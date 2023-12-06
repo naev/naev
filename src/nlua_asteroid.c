@@ -110,7 +110,7 @@ Asteroid* luaL_validasteroid( lua_State *L, int ind )
 {
    Asteroid *a;
    if (lua_isasteroid(L, ind)) {
-      LuaAsteroid_t *la = luaL_checkasteroid(L, ind);
+      const LuaAsteroid_t *la = luaL_checkasteroid(L, ind);
 #if DEBUGGING
       if ((la->parent < 0) || (la->parent >= array_size(cur_system->asteroids)))
          NLUA_ERROR(L,_("Asteroid field '%d' is out of range!"),la->parent);
@@ -296,7 +296,7 @@ static int asteroidL_get( lua_State *L )
          if (a->state != ASTEROID_FG)
             continue;
 
-         d2 = vec2_dist2( pos, &a->pos );
+         d2 = vec2_dist2( pos, &a->sol.pos );
          if (d2 > dist2)
             continue;
 
@@ -328,7 +328,7 @@ static int asteroidL_exists( lua_State *L )
       return 1;
    }
 
-   LuaAsteroid_t *la = luaL_checkasteroid(L, 1);
+   const LuaAsteroid_t *la = luaL_checkasteroid(L, 1);
    if ((la->parent < 0) || (la->parent >= array_size(cur_system->asteroids))) {
       lua_pushboolean(L, 0);
       return 1;
@@ -340,7 +340,7 @@ static int asteroidL_exists( lua_State *L )
       return 1;
    }
 
-   Asteroid *a = &field->asteroids[ la->id ];
+   const Asteroid *a = &field->asteroids[ la->id ];
    lua_pushboolean(L, (a->state==ASTEROID_FG));
    return 1;
 }
@@ -442,7 +442,7 @@ static int asteroidL_field( lua_State *L )
 static int asteroidL_pos( lua_State *L )
 {
    const Asteroid *a = luaL_validasteroid(L,1);
-   lua_pushvector(L,a->pos);
+   lua_pushvector(L,a->sol.pos);
    return 1;
 }
 
@@ -456,7 +456,7 @@ static int asteroidL_pos( lua_State *L )
 static int asteroidL_vel( lua_State *L )
 {
    const Asteroid *a = luaL_validasteroid(L,1);
-   lua_pushvector(L,a->vel);
+   lua_pushvector(L,a->sol.vel);
    return 1;
 }
 
@@ -470,8 +470,8 @@ static int asteroidL_vel( lua_State *L )
 static int asteroidL_setPos( lua_State *L )
 {
    Asteroid *a = luaL_validasteroid(L,1);
-   vec2 *v = luaL_checkvector(L,2);
-   a->pos = *v;
+   const vec2 *v = luaL_checkvector(L,2);
+   a->sol.pos = *v;
    return 0;
 }
 
@@ -485,8 +485,8 @@ static int asteroidL_setPos( lua_State *L )
 static int asteroidL_setVel( lua_State *L )
 {
    Asteroid *a = luaL_validasteroid(L,1);
-   vec2 *v = luaL_checkvector(L,2);
-   a->vel = *v;
+   const vec2 *v = luaL_checkvector(L,2);
+   a->sol.vel = *v;
    return 0;
 }
 

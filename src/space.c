@@ -722,7 +722,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
          if (!pilot_inRangeAsteroid( player.p, k, i ))
             continue;
 
-         td = pow2(x-as->pos.x) + pow2(y-as->pos.y);
+         td = pow2(x-as->sol.pos.x) + pow2(y-as->sol.pos.y);
          if (td < d) {
             *pnt  = -1; /* We must clear spob target as asteroid is closer. */
             *ast  = k;
@@ -793,7 +793,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
          if (as->state != ASTEROID_FG)
             continue;
 
-         ta = atan2( y - as->pos.y, x - as->pos.x);
+         ta = atan2( y - as->sol.pos.y, x - as->sol.pos.x);
          if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
             *pnt  = -1; /* We must clear spob target as asteroid is closer. */
             *ast  = k;

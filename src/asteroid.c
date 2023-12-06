@@ -104,13 +104,13 @@ void asteroids_update( double dt )
          }
 
          /* Push back towards center. */
-         offx = ast->pos.x - a->pos.x;
-         offy = ast->pos.y - a->pos.y;
+         offx = ast->pos.x - a->sol.pos.x;
+         offy = ast->pos.y - a->sol.pos.y;
          d = pow2(offx)+pow2(offy);
          if (d >= pow2(ast->radius)) {
             d = sqrt(d);
-            a->vel.x += ast->accel * dt * offx / d;
-            a->vel.y += ast->accel * dt * offy / d;
+            a->sol.vel.x += ast->accel * dt * offx / d;
+            a->sol.vel.y += ast->accel * dt * offy / d;
             setvel = 1;
          }
          else if (has_exclusion) {
@@ -123,13 +123,13 @@ void asteroids_update( double dt )
                if (!exc->affects)
                   continue;
 
-               ex = a->pos.x - exc->pos.x;
-               ey = a->pos.y - exc->pos.y;
+               ex = a->sol.pos.x - exc->pos.x;
+               ey = a->sol.pos.y - exc->pos.y;
                ed = pow2(ex) + pow2(ey);
                if (ed <= pow2(exc->radius)) {
                   ed = sqrt(ed);
-                  a->vel.x += ast->accel * dt * ex / ed;
-                  a->vel.y += ast->accel * dt * ey / ed;
+                  a->sol.vel.x += ast->accel * dt * ex / ed;
+                  a->sol.vel.y += ast->accel * dt * ey / ed;
                   setvel = 1;
                }
             }
@@ -137,16 +137,17 @@ void asteroids_update( double dt )
 
          if (setvel) {
             /* Enforce max speed. */
-            d = MOD(a->vel.x, a->vel.y);
+            d = MOD(a->sol.vel.x, a->sol.vel.y);
             if (d > ast->maxspeed) {
-               a->vel.x *= ast->maxspeed / d;
-               a->vel.y *= ast->maxspeed / d;
+               a->sol.vel.x *= ast->maxspeed / d;
+               a->sol.vel.y *= ast->maxspeed / d;
             }
          }
 
          /* Update position. */
-         a->pos.x += a->vel.x * dt;
-         a->pos.y += a->vel.y * dt;
+         /* TODO use physics.c */
+         a->sol.pos.x += a->sol.vel.x * dt;
+         a->sol.pos.y += a->sol.vel.y * dt;
 
          /* Update angle. */
          a->ang += a->spin * dt;
@@ -198,8 +199,8 @@ void asteroids_update( double dt )
          /* Add to quadtree if in foreground. */
          if (a->state == ASTEROID_FG) {
             int x, y, w2, h2;
-            x = round(a->pos.x);
-            y = round(a->pos.y);
+            x = round(a->sol.pos.x);
+            y = round(a->sol.pos.y);
             w2 = ceil(a->gfx->sw*0.5);
             h2 = ceil(a->gfx->sh*0.5);
             qt_insert( &ast->qt, j, x-w2, y-h2, x+w2, y+h2 );
@@ -337,15 +338,15 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
 
    do {
       /* Try to keep density uniform using cartesian coordinates. */
-      ast->pos.x = field->pos.x + (RNGF()*2.-1.)*field->radius;
-      ast->pos.y = field->pos.y + (RNGF()*2.-1.)*field->radius;
+      ast->sol.pos.x = field->pos.x + (RNGF()*2.-1.)*field->radius;
+      ast->sol.pos.y = field->pos.y + (RNGF()*2.-1.)*field->radius;
 
       /* Check if out of the field. */
-      outfield = (asteroids_inField(&ast->pos) < 0);
+      outfield = (asteroids_inField(&ast->sol.pos) < 0);
 
       /* If this is the first time and it's spawned outside the field,
        * we get rid of it so that density remains roughly consistent. */
-      if (asteroid_creating && outfield && (vec2_dist2( &ast->pos, &field->pos ) < r2)) {
+      if (asteroid_creating && outfield && (vec2_dist2( &ast->sol.pos, &field->pos ) < r2)) {
          ast->state = ASTEROID_XX;
          ast->timer_max = ast->timer = HUGE_VAL; /* Don't reappear. */
          /* TODO probably do a more proper solution removing total number of asteroids. */
@@ -386,7 +387,7 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
    theta     = RNGF()*2.*M_PI;
    ast->spin = (1-2*RNGF())*field->maxspin;
    mod       = RNGF()*field->maxspeed;
-   vec2_pset( &ast->vel, mod, theta );
+   vec2_pset( &ast->sol.vel, mod, theta );
 
    /* Fade in stuff. */
    ast->state = ASTEROID_XX;
@@ -883,14 +884,14 @@ static void asteroid_renderSingle( const Asteroid *a )
    }
 
    at = a->type;
-   gl_renderSpriteRotate( a->gfx, a->pos.x, a->pos.y, a->ang, 0, 0, &col );
+   gl_renderSpriteRotate( a->gfx, a->sol.pos.x, a->sol.pos.y, a->ang, 0, 0, &col );
 
    /* Add the commodities if scanned. */
    if (!a->scanned)
       return;
    col = cFontWhite;
    col.a = a->scan_alpha;
-   gl_gameToScreenCoords( &nx, &ny, a->pos.x, a->pos.y );
+   gl_gameToScreenCoords( &nx, &ny, a->sol.pos.x, a->sol.pos.y );
    gl_printRaw( &gl_smallFont, nx+a->gfx->sw/2, ny-gl_smallFont.h/2, &col, -1., _(at->scanned_msg) );
    /*
    for (int i=0; i<array_size(at->material); i++) {
@@ -1085,7 +1086,7 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
    double rad2;
    LuaAsteroid_t la;
    const AsteroidType *at = a->type;
-   AsteroidAnchor *field = &cur_system->asteroids[a->parent];
+   const AsteroidAnchor *field = &cur_system->asteroids[a->parent];
    Pilot *const* pilot_stack = pilot_getAll();
 
    /* Manage the explosion */
@@ -1093,12 +1094,12 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
    dmg.damage        = at->damage;
    dmg.penetration   = at->penetration; /* Full penetration. */
    dmg.disable       = 0.;
-   expl_explode( a->pos.x, a->pos.y, a->vel.x, a->vel.y,
+   expl_explode( a->sol.pos.x, a->sol.pos.y, a->sol.vel.x, a->sol.vel.y,
                  at->exp_radius, &dmg, NULL, EXPL_MODE_SHIP );
 
    /* Play random explosion sound. */
    snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
-   sound_playPos( sound_get(buf), a->pos.x, a->pos.y, a->vel.x, a->vel.y );
+   sound_playPos( sound_get(buf), a->sol.pos.x, a->sol.pos.y, a->sol.vel.x, a->sol.vel.y );
 
    /* Alert nearby pilots. */
    rad2 = pow2( at->alert_range );
@@ -1108,7 +1109,7 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
 
-      if (vec2_dist2( &p->solid.pos, &a->pos ) > rad2)
+      if (vec2_dist2( &p->solid.pos, &a->sol.pos ) > rad2)
          continue;
 
       pilot_msg( NULL, p, "asteroid", -1 );
@@ -1117,20 +1118,19 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
 
    /* Release commodity rewards. */
    if (max_rarity >= 0) {
-      double prob, accum;
       int ndrops = 0;
       for (int i=0; i<array_size(at->material); i++) {
-         AsteroidReward *mat = &at->material[i];
+         const AsteroidReward *mat = &at->material[i];
          if (mat->rarity > max_rarity)
             continue;
          ndrops++;
       }
       if (ndrops > 0) {
          double r = RNGF();
-         prob = 1./(double)ndrops;
-         accum = 0.;
+         double prob = 1./(double)ndrops;
+         double accum = 0.;
          for (int i=0; i<array_size(at->material); i++) {
-            AsteroidReward *mat = &at->material[i];
+            const AsteroidReward *mat = &at->material[i];
             if (mat->rarity > max_rarity)
                continue;
             accum += prob;
@@ -1140,8 +1140,8 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
             int nb = RNG(0, round((double)mat->quantity * mining_bonus));
             for (int j=0; j<nb; j++) {
                vec2 pos, vel;
-               pos = a->pos;
-               vel = a->vel;
+               pos = a->sol.pos;
+               vel = a->sol.vel;
                pos.x += (RNGF()*30.-15.);
                pos.y += (RNGF()*30.-15.);
                vel.x += (RNGF()*20.-10.);

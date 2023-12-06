@@ -1225,7 +1225,7 @@ void player_think( Pilot* pplayer, const double dt )
          AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
          Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
          pilot_face( pplayer,
-               vec2_angle( &player.p->solid.pos, &ast->pos ));
+               vec2_angle( &player.p->solid.pos, &ast->sol.pos ));
          /* Disable turning. */
          facing = 1;
       }
@@ -1397,7 +1397,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
             if (a->scanned) /* Ignore scanned outfits. */
                continue;
 
-            if (vec2_dist2( &a->pos, &player.p->solid.pos ) > r2)
+            if (vec2_dist2( &a->sol.pos, &player.p->solid.pos ) > r2)
                continue;
 
             a->scanned = 1;

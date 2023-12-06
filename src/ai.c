@@ -1944,7 +1944,7 @@ static int aiL_aim( lua_State *L )
 
    if (lua_isasteroid(L,1)) {
       const Asteroid *a = luaL_validasteroid(L,1);
-      angle = pilot_aimAngle( cur_pilot, &a->pos, &a->vel );
+      angle = pilot_aimAngle( cur_pilot, &a->sol.pos, &a->sol.vel );
    }
    else {
       const Pilot *p = luaL_validpilot(L,1);

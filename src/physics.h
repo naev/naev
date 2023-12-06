@@ -47,6 +47,7 @@ typedef struct Solid_ {
    double dir_vel; /**< Velocity at which solid is rotating in rad/s. */
    vec2 vel; /**< Velocity of the solid. */
    vec2 pos; /**< Position of the solid. */
+   vec2 pre; /**< Previous position of the solid. For collisions. */
    double accel; /**< Relative X acceleration, basically simplified for our model. */
    double speed_max; /**< Maximum speed. */
    void (*update)( struct Solid_*, double ); /**< Update method. */

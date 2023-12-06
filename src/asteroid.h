@@ -84,8 +84,7 @@ typedef struct Asteroid_ {
    CollPoly *polygon;   /**< Collision polygon associated to gfx. */
    double armour; /**< Current "armour" of the asteroid. */
    /* Movement. */
-   vec2 pos;      /**< Position. */
-   vec2 vel;      /**< Velocity. */
+   Solid sol;     /**< Solid. */
    double ang;    /**< Angle. */
    double spin;   /**< Spin. */
    /* Stats. */

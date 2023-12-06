@@ -400,8 +400,8 @@ static void gui_renderSpobTarget (void)
       const Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
       c = &cWhite;
 
-      x = ast->pos.x;
-      y = ast->pos.y;
+      x = ast->sol.pos.x;
+      y = ast->sol.pos.y;
       r = ast->gfx->sw * 0.5;
       gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
    }
@@ -552,7 +552,7 @@ static void gui_renderBorder( double dt )
 
    /* Draw spobs. */
    for (int i=0; i<array_size(cur_system->spobs); i++) {
-      Spob *pnt = cur_system->spobs[i];
+      const Spob *pnt = cur_system->spobs[i];
 
       /* Skip if unknown. */
       if (!spob_isKnown( pnt ))
@@ -1218,12 +1218,12 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 
    /* Get position. */
    if (overlay) {
-      x = (a->pos.x / res);
-      y = (a->pos.y / res);
+      x = (a->sol.pos.x / res);
+      y = (a->sol.pos.y / res);
    }
    else {
-      x = ((a->pos.x - player.p->solid.pos.x) / res);
-      y = ((a->pos.y - player.p->solid.pos.y) / res);
+      x = ((a->sol.pos.x - player.p->solid.pos.x) / res);
+      y = ((a->sol.pos.y - player.p->solid.pos.y) / res);
    }
 
    /* Get size. */

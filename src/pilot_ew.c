@@ -325,7 +325,7 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
    sense = EW_ASTEROID_DIST;
 
    /* Get distance. */
-   d = vec2_dist2( &p->solid.pos, &as->pos );
+   d = vec2_dist2( &p->solid.pos, &as->sol.pos );
 
    /* By default, asteroid's hide score is 1. It could be made changeable via xml.*/
    if (d < pow2( MAX( 0., sense * p->stats.ew_detect ) ) )

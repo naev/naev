@@ -263,7 +263,7 @@ int CollidePolygon( const CollPoly* at, const vec2* ap,
    int ax1,ax2, ay1,ay2;
    int bx1,bx2, by1,by2;
    int inter_x0, inter_x1, inter_y0, inter_y1;
-   float xabs, yabs, x1, y1, x2, y2;
+   float x1, y1, x2, y2;
 
    /* a - cube coordinates */
    ax1 = (int)VX(*ap) + (int)(at->xmin);
@@ -289,6 +289,7 @@ int CollidePolygon( const CollPoly* at, const vec2* ap,
 
    /* loop on the points of bt to see if one of them is in polygon at. */
    for (int i=0; i<=bt->npt-1; i++) {
+      float xabs, yabs;
       xabs = bt->x[i] + VX(*bp);
       yabs = bt->y[i] + VY(*bp);
 
@@ -330,7 +331,7 @@ int CollidePolygon( const CollPoly* at, const vec2* ap,
  */
 void RotatePolygon( CollPoly* rpolygon, CollPoly* ipolygon, float theta )
 {
-   float ct, st, d;
+   float ct, st;
 
    rpolygon->npt = ipolygon->npt;
    rpolygon->x = malloc( ipolygon->npt*sizeof(float) );
@@ -344,7 +345,7 @@ void RotatePolygon( CollPoly* rpolygon, CollPoly* ipolygon, float theta )
    st = sin( theta );
 
    for (int i=0; i<=rpolygon->npt-1; i++) {
-      d = ipolygon->x[i] * ct - ipolygon->y[i] * st;
+      float d = ipolygon->x[i] * ct - ipolygon->y[i] * st;
       rpolygon->x[i] = d;
       rpolygon->xmin = MIN( rpolygon->xmin, d );
       rpolygon->xmax = MAX( rpolygon->xmax, d );
@@ -455,13 +456,13 @@ int CollideLineLine( double s1x, double s1y, double e1x, double e1y,
       double s2x, double s2y, double e2x, double e2y, vec2* crash )
 {
    double ua_t, ub_t, u_b;
-   double ua, ub;
 
    ua_t = (e2x - s2x) * (s1y - s2y) - (e2y - s2y) * (s1x - s2x);
    ub_t = (e1x - s1x) * (s1y - s2y) - (e1y - s1y) * (s1x - s2x);
    u_b  = (e2y - s2y) * (e1x - s1x) - (e2x - s2x) * (e1y - s1y);
 
    if (u_b != 0.) {
+      double ua, ub;
       ua = ua_t / u_b;
       ub = ub_t / u_b;
 
@@ -656,9 +657,9 @@ int CollideLineSprite( const vec2* ap, double ad, double al,
 int CollideLinePolygon( const vec2* ap, double ad, double al,
       const CollPoly* bt, const vec2* bp, vec2 crash[2] )
 {
-   double ep[2], bl[2], tr[2];
+   double ep[2];
    double xi, yi, xip, yip;
-   int hits, real_hits;
+   int real_hits;
    vec2 tmp_crash;
 
    /* Set up end point of line. */
@@ -688,6 +689,8 @@ int CollideLinePolygon( const vec2* ap, double ad, double al,
 
    /* None is inside, check if there is a chance of intersection */
    if (real_hits == 0) {
+      int hits;
+      double bl[2], tr[2];
       /* Set up top right corner of the rectangle. */
       tr[0] = bp->x + (double)bt->xmax;
       tr[1] = bp->y + (double)bt->ymax;

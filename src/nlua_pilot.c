@@ -6270,7 +6270,7 @@ static int pilotL_collisionTest( lua_State *L )
       CollPoly rpoly;
       RotatePolygon( &rpoly, a->polygon, (float) a->ang );
       int ret = CollidePolygon( getCollPoly(p), &p->solid.pos,
-            &rpoly, &a->pos, &crash );
+            &rpoly, &a->sol.pos, &crash );
       free(rpoly.x);
       free(rpoly.y);
       if (!ret)
@@ -6487,7 +6487,7 @@ static int pilotL_shipvarPeek( lua_State *L )
 {
    const Pilot *p   = luaL_validpilot(L,1);
    const char *str  = luaL_checkstring(L,2);
-   lvar *var        = lvar_get( p->shipvar, str );
+   const lvar *var        = lvar_get( p->shipvar, str );
    if (var != NULL)
       return lvar_push( L, var );
    return 0;

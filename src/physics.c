@@ -81,7 +81,10 @@ static void solid_update_euler( Solid *obj, double dt )
    double px,py, vx,vy, ax,ay, th;
    double cdir, sdir;
 
-   /* make sure angle doesn't flip */
+   /* Save previous position. */
+   obj->pre = obj->pos;
+
+   /* Make sure angle doesn't flip */
    obj->dir += obj->dir_vel*dt;
    if (obj->dir >= 2*M_PI)
       obj->dir -= 2*M_PI;
@@ -145,6 +148,9 @@ static void solid_update_rk4( Solid *obj, double dt )
    double vmod, vang, th;
    int vint;
    int limit; /* limit speed? */
+
+   /* Save previous position. */
+   obj->pre = obj->pos;
 
    /* Initial positions and velocity. */
    px = obj->pos.x;
@@ -267,6 +273,7 @@ void solid_init( Solid* dest, double mass, double dir,
       vectnull( &dest->pos );
    else
       dest->pos = *pos;
+   dest->pre = dest->pos; /* Store previous position. */
 
    /* Misc. */
    dest->speed_max = -1.; /* Negative is invalid. */
