@@ -1006,7 +1006,8 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
    }
 
    if (wc->beam) {
-      /* Set up variables so we can use the equations from CollideLineLine as is. */
+      /* Set up variables so we can use the equations from CollideLineLine as is.
+       * Main idea is to just do a line-line collision*/
       double s1x = csol->pos.x;
       double s1y = csol->pos.y;
       double e1x = csol->pre.x;
@@ -1015,19 +1016,24 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       double s2y = w->solid.pos.y;
       double e2x = w->solid.pos.x + cos(w->solid.dir) * wc->range;
       double e2y = w->solid.pos.y + sin(w->solid.dir) * wc->range;
-      double ua_t, u_b, ua;
+      double u_b;
 
       /* Find intersection position. */
-      ua_t = (e2x - s2x) * (s1y - s2y) - (e2y - s2y) * (s1x - s2x);
       u_b  = (e2y - s2y) * (e1x - s1x) - (e2x - s2x) * (e1y - s1y);
 
-      /* Interested in closest point only on the csol line. */
-      ua = CLAMP( 0., 1., ua_t / u_b );
+      /* Only handle case not coincident or parallel. */
+      if (fabs(u_b) > 1e-5) {
+         double ua_t = (e2x - s2x) * (s1y - s2y) - (e2y - s2y) * (s1x - s2x);
+         double ua;
 
-      /* Nearest point on the line segment. */
-      cipos.x = s1x + ua * (e1x-s1x);
-      cipos.y = s1y + ua * (e1x-s1y);
-      cpos = &cipos;
+         /* Interested in closest point only on the csol line. */
+         ua = CLAMP( 0., 1., ua_t / u_b );
+
+         /* Nearest point on the line segment. */
+         cipos.x = s1x + ua * (e1x-s1x);
+         cipos.y = s1y + ua * (e1x-s1y);
+         cpos = &cipos;
+      }
 
       /* Now we can look at the collision at the corrected point. */
       if (cpol!=NULL) {
