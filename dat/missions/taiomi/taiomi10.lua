@@ -313,7 +313,7 @@ function hypergate_dead ()
 const float THRESHOLD = 0.4;
 const float INTENSITY = 10.0;
 
-uniform float u_progress = 0.0;
+uniform float u_progress;
 
 vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
@@ -471,7 +471,7 @@ function cutscene09 ()
    local fadeout_pixelcode = [[
 const float THRESHOLD = 0.8;
 
-uniform float u_progress = 0.0;
+uniform float u_progress;
 
 vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
@@ -563,7 +563,7 @@ Protocols don't cover this. What should we do?]]))
 
 const float INTENSITY = 10.0;
 
-uniform float u_progress = 0.0;
+uniform float u_progress;
 
 vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {

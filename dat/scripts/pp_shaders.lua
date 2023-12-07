@@ -10,7 +10,7 @@ local pp_shaders = {}
 -- We load the C-side shader for the vertex shader
 local f = file.new( 'glsl/postprocess.vert' )
 f:open('r')
-pp_shaders.vertexcode = "#version 140\n"..f:read()
+pp_shaders.vertexcode = "#version 300 es\n"..f:read()
 
 --[[--
    Creates a new post-processing shader.
@@ -20,7 +20,8 @@ pp_shaders.vertexcode = "#version 140\n"..f:read()
 --]]
 function pp_shaders.newShader( fragcode )
    local s = shader.new([[
-#version 140
+#version 300 es
+precision mediump float;
 
 uniform sampler2D MainTex;
 uniform vec4 love_ScreenSize;

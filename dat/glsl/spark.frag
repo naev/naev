@@ -2,10 +2,10 @@
 #include "lib/simplex.glsl"
 
 /* Common uniforms for special effects. */
-uniform float u_time    = 0.0; /**< Elapsed time. */
-uniform float u_r       = 0.0; /**< Random seed. */
+uniform float u_time; /**< Elapsed time. */
+uniform float u_r    ; /**< Random seed. */
 /* Custom stuff. */
-uniform float u_speed   = 1.3; /**< How fast it playes. */
+uniform float u_speed; /**< How fast it playes. */
 
 /* Entry point. */
 vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )

@@ -189,6 +189,7 @@ void background_renderDust( const double dt )
    h  = (SCREEN_H + 2.*STAR_BUF);
    h += (h / conf.zoom_far - 1.);
 
+#if 0
    /* Common shader stuff. */
    glUseProgram(shaders.dust.program);
    gl_uniformMat4(shaders.dust.projection, &projection);
@@ -214,6 +215,7 @@ void background_renderDust( const double dt )
    /* Disable vertex array. */
    glDisableVertexAttribArray( shaders.dust.vertex );
    glDisableVertexAttribArray( shaders.dust.brightness );
+# endif
 
    glUseProgram(0);
 

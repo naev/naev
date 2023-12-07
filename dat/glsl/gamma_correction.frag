@@ -1,7 +1,7 @@
 #include "lib/gamma.glsl"
 
 uniform sampler2D MainTex;
-uniform float gamma = 1.0;
+uniform float gamma;
 in vec4 VaryingTexCoord;
 out vec4 color_out;
 

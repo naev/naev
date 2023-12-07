@@ -3,7 +3,7 @@
 #include "lib/colour.glsl"
 
 uniform float u_time;
-uniform vec3 u_camera = vec3(1.0); /* xy corresponds to screen space */
+uniform vec3 u_camera; /* xy corresponds to screen space */
 
 const float DRAGMULT    = 10.0;
 const float SCALE       = 300.0;

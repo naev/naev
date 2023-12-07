@@ -20,7 +20,7 @@ subroutine uniform jump_func_prototype jump_func;
 uniform float progress;
 uniform float direction;
 uniform vec2 dimensions;
-uniform float brightness = 1.0;
+uniform float brightness;
 in vec2 pos;
 out vec4 color_out;
 

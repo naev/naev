@@ -1,8 +1,8 @@
 #include "lib/simplex.glsl"
 uniform sampler2D u_tex;
 
-uniform float u_timer   = 0.0;
-uniform float u_elapsed = 0.0;
+uniform float u_timer;
+uniform float u_elapsed;
 
 const float LENGTH   = 3.0;
 

@@ -32,7 +32,7 @@ void main (void)
    /* Create the noise */
    float f = 0.0;
    for (int i=0; i<ITERATIONS; i++) {
-      float scale = pow(SCALAR, i);
+      float scale = pow(SCALAR, float(i));
       f += (snoise( uv * scale )*0.5 + 0.2) / scale;
    }
 

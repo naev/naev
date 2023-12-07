@@ -4,10 +4,10 @@
 uniform vec3 dimensions;
 uniform sampler2D u_tex;
 
-uniform float u_r       = 0.0;
+uniform float u_r;
 //uniform float u_timer   = 0.0;
-uniform float u_elapsed = 0.0;
-uniform float u_dir     = 0.0;
+uniform float u_elapsed;
+uniform float u_dir;
 
 const vec4 COLOUR_OUTLINE  = vec4( 0.9, 0.9, 0.4, 3.0/3.0 );
 const vec4 COLOUR_BRIGHT   = vec4( 0.6, 0.6, 0.3, 2.0/3.0 );

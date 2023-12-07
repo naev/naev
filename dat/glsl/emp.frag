@@ -2,14 +2,14 @@
 #include "lib/simplex.glsl"
 
 /* Common uniforms for special effects. */
-uniform float u_time    = 0.0; /**< Elapsed time. */
-uniform float u_r       = 0.0; /**< Random seed. */
+uniform float u_time    ; /**< Elapsed time. */
+uniform float u_r       ; /**< Random seed. */
 /* Custom stuff. */
-uniform float u_speed   = 1.3; /**< How fast it playes. */
-uniform float u_grain   = 1.0; /**< How grainy it is. */
+uniform float u_speed   ; /**< How fast it playes. */
+uniform float u_grain   ; /**< How grainy it is. */
 
-const float UP          = 0.7; /**< Time spent on creating the explosion vs not doing it. */
-const float MAX         = 0.65;/**< How big the effect can get. */
+const float UP          ; /**< Time spent on creating the explosion vs not doing it. */
+const float MAX         ;/**< How big the effect can get. */
 
 /* Entry point. */
 vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )

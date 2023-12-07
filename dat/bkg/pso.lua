@@ -24,7 +24,7 @@ const float SCALE = 1.0/300.0;
 const float TIME_SCALE = 1.0/50.0;
 const float nonuniformity = %f;
 
-uniform float u_time = 0.0;
+uniform float u_time;
 uniform vec3 u_camera;
 
 vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )

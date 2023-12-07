@@ -5,9 +5,9 @@
 uniform vec3 dimensions;
 uniform sampler2D u_tex;
 
-uniform float u_r       = 0.0;
-uniform float u_timer   = 0.0;
-uniform float u_elapsed = 0.0;
+uniform float u_r;
+uniform float u_timer;
+uniform float u_elapsed;
 
 const float TIME_TOTAL  = 3.0;
 const float AMPLITUDE   = 30.0;

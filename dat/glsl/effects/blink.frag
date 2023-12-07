@@ -6,8 +6,8 @@ uniform vec3 dimensions;
 uniform sampler2D u_tex;
 
 //uniform float u_r       = 0.0;
-uniform float u_timer   = 0.0;
-uniform float u_elapsed = 0.0;
+uniform float u_timer;
+uniform float u_elapsed;
 
 const float LENGTH = 0.3;
 const vec3 FADECOL = vec3( 0.6, 0.6, 1.0 );

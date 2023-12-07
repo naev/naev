@@ -224,7 +224,7 @@ transitions._t.hexagon = [[
 // Hexagonal math from: http://www.redblobgames.com/grids/hexagons/
 
 const int steps = 50;
-uniform float horizontalHexagons = 20.0;
+uniform float horizontalHexagons;
 float ratio = love_ScreenSize.x / love_ScreenSize.y;
 
 struct Hexagon {
@@ -369,7 +369,7 @@ end
 
 transitions._t.electric = [[
 #include "lib/simplex.glsl"
-uniform float u_time = 0.0;
+uniform float u_time;
 
 const float height = 10.0;
 //const vec3 bluetint = vec3( 0.132, 0.319, 1.0 );/* Gamma: vec3(0.4, 0.6, 0.8); */
@@ -512,7 +512,7 @@ function transitions.get( name, seconds, transition )
 
    local prefix = string.format( [[
 uniform Image texprev;
-uniform float progress = 0.0;
+uniform float progress;
 const float u_r = %f;
    ]], love_math.random() )
 

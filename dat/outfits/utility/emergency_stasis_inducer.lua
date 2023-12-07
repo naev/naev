@@ -9,7 +9,7 @@ local oshader = osh.new([[
 #include "lib/blend.glsl"
 #include "lib/colour.glsl"
 const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
-uniform float progress = 0;
+uniform float progress;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
    vec4 color     = texture( tex, texcoord );

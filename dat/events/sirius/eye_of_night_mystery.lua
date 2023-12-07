@@ -548,7 +548,7 @@ What do you do?]])
 
 const float INTENSITY = 10.0;
 
-uniform float u_progress = 0.0;
+uniform float u_progress;
 
 vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {

@@ -7,7 +7,7 @@
 
 #define MOTIONBLUR   %d
 
-uniform vec4 u_camera = vec4(1.0); /* xy corresponds to screen space */
+uniform vec4 u_camera; /* xy corresponds to screen space */
 #if MOTIONBLUR==1
 uniform sampler2D u_prevtex;
 #endif /* MOTIONBLUR==1 */
