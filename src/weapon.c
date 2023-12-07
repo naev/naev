@@ -994,7 +994,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       if ((fabs(b)>1e-5) || (fabs(d)>1e-5)) {
          double a = w->solid.pos.x - csol->pos.x;
          double c = w->solid.pos.y - csol->pos.y;
-         double t = CLAMP( 0., 1., (a*b+c*d) / (b*b+d*d) );
+         double t = CLAMP( 0., 1., -(a*b+c*d) / (b*b+d*d) );
          /* Now we can update the position to the minimum. */
          wipos.x = w->solid.pos.x + t*vx1;
          wipos.y = w->solid.pos.y + t*vy1;
