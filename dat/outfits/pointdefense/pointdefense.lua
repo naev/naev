@@ -13,12 +13,21 @@ function init( _p, _po )
    mem.tpilot = false -- hether or not the target is a pilot
 end
 
-function ontoggle( _p, _po, _on )
-   -- Doesn't fire normally, TODO some way to turn on/off
+function ontoggle( _p, _po, on )
+   if on then
+      mem.on = not mem.on
+   end
+   return false
+end
+
+function onshoot( _p, _po, _on )
+   -- Doesn't fire normally,
    return false
 end
 
 function update( p, po, _dt )
+   if not mem.on then return end
+
    local pos = p:pos()
    local m = mem.target
 

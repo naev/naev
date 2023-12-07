@@ -976,8 +976,8 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
    }
 
    /* Lua test to stop beam. */
-   if ((w->outfit->lua_ontoggle != LUA_NOREF) &&
-         !pilot_outfitLOntoggle( p, w, 0 ))
+   if ((w->outfit->lua_onshoot!= LUA_NOREF) &&
+         !pilot_outfitLOnshoot( p, w, 0 ))
       return;
 
    /* Calculate rate modifier. */
@@ -1220,8 +1220,8 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
          return 0;
 
       /* Lua test. */
-      if ((aim >= 0) && (w->outfit->lua_ontoggle != LUA_NOREF) &&
-            !pilot_outfitLOntoggle( p, w, 1 ))
+      if ((aim >= 0) && (w->outfit->lua_onshoot != LUA_NOREF) &&
+            !pilot_outfitLOnshoot( p, w, 1 ))
          return 0;
 
       energy      = outfit_energy(w->outfit)*energy_mod;
@@ -1248,8 +1248,8 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
          return 0;
 
       /* Lua test. */
-      if ((aim>=0) && (w->outfit->lua_ontoggle != LUA_NOREF) &&
-            !pilot_outfitLOntoggle( p, w, 1 ))
+      if ((aim>=0) && (w->outfit->lua_onshoot != LUA_NOREF) &&
+            !pilot_outfitLOnshoot( p, w, 1 ))
          return 0;
 
       /** @todo Handle warmup stage. */
@@ -1286,8 +1286,8 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
          return 0;
 
       /* Lua test. */
-      if ((aim>=0) && (w->outfit->lua_ontoggle != LUA_NOREF) &&
-            !pilot_outfitLOntoggle( p, w, 1 ))
+      if ((aim>=0) && (w->outfit->lua_onshoot != LUA_NOREF) &&
+            !pilot_outfitLOnshoot( p, w, 1 ))
          return 0;
 
       energy      = outfit_energy(w->outfit)*energy_mod;
@@ -1323,8 +1323,8 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
          return 0;
 
       /* Lua test. */
-      if ((aim>=0) && (w->outfit->lua_ontoggle != LUA_NOREF) &&
-            !pilot_outfitLOntoggle( p, w, 1 ))
+      if ((aim>=0) && (w->outfit->lua_onshoot != LUA_NOREF) &&
+            !pilot_outfitLOnshoot( p, w, 1 ))
          return 0;
 
       /* Get index of outfit slot */
@@ -1579,8 +1579,8 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       pilot_afterburnOver( p );
    }
    else if (outfit_isBeam( o->outfit )) {
-      if ((o->outfit->lua_ontoggle != LUA_NOREF) &&
-            !pilot_outfitLOntoggle( p, o, 0 ))
+      if ((o->outfit->lua_onshoot != LUA_NOREF) &&
+            !pilot_outfitLOnshoot( p, o, 0 ))
          return 0;
       /* Beams use stimer to represent minimum time until shutdown. */
       if (o->u.beamid>0) {
@@ -1592,7 +1592,6 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       /* Case of a mod we can't toggle. */
       return 0;
    else if (o->outfit->lua_ontoggle != LUA_NOREF)
-      /* TODO toggle Lua outfit. */
       return pilot_outfitLOntoggle( p, o, 0 );
    else {
       o->stimer = outfit_cooldown( o->outfit );
@@ -1619,7 +1618,6 @@ int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o )
    if (outfit_isAfterburner(o->outfit))
       pilot_afterburn( p );
    else if (o->outfit->lua_ontoggle != LUA_NOREF)
-      /* TODO toggle Lua outfit. */
       return pilot_outfitLOntoggle( p, o, 1 );
    else {
       o->state  = PILOT_OUTFIT_ON;

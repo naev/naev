@@ -1610,6 +1610,42 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
    return ret || pilotoutfit_modified; /* Even if the script says it didn't change, it may have been modified. */
 }
 
+/**
+ * @brief Handle the manual shoot of an outfit.
+ *
+ *    @param pilot Pilot to shoot outfit of.
+ *    @param po Outfit to be toggling.
+ *    @param on Whether to shoot on or off.
+ *    @return 1 if was able to shoot it, 0 otherwise.
+ */
+int pilot_outfitLOnshoot( Pilot *pilot, PilotOutfitSlot *po, int on )
+{
+   nlua_env env = po->outfit->lua_env;
+   int ret, oldmem;
+   pilotoutfit_modified = 0;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: onshoot( p, po, armour, shield ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onshoot); /* f */
+   lua_pushpilot(naevL, pilot->id); /* f, p */
+   lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+   lua_pushboolean(naevL, on);      /* f, p, po, on */
+   if (nlua_pcall( env, 3, 1 )) {   /* */
+      outfitLRunWarning( pilot, po->outfit, "onshoot", lua_tostring(naevL,-1) );
+      lua_pop(naevL, 1);
+      pilot_outfitLunmem( env, oldmem );
+      return 0;
+   }
+
+   /* Handle return boolean. */
+   ret = lua_toboolean(naevL, -1);
+   lua_pop(naevL, 1);
+   pilot_outfitLunmem( env, oldmem );
+   return ret || pilotoutfit_modified; /* Even if the script says it didn't change, it may have been modified. */
+}
+
 struct CooldownData {
    int done;
    int success;

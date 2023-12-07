@@ -104,7 +104,7 @@ function onhit( p, po, _armour, _shield )
 end
 
 -- Disable on shoot
-function onshoot( p, po )
+function onshootany( p, po )
    if mem.active then
       turnoff( p, po )
    end

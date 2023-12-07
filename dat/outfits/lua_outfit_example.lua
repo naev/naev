@@ -89,8 +89,8 @@ end
 function onhit( _p, _po, _armour, _shield, _attacker )
 end
 
--- The onshoot function is run when the pilot 'p' shoots. This includes primary / secondary / instant weapon sets
-function onshoot( _p, _po )
+-- The onshoot function is run when the pilot 'p' shoots ANY weapon. This includes primary / secondary / instant weapon sets
+function onshootany( _p, _po )
 end
 
 -- The ontoggle function allows the oufit to be toggled by the player
@@ -151,6 +151,12 @@ end
 
    Note that these are calculated with particles.
 --]]
+-- Triggered when the weapon is about to shoot and can be used to control
+-- whether or not it should be able to shoot. By returning true, it'll start
+-- firing the weapon, while returning false will block in from shooting.
+function onshoot( _p, _po )
+   return false
+end
 -- Triggered when a particle shot by p impacts the target. p may not exist if
 -- the pilot that shot the weapon ceased to exist.
 function onimpact( _p, _target, _pos, _vel, _o )

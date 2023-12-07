@@ -5,7 +5,7 @@ function params.default( overwrite )
       -- Global stuff
       constant    = 10, -- Constant value makes them prefer outfits rather than not
       rnd         = 0.2, -- amount of randomness to use for goodness function
-      max_weap    = nil, -- Maximum number of ewapon slots to use
+      max_weap    = nil, -- Maximum number of weapon slots to use
       max_util    = nil, -- Maximum number of utility slots to use
       max_stru    = nil, -- Maximum number of structural slots to use
       max_same_weap = nil, -- maximum same weapons (nil is no limit)
