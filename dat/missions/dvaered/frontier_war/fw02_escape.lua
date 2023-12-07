@@ -473,10 +473,14 @@ function targetBoarded()
    fzlk:modPlayerRaw( mem.stand0-stand1 )
 end
 function targetDied()
+   -- Don't care after boarding
+   if mem.stage >= 2 then return end
    tk.msg(_("Mission Failed: target destroyed"), _("You were supposed to disable that ship, not destroy it. How are you supposed to free anyone now?"))
    misn.finish(false)
 end
 function targetEscaped()
+   -- Don't care after boarding
+   if mem.stage >= 2 then return end
    tk.msg(_("Mission Failed: target escaped"), _("You were supposed to disable that ship, not let it escape. How are you supposed to free anyone now?"))
    misn.finish(false)
 end
