@@ -2296,9 +2296,9 @@ static int pilotL_actives( lua_State *L )
       lua_pushnumber(L,++k);
       lua_newtable(L);
 
-      /* Name. */
-      lua_pushstring(L,"name");
-      lua_pushstring(L,o->outfit->name);
+      /* Outfit. */
+      lua_pushstring(L,"outfit");
+      lua_pushoutfit(L,o->outfit);
       lua_rawset(L,-3);
 
       /* Type. */
