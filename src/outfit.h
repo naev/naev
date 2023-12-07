@@ -378,7 +378,7 @@ typedef struct Outfit_ {
    int lua_ontoggle; /**< Run when toggled. */
    int lua_onhit;    /**< Run when pilot takes damage. */
    int lua_outofenergy;/**< Run when the pilot runs out of energy. */
-   int lua_onshoot;  /**< Run when pilot shoots. */
+   int lua_onshootany; /**< Run when pilot shoots ANY weapon. */
    int lua_onstealth;/**< Run when pilot toggles stealth. */
    int lua_onscanned;/**< Run when the pilot is scanned by another pilot. */
    int lua_onscan;   /**< Run when the pilot scans another pilot. */

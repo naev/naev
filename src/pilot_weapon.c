@@ -136,7 +136,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
    /* Trigger onshoot after stealth gets broken. */
    if (ret > 0)
-      pilot_outfitLOnshoot( p );
+      pilot_outfitLOnshootany( p );
 
    return ret;
 }

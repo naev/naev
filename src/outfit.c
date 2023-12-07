@@ -2468,7 +2468,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    temp->lua_ontoggle   = LUA_NOREF;
    temp->lua_onhit      = LUA_NOREF;
    temp->lua_outofenergy= LUA_NOREF;
-   temp->lua_onshoot    = LUA_NOREF;
+   temp->lua_onshootany = LUA_NOREF;
    temp->lua_onstealth  = LUA_NOREF;
    temp->lua_onscanned  = LUA_NOREF;
    temp->lua_onscan     = LUA_NOREF;
@@ -2841,7 +2841,7 @@ int outfit_load (void)
       o->lua_ontoggle   = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
       o->lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
       o->lua_outofenergy= nlua_refenvtype( env, "outofenergy",LUA_TFUNCTION );
-      o->lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
+      o->lua_onshootany = nlua_refenvtype( env, "onshootany",LUA_TFUNCTION );
       o->lua_onstealth  = nlua_refenvtype( env, "onstealth",LUA_TFUNCTION );
       o->lua_onscanned  = nlua_refenvtype( env, "onscanned",LUA_TFUNCTION );
       o->lua_onscan     = nlua_refenvtype( env, "onscan",   LUA_TFUNCTION );

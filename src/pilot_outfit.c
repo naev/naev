@@ -1663,11 +1663,11 @@ void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer )
    pilot_outfitLRun( pilot, outfitLCooldown, &data );
 }
 
-static void outfitLOnshoot( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
+static void outfitLOnshootany( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    (void) data;
    int oldmem;
-   if (po->outfit->lua_onshoot == LUA_NOREF)
+   if (po->outfit->lua_onshootany == LUA_NOREF)
       return;
 
    nlua_env env = po->outfit->lua_env;
@@ -1675,24 +1675,24 @@ static void outfitLOnshoot( const Pilot *pilot, PilotOutfitSlot *po, const void 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
 
-   /* Set up the function: onshoot( p, po ) */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onshoot); /* f */
+   /* Set up the function: onshootany( p, po ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onshootany); /* f */
    lua_pushpilot(naevL, pilot->id); /* f, p */
    lua_pushpilotoutfit(naevL, po);  /* f, p, po */
    if (nlua_pcall( env, 2, 0 )) {   /* */
-      outfitLRunWarning( pilot, po->outfit, "onshoot", lua_tostring(naevL,-1) );
+      outfitLRunWarning( pilot, po->outfit, "onshootany", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
    pilot_outfitLunmem( env, oldmem );
 }
 /**
- * @brief Runs the pilot's Lua outfits onshoot script.
+ * @brief Runs the pilot's Lua outfits onshootany script.
  *
  *    @param pilot Pilot to run Lua outfits for.
  */
-void pilot_outfitLOnshoot( Pilot *pilot )
+void pilot_outfitLOnshootany( Pilot *pilot )
 {
-   pilot_outfitLRun( pilot, outfitLOnshoot, NULL );
+   pilot_outfitLRun( pilot, outfitLOnshootany, NULL );
 }
 
 static void outfitLOnstealth( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
