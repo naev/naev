@@ -1,3 +1,5 @@
+notactive = true
+
 -- Global constant variables for the outfit
 local range = 2000
 local bonus = 10
