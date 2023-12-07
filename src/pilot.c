@@ -3779,7 +3779,7 @@ void pilots_updatePurge (void)
    qt_clear( &pilot_quadtree ); /* Empty it. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
-      int x, y, w2, h2;
+      int x, y, w2, h2, px, py;
 
       /* Ignore pilots being deleted. */
       if (pilot_isFlag(p, PILOT_DELETE))
@@ -3789,11 +3789,13 @@ void pilots_updatePurge (void)
       if (pilot_isFlag(p, PILOT_HIDE))
          continue;
 
-      x = round(p->solid.pos.x);
-      y = round(p->solid.pos.y);
+      x  = round(p->solid.pos.x);
+      y  = round(p->solid.pos.y);
+      px = round(p->solid.pre.x);
+      py = round(p->solid.pre.y);
       w2 = ceil(p->ship->gfx_space->sw * 0.5);
       h2 = ceil(p->ship->gfx_space->sh * 0.5);
-      qt_insert( &pilot_quadtree, i, x-w2, y-h2, x+w2, y+h2 );
+      qt_insert( &pilot_quadtree, i, MIN(x,px)-w2, MIN(y,py)-h2, MAX(x,px)+w2, MAX(y,py)+h2 );
    }
 }
 

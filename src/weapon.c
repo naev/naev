@@ -45,6 +45,7 @@ typedef struct WeaponCollision_ {
    int beam;               /**< Is the weapon a beam weapon? */
    double range;           /**< Range of the weapon (or size in the case of GFX). */
    const CollPoly *polygon;/**< Collision polygon of the weapon if applicable. */
+   int explosion;          /**< Collision is an explosion. */
 } WeaponCollision;
 
 /**
@@ -593,8 +594,8 @@ void weapons_updatePurge (void)
       /* Determine quadtree location, and insert. */
       x  = round(w->solid.pos.x);
       y  = round(w->solid.pos.y);
-      px = x+round(w->solid.pre.x);
-      py = y+round(w->solid.pre.y);
+      px = round(w->solid.pre.x);
+      py = round(w->solid.pre.y);
       w2 = ceil(range * 0.5);
       h2 = ceil(range * 0.5);
       qt_insert( &weapon_quadtree, i, MIN(x,px)-w2, MIN(y,py)-h2, MAX(x,px)+w2, MAX(y,py)+h2 );
@@ -968,8 +969,44 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
    int csx, int csy, const Solid *csol, const CollPoly *cpol, double cradius, vec2 crash[2] )
 {
    const Weapon *w = wc->w;
+   vec2 wipos, cipos; /* Interpolated positions. */
+   const vec2 *wpos, *cpos;
+
+   /* Default to the real positions. */
+   wpos = &w->solid.pos;
+   cpos = &csol->pos;
+
+   /* Correct position if possible.
+    * This is basically looking at both line segments from pos+vel*t and then
+    * writing the distance. The resulting equation can be minimized to find the
+    * time of the closest intersection. */
+   if (!wc->explosion && !wc->beam) {
+      /* Don't consider the real velocity, just the linear interpolation of the
+       * previous positions. Thus time becomes a [0,1] value. */
+      double vx1 = w->solid.pre.x - w->solid.pos.x;
+      double vy1 = w->solid.pre.y - w->solid.pos.y;
+      double vx2 = csol->pre.x - csol->pos.x;
+      double vy2 = csol->pre.y - csol->pos.y;
+      double b = vx1 - vx2;
+      double d = vy1 - vy2;
+
+      /* Make sure we have to do a correction. */
+      if ((fabs(b)>1e-5) || (fabs(d)>1e-5)) {
+         double a = w->solid.pos.x - csol->pos.x;
+         double c = w->solid.pos.y - csol->pos.y;
+         double t = CLAMP( 0., 1., (a*b+c*d) / (b*b+d*d) );
+         /* Now we can update the position to the minimum. */
+         wipos.x = w->solid.pos.x + t*vx1;
+         wipos.y = w->solid.pos.y + t*vy1;
+         cipos.x = csol->pos.x + t*vx2;
+         cipos.y = csol->pos.y + t*vy2;
+         wpos = &wipos;
+         cpos = &cipos;
+      }
+   }
+
    if (wc->beam) {
-      /* TODO correct for fast motion. */
+      /* TODO correct for fast motion, right now just using direct positions. */
       if (cpol!=NULL) {
          int k = ctex->sx * csy + csx;
          return CollideLinePolygon( &w->solid.pos, w->solid.dir,
@@ -991,38 +1028,38 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       int k = ctex->sx * csy + csx;
       /* Case full polygon on polygon collision. */
       if (wc->polygon!=NULL)
-         return CollidePolygon( &cpol[k], &csol->pos, wc->polygon, &w->solid.pos, crash );
+         return CollidePolygon( &cpol[k], cpos, wc->polygon, wpos, crash );
       /* GFX on polygon. */
       else if ((wc->gfx!=NULL) && (wc->gfx->tex != NULL))
-         return CollideSpritePolygon( &cpol[k], &csol->pos, wc->gfx->tex, w->sx, w->sy, &w->solid.pos, crash );
+         return CollideSpritePolygon( &cpol[k], cpos, wc->gfx->tex, w->sx, w->sy, wpos, crash );
       /* Circle on polygon. */
       else
-         return CollideCirclePolygon( &w->solid.pos, wc->range, &cpol[k], &csol->pos, crash );
+         return CollideCirclePolygon( wpos, wc->range, &cpol[k], cpos, crash );
    }
    /* Try to do texture next. */
    else if (ctex != NULL) {
       /* GFX on polygon. */
       if (wc->polygon!=NULL)
-         return CollideSpritePolygon( wc->polygon, &w->solid.pos, ctex, csx, csy, &csol->pos, crash );
+         return CollideSpritePolygon( wc->polygon, wpos, ctex, csx, csy, cpos, crash );
       /* Case texture on texture collision. */
       else if ((wc->gfx!=NULL) && (wc->gfx->tex!=NULL))
-         return CollideSprite( wc->gfx->tex, w->sx, w->sy, &w->solid.pos,
-                  ctex, csx, csy, &csol->pos, crash );
+         return CollideSprite( wc->gfx->tex, w->sx, w->sy, wpos,
+                  ctex, csx, csy, cpos, crash );
       /* Case no polygon and circle collision. */
       else
-         return CollideCircleSprite( &w->solid.pos, wc->range, ctex, csx, csy, &csol->pos, crash );
+         return CollideCircleSprite( wpos, wc->range, ctex, csx, csy, cpos, crash );
    }
    /* Finally radius only. */
    else {
       /* GFX on polygon. */
       if (wc->polygon!=NULL)
-         return CollideSpritePolygon( wc->polygon, &w->solid.pos, ctex, csx, csy, &csol->pos, crash );
+         return CollideSpritePolygon( wc->polygon, wpos, ctex, csx, csy, cpos, crash );
       /* Case texture on texture collision. */
       else if ((wc->gfx!=NULL) && (wc->gfx->tex!=NULL))
-         return CollideCircleSprite( &csol->pos, cradius, wc->gfx->tex, w->sx, w->sy, &w->solid.pos, crash );
+         return CollideCircleSprite( cpos, cradius, wc->gfx->tex, w->sx, w->sy, wpos, crash );
       /* Trivial circle on circle case. */
       else
-         return CollideCircleCircle( &w->solid.pos, wc->range, &csol->pos, cradius, crash );
+         return CollideCircleCircle( wpos, wc->range, cpos, cradius, crash );
    }
 }
 
@@ -1040,8 +1077,9 @@ static void weapon_updateCollide( Weapon* w, double dt )
    int x1, y1, x2, y2;
 
    /* Get the sprite direction to speed up calculations. */
-   wc.w = w;
-   wc.beam = outfit_isBeam(w->outfit);
+   wc.explosion   = 0;
+   wc.w           = w;
+   wc.beam        = outfit_isBeam(w->outfit);
    if (!wc.beam) {
       int x, y, w2, h2, px, py;
       wc.gfx = outfit_gfx(w->outfit);
@@ -1225,7 +1263,10 @@ static void weapon_updateCollide( Weapon* w, double dt )
          WeaponHit hit;
 
          /* We can only hit ammo weapons, so no beams. */
-         wchit.gfx = outfit_gfx(w->outfit);
+         wchit.w        = whit;
+         wchit.explosion= 0;
+         wchit.beam     = 0;
+         wchit.gfx      = outfit_gfx(w->outfit);
          if (wchit.gfx->tex != NULL) {
             gl_getSpriteFromDir( &whit->sx, &whit->sy, wchit.gfx->tex, w->solid.dir );
             wchit.polygon = outfit_plg(w->outfit);
@@ -1370,6 +1411,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
    wc.beam  = 0;
    wc.range = radius;
    wc.polygon = NULL;
+   wc.explosion = 1;
 
    /* Set up coordinates. */
    x = round(w->solid.pos.x);

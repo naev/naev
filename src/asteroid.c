@@ -146,6 +146,7 @@ void asteroids_update( double dt )
 
          /* Update position. */
          /* TODO use physics.c */
+         a->sol.pre = a->sol.pos;
          a->sol.pos.x += a->sol.vel.x * dt;
          a->sol.pos.y += a->sol.vel.y * dt;
 
@@ -198,12 +199,14 @@ void asteroids_update( double dt )
 
          /* Add to quadtree if in foreground. */
          if (a->state == ASTEROID_FG) {
-            int x, y, w2, h2;
-            x = round(a->sol.pos.x);
-            y = round(a->sol.pos.y);
+            int x, y, w2, h2, px, py;
+            x  = round(a->sol.pos.x);
+            y  = round(a->sol.pos.y);
+            px = round(a->sol.pre.x);
+            py = round(a->sol.pre.y);
             w2 = ceil(a->gfx->sw*0.5);
             h2 = ceil(a->gfx->sh*0.5);
-            qt_insert( &ast->qt, j, x-w2, y-h2, x+w2, y+h2 );
+            qt_insert( &ast->qt, j, MIN(x,px)-w2, MIN(y,py)-h2, MAX(x,px)+w2, MAX(y,py)+h2 );
          }
       }
    }

@@ -1,4 +1,5 @@
 * 0.11.0-beta.2 (unreleased)
+   * Collision system reworked (again) to take into acount fast moving particles
    * Added short names to some outfits such that they are easier to distinguish in the GUI
    * Fixed collision polygons not properly being used
    * Allied factions won't help out the player against neutral targets
