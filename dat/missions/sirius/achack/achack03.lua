@@ -112,6 +112,9 @@ end
 
 -- Date hook.
 function date()
+   if mem.harjatalked then
+      return
+   end
    if (harja == nil or not harja:exists()) and system.cur():presences()["Sirius"] then
       -- Determine spawn point. The reason why we don't use the normal random is that we don't want Harja spawning from the same place as the player.
       local spawnpoints = tmergei(system.cur():adjacentSystems(), system.cur():spobs())
