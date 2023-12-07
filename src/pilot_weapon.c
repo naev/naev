@@ -976,9 +976,11 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
    }
 
    /* Lua test to stop beam. */
+   /*
    if ((w->outfit->lua_onshoot!= LUA_NOREF) &&
          !pilot_outfitLOnshoot( p, w, 0 ))
       return;
+   */
 
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
@@ -1221,7 +1223,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
 
       /* Lua test. */
       if ((aim >= 0) && (w->outfit->lua_onshoot != LUA_NOREF) &&
-            !pilot_outfitLOnshoot( p, w, 1 ))
+            !pilot_outfitLOnshoot( p, w ))
          return 0;
 
       energy      = outfit_energy(w->outfit)*energy_mod;
@@ -1249,7 +1251,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
 
       /* Lua test. */
       if ((aim>=0) && (w->outfit->lua_onshoot != LUA_NOREF) &&
-            !pilot_outfitLOnshoot( p, w, 1 ))
+            !pilot_outfitLOnshoot( p, w ))
          return 0;
 
       /** @todo Handle warmup stage. */
@@ -1287,7 +1289,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
 
       /* Lua test. */
       if ((aim>=0) && (w->outfit->lua_onshoot != LUA_NOREF) &&
-            !pilot_outfitLOnshoot( p, w, 1 ))
+            !pilot_outfitLOnshoot( p, w ))
          return 0;
 
       energy      = outfit_energy(w->outfit)*energy_mod;
@@ -1324,7 +1326,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
 
       /* Lua test. */
       if ((aim>=0) && (w->outfit->lua_onshoot != LUA_NOREF) &&
-            !pilot_outfitLOnshoot( p, w, 1 ))
+            !pilot_outfitLOnshoot( p, w ))
          return 0;
 
       /* Get index of outfit slot */
@@ -1579,9 +1581,11 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       pilot_afterburnOver( p );
    }
    else if (outfit_isBeam( o->outfit )) {
+      /*
       if ((o->outfit->lua_onshoot != LUA_NOREF) &&
             !pilot_outfitLOnshoot( p, o, 0 ))
          return 0;
+      */
       /* Beams use stimer to represent minimum time until shutdown. */
       if (o->u.beamid>0) {
          beam_end( o->u.beamid );

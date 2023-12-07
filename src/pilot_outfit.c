@@ -1615,10 +1615,9 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
  *
  *    @param pilot Pilot to shoot outfit of.
  *    @param po Outfit to be toggling.
- *    @param on Whether to shoot on or off.
  *    @return 1 if was able to shoot it, 0 otherwise.
  */
-int pilot_outfitLOnshoot( Pilot *pilot, PilotOutfitSlot *po, int on )
+int pilot_outfitLOnshoot( Pilot *pilot, PilotOutfitSlot *po )
 {
    nlua_env env = po->outfit->lua_env;
    int ret, oldmem;
@@ -1631,8 +1630,7 @@ int pilot_outfitLOnshoot( Pilot *pilot, PilotOutfitSlot *po, int on )
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onshoot); /* f */
    lua_pushpilot(naevL, pilot->id); /* f, p */
    lua_pushpilotoutfit(naevL, po);  /* f, p, po */
-   lua_pushboolean(naevL, on);      /* f, p, po, on */
-   if (nlua_pcall( env, 3, 1 )) {   /* */
+   if (nlua_pcall( env, 2, 1 )) {   /* */
       outfitLRunWarning( pilot, po->outfit, "onshoot", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
       pilot_outfitLunmem( env, oldmem );
