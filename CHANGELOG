@@ -1,7 +1,7 @@
 * 0.11.0-beta.2 (unreleased)
    * Collision system reworked (again) to take into account fast moving particles
-   * Added short names to some outfits such that they are easier to distinguish in the GUI
    * Fixed collision polygons not properly being used
+   * Added short names to some outfits such that they are easier to distinguish in the GUI
    * Allied factions won't help out the player against neutral targets
    * Added missing graphics for meditation chambers
    * Don't allow giving the player names that can't be saved
@@ -10,10 +10,11 @@
    * Hardened physics engine a bit to overflow that happens in 49 days of straight game time
    * Fixed trivial memory leak in vpool
    * Allow buying local maps where they are not sold
-   * Buffed Hunting Combat AI
+   * Buffed Hunting Combat AI to 15% bonus
    * Made Weakness Harmonizer AI not appear as an active outfit
    * Outfit Lua function onshoot has been renamed onshootany
    * Can toggle point defense weapons on and off
+   * Player's new ships should start will all the default outfits, which fixes the some Sirius psychic tests
    * `chapter1`: event claims all the systems just in case
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
    * `poi_intro`: fixed typo

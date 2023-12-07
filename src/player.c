@@ -489,7 +489,9 @@ static PlayerShip_t *player_newShipMake( const char *name )
    /* store the current ship if it exists */
    pilot_clearFlagsRaw( flags );
    pilot_setFlagRaw( flags, PILOT_PLAYER );
-   pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
+   /* Not sure why we were removing outfits, but this breaks things like giving
+    * player ships in the Test of Enlightenment. */
+   //pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
 
    /* in case we're respawning */
    player_rmFlag( PLAYER_CREATING );
