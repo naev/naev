@@ -18,7 +18,8 @@
    * `chapter1`: event claims all the systems just in case
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
    * `poi_intro`: fixed typo
-   * `achack03`: fixed mission not being acceptable
+   * `achack03`: fixed mission not being acceptable and harja spawning forever
+   * `achack04`: fixed missing formatting string
 
 * 0.11.0-beta.1
    * Gameplay Changes

@@ -56,7 +56,8 @@ function create()
    joanne(fmt.f(_([[The message is from Joanne, the woman you've had dealings with in the past. Her recorded image looks at you from the screen. "Dear {player}," she begins. "You have helped me on several occasions in regard with my personal problem. I've given it some thought since then, and I've come to the conclusion that I want to get to the bottom of this. To do so, I will need your help yet again. I'm currently on assignment on {pnt} in the {sys} system. Please meet me there at the earliest opportunity."]]),
       {player=player.name(), pnt=startplanet, sys=startsys}))
    vn.disappear( joanne, "electric" )
-   vn.na(_([[The message ends. You save it for later reference. Maybe you should swing by {pnt} to see what Joanne wants.]]))
+   vn.na(fmt.f(_([[The message ends. You save it for later reference. Maybe you should swing by {pnt} to see what Joanne wants.]]),
+      {pnt=startplanet}))
    vn.run()
 
    mem.stage = stages.start
