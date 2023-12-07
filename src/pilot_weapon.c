@@ -336,7 +336,7 @@ static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
  */
 int pilot_weapSetTypeCheck( Pilot* p, int id )
 {
-   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   const PilotWeaponSet *ws = pilot_weapSet(p,id);
    return ws->type;
 }
 
@@ -362,7 +362,7 @@ void pilot_weapSetType( Pilot* p, int id, WeaponSetType type )
  */
 int pilot_weapSetInrangeCheck( Pilot* p, int id )
 {
-   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   const PilotWeaponSet *ws = pilot_weapSet(p,id);
    return ws->inrange;
 }
 
@@ -388,7 +388,7 @@ void pilot_weapSetInrange( Pilot* p, int id, int inrange )
  */
 int pilot_weapSetManualCheck( Pilot *p, int id )
 {
-   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   const PilotWeaponSet *ws = pilot_weapSet(p,id);
    return ws->manual;
 }
 
@@ -414,7 +414,7 @@ void pilot_weapSetManual( Pilot* p, int id, int manual )
  */
 int pilot_weapSetVolleyCheck( Pilot *p, int id )
 {
-   PilotWeaponSet *ws = pilot_weapSet(p,id);
+   const PilotWeaponSet *ws = pilot_weapSet(p,id);
    return ws->volley;
 }
 
@@ -1654,8 +1654,6 @@ int pilot_outfitOffAll( Pilot *p )
  */
 void pilot_afterburn( Pilot *p )
 {
-   double afb_mod;
-
    if (p == NULL)
       return;
 
@@ -1692,7 +1690,7 @@ void pilot_afterburn( Pilot *p )
    }
 
    if (pilot_isPlayer(p)) {
-      afb_mod = MIN( 1., pilot_massFactor(player.p) );
+      double afb_mod = MIN( 1., pilot_massFactor(player.p) );
       spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble );
    }
 }
