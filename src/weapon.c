@@ -1006,21 +1006,42 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
    }
 
    if (wc->beam) {
-      /* TODO correct for fast motion, right now just using direct positions. */
+      /* Set up variables so we can use the equations from CollideLineLine as is. */
+      double s1x = csol->pos.x;
+      double s1y = csol->pos.y;
+      double e1x = csol->pre.x;
+      double e1y = csol->pre.y;
+      double s2x = w->solid.pos.x;
+      double s2y = w->solid.pos.y;
+      double e2x = w->solid.pos.x + cos(w->solid.dir) * wc->range;
+      double e2y = w->solid.pos.y + sin(w->solid.dir) * wc->range;
+      double ua_t, u_b, ua;
+
+      /* Find intersection position. */
+      ua_t = (e2x - s2x) * (s1y - s2y) - (e2y - s2y) * (s1x - s2x);
+      u_b  = (e2y - s2y) * (e1x - s1x) - (e2x - s2x) * (e1y - s1y);
+
+      /* Interested in closest point only on the csol line. */
+      ua = CLAMP( 0., 1., ua_t / u_b );
+
+      /* Nearest point on the line segment. */
+      cipos.x = s1x + ua * (e1x-s1x);
+      cipos.y = s1y + ua * (e1x-s1y);
+      cpos = &cipos;
+
+      /* Now we can look at the collision at the corrected point. */
       if (cpol!=NULL) {
          int k = ctex->sx * csy + csx;
          return CollideLinePolygon( &w->solid.pos, w->solid.dir,
-               wc->range, &cpol[k], &csol->pos, crash);
+               wc->range, &cpol[k], cpos, crash);
       }
       else if (ctex!=NULL) {
          return CollideLineSprite( &w->solid.pos, w->solid.dir,
-               wc->range, ctex, csx, csy, &csol->pos, crash);
+               wc->range, ctex, csx, csy, cpos, crash);
       }
       else {
-         vec2 endpoint;
-         endpoint.x = w->solid.pos.x + cos(w->solid.dir) * wc->range;
-         endpoint.y = w->solid.pos.y + sin(w->solid.dir) * wc->range;
-         return CollideLineCircle( &w->solid.pos, &endpoint, &csol->pos, cradius, crash );
+         const vec2 endpoint = { .x=e2x, .y=e2y };
+         return CollideLineCircle( &w->solid.pos, &endpoint, cpos, cradius, crash );
       }
    }
    /* Try to do polygon first. */
