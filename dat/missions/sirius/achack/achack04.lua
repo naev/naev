@@ -66,6 +66,10 @@ function create()
    misn.accept()
    misn.setReward(reward)
    misn.setDesc(fmt.f(_("Joanne has contacted you. She wants to meet you on {pnt} ({sys} system)."), {pnt=startplanet, sys=startsys}))
+   misn.osdCreate(_("Sirian Truce"), {
+      fmt.f(_("Meet Joanne at {pnt} ({sys} system)"),
+         {pnt=startplanet, sys=startsys})
+   } )
    hook.land("land")
    hook.load("land")
    mem.mark = misn.markerAdd( startplanet, "low" )
