@@ -4,5 +4,5 @@ set -euo pipefail  # Let's not do a https://github.com/valvesoftware/steam-for-l
 TEMPDIR="$(mktemp -d)"
 echo 'void x(){}' > "${TEMPDIR}/conftest.c"
 "$@" -c -o "${TEMPDIR}/conftest.o" "${TEMPDIR}/conftest.c"
-awk -f "${0/filetype.sh/filetype.awk}" "${TEMPDIR}/conftest.o"
+LC_ALL=C awk -f "${0/filetype.sh/filetype.awk}" "${TEMPDIR}/conftest.o"
 rm -rf "${TEMPDIR}"
