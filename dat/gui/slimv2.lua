@@ -29,7 +29,7 @@ local function update_wset()
       if k > max_slots then
          break
       end
-      weap_icons[k] = outfit.get( v.name ):icon()
+      weap_icons[k] = v.outfit:icon()
    end
 
    aset = pp:actives()
@@ -39,7 +39,7 @@ local function update_wset()
       if k > max_slots then
          break
       end
-      active_icons[k] = outfit.get( v.name ):icon()
+      active_icons[k] = v.outfit:icon()
     end
 end
 
