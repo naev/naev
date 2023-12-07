@@ -14,9 +14,7 @@ function init( _p, _po )
 end
 
 function ontoggle( _p, _po, on )
-   if on then
-      mem.on = not mem.on
-   end
+   mem.on = not on
    return false
 end
 
