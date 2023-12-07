@@ -10,6 +10,8 @@
    * Hardened physics engine a bit to overflow that happens in 49 days of straight game time
    * Fixed trivial memory leak in vpool
    * Allow buying local maps where they are not sold
+   * Buffed Hunting Combat AI
+   * Made Weakness Harmonizer AI not appear as an active outfit
    * `chapter1`: event claims all the systems just in case
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
    * `poi_intro`: fixed typo
