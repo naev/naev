@@ -28,7 +28,7 @@ end
 
 achack.harja = {
    name = _("Harja"),
-   portrait = "harja.webp",
+   portrait = "sirius/unique/harja.webp",
    image = portrait.getFullPath("sirius/unique/harja.webp"),
 }
 achack.joanne = {
