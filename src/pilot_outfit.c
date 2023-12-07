@@ -1276,6 +1276,11 @@ static const char* pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
       descextra[0] = '\0';
       return descextra;
    }
+   /* Case no return we just pass nothing. */
+   if (lua_isnoneornil( naevL, -1 )) {
+      lua_pop( naevL, 1 );
+      return NULL;
+   }
    de = luaL_checkstring( naevL, -1 );
    strncpy( descextra, de, sizeof(descextra)-1 );
    lua_pop( naevL, 1 );
