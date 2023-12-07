@@ -45,8 +45,7 @@ static const char *outfitkeytostr( OutfitKey key );
  */
 void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt )
 {
-   double max, old;
-   double x,y, ang, arc;
+   double arc, max;
    int locked;
 
    /* No target. */
@@ -63,6 +62,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
 
       /* We use an external variable to set and update the angle if necessary. */
       if (*a < 0.) {
+         double x, y, ang;
          x     = t->solid.pos.x - p->solid.pos.x;
          y     = t->solid.pos.y - p->solid.pos.y;
          ang   = ANGLE( x, y );
@@ -71,13 +71,12 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
 
       /* Decay if not in arc. */
       if (*a > arc) {
-         /* Limit decay to the lockon time for this launcher. */
-         max = o->outfit->u.lau.lockon;
-
          /* When a lock is lost, immediately gain half the lock timer.
           * This is meant as an incentive for the aggressor not to lose the lock,
           * and for the target to try and break the lock. */
-         old = o->u.ammo.lockon_timer;
+         double old = o->u.ammo.lockon_timer;
+         /* Limit decay to the lockon time for this launcher. */
+         max = o->outfit->u.lau.lockon;
          o->u.ammo.lockon_timer += dt;
          if ((old <= 0.) && (o->u.ammo.lockon_timer > 0.))
             o->u.ammo.lockon_timer += o->outfit->u.lau.lockon / 2.;
@@ -327,7 +326,7 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
  *    @param warn Whether or not should generate a warning.
  *    @return 0 if can add, -1 if can't.
  */
-int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s, int warn )
+int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, const PilotOutfitSlot *s, int warn )
 {
    const char *str;
 
@@ -450,7 +449,7 @@ int pilot_hasIntrinsic( const Pilot *pilot, const Outfit *outfit )
 {
    int ret = 0;
    for (int i=0; i<array_size(pilot->outfit_intrinsic); i++) {
-      PilotOutfitSlot *s = &pilot->outfit_intrinsic[i];
+      const PilotOutfitSlot *s = &pilot->outfit_intrinsic[i];
       if (s->outfit != outfit)
          continue;
       ret++;
@@ -640,7 +639,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
       if (ship_isFlag(p->ship, SHIP_NOPLAYER))
          pos += scnprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Escort only") );
       if (ship_isFlag(p->ship, SHIP_NOESCORT))
-         pos += scnprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Lead ship only") );
+        /* pos +=*/ scnprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Lead ship only") );
    }
 
    return ret;
@@ -1109,7 +1108,7 @@ void pilot_healLanded( Pilot *pilot )
    pilot_fillAmmo( pilot );
 
    for (int i=0; i<array_size(pilot->escorts); i++) {
-      Escort_t *e = &pilot->escorts[i];
+      const Escort_t *e = &pilot->escorts[i];
       Pilot *pe = pilot_get( e->id );
 
       if (pe != NULL)

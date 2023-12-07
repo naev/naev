@@ -19,7 +19,7 @@ const char* pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname )
 
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
-int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s, int warn );
+int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, const PilotOutfitSlot *s, int warn );
 int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s );
 
 /* Changes with checks. */
