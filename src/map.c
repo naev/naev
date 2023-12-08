@@ -213,7 +213,7 @@ static void map_setup (void)
 
       int known = 1;
       for (int j=0; j<array_size(sys->jumps); j++) {
-         JumpPoint *jp = &sys->jumps[j];
+         const JumpPoint *jp = &sys->jumps[j];
          if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
             continue;
          if (!jp_isFlag(jp, JP_KNOWN)) {
@@ -224,7 +224,7 @@ static void map_setup (void)
       if (known) {
          /* Check spobs. */
          for (int j=0; j<array_size(sys->spobs); j++) {
-            Spob *p = sys->spobs[j];
+            const Spob *p = sys->spobs[j];
             if (!spob_isKnown(p)) {
                known = 0;
                break;
@@ -502,13 +502,13 @@ static void map_update_autonav( unsigned int wid )
    sys = map_getDestination( &autonav );
    p += scnprintf(&buf[p], sizeof(buf)-p, "\n#n%s#0", _("Autonav: ") );
    if (sys==NULL)
-      p += scnprintf(&buf[p], sizeof(buf)-p, _("Off") );
+      /*p +=*/ scnprintf(&buf[p], sizeof(buf)-p, _("Off") );
    else {
       if (autonav > jumps)
          p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
       p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", autonav), autonav );
       if (autonav > jumps)
-         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
+         /*p +=*/ scnprintf(&buf[p], sizeof(buf)-p, "#0" );
    }
    th = gl_printHeightRaw( &gl_smallFont, rw, buf );
    window_resizeWidget( wid, "txtPlayerStatus", rw, th );
@@ -992,7 +992,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
 {
    CstMapWidget *cst = data;
    double x,y,z,r;
-   StarSystem *sys;
    double dt = naev_getrealdt();
 
    /* Update timer. */
@@ -1045,7 +1044,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    /* Selected system. */
    if (map_selected != -1) {
-      sys = system_getIndex( map_selected );
+      const StarSystem *sys = system_getIndex( map_selected );
       glUseProgram( shaders.selectspob.program );
       glUniform1f( shaders.selectspob.dt, map_dt ); /* good enough. */
       gl_renderShader( x + sys->pos.x * z, y + sys->pos.y * z,
@@ -1092,7 +1091,7 @@ void map_renderDecorators( double x, double y, double zoom, int editor, double a
       visible = 0;
       if (!editor) {
          for (int j=0; j<array_size(systems_stack) && visible==0; j++) {
-            StarSystem *sys = system_getIndex( j );
+            const StarSystem *sys = system_getIndex( j );
 
             if (sys_isFlag(sys, SYSTEM_HIDDEN))
                continue;
@@ -1117,7 +1116,7 @@ void map_renderDecorators( double x, double y, double zoom, int editor, double a
          int sh = decorator->image->sh*zoom;
 
          gl_renderScale( decorator->image,
-               tx - sw/2, ty - sh/2, sw, sh, &ccol );
+               tx - sw*0.5, ty - sh*0.5, sw, sh, &ccol );
       }
    }
 }
@@ -1323,7 +1322,6 @@ void map_renderSystems( double bx, double by, double x, double y,
       double zoom, double w, double h, double r, MapMode mode )
 {
    for (int i=0; i<array_size(systems_stack); i++) {
-      const glColour *col;
       double tx, ty;
       StarSystem *sys = system_getIndex( i );
 
@@ -1351,6 +1349,7 @@ void map_renderSystems( double bx, double by, double x, double y,
          continue;
 
       if (mode == MAPMODE_EDITOR || mode == MAPMODE_TRAVEL || mode == MAPMODE_TRADE) {
+         const glColour *col;
          if (!system_hasSpob(sys))
             continue;
          if (!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE) && mode != MAPMODE_EDITOR)
@@ -1662,14 +1661,14 @@ void map_renderCommod( double bx, double by, double x, double y,
 {
    Commodity *c;
    glColour ccol;
-   double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
 
    /* If not plotting commodities, return */
-   if (cur_commod == -1 || map_selected == -1 || commod_known == NULL)
+   if ((cur_commod == -1) || (map_selected == -1) || (commod_known == NULL))
       return;
 
    c = commod_known[cur_commod];
    if (cur_commod_mode == 1) { /*showing price difference to selected system*/
+      double curMaxPrice, curMinPrice;
       StarSystem *sys = system_getIndex( map_selected );
       /* Get commodity price in selected system.  If selected system is current
          system, and if landed, then get price of commodity where we are */
@@ -1694,11 +1693,12 @@ void map_renderCommod( double bx, double by, double x, double y,
       else {
          /* not currently landed, so get max and min price in the selected system. */
          if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
-            minPrice = HUGE_VAL;
-            maxPrice = 0;
+            double minPrice = HUGE_VAL;
+            double maxPrice = 0;
             for (int j=0; j<array_size(sys->spobs); j++) {
                Spob *p = sys->spobs[j];
                for (int k=0; k<array_size(p->commodities); k++) {
+                  double thisPrice;
                   if (p->commodities[k] != c)
                      continue;
                   if (p->commodityPrice[k].cnt <= 0) /* commodity is not known about */
@@ -1745,11 +1745,12 @@ void map_renderCommod( double bx, double by, double x, double y,
 
          /* If system is known fill it. */
          if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
-            minPrice = HUGE_VAL;
-            maxPrice = 0;
+            double minPrice = HUGE_VAL;
+            double maxPrice = 0;
             for (int j=0; j<array_size(sys->spobs); j++) {
                Spob *p = sys->spobs[j];
                for (int k=0; k<array_size(p->commodities); k++) {
+                  double thisPrice;
                   if (p->commodities[k] != c)
                      continue;
                   if (p->commodityPrice[k].cnt <= 0) /*commodity is not known about */
@@ -1764,8 +1765,8 @@ void map_renderCommod( double bx, double by, double x, double y,
             /* Calculate best and worst profits */
             if (maxPrice > 0) {
                /* Commodity sold at this system */
-               best = maxPrice - curMinPrice;
-               worst= minPrice - curMaxPrice;
+               double best = maxPrice - curMinPrice;
+               double worst= minPrice - curMaxPrice;
                if (best >= 0) { /* draw circle above */
                   ccol = cLightBlue;
                   ccol.a = a;
@@ -1824,6 +1825,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             for (int j=0; j<array_size(sys->spobs); j++) {
                Spob *p = sys->spobs[j];
                for (int k=0; k<array_size(p->commodities); k++) {
+                  double thisPrice;
                   if (p->commodities[k] != c)
                      continue;
                   if (p->commodityPrice[k].cnt <= 0) /* commodity is not known about */
@@ -1880,10 +1882,10 @@ static void map_renderCommodIgnorance( double x, double y, double zoom,
    if (line2 != NULL) {
       *line2++ = '\0';
       textw = gl_printWidthRaw( &gl_smallFont, line2 );
-      gl_printRaw( &gl_smallFont, x + (sys->pos.x)*zoom - textw/2, y + (sys->pos.y-15)*zoom, &col, -1, line2 );
+      gl_printRaw( &gl_smallFont, x + (sys->pos.x)*zoom - textw*0.5, y + (sys->pos.y-15.)*zoom, &col, -1, line2 );
    }
    textw = gl_printWidthRaw( &gl_smallFont, buf );
-   gl_printRaw( &gl_smallFont,x + sys->pos.x *zoom- textw/2, y + (sys->pos.y+10)*zoom, &col, -1, buf );
+   gl_printRaw( &gl_smallFont,x + sys->pos.x *zoom- textw*0.5, y + (sys->pos.y+10.)*zoom, &col, -1, buf );
 }
 
 static int factionPresenceCompare( const void *a, const void *b )
@@ -2255,21 +2257,21 @@ static void map_buttonCommodity( unsigned int wid, const char* str )
    (void) str;
    SDL_Keymod mods;
    char **this_map_modes;
-   static int cur_commod_last = 0;
-   static int cur_commod_mode_last = 0;
-   static int map_mode_last = MAPMODE_TRAVEL;
-   int defpos;
    /* Clicking the mode button - by default will show (or remove) the list of map modes.
       If ctrl is pressed, will toggle between current mode and default */
    mods = SDL_GetModState();
    if (mods & (KMOD_LCTRL | KMOD_RCTRL)) {/* toggle on/off */
+      static int cur_commod_last = 0;
+      static int cur_commod_mode_last = 0;
+      static int map_mode_last = MAPMODE_TRAVEL;
       if (map_mode == MAPMODE_TRAVEL) {
          map_mode = map_mode_last;
          cur_commod = cur_commod_last;
          if (cur_commod == -1)
             cur_commod = 0;
          cur_commod_mode = cur_commod_mode_last;
-      } else {
+      }
+      else {
          map_mode_last = map_mode;
          map_mode = MAPMODE_TRAVEL;
          cur_commod_last = cur_commod;
@@ -2284,11 +2286,14 @@ static void map_buttonCommodity( unsigned int wid, const char* str )
          window_destroyWidget( wid, "lstMapMode" );
       }
       map_update(wid);
-   } else {/* no keyboard modifier */
+   }
+   else { /* no keyboard modifier */
       if (listMapModeVisible) {/* Hide the list widget */
          listMapModeVisible = 0;
          window_destroyWidget( wid, "lstMapMode" );
-      } else {/* show the list widget */
+      }
+      else { /* show the list widget */
+         int defpos;
          this_map_modes = calloc( sizeof(char*), array_size(map_modes) );
          for (int i=0; i<array_size(map_modes);i++) {
             this_map_modes[i]=strdup(map_modes[i]);
@@ -2350,7 +2355,7 @@ void map_clear (void)
 
 static void map_updateInternal( CstMapWidget *cst, double dt )
 {
-   double dx, dy, mod, angle;
+   double dx, dy, mod;
    double mapmin = 1.-map_minimal_mode;
 
 #define AMAX(x) (x) = MIN( 1., (x) + dt )
@@ -2398,7 +2403,7 @@ else (x) = MAX( y, (x) - dt )
    dy = (cst->ytarget - cst->ypos);
    mod = MOD(dx,dy);
    if (mod > 1e-5) {
-      angle = ANGLE(dx,dy);
+      double angle = ANGLE(dx,dy);
       /* TODO we should really do this with some nicer easing. */
       mod = MIN( mod, dt*map_flyto_speed);
       cst->xpos += mod * cos(angle);
@@ -2464,7 +2469,7 @@ void map_jump (void)
 
    /* update path if set */
    if (array_size(map_path) != 0) {
-      array_erase( &map_path, &map_path[0], &map_path[1] );
+      array_erase( &map_path, &map_path[0], &map_path[1] ); // NOLINT
       if (array_size(map_path) == 0)
          player_targetHyperspaceSet( -1, 1 );
       else { /* get rid of bottom of the path */
@@ -2661,8 +2666,8 @@ static int A_g( const SysNode* n );
 static double A_d( const SysNode* n );
 static int A_less( const SysNode *op1, const SysNode *op2 );
 static SysNode* A_add( SysNode *first, SysNode *cur );
-static SysNode* A_rm( SysNode *first, StarSystem *cur );
-static SysNode* A_in( SysNode *first, StarSystem *cur );
+static SysNode* A_rm( SysNode *first, const StarSystem *cur );
+static SysNode* A_in( SysNode *first, const StarSystem *cur );
 static SysNode* A_lowest( SysNode *first );
 static void A_freeList( SysNode *first );
 static int map_decorator_parse( MapDecorator *temp, const char *file );
@@ -2710,7 +2715,7 @@ static SysNode* A_add( SysNode *first, SysNode *cur )
    return first;
 }
 /* @brief Removes a node from a linked list. */
-static SysNode* A_rm( SysNode *first, StarSystem *cur )
+static SysNode* A_rm( SysNode *first, const StarSystem *cur )
 {
    SysNode *n, *p;
 
@@ -2734,7 +2739,7 @@ static SysNode* A_rm( SysNode *first, StarSystem *cur )
    return first;
 }
 /** @brief Checks to see if node is in linked list. */
-static SysNode* A_in( SysNode *first, StarSystem *cur )
+static SysNode* A_in( SysNode *first, const StarSystem *cur )
 {
    SysNode *n;
 
@@ -2937,7 +2942,7 @@ StarSystem** map_getJumpPath( const char* sysstart, const vec2 *posstart, const 
       assert( njumps > ojumps );
       if (res == NULL)
          res = array_create_size( StarSystem*, njumps );
-      array_resize( &res, njumps );
+      array_resize( &res, njumps ); // NOLINT
       /* Build path. */
       for (int i=0; i<njumps-ojumps; i++) {
          res[njumps-i-1] = cur->sys;
@@ -3070,7 +3075,7 @@ int localmap_isUseless( const Outfit *lmap )
 
    detect = lmap->u.lmap.jump_detect;
    for (int i=0; i<array_size(cur_system->jumps); i++) {
-      JumpPoint *jp = &cur_system->jumps[i];
+      const JumpPoint *jp = &cur_system->jumps[i];
       if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
          continue;
       if ((mod*jp->hide <= detect) && !jp_isKnown( jp ))
@@ -3079,7 +3084,7 @@ int localmap_isUseless( const Outfit *lmap )
 
    detect = lmap->u.lmap.spob_detect;
    for (int i=0; i<array_size(cur_system->spobs); i++) {
-      Spob *p = cur_system->spobs[i];
+      const Spob *p = cur_system->spobs[i];
       if ((mod*p->hide <= detect) && !spob_isKnown( p ))
          return 0;
    }
@@ -3160,7 +3165,9 @@ int map_center( int wid, const char *sys )
  */
 int map_load (void)
 {
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
    char **decorator_files = ndata_listRecursive( MAP_DECORATOR_DATA_PATH );
 
    decorator_stack = array_create( MapDecorator );
@@ -3173,12 +3180,14 @@ int map_load (void)
    }
    array_free( decorator_files );
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d map decorator in %.3f s", "Loaded %d map decorators in %.3f s", array_size(decorator_stack) ), array_size(decorator_stack), time/1000. );
    }
    else
       DEBUG( n_( "Loaded %d map decorator", "Loaded %d map decorators", array_size(decorator_stack) ), array_size(decorator_stack) );
+#endif /* DEBUGGING */
 
    return 0;
 }

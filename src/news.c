@@ -217,7 +217,7 @@ int *generate_news( int faction )
 
    /* First pass to remove old articles. */
    for (int i=array_size(news_list)-1; i>=0; i--) {
-      news_t *n = &news_list[i];
+      const news_t *n = &news_list[i];
 
       /* if the article is due for removal */
       if (n->date_to_rm <= curtime)
@@ -242,7 +242,7 @@ int *generate_news( int faction )
 
       /* if article is okay */
       if (match_tag || ((fname != NULL) && (strcasecmp(n->faction, fname) == 0))) {
-         if (n->date && (n->date != 0)) {
+         if (n->date != 0) {
             char *article_time = ntime_pretty( n->date, 1 );
             p += scnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
@@ -280,7 +280,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    glPrintLineIterator iter;
 
    /* Safe defaults. */
-   news_pos    = h/3;
+   news_pos    = h/3.;
    news_tick   = SDL_GetTicks();
 
    clear_newslines();
@@ -500,8 +500,7 @@ int news_loadArticles( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node, "news"))
-         if (news_parseArticle( node ) < 0)
-            return -1;
+         news_parseArticle( node );
    } while (xml_nextNode(node));
 
    next_id = largestID;
