@@ -243,7 +243,7 @@ function handle_messages( p, si, dopush )
          if l==nil or sameFleet( p, sender ) then
             if msgtype == "hyperspace" then
                if dopush then
-                  ai.pushtask("hyperspace", data)
+                  ai.pushtask("hyperspace_follow", data)
                   taskchange = true
                end
             elseif msgtype == "land" then
@@ -503,6 +503,8 @@ function control( dt )
             end
          end
       end
+      -- Tell followers to jump if not doing so
+      p:msg(p:followers(), "hyperspace", ai.taskdata())
       return
    end
 

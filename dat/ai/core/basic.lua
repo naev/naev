@@ -733,8 +733,9 @@ function hyperspace( target )
          ai.poptask()
          return
       else
-         -- Push the new task
-         ai.pushsubtask("hyperspace", target)
+         -- Switch to a new task with the target
+         ai.poptask()
+         ai.pushtask("hyperspace", target)
          return
       end
    end
@@ -742,15 +743,25 @@ function hyperspace( target )
    ai.pushsubtask( "_hyp_approach", target )
 end
 
+-- luacheck: globals hyperspace_follow (AI Task functions passed by name)
+function hyperspace_follow( target )
+   ai.pushsubtask( "_hyp_approach_follow", target )
+end
+
 -- luacheck: globals _hyp_approach (AI Task functions passed by name)
 function _hyp_approach( target )
    __hyp_approach( target )
 end
-function __hyp_approach( target )
+-- luacheck: globals _hyp_approach_follow (AI Task functions passed by name)
+function _hyp_approach_follow( target )
+   __hyp_approach( target, "_hyp_jump_follow" )
+end
+function __hyp_approach( target, jumptsk )
    local dir
    local pos      = target:pos() + mem.target_bias
    local dist     = ai.dist( pos )
    local bdist    = ai.minbrakedist()
+   jumptsk  = jumptsk or "_hyp_jump"
 
    -- 2 methods for dir
    if not mem.careful or dist < 3*bdist then
@@ -765,9 +776,9 @@ function __hyp_approach( target )
    -- Need to start braking
    elseif dist < bdist then
       if ai.instantJump() then
-         ai.pushsubtask("_hyp_jump", target)
+         ai.pushsubtask(jumptsk, target)
       else
-         ai.pushsubtask("_hyp_jump", target)
+         ai.pushsubtask(jumptsk, target)
          ai.pushsubtask("_subbrake")
       end
    end
@@ -780,6 +791,22 @@ function _hyp_jump ( jump )
       p:msg(p:followers(), "hyperspace", jump)
    end
    ai.popsubtask() -- Keep the task even if succeeding in case pilot gets pushed away.
+end
+
+-- luacheck: globals _hyp_jump_follow (AI Task functions passed by name)
+function _hyp_jump_follow( jump )
+   local l = ai.pilot():leader()
+   if l and l:exists() then
+      -- Wait until leader is in hyperspace
+      if l:flags("jumpingout") then
+         _hyp_jump( jump )
+      elseif not ai.canHyperspace() then
+         -- Drifted away or whatever, so pop and go back
+         ai.popsubtask()
+      end
+   else
+      _hyp_jump( jump )
+   end
 end
 
 
