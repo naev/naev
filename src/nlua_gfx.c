@@ -188,35 +188,32 @@ static int gfxL_screencoords( lua_State *L )
  */
 static int gfxL_renderTex( lua_State *L )
 {
-   glTexture *tex;
-   glColour *col;
+   const glTexture *tex;
+   const glColour *col;
    double x, y;
    int sx, sy;
 
    /* Parameters. */
-   col = NULL;
    tex = luaL_checktex( L, 1 );
    x   = luaL_checknumber( L, 2 );
    y   = luaL_checknumber( L, 3 );
    if (lua_isnumber( L, 4 )) {
       sx    = luaL_checkinteger( L, 4 ) - 1;
       sy    = luaL_checkinteger( L, 5 ) - 1;
-      if (lua_iscolour(L, 6))
-         col = luaL_checkcolour(L,6);
+      col   = luaL_optcolour( L, 6, &cWhite );
    }
    else {
       sx    = 0;
       sy    = 0;
-      if (lua_iscolour(L, 4))
-         col = luaL_checkcolour(L,4);
+      col   = luaL_optcolour( L, 4, &cWhite );
    }
 
    /* Some safety checking. */
 #if DEBUGGING
-   if (sx >= tex->sx)
+   if (sx < 0 || sx >= tex->sx)
       NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
             tex->name, sx+1, tex->sx );
-   if (sx >= tex->sx)
+   if (sy < 0 || sy >= tex->sy)
       NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
             tex->name, sy+1, tex->sy );
 #endif /* DEBUGGING */
