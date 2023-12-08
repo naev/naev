@@ -16,6 +16,8 @@
    * Can toggle point defense weapons on and off
    * AI will turn off weapons ionizer when going for a kill
    * Player's new ships should start will all the default outfits, which fixes the some Sirius psychic tests
+   * pilot.weapsetAdd follows the same logic as the normal equipping functions
+   * slim GUI uses primary/secondary colours like the info menu
    * `chapter1`: event claims all the systems just in case
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
    * `poi_intro`: fixed typo

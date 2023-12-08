@@ -60,6 +60,10 @@ function create()
    cols.temperature = cols.heat
    cols.flow    = colour.new( 189/255, 166/255,  85/255 )
    cols.missile = colour.new(cols.txt_enm)
+   -- Weaposn
+   cols.weap_non= colour.new( "FontGrey" )
+   cols.weap_pri= colour.new( "FontRed" )
+   cols.weap_sec= colour.new( "FontYellow" )
    -- Active outfit bar
    cols.slot_bg = colour.new(  12/255,  14/255,  20/255 )
 
@@ -92,9 +96,10 @@ function create()
    icons.speed_sm = tex_open( "speed_sm.png" )
    bgs.bar = tex_open( "bg_bar.png" )
    bgs.bar_sm = tex_open( "bg_bar_sm.png" )
-   bgs.bar_weapon = tex_open( "bg_bar_weapon.png" )
-   bgs.bar_weapon_prim = tex_open( "bg_bar_weapon_prim.png" )
-   bgs.bar_weapon_sec = tex_open( "bg_bar_weapon_sec.png" )
+   bgs.bar_weapon = tex_open( "bg_bar_weapon_blank.png" )
+   --bgs.bar_weapon = tex_open( "bg_bar_weapon.png" )
+   --bgs.bar_weapon_prim = tex_open( "bg_bar_weapon_prim.png" )
+   --bgs.bar_weapon_sec = tex_open( "bg_bar_weapon_sec.png" )
    bgs.shield = tex_open( "bg_shield.png" )
    bgs.armour = tex_open( "bg_armour.png" )
    bgs.energy = tex_open( "bg_energy.png" )
@@ -480,7 +485,7 @@ function update_effects()
 end
 
 local function update_wset()
-   wset_name, wset  = pp:weapset()
+   wset_name, wset  = pp:weapset(true)
 
 -- Currently unused.
 --[[
@@ -490,6 +495,7 @@ local function update_wset()
       weap_icons[k] = outfit.get( v.name ):icon()
    end
 --]]
+   -- Set the names as short names
    for k, w in ipairs( wset ) do
       w.name = w.outfit:shortname()
    end
@@ -628,13 +634,17 @@ local function render_ammoBar( name, x, y, value, txt, txtcol )
    -- Refire indicator
    gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, value[6])
 
+   local col
    if value[3] == 1 then
-      gfx.renderTex( bgs.bar_weapon_prim, x, y )
+      col = cols.weap_pri
    elseif value[3] == 2 then
-      gfx.renderTex( bgs.bar_weapon_sec, x, y )
+      col = cols.weap_sec
    else
-      gfx.renderTex( bgs.bar_weapon, x, y )
+      col = cols.weap_non
    end
+   --print( col )
+   gfx.renderTex( bgs.bar_weapon, x, y, col )
+   --gfx.renderTex( bgs.bar_weapon, x, y )
 
    local textoffset = 0
    local trackcol
@@ -795,14 +805,6 @@ function render( dt, dt_mod )
       txt = weapon.name
       local values
       if weapon.left then -- Truncate names for readability.
-         if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
-            txt = string.gsub(txt,"Cannon", "C.")
-         elseif weapon.type == "Bolt Turret" or weapon.type == "Beam Turret" then
-            txt = string.gsub(txt,"Turret", "T.")
-         elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
-            txt = string.gsub(txt,"Launcher", "L.")
-         end
-
          txt = txt .. " (" .. weapon.left .. ")"
          if weapon.left == 0 then
             col = cols.txt_wrn
