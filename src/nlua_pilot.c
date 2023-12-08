@@ -1735,12 +1735,14 @@ static int pilotL_weapsetActive( lua_State *L )
 
 /**
  * @brief Sets up an item in a weapon set.
+ *
+ * TODO move this to an object in its own module or something.
  */
-static int weapsetItem( lua_State *L, int *k, const Pilot *p, const PilotOutfitSlot *slot, const Pilot *target )
+static int weapsetItem( lua_State *L, int *k, Pilot *p, const PilotOutfitSlot *slot, const Pilot *target )
 {
    const Damage *dmg;
    const Outfit *o = slot->outfit;
-   int is_lau, is_fb;
+   int is_lau, is_fb, active;
 
    /* Check if we should add. */
    if (o == NULL)
@@ -1841,6 +1843,25 @@ static int weapsetItem( lua_State *L, int *k, const Pilot *p, const PilotOutfitS
    lua_pushnumber(L, slot->level+1);
    lua_rawset(L,-3);
 
+   active = 0;
+   for (int id=0; id<PILOT_WEAPSET_MAX_LEVELS; id++) {
+      PilotWeaponSet *ws = pilot_weapSet( p, id );
+      const PilotWeaponSetOutfit *po_list = ws->slots;
+      if (!ws->active)
+         continue;
+      for (int i=0; i<array_size(po_list); i++) {
+         if (po_list[i].slotid==slot->id) {
+            active = 1;
+            break;
+         }
+      }
+      if (active)
+         break;
+   }
+   lua_pushstring(L,"active");
+   lua_pushboolean(L,active);
+   lua_rawset(L,-3);
+
    /* Temperature. */
    lua_pushstring(L,"heat");
    lua_pushnumber(L, pilot_heatFirePercent(slot->heat_T));
@@ -1887,6 +1908,7 @@ static int weapsetItem( lua_State *L, int *k, const Pilot *p, const PilotOutfitS
  *  <li> lockon: Lock-on [0:1] for seeker weapons or nil if not applicable. </li>
  *  <li> in_arc: Whether or not the target is in targeting arc or nil if not applicable. </li>
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). </li>
+ *  <li> active: Whether or not the weapon is currently active. </li>
  *  <li> heat: Heat level of the weapon where 1 is normal and 0 is overheated. </li>
  *  <li> type: Type of the weapon. </li>
  *  <li> dtype: Damage type of the weapon. </li>
