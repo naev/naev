@@ -53,14 +53,14 @@ typedef enum PilotHookType_ {
    PILOT_HOOK_DEATH,     /**< Pilot died. */
    PILOT_HOOK_BOARDING,  /**< Player is boarding. */
    PILOT_HOOK_BOARD,     /**< Player got boarded. */
-   PILOT_HOOK_BOARD_ALL,  /**< Pilot got boarded. */
+   PILOT_HOOK_BOARD_ALL, /**< Pilot got boarded. */
    PILOT_HOOK_DISABLE,   /**< Pilot got disabled. */
    PILOT_HOOK_UNDISABLE, /**< Pilot recovered from being disabled. */
    PILOT_HOOK_JUMP,      /**< Pilot jumped. */
    PILOT_HOOK_HAIL,      /**< Pilot is hailed. */
    PILOT_HOOK_LAND,      /**< Pilot is landing. */
    PILOT_HOOK_ATTACKED,  /**< Pilot is in manual override and is being attacked. */
-   PILOT_HOOK_DISCOVERED,  /**< Pilot is in manual override and is discovered. */
+   PILOT_HOOK_DISCOVERED,/**< Pilot is in manual override and is discovered. */
    PILOT_HOOK_SCAN,      /**< Pilot has scanned another pilot. */
    PILOT_HOOK_SCANNED,   /**< Pilot has been scanned by another pilot. */
    PILOT_HOOK_IDLE,      /**< Pilot is in manual override and has just become idle. */
