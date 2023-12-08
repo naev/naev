@@ -1914,8 +1914,6 @@ static int weapsetItem( lua_State *L, int *k, const Pilot *p, const PilotOutfitS
 static int pilotL_weapset( lua_State *L )
 {
    Pilot *p, *target;
-   int k, n;
-   PilotWeaponSetOutfit *po_list;
    int id, all;
 
    /* Parse parameters. */
@@ -1945,28 +1943,23 @@ static int pilotL_weapset( lua_State *L )
    lua_pushstring( L, pilot_weapSetName( p, id ) );
 
    /* Push set. */
-   po_list = all ? NULL : pilot_weapSetList( p, id );
-   n = all ? array_size(p->outfits) : array_size(po_list);
-
-   k = 0;
-   lua_newtable(L);
-   for (int j=0; j<=PILOT_WEAPSET_MAX_LEVELS; j++) {
-      /* Level to match. */
-      int level_match = (j==PILOT_WEAPSET_MAX_LEVELS) ? -1 : j;
-
-      /* Iterate over weapons. */
-      for (int i=0; i<n; i++) {
-         /* Get base look ups. */
-         const PilotOutfitSlot *slot = all ?  p->outfits[i] : p->outfits[ po_list[i].slotid ];
-
-         /* Must match level. */
-         if (slot->level != level_match)
-            continue;
-
-         /* Add the item. */
+   lua_newtable( L );
+   if (all) {
+      int k = 0;
+      for (int i=0; i<array_size(p->outfits); i++) {
+         const PilotOutfitSlot *slot = p->outfits[i];
          weapsetItem( L, &k, p, slot, target );
       }
    }
+   else {
+      int k = 0;
+      const PilotWeaponSetOutfit *po_list = pilot_weapSetList( p, id );
+      for (int i=0; i<array_size(po_list); i++) {
+         const PilotOutfitSlot *slot = p->outfits[ po_list[i].slotid ];
+         weapsetItem( L, &k, p, slot, target );
+      }
+   }
+
    return 2;
 }
 
