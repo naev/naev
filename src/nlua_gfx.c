@@ -198,8 +198,8 @@ static int gfxL_renderTex( lua_State *L )
    x   = luaL_checknumber( L, 2 );
    y   = luaL_checknumber( L, 3 );
    if (lua_isnumber( L, 4 )) {
-      sx    = luaL_checkinteger( L, 4 ) - 1;
-      sy    = luaL_checkinteger( L, 5 ) - 1;
+      sx    = luaL_checkinteger( L, 4 )-1;
+      sy    = luaL_checkinteger( L, 5 )-1;
       col   = luaL_optcolour( L, 6, &cWhite );
    }
    else {

@@ -1844,7 +1844,7 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p, const PilotOutfitSlot *s
    lua_rawset(L,-3);
 
    active = 0;
-   for (int id=0; id<PILOT_WEAPSET_MAX_LEVELS; id++) {
+   for (int id=0; id<PILOT_WEAPON_SETS; id++) {
       PilotWeaponSet *ws = pilot_weapSet( p, id );
       const PilotWeaponSetOutfit *po_list = ws->slots;
       if (!ws->active)
@@ -2241,8 +2241,9 @@ static int pilotL_weapsetSetInrange( lua_State *L )
  *
  * The active outfits have the following structure: <br />
  * <ul>
- *  <li> name: Name of the set. </li>
+ *  <li> outfit: The outfit. </li>
  *  <li> type: Type of the outfit. </li>
+ *  <li> active: Whether or not the outfit is active at the current time.
  *  <li> heat: The heat of the outfit's slot. A value between 0 and 1, where 0 is fully overheated, and 1 is normal. </li>
  *  <li> weapset: The first weapon set that the outfit appears in, if any. </li>
  *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. </li>
@@ -2269,7 +2270,7 @@ static int pilotL_weapsetSetInrange( lua_State *L )
  */
 static int pilotL_actives( lua_State *L )
 {
-   const Pilot *p;
+   Pilot *p;
    int k, sort;
    PilotOutfitSlot **outfits;
    const char *str;
@@ -2292,6 +2293,7 @@ static int pilotL_actives( lua_State *L )
    for (int i=0; i<array_size(outfits); i++) {
       /* Get active outfits. */
       PilotOutfitSlot *o = outfits[i];
+      int active;
       if (o->outfit == NULL)
          continue;
       if (!o->active)
@@ -2319,6 +2321,25 @@ static int pilotL_actives( lua_State *L )
       lua_pushnumber(L, 1.-pilot_heatEfficiencyMod(o->heat_T,
                o->outfit->overheat_min,
                o->outfit->overheat_max));
+      lua_rawset(L,-3);
+
+      active = 0;
+      for (int id=0; id<PILOT_WEAPON_SETS; id++) {
+         PilotWeaponSet *ws = pilot_weapSet( p, id );
+         const PilotWeaponSetOutfit *po_list = ws->slots;
+         if (!ws->active)
+            continue;
+         for (int j=0; j<array_size(po_list); j++) {
+            if (po_list[j].slotid==o->id) {
+               active = 1;
+               break;
+            }
+         }
+         if (active)
+            break;
+      }
+      lua_pushstring(L,"active");
+      lua_pushboolean(L,active);
       lua_rawset(L,-3);
 
       /* Find the first weapon set containing the outfit, if any. */
