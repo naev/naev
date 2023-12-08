@@ -60,7 +60,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend );
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
 static int outfit_compareActive( const void *slot1, const void *slot2 );
 static int pilotL_setFlagWrapper( lua_State *L, int flag );
-static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, int bypass_slot, int bypass_cpu );
+static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, int bypass_cpu, int bypass_slot );
 static int luaL_checkweapset( lua_State *L, int idx );
 static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx );
 
@@ -1180,7 +1180,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       r = ceil(dist);
       qt = pilot_collideQuery( x-r, y-r, x+r, y+r );
       for (int i=0; i<il_size(qt); i++) {
-         Pilot *plt = pilot_stack[ il_get( qt, i, 0 ) ];
+         const Pilot *plt = pilot_stack[ il_get( qt, i, 0 ) ];
 
          if (getFriendOrFoeTest( p, plt, friend, dd, inrange, dis, fighters, v, lf )) {
             lua_pushpilot(L, plt->id); /* value */
@@ -1190,7 +1190,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    }
    else {
       for (int i=0; i<array_size(pilot_stack); i++) {
-         Pilot *plt = pilot_stack[i];
+         const Pilot *plt = pilot_stack[i];
 
          if (getFriendOrFoeTest( p, plt, friend, dd, inrange, dis, fighters, v, lf )) {
             lua_pushpilot(L, plt->id); /* value */
@@ -1514,7 +1514,7 @@ static int pilotL_targetAsteroid( lua_State *L )
 static int pilotL_setTargetAsteroid( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   LuaAsteroid_t *la = luaL_checkasteroid(L,2);
+   const LuaAsteroid_t *la = luaL_checkasteroid(L,2);
 
    /* Set the target asteroid. */
    p->nav_anchor = la->parent;
@@ -2057,24 +2057,7 @@ static int pilotL_weapsetAdd( lua_State *L )
    int id = luaL_checkweapset(L,2);
    PilotOutfitSlot *o = luaL_checkslot(L,p,3);
    int level = luaL_optinteger(L,4,0);
-   /* Follows same logic as equipment_mouseColumn (equipment.c) */
-   if ((o->sslot->slot.type==OUTFIT_SLOT_UTILITY) ||
-         (o->sslot->slot.type==OUTFIT_SLOT_UTILITY)) {
-      pilot_weapSetRmSlot( p, id, OUTFIT_SLOT_WEAPON );
-      pilot_weapSetAdd( p, id, o, level );
-      pilot_weapSetType( p, id, WEAPSET_TYPE_HOLD );
-   }
-   else {
-      pilot_weapSetRmSlot( p, id, OUTFIT_SLOT_STRUCTURE );
-      pilot_weapSetRmSlot( p, id, OUTFIT_SLOT_UTILITY );
-      if (pilot_weapSetTypeCheck( p, id) == WEAPSET_TYPE_SWITCH)
-         pilot_weapSetType( p, id, WEAPSET_TYPE_SWITCH );
-      else {
-         pilot_weapSetType( p, id, WEAPSET_TYPE_TOGGLE );
-         level = 0;
-      }
-      pilot_weapSetAdd( p, id, o, level );
-   }
+   pilot_weapSetAdd( p, id, o, level );
    return 0;
 }
 
@@ -2354,9 +2337,7 @@ static int pilotL_actives( lua_State *L )
             str = "cooldown";
             if (!outfit_isMod(o->outfit) || o->outfit->lua_env == LUA_NOREF) {
                d = outfit_cooldown(o->outfit);
-               if (d==0.)
-                  d = 0.;
-               else if (!isinf(o->stimer))
+               if (d>0. && !isinf(o->stimer))
                   d = o->stimer / d;
             }
             else
@@ -2923,7 +2904,7 @@ static int pilotL_setPosition( lua_State *L )
 {
    /* Parse parameters */
    Pilot *p   = luaL_validpilot(L,1);
-   vec2 *vec  = luaL_checkvector(L,2);
+   const vec2 *vec  = luaL_checkvector(L,2);
 
    /* Insert skip in trail. */
    pilot_sample_trails( p, 1 );
@@ -2951,7 +2932,7 @@ static int pilotL_setVelocity( lua_State *L )
 {
    /* Parse parameters */
    Pilot *p  = luaL_validpilot(L,1);
-   vec2 *vec = luaL_checkvector(L,2);
+   const vec2 *vec = luaL_checkvector(L,2);
 
    /* Warp pilot to new position. */
    p->solid.vel = *vec;
@@ -3039,7 +3020,6 @@ static int pilotL_comm( lua_State *L )
 {
    if (lua_isstring(L,1)) {
       const char *s;
-      LuaPilot target;
       const char *msg, *col;
       int raw;
 
@@ -3054,7 +3034,7 @@ static int pilotL_comm( lua_State *L )
          raw   = lua_toboolean(L,4);
       }
       else {
-         target = luaL_checkpilot(L,2);
+         LuaPilot target = luaL_checkpilot(L,2);
          if (target != player.p->id)
             return 0;
          msg   = luaL_checkstring(L,3);
@@ -3537,12 +3517,12 @@ static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, i
 
    /* Add outfit - already tested. */
    ret = pilot_addOutfitRaw( p, o, s );
-   if (ret==0)
+   if (ret==0) {
       pilot_outfitLInit( p, s );
 
-   /* Add ammo if needed. */
-   if (ret==0)
+      /* Add ammo if needed. */
       pilot_addAmmo( p, s, pilot_maxAmmoO(p,o) );
+   }
 
    /* Update GUI if necessary. */
    if (pilot_isPlayer(p))
@@ -3639,8 +3619,8 @@ static int pilotL_outfitAdd( lua_State *L )
  */
 static int pilotL_outfitSlot( lua_State *L )
 {
-   Pilot *p             = luaL_validpilot(L,1);
-   PilotOutfitSlot *s   = luaL_checkslot( L, p, 2 );
+   Pilot *p                = luaL_validpilot(L,1);
+   const PilotOutfitSlot *s= luaL_checkslot( L, p, 2 );
    if (s==NULL)
       return 0;
    if (s->outfit) {
@@ -3801,7 +3781,7 @@ static int pilotL_outfitRm( lua_State *L )
 static int pilotL_outfitRmSlot( lua_State *L )
 {
    /* Get parameters. */
-   int ret, removed = 0;
+   int ret;
    Pilot *p = luaL_validpilot(L,1);
    PilotOutfitSlot *s = luaL_checkslot( L, p, 2 );
    if (s==NULL)
@@ -3811,7 +3791,7 @@ static int pilotL_outfitRmSlot( lua_State *L )
    if (ret) {
       pilot_calcStats( p ); /* Recalculate stats. */
       /* Update equipment window if operating on the player's pilot. */
-      if (player.p != NULL && player.p == p && removed > 0)
+      if (player.p != NULL && player.p == p)
          outfits_updateEquipmentOutfits();
    }
 
@@ -5490,7 +5470,7 @@ static int pilotL_poptask( lua_State *L )
 static int pilotL_refuel( lua_State *L )
 {
    Pilot *p       = luaL_validpilot(L,1);
-   Pilot *target  = luaL_validpilot(L,2);
+   const Pilot *target = luaL_validpilot(L,2);
    double amount  = luaL_optinteger(L,3,100);
    pilot_rmFlag(  p, PILOT_HYP_PREP);
    pilot_rmFlag(  p, PILOT_HYP_BRAKE );
@@ -5697,7 +5677,7 @@ static int pilotL_attack( lua_State *L )
    /* Get parameters. */
    p  = luaL_validpilot(L,1);
    if (!lua_isnoneornil(L,2)) {
-      Pilot *pt = luaL_validpilot(L,2);
+      const Pilot *pt = luaL_validpilot(L,2);
       pid = pt->id;
    }
    else {
@@ -5764,7 +5744,7 @@ static int pilotL_runaway( lua_State *L )
 {
    /* Get parameters. */
    Pilot *p   = luaL_validpilot(L,1);
-   Pilot *pt  = luaL_validpilot(L,2);
+   const Pilot *pt = luaL_validpilot(L,2);
 
    /* Set the task depending on the last parameter. */
    if (lua_isnoneornil(L,3)) {
@@ -5780,7 +5760,7 @@ static int pilotL_runaway( lua_State *L )
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
       else if (lua_isjump(L,3)) {
-         LuaJump *lj = lua_tojump(L,3);
+         const LuaJump *lj = lua_tojump(L,3);
          Task *t = pilotL_newtask( L, p, "runaway_jump" );
          lua_newtable(L);
          lua_pushpilot(L, pt->id);
@@ -5830,7 +5810,7 @@ static int pilotL_gather( lua_State *L )
  */
 static int pilotL_canHyperspace( lua_State *L )
 {
-   Pilot *p = luaL_validpilot(L,1);
+   const Pilot *p = luaL_validpilot(L,1);
    lua_pushboolean(L, space_canHyperspace(p));
    return 1;
 }
@@ -6046,13 +6026,13 @@ static int pilotL_msg( lua_State *L )
    data = lua_gettop(L) > 3 ? 4 : 0;
 
    if (!lua_istable(L,2)) {
-      Pilot *receiver = luaL_validpilot(L,2);
+      const Pilot *receiver = luaL_validpilot(L,2);
       pilot_msg(p, receiver, type, data);
    }
    else {
       lua_pushnil(L);
       while (lua_next(L, 2) != 0) {
-         Pilot *receiver = luaL_validpilot(L,-1);
+         const Pilot *receiver = luaL_validpilot(L,-1);
          pilot_msg(p, receiver, type, data);
          lua_pop(L, 1);
       }
@@ -6129,7 +6109,7 @@ static int pilotL_setLeader( lua_State *L )
    if (prev_leader != NULL) {
       int found = 0;
       for (int i=0; i<array_size(prev_leader->escorts); i++) {
-         Escort_t *e = &prev_leader->escorts[i];
+         const Escort_t *e = &prev_leader->escorts[i];
          if (e->id != p->id)
             continue;
          if (e->type != ESCORT_TYPE_MERCENARY) {
@@ -6177,7 +6157,7 @@ static int pilotL_setLeader( lua_State *L )
 
       /* If the pilot has followers, they should be given the new leader as well, and be added as escorts. */
       for (int i=array_size(p->escorts)-1; i>=0; i--) {
-         Escort_t *e = &p->escorts[i];
+         const Escort_t *e = &p->escorts[i];
          /* We don't want to deal with fighter bays this way. */
          if (e->type != ESCORT_TYPE_MERCENARY)
             continue;
@@ -6220,7 +6200,7 @@ static int pilotL_followers( lua_State *L )
    lua_newtable(L);
    for (int i=0; i < array_size(p->escorts); i++) {
       /* Make sure the followers are valid. */
-      Pilot *pe = pilot_get( p->escorts[i].id );
+      const Pilot *pe = pilot_get( p->escorts[i].id );
       if ((pe==NULL) || pilot_isFlag( pe, PILOT_DEAD ) || pilot_isFlag( pe, PILOT_HIDE ))
          continue;
       lua_pushpilot(L, p->escorts[i].id);
