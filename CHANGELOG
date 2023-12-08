@@ -19,6 +19,7 @@
    * Player's new ships should start will all the default outfits, which fixes the some Sirius psychic tests
    * pilot.weapsetAdd follows the same logic as the normal equipping functions
    * slim GUI uses primary/secondary colours like the info menu
+   * AI should be less prone to jump before their leader
    * `chapter1`: event claims all the systems just in case
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
    * `poi_intro`: fixed typo
