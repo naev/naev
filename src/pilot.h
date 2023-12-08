@@ -67,7 +67,7 @@ enum {
    PILOT_HOOK_EXPLODED,  /**< Pilot died and exploded (about to be removed). */
    PILOT_HOOK_LOCKON,    /**< Pilot had a launcher lockon. */
    PILOT_HOOK_STEALTH,   /**< Pilot either stealthed or destealthed. */
-};
+} PilotHookType;
 
 /* Damage */
 #define PILOT_HOSTILE_THRESHOLD  0.09 /**< Point at which pilot becomes hostile. */
