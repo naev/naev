@@ -22,15 +22,15 @@ local bgs = {}
 local cols = {}
 local icons = {}
 local has_flow
-function create()
 
+function create()
    --Get player
    pp = player.pilot()
    pname = player.name()
 
    -- Set default formation
    local savedform = var.peek("player_formation") or "Circle"
-   player.pilot():memory().formation = formation.keys[savedform]
+   pp:memory().formation = formation.keys[savedform]
 
    --Get sizes
    screen_w, screen_h = gfx.dim()
@@ -45,24 +45,23 @@ function create()
    cols.txt_enm = colour.new( 222/255,  28/255,  28/255 )
    --cols.txt_res = colour.new(     1.0,     0.6,     0.0 )
    cols.txt_una = colour.new(  66/255,  72/255,  84/255 )
-   cols.shield = colour.new( 40/255,  51/255,  88/255 )
-   cols.armour = colour.new( 72/255,  73/255,  60/255 )
-   cols.stress = colour.new( 64/255,  130/255,  148/255 )
-   cols.energy = colour.new( 41/255,  92/255,  47/255 )
-   cols.speed = colour.new( 77/255,  80/255,  21/255 )
-   cols.speed2 = colour.new(169/255,177/255,  46/255 )
-   cols.ammo = colour.new(140/255,94/255,  7/255 )
-   cols.heat = colour.new(114/255,26/255, 14/255 )
-   cols.heat2 = colour.new( 222/255, 51/255, 27/255 )
-   cols.afb = colour.new(cols.heat)
+   cols.shield  = colour.new(  40/255,  51/255,  88/255 )
+   cols.armour  = colour.new(  72/255,  73/255,  60/255 )
+   cols.stress  = colour.new(  64/255, 130/255, 148/255 )
+   cols.energy  = colour.new(  41/255,  92/255,  47/255 )
+   cols.speed   = colour.new(  77/255,  80/255,  21/255 )
+   cols.speed2  = colour.new( 169/255, 177/255,  46/255 )
+   cols.ammo    = colour.new( 140/255,  94/255,   7/255 )
+   cols.heat    = colour.new( 114/255,  26/255,  14/255 )
+   cols.heat2   = colour.new( 222/255,  51/255,  27/255 )
+   cols.afb     = colour.new(cols.heat)
    cols.afb:setAlpha(.5)
-   cols.ready = colour.new( 14/255,108/255, 114/255 )
+   cols.ready   = colour.new(  14/255, 108/255, 114/255 )
    cols.temperature = cols.heat
-   cols.flow = colour.new( 189/255, 166/255, 85/255 )
+   cols.flow    = colour.new( 189/255, 166/255,  85/255 )
    cols.missile = colour.new(cols.txt_enm)
-
    -- Active outfit bar
-   cols.slot_bg = colour.new( 12/255, 14/255, 20/255 )
+   cols.slot_bg = colour.new(  12/255,  14/255,  20/255 )
 
    --Load Images
    local base = "gfx/gui/slim/"
@@ -299,8 +298,8 @@ function create()
 
    -- Planet image center
    local ta_pnt_image_w, ta_pnt_image_h = planet_bg:dim()
-   ta_pnt_center_x = ta_pnt_image_x + ta_pnt_image_w / 2
-   ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h / 2
+   ta_pnt_center_x = ta_pnt_image_x + ta_pnt_image_w * 0.5
+   ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h * 0.5
 
    -- Set FPS
    gui.fpsPos( 15, screen_h - fps_y )
@@ -380,10 +379,10 @@ function update_nav()
       end
 
       nav_spob = { -- Table for convenience.
-         name = nav_pnt:name(),
-         pos = nav_pnt:pos(),
+         name  = nav_pnt:name(),
+         pos   = nav_pnt:pos(),
          class = _(nav_pnt:class()),
-         col = nav_pnt:colour(),
+         col   = nav_pnt:colour(),
          services = {}
       }
       nav_spob.class_w = gfx.printDim( nil, nav_spob.class )
@@ -458,8 +457,8 @@ end
 
 local effects = {}
 function update_effects()
-   local buff_col = colour.new("Friend")
-   local debuff_col = colour.new("Hostile")
+   local buff_col    = colour.new("Friend")
+   local debuff_col  = colour.new("Hostile")
    effects = {}
    local effects_added = {}
    for k,e in ipairs(pp:effects()) do
@@ -904,7 +903,7 @@ function render( dt, dt_mod )
       for i=1,#aset do
          local slot_x = screen_w - slot_start_x - i * slot_w
 
-         -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
+         -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat-based somehow!
          --if aset[i].type == "Afterburner" then
             gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].heat, cols.heat ) -- Background (heat)
          --end
