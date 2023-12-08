@@ -169,7 +169,6 @@ static int colL_new( lua_State *L )
    glColour col;
    const glColour *col2;
 
-
    if (lua_gettop(L)==0) {
       col.r = col.g = col.b = col.a = 1.;
    }
@@ -262,7 +261,7 @@ static int colL_rgb( lua_State *L )
 static int colL_hsv( lua_State *L )
 {
    float h, s, v, r, g, b;
-   glColour *col = luaL_checkcolour(L,1);
+   const glColour *col = luaL_checkcolour(L,1);
    if (lua_toboolean(L,2)) {
       r = linearToGamma( col->r );
       g = linearToGamma( col->g );
@@ -352,7 +351,7 @@ static int colL_setalpha( lua_State *L )
  */
 static int colL_linearToGamma( lua_State *L )
 {
-   glColour *col = luaL_checkcolour(L,1);
+   const glColour *col = luaL_checkcolour(L,1);
    glColour out;
    out.r = linearToGamma( col->r );
    out.g = linearToGamma( col->g );
@@ -370,7 +369,7 @@ static int colL_linearToGamma( lua_State *L )
  */
 static int colL_gammaToLinear( lua_State *L )
 {
-   glColour *col = luaL_checkcolour(L,1);
+   const glColour *col = luaL_checkcolour(L,1);
    glColour out;
    out.r = gammaToLinear( col->r );
    out.g = gammaToLinear( col->g );
