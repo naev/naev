@@ -27,10 +27,10 @@
 
    Stages :
    0) Way to Ulios to encounter the Baron
-   1) Way to Vault in Mason for the biker's convention
+   1) Way to Norpin II in Norpin for the biker's convention
    2) Taking off for the "Hallway to Hell" with Big Bunny Benny
-   3) Land back on Vault
-   4) Discussions on Vault
+   3) Land back on Norpin II
+   4) Discussions on Norpin II
    5) Taking off for the duel with Blue Belly Billy
    6) Way back to Ulios for getting paid
 --]]
@@ -42,8 +42,6 @@ local vn       = require 'vn'
 local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
-
-
 
 local agentPort = "dvaered/dv_military_m2.webp"
 local BBB1Port = "pirate/pirate4.webp"
@@ -66,7 +64,7 @@ local spawnGang, land_state1, land_state3
 
 function create()
    mem.baronpnt, mem.baronsys  = spob.getS("Ulios") -- Where you get paid
-   mem.convpnt,   mem.convsys  = spob.getS("Vault") -- Where you do the fights
+   mem.convpnt,   mem.convsys  = spob.getS("Norpin II") -- Where you do the fights
 
    if not misn.claim(mem.convsys) then misn.finish(false) end -- Claim
 
@@ -136,7 +134,7 @@ end
 
 function enter()
    -- Player will perform the Hallway to Hell
-   if mem.misn_state == 2 and system.cur() == mem.convsys then
+   if mem.misn_state==2 and system.cur()==mem.convsys then
       local pp = player.pilot()
       local ps = pp:ship()
       if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
@@ -167,7 +165,7 @@ function enter()
          -- Compute timer
          -- Max vel of a top notch Hyena is 476 (without extra outfits). We give a bit of margin
          local dist = 5000 + vec2.dist( t1, t2 ) + vec2.dist( t2, t3 )
-         mem.timer = dist/460
+         mem.timer = dist/430
          misn.osdDestroy()
          misn.osdCreate( _("Dvaered Negotiation 2"), {
             fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=mem.timer} ),
@@ -176,36 +174,29 @@ function enter()
             fmt.f(_("Go back to {pnt} in {sys}"), {pnt=mem.baronpnt,sys=mem.baronsys} ),
          } )
 
+         local weap = outfit.get("Bikers Fury Launcher") -- Easier to dodge version of the Fury
+         local function equip_zebra( p )
+            p:outfitAdd( weap, 4 ) -- Difficulty can be tuned here (1<=nb<=6)
+            --p:outfitAdd( "Sensor Array", 4 ) -- Apparently, they do stack
+            p:setSpeedLimit( 0.0001 )
+            p:memory().ranged_ammo = 1 -- AI was initialized before the launchers did exist so it's not aware it has ammo
+            p:control()
+         end
          -- Put the platforms
-         mem.pla1 = pilot.add("Zebra", targetF, .5*(t1+t2), _("Dodge Me"))
-         mem.pla2 = pilot.add("Zebra", targetF, .5*(t1+t3), _("Dodge Me"))
-         mem.pla3 = pilot.add("Zebra", targetF, .5*(t2+t3), _("Dodge Me"))
-         mem.pla1:outfitRm( "all" )
-         mem.pla1:outfitAdd( "Enygma Systems Turreted Fury Launcher", 3 ) -- Difficulty can be tuned here (1<=nb<=6)
-         mem.pla1:outfitAdd( "Sensor Array", 4 ) -- Apparently, they do stack
-         mem.pla1:setSpeedLimit( .0001 )
-         mem.pla1:memory().ranged_ammo = 1 -- AI was initialized before the launchers did exist so it's not aware it has ammo
-         mem.pla1:control()
-         mem.pla2:outfitRm( "all" )
-         mem.pla2:outfitAdd( "Enygma Systems Turreted Fury Launcher", 3 )
-         mem.pla2:outfitAdd( "Sensor Array", 4 )
-         mem.pla2:setSpeedLimit( .0001 )
-         mem.pla2:memory().ranged_ammo = 1
-         mem.pla2:control()
-         mem.pla3:outfitRm( "all" )
-         mem.pla3:outfitAdd( "Enygma Systems Turreted Fury Launcher", 3 )
-         mem.pla3:outfitAdd( "Sensor Array", 4 )
-         mem.pla3:setSpeedLimit( .0001 )
-         mem.pla3:memory().ranged_ammo = 1
-         mem.pla3:control()
+         mem.pla1 = pilot.add("Zebra", targetF, .5*(t1+t2), _("Dodge Me"), {naked=true})
+         mem.pla2 = pilot.add("Zebra", targetF, .5*(t1+t3), _("Dodge Me"), {naked=true})
+         mem.pla3 = pilot.add("Zebra", targetF, .5*(t2+t3), _("Dodge Me"), {naked=true})
+         equip_zebra( mem.pla1 )
+         equip_zebra( mem.pla2 )
+         equip_zebra( mem.pla3 )
 
          -- Block the player and set timers
          pp:control()
          pp:face( mem.pil1 )
          mem.countdown = 10
          mem.omsg = player.omsgAdd(tostring(mem.countdown), 0, 50)
-         hook.timer( 1.0, "timerIncrement", _("GO!") )
-         hook.timer( 10.0, "startHallway" )
+         hook.timer( 1, "timerIncrement", _("GO!") )
+         hook.timer( 10, "startHallway" )
          hook.pilot( mem.pil1, "death", "killPil1" )
 
          vn.clear()
@@ -274,7 +265,7 @@ function land()
       vn.na(_([["The shuttle system leads us directly under the presidential palace. I'm afraid you won't see its new pediment that His Lordship had built recently."]]))
       vn.na(_([[You proceed to follow your guides through a checkpoint into the administrative part of the palace, the kind of place where people wear moccasins and the carpets have no spots. You enter a seemingly common and empty meeting room and start to ask yourself where the Baron is.]])) -- Remark: implicitly, we suggest the baron is in his Gauss, the Pinnacle.
       vn.na(fmt.f(_([[Suddenly, a huge holographic face appears in the centre of the room:
-"Hello, and welcome on the planet Ulios, {player}! I am the Baron Dovai Sauterfeldt. I hope you got a smooth travel to our very remote humble piece of land! I am truly delighted to meet you, {player}, truly… Or did we already meet before? Mmmm! I am afraid I am perfectly incapable to remember most of the astonishingly inspiring people I tend to meet."]])
+"Hello, and welcome on the planet Ulios, {player}! I am the Baron Dovai Sauterfeldt. I hope you got a smooth travel to our very remote humble piece of land! I am truly delighted to meet you, {player}, truly… Or did we already meet before? Mmmm! I am afraid I am perfectly incapable to remember most of the astonishingly inspiring people I tend to meet."]]),
          {player=player.name()}))
       vn.na(fmt.f(_([["Anyway, you are truly most certainly one very inspiring person, {player}, aren't you? Yes, you are! You know what? I am really happy to finally have time to discuss with such a notable person as you."]]),
          {player=player.name()}))
@@ -370,15 +361,19 @@ end
 
 -- Tests to determine if the player is running away
 function escape()
-   -- Player quits in the middle of the Hallway to Hell
-   if mem.misn_state == 2 then
-      vntk.msg(_("Mission Failure"),_([[You were supposed to cross the Hallway to Hell, not to cowardly run away.]]))
-      misn.finish(false)
+   local pp = player.pilot()
+   local ps = pp:ship()
+   if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
+      -- Player quits in the middle of the Hallway to Hell
+      if mem.misn_state == 2 then
+         vntk.msg(_("Mission Failure"),_([[You were supposed to cross the Hallway to Hell, not to cowardly run away.]]))
+         misn.finish(false)
 
-   -- Player escapes the fight with BBB
-   elseif mem.misn_state == 5 then
-      vntk.msg(_("Mission Failure"),_([[You were supposed to defeat Blue Belly Billy, not to run away.]]))
-      misn.finish(false)
+      -- Player escapes the fight with BBB
+      elseif mem.misn_state == 5 then
+         vntk.msg(_("Mission Failure"),_([[You were supposed to defeat Blue Belly Billy, not to run away.]]))
+         misn.finish(false)
+      end
    end
 end
 
@@ -589,7 +584,7 @@ end
 -- Start the Hallway to Hell challenge
 function startHallway()
    player.pilot():control(false)
-   hook.timer( 5., "tick" )
+   hook.timer( 1., "tick" )
    mem.finishH = hook.timer( mem.timer-10., "finishHallway" ) -- Final countdown
    mem.loseH = hook.timer( mem.timer, "timeOver" )
    mem.pla1:attack(player.pilot())
@@ -606,16 +601,16 @@ end
 
 -- Manage timer in OSD
 function tick()
-   mem.timer = mem.timer - 5. -- TODO: I guess it will deviate with time
+   mem.timer = mem.timer-1. -- TODO: I guess it will deviate with time
    if mem.misn_state == 2 then -- If player didnt already win
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Negotiation 2"), {
-         fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=mem.timer} ),
+         fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=string.format("%.1f",mem.timer)} ),
          fmt.f(_("Land on {pnt} and talk to Blue Belly Billy"), {pnt=mem.convpnt} ),
          _("Disable and board Blue Belly Billy"),
          fmt.f(_("Go back to {pnt} in {sys}"), {pnt=mem.baronpnt,sys=mem.baronsys} ),
       } )
-      hook.timer( 5., "tick" )
+      hook.timer( 1., "tick" )
    end
 end
 
