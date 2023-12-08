@@ -11,6 +11,7 @@ local usable_outfits = {
    ["Hyperbolic Blink Engine"]   = "blink_engine",
    ["Unicorp Jammer"]            = "jammer",
    ["Milspec Jammer"]            = "jammer",
+   ["Weapons Ionizer"]           = "ionizer",
    -- Mining stuff, not strictly combat...
    ["S&K Plasma Drill"]          = "plasma_drill",
    ["S&K Heavy Plasma Drill"]    = "plasma_drill",

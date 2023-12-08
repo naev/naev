@@ -57,6 +57,11 @@ function atk.think( target, si, noretarget )
    if mem._o then
       local p = ai.pilot()
 
+      -- Turn off ionizer when going for a kill
+      if mem._o.ionizer and mem.atk_kill and target:flags("disabled") then
+         p:outfitToggle( mem._o.ionizer, false )
+      end
+
       -- Use shield booster if applicable
       if mem._o.shield_booster then
          local _a, s = p:health()

@@ -14,6 +14,7 @@
    * Made Weakness Harmonizer AI not appear as an active outfit
    * Outfit Lua function onshoot has been renamed onshootany
    * Can toggle point defense weapons on and off
+   * AI will turn off weapons ionizer when going for a kill
    * Player's new ships should start will all the default outfits, which fixes the some Sirius psychic tests
    * `chapter1`: event claims all the systems just in case
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
