@@ -360,6 +360,9 @@ dat/outfits/misc/mercenary_license.xml
 dat/outfits/pointdefense/guardian_interception_system.xml
 dat/outfits/pointdefense/guardian_overseer_system.xml
 dat/outfits/pointdefense/spittle_tubuloid_cluster.xml
+dat/outfits/special/base_ripper_mk2.xml
+dat/outfits/special/cheaters_laser_cannon.xml
+dat/outfits/special/cheaters_ragnarok_beam.xml
 dat/outfits/structure/active_plating.xml
 dat/outfits/structure/adaptive_stealth_plating.xml
 dat/outfits/structure/auxiliary_processing_unit_i.xml
@@ -453,9 +456,6 @@ dat/outfits/utility/unicorp_scrambler.xml
 dat/outfits/utility/weakness_harmonizer_ai.xml
 dat/outfits/utility/weapons_ionizer.xml
 dat/outfits/weapons/antimatter_lance.xml
-dat/outfits/weapons/base_ripper_mk2.xml
-dat/outfits/weapons/cheaters_laser_cannon.xml
-dat/outfits/weapons/cheaters_ragnarok_beam.xml
 dat/outfits/weapons/disruptor_artillery_s1.xml
 dat/outfits/weapons/disruptor_artillery_s2.xml
 dat/outfits/weapons/disruptor_battery_s2.xml
