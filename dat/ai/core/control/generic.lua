@@ -242,7 +242,7 @@ function handle_messages( p, si, dopush )
          -- Special case where we accept messages from all pilots in the same fleet
          if l==nil or sameFleet( p, sender ) then
             if msgtype == "hyperspace" then
-               if dopush then
+               if dopush and ai.taskname()~="hyperspace_follow" then
                   ai.pushtask("hyperspace_follow", data)
                   taskchange = true
                end
@@ -299,6 +299,12 @@ function handle_messages( p, si, dopush )
                         ai.pushtask("attack", data)
                         taskchange = true
                      end
+                  end
+               elseif msgtype=="hyperspace_abort" then
+                  if ai.taskname()=="hyperspace_follow" then
+                     ai.poptask()
+                     ai.hyperspaceAbort()
+                     taskchange = true
                   end
 
                -- Escort commands
@@ -495,16 +501,17 @@ function control( dt )
       if l then
          for i, msg in ipairs(ai.messages()) do
             local sender, msgtype, _data = msg[1], msg[2], msg[3]
-            if l==sender then
-               if msgtype=="hyperspace_abort" then
+            if l==sender and msgtype=="hyperspace_abort" then
+               if ai.taskname()=="hyperspace_follow" then
+                  ai.poptask()
                   ai.hyperspaceAbort()
-                  return
                end
+               return
             end
          end
       end
       -- Tell followers to jump if not doing so
-      p:msg(p:followers(), "hyperspace", ai.taskdata())
+      --p:msg(p:followers(), "hyperspace", ai.taskdata())
       return
    end
 

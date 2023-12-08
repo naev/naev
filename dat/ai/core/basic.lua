@@ -745,6 +745,7 @@ end
 
 -- luacheck: globals hyperspace_follow (AI Task functions passed by name)
 function hyperspace_follow( target )
+   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
    ai.pushsubtask( "_hyp_approach_follow", target )
 end
 
