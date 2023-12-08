@@ -129,7 +129,7 @@ static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset )
    b = NULL;
 
    if (lua_isjump(L, ind)) {
-      LuaJump *lj = luaL_checkjump(L, ind);
+      const LuaJump *lj = luaL_checkjump(L, ind);
       a = system_getIndex( lj->srcid );
       b = system_getIndex( lj->destid );
       if (offset != NULL)
@@ -230,7 +230,6 @@ int lua_isjump( lua_State *L, int ind )
  */
 static int jumpL_get( lua_State *L )
 {
-   LuaJump lj;
    StarSystem *a, *b;
 
    a = luaL_validsystem(L,1);
@@ -242,6 +241,7 @@ static int jumpL_get( lua_State *L )
    }
 
    if (jump_getTarget(b, a) != NULL) {
+      LuaJump lj;
       lj.srcid  = a->id;
       lj.destid = b->id;
       lua_pushjump(L, lj);
@@ -283,9 +283,9 @@ static int jumpL_eq( lua_State *L )
 static int jumpL_tostring( lua_State *L )
 {
    char buf[STRMAX_SHORT];
-   LuaJump *lj = luaL_checkjump(L,1);
-   StarSystem *src = system_getIndex( lj->srcid );
-   StarSystem *dst = system_getIndex( lj->destid );
+   const LuaJump *lj = luaL_checkjump(L,1);
+   const StarSystem *src = system_getIndex( lj->srcid );
+   const StarSystem *dst = system_getIndex( lj->destid );
    snprintf( buf, sizeof(buf), _("Jump( %s -> %s )"), _(src->name), _(dst->name) );
    lua_pushstring( L, buf );
    return 1;

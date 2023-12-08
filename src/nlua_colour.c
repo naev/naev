@@ -161,7 +161,7 @@ static int colL_tostring( lua_State * L )
 {
    const glColour *col = luaL_checkcolour(L,1);
    char buf[STRMAX_SHORT];
-   snprintf( buf, sizeof(buf), "col( %.2f, %.2f, %.2f, %.2f )", col->r, col->g, col->b, col->a );
+   snprintf( buf, sizeof(buf), "Colour( %.2f, %.2f, %.2f, %.2f )", col->r, col->g, col->b, col->a );
    lua_pushstring( L, buf );
    return 1;
 }

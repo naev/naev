@@ -231,7 +231,7 @@ int escort_clearDeployed( Pilot *p )
    /* Iterate backwards so we don't have to care about indices. */
    for (int j=array_size(p->escorts)-1; j>=0; j--) {
       Pilot *pe;
-      Escort_t *e = &p->escorts[j];
+      const Escort_t *e = &p->escorts[j];
 
       /* Only try to dock fighters. */
       if (e->type != ESCORT_TYPE_BAY)
@@ -265,7 +265,7 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int idx )
       return 1;
 
    for (int i=0; i<array_size(parent->escorts); i++) {
-      Pilot *e = pilot_get( parent->escorts[i].id );
+      const Pilot *e = pilot_get( parent->escorts[i].id );
       if (e == NULL) /* Most likely died. */
          continue;
 
@@ -411,7 +411,7 @@ int escort_playerCommand( Pilot *e )
  *    @param parent Pilot giving the order.
  *    @param jp Where to jump.
  */
-int escorts_jump( Pilot *parent, JumpPoint *jp )
+int escorts_jump( Pilot *parent, const JumpPoint *jp )
 {
    int ret;
    LuaJump lj;
