@@ -2843,6 +2843,14 @@ void pilot_hyperspaceAbort( Pilot* p )
    pilot_rmFlag(p, PILOT_HYP_BEGIN);
    pilot_rmFlag(p, PILOT_HYP_BRAKE);
    pilot_rmFlag(p, PILOT_HYP_PREP);
+
+   /* Try to inform followers. */
+   for (int i=0; i<array_size(p->escorts); i++) {
+      const Pilot *e = pilot_get( p->escorts[i].id );
+      if (e == NULL) /* Most likely died. */
+         continue;
+      pilot_msg( p, e, "hyperspace_abort", 0 );
+   }
 }
 
 /**

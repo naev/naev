@@ -191,6 +191,7 @@ static int aiL_nearhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_rndhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_hyperspace( lua_State *L ); /* [number] hyperspace() */
 static int aiL_canHyperspace( lua_State *L );
+static int aiL_hyperspaceAbort( lua_State *L );
 
 /* escorts */
 static int aiL_dock( lua_State *L ); /* dock( number ) */
@@ -289,6 +290,7 @@ static const luaL_Reg aiL_methods[] = {
    { "rndhyptarget", aiL_rndhyptarget },
    { "hyperspace", aiL_hyperspace },
    { "canHyperspace", aiL_canHyperspace },
+   { "hyperspaceAbort", aiL_hyperspaceAbort },
    { "dock", aiL_dock },
    /* combat */
    { "aim", aiL_aim },
@@ -2629,6 +2631,18 @@ static int aiL_canHyperspace( lua_State *L )
 {
    lua_pushboolean(L, space_canHyperspace(cur_pilot));
    return 1;
+}
+
+/**
+ * @brief Has the AI abandon hyperspace if applicable.
+ *
+ * @luafunc hyperspaceAbort
+ */
+static int aiL_hyperspaceAbort( lua_State *L )
+{
+   (void) L;
+   pilot_hyperspaceAbort( cur_pilot );
+   return 0;
 }
 
 /**

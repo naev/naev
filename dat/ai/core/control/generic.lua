@@ -196,7 +196,7 @@ function control_manual( dt )
    ai.combat( si.fighting )
 
    lead_fleet( p )
-   handle_messages( si, false )
+   handle_messages( p, si, false )
 end
 
 --[[
@@ -210,9 +210,8 @@ local function sameFleet( pa, pb )
    return la == lb
 end
 
-function handle_messages( si, dopush )
+function handle_messages( p, si, dopush )
    local taskchange = false
-   local p = ai.pilot()
    local l = p:leader()
    for i, msg in ipairs(ai.messages()) do
       local sender, msgtype, data = msg[1], msg[2], msg[3]
@@ -490,13 +489,30 @@ function control( dt )
    mem.elapsed = mem.elapsed + dt
    local p = ai.pilot()
 
+   -- Preparing for a jump, so we don't actually try to do anything else
+   if p:flags("jumpprep") then
+      local l = p:leader()
+      if l then
+         for i, msg in ipairs(ai.messages()) do
+            local sender, msgtype, _data = msg[1], msg[2], msg[3]
+            if l==sender then
+               if msgtype=="hyperspace_abort" then
+                  ai.hyperspaceAbort()
+                  return
+               end
+            end
+         end
+      end
+      return
+   end
+
    -- Task information stuff
    local task = ai.taskname()
    local si = _stateinfo( task )
    ai.combat( si.fighting )
 
    lead_fleet( p )
-   local taskchange = handle_messages( si, true )
+   local taskchange = handle_messages( p, si, true )
 
    -- Select new leader
    local l = p:leader()
@@ -511,11 +527,6 @@ function control( dt )
             l = nil
          end
       end
-   end
-
-   -- Preparing for a jump, so we don't actually try to do anything else
-   if p:flags("jumpprep") then
-      return
    end
 
    -- Try to stealth if leader is stealthed
