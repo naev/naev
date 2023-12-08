@@ -1733,6 +1733,9 @@ static int pilotL_weapsetActive( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Sets up an item in a weapon set.
+ */
 static int weapsetItem( lua_State *L, int *k, const Pilot *p, const PilotOutfitSlot *slot, const Pilot *target )
 {
    const Damage *dmg;
@@ -1811,7 +1814,7 @@ static int weapsetItem( lua_State *L, int *k, const Pilot *p, const PilotOutfitS
       lua_pushnumber( L, slot->u.ammo.quantity );
       lua_rawset(L,-3);
 
-   /* Ammo quantity relative. */
+      /* Ammo quantity relative. */
       lua_pushstring(L,"left_p");
       lua_pushnumber( L, (double)slot->u.ammo.quantity / (double)pilot_maxAmmoO(p,slot->outfit) );
       lua_rawset(L,-3);
@@ -1926,18 +1929,17 @@ static int pilotL_weapset( lua_State *L )
          all = lua_toboolean(L,2);
          id  = p->active_set;
       }
-      else
+      else {
          NLUA_INVALID_PARAMETER(L);
+         return 0;
+      }
    }
    else
       id = p->active_set;
    id = CLAMP( 0, PILOT_WEAPON_SETS, id );
 
    /* Get target. */
-   if (p->target != p->id)
-      target = pilot_get( p->target );
-   else
-      target = NULL;
+   target = (p->target != p->id) ? pilot_get(p->target) : NULL;
 
    /* Push name. */
    lua_pushstring( L, pilot_weapSetName( p, id ) );

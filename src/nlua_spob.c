@@ -173,11 +173,10 @@ LuaSpob luaL_checkspob( lua_State *L, int ind )
  */
 Spob* luaL_validspob( lua_State *L, int ind )
 {
-   LuaSpob lp;
    Spob *p;
 
    if (lua_isspob(L, ind)) {
-      lp = luaL_checkspob(L, ind);
+      LuaSpob lp = luaL_checkspob(L, ind);
       p  = spob_getIndex(lp);
    }
    else if (lua_isstring(L, ind))
@@ -463,7 +462,7 @@ static int spobL_getAll( lua_State *L )
 static int spobL_system( lua_State *L )
 {
    LuaSystem sys;
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    const char *sysname = spob_getSystem( p->name );
    if (sysname == NULL)
       return 0;
@@ -509,7 +508,7 @@ static int spobL_eq( lua_State *L )
  */
 static int spobL_name( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_pushstring(L, spob_name(p));
    return 1;
 }
@@ -593,7 +592,7 @@ static int spobL_faction( lua_State *L )
  */
 static int spobL_colour( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    const glColour *col = spob_getColour( p );
    lua_pushcolour( L, *col );
    return 1;
@@ -610,7 +609,7 @@ static int spobL_colour( lua_State *L )
  */
 static int spobL_colourChar( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    char str[2];
    str[0] = spob_getColourChar( p );
    str[1] = '\0';
@@ -646,7 +645,7 @@ static int spobL_class(lua_State *L )
  */
 static int spobL_classLong(lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_pushstring(L, spob_getClassName(p->class));
    return 1;
 }
@@ -673,7 +672,7 @@ static int spobL_classLong(lua_State *L )
  */
 static int spobL_services( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    /* Return result in table */
    lua_newtable(L);
    /* allows syntax like foo = spob.get("foo"); if foo["bar"] then ... end */
@@ -705,7 +704,7 @@ static int spobL_services( lua_State *L )
  */
 static int spobL_flags( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_newtable(L);
    if (spob_isFlag( p, SPOB_NOMISNSPAWN )) {
       lua_pushstring(L, "nomissionspawn");
@@ -786,7 +785,7 @@ static int spobL_landDeny( lua_State *L )
  */
 static int spobL_getLandAllow( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_pushboolean(L, p->land_override>0);
    return 1;
 }
@@ -801,7 +800,7 @@ static int spobL_getLandAllow( lua_State *L )
  */
 static int spobL_getLandDeny( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_pushboolean(L, p->land_override<0);
    return 1;
 }
@@ -816,7 +815,7 @@ static int spobL_getLandDeny( lua_State *L )
  */
 static int spobL_position( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_pushvector(L, p->pos);
    return 1;
 }
@@ -832,7 +831,7 @@ static int spobL_position( lua_State *L )
 static int spobL_gfxSpace( lua_State *L )
 {
    glTexture *tex;
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    if (p->gfx_space == NULL) { /* Not loaded. */
       /* If the spob has no texture, just return nothing. */
       if (p->gfx_spaceName == NULL)
@@ -889,7 +888,7 @@ static int spobL_gfxExteriorPath( lua_State *L )
  */
 static int spobL_gfxComm( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    if (p->gfx_comm==NULL)
       return spobL_gfxSpace(L);
    lua_pushtex( L, gl_newImage( p->gfx_comm, 0 ) );
@@ -905,7 +904,7 @@ static int spobL_gfxComm( lua_State *L )
  */
 static int spobL_shipsSold( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    Ship **s = tech_getShip( p->tech );
 
    /* Push results in a table. */
@@ -928,7 +927,7 @@ static int spobL_shipsSold( lua_State *L )
  */
 static int spobL_outfitsSold( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    Outfit **o = tech_getOutfit( p->tech );
 
    /* Push results in a table. */
@@ -975,7 +974,7 @@ static int spobL_commoditiesSold( lua_State *L )
  */
 static int spobL_isBlackMarket( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_pushboolean(L, spob_hasService(p, SPOB_SERVICE_BLACKMARKET));
    return 1;
 }
@@ -991,7 +990,7 @@ static int spobL_isBlackMarket( lua_State *L )
  */
 static int spobL_isKnown( lua_State *L )
 {
-   Spob *s = luaL_validspob(L,1);
+   const Spob *s = luaL_validspob(L,1);
    lua_pushboolean(L, spob_isKnown(s));
    return 1;
 }
@@ -1035,7 +1034,7 @@ static int spobL_setKnown( lua_State *L )
  */
 static int spobL_recordCommodityPriceAtTime( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    ntime_t t = luaL_validtime(L, 2);
    spob_averageSeenPricesAtTime( p, t );
    return 0;
