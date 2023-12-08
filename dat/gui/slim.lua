@@ -669,12 +669,12 @@ local function render_ammoBar( weap, x, y )
    gfx.renderRect( x+offsets[1], y + offsets[2], charge * bar_ready_w, bar_ready_h, colready)
 
    local col
-   if weap.level==1 then
+   if weap.active then
+      col = cols.weap_on
+   elseif weap.level==1 then
       col = cols.weap_pri
    elseif weap.level==2 then
       col = cols.weap_sec
-   elseif weap.active then
-      col = cols.weap_on
    else
       col = cols.weap_off
    end
