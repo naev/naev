@@ -47,7 +47,7 @@
 #define PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY 5. /**< Time the player is safe (from being targetted) after jumping in. */
 
 /* Pilot-related hooks. */
-enum {
+typedef enum PilotHookType_ {
    PILOT_HOOK_NONE,      /**< No hook. */
    PILOT_HOOK_CREATION,  /**< Pilot was created. */
    PILOT_HOOK_DEATH,     /**< Pilot died. */
