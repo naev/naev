@@ -78,6 +78,7 @@ end
 -- Land hook.
 function land()
    local scur = spob.cur()
+
    mem.enter_src = scur
    local harjadesc = _("You've found Harja. He's sourly watching the galactic news, and hasn't noticed you yet.")
 
@@ -90,7 +91,7 @@ function land()
    elseif scur ~= startplanet and mem.stage == stages.findHarja then
       -- Harja appears randomly in the spaceport bar.
       local st = scur:tags()
-      if not (st.military or st.restricted) and rnd.rnd() < 0.25 then
+      if scur:faction()==faction.get("Sirius") and not (st.military or st.restricted) and rnd.rnd() < 0.25 then
          mem.harja_npc = misn.npcAdd("talkHarja", _("Harja"), achack.harja.portrait, harjadesc, 4)
          mem.harjaplanet, mem.harjasys = spob.cur() -- Harja, once he spawns, stays put.
       end
