@@ -513,6 +513,11 @@ function control( dt )
       end
    end
 
+   -- Preparing for a jump, so we don't actually try to do anything else
+   if p:flags("jumpprep") then
+      return
+   end
+
    -- Try to stealth if leader is stealthed
    if l then
       if l:flags("stealth") then

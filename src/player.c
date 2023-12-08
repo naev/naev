@@ -1186,13 +1186,12 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
    /* We always have to run ai_think in the case the player has escorts so that
-    * they properly form formations. */
-   ai_think( pplayer, dt );
+    * they properly form formations, however, we only have to do the task under manual control.. */
+   ai_think( pplayer, pilot_isFlag(pplayer, PILOT_MANUAL_CONTROL) );
 
    /* Under manual control is special. */
-   if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL ) || pilot_isFlag( pplayer, PILOT_HIDE )) {
+   if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL ) || pilot_isFlag( pplayer, PILOT_HIDE ))
       return;
-   }
 
    /* Not facing anything yet. */
    facing = 0;

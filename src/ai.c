@@ -787,11 +787,10 @@ void ai_exit (void)
  * @brief Heart of the AI, brains of the pilot.
  *
  *    @param pilot Pilot that needs to think.
- *    @param dt Current delta tick.
+ *    @param dotask Whether or not to do the task, or just control tick.
  */
-void ai_think( Pilot* pilot, const double dt )
+void ai_think( Pilot* pilot, int dotask )
 {
-   (void) dt;
    nlua_env env;
    AIMemory oldmem;
    Task *t;
@@ -836,9 +835,10 @@ void ai_think( Pilot* pilot, const double dt )
       t = ai_curTask( cur_pilot );
    }
 
-   if (pilot_isFlag(pilot,PILOT_PLAYER) &&
-       !pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL))
+   if (!dotask) {
+      ai_unsetPilot( oldmem );
       return;
+   }
 
    /* pilot has a currently running task */
    if (t != NULL) {

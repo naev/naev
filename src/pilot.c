@@ -2291,7 +2291,7 @@ void pilot_update( Pilot* pilot, double dt )
             char buf[16];
 
             /* Play random explosion sound. */
-            snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
+            snprintf( buf, sizeof(buf), "explosion%d", RNG(0,2) );
             sound_playPos( sound_get(buf), pilot->solid.pos.x, pilot->solid.pos.y,
                   pilot->solid.vel.x, pilot->solid.vel.y );
 
@@ -3017,7 +3017,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    ShipOutfitSlot *ship_list[] = { ship->outfit_structure, ship->outfit_utility, ship->outfit_weapon };
 
    /* Clear memory. */
-   memset(pilot, 0, sizeof(Pilot));
+   memset( pilot, 0, sizeof(Pilot) );
 
    /* Defaults. */
    pilot->lua_mem = LUA_NOREF;
@@ -3056,7 +3056,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
          memset( slot, 0, sizeof(PilotOutfitSlot) );
          slot->id    = array_size(pilot->outfits);
          slot->sslot = &ship_list[i][j];
-         array_push_back( &pilot->outfits, slot );
+         array_push_back( &pilot->outfits, slot ); // NOLINT
          if (pilot_list_ptr[i] != &pilot->outfit_weapon)
             slot->weapset = -1;
          /* We'll ignore non-required outfits if NO_OUTFITS is set. */
@@ -3064,7 +3064,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
             pilot_addOutfitRaw( pilot, slot->sslot->data, slot );
       }
    }
-   array_shrink( &pilot->outfits );
+   array_shrink( &pilot->outfits ); // NOLINT
 
    /* Add intrinsics if applicable. */
    if (!pilot_isFlagRaw(flags, PILOT_NO_OUTFITS)) {
@@ -3200,7 +3200,7 @@ static void pilot_init_trails( Pilot* p )
 
    for (int g=0; g<n; g++)
       if (pilot_trail_generated( p, g ))
-         array_push_back( &p->trail, spfx_trail_create( p->ship->trail_emitters[g].trail_spec ) );
+         array_push_back( &p->trail, spfx_trail_create( p->ship->trail_emitters[g].trail_spec ) ); // NOLINT
 }
 
 /**
@@ -3224,7 +3224,7 @@ Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char
    }
 
    /* Set the pilot in the stack -- must be there before initializing */
-   array_push_back( &pilot_stack, p );
+   array_push_back( &pilot_stack, p ); // NOLINT
 
    /* Initialize the pilot. */
    pilot_init( p, ship, name, faction, dir, pos, vel, flags, dockpilot, dockslot );
@@ -3299,7 +3299,7 @@ unsigned int pilot_clone( const Pilot *ref )
    }
 
    /* Set the pilot in the stack -- must be there before initializing */
-   p = &array_grow( &pilot_stack );
+   p = &array_grow( &pilot_stack ); // NOLINT
    *p = dyn;
 
    /* Initialize the pilot. */
@@ -3327,7 +3327,7 @@ unsigned int pilot_addStack( Pilot *p )
    p->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
    pilot_setFlag( p, PILOT_NOFREE );
 
-   array_push_back( &pilot_stack, p );
+   array_push_back( &pilot_stack, p ); // NOLINT
 
    /* Have to reset after adding to stack, as some Lua functions will run code on the pilot. */
    pilot_reset( p );
@@ -3351,7 +3351,7 @@ void pilot_clearTrails( Pilot *p )
 {
    for (int j=0; j<array_size(p->trail); j++)
       spfx_trail_remove( p->trail[j] );
-   array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
+   array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) ); // NOLINT
    pilot_init_trails( p );
 }
 
@@ -3825,8 +3825,11 @@ void pilots_update( double dt )
          continue;
 
       /* Hyperspace gets special treatment */
-      if (pilot_isFlag(p, PILOT_HYP_PREP))
+      if (pilot_isFlag(p, PILOT_HYP_PREP)) {
+         if (!pilot_isFlag(p, PILOT_HYPERSPACE))
+            ai_think( p, 0 );
          pilot_hyperspace(p, dt);
+      }
       /* Entering hyperspace. */
       else if (pilot_isFlag(p, PILOT_HYP_END)) {
          if ((VMOD(p->solid.vel) < 2*solid_maxspeed( &p->solid, p->speed, p->accel) ) && (p->ptimer < 0.))
@@ -3843,7 +3846,7 @@ void pilots_update( double dt )
          if (pilot_isFlag(p, PILOT_PLAYER))
             player_think( p, dt );
          else
-            ai_think( p, dt );
+            ai_think( p, 1 );
       }
    }
 
