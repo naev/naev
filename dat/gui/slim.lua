@@ -61,9 +61,10 @@ function create()
    cols.flow    = colour.new( 189/255, 166/255,  85/255 )
    cols.missile = colour.new(cols.txt_enm)
    -- Weaposn
-   cols.weap_non= colour.new( "FontGrey" )
+   cols.weap_off= colour.new( "FontGrey" )
    cols.weap_pri= colour.new( "FontRed" )
    cols.weap_sec= colour.new( "FontYellow" )
+   cols.weap_on = colour.new( "FontGreen" )
    -- Active outfit bar
    cols.slot_bg = colour.new(  12/255,  14/255,  20/255 )
 
@@ -608,7 +609,30 @@ local function render_armourBar( data, value, stress_value, txt, txtcol, size, c
    end
 end
 
-local function render_ammoBar( name, x, y, value, txt, txtcol )
+local function render_ammoBar( weap, x, y )
+   local name, txtcol, value, track
+   local txt = weap.name
+
+   if weap.left then
+      name = "ammo"
+      txt = txt .. " (" .. weap.left .. ")"
+      if weap.left == 0 then
+         txtcol = cols.txt_wrn
+      else
+         txtcol = cols.txt_bar
+      end
+      if not weap.in_arc and ptarget ~= nil then
+         txtcol = cols.txt_una
+      end
+      value = weap.left_p
+      track = weap.track or weap.lockon
+   else
+      name = "heat"
+      txtcol = cols.txt_bar
+      value = weap.heat
+      track = weap.track
+   end
+
    local offsets = bar_offsets['ammo']
    local l_bg = bgs[name]
    local l_col
@@ -616,10 +640,10 @@ local function render_ammoBar( name, x, y, value, txt, txtcol )
    gfx.renderTex( bgs.ready, x + offsets[1], y + offsets[2])
 
    -- Overheat or ammo capacity
-   if value[1] > 0 then
+   if value > 0 then
       if name == "heat" then
-         value[1] = value[1] / 2.
-         if value[1] > .5 then
+         value = value * 0.5
+         if value > 0.5 then
             l_col = cols.heat2
          else
             l_col = cols.heat
@@ -628,39 +652,49 @@ local function render_ammoBar( name, x, y, value, txt, txtcol )
          l_col = cols[name]
       end
 
-      gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
+      gfx.renderRect( x + offsets[1], y + offsets[1], value * bar_weapon_w, bar_weapon_h, l_col)
    end
 
    -- Refire indicator
-   gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, value[6])
+   local colready = cols.ready
+   local charge = weap.cooldown
+   if weap.charge then
+      charge = weap.charge
+      if weap.charge==1 or weap.cooldown==0 then
+         colready = cols.energy
+      else
+         colready = cols.txt_wrn
+      end
+   end
+   gfx.renderRect( x+offsets[1], y + offsets[2], charge * bar_ready_w, bar_ready_h, colready)
 
    local col
-   if value[3] == 1 then
+   if weap.level==1 then
       col = cols.weap_pri
-   elseif value[3] == 2 then
+   elseif weap.level==2 then
       col = cols.weap_sec
+   elseif weap.active then
+      col = cols.weap_on
    else
-      col = cols.weap_non
+      col = cols.weap_off
    end
-   --print( col )
    gfx.renderTex( bgs.bar_weapon, x, y, col )
-   --gfx.renderTex( bgs.bar_weapon, x, y )
 
    local textoffset = 0
    local trackcol
-   if value[4] then
-      if value[4] == -1 or ptarget == nil then
+   if track then
+      if track == -1 or ptarget == nil then
          trackcol = cols.txt_una
-      elseif value[5] then -- Handling missile lock-on.
-         if value[4] < 1. then
+      elseif weap.lockon then
+         if track < 1. then
             local h, s, v = cols.txt_una:hsv()
             trackcol = colour.new( cols.txt_una )
-            trackcol:setHSV( h, s, v + value[4] * (1-v))
+            trackcol:setHSV( h, s, v + track * (1-v))
          else
             trackcol = colour.new( "Green" )
          end
       else -- Handling turret tracking.
-         trackcol = colour.new(1-value[4], value[4], 0)
+         trackcol = colour.new(1-track, track, 0)
       end
       gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], trackcol )
       textoffset = track_w + 2
@@ -801,37 +835,8 @@ function render( dt, dt_mod )
    end
 
    --Weapon bars
-   for num, weapon in ipairs(wset) do
-      txt = weapon.name
-      local values
-      if weapon.left then -- Truncate names for readability.
-         txt = txt .. " (" .. weapon.left .. ")"
-         if weapon.left == 0 then
-            col = cols.txt_wrn
-         else
-            col = cols.txt_bar
-         end
-         if not weapon.in_arc and ptarget ~= nil then
-            col = cols.txt_una
-         end
-         values = {weapon.left_p, weapon.cooldown, weapon.level,
-               weapon.track or weapon.lockon, weapon.lockon, cols.ready }
-         render_ammoBar( "ammo", x_ammo, y_ammo - (num-1)*28, values, txt, col)
-      else
-         col = cols.txt_bar
-         values = {weapon.heat, weapon.cooldown, weapon.level, weapon.track, nil, cols.ready}
-
-         if weapon.charge then
-            values[2] = weapon.charge
-            if weapon.charge == 1 or weapon.cooldown == 0 then
-               values[6] = cols.energy
-            else
-               values[6] = cols.txt_wrn
-            end
-         end
-
-         render_ammoBar( "heat", x_ammo, y_ammo - (num-1)*28, values, txt, col )
-      end
+   for n, w in ipairs(wset) do
+      render_ammoBar( w, x_ammo, y_ammo-(n-1)*28 )
    end
 
    -- Formation selection button
