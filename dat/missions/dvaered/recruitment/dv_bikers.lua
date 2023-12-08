@@ -137,13 +137,15 @@ end
 function enter()
    -- Player will perform the Hallway to Hell
    if mem.misn_state == 2 and system.cur() == mem.convsys then
-      if player.pilot():ship():nameRaw() == "Hyena" or player.pilot():ship():nameRaw() == "Pirate Hyena" then
+      local pp = player.pilot()
+      local ps = pp:ship()
+      if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
          pilot.toggleSpawn()
          pilot.clear()
          local targetF = faction.dynAdd( "Independent", "targets", _("Targets"), {clear_enemies=true, clear_allies=true} )
 
          -- Put the targets
-         local center = player.pilot():pos()
+         local center = pp:pos()
          local t1 = center + vec2.new(0,5000)
          local t2 = center + vec2.new(-4000,-2000)
          local t3 = center + vec2.new(4000,-2000)
@@ -154,7 +156,7 @@ function enter()
          mem.pil2:setHealth(10)
          mem.pil3:setHealth(10)
          mem.pil1:setHilight()
-         player.pilot():setTarget(mem.pil1)
+         pp:setTarget(mem.pil1)
          mem.pil1:disable()
          mem.pil2:disable()
          mem.pil3:disable()
@@ -198,8 +200,8 @@ function enter()
          mem.pla3:control()
 
          -- Block the player and set timers
-         player.pilot():control()
-         player.pilot():face( mem.pil1 )
+         pp:control()
+         pp:face( mem.pil1 )
          mem.countdown = 10
          mem.omsg = player.omsgAdd(tostring(mem.countdown), 0, 50)
          hook.timer( 1.0, "timerIncrement", _("GO!") )
@@ -222,7 +224,9 @@ So, don't try to auto-target around, and just shoot at the targets I will be ind
    -- Player fights Blue Belly Billy
    elseif mem.misn_state == 4 and system.cur() == mem.convsys then
 
-      if player.pilot():ship():nameRaw() == "Hyena" or player.pilot():ship():nameRaw() == "Pirate Hyena" then
+      local pp = player.pilot()
+      local ps = pp:ship()
+      if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
          pilot.toggleSpawn()
          pilot.clear()
 
@@ -232,8 +236,8 @@ So, don't try to auto-target around, and just shoot at the targets I will be ind
          mem.bbb:moveto( mem.convpnt:pos() + vec2.new(3000, 0) )
          mem.misn_state = 5
 
-         player.pilot():control()
-         player.pilot():face(mem.bbb)
+         pp:control()
+         pp:face(mem.bbb)
 
          mem.countdown = 10
          mem.omsg = player.omsgAdd(tostring(mem.countdown), 0, 50)
@@ -265,18 +269,21 @@ function land()
       vn.clear()
       vn.scene()
       vn.transition( ) -- TODO: rework that part once Baron Sauterfeldt has a portrait
-      vn.na(_([[After landing, you are approached by a group of well-dressed people: "His Lordship, the Baron Sauterfeldt, will encounter you. Please follow us to the presidential palace."
-They guide you to the urban transport station, and while a crowd of workers are waiting for the next train in a suffocating heat, you enter a small shuttle: "His Lordship decided the creation of the hypervelocity shuttles system last cycle. Since then, this system saves much time to first-class citizen who used to get stuck in traffic jams or in over-crowded heliports. His genial idea was to use the same tunnel net as the subway."]]))
-      vn.na(_([["The shuttle system leads us directly under the presidential palace. I'm afraid you won't see its new pediment that His Lordship had built recently."
-You proceed to follow your guides through a checkpoint into the administrative part of the palace, the kind of place where people wear moccasins and the carpets have no spots. You enter a seemingly common and empty meeting room and start to ask yourself where the Baron is.]])) -- Remark: implicitly, we suggest the baron is in his Gauss, the Pinnacle.
+      vn.na(_([[After landing, you are approached by a group of well-dressed people: "His Lordship, the Baron Sauterfeldt, will encounter you. Please follow us to the presidential palace."]]))
+      vn.na(_([[They guide you to the urban transport station, and while a crowd of workers are waiting for the next train in a suffocating heat, you enter a small shuttle: "His Lordship decided the creation of the hypervelocity shuttles system last cycle. Since then, this system saves much time to first-class citizen who used to get stuck in traffic jams or in over-crowded heliports. His genial idea was to use the same tunnel net as the subway."]]))
+      vn.na(_([["The shuttle system leads us directly under the presidential palace. I'm afraid you won't see its new pediment that His Lordship had built recently."]]))
+      vn.na(_([[You proceed to follow your guides through a checkpoint into the administrative part of the palace, the kind of place where people wear moccasins and the carpets have no spots. You enter a seemingly common and empty meeting room and start to ask yourself where the Baron is.]])) -- Remark: implicitly, we suggest the baron is in his Gauss, the Pinnacle.
       vn.na(fmt.f(_([[Suddenly, a huge holographic face appears in the centre of the room:
-"Hello, and welcome on the planet Ulios, {player}! I am the Baron Dovai Sauterfeldt. I hope you got a smooth travel to our very remote humble piece of land! I am truly delighted to meet you, {player}, truly… Or did we already meet before? Mmmm! I am afraid I am perfectly incapable to remember most of the astonishingly inspiring people I tend to meet.
-"Anyway, you are truly most certainly one very inspiring person, {player}, aren't you? Yes, you are! You know what? I am really happy to finally have time to discuss with such a notable person as you."]]), {player=player.name()}))
+"Hello, and welcome on the planet Ulios, {player}! I am the Baron Dovai Sauterfeldt. I hope you got a smooth travel to our very remote humble piece of land! I am truly delighted to meet you, {player}, truly… Or did we already meet before? Mmmm! I am afraid I am perfectly incapable to remember most of the astonishingly inspiring people I tend to meet."]])
+         {player=player.name()}))
+      vn.na(fmt.f(_([["Anyway, you are truly most certainly one very inspiring person, {player}, aren't you? Yes, you are! You know what? I am really happy to finally have time to discuss with such a notable person as you."]]),
+         {player=player.name()}))
       vn.na(fmt.f(_([[You start to wonder if the "special service" you came to provide was simply to endure the baron's spiel, but he continues:
 "{player}, do you know the Lady named Blue Belly Billy? Oh, of course you don't! For she is not the inspiring kind of person! She is the leader of a group… or rather a gang of young people. Nestor, do you like young people?"
-The man on your right answers: "Certainly not, your Lordship."]]), {player=player.name()}))
-      vn.na(_([[The baron continues: "I don't either, Nestor, they are rude and dirty and… young. Anyway, I got lost… So, this gang of young people have the particularity to fly Hyena interceptors. It is what one calls a Hyena bikers gang. Those bikers like to tune their ships, as they say, by using scavenged pieces of, preferably shiny, metal. A bit like magpies do with their nests, except they have worst taste.
-"That lady uses a fake pre-space-age trash top as left nozzle hubcap. My art historian, Flintley, examined it once, and noticed that this piece was constructed by the famous counterfeiter Themistocle Zweihundertshrittenausdaheim, who became later a famous artist. So this piece, although being a fake archaeological relic, is a true piece of Themistocle Zweihundertshrittenausdaheim!
+The man on your right answers: "Certainly not, your Lordship."]]),
+         {player=player.name()}))
+      vn.na(_([[The baron continues: "I don't either, Nestor, they are rude and dirty and… young. Anyway, I got lost… So, this gang of young people have the particularity to fly Hyena interceptors. It is what one calls a Hyena bikers gang. Those bikers like to tune their ships, as they say, by using scavenged pieces of, preferably shiny, metal. A bit like magpies do with their nests, except they have worst taste."]]))
+      vn.na(_([["That lady uses a fake pre-space-age trash top as left nozzle hubcap. My art historian, Flintley, examined it once, and noticed that this piece was constructed by the famous counterfeiter Themistocle Zweihundertshrittenausdaheim, who became later a famous artist. So this piece, although being a fake archaeological relic, is a true piece of Themistocle Zweihundertshrittenausdaheim!
 And as such, it belongs to my collection, is that true, Nestor?"
 The man on your right answers: "Certainly, your Lordship."]]))
       vn.na(fmt.f(_([[The baron explains his plan: "Hyena bikers will soon gather for a festival on {pnt} in {sys}. I want you to go there, find Blue Belly Billy, defy her in a Hyena duel, disable her ship, get her nozzle hubcap and come back." You ask if it would not be preferable to steal the hubcap while the ship is at dock, but the baron answers:
@@ -467,17 +474,17 @@ Please tell your boss we will pay him very soon! I promise! Don't get angry, I c
    vn.jump("hallway")
 
    vn.label("challenge")
-   biker(_([["There are plenty of kinds of challenges! Some consist in doing acrobatic figures, other are races. There is also the 'Bad Boar Battle' challenge, it is the one you must beat to enter my gang: the Big Bang Band, and it consists in flying to Dvaer Prime, broadcasting messages of insults against House Dvaered, and then… if you manage to get to a civilized planet in one piece, you have beaten the challenge."
-"Oh, and there is also the 'Hallway to Hell'. It was invented by my gang leader, Blue Belly Billy, and nowadays, she requires anybody who wants to defy her to first beat the Hallway to Hell. Do you want to try it out?"]]))
+   biker(_([["There are plenty of kinds of challenges! Some consist in doing acrobatic figures, other are races. There is also the 'Bad Boar Battle' challenge, it is the one you must beat to enter my gang: the Big Bang Band, and it consists in flying to Dvaer Prime, broadcasting messages of insults against House Dvaered, and then… if you manage to get to a civilized planet in one piece, you have beaten the challenge."]]))
+   biker(_([["Oh, and there is also the 'Hallway to Hell'. It was invented by my gang leader, Blue Belly Billy, and nowadays, she requires anybody who wants to defy her to first beat the Hallway to Hell. Do you want to try it out?"]]))
    vn.na(_([[You answer you would like to try it out.]]))
    biker(_([["Hey? I was joking, you know. The Hallway to Hell is the most deadly of all challenges. And if you survive it, you'll have to fight to death against Blue Belly Billy. No-one ever won against her!"]]))
    vn.na(_([[You insist.]])) -- This is a bit too directive, any reorganization is welcome to get the player feel they can actually decide what they say.
    vn.jump("hallway")
 
    vn.label("hallway")
-   biker(_([["If you want to approach Blue Belly Billy, you have to prove that you are worth of it. You need to cross the 'Hallway to Hell' inside a Hyena.
-It is a very simple challenge in principle, but only few manage to make it alive through the Hallway to Hell. And even fewer manage to make it in a time short enough for Blue Belly Billy to accept them to defy her.
-Let me explain: there are 3 weak targets in a triangle, and you need to destroy all those 3 targets with your Hyena. Sounds pretty simple, no? But between those targets, there are platforms that fire fury missiles at you. You'll have to dodge the missiles and destroy the 3 buoys before the timer runs out… unless you are too scared for our challenge and you did already pee your pants.
+   biker(_([["If you want to approach Blue Belly Billy, you have to prove that you are worth of it. You need to cross the 'Hallway to Hell' inside a Hyena."
+"It is a very simple challenge in principle, but only few manage to make it alive through the Hallway to Hell. And even fewer manage to make it in a time short enough for Blue Belly Billy to accept them to defy her."]]))
+   biker(_([[Let me explain: there are 3 weak targets in a triangle, and you need to destroy all those 3 targets with your Hyena. Sounds pretty simple, no? But between those targets, there are platforms that fire fury missiles at you. You'll have to dodge the missiles and destroy the 3 buoys before the timer runs out… unless you are too scared for our challenge and you did already pee your pants.
 We are preparing the set. Just take off to start the challenge!"]]))
 
    vn.done()
