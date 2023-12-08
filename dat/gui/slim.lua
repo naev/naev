@@ -9,9 +9,10 @@ local playerform = require "playerform"
 local radar_gfx, radar_x, radar_y, screen_h, screen_w
 local aset, cargo, nav_spob, nav_pnt, pp, ptarget, slot_w, slot_h, slot_y, timers
 local ta_pane_w, ta_pane_x, ta_pane_y, ta_pnt_pane_x, ta_pnt_pane_y, pl_pane_x, pl_pane_y
+local slot, slotend, slotframe
 -- This script has a lot of globals. It really loves them.
 -- The below variables aren't part of the GUI API and aren't accessed via _G:
--- luacheck: globals active active_icons aset bardata bar_offsets bar_ready_h bar_ready_w bars bar_weapon_h bar_weapon_w blinkcol bottom_bar buttons cargofree cargofreel cargo_light_off cargo_light_on cargoterml cooldown cooldown_bg cooldown_bg_h cooldown_bg_w cooldown_bg_x cooldown_bg_y cooldown_frame cooldown_frame_h cooldown_frame_w cooldown_frame_x cooldown_frame_y cooldown_panel cooldown_panel_x cooldown_panel_y cooldown_sheen cooldown_sheen_x cooldown_sheen_y deffont_h gfxWarn lmouse missile_lock_length missile_lock_text nav_hyp navstring planet_bg planet_pane_b planet_pane_m planet_pane_t player_pane_b player_pane_m player_pane_t pl_pane_h_b pl_pane_w_b pname pntflags ptarget_faction_gfx ptarget_gfx ptarget_gfx_draw_h ptarget_gfx_draw_w ptarget_gfx_h ptarget_gfx_w ptarget_target question sheen sheen_sm sheen_tiny sheen_weapon slot slotend slotend_h slotend_w slot_img_offs_x slot_img_offs_y slot_img_w slot_start_x stats sysname ta_cargo ta_cargo_x ta_cargo_y ta_center_x ta_center_y ta_fact_x ta_fact_y ta_image_x ta_image_y ta_pane_h ta_pnt_center_x ta_pnt_center_y ta_pnt_faction_gfx ta_pnt_fact_x ta_pnt_fact_y ta_pnt_gfx ta_pnt_gfx_draw_h ta_pnt_gfx_draw_w ta_pnt_gfx_h ta_pnt_gfx_w ta_pnt_image_x ta_pnt_image_y ta_pnt_pane_h ta_pnt_pane_h_b ta_pnt_pane_w ta_pnt_pane_w_b ta_question_h ta_question_w target_bg target_dir target_light_off target_light_on target_pane ta_speed ta_stats ta_warning_x ta_warning_y tflags track_h tracking_light track_w warnlight1 warnlight2 warnlight3 warnlight4 warnlight5 wset wset_name x_ammo y_ammo
+-- luacheck: globals active aset bardata bar_offsets bar_ready_h bar_ready_w bars bar_weapon_h bar_weapon_w blinkcol bottom_bar buttons cargofree cargofreel cargo_light_off cargo_light_on cargoterml cooldown cooldown_bg cooldown_bg_h cooldown_bg_w cooldown_bg_x cooldown_bg_y cooldown_frame cooldown_frame_h cooldown_frame_w cooldown_frame_x cooldown_frame_y cooldown_panel cooldown_panel_x cooldown_panel_y cooldown_sheen cooldown_sheen_x cooldown_sheen_y deffont_h gfxWarn lmouse missile_lock_length missile_lock_text nav_hyp navstring planet_bg planet_pane_b planet_pane_m planet_pane_t player_pane_b player_pane_m player_pane_t pl_pane_h_b pl_pane_w_b pname pntflags ptarget_faction_gfx ptarget_gfx ptarget_gfx_draw_h ptarget_gfx_draw_w ptarget_gfx_h ptarget_gfx_w ptarget_target question sheen sheen_sm sheen_tiny sheen_weapon slotend_h slotend_w slot_img_offs_x slot_img_offs_y slot_img_w slot_start_x stats sysname ta_cargo ta_cargo_x ta_cargo_y ta_center_x ta_center_y ta_fact_x ta_fact_y ta_image_x ta_image_y ta_pane_h ta_pnt_center_x ta_pnt_center_y ta_pnt_faction_gfx ta_pnt_fact_x ta_pnt_fact_y ta_pnt_gfx ta_pnt_gfx_draw_h ta_pnt_gfx_draw_w ta_pnt_gfx_h ta_pnt_gfx_w ta_pnt_image_x ta_pnt_image_y ta_pnt_pane_h ta_pnt_pane_h_b ta_pnt_pane_w ta_pnt_pane_w_b ta_question_h ta_question_w target_bg target_dir target_light_off target_light_on target_pane ta_speed ta_stats ta_warning_x ta_warning_y tflags track_h tracking_light track_w warnlight1 warnlight2 warnlight3 warnlight4 warnlight5 wset wset_name x_ammo y_ammo
 -- Unfortunately, it is an error to make any function a closure over more than 60 variables.
 -- Caution: the below **are** accessed via _G.
 -- luacheck: globals armour energy shield speed stress (_G[v])
@@ -135,10 +136,11 @@ function create()
    gui.targetPilotGFX(  tex_open( "radar_ship.png", 2, 2 ) )
 
    -- Active outfit list.
-   slot = tex_open( "slot.png" )
-   slotend = tex_open( "slotend.png" )
-   cooldown = tex_open( "cooldown.png", 6, 6 )
-   active =  tex_open( "active.png" )
+   slot        = tex_open( "slot.png" )
+   slotframe   = tex_open( "slot_frame.png" )
+   slotend     = tex_open( "slotend.png" )
+   cooldown    = tex_open( "cooldown.png", 6, 6 )
+   active      = tex_open( "active.png" )
 
    -- Active outfit bar
    slot_w, slot_h = slot:dim()
@@ -488,24 +490,15 @@ end
 local function update_wset()
    wset_name, wset  = pp:weapset(true)
 
--- Currently unused.
---[[
-   weap_icons = {}
-
-   for k, v in ipairs( wset ) do
-      weap_icons[k] = outfit.get( v.name ):icon()
-   end
---]]
    -- Set the names as short names
    for k, w in ipairs( wset ) do
       w.name = w.outfit:shortname()
    end
 
+   -- Set up icons for active outfits
    aset = pp:actives(true)
-   active_icons = {}
-
    for k, v in ipairs( aset ) do
-      active_icons[k] = v.outfit:icon()
+      v.icon = v.outfit:icon()
    end
    slot_start_x = screen_w/2 - #aset/2 * slot_w
 end
@@ -727,7 +720,6 @@ local function largeNumber( number, idp )
    return formatted
 end
 
-
 function render( dt, dt_mod )
    --Values
    armour, shield, stress = pp:health()
@@ -907,33 +899,30 @@ function render( dt, dt_mod )
       gfx.renderTexRaw( slotend, slot_start_x - slotend_w, slot_y, slotend_w, slotend_h, 1, 1, 0, 0, -1, 1 )
 
       gfx.renderRect( slot_start_x, slot_y, slot_w * #aset, slot_h, cols.slot_bg ) -- Background for all slots.
-      for i=1,#aset do
+      for i,a in ipairs(aset) do
          local slot_x = screen_w - slot_start_x - i * slot_w
 
          -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat-based somehow!
-         --if aset[i].type == "Afterburner" then
-            gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].heat, cols.heat ) -- Background (heat)
-         --end
+         gfx.renderRect( slot_x, slot_y, slot_w, slot_h * a.heat, cols.heat ) -- Background (heat)
+         gfx.renderTexRaw( a.icon, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
+         gfx.renderRect( slot_x, slot_y, slot_w, slot_h * a.heat, cols.afb ) -- Foreground (heat)
 
-         gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
-
-         --if aset[i].type == "Afterburner" then
-            gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].heat, cols.afb ) -- Foreground (heat)
-         --end
-
-         if aset[i].state == "on" then
+         if a.state == "on" then
             gfx.renderTex( active, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y )
-         elseif aset[i].state == "cooldown" then
-            local texnum = round(aset[i].cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
+         elseif a.state == "cooldown" then
+            local texnum = round(a.cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
          end
 
-         if aset[i].weapset then
-            gfx.print( true, _(aset[i].weapset), slot_x + slot_img_offs_x + 5,
+         if a.weapset then
+            gfx.print( true, _(a.weapset), slot_x + slot_img_offs_x + 5,
                   slot_y + slot_img_offs_y + 5, cols.txt_bar, slot_w, false )
          end
 
          gfx.renderTex( slot, slot_x, slot_y ) -- Frame
+         if a.active then
+            gfx.renderTex( slotframe, slot_x, slot_y, cols.weap_on ) -- Indicator
+         end
       end
 
       -- Draw the right-side bar cap.

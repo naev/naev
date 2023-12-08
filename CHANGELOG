@@ -1,4 +1,5 @@
 * 0.11.0-beta.2 (unreleased)
+   * Slim GUI now shows activated outfits and all weapons all the time
    * Collision system reworked (again) to take into account fast moving particles
    * Fixed collision polygons not properly being used
    * Added short names to some outfits such that they are easier to distinguish in the GUI

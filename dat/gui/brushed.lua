@@ -723,7 +723,7 @@ function render( _dt )
    for k, v in ipairs( pwset ) do
       v.is_outfit = false
       if v.level ~= 0 then
-         wset[ #wset + 1 ] = v
+         wset[ #wset+1 ] = v
       end
    end
    for k, v in ipairs( aset ) do
