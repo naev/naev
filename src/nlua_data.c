@@ -18,7 +18,7 @@
 #include "nluadef.h"
 
 /* Helper functions. */
-static size_t dataL_checkpos( lua_State *L, LuaData_t *ld, long pos );
+static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos );
 
 /* Data metatable methods. */
 static int dataL_gc( lua_State *L );
@@ -177,19 +177,23 @@ static int dataL_new( lua_State *L )
       ld.type = LUADATA_NUMBER;
       ld.elem = sizeof(float);
    }
-   else
+   else {
       NLUA_ERROR(L, _("unknown data type '%s'"), type);
+      return 0;
+   }
    ld.size = size*ld.elem;
    ld.data = calloc( ld.elem, size );
    lua_pushdata( L, ld );
    return 1;
 }
 
-static size_t dataL_checkpos( lua_State *L, LuaData_t *ld, long pos )
+static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos )
 {
    size_t mpos;
-   if (pos < 0)
+   if (pos < 0) {
       NLUA_ERROR(L, _("position argument must be positive!"));
+      return 0;
+   }
    mpos = pos * ld->elem;
    if (mpos >= ld->size)
       NLUA_ERROR(L, _("position argument out of bounds: %d of %d elements"), pos, ld->size/ld->elem);
@@ -370,8 +374,8 @@ static int dataL_convolve2d( lua_State *L )
    LuaData_t out;
    int p, u,v, ku,kv, bu,bv;
    int kw2,kh2, bw,bh, ow,oh;
-   float *I = (float*)lI->data;
-   float *K = (float*)lK->data;
+   const float *I = (const float*)lI->data;
+   const float *K = (const float*)lK->data;
    float *B, *O;
 
    /* Checks. */

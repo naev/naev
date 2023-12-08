@@ -310,7 +310,6 @@ static int texL_readData( lua_State *L )
    size_t size;
    uint8_t r, g, b, a;
    uint32_t pix;
-   int i, j;
    float *data;
 
    s = NULL;
@@ -321,13 +320,17 @@ static int texL_readData( lua_State *L )
    else
       s = luaL_checkstring(L,1);
    rw = PHYSFSRWOPS_openRead( s );
-   if (rw == NULL)
+   if (rw == NULL) {
       NLUA_ERROR(L, _("problem opening file '%s' for reading"), s );
+      return 0;
+   }
 
    /* Try to read the image. */
    surface = IMG_Load_RW( rw, 1 );
-   if (surface == NULL)
+   if (surface == NULL) {
       NLUA_ERROR(L, _("problem opening image for reading") );
+      return 0;
+   }
 
    /* Convert surface to LuaData_t */
    SDL_LockSurface( surface );
@@ -337,8 +340,8 @@ static int texL_readData( lua_State *L )
    ld.data = calloc( ld.elem*4, size );
    ld.type = LUADATA_NUMBER;
    data = (float*)ld.data;
-   for (i=0; i<surface->h; i++) {
-      for (j=0; j<surface->w; j++) {
+   for (int i=0; i<surface->h; i++) {
+      for (int j=0; j<surface->w; j++) {
          pix = get_pixel( surface, j, i );
          SDL_GetRGBA( pix, surface->format, &r, &g, &b, &a );
          size_t pos = 4*((surface->h-i-1)*surface->w+j);
@@ -469,8 +472,7 @@ static int texL_spriteFromDir( lua_State *L )
 {
 
    int sx, sy;
-
-   glTexture *tex = luaL_checktex( L, 1 );
+   const glTexture *tex = luaL_checktex( L, 1 );
    double a = luaL_checknumber( L, 2 );
 
    /* Calculate with parameter validity.. */

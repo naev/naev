@@ -961,7 +961,7 @@ unsigned int pilot_weaponSetShootStop( Pilot* p, PilotWeaponSet *ws, int level )
  *    @param p Pilot that is firing.
  *    @param w Pilot's beam outfit.
  */
-void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
+void pilot_stopBeam( const Pilot *p, PilotOutfitSlot *w )
 {
    double rate_mod, energy_mod, used;
 
