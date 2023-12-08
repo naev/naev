@@ -346,8 +346,12 @@ function goodevent()
             "Kermite",
          }
          local c = commodity.get( commodities[ rnd.rnd(1,#commodities) ] )
-         derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. you find that there is an entire hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You load as much of it as you can fit in your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
          player.fleetCargoAdd( c, rnd.rnd(30,100) )
+         if player.fleetCargoFree()==0 then
+            derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. you find that there is an entire hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You load as much of it as you can fit in your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
+         else
+            derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. you find that there is an entire hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You are able to load all of it into your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
+         end
       end )
    end
 
