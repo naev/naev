@@ -1733,6 +1733,144 @@ static int pilotL_weapsetActive( lua_State *L )
    return 1;
 }
 
+static int weapsetItem( lua_State *L, int *k, const Pilot *p, const PilotOutfitSlot *slot, const Pilot *target )
+{
+   const Damage *dmg;
+   const Outfit *o = slot->outfit;
+   int is_lau, is_fb;
+
+   /* Check if we should add. */
+   if (o == NULL)
+      return 0;
+   is_lau   = outfit_isLauncher(o);
+   is_fb    = outfit_isFighterBay(o);
+
+   /* Must be valid weapon. */
+   if (!(outfit_isBolt(o) || outfit_isBeam(o)
+         || is_lau || is_fb))
+      return 0;
+
+   /* Must be weapon. */
+   if (outfit_isMod(o) ||
+         outfit_isAfterburner(o))
+      return 0;
+
+   /* Set up new item. */
+   lua_pushnumber(L,++(*k));
+
+   /* We'll store the data in a table. */
+   lua_newtable(L);
+
+   /* Outfit. */
+   lua_pushstring(L,"outfit");
+   lua_pushoutfit(L,slot->outfit);
+   lua_rawset(L,-3);
+
+   /* Beams require special handling. */
+   if (outfit_isBeam(o)) {
+      double delay, firemod, enermod;
+      int has_beamid;
+      pilot_getRateMod( &firemod, &enermod, p, slot->outfit );
+
+      /* When firing, cooldown is always zero. When recharging,
+         * it's the usual 0-1 readiness value. */
+      lua_pushstring(L,"cooldown");
+      has_beamid = (slot->u.beamid > 0);
+      if (has_beamid)
+         lua_pushnumber(L, 0.);
+      else {
+         delay = (slot->timer / outfit_delay(o)) * firemod;
+         lua_pushnumber( L, CLAMP( 0., 1., 1. -delay ) );
+      }
+      lua_rawset(L,-3);
+
+      /* When firing, slot->timer represents the remaining duration. */
+      lua_pushstring(L,"charge");
+      if (has_beamid)
+         lua_pushnumber(L, CLAMP( 0., 1., slot->timer / o->u.bem.duration ) );
+      else
+         lua_pushnumber( L, CLAMP( 0., 1., 1. -delay ) );
+      lua_rawset(L,-3);
+   }
+   else {
+      double delay, firemod, enermod;
+      /* Set cooldown. */
+      lua_pushstring(L,"cooldown");
+      pilot_getRateMod( &firemod, &enermod, p, slot->outfit );
+      delay = outfit_delay(slot->outfit) * firemod;
+      if (delay > 0.)
+         lua_pushnumber( L, CLAMP( 0., 1., 1. - slot->timer / delay ) );
+      else
+         lua_pushnumber( L, 1. );
+      lua_rawset(L,-3);
+   }
+
+   /* Ammo quantity absolute. */
+   if (is_lau || is_fb) {
+      lua_pushstring(L,"left");
+      lua_pushnumber( L, slot->u.ammo.quantity );
+      lua_rawset(L,-3);
+
+   /* Ammo quantity relative. */
+      lua_pushstring(L,"left_p");
+      lua_pushnumber( L, (double)slot->u.ammo.quantity / (double)pilot_maxAmmoO(p,slot->outfit) );
+      lua_rawset(L,-3);
+   }
+
+   /* Launcher lockon. */
+   if (is_lau) {
+      double t = slot->u.ammo.lockon_timer;
+      lua_pushstring(L, "lockon");
+      if (t <= 0.)
+         lua_pushnumber(L, 1.);
+      else
+         lua_pushnumber(L, 1. - (t / slot->outfit->u.lau.lockon));
+      lua_rawset(L,-3);
+
+      /* Is in arc. */
+      lua_pushstring(L, "in_arc");
+      lua_pushboolean(L, slot->u.ammo.in_arc);
+      lua_rawset(L,-3);
+   }
+
+   /* Level. */
+   lua_pushstring(L,"level");
+   lua_pushnumber(L, slot->level+1);
+   lua_rawset(L,-3);
+
+   /* Temperature. */
+   lua_pushstring(L,"heat");
+   lua_pushnumber(L, pilot_heatFirePercent(slot->heat_T));
+   lua_rawset(L,-3);
+
+   /* Type. */
+   lua_pushstring(L, "type");
+   lua_pushstring(L, outfit_getType(slot->outfit));
+   lua_rawset(L,-3);
+
+   /* Damage type. */
+   dmg = outfit_damage( slot->outfit );
+   if (dmg != NULL) {
+      lua_pushstring(L, "dtype");
+      lua_pushstring(L, dtype_damageTypeToStr( dmg->type ) );
+      lua_rawset(L,-3);
+   }
+
+   /* Track. */
+   if (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
+      lua_pushstring(L, "track");
+      if (target != NULL)
+         lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.trackmin, slot->outfit->u.blt.trackmax ));
+      else
+         lua_pushnumber(L, -1);
+      lua_rawset(L,-3);
+   }
+
+   /* Add to table. */
+   lua_rawset(L,-3);
+   return 1;
+}
+
 /**
  * @brief Gets the weapset weapon of the pilot.
  *
@@ -1778,13 +1916,7 @@ static int pilotL_weapset( lua_State *L )
    Pilot *p, *target;
    int k, n;
    PilotWeaponSetOutfit *po_list;
-   PilotOutfitSlot *slot;
-   const Outfit *o;
-   double delay, firemod, enermod, t;
-   int id, all, level;
-   int is_lau, is_fb;
-   const Damage *dmg;
-   int has_beamid;
+   int id, all;
 
    /* Parse parameters. */
    all = 0;
@@ -1825,138 +1957,14 @@ static int pilotL_weapset( lua_State *L )
       /* Iterate over weapons. */
       for (int i=0; i<n; i++) {
          /* Get base look ups. */
-         slot = all ?  p->outfits[i] : p->outfits[ po_list[i].slotid ];
-         o    = slot->outfit;
-         if (o == NULL)
-            continue;
-         is_lau   = outfit_isLauncher(o);
-         is_fb    = outfit_isFighterBay(o);
-
-         /* Must be valid weapon. */
-         if (all && !(outfit_isBolt(o) || outfit_isBeam(o)
-               || is_lau || is_fb))
-            continue;
-
-         level    = slot->level;
+         const PilotOutfitSlot *slot = all ?  p->outfits[i] : p->outfits[ po_list[i].slotid ];
 
          /* Must match level. */
-         if (level != level_match)
+         if (slot->level != level_match)
             continue;
 
-         /* Must be weapon. */
-         if (outfit_isMod(o) ||
-               outfit_isAfterburner(o))
-            continue;
-
-         /* Set up for creation. */
-         lua_pushnumber(L,++k);
-         lua_newtable(L);
-
-         /* Outfit. */
-         lua_pushstring(L,"outfit");
-         lua_pushoutfit(L,slot->outfit);
-         lua_rawset(L,-3);
-
-         /* Beams require special handling. */
-         if (outfit_isBeam(o)) {
-            pilot_getRateMod( &firemod, &enermod, p, slot->outfit );
-
-            /* When firing, cooldown is always zero. When recharging,
-             * it's the usual 0-1 readiness value.
-             */
-            lua_pushstring(L,"cooldown");
-            has_beamid = (slot->u.beamid > 0);
-            if (has_beamid)
-               lua_pushnumber(L, 0.);
-            else {
-               delay = (slot->timer / outfit_delay(o)) * firemod;
-               lua_pushnumber( L, CLAMP( 0., 1., 1. -delay ) );
-            }
-            lua_rawset(L,-3);
-
-            /* When firing, slot->timer represents the remaining duration. */
-            lua_pushstring(L,"charge");
-            if (has_beamid)
-               lua_pushnumber(L, CLAMP( 0., 1., slot->timer / o->u.bem.duration ) );
-            else
-               lua_pushnumber( L, CLAMP( 0., 1., 1. -delay ) );
-            lua_rawset(L,-3);
-         }
-         else {
-            /* Set cooldown. */
-            lua_pushstring(L,"cooldown");
-            pilot_getRateMod( &firemod, &enermod, p, slot->outfit );
-            delay = outfit_delay(slot->outfit) * firemod;
-            if (delay > 0.)
-               lua_pushnumber( L, CLAMP( 0., 1., 1. - slot->timer / delay ) );
-            else
-               lua_pushnumber( L, 1. );
-            lua_rawset(L,-3);
-         }
-
-         /* Ammo quantity absolute. */
-         if (is_lau || is_fb) {
-            lua_pushstring(L,"left");
-            lua_pushnumber( L, slot->u.ammo.quantity );
-            lua_rawset(L,-3);
-
-         /* Ammo quantity relative. */
-            lua_pushstring(L,"left_p");
-            lua_pushnumber( L, (double)slot->u.ammo.quantity / (double)pilot_maxAmmoO(p,slot->outfit) );
-            lua_rawset(L,-3);
-         }
-
-         /* Launcher lockon. */
-         if (is_lau) {
-            t = slot->u.ammo.lockon_timer;
-            lua_pushstring(L, "lockon");
-            if (t <= 0.)
-               lua_pushnumber(L, 1.);
-            else
-               lua_pushnumber(L, 1. - (t / slot->outfit->u.lau.lockon));
-            lua_rawset(L,-3);
-
-         /* Is in arc. */
-            lua_pushstring(L, "in_arc");
-            lua_pushboolean(L, slot->u.ammo.in_arc);
-            lua_rawset(L,-3);
-         }
-
-         /* Level. */
-         lua_pushstring(L,"level");
-         lua_pushnumber(L, level+1);
-         lua_rawset(L,-3);
-
-         /* Temperature. */
-         lua_pushstring(L,"heat");
-         lua_pushnumber(L, pilot_heatFirePercent(slot->heat_T));
-         lua_rawset(L,-3);
-
-         /* Type. */
-         lua_pushstring(L, "type");
-         lua_pushstring(L, outfit_getType(slot->outfit));
-         lua_rawset(L,-3);
-
-         /* Damage type. */
-         dmg = outfit_damage( slot->outfit );
-         if (dmg != NULL) {
-            lua_pushstring(L, "dtype");
-            lua_pushstring(L, dtype_damageTypeToStr( dmg->type ) );
-            lua_rawset(L,-3);
-         }
-
-         /* Track. */
-         if (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
-            lua_pushstring(L, "track");
-            if (target != NULL)
-               lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.trackmin, slot->outfit->u.blt.trackmax ));
-            else
-               lua_pushnumber(L, -1);
-            lua_rawset(L,-3);
-         }
-
-         /* Set table in table. */
-         lua_rawset(L,-3);
+         /* Add the item. */
+         weapsetItem( L, &k, p, slot, target );
       }
    }
    return 2;
