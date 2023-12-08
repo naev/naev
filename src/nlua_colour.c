@@ -20,6 +20,7 @@
 
 /* Colour metatable methods. */
 static int colL_eq( lua_State *L );
+static int colL_tostring( lua_State * L );
 static int colL_new( lua_State *L );
 static int colL_alpha( lua_State *L );
 static int colL_rgb( lua_State *L );
@@ -31,6 +32,7 @@ static int colL_linearToGamma( lua_State *L );
 static int colL_gammaToLinear( lua_State *L );
 static const luaL_Reg colL_methods[] = {
    { "__eq", colL_eq },
+   { "__tostring", colL_tostring },
    { "new", colL_new },
    { "alpha", colL_alpha },
    { "rgb", colL_rgb },
@@ -145,6 +147,22 @@ static int colL_eq( lua_State *L )
    c1 = luaL_checkcolour(L,1);
    c2 = luaL_checkcolour(L,2);
    lua_pushboolean( L, (memcmp( c1, c2, sizeof(glColour) )==0) );
+   return 1;
+}
+
+/**
+ * @brief Converts a colour to a string.
+ *
+ *    @luatparam Colour col Colour to get string from.
+ *    @luatreturn string A string representing the colour.
+ * @luafunc __tostring
+ */
+static int colL_tostring( lua_State * L )
+{
+   const glColour *col = luaL_checkcolour(L,1);
+   char buf[STRMAX_SHORT];
+   snprintf( buf, sizeof(buf), "col( %.2f, %.2f, %.2f, %.2f )", col->r, col->g, col->b, col->a );
+   lua_pushstring( L, buf );
    return 1;
 }
 
