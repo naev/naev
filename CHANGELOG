@@ -25,6 +25,7 @@
    * `poi_intro`: fixed typo
    * `achack03`: fixed mission not being acceptable and harja spawning forever
    * `achack04`: fixed missing formatting string
+   * `dv_bikers`: made missiles significantly more dodgeable and changed location
 
 * 0.11.0-beta.1
    * Gameplay Changes
