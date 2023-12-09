@@ -11,7 +11,7 @@ void background_render( double dt );
 void background_renderOverlay( double dt );
 
 /* Add images. */
-unsigned int background_addImage( glTexture *image, double x, double y,
+unsigned int background_addImage( const glTexture *image, double x, double y,
       double move, double scale, double angle, const glColour *col, int foreground );
 
 /* Space Dust. */
