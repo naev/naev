@@ -28,7 +28,7 @@ local articles = {
    },
    {
       head = N_([[Tessellated Singularity Observed]]),
-      body = _([[New paper published in Estimation Weekly provides proof of naturally occurring tessellated singularity. Future applications may include a fountain pen configuration and a new color somewhere between pink and magenta.]]),
+      body = _([[New paper published in Estimation Weekly provides proof of naturally occurring tessellated singularity. Future applications may include a fountain pen configuration and a new colour somewhere between pink and magenta.]]),
    },
    --[[
       Business
@@ -61,7 +61,7 @@ local articles = {
    },
    {
       head = N_([[Za'lek Citizen Arrested]]),
-      body = _([[A long renowned scientist arrested for using an unauthorized nuclear device to make toast. A three headed cat attained from perpetrator's apartment and sent for further studies.]]),
+      body = _([[A long renowned scientist arrested for using an unauthorized nuclear device to make toast. A three-headed cat attained from perpetrator's apartment and sent for further studies.]]),
    },
 }
 

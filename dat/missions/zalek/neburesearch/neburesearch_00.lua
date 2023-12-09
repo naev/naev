@@ -63,7 +63,7 @@ function accept()
 
    -- Check for cargo space
    if player.pilot():cargoFree() < amount then
-      student(_([["Unfortunately it looks like your ship does not has enough free cargo space."
+      student(_([["Unfortunately it looks like your ship does not have enough free cargo space."
 He leaves the bar. It appears he has given up finding a pilot, at least for now.]]))
       vn.done()
    end
@@ -134,7 +134,7 @@ function land()
       student:rename(_("Student"))
       vn.transition("fade")
       vn.na(fmt.f(_("The student has already removed all the cables and sensors inside your ship during the flight back to {pnt}. Everything is packed into a couple of crates by the time you land."),{pnt=homeworld}))
-      student(_([["Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."]]))
+      student(_([["Once again, thank you for your help. I still have to analyze the data, but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."]]))
       vn.na(fmt.f(_("He gives you a credit chip worth {credits} and heads off. The money is nice, but not worth as much as the insight that working for the Za'lek will be dangerous and tiresome."),{credits=fmt.credits(credits)}))
       vn.done()
       vn.run()
@@ -151,12 +151,12 @@ function takeoff()
    local student = vn.newCharacter( nebu_research.vn_student() )
    student:rename(_("Student"))
    vn.transition("fade")
-   vn.na(_("As you enter your ship you notice dozens of cables of various colors stretched across your ship's corridors. It is a complete mess. You follow the direction most of the cables seem to lead to and find the culprit."))
+   vn.na(_("As you enter your ship you notice dozens of cables of various colours stretched across your ship's corridors. It is a complete mess. You follow the direction most of the cables seem to lead to and find the culprit."))
    student(fmt.f(_([["Oh, hello again, Captain! I'm done with my work here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight, so there is no need to rush. Our first destination is {sys}."]]), {sys=t_sys[1]}))
    vn.na(_("You try to maintain composure as you ask him what he has done to your ship."))
    student(_([["Oh, I just installed the sensors. It should have no unwanted side effects on your ship."]]))
-   student(_([["A mess, you say? Haven't you noticed the color coding? Don't worry, I know exactly what I'm doing!"
-His last words are supposed to be reassuring but instead you start to think that accepting this mission was not the best idea.]]))
+   student(_([["A mess, you say? Haven't you noticed the colour coding? Don't worry, I know exactly what I'm doing!"
+His last words are supposed to be reassuring, but instead you start to think that accepting this mission was not the best idea.]]))
    vn.done()
    vn.run()
    hook.rm(mem.thook)
