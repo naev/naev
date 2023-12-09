@@ -101,7 +101,6 @@ function puzzle01_addship ()
       accel_mod      = -30,
       speed_mod      = -30,
       turn_mod       = -30,
-      fwd_damage     = -30, -- Don't instagib player
       armour_mod     = -90,
       shield_mod     = -90,
    }, true ) -- overwrite all
