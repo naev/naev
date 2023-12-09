@@ -33862,7 +33862,7 @@ msgstr ""
 #: dat/events/dvaered/warlord_propaganda.lua:65
 msgid ""
 "\"I will not explain in detail how the Dvaered internal wars work, but you "
-"have ot know that they are often divided into a space campaign and a ground "
+"have to know that they are often divided into a space campaign and a ground "
 "campaign. The space campaign usually takes only a few periods, while ground "
 "campaign can take an entire cycle. And during ground campaigns, for many "
 "strategic reasons, it is necessary for each warlord to keep the support of "
