@@ -103,7 +103,7 @@ Many of the new features come with small tutorials in form of missions. I will n
 
    -- 0.10.0 changes
    if did0100 then
-      sai(_([["Asteroids have been completely reworked. They no longer explode randomly and asteroid fields can spawn different types of asteroids. While it is possible to mine them with regular weapons, there are special outfits that will help you mine them and give you access to more rare rewards."]]))
+      sai(_([["Asteroids have been completely reworked. They no longer explode randomly, and asteroid fields can spawn different types of asteroids. While it is possible to mine them with regular weapons, there are special outfits that will help you mine them and give you access to more rare rewards."]]))
       sai(_([["You may have also noticed that there has been a major change in outfits. Lots of outfits have been removed, added, or renamed, leading to a loss of outfits when updating old save games. Please make sure to take some time inspecting your ships and their equipment before taking off, you don't want to be flying a poorly equipped ship in space!"]]))
       if hasbioship then
          sai(_([["Bioships have also been reworked completely. Similar to the old ships, they gain ranks through experience. However, instead of the ranks being on a per-outfit level, they are now on per-ship levels. Increasing ranks will give you better core outfits and weapons, while also unlocking skill points that you can use to significantly change the functionality and performance of the bioship."]]))
@@ -113,7 +113,7 @@ Many of the new features come with small tutorials in form of missions. I will n
 
    -- 0.11.0 changes
    sai(_([["The universe has also undergone drastic changes to fit the game lore and make it overall a more interesting place. The old Trader's Guild has been revamped as the Space Traders Society and has control of several new systems. All these changes include lots of new events and things to discover which I will not spoil for you."]]))
-   sai(_([["The number of slots ships have and structural slots have been significantly tweaked. Additionally, House Sirius has been reworked completely. They have new weapons and outfits that you will be able to discover. Due to this, you may notice that some of your owned outfits and ship loadouts may have changed."]]))
+   sai(_([["The number of slots ships have, and structural slots have been significantly tweaked. Additionally, House Sirius has been reworked completely. They have new weapons and outfits that you will be able to discover. Due to this, you may notice that some of your owned outfits and ship loadouts may have changed."]]))
    sai(fmt.f(_([["Naev now supports plugins! Although there aren't many available yet, we hope that this will increase in the future. If you are interested in creating plugins, please check out the website {website} for more information."]]),
       {website="#bhttps://naev.org#0"}))
    sai(fmt.f(_([["Some settings have been moved to be per-player instead of global. This includes all the autonav settings, which are now accessible from the #bInfo menu#0, which you can open with {infokey}. Autonav has also been rewritten and by default it should be much more useful and is able to use patrol lanes among other things."]]),
