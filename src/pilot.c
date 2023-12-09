@@ -3528,7 +3528,6 @@ void pilot_free( Pilot *p )
    pilot_clearHooks(p);
    effect_cleanup( p->effects );
    p->effects = NULL;
-   pilot_cargoRmAll( p, 1 );
    escort_freeList(p);
 
    /* If hostile, must remove counter. */
@@ -3545,6 +3544,9 @@ void pilot_free( Pilot *p )
       p->id = 0; /* Invalidate ID. */
       return;
    }
+
+   /* Only remove cargo at the end. */
+   pilot_cargoRmAll( p, 1 );
 
    /* Clean up stats. */
    ss_free( p->ship_stats );

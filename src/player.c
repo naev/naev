@@ -656,8 +656,6 @@ void player_swapShip( const char *shipname, int move_cargo )
    hparam[3].u.ship  = ps->p->ship;
    hparam[4].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "ship_swap", hparam );
-
-   return;
 }
 
 /**
