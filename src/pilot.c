@@ -3134,6 +3134,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    pilot->nav_hyperspace   = -1;
    pilot->nav_anchor       = -1;
    pilot->nav_asteroid     = -1;
+   pilot->shoot_indicator  = 0;
 
    /* Check takeoff. */
    if (pilot_isFlagRaw( flags, PILOT_TAKEOFF )) {
@@ -3144,8 +3145,6 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    /* Create empty table for messages. */
    lua_newtable(naevL);
    pilot->messages = luaL_ref(naevL, LUA_REGISTRYINDEX);
-
-   pilot->shoot_indicator = 0;
 }
 
 /**

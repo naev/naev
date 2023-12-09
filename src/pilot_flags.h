@@ -19,6 +19,7 @@ enum {
    PILOT_CARRIED,       /**< Pilot usually resides in a fighter bay. */
    PILOT_CREATED_AI,    /**< Pilot has already created AI. */
    PILOT_NO_OUTFITS,    /**< Do not create the pilot with outfits. */
+   PILOT_NO_EQUIP,      /**< Do not run the equip script on the pilot. */
    /*
     * Dynamic flags
     */

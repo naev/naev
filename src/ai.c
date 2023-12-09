@@ -1075,7 +1075,7 @@ static void ai_create( Pilot* pilot )
       aiL_status = AI_STATUS_CREATE;
 
    /* Create equipment first - only if creating for the first time. */
-   if (!pilot_isFlag(pilot,PILOT_NO_OUTFITS) && (aiL_status==AI_STATUS_CREATE)) {
+   if (!pilot_isFlag(pilot,PILOT_NO_OUTFITS) && !pilot_isFlag(pilot,PILOT_NO_EQUIP) && (aiL_status==AI_STATUS_CREATE)) {
       nlua_env env = equip_env;
       char *func = "equip_generic";
 
