@@ -197,8 +197,7 @@ void player_autonavPos( double x, double y )
    if (player_autonavSetup())
       return;
 
-   pos.x = x;
-   pos.y = y;
+   vec2_cset( &pos, x, y );
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_pos );
    lua_pushvector( naevL, pos );
    if (nlua_pcall( autonav_env, 1, 0 )) {
@@ -213,7 +212,7 @@ void player_autonavPos( double x, double y )
  */
 void player_autonavSpob( const char *name, int tryland )
 {
-   Spob *spb;
+   const Spob *spb;
 
    if (player_autonavSetup())
       return;
@@ -236,7 +235,7 @@ void player_autonavSpob( const char *name, int tryland )
  */
 void player_autonavPil( unsigned int p )
 {
-   Pilot *pilot = pilot_get( p );
+   const Pilot *pilot = pilot_get( p );
    int inrange  = pilot_inRangePilot( player.p, pilot, NULL );
    if (player_autonavSetup() || !inrange)
       return;
@@ -255,7 +254,7 @@ void player_autonavPil( unsigned int p )
  */
 void player_autonavBoard( unsigned int p )
 {
-   Pilot *pilot = pilot_get( p );
+   const Pilot *pilot = pilot_get( p );
    int inrange  = pilot_inRangePilot( player.p, pilot, NULL );
    if (player_autonavSetup() || !inrange)
       return;
@@ -352,7 +351,6 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
  */
 void player_updateAutonav( double dt )
 {
-   static double tc_mod  = 1.0;
    const double dis_dead = 1.0; /* Time it takes to start ramping up. */
    const double dis_mod  = 2.0;
    //const double dis_max  = 5.0;
@@ -366,6 +364,7 @@ void player_updateAutonav( double dt )
    /* TODO maybe handle in autonav? */
    /* We handle disabling here. */
    if (pilot_isFlag(player.p, PILOT_DISABLED)) {
+      static double tc_mod  = 1.0;
       /* It is somewhat like:
        *        /------------\        4x
        *       /              \
