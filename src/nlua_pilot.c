@@ -2154,14 +2154,20 @@ static int pilotL_weapsetRm( lua_State *L )
  * @brief Cleans up a weapon set. This removes all properties of the weapon set and resets it.
  *
  *    @luatparam Pilot p Pilot to remove weapon from weapon set.
- *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
+ *    @luatparam[opt] integer id ID of the weapon set as shown in game (from 0 to 9). Cleans them all up if set to nil or not set.
  * @luafunc weapsetCleanup
  */
 static int pilotL_weapsetCleanup( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   int id = luaL_checkweapset(L,2);
-   pilot_weapSetCleanup( p, id );
+   if (lua_isnoneornil(L,2)) {
+      for (int i=0; i<PILOT_WEAPON_SETS; i++)
+         pilot_weapSetCleanup( p, i );
+   }
+   else {
+      int id = luaL_checkweapset(L,2);
+      pilot_weapSetCleanup( p, id );
+   }
    return 0;
 }
 
@@ -2272,15 +2278,16 @@ static int pilotL_weapsetHeat( lua_State *L )
 static int pilotL_weapsetSetInrange( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   int id = luaL_optinteger(L,2,-1);
    int inrange = lua_toboolean(L,3);
-   if (id<0) {
+   if (lua_isnoneornil(L,2)) {
       for (int i=0; i<PILOT_WEAPON_SETS; i++)
          pilot_weapSetInrange( p, i, inrange );
    }
-   else
+   else {
+      int id = luaL_checkweapset(L,2);
       pilot_weapSetInrange( p, id, inrange );
-   return 2;
+   }
+   return 0;
 }
 
 /**
