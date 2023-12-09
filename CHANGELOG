@@ -6,7 +6,7 @@
    * Allied factions won't help out the player against neutral targets
    * Added missing graphics for meditation chambers
    * Don't allow giving the player names that can't be saved
-   * Updated love.filesystem to 0.11 spec renaming mkdir to createDirectory, enumerate to getDirectoryItems, and adding remove.
+   * Updated love.filesystem to 0.11 spec renaming mkdir to createDirectory, enumerate to getDirectoryItems, and adding remove
    * Fixed toggle weapon sets not turning off with only bolt weapons
    * Hardened physics engine a bit to overflow that happens in 49 days of straight game time
    * Fixed trivial memory leak in vpool
@@ -20,12 +20,14 @@
    * pilot.weapsetAdd follows the same logic as the normal equipping functions
    * slim GUI uses primary/secondary colours like the info menu
    * AI should be less prone to jump before their leader
+   * Fixed cargo being lost when swapping ships in missions and events
    * `chapter1`: event claims all the systems just in case
    * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
    * `poi_intro`: fixed typo
    * `achack03`: fixed mission not being acceptable and harja spawning forever
    * `achack04`: fixed missing formatting string
    * `dv_bikers`: made missiles significantly more dodgeable and changed location
+   * Translation updates
 
 * 0.11.0-beta.1
    * Gameplay Changes
