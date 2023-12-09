@@ -12,12 +12,11 @@ const float UP          = 0.7; /**< Time spent on creating the explosion vs not 
 const float MAX         = 0.65;/**< How big the effect can get. */
 
 /* Entry point. */
-vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 unused, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    float progress = u_time * u_speed;
    vec2 uv = texture_coords*2.0-1.0;
-
-   colour = vec4( 0.1, 0.7, 0.9, 1.0 );
+   vec4 colour = vec4( 0.1, 0.7, 0.9, 1.0 );
 
    float angle = 2.0*M_PI*random(u_r);
    float shear = 0.5*random(10.0*u_r+10.0);
@@ -67,4 +66,4 @@ void main (void)
 {
    colour_out = effect( vec4(0.0), dummy, pos, vec2(0.0) );
 }
-#endif
+#endif /* _LOVE */

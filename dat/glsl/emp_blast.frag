@@ -60,4 +60,4 @@ void main (void)
 {
    colour_out = effect( vec4(0.0), dummy, pos, vec2(0.0) );
 }
-#endif
+#endif /* _LOVE */

@@ -105,7 +105,7 @@ vec3 sample_sphere( vec2 rand )
    return vec3( vmod * cos(theta), vmod * sin(theta), u );
 }
 
-vec4 effect( vec4 colour, sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 unused, sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
    /* Normalized 0 centered coordinates. */
    vec2 uv = 2.0*texture_coords-1.0;
@@ -224,4 +224,4 @@ void main (void)
 {
    colour_out = effect( vec4(0.0), dummy, pos, vec2(0.0) );
 }
-#endif
+#endif /* _LOVE */
