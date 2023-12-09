@@ -7,6 +7,18 @@ import argparse
 import subprocess
 from multiprocessing import Pool
 
+# Can also be used with vim by adding the following lines to your vimrc
+"""
+" Set up ALE plugin used plugged
+call plug#begin('~/.vim/plugged')
+ Plug 'dense-analysis/ale'
+call plug#end()
+" ALE Lua settingsshould use luacheck by default
+" Remember to change the below paths to your Naev directory
+let g:ale_lua_luacheck_executable = '/PATH/TO/naev/utils/nluacheck.py'
+let g:ale_lua_luacheck_options = '--config /PATH/TO/naev/.luacheckrc'
+"""
+
 # TODO also filter out hook.custom from HOOKS_REGEX
 HOOKS_REGEX = re.compile( r'hook\.(?!pilot)[_a-z]*\s*\(.*?"(.+?)"' )
 HOOKS_PILOT_REGEX = re.compile( r'hook\.pilot\s*\(.*?,.*?, *?"(.+?)"' )
