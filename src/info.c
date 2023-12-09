@@ -166,7 +166,7 @@ static void info_buttonRegen (void)
    rows = 1 + (array_size(info_buttons)) / cols;
 
    for (int i=0; i<array_size(info_buttons); i++) {
-      InfoButton_t *btn = &info_buttons[i];
+      const InfoButton_t *btn = &info_buttons[i];
       int r = (i+1)/cols, c = (i+1)%cols;
       if (widget_exists( wid, btn->button ))
          window_destroyWidget( wid, btn->button );
@@ -393,7 +393,7 @@ static void info_openMain( unsigned int wid )
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Times landed:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Damage done:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Damage taken:") );
-   k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Ships destroyed:") );
+   /*k +=*/ scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Ships destroyed:") );
    window_addText( wid, 20, 20, 160, h-80, 0, "txtDPilot", &gl_smallFont, &cFontGrey, str );
 
    credits2str( creds, player.p->credits, 2 );
@@ -414,7 +414,7 @@ static void info_openMain( unsigned int wid )
    l += scnprintf( &str[l], sizeof(str)-l, _("%s %s"), num2strU(player.dmg_done_shield + player.dmg_done_armour, 0), UNIT_ENERGY );
    l += scnprintf( &str[l], sizeof(str)-l, "\n" );
    l += scnprintf( &str[l], sizeof(str)-l, _("%s %s"), num2strU(player.dmg_taken_shield + player.dmg_taken_armour, 0), UNIT_ENERGY );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU(destroyed, 0) );
+   /*l +=*/ scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU(destroyed, 0) );
    window_addText( wid, 200, 20,
          w-80-200-40+20-180, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
@@ -499,7 +499,7 @@ static void info_openShip( unsigned int wid )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stats:") );
+   /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stats:") );
    window_addText( wid, 20, -40, 160, h-60, 0, "txtSDesc", &gl_smallFont, &cFontGrey, buf );
    window_addText( wid, 200, -40, w-20-20-20-200-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
@@ -1008,8 +1008,7 @@ static void cargo_update( unsigned int wid, const char *str )
 static void cargo_jettison( unsigned int wid, const char *str )
 {
    (void)str;
-   int pos, ret;
-   Mission *misn;
+   int pos;
    HookParam hparam[3];
    PilotCommodity *pclist = pfleet_cargoList();
 
@@ -1022,7 +1021,8 @@ static void cargo_jettison( unsigned int wid, const char *str )
 
    /* Special case mission cargo. */
    if (pclist[pos].id != 0) {
-      int f;
+      int f, ret;
+      Mission *misn;
 
       if (!dialogue_YesNo( _("Abort Mission"),
                _("Are you sure you want to abort this mission?") )) {
@@ -1357,7 +1357,7 @@ static void mission_menu_update( unsigned int wid, const char *str )
    window_enableButton( wid, "btnAbortMission" );
    window_enableCheckbox( wid, "chkHide" );
    window_enableCheckbox( wid, "chkPrefer" );
-   if (misn->osd <= 0) {
+   if (misn->osd == 0) {
       window_checkboxSet( wid, "chkHide", 0 );
       window_checkboxSet( wid, "chkPrefer", 0 );
    }
@@ -1379,7 +1379,7 @@ static void mission_menu_chk_hide( unsigned int wid, const char *str )
       return;
    misn = player_missions[pos];
 
-   if (misn->osd <= 0)
+   if (misn->osd == 0)
       return;
    osd_setHide( misn->osd, window_checkboxState(wid,str) );
 }
@@ -1391,7 +1391,7 @@ static void mission_menu_chk_priority( unsigned int wid, const char *str )
       return;
    misn = player_missions[pos];
 
-   if (misn->osd <= 0)
+   if (misn->osd == 0)
       return;
    osd_setPriority( misn->osd, misn->data->avail.priority-100*window_checkboxState(wid,str) );
 }
@@ -1444,9 +1444,7 @@ static void mission_menu_abort( unsigned int wid, const char *str )
  */
 static void shiplog_menu_update( unsigned int wid, const char *str )
 {
-   int regenerateEntries=0;
    int w, h;
-   int logType, log;
    int nentries;
    char **logentries;
 
@@ -1457,6 +1455,9 @@ static void shiplog_menu_update( unsigned int wid, const char *str )
     * If a new log type has been selected, need to regenerate the log lists.
     * If a new log has been selected, need to regenerate the entries. */
    if (strcmp(str, "lstLogEntries" ) != 0) {
+      int regenerateEntries=0;
+      int logType, log;
+
       /* has selected a type of log or a log */
       window_dimWindow( wid, &w, &h );
       logWidgetsReady=0;
@@ -1611,7 +1612,6 @@ static void info_shiplogAdd( unsigned int wid, const char *str )
 {
    char *tmp;
    int logType, log;
-   int logid;
    (void) str;
 
    logType = toolkit_getListPos( wid, "lstLogType" );
@@ -1627,7 +1627,7 @@ static void info_shiplogAdd( unsigned int wid, const char *str )
    } else {
       tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logs[log] );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
-         logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(logType), log-1 );
+         int logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(logType), log-1 );
          if ( logid >= 0 )
             shiplog_appendByID( logid, tmp );
          else
