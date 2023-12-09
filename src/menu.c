@@ -282,7 +282,6 @@ void menu_main_resize (void)
    int w, h, bgw, bgh, tw, th;
    int offset_logo, offset_wdw, freespace;
    int menu_id, bg_id;
-   Widget *wgt;
 
    if (!menu_isOpen(MENU_MAIN))
       return;
@@ -311,7 +310,7 @@ void menu_main_resize (void)
    if (tw > SCREEN_W) {
       /* RIP abstractions. X must be set manually because window_moveWidget
        * transforms negative coordinates. */
-      wgt = window_getwgt( bg_id, "txtBG" );
+      Widget *wgt = window_getwgt( bg_id, "txtBG" );
       if (wgt)
          wgt->x = (SCREEN_W - tw) / 2;
    }
