@@ -1,5 +1,6 @@
 * 0.11.0-beta.3 (unreleased)
    * Added pilot.weapsetAddType and pilot.weapsetSetActive
+   * Gave unicorp storm launchers a rarity of 2 and made it more available
    * `test_of_renewal`: fixed weapon set defaults being incorrect
 
 * 0.11.0-beta.2
