@@ -95,6 +95,7 @@ static int pilotL_navSpob( lua_State *L );
 static int pilotL_navJump( lua_State *L );
 static int pilotL_navJumpSet( lua_State *L );
 static int pilotL_weapsetActive( lua_State *L );
+static int pilotL_weapsetSetActive( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetList( lua_State *L );
 static int pilotL_weapsetType( lua_State *L );
@@ -282,6 +283,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "navJump", pilotL_navJump },
    { "navJumpSet", pilotL_navJumpSet },
    { "weapsetActive", pilotL_weapsetActive },
+   { "weapsetSetActive", pilotL_weapsetSetActive },
    { "weapset", pilotL_weapset },
    { "weapsetList", pilotL_weapsetList },
    { "weapsetType", pilotL_weapsetType },
@@ -1724,7 +1726,7 @@ static int pilotL_navJumpSet( lua_State *L )
  * @usage set_id = p:weapsetActive() -- A number from 1 to 10
  *
  *    @luatparam Pilot p Pilot to get active weapset ID of.
- *    @luatparam number current active weapset ID.
+ *    @luatreturn number current active weapset ID.
  *
  * @luafunc weapsetActive
  */
@@ -1733,6 +1735,25 @@ static int pilotL_weapsetActive( lua_State *L )
    const Pilot *p = luaL_validpilot(L,1);
    lua_pushinteger( L, p->active_set+1 );
    return 1;
+}
+
+/**
+ * @brief Sets the ID (number from 1 to 10) of the current active weapset.
+ *
+ * @usage set_id = p:weapsetActive() -- A number from 1 to 10
+ *
+ *    @luatparam Pilot p Pilot to get active weapset ID of.
+ *    @luatparam number Weapon set to make active.
+ *
+ * @luafunc weapsetSetActive
+ */
+static int pilotL_weapsetSetActive( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int id = luaL_checkweapset(L,2);
+   if (pilot_weapSetTypeCheck(p,id)==WEAPSET_TYPE_SWITCH)
+      pilot_weapSetPress(p,id,1);
+   return 0;
 }
 
 /**
