@@ -97,7 +97,7 @@ function hail()
       vn.scene()
       local plt = ccomm.newCharacter( vn, pinnacle )
       vn.transition()
-      plt(_([[Your comm is answered by a communications officer on the bridge of the Pinnacle. You tell her you've got a delivery for the baron. She runs a few checks on a console off the screen, then tells you you've been cleared for docking and that the Pinnacle will be brought to a halt.]]))
+      plt(_([[Your comm is answered by a communications officer on the bridge of the Pinnacle. You tell her you've got a delivery for the baron. She runs a few checks on a console off the screen, then tells you that you've been cleared for docking and that the Pinnacle will be brought to a halt.]]))
       vn.run()
 
       pinnacle:taskClear()
