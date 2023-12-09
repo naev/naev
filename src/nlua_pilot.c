@@ -99,6 +99,7 @@ static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetList( lua_State *L );
 static int pilotL_weapsetType( lua_State *L );
 static int pilotL_weapsetAdd( lua_State *L );
+static int pilotL_weapsetAddType( lua_State *L );
 static int pilotL_weapsetRm( lua_State *L );
 static int pilotL_weapsetCleanup( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
@@ -285,6 +286,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "weapsetList", pilotL_weapsetList },
    { "weapsetType", pilotL_weapsetType },
    { "weapsetAdd", pilotL_weapsetAdd },
+   { "weapsetAddType", pilotL_weapsetAddType },
    { "weapsetRm", pilotL_weapsetRm },
    { "weapsetCleanup", pilotL_weapsetCleanup },
    { "weapsetHeat", pilotL_weapsetHeat },
@@ -2069,8 +2071,6 @@ static int pilotL_weapsetType( lua_State *L )
 /**
  * @brief Adds an outfit to a pilot's weapon set.
  *
- * Note that this can change the structure of the weapon set. For example, adding a utility/structural outfit to a weapon weapon set will remove all weapons and change it to be of type "active".
- *
  *    @luatparam Pilot p Pilot to remove weapon from weapon set.
  *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
  *    @luatparam string|integer slot Slot to add to weapon set. Can be passed by either id or name.
@@ -2083,6 +2083,32 @@ static int pilotL_weapsetAdd( lua_State *L )
    PilotOutfitSlot *o = luaL_checkslot(L,p,3);
    int level = luaL_optinteger(L,4,0);
    pilot_weapSetAdd( p, id, o, level );
+   return 0;
+}
+
+/**
+ * @brief Adds an outfit to a pilot's weapon set.
+ *
+ *    @luatparam Pilot p Pilot to remove weapon from weapon set.
+ *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
+ *    @luatparam string|integer slot Slot to add to weapon set. Can be passed by either id or name.
+ * @luafunc weapsetAdd
+ */
+static int pilotL_weapsetAddType( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int id = luaL_checkweapset(L,2);
+   const char *type = luaL_checkstring(L,3);
+   int level = luaL_optinteger(L,4,0);
+   for (int i=0; i<array_size(p->outfits); i++) {
+      PilotOutfitSlot *pos = p->outfits[i];
+      if (pos->outfit==NULL)
+         continue;
+      if ((strcmp(pos->outfit->name,type)==0) ||
+            (strcmp(outfit_getType(pos->outfit),type)==0) ||
+            (strcmp(outfit_getTypeBroad(pos->outfit),type)==0))
+         pilot_weapSetAdd( p, id, pos, level );
+   }
    return 0;
 }
 
