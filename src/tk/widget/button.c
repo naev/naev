@@ -288,7 +288,7 @@ static void btn_render( Widget* btn, double bx, double by )
 
    /* set the colours */
    if (btn->dat.btn.disabled) {
-      c = &cGrey20;  // cGrey20 is also the background color
+      c = &cGrey20;  // cGrey20 is also the background colour
       fc = &cGrey50; // Enabled text is cFontGrey 0.7; a little lighter
       outline = &cGrey15;  // Slightly darker than the background
    }
@@ -308,7 +308,7 @@ static void btn_render( Widget* btn, double bx, double by )
       }
    }
 
-   /* The face of the button, with c being the color */
+   /* The face of the button, with c being the colour */
    toolkit_drawRect( x, y, btn->w, btn->h, c, NULL );
 
    /* inner outline */

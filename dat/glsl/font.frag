@@ -1,12 +1,12 @@
 #include "lib/math.glsl"
 
 uniform float m;
-uniform vec4 color;
-uniform vec4 outline_color;
+uniform vec4 colour;
+uniform vec4 outline_colour;
 uniform sampler2D sampler;
 
 in vec2 tex_coord_out;
-out vec4 color_out;
+out vec4 colour_out;
 
 void main(void)
 {
@@ -16,7 +16,7 @@ void main(void)
    // Map the signed distance to mixing parameters for outline..foreground, transparent..opaque.
    float alpha = smoothstep(-0.5    , +0.5, d);
    float beta  = smoothstep(-M_SQRT2, -1.0, d);
-   vec4 fg_c   = mix( outline_color, color, alpha );
-   color_out   = vec4( fg_c.rgb, beta*fg_c.a );
+   vec4 fg_c   = mix( outline_colour, colour, alpha );
+   colour_out   = vec4( fg_c.rgb, beta*fg_c.a );
    gl_FragDepth = -t+1.0;
 }

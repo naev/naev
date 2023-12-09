@@ -1,6 +1,6 @@
-uniform vec4 color;
-out vec4 color_out;
+uniform vec4 colour;
+out vec4 colour_out;
 
 void main(void) {
-   color_out = color;
+   colour_out = colour;
 }

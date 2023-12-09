@@ -83,8 +83,8 @@ extern mat4 gl_view_matrix;
 /*
  * used with colour.h
  */
-#define COLOUR(x)    glColor4d((x).r,(x).g,(x).b,(x).a) /**< Change colour. */
-#define ACOLOUR(x,a) glColor4d((x).r,(x).g,(x).b,a) /**< Change colour and override alpha. */
+#define COLOUR(x)    glColour4d((x).r,(x).g,(x).b,(x).a) /**< Change colour. */
+#define ACOLOUR(x,a) glColour4d((x).r,(x).g,(x).b,a) /**< Change colour and override alpha. */
 
 /*
  * initialization / cleanup
@@ -111,7 +111,7 @@ int gl_setupFullscreen (void);
 /*
  * misc
  */
-void gl_colorblind( int enable );
+void gl_colourblind( int enable );
 GLint gl_stringToFilter( const char *s );
 GLint gl_stringToClamp( const char *s );
 void gl_screenshot( const char *filename );

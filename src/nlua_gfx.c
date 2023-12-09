@@ -403,7 +403,7 @@ static int gfxL_renderTexH( lua_State *L )
    glActiveTexture( GL_TEXTURE0 );
 
    /* Set shader uniforms. */
-   gl_uniformColor( shader->ConstantColour, col );
+   gl_uniformColour( shader->ConstantColour, col );
    gl_uniformMat4( shader->ClipSpaceFromLocal, H );
 
    /* Draw. */
@@ -585,7 +585,7 @@ static int gfxL_renderLinesH( lua_State *L )
    gl_vboActivateAttribOffset( vbo_lines, shaders.lines.vertex, 0,
          2, GL_FLOAT, 2*sizeof(GLfloat) );
 
-   gl_uniformColor(shaders.lines.colour, c);
+   gl_uniformColour(shaders.lines.colour, c);
    gl_uniformMat4(shaders.lines.projection, H);
 
    glDrawArrays( GL_LINE_STRIP, 0, n );

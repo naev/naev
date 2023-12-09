@@ -204,7 +204,7 @@ static void nebu_blitFBO (void)
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   gl_uniformColor(shaders.texture.color, &cWhite);
+   gl_uniformColour(shaders.texture.colour, &cWhite);
 
    const mat4 ortho = mat4_ortho(0, 1, 0, 1, 1, -1);
    const mat4 I = mat4_identity();

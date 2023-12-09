@@ -239,7 +239,7 @@ void conf_setVideoDefaults (void)
    conf.scalefactor  = SCALE_FACTOR_DEFAULT;
    conf.nebu_scale   = NEBULA_SCALE_FACTOR_DEFAULT;
    conf.minimize     = MINIMIZE_DEFAULT;
-   conf.colorblind   = COLORBLIND_DEFAULT;
+   conf.colourblind   = COLORBLIND_DEFAULT;
    conf.healthbars   = HEALTHBARS_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;
@@ -247,7 +247,7 @@ void conf_setVideoDefaults (void)
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
    conf.background_fancy = BACKGROUND_FANCY_DEFAULT;
 
-   gl_colorblind( conf.colorblind );
+   gl_colourblind( conf.colourblind );
    if (cur_system)
       background_load( cur_system->background );
 
@@ -335,7 +335,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "notresizable", conf.notresizable );
       conf_loadBool( lEnv, "borderless", conf.borderless );
       conf_loadBool( lEnv, "minimize", conf.minimize );
-      conf_loadBool( lEnv, "colorblind", conf.colorblind );
+      conf_loadBool( lEnv, "colourblind", conf.colourblind );
       conf_loadBool( lEnv, "healthbars", conf.healthbars );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
       /* todo leave only nebu_nonuniformity sometime */
@@ -884,7 +884,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment(_("Enables colourblind mode. Good for simulating colourblindness."));
-   conf_saveBool("colorblind",conf.colorblind);
+   conf_saveBool("colourblind",conf.colourblind);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Enable health bars. These show hostility/friendliness and health of pilots on screen."));

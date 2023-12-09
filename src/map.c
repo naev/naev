@@ -1308,7 +1308,7 @@ void map_renderJumps( double x, double y, double zoom, double radius, int editor
          }
 
          glUseProgram( shaders.jumplane.program );
-         gl_uniformColor( shaders.jumplane.paramv, cole );
+         gl_uniformColour( shaders.jumplane.paramv, cole );
          glUniform1f( shaders.jumplane.paramf, radius );
          gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.jumplane, col, 1 );
       }

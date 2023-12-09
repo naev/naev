@@ -52,7 +52,7 @@ void gl_beginSolidProgram(mat4 projection, const glColour *c)
 {
    glUseProgram(shaders.solid.program);
    glEnableVertexAttribArray(shaders.solid.vertex);
-   gl_uniformColor(shaders.solid.color, c);
+   gl_uniformColour(shaders.solid.colour, c);
    gl_uniformMat4(shaders.solid.projection, &projection);
 }
 
@@ -67,13 +67,13 @@ void gl_beginSmoothProgram(mat4 projection)
 {
    glUseProgram(shaders.smooth.program);
    glEnableVertexAttribArray(shaders.smooth.vertex);
-   glEnableVertexAttribArray(shaders.smooth.vertex_color);
+   glEnableVertexAttribArray(shaders.smooth.vertex_colour);
    gl_uniformMat4(shaders.smooth.projection, &projection);
 }
 
 void gl_endSmoothProgram() {
    glDisableVertexAttribArray(shaders.smooth.vertex);
-   glDisableVertexAttribArray(shaders.smooth.vertex_color);
+   glDisableVertexAttribArray(shaders.smooth.vertex_colour);
    glUseProgram(0);
    gl_checkErr();
 }
@@ -234,7 +234,7 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
    mat4_scale( &tex_mat, tw, th, 1. );
 
    /* Set shader uniforms. */
-   gl_uniformColor(shaders.texture.color, c);
+   gl_uniformColour(shaders.texture.colour, c);
    gl_uniformMat4(shaders.texture.projection, &projection);
    gl_uniformMat4(shaders.texture.tex_mat, &tex_mat);
 
@@ -330,7 +330,7 @@ void gl_renderSDF( const glTexture *texture,
    mat4_translate( &tex_mat, -sw, -sh, 0. );
 
    /* Set shader uniforms. */
-   gl_uniformColor(shaders.texturesdf.color, c);
+   gl_uniformColour(shaders.texturesdf.colour, c);
    gl_uniformMat4(shaders.texturesdf.projection, &projection);
    gl_uniformMat4(shaders.texturesdf.tex_mat, &tex_mat);
    glUniform1f( shaders.texturesdf.m, (2.0*texture->vmax*(w+2.)/texture->w) );
@@ -416,7 +416,7 @@ void gl_renderTextureInterpolate(  const glTexture* ta,
    /* Set shader uniforms. */
    glUniform1i(shaders.texture_interpolate.sampler1, 0);
    glUniform1i(shaders.texture_interpolate.sampler2, 1);
-   gl_uniformColor(shaders.texture_interpolate.color, c);
+   gl_uniformColour(shaders.texture_interpolate.colour, c);
    glUniform1f(shaders.texture_interpolate.inter, inter);
    gl_uniformMat4(shaders.texture_interpolate.projection, &projection);
    gl_uniformMat4(shaders.texture_interpolate.tex_mat, &tex_mat);
@@ -979,7 +979,7 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H, const glColour *c
    gl_vboActivateAttribOffset( center ? gl_circleVBO : gl_squareVBO, shd->vertex, 0, 2, GL_FLOAT, 0 );
 
    if (c != NULL)
-      gl_uniformColor(shd->color, c);
+      gl_uniformColour(shd->colour, c);
 
    gl_uniformMat4(shd->projection, H);
 

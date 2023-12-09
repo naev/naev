@@ -2074,7 +2074,7 @@ void pilot_renderOverlay( Pilot* p )
       glUseProgram( shaders.healthbar.program );
       glUniform2f( shaders.healthbar.dimensions, 5., h );
       glUniform1f( shaders.healthbar.paramf, (p->armour + p->shield) / (p->armour_max + p->shield_max) );
-      gl_uniformColor( shaders.healthbar.paramv, (p->shield > 0.) ? &cShield : &cArmour );
+      gl_uniformColour( shaders.healthbar.paramv, (p->shield > 0.) ? &cShield : &cArmour );
       gl_renderShader( x + w/2. + 2.5, y, 5., h, 0., &shaders.healthbar, pilot_getColour(p), 1 );
    }
 }

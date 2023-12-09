@@ -33,13 +33,13 @@
 #define OUTFIT_PROP_WEAP_ONLYHITTARGET (1<<13) /**< The weapon can only hit the target (and asteroids or whatever). */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
-/** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
+/** Colour-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_WEAPON            N_("#pWeapon")
-/** Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title. */
+/** Colour-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_UTILITY           N_("#gUtility")
-/** Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
+/** Colour-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_STRUCTURE         N_("#nStructural")
-/** Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
+/** Colour-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_CORE              N_("#oCore")
 
 /*
@@ -193,7 +193,7 @@ typedef struct OutfitBeamData_ {
    int mining_rarity;/**< Maximum mining rarity the weapon can mine. */
 
    /* Graphics and sound. */
-   glColour colour;  /**< Color to use for the shader. */
+   glColour colour;  /**< Colour to use for the shader. */
    GLfloat width;    /**< Width of the beam. */
    GLuint shader;    /**< Shader subroutine to use. */
    int spfx_armour;  /**< special effect on hit */

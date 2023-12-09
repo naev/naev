@@ -94,7 +94,7 @@ static void opt_setZoomNear( unsigned int wid, const char *str );
 static void opt_setBGBrightness( unsigned int wid, const char *str );
 static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
 static void opt_setJumpBrightness( unsigned int wid, const char *str );
-static void opt_checkColorblind( unsigned int wid, const char *str );
+static void opt_checkColourblind( unsigned int wid, const char *str );
 static void opt_checkHealth( unsigned int wid, const char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
@@ -1323,8 +1323,8 @@ static void opt_video( unsigned int wid )
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkColorblind", _("Colorblind mode"), opt_checkColorblind,
-         conf.colorblind );
+         "chkColourblind", _("Colourblind mode"), opt_checkColourblind,
+         conf.colourblind );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkHealth", _("Health bars for pilots"), opt_checkHealth,
@@ -1455,13 +1455,13 @@ static int opt_videoSave( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Handles the colorblind checkbox being checked.
+ * @brief Handles the colourblind checkbox being checked.
  */
-static void opt_checkColorblind( unsigned int wid, const char *str )
+static void opt_checkColourblind( unsigned int wid, const char *str )
 {
    int f = window_checkboxState( wid, str );
-   conf.colorblind = f;
-   gl_colorblind( f );
+   conf.colourblind = f;
+   gl_colourblind( f );
 }
 
 /**

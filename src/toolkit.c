@@ -51,7 +51,7 @@ const glColour* toolkit_col      = &cGrey20; /**< Normal outline colour. */
 const glColour* toolkit_colDark  = &cGrey5; /**< Dark outline colour. */
 
 /*
- * Tab colors
+ * Tab colours
  */
 const glColour* tab_active    = &cGrey20; /**< Light outline colour. */
 const glColour* tab_activeB   = &cGrey10; /**< Light outline colour. */
@@ -1271,7 +1271,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
 
    gl_beginSmoothProgram(gl_view_matrix);
    gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_color,
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 10 );
    gl_endSmoothProgram();
@@ -1323,7 +1323,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
 
    gl_beginSmoothProgram(gl_view_matrix);
    gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_color,
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_LOOP, 0, 4 );
    gl_endSmoothProgram();
@@ -1371,7 +1371,7 @@ void toolkit_drawRect( int x, int y, int w, int h,
 
    gl_beginSmoothProgram(gl_view_matrix);
    gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_color,
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    gl_endSmoothProgram();
@@ -1413,7 +1413,7 @@ void toolkit_drawTriangle( int x1, int y1, int x2, int y2, int x3, int y3,
 
    gl_beginSmoothProgram(gl_view_matrix);
    gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_color,
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 3 );
    gl_endSmoothProgram();
@@ -1632,7 +1632,7 @@ void toolkit_render( double dt )
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   gl_uniformColor(shaders.texture.color, &cWhite);
+   gl_uniformColour(shaders.texture.colour, &cWhite);
    const mat4 ortho = mat4_ortho(0., 1., 0., 1., 1., -1.);
    const mat4 I = mat4_identity();
    gl_uniformMat4(shaders.texture.projection, &ortho);

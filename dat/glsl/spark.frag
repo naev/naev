@@ -55,10 +55,10 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 
 #ifndef _LOVE
 in vec2 pos;
-out vec4 color_out;
+out vec4 colour_out;
 uniform sampler2D dummy;
 void main (void)
 {
-   color_out = effect( vec4(0.0), dummy, pos, vec2(0.0) );
+   colour_out = effect( vec4(0.0), dummy, pos, vec2(0.0) );
 }
 #endif

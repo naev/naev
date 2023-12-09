@@ -868,8 +868,8 @@ void spfx_trail_draw( const Trail_spfx* trail )
 
       /* Set uniforms. */
       gl_uniformMat4(shaders.trail.projection, &projection);
-      gl_uniformColor(shaders.trail.c1, &sp->col);
-      gl_uniformColor(shaders.trail.c2, &spp->col);
+      gl_uniformColour(shaders.trail.c1, &sp->col);
+      gl_uniformColour(shaders.trail.c2, &spp->col);
       glUniform1f(shaders.trail.t1, tp->t);
       glUniform1f(shaders.trail.t2, tpp->t);
       glUniform2f(shaders.trail.pos2, len, sp->thick);

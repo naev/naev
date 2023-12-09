@@ -38,7 +38,7 @@
 #define FPS_MAX_DEFAULT                60    /**< Maximum FPS. */
 #define SHOW_PAUSE_DEFAULT             1     /**< Whether to display pause status. */
 #define MINIMIZE_DEFAULT               1     /**< Whether to minimize on focus loss. */
-#define COLORBLIND_DEFAULT             0     /**< Whether to enable colorblindness simulation. */
+#define COLORBLIND_DEFAULT             0     /**< Whether to enable colourblindness simulation. */
 #define HEALTHBARS_DEFAULT             1     /**< Whether or not to show pilot health bars. */
 #define BG_BRIGHTNESS_DEFAULT          0.5   /**< How much to darken (or lighten) the backgrounds. */
 #define NEBU_NONUNIFORMITY_DEFAULT     1.    /**< How much to darken (or lighten) the nebula stuff. */
@@ -91,7 +91,7 @@ typedef struct PlayerConf_s {
    int notresizable; /**< Whether or not the window is resizable. */
    int borderless; /**< Whether to disable window decorations. */
    int minimize; /**< Whether to minimize on focus loss. */
-   int colorblind; /**< Whether to enable colourblindness simulation. */
+   int colourblind; /**< Whether to enable colourblindness simulation. */
    int healthbars; /**< Whether or not to show health bars next to pilots. */
    double bg_brightness; /**< How much to darken the background stuff. */
    double nebu_nonuniformity; /**< How much to darken the nebula stuff. */

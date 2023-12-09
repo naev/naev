@@ -1240,11 +1240,11 @@ static void gl_fontRenderStartH( const glFontStash* stsh, const mat4 *H, const g
       col = c;
 
    glUseProgram(shaders.font.program);
-   gl_uniformAColor(shaders.font.color, col, a);
+   gl_uniformAColour(shaders.font.colour, col, a);
    if (outlineR == 0.)
-      gl_uniformAColor(shaders.font.outline_color, col, 0.);
+      gl_uniformAColour(shaders.font.outline_colour, col, 0.);
    else
-      gl_uniformAColor(shaders.font.outline_color, &cGrey10, a);
+      gl_uniformAColour(shaders.font.outline_colour, &cGrey10, a);
 
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
    font_projection_mat = *H;
@@ -1425,11 +1425,11 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
       const glColour *col = gl_fontGetColour( ch );
       double a = (c==NULL) ? 1. : c->a;
       if (col != NULL)
-         gl_uniformAColor(shaders.font.color, col, a );
+         gl_uniformAColour(shaders.font.colour, col, a );
       else if (c==NULL)
-         gl_uniformColor(shaders.font.color, &cWhite);
+         gl_uniformColour(shaders.font.colour, &cWhite);
       else
-         gl_uniformColor(shaders.font.color, c);
+         gl_uniformColour(shaders.font.colour, c);
       font_lastCol = col;
       return 0;
    }

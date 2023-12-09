@@ -6,8 +6,8 @@
   <frag>explosion.frag</frag>
   <size>40</size>
   <uniforms>
-   <u_colorbase x="0.9" y="0.1" z="0.1" w="0.1" />
-   <u_colorsmoke x="0.6" y="0.3" z="0.3" w="0.25" />
+   <u_colourbase x="0.9" y="0.1" z="0.1" w="0.1" />
+   <u_coloursmoke x="0.6" y="0.3" z="0.3" w="0.25" />
    <u_smokiness x="0.4" />
    <u_smoke_fade x="1.6" />
    <u_roll_speed x="0.3" />

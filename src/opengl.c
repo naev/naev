@@ -51,7 +51,7 @@
 glInfo gl_screen; /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
 
-static unsigned int colorblind_pp = 0; /**< Colorblind post-process shader id. */
+static unsigned int colourblind_pp = 0; /**< Colourblind post-process shader id. */
 
 /*
  * Viewport offsets
@@ -529,8 +529,8 @@ int gl_init (void)
 
    shaders_load();
 
-   /* Set colorblind shader if necessary. */
-   gl_colorblind( conf.colorblind );
+   /* Set colourblind shader if necessary. */
+   gl_colourblind( conf.colourblind );
 
    /* Set colourspace. */
    glEnable( GL_FRAMEBUFFER_SRGB );
@@ -667,26 +667,26 @@ GLint gl_stringToClamp( const char *s )
 }
 
 /**
- * @brief Enables or disables the colorblind shader.
+ * @brief Enables or disables the colourblind shader.
  *
- *    @param enable Whether or not to enable or disable the colorblind shader.
+ *    @param enable Whether or not to enable or disable the colourblind shader.
  */
-void gl_colorblind( int enable )
+void gl_colourblind( int enable )
 {
    if (enable) {
       LuaShader_t shader;
-      if (colorblind_pp != 0)
+      if (colourblind_pp != 0)
          return;
       memset( &shader, 0, sizeof(LuaShader_t) );
-      shader.program    = shaders.colorblind.program;
-      shader.VertexPosition = shaders.colorblind.VertexPosition;
-      shader.ClipSpaceFromLocal = shaders.colorblind.ClipSpaceFromLocal;
-      shader.MainTex    = shaders.colorblind.MainTex;
-      colorblind_pp = render_postprocessAdd( &shader, PP_LAYER_FINAL, 99, PP_SHADER_PERMANENT );
+      shader.program    = shaders.colourblind.program;
+      shader.VertexPosition = shaders.colourblind.VertexPosition;
+      shader.ClipSpaceFromLocal = shaders.colourblind.ClipSpaceFromLocal;
+      shader.MainTex    = shaders.colourblind.MainTex;
+      colourblind_pp = render_postprocessAdd( &shader, PP_LAYER_FINAL, 99, PP_SHADER_PERMANENT );
    } else {
-      if (colorblind_pp != 0)
-         render_postprocessRm( colorblind_pp );
-      colorblind_pp = 0;
+      if (colourblind_pp != 0)
+         render_postprocessRm( colourblind_pp );
+      colourblind_pp = 0;
    }
 }
 

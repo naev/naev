@@ -311,12 +311,12 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader, GLu
    return program;
 }
 
-void gl_uniformColor(GLint location, const glColour *c)
+void gl_uniformColour(GLint location, const glColour *c)
 {
    glUniform4f(location, c->r, c->g, c->b, c->a);
 }
 
-void gl_uniformAColor(GLint location, const glColour *c, GLfloat a)
+void gl_uniformAColour(GLint location, const glColour *c, GLfloat a)
 {
    glUniform4f(location, c->r, c->g, c->b, a);
 }

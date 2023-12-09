@@ -258,13 +258,13 @@ void weapon_minimap( double res, double w,
 
       glUseProgram(shaders.points.program);
       glEnableVertexAttribArray(shaders.points.vertex);
-      glEnableVertexAttribArray(shaders.points.vertex_color);
+      glEnableVertexAttribArray(shaders.points.vertex_colour);
       gl_uniformMat4(shaders.points.projection, &gl_view_matrix);
       gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex, 0, 2, GL_FLOAT, 0 );
-      gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex_color, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex_colour, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
       glDrawArrays( GL_POINTS, 0, p );
       glDisableVertexAttribArray(shaders.points.vertex);
-      glDisableVertexAttribArray(shaders.points.vertex_color);
+      glDisableVertexAttribArray(shaders.points.vertex_colour);
       glUseProgram(0);
       gl_checkErr();
    }
@@ -731,7 +731,7 @@ static void weapon_renderBeam( Weapon* w, double dt )
 
    /* Set shader uniforms. */
    gl_uniformMat4(shaders.beam.projection, &projection);
-   gl_uniformColor(shaders.beam.color, &w->outfit->u.bem.colour);
+   gl_uniformColour(shaders.beam.colour, &w->outfit->u.bem.colour);
    glUniform2f(shaders.beam.dimensions, w->outfit->u.bem.range, w->outfit->u.bem.width);
    glUniform1f(shaders.beam.dt, w->anim);
    glUniform1f(shaders.beam.r, w->r);

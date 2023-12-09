@@ -510,7 +510,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       else if ((o != NULL) &&
             (lst[i].sslot->slot.type == o->slot.type)) {
-         /* Render a thick frame with a yes/no color, and geometric cue. */
+         /* Render a thick frame with a yes/no colour, and geometric cue. */
          int ok = (!lst[i].sslot->locked && pilot_canEquip( p, &lst[i], o ) == NULL);
          glUseProgram( shaders.status.program );
          glUniform1f( shaders.status.paramf, ok );

@@ -50,7 +50,7 @@ class Shader:
 num_simpleshaders = 0
 class SimpleShader(Shader):
     def __init__(self, name, fs_path):
-        super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","color","dimensions","dt","paramf","parami","paramv"], subroutines={} )
+        super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","colour","dimensions","dt","paramf","parami","paramv"], subroutines={} )
         global num_simpleshaders
         num_simpleshaders += 1
     def header_chunks(self):
@@ -64,7 +64,7 @@ SHADERS = [
       vs_path = "project.vert",
       fs_path = "solid.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color"],
+      uniforms = ["projection", "colour"],
       subroutines = {},
    ),
    Shader(
@@ -89,7 +89,7 @@ SHADERS = [
       name = "smooth",
       vs_path = "smooth.vert",
       fs_path = "smooth.frag",
-      attributes = ["vertex", "vertex_color"],
+      attributes = ["vertex", "vertex_colour"],
       uniforms = ["projection"],
       subroutines = {},
    ),
@@ -98,7 +98,7 @@ SHADERS = [
       vs_path = "texture.vert",
       fs_path = "texture.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat", "sampler"],
+      uniforms = ["projection", "colour", "tex_mat", "sampler"],
       subroutines = {},
    ),
    Shader(
@@ -106,7 +106,7 @@ SHADERS = [
       vs_path = "texture.vert",
       fs_path = "texture_interpolate.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat", "sampler1", "sampler2", "inter"],
+      uniforms = ["projection", "colour", "tex_mat", "sampler1", "sampler2", "inter"],
       subroutines = {},
    ),
    Shader(
@@ -114,7 +114,7 @@ SHADERS = [
       vs_path = "texturesdf.vert",
       fs_path = "texturesdf.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat", "sampler", "m", "outline"],
+      uniforms = ["projection", "colour", "tex_mat", "sampler", "m", "outline"],
       subroutines = {},
    ),
    Shader(
@@ -122,7 +122,7 @@ SHADERS = [
       vs_path = "texture.vert",
       fs_path = "stealthoverlay.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat"],
+      uniforms = ["projection", "colour", "tex_mat"],
       subroutines = {},
    ),
    Shader(
@@ -161,7 +161,7 @@ SHADERS = [
       name = "points",
       vs_path = "smooth.vert",
       fs_path = "points.frag",
-      attributes = ["vertex", "vertex_color"],
+      attributes = ["vertex", "vertex_colour"],
       uniforms = ["projection"],
       subroutines = {},
    ),
@@ -187,7 +187,7 @@ SHADERS = [
       vs_path = "font.vert",
       fs_path = "font.frag",
       attributes = ["vertex", "tex_coord"],
-      uniforms = ["projection", "m", "color", "outline_color"],
+      uniforms = ["projection", "m", "colour", "outline_colour"],
       subroutines = {},
    ),
    Shader(
@@ -195,7 +195,7 @@ SHADERS = [
       vs_path = "project_pos.vert",
       fs_path = "beam.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "dt", "r", "dimensions" ],
+      uniforms = ["projection", "colour", "dt", "r", "dimensions" ],
       subroutines = {
         "beam_func" : [
             "beam_default",
@@ -233,9 +233,9 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
-      name = "colorblind",
+      name = "colourblind",
       vs_path = "postprocess.vert",
-      fs_path = "colorblind.frag",
+      fs_path = "colourblind.frag",
       attributes = ["VertexPosition"],
       uniforms = ["ClipSpaceFromLocal", "MainTex"],
       subroutines = {},
@@ -426,7 +426,7 @@ typedef struct SimpleShader_ {{
    GLuint program;
    GLuint vertex;
    GLuint projection;
-   GLuint color;
+   GLuint colour;
    GLuint dimensions;
    GLuint dt;
    GLuint parami;
@@ -475,7 +475,7 @@ static int shaders_loadSimple( const char *name, SimpleShader *shd, const char *
    shd->program = gl_program_vert_frag( "project_pos.vert", fs_path, NULL );
    shd->vertex = glGetAttribLocation( shd->program, "vertex" );
    shd->projection = glGetUniformLocation( shd->program, "projection" );
-   shd->color  = glGetUniformLocation( shd->program, "color" );
+   shd->colour  = glGetUniformLocation( shd->program, "colour" );
    shd->dimensions = glGetUniformLocation( shd->program, "dimensions" );
    shd->dt     = glGetUniformLocation( shd->program, "dt" );
    shd->paramf = glGetUniformLocation( shd->program, "paramf" );

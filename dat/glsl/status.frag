@@ -1,12 +1,12 @@
 uniform float paramf;
 
-const vec3 outline_color = vec3( 0.0, 0.0, 0.0 );
-const vec3 color_0 = vec3( 0.8, 0.2, 0.2 );
-const vec3 color_1 = vec3( 0.2, 0.8, 0.2 );
+const vec3 outline_colour = vec3( 0.0, 0.0, 0.0 );
+const vec3 colour_0 = vec3( 0.8, 0.2, 0.2 );
+const vec3 colour_1 = vec3( 0.2, 0.8, 0.2 );
 const float r2 = sqrt( 2.0 );
 
 in vec2 pos;
-out vec4 color_out;
+out vec4 colour_out;
 
 // Colour cutoffs, corresponding to "dist" below.
 const float glyph_center     = 0.5;
@@ -25,6 +25,6 @@ void main(void) {
    // smoothstep maps values below 0.5 to 0 and above 0.5 to 1, with a smooth transition at 0.5.
    float alpha = smoothstep(glyph_center-glyph_stepsize, glyph_center+glyph_stepsize, dist);
    float beta = smoothstep(outline_center-outline_stepsize, outline_center+outline_stepsize, dist);
-   vec3 fg_c = alpha * mix( color_0, color_1, paramf);
-   color_out = vec4( fg_c, beta );
+   vec3 fg_c = alpha * mix( colour_0, colour_1, paramf);
+   colour_out = vec4( fg_c, beta );
 }

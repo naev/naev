@@ -1,6 +1,6 @@
 #include "lib/sdf.glsl"
 
-uniform vec4 color;
+uniform vec4 colour;
 uniform vec2 dimensions;
 
 in vec2 pos;
@@ -20,8 +20,8 @@ void main (void)
    float beta  = smoothstep(-2.0*m,  -m, -d);
 
    if (dpie < m)
-      colour_out = vec4( vec3(0.1,0.3,0.7), color.a );
+      colour_out = vec4( vec3(0.1,0.3,0.7), colour.a );
    else
-      colour_out = color;
+      colour_out = colour;
    colour_out *= vec4( vec3(alpha), beta );
 }

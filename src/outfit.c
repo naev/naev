@@ -101,8 +101,8 @@ static void sdesc_miningRarity( int *l, Outfit *temp, int rarity );
 typedef struct s_Outfitstat {
     const char *name;
     const char *unit;
-    int color;
-    int color_threshold;
+    int colour;
+    int colour_threshold;
     int hide_zero;
     int precision;
 } t_os_stat;
@@ -1526,7 +1526,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    SDESC_ADD( l, temp, p_("outfitstats","%s [%s]"), _(outfit_getType(temp)),
          _(dtype_damageTypeToStr(temp->u.blt.dmg.type)) );
    dtype_raw( temp->u.blt.dmg.type, &dshield, &darmour, &dknockback );
-   // new_opts(name, unit, color, threshold, hidezero, precision)
+   // new_opts(name, unit, colour, threshold, hidezero, precision)
    l = os_printD( temp->summary_raw, l, darmour*100., &darmour_opts );
    l = os_printD( temp->summary_raw, l, dshield*100., &dshield_opts );
    l = os_printD( temp->summary_raw, l, dknockback*100., &dknockback_opts );
@@ -1551,8 +1551,8 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       const t_os_stat radius_opts = {
          .name = radius,
          .unit = _UNIT_DISTANCE,
-         .color = 0,
-         .color_threshold = 0,
+         .colour = 0,
+         .colour_threshold = 0,
          .hide_zero = 1,
          .precision = 0,
       };
@@ -1972,8 +1972,8 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       t_os_stat radius_opts = {
          .name = radius,
          .unit = _UNIT_DISTANCE,
-         .color = 0,
-         .color_threshold = 0,
+         .colour = 0,
+         .colour_threshold = 0,
          .hide_zero = 1,
          .precision = 0,
       };
@@ -3164,14 +3164,14 @@ static int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
       precision = MAX( opts->precision, 2 );
 
    i += scnprintf(buffer + i, MAXLEN, "\n");
-   if (opts->color)
+   if (opts->colour)
       i += scnprintf(buffer + i, MAXLEN,
-                     value > opts->color_threshold ? "#g" :
-                     value < opts->color_threshold ? "#r" : "");
+                     value > opts->colour_threshold ? "#g" :
+                     value < opts->colour_threshold ? "#r" : "");
    /* The brochure of the International System of Units declares in chapter 5: "a space separates the number and the symbol %". The ISO 31-0 standard also specifies a space, and the TeX typesetting system encourages using one. */
    num2str( buf, value, precision );
    i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), _(opts->name), buf, opts->unit ? _(opts->unit) : "" );
-   if (opts->color)
+   if (opts->colour)
       i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
 }
@@ -3198,13 +3198,13 @@ static int os_printD_range( char *buffer, int i, double minValue, double maxValu
    num2str( buf2, maxValue, opts->precision );
 
    i += scnprintf(buffer + i, MAXLEN, "\n");
-   if (opts->color)
+   if (opts->colour)
       i += scnprintf(buffer + i, MAXLEN,
-                     maxValue > opts->color_threshold ? "#g" :
-                     maxValue < opts->color_threshold ? "#r" : "");
+                     maxValue > opts->colour_threshold ? "#g" :
+                     maxValue < opts->colour_threshold ? "#r" : "");
    i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s - %s %s"), _(opts->name),
          buf1, _(opts->unit), buf2, _(opts->unit) );
-   if (opts->color)
+   if (opts->colour)
       i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
 }
@@ -3231,10 +3231,10 @@ static int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val
        return i;
 
    i += scnprintf(buffer + i, MAXLEN, "\n");
-   if (val_opts->color)
+   if (val_opts->colour)
       i += scnprintf(buffer + i, MAXLEN,
-                     val > val_opts->color_threshold ? "#g" :
-                     val < val_opts->color_threshold ? "#r" : "");
+                     val > val_opts->colour_threshold ? "#g" :
+                     val < val_opts->colour_threshold ? "#r" : "");
 
    if (multiplier > 1)
       snprintf( mult, sizeof(mult), p_("multiplier", " x %d"), multiplier );
@@ -3246,7 +3246,7 @@ static int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val
 
    i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s%s %s [%s %s]"), _(val_opts->name),
                   buf1, mult, _(val_opts->unit), buf2, _(rate_opts->unit) );
-   if (val_opts->color)
+   if (val_opts->colour)
       i += scnprintf(buffer + i, MAXLEN, "#0");
    return i;
 }

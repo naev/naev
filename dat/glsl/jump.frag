@@ -22,7 +22,7 @@ uniform float direction;
 uniform vec2 dimensions;
 uniform float brightness = 1.0;
 in vec2 pos;
-out vec4 color_out;
+out vec4 colour_out;
 
 /**
  * Calculates the transform that the player is going through.
@@ -131,9 +131,9 @@ void main(void)
 {
 #ifdef HAS_GL_ARB_shader_subroutine
    // Use subroutines
-   color_out = jump_func();
+   colour_out = jump_func();
 #else /* HAS_GL_ARB_shader_subroutine */
    //* Just use default
-   color_out = jump_wind();
+   colour_out = jump_wind();
 #endif /* HAS_GL_ARB_shader_subroutine */
 }
