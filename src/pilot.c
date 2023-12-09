@@ -3754,10 +3754,8 @@ void pilots_cleanAll (void)
 {
    pilots_clean(0);
    if (player.p != NULL) {
-      pilot_rmFlag( player.p, PILOT_NOFREE );
-      pilot_free(player.p);
+      player_rmPlayerShip( &player.ps );
       player.p = NULL;
-      free( player.ps.acquired );
       memset( &player.ps, 0, sizeof(PlayerShip_t) );
    }
    array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) ); // NOLINT

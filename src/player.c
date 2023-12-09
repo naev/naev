@@ -167,7 +167,6 @@ static void player_renderStealthUnderlay( double dt );
 static void player_renderStealthOverlay( double dt );
 static void player_renderAimHelper( double dt );
 /* Misc. */
-static void player_rmPlayerShip( PlayerShip_t *ps );
 static int player_filterSuitableSpob( Spob *p );
 static void player_spobOutOfRangeMsg (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
@@ -690,7 +689,7 @@ credits_t player_shipPrice( const char *shipname, int count_unique )
    return pilot_worth( ship, count_unique );
 }
 
-static void player_rmPlayerShip( PlayerShip_t *ps )
+void player_rmPlayerShip( PlayerShip_t *ps )
 {
    pilot_rmFlag( ps->p, PILOT_NOFREE );
    pilot_free( ps->p );
