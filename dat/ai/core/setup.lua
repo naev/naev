@@ -7,6 +7,7 @@ local usable_outfits = {
    ["Berserk Chip"]              = "berserk_chip",
    ["Combat Hologram Projector"] = "hologram_projector",
    ["Neural Accelerator Interface"] = "neural_interface",
+   ["Flicker Drive"]             = "blink_drive",
    ["Blink Drive"]               = "blink_drive",
    ["Hyperbolic Blink Engine"]   = "blink_engine",
    ["Unicorp Jammer"]            = "jammer",
