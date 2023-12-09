@@ -1,4 +1,5 @@
 * 0.11.0-beta.3 (unreleased)
+   * Fixed resizing not working on the background in some cases
    * Added pilot.weapsetAddType and pilot.weapsetSetActive
    * Gave unicorp storm launchers a rarity of 2 and made it more available
    * `test_of_renewal`: fixed weapon set defaults being incorrect and increased enemy damage

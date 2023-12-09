@@ -19,20 +19,20 @@
  * @brief VBO types.
  */
 typedef enum gl_vboType_e {
-   NGL_VBO_NULL, /**< No VBO type. */
-   NGL_VBO_STREAM, /**< VBO streaming type. */
-   NGL_VBO_DYNAMIC, /**< VBO dynamic type. */
-   NGL_VBO_STATIC /**< VBO static type. */
+   NGL_VBO_NULL,     /**< No VBO type. */
+   NGL_VBO_STREAM,   /**< VBO streaming type. */
+   NGL_VBO_DYNAMIC,  /**< VBO dynamic type. */
+   NGL_VBO_STATIC    /**< VBO static type. */
 } gl_vboType;
 
 /**
  * @brief Contains the VBO.
  */
 struct gl_vbo_s {
-   GLuint id; /**< VBO ID. */
-   gl_vboType type; /**< VBO type. */
-   GLsizei size; /**< VBO size. */
-   char* data; /**< VBO data. */
+   GLuint id;        /**< VBO ID. */
+   gl_vboType type;  /**< VBO type. */
+   GLsizei size;     /**< VBO size. */
+   char* data;       /**< VBO data. */
 };
 
 /**
@@ -68,10 +68,8 @@ void gl_exitVBO (void)
  */
 static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, const void* data, GLenum usage )
 {
-   gl_vbo *vbo;
-
    /* Allocate. */
-   vbo = calloc( 1, sizeof(gl_vbo) );
+   gl_vbo *vbo = calloc( 1, sizeof(gl_vbo) );
 
    /* General stuff. */
    vbo->size = size;
