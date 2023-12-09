@@ -856,13 +856,10 @@ int pilot_brake( Pilot *p )
    }
 
    diff = pilot_face(p, dir);
-   if (ABS(diff) < MAX_DIR_ERR && !isstopped)
+   if (ABS(diff) < MAX_DIR_ERR)
       pilot_setAccel(p, accel);
-   else {
+   else
       pilot_setAccel(p, 0.);
-      if (isstopped)
-         return 1;
-   }
    return 0;
 }
 
@@ -1317,7 +1314,7 @@ void pilot_setTarget( Pilot* p, unsigned int id )
 double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       const Damage *dmg, const Outfit *outfit, int lua_mem, int reset )
 {
-   int mod, shooter;
+   int shooter;
    double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, ddis, absorb, dmod, start;
    double tdshield, tdarmour;
 
@@ -1508,9 +1505,8 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
 
          /* adjust the combat rating based on pilot mass and ditto faction */
          if ((pshooter != NULL) && pilot_isWithPlayer(pshooter)) {
-
             /* About 6 for a llama, 52 for hawking. */
-            mod = 2. * (pow(p->base_mass, 0.4) - 1.);
+            int mod = 2. * (pow(p->base_mass, 0.4) - 1.);
 
             /* Modify faction for him and friends. */
             faction_modPlayer( p->faction, -mod, "kill" );
@@ -1666,7 +1662,7 @@ void pilot_dead( Pilot* p, unsigned int killer )
  */
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent )
 {
-   double dist, rad2;
+   double rad2;
    Solid s; /* Only need to manipulate mass and vel. */
    Damage ddmg;
    const IntList *qt;
@@ -1681,7 +1677,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
    qt = pilot_collideQuery( qx-qr, qy-qr, qx+qr, qy+qr );
    for (int i=0; i<il_size(qt); i++) {
       Pilot *p = pilot_stack[ il_get( qt, i, 0 ) ];
-      double rx, ry;
+      double rx, ry, dist;
 
       /* Calculate a bit. */
       rx = p->solid.pos.x - x;
@@ -2610,8 +2606,8 @@ void pilot_sample_trails( Pilot* p, int none )
 
    /* Compute the engine offset and decide where to draw the trail. */
    for (int i=0, g=0; g<array_size(p->ship->trail_emitters); g++) {
-      ShipTrailEmitter *trail = &p->ship->trail_emitters[g];
-      double dx, dy, prod, scale;
+      const ShipTrailEmitter *trail = &p->ship->trail_emitters[g];
+      double dx, dy, scale;
 
       if (!pilot_trail_generated( p, g ))
          continue;
@@ -2619,7 +2615,7 @@ void pilot_sample_trails( Pilot* p, int none )
       p->trail[i]->ontop = 0;
       if (!(trail->always_under) && (dirsin > 0)) {
          /* See if the trail's front (tail) is in front of the ship. */
-         prod = (trail_front( p->trail[i] ).x - p->solid.pos.x) * dircos +
+         double prod = (trail_front( p->trail[i] ).x - p->solid.pos.x) * dircos +
                   (trail_front( p->trail[i] ).y - p->solid.pos.y) * dirsin;
 
          p->trail[i]->ontop = (prod < 0);
@@ -3375,7 +3371,7 @@ Pilot* pilot_setPlayer( Pilot* after )
 
    if (i < 0) { /* No existing player ID. */
       if (l < 0) /* No existing pilot, have to create. */
-         array_push_back( &pilot_stack, after );
+         array_push_back( &pilot_stack, after ); // NOLINT
    }
    else { /* Player pilot already exists. */
       if (l >= 0)
@@ -3451,7 +3447,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
             continue;
 
          if (ignore_rules) {
-            array_push_back( &validJumpPoints, target );
+            array_push_back( &validJumpPoints, target ); // NOLINT
             continue;
          }
 
@@ -3470,7 +3466,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
          for (int j=0; j<array_size(fact); j++)
             limit += system_getPresence( jmp->target, fact[j] );
          if (pres > limit)
-            array_push_back( &validJumpPoints, target );
+            array_push_back( &validJumpPoints, target ); // NOLINT
       }
    }
 
@@ -3484,9 +3480,9 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
             if (jp_isFlag( jp->returnJump, JP_EXITONLY ))
                continue;
             /* Ignore hidden jumps for now. */
-            if (jp_isFlag( jp, JP_HIDDEN ) && !guerilla)
+            if (jp_isFlag( jp, JP_HIDDEN ))
                continue;
-            array_push_back(&validJumpPoints, jp->returnJump);
+            array_push_back(&validJumpPoints, jp->returnJump); // NOLINT
          }
          /* Now add hidden jumps as a last resort - only for non guerillas as they should be added otherwise. */
          if (!guerilla && array_size(validJumpPoints)<=0) {
@@ -3494,7 +3490,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
                JumpPoint *jp = &cur_system->jumps[i];
                if (jp_isFlag( jp->returnJump, JP_EXITONLY ))
                   continue;
-               array_push_back(&validJumpPoints, jp->returnJump);
+               array_push_back(&validJumpPoints, jp->returnJump); // NOLINT
             }
          }
       }
@@ -3604,7 +3600,7 @@ static void pilot_erase( Pilot *p )
 {
    int i = pilot_getStackPos( p->id );
    pilot_free(p);
-   array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
+   array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] ); // NOLINT
 }
 
 /**
@@ -3618,7 +3614,7 @@ void pilot_stackRemove( Pilot *p )
       WARN(_("Trying to remove non-existent pilot '%s' from stack!"), p->name);
 #endif /* DEBUGGING */
    p->id = 0;
-   array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
+   array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] ); // NOLINT
 }
 
 /**
@@ -3701,14 +3697,14 @@ void pilots_clean( int persist )
          /* Reset trails */
          for (int g=0; g<array_size(p->trail); g++)
             spfx_trail_remove( p->trail[g] );
-         array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
+         array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) ); // NOLINT
          /* All done. */
          persist_count++;
       }
       else /* rest get killed */
          pilot_free(pilot_stack[i]);
    }
-   array_erase( &pilot_stack, &pilot_stack[persist_count], array_end(pilot_stack) );
+   array_erase( &pilot_stack, &pilot_stack[persist_count], array_end(pilot_stack) ); // NOLINT
 
    /* Init AI on the remaining pilots, has to be done here so the pilot_stack is consistent. */
    for (int i=0; i<array_size(pilot_stack); i++) {
@@ -3763,7 +3759,7 @@ void pilots_cleanAll (void)
       free( player.ps.acquired );
       memset( &player.ps, 0, sizeof(PlayerShip_t) );
    }
-   array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) );
+   array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) ); // NOLINT
 }
 
 /**
