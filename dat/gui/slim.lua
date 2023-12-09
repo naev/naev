@@ -37,7 +37,7 @@ function create()
    screen_w, screen_h = gfx.dim()
    gui.viewport( 0, 28, screen_w, screen_h - 28 )
 
-   --Colors
+   --Colours
    cols.txt_bar = colour.new( 192/255, 198/255, 217/255 )
    cols.txt_top = colour.new( 148/255, 158/255, 192/255 )
    cols.txt_std = colour.new( 111/255, 125/255, 169/255 )

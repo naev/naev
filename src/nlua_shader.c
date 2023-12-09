@@ -220,11 +220,11 @@ static int shaderL_new( lua_State *L )
    UNIFORM( ClipSpaceFromLocal );
    UNIFORM( ViewNormalFromLocal );
    UNIFORM( MainTex );
-   UNIFORM( ConstantColor );
+   UNIFORM( ConstantColour );
    UNIFORM( love_ScreenSize );
    ATTRIB( VertexPosition );
    ATTRIB( VertexTexCoord );
-   ATTRIB( VertexColor );
+   ATTRIB( VertexColour );
 #undef ATTRIB
 #undef UNIFORM
 

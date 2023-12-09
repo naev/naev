@@ -434,14 +434,14 @@ local function bg_generator( params )
 
    -- Do some background
    lg.setCanvas( cvs )
-   lg.setColor( colbg )
+   lg.setColour( colbg )
    gradient( -0.1+0.2*rnd.rnd(), 0.5+0.2*rnd.rnd(), 0, 0, 0, 1 );
    for i=1,nfeats do
       local c = calpha( colfeat, featalpha+featrandonmess*rnd.rnd() )
       c[1] = c[1] + rnd.rnd()*featrnd[1]
       c[2] = c[2] + rnd.rnd()*featrnd[2]
       c[3] = c[3] + rnd.rnd()*featrnd[3]
-      lg.setColor( c )
+      lg.setColour( c )
       if rnd.rnd() < 0.6 then
          local r = rnd.rnd()*(w+h)*0.4 * featscale
          light( rnd.rnd()*w-r*0.5, rnd.rnd()*h-r*0.5+0.3*h, r )
@@ -454,7 +454,7 @@ local function bg_generator( params )
 
    -- Do some lights
    for i=1,nlights do
-      lg.setColor( calpha( collight, lightbrightness+lightrandomness*rnd.rnd() ) )
+      lg.setColour( calpha( collight, lightbrightness+lightrandomness*rnd.rnd() ) )
       local r = (0.1+0.15*rnd.rnd())*(w+h)*0.5
       light( rnd.rnd()*w-r*0.5, (0.1+0.5*rnd.rnd())*h-r*0.5, r )
    end

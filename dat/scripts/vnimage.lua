@@ -286,10 +286,10 @@ function vni.soundonly( id, params )
    local oc = lg.getCanvas()
    local fl = lg.newFont( "fonts/D2CodingBold.ttf", 300 )
    local fs = lg.newFont( 64 )
-   local col = params.color or { 1, 0, 0 }
+   local col = params.colour or { 1, 0, 0 }
    lg.setCanvas( c )
    lg.clear{ 0, 0, 0, 0.8 }
-   lg.setColor( col )
+   lg.setColour( col )
    lg.printf( id, fl, 0, 200, 1000, "center" )
    lg.printf( p_("vn_extras", "SOUND ONLY"), fs, 0, 550, 1000, "center" )
    lg.setCanvas( oc )

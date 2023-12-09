@@ -54,7 +54,7 @@ function create()
 
    vn.setBackground( function()
       local w, h = gfx.dim()
-      vn.setColor( {0, 0, 0, 1} )
+      vn.setColour( {0, 0, 0, 1} )
       lg.rectangle( "fill", 0, 0, w, h )
    end )
    local sigsegv = vn.newCharacter( _("Naev received SIGSEGV (address not mapped to object)!") )

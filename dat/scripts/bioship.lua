@@ -530,18 +530,18 @@ function bioship.window ()
       local s = self.skill
       local x, y = bx+self.x, by+self.y
       if s.enabled then
-         lg.setColor( {0,0.4,0.8,1} )
+         lg.setColour( {0,0.4,0.8,1} )
          lg.rectangle( "fill", x+10,y+10,70,70 )
       elseif not skill_canEnable(s) then
-         lg.setColor( {0.5,0.2,0.2,1} )
+         lg.setColour( {0.5,0.2,0.2,1} )
          lg.rectangle( "fill", x+10,y+10,70,70 )
       else
-         lg.setColor( {0,0.4,0.8,1} )
+         lg.setColour( {0,0.4,0.8,1} )
          lg.rectangle( "fill", x+7,y+7,76,76 )
-         lg.setColor( {0,0,0,1} )
+         lg.setColour( {0,0,0,1} )
          lg.rectangle( "fill", x+10,y+10,70,70 )
       end
-      lg.setColor( {1,1,1,1} )
+      lg.setColour( {1,1,1,1} )
       if s.gfx and not (lk.isDown("left ctrl") or lk.isDown("right ctrl")) then
          s.gfx:draw( x+10, y+10, 0, 70/256, 70/256 )
       else

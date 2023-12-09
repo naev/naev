@@ -123,10 +123,10 @@ function trial_start ()
    local maikki = minerva.vn_maikki()
    local ceo = minerva.vn_ceo()
    local judge = vn.Character.new( _("Judge Holmes"), { image="judge_holmes.webp" } )
-   local zlk = vn.Character.new( _("Za'lek Lawyer"), { image=zalek_image, color=zalek_colour } )
-   local dvd = vn.Character.new( _("Dvaered Representative"), { image=dvaered_image, color=dvaered_colour } )
+   local zlk = vn.Character.new( _("Za'lek Lawyer"), { image=zalek_image, colour=zalek_colour } )
+   local dvd = vn.Character.new( _("Dvaered Representative"), { image=dvaered_image, colour=dvaered_colour } )
    local scv = vn.Character.new( minerva.scavengera.name,
-         { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="farleft" } )
+         { image=minerva.scavengera.image, colour=minerva.scavengera.colour, pos="farleft" } )
 
    vn.clear()
    vn.scene()

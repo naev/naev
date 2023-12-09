@@ -13,7 +13,7 @@ tut.shipai = {
    portrait = "tutorial.webp",
    image = "tutorial.webp",
    name = _("Ship AI"),
-   color = { 0, 1, 1 },
+   colour = { 0, 1, 1 },
    transition = "electric",
 }
 
@@ -37,7 +37,7 @@ function tut.vn_shipai( params )
    return vn.Character.new( tut.ainame(),
          tmerge( {
             image=tut.shipai.image,
-            color=tut.shipai.colour,
+            colour=tut.shipai.colour,
             shader=love_shaders.hologram{strength=0.2},
          }, params) )
 end
@@ -47,7 +47,7 @@ function tut.log( text )
    shiplog.append( "tutorial", text )
 end
 
--- Capsule function for naev.keyGet() that adds a color code to the return string.
+-- Capsule function for naev.keyGet() that adds a colour code to the return string.
 function tut.getKey( command )
     return "#b" .. naev.keyGet(command) .. "#0"
 end

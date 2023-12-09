@@ -19,8 +19,8 @@ local articles = {
       body = _([[Several dark planets report the natural re-emergence of daylight eyes, prompting leaders to declare planetary emergency.]]),
    },
    {
-      head = N_([[Colorful Outlook on Life]]),
-      body = _([[New eye color serum released for general consumption. The new color changes, and can appear to be either blue, green, purple or yellow, depending on the direction it is viewed from. Renowned socialite Sharmante Givotake has already signed a 6 month deal to promote the new color.]]),
+      head = N_([[Colourful Outlook on Life]]),
+      body = _([[New eye colour serum released for general consumption. The new colour changes, and can appear to be either blue, green, purple or yellow, depending on the direction it is viewed from. Renowned socialite Sharmante Givotake has already signed a 6-month deal to promote the new colour.]]),
    },
    --[[
       Business
@@ -49,7 +49,7 @@ local articles = {
    --]]
    {
       head = N_([[The Circus of Ancient Visage]]),
-      body = _([[A roaming circus trails all over Soromid space, showing such magnificent and bizarre performers, like the 160cm man, the two legged woman, and the man who cannot fly. Visitors flock to this primitive display, basking in our ancestors' fragility and weird biology.]]),
+      body = _([[A roaming circus trails all over Soromid space, showing such magnificent and bizarre performers, like the 160 cm man, the two legged woman, and the man who cannot fly. Visitors flock to this primitive display, basking in our ancestors' fragility and weird biology.]]),
    },
    {
       head = N_([[Beauty in the Third Eye of the Beholder]]),

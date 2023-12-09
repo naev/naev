@@ -33,8 +33,8 @@ return function ( mem )
          vn.disappear( sai, tut.shipai.transition )
 
          vn.scene()
-         local v01 = vn.newCharacter( vni.soundonly( _("01"), {color={0.9,0.2,0.2}, pos="left"} ) )
-         local v02 = vn.newCharacter( vni.soundonly( _("02"), {color={0.4,0.2,0.9}, pos="right"} ) )
+         local v01 = vn.newCharacter( vni.soundonly( _("01"), {colour={0.9,0.2,0.2}, pos="left"} ) )
+         local v02 = vn.newCharacter( vni.soundonly( _("02"), {colour={0.4,0.2,0.9}, pos="right"} ) )
          vn.transition()
 
          local function noise ()

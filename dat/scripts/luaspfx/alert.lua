@@ -18,7 +18,7 @@ local function render( sp, x, y, z )
    local s = d.size * z
    local old_shader = lg.getShader()
    lg.setShader( alert_shader )
-   lg.setColor( d.col )
+   lg.setColour( d.col )
    love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
    lg.setShader( old_shader )
 end

@@ -69,7 +69,7 @@ function bgshader:render( dt, col )
       lg.setCanvas( self.bgcanvas )
       lg.clear( 0, 0, 0, 0 )
       lg.setShader( self.bgshader )
-      lg.setColor( col )
+      lg.setColour( col )
       lg.setBlendMode( "alpha", "premultiplied" )
       love_shaders.img:draw( 0, 0, 0, self.cw, self.ch )
       lg.setBlendMode( "alpha" )
@@ -77,7 +77,7 @@ function bgshader:render( dt, col )
       lg.setCanvas( oldcanvas )
 
       -- Render to screen
-      lg.setColor( 1, 1, 1, 1 )
+      lg.setColour( 1, 1, 1, 1 )
       self.bgcanvas:draw( 0, 0, 0, self.bgscale, self.bgscale )
 
       -- Swap buffers
@@ -88,7 +88,7 @@ function bgshader:render( dt, col )
    end
 
    -- Native resolution
-   lg.setColor( col )
+   lg.setColour( col )
    local oldshader = lg.getShader()
    lg.setShader( self.bgshader )
    love_shaders.img:draw( 0, 0, 0, nw, nh )

@@ -29,7 +29,7 @@ function sciwrong.vn_geller( params )
    return vn.Character.new( sciwrong.geller.name,
       tmerge( {
          image=sciwrong.geller.image,
-         color=sciwrong.geller.colour,
+         colour=sciwrong.geller.colour,
       }, params) )
 end
 

@@ -55,7 +55,7 @@ function love.update( dt )
 end
 
 function love.load()
-   -- Transparent background in Naev
+   -- Transparent background in Naev, use the true love2d API here
    love.graphics.setColor( 1, 1, 1, 1 )
    love.graphics.setBackgroundColor( 0, 0, 0, 0 )
 end

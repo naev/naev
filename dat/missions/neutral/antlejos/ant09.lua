@@ -129,7 +129,7 @@ He takes a long swig and finishes his mug.
       vn.func( function ()
          local lw, lh = lg.getDimensions()
          vn.setBackground( function ()
-            lg.setColor( 0, 0, 0, 1 )
+            lg.setColour( 0, 0, 0, 1 )
             lg.rectangle( "fill", 0, 0, lw, lh )
          end )
          music.stop()

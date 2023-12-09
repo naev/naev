@@ -14,7 +14,7 @@ function lucas.vn_lucas( params )
    return vn.Character.new( lucas.lucas.name,
          tmerge( {
             image=lucas.lucas.image,
-            color=lucas.lucas.colour,
+            colour=lucas.lucas.colour,
          }, params) )
 end
 

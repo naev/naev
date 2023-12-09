@@ -234,15 +234,15 @@ function wgtBoard:draw( bx, by )
    local l = self.loot
    local a = self.selalpha
    if a < 1 then
-      lg.setColor( luatk.colour.outline )
+      lg.setColour( luatk.colour.outline )
       lg.rectangle( "fill", x-1, y-1, w+2, h+2 )
-      lg.setColor( (l and l.bg) or {0,0,0} )
+      lg.setColour( (l and l.bg) or {0,0,0} )
       lg.rectangle( "fill", x, y, w, h )
    end
    if a > 0 then
-      lg.setColor( {0,1,1,a} )
+      lg.setColour( {0,1,1,a} )
       lg.rectangle( "fill", x-3, y-3, w+6, h+6 )
-      lg.setColor( {0,0.5,0.5,a} )
+      lg.setColour( {0,0.5,0.5,a} )
       lg.rectangle( "fill", x, y, w, h )
    end
    -- Ignore anything that isn't loot from now on
@@ -251,19 +251,19 @@ function wgtBoard:draw( bx, by )
    local img = l.image
    if img then
       local iw, ih = img:getDimensions()
-      lg.setColor( {1,1,1} )
+      lg.setColour( {1,1,1} )
       img:draw( x, y, 0, w / iw, h / ih )
    end
    local txt = l.text
    if txt and (self.mouseover or not img) then
-      lg.setColor( luatk.colour.text )
+      lg.setColour( luatk.colour.text )
       local font = luatk._deffont
       local _maxw, wrap = font:getWrap( txt, w )
       local th = #wrap * font:getLineHeight()
       lg.printf( txt, luatk._deffont, x, y+(h-th)/2, w, 'center' )
    end
    if l.qs then
-      lg.setColor( luatk.colour.text )
+      lg.setColour( luatk.colour.text )
       lg.printf( l.qs, luatk._deffont, x+5, y+5, w-10, 'right' )
    end
 end

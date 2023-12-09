@@ -143,11 +143,11 @@ end
 
 function foreground ()
    if fg.alpha > 0 then
-      lg.setColor( 0, 0, 0, fg.alpha )
+      lg.setColour( 0, 0, 0, fg.alpha )
       lg.rectangle( "fill", 0, 0, nw, nh )
 
       if fg.text then
-         lg.setColor( 1, 1, 1, fg.alpha )
+         lg.setColour( 1, 1, 1, fg.alpha )
          lg.printf( fg.text, fg.font, fg.x, fg.y, 0.6*nw, "center" )
       end
    end

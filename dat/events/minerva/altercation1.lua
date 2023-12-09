@@ -52,9 +52,9 @@ function create ()
 
    -- Create scuffle
    local vn_zl = vn.Character.new( _("Za'lek Belligerent"),
-         { image=zalek_image, color=zalek_colour, pos="left" } )
+         { image=zalek_image, colour=zalek_colour, pos="left" } )
    local vn_dv = vn.Character.new( _("Dvaered Hooligan"),
-         { image=dvaered_image, color=dvaered_colour, pos="right" } )
+         { image=dvaered_image, colour=dvaered_colour, pos="right" } )
    vn.clear()
    vn.scene()
    vn.music( minerva.loops.conflict )
@@ -207,7 +207,7 @@ function dv_hail ()
    vn.clear()
    vn.scene()
    local dvc = vn.newCharacter( _("Dvaered Hooligan"),
-      { image=dvaered_holo, color=dvaered_colour, shader=love_shaders.hologram() } )
+      { image=dvaered_holo, colour=dvaered_colour, shader=love_shaders.hologram() } )
    vn.transition("electric")
    dvc( _([["Thank you for the help with the Za'lek scum. Let us celebrate with a drink in the bar down at Minerva Station!"]]) )
    vn.done("electric")
@@ -245,7 +245,7 @@ function zl_hail ()
    vn.clear()
    vn.scene()
    local zlc = vn.newCharacter( _("Za'lek Belligerent"),
-      { image=zalek_holo, color=zalek_colour, shader=love_shaders.hologram() } )
+      { image=zalek_holo, colour=zalek_colour, shader=love_shaders.hologram() } )
    vn.transition("electric")
    zlc( _([["As my computations predicted, the Dvaered scum was no match for the Za'lek superiority. Let us celebrate with a drink down at Minerva Station"]]) )
    vn.done("electric")

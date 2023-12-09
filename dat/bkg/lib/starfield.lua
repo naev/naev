@@ -152,7 +152,7 @@ function starfield.init( params )
       lg.setCanvas( cvs )
       lg.clear( 0, 0, 0, 0 )
       lg.setShader( shader )
-      lg.setColor( {1,1,1,1} )
+      lg.setColour( {1,1,1,1} )
       love_shaders.img:draw( 0, 0, 0, texw, texh )
       lg.setShader()
       lg.setCanvas( oldcanvas )
@@ -171,7 +171,7 @@ end
 
 function starfield.render( dt )
    if static then
-      lg.setColor( {sb,sb,sb,1} )
+      lg.setColour( {sb,sb,sb,1} )
       cvs:draw( 0, 0 )
       return
    end

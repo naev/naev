@@ -53,7 +53,7 @@ local articles = {
    },
    {
       head = N_([[Emperor's Aid Gets Hitched]]),
-      body = _([[Imperial secretary Karil Lorenze married long time fiancee Rachid Baouda in the future palace gardens on Emperor's Fist. His Eminence the Bishop of Bao performed the ceremony.]])
+      body = _([[Imperial secretary Karil Lorenze married long time fiancée Rachid Baouda in the future palace gardens on Emperor's Fist. His Eminence the Bishop of Bao performed the ceremony.]])
    },
    {
       head = N_([[Remembering the Past]]),

@@ -21,7 +21,7 @@ function totoran.vn_guide( params )
    return vn.Character.new( totoran.guide.name,
          tmerge( {
             image=totoran.guide.image,
-            color=totoran.guide.colour,
+            colour=totoran.guide.colour,
          }, params) )
 end
 

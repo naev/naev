@@ -39,7 +39,7 @@ function create()
    screen_w, screen_h = gfx.dim()
    smallfont_h = gfx.fontSize(true)
 
-   --Colors
+   --Colours
    col_shield = colour.new(  42/255,  57/255,  162/255 )
    col_armour = colour.new(  80/255,  80/255,  80/255 )
    col_energy = colour.new(  36/255,  125/255,  51/255 )

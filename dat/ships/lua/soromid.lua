@@ -4,9 +4,9 @@ local explib = require "ships.lua.lib.explode"
 
 local function exp_params( size )
    return {
-      colorbase = {0.1, 0.9, 0.1, 0.2},
+      colourbase = {0.1, 0.9, 0.1, 0.2},
       smokiness = 0.4,
-      colorsmoke = {0.6, 0.7, 0.1, 0.5},
+      coloursmoke = {0.6, 0.7, 0.1, 0.5},
       smokefade = 1.6,
       rollspeed = 0.3,
       grain = 0.1 + size*0.0015,

@@ -24,7 +24,7 @@ function zpp.vn_noona( params )
    return vn.Character.new( zpp.noona.name,
          tmerge( {
             image=zpp.noona.image,
-            color=zpp.noona.colour,
+            colour=zpp.noona.colour,
          }, params) )
 end
 
@@ -57,7 +57,7 @@ function zpp.shader_focal ()
 
 uniform float u_time = 0.0;
 
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec2 uv = texture_coords * 2.0 - 1.0;
    float m = 1.0 / love_ScreenSize.x;
@@ -70,7 +70,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    float dhard = length(uv) - (0.15 + 0.1 * snoise(ncoord * vec3(3.0) + vec3(300.0)));
 
-   vec4 colout = color;
+   vec4 colout = colour;
    colout *= pow( smoothstep( -dsoft1, dsoft2, 0.0 ), 2.0 );
    colout += smoothstep( -m, 0.0, -dhard );
    colout.a *= smoothstep( -m, 0, -dsoft1 );
@@ -86,7 +86,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    end
    shader.render = function( self, x, y, size )
       local oldshader = lg.getShader()
-      lg.setColor( 0, 0.2, 1, 1 )
+      lg.setColour( 0, 0.2, 1, 1 )
       lg.setShader( self )
       local s2 = size*0.5
       love_shaders.img:draw( x-s2, y-s2, 0, size, size )
@@ -115,25 +115,25 @@ vec4 nebula_bg( vec2 screen_coords )
    return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, u_time*0.1, hue, 1.0, 0.0, 0.1 );
 }
 
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec2 uv = (texture_coords*2.0-1.0) * love_ScreenSize.xy;
    float r = (u_progress*2.0-0.5) * max( love_ScreenSize.x, love_ScreenSize.y ) * M_SQRT2;
    float d = length(uv)-r;
 
    if (u_mode==0)
-      color.a *= smoothstep( -800.0 / sf, 0.0, -abs(d) );
+      colour.a *= smoothstep( -800.0 / sf, 0.0, -abs(d) );
    else if (u_mode==1)
-      color.a *= smoothstep( -800.0 / sf, 0.0, -d );
+      colour.a *= smoothstep( -800.0 / sf, 0.0, -d );
    else if (u_mode==2)
-      color.a *= 1.0-smoothstep( -800.0 / sf, 0.0,  -d );
+      colour.a *= 1.0-smoothstep( -800.0 / sf, 0.0,  -d );
 
-   if (color.a > 0.0) {
+   if (colour.a > 0.0) {
       vec4 nebucol = nebula_bg( uv );
-      nebucol.a *= color.a;
+      nebucol.a *= colour.a;
       return nebucol;
    }
-   return color;
+   return colour;
 }
 ]]
    local sf = naev.conf().nebu_scale
@@ -160,7 +160,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
       local oldcanvas = lg.getCanvas()
       local oldshader = lg.getShader()
-      lg.setColor( 1, 1, 1, 1 )
+      lg.setColour( 1, 1, 1, 1 )
       lg.setCanvas( self.canvas )
       lg.clear( 0, 0, 0, 0 )
       lg.setShader( self )

@@ -4,8 +4,8 @@ local chakra = require "luaspfx.chakra_explosion"
 local explib = require "ships.lua.lib.explode"
 
 local exp_params = {
-   colorbase = {1.0, 0.8, 0.8, 0.7},
-   colorsmoke = {0.3, 0.3, 0.3, 0.1},
+   colourbase = {1.0, 0.8, 0.8, 0.7},
+   coloursmoke = {0.3, 0.3, 0.3, 0.1},
    smokiness = 0.4,
    --smokefade = 1.6,
    --rollspeed = 0.3,

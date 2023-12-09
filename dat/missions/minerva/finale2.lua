@@ -846,7 +846,7 @@ function approach_pir ()
       vn.show_options = false
       vn.setBackground( function ()
          local nw, nh = naev.gfx.dim()
-         vn.setColor( {0, 0, 0, 1} )
+         vn.setColour( {0, 0, 0, 1} )
          lg.rectangle("fill", 0, 0, nw, nh )
       end )
    end )

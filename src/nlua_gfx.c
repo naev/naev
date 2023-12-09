@@ -403,7 +403,7 @@ static int gfxL_renderTexH( lua_State *L )
    glActiveTexture( GL_TEXTURE0 );
 
    /* Set shader uniforms. */
-   gl_uniformColor( shader->ConstantColor, col );
+   gl_uniformColor( shader->ConstantColour, col );
    gl_uniformMat4( shader->ClipSpaceFromLocal, H );
 
    /* Draw. */

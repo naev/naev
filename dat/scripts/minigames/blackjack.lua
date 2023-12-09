@@ -48,12 +48,12 @@ function bj.init( x, y, w, h, donefunc )
    bj.player = {}
    bj.msg = nil
    bj.chatter = nil
-   bj.chatter_color = nil
+   bj.chatter_colour = nil
 end
 
 local function _chatter( chat_type )
    local text
-   bj.chatter_color = minerva.chicken.colour
+   bj.chatter_colour = minerva.chicken.colour
 
    if player.misnDone("Minerva Pirates 6") then
       bj.chatter = nil -- TODO more dealer messages?
@@ -252,14 +252,14 @@ function bj.draw( bx, by, bw, _bh )
 
    -- Special chatter
    if bj.chatter then
-      lg.setColor( bj.chatter_color or {1,1,1} )
+      lg.setColour( bj.chatter_colour or {1,1,1} )
       lg.print( bj.chatter, bj.font, x, y )
    end
    y = y + bj.font:getHeight()+20
 
    -- Dealer
    if #bj.dealer > 0 then
-      lg.setColor( 1, 1, 1 )
+      lg.setColour( 1, 1, 1 )
       local str
       if not bj.done then
          str = "?"
@@ -278,7 +278,7 @@ function bj.draw( bx, by, bw, _bh )
       local tplayer = _total(bj.player)
       x = rs
       y = y + (h + sep)*bj.scale
-      lg.setColor( 1, 1, 1 )
+      lg.setColour( 1, 1, 1 )
       lg.print( string.format(_("Player: %d"),tplayer), bj.font, x, y )
       y = y + bj.font:getHeight()+10
       _drawhand( x, y, bj.player )
@@ -290,7 +290,7 @@ function bj.draw( bx, by, bw, _bh )
    y = y + h + 20
    if bj.msg ~= nil then
       x = rs
-      lg.setColor( 1, 1, 1 )
+      lg.setColour( 1, 1, 1 )
       lg.print( bj.msg, bj.font, x, y )
    end
 
@@ -315,11 +315,11 @@ function bj.draw( bx, by, bw, _bh )
       else
          col = {0, 0, 0}
       end
-      lg.setColor( 0.5, 0.5, 0.5 )
+      lg.setColour( 0.5, 0.5, 0.5 )
       lg.rectangle( "fill", x, y, w+2*b, h+2*b )
-      lg.setColor( col )
+      lg.setColour( col )
       lg.rectangle( "fill", x+2, y+2, w+2*b-4, h+2*b-4 )
-      lg.setColor( 0.7, 0.7, 0.7 )
+      lg.setColour( 0.7, 0.7, 0.7 )
       lg.print( s, bj.font, x+b, y+b )
       x = x + 3*b + w
    end

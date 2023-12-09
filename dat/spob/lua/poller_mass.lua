@@ -10,7 +10,7 @@ local function update_canvas ()
    local oldcanvas = lg.getCanvas()
    lg.setCanvas( mem.cvs )
    lg.clear( 0, 0, 0, 0 )
-   lg.setColor( 1, 1, 1, 1 )
+   lg.setColour( 1, 1, 1, 1 )
 
    -- Draw the shader
    lg.setShader( mem.shader )

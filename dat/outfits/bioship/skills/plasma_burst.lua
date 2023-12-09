@@ -46,8 +46,8 @@ local function activate( p, po )
       smokiness = 0.4,
       rollspeed = 0.3,
       smokefade = 1.6,
-      colorbase = {0.9, 0.1, 0.1, 0.1},
-      colorsmoke = {0.6, 0.3, 0.3, 0.25},
+      colourbase = {0.9, 0.1, 0.1, 0.1},
+      coloursmoke = {0.6, 0.3, 0.3, 0.25},
    } )
 
    mem.timer = cooldown * p:shipstat("cooldown_mod",true)

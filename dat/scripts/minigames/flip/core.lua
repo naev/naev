@@ -97,7 +97,7 @@ function mg.load ()
    if headertext then
       by = by - 40
    end
-   lg.setBackgroundColor(0, 0, 0, 0)
+   lg.setBackgroundColour(0, 0, 0, 0)
    lg.setNewFont( 16 )
    headerfont = lg.newFont(24)
    bgshader = love_shaders.circuit()
@@ -163,7 +163,7 @@ end
 local function setcol( col )
    local r, g, b, a = table.unpack( col )
    a = a or 1
-   lg.setColor( r, g, b, a*alpha )
+   lg.setColour( r, g, b, a*alpha )
 end
 
 function mg.draw ()

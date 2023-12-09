@@ -20,7 +20,7 @@ local function update_canvas ()
    local oldcanvas = lg.getCanvas()
    lg.setCanvas( mem.cvs )
    lg.clear( 0, 0, 0, 0 )
-   lg.setColor( 1, 1, 1, 1 )
+   lg.setColour( 1, 1, 1, 1 )
    --lg.setBlendMode( "alpha", "premultiplied" )
 
    -- Draw base hypergate
@@ -197,13 +197,13 @@ function hypergate_window ()
    local map = luatk_map.newMap( wdw, 20, 40, mapw, maph, {
       render = function ( m )
          if not targetknown then
-            lg.setColor( {0, 0, 0, 0.3} )
+            lg.setColour( {0, 0, 0, 0.3} )
             lg.rectangle("fill", 0, 0, mapw, maph )
             -- Show big question mark or something
          else
             local mx, my = m.pos:get()
             local s = luatk_map.scale
-            lg.setColor( {0, 0.5, 1, 0.7} )
+            lg.setColour( {0, 0.5, 1, 0.7} )
             lg.push()
             lg.translate( (jumpx-mx)*s + mapw*0.5, (jumpy-my)*s + maph*0.5 )
             lg.rotate( jumpa )
@@ -213,7 +213,7 @@ function hypergate_window ()
             lg.pop()
 
             local r = luatk_map.sys_radius
-            lg.setColor( {1, 1, 1, 0.8} )
+            lg.setColour( {1, 1, 1, 0.8} )
             lg.setShader( shd_selectsys )
             love_shaders.img:draw( (targetx-mx)*s + mapw*0.5 - 2*r, (targety-my)*s + maph*0.5 - 2*r, 0, 4*r, 4*r )
             lg.setShader()

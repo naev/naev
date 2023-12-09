@@ -73,7 +73,7 @@ function mg.load ()
 
    -- Window properties
    local lw, lh = love.window.getDesktopDimensions()
-   lg.setBackgroundColor(0, 0, 0, 0)
+   lg.setBackgroundColour(0, 0, 0, 0)
    local ww, wh
    ww = 90 + 60*#sol+14 + 220 + 20 + 40*#sol+10+40
    wh = 25 + #keyset*40+10
@@ -206,7 +206,7 @@ end
 local function setcol( col )
    local r, g, b, a = table.unpack( col )
    a = a or 1
-   lg.setColor( r, g, b, a*alpha )
+   lg.setColour( r, g, b, a*alpha )
 end
 
 local function drawglyph( g, f, x, y, w, h, col )

@@ -25,13 +25,13 @@ function pp_shaders.newShader( fragcode )
 uniform sampler2D MainTex;
 uniform vec4 love_ScreenSize;
 in vec4 VaryingTexCoord;
-out vec4 color_out;
+out vec4 colour_out;
 
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord );
 
 void main (void)
 {
-   color_out = effect( MainTex, VaryingTexCoord.st, vec2(VaryingTexCoord.s,1.0-VaryingTexCoord.t) * love_ScreenSize.xy );
+   colour_out = effect( MainTex, VaryingTexCoord.st, vec2(VaryingTexCoord.s,1.0-VaryingTexCoord.t) * love_ScreenSize.xy );
 }
 ]] .. fragcode, pp_shaders.vertexcode )
    return s
@@ -53,10 +53,10 @@ const float strength = %f;
 vec4 effect( sampler2D tex, vec2 uv, vec2 px ) {
    float time = u_time - mod( u_time, 1.0 / float(fps) );
    float glitchStep = mix(4.0, 32.0, random(vec2(time)));
-   vec4 screenColor = texture( tex, uv );
+   vec4 screenColour = texture( tex, uv );
    uv.x = round(uv.x * glitchStep ) / glitchStep;
-   vec4 glitchColor = texture( tex, uv );
-   return mix(screenColor, glitchColor, vec4(0.03*strength));
+   vec4 glitchColour = texture( tex, uv );
+   return mix(screenColour, glitchColour, vec4(0.03*strength));
 }
    ]], strength )
    return pp_shaders.newShader( pixelcode )
@@ -74,16 +74,16 @@ function pp_shaders.highlightBox( x, y, w, h )
 vec4 effect( sampler2D tex, vec2 uv, vec2 px ) {
    float d = sdBox( px - vec2(%f,%f), vec2(%f,%f) ) - 3.0;
 
-   vec4 screenColor = texture( tex, uv );
+   vec4 screenColour = texture( tex, uv );
    if (d > 0.0) {
       const vec3 highcol = vec3(0.0, 0.0, 1.0);
       float dd = 1.0 - clamp( d/500.0, 0.0, 1.0 );
-      screenColor.rgb *= 0.75 - 0.5 * dd;
+      screenColour.rgb *= 0.75 - 0.5 * dd;
       float hd = 1.0 - clamp( d/25.0, 0.0, 1.0 );
-      screenColor.rgb = mix( screenColor.rgb, highcol, hd);
+      screenColour.rgb = mix( screenColour.rgb, highcol, hd);
    }
 
-   return screenColor;
+   return screenColour;
 }
    ]], x+w, y+h, w, h )
    return pp_shaders.newShader( pixelcode )

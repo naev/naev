@@ -63,7 +63,7 @@ local function load_shader ()
    lg.setCanvas( cvs )
    lg.clear( 0, 0, 0, 0 )
    lg.setShader( shader )
-   lg.setColor( {1,1,1,1} )
+   lg.setColour( {1,1,1,1} )
    love_shaders.img:draw( 0, 0, 0, texw, texh )
    lg.setShader()
    lg.setCanvas( oldcanvas )
@@ -127,11 +127,11 @@ function render ()
    end
 
    -- Draw starfield background
-   lg.setColor( sb, sb, sb, 1 )
+   lg.setColour( sb, sb, sb, 1 )
    bg:draw( 0, 0, 0, 1, 1 )
 
    -- Draw ship
-   lg.setColor( 1, 1, 1, 1 )
+   lg.setColour( 1, 1, 1, 1 )
    shipgfx:draw( bx, by )
    lg.print( shipcaption, font, bx+shipw-captionw, by+shiph-20 )
 

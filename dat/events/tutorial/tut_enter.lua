@@ -170,7 +170,7 @@ function tut_weapset ()
    vn.scene()
    vn.transition( tut.shipai.transition )
    sai = vn.newCharacter( tut.ainame(), {
-      color=tut.shipai.colour
+      colour=tut.shipai.colour
    } )
    sai(_([["A large part of combat is decided ahead of time by the ship classes and their load out. However, good piloting can turn the tables easily. It is important to assign weapon sets to be easy to use. You can set weapon sets from the '#oWeapons#0' tab of the information window. You have 10 different weapon sets that can be configured separately for each ship."]]))
    sai(_([["There are three different types of weapon sets:

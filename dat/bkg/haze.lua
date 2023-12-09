@@ -28,7 +28,7 @@ const float VISIBILITY = 700.0;
 uniform float u_time = 0.0;
 uniform vec3 u_camera;
 
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec3 uv = 100.0 * vec3( %f, %f, %f );
 
@@ -46,7 +46,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    /* Give more transparency around the player. */
    float d = min( 1.0, length( (texture_coords-0.5)*love_ScreenSize.xy )*u_camera.z/VISIBILITY );
 
-   vec4 col_out = color;
+   vec4 col_out = colour;
    col_out.a *= smoothstep(0.0, 1.0, f*d);
    return col_out;
 }

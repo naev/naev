@@ -455,9 +455,9 @@ local function vn_blackjack( npc )
    bj._draw = function( _self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
       -- Horrible hack where we draw ontop of the textbox a background
-      lg.setColor( 0.5, 0.5, 0.5 )
+      lg.setColour( 0.5, 0.5, 0.5 )
       lg.rectangle( "fill", x, y, w, h )
-      lg.setColor( 0, 0, 0 )
+      lg.setColour( 0, 0, 0 )
       lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
 
       -- Draw blackjack game
@@ -598,9 +598,9 @@ function approach_chuckaluck ()
    cl._draw = function( _self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
       -- Horrible hack where we draw ontop of the textbox a background
-      lg.setColor( 0.5, 0.5, 0.5 )
+      lg.setColour( 0.5, 0.5, 0.5 )
       lg.rectangle( "fill", x, y, w, h )
-      lg.setColor( 0, 0, 0 )
+      lg.setColour( 0, 0, 0 )
       lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
 
       -- Draw chuckaluck game
@@ -649,9 +649,9 @@ function approach_scavengers ()
    vn.clear()
    vn.scene()
    local scavA = vn.newCharacter( minerva.scavengera.name,
-         { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="left" } )
+         { image=minerva.scavengera.image, colour=minerva.scavengera.colour, pos="left" } )
    --[[local scavB =]] vn.newCharacter( minerva.scavengerb.name,
-         { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )
+         { image=minerva.scavengerb.image, colour=minerva.scavengerb.colour, pos="right" } )
    vn.transition()
    vn.na(_([[The scavengers fall silent as soon as they notice your presence.]]))
    scavA(_([["What are you looking at?"]]))

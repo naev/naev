@@ -64,7 +64,7 @@ function create()
    bars.speed2 = {}
    bars.stress = {}
 
-   --Colors
+   --Colours
    col_txt_std = colour.new( 192/255, 198/255, 217/255 )
    col_txt_wrn = colour.new( 127/255,  31/255,  31/255 )
    col_txt_enm = colour.new( 222/255,  28/255,  28/255 )

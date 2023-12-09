@@ -36,14 +36,14 @@ end
 
 function love.load()
    -- Transparent background in Naev
-   love.graphics.setColor( 1, 1, 1, 1 )
-   love.graphics.setBackgroundColor( 0, 0, 0, 0 )
+   love.graphics.setColour( 1, 1, 1, 1 )
+   love.graphics.setBackgroundColour( 0, 0, 0, 0 )
 
    -- Check to see if running standalone
    if not love._vn then
       -- Small test
       vn.scene()
-      local d = vn.newCharacter( "Developer", { color={1,0,0}, image="gfx/portraits/neutral/scientist.webp" } )
+      local d = vn.newCharacter( "Developer", { colour={1,0,0}, image="gfx/portraits/neutral/scientist.webp" } )
       local me = vn.me
       local na = vn.na
       vn.transition()

@@ -357,7 +357,7 @@ function maikki_board_safe ()
    vn.scene()
    local pir1 = vn.newCharacter( _("Pirate A"), {image=vni.pirate(), pos="left"} )
    local pir2 = vn.newCharacter( _("Pirate B"), {image=vni.pirate(), pos="right"} )
-   local unknown = vn.newCharacter( _("???"), {color=minerva.maikkiP.colour} )
+   local unknown = vn.newCharacter( _("???"), {colour=minerva.maikkiP.colour} )
    vn.sfx( der.sfx.board )
    vn.transition( "slideup" )
 

@@ -86,7 +86,7 @@ function land_smuggler ()
    vn.clear()
    vn.scene()
    local s = vn.Character.new( _("Smuggler"), { image=vni.generic() } )
-   local scav = vni.soundonly( 1, {pos="farleft", color=taiomi.scavenger.colour} )
+   local scav = vni.soundonly( 1, {pos="farleft", colour=taiomi.scavenger.colour} )
    vn.transition()
 
    if mem.smugden_known then
