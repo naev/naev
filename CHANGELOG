@@ -1,4 +1,8 @@
-* 0.11.0-beta.2 (unreleased)
+* 0.11.0-beta.3 (unreleased)
+   * Added pilot.weapsetAddType and pilot.weapsetSetActive
+   * `test_of_renewal`: fixed weapon set defaults being incorrect
+
+* 0.11.0-beta.2
    * Slim GUI now shows activated outfits and all weapons all the time
    * Collision system reworked (again) to take into account fast moving particles
    * Fixed collision polygons not properly being used
