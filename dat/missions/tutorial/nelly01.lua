@@ -117,11 +117,11 @@ function accept ()
 
    if var.peek("nelly_met") then
       nel(fmt.f(_([[Nelly lightens up when you near her.
-"Hello again! I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
+"Hello again! I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down, and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
          {cargo=cargo_type, pnt=mem.destpnt, sys=mem.destsys}))
    else
       nel(fmt.f(_([[The lone individual lightens up when you near her.
-"Say, you look like a pilot with a working ship. I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
+"Say, you look like a pilot with a working ship. I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down, and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
          {cargo=cargo_type, pnt=mem.destpnt, sys=mem.destsys}))
    end
 
@@ -149,9 +149,9 @@ function accept ()
       doaccept = true
    end )
    if var.peek("nelly_met") then
-      nel(_([["Great! I'll have the dock workers load up your ship and we can be off. This should be a piece of cake."]]))
+      nel(_([["Great! I'll have the dockworkers load up your ship, and we can be off. This should be a piece of cake."]]))
    else
-      nel(_([["Great! My name is Nelly. Glad to make your acquaintance. I'll have the dock workers load up your ship and we can be off. This should be a piece of cake."
+      nel(_([["Great! My name is Nelly. Glad to make your acquaintance. I'll have the dockworkers load up your ship, and we can be off. This should be a piece of cake."
    They cock their head a bit at you.
    "Say, you wouldn't happen to be a novice pilot?"]]))
       vn.func( function ()
@@ -299,7 +299,7 @@ function enter ()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
-      vn.na(fmt.f(_("After the dock workers load the cargo on your ship, you take off with Nelly aboard. On to {sys}!"), {sys=mem.destsys}))
+      vn.na(fmt.f(_("After the dockworkers load the cargo on your ship, you take off with Nelly aboard. On to {sys}!"), {sys=mem.destsys}))
       nel(_([[Just after taking off Nelly pipes up.
 "Say, are you familiar with the information window? It shows all the important things about your ship and current missions."]]))
       vn.menu{
@@ -392,7 +392,7 @@ function info ()
       mem.hk_info = nil
    end
 
-   info_msg( _([["Ah, the info menu in all it's glory. In the main window, you can see overall statistics of your gameplay and license information. Try to navigate to the #oMissions#0 tab. Feel free to click the other tabs for more information."]]) )
+   info_msg( _([["Ah, the info menu in all its glory. In the main window, you can see overall statistics of your gameplay and license information. Try to navigate to the #oMissions#0 tab. Feel free to click the other tabs for more information."]]) )
 
    mem.hk_info_ship      = hook.info( "info_ship",     "ship" )
    mem.hk_info_weapons   = hook.info( "info_weapons",  "weapons" )
@@ -509,7 +509,7 @@ function outfit_buy( o, _q )
 end
 
 function equipment ()
-   info_msg( fmt.f(_([["The #oEquipment Tab#0 allows to handle your ships and their equipment. You can have more than one ship and switch between them freely. Try to equip the #o{outfit}#0 in a weapon slot by first clicking on the outfit and then right clicking on the slot you want to equip it at. If you have free slots you can also right click on an outfit to have it directly be assigned to the smallest free slot it fits into. Try to equip the #o{outfit}#0 now."]]), {outfit=outfit_tobuy}) )
+   info_msg( fmt.f(_([["The #oEquipment Tab#0 allows handling your ships and their equipment. You can have more than one ship and switch between them freely. Try to equip the #o{outfit}#0 in a weapon slot by first clicking on the outfit and then right-clicking on the slot you want to equip it at. If you have free slots you can also right-click on an outfit to have it directly be assigned to the smallest free slot it fits into. Try to equip the #o{outfit}#0 now."]]), {outfit=outfit_tobuy}) )
 
    mem.hk_equip = hook.equip( "equip" )
 end

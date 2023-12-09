@@ -121,13 +121,13 @@ function accept ()
 
    vn.label("01_silent")
    if mem.destsys == system.cur() then
-      nel(fmt.f(_([["Anyway, if my info is correct, there should be an asteroid field right here in {sys}! You just have to take us there, and get some materials from it and we should all be set!"]]),
+      nel(fmt.f(_([["Anyway, if my info is correct, there should be an asteroid field right here in {sys}! You just have to take us there, and get some materials from it, and we should all be set!"]]),
          {sys=mem.destsys}))
    else
-      nel(fmt.f(_([["Anyway, if my info is correct, there should be an asteroid field nearby at the {sys} system! You just have to take us there, and get some materials from it and we should all be set!"]]),
+      nel(fmt.f(_([["Anyway, if my info is correct, there should be an asteroid field nearby at the {sys} system! You just have to take us there, and get some materials from it, and we should all be set!"]]),
          {sys=mem.destsys}))
    end
-   nel(fmt.f(_([["I've recently learned about the notes functionality in the system map, it's very useful for writing down where good asteroids are! You can add notes to systems from the system map which you can access with the {mapkey}. You should try it out."]]),
+   nel(fmt.f(_([["I've recently learned about the #bnotes#0 functionality in the system map, it's very useful for writing down where good asteroids are! You can add #bnotes#0 to systems from the system map which you can access with the {mapkey}. You should try it out."]]),
       {mapkey=tut.getKey("starmap")}))
 
    nel(_([["One second. I have to… uh… go to the bathroom before we can be off!"
@@ -139,7 +139,7 @@ She runs off out of the spaceport bar.]]))
    nel(fmt.f(_([["Isn't it awesome! I figure we would need some drilling hardware to be able to get to the materials in the asteroid! You do know that normal weapons aren't able to extract materials properly right? Usually you have to use something like a {tool1}, or even better, a {tool2}! However, I'm pretty sure this should work as good or better! I wasn't able to fit an asteroid scanner, so we will have to eyeball it, but I'm great at that! Leave it to me."]]),
       {tool1=outfit.get("Mining Lance MK1"), tool2=outfit.get("S&K Plasma Drill")}))
    nel(_([["Time is credits or so they say, so let's go drill some asteroids!"]]))
-   vn.na(_("You don't really expect the 'Drillmaster 5000' to make it through takeoff, but worst comes to worst, you expect to be able to blast asteroids apart, which might work better."))
+   vn.na(_("You don't really expect the 'Drillmaster 5000' to make it through takeoff, but worse comes to worst, you expect to be able to blast asteroids apart, which might work better."))
 
    vn.done( tutnel.nelly.transition )
    vn.run()
@@ -193,7 +193,7 @@ local function drilltime ()
    vn.transition( tutnel.nelly.transition )
    vn.na(_("You approach the asteroid, Nelly seems a bit nervous."))
    nel(_([["Time for the big moment! I've never actually tried the 'DRILLMASTER 5000'. This is like a maiden's voyage!"]]))
-   nel(_([["When I activate it, you'll see the drill interface. It will start stopped and you have to press any key for it to start. You have to press the trigger when the blue scanning thing is inside the red optimal target zone. I guess this is easier shown then done. Let me start it up and go ahead and try it!"]]))
+   nel(_([["When I activate it, you'll see the drill interface. It will start stopped, and you have to press any key for it to start. You have to press the trigger when the blue scanning thing is inside the red optimal target zone. I guess this is easier shown than done. Let me start it up and go ahead and try it!"]]))
 
    vn.label("mining")
    mining.vn{ difficulty=0, shots_max=2, reward_func=function( bonus )
