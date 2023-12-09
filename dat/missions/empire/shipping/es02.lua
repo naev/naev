@@ -84,7 +84,7 @@ function accept ()
 
    -- Flavour text and mini-briefing
    vn.label("accept")
-   soldner(fmt.f(_([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while carrying a VIP. They managed to escape, but the engine ended up giving out in the {sys} system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.]]),
+   soldner(fmt.f(_([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while carrying a VIP. They managed to escape, but the engine ended up giving out in the {sys} system. The ship is now disabled, and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.]]),
       {sys=destsys}))
    soldner(fmt.f(_([["You're going to have to fly to the {sys} system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]]),
       {sys=destsys}))
@@ -251,7 +251,7 @@ function board ()
    -- VIP boards
    local c = commodity.new( N_("VIP"), N_("A Very Important Person.") )
    mem.vip = misn.cargoAdd( c, 0 )
-   vntk.msg( _("Disabled Ship"), _([[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]) )
+   vntk.msg( _("Disabled Ship"), _([[The ship's hatch opens, and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]) )
 
    -- Update mission details
    mem.misn_stage = 2

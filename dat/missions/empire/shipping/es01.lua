@@ -53,7 +53,7 @@ function accept ()
 
    -- See if accept mission
    soldner(_([[You approach Commander Soldner, who seems to be waiting for you.
-"Ready for your next mission? We need you to do a pick up and delivery, however, you are expected to encounter hostilities on the way. Interested?"]]) )
+"Ready for your next mission? We need you to do a pickup and delivery, however, you are expected to encounter hostilities on the way. Interested?"]]) )
    vn.menu{
       {_([[Accept]]), "accept"},
       {_([[Decline]]), "decline"},
@@ -66,7 +66,7 @@ function accept ()
    vn.label("accept")
    soldner(fmt.f(_([[Commander Soldner begins, "We have an important package that must get from {pickup_pnt} in the {pickup_sys} system to {dropoff_pnt} in the {dropoff_sys} system. We have reason to believe that it is also wanted by external forces.]]),
       {pickup_pnt=mem.pickup, pickup_sys=mem.pickupsys, dropoff_pnt=mem.dest, dropoff_sys=mem.destsys}))
-   soldner(fmt.f(_([["The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid {credits}."]]),
+   soldner(fmt.f(_([["The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery, and you'll be paid {credits}."]]),
       {credits=fmt.credits(emp.rewards.es01)} ) )
    soldner(_([["Avoid hostilities at all costs. The package must arrive at its destination. Since you are undercover, Empire ships won't assist you if you come under fire, so stay sharp. Good luck."]]))
    vn.func( function () accepted = true end )
