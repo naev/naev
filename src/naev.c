@@ -809,8 +809,10 @@ void naev_resize (void)
    gl_resize();
 
    /* Regenerate the background space dust. */
-   if (cur_system != NULL)
+   if (cur_system != NULL) {
       background_initDust( cur_system->spacedust );
+      background_load( cur_system->background );
+   }
    else
       background_initDust( 1000. ); /* from loadscreen_load */
 
