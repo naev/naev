@@ -26,7 +26,6 @@ function create ()
 
    -- Set up position
    local pp = player.pilot()
-   pp:weapsetSetInrange(nil,false)
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
    pp:setPos( vec2.new(0,-200) )
@@ -37,17 +36,7 @@ function create ()
    }, true ) -- overwrite all
    local _n1, seeking_chakra = pp:outfitAdd( "Seeking Chakra" )
    local _n2, feather_drive = pp:outfitAdd( "Feather Drive" )
-   pp:outfitAddIntrinsic( "Astral Flow Amplifier" )
-   pp:weapsetCleanup(1)
-   pp:weapsetType( 1, "hold" )
-   pp:weapsetAdd( 1, seeking_chakra )
-   pp:weapsetCleanup(2)
-   pp:weapsetType( 2, "hold" )
-   pp:weapsetAdd( 2, feather_drive )
-   pp:weapsetCleanup(3)
-   pp:weapsetType( 3, "switch" )
-   pp:weapsetAddType( 3, "Bolt Weapon" )
-   pp:weapsetSetActive( 3 )
+   srs.weapsets{ seeking_chakra, feather_drive }
 
    -- First puzzle
    local m = pilot.add("Psychic Orb", "Independent", vec2.new(), nil, {ai="dummy"} )

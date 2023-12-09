@@ -27,7 +27,6 @@ function create ()
 
    -- Set up position
    local pp = player.pilot()
-   pp:weapsetSetInrange(nil,false)
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
    pp:setPos( vec2.new(0,-200) )
@@ -39,10 +38,7 @@ function create ()
    local _n1, cleansing_flames = pp:outfitAdd( "Cleansing Flames" )
    local _n2, astral_projection = pp:outfitAdd( "Astral Projection" )
    pp:outfitAddIntrinsic( "Astral Flow Amplifier" )
-   pp:weapsetAdd( 1, cleansing_flames )
-   pp:weapsetType( 1, "hold" )
-   pp:weapsetAdd( 2, astral_projection )
-   pp:weapsetType( 2, "hold" )
+   srs.weapsets{ cleansing_flames, astral_projection }
 
    textoverlay.init( "#y".._("Test of Devotion").."#0",
       "#y"..fmt.f(_("Survive for {amt} seconds"),{amt=survivetime}).."\n"..

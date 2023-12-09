@@ -34,6 +34,20 @@ function srs.sfxGong()
    luaspfx.sfx( false, nil, sfxGong )
 end
 
+function srs.weapsets( outfits )
+   local pp = player.pilot()
+   pp:weapsetCleanup()
+   pp:weapsetSetInrange(nil,false)
+   for k,o in ipairs(outfits) do
+      pp:weapsetType( k, "hold" )
+      pp:weapsetAdd( k, o )
+   end
+   local n = #outfits+1
+   pp:weapsetType( n, "switch" )
+   pp:weapsetAddType( n, "Bolt Weapon" )
+   pp:weapsetSetActive( n )
+end
+
 local ssys, sysr, obelisk, spos, sdir, hook_limits
 function srs.obeliskEnter( oblk )
    obelisk = oblk
