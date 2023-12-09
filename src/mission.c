@@ -73,7 +73,7 @@ static int mission_parseFile( const char* file, MissionData *temp );
 static int mission_parseXML( MissionData *temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
 /* Misc. */
-static const char* mission_markerTarget( MissionMarker *m );
+static const char* mission_markerTarget( const MissionMarker *m );
 static int mission_markerLoad( Mission *misn, xmlNodePtr node );
 
 /**
@@ -417,7 +417,7 @@ const char *mission_availabilityStr( MissionAvailability loc )
 /**
  * @brief Gets the name of the mission marker target.
  */
-static const char* mission_markerTarget( MissionMarker *m )
+static const char* mission_markerTarget( const MissionMarker *m )
 {
    switch (m->type) {
       case SYSMARKER_COMPUTER:
@@ -585,7 +585,7 @@ void mission_sysMark (void)
          continue;
 
       for (int j=0; j<array_size(player_missions[i]->markers); j++) {
-         MissionMarker *m = &player_missions[i]->markers[j];
+         const MissionMarker *m = &player_missions[i]->markers[j];
 
          /* Add the individual markers. */
          space_addMarker( m->objid, m->type );
@@ -612,7 +612,7 @@ const StarSystem* mission_sysComputerMark( const Mission* misn )
       StarSystem *sys;
       Spob *pnt;
       const char *sysname;
-      MissionMarker *m = &misn->markers[i];
+      const MissionMarker *m = &misn->markers[i];
 
       switch (m->type) {
          case SYSMARKER_COMPUTER:
@@ -660,7 +660,7 @@ const StarSystem* mission_getSystemMarker( const Mission* misn )
       StarSystem *sys;
       Spob *pnt;
       const char *sysname;
-      MissionMarker *m = &misn->markers[i];;
+      const MissionMarker *m = &misn->markers[i];;
 
       switch (m->type) {
          case SYSMARKER_COMPUTER:
@@ -1053,7 +1053,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &temp->tags, strdup(tmp) );
                continue;
@@ -1119,8 +1119,10 @@ static int missions_cmp( const void *a, const void *b )
  */
 int missions_load (void)
 {
-   char **mission_files;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   char **mission_files;
 
    /* Run over missions. */
    mission_files = ndata_listRecursive( MISSION_DATA_PATH );
@@ -1144,12 +1146,14 @@ int missions_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( mission_stack, array_size(mission_stack), sizeof(MissionData), missions_cmp );
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_("Loaded %d Mission in %.3f s", "Loaded %d Missions in %.3f s", array_size(mission_stack) ), array_size(mission_stack), time/1000. );
    }
    else
       DEBUG( n_("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -1267,7 +1271,7 @@ void missions_cleanup (void)
       mission_cleanup( player_missions[i] );
       free( player_missions[i] );
    }
-   array_erase( &player_missions, array_begin(player_missions), array_end(player_missions) );
+   array_erase( &player_missions, array_begin(player_missions), array_end(player_missions) ); // NOLINT
 
    for (int i=0; i<array_size(player_missions_failed); i++)
       free( player_missions_failed[i] );
@@ -1626,7 +1630,7 @@ static int missions_parseActive( xmlNodePtr parent )
             mission_cleanup( misn );
          }
          else
-            array_push_back( &player_missions, misn );
+            array_push_back( &player_missions, misn ); // NOLINT
       }
    } while (xml_nextNode(node));
 

@@ -204,7 +204,7 @@ int pilot_cargoUsedMission( const Pilot* p )
 {
    int q = 0;
    for (int i=0; i<array_size(p->commodities); i++) {
-      PilotCommodity *pc = &p->commodities[i];
+      const PilotCommodity *pc = &p->commodities[i];
       if (pc->id > 0)
          q += pc->quantity;
    }
@@ -408,7 +408,7 @@ int pilot_cargoJet( Pilot *p, const Commodity *cargo, int quantity, int simulate
    if (!simulate)
       quantity = pilot_cargoRmRaw( p, cargo, quantity, 0 );
 
-   n   = MAX( 1, RNG(quantity/10, quantity/5) );
+   n   = MAX( 1, RNG((int)(quantity/10), (int)(quantity/5)) );
    px  = p->solid.pos.x;
    py  = p->solid.pos.y;
    bvx = p->solid.vel.x;

@@ -118,8 +118,7 @@ int music_init (void)
       return 0;
 
    /* Load the music. */
-   if (music_find() < 0)
-      return -1;
+   music_find();
 
    /* Start up Lua. */
    if (music_luaInit() < 0)
