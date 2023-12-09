@@ -39,7 +39,9 @@ function create ()
    local _n2, feather_drive = pp:outfitAdd( "Feather Drive" )
    pp:outfitAddIntrinsic( "Astral Flow Amplifier" )
    pp:weapsetAdd( 1, seeking_chakra )
+   pp:weapsetType( 1, "hold" )
    pp:weapsetAdd( 2, feather_drive )
+   pp:weapsetType( 2, "hold" )
 
    -- First puzzle
    local m = pilot.add("Psychic Orb", "Independent", vec2.new(), nil, {ai="dummy"} )

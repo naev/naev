@@ -40,7 +40,9 @@ function create ()
    local _n2, astral_projection = pp:outfitAdd( "Astral Projection" )
    pp:outfitAddIntrinsic( "Astral Flow Amplifier" )
    pp:weapsetAdd( 1, cleansing_flames )
+   pp:weapsetType( 1, "hold" )
    pp:weapsetAdd( 2, astral_projection )
+   pp:weapsetType( 2, "hold" )
 
    textoverlay.init( "#y".._("Test of Devotion").."#0",
       "#y"..fmt.f(_("Survive for {amt} seconds"),{amt=survivetime}).."\n"..
