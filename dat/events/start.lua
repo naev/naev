@@ -45,6 +45,7 @@ end
 function create()
    local pp = player.pilot()
    pp:rename( name() ) -- Assign a random name to the player's ship.
+   pp:outfitRm( "all" ) -- Not naked at the start
    pp:outfitAdd( "Laser Cannon MK1", 1 ) -- Tutorials tell the player to buy and equip ion cannon later, need one weapon slot empty
    jump.setKnown( "Delta Polaris", "Jade" )
 
