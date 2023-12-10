@@ -531,6 +531,9 @@ int pilot_stealth( Pilot *p )
       return 0;
    }
 
+   /* Turn off all weapon sets. */
+   pilot_weapSetAIClear( p );
+
    /* Turn off outfits. */
    pilot_outfitOffAll( p );
 
