@@ -35,29 +35,28 @@ assert(len(sys.argv)>1)
 
 os.environ["LC_ALL"] = "C"
 
+# TODO better handling parameters and ideally passing them on to xgettext
 filename = sys.argv[1]
 if filename=='--autoDetect':
     filename = sys.argv[2]
 
 with open( filename, 'r' ) as f:
-    data = f.read()
-lines = data.splitlines()
+    lines = f.read().splitlines()
 
 tf = tempfile.NamedTemporaryFile( suffix='.po' )
-args = [ "xgettext", filename, '--from-code=utf-8', '-d' , tf.name[:-3] ]
+args = [ "xgettext", filename, '--from-code=utf-8', '-d' , tf.name[:-3] ] # xgettext adds .po again
 ret = subprocess.run( args )
 
-# If we use 'en-GB' it gets a ton of false positives, not sure how to solve it...
+# TODO implement a custom dictionary or something to lower false positives
 tool = language_tool_python.LanguageTool('en-GB')
-#tool = language_tool_python.LanguageTool('en')
 po = polib.pofile( tf.name )
 n = 1
 for entry in po:
     for ti,txt in enumerate(entry.msgid.splitlines()):
-        clist = tool.check(txt)
         line = int(entry.occurrences[0][1])+ti
         f = lines[line-1].find(txt)
         assert( f>= 0)
+        clist = tool.check(txt)
         for c in clist:
             col = 1+f+c.offset
             print(f"{n}.) Line {line}, column {col}, Rule ID: {c.ruleId}")
