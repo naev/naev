@@ -831,6 +831,9 @@ void naev_resize (void)
    /* Lua stuff. */
    nlua_resize();
 
+   /* Have to rerender the toolkit too. */
+   toolkit_rerender();
+
    /* Finally do a render pass to avoid half-rendered stuff. */
    render_all( 0., 0. );
    SDL_GL_SwapWindow( gl_screen.window );
