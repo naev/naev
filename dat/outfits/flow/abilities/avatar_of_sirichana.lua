@@ -92,7 +92,7 @@ function init( p, po )
 
    po:state("off")
    mem.isp = (p == player.pilot())
-   turnoff()
+   turnoff( p, po )
 end
 
 function update( p, po, dt )
