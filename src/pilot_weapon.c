@@ -305,13 +305,34 @@ void pilot_weapSetUpdate( Pilot* p )
       return;
 
    for (int i=0; i<PILOT_WEAPON_SETS; i++) {
+      int n;
       PilotWeaponSet *ws = &p->weapon_sets[i];
       if (ws->slots == NULL)
          continue;
 
+      /* Only care if on. */
+      if (!ws->active)
+         continue;
+
       /* Weapons must get "fired" every turn. */
-      if (ws->active)
-         pilot_weapSetFire( p, ws, -1 );
+      pilot_weapSetFire( p, ws, -1 );
+
+      /* Keep on toggling on. */
+      n = 0;
+      for (int j=0; j<array_size(ws->slots); j++) {
+         PilotOutfitSlot *pos = p->outfits[ ws->slots[j].slotid ];
+         if (pos->state != PILOT_OUTFIT_OFF)
+            continue;
+
+         n += pilot_outfitOn( p, pos );
+      }
+      if ((n > 0) || pilotoutfit_modified) {
+         /* pilot_destealth should run calcStats already. */
+         if (pilot_isFlag(p,PILOT_STEALTH))
+            pilot_destealth( p );
+         else
+            pilot_calcStats( p );
+      }
    }
 }
 
