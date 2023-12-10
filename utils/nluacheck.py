@@ -60,8 +60,6 @@ def nluacheck( filename, extra_opts=[] ):
     return ret.returncode, ret.stdout
 
 if __name__ == "__main__":
-    with open( "/tmp/foobar", "w" ) as f:
-        f.write(' '.join(sys.argv))
     parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
     parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
     parser.add_argument('-j', '--jobs', metavar='jobs', type=int, default=None, help='Number of jobs to use. Defaults to number of CPUs.')
