@@ -529,35 +529,6 @@ const char *pilot_weapSetName( Pilot* p, int id )
 }
 
 /**
- * @brief Removes slots by type from the weapon set.
- */
-void pilot_weapSetRmSlot( Pilot *p, int id, OutfitSlotType type )
-{
-   int n, l;
-   PilotWeaponSet *ws;
-
-   /* We must clean up the slots. */
-   n  = 0; /* Number to remove. */
-   ws = pilot_weapSet(p,id);
-   if (ws->slots == NULL)
-      return;
-   l  = array_size(ws->slots);
-   for (int i=0; i<l; i++) {
-      PilotOutfitSlot *pos = p->outfits[ ws->slots[i].slotid ];
-
-      if (pos->sslot->slot.type != type)
-         continue;
-
-      /* Move down. */
-      memmove( &ws->slots[i], &ws->slots[i+1], sizeof(PilotWeaponSetOutfit) * (l-i-1) );
-      n++;
-   }
-
-   /* Remove surplus. */
-   array_erase( &ws->slots, &ws->slots[l-n], &ws->slots[l] );
-}
-
-/**
  * @brief Adds an outfit to a weapon set.
  *
  *    @param p Pilot to manipulate.
@@ -629,13 +600,6 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
 
       array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
 
-      /* Update range. */
-      pilot_weapSetUpdateRange( p, ws );
-
-      /* Update if needed. */
-      if (id == p->active_set)
-         pilot_weapSetUpdateOutfits( p, ws );
-
       /* Updated cached weapset. */
       o->weapset = -1;
       for (int j=0; j<PILOT_WEAPON_SETS; j++) {
@@ -644,6 +608,13 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
             break;
          }
       }
+
+      /* Update range. */
+      pilot_weapSetUpdateRange( p, ws );
+
+      /* Update if needed. */
+      if (id == p->active_set)
+         pilot_weapSetUpdateOutfits( p, ws );
 
       return;
    }
@@ -681,9 +652,13 @@ void pilot_weapSetClear( Pilot* p, int id )
 int pilot_weapSetCheck( Pilot* p, int id, const PilotOutfitSlot *o )
 {
    const PilotWeaponSet *ws = pilot_weapSet(p,id);
-   for (int i=0; i<array_size(ws->slots); i++)
+   for (int i=0; i<array_size(ws->slots); i++) {
+      /* Only weapons can be used as switch sets. */
+      if ((o->outfit!= NULL) && !outfit_isWeapon(o->outfit) && (ws->type==WEAPSET_TYPE_SWITCH))
+         continue;
       if (ws->slots[i].slotid == o->id)
          return ws->slots[i].level;
+   }
 
    /* Not found. */
    return -1;

@@ -1,5 +1,6 @@
 * 0.11.0-beta.3 (unreleased)
    * Fixed rare hard crash when beams are being fired
+   * Non-weapon outfits no longer show switch groups they are in as hot keys
    * Turn off weapon sets when changing type
    * Fixed resizing not working on the background and toolkit in some cases
    * Added pilot.weapsetAddType and pilot.weapsetSetActive
