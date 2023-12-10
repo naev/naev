@@ -80,6 +80,7 @@ static IntList weapon_qtexp; /**< For querying collisions from explosions. */
  * Prototypes
  */
 /* Creation. */
+static void weapon_updateVBO (void);
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Target *target, const vec2 *pos, const vec2 *vel, double dir,
       double swivel, double time );
@@ -135,6 +136,23 @@ void weapon_init (void)
 Weapon *weapon_getStack (void)
 {
    return weapon_stack;
+}
+
+/**
+ * @brief Checks to see if we have to update the VBO size.
+ */
+static void weapon_updateVBO (void)
+{
+   size_t bufsize = array_reserved(weapon_stack);
+   if (bufsize != weapon_vboSize) {
+      GLsizei size;
+      weapon_vboSize = bufsize;
+      size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
+      weapon_vboData = realloc( weapon_vboData, size );
+      if (weapon_vbo == NULL)
+         weapon_vbo = gl_vboCreateStream( size, NULL );
+      gl_vboData( weapon_vbo, size, weapon_vboData );
+   }
 }
 
 /**
@@ -238,6 +256,7 @@ void weapon_minimap( double res, double w,
       /* Set the colour. */
       weapon_vboData[ offset + 4*p + 0 ] = c->r;
       weapon_vboData[ offset + 4*p + 1 ] = c->g;
+
       weapon_vboData[ offset + 4*p + 2 ] = c->b;
       weapon_vboData[ offset + 4*p + 3 ] = alpha;
 
@@ -2391,7 +2410,6 @@ Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       const Pilot *parent, const Target *target, double time, int aim )
 {
    Weapon *w;
-   size_t bufsize;
    double T = po->heat_T;
 
 #if DEBUGGING
@@ -2403,21 +2421,11 @@ Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref,
    }
 #endif /* DEBUGGING */
 
-   w  = &array_grow(&weapon_stack);
+   w = &array_grow(&weapon_stack);
    weapon_create( w, po, ref, T, dir, pos, vel, parent, target, time, aim );
 
    /* Grow the vertex stuff if needed. */
-   bufsize = array_reserved(weapon_stack);
-   if (bufsize != weapon_vboSize) {
-      GLsizei size;
-      weapon_vboSize = bufsize;
-      size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
-      weapon_vboData = realloc( weapon_vboData, size );
-      if (weapon_vbo == NULL)
-         weapon_vbo = gl_vboCreateStream( size, NULL );
-      gl_vboData( weapon_vbo, size, weapon_vboData );
-   }
-
+   weapon_updateVBO();
    return w;
 }
 
@@ -2475,7 +2483,6 @@ unsigned int beam_start( PilotOutfitSlot *po,
       const Pilot *parent, const Target *target, int aim )
 {
    Weapon *w;
-   size_t bufsize;
 
    if (!outfit_isBeam(po->outfit)) {
       ERR(_("Trying to create a Beam Weapon from a non-beam outfit."));
@@ -2486,16 +2493,7 @@ unsigned int beam_start( PilotOutfitSlot *po,
    weapon_create( w, po, NULL, 0., dir, pos, vel, parent, target, 0., aim );
 
    /* Grow the vertex stuff if needed. */
-   bufsize = array_reserved(weapon_stack);
-   if (bufsize != weapon_vboSize) {
-      GLsizei size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
-      weapon_vboSize = bufsize;
-      weapon_vboData = realloc( weapon_vboData, size );
-      if (weapon_vbo == NULL)
-         weapon_vbo = gl_vboCreateStream( size, NULL );
-      gl_vboData( weapon_vbo, size, weapon_vboData );
-   }
-
+   weapon_updateVBO();
    return w->id;
 }
 
