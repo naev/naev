@@ -320,7 +320,7 @@ function rescue()
    -- Mae sure fleet capacity is ok
    local totalcap, curcap, capok = player.fleetCapacity()
    if not capok then
-      if tk.yesno(string.format(_("You need {diff} more fleet capacity to take off with your current fleet. Reset all deploy ships to allow taking off with your current ship?"),{diff=curcap-totalcap})) then
+      if vntk.yesno(string.format(_("You need {diff} more fleet capacity to take off with your current fleet. Reset all deploy ships to allow taking off with your current ship?"),{diff=curcap-totalcap})) then
          for k,v in ipairs(player.ships()) do
             if v.deployed then
                player.shipDeploy( v.name, false )
