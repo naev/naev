@@ -654,6 +654,22 @@ void pilot_weapSetClear( Pilot* p, int id )
 
 /**
  * @brief Checks to see if a slot is in a weapon set.
+ */
+int pilot_weapSetInSet( Pilot* p, int id, const PilotOutfitSlot *o )
+{
+   const PilotWeaponSet *ws = pilot_weapSet(p,id);
+   for (int i=0; i<array_size(ws->slots); i++) {
+      /* Must match the current weapon. */
+      if (ws->slots[i].slotid != o->id)
+         continue;
+      return ws->slots[i].level;
+   }
+   /* Not found. */
+   return -1;
+}
+
+/**
+ * @brief Checks to see if a slot is in a weapon set and usable.
  *
  *    @param p Pilot to check.
  *    @param id ID of the weapon set.
@@ -672,7 +688,6 @@ int pilot_weapSetCheck( Pilot* p, int id, const PilotOutfitSlot *o )
          continue;
       return ws->slots[i].level;
    }
-
    /* Not found. */
    return -1;
 }

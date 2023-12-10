@@ -479,7 +479,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Choose default colour. */
       if (wgt->weapons >= 0) {
-         int level = pilot_weapSetCheck( p, wgt->weapons, &lst[i] );
+         int level = pilot_weapSetInSet( p, wgt->weapons, &lst[i] );
          if (level == 0)
             dc = &cFontRed;
          else if (level == 1)
@@ -496,7 +496,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          dc = &cGrey60;
 
       /* Draw background. */
-      if ((wgt->weapons >= 0) && !cantoggle)
+      if ((wgt->weapons >= 0) && (!cantoggle || pilot_weapSetCheck( p, wgt->weapons, &lst[i] )))
          bc = cFontGrey;
       else
          bc = *dc;
@@ -1064,7 +1064,7 @@ static int equipment_mouseColumn( unsigned int wid, const SDL_Event* event,
       /* Viewing weapon slots. */
       else {
          int level;
-         int exists = pilot_weapSetCheck( p, wgt->weapons, &os[ret] );
+         int exists = pilot_weapSetInSet( p, wgt->weapons, &os[ret] );
          /* Get the level of the selection. */
          if (event->button.button == SDL_BUTTON_LEFT)
             level = 0;
