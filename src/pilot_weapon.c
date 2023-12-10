@@ -363,6 +363,7 @@ void pilot_weapSetType( Pilot* p, int id, WeaponSetType type )
 {
    PilotWeaponSet *ws = pilot_weapSet(p,id);
    ws->type = type;
+   ws->active = 0; /* Disable no matter what. */
    if (p->active_set==id)
       pilot_weapSetUpdateOutfits(p,ws);
 }
