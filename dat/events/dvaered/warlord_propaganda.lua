@@ -47,7 +47,7 @@ function approach()
    }
 
    vn.label("decline")
-   sol(_([["Ah! I knew it! you refuse because I said it is dangerous! You're a coward, as shown by the disturbing absence of bruises on your face!"]]))
+   sol(_([["Ah! I knew it! You refuse because I said it is dangerous! You're a coward, as shown by the disturbing absence of bruises on your face!"]]))
    vn.func( function () doaccept = false end )
    vn.done( "hexagon" )
 
