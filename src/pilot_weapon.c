@@ -364,6 +364,17 @@ void pilot_weapSetType( Pilot* p, int id, WeaponSetType type )
    PilotWeaponSet *ws = pilot_weapSet(p,id);
    ws->type = type;
    ws->active = 0; /* Disable no matter what. */
+   /* Have to update slots potentially. */
+   for (int i=0; i<array_size(ws->slots); i++) {
+      PilotOutfitSlot *o = p->outfits[ ws->slots[i].slotid ];
+      o->weapset = -1;
+      for (int j=0; j<PILOT_WEAPON_SETS; j++) {
+         if (pilot_weapSetCheck(p, j, o) != -1) {
+            o->weapset = j;
+            break;
+         }
+      }
+   }
    if (p->active_set==id)
       pilot_weapSetUpdateOutfits(p,ws);
 }
@@ -653,11 +664,13 @@ int pilot_weapSetCheck( Pilot* p, int id, const PilotOutfitSlot *o )
 {
    const PilotWeaponSet *ws = pilot_weapSet(p,id);
    for (int i=0; i<array_size(ws->slots); i++) {
+      /* Must match the current weapon. */
+      if (ws->slots[i].slotid != o->id)
+         continue;
       /* Only weapons can be used as switch sets. */
       if ((o->outfit!= NULL) && !outfit_isWeapon(o->outfit) && (ws->type==WEAPSET_TYPE_SWITCH))
          continue;
-      if (ws->slots[i].slotid == o->id)
-         return ws->slots[i].level;
+      return ws->slots[i].level;
    }
 
    /* Not found. */
