@@ -2,6 +2,7 @@ local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
 local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
+local helper = require "outfits.lib.helper"
 
 local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
 
@@ -48,7 +49,7 @@ end
 
 local function turnon( p, po )
    if p:mass() > mem.mass_limit then
-      player.msg("#r".._("Your ship is above the mass limit to use Avatar of Sirichana.").."#0")
+      helper.msgnospam("#r".._("Your ship is above the mass limit to use Avatar of Sirichana.").."#0")
       return false
    end
 

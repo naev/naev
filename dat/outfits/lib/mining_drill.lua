@@ -5,6 +5,7 @@ local drill = {}
 
 local mining = require "minigames.mining"
 local fmt = require "format"
+local helper = require "outfits.lib.helper"
 
 -- Global stats
 local dist_threshold = math.pow( 50, 2 )
@@ -31,7 +32,7 @@ function drill.ontoggle( p, _po, on )
       a = asteroid.get( p )
       if not a or not p:inrange( a ) then
          if mem.isp then
-            player.msg("#r".._("No asteroids available to mine"))
+            helper.msgnospam("#r".._("No asteroids available to mine"))
          end
          return false
       end
@@ -46,7 +47,7 @@ function drill.ontoggle( p, _po, on )
    -- Check if in range
    if a:pos():dist2( p:pos() ) > dist_threshold then
       if mem.isp then
-         player.msg("#r".._("You are too far from the asteroid to mine"))
+         helper.msgnospam("#r".._("You are too far from the asteroid to mine"))
       end
       return false
    end
@@ -54,7 +55,7 @@ function drill.ontoggle( p, _po, on )
    -- Check relative velocity
    if a:vel():dist2( p:vel() ) > vel_threshold then
       if mem.isp then
-         player.msg("#r".._("You are moving too fast to mine the asteroid"))
+         helper.msgnospam("#r".._("You are moving too fast to mine the asteroid"))
       end
       return false
    end

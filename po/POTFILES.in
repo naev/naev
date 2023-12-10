@@ -3230,6 +3230,7 @@ dat/outfits/intrinsic/gauntlet_supreme.lua
 dat/outfits/intrinsic/port_and_polish.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
+dat/outfits/lib/helper.lua
 dat/outfits/lib/mining_drill.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/pointdefense/pointdefense.lua

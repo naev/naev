@@ -2,6 +2,7 @@ local fmt   = require "format"
 local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
+local helper = require "outfits.lib.helper"
 
 local cooldown = 15 -- cooldown time in seconds
 local oshader = osh.new([[
@@ -32,7 +33,7 @@ local function turnon( p, po )
       t = p:targetAsteroid()
       if t==nil then
          if mem.isp then
-            player.msg("#r".._("You need a target to bite!"))
+            helper.msgnospam("#r".._("You need a target to bite!"))
          end
          return false
       end

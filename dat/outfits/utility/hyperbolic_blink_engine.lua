@@ -1,6 +1,7 @@
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
 local fmt = require "format"
+local helper = require "outfits.lib.helper"
 
 local masslimit = 6000^2 -- squared
 local jumpdist = 2000
@@ -82,13 +83,13 @@ local function doblink( p, po )
 
    -- Test energy
    if p:energy(true) < energy then
-      player.msg("#r"..fmt.f(_("Not enough energy to use {outfit}!"),{outfit=po:outfit()}).."#0")
+      helper.msgnospam("#r"..fmt.f(_("Not enough energy to use {outfit}!"),{outfit=po:outfit()}).."#0")
       return false
    end
 
    -- Test heat
    if po:heat() <= 0 then
-      player.msg("#r"..fmt.f(_("{outfit} is overheating!"),{outfit=po:outfit()}).."#0")
+      helper.msgnospam("#r"..fmt.f(_("{outfit} is overheating!"),{outfit=po:outfit()}).."#0")
       return false
    end
 
