@@ -1035,18 +1035,16 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       double s2y = w->solid.pos.y;
       double e2x = w->solid.pos.x + cos(w->solid.dir) * wc->range;
       double e2y = w->solid.pos.y + sin(w->solid.dir) * wc->range;
-      double u_b;
 
       /* Find intersection position. */
-      u_b  = (e2y - s2y) * (e1x - s1x) - (e2x - s2x) * (e1y - s1y);
+      double u_b = (e2y - s2y) * (e1x - s1x) - (e2x - s2x) * (e1y - s1y);
 
       /* Only handle case not coincident or parallel. */
       if (fabs(u_b) > 1e-5) {
          double ua_t = (e2x - s2x) * (s1y - s2y) - (e2y - s2y) * (s1x - s2x);
-         double ua;
 
          /* Interested in closest point only on the csol line. */
-         ua = CLAMP( 0., 1., ua_t / u_b );
+         double ua = CLAMP( 0., 1., ua_t / u_b );
 
          /* Nearest point on the line segment. */
          cipos.x = s1x + ua * (e1x-s1x);
