@@ -41,8 +41,8 @@ args = [ "xgettext", "-", '--language=lua', '-d' , tf.name[:-3] ]
 ret = subprocess.run( args, input=bytes(data,'utf-8') )
 
 # If we use 'en-GB' it gets a ton of false positives, not sure how to solve it...
-#tool = language_tool_python.LanguageTool('en-GB')
-tool = language_tool_python.LanguageTool('en')
+tool = language_tool_python.LanguageTool('en-GB')
+#tool = language_tool_python.LanguageTool('en')
 po = polib.pofile( tf.name )
 n = 1
 for entry in po:
@@ -52,7 +52,7 @@ for entry in po:
         f = lines[line-1].find(entry.msgid)
         assert( f>= 0)
         col = 1+f+c.offset
-        print(f"{n}.) Line {line}, column {col}, Rule ID: {c.ruleId} premium: false")
+        print(f"{n}.) Line {line}, column {col}, Rule ID: {c.ruleId}")
         print(f"Message: {c.message}")
         print(f"{c.context}")
         print(f"{' '*c.offsetInContext}{'^'*c.errorLength}")
