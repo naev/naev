@@ -83,7 +83,10 @@ end
 
 function ontoggle( p, po, on )
    -- Only care about turning on (outfit never has the "on" state)
-   if not on then return false end
+   if not on then
+      mem.lastmsg = nil -- clear helper.msgnospam timer
+      return false
+   end
    return doblink( p, po, 0, 1 ) -- Goes forward
 end
 

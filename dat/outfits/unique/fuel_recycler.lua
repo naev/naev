@@ -204,6 +204,7 @@ function ontoggle( p, po, on )
    if on then
       return turnon( p, po )
    else
+      mem.lastmsg = nil -- clear helper.msgnospam timer
       return turnoff( p, po )
    end
 end
