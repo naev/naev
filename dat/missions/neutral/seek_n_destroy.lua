@@ -281,6 +281,7 @@ function enter ()
          target_ship:setHostile()
 
          mem.death_hook = hook.pilot( target_ship, "death", "target_death" )
+         mem.board_hook = hook.pilot( target_ship, "board", "target_board" )
          mem.pir_jump_hook = hook.pilot( target_ship, "jump", "target_flee" )
          mem.pir_land_hook = hook.pilot( target_ship, "land", "target_land" )
          mem.jumpout = hook.jumpout( "player_flee" )
@@ -691,11 +692,6 @@ function player_flee ()
    vntk.msg( _("You're not going to kill anybody like that"), fmt.f( _("You had a chance to neutralize {plt}, and you wasted it! Now you have to start all over. Maybe some other pilots in {sys} know where your target is going."), {plt=mem.name, sys=system.cur()} ) )
    mem.stage = 0
    misn.osdActive( 1 )
-
-   hook.rm(mem.death_hook)
-   hook.rm(mem.pir_jump_hook)
-   hook.rm(mem.pir_land_hook)
-   hook.rm(mem.jumpout)
 end
 
 function target_flee ()
@@ -705,21 +701,27 @@ function target_flee ()
    pilot.toggleSpawn(true)
    mem.stage = 0
    misn.osdActive( 1 )
-
-   hook.rm(mem.death_hook)
-   hook.rm(mem.pir_jump_hook)
-   hook.rm(mem.pir_land_hook)
-   hook.rm(mem.jumpout)
 end
 
 function target_death ()
    mem.stage = 4
-   hook.rm(mem.death_hook)
-   hook.rm(mem.pir_jump_hook)
-   hook.rm(mem.pir_land_hook)
-   hook.rm(mem.jumpout)
 
    misn.osdActive( 3 )
-   misn.markerRm (mem.marker)
+   misn.markerRm(mem.marker)
    pilot.toggleSpawn(true)
+end
+
+function target_board( p )
+   mem.stage = 4
+
+   vntk.msg( _("Target captured"), _("You board the ship and, after a short but intense firefight, are able to take the wanted outlaw alive. Time to hand them in to the authorities.") )
+   p:disable() -- Permanently disable
+   local c = commodity.new( N_("Wanted Outlaw"), N_("A wanted outlaw you captured.") )
+   misn.cargoAdd( c, 0 )
+
+   misn.osdActive( 3 )
+   misn.markerRm(mem.marker)
+   pilot.toggleSpawn(true)
+
+   player.unboard()
 end
