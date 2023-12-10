@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-09 17:44+0900\n"
+"POT-Creation-Date: 2023-12-10 23:03+0900\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -1936,8 +1936,8 @@ msgstr ""
 #. start
 #: dat/factions/independent.xml:2 dat/factions/miner.xml:3
 #: dat/factions/strangelove.xml:5 dat/factions/trader.xml:3
-#: dat/events/sirius/test_of_devotion.lua:111
-#: dat/events/sirius/test_of_renewal.lua:106
+#: dat/events/sirius/test_of_devotion.lua:107
+#: dat/events/sirius/test_of_renewal.lua:95
 #: dat/missions/dvaered/gauntlet/gui.lua:142
 #: dat/missions/neutral/teenager.lua:95 dat/missions/taiomi/taiomi10.lua:137
 msgid "Independent"
@@ -4645,7 +4645,7 @@ msgstr "터레 티드 가우스 건"
 msgid "U. Storm Launcher"
 msgstr "터레 티드 가우스 건"
 
-#: dat/outfits/launchers/unicorp_storm_launcher.xml:10
+#: dat/outfits/launchers/unicorp_storm_launcher.xml:11
 msgid ""
 "Storm missiles and launchers were designed by Unicorp in order to be the "
 "guided equivalent to a Mace rocket. However, despite the undeniable ability "
@@ -5618,7 +5618,7 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/unique/fuel_recycler.xml:2
-#: dat/outfits/unique/fuel_recycler.lua:67
+#: dat/outfits/unique/fuel_recycler.lua:68
 msgid "Fuel Recycler"
 msgstr ""
 
@@ -26344,7 +26344,7 @@ msgstr ""
 #. Set up position
 #. Ship is too fast otherwise
 #. overwrite all
-#: dat/ssys/test_of_devotion.xml:2 dat/events/sirius/test_of_devotion.lua:47
+#: dat/ssys/test_of_devotion.xml:2 dat/events/sirius/test_of_devotion.lua:43
 msgid "Test of Devotion"
 msgstr ""
 
@@ -26370,7 +26370,7 @@ msgstr "선체 수정"
 #. Ship is too fast otherwise
 #. overwrite all
 #. First puzzle
-#: dat/ssys/test_of_renewal.xml:2 dat/events/sirius/test_of_renewal.lua:62
+#: dat/ssys/test_of_renewal.xml:2 dat/events/sirius/test_of_renewal.lua:51
 msgid "Test of Renewal"
 msgstr ""
 
@@ -27332,7 +27332,6 @@ msgstr "\"%d 크레딧 정도의 여분의 연료는 내가 줄 수 있을 것 �
 #. Less spam
 #. overwrite all
 #. Ship is too fast otherwise
-#. Don't instagib player
 #. overwrite all
 #. Start round
 #. clear remaining pilots if necessary
@@ -27347,8 +27346,8 @@ msgstr "\"%d 크레딧 정도의 여분의 연료는 내가 줄 수 있을 것 �
 #. Should be taking off from the Lab
 #. Spawn
 #: dat/ai/collective.lua:10 dat/ai/drone_miner.lua:10 dat/ai/dummy.lua:10
-#: dat/ai/feralbioship.lua:10 dat/events/sirius/test_of_devotion.lua:126
-#: dat/events/sirius/test_of_renewal.lua:120
+#: dat/ai/feralbioship.lua:10 dat/events/sirius/test_of_devotion.lua:122
+#: dat/events/sirius/test_of_renewal.lua:108
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:297
 #: dat/missions/minerva/kex5.lua:294 dat/missions/tutorial/nelly02.lua:248
 msgid "No response."
@@ -30643,7 +30642,7 @@ msgstr ""
 #. Make sure it's valid.
 #. text
 #: dat/board.lua:395 dat/gui/brushed.lua:904 dat/gui/brushed.lua:913
-#: dat/outfits/unique/fuel_recycler.lua:119 dat/scripts/common/poi.lua:205
+#: dat/outfits/unique/fuel_recycler.lua:120 dat/scripts/common/poi.lua:205
 #: dat/scripts/common/rehab.lua:49 src/dev_sysedit.c:1419
 #: src/dev_sysedit.c:1938 src/dev_sysedit.c:1939 src/dev_sysedit.c:2046
 #: src/dev_sysedit.c:2060 src/dev_sysedit.c:2086 src/dev_sysedit.c:2107
@@ -30677,7 +30676,7 @@ msgstr ""
 #: dat/events/escort_settings.lua:170 dat/events/settings.lua:170
 #: dat/events/settings.lua:206 dat/events/shipai.lua:35
 #: dat/events/shipai.lua:49 dat/missions/neutral/race_qex.lua:134
-#: dat/outfits/unique/fuel_recycler.lua:90 dat/spob/lua/lib/hypergate.lua:308
+#: dat/outfits/unique/fuel_recycler.lua:91 dat/spob/lua/lib/hypergate.lua:308
 #: dat/spob/lua/lib/obelisk.lua:48 dat/spob/lua/lib/spob.lua:269
 #: src/console.c:694 src/dev_sysedit.c:1507 src/dev_sysedit.c:1631
 #: src/dev_sysedit.c:1728 src/dev_sysedit.c:1881 src/dev_sysedit.c:1946
@@ -33839,7 +33838,7 @@ msgstr "당신의 얼굴에 무슨 일이 일어 났습니까?"
 
 #: dat/events/dvaered/warlord_propaganda.lua:50
 msgid ""
-"\"Ah! I knew it! you refuse because I said it is dangerous! You're a coward, "
+"\"Ah! I knew it! You refuse because I said it is dangerous! You're a coward, "
 "as shown by the disturbing absence of bruises on your face!\""
 msgstr ""
 
@@ -43691,30 +43690,30 @@ msgstr "당신은 큰 실수를 저질렀습니다!"
 msgid "ECB Bolten"
 msgstr ""
 
-#: dat/events/pers/empire.lua:75
+#: dat/events/pers/empire.lua:78
 msgid ""
 "Empire is recruiting new Combat Bureaucrats. Inquire at your nearest Bureau."
 msgstr ""
 
-#: dat/events/pers/empire.lua:76
+#: dat/events/pers/empire.lua:79
 msgid ""
 "\"You wouldn't be interested in becoming an Empire Combat Bureaucrat, would "
 "you?\""
 msgstr ""
 
-#: dat/events/pers/empire.lua:77
+#: dat/events/pers/empire.lua:80
 msgid "You just signed your own death warrant, and here comes the certificate!"
 msgstr ""
 
-#: dat/events/pers/empire.lua:78
+#: dat/events/pers/empire.lua:81
 msgid "\"You didn't fill in the EB-2781 request for bribe form!\""
 msgstr ""
 
-#: dat/events/pers/empire.lua:82
+#: dat/events/pers/empire.lua:85
 msgid "ECB Intern"
 msgstr ""
 
-#: dat/events/pers/empire.lua:84
+#: dat/events/pers/empire.lua:87
 msgid "I don't have the authority to talk to you."
 msgstr ""
 
@@ -46082,10 +46081,10 @@ msgstr ""
 #. Anything will finish the event
 #. Heal up to avoid game over if necessary
 #: dat/events/sirius/test_of_alacrity.lua:137
-#: dat/events/sirius/test_of_devotion.lua:75
-#: dat/events/sirius/test_of_devotion.lua:85
-#: dat/events/sirius/test_of_renewal.lua:85
-#: dat/events/sirius/test_of_renewal.lua:95
+#: dat/events/sirius/test_of_devotion.lua:71
+#: dat/events/sirius/test_of_devotion.lua:81
+#: dat/events/sirius/test_of_renewal.lua:74
+#: dat/events/sirius/test_of_renewal.lua:84
 msgid "Test Failed"
 msgstr ""
 
@@ -46118,24 +46117,24 @@ msgstr ""
 #. Get rid of enemies
 #. All done, so give ability
 #: dat/events/sirius/test_of_alacrity.lua:171
-#: dat/events/sirius/test_of_devotion.lua:154
+#: dat/events/sirius/test_of_devotion.lua:150
 #: dat/events/sirius/test_of_enlightenment.lua:188
-#: dat/events/sirius/test_of_renewal.lua:224
+#: dat/events/sirius/test_of_renewal.lua:212
 msgid "Test Completed"
 msgstr ""
 
 #: dat/events/sirius/test_of_alacrity.lua:175
-#: dat/events/sirius/test_of_devotion.lua:158
+#: dat/events/sirius/test_of_devotion.lua:154
 #: dat/events/sirius/test_of_enlightenment.lua:192
-#: dat/events/sirius/test_of_renewal.lua:228
+#: dat/events/sirius/test_of_renewal.lua:216
 msgid "New Flow Ability Unlocked"
 msgstr ""
 
-#: dat/events/sirius/test_of_devotion.lua:48
+#: dat/events/sirius/test_of_devotion.lua:44
 msgid "Survive for {amt} seconds"
 msgstr ""
 
-#: dat/events/sirius/test_of_devotion.lua:49
+#: dat/events/sirius/test_of_devotion.lua:45
 msgid ""
 "{key1}: use cleansing flames\n"
 "{key2}: use astral projection"
@@ -46147,11 +46146,11 @@ msgstr ""
 msgid "Activate the Orbs"
 msgstr "무기 세트 7을 활성화합니다."
 
-#: dat/events/sirius/test_of_renewal.lua:63
+#: dat/events/sirius/test_of_renewal.lua:52
 msgid "Feather Drive through All the Orbs"
 msgstr ""
 
-#: dat/events/sirius/test_of_renewal.lua:64
+#: dat/events/sirius/test_of_renewal.lua:53
 msgid ""
 "{key1}: use seeking chakra\n"
 "{key2}: use feather drive"
@@ -50047,12 +50046,11 @@ msgid "Sauterfeldt's agents"
 msgstr ""
 
 #: dat/missions/baron/baron_baron.lua:100
-#: dat/missions/baron/baron_prince.lua:428
 msgid ""
 "Your comm is answered by a communications officer on the bridge of the "
 "Pinnacle. You tell her you've got a delivery for the baron. She runs a few "
-"checks on a console off the screen, then tells you you've been cleared for "
-"docking and that the Pinnacle will be brought to a halt."
+"checks on a console off the screen, then tells you that you've been cleared "
+"for docking and that the Pinnacle will be brought to a halt."
 msgstr ""
 
 #: dat/missions/baron/baron_baron.lua:117
@@ -50669,6 +50667,14 @@ msgstr ""
 #. Just go towards the player position and attack if they are around
 #: dat/missions/baron/baron_prince.lua:428
 msgid "Green light for docking"
+msgstr ""
+
+#: dat/missions/baron/baron_prince.lua:428
+msgid ""
+"Your comm is answered by a communications officer on the bridge of the "
+"Pinnacle. You tell her you've got a delivery for the baron. She runs a few "
+"checks on a console off the screen, then tells you you've been cleared for "
+"docking and that the Pinnacle will be brought to a halt."
 msgstr ""
 
 #.
@@ -105476,7 +105482,7 @@ msgstr ""
 #. cooldown time in seconds
 #. Still on cooldown
 #. Needs a target
-#: dat/outfits/bioship/skills/the_bite.lua:35
+#: dat/outfits/bioship/skills/the_bite.lua:36
 #, fuzzy
 #| msgid "You'll make great target practice!"
 msgid "You need a target to bite!"
@@ -105486,7 +105492,7 @@ msgstr "타겟 연습이 잘 될거야!"
 #. Visual effect
 #. local o_base = outfit.get("The Bite")
 #. clear stat modifications
-#: dat/outfits/bioship/skills/the_bite.lua:119
+#: dat/outfits/bioship/skills/the_bite.lua:120
 msgid ""
 "Makes the ship lunge for {duration} seconds at the target to take a bite out "
 "of it for {damage} damage ({mass}) [Strong Jaws]. On succesful bite, weapon "
@@ -105494,20 +105500,20 @@ msgid ""
 "armour is restored to the ship [Strong Jaws]."
 msgstr ""
 
-#: dat/outfits/bioship/skills/the_bite.lua:122
+#: dat/outfits/bioship/skills/the_bite.lua:123
 msgid ""
 "Makes the ship lunge for {duration} seconds at the target to take a bite out "
 "of it for {damage} damage ({mass}). On succesful bite, weapon damage is "
 "increased by 25% for 10 seconds [Blood Lust]."
 msgstr ""
 
-#: dat/outfits/bioship/skills/the_bite.lua:125
+#: dat/outfits/bioship/skills/the_bite.lua:126
 msgid ""
 "Makes the ship lunge at the target for {duration} seconds to take a bite out "
 "of it for {damage} damage ({mass})."
 msgstr ""
 
-#: dat/outfits/bioship/skills/the_bite.lua:129
+#: dat/outfits/bioship/skills/the_bite.lua:130
 msgid ""
 "Makes the ship lunge at the target to take a bite out of it. Damage is based "
 "on ship's mass."
@@ -105520,7 +105526,8 @@ msgstr ""
 #. Hit the enemy!
 #. Do the healing
 #. Player effects
-#. else
+#. clear helper.msgnospam timer
+#. Can't turn off the bite.
 #. return turnoff( p, po )
 #. Generic description
 #: dat/outfits/flow/abilities/astral_projection.lua:31
@@ -105541,20 +105548,20 @@ msgstr ""
 #. hologram if it is up
 #. Not ready yet
 #. Generic description
-#: dat/outfits/flow/abilities/avatar_of_sirichana.lua:35
+#: dat/outfits/flow/abilities/avatar_of_sirichana.lua:36
 msgid ""
 "Uses flow to enhance the ships damage by {dmg}%, movement by {mvt}%, "
 "absorption by {abs}%, jamming chance by {jam}%, and shield and energy "
 "regeneration by {regen}. Furthermore, it accelerates the ship by {accel}%. "
 msgstr ""
 
-#: dat/outfits/flow/abilities/avatar_of_sirichana.lua:43
+#: dat/outfits/flow/abilities/avatar_of_sirichana.lua:44
 msgid ""
 "#n{prefix}:#0 {cost} flow, drains {drain} flow per second, limited to ships "
 "under {limit}"
 msgstr ""
 
-#: dat/outfits/flow/abilities/avatar_of_sirichana.lua:51
+#: dat/outfits/flow/abilities/avatar_of_sirichana.lua:52
 msgid "Your ship is above the mass limit to use Avatar of Sirichana."
 msgstr ""
 
@@ -105738,28 +105745,29 @@ msgstr ""
 #. Library for handling mining drills with various properties.
 #. --
 #. Global stats
+#. clear helper.msgnospam timer
 #. See if there's an asteroid targetted
 #. Get nearest if not found
-#: dat/outfits/lib/mining_drill.lua:34
+#: dat/outfits/lib/mining_drill.lua:37
 msgid "No asteroids available to mine"
 msgstr ""
 
 #. Make sure it exists (should do a foreground check)
 #. Check if in range
-#: dat/outfits/lib/mining_drill.lua:49
+#: dat/outfits/lib/mining_drill.lua:52
 #, fuzzy
 msgid "You are too far from the asteroid to mine"
 msgstr "너는 FLF와 어울리지 않아."
 
 #. Check relative velocity
-#: dat/outfits/lib/mining_drill.lua:57
+#: dat/outfits/lib/mining_drill.lua:60
 #, fuzzy
 msgid "You are moving too fast to mine the asteroid"
 msgstr "너는 FLF와 어울리지 않아."
 
 #. Try to figure out difficulty
 #. Handles giving the function
-#: dat/outfits/lib/mining_drill.lua:88
+#: dat/outfits/lib/mining_drill.lua:91
 msgid "You obtained {amount} of {cargo}"
 msgstr ""
 
@@ -105919,68 +105927,68 @@ msgstr ""
 #. Rare
 #. Uncommon
 #. Common
-#: dat/outfits/unique/fuel_recycler.lua:52
+#: dat/outfits/unique/fuel_recycler.lua:53
 msgid "{cargo} ({amount} fuel/t, {tonnes})"
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:75
+#: dat/outfits/unique/fuel_recycler.lua:76
 msgid "Amount: "
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:76
-#: dat/outfits/unique/fuel_recycler.lua:79 src/map.c:500
+#: dat/outfits/unique/fuel_recycler.lua:77
+#: dat/outfits/unique/fuel_recycler.lua:80 src/map.c:500
 msgid "Fuel: "
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:76
+#: dat/outfits/unique/fuel_recycler.lua:77
 msgid "{amount} fuel/t"
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:77
+#: dat/outfits/unique/fuel_recycler.lua:78
 msgid "Price: "
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:79
+#: dat/outfits/unique/fuel_recycler.lua:80
 msgid "{fuel} / {fuel_max}"
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:80
+#: dat/outfits/unique/fuel_recycler.lua:81
 #, fuzzy
 msgid "Jumps: "
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: dat/outfits/unique/fuel_recycler.lua:84
+#: dat/outfits/unique/fuel_recycler.lua:85
 msgid "Select cargo to recycle:"
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:92
+#: dat/outfits/unique/fuel_recycler.lua:93
 msgid "Recycle"
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:99
+#: dat/outfits/unique/fuel_recycler.lua:100
 msgid "Recycle {cargo}"
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:100
+#: dat/outfits/unique/fuel_recycler.lua:101
 msgid "How many tonnes of {cargo} do you wish to recycle?"
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:105
+#: dat/outfits/unique/fuel_recycler.lua:106
 msgid "Recycle {cargo}?"
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:106
+#: dat/outfits/unique/fuel_recycler.lua:107
 #, fuzzy
 #| msgid "Are you sure you want to fire {name}? This cannot be undone."
 msgid ""
 "Are you sure you want to recycle {tonnes} of {cargo} to obtain {fuel} fuel?"
 msgstr "{name} 님을 내쫓으시겠습니까? 이 작업은 실행 취소할 수 없습니다."
 
-#: dat/outfits/unique/fuel_recycler.lua:112
+#: dat/outfits/unique/fuel_recycler.lua:113
 msgid "Bye Bye {cargo}, Hello Fuel"
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:113
+#: dat/outfits/unique/fuel_recycler.lua:114
 msgid ""
 "You activate the Fuel Recycler and convert {tonnes} of {cargo} to {fuel} "
 "fuel."
@@ -105988,15 +105996,16 @@ msgstr ""
 
 #. Still on cooldown
 #. Only player can use
-#: dat/outfits/unique/fuel_recycler.lua:146
+#: dat/outfits/unique/fuel_recycler.lua:147
 msgid "You already have maximum fuel!"
 msgstr ""
 
-#: dat/outfits/unique/fuel_recycler.lua:152
+#: dat/outfits/unique/fuel_recycler.lua:153
 msgid "You do not have any cargo you can recycle."
 msgstr ""
 
 #. Didn't do anything
+#. clear helper.msgnospam timer
 #. Doesnt' become active
 #: dat/outfits/unique/poi_data.lua:10
 msgid "{num} Encrypted Data Matrix"
@@ -106051,6 +106060,7 @@ msgstr ""
 #. Cool "blink in" effect
 #. Play the sound
 #. Only care about turning on (outfit never has the "on" state)
+#. clear helper.msgnospam timer
 #. Goes forward
 #. Only blink forward on double tap if no afterburner
 #. active time in seconds
@@ -106140,6 +106150,7 @@ msgstr ""
 #. Cool "blink in" effect
 #. Play the sound
 #. Only care about turning on (outfit never has the "on" state)
+#. clear helper.msgnospam timer
 #. Goes forward
 #. Only blink forward on double tap if no afterburner
 #. squared
@@ -106156,22 +106167,23 @@ msgstr ""
 #. Update progress
 #. Not ready yet
 #. Test energy
-#: dat/outfits/utility/blink_drive.lua:46
-#: dat/outfits/utility/flicker_drive.lua:47
-#: dat/outfits/utility/hyperbolic_blink_engine.lua:85
+#: dat/outfits/utility/blink_drive.lua:47
+#: dat/outfits/utility/flicker_drive.lua:48
+#: dat/outfits/utility/hyperbolic_blink_engine.lua:86
 msgid "Not enough energy to use {outfit}!"
 msgstr ""
 
 #. Test heat
-#: dat/outfits/utility/blink_drive.lua:53
-#: dat/outfits/utility/flicker_drive.lua:54
-#: dat/outfits/utility/hyperbolic_blink_engine.lua:91
+#: dat/outfits/utility/blink_drive.lua:54
+#: dat/outfits/utility/flicker_drive.lua:55
+#: dat/outfits/utility/hyperbolic_blink_engine.lua:92
 msgid "{outfit} is overheating!"
 msgstr ""
 
 #. Pay the cost
 #. Start the warmup
 #. Only care about turning on (outfit never has the "on" state)
+#. clear helper.msgnospam timer
 #. active time in seconds
 #. cooldown time in seconds
 #. Still on cooldown
@@ -106358,7 +106370,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "You need {diff} more fleet capacity to take off with your current fleet. "
-"Reset all deploy ships to allow taing off with your current ship?"
+"Reset all deploy ships to allow taking off with your current ship?"
 msgstr ""
 
 #. Do nothing if already spaceworthy.
@@ -116246,13 +116258,13 @@ msgstr ""
 msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
-#: src/ai.c:1209 src/nlua_pilot.c:5594
+#: src/ai.c:1209 src/nlua_pilot.c:5601
 #, fuzzy, c-format
 #| msgid "Failed to create new Lua state."
 msgid "Failed to create new task for pilot '%s'."
 msgstr "새 Lua 상태를 생성하지 못했습니다."
 
-#: src/ai.c:1265 src/ai.c:1331 src/nlua_pilot.c:5549
+#: src/ai.c:1265 src/ai.c:1331 src/nlua_pilot.c:5556
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
@@ -116261,7 +116273,7 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2367 src/nlua_pilot.c:6045
+#: src/ai.c:2367 src/nlua_pilot.c:6052
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr "시스템 '%s'에서 Spob '%s'을(를) 찾을 수 없습니다"
@@ -117157,7 +117169,7 @@ msgstr "네뷸라에 온것을 환영합니다"
 msgid "Lua Console"
 msgstr ""
 
-#: src/damagetype.c:85 src/difficulty.c:51 src/event.c:643 src/slots.c:64
+#: src/damagetype.c:85 src/difficulty.c:51 src/event.c:647 src/slots.c:64
 #: src/spfx.c:188 src/start.c:67
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
@@ -118739,7 +118751,7 @@ msgstr ""
 msgid "#gEscorts: #0Jumping."
 msgstr ""
 
-#: src/event.c:227
+#: src/event.c:225
 #, c-format
 msgid ""
 "Error loading event file: %s\n"
@@ -118747,7 +118759,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/event.c:285
+#: src/event.c:283
 #, c-format
 msgid "Event ID '%u' not valid."
 msgstr ""
@@ -118803,87 +118815,87 @@ msgstr ""
 msgid "Event '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/event.c:572 src/mission.c:1140
+#: src/event.c:574 src/mission.c:1142
 #, c-format
 msgid "Duplicate event '%s'!"
 msgstr ""
 
-#: src/event.c:581
+#: src/event.c:584
 #, c-format
 msgid "Loaded %d Event in %.3f s"
 msgid_plural "Loaded %d Events in %.3f s"
 msgstr[0] ""
 
-#: src/event.c:584
+#: src/event.c:587
 #, c-format
 msgid "Loaded %d Event"
 msgid_plural "Loaded %d Events"
 msgstr[0] ""
 
-#: src/event.c:607 src/mission.c:1174 src/nxml.c:85
+#: src/event.c:611 src/mission.c:1178 src/nxml.c:85
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr ""
 
-#: src/event.c:620
+#: src/event.c:624
 #, c-format
 msgid "Event '%s' has create function but no XML header!"
 msgstr ""
 
-#: src/event.c:629
+#: src/event.c:633
 #, c-format
 msgid "Event file '%s' has missing XML header!"
 msgstr ""
 
-#: src/event.c:636
+#: src/event.c:640
 #, c-format
 msgid "Unable to parse document XML header for Event '%s'"
 msgstr ""
 
-#: src/event.c:662
+#: src/event.c:666
 #, c-format
 msgid "Event Lua '%s' syntax error: %s"
 msgstr ""
 
-#: src/event.c:746
+#: src/event.c:750
 #, c-format
 msgid "No event data found matching name '%s'."
 msgstr ""
 
-#: src/event.c:779
+#: src/event.c:783
 #, fuzzy, c-format
 msgid "Trying to test claims of unknown event with id '%d'!"
 msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
 
 #. Must delete.
-#: src/event.c:799
+#: src/event.c:803
 #, c-format
 msgid ""
 "Detected event '%s' without any hooks and is therefore invalid. Removing "
 "event."
 msgstr ""
 
-#: src/event.c:889
+#: src/event.c:893
 msgid "Event has missing 'name' attribute, skipping."
 msgstr ""
 
-#: src/event.c:894
+#: src/event.c:898
 #, c-format
 msgid ""
 "Event in save has name '%s' but event data not found matching name. Skipping."
 msgstr ""
 
-#: src/event.c:901
+#: src/event.c:905
 #, c-format
 msgid "Event with data '%s' has invalid 'id' attribute, skipping."
 msgstr ""
 
-#: src/event.c:909
+#: src/event.c:913
 #, c-format
 msgid "Event with data '%s' was not created, skipping."
 msgstr ""
 
-#: src/event.c:920
+#: src/event.c:924
 #, c-format
 msgid "Event with data '%s' failed to unpersist Lua, skipping."
 msgstr ""
@@ -121866,7 +121878,7 @@ msgstr ""
 msgid "Mission '%s' missing/invalid '%s' element"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
-#: src/mission.c:1149
+#: src/mission.c:1152
 #, fuzzy, c-format
 #| msgid "Loaded %d Mission"
 #| msgid_plural "Loaded %d Missions"
@@ -121874,64 +121886,64 @@ msgid "Loaded %d Mission in %.3f s"
 msgid_plural "Loaded %d Missions in %.3f s"
 msgstr[0] "%d개의 임무를 불러왔습니다"
 
-#: src/mission.c:1152
+#: src/mission.c:1155
 #, c-format
 msgid "Loaded %d Mission"
 msgid_plural "Loaded %d Missions"
 msgstr[0] "%d개의 임무를 불러왔습니다"
 
-#: src/mission.c:1187
+#: src/mission.c:1191
 #, c-format
 msgid "Mission '%s' has create function but no XML header!"
 msgstr "임무 '%s'에는 생성 기능이 있지만 XML 헤더가 없습니다!"
 
-#: src/mission.c:1196
+#: src/mission.c:1200
 #, c-format
 msgid "Mission file '%s' has missing XML header!"
 msgstr "임무 파일 '%s'에 XML 헤더가 없습니다!"
 
-#: src/mission.c:1203
+#: src/mission.c:1207
 #, c-format
 msgid "Unable to parse document XML header for Mission '%s'"
 msgstr "미션 '%s'에 대한 문서 XML 헤더를 구문 분석할 수 없습니다"
 
-#: src/mission.c:1209
+#: src/mission.c:1213
 #, c-format
 msgid "Malformed XML header for '%s' mission: missing root element '%s'"
 msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
-#: src/mission.c:1228
+#: src/mission.c:1232
 #, c-format
 msgid "Mission Lua '%s' syntax error: %s"
 msgstr "Mission Lua '%s'구문 오류: %s"
 
-#: src/mission.c:1433
+#: src/mission.c:1437
 #, fuzzy
 #| msgid "Mission '%s' has create function but no XML header!"
 msgid "Mission cargo without name!"
 msgstr "임무 '%s'에는 생성 기능이 있지만 XML 헤더가 없습니다!"
 
-#: src/mission.c:1445
+#: src/mission.c:1449
 #, fuzzy, c-format
 #| msgid "Mission file '%s' has missing XML header!"
 msgid "Mission temporary cargo '%s' missing description!"
 msgstr "임무 파일 '%s'에 XML 헤더가 없습니다!"
 
-#: src/mission.c:1526
+#: src/mission.c:1530
 #, c-format
 msgid "Mission '%s' from saved game not found in game - ignoring."
 msgstr "저장된 게임의 '%s'임무를 게임에서 찾을 수 없습니다 -무시합니다."
 
-#: src/mission.c:1533
+#: src/mission.c:1537
 #, c-format
 msgid "Mission '%s' from saved game failed to load properly - ignoring."
 msgstr "저장된 게임의 '%s'임무를 제대로 불러오지 못했습니다 - 무시합니다."
 
-#: src/mission.c:1583
+#: src/mission.c:1587
 msgid "Inconsistency with 'nitems' in save file."
 msgstr "저장 파일의 'nitems'와 일치하지 않습니다."
 
-#: src/mission.c:1616
+#: src/mission.c:1620
 #, fuzzy, c-format
 #| msgid "Mission '%s' from saved game failed to load properly - ignoring."
 msgid ""
@@ -121939,24 +121951,24 @@ msgid ""
 msgstr "저장된 게임의 '%s'임무를 제대로 불러오지 못했습니다 - 무시합니다."
 
 #. error has occurred
-#: src/music.c:79 src/music.c:102 src/music.c:207 src/music.c:248
-#: src/music.c:269 src/music.c:287 src/music.c:304 src/music.c:325
+#: src/music.c:79 src/music.c:102 src/music.c:206 src/music.c:247
+#: src/music.c:268 src/music.c:286 src/music.c:303 src/music.c:324
 #, fuzzy, c-format
 #| msgid "Error while choosing music: %s"
 msgid "Error while running music function '%s': %s"
 msgstr "음악 선택 중 오류: %s"
 
-#: src/music.c:130
+#: src/music.c:129
 msgid "Music has invalid value, clamping to [0:1]."
 msgstr "음악에 잘못된 값이 있습니다. [0: 1]로 고정됩니다."
 
-#: src/music.c:178
+#: src/music.c:177
 #, c-format
 msgid "Loaded %d Song"
 msgid_plural "Loaded %d Songs"
 msgstr[0] "%d 개의 음악 불러옴"
 
-#: src/music.c:366
+#: src/music.c:365
 #, c-format
 msgid ""
 "Error loading music file: %s\n"
@@ -121967,7 +121979,7 @@ msgstr ""
 "%s\n"
 "Lua 파일에 부적절한 구문이있을 가능성이 높습니다"
 
-#: src/naev.c:198 src/naev.c:1124 src/nlua_naev.c:177 src/nlua_naev.c:179
+#: src/naev.c:198 src/naev.c:1129 src/nlua_naev.c:177 src/nlua_naev.c:179
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -122184,36 +122196,36 @@ msgstr ""
 msgid "Loading Completed!"
 msgstr ""
 
-#: src/naev.c:864
+#: src/naev.c:869
 msgid "clock_gettime failed, disabling POSIX time."
 msgstr ""
 
-#: src/naev.c:889
+#: src/naev.c:894
 msgid "clock_gettime failed!"
 msgstr ""
 
-#: src/naev.c:976
+#: src/naev.c:981
 msgid "PAUSED"
 msgstr ""
 
-#: src/naev.c:1091
+#: src/naev.c:1096
 msgid "Icon (icon.webp) not found!"
 msgstr ""
 
-#: src/naev.c:1096
+#: src/naev.c:1101
 msgid "Unable to load icon.webp!"
 msgstr ""
 
-#: src/naev.c:1151
+#: src/naev.c:1156
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr ""
 
-#: src/naev.c:1164
+#: src/naev.c:1169
 msgid "SDL is newer than compiled version"
 msgstr ""
 
-#: src/naev.c:1166
+#: src/naev.c:1171
 msgid "SDL is older than compiled version."
 msgstr ""
 
@@ -122477,7 +122489,7 @@ msgstr "지원되지 않는 오디오 효과 유형 '%s'!"
 msgid "Unknown audio effect '%s'!"
 msgstr "알 수 없는 오디오 효과 '%s'!"
 
-#: src/nlua_canvas.c:219 src/nlua_pilot.c:6623 src/opengl_tex.c:279
+#: src/nlua_canvas.c:219 src/nlua_pilot.c:6630 src/opengl_tex.c:279
 msgid "Error setting up framebuffer!"
 msgstr ""
 
@@ -122808,112 +122820,112 @@ msgstr ""
 msgid "Invalid weapon set type '%s'!"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/nlua_pilot.c:2518
+#: src/nlua_pilot.c:2525
 #, fuzzy, c-format
 msgid "Unknown slot type '%s'"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/nlua_pilot.c:2600
+#: src/nlua_pilot.c:2607
 #, c-format
 msgid "Trying to equip more outfits than slots available on pilot '%s'!"
 msgstr ""
 
-#: src/nlua_pilot.c:2633 src/nlua_pilot.c:2645 src/nlua_pilot.c:2717
+#: src/nlua_pilot.c:2640 src/nlua_pilot.c:2652 src/nlua_pilot.c:2724
 #, fuzzy, c-format
 #| msgid "Formation '%s' not found"
 msgid "Pilot '%s' outfit ID '%d' is out of range!"
 msgstr "'%s' 대형은 발견되지 않았다"
 
-#: src/nlua_pilot.c:3080 src/pilot.c:1100
+#: src/nlua_pilot.c:3087 src/pilot.c:1100
 #, c-format
 msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
 #. Hostile
-#: src/nlua_pilot.c:3140 src/nlua_pilot.c:3177 src/player.c:1648
+#: src/nlua_pilot.c:3147 src/nlua_pilot.c:3184 src/player.c:1648
 #: src/player.c:1657 src/player.c:1660 src/player.c:1663
 #, c-format
 msgid "#%c%s>#0 %s"
 msgstr ""
 
-#: src/nlua_pilot.c:3142 src/nlua_pilot.c:3179
+#: src/nlua_pilot.c:3149 src/nlua_pilot.c:3186
 #, c-format
 msgid "#%cComm %s>#0 \"%s\""
 msgstr ""
 
-#: src/nlua_pilot.c:4094
+#: src/nlua_pilot.c:4101
 #, c-format
 msgid ""
 "Trying to set ship property of pilot '%s' flying ship '%s' with no ship Lua "
 "enabled!"
 msgstr ""
 
-#: src/nlua_pilot.c:4893
+#: src/nlua_pilot.c:4900
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
 
-#: src/nlua_pilot.c:4929
+#: src/nlua_pilot.c:4936
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)"
 msgstr ""
 
-#: src/nlua_pilot.c:5195
+#: src/nlua_pilot.c:5202
 #, fuzzy, c-format
 #| msgid "Failed to remove mission cargo '%d' for mission '%s'."
 msgid "Tried to access unknown flag '%s' for pilot '%s'!"
 msgstr "임무 '%2$s'에 대한 임무화물 '%1$d'을 제거하지 못했습니다."
 
-#: src/nlua_pilot.c:5364 src/pilot.c:1181
+#: src/nlua_pilot.c:5371 src/pilot.c:1181
 #, fuzzy, c-format
 #| msgid "Colour '%s' does not exist!"
 msgid "Pilot '%s' does not have an AI!"
 msgstr "색상 '%s'이 (가) 없습니다!"
 
-#: src/nlua_pilot.c:5587
+#: src/nlua_pilot.c:5594
 #, fuzzy, c-format
 #| msgid "File '%s' is not a png."
 msgid "Pilot '%s' is not on manual control."
 msgstr "'%s'파일은 png가 아닙니다."
 
-#: src/nlua_pilot.c:5956
+#: src/nlua_pilot.c:5963
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
 msgstr ""
 
 #. Not found.
-#: src/nlua_pilot.c:5968
+#: src/nlua_pilot.c:5975
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:6086
+#: src/nlua_pilot.c:6093
 #, c-format
 msgid "#%c%s#0 is hailing you."
 msgstr ""
 
-#: src/nlua_pilot.c:6210
+#: src/nlua_pilot.c:6217
 #, c-format
 msgid ""
 "Trying to change the leader of pilot '%s' that is a deployed fighter or part "
 "of the player fleet!"
 msgstr ""
 
-#: src/nlua_pilot.c:6218
+#: src/nlua_pilot.c:6225
 #, fuzzy, c-format
 msgid "Pilot '%s' not found in followers of '%s'"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
 
-#: src/nlua_pilot.c:6231
+#: src/nlua_pilot.c:6238
 #, fuzzy, c-format
 msgid "Trying to set pilot '%s' to be their own leader!"
 msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/nlua_pilot.c:6544
+#: src/nlua_pilot.c:6551
 msgid "Requires a debug build."
 msgstr ""
 
-#: src/nlua_pilot.c:6648
+#: src/nlua_pilot.c:6655
 #, c-format
 msgid "Canvas is too small to fully render '%s': %.0f x %.0f < %.0f x %.0f"
 msgstr ""
@@ -124980,77 +124992,77 @@ msgid ""
 "%s"
 msgstr "파일럿 '%s' ai '%s' -> '%s': %s"
 
-#: src/pilot_weapon.c:460
+#: src/pilot_weapon.c:493
 msgctxt "weapset"
 msgid "Switch"
 msgstr ""
 
-#: src/pilot_weapon.c:463
+#: src/pilot_weapon.c:496
 msgctxt "weapset"
 msgid "Toggle"
 msgstr ""
 
-#: src/pilot_weapon.c:466
+#: src/pilot_weapon.c:499
 msgctxt "weapset"
 msgid "Hold"
 msgstr ""
 
-#: src/pilot_weapon.c:469
+#: src/pilot_weapon.c:502
 #, fuzzy
 msgctxt "weapset"
 msgid "Unknown"
 msgstr "%s (알수없는 경로)"
 
-#: src/pilot_weapon.c:474 src/pilot_weapon.c:506 src/shiplog.c:657
+#: src/pilot_weapon.c:507 src/pilot_weapon.c:539 src/shiplog.c:657
 msgid "Empty"
 msgstr ""
 
-#: src/pilot_weapon.c:510
+#: src/pilot_weapon.c:543
 #, fuzzy
 #| msgid "Weapon Set 8"
 msgctxt "weapset"
 msgid "Weapons"
 msgstr "무기 세트 8"
 
-#: src/pilot_weapon.c:512
+#: src/pilot_weapon.c:545
 msgctxt "weapset"
 msgid "Utilities"
 msgstr ""
 
-#: src/pilot_weapon.c:514
+#: src/pilot_weapon.c:547
 msgctxt "weapset"
 msgid "Structurals"
 msgstr ""
 
-#: src/pilot_weapon.c:516
+#: src/pilot_weapon.c:549
 msgctxt "weapset"
 msgid "Mixed"
 msgstr ""
 
-#: src/pilot_weapon.c:520
+#: src/pilot_weapon.c:553
 #, fuzzy
 #| msgid "Bioship Weapons"
 msgid "no weapons!"
 msgstr "바이오십 무기"
 
-#: src/pilot_weapon.c:524
+#: src/pilot_weapon.c:557
 #, c-format
 msgctxt "weapset"
 msgid "#o%s - %s#0 [#r%s#0]"
 msgstr ""
 
-#: src/pilot_weapon.c:526
+#: src/pilot_weapon.c:559
 #, c-format
 msgctxt "weapset"
 msgid "%s - %s"
 msgstr ""
 
-#: src/pilot_weapon.c:1362
+#: src/pilot_weapon.c:1387
 #, c-format
 msgid "Shooting unknown weapon type: %s"
 msgstr ""
 
-#: src/pilot_weapon.c:1692
+#: src/pilot_weapon.c:1717
 #, c-format
 msgid "#r%s is overheating!#0"
 msgstr ""
@@ -125512,7 +125524,7 @@ msgstr ""
 msgid "Not enough fuel to jump for autonav."
 msgstr ""
 
-#: src/player_autonav.c:312
+#: src/player_autonav.c:311
 msgid "Autonav: aborting hyperspace sequence."
 msgstr ""
 
@@ -127392,23 +127404,23 @@ msgstr ""
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
 
-#: src/weapon.c:423
+#: src/weapon.c:442
 #, c-format
 msgid "Unknown weapon status for '%s'"
 msgstr ""
 
-#: src/weapon.c:663
+#: src/weapon.c:682
 #, c-format
 msgid "Weapon of type '%s' has no update implemented yet!"
 msgstr ""
 
-#: src/weapon.c:882
+#: src/weapon.c:901
 #, c-format
 msgid "Weapon of type '%s' has no render implemented yet!"
 msgstr ""
 
 #.
-#: src/weapon.c:1689
+#: src/weapon.c:1708
 #, fuzzy, c-format
 #| msgid "Event '%s' -> '%s': %s"
 msgid ""
@@ -127416,20 +127428,20 @@ msgid ""
 "%s"
 msgstr "이벤트 '%s'-> '%s': %s"
 
-#: src/weapon.c:2364
+#: src/weapon.c:2383
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr ""
 
-#: src/weapon.c:2401
+#: src/weapon.c:2419
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 
-#: src/weapon.c:2481
+#: src/weapon.c:2488
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
 
-#: src/weapon.c:2511
+#: src/weapon.c:2509
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
