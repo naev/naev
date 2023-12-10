@@ -3,6 +3,7 @@
    * Added pilot.weapsetAddType and pilot.weapsetSetActive
    * Gave unicorp storm launchers a rarity of 2 and made it more available
    * `test_of_renewal`: fixed weapon set defaults being incorrect and increased enemy damage
+   * Fixed many typos
 
 * 0.11.0-beta.2
    * Slim GUI now shows activated outfits and all weapons all the time
