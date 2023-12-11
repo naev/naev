@@ -1,4 +1,5 @@
 * 0.11.0-beta.3 (unreleased)
+   * Fixed Naev not starting on Mac OS
    * Fixed beam collisions (again)
    * Fixed rare hard crash when beams are being fired
    * Non-weapon outfits no longer show switch groups they are in as hot keys

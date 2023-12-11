@@ -569,8 +569,6 @@ int naev_shouldRenderLoadscreen (void)
 
 void naev_doRenderLoadscreen (void)
 {
-   SDL_Event event;
-
    SDL_mutexP( load_mutex );
    load_last_render = SDL_GetTicks();
 
@@ -583,9 +581,6 @@ void naev_doRenderLoadscreen (void)
       WARN( _("Loadscreen '%s': '%s'"), "render", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
-
-   /* Get rid of events again. */
-   while (SDL_PollEvent(&event));
 
    /* Flip buffers. HACK: Also try to catch a late-breaking resize from the WM (...or a crazy user?). */
    SDL_GL_SwapWindow( gl_screen.window );
