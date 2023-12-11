@@ -1048,7 +1048,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
 
          /* Nearest point on the line segment. */
          cipos.x = s1x + ua * (e1x-s1x);
-         cipos.y = s1y + ua * (e1x-s1y);
+         cipos.y = s1y + ua * (e1y-s1y);
          cpos = &cipos;
       }
 
