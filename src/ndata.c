@@ -156,7 +156,6 @@ void* ndata_read( const char* path, size_t *filesize )
    char *buf;
    PHYSFS_file *file;
    PHYSFS_sint64 len, n;
-   size_t pos;
    PHYSFS_Stat path_stat;
 
    if (!PHYSFS_stat( path, &path_stat )) {
@@ -202,9 +201,9 @@ void* ndata_read( const char* path, size_t *filesize )
 
    /* Read the file. */
    n = 0;
-   while ( n < len ) {
-      pos = PHYSFS_readBytes( file, &buf[ n ], len - n );
-      if ( pos <= 0 ) {
+   while (n < len) {
+      size_t pos = PHYSFS_readBytes( file, &buf[ n ], len - n );
+      if (pos == 0) {
          WARN( _( "Error occurred while reading '%s': %s" ), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
          PHYSFS_close( file );
