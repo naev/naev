@@ -9,7 +9,7 @@
  *
  * @note macOS does not define these macros, but does follow unix somewhat.
  */
-#if (defined(__unix__) || defined(__unix) || MACOS)
+#if (defined(__unix__) || defined(__unix) || __MACOS__)
 #define HAS_UNIX 1
 #else
 #define HAS_UNIX 0

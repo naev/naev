@@ -212,9 +212,9 @@ void debug_sigInit (void)
 {
 #if DEBUGGING
    Dl_info addr = {0};
-#if WIN32
+#if __WIN32__
    dladdr( debug_sigInit, &addr );  /* Get the filename using dlfcn-win32; libbacktrace fucks this up (as of 2022-08-18). */
-#endif /* WIN32 */
+#endif /* __WIN32__ */
 
    debug_bs = backtrace_create_state( addr.dli_fname, /*threaded:*/ 1, NULL, NULL );
 

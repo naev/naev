@@ -25,22 +25,22 @@
 #include <errno.h>
 #include <libgen.h>
 #endif /* HAS_POSIX */
-#if WIN32
+#if __WIN32__
 #include <windows.h>
-#endif /* WIN32 */
+#endif /* __WIN32__ */
 /** @endcond */
 
 #include "nfile.h"
 
 #include "array.h"
 #include "conf.h"
-#if MACOS
+#if __MACOS__
 #include "glue_macos.h"
-#endif /* MACOS */
+#endif /* __MACOS__ */
 #include "log.h"
 #include "nstring.h"
 
-#if HAS_UNIX && !MACOS
+#if HAS_UNIX && !__MACOS__
 //! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
 
 /**
@@ -121,7 +121,7 @@ const char* nfile_configPath (void)
            snprintf( naev_configPath, sizeof(naev_configPath), "%s/", conf.datapath );
            return naev_configPath;
         }
-#if MACOS
+#if __MACOS__
         if (macos_configPath( naev_configPath, sizeof(naev_configPath) ) != 0) {
            WARN(_("Cannot determine config path, using current directory."));
            snprintf( naev_configPath, sizeof(naev_configPath), "./naev/" );
@@ -135,7 +135,7 @@ const char* nfile_configPath (void)
 
         snprintf( naev_configPath, sizeof(naev_configPath), "%s/naev/", path );
         free (path);
-#elif WIN32
+#elif __WIN32__
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
          WARN(_("%%APPDATA%% isn't set, using current directory."));
@@ -164,7 +164,7 @@ const char* nfile_cachePath (void)
            snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/", conf.datapath );
            return naev_cachePath;
         }
-#if MACOS
+#if __MACOS__
         if (macos_cachePath( naev_cachePath, sizeof(naev_cachePath) ) != 0) {
            WARN(_("Cannot determine cache path, using current directory."));
            snprintf( naev_cachePath, sizeof(naev_cachePath), "./naev/" );
@@ -178,7 +178,7 @@ const char* nfile_cachePath (void)
 
         snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/naev/", path );
         free (path);
-#elif WIN32
+#elif __WIN32__
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
          WARN(_("%%APPDATA%% isn't set, using current directory."));
@@ -196,7 +196,7 @@ const char* nfile_cachePath (void)
 #if HAS_POSIX
 #define MKDIR mkdir( opath, mode )
 static int mkpath( const char *path, mode_t mode )
-#elif WIN32
+#elif __WIN32__
 #define MKDIR !CreateDirectory( opath, NULL )
 static int mkpath( const char *path )
 #else
@@ -275,7 +275,7 @@ int nfile_dirMakeExist( const char *path )
 
 #if HAS_POSIX
    if ( mkpath( path, S_IRWXU | S_IRWXG | S_IRWXO ) < 0 ) {
-#elif WIN32
+#elif __WIN32__
    if ( mkpath( path ) < 0 ) {
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
@@ -582,10 +582,10 @@ int nfile_isSeparator( uint32_t c )
 {
    if (c == '/')
       return 1;
-#if WIN32
+#if __WIN32__
    else if (c == '\\')
       return 1;
-#endif /* WIN32 */
+#endif /* __WIN32__ */
    return 0;
 }
 
