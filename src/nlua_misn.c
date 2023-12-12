@@ -364,10 +364,8 @@ static int misn_markerAdd( lua_State *L )
       type = SPOBMARKER_HIGH;
    else if (strcmp(stype, "plot")==0)
       type = SPOBMARKER_PLOT;
-   else {
+   else
       return NLUA_ERROR(L, _("Unknown marker type: %s"), stype);
-      return 0;
-   }
 
    /* Convert spob -> system. */
    if (issys)
@@ -422,10 +420,8 @@ static int misn_markerMove( lua_State *L )
          break;
       }
    }
-   if (marker == NULL) {
+   if (marker == NULL)
       return NLUA_ERROR( L, _("Mission does not have a marker with id '%d'"), id );
-      return 0;
-   }
 
    /* Update system. */
    if (issys)
@@ -981,10 +977,8 @@ static int misn_claim( lua_State *L )
    inclusive = lua_toboolean(L,2);
 
    /* Check to see if already claimed. */
-   if (!claim_isNull(cur_mission->claims)) {
+   if (!claim_isNull(cur_mission->claims))
       return NLUA_ERROR(L, _("Mission trying to claim but already has."));
-      return 0;
-   }
 
    /* Create the claim. */
    claim = claim_create( !inclusive );
