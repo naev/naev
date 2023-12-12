@@ -535,17 +535,15 @@ static void map_update_status( unsigned int wid, const char *buf )
  */
 static void map_update( unsigned int wid )
 {
-   int found, multiple;
+   int multiple;
    StarSystem *sys;
-   int f, fh, h, x, y, logow, logoh;
+   int f, fh, h, x, y;
    unsigned int services, services_u, services_h, services_f, services_r;
    int hasSpobs;
    char t;
-   const char *adj;
    char buf[STRMAX];
    int p;
-   const glTexture *logo;
-   double w, dmg, itf;
+   double w;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -568,7 +566,7 @@ static void map_update( unsigned int wid )
 
    /* Economy button */
    if (map_mode == MAPMODE_TRADE) {
-      Commodity *c = commod_known[cur_commod];
+      const Commodity *c = commod_known[cur_commod];
       if (cur_commod_mode == 1) {
          snprintf( buf, sizeof(buf),
                    _("Showing %s prices relative to %s:\n"
@@ -671,6 +669,8 @@ static void map_update( unsigned int wid )
    }
    else {
       const char *fcttext;
+      const glTexture *logo;
+      int logow, logoh;
       if (!multiple) /* saw them all and all the same */
          snprintf( buf, sizeof(buf), "%s", faction_longname(f) );
 
@@ -789,14 +789,15 @@ static void map_update( unsigned int wid )
          p += scnprintf( &buf[p], sizeof(buf)-p, "#I= %s\n", _(spob_getServiceName(i)) );
    }
    if (buf[0] == '\0')
-      p += scnprintf( &buf[p], sizeof(buf)-p, _("None"));
+      /*p +=*/ scnprintf( &buf[p], sizeof(buf)-p, _("None"));
 
    window_modifyText( wid, "txtServices", buf );
 
    /*
     * System Status, if not showing commodity info
     */
-   if (map_mode == MAPMODE_TRAVEL) {
+   if ((map_mode==MAPMODE_TRAVEL) || (map_mode==MAPMODE_DISCOVER)) {
+      int found;
       buf[0] = '\0';
       p = 0;
 
@@ -832,6 +833,8 @@ static void map_update( unsigned int wid )
 
       /* Nebula. */
       if (sys->nebu_density > 0.) {
+         const char *adj;
+         double dmg;
          if (buf[0] != '\0')
             p += scnprintf(&buf[p], sizeof(buf)-p, p_("system features", ", "));
 
@@ -863,6 +866,7 @@ static void map_update( unsigned int wid )
       }
       /* Interference. */
       if (sys->interference > 0.) {
+         double itf;
          if (buf[0] != '\0')
             p += scnprintf(&buf[p], sizeof(buf)-p, p_("system features", ", "));
 
@@ -898,7 +902,7 @@ static void map_update( unsigned int wid )
          }
          else
             p += scnprintf(&buf[p], sizeof(buf)-p, _("Asteroids"));
-         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
+         /*p +=*/ scnprintf(&buf[p], sizeof(buf)-p, "#0" );
       }
       /* Update the string. */
       map_update_status( wid, buf );
@@ -2808,7 +2812,7 @@ void map_setZoom( unsigned int wid, double zoom )
 StarSystem** map_getJumpPath( const char* sysstart, const vec2 *posstart, const char* sysend,
     int ignore_known, int show_hidden, StarSystem** old_data, double *o_distance )
 {
-   int j, cost, njumps, ojumps;
+   int j, ojumps;
    StarSystem *ssys, *esys, **res;
 
    SysNode *cur,   *neighbour;
@@ -2864,6 +2868,7 @@ StarSystem** map_getJumpPath( const char* sysstart, const vec2 *posstart, const 
 
    j = 0;
    while ((cur = A_lowest(open))) {
+      int cost;
       /* End condition. */
       if (cur->sys == esys)
          break;
@@ -2938,7 +2943,7 @@ StarSystem** map_getJumpPath( const char* sysstart, const vec2 *posstart, const 
 
    /* Build path backwards if not broken from loop. */
    if (cur != NULL && esys == cur->sys) {
-      njumps = A_g(cur) + ojumps;
+      int njumps = A_g(cur) + ojumps;
       assert( njumps > ojumps );
       if (res == NULL)
          res = array_create_size( StarSystem*, njumps );
