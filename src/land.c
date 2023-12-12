@@ -1366,7 +1366,8 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
 
       visited(to_visit);
 
-      land_needsTakeoff( 1 );
+      if (land_loaded)
+         land_needsTakeoff( 1 );
    }
 }
 
