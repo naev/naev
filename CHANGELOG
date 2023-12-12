@@ -4,6 +4,7 @@
    * Fixed Naev not starting on Mac OS
    * Fixed beam collisions (again)
    * Fixed rare hard crash when beams are being fired
+   * Removed enemies from a certain hidden faction so the player won't have standing issues with them
    * Non-weapon outfits no longer show switch groups they are in as hot keys
    * Turn off weapon sets when changing type
    * Fixed toggle weapon sets not triggering outfits over and over as expected
