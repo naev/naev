@@ -171,6 +171,7 @@ static int nlua_os_getenv( lua_State *L )
 static int nlua_panic( lua_State *L )
 {
    ERR( _("LUA PANIC: %s"),  lua_tostring(L,-1) );
+   return 0;
 }
 
 /*
@@ -232,7 +233,6 @@ int nlua_dobufenv( nlua_env env,
                    const char *name )
 {
    int ret;
-
 #if DEBUGGING
    /* We don't really want to do this, but Lua seems to trigger all sorts of
     * FPE exceptions on a daily basis.
@@ -574,7 +574,7 @@ static int nlua_loadBasic( lua_State* L )
 static int nlua_package_loader_lua( lua_State* L )
 {
    size_t bufsize, l = 0;
-   char *buf = NULL, *q;
+   char *buf = NULL;
    char path_filename[PATH_MAX], tmpname[PATH_MAX], tried_paths[STRMAX];
    const char *packagepath, *start, *end;
    const char *name = luaL_checkstring(L,1);
@@ -599,6 +599,7 @@ static int nlua_package_loader_lua( lua_State* L )
    /* Parse path. */
    start = packagepath;
    while (!done) {
+      char *q;
       end = strchr( start, ';' );
       if (end == NULL) {
          done = 1;
@@ -687,10 +688,9 @@ static int nlua_package_loader_croot( lua_State* L )
 static int nlua_require( lua_State* L )
 {
    const char *filename = luaL_checkstring(L,1);
-   int envtab;
 
    /* Environment table to load module into */
-   envtab = lua_upvalueindex(1);
+   int envtab = lua_upvalueindex(1);
 
    /* Check to see if already included. */
    lua_getfield( L, envtab, NLUA_LOAD_TABLE );  /* t */
