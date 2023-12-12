@@ -15,7 +15,7 @@
  <cond>faction.playerStanding("Sirius") &gt;= 20</cond>
  <condstr>You need at least 20 reputation with House Sirius.</condstr>
  <description>The Fidelity is the interceptor of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
- <desc_extra>For each 10 flow over 25 flow, increases action speed by 4%.</desc_extra>
+ <desc_extra>For each 10 flow over 25 flow, increases action speed by 3% up to a maximum of 25%.</desc_extra>
  <health>
   <armour>45</armour>
   <armour_regen>0</armour_regen>
