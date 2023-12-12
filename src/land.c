@@ -211,11 +211,9 @@ void land_errDialogueBuild( const char *fmt, ... )
 
    if (fmt == NULL)
       return;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(errorreason, sizeof(errorreason), fmt, ap);
-      va_end(ap);
-   }
+   va_start(ap, fmt);
+   vsnprintf(errorreason, sizeof(errorreason), fmt, ap);
+   va_end(ap);
 
    if (errorlist_ptr == NULL) /* Initialize on first run. */
       errorappend = scnprintf( errorlist, sizeof(errorlist), "%s", errorreason );
@@ -351,7 +349,7 @@ static int bar_genList( unsigned int wid )
       portraits[0].caption = strdup(_("News"));
       for (int i=0; i<npc_getArraySize(); i++) {
          ImageArrayCell *p = &portraits[i+1];
-         glTexture *bg = npc_getBackground(i);
+         const glTexture *bg = npc_getBackground(i);
          p->caption = strdup( npc_getName(i) );
          if (bg!=NULL) {
             p->image = gl_dupTexture( bg );
@@ -609,11 +607,7 @@ static void misn_autonav( unsigned int wid, const char *str )
 static void misn_accept( unsigned int wid, const char *str )
 {
    (void) str;
-   const char* misn_name;
-   Mission* misn;
-   int pos, ret;
-
-   misn_name = toolkit_getList( wid, "lstMission" );
+   const char *misn_name = toolkit_getList( wid, "lstMission" );
 
    /* Make sure you have missions. */
    if (strcmp(misn_name,_("No Missions"))==0)
@@ -622,9 +616,9 @@ static void misn_accept( unsigned int wid, const char *str )
    if (dialogue_YesNo( _("Accept Mission"),
          _("Are you sure you want to accept this mission?"))) {
       int changed = 0;
-      pos = toolkit_getListPos( wid, "lstMission" );
-      misn = &mission_computer[pos];
-      ret = mission_accept( misn );
+      int pos = toolkit_getListPos( wid, "lstMission" );
+      Mission *misn = &mission_computer[pos];
+      int ret = mission_accept( misn );
       if (ret==-1) { /* Errored out. */
          mission_cleanup( &mission_computer[pos] );
          changed = 1;
@@ -1209,9 +1203,8 @@ static int land_gc( void *unused )
  */
 static void land_createMainTab( unsigned int wid )
 {
-   const glTexture *logo;
    int offset;
-   int w, h, y, logow, logoh, th;
+   int w, h, y, th;
    char buf[STRMAX_SHORT];
    size_t l = 0;
 
@@ -1223,10 +1216,10 @@ static void land_createMainTab( unsigned int wid )
     */
    offset = 20;
    if (land_spob->presence.faction != -1) {
-      logo = faction_logo(land_spob->presence.faction);
+      const glTexture *logo = faction_logo(land_spob->presence.faction);
       if (logo != NULL) {
-         logow = logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
-         logoh = logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+         int logow = logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+         int logoh = logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
          window_addImage( wid, 440 + (w-460-logow)/2, -20,
                logow, logoh, "imgFaction", logo, 0 );
          offset += FACTION_LOGO_SM;
@@ -1385,7 +1378,7 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
  */
 void takeoff( int delay, int nosave )
 {
-   int h, stu;
+   int h;
    char *nt;
    double a, r;
 
@@ -1492,7 +1485,7 @@ void takeoff( int delay, int nosave )
    /* time goes by, triggers hook before takeoff */
    if (delay) {
       /* TODO should this depend on something else? */
-      stu = (int)(NT_PERIOD_SECONDS * player.p->stats.land_delay);
+      int stu = (int)(NT_PERIOD_SECONDS * player.p->stats.land_delay);
       ntime_inc( ntime_create( 0, 0, stu ) );
    }
    nt = ntime_pretty( 0, 2 );
