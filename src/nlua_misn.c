@@ -212,16 +212,14 @@ void misn_runStart( Mission *misn, const char *func )
  *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
  *          3 if the mission got accepted, and 0 normally.
  */
-int misn_runFunc( Mission *misn, const char *func, int nargs )
+int misn_runFunc( const Mission *misn, const char *func, int nargs )
 {
-   int ret;
-   int misn_delete;
+   int ret, misn_delete;
    Mission *cur_mission;
    nlua_env env;
-   int isaccepted;
 
    /* Check to see if it is accepted first. */
-   isaccepted = misn->accepted;
+   int isaccepted = misn->accepted;
 
    /* Set up and run function. */
    env = misn->env;
@@ -567,7 +565,7 @@ static int misn_factions( lua_State *L )
  */
 static int misn_accept( lua_State *L )
 {
-   Mission *new_misn, *cur_mission, **misnptr;
+   Mission *new_misn, *cur_mission;
    int ret = 0;
 
    if (player_missions == NULL)
@@ -580,12 +578,12 @@ static int misn_accept( lua_State *L )
          continue;
       mission_cleanup( m );
       free( m );
-      array_erase( &player_missions, &player_missions[i], &player_missions[i+1] );
+      array_erase( &player_missions, &player_missions[i], &player_missions[i+1] ); // NOLINT
    }
 
    /* Create the new mission. */
    new_misn = calloc( 1, sizeof(Mission) );
-   array_push_back( &player_missions, new_misn );
+   array_push_back( &player_missions, new_misn ); // NOLINT
 
    cur_mission = misn_getFromLua(L);
 
@@ -593,6 +591,7 @@ static int misn_accept( lua_State *L )
    if (cur_mission->accepted)
       NLUA_ERROR(L, _("Mission already accepted!"));
    else { /* copy it over */
+      Mission **misnptr;
       *new_misn = *cur_mission;
       memset( cur_mission, 0, sizeof(Mission) );
       cur_mission->env = LUA_NOREF;
@@ -839,7 +838,7 @@ static int misn_osdActive( lua_State *L )
  */
 static int misn_osdGetActiveItem( lua_State *L )
 {
-   Mission *cur_mission = misn_getFromLua(L);
+   const Mission *cur_mission = misn_getFromLua(L);
    char **items = osd_getItems(cur_mission->osd);
    int active   = osd_getActive(cur_mission->osd);
 
@@ -862,7 +861,7 @@ static int misn_osdGetActiveItem( lua_State *L )
  */
 static int misn_osdGet( lua_State *L )
 {
-   Mission *cur_mission = misn_getFromLua(L);
+   const Mission *cur_mission = misn_getFromLua(L);
    char **items;
 
    if (cur_mission->osd == 0)
@@ -941,7 +940,7 @@ static int misn_npcAdd( lua_State *L )
 static int misn_npcRm( lua_State *L )
 {
    unsigned int id = luaL_checklong(L, 1);
-   Mission *cur_mission = misn_getFromLua(L);
+   const Mission *cur_mission = misn_getFromLua(L);
    int ret = npc_rm_mission( id, cur_mission->id );
 
    /* Regenerate bar. */
