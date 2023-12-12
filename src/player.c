@@ -733,12 +733,12 @@ void player_cleanup (void)
    input_enableAll();
 
    /* Clean up other stuff. */
+   land_cleanup(); /* Should be first. */
    diff_clear();
    var_cleanup();
    missions_cleanup();
    events_cleanup();
    space_clearKnown();
-   land_cleanup();
    map_cleanup();
    factions_clearDynamic();
    player_inventoryClear();
