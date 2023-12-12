@@ -1272,8 +1272,6 @@ static int hook_parse( xmlNodePtr base )
    int is_date;
    ntime_t res = 0;
 
-   /* Defaults. */
-
    node = base->xmlChildrenNode;
    do {
       if (xml_isNode(node, "hook")) {

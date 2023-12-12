@@ -134,12 +134,11 @@ void dialogue_alert( const char *fmt, ... )
    char msg[STRMAX_SHORT];
    va_list ap;
 
-   if (fmt == NULL) return;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    dialogue_alertRaw( msg );
 }
@@ -152,12 +151,10 @@ void dialogue_alert( const char *fmt, ... )
 void dialogue_alertRaw( const char *msg )
 {
    int w,h;
-   glFont* font;
    unsigned int msg_wid;
    int done;
    const char *caption = _("Warning");
-
-   font = dialogue_getSize( caption, msg, &w, &h );
+   glFont *font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create the window, can't reuse dialogue_msg since we need to have a
     * different window name. */
@@ -235,12 +232,11 @@ void dialogue_msg( const char* caption, const char *fmt, ... )
    char msg[STRMAX];
    va_list ap;
 
-   if (fmt == NULL) return;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    dialogue_msgRaw( caption, msg );
 }
@@ -257,12 +253,11 @@ void dialogue_msgImg( const char* caption, const char *img, const char *fmt, ...
    char msg[STRMAX];
    va_list ap;
 
-   if (fmt == NULL) return;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    dialogue_msgImgRaw( caption, msg, img, -1, -1 );
 }
@@ -276,11 +271,9 @@ void dialogue_msgImg( const char* caption, const char *img, const char *fmt, ...
 void dialogue_msgRaw( const char* caption, const char *msg )
 {
    int w,h;
-   glFont* font;
    unsigned int msg_wid;
    int done;
-
-   font = dialogue_getSize( caption, msg, &w, &h );
+   glFont *font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create the window */
    msg_wid = window_create( "dlgMsg", caption, -1, -1, w, 110 + h );
@@ -361,12 +354,11 @@ int dialogue_YesNo( const char* caption, const char *fmt, ... )
    char msg[STRMAX];
    va_list ap;
 
-   if (fmt == NULL) return -1;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return -1;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    return dialogue_YesNoRaw( caption, msg );
 }
@@ -382,11 +374,9 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
 {
    unsigned int wid;
    int w,h;
-   glFont* font;
    int done[2];
    char buf[STRMAX_SHORT];
-
-   font = dialogue_getSize( caption, msg, &w, &h );
+   glFont *font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create window */
    snprintf( buf, sizeof(buf), "dlgYesNo%d", ++dlgid );
@@ -456,12 +446,11 @@ char* dialogue_input( const char* title, int min, int max, const char *fmt, ... 
    if (input_dialogue.input_wid)
       return NULL;
 
-   if (fmt == NULL) return NULL;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return NULL;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    return dialogue_inputRaw( title, min, max, msg );
 }
@@ -595,12 +584,11 @@ int dialogue_list( const char* title, char **items, int nitems, const char *fmt,
 
    if (input_dialogue.input_wid) return -1;
 
-   if (fmt == NULL) return -1;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return -1;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    return dialogue_listPanelRaw( title, items, nitems, 0, 0, NULL, NULL, msg );
 }
