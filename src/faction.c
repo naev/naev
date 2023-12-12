@@ -138,6 +138,9 @@ static int faction_cmp( const void *p1, const void *p2 )
  */
 static int faction_getRaw( const char* name )
 {
+   if (name==NULL)
+      return -1;
+
    /* Escorts are part of the "player" faction. */
    if (strcmp(name, "Escort") == 0)
       return FACTION_PLAYER;
@@ -937,7 +940,6 @@ void faction_modPlayerRaw( int f, double mod )
 void faction_setPlayer( int f, double value )
 {
    Faction *faction;
-   HookParam hparam[3];
    double mod;
 
    /* Ignore it if player is dead. */
@@ -954,6 +956,7 @@ void faction_setPlayer( int f, double value )
    faction->player = value;
    /* Run hook if necessary. */
    if (!faction_isFlag(faction, FACTION_DYNAMIC)) {
+      HookParam hparam[3];
       hparam[0].type    = HOOK_PARAM_FACTION;
       hparam[0].u.lf    = f;
       hparam[1].type    = HOOK_PARAM_NUMBER;
@@ -1005,8 +1008,8 @@ double faction_getPlayerDef( int f )
  */
 int faction_isPlayerFriend( int f )
 {
-   Faction *faction = &faction_stack[f];
-   return faction->player >= faction->friendly_at;
+   const Faction *faction = &faction_stack[f];
+   return (faction->player >= faction->friendly_at);
 }
 
 /**
@@ -1017,8 +1020,8 @@ int faction_isPlayerFriend( int f )
  */
 int faction_isPlayerEnemy( int f )
 {
-   Faction *faction = &faction_stack[f];
-   return faction->player < 0;
+   const Faction *faction = &faction_stack[f];
+   return (faction->player < 0);
 }
 
 /**
@@ -1335,7 +1338,7 @@ static int faction_parse( Faction* temp, const char *file )
       xmlr_float(node,"lane_length_per_presence",temp->lane_length_per_presence);
       xmlr_float(node,"lane_base_cost",temp->lane_base_cost);
       if (xml_isNode(node, "colour")) {
-         char *ctmp = xml_get(node);
+         const char *ctmp = xml_get(node);
          if (ctmp != NULL)
             temp->colour = *col_fromName(xml_raw(node));
          /* If no named colour is present, RGB attributes are used. */
@@ -1388,7 +1391,7 @@ static int faction_parse( Faction* temp, const char *file )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &temp->tags, strdup(tmp) );
                continue;
@@ -1606,8 +1609,10 @@ void factions_reset (void)
  */
 int factions_load (void)
 {
-   Faction *f;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   Faction *f;
    char **faction_files = ndata_listRecursive( FACTION_DATA_PATH );
 
    /* player faction is hard-coded */
@@ -1658,7 +1663,7 @@ int factions_load (void)
 
       /* First run over allies and make sure it's mutual. */
       for (int j=0; j < array_size(f->allies); j++) {
-         Faction *sf = &faction_stack[ f->allies[j] ];
+         const Faction *sf = &faction_stack[ f->allies[j] ];
          int r = 0;
          for (int k=0; k < array_size(sf->allies); k++)
             if (sf->allies[k] == i) {
@@ -1673,7 +1678,7 @@ int factions_load (void)
 
       /* Now run over enemies. */
       for (int j=0; j < array_size(f->enemies); j++) {
-         Faction *sf = &faction_stack[ f->enemies[j] ];
+         const Faction *sf = &faction_stack[ f->enemies[j] ];
          int r = 0;
          for (int k=0; k < array_size(sf->enemies); k++)
             if (sf->enemies[k] == i) {
@@ -1693,12 +1698,14 @@ int factions_load (void)
 
    /* Compute grid and finalize. */
    faction_computeGrid();
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Faction in %.3f s", "Loaded %d Factions in %.3f s", array_size(faction_stack) ), array_size(faction_stack), time/1000. );
    }
    else
       DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", array_size(faction_stack) ), array_size(faction_stack) );
+#endif /* DEBUGGING */
 
    return 0;
 }
