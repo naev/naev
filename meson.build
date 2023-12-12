@@ -244,7 +244,8 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_F77BLAS_H', cc.has_header('f77blas.h', dependencies: blas))
    config_data.set10('HAVE_OPENBLAS_F77BLAS_H', cc.has_header('openblas/f77blas.h', dependencies: blas))
 
-   # OS declaration (Shows which OS we built this with in the options menu)
+   # Specify OS, which apparently is required for some MACOS specific code.
+   # We use this in nfile.c (ln 167) and might want to try and use compiler macros instead.
    if host_machine.system() == 'linux'
       config_data.set10('LINUX', true)
    elif host_machine.system() == 'freebsd'

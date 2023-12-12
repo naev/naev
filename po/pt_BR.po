@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-10 23:03+0900\n"
+"POT-Creation-Date: 2023-12-11 19:46-0500\n"
 "PO-Revision-Date: 2023-01-30 00:36+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -35455,7 +35455,7 @@ msgstr ""
 #: dat/events/minerva/station.lua:409 dat/missions/dvaered/gauntlet/gui.lua:300
 #: dat/rescue.lua:305 dat/rescue.lua:316 dat/scripts/luatk/core.lua:1150
 #: src/dialogue.c:741 src/escort.c:374 src/map_find.c:214 src/options.c:279
-#: src/options.c:782 src/options.c:896 src/options.c:1159 src/options.c:1210
+#: src/options.c:775 src/options.c:889 src/options.c:1152 src/options.c:1203
 msgid "Cancel"
 msgstr ""
 
@@ -45713,8 +45713,8 @@ msgstr ""
 msgid "Pick GUI"
 msgstr ""
 
-#: dat/events/settings.lua:136 src/options.c:282 src/options.c:582
-#: src/options.c:899 src/options.c:1213
+#: dat/events/settings.lua:136 src/options.c:282 src/options.c:575
+#: src/options.c:892 src/options.c:1206
 msgid "Defaults"
 msgstr ""
 
@@ -63752,7 +63752,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:56 dat/missions/flf/dvk/flf_dvk04.lua:55
-#: dat/missions/flf/flf_diversion.lua:68
+#: dat/missions/flf/flf_diversion.lua:69
 msgid "FLF Diversion"
 msgstr ""
 
@@ -64674,26 +64674,26 @@ msgid "Engage and destroy Dvaered ships to get their attention"
 msgstr ""
 
 #. Set mission details
-#: dat/missions/flf/flf_diversion.lua:57
+#: dat/missions/flf/flf_diversion.lua:58
 msgid "FLF: Diversion in {sys}"
 msgstr ""
 
-#: dat/missions/flf/flf_diversion.lua:58
+#: dat/missions/flf/flf_diversion.lua:59
 msgid ""
 "A fleet of FLF ships will be conducting an operation against the Dvaered "
 "forces. Create a diversion from this operation by wreaking havoc in the "
 "nearby {sys} system."
 msgstr ""
 
-#: dat/missions/flf/flf_diversion.lua:159
+#: dat/missions/flf/flf_diversion.lua:160
 msgid "Dvaered Small Patrol"
 msgstr ""
 
-#: dat/missions/flf/flf_diversion.lua:161
+#: dat/missions/flf/flf_diversion.lua:162
 msgid "Dvaered Big Patrol"
 msgstr ""
 
-#: dat/missions/flf/flf_diversion.lua:164
+#: dat/missions/flf/flf_diversion.lua:165
 msgid "{fleet} has warped in!"
 msgstr ""
 
@@ -84210,7 +84210,7 @@ msgstr ""
 
 #. NPC tells the clue
 #: dat/missions/neutral/seek_n_destroy.lua:230
-#: dat/missions/neutral/seek_n_destroy.lua:685
+#: dat/missions/neutral/seek_n_destroy.lua:686
 msgid "Fly to the {sys} system and search for clues"
 msgstr ""
 
@@ -84225,7 +84225,7 @@ msgid "Land in {paying_faction} territory to collect your bounty"
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:233
-#: dat/missions/neutral/seek_n_destroy.lua:686
+#: dat/missions/neutral/seek_n_destroy.lua:687
 msgid "Seek and Destroy"
 msgstr ""
 
@@ -84241,7 +84241,7 @@ msgstr ""
 #. If the target is weaker, runaway
 #. Enemies wait for the player
 #. Enemies explain that they are ambushing the player
-#: dat/missions/neutral/seek_n_destroy.lua:364
+#: dat/missions/neutral/seek_n_destroy.lua:365
 msgid ""
 "\"Hi there\", says the pilot. \"You seem to be lost.\" As you explain that "
 "you're looking for an outlaw pilot and have no idea where to find your "
@@ -84266,34 +84266,34 @@ msgstr ""
 #. If target is quicker, no fear
 #. The NPC knows the target. The player has to convince him to give info
 #. Pilot doesn't like you
-#: dat/missions/neutral/seek_n_destroy.lua:468
-#: dat/missions/neutral/seek_n_destroy.lua:515
-#: dat/missions/neutral/seek_n_destroy.lua:643
+#: dat/missions/neutral/seek_n_destroy.lua:469
+#: dat/missions/neutral/seek_n_destroy.lua:516
+#: dat/missions/neutral/seek_n_destroy.lua:644
 msgid "Give up"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:469
-#: dat/missions/neutral/seek_n_destroy.lua:516
+#: dat/missions/neutral/seek_n_destroy.lua:470
+#: dat/missions/neutral/seek_n_destroy.lua:517
 msgid "Threaten the pilot"
 msgstr ""
 
 #. TODO maybe: add the possibility to pay
 #. Clean the previous hook if it exists
 #. Pilot wants payment
-#: dat/missions/neutral/seek_n_destroy.lua:511
+#: dat/missions/neutral/seek_n_destroy.lua:512
 msgid "How much money do you have?"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:514
+#: dat/missions/neutral/seek_n_destroy.lua:515
 msgid "Pay {amount}"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:521
-#: dat/missions/neutral/seek_n_destroy.lua:660
+#: dat/missions/neutral/seek_n_destroy.lua:522
+#: dat/missions/neutral/seek_n_destroy.lua:661
 msgid "You don't have enough money."
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:535
+#: dat/missions/neutral/seek_n_destroy.lua:536
 msgid "I know the pilot you're looking for"
 msgstr ""
 
@@ -84301,7 +84301,7 @@ msgstr ""
 #. Clean the previous hook if it exists
 #. Player attacks an informant who has refused to give info
 #. Target was hit sufficiently to get more talkative
-#: dat/missions/neutral/seek_n_destroy.lua:586
+#: dat/missions/neutral/seek_n_destroy.lua:587
 msgid "You're intimidating!"
 msgstr ""
 
@@ -84311,11 +84311,11 @@ msgstr ""
 #. NPC does not know the target
 #. NPC wants money
 #. NPC mem.tells the clue
-#: dat/missions/neutral/seek_n_destroy.lua:608
+#: dat/missions/neutral/seek_n_destroy.lua:609
 msgid "Shifty Person"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:610
+#: dat/missions/neutral/seek_n_destroy.lua:611
 msgid ""
 "This person might be an outlaw, a pirate, or even worse, a bounty hunter. "
 "You normally wouldn't want to get close to this kind of person, but they may "
@@ -84323,27 +84323,27 @@ msgid ""
 msgstr ""
 
 #. Player wants to be paid
-#: dat/missions/neutral/seek_n_destroy.lua:615
+#: dat/missions/neutral/seek_n_destroy.lua:616
 msgid "Good work, pilot!"
 msgstr ""
 
 #. The player ask for clues in the bar
 #. No more claimed system : need to finish the mission
-#: dat/missions/neutral/seek_n_destroy.lua:631
+#: dat/missions/neutral/seek_n_destroy.lua:632
 msgid "MISSION FAILED"
 msgstr ""
 
 #. NPC does not know the target
 #. NPC wants money
-#: dat/missions/neutral/seek_n_destroy.lua:642
+#: dat/missions/neutral/seek_n_destroy.lua:643
 msgid "Pay the sum"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:691
+#: dat/missions/neutral/seek_n_destroy.lua:692
 msgid "You're not going to kill anybody like that"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:691
+#: dat/missions/neutral/seek_n_destroy.lua:692
 msgid ""
 "You had a chance to neutralize {plt}, and you wasted it! Now you have to "
 "start all over. Maybe some other pilots in {sys} know where your target is "
@@ -84352,14 +84352,35 @@ msgstr ""
 
 #. Target ran away. Unfortunately, we cannot continue the mission
 #. on the other side because the system has not been claimed...
-#: dat/missions/neutral/seek_n_destroy.lua:704
+#: dat/missions/neutral/seek_n_destroy.lua:700
 msgid "Target ran away"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:704
+#: dat/missions/neutral/seek_n_destroy.lua:700
 msgid ""
 "That was close, but unfortunately, {plt} ran away. Maybe some other pilots "
 "in this system know where your target is heading."
+msgstr ""
+
+#: dat/missions/neutral/seek_n_destroy.lua:717
+#, fuzzy
+#| msgid "Targets"
+msgid "Target captured"
+msgstr "Alvos"
+
+#: dat/missions/neutral/seek_n_destroy.lua:717
+msgid ""
+"You board the ship and, after a short but intense firefight, are able to "
+"take the wanted outlaw alive. Time to hand them in to the authorities."
+msgstr ""
+
+#. Permanently disable
+#: dat/missions/neutral/seek_n_destroy.lua:719
+msgid "Wanted Outlaw"
+msgstr ""
+
+#: dat/missions/neutral/seek_n_destroy.lua:719
+msgid "A wanted outlaw you captured."
 msgstr ""
 
 #.
@@ -107124,8 +107145,8 @@ msgstr ""
 #. Add the OK button
 #: dat/scripts/bioship.lua:624 dat/scripts/luatk/core.lua:1108
 #: src/dialogue.c:168 src/dialogue.c:290 src/dialogue.c:346 src/dialogue.c:739
-#: src/options.c:276 src/options.c:579 src/options.c:893 src/options.c:1207
-#: src/options.c:1744
+#: src/options.c:276 src/options.c:572 src/options.c:886 src/options.c:1200
+#: src/options.c:1737
 msgid "OK"
 msgstr ""
 
@@ -119838,7 +119859,7 @@ msgstr ""
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr ""
 
-#: src/input.c:463 src/options.c:726
+#: src/input.c:463 src/options.c:719
 #, c-format
 msgid "Not bound"
 msgstr ""
@@ -121522,7 +121543,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/naev.c:198 src/naev.c:1129 src/nlua_naev.c:177 src/nlua_naev.c:179
+#: src/naev.c:198 src/naev.c:1124 src/nlua_naev.c:177 src/nlua_naev.c:179
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -121650,124 +121671,124 @@ msgid "Something went wrong when loading Lua libraries for '%s'!"
 msgstr ""
 
 #. error has occurred
-#: src/naev.c:583 src/naev.c:621
+#: src/naev.c:581 src/naev.c:616
 #, c-format
 msgid "Loadscreen '%s': '%s'"
 msgstr ""
 
 #. order is very important as they're interdependent
-#: src/naev.c:650
+#: src/naev.c:645
 msgid "Loading Commodities…"
 msgstr ""
 
 #. dep for space
-#: src/naev.c:653
+#: src/naev.c:648
 msgid "Loading Special Effects…"
 msgstr ""
 
 #. no dep
-#: src/naev.c:656
+#: src/naev.c:651
 msgid "Loading Effects…"
 msgstr ""
 
 #. no dep
-#: src/naev.c:659
+#: src/naev.c:654
 msgid "Loading Damage Types…"
 msgstr ""
 
 #. dep for outfits
-#: src/naev.c:662
+#: src/naev.c:657
 msgid "Loading Outfits…"
 msgstr ""
 
 #. dep for ships, factions
-#: src/naev.c:665
+#: src/naev.c:660
 msgid "Loading Ships…"
 msgstr ""
 
 #. dep for fleet
-#: src/naev.c:668
+#: src/naev.c:663
 msgid "Loading Factions…"
 msgstr ""
 
-#: src/naev.c:674
+#: src/naev.c:669
 msgid "Loading AI…"
 msgstr ""
 
 #. dep for fleets
-#: src/naev.c:677
+#: src/naev.c:672
 msgid "Loading Techs…"
 msgstr ""
 
 #. dep for space
-#: src/naev.c:680
+#: src/naev.c:675
 msgid "Loading the Universe…"
 msgstr ""
 
 #. dep for events/missions
-#: src/naev.c:683
+#: src/naev.c:678
 msgid "Loading Events…"
 msgstr ""
 
-#: src/naev.c:686
+#: src/naev.c:681
 msgid "Loading Missions…"
 msgstr ""
 
-#: src/naev.c:689
+#: src/naev.c:684
 msgid "Loading the UniDiffs…"
 msgstr ""
 
-#: src/naev.c:692
+#: src/naev.c:687
 msgid "Populating Maps…"
 msgstr ""
 
-#: src/naev.c:695
+#: src/naev.c:690
 msgid "Calculating Patrols…"
 msgstr ""
 
-#: src/naev.c:698
+#: src/naev.c:693
 msgid "Initializing Details…"
 msgstr ""
 
-#: src/naev.c:701
+#: src/naev.c:696
 msgid "Too many loading stages, please increase LOADING_STAGES"
 msgstr ""
 
 #. Initialize player stuff.
-#: src/naev.c:711
+#: src/naev.c:706
 msgid "Loading Completed!"
 msgstr ""
 
-#: src/naev.c:869
+#: src/naev.c:864
 msgid "clock_gettime failed, disabling POSIX time."
 msgstr ""
 
-#: src/naev.c:894
+#: src/naev.c:889
 msgid "clock_gettime failed!"
 msgstr ""
 
-#: src/naev.c:981
+#: src/naev.c:976
 msgid "PAUSED"
 msgstr ""
 
-#: src/naev.c:1096
+#: src/naev.c:1091
 msgid "Icon (icon.webp) not found!"
 msgstr ""
 
-#: src/naev.c:1101
+#: src/naev.c:1096
 msgid "Unable to load icon.webp!"
 msgstr ""
 
-#: src/naev.c:1156
+#: src/naev.c:1151
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr ""
 
-#: src/naev.c:1169
+#: src/naev.c:1164
 msgid "SDL is newer than compiled version"
 msgstr ""
 
-#: src/naev.c:1171
+#: src/naev.c:1166
 msgid "SDL is older than compiled version."
 msgstr ""
 
@@ -123079,378 +123100,382 @@ msgid "system (%s[%3.0f%%] %s#0)"
 msgstr ""
 
 #: src/options.c:292
+msgid "Platform Info: "
+msgstr ""
+
+#: src/options.c:296
 msgid "Config Path: "
 msgstr ""
 
-#: src/options.c:301
+#: src/options.c:305
 msgid "Language:"
 msgstr ""
 
-#: src/options.c:334
+#: src/options.c:338
 msgid "Difficulty (this save):"
 msgstr ""
 
-#: src/options.c:336
+#: src/options.c:340
 msgid "Difficulty (global):"
 msgstr ""
 
-#: src/options.c:345
+#: src/options.c:349
 msgid "Compilation Flags:"
 msgstr ""
 
-#: src/options.c:381
+#: src/options.c:374
 msgid "Settings:"
 msgstr ""
 
-#: src/options.c:385
+#: src/options.c:378
 msgid "Enable manual zoom control"
 msgstr ""
 
-#: src/options.c:388
+#: src/options.c:381
 msgid "Enable double-tap afterburn/cooldown"
 msgstr ""
 
-#: src/options.c:391
+#: src/options.c:384
 msgid "Enable mouse-flying (toggle with middle click)"
 msgstr ""
 
-#: src/options.c:394
+#: src/options.c:387
 msgid "Enable mouse-flying accel control"
 msgstr ""
 
-#: src/options.c:397
+#: src/options.c:390
 msgid "Enable saved game compression"
 msgstr ""
 
-#: src/options.c:399
+#: src/options.c:392
 msgid "Visible Messages"
 msgstr ""
 
-#: src/options.c:405
+#: src/options.c:398
 msgid "Max Time Compression Factor"
 msgstr ""
 
-#: src/options.c:585
+#: src/options.c:578
 msgid "Set Key"
 msgstr ""
 
-#: src/options.c:630
+#: src/options.c:623
 #, c-format
 msgid "any+"
 msgstr ""
 
-#: src/options.c:635
+#: src/options.c:628
 msgid "shift+"
 msgstr ""
 
-#: src/options.c:637
+#: src/options.c:630
 msgid "ctrl+"
 msgstr ""
 
-#: src/options.c:639
+#: src/options.c:632
 msgid "alt+"
 msgstr ""
 
-#: src/options.c:641
+#: src/options.c:634
 msgid "meta+"
 msgstr ""
 
-#: src/options.c:731
+#: src/options.c:724
 #, c-format
 msgid "keyboard:   %s%s%c"
 msgstr ""
 
-#: src/options.c:736
+#: src/options.c:729
 #, c-format
 msgid "keyboard:   %s%s%s"
 msgstr ""
 
-#: src/options.c:742
+#: src/options.c:735
 #, c-format
 msgid "joy axis pos:   <%d>"
 msgstr ""
 
-#: src/options.c:745
+#: src/options.c:738
 #, c-format
 msgid "joy axis neg:   <%d>"
 msgstr ""
 
-#: src/options.c:748
+#: src/options.c:741
 #, c-format
 msgid "joy button:   <%d>"
 msgstr ""
 
-#: src/options.c:751
+#: src/options.c:744
 #, c-format
 msgid "joy hat up:   <%d>"
 msgstr ""
 
-#: src/options.c:754
+#: src/options.c:747
 #, c-format
 msgid "joy hat down: <%d>"
 msgstr ""
 
-#: src/options.c:757
+#: src/options.c:750
 #, c-format
 msgid "joy hat left: <%d>"
 msgstr ""
 
-#: src/options.c:760
+#: src/options.c:753
 #, c-format
 msgid "joy hat right:<%d>"
 msgstr ""
 
-#: src/options.c:780
+#: src/options.c:773
 msgid "WASD"
 msgstr ""
 
-#: src/options.c:781
+#: src/options.c:774
 msgid "Arrow Keys"
 msgstr ""
 
-#: src/options.c:785
+#: src/options.c:778
 msgid "Restore Defaults"
 msgstr ""
 
-#: src/options.c:786
+#: src/options.c:779
 msgid "Which layout do you want to use?"
 msgstr ""
 
 #. Alert user it worked.
-#: src/options.c:815
+#: src/options.c:808
 msgid "Defaults Restored"
 msgstr ""
 
-#: src/options.c:815
+#: src/options.c:808
 msgid "Keybindings restored to defaults."
 msgstr ""
 
-#: src/options.c:822
+#: src/options.c:815
 #, fuzzy
 #| msgid "Engine Reroute"
 msgid "Engine Volume"
 msgstr "Redirecionamento de Motor"
 
-#: src/options.c:826 src/options.c:872
+#: src/options.c:819 src/options.c:865
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: src/options.c:826 src/options.c:872
+#: src/options.c:819 src/options.c:865
 msgid "Muted"
 msgstr ""
 
 #. -48 dB minimum divided by logarithm of volume floor.
-#: src/options.c:829 src/options.c:875
+#: src/options.c:822 src/options.c:868
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
 msgstr ""
 
-#: src/options.c:868
+#: src/options.c:861
 msgid "Music Volume"
 msgstr ""
 
-#: src/options.c:868
+#: src/options.c:861
 msgid "Sound Volume"
 msgstr ""
 
-#: src/options.c:905
+#: src/options.c:898
 msgid "Disable all sound/music"
 msgstr ""
 
-#: src/options.c:909
+#: src/options.c:902
 msgid "EFX (More CPU)"
 msgstr ""
 
-#: src/options.c:915
+#: src/options.c:908
 msgid "Volume Levels:"
 msgstr ""
 
-#: src/options.c:1114
+#: src/options.c:1107
 #, c-format
 msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
 "this."
 msgstr ""
 
-#: src/options.c:1147
+#: src/options.c:1140
 msgid "Set Keybinding"
 msgstr ""
 
-#: src/options.c:1154
+#: src/options.c:1147
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
 msgstr ""
 
-#: src/options.c:1163
+#: src/options.c:1156
 msgid "Unset"
 msgstr ""
 
-#: src/options.c:1167
+#: src/options.c:1160
 msgid "Set any modifier"
 msgstr ""
 
-#: src/options.c:1220
+#: src/options.c:1213
 msgid "Resolution:"
 msgstr ""
 
-#: src/options.c:1225
+#: src/options.c:1218
 msgid "Fullscreen"
 msgstr ""
 
-#: src/options.c:1291
+#: src/options.c:1284
 msgid "FPS Control:"
 msgstr ""
 
-#: src/options.c:1293
+#: src/options.c:1286
 msgid "FPS Limit"
 msgstr ""
 
-#: src/options.c:1303
+#: src/options.c:1296
 msgid "Show FPS"
 msgstr ""
 
-#: src/options.c:1312
+#: src/options.c:1305
 msgid "OpenGL:"
 msgstr ""
 
-#: src/options.c:1315
+#: src/options.c:1308
 msgid "Vertical Sync"
 msgstr ""
 
-#: src/options.c:1320
+#: src/options.c:1313
 msgid "Features:"
 msgstr ""
 
-#: src/options.c:1323
+#: src/options.c:1316
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: src/options.c:1326
+#: src/options.c:1319
 msgid "Colourblind mode"
 msgstr ""
 
-#: src/options.c:1330
+#: src/options.c:1323
 msgid "Health bars for pilots"
 msgstr ""
 
-#: src/options.c:1364
+#: src/options.c:1357
 msgid "GUI:"
 msgstr ""
 
-#: src/options.c:1367
+#: src/options.c:1360
 msgid "Bigger icons"
 msgstr ""
 
-#: src/options.c:1383
+#: src/options.c:1376
 msgid "#rRestart Naev for changes to take effect.#0"
 msgstr ""
 
-#: src/options.c:1413
+#: src/options.c:1406
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr ""
 
-#: src/options.c:1511
+#: src/options.c:1504
 msgid "Resolution can't be changed while maximized."
 msgstr ""
 
-#: src/options.c:1515
+#: src/options.c:1508
 msgid "Keep Video Settings"
 msgstr ""
 
-#: src/options.c:1516
+#: src/options.c:1509
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr ""
 
-#: src/options.c:1517 src/options.c:1523
+#: src/options.c:1510 src/options.c:1516
 msgid "fullscreen"
 msgstr ""
 
-#: src/options.c:1517 src/options.c:1523
+#: src/options.c:1510 src/options.c:1516
 msgid "windowed"
 msgstr ""
 
-#: src/options.c:1521
+#: src/options.c:1514
 msgid "Video Settings Restored"
 msgstr ""
 
-#: src/options.c:1522
+#: src/options.c:1515
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr ""
 
-#: src/options.c:1600
+#: src/options.c:1593
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr ""
 
-#: src/options.c:1618
+#: src/options.c:1611
 #, c-format
 msgid "Far Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1640
+#: src/options.c:1633
 #, c-format
 msgid "Near Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1661
+#: src/options.c:1654
 #, c-format
 msgid "Gamma: %.1f"
 msgstr ""
 
-#: src/options.c:1677
+#: src/options.c:1670
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1692
+#: src/options.c:1685
 #, c-format
 msgid "Nebula non-uniformity: %.0f%%"
 msgstr ""
 
-#: src/options.c:1707
+#: src/options.c:1700
 #, c-format
 msgid "Jump Brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1722
+#: src/options.c:1715
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr ""
 
 #. Text stuff.
-#: src/options.c:1747
+#: src/options.c:1740
 msgid "Plugins Directory: "
 msgstr ""
 
-#: src/options.c:1756
+#: src/options.c:1749
 msgid "No Plugins Found"
 msgstr ""
 
-#: src/options.c:1779
+#: src/options.c:1772
 msgctxt "plugins"
 msgid "Name:"
 msgstr ""
 
-#: src/options.c:1781
+#: src/options.c:1774
 msgctxt "plugins"
 msgid "Author(s):"
 msgstr ""
 
-#: src/options.c:1783
+#: src/options.c:1776
 msgctxt "plugins"
 msgid "Version:"
 msgstr ""
 
-#: src/options.c:1785
+#: src/options.c:1778
 msgctxt "plugins"
 msgid "Description:"
 msgstr ""
 
-#: src/options.c:1788
+#: src/options.c:1781
 msgid "Total Conversion"
 msgstr ""
 
@@ -126823,27 +126848,27 @@ msgid "Weapon of type '%s' has no render implemented yet!"
 msgstr ""
 
 #.
-#: src/weapon.c:1708
+#: src/weapon.c:1706
 #, c-format
 msgid ""
 "Outfit '%s' -> '%s':\n"
 "%s"
 msgstr ""
 
-#: src/weapon.c:2383
+#: src/weapon.c:2381
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr ""
 
-#: src/weapon.c:2419
+#: src/weapon.c:2417
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 
-#: src/weapon.c:2488
+#: src/weapon.c:2486
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
 
-#: src/weapon.c:2509
+#: src/weapon.c:2507
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
