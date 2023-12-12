@@ -199,7 +199,7 @@ static int linoptL_new( lua_State *L )
 
 #ifdef DEBUGGING
    if (lp.ncols <= 0)
-      NLUA_ERROR( L, _("Number of columns in a linear optimization problem must be greater than 0!") );
+      return NLUA_ERROR( L, _("Number of columns in a linear optimization problem must be greater than 0!") );
 #endif /* DEBUGGING */
 
    /* Initialize and create. */
@@ -314,7 +314,7 @@ static int linoptL_setcol( lua_State *L )
    else if (strcmp(skind,"binary")==0)
       kind = GLP_BV;
    else
-      NLUA_ERROR(L,_("Unknown column kind '%s'!"), skind);
+      return NLUA_ERROR(L,_("Unknown column kind '%s'!"), skind);
    glp_set_col_kind( lp->prob, idx, kind );
 
    return 0;
@@ -386,7 +386,7 @@ static int linoptL_loadmatrix( lua_State *L )
    n = lua_objlen(L,2);
 #if DEBUGGING
    if ((n != lua_objlen(L,3)) || (n != lua_objlen(L,4)))
-      NLUA_ERROR(L, _("Table lengths don't match!"));
+      return NLUA_ERROR(L, _("Table lengths don't match!"));
 #endif /* DEBUGGING */
 
    /* Load everything from tables, has to be 1-index based. */
@@ -737,14 +737,14 @@ static int linoptL_readProblem( lua_State *L )
    int ret;
    LuaLinOpt_t lp;
    if (dirname == NULL)
-      NLUA_ERROR( L, _("Failed to read LP problem \"%s\"!"), fname );
+      return NLUA_ERROR( L, _("Failed to read LP problem \"%s\"!"), fname );
    SDL_asprintf( &fpath, "%s/%s", dirname, fname );
    lp.prob = glp_create_prob();
    ret = glpk_format ? glp_read_prob( lp.prob, 0, fpath ) : glp_read_mps(  lp.prob, GLP_MPS_FILE, NULL, fpath );
    free( fpath );
    if (ret != 0) {
       glp_delete_prob( lp.prob );
-      NLUA_ERROR( L, _("Failed to read LP problem \"%s\"!"), fname );
+      return NLUA_ERROR( L, _("Failed to read LP problem \"%s\"!"), fname );
    }
    lp.ncols = glp_get_num_cols( lp.prob );
    lp.nrows = glp_get_num_rows( lp.prob );

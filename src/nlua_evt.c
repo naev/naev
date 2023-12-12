@@ -241,7 +241,7 @@ static int evtL_npcRm( lua_State *L )
    bar_regen();
 
    if (ret != 0)
-      NLUA_ERROR(L, _("Invalid NPC ID!"));
+      return NLUA_ERROR(L, _("Invalid NPC ID!"));
    return 0;
 }
 
@@ -320,7 +320,7 @@ static int evtL_claim( lua_State *L )
 
    /* Check to see if already claimed. */
    if (!claim_isNull(cur_event->claims)) {
-      NLUA_ERROR(L, _("Event trying to claim but already has."));
+      return NLUA_ERROR(L, _("Event trying to claim but already has."));
       return 0;
    }
 

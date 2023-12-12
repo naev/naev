@@ -138,7 +138,7 @@ LuaSpfx_t* luaL_checkspfx( lua_State *L, int ind )
 }
 static LuaSpfxData_t* luaL_checkspfxdataNoWarn( lua_State *L, int ind )
 {
-   LuaSpfx_t *ls = luaL_checkspfx( L , ind );
+   const LuaSpfx_t *ls = luaL_checkspfx( L , ind );
    const LuaSpfxData_t key = { .id = *ls };
    LuaSpfxData_t *f = bsearch( &key, lua_spfx, array_size(lua_spfx), sizeof(LuaSpfxData_t), spfx_cmp );
    if (f == NULL) {
@@ -269,7 +269,7 @@ static int spfxL_getAll( lua_State *L )
    int n=1;
    lua_newtable(L);
    for (int i=0; i<array_size(lua_spfx); i++) {
-      LuaSpfxData_t *ls = &lua_spfx[i];
+      const LuaSpfxData_t *ls = &lua_spfx[i];
 
       if (ls->flags & (SPFX_GLOBAL | SPFX_CLEANUP))
          continue;
@@ -343,7 +343,7 @@ static int spfxL_new( lua_State *L )
 
    /* Special effect. */
    if (!lua_isnoneornil(L,8)) {
-      LuaAudio_t *la = luaL_checkaudio( L, 8 );
+      const LuaAudio_t *la = luaL_checkaudio( L, 8 );
 
       if (!sound_disabled) {
          ls.flags |= SPFX_AUDIO;
@@ -448,7 +448,7 @@ static int spfxL_rm( lua_State *L )
  */
 static int spfxL_pos( lua_State *L )
 {
-   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   const LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_pushvector( L, ls->pos );
    return 1;
 }
@@ -462,7 +462,7 @@ static int spfxL_pos( lua_State *L )
  */
 static int spfxL_vel( lua_State *L )
 {
-   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   const LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_pushvector( L, ls->vel );
    return 1;
 }
@@ -477,7 +477,7 @@ static int spfxL_vel( lua_State *L )
 static int spfxL_setPos( lua_State *L )
 {
    LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
-   vec2 *v = luaL_checkvector(L,2);
+   const vec2 *v = luaL_checkvector(L,2);
    ls->pos = *v;
    return 0;
 }
@@ -492,7 +492,7 @@ static int spfxL_setPos( lua_State *L )
 static int spfxL_setVel( lua_State *L )
 {
    LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
-   vec2 *v = luaL_checkvector(L,2);
+   const vec2 *v = luaL_checkvector(L,2);
    ls->vel = *v;
    return 0;
 }
@@ -506,7 +506,7 @@ static int spfxL_setVel( lua_State *L )
  */
 static int spfxL_sfx( lua_State *L )
 {
-   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   const LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_pushaudio( L, ls->sfx );
    return 1;
 }
@@ -769,8 +769,8 @@ static int spfxL_debris( lua_State *L )
 {
    double mass = luaL_checknumber( L, 1 );
    double radius = luaL_checknumber( L, 2 );
-   vec2 *p = luaL_checkvector( L, 3 );
-   vec2 *v = luaL_checkvector( L, 4 );
+   const vec2 *p = luaL_checkvector( L, 3 );
+   const vec2 *v = luaL_checkvector( L, 4 );
    debris_add( mass, radius, p->x, p->y, v->x, v->y );
    return 0;
 }

@@ -216,7 +216,7 @@ static int canvasL_new( lua_State *L )
    int h = luaL_checkint(L,2);
 
    if (canvas_new( &lc, w, h ))
-      NLUA_ERROR( L, _("Error setting up framebuffer!"));
+      return NLUA_ERROR( L, _("Error setting up framebuffer!"));
    lua_pushcanvas( L, lc );
    return 1;
 }

@@ -6,6 +6,7 @@
 /** @cond */
 #include <stdint.h>
 #include <time.h>
+#include "physfs.h"
 /** @endcond */
 
 #include "ntime.h"

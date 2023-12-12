@@ -241,10 +241,8 @@ int lua_isspob( lua_State *L, int ind )
 static int spobL_cur( lua_State *L )
 {
    LuaSystem sys;
-   if (land_spob == NULL) {
-      NLUA_ERROR(L,_("Attempting to get landed spob when player not landed."));
-      return 0; /* Not landed. */
-   }
+   if (land_spob == NULL)
+      return NLUA_ERROR(L,_("Attempting to get landed spob when player not landed."));
    lua_pushspob(L,spob_index(land_spob));
    sys = system_index( system_get( spob_getSystem(land_spob->name) ) );
    lua_pushsystem(L,sys);
@@ -280,10 +278,8 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
 
       if (landable) {
          pnt = spob_get( rndspob );
-         if (pnt == NULL) {
-            NLUA_ERROR(L, _("Spob '%s' not found in stack"), rndspob);
-            return 0;
-         }
+         if (pnt == NULL)
+            return NLUA_ERROR(L, _("Spob '%s' not found in stack"), rndspob);
 
          /* Check if can land. */
          spob_updateLand( pnt );
@@ -352,10 +348,8 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
 
    /* Push the spob */
    pnt = spob_get(rndspob); /* The real spob */
-   if (pnt == NULL) {
-      NLUA_ERROR(L, _("Spob '%s' not found in stack"), rndspob);
-      return 0;
-   }
+   if (pnt == NULL)
+      return NLUA_ERROR(L, _("Spob '%s' not found in stack"), rndspob);
    lua_pushspob(L,spob_index( pnt ));
    if (system) {
       LuaSystem sys;

@@ -751,10 +751,8 @@ static int pilotL_add( lua_State *L )
    /* Parse final argument - table of optional parameters */
    ai = NULL;
    if (lua_gettop( L ) >= 5 && !lua_isnil( L, 5 )) {
-      if (!lua_istable( L, 5 )) {
-         NLUA_ERROR( L, _("'parameters' should be a table of options or omitted!") );
-         return 0;
-      }
+      if (!lua_istable( L, 5 ))
+         return NLUA_ERROR( L, _("'parameters' should be a table of options or omitted!") );
       lua_getfield( L, 5, "ai" );
       ai = luaL_optstring( L, -1, NULL );
       lua_pop( L, 1 );
@@ -1701,7 +1699,7 @@ static int pilotL_navJumpSet( lua_State *L )
    if (!lua_isnoneornil(L,2)) {
       const LuaJump *lj = luaL_checkjump(L,2);
       if (cur_system->id != lj->srcid)
-         NLUA_ERROR(L,_("Jump source system doesn't match current system!"));
+         return NLUA_ERROR(L,_("Jump source system doesn't match current system!"));
       /* jumpid = jp - cur_system->jumps; */
       for (int i=0; i<array_size(cur_system->jumps); i++)
          if (cur_system->jumps[ i ].targetid == lj->destid) {
@@ -1709,7 +1707,7 @@ static int pilotL_navJumpSet( lua_State *L )
             break;
          }
       if (jumpid<0)
-         NLUA_ERROR(L,_("Jump destination system not found!"));
+         return NLUA_ERROR(L,_("Jump destination system not found!"));
    }
 
    if (pilot_isPlayer(p))
@@ -2014,7 +2012,7 @@ static int luaL_checkweapset( lua_State *L, int idx )
 {
    int ws = luaL_checkinteger(L,idx)-1;
    if ((ws < 0) || (ws > 9))
-      NLUA_ERROR(L,_("Invalid weapon set '%d'!"),idx);
+      return NLUA_ERROR(L,_("Invalid weapon set '%d'!"),idx);
    return ws;
 }
 
@@ -2081,10 +2079,8 @@ static int pilotL_weapsetType( lua_State *L )
       typeid = WEAPSET_TYPE_TOGGLE;
    else if (strcmp(type,"hold")==0)
       typeid = WEAPSET_TYPE_HOLD;
-   else {
-      NLUA_ERROR(L,_("Invalid weapon set type '%s'!"),type);
-      return 0;
-   }
+   else
+      return NLUA_ERROR(L,_("Invalid weapon set type '%s'!"),type);
    pilot_weapSetType( p, id, typeid );
    return 0;
 }
@@ -2522,7 +2518,7 @@ static int pilotL_outfitsList( lua_State *L )
          normal = 0;
       }
       else
-         NLUA_ERROR(L,_("Unknown slot type '%s'"), type);
+         return NLUA_ERROR(L,_("Unknown slot type '%s'"), type);
    }
 
    lua_newtable( L );
@@ -2637,7 +2633,7 @@ static int pilotL_outfitGet( lua_State *L )
    const Pilot *p  = luaL_validpilot(L,1);
    int id    = luaL_checkinteger(L,2)-1;
    if (id < 0 || id >= array_size(p->outfits))
-      NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
+      return NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
 
    if (p->outfits[id]->outfit != NULL)
       lua_pushoutfit( L, p->outfits[id]->outfit );
@@ -2649,7 +2645,7 @@ static int pilotL_outfitGet( lua_State *L )
 static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
 {
    if (id < 0 || id >= array_size(p->outfits))
-      NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
+      return NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
 
    PilotOutfitSlot *po = p->outfits[id];
    const Outfit *o = po->outfit;
@@ -2721,7 +2717,7 @@ static int pilotL_outfitReady( lua_State *L )
    const Pilot *p = luaL_validpilot(L,1);
    int id    = luaL_checkinteger(L,2)-1;
    if (id < 0 || id >= array_size(p->outfits))
-      NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
+      return NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
 
    if (p->outfits[id]->outfit != NULL)
       lua_pushboolean( L, p->outfits[id]->state==PILOT_OUTFIT_OFF );
@@ -4098,7 +4094,7 @@ static int pilotL_shippropSet( lua_State *L )
    double value;
 
    if (p->ship->lua_env == LUA_NOREF)
-      NLUA_ERROR(L,_("Trying to set ship property of pilot '%s' flying ship '%s' with no ship Lua enabled!"), p->name, p->ship->name);
+      return NLUA_ERROR(L,_("Trying to set ship property of pilot '%s' flying ship '%s' with no ship Lua enabled!"), p->name, p->ship->name);
 
    /* Case individual parameter. */
    if (!lua_istable(L,2)) {
@@ -4896,10 +4892,8 @@ static int pilotL_cargoAdd( lua_State *L )
    const Commodity *cargo = luaL_validcommodity(L, 2);
    int quantity = luaL_checknumber(L, 3);
 
-   if (quantity < 0) {
-      NLUA_ERROR( L, _("Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)") );
-      return 0;
-   }
+   if (quantity < 0)
+      return NLUA_ERROR( L, _("Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)") );
 
    /* Try to add the cargo. */
    quantity = pilot_cargoAdd( p, cargo, quantity, 0 );
@@ -4931,12 +4925,8 @@ static int pilotL_cargoRmHelper( lua_State *L, int jet )
    cargo = luaL_validcommodity(L, 2);
    quantity = luaL_checknumber(L, 3);
 
-   if (quantity < 0) {
-      NLUA_ERROR(L,
-            _("Quantity must be positive for pilot.cargoRm (if adding, use"
-               " pilot.cargoAdd)"));
-      return 0;
-   }
+   if (quantity < 0)
+      return NLUA_ERROR(L,_("Quantity must be positive for pilot.cargoRm (if adding, use  pilot.cargoAdd)"));
 
    /* Try to remove the cargo. */
    if (jet)
@@ -5367,10 +5357,8 @@ static int pilotL_memory( lua_State *L )
 {
    const Pilot *p  = luaL_validpilot(L,1);
    /* Set the pilot's memory. */
-   if (p->ai == NULL) {
-      NLUA_ERROR(L,_("Pilot '%s' does not have an AI!"),p->name);
-      return 0;
-   }
+   if (p->ai == NULL)
+      return NLUA_ERROR(L,_("Pilot '%s' does not have an AI!"),p->name);
    lua_rawgeti( L, LUA_REGISTRYINDEX, p->lua_mem );
    return 1;
 }
@@ -5552,10 +5540,8 @@ static int pilotL_poptask( lua_State *L )
    Pilot *p  = luaL_validpilot(L,1);
    Task *t = ai_curTask( p );
    /* Tasks must exist. */
-   if (t == NULL) {
-      NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
-      return 0;
-   }
+   if (t == NULL)
+      return NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
    t->done = 1;
    return 0;
 }
@@ -5592,13 +5578,15 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
    /* Must be on manual control. */
    if (!pilot_isFlag( p, PILOT_MANUAL_CONTROL)) {
       NLUA_ERROR( L, _("Pilot '%s' is not on manual control."), p->name );
-      return 0;
+      return NULL;
    }
 
    /* Creates the new task. */
    t = ai_newtask( L, p, task, 0, 1 );
-   if (t==NULL)
+   if (t==NULL) {
       NLUA_ERROR( L, _("Failed to create new task for pilot '%s'."), p->name );
+      return NULL;
+   }
 
    return t;
 }
@@ -5959,10 +5947,8 @@ static int pilotL_hyperspace( lua_State *L )
          continue;
       /* Found target. */
 
-      if (jp_isFlag( jp, JP_EXITONLY )) {
-         NLUA_ERROR( L, _("Pilot '%s' can't jump out exit only jump '%s'"), p->name, ss->name );
-         return 0;
-      }
+      if (jp_isFlag( jp, JP_EXITONLY ))
+         return NLUA_ERROR( L, _("Pilot '%s' can't jump out exit only jump '%s'"), p->name, ss->name );
 
       /* Push jump. */
       lj.srcid  = cur_system->id;
@@ -5972,8 +5958,7 @@ static int pilotL_hyperspace( lua_State *L )
       return 0;
    }
    /* Not found. */
-   NLUA_ERROR( L, _("System '%s' is not adjacent to current system '%s'"), ss->name, cur_system->name );
-   return 0;
+   return NLUA_ERROR( L, _("System '%s' is not adjacent to current system '%s'"), ss->name, cur_system->name );
 }
 
 /**
@@ -6048,10 +6033,8 @@ static int pilotL_land( lua_State *L )
             break;
          }
       }
-      if (i >= array_size(cur_system->spobs)) {
-         NLUA_ERROR( L, _("Spob '%s' not found in system '%s'"), pnt->name, cur_system->name );
-         return 0;
-      }
+      if (i >= array_size(cur_system->spobs))
+         return NLUA_ERROR( L, _("Spob '%s' not found in system '%s'"), pnt->name, cur_system->name );
 
       p->nav_spob = i;
       if (p->id == PLAYER_ID)
@@ -6213,10 +6196,8 @@ static int pilotL_setLeader( lua_State *L )
          const Escort_t *e = &prev_leader->escorts[i];
          if (e->id != p->id)
             continue;
-         if (e->type != ESCORT_TYPE_MERCENARY) {
-            NLUA_ERROR(L,_("Trying to change the leader of pilot '%s' that is a deployed fighter or part of the player fleet!"), p->name);
-            return 0;
-         }
+         if (e->type != ESCORT_TYPE_MERCENARY)
+            return NLUA_ERROR(L,_("Trying to change the leader of pilot '%s' that is a deployed fighter or part of the player fleet!"), p->name);
          escort_rmListIndex( prev_leader, i );
          found = 1;
          break;
@@ -6235,7 +6216,7 @@ static int pilotL_setLeader( lua_State *L )
 
       /* Don't allow setting a pilot's leader to themselves. */
       if (p->id == leader->id)
-         NLUA_ERROR(L,_("Trying to set pilot '%s' to be their own leader!"),p->name);
+         return NLUA_ERROR(L,_("Trying to set pilot '%s' to be their own leader!"),p->name);
 
       if ((leader->parent != 0) && (leader->parent != p->id)) {
          Pilot *leader_leader =  pilot_get(leader->parent);
@@ -6548,7 +6529,7 @@ static int pilotL_showEmitters( lua_State *L )
       debug_rmFlag(DEBUG_MARK_EMITTER);
 #else /* DEBUGGING */
    (void) state;
-   NLUA_ERROR(L, _("Requires a debug build."));
+   return NLUA_ERROR(L, _("Requires a debug build."));
 #endif /* DEBUGGING */
 
    return 0;
@@ -6627,7 +6608,7 @@ static int pilotL_render( lua_State *L )
    w = p->ship->gfx_space->sw;
    h = p->ship->gfx_space->sh;
    if (canvas_new( &lc, w, h ))
-      NLUA_ERROR( L, _("Error setting up framebuffer!"));
+      return NLUA_ERROR( L, _("Error setting up framebuffer!"));
 
    /* I'me really stumped at why we need to pass gl_screen here for it to work... */
    pilot_renderFramebuffer( p, lc.fbo, gl_screen.rw, gl_screen.rh );

@@ -178,7 +178,7 @@ static int dataL_new( lua_State *L )
       ld.elem = sizeof(float);
    }
    else {
-      NLUA_ERROR(L, _("unknown data type '%s'"), type);
+      return NLUA_ERROR(L, _("unknown data type '%s'"), type);
       return 0;
    }
    ld.size = size*ld.elem;
@@ -191,12 +191,12 @@ static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos )
 {
    size_t mpos;
    if (pos < 0) {
-      NLUA_ERROR(L, _("position argument must be positive!"));
+      return NLUA_ERROR(L, _("position argument must be positive!"));
       return 0;
    }
    mpos = pos * ld->elem;
    if (mpos >= ld->size)
-      NLUA_ERROR(L, _("position argument out of bounds: %d of %d elements"), pos, ld->size/ld->elem);
+      return NLUA_ERROR(L, _("position argument out of bounds: %d of %d elements"), pos, ld->size/ld->elem);
    return mpos;
 }
 
@@ -292,9 +292,9 @@ static int dataL_paste( lua_State *L )
 
    /* Check fits. */
    if (dx+sw > (long)dest->size)
-      NLUA_ERROR(L, _("size mismatch: out of bound access dest: %d of %d elements"), dx+sw, dest->size);
+      return NLUA_ERROR(L, _("size mismatch: out of bound access dest: %d of %d elements"), dx+sw, dest->size);
    else if (sx+sw > (long)source->size)
-      NLUA_ERROR(L, _("size mismatch: out of bound access of source: %d of %d elements"), sx+sw, source->size);
+      return NLUA_ERROR(L, _("size mismatch: out of bound access of source: %d of %d elements"), sx+sw, source->size);
 
    /* Copy memory over. */
    memcpy( &dest->data[dx], &source->data[sx], sw );
@@ -328,9 +328,9 @@ static int dataL_addWeighted( lua_State *L )
 
    /* Checks. */
    if (A->size != B->size)
-      NLUA_ERROR(L, _("size mismatch: A has %d elements but B has %d elements"), A->size, B->size );
+      return NLUA_ERROR(L, _("size mismatch: A has %d elements but B has %d elements"), A->size, B->size );
    if (A->type != LUADATA_NUMBER || B->type != LUADATA_NUMBER)
-      NLUA_ERROR(L, _("%s is only implemented for number types"), __func__);
+      return NLUA_ERROR(L, _("%s is only implemented for number types"), __func__);
 
    /* Create new data. */
    out.size = A->size;
@@ -380,11 +380,11 @@ static int dataL_convolve2d( lua_State *L )
 
    /* Checks. */
    if (iw*ih*4*lI->elem != lI->size)
-      NLUA_ERROR(L,_("size mismatch for data: got %dx%dx4x%d, expected %d"), iw, ih, lI->elem, lI->size);
+      return NLUA_ERROR(L,_("size mismatch for data: got %dx%dx4x%d, expected %d"), iw, ih, lI->elem, lI->size);
    if (kw*kh*4*lK->elem != lK->size)
-      NLUA_ERROR(L,_("size mismatch for data: got %dx%dx4x%d, expected %d"), kw, kh, lK->elem, lK->size);
+      return NLUA_ERROR(L,_("size mismatch for data: got %dx%dx4x%d, expected %d"), kw, kh, lK->elem, lK->size);
    if (lI->type != LUADATA_NUMBER || lK->type != LUADATA_NUMBER)
-      NLUA_ERROR(L, _("%s is only implemented for number types"), __func__);
+      return NLUA_ERROR(L, _("%s is only implemented for number types"), __func__);
 
    /* Set up. */
    kw2 = (kw-1)/2;

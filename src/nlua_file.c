@@ -258,7 +258,7 @@ static int fileL_read( lua_State *L )
    char *buf;
 
    if (lf->rw == NULL)
-      NLUA_ERROR(L, _("file not open!"));
+      return NLUA_ERROR(L, _("file not open!"));
 
    /* Figure out how much to read. */
    readlen = luaL_optinteger(L,2,SDL_RWsize(lf->rw));
@@ -289,7 +289,7 @@ static int fileL_write( lua_State *L )
 
 
    if (lf->rw == NULL)
-      NLUA_ERROR(L, _("file not open!"));
+      return NLUA_ERROR(L, _("file not open!"));
 
    buf   = luaL_checklstring(L,2,&len);
    write = luaL_optlong(L,3,len);
@@ -446,7 +446,7 @@ static int fileL_enumerate( lua_State *L )
    lua_newtable(L);
    items = PHYSFS_enumerateFiles( path );
    if (items==NULL)
-      NLUA_ERROR(L,_("Directory '%s' enumerate error: %s"), path,
+      return NLUA_ERROR(L,_("Directory '%s' enumerate error: %s"), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
    for (int i=0; items[i]!=NULL; i++) {
       lua_pushstring(L,items[i]);

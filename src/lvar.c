@@ -36,9 +36,9 @@ static int lvar_cmp( const void *p1, const void *p2 )
  *    @param str Name to use as a key.
  *    @return Found element or NULL if not found.
  */
-lvar *lvar_get( lvar *arr, const char *str )
+lvar *lvar_get( const lvar *arr, const char *str )
 {
-   lvar mv = {.name=(char*)str};
+   const lvar mv = {.name=(char*)str};
    if (arr == NULL)
       return NULL;
    return bsearch( &mv, arr, array_size(arr), sizeof(lvar), lvar_cmp );
@@ -108,6 +108,7 @@ lvar lvar_tovar( lua_State *L, const char *name, int idx )
       /* Hack because we don't want to return 0 and can't use NLUA_INVALID_PARAMETER */
       DEBUG( "Invalid parameter for %s.", __func__ );
       luaL_error( L, "Invalid parameter for %s.", __func__ );
+      var.type = LVAR_NIL;
       return var;
    }
    /* Set name. */
@@ -157,7 +158,7 @@ void lvar_freeArray( lvar *arr )
  *    @param sort Whether or not to sort.
  *    @return 0 on success.
  */
-int lvar_addArray( lvar **arr, lvar *new_var, int sort )
+int lvar_addArray( lvar **arr, const lvar *new_var, int sort )
 {
    /* Avoid Duplicates. */
    lvar *mv = lvar_get( *arr, new_var->name );

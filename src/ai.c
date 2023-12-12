@@ -1147,6 +1147,7 @@ Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos
       if (curtask == NULL) {
          ai_freetask( t );
          NLUA_ERROR( L, _("Trying to add subtask '%s' to non-existent task."), func);
+         return NULL;
       }
 
       /* Add the subtask. */
@@ -1205,8 +1206,10 @@ static Task* ai_createTask( lua_State *L, int subtask )
 
    /* Creates a new AI task. */
    Task *t = ai_newtask( L, cur_pilot, func, subtask, 0 );
-   if (t==NULL)
+   if (t==NULL) {
       NLUA_ERROR( L, _("Failed to create new task for pilot '%s'."), cur_pilot->name );
+      return NULL;
+   }
 
    /* Set the data. */
    if (lua_gettop(L) > 1) {
@@ -1261,10 +1264,8 @@ static int aiL_poptask( lua_State *L )
 {
    Task *t = ai_curTask( cur_pilot );
    /* Tasks must exist. */
-   if (t == NULL) {
-      NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
-      return 0;
-   }
+   if (t == NULL)
+      return NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
    t->done = 1;
    return 0;
 }
@@ -1327,14 +1328,10 @@ static int aiL_popsubtask( lua_State *L )
    t = ai_curTask( cur_pilot );
 
    /* Tasks must exist. */
-   if (t == NULL) {
-      NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
-      return 0;
-   }
-   if (t->subtask == NULL) {
-      NLUA_ERROR(L, _("Trying to pop subtask when there are no subtasks for the task '%s'."), t->name);
-      return 0;
-   }
+   if (t == NULL)
+      return NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
+   if (t->subtask == NULL)
+      return NLUA_ERROR(L, _("Trying to pop subtask when there are no subtasks for the task '%s'."), t->name);
 
    /* Exterminate, annihilate destroy. */
    st          = t->subtask;
@@ -2363,18 +2360,14 @@ static int aiL_land( lua_State *L )
             break;
          }
       }
-      if (i >= array_size(cur_system->spobs)) {
-         NLUA_ERROR( L, _("Spob '%s' not found in system '%s'"), pnt->name, cur_system->name );
-         return 0;
-      }
+      if (i >= array_size(cur_system->spobs))
+         return NLUA_ERROR( L, _("Spob '%s' not found in system '%s'"), pnt->name, cur_system->name );
 
       cur_pilot->nav_spob = i;
    }
 
-   if (cur_pilot->nav_spob < 0) {
-      NLUA_ERROR( L, _("Pilot '%s' (ai '%s') has no land target"), cur_pilot->name, cur_pilot->ai->name );
-      return 0;
-   }
+   if (cur_pilot->nav_spob < 0)
+      return NLUA_ERROR( L, _("Pilot '%s' (ai '%s') has no land target"), cur_pilot->name, cur_pilot->ai->name );
 
    /* Get spob. */
    spob = cur_system->spobs[ cur_pilot->nav_spob ];
@@ -2448,7 +2441,7 @@ static int aiL_hyperspace( lua_State *L )
       const JumpPoint *jp = luaL_validjump( L, 1 );
       const LuaJump *lj = luaL_checkjump( L, 1 );
       if (lj->srcid != cur_system->id)
-         NLUA_ERROR(L, _("Jump point must be in current system."));
+         return NLUA_ERROR(L, _("Jump point must be in current system."));
       cur_pilot->nav_hyperspace = jp - cur_system->jumps;
    }
 
@@ -2481,7 +2474,7 @@ static int aiL_sethyptarget( lua_State *L )
    jp = luaL_validjump( L, 1 );
 
    if (lj->srcid != cur_system->id)
-      NLUA_ERROR(L, _("Jump point must be in current system."));
+      return NLUA_ERROR(L, _("Jump point must be in current system."));
 
    /* Copy vector. */
    vec = jp->pos;

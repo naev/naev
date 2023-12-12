@@ -227,7 +227,7 @@ static int poL_state( lua_State *L )
    PilotOutfitState pos = po->state;
 
    if (!outfit_isMod( po->outfit ))
-      NLUA_ERROR( L, _("'pilotoutfit.%s' only works with modifier outfits!"), "state");
+      return NLUA_ERROR( L, _("'pilotoutfit.%s' only works with modifier outfits!"), "state");
 
    if (state==NULL || strcmp(state,"off")==0)
       po->state = PILOT_OUTFIT_OFF;
@@ -238,7 +238,7 @@ static int poL_state( lua_State *L )
    else if (strcmp(state,"cooldown")==0)
       po->state = PILOT_OUTFIT_COOLDOWN;
    else
-      NLUA_ERROR( L, _("Unknown PilotOutfit state '%s'!"), state );
+      return NLUA_ERROR( L, _("Unknown PilotOutfit state '%s'!"), state );
 
    /* Mark as modified if state changed. */
    if (pos != po->state)
@@ -259,7 +259,7 @@ static int poL_progress( lua_State *L )
    PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
 
    if (!outfit_isMod( po->outfit ))
-      NLUA_ERROR( L, _("'pilotoutfit.%s' only works with modifier outfits!"), "progress");
+      return NLUA_ERROR( L, _("'pilotoutfit.%s' only works with modifier outfits!"), "progress");
 
    po->progress = CLAMP( 0., 1., luaL_checknumber(L,2) );
    return 0;

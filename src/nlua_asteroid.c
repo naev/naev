@@ -112,13 +112,17 @@ Asteroid* luaL_validasteroid( lua_State *L, int ind )
    if (lua_isasteroid(L, ind)) {
       const LuaAsteroid_t *la = luaL_checkasteroid(L, ind);
 #if DEBUGGING
-      if ((la->parent < 0) || (la->parent >= array_size(cur_system->asteroids)))
+      if ((la->parent < 0) || (la->parent >= array_size(cur_system->asteroids))) {
          NLUA_ERROR(L,_("Asteroid field '%d' is out of range!"),la->parent);
+         return NULL;
+      }
 #endif /* DEBUGGING */
       AsteroidAnchor *field = &cur_system->asteroids[ la->parent ];
 #if DEBUGGING
-      if ((la->id < 0) || (la->id >= field->nb))
+      if ((la->id < 0) || (la->id >= field->nb)) {
          NLUA_ERROR(L,_("Asteroid '%d' in field '%d' is out of range!"),la->id,la->parent);
+         return NULL;
+      }
 #endif /* DEBUGGING */
       a = &field->asteroids[ la->id ];
    }
@@ -127,8 +131,10 @@ Asteroid* luaL_validasteroid( lua_State *L, int ind )
       return NULL;
    }
 
-   if (a == NULL)
+   if (a == NULL) {
       NLUA_ERROR(L, _("Asteroid is invalid"));
+      return NULL;
+   }
 
    return a;
 }

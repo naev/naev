@@ -199,7 +199,7 @@ static int colL_new( lua_State *L )
    else if (lua_isstring(L,1)) {
       col2 = col_fromName( lua_tostring(L,1) );
       if (col2 == NULL) {
-         NLUA_ERROR( L, _("Colour '%s' does not exist!"), lua_tostring(L,1) );
+         return NLUA_ERROR( L, _("Colour '%s' does not exist!"), lua_tostring(L,1) );
          return 0;
       }
       col = *col2;

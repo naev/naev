@@ -549,7 +549,7 @@ static int audioL_new( lua_State *L )
    }
    rw = PHYSFSRWOPS_openRead( name );
    if (rw==NULL)
-      NLUA_ERROR(L,"Unable to open '%s'", name );
+      return NLUA_ERROR(L,"Unable to open '%s'", name );
 #if DEBUGGING
    la.name = strdup( name );
 #endif /* DEBUGGING */
@@ -585,7 +585,7 @@ static int audioL_new( lua_State *L )
       /* ov_clear will close rw for us. */
       if (ov_open_callbacks( rw, &la.stream, NULL, 0, sound_al_ovcall ) < 0) {
          SDL_RWclose( rw );
-         NLUA_ERROR(L,_("Audio '%s' does not appear to be a Vorbis bitstream."), name );
+         return NLUA_ERROR(L,_("Audio '%s' does not appear to be a Vorbis bitstream."), name );
       }
       la.info = ov_info( &la.stream, -1 );
 
@@ -882,7 +882,7 @@ static int audioL_seek( lua_State *L )
    if (strcmp(unit,"samples")==0)
       seconds = 0;
    else if (strcmp(unit,"seconds")!=0)
-      NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+      return NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
    if (sound_disabled || la->ok)
       return 0;
@@ -933,7 +933,7 @@ static int audioL_tell( lua_State *L )
    if (strcmp(unit,"samples")==0)
       seconds = 0;
    else if (strcmp(unit,"seconds")!=0)
-      NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+      return NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
    if (sound_disabled || la->ok) {
       lua_pushnumber(L, -1.);
@@ -989,7 +989,7 @@ static int audioL_getDuration( lua_State *L )
    if (strcmp(unit,"samples")==0)
       seconds = 0;
    else if (strcmp(unit,"seconds")!=0)
-      NLUA_ERROR(L, _("Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+      return NLUA_ERROR(L, _("Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
    if (sound_disabled || la->ok) {
       lua_pushnumber(L, -1.);
@@ -1597,7 +1597,7 @@ static int audioL_setEffectGlobal( lua_State *L )
    }
    else {
       soundUnlock();
-      NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
+      return NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
    }
 
    if (volume > 0.)

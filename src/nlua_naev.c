@@ -575,7 +575,7 @@ static int naevL_confSet( lua_State *L )
 {
    (void) L;
    /* TODO implement. */
-   NLUA_ERROR(L, _("unimplemented"));
+   return NLUA_ERROR(L, _("unimplemented"));
    return 0;
 }
 
@@ -758,7 +758,7 @@ static int naevL_menuInfo( lua_State *L )
    else if (strcasecmp( str, "standings" )==0)
       window = INFO_STANDINGS;
    else {
-      NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
+      return NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
       return 0;
    }
 
@@ -818,7 +818,7 @@ static int naevL_pause( lua_State *L )
 static int naevL_unpause( lua_State *L )
 {
    if (landed)
-      NLUA_ERROR(L, _("Unable to unpause the game when landed!"));
+      return NLUA_ERROR(L, _("Unable to unpause the game when landed!"));
    unpause_game();
    return 0;
 }

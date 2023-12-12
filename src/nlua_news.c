@@ -277,7 +277,7 @@ int newsL_add( lua_State *L )
       lua_pushnews( L, n_article );
    }
    else
-      NLUA_ERROR(L,_("Bad arguments"));
+      return NLUA_ERROR(L,_("Bad arguments"));
 
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {

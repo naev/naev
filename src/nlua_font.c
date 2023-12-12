@@ -179,7 +179,7 @@ static int fontL_new( lua_State *L )
       prefix = "";
 
    if (gl_fontInit( &font, fname, h, prefix, FONT_FLAG_DONTREUSE ))
-      NLUA_ERROR(L, _("failed to load font '%s'"), fname);
+      return NLUA_ERROR(L, _("failed to load font '%s'"), fname);
 
    lua_pushfont( L, font );
    lua_pushstring( L, fname );

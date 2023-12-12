@@ -365,7 +365,7 @@ static int misn_markerAdd( lua_State *L )
    else if (strcmp(stype, "plot")==0)
       type = SPOBMARKER_PLOT;
    else {
-      NLUA_ERROR(L, _("Unknown marker type: %s"), stype);
+      return NLUA_ERROR(L, _("Unknown marker type: %s"), stype);
       return 0;
    }
 
@@ -423,7 +423,7 @@ static int misn_markerMove( lua_State *L )
       }
    }
    if (marker == NULL) {
-      NLUA_ERROR( L, _("Mission does not have a marker with id '%d'"), id );
+      return NLUA_ERROR( L, _("Mission does not have a marker with id '%d'"), id );
       return 0;
    }
 
@@ -589,7 +589,7 @@ static int misn_accept( lua_State *L )
 
    /* no missions left */
    if (cur_mission->accepted)
-      NLUA_ERROR(L, _("Mission already accepted!"));
+      return NLUA_ERROR(L, _("Mission already accepted!"));
    else { /* copy it over */
       Mission **misnptr;
       *new_misn = *cur_mission;
@@ -947,7 +947,7 @@ static int misn_npcRm( lua_State *L )
    bar_regen();
 
    if (ret != 0)
-      NLUA_ERROR(L, _("Invalid NPC ID!"));
+      return NLUA_ERROR(L, _("Invalid NPC ID!"));
    return 0;
 }
 
@@ -982,7 +982,7 @@ static int misn_claim( lua_State *L )
 
    /* Check to see if already claimed. */
    if (!claim_isNull(cur_mission->claims)) {
-      NLUA_ERROR(L, _("Mission trying to claim but already has."));
+      return NLUA_ERROR(L, _("Mission trying to claim but already has."));
       return 0;
    }
 

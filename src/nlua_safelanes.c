@@ -98,7 +98,7 @@ static int safelanesL_get( lua_State *L )
       else if (strcmp(std,"non-hostile")==0)
          standing |= SAFELANES_NEUTRAL | SAFELANES_FRIENDLY;
       else
-         NLUA_ERROR(L,_("Unknown standing type '%s'!"), std);
+         return NLUA_ERROR(L,_("Unknown standing type '%s'!"), std);
    }
 
    /* Get and process the lanes. */
@@ -120,7 +120,7 @@ static int safelanesL_get( lua_State *L )
                      known = 0;
                   break;
                default:
-                  NLUA_ERROR( L, _("Safe-lane vertex type is invalid.") );
+                  return NLUA_ERROR( L, _("Safe-lane vertex type is invalid.") );
             }
          }
          if (!known)
@@ -136,7 +136,7 @@ static int safelanesL_get( lua_State *L )
                //lua_pushspob( L, l->point_id[j] );
 #ifdef DEBUGGING
                if (pnt==NULL)
-                  NLUA_ERROR(L, _("Spob is invalid"));
+                  return NLUA_ERROR(L, _("Spob is invalid"));
 #endif /* DEBUGGING */
                lua_pushvector( L, pnt->pos );
                break;
@@ -147,12 +147,12 @@ static int safelanesL_get( lua_State *L )
                jmp = jump_getTarget( system_getIndex(l->point_id[j]), sys );
 #ifdef DEBUGGING
                if (jmp==NULL)
-                  NLUA_ERROR(L, _("Jump is invalid"));
+                  return NLUA_ERROR(L, _("Jump is invalid"));
 #endif /* DEBUGGING */
                lua_pushvector( L, jmp->pos );
                break;
             default:
-               NLUA_ERROR( L, _("Safe-lane vertex type is invalid.") );
+               return NLUA_ERROR( L, _("Safe-lane vertex type is invalid.") );
          }
          lua_rawseti( L, -2, j+1 );
       }

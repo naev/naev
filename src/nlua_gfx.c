@@ -211,10 +211,10 @@ static int gfxL_renderTex( lua_State *L )
    /* Some safety checking. */
 #if DEBUGGING
    if (sx < 0 || sx >= tex->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
             tex->name, sx+1, tex->sx );
    if (sy < 0 || sy >= tex->sy)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
             tex->name, sy+1, tex->sy );
 #endif /* DEBUGGING */
 
@@ -267,10 +267,10 @@ static int gfxL_renderTexScale( lua_State *L )
    /* Some safety checking. */
 #if DEBUGGING
    if (sx >= tex->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
             tex->name, sx+1, tex->sx );
    if (sx >= tex->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
             tex->name, sy+1, tex->sy );
 #endif /* DEBUGGING */
 
@@ -330,10 +330,10 @@ static int gfxL_renderTexRaw( lua_State *L )
    /* Some safety checking. */
 #if DEBUGGING
    if (sx >= t->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
             t->name, sx+1, t->sx );
    if (sx >= t->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
             t->name, sy+1, t->sy );
 #endif /* DEBUGGING */
 
@@ -701,7 +701,7 @@ static int gfxL_printfWrap( lua_State *L )
    s     = luaL_checkstring(L,2);
    width = luaL_checkinteger(L,3);
    if (width < 0)
-      NLUA_ERROR(L,_("width has to be a positive value."));
+      return NLUA_ERROR(L,_("width has to be a positive value."));
 
    /* Process output into table. */
    lua_newtable(L);

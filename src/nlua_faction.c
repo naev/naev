@@ -194,7 +194,7 @@ LuaFaction luaL_validfaction( lua_State *L, int ind )
 {
    int id = luaL_validfactionSilent( L, ind );
    if (id == -1)
-      NLUA_ERROR(L,_("Faction '%s' not found in stack."), lua_tostring(L,ind) );
+      return NLUA_ERROR(L,_("Faction '%s' not found in stack."), lua_tostring(L,ind) );
    return id;
 }
 
@@ -685,7 +685,7 @@ static int factionL_dynAdd( lua_State *L )
    if (faction_exists(name)) {
       int f = faction_get(name);
       if (!faction_isDynamic(f))
-         NLUA_ERROR(L,_("Trying to overwrite existing faction '%s' with dynamic faction!"),name);
+         return NLUA_ERROR(L,_("Trying to overwrite existing faction '%s' with dynamic faction!"),name);
 
       lua_pushfaction( L, f );
       return 1;
@@ -756,7 +756,7 @@ static int factionL_dynAlly( lua_State *L )
    int remove;
    fac      = luaL_validfaction(L,1);
    if (!faction_isDynamic(fac))
-      NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
+      return NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
    ally     = luaL_validfaction(L,2);
    remove   = lua_toboolean(L,3);
    if (remove)
@@ -780,7 +780,7 @@ static int factionL_dynEnemy( lua_State *L )
    int remove;
    fac      = luaL_validfaction(L,1);
    if (!faction_isDynamic(fac))
-      NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
+      return NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
    enemy    = luaL_validfaction(L,2);
    remove   = lua_toboolean(L,3);
    if (remove)

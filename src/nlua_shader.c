@@ -208,7 +208,7 @@ static int shaderL_new( lua_State *L )
    /* Do from string. */
    shader.program = gl_program_vert_frag_string( vertexcode, strlen(vertexcode),  pixelcode, strlen(pixelcode) );
    if (shader.program == 0)
-      NLUA_ERROR(L,_("shader failed to compile!"));
+      return NLUA_ERROR(L,_("shader failed to compile!"));
 
    /* Set up defaults. */
 #define ATTRIB(name) \
@@ -343,7 +343,7 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
    if (u==NULL) {
       if (ignore_missing)
          return 0;
-      NLUA_ERROR(L,_("Shader does not have uniform '%s'!"), name);
+      return NLUA_ERROR(L,_("Shader does not have uniform '%s'!"), name);
       return -1;
    }
 
@@ -443,7 +443,7 @@ static int shaderL_addPostProcess( lua_State *L )
    else if (strcmp(str,"gui")==0)
       layer = PP_LAYER_GUI;
    else
-      NLUA_ERROR(L,_("Layer was '%s', but must be one of 'final' or 'game'"), str);
+      return NLUA_ERROR(L,_("Layer was '%s', but must be one of 'final' or 'game'"), str);
 
    if (ls->pp_id == 0)
       ls->pp_id = render_postprocessAdd( ls, layer, priority, 0 );
