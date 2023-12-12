@@ -27,9 +27,9 @@
 #include "array.h"
 #include "conf.h"
 #include "env.h"
-#if __MACOS__
+#if __MACOSX__
 #include "glue_macos.h"
-#endif /* __MACOS__ */
+#endif /* __MACOSX__ */
 #include "log.h"
 #include "nfile.h"
 #include "nstring.h"
@@ -92,12 +92,12 @@ void ndata_setupWriteDir (void)
       PHYSFS_setWriteDir( conf.datapath );
       return;
    }
-#if __MACOS__
+#if __MACOSX__
    /* For historical reasons predating physfs adoption, this case is different. */
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "org.naev.Naev" ) );
 #else
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "naev" ) );
-#endif /* __MACOS__ */
+#endif /* __MACOSX__ */
    if (PHYSFS_getWriteDir() == NULL) {
       WARN(_("Cannot determine data path, using current directory."));
       PHYSFS_setWriteDir( "./naev/" );
@@ -114,12 +114,12 @@ void ndata_setupReadDirs (void)
    if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
       LOG(_("Added datapath from conf.lua file: %s"), conf.ndata);
 
-#if __MACOS__
+#if __MACOSX__
    if ( !ndata_found() && macos_isBundle() && macos_resourcesPath( buf, PATH_MAX-4 ) >= 0 && strncat( buf, "/dat", 4 ) ) {
       LOG(_("Trying default datapath: %s"), buf);
       PHYSFS_mount( buf, NULL, 1 );
    }
-#endif /* __MACOS__ */
+#endif /* __MACOSX__ */
 
    if ( !ndata_found() && env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >= 0 ) {
       LOG(_("Trying default datapath: %s"), buf);

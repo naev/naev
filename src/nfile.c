@@ -34,13 +34,13 @@
 
 #include "array.h"
 #include "conf.h"
-#if __MACOS__
+#if __MACOSX__
 #include "glue_macos.h"
-#endif /* __MACOS__ */
+#endif /* __MACOSX__ */
 #include "log.h"
 #include "nstring.h"
 
-#if HAS_UNIX && !__MACOS__
+#if HAS_UNIX && !__MACOSX__
 //! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
 
 /**
@@ -121,7 +121,7 @@ const char* nfile_configPath (void)
            snprintf( naev_configPath, sizeof(naev_configPath), "%s/", conf.datapath );
            return naev_configPath;
         }
-#if __MACOS__
+#if __MACOSX__
         if (macos_configPath( naev_configPath, sizeof(naev_configPath) ) != 0) {
            WARN(_("Cannot determine config path, using current directory."));
            snprintf( naev_configPath, sizeof(naev_configPath), "./naev/" );
@@ -164,7 +164,7 @@ const char* nfile_cachePath (void)
            snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/", conf.datapath );
            return naev_cachePath;
         }
-#if __MACOS__
+#if __MACOSX__
         if (macos_cachePath( naev_cachePath, sizeof(naev_cachePath) ) != 0) {
            WARN(_("Cannot determine cache path, using current directory."));
            snprintf( naev_cachePath, sizeof(naev_cachePath), "./naev/" );
