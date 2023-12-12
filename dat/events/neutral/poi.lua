@@ -62,7 +62,7 @@ function create ()
 end
 
 function delay ()
-   player.msg(_("Your sensors detect a point of interest in the system!"),true)
+   player.msg(_("Your sensors detect a sensor anomaly in the system!"),true)
    player.autonavReset( 1 )
    poi.hook_enter()
 end

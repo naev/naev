@@ -149,7 +149,7 @@ poi.hook_enter = _poi_enter
 function _poi_heartbeat_nooutfit ()
    if player.pos():dist( pos ) < 3e3 then
       -- TODO ship AI message
-      player.msg(_("You lack an outfit to scan the point of interest."),true)
+      player.msg(_("You lack an outfit to scan the sensor anomaly."),true)
       return
    end
    timer = hook.timer( 1, "_poi_heartbeat_nooutfit" )
@@ -215,9 +215,9 @@ function poi.misnSetup( params )
 
    -- Accept and set up mission
    misn.accept()
-   misn.setTitle(_("Point of Interest")) -- TODO maybe randomize somewhat?
+   misn.setTitle(fmt.f(_("Sensor Anomaly at {sys}"),{sys=mem.poi.sys})) -- TODO maybe randomize somewhat?
    misn.setReward(_("Unknown")) -- TODO give some hint?
-   misn.setDesc(fmt.f(_([[A point of interest has been found in the {sys} system. It is not clear what can be found, however, it warrants investigation. You should bring an outfit that can perform scans such as a #bPulse Scanner#0.
+   misn.setDesc(fmt.f(_([[A sensor anomaly has been found in the {sys} system. It is not clear what can be found, however, it warrants investigation. You should bring an outfit that can perform scans such as a #bPulse Scanner#0.
 
 #nEstimated Risk:#0 {risk}
 #nEstimated Reward:#0 {reward}]]),
@@ -283,7 +283,7 @@ Logs a point of interest message.
    @tparam string msg Message to log.
 --]]
 function poi.log( msg )
-   shiplog.create( "poi", _("Point of Interest"), _("Neutral") )
+   shiplog.create( "poi", _("Sensor Anomaly"), _("Neutral") )
    shiplog.append( "poi", msg )
 end
 
@@ -377,7 +377,7 @@ function poi.board( _p )
       vn.jump("reward")
 
       vn.label("unlock_failed")
-      vn.na(_([[A brief '#rAUTHORIZATION DENIED#0' flashes on the screen and you hear the ship internals groan as the emergency security protocol kicks in and everything gets locked down. It looks like you won't be getting anywhere here; the ship is as good as debris. You have no option but to return dejectedly to your ship. Maybe next time.]]))
+      vn.na(_([[A brief '#rAUTHORIZATION DENIED#0' flashes on the screen, and you hear the ship internals groan as the emergency security protocol kicks in and everything gets locked down. It looks like you won't be getting anywhere here; the ship is as good as debris. You have no option but to return dejectedly to your ship. Maybe next time.]]))
       vn.func( function () failed = true end )
       vn.done()
    else
@@ -394,7 +394,7 @@ function poi.board( _p )
       end
    end
    if mem.reward.type == "credits" then
-      local msg = _([[You access the main computer and are able to login to find a hefty amount of credits. This will come in handy.]])
+      local msg = _([[You access the main computer and are able to log in to find a hefty amount of credits. This will come in handy.]])
       msg = msg .. "\n\n" .. fmt.reward(mem.reward.value)
       vn.na( msg )
       vn.func( function ()

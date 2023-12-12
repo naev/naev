@@ -7,11 +7,11 @@
 --]]
 --[[
 
-   Introduction to Point of Interest missions.
+   Introduction to Point of Interest (Sensor Anomaly) missions.
 
    We assume it is started from a derelict event.
 
-   1. Follow NPC to point of interest.
+   1. Follow NPC to sensor anomaly.
    2. NPC activates scanning outfit and is attacked by a bandit hyena.
    3. Destroy hyena and follow trails.
    4. Loot goal and get Pulse Scanner!
@@ -80,13 +80,13 @@ function create ()
    vn.na(fmt.f(_([[As the ship's operating system is starting, {shipai} materializes in front of you.]]),{shipai=tut.ainame()}))
    if not var.peek( "poi_sai_intro" ) then
       -- Worded to be a bit like the explosion messages in EVC
-      sai(_([["While you were exploring I managed to bootstrap the ship's systems. No, nothing bad could have happened. I estimated under 10% chance of triggering the ship's security self-destruct mechasim and blowing up the ship. Oh…"]]))
-      sai(_([["Anyway, it seems like my work paid off, there seems to be some data marking a point of interest. Should I download the data so that we can explore it?"]]))
+      sai(_([["While you were exploring I managed to bootstrap the ship's systems. No, nothing bad could have happened. I estimated under 10% chance of triggering the ship's security self-destruct mechanism and blowing up the ship. Oh…"]]))
+      sai(_([["Anyway, it seems like my work paid off, there seems to be some data marking a sensor anomaly. Should I download the data so that we can explore it?"]]))
       vn.func( function ()
          var.push( "poi_sai_intro", true )
       end )
    else
-      sai(_([["Hey, it looks like there is data marking a point of interest stored on the ship computer. Should I download the data so that we can explore it?"]]))
+      sai(_([["Hey, it looks like there is data marking a sensor anomaly stored on the ship computer. Should I download the data so that we can explore it?"]]))
    end
 
    vn.menu{
@@ -115,9 +115,9 @@ function create ()
    player.unboard()
 
    if accept then
-      der.addMiscLog(fmt.f(_([[You found information on a point of interest aboard a derelict in the {sys} system.]]),{sys=system.cur()}))
+      der.addMiscLog(fmt.f(_([[You found information on a sensor anomaly aboard a derelict in the {sys} system.]]),{sys=system.cur()}))
    else
-      der.addMiscLog(_([[You found information about a point of interest aboard a derelict, but decided not to download it.]]))
+      der.addMiscLog(_([[You found information about a sensor anomaly aboard a derelict, but decided not to download it.]]))
 
       -- We want to delay aborting the mission a frame so that the derelict
       -- event thinks it's running fine
@@ -131,7 +131,7 @@ function create ()
    -- Mission gets accepted in misnSetup
    poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }
 
-   misn.osdCreate( _("Point of Interest"), {
+   misn.osdCreate( _("Sensor Anomaly"), {
       _("Improve your ship's systems"),
       _("Head to the marked location"),
    } )
@@ -222,7 +222,7 @@ She cackles maniacally.
    nel(_([["You wouldn't have anything interesting I could help with? I would love an adventure!"]]))
 
    vn.menu{
-      {_([[Tell her about the point of interest]]), "poi"},
+      {_([[Tell her about the sensor anomaly]]), "poi"},
       {_([[Leave]]), "leave"},
    }
 
@@ -235,9 +235,9 @@ She cackles maniacally.
    vn.na(_([[You're not sure if that was the best idea, but it does seem like she may be able to help this time around.]]))
    vn.func( function ()
       mem.state = 1
-      misn.osdCreate( _("Point of Interest"), {
+      misn.osdCreate( _("Sensor Anomaly"), {
          fmt.f(_("Meet Nelly at {sys}"),{sys=mem.sys}),
-         _("Head to the point of interest"),
+         _("Head to the sensor anomaly"),
       } )
       misn.npcRm( npc_nel )
    end )
@@ -252,7 +252,7 @@ end
 local nelly, fct_nelly, fct_nemesis, cutscene
 function enter ()
    if cutscene then
-      lmisn.fail(_("You abandoned the point of interest and Nelly!"))
+      lmisn.fail(_("You abandoned the sensor anomaly and Nelly!"))
       return
    end
 
@@ -303,7 +303,7 @@ function enter_delay ()
    nelly:control()
    nelly:moveto( pos )
 
-   nelly:broadcast(_("There it is! Let's head towards the point of interest!"))
+   nelly:broadcast(_("There it is! Let's head towards the sensor anomaly!"))
 
    hook.timer( 1, "heartbeat" )
 end
@@ -324,7 +324,7 @@ function heartbeat ()
          hook.timer( 5, "heartbeat" )
          player.autonavReset( 5 )
 
-         misn.osdCreate( _("Point of Interest"), {
+         misn.osdCreate( _("Sensor Anomaly"), {
             _("Eliminate the hostiles"),
          } )
          nelly:setHilight(false)
@@ -399,7 +399,7 @@ function heartbeat ()
 
    elseif cutscene == 8 then
       nelly:broadcast(_("My engine stopped, you go on ahead!"))
-      misn.osdCreate( _("Point of Interest"), {
+      misn.osdCreate( _("Sensor Anomaly"), {
          _("Follow the trail"),
       } )
       return -- Done
@@ -416,7 +416,7 @@ end
 function found ()
    player.msg(_("You have found something!"),true)
 
-   misn.osdCreate( _("Point of Interest"), {
+   misn.osdCreate( _("Sensor Anomaly"), {
       _("Board the derelict"),
    } )
 
@@ -494,7 +494,7 @@ They dematerialize in a hurry.]]),
    end )
 
    vn.label("unlock_failed")
-   vn.na(_([[A brief '#rAUTHORIZATION DENIED#0' flashes on the screen and you hear the ship internals groan as the emergency security protocol kicks in and everything starts to get locked down. However, it seems to jam and stops halfway. Then the authorization prompt reappears. Looks like you get another chance!]]))
+   vn.na(_([[A brief '#rAUTHORIZATION DENIED#0' flashes on the screen, and you hear the ship internals groan as the emergency security protocol kicks in and everything starts to get locked down. However, it seems to jam and stops halfway. Then the authorization prompt reappears. Looks like you get another chance!]]))
    vn.jump("trycrack")
 
    vn.label("unlocked")
@@ -512,7 +512,7 @@ They dematerialize in a hurry.]]),
       nelly:setHilight()
       hook.pilot( nelly, "board", "board_nelly" )
 
-      misn.osdCreate( _("Point of Interest"), {
+      misn.osdCreate( _("Sensor Anomaly"), {
          _("Board Nelly's ship"),
       } )
    end )
@@ -538,9 +538,9 @@ function board_nelly ()
    nel(_([["Oh! It's even better in person! Let me check the goods."]]))
    nel(_([[She takes the crate and deftly pries it open. Suddenly everything smells really strongly of cheese and you gag a bit.
 "Let's see. This is an authentic sausage-infused matured cheese! The rumours were true!"]]))
-   nel(_([["Here, take my Pulse Scanner, I'll take the cheese. I won't have to chase points of interest for a while with this beauty!"
+   nel(_([["Here, take my Pulse Scanner, I'll take the cheese. I won't have to chase sensor anomalies for a while with this beauty!"
 She rubs the cheese to her face.]]))
-   vn.na(_([[Seeing as it doesn't seem like you'll be able to change anything and the Pulse Scanner is probably more useful than the cheese, you take the outfit and head back to your ship. Now you can explore points of interest on your own!]]))
+   vn.na(_([[Seeing as it doesn't seem like you'll be able to change anything and the Pulse Scanner is probably more useful than the cheese, you take the outfit and head back to your ship. Now you can explore sensor anomalies on your own!]]))
 
    vn.sfxVictory()
    vn.na( fmt.reward(o) )
@@ -558,7 +558,7 @@ She rubs the cheese to her face.]]))
    pilot.toggleSpawn(true) -- Re-enable spawns
    player.unboard()
 
-   poi.log(_([[Nelly helped you explore a point of interest. You found some smelly cheese and traded it with Nelly for a Pulse Scanner to be able to explore more points of interest.]]))
+   poi.log(_([[Nelly helped you explore a sensor anomaly. You found some smelly cheese and traded it with Nelly for a Pulse Scanner to be able to explore more sensor anomalies.]]))
 
    misn.finish(true) -- We're done here!
 end
