@@ -1,4 +1,5 @@
 * 0.11.0-beta.3 (unreleased)
+   * Fixed hard crash when loading when approaching certain NPCs
    * Fixed Naev not starting on Mac OS
    * Fixed beam collisions (again)
    * Fixed rare hard crash when beams are being fired
