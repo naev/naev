@@ -3078,21 +3078,21 @@ const char **player_getLicenses ()
 void player_runHooks (void)
 {
    if (player_isFlag( PLAYER_HOOK_HYPER )) {
-      player_brokeHyperspace();
       player_rmFlag( PLAYER_HOOK_HYPER );
+      player_brokeHyperspace();
    }
    if (player_isFlag( PLAYER_HOOK_JUMPIN)) {
+      player_rmFlag( PLAYER_HOOK_JUMPIN );
       pilot_outfitLOnjumpin( player.p );
       hooks_run( "jumpin" );
       hooks_run( "enter" );
       events_trigger( EVENT_TRIGGER_ENTER );
       missions_run( MIS_AVAIL_ENTER, -1, NULL, NULL );
-      player_rmFlag( PLAYER_HOOK_JUMPIN );
    }
    if (player_isFlag( PLAYER_HOOK_LAND )) {
+      player_rmFlag( PLAYER_HOOK_LAND );
       if (player.p->nav_spob >= 0)
          land( cur_system->spobs[ player.p->nav_spob ], 0 );
-      player_rmFlag( PLAYER_HOOK_LAND );
    }
 }
 
