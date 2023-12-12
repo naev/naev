@@ -289,6 +289,10 @@ static void opt_gameplay( unsigned int wid )
          NULL, NULL, naev_version(1) );
    y -= 20;
 
+   snprintf( buf, sizeof(buf), "#n%s#0%s (%s)", _("Platform Info: "), SDL_GetPlatform(), HOST );
+   window_addText( wid, x, y, cw, 20, 1, "txtPlatInfo", NULL, NULL, buf );
+   y -= 20;
+
    snprintf( buf, sizeof(buf), "#n%s#0%s"CONF_FILE, _("Config Path: "), nfile_configPath() );
    window_addText( wid, x, y, cw, 20, 1, "txtConfPath", NULL, NULL, buf );
    y -= 40;
@@ -354,17 +358,6 @@ static void opt_gameplay( unsigned int wid )
          "Debug\n"
 #endif /* DEBUG_PARANOID */
 #endif /* DEBUGGING */
-#if LINUX
-         "Linux\n"
-#elif FREEBSD
-         "FreeBSD\n"
-#elif MACOS
-         "macOS\n"
-#elif WIN32
-         "Windows\n"
-#else /* LINUX */
-         "Unknown OS\n"
-#endif /* LINUX */
 #if HAVE_LUAJIT
          "Using LuaJIT\n"
 #endif /* HAVE_LUAJIT */
