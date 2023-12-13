@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Za'lek Heavy Drone Bay">
  <general>
-  <shortname>Z. H. Drone Bay</shortname>
+  <shortname>Z. H. Drone B.</shortname>
   <slot prop="fighter_bay">weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel</license>
