@@ -266,7 +266,7 @@ function create()
          30, -- Bar X, relative to frame
           7, -- Icon X
          15, -- Sheen Y
-          6  -- Text Y
+          6, -- Text Y
       },
       small = { 22, 5, 9, 3 }, -- See above.
       ammo = {
@@ -276,8 +276,8 @@ function create()
          13, -- Sheen Y
          22, -- Refire sheen Y
           6, -- Text Y
-          2, -- Tracking icon X
-          5  -- Tracking icon Y
+          5, -- Tracking icon X
+          8, -- Tracking icon Y
       }
    }
 
