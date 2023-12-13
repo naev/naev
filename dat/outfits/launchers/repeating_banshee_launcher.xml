@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Repeating Banshee Launcher">
  <general>
+  <shortname>R. Banshee L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Heavy Weapon</license>

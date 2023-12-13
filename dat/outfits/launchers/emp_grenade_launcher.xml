@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="EMP Grenade Launcher">
  <general>
+  <shortname>EMP Grenade L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <mass>26</mass>

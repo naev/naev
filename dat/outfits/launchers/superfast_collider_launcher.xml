@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Super-Fast Collider Launcher">
  <general>
+  <shortname>SFC L.</shortname>
   <slot>weapon</slot>
   <size>large</size>
   <license>Heavy Weapon</license>
