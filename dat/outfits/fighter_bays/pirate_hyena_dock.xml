@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Pirate Hyena Dock">
  <general>
+  <shortname>P. Hyena Dock</shortname>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
   <license>Light Combat Vessel</license>

@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Razor Artillery S2">
  <general>
+  <shortname>Razor A. S2</shortname>
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
