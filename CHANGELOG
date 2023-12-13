@@ -4,6 +4,7 @@
    * Fixed Naev not starting on Mac OS
    * Fixed beam collisions (again)
    * Fixed rare hard crash when beams are being fired
+   * Buffed Targeting Conduit
    * Renamed 'Point of Interest' to 'Sensor Anomaly'
    * Double-tap activating outfits breaks stealth
    * Nerfed Sirius Fidelity so it can no longer get ludicrous levels of action speed
