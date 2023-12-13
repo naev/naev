@@ -19,6 +19,7 @@
    * Gave unicorp storm launchers a rarity of 2 and made it more available
    * Have ships be a little less spammy distressing
    * Centered tracking icon in slim GUI
+   * Show tracking icons for non-turret bolt weapons too
    * `test_of_renewal`: fixed weapon set defaults being incorrect and increased enemy damage
    * `seek_n_destroy`: missions should work properly when boarding the target
    * `flf_diversion`, `flf_rogue`: Missions should no longer be able to have ridiculously low credit rewards

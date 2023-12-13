@@ -1902,7 +1902,7 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p, const PilotOutfitSlot *s
    }
 
    /* Track. */
-   if (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
+   if (outfit_isBolt(slot->outfit)) {
       lua_pushstring(L, "track");
       if (target != NULL)
          lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.trackmin, slot->outfit->u.blt.trackmax ));
