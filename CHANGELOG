@@ -4,6 +4,7 @@
    * Fixed Naev not starting on Mac OS
    * Fixed beam collisions (again)
    * Fixed rare hard crash when beams are being fired
+   * Double-tap activating outfits breaks stealth
    * Nerfed Sirius Fidelity so it can no longer get ludicrous levels of action speed
    * Map's discovery mode shows system features
    * Removed enemies from a certain hidden faction so the player won't have standing issues with them

@@ -28,6 +28,8 @@
 #include "nlua_pilotoutfit.h"
 #include "nlua_outfit.h"
 
+static int stealth_break = 0; /**< Whether or not to break stealth. */
+
 /*
  * Prototypes.
  */
@@ -2004,10 +2006,17 @@ static void outfitLOnkeydoubletap( const Pilot *pilot, PilotOutfitSlot *po, cons
       lua_pop(naevL, 1);
    }
    pilot_outfitLunmem( env, oldmem );
+
+   /* Broke stealth. */
+   if (po->state==PILOT_OUTFIT_ON)
+      stealth_break = 1;
 }
 void pilot_outfitLOnkeydoubletap( Pilot *pilot, OutfitKey key )
 {
+   stealth_break = 0;
    pilot_outfitLRun( pilot, outfitLOnkeydoubletap, &key );
+   if (stealth_break && pilot_isFlag( pilot, PILOT_STEALTH ))
+      pilot_destealth( pilot );
 }
 
 static void outfitLOnkeyrelease( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
