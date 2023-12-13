@@ -3265,7 +3265,7 @@ static int aiL_distress( lua_State *L )
 {
    if (lua_isstring(L,1))
       snprintf( aiL_distressmsg, sizeof(aiL_distressmsg), "%s", lua_tostring(L,1) );
-   else if (lua_isnil(L,1))
+   else if (lua_isnoneornil(L,1))
       aiL_distressmsg[0] = '\0';
    else
       NLUA_INVALID_PARAMETER(L);

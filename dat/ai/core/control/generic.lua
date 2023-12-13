@@ -38,7 +38,7 @@ mem.land_planet   = true -- Should land on planets?
 mem.land_friendly = false -- Only land on friendly planets?
 mem.distress      = true -- AI distresses
 mem.distress_hit  = 0 -- Amount of faction lost on distress
-mem.distressrate  = 3 -- Number of ticks before calling for help
+mem.distressrate  = 8 -- Number of ticks before calling for help. Should default to about 16 seconds with defaults.
 mem.distressmsg   = nil -- Message when calling for help
 mem.distressmsgfunc = nil -- Function to call when distressing
 mem.weapset       = 3 -- Weapon set that should be used (tweaked based on heat).
@@ -948,7 +948,7 @@ function create_post ()
 
    -- Fighters give much smaller faction hits
    if mem.carried then
-      mem.distress_hit = mem.distress_hit * 0.1
+      mem.distress_hit = mem.distress_hit * 0.05
    end
 end
 
