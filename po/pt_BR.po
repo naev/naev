@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-13 12:42+0900\n"
+"POT-Creation-Date: 2023-12-13 23:07+0900\n"
 "PO-Revision-Date: 2023-01-30 00:36+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -4210,12 +4210,18 @@ msgstr ""
 msgid "Empire Lancelot Bay"
 msgstr "Baia de Lancelots Imperiais"
 
-#: dat/outfits/fighter_bays/empire_lancelot_bay.xml:8
+#: dat/outfits/fighter_bays/empire_lancelot_bay.xml:4
+#, fuzzy
+#| msgid "Lancelot Bay"
+msgid "E. Lancelot Bay"
+msgstr "Baia de Lancelot"
+
+#: dat/outfits/fighter_bays/empire_lancelot_bay.xml:9
 #: dat/ships/empire/empire_pacifier.xml:18
 msgid "You need at least 50 reputation with the Empire."
 msgstr "Requer 50 pontos de reputação com o Império."
 
-#: dat/outfits/fighter_bays/empire_lancelot_bay.xml:13
+#: dat/outfits/fighter_bays/empire_lancelot_bay.xml:14
 msgid ""
 "This fighter bay allows your ship to carry a pair of Empire Lancelot class "
 "fighters. It comes with all the devices required for the maintenance and "
@@ -4271,7 +4277,13 @@ msgstr ""
 msgid "Pirate Hyena Bay"
 msgstr "Baia de Hiena Pirata"
 
-#: dat/outfits/fighter_bays/pirate_hyena_bay.xml:10
+#: dat/outfits/fighter_bays/pirate_hyena_bay.xml:4
+#, fuzzy
+#| msgid "Hyena Bay"
+msgid "P. Hyena Bay"
+msgstr "Baia de Hiena"
+
+#: dat/outfits/fighter_bays/pirate_hyena_bay.xml:11
 msgid ""
 "This bay expands on the popular Pirate Hyena Dock, doubling the amount of "
 "interceptors that can be operated. It comes with all the amenities necessary "
@@ -4287,7 +4299,13 @@ msgstr ""
 msgid "Pirate Hyena Dock"
 msgstr "Doca Hiena Pirata"
 
-#: dat/outfits/fighter_bays/pirate_hyena_dock.xml:10
+#: dat/outfits/fighter_bays/pirate_hyena_dock.xml:4
+#, fuzzy
+#| msgid "Hyena Dock"
+msgid "P. Hyena Dock"
+msgstr "Doca Hiena"
+
+#: dat/outfits/fighter_bays/pirate_hyena_dock.xml:11
 msgid ""
 "This dock allows your ship to carry a pair of Pirate Hyena interceptors. It "
 "comes with all the amenities necessary for the maintenance and operation of "
@@ -4305,7 +4323,13 @@ msgstr ""
 msgid "Proteron Dalton Bay"
 msgstr "Watson Proteron"
 
-#: dat/outfits/fighter_bays/proteron_dalton_bay.xml:11
+#: dat/outfits/fighter_bays/proteron_dalton_bay.xml:4
+#, fuzzy
+#| msgid "Proteron Watson"
+msgid "P. Dalton Bay"
+msgstr "Watson Proteron"
+
+#: dat/outfits/fighter_bays/proteron_dalton_bay.xml:12
 #, fuzzy
 #| msgid ""
 #| "This fighter bay allows your ship to carry a triplet of Proteron "
@@ -4326,7 +4350,13 @@ msgstr ""
 msgid "Proteron Dalton Dock"
 msgstr "Watson Proteron"
 
-#: dat/outfits/fighter_bays/proteron_dalton_dock.xml:11
+#: dat/outfits/fighter_bays/proteron_dalton_dock.xml:4
+#, fuzzy
+#| msgid "Proteron Watson"
+msgid "P. Dalton Dock"
+msgstr "Watson Proteron"
+
+#: dat/outfits/fighter_bays/proteron_dalton_dock.xml:12
 #, fuzzy
 #| msgid ""
 #| "This fighter bay allows your ship to carry a triplet of Proteron "
@@ -4347,11 +4377,17 @@ msgstr ""
 msgid "Sirius Fidelity Bay"
 msgstr "Fidelidade Sirius"
 
-#: dat/outfits/fighter_bays/sirius_fidelity_bay.xml:8
+#: dat/outfits/fighter_bays/sirius_fidelity_bay.xml:4
+#, fuzzy
+#| msgid "Fidelity Bay"
+msgid "S. Fidelity Bay"
+msgstr "Baia de Fidelidade"
+
+#: dat/outfits/fighter_bays/sirius_fidelity_bay.xml:9
 msgid "You need at least 50 reputation with House Sirius."
 msgstr "Requer 50 pontos de reputação com a Casa Sirius."
 
-#: dat/outfits/fighter_bays/sirius_fidelity_bay.xml:13
+#: dat/outfits/fighter_bays/sirius_fidelity_bay.xml:14
 msgid ""
 "This bay launches three Sirius Fidelity fighters. Weak individually, they "
 "are stronger when working together in groups. Quite apropos, given Sirian "
@@ -4365,11 +4401,17 @@ msgstr ""
 msgid "Sirius Shaman Bay"
 msgstr "Baia de Xamã Sirius"
 
-#: dat/outfits/fighter_bays/sirius_shaman_bay.xml:8
+#: dat/outfits/fighter_bays/sirius_shaman_bay.xml:4
+#, fuzzy
+#| msgid "Sirius Shaman Bay"
+msgid "S. Shaman Bay"
+msgstr "Baia de Xamã Sirius"
+
+#: dat/outfits/fighter_bays/sirius_shaman_bay.xml:9
 msgid "You need at least 50 reputation with the Sirius."
 msgstr "Requer 50 pontos de reputação com a Casa Sirius."
 
-#: dat/outfits/fighter_bays/sirius_shaman_bay.xml:13
+#: dat/outfits/fighter_bays/sirius_shaman_bay.xml:14
 msgid ""
 "This fighter bay allows your ship to carry a pair of Sirius Shaman class "
 "bombers. It comes with all the devices required for the maintenance and "
@@ -4383,12 +4425,18 @@ msgstr ""
 msgid "Soromid Brigand Bay"
 msgstr "Baia de Salteador Soromid"
 
-#: dat/outfits/fighter_bays/soromid_brigand_bay.xml:8
+#: dat/outfits/fighter_bays/soromid_brigand_bay.xml:4
+#, fuzzy
+#| msgid "Soromid Brigand Bay"
+msgid "S. Brigand Bay"
+msgstr "Baia de Salteador Soromid"
+
+#: dat/outfits/fighter_bays/soromid_brigand_bay.xml:9
 #: dat/ships/soromid/soromid_nyx.xml:17
 msgid "You need at least 50 reputation with the Soromid."
 msgstr "Requer 50 pontos de reputação com os Soromids."
 
-#: dat/outfits/fighter_bays/soromid_brigand_bay.xml:13
+#: dat/outfits/fighter_bays/soromid_brigand_bay.xml:14
 msgid ""
 "This fighter bay allows your ship to carry a triplet of Soromid Brigand "
 "class fighters. It comes with all the devices required for the maintenance "
@@ -4402,13 +4450,19 @@ msgstr ""
 msgid "Thurion Perspicacity Bay"
 msgstr "Baia de Perspicácia Thurion"
 
-#: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:8
+#: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:4
+#, fuzzy
+#| msgid "Thurion Perspicacity Bay"
+msgid "T. Perspicacity Bay"
+msgstr "Baia de Perspicácia Thurion"
+
+#: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:9
 #: dat/ships/thurion/thurion_apprehension.xml:20
 #: dat/ships/thurion/thurion_taciturnity.xml:19
 msgid "You need at least 50 reputation with the Thurion."
 msgstr "Requer 50 pontos de reputação com os Thurion."
 
-#: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:13
+#: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:14
 msgid ""
 "This bay allows your ship to carry four Thurion Perspicacity fighters. It "
 "comes with all the devices required for the maintenance and flight of the "
@@ -4422,13 +4476,19 @@ msgstr ""
 msgid "Thurion Perspicacity Dock"
 msgstr "Doca Perspicácia Thurion"
 
-#: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:8
+#: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:4
+#, fuzzy
+#| msgid "Thurion Perspicacity Dock"
+msgid "T. Perspicacity Dock"
+msgstr "Doca Perspicácia Thurion"
+
+#: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:9
 #: dat/ships/thurion/thurion_ingenuity.xml:19
 #: dat/ships/thurion/thurion_scintillation.xml:20
 msgid "You need at least 30 reputation with the Thurion."
 msgstr "Requer 30 pontos de reputação com os Thurion."
 
-#: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:13
+#: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:14
 msgid ""
 "This dock allows your ship to carry two Thurion Perspicacity fighters. It "
 "comes with all the devices required for the maintenance and flight of the "
@@ -4441,13 +4501,19 @@ msgstr ""
 msgid "Za'lek Bomber Drone Bay"
 msgstr "Baia de Drones Bombardeiros Za'lek"
 
-#: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:8
-#: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:8
+#: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:4
+#, fuzzy
+#| msgid "Drone Bay"
+msgid "Z. B. Drone B."
+msgstr "Baia de Drones"
+
+#: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:9
+#: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:9
 #: dat/ships/zalek/zalek_demon.xml:19
 msgid "You need at least 50 reputation with House Za'lek."
 msgstr "Requer 50 pontos de reputação a Casa Za'lek."
 
-#: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:13
+#: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:14
 msgid ""
 "This bay can launch two wings of bomber drones capable of bombarding enemy "
 "capital ships into submission without the mothership ever coming into "
@@ -4463,13 +4529,17 @@ msgstr ""
 msgid "Za'lek Bomber Drone Mini Bay"
 msgstr "Mini Baia de Drones Bombardeiros Za'lek"
 
-#: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:8
-#: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:8
+#: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:4
+msgid "Z. B. Drone mB."
+msgstr ""
+
+#: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:9
+#: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:9
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:9
 msgid "You need at least 30 reputation with House Za'lek."
 msgstr "Requer 30 pontos de reputação a Casa Za'lek."
 
-#: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:13
+#: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:14
 msgid ""
 "This bay can launch a wing of bomber drones capable of bombarding enemy "
 "capital ships into submission without the mothership ever coming into "
@@ -4485,12 +4555,18 @@ msgstr ""
 msgid "Za'lek Heavy Drone Bay"
 msgstr "Baia de Drones Pesados Za'lek"
 
-#: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:8
+#: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:4
+#, fuzzy
+#| msgid "Za'lek Heavy Drone Bay"
+msgid "Z. H. Drone B."
+msgstr "Baia de Drones Pesados Za'lek"
+
+#: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:9
 #: dat/ships/zalek/zalek_mammon.xml:23
 msgid "You need at least 60 reputation with House Za'lek."
 msgstr "Requer 60 pontos de reputação a Casa Za'lek."
 
-#: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:13
+#: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:14
 msgid ""
 "This bay can launch an entire squadron of drones capable of fighting all but "
 "the biggest ships in packs. It comes with all the devices required for the "
@@ -4504,13 +4580,17 @@ msgstr ""
 msgid "Za'lek Heavy Drone Mini Bay"
 msgstr "Mini Baia de Drones Pesados Za'lek"
 
-#: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:8
+#: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:4
+msgid "Z. H. Drone mB."
+msgstr ""
+
+#: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:9
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:9
 #: dat/ships/zalek/zalek_sting.xml:19
 msgid "You need at least 40 reputation with House Za'lek."
 msgstr "Requer 40 pontos de reputação a Casa Za'lek."
 
-#: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:13
+#: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:14
 msgid ""
 "This bay can launch three heavy drones, giving the mothership a good deal of "
 "punch. It comes with all the devices required for the maintenance and flight "
@@ -4524,7 +4604,13 @@ msgstr ""
 msgid "Za'lek Light Drone Bay"
 msgstr "Mini Baia de Drones Leves Za'lek"
 
-#: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:13
+#: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:4
+#, fuzzy
+#| msgid "Za'lek Light Drone Bay"
+msgid "Z. L. Drone B."
+msgstr "Mini Baia de Drones Leves Za'lek"
+
+#: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:14
 msgid ""
 "This bay is built to launch a swarm of Za'lek Light Drones. The drones are "
 "expendable, but in numbers they excel at clearing enemy light craft. It "
@@ -4540,7 +4626,11 @@ msgstr ""
 msgid "Za'lek Light Drone Mini Bay"
 msgstr "Mini Baia de Drones Leves Za'lek"
 
-#: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:13
+#: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:4
+msgid "Z. L. Drone mB."
+msgstr ""
+
+#: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:14
 msgid ""
 "This bay is built to launch a quartet Za'lek Light Drones. The drones are "
 "expendable, but in numbers they excel at clearing enemy light craft. It "
@@ -4866,7 +4956,13 @@ msgstr ""
 msgid "Convulsion Launcher"
 msgstr "Lançador Convulsão"
 
-#: dat/outfits/launchers/convulsion_launcher.xml:10
+#: dat/outfits/launchers/convulsion_launcher.xml:4
+#, fuzzy
+#| msgid "Convulsion Launcher"
+msgid "Convulsion L."
+msgstr "Lançador Convulsão"
+
+#: dat/outfits/launchers/convulsion_launcher.xml:11
 msgid ""
 "The Thurion interceptor class missile focus on high agility rather than "
 "destructive power. While it does little damage to physical objects it is "
@@ -4880,7 +4976,13 @@ msgstr ""
 msgid "Electron Burst Cannon"
 msgstr "Canhão de Explosão de Elétrons"
 
-#: dat/outfits/launchers/electron_burst_cannon.xml:10
+#: dat/outfits/launchers/electron_burst_cannon.xml:4
+#, fuzzy
+#| msgid "Electron Burst Cannon"
+msgid "Electron Burst C."
+msgstr "Canhão de Explosão de Elétrons"
+
+#: dat/outfits/launchers/electron_burst_cannon.xml:11
 #, fuzzy
 #| msgid ""
 #| "This powerful energy weapon is built to bombard a target from great range "
@@ -4905,7 +5007,13 @@ msgstr ""
 msgid "EMP Grenade Launcher"
 msgstr "Lançador de Granada PEM"
 
-#: dat/outfits/launchers/emp_grenade_launcher.xml:9
+#: dat/outfits/launchers/emp_grenade_launcher.xml:4
+#, fuzzy
+#| msgid "EMP Grenade Launcher"
+msgid "EMP Grenade L."
+msgstr "Lançador de Granada PEM"
+
+#: dat/outfits/launchers/emp_grenade_launcher.xml:10
 #, fuzzy
 #| msgid ""
 #| "This launcher can fire EMP grenades in any direction using a unique "
@@ -4936,7 +5044,7 @@ msgstr "Lançador de Torpedos Caçador Sistemas Enygma"
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:4
 #, fuzzy
 #| msgid "Enygma Systems Huntsman Launcher"
-msgid "E. Huntsman Launcher"
+msgid "E. Huntsman L."
 msgstr "Lançador de Torpedos Caçador Sistemas Enygma"
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:11
@@ -4966,7 +5074,7 @@ msgstr "Lançador de Mísseis Ponta de Lança Sistemas Enygma"
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:4
 #, fuzzy
 #| msgid "Enygma Systems Spearhead Launcher"
-msgid "E. Spearhead Launcher"
+msgid "E. Spearhead L."
 msgstr "Lançador de Mísseis Ponta de Lança Sistemas Enygma"
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:10
@@ -4998,10 +5106,8 @@ msgid "Enygma Systems Turreted Fury Launcher"
 msgstr "Lançador Torretado de Mísseis Fúria Sistemas Enygma"
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:4
-#, fuzzy
-#| msgid "Enygma Systems Turreted Fury Launcher"
-msgid "E. Fury Turreted Launcher"
-msgstr "Lançador Torretado de Mísseis Fúria Sistemas Enygma"
+msgid "E. Fury T. L."
+msgstr ""
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:10
 msgid ""
@@ -5021,7 +5127,7 @@ msgstr "Lançador Torretado de Mísseis Caçador de Cabeças Sistemas Enygma"
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:4
 #, fuzzy
 #| msgid "TeraCom Headhunter Launcher"
-msgid "E. Headhunter Turreted Launcher"
+msgid "E. Headhunter T. L."
 msgstr "Lançador de Mísseis Caçador de Cabeças TeraCom"
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:10
@@ -5041,7 +5147,13 @@ msgstr ""
 msgid "Repeating Banshee Launcher"
 msgstr "Lançador de Repetição Banshee"
 
-#: dat/outfits/launchers/repeating_banshee_launcher.xml:11
+#: dat/outfits/launchers/repeating_banshee_launcher.xml:4
+#, fuzzy
+#| msgid "TeraCom Banshee Launcher"
+msgid "R. Banshee L."
+msgstr "Lançador Banshee TeraCom"
+
+#: dat/outfits/launchers/repeating_banshee_launcher.xml:12
 msgid ""
 "Designed by House Dvaered to equip their Ancestors, this launcher features "
 "an advanced, but very heavy reloading system that allows for an unparalleled "
@@ -5058,7 +5170,13 @@ msgstr ""
 msgid "Shatterer Launcher"
 msgstr "Lançador Estilhaçador"
 
-#: dat/outfits/launchers/shatterer_launcher.xml:10
+#: dat/outfits/launchers/shatterer_launcher.xml:4
+#, fuzzy
+#| msgid "Shatterer Launcher"
+msgid "Shatterer L."
+msgstr "Lançador Estilhaçador"
+
+#: dat/outfits/launchers/shatterer_launcher.xml:11
 msgid ""
 "This weapon, based on a fury missile, is used by the collective heavy drones "
 "as a bombardment tool against large targets. While weak individually, the "
@@ -5074,14 +5192,20 @@ msgstr ""
 msgid "Space Mine Layer"
 msgstr ""
 
-#: dat/outfits/launchers/space_mine_layer.xml:10
+#: dat/outfits/launchers/space_mine_layer.xml:4
+#, fuzzy
+#| msgid "Space Moss"
+msgid "Space Mine L."
+msgstr "Musgo Espacial"
+
+#: dat/outfits/launchers/space_mine_layer.xml:11
 msgid ""
 "The vastness of space limits the applicability of space mines in lieu of "
 "automated or manned patrols in most situations. However, when raw explosive "
 "power is mandated, nothing can surpass the destructive force of space mines."
 msgstr ""
 
-#: dat/outfits/launchers/space_mine_layer.xml:11
+#: dat/outfits/launchers/space_mine_layer.xml:12
 msgid ""
 "Space mines detonate five seconds after hostiles come within 300 units with "
 "a maximum tracking of 10,000 units and minimum tracking of 3,000 units. "
@@ -5092,7 +5216,11 @@ msgstr ""
 msgid "Super-Fast Collider Launcher"
 msgstr "Lançador Colisor Super Rápido"
 
-#: dat/outfits/launchers/superfast_collider_launcher.xml:10
+#: dat/outfits/launchers/superfast_collider_launcher.xml:4
+msgid "SFC L."
+msgstr ""
+
+#: dat/outfits/launchers/superfast_collider_launcher.xml:11
 msgid ""
 "Mostly referred by its initials SFC, the Super-Fast Collider is basically a "
 "giant Mace rocket used by Dvaered Capships in order to strike distant "
@@ -5109,7 +5237,7 @@ msgstr "Lançador Banshee TeraCom"
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:4
 #, fuzzy
 #| msgid "TeraCom Banshee Launcher"
-msgid "T. Banshee Launcher"
+msgid "T. Banshee L."
 msgstr "Lançador Banshee TeraCom"
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:11
@@ -5131,7 +5259,7 @@ msgstr "Lançador Fúria TeraCom"
 #: dat/outfits/launchers/teracom_fury_launcher.xml:4
 #, fuzzy
 #| msgid "TeraCom Fury Launcher"
-msgid "T. Fury Launcher"
+msgid "T. Fury L."
 msgstr "Lançador Fúria TeraCom"
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:10
@@ -5156,7 +5284,7 @@ msgstr "Lançador de Mísseis Caçador de Cabeças TeraCom"
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:4
 #, fuzzy
 #| msgid "TeraCom Headhunter Launcher"
-msgid "T. Headhunter Launcher"
+msgid "T. Headhunter L."
 msgstr "Lançador de Mísseis Caçador de Cabeças TeraCom"
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:10
@@ -5187,7 +5315,7 @@ msgstr "Lançador de Torpedos Imperador TeraCom"
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:4
 #, fuzzy
 #| msgid "TeraCom Imperator Launcher"
-msgid "T. Imperator Launcher"
+msgid "T. Imperator L."
 msgstr "Lançador de Torpedos Imperador TeraCom"
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:11
@@ -5213,7 +5341,7 @@ msgstr "Lançador de Foguetes Maça TeraCom"
 #: dat/outfits/launchers/teracom_mace_launcher.xml:4
 #, fuzzy
 #| msgid "TeraCom Mace Launcher"
-msgid "T. Mace Launcher"
+msgid "T. Mace L."
 msgstr "Lançador de Foguetes Maça TeraCom"
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:10
@@ -5236,7 +5364,7 @@ msgstr "Lançador de Mísseis Medusa TeraCom"
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:4
 #, fuzzy
 #| msgid "TeraCom Medusa Launcher"
-msgid "T. Medusa Launcher"
+msgid "T. Medusa L."
 msgstr "Lançador de Mísseis Medusa TeraCom"
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:10
@@ -5260,7 +5388,7 @@ msgstr "Lançador de Mísseis Vingança TeraCom"
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:4
 #, fuzzy
 #| msgid "TeraCom Vengeance Launcher"
-msgid "T. Vengeance Launcher"
+msgid "T. Vengeance L."
 msgstr "Lançador de Mísseis Vingança TeraCom"
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:10
@@ -5286,7 +5414,13 @@ msgstr ""
 msgid "Turreted Convulsion Launcher"
 msgstr "Lançador de Mísseis Turretado Convulsão"
 
-#: dat/outfits/launchers/turreted_convulsion_launcher.xml:10
+#: dat/outfits/launchers/turreted_convulsion_launcher.xml:4
+#, fuzzy
+#| msgid "Convulsion Launcher"
+msgid "T. Convulsion L."
+msgstr "Lançador Convulsão"
+
+#: dat/outfits/launchers/turreted_convulsion_launcher.xml:11
 msgid ""
 "The Thurion interceptor class missile focus on high agility rather than "
 "destructive power. While it does little damage to physical objects it is "
@@ -5309,7 +5443,7 @@ msgstr "Lançador de Torpedos César IV Unicorp"
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:4
 #, fuzzy
 #| msgid "Unicorp Caesar IV Launcher"
-msgid "U. Caesar IV Launcher"
+msgid "U. Caesar IV L."
 msgstr "Lançador de Torpedos César IV Unicorp"
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:11
@@ -5330,7 +5464,7 @@ msgstr "Lançador de Mísseis Tempestade Unicorp"
 #: dat/outfits/launchers/unicorp_storm_launcher.xml:4
 #, fuzzy
 #| msgid "Unicorp Storm Launcher"
-msgid "U. Storm Launcher"
+msgid "U. Storm L."
 msgstr "Lançador de Mísseis Tempestade Unicorp"
 
 #: dat/outfits/launchers/unicorp_storm_launcher.xml:11
@@ -5355,7 +5489,7 @@ msgstr "Lançador de Drones Caçador Za'lek"
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:4
 #, fuzzy
 #| msgid "Za'lek Hunter Launcher"
-msgid "Zl. Hunter Launcher"
+msgid "Z. Hunter L."
 msgstr "Lançador de Drones Caçador Za'lek"
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:13
@@ -5380,7 +5514,7 @@ msgstr "Lançador de Drones Ceifador Za'lek"
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:4
 #, fuzzy
 #| msgid "Za'lek Reaper Launcher"
-msgid "Zl. Reaper Launcher"
+msgid "Z. Reaper L."
 msgstr "Lançador de Drones Ceifador Za'lek"
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:13
@@ -7776,7 +7910,11 @@ msgstr ""
 msgid "Disruptor Artillery S1"
 msgstr ""
 
-#: dat/outfits/weapons/disruptor_artillery_s1.xml:10
+#: dat/outfits/weapons/disruptor_artillery_s1.xml:4
+msgid "Disruptor A. S1"
+msgstr ""
+
+#: dat/outfits/weapons/disruptor_artillery_s1.xml:11
 msgid ""
 "The Disruptor series of weapons is loosely based on the Razor series. House "
 "Sirius found it impossible to simply upscale the Razor Artillery S3, and "
@@ -7790,7 +7928,11 @@ msgstr ""
 msgid "Disruptor Artillery S2"
 msgstr ""
 
-#: dat/outfits/weapons/disruptor_artillery_s2.xml:10
+#: dat/outfits/weapons/disruptor_artillery_s2.xml:4
+msgid "Disruptor A. S2"
+msgstr ""
+
+#: dat/outfits/weapons/disruptor_artillery_s2.xml:11
 msgid ""
 "The Disruptor Artillery S2 is an upscaled version of the S1 model. Although "
 "the larger dimensions limit the applicability to destroyer-class ships and "
@@ -7801,7 +7943,11 @@ msgstr ""
 msgid "Disruptor Battery S2"
 msgstr ""
 
-#: dat/outfits/weapons/disruptor_battery_s2.xml:10
+#: dat/outfits/weapons/disruptor_battery_s2.xml:4
+msgid "Disruptor B. S2"
+msgstr ""
+
+#: dat/outfits/weapons/disruptor_battery_s2.xml:11
 msgid ""
 "House Sirius typically equips its heaviest vessels with Disruptor Battery "
 "S2s. Where the Razor Batteries are ineffective, the Disruptor Battery S2 "
@@ -8267,7 +8413,13 @@ msgstr ""
 msgid "Plasma Blaster MK1"
 msgstr "Canhão de Plasma MK1"
 
-#: dat/outfits/weapons/plasma_blaster_mk1.xml:8
+#: dat/outfits/weapons/plasma_blaster_mk1.xml:4
+#, fuzzy
+#| msgid "Plasma Blaster MK1"
+msgid "Plasma Bl. MK1"
+msgstr "Canhão de Plasma MK1"
+
+#: dat/outfits/weapons/plasma_blaster_mk1.xml:9
 #, fuzzy
 #| msgid ""
 #| "The Plasma Blaster fires superheated plasma which is very effective at "
@@ -8289,7 +8441,13 @@ msgstr ""
 msgid "Plasma Blaster MK2"
 msgstr "Disparador de Plasma MK2"
 
-#: dat/outfits/weapons/plasma_blaster_mk2.xml:9
+#: dat/outfits/weapons/plasma_blaster_mk2.xml:4
+#, fuzzy
+#| msgid "Plasma Blaster MK2"
+msgid "Plasma Bl. MK2"
+msgstr "Disparador de Plasma MK2"
+
+#: dat/outfits/weapons/plasma_blaster_mk2.xml:10
 #, fuzzy
 #| msgid ""
 #| "The Plasma Blaster MK2 is a high-powered version of the Plasma Blaster, "
@@ -8330,7 +8488,13 @@ msgstr ""
 msgid "Plasma Cluster Cannon"
 msgstr "Canhão de Plasma Aninhado"
 
-#: dat/outfits/weapons/plasma_cluster_cannon.xml:9
+#: dat/outfits/weapons/plasma_cluster_cannon.xml:4
+#, fuzzy
+#| msgid "Plasma Cannon"
+msgid "Plasma C. Cannon"
+msgstr "Canhão de Plasma"
+
+#: dat/outfits/weapons/plasma_cluster_cannon.xml:10
 msgid ""
 "The Plasma Cluster Cannon is a Soromid refinement to the standard Plasma "
 "Cannon design. By confining a massive cluster of superheated plasma into a "
@@ -8353,7 +8517,13 @@ msgstr ""
 msgid "Plasma Turret MK1"
 msgstr "Torreta de Plasma MK1"
 
-#: dat/outfits/weapons/plasma_turret_mk1.xml:9
+#: dat/outfits/weapons/plasma_turret_mk1.xml:4
+#, fuzzy
+#| msgid "Plasma Turret MK1"
+msgid "Plasma T. MK1"
+msgstr "Torreta de Plasma MK1"
+
+#: dat/outfits/weapons/plasma_turret_mk1.xml:10
 msgid ""
 "The plasma turret essentially takes a plasma blaster and mounts it on a "
 "turret. Its short range makes it ill-suited for defence, so it is not "
@@ -8370,7 +8540,13 @@ msgstr ""
 msgid "Plasma Turret MK2"
 msgstr "Torreta de Plasma MK2"
 
-#: dat/outfits/weapons/plasma_turret_mk2.xml:9
+#: dat/outfits/weapons/plasma_turret_mk2.xml:4
+#, fuzzy
+#| msgid "Plasma Turret MK2"
+msgid "Plasma T. MK2"
+msgstr "Torreta de Plasma MK2"
+
+#: dat/outfits/weapons/plasma_turret_mk2.xml:10
 msgid ""
 "The mark 2 plasma turret isn't especially impressive compared to other "
 "medium-size turrets, but it is sometimes favoured by corvettes for its "
@@ -8445,7 +8621,13 @@ msgstr ""
 msgid "Razor Artillery S1"
 msgstr ""
 
-#: dat/outfits/weapons/razor_artillery_s1.xml:8
+#: dat/outfits/weapons/razor_artillery_s1.xml:4
+#, fuzzy
+#| msgid "Razor MK1"
+msgid "Razor A. S1"
+msgstr "Navalha MK1"
+
+#: dat/outfits/weapons/razor_artillery_s1.xml:9
 msgid ""
 "Designed and employed by House Sirius, the Razor Artillery S1 fires "
 "concentrated pockets of high energy ions that are very effective at draining "
@@ -8461,7 +8643,13 @@ msgstr ""
 msgid "Razor Artillery S2"
 msgstr ""
 
-#: dat/outfits/weapons/razor_artillery_s2.xml:9
+#: dat/outfits/weapons/razor_artillery_s2.xml:4
+#, fuzzy
+#| msgid "Razor MK2"
+msgid "Razor A. S2"
+msgstr "Navalha MK2"
+
+#: dat/outfits/weapons/razor_artillery_s2.xml:10
 #, fuzzy
 #| msgid ""
 #| "The upgraded civilian Razor model packs increased overall effectiveness "
@@ -8486,7 +8674,13 @@ msgstr ""
 msgid "Razor Artillery S3"
 msgstr ""
 
-#: dat/outfits/weapons/razor_artillery_s3.xml:9
+#: dat/outfits/weapons/razor_artillery_s3.xml:4
+#, fuzzy
+#| msgid "Razor MK1"
+msgid "Razor A. S3"
+msgstr "Navalha MK1"
+
+#: dat/outfits/weapons/razor_artillery_s3.xml:10
 #, fuzzy
 #| msgid ""
 #| "The Slicer is a high-powered version of the Razor, excellent at stripping "
@@ -8508,7 +8702,13 @@ msgstr ""
 msgid "Razor Battery S2"
 msgstr "Bateria I"
 
-#: dat/outfits/weapons/razor_battery_s2.xml:9
+#: dat/outfits/weapons/razor_battery_s2.xml:4
+#, fuzzy
+#| msgid "Battery I"
+msgid "Razor B. S2"
+msgstr "Bateria I"
+
+#: dat/outfits/weapons/razor_battery_s2.xml:10
 msgid ""
 "Being the only turreted version of the Razor Artillery series, the Razor "
 "Battery S2 sees a lot of application on medium escort ships. The strong "
@@ -30073,7 +30273,7 @@ msgstr ""
 #. Only land on friendly planets?
 #. AI distresses
 #. Amount of faction lost on distress
-#. Number of ticks before calling for help
+#. Number of ticks before calling for help. Should default to about 16 seconds with defaults.
 #. Message when calling for help
 #. Function to call when distressing
 #. Weapon set that should be used (tweaked based on heat).
@@ -127173,6 +127373,16 @@ msgid "Immanis Cortex III"
 msgstr ""
 
 #, fuzzy
+#~| msgid "Enygma Systems Turreted Fury Launcher"
+#~ msgid "E. Fury Turreted Launcher"
+#~ msgstr "Lançador Torretado de Mísseis Fúria Sistemas Enygma"
+
+#, fuzzy
+#~| msgid "TeraCom Headhunter Launcher"
+#~ msgid "E. Headhunter Turreted Launcher"
+#~ msgstr "Lançador de Mísseis Caçador de Cabeças TeraCom"
+
+#, fuzzy
 #~| msgid ""
 #~| "Applies 7 seconds of antimatter taint upon hit, which applies a 10% "
 #~| "speed-down to the ship."
@@ -127189,9 +127399,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Como a Crânio e Ossos não tem tecnologia para criar novas bionaves do "
 #~ "zero, eles recuperam naves Soromid roubadas e bionaves selvagens raptadas."
-
-#~ msgid "Fidelity Bay"
-#~ msgstr "Baia de Fidelidade"
 
 #~ msgid "Heavy Razor Turret"
 #~ msgstr "Torreta Navalha Pesada"
@@ -127223,9 +127430,6 @@ msgstr ""
 #~ "energia extremamente grande a torne de certa forma útil para a destruir "
 #~ "de caças inimigos."
 
-#~ msgid "Razor MK1"
-#~ msgstr "Navalha MK1"
-
 #~ msgid ""
 #~ "Razors fire concentrated pockets of high energy ions that are very "
 #~ "effective at draining shields, but have only limited effect on a ship's "
@@ -127238,9 +127442,6 @@ msgstr ""
 #~ "blindagens de naves. Assim, Navalhas são melhor usadas na fase inicial de "
 #~ "um combate, e trocadas por outras armas quando os escudos já estiverem "
 #~ "desativados."
-
-#~ msgid "Razor MK2"
-#~ msgstr "Navalha MK2"
 
 #~ msgid "Razor Turret MK1"
 #~ msgstr "Torre Navalha MK1"
