@@ -30,6 +30,7 @@
    * `ec00`: changed it so you can't hail the collective drone
    * `escort`: fixed pilots not flying in formation
    * Fixed many typos
+   * Translation updates
 
 * 0.11.0-beta.2
    * Slim GUI now shows activated outfits and all weapons all the time
