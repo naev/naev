@@ -1864,7 +1864,7 @@ int weapon_inArc( const Outfit *o, const Pilot *parent, const Target *target, co
 {
    if (outfit_isTurret(o))
       return 1;
-   else if (o->type==OUTFIT_TYPE_LAUNCHER) {
+   else if ((o->type==OUTFIT_TYPE_LAUNCHER) && (o->u.lau.ai > 0)) {
       /* TODO reduce code duplication here. */
       const vec2 *target_pos;
       double x, y, ang, off;
