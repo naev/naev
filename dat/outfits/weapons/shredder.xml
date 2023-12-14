@@ -18,16 +18,16 @@
   <spfx_armour>ExpS</spfx_armour>
   <delay>0.3</delay>
   <speed>500</speed>
-  <range blowup="armour">1200</range>
-  <energy>7.5</energy>
+  <range blowup="armour">1250</range>
+  <energy>8.1</energy>
   <heatup>30</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>kinetic</type>
-   <penetrate>24</penetrate>
-   <physical>9</physical>
+   <penetrate>28</penetrate>
+   <physical>10.5</physical>
   </damage>
  </specific>
  <tags>

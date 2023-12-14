@@ -3,7 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>medium</size>
-  <mass>26</mass>
+  <mass>27</mass>
   <license>Heavy Weapon</license>
   <rarity>1</rarity>
   <price>73000</price>
@@ -19,15 +19,15 @@
   <spfx_armour>ExpS</spfx_armour>
   <delay>0.25</delay>
   <speed>500</speed>
-  <range blowup="armour">1200</range>
-  <energy>7.5</energy>
+  <range blowup="armour">1100</range>
+  <energy>8</energy>
   <heatup>50</heatup>
   <trackmin>1000</trackmin>
   <trackmax>4000</trackmax>
   <damage>
    <type>kinetic</type>
-   <penetrate>36</penetrate>
-   <physical>8</physical>
+   <penetrate>39</penetrate>
+   <physical>8.5</physical>
   </damage>
  </specific>
  <tags>

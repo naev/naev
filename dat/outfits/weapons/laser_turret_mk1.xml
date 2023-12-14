@@ -16,7 +16,7 @@
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
   <delay>0.8</delay>
-  <speed>1050</speed>
+  <speed>1100</speed>
   <range>900</range>
   <falloff>750</falloff>
   <energy>8</energy>
@@ -25,8 +25,8 @@
   <trackmax>3600</trackmax>
   <damage>
    <type>energy</type>
-   <penetrate>6</penetrate>
-   <physical>17</physical>
+   <penetrate>10</penetrate>
+   <physical>20</physical>
   </damage>
  </specific>
 </outfit>

@@ -3,7 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>large</size>
-  <mass>72</mass>
+  <mass>85</mass>
   <license>Heavy Weapon</license>
   <rarity>1</rarity>
   <price>720000</price>
@@ -17,7 +17,7 @@
   <spfx_shield>ShiM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
   <delay>1.7</delay>
-  <speed>650</speed>
+  <speed>700</speed>
   <range>2200</range>
   <falloff>1600</falloff>
   <gfx_end>massL-end.png</gfx_end>
@@ -28,7 +28,7 @@
   <damage>
    <type>kinetic</type>
    <penetrate>90</penetrate>
-   <physical>76</physical>
+   <physical>80</physical>
   </damage>
  </specific>
  <tags>

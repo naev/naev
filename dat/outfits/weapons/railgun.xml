@@ -30,7 +30,7 @@
   <damage>
    <type>kinetic</type>
    <penetrate>72</penetrate>
-   <physical>76</physical>
+   <physical>68</physical>
   </damage>
  </specific>
  <tags>

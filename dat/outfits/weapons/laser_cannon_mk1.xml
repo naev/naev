@@ -22,10 +22,10 @@
   <heatup>40</heatup>
   <trackmin>0</trackmin>
   <trackmax>2400</trackmax>
-  <swivel>22</swivel>
+  <swivel>18</swivel>
   <damage>
    <type>energy</type>
-   <penetrate>0</penetrate>
+   <penetrate>1</penetrate>
    <physical>17</physical>
   </damage>
  </specific>

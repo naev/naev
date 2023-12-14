@@ -24,7 +24,7 @@
   <heatup>35</heatup>
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>
-  <swivel>22</swivel>
+  <swivel>18</swivel>
   <damage>
    <type>energy</type>
    <penetrate>12</penetrate>

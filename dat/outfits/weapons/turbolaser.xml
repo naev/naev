@@ -17,7 +17,7 @@
   <spfx_shield>ShiM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
   <delay>1.45</delay>
-  <speed>1000</speed>
+  <speed>1300</speed>
   <range>2400</range>
   <falloff>1800</falloff>
   <gfx_end>laser3L.png</gfx_end>
@@ -28,7 +28,7 @@
   <damage>
    <type>energy</type>
    <penetrate>80</penetrate>
-   <physical>80</physical>
+   <physical>70</physical>
   </damage>
  </specific>
 </outfit>

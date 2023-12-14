@@ -19,15 +19,15 @@
   <delay>0.25</delay>
   <speed>500</speed>
   <range blowup="armour">1100</range>
-  <energy>2.5</energy>
+  <energy>2.7</energy>
   <heatup>35</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>kinetic</type>
-   <penetrate>12</penetrate>
-   <physical>6</physical>
+   <penetrate>14</penetrate>
+   <physical>7</physical>
   </damage>
  </specific>
  <tags>

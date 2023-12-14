@@ -17,21 +17,24 @@
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS2</spfx_armour>
-  <delay>1.4</delay>
+  <delay>2.2</delay>
   <speed>700</speed>
-  <range>1750</range>
-  <falloff>1400</falloff>
+  <range>1200</range>
+  <falloff>1000</falloff>
   <gfx_end>plasma2-end.png</gfx_end>
-  <energy>42</energy>
+  <energy>66</energy>
   <heatup>50</heatup>
   <trackmin>1000</trackmin>
   <trackmax>6000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>plasma</type>
-   <penetrate>48</penetrate>
-   <physical>36</physical>
+   <penetrate>42</penetrate>
+   <physical>17</physical>
   </damage>
+  <shots>4</shots>
+  <dispersion>3</dispersion>
+  <speed_dispersion>30</speed_dispersion>
  </specific>
  <tags>
   <tag>soromid</tag>

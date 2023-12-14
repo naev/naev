@@ -16,7 +16,7 @@
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
   <delay>1.2</delay>
-  <speed>1150</speed>
+  <speed>1200</speed>
   <range>1100</range>
   <falloff>950</falloff>
   <gfx_end>ripperS-end.png</gfx_end>
@@ -24,7 +24,7 @@
   <heatup>30</heatup>
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>
-  <swivel>22</swivel>
+  <swivel>18</swivel>
   <damage>
    <type>energy</type>
    <penetrate>24</penetrate>

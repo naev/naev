@@ -16,7 +16,7 @@
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
   <delay>1.0</delay>
-  <speed>1050</speed>
+  <speed>1100</speed>
   <range>1100</range>
   <falloff>950</falloff>
   <gfx_end>laser1M.png</gfx_end>
