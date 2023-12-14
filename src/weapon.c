@@ -1866,6 +1866,8 @@ int weapon_inArc( const Outfit *o, const Pilot *parent, const Target *target, co
       return 1;
    else {
       double swivel = outfit_swivel(o);
+      if (o->type==OUTFIT_TYPE_LAUNCHER)
+         swivel = MAX( swivel, o->u.lau.arc );
       double rdir = weapon_aimTurretAngle( o, parent, target, pos, vel, dir, time );
       double off = angle_diff( rdir, dir );
       if (FABS(off) <= swivel)
