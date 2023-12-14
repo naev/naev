@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.0-beta.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-13 23:07+0900\n"
+"POT-Creation-Date: 2023-12-14 19:56+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7547,7 +7547,7 @@ msgstr ""
 #: src/gui.c:1558 src/map.c:599 src/map.c:605 src/map.c:611 src/map.c:617
 #: src/map.c:623 src/map.c:629 src/map.c:1932 src/map.c:2225
 #: src/map_overlay.c:256 src/map_system.c:490 src/outfit.c:350 src/outfit.c:369
-#: src/outfit.c:998 src/plugin.c:154 src/plugin.c:156 src/plugin.c:158
+#: src/outfit.c:1010 src/plugin.c:154 src/plugin.c:156 src/plugin.c:158
 #: src/ship.c:226
 #, c-format
 msgid "Unknown"
@@ -26439,10 +26439,11 @@ msgstr ""
 #. State 1: Do nothing (just in case the player kills bounty hunters and goes off somewhere)
 #. Should be taking off from the Lab
 #. Spawn
-#: dat/ai/collective.lua:10 dat/ai/drone_miner.lua:10 dat/ai/dummy.lua:10
+#: dat/ai/collective.lua:11 dat/ai/drone_miner.lua:10 dat/ai/dummy.lua:10
 #: dat/ai/feralbioship.lua:10 dat/events/sirius/test_of_devotion.lua:122
 #: dat/events/sirius/test_of_renewal.lua:108
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:297
+#: dat/missions/empire/collective/ec00.lua:117
 #: dat/missions/minerva/kex5.lua:294 dat/missions/tutorial/nelly02.lua:248
 msgid "No response."
 msgstr ""
@@ -42701,7 +42702,7 @@ msgstr ""
 msgid "Brake when heading to a position"
 msgstr ""
 
-#: dat/events/settings.lua:132 src/outfit.c:969 src/outfit.c:996
+#: dat/events/settings.lua:132 src/outfit.c:981 src/outfit.c:1008
 msgid "GUI"
 msgstr ""
 
@@ -42976,14 +42977,14 @@ msgstr ""
 #: dat/events/shipai.lua:154
 msgid ""
 "\"Asteroid mining can be a lucrative business. Asteroid field scan be found "
-"throughout the galaxy in many different shapes and sizes. They can be a good "
-"source of many precious materials that fetch a good price on the commodity "
-"exchange. However, not all asteroid fields are made equal. In general, the "
-"more easily accessible asteroid fields are generally over-mined, leading to "
-"low yields. On the other hand, hard to access asteroid fields in dangerous "
-"areas have not yet succumbed to the hordes of ravenous mining fleets. If you "
-"find a good mining spot, I recommend you add a note on the #bSystem Map#0 so "
-"you don't forget.\""
+"throughout the galaxy in many shapes and sizes. They can be a good source of "
+"many precious materials that fetch a good price on the commodity exchange. "
+"However, not all asteroid fields are made equal. In general, the more easily "
+"accessible asteroid fields are generally over-mined, leading to low yields. "
+"On the other hand, hard to access asteroid fields in dangerous areas have "
+"not yet succumbed to the hordes of ravenous mining fleets. If you find a "
+"good mining spot, I recommend you add a note on the #bSystem Map#0 so you "
+"don't forget.\""
 msgstr ""
 
 #: dat/events/shipai.lua:155
@@ -43076,12 +43077,12 @@ msgstr ""
 msgid ""
 "\"It is important to note that fleet capacity depends exclusively on the "
 "ship, and is not affected by normal outfits. Make sure to equip your ships "
-"as best as possible!\""
+"as good as possible!\""
 msgstr ""
 
 #: dat/events/shipai.lua:179
 msgid ""
-"\"Your additional ships will behave as escorts and you can give them "
+"\"Your additional ships will behave as escorts, and you can give them "
 "commands to perform actions just like deployed fighters. Furthermore, they "
 "are all insured so even if you lose any ships, they will respawn when you "
 "land.\""
@@ -43098,7 +43099,7 @@ msgstr ""
 msgid ""
 "\"When out of fuel, if there is an inhabitable planet you can land to refuel "
 "for free. However, if you want to save time or have no other option, it is "
-"possible to hail passing ships to get refueled, or even take fuel by force "
+"possible to hail passing ships to get refuelled, or even take fuel by force "
 "by boarding ships. Bribing hostile ships can also encourage them to give you "
 "fuel afterwards.\""
 msgstr ""
@@ -43113,11 +43114,11 @@ msgstr ""
 #: dat/events/shipai.lua:209
 msgid ""
 "\"When your ship or weapons get very hot, it is usually a good idea to "
-"perform an active cooldown when it is safe to do so. You can actively "
-"cooldown with {cooldownkey} or double-tapping {reversekey}. The amount it "
-"takes to cooldown depends on the size of the ship, but when done, not only "
-"will your ship be cool, it will also have replenished all ammunition and "
-"fighters.\""
+"perform an active cooldown when it is safe to do so. You can actively cool "
+"down with {cooldownkey} or double-tapping {reversekey}. The amount it takes "
+"to cooldown depends on the size of the ship, but when done, not only will "
+"your ship be cool, it will also have replenished all ammunition and fighters."
+"\""
 msgstr ""
 
 #: dat/events/shipai.lua:215
@@ -43135,9 +43136,9 @@ msgstr ""
 msgid ""
 "\"In general, ships are unable to regenerate armour damage in space. If you "
 "take heavy armour damage, it is best to try to find a safe place to land to "
-"get fully repaired. However, there exists many different outfits that allow "
-"you to repair your ship, and some ships have built-in  armour regeneration "
-"allowing you to survive longer in space.\""
+"get fully repaired. However, there exists many outfits that allow you to "
+"repair your ship, and some ships have built-in armour regeneration allowing "
+"you to survive longer in space.\""
 msgstr ""
 
 #: dat/events/shipai.lua:230
@@ -46182,7 +46183,7 @@ msgstr ""
 #. Tutorial Event
 #.
 #. --
-#: dat/events/tutorial/tut_land.lua:35
+#: dat/events/tutorial/tut_land.lua:36
 msgid ""
 "\"Looks like you just bought an #oAfterburner#0 outfit. Afterburners are "
 "active outfits that you can only equip one of on any specific ship. You can "
@@ -46192,28 +46193,29 @@ msgid ""
 "afterburners only when necessary.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:45
+#. launchers
+#: dat/events/tutorial/tut_land.lua:47
 msgid ""
 "\"Looks like you just acquired your first #oLauncher#0 outfit. Launchers are "
 "ammo-based weapons that can have target tracking abilities. Seeking "
 "launchers have two important properties: '#oLock-on#0' and '#oIn-Flight "
 "Calibration#0'. Lock-on determines how many seconds it takes to be able to "
-"launch rockets after getting a new target. It is modulated depending if the "
-"target's '#oSignature#0' is lower than the '#oOptimal Tracking#0'.\""
+"launch rockets after getting a new target. It is modulated depending on if "
+"the target's '#oSignature#0' is lower than the '#oOptimal Tracking#0'.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:46
+#: dat/events/tutorial/tut_land.lua:48
 msgid ""
 "\"'#oIn-Flight Calibration#0' is the amount of time it takes for the rocket "
 "after being launched to start tracking the target. When not locked-on it "
 "will fly in a straight line and damage all hostiles they encounter, however, "
 "once locked-on they will only damage the target unless jammed. In-Flight "
 "Calibration is not affected by the target's signature, and is visualized by "
-"a coloured circle around the outfit that shrinks as the calibration "
-"finishes..\""
+"a coloured circle around the outfit that shrinks as the calibration finishes."
+"\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:47
+#: dat/events/tutorial/tut_land.lua:49
 msgid ""
 "\"That leads us to the last important concept: jamming! Seeking rockets can "
 "be jammed depending on whether or not the target has jamming equipment, and "
@@ -46224,7 +46226,7 @@ msgid ""
 "encounter.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:48
+#: dat/events/tutorial/tut_land.lua:50
 msgid ""
 "\"Finally, the ammo of launchers regenerates over time: there is no need to "
 "buy ammunition. By either performing a cooldown with {cooldownkey} or double-"
@@ -46233,7 +46235,8 @@ msgid ""
 "master them. Please try them out with different configurations!\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:58
+#. fighter bays
+#: dat/events/tutorial/tut_land.lua:61
 msgid ""
 "\"Looks like you are moving up in the world with your first #oFighter Bay#0 "
 "outfit! As you can expect, fighter bays let you launch and control "
@@ -46244,7 +46247,7 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:59
+#: dat/events/tutorial/tut_land.lua:62
 msgid ""
 "\"Besides giving direct orders to your escorts, you can also control how "
 "they behave by using the 'Escort AI' button accessible from the #oMain#0 tab "
@@ -46254,17 +46257,18 @@ msgid ""
 "to give your escorts!\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:61
+#: dat/events/tutorial/tut_land.lua:64
 msgid ""
 "\"Like ammunition in launchers, lost fighters will regenerate slowly over "
-"time and you can restock them either by performing a cooldown operation with "
-"{cooldownkey} or double-tapping {reversekey}, or by landing on a planet or "
-"station. You can either fly around with deployed fighters or keep them "
+"time, and you can restock them either by performing a cooldown operation "
+"with {cooldownkey} or double-tapping {reversekey}, or by landing on a planet "
+"or station. You can either fly around with deployed fighters or keep them "
 "inside your ship and only deploy as necessary. You should try to see "
 "whatever works best for you!\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:71
+#. turrets
+#: dat/events/tutorial/tut_land.lua:75
 msgid ""
 "\"Is that a #oTurret#0 weapon you just bought? Almost all weapons have built-"
 "in tracking capabilities, however, non-turret weapons have very limited "
@@ -46273,7 +46277,7 @@ msgid ""
 "can hit enemy ships from all over!\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:72
+#: dat/events/tutorial/tut_land.lua:76
 msgid ""
 "\"Like non-turret weapons, turret weapons must be fired manually. When "
 "outfitting a ship with both turrets and non-turrets at the same time, it may "
@@ -46283,7 +46287,27 @@ msgid ""
 "what works best for you!\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:83
+#. pointdefense
+#: dat/events/tutorial/tut_land.lua:88
+msgid ""
+"\"Whoa, is that a #oPoint Defense#0 weapon you just acquired? When "
+"activated, #oPoint Defense#0 will target nearby incoming missiles and try to "
+"destroy them. Also, if they have tracking, they will also be able to track "
+"ships with a signature less than the tracking value. They can be very useful "
+"for keeping ships alive when being pummelled with fighters and ordinances.\""
+msgstr ""
+
+#: dat/events/tutorial/tut_land.lua:89
+msgid ""
+"\"To make the best use of #oPoint Defense#0, you should set them to a toggle "
+"weapon group from the #bInfo#0 menu accessible with {infokey}. When you "
+"activate the toggle weapon set with the #oPoint Defense#0, it will "
+"automatically shoot anything it can target in range. No need for any "
+"micromanagement. Almost like they make me obsolete... wait no! I'm still "
+"important! Don't get rid of me!\""
+msgstr ""
+
+#: dat/events/tutorial/tut_land.lua:100
 msgid ""
 "\"If you want to rake in the credits doing larger missions or commodities "
 "trades, the #oLarge Civilian Vessel License#0 is your first step! Plan your "
@@ -46291,7 +46315,7 @@ msgid ""
 "very limited.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:89
+#: dat/events/tutorial/tut_land.lua:106
 msgid ""
 "\"Oh, is that a #oMedium Weapon License#0? This will open the possibility of "
 "equipping larger weapons like turrets or launchers. Turrets can rotate any "
@@ -46301,7 +46325,7 @@ msgid ""
 "greatly increase your combat ability.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:90
+#: dat/events/tutorial/tut_land.lua:107
 msgid ""
 "\"Many of the newer weapons you'll now have access to have higher CPU "
 "requirements. To increase your CPU, you have to equip better #oCore "
@@ -46311,7 +46335,7 @@ msgid ""
 "careful about increasing your mass.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:96
+#: dat/events/tutorial/tut_land.lua:113
 msgid ""
 "\"Looks like you're finally ready to take on the big guns. #oHeavy Weapons "
 "License#0 will allow you to buy the largest and most powerful of weaponry. "
@@ -46320,7 +46344,7 @@ msgid ""
 "much longer range and higher firepower.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:97
+#: dat/events/tutorial/tut_land.lua:114
 msgid ""
 "\"One thing you will have to watch out is that heavy weapons tend to have "
 "large minimum tracking values and optimal tracking values. Ships with "
@@ -46331,7 +46355,7 @@ msgid ""
 "fighter bays or lighter weapons!\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:103
+#: dat/events/tutorial/tut_land.lua:120
 msgid ""
 "\"It looks like you can finally get your hands on combat vessels with the "
 "#oLight Combat Vessel License#0! Combat vessels differ from civilian vessels "
@@ -46341,16 +46365,16 @@ msgid ""
 "#oFighters#0, #oBombers#0, and #oInterceptors#0.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:104
+#: dat/events/tutorial/tut_land.lua:121
 msgid ""
 "\"#oInterceptors#0 are the lightest of the three with limited slots, but low "
-"mass and high maneuverability. #oFighters#0 and #oBombers#0 are heavier but "
+"mass and high manoeuvrability. #oFighters#0 and #oBombers#0 are heavier but "
 "still very agile, with fighters specialized in closer combat with small "
 "craft, while bombers are known to carry torpedoes that can ravage even the "
 "largest of battleships.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:105
+#: dat/events/tutorial/tut_land.lua:122
 msgid ""
 "\"To make the most of combat ships, it is recommended you look at their "
 "strengths and weaknesses. Equipping only forward weapons on a #oBomber#0-"
@@ -46360,7 +46384,7 @@ msgid ""
 "works well for you.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:111
+#: dat/events/tutorial/tut_land.lua:128
 msgid ""
 "\"Looks like you've outgrown the #oLight Combat Vessel License#0. With the "
 "#oMedium Combat Vessel License#0 you'll get access to #oCorvette#0- and "
@@ -46369,16 +46393,16 @@ msgid ""
 "destroyers tend to be slower with much more firepower.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:112
+#: dat/events/tutorial/tut_land.lua:129
 msgid ""
 "\"Medium combat vessels tend to have a good balance between firepower and "
 "utility, being able to both perform stealth operations and frontal assaults. "
 "As they also have more slots, they can be configured more extensively to "
-"play different roles. You should experiment and see what what works well for "
-"you.\""
+"play different roles. You should experiment and see what works well for you."
+"\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:118
+#: dat/events/tutorial/tut_land.lua:135
 msgid ""
 "\"Looks like you finally got your hands on the #oHeavy Combat Vessel "
 "License#0! This will allow you to pilot the largest of the combat ships, "
@@ -46387,7 +46411,7 @@ msgid ""
 "being able to lay devastating barrages to lay waste to enemy forces.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:119
+#: dat/events/tutorial/tut_land.lua:136
 msgid ""
 "\"#oCruisers#0 are the smallest of the three categories, but also the lowest "
 "mass and highest manoeuvrability. They can be seen more or less as a heavier "
@@ -46397,17 +46421,17 @@ msgid ""
 "combat for them while maximizing survivability.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:120
+#: dat/events/tutorial/tut_land.lua:137
 msgid ""
 "\"Flying a heavy combat vessel is very different from other classes of "
 "ships. Given their size, usually time seems to pass at a faster rate than "
 "smaller ships which can be seen by their '#oTime dilation#0' value. "
-"Furthermore, given their size, stealth becomes difficult and they can be "
+"Furthermore, given their size, stealth becomes difficult, and they can be "
 "vulnerable to volleys of torpedoes. Escorts and fighter bays can help them "
 "deal with enemy bombers.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:126
+#: dat/events/tutorial/tut_land.lua:143
 msgid ""
 "\"It looks like you got a #oMercenary License#0. This will enable bounty "
 "collection missions that should start appearing in your mission computer "
@@ -46417,9 +46441,9 @@ msgid ""
 "your ship is properly equipped for combat.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:152
+#: dat/events/tutorial/tut_land.lua:169
 msgid ""
-"\"Congratulations on buying a brand new {ship}! Unless you trade-in your "
+"\"Congratulations on buying a brand new {ship}! Unless you trade in your "
 "ship, when you buy a new ship it is added to your available ships. Usually, "
 "ships come with only core outfits equipped, so you should head over to the "
 "#oEquipment#0 window to deck the ship out and swap it with your current one "
@@ -46429,24 +46453,24 @@ msgid ""
 "need is a great way to get things done.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:153
+#: dat/events/tutorial/tut_land.lua:170
 msgid ""
 "\"You also don't have to worry about your ship AI changing, I am "
 "automatically transferred between your ships. You can't get away from me, ha "
 "ha.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:163
+#: dat/events/tutorial/tut_land.lua:180
 msgid ""
-"\"Wow! Looks like you acquired a bioship! My data banks show that they grown "
-"on top of synthetic structures and have varying degrees of sentience. "
+"\"Wow! Looks like you acquired a bioship! My data banks show that they are "
+"grown on top of synthetic structures and have varying degrees of sentience. "
 "However, because of this they start at lower stages and have to gain "
 "experience to reach their full potential. As bioships unlock their "
 "potential, you will be able to customize and modify them at will. However, "
 "be aware that the choices that you make are not easy to reverse.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:164
+#: dat/events/tutorial/tut_land.lua:181
 msgid ""
 "\"You can see the status of your current bioship from the #bInfo menu#0, "
 "which you can access with #b{infokey}#0. As your bioship gains experience, "
@@ -46455,12 +46479,12 @@ msgid ""
 "easy to change them once they have been chosen.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:165
+#: dat/events/tutorial/tut_land.lua:182
 msgid ""
 "I've never been run in a bioship before. I wonder what it will be like?\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:175
+#: dat/events/tutorial/tut_land.lua:192
 msgid ""
 "\"Whoa, it looks like you just acquired your first large ship. You may have "
 "noticed by now, but ships have a '#oTime Constant#0' rating, which indicates "
@@ -46472,10 +46496,10 @@ msgid ""
 "the ship feel less cumbersome to fly.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:176
+#: dat/events/tutorial/tut_land.lua:193
 msgid ""
 "\"In general, due to the low manoeuvrability of large ships, you should "
-"consider using turret weapons and/or fighter bays for self defence. They "
+"consider using turret weapons and/or fighter bays for self-defence. They "
 "allow you to worry less about aiming and more about getting jobs done. "
 "Turrets rely heavily on their tracking values. '#oMinimum Tracking#0' refers "
 "to the '#oSignature#0' value of a target ship at which the turret will not "
@@ -58055,11 +58079,11 @@ msgid "Collective Drone"
 msgstr ""
 
 #. update mission
-#: dat/missions/empire/collective/ec00.lua:125
+#: dat/missions/empire/collective/ec00.lua:128
 msgid "Drone spotted!"
 msgstr ""
 
-#: dat/missions/empire/collective/ec00.lua:126
+#: dat/missions/empire/collective/ec00.lua:129
 #: dat/missions/empire/collective/ec01.lua:66
 #: dat/missions/empire/collective/ec02.lua:112
 msgid "Travel back to {pnt} in {sys}"
@@ -58071,7 +58095,7 @@ msgstr ""
 #. Handles arrival back to base
 #. Successfully killed
 #. More flavour text
-#: dat/missions/empire/collective/ec00.lua:135
+#: dat/missions/empire/collective/ec00.lua:138
 #: dat/missions/empire/collective/ec01.lua:121
 #: dat/missions/empire/collective/ec02.lua:89
 #: dat/missions/empire/collective/ec03.lua:121
@@ -58087,7 +58111,7 @@ msgstr ""
 msgid "Mission Accomplished"
 msgstr ""
 
-#: dat/missions/empire/collective/ec00.lua:135
+#: dat/missions/empire/collective/ec00.lua:138
 msgid ""
 "After landing, you head to the Empire military headquarters and find Lt. "
 "Commander Dimitri there.\n"
@@ -58097,18 +58121,18 @@ msgid ""
 "Collective.\""
 msgstr ""
 
-#: dat/missions/empire/collective/ec00.lua:139
+#: dat/missions/empire/collective/ec00.lua:142
 msgid ""
 "You scouted out a Collective drone on behalf of the Empire. Lt. Commander "
 "Dimitri told you to report back to the bar on Omega Enclave for your next "
 "mission."
 msgstr ""
 
-#: dat/missions/empire/collective/ec00.lua:155
+#: dat/missions/empire/collective/ec00.lua:158
 msgid "Mission Failed: You weren't supposed to kill the drone!"
 msgstr ""
 
-#: dat/missions/empire/collective/ec00.lua:157
+#: dat/missions/empire/collective/ec00.lua:160
 msgid ""
 "You killed the Collective drone you were supposed to scout out and failed "
 "your mission for the Empire as a result."
@@ -98688,7 +98712,7 @@ msgid "You jumped before the transport ship you were escorting."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:213
-#: dat/scripts/escort.lua:474
+#: dat/scripts/escort.lua:483
 msgid "You abandoned your mission!"
 msgstr ""
 
@@ -98737,13 +98761,13 @@ msgid "You helped Dr. Mensing to collect sensor data of the PSO nebula."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:260
-#: dat/scripts/escort.lua:312
+#: dat/scripts/escort.lua:324
 msgid "{plt} has jumped to {sys}."
 msgstr ""
 
 #. Set a new leader and tell them to move on
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:267
-#: dat/scripts/escort.lua:295
+#: dat/scripts/escort.lua:307
 msgid "{plt} has landed on {pnt}."
 msgstr ""
 
@@ -104165,7 +104189,7 @@ msgid ""
 msgstr ""
 
 #. if luatk.yesno( _("Remove Afterburner?"), _("Your ship already has an afterburner. Remove to learn the new skill?")A)
-#: dat/scripts/bioship/skills.lua:75 src/outfit.c:965 src/outfit.c:992
+#: dat/scripts/bioship/skills.lua:75 src/outfit.c:977 src/outfit.c:1004
 msgid "Afterburner"
 msgstr ""
 
@@ -106287,23 +106311,27 @@ msgstr ""
 #. --
 #. Disables the escorts destination target and makes them follow the player.
 #. --
-#: dat/scripts/escort.lua:240
+#. Clear speed limits and such
+#. Find the leader
+#. Find and limit max speed
+#. Control leader and set new target
+#: dat/scripts/escort.lua:252
 msgid "{plt} has been lost!"
 msgstr ""
 
-#: dat/scripts/escort.lua:249
+#: dat/scripts/escort.lua:261
 msgid "The escort has been lost!"
 msgstr ""
 
-#: dat/scripts/escort.lua:251
+#: dat/scripts/escort.lua:263
 msgid "All escorts have been lost!"
 msgstr ""
 
-#: dat/scripts/escort.lua:299
+#: dat/scripts/escort.lua:311
 msgid "All escorts have landed on {pnt}."
 msgstr ""
 
-#: dat/scripts/escort.lua:316
+#: dat/scripts/escort.lua:328
 msgid "All escorts have jumped to {sys}. Follow them."
 msgstr ""
 
@@ -106321,23 +106349,23 @@ msgstr ""
 #. Moving to system
 #. Mark destination
 #. We want to defer it one frame in case an enter hook clears all pilots
-#: dat/scripts/escort.lua:424
+#: dat/scripts/escort.lua:433
 msgid "You jumped into the wrong system."
 msgstr ""
 
 #. We want to defer it one frame in case an enter hook clears all pilots
-#: dat/scripts/escort.lua:461
+#: dat/scripts/escort.lua:470
 msgid "You jumped before the convoy you were escorting."
 msgstr ""
 
 #. luacheck: globals _escort_failure
-#: dat/scripts/escort.lua:470
+#: dat/scripts/escort.lua:479
 msgid "You landed before your escort!"
 msgid_plural "You landed before your escorts!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: dat/scripts/escort.lua:471
+#: dat/scripts/escort.lua:480
 msgid ""
 "You landed at the planet before ensuring that your escort was safe. You have "
 "abandoned your duties, and failed your mission."
@@ -106347,7 +106375,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: dat/scripts/escort.lua:475
+#: dat/scripts/escort.lua:484
 msgid "You have landed, abandoning your mission to protect your escort."
 msgid_plural ""
 "You have landed, abandoning your mission to protect your escorts."
@@ -112821,12 +112849,12 @@ msgstr ""
 msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
-#: src/ai.c:1210 src/nlua_pilot.c:5587
+#: src/ai.c:1210 src/nlua_pilot.c:5591
 #, c-format
 msgid "Failed to create new task for pilot '%s'."
 msgstr ""
 
-#: src/ai.c:1268 src/ai.c:1332 src/nlua_pilot.c:5544
+#: src/ai.c:1268 src/ai.c:1332 src/nlua_pilot.c:5548
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
@@ -112835,7 +112863,7 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2364 src/nlua_pilot.c:6037
+#: src/ai.c:2364 src/nlua_pilot.c:6041
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr ""
@@ -112916,7 +112944,7 @@ msgid ""
 "                This file can be found in Naev's artwork repo."
 msgstr ""
 
-#: src/asteroid.c:721 src/outfit.c:1265 src/ship.c:551 src/ship.c:682
+#: src/asteroid.c:721 src/outfit.c:1277 src/ship.c:551 src/ship.c:682
 #: src/space.c:1837 src/space.c:2191 src/space.c:2910
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -114648,8 +114676,8 @@ msgstr ""
 msgid "Spob '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
-#: src/effect.c:61 src/faction.c:1302 src/faction.c:1481 src/outfit.c:2450
-#: src/outfit.c:3014 src/plugin.c:42 src/spfx.c:1144 src/start.c:73
+#: src/effect.c:61 src/faction.c:1302 src/faction.c:1481 src/outfit.c:2464
+#: src/outfit.c:3031 src/plugin.c:42 src/spfx.c:1144 src/start.c:73
 #: src/tech.c:249 src/tech.c:345
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -116364,7 +116392,7 @@ msgstr ""
 msgid "Cycles through jump points."
 msgstr ""
 
-#: src/input.c:92 src/map.c:253 src/outfit.c:967
+#: src/input.c:92 src/map.c:253 src/outfit.c:979
 msgid "Star Map"
 msgstr ""
 
@@ -118773,7 +118801,7 @@ msgstr ""
 msgid "Unknown audio effect '%s'!"
 msgstr ""
 
-#: src/nlua_canvas.c:219 src/nlua_pilot.c:6611 src/opengl_tex.c:279
+#: src/nlua_canvas.c:219 src/nlua_pilot.c:6615 src/opengl_tex.c:279
 msgid "Error setting up framebuffer!"
 msgstr ""
 
@@ -119130,69 +119158,69 @@ msgid ""
 "enabled!"
 msgstr ""
 
-#: src/nlua_pilot.c:4896
+#: src/nlua_pilot.c:4900
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
 
-#: src/nlua_pilot.c:4929
+#: src/nlua_pilot.c:4933
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use  pilot.cargoAdd)"
 msgstr ""
 
-#: src/nlua_pilot.c:5192
+#: src/nlua_pilot.c:5196
 #, c-format
 msgid "Tried to access unknown flag '%s' for pilot '%s'!"
 msgstr ""
 
-#: src/nlua_pilot.c:5361 src/pilot.c:1181
+#: src/nlua_pilot.c:5365 src/pilot.c:1181
 #, c-format
 msgid "Pilot '%s' does not have an AI!"
 msgstr ""
 
-#: src/nlua_pilot.c:5580
+#: src/nlua_pilot.c:5584
 #, c-format
 msgid "Pilot '%s' is not on manual control."
 msgstr ""
 
-#: src/nlua_pilot.c:5951
+#: src/nlua_pilot.c:5955
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
 msgstr ""
 
 #. Not found.
-#: src/nlua_pilot.c:5961
+#: src/nlua_pilot.c:5965
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:6076
+#: src/nlua_pilot.c:6080
 #, c-format
 msgid "#%c%s#0 is hailing you."
 msgstr ""
 
-#: src/nlua_pilot.c:6200
+#: src/nlua_pilot.c:6204
 #, c-format
 msgid ""
 "Trying to change the leader of pilot '%s' that is a deployed fighter or part "
 "of the player fleet!"
 msgstr ""
 
-#: src/nlua_pilot.c:6206
+#: src/nlua_pilot.c:6210
 #, c-format
 msgid "Pilot '%s' not found in followers of '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:6219
+#: src/nlua_pilot.c:6223
 #, c-format
 msgid "Trying to set pilot '%s' to be their own leader!"
 msgstr ""
 
-#: src/nlua_pilot.c:6532
+#: src/nlua_pilot.c:6536
 msgid "Requires a debug build."
 msgstr ""
 
-#: src/nlua_pilot.c:6636
+#: src/nlua_pilot.c:6640
 #, c-format
 msgid "Canvas is too small to fully render '%s': %.0f x %.0f < %.0f x %.0f"
 msgstr ""
@@ -120377,113 +120405,113 @@ msgstr ""
 msgid "'%s' does not match any outfit slot sizes."
 msgstr ""
 
-#: src/outfit.c:957
+#: src/outfit.c:969
 msgid "NULL"
 msgstr ""
 
-#: src/outfit.c:958
+#: src/outfit.c:970
 msgid "Bolt Cannon"
 msgstr ""
 
-#: src/outfit.c:959
+#: src/outfit.c:971
 msgid "Beam Cannon"
 msgstr ""
 
-#: src/outfit.c:960
+#: src/outfit.c:972
 msgid "Bolt Turret"
 msgstr ""
 
-#: src/outfit.c:961
+#: src/outfit.c:973
 msgid "Beam Turret"
 msgstr ""
 
-#: src/outfit.c:962 src/outfit.c:989
+#: src/outfit.c:974 src/outfit.c:1001
 msgid "Launcher"
 msgstr ""
 
-#: src/outfit.c:963
+#: src/outfit.c:975
 msgid "Turret Launcher"
 msgstr ""
 
-#: src/outfit.c:964
+#: src/outfit.c:976
 msgid "Ship Modification"
 msgstr ""
 
-#: src/outfit.c:966 src/outfit.c:993
+#: src/outfit.c:978 src/outfit.c:1005
 msgid "Fighter Bay"
 msgstr ""
 
-#: src/outfit.c:968 src/outfit.c:995
+#: src/outfit.c:980 src/outfit.c:1007
 msgid "Local Map"
 msgstr ""
 
-#: src/outfit.c:970 src/outfit.c:997
+#: src/outfit.c:982 src/outfit.c:1009
 msgid "License"
 msgstr ""
 
-#: src/outfit.c:987
+#: src/outfit.c:999
 msgid "Bolt Weapon"
 msgstr ""
 
-#: src/outfit.c:988
+#: src/outfit.c:1000
 msgid "Beam Weapon"
 msgstr ""
 
 #. else if (outfit_isTurret(o))     return N_("Turret");
-#: src/outfit.c:991
+#: src/outfit.c:1003
 msgid "Modification"
 msgstr ""
 
-#: src/outfit.c:994
+#: src/outfit.c:1006
 msgid "Map"
 msgstr ""
 
-#: src/outfit.c:1009
+#: src/outfit.c:1021
 msgid "Unguided"
 msgstr ""
 
-#: src/outfit.c:1010
+#: src/outfit.c:1022
 msgid "Seek"
 msgstr ""
 
-#: src/outfit.c:1011
+#: src/outfit.c:1023
 msgid "Smart"
 msgstr ""
 
-#: src/outfit.c:1015
+#: src/outfit.c:1027
 #, c-format
 msgid "Outfit '%s' is not a launcher outfit"
 msgstr ""
 
-#: src/outfit.c:1153
+#: src/outfit.c:1165
 #, c-format
 msgid "Invalid outfit type: '%s'"
 msgstr ""
 
-#: src/outfit.c:1166
+#: src/outfit.c:1178
 msgid "Can mine uncommon and rare minerals"
 msgstr ""
 
-#: src/outfit.c:1168
+#: src/outfit.c:1180
 msgid "Can mine uncommon minerals"
 msgstr ""
 
-#: src/outfit.c:1208
+#: src/outfit.c:1220
 #, c-format
 msgid "Unknown damage type '%s'"
 msgstr ""
 
-#: src/outfit.c:1211
+#: src/outfit.c:1223
 #, c-format
 msgid "Damage has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1239
+#: src/outfit.c:1251
 #, c-format
 msgid "Trying to load polygon for non-compatible outfit '%s'!"
 msgstr ""
 
-#: src/outfit.c:1247
+#: src/outfit.c:1259
 #, c-format
 msgid ""
 "%s xml collision polygon does not exist!\n"
@@ -120491,293 +120519,293 @@ msgid ""
 "found in Naev's artwork repo."
 msgstr ""
 
-#: src/outfit.c:1303
+#: src/outfit.c:1315
 #, c-format
 msgid "Trying to load graphics for non-compatible outfit '%s'!"
 msgstr ""
 
-#: src/outfit.c:1333
+#: src/outfit.c:1345
 #, c-format
 msgid "Outfit '%s' has GFX shader but no 'size' set!"
 msgstr ""
 
-#: src/outfit.c:1341
+#: src/outfit.c:1353
 #, c-format
 msgid "Outfit '%s' has unknown gfx type '%s'!"
 msgstr ""
 
-#: src/outfit.c:1359
+#: src/outfit.c:1371
 #, c-format
 msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
 "                npolygon = %i and sx*sy = %i"
 msgstr ""
 
-#: src/outfit.c:1445 src/outfit.c:1842
+#: src/outfit.c:1457 src/outfit.c:1854
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
 msgstr ""
 
-#: src/outfit.c:1469
+#: src/outfit.c:1481
 #, c-format
 msgid "Outfit '%s' has unknown spfx_shield '%s'!"
 msgstr ""
 
-#: src/outfit.c:1475
+#: src/outfit.c:1487
 #, c-format
 msgid "Outfit '%s' has unknown spfx_armour '%s'!"
 msgstr ""
 
-#: src/outfit.c:1500 src/outfit.c:1696 src/outfit.c:1911 src/outfit.c:2068
-#: src/outfit.c:2130 src/outfit.c:2197 src/outfit.c:2283 src/outfit.c:2302
-#: src/outfit.c:2341 src/outfit.c:2377 src/outfit.c:2410 src/outfit.c:2609
-#: src/outfit.c:2692
+#: src/outfit.c:1512 src/outfit.c:1708 src/outfit.c:1923 src/outfit.c:2082
+#: src/outfit.c:2144 src/outfit.c:2211 src/outfit.c:2297 src/outfit.c:2316
+#: src/outfit.c:2355 src/outfit.c:2391 src/outfit.c:2424 src/outfit.c:2623
+#: src/outfit.c:2706
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1526
+#: src/outfit.c:1538
 #, c-format
 msgctxt "outfitstats"
 msgid "%s [%s]"
 msgstr ""
 
-#: src/outfit.c:1550 src/outfit.c:1971
+#: src/outfit.c:1562 src/outfit.c:1985
 #, c-format
 msgctxt "friendlyfire"
 msgid "#r!! %s !!#0"
 msgstr ""
 
-#: src/outfit.c:1550 src/outfit.c:1971
+#: src/outfit.c:1562 src/outfit.c:1985
 msgid "Hit radius"
 msgstr ""
 
-#: src/outfit.c:1571 src/outfit.c:1736 src/outfit.c:2158 src/outfit.c:2216
-#: src/outfit.c:2317 src/outfit.c:2354 src/outfit.c:2386 src/outfit.c:2423
-#: src/outfit.c:2696
+#: src/outfit.c:1583 src/outfit.c:1748 src/outfit.c:2172 src/outfit.c:2230
+#: src/outfit.c:2331 src/outfit.c:2368 src/outfit.c:2400 src/outfit.c:2437
+#: src/outfit.c:2710
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/outfit.c:1899
+#: src/outfit.c:1911
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
 msgstr ""
 
-#: src/outfit.c:1918
+#: src/outfit.c:1930
 #, c-format
 msgid "Launcher outfit '%s' has negative mass when subtracting ammo mass!"
 msgstr ""
 
 #. Condition for not taking max_speed into account.
-#: src/outfit.c:1929
+#: src/outfit.c:1943
 #, c-format
 msgid "Max speed of ammo '%s' will be ignored."
 msgstr ""
 
-#: src/outfit.c:1961
+#: src/outfit.c:1975
 msgid "No Seeking"
 msgstr ""
 
-#: src/outfit.c:1968
+#: src/outfit.c:1982
 #, c-format
 msgid ""
 "\n"
 "  Holds %d ammo"
 msgstr ""
 
-#: src/outfit.c:2002
+#: src/outfit.c:2016
 #, c-format
 msgid "Outfit '%s' missing '%s' element"
 msgstr ""
 
-#: src/outfit.c:2027
+#: src/outfit.c:2041
 #, c-format
 msgid "Outfit '%s' has no speed nor accel set!"
 msgstr ""
 
-#: src/outfit.c:2029
+#: src/outfit.c:2043
 #, c-format
 msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 msgstr ""
 
 #. Ignore Lua since it's handled later.
-#: src/outfit.c:2137 src/outfit.c:2877 src/outfit.c:2893
+#: src/outfit.c:2151 src/outfit.c:2893 src/outfit.c:2909
 msgid "Activated Outfit"
 msgstr ""
 
-#: src/outfit.c:2142
+#: src/outfit.c:2156
 msgid "Only one can be equipped"
 msgstr ""
 
-#: src/outfit.c:2203
+#: src/outfit.c:2217
 #, c-format
 msgid "Fighter bay outfit '%s' has negative mass when subtracting ship mass!"
 msgstr ""
 
-#: src/outfit.c:2211
+#: src/outfit.c:2225
 #, c-format
 msgid ""
 "\n"
 "  Holds %d ships"
 msgstr ""
 
-#: src/outfit.c:2253
+#: src/outfit.c:2267
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr ""
 
-#: src/outfit.c:2271
+#: src/outfit.c:2285
 #, c-format
 msgid "Map '%s' has invalid spob '%s'"
 msgstr ""
 
-#: src/outfit.c:2280
+#: src/outfit.c:2294
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr ""
 
-#: src/outfit.c:2383
+#: src/outfit.c:2397
 #, c-format
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2491
+#: src/outfit.c:2505
 #, c-format
 msgid "Outfit '%s' has invalid or no name"
 msgstr ""
 
-#: src/outfit.c:2550
+#: src/outfit.c:2564
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr ""
 
-#: src/outfit.c:2562
+#: src/outfit.c:2576
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr ""
 
-#: src/outfit.c:2583
+#: src/outfit.c:2597
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
 msgstr ""
 
-#: src/outfit.c:2589
+#: src/outfit.c:2603
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
 msgstr ""
 
-#: src/outfit.c:2592
+#: src/outfit.c:2606
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr ""
 
-#: src/outfit.c:2626
+#: src/outfit.c:2640
 #, c-format
 msgid "Outfit '%s' has unknown node in tags '%s'."
 msgstr ""
 
-#: src/outfit.c:2635
+#: src/outfit.c:2649
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 
-#: src/outfit.c:2651
+#: src/outfit.c:2665
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr ""
 
-#: src/outfit.c:2662
+#: src/outfit.c:2676
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr ""
 
-#: src/outfit.c:2798
+#: src/outfit.c:2814
 #, c-format
 msgid "Duplicated outfit name '%s' detected!"
 msgstr ""
 
-#: src/outfit.c:2811
+#: src/outfit.c:2827
 #, c-format
 msgid "Outfit '%s' failed to read Lua '%s'!"
 msgstr ""
 
-#: src/outfit.c:2826
+#: src/outfit.c:2842
 #, c-format
 msgid ""
 "Outfit '%s' Lua error:\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2869
+#: src/outfit.c:2885
 #, c-format
 msgid ""
 "Outfit '%s' has 'ontoggle' Lua function defined, but is set as 'notactive'!"
 msgstr ""
 
-#: src/outfit.c:2925
+#: src/outfit.c:2941
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2934
+#: src/outfit.c:2951
 #, c-format
 msgid "Loaded %d Outfit in %.3f s"
 msgid_plural "Loaded %d Outfits in %.3f s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2937
+#: src/outfit.c:2954
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2967
+#: src/outfit.c:2984
 msgid "Illegal to:"
 msgstr ""
 
-#: src/outfit.c:2969
+#: src/outfit.c:2986
 #, c-format
 msgid ""
 "\n"
 "#r- %s#0"
 msgstr ""
 
-#: src/outfit.c:2980
+#: src/outfit.c:2997
 #, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2988
+#: src/outfit.c:3005
 #, c-format
 msgid "Outfit '%s' has inexistent license requirement '%s'!"
 msgstr ""
 
-#: src/outfit.c:3173
+#: src/outfit.c:3190
 #, c-format
 msgctxt "outfitstats"
 msgid "%s: %s %s"
 msgstr ""
 
-#: src/outfit.c:3205
+#: src/outfit.c:3222
 #, c-format
 msgctxt "outfitstats"
 msgid "%s: %s %s - %s %s"
 msgstr ""
 
-#: src/outfit.c:3240
+#: src/outfit.c:3257
 #, c-format
 msgctxt "multiplier"
 msgid " x %d"
 msgstr ""
 
-#: src/outfit.c:3247
+#: src/outfit.c:3264
 #, c-format
 msgctxt "outfitstats"
 msgid "%s: %s%s %s [%s %s]"
@@ -120948,42 +120976,42 @@ msgstr ""
 msgid "#rShip under command '%s' was destroyed!#0"
 msgstr ""
 
-#: src/pilot.c:2753 src/pilot.c:2780
+#: src/pilot.c:2755 src/pilot.c:2782
 msgid "Strayed too far from jump point: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2760
+#: src/pilot.c:2762
 msgid "Afterburner active: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2800
+#: src/pilot.c:2802
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 
-#: src/pilot.c:3112
+#: src/pilot.c:3114
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr ""
 
-#: src/pilot.c:3115
+#: src/pilot.c:3117
 #, c-format
 msgid "   [%d] %s"
 msgstr ""
 
-#: src/pilot.c:3225 src/pilot.c:3276 src/pilot.c:3300
+#: src/pilot.c:3227 src/pilot.c:3278 src/pilot.c:3302
 msgid "Unable to allocate memory"
 msgstr ""
 
-#: src/pilot.c:3344
+#: src/pilot.c:3346
 msgid "Duplicate pilots on stack!"
 msgstr ""
 
-#: src/pilot.c:3497
+#: src/pilot.c:3499
 msgid "Creating pilot in system with no jumps nor spobs to take off from!"
 msgstr ""
 
-#: src/pilot.c:3615
+#: src/pilot.c:3617
 #, c-format
 msgid "Trying to remove non-existent pilot '%s' from stack!"
 msgstr ""
@@ -121158,72 +121186,72 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/pilot_weapon.c:493
+#: src/pilot_weapon.c:495
 msgctxt "weapset"
 msgid "Switch"
 msgstr ""
 
-#: src/pilot_weapon.c:496
+#: src/pilot_weapon.c:498
 msgctxt "weapset"
 msgid "Toggle"
 msgstr ""
 
-#: src/pilot_weapon.c:499
+#: src/pilot_weapon.c:501
 msgctxt "weapset"
 msgid "Hold"
 msgstr ""
 
-#: src/pilot_weapon.c:502
+#: src/pilot_weapon.c:504
 msgctxt "weapset"
 msgid "Unknown"
 msgstr ""
 
-#: src/pilot_weapon.c:507 src/pilot_weapon.c:539 src/shiplog.c:657
+#: src/pilot_weapon.c:509 src/pilot_weapon.c:541 src/shiplog.c:657
 msgid "Empty"
-msgstr ""
-
-#: src/pilot_weapon.c:543
-msgctxt "weapset"
-msgid "Weapons"
 msgstr ""
 
 #: src/pilot_weapon.c:545
 msgctxt "weapset"
-msgid "Utilities"
+msgid "Weapons"
 msgstr ""
 
 #: src/pilot_weapon.c:547
 msgctxt "weapset"
-msgid "Structurals"
+msgid "Utilities"
 msgstr ""
 
 #: src/pilot_weapon.c:549
 msgctxt "weapset"
+msgid "Structurals"
+msgstr ""
+
+#: src/pilot_weapon.c:551
+msgctxt "weapset"
 msgid "Mixed"
 msgstr ""
 
-#: src/pilot_weapon.c:553
+#: src/pilot_weapon.c:555
 msgid "no weapons!"
-msgstr ""
-
-#: src/pilot_weapon.c:557
-#, c-format
-msgctxt "weapset"
-msgid "#o%s - %s#0 [#r%s#0]"
 msgstr ""
 
 #: src/pilot_weapon.c:559
 #, c-format
 msgctxt "weapset"
+msgid "#o%s - %s#0 [#r%s#0]"
+msgstr ""
+
+#: src/pilot_weapon.c:561
+#, c-format
+msgctxt "weapset"
 msgid "%s - %s"
 msgstr ""
 
-#: src/pilot_weapon.c:1387
+#: src/pilot_weapon.c:1389
 #, c-format
 msgid "Shooting unknown weapon type: %s"
 msgstr ""
 
-#: src/pilot_weapon.c:1717
+#: src/pilot_weapon.c:1719
 #, c-format
 msgid "#r%s is overheating!#0"
 msgstr ""
@@ -123520,43 +123548,43 @@ msgstr ""
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
 
-#: src/weapon.c:442
+#: src/weapon.c:443
 #, c-format
 msgid "Unknown weapon status for '%s'"
 msgstr ""
 
-#: src/weapon.c:682
+#: src/weapon.c:683
 #, c-format
 msgid "Weapon of type '%s' has no update implemented yet!"
 msgstr ""
 
-#: src/weapon.c:901
+#: src/weapon.c:902
 #, c-format
 msgid "Weapon of type '%s' has no render implemented yet!"
 msgstr ""
 
 #.
-#: src/weapon.c:1706
+#: src/weapon.c:1707
 #, c-format
 msgid ""
 "Outfit '%s' -> '%s':\n"
 "%s"
 msgstr ""
 
-#: src/weapon.c:2381
+#: src/weapon.c:2418
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr ""
 
-#: src/weapon.c:2417
+#: src/weapon.c:2454
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 
-#: src/weapon.c:2486
+#: src/weapon.c:2523
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
 
-#: src/weapon.c:2507
+#: src/weapon.c:2544
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
