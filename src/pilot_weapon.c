@@ -87,8 +87,8 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       if ((level != -1) && (ws->slots[i].level != level))
          continue;
 
-      /* Only weapons, TODO probably better check. */
-      if (pos->sslot->slot.type!=OUTFIT_SLOT_WEAPON)
+      /* Only weapons. */
+      if (!outfit_isWeapon(o))
          continue;
 
       /* Only run once for each weapon type in the group if not volley. */
@@ -121,7 +121,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* Only "inrange" outfits.
        * XXX for simplicity we are using pilot position / velocity instead of mount point, which might be a bit off. */
-      if (ws->inrange && ((outfit_duration(o)<time) ||
+      if (ws->inrange && !outfit_isFighterBay(o) && ((outfit_duration(o)<time) ||
                (!weapon_inArc( o, p, &wt, &p->solid.pos, &p->solid.vel, p->solid.dir, time))))
          continue;
 
