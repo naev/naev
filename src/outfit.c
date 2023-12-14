@@ -839,6 +839,18 @@ double outfit_speed( const Outfit* o )
    return -1.;
 }
 /**
+ * @brief Gets the swivel of an outfit.
+ *    @param o Outfit to get swivel of.
+ *    @return Outfit's swivel (in radians).
+ */
+double outfit_swivel( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.swivel;
+   else if (outfit_isLauncher(o)) return o->u.lau.swivel;
+   else if (outfit_isBeam(o)) return o->u.bem.swivel;
+   return -1.;
+}
+/**
  * @brief Gets the outfit's animation spin.
  *    @param o Outfit to get information from.
  *    @return Outfit's animation spin.

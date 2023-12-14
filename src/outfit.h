@@ -486,6 +486,7 @@ double outfit_heat( const Outfit* o );
 double outfit_cpu( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );
+double outfit_swivel( const Outfit* o );
 double outfit_spin( const Outfit* o );
 double outfit_trackmin( const Outfit* o );
 double outfit_trackmax( const Outfit* o );
