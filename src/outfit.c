@@ -1921,6 +1921,8 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    temp->u.lau.swivel *= M_PI/180.;
    temp->u.lau.arc *= M_PI/180.;
    /* Note that arc will be 0. for turrets. */
+   if (outfit_isTurret(temp))
+      temp->u.lau.swivel = M_PI;
    temp->u.lau.dispersion *= M_PI/180.;
    temp->u.lau.turn *= M_PI/180.; /* Convert to rad/s. */
    if (temp->u.lau.speed_max < 0.)

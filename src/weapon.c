@@ -1868,6 +1868,10 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    const vec2 *target_pos, *target_vel;
    double rx, ry, x, y, t, lead, rdir, off;
 
+   /* No swivel is trivial case. */
+   if (swivel <= 0.)
+      return dir;
+
    switch (target->type) {
       case TARGET_PILOT:
          pilot_target = pilot_get( target->u.id );
@@ -2152,16 +2156,10 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    double mass, rdir, m;
    const OutfitGFX *gfx;
 
-   if (aim) {
-      if (outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)
-         rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, M_PI, time );
-      else if (outfit->u.lau.swivel > 0.)
-         rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, outfit->u.lau.swivel, time );
-      else
-         rdir = dir;
-   }
+   if (aim)
+      rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, outfit->u.lau.swivel, time );
    else {
-      if ((outfit->u.lau.swivel > 0.) && pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
+      if (pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
          vec2 tv;
          gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
          rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.blt.swivel );
