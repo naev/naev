@@ -82,8 +82,7 @@ static IntList weapon_qtexp; /**< For querying collisions from explosions. */
 /* Creation. */
 static void weapon_updateVBO (void);
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
-      const Target *target, const vec2 *pos, const vec2 *vel, double dir,
-      double swivel, double time );
+      const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time );
 static double weapon_aimTurretStatic( const vec2 *target_pos, const vec2 *pos, double dir, double swivel );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
@@ -541,7 +540,7 @@ static void think_beam( Weapon* w, double dt )
    switch (w->outfit->type) {
       case OUTFIT_TYPE_BEAM:
          if (w->outfit->u.bem.swivel > 0.)
-            w->solid.dir = weapon_aimTurret( w->outfit, p, &w->target, &w->solid.pos, &p->solid.vel, p->solid.dir, w->outfit->u.bem.swivel, 0. );
+            w->solid.dir = weapon_aimTurret( w->outfit, p, &w->target, &w->solid.pos, &p->solid.vel, p->solid.dir, 0. );
          else
             w->solid.dir = p->solid.dir;
          break;
@@ -1857,16 +1856,15 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
  *    @param vel Velocity of the turret.
  *    @param dir Direction facing parent ship and turret.
  *    @param time Expected flight time.
- *    @param swivel Maximum angle between weapon and straight ahead.
  *    @return The direction to aim.
  */
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
-      const Target *target, const vec2 *pos, const vec2 *vel, double dir,
-      double swivel, double time )
+      const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time )
 {
    const Pilot *pilot_target = NULL;
    const vec2 *target_pos, *target_vel;
    double rx, ry, x, y, t, lead, rdir, off;
+   double swivel = outfit_swivel(outfit);
 
    /* No swivel is trivial case. */
    if (swivel <= 0.)
@@ -2077,7 +2075,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    const OutfitGFX *gfx;
 
    if (aim)
-      rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, outfit->u.blt.swivel, time );
+      rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, time );
    else {
       if (pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
          vec2 tv;
@@ -2157,7 +2155,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    const OutfitGFX *gfx;
 
    if (aim)
-      rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, outfit->u.lau.swivel, time );
+      rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, time );
    else {
       if (pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
          vec2 tv;
