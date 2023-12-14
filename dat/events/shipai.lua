@@ -151,7 +151,7 @@ local function clicked ()
    vn.jump("tutorials")
 
    vn.label("tut_mining")
-   sai(_([["Asteroid mining can be a lucrative business. Asteroid field scan be found throughout the galaxy in many different shapes and sizes. They can be a good source of many precious materials that fetch a good price on the commodity exchange. However, not all asteroid fields are made equal. In general, the more easily accessible asteroid fields are generally over-mined, leading to low yields. On the other hand, hard to access asteroid fields in dangerous areas have not yet succumbed to the hordes of ravenous mining fleets. If you find a good mining spot, I recommend you add a note on the #bSystem Map#0 so you don't forget."]]))
+   sai(_([["Asteroid mining can be a lucrative business. Asteroid field scan be found throughout the galaxy in many shapes and sizes. They can be a good source of many precious materials that fetch a good price on the commodity exchange. However, not all asteroid fields are made equal. In general, the more easily accessible asteroid fields are generally over-mined, leading to low yields. On the other hand, hard to access asteroid fields in dangerous areas have not yet succumbed to the hordes of ravenous mining fleets. If you find a good mining spot, I recommend you add a note on the #bSystem Map#0 so you don't forget."]]))
    sai(_([["Standard ship sensors are not designed for prospecting asteroid fields, so if you want to be able to get a rough estimate of what materials are in each asteroid, you will need to get an asteroid scanner. They can be either sold as standalone outfits, or integrated into mining tools such as drills. With an asteroid scanner equipped, all you have to do is get close to asteroids and their material composition will be displayed. You can also equip multiple asteroid scanners at the same time to increase the scanning range."]]))
    sai(fmt.f(_([["Once you have found a good potential mining spot, mining is as straight forward as shooting asteroid with damaging weapons. However, with most weapons, this will only yield common materials and not be a very efficient way of mining. By using mining-specific weapons such as {tool1}, you can also obtain more expensive materials. Furthermore, integrated tools such as {tool2} can be used as a solution for both scanning and extraction. One important point is that asteroid mining is fairly noisy and can attract unwanted attention. One of my previous owners found that out the hard way."]]),
       {tool1=outfit.get("Mining Lance MK1"), tool2=outfit.get("S&K Plasma Drill")}))
@@ -175,8 +175,8 @@ local function clicked ()
    sai(_([["With my overriding of the disable routine on the fleet procedure, you can now deploy additional ships you own. You have a maximum amount of fleet capacity, indicated in the equipment tab when landed, and each ship consumes a fixed amount of fleet capacity."]]))
    sai(fmt.f(_([["For example, you have a total fleet capacity of {fleetcap} points, and your current ship takes {shipcap} points. Note that if you are flying a single ship with no additional deployed ships, you can go over the fleet capacity. However, if you deploy additional ships, you have to stay below the total fleet capacity."]]),
       {fleetcap=player.fleetCapacity(), shipcap=player.pilot():ship():points()}))
-   sai(_([["It is important to note that fleet capacity depends exclusively on the ship, and is not affected by normal outfits. Make sure to equip your ships as best as possible!"]]))
-   sai(_([["Your additional ships will behave as escorts and you can give them commands to perform actions just like deployed fighters. Furthermore, they are all insured so even if you lose any ships, they will respawn when you land."]]))
+   sai(_([["It is important to note that fleet capacity depends exclusively on the ship, and is not affected by normal outfits. Make sure to equip your ships as good as possible!"]]))
+   sai(_([["Your additional ships will behave as escorts, and you can give them commands to perform actions just like deployed fighters. Furthermore, they are all insured so even if you lose any ships, they will respawn when you land."]]))
    sai(_([["Finally, you can toggle ships' deployment by #bright-clicking#0 on their icon. Try it out!"]]))
    vn.jump("tutorials")
 
@@ -192,7 +192,7 @@ function advice ()
    local pp = player.pilot()
    local ppstats = pp:stats()
 
-   local msg_fuel = _([["When out of fuel, if there is an inhabitable planet you can land to refuel for free. However, if you want to save time or have no other option, it is possible to hail passing ships to get refueled, or even take fuel by force by boarding ships. Bribing hostile ships can also encourage them to give you fuel afterwards."]])
+   local msg_fuel = _([["When out of fuel, if there is an inhabitable planet you can land to refuel for free. However, if you want to save time or have no other option, it is possible to hail passing ships to get refuelled, or even take fuel by force by boarding ships. Bribing hostile ships can also encourage them to give you fuel afterwards."]])
    table.insert( adv_rnd, msg_fuel )
    if ppstats.fuel < ppstats.fuel_consumption then
       table.insert( adv, msg_fuel )
@@ -206,7 +206,7 @@ function advice ()
    end
 
    local _hmean, hpeak = pp:weapsetHeat(true)
-   local msg_heat = fmt.f(_([["When your ship or weapons get very hot, it is usually a good idea to perform an active cooldown when it is safe to do so. You can actively cooldown with {cooldownkey} or double-tapping {reversekey}. The amount it takes to cooldown depends on the size of the ship, but when done, not only will your ship be cool, it will also have replenished all ammunition and fighters."]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")})
+   local msg_heat = fmt.f(_([["When your ship or weapons get very hot, it is usually a good idea to perform an active cooldown when it is safe to do so. You can actively cool down with {cooldownkey} or double-tapping {reversekey}. The amount it takes to cooldown depends on the size of the ship, but when done, not only will your ship be cool, it will also have replenished all ammunition and fighters."]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")})
    table.insert( adv_rnd, msg_heat )
    if pp:temp() > 300 or hpeak > 0.2 then
       table.insert( adv, msg_heat )
@@ -220,7 +220,7 @@ function advice ()
    end
 
    local armour = pp:health()
-   local msg_armour = _([["In general, ships are unable to regenerate armour damage in space. If you take heavy armour damage, it is best to try to find a safe place to land to get fully repaired. However, there exists many different outfits that allow you to repair your ship, and some ships have built-in  armour regeneration allowing you to survive longer in space."]])
+   local msg_armour = _([["In general, ships are unable to regenerate armour damage in space. If you take heavy armour damage, it is best to try to find a safe place to land to get fully repaired. However, there exists many outfits that allow you to repair your ship, and some ships have built-in armour regeneration allowing you to survive longer in space."]])
    table.insert( adv_rnd, msg_armour )
    if armour < 80 and ppstats.armour_regen <= 0 then
       table.insert( adv, msg_armour )
