@@ -1864,10 +1864,51 @@ int weapon_inArc( const Outfit *o, const Pilot *parent, const Target *target, co
 {
    if (outfit_isTurret(o))
       return 1;
+   else if (o->type==OUTFIT_TYPE_LAUNCHER) {
+      /* TODO reduce code duplication here. */
+      const vec2 *target_pos;
+      double x, y, ang, off;
+      switch (target->type) {
+         case TARGET_PILOT:
+            {
+               const Pilot *pilot_target = pilot_get( target->u.id );
+               if (pilot_target==NULL)
+                  return dir;
+               target_pos = &pilot_target->solid.pos;
+            }
+            break;
+
+         case TARGET_ASTEROID:
+            {
+               const AsteroidAnchor *field = &cur_system->asteroids[ target->u.ast.anchor ];
+               const Asteroid *ast = &field->asteroids[ target->u.ast.asteroid ];
+               target_pos = &ast->sol.pos;
+            }
+            break;
+
+         case TARGET_WEAPON:
+            {
+               const Weapon *wtarget = weapon_getID( target->u.id );
+               if (wtarget==NULL)
+                  return dir;
+               target_pos = &wtarget->solid.pos;
+            }
+            break;
+
+         //case TARGET_NONE:
+         default:
+            return dir;
+      }
+      x     = target_pos->x - pos->x;
+      y     = target_pos->y - pos->y;
+      ang   = ANGLE( x, y );
+      off   = angle_diff( ang, dir );
+      if (FABS(off) <= o->u.lau.arc)
+         return 1;
+      return 0;
+   }
    else {
       double swivel = outfit_swivel(o);
-      if (o->type==OUTFIT_TYPE_LAUNCHER)
-         swivel = MAX( swivel, o->u.lau.arc );
       double rdir = weapon_aimTurretAngle( o, parent, target, pos, vel, dir, time );
       double off = angle_diff( rdir, dir );
       if (FABS(off) <= swivel)
