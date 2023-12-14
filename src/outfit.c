@@ -79,7 +79,7 @@ static char **license_stack = NULL; /**< Stack of available licenses. */
 /* misc */
 static OutfitType outfit_strToOutfitType( char *buf );
 /* parsing */
-static int outfit_loadDir( char *dir );
+static int outfit_loadDir( const char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
 static int outfit_parseThread( void *ptr );
 static int outfit_parse( Outfit* temp, const char* file );
@@ -2618,7 +2618,7 @@ static int outfit_parse( Outfit* temp, const char* file )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &temp->tags, strdup(tmp) );
                continue;
@@ -2732,7 +2732,7 @@ static int outfit_parseThread( void *ptr )
  *    @param dir Directory to load files from.
  *    @return 0 on success.
  */
-static int outfit_loadDir( char *dir )
+static int outfit_loadDir( const char *dir )
 {
    char **outfit_files = ndata_listRecursive( dir );
    ThreadQueue *tq = vpool_create();
@@ -2779,8 +2779,10 @@ static int outfit_loadDir( char *dir )
  */
 int outfit_load (void)
 {
-   int noutfits;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   int noutfits;
 
    /* First pass, Loads up all outfits, without filling ammunition and the likes. */
    outfit_stack = array_create(Outfit);
@@ -2929,13 +2931,14 @@ int outfit_load (void)
    free(outfit_names);
 #endif /* DEBUGGING */
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Outfit in %.3f s", "Loaded %d Outfits in %.3f s", noutfits ), noutfits, time/1000. );
    }
    else
       DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
-
+#endif /* DEBUGGING */
    return 0;
 }
 
@@ -3062,7 +3065,7 @@ int outfit_licenseExists( const char *name )
 {
    if (license_stack==NULL)
       return 0;
-   char *lic = bsearch( &name, license_stack, array_size(license_stack), sizeof(char*), strsort );
+   const char *lic = bsearch( &name, license_stack, array_size(license_stack), sizeof(char*), strsort );
    return (lic!=NULL);
 }
 
