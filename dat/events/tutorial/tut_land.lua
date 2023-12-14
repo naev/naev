@@ -25,6 +25,7 @@ end
 
 function outfit_buy( o )
    local tbroad = o:typeBroad()
+   local tspecific = o:type()
    local isturret = o:specificstats().isturret
 
    if tbroad == "Afterburner" and not var.peek( "tut_afterburner" ) then
@@ -37,12 +38,13 @@ function outfit_buy( o )
       vn.run()
       var.push( "tut_afterburner", true )
 
+   -- launchers
    elseif tbroad == "Launcher" and not var.peek( "tut_launcher" ) then
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(_([["Looks like you just acquired your first #oLauncher#0 outfit. Launchers are ammo-based weapons that can have target tracking abilities. Seeking launchers have two important properties: '#oLock-on#0' and '#oIn-Flight Calibration#0'. Lock-on determines how many seconds it takes to be able to launch rockets after getting a new target. It is modulated depending if the target's '#oSignature#0' is lower than the '#oOptimal Tracking#0'."]]))
+      sai(_([["Looks like you just acquired your first #oLauncher#0 outfit. Launchers are ammo-based weapons that can have target tracking abilities. Seeking launchers have two important properties: '#oLock-on#0' and '#oIn-Flight Calibration#0'. Lock-on determines how many seconds it takes to be able to launch rockets after getting a new target. It is modulated depending on if the target's '#oSignature#0' is lower than the '#oOptimal Tracking#0'."]]))
       sai(_([["'#oIn-Flight Calibration#0' is the amount of time it takes for the rocket after being launched to start tracking the target. When not locked-on it will fly in a straight line and damage all hostiles they encounter, however, once locked-on they will only damage the target unless jammed. In-Flight Calibration is not affected by the target's signature, and is visualized by a coloured circle around the outfit that shrinks as the calibration finishes."]]))
       sai(_([["That leads us to the last important concept: jamming! Seeking rockets can be jammed depending on whether or not the target has jamming equipment, and the resistance of the rocket. The chance of a rocket being jammed is the difference between the jamming chance and the resistance. When a rocket becomes jammed it can either get slowed down, or get stuck in a random trajectory. Despite being jammed, they can still damage any hostiles they encounter."]]))
       sai(fmt.f(_([["Finally, the ammo of launchers regenerates over time: there is no need to buy ammunition. By either performing a cooldown with {cooldownkey} or double-tapping {reversekey}, or landing on a planet or station you can instantly refill the ammunition when necessary. Launchers can be very useful if you master them. Please try them out with different configurations!"]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
@@ -50,6 +52,7 @@ function outfit_buy( o )
       vn.run()
       var.push( "tut_launcher", true )
 
+   -- fighter bays
    elseif tbroad == "Fighter Bay" and not var.peek( "tut_fighterbay" ) then
       vn.clear()
       vn.scene()
@@ -63,6 +66,7 @@ function outfit_buy( o )
       vn.run()
       var.push( "tut_fighterbay", true )
 
+   -- turrets
    elseif isturret and not var.peek( "tut_turret" ) then
       vn.clear()
       vn.scene()
@@ -74,6 +78,19 @@ function outfit_buy( o )
       vn.done( tut.shipai.transition )
       vn.run()
       var.push( "tut_turret", true )
+
+   -- pointdefense
+   elseif tspecific=="Point Defense" and not var.peek( "tut_pd" ) then
+      vn.clear()
+      vn.scene()
+      local sai = vn.newCharacter( tut.vn_shipai() )
+      vn.transition( tut.shipai.transition )
+      sai(_([["Whoa, is that a #oPoint Defense#0 weapon you just acquired? When activated, #oPoint Defense#0 will target nearby incoming missiles and try to destroy them. Also, if they have tracking, they will also be able to track ships with a signature less than the tracking value. They can be very useful for keeping ships alive when being pummelled with fighters and ordinances."]]))
+      sai(fmt.f(_([["To make the best use of #oPoint Defense#0, you should set them to a toggle weapon group from the #bInfo#0 menu accessible with {infokey}. When you activate the toggle weapon set with the #oPoint Defense#0, it will automatically shoot anything it can target in range. No need for any micromanagement. Almost like they make me obsolete... wait no! I'm still important! Don't get rid of me!"]]),
+         {infokey=tut.getKey("info")}))
+      vn.done( tut.shipai.transition )
+      vn.run()
+      var.push( "tut_pd", true )
 
    elseif tbroad == "License" then
 
