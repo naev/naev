@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-06-11 11:58+0900\n"
-"PO-Revision-Date: 2023-12-05 23:07+0000\n"
+"PO-Revision-Date: 2023-12-14 23:10+0000\n"
 "Last-Translator: John Donne <akheron@zaclys.net>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev-0-10-x/"
 "fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.3-dev\n"
+"X-Generator: Weblate 5.3\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -764,7 +764,7 @@ msgstr "Sudarshan S"
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
-msgstr "   * Contributeur d'éventement"
+msgstr "   * Contributeur d'événement"
 
 #: dat/AUTHORS:160 dat/AUTHORS:178
 msgid "PhoenixRiver"
@@ -9792,8 +9792,9 @@ msgstr ""
 "devoir travailler dans des conditions aussi violentes et radioactives."
 
 #: dat/spob/anya.xml:2
+#, fuzzy
 msgid "Anya"
-msgstr ""
+msgstr "Anya"
 
 #: dat/spob/anya.xml:15 dat/spob/sevlow.xml:15 dat/spob/wellen.xml:16
 msgid "N"
@@ -9828,24 +9829,28 @@ msgstr ""
 "d'autres substances jugées nocives pour le cerveau."
 
 #: dat/spob/apez_ii.xml:2
+#, fuzzy
 msgid "Apez II"
-msgstr ""
+msgstr "Apez II"
 
 #: dat/spob/apez_v.xml:2
+#, fuzzy
 msgid "Apez V"
-msgstr ""
+msgstr "Apez V"
 
 #: dat/spob/apik_i.xml:2
+#, fuzzy
 msgid "Apik I"
-msgstr ""
+msgstr "Apik I"
 
 #: dat/spob/apik_ii.xml:2
+#, fuzzy
 msgid "Apik II"
-msgstr ""
+msgstr "Apik II"
 
 #: dat/spob/apik_shipyard.xml:2
 msgid "Apik Shipyard"
-msgstr ""
+msgstr "Chantier spatial Apik"
 
 #: dat/spob/apik_shipyard.xml:25
 msgid ""
@@ -9867,16 +9872,19 @@ msgid "shipbuilding"
 msgstr ""
 
 #: dat/spob/aquilia.xml:2
+#, fuzzy
 msgid "Aquilia"
-msgstr ""
+msgstr "Aquilia"
 
 #: dat/spob/arai.xml:2
+#, fuzzy
 msgid "Arai"
-msgstr ""
+msgstr "Arai"
 
 #: dat/spob/arashu.xml:2
+#, fuzzy
 msgid "Arashu"
-msgstr ""
+msgstr "Arashu"
 
 #: dat/spob/arashu.xml:28
 msgid ""
@@ -9912,8 +9920,9 @@ msgstr ""
 "surtout une fois que vous pouvez placer le spatioport et le bar !"
 
 #: dat/spob/arcadia.xml:2
+#, fuzzy
 msgid "Arcadia"
-msgstr ""
+msgstr "Arcadia"
 
 #: dat/spob/arcadia.xml:26
 msgid ""
@@ -9963,8 +9972,9 @@ msgid "agriculture"
 msgstr "agricole"
 
 #: dat/spob/arch_arai.xml:2
+#, fuzzy
 msgid "Arch Arai"
-msgstr ""
+msgstr "Arch Arai"
 
 #: dat/spob/arch_arai.xml:28
 msgid ""
@@ -9992,8 +10002,9 @@ msgstr ""
 "de ceux qui sont déjà là, presque instinctivement."
 
 #: dat/spob/arck.xml:2
+#, fuzzy
 msgid "Arck"
-msgstr ""
+msgstr "Arck"
 
 #: dat/spob/arck.xml:26
 msgid ""
@@ -10079,36 +10090,44 @@ msgstr ""
 "en service - ce n'est pas un endroit pour se battre."
 
 #: dat/spob/arcturus_i.xml:2
+#, fuzzy
 msgid "Arcturus I"
-msgstr ""
+msgstr "Arcturus I"
 
 #: dat/spob/arcturus_ii.xml:2
+#, fuzzy
 msgid "Arcturus II"
-msgstr ""
+msgstr "Arcturus II"
 
 #: dat/spob/ariadus_ii.xml:2
+#, fuzzy
 msgid "Ariadus II"
-msgstr ""
+msgstr "Ariadus II"
 
 #: dat/spob/ariadus_iv.xml:2
+#, fuzzy
 msgid "Ariadus IV"
-msgstr ""
+msgstr "Ariadus IV"
 
 #: dat/spob/ariadus_vi.xml:2
+#, fuzzy
 msgid "Ariadus VI"
-msgstr ""
+msgstr "Ariadus VI"
 
 #: dat/spob/ariadus_via.xml:2
+#, fuzzy
 msgid "Ariadus VIa"
-msgstr ""
+msgstr "Ariadus VIa"
 
 #: dat/spob/ariadus_vib.xml:2
+#, fuzzy
 msgid "Ariadus VIb"
-msgstr ""
+msgstr "Ariadus VIb"
 
 #: dat/spob/ariak.xml:2
+#, fuzzy
 msgid "Ariak"
-msgstr ""
+msgstr "Ariak"
 
 #: dat/spob/armorhead_i1.xml:2
 msgid "Armorhead I-1"
@@ -12067,12 +12086,14 @@ msgid "Draconis Beta"
 msgstr ""
 
 #: dat/spob/draconis_delta.xml:2
+#, fuzzy
 msgid "Draconis Delta"
-msgstr ""
+msgstr "Draconis Delta"
 
 #: dat/spob/draconis_epsilon.xml:2
+#, fuzzy
 msgid "Draconis Epsilon"
-msgstr ""
+msgstr "Draconis Epsilon"
 
 #: dat/spob/draconis_epsilon.xml:27
 msgid ""
@@ -12104,12 +12125,14 @@ msgstr ""
 "aussi impressionnants que celui-ci."
 
 #: dat/spob/draconis_gamma.xml:2
+#, fuzzy
 msgid "Draconis Gamma"
-msgstr ""
+msgstr "Draconis Gamma"
 
 #: dat/spob/draconis_omega.xml:2
+#, fuzzy
 msgid "Draconis Omega"
-msgstr ""
+msgstr "Draconis Omega"
 
 #: dat/spob/draconis_omega.xml:28
 msgid ""
@@ -12146,8 +12169,9 @@ msgstr ""
 "reviendront un jour."
 
 #: dat/spob/draygar_iii.xml:2
+#, fuzzy
 msgid "Draygar III"
-msgstr ""
+msgstr "Draygar III"
 
 #: dat/spob/drognain.xml:2
 msgid "Drognain"
@@ -18696,15 +18720,15 @@ msgstr ""
 
 #: dat/spob/oberon_i.xml:2
 msgid "Oberon I"
-msgstr ""
+msgstr "Obéron I"
 
 #: dat/spob/oberon_iii.xml:2
 msgid "Oberon III"
-msgstr ""
+msgstr "Obéron III"
 
 #: dat/spob/oberon_iv.xml:2
 msgid "Oberon IV"
-msgstr ""
+msgstr "Obéron IV"
 
 #: dat/spob/ocata.xml:2
 msgid "Ocata"
