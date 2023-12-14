@@ -25,7 +25,7 @@
  * Prototypes.
  */
 /* Static */
-static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
+static int escort_command( const Pilot *parent, const char *cmd, unsigned int index );
 
 /**
  * @brief Adds an escort to the escort list of a pilot.
@@ -259,7 +259,7 @@ int escort_clearDeployed( Pilot *p )
  *    @param idx Lua index of argument or 0.
  *    @return 0 on success, 1 if no orders given.
  */
-static int escort_command( Pilot *parent, const char *cmd, unsigned int idx )
+static int escort_command( const Pilot *parent, const char *cmd, unsigned int idx )
 {
    if (array_size(parent->escorts) == 0)
       return 1;
@@ -319,7 +319,7 @@ int escorts_attack( Pilot *parent )
  *
  *    @param parent Pilot giving the order.
  */
-int escorts_hold( Pilot *parent )
+int escorts_hold( const Pilot *parent )
 {
    int ret = escort_command( parent, "e_hold", 0 );
    if ((ret == 0) && (parent == player.p))
@@ -332,7 +332,7 @@ int escorts_hold( Pilot *parent )
  *
  *    @param parent Pilot giving the order.
  */
-int escorts_return( Pilot *parent )
+int escorts_return( const Pilot *parent )
 {
    int ret = escort_command( parent, "e_return", 0 );
    if ((ret == 0) && (parent == player.p))
@@ -345,7 +345,7 @@ int escorts_return( Pilot *parent )
  *
  *    @param parent Pilot giving the order.
  */
-int escorts_clear( Pilot *parent )
+int escorts_clear( const Pilot *parent )
 {
    int ret = escort_command( parent, "e_clear", 0 );
    if ((ret == 0) && (parent == player.p))
@@ -359,7 +359,7 @@ int escorts_clear( Pilot *parent )
  *    @param e The pilot for the player to issue an order to.
  *    @return 0 on success, 1 if no orders given.
  */
-int escort_playerCommand( Pilot *e )
+int escort_playerCommand( const Pilot *e )
 {
    const char *title, *caption;
    char *choice;
@@ -411,7 +411,7 @@ int escort_playerCommand( Pilot *e )
  *    @param parent Pilot giving the order.
  *    @param jp Where to jump.
  */
-int escorts_jump( Pilot *parent, const JumpPoint *jp )
+int escorts_jump( const Pilot *parent, const JumpPoint *jp )
 {
    int ret;
    LuaJump lj;

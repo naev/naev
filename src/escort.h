@@ -23,8 +23,8 @@ int escort_clearDeployed( Pilot *p );
 
 /* Keybind commands. */
 int escorts_attack( Pilot *parent );
-int escorts_hold( Pilot *parent );
-int escorts_return( Pilot *parent );
-int escorts_clear( Pilot *parent );
-int escorts_jump( Pilot *parent, const JumpPoint *jp );
-int escort_playerCommand( Pilot *e );
+int escorts_hold( const Pilot *parent );
+int escorts_return( const Pilot *parent );
+int escorts_clear( const Pilot *parent );
+int escorts_jump( const Pilot *parent, const JumpPoint *jp );
+int escort_playerCommand( const Pilot *e );
