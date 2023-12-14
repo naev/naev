@@ -167,6 +167,7 @@ local function run_success ()
 end
 
 function escort.reset_ai ()
+   -- Clear speed limits and such
    for k,p in ipairs(_escort_convoy) do
       if p:exists() then
          p:setSpeedLimit(0)
@@ -181,6 +182,7 @@ function escort.reset_ai ()
    end
 
    if not mem._escort.followplayer then
+      -- Find the leader
       local l
       for k,v in ipairs(_escort_convoy) do
          if v:exists() then
@@ -190,6 +192,16 @@ function escort.reset_ai ()
       end
       if not l then return end
 
+      -- Find and limit max speed
+      local minspeed = player.pilot():stats().speed_max * 0.9
+      for k,p in ipairs(_escort_convoy) do
+         if p:exists() then
+            minspeed = math.min( p:stats().speed_max * 0.95, minspeed )
+         end
+      end
+      l:setSpeedLimit( minspeed )
+
+      -- Control leader and set new target
       l:control(true)
       local scur = system.cur()
       if scur == mem._escort.destsys then
@@ -330,6 +342,7 @@ Spawns the escorts at location. This can be useful at the beginning if you want 
 --]]
 function escort.spawn( pos )
    local have_outfits = (escort_outfits ~= nil)
+   local pp = player.pilot()
    pos = pos or mem._escort.origin
 
    -- Set up the new convoy for the new system
@@ -340,7 +353,7 @@ function escort.spawn( pos )
    end
    local l
    if mem._escort.followplayer then
-      l = player.pilot()
+      l = pp
    end
    for k,s in ipairs( mem._escort.ships ) do
       local params = tcopy( mem._escort.params.pilot_params or {} )
@@ -371,7 +384,6 @@ function escort.spawn( pos )
    end
 
    -- Some post-processing for the convoy
-   local minspeed = player.pilot():stats().speed_max * 0.9
    for k,p in ipairs(_escort_convoy) do
       p:setInvincPlayer(true)
       p:setFriendly(true)
@@ -385,13 +397,10 @@ function escort.spawn( pos )
          fcreate( p )
          aisetup.setup( p )
       end
-
-      minspeed = math.min( p:stats().speed_max * 0.95, minspeed )
    end
 
    if not mem._escort.followplayer then
       -- Have the leader move as slow as the slowest ship
-      l:setSpeedLimit( minspeed )
       l:setHilight(true)
       -- Moving to system
       escort.reset_ai()

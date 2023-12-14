@@ -23,10 +23,12 @@
    * Centered tracking icon in slim GUI
    * Show tracking icons for non-turret bolt weapons too
    * More short names for weapon outfits
+   * Fixed pilot.setSpeedLimit not working
    * `test_of_renewal`: fixed weapon set defaults being incorrect and increased enemy damage
    * `seek_n_destroy`: missions should work properly when boarding the target
    * `flf_diversion`, `flf_rogue`: Missions should no longer be able to have ridiculously low credit rewards
    * `ec00`: changed it so you can't hail the collective drone
+   * `escort`: fixed pilots not flying in formation
    * Fixed many typos
 
 * 0.11.0-beta.2

@@ -2522,6 +2522,8 @@ void pilot_update( Pilot* pilot, double dt )
             pilot_setAccel(pilot, 1. + pilot->afterburner->outfit->u.afb.accel * accel);
          }
       }
+      else if (pilot_isFlag( pilot, PILOT_HASSPEEDLIMIT ))
+         pilot->solid.speed_max = MIN( pilot->speed, pilot->speed_limit );
       else
          pilot->solid.speed_max = pilot->speed;
    }
