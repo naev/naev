@@ -117,7 +117,7 @@ static inline _private_container *_array_private_container(void *a)
  * @note Invalidates all iterators.
  */
 #define array_grow(ptr_array) \
-      (*(__typeof__((ptr_array)[0]))_array_grow_helper((void **)(ptr_array), sizeof((ptr_array)[0][0]))) // NOLINT
+      (*(__typeof__((ptr_array)[0]))_array_grow_helper((void **)(ptr_array), sizeof((ptr_array)[0][0]))) // NOLINT (bugprone-sizeof-expression)
 /**
  * @brief Adds a new element at the end of the array.
  *
@@ -138,7 +138,7 @@ static inline _private_container *_array_private_container(void *a)
  *    @param last Last iterator in erase section but is not erased.
  */
 #define array_erase(ptr_array, first, last) \
-      (_array_erase_helper((void **)(ptr_array), sizeof((ptr_array)[0][0]), (void *)(first), (void *)(last)))
+      (_array_erase_helper((void **)(ptr_array), sizeof((ptr_array)[0][0]), (void *)(first), (void *)(last))) // NOLINT
 /**
  * @brief Shrinks memory to fit only `size' elements.
  *
