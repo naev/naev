@@ -115,6 +115,7 @@ function spotdrone()
    p = pilot.add( "Drone", "Collective", vec2.new(8000, -20000), _("Collective Drone"), {ai="scout"} )
    local m = p:memory()
    m.comm_no = _("No response.")
+   m.doscans = false
    p:control()
    p:setHilight(true)
    idle()
