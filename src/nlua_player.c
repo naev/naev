@@ -1573,7 +1573,7 @@ static int playerL_outfitRm( lua_State *L )
          const PlayerOutfit_t *poutfits = player_getOutfits();
          const Outfit **outfits = array_create_size( const Outfit*, array_size( poutfits ) );
          for (int i=0; i<array_size(poutfits); i++)
-            array_push_back( &outfits, poutfits[i].o ); // NOLINT
+            array_push_back( &outfits, poutfits[i].o );
 
          for (int i=0; i<array_size(outfits); i++) {
             o = outfits[i];

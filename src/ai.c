@@ -2577,7 +2577,7 @@ static int aiL_rndhyptarget( lua_State *L )
          continue;
 
       array_push_back( &id, i );
-      array_push_back( &jumps, jiter ); // NOLINT
+      array_push_back( &jumps, jiter );
    }
 
    /* Try to be more lax. */
@@ -2590,7 +2590,7 @@ static int aiL_rndhyptarget( lua_State *L )
             continue;
 
          array_push_back( &id, i );
-         array_push_back( &jumps, jiter ); // NOLINT
+         array_push_back( &jumps, jiter );
       }
    }
 

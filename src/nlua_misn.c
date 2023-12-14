@@ -574,12 +574,12 @@ static int misn_accept( lua_State *L )
          continue;
       mission_cleanup( m );
       free( m );
-      array_erase( &player_missions, &player_missions[i], &player_missions[i+1] ); // NOLINT
+      array_erase( &player_missions, &player_missions[i], &player_missions[i+1] );
    }
 
    /* Create the new mission. */
    new_misn = calloc( 1, sizeof(Mission) );
-   array_push_back( &player_missions, new_misn ); // NOLINT
+   array_push_back( &player_missions, new_misn );
 
    cur_mission = misn_getFromLua(L);
 

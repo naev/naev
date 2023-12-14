@@ -545,7 +545,7 @@ glTexture** background_getStarTextures (void)
 {
   glTexture **imgs = array_create_size( glTexture*, array_size( bkg_image_arr_ft ));
   for (int i=0; i<array_size(bkg_image_arr_ft); i++)
-    array_push_back( &imgs, gl_dupTexture(bkg_image_arr_ft[i].image) ); // NOLINT
+    array_push_back( &imgs, gl_dupTexture(bkg_image_arr_ft[i].image) );
   return imgs;
 }
 

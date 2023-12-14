@@ -2001,7 +2001,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       int ncells = array_size(ship->outfit_intrinsic);
       Outfit const **outfits = (Outfit const**) array_create( Outfit* );
       for (int i=0; i<ncells; i++)
-         array_push_back( &outfits, ship->outfit_intrinsic[i].outfit ); // NOLINT
+         array_push_back( &outfits, ship->outfit_intrinsic[i].outfit );
 
       cells = outfits_imageArrayCells( outfits, &ncells, ship );
 

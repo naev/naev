@@ -1271,7 +1271,7 @@ void missions_cleanup (void)
       mission_cleanup( player_missions[i] );
       free( player_missions[i] );
    }
-   array_erase( &player_missions, array_begin(player_missions), array_end(player_missions) ); // NOLINT
+   array_erase( &player_missions, array_begin(player_missions), array_end(player_missions) );
 
    for (int i=0; i<array_size(player_missions_failed); i++)
       free( player_missions_failed[i] );
@@ -1630,7 +1630,7 @@ static int missions_parseActive( xmlNodePtr parent )
             mission_cleanup( misn );
          }
          else
-            array_push_back( &player_missions, misn ); // NOLINT
+            array_push_back( &player_missions, misn );
       }
    } while (xml_nextNode(node));
 

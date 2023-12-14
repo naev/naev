@@ -3062,7 +3062,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
          memset( slot, 0, sizeof(PilotOutfitSlot) );
          slot->id    = array_size(pilot->outfits);
          slot->sslot = &ship_list[i][j];
-         array_push_back( &pilot->outfits, slot ); // NOLINT
+         array_push_back( &pilot->outfits, slot );
          if (pilot_list_ptr[i] != &pilot->outfit_weapon)
             slot->weapset = -1;
          /* We'll ignore non-required outfits if NO_OUTFITS is set. */
@@ -3070,7 +3070,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
             pilot_addOutfitRaw( pilot, slot->sslot->data, slot );
       }
    }
-   array_shrink( &pilot->outfits ); // NOLINT
+   array_shrink( &pilot->outfits );
 
    /* Add intrinsics if applicable. */
    if (!pilot_isFlagRaw(flags, PILOT_NO_OUTFITS)) {
@@ -3205,7 +3205,7 @@ static void pilot_init_trails( Pilot* p )
 
    for (int g=0; g<n; g++)
       if (pilot_trail_generated( p, g ))
-         array_push_back( &p->trail, spfx_trail_create( p->ship->trail_emitters[g].trail_spec ) ); // NOLINT
+         array_push_back( &p->trail, spfx_trail_create( p->ship->trail_emitters[g].trail_spec ) );
 }
 
 /**
@@ -3229,7 +3229,7 @@ Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char
    }
 
    /* Set the pilot in the stack -- must be there before initializing */
-   array_push_back( &pilot_stack, p ); // NOLINT
+   array_push_back( &pilot_stack, p );
 
    /* Initialize the pilot. */
    pilot_init( p, ship, name, faction, dir, pos, vel, flags, dockpilot, dockslot );
@@ -3304,7 +3304,7 @@ unsigned int pilot_clone( const Pilot *ref )
    }
 
    /* Set the pilot in the stack -- must be there before initializing */
-   p = &array_grow( &pilot_stack ); // NOLINT
+   p = &array_grow( &pilot_stack );
    *p = dyn;
 
    /* Initialize the pilot. */
@@ -3332,7 +3332,7 @@ unsigned int pilot_addStack( Pilot *p )
    p->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
    pilot_setFlag( p, PILOT_NOFREE );
 
-   array_push_back( &pilot_stack, p ); // NOLINT
+   array_push_back( &pilot_stack, p );
 
    /* Have to reset after adding to stack, as some Lua functions will run code on the pilot. */
    pilot_reset( p );
@@ -3356,7 +3356,7 @@ void pilot_clearTrails( Pilot *p )
 {
    for (int j=0; j<array_size(p->trail); j++)
       spfx_trail_remove( p->trail[j] );
-   array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) ); // NOLINT
+   array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
    pilot_init_trails( p );
 }
 
@@ -3372,7 +3372,7 @@ Pilot* pilot_setPlayer( Pilot* after )
 
    if (i < 0) { /* No existing player ID. */
       if (l < 0) /* No existing pilot, have to create. */
-         array_push_back( &pilot_stack, after ); // NOLINT
+         array_push_back( &pilot_stack, after );
    }
    else { /* Player pilot already exists. */
       if (l >= 0)
@@ -3448,7 +3448,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
             continue;
 
          if (ignore_rules) {
-            array_push_back( &validJumpPoints, target ); // NOLINT
+            array_push_back( &validJumpPoints, target );
             continue;
          }
 
@@ -3467,7 +3467,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
          for (int j=0; j<array_size(fact); j++)
             limit += system_getPresence( jmp->target, fact[j] );
          if (pres > limit)
-            array_push_back( &validJumpPoints, target ); // NOLINT
+            array_push_back( &validJumpPoints, target );
       }
    }
 
@@ -3483,7 +3483,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
             /* Ignore hidden jumps for now. */
             if (jp_isFlag( jp, JP_HIDDEN ))
                continue;
-            array_push_back(&validJumpPoints, jp->returnJump); // NOLINT
+            array_push_back(&validJumpPoints, jp->returnJump);
          }
          /* Now add hidden jumps as a last resort - only for non guerillas as they should be added otherwise. */
          if (!guerilla && array_size(validJumpPoints)<=0) {
@@ -3491,7 +3491,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
                JumpPoint *jp = &cur_system->jumps[i];
                if (jp_isFlag( jp->returnJump, JP_EXITONLY ))
                   continue;
-               array_push_back(&validJumpPoints, jp->returnJump); // NOLINT
+               array_push_back(&validJumpPoints, jp->returnJump);
             }
          }
       }
@@ -3603,7 +3603,7 @@ static void pilot_erase( Pilot *p )
 {
    int i = pilot_getStackPos( p->id );
    pilot_free(p);
-   array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] ); // NOLINT
+   array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
 }
 
 /**
@@ -3617,7 +3617,7 @@ void pilot_stackRemove( Pilot *p )
       WARN(_("Trying to remove non-existent pilot '%s' from stack!"), p->name);
 #endif /* DEBUGGING */
    p->id = 0;
-   array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] ); // NOLINT
+   array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
 }
 
 /**
@@ -3700,14 +3700,14 @@ void pilots_clean( int persist )
          /* Reset trails */
          for (int g=0; g<array_size(p->trail); g++)
             spfx_trail_remove( p->trail[g] );
-         array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) ); // NOLINT
+         array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
          /* All done. */
          persist_count++;
       }
       else /* rest get killed */
          pilot_free(pilot_stack[i]);
    }
-   array_erase( &pilot_stack, &pilot_stack[persist_count], array_end(pilot_stack) ); // NOLINT
+   array_erase( &pilot_stack, &pilot_stack[persist_count], array_end(pilot_stack) );
 
    /* Init AI on the remaining pilots, has to be done here so the pilot_stack is consistent. */
    for (int i=0; i<array_size(pilot_stack); i++) {
@@ -3760,7 +3760,7 @@ void pilots_cleanAll (void)
       player.p = NULL;
       memset( &player.ps, 0, sizeof(PlayerShip_t) );
    }
-   array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) ); // NOLINT
+   array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) );
 }
 
 /**

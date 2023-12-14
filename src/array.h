@@ -117,7 +117,7 @@ static inline _private_container *_array_private_container(void *a)
  * @note Invalidates all iterators.
  */
 #define array_grow(ptr_array) \
-      (*(__typeof__((ptr_array)[0]))_array_grow_helper((void **)(ptr_array), sizeof((ptr_array)[0][0])))
+      (*(__typeof__((ptr_array)[0]))_array_grow_helper((void **)(ptr_array), sizeof((ptr_array)[0][0]))) // NOLINT
 /**
  * @brief Adds a new element at the end of the array.
  *
@@ -147,7 +147,7 @@ static inline _private_container *_array_private_container(void *a)
  *    @param ptr_array Array being manipulated.
  */
 #define array_shrink(ptr_array) \
-      (_array_shrink_helper((void **)(ptr_array), sizeof((ptr_array)[0][0])))
+      (_array_shrink_helper((void **)(ptr_array), sizeof((ptr_array)[0][0]))) // NOLINT
 /**
  * @brief Frees memory allocated and sets array to NULL.
  *

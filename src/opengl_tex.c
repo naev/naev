@@ -1038,7 +1038,7 @@ glTexture** gl_copyTexArray( glTexture **tex )
 
    t = array_create_size( glTexture*, n );
    for (int i=0; i<array_size(tex); i++)
-      array_push_back( &t, gl_dupTexture( tex[i] ) ); // NOLINT
+      array_push_back( &t, gl_dupTexture( tex[i] ) );
    return t;
 }
 
@@ -1049,6 +1049,6 @@ glTexture** gl_addTexArray( glTexture **tex, glTexture *t )
 {
    if (tex==NULL)
       tex = array_create_size( glTexture*, 1 );
-   array_push_back( &tex, t ); // NOLINT
+   array_push_back( &tex, t );
    return tex;
 }

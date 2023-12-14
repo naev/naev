@@ -2473,7 +2473,7 @@ void map_jump (void)
 
    /* update path if set */
    if (array_size(map_path) != 0) {
-      array_erase( &map_path, &map_path[0], &map_path[1] ); // NOLINT
+      array_erase( &map_path, &map_path[0], &map_path[1] );
       if (array_size(map_path) == 0)
          player_targetHyperspaceSet( -1, 1 );
       else { /* get rid of bottom of the path */
@@ -2947,7 +2947,7 @@ StarSystem** map_getJumpPath( const char* sysstart, const vec2 *posstart, const 
       assert( njumps > ojumps );
       if (res == NULL)
          res = array_create_size( StarSystem*, njumps );
-      array_resize( &res, njumps ); // NOLINT
+      array_resize( &res, njumps );
       /* Build path. */
       for (int i=0; i<njumps-ojumps; i++) {
          res[njumps-i-1] = cur->sys;
