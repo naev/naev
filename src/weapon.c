@@ -81,6 +81,8 @@ static IntList weapon_qtexp; /**< For querying collisions from explosions. */
  */
 /* Creation. */
 static void weapon_updateVBO (void);
+static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
+      const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time );
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time );
 static double weapon_aimTurretStatic( const vec2 *target_pos, const vec2 *pos, double dir, double swivel );
@@ -1849,26 +1851,38 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
 /**
  * @brief Gets the aim position of a turret weapon.
  *
- *    @param outfit Weapon outfit.
+ *    @param o Weapon outfit.
  *    @param parent Parent of the weapon.
  *    @param target Target of the weapon.
  *    @param pos Position of the turret.
  *    @param vel Velocity of the turret.
  *    @param dir Direction facing parent ship and turret.
  *    @param time Expected flight time.
- *    @return The direction to aim.
+ *    @return 0 if not in arc, 1 if in arc.
  */
-static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
+int weapon_inArc( const Outfit *o, const Pilot *parent, const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time )
+{
+   if (outfit_isTurret(o))
+      return 1;
+   else {
+      double swivel = outfit_swivel(o);
+      double rdir = weapon_aimTurretAngle( o, parent, target, pos, vel, dir, time );
+      double off = angle_diff( rdir, dir );
+      if (FABS(off) <= swivel)
+         return 1;
+      return 0;
+   }
+}
+
+/**
+ * @brief Gets the aim direction of a turret weapon.
+ */
+static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
       const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time )
 {
    const Pilot *pilot_target = NULL;
    const vec2 *target_pos, *target_vel;
-   double rx, ry, x, y, t, lead, rdir, off;
-   double swivel = outfit_swivel(outfit);
-
-   /* No swivel is trivial case. */
-   if (swivel <= 0.)
-      return dir;
+   double rx, ry, x, y, t, lead, rdir;
 
    switch (target->type) {
       case TARGET_PILOT:
@@ -1980,6 +1994,33 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
          }
       }
    }
+   return rdir;
+}
+
+/**
+ * @brief Gets the aim position of a turret weapon.
+ *
+ *    @param outfit Weapon outfit.
+ *    @param parent Parent of the weapon.
+ *    @param target Target of the weapon.
+ *    @param pos Position of the turret.
+ *    @param vel Velocity of the turret.
+ *    @param dir Direction facing parent ship and turret.
+ *    @param time Expected flight time.
+ *    @return The direction to aim.
+ */
+static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
+      const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time )
+{
+   double rdir, off;
+   double swivel = outfit_swivel(outfit);
+
+   /* No swivel is trivial case. */
+   if (swivel <= 0.)
+      return dir;
+
+   /* Get the angle. */
+   rdir = weapon_aimTurretAngle( outfit, parent, target, pos, vel, dir, time );
 
    /* Calculate bounds. */
    off = angle_diff( rdir, dir );

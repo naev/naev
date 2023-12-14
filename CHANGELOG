@@ -5,6 +5,7 @@
    * Fixed Naev not starting on Mac OS
    * Fixed beam collisions (again)
    * Fixed rare hard crash when beams are being fired
+   * 'in range' option for weapon sets now takes into account weapon arcs
    * Buffed Targeting Conduit
    * Renamed 'Point of Interest' to 'Sensor Anomaly'
    * Double-tap activating outfits breaks stealth
