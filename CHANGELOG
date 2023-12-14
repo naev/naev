@@ -1,5 +1,5 @@
 * 0.11.0-beta.3 (unreleased)
-   * Differentiated more significantly the energy / kinetic / plasma weapon groups
+   * Differentiated more significantly the energy / kinetic / plasma weapon types
    * Fixed hard crash when loading when approaching certain NPCs
    * Fixed crash when change tab triggers a takeoff
    * Fixed Naev not starting on Mac OS
