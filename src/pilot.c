@@ -4090,25 +4090,25 @@ credits_t pilot_worth( const Pilot *p, int count_unique )
 void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type, unsigned int idx )
 {
    if (idx != 0)
-      lua_pushvalue(naevL, idx); /* data */
+      lua_pushvalue(naevL, idx);    /* data */
    else
-      lua_pushnil(naevL); /* data */
+      lua_pushnil(naevL);           /* data */
 
-   lua_newtable(naevL); /* data, msg */
+   lua_newtable(naevL);             /* data, msg */
 
    if (p != NULL) {
-      lua_pushpilot(naevL, p->id); /* data, msg, sender */
-      lua_rawseti(naevL, -2, 1); /* data, msg */
+      lua_pushpilot(naevL, p->id);  /* data, msg, sender */
+      lua_rawseti(naevL, -2, 1);    /* data, msg */
    }
 
-   lua_pushstring(naevL, type); /* data, msg, type */
-   lua_rawseti(naevL, -2, 2); /* data, msg */
+   lua_pushstring(naevL, type);     /* data, msg, type */
+   lua_rawseti(naevL, -2, 2);       /* data, msg */
 
-   lua_pushvalue(naevL, -2); /* data, msg, data */
-   lua_rawseti(naevL, -2, 3); /* data, msg */
+   lua_pushvalue(naevL, -2);        /* data, msg, data */
+   lua_rawseti(naevL, -2, 3);       /* data, msg */
 
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, receiver->messages); /* data, msg, messages */
-   lua_pushvalue(naevL, -2); /* data, msg, messages, msg */
+   lua_pushvalue(naevL, -2);        /* data, msg, messages, msg */
    lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); /* data, msg, messages */
    lua_pop(naevL, 3); /*  */
 }

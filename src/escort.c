@@ -43,11 +43,11 @@ int escort_addList( Pilot *p, const Ship *ship, EscortType_t type,
    Escort_t *escort;
    if (p->escorts == NULL)
       p->escorts = array_create( Escort_t );
-   escort = &array_grow( &p->escorts );
-   escort->ship = ship;
-   escort->type = type;
-   escort->id   = id;
-   escort->persist = persist;
+   escort         = &array_grow( &p->escorts );
+   escort->ship   = ship;
+   escort->type   = type;
+   escort->id     = id;
+   escort->persist= persist;
 
    return 0;
 }
