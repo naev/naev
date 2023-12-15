@@ -223,6 +223,8 @@ static int load_load( nsave_t *save, const char *path )
 
 /**
  * @brief Loads or refreshes saved games for the player.
+ *
+ * @TODO thread this
  */
 int load_refresh (void)
 {
