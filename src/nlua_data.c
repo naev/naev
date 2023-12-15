@@ -177,10 +177,8 @@ static int dataL_new( lua_State *L )
       ld.type = LUADATA_NUMBER;
       ld.elem = sizeof(float);
    }
-   else {
+   else
       return NLUA_ERROR(L, _("unknown data type '%s'"), type);
-      return 0;
-   }
    ld.size = size*ld.elem;
    ld.data = calloc( ld.elem, size );
    lua_pushdata( L, ld );
@@ -190,10 +188,8 @@ static int dataL_new( lua_State *L )
 static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos )
 {
    size_t mpos;
-   if (pos < 0) {
+   if (pos < 0)
       return NLUA_ERROR(L, _("position argument must be positive!"));
-      return 0;
-   }
    mpos = pos * ld->elem;
    if (mpos >= ld->size)
       return NLUA_ERROR(L, _("position argument out of bounds: %d of %d elements"), pos, ld->size/ld->elem);
@@ -372,7 +368,6 @@ static int dataL_convolve2d( lua_State *L )
    long kw = luaL_checklong(L,5);
    long kh = luaL_checklong(L,6);
    LuaData_t out;
-   int p, u,v, ku,kv, bu,bv;
    int kw2,kh2, bw,bh, ow,oh;
    const float *I = (const float*)lI->data;
    const float *K = (const float*)lK->data;
@@ -404,19 +399,19 @@ static int dataL_convolve2d( lua_State *L )
    bw = ow+2*kw2;
    bh = oh+2*kh2;
    B = calloc( bw*bh*4, sizeof(float) );
-   for (v=0; v<ih; v++)
+   for (int v=0; v<ih; v++)
       memcpy( &B[ POS(kw2, v+kh2, bw) ],
               &I[ POS(  0,     v, iw) ],
               4*sizeof(float)*iw );
 
    /* Convolve. */
-   for (v=0; v<oh; v++) {
-      for (u=0; u<ow; u++) {
-         for (kv=0; kv<kh; kv++) {
-            for (ku=0; ku<kw; ku++) {
-               bu = u + ku;
-               bv = v + kv;
-               for (p=0; p<4; p++)
+   for (int v=0; v<oh; v++) {
+      for (int u=0; u<ow; u++) {
+         for (int kv=0; kv<kh; kv++) {
+            for (int ku=0; ku<kw; ku++) {
+               int bu = u + ku;
+               int bv = v + kv;
+               for (int p=0; p<4; p++)
                   O[ POS( u, v, ow )+p ] +=
                         B[ POS( bu, bv, bw )+p ]
                         * K[ POS( ku, kv, kw )+p ];
