@@ -1,4 +1,6 @@
 * 0.11.0 (unreleased)
+   * Tweaked the approach logic to prefer planets over pilots when only planet is selected
+   * Approach should no longer play extraneous target sounds
    * Fixed POI missions having markers say 'Point of Interest' instead of 'Sensor Anomaly'
    * Most consistent texture interpolation when using mipmaps
    * Can only start to afterburn with enough energy for 0.5 seconds of afterburning

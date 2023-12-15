@@ -1772,10 +1772,10 @@ void player_nolandMsg( const char *str )
  */
 void player_approach (void)
 {
-   int brd = (player_canBoard(0)!=PLAYER_BOARD_IMPOSSIBLE);
+   int plt = (player.p->target!=PLAYER_ID);
    int lnd = (player.p->nav_spob != -1);
 
-   if (brd) {
+   if (plt && (player_canBoard(0)!=PLAYER_BOARD_IMPOSSIBLE)) {
       if (player_tryBoard(1) == PLAYER_BOARD_RETRY)
          player_autonavBoard( player.p->target );
       return;
@@ -1789,22 +1789,16 @@ void player_approach (void)
       return;
    }
    else {
-      int plt = (player.p->target!=PLAYER_ID);
-
       /* Try to get a pilot to board first. */
       if (!plt) {
          /* We don't try to find far away targets, only nearest and see if it matches.
          * However, perhaps looking for first boardable target within a certain range
          * could be more interesting. */
-         player_targetNearest();
-         if (player_canBoard(0)!=PLAYER_BOARD_IMPOSSIBLE) {
+         if (player_canBoard(0)!=PLAYER_BOARD_IMPOSSIBLE) { /* player_canBoard should try to find a target. */
             if (player_tryBoard(1) == PLAYER_BOARD_RETRY)
                player_autonavBoard( player.p->target );
             return;
          }
-
-         /* Clear pilot again */
-         player_targetClear();
       }
 
       if (player_land(1)==PLAYER_LAND_AGAIN)
