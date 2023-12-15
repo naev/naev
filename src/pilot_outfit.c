@@ -1050,10 +1050,6 @@ void pilot_calcStats( Pilot* pilot )
    pilot->cap_cargo    *= s->cargo_mod;
    s->engine_limit     *= s->engine_limit_rel;
 
-   /* Set maximum speed. */
-   if (!pilot_isFlag( pilot, PILOT_AFTERBURNER ))
-      pilot->solid.speed_max = pilot->speed_base;
-
    /*
     * Flat increases.
     */

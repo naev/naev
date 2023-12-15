@@ -4605,16 +4605,12 @@ static int pilotL_setSpeedLimit(lua_State* L)
 
    /* Limit the speed */
    p->speed_limit = s;
-   if (s > 0.) {
+   if (s > 0.)
       pilot_setFlag( p, PILOT_HASSPEEDLIMIT );
-      p->solid.speed_max = MIN( p->speed, p->speed_limit );
-   }
-   else {
+   else
       pilot_rmFlag( p, PILOT_HASSPEEDLIMIT );
-      p->solid.speed_max = p->speed;
-   }
 
-   pilot_updateMass(p);
+   pilot_updateMass(p); /* Updates the true speed limit. */
    return 0;
 }
 
