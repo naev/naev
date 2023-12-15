@@ -276,7 +276,7 @@ const char* spob_getClassName( const char *class )
 credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
 {
    const char *sysname = spob_getSystem( p->name );
-   StarSystem *sys = system_get( sysname );
+   const StarSystem *sys = system_get( sysname );
    return economy_getPrice( c, sys, p );
 }
 
@@ -290,7 +290,7 @@ credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
 credits_t spob_commodityPriceAtTime( const Spob *p, const Commodity *c, ntime_t t )
 {
    const char *sysname = spob_getSystem( p->name );
-   StarSystem *sys = system_get( sysname );
+   const StarSystem *sys = system_get( sysname );
    return economy_getPriceAtTime( c, sys, p, t );
 }
 
@@ -587,7 +587,7 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
  *    @param landable Whether the search is limited to landable spobs.
  *    @return An array (array.h) of faction names.  Individual names are not allocated.
  */
-char** space_getFactionSpob( int *factions, int landable )
+char** space_getFactionSpob( const int *factions, int landable )
 {
    char **tmp = array_create( char* );
    for (int i=0; i<array_size(systems_stack); i++) {
@@ -830,7 +830,7 @@ int space_sysReachable( const StarSystem *sys )
 
    /* check to see if it is adjacent to known */
    for (int i=0; i<array_size(sys->jumps); i++) {
-      JumpPoint *jp = sys->jumps[i].returnJump;
+      const JumpPoint *jp = sys->jumps[i].returnJump;
       if (jp && jp_isUsable( jp ))
          return 1;
    }
@@ -865,7 +865,7 @@ int space_sysReallyReachable( const char* sysname )
 int space_sysReachableFromSys( const StarSystem *target, const StarSystem *sys )
 {
    /* check to see if sys contains a known jump point to target */
-   JumpPoint *jp = jump_getTarget( target, sys );
+   const JumpPoint *jp = jump_getTarget( target, sys );
    if (jp == NULL)
       return 0;
    else if (jp_isUsable( jp ))
@@ -1548,9 +1548,8 @@ int space_needsEffects (void)
  */
 void space_init( const char* sysname, int do_simulate )
 {
-   int n, s;
    const double fps_min_simulation = fps_min;
-   StarSystem *oldsys = cur_system;
+   const StarSystem *oldsys = cur_system;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1662,6 +1661,7 @@ void space_init( const char* sysname, int do_simulate )
    }
    player_messageToggle( 0 );
    if (do_simulate) {
+      int n, s;
       /* Uint32 time = SDL_GetTicks(); */
       s = sound_disabled;
       sound_disabled = 1;
@@ -2354,7 +2354,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &spob->tags, strdup(tmp) );
                continue;
@@ -3015,7 +3015,7 @@ static int system_parse( StarSystem *sys, const char *filename )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &sys->tags, strdup(tmp) );
                continue;
@@ -3312,8 +3312,6 @@ static int system_parseJumps( StarSystem *sys )
  */
 int space_load (void)
 {
-   int ret;
-
    /* Loading. */
    systems_loading = 1;
 
@@ -3325,25 +3323,11 @@ int space_load (void)
    jumppoint_gfx = gl_newSprite(  SPOB_GFX_SPACE_PATH"jumppoint.webp", 4, 4, OPENGL_TEX_MIPMAPS );
    jumpbuoy_gfx = gl_newImage(  SPOB_GFX_SPACE_PATH"jumpbuoy.webp", 0 );
 
-   /* Load spobs. */
-   ret = spobs_load();
-   if (ret < 0)
-      return ret;
-
-   /* Load virtual spobs. */
-   ret = virtualspobs_load();
-   if (ret < 0)
-      return ret;
-
-   /* Load asteroid stuff. */
-   ret = asteroids_load ();
-   if (ret < 0)
-      return ret;
-
-   /* Load systems. */
-   ret = systems_load();
-   if (ret < 0)
-      return ret;
+   /* Load data. */
+   spobs_load();
+   virtualspobs_load();
+   asteroids_load ();
+   systems_load();
 
    /* Done loading. */
    systems_loading = 0;
@@ -3382,8 +3366,10 @@ int space_loadLua (void)
  */
 static int systems_load (void)
 {
-   char **system_files;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   char **system_files;
 
    /* Allocate if needed. */
    if (systems_stack == NULL)
@@ -3429,12 +3415,12 @@ static int systems_load (void)
    /* Clean up. */
    array_free( system_files );
 
+#if DEBUGGING
    if (conf.devmode) {
-      time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Star System",
                  "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
       DEBUG( n_( "       with %d Space Object in %.3f s",
-                 "       with %d Space Objects in %.3f s", array_size(spob_stack) ), array_size(spob_stack), time/1000. );
+                 "       with %d Space Objects in %.3f s", array_size(spob_stack) ), array_size(spob_stack), (SDL_GetTicks()-time)/1000. );
    }
    else {
       DEBUG( n_( "Loaded %d Star System",
@@ -3442,6 +3428,7 @@ static int systems_load (void)
       DEBUG( n_( "       with %d Space Object",
                  "       with %d Space Objects", array_size(spob_stack) ), array_size(spob_stack) );
    }
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -4130,7 +4117,6 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
       q_destroy(q);
       q_destroy(qn);
       goto sys_cleanup;
-      return;
    }
 
    while (curSpill < range) {
