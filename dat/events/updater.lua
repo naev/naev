@@ -16,26 +16,6 @@ local luatk = require "luatk"
 
 -- Runs on saves older than 0.11.0
 local function updater0110( did0100, did090 )
-   local conf = naev.conf()
-   local function set_var( name, default, olddefault )
-      local v = var.peek(name) or default
-      if v <= 0 then -- Case not set or erased
-         v = olddefault
-      end
-      var.push( name, v )
-   end
-
-   -- Move some old configuration values to player variables
-   -- TODO eliminate around 0.12.0 or so
-   set_var( "autonav_reset_shield", conf.autonav_reset_shield, 1 )
-   set_var( "autonav_reset_dist", conf.autonav_reset_dist, 3e3 )
-   set_var( "autonav_compr_speed", conf.compression_velocity, 5e3 )
-   if conf.compression_mult==200 then -- Take the opportunity to lower default from 200 to 50
-      set_var( "autonav_compr_max", 50 )
-   else
-      set_var( "autonav_compr_max", conf.compression_mult, 50  )
-   end
-
    local metai = (var.peek("shipai_name") ~= nil)
    local hasbioship = player.pilot():ship():tags().bioship
    for k,v in ipairs(player.ships()) do
@@ -53,8 +33,8 @@ local function updater0110( did0100, did090 )
    if not metai then
       vn.na(_([[Suddenly, a hologram materializes in front of you.]]))
       sai(fmt.f(_([["Hello there {playername}! I'm your Ship AI. Up until now I've been resident in your ship controlling your Autonav and other functionality, but with new updates, I can now materialize and communicate directly with you as a hologram."
-   They stare at you for a few seconds.
-   "Say, now that I can see you, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))
+They stare at you for a few seconds.
+"Say, now that I can see you, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))
       sai(_([["I'm sure you have many questions about the update, but first, would you like to give me a name?"]]))
       vn.label("rename")
       local ainame
