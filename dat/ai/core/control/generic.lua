@@ -1083,7 +1083,7 @@ function gen_distress( target )
 
    -- Initialize if unset.
    if mem.distressed == nil then
-      mem.distressed = 1
+      mem.distressed = rnd.rnd(1,math.ceil(mem.distressrate*0.5+0.5))
    end
 
    -- Update distress counter
