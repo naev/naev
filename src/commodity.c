@@ -340,7 +340,7 @@ static int commodity_parse( Commodity *temp, const char *filename )
          continue;
       }
 
-      WARN(_("Commodity '%s' has unknown node '%s'"),temp->name, node->name);
+      WARN(_("Commodity '%s' has unknown node '%s'"), temp->name, node->name);
    } while (xml_nextNode(node));
 
    if (temp->name == NULL)
@@ -461,8 +461,10 @@ int commodity_tempIllegalto( Commodity *com, int faction )
  */
 int commodity_load (void)
 {
-   char **commodities = ndata_listRecursive( COMMODITY_DATA_PATH );
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   char **commodities = ndata_listRecursive( COMMODITY_DATA_PATH );
 
    commodity_stack = array_create( Commodity );
    econ_comm = array_create( int );
@@ -488,12 +490,14 @@ int commodity_load (void)
    }
    array_free( commodities );
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Commodity in %.3f s", "Loaded %d Commodities in %.3f s", array_size(commodity_stack) ), array_size(commodity_stack), time/1000. );
    }
    else
       DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", array_size(commodity_stack) ), array_size(commodity_stack) );
+#endif /* DEBUGGING */
 
    return 0;
 }
