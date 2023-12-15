@@ -229,6 +229,11 @@ void lua_exit (void)
    free( common_script );
    lua_close(naevL);
    naevL = NULL;
+   for (int i=0; i<array_size(lua_cache); i++) {
+      LuaCache_t *lc = &lua_cache[i];
+      free(lc->path);
+      /*luaL_unref(naevL, LUA_REGISTRYINDEX, lc->idx);*/ /* lua_close should have taken care of this. */
+   }
    array_free(lua_cache);
    lua_cache = NULL;
 }
