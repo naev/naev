@@ -101,8 +101,10 @@ static void menu_editors_close( unsigned int wid, const char *str );
 /* options button. */
 static void menu_options_button( unsigned int wid, const char *str );
 
-/*
+/**
  * Background system for the menu.
+ *
+ * @TODO optimize this, it's too slow
  */
 static int menu_main_bkg_system (void)
 {
@@ -157,7 +159,7 @@ static int menu_main_bkg_system (void)
    cy += SCREEN_H/8. / conf.zoom_far;
 
    /* Initialize. */
-   space_init( sys, 1 ); /* More lively with simulation. */
+   space_init( sys, 0 ); /* More lively with simulation. */
    cam_setTargetPos( cx, cy, 0 );
    cam_setZoom( conf.zoom_far );
    pause_setSpeed( 1. );
@@ -201,9 +203,7 @@ void menu_main (void)
    gl_freeTexture( main_naevLogo );
    tex = gl_newImage( GFX_PATH"Naev.webp", 0 );
    main_naevLogo = tex;
-   Uint32 starttime = SDL_GetTicks();
    menu_main_bkg_system();
-   LOG( _( "Loaded in %.3f s" ), (SDL_GetTicks()-starttime)/1000. );
 
    /* Set dimensions */
    y  = 20 + (BUTTON_HEIGHT+20)*4;
