@@ -124,6 +124,7 @@ static void outfit_modifiers( unsigned int wid )
  */
 static int outfit_events( unsigned int wid, SDL_Event *evt )
 {
+   (void) evt; /* For constness warning. */
    if ((evt->type==SDL_KEYDOWN) || (evt->type==SDL_KEYUP))
       outfit_modifiers( wid );
    return 0;
@@ -348,12 +349,8 @@ static void outfits_genList( unsigned int wid )
       outfit_filterOther,
       outfitLand_filter,
    };
-   const char *tabnames[] = {
-      _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE), _("#rOther"), _("Owned"),
-   };
 
    int active;
-   int fx, fy, fw, fh, barw; /* Input filter. */
    ImageArrayCell *coutfits;
    int noutfits;
    int w, h, iw, ih;
@@ -366,6 +363,11 @@ static void outfits_genList( unsigned int wid )
 
    /* Create tabbed window. */
    if (!widget_exists( wid, OUTFITS_TAB )) {
+      int fx, fy, fw, fh, barw; /* Input filter. */
+      const char *tabnames[] = {
+         _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE), _("#rOther"), _("Owned"),
+      };
+
       window_addTabbedWindow( wid, 20, 20 + ih - 30, iw, 30,
             OUTFITS_TAB, OUTFITS_NTABS, tabnames, 1 );
 
@@ -476,7 +478,7 @@ void outfits_update( unsigned int wid, const char *str )
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
 
    /* See if black market. */
-   LandOutfitData *data = window_getData( wid );
+   const LandOutfitData *data = window_getData( wid );
    blackmarket = data->blackmarket;
 
    /* Set up keys. */
@@ -495,7 +497,7 @@ void outfits_update( unsigned int wid, const char *str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("N/A") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
+      /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
       window_modifyText( wid, "txtSDesc", buf );
       window_modifyText( wid, "txtDDesc", buf );
       window_modifyText( wid, "txtOutfitName", _("None") );
@@ -567,11 +569,11 @@ void outfits_update( unsigned int wid, const char *str )
       int meets_reqs = 0;
       if (land_spob != NULL)
          meets_reqs = cond_check(outfit->cond);
-      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
+      /*k +=*/ scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
       if (blackmarket)
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0", _("Not Necessary (Blackmarket)") );
+         /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0", _("Not Necessary (Blackmarket)") );
       else
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s%s#0", meets_reqs ? "" : "#r", _(outfit->condstr) );
+         /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "\n%s%s#0", meets_reqs ? "" : "#r", _(outfit->condstr) );
    }
    window_modifyText( wid, "txtSDesc", lbl );
    window_modifyText( wid, "txtDDesc", buf );
@@ -772,7 +774,6 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, 
       /* Set alt text. */
       for (int i=0; i<*noutfits; i++) {
          const glColour *c;
-         const char *typename;
          glTexture *t;
          const Outfit *o = outfits[i];
 
@@ -797,7 +798,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, 
          if ( (strcmp(outfit_slotName(o), "N/A") != 0)
                && (strcmp(outfit_slotName(o), "NULL") != 0) ) {
             size_t sz = 0;
-            typename       = _(outfit_slotName(o));
+            const char *typename = _(outfit_slotName(o));
             u8_inc( typename, &sz );
             coutfits[i].slottype = malloc( sz+1 );
             memcpy( coutfits[i].slottype, typename, sz );
@@ -891,12 +892,10 @@ int outfit_canBuy( const Outfit *outfit, int wid )
 {
    int failure, canbuy, cansell;
    credits_t price;
-   char buf[ECON_CRED_STRLEN];
    LandOutfitData *data = NULL;
    if (wid>=0)
       data = window_getData( wid );
    int blackmarket = (data!=NULL) ? data->blackmarket : 0;
-   int sold = 0;
    const Outfit *omap = outfit_get( LOCAL_MAP_NAME );
 
    land_errClear();
@@ -905,6 +904,7 @@ int outfit_canBuy( const Outfit *outfit, int wid )
 
    /* Special exception for local map. */
    if (outfit!=omap) {
+      int sold = 0;
       /* See if the player previously sold it. */
       for (int i=0; i<array_size(outfits_sold); i++) {
          if (outfits_sold[i].o == outfit ) {
@@ -952,6 +952,7 @@ int outfit_canBuy( const Outfit *outfit, int wid )
    }
    /* Not enough $$ */
    if (!player_hasCredits(price)) {
+      char buf[ECON_CRED_STRLEN];
       credits2str( buf, price - player.p->credits, 2 );
       land_errDialogueBuild( _("You need %s more."), buf);
       failure = 1;
