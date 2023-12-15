@@ -1607,29 +1607,9 @@ int player_land( int loud )
       return PLAYER_LAND_DENIED;
    }
 
-   /* Find new target. */
-   if (player.p->nav_spob == -1) { /* get nearest spob target */
-      double td = -1.; /* temporary distance */
-      int tp = -1; /* temporary spob */
-      for (int i=0; i<array_size(cur_system->spobs); i++) {
-         spob = cur_system->spobs[i];
-         double d = vec2_dist(&player.p->solid.pos,&spob->pos);
-         if (pilot_inRangeSpob( player.p, i ) &&
-               spob_hasService(spob,SPOB_SERVICE_LAND) &&
-               ((tp==-1) || ((td == -1) || (td > d)))) {
-            tp = i;
-            td = d;
-         }
-      }
-      player_targetSpobSet( tp );
-      player_hyperspacePreempt(0);
-
-      /* no landable spob */
-      if (player.p->nav_spob < 0)
-         return PLAYER_LAND_DENIED;
-
-      silent = 1; /* Suppress further targeting noises. */
-   }
+   /* No target means no land. */
+   if (player.p->nav_spob == -1)
+      return PLAYER_LAND_DENIED;
    /* Check if spob is in range when not uninhabited. */
    else if (!spob_isFlag(cur_system->spobs[ player.p->nav_spob ], SPOB_UNINHABITED) && !pilot_inRangeSpob( player.p, player.p->nav_spob )) {
       player_spobOutOfRangeMsg();
@@ -1789,20 +1769,42 @@ void player_approach (void)
       return;
    }
    else {
-      /* Try to get a pilot to board first. */
+      /* In the case they have no target already, we just try to find a target
+       * first, with priority for boarding. */
       if (!plt) {
-         /* We don't try to find far away targets, only nearest and see if it matches.
-         * However, perhaps looking for first boardable target within a certain range
-         * could be more interesting. */
-         if (player_canBoard(0)!=PLAYER_BOARD_IMPOSSIBLE) { /* player_canBoard should try to find a target. */
-            if (player_tryBoard(1) == PLAYER_BOARD_RETRY)
-               player_autonavBoard( player.p->target );
+         Pilot *nearp;
+         double d = pilot_getNearestPosPilot( player.p, &nearp, player.p->solid.pos.x, player.p->solid.pos.y, 1 );
+         if ((nearp!=NULL) && !pilot_isFlag(nearp,PILOT_NOBOARD) && (d<pow2(5e3)) &&
+               (pilot_isDisabled(nearp) || pilot_isFlag(nearp,PILOT_BOARDABLE))) {
+            player_targetSet( nearp->id );
+            player_tryBoard(0); /* Try to board if can. */
             return;
          }
       }
 
-      if (player_land(1)==PLAYER_LAND_AGAIN)
-         player_autonavSpob( cur_system->spobs[player.p->nav_spob]->name, 1 );
+      /* Now try to find a landing target. */
+      if (!lnd) {
+         double td = -1.; /* temporary distance */
+         int tp = -1; /* temporary spob */
+         for (int i=0; i<array_size(cur_system->spobs); i++) {
+            const Spob *spob = cur_system->spobs[i];
+            double d = vec2_dist(&player.p->solid.pos,&spob->pos);
+            if (!pilot_inRangeSpob( player.p, i ))
+               continue;
+            if (!spob_hasService(spob,SPOB_SERVICE_LAND))
+               continue;
+            if ((tp==-1) || ((td==-1) || (td > d))) {
+               tp = i;
+               td = d;
+            }
+         }
+         if (tp>=0) {
+            player_targetSpobSet( tp );
+            player_hyperspacePreempt(0);
+            player_land(0); /* Try to land if can. */
+            return;
+         }
+      }
    }
 }
 

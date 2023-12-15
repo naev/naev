@@ -119,22 +119,10 @@ int player_canBoard( int noisy )
    if (pilot_isDisabled(player.p))
       return PLAYER_BOARD_IMPOSSIBLE;
 
-   if (player.p->target==PLAYER_ID) {
-      /* We don't try to find far away targets, only nearest and see if it matches.
-       * However, perhaps looking for first boardable target within a certain range
-       * could be more interesting. */
-      pilot_getNearestPosPilot( player.p, &p, player.p->solid.pos.x, player.p->solid.pos.y, 1 );
-      if ((p == NULL) ||
-            (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
-            pilot_isFlag(p,PILOT_NOBOARD)) {
-         if (noisy)
-            player_message( "#r%s", _("You need a target to board first!") );
-         return PLAYER_BOARD_IMPOSSIBLE;
-      }
-      player_targetSet( p->id );
-   }
-   else
-      p = pilot_getTarget( player.p );
+   /* Can't board if no pilot. */
+   if (player.p->target==PLAYER_ID)
+      return PLAYER_BOARD_IMPOSSIBLE;
+   p = pilot_getTarget( player.p );
 
    /* More checks. */
    if (pilot_isFlag(p,PILOT_NOBOARD)) {
