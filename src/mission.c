@@ -1405,8 +1405,7 @@ int missions_loadCommodity( xmlNodePtr parent )
    do {
       xml_onlyNodes(node);
 
-      /* TODO remove support for "mission_cargo" in the future (maybe 0.12.0?). 0.10.0 onwards uses "temporary_cargo" */
-      if (xml_isNode(node,"temporary_cargo") || xml_isNode(node,"mission_cargo")) {
+      if (xml_isNode(node,"temporary_cargo")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
             xml_onlyNodes(cur);

@@ -131,7 +131,7 @@ static int menu_main_bkg_system (void)
 
       /* Get start position. */
       if (spob_exists( ns[0].spob )) {
-         Spob *pnt = spob_get( ns[0].spob );
+         const Spob *pnt = spob_get( ns[0].spob );
          if (pnt != NULL) {
             sys = spob_getSystem( ns[0].spob );
             if (sys != NULL) {
@@ -201,7 +201,9 @@ void menu_main (void)
    gl_freeTexture( main_naevLogo );
    tex = gl_newImage( GFX_PATH"Naev.webp", 0 );
    main_naevLogo = tex;
+   Uint32 starttime = SDL_GetTicks();
    menu_main_bkg_system();
+   LOG( _( "Loaded in %.3f s" ), (SDL_GetTicks()-starttime)/1000. );
 
    /* Set dimensions */
    y  = 20 + (BUTTON_HEIGHT+20)*4;

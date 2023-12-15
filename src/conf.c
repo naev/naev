@@ -403,7 +403,6 @@ int conf_loadConfig ( const char* file )
       conf_loadInt( lEnv, "doubletap_sensitivity", conf.doubletap_sens );
       conf_loadFloat( lEnv, "mouse_hide", conf.mouse_hide );
       conf_loadBool( lEnv, "mouse_fly", conf.mouse_fly );
-      conf_loadInt( lEnv, "mouse_thrust", conf.mouse_accel ); /* Old format, TODO remove around 0.12.0 or so. */
       conf_loadInt( lEnv, "mouse_accel", conf.mouse_accel );
       conf_loadFloat( lEnv, "mouse_doubleclick", conf.mouse_doubleclick );
       conf_loadFloat( lEnv, "autonav_reset_dist", conf.autonav_reset_dist );
@@ -713,8 +712,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
       return count;
 
    /* zero-terminate, if possible */
-   if (count != size)
-      str[count] = '\0';   /* don't increase count, like snprintf */
+   str[count] = '\0';   /* don't increase count, like snprintf */
 
    /* return the amount of characters written */
    return count;
@@ -1068,13 +1066,6 @@ int conf_saveConfig ( const char* file )
    conf_saveString("dev_save_map",conf.dev_save_map);
    conf_saveString("dev_save_spob",conf.dev_save_spob);
    conf_saveEmptyLine();
-
-   /* TODO remove the following in 0.12.0 */
-   conf_saveComment(_("The following are for legacy purposes and will be removed in 0.12.0."))
-   conf_saveFloat("compression_velocity",conf.compression_velocity);
-   conf_saveFloat("compression_mult",conf.compression_mult);
-   conf_saveFloat("autonav_reset_dist",conf.autonav_reset_dist);
-   conf_saveFloat("autonav_reset_shield",conf.autonav_reset_shield);
 
    /*
     * Keybindings.
