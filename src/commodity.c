@@ -31,6 +31,7 @@
 #include "rng.h"
 #include "space.h"
 #include "spfx.h"
+#include "threadpool.h"
 
 #define XML_COMMODITY_ID      "commodity" /**< XML document identifier */
 #define CRED_TEXT_MAX         (ECON_CRED_STRLEN-4) /* Maximum length of just credits2str text, no markup */
@@ -42,10 +43,20 @@ static Commodity** commodity_temp = NULL; /**< Contains all the temporary commod
 /* @TODO remove externs. */
 extern int *econ_comm;
 
+/**
+ * @brief For threaded loading of commodities.
+ */
+typedef struct CommodityThreadData_ {
+   char *filename;
+   Commodity com;
+   int ret;
+} CommodityThreadData;
+
 /*
  * Prototypes.
  */
 /* Commodity. */
+static int commodity_parseThread( void *ptr );
 static void commodity_freeOne( Commodity* com );
 static int commodity_parse( Commodity *temp, const char *filename );
 
@@ -454,6 +465,19 @@ int commodity_tempIllegalto( Commodity *com, int faction )
    return 0;
 }
 
+static int commodity_parseThread( void *ptr )
+{
+   CommodityThreadData *data = ptr;
+   data->ret = commodity_parse( &data->com, data->filename );
+   /* Render if necessary. */
+   if (naev_shouldRenderLoadscreen()) {
+      gl_contextSet();
+      naev_renderLoadscreen();
+      gl_contextUnset();
+   }
+   return data->ret;
+}
+
 /**
  * @brief Loads all the commodity data.
  *
@@ -464,6 +488,8 @@ int commodity_load (void)
 #if DEBUGGING
    Uint32 time = SDL_GetTicks();
 #endif /* DEBUGGING */
+   ThreadQueue *tq = vpool_create();
+   CommodityThreadData *cdata = array_create( CommodityThreadData );
    char **commodities = ndata_listRecursive( COMMODITY_DATA_PATH );
 
    commodity_stack = array_create( Commodity );
@@ -471,24 +497,34 @@ int commodity_load (void)
 
    gatherable_load();
 
+   /* Prepare files to run. */
    for (int i=0; i<array_size(commodities); i++) {
-      Commodity c;
-      int ret = commodity_parse( &c, commodities[i] );
-      if (ret == 0) {
-         array_push_back( &commodity_stack, c );
-
-         /* See if should get added to commodity list. */
-         if (c.price > 0.) {
-            int *e = &array_grow( &econ_comm );
-            *e = array_size(commodity_stack)-1;
-         }
-
-         /* Render if necessary. */
-         naev_renderLoadscreen();
+      if (ndata_matchExt( commodities[i], "xml" )) {
+         CommodityThreadData *cd = &array_grow( &cdata );
+         cd->filename = commodities[i];
       }
-      free( commodities[i] );
+      else
+         free( commodities[i] );
    }
    array_free( commodities );
+
+   /* Enqueue the jobs after the data array is done. */
+   for (int i=0; i<array_size(cdata); i++)
+      vpool_enqueue( tq, commodity_parseThread, &cdata[i] );
+
+   /* Wait until done processing. */
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
+   vpool_wait( tq );
+   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+
+   /* Finally load. */
+   for (int i=0; i<array_size(cdata); i++) {
+      CommodityThreadData *cd = &cdata[i];
+      if (!cd->ret)
+         array_push_back( &commodity_stack, cd->com );
+      free( cd->filename );
+   }
+   array_free(cdata);
 
 #if DEBUGGING
    if (conf.devmode) {
