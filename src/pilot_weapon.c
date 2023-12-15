@@ -1713,6 +1713,10 @@ void pilot_afterburn( Pilot *p )
    if (p->afterburner == NULL)
       return;
 
+   /* Needs at least enough energy to afterburn fo 0.5 seconds. */
+   if (p->energy < p->afterburner->outfit->u.afb.energy*0.5)
+      return;
+
    /* The afterburner only works if its efficiency is high enough. */
    if (pilot_heatEfficiencyMod( p->afterburner->heat_T, p->afterburner->outfit->overheat_min, p->afterburner->outfit->overheat_max ) < 0.1) {
       if (pilot_isPlayer(p))
@@ -1720,6 +1724,7 @@ void pilot_afterburn( Pilot *p )
       return;
    }
 
+   /* Turn it on. */
    if (p->afterburner->state == PILOT_OUTFIT_OFF) {
       p->afterburner->state  = PILOT_OUTFIT_ON;
       p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
