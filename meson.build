@@ -88,7 +88,7 @@ if buildExec.disabled() == false
 
    enet = dependency('libenet', required: true, version: '>=1.3', fallback: ['enet', 'enet_dep'], static: get_option('steamruntime'))
    pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'], static: get_option('steamruntime'))
-   sdl = dependency('sdl2', version: '>=2.0.18', required: true)
+   sdl = dependency('sdl2', version: '>=2.0.26', required: true)
    sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'], static: get_option('steamruntime'))
 
