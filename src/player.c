@@ -1777,6 +1777,7 @@ void player_approach (void)
          if ((nearp!=NULL) && !pilot_isFlag(nearp,PILOT_NOBOARD) && (d<pow2(5e3)) &&
                (pilot_isDisabled(nearp) || pilot_isFlag(nearp,PILOT_BOARDABLE))) {
             player_targetSet( nearp->id );
+            player_tryBoard(0); /* Try to board if can. */
             return;
          }
       }
@@ -1800,6 +1801,7 @@ void player_approach (void)
          if (tp>=0) {
             player_targetSpobSet( tp );
             player_hyperspacePreempt(0);
+            player_land(0); /* Try to land if can. */
             return;
          }
       }
