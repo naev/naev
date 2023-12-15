@@ -417,7 +417,7 @@ int system_index( const StarSystem *sys );
 int space_sysReachable( const StarSystem *sys );
 int space_sysReallyReachable( const char* sysname );
 int space_sysReachableFromSys( const StarSystem *target, const StarSystem *sys );
-char** space_getFactionSpob( int *factions, int landable );
+char** space_getFactionSpob( const int *factions, int landable );
 const char* space_getRndSpob( int landable, unsigned int services,
       int (*filter)(Spob *p));
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );
