@@ -184,15 +184,13 @@ static int tkL_query( lua_State *L )
  */
 static int tkL_msg( lua_State *L )
 {
-   const char *title, *str, *img;
-   int width, height;
-
-   // Get fixed arguments : title, string to display and image filename
-   title = luaL_checkstring(L,1);
-   str   = luaL_checkstring(L,2);
+   /* Get fixed arguments : title, string to display and image filename. */
+   const char *title = luaL_checkstring(L,1);
+   const char *str   = luaL_checkstring(L,2);
 
    if (lua_gettop(L) > 2) {
-      img   = luaL_checkstring(L,3);
+      int width, height;
+      const char *img = luaL_checkstring(L,3);
 
       // Get optional arguments : width and height
       width  = (lua_gettop(L) < 4) ? -1 : luaL_checkinteger(L,4);
