@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include <stdlib.h>
+
 /*
  * Define various paths
  */
