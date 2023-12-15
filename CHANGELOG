@@ -1,4 +1,5 @@
 * 0.11.0 (unreleased)
+   * Approach no longer instantly starts autonav unless a space object or derelict is already targetted
    * Tweaked the approach logic to prefer planets over pilots when only planet is selected
    * Approach should no longer play extraneous target sounds
    * Stores now show amount for unique outfits, while equipment windows shall not
