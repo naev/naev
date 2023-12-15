@@ -1745,7 +1745,7 @@ static void equipment_genOutfitList( unsigned int wid )
 
    /* Get the outfits. */
    noutfits = player_getOutfitsFiltered( (const Outfit**)iar_outfits[active], tabfilters[active], filtertext );
-   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, (p==NULL) ? player.p : p );
+   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, (p==NULL) ? player.p : p, 0 );
 
    /* Create the actual image array. */
    iw = ow - 6;
@@ -2003,7 +2003,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       for (int i=0; i<ncells; i++)
          array_push_back( &outfits, ship->outfit_intrinsic[i].outfit );
 
-      cells = outfits_imageArrayCells( outfits, &ncells, ship );
+      cells = outfits_imageArrayCells( outfits, &ncells, ship, 0 );
 
       window_posWidget( wid, "txtSDesc", &tx, &ty );
       window_dimWidget( wid, "txtSDesc", &tw, &th );

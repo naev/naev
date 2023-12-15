@@ -214,13 +214,10 @@ static int tkL_msg( lua_State *L )
  */
 static int tkL_yesno( lua_State *L )
 {
-   int ret;
-   const char *title, *str;
+   const char *title = luaL_checkstring(L,1);
+   const char *str   = luaL_checkstring(L,2);
 
-   title = luaL_checkstring(L,1);
-   str   = luaL_checkstring(L,2);
-
-   ret = dialogue_YesNoRaw( title, str );
+   int ret = dialogue_YesNoRaw( title, str );
    lua_pushboolean(L,ret);
    return 1;
 }

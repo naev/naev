@@ -40,15 +40,17 @@
 #define  OUTFITS_FILTER "inpFilterOutfits"
 #define  OUTFITS_NTABS  7
 
+/**
+ * @brief Data for handling the widget. */
 typedef struct LandOutfitData_ {
-   const Outfit **outfits;
-   int blackmarket;
+   const Outfit **outfits; /**< Override list of outfits, otherwise uses landed_spob. */
+   int blackmarket;        /**< Whether on not is considered a blackmarket. */
 } LandOutfitData;
 
 static iar_data_t iar_data[OUTFITS_NTABS]; /**< Stored image array positions. */
 static Outfit **iar_outfits[OUTFITS_NTABS]; /**< C-array of Arrays: Outfits associated with the image array cells. */
 static int outfit_Mode = 0; /**< Outfit mode for filtering. */
-static PlayerOutfit_t *outfits_sold = NULL;
+static PlayerOutfit_t *outfits_sold = NULL; /**< List of the outfits the player sold so they can buy them back. */
 
 /* Modifier for buying and selling quantity. */
 static int outfits_mod = 1;
@@ -431,14 +433,14 @@ static void outfits_genList( unsigned int wid )
       }
       qsort( ol, array_size(ol), sizeof(Outfit*), outfit_compareTech );
       noutfits = outfits_filter( (const Outfit**)ol, array_size(ol), tabfilters[active], filtertext );
-      coutfits = outfits_imageArrayCells( (const Outfit**)ol, &noutfits, player.p );
+      coutfits = outfits_imageArrayCells( (const Outfit**)ol, &noutfits, player.p, 1 );
       iar_outfits[active] = ol;
    }
    else {
       /* Use custom list; default to landed outfits. */
       iar_outfits[active] = (data->outfits!=NULL) ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_spob->tech );
       noutfits = outfits_filter( (const Outfit**)iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
-      coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, player.p );
+      coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, player.p, 1 );
    }
 
    iconsize = 128;
@@ -761,7 +763,7 @@ int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
 /**
  * @brief Generates image array cells corresponding to outfits.
  */
-ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, const Pilot *p )
+ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, const Pilot *p, int store )
 {
    ImageArrayCell *coutfits = calloc( MAX(1,*noutfits), sizeof(ImageArrayCell) );
 
@@ -779,7 +781,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, 
 
          coutfits[i].image = gl_dupTexture( o->gfx_store );
          coutfits[i].caption = strdup( _(o->name) );
-         if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
+         if (!store && outfit_isProp(o, OUTFIT_PROP_UNIQUE))
             coutfits[i].quantity = -1; /* Don't display. */
          else
             coutfits[i].quantity = player_outfitOwned(o);
