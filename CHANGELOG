@@ -1,6 +1,7 @@
 * 0.11.0 (unreleased)
    * Fixed POI missions having markers say 'Point of Interest' instead of 'Sensor Anomaly'
    * Updated meson.build to require SDL 2.0.26 which seems to be minimum supported version now
+   * Translation updates
 
 * 0.11.0-beta.3
    * Differentiated more significantly the energy / kinetic / plasma weapon types
