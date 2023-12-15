@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-14 19:56+0900\n"
+"POT-Creation-Date: 2023-12-15 12:46+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -82009,6 +82009,11 @@ msgstr ""
 #. We want to delay aborting the mission a frame so that the derelict
 #. event thinks it's running fine
 #. Mission gets accepted in misnSetup
+#. Clean up
+#. Find the initial point of interest, and path to the real location
+#. TODO have path be out of the way
+#. TODO better initialization
+#. should average 15*750 = 11250 units
 #. --
 #. Logs a point of interest message.
 #. @tparam string msg Message to log.
@@ -82018,7 +82023,8 @@ msgstr ""
 #: dat/missions/neutral/poi_intro.lua:327
 #: dat/missions/neutral/poi_intro.lua:402
 #: dat/missions/neutral/poi_intro.lua:419
-#: dat/missions/neutral/poi_intro.lua:515 dat/scripts/common/poi.lua:286
+#: dat/missions/neutral/poi_intro.lua:515 dat/scripts/common/poi.lua:129
+#: dat/scripts/common/poi.lua:286
 msgid "Sensor Anomaly"
 msgstr ""
 
@@ -108132,15 +108138,6 @@ msgstr ""
 msgid "Point of Interest not properly initialized!"
 msgstr ""
 
-#. Clean up
-#. Find the initial point of interest, and path to the real location
-#. TODO have path be out of the way
-#. TODO better initialization
-#. should average 15*750 = 11250 units
-#: dat/scripts/common/poi.lua:129
-msgid "Point of Interest"
-msgstr ""
-
 #. Custom hook for when the player scans
 #. If the player has no scanning outfit we have to help them out
 #. TODO ship AI message
@@ -126585,24 +126582,24 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/weapon.c:2418
+#: src/weapon.c:2461
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr "Non è ancora stata implementata la creazione dell'arma di tipo '%s'!"
 
-#: src/weapon.c:2454
+#: src/weapon.c:2497
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 "Tentativo di creare un'arma da un equipaggiamento di tipo non adatto per le "
 "armi"
 
-#: src/weapon.c:2523
+#: src/weapon.c:2566
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
 "Tentativo di creare un'arma disintegratore da un equipaggiamento di tipo non "
 "disintegratore."
 
-#: src/weapon.c:2544
+#: src/weapon.c:2587
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
