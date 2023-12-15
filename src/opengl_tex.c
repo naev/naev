@@ -221,7 +221,7 @@ static GLuint gl_texParameters( unsigned int flags )
    if ((gl_screen.scale != 1.) || (flags & OPENGL_TEX_MIPMAPS)) {
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
       if (flags & OPENGL_TEX_MIPMAPS)
-         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
       else
          glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
    }
@@ -342,7 +342,6 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
 static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur, double *vmax )
 {
    GLuint texture;
-   GLfloat param;
 
    SDL_mutexP( tex_lock );
    tex_ctxSet();
@@ -379,11 +378,10 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    if (flags & OPENGL_TEX_MIPMAPS) {
       /* Do fancy stuff. */
       if (GLAD_GL_ARB_texture_filter_anisotropic) {
+         GLfloat param;
          glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &param);
          glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY, param);
       }
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 9);
 
       /* Now generate the mipmaps. */
       glGenerateMipmap(GL_TEXTURE_2D);

@@ -1,5 +1,6 @@
 * 0.11.0 (unreleased)
    * Fixed POI missions having markers say 'Point of Interest' instead of 'Sensor Anomaly'
+   * Most consistent texture interpolation when using mipmaps
    * Can only start to afterburn with enough energy for 0.5 seconds of afterburning
    * Updated meson.build to require SDL 2.0.26 which seems to be minimum supported version now
    * Translation updates
