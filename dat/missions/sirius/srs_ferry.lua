@@ -152,7 +152,7 @@ function create()
    mem.distbonus_maxjumps = 12 -- This is the maximum distance for reputation bonus calculations. Distances beyond this don't add to the bonus.
    mem.distbonus_minjumps = 5 -- This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
 
-   misn.markerAdd(mem.destplanet, "computer")
+   dest_marker = misn.markerAdd(mem.destplanet, "computer")
    misn.setTitle( fmt.f(srs.prefix.._("{tier} pilgrimage transport for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], rank=prank[mem.rank]}) )
    car.setDesc( fmt.f(_("{tier} space transport to {pnt} for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], pnt=mem.destplanet, rank=prank[mem.rank]}), nil, nil, mem.destplanet, mem.timelimit )
    misn.setReward(mem.reward)
@@ -236,6 +236,7 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
       end
 
       mem.destplanet = altplanets[mem.altdest]
+      misn.markerMove(dest_marker, mem.destplanet)
       car.setDesc( fmt.f(_("{tier} space transport to {pnt} for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], pnt=mem.destplanet, rank=prank[mem.rank]}), nil, nil, mem.destplanet, mem.timelimit )
       --mem.wants_sirian = false    -- Don't care what kind of ship you're flying
    end
