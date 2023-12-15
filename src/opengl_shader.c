@@ -191,8 +191,7 @@ static int gl_program_link( GLuint program )
    glGetProgramiv(program, GL_LINK_STATUS, &link_status);
    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
    if (log_length > 0) {
-      char *log;
-      log = malloc(log_length + 1);
+      char *log = malloc(log_length + 1);
       glGetProgramInfoLog(program, log_length, &log_length, log);
       if (gl_log_says_anything( log ))
          WARN("link_status==%d: [[\n%s\n]]", link_status, log);
