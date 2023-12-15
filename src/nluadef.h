@@ -7,14 +7,18 @@
 #include <lauxlib.h>
 #include <lua.h>
 #include <lualib.h>
+#include <assert.h>
 /** @endcond */
 
 #include "attributes.h"
 #include "log.h"
 
+/* Fixes clangd warning about #pragma GCC diagnostic pop
+ * See: https://github.com/clangd/clangd/issues/1167 */
+static_assert(1,"");
 /*
- * A number of lua error functions don't ruturn, but arnen't marked
- * as such. These redeclarations ensure that the compiler and analizer are
+ * A number of Lua error functions don't return, but aren't marked
+ * as such. These redeclarations ensure that the compiler and analyzer are
  * aware that no return will take place when compiling our code.
  */
 #pragma GCC diagnostic push
