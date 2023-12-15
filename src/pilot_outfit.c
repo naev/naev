@@ -418,7 +418,7 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
    s = &array_grow( &pilot->outfit_intrinsic );
    memset( s, 0, sizeof(PilotOutfitSlot) );
    ret = pilot_addOutfitRaw( pilot, outfit, s );
-   if (pilot->id > 0 && ret==0)
+   if (pilot->id > 0)
       pilot_outfitLInit( pilot, s );
 
    return ret;
@@ -1358,7 +1358,7 @@ void pilot_outfitLInitAll( Pilot *pilot )
 /**
  * @brief Outfit is added to a ship.
  */
-int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
+int pilot_outfitLAdd( const Pilot *pilot, PilotOutfitSlot *po )
 {
    int oldmem;
 
@@ -1387,7 +1387,7 @@ int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
 /**
  * @brief Outfit is removed froma ship.
  */
-int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
+int pilot_outfitLRemove( const Pilot *pilot, PilotOutfitSlot *po )
 {
    int oldmem;
 
@@ -1420,9 +1420,9 @@ int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
  *    @param po Pilot outfit to check.
  *    @return 0 if nothing was done, 1 if script was run, and -1 on error.
  */
-int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
+int pilot_outfitLInit( const Pilot *pilot, PilotOutfitSlot *po )
 {
-   int lua_init, oldmem;
+   int lua_oinit, oldmem;
    nlua_env lua_env;
 
    if (po->outfit==NULL)
@@ -1431,19 +1431,19 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
    if (po->outfit->lua_env==LUA_NOREF)
       return 0;
 
-   lua_init = po->outfit->lua_init;
+   lua_oinit = po->outfit->lua_init;
    lua_env = po->outfit->lua_env;
 
    /* Create the memory if necessary and initialize stats. */
    oldmem = pilot_outfitLmem( po, lua_env );
 
-   if (lua_init == LUA_NOREF) {
+   if (lua_oinit == LUA_NOREF) {
       pilot_outfitLunmem( po->outfit->lua_env, oldmem );
       return 0;
    }
 
    /* Set up the function: init( p, po ) */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_init); /* f */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_oinit); /* f */
    lua_pushpilot(naevL, pilot->id); /* f, p */
    lua_pushpilotoutfit(naevL, po); /* f, p, po */
    if (nlua_pcall( lua_env, 2, 0 )) { /* */
@@ -1589,7 +1589,7 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned in
  *    @param on Whether to toggle on or off.
  *    @return 1 if was able to toggle it, 0 otherwise.
  */
-int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
+int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on )
 {
    nlua_env env = po->outfit->lua_env;
    int ret, oldmem;
@@ -1624,7 +1624,7 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
  *    @param po Outfit to be toggling.
  *    @return 1 if was able to shoot it, 0 otherwise.
  */
-int pilot_outfitLOnshoot( Pilot *pilot, PilotOutfitSlot *po )
+int pilot_outfitLOnshoot( const Pilot *pilot, PilotOutfitSlot *po )
 {
    nlua_env env = po->outfit->lua_env;
    int ret, oldmem;
