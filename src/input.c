@@ -1305,8 +1305,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
       /* Go to position, if the position is >= 1500 px away. */
       if ((pow2(x - player.p->solid.pos.x) + pow2(y - player.p->solid.pos.y))
             >= pow2(1500))
-
-      player_autonavPos( x, y );
+         player_autonavPos( x, y );
       return 1;
    }
 

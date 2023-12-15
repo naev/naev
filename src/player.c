@@ -2297,9 +2297,7 @@ void player_targetEscort( int prev )
 void player_targetNearest (void)
 {
    unsigned int t, dt;
-   double d;
-
-   d = pilot_getNearestPos( player.p, &dt, player.p->solid.pos.x,
+   double d = pilot_getNearestPos( player.p, &dt, player.p->solid.pos.x,
          player.p->solid.pos.y, 1 );
    t = dt;
 

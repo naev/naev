@@ -500,11 +500,10 @@ unsigned int pilot_getBoss( const Pilot* p )
  *    @param disabled Whether to return disabled pilots.
  *    @return The distance to the nearest pilot.
  */
-double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y, int disabled )
+double pilot_getNearestPosPilot( const Pilot *p, Pilot **tp, double x, double y, int disabled )
 {
    double d = 0.;
-
-   *tp = PLAYER_ID;
+   *tp = NULL;
    for (int i=0; i<array_size(pilot_stack); i++) {
       double td;
 
@@ -527,11 +526,32 @@ double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y
 
       /* Minimum distance. */
       td = pow2(x-pilot_stack[i]->solid.pos.x) + pow2(y-pilot_stack[i]->solid.pos.y);
-      if (((*tp==PLAYER_ID) || (td < d))) {
+      if (((*tp==NULL) || (td < d))) {
          d = td;
-         *tp = pilot_stack[i]->id;
+         *tp = pilot_stack[i];
       }
    }
+   return d;
+}
+
+/**
+ * @brief Get the nearest pilot to a pilot from a certain position.
+ *
+ *    @param p Pilot to get the nearest pilot of.
+ *    @param[out] tp The nearest pilot.
+ *    @param x X position to calculate from.
+ *    @param y Y position to calculate from.
+ *    @param disabled Whether to return disabled pilots.
+ *    @return The distance to the nearest pilot.
+ */
+double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y, int disabled )
+{
+   Pilot *pn;
+   double d = pilot_getNearestPosPilot( p, &pn, x, y, disabled );
+   if (pn==NULL)
+      *tp = PLAYER_ID;
+   else
+      *tp = pn->id;
    return d;
 }
 

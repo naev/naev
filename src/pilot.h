@@ -405,6 +405,7 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
 unsigned int pilot_getNearestHostile (void); /* only for the player */
 unsigned int pilot_getNearestPilot( const Pilot* p );
 unsigned int pilot_getBoss( const Pilot* p );
+double pilot_getNearestPosPilot( const Pilot *p, Pilot **tp, double x, double y, int disabled );
 double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y, int disabled );
 double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int disabled );
 int pilot_getJumps( const Pilot* p );
