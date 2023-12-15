@@ -126,7 +126,7 @@ function _poi_enter ()
    goal = mpos + vec2.newP( 600+400*rnd.rnd(), angle )
    mem.goal = goal
 
-   mrk = system.markerAdd( pos, _("Point of Interest") )
+   mrk = system.markerAdd( pos, _("Sensor Anomaly") )
 
    -- Custom hook for when the player scans
    mem.poi.chook = hook.custom( "poi_scan", "_poi_scan" )
