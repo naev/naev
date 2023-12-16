@@ -447,7 +447,7 @@ int ss_statsInit( ShipStats *stats )
          case SS_DATA_TYPE_DOUBLE:
             {
                double *dbl;
-               char *fieldptr = &ptr[ sl->offset ];
+               const char *fieldptr = &ptr[ sl->offset ];
                memcpy(&dbl, &fieldptr, sizeof(double*));
                *dbl  = 1.0;
                break;
@@ -779,10 +779,10 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
  */
 int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
 {
-   const ShipStatsLookup *sl;
    int i     = 0;
    int newl  = newline;
    for ( ; ll != NULL; ll=ll->next) {
+      const ShipStatsLookup *sl;
       int left  = len-i;
       if (left < 0)
          break;

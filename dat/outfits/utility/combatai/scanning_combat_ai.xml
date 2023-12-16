@@ -14,5 +14,6 @@
  </general>
  <specific type="modification">
   <ew_detect>15</ew_detect>
+  <ew_track>15</ew_track>
  </specific>
 </outfit>
