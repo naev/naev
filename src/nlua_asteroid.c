@@ -256,10 +256,10 @@ static int asteroidL_get( lua_State *L )
    else if (lua_isnumber(L,1)) {
       field = luaL_checkinteger(L,1)-1;
       if ((field < 0) || (field >= array_size(cur_system->asteroids)))
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,1);
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Get random asteroid. */
    if ((pos==NULL) && (field >= 0)) {
@@ -420,7 +420,7 @@ static int asteroidL_setState( lua_State *L )
    else if (strcmp(state,"XX")==0)
       ast->state = ASTEROID_XX;
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
    return 0;
 }
 

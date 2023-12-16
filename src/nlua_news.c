@@ -352,7 +352,7 @@ int newsL_get( lua_State *L )
    else if (lua_isstring(L, 1))
       characteristic = lua_tostring(L, 1);
    else
-      NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
+      NLUA_INVALID_PARAMETER(L,1); /* Bad Parameter */
 
    /* Now put all the matching articles in a table. */
    lua_newtable(L);

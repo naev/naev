@@ -256,18 +256,21 @@ She gives a small reverence to the debris before coming back to her happy self.
 end
 
 function heartbeat ()
+   local scur = system.cur()
+   local af = scur:asteroidFields()
+   if #af <= 0 then
+      return -- Player probably changed systems
+   end
    if hb_state==1 then
-      local af = system.cur():asteroidFields()
       nelly_say(fmt.f(_("I've marked an asteroid field on your overlay. Use {overlaykey} to check it!"),
          {overlaykey=tut.getKey("overlay")}))
       system.markerAdd( af[ rnd.rnd(1,#af) ].pos )
       hb_state = hb_state+1
    elseif hb_state==2 then
-      local af = system.cur():asteroidFields()
       local ppos = player.pos()
       for k,v in ipairs(af) do
          if ppos:dist( v.pos ) < v.radius+1000 then
-            nelly_say(_("Get close to an asteroid try to stop ontop of it. I want to try the Drillmaster!"))
+            nelly_say(_("Get close to an asteroid try to stop on top of it. I want to try the Drillmaster!"))
             misn.osdActive(2)
             hb_state = hb_state+1
          end
@@ -276,7 +279,7 @@ function heartbeat ()
    elseif hb_state==3 then
       local pp = player.pilot()
       local a = asteroid.get( pp )
-      if a:pos():dist( pp:pos() ) < 50 and a:vel():dist( pp:vel() ) < 15 then
+      if a and a:pos():dist( pp:pos() ) < 50 and a:vel():dist( pp:vel() ) < 15 then
          system.markerClear()
          drilltime()
          a:setTimer( -1 ) -- Get rid of the asteroid

@@ -241,7 +241,7 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
  */
 static void rg_filter( float **pcm, long channels, long samples, void *filter_param )
 {
-   LuaAudio_t *param    = filter_param;
+   const LuaAudio_t *param = filter_param;
    float scale_factor   = param->rg_scale_factor;
    float max_scale      = param->rg_max_scale;
 
@@ -525,7 +525,7 @@ static int audioL_new( lua_State *L )
       name = lf->path;
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Second parameter. */
    if (lua_isnoneornil(L,2)) {
@@ -538,7 +538,7 @@ static int audioL_new( lua_State *L )
       else if (strcmp(type,"stream")==0)
          stream = 1;
       else
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,2);
    }
 
    memset( &la, 0, sizeof(LuaAudio_t) );
@@ -693,7 +693,7 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
 static int audioL_clone( lua_State *L )
 {
    LuaAudio_t la;
-   LuaAudio_t *source = luaL_checkaudio(L,1);
+   const LuaAudio_t *source = luaL_checkaudio(L,1);
    audio_clone( &la, source );
    lua_pushaudio(L, la);
    return 1;

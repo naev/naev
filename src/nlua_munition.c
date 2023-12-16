@@ -135,7 +135,7 @@ Weapon* luaL_validmunition( lua_State *L, int ind )
  */
 LuaMunition* lua_pushmunition( lua_State *L, const Weapon *w )
 {
-   Weapon *weapon_stack = weapon_getStack();
+   const Weapon *weapon_stack = weapon_getStack();
    LuaMunition *lm = (LuaMunition*) lua_newuserdata(L, sizeof(LuaMunition));
    lm->id   = w->id;
    lm->idx  = w-weapon_stack;
@@ -178,8 +178,8 @@ int lua_ismunition( lua_State *L, int ind )
  */
 static int munitionL_eq( lua_State *L )
 {
-   LuaMunition *lm1 = luaL_checkmunition(L,1);
-   LuaMunition *lm2 = luaL_checkmunition(L,2);
+   const LuaMunition *lm1 = luaL_checkmunition(L,1);
+   const LuaMunition *lm2 = luaL_checkmunition(L,2);
    lua_pushboolean(L, lm1->id==lm2->id);
    return 1;
 }

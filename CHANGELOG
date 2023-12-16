@@ -1,4 +1,6 @@
 * 0.11.0 (unreleased)
+   * Point defense weapons should track fighters much better now
+   * Fixed point defense weapons not firing properly
    * Approach no longer instantly starts autonav unless a space object or derelict is already targetted
    * Tweaked the approach logic to prefer planets over pilots when only planet is selected
    * Approach should no longer play extraneous target sounds
@@ -8,7 +10,9 @@
    * Pilots will do tehir first distress somewhat sooner
    * Can only start to afterburn with enough energy for 0.5 seconds of afterburning
    * Updated meson.build to require SDL 2.0.26 which seems to be minimum supported version now
+   * Fixed a certain faction being enemies with wild ones when they shouldn't necessarily be
    * `srs_ferry`: fixed marker not updating for alternative delivery locations
+   * `nelly03`: guard against the player changing systems in the middle of mining
    * Translation updates
 
 * 0.11.0-beta.3

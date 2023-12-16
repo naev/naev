@@ -320,17 +320,13 @@ static int texL_readData( lua_State *L )
    else
       s = luaL_checkstring(L,1);
    rw = PHYSFSRWOPS_openRead( s );
-   if (rw == NULL) {
+   if (rw == NULL)
       return NLUA_ERROR(L, _("problem opening file '%s' for reading"), s );
-      return 0;
-   }
 
    /* Try to read the image. */
    surface = IMG_Load_RW( rw, 1 );
-   if (surface == NULL) {
+   if (surface == NULL)
       return NLUA_ERROR(L, _("problem opening image for reading") );
-      return 0;
-   }
 
    /* Convert surface to LuaData_t */
    SDL_LockSurface( surface );
@@ -508,7 +504,7 @@ static int texL_setFilter( lua_State *L )
    mag = gl_stringToFilter( smag );
 
    if (min==0 || mag==0)
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
 
    glBindTexture( GL_TEXTURE_2D, tex->texture );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag );
@@ -540,7 +536,7 @@ static int texL_setWrap( lua_State *L )
    depth = gl_stringToClamp( sdepth );
 
    if (horiz==0 || vert==0 || depth==0)
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
 
    glBindTexture( GL_TEXTURE_2D, tex->texture );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, horiz );

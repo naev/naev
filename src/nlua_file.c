@@ -183,8 +183,8 @@ static int fileL_new( lua_State *L )
 {
    LuaFile_t lf;
    const char *str = luaL_checkstring(L,1);
+   memset( &lf, 0, sizeof(lf) );
    strncpy( lf.path, str, sizeof(lf.path)-1 );
-
    lf.mode = 'c';
    lf.rw = NULL;
    lua_pushfile( L, lf );
@@ -381,7 +381,7 @@ static int fileL_size( lua_State *L )
  */
 static int fileL_isopen( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
+   const LuaFile_t *lf = luaL_checkfile(L,1);
    lua_pushboolean(L, lf->rw!=NULL);
    return 1;
 }

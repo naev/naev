@@ -208,7 +208,7 @@ static int colL_new( lua_State *L )
    else if (lua_iscolour(L,1))
       col = *lua_tocolour(L,1);
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    lua_pushcolour( L, col );
    return 1;

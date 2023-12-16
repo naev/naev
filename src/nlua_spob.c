@@ -263,7 +263,6 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
       pnt = spob_get( space_getRndSpob(landable, 0, NULL) );
       rndspob = pnt->name;
    }
-
    /* Get a spob by faction */
    else if (lua_isfaction(L,1)) {
       int *factions = array_create( int );
@@ -271,7 +270,6 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
       spobs  = space_getFactionSpob( factions, landable );
       array_free( factions );
    }
-
    /* Get a spob by name */
    else if (lua_isstring(L,1)) {
       rndspob = lua_tostring(L,1);
@@ -287,7 +285,6 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
             return 0;
       }
    }
-
    /* Get a spob from faction list */
    else if (lua_istable(L,1)) {
       /* Get table length and preallocate. */
@@ -304,7 +301,6 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
       spobs = space_getFactionSpob( factions, landable );
       array_free(factions);
    }
-
    /* Just get a spob. */
    else if (lua_isspob(L,1)) {
       pnt = luaL_validspob( L, 1 );
@@ -316,9 +312,8 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
       }
       rndspob = pnt->name;
    }
-
    else
-      NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
+      NLUA_INVALID_PARAMETER(L,1); /* Bad Parameter */
 
    /* Pick random spob */
    if (rndspob == NULL) {

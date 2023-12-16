@@ -292,15 +292,11 @@ static unsigned int hookL_generic( lua_State *L, const char* stack, double sec, 
       else
          h = hook_addTimerEvt( running_event->id, func, sec );
    }
-   else {
+   else
       return NLUA_ERROR(L,_("Attempting to set a hook outside of a mission or event."));
-      return 0;
-   }
 
-   if (h == 0) {
+   if (h == 0)
       return NLUA_ERROR(L,_("No hook target was set."));
-      return 0;
-   }
 
    /* Check parameter. */
    if (!lua_isnoneornil(L,arg))
@@ -1047,10 +1043,8 @@ static int hookL_pilot( lua_State *L )
       p  = luaL_checkpilot(L,1);
    else if (lua_isnil(L,1))
       p  = 0;
-   else {
+   else
       return NLUA_ERROR(L, _("Invalid parameter #1 for hook.pilot, expecting pilot or nil."));
-      return 0;
-   }
    hook_type   = luaL_checkstring(L,2);
 
    /* Check to see if hook_type is valid */
@@ -1072,10 +1066,8 @@ static int hookL_pilot( lua_State *L )
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
    else if (strcmp(hook_type,"lockon")==0)   type = PILOT_HOOK_LOCKON;
    else if (strcmp(hook_type,"stealth")==0)  type = PILOT_HOOK_STEALTH;
-   else { /* hook_type not valid */
+   else /* hook_type not valid */
       return NLUA_ERROR(L, _("Invalid pilot hook type: '%s'"), hook_type);
-      return 0;
-   }
 
 #ifdef DEBUGGING
    if ((type == PILOT_HOOK_CREATION) && (p!=0))

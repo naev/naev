@@ -260,7 +260,7 @@ static int systemL_get( lua_State *L )
       return 1;
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Error checking. */
    if (ss == NULL)
@@ -471,7 +471,7 @@ static int systemL_jumpdistance( lua_State *L )
          goal = sysp->name;
       }
       else
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,2);
    }
    else {
       goal  = sys->name;

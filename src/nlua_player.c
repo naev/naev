@@ -1172,7 +1172,7 @@ static int playerL_landWindow( lua_State *L )
    else if (strcasecmp(str,"commodity")==0)
       win = LAND_WINDOW_COMMODITY;
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Sets the window. */
    ret = land_setWindow( win );
@@ -2194,7 +2194,7 @@ static int playerL_teleport( lua_State *L )
          name = sysname;
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    no_simulate = lua_toboolean(L,2);
    silent = lua_toboolean(L,3);

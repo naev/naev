@@ -999,7 +999,7 @@ static int misn_claim( lua_State *L )
    else if (lua_isstring(L, 1))
       claim_addStr( claim, lua_tostring( L, 1 ) );
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Test claim. */
    if (claim_test( claim )) {

@@ -1464,7 +1464,7 @@ static int aiL_getdistance( lua_State *L )
    }
    /* wrong parameter */
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    lua_pushnumber(L, vec2_dist(v, &cur_pilot->solid.pos));
    return 1;
@@ -1491,7 +1491,7 @@ static int aiL_getdistance2( lua_State *L )
    }
    /* wrong parameter */
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    lua_pushnumber(L, vec2_dist2(v, &cur_pilot->solid.pos));
    return 1;
@@ -1521,7 +1521,7 @@ static int aiL_getflybydistance( lua_State *L )
       /*vec2_cset(&v, VX(pilot->solid.pos) - VX(cur_pilot->solid.pos), VY(pilot->solid.pos) - VY(cur_pilot->solid.pos) );*/
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    vec2_cset(&offset_vect, VX(*v) - VX(cur_pilot->solid.pos), VY(*v) - VY(cur_pilot->solid.pos) );
    vec2_pset(&perp_motion_unit, 1, VANGLE(cur_pilot->solid.vel)+M_PI_2);
@@ -1779,7 +1779,7 @@ static int aiL_face( lua_State *L )
    else if (lua_isvector(L,1))
       tv = lua_tovector(L,1);
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Third parameter. */
    vel = lua_toboolean(L, 3);
@@ -1867,12 +1867,12 @@ static int aiL_careful_face( lua_State *L )
       if (d < 0.)
          tv = &cur_pilot->solid.pos;
       else
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,1);
    }
    else if (lua_isvector(L,1))
       tv = lua_tovector(L,1);
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Init the force, where F1 is roughly normalized to norm 1. */
    vec2_csetmin( &F, 0., 0.) ;
@@ -1981,7 +1981,8 @@ static int aiL_iface( lua_State *L )
       p = luaL_validpilot(L,1);
    else if (lua_isvector(L,1))
       vec = lua_tovector(L,1);
-   else NLUA_INVALID_PARAMETER(L);
+   else
+      NLUA_INVALID_PARAMETER(L,1);
 
    if (vec==NULL) {
       if (p == NULL)
@@ -2072,7 +2073,7 @@ static int aiL_dir( lua_State *L )
             vec2_angle(&cur_pilot->solid.pos, vec));
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Return angle in degrees away from target. */
    lua_pushnumber(L, diff);
@@ -2100,7 +2101,8 @@ static int aiL_idir( lua_State *L )
       p = luaL_validpilot(L,1);
    else if (lua_isvector(L,1))
       vec = lua_tovector(L,1);
-   else NLUA_INVALID_PARAMETER(L);
+   else
+      NLUA_INVALID_PARAMETER(L,1);
 
    if (vec==NULL) {
       if (p==NULL)
@@ -3268,7 +3270,7 @@ static int aiL_distress( lua_State *L )
    else if (lua_isnoneornil(L,1))
       aiL_distressmsg[0] = '\0';
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Set flag because code isn't reentrant. */
    ai_setFlag(AI_DISTRESS);
