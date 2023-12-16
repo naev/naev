@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.0-beta.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-16 12:42+0900\n"
+"POT-Creation-Date: 2023-12-16 16:55+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4957,11 +4957,6 @@ msgid ""
 "and can even be used to deter small assault craft."
 msgstr ""
 
-#: dat/outfits/pointdefense/guardian_interception_system.xml:11
-#: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:11
-msgid "Automatically fires at nearby missiles and interceptors."
-msgstr ""
-
 #: dat/outfits/pointdefense/guardian_overseer_system.xml:2
 msgid "Guardian Overseer System"
 msgstr ""
@@ -4973,10 +4968,6 @@ msgid ""
 "system makes use of specially modified Ripper cannons that allow it to "
 "neutralize most ordinances. Although designed for intercepting torpedoes, "
 "the targeting system is also efficient at tracking small enemy craft."
-msgstr ""
-
-#: dat/outfits/pointdefense/guardian_overseer_system.xml:11
-msgid "Automatically fires at nearby missiles and fighters."
 msgstr ""
 
 #: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:2
@@ -4992,6 +4983,10 @@ msgid ""
 "defense mechanism of spitting large bubbles of plasma. Although the bubbles "
 "are quite weak compared to engineered weapons, their numbers allow them to "
 "efficiently protect the ship they are attached to from non-armoured missiles."
+msgstr ""
+
+#: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:11
+msgid "Automatically fires at nearby missiles and interceptors."
 msgstr ""
 
 #: dat/outfits/special/base_ripper_mk2.xml:2
@@ -102614,6 +102609,18 @@ msgstr ""
 #. Mark cooldown is over
 #. Ignore already active
 #. Ignore already not active
+#. Replace if not defined
+#. Effective range
+#: dat/outfits/pointdefense/pointdefense.lua:19
+msgid "When on, automatically fires at nearby incoming missiles."
+msgstr ""
+
+#: dat/outfits/pointdefense/pointdefense.lua:21
+msgid ""
+"When on, automatically fires at nearby incoming missiles and hostile ships "
+"with under {trackmax} {unit} signature."
+msgstr ""
+
 #. current target
 #. hether or not the target is a pilot
 #. Doesn't fire normally,
@@ -107189,7 +107196,7 @@ msgstr ""
 #. --
 #. luacheck: globals love (We are *implementing* the love2d API.)
 #. TODO implement.
-#: dat/scripts/love.lua:33 src/nlua_naev.c:578
+#: dat/scripts/love.lua:33 src/nlua_naev.c:580
 msgid "unimplemented"
 msgstr ""
 
@@ -118306,7 +118313,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/naev.c:198 src/naev.c:1124 src/nlua_naev.c:177 src/nlua_naev.c:179
+#: src/naev.c:198 src/naev.c:1124 src/nlua_naev.c:179 src/nlua_naev.c:181
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -119030,12 +119037,12 @@ msgstr ""
 msgid "Munition is invalid."
 msgstr ""
 
-#: src/nlua_naev.c:760
+#: src/nlua_naev.c:762
 #, c-format
 msgid "Invalid window info name '%s'."
 msgstr ""
 
-#: src/nlua_naev.c:818
+#: src/nlua_naev.c:820
 msgid "Unable to unpause the game when landed!"
 msgstr ""
 
