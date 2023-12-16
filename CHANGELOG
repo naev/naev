@@ -8,6 +8,7 @@
    * Pilots will do tehir first distress somewhat sooner
    * Can only start to afterburn with enough energy for 0.5 seconds of afterburning
    * Updated meson.build to require SDL 2.0.26 which seems to be minimum supported version now
+   * Fixed a certain faction being enemies with wild ones when they shouldn't necessarily be
    * `srs_ferry`: fixed marker not updating for alternative delivery locations
    * Translation updates
 
