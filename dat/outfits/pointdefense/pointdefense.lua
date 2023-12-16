@@ -7,20 +7,19 @@ function pd.setTrack( track )
 end
 
 function onload( o )
-   -- Tries a default
    local _dps, _disps, _eps, _trackmin, trackmax_local
    _dps, _disps, _eps, range, _trackmin, trackmax_local = o:weapstats()
    trackmax = trackmax or trackmax_local -- Replace if not defined
-   range2 = range*range
+   range2 = range*range -- Effective range
    hitships = not o:missShips()
 end
 
 function descextra( _p, _o )
    if not hitships then
-      return "#b".._("Automatically fires at nearby incoming missiles.").."#0"
+      return "#b".._("When on, automatically fires at nearby incoming missiles.").."#0"
    end
-   return "#b"..fmt.f(_("Automatically fires at nearby incoming missiles and interceptors with under {trackmax} signature.").."#0",
-      {trackmax=fmt.number(trackmax)})
+   return "#b"..fmt.f(_("When on, automatically fires at nearby incoming missiles and hostile ships with under {trackmax} {unit} signature.").."#0",
+      {trackmax=fmt.number(trackmax), unit=naev.unit("distance")})
 end
 
 function init( _p, _po )
