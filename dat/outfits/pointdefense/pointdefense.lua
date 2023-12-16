@@ -8,14 +8,14 @@ function onload( o )
 end
 
 function init( _p, _po )
-   mem.on = true
+   mem.on = false
    mem.target = nil -- current target
    mem.tpilot = false -- hether or not the target is a pilot
 end
 
 function ontoggle( _p, _po, on )
-   mem.on = not on
-   return false
+   mem.on = on
+   return true
 end
 
 function onshoot( _p, _po, _on )
