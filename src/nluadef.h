@@ -43,14 +43,12 @@ NORETURN extern int luaL_typerror( lua_State *L, int narg, const char *tname );
 #define NLUA_INVALID_PARAMETER(L)    \
 { \
    DEBUG( "Invalid parameter for %s.", __func__ ); \
-   luaL_error( L, "Invalid parameter for %s.", __func__ ); \
-   return 0; \
+   return luaL_error( L, "Invalid parameter for %s.", __func__ ); \
 }
 #define NLUA_MIN_ARGS(n)     \
    if (lua_gettop(L) < n) { \
       DEBUG( "Too few arguments for %s.", __func__ ); \
-      luaL_error( L, "Too few arguments for %s.", __func__ ); \
-      return 0; \
+      return luaL_error( L, "Too few arguments for %s.", __func__ ); \
    }
 
 /*

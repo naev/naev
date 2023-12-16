@@ -208,7 +208,7 @@ static int poL_slot( lua_State *L )
  */
 static int poL_outfit( lua_State *L )
 {
-   PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
+   const PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
    lua_pushoutfit(L, po->outfit );
    return 1;
 }
