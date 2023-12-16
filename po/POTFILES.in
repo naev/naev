@@ -3233,6 +3233,8 @@ dat/outfits/lib/bioplasma.lua
 dat/outfits/lib/helper.lua
 dat/outfits/lib/mining_drill.lua
 dat/outfits/lua_outfit_example.lua
+dat/outfits/pointdefense/guardian_interception_system.lua
+dat/outfits/pointdefense/guardian_overseer_system.lua
 dat/outfits/pointdefense/pointdefense.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/bioship_pheromone_emitter.lua
