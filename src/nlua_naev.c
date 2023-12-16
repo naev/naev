@@ -68,6 +68,7 @@ static int naevL_pause( lua_State *L );
 static int naevL_unpause( lua_State *L );
 static int naevL_hasTextInput( lua_State *L );
 static int naevL_setTextInput( lua_State *L );
+static int naevL_unit( lua_State *L );
 static int naevL_quadtreeParams( lua_State *L );
 #if DEBUGGING
 static int naevL_envs( lua_State *L );
@@ -106,6 +107,7 @@ static const luaL_Reg naev_methods[] = {
    { "unpause", naevL_unpause },
    { "hasTextInput", naevL_hasTextInput },
    { "setTextInput", naevL_setTextInput },
+   { "unit", naevL_unit },
    { "quadtreeParams", naevL_quadtreeParams },
 #if DEBUGGING
    { "envs", naevL_envs },
@@ -861,6 +863,56 @@ static int naevL_setTextInput( lua_State *L )
    return 0;
 }
 
+static const char *unittbl[] = {
+   "time",     _UNIT_TIME,
+   "per_time", _UNIT_PER_TIME,
+   "distance", _UNIT_DISTANCE,
+   "speed",    _UNIT_SPEED,
+   "accel",    _UNIT_ACCEL,
+   "energy",   _UNIT_ENERGY,
+   "power",    _UNIT_POWER,
+   "angle",    _UNIT_ANGLE,
+   "rotation", _UNIT_ROTATION,
+   "mass",     _UNIT_MASS,
+   "cpu",      _UNIT_CPU,
+   "unit",     _UNIT_UNIT,
+   "percent",  _UNIT_PERCENT,
+};
+/**
+ * @brief Gets the translated string corresponding to an in-game unit.
+ *    @luaparam[opt=nil] string str Name of the unit to get or nil to get a table with all of them.
+ *    @luareturn Translated string corresponding to the unit or table of all strings if no parameter is passed.
+ * @luafunc unit
+ */
+static int naevL_unit( lua_State *L )
+{
+   if (lua_isnoneornil(L,1)) {
+      lua_newtable( L );
+      for (unsigned int i=0; i<sizeof(unittbl)/sizeof(unittbl[0]); i+=2) {
+         lua_pushstring( L, _(unittbl[i+1]) );
+         lua_setfield( L, -2, unittbl[i] );
+      }
+      return 1;
+   }
+   else {
+      const char *str = luaL_checkstring(L,1);
+      for (unsigned int i=0; i<sizeof(unittbl)/sizeof(unittbl[0]); i+=2) {
+         if (strcmp(unittbl[i],str)==0) {
+            lua_pushstring( L, _(unittbl[i+1]) );
+            return 1;
+         }
+      }
+   }
+   NLUA_INVALID_PARAMETER(L,1);
+}
+
+/**
+ * @brief Modifies the Naev internal quadtree lookup parameters.
+ *
+ *    @luatparam number max_elem Maximum amount of elements to allow in a leaf node.
+ *    @luatparam number depth depth Maximum depth to allow.
+ * @luafunc quadtreeParams
+ */
 static int naevL_quadtreeParams( lua_State *L )
 {
    int max_elem = luaL_checkinteger( L, 1 );
