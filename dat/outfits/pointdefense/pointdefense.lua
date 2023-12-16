@@ -17,10 +17,10 @@ end
 
 function descextra( _p, _o )
    if not hitships then
-      return _("Automatically fires at nearby missiles.")
+      return "#b".._("Automatically fires at nearby incoming missiles.").."#0"
    end
-   return fmt.f(_("Automatically fires at nearby missiles and interceptors with under {trackmax} signature."),
-      {trackmax=trackmax})
+   return "#b"..fmt.f(_("Automatically fires at nearby incoming missiles and interceptors with under {trackmax} signature.").."#0",
+      {trackmax=fmt.number(trackmax)})
 end
 
 function init( _p, _po )
