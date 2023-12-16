@@ -102,7 +102,7 @@ static int camL_set( lua_State *L )
       }
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
    hard_over = !lua_toboolean(L,2);
    cam_getPos( &x, &y );
    if (vec != NULL)
@@ -146,7 +146,9 @@ static int camL_get( lua_State *L )
 static int camL_pos( lua_State *L )
 {
    vec2 v;
-   cam_getPos( &v.x, &v.y );
+   double x, y;
+   cam_getPos( &x, &y );
+   vec2_cset( &v, x, y );
    lua_pushvector( L, v );
    return 1;
 }

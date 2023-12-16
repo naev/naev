@@ -235,10 +235,8 @@ static int jumpL_get( lua_State *L )
    a = luaL_validsystem(L,1);
    b = luaL_validsystem(L,2);
 
-   if ((a == NULL) || (b == NULL)) {
+   if ((a == NULL) || (b == NULL))
       return NLUA_ERROR(L, _("No matching jump points found."));
-      return 0;
-   }
 
    if (jump_getTarget(b, a) != NULL) {
       LuaJump lj;

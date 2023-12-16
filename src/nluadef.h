@@ -40,10 +40,10 @@ NORETURN extern int luaL_typerror( lua_State *L, int narg, const char *tname );
 #define NLUA_DEBUG(str, ...) \
    (DEBUG("Lua: "str"\n", ## __VA_ARGS__))
 #endif /* DEBUG_PARANOID */
-#define NLUA_INVALID_PARAMETER(L)    \
+#define NLUA_INVALID_PARAMETER(L,idx)    \
 { \
-   DEBUG( "Invalid parameter for %s.", __func__ ); \
-   return luaL_error( L, "Invalid parameter for %s.", __func__ ); \
+   DEBUG( "Invalid parameter %d for %s.", idx, __func__ ); \
+   return luaL_error( L, "Invalid parameter %d for %s.", idx, __func__ ); \
 }
 #define NLUA_MIN_ARGS(n)     \
    if (lua_gettop(L) < n) { \

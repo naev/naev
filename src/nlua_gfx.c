@@ -159,11 +159,13 @@ static int gfxL_dim( lua_State *L )
 static int gfxL_screencoords( lua_State *L )
 {
    vec2 screen;
-   vec2 *game = luaL_checkvector( L, 1 );
+   double x, y;
+   const vec2 *game = luaL_checkvector( L, 1 );
    int invert = lua_toboolean( L, 2 );
-   gl_gameToScreenCoords( &screen.x, &screen.y, game->x, game->y );
+   gl_gameToScreenCoords( &x, &y, game->x, game->y );
    if (invert)
-      screen.y = SCREEN_H-screen.y;
+      y = SCREEN_H-y;
+   vec2_cset( &screen, x, y );
    lua_pushvector( L, screen );
    return 1;
 }
@@ -570,7 +572,7 @@ static int gfxL_renderLinesH( lua_State *L )
          i+=2;
       }
       else {
-         vec2 *v = luaL_checkvector(L,i);
+         const vec2 *v = luaL_checkvector(L,i);
          buf[2*n+0] = v->x;
          buf[2*n+1] = v->y;
          n++;
@@ -930,10 +932,10 @@ static int gfxL_setBlendMode( lua_State *L )
       srcRGB = srcA = GL_SRC_ALPHA;
    else if (!strcmp( alphamode, "premultiplied" )) {
       if (!strcmp( mode, "lighten" ) || !strcmp( mode, "darken" ) || !strcmp( mode, "multiply" ))
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,2);
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
 
    if (!strcmp( mode, "alpha" ))
       dstRGB = dstA = GL_ONE_MINUS_SRC_ALPHA;
@@ -953,7 +955,7 @@ static int gfxL_setBlendMode( lua_State *L )
    else if (!strcmp( mode, "screen" ))
       dstRGB = dstA = GL_ONE_MINUS_SRC_COLOR;
    else if (strcmp( mode, "replace" ))
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    glBlendEquation(func);
    glBlendFuncSeparate(srcRGB, dstRGB, srcA, dstA);

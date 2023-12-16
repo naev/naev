@@ -101,7 +101,8 @@ static int rndL_int( lua_State *L )
       h = luaL_checkint(L,2);
       lua_pushnumber(L, RNG(l,h));
    }
-   else NLUA_INVALID_PARAMETER(L);
+   else
+      NLUA_INVALID_PARAMETER(L,1);
 
    return 1; /* unless it's returned 0 already it'll always return a parameter */
 }
@@ -186,7 +187,8 @@ static int rndL_uniform( lua_State *L )
       int h = luaL_checknumber( L, 2 );
       lua_pushnumber( L, l + (h-l) * RNGF() );
    }
-   else NLUA_INVALID_PARAMETER(L);
+   else
+      NLUA_INVALID_PARAMETER(L,1);
 
    return 1; /* unless it's returned 0 already it'll always return a parameter */
 }
@@ -233,7 +235,7 @@ static int rndL_permutation( lua_State *L )
       new_table = 0;
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Create the list. */
    values = malloc( sizeof(int)*max );

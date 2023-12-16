@@ -373,7 +373,7 @@ static int tkL_merchantOutfit( lua_State *L )
    name = luaL_checkstring(L,1);
 
    if (!lua_istable(L,2))
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
 
    outfits = array_create_size( const Outfit*, lua_objlen(L,2) );
    /* Iterate over table. */

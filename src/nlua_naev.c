@@ -576,7 +576,6 @@ static int naevL_confSet( lua_State *L )
    (void) L;
    /* TODO implement. */
    return NLUA_ERROR(L, _("unimplemented"));
-   return 0;
 }
 
 /**
@@ -659,7 +658,7 @@ static int naevL_claimTest( lua_State *L )
    else if (lua_isstring(L, 1))
       claim_addStr( claim, lua_tostring( L, 1 ) );
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Only test, but don't apply case. */
    lua_pushboolean( L, !claim_test( claim ) );
@@ -757,10 +756,8 @@ static int naevL_menuInfo( lua_State *L )
       window = INFO_MISSIONS;
    else if (strcasecmp( str, "standings" )==0)
       window = INFO_STANDINGS;
-   else {
+   else
       return NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
-      return 0;
-   }
 
    /* Open window. */
    menu_info( window );

@@ -344,7 +344,6 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
       if (ignore_missing)
          return 0;
       return NLUA_ERROR(L,_("Shader does not have uniform '%s'!"), name);
-      return -1;
    }
 
    /* With OpenGL 4.1 or ARB_separate_shader_objects, there

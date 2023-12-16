@@ -725,7 +725,7 @@ static int pilotL_add( lua_State *L )
       vectnull( &vv );
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,3);
 
    /* Handle system. */
    if (ss != NULL) {
@@ -983,7 +983,7 @@ static int pilotL_toggleSpawn( lua_State *L )
       else if (lua_isboolean(L,1))
          space_spawn = lua_toboolean(L,1);
       else
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,1);
    }
    /* Toggling. */
    else
@@ -1059,9 +1059,8 @@ static int pilotL_getPilots( lua_State *L )
          }
       }
    }
-   else {
-      NLUA_INVALID_PARAMETER(L);
-   }
+   else
+      NLUA_INVALID_PARAMETER(L,1);
 
    return 1;
 }
@@ -1972,10 +1971,8 @@ static int pilotL_weapset( lua_State *L )
          all = lua_toboolean(L,2);
          id  = p->active_set;
       }
-      else {
-         NLUA_INVALID_PARAMETER(L);
-         return 0;
-      }
+      else
+         NLUA_INVALID_PARAMETER(L,2);
    }
    else
       id = p->active_set;
@@ -2211,7 +2208,7 @@ static int pilotL_weapsetHeat( lua_State *L )
          id  = p->active_set;
       }
       else
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,2);
    }
    else
       id = p->active_set;
@@ -3978,7 +3975,7 @@ static int pilotL_setFuel( lua_State *L )
       p->fuel = CLAMP( 0, p->fuel_max, lua_tonumber(L,2) );
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
 
    /* Return amount of fuel. */
    lua_pushnumber(L, p->fuel);
@@ -5869,7 +5866,7 @@ static int pilotL_runaway( lua_State *L )
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
       else
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,3);
    }
 
    return 0;

@@ -260,7 +260,7 @@ static int vectorL_copy( lua_State *L )
 static int vectorL_tostring( lua_State *L )
 {
    char buf[STRMAX_SHORT];
-   vec2 *v = luaL_checkvector(L,1);
+   const vec2 *v = luaL_checkvector(L,1);
    snprintf( buf, sizeof(buf), "vec2( %g, %g )", v->x, v->y );
    lua_pushstring(L, buf);
    return 1;
@@ -297,7 +297,7 @@ static int vectorL_add( lua_State *L )
 
       /* Get rest of parameters. */
       if (lua_isvector(L,2)) {
-         vec2 *v2 = lua_tovector(L,2);
+         const vec2 *v2 = lua_tovector(L,2);
          x = v2->x;
          y = v2->y;
       }
@@ -326,7 +326,7 @@ static int vectorL_add__( lua_State *L )
 
    /* Get rest of parameters. */
    if (lua_isvector(L,2)) {
-      vec2 *v2 = lua_tovector(L,2);
+      const vec2 *v2 = lua_tovector(L,2);
       x = v2->x;
       y = v2->y;
    }
