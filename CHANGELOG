@@ -10,6 +10,7 @@
    * Updated meson.build to require SDL 2.0.26 which seems to be minimum supported version now
    * Fixed a certain faction being enemies with wild ones when they shouldn't necessarily be
    * `srs_ferry`: fixed marker not updating for alternative delivery locations
+   * `nelly03`: guard against the player changing systems in the middle of mining
    * Translation updates
 
 * 0.11.0-beta.3
