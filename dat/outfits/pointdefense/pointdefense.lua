@@ -1,10 +1,26 @@
+local fmt = require "format"
 local range, range2, hitships, trackmax
+local pd = {}
+
+function pd.setTrack( track )
+   trackmax = track
+end
 
 function onload( o )
-   local _dps, _disps, _eps, _trackmin
-   _dps, _disps, _eps, range, _trackmin, trackmax = o:weapstats()
+   -- Tries a default
+   local _dps, _disps, _eps, _trackmin, trackmax_local
+   _dps, _disps, _eps, range, _trackmin, trackmax_local = o:weapstats()
+   trackmax = trackmax or trackmax_local -- Replace if not defined
    range2 = range*range
    hitships = not o:missShips()
+end
+
+function descextra( _p, _o )
+   if not hitships then
+      return _("Automatically fires at nearby missiles.")
+   end
+   return fmt.f(_("Automatically fires at nearby missiles and interceptors with under {trackmax} signature."),
+      {trackmax=trackmax})
 end
 
 function init( _p, _po )
@@ -78,3 +94,5 @@ function update( p, po, _dt )
       po:shoot( p, m, true )
    end
 end
+
+return pd

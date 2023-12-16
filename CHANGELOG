@@ -1,4 +1,5 @@
 * 0.11.0 (unreleased)
+   * Point defense weapons should track fighters much better now
    * Fixed point defense weapons not firing properly
    * Approach no longer instantly starts autonav unless a space object or derelict is already targetted
    * Tweaked the approach logic to prefer planets over pilots when only planet is selected
