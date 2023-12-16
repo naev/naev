@@ -30,7 +30,7 @@ static int macos_writeString ( NSString *str, char *res, size_t n )
 /**
  * @brief Determine if we're running from inside an app bundle
  */
-int macos_isBundle ()
+int macos_isBundle ( void )
 {
    NSString *path = [[NSBundle mainBundle] bundlePath];
    return [path hasSuffix:@".app"] ? 1 : 0;
