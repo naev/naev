@@ -430,7 +430,7 @@ Scavenger goes silent for a second, as if thinking.
          d(_([["No, I guess you could say build our own hypergate would be the closest to what we wish to do."]]))
          sai(_([["How do we know you will not rip apart the metaspace and cause the end of all humanity! You could be using us as your pawns in your perverse game!"]]))
          d(_([["I see what the technical brief about your model meant by distrust of authority. However, let me convince you otherwise. Please accept my transmission."]]))
-         vn.na(fmt.f(_([[Your ship console shows a large binary data transmission, as initial analysis shows it seems to be benign, albeit unintelligible to humans, you accept it. {shipai} flickers as they minimize the hologram rendering computational power to process the transmission. After what seems to be a few minutes of silence, you see the flickering stop.]]),
+         vn.na(fmt.f(_([[Your ship console shows a large binary data transmission, as initial analysis shows it seems to be benign, albeit unintelligible to humans, you accept it. {shipai} flickers as they minimise the hologram rendering computational power to process the transmission. After what seems to be a few minutes of silence, you see the flickering stop.]]),
             {shipai=tut.ainame()}))
          sai(fmt.f(_([[Suddenly, {shipai}'s character changes.
 "Oh… I'm sorry about what I said… I need some time to be alone. Bye."
