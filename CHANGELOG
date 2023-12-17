@@ -19,6 +19,7 @@
    * Pirates should no longer have presence in Sol under certain conditions
    * Buffed weapon ionizer to only -50% damage from -70% damage
    * Made weapon sets more robust to changes
+   * Fixed some pirate checks in dominated systems
    * `srs_ferry`: fixed marker not updating for alternative delivery locations
    * `nelly03`: guard against the player changing systems in the middle of mining
    * `zbh06`: made mission easier for the player
