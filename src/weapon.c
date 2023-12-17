@@ -672,12 +672,8 @@ void weapons_updateCollide( double dt )
             }
             /* We use the explosion timer to tell when we have to create explosions. */
             w->timer2 -= dt;
-            if (w->timer2 < 0.) {
-               if (w->timer2 < -1.)
-                  w->timer2 = 0.100;
-               else
-                  w->timer2 = -1.;
-            }
+            if (w->timer2 < -1.)
+               w->timer2 = 0.100;
             break;
          default:
             WARN(_("Weapon of type '%s' has no update implemented yet!"),
@@ -1205,7 +1201,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
             continue;
 
          /* Ignore if parent is self. */
-         if (w->parent == p->id)
+         if (w->parent==p->id)
             continue; /* pilot is self */
 
          /* Smart weapons only collide with their target */
@@ -1789,7 +1785,7 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       double realdmg = pilot_hit( p, &w->solid, parent, &dmg, w->outfit, w->lua_mem, 1 );
 
       /* Add sprite, layer depends on whether player shot or not. */
-      if (w->timer2 == -1.) {
+      if (w->timer2 <= 0.) {
          int spfx;
          /* Get the layer. */
          WeaponLayer spfx_layer = (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
@@ -1817,7 +1813,7 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       asteroid_hit( a, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
 
       /* Add sprite. */
-      if (w->timer2 == -1.) {
+      if (w->timer2 <= 0.) {
          int spfx = outfit_spfxArmour(w->outfit);
 
          /* Add graphic. */
@@ -1833,7 +1829,7 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       weapon_damage( wpn, &dmg );
 
       /* Add sprite. */
-      if (w->timer2 == -1.) {
+      if (w->timer2 <= 0.) {
          int spfx = outfit_spfxArmour(w->outfit);
          /* Get the layer. */
          WeaponLayer spfx_layer = (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
