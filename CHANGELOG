@@ -16,6 +16,7 @@
    * Fixed a certain faction being enemies with wild ones when they shouldn't necessarily be
    * Soromid arx now has one non-exclusive heavy non-bio slot
    * Buffed Scanning Combat AI to have an additional +15% tracking
+   * Pirates should no longer have presence in Sol under certain conditions
    * `srs_ferry`: fixed marker not updating for alternative delivery locations
    * `nelly03`: guard against the player changing systems in the middle of mining
    * `zbh06`: made mission easier for the player

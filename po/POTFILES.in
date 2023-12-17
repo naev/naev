@@ -1947,6 +1947,7 @@ dat/spob_virtual/miner_local.xml
 dat/spob_virtual/miner_small.xml
 dat/spob_virtual/pirate_all_unpresence.xml
 dat/spob_virtual/pirate_all_unpresence_range1.xml
+dat/spob_virtual/pirate_all_unpresence_range2.xml
 dat/spob_virtual/pirate_medium.xml
 dat/spob_virtual/pirate_small.xml
 dat/spob_virtual/pirate_unpresence.xml
