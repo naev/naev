@@ -149,6 +149,8 @@ There are also Lua API docs there.
 Before committing, it's advisable to install [pre-commit](https://pre-commit.com/) 2.17 or newer, and run `pre-commit install`.
 The dev team is teaching `pre-commit` to handle various fussy and forgettable steps.
 
+Naev uses [Oxford Spelling](https://en.wikipedia.org/wiki/Oxford_spelling) for all text in the game.
+
 ### ONLINE TRANSLATION
 
 Naev is incorporated into [Weblate](https://weblate.org/). You can easily
