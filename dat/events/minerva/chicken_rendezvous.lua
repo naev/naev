@@ -34,7 +34,7 @@ function create()
    vn.na(_("If only the terminal could be more discrete… You follow the terminal as it leads you towards the spa facilities. All the rooms you pass seem to have the same gaudy decorations and similar patrons. You wonder if you will be able to make it back to where you came from."))
    t(_([[The terminal glides around the maze that is Minerva station while its head rotates backwards to face you.
 "I BELIEVE YOU WILL BE VERY IMPRESSED WITH THE ACCOMMODATIONS AT THE SPA. THE RENOVATIONS TOOK ALMOST A CYCLE AND IT IS MORE BEAUTIFUL THAN EVER."]]))
-   t(_([["TODAY THE WATER IS INFUSED WITH NANOBOTS THAT SPECIALIZE IN ANTI-AGING, AFTER A DIP YOU WILL LOOK YOUNGER THAN EVER. THESE HAVE BEEN DEVELOPED BY THE ZA'LEK AND SHOULD EVEN SURPASS THE ANTI-AGING PROPERTIES OF THE SOROMID SKIN LEECHES, WITHOUT EVEN CLOUDING THE WATER."]]))
+   t(_([["TODAY THE WATER IS INFUSED WITH NANOBOTS THAT SPECIALIZE IN ANTI-AGEING, AFTER A DIP YOU WILL LOOK YOUNGER THAN EVER. THESE HAVE BEEN DEVELOPED BY THE ZA'LEK AND SHOULD EVEN SURPASS THE ANTI-AGEING PROPERTIES OF THE SOROMID SKIN LEECHES, WITHOUT EVEN CLOUDING THE WATER."]]))
    vn.na(_("As you walk, you feel that the surrounding decorations are starting to get fancier, you must be nearing the VIP area."))
    t(_([["FURTHERMORE, CYBORG CHICKEN WILL BE JOINING YOU IN THE SPA. DO NOT WORRY, HIS CYBORG IMPLEMENTS ARE ALL WATER-PROOF UNLIKE MY BODY. MAKE SURE TO MAKE MOST OF THIS ONCE IN A LIFETIME OPPORTUNITY."]]))
    t(_([[The terminal stops moving in front of a airlock encrusted with what look to be diamonds on a gold enamel.
@@ -164,7 +164,7 @@ Kex slides out of the water, ruffles his feather and fades into the steam. You h
       vn.setUpdateFunc()
    end )
    vn.transition()
-   vn.na(_("The noise and lights once again jar you back to reality harshly. At least you feel younger from the anti-aging nanobots. Maybe you should get a spa for your ship…"))
+   vn.na(_("The noise and lights once again jar you back to reality harshly. At least you feel younger from the anti-ageing nanobots. Maybe you should get a spa for your ship…"))
    vn.done("hexagon")
    vn.run()
 

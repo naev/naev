@@ -99,7 +99,7 @@ You escort the old lady to your ship, trying not to listen to her rambling. Perh
 
    misn.accept()
    misn.setTitle(_("The Old Woman"))
-   misn.setDesc(fmt.f(_("An aging lady has asked you to ferry her to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys}))
+   misn.setDesc(fmt.f(_("An ageing lady has asked you to ferry her to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys}))
    misn.setReward(_("Fair monetary compensation"))
    misn.osdCreate(_("The Old Woman"), {
       fmt.f(_("Take the old woman to {pnt} ({sys} system)"), {pnt=mem.destplanet, sys=mem.destsys}),
