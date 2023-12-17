@@ -15,6 +15,7 @@
    * Buffed Scanning Combat AI to have an additional +15% tracking
    * `srs_ferry`: fixed marker not updating for alternative delivery locations
    * `nelly03`: guard against the player changing systems in the middle of mining
+   * `zbh06`: made mission easier for the player
    * Translation updates
 
 * 0.11.0-beta.3
