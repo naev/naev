@@ -48,7 +48,7 @@ args = [ "xgettext", filename, '--from-code=utf-8', '-d' , tf.name[:-3] ] # xget
 ret = subprocess.run( args )
 
 # TODO implement a custom dictionary or something to lower false positives
-tool = language_tool_python.LanguageTool('en-GB')
+tool = language_tool_python.LanguageTool('en-GB-oxendict')
 po = polib.pofile( tf.name )
 n = 1
 for entry in po:

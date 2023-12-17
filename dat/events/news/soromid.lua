@@ -12,7 +12,7 @@ local articles = {
    --]]
    {
       head = N_([[On the Usefulness of Tails]]),
-      body = _([[A paper published by the journal Unnatural Observations on the usefulness of tails caused a great debate among the proponents and opponents of heavy planet colonisation endeavours. Moderator quoted as saying "we can't seem to reach an agreement. I'm splitting my tails!"]]),
+      body = _([[A paper published by the journal Unnatural Observations on the usefulness of tails caused a great debate among the proponents and opponents of heavy planet colonization endeavours. Moderator quoted as saying "we can't seem to reach an agreement. I'm splitting my tails!"]]),
    },
    {
       head = N_([[Unusual Recessiveness]]),
