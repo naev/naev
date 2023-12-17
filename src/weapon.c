@@ -44,6 +44,7 @@ typedef struct WeaponCollision_ {
    const OutfitGFX *gfx;   /**< Graphics of the weapon if applicable. */
    int beam;               /**< Is the weapon a beam weapon? */
    double range;           /**< Range of the weapon (or size in the case of GFX). */
+   double beamrange;       /**< Range of the weapon if beam. */
    const CollPoly *polygon;/**< Collision polygon of the weapon if applicable. */
    int explosion;          /**< Collision is an explosion. */
 } WeaponCollision;
@@ -1022,6 +1023,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
    }
 
    if (wc->beam) {
+      int ret, pll;
       /* Set up variables so we can use the equations from CollideLineLine as is.
        * Main idea is to just do a line-line collision*/
       double s1x = csol->pos.x;
@@ -1030,8 +1032,8 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       double e1y = csol->pre.y;
       double s2x = w->solid.pos.x;
       double s2y = w->solid.pos.y;
-      double e2x = w->solid.pos.x + cos(w->solid.dir) * wc->range;
-      double e2y = w->solid.pos.y + sin(w->solid.dir) * wc->range;
+      double e2x = w->solid.pos.x + cos(w->solid.dir) * wc->beamrange;
+      double e2y = w->solid.pos.y + sin(w->solid.dir) * wc->beamrange;
 
       /* Find intersection position. */
       double u_b = (e2y - s2y) * (e1x - s1x) - (e2x - s2x) * (e1y - s1y);
@@ -1046,26 +1048,53 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
          /* Nearest point on the line segment. */
          cipos.x = s1x + ua * (e1x-s1x);
          cipos.y = s1y + ua * (e1y-s1y);
-         cpos = &cipos;
+         cpos  = &cipos;
+         pll   = 0;
       }
+      else
+         pll   = 1;
 
       /* Now we can look at the collision at the corrected point. */
       if (cpol!=NULL) {
          int k = ctex->sx * csy + csx;
-         return CollideLinePolygon( &w->solid.pos, w->solid.dir,
-               wc->range, &cpol[k], cpos, crash);
+         ret = CollideLinePolygon( &w->solid.pos, w->solid.dir,
+               wc->beamrange, &cpol[k], cpos, crash);
       }
       else if (ctex!=NULL) {
-         return CollideLineSprite( &w->solid.pos, w->solid.dir,
-               wc->range, ctex, csx, csy, cpos, crash);
+         ret = CollideLineSprite( &w->solid.pos, w->solid.dir,
+               wc->beamrange, ctex, csx, csy, cpos, crash);
       }
       else {
          const vec2 endpoint = { .x=e2x, .y=e2y };
-         return CollideLineCircle( &w->solid.pos, &endpoint, cpos, cradius, crash );
+         ret = CollideLineCircle( &w->solid.pos, &endpoint, cpos, cradius, crash );
       }
+      if (ret > 0)
+         return ret;
+      /* Case non-parallel lines (or 0 length lines), we just compute the nearest point. */
+      else if (!pll) {
+         double ub_t = (e1x - s1x) * (s1y - s2y) - (e1y - s1y) * (s1x - s2x);
+         double ub = CLAMP( 0., 1., ub_t / u_b );
+         wipos.x = s2x + ub * (e2x-s2x);
+         wipos.y = s2y + ub * (e2y-s2y);
+         wpos = &wipos;
+      }
+      /* Case parallel or 0 length lines, computer nearest point on beam to position. */
+      else {
+         double vx1 = s1x-s2x;
+         double vy1 = s1y-s2y;
+         double vx2 = e2x-s2x;
+         double vy2 = e2y-s2y;
+         double t   = (vx1*vx2 + vy1*vy2) / (pow2(vx2)+pow2(vy2));
+         t = CLAMP( 0., 1., t );
+         wipos.x = s2x + t * vx2;
+         wipos.y = s2y + t * vy2;
+         wpos = &wipos;
+      }
+      /* Purpose fallthrough. If beam doesn't intersect with lines, we try a spherical collision. */
    }
+
    /* Try to do polygon first. */
-   else if (cpol != NULL) {
+   if (cpol != NULL) {
       int k = ctex->sx * csy + csx;
       /* Case full polygon on polygon collision. */
       if (wc->polygon!=NULL)
@@ -1170,7 +1199,8 @@ static void weapon_updateCollide( Weapon* w, double dt )
       }
       wc.gfx = NULL;
       wc.polygon = NULL;
-      wc.range = w->outfit->u.bem.range; /* Set beam range. */
+      wc.range = w->outfit->u.bem.width*0.5; /* Set beam range. */
+      wc.beamrange = w->outfit->u.bem.range; /* Set beam range. */
 
       /* Determine quadtree location. */
       x1 = round(w->solid.pos.x);
