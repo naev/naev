@@ -433,7 +433,7 @@ end
 -- Player checks security clearance of a ship
 local function checkClearance( self )
    mem.myjob = occupations[ rnd.rnd(1,#occupations) ]
-   tk.msg( _("Controlling incoming ship"), fmt.f(_([[As you approach the ship, your targeting array focuses on it and processes its clearance code. You read on your control pad: "This citizen is an honorable {job} whose presence is required for the meeting: let the ship land on the station."]]), {job=mem.myjob}) )
+   tk.msg( _("Controlling incoming ship"), fmt.f(_([[As you approach the ship, your targeting array focuses on it and processes its clearance code. You read on your control pad: "This citizen is an honourable {job} whose presence is required for the meeting: let the ship land on the station."]]), {job=mem.myjob}) )
    self:setHilight( false )
 
    -- Change osd if needed

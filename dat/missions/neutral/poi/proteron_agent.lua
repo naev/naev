@@ -65,7 +65,7 @@ return function ( mem )
          vn.disappear( v01 )
 
          vn.na(_([[BEGIN PLAYBACK OF AUDIO DATA ##4189]]))
-         v02(fmt.f(_([["…personal log date… {n1} …no transmissions getting through. Ship is still heavily damaged from what I can only describe as an enormous explosion. Hiding in the shadow of… {n2} …minimized damage, however, nothing remains… {n3}"]]),
+         v02(fmt.f(_([["…personal log date… {n1} …no transmissions getting through. Ship is still heavily damaged from what I can only describe as an enormous explosion. Hiding in the shadow of… {n2} …minimised damage, however, nothing remains… {n3}"]]),
             {n1=noise(), n2=noise(), n3=noise()}))
          v02(fmt.f(_([["…possibly end of civilization. The little functionality left in my scanners has not picked up any objects, just this dense fog or whatever… {n1}"]]),
             {n1=noise()}))

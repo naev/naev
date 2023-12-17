@@ -72,7 +72,7 @@ function accept()
 
    vn.label("accept")
    vn.func( function () accepted=true end )
-   joanne(_([["Oh, I'm glad to hear that. Here, I'll upload the details of Harja's private ship into your computer. I did some digging in the military database to find them. You don't graduate from the Sinass High Academy with honors without picking up a few tricks! I know, I know, it's classified data, but it's for a good cause, wouldn't you say?"]]))
+   joanne(_([["Oh, I'm glad to hear that. Here, I'll upload the details of Harja's private ship into your computer. I did some digging in the military database to find them. You don't graduate from the Sinass High Academy with honours without picking up a few tricks! I know, I know, it's classified data, but it's for a good cause, wouldn't you say?"]]))
    joanne(_([["You should be able to identify Harja when you pick him up on your sensors now. If you have trouble locating him, consider installing better sensors on your ship so you can pick him up from farther away. But don't spend too much effort looking for him, just keep a look out as you go about your normal business. If you just stay in Sirius space, I'm sure you'll run into him sooner or later."]]))
    joanne(fmt.f(_([[Joanne gets up to leave, but before she goes she adds, "I'll be on {pnt} for a while longer, so come back here when you've got something. Good luck!"]]),
       {pnt=spob.cur()}))

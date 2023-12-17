@@ -423,7 +423,7 @@ So I guess you want to know why I told the pack of boars that you betrayed them,
    vn.label("why")
    trick(_([["Guess what, mate? When I told Okran you betrayed him, I made you the greatest favour possible! Yep for real!
 You know how to work your way up among the Dvaereds? Hewhewhew! By killing Dvaereds! Totally true! Hundred percent fact-checked! Dvaereds weirdos are the only kind of weirdos that will love you more if you kill other Dvaered weirdos.
-But watch out, mate! For killing Dvaereds weirdos is a subtle art, ya know? You can't just attack random Vendettas in space and win the High Command's respect. You need to kill people in the context of a "honorable fight between two respectable gentlemen". Yo, because Dvaered are for sure respectable gentlemen!"]]))
+But watch out, mate! For killing Dvaereds weirdos is a subtle art, ya know? You can't just attack random Vendettas in space and win the High Command's respect. You need to kill people in the context of a "honourable fight between two respectable gentlemen". Yo, because Dvaered are for sure respectable gentlemen!"]]))
    trick(_([["So, I gave you the occasion to fight a respectable asshol… hem… gentleman. And if you kill him, the Dvaered will fully accept you among them. You'll be like their mate, ya know? Hewhewhew! For what it's worth. But you decided to join them.
 So here I am! Your white knight on his white horse. I give you not only the occasion to fight one Colonel, but also one Colonel in a Goddard. Ya'll never have any better occasion!"]]))
    vn.menu{
