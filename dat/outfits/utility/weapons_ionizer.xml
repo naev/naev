@@ -13,11 +13,11 @@
  </general>
  <specific type="modification">
   <fwd_dam_as_dis>100</fwd_dam_as_dis>
-  <fwd_damage>-70</fwd_damage>
+  <fwd_damage>-50</fwd_damage>
   <fwd_energy>20</fwd_energy>
   <fwd_heat>20</fwd_heat>
   <tur_dam_as_dis>100</tur_dam_as_dis>
-  <tur_damage>-70</tur_damage>
+  <tur_damage>-50</tur_damage>
   <tur_energy>20</tur_energy>
   <tur_heat>20</tur_heat>
   <lua>outfits/utility/weapons_ionizer.lua</lua>

@@ -27,6 +27,6 @@
   <spfx_armour>ExpS</spfx_armour>
   <sound>beam0</sound>
   <sound_off>beam_off0</sound_off>
-  <shader r="0.8" g="0.1" b="0.4" a="1." width="22.">beam_helix</shader>
+  <shader r="0.8" g="0.1" b="0.4" a="1." width="20.">beam_helix</shader>
  </specific>
 </outfit>

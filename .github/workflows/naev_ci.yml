@@ -224,11 +224,15 @@ jobs:
       matrix:
         include:
           - image: naev-macos
+            tag: latest
             config: macos_cross_osxcross.ini
+          - image: naev-macos
+            tag: latest-aarch64
+            config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/naev/${{ matrix.image }}:latest"
+      image: "ghcr.io/naev/${{ matrix.image }}:${{ matrix.tag }}"
 
     steps:
       - name: Get Source
@@ -261,7 +265,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
-          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
+          name: ${{ matrix.image }}.${{ matrix.tag }}-${{ github.sha }}-setup-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Meson Compile
@@ -273,13 +277,13 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
-          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
+          name: ${{ matrix.image }}.${{ matrix.tag }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
+          name: ${{ matrix.image }}.${{ matrix.tag }}-${{ github.sha }}-buildArtifacts
           path: |
             ${{ github.workspace }}/build
           if-no-files-found: error
@@ -293,7 +297,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
-          name: ${{ matrix.image }}-${{ github.sha }}-install-log
+          name: ${{ matrix.image }}.${{ matrix.tag }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
   "Luacheck":

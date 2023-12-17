@@ -215,7 +215,7 @@ function talkHarja()
       vn.transition()
       hrj(_([[Harja raises an eyebrow when he's confronted with you again. "Well well, back are we? Does that mean you've taken care of my little problem?"]]))
       vn.na(_([[You recount the fight you had with the bounty hunters. Harja seems quite pleased with the outcome.]]))
-      hrj(fmt.f(_([["Okay {player}, I'll admit it, you're one hell of a pilot," he smiles. "I still think you picked the wrong side, but that doesn't matter right now. I said I would come with you, and I intend to honor that promise. I'll go and prep my ship for takeoff right away. When you're ready to leave, I'll launch as well."]]),
+      hrj(fmt.f(_([["Okay {player}, I'll admit it, you're one hell of a pilot," he smiles. "I still think you picked the wrong side, but that doesn't matter right now. I said I would come with you, and I intend to honour that promise. I'll go and prep my ship for takeoff right away. When you're ready to leave, I'll launch as well."]]),
          {player=player.name()}))
       vn.na(fmt.f(_([[Harja leaves in the direction of the spaceport hangars. It seems you're finally making some progress. You take a minute to key in a message to Joanne, letting her know you're on your way with Harja in tow. Now you just have to hope it doesn't all fall to pieces again when you get back to {pnt}.]]),
          {pnt=startplanet}))

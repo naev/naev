@@ -304,7 +304,7 @@ static Target lua_totarget( lua_State *L, int idx )
    /* Handle target. */
    if (lua_isnoneornil(L,idx))
       t.type = TARGET_NONE;
-   if (lua_ispilot(L,idx)) {
+   else if (lua_ispilot(L,idx)) {
       t.type = TARGET_PILOT;
       t.u.id = lua_topilot(L,idx);
    }
@@ -318,6 +318,10 @@ static Target lua_totarget( lua_State *L, int idx )
       const LuaMunition *lm = lua_tomunition(L,idx);
       t.type = TARGET_WEAPON;
       t.u.id = lm->id;
+   }
+   else {
+      NLUA_INVALID_PARAMETER_NORET(L,idx);
+      t.type = TARGET_NONE;
    }
    return t;
 }
@@ -339,14 +343,14 @@ static Target lua_totarget( lua_State *L, int idx )
 static int poL_munition( lua_State *L )
 {
    PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
-   Pilot *p    = luaL_validpilot( L, 2 );
-   const Outfit *o = luaL_optoutfit( L, 3, po->outfit );
-   Target t = lua_totarget( L, 4 );
-   double dir  = luaL_optnumber( L, 5, p->solid.dir );
-   vec2 *vp    = luaL_optvector( L, 6, &p->solid.pos );
-   vec2 *vv    = luaL_optvector( L, 7, &p->solid.vel );
-   int noaim   = lua_toboolean( L, 8 );
-   Weapon *w = weapon_add( po, o, dir, vp, vv, p, &t, 0., !noaim );
+   Pilot *p       = luaL_validpilot( L, 2 );
+   const Outfit *o= luaL_optoutfit( L, 3, po->outfit );
+   Target t       = lua_totarget( L, 4 );
+   double dir     = luaL_optnumber( L, 5, p->solid.dir );
+   const vec2 *vp = luaL_optvector( L, 6, &p->solid.pos );
+   const vec2 *vv = luaL_optvector( L, 7, &p->solid.vel );
+   int noaim      = lua_toboolean( L, 8 );
+   const Weapon *w = weapon_add( po, o, dir, vp, vv, p, &t, 0., !noaim );
    lua_pushmunition( L, w );
    return 1;
 }

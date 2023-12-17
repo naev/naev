@@ -8,7 +8,9 @@
   <nolanes/>
  </general>
  <pos x="639.683808" y="-63.683082"/>
- <spobs/>
+ <spobs>
+  <spob_virtual>Pirate All Unpresence (Range 2)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Midoros">
    <autopos/>

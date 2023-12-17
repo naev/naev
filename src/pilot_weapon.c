@@ -175,9 +175,8 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
       case WEAPSET_TYPE_SWITCH:
          /* On press just change active weapon set to whatever is available. */
          if ((type > 0) && (array_size(ws->slots)>0)) {
-            if (id != p->active_set)
-               pilot_weapSetUpdateOutfits( p, ws );
             p->active_set = id;
+            pilot_weapSetUpdateOutfits( p, ws );
          }
          break;
 
@@ -347,19 +346,35 @@ static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
    const PilotWeaponSet *wsa = pilot_weapSet( p, p->active_set );
    if (wsa->type != WEAPSET_TYPE_SWITCH) {
       for (int i=0; i<PILOT_WEAPON_SETS; i++) {
-         PilotWeaponSet *wsi = pilot_weapSet( p, p->active_set );
+         const PilotWeaponSet *wsi = pilot_weapSet( p, p->active_set );
          if (wsi->type == WEAPSET_TYPE_SWITCH) {
             p->active_set = i;
-            return pilot_weapSetUpdateOutfits( p, wsi );
+            wsa = pilot_weapSet( p, p->active_set );
+            break;
          }
       }
    }
 
-   /* Just and redo. */
+   /* Have to update slots potentially. */
+   for (int i=0; i<array_size(p->outfits); i++) {
+      PilotOutfitSlot *o = p->outfits[i];
+      o->weapset = -1;
+      for (int j=0; j<PILOT_WEAPON_SETS; j++) {
+         if (pilot_weapSetCheck(p, j, o) != -1) {
+            o->weapset = j;
+            break;
+         }
+      }
+   }
+
+   /* Update range. */
+   pilot_weapSetUpdateRange( p, ws );
+
+   /* Just update levels of active weapon set.  */
    for (int i=0; i<array_size(p->outfits); i++)
       p->outfits[i]->level = -1;
-   for (int i=0; i<array_size(ws->slots); i++)
-      p->outfits[ ws->slots[i].slotid ]->level = ws->slots[i].level;
+   for (int i=0; i<array_size(wsa->slots); i++)
+      p->outfits[ wsa->slots[i].slotid ]->level = wsa->slots[i].level;
 }
 
 /**
@@ -387,19 +402,7 @@ void pilot_weapSetType( Pilot* p, int id, WeaponSetType type )
    PilotWeaponSet *ws = pilot_weapSet(p,id);
    ws->type = type;
    ws->active = 0; /* Disable no matter what. */
-   /* Have to update slots potentially. */
-   for (int i=0; i<array_size(ws->slots); i++) {
-      PilotOutfitSlot *o = p->outfits[ ws->slots[i].slotid ];
-      o->weapset = -1;
-      for (int j=0; j<PILOT_WEAPON_SETS; j++) {
-         if (pilot_weapSetCheck(p, j, o) != -1) {
-            o->weapset = j;
-            break;
-         }
-      }
-   }
-   if (p->active_set==id)
-      pilot_weapSetUpdateOutfits(p,ws);
+   pilot_weapSetUpdateOutfits(p,ws);
 }
 
 /**
@@ -570,7 +573,7 @@ const char *pilot_weapSetName( Pilot* p, int id )
  *    @param o Outfit to add.
  *    @param level Level of the trigger.
  */
-void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
+void pilot_weapSetAdd( Pilot* p, int id, const PilotOutfitSlot *o, int level )
 {
    PilotWeaponSetOutfit *slot;
    PilotWeaponSet *ws = pilot_weapSet(p,id);
@@ -583,12 +586,8 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    for (int i=0; i<array_size(ws->slots); i++) {
       if (ws->slots[i].slotid != o->id)
          continue;
-
       ws->slots[i].level = level;
-
-      /* Update if needed. */
-      if (id == p->active_set)
-         pilot_weapSetUpdateOutfits( p, ws );
+      pilot_weapSetUpdateOutfits( p, ws );
       return;
    }
 
@@ -600,22 +599,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
       slot->range2 = pow2(outfit_range(o->outfit));
    else
       slot->range2 = 0.;
-
-   /* Updated cached weapset. */
-   o->weapset = -1;
-   for (int j=0; j<PILOT_WEAPON_SETS; j++) {
-      if (pilot_weapSetCheck(p, j, o) != -1) {
-         o->weapset = j;
-         break;
-      }
-   }
-
-   /* Update range. */
-   pilot_weapSetUpdateRange( p, ws );
-
-   /* Update if needed. */
-   if (id==p->active_set)
-      pilot_weapSetUpdateOutfits( p, ws );
+   pilot_weapSetUpdateOutfits( p, ws );
 }
 
 /**
@@ -625,7 +609,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
  *    @param id ID of the weapon set.
  *    @param o Outfit to remove.
  */
-void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
+void pilot_weapSetRm( Pilot* p, int id, const PilotOutfitSlot *o )
 {
    PilotWeaponSet *ws = pilot_weapSet(p,id);
    for (int i=0; i<array_size(ws->slots); i++) {
@@ -633,23 +617,7 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
          continue;
 
       array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
-
-      /* Updated cached weapset. */
-      o->weapset = -1;
-      for (int j=0; j<PILOT_WEAPON_SETS; j++) {
-         if (pilot_weapSetCheck(p, j, o) != -1) {
-            o->weapset = j;
-            break;
-         }
-      }
-
-      /* Update range. */
-      pilot_weapSetUpdateRange( p, ws );
-
-      /* Update if needed. */
-      if (id == p->active_set)
-         pilot_weapSetUpdateOutfits( p, ws );
-
+      pilot_weapSetUpdateOutfits( p, ws );
       return;
    }
 }
@@ -667,12 +635,8 @@ void pilot_weapSetClear( Pilot* p, int id )
    array_free( ws->slots );
    ws->slots = NULL;
 
-   /* Update range. */
-   pilot_weapSetUpdateRange( p, ws );
-
    /* Update if needed. */
-   if (id==p->active_set)
-      pilot_weapSetUpdateOutfits( p, ws );
+   pilot_weapSetUpdateOutfits( p, ws );
 }
 
 /**
@@ -1544,8 +1508,8 @@ void pilot_weaponAuto( Pilot *p )
       }
    }
 
-   /* Update active weapon set. */
-   pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
+   /* Update all outfits. */
+   pilot_weaponSafe( p );
 }
 
 /**
@@ -1600,6 +1564,9 @@ void pilot_weaponSafe( Pilot *p )
       /* Update range. */
       pilot_weapSetUpdateRange( p, ws );
    }
+
+   /* Update active weapon set. */
+   pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
 }
 
 /**

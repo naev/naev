@@ -109,7 +109,7 @@ It isn't just the pirates who keep swarming around us unbidden. The merchantmen 
             log(_([[Final log, UST 551:3517
 Red Rackham is here. He jumped out of hyperspace right beside us somehow and opened fire. His ship was like nothing I've ever seen before, maybe like nothing else that's ever been built. The merchantmen scattered, but it seemed like he wasn't planning on letting any of them go. They drew enough of his fire for my crew to bring his shields down before he realized what was happening. I saw one of his engines explode right before he disabled us. We must have hit something critical, because the next thing we knew we were getting boarded by fighters.
 
-They've taken over entire ship now, with Rackham himself leading the charge. He only left enough of us alive to make up his missing crew, no doubt he's planning to commandeer the ship and make us fly it back to some pirate station. After that though, they won't need us anymore. All I have is my blaster and one thermal detonator. If I am to die, then on my honor as captain I swear I will take Red Rackham with me.]]))
+They've taken over entire ship now, with Rackham himself leading the charge. He only left enough of us alive to make up his missing crew, no doubt he's planning to commandeer the ship and make us fly it back to some pirate station. After that though, they won't need us anymore. All I have is my blaster and one thermal detonator. If I am to die, then on my honour as captain I swear I will take Red Rackham with me.]]))
             vne.notebookEnd()
             reward = commodity.get("Gold")
             vn.na(fmt.f(_(

@@ -254,7 +254,7 @@ function spawnNpcs()
    "And Helmut Strafer's big plan is named Great House Dvaered."]]))
             tk.msg(_("Goodbye, Lieutenant Strafer"),_([["Great House Dvaered turns scarlet when its citizens spill their blood for it. Great House Dvaered loses a bit of its majesty anytime one of its ships crashes. Great House Dvaered is horrified when it witnesses atrocities.
    "Helmut Strafer dedicated his life to Great House Dvaered, and I have the great honour to speak of him at this occasion. I could tell you how right, loyal, and strong this man was. I could tell you the confidence his very presence next to my ship made me feel. But you already know. So I will only tell you this story: We were flying, side by side, in the Arandon nebula. We had spent hours in there, with the abrasive gases slowly gnawing on our shields. All to find and destroy a single terrorist fighter. I asked Strafer if he thought it was worth it and he gave this simple answer: 'Everything is worth it when it is done for the Dvaered Nation'.
-   "In conclusion, if you want to honor the memory of Helmut Strafer, do worthy things: do work for the Nation!"]]))
+   "In conclusion, if you want to honour the memory of Helmut Strafer, do worthy things: do work for the Nation!"]]))
 
             shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
             shiplog.append( "frontier_war", _("You took part to a Mace Rocket Ballet in memory of Lieutenant Strafer, and won an astonishing prize. Major Tam warned you that assassins are on your tracks and requested you to capture one of them alive.") )

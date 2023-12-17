@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-15 12:46+0900\n"
+"POT-Creation-Date: 2023-12-17 14:10+0900\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -2512,7 +2512,7 @@ msgstr ""
 #: dat/outfits/accessory/rackham_razor.xml:11
 msgid ""
 "An ornately engraved sword with a lightly curved, razor-sharp nanosteel "
-"blade, the favorite weapon of the once legendary pirate Red Rackham. The "
+"blade, the favourite weapon of the once legendary pirate Red Rackham. The "
 "mere sight of this sword struck fear into his enemies and rallied his crew "
 "with visions of plunder and glory."
 msgstr ""
@@ -5207,11 +5207,6 @@ msgid ""
 "and can even be used to deter small assault craft."
 msgstr ""
 
-#: dat/outfits/pointdefense/guardian_interception_system.xml:11
-#: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:11
-msgid "Automatically fires at nearby missiles and interceptors."
-msgstr ""
-
 #: dat/outfits/pointdefense/guardian_overseer_system.xml:2
 #, fuzzy
 msgid "Guardian Overseer System"
@@ -5224,10 +5219,6 @@ msgid ""
 "system makes use of specially modified Ripper cannons that allow it to "
 "neutralize most ordinances. Although designed for intercepting torpedoes, "
 "the targeting system is also efficient at tracking small enemy craft."
-msgstr ""
-
-#: dat/outfits/pointdefense/guardian_overseer_system.xml:11
-msgid "Automatically fires at nearby missiles and fighters."
 msgstr ""
 
 #: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:2
@@ -5243,6 +5234,10 @@ msgid ""
 "defense mechanism of spitting large bubbles of plasma. Although the bubbles "
 "are quite weak compared to engineered weapons, their numbers allow them to "
 "efficiently protect the ship they are attached to from non-armoured missiles."
+msgstr ""
+
+#: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:11
+msgid "Automatically fires at nearby missiles and interceptors."
 msgstr ""
 
 #: dat/outfits/special/base_ripper_mk2.xml:2
@@ -6566,7 +6561,7 @@ msgstr "플라즈마 터렛 MK1"
 #: dat/outfits/utility/targeting_array.xml:9
 msgid ""
 "An improved targeting array allows your turrets to more quickly acquire "
-"targets, and minimizes accuracy losses at range. It requires a short period "
+"targets, and minimises accuracy losses at range. It requires a short period "
 "to compute an ideal vector, slightly slowing firing rates."
 msgstr ""
 
@@ -7621,7 +7616,7 @@ msgid ""
 "Once upon a time, the Goddard Battlecruiser was commissioned by the Empire "
 "for military service. However, during the Dvaered Revolts most Goddard "
 "captains sided with the insurgents and, after the establishment of House "
-"Dvaered, the Empire ceded the license for the aging vessel to them. Today, "
+"Dvaered, the Empire ceded the license for the ageing vessel to them. Today, "
 "House Dvaered is House Goddard's biggest client and this Dvaered military "
 "grade version has been adapted to the needs of the Dvaered Warlords, which "
 "means better armour and forwards weapon damage at the cost of increased mass."
@@ -7654,7 +7649,7 @@ msgstr "드 베어드 경계"
 
 #: dat/ships/dvaered/dvaered_retribution.xml:20
 msgid ""
-"When the Empire replaced their aging cruisers with the new Hawking class "
+"When the Empire replaced their ageing cruisers with the new Hawking class "
 "House Dvaered seized the opportunity to acquire the license for the cruiser "
 "and most of the remaining ships. Dvaered engineers reinforced the armor and "
 "redesigned the ship's structure while also attaching additional weapon hard "
@@ -7884,6 +7879,7 @@ msgstr "투리온의 확신"
 msgid "Station"
 msgstr "투리온의 불꽃"
 
+#. l +=
 #: dat/ships/misc/fort_raelid.xml:11 dat/ships/misc/fort_raglan.xml:11
 #: dat/ships/misc/onewing_goddard.xml:11 dat/ships/misc/psychic_orb.xml:10
 #: dat/ships/misc/sindbad.xml:11
@@ -7892,8 +7888,8 @@ msgstr "투리온의 불꽃"
 #: dat/ships/sirius/astral_projection_normal.xml:12
 #: dat/missions/neutral/race_qex.lua:156 src/dev_uniedit.c:274
 #: src/dev_uniedit.c:278 src/dev_uniedit.c:1583 src/dev_uniedit.c:1584
-#: src/land_outfits.c:495 src/land_outfits.c:496 src/land_outfits.c:497
-#: src/land_outfits.c:498 src/land_trade.c:228 src/land_trade.c:232
+#: src/land_outfits.c:499 src/land_outfits.c:500 src/land_outfits.c:501
+#: src/land_outfits.c:502 src/land_trade.c:228 src/land_trade.c:232
 #: src/land_trade.c:233 src/land_trade.c:234 src/map.c:665 src/map.c:666
 #: src/outfit.c:340 src/outfit.c:361
 msgid "N/A"
@@ -11085,7 +11081,7 @@ msgstr ""
 msgid ""
 "Arrakis is a desert planet with no natural precipitation and the dust storms "
 "can rage for many periods at a time. Due to the expense of constantly "
-"importing water, lots of care is taken to minimize evaporation with most "
+"importing water, lots of care is taken to minimise evaporation with most "
 "buildings are almost completely hermetic. The locals are continuously "
 "discussing sandworms, though you're not sure what to make of it."
 msgstr ""
@@ -11742,7 +11738,7 @@ msgstr ""
 
 #: dat/spob/caladan.xml:29
 msgid ""
-"The bar is just off the starport with a great view of the harbor. You could "
+"The bar is just off the starport with a great view of the harbour. You could "
 "watch the fishermen run frantically about attending their duties for hours. "
 "You could also tuck into some of the local cuisine which is rather refined, "
 "with most dishes containing meat."
@@ -13153,7 +13149,7 @@ msgid ""
 "down most objects above the surface. It was originally designed as a forced "
 "mining camp when controlled by the Empire, and when passed over to House "
 "Dvaered, the tradition continued not only continued, but was expanded with "
-"criminals and other undesirables. When the Incident happened, to minimize "
+"criminals and other undesirables. When the Incident happened, to minimise "
 "the effect of refugees on their core worlds, incoming refugees were diverted "
 "in large numbers here, significantly increasing the population. Although "
 "initial attempts to keep the forced labourers and refugees were had, the "
@@ -13168,7 +13164,7 @@ msgid ""
 "Like almost all the constructions on the planet, the bar is located under "
 "the surface, just below the spaceport. It is a dusty and dirty place, quite "
 "crowded with people off their mining shifts. Drink covers are offered to try "
-"to minimize the ratio of sand-to-drink, however, quite a few of the locals "
+"to minimise the ratio of sand-to-drink, however, quite a few of the locals "
 "have given up on such endeavour."
 msgstr ""
 
@@ -14280,7 +14276,7 @@ msgid ""
 "routes, having a knack for spotting the areas in space that allowed entry "
 "into hyperspace for prolonged periods. In those days this was exceptional, "
 "since scanning technology was nowhere near as advanced as now.\n"
-"In honor of Gilligan's services to the old Factions, he was granted his own "
+"In honour of Gilligan's services to the old Factions, he was granted his own "
 "planetary system and settlement therein. After the Faction Wars, Gilligan's "
 "Memory came to fall under Sirian rule, though the Sirii have chosen to "
 "uphold Gilligan's memory."
@@ -19914,7 +19910,7 @@ msgid ""
 "Ruadan has recently become the nerve center of the Za'lek. Most of the "
 "Za'lek's strength is concentrated here, and they don't allow anyone but the "
 "highest level captains to land here. Even being allowed to be here is "
-"considered a great honor."
+"considered a great honour."
 msgstr ""
 
 #: dat/spob/ruadan_prime.xml:30
@@ -20288,7 +20284,7 @@ msgstr ""
 
 #: dat/spob/savoy_terminal.xml:25
 msgid ""
-"An aging station, this serves as a simple guard station against possible "
+"An ageing station, this serves as a simple guard station against possible "
 "piracy in the south. There is little to warm or recommend the place to "
 "curious visitors. There are few people wandering the halls, and most of them "
 "are militia or scientists."
@@ -22742,7 +22738,7 @@ msgstr ""
 msgid ""
 "The Unicorp Mess Hall serves as a meeting point for all employees and "
 "visitors regardless of status. It is a self-service style with automated "
-"food dispensers to minimize waits and latency, which seems to be quite "
+"food dispensers to minimise waits and latency, which seems to be quite "
 "useful with the amount of employees constantly visiting the bar. Not very "
 "elegant, but very functional."
 msgstr ""
@@ -23159,7 +23155,7 @@ msgstr "각서"
 
 #: dat/spob/vigil_station.xml:24
 msgid ""
-"Vigil Station was built to honor all those who died in the ordeals of the "
+"Vigil Station was built to honour all those who died in the ordeals of the "
 "Soromid. The system sees few visitors, and the station is primarily a "
 "ceremonial post rather than an actual defensive installation. Nonetheless, "
 "many Soromid want to be posted here, to be connected with their past."
@@ -23200,7 +23196,7 @@ msgstr ""
 #: dat/spob/vilati_vilata.xml:28
 msgid ""
 "The bar is cold. It must be mentioned. Every effort has been made to "
-"minimize loss of heat from the building, but given the bar's close proximity "
+"minimise loss of heat from the building, but given the bar's close proximity "
 "to the spaceport, which is exposed to the elements, and the constant flow of "
 "customers, it has proven impossible to keep out the cold. This situation has "
 "given rise to a number of unkind jokes about the Vilati bar, which are told "
@@ -23949,7 +23945,7 @@ msgid ""
 "adapted and the ecosystem is based around nutrients and resources unearthed "
 "by the constant battering. The Soromid have also quickly adapted to life "
 "here and a rich and prosperous research community exists mainly in the "
-"depths of the oceans to minimize the risk of a direct asteroid impact. The "
+"depths of the oceans to minimise the risk of a direct asteroid impact. The "
 "locals are, in general, somewhat oblivious to the surrounding galaxy and are "
 "mainly focused on happenings at Wyrmwood."
 msgstr ""
@@ -30844,7 +30840,7 @@ msgstr ""
 #: src/dev_uniedit.c:1824 src/dev_uniedit.c:2055 src/dev_uniedit.c:2124
 #: src/dev_uniedit.c:2322 src/dev_uniedit.c:2369 src/dev_uniedit.c:2392
 #: src/info.c:435 src/info.c:924 src/input.c:519 src/land.c:804
-#: src/land_outfits.c:501 src/land_outfits.c:769 src/land_shipyard.c:152
+#: src/land_outfits.c:505 src/land_outfits.c:773 src/land_shipyard.c:152
 #: src/land_trade.c:108 src/land_trade.c:110 src/land_trade.c:177
 #: src/load.c:526 src/load.c:622 src/map.c:739 src/map.c:792 src/map.c:1971
 #: src/map_find.c:644 src/map_system.c:667
@@ -30876,7 +30872,7 @@ msgstr ""
 #: src/dev_sysedit.c:2629 src/dev_uniedit.c:454 src/dev_uniedit.c:1719
 #: src/dev_uniedit.c:1918 src/dev_uniedit.c:2174 src/dev_uniedit.c:2232
 #: src/info.c:426 src/info.c:480 src/info.c:646 src/info.c:889 src/info.c:1143
-#: src/info.c:1273 src/info.c:1658 src/land_outfits.c:201 src/map.c:381
+#: src/info.c:1273 src/info.c:1658 src/land_outfits.c:204 src/map.c:381
 #: src/map_find.c:993 src/map_system.c:203
 msgid "Close"
 msgstr ""
@@ -34668,7 +34664,7 @@ msgid ""
 "\" Alicia says. \"And do check out our bars and mission computers from time "
 "to time. We very well might have some missions for you in the future. In the "
 "meantime, buy yourself some nebula-resistant coating, and make yourself "
-"comfortable. You are our honored guest and, I hope, the first of many "
+"comfortable. You are our honoured guest and, I hope, the first of many "
 "outsiders to learn the wonders of our way of life.\"\n"
 "    The guards then promptly but politely escort you back to your ship, "
 "which has been refueled while you were gone. This should be an interesting "
@@ -35225,9 +35221,9 @@ msgstr ""
 
 #: dat/events/minerva/chicken_rendezvous.lua:37
 msgid ""
-"\"TODAY THE WATER IS INFUSED WITH NANOBOTS THAT SPECIALIZE IN ANTI-AGING, "
+"\"TODAY THE WATER IS INFUSED WITH NANOBOTS THAT SPECIALIZE IN ANTI-AGEING, "
 "AFTER A DIP YOU WILL LOOK YOUNGER THAN EVER. THESE HAVE BEEN DEVELOPED BY "
-"THE ZA'LEK AND SHOULD EVEN SURPASS THE ANTI-AGING PROPERTIES OF THE SOROMID "
+"THE ZA'LEK AND SHOULD EVEN SURPASS THE ANTI-AGEING PROPERTIES OF THE SOROMID "
 "SKIN LEECHES, WITHOUT EVEN CLOUDING THE WATER.\""
 msgstr ""
 
@@ -35604,7 +35600,7 @@ msgstr ""
 #: dat/events/minerva/chicken_rendezvous.lua:167
 msgid ""
 "The noise and lights once again jar you back to reality harshly. At least "
-"you feel younger from the anti-aging nanobots. Maybe you should get a spa "
+"you feel younger from the anti-ageing nanobots. Maybe you should get a spa "
 "for your ship…"
 msgstr ""
 
@@ -40238,8 +40234,8 @@ msgstr ""
 msgid ""
 "A paper published by the journal Unnatural Observations on the usefulness of "
 "tails caused a great debate among the proponents and opponents of heavy "
-"planet colonization endeavors. Moderator quoted as saying \"we can't seem to "
-"reach an agreement. I'm splitting my tails!\""
+"planet colonization endeavours. Moderator quoted as saying \"we can't seem "
+"to reach an agreement. I'm splitting my tails!\""
 msgstr ""
 
 #: dat/events/news/soromid.lua:18
@@ -42050,9 +42046,9 @@ msgstr ""
 
 #: dat/events/npc/generic.lua:73
 msgid ""
-"\"Hi there, traveler. Is your system map up to date? Just in case you didn't "
-"know already, let me give you the location of the jump from here to {jmp}. I "
-"hope that helps.\""
+"\"Hi there, traveller. Is your system map up to date? Just in case you "
+"didn't know already, let me give you the location of the jump from here to "
+"{jmp}. I hope that helps.\""
 msgstr ""
 
 #: dat/events/npc/generic.lua:74
@@ -42818,8 +42814,11 @@ msgstr ""
 
 #. Common stuff added to all echelons
 #: dat/events/npc/sirius.lua:38
+#, fuzzy
+#| msgid ""
+#| "\"Greetings, traveler. May Sirichana's wisdom guide you as it guides me.\""
 msgid ""
-"\"Greetings, traveler. May Sirichana's wisdom guide you as it guides me.\""
+"\"Greetings, traveller. May Sirichana's wisdom guide you as it guides me.\""
 msgstr ""
 "\"반갑다, 여행자. 시리차나의 지혜가 나를 인도하는 대로 너를 인도해 주기를.\""
 
@@ -52055,7 +52054,7 @@ msgid ""
 "pin in the shape of a star.\n"
 "   \"This is a reward for your services. The money speaks for itself, of "
 "course. As for the pin, it's a civilian commendation, the Star of Valor. "
-"Think of it as a badge of honor. It isn't a medal, but it's considered a "
+"Think of it as a badge of honour. It isn't a medal, but it's considered a "
 "mark of prestige among the Dvaered citizenry nonetheless. You will certainly "
 "enjoy greater respect when you wear this on your lapel, at least as long as "
 "you're in Dvaered space.\""
@@ -52964,7 +52963,7 @@ msgid ""
 "hordes! Because I myself, Major Archibald Tam, I have a plan. We will make "
 "sure that Lord Battleaddict loses his duel. Please note, however, that if "
 "the very existence of House Dvaered was not threatened, we would never allow "
-"ourselves to interfere in a honorable duel between two respectable "
+"ourselves to interfere in a honourable duel between two respectable "
 "gentlemen. Go to {pnt} in {sys} and meet Captain Hamfresser. His portrait is "
 "attached in the data I will give you. He will explain the details. It is "
 "very important that you use a civilian ship that can transport at least "
@@ -55565,7 +55564,7 @@ msgstr ""
 msgid ""
 "As you approach the ship, your targeting array focuses on it and processes "
 "its clearance code. You read on your control pad: \"This citizen is an "
-"honorable {job} whose presence is required for the meeting: let the ship "
+"honourable {job} whose presence is required for the meeting: let the ship "
 "land on the station.\""
 msgstr ""
 
@@ -56102,7 +56101,7 @@ msgid ""
 "on our shields. All to find and destroy a single terrorist fighter. I asked "
 "Strafer if he thought it was worth it and he gave this simple answer: "
 "'Everything is worth it when it is done for the Dvaered Nation'.\n"
-"   \"In conclusion, if you want to honor the memory of Helmut Strafer, do "
+"   \"In conclusion, if you want to honour the memory of Helmut Strafer, do "
 "worthy things: do work for the Nation!\""
 msgstr ""
 
@@ -60244,7 +60243,7 @@ msgid ""
 "weirdos.\n"
 "But watch out, mate! For killing Dvaereds weirdos is a subtle art, ya know? "
 "You can't just attack random Vendettas in space and win the High Command's "
-"respect. You need to kill people in the context of a \"honorable fight "
+"respect. You need to kill people in the context of a \"honourable fight "
 "between two respectable gentlemen\". Yo, because Dvaered are for sure "
 "respectable gentlemen!\""
 msgstr ""
@@ -61493,7 +61492,7 @@ msgid ""
 "As you approach to land on {pnt} you notice big banners placed on the "
 "exterior of the station. They seem to be in celebration of the final defeat "
 "of the Collective. Upon landing, you are saluted by the welcoming committee "
-"in charge of honoring all the returning pilots.\n"
+"in charge of honouring all the returning pilots.\n"
 "    You notice Commodore Keer. Upon greeting her, she says, \"You did a good "
 "job out there. No need to worry about the Collective anymore. Without Welsh, "
 "the Collective won't stand a chance, since they aren't truly autonomous. "
@@ -64449,8 +64448,8 @@ msgid ""
 "base in the {sys} system. Fly there and contact my comrades. They will take "
 "you the rest of the way.\"\n"
 "   Gregar nods off, leaving you to decide what to do next. Gregar wants you "
-"to find his friends, but harboring a known terrorist, let alone helping him, "
-"might not be looked kindly upon by the authorities..."
+"to find his friends, but harbouring a known terrorist, let alone helping "
+"him, might not be looked kindly upon by the authorities..."
 msgstr ""
 
 #. Small buffer to ensure it doesn't go negative again right away.
@@ -64557,7 +64556,7 @@ msgstr ""
 
 #: dat/missions/flf/flf_pre01.lua:121
 msgid ""
-"You have arrived at a Dvaered controlled world, and you are harboring a FLF "
+"You have arrived at a Dvaered controlled world, and you are harbouring a FLF "
 "fugitive on your ship. Fortunately, Gregar is still asleep. You could choose "
 "to alert the authorities and turn him in, and possibly collect a reward.\n"
 "   Would you like to do so?"
@@ -78551,7 +78550,7 @@ msgstr ""
 #: dat/missions/neutral/diy-nerds.lua:182
 #: dat/missions/neutral/diy-nerds.lua:274 dat/missions/shadow/shadowrun.lua:118
 #: dat/missions/shadow/shadowrun.lua:225 dat/missions/shadow/shadowrun.lua:232
-#: dat/missions/sirius/srs_ferry.lua:340
+#: dat/missions/sirius/srs_ferry.lua:341
 msgid "You have {time} remaining"
 msgstr ""
 
@@ -80867,7 +80866,7 @@ msgstr ""
 #: dat/missions/neutral/oldwoman.lua:102
 #, fuzzy
 #| msgid "Frontier systems"
-msgid "An aging lady has asked you to ferry her to {pnt} in the {sys} system."
+msgid "An ageing lady has asked you to ferry her to {pnt} in the {sys} system."
 msgstr "프론티어 시스템"
 
 #: dat/missions/neutral/oldwoman.lua:103
@@ -82067,7 +82066,7 @@ msgid ""
 "He only left enough of us alive to make up his missing crew, no doubt he's "
 "planning to commandeer the ship and make us fly it back to some pirate "
 "station. After that though, they won't need us anymore. All I have is my "
-"blaster and one thermal detonator. If I am to die, then on my honor as "
+"blaster and one thermal detonator. If I am to die, then on my honour as "
 "captain I swear I will take Red Rackham with me."
 msgstr ""
 
@@ -91339,7 +91338,7 @@ msgstr ""
 msgid ""
 "\"Another thing you should know is that the High Academy offers the very "
 "best among its students the chance to advance to the Serra echelon. You're "
-"not Sirian so you might not understand, but it's an exceptional honor for "
+"not Sirian so you might not understand, but it's an exceptional honour for "
 "those born into the Shaira or Fyrra echelons to rise to a higher echelon. "
 "It's extremely valuable to us. So you see, the prospect of being rewarded "
 "like that is a very strong motivation for most of the students. It was no "
@@ -91590,7 +91589,7 @@ msgstr ""
 msgid ""
 "\"Oh, I'm glad to hear that. Here, I'll upload the details of Harja's "
 "private ship into your computer. I did some digging in the military database "
-"to find them. You don't graduate from the Sinass High Academy with honors "
+"to find them. You don't graduate from the Sinass High Academy with honours "
 "without picking up a few tricks! I know, I know, it's classified data, but "
 "it's for a good cause, wouldn't you say?\""
 msgstr ""
@@ -92204,7 +92203,7 @@ msgstr ""
 msgid ""
 "\"Okay {player}, I'll admit it, you're one hell of a pilot,\" he smiles. \"I "
 "still think you picked the wrong side, but that doesn't matter right now. I "
-"said I would come with you, and I intend to honor that promise. I'll go and "
+"said I would come with you, and I intend to honour that promise. I'll go and "
 "prep my ship for takeoff right away. When you're ready to leave, I'll launch "
 "as well.\""
 msgstr ""
@@ -93329,7 +93328,7 @@ msgstr ""
 msgid "{tier} pilgrimage transport for {rank}-class citizen"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:157 dat/missions/sirius/srs_ferry.lua:239
+#: dat/missions/sirius/srs_ferry.lua:157 dat/missions/sirius/srs_ferry.lua:240
 msgid "{tier} space transport to {pnt} for {rank}-class citizen"
 msgstr ""
 
@@ -93396,12 +93395,12 @@ msgstr ""
 #. Demands to be delivered in a Sirian ship
 #. Could be persuaded, for a discount
 #. discount is ok
-#: dat/missions/sirius/srs_ferry.lua:251 dat/missions/sirius/srs_ferry.lua:256
-#: dat/missions/sirius/srs_ferry.lua:268
+#: dat/missions/sirius/srs_ferry.lua:252 dat/missions/sirius/srs_ferry.lua:257
+#: dat/missions/sirius/srs_ferry.lua:269
 msgid "Transportation details"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:251
+#: dat/missions/sirius/srs_ferry.lua:252
 msgid ""
 "As you arrive at the hangar, the Sirian looks at your ship and remarks, "
 "\"What? This is to be the ship for my pilgrimage? This is unacceptable - "
@@ -93409,7 +93408,7 @@ msgid ""
 "will wait for a pilot who can ferry me in a true Sirian vessel.\""
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:256
+#: dat/missions/sirius/srs_ferry.lua:257
 msgid ""
 "\"As you arrive at the hangar, the Sirian looks at your ship and remarks, "
 "\"Oh, you didn't tell me your ship is not from our native Sirian shipyards. "
@@ -93420,25 +93419,25 @@ msgid ""
 msgstr ""
 
 #. Player won't offer a discount
-#: dat/missions/sirius/srs_ferry.lua:262
+#: dat/missions/sirius/srs_ferry.lua:263
 msgid "Offer denied"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:262
+#: dat/missions/sirius/srs_ferry.lua:263
 msgid "\"I'm sorry. Your price is reasonable, but piety is of greater value.\""
 msgstr ""
 
 #. Would not be persuaded by a discount
-#: dat/missions/sirius/srs_ferry.lua:265
+#: dat/missions/sirius/srs_ferry.lua:266
 msgid "Offer accepted"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:265
+#: dat/missions/sirius/srs_ferry.lua:266
 msgid ""
 "\"Very well. For a price that reasonable, I will adjust my expectations.\""
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:268
+#: dat/missions/sirius/srs_ferry.lua:269
 msgid ""
 "As you arrive at the hangar, the Sirian looks at your ship, and you catch a "
 "hint of disappointment on their face, before they notice you and quickly "
@@ -93448,11 +93447,11 @@ msgstr ""
 #. ok with the arrangements
 #. Will not expect to arrive in a Sirian ship
 #. Will expect to arrive in a Sirian ship
-#: dat/missions/sirius/srs_ferry.lua:279
+#: dat/missions/sirius/srs_ferry.lua:280
 msgid "Pilgrims"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:279
+#: dat/missions/sirius/srs_ferry.lua:280
 msgid "A bunch of giddy Sirian pilgrims."
 msgstr ""
 
@@ -93462,11 +93461,11 @@ msgstr ""
 #. Check if we're still flying a Sirian ship
 #. Bad: they wanted a Sirian ship and you switched on them
 #. A little bonus for doing something nice
-#: dat/missions/sirius/srs_ferry.lua:296 dat/missions/sirius/srs_ferry.lua:321
+#: dat/missions/sirius/srs_ferry.lua:297 dat/missions/sirius/srs_ferry.lua:322
 msgid "Altering the deal"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:296
+#: dat/missions/sirius/srs_ferry.lua:297
 msgid ""
 "\"On landing, the passenger gives you a brief glare. \"I had paid for "
 "transportation in a Sirian ship,\" they remark. \"This alternate arrangement "
@@ -93476,74 +93475,74 @@ msgstr ""
 
 #. Good: they weren't expecting a Sirian ship, but they got one anyway
 #. ranges from 0 (<mem.distbonus_minjumps jumps) to 4 (>=mem.distbonus_maxjumps jumps)
-#: dat/missions/sirius/srs_ferry.lua:308
+#: dat/missions/sirius/srs_ferry.lua:309
 msgid "Successful arrival!"
 msgstr ""
 
 #. if we missed the second deadline, drop the person off at the planet.
-#: dat/missions/sirius/srs_ferry.lua:310 dat/missions/sirius/srs_ferry.lua:329
+#: dat/missions/sirius/srs_ferry.lua:311 dat/missions/sirius/srs_ferry.lua:330
 msgid "Passenger transport failure"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:310
+#: dat/missions/sirius/srs_ferry.lua:311
 msgid ""
 "Well, you arrived, but with this late of an arrival, you can't hope for any "
 "payment."
 msgstr ""
 
 #. You were late
-#: dat/missions/sirius/srs_ferry.lua:315
+#: dat/missions/sirius/srs_ferry.lua:316
 msgid "Late arrival"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:321
+#: dat/missions/sirius/srs_ferry.lua:322
 msgid ""
 "Since you were unexpectedly able to procure a Sirian ship for the journey, "
 "you find a few extra credits tucked in with the fare!"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:329
+#: dat/missions/sirius/srs_ferry.lua:330
 msgid "You drop the upset pilgrim off at the nearest spaceport."
 msgstr ""
 
 #. Date hook
-#: dat/missions/sirius/srs_ferry.lua:337
+#: dat/missions/sirius/srs_ferry.lua:338
 #, fuzzy
 #| msgid "Frontier systems"
 msgid "Fly to {pnt} in the {sys} system before {time}"
 msgstr "프론티어 시스템"
 
-#: dat/missions/sirius/srs_ferry.lua:341 dat/missions/sirius/srs_ferry.lua:352
+#: dat/missions/sirius/srs_ferry.lua:342 dat/missions/sirius/srs_ferry.lua:353
 msgid "Pilgrimage transport"
 msgstr ""
 
 #. Case missed second deadline
-#: dat/missions/sirius/srs_ferry.lua:344
+#: dat/missions/sirius/srs_ferry.lua:345
 msgid ""
 "You're far too late … best to drop your passengers off on the nearest planet "
 "before tempers run any higher."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:345
+#: dat/missions/sirius/srs_ferry.lua:346
 msgid "Pilgrim drop-off"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:346
+#: dat/missions/sirius/srs_ferry.lua:347
 msgid "Drop off the pilgrims at the nearest planet"
 msgstr ""
 
 #. Case missed first deadline
-#: dat/missions/sirius/srs_ferry.lua:350 dat/missions/sirius/srs_ferry.lua:351
+#: dat/missions/sirius/srs_ferry.lua:351 dat/missions/sirius/srs_ferry.lua:352
 msgid "You've missed the scheduled arrival time! But better late than never…"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:358
+#: dat/missions/sirius/srs_ferry.lua:359
 msgid "Passenger transport aborted"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:358
+#: dat/missions/sirius/srs_ferry.lua:359
 msgid ""
-"Informing the pilgrim that their flight to {pnt} has been canceled, you "
+"Informing the pilgrim that their flight to {pnt} has been cancelled, you "
 "promise to drop them off at the nearest planet."
 msgstr ""
 
@@ -98012,45 +98011,46 @@ msgstr ""
 msgid "\"On to {pnt}!\""
 msgstr "투리온의 불꽃"
 
-#: dat/missions/tutorial/nelly03.lua:261
+#. Player probably changed systems
+#: dat/missions/tutorial/nelly03.lua:265
 msgid ""
 "I've marked an asteroid field on your overlay. Use {overlaykey} to check it!"
 msgstr ""
 
-#: dat/missions/tutorial/nelly03.lua:270
+#: dat/missions/tutorial/nelly03.lua:273
 msgid ""
-"Get close to an asteroid try to stop ontop of it. I want to try the "
+"Get close to an asteroid try to stop on top of it. I want to try the "
 "Drillmaster!"
 msgstr ""
 
 #. Get rid of the asteroid
 #. We're done here
 #. Finished mission
-#: dat/missions/tutorial/nelly03.lua:298
+#: dat/missions/tutorial/nelly03.lua:301
 msgid ""
 "\"Great! That was awesome. Now it is my time to shine and repair my ship!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly03.lua:299
+#: dat/missions/tutorial/nelly03.lua:302
 msgid "\"Here, let me transfer a nice reward for you!\""
 msgstr ""
 
 #. Rewards
-#: dat/missions/tutorial/nelly03.lua:306
+#: dat/missions/tutorial/nelly03.lua:309
 msgid ""
 "\"You can also keep the extra {cargo} we got. I would recommend selling it, "
 "but I'm really bad at finding out the most expensive place to make money. "
 "Maybe you are better?\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly03.lua:309
+#: dat/missions/tutorial/nelly03.lua:312
 msgid ""
 "With some materials in hand, she rushes towards her beaten-up Llama to begin "
 "the reparations. Hopefully she'll be able to pull this off, but it's best "
 "for her to try herself."
 msgstr ""
 
-#: dat/missions/tutorial/nelly03.lua:313
+#: dat/missions/tutorial/nelly03.lua:316
 msgid "You helped Nelly get materials from asteroids to repair her ship."
 msgstr ""
 
@@ -100133,7 +100133,7 @@ msgid ""
 "have what you could call a 'fracture' on the left module, that has healed "
 "poorly. I'll have to cut through most of the armoured flesh to reach it and "
 "do some welding to set the injury. Other than that, it seems like bioships "
-"are really resiliant, as most old wounds are just scars now.\""
+"are really resilient, as most old wounds are just scars now.\""
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh06.lua:49
@@ -100204,7 +100204,7 @@ msgid "Eliminate hostiles coming from {sys}!"
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh06.lua:92
-msgid "You land amidst a Icarus spinning around joyfully around the station."
+msgid "You land amidst an Icarus spinning around joyfully around the station."
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh06.lua:93
@@ -102151,8 +102151,8 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:232
 msgid ""
 "\"We'll be able to return to Jorla safely from here on. You did science a "
-"great favor today. I'm sure the data we collected will help us to understand "
-"the cause for the Sol nebula's volatility.\""
+"great favour today. I'm sure the data we collected will help us to "
+"understand the cause for the Sol nebula's volatility.\""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:236
@@ -106106,6 +106106,18 @@ msgstr ""
 #. Mark cooldown is over
 #. Ignore already active
 #. Ignore already not active
+#. Replace if not defined
+#. Effective range
+#: dat/outfits/pointdefense/pointdefense.lua:19
+msgid "When on, automatically fires at nearby incoming missiles."
+msgstr ""
+
+#: dat/outfits/pointdefense/pointdefense.lua:21
+msgid ""
+"When on, automatically fires at nearby incoming missiles and hostile ships "
+"with under {trackmax} {unit} signature."
+msgstr ""
+
 #. current target
 #. hether or not the target is a pilot
 #. Doesn't fire normally,
@@ -110723,7 +110735,7 @@ msgstr ""
 #. --
 #. luacheck: globals love (We are *implementing* the love2d API.)
 #. TODO implement.
-#: dat/scripts/love.lua:33 src/nlua_naev.c:578
+#: dat/scripts/love.lua:33 src/nlua_naev.c:580
 msgid "unimplemented"
 msgstr ""
 
@@ -116439,7 +116451,7 @@ msgid_plural "Loaded %d AI Profiles"
 msgstr[0] ""
 
 #: src/ai.c:660 src/board.c:89 src/comm.c:160 src/land.c:1575 src/naev.c:543
-#: src/player.c:3639 src/player_autonav.c:64
+#: src/player.c:3633 src/player_autonav.c:64
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -116505,13 +116517,13 @@ msgstr ""
 msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
-#: src/ai.c:1210 src/nlua_pilot.c:5591
+#: src/ai.c:1210 src/nlua_pilot.c:5584
 #, fuzzy, c-format
 #| msgid "Failed to create new Lua state."
 msgid "Failed to create new task for pilot '%s'."
 msgstr "새 Lua 상태를 생성하지 못했습니다."
 
-#: src/ai.c:1268 src/ai.c:1332 src/nlua_pilot.c:5548
+#: src/ai.c:1268 src/ai.c:1332 src/nlua_pilot.c:5541
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
@@ -116520,30 +116532,30 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2364 src/nlua_pilot.c:6041
+#: src/ai.c:2366 src/nlua_pilot.c:6034
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr "시스템 '%s'에서 Spob '%s'을(를) 찾을 수 없습니다"
 
-#: src/ai.c:2370
+#: src/ai.c:2372
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2415 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
-#: src/player.c:1708 src/space.c:1960 src/space.c:2066 src/space.c:2084
-#: src/space.c:2136 src/space.c:3548 src/space.c:3569 src/space.c:4398
+#: src/ai.c:2417 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
+#: src/player.c:1688 src/space.c:1960 src/space.c:2066 src/space.c:2084
+#: src/space.c:2136 src/space.c:3535 src/space.c:3556 src/space.c:4384
 #, c-format
 msgid ""
 "Spob '%s' failed to run '%s':\n"
 "%s"
 msgstr ""
 
-#: src/ai.c:2444 src/ai.c:2477
+#: src/ai.c:2446 src/ai.c:2479
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2598
+#: src/ai.c:2600
 #, fuzzy, c-format
 #| msgid "Planet '%s' does not belong to a system."
 msgid "Pilot '%s' can't find jump to leave system!"
@@ -116688,57 +116700,53 @@ msgid "#gYou reactivate the systems of %s."
 msgstr "시스템을 떠났습니다."
 
 #. error has occurred
-#: src/board.c:104 src/player.c:3653
+#: src/board.c:104 src/player.c:3647
 #, fuzzy, c-format
 #| msgid "Commit: %s"
 msgid "Board: '%s'"
 msgstr "저지름: %s"
 
-#: src/board.c:134
-msgid "You need a target to board first!"
-msgstr ""
-
-#: src/board.c:145
+#: src/board.c:130
 #, fuzzy
 msgid "Target ship can not be boarded."
 msgstr "탑승 준비!"
 
-#: src/board.c:150
+#: src/board.c:135
 msgid "You cannot board a ship that isn't disabled!"
 msgstr ""
 
-#: src/board.c:155
+#: src/board.c:140
 #, fuzzy
 msgid "Your target cannot be boarded again."
 msgstr "탑승 준비!"
 
-#: src/board.c:182
+#: src/board.c:167
 #, fuzzy
 msgid "You are too far away to board your target."
 msgstr "너는 FLF와 어울리지 않아."
 
-#: src/board.c:187
+#: src/board.c:172
 #, fuzzy
 msgid "You are going too fast to board the ship."
 msgstr "너는 FLF와 어울리지 않아."
 
-#: src/board.c:194
+#: src/board.c:179
 #, fuzzy
 #| msgid "Unable to redirect stderr to file"
 msgid "Unable to recover fighter."
 msgstr "Stderr을 파일로 리디렉션 할 수 없습니다"
 
-#: src/board.c:197
+#: src/board.c:182
 #, c-format
 msgid "#oYou recover your %s fighter."
 msgstr ""
 
-#: src/board.c:211
+#: src/board.c:196
 #, c-format
 msgid "#oBoarding ship #%c%s#0."
 msgstr ""
 
-#: src/board.c:301
+#: src/board.c:286
 #, c-format
 msgid "#%c%s#0 has plundered %s from your ship!"
 msgstr ""
@@ -117583,7 +117591,7 @@ msgstr ""
 msgid "No selection"
 msgstr ""
 
-#: src/dev_mapedit.c:234 src/land_outfits.c:485 src/land_shipyard.c:320
+#: src/dev_mapedit.c:234 src/land_outfits.c:489 src/land_shipyard.c:320
 #: src/map_find.c:585 src/map_system.c:655 src/map_system.c:702
 msgid "Price:"
 msgstr ""
@@ -118378,7 +118386,7 @@ msgid "Unable to create economy G Matrix."
 msgstr ""
 
 #: src/economy.c:532 src/gui.c:1635 src/ndata.c:195 src/nfile.c:479
-#: src/opengl_tex.c:174 src/opengl_tex.c:462
+#: src/opengl_tex.c:174 src/opengl_tex.c:460
 msgid "Out of Memory"
 msgstr ""
 
@@ -118473,7 +118481,7 @@ msgid "Trying to remove invalid effect ID!"
 msgstr ""
 
 #: src/equipment.c:323 src/land.c:279 src/land.c:545 src/land.c:1259
-#: src/land_outfits.c:196 src/land_shipyard.c:110 src/land_trade.c:97
+#: src/land_outfits.c:199 src/land_shipyard.c:110 src/land_trade.c:97
 msgid "Take Off"
 msgstr ""
 
@@ -118632,7 +118640,7 @@ msgstr ""
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1680 src/land_outfits.c:352 src/shiplog.c:489
+#: src/equipment.c:1680 src/land_outfits.c:370 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
@@ -118641,7 +118649,7 @@ msgstr ""
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1723 src/land_outfits.c:388
+#: src/equipment.c:1723 src/land_outfits.c:392
 msgid "Filter…"
 msgstr ""
 
@@ -118678,7 +118686,7 @@ msgstr ""
 msgid "Crew:"
 msgstr ""
 
-#: src/equipment.c:1882 src/info.c:488 src/land_outfits.c:484
+#: src/equipment.c:1882 src/info.c:488 src/land_outfits.c:488
 #: src/land_shipyard.c:262 src/map_find.c:584 src/map_system.c:654
 #: src/map_system.c:681
 msgid "Mass:"
@@ -118854,27 +118862,27 @@ msgstr[0] ""
 msgid "%s hours"
 msgstr ""
 
-#: src/equipment.c:2097 src/land_outfits.c:842
+#: src/equipment.c:2097 src/land_outfits.c:845
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:2098 src/land_outfits.c:843
+#: src/equipment.c:2098 src/land_outfits.c:846
 msgid "Show only outfits equipable on any of your ships"
 msgstr ""
 
-#: src/equipment.c:2099 src/land_outfits.c:844
+#: src/equipment.c:2099 src/land_outfits.c:847
 msgid "Show only outfits equipable on current ship"
 msgstr ""
 
-#: src/equipment.c:2100 src/land_outfits.c:845
+#: src/equipment.c:2100 src/land_outfits.c:848
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:2101 src/land_outfits.c:846
+#: src/equipment.c:2101 src/land_outfits.c:849
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:2102 src/land_outfits.c:847
+#: src/equipment.c:2102 src/land_outfits.c:850
 msgid "Show only heavy outfits"
 msgstr ""
 
@@ -119519,7 +119527,7 @@ msgstr ""
 msgid "Date:"
 msgstr "날짜:"
 
-#: src/info.c:386 src/land.c:1244 src/land_outfits.c:486
+#: src/info.c:386 src/land.c:1244 src/land_outfits.c:490
 #: src/land_shipyard.c:322 src/land_trade.c:114 src/map_find.c:586
 msgid "Money:"
 msgstr ""
@@ -120505,7 +120513,7 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: src/input.c:525 src/opengl_tex.c:751
+#: src/input.c:525 src/opengl_tex.c:749
 msgid "unknown"
 msgstr ""
 
@@ -120707,65 +120715,67 @@ msgstr ""
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
 
-#: src/land_outfits.c:108 src/land_outfits.c:210 src/land_shipyard.c:118
+#: src/land_outfits.c:110 src/land_outfits.c:213 src/land_shipyard.c:118
 msgid "Buy"
 msgstr ""
 
-#: src/land_outfits.c:109 src/land_outfits.c:206
+#: src/land_outfits.c:111 src/land_outfits.c:209
 msgid "Sell"
-msgstr ""
-
-#: src/land_outfits.c:113
-#, c-format
-msgid "Buy (%dx)"
 msgstr ""
 
 #: src/land_outfits.c:115
 #, c-format
+msgid "Buy (%dx)"
+msgstr ""
+
+#: src/land_outfits.c:117
+#, c-format
 msgid "Sell (%dx)"
 msgstr ""
 
-#: src/land_outfits.c:214
+#: src/land_outfits.c:217
 msgid "Find Outfits"
 msgstr ""
 
-#: src/land_outfits.c:352
+#: src/land_outfits.c:370
 msgid "#rOther"
 msgstr ""
 
-#: src/land_outfits.c:352
+#: src/land_outfits.c:370
 msgid "Owned"
 msgstr ""
 
 #. Set up keys.
-#: src/land_outfits.c:483 src/map_find.c:583 src/map_system.c:653
+#: src/land_outfits.c:487 src/map_find.c:583 src/map_system.c:653
 msgid "Owned:"
 msgstr ""
 
-#: src/land_outfits.c:522
+#: src/land_outfits.c:526
 msgid ""
 "This is an intrinsic outfit that will be directly equipped on the current "
 "ship and can not be moved."
 msgstr ""
 
-#: src/land_outfits.c:560 src/land_shipyard.c:326 src/map_find.c:587
+#: src/land_outfits.c:564 src/land_shipyard.c:326 src/map_find.c:587
 #: src/map_system.c:703
 #, fuzzy
 #| msgid "License"
 msgid "License:"
 msgstr "라이센스"
 
-#: src/land_outfits.c:562 src/land_outfits.c:572 src/land_shipyard.c:328
+#. l +=
+#: src/land_outfits.c:566 src/land_outfits.c:576 src/land_shipyard.c:328
 #: src/land_shipyard.c:338
 msgid "Not Necessary (Blackmarket)"
 msgstr ""
 
-#: src/land_outfits.c:570 src/land_shipyard.c:336
+#. k +=
+#: src/land_outfits.c:574 src/land_shipyard.c:336
 msgid "Requires:"
 msgstr ""
 
 #.
-#: src/land_outfits.c:708 src/land_outfits.c:1042 src/land_outfits.c:1157
+#: src/land_outfits.c:712 src/land_outfits.c:1045 src/land_outfits.c:1160
 #, fuzzy, c-format
 #| msgid ""
 #| "Failed to run '%s':\n"
@@ -120777,88 +120787,88 @@ msgstr ""
 "'%s' 실행 실패:\n"
 "%s"
 
-#: src/land_outfits.c:744
+#: src/land_outfits.c:748
 msgid "Unique"
 msgstr ""
 
-#: src/land_outfits.c:746
+#: src/land_outfits.c:750
 msgid "Only 1 of type per ship"
 msgstr ""
 
-#: src/land_outfits.c:918
+#: src/land_outfits.c:920
 #, fuzzy
 #| msgid "Shooting back isn't allowed!"
 msgid "Outfit not sold here!"
 msgstr "반격은 허용되지 않습니다!"
 
-#: src/land_outfits.c:925
+#: src/land_outfits.c:927
 msgid "You can only own one of this outfit."
 msgstr ""
 
-#: src/land_outfits.c:932
+#: src/land_outfits.c:934
 #, fuzzy
 #| msgid "You wanna do this? Have it your way."
 msgid "You can only equip one of this outfit type."
 msgstr "너 이거 하고싶어? 네 방식대로 해."
 
-#: src/land_outfits.c:940
+#: src/land_outfits.c:942
 msgid "You already know of everything this map contains."
 msgstr ""
 
-#: src/land_outfits.c:945
+#: src/land_outfits.c:947
 msgid "You already own this GUI."
 msgstr ""
 
-#: src/land_outfits.c:950
+#: src/land_outfits.c:952
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:956 src/land_shipyard.c:483 src/land_trade.c:320
+#: src/land_outfits.c:959 src/land_shipyard.c:483 src/land_trade.c:320
 #, c-format
 msgid "You need %s more."
 msgstr ""
 
-#: src/land_outfits.c:961
+#: src/land_outfits.c:964
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:972
+#: src/land_outfits.c:975
 msgid "You lack the resources to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:1034
+#: src/land_outfits.c:1037
 msgid "Buy Intrinsic Outfit?"
 msgstr ""
 
-#: src/land_outfits.c:1034
+#: src/land_outfits.c:1037
 #, c-format
 msgid ""
 "Are you sure you wish to buy '%s'? It will be automatically equipped on your "
 "current ship '%s'."
 msgstr ""
 
-#: src/land_outfits.c:1093
+#: src/land_outfits.c:1096
 msgid "You can't sell a unique outfit."
 msgstr ""
 
-#: src/land_outfits.c:1098
+#: src/land_outfits.c:1101
 msgid "You can't sell a map."
 msgstr ""
 
-#: src/land_outfits.c:1103
+#: src/land_outfits.c:1106
 msgid "You can't sell a GUI."
 msgstr ""
 
-#: src/land_outfits.c:1108
+#: src/land_outfits.c:1111
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:1113 src/land_trade.c:351
+#: src/land_outfits.c:1116 src/land_trade.c:351
 msgid "You can't sell something you don't have!"
 msgstr ""
 
-#: src/land_outfits.c:1118
+#: src/land_outfits.c:1121
 #, fuzzy
 msgid "You are unable to sell this outfit!"
 msgstr "너는 FLF와 어울리지 않아."
@@ -122058,8 +122068,8 @@ msgid "Conditional for mission '%s' failed to run"
 msgstr "'%s' 미션에 대한 조건부 실행에 실패했습니다"
 
 #: src/mission.c:434 src/mission.c:456 src/mission.c:478 src/mission.c:541
-#: src/mission.c:637 src/mission.c:685 src/space.c:3760 src/space.c:3814
-#: src/space.c:3845 src/space.c:3900
+#: src/mission.c:637 src/mission.c:685 src/space.c:3747 src/space.c:3801
+#: src/space.c:3832 src/space.c:3887
 msgid "Unknown marker type."
 msgstr ""
 
@@ -122226,7 +122236,7 @@ msgstr ""
 "%s\n"
 "Lua 파일에 부적절한 구문이있을 가능성이 높습니다"
 
-#: src/naev.c:198 src/naev.c:1124 src/nlua_naev.c:177 src/nlua_naev.c:179
+#: src/naev.c:198 src/naev.c:1124 src/nlua_naev.c:179 src/nlua_naev.c:181
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -122544,7 +122554,7 @@ msgstr "'%s'을 (를) 읽는 동안 오류 발생: %s"
 msgid "Failure to copy '%s' to '%s': %s"
 msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
 
-#: src/ndata.h:65
+#: src/ndata.h:67
 #, fuzzy
 msgid ""
 "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,"
@@ -122552,7 +122562,7 @@ msgid ""
 msgstr "fonts/Cabin-SemiBold.otf,fonts/NanumBarunGothicBold.ttf"
 
 #. *< Default font path.
-#: src/ndata.h:66
+#: src/ndata.h:68
 #, fuzzy
 msgid "SourceCodePro-Semibold.ttf,D2CodingBold.ttf,IBMPlexSansJP-Medium.otf"
 msgstr "fonts/SourceCodePro-Semibold.ttf,fonts/D2CodingBold.ttf"
@@ -122736,7 +122746,7 @@ msgstr "지원되지 않는 오디오 효과 유형 '%s'!"
 msgid "Unknown audio effect '%s'!"
 msgstr "알 수 없는 오디오 효과 '%s'!"
 
-#: src/nlua_canvas.c:219 src/nlua_pilot.c:6615 src/opengl_tex.c:279
+#: src/nlua_canvas.c:219 src/nlua_pilot.c:6608 src/opengl_tex.c:279
 msgid "Error setting up framebuffer!"
 msgstr ""
 
@@ -122779,36 +122789,36 @@ msgstr ""
 msgid "unknown data type '%s'"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/nlua_data.c:194
+#: src/nlua_data.c:192
 msgid "position argument must be positive!"
 msgstr ""
 
-#: src/nlua_data.c:199
+#: src/nlua_data.c:195
 #, c-format
 msgid "position argument out of bounds: %d of %d elements"
 msgstr ""
 
-#: src/nlua_data.c:295
+#: src/nlua_data.c:291
 #, c-format
 msgid "size mismatch: out of bound access dest: %d of %d elements"
 msgstr ""
 
-#: src/nlua_data.c:297
+#: src/nlua_data.c:293
 #, c-format
 msgid "size mismatch: out of bound access of source: %d of %d elements"
 msgstr ""
 
-#: src/nlua_data.c:331
+#: src/nlua_data.c:327
 #, c-format
 msgid "size mismatch: A has %d elements but B has %d elements"
 msgstr ""
 
-#: src/nlua_data.c:333 src/nlua_data.c:387
+#: src/nlua_data.c:329 src/nlua_data.c:382
 #, c-format
 msgid "%s is only implemented for number types"
 msgstr ""
 
-#: src/nlua_data.c:383 src/nlua_data.c:385
+#: src/nlua_data.c:378 src/nlua_data.c:380
 #, c-format
 msgid "size mismatch for data: got %dx%dx4x%d, expected %d"
 msgstr ""
@@ -122857,23 +122867,23 @@ msgstr "Mission Lua '%s'구문 오류: %s"
 msgid "failed to load font '%s'"
 msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/nlua_gfx.c:214 src/nlua_gfx.c:270 src/nlua_gfx.c:333
+#: src/nlua_gfx.c:216 src/nlua_gfx.c:272 src/nlua_gfx.c:335
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."
 msgstr "경계를 벗어난 (X 위치) 스프라이트를 렌더링하려는 텍스처 '%s': %d> %d."
 
-#: src/nlua_gfx.c:217 src/nlua_gfx.c:273 src/nlua_gfx.c:336
+#: src/nlua_gfx.c:219 src/nlua_gfx.c:275 src/nlua_gfx.c:338
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."
 msgstr "경계를 벗어난 (Y 위치) 스프라이트를 렌더링하려는 텍스처 '%s': %d> %d."
 
-#: src/nlua_gfx.c:559
+#: src/nlua_gfx.c:561
 msgid "Trying to draw too many lines in one call!"
 msgstr ""
 
-#: src/nlua_gfx.c:704
+#: src/nlua_gfx.c:706
 msgid "width has to be a positive value."
 msgstr ""
 
@@ -122887,21 +122897,21 @@ msgstr ""
 msgid "Attempting to set a hook outside of a mission or event."
 msgstr ""
 
-#: src/nlua_hook.c:301
+#: src/nlua_hook.c:299
 msgid "No hook target was set."
 msgstr ""
 
-#: src/nlua_hook.c:1051
+#: src/nlua_hook.c:1047
 msgid "Invalid parameter #1 for hook.pilot, expecting pilot or nil."
 msgstr ""
 
 #. hook_type not valid
-#: src/nlua_hook.c:1076
+#: src/nlua_hook.c:1070
 #, c-format
 msgid "Invalid pilot hook type: '%s'"
 msgstr ""
 
-#: src/nlua_hook.c:1082
+#: src/nlua_hook.c:1074
 msgid ""
 "'creation' pilot hook can not be set on a specific pilot, only globally."
 msgstr ""
@@ -122914,7 +122924,7 @@ msgstr ""
 msgid "No matching jump points found."
 msgstr ""
 
-#: src/nlua_jump.c:289
+#: src/nlua_jump.c:287
 #, c-format
 msgid "Jump( %s -> %s )"
 msgstr ""
@@ -122975,12 +122985,12 @@ msgstr ""
 msgid "Munition is invalid."
 msgstr "상품이 유효하지 않습니다."
 
-#: src/nlua_naev.c:761
+#: src/nlua_naev.c:762
 #, c-format
 msgid "Invalid window info name '%s'."
 msgstr "창 정보 이름 '%s'이 (가) 잘못되었습니다."
 
-#: src/nlua_naev.c:821
+#: src/nlua_naev.c:820
 msgid "Unable to unpause the game when landed!"
 msgstr ""
 
@@ -123035,144 +123045,144 @@ msgstr ""
 msgid "'parameters' should be a table of options or omitted!"
 msgstr ""
 
-#: src/nlua_pilot.c:1702
+#: src/nlua_pilot.c:1701
 msgid "Jump source system doesn't match current system!"
 msgstr ""
 
-#: src/nlua_pilot.c:1710
+#: src/nlua_pilot.c:1709
 #, fuzzy
 #| msgid "Jump to first system not found!"
 msgid "Jump destination system not found!"
 msgstr "이동 할 첫 번째 시스템을 찾지 못했습니다!"
 
-#: src/nlua_pilot.c:2015
+#: src/nlua_pilot.c:2012
 #, fuzzy, c-format
 #| msgid "Invalid window info name '%s'."
 msgid "Invalid weapon set '%d'!"
 msgstr "창 정보 이름 '%s'이 (가) 잘못되었습니다."
 
-#: src/nlua_pilot.c:2024
+#: src/nlua_pilot.c:2021
 #, fuzzy, c-format
 #| msgid "Colour '%s' does not exist!"
 msgid "Pilot '%s' with ship '%s' does not have a slot with id '%d'!"
 msgstr "색상 '%s'이 (가) 없습니다!"
 
-#: src/nlua_pilot.c:2034
+#: src/nlua_pilot.c:2031
 #, c-format
 msgid "Pilot '%s' with ship '%s' does not have named slot '%s'!"
 msgstr ""
 
-#: src/nlua_pilot.c:2083
+#: src/nlua_pilot.c:2080
 #, fuzzy, c-format
 msgid "Invalid weapon set type '%s'!"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/nlua_pilot.c:2521
+#: src/nlua_pilot.c:2518
 #, fuzzy, c-format
 msgid "Unknown slot type '%s'"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/nlua_pilot.c:2603
+#: src/nlua_pilot.c:2600
 #, c-format
 msgid "Trying to equip more outfits than slots available on pilot '%s'!"
 msgstr ""
 
-#: src/nlua_pilot.c:2636 src/nlua_pilot.c:2648 src/nlua_pilot.c:2720
+#: src/nlua_pilot.c:2633 src/nlua_pilot.c:2645 src/nlua_pilot.c:2717
 #, fuzzy, c-format
 #| msgid "Formation '%s' not found"
 msgid "Pilot '%s' outfit ID '%d' is out of range!"
 msgstr "'%s' 대형은 발견되지 않았다"
 
-#: src/nlua_pilot.c:3083 src/pilot.c:1100
+#: src/nlua_pilot.c:3080 src/pilot.c:1120
 #, c-format
 msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
 #. Hostile
-#: src/nlua_pilot.c:3143 src/nlua_pilot.c:3180 src/player.c:1648
-#: src/player.c:1657 src/player.c:1660 src/player.c:1663
+#: src/nlua_pilot.c:3140 src/nlua_pilot.c:3177 src/player.c:1628
+#: src/player.c:1637 src/player.c:1640 src/player.c:1643
 #, c-format
 msgid "#%c%s>#0 %s"
 msgstr ""
 
-#: src/nlua_pilot.c:3145 src/nlua_pilot.c:3182
+#: src/nlua_pilot.c:3142 src/nlua_pilot.c:3179
 #, c-format
 msgid "#%cComm %s>#0 \"%s\""
 msgstr ""
 
-#: src/nlua_pilot.c:4097
+#: src/nlua_pilot.c:4094
 #, c-format
 msgid ""
 "Trying to set ship property of pilot '%s' flying ship '%s' with no ship Lua "
 "enabled!"
 msgstr ""
 
-#: src/nlua_pilot.c:4900
+#: src/nlua_pilot.c:4893
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
 
-#: src/nlua_pilot.c:4933
+#: src/nlua_pilot.c:4926
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use  pilot.cargoAdd)"
 msgstr ""
 
-#: src/nlua_pilot.c:5196
+#: src/nlua_pilot.c:5189
 #, fuzzy, c-format
 #| msgid "Failed to remove mission cargo '%d' for mission '%s'."
 msgid "Tried to access unknown flag '%s' for pilot '%s'!"
 msgstr "임무 '%2$s'에 대한 임무화물 '%1$d'을 제거하지 못했습니다."
 
-#: src/nlua_pilot.c:5365 src/pilot.c:1181
+#: src/nlua_pilot.c:5358 src/pilot.c:1201
 #, fuzzy, c-format
 #| msgid "Colour '%s' does not exist!"
 msgid "Pilot '%s' does not have an AI!"
 msgstr "색상 '%s'이 (가) 없습니다!"
 
-#: src/nlua_pilot.c:5584
+#: src/nlua_pilot.c:5577
 #, fuzzy, c-format
 #| msgid "File '%s' is not a png."
 msgid "Pilot '%s' is not on manual control."
 msgstr "'%s'파일은 png가 아닙니다."
 
-#: src/nlua_pilot.c:5955
+#: src/nlua_pilot.c:5948
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
 msgstr ""
 
 #. Not found.
-#: src/nlua_pilot.c:5965
+#: src/nlua_pilot.c:5958
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:6080
+#: src/nlua_pilot.c:6073
 #, c-format
 msgid "#%c%s#0 is hailing you."
 msgstr ""
 
-#: src/nlua_pilot.c:6204
+#: src/nlua_pilot.c:6197
 #, c-format
 msgid ""
 "Trying to change the leader of pilot '%s' that is a deployed fighter or part "
 "of the player fleet!"
 msgstr ""
 
-#: src/nlua_pilot.c:6210
+#: src/nlua_pilot.c:6203
 #, fuzzy, c-format
 msgid "Pilot '%s' not found in followers of '%s'"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
 
-#: src/nlua_pilot.c:6223
+#: src/nlua_pilot.c:6216
 #, fuzzy, c-format
 msgid "Trying to set pilot '%s' to be their own leader!"
 msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/nlua_pilot.c:6536
+#: src/nlua_pilot.c:6529
 msgid "Requires a debug build."
 msgstr ""
 
-#: src/nlua_pilot.c:6640
+#: src/nlua_pilot.c:6633
 #, c-format
 msgid "Canvas is too small to fully render '%s': %.0f x %.0f < %.0f x %.0f"
 msgstr ""
@@ -123296,12 +123306,12 @@ msgstr ""
 msgid "Shader does not have uniform '%s'!"
 msgstr ""
 
-#: src/nlua_shader.c:395
+#: src/nlua_shader.c:394
 #, c-format
 msgid "Unsupported shader uniform type '%d' for uniform '%s'. Ignoring."
 msgstr ""
 
-#: src/nlua_shader.c:446
+#: src/nlua_shader.c:445
 #, c-format
 msgid "Layer was '%s', but must be one of 'final' or 'game'"
 msgstr ""
@@ -123377,7 +123387,7 @@ msgstr ""
 msgid "Attempting to get landed spob when player not landed."
 msgstr ""
 
-#: src/nlua_spob.c:282 src/nlua_spob.c:352
+#: src/nlua_spob.c:280 src/nlua_spob.c:347
 #, fuzzy, c-format
 #| msgid "Mission '%s' not found in stack"
 msgid "Spob '%s' not found in stack"
@@ -123412,24 +123422,24 @@ msgstr ""
 msgid "problem opening file '%s' for reading"
 msgstr "쓰기 위해 '%s'을 (를) 열 수 없습니다."
 
-#: src/nlua_tex.c:331
+#: src/nlua_tex.c:329
 #, fuzzy
 msgid "problem opening image for reading"
 msgstr "쓰기 위해 '%s'을 (를) 열 수 없습니다."
 
-#: src/nlua_tex.c:404
+#: src/nlua_tex.c:400
 #, fuzzy, c-format
 #| msgid "Unable to open '%s' for writing."
 msgid "Unable to open '%s' for writing!"
 msgstr "쓰기 위해 '%s'을 (를) 열 수 없습니다."
 
-#: src/nlua_tk.c:476 src/nlua_tk.c:492 src/nlua_tk.c:509 src/nlua_tk.c:528
-#: src/nlua_tk.c:543
+#: src/nlua_tk.c:471 src/nlua_tk.c:487 src/nlua_tk.c:504 src/nlua_tk.c:523
+#: src/nlua_tk.c:538
 msgid "custom dialogue not open"
 msgstr ""
 
-#: src/nlua_tk.c:580 src/nlua_tk.c:603 src/nlua_tk.c:660 src/nlua_tk.c:676
-#: src/nlua_tk.c:703 src/nlua_tk.c:724
+#: src/nlua_tk.c:575 src/nlua_tk.c:598 src/nlua_tk.c:655 src/nlua_tk.c:671
+#: src/nlua_tk.c:698 src/nlua_tk.c:719
 #, c-format
 msgid "Custom dialogue internal error: %s"
 msgstr ""
@@ -123652,7 +123662,7 @@ msgstr ""
 msgid "No such material %s"
 msgstr ""
 
-#: src/opengl.c:110 src/player.c:2326
+#: src/opengl.c:110 src/player.c:2320
 msgid "Aborting screenshot"
 msgstr ""
 
@@ -123763,61 +123773,61 @@ msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 msgid "Invalid #include syntax in '%s%s'!"
 msgstr "창 정보 이름 '%s'이 (가) 잘못되었습니다."
 
-#: src/opengl_shader.c:245
+#: src/opengl_shader.c:244
 #, c-format
 msgid "Failed to link vertex shader '%s' and fragment shader '%s'!"
 msgstr ""
 
 #. We could hash raw pixel data here, but that's slower than just
 #. * generating the map from scratch.
-#: src/opengl_tex.c:496
+#: src/opengl_tex.c:494
 #, c-format
 msgid "Texture '%s' has no RWops"
 msgstr "텍스처 '%s '에 RWop이 없습니다"
 
-#: src/opengl_tex.c:719
+#: src/opengl_tex.c:717
 msgid "Trying to load image from NULL path."
 msgstr "NULL 경로에서 이미지를 로드하려고합니다."
 
-#: src/opengl_tex.c:726
+#: src/opengl_tex.c:724
 #, c-format
 msgid "Failed to load surface '%s' from ndata."
 msgstr "Ndata에서 표면 '%s'을(를) 로드하지 못했습니다."
 
-#: src/opengl_tex.c:757
+#: src/opengl_tex.c:755
 #, fuzzy, c-format
 #| msgid "Unable to load Nebula image: %s"
 msgid "Unable to load image '%s'."
 msgstr "Nebula 이미지를 로드 할 수 없습니다. %s"
 
-#: src/opengl_tex.c:762
+#: src/opengl_tex.c:760
 #, c-format
 msgid "'%s' could not be opened"
 msgstr "'%s'을 (를) 열 수 없습니다"
 
 #. Not found
 #. Surfaces will have NULL names
-#: src/opengl_tex.c:887
+#: src/opengl_tex.c:885
 #, c-format
 msgid "Attempting to free texture '%s' not found in stack!"
 msgstr "스택에서 찾을 수없는 '%s' 텍스처를 해제하려고합니다!"
 
 #. Invalid texture.
-#: src/opengl_tex.c:929
+#: src/opengl_tex.c:927
 #, c-format
 msgid "Unable to duplicate texture '%s'."
 msgstr "텍스처 '%s'을 (를) 복제 할 수 없습니다."
 
-#: src/opengl_tex.c:967
+#: src/opengl_tex.c:965
 #, c-format
 msgid "Angle not between 0 and 2.*M_PI [%f]."
 msgstr "각도가 0과 2 사이가 아닙니다. * M_PI [[%f]]."
 
-#: src/opengl_tex.c:1016
+#: src/opengl_tex.c:1014
 msgid "Texture leak detected!"
 msgstr "텍스처 누출 감지!"
 
-#: src/opengl_tex.c:1019
+#: src/opengl_tex.c:1017
 #, fuzzy, c-format
 msgid "   '%s' opened %d time"
 msgid_plural "   '%s' opened %d times"
@@ -124978,24 +124988,24 @@ msgstr ""
 msgid "Solid initialization did not specify correct update function!"
 msgstr ""
 
-#: src/pilot.c:888
+#: src/pilot.c:908
 msgid "#oActive cooldown engaged."
 msgstr ""
 
-#: src/pilot.c:945
+#: src/pilot.c:965
 msgid "Active cooldown completed."
 msgstr ""
 
-#: src/pilot.c:948
+#: src/pilot.c:968
 #, c-format
 msgid "#rActive cooldown aborted: %s!"
 msgstr ""
 
-#: src/pilot.c:950
+#: src/pilot.c:970
 msgid "Active cooldown aborted!"
 msgstr ""
 
-#: src/pilot.c:1191
+#: src/pilot.c:1211
 #, fuzzy, c-format
 #| msgid "Pilot '%s' ai '%s' -> 'distress': %s"
 msgid "Pilot '%s' has non-number mem.distress_hit!"
@@ -125011,63 +125021,63 @@ msgstr "파일럿 '%s' ai '%s' -> '조난': %s"
 #. f, p, p, x, v
 #. f, p, p, x, v, o
 #.
-#: src/pilot.c:1488 src/pilot_outfit.c:1228
+#: src/pilot.c:1508 src/pilot_outfit.c:1224
 #, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> '%s':\n"
 "%s"
 msgstr ""
 
-#: src/pilot.c:1571
+#: src/pilot.c:1591
 #, fuzzy
 msgid "You have been disabled!"
 msgstr "너는 제국에 걸맞지 않아!"
 
-#: src/pilot.c:1597
+#: src/pilot.c:1617
 msgid "You have recovered control of your ship!"
 msgstr ""
 
-#: src/pilot.c:1646
+#: src/pilot.c:1666
 #, c-format
 msgid "#rShip under command '%s' was destroyed!#0"
 msgstr ""
 
-#: src/pilot.c:2755 src/pilot.c:2782
+#: src/pilot.c:2773 src/pilot.c:2800
 msgid "Strayed too far from jump point: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2762
+#: src/pilot.c:2780
 msgid "Afterburner active: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2802
+#: src/pilot.c:2820
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 
-#: src/pilot.c:3114
+#: src/pilot.c:3132
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr ""
 
-#: src/pilot.c:3117
+#: src/pilot.c:3135
 #, c-format
 msgid "   [%d] %s"
 msgstr ""
 
-#: src/pilot.c:3227 src/pilot.c:3278 src/pilot.c:3302
+#: src/pilot.c:3245 src/pilot.c:3296 src/pilot.c:3320
 msgid "Unable to allocate memory"
 msgstr ""
 
-#: src/pilot.c:3346
+#: src/pilot.c:3364
 msgid "Duplicate pilots on stack!"
 msgstr ""
 
-#: src/pilot.c:3499
+#: src/pilot.c:3517
 msgid "Creating pilot in system with no jumps nor spobs to take off from!"
 msgstr ""
 
-#: src/pilot.c:3617
+#: src/pilot.c:3635
 #, fuzzy, c-format
 msgid "Trying to remove non-existent pilot '%s' from stack!"
 msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
@@ -125313,7 +125323,7 @@ msgstr ""
 msgid "Shooting unknown weapon type: %s"
 msgstr ""
 
-#: src/pilot_weapon.c:1719
+#: src/pilot_weapon.c:1723
 #, c-format
 msgid "#r%s is overheating!#0"
 msgstr ""
@@ -125403,195 +125413,195 @@ msgstr ""
 msgid "Docking stabilizers malfunctioning, cannot land."
 msgstr ""
 
-#: src/player.c:1643 src/player.c:1651
+#: src/player.c:1623 src/player.c:1631
 #, fuzzy
 #| msgid "You can't bribe me!"
 msgid "You can't land here."
 msgstr "넌 나를 매수할 수 없어!"
 
-#: src/player.c:1661
+#: src/player.c:1641
 #, fuzzy
 msgid "Landing authorized."
 msgstr "조판됨:"
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1669
+#: src/player.c:1649
 #, c-format
 msgid "#oReady to land on %s."
 msgstr ""
 
-#: src/player.c:1679
+#: src/player.c:1659
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr ""
 
-#: src/player.c:1684
+#: src/player.c:1664
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
-#: src/player.c:1739
+#: src/player.c:1719
 msgid "Player has landing permission, but no valid spob targeted."
 msgstr ""
 
-#: src/player.c:1750
+#: src/player.c:1730
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr ""
 
-#: src/player.c:1767
+#: src/player.c:1747
 msgid "You are not allowed to land at this moment."
 msgstr ""
 
-#: src/player.c:1830
+#: src/player.c:1826
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1930
+#: src/player.c:1926
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
 msgstr ""
 
-#: src/player.c:1981
+#: src/player.c:1977
 msgid "Aborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1993 src/player_autonav.c:120
+#: src/player.c:1989 src/player_autonav.c:120
 msgid "Hyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1995
+#: src/player.c:1991
 #, fuzzy
 msgid "You do not have enough fuel to hyperspace jump."
 msgstr "\"나는 여분의 연료가 없다.\""
 
-#: src/player.c:1997
+#: src/player.c:1993
 msgid "Preparing for hyperspace."
 msgstr ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2338
+#: src/player.c:2332
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2343
+#: src/player.c:2337
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2374
+#: src/player.c:2368
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2392
+#: src/player.c:2386
 #, fuzzy, c-format
 #| msgid "Colour '%s' does not exist!"
 msgid "#r%s does not respond."
 msgstr "색상 '%s'이 (가) 없습니다!"
 
-#: src/player.c:2399 src/player.c:2421
+#: src/player.c:2393 src/player.c:2415
 msgid "No target selected to hail."
 msgstr ""
 
-#: src/player.c:2454
+#: src/player.c:2448
 msgid "You haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2467
+#: src/player.c:2461
 msgid "Mouse flying enabled."
 msgstr ""
 
-#: src/player.c:2473
+#: src/player.c:2467
 msgid "Mouse flying disabled."
 msgstr ""
 
-#: src/player.c:2694 src/player.c:2713
+#: src/player.c:2688 src/player.c:2707
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:3151
+#: src/player.c:3145
 msgid "Escort is undeployed, removing."
 msgstr ""
 
-#: src/player.c:3162
+#: src/player.c:3156
 msgid "Escort is deployed past outfit limits, removing."
 msgstr ""
 
-#: src/player.c:3455
+#: src/player.c:3449
 #, c-format
 msgid "Found mission cargo '%s' without associated mission."
 msgstr ""
 
-#: src/player.c:3456 src/player.c:3462
+#: src/player.c:3450 src/player.c:3456
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3461
+#: src/player.c:3455
 #, c-format
 msgid "Found cargo '%s' with 0 quantity."
 msgstr ""
 
-#: src/player.c:3686
+#: src/player.c:3680
 #, fuzzy, c-format
 #| msgid "Outfit '%s' is not an ammo outfit"
 msgid "Outfit '%s' in player save not found!"
 msgstr "의상 '%s'은 탄약 의상이 아닙니다"
 
-#: src/player.c:3713
+#: src/player.c:3707
 #, fuzzy, c-format
 #| msgid "Outfit '%s' is not an ammo outfit"
 msgid "Ship '%s' in player save not found!"
 msgstr "의상 '%s'은 탄약 의상이 아닙니다"
 
-#: src/player.c:3738
+#: src/player.c:3732
 #, fuzzy, c-format
 #| msgid "Dir '%s' does not exist and unable to create: %s"
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr "디렉터리 '%s'이 (가) 존재하지 않아 만들 수 없습니다: %s"
 
-#: src/player.c:3795
+#: src/player.c:3789
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3832
+#: src/player.c:3826
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3860
+#: src/player.c:3854
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3863
+#: src/player.c:3857
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3873
+#: src/player.c:3867
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3879
+#: src/player.c:3873
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3889
+#: src/player.c:3883
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3895
+#: src/player.c:3889
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3896
+#: src/player.c:3890
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3896
+#: src/player.c:3890
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -125599,175 +125609,175 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3904
+#: src/player.c:3898
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid spob '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3933
+#: src/player.c:3927
 #, c-format
 msgid "Could not find a spob satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3937
+#: src/player.c:3931
 msgid "Could not find a suitable spob. Choosing a random spob."
 msgstr ""
 
-#: src/player.c:3993
+#: src/player.c:3987
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:4018
+#: src/player.c:4012
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:4043
+#: src/player.c:4037
 msgid "License node is missing name."
 msgstr ""
 
-#: src/player.c:4070
+#: src/player.c:4064
 msgid "Inventory item node is missing name."
 msgstr ""
 
-#: src/player.c:4106
+#: src/player.c:4100
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being marked for deployal!"
 msgstr ""
 
-#: src/player.c:4110
+#: src/player.c:4104
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being space worthy!"
 msgstr ""
 
-#: src/player.c:4115
+#: src/player.c:4109
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:4166 src/player.c:4340
+#: src/player.c:4160 src/player.c:4334
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:4185
+#: src/player.c:4179
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:4193
+#: src/player.c:4187
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:4212
+#: src/player.c:4206
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:4266
+#: src/player.c:4260
 #, c-format
 msgid "Ignoring player-owned ship '%s': duplicate of player's current ship."
 msgstr ""
 
-#: src/player.c:4275
+#: src/player.c:4269
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:4358 src/player.c:4376 src/player.c:4394 src/player.c:4411
+#: src/player.c:4352 src/player.c:4370 src/player.c:4388 src/player.c:4405
 #, fuzzy, c-format
 msgid "Save has unknown '%s' tag!"
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/player.c:4363
+#: src/player.c:4357
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:4381 src/player.c:4399
+#: src/player.c:4375 src/player.c:4393
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:4417
+#: src/player.c:4411
 #, c-format
 msgid "Player ship '%s' has intrinsic outfit '%s' exceeding limits! Removing."
 msgstr ""
 
-#: src/player.c:4436
+#: src/player.c:4430
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:4443
+#: src/player.c:4437
 #, c-format
 msgid ""
 "Adding cargo '%s' to ship '%s' that is not a mission cargo with quantity=0!"
 msgstr ""
 
-#: src/player.c:4461
+#: src/player.c:4455
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4507
+#: src/player.c:4501
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4515
+#: src/player.c:4509
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4519
+#: src/player.c:4513
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4548
+#: src/player.c:4542
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4562
+#: src/player.c:4556
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4570
+#: src/player.c:4564
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4575
+#: src/player.c:4569
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4624
+#: src/player.c:4618
 #, fuzzy
 msgid "You have destealthed."
 msgstr "너는 제국에 걸맞지 않아!"
 
-#: src/player.c:4630
+#: src/player.c:4624
 #, fuzzy
 msgid "You have entered stealth mode."
 msgstr "너는 제국에 걸맞지 않아!"
 
-#: src/player.c:4635
+#: src/player.c:4629
 msgid "Unable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4637
+#: src/player.c:4631
 msgid "Unable to stealth: other pilots nearby!"
 msgstr ""
 
@@ -126832,7 +126842,7 @@ msgstr ""
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr ""
 
-#: src/space.c:1332 src/space.c:4363
+#: src/space.c:1332 src/space.c:4349
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
@@ -126866,22 +126876,22 @@ msgstr ""
 msgid "You discovered a Jump Point."
 msgstr ""
 
-#: src/space.c:1577
+#: src/space.c:1576
 msgid "Cannot reinit system if there is no system previously loaded"
 msgstr ""
 
-#: src/space.c:1581
+#: src/space.c:1580
 #, fuzzy, c-format
 #| msgid "Spob '%s' not found in system '%s'"
 msgid "System '%s' not found, trying random system!"
 msgstr "시스템 '%s'에서 Spob '%s'을(를) 찾을 수 없습니다"
 
-#: src/space.c:1586
+#: src/space.c:1585
 #, c-format
 msgid "#oEntering System %s on %s."
 msgstr ""
 
-#: src/space.c:1588
+#: src/space.c:1587
 #, c-format
 msgid "#rWARNING - Volatile nebula detected in %s! Taking %.1f %s damage!"
 msgstr ""
@@ -127065,25 +127075,25 @@ msgid ""
 "flag."
 msgstr ""
 
-#: src/space.c:3434 src/space.c:3440
+#: src/space.c:3420 src/space.c:3426
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
 msgstr[0] ""
 
-#: src/space.c:3436
+#: src/space.c:3422
 #, c-format
 msgid "       with %d Space Object in %.3f s"
 msgid_plural "       with %d Space Objects in %.3f s"
 msgstr[0] ""
 
-#: src/space.c:3442
+#: src/space.c:3428
 #, c-format
 msgid "       with %d Space Object"
 msgid_plural "       with %d Space Objects"
 msgstr[0] ""
 
-#: src/space.c:3786
+#: src/space.c:3773
 #, fuzzy, c-format
 #| msgid "Planet '%s' does not belong to a system."
 msgid "Marking spob '%s' that is not in any system!"
@@ -127094,21 +127104,21 @@ msgstr "행성 '%s'은 (는) 시스템에 속하지 않습니다."
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:4355
+#: src/space.c:4341
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
 
-#: src/space.c:4419
+#: src/space.c:4405
 msgid "roughly "
 msgstr ""
 
-#: src/space.c:4499
+#: src/space.c:4485
 #, fuzzy, c-format
 msgid "Failed to read spob Lua '%s'!"
 msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/space.c:4522
+#: src/space.c:4508
 #, fuzzy, c-format
 #| msgid "Mission Lua '%s' syntax error: %s"
 msgid ""

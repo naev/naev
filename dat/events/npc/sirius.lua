@@ -35,7 +35,7 @@ local msg_lore = {
 }
 -- Common stuff added to all echelons
 local msg_lore_common = {
-   _([["Greetings, traveler. May Sirichana's wisdom guide you as it guides me."]]),
+   _([["Greetings, traveller. May Sirichana's wisdom guide you as it guides me."]]),
    _([["House Sirius is officially part of the Empire, but everyone knows that's only true on paper. The Emperor has nothing to say in these systems. We follow Sirichana, and no-one else."]]),
    _([["You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon."]]),
 }
