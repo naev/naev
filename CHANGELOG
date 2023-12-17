@@ -1,6 +1,7 @@
 * 0.11.0 (unreleased)
    * Fixed beams only showing hit explosions on one target being hit instead of all
    * Consider beam width when computing collisions
+   * Made beam effects a bit thinner
    * Point defense weapons should track fighters much better now
    * Fixed point defense weapons not firing properly
    * Approach no longer instantly starts autonav unless a space object or derelict is already targetted

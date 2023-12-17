@@ -30,6 +30,6 @@
   <spfx_armour>ExpS</spfx_armour>
   <sound>beam_fuzzy</sound>
   <sound_off>beam_fuzzy_off</sound_off>
-  <shader r="0.95" g="0.2" b="0.95" a="1." width="20.">beam_unstable</shader>
+  <shader r="0.95" g="0.2" b="0.95" a="1." width="19.">beam_unstable</shader>
  </specific>
 </outfit>
