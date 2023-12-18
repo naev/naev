@@ -65,7 +65,7 @@ static unsigned int equipment_wid   = 0; /**< Global wid. */
 static int equipment_creating    = 0; /**< Whether or not creating. */
 static int ship_mode = 0; /**< Ship mode. */
 static iar_data_t iar_data[OUTFIT_TABS]; /**< Stored image array positions. */
-static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
+static Outfit **iar_outfits[OUTFIT_TABS]; /**< Outfits associated with the image array cells. */
 static nlua_env autoequip_env = LUA_NOREF; /* Autoequip env. */
 static int equipment_outfitMode = 0; /**< Outfit mode for filtering. */
 
@@ -132,7 +132,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
    id = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
 
    /* Did the user click on background or placeholder cell? */
-   if (id < 0 || iar_outfits[active] == NULL)
+   if (id < 0 || array_size(iar_outfits[active])==0)
       return;
 
    o = iar_outfits[active][id];
@@ -339,15 +339,11 @@ void equipment_open( unsigned int wid )
          _("Autoequip"), equipment_autoequipShip, SDLK_a );
 
    /* Prepare the outfit array. */
-   for (int i=0; i<OUTFIT_TABS; i++)
+   for (int i=0; i<OUTFIT_TABS; i++) {
       toolkit_initImageArrayData( &iar_data[i] );
-   if (iar_outfits == NULL)
-      iar_outfits = calloc( OUTFIT_TABS, sizeof(Outfit**) );
-   else {
-      for (int i=0; i<OUTFIT_TABS; i++)
-         free( iar_outfits[i] );
-      memset( iar_outfits, 0, sizeof(Outfit**) * OUTFIT_TABS );
+      array_free( iar_outfits[i] );
    }
+   memset( iar_outfits, 0, sizeof(Outfit**) * OUTFIT_TABS );
 
    /* Safe defaults. */
    equipment_lastick = SDL_GetTicks();
@@ -1733,8 +1729,8 @@ static void equipment_genOutfitList( unsigned int wid )
 
    /* Allocate space. */
    noutfits = MAX( 1, player_numOutfits() ); /* This is the most we'll need, probably less due to filtering. */
-   free( iar_outfits[active] );
-   iar_outfits[active] = calloc( noutfits, sizeof(Outfit*) );
+   array_free( iar_outfits[active] );
+   iar_outfits[active] = array_create( Outfit* );
 
    filtertext = NULL;
    if (widget_exists(equipment_wid, EQUIPMENT_FILTER)) {
@@ -1744,7 +1740,7 @@ static void equipment_genOutfitList( unsigned int wid )
    }
 
    /* Get the outfits. */
-   noutfits = player_getOutfitsFiltered( (const Outfit**)iar_outfits[active], tabfilters[active], filtertext );
+   noutfits = player_getOutfitsFiltered( (const Outfit***)&iar_outfits[active], tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, (p==NULL) ? player.p : p, 0 );
 
    /* Create the actual image array. */
@@ -2050,7 +2046,7 @@ void equipment_updateOutfits( unsigned int wid, const char* str )
    /* Must have outfit. */
    active = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
    i = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
-   if (i < 0 || iar_outfits[active] == NULL) {
+   if (i < 0 || array_size(iar_outfits[active])==0) {
       eq_wgt.outfit = NULL;
       return;
    }
@@ -2527,12 +2523,9 @@ static int equipment_playerRmOutfit( const Outfit *o, int quantity )
 void equipment_cleanup (void)
 {
    /* Free stored positions. */
-   if (iar_outfits != NULL) {
-      for (int i=0; i<OUTFIT_TABS; i++)
-         free( iar_outfits[i] );
-      free(iar_outfits);
-      iar_outfits = NULL;
-   }
+   for (int i=0; i<OUTFIT_TABS; i++)
+      array_free( iar_outfits[i] );
+   memset( iar_outfits, 0, sizeof(Outfit**) * OUTFIT_TABS );
 
    equipment_slotDeselect( &eq_wgt );
 }
