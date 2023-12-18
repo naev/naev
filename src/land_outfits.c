@@ -1234,4 +1234,5 @@ void outfits_cleanup(void)
    /* Free stored positions. */
    for (int i=0; i<OUTFITS_NTABS; i++)
       array_free( iar_outfits[i] );
+   memset( iar_outfits, 0, sizeof(Outfit**) * OUTFITS_NTABS );
 }
