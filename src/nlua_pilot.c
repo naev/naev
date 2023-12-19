@@ -2094,7 +2094,7 @@ static int pilotL_weapsetAdd( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    int id = luaL_checkweapset(L,2);
-   PilotOutfitSlot *o = luaL_checkslot(L,p,3);
+   const PilotOutfitSlot *o = luaL_checkslot(L,p,3);
    int level = luaL_optinteger(L,4,0);
    pilot_weapSetAdd( p, id, o, level );
    return 0;
@@ -2138,7 +2138,7 @@ static int pilotL_weapsetRm( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    int id = luaL_checkweapset(L,2);
-   PilotOutfitSlot *o = luaL_checkslot(L,p,3);
+   const PilotOutfitSlot *o = luaL_checkslot(L,p,3);
    pilot_weapSetRm( p, id, o );
    return 0;
 }
