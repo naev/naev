@@ -907,6 +907,9 @@ void pilot_cooldown( Pilot *p, int dochecks )
    if (p->id == PLAYER_ID)
       player_message(_("#oActive cooldown engaged."));
 
+   /* Turn off all weapon sets. */
+   pilot_weapSetAIClear( p );
+
    /* Disable active outfits. */
    if (pilot_outfitOffAll( p ) > 0)
       pilot_calcStats( p );
