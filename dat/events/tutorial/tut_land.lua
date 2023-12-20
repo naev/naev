@@ -85,7 +85,7 @@ function outfit_buy( o )
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(_([["Whoa, is that a #oPoint Defense#0 weapon you just acquired? When activated, #oPoint Defense#0 will target nearby incoming missiles and try to destroy them. Also, if they have tracking, they will also be able to track ships with a signature less than the tracking value. They can be very useful for keeping ships alive when being pummelled with fighters and ordinances."]]))
+      sai(_([["Whoa, is that a #oPoint Defense#0 weapon you just acquired? When activated, #oPoint Defense#0 will target nearby incoming missiles and try to destroy them. Also, if they have tracking, they will also be able to track ships with a signature less than the tracking value. They can be very useful for keeping ships alive when being pummelled with fighters and ordnances."]]))
       sai(fmt.f(_([["To make the best use of #oPoint Defense#0, you should set them to a toggle weapon group from the #bInfo#0 menu accessible with {infokey}. When you activate the toggle weapon set with the #oPoint Defense#0, it will automatically shoot anything it can target in range. No need for any micromanagement. Almost like they make me obsolete... wait no! I'm still important! Don't get rid of me!"]]),
          {infokey=tut.getKey("info")}))
       vn.done( tut.shipai.transition )

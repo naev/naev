@@ -7,7 +7,7 @@
   <typename>Point Defense</typename>
   <mass>30</mass>
   <price>120000</price>
-  <description>Marketed as a unified system for intercepting missiles and interceptors, the Guardian Interception System is a favourite of merchants and mercenaries alike. Although it lacks the sufficient firepower to efficiently take down torpedoes and other heavy ordinances, it excels at tracking lighter missiles and can even be used to deter small assault craft.</description>
+  <description>Marketed as a unified system for intercepting missiles and interceptors, the Guardian Interception System is a favourite of merchants and mercenaries alike. Although it lacks the sufficient firepower to efficiently take down torpedoes and other heavy ordnances, it excels at tracking lighter missiles and can even be used to deter small assault craft.</description>
   <gfx_store>placeholder.webp</gfx_store>
   <cpu>-40</cpu>
  </general>
