@@ -27,6 +27,7 @@ static int map_find_systems = 1; /**< Systems checkbox value. */
 static int map_find_spobs   = 0; /**< Spobs checkbox value. */
 static int map_find_outfits = 0; /**< Outfits checkbox value. */
 static int map_find_ships   = 0; /**< Ships checkbox value. */
+static int regex_enabled = 0;
 
 /* Misc ugly globals. */
 /* Current found stuff. */
@@ -119,10 +120,12 @@ static void map_findCheckUpdate( unsigned int wid_map_find, const char* str )
    map_find_spobs   ^= window_checkboxState( wid_map_find, "chkSpob" );
    map_find_outfits ^= window_checkboxState( wid_map_find, "chkOutfit" );
    map_find_ships   ^= window_checkboxState( wid_map_find, "chkShip" );
+   regex_enabled    ^= window_checkboxState( wid_map_find, "regex");
    window_checkboxSet( wid_map_find, "chkSystem", map_find_systems );
    window_checkboxSet( wid_map_find, "chkSpob",   map_find_spobs );
    window_checkboxSet( wid_map_find, "chkOutfit", map_find_outfits );
    window_checkboxSet( wid_map_find, "chkShip",   map_find_ships );
+   window_checkboxSet( wid_map_find, "regex", regex_enabled);
 }
 
 /**
@@ -1005,4 +1008,7 @@ void map_inputFind( unsigned int parent, const char* str )
    y -= 20;
    window_addCheckbox( wid_map_find, x, y, 160, 20,
          "chkShip", _("Ships"), map_findCheckUpdate, map_find_ships );
+   y -= 20;
+   window_addCheckbox( wid_map_find, x, y, 160, 20,
+         "regex", _("Enable regex search"), map_findCheckUpdate, regex_enabled );
 }

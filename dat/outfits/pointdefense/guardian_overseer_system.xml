@@ -7,7 +7,7 @@
   <typename>Point Defense</typename>
   <mass>60</mass>
   <price>850000</price>
-  <description>The Guardian Overseer System is a complete rework of the original Guardian Interception System. Instead of basing itself on weaker laser turrets, the system makes use of specially modified Ripper cannons that allow it to neutralize most ordnances. Although designed for intercepting torpedoes, the targeting system is also efficient at tracking small enemy craft.</description>
+  <description>The Guardian Overseer System is a complete rework of the original Guardian Interception System. Instead of basing itself on weaker laser turrets, the system makes use of specially modified Ripper cannons that allow it to neutralize most ordnance. Although designed for intercepting torpedoes, the targeting system is also efficient at tracking small enemy craft.</description>
   <gfx_store>placeholder.webp</gfx_store>
   <cpu>-200</cpu>
  </general>
