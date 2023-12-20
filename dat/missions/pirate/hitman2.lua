@@ -7,6 +7,9 @@
  <location>Bar</location>
  <system>Alteris</system>
  <done>Hitman</done>
+ <tags>
+  <tag>pir_cap_ch01_med</tag>
+ </tags>
 </mission>
 --]]
 --[[
@@ -140,7 +143,6 @@ function landed()
    vn.func( function ()
       player.pay(reward)
       pir.modDecayFloor(3)
-      pir.modReputation(3)
       faction.modPlayerSingle("Pirate", 5)
    end )
    vn.sfxVictory()

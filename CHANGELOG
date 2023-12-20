@@ -22,6 +22,7 @@
    * Fixed some pirate checks in dominated systems
    * Clear weapon sets when doing active cooldown
    * Run ship / outfit code Lua code when disabled or cooling down
+   * Increased maximum standing cap with pirates
    * `srs_ferry`: fixed marker not updating for alternative delivery locations
    * `nelly03`: guard against the player changing systems in the middle of mining
    * `zbh06`: made mission easier for the player
