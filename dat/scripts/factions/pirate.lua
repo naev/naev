@@ -6,9 +6,9 @@ return {
    cap_misn_def   = 80-3*3-5*3, -- Player should be able to get to 80
    cap_misn_var   = "_fcap_pirate",
    cap_tags       = {
-      ["pir_cap_ch01_sml"] = { val=1, max=70 },
-      ["pir_cap_ch01_med"] = { val=3, max=70 },
-      ["pir_cap_ch01_lrg"] = { val=5, max=70 },
+      ["pir_cap_ch01_sml"] = { val=1, max=80 },
+      ["pir_cap_ch01_med"] = { val=3, max=80 },
+      ["pir_cap_ch01_lrg"] = { val=5, max=80 },
    },
    text = {
       [95] = _("Clan Legend"),
