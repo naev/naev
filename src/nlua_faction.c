@@ -156,12 +156,13 @@ static int factionL_get( lua_State *L )
  */
 static int factionL_getAll(lua_State *L)
 {
-   int* factions = faction_getAll();
+   const int* factions = faction_getAll();
    lua_newtable(L);
    for (int i=0; i<array_size(factions); i++) {
       lua_pushfaction( L, factions[i] );
       lua_rawseti( L, -2, i+1 );
    }
+   array_free(factions);
    return 1;
 }
 
