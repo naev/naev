@@ -603,6 +603,9 @@ void vpool_wait( ThreadQueue *queue )
    /* Wait for the threads to finish */
    SDL_CondWait( queue->cond, queue->mutex );
    SDL_mutexV( queue->mutex );
+
+   /* Can toss away all the queue stuff. */
+   array_erase( &queue->arg, array_begin(queue->arg), array_end(queue->arg) );
 }
 
 /**

@@ -24,11 +24,13 @@ int threadpool_init (void);
 ThreadQueue* vpool_create (void);
 
 /* Enqueue a job in the vpool queue. Do NOT enqueue a job that has to wait for
- * another job to be done as this could lead to a deadlock. */
+ * another job to be done as this could lead to a deadlock. Also do not enqueue
+ * jobs from enqueued threads. */
 void vpool_enqueue( ThreadQueue* queue, int (*function)(void *), void *data );
 
 /* Run every job in the vpool queue and block until every job in the queue is
- * done. It destroys the queue when it's done. */
+ * done. */
 void vpool_wait( ThreadQueue* queue );
 
+/* Clean up. */
 void vpool_cleanup( ThreadQueue* queue );

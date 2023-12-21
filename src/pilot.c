@@ -2962,8 +2962,8 @@ ntime_t pilot_hyperspaceDelay( const Pilot *p )
  */
 void pilot_untargetAsteroid( int anchor, int asteroid )
 {
-   for (int i=0; i < array_size(pilot_stack); i++) {
-      if ((pilot_stack[i]->nav_asteroid == asteroid) && (pilot_stack[i]->nav_anchor == anchor)) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      if ((pilot_stack[i]->nav_asteroid==asteroid) && (pilot_stack[i]->nav_anchor==anchor)) {
          pilot_stack[i]->nav_asteroid = -1;
          pilot_stack[i]->nav_anchor   = -1;
       }
