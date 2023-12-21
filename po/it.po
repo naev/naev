@@ -10983,7 +10983,7 @@ msgstr "Alleyway"
 #: dat/spob/behar_station.xml:16 dat/spob/cantina_center.xml:15
 #: dat/spob/castellum_hystera.xml:15 dat/spob/castellum_telika.xml:15
 #: dat/spob/castrum_akra.xml:15 dat/spob/cole_outpost.xml:15
-#: dat/spob/corinth_foods.xml:15 dat/spob/cornwal_ordinance.xml:15
+#: dat/spob/corinth_foods.xml:15 dat/spob/cornwal_ordnance.xml:15
 #: dat/spob/darkshed.xml:15 dat/spob/diabolos_station.xml:15
 #: dat/spob/dundrop_monastery.xml:15 dat/spob/duran_shipyard.xml:15
 #: dat/spob/dvnn_central.xml:15 dat/spob/ekta_station.xml:15
@@ -13364,13 +13364,13 @@ msgstr ""
 "dato che i Cibi di Corinto producono abbastanza cibo per essere esportato da "
 "tutto lo spazio degli Za'lek."
 
-#: dat/spob/cornwal_ordinance.xml:2
+#: dat/spob/cornwal_ordnance.xml:2
 #, fuzzy
 #| msgid "Cornwal Ordinance"
 msgid "Cornwal Ordnance"
 msgstr "Ordinanza di Cornwal"
 
-#: dat/spob/cornwal_ordinance.xml:25
+#: dat/spob/cornwal_ordnance.xml:25
 msgid ""
 "This is a weapons manufacturing plant run by a local businessman called "
 "Frederick Cornwal. Cornwal makes money by mass producing ammunition and "
@@ -13388,7 +13388,7 @@ msgstr ""
 "popolazione che vive nei rudi pianeti del sistema Undergate e si assicura "
 "sempre che abbiano prezzi generosi per le loro esportazioni."
 
-#: dat/spob/cornwal_ordinance.xml:26
+#: dat/spob/cornwal_ordnance.xml:26
 #, fuzzy
 #| msgid ""
 #| "For such a remote station, Cornwal Ordinance is remarkably well "

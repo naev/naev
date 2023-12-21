@@ -9666,7 +9666,7 @@ msgstr "Alleyway"
 #: dat/spob/behar_station.xml:16 dat/spob/cantina_center.xml:15
 #: dat/spob/castellum_hystera.xml:15 dat/spob/castellum_telika.xml:15
 #: dat/spob/castrum_akra.xml:15 dat/spob/cole_outpost.xml:15
-#: dat/spob/corinth_foods.xml:15 dat/spob/cornwal_ordinance.xml:15
+#: dat/spob/corinth_foods.xml:15 dat/spob/cornwal_ordnance.xml:15
 #: dat/spob/darkshed.xml:15 dat/spob/diabolos_station.xml:15
 #: dat/spob/dundrop_monastery.xml:15 dat/spob/duran_shipyard.xml:15
 #: dat/spob/dvnn_central.xml:15 dat/spob/ekta_station.xml:15
@@ -12058,13 +12058,11 @@ msgid ""
 "enough food to be exported from Za'lek space entirely."
 msgstr ""
 
-#: dat/spob/cornwal_ordinance.xml:2
-#, fuzzy
-#| msgid "Cornwal Ordinance"
+#: dat/spob/cornwal_ordnance.xml:2
 msgid "Cornwal Ordnance"
-msgstr "Cornwal Ordinance"
+msgstr "Cornwal Ordnance"
 
-#: dat/spob/cornwal_ordinance.xml:25
+#: dat/spob/cornwal_ordnance.xml:25
 msgid ""
 "This is a weapons manufacturing plant run by a local businessman called "
 "Frederick Cornwal. Cornwal makes money by mass producing ammunition and "
@@ -12081,21 +12079,14 @@ msgstr ""
 "sympatizuje s obyvateli nehostinných světů, jako je například Undergate, a "
 "vždycky se osobně postará, aby zásilky tam směující byly štědře naceněny."
 
-#: dat/spob/cornwal_ordinance.xml:26
-#, fuzzy
-#| msgid ""
-#| "For such a remote station, Cornwal Ordinance is remarkably well "
-#| "frequented by traders. Frederick Cornwal is a talented businessman to "
-#| "have spread word of his merchandise so widely throughout Sirius space. "
-#| "The regular shipments required to keep business going helps too, so it is "
-#| "with the bar too."
+#: dat/spob/cornwal_ordnance.xml:26
 msgid ""
 "For such a remote station, Cornwal Ordnance is remarkably well frequented by "
 "traders. Frederick Cornwal is a talented businessman to have spread word of "
 "his merchandise so widely throughout Sirius space. The regular shipments "
 "required to keep business going helps too, so it is with the bar too."
 msgstr ""
-"Na to, jak odlehlá stanice Cornwal Ordinance je, ji navštěvuje celkem dost "
+"Na to, jak odlehlá stanice Cornwal Ordnance je, ji navštěvuje celkem dost "
 "obchodníků. Frederick Cornwal je talentovaný byznysmen a jeho značka je "
 "známá napříč siriuským prostorem. Pravidelné dodávky surovin a vývoz zboží "
 "znamenají, že se obchod hýbe, a bar se samozřejmě hýbe s ním."
