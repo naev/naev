@@ -514,7 +514,7 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
  */
 int pilot_stealth( Pilot *p )
 {
-   int n;
+   int n, ret;
 
    if (pilot_isFlag( p, PILOT_STEALTH ))
       return 1;
@@ -535,10 +535,10 @@ int pilot_stealth( Pilot *p )
    pilot_weapSetAIClear( p );
 
    /* Turn off outfits. */
-   pilot_outfitOffAll( p );
+   ret = pilot_outfitOffAll( p );
 
    /* Got into stealth. */
-   if (!pilot_outfitLOnstealth( p ))
+   if (!pilot_outfitLOnstealth( p ) || ret)
       pilot_calcStats(p);
    p->ew_stealth_timer = 0.;
 

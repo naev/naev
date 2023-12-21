@@ -13,6 +13,9 @@
  <notes>
   <tier>2</tier>
  </notes>
+ <tags>
+  <tag>pir_cap_ch01_lrg</tag>
+ </tags>
 </mission>
 --]]
 --[[
@@ -250,12 +253,6 @@ Enemy ships will probably be after you as soon as you leave the atmosphere, so y
       -- stole in the future.
       local stolen_ships = var.peek("pir_stolen_ships") or 0
       var.push("pir_stolen_ships", stolen_ships + 1)
-
-      -- Stealing a ship for the first time increases your maximum faction
-      -- standing.
-      if stolen_ships == 0 then
-         pir.modReputation( 5 )
-      end
 
       -- If you stole a ship of some value, the faction will have something
       -- to say, even if they can only suspect you.

@@ -819,7 +819,7 @@ dat/spob/corax.xml
 dat/spob/corinth_1.xml
 dat/spob/corinth_2.xml
 dat/spob/corinth_foods.xml
-dat/spob/cornwal_ordinance.xml
+dat/spob/cornwal_ordnance.xml
 dat/spob/corvus_i.xml
 dat/spob/corvus_vi.xml
 dat/spob/corvus_via.xml
@@ -3338,6 +3338,7 @@ dat/scripts/factions/dvaered.lua
 dat/scripts/factions/empire.lua
 dat/scripts/factions/frontier.lua
 dat/scripts/factions/goddard.lua
+dat/scripts/factions/pirate.lua
 dat/scripts/factions/proteron.lua
 dat/scripts/factions/sirius.lua
 dat/scripts/factions/soromid.lua

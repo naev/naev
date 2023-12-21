@@ -28,6 +28,7 @@ static LuaFaction luaL_validfactionSilent( lua_State *L, int ind );
 /* Faction metatable methods */
 static int factionL_exists( lua_State *L );
 static int factionL_get( lua_State *L );
+static int factionL_getAll(lua_State *L);
 static int factionL_player( lua_State *L );
 static int factionL_eq( lua_State *L );
 static int factionL_name( lua_State *L );
@@ -57,6 +58,7 @@ static int factionL_dynEnemy( lua_State *L );
 static const luaL_Reg faction_methods[] = {
    { "exists", factionL_exists },
    { "get", factionL_get },
+   { "getAll", factionL_getAll },
    { "player", factionL_player },
    { "__eq", factionL_eq },
    { "__tostring", factionL_name },
@@ -144,6 +146,24 @@ static int factionL_get( lua_State *L )
 {
    LuaFaction f = luaL_validfaction(L,1);
    lua_pushfaction(L,f);
+   return 1;
+}
+
+/**
+ * @brief Gets all the factions.
+ *
+ *    @luatreturn {Faction,...} An ordered table containing all of the factions.
+ * @luafunc getAll
+ */
+static int factionL_getAll(lua_State *L)
+{
+   const int* factions = faction_getAll();
+   lua_newtable(L);
+   for (int i=0; i<array_size(factions); i++) {
+      lua_pushfaction( L, factions[i] );
+      lua_rawseti( L, -2, i+1 );
+   }
+   array_free(factions);
    return 1;
 }
 

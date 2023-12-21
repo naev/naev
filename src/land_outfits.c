@@ -415,9 +415,9 @@ static void outfits_genList( unsigned int wid )
    if (active==6) {
       /* Show player their owned outfits. */
       const PlayerOutfit_t *po = player_getOutfits();
-      Outfit **ol = array_create( Outfit* );
+      iar_outfits[active] = array_create( Outfit* );
       for (int i=0; i<array_size(po); i++)
-         array_push_back( &ol, (Outfit*) po[i].o );
+         array_push_back( &iar_outfits[active], (Outfit*) po[i].o );
       /* Also add stuff they sold. */
       for (int i=0; i<array_size(outfits_sold); i++) {
          PlayerOutfit_t *os = &outfits_sold[i];
@@ -429,19 +429,16 @@ static void outfits_genList( unsigned int wid )
             }
          }
          if (!found)
-            array_push_back( &ol, (Outfit*) os->o );
+            array_push_back( &iar_outfits[active], (Outfit*) os->o );
       }
-      qsort( ol, array_size(ol), sizeof(Outfit*), outfit_compareTech );
-      noutfits = outfits_filter( (const Outfit**)ol, array_size(ol), tabfilters[active], filtertext );
-      coutfits = outfits_imageArrayCells( (const Outfit**)ol, &noutfits, player.p, 1 );
-      iar_outfits[active] = ol;
+      qsort( iar_outfits[active], array_size(iar_outfits[active]), sizeof(Outfit*), outfit_compareTech );
    }
    else {
       /* Use custom list; default to landed outfits. */
       iar_outfits[active] = (data->outfits!=NULL) ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_spob->tech );
-      noutfits = outfits_filter( (const Outfit**)iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
-      coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, player.p, 1 );
    }
+   noutfits = outfits_filter( (const Outfit**)iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
+   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, player.p, 1 );
 
    iconsize = 128;
    if (!conf.big_icons) {
@@ -1234,4 +1231,5 @@ void outfits_cleanup(void)
    /* Free stored positions. */
    for (int i=0; i<OUTFITS_NTABS; i++)
       array_free( iar_outfits[i] );
+   memset( iar_outfits, 0, sizeof(Outfit**) * OUTFITS_NTABS );
 }

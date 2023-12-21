@@ -2787,7 +2787,7 @@ const PlayerOutfit_t* player_getOutfits (void)
  *    @param[in] name Name fragment that each outfit must contain.
  *    @return Number of outfits.
  */
-int player_getOutfitsFiltered( const Outfit **outfits,
+int player_getOutfitsFiltered( const Outfit ***outfits,
       int(*filter)( const Outfit *o ), const char *name )
 {
    if (array_size(player_outfits) == 0)
@@ -2798,9 +2798,9 @@ int player_getOutfitsFiltered( const Outfit **outfits,
          sizeof(PlayerOutfit_t), player_outfitCompare );
 
    for (int i=0; i<array_size(player_outfits); i++)
-      outfits[i] = (Outfit*)player_outfits[i].o;
+      array_push_back( outfits, (Outfit*)player_outfits[i].o );
 
-   return outfits_filter( outfits, array_size(player_outfits), filter, name );
+   return outfits_filter( *outfits, array_size(player_outfits), filter, name );
 }
 
 /**

@@ -907,6 +907,9 @@ void pilot_cooldown( Pilot *p, int dochecks )
    if (p->id == PLAYER_ID)
       player_message(_("#oActive cooldown engaged."));
 
+   /* Turn off all weapon sets. */
+   pilot_weapSetAIClear( p );
+
    /* Disable active outfits. */
    if (pilot_outfitOffAll( p ) > 0)
       pilot_calcStats( p );
@@ -2117,7 +2120,6 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Check target validity. */
    target = pilot_getTarget( pilot );
-
    cooling = pilot_isFlag(pilot, PILOT_COOLDOWN);
 
    /*
@@ -2460,7 +2462,7 @@ void pilot_update( Pilot* pilot, double dt )
       pilot_calcStats( pilot );
 
    /* purpose fallthrough to get the movement like disabled */
-   if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
+   if (pilot_isDisabled(pilot) || cooling) {
       /* Do the slow brake thing */
       pilot->solid.speed_max = 0.;
       pilot_setAccel( pilot, 0. );
@@ -2482,6 +2484,17 @@ void pilot_update( Pilot* pilot, double dt )
       /* Update the trail. */
       pilot_sample_trails( pilot, 0 );
 
+      /* Cooldown still updates outfits. */
+      pilot_shipLUpdate( pilot, dt );
+
+      /* Update outfits if necessary. */
+      pilot->otimer += dt;
+      while (pilot->otimer >= PILOT_OUTFIT_LUA_UPDATE_DT) {
+         pilot_outfitLUpdate( pilot, PILOT_OUTFIT_LUA_UPDATE_DT );
+         if (pilot_isFlag( pilot, PILOT_DELETE ))
+            return; /* Same as with the effects, it is theoretically possible for the outfit to remove the pilot. */
+         pilot->otimer -= PILOT_OUTFIT_LUA_UPDATE_DT;
+      }
       return;
    }
 
