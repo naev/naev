@@ -151,7 +151,8 @@ static int factionL_get( lua_State *L )
 
 /**
  * @brief Gets all the factions.
- *    @luatreturn {Faction,...} A list of all the factions
+ *
+ *    @luatreturn {Faction,...} An ordered table containing all of the factions.
  * @luafunc getAll
  */
 static int factionL_getAll(lua_State *L)
