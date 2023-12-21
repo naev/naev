@@ -258,6 +258,8 @@ int load_refresh (void)
       for (int j=array_size(ps->saves)-1; j>=0; j--) {
          const nsave_t *ns = &ps->saves[j];
          if (ns->ret!=0) {
+            free( ns->path );
+            free( ns->save_name );
             array_erase( &ps->saves, &ps->saves[j], &ps->saves[j+1] );
             continue;
          }
