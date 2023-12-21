@@ -50,8 +50,8 @@ static int MAXTHREADS = 8; /* Bit overkill, but oh well. */
  * @brief Node in the thread queue.
  */
 typedef struct Node_ {
-   void *data;          /* The element in the list */
-   struct Node_ *next;  /* The next node in the list */
+   void *data;          /**< The element in the list */
+   struct Node_ *next;  /**< The next node in the list */
 } Node;
 
 struct vpoolThreadData_;
@@ -293,9 +293,7 @@ int threadpool_newJob( int (*function)(void *), void *data )
  */
 static int threadpool_worker( void *data )
 {
-   ThreadData *work;
-
-   work = (ThreadData*) data;
+   ThreadData *work = (ThreadData*) data;
 
    /* Work loop */
    while (1) {
