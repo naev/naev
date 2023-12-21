@@ -135,9 +135,6 @@ static int load_load( nsave_t *save, const char *path )
       return -1;
    }
 
-   /* Save path. */
-   save->path = strdup(path);
-
    /* Iterate inside the naev_save. */
    parent = root->xmlChildrenNode;
    do {
@@ -306,6 +303,8 @@ static int load_enumerateCallbackPlayer( void* data, const char* origdir, const 
       ns.modtime = stat.modtime;
       array_push_back( &ps->saves, ns );
    }
+   else
+      free( path );
 
    return PHYSFS_ENUM_OK;
 }
