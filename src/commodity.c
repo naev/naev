@@ -59,6 +59,14 @@ typedef struct CommodityThreadData_ {
 static int commodity_parseThread( void *ptr );
 static void commodity_freeOne( Commodity* com );
 static int commodity_parse( Commodity *temp, const char *filename );
+static int commodity_cmp( const void *p1, const void *p2 );
+
+static int commodity_cmp( const void *p1, const void *p2 )
+{
+   const Commodity *c1 = p1;
+   const Commodity *c2 = p2;
+   return strcmp( c1->name, c2->name );
+}
 
 /**
  * @brief Converts credits to a usable string for displaying.
@@ -152,9 +160,10 @@ Commodity* commodity_get( const char* name )
  */
 Commodity* commodity_getW( const char* name )
 {
-   for (int i=0; i<array_size(commodity_stack); i++)
-      if (strcmp(commodity_stack[i].name, name) == 0)
-         return &commodity_stack[i];
+   const Commodity q = { .name=(char*)name };
+   Commodity *r = bsearch( &q, commodity_stack, array_size(commodity_stack), sizeof(Commodity), commodity_cmp );
+   if (r!=NULL)
+      return r;
    for (int i=0; i<array_size(commodity_temp); i++)
       if (strcmp(commodity_temp[i]->name, name) == 0)
          return commodity_temp[i];
@@ -520,12 +529,14 @@ int commodity_load (void)
    /* Finally load. */
    for (int i=0; i<array_size(cdata); i++) {
       CommodityThreadData *cd = &cdata[i];
-      if (!cd->ret) {
+      if (!cd->ret)
          array_push_back( &commodity_stack, cd->com );
-      }
       free( cd->filename );
    }
    array_free(cdata);
+
+   /* Sort. */
+   qsort( commodity_stack, array_size(commodity_stack), sizeof(Commodity), commodity_cmp );
 
    /* Load into commodity stack. */
    for (int i=0; i<array_size(commodity_stack); i++) {
