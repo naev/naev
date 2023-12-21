@@ -35,6 +35,7 @@
 #include "threadpool.h"
 
 #include "log.h"
+#include "array.h"
 
 #define THREADPOOL_TIMEOUT (5 * 100) /* The time a worker thread waits in ms. */
 #define THREADSIG_STOP     (1) /* The signal to stop a worker thread */
@@ -53,6 +54,8 @@ typedef struct Node_ {
    struct Node_ *next;  /* The next node in the list */
 } Node;
 
+struct vpoolThreadData_;
+
 /**
  * @brief Threadqueue itself.
  */
@@ -63,6 +66,11 @@ struct ThreadQueue_ {
    SDL_sem *semaphore;
    SDL_mutex *t_lock;   /* Tail lock. Lock when reading/updating tail */
    SDL_mutex *h_lock;   /* Same as tail lock, except it's head lock */
+   /* For vpools. */
+   SDL_cond *cond;
+   SDL_mutex *mutex;
+   struct vpoolThreadData_ *arg;
+   int cnt;
 };
 
 /**
@@ -89,13 +97,14 @@ typedef struct ThreadData_ {
 /**
  * @brief Virtual thread pool data.
  */
-typedef struct vpoolThreadData_ {
+struct vpoolThreadData_ {
    SDL_cond *cond;         /* Condition variable for signalling all jobs in the vpool
                               are done */
    SDL_mutex *mutex;       /* The mutex to use with the above condition variable */
    int *count;             /* Variable to count number of finished jobs in the vpool */
    ThreadQueueData *node;  /* The job to be done */
-} vpoolThreadData;
+};
+typedef struct vpoolThreadData_ vpoolThreadData;
 
 /* The global threadpool queue */
 static ThreadQueue *global_queue = NULL;
@@ -231,6 +240,13 @@ static void tq_destroy( ThreadQueue *q )
    SDL_DestroySemaphore( q->semaphore );
    SDL_DestroyMutex( q->h_lock );
    SDL_DestroyMutex( q->t_lock );
+
+   /* Clean up vpool structures. */
+   if (q->mutex != NULL)
+      SDL_DestroyMutex( q->mutex );
+   if (q->cond != NULL)
+      SDL_DestroyCond( q->cond );
+   array_free(q->arg);
 
    free( q->first );
    free( q );
@@ -499,7 +515,12 @@ int threadpool_init (void)
  */
 ThreadQueue* vpool_create (void)
 {
-   return tq_create();
+   ThreadQueue *tq = tq_create();
+   /* Create vpool-specific threading structures. */
+   tq->cond  = SDL_CreateCond();
+   tq->mutex = SDL_CreateMutex();
+   tq->arg   = array_create( vpoolThreadData );
+   return tq;
 }
 
 /**
@@ -559,48 +580,37 @@ static int vpool_worker( void *data )
  */
 void vpool_wait( ThreadQueue *queue )
 {
-   int cnt;
-   SDL_cond *cond;
-   SDL_mutex *mutex;
-   vpoolThreadData *arg;
-   ThreadQueueData *node;
-
-   /* Create temporary threading structures. */
-   cond  = SDL_CreateCond();
-   mutex = SDL_CreateMutex();
    /* This might be a little ugly (and inefficient?) */
-   cnt   = SDL_SemValue( queue->semaphore );
+   int cnt = SDL_SemValue( queue->semaphore );
+   array_resize( &queue->arg, cnt );
 
    /* Allocate all vpoolThreadData objects */
-   arg = calloc( cnt, sizeof(vpoolThreadData) );
-
-   SDL_mutexP( mutex );
+   SDL_mutexP( queue->mutex );
    /* Initialize the vpoolThreadData */
    for (int i=0; i<cnt; i++) {
+      vpoolThreadData *arg;
+
       /* This is needed to keep the invariants of the queue */
       while (SDL_SemWait( queue->semaphore ) == -1) {
           /* Again, a really bad idea */
           WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
       }
-      node = tq_dequeue( queue );
 
       /* Set up arguments. */
-      arg[i].node    = node;
-      arg[i].cond    = cond;
-      arg[i].mutex   = mutex;
-      arg[i].count   = &cnt;
+      arg         = &queue->arg[i];
+      arg->node   = tq_dequeue( queue );
+      arg->cond   = queue->cond;
+      arg->mutex  = queue->mutex;
+      arg->count  = &cnt;
 
       /* Launch new job. */
-      threadpool_newJob( vpool_worker, &arg[i] );
+      threadpool_newJob( vpool_worker, arg );
    }
 
    /* Wait for the threads to finish */
-   SDL_CondWait( cond, mutex );
-   SDL_mutexV( mutex );
+   SDL_CondWait( queue->cond, queue->mutex );
+   SDL_mutexV( queue->mutex );
 
    /* Clean up */
-   SDL_DestroyMutex( mutex );
-   SDL_DestroyCond( cond );
    tq_destroy( queue );
-   free( arg );
 }
