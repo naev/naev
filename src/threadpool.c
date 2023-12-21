@@ -102,7 +102,7 @@ struct vpoolThreadData_ {
                               are done */
    SDL_mutex *mutex;       /* The mutex to use with the above condition variable */
    int *count;             /* Variable to count number of finished jobs in the vpool */
-   ThreadQueueData *node;  /* The job to be done */
+   ThreadQueueData node;   /* The job to be done */
 };
 typedef struct vpoolThreadData_ vpoolThreadData;
 
@@ -534,15 +534,16 @@ ThreadQueue* vpool_create (void)
  */
 void vpool_enqueue( ThreadQueue *queue, int (*function)(void *), void *data )
 {
-   ThreadQueueData *node;
-
-   /* Allocate and set up data. */
-   node           = calloc( 1, sizeof(ThreadQueueData) );
-   node->data     = data;
-   node->function = function;
-
-   /* Add to vpool. */
-   tq_enqueue( queue, node );
+   vpoolThreadData *arg = &array_grow( &queue->arg );
+   memset( arg, 0, sizeof(vpoolThreadData) );
+   /* Common field.s */
+   arg->cond   = queue->cond;
+   arg->mutex  = queue->mutex;
+   arg->count  = &queue->cnt;
+   /* Task-specific stuff. */
+   arg->node.data = data;
+   arg->node.function = function;
+   SDL_SemPost( queue->semaphore );
 }
 
 /**
@@ -557,7 +558,7 @@ static int vpool_worker( void *data )
    vpoolThreadData *work = (vpoolThreadData*) data;
 
    /* Do work */
-   work->node->function( work->node->data );
+   work->node.function( work->node.data );
 
    /* Decrement the counter and signal vpool_wait if all threads are done */
    SDL_mutexP( work->mutex );
@@ -566,9 +567,6 @@ static int vpool_worker( void *data )
       SDL_CondSignal( work->cond );  /* Signal waiting thread */
    *(work->count) = cnt;
    SDL_mutexV( work->mutex );
-
-   /* Clean up data. */
-   free( work->node );
 
    return 0;
 }
@@ -580,31 +578,22 @@ static int vpool_worker( void *data )
  */
 void vpool_wait( ThreadQueue *queue )
 {
-   /* This might be a little ugly (and inefficient?) */
-   int cnt = SDL_SemValue( queue->semaphore );
-   array_resize( &queue->arg, cnt );
+   /* Number of tasks we have. */
+   int cnt;
+   queue->cnt  = array_size( queue->arg );
+   cnt = queue->cnt;
 
    /* Allocate all vpoolThreadData objects */
    SDL_mutexP( queue->mutex );
    /* Initialize the vpoolThreadData */
    for (int i=0; i<cnt; i++) {
-      vpoolThreadData *arg;
-
       /* This is needed to keep the invariants of the queue */
       while (SDL_SemWait( queue->semaphore ) == -1) {
           /* Again, a really bad idea */
           WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
       }
-
-      /* Set up arguments. */
-      arg         = &queue->arg[i];
-      arg->node   = tq_dequeue( queue );
-      arg->cond   = queue->cond;
-      arg->mutex  = queue->mutex;
-      arg->count  = &cnt;
-
       /* Launch new job. */
-      threadpool_newJob( vpool_worker, arg );
+      threadpool_newJob( vpool_worker, &queue->arg[i] );
    }
 
    /* Wait for the threads to finish */
