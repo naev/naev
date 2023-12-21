@@ -248,7 +248,7 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
 /**
  * @brief Return an array (array.h) of standard commodities. Free with array_free. (Don't free contents.)
  */
-Commodity ** standard_commodities (void)
+Commodity **standard_commodities (void)
 {
    int n = array_size(commodity_stack);
    Commodity **com = array_create_size( Commodity*, n );
@@ -520,11 +520,20 @@ int commodity_load (void)
    /* Finally load. */
    for (int i=0; i<array_size(cdata); i++) {
       CommodityThreadData *cd = &cdata[i];
-      if (!cd->ret)
+      if (!cd->ret) {
          array_push_back( &commodity_stack, cd->com );
+      }
       free( cd->filename );
    }
    array_free(cdata);
+
+   /* Load into commodity stack. */
+   for (int i=0; i<array_size(commodity_stack); i++) {
+      const Commodity *com = &commodity_stack[i];
+      /* See if should get added to commodity list. */
+      if (com->price > 0.)
+         array_push_back( &econ_comm, i );
+   }
 
 #if DEBUGGING
    if (conf.devmode) {
