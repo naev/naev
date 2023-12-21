@@ -231,8 +231,6 @@ function land ()
       vn.done( tutnel.nelly.transition )
       vn.run()
 
-      player.pay( outfit_tobuy:price() )
-
       -- Get rid of cargo
       misn.cargoRm( mem.cargo_id )
       mem.misn_state = 2
