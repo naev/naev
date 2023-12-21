@@ -200,8 +200,8 @@ So, after the reparations were completed, I went to Dvaered space. But I didn't 
    vn.label("repair")
    nel(_([["Well. The problem is that my hull's architecture is a bit… uncommon. Front and back are from the original Llama Mk IV-BM version from UST-599, but on the sides, I have adapted parts of the Llama Mk II-O version (from the batch of UST-567, not the more mainstream batch of UST-568). As they cannot be adapted together by default, I got a friend on Em5 to machine a special adaptor.
 "Anyway, so the repairman on Brooks didn't have the needed parts to repair my hull and I had to get someone to transport me to Darkshed. You know, it's the best place to find spare parts for older models of ships as nebula scavengers often sell their findings there. But once there, I met Robin. Do you know Robin?
-She is small, wants to kill me, has curly brunette hair and a smiling round head. You are sure you don't know her? she talked a lot about killing me lately. Anyway, I managed to hide in a trash can, but unfortunately, I got loaded by mistake on a garbage ship heading to that stinky planet in Soromid space, you know? I got lucky I was in a pressurized compartment, and I managed to get out in Father's Pride.
-And after that I got an inter-system call from the repairman in Brooks who actually found the needed set of parts (it was in a crate he was using to wedge his desk). So I returned, took a bath and got my repaired ship!"]]))
+She is small, wants to kill me, has curly brunette hair and a smiling round head. You are sure you don't know her? She talked a lot about killing me lately. Anyway, I managed to hide in a trash can, but unfortunately, I got loaded by mistake on a garbage ship heading to that stinky planet in Soromid space, you know? I got lucky I was in a pressurized compartment, and I managed to get out in Father's Pride.
+And after that I got an inter-system call from the repairman in Brooks who actually found the needed set of parts (it was in a crate he was using to wedge his desk). So I returned, had a bath and got my repaired ship!"]]))
    vn.menu{ warlord, sausage, leave }
 
    vn.label("warlords")

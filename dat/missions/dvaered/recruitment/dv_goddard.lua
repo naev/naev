@@ -121,7 +121,7 @@ function accept()
    vn.jump("task")
 
    vn.label("task")
-   sol(_([[So, as you may think, Lord Fatgun is very successful, and many lesser Warlords envy him and dream of invading his planets. For that reason, we are in need of more weapons of all kinds. I have recently bought two hundred armored ground vehicles that will help us finally kick off the troops of Lady Proserpina on Golem in Palin, where the war is raging for two cycles.]]))
+   sol(_([[So, as you may think, Lord Fatgun is very successful, and many lesser Warlords envy him and dream of invading his planets. For that reason, we are in need of more weapons of all kinds. I have recently bought two hundred armoured ground vehicles that will help us finally kick off the troops of Lady Proserpina on Golem in Palin, where the war is raging for two cycles.]]))
    sol(_([[But before definitely bringing peace to this planet, we need to deliver those weapons there. And Lord Richthofen, who has been humiliated by his recent defeats, tends to ambush our convoys. This is why we need our transport to be escorted by a complete fleet, including a battlecruiser.]]))
    sol(_([[As you probably know, most warlords only own one Goddard battlecruiser. This is due to both the High Command being reluctant to give the authorization, and to House Goddard often refusing to sell a second battlecruiser. However, in our particular situation, having a second Goddard battlecruiser would ease our logistics by a lot.]]))
    sol(_([[And I managed to get the special authorization from the High Command. I should soon present my request for the ship to House Goddard, but before doing so, we need to make sure that Goddard shareholders are on our side. And that is why we need you.]]))
@@ -131,7 +131,7 @@ function accept()
    }
 
    vn.label("continue")
-   sol(_([[We identified a shareholder whose name is Agrippina Grosjean. She is an allied of Lord Richthofen and she will be firmly against us buying a second battlecruiser. This is why I have elaborated a negotiation plan that consists in eliminating her. What do you think of that negotiation plan?]]))
+   sol(_([[We identified a shareholder whose name is Agrippina Grosjean. She is an allied of Lord Richthofen, and she will be firmly against us buying a second battlecruiser. This is why I have elaborated a negotiation plan that consists in eliminating her. What do you think of that negotiation plan?]]))
    vn.menu{
       {_("That is a very Dvaered kind of negotiation."), "congratulate"},
       {_("This plan is very subtle Indeed."), "congratulate"},
@@ -148,7 +148,7 @@ function accept()
    sol(fmt.f(_([[Let me explain: Grosjean has a very special hobby that consists in flying a Pirate Shark in {sys} and killing lone traders under the name 'Silent Death'. Dvaered patrols in the system are under the responsibility of her friend, the dishonourable Lord Richthofen. We have collected data on her habits, and we know she should be cruising in the system soon. So we need you to go there, pretend you are a harmless trader, wait for her to attack, and kill her.]]), {sys=mem.sharksys}))
    sol(_([[The problem is that she tends to only attack Llamas as it is probably the less dangerous ship that exists. This means that you will have to fly such a ship for her to engage you. Now, you may wonder how you are supposed to catch her in a Llama if she decides to run away, and that is where the less legal part of the mission comes into play.]]))
    sol(fmt.f(_([[Before entering {sharksys}, we will have to sabotage her ship's engine. We know that she has purchased a new engine that will be delivered to her soon. This engine will transit in the main warehouse of Tricon on {enginpnt}. Your first task will be to shuttle a group of… hem… special… workers to that planet for them to infiltrate the warehouse and sabotage the engine. You will then deposit them back on {pnt}.]]),{sharksys=mem.sharksys, enginpnt=mem.enginpnt, pnt=mem.paypnt}))
-   sol(_([[And only afterwards, you will go and encounter the target. Her engine will malfunction at the very moment you will hit her ship with whatever weapon, and she won't be able to run away anymore. Moreover, as you know, the combat ability of an interceptor like the Shark is closely linked to its maneuverability, which means that this sabotage will make the target much less dangerous for your own safety. So, what do you say? Are you in?]]))
+   sol(_([[And only afterwards, you will go and encounter the target. Her engine will malfunction at the very moment you will hit her ship with whatever weapon, and she won't be able to run away any more. Moreover, as you know, the combat ability of an interceptor like the Shark is closely linked to its manoeuvrability, which means that this sabotage will make the target much less dangerous for your own safety. So, what do you say? Are you in?]]))
    vn.menu{
       {_("Agree"), "agree"},
       {_("Refuse"), "refuse"},
@@ -228,7 +228,7 @@ function land()
       vn.na(_([[You land and the saboteurs team leave your ship to disappear among the crowd on the docks. You head to the bar to wait for their return behind a drink. The atmosphere in the spaceport seems unusual. There are groups of workers wandering around and policemen guarding the stores in the shopping alley. You finally ask someone for information.]]))
       local cyb = vn.newCharacter( _("Sergeant Krakadak"), { image=portrait.getFullPath(cyborPort) } )
       local civ = vn.newCharacter( _("Worker"), { image=portrait.getFullPath(civilPort) } )
-      civ(_([["We are on strike! That is what's going on! Nexus docks, who runs the spaceport, decided to lower our wages to only 0.026 credits per tonne for loaders, and 0.051 credits per kilometer for drivers. It is totally impossible for non-modified workers to survive like that, and costs for maintenance are also increasing for cyborg-workers. There are planets where the gravity is lower than here, but the wages are higher. According to some workers, there are even docker companies that offer a fixed salary, on other planets. So we are on strike to force Nexus docks to give us better remuneration."]]))
+      civ(_([["We are on strike! That is what's going on! Nexus docks, who runs the spaceport, decided to lower our wages to only 0.026 credits per tonne for loaders, and 0.051 credits per kilometre for drivers. It is totally impossible for non-modified workers to survive like that, and costs for maintenance are also increasing for cyborg-workers. There are planets where the gravity is lower than here, but the wages are higher. According to some workers, there are even docker companies that offer a fixed salary, on other planets. So we are on strike to force Nexus docks to give us better remuneration."]]))
       vn.jump("menu")
 
       vn.label("menu")
@@ -241,7 +241,7 @@ function land()
       }
 
       vn.label("other")
-      civ(_([["That is unfortunately impossible: a cheap spacebus ticket costs about 50 credits at least. That is about what we dockers can spare in several cycles. Besides, most of us have our roots on this planet. Our parents, families, children that we cannot abandon like that. You know, you are used to travelling across the stars and such, but remember that most of the population won't ever make an interplanetary travel in their whole life!"]]))
+      civ(_([["That is unfortunately impossible: a cheap spacebus ticket costs about 50 credits at least. That is about what we dockers can spare in several cycles. Besides, most of us have our roots on this planet. Our parents, families, children that we cannot abandon like that. You know, you are used to travelling across the stars and such, but remember that most of the population won't ever make interplanetary travel in their whole life!"]]))
       vn.jump("menu")
 
       vn.label("independent")
@@ -249,8 +249,8 @@ function land()
       vn.jump("menu")
 
       vn.label("legal")
-      civ(_([["Actually, nowadays, only few people really care about Imperial laws. All I know is that Nexus sent their private police after us when we created our labor union. Then we did throw large bolts at the cops and they never came back. So I suppose what we do is legal."]]))
-      civ(_([["By the way, the General Inquisitor of Nexus private police on the planet was found dead in his bath at that same period. Some say that a foreign power sent agents to disorganize the repression against our union. I don't know if it is true, or if it is just an other attempt at flagging the union as an 'agent of hostile foreign powers'."]]))
+      civ(_([["Actually, nowadays, only few people really care about Imperial laws. All I know is that Nexus sent their private police after us when we created our labour union. Then we did throw large bolts at the cops, and they never came back. So I suppose what we do is legal."]]))
+      civ(_([["By the way, the General Inquisitor of Nexus private police on the planet was found dead in his bath at that same period. Some say that a foreign power sent agents to disorganize the repression against our union. I don't know if it is true, or if it is just another attempt at flagging the union as an 'agent of hostile foreign powers'."]]))
       vn.jump("menu")
 
       vn.label("tricon")
