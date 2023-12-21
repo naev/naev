@@ -97,7 +97,7 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str );
 static void load_snapshot_menu_save( unsigned int wdw, const char *str );
 static void display_save_info( unsigned int wid, const nsave_t *ns );
 static void move_old_save( const char *path, const char *fname, const char *ext, const char *new_name );
-static int load_load( nsave_t *save, const char *path );
+static int load_load( nsave_t *save );
 static int load_game( const nsave_t *ns );
 static int load_gameInternal( const char* file, const char* version );
 static int load_gameInternalHook( void *data );
@@ -113,23 +113,22 @@ static xmlDocPtr load_xml_parsePhysFS( const char* filename );
 /**
  * @brief Loads an individual save.
  * @param[out] save Structure to populate.
- * @param path PhysicsFS path (i.e., relative path starting with "saves/").
  * @return 0 on success.
  */
-static int load_load( nsave_t *save, const char *path )
+static int load_load( nsave_t *save )
 {
    xmlDocPtr doc;
    xmlNodePtr root, parent;
 
    /* Load the XML. */
-   doc = load_xml_parsePhysFS( path );
+   doc = load_xml_parsePhysFS( save->path );
    if (doc == NULL) {
-      WARN( _("Unable to parse save path '%s'."), path);
+      WARN( _("Unable to parse save path '%s'."), save->path);
       return -1;
    }
    root = doc->xmlChildrenNode; /* base node */
    if (root == NULL) {
-      WARN( _("Unable to get child node of save '%s'."), path);
+      WARN( _("Unable to get child node of save '%s'."), save->path);
       xmlFreeDoc(doc);
       return -1;
    }
@@ -198,7 +197,7 @@ static int load_load( nsave_t *save, const char *path )
                if (name != NULL)
                   array_push_back( &save->plugins, strdup(name) );
                else
-                  WARN(_("Save '%s' has unnamed plugin node!"), path);
+                  WARN(_("Save '%s' has unnamed plugin node!"), save->path);
             }
          } while (xml_nextNode(node));
          continue;
@@ -220,7 +219,7 @@ static int load_load( nsave_t *save, const char *path )
 static int load_loadThread( void *ptr )
 {
    nsave_t *ns = ptr;
-   ns->ret = load_load( ns, ns->path );
+   ns->ret = load_load( ns );
    return ns->ret;
 }
 
