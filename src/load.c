@@ -119,8 +119,7 @@ static xmlDocPtr load_xml_parsePhysFS( const char* filename );
 static int load_load( nsave_t *save, const char *path )
 {
    xmlDocPtr doc;
-   xmlNodePtr root, parent, node, cur;
-   int cycles, periods, seconds;
+   xmlNodePtr root, parent;
 
    /* Load the XML. */
    doc = load_xml_parsePhysFS( path );
@@ -142,7 +141,7 @@ static int load_load( nsave_t *save, const char *path )
 
       /* Info. */
       if (xml_isNode(parent, "version")) {
-         node = parent->xmlChildrenNode;
+         xmlNodePtr node = parent->xmlChildrenNode;
          do {
             xmlr_strd(node, "naev", save->version);
             xmlr_strd(node, "data", save->data);
@@ -154,7 +153,7 @@ static int load_load( nsave_t *save, const char *path )
          /* Get name. */
          xmlr_attr_strd(parent, "name", save->player_name);
          /* Parse rest. */
-         node = parent->xmlChildrenNode;
+         xmlNodePtr node = parent->xmlChildrenNode;
          do {
             xml_onlyNodes(node);
 
@@ -166,7 +165,8 @@ static int load_load( nsave_t *save, const char *path )
 
             /* Time. */
             if (xml_isNode(node, "time")) {
-               cur = node->xmlChildrenNode;
+               int cycles, periods, seconds;
+               xmlNodePtr cur = node->xmlChildrenNode;
                cycles = periods = seconds = 0;
                do {
                   xmlr_int(cur, "SCU", cycles);
@@ -189,7 +189,7 @@ static int load_load( nsave_t *save, const char *path )
       else if (xml_isNode(parent, "plugins")) {
          save->plugins = array_create( char* );
          /* Parse rest. */
-         node = parent->xmlChildrenNode;
+         xmlNodePtr node = parent->xmlChildrenNode;
          do {
             xml_onlyNodes(node);
 
@@ -692,9 +692,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
 static void load_menu_snapshots( unsigned int wdw, const char *str )
 {
    (void) str;
-   int pos;
-
-   pos = toolkit_getListPos( wdw, "lstNames" );
+   int pos = toolkit_getListPos( wdw, "lstNames" );
    if (array_size(load_saves) <= 0)
       return;
    load_loadSnapshotMenu( load_saves[pos].name, 1 );
@@ -809,9 +807,9 @@ static void move_old_save( const char *path, const char *fname, const char *ext,
    size_t name_len = strlen(fname);
    size_t ext_len = strlen(ext);
    if (name_len >= ext_len + 1 && !strcmp( &fname[name_len - ext_len], ext )) {
+      char *new_path;
       char *dirname = strdup( fname );
       dirname[name_len - ext_len] = '\0';
-      char *new_path;
       SDL_asprintf( &new_path, "saves/%s", dirname );
       if (!PHYSFS_exists( new_path ))
          PHYSFS_mkdir( new_path );
@@ -857,7 +855,6 @@ static void load_menu_update( unsigned int wid, const char *str )
 
    /* Get position. */
    pos = toolkit_getListPos( wid, "lstNames" );
-
    ns = &load_saves[pos].saves[0];
    if (selected_player != NULL)
       free( selected_player );
@@ -1006,10 +1003,8 @@ static void load_menu_delete( unsigned int wdw, const char *str )
  */
 static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
 {
-   unsigned int wid;
    int pos, last_save;
-
-   wid = window_get( "wdwLoadSnapshotMenu" );
+   unsigned int wid = window_get( "wdwLoadSnapshotMenu" );
 
    if (array_size(load_player->saves) <= 0)
       return;
