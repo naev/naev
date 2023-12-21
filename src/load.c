@@ -40,6 +40,7 @@
 #include "shiplog.h"
 #include "start.h"
 #include "space.h"
+#include "threadpool.h"
 #include "toolkit.h"
 #include "unidiff.h"
 
@@ -219,27 +220,43 @@ static int load_load( nsave_t *save, const char *path )
    return 0;
 }
 
+static int load_loadThread( void *ptr )
+{
+   nsave_t *ns = ptr;
+   ns->ret = load_load( ns, ns->path );
+   return ns->ret;
+}
+
 /**
  * @brief Loads or refreshes saved games for the player.
- *
- * @TODO thread this
  */
 int load_refresh (void)
 {
+   ThreadQueue *tq = vpool_create();
+
    if (load_saves != NULL)
       load_free();
 
-   /* load the saves candidates. */
+   /* Load the saves candidates. */
    load_saves = array_create( player_saves_t );
    PHYSFS_enumerate( "saves", load_enumerateCallback, NULL );
+
+   /* Set up threads and load. */
+   for (int i=array_size(load_saves)-1; i>=0; i--) {
+      player_saves_t *ps = &load_saves[i];
+      for (int j=array_size(ps->saves)-1; j>=0; j--) {
+         nsave_t *ns = &ps->saves[j];
+         vpool_enqueue( tq, load_loadThread, ns );
+      }
+   }
+   vpool_wait( tq );
 
    /* Load the saves. */
    for (int i=array_size(load_saves)-1; i>=0; i--) {
       player_saves_t *ps = &load_saves[i];
       for (int j=array_size(ps->saves)-1; j>=0; j--) {
-         nsave_t *ns = &ps->saves[j];
-         int ret = load_load( ns, ns->path );
-         if (ret!=0) {
+         const nsave_t *ns = &ps->saves[j];
+         if (ns->ret!=0) {
             array_erase( &ps->saves, &ps->saves[j], &ps->saves[j+1] );
             continue;
          }
