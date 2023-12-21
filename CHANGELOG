@@ -1,3 +1,8 @@
+* 0.12.0 (unreleased)
+   * Threaded more loading components
+   * Lua require now caches chunks
+   * Dropped SDL_image fallback
+
 * 0.11.0 (unreleased)
    * Fixed beams only showing hit explosions on one target being hit instead of all
    * Consider beam width when computing collisions
