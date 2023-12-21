@@ -30,3 +30,5 @@ void vpool_enqueue( ThreadQueue* queue, int (*function)(void *), void *data );
 /* Run every job in the vpool queue and block until every job in the queue is
  * done. It destroys the queue when it's done. */
 void vpool_wait( ThreadQueue* queue );
+
+void vpool_cleanup( ThreadQueue* queue );

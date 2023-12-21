@@ -250,6 +250,7 @@ int load_refresh (void)
       }
    }
    vpool_wait( tq );
+   vpool_cleanup( tq );
 
    /* Load the saves. */
    for (int i=array_size(load_saves)-1; i>=0; i--) {

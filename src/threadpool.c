@@ -603,7 +603,13 @@ void vpool_wait( ThreadQueue *queue )
    /* Wait for the threads to finish */
    SDL_CondWait( queue->cond, queue->mutex );
    SDL_mutexV( queue->mutex );
+}
 
+/**
+ * @brief Cleans up the threadpool.
+ */
+void vpool_cleanup( ThreadQueue* queue )
+{
    /* Clean up */
    tq_destroy( queue );
 }
