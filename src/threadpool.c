@@ -60,12 +60,14 @@ struct vpoolThreadData_;
  * @brief Threadqueue itself.
  */
 struct ThreadQueue_ {
-   Node *first;         /* The first node */
-   Node *last;          /* The second node */
+   Node *first;         /**< The first node */
+   Node *last;          /**< The second node */
+   Node *reserve;       /**< Reserve buffer. */
    /* A semaphore to ensure reads only happen when the queue is not empty */
    SDL_sem *semaphore;
-   SDL_mutex *t_lock;   /* Tail lock. Lock when reading/updating tail */
-   SDL_mutex *h_lock;   /* Same as tail lock, except it's head lock */
+   SDL_mutex *t_lock;   /**< Tail lock. Lock when reading/updating tail */
+   SDL_mutex *h_lock;   /**< Same as tail lock, except it's head lock */
+   SDL_mutex *r_lock;   /**< For reserve buffer. */
    /* For vpools. */
    SDL_cond *cond;
    SDL_mutex *mutex;
@@ -98,11 +100,12 @@ typedef struct ThreadData_ {
  * @brief Virtual thread pool data.
  */
 struct vpoolThreadData_ {
-   SDL_cond *cond;         /* Condition variable for signalling all jobs in the vpool
+   SDL_cond *cond;         /**< Condition variable for signalling all jobs in the vpool
                               are done */
-   SDL_mutex *mutex;       /* The mutex to use with the above condition variable */
-   int *count;             /* Variable to count number of finished jobs in the vpool */
-   ThreadQueueData node;   /* The job to be done */
+   SDL_mutex *mutex;       /**< The mutex to use with the above condition variable */
+   int *count;             /**< Variable to count number of finished jobs in the vpool */
+   ThreadQueueData node;   /**< The job to be done */
+   ThreadQueueData wrapper;/**< Wrapper to avoid malloc. */
 };
 typedef struct vpoolThreadData_ vpoolThreadData;
 
@@ -146,6 +149,7 @@ static ThreadQueue* tq_create (void)
    /* Create locks. */
    q->t_lock      = SDL_CreateMutex();
    q->h_lock      = SDL_CreateMutex();
+   q->r_lock      = SDL_CreateMutex();
    q->semaphore   = SDL_CreateSemaphore( 0 );
 
    return q;
@@ -159,10 +163,19 @@ static ThreadQueue* tq_create (void)
  */
 static void tq_enqueue( ThreadQueue *q, void *data )
 {
-   /* Allocate new struct. */
-   Node *n  = calloc( 1, sizeof(Node) );
+   Node *n;
+
+   /* Try to grab reserved struct if possible. */
+   SDL_mutexP( q->r_lock );
+   if (q->reserve!=NULL) {
+      n = q->reserve;
+      q->reserve = n->next;
+   }
+   else
+      n = malloc( sizeof(Node) );
    n->data  = data;
    n->next  = NULL;
+   SDL_mutexV( q->r_lock );
 
    /* Lock */
    SDL_mutexP( q->t_lock );
@@ -219,7 +232,12 @@ static void* tq_dequeue( ThreadQueue *q )
    /* Unlock */
    SDL_mutexV( q->h_lock );
 
-   free( node );
+   /* Save memory in reserve. */
+   SDL_mutexP( q->r_lock );
+   node->next = q->reserve;
+   q->reserve = node;
+   SDL_mutexV( q->r_lock );
+
    return d;
 }
 
@@ -233,13 +251,25 @@ static void* tq_dequeue( ThreadQueue *q )
 static void tq_destroy( ThreadQueue *q )
 {
    /* Iterate through the list and free the nodes */
-   while (q->first->next != NULL)
-      free( tq_dequeue(q) ); /* Locks q->t_lock, so we must destroy mutex after. */
+   while (q->first != NULL) {
+      Node *n = q->first;
+      q->first = n->next;
+      free(n);
+   }
+
+   /* Free reserve. */
+   while (q->reserve != NULL) {
+      Node *n = q->reserve;
+      q->reserve = n->next;
+      free(n);
+   }
 
    /* Clean up threading structures. */
    SDL_DestroySemaphore( q->semaphore );
    SDL_DestroyMutex( q->h_lock );
    SDL_DestroyMutex( q->t_lock );
+   SDL_DestroyMutex( q->r_lock );
+
 
    /* Clean up vpool structures. */
    if (q->mutex != NULL)
@@ -250,36 +280,6 @@ static void tq_destroy( ThreadQueue *q )
 
    free( q->first );
    free( q );
-}
-
-/**
- * @brief Enqueues a new job for the threadpool.
- *
- * @warning Do NOT enqueue a job that has to wait for another job to be done as
- *          this could lead to a deadlock.
- *
- *    @param function The function (job) to be called (executed).
- *    @param data The arguments for the function.
- *    @return Returns 0 on success and -2 if there was no threadpool.
- */
-int threadpool_newJob( int (*function)(void *), void *data )
-{
-   ThreadQueueData *node;
-
-   if (global_queue == NULL) {
-      WARN(_("Threadpool has not been initialized yet!"));
-      return -2;
-   }
-
-   /* Allocate and set parameters. */
-   node           = calloc( 1, sizeof(ThreadQueueData) );
-   node->data     = data;
-   node->function = function;
-
-   /* Actually enque. */
-   tq_enqueue( global_queue, node );
-
-   return 0;
 }
 
 /**
@@ -456,9 +456,6 @@ static int threadpool_handler( void *data )
                threadarg );
          nrunning += 1;
       }
-
-      /* Free the now unused job from the global_queue */
-      free(node);
    }
    /** @TODO A way to stop the threadpool. */
 
@@ -542,6 +539,7 @@ void vpool_enqueue( ThreadQueue *queue, int (*function)(void *), void *data )
    arg->node.data = data;
    arg->node.function = function;
    SDL_SemPost( queue->semaphore );
+   arg->wrapper.function = vpool_worker;
 }
 
 /**
@@ -581,17 +579,25 @@ void vpool_wait( ThreadQueue *queue )
    queue->cnt  = array_size( queue->arg );
    cnt = queue->cnt;
 
+   if (global_queue == NULL) {
+      WARN(_("Threadpool has not been initialized yet!"));
+      return;
+   }
+
    /* Allocate all vpoolThreadData objects */
    SDL_mutexP( queue->mutex );
    /* Initialize the vpoolThreadData */
    for (int i=0; i<cnt; i++) {
+      vpoolThreadData *arg;
       /* This is needed to keep the invariants of the queue */
       while (SDL_SemWait( queue->semaphore ) == -1) {
           /* Again, a really bad idea */
           WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
       }
       /* Launch new job. */
-      threadpool_newJob( vpool_worker, &queue->arg[i] );
+      arg = &queue->arg[i];
+      arg->wrapper.data = arg;
+      tq_enqueue( global_queue, &queue->arg[i].wrapper );
    }
 
    /* Wait for the threads to finish */
