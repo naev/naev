@@ -1266,11 +1266,13 @@ static int aiL_poptask( lua_State *L )
    /* Tasks must exist. */
    if (t == NULL)
       return NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
+   /*
    if (strcmp(cur_pilot->ai->name,"escort")==0) {
       if (cur_pilot->task==t) {
          WARN("Popping last task!");
       }
    }
+   */
    t->done = 1;
    return 0;
 }
