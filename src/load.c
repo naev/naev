@@ -121,8 +121,6 @@ static int load_load( nsave_t *save, const char *path )
    xmlNodePtr root, parent, node, cur;
    int cycles, periods, seconds;
 
-   memset( save, 0, sizeof(nsave_t) );
-
    /* Load the XML. */
    doc = load_xml_parsePhysFS( path );
    if (doc == NULL) {
@@ -231,9 +229,32 @@ int load_refresh (void)
    if (load_saves != NULL)
       load_free();
 
-   /* load the saves */
+   /* load the saves candidates. */
    load_saves = array_create( player_saves_t );
    PHYSFS_enumerate( "saves", load_enumerateCallback, NULL );
+
+   /* Load the saves. */
+   for (int i=array_size(load_saves)-1; i>=0; i--) {
+      player_saves_t *ps = &load_saves[i];
+      for (int j=array_size(ps->saves)-1; j>=0; j--) {
+         nsave_t *ns = &ps->saves[j];
+         int ret = load_load( ns, ns->path );
+         if (ret!=0) {
+            array_erase( &ps->saves, &ps->saves[j], &ps->saves[j+1] );
+            continue;
+         }
+         if (ps->name == NULL)
+            ps->name = strdup( ns->player_name );
+      }
+      if (ps->name==NULL)
+         array_erase( &load_saves, &load_saves[i], &load_saves[i+1] );
+   }
+
+   /* Sort and done. */
+   for (int i=0; i<array_size(load_saves); i++) {
+      player_saves_t *ps = &load_saves[i];
+      qsort( ps->saves, array_size(ps->saves), sizeof(nsave_t), load_sortCompare );
+   }
    qsort( load_saves, array_size(load_saves), sizeof(player_saves_t), load_sortComparePlayers );
 
    return 0;
@@ -250,25 +271,22 @@ static int load_enumerateCallbackPlayer( void* data, const char* origdir, const 
 
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
    SDL_asprintf( &path, fmt, origdir, fname );
-   if (!PHYSFS_stat( path, &stat ))
+   if (!PHYSFS_stat( path, &stat )) {
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
-   /* TODO remove this sometime in the future. Maybe 0.12.0 or 0.13.0? */
+      free( path );
+   }
    else if (stat.filetype == PHYSFS_FILETYPE_REGULAR) {
       player_saves_t *ps = (player_saves_t*) data;
       nsave_t ns;
-      int ret = load_load( &ns, path );
-      if (ret == 0) {
-         ns.save_name = strdup( fname );
-         ns.save_name[ strlen(ns.save_name)-3 ] = '\0';
-         ns.modtime = stat.modtime;
-         array_push_back( &ps->saves, ns );
-         if (ps->name == NULL)
-            ps->name = strdup( ns.player_name );
-      }
+      memset( &ns, 0, sizeof(ns) );
+      ns.path = path;
+      ns.save_name = strdup( fname );
+      ns.save_name[ strlen(ns.save_name)-3 ] = '\0';
+      ns.modtime = stat.modtime;
+      array_push_back( &ps->saves, ns );
    }
 
-   free( path );
    return PHYSFS_ENUM_OK;
 }
 
@@ -311,12 +329,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
       psave.name = NULL;
       psave.saves = array_create( nsave_t );
       PHYSFS_enumerate( path, load_enumerateCallbackPlayer, &psave );
-      if (psave.name!=NULL) {
-         qsort( psave.saves, array_size(psave.saves), sizeof(nsave_t), load_sortCompare );
-         array_push_back( &load_saves, psave );
-      }
-      else
-         array_free( psave.saves );
+      array_push_back( &load_saves, psave );
    }
 
    free( path );
