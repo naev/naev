@@ -242,9 +242,9 @@ int load_refresh (void)
    PHYSFS_enumerate( "saves", load_enumerateCallback, NULL );
 
    /* Set up threads and load. */
-   for (int i=array_size(load_saves)-1; i>=0; i--) {
+   for (int i=0; i<array_size(load_saves); i++) {
       player_saves_t *ps = &load_saves[i];
-      for (int j=array_size(ps->saves)-1; j>=0; j--) {
+      for (int j=0; j<array_size(ps->saves); j++) {
          nsave_t *ns = &ps->saves[j];
          vpool_enqueue( tq, load_loadThread, ns );
       }
