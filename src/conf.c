@@ -239,7 +239,7 @@ void conf_setVideoDefaults (void)
    conf.scalefactor  = SCALE_FACTOR_DEFAULT;
    conf.nebu_scale   = NEBULA_SCALE_FACTOR_DEFAULT;
    conf.minimize     = MINIMIZE_DEFAULT;
-   conf.colourblind   = COLORBLIND_DEFAULT;
+   conf.colourblind   = COLOURBLIND_DEFAULT;
    conf.healthbars   = HEALTHBARS_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;

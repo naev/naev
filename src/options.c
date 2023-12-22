@@ -38,11 +38,12 @@
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
 #define OPT_WIN_GAMEPLAY   0
-#define OPT_WIN_VIDEO      1
-#define OPT_WIN_AUDIO      2
-#define OPT_WIN_INPUT      3
-#define OPT_WIN_PLUGINS    4
-#define OPT_WINDOWS        5
+#define OPT_WIN_ACCESSIBILITY 1
+#define OPT_WIN_VIDEO      2
+#define OPT_WIN_AUDIO      3
+#define OPT_WIN_INPUT      4
+#define OPT_WIN_PLUGINS    5
+#define OPT_WINDOWS        6
 
 #define AUTONAV_RESET_DIST_MAX  10e3
 #define LANG_CODE_START 7 /**< Length of a language-list item's prefix, like the "[ 81%] " in "[ 81%] de". */
@@ -51,6 +52,7 @@ static unsigned int opt_wid = 0;
 static unsigned int *opt_windows;
 static const char *opt_names[] = {
    N_("Gameplay"),
+   N_("Accessibility"),
    N_("Video"),
    N_("Audio"),
    N_("Input"),
@@ -81,6 +83,8 @@ static void opt_OK( unsigned int wid, const char *str );
 static int opt_gameplaySave( unsigned int wid, const char *str );
 static void opt_gameplayDefaults( unsigned int wid, const char *str );
 static void opt_gameplayUpdate( unsigned int wid, const char *str );
+/* Accessibility. */
+static void opt_accessibility( unsigned int wid );
 /* Video. */
 static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, const char *str );
@@ -149,6 +153,7 @@ void opt_menu (void)
 
    /* Load tabs. */
    opt_gameplay(  opt_windows[ OPT_WIN_GAMEPLAY ] );
+   opt_accessibility( opt_windows[ OPT_WIN_ACCESSIBILITY ] );
    opt_video(     opt_windows[ OPT_WIN_VIDEO ] );
    opt_audio(     opt_windows[ OPT_WIN_AUDIO ] );
    opt_keybinds(  opt_windows[ OPT_WIN_INPUT ] );
@@ -1180,11 +1185,52 @@ static void opt_unsetKey( unsigned int wid, const char *str )
 }
 
 /**
+ * @brief Initializes the accessibility window.
+ */
+static void opt_accessibility( unsigned int wid )
+{
+   int i, j, nres, res_def;
+   char buf[16];
+   int cw, w, h, y, x, l;
+   char **res;
+   const char *s;
+
+   /* Get size. */
+   window_dimWindow( wid, &w, &h );
+
+   /* Close button */
+   window_addButton( wid, -20, 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", _("OK"), opt_OK );
+   window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnCancel", _("Cancel"), opt_close );
+   window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnDefaults", _("Defaults"), opt_videoDefaults );
+
+   x = 20;
+   y = -40;
+#define COLOURBLIND_DEFAULT             0     /**< Whether to enable colourblindness simulation. */
+#define BG_BRIGHTNESS_DEFAULT          0.5   /**< How much to darken (or lighten) the backgrounds. */
+#define NEBU_NONUNIFORMITY_DEFAULT     1.    /**< How much to darken (or lighten) the nebula stuff. */
+#define JUMP_BRIGHTNESS_DEFAULT        1.    /**< Default jump brightness.*/
+
+   /* Video. */
+   window_addText( wid, x, y, 100, 20, 0, "txtSVideo",
+         NULL, cHeader, _("Video:") );
+   y -= 20;
+
+   /* Restart text. */
+   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
+         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
+}
+
+/**
  * @brief Initializes the video window.
  */
 static void opt_video( unsigned int wid )
 {
-   (void) wid;
    int i, j, nres, res_def;
    char buf[16];
    int cw, w, h, y, x, l;
@@ -1262,7 +1308,7 @@ static void opt_video( unsigned int wid )
    y -= 30;
    window_addText( wid, x, y-3, 130, 20, 0, "txtZoomFar",
          NULL, NULL, NULL );
-   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomFar", log(0.1+1.), log(2.0+1.),
+   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomFar", log1p(0.1+1.), log(2.0+1.),
          log(conf.zoom_far+1.), opt_setZoomFar );
    y -= 30;
    window_addText( wid, x, y-3, 130, 20, 0, "txtZoomNear",
