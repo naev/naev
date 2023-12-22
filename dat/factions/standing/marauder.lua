@@ -7,7 +7,7 @@ spir.init{
       [-1] = _("Potential Victim"),
    },
 }
-friendly_at    = 101 -- Can't get friendly
+--friendly_at    = 50
 
 function hit( current, _amount, _source, _secondary )
    return current -- Doesn't change through hits
