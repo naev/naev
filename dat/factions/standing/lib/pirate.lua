@@ -6,7 +6,7 @@ local spir = {}
 friendly_at = 40 -- Lower default than sbase
 
 function spir.init( args )
-   args = tmerge_r( fpir, args or {} )
+   args = tmerge( fpir, args or {} ) -- Not recursive to overwrite
    return sbase.init( args )
 end
 

@@ -1262,15 +1262,20 @@ static int aiL_pushtask( lua_State *L )
  */
 static int aiL_poptask( lua_State *L )
 {
+   (void) L;
    Task *t = ai_curTask( cur_pilot );
    /* Tasks must exist. */
-   if (t == NULL)
-      return NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
+   if (t == NULL) {
+      WARN(_("Trying to pop task when there are no tasks on the stack."));
+      return 0;
+   }
+   /*
    if (strcmp(cur_pilot->ai->name,"escort")==0) {
       if (cur_pilot->task==t) {
          WARN("Popping last task!");
       }
    }
+   */
    t->done = 1;
    return 0;
 }
