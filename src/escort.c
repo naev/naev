@@ -323,7 +323,7 @@ int escorts_hold( const Pilot *parent )
 {
    int ret = escort_command( parent, "e_hold", 0 );
    if ((ret == 0) && (parent == player.p))
-         player_message(_("#gEscorts: #0Holding formation."));
+      player_message(_("#gEscorts: #0Holding formation."));
    return ret;
 }
 
@@ -368,7 +368,7 @@ int escort_playerCommand( const Pilot *e )
    /* "Attack My Target" order is omitted deliberately since e is your
     * target, making "Attack My Target" a useless command. */
    const char *opts[] = {
-      _("Hold Position"),
+      _("Hold Formation"),
       _("Return To Ship"),
       _("Clear Orders"),
       _("Cancel")
