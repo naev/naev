@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-21 10:45+0900\n"
+"POT-Creation-Date: 2023-12-23 15:17+0900\n"
 "PO-Revision-Date: 2023-12-04 22:09+0000\n"
 "Last-Translator: Václav Černý <vaclav.vatoz.cerny@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -38372,7 +38372,7 @@ msgid "\"Yes!\""
 msgstr ""
 
 #: dat/events/neutral/shiplover.lua:347 dat/missions/minerva/kex4.lua:142
-#: dat/missions/shadow/shadowrun.lua:166
+#: dat/missions/shadow/shadowrun.lua:168
 msgid "\"No.\""
 msgstr ""
 
@@ -49047,6 +49047,7 @@ msgstr ""
 #. Returns the maximum reputation limit of the player.
 #. --
 #. Lower default than sbase
+#. Not recursive to overwrite
 #. Override hit function
 #. Get the maximum player value with any pirate clan
 #. Only get first parameter
@@ -49061,7 +49062,7 @@ msgstr ""
 msgid "Potential Victim"
 msgstr ""
 
-#. Can't get friendly
+#. friendly_at    = 50
 #. Doesn't change through hits
 #. Nasin faction standing script
 #. Maximum change constraints
@@ -77469,8 +77470,8 @@ msgstr ""
 #. Case still in time
 #: dat/missions/neutral/diy-nerds.lua:129
 #: dat/missions/neutral/diy-nerds.lua:182
-#: dat/missions/neutral/diy-nerds.lua:274 dat/missions/shadow/shadowrun.lua:118
-#: dat/missions/shadow/shadowrun.lua:225 dat/missions/shadow/shadowrun.lua:232
+#: dat/missions/neutral/diy-nerds.lua:274 dat/missions/shadow/shadowrun.lua:120
+#: dat/missions/shadow/shadowrun.lua:227 dat/missions/shadow/shadowrun.lua:234
 #: dat/missions/sirius/srs_ferry.lua:341
 msgid "You have {time} remaining"
 msgstr ""
@@ -87394,7 +87395,7 @@ msgstr ""
 #. not escorting.
 #. case enter system where Seiryuu is
 #: dat/missions/shadow/darkshadow.lua:190 dat/missions/shadow/shadowrun.lua:38
-#: dat/missions/shadow/shadowrun.lua:289
+#: dat/missions/shadow/shadowrun.lua:291
 #: dat/missions/shadow/shadowvigil.lua:206
 #: dat/missions/shadow/shadowvigil.lua:372
 msgid "Seiryuu"
@@ -87641,7 +87642,7 @@ msgid ""
 msgstr ""
 
 #. Generate portraits
-#: dat/missions/shadow/darkshadow.lua:496 dat/missions/shadow/shadowrun.lua:142
+#: dat/missions/shadow/darkshadow.lua:496 dat/missions/shadow/shadowrun.lua:144
 msgid "An unpleasant man."
 msgstr ""
 
@@ -87865,63 +87866,63 @@ msgstr ""
 
 #. Set deadlines
 #. Deadline stuff
-#: dat/missions/shadow/shadowrun.lua:113 dat/missions/shadow/shadowrun.lua:116
-#: dat/missions/shadow/shadowrun.lua:223 dat/missions/shadow/shadowrun.lua:229
+#: dat/missions/shadow/shadowrun.lua:115 dat/missions/shadow/shadowrun.lua:118
+#: dat/missions/shadow/shadowrun.lua:225 dat/missions/shadow/shadowrun.lua:231
 msgid "Shadowrun"
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:114
+#: dat/missions/shadow/shadowrun.lua:116
 msgid "You were promised riches..."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:115
+#: dat/missions/shadow/shadowrun.lua:117
 msgid ""
 "Fly to planet {pnt} in the {sys} system and talk to Jorek. Once Jorek has "
 "boarded your ship, proceed to system {sys2} and board the {plt}."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:117 dat/missions/shadow/shadowrun.lua:224
+#: dat/missions/shadow/shadowrun.lua:119 dat/missions/shadow/shadowrun.lua:226
 msgid "Fly to planet {pnt} in the {sys} system and pick up Jorek"
 msgstr "Leťte na planetu {pnt} v soustavě {sys} a vyzvedněte Joreka"
 
-#: dat/missions/shadow/shadowrun.lua:142
+#: dat/missions/shadow/shadowrun.lua:144
 msgid ""
 "A middle-aged, cranky looking man is sitting at a table by himself. You are "
 "fairly certain that this is the fellow you're looking for."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:143
+#: dat/missions/shadow/shadowrun.lua:145
 msgid "Officer at the bar"
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:143
+#: dat/missions/shadow/shadowrun.lua:145
 msgid ""
 "You see a military officer with a drink at the bar. They doesn't seem to be "
 "very interested in it, though..."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:144
+#: dat/missions/shadow/shadowrun.lua:146
 msgid "Soldier at the news kiosk"
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:144
+#: dat/missions/shadow/shadowrun.lua:146
 msgid ""
 "You see a soldier at a news kiosk. For some reason, they keeps reading the "
 "same articles over and over again."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:145
+#: dat/missions/shadow/shadowrun.lua:147
 msgid ""
 "Two soldiers are sharing a table near the exit, playing cards. Neither of "
 "them seems very into the game."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:146 dat/missions/shadow/shadowrun.lua:147
+#: dat/missions/shadow/shadowrun.lua:148 dat/missions/shadow/shadowrun.lua:149
 msgid "Card-playing soldier"
 msgstr ""
 
 #. Talking to Jorek
-#: dat/missions/shadow/shadowrun.lua:159
+#: dat/missions/shadow/shadowrun.lua:161
 msgid ""
 "You join the man at his table. He doesn't particularly seem to welcome your "
 "company, though, because he gives you a look most people would reserve for "
@@ -87929,11 +87930,11 @@ msgid ""
 "ask him if his name is indeed Jorek."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:160
+#: dat/missions/shadow/shadowrun.lua:162
 msgid "\"Yeah, that's me,\" he replies. \"What'd ya want, kid?\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:161
+#: dat/missions/shadow/shadowrun.lua:163
 msgid ""
 "You explain to him that you've come to see to his special needs. This earns "
 "you a sneer from Jorek. \"Ha! So you're running errands for the little lady, "
@@ -87941,7 +87942,7 @@ msgid ""
 "from me.\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:162
+#: dat/missions/shadow/shadowrun.lua:164
 msgid ""
 "He leans onto the table, bringing his face closer to yours. \"Listen, buddy. "
 "I don't know if you noticed, but people are watchin' me. And you too, now "
@@ -87951,7 +87952,7 @@ msgid ""
 "with a bunch of grunts. Cheaper, see.\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:163
+#: dat/missions/shadow/shadowrun.lua:165
 msgid ""
 "\"And it's not just them,\" Jorek continues. \"On your way here, did you see "
 "the flotilla of 'patrol ships' hangin' around? You guessed it, they're "
@@ -87960,12 +87961,12 @@ msgid ""
 "what you're tellin' me?\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:165
+#: dat/missions/shadow/shadowrun.lua:167
 #: dat/missions/sirius/achack/achack01.lua:53
 msgid "\"Yes.\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:170
+#: dat/missions/shadow/shadowrun.lua:172
 msgid ""
 "Jorek roars with laughter. \"Hah! Yeah, I'm sure you don't! I know what "
 "you're thinkin', I do. You'll take me outta here, pull a heroic bust past "
@@ -87975,7 +87976,7 @@ msgid ""
 "keep the mocking tone out of his voice."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:171
+#: dat/missions/shadow/shadowrun.lua:173
 msgid ""
 "\"Well, good for you. You're a real hero, right enough. But you know what? "
 "I'm stayin' put. I don't care if you have the vixen's approval. I'm not "
@@ -87983,7 +87984,7 @@ msgid ""
 "smithereens.\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:172
+#: dat/missions/shadow/shadowrun.lua:174
 msgid ""
 "Your patience with Jorek's abuse is finally at an end, and you heatedly make "
 "it clear to him that your abilities as a pilot aren't deserving of this "
@@ -87993,7 +87994,7 @@ msgid ""
 "him."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:175
+#: dat/missions/shadow/shadowrun.lua:177
 msgid ""
 "Jorek exhales derisively. \"No, I thought not. Probably thought this was "
 "going to be a walk in the park, didn't you? But when the chips are down, you "
@@ -88003,55 +88004,55 @@ msgid ""
 "focuses his attention back on you."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:176
+#: dat/missions/shadow/shadowrun.lua:178
 msgid ""
 "\"I've got no use for wusses like yourself. Go on, get out of here. Go back "
 "to your ship and beat it off this rock. Maybe you should consider gettin' "
 "yourself a desk job, eh?\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:177
+#: dat/missions/shadow/shadowrun.lua:179
 msgid ""
 "With that, Jorek leaves your table and sits down at a nearby empty one. "
 "Clearly this conversation is over, and you're not going to get anything more "
 "out of him."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:188
+#: dat/missions/shadow/shadowrun.lua:190
 msgid ""
 "Jorek pointedly ignores you. It doesn't seem like he's willing to give you "
 "the time of day any longer. You decide not to push your luck."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:198
+#: dat/missions/shadow/shadowrun.lua:200
 msgid ""
 "You try to strike a conversation with the officer, but they doesn't seem "
 "interested what you have to say, so you give up."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:206
+#: dat/missions/shadow/shadowrun.lua:208
 #, fuzzy
 #| msgid "\"What do you want? Can't you see I'm busy writing a grant?\""
 msgid "\"Leave me alone. Can't you see I'm busy?\""
 msgstr "\"Co chceš? Nevidíš, že jsem zaneprázdněný psaním grantu?\""
 
-#: dat/missions/shadow/shadowrun.lua:215
+#: dat/missions/shadow/shadowrun.lua:217
 msgid ""
 "They don't seem to appreciate your company. You decide to leave them to "
 "their game."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:230
+#: dat/missions/shadow/shadowrun.lua:232
 msgid "You could not persuade Jorek to come with you"
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:231
+#: dat/missions/shadow/shadowrun.lua:233
 msgid ""
 "Fly to the {sys} system and dock with (board) {plt} to report your result"
 msgstr ""
 
 #. player reports in without SHITMAN
-#: dat/missions/shadow/shadowrun.lua:307
+#: dat/missions/shadow/shadowrun.lua:309
 msgid ""
 "You complete docking operations with the {plt}, well aware that your ship "
 "isn't carrying the man they were expecting. At the airlock, you are greeted "
@@ -88061,7 +88062,7 @@ msgid ""
 "their ship, closing the airlock behind them, and you return to your bridge."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:309
+#: dat/missions/shadow/shadowrun.lua:311
 msgid ""
 "You prepare to undock from the {plt}, but before you complete the procedures "
 "there is a sudden power spike in your primary systems. All panels go black. "
@@ -88069,7 +88070,7 @@ msgid ""
 "the {plt} dislodging itself from your docking clamp."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:311
+#: dat/missions/shadow/shadowrun.lua:313
 msgid ""
 "Seconds later, the computer core reboots itself and your controls come back "
 "online, but you find to your dismay that your OS has been reset to factory "
@@ -88078,7 +88079,7 @@ msgid ""
 msgstr ""
 
 #. player reports in with SHITMAN
-#: dat/missions/shadow/shadowrun.lua:323
+#: dat/missions/shadow/shadowrun.lua:325
 msgid ""
 "You complete docking operations with the {plt}, well aware that your ship "
 "isn't carrying the man they were expecting. When the airlock opens, you find "
@@ -88089,7 +88090,7 @@ msgid ""
 "and you immediately understand that Rebina is in fact captain of the {plt}."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:325
+#: dat/missions/shadow/shadowrun.lua:327
 msgid ""
 "\"Well met, {player},\" she greets you. At the same time, the two crewmen "
 "that accompanied her push their way past you and disappear in the direction "
@@ -88099,7 +88100,7 @@ msgid ""
 "and its cargo will be left undisturbed.\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:327
+#: dat/missions/shadow/shadowrun.lua:329
 msgid ""
 "You explain to Rebina that although you met Jorek, he didn't accompany you "
 "on your way here. Rebina gives you a grim smile in return. \"Oh, I know "
@@ -88107,14 +88108,14 @@ msgid ""
 "it's not Jorek we wanted you to get. It was... that.\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:328
+#: dat/missions/shadow/shadowrun.lua:330
 msgid ""
 "You follow her gaze, and spot the crewmen making their way back to the "
 "airlock, carrying between them a small but apparently rather heavy crate. "
 "You are absolutely certain you've never seen it before."
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:329
+#: dat/missions/shadow/shadowrun.lua:331
 msgid ""
 "\"That is what Jorek was keeping for us on {pnt}, and that is what we need,"
 "\" Rebina explains. \"Jorek is nothing but a decoy to draw the Empire's "
@@ -88124,7 +88125,7 @@ msgid ""
 "crate. I'm sure we understand each other.\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:331
+#: dat/missions/shadow/shadowrun.lua:333
 msgid ""
 "Rebina turns to follow her men back into the ship, but before she closes the "
 "airlock hatch she looks back at you over her shoulder, shooting you a casual "
@@ -88133,7 +88134,7 @@ msgid ""
 "other again someday, and when we do perhaps we can do some more business.\""
 msgstr ""
 
-#: dat/missions/shadow/shadowrun.lua:332
+#: dat/missions/shadow/shadowrun.lua:334
 msgid ""
 "Then she is gone. You stare at the airlock hatch, then down at the credit "
 "chip in your hand, first marveling at the wealth it represents and then "
@@ -88141,7 +88142,7 @@ msgid ""
 msgstr ""
 
 #. in case it was used
-#: dat/missions/shadow/shadowrun.lua:351
+#: dat/missions/shadow/shadowrun.lua:353
 msgid ""
 "You participated in an operation for Captain Rebina. You thought you were "
 "rescuing a man named Jorek, but it turns out that you were actually helping "
@@ -115007,26 +115008,26 @@ msgstr ""
 msgid "Failed to create new task for pilot '%s'."
 msgstr "Nepodařilo se vytvořit nový úkol pro pilota '%s'."
 
-#: src/ai.c:1268 src/ai.c:1337 src/nlua_pilot.c:5541
+#: src/ai.c:1269 src/ai.c:1342 src/nlua_pilot.c:5541
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
-#: src/ai.c:1339
+#: src/ai.c:1344
 #, c-format
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2371 src/nlua_pilot.c:6034
+#: src/ai.c:2376 src/nlua_pilot.c:6034
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr "Spob '%s' nebyl nalezen v systému '%s'"
 
-#: src/ai.c:2377
+#: src/ai.c:2382
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr "Pilot '%s' (UI '%s') nemá pozemní cíl"
 
-#: src/ai.c:2422 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
+#: src/ai.c:2427 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
 #: src/player.c:1688 src/space.c:1960 src/space.c:2066 src/space.c:2084
 #: src/space.c:2136 src/space.c:3535 src/space.c:3556 src/space.c:4384
 #, c-format
@@ -115035,11 +115036,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/ai.c:2451 src/ai.c:2484
+#: src/ai.c:2456 src/ai.c:2489
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2605
+#: src/ai.c:2610
 #, c-format
 msgid "Pilot '%s' can't find jump to leave system!"
 msgstr ""
@@ -117595,7 +117596,7 @@ msgstr ""
 msgid "Event with data '%s' failed to unpersist Lua, skipping."
 msgstr ""
 
-#: src/faction.c:188 src/nlua_faction.c:216
+#: src/faction.c:188 src/nlua_faction.c:217
 #, c-format
 msgid "Faction '%s' not found in stack."
 msgstr ""
@@ -121215,12 +121216,12 @@ msgstr "Neplatné ID NPC!"
 msgid "Event trying to claim but already has."
 msgstr "Událost se snaží tvrdit, ale již má."
 
-#: src/nlua_faction.c:707
+#: src/nlua_faction.c:708
 #, c-format
 msgid "Trying to overwrite existing faction '%s' with dynamic faction!"
 msgstr "Pokus o přepsání existující frakce '%s' dynamickou frakcí!"
 
-#: src/nlua_faction.c:778 src/nlua_faction.c:802
+#: src/nlua_faction.c:779 src/nlua_faction.c:803
 msgid "Can only add allies to dynamic factions"
 msgstr "Spojence lze přidávat pouze do dynamických frakcí"
 
@@ -121693,9 +121694,10 @@ msgstr "Shader nemá jednotný '%s'!"
 msgid "Unsupported shader uniform type '%d' for uniform '%s'. Ignoring."
 msgstr "Nepodporovaný typ uniformy shaderu '%d' pro uniformu '%s'. Ignorováno."
 
-#: src/nlua_shader.c:445
-#, c-format
-msgid "Layer was '%s', but must be one of 'final' or 'game'"
+#: src/nlua_shader.c:447
+#, fuzzy, c-format
+#| msgid "Layer was '%s', but must be one of 'final' or 'game'"
+msgid "Layer was '%s', but must be one of 'final', 'game', 'gui', or 'core'."
 msgstr "Vrstva byla '%s', ale musí to být jedna z možností 'final' nebo 'game'"
 
 #: src/nlua_ship.c:155
@@ -124163,7 +124165,7 @@ msgstr ""
 msgid "Plugin '%s' PCRE2 compilation failed at offset %d: %s"
 msgstr ""
 
-#: src/render.c:297
+#: src/render.c:302
 #, c-format
 msgid "Unknown post-processing shader layer '%d'!"
 msgstr ""
