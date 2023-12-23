@@ -120,10 +120,7 @@ _("Someone killed the preacher!")
 
 --initialize the event
 function create()
-   -- Doesn't pilot.clear so inclusive claim
-   if not evt.claim( system.cur(), true ) then
-      evt.finish( false )
-   end
+   -- Claim is done in "theFunBegins"
 
    curr = system.cur() --save the current system
 
@@ -154,8 +151,8 @@ function theFunBegins()
    end
    if not found then evt.finish(false) end
 
-   -- Make sure system is not claimed
-   if not evt.claim({system.cur()}) then evt.finish(false) end
+   -- Make sure system is not claimed. Doesn't pilot.clear so inclusive claim
+   if not evt.claim({system.cur()}, true) then evt.finish(false) end
    claimed = true
 
    if rep < 0 then
