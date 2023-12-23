@@ -164,7 +164,6 @@ void opt_menu (void)
             w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
    }
 
-
    /* Load tabs. */
    opt_gameplay(  opt_windows[ OPT_WIN_GAMEPLAY ] );
    opt_accessibility( opt_windows[ OPT_WIN_ACCESSIBILITY ] );
@@ -1335,13 +1334,13 @@ static void opt_video( unsigned int wid )
    y -= 30;
    window_addText( wid, x, y-3, 130, 20, 0, "txtZoomFar",
          NULL, NULL, NULL );
-   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomFar", log1p(0.1+1.), log(2.0+1.),
-         log(conf.zoom_far+1.), opt_setZoomFar );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomFar", log1p(0.1), log1p(2.0),
+         log1p(conf.zoom_far), opt_setZoomFar );
    y -= 30;
    window_addText( wid, x, y-3, 130, 20, 0, "txtZoomNear",
          NULL, NULL, NULL );
-   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomNear", log(0.1+1.), log(2.0+1.),
-         log(conf.zoom_near+1.), opt_setZoomNear );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomNear", log1p(0.1), log1p(2.0),
+         log1p(conf.zoom_near), opt_setZoomNear );
    opt_setZoomFar( wid, "fadZoomFar" );
    opt_setZoomNear( wid, "fadZoomNear" );
    y -= 30;
@@ -1610,8 +1609,8 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
 
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadScale", log(SCALE_FACTOR_DEFAULT) );
-   window_faderSetBoundedValue( wid, "fadZoomFar", log(ZOOM_FAR_DEFAULT+1.) );
-   window_faderSetBoundedValue( wid, "fadZoomNear", log(ZOOM_NEAR_DEFAULT+1.) );
+   window_faderSetBoundedValue( wid, "fadZoomFar", log1p(ZOOM_FAR_DEFAULT) );
+   window_faderSetBoundedValue( wid, "fadZoomNear", log1p(ZOOM_NEAR_DEFAULT) );
    window_faderSetBoundedValue( wid, "fadGammaCorrection", log(GAMMA_CORRECTION_DEFAULT) /* a.k.a. 0. */ );
 }
 
@@ -1644,11 +1643,11 @@ static void opt_setZoomFar( unsigned int wid, const char *str )
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
    //scale = round(scale * 10.) / 10.;
-   conf.zoom_far = exp(scale)-1.;
+   conf.zoom_far = expm1(scale);
    snprintf( buf, sizeof(buf), _("Far Zoom: %.1fx"), conf.zoom_far );
    window_modifyText( wid, "txtZoomFar", buf );
    if (conf.zoom_far > conf.zoom_near) {
-      window_faderSetBoundedValue( wid, "fadZoomNear", log(conf.zoom_far+1.) );
+      window_faderSetBoundedValue( wid, "fadZoomNear", log1p(conf.zoom_far) );
       opt_setZoomNear( wid, "fadZoomNear" );
    }
    if (FABS(conf.zoom_far-local_conf.zoom_far) > 1e-4)
@@ -1666,11 +1665,11 @@ static void opt_setZoomNear( unsigned int wid, const char *str )
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
    //scale = round(scale * 10.) / 10.;
-   conf.zoom_near = exp(scale)-1.;
+   conf.zoom_near = expm1(scale);
    snprintf( buf, sizeof(buf), _("Near Zoom: %.1fx"), conf.zoom_near );
    window_modifyText( wid, "txtZoomNear", buf );
    if (conf.zoom_near < conf.zoom_far) {
-      window_faderSetBoundedValue( wid, "fadZoomFar", log(conf.zoom_near+1.) );
+      window_faderSetBoundedValue( wid, "fadZoomFar", log1p(conf.zoom_near) );
       opt_setZoomFar( wid, "fadZoomFar" );
    }
    if (FABS(conf.zoom_near-local_conf.zoom_near) > 1e-4)
