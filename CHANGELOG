@@ -1,4 +1,4 @@
-* 0.11.0 (unreleased)
+* 0.11.0
    * Fixed beams only showing hit explosions on one target being hit instead of all
    * Consider beam width when computing collisions
    * Made beam effects a bit thinner
