@@ -12,6 +12,23 @@ local exp_params = {
    --grain = 0.1 + size*0.001,
 }
 
+local amp = outfit.get("Internal Flow Amplifier")
+
+function init( p )
+   -- Sirius ships need the Internal Flow Amplifier for now, add if missing
+   -- TODO get rid of before 0.12.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
+   local found = false
+   for k,o in ipairs(p:outfitsList("intrinsic")) do
+      if o==amp then
+         found = true
+         break
+      end
+   end
+   if found then return end
+
+   p:outfitAddIntrinsic( amp )
+end
+
 explode_init, explode_update = explib{
    boom_func = function( p )
       mem.timer = 0.09 * (mem.dtimer - mem.timer) / mem.dtimer
