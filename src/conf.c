@@ -338,6 +338,10 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "borderless", conf.borderless );
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colourblind", conf.colourblind_sim ); /* TODO remove in 0.13.0 or so. */
+      if (conf.colourblind_sim) {
+         /* Old colourblind used Rod Monochromancy, so we'll restore that in this case. TODO Remove in 0.13.0 or so. */
+         conf.colourblind_type = 3;
+      }
       conf_loadBool( lEnv, "colourblind_sim", conf.colourblind_sim );
       conf_loadBool( lEnv, "colourblind_correct", conf.colourblind_correct );
       conf_loadInt( lEnv, "colourblind_type", conf.colourblind_type );
