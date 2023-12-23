@@ -1228,7 +1228,7 @@ static void opt_accessibility( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkColourblind", _("Colourblind mode"), opt_checkColourblind,
-         conf.colourblind );
+         conf.colourblind_sim );
 }
 
 static int opt_accessibilitySave( unsigned int wid, const char *str )
@@ -1247,12 +1247,15 @@ static void opt_accessibilityDefaults( unsigned int wid, const char *str )
    (void) str;
 
    /* Checkboxes. */
-   window_checkboxSet( wid, "chkColourblind", COLOURBLIND_DEFAULT );
+   window_checkboxSet( wid, "chkColourblind", COLOURBLIND_SIM_DEFAULT );
 
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadNebuNonuniformity", NEBU_NONUNIFORMITY_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
+
+   /* Reset colorblind if needed. */
+   gl_colourblind();
 }
 
 /**
@@ -1492,8 +1495,8 @@ static int opt_videoSave( unsigned int wid, const char *str )
 static void opt_checkColourblind( unsigned int wid, const char *str )
 {
    int f = window_checkboxState( wid, str );
-   conf.colourblind = f;
-   gl_colourblind( f );
+   conf.colourblind_sim = f;
+   gl_colourblind();
 }
 
 /**

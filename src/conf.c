@@ -239,7 +239,10 @@ void conf_setVideoDefaults (void)
    conf.scalefactor  = SCALE_FACTOR_DEFAULT;
    conf.nebu_scale   = NEBULA_SCALE_FACTOR_DEFAULT;
    conf.minimize     = MINIMIZE_DEFAULT;
-   conf.colourblind  = COLOURBLIND_DEFAULT;
+   conf.colourblind_sim = COLOURBLIND_SIM_DEFAULT;
+   conf.colourblind_correct = COLOURBLIND_CORRECT_DEFAULT;
+   conf.colourblind_type = COLOURBLIND_TYPE_DEFAULT;
+   conf.colourblind_intensity = COLOURBLIND_INTENSITY_DEFAULT;
    conf.healthbars   = HEALTHBARS_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;
@@ -247,7 +250,6 @@ void conf_setVideoDefaults (void)
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
    conf.background_fancy = BACKGROUND_FANCY_DEFAULT;
 
-   gl_colourblind( conf.colourblind );
    if (cur_system)
       background_load( cur_system->background );
 
@@ -335,11 +337,15 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "notresizable", conf.notresizable );
       conf_loadBool( lEnv, "borderless", conf.borderless );
       conf_loadBool( lEnv, "minimize", conf.minimize );
-      conf_loadBool( lEnv, "colourblind", conf.colourblind );
+      conf_loadBool( lEnv, "colourblind", conf.colourblind_sim ); /* TODO remove in 0.13.0 or so. */
+      conf_loadBool( lEnv, "colourblind_sim", conf.colourblind_sim );
+      conf_loadBool( lEnv, "colourblind_correct", conf.colourblind_correct );
+      conf_loadInt( lEnv, "colourblind_type", conf.colourblind_type );
+      conf_loadFloat( lEnv, "colourblind_intensity", conf.colourblind_intensity );
       conf_loadBool( lEnv, "healthbars", conf.healthbars );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
       /* todo leave only nebu_nonuniformity sometime */
-      conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_nonuniformity ); /* Old conf name. */
+      conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_nonuniformity ); /* Old conf name. TODO Remove for 0.12.0  */
       conf_loadFloat( lEnv, "nebu_uniformity", conf.nebu_nonuniformity );
       conf_loadFloat( lEnv, "nebu_nonuniformity", conf.nebu_nonuniformity );
       /* end todo */
@@ -881,8 +887,25 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("minimize",conf.minimize);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Enables colourblind mode. Good for simulating colourblindness."));
-   conf_saveBool("colourblind",conf.colourblind);
+   conf_saveComment(_("Enables colourblind simulation."))
+   conf_saveBool("colourblind_sim",conf.colourblind_sim);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Enables colourblind correction."))
+   conf_saveBool("colourblind_correct",conf.colourblind_correct);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Type of colourblindness to simulate or correct."))
+   conf_saveComment(_("0 is Protanopia"))
+   conf_saveComment(_("1 is Deuteranopia"))
+   conf_saveComment(_("2 is Tritanapia"))
+   conf_saveComment(_("3 is Rod Monochromacy"))
+   conf_saveComment(_("4 is Cone Monochromacy"))
+   conf_saveInt("colourblind_type",conf.colourblind_type);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Intensity of the colour blindness correction."))
+   conf_saveFloat("colourblind_intensity",conf.colourblind_intensity);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Enable health bars. These show hostility/friendliness and health of pilots on screen."));

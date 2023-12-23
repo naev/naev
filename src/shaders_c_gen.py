@@ -233,11 +233,19 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
-      name = "colourblind",
+      name = "colourblind_sim",
+      vs_path = "postprocess.vert",
+      fs_path = "colourblind_sim.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "type" ],
+      subroutines = {},
+   ),
+   Shader(
+      name = "colourblind_correct",
       vs_path = "postprocess.vert",
       fs_path = "colourblind.frag",
       attributes = ["VertexPosition"],
-      uniforms = ["ClipSpaceFromLocal", "MainTex"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "type", "intensity"],
       subroutines = {},
    ),
    Shader(
