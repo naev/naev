@@ -13,13 +13,12 @@ void main (void)
 {
    float l, m, s;
    float L, M, S;
-
-   colour_out = texture( MainTex, VaryingTexCoord.st );
+   vec4 tex = texture( MainTex, VaryingTexCoord.st );
 
    // Convert to LMS
-   L = (0.31399022f * colour_out.r) + (0.63951294f * colour_out.g) + (0.04649755f * colour_out.b);
-   M = (0.15537241f * colour_out.r) + (0.75789446f * colour_out.g) + (0.08670142f * colour_out.b);
-   S = (0.01775239f * colour_out.r) + (0.10944209f * colour_out.g) + (0.87256922f * colour_out.b);
+   L = (0.31399022f * tex.r) + (0.63951294f * tex.g) + (0.04649755f * tex.b);
+   M = (0.15537241f * tex.r) + (0.75789446f * tex.g) + (0.08670142f * tex.b);
+   S = (0.01775239f * tex.r) + (0.10944209f * tex.g) + (0.87256922f * tex.b);
 
    // Simulate colour blindness
    if (type==PROTANOPIA) {
@@ -62,4 +61,5 @@ void main (void)
    colour_out.r = (5.47221206f * l) + (-4.6419601f * m) + (0.16963708f * s);
    colour_out.g = (-1.1252419f * l) + (2.29317094f * m) + (-0.1678952f * s);
    colour_out.b = (0.02980165f * l) + (-0.19318073f * m) + (1.16364789f * s);
+   colour_out.a = tex.a;
 }
