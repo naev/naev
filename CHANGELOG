@@ -25,6 +25,7 @@
    * Increased maximum standing cap with pirates
    * Allow marauders to become friendly
    * Fixed gamma correction / colourblind shaders not being run on top of everything
+   * Fixed damage sometimes causing pilots to instantly become undisabled
    * `srs_ferry`: fixed marker not updating for alternative delivery locations
    * `nelly01`: fixed giving the player twice as much money as needed for an ion cannon
    * `nelly03`: guard against the player changing systems in the middle of mining

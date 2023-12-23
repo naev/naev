@@ -1450,10 +1450,6 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       tdarmour = ddmg;
    }
 
-   /* Ensure stress never exceeds remaining armour. */
-   if (p->stress > p->armour)
-      p->stress = p->armour;
-
    /* Do not let pilot die. */
    if ((p->armour <= 0.) && pilot_isFlag( p, PILOT_NODEATH )) {
       p->armour = 1.;
