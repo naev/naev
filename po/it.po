@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-23 15:17+0900\n"
+"POT-Creation-Date: 2023-12-23 21:41+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -46433,7 +46433,7 @@ msgid "Someone killed the preacher!"
 msgstr ""
 
 #. initialize the event
-#. Doesn't pilot.clear so inclusive claim
+#. Claim is done in "theFunBegins"
 #. save the current system
 #. Start the fun when the player jumps
 #. oops they landed
@@ -46443,12 +46443,12 @@ msgstr ""
 #. the preaching's about to begin!
 #. Case player jumps out in under 5 seconds
 #. Make sure system is adjacent to the previous one (system tour)
-#. Make sure system is not claimed
+#. Make sure system is not claimed. Doesn't pilot.clear so inclusive claim
 #. please note the order of system.cur() and curr matters!
 #. wait some more time
 #. Only increment if we can actually do stuff
 #. summon a preacher from the jump point and highlight him and take control and focus on him
-#: dat/events/sirius/preach.lua:174
+#: dat/events/sirius/preach.lua:171
 msgid "Sirius Reverence"
 msgstr ""
 
@@ -46459,7 +46459,7 @@ msgstr ""
 #. This is the total number of converted follower ships.
 #. Pick a follower ship at random.
 #. The table now contains pilots, not ship names.
-#: dat/events/sirius/preach.lua:217
+#: dat/events/sirius/preach.lua:214
 msgid "Converted {plt}"
 msgstr ""
 
@@ -46499,20 +46499,20 @@ msgstr ""
 #. releases the player after the cutscene
 #. if the attacks have already started, we shouldn't set a target yet
 #. when hailed back, show the message
-#: dat/events/sirius/preach.lua:412
+#: dat/events/sirius/preach.lua:409
 #, fuzzy
 #| msgid "Sirius Preacher"
 msgid "Preacher"
 msgstr "Predicatore di Sirio"
 
 #. TODO should be specific echelon?
-#: dat/events/sirius/preach.lua:418
+#: dat/events/sirius/preach.lua:415
 msgid ""
 "A Sirian appears on your viewscreen. They seems different than most Sirii "
 "you've met. They regards you with a neutral, yet intense, gaze."
 msgstr ""
 
-#: dat/events/sirius/preach.lua:419
+#: dat/events/sirius/preach.lua:416
 msgid ""
 "\"Man is cruel and deceptive,\" he says. \"You deserve more than you shall "
 "ever get from humanity. Your only hope is to follow the Holy One, Sirichana. "
@@ -46520,7 +46520,7 @@ msgid ""
 "humans like you and me. You MUST follow them!\""
 msgstr ""
 
-#: dat/events/sirius/preach.lua:420
+#: dat/events/sirius/preach.lua:417
 msgid ""
 "You feel a brief but overpowering urge to follow them, but it passes and "
 "your head clears. The Sirian ship makes no further attempt to communicate "
@@ -83790,34 +83790,34 @@ msgstr ""
 
 #. Target ran away. Unfortunately, we cannot continue the mission
 #. on the other side because the system has not been claimed...
-#: dat/missions/neutral/seek_n_destroy.lua:700
+#: dat/missions/neutral/seek_n_destroy.lua:701
 msgid "Target ran away"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:700
+#: dat/missions/neutral/seek_n_destroy.lua:701
 msgid ""
 "That was close, but unfortunately, {plt} ran away. Maybe some other pilots "
 "in this system know where your target is heading."
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:717
+#: dat/missions/neutral/seek_n_destroy.lua:721
 #, fuzzy
 #| msgid "Rename Ship AI"
 msgid "Target captured"
 msgstr "Rinomina l'IA dell'Astronave"
 
-#: dat/missions/neutral/seek_n_destroy.lua:717
+#: dat/missions/neutral/seek_n_destroy.lua:721
 msgid ""
 "You board the ship and, after a short but intense firefight, are able to "
 "take the wanted outlaw alive. Time to hand them in to the authorities."
 msgstr ""
 
 #. Permanently disable
-#: dat/missions/neutral/seek_n_destroy.lua:719
+#: dat/missions/neutral/seek_n_destroy.lua:723
 msgid "Wanted Outlaw"
 msgstr ""
 
-#: dat/missions/neutral/seek_n_destroy.lua:719
+#: dat/missions/neutral/seek_n_destroy.lua:723
 msgid "A wanted outlaw you captured."
 msgstr ""
 
@@ -106540,11 +106540,9 @@ msgstr ""
 #. local audio = require 'love.audio'
 #. Chakra look a bit smaller in reality, so we increase in size
 #. Lazy loading shader / sound
-#. TODO sound
 #. Create the exps
 #. local audio = require 'love.audio'
 #. Lazy loading shader / sound
-#. TODO sound
 #. Create the flames
 #. Flames look a bit smaller in reality, so we increase in size
 #. Apply effect
@@ -113784,6 +113782,8 @@ msgstr "Acqua"
 #. smokefade = 1.6,
 #. rollspeed = 0.3,
 #. grain = 0.1 + size*0.001,
+#. Sirius ships need the Internal Flow Amplifier for now, add if missing
+#. TODO get rid of before 0.12.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
 #. Update once per second
 #. Maximum at 108.3333 flow
 #. Fast explosions
@@ -118186,7 +118186,7 @@ msgid "#gEscorts: #0Clearing orders."
 msgstr ""
 
 #: src/escort.c:371
-msgid "Hold Position"
+msgid "Hold Formation"
 msgstr ""
 
 #: src/escort.c:372
@@ -123996,62 +123996,62 @@ msgstr ""
 #. f, p, p, x, v
 #. f, p, p, x, v, o
 #.
-#: src/pilot.c:1511 src/pilot_outfit.c:1224
+#: src/pilot.c:1507 src/pilot_outfit.c:1224
 #, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> '%s':\n"
 "%s"
 msgstr ""
 
-#: src/pilot.c:1594
+#: src/pilot.c:1590
 msgid "You have been disabled!"
 msgstr ""
 
-#: src/pilot.c:1620
+#: src/pilot.c:1616
 msgid "You have recovered control of your ship!"
 msgstr ""
 
-#: src/pilot.c:1669
+#: src/pilot.c:1665
 #, c-format
 msgid "#rShip under command '%s' was destroyed!#0"
 msgstr ""
 
-#: src/pilot.c:2786 src/pilot.c:2813
+#: src/pilot.c:2782 src/pilot.c:2809
 msgid "Strayed too far from jump point: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2793
+#: src/pilot.c:2789
 msgid "Afterburner active: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2833
+#: src/pilot.c:2829
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 
-#: src/pilot.c:3145
+#: src/pilot.c:3141
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr ""
 
-#: src/pilot.c:3148
+#: src/pilot.c:3144
 #, c-format
 msgid "   [%d] %s"
 msgstr ""
 
-#: src/pilot.c:3258 src/pilot.c:3309 src/pilot.c:3333
+#: src/pilot.c:3254 src/pilot.c:3305 src/pilot.c:3329
 msgid "Unable to allocate memory"
 msgstr ""
 
-#: src/pilot.c:3377
+#: src/pilot.c:3373
 msgid "Duplicate pilots on stack!"
 msgstr ""
 
-#: src/pilot.c:3530
+#: src/pilot.c:3526
 msgid "Creating pilot in system with no jumps nor spobs to take off from!"
 msgstr ""
 
-#: src/pilot.c:3648
+#: src/pilot.c:3644
 #, c-format
 msgid "Trying to remove non-existent pilot '%s' from stack!"
 msgstr ""
