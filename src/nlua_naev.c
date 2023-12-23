@@ -554,11 +554,6 @@ static int naevL_conf( lua_State *L )
    PUSH_STRING( L, "dev_save_sys", conf.dev_save_sys );
    PUSH_STRING( L, "dev_save_map", conf.dev_save_map );
    PUSH_STRING( L, "dev_save_spob", conf.dev_save_spob );
-   /* TODO remove the following in 0.12.0 */
-   PUSH_DOUBLE( L, "compression_velocity", conf.compression_velocity );
-   PUSH_DOUBLE( L, "compression_mult", conf.compression_mult );
-   PUSH_DOUBLE( L, "autonav_reset_dist", conf.autonav_reset_dist );
-   PUSH_DOUBLE( L, "autonav_reset_shield", conf.autonav_reset_shield );
    return 1;
 }
 #undef PUSH_STRING

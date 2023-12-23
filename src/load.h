@@ -44,6 +44,8 @@ typedef struct nsave_s {
    /* Ship info. */
    char *shipname; /**< Name of the ship. */
    char *shipmodel; /**< Model of the ship. */
+
+   int ret; /**< Used for threaded loading. */
 } nsave_t;
 
 void load_loadGameMenu (void);

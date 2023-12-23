@@ -1120,6 +1120,7 @@ int ships_load (void)
    /* Wait until done processing. */
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
    vpool_wait( tq );
+   vpool_cleanup( tq );
    SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
 
    /* Properly load the data. */

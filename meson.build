@@ -89,7 +89,7 @@ if buildExec.disabled() == false
    enet = dependency('libenet', required: true, version: '>=1.3', fallback: ['enet', 'enet_dep'], static: get_option('steamruntime'))
    pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'], static: get_option('steamruntime'))
    sdl = dependency('sdl2', version: '>=2.0.26', required: true)
-   sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
+   sdl_image = dependency('SDL2_image', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'], static: get_option('steamruntime'))
 
    libxml2 = dependency('libxml-2.0', required: false)
@@ -229,7 +229,7 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
-   # SDL_strndup is in SDL3, so we can remove this once it is released
+   # SDL_strndup and SDL_strnstr is in SDL3, so we can remove this once it is released
    # strndup() detection must work around this bug: https://github.com/mesonbuild/meson/issues/3672
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
    config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))

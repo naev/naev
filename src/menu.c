@@ -101,8 +101,10 @@ static void menu_editors_close( unsigned int wid, const char *str );
 /* options button. */
 static void menu_options_button( unsigned int wid, const char *str );
 
-/*
+/**
  * Background system for the menu.
+ *
+ * @TODO optimize this, it's too slow
  */
 static int menu_main_bkg_system (void)
 {
@@ -131,7 +133,7 @@ static int menu_main_bkg_system (void)
 
       /* Get start position. */
       if (spob_exists( ns[0].spob )) {
-         Spob *pnt = spob_get( ns[0].spob );
+         const Spob *pnt = spob_get( ns[0].spob );
          if (pnt != NULL) {
             sys = spob_getSystem( ns[0].spob );
             if (sys != NULL) {
@@ -157,7 +159,7 @@ static int menu_main_bkg_system (void)
    cy += SCREEN_H/8. / conf.zoom_far;
 
    /* Initialize. */
-   space_init( sys, 1 ); /* More lively with simulation. */
+   space_init( sys, 0 ); /* More lively with simulation. */
    cam_setTargetPos( cx, cy, 0 );
    cam_setZoom( conf.zoom_far );
    pause_setSpeed( 1. );

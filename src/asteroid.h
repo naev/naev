@@ -116,6 +116,7 @@ typedef struct AsteroidAnchor_ {
    /* Collision stuff. */
    Quadtree qt;   /**< Handles collisions. */
    int qt_init;   /**< Whether or not the quadtree has been initialized. */
+   int has_exclusion; /**< Used for updating. */
 } AsteroidAnchor;
 
 /**

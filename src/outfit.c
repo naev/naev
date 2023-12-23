@@ -1220,7 +1220,8 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
             WARN(_("Unknown damage type '%s'"), buf);
          }
       }
-      else WARN(_("Damage has unknown node '%s'"), cur->name);
+      else
+         WARN(_("Damage has unknown node '%s'"), cur->name);
 
    } while (xml_nextNode(cur));
 
@@ -1356,7 +1357,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
    }
 
    /* Load the collision polygon. */
-   char *buf = xml_get(node);
+   const char *buf = xml_get(node);
    outfit_loadPLG( temp, buf );
 
    /* Load normal graphics. */
@@ -2157,7 +2158,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    l = os_printD( temp->summary_raw, l, temp->u.afb.accel+100., &accel_opts );
    l = os_printD( temp->summary_raw, l, temp->u.afb.speed+100., &max_speed_opts );
    l = os_printD( temp->summary_raw, l, temp->u.afb.energy, &power_opts );
-   l = os_printD( temp->summary_raw, l, temp->u.afb.rumble, &rumble_opts );
+   /*l =*/ os_printD( temp->summary_raw, l, temp->u.afb.rumble, &rumble_opts );
 
    /* Post processing. */
    temp->u.afb.accel /= 100.;
@@ -2769,6 +2770,7 @@ static int outfit_loadDir( const char *dir )
    /* Wait until done processing. */
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
    vpool_wait( tq );
+   vpool_cleanup( tq );
    SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
 
    /* Properly load the data. */
