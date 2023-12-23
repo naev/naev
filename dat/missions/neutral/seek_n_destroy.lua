@@ -39,7 +39,7 @@ local vn = require "vn"
 local vntk = require "vntk"
 local ccomm = require "common.comm"
 
-local trigger_ambush, spawn_advisor, space_clue, next_sys -- Forward-declared functions
+local trigger_ambush, spawn_advisor, space_clue, next_sys, clear_target_hook -- Forward-declared functions
 local adm_factions, advisor, ambush, hailed, target_ship -- Non-persistent state
 
 local quotes = {}
