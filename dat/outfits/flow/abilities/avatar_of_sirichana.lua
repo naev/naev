@@ -4,7 +4,7 @@ local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
 local helper = require "outfits.lib.helper"
 
-local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
+local sfx = audio.newSource( 'snd/sounds/avatar_of_sirichana.ogg' )
 
 local function getStats( p, size )
    local flow_cost, flow_drain, mass_limit

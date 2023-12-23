@@ -5,7 +5,7 @@ local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
 local chakraexp = require "luaspfx.chakra_explosion"
 
-local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
+local sfx = audio.newSource( 'snd/sounds/feather_drive.ogg' )
 
 local function getStats( p, size )
    local flow_cost, cooldown, masslimit, range, drain
