@@ -682,7 +682,7 @@ void gl_colourblind( int enable )
       shader.VertexPosition = shaders.colourblind.VertexPosition;
       shader.ClipSpaceFromLocal = shaders.colourblind.ClipSpaceFromLocal;
       shader.MainTex    = shaders.colourblind.MainTex;
-      colourblind_pp = render_postprocessAdd( &shader, PP_LAYER_FINAL, 99, PP_SHADER_PERMANENT );
+      colourblind_pp = render_postprocessAdd( &shader, PP_LAYER_CORE, 99, PP_SHADER_PERMANENT );
    } else {
       if (colourblind_pp != 0)
          render_postprocessRm( colourblind_pp );

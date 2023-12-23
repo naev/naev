@@ -174,16 +174,17 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
 void render_all( double game_dt, double real_dt )
 {
    double dt;
-   int pp_final, pp_gui, pp_game;
+   int pp_core, pp_final, pp_gui, pp_game;
    int cur = 0;
 
    /* See what post-processing is up. */
    pp_game  = (array_size(pp_shaders_list[PP_LAYER_GAME]) > 0);
    pp_gui   = (array_size(pp_shaders_list[PP_LAYER_GUI]) > 0);
    pp_final = (array_size(pp_shaders_list[PP_LAYER_FINAL]) > 0);
+   pp_core  = (array_size(pp_shaders_list[PP_LAYER_CORE]) > 0);
 
    /* Case we have a post-processing shader we use the framebuffers. */
-   if (pp_game || pp_gui || pp_final) {
+   if (pp_game || pp_gui || pp_final || pp_core) {
       /* Clear main screen. */
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -232,14 +233,14 @@ void render_all( double game_dt, double real_dt )
 
    /* Process game stuff only. */
    if (pp_game)
-      render_fbo_list( dt, pp_shaders_list[PP_LAYER_GAME], &cur, !(pp_final || pp_gui) );
+      render_fbo_list( dt, pp_shaders_list[PP_LAYER_GAME], &cur, !(pp_core || pp_final || pp_gui) );
 
    /* GUi stuff. */
    gui_render(dt);
    render_reset();
 
    if (pp_gui)
-      render_fbo_list( dt, pp_shaders_list[PP_LAYER_GUI], &cur, !pp_final );
+      render_fbo_list( dt, pp_shaders_list[PP_LAYER_GUI], &cur, !(pp_core || pp_final) );
 
    /* We set the to fullscreen, ignoring the GUI modifications. */
    gl_viewport( 0, 0, gl_screen.nw, gl_screen.nh );
@@ -254,10 +255,14 @@ void render_all( double game_dt, double real_dt )
 
    /* Final post-processing. */
    if (pp_final)
-      render_fbo_list( dt, pp_shaders_list[PP_LAYER_FINAL], &cur, 1 );
+      render_fbo_list( dt, pp_shaders_list[PP_LAYER_FINAL], &cur, !(pp_core) );
 
    if (menu_open)
       toolkit_render( real_dt );
+
+   /* Final post-processing. */
+   if (pp_core)
+      render_fbo_list( dt, pp_shaders_list[PP_LAYER_CORE], &cur, 1 );
 
    /* check error every loop */
    gl_checkErr();
@@ -341,7 +346,7 @@ int render_postprocessRm( unsigned int id )
    for (j=0; j<PP_LAYER_MAX; j++) {
       PPShader *pp_shaders = pp_shaders_list[j];
       for (int i=0; i<array_size(pp_shaders); i++) {
-         PPShader *pp = &pp_shaders[i];
+         const PPShader *pp = &pp_shaders[i];
          if (pp->id != id)
             continue;
          found = i;
@@ -369,7 +374,7 @@ void render_postprocessCleanup (void)
    for (int j=0; j<PP_LAYER_MAX; j++) {
       PPShader *pp_shaders = pp_shaders_list[j];
       for (int i=array_size(pp_shaders)-1; i>=0; i--) {
-         PPShader *pp = &pp_shaders[i];
+         const PPShader *pp = &pp_shaders[i];
          if (pp->flags & PP_SHADER_PERMANENT)
             continue;
          array_erase( &pp_shaders_list[j], &pp_shaders_list[j][i], &pp_shaders_list[j][i+1] );
@@ -423,7 +428,7 @@ void render_setGamma( double gamma )
    glUseProgram( shaders.gamma_correction.program );
    glUniform1f( shaders.gamma_correction.gamma, gamma );
    glUseProgram( 0 );
-   pp_gamma_correction = render_postprocessAdd( &gamma_correction_shader, PP_LAYER_FINAL, 98, PP_SHADER_PERMANENT );
+   pp_gamma_correction = render_postprocessAdd( &gamma_correction_shader, PP_LAYER_CORE, 98, PP_SHADER_PERMANENT );
 }
 
 static int needsReset = 0;
