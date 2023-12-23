@@ -33,6 +33,7 @@
    * `nelly01`: fixed giving the player twice as much money as needed for an ion cannon
    * `nelly03`: guard against the player changing systems in the middle of mining
    * `zbh06`: made mission easier for the player
+   * `seek_n_destroy`: fixed mission being failable after the player takes out the target
    * Fixed many typos
    * Translation updates
 
