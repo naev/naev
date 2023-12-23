@@ -40,7 +40,7 @@
 #define FPS_MAX_DEFAULT                60    /**< Maximum FPS. */
 #define SHOW_PAUSE_DEFAULT             1     /**< Whether to display pause status. */
 #define MINIMIZE_DEFAULT               1     /**< Whether to minimize on focus loss. */
-#define COLORBLIND_DEFAULT             0     /**< Whether to enable colourblindness simulation. */
+#define COLOURBLIND_DEFAULT            0     /**< Whether to enable colourblindness simulation. */
 #define HEALTHBARS_DEFAULT             1     /**< Whether or not to show pilot health bars. */
 #define BG_BRIGHTNESS_DEFAULT          0.5   /**< How much to darken (or lighten) the backgrounds. */
 #define NEBU_NONUNIFORMITY_DEFAULT     1.    /**< How much to darken (or lighten) the nebula stuff. */

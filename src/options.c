@@ -58,6 +58,7 @@ static const char *opt_names[] = {
    N_("Input"),
    N_("Plugins"),
 };
+static_assert( (sizeof(opt_names)/sizeof(opt_names[0]))==OPT_WINDOWS, "Options windows mismatch!" );
 static const glColour *cHeader = &cFontGrey;
 
 static int opt_restart = 0;
@@ -85,6 +86,12 @@ static void opt_gameplayDefaults( unsigned int wid, const char *str );
 static void opt_gameplayUpdate( unsigned int wid, const char *str );
 /* Accessibility. */
 static void opt_accessibility( unsigned int wid );
+static int opt_accessibilitySave( unsigned int wid, const char *str );
+static void opt_accessibilityDefaults( unsigned int wid, const char *str );
+static void opt_setBGBrightness( unsigned int wid, const char *str );
+static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
+static void opt_setJumpBrightness( unsigned int wid, const char *str );
+static void opt_checkColourblind( unsigned int wid, const char *str );
 /* Video. */
 static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, const char *str );
@@ -95,10 +102,6 @@ static void opt_setGammaCorrection( unsigned int wid, const char *str );
 static void opt_setScalefactor( unsigned int wid, const char *str );
 static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
-static void opt_setBGBrightness( unsigned int wid, const char *str );
-static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
-static void opt_setJumpBrightness( unsigned int wid, const char *str );
-static void opt_checkColourblind( unsigned int wid, const char *str );
 static void opt_checkHealth( unsigned int wid, const char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
@@ -144,12 +147,23 @@ void opt_menu (void)
    window_setCancel( opt_wid, opt_close );
 
    /* Create tabbed window. */
-   names = calloc( sizeof(char*), sizeof(opt_names)/sizeof(char*) );
-   for (size_t i=0; i<sizeof(opt_names)/sizeof(char*); i++)
+   names = calloc( 1, sizeof(opt_names) );
+   for (size_t i=0; i<sizeof(opt_names)/sizeof(opt_names[0]); i++)
       names[i] = _(opt_names[i]);
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
          OPT_WINDOWS, (const char**)names, 0 );
    free(names);
+
+   /* Common stuff. */
+   for (int i=0; i<OPT_WINDOWS; i++) {
+      unsigned int wid = opt_windows[i];
+      window_addButton( wid, -20, 20,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnClose", _("OK"), opt_OK );
+      window_addText( opt_windows[i], 20, 20 + BUTTON_HEIGHT,
+            w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
+   }
+
 
    /* Load tabs. */
    opt_gameplay(  opt_windows[ OPT_WIN_GAMEPLAY ] );
@@ -174,6 +188,7 @@ static void opt_OK( unsigned int wid, const char *str )
    prompted_restart = opt_restart;
    ret = 0;
    ret |= opt_gameplaySave( opt_windows[ OPT_WIN_GAMEPLAY ], str);
+   ret |= opt_accessibilitySave( opt_windows[ OPT_WIN_ACCESSIBILITY ], str);
    ret |= opt_audioSave(    opt_windows[ OPT_WIN_AUDIO ], str);
    ret |= opt_videoSave(    opt_windows[ OPT_WIN_VIDEO ], str);
 
@@ -276,12 +291,6 @@ static void opt_gameplay( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Close button */
-   window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("OK"), opt_OK );
-   window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnCancel", _("Cancel"), opt_close );
    window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDefaults", _("Defaults"), opt_gameplayDefaults );
@@ -368,7 +377,7 @@ static void opt_gameplay( unsigned int wid )
 #endif /* HAVE_LUAJIT */
          );
 
-   y -= window_getTextHeight(wid, "txtFlags") + 10;
+   /*y -= window_getTextHeight(wid, "txtFlags") + 10; */
 
    /* Options. */
    x = 20 + cw + 20;
@@ -405,10 +414,6 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, l, 20, 1, "txtTMax",
          NULL, NULL, s );
    window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
-
-   /* Restart text. */
-   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
-         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
 
    /* Update. */
    opt_gameplayUpdate( wid, NULL );
@@ -572,9 +577,6 @@ static void opt_keybinds( unsigned int wid )
    /* Get dimensions. */
    menuKeybinds_getDim( wid, &w, &h, &lw, NULL, &bw, &bh );
 
-   /* Close button. */
-   window_addButton( wid, -20, 20, bw, bh,
-         "btnClose", _("OK"), opt_OK );
    /* Restore defaults button. */
    window_addButton( wid, -20, 40 + bh, bw, bh,
          "btnDefaults", _("Defaults"), opt_keyDefaults );
@@ -599,9 +601,8 @@ static void opt_keybinds( unsigned int wid )
  */
 static void menuKeybinds_genList( unsigned int wid )
 {
-   int l, p;
+   int p;
    char **str, mod_text[64];
-   SDL_Keycode key;
    KeybindType type;
    SDL_Keymod mod;
    int w, h;
@@ -614,8 +615,9 @@ static void menuKeybinds_genList( unsigned int wid )
    /* Create the list. */
    str = malloc( sizeof( char * ) * input_numbinds );
    for (int j = 0; j < input_numbinds; j++) {
+      SDL_Keycode key;
       const char *short_desc = _(keybind_info[j][1]);
-      l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
+      int l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
                 * where "char mod_text[64]" is one of the "%s" args.
                 * (that plus brackets plus %c + null gets to 68.
                 * Just set to 128 as it's a power of two. */
@@ -886,9 +888,6 @@ static void opt_audio( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Close button */
-   window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("OK"), opt_OK );
    window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnCancel", _("Cancel"), opt_close );
@@ -937,10 +936,6 @@ static void opt_audio( unsigned int wid )
    window_addFader( wid, x, y, cw, 20, "fadEngine", 0., 1.,
          conf.engine_vol, opt_setEngineLevel );
    opt_setEngineLevel( wid, "fadEngine" );
-
-   /* Restart text. */
-   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
-         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
 
    opt_audioUpdate(wid);
 }
@@ -1021,7 +1016,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    unsigned int parent;
    KeybindType type;
    int key, test_key_event;
-   SDL_Keymod mod, ev_mod;
+   SDL_Keymod mod;
    const char *str;
 
    /* See how to handle it. */
@@ -1048,7 +1043,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          if (window_checkboxState( wid, "chkAny" ))
             mod = NMOD_ANY;
          else {
-            ev_mod = event->key.keysym.mod;
+            SDL_Keymod ev_mod = event->key.keysym.mod;
             mod    = 0;
             if (ev_mod & (KMOD_LSHIFT | KMOD_RSHIFT))
                mod |= NMOD_SHIFT;
@@ -1189,41 +1184,76 @@ static void opt_unsetKey( unsigned int wid, const char *str )
  */
 static void opt_accessibility( unsigned int wid )
 {
-   int i, j, nres, res_def;
-   char buf[16];
-   int cw, w, h, y, x, l;
-   char **res;
-   const char *s;
+   int cw, w, h, y, x;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
 
    /* Close button */
-   window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("OK"), opt_OK );
    window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnCancel", _("Cancel"), opt_close );
    window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnDefaults", _("Defaults"), opt_videoDefaults );
+         "btnDefaults", _("Defaults"), opt_accessibilityDefaults );
 
+   /* Resolution bits. */
+   cw = (w-60)/2;
    x = 20;
    y = -40;
-#define COLOURBLIND_DEFAULT             0     /**< Whether to enable colourblindness simulation. */
-#define BG_BRIGHTNESS_DEFAULT          0.5   /**< How much to darken (or lighten) the backgrounds. */
-#define NEBU_NONUNIFORMITY_DEFAULT     1.    /**< How much to darken (or lighten) the nebula stuff. */
-#define JUMP_BRIGHTNESS_DEFAULT        1.    /**< Default jump brightness.*/
 
    /* Video. */
    window_addText( wid, x, y, 100, 20, 0, "txtSVideo",
          NULL, cHeader, _("Video:") );
    y -= 20;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtNebuNonuniformity",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadNebuNonuniformity", 0., 1.,
+         conf.nebu_nonuniformity, opt_setNebuNonuniformity );
+   opt_setNebuNonuniformity( wid, "fadNebuNonuniformity" );
+   y -= 20;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtBGBrightness",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadBGBrightness", 0., 1.,
+         conf.bg_brightness, opt_setBGBrightness );
+   opt_setBGBrightness( wid, "fadBGBrightness" );
+   y -= 20;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtJumpBrightness",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadJumpBrightness", 0., 1.,
+         conf.jump_brightness, opt_setJumpBrightness );
+   opt_setJumpBrightness( wid, "fadJumpBrightness" );
+   y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkColourblind", _("Colourblind mode"), opt_checkColourblind,
+         conf.colourblind );
+}
 
-   /* Restart text. */
-   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
-         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
+static int opt_accessibilitySave( unsigned int wid, const char *str )
+{
+   (void) wid;
+   (void) str;
+   /* Colourblind and faders are handled in their respective functions. */
+   return 0;
+}
+
+/**
+ * @brief Sets video defaults.
+ */
+static void opt_accessibilityDefaults( unsigned int wid, const char *str )
+{
+   (void) str;
+
+   /* Checkboxes. */
+   window_checkboxSet( wid, "chkColourblind", COLOURBLIND_DEFAULT );
+
+   /* Faders. */
+   window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadNebuNonuniformity", NEBU_NONUNIFORMITY_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 }
 
 /**
@@ -1241,9 +1271,6 @@ static void opt_video( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Close button */
-   window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("OK"), opt_OK );
    window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnCancel", _("Cancel"), opt_close );
@@ -1362,34 +1389,9 @@ static void opt_video( unsigned int wid )
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkColourblind", _("Colourblind mode"), opt_checkColourblind,
-         conf.colourblind );
-   y -= 25;
-   window_addCheckbox( wid, x, y, cw, 20,
          "chkHealth", _("Health bars for pilots"), opt_checkHealth,
          conf.healthbars );
    y -= 30;
-   window_addText( wid, x, y-3, cw-20, 20, 0, "txtBGBrightness",
-         NULL, NULL, NULL );
-   y -= 20;
-   window_addFader( wid, x+20, y, cw-60, 20, "fadBGBrightness", 0., 1.,
-         conf.bg_brightness, opt_setBGBrightness );
-   opt_setBGBrightness( wid, "fadBGBrightness" );
-   y -= 20;
-   window_addText( wid, x, y-3, cw-20, 20, 0, "txtNebuNonuniformity",
-         NULL, NULL, NULL );
-   y -= 20;
-   window_addFader( wid, x+20, y, cw-60, 20, "fadNebuNonuniformity", 0., 1.,
-         conf.nebu_nonuniformity, opt_setNebuNonuniformity );
-   opt_setNebuNonuniformity( wid, "fadNebuNonuniformity" );
-   y -= 20;
-   window_addText( wid, x, y-3, cw-20, 20, 0, "txtJumpBrightness",
-         NULL, NULL, NULL );
-   y -= 20;
-   window_addFader( wid, x+20, y, cw-60, 20, "fadJumpBrightness", 0., 1.,
-         conf.jump_brightness, opt_setJumpBrightness );
-   opt_setJumpBrightness( wid, "fadJumpBrightness" );
-   y -= 20;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtMOpacity",
          NULL, NULL, NULL );
    y -= 20;
@@ -1404,10 +1406,6 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkBigIcons", _("Bigger icons"), NULL, conf.big_icons );
-
-   /* Restart text. */
-   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
-         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
 }
 
 /**
@@ -1415,16 +1413,12 @@ static void opt_video( unsigned int wid )
  */
 static void opt_needRestart (void)
 {
-   const char *s;
-
-   /* Values. */
+   const char *s = _("#rRestart Naev for changes to take effect.#0");
    opt_restart = 1;
-   s           = _("#rRestart Naev for changes to take effect.#0");
 
    /* Modify widgets. */
-   window_modifyText( opt_windows[ OPT_WIN_GAMEPLAY ], "txtRestart", s );
-   window_modifyText( opt_windows[ OPT_WIN_VIDEO ], "txtRestart", s );
-   window_modifyText( opt_windows[ OPT_WIN_AUDIO ], "txtRestart", s );
+   for (int i=0; i<OPT_WINDOWS; i++)
+      window_modifyText( opt_windows[i], "txtRestart", s );
 }
 
 /**
@@ -1619,9 +1613,6 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
    window_faderSetBoundedValue( wid, "fadZoomFar", log(ZOOM_FAR_DEFAULT+1.) );
    window_faderSetBoundedValue( wid, "fadZoomNear", log(ZOOM_NEAR_DEFAULT+1.) );
    window_faderSetBoundedValue( wid, "fadGammaCorrection", log(GAMMA_CORRECTION_DEFAULT) /* a.k.a. 0. */ );
-   window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
-   window_faderSetBoundedValue( wid, "fadNebuNonuniformity", NEBU_NONUNIFORMITY_DEFAULT );
-   window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 }
 
 /**
@@ -1767,20 +1758,15 @@ static void opt_setMapOverlayOpacity( unsigned int wid, const char *str )
  */
 static void opt_plugins( unsigned int wid )
 {
-   int w, h, lw, lh, bw, bh, n;
+   int w, h, lw, lh, bw, n;
    char **str, buf[STRMAX_SHORT];
    const plugin_t *plgs = plugin_list();
 
    /* Get dimensions. */
    bw = BUTTON_WIDTH;
-   bh = BUTTON_HEIGHT;
    window_dimWindow( wid, &w, &h );
    lw = w - bw - 100;
    lh = h - 90;
-
-   /* Close button. */
-   window_addButton( wid, -20, 20, bw, bh,
-         "btnClose", _("OK"), opt_OK );
 
    /* Text stuff. */
    snprintf( buf, sizeof(buf), "#n%s#0%s%s", _("Plugins Directory: "), PHYSFS_getRealDir("plugins"), "plugins" );
@@ -1824,7 +1810,7 @@ static void opt_plugins_update( unsigned int wid, const char *name )
    l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", p_("plugins", "Description:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "   %s\n", _(plg->description) );
    if (plg->total_conversion)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "#g%s#0", _("Total Conversion") );
+      /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "#g%s#0", _("Total Conversion") );
 
    window_modifyText( wid, "txtDesc", buf );
 }
