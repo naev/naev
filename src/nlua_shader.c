@@ -441,8 +441,10 @@ static int shaderL_addPostProcess( lua_State *L )
       layer = PP_LAYER_GAME;
    else if (strcmp(str,"gui")==0)
       layer = PP_LAYER_GUI;
+   else if (strcmp(str,"core")==0)
+      layer = PP_LAYER_CORE;
    else
-      return NLUA_ERROR(L,_("Layer was '%s', but must be one of 'final' or 'game'"), str);
+      return NLUA_ERROR(L,_("Layer was '%s', but must be one of 'final', 'game', 'gui', or 'core'."), str);
 
    if (ls->pp_id == 0)
       ls->pp_id = render_postprocessAdd( ls, layer, priority, 0 );

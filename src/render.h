@@ -9,7 +9,8 @@ enum {
    PP_LAYER_NONE, /**< Not actually done. */
    PP_LAYER_GAME, /**< Applied ontop of the in-game graphics. */
    PP_LAYER_GUI,  /**< Applied ontop of the in-game GUI. */
-   PP_LAYER_FINAL,/**< Applied ontop of everything! */
+   PP_LAYER_FINAL,/**< Applied ontop of everything, except special menus. */
+   PP_LAYER_CORE, /**< Applied ontop of everything! Should only be used for special shaders like gamma/colourblind. */
    PP_LAYER_MAX,
 };
 
