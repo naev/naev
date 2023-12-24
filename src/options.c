@@ -92,8 +92,8 @@ static void opt_accessibilityDefaults( unsigned int wid, const char *str );
 static void opt_setBGBrightness( unsigned int wid, const char *str );
 static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
 static void opt_setJumpBrightness( unsigned int wid, const char *str );
-static void opt_checkColourblind( unsigned int wid, const char *str );
 static void opt_setColourblindCorrect( unsigned int wid, const char *str );
+static void opt_setColourblindSimulate( unsigned int wid, const char *str );
 static void opt_listColourblind( unsigned int wid, const char *str );
 static void opt_setGameSpeed( unsigned int wid, const char *str );
 /* Video. */
@@ -1254,9 +1254,12 @@ static void opt_accessibility( unsigned int wid )
          conf.colourblind_correct, opt_setColourblindCorrect );
    opt_setColourblindCorrect( wid, "fadColourblindCorrect" );
    y -= 30;
-   window_addCheckbox( wid, x, y, cw, 20,
-         "chkColourblind", _("Simulate colourblindness"), opt_checkColourblind,
-         conf.colourblind_sim );
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtColourblindSimulate",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadColourblindSimulate", 0., 1.,
+         conf.colourblind_sim, opt_setColourblindSimulate );
+   opt_setColourblindSimulate( wid, "fadColourblindSimulate" );
 
    /* Second column. */
    x = 20 + cw + 20;
@@ -1289,14 +1292,12 @@ static void opt_accessibilityDefaults( unsigned int wid, const char *str )
 {
    (void) str;
 
-   /* Checkboxes. */
-   window_checkboxSet( wid, "chkColourblind", COLOURBLIND_SIM_DEFAULT );
-
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadNebuNonuniformity", NEBU_NONUNIFORMITY_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
    window_faderSetBoundedValue( wid, "fadColourblindCorrect", COLOURBLIND_CORRECT_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadColourblindSimulate", COLOURBLIND_CORRECT_DEFAULT );
 
    /* Reset colorblind if needed. */
    gl_colourblind();
@@ -1534,16 +1535,6 @@ static int opt_videoSave( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Handles the colourblind checkbox being checked.
- */
-static void opt_checkColourblind( unsigned int wid, const char *str )
-{
-   int f = window_checkboxState( wid, str );
-   conf.colourblind_sim = f;
-   gl_colourblind();
-}
-
-/**
  * @brief Handles the colourblind correction.
  */
 static void opt_setColourblindCorrect( unsigned int wid, const char *str )
@@ -1551,10 +1542,25 @@ static void opt_setColourblindCorrect( unsigned int wid, const char *str )
    char buf[STRMAX_SHORT];
    conf.colourblind_correct = window_getFaderValue(wid, str);
    if (conf.colourblind_correct > 0.)
-      snprintf( buf, sizeof(buf), _("Colourblindc orrection: %.2f"), conf.colourblind_correct );
+      snprintf( buf, sizeof(buf), _("Colourblind correction: %.2f"), conf.colourblind_correct );
    else
       snprintf( buf, sizeof(buf), _("Colourblind correction: off") );
    window_modifyText( wid, "txtColourblindCorrect", buf );
+   gl_colourblind();
+}
+
+/**
+ * @brief Handles the colourblind correction.
+ */
+static void opt_setColourblindSimulate( unsigned int wid, const char *str )
+{
+   char buf[STRMAX_SHORT];
+   conf.colourblind_sim = window_getFaderValue(wid, str);
+   if (conf.colourblind_sim > 0.)
+      snprintf( buf, sizeof(buf), _("Colourblind simulation: %.2f"), conf.colourblind_sim );
+   else
+      snprintf( buf, sizeof(buf), _("Colourblind simulation: off") );
+   window_modifyText( wid, "txtColourblindSimulate", buf );
    gl_colourblind();
 }
 

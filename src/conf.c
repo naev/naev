@@ -291,7 +291,7 @@ void conf_loadConfigPath( void )
  */
 int conf_loadConfig ( const char* file )
 {
-   int i, t;
+   int i, t, cb;
    const char *str, *mod;
    SDL_Keycode key;
    int type;
@@ -337,12 +337,14 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "notresizable", conf.notresizable );
       conf_loadBool( lEnv, "borderless", conf.borderless );
       conf_loadBool( lEnv, "minimize", conf.minimize );
-      conf_loadBool( lEnv, "colourblind", conf.colourblind_sim ); /* TODO remove in 0.13.0 or so. */
-      if (conf.colourblind_sim) {
+      cb = 0;
+      conf_loadBool( lEnv, "colourblind", cb ); /* TODO remove in 0.13.0 or so. */
+      if (cb) {
          /* Old colourblind used Rod Monochromancy, so we'll restore that in this case. TODO Remove in 0.13.0 or so. */
          conf.colourblind_type = 3;
+         conf.colourblind_sim = 1.; /* Turn on at max. */
       }
-      conf_loadBool( lEnv, "colourblind_sim", conf.colourblind_sim );
+      conf_loadFloat( lEnv, "colourblind_sim", conf.colourblind_sim );
       conf_loadFloat( lEnv, "colourblind_correct", conf.colourblind_correct );
       conf_loadInt( lEnv, "colourblind_type", conf.colourblind_type );
       conf_loadFloat( lEnv, "game_speed", conf.game_speed );
@@ -891,8 +893,8 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("minimize",conf.minimize);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Enables colourblind simulation."))
-   conf_saveBool("colourblind_sim",conf.colourblind_sim);
+   conf_saveComment(_("Enables colourblind simulation. A value of 0. disables."))
+   conf_saveFloat("colourblind_sim",conf.colourblind_sim);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Type of colourblindness to simulate or correct."))

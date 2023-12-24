@@ -8,6 +8,7 @@ out vec4 colour_out;
 #define ROD_MONOCHROMACY   3  /* Old default. */
 #define CONE_MONOCHROMACY  4
 uniform int type;
+uniform float intensity;
 
 void main (void)
 {
@@ -62,4 +63,5 @@ void main (void)
    colour_out.g = (-1.1252419f * l) + (2.29317094f * m) + (-0.1678952f * s);
    colour_out.b = (0.02980165f * l) + (-0.19318073f * m) + (1.16364789f * s);
    colour_out.a = tex.a;
+   colour_out.rgb = colour_out.rgb*intensity + (1.0-intensity)*tex.rgb;
 }

@@ -40,7 +40,7 @@
 #define FPS_MAX_DEFAULT                60    /**< Maximum FPS. */
 #define SHOW_PAUSE_DEFAULT             1     /**< Whether to display pause status. */
 #define MINIMIZE_DEFAULT               1     /**< Whether to minimize on focus loss. */
-#define COLOURBLIND_SIM_DEFAULT        0     /**< Whether to enable colourblindness simulation. */
+#define COLOURBLIND_SIM_DEFAULT        0.    /**< Whether to enable colourblindness simulation. */
 #define COLOURBLIND_TYPE_DEFAULT       0     /**< Type of colourblindness to simulate. */
 #define COLOURBLIND_CORRECT_DEFAULT    0.    /**< Intensity of the colourblindness correction. */
 #define GAME_SPEED_DEFAULT             1.    /**< Game speed. */
@@ -96,7 +96,7 @@ typedef struct PlayerConf_s {
    int notresizable; /**< Whether or not the window is resizable. */
    int borderless; /**< Whether to disable window decorations. */
    int minimize; /**< Whether to minimize on focus loss. */
-   int colourblind_sim; /**< Whether to enable colourblindness simulation. */
+   double colourblind_sim; /**< Whether to enable colourblindness simulation. */
    int colourblind_type; /**< Type of colourblindness. */
    double colourblind_correct; /**< Whether to enable colourblindness simulation. */
    double game_speed; /**< Speed of the game. */
