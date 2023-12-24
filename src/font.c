@@ -1747,7 +1747,8 @@ void gl_freeFont( glFont* font )
    free(stsh->vbo_vert_data);
 
    memset( stsh, 0, sizeof(glFontStash) );
-   /* TODO handle empty font stashes accumulating. */
+   /* Font stash will get reused when possible, and we can't erase because IDs
+    * will get messed up. */
 }
 
 /**
