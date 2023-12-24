@@ -4,7 +4,7 @@ luaspob.setup{
    std_land = 50,
    std_bribe = 0,
    msg_granted = {
-      _("Permisson to land granted."),
+      _("Permission to land granted."),
    },
    msg_notyet = {
       _("Access to Maanen's Moon denied."),
