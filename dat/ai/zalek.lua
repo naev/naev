@@ -52,7 +52,7 @@ function create()
    -- See if a drone
    mem.isdrone = pt.drone
    if mem.isdrone then
-      local msg = _([["ACCESS DENIED.]])
+      local msg = _([["ACCESS DENIED."]])
       mem.refuel_no = msg
       mem.bribe_no = msg
       mem.scan_msg = _("COMMENCING SCAN PROCEDURE.")

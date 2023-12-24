@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-23 21:41+0900\n"
-"PO-Revision-Date: 2023-12-04 22:09+0000\n"
-"Last-Translator: Václav Černý <vaclav.vatoz.cerny@gmail.com>\n"
+"POT-Creation-Date: 2023-12-23 19:52-0500\n"
+"PO-Revision-Date: 2023-12-24 00:54+0000\n"
+"Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.3-dev\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: physfs.c:1
 msgid "no error"
-msgstr "bez chyby"
+msgstr "žádná chyba"
 
 #: physfs.c:2 src/background.c:453 src/gui.c:1745 src/nlua_evt.c:146
 #: src/nlua_misn.c:237 src/nopenal.c:68
@@ -153,9 +153,9 @@ msgid ""
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
-"Ze Země první pozorovatelé vesmíru sledovali drobné drahokamy zářící světlem "
-"vzdálených sluncí, daleko, ale tak jasně. Natáhnout ruku a uchopit ji by "
-"stálo jen celý život. Levné za tu cenu."
+"Ze Země první vesmírní cestovatelé spatřili drobné drahokamy zářící světlem "
+"vzdálených sluncí, které byly tak vzdálené, ale jasné. Natáhnout ruku a "
+"uchopit jeden z nich by stálo celý život. Levně za tu cenu."
 
 #: dat/intro:7
 msgid ""
@@ -196,8 +196,8 @@ msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
-"Po sto letech mezihvězdného konfliktu, na popelu, který zůstal, konečně nový "
-"řád postavil své základy."
+"Po sto letech mezihvězdného konfliktu, na popelu, který zůstal, konečně "
+"postavil své základy nový řád."
 
 #: dat/intro:17
 msgid ""
@@ -207,7 +207,7 @@ msgid ""
 "traffic for the first time in living memory."
 msgstr ""
 "Muž jménem Daedris prosadil vládu nad vyčerpanými světy. Založil Galaktickou "
-"říši a jmenoval se jejím vládcem. Pod železnou pěstí jeho armády se obnovily "
+"Říši a jmenoval se jejím vládcem. Pod železnou pěstí jeho armády se obnovily "
 "vztahy mezi planetami; opuštěné obchodní cesty znovu po dlouhé době spatřily "
 "obchodní provoz."
 
@@ -239,11 +239,11 @@ msgstr "Vzestup a pád, rytmus historie."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
-msgstr "Pochod historie však narazil na neznámo, na Incident."
+msgstr "Ale pochod dějin klopýtal přes neznámo, přes Incident."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr "Vytrhalo to srdce z Impéria."
+msgstr "Vytrhlo to srdce Impéria."
 
 #: dat/intro:29
 msgid ""
@@ -298,7 +298,7 @@ msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr "   * Tvůrce příběhu a Vývojářský tým"
+msgstr "   * Tvůrce příběhu a Vývoj"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
@@ -418,7 +418,7 @@ msgstr "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:57
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr "   * Lodě pro Soromidy a Za'leky"
+msgstr "   * Lodě pro Soromid a Za'lek"
 
 #: dat/AUTHORS:59
 msgid "Askyel"
@@ -495,8 +495,8 @@ msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
-"   I když knihovnu SDL_collide jako takovou nepoužíváme, byla inspirací pro "
-"kolize, které používáme."
+"   I když knihovnu SDL_collide jako takovou nepoužíváme, byla inspirativní "
+"pro vlastní kolizní rutiny Naevu."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
@@ -748,26 +748,20 @@ msgid "Arvind S"
 msgstr "Arvind S"
 
 #: dat/AUTHORS:161
-#, fuzzy
-#| msgid "   * Mission contributor"
 msgid "   * PoI contributor"
-msgstr "   * Přispěvatel misí"
+msgstr "   * PoI přispěvatel"
 
 #: dat/AUTHORS:162
-#, fuzzy
-#| msgid "   * Art and code"
 msgid "   * Proteron lore"
-msgstr "   * Umění a kód"
+msgstr "   * Proteronské pověsti"
 
 #: dat/AUTHORS:164 dat/AUTHORS:202
 msgid "PhoenixRiver"
 msgstr "PhoenixRiver"
 
 #: dat/AUTHORS:165
-#, fuzzy
-#| msgid "   * Event contributor"
 msgid "   * Content contributor"
-msgstr "   * Přispěvatel událostí"
+msgstr "   * Přispěvatel do obsahu"
 
 #: dat/AUTHORS:166
 msgid "   * Misc fixes and typos"
@@ -796,21 +790,19 @@ msgstr "oo13"
 
 #: dat/AUTHORS:174
 msgid "   * Japanese translation"
-msgstr ""
+msgstr "   * Japonský překlad"
 
 #: dat/AUTHORS:175
 msgid "   * Many bug fixes"
-msgstr ""
+msgstr "   * Opravy mnoha chyb"
 
 #: dat/AUTHORS:177
 msgid "theElerd"
-msgstr ""
+msgstr "theElerd"
 
 #: dat/AUTHORS:178
-#, fuzzy
-#| msgid "   * Planet images"
 msgid "   * New character images"
-msgstr "   * Obrázky planet"
+msgstr "   * Nové obrázky postav"
 
 #: dat/AUTHORS:180
 msgid "Music by Matthew Pablo"
@@ -836,31 +828,31 @@ msgstr "(de) Wuzzy, Solid Tscheik"
 
 #: dat/AUTHORS:188
 msgid "(fr) Nicolas, Jérémie Guegain, Étienne Girard, Nathan"
-msgstr ""
+msgstr "(fr) Nicolas, Jérémie Guegain, Étienne Girard, Nathan"
 
 #: dat/AUTHORS:189
 msgid "(es) paco, gallegonovato"
-msgstr ""
+msgstr "(es) paco, gallegonovato"
 
 #: dat/AUTHORS:190
 msgid "(cs) David Doubek, Hahaha Nope"
-msgstr ""
+msgstr "(cs) David Doubek, Hahaha Nope"
 
 #: dat/AUTHORS:191
 msgid "(pt_PT) SC, ssantos"
-msgstr ""
+msgstr "(pt_PT) SC, ssantos"
 
 #: dat/AUTHORS:192
 msgid "(pt_BR) Bloody Kenshiro, SC, Anthony Gregory Souza dos Santos"
-msgstr ""
+msgstr "(pt_BR) Bloody Kenshiro, SC, Anthony Gregory Souza dos Santos"
 
 #: dat/AUTHORS:193
 msgid "(ko) 이정희"
-msgstr ""
+msgstr "(ko) 이정희"
 
 #: dat/AUTHORS:194
 msgid "(it) Davide Prina"
-msgstr ""
+msgstr "(it) Davide Prina"
 
 #: dat/AUTHORS:196
 msgid "Testers"
@@ -880,55 +872,55 @@ msgstr "EvanR"
 
 #: dat/AUTHORS:203
 msgid "Markus Büchele (BM-W1)"
-msgstr ""
+msgstr "Markus Büchele (BM-W1)"
 
 #: dat/AUTHORS:204
 msgid "Alaisdair West (awest03)"
-msgstr ""
+msgstr "Alaisdair West (awest03)"
 
 #: dat/AUTHORS:205
 msgid "VividViolet"
-msgstr ""
+msgstr "VividViolet"
 
 #: dat/AUTHORS:206
 msgid "exoterws"
-msgstr ""
+msgstr "exoterws"
 
 #: dat/AUTHORS:207
 msgid "LJ_Dude"
-msgstr ""
+msgstr "LJ_Dude"
 
 #: dat/AUTHORS:208
 msgid "sigus"
-msgstr ""
+msgstr "sigus"
 
 #: dat/AUTHORS:209
 msgid "Timsticles"
-msgstr ""
+msgstr "Timsticles"
 
 #: dat/AUTHORS:210
 msgid "Mister T"
-msgstr ""
+msgstr "Mister T"
 
 #: dat/AUTHORS:211
 msgid "Lemuria"
-msgstr ""
+msgstr "Lemuria"
 
 #: dat/AUTHORS:212
 msgid "Powerpeon"
-msgstr ""
+msgstr "Powerpeon"
 
 #: dat/AUTHORS:213
 msgid "xrogaan"
-msgstr ""
+msgstr "xrogaan"
 
 #: dat/AUTHORS:214
 msgid "nloewen"
-msgstr ""
+msgstr "nloewen"
 
 #: dat/AUTHORS:215
 msgid "Elven_Moustache"
-msgstr ""
+msgstr "Elven_Moustache"
 
 #: dat/AUTHORS:217
 msgid "Artwork Contributors"
@@ -1067,22 +1059,22 @@ msgstr "VIGILANCE"
 #: dat/asteroids/types/massive.xml:3 dat/asteroids/types/silicate_olivine.xml:3
 #: dat/asteroids/types/water_clay.xml:3
 msgid "common"
-msgstr ""
+msgstr "běžný"
 
 #: dat/asteroids/types/gold_platinum.xml:3
 #: dat/asteroids/types/gold_rhodium.xml:3 dat/asteroids/types/golden.xml:3
 #: dat/asteroids/types/mossy.xml:3 dat/asteroids/types/rhodium_yttrium.xml:3
 msgid "uncommon"
-msgstr ""
+msgstr "neobvyklý"
 
 #: dat/asteroids/types/kermite.xml:3 dat/asteroids/types/nebula_crystal.xml:3
 #: dat/asteroids/types/therite.xml:3 dat/asteroids/types/vixilium.xml:3
 msgid "rare"
-msgstr ""
+msgstr "vzácný"
 
 #: dat/asteroids/types/nodrop.xml:3
 msgid "empty"
-msgstr ""
+msgstr "prázdný"
 
 #: dat/commodities/clay.xml:3
 msgid "Clay"
@@ -1450,10 +1442,8 @@ msgid "armourbreaker"
 msgstr "rozbíječ pancíře"
 
 #: dat/damagetype/armourbreaker.xml:2
-#, fuzzy
-#| msgid "armourbreaker"
 msgid "#nArmourbreaker#0"
-msgstr "rozbíječ pancíře"
+msgstr "#nRozbíječ pancíře#0"
 
 #: dat/damagetype/emp.xml:2
 msgid "emp"
@@ -1461,23 +1451,23 @@ msgstr "emp"
 
 #: dat/damagetype/emp.xml:2
 msgid "#bEMP#0"
-msgstr ""
+msgstr "#bEMP#0"
 
 #: dat/damagetype/energy.xml:2
 msgid "energy"
-msgstr ""
+msgstr "energie"
 
 #: dat/damagetype/energy.xml:2 dat/damagetype/energy_noknockback.xml:2
 msgid "#gEnergy#0"
-msgstr ""
+msgstr "#gEnergie#0"
 
 #: dat/damagetype/energy_noknockback.xml:2
 msgid "energy_noknockback"
-msgstr ""
+msgstr "energy_noknockback"
 
 #: dat/damagetype/explosion_splash.xml:2
 msgid "explosion_splash"
-msgstr "rozptyl výbuchu"
+msgstr "rozptyl_výbuchu"
 
 #: dat/damagetype/ion.xml:2
 msgid "ion"
@@ -1485,33 +1475,31 @@ msgstr "ion"
 
 #: dat/damagetype/ion.xml:2
 msgid "#yIon#0"
-msgstr ""
+msgstr "#yIon#0"
 
 #: dat/damagetype/kinetic.xml:2
 msgid "kinetic"
-msgstr ""
+msgstr "kinetický"
 
 #: dat/damagetype/kinetic.xml:2
 msgid "#oKinetic#0"
-msgstr ""
+msgstr "#oKinetický#0"
 
 #: dat/damagetype/nebula.xml:2
 msgid "nebula"
 msgstr "mlhovina"
 
 #: dat/damagetype/nebula.xml:2
-#, fuzzy
-#| msgid "nebula"
 msgid "#pNebula#0"
-msgstr "mlhovina"
+msgstr "#pNebula#0"
 
 #: dat/damagetype/plasma.xml:2
 msgid "plasma"
-msgstr ""
+msgstr "plazma"
 
 #: dat/damagetype/plasma.xml:2
 msgid "#rPlasma#0"
-msgstr ""
+msgstr "#rPlazma#0"
 
 #: dat/difficulty/default.xml:2 dat/events/escort_settings.lua:83
 #: src/dev_uniedit.c:433
@@ -1536,7 +1524,7 @@ msgstr "Masochistický režim"
 
 #: dat/difficulty/masochist_mode.xml:3
 msgid "Makes the game significantly harder for the player."
-msgstr "Hra je pro hráče výrazně obtížnější."
+msgstr "Výrazně ztěžuje hru pro hráče."
 
 #: dat/difficulty/slow_mode.xml:2
 msgid "Slow Mode"
@@ -1583,22 +1571,20 @@ msgstr "Vaše loď je kontaminována antihmotou!"
 #: dat/outfits/flow/abilities/astral_projection.xml:2
 #: dat/outfits/flow/abilities/astral_projection.lua:57
 msgid "Astral Projection"
-msgstr ""
+msgstr "Astrální projekce"
 
 #: dat/effects/astral_projection.xml:3
-#, fuzzy
-#| msgid "Shields are being boosted."
 msgid "Ship is being projected."
-msgstr "Štíty jsou posíleny."
+msgstr "Loď se projektuje."
 
 #: dat/effects/avatar_of_sirichana.xml:2
 #: dat/outfits/flow/abilities/avatar_of_sirichana.xml:2
 msgid "Avatar of Sirichana"
-msgstr ""
+msgstr "Avatar Sirichany"
 
 #: dat/effects/avatar_of_sirichana.xml:3
 msgid "You are an avatar of Sirichana!"
-msgstr ""
+msgstr "Jsi avatarem Sirichany!"
 
 #: dat/effects/blink.xml:2
 msgid "Blink"
@@ -1606,31 +1592,27 @@ msgstr "Záblesk"
 
 #: dat/effects/blink.xml:3
 msgid "Your ship just blinked!"
-msgstr "Vaše loď se právě mihla!"
+msgstr "Vaše loď právě zablikala!"
 
 #: dat/effects/bloodlust.xml:2 dat/scripts/bioship/skills.lua:42
 msgid "Blood Lust"
-msgstr "Krvavá touha"
+msgstr "Krvavá Touha"
 
 #: dat/effects/bloodlust.xml:3
 msgid "The ship has had a taste of blood and wants more!"
-msgstr "Loď ochutnala krev a chce víc!"
+msgstr "Loď ochutnala krev a chce ještě víc!"
 
 #: dat/effects/chakra_burn.xml:2
-#, fuzzy
-#| msgid "Plasma Burn"
 msgid "Chakra Burn"
-msgstr "Plazmový požár"
+msgstr "Vypálení Čakry"
 
 #: dat/effects/chakra_burn.xml:3
-#, fuzzy
-#| msgid "Your ship just blinked!"
 msgid "Your ship is being burned by chakra!"
-msgstr "Vaše loď se právě mihla!"
+msgstr "Vaše loď je spalována čakrou!"
 
 #: dat/effects/chakra_corruption.xml:2
 msgid "Chakra Corruption"
-msgstr ""
+msgstr "Poškození čakrou"
 
 #: dat/effects/chakra_corruption.xml:3
 msgid "Your ship is corrupted by chakra damage!"
@@ -28156,6 +28138,7 @@ msgstr "Převod paliva hotov."
 #. luacheck: globals jumpin_wait (AI Task functions passed by name)
 #. Simple create function
 #. Inherit some properties from the parent (leader)
+#. They don't investigate
 #. Just tries to guard mem.escort
 #. Forward-declared functions
 #.
@@ -30265,8 +30248,8 @@ msgid "ENGAGING DEFENSIVE PROTOCOLS."
 msgstr ""
 
 #. See if a drone
-#: dat/ai/zalek.lua:55
-msgid "\"ACCESS DENIED."
+#: dat/ai/zalek.lua:55 dat/spob/lua/lib/spob.lua:72
+msgid "\"ACCESS DENIED.\""
 msgstr ""
 
 #: dat/ai/zalek.lua:58
@@ -113437,10 +113420,6 @@ msgstr ""
 
 #: dat/spob/lua/lib/spob.lua:68
 msgid "\"Credentials invalid. Landing request denied.\""
-msgstr ""
-
-#: dat/spob/lua/lib/spob.lua:72
-msgid "\"ACCESS DENIED.\""
 msgstr ""
 
 #: dat/spob/lua/lib/spob.lua:73
