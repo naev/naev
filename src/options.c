@@ -93,6 +93,7 @@ static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
 static void opt_setJumpBrightness( unsigned int wid, const char *str );
 static void opt_checkColourblind( unsigned int wid, const char *str );
 static void opt_setColourblindCorrect( unsigned int wid, const char *str );
+static void opt_listColourblind( unsigned int wid, const char *str );
 /* Video. */
 static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, const char *str );
@@ -1185,6 +1186,17 @@ static void opt_unsetKey( unsigned int wid, const char *str )
 static void opt_accessibility( unsigned int wid )
 {
    int cw, w, h, y, x;
+   const char *colourblind_modes[] = {
+      _("Protanopia"),
+      _("Deuteranopia"),
+      _("Tritanopia"),
+      _("Rod Monochromacy"),
+      _("Cone Monochromacy"),
+   };
+   int nmodes = sizeof(colourblind_modes)/sizeof(colourblind_modes[0]);
+   char **modes = malloc( nmodes * sizeof(char*) );
+   for (int i=0; i<nmodes; i++)
+      modes[i] = strdup( colourblind_modes[i] );
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -1226,17 +1238,23 @@ static void opt_accessibility( unsigned int wid )
    window_addFader( wid, x+20, y, cw-60, 20, "fadJumpBrightness", 0., 1.,
          conf.jump_brightness, opt_setJumpBrightness );
    opt_setJumpBrightness( wid, "fadJumpBrightness" );
-   y -= 20;
-   window_addCheckbox( wid, x, y, cw, 20,
-         "chkColourblind", _("Colourblind simulation mode"), opt_checkColourblind,
-         conf.colourblind_sim );
    y -= 30;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtColourblind",
+         NULL, NULL, _("Colourblind Mode:") );
+   y -= 25;
+   window_addList( wid, x, y, cw, 100, "lstColourblind",
+         (char**)modes, nmodes, conf.colourblind_type, opt_listColourblind, NULL );
+   y -= 120;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtColourblindCorrect",
          NULL, NULL, NULL );
    y -= 20;
    window_addFader( wid, x+20, y, cw-60, 20, "fadColourblindCorrect", 0., 1.,
          conf.colourblind_correct, opt_setColourblindCorrect );
    opt_setColourblindCorrect( wid, "fadColourblindCorrect" );
+   y -= 30;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkColourblind", _("Colourblind simulation mode"), opt_checkColourblind,
+         conf.colourblind_sim );
 }
 
 static int opt_accessibilitySave( unsigned int wid, const char *str )
@@ -1514,13 +1532,21 @@ static void opt_checkColourblind( unsigned int wid, const char *str )
 static void opt_setColourblindCorrect( unsigned int wid, const char *str )
 {
    char buf[STRMAX_SHORT];
-   double intensity = window_getFaderValue(wid, str);
-   conf.colourblind_correct = intensity;
+   conf.colourblind_correct = window_getFaderValue(wid, str);
    if (conf.colourblind_correct > 0.)
       snprintf( buf, sizeof(buf), _("Colourblind Correction: %.2f"), conf.colourblind_correct );
    else
       snprintf( buf, sizeof(buf), _("Colourblind Correction: off") );
    window_modifyText( wid, "txtColourblindCorrect", buf );
+   gl_colourblind();
+}
+
+/**
+ * @brief Handles the colourblind mode change.
+ */
+static void opt_listColourblind( unsigned int wid, const char *str )
+{
+   conf.colourblind_type = toolkit_getListPos( wid, str );
    gl_colourblind();
 }
 
