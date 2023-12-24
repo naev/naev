@@ -172,9 +172,6 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
 {
    xmlNodePtr node, cur, uniforms;
    char *shadervert, *shaderfrag;
-   const char *name;
-   int isint;
-   GLint loc, dim;
    xmlDocPtr doc;
 
    /* Load and read the data. */
@@ -244,8 +241,10 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
          node = uniforms->xmlChildrenNode;
          do {
             xml_onlyNodes(node);
-            name = (char*)node->name;
-            loc = glGetUniformLocation( temp->shader, name );
+            int isint;
+            GLint dim;
+            const char *name = (char*)node->name;
+            GLint loc = glGetUniformLocation( temp->shader, name );
             if (loc < 0) {
                WARN(_("SPFX '%s' is trying to set uniform '%s' not in shader!"), temp->name, name );
                continue;
@@ -359,8 +358,10 @@ int spfx_get( const char *name )
  */
 int spfx_load (void)
 {
-   char **spfx_files;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   char **spfx_files;
 
    spfx_effects = array_create(SPFX_Base);
 
@@ -408,12 +409,14 @@ int spfx_load (void)
    spfx_stack_middle = array_create( SPFX );
    spfx_stack_back = array_create( SPFX );
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Special Effect in %.3f s", "Loaded %d Special Effects in %.3f s", array_size(spfx_effects) ), array_size(spfx_effects), time/1000. );
    }
    else
       DEBUG( n_( "Loaded %d Special Effect", "Loaded %d Special Effects", array_size(spfx_effects) ), array_size(spfx_effects) );
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -597,7 +600,7 @@ static void spfx_update_layer( SPFX *layer, const double dt )
  */
 static void spfx_updateShake( double dt )
 {
-   double mod, vmod, angle;
+   double mod, vmod;
    double force_x, force_y;
    double dupdate;
    int forced;
@@ -635,6 +638,7 @@ static void spfx_updateShake( double dt )
 
    /* Apply force if necessary. */
    if (forced) {
+      double angle;
       shake_force_ang  += dt;
       angle             = noise_simplex1( shake_noise, &shake_force_ang ) * 5.*M_PI;
       force_x          += shake_force_mod * cos(angle);
