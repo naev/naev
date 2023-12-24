@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-12-24 12:17+0900\n"
-"PO-Revision-Date: 2023-12-24 00:54+0000\n"
+"PO-Revision-Date: 2023-12-24 22:51+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1616,7 +1616,7 @@ msgstr "Poškození čakrou"
 
 #: dat/effects/chakra_corruption.xml:3
 msgid "Your ship is corrupted by chakra damage!"
-msgstr ""
+msgstr "Vaše loď je poškozena narušující čakrou!"
 
 #: dat/effects/crippling_plasma.xml:2
 #: dat/outfits/bioship/skills/crippling_plasma.xml:2
@@ -1655,13 +1655,11 @@ msgstr "Rozplynutí!"
 #: dat/effects/feather_drive.xml:2
 #: dat/outfits/flow/abilities/feather_drive.xml:2
 msgid "Feather Drive"
-msgstr ""
+msgstr "Pohon Feather"
 
 #: dat/effects/feather_drive.xml:3
-#, fuzzy
-#| msgid "Your ship just blinked!"
 msgid "Your ship just used Feather Drive!"
-msgstr "Vaše loď se právě mihla!"
+msgstr "Vaše loď právě použila pohon Feather!"
 
 #. Attack tree
 #. For everyone!
@@ -1673,11 +1671,11 @@ msgstr "Divoký vztek I"
 
 #: dat/effects/fractured_reality.xml:2
 msgid "Fractured Reality"
-msgstr ""
+msgstr "Roztříštěná realita"
 
 #: dat/effects/fractured_reality.xml:3
 msgid "Reality is not really what it seems! Or is this the true reality?"
-msgstr ""
+msgstr "Skutečnost není taková, jaká se zdá! Nebo je to skutečná realita?"
 
 #: dat/effects/hypergate_enter.xml:2
 msgid "Hypergate Enter"
@@ -1696,16 +1694,12 @@ msgid "Exitting a hypergate!"
 msgstr "Opouštíte hyperbránu!"
 
 #: dat/effects/ionization.xml:2
-#, fuzzy
-#| msgid "An invitation"
 msgid "Ionization"
-msgstr "Pozvánka"
+msgstr "Ionizace"
 
 #: dat/effects/ionization.xml:3
-#, fuzzy
-#| msgid "Shields are being boosted."
 msgid "The ship is being ionized!"
-msgstr "Štíty jsou posíleny."
+msgstr "Loď je ionizovaná!"
 
 #: dat/effects/paralyzing_plasma.xml:2
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
@@ -1719,7 +1713,7 @@ msgstr "Plazma zpomaluje loď!"
 
 #: dat/effects/plasma_burn.xml:2
 msgid "Plasma Burn"
-msgstr "Plazmový požár"
+msgstr "Plazmový žár"
 
 #: dat/effects/plasma_burn.xml:3 dat/effects/plasma_burn_ii.xml:3
 msgid "Plasma is burning the ship!"
@@ -1727,27 +1721,27 @@ msgstr "Plazma spaluje loď!"
 
 #: dat/effects/plasma_burn_ii.xml:2
 msgid "Plasma Burn II"
-msgstr "Plazmový požár II"
+msgstr "Plazmový žár II"
 
 #: dat/effects/psychic_divinity.xml:2
 msgid "Psychic Divinity"
-msgstr ""
+msgstr "Psychické božství"
 
 #: dat/effects/psychic_orb_off.xml:2
 msgid "Psychic Orb Off"
-msgstr ""
+msgstr "Psychická koule vypnuta"
 
 #: dat/effects/psychic_orb_off.xml:3
 msgid "A psychic orb that is off."
-msgstr ""
+msgstr "Psychická koule, která je vypnutá."
 
 #: dat/effects/psychic_orb_on.xml:2
 msgid "Psychic Orb On"
-msgstr ""
+msgstr "Psychická koule zapnuta"
 
 #: dat/effects/psychic_orb_on.xml:3
 msgid "A psychic orb that is on."
-msgstr ""
+msgstr "Psychická koule, která je zapnutá."
 
 #: dat/effects/ride_of_the_valkyries.xml:2
 msgid "Ride of the Valkyries"
@@ -1803,7 +1797,8 @@ msgid ""
 "between the Za'lek and Sirius space. Organized crime at its finest."
 msgstr ""
 "Pirátský klan Černý Lotos je tvrdě organizovaný pirátský klan, který se "
-"nachází mezi Za'lek a Siriusem. Organizovaný zločin ve své nejlepší podobě."
+"nachází mezi vesmírem Za'lek a Sirius. Organizovaný zločin ve své nejlepší "
+"podobě."
 
 #: dat/factions/collective.xml:2
 msgid "Collective"
@@ -1823,19 +1818,19 @@ msgstr "Opuštěný"
 
 #: dat/factions/dreamer_clan.xml:2
 msgid "Dreamer Clan"
-msgstr "Dreamer Klan"
+msgstr "Klan Vizionářů"
 
 #: dat/factions/dreamer_clan.xml:5
 msgid "Dreamer Pirate Clan"
-msgstr "Klan pirátů Dreamer"
+msgstr "Pirátský klan Vizionářů"
 
 #: dat/factions/dreamer_clan.xml:12
 msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
-"Pirátský klan Dreamer se skládá z velké části z nespokojených pirátů z "
-"Pohraničí, otrávených terorismem FLF, Dvaered a tyranií Impéria."
+"Pirátský klan Vizionářů se skládá z velké části z nespokojených pirátů z "
+"Pohraničí, otrávených terorismem POF, Dvaered a tyranií Impéria."
 
 #: dat/factions/dummy.xml:2
 msgid "Dummy"
@@ -1887,13 +1882,15 @@ msgstr ""
 #: dat/factions/empire.xml:2 dat/scripts/common/empire.lua:15
 #: dat/scripts/common/empire.lua:20
 msgid "Empire"
-msgstr ""
+msgstr " Impérium"
 
 #: dat/factions/empire.xml:11
 msgid ""
 "The Empire is the bureaucratic heart of the universe that provides stability "
 "and cohesion, when possible."
 msgstr ""
+"Impérium je byrokratické srdce vesmíru, které zajišťuje stabilitu a "
+"soudržnost, pokud je to možné."
 
 #. FLF are not a natural enemy of the Empire, we have to enforce that
 #.
@@ -1911,47 +1908,53 @@ msgstr ""
 #: dat/factions/flf.xml:2 dat/events/flf/flf_catastrophe.lua:94
 #: dat/missions/flf/flf_common.lua:71
 msgid "FLF"
-msgstr ""
+msgstr "POF"
 
 #: dat/factions/flf.xml:5
 msgid "Frontier Liberation Front"
-msgstr "Pohraniční osvobozenecká fronta"
+msgstr "Pohraniční Osvobozenecká Fronta"
 
 #: dat/factions/flf.xml:11
 msgid ""
 "The Frontier Liberation Front is a group of terrorists advocating for the "
 "independence of the Frontier from Imperial tyranny."
 msgstr ""
+"Pohraniční Osvobozenecká Fronta je skupina teroristů, kteří prosazují "
+"nezávislost pohraničí na císařské tyranii."
 
 #: dat/factions/frontier.xml:2 dat/missions/flf/flf_common.lua:71
 msgid "Frontier"
-msgstr ""
+msgstr "Hranice"
 
 #: dat/factions/frontier.xml:6
 msgid "Frontier Alliance"
-msgstr ""
+msgstr "Hraniční aliance"
 
 #: dat/factions/frontier.xml:11
 msgid ""
 "The Frontier Alliance is formed by the survivors of the initial attempts of "
 "Human expansion into space."
 msgstr ""
+"Hraniční alianci tvoří lidé, kteří přežili první pokusy o expanzi člověka do "
+"vesmíru."
 
 #: dat/factions/goddard.xml:2 dat/ships/neutral/goddard.xml:2
 #: dat/ssys/goddard.xml:2 dat/events/dvaered/fwB_repay.lua:89
 msgid "Goddard"
-msgstr ""
+msgstr "Goddard"
 
 #: dat/factions/goddard.xml:7 dat/ships/dvaered/dvaered_goddard.xml:18
 #: dat/ships/neutral/goddard.xml:16 dat/events/dvaered/fwB_repay.lua:74
 msgid "House Goddard"
-msgstr ""
+msgstr "Rod Goddard"
 
 #: dat/factions/goddard.xml:12
 msgid ""
 "House Goddard is a minor house wedged between the Empire and Dvaered. They "
 "are one of the main fabricators of ships for the Dvaered."
 msgstr ""
+"Rod Goddardů je nevýznamný rod vklíněný mezi Říši a Dvaered. Je jedním z "
+"hlavních výrobců lodí pro Dvaered."
 
 #. Too many, so just wait a bit
 #. Spawn an enemy
@@ -1969,11 +1972,11 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gui.lua:142
 #: dat/missions/neutral/teenager.lua:95 dat/missions/taiomi/taiomi10.lua:137
 msgid "Independent"
-msgstr ""
+msgstr "Nezávislý"
 
 #: dat/factions/marauder.xml:2
 msgid "Marauder"
-msgstr ""
+msgstr "Nájezdník"
 
 #. Returns a lore message for the given faction.
 #. Need presence
@@ -1991,11 +1994,11 @@ msgstr ""
 #: dat/missions/tutorial/nelly02.lua:259 dat/scripts/common/pirate.lua:57
 #: dat/scripts/common/shadow.lua:28
 msgid "Pirate"
-msgstr ""
+msgstr "Pirát"
 
 #: dat/factions/marauder.xml:4
 msgid "Pirate Marauders"
-msgstr "Pirátští nájezdníci"
+msgstr "Pirátští Nájezdníci"
 
 #: dat/factions/marauder.xml:14
 msgid ""
@@ -2003,6 +2006,9 @@ msgid ""
 "aggressive and will attack most vessels unprovoked. Even the pirate clans "
 "have difficulty in dealing with them."
 msgstr ""
+"Pirátští Nájezdníci jsou nejnižší a nejpodlejší piráti. Jsou nesmírně "
+"agresivní a nevyprovokovaně zaútočí na většinu plavidel. Dokonce i pirátské "
+"klany mají problém se s nimi vypořádat."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -2080,19 +2086,19 @@ msgstr ""
 #: dat/missions/shark/sh02_tapping.lua:286
 #: dat/missions/shark/sh02_tapping.lua:291
 msgid "Mercenary"
-msgstr ""
+msgstr "Žoldák"
 
 #: dat/factions/miner.xml:2
 msgid "Miner"
-msgstr ""
+msgstr "Těžař"
 
 #: dat/factions/nasin.xml:2
 msgid "Nasin"
-msgstr ""
+msgstr "Nasin"
 
 #: dat/factions/pirate.xml:6
 msgid "Galactic Space Pirates"
-msgstr ""
+msgstr "Galaktičtí Vesmírní Piráti"
 
 #: dat/factions/pirate.xml:13
 msgid ""
@@ -2100,6 +2106,9 @@ msgid ""
 "affiliated with any particular clan. Due to their disorganized nature, they "
 "tend to respect the clans they operate near."
 msgstr ""
+"Galaktické Vesmírné Piráty tvoří nezávislá pirátská plavidla, která nejsou "
+"spojena s žádným konkrétním klanem. Vzhledem ke své neorganizovanosti mají "
+"tendenci respektovat klany, v jejichž blízkosti působí."
 
 #: dat/factions/proteron.xml:2 dat/ships/proteron/proteron_archimedes.xml:17
 #: dat/ships/proteron/proteron_dalton.xml:15
@@ -2109,11 +2118,11 @@ msgstr ""
 #: dat/ships/proteron/proteron_pythagoras.xml:16
 #: dat/ships/proteron/proteron_watson.xml:17
 msgid "Proteron"
-msgstr ""
+msgstr "Proteron"
 
 #: dat/factions/proteron.xml:5
 msgid "Sovereign Proteron Autarchy"
-msgstr ""
+msgstr "Svrchovaná Proteronská Autarchie"
 
 #: dat/factions/proteron.xml:11
 msgid ""
@@ -2121,20 +2130,25 @@ msgid ""
 "move and attack the Emperor himself. This caused the Incident and left the "
 "universe irreversibly ravaged."
 msgstr ""
+"Svrchovaná Proteronská Autarchie byla císařským velkostatkem, který se "
+"rozhodl přestěhovat a zaútočit na samotného císaře. To způsobilo Incident a "
+"zanechalo vesmír nenávratně zpustošený."
 
 #: dat/factions/raven_clan.xml:2
 msgid "Raven Clan"
-msgstr ""
+msgstr "Klan Havranů"
 
 #: dat/factions/raven_clan.xml:5
 msgid "Raven Pirate Clan"
-msgstr ""
+msgstr "Pirátský klan Havranů"
 
 #: dat/factions/raven_clan.xml:12
 msgid ""
 "The Raven Pirate Clan is a band of pirates that lead over the widespread "
 "Qorel sector between the Empire and Dvaered systems."
 msgstr ""
+"Pirátský klan Havranů je skupina pirátů, která vede rozsáhlý sektor Qorel "
+"mezi soustavami Impéria a Dvaered."
 
 #. --
 #. Functions for handling cinematic scenes.
@@ -2166,13 +2180,15 @@ msgstr "Sirius"
 
 #: dat/factions/sirius.xml:7 dat/events/dvaered/fwB_repay.lua:72
 msgid "House Sirius"
-msgstr ""
+msgstr "Rod Sirius"
 
 #: dat/factions/sirius.xml:12
 msgid ""
 "House Sirius is defined by its state religion more than anything else, with "
 "Sirichana as the focus of worship."
 msgstr ""
+"Dům Sirius je více než cokoli jiného definován svým státním náboženstvím, "
+"jehož ústředním bodem je Sirichana."
 
 #: dat/factions/soromid.xml:2 dat/ships/feral_bioship/kauweke.xml:23
 #: dat/ships/feral_bioship/nohinohi.xml:16
@@ -2184,11 +2200,11 @@ msgstr ""
 #: dat/ships/soromid/soromid_nyx.xml:14 dat/ships/soromid/soromid_odium.xml:15
 #: dat/ships/soromid/soromid_reaver.xml:13 dat/ships/soromid/soromid_vox.xml:17
 msgid "Soromid"
-msgstr ""
+msgstr "Soromid"
 
 #: dat/factions/soromid.xml:7
 msgid "Soromid Tribes"
-msgstr ""
+msgstr "Soromidské kmeny"
 
 #: dat/factions/soromid.xml:12
 msgid ""
@@ -2196,20 +2212,25 @@ msgid ""
 "themselves in order to survive a pandemic. They now openly embrace their "
 "human transcendence as a sign of strength."
 msgstr ""
+"Soromidové se skládají z jedinců, kteří byli nuceni se geneticky "
+"modifikovat, aby přežili pandemii. Nyní otevřeně přijímají svou lidskou "
+"transcendenci jako znamení síly."
 
 #: dat/factions/strangelove.xml:2
 msgid "Strangelove"
-msgstr ""
+msgstr "Divnoláska"
 
 #: dat/factions/thurion.xml:2
 msgid "Thurion"
-msgstr ""
+msgstr "Thurion"
 
 #: dat/factions/thurion.xml:10
 msgid ""
 "The Thurion are a mysterious faction located deep in the Nebula. They seem "
 "to be out of touch with the external world."
 msgstr ""
+"Thurioni jsou tajemná frakce, která se nachází hluboko v mlhovině. Zdá se, "
+"že jsou mimo kontakt s vnějším světem."
 
 #. Get a lore message
 #. Need a generic faction
@@ -2249,15 +2270,15 @@ msgstr ""
 #: dat/factions/trader.xml:2 dat/events/npc/trader.lua:60
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:48
 msgid "Trader"
-msgstr ""
+msgstr "Obchodník"
 
 #: dat/factions/traders_society.xml:2
 msgid "Traders Society"
-msgstr ""
+msgstr "Společnost obchodníků"
 
 #: dat/factions/traders_society.xml:5
 msgid "Space Traders Society"
-msgstr ""
+msgstr "Společnost Vesmírných Obchodníků"
 
 #: dat/factions/traders_society.xml:12
 msgid ""
@@ -2266,20 +2287,26 @@ msgid ""
 "Great Houses, and Soromid. Some of the prominent members include Astra "
 "Vigilis, Mining Vrata, and the Imperial Red Star."
 msgstr ""
+"Společnost Vesmírných Obchodníků je organizace, která zastřešuje všechny "
+"cechy a slouží k ochraně jejich zájmů proti Impériu, Velkým domům a "
+"Soromidům. Mezi významné členy patří Astra Vigilis, Mining Vrata a Císařská "
+"Rudá hvězda."
 
 #: dat/factions/wild_ones.xml:2 dat/scripts/common/minerva.lua:307
 msgid "Wild Ones"
-msgstr ""
+msgstr "Divocí"
 
 #: dat/factions/wild_ones.xml:5
 msgid "Wild Ones Pirate Clan"
-msgstr ""
+msgstr "Pirátský klan Divokých"
 
 #: dat/factions/wild_ones.xml:12
 msgid ""
 "The Wild Ones Pirate Clan is a violent and loosely organized band of pirates "
 "that control the Haven sector between Empire and Soromid territories."
 msgstr ""
+"Pirátský klan Divokých je násilná a volně organizovaná skupina pirátů, která "
+"ovládá sektor Haven mezi územím Impéria a Soromidů."
 
 #. Gets reset on enter system
 #. Must be goal system
@@ -2307,21 +2334,23 @@ msgstr ""
 #: dat/scripts/common/zalek_blackhole.lua:89
 #: dat/scripts/common/zalek_physics.lua:32
 msgid "Za'lek"
-msgstr ""
+msgstr "Za'lek"
 
 #: dat/factions/zalek.xml:7
 msgid "House Za'lek"
-msgstr ""
+msgstr "Rod Za'lek"
 
 #: dat/factions/zalek.xml:12
 msgid ""
 "House Za'lek is the scientific heart of the Empire. Until recently they were "
 "a secretive Great House, but they have recently become much more open."
 msgstr ""
+"Dům Za'lek je vědeckým srdcem Impéria. Donedávna byl tajnůstkářským "
+"velkorodem, ale v poslední době je mnohem otevřenější."
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
-msgstr ""
+msgstr "Osvěžovač vzduchu"
 
 #: dat/outfits/accessory/air_freshener.xml:5
 #: dat/outfits/accessory/black_cat_doll.xml:5
@@ -2348,7 +2377,7 @@ msgstr ""
 #: dat/outfits/accessory/ugly_statue.xml:5
 #: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots/accessory.xml:3
 msgid "Accessory"
-msgstr ""
+msgstr "Příslušenství"
 
 #: dat/outfits/accessory/air_freshener.xml:11
 msgid ""
@@ -2357,25 +2386,30 @@ msgid ""
 "modern ships' powerful filtration systems, these days they are entirely "
 "cosmetic."
 msgstr ""
+"Osvěžovače vzduchu se zřejmě tradičně používají v lidských vozidlech jako "
+"ozdoby. Dříve se používaly vůně, ale protože ty nemají žádný vliv na výkonné "
+"filtrační systémy moderních lodí, jsou dnes výhradně kosmetické."
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
 msgid "Black Cat Doll"
-msgstr ""
+msgstr "Panenka Black Cat"
 
 #: dat/outfits/accessory/black_cat_doll.xml:11
 msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
 "that was all over your ship. It's quite cute."
 msgstr ""
+"Hrubá panenka černé kočky z pravé kožešiny \"Felis catus\", kterou jste "
+"vyrobili a která byla všude na vaší lodi. Je docela roztomilá."
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
 msgid "#pOnly active when in stealth.#0"
-msgstr ""
+msgstr "#pAktivní pouze v režimu stealth.#0"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:2
 msgid "Broken Nebular Shielding Prototype"
-msgstr ""
+msgstr "Prototyp rozbitého mlhovinového štítu"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:11
 msgid ""
@@ -2384,10 +2418,13 @@ msgid ""
 "On the other hand it does seem to absorb harmful energy and emit heat "
 "radiation into space."
 msgstr ""
+"Rozbitý prototyp nového mlhovinového štítu, které má umožnit cestování do "
+"mlhoviny Sol. Kvůli jeho poruše jste však málem zemřeli. Na druhou stranu se "
+"zdá, že pohlcuje škodlivou energii a vyzařuje do vesmíru tepelné záření."
 
 #: dat/outfits/accessory/commemorative_stein.xml:2
 msgid "Commemorative Stein"
-msgstr ""
+msgstr "Pamětní Stein"
 
 #: dat/outfits/accessory/commemorative_stein.xml:11
 msgid ""
@@ -2399,20 +2436,28 @@ msgid ""
 "there is an inscription saying \"Screw the PUAAA, long live the Hero of "
 "Antlejos!\" with an illegible signature."
 msgstr ""
+"Jedná se o stein připomínající terraformaci a založení stálé kolonie na "
+"Antlejosu V. Na steinu jsou mistrně vyryty výjevy, které se zdají být výjevy "
+"z krátké historie kolonie. Je na něm vidět, jak někteří lidé zápasí, spousta "
+"těžkých strojů a lidé tančící jakýsi kruhový tanec. Stalo se to všechno? Na "
+"spodní straně je nápis \"Kašlu na PUAAA, ať žije hrdina Antlejosu!\" s "
+"nečitelným podpisem."
 
 #: dat/outfits/accessory/cyborg_feather.xml:2
 msgid "Cyborg Feather"
-msgstr ""
+msgstr "Kyborgské pírko"
 
 #: dat/outfits/accessory/cyborg_feather.xml:11
 msgid ""
 "A feather from a cyborg duck. Although the quill is made of some lightweight "
 "metal alloy, the rest looks surisingly close to anormal feather."
 msgstr ""
+"Pírko z kyborgské kachny. Ačkoli je peří vyrobeno z lehké kovové slitiny, "
+"zbytek se překvapivě podobá normálnímu peří."
 
 #: dat/outfits/accessory/dv_handbook.xml:2
 msgid "Handbook for Dvaered Good Manners"
-msgstr ""
+msgstr "Příručka dobrých mravů Dvaeredů"
 
 #: dat/outfits/accessory/dv_handbook.xml:11
 msgid ""
@@ -2425,10 +2470,17 @@ msgid ""
 "highest ranks\" -- Colonel Urnus, Executive Office Manager at the High "
 "Command"
 msgstr ""
+"Kdy gentleman používá hlavu jiného gentlemana jako trofej ve své koupelně? A "
+"kdy je vhodnější použít ji jako hrnek? Kdy je dovoleno zapálit dům jedné ze "
+"svých obětí? A kdy je to absolutní přešlap? Na tyto palčivé otázky a mnohé "
+"další odpovídá v této nezbytné malé knize Lord Chainsaw, jeden z "
+"nejúspěšnějších válečníků naší doby. \"Tato kniha mi umožnila rychle se "
+"propracovat do nejvyšších pozic.\" -- Plukovník Urnus, vedoucí výkonné "
+"kanceláře vrchního velení"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
 msgid "Fuzzy Dice"
-msgstr ""
+msgstr "Chlupaté kostky"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:11
 msgid ""
@@ -2437,17 +2489,18 @@ msgid ""
 "belonged to starship pilot Mireia, who was famous for recovering artefacts "
 "from the Nebula before she disappeared mysteriously."
 msgstr ""
+"Pár chlupatých kostek, které lze zavěsit do lodi. Zřejmě vám mají přinést "
+"štěstí. Tento konkrétní pár prý patřil pilotce hvězdné lodi Mireii, která se "
+"proslavila vyzvedáváním artefaktů z mlhoviny, než záhadně zmizela."
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
 #: dat/outfits/intrinsic/machiavellian_fortune.xml:10
 msgid "#pImproves luck!#0"
-msgstr ""
+msgstr "#pZvyšuje štěstí!#0"
 
 #: dat/outfits/accessory/goatee_marker.xml:2
-#, fuzzy
-#| msgid "Pirate Marauders"
 msgid "Goatee Marker"
-msgstr "Pirátští nájezdníci"
+msgstr "Fix na kozí bradky"
 
 #: dat/outfits/accessory/goatee_marker.xml:11
 msgid ""
@@ -2455,19 +2508,23 @@ msgid ""
 "facial hair, but Goatees in particular. It seems to have been partially used "
 "and has the marauder logo on the bottom."
 msgstr ""
+"Vzácná limitovaná edice fixu na kozí bradku, která je určena výhradně pro "
+"kreslení nejen vousů, ale zejména kozí bradky. Zdá se, že byl částečně "
+"použit a na spodní straně má logo Nájezdníků."
 
 #: dat/outfits/accessory/key_chain.xml:2
 msgid "Fancy Key Chain"
-msgstr ""
+msgstr "Ozdobný řetízek na klíče"
 
 #: dat/outfits/accessory/key_chain.xml:11
 msgid ""
 "A small statue of a crossed-eyed gorilla lifting a Goddard Battlecruiser."
 msgstr ""
+"Malá soška gorily se zkříženýma očima, která zvedá bitevní křižník Goddard."
 
 #: dat/outfits/accessory/left_boot.xml:2
 msgid "Left Boot"
-msgstr ""
+msgstr "Levá bota"
 
 #: dat/outfits/accessory/left_boot.xml:11
 msgid ""
@@ -2475,14 +2532,16 @@ msgid ""
 "and is full of confetti. You're not sure what to do with it, but it might "
 "liven up the ship."
 msgstr ""
+"Levá bota vysoce postaveného úředníka Říše. Zdá se, že ti nesedí a je plná "
+"konfet. Nejsi si jistý, co s ní máš dělat, ale mohla by zkrášlit loď."
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#pSmells funky.#0"
-msgstr ""
+msgstr "#pVoní funky.#0"
 
 #: dat/outfits/accessory/love_letter.xml:2
 msgid "Love Letter"
-msgstr ""
+msgstr "Milostný dopis"
 
 #: dat/outfits/accessory/love_letter.xml:11
 msgid ""
@@ -2491,22 +2550,26 @@ msgid ""
 "fairly certain that you did a favour in not delivering it. At least it makes "
 "your ship look cuter."
 msgstr ""
+"Ztracený milostný dopis, který jste měli doručit, a po přečtení prvního "
+"řádku \"Moje tootle pumpy, jak úžasné jsou ty plucker pumpičky...\" jste si "
+"docela jistí, že jste udělali laskavost, když jste ho nedoručili. Alespoň "
+"vaše loď vypadá roztomileji."
 
 #: dat/outfits/accessory/love_letter.xml:13
 msgid "#rLove is in the air.#0"
-msgstr ""
+msgstr "#rLáska je ve vzduchu.#0"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:2
 msgid "Pentagram of Valor"
-msgstr ""
+msgstr "Pentagram Statečnosti"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:11
 msgid "A token of commitment to the FLF cause. It smells oddly of fish."
-msgstr ""
+msgstr "Důkaz závazku vůči POF. Je podivně cítit rybinou."
 
 #: dat/outfits/accessory/pilot_doll.xml:2
 msgid "Pilot Doll"
-msgstr ""
+msgstr "Panenka Pilota"
 
 #: dat/outfits/accessory/pilot_doll.xml:11
 msgid ""
@@ -2514,20 +2577,24 @@ msgid ""
 "to be you, but it looks nothing like you at all. However, what is important "
 "here is the intention and not the result."
 msgstr ""
+"Panenka vyrobená sirotky z jejich starého oblečení. Věříš, že to máš být ty, "
+"ale vůbec se ti nepodobá. Důležitý je zde však záměr, nikoliv výsledek."
 
 #: dat/outfits/accessory/racing_trophy.xml:2
 msgid "Racing Trophy"
-msgstr ""
+msgstr "Závodní trofej"
 
 #: dat/outfits/accessory/racing_trophy.xml:11
 msgid ""
 "Racing trophy you won with your excellent piloting skills. Looks great on "
 "the wall!"
 msgstr ""
+"Závodní trofej jsi získal díky svým skvělým pilotním dovednostem. Na zdi "
+"vypadá skvěle!"
 
 #: dat/outfits/accessory/rackham_razor.xml:2
 msgid "Rackham's Razor"
-msgstr ""
+msgstr "Rackhamova břitva"
 
 #: dat/outfits/accessory/rackham_razor.xml:11
 msgid ""
@@ -2536,14 +2603,18 @@ msgid ""
 "mere sight of this sword struck fear into his enemies and rallied his crew "
 "with visions of plunder and glory."
 msgstr ""
+"Zdobený meč s lehce zakřivenou čepelí z nanoocele ostrou jako břitva, "
+"oblíbená zbraň kdysi legendárního piráta Reda Rackhama. Pouhý pohled na "
+"tento meč naháněl strach jeho nepřátelům a povzbuzoval jeho posádku vidinou "
+"drancování a slávy."
 
 #: dat/outfits/accessory/rackham_razor.xml:13
 msgid "#gDouble effect when flying a pirate ship.#0"
-msgstr ""
+msgstr "#gDvojí efekt při letu na pirátské lodi.#0"
 
 #: dat/outfits/accessory/sandwich_holder.xml:2
 msgid "Sandwich Holder"
-msgstr ""
+msgstr "Držák na sendviče"
 
 #: dat/outfits/accessory/sandwich_holder.xml:11
 msgid ""
@@ -2551,40 +2622,49 @@ msgid ""
 "useful for hands-free eating of sandwiches in zero gravity. Apparently the "
 "CEO really loves his sandwiches."
 msgstr ""
+"Zdá se, že se jedná o limitovanou edici držáku sendvičů Nexus Shipyards. "
+"Velmi užitečné pro konzumaci sendvičů bez použití rukou v beztíži. Generální "
+"ředitel má zřejmě sendviče opravdu rád."
 
 #: dat/outfits/accessory/satellite_mockup.xml:2
 msgid "Satellite Mock-up"
-msgstr ""
+msgstr "Maketa satelitu"
 
 #: dat/outfits/accessory/satellite_mockup.xml:11
 msgid ""
 "A mock-up of a satellite you helped launch into the Nebula. It even has cute "
 "blinking lights!"
 msgstr ""
+"Maketa satelitu, který jste pomohli vypustit do mlhoviny. Má dokonce "
+"roztomilá blikající světýlka!"
 
 #: dat/outfits/accessory/star_of_valor.xml:2
 msgid "Star of Valor"
-msgstr ""
+msgstr "Hvězda statečnosti"
 
 #: dat/outfits/accessory/star_of_valor.xml:11
 msgid ""
 "A shiny medal for your contribution to the Dvaered cause. On the back it "
 "says \"not for rectal use\". Wait, what?"
 msgstr ""
+"Lesklá medaile za vaši podporu věci Dvaeredu. Na zadní straně je napsáno "
+"\"není určeno k rektálnímu použití\". Počkat, cože?"
 
 #: dat/outfits/accessory/swamp_bombing.xml:2
 msgid "Swamp Bombing"
-msgstr ""
+msgstr "Bažinatá Bomba"
 
 #: dat/outfits/accessory/swamp_bombing.xml:11
 msgid ""
 "A fairly mediocre cocktail that you don't intend to drink. At least it looks "
 "good as an accessory."
 msgstr ""
+"Poměrně průměrný koktejl, který nemáte v úmyslu vypít. Alespoň vypadá dobře "
+"jako doplněk."
 
 #: dat/outfits/accessory/toy_drone.xml:2
 msgid "Toy Drone"
-msgstr ""
+msgstr "Dron na hraní"
 
 #: dat/outfits/accessory/toy_drone.xml:11
 msgid ""
@@ -2592,10 +2672,13 @@ msgid ""
 "too well and it has a habit of bumping into the walls and beeping all the "
 "time, but it is rather cute."
 msgstr ""
+"Malý dron na hraní, který může létat kolem lodi. Zdá se, že umělá "
+"inteligence nefunguje příliš dobře a má ve zvyku neustále narážet do stěn a "
+"pípat, ale je docela roztomilý."
 
 #: dat/outfits/accessory/trading_card_common.xml:2
 msgid "Trading Card (Common)"
-msgstr ""
+msgstr "Sběratelská karta (obyčejná)"
 
 #: dat/outfits/accessory/trading_card_common.xml:11
 msgid ""
@@ -2604,10 +2687,13 @@ msgid ""
 "the Hyena put so much strain on the pilots that it could crush them during "
 "high acceleration?"
 msgstr ""
+"Karta #oHyena#0 pro obchodní karetní hru s běžnou vzácností. Podrobně "
+"popisuje všechny důležité statistiky hyeny. Věděli jste, že rané modely "
+"Hyeny zatěžovaly piloty natolik, že je mohly při vysoké akceleraci rozdrtit?"
 
 #: dat/outfits/accessory/trading_card_rare.xml:2
 msgid "Trading Card (Rare)"
-msgstr ""
+msgstr "Sběratelská karta (vzácná)"
 
 #: dat/outfits/accessory/trading_card_rare.xml:11
 msgid ""
@@ -2615,10 +2701,13 @@ msgid ""
 "going into the important details of the ship, it just shows a high "
 "definition holographic rendition of the supposed Golden Llama."
 msgstr ""
+"Karta #oZlatá Llama#0 pro obchodní karetní hru se vzácností #pvzácná#0. "
+"Místo toho, aby se věnovala důležitým detailům lodi, zobrazuje pouze "
+"holografické ztvárnění údajné Zlaté Llamy ve vysokém rozlišení."
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:2
 msgid "Trading Card (Uncommon)"
-msgstr ""
+msgstr "Sběratelská karta (neobvyklá)"
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:11
 msgid ""
@@ -2628,10 +2717,15 @@ msgid ""
 "allowing the crew to man it past damage that would usually incapacitate "
 "normal ships?"
 msgstr ""
+"Karta #oDvaered Vigilance#0 obchodní karetní hry se vzácností #bneobvyklá#0. "
+"Podrobně popisuje všechny důležité statistiky Dvaered Vigilance. Věděli "
+"jste, že Vigilance má trojnásobně redundantní systémy podpory života, které "
+"umožňují posádce překonat poškození, která by normální lodě obvykle vyřadila "
+"z provozu?"
 
 #: dat/outfits/accessory/ugly_statue.xml:2
 msgid "Ugly Statue"
-msgstr ""
+msgstr "Ošklivá socha"
 
 #: dat/outfits/accessory/ugly_statue.xml:11
 msgid ""
@@ -2641,10 +2735,14 @@ msgid ""
 "ukulele and its head bobbles around with the ship acceleration. How "
 "tasteful..."
 msgstr ""
+"Soška, kterou vám věnoval baron Sauterfeldt za vaši skvělou práci. Cítil by "
+"ses vděčnější, kdyby se nezmínil, že ho jeho milenka nutí, aby se jí zbavil. "
+"Zdá se, že socha zobrazuje krevetu v motýlku, která hraje na ukulele, a její "
+"hlava se pohupuje se zrychlením lodi. Jak vkusné..."
 
 #: dat/outfits/accessory/vacuum_cleaner.xml:2
 msgid "Vacuum Cleaner?"
-msgstr ""
+msgstr "Vysavač?"
 
 #: dat/outfits/accessory/vacuum_cleaner.xml:11
 msgid ""
@@ -2653,11 +2751,14 @@ msgid ""
 "most certainly not an actual vacuum cleaner, but you don't know this "
 "outfit's real name."
 msgstr ""
+"Nalezen na stíhačce Four Winds, která nesla paprsek Ragnarok. Zdá se, že při "
+"vysoké hmotnosti lodi zvyšuje výkon motoru. Rozhodně to není skutečný "
+"vysavač, ale pravé jméno tohoto vybavení neznáte."
 
 #: dat/outfits/bioship/skills/adaptive_jump.xml:2
 #: dat/scripts/bioship/skills.lua:309
 msgid "Adaptive Jump"
-msgstr ""
+msgstr "Adaptivní skok"
 
 #: dat/outfits/bioship/skills/adaptive_jump.xml:4
 #: dat/outfits/bioship/skills/adrenal_gland_i.xml:4
@@ -2691,7 +2792,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:4
 #: dat/outfits/bioship/skills/wanderer.xml:4
 msgid "Bioship Organ"
-msgstr ""
+msgstr "Orgány Biolodi"
 
 #. Movement skill tree
 #. Only for up to destroyers
@@ -2699,7 +2800,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/adrenal_gland_i.xml:2
 #: dat/scripts/bioship/skills.lua:66
 msgid "Adrenal Gland I"
-msgstr ""
+msgstr "Adrenální žláza I"
 
 #: dat/outfits/bioship/skills/adrenal_gland_i.xml:9
 #: dat/outfits/bioship/skills/adrenal_gland_ii.xml:9
@@ -2709,21 +2810,23 @@ msgid ""
 "adrenaline from raw energy, allowing the ship to temporarily have augmented "
 "movement."
 msgstr ""
+"Orgán adrenální žlázy biolodi je schopen generovat obrovské množství "
+"adrenalinu ze surové energie, což lodi umožňuje dočasně zvýšit pohyblivost."
 
 #: dat/outfits/bioship/skills/adrenal_gland_ii.xml:2
 #: dat/scripts/bioship/skills.lua:84
 msgid "Adrenal Gland II"
-msgstr ""
+msgstr "Adrenální žláza II"
 
 #: dat/outfits/bioship/skills/adrenal_gland_iii.xml:2
 #: dat/scripts/bioship/skills.lua:102
 msgid "Adrenal Gland III"
-msgstr "Adrenal Gland III"
+msgstr "Adrenální žláza III"
 
 #: dat/outfits/bioship/skills/adrenaline_hormones.xml:2
 #: dat/scripts/bioship/skills.lua:208
 msgid "Adrenaline Hormones"
-msgstr ""
+msgstr "Adrenální hormony"
 
 #. Health tree
 #. For everyone!
@@ -2731,7 +2834,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/bulky_abdomen.xml:2
 #: dat/scripts/bioship/skills.lua:155
 msgid "Bulky Abdomen"
-msgstr ""
+msgstr "Objemná břišní dutina"
 
 #. Misc tree
 #. For everyone!
@@ -2739,7 +2842,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/cargo_sacs.xml:2
 #: dat/scripts/bioship/skills.lua:294
 msgid "Cargo Sacs"
-msgstr ""
+msgstr "Nákladní vaky"
 
 #. Stealth skill tree
 #. For up to destroyer
@@ -2747,7 +2850,7 @@ msgstr ""
 #: dat/outfits/bioship/skills/compound_eyes.xml:2
 #: dat/scripts/bioship/skills.lua:118
 msgid "Compound Eyes"
-msgstr ""
+msgstr "Složené oči"
 
 #. Plasma tree
 #. For everyone!
@@ -2755,17 +2858,17 @@ msgstr ""
 #: dat/outfits/bioship/skills/corrosion_i.xml:2
 #: dat/scripts/bioship/skills.lua:248
 msgid "Corrosion I"
-msgstr ""
+msgstr "Koroze I"
 
 #: dat/outfits/bioship/skills/corrosion_ii.xml:2
 #: dat/scripts/bioship/skills.lua:271
 msgid "Corrosion II"
-msgstr "Corrosion II"
+msgstr "Koroze II"
 
 #: dat/outfits/bioship/skills/enhanced_smell.xml:2
 #: dat/scripts/bioship/skills.lua:317
 msgid "Enhanced Smell"
-msgstr ""
+msgstr "Vylepšený čich"
 
 #: dat/outfits/bioship/skills/feral_rage_i.xml:9
 msgid ""
@@ -2774,16 +2877,19 @@ msgid ""
 "output is significantly increased. Armour damage is needed to enter the "
 "trance-like state."
 msgstr ""
+"Pečlivou manipulací s mozkovým kmenem lze biolodě přivést do primitivního "
+"stavu divoké zuřivosti, kdy se výrazně zvýší výkon předních a věžových "
+"zbraní. Pro vstup do stavu transu je nutné poškození pancíře."
 
 #: dat/outfits/bioship/skills/feral_rage_i.xml:11
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:11
 msgid "Active for 5 seconds since armour was last damaged."
-msgstr ""
+msgstr "Aktivní po dobu 5 sekund od posledního poškození zbroje."
 
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:2
 #: dat/scripts/bioship/skills.lua:216
 msgid "Feral Rage II"
-msgstr ""
+msgstr "Divoký hněv II"
 
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:9
 msgid ""
@@ -2793,11 +2899,15 @@ msgid ""
 "trance-like state. Further coupling with the cerebellum allows the trance to "
 "also increase the ship agility temporarily."
 msgstr ""
+"Pečlivou manipulací s mozkovým kmenem lze biolodě přivést do primitivního "
+"stavu divoké zuřivosti, kdy se výrazně zvýší výkon předních a věžových "
+"zbraní. Pro vstup do stavu transu je nutné poškození pancíře. Další spojení "
+"s mozečkem umožňuje v transu také dočasně zvýšit obratnost lodi."
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:2
 #: dat/scripts/bioship/skills.lua:233
 msgid "Feral Rage III"
-msgstr ""
+msgstr "Divoký hněv III"
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:9
 msgid ""
@@ -2808,61 +2918,70 @@ msgid ""
 "is induced automaticalyl upon armour damage, but can also be manually "
 "triggered through focusing."
 msgstr ""
+"Pečlivou manipulací s mozkovým kmenem lze biolodě přivést do primitivního "
+"stavu divoké zuřivosti, kdy se výrazně zvýší výkon předních a věžových "
+"zbraní. Další propojení s mozečkem umožňuje v transu dočasně zvýšit také "
+"obratnost lodi. Tranz se vyvolává automaticky při poškození pancíře, ale lze "
+"jej vyvolat i ručně soustředěním."
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:11
 msgid ""
 "Active for 7 seconds since armour was last damaged, or can be manually "
 "toggled with a 30 second cooldown."
 msgstr ""
+"Aktivní po dobu 7 sekund od posledního poškození zbroje nebo lze přepnout "
+"ručně s 30sekundovým chladnutím."
 
 #: dat/outfits/bioship/skills/fuel_bladder.xml:2
 #: dat/scripts/bioship/skills.lua:301
 msgid "Fuel Bladder"
-msgstr ""
+msgstr "Palivový zásobník"
 
 #: dat/outfits/bioship/skills/hard_shell.xml:2
 #: dat/scripts/bioship/skills.lua:170
 msgid "Hard Shell"
-msgstr ""
+msgstr "Tvrdý krunýř"
 
 #: dat/outfits/bioship/skills/hunters_instinct.xml:2
 #: dat/scripts/bioship/skills.lua:125
 msgid "Hunter's Instinct"
-msgstr ""
+msgstr "Lovecký instinkt"
 
 #: dat/outfits/bioship/skills/natural_healing_i.xml:2
 #: dat/scripts/bioship/skills.lua:162
 msgid "Natural Healing I"
-msgstr ""
+msgstr "Přírodní léčba I"
 
 #: dat/outfits/bioship/skills/natural_healing_ii.xml:2
 #: dat/scripts/bioship/skills.lua:178
 msgid "Natural Healing II"
-msgstr ""
+msgstr "Přírodní léčba II"
 
 #: dat/outfits/bioship/skills/plasma_burst.xml:2
 #: dat/scripts/bioship/skills.lua:279
 msgid "Plasma Burst"
-msgstr ""
+msgstr "Plazmový výbuch"
 
 #: dat/outfits/bioship/skills/plasma_burst.xml:11
 msgid "Deals 300 plasma damage to all hostile ships in 200 range."
-msgstr ""
+msgstr "Způsobí 300 poškození plazmou všem nepřátelským lodím v dosahu 200."
 
 #: dat/outfits/bioship/skills/reflective_shell.xml:2
 #: dat/scripts/bioship/skills.lua:186
 msgid "Reflective Shell"
-msgstr ""
+msgstr "Reflexní krunýř"
 
 #: dat/outfits/bioship/skills/reflective_shell.xml:11
 msgid ""
 "Reflect 5% of damage back to attackers. Reflected damage is affected by "
 "turret damage bonus."
 msgstr ""
+"Odrazí 5 % poškození zpět k útočníkům. Odražené poškození je ovlivněno "
+"bonusem k poškození věže."
 
 #: dat/outfits/bioship/skills/silence.xml:2 dat/scripts/bioship/skills.lua:141
 msgid "Silence"
-msgstr ""
+msgstr "Ticho"
 
 #: dat/outfits/bioship/skills/the_bite.xml:2 dat/scripts/bioship/skills.lua:21
 msgid "The Bite"
@@ -2870,28 +2989,28 @@ msgstr "Kousnutí"
 
 #: dat/outfits/bioship/skills/the_bite_blood_lust.xml:2
 msgid "The Bite - Blood Lust"
-msgstr ""
+msgstr "Kousnutí - Krvavá touha"
 
 #: dat/outfits/bioship/skills/the_bite_improved.xml:2
 msgid "The Bite - Improved"
-msgstr ""
+msgstr "Kousnutí - vylepšené"
 
 #: dat/outfits/bioship/skills/tracking_antennae.xml:2
 msgid "Tracking Antennae"
-msgstr ""
+msgstr "Sledovací anténa"
 
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:2
 #: dat/scripts/bioship/skills.lua:325
 msgid "Tunnelling Organ"
-msgstr ""
+msgstr "Tunelovací orgány"
 
 #: dat/outfits/bioship/skills/wanderer.xml:2 dat/scripts/bioship/skills.lua:94
 msgid "Wanderer"
-msgstr ""
+msgstr "Poutník"
 
 #: dat/outfits/core_engine/dummy_engine.xml:2
 msgid "Dummy Engine"
-msgstr ""
+msgstr "Atrapa motoru"
 
 #: dat/outfits/core_engine/dummy_engine.xml:4
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:4
@@ -2916,17 +3035,19 @@ msgstr ""
 #: dat/outfits/core_engine/small/unicorp_hawk_360_engine.xml:4
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:4
 msgid "Core Systems (Engine)"
-msgstr ""
+msgstr "Základní systémy (motor)"
 
 #: dat/outfits/core_engine/dummy_engine.xml:9
 msgid ""
 "This is a dummy engine for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
+"Jedná se o fiktivní motor určený pouze pro použití v misích, který nic "
+"nedělá. NEKUPUJTE."
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
-msgstr ""
+msgstr "Opotřebovaný velký motor"
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:9
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:9
@@ -2935,10 +3056,12 @@ msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
 msgstr ""
+"Tento motor, který je zanesený, zkorodovaný a popraskaný všemi možnými "
+"způsoby a přitom stále funkční, skutečně patří do šrotu."
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:2
 msgid "Krain Remige Engine"
-msgstr ""
+msgstr "Krain Remige Motor"
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:9
 msgid ""
@@ -2947,10 +3070,14 @@ msgid ""
 "performance exceeding most other cruiser engines in every respect, though "
 "its tuning renders it ill-suited to heavier vessels."
 msgstr ""
+"Remige vyvinula společnost Krain Industries výhradně pro svůj vlajkový "
+"křižník Kestrel. Motor Remige, optimalizovaný pro potřeby křižníku Kestrel, "
+"dosahuje ve všech ohledech vyššího výkonu než většina ostatních křižníkových "
+"motorů, ačkoli je díky svému vyladění nevhodný pro těžší plavidla."
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:2
 msgid "Melendez Mammoth XL Engine"
-msgstr ""
+msgstr "Melendez Mammoth XL Motor"
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:10
 msgid ""
@@ -2959,10 +3086,14 @@ msgid ""
 "the galaxy, whether in the form of bulk freight or as the primary engine of "
 "a fully-equipped battlecruiser."
 msgstr ""
+"Největší motor, který Melendez vyrábí, Mamut XL má jen malou konkurenci, "
+"pokud jde o přepravu obrovského množství hmoty po galaxii, ať už ve formě "
+"hromadného nákladu, nebo jako hlavní motor plně vybaveného bitevního "
+"křižníku."
 
 #: dat/outfits/core_engine/large/nexus_bolt_3000_engine.xml:2
 msgid "Nexus Bolt 3000 Engine"
-msgstr ""
+msgstr "Nexus Bolt 3000 Motor"
 
 #: dat/outfits/core_engine/large/nexus_bolt_3000_engine.xml:9
 msgid ""
@@ -2970,10 +3101,13 @@ msgid ""
 "Like most Nexus engines, it doesn't excel in speed, but its low power "
 "consumption makes it an attractive option for some pilots."
 msgstr ""
+"Bolt 3000 je poněkud neobvykle používaný motor určený pro cestovní lodě. "
+"Stejně jako většina motorů Nexus nevyniká rychlostí, ale jeho nízká spotřeba "
+"energie z něj činí pro některé piloty atraktivní volbu."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
-msgstr ""
+msgstr "Tricon Typhoon Motor"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:9
 msgid ""
@@ -2982,10 +3116,14 @@ msgid ""
 "of many captains, though its high power consumption limits it to ships with "
 "powerful reactors."
 msgstr ""
+"Vývoj motoru Typhoon byl pro společnost Tricon do jisté míry prestižním "
+"projektem. Motor poskytuje křižníkům vynikající ovladatelnost a rychlost a "
+"je oblíbený u mnoha kapitánů, ačkoli jeho vysoká spotřeba energie jej "
+"omezuje na lodě s výkonnými reaktory."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
 msgid "Tricon Typhoon II Engine"
-msgstr ""
+msgstr "Tricon Typhoon II Motor"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:10
 msgid ""
@@ -2994,10 +3132,14 @@ msgid ""
 "markedly higher than anything in its class, but most captains are willing to "
 "make the trade for superior manoeuvrability"
 msgstr ""
+"Typhoon II je největší vyráběný motor Tricon a na motor pro velkokapacitní "
+"lodě má překvapivě vysoký výkon. Jeho spotřeba energie je výrazně vyšší než "
+"u jiných strojů této třídy, ale většina kapitánů je ochotna tuto výhodu "
+"vyměnit za lepší manévrovací schopnosti"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_6500_engine.xml:2
 msgid "Unicorp Eagle 6500 Engine"
-msgstr ""
+msgstr "Unicorp Eagle 6500 Motor"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_6500_engine.xml:10
 msgid ""
@@ -3007,14 +3149,19 @@ msgid ""
 "and its efficiency makes it an attractive option for heavy cruisers that "
 "need as much battery power for their weapons as possible."
 msgstr ""
+"Eagle 6500 je největší a nejvýkonnější motor společnosti Unicorp, i když se "
+"pravděpodobně nejedná o vlajkový model. Jeho relativně nízká cena ho činí "
+"atraktivním pro kapitány s omezeným rozpočtem, pokud nemají příliš vysoké "
+"nároky na výkon, a jeho účinnost z něj dělá atraktivní volbu pro těžké "
+"křižníky, které potřebují co nejvíce energie pro své zbraně."
 
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:2
 msgid "Beat Up Medium Engine"
-msgstr ""
+msgstr "Opotřebovaný střední motor"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:2
 msgid "Krain Patagium Engine"
-msgstr ""
+msgstr "Krain Patagium Motor"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:10
 msgid ""
@@ -3023,10 +3170,14 @@ msgid ""
 "terms of maximum speed and manouverability, the engine is not adequate for "
 "most other destroyers due to their higher mass."
 msgstr ""
+"Patagium je stíhací motor vyvinutý společností Krain Industries pro použití "
+"v lodi Starbridge. Ačkoli jeho výkon převyšuje ostatní motory torpédoborců, "
+"pokud jde o maximální rychlost a manévrovací schopnosti, motor není pro "
+"většinu ostatních torpédoborců vhodný kvůli jejich vyšší hmotnosti."
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:2
 msgid "Melendez Buffalo XL Engine"
-msgstr ""
+msgstr "Melendez Buffalo XL Motor"
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:10
 msgid ""
@@ -3035,10 +3186,14 @@ msgid ""
 "in its size class, and more than a few combat vessels rely on it to move "
 "them and their arsenals into battle."
 msgstr ""
+"Buffalo XL je základním modelem mezi středně velkými nákladními letadly, "
+"zejména těmi, která přepravují objemný náklad. Jeho značný výkon mu ve své "
+"velikostní třídě ponechává jen málo konkurentů a více než několik bojových "
+"plavidel se na něj spoléhá při přesunu do bitvy."
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:2
 msgid "Nexus Arrow 700 Engine"
-msgstr ""
+msgstr "Nexus Arrow 700 Motor"
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:9
 msgid ""
@@ -3046,10 +3201,12 @@ msgid ""
 "giving captains decent manouverability without leeching too much off of the "
 "ship's reactors."
 msgstr ""
+"Arrow 700 je slušný motor pro korvety za slušnou cenu, který kapitánům "
+"poskytuje slušnou ovladatelnost, aniž by příliš zatěžoval reaktory lodi."
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:2
 msgid "Tricon Cyclone Engine"
-msgstr ""
+msgstr "Tricon Cyclone Motor"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:9
 msgid ""
@@ -3057,10 +3214,13 @@ msgid ""
 "engines with superb performance. Many large navies and wealthier mercenaries "
 "employ the Cyclone in their corvettes."
 msgstr ""
+"Motor Cyclone od společnosti Tricon si udržuje pověst prémiových motorů s "
+"vynikajícím výkonem. Mnoho velkých námořních sil a bohatších žoldnéřů "
+"používá Cyclone ve svých korvetách."
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:2
 msgid "Tricon Cyclone II Engine"
-msgstr ""
+msgstr "Tricon Cyclone II Motor"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:10
 msgid ""
@@ -3069,10 +3229,14 @@ msgid ""
 "than doubling the engine's mass capacity. Its high power consumption is "
 "typically gladly written off given its exemplary performance."
 msgstr ""
+"Cyclone II, oblíbený motor kapitánů torpédoborců a nákladních lodí "
+"zaměřených na čas, si zachovává většinu výkonů původního Cyclonu a zároveň "
+"více než zdvojnásobuje hmotnostní kapacitu motoru. Jeho vysoká spotřeba "
+"energie se obvykle s radostí odepisuje vzhledem k jeho příkladnému výkonu."
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:2
 msgid "Unicorp Falcon 1400 Engine"
-msgstr ""
+msgstr "Unicorp Falcon 1400 Motor"
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:10
 msgid ""
@@ -3081,14 +3245,18 @@ msgid ""
 "Destroyer pilots who prefer a more efficient engine over the fastest engine "
 "available."
 msgstr ""
+"Falcon 1400 je standardní středně těžký motor s nízkým výkonem. Běžně jej "
+"používají piloti civilních nákladních lodí, kteří si nemohou dovolit lepší, "
+"a také piloti torpédoborců, kteří dávají přednost účinnějšímu motoru před "
+"nejrychlejším dostupným motorem."
 
 #: dat/outfits/core_engine/small/beat_up_small_engine.xml:2
 msgid "Beat Up Small Engine"
-msgstr ""
+msgstr "Opotřebovaný malý motor"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:2
 msgid "Melendez Ox XL Engine"
-msgstr ""
+msgstr "Melendez Ox XL Motor"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:10
 msgid ""
@@ -3096,10 +3264,13 @@ msgid ""
 "excels at enabling merchants to haul moderate amounts of cargo from system "
 "to system with minimal refuelling stops."
 msgstr ""
+"Ox XL patří mezi nejvýkonnější motory dostupné pro malá plavidla a umožňuje "
+"obchodníkům přepravovat střední množství nákladu ze systému do systému s "
+"minimálními zastávkami na doplnění paliva."
 
 #: dat/outfits/core_engine/small/nexus_dart_160_engine.xml:2
 msgid "Nexus Dart 160 Engine"
-msgstr ""
+msgstr "Nexus Dart 160 Motor"
 
 #: dat/outfits/core_engine/small/nexus_dart_160_engine.xml:9
 msgid ""
@@ -3108,10 +3279,13 @@ msgid ""
 "reasonable price. A very popular engine among civilian and military users "
 "alike."
 msgstr ""
+"Dart 160 je dobře vybavený motor pro lehká plavidla. Nevyniká sice "
+"rychlostí, ale za rozumnou cenu nabízí dobrou ovladatelnost a výkonovou "
+"účinnost. Velmi oblíbený motor mezi civilními i vojenskými uživateli."
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:2
 msgid "Tricon Zephyr Engine"
-msgstr ""
+msgstr "Tricon Zephyr Motor"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:9
 msgid ""
@@ -3120,11 +3294,16 @@ msgid ""
 "caveat of markedly increased power consumption, but those flying with Tricon "
 "engines can usually afford the requisite reactor upgrades."
 msgstr ""
+"Pro piloty lehkých plavidel, kteří vyžadují bezkonkurenční výkon, je Zephyr "
+"od společnosti Tricon tou nejlepší volbou. Jeho nejlepší jízdní vlastnosti "
+"ve své třídě jsou sice spojeny s výrazně vyšší spotřebou energie, ale ti, "
+"kdo létají s motory Tricon, si obvykle mohou dovolit potřebnou modernizaci "
+"reaktoru."
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
 msgid "Tricon Zephyr II Engine"
-msgstr ""
+msgstr "Tricon Zephyr II Motor"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:10
 msgid ""
@@ -3133,10 +3312,14 @@ msgid ""
 "Its performance has not gone unnoticed by merchants either, resulting in its "
 "use for lightweight, time-critical shipping."
 msgstr ""
+"Zephyr II je větší verzí původního Zephyru společnosti Tricon určeného pro "
+"těžké stíhače a umožňuje těžším stíhačům a bombardérům pohybovat se jako "
+"průzkumné lodě. Jeho výkon nezůstal bez povšimnutí ani u obchodníků, což "
+"vedlo k jeho využití pro lehkou, časově kritickou přepravu."
 
 #: dat/outfits/core_engine/small/unicorp_hawk_360_engine.xml:2
 msgid "Unicorp Hawk 360 Engine"
-msgstr ""
+msgstr "Unicorp Hawk 360 Motor"
 
 #: dat/outfits/core_engine/small/unicorp_hawk_360_engine.xml:10
 msgid ""
@@ -3144,10 +3327,13 @@ msgid ""
 "modest energy consumption allows it to be equipped on most vessels without "
 "requiring reactor upgrades."
 msgstr ""
+"Hawk 360 je určen pro těžké stíhačky a lehká nákladní plavidla. Díky své "
+"nízké spotřebě energie může být instalován na většině plavidel, aniž by "
+"vyžadoval modernizaci reaktoru."
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:2
 msgid "Za'lek Test Engine"
-msgstr ""
+msgstr "Testovací motor Za'lek"
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:10
 msgid ""
@@ -3156,10 +3342,14 @@ msgid ""
 "scientists to test new refrigeration and propulsion systems. These engines "
 "are very often modded by students, which makes them unreliable."
 msgstr ""
+"Tento motor, postavený společností Za'lek Fabricators, si neklade za cíl být "
+"výkonným motorem. Jeho cílem je, aby byl snadno modifikovatelný a umožnil "
+"vědcům Za'leku testovat nové chladicí a pohonné systémy. Tyto motory jsou "
+"velmi často upravovány studenty, což je činí nespolehlivými."
 
 #: dat/outfits/core_hull/dummy_plating.xml:2
 msgid "Dummy Plating"
-msgstr ""
+msgstr "Maketa pancíře"
 
 #: dat/outfits/core_hull/dummy_plating.xml:4
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:4
@@ -3186,17 +3376,19 @@ msgstr ""
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:4
 #: dat/outfits/core_hull/small/unicorp_d9_light_plating.xml:4
 msgid "Core Systems (Hull)"
-msgstr ""
+msgstr "Základní systémy (Trup)"
 
 #: dat/outfits/core_hull/dummy_plating.xml:9
 msgid ""
 "This is a dummy hull for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
+"Jedná se o atrapu trupu určenou pouze pro použití v misích, která nic "
+"nedělá. NEKUPUJTE."
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:2
 msgid "Patchwork Heavy Plating"
-msgstr ""
+msgstr "Patchworkový těžký pancíř"
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:10
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:10
@@ -3205,10 +3397,12 @@ msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
 msgstr ""
+"Pozitivní je, že zabraňuje úniku vzduchu do prostoru. Ale to je asi tak "
+"všechno. Taková údržba trupu je prostě nepřijatelná."
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:2
 msgid "Red Star Large Cargo Hull"
-msgstr ""
+msgstr "Red Star velký nákladní trup"
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:10
 msgid ""
@@ -3219,10 +3413,15 @@ msgid ""
 "scrambler systems allow even the largest ships a chance to turn away "
 "missiles."
 msgstr ""
+"Imperiální Rudá Hvězda se věnuje pomoci v oblastech postižených válkou, "
+"pirátstvím a nemocemi. Organizace nedávno vyvinula řadu specializovaných "
+"nákladních korábů, které mají maximalizovat šance, že se zásoby a personál "
+"bezpečně dostanou tam, kde je jich nejvíce potřeba. Integrované scramblerové "
+"systémy umožňují i těm největším lodím odvrátit střely."
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:2
 msgid "S&K Heavy Combat Plating"
-msgstr ""
+msgstr "S&K těžký bojový pancíř"
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:10
 msgid ""
@@ -3230,10 +3429,13 @@ msgid ""
 "prolonged battle. Quite a few captains and their crews owe their lives to "
 "this armour configuration."
 msgstr ""
+"Tento těžký plát vyvinutý společností Schafer & Kane Industries vydrží i "
+"delší boj. Několik kapitánů a jejich posádek vděčí za svůj život právě této "
+"konfiguraci pancíře."
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:2
 msgid "S&K Large Cargo Hull"
-msgstr ""
+msgstr "S&K velký nákladní trup"
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:10
 msgid ""
@@ -3241,10 +3443,13 @@ msgid ""
 "defensive alloys, which allows it to free up even more space for cargo "
 "without sacrificing too much durability."
 msgstr ""
+"Tento nákladní trup od společnosti Schafer & Kane Industries využívá "
+"nejmodernější obranné slitiny, které umožňují uvolnit ještě více prostoru "
+"pro náklad, aniž by to bylo na úkor odolnosti."
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:2
 msgid "S&K Superheavy Combat Plating"
-msgstr ""
+msgstr "S&K supertěžký bojový pancíř"
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:10
 msgid ""
@@ -3252,10 +3457,13 @@ msgid ""
 "modification from Schafer & Kane Industries is generally found only on "
 "important capital ships."
 msgstr ""
+"Tato úprava trupu od společnosti Schafer & Kane Industries, která je "
+"považována za nejlepší standardní konfiguraci opláštění na trhu, se obvykle "
+"vyskytuje pouze na důležitých hlavních lodích."
 
 #: dat/outfits/core_hull/large/unicorp_d58_heavy_plating.xml:2
 msgid "Unicorp D-58 Heavy Plating"
-msgstr ""
+msgstr "Unicorp D-58 těžký pancíř"
 
 #: dat/outfits/core_hull/large/unicorp_d58_heavy_plating.xml:9
 msgid ""
@@ -3263,10 +3471,13 @@ msgid ""
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
+"Ačkoli se jedná o úctyhodnou konstrukci, je plátování D-58 překonáno "
+"moderními těžkými zbraněmi a většina zkušených kapitánů se rozhoduje pro "
+"těžší a modernější plátování."
 
 #: dat/outfits/core_hull/large/unicorp_d72_heavy_plating.xml:2
 msgid "Unicorp D-72 Heavy Plating"
-msgstr ""
+msgstr "Unicorp D-72 těžký pancíř"
 
 #: dat/outfits/core_hull/large/unicorp_d72_heavy_plating.xml:10
 msgid ""
@@ -3274,10 +3485,13 @@ msgid ""
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
+"Ačkoli se jedná o úctyhodnou konstrukci, je plátování D-72 překonáno "
+"moderními těžkými zbraněmi a většina zkušených kapitánů se rozhoduje pro "
+"těžší a modernější plátování."
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:2
 msgid "Nexus Medium Stealth Plating"
-msgstr ""
+msgstr "Nexus střední maskovací pancíř"
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:9
 msgid ""
@@ -3285,14 +3499,16 @@ msgid ""
 "but Nexus Shipyards have nevertheless developed a hull modification that "
 "helps in this area"
 msgstr ""
+"Středně velké lodě se obvykle nesnaží zůstat neodhaleny, ale loděnice Nexus "
+"přesto vyvinuly úpravu trupu, která v této oblasti pomáhá"
 
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:2
 msgid "Patchwork Medium Plating"
-msgstr ""
+msgstr "Patchworkový střední pancíř"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
 msgid "Red Star Medium Cargo Hull"
-msgstr ""
+msgstr "Red Star střední nákladový trup"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:10
 msgid ""
@@ -3304,20 +3520,28 @@ msgid ""
 "missiles, especially torpedoes, and compel enemy turrets to track just that "
 "little bit slower."
 msgstr ""
+"Imperiální Rudá hvězda se věnuje pomoci v oblastech postižených válkou, "
+"pirátstvím a nemocemi. Organizace nedávno vyvinula řadu specializovaných "
+"nákladních korábů, které mají maximalizovat šance, že se zásoby a personál "
+"bezpečně dostanou tam, kde je jich nejvíce potřeba. Pohonné systémy umožňují "
+"středním lodím účinněji čelit útokům řízených střel, zejména torpéd, a nutí "
+"nepřátelské věže sledovat loď jen o něco pomaleji."
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:2
 msgid "S&K Medium Cargo Hull"
-msgstr ""
+msgstr "S&K střední nákladový trup"
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:10
 msgid ""
 "Schafer & Kane Industries have developed a hull modification that provides "
 "both ample cargo space and protection."
 msgstr ""
+"Společnost Schafer & Kane Industries vyvinula úpravu trupu, která poskytuje "
+"dostatečný nákladní prostor i ochranu."
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:2
 msgid "S&K Medium Combat Plating"
-msgstr ""
+msgstr "S&K střední bojový pancíř"
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:9
 msgid ""
@@ -3325,10 +3549,13 @@ msgid ""
 "combat plating provides ample protection utilizing the latest in defensive "
 "materials."
 msgstr ""
+"Střední bojové pancéřování společnosti Schafer & Kane je určeno pro korvety "
+"a podobně velká plavidla a poskytuje dostatečnou ochranu s využitím "
+"nejnovějších obranných materiálů."
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:2
 msgid "S&K Medium-Heavy Combat Plating"
-msgstr ""
+msgstr "S&K Středně těžký bojový pancíř"
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:10
 msgid ""
@@ -3336,20 +3563,25 @@ msgid ""
 "heavy combat plating provides excellent protection from everything save "
 "capital-class threats."
 msgstr ""
+"Středně těžké bojové pancéřování společnosti Schafer & Kane, určené pro "
+"torpédoborce a podobně velká plavidla, poskytuje vynikající ochranu před "
+"všemi hrozbami s výjimkou hrozeb třídy capital."
 
 #: dat/outfits/core_hull/medium/unicorp_d23_medium_plating.xml:2
 msgid "Unicorp D-23 Medium Plating"
-msgstr ""
+msgstr "Unicorp D-23 střední pancíř"
 
 #: dat/outfits/core_hull/medium/unicorp_d23_medium_plating.xml:9
 msgid ""
 "D-23 plating provides a serviceable layer of armour to medium ships, and "
 "doesn't weigh too much."
 msgstr ""
+"Pancéřování D-23 poskytuje použitelnou vrstvu pancíře pro střední lodě a "
+"neváží příliš mnoho."
 
 #: dat/outfits/core_hull/medium/unicorp_d38_medium_plating.xml:2
 msgid "Unicorp D-38 Medium Plating"
-msgstr ""
+msgstr "Unicorp D-38 střední pancíř"
 
 #: dat/outfits/core_hull/medium/unicorp_d38_medium_plating.xml:10
 msgid ""
@@ -3357,10 +3589,13 @@ msgid ""
 "thicker and built atop an enlarged superstructure, increasing mass, armour, "
 "and cargo capacity."
 msgstr ""
+"Pancéřování D-24 společnosti Unicorp je podobné pancéřování D-38, ale "
+"pancéřové pláty jsou silnější a jsou postaveny na zvětšené nástavbě, což "
+"zvyšuje hmotnost, pancéřování a kapacitu nákladu."
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:2
 msgid "Nexus Light Stealth Plating"
-msgstr ""
+msgstr "Nexus lehký maskovací pancíř"
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:10
 msgid ""
@@ -3368,14 +3603,17 @@ msgid ""
 "Plating configuration features the latest in sensor-absorbing materials and "
 "geometry."
 msgstr ""
+"Konfigurace lehkého maskovacího pancéřování společnosti Nexus, určená pro "
+"vojenská průzkumná a hlídková plavidla, se vyznačuje nejnovějšími materiály "
+"a geometrií pohlcujícími senzory."
 
 #: dat/outfits/core_hull/small/patchwork_light_plating.xml:2
 msgid "Patchwork Light Plating"
-msgstr ""
+msgstr "Patchworkový lehký pancíř"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:2
 msgid "Red Star Small Cargo Hull"
-msgstr ""
+msgstr "Red Star malý nákladní trup"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:10
 msgid ""
@@ -3387,11 +3625,18 @@ msgid ""
 "allowing small ships to more effectively run blockades by pirates and "
 "privateers."
 msgstr ""
+"Císařská Rudá hvězda se věnuje pomoci v oblastech postižených válkou, "
+"pirátstvím a nemocemi. Organizace nedávno vyvinula řadu specializovaných "
+"nákladních korábů, které mají maximalizovat šance, že se zásoby a personál "
+"bezpečně dostanou tam, kde je jich nejvíce potřeba. Tento trup integruje "
+"scramblery, které pomáhají otupit účinky naváděcích střel a sledování věží, "
+"což umožňuje malým lodím efektivněji procházet blokádami pirátů a "
+"soukromníků."
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:228
 msgid "S&K Light Combat Plating"
-msgstr ""
+msgstr "S&K lehký bojový pancíř"
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:10
 msgid ""
@@ -3399,10 +3644,13 @@ msgid ""
 "Combat Plating configuration is a product made for fighters and bombers, "
 "providing optimum protection."
 msgstr ""
+"Společnost Schafer & Kane Industries většinou vyvíjí pro větší lodě, ale "
+"konfigurace lehkého bojového pancéřování je produkt určený pro stíhačky a "
+"bombardéry, kterým poskytuje optimální ochranu."
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:2
 msgid "S&K Small Cargo Hull"
-msgstr ""
+msgstr "S&K malý nákladní trup"
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:10
 msgid ""
@@ -3410,10 +3658,13 @@ msgid ""
 "Schafer & Kane Industries provides an impressive amount of cargo space "
 "without compromising the hull's integrity."
 msgstr ""
+"Ačkoli se jedná o drahou investici pro malé kurýry, tato úprava trupu od "
+"společnosti Schafer & Kane Industries poskytuje působivé množství "
+"nákladového prostoru, aniž by byla ohrožena integrita trupu."
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:2
 msgid "S&K Ultralight Combat Plating"
-msgstr ""
+msgstr "S&K ultralehký bojový pancíř"
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:9
 msgid ""
@@ -3421,30 +3672,39 @@ msgid ""
 "Ultralight Combat Plating configuration is a product made for light fighters "
 "and in-system patrol craft, providing optimum protection."
 msgstr ""
+"Schafer & Kane Industries většinou vyvíjí pro větší lodě, ale konfigurace "
+"ultralehkého bojového pancéřování je produkt určený pro lehké stíhačky a "
+"hlídková plavidla v systému, který poskytuje optimální ochranu."
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:2
 msgid "Unicorp D-2 Light Plating"
-msgstr ""
+msgstr "Unicorp D-2 lehký pancíř"
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:9
 msgid ""
 "Commonly found on civilian vessels, the D-2 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
+"Plátování D-2, které se běžně vyskytuje na civilních plavidlech, je u "
+"výrobců lodí oblíbené díky své nízké ceně a přiměřeným, i když ne příliš "
+"inspirativním parametrům."
 
 #: dat/outfits/core_hull/small/unicorp_d9_light_plating.xml:2
 msgid "Unicorp D-9 Light Plating"
-msgstr ""
+msgstr "Unicorp D-9 lehký pancíř"
 
 #: dat/outfits/core_hull/small/unicorp_d9_light_plating.xml:10
 msgid ""
 "Commonly found on civilian vessels, the D-9 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
+"Povlak D-9, který se běžně vyskytuje na civilních plavidlech, je u výrobců "
+"lodí oblíbený díky své nízké ceně a dostatečnému, i když ne příliš "
+"inspirativnímu výkonu."
 
 #: dat/outfits/core_system/dummy_systems.xml:2
 msgid "Dummy Systems"
-msgstr ""
+msgstr "Maketa systémů"
 
 #: dat/outfits/core_system/dummy_systems.xml:4
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:4
@@ -3470,17 +3730,19 @@ msgstr ""
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:4
 #: dat/outfits/unique/homebrew_processing_unit.xml:6
 msgid "Core Systems (System)"
-msgstr ""
+msgstr "Jádrové systémy (systém)"
 
 #: dat/outfits/core_system/dummy_systems.xml:9
 msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
 "NOT BUY."
 msgstr ""
+"Jedná se o falešný jádrový systém určený pouze pro použití v misích, který "
+"nic neumí. NEKUPUJTE."
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:2
 msgid "Milspec Orion 8601 Core System"
-msgstr ""
+msgstr "Milspec Orion 8601 Jádrový systém"
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:9
 msgid ""
@@ -3490,10 +3752,15 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Společnost Milspec vyvíjí vysoce výkonný hardware pro vaši loď, abyste byli "
+"vždy optimálně připraveni na nebezpečí, která vám vesmír může na cestách "
+"připravit. Základní systém Orion 8601 je špičkové řešení pro hlavní lodě, "
+"které poskytuje vynikající výkon v každé oblasti. Létejte bezpečně, létejte "
+"s Milspec."
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:2
 msgid "Milspec Orion 9901 Core System"
-msgstr ""
+msgstr "Milspec Orion 9901 Jádrový systém"
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:10
 msgid ""
@@ -3503,10 +3770,15 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Společnost Milspec vyvíjí vysoce výkonný hardware pro vaši loď, abyste byli "
+"vždy optimálně připraveni na nebezpečí, která vám vesmír může na cestách "
+"připravit. Základní systém Orion 9901 je špičkové řešení pro hlavní lodě, "
+"které poskytuje vynikající výkon v každé oblasti. Létejte bezpečně, létejte "
+"s Milspec."
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:2
 msgid "Milspec Thalos 8502 Core System"
-msgstr ""
+msgstr "Milspec Thalos 8502 Jádrový systém"
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:9
 msgid ""
@@ -3515,10 +3787,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Společnost Milspec ví, že loď je pouhým součtem svých částí, a to znamená, "
+"že čím více částí, tím lepší loď. Thalos 8502 poskytuje seriózní kontrolu "
+"nad subsystémy a zároveň zachovává vysoký standard v oblasti energie a "
+"štítů, kterým se společnost Milspec pyšní. Létejte bezpečně, létejte s "
+"Milspec."
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:2
 msgid "Milspec Thalos 9802 Core System"
-msgstr ""
+msgstr "Milspec Thalos 9802 Jádrový systém"
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:10
 msgid ""
@@ -3527,10 +3804,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Společnost Milspec ví, že loď je pouhým součtem svých částí, a to znamená, "
+"že čím více částí, tím lepší loď. Thalos 9802 poskytuje seriózní kontrolu "
+"nad subsystémy a zároveň si zachovává vysoký standard v oblasti energie a "
+"štítů, kterým se společnost Milspec pyšní. Létejte bezpečně, létejte s "
+"Milspec."
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:2
 msgid "Previous Generation Large Systems"
-msgstr ""
+msgstr "Předchozí generace jádrových systémů"
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:9
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:9
@@ -3539,10 +3821,12 @@ msgid ""
 "A jury-rigged mess of processors and generators that most captains wouldn't "
 "be seen dead having installed on their ship."
 msgstr ""
+"Směsice procesorů a generátorů, kterou by si většina kapitánů na své lodi "
+"nenechala nainstalovat."
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:2
 msgid "Unicorp PT-2200 Core System"
-msgstr ""
+msgstr "Unicorp PT-2200 jádrový systém"
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:10
 msgid ""
@@ -3550,10 +3834,12 @@ msgid ""
 "PT-2200 nevertheless offers acceptable performance for capital ships at a "
 "fraction of its competitors' prices."
 msgstr ""
+"PT-2200, který někteří kritizují jako pouhý shluk systémů PT-400, nicméně "
+"nabízí přijatelný výkon pro hlavní lodě za zlomek ceny svých konkurentů."
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:2
 msgid "Unicorp PT-500 Core System"
-msgstr ""
+msgstr "Unicorp PT-500 jádrový systém"
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:9
 msgid ""
@@ -3561,10 +3847,12 @@ msgid ""
 "PT-500 nevertheless offers acceptable performance for light cruisers at a "
 "fraction of its competitors' prices."
 msgstr ""
+"PT-500, který někteří kritizují jako pouhý shluk systémů PT-310, nicméně "
+"nabízí přijatelný výkon pro lehké křižníky za zlomek ceny svých konkurentů."
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:2
 msgid "Milspec Orion 4801 Core System"
-msgstr ""
+msgstr "Milspec Orion 4801 jádrový systém"
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:9
 msgid ""
@@ -3573,10 +3861,14 @@ msgid ""
 "you on your travels. The Orion 4801 core system is affordable yet capable, "
 "recommended for the discerning captain. Fly safe, fly Milspec."
 msgstr ""
+"Společnost Milspec vyvíjí vysoce výkonný hardware pro vaši loď, abyste byli "
+"vždy optimálně připraveni na nebezpečí, která vám vesmír může na cestách "
+"připravit. Základní systém Orion 4801 je cenově dostupný a přitom výkonný a "
+"doporučujeme jej náročným kapitánům. Létejte bezpečně, létejte s Milspec."
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:2
 msgid "Milspec Orion 5501 Core System"
-msgstr ""
+msgstr "Milspec Orion 5501 jádrový systém"
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:10
 msgid ""
@@ -3586,10 +3878,15 @@ msgid ""
 "medium ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Společnost Milspec vyvíjí vysoce výkonný hardware pro vaši loď, abyste byli "
+"vždy optimálně připraveni na nebezpečí, která vám vesmír může na cestách "
+"připravit. Základní systém Orion 5501 je špičkové řešení pro střední lodě, "
+"které poskytuje vynikající výkon v každé oblasti. Létejte bezpečně, létejte "
+"s Milspec."
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:2
 msgid "Milspec Thalos 4702 Core System"
-msgstr ""
+msgstr "Milspec Thalos 4702 jádrový systém"
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:9
 msgid ""
@@ -3598,10 +3895,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Společnost Milspec ví, že loď je pouhým součtem svých částí, a to znamená, "
+"že čím více částí, tím lepší loď. Thalos 4702 poskytuje seriózní kontrolu "
+"nad subsystémy a zároveň zachovává vysoký standard v oblasti energie a "
+"štítů, kterým se společnost Milspec pyšní. Létejte bezpečně, létejte s "
+"Milspec."
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:2
 msgid "Milspec Thalos 5402 Core System"
-msgstr ""
+msgstr "Milspec Thalos 5402 jádrový systém"
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:10
 msgid ""
@@ -3610,24 +3912,31 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Společnost Milspec ví, že loď je pouhým součtem svých částí, a to znamená, "
+"že čím více částí, tím lepší loď. Thalos 5402 poskytuje seriózní kontrolu "
+"nad subsystémy a zároveň zachovává vysoký standard v oblasti energie a "
+"štítů, kterým se společnost Milspec pyšní. Létejte bezpečně, létejte s "
+"Milspec."
 
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:2
 msgid "Previous Generation Medium Systems"
-msgstr ""
+msgstr "Předchozí generace středních systémů"
 
 #: dat/outfits/core_system/medium/unicorp_pt200_core_system.xml:2
 msgid "Unicorp PT-200 Core System"
-msgstr ""
+msgstr "Unicorp PT-200 jádrový systém"
 
 #: dat/outfits/core_system/medium/unicorp_pt200_core_system.xml:9
 msgid ""
 "Continuing Unicorp's PT series of core systems in the medium ship category, "
 "the PT-200 gives acceptable performance for an acceptable price."
 msgstr ""
+"PT-200 je pokračováním řady základních systémů PT společnosti Unicorp v "
+"kategorii středních lodí a poskytuje přijatelný výkon za přijatelnou cenu."
 
 #: dat/outfits/core_system/medium/unicorp_pt310_core_system.xml:2
 msgid "Unicorp PT-310 Core System"
-msgstr ""
+msgstr "Unicorp jádrový systém"
 
 #: dat/outfits/core_system/medium/unicorp_pt310_core_system.xml:10
 msgid ""
@@ -3635,10 +3944,13 @@ msgid ""
 "all respects. Its considerably higher mass restricts its use to larger "
 "medium vessels such as destroyers."
 msgstr ""
+"Model PT-310, těžká varianta modelu PT-200, překonává svého předchůdce ve "
+"všech ohledech. Jeho výrazně vyšší hmotnost omezuje jeho použití na větší "
+"střední plavidla, jako jsou torpédoborci."
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:2
 msgid "Milspec Orion 2301 Core System"
-msgstr ""
+msgstr "Milspec Orion 2301 jádrový systém"
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:9
 msgid ""
@@ -3647,11 +3959,15 @@ msgid ""
 "you on your travels. The Orion 2301 core system is affordable yet capable, "
 "recommended for the beginning captain. Fly safe, fly Milspec."
 msgstr ""
+"Společnost Milspec vyvíjí vysoce výkonný hardware pro vaši loď, abyste byli "
+"vždy optimálně připraveni na nebezpečí, která vám vesmír může na cestách "
+"připravit. Základní systém Orion 2301 je cenově dostupný a přitom výkonný, "
+"doporučený pro začínající kapitány. Létejte bezpečně, létejte s Milspec."
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:224
 msgid "Milspec Orion 3701 Core System"
-msgstr ""
+msgstr "Milspec Orion 3701 jádrový systém"
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:10
 msgid ""
@@ -3661,10 +3977,15 @@ msgid ""
 "small ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Společnost Milspec vyvíjí vysoce výkonný hardware pro vaši loď, abyste byli "
+"vždy optimálně připraveni na nebezpečí, která vám vesmír může na cestách "
+"připravit. Základní systém Orion 3701 je špičkové řešení pro malé lodě, "
+"které poskytuje vynikající výkon v každé oblasti. Létejte bezpečně, létejte "
+"s Milspec."
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:2
 msgid "Milspec Thalos 2202 Core System"
-msgstr ""
+msgstr "Milspec Thalos 2202 jádrový systém"
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:9
 msgid ""
@@ -3673,10 +3994,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Společnost Milspec ví, že loď je pouhým součtem svých částí, a to znamená, "
+"že čím více částí, tím lepší loď. Thalos 2202 poskytuje seriózní kontrolu "
+"nad subsystémy a zároveň zachovává vysoký standard v oblasti energie a "
+"štítů, kterým se společnost Milspec pyšní. Létejte bezpečně, létejte s "
+"Milspec."
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:2
 msgid "Milspec Thalos 3602 Core System"
-msgstr ""
+msgstr "Milspec Thalos 3602 jádrový systém"
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:10
 msgid ""
@@ -3685,34 +4011,43 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Společnost Milspec ví, že loď je pouhým součtem svých částí, a to znamená, "
+"že čím více částí, tím lepší loď. Thalos 3602 poskytuje seriózní kontrolu "
+"nad subsystémy a zároveň zachovává vysoký standard v oblasti energie a "
+"štítů, kterým se společnost Milspec pyšní. Létejte bezpečně, létejte s "
+"Milspec."
 
 #: dat/outfits/core_system/small/previous_generation_small_systems.xml:2
 msgid "Previous Generation Small Systems"
-msgstr ""
+msgstr "Předchozí generace malých systémů"
 
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:2
 msgid "Unicorp PT-16 Core System"
-msgstr ""
+msgstr "Unicorp PT-16 jádrový systém"
 
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:9
 msgid ""
 "The PT-16 is a modest but to-spec core system offering reasonable, all-round "
 "performance for small vessels."
 msgstr ""
+"PT-16 je skromný, ale špičkový jádrový systém, který nabízí přiměřený a "
+"všestranný výkon pro malá plavidla."
 
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:2
 msgid "Unicorp PT-68 Core System"
-msgstr ""
+msgstr "Unicorp PT-68 jádrový systém"
 
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:10
 msgid ""
 "The PT-68 is an economical core system providing decent performance to small-"
 "to-medium vessels."
 msgstr ""
+"PT-68 je ekonomický jádrový systém, který poskytuje slušný výkon malým a "
+"středním plavidlům."
 
 #: dat/outfits/fighter_bays/drone_bay.xml:2
 msgid "Drone Bay"
-msgstr ""
+msgstr "Zásobník dronů"
 
 #: dat/outfits/fighter_bays/drone_bay.xml:11
 msgid ""
@@ -3722,19 +4057,24 @@ msgid ""
 "maintenance. All the tools needed to take care of them are provided with the "
 "bay."
 msgstr ""
+"Zásobník stíhačů dronů využívá pokročilé kolektivní technologie k udržení "
+"skupiny tří stíhačů dronů. Dronové stíhačky nepotřebují žádného pilota, což "
+"z nich činí bezpečnější přístup v nebezpečných situacích. Potřebují však "
+"pečlivou údržbu. Všechny nástroje potřebné k péči o ně jsou součástí "
+"zásobníku."
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:2
 msgid "Empire Lancelot Bay"
-msgstr ""
+msgstr "Zásobník imperiálních Lancelotů"
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:4
 msgid "E. Lancelot Bay"
-msgstr ""
+msgstr "Zásobník I. Lancelotů"
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:9
 #: dat/ships/empire/empire_pacifier.xml:18
 msgid "You need at least 50 reputation with the Empire."
-msgstr ""
+msgstr "Potřebujete alespoň 50 reputace u Impéria."
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:14
 msgid ""
@@ -3742,10 +4082,13 @@ msgid ""
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+"Tento prostor pro stíhačky umožňuje vaší lodi nést dvojici stíhaček třídy "
+"Empire Lancelot. Je dodáván se všemi zařízeními potřebnými pro údržbu a let "
+"stíhaček."
 
 #: dat/outfits/fighter_bays/hyena_bay.xml:2
 msgid "Hyena Bay"
-msgstr ""
+msgstr "Zásobník Hyen"
 
 #: dat/outfits/fighter_bays/hyena_bay.xml:10
 msgid ""
@@ -3753,10 +4096,13 @@ msgid ""
 "interceptors that can be operated. It comes with all the amenities necessary "
 "for the maintenance and operation of the interceptors."
 msgstr ""
+"Tato zátoka rozšiřuje oblíbený dok Hyena a zdvojnásobuje počet záchytných "
+"zařízení Hyena, která lze provozovat. Je vybavena veškerým příslušenstvím "
+"potřebným pro údržbu a provoz záchytných zařízení."
 
 #: dat/outfits/fighter_bays/hyena_dock.xml:2
 msgid "Hyena Dock"
-msgstr ""
+msgstr "Dok Hyen"
 
 #: dat/outfits/fighter_bays/hyena_dock.xml:10
 msgid ""
@@ -3764,10 +4110,12 @@ msgid ""
 "all the amenities necessary for the maintenance and operation of the "
 "interceptors."
 msgstr ""
+"Tento dok umožňuje vaší lodi nést dva stíhače Hyena. Je vybaven veškerým "
+"zařízením potřebným pro údržbu a provoz záchytných stíhaček."
 
 #: dat/outfits/fighter_bays/lancelot_bay.xml:2
 msgid "Lancelot Bay"
-msgstr ""
+msgstr "Dok Lancelotů"
 
 #: dat/outfits/fighter_bays/lancelot_bay.xml:10
 msgid ""
@@ -3775,14 +4123,16 @@ msgid ""
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+"Tento prostor pro stíhačky umožňuje vaší lodi nést dvojici stíhaček třídy "
+"Lancelot. Je vybaven všemi zařízeními potřebnými pro údržbu a let stíhaček."
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:2
 msgid "Pirate Hyena Bay"
-msgstr ""
+msgstr "Zásobník Pirátských Hyen"
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:4
 msgid "P. Hyena Bay"
-msgstr ""
+msgstr "Zásobník P. Hyen"
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:11
 msgid ""
@@ -3791,10 +4141,14 @@ msgid ""
 "for the maintenance and operation of the interceptors. The Pirate Hyenas can "
 "also assist in ship scavenging and looting."
 msgstr ""
+"Tento zásobník rozšiřuje oblíbený pirátský dok Hyena a zdvojnásobuje počet "
+"záchytných lodí, které lze provozovat. Je vybaven veškerým zařízením "
+"potřebným pro údržbu a provoz záchytných zařízení. Pirátské hyeny mohou také "
+"pomáhat při vyklízení a plenění lodí."
 
 #: dat/outfits/fighter_bays/pirate_hyena_dock.xml:2
 msgid "Pirate Hyena Dock"
-msgstr ""
+msgstr "Dok Pirátských Hyen"
 
 #: dat/outfits/fighter_bays/pirate_hyena_dock.xml:4
 msgid "P. Hyena Dock"
