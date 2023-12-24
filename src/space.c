@@ -1036,10 +1036,9 @@ const char* spob_getSystem( const char* spobname )
  */
 static int spob_cmp( const void *p1, const void *p2 )
 {
-   const Spob *pnt1, *pnt2;
-   pnt1 = (const Spob*) p1;
-   pnt2 = (const Spob*) p2;
-   return strcmp(pnt1->name,pnt2->name);
+   const Spob *spb1 = p1;
+   const Spob *spb2 = p2;
+   return strcmp(spb1->name,spb2->name);
 }
 
 /**
@@ -1150,14 +1149,11 @@ const char* spob_existsCase( const char* spobname )
  */
 char **spob_searchFuzzyCase( const char* spobname, int *n )
 {
-   int len;
-   char **names;
-
    /* Overallocate to maximum. */
-   names = malloc( sizeof(char*) * array_size(spob_stack) );
+   char **names = malloc( sizeof(char*) * array_size(spob_stack) );
 
    /* Do fuzzy search. */
-   len = 0;
+   int len = 0;
    for (int i=0; i<array_size(spob_stack); i++) {
       Spob *spob = &spob_stack[i];
       if (SDL_strcasestr( spob_name(spob), spobname ) != NULL) {
@@ -1193,9 +1189,8 @@ VirtualSpob* virtualspob_getAll (void)
  */
 static int virtualspob_cmp( const void *p1, const void *p2 )
 {
-   const VirtualSpob *v1, *v2;
-   v1 = (const VirtualSpob*) p1;
-   v2 = (const VirtualSpob*) p2;
+   const VirtualSpob *v1 = p1;
+   const VirtualSpob *v2 = p2;
    return strcmp(v1->name,v2->name);
 }
 
@@ -1426,7 +1421,7 @@ void space_update( double dt, double real_dt )
     */
    nebu_update( dt );
    if (cur_system->nebu_volatility > 0.) {
-      Pilot *const* pilot_stack;
+      Pilot *const* pilot_stack = pilot_getAll();
       Damage dmg;
       dmg.type          = dtype_get("nebula");
       dmg.damage        = cur_system->nebu_volatility * dt;
@@ -1434,7 +1429,6 @@ void space_update( double dt, double real_dt )
       dmg.disable       = 0.;
 
       /* Damage pilots in volatile systems. */
-      pilot_stack = pilot_getAll();
       for (int i=0; i<array_size(pilot_stack); i++)
          pilot_hit( pilot_stack[i], NULL, NULL, &dmg, NULL, LUA_NOREF, 0 );
    }
