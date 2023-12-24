@@ -1186,17 +1186,17 @@ static void opt_unsetKey( unsigned int wid, const char *str )
 static void opt_accessibility( unsigned int wid )
 {
    int cw, w, h, y, x;
-   const char *colourblind_modes[] = {
+   const char *colourblind_types[] = {
       _("Protanopia"),
       _("Deuteranopia"),
       _("Tritanopia"),
       _("Rod Monochromacy"),
       _("Cone Monochromacy"),
    };
-   int nmodes = sizeof(colourblind_modes)/sizeof(colourblind_modes[0]);
-   char **modes = malloc( nmodes * sizeof(char*) );
-   for (int i=0; i<nmodes; i++)
-      modes[i] = strdup( colourblind_modes[i] );
+   int ntypes = sizeof(colourblind_types)/sizeof(colourblind_types[0]);
+   char **types = malloc( ntypes * sizeof(char*) );
+   for (int i=0; i<ntypes; i++)
+      types[i] = strdup( colourblind_types[i] );
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -1224,14 +1224,14 @@ static void opt_accessibility( unsigned int wid )
    window_addFader( wid, x+20, y, cw-60, 20, "fadNebuNonuniformity", 0., 1.,
          conf.nebu_nonuniformity, opt_setNebuNonuniformity );
    opt_setNebuNonuniformity( wid, "fadNebuNonuniformity" );
-   y -= 20;
+   y -= 30;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtBGBrightness",
          NULL, NULL, NULL );
    y -= 20;
    window_addFader( wid, x+20, y, cw-60, 20, "fadBGBrightness", 0., 1.,
          conf.bg_brightness, opt_setBGBrightness );
    opt_setBGBrightness( wid, "fadBGBrightness" );
-   y -= 20;
+   y -= 30;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtJumpBrightness",
          NULL, NULL, NULL );
    y -= 20;
@@ -1240,11 +1240,11 @@ static void opt_accessibility( unsigned int wid )
    opt_setJumpBrightness( wid, "fadJumpBrightness" );
    y -= 30;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtColourblind",
-         NULL, NULL, _("Colourblind Mode:") );
+         NULL, NULL, _("Colourblind type:") );
    y -= 25;
    window_addList( wid, x, y, cw, 100, "lstColourblind",
-         (char**)modes, nmodes, conf.colourblind_type, opt_listColourblind, NULL );
-   y -= 120;
+         (char**)types, ntypes, conf.colourblind_type, opt_listColourblind, NULL );
+   y -= 115;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtColourblindCorrect",
          NULL, NULL, NULL );
    y -= 20;
@@ -1253,7 +1253,7 @@ static void opt_accessibility( unsigned int wid )
    opt_setColourblindCorrect( wid, "fadColourblindCorrect" );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkColourblind", _("Colourblind simulation mode"), opt_checkColourblind,
+         "chkColourblind", _("Simulate colourblindness"), opt_checkColourblind,
          conf.colourblind_sim );
 }
 
@@ -1534,9 +1534,9 @@ static void opt_setColourblindCorrect( unsigned int wid, const char *str )
    char buf[STRMAX_SHORT];
    conf.colourblind_correct = window_getFaderValue(wid, str);
    if (conf.colourblind_correct > 0.)
-      snprintf( buf, sizeof(buf), _("Colourblind Correction: %.2f"), conf.colourblind_correct );
+      snprintf( buf, sizeof(buf), _("Colourblindc orrection: %.2f"), conf.colourblind_correct );
    else
-      snprintf( buf, sizeof(buf), _("Colourblind Correction: off") );
+      snprintf( buf, sizeof(buf), _("Colourblind correction: off") );
    window_modifyText( wid, "txtColourblindCorrect", buf );
    gl_colourblind();
 }
@@ -1787,7 +1787,7 @@ static void opt_setJumpBrightness( unsigned int wid, const char *str )
    char buf[STRMAX_SHORT];
    double fad = window_getFaderValue(wid, str);
    conf.jump_brightness = fad;
-   snprintf( buf, sizeof(buf), _("Jump Brightness: %.0f%%"), 100.*fad );
+   snprintf( buf, sizeof(buf), _("Jump brightness: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtJumpBrightness", buf );
 }
 
