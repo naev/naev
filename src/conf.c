@@ -242,7 +242,6 @@ void conf_setVideoDefaults (void)
    conf.colourblind_sim = COLOURBLIND_SIM_DEFAULT;
    conf.colourblind_correct = COLOURBLIND_CORRECT_DEFAULT;
    conf.colourblind_type = COLOURBLIND_TYPE_DEFAULT;
-   conf.colourblind_intensity = COLOURBLIND_INTENSITY_DEFAULT;
    conf.healthbars   = HEALTHBARS_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;
@@ -343,9 +342,8 @@ int conf_loadConfig ( const char* file )
          conf.colourblind_type = 3;
       }
       conf_loadBool( lEnv, "colourblind_sim", conf.colourblind_sim );
-      conf_loadBool( lEnv, "colourblind_correct", conf.colourblind_correct );
+      conf_loadFloat( lEnv, "colourblind_correct", conf.colourblind_correct );
       conf_loadInt( lEnv, "colourblind_type", conf.colourblind_type );
-      conf_loadFloat( lEnv, "colourblind_intensity", conf.colourblind_intensity );
       conf_loadBool( lEnv, "healthbars", conf.healthbars );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
       /* todo leave only nebu_nonuniformity sometime */
@@ -895,10 +893,6 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("colourblind_sim",conf.colourblind_sim);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Enables colourblind correction."))
-   conf_saveBool("colourblind_correct",conf.colourblind_correct);
-   conf_saveEmptyLine();
-
    conf_saveComment(_("Type of colourblindness to simulate or correct."))
    conf_saveComment(_("0 is Protanopia"))
    conf_saveComment(_("1 is Deuteranopia"))
@@ -908,8 +902,8 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("colourblind_type",conf.colourblind_type);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Intensity of the colour blindness correction."))
-   conf_saveFloat("colourblind_intensity",conf.colourblind_intensity);
+   conf_saveComment(_("Intensity of the colour blindness correction. A value of 0. disables."))
+   conf_saveFloat("colourblind_correct",conf.colourblind_correct);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Enable health bars. These show hostility/friendliness and health of pilots on screen."));

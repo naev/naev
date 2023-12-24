@@ -511,9 +511,8 @@ static int naevL_conf( lua_State *L )
    PUSH_BOOL( L, "borderless", conf.borderless );
    PUSH_BOOL( L, "minimize", conf.minimize );
    PUSH_BOOL( L, "colourblind_sim", conf.colourblind_sim );
-   PUSH_BOOL( L, "colourblind_correct", conf.colourblind_correct );
+   PUSH_DOUBLE( L, "colourblind_correct", conf.colourblind_correct );
    PUSH_INT( L, "colourblind_type", conf.colourblind_type );
-   PUSH_DOUBLE( L, "colourblind_intensity", conf.colourblind_intensity );
    PUSH_DOUBLE( L, "bg_brightness", conf.bg_brightness );
    PUSH_DOUBLE( L, "nebu_nonuniformity", conf.nebu_nonuniformity );
    PUSH_DOUBLE( L, "gamma_correction", conf.gamma_correction );

@@ -92,6 +92,7 @@ static void opt_setBGBrightness( unsigned int wid, const char *str );
 static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
 static void opt_setJumpBrightness( unsigned int wid, const char *str );
 static void opt_checkColourblind( unsigned int wid, const char *str );
+static void opt_setColourblindCorrect( unsigned int wid, const char *str );
 /* Video. */
 static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, const char *str );
@@ -1227,8 +1228,15 @@ static void opt_accessibility( unsigned int wid )
    opt_setJumpBrightness( wid, "fadJumpBrightness" );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkColourblind", _("Colourblind mode"), opt_checkColourblind,
+         "chkColourblind", _("Colourblind simulation mode"), opt_checkColourblind,
          conf.colourblind_sim );
+   y -= 30;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtColourblindCorrect",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadColourblindCorrect", 0., 1.,
+         conf.colourblind_correct, opt_setColourblindCorrect );
+   opt_setColourblindCorrect( wid, "fadColourblindCorrect" );
 }
 
 static int opt_accessibilitySave( unsigned int wid, const char *str )
@@ -1253,6 +1261,7 @@ static void opt_accessibilityDefaults( unsigned int wid, const char *str )
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadNebuNonuniformity", NEBU_NONUNIFORMITY_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadColourblindCorrect", COLOURBLIND_CORRECT_DEFAULT );
 
    /* Reset colorblind if needed. */
    gl_colourblind();
@@ -1496,6 +1505,22 @@ static void opt_checkColourblind( unsigned int wid, const char *str )
 {
    int f = window_checkboxState( wid, str );
    conf.colourblind_sim = f;
+   gl_colourblind();
+}
+
+/**
+ * @brief Handles the colourblind correction.
+ */
+static void opt_setColourblindCorrect( unsigned int wid, const char *str )
+{
+   char buf[STRMAX_SHORT];
+   double intensity = window_getFaderValue(wid, str);
+   conf.colourblind_correct = intensity;
+   if (conf.colourblind_correct > 0.)
+      snprintf( buf, sizeof(buf), _("Colourblind Correction: %.2f"), conf.colourblind_correct );
+   else
+      snprintf( buf, sizeof(buf), _("Colourblind Correction: off") );
+   window_modifyText( wid, "txtColourblindCorrect", buf );
    gl_colourblind();
 }
 

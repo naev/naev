@@ -677,7 +677,7 @@ void gl_colourblind (void)
    glUniform1i( shaders.colourblind_sim.type, conf.colourblind_type );
    glUseProgram( shaders.colourblind_correct.program );
    glUniform1i( shaders.colourblind_correct.type, conf.colourblind_type );
-   glUniform1f( shaders.colourblind_correct.intensity, conf.colourblind_intensity );
+   glUniform1f( shaders.colourblind_correct.intensity, conf.colourblind_correct );
    glUseProgram( 0 );
 
    /* See if we have to correct. */
@@ -698,7 +698,7 @@ void gl_colourblind (void)
    }
 
    /* See if we have to correct. */
-   if (conf.colourblind_correct) {
+   if (conf.colourblind_correct > 0.) {
       LuaShader_t shader;
       if (cb_correct_pp != 0)
          return;

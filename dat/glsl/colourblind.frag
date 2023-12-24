@@ -65,6 +65,7 @@ void main (void)
    correction = tex + correction;
    //correction.a = tex.a * intensity;
 
-   colour_out = tex;
-   colour_out.rgb += intensity * correction.rgb;
+   /* Alpha compositing. */
+   colour_out.rgb = intensity * correction.rgb + (1.0-intensity) * tex.rgb;
+   colour_out.a = tex.a;
 }

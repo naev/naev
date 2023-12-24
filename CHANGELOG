@@ -1,7 +1,11 @@
 * 0.12.0 (unreleased)
-   * Threaded more loading components
-   * Lua require now caches chunks
-   * Dropped SDL_image fallback
+   * Quality of Life
+      * Added colourblind correction mode
+      * Exposed more colourblind options to the user
+   * Engine
+      * Threaded more loading components
+      * Lua require now caches chunks
+      * Dropped SDL_image fallback
 
 * 0.11.1 (unreleased)
    * Fixed many typos
