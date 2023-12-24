@@ -595,7 +595,7 @@ static void gui_renderBorder( double dt )
    /* Draw pilots. */
    pilot_stack = pilot_getAll();
    for (int i=1; i<array_size(pilot_stack); i++) { /* skip the player */
-      Pilot *plt = pilot_stack[i];
+      const Pilot *plt = pilot_stack[i];
 
       /* See if in sensor range. */
       if (!pilot_inRangePilot(player.p, plt, NULL))
@@ -920,7 +920,7 @@ void gui_radarRender( double x, double y )
     * Jump points.
     */
    for (int i=0; i<array_size(cur_system->jumps); i++) {
-      JumpPoint *jp = &cur_system->jumps[i];
+      const JumpPoint *jp = &cur_system->jumps[i];
       if (i != player.p->nav_hyperspace && jp_isUsable(jp))
          gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
    }
@@ -1296,7 +1296,7 @@ void gui_renderPlayer( double res, int overlay )
 static const glColour *gui_getSpobColour( int i )
 {
    const glColour *col;
-   Spob *spob = cur_system->spobs[i];
+   const Spob *spob = cur_system->spobs[i];
 
    if (i == player.p->nav_spob)
       col = &cRadar_tSpob;
@@ -1371,11 +1371,10 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  */
 void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, double alpha, int overlay )
 {
-   GLfloat cx, cy, x, y, r, vr;
+   GLfloat cx, cy, r, vr;
    glColour col;
    Spob *spob;
    const SimpleShader *shd;
-   char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
    if (!spob_isKnown( cur_system->spobs[ind] ))
@@ -1397,8 +1396,8 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
 
    /* Check if in range. */
    if (shape == RADAR_CIRCLE) {
-      x = ABS(cx)-r;
-      y = ABS(cy)-r;
+      GLfloat x = ABS(cx)-r;
+      GLfloat y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > pow2(w-2*r)) {
          if ((player.p->nav_spob == ind) && !overlay)
@@ -1423,8 +1422,6 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
       /* Transform coordinates. */
       cx += ox;
       cy += oy;
-      w  *= 2.;
-      h  *= 2.;
    }
 
    /* Scale according to marker. */
@@ -1458,6 +1455,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    gl_renderShader( cx, cy, vr, vr, 0., shd, &col, 1 );
 
    if (overlay) {
+      char buf[STRMAX_SHORT];
       snprintf( buf, sizeof(buf), "%s%s", spob_getSymbol(spob), spob_name(spob) );
       gl_printMarkerRaw( &gl_smallFont, cx+spob->mo.text_offx, cy+spob->mo.text_offy, &col, buf );
    }
@@ -1478,7 +1476,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 {
    GLfloat cx, cy, x, y, r, vr;
    glColour col;
-   char buf[STRMAX_SHORT];
    StarSystem *s;
    JumpPoint *jp = &cur_system->jumps[ind];
 
@@ -1553,8 +1550,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Render name. */
    if (overlay) {
-      snprintf(
-            buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
+      char buf[STRMAX_SHORT];
+      snprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
             sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       gl_printMarkerRaw( &gl_smallFont, cx+jp->mo.text_offx, cy+jp->mo.text_offy, &col, buf );
    }
@@ -2076,7 +2073,7 @@ glTexture* gui_hailIcon (void)
 /**
  * @brief Sets the spob target GFX.
  */
-void gui_targetSpobGFX( glTexture *gfx )
+void gui_targetSpobGFX( const glTexture *gfx )
 {
    gl_freeTexture( gui_target_spob );
    gui_target_spob = gl_dupTexture( gfx );
@@ -2085,7 +2082,7 @@ void gui_targetSpobGFX( glTexture *gfx )
 /**
  * @brief Sets the pilot target GFX.
  */
-void gui_targetPilotGFX( glTexture *gfx )
+void gui_targetPilotGFX( const glTexture *gfx )
 {
    gl_freeTexture( gui_target_pilot );
    gui_target_pilot = gl_dupTexture( gfx );

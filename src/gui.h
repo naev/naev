@@ -74,8 +74,8 @@ void gui_renderPlayer( double res, int overlay );
 /*
  * Targeting.
  */
-void gui_targetSpobGFX( glTexture *gfx );
-void gui_targetPilotGFX( glTexture *gfx );
+void gui_targetSpobGFX( const glTexture *gfx );
+void gui_targetPilotGFX( const glTexture *gfx );
 
 /*
  * Mouse.
