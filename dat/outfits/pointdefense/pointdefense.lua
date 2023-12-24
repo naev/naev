@@ -25,7 +25,7 @@ end
 function init( _p, _po )
    mem.on = false
    mem.target = nil -- current target
-   mem.tpilot = false -- hether or not the target is a pilot
+   mem.tpilot = false -- whether or not the target is a pilot
 end
 
 function ontoggle( _p, _po, on )
@@ -45,7 +45,7 @@ function update( p, po, _dt )
    local m = mem.target
 
    -- Clear target if doesn't exist
-   if not m or not m:exists() then
+   if not m or not m:exists() or (mem.tpilot and m:flags("disabled")) then
       mem.target = nil
       mem.tpilot = false
       m = nil
@@ -71,7 +71,7 @@ function update( p, po, _dt )
 
       -- If no current target, shoot at enemies too
       if not m and hitships then
-         local pall = p:getEnemies( range )
+         local pall = p:getEnemies( range, nil, nil, false, true )
          if #pall > 0 then
             local ptarget = {}
             for k,e in ipairs(pall) do
