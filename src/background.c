@@ -281,16 +281,9 @@ void background_renderOverlay( double dt )
  */
 static int bkg_compare( const void *p1, const void *p2 )
 {
-   background_image_t *bkg1, *bkg2;
-
-   bkg1 = (background_image_t*) p1;
-   bkg2 = (background_image_t*) p2;
-
-   if (bkg1->move < bkg2->move)
-      return -1;
-   else if (bkg1->move > bkg2->move)
-      return +1;
-   return  0;
+   const background_image_t *bkg1 = (background_image_t*) p1;
+   const background_image_t *bkg2 = (background_image_t*) p2;
+   return bkg1->move - bkg2->move;
 }
 
 /**
