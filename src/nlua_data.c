@@ -209,9 +209,10 @@ static int dataL_get( lua_State *L )
    LuaData_t *ld = luaL_checkdata(L,1);
    long pos = luaL_checklong(L,2);
    size_t mpos = dataL_checkpos( L, ld, pos );
+   char *data = ld->data;
    switch (ld->type) {
       case LUADATA_NUMBER:
-         lua_pushnumber(L, *((float*)(&ld->data[mpos])));
+         lua_pushnumber(L, *((float*)((void*)&data[mpos])));
          break;
    }
    return 1;
@@ -230,11 +231,12 @@ static int dataL_set( lua_State *L )
    LuaData_t *ld = luaL_checkdata(L,1);
    long pos = luaL_checklong(L,2);
    size_t mpos = dataL_checkpos( L, ld, pos );
+   char *data = ld->data;
    double value;
    switch (ld->type) {
       case LUADATA_NUMBER:
          value = luaL_checknumber(L,3);
-         *((float*)(&ld->data[mpos])) = value;
+         *((float*)((void*)&data[mpos])) = value;
          break;
    }
    return 0;
@@ -285,6 +287,8 @@ static int dataL_paste( lua_State *L )
    long dx = luaL_checklong(L,3) * dest->elem;
    long sx = luaL_checklong(L,4) * source->elem;
    long sw = luaL_checklong(L,5) * source->elem;
+   char *ddata = dest->data;
+   const char *sdata = source->data;
 
    /* Check fits. */
    if (dx+sw > (long)dest->size)
@@ -293,7 +297,7 @@ static int dataL_paste( lua_State *L )
       return NLUA_ERROR(L, _("size mismatch: out of bound access of source: %d of %d elements"), sx+sw, source->size);
 
    /* Copy memory over. */
-   memcpy( &dest->data[dx], &source->data[sx], sw );
+   memcpy( &ddata[dx], &sdata[sx], sw );
 
    /* Return destination. */
    lua_pushvalue(L,1);
