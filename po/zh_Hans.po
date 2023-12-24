@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.0-alpha.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-23 21:41+0900\n"
+"POT-Creation-Date: 2023-12-23 19:52-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -27077,6 +27077,7 @@ msgstr ""
 #. luacheck: globals jumpin_wait (AI Task functions passed by name)
 #. Simple create function
 #. Inherit some properties from the parent (leader)
+#. They don't investigate
 #. Just tries to guard mem.escort
 #. Forward-declared functions
 #.
@@ -29142,8 +29143,8 @@ msgid "ENGAGING DEFENSIVE PROTOCOLS."
 msgstr ""
 
 #. See if a drone
-#: dat/ai/zalek.lua:55
-msgid "\"ACCESS DENIED."
+#: dat/ai/zalek.lua:55 dat/spob/lua/lib/spob.lua:72
+msgid "\"ACCESS DENIED.\""
 msgstr ""
 
 #: dat/ai/zalek.lua:58
@@ -111322,10 +111323,6 @@ msgstr ""
 
 #: dat/spob/lua/lib/spob.lua:68
 msgid "\"Credentials invalid. Landing request denied.\""
-msgstr ""
-
-#: dat/spob/lua/lib/spob.lua:72
-msgid "\"ACCESS DENIED.\""
 msgstr ""
 
 #: dat/spob/lua/lib/spob.lua:73
