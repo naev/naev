@@ -170,8 +170,8 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node );
 static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node );
 static int diff_patch( xmlNodePtr parent );
 static int diff_patchHunk( UniHunk_t *hunk );
-static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk );
-static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk );
+static void diff_hunkFailed( UniDiff_t *diff, const UniHunk_t *hunk );
+static void diff_hunkSuccess( UniDiff_t *diff, const UniHunk_t *hunk );
 static void diff_cleanup( UniDiff_t *diff );
 static void diff_cleanupHunk( UniHunk_t *hunk );
 /* Misc. */
@@ -198,7 +198,9 @@ static int diff_cmp( const void *p1, const void *p2 )
  */
 int diff_loadAvailable (void)
 {
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
    char **diff_files = ndata_listRecursive( UNIDIFF_DATA_PATH );
    diff_available    = array_create_size( UniDiffData_t, array_size( diff_files ) );
    for (int i=0; i<array_size(diff_files); i++ ) {
@@ -233,17 +235,19 @@ int diff_loadAvailable (void)
    qsort( diff_available, array_size(diff_available), sizeof(UniDiffData_t), diff_cmp );
    for (int i=0; i<array_size(diff_available)-1; i++) {
       UniDiffData_t *d = &diff_available[i];
-      UniDiffData_t *dn = &diff_available[i+1];
+      const UniDiffData_t *dn = &diff_available[i+1];
       if (strcmp( d->name, dn->name )==0)
          WARN(_("Two unidiff have the same name '%s'!"), d->name );
    }
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_("Loaded %d UniDiff in %.3f s", "Loaded %d UniDiffs in %.3f s", array_size(diff_available) ), array_size(diff_available), time/1000. );
    }
    else
       DEBUG( n_("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -1475,7 +1479,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
  *    @param diff Diff to add hunk to.
  *    @param hunk Hunk that failed to apply.
  */
-static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk )
+static void diff_hunkFailed( UniDiff_t *diff, const UniHunk_t *hunk )
 {
    if (diff == NULL)
       return;
@@ -1490,7 +1494,7 @@ static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk )
  *    @param diff Diff to add hunk to.
  *    @param hunk Hunk that applied correctly.
  */
-static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk )
+static void diff_hunkSuccess( UniDiff_t *diff, const UniHunk_t *hunk )
 {
    if (diff == NULL)
       return;
@@ -1811,7 +1815,7 @@ int diff_load( xmlNodePtr parent )
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if ( xml_isNode( cur, "diff" ) ) {
-               char *diffName = xml_get( cur );
+               const char *diffName = xml_get( cur );
                if ( diffName == NULL ) {
                   WARN( _( "Expected node \"diff\" to contain the name of a unidiff. Was empty." ) );
                   continue;
