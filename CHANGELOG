@@ -2,6 +2,7 @@
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
+      * Can modify game speed directly instead of using a slowmode difficulty for accessibility
    * Engine
       * Threaded more loading components
       * Lua require now caches chunks

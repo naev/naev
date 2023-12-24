@@ -60,7 +60,6 @@ dat/damagetype/plasma.xml
 dat/difficulty/default.xml
 dat/difficulty/easy_mode.xml
 dat/difficulty/masochist_mode.xml
-dat/difficulty/slow_mode.xml
 dat/difficulty/story_mode.xml
 dat/effects/ambush_hunter.xml
 dat/effects/antimatter_taint.xml

@@ -242,6 +242,7 @@ void conf_setVideoDefaults (void)
    conf.colourblind_sim = COLOURBLIND_SIM_DEFAULT;
    conf.colourblind_correct = COLOURBLIND_CORRECT_DEFAULT;
    conf.colourblind_type = COLOURBLIND_TYPE_DEFAULT;
+   conf.game_speed   = GAME_SPEED_DEFAULT;
    conf.healthbars   = HEALTHBARS_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;
@@ -344,6 +345,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "colourblind_sim", conf.colourblind_sim );
       conf_loadFloat( lEnv, "colourblind_correct", conf.colourblind_correct );
       conf_loadInt( lEnv, "colourblind_type", conf.colourblind_type );
+      conf_loadFloat( lEnv, "game_speed", conf.game_speed );
       conf_loadBool( lEnv, "healthbars", conf.healthbars );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
       /* todo leave only nebu_nonuniformity sometime */
@@ -904,6 +906,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Intensity of the colour blindness correction. A value of 0. disables."))
    conf_saveFloat("colourblind_correct",conf.colourblind_correct);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Slows down the game to improve accessibility."))
+   conf_saveFloat("game_speed",conf.game_speed);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Enable health bars. These show hostility/friendliness and health of pilots on screen."));

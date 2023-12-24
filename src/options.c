@@ -32,6 +32,7 @@
 #include "plugin.h"
 #include "render.h"
 #include "sound.h"
+#include "pause.h"
 #include "toolkit.h"
 
 #define BUTTON_WIDTH    200 /**< Button width, standard across menus. */
@@ -94,6 +95,7 @@ static void opt_setJumpBrightness( unsigned int wid, const char *str );
 static void opt_checkColourblind( unsigned int wid, const char *str );
 static void opt_setColourblindCorrect( unsigned int wid, const char *str );
 static void opt_listColourblind( unsigned int wid, const char *str );
+static void opt_setGameSpeed( unsigned int wid, const char *str );
 /* Video. */
 static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, const char *str );
@@ -1255,6 +1257,21 @@ static void opt_accessibility( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkColourblind", _("Simulate colourblindness"), opt_checkColourblind,
          conf.colourblind_sim );
+
+   /* Second column. */
+   x = 20 + cw + 20;
+   y = -40;
+
+   /* Video. */
+   window_addText( wid, x, y, 100, 20, 0, "txtSGameplay",
+         NULL, cHeader, _("Gamplay:") );
+   y -= 20;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtGameSpeed",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadGameSpeed", 0.1, 1.,
+         conf.game_speed, opt_setGameSpeed );
+   opt_setGameSpeed( wid, "fadGameSpeed" );
 }
 
 static int opt_accessibilitySave( unsigned int wid, const char *str )
@@ -1789,6 +1806,17 @@ static void opt_setJumpBrightness( unsigned int wid, const char *str )
    conf.jump_brightness = fad;
    snprintf( buf, sizeof(buf), _("Jump brightness: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtJumpBrightness", buf );
+}
+
+static void opt_setGameSpeed( unsigned int wid, const char *str )
+{
+   char buf[STRMAX_SHORT];
+   double prevspeed = conf.game_speed;
+   conf.game_speed = window_getFaderValue(wid, str);
+   player.speed *= conf.game_speed / prevspeed;
+   pause_setSpeed( player.speed );
+   snprintf( buf, sizeof(buf), _("Game speed: %.0f%%"), 100.*conf.game_speed );
+   window_modifyText( wid, "txtGameSpeed", buf );
 }
 
 /**

@@ -372,7 +372,7 @@ static int player_newMake (void)
    cam_setTargetPilot( player.p->id, 0 );
 
    /* Set player speed to default 1 */
-   player.speed = 1.;
+   player.speed = conf.game_speed;
 
    /* Reset speed (to make sure time dilation stuff is accounted for). */
    player_autonavResetSpeed();
@@ -1445,7 +1445,7 @@ void player_resetSpeed (void)
 {
    double spd = player.speed * player_dt_default();
    pause_setSpeed( spd );
-   sound_setSpeed( spd );
+   sound_setSpeed( spd / conf.game_speed );
 }
 
 /**
@@ -3562,7 +3562,7 @@ Spob* player_load( xmlNodePtr parent )
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
-   player.speed = 1.;
+   player.speed = conf.game_speed;
    pnt = NULL;
    map_cleanup();
 
@@ -3875,7 +3875,7 @@ static Spob* player_parse( xmlNodePtr parent )
    }
 
    /* Reset player speed */
-   player.speed = 1.;
+   player.speed = conf.game_speed;
 
    /* set global thingies */
    player.p->credits = player_creds + player_payback;

@@ -755,12 +755,24 @@ static int playerL_autonavEnd( lua_State *L )
    return 0;
 }
 
+/**
+ * @brief Gets the current time modifier for the player.
+ *
+ *    @luatreturn number Current time modifier.
+ * @luafunc dt_defaults
+ */
 static int playerL_dt_default( lua_State *L )
 {
    lua_pushnumber( L, player_dt_default() );
    return 1;
 }
 
+/**
+ * @brief Gets the current speed of the player.
+ *
+ *    @luatreturn number Current speed modifier.
+ * @luafunc sped
+ */
 static int playerL_speed( lua_State *L )
 {
    lua_pushnumber( L, player.speed );
@@ -783,13 +795,13 @@ static int playerL_setSpeed( lua_State *L )
 
    if (speed > 0.) {
       if (!noset)
-         player.speed = speed;
-      pause_setSpeed( speed );
+         player.speed = speed * conf.game_speed;
+      pause_setSpeed( speed * conf.game_speed );
       sound_setSpeed( sound );
    }
    else {
       if (!noset)
-         player.speed = 1.;
+         player.speed = conf.game_speed;
       player_resetSpeed();
    }
 
