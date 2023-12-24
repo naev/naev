@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-24 12:17+0900\n"
+"POT-Creation-Date: 2023-12-25 07:47+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -79606,7 +79606,7 @@ msgid ""
 "\"So this dummy thought he could out-fly me in his pathetic Llama! So I took "
 "him offline in, like, 2 seconds, got on that ship, and took the kids. The "
 "guy tried to fight back, but I stopped that quick enough. Then the woman "
-"says they was on a vacation, like I care! Ha! Fools think they can even "
+"says they were on a vacation, like I care! Ha! Fools think they can even "
 "bother to mess with me when I have work to do.\""
 msgstr ""
 
@@ -79695,7 +79695,7 @@ msgstr ""
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:220
 msgid ""
-"You and the other children stand off to the side and watch one of the most "
+"You and the other children stand-off to the side and watch one of the most "
 "beautiful reunions you have ever seen. After a little while the father "
 "approaches you, wiping a tear from his cheek, and takes you in an embrace. "
 "Releasing you and drying his eyes, he says, \"Thank you so much, {player}. "
@@ -105494,7 +105494,7 @@ msgid ""
 msgstr ""
 
 #. current target
-#. hether or not the target is a pilot
+#. whether or not the target is a pilot
 #. Doesn't fire normally,
 #. Clear target if doesn't exist
 #. Do range check
