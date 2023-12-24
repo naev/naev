@@ -197,7 +197,7 @@ const char* dtype_damageTypeToStr( int type )
  */
 int dtype_load (void)
 {
-   const DTYPE dtype_raw = {
+   const DTYPE dtype_raw_type = {
       .name = strdup(N_("raw")),
       .display = NULL,
       .sdam = 1.,
@@ -210,7 +210,7 @@ int dtype_load (void)
 
    /* Load up the individual damage types. */
    dtype_types = array_create(DTYPE);
-   array_push_back( &dtype_types, dtype_raw );
+   array_push_back( &dtype_types, dtype_raw_type );
 
    for (int i=0; i<array_size(dtype_files); i++) {
       DTYPE dtype;
@@ -251,7 +251,7 @@ void dtype_free (void)
  */
 int dtype_raw( int type, double *shield, double *armour, double *knockback )
 {
-   DTYPE *dtype = dtype_validType( type );
+   const DTYPE *dtype = dtype_validType( type );
    if (dtype == NULL)
       return -1;
    if (shield != NULL)
@@ -286,7 +286,7 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
 
    /* Set if non-nil. */
    if (dshield != NULL) {
-      if ((dtype->soffset <= 0) || (s == NULL))
+      if ((dtype->soffset == 0) || (s == NULL))
          *dshield    = dtype->sdam * dmg->damage * absorb;
       else {
          /*
@@ -303,7 +303,7 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
       }
    }
    if (darmour != NULL) {
-      if ((dtype->aoffset) <= 0 || (s == NULL))
+      if ((dtype->aoffset) == 0 || (s == NULL))
          *darmour    = dtype->adam * dmg->damage * absorb;
       else {
          ptr = (char*) s;
