@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-23 19:52-0500\n"
+"POT-Creation-Date: 2023-12-24 12:17+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -80000,7 +80000,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/majesteka_stowaways.lua:101
-msgid "Without giving given it a second thought he gladly agrees."
+msgid "Without giving it a second thought he gladly agrees."
 msgstr ""
 
 #: dat/missions/neutral/majesteka_stowaways.lua:102
@@ -80013,7 +80013,7 @@ msgstr ""
 
 #: dat/missions/neutral/majesteka_stowaways.lua:105
 msgid ""
-"With that settled, you bright the kids over to Verner who quickly enthralls "
+"With that settled, you bring the kids over to Verner who quickly enthrals "
 "with some sleight of hand. Seeing that they are in good hands, you now "
 "return to your ship with peace of mind."
 msgstr ""
@@ -80133,8 +80133,8 @@ msgstr ""
 
 #: dat/missions/neutral/majesteka_stowaways.lua:226
 msgid ""
-"You reach the cargo holds but don't find nothing out of the ordinary. You "
-"carefully open the hatch and find a big thank you note written on the wall "
+"You reach the cargo holds but don't find anything out of the ordinary. You "
+"carefully open the hatch and find a big thank-you note written on the wall "
 "with some sort of crayon or chalk. It reads \"thank you for everything\". "
 "While taking the orphans to a safe home may have not meant too much trouble "
 "for you, it meant an entire life to them."
@@ -113897,7 +113897,9 @@ msgstr ""
 msgid "\"Money won't buy you access to our restricted facilities, citizen.\""
 msgstr ""
 
-#: dat/spob/lua/dvaered_mil_restricted.lua:7
+#. Avoid double landing
+#. Not player, just play animation and remove
+#: dat/spob/lua/dvaered_mil_restricted.lua:7 dat/spob/lua/maanens_moon.lua:7
 #: dat/spob/lua/soromid_mil_kataka.lua:7
 #: dat/spob/lua/soromid_mil_restricted.lua:7
 msgid "Permission to land granted."
@@ -114423,14 +114425,6 @@ msgstr ""
 #: dat/spob/lua/lib/wormhole.lua:93
 msgid "The wormhole seems to be active."
 msgstr ""
-
-#. Avoid double landing
-#. Not player, just play animation and remove
-#: dat/spob/lua/maanens_moon.lua:7
-#, fuzzy
-#| msgid "permission denied"
-msgid "Permisson to land granted."
-msgstr "permesso negato"
 
 #: dat/spob/lua/maanens_moon.lua:10
 msgid "Access to Maanen's Moon denied."
@@ -126940,6 +126934,11 @@ msgstr ""
 #: dat/outfits/bioship/generate.py:484
 msgid "Immanis Cortex III"
 msgstr ""
+
+#, fuzzy
+#~| msgid "permission denied"
+#~ msgid "Permisson to land granted."
+#~ msgstr "permesso negato"
 
 #, fuzzy
 #~| msgid "Enygma Systems Turreted Fury Launcher"
