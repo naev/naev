@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-12-25 07:47+0900\n"
-"PO-Revision-Date: 2023-12-24 22:51+0000\n"
+"PO-Revision-Date: 2023-12-26 03:07+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -4047,7 +4047,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/drone_bay.xml:2
 msgid "Drone Bay"
-msgstr "Zásobník dronů"
+msgstr "Hangár dronů"
 
 #: dat/outfits/fighter_bays/drone_bay.xml:11
 msgid ""
@@ -4057,7 +4057,7 @@ msgid ""
 "maintenance. All the tools needed to take care of them are provided with the "
 "bay."
 msgstr ""
-"Zásobník stíhačů dronů využívá pokročilé kolektivní technologie k udržení "
+"Hangár stíhačů dronů využívá pokročilé kolektivní technologie k udržení "
 "skupiny tří stíhačů dronů. Dronové stíhačky nepotřebují žádného pilota, což "
 "z nich činí bezpečnější přístup v nebezpečných situacích. Potřebují však "
 "pečlivou údržbu. Všechny nástroje potřebné k péči o ně jsou součástí "
@@ -4065,11 +4065,11 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:2
 msgid "Empire Lancelot Bay"
-msgstr "Zásobník imperiálních Lancelotů"
+msgstr "Hangár imperiálních Lancelotů"
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:4
 msgid "E. Lancelot Bay"
-msgstr "Zásobník I. Lancelotů"
+msgstr "Hangár I. Lancelotů"
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:9
 #: dat/ships/empire/empire_pacifier.xml:18
@@ -4088,7 +4088,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/hyena_bay.xml:2
 msgid "Hyena Bay"
-msgstr "Zásobník Hyen"
+msgstr "Hangár Hyen"
 
 #: dat/outfits/fighter_bays/hyena_bay.xml:10
 msgid ""
@@ -4096,7 +4096,7 @@ msgid ""
 "interceptors that can be operated. It comes with all the amenities necessary "
 "for the maintenance and operation of the interceptors."
 msgstr ""
-"Tato zátoka rozšiřuje oblíbený dok Hyena a zdvojnásobuje počet záchytných "
+"Tento hangár rozšiřuje oblíbený dok Hyena a zdvojnásobuje počet záchytných "
 "zařízení Hyena, která lze provozovat. Je vybavena veškerým příslušenstvím "
 "potřebným pro údržbu a provoz záchytných zařízení."
 
@@ -4128,11 +4128,11 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:2
 msgid "Pirate Hyena Bay"
-msgstr "Zásobník Pirátských Hyen"
+msgstr "Hangár Pirátských Hyen"
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:4
 msgid "P. Hyena Bay"
-msgstr "Zásobník P. Hyen"
+msgstr "Hangár P. Hyen"
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:11
 msgid ""
@@ -4141,7 +4141,7 @@ msgid ""
 "for the maintenance and operation of the interceptors. The Pirate Hyenas can "
 "also assist in ship scavenging and looting."
 msgstr ""
-"Tento zásobník rozšiřuje oblíbený pirátský dok Hyena a zdvojnásobuje počet "
+"Tento hangár rozšiřuje oblíbený pirátský dok Hyena a zdvojnásobuje počet "
 "záchytných lodí, které lze provozovat. Je vybaven veškerým zařízením "
 "potřebným pro údržbu a provoz záchytných zařízení. Pirátské hyeny mohou také "
 "pomáhat při vyklízení a plenění lodí."
@@ -4152,7 +4152,7 @@ msgstr "Dok Pirátských Hyen"
 
 #: dat/outfits/fighter_bays/pirate_hyena_dock.xml:4
 msgid "P. Hyena Dock"
-msgstr ""
+msgstr "Dok P. Hyen"
 
 #: dat/outfits/fighter_bays/pirate_hyena_dock.xml:11
 msgid ""
@@ -4161,14 +4161,17 @@ msgid ""
 "the interceptors. The Pirate Hyenas can assist in ship scavenging and "
 "looting."
 msgstr ""
+"Tento dok umožňuje vaší lodi nést dvojici pirátských stíhaček Hyena. Je "
+"vybaven veškerým zařízením potřebným pro údržbu a provoz záchytných "
+"stíhaček. Pirátské hyeny mohou pomáhat při vyklízení a plenění lodí."
 
 #: dat/outfits/fighter_bays/proteron_dalton_bay.xml:2
 msgid "Proteron Dalton Bay"
-msgstr ""
+msgstr "Hangár Proteron Daltonů"
 
 #: dat/outfits/fighter_bays/proteron_dalton_bay.xml:4
 msgid "P. Dalton Bay"
-msgstr ""
+msgstr "Hangár P. Daltonů"
 
 #: dat/outfits/fighter_bays/proteron_dalton_bay.xml:12
 msgid ""
@@ -4176,14 +4179,17 @@ msgid ""
 "interceptors. It comes with all the devices required for the maintenance and "
 "flight of the interceptors."
 msgstr ""
+"Tento prostor pro stíhačky umožňuje vaší lodi nést čtyři stíhačky třídy "
+"Proteron Dalton. Je vybaven všemi zařízeními potřebnými pro údržbu a let "
+"stíhaček."
 
 #: dat/outfits/fighter_bays/proteron_dalton_dock.xml:2
 msgid "Proteron Dalton Dock"
-msgstr ""
+msgstr "Dok Proteron Daltonů"
 
 #: dat/outfits/fighter_bays/proteron_dalton_dock.xml:4
 msgid "P. Dalton Dock"
-msgstr ""
+msgstr "Dok P. Daltonů"
 
 #: dat/outfits/fighter_bays/proteron_dalton_dock.xml:12
 msgid ""
@@ -4191,18 +4197,20 @@ msgid ""
 "interceptors. It comes with all the devices required for the maintenance and "
 "flight of the interceptors."
 msgstr ""
+"Tento prostor pro stíhačky umožňuje lodi nést dva stíhače třídy Proteron "
+"Dalton. Je vybaven všemi zařízeními potřebnými pro údržbu a let stíhaček."
 
 #: dat/outfits/fighter_bays/sirius_fidelity_bay.xml:2
 msgid "Sirius Fidelity Bay"
-msgstr ""
+msgstr "Hangár Sirius Fidelity"
 
 #: dat/outfits/fighter_bays/sirius_fidelity_bay.xml:4
 msgid "S. Fidelity Bay"
-msgstr ""
+msgstr "Hangár S. Fidelity"
 
 #: dat/outfits/fighter_bays/sirius_fidelity_bay.xml:9
 msgid "You need at least 50 reputation with House Sirius."
-msgstr ""
+msgstr "Potřebujete alespoň 50 reputace u rodu Sirius."
 
 #: dat/outfits/fighter_bays/sirius_fidelity_bay.xml:14
 msgid ""
@@ -4210,14 +4218,17 @@ msgid ""
 "are stronger when working together in groups. Quite apropos, given Sirian "
 "society."
 msgstr ""
+"Z tohoto doku jsou spuštěny tři stíhačky společnosti Sirius Fidelity. "
+"Jednotlivě jsou slabé, ale ve skupině jsou silnější. Vzhledem k sirianské "
+"společnosti je to docela vhodné."
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:2
 msgid "Sirius Shaman Bay"
-msgstr ""
+msgstr "Hangár Sirius Šamanů"
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:4
 msgid "S. Shaman Bay"
-msgstr ""
+msgstr "Hangár S. Šamanů"
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:9
 msgid "You need at least 50 reputation with the Sirius."
@@ -4229,19 +4240,22 @@ msgid ""
 "bombers. It comes with all the devices required for the maintenance and "
 "flight of the bombers."
 msgstr ""
+"Tento prostor pro stíhačky umožňuje vaší lodi nést dvojici bombardérů třídy "
+"Sirius Shaman. Je vybaven všemi zařízeními potřebnými pro údržbu a let "
+"bombardérů."
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:2
 msgid "Soromid Brigand Bay"
-msgstr ""
+msgstr "Hangár Soromid Brigandů"
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:4
 msgid "S. Brigand Bay"
-msgstr ""
+msgstr "Hangár S. Brigandů"
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:9
 #: dat/ships/soromid/soromid_nyx.xml:17
 msgid "You need at least 50 reputation with the Soromid."
-msgstr ""
+msgstr "Potřebujete alespoň 50 reputace u Soromidů."
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:14
 msgid ""
@@ -4249,20 +4263,23 @@ msgid ""
 "class fighters. It comes with all the devices required for the maintenance "
 "and flight of the fighters."
 msgstr ""
+"Tento prostor pro stíhačky umožňuje vaší lodi nést trojici stíhaček třídy "
+"Soromid Brigand. Je vybaven všemi zařízeními potřebnými pro údržbu a let "
+"stíhaček."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:2
 msgid "Thurion Perspicacity Bay"
-msgstr ""
+msgstr "Hangár Thurion Perspicacity"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:4
 msgid "T. Perspicacity Bay"
-msgstr ""
+msgstr "Hangár T. Perspicacity"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:9
 #: dat/ships/thurion/thurion_apprehension.xml:20
 #: dat/ships/thurion/thurion_taciturnity.xml:19
 msgid "You need at least 50 reputation with the Thurion."
-msgstr ""
+msgstr "Potřebujete alespoň 50 reputace u Thurionu."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:14
 msgid ""
@@ -4270,20 +4287,22 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "fighters."
 msgstr ""
+"Tento prostor umožňuje vaší lodi nést čtyři stíhačky Thurion Perspicacity. "
+"Je vybaven všemi zařízeními potřebnými pro údržbu a let stíhaček."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:2
 msgid "Thurion Perspicacity Dock"
-msgstr ""
+msgstr "Dok Thurion Perspicacity"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:4
 msgid "T. Perspicacity Dock"
-msgstr ""
+msgstr "Dok T. Perspicacity"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:9
 #: dat/ships/thurion/thurion_ingenuity.xml:19
 #: dat/ships/thurion/thurion_scintillation.xml:20
 msgid "You need at least 30 reputation with the Thurion."
-msgstr ""
+msgstr "Potřebujete alespoň 30 reputace u Thurionu."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:14
 msgid ""
@@ -4291,20 +4310,22 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "fighters."
 msgstr ""
+"Tento dok umožňuje vaší lodi nést dvě stíhačky Thurion Perspicacity. Je "
+"vybaven všemi zařízeními potřebnými pro údržbu a let stíhaček."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:2
 msgid "Za'lek Bomber Drone Bay"
-msgstr ""
+msgstr "Hangár Za'lek bombardér Dronů"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:4
 msgid "Z. B. Drone B."
-msgstr ""
+msgstr "H. Z. B-Dronů"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:9
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:9
 #: dat/ships/zalek/zalek_demon.xml:19
 msgid "You need at least 50 reputation with House Za'lek."
-msgstr ""
+msgstr "Potřebujete alespoň 50 reputace u rodu Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:14
 msgid ""
@@ -4313,20 +4334,23 @@ msgid ""
 "danger. It comes with all the devices required for the maintenance and "
 "flight of the drones."
 msgstr ""
+"Z tohoto prostoru lze vypustit dvě křídla bombardovacích dronů, které jsou "
+"schopny bombardovat nepřátelské hlavní lodě, aniž by se mateřská loď dostala "
+"do nebezpečí. Je vybaven všemi zařízeními potřebnými pro údržbu a let dronů."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:2
 msgid "Za'lek Bomber Drone Mini Bay"
-msgstr ""
+msgstr "Minihangár Za'lek bombardér Dronů"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:4
 msgid "Z. B. Drone mB."
-msgstr ""
+msgstr "Mh. Z. B-Dronů"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:9
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:9
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:9
 msgid "You need at least 30 reputation with House Za'lek."
-msgstr ""
+msgstr "Potřebujete alespoň 30 reputace u rodu Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:14
 msgid ""
@@ -4335,19 +4359,22 @@ msgid ""
 "danger. It comes with all the devices required for the maintenance and "
 "flight of the drones."
 msgstr ""
+"Z tohoto prostoru lze vypustit křídlo bombardovacích dronů schopných "
+"bombardovat nepřátelské hlavní lodě, aniž by se mateřská loď dostala do "
+"nebezpečí. Je vybaven všemi zařízeními potřebnými pro údržbu a let dronů."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:2
 msgid "Za'lek Heavy Drone Bay"
-msgstr ""
+msgstr "Hangár Za'lek těžkých Dronů"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:4
 msgid "Z. H. Drone B."
-msgstr ""
+msgstr "H. Z. T-Dronů"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:9
 #: dat/ships/zalek/zalek_mammon.xml:23
 msgid "You need at least 60 reputation with House Za'lek."
-msgstr ""
+msgstr "Potřebujete alespoň 60 reputace u rodu Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:14
 msgid ""
@@ -4355,20 +4382,23 @@ msgid ""
 "the biggest ships in packs. It comes with all the devices required for the "
 "maintenance and flight of the drones."
 msgstr ""
+"Z tohoto hangáru lze vypustit celou letku bezpilotních letounů, která je "
+"schopna bojovat se všemi loděmi kromě těch největších. Je vybavena všemi "
+"zařízeními potřebnými pro údržbu a let dronů."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:2
 msgid "Za'lek Heavy Drone Mini Bay"
-msgstr ""
+msgstr "Minihangár Za'lek těžkých Dronů"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:4
 msgid "Z. H. Drone mB."
-msgstr ""
+msgstr "Mh. Z. T-Dronů"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:9
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:9
 #: dat/ships/zalek/zalek_sting.xml:19
 msgid "You need at least 40 reputation with House Za'lek."
-msgstr ""
+msgstr "Potřebujete alespoň 40 reputace u rodu Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:14
 msgid ""
@@ -4376,14 +4406,16 @@ msgid ""
 "punch. It comes with all the devices required for the maintenance and flight "
 "of the drones."
 msgstr ""
+"Z tohoto prostoru lze vypustit tři těžké drony, což mateřské lodi dodává "
+"značnou sílu. Je vybavena všemi zařízeními potřebnými pro údržbu a let dronů."
 
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:2
 msgid "Za'lek Light Drone Bay"
-msgstr ""
+msgstr "Hangár Za'lek lehkých Dronů"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:4
 msgid "Z. L. Drone B."
-msgstr ""
+msgstr "H. Z. L-Dronů"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:14
 msgid ""
@@ -4392,14 +4424,18 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "drones."
 msgstr ""
+"Tento prostor je určen k vypuštění roje lehkých dronů Za'lek. Tyto drony "
+"jsou postradatelné, ale ve velkém počtu vynikají při likvidaci nepřátelských "
+"lehkých plavidel. Je vybavena všemi zařízeními potřebnými pro údržbu a let "
+"dronů."
 
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:2
 msgid "Za'lek Light Drone Mini Bay"
-msgstr ""
+msgstr "Minihangár Za'lek lehkých dronů"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:4
 msgid "Z. L. Drone mB."
-msgstr ""
+msgstr "Mh. Z. L-Dronů"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:14
 msgid ""
@@ -4408,6 +4444,10 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "drones."
 msgstr ""
+"Tento hangár je určen k vypuštění čtveřice lehkých dronů Za'lek. Tyto drony "
+"jsou postradatelné, ale ve velkém počtu vynikají při likvidaci nepřátelských "
+"lehkých plavidel. Je vybavena všemi zařízeními potřebnými pro údržbu a let "
+"dronů."
 
 #: dat/outfits/flow/abilities/astral_projection.xml:4
 #: dat/outfits/flow/abilities/avatar_of_sirichana.xml:4
@@ -4417,7 +4457,7 @@ msgstr ""
 #: dat/outfits/flow/abilities/reality_rip.xml:4
 #: dat/outfits/flow/abilities/seeking_chakra.xml:4
 msgid "Flow Ability"
-msgstr ""
+msgstr "Schopnost soustředění síly toku"
 
 #: dat/outfits/flow/abilities/astral_projection.xml:12
 msgid ""
@@ -4426,16 +4466,21 @@ msgid ""
 "that are able to engage with enemies of the user, as long as flow is "
 "sustained."
 msgstr ""
+"Soustředění síly toku umožňuje vytvářet éterické projevy, které mohou přímo "
+"působit na realitu. Tyto projevy mají podobu lodí, které jsou schopny se "
+"utkat s nepřáteli uživatele, pokud je tok udržován."
 
 #: dat/outfits/flow/abilities/avatar_of_sirichana.xml:12
 msgid ""
 "By turning flow inwards to oneself, one can embody all the virtues of the "
 "Sirichana significantly increasing all aspects of the ship being flown."
 msgstr ""
+"Obrácením toku dovnitř k sobě samému lze ztělesnit všechny ctnosti "
+"Sirichana, čímž se výrazně zvýší všechny aspekty proplouvané lodi."
 
 #: dat/outfits/flow/abilities/cleansing_flames.xml:2
 msgid "Cleansing Flames"
-msgstr ""
+msgstr "Očišťující plameny"
 
 #: dat/outfits/flow/abilities/cleansing_flames.xml:12
 msgid ""
@@ -4443,6 +4488,9 @@ msgid ""
 "allies in soothing psychic emanations, while scorching enemies in damaging "
 "chakra burns."
 msgstr ""
+"Tok lze použít k pročištění bezprostředního okolí lodi, k omývání spojenců "
+"uklidňujícími psychickými emanacemi, zatímco nepřátele spaluje ničivými "
+"výbuchy čakry."
 
 #: dat/outfits/flow/abilities/feather_drive.xml:12
 msgid ""
@@ -4452,10 +4500,15 @@ msgid ""
 "distances, hostile ships that are hit have their energy drain, and the "
 "residual psychic shockwaves additionally slow them down."
 msgstr ""
+"Zatímco většina moderních technik cestování se spoléhá na skládání prostoru, "
+"aby se dlouhá vzdálenost stala krátkou, technika pohonu peřím místo toho "
+"využívá proudění k rozkládání lodi. To nejenže umožňuje lodi téměř okamžitě "
+"překonat krátké vzdálenosti, ale nepřátelským lodím, které jsou zasaženy, se "
+"vyčerpá energie a zbytkové psychické rázové vlny je navíc zpomalí."
 
 #: dat/outfits/flow/abilities/house_of_mirrors.xml:2
 msgid "House of Mirrors"
-msgstr ""
+msgstr "Zrcadlový dům"
 
 #: dat/outfits/flow/abilities/house_of_mirrors.xml:12
 msgid ""
@@ -4468,10 +4521,17 @@ msgid ""
 "destructive power. It has become a favourite of those who have been able to "
 "master the skill."
 msgstr ""
+"Není jasné, jak se tato průtočná schopnost objevila, ale vypráví se o "
+"pirátovi, který si vzal příliš mnoho průtočných hub a skončil zavřený na "
+"záchodě s velkým zrcadlem. Když se jim podařilo dostat je ven, tvrdili, že "
+"vedli velmi dlouhý a podrobný rozhovor se svým druhým já. Koncept plurality "
+"já byl pak zdokonalen pomocí průtokových zesilovačů, aby bylo možné promítat "
+"více kopií své lodi a zesílit tak hrubou ničivou sílu. To se stalo oblíbenou "
+"dovedností těch, kteří ji dokázali ovládnout."
 
 #: dat/outfits/flow/abilities/reality_rip.xml:2
 msgid "Reality Rip"
-msgstr ""
+msgstr "Roztrhání reality"
 
 #: dat/outfits/flow/abilities/reality_rip.xml:12
 msgid ""
@@ -4483,10 +4543,17 @@ msgid ""
 "uncontrolled field affects all ships alike, seemingly slowing time on the "
 "outside."
 msgstr ""
+"Technika vyvinutá pirátem Vizionářů známým pouze pod přezdívkou \"Snort\" "
+"spočívá v tom, že soustředěním velkého množství proudu do velmi "
+"koncentrované oblasti a následným přetlakem psychiky, která splyne s "
+"prázdnotou, je možné vytvořit něco, co lze popsat pouze jako roztržení "
+"reality. Na rozdíl od kontrolovanějších schopností proudění, které dokáže "
+"rozlišit mezi přítelem a nepřítelem, nekontrolované pole působí na všechny "
+"lodě stejně a zdánlivě zpomaluje čas navenek."
 
 #: dat/outfits/flow/abilities/seeking_chakra.xml:2
 msgid "Seeking Chakra"
-msgstr ""
+msgstr "Pátrací čakra"
 
 #: dat/outfits/flow/abilities/seeking_chakra.xml:12
 msgid ""
@@ -4494,22 +4561,25 @@ msgid ""
 "ball which is then hurled at the target. Proficient users are able to create "
 "multiple seeking chakra at once."
 msgstr ""
+"Jedna z prvních schopností, kterou se všichni kadeti Sirii učí. Proud se "
+"soustředí do koule, která je pak vrhána na cíl. Zkušení uživatelé jsou "
+"schopni vytvořit více pátracích čaker najednou."
 
 #: dat/outfits/flow/abilities/seeking_chakra_large.xml:2
 msgid "Seeking Chakra Large"
-msgstr ""
+msgstr "Velká pátrací čakra"
 
 #: dat/outfits/flow/abilities/seeking_chakra_medium.xml:2
 msgid "Seeking Chakra Medium"
-msgstr ""
+msgstr "Střední pátrací čakra"
 
 #: dat/outfits/flow/abilities/seeking_chakra_small.xml:2
 msgid "Seeking Chakra Small"
-msgstr ""
+msgstr "Malá pátrací čakra"
 
 #: dat/outfits/flow/astral_flow_amplifier.xml:2
 msgid "Astral Flow Amplifier"
-msgstr ""
+msgstr "Zesilovač astrálního toku"
 
 #: dat/outfits/flow/astral_flow_amplifier.xml:4
 #: dat/outfits/flow/internal_flow_amplifier.xml:4
@@ -4517,27 +4587,27 @@ msgstr ""
 #: dat/outfits/flow/structure/medium_flow_amplifier.xml:4
 #: dat/outfits/flow/structure/small_flow_amplifier.xml:4
 msgid "Flow Amplifier"
-msgstr ""
+msgstr "Zesilovač toku"
 
 #: dat/outfits/flow/astral_projection/astral_cannon.xml:2
 msgid "Astral Cannon"
-msgstr ""
+msgstr "Astrální dělo"
 
 #: dat/outfits/flow/astral_projection/greater_astral_cannon.xml:2
 msgid "Greater Astral Cannon"
-msgstr ""
+msgstr "Větší astrální dělo"
 
 #: dat/outfits/flow/astral_projection/lesser_astral_cannon.xml:2
 msgid "Lesser Astral Cannon"
-msgstr ""
+msgstr "Menší astrální dělo"
 
 #: dat/outfits/flow/internal_flow_amplifier.xml:2
 msgid "Internal Flow Amplifier"
-msgstr ""
+msgstr "Interní zesilovač toku"
 
 #: dat/outfits/flow/structure/large_flow_amplifier.xml:2
 msgid "Large Flow Amplifier"
-msgstr ""
+msgstr "Velký zesilovač průtoku"
 
 #: dat/outfits/flow/structure/large_flow_amplifier.xml:11
 #: dat/outfits/flow/structure/medium_flow_amplifier.xml:11
@@ -4549,10 +4619,15 @@ msgid ""
 "significantly amplifying their psychic abilities to aid the ship with "
 "different abilities."
 msgstr ""
+"Ačkoli jsou všechny lodě Sirius vybaveny interními zesilovači průtoku, "
+"některé z nich jsou vytvořeny také jako samostatné jednotky pro lodě bez "
+"vestavěných průtokových funkcí. Zesilovače toku jsou speciálně vyladěny na "
+"míru posádce a umožňují výrazně zesílit její psychické schopnosti a pomoci "
+"tak lodi s různými schopnostmi."
 
 #: dat/outfits/flow/structure/large_flow_resonator.xml:2
 msgid "Large Flow Resonator"
-msgstr ""
+msgstr "Velký průtokový rezonátor"
 
 #: dat/outfits/flow/structure/large_flow_resonator.xml:4
 #: dat/outfits/flow/structure/large_meditation_chamber.xml:4
@@ -4560,10 +4635,8 @@ msgstr ""
 #: dat/outfits/flow/structure/medium_meditation_chamber.xml:4
 #: dat/outfits/flow/structure/small_flow_resonator.xml:4
 #: dat/outfits/flow/structure/small_meditation_chamber.xml:4
-#, fuzzy
-#| msgid "Slow Mode"
 msgid "Flow Modifier"
-msgstr "Zpomalený režim"
+msgstr "Modifikátor toku"
 
 #: dat/outfits/flow/structure/large_flow_resonator.xml:10
 #: dat/outfits/flow/structure/medium_flow_resonator.xml:10
@@ -4574,10 +4647,14 @@ msgid ""
 "generation. This allows the ship to gain flow regeneration, albeit to only "
 "half of the full potential."
 msgstr ""
+"Díky napojení na tok každého jednotlivce může rezonátor toku vyladit a "
+"vytvořit přímé spojení mezi zesilovačem toku a osobní generací toku. To "
+"umožňuje lodi získat regeneraci toku, i když jen na polovinu plného "
+"potenciálu."
 
 #: dat/outfits/flow/structure/large_meditation_chamber.xml:2
 msgid "Large Meditation Chamber"
-msgstr ""
+msgstr "Velká meditační komora"
 
 #: dat/outfits/flow/structure/large_meditation_chamber.xml:10
 #: dat/outfits/flow/structure/medium_meditation_chamber.xml:10
@@ -4587,34 +4664,37 @@ msgid ""
 "to aid the ship's flow capabilities and acts as an auxiliary flow buffer. A "
 "flow amplifier is required for the meditation chamber to take effect."
 msgstr ""
+"Meditační komora integrovaná přímo do lodi. Umožňuje posádce napomáhat "
+"průtokovým schopnostem lodi a funguje jako pomocný nárazník průtoku. Aby "
+"meditační komora mohla účinkovat, je zapotřebí zesilovač průtoku."
 
 #: dat/outfits/flow/structure/medium_flow_amplifier.xml:2
 msgid "Medium Flow Amplifier"
-msgstr ""
+msgstr "Střední zesilovač toku"
 
 #: dat/outfits/flow/structure/medium_flow_resonator.xml:2
 msgid "Medium Flow Resonator"
-msgstr ""
+msgstr "Střední průtokový rezonátor"
 
 #: dat/outfits/flow/structure/medium_meditation_chamber.xml:2
 msgid "Medium Meditation Chamber"
-msgstr ""
+msgstr "Střední meditační komora"
 
 #: dat/outfits/flow/structure/small_flow_amplifier.xml:2
 msgid "Small Flow Amplifier"
-msgstr ""
+msgstr "Malý zesilovač toku"
 
 #: dat/outfits/flow/structure/small_flow_resonator.xml:2
 msgid "Small Flow Resonator"
-msgstr ""
+msgstr "Malý průtokový rezonátor"
 
 #: dat/outfits/flow/structure/small_meditation_chamber.xml:2
 msgid "Small Meditation Chamber"
-msgstr ""
+msgstr "Malá meditační komora"
 
 #: dat/outfits/intrinsic/gauntlet_deluxe.xml:2
 msgid "Gauntlet Deluxe"
-msgstr ""
+msgstr "Gauntlet Deluxe"
 
 #: dat/outfits/intrinsic/gauntlet_deluxe.xml:7
 msgid ""
@@ -4624,10 +4704,14 @@ msgid ""
 "high cost of the service itself. Due to the nature of the service, only one "
 "can be applied to each ship."
 msgstr ""
+"Služba \"Gauntlet Deluxe\" zajišťuje kompletní úpravu a generální opravu "
+"předních systémů a zbraňových obvodů věže. Optimalizace dokáže mírně zvýšit "
+"výkon bez výraznější nevýhody kromě vysoké ceny samotné služby. Vzhledem k "
+"povaze služby lze na každou loď použít pouze jednu."
 
 #: dat/outfits/intrinsic/gauntlet_supreme.xml:2
 msgid "Gauntlet Supreme"
-msgstr ""
+msgstr "Gauntlet Supreme"
 
 #: dat/outfits/intrinsic/gauntlet_supreme.xml:7
 msgid ""
@@ -4637,14 +4721,19 @@ msgid ""
 "technicians tuning everything for maximum efficiency. Due to the nature of "
 "the service, only one can be applied to each ship."
 msgstr ""
+"Tato služba se zaměřuje na zdokonalování a vylepšování odpalovacích systémů "
+"s cílem maximalizovat palebnou sílu raket na lodi. Jedná se o komplexní a "
+"hloubkovou optimalizaci, která musí být provedena pro každou loď zvlášť, "
+"přičemž specializovaní technici vše vyladí pro maximální účinnost. Vzhledem "
+"k povaze služby lze na každou loď použít pouze jednu."
 
 #: dat/outfits/intrinsic/gauntlet_supreme.xml:8
 msgid "#oDoubles effect when using unguided launchers.#0"
-msgstr ""
+msgstr "#oDvojnásobí účinek při použití neřízených odpalovacích zařízení.#0"
 
 #: dat/outfits/intrinsic/machiavellian_fortune.xml:2
 msgid "Machiavellian Fortune"
-msgstr ""
+msgstr "Machiavellistické štěstí"
 
 #: dat/outfits/intrinsic/machiavellian_fortune.xml:7
 msgid ""
@@ -4652,30 +4741,37 @@ msgid ""
 "ahead of it. It is possible to build dams and walls to try to contain the "
 "flow, but there is no way to prevent the water from hitting."
 msgstr ""
+"Štěstí je jako rozbouřená řeka, která před sebou tlačí neprostupnou vodní "
+"stěnu. Je možné stavět hráze a zdi a snažit se tok zadržet, ale neexistuje "
+"způsob, jak zabránit vodě, aby udeřila."
 
 #: dat/outfits/intrinsic/machiavellian_necessity.xml:2
 msgid "Machiavellian Necessity"
-msgstr ""
+msgstr "Machiavelistická nezbytnost"
 
 #: dat/outfits/intrinsic/machiavellian_necessity.xml:7
 msgid ""
 "In order to achieve goals, decisiveness becomes a necessity. A quick strike "
 "can determine the outcome of an encounter."
 msgstr ""
+"Pro dosažení cílů je rozhodnost nutností. Rychlý úder může rozhodnout o "
+"výsledku střetnutí."
 
 #: dat/outfits/intrinsic/machiavellian_virtue.xml:2
 msgid "Machiavellian Virtue"
-msgstr ""
+msgstr "Machiavellistická ctnost"
 
 #: dat/outfits/intrinsic/machiavellian_virtue.xml:7
 msgid ""
 "Virtue is the bulwark against the fickle whims of fortune. One can master "
 "their own will by mastering their own character."
 msgstr ""
+"Ctnost je oporou proti vrtkavým rozmarům štěstěny. Člověk může ovládnout "
+"svou vůli tím, že ovládne svůj charakter."
 
 #: dat/outfits/intrinsic/port_and_polish.xml:2
 msgid "Port & Polish"
-msgstr ""
+msgstr "Portování a ladění"
 
 #: dat/outfits/intrinsic/port_and_polish.xml:7
 msgid ""
@@ -4687,16 +4783,21 @@ msgid ""
 "significantly with the size of the ship.\n"
 "#oThis outfit can not be removed once equipped.#0"
 msgstr ""
+"Přestože mnoho lodí prochází během sériové výroby procesem ladění, není "
+"zdaleka dokonalý a jeho nedokonalosti vedou k neoptimálnímu výkonu. "
+"Portování a ladění spočívá v kompletním hloubkovém vyladění lodi tak, aby "
+"vyniklo její nejlepší vlastnosti. Protože vyžaduje rozebrání, doladění a "
+"opětovné složení velkých částí lodi, náklady se výrazně zvyšují s velikostí "
+"lodi.\n"
+"#oTuto výbavu nelze po vybavení odstranit.#0"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:2
 msgid "Convulsion Launcher"
-msgstr ""
+msgstr "Konvulzní odpalovač"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:4
-#, fuzzy
-#| msgid "Pirate Station"
 msgid "Convulsion L."
-msgstr "Pirátská stanice"
+msgstr "Konvulzní O."
 
 #: dat/outfits/launchers/convulsion_launcher.xml:11
 msgid ""
@@ -4704,14 +4805,17 @@ msgid ""
 "destructive power. While it does little damage to physical objects it is "
 "quite effective at disrupting shields."
 msgstr ""
+"Střely třídy Thurion se zaměřují spíše na vysokou obratnost než na ničivou "
+"sílu. Ačkoli způsobuje jen malé poškození fyzických objektů, je poměrně "
+"účinná při narušování štítů."
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:2
 msgid "Electron Burst Cannon"
-msgstr ""
+msgstr "Dělo s elektronovým výbojem"
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:4
 msgid "Electron Burst C."
-msgstr ""
+msgstr "Dělo s elektron. výb."
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:11
 msgid ""
@@ -4721,14 +4825,19 @@ msgid ""
 "developed by the Za'lek to be used by their heavier droness to supplement "
 "the short range and high damage of their beams."
 msgstr ""
+"Tato výkonná energetická zbraň je zkonstruována tak, aby bombardovala cíl z "
+"velké vzdálenosti výboji EMP, které způsobují oslabení štítů a elektrických "
+"systémů cíle, takže loď může zůstat prakticky bezbranná. Za'lekové ji "
+"vyvinuli pro své těžší drony, aby doplnila krátký dosah a vysoké poškození "
+"jejich paprsků."
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:2
 msgid "EMP Grenade Launcher"
-msgstr ""
+msgstr "EMP odpalovač granátů"
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:4
 msgid "EMP Grenade L."
-msgstr ""
+msgstr "EMP Grenade Odp."
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:10
 msgid ""
@@ -4739,14 +4848,20 @@ msgid ""
 "leaving it floating disabled in space. These are favoured by traders for "
 "keeping pirates at bay."
 msgstr ""
+"Tento granátomet může střílet granáty EMP v libovolném směru pomocí "
+"jedinečného vnitřního naváděcího systému. Granáty při dopadu uvolní "
+"elektromagnetický puls, který rychle vyřadí elektroniku blízkých lodí, ať už "
+"nepřátelských nebo jiných. Užitečné pro dobývání živých lodí; EM pulzy "
+"zřídkakdy zničí loď a ta se pak vznáší v prostoru jako vyřazená z provozu. "
+"Obchodníci si je oblíbili, aby udrželi piráty na uzdě."
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:2
 msgid "Enygma Systems Huntsman Launcher"
-msgstr ""
+msgstr "Enygma Systems Huntsman Odpalovač"
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:4
 msgid "E. Huntsman L."
-msgstr ""
+msgstr "E. Huntsman Odp."
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:11
 msgid ""
@@ -4755,14 +4870,19 @@ msgid ""
 "insufficient, they redesigned Unicorp's Caesar IV torpedo as a heavy EMP "
 "weapon, capable of rapidly frying the systems of even the largest warships."
 msgstr ""
+"Společnost Enygma Systems zjistila, že existuje nevyužitá mezera v oblasti "
+"zneškodňování zbraní zaměřených na větší válečné lodě. Střely Medusa a "
+"iontové zbraně jim připadaly nedostatečné, a proto přepracovali torpédo "
+"Caesar IV společnosti Unicorp na těžkou EMP zbraň, která dokáže rychle "
+"usmažit systémy i těch největších válečných lodí."
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:2
 msgid "Enygma Systems Spearhead Launcher"
-msgstr ""
+msgstr "Enygma Systems Spearhead Odpalovač"
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:4
 msgid "E. Spearhead L."
-msgstr ""
+msgstr "E. Spearhead Odp."
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:10
 msgid ""
@@ -4773,14 +4893,20 @@ msgid ""
 "Spearhead's limited agility make it primarily suited to fighting corvette "
 "class ships or heavier."
 msgstr ""
+"EMP raketa třídy Spearhead je jedním ze specializovaných kusů hardwaru "
+"společnosti Enygma Systems. Jejím jediným úkolem je masivně poškozovat "
+"ochranné štíty. Používá speciální hlavici s energetickým výbojem, která je "
+"poměrně účinná při narušování štítů, ale na fyzické objekty má jen malý "
+"účinek. Díky omezené pohyblivosti je Spearhead vhodný především pro boj s "
+"korvetami nebo těžšími loděmi."
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:2
 msgid "Enygma Systems Turreted Fury Launcher"
-msgstr ""
+msgstr "Enygma Systems Turreted Fury Odpalovač"
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:4
 msgid "E. Fury T. L."
-msgstr ""
+msgstr "E. Fury T. Odp."
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:10
 msgid ""
@@ -4788,14 +4914,18 @@ msgid ""
 "steep price, but Fury missiles can be a powerful means of discouraging "
 "pirate fighters and an effective means of defending against hostile bombers."
 msgstr ""
+"Společnost Enygma Systems vyvinula odpalovací zařízení Fury namontované na "
+"věži. Jeho cena je vysoká, ale střely Fury mohou být účinným prostředkem k "
+"odradení pirátských stíhaček a účinným prostředkem obrany proti nepřátelským "
+"bombardérům."
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:2
 msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr ""
+msgstr "Enygma Systems Turreted Headhunter Odpalovač"
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:4
 msgid "E. Headhunter T. L."
-msgstr ""
+msgstr "E. Headhunter T. Odp."
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:10
 msgid ""
@@ -4804,14 +4934,19 @@ msgid ""
 "bombers. The punch of the Headhunter missile combined with Enygma Systems' "
 "swivel mounted launcher can effectively compensate for any blind spots."
 msgstr ""
+"Tato věžová odpalovací zařízení někdy používají kapitáni křižníků, jejichž "
+"lodě nejsou dostatečně manévrovatelné, aby mohly účinně bojovat s "
+"nepřátelskými stíhačkami a bombardéry. Údernost střely Headhunter v "
+"kombinaci s otočným odpalovacím zařízením společnosti Enygma Systems dokáže "
+"účinně kompenzovat případná slepá místa."
 
 #: dat/outfits/launchers/repeating_banshee_launcher.xml:2
 msgid "Repeating Banshee Launcher"
-msgstr ""
+msgstr "Repeating Banshee Odpalovač"
 
 #: dat/outfits/launchers/repeating_banshee_launcher.xml:4
 msgid "R. Banshee L."
-msgstr ""
+msgstr "R. Banshee Odp."
 
 #: dat/outfits/launchers/repeating_banshee_launcher.xml:12
 msgid ""
@@ -4820,14 +4955,19 @@ msgid ""
 "fire rate. The ammo storage is short, but it can be anticipated that either "
 "the bomber or its target will have been destroyed before it is empty."
 msgstr ""
+"Toto odpalovací zařízení, navržené rodem Dvaeredů pro vybavení jejich "
+"předků, je vybaveno pokročilým, ale velmi těžkým nabíjecím systémem, který "
+"umožňuje bezkonkurenční rychlost střelby. Zásobník munice je krátký, ale lze "
+"předpokládat, že buď bombardér, nebo jeho cíl budou zničeny dříve, než se "
+"vyprázdní."
 
 #: dat/outfits/launchers/shatterer_launcher.xml:2
 msgid "Shatterer Launcher"
-msgstr ""
+msgstr "Shatterer Odpalovač"
 
 #: dat/outfits/launchers/shatterer_launcher.xml:4
 msgid "Shatterer L."
-msgstr ""
+msgstr "Shatterer Odp."
 
 #: dat/outfits/launchers/shatterer_launcher.xml:11
 msgid ""
@@ -4836,16 +4976,18 @@ msgid ""
 "sheer numbers that the Collective could bring to bear makes this weapon "
 "dangerous."
 msgstr ""
+"Tuto zbraň, založenou na raketě fury, používají kolektivní těžké bezpilotní "
+"letouny jako nástroj pro bombardování velkých cílů. Jednotlivě je sice "
+"slabá, ale díky obrovskému počtu, který může Kolektiv nasadit, je tato zbraň "
+"nebezpečná."
 
 #: dat/outfits/launchers/space_mine_layer.xml:2
 msgid "Space Mine Layer"
-msgstr ""
+msgstr "Vypouštěč vesmírných min"
 
 #: dat/outfits/launchers/space_mine_layer.xml:4
-#, fuzzy
-#| msgid "Space Moss"
 msgid "Space Mine L."
-msgstr "Vesmírný mech"
+msgstr "Vypouštěč min"
 
 #: dat/outfits/launchers/space_mine_layer.xml:11
 msgid ""
@@ -4853,6 +4995,9 @@ msgid ""
 "automated or manned patrols in most situations. However, when raw explosive "
 "power is mandated, nothing can surpass the destructive force of space mines."
 msgstr ""
+"Rozlehlost vesmíru omezuje ve většině situací použitelnost vesmírných min "
+"namísto automatických hlídek nebo hlídek s posádkou. Pokud je však zapotřebí "
+"hrubá výbušná síla, nic nemůže překonat ničivou sílu vesmírných min."
 
 #: dat/outfits/launchers/space_mine_layer.xml:12
 msgid ""
@@ -4860,14 +5005,18 @@ msgid ""
 "a maximum tracking of 10,000 units and minimum tracking of 3,000 units. "
 "Detonations have a range of 500 units and damage all ships within range."
 msgstr ""
+"Vesmírné miny vybuchují pět sekund poté, co se nepřátelé přiblíží na "
+"vzdálenost 300 jednotek, přičemž maximální dosah je 10 000 jednotek a "
+"minimální dosah 3 000 jednotek. Detonace mají dosah 500 jednotek a poškozují "
+"všechny lodě v dosahu."
 
 #: dat/outfits/launchers/superfast_collider_launcher.xml:2
 msgid "Super-Fast Collider Launcher"
-msgstr ""
+msgstr "Super-Fast Collider Odpalovač"
 
 #: dat/outfits/launchers/superfast_collider_launcher.xml:4
 msgid "SFC L."
-msgstr ""
+msgstr "SFC Odpč."
 
 #: dat/outfits/launchers/superfast_collider_launcher.xml:11
 msgid ""
@@ -4875,14 +5024,16 @@ msgid ""
 "giant Mace rocket used by Dvaered Capships in order to strike distant "
 "enemies."
 msgstr ""
+"Superrychlý srážeč, většinou označovaný iniciálami SFC, je v podstatě obří "
+"raketou Mace, kterou Dvaered - používají k úderům na vzdálené nepřátele."
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:2
 msgid "TeraCom Banshee Launcher"
-msgstr ""
+msgstr "TeraCom Banshee Odpalovač"
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:4
 msgid "T. Banshee L."
-msgstr ""
+msgstr "T. Banshee Odpč."
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:11
 msgid ""
@@ -4891,14 +5042,18 @@ msgid ""
 "unguided rockets, while slow, can do quite respectable damage even to fairly "
 "large ships."
 msgstr ""
+"Společnost TeraCom vybavila svůj model odpalovacího zařízení Banshee vysoce "
+"kvalitními systémy pro nabíjení a chlazení trubic, které výrazně zvyšují "
+"rychlost střelby. Tyto neřízené rakety jsou sice pomalé, ale mohou způsobit "
+"docela slušné poškození i poměrně velkým lodím."
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:2
 msgid "TeraCom Fury Launcher"
-msgstr ""
+msgstr "TeraCom Fury Odpalovač"
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:4
 msgid "T. Fury L."
-msgstr ""
+msgstr "T. Fury Odpč."
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:10
 msgid ""
@@ -4908,14 +5063,20 @@ msgid ""
 "power, the Fury missiles launched are nimble enough to easily strike even "
 "some of the fastest ships in the galaxy."
 msgstr ""
+"Odpalovací zařízení Fury společnosti TeraCom je vysoce výkonné raketové "
+"odpalovací zařízení vybavené patentovanou technologií sledování cíle a "
+"odpalování raket, která pilotům umožňuje rychle a snadno zaměřit cíl. "
+"Vypouštěné střely Fury sice nemají dostatečnou ničivou sílu, ale jsou "
+"dostatečně obratné na to, aby snadno zasáhly i ty nejrychlejší lodě v "
+"galaxii."
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:2
 msgid "TeraCom Headhunter Launcher"
-msgstr ""
+msgstr "TeraCom Headhunter Odpalovač"
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:4
 msgid "T. Headhunter L."
-msgstr ""
+msgstr "T. Headhunter Odpč."
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:10
 msgid ""
@@ -4928,14 +5089,21 @@ msgid ""
 "demanding on the ship's resources, the patented tracking and missile arming "
 "technology allows pilots to fire their missiles before the competition does."
 msgstr ""
+"Stíhací raketa třídy Headhunter je střela střední ráže, která dokáže "
+"způsobit ničivé poškození malým a středně velkým cílům a zároveň je poměrně "
+"rychlá a obratná. Nejúčinnější je při odpálení na vzdálené nepřátele.\n"
+"\n"
+"Toto je model odpalovacího zařízení Headhunter společnosti TeraCom. Ačkoli "
+"je poněkud drahý a náročný na zdroje lodi, patentovaná technologie sledování "
+"a odjišťování střel umožňuje pilotům vypálit své střely dříve než konkurence."
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:2
 msgid "TeraCom Imperator Launcher"
-msgstr ""
+msgstr "TeraCom Imperator Odpalovač"
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:4
 msgid "T. Imperator L."
-msgstr ""
+msgstr "T. Imperator Odpč."
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:11
 msgid ""
@@ -4946,14 +5114,19 @@ msgid ""
 "take a while for it to reach its target. Faster cruisers may be able to "
 "outrun it completely."
 msgstr ""
+"Společnost TeraCom se rozhodla nevyvíjet odpalovací zařízení pro Caesar IV, "
+"protože nesplňovalo požadavky společnosti na výkon. Místo toho společnost "
+"vydala zcela novou specifikaci torpéda. V současné době poskytuje těžké "
+"torpédo třídy Imperator devastující ničivou sílu, i když chvíli potrvá, než "
+"dosáhne svého cíle. Rychlejší křižníky jej mohou zcela předstihnout."
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:2
 msgid "TeraCom Mace Launcher"
-msgstr ""
+msgstr "TeraCom Mace Odpalovač"
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:4
 msgid "T. Mace L."
-msgstr ""
+msgstr "T. Mace Odpč."
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:10
 msgid ""
@@ -4962,14 +5135,18 @@ msgid ""
 "light targets than most fighter sized energy cannons, but comes with the "
 "disadvantage of running out of ammunition after only a short time of fire."
 msgstr ""
+"Neřízená raketa třídy Mace je levná, postradatelná zbraň, která se používá k "
+"posílení maximální palebné síly ve vypjatých situacích. Dokáže mnohem lépe "
+"poškozovat lehké cíle než většina energetických kanónů třídy stíhačů, ale "
+"její nevýhodou je, že jí dochází munice již po krátké době střelby."
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:2
 msgid "TeraCom Medusa Launcher"
-msgstr ""
+msgstr "TeraCom Medusa Odpalovač"
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:4
 msgid "T. Medusa L."
-msgstr ""
+msgstr "T. Medusa Odpč."
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:10
 msgid ""
@@ -4979,14 +5156,18 @@ msgid ""
 "effectively be disabled with this weapon. However, the Medusa is not the "
 "most agile missile on the market."
 msgstr ""
+"EMP raketa třídy Medusa je nesmrtící zbraň určená k vyřazení vnitřních "
+"systémů lodi, čímž ji zneškodní a připraví k nalodění. Bojová hlavice "
+"způsobuje pouze omezené poškození, takže touto zbraní lze účinně vyřadit i "
+"slabě pancéřované cíle. Medusa však není nejobratnější střelou na trhu."
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:2
 msgid "TeraCom Vengeance Launcher"
-msgstr ""
+msgstr "TeraCom Vengeance Odpalovač"
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:4
 msgid "T. Vengeance L."
-msgstr ""
+msgstr "T. Vengeance Odpč."
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:10
 msgid ""
@@ -4998,14 +5179,21 @@ msgid ""
 "considerably reduces the time it takes to achieve a lock. Sometimes, those "
 "few seconds can make all the difference."
 msgstr ""
+"Stíhací rakety třídy Vengeance jsou nejtěžšími stíhacími raketami, které se "
+"v současnosti vyrábějí. Téměř polovina trupu střely je využita pro užitečné "
+"zatížení, což snižuje její schopnost zachytit rychlé cíle. Je navržena tak, "
+"aby vynikala v ničení obrněných cílů na úkor toho, že je slabá proti štítům. "
+"Nejlépe se kombinuje s protištítovými zbraněmi. Patentovaný hardware "
+"odpalovacího zařízení společnosti TeraCom výrazně zkracuje dobu potřebnou k "
+"dosažení zaměření. Někdy těch pár sekund může rozhodnout."
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:2
 msgid "Turreted Convulsion Launcher"
-msgstr ""
+msgstr "Turreted Convulsion Odpalovač"
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:4
 msgid "T. Convulsion L."
-msgstr ""
+msgstr "T. Convulsion Odpč."
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:11
 msgid ""
@@ -5016,14 +5204,20 @@ msgid ""
 "This launcher is mounted on a turret and has more ammo capacity than the "
 "standard launcher."
 msgstr ""
+"Střely třídy Thurion se zaměřují spíše na vysokou obratnost než na ničivou "
+"sílu. Ačkoli způsobuje jen malé poškození fyzických objektů, je poměrně "
+"účinná při narušování štítů.\n"
+"\n"
+"Toto odpalovací zařízení je umístěno na věži a má větší kapacitu munice než "
+"standardní odpalovací zařízení."
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:2
 msgid "Unicorp Caesar IV Launcher"
-msgstr ""
+msgstr "Unicorp Caesar IV Odpalovač"
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:4
 msgid "U. Caesar IV L."
-msgstr ""
+msgstr "U. Caesar IV Odpč."
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:11
 msgid ""
@@ -5031,14 +5225,17 @@ msgid ""
 "available. Though much slower than missiles and useless against mobile "
 "targets, they remain manoeuvrable enough to chase down cruisers."
 msgstr ""
+"Torpéda třídy Caesar IV patří k nejběžnějším torpédovým zbraním. Ačkoli jsou "
+"mnohem pomalejší než střely a proti mobilním cílům jsou nepoužitelná, "
+"zůstávají dostatečně obratná, aby mohla pronásledovat křižníky."
 
 #: dat/outfits/launchers/unicorp_storm_launcher.xml:2
 msgid "Unicorp Storm Launcher"
-msgstr ""
+msgstr "Unicorp Storm Odpalovač"
 
 #: dat/outfits/launchers/unicorp_storm_launcher.xml:4
 msgid "U. Storm L."
-msgstr ""
+msgstr "U. Storm Odpč."
 
 #: dat/outfits/launchers/unicorp_storm_launcher.xml:11
 msgid ""
@@ -5048,14 +5245,19 @@ msgid ""
 "be way too costly to mass-equip the Navy. This is the reason why only the "
 "Imperial elite squadrons use this very deadly weapon."
 msgstr ""
+"Střely a odpalovací zařízení Storm byly navrženy společností Unicorp tak, "
+"aby byly řízenou obdobou raket Mace. Avšak navzdory nepopiratelné schopnosti "
+"Unicorpu navrhnout funkční a levné vybavení se ukázalo, že výsledek je "
+"příliš nákladný na to, aby jím mohlo být námořnictvo masově vybaveno. To je "
+"důvod, proč tuto velmi smrtící zbraň používají pouze císařské elitní eskadry."
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:2
 msgid "Za'lek Hunter Launcher"
-msgstr ""
+msgstr "Za'lek Hunter Odpalovač"
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:4
 msgid "Z. Hunter L."
-msgstr ""
+msgstr "Z. Hunter Odpč."
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:13
 msgid ""
@@ -5065,16 +5267,20 @@ msgid ""
 "deadly fruit with the hunter-killer drone. It accelerates towards its target "
 "and unleashes its ferromagnetohydraulic payload to deadly effect."
 msgstr ""
+"Za'lekové začali zjišťovat, že konvenční střely a torpéda jsou ve srovnání s "
+"jejich miniaturní technologií dronů žalostně primitivní. Proto začali "
+"pracovat na výrobcích kamikadze dronů, které je měly nahradit. Výsledky "
+"přinesly smrtící ovoce v podobě dronu lovce-zabijáka. Zrychlí směrem ke "
+"svému cíli a vypustí svou feromagneticko-hydraulickou nálož se smrtícím "
+"účinkem."
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:2
 msgid "Za'lek Reaper Launcher"
-msgstr ""
+msgstr "Za'lek Reaper Odpalovač"
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:4
-#, fuzzy
-#| msgid "Za'lek Researcher"
 msgid "Z. Reaper L."
-msgstr "Za'lekský vědec"
+msgstr "Z. Reaper Odpč."
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:13
 msgid ""
@@ -5084,18 +5290,22 @@ msgid ""
 "the Za'lek's answer to torpedoes from less advanced nations, and an eloquent "
 "answer it certainly is."
 msgstr ""
+"Tato zbraň je téměř na hranici únosnosti pojmu \"miniaturizovaný dron\". Je "
+"to vlastně zmenšená platforma standardního dronu, ve které je téměř vše "
+"nahrazeno obrovskou feromagnetickou hydraulickou bombou. Je to odpověď "
+"Za'leků na torpéda méně vyspělých národů a rozhodně je to odpověď výmluvná."
 
 #: dat/outfits/maps/localmap.xml:2
 msgid "Local System Map"
-msgstr ""
+msgstr "Mapa lokálního systému"
 
 #: dat/outfits/maps/localmap.xml:6
 msgid "This map contains information about the local system."
-msgstr ""
+msgstr "Tato mapa obsahuje informace o místním systému."
 
 #: dat/outfits/maps/map_collective_space.xml:2
 msgid "Map: Collective Space"
-msgstr ""
+msgstr "Mapa: prostoru Kolektivu"
 
 #: dat/outfits/maps/map_collective_space.xml:7
 msgid ""
@@ -5103,120 +5313,145 @@ msgid ""
 "Collective. Sadly, the Empire has no accurate intel about Collective assets "
 "in the area."
 msgstr ""
+"Na této mapě jsou vyznačeny známé skoky, které spojují systémy obsazené "
+"Kolektivem. Impérium bohužel nemá přesné informace o prostředcích Kolektivu "
+"v této oblasti."
 
 #: dat/outfits/maps/map_dvaered_core.xml:2
 msgid "Map: Dvaered Core"
-msgstr ""
+msgstr "Mapa: Jádro Dvaeredu"
 
 #: dat/outfits/maps/map_dvaered_core.xml:7
 msgid ""
 "This map lists the locations of all Dvaered worlds and stations close to the "
 "Dvaered capital."
 msgstr ""
+"Na této mapě jsou uvedeny polohy všech dvaeredských světů a stanic v "
+"blízkosti hlavního města Dvaered."
 
 #: dat/outfits/maps/map_empire_core.xml:2
 msgid "Map: Empire Core"
-msgstr ""
+msgstr "Mapa: Jádro Impéria"
 
 #: dat/outfits/maps/map_empire_core.xml:7
 msgid ""
 "This map lists the locations of all Imperial worlds and stations close to "
 "the Imperial capital."
 msgstr ""
+"Na této mapě jsou uvedeny polohy všech císařských světů a stanic v blízkosti "
+"Imperálního hlavního města."
 
 #: dat/outfits/maps/map_empiresoromid_trade_route.xml:2
 msgid "Map: Empire-Soromid Trade Route"
-msgstr ""
+msgstr "Mapa: Obchodní cesta mezi Impériem a Soromidu"
 
 #: dat/outfits/maps/map_empiresoromid_trade_route.xml:7
 msgid ""
 "This map contains the main trade route between Empire and Soromid controlled "
 "space."
 msgstr ""
+"Tato mapa obsahuje hlavní obchodní trasu mezi Impériem a prostorem ovládaným "
+"Soromidy."
 
 #: dat/outfits/maps/map_flf.xml:2
 msgid "Map: FLF Hidden Jumps"
-msgstr ""
+msgstr "Mapa: Skryté skoky POF"
 
 #: dat/outfits/maps/map_flf.xml:7
 msgid ""
 "This map contains the location of hidden jump points between the FLF base "
 "and Frontier space."
 msgstr ""
+"Tato mapa obsahuje umístění skrytých skokových bodů mezi základnou POF a "
+"prostorem Frontier."
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:2
 msgid "Map: FLF-Pirate Route"
-msgstr ""
+msgstr "Mapa: POF-Pirátská trasa"
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:7
 msgid ""
 "This map contains the location of the two-way hidden jump point between the "
 "FLF base and the nearest Pirate stronghold."
 msgstr ""
+"Tato mapa obsahuje umístění obousměrného skrytého skokového bodu mezi "
+"základnou POF a nejbližší pirátskou pevností."
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:2
 msgid "Map: Inner Nebula Secret Jump"
-msgstr ""
+msgstr "Mapa: Tajný skok ve vnitřní mlhovině"
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:7
 msgid ""
 "This map contains the location of a hidden jump point leading to the inner "
 "nebula."
 msgstr ""
+"Tato mapa obsahuje polohu skrytého skokového bodu vedoucího do vnitřní "
+"mlhoviny."
 
 #: dat/outfits/maps/map_kretogg_hypergate.xml:2
 msgid "Map: Kretogg's Hypergate"
-msgstr ""
+msgstr "Mapa: Kretoggova hyperbrána"
 
 #: dat/outfits/maps/map_kretogg_hypergate.xml:7
 msgid ""
 "A map revealing a hidden jump point from Kretogg to NGC-14549, leading to "
 "the Black Lotus Clan-controlled hypergate."
 msgstr ""
+"Mapa odhalující skrytý skokový bod z Kretoggu do NGC-14549, který vede k "
+"hyperbráně ovládané klanem Černý lotos."
 
 #: dat/outfits/maps/map_kretogg_secrets.xml:2
 msgid "Map: Kretogg's Secrets"
-msgstr ""
+msgstr "Mapa: Kretoggova tajemství"
 
 #: dat/outfits/maps/map_kretogg_secrets.xml:7
 msgid ""
 "This map contains the position of hidden jump points leading straight into "
 "Za'lek space."
 msgstr ""
+"Tato mapa obsahuje polohu skrytých skokových bodů vedoucích přímo do "
+"prostoru Za'leku."
 
 #: dat/outfits/maps/map_nebula_edge.xml:2
 msgid "Map: Nebula Edge"
-msgstr ""
+msgstr "Mapa: Okraj mlhoviny"
 
 #: dat/outfits/maps/map_nebula_edge.xml:7
 msgid ""
 "This map contains border of the Nebula with Dvaered/Imperial space. It also "
 "lists the deepest Imperial station within the Nebula."
 msgstr ""
+"Tato mapa obsahuje hranici mlhoviny s Dvaeredem/Imperiálním prostorem. Je "
+"zde také uvedena nejhlubší císařská stanice v mlhovině."
 
 #: dat/outfits/maps/map_new_haven_secrets.xml:2
 msgid "Map: New Haven's Secrets"
-msgstr ""
+msgstr "Mapa: Tajemství New Havenu"
 
 #: dat/outfits/maps/map_new_haven_secrets.xml:7
 msgid ""
 "This map contains the position of a set of hidden jump points in and around "
 "the New Haven system."
 msgstr ""
+"Tato mapa obsahuje polohu sady skrytých skokových bodů v systému New Haven a "
+"jeho okolí."
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:2
 msgid "Map: Pirate Strongholds"
-msgstr ""
+msgstr "Mapa: Pirátské pevnosti"
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:7
 msgid ""
 "This map contains the locations of the pirate clan worlds, and a few "
 "stations that are known to offer opportunities for pirates in the vicinity."
 msgstr ""
+"Tato mapa obsahuje lokace světů pirátských klanů a několik stanic, o kterých "
+"je známo, že nabízejí příležitosti pro piráty v okolí."
 
 #: dat/outfits/maps/map_qorel.xml:2
 msgid "Map: Qorel Tunnel"
-msgstr ""
+msgstr "Mapa: Qorelský tunel"
 
 #: dat/outfits/maps/map_qorel.xml:7
 msgid ""
@@ -5225,28 +5460,35 @@ msgid ""
 "Getting the location of these very special jump points is usually very "
 "costly to reduce the number of people having access to it."
 msgstr ""
+"Tato mapa obsahuje umístění skokových bodů do a z Qorelského tunelu, což je "
+"soubor systémů, které nejsou přístupné přes standardní skokové body. Získání "
+"polohy těchto velmi speciálních skokových bodů je obvykle velmi nákladné, "
+"aby se snížil počet lidí, kteří k nim mají přístup."
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:2
 msgid "Map: Sirian Border Systems"
-msgstr ""
+msgstr "Mapa: Hraniční systémy Siria"
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:7
 msgid "This map contains the systems that lead to Sirius controlled space."
 msgstr ""
+"Tato mapa obsahuje systémy, které vedou do prostoru pod kontrolou Siria."
 
 #: dat/outfits/maps/map_sirius_core.xml:2
 msgid "Map: Sirius Core"
-msgstr ""
+msgstr "Mapa: Jádro Siria"
 
 #: dat/outfits/maps/map_sirius_core.xml:7
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
 "the Sirians, as well as the surrounding systems."
 msgstr ""
+"Tato mapa obsahuje polohu Mutrisu, domova Sirichany a hlavního města "
+"Sirianů, a okolních systémů."
 
 #: dat/outfits/maps/map_sol.xml:2
 msgid "Map: Sol"
-msgstr ""
+msgstr "Mapa: Sol"
 
 #: dat/outfits/maps/map_sol.xml:6
 msgid ""
@@ -5255,48 +5497,56 @@ msgid ""
 "which no known ship in the galaxy can safely pass through. What lies beyond "
 "Sol, if anything, is unknown."
 msgstr ""
+"Tato mapa obsahuje polohu soustavy Sol, odkud pochází lidstvo. Po Incidentu "
+"se stala mrtvou a nyní ji pokrývá vysoce nestabilní mlhovina, kterou žádná "
+"známá loď v galaxii nemůže bezpečně proplout. Co leží za Sol, pokud vůbec "
+"něco, není známo."
 
 #: dat/outfits/maps/map_the_frontier.xml:2
 msgid "Map: The Frontier"
-msgstr ""
+msgstr "Mapa: Pohraničí"
 
 #: dat/outfits/maps/map_the_frontier.xml:7
 msgid ""
 "This map contains an east-west route through Frontier space, as well as the "
 "location of the Frontier Council."
 msgstr ""
+"Tato mapa obsahuje východo-západní trasu prostorem Pohraničí a umístění Rady "
+"Pohraničí."
 
 #: dat/outfits/maps/map_thurion.xml:2
 msgid "Map: Thurion Core"
-msgstr ""
+msgstr "Mapa: Jádro Thurionu"
 
 #: dat/outfits/maps/map_thurion.xml:7
 msgid ""
 "This map provides the hidden route to the Thurion core systems outside of "
 "the Nebula."
-msgstr ""
+msgstr "Tato mapa poskytuje skrytou cestu k jádru Thurionu mimo mlhovinu."
 
 #: dat/outfits/maps/map_zalek_core.xml:2
 msgid "Map: Za'lek Core"
-msgstr ""
+msgstr "Mapa: Jádro Za'leku"
 
 #: dat/outfits/maps/map_zalek_core.xml:7
 msgid ""
 "This map contains the heart of Za'lek space, including its capital Ruadan "
 "and central hub, Za'lek."
 msgstr ""
+"Tato mapa obsahuje srdce Za'leku, včetně jeho hlavního města Ruadanu a "
+"centrálního uzlu Za'lek."
 
 #: dat/outfits/maps/ultra_map.xml:2
 msgid "Ultra Map"
-msgstr ""
+msgstr "Ultra mapa"
 
 #: dat/outfits/maps/ultra_map.xml:6
 msgid "For cheating."
-msgstr ""
+msgstr "Pro podvádění."
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:2
 msgid "Counterfeit Heavy Combat Vessel License"
-msgstr ""
+msgstr "Padělaná licence pro těžká bojová plavidla"
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:8
 msgid ""
@@ -5306,15 +5556,20 @@ msgid ""
 "This license will authorize you to buy cruiser and carrier-class ships on "
 "worlds that perform background checks."
 msgstr ""
+"Díky dlouholeté řemeslné zručnosti jsou pirátští softwaroví inženýři schopni "
+"vytvořit téměř dokonalé repliky licence těžkého bojového plavidla. V "
+"porovnání se standardními cenami licencí je však jejich cena výrazně vyšší. "
+"Tato licence vás opravňuje k nákupu lodí třídy křižníků a letadlových lodí "
+"na světech, které provádějí prověrky."
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:11
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:12
 msgid "Heavy Combat Vessel"
-msgstr ""
+msgstr "Těžká bojová loď"
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:2
 msgid "Counterfeit Heavy Weapon License"
-msgstr ""
+msgstr "Padělaná licence na těžké zbraně"
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:8
 msgid ""
@@ -5324,132 +5579,143 @@ msgid ""
 "license will authorize you to buy and use heavy weapons, like the heavy ion "
 "turret, on worlds that perform background checks."
 msgstr ""
+"Díky dlouholeté řemeslné zručnosti jsou pirátští softwaroví inženýři schopni "
+"vytvořit téměř dokonalé repliky licence na těžké zbraně. V porovnání se "
+"standardními cenami licencí je však jejich cena značně vysoká. Tato licence "
+"vás opravňuje k nákupu a používání těžkých zbraní, jako je těžká iontová "
+"věž, na světech, které provádějí kontrolu pozadí."
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:11
 #: dat/outfits/misc/heavy_weapon_license.xml:12
 msgid "Heavy Weapon"
-msgstr ""
+msgstr "Těžké zbraně"
 
 #: dat/outfits/misc/gui_brushed.xml:2
 msgid "GUI - Brushed"
-msgstr ""
+msgstr "Grafické uživatelské rozhraní - Vybroušené"
 
 #: dat/outfits/misc/gui_brushed.xml:6
 msgid "Outfit corresponding with the \"Brushed\" GUI."
-msgstr ""
+msgstr "Výbava odpovídající grafickému uživatelskému rozhraní \"Vybroušené\"."
 
 #: dat/outfits/misc/gui_legacy.xml:2
 msgid "GUI - Legacy"
-msgstr ""
+msgstr "Grafické uživatelské rozhraní - Zastaralé"
 
 #: dat/outfits/misc/gui_legacy.xml:6
 msgid "Outfit corresponding with the \"Legacy\" GUI."
-msgstr ""
+msgstr "Výbava odpovídající grafickému uživatelskému rozhraní \"Zastaralé\"."
 
 #: dat/outfits/misc/gui_slim.xml:2
 msgid "GUI - Slim"
-msgstr ""
+msgstr "Grafické uživatelské rozhraní - Štíhlé"
 
 #: dat/outfits/misc/gui_slim.xml:6
 msgid "Outfit corresponding with the \"Slim\" GUI."
-msgstr ""
+msgstr "Výbava odpovídající grafickému uživatelskému rozhraní \"Štíhlé\"."
 
 #: dat/outfits/misc/gui_slimv2.xml:2
 msgid "GUI - Slimv2"
-msgstr ""
+msgstr "Grafické uživatelské rozhraní - Štíhlé v2"
 
 #: dat/outfits/misc/gui_slimv2.xml:6
 msgid "Outfit corresponding with the \"Slimv2\" GUI."
-msgstr ""
+msgstr "Výbava odpovídající grafickému uživatelskému rozhraní \"Štíhlé v2\"."
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:2
 msgid "Heavy Combat Vessel License"
-msgstr ""
+msgstr "Licence pro těžká bojová plavidla"
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:9
 msgid "This license will authorize you to buy cruiser and carrier-class ships."
-msgstr ""
+msgstr "Tato licence vás opravňuje k nákupu křižníků a letadlových lodí."
 
 #: dat/outfits/misc/heavy_weapon_license.xml:2
 msgid "Heavy Weapon License"
-msgstr ""
+msgstr "Licence na těžké zbraně"
 
 #: dat/outfits/misc/heavy_weapon_license.xml:9
 msgid ""
 "This license will authorize you to buy and use heavy weapons like the heavy "
 "ion turret."
 msgstr ""
+"Tato licence vás opravňuje k nákupu a používání těžkých zbraní, jako je "
+"těžká iontová věž."
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:2
 msgid "Large Civilian Vessel License"
-msgstr ""
+msgstr "Licence pro velká civilní plavidla"
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:7
 msgid "This license will authorize you to buy freighter-class ships."
-msgstr ""
+msgstr "Tato licence vás opravňuje k nákupu lodí třídy freighter."
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:10
 msgid "Large Civilian Vessel"
-msgstr ""
+msgstr "Velké civilní plavidlo"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:2
 msgid "Light Combat Vessel License"
-msgstr ""
+msgstr "Licence pro lehká bojová plavidla"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:7
 msgid "This license will authorize you to buy fighter and bomber class ships."
-msgstr ""
+msgstr "Tato licence vás opravňuje k nákupu stíhacích a bombardovacích lodí."
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:10
 msgid "Light Combat Vessel"
-msgstr ""
+msgstr "Lehké bojové plavidlo"
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:2
 msgid "Medium Combat Vessel License"
-msgstr ""
+msgstr "Licence pro střední bojová plavidla"
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:8
 msgid ""
 "This license will authorize you to buy destroyer and corvette-class ships."
-msgstr ""
+msgstr "Tato licence vás opravňuje k nákupu lodí třídy torpédoborců a korvet."
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:11
 msgid "Medium Combat Vessel"
-msgstr ""
+msgstr "Střední bojové plavidlo"
 
 #: dat/outfits/misc/medium_weapon_license.xml:2
 msgid "Medium Weapon License"
-msgstr ""
+msgstr "Střední zbrojní licence"
 
 #: dat/outfits/misc/medium_weapon_license.xml:7
 msgid ""
 "This license will authorize you to buy and use medium weapons like the "
 "ripper cannon."
 msgstr ""
+"Tato licence vás opravňuje k nákupu a používání středně těžkých zbraní, "
+"například děla ripper."
 
 #: dat/outfits/misc/medium_weapon_license.xml:10
 msgid "Medium Weapon"
-msgstr ""
+msgstr "Střední zbraň"
 
 #: dat/outfits/misc/mercenary_license.xml:2
 msgid "Mercenary License"
-msgstr ""
+msgstr "Žoldnéřská licence"
 
 #: dat/outfits/misc/mercenary_license.xml:7
 msgid ""
 "This license will authorize you to do mercenary missions and, more "
 "importantly, collect bounties."
 msgstr ""
+"Tato licence vás opravňuje k plnění žoldáckých misí a především k vybírání "
+"odměn."
 
 #: dat/outfits/pointdefense/guardian_interception_system.xml:2
 msgid "Guardian Interception System"
-msgstr ""
+msgstr "Odchytový systém Guardian"
 
 #: dat/outfits/pointdefense/guardian_interception_system.xml:7
 #: dat/outfits/pointdefense/guardian_overseer_system.xml:7
 #: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:7
 msgid "Point Defense"
-msgstr ""
+msgstr "Bodová obrana"
 
 #: dat/outfits/pointdefense/guardian_interception_system.xml:10
 msgid ""
@@ -5459,10 +5725,15 @@ msgid ""
 "torpedoes and other heavy ordnance, it excels at tracking lighter missiles "
 "and can even be used to deter small assault craft."
 msgstr ""
+"Zachytávací systém Guardian, který je prodáván jako jednotný systém pro "
+"zachycování raket a střel, je oblíbený u obchodníků i žoldáků. Ačkoli nemá "
+"dostatečnou palebnou sílu, aby účinně likvidoval torpéda a další těžkou "
+"munici, vyniká při sledování lehčích střel a lze jej použít i k odstrašení "
+"malých útočných plavidel."
 
 #: dat/outfits/pointdefense/guardian_overseer_system.xml:2
 msgid "Guardian Overseer System"
-msgstr ""
+msgstr "Guardian Overseer Systém"
 
 #: dat/outfits/pointdefense/guardian_overseer_system.xml:10
 msgid ""
@@ -5472,10 +5743,15 @@ msgid ""
 "neutralize most ordnance. Although designed for intercepting torpedoes, the "
 "targeting system is also efficient at tracking small enemy craft."
 msgstr ""
+"Systém Guardian Overseer je kompletně přepracovaný původní systém Guardian "
+"Interception System. Místo slabších laserových věží využívá systém speciálně "
+"upravená děla Ripper, která mu umožňují zneškodnit většinu munice. Ačkoli je "
+"zaměřovací systém určen k zachycování torpéd, je účinný i při sledování "
+"malých nepřátelských plavidel."
 
 #: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:2
 msgid "Spittle Tubuloid Cluster"
-msgstr ""
+msgstr "Spittle Tubuloid Klastr"
 
 #: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:10
 msgid ""
@@ -5487,36 +5763,44 @@ msgid ""
 "are quite weak compared to engineered weapons, their numbers allow them to "
 "efficiently protect the ship they are attached to from non-armoured missiles."
 msgstr ""
+"Ve skutečnosti se skládá z malé kolonie vesmírných parazitů, známých jako "
+"plivající tubuloidi, kteří se napájejí z energetických systémů lodi a "
+"poskytují jí obranné krytí. Byli geneticky upraveni tak, aby detekovali "
+"slabé radiační a gravitační signály přilétající munice a aktivovali svůj "
+"obranný mechanismus, který spočívá v plivání velkých bublin plazmy. Ačkoli "
+"jsou bubliny ve srovnání s technickými zbraněmi poměrně slabé, jejich počet "
+"jim umožňuje účinně chránit loď, ke které jsou připojeny, před "
+"nepancéřovanými střelami."
 
 #: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:11
 msgid "Automatically fires at nearby missiles and interceptors."
-msgstr ""
+msgstr "Automaticky střílí na blízké střely a interceptory."
 
 #: dat/outfits/special/base_ripper_mk2.xml:2
 msgid "Base Ripper MK2"
-msgstr ""
+msgstr "Base Ripper MK2"
 
 #: dat/outfits/special/base_ripper_mk2.xml:9
 #: dat/outfits/special/cheaters_laser_cannon.xml:8
 #: dat/outfits/special/cheaters_ragnarok_beam.xml:8
 msgid "This weapon is a cheat. It is not meant to be used by players."
-msgstr ""
+msgstr "Tato zbraň je podvod. Hráči ji nemají používat."
 
 #: dat/outfits/special/bikers_fury_launcher.xml:2
 msgid "Bikers Fury Launcher"
-msgstr ""
+msgstr "Bikers Fury Odpalovač"
 
 #: dat/outfits/special/cheaters_laser_cannon.xml:2
 msgid "Cheater's Laser Cannon"
-msgstr ""
+msgstr "Podvodníkovo laserové dělo"
 
 #: dat/outfits/special/cheaters_ragnarok_beam.xml:2
 msgid "Cheater's Ragnarok Beam"
-msgstr ""
+msgstr "Podvodníkův paprsek Ragnarok"
 
 #: dat/outfits/structure/active_plating.xml:2
 msgid "Active Plating"
-msgstr ""
+msgstr "Aktivní pancíř"
 
 #: dat/outfits/structure/active_plating.xml:4
 #: dat/outfits/structure/adaptive_stealth_plating.xml:4
@@ -5525,7 +5809,7 @@ msgstr ""
 #: dat/outfits/structure/nanobond_plating.xml:4
 #: dat/outfits/structure/plasteel_plating.xml:4
 msgid "Armour Modifier"
-msgstr ""
+msgstr "Modifikátor zbroje"
 
 #: dat/outfits/structure/active_plating.xml:11
 msgid ""
@@ -5535,10 +5819,14 @@ msgid ""
 "strength is substantially increased at the cost of dramatically increased "
 "energy usage."
 msgstr ""
+"Tento pancíř vyvinutý rodem Dvaeredů využívá jedinečný, ale poněkud brutální "
+"přístup ke zvýšení pevnosti pancéřování. Neustálým čerpáním energie přes "
+"elektromagnetické stínicí cívky rozmístěné po celém trupu se výrazně zvyšuje "
+"pevnost pancíře za cenu dramaticky zvýšené spotřeby energie."
 
 #: dat/outfits/structure/adaptive_stealth_plating.xml:2
 msgid "Adaptive Stealth Plating"
-msgstr ""
+msgstr "Adaptivní maskovací pancíř"
 
 #: dat/outfits/structure/adaptive_stealth_plating.xml:11
 msgid ""
@@ -5547,103 +5835,123 @@ msgid ""
 "radiation around the ship and is able to emit space-resolved the right "
 "amount of radiation to appear invisible for passive sensors."
 msgstr ""
+"Toto pancéřování neposkytuje žádnou ochranu, ale ztěžuje odhalení lodi. Má "
+"integrované senzory, které měří okolní záření v okolí lodi, a je schopna "
+"vysílat prostorově rozlišené záření v takovém množství, aby se pro pasivní "
+"senzory jevilo jako neviditelné."
 
 #: dat/outfits/structure/auxiliary_processing_unit_i.xml:2
 msgid "Auxiliary Proccessing Unit I"
-msgstr ""
+msgstr "Pomocná procesní jednotka I"
 
 #: dat/outfits/structure/auxiliary_processing_unit_i.xml:4
 #: dat/outfits/structure/auxiliary_processing_unit_ii.xml:4
 #: dat/outfits/structure/auxiliary_processing_unit_iii.xml:4
 #: dat/outfits/structure/auxiliary_processing_unit_iv.xml:4
 msgid "CPU Modifier"
-msgstr ""
+msgstr "Modifikátor CPU"
 
 #: dat/outfits/structure/auxiliary_processing_unit_i.xml:9
 msgid ""
 "An additional proccessing unit to supplement the main processor of the core "
 "system, giving small ships a little more processing power."
 msgstr ""
+"Přídavná procesorová jednotka, která doplňuje hlavní procesor základního "
+"systému a poskytuje malým lodím o něco větší výpočetní výkon."
 
 #: dat/outfits/structure/auxiliary_processing_unit_ii.xml:2
 msgid "Auxiliary Proccessing Unit II"
-msgstr ""
+msgstr "Pomocná procesní jednotka II"
 
 #: dat/outfits/structure/auxiliary_processing_unit_ii.xml:9
 msgid ""
 "An additional proccessing unit to supplement the main processor of the core "
 "system, giving medium ships a little more processing power."
 msgstr ""
+"Přídavná procesorová jednotka, která doplňuje hlavní procesor základního "
+"systému a poskytuje středním lodím o něco větší výpočetní výkon."
 
 #: dat/outfits/structure/auxiliary_processing_unit_iii.xml:2
 msgid "Auxiliary Proccessing Unit III"
-msgstr ""
+msgstr "Pomocná procesní jednotka III"
 
 #: dat/outfits/structure/auxiliary_processing_unit_iii.xml:9
 msgid ""
 "An additional proccessing unit to supplement the main processor of the core "
 "system, giving large ships a little more processing power."
 msgstr ""
+"Přídavná procesorová jednotka, která doplňuje hlavní procesor základního "
+"systému a poskytuje velkým lodím o něco větší výpočetní výkon."
 
 #: dat/outfits/structure/auxiliary_processing_unit_iv.xml:2
 msgid "Auxiliary Proccessing Unit IV"
-msgstr ""
+msgstr "Pomocná procesní jednotka IV"
 
 #: dat/outfits/structure/auxiliary_processing_unit_iv.xml:9
 msgid ""
 "An additional proccessing unit to supplement the main processor of the core "
 "system, giving capital ships a little more processing power."
 msgstr ""
+"Přídavná procesorová jednotka, která doplňuje hlavní procesor základního "
+"systému a poskytuje kapitálním lodím o něco větší výpočetní výkon."
 
 #: dat/outfits/structure/battery_i.xml:2
 msgid "Battery I"
-msgstr ""
+msgstr "Baterie I"
 
 #: dat/outfits/structure/battery_i.xml:4 dat/outfits/structure/battery_ii.xml:4
 #: dat/outfits/structure/battery_iii.xml:4
 #: dat/outfits/structure/battery_iv.xml:4
 msgid "Energy Modifier"
-msgstr ""
+msgstr "Energetický modifikátor"
 
 #: dat/outfits/structure/battery_i.xml:9
 msgid ""
 "A large battery unit designed to hold 250 MJ of energy. Small enough to "
 "mount on many light vessels."
 msgstr ""
+"Velká bateriová jednotka určená pro 250 MJ energie. Dostatečně malá pro "
+"montáž na mnoho lehkých plavidel."
 
 #: dat/outfits/structure/battery_ii.xml:2
 msgid "Battery II"
-msgstr ""
+msgstr "Baterie II"
 
 #: dat/outfits/structure/battery_ii.xml:9
 msgid ""
 "A large battery unit designed to hold 500 MJ of energy. Ideally mounted on "
 "medium-to-large vessels."
 msgstr ""
+"Velká bateriová jednotka určená pro 500 MJ energie. Ideální pro montáž na "
+"středně velká až velká plavidla."
 
 #: dat/outfits/structure/battery_iii.xml:2
 msgid "Battery III"
-msgstr ""
+msgstr "Baterie III"
 
 #: dat/outfits/structure/battery_iii.xml:9
 msgid ""
 "A very large battery unit designed to hold 1200 MJ of energy. It can only be "
 "mounted on very large ships."
 msgstr ""
+"Velmi velká bateriová jednotka určená pro 1200 MJ energie. Lze ji namontovat "
+"pouze na velmi velké lodě."
 
 #: dat/outfits/structure/battery_iv.xml:2
 msgid "Battery IV"
-msgstr ""
+msgstr "Baterie IV"
 
 #: dat/outfits/structure/battery_iv.xml:9
 msgid ""
 "A massive battery unit designed to hold 2000 MJ of energy. Given the mass of "
 "this battery, it's advisable to only mount it on capital ships."
 msgstr ""
+"Obrovská bateriová jednotka, která pojme 2000 MJ energie. Vzhledem k "
+"hmotnosti této baterie je vhodné ji montovat pouze na hlavní lodě."
 
 #: dat/outfits/structure/biometal_armour.xml:2
 msgid "Biometal Armour"
-msgstr ""
+msgstr "Biometalický pancíř"
 
 #: dat/outfits/structure/biometal_armour.xml:10
 msgid ""
@@ -5652,15 +5960,19 @@ msgid ""
 "life, and the difficulty of cultivating the bacteria, Biometal has greater "
 "mass than alternatives, and is the most expensive hull plating."
 msgstr ""
+"Biometalické pancéřování, které se samo regeneruje díky geneticky upraveným "
+"bakteriím. Kvůli rozdělení do oddílů, které umožňuje život bakterií, a "
+"obtížné kultivaci bakterií má Biometal větší hmotnost než alternativy a je "
+"nejdražším pláštěm trupu."
 
 #: dat/outfits/structure/engine_reroute.xml:2
 msgid "Engine Reroute"
-msgstr ""
+msgstr "Přesměrování motoru"
 
 #: dat/outfits/structure/engine_reroute.xml:4
 #: dat/outfits/structure/improved_stabilizer.xml:4
 msgid "Manoeuvrability Modifier"
-msgstr ""
+msgstr "Modifikátor manévrovatelnosti"
 
 #: dat/outfits/structure/engine_reroute.xml:9
 msgid ""
@@ -5670,10 +5982,15 @@ msgid ""
 "curious effect is that the engines can now also be run in reverse to allow "
 "braking with a small loss in reverse thrust capability."
 msgstr ""
+"Toto vylepšení přivádí energii z lodních zdrojů do motoru, čímž se zvyšuje "
+"zrychlení a otáčení lodi. Nezvyšuje přímo maximální rychlost lodi ani její "
+"schopnost otáčet se, nicméně zajímavým efektem je, že motory lze nyní "
+"spouštět i zpětným chodem, což umožňuje brzdění s malou ztrátou schopnosti "
+"zpětného tahu."
 
 #: dat/outfits/structure/improved_stabilizer.xml:2
 msgid "Improved Stabilizer"
-msgstr ""
+msgstr "Vylepšený stabilizátor"
 
 #: dat/outfits/structure/improved_stabilizer.xml:9
 msgid ""
@@ -5682,16 +5999,20 @@ msgid ""
 "ship stable. As another side effect, the improved stabilizers allowing "
 "reversing the thrusters with a small loss of thrust."
 msgstr ""
+"Tato úprava, která výrazně zlepšuje stabilizační systémy lodi, vám umožní "
+"dosahovat vyšších rychlostí a zároveň udržovat stabilitu lodi. Dalším "
+"vedlejším efektem je, že vylepšené stabilizátory umožňují reverzaci trysek s "
+"malou ztrátou tahu."
 
 #: dat/outfits/structure/large_cargo_pod.xml:2
 msgid "Large Cargo Pod"
-msgstr ""
+msgstr "Velký nákladní Pod"
 
 #: dat/outfits/structure/large_cargo_pod.xml:4
 #: dat/outfits/structure/medium_cargo_pod.xml:4
 #: dat/outfits/structure/small_cargo_pod.xml:4
 msgid "Cargo Expansion"
-msgstr ""
+msgstr "Rozšíření nákladní dopravy"
 
 #: dat/outfits/structure/large_cargo_pod.xml:9
 #: dat/outfits/structure/medium_cargo_pod.xml:9
@@ -5701,32 +6022,36 @@ msgid ""
 "to being externally added to the ship's hull, it has the side effect of "
 "slightly increasing the cargo inertia."
 msgstr ""
+"Nákladní pody jsou velké kontejnery, které zvyšují kapacitu lodi. Vzhledem k "
+"tomu, že jsou přidány zvenčí k trupu lodi, mají vedlejší účinek v podobě "
+"mírného zvýšení setrvačnosti nákladu."
 
 #: dat/outfits/structure/large_fuel_pod.xml:2
 msgid "Large Fuel Pod"
-msgstr ""
+msgstr "Velký palivový zásobník"
 
 #: dat/outfits/structure/large_fuel_pod.xml:4
 #: dat/outfits/structure/medium_fuel_pod.xml:4
 #: dat/outfits/structure/small_fuel_pod.xml:4
 msgid "Fuel Modifier"
-msgstr ""
+msgstr "Modifikátor paliva"
 
 #: dat/outfits/structure/large_fuel_pod.xml:9
 #: dat/outfits/structure/medium_fuel_pod.xml:9
 #: dat/outfits/structure/small_fuel_pod.xml:9
 msgid "The fuel pod allows a ship to store more fuel for hyperspace jumps."
 msgstr ""
+"Palivový modul umožňuje lodi uložit více paliva pro skoky hyperprostorem."
 
 #: dat/outfits/structure/large_shield_booster.xml:2
 msgid "Large Shield Booster"
-msgstr ""
+msgstr "Velký posilovač štítu"
 
 #: dat/outfits/structure/large_shield_booster.xml:4
 #: dat/outfits/structure/medium_shield_booster.xml:4
 #: dat/outfits/structure/small_shield_booster.xml:4
 msgid "Shield Booster"
-msgstr ""
+msgstr "Posilovač štítu"
 
 #: dat/outfits/structure/large_shield_booster.xml:9
 #: dat/outfits/structure/medium_shield_booster.xml:9
@@ -5736,22 +6061,25 @@ msgid ""
 "you to regenerate your shield faster and give you a small shield capacity "
 "boost, at the expense of draining some of the ship's energy."
 msgstr ""
+"Generátor štítu, který se napájí z hlavního energetického vedení lodi. "
+"Umožní vám rychlejší regeneraci štítu a poskytne vám malé zvýšení kapacity "
+"štítu na úkor odčerpání části energie z lodi."
 
 #: dat/outfits/structure/medium_cargo_pod.xml:2
 msgid "Medium Cargo Pod"
-msgstr ""
+msgstr "Střední nákladní Pod"
 
 #: dat/outfits/structure/medium_fuel_pod.xml:2
 msgid "Medium Fuel Pod"
-msgstr ""
+msgstr "Střední palivová nádrž"
 
 #: dat/outfits/structure/medium_shield_booster.xml:2
 msgid "Medium Shield Booster"
-msgstr ""
+msgstr "Střední posilovač štítu"
 
 #: dat/outfits/structure/microbond_plating.xml:2
 msgid "Microbond Plating"
-msgstr ""
+msgstr "Microbond pancíř"
 
 #: dat/outfits/structure/microbond_plating.xml:10
 msgid ""
@@ -5759,10 +6087,13 @@ msgid ""
 "lighter revision that's still stronger than Plasteel, making it a great "
 "choice to strengthen the hull of a medium-sized ship."
 msgstr ""
+"Pancíř Microbond, který byl dále vyvinut z pancéřování Nanobond, je méně "
+"hustá a lehčí revize, která je stále pevnější než povlak Plasteel, takže je "
+"skvělou volbou pro zpevnění trupu středně velké lodi."
 
 #: dat/outfits/structure/nanobond_plating.xml:2
 msgid "Nanobond Plating"
-msgstr ""
+msgstr "Nanobond pancíř"
 
 #: dat/outfits/structure/nanobond_plating.xml:10
 msgid ""
@@ -5771,10 +6102,13 @@ msgid ""
 "The result is a much more robust material, although it is substantially more "
 "expensive."
 msgstr ""
+"Nanobond je nástupcem materiálu Plasteel. Vychází ze stejného přístupu, ale "
+"má výrazně zdokonalený výrobní proces, který zajišťuje větší hustotu částic. "
+"Výsledkem je mnohem robustnější materiál, který je však podstatně dražší."
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:2
 msgid "Nebular Shielding Prototype"
-msgstr ""
+msgstr "Prototyp mlhovinového stínění"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:4
 #: dat/outfits/structure/shield_capacitor_i.xml:4
@@ -5782,23 +6116,25 @@ msgstr ""
 #: dat/outfits/structure/shield_capacitor_iii.xml:4
 #: dat/outfits/structure/shield_capacitor_iv.xml:4
 msgid "Shield Modifier"
-msgstr ""
+msgstr "Modifikátor štítu"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:11
 msgid ""
 "A modification to the ship's shields that allows them to resist nebular "
 "volatility."
-msgstr ""
+msgstr "Úprava štítů lodi, která jim umožňuje odolávat mlhovinám."
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:12
 msgid ""
 "Able to compensate up to 30 MW of nebula volatility. Uses 1 MW of energy per "
 "MW of damage prevented."
 msgstr ""
+"Dokáže kompenzovat až 30 MW nestálosti mlhoviny. Spotřebuje 1 MW energie na "
+"1 MW zabráněného poškození."
 
 #: dat/outfits/structure/plasteel_plating.xml:2
 msgid "Plasteel Plating"
-msgstr ""
+msgstr "Plasteel pancíř"
 
 #: dat/outfits/structure/plasteel_plating.xml:10
 msgid ""
@@ -5808,17 +6144,22 @@ msgid ""
 "only possible with this material. Although it is no longer cutting-edge, its "
 "low price point attracts many buyers."
 msgstr ""
+"Plasteel byla jedním z největších vylepšení materiálů, které člověk "
+"vytvořil. Je to levné a pevné pancéřování, které jako by si bralo to "
+"nejlepší z plastu i oceli, snadno se ohýbá, ale přitom si zachovává "
+"neuvěřitelnou pevnost. Druhý růst byl možný pouze s tímto materiálem. Ačkoli "
+"už není nejmodernější, jeho nízká cena láká mnoho kupujících."
 
 #: dat/outfits/structure/reactor_class_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:237
 msgid "Reactor Class I"
-msgstr ""
+msgstr "Reaktor třídy I"
 
 #: dat/outfits/structure/reactor_class_i.xml:4
 #: dat/outfits/structure/reactor_class_ii.xml:4
 #: dat/outfits/structure/reactor_class_iii.xml:4
 msgid "Power Modifier"
-msgstr ""
+msgstr "Modifikátor výkonu"
 
 #: dat/outfits/structure/reactor_class_i.xml:10
 msgid ""
@@ -5826,10 +6167,13 @@ msgid ""
 "energy boost you need. This does not replace the existing reactor but works "
 "alongside it and hooks up directly to the energy flux."
 msgstr ""
+"Přidání doplňkového reaktoru na loď je skvělý způsob, jak získat další "
+"potřebnou energii. Nenahrazuje stávající reaktor, ale pracuje vedle něj a "
+"připojuje se přímo k toku energie."
 
 #: dat/outfits/structure/reactor_class_ii.xml:2
 msgid "Reactor Class II"
-msgstr ""
+msgstr "Reaktor třídy II"
 
 #: dat/outfits/structure/reactor_class_ii.xml:10
 msgid ""
@@ -5837,10 +6181,14 @@ msgid ""
 "permitting it to have greater energy density. The result is a mid-sized "
 "reactor that is best used on ships with moderate energy demands."
 msgstr ""
+"Reaktor třídy II využívá novější technologii fúze než reaktor třídy I, což "
+"mu umožňuje dosáhnout větší hustoty energie. Výsledkem je reaktor střední "
+"velikosti, který je nejvhodnější používat na lodích se středními "
+"energetickými nároky."
 
 #: dat/outfits/structure/reactor_class_iii.xml:2
 msgid "Reactor Class III"
-msgstr ""
+msgstr "Reaktor třídy III"
 
 #: dat/outfits/structure/reactor_class_iii.xml:10
 msgid ""
@@ -5850,68 +6198,77 @@ msgid ""
 "III results in it only fitting comfortably on large vessels, though its "
 "energy output would be excessive for anything less."
 msgstr ""
+"Obrovský reaktor třídy III poskytuje dostatek energie téměř pro cokoli. "
+"Technologie použitá v tomto reaktoru je obzvláště převratná a má nejlepší "
+"hustotu energie ze všech tří tříd reaktorů. Obrovské rozměry reaktoru třídy "
+"III vedou k tomu, že se pohodlně vejde pouze na velká plavidla, ačkoli jeho "
+"energetický výkon by byl nadměrný pro cokoli menšího."
 
 #: dat/outfits/structure/shield_capacitor_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:224
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:243
 msgid "Shield Capacitor I"
-msgstr ""
+msgstr "Štítový kondenzátor I"
 
 #: dat/outfits/structure/shield_capacitor_i.xml:9
 msgid ""
 "An enhancement for the shield power system, giving small ships a better "
 "chance of escaping attackers."
 msgstr ""
+"Vylepšení systému napájení štítů, které dává malým lodím větší šanci "
+"uniknout útočníkům."
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:2
 msgid "Shield Capacitor II"
-msgstr ""
+msgstr "Štítový kondenzátor II"
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:9
 msgid ""
 "A more powerful shield enhancer, providing better protection during "
 "skirmishes."
-msgstr ""
+msgstr "Silnější zesilovač štítu, který poskytuje lepší ochranu během potyček."
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:2
 msgid "Shield Capacitor III"
-msgstr ""
+msgstr "Štítový kondenzátor III"
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:9
 msgid ""
 "A heavy duty shield enhancer for ships that face combat on a regular basis."
-msgstr ""
+msgstr "Silný zesilovač štítu pro lodě, které pravidelně čelí boji."
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:2
 msgid "Shield Capacitor IV"
-msgstr ""
+msgstr "Štítový kondenzátor IV"
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:9
 msgid ""
 "The pinnacle in shield boosting technology, reinforcing the defences of "
 "ships fighting on the front lines."
 msgstr ""
+"Špičková technologie posilování štítů, která posiluje obranu lodí bojujících "
+"v první linii."
 
 #: dat/outfits/structure/small_cargo_pod.xml:2
 msgid "Small Cargo Pod"
-msgstr ""
+msgstr "Malý nákladní pod"
 
 #: dat/outfits/structure/small_fuel_pod.xml:2
 msgid "Small Fuel Pod"
-msgstr ""
+msgstr "Malá palivová nádrž"
 
 #: dat/outfits/structure/small_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:240
 msgid "Small Shield Booster"
-msgstr ""
+msgstr "Malý zesilovač štítu"
 
 #: dat/outfits/unique/bioship_pheromone_emitter.xml:2
 msgid "Bioship Pheromone Emitter"
-msgstr ""
+msgstr "Feromonový emitér Biolodě"
 
 #: dat/outfits/unique/bioship_pheromone_emitter.xml:6
 msgid "Pheromone Emitter"
-msgstr ""
+msgstr "Feromonový emitér"
 
 #: dat/outfits/unique/bioship_pheromone_emitter.xml:11
 msgid ""
@@ -5922,14 +6279,19 @@ msgid ""
 "albeit with much more potency, and it may be able to have some influence on "
 "bioships in some cases."
 msgstr ""
+"Není jasné, jak přesně spolu biolodě komunikují, jisté však je, že k "
+"vzájemnému ovlivňování a komunikaci používají nejen elektromagnetické "
+"frekvence, ale také feromony. Toto experimentální zařízení je navrženo tak, "
+"aby napodobovalo některé pozorované feromonové vzorce, i když s mnohem větší "
+"silou, a v některých případech by mohlo být schopno biolodě ovlivnit."
 
 #: dat/outfits/unique/bioship_pheromone_emitter.xml:12
 msgid "Release bioship pheromones when used."
-msgstr ""
+msgstr "Při použití uvolňuje feromony biolodě."
 
 #: dat/outfits/unique/daphnes_leap.xml:2
 msgid "Daphne's Leap"
-msgstr ""
+msgstr "Skok Daphne"
 
 #: dat/outfits/unique/daphnes_leap.xml:10
 msgid ""
@@ -5939,14 +6301,19 @@ msgid ""
 "amount of time needed to jump, however, this comes at the cost of increasing "
 "the overall time needed to jump due to necessary in-flight calibration."
 msgstr ""
+"Jedná se o modul, který spolupracuje s navigačním systémem lodi a upravuje "
+"jeho základní chování. Díky tomu, že systém detekce a kalibrace bodů skoku "
+"je posunut až na hranici svých možností, dokáže výrazně zkrátit dobu "
+"potřebnou ke skoku, avšak za cenu prodloužení celkové doby potřebné ke skoku "
+"kvůli nutné kalibraci za letu."
 
 #: dat/outfits/unique/executor_shield_aura.xml:2
 msgid "Executor Shield Aura"
-msgstr ""
+msgstr "Štítová aura Executora"
 
 #: dat/outfits/unique/executor_shield_aura.xml:6
 msgid "Aura"
-msgstr ""
+msgstr "Aura"
 
 #: dat/outfits/unique/executor_shield_aura.xml:11
 msgid ""
@@ -5958,34 +6325,45 @@ msgid ""
 "necessary, few of such devices are available, and their usage is limited to "
 "the fearsome Imperial Executors."
 msgstr ""
+"Štítová aura Executora, vyvinutá v rámci tajného programu Impéria s cílem "
+"posunout hranice štítové technologie, využívá polarizované elektromagnetické "
+"pole k dálkovému ovládání blízkých lodí. Pečlivou modulací polarizace lze "
+"účinek omezit na určitou skupinu lodí. Vzhledem k pokročilým technickým "
+"požadavkům, jako je kalibrace, a potřebným vzácným zdrojům je k dispozici "
+"jen málo takových zařízení a jejich použití je omezeno na obávané císařské "
+"Exekutory."
 
 #: dat/outfits/unique/executor_shield_aura.xml:12
 msgid ""
 "Gives +30% shield regeneration to all friendly ships within 3000 units. "
 "Range is affected by detection bonus."
 msgstr ""
+"Poskytuje +30% regeneraci štítu všem přátelským lodím v okruhu 3000 "
+"jednotek. Dosah je ovlivněn bonusem za detekci."
 
 #: dat/outfits/unique/fake_transponder.xml:2
 #: dat/outfits/unique/fake_transponder.xml:6
 msgid "Fake Transponder"
-msgstr ""
+msgstr "Falešný transpondér"
 
 #: dat/outfits/unique/fake_transponder.xml:11
 msgid ""
 "A fake transponder to make ships appear to be a non-descript and harmless "
 "independent ship."
-msgstr ""
+msgstr "Falešný transpondér, aby se lodě jevily jako neškodné nezávislé lodě."
 
 #: dat/outfits/unique/fake_transponder.xml:12
 msgid ""
 "Makes the ship appear as independent to other ships. Becomes temporarily "
 "void when discovered."
 msgstr ""
+"Učiní loď nezávislou na ostatních lodích. Po objevení se stane dočasně "
+"neplatné."
 
 #: dat/outfits/unique/fuel_recycler.xml:2
 #: dat/outfits/unique/fuel_recycler.lua:68
 msgid "Fuel Recycler"
-msgstr ""
+msgstr "Recyklátor paliva"
 
 #: dat/outfits/unique/fuel_recycler.xml:10
 msgid ""
@@ -5998,14 +6376,21 @@ msgid ""
 "materials to generate fuel. Despite this, such generation can be useful for "
 "long space journeys or when in a pinch."
 msgstr ""
+"I když je proces rafinace paliva pro vesmírné lodě možný s využitím levných "
+"dostupných materiálů a vhodného strojního vybavení, výroba je obvykle "
+"omezena na velké nepohyblivé stanice nebo astrální tělesa. Díky obětování "
+"velikosti a složitosti strojů je recyklátor paliva schopen syntetizovat "
+"palivo ve velmi kompaktní formě. Nevýhodou je, že zařízení nakonec výrazně "
+"snižuje účinnost a vyžaduje velké množství surovin k výrobě paliva. Přesto "
+"může být taková výroba užitečná při dlouhých vesmírných cestách nebo v nouzi."
 
 #: dat/outfits/unique/fuel_recycler.xml:11
 msgid "#gAllows converting space resources to fuel.#0"
-msgstr ""
+msgstr "#gUmožňuje převod vesmírných zdrojů na palivo.#0"
 
 #: dat/outfits/unique/hades_torch.xml:2
 msgid "Hades Torch"
-msgstr ""
+msgstr "Hádova pochodeň"
 
 #: dat/outfits/unique/hades_torch.xml:10
 msgid ""
@@ -6013,6 +6398,9 @@ msgid ""
 "detail that to obtain maximum performance it has a tendency to burn the hull "
 "of the ship it is attached too."
 msgstr ""
+"Hádova pochodeň by byla výjimečným přídavným spalovačem, až na drobný "
+"detail, že pro dosažení maximálního výkonu má tendenci spálit trup lodi, ke "
+"které je připojena."
 
 #: dat/outfits/unique/hades_torch.xml:14
 msgid "#rHot hot hot!#0"
@@ -6020,7 +6408,7 @@ msgstr ""
 
 #: dat/outfits/unique/homebrew_processing_unit.xml:2
 msgid "Homebrew Processing Unit"
-msgstr ""
+msgstr "Domácí zpracovatelská jednotka"
 
 #: dat/outfits/unique/homebrew_processing_unit.xml:11
 msgid ""
@@ -6031,16 +6419,21 @@ msgid ""
 "most similar cores, it has significantly better developed functionality in "
 "other areas."
 msgstr ""
+"Tento jádrový systém je snadno rozpoznatelný jako dílo amatérů, s nedbalým "
+"zapojením a nebezpečně odhalenými vnitřnostmi. Na rozdíl od sériově "
+"vyráběných jader je však znát, že do vývoje jednotky bylo vloženo mnoho "
+"lásky a péče. Zatímco štít a výpočetní výkon jsou menší než u většiny "
+"podobných jader, má výrazně lépe propracovanou funkčnost v jiných oblastech."
 
 #: dat/outfits/unique/pulse_scanner.xml:2
 #: dat/missions/neutral/poi_intro.lua:232
 msgid "Pulse Scanner"
-msgstr ""
+msgstr "Pulzní skener"
 
 #: dat/outfits/unique/pulse_scanner.xml:6
 #: dat/outfits/utility/sensor_array.xml:4 dat/events/shipai.lua:108
 msgid "Electronic Warfare"
-msgstr ""
+msgstr "Elektronický boj"
 
 #: dat/outfits/unique/pulse_scanner.xml:11
 msgid ""
@@ -6054,16 +6447,26 @@ msgid ""
 "strong enough to pick up nearby faint traces and can be useful for detective "
 "work."
 msgstr ""
+"Pulzní skener využívá k detekci lodí alternativní přístup k běžným "
+"skenovacím zařízením. Hardware je značně upraven tak, aby nepracoval v "
+"kontinuálním režimu, ale generoval extrémně velký pulzní signál a následně "
+"analyzoval odezvy odrazu, které poskytují ostatní lodě. To vede k tomu, že "
+"je možné výrazně zlepšit schopnost detekce lodi na krátkou dobu, i když s "
+"vedlejším účinkem zvýšení viditelnosti lodi, která generuje impuls. Impuls "
+"je navíc dostatečně silný na to, aby zachytil blízké slabé stopy, což může "
+"být užitečné pro detektivní práci."
 
 #: dat/outfits/unique/pulse_scanner.xml:12
 msgid ""
 "Activates for 5 seconds with a 15 second cooldown period.\n"
 "#pCan be used for tracking anomaly signals.#0"
 msgstr ""
+"Aktivuje se na 5 sekund s 15sekundovým obdobím ochlazení.\n"
+"#pMůže být použito pro sledování signálů anomálií.#0"
 
 #: dat/outfits/unique/squadron_synchronizer_module.xml:2
 msgid "Squadron Synchronizer Module"
-msgstr ""
+msgstr "Modul synchronizace letky"
 
 #: dat/outfits/unique/squadron_synchronizer_module.xml:9
 msgid ""
@@ -6073,14 +6476,19 @@ msgid ""
 "accurately. At its core it seems to change some of the underlying algorithms "
 "to be more efficient to use less bandwidth."
 msgstr ""
+"Není jasné, jak Misi získala zboží na prodej, a otázkám na toto téma se "
+"vyhýbá, nicméně modul synchronizace letky lze snadno připojit k jakékoli "
+"lodi a zvýšit tak počet lodí, kterým může efektivně a přesně velet. Ve své "
+"podstatě zřejmě mění některé základní algoritmy tak, aby byly efektivnější a "
+"využívaly menší šířku pásma."
 
 #: dat/outfits/unique/squadron_synchronizer_module.xml:10
 msgid "Increases Fleet Capacity by 10. Does not need to be equipped."
-msgstr ""
+msgstr "Zvyšuje kapacitu flotily o 10. Nemusí být vybavena."
 
 #: dat/outfits/unique/valkyrie_beam.xml:2
 msgid "Valkyrie Beam"
-msgstr ""
+msgstr "Paprsek Valkýry"
 
 #: dat/outfits/unique/valkyrie_beam.xml:10
 msgid ""
@@ -6090,14 +6498,18 @@ msgid ""
 "a tendency to leave the ship as a sitting duck if it is unable to destroy "
 "the target in a single shot."
 msgstr ""
+"Paprsek Valkýry je silně upravená verze paprsku Ragnarok, kde jsou štíty "
+"lodi výrazně přesměrovány do paprskové zbraně, aby se zvýšilo její "
+"poškození. Výsledkem je neuvěřitelně silný paprsek, který má tendenci nechat "
+"loď na holičkách, pokud se mu nepodaří zničit cíl jediným výstřelem."
 
 #: dat/outfits/unique/valkyrie_beam.xml:11
 msgid "#rDrains 80 shield per second when firing and for one second after.#0"
-msgstr ""
+msgstr "#rVyčerpá 80 štítů za sekundu při střelbě a jednu sekundu po ní.#0"
 
 #: dat/outfits/unique/veil_of_penelope.xml:2
 msgid "Veil of Penelope"
-msgstr ""
+msgstr "Penelopin závoj"
 
 #: dat/outfits/unique/veil_of_penelope.xml:10
 msgid ""
@@ -6106,10 +6518,14 @@ msgid ""
 "emitted radiation, allowing the ship to remain undetected longer when near "
 "other ships."
 msgstr ""
+"Toto zařízení vypadá téměř jako parazit, který se připojuje k lodním "
+"systémům. Není přesně jasné, co dělá, ale zdá se, že se živí vyzařovaným "
+"zářením, což umožňuje lodi zůstat déle neodhalena, když je v blízkosti "
+"jiných lodí."
 
 #: dat/outfits/unique/zd5_guardian_unit.xml:2
 msgid "ZD-5 Guardian Unit"
-msgstr ""
+msgstr "Strážná jednotka ZD-5"
 
 #: dat/outfits/unique/zd5_guardian_unit.xml:10
 msgid ""
@@ -6120,16 +6536,24 @@ msgid ""
 "although the reasons are not very clear, the project was cancelled only very "
 "few experimental models exist."
 msgstr ""
+"Strážní jednotka ZD-5 je navržena jako obranný systém poslední instance. Má "
+"silné magnetické pole, které násilně udržuje integritu trupu lodi tak "
+"dlouho, dokud vydrží energie. Malé rozvržení omezuje maximální poškození, "
+"které může jednotka kompenzovat. Původně měla být použita pro novou generaci "
+"za'leckých dronů, ačkoli důvody nejsou příliš jasné, projekt byl zrušen, "
+"existuje jen velmi málo experimentálních modelů."
 
 #: dat/outfits/unique/zd5_guardian_unit.xml:11
 msgid ""
 "Uses energy to stop lethal damage with 50% efficiency. Can only stop a "
 "maximum of 200 damage per second."
 msgstr ""
+"Využívá energii k zastavení smrtelného poškození s 50% účinností. Dokáže "
+"zastavit maximálně 200 poškození za sekundu."
 
 #: dat/outfits/utility/asteroid_scanner.xml:2
 msgid "Asteroid Scanner"
-msgstr ""
+msgstr "Skener asteroidů"
 
 #: dat/outfits/utility/asteroid_scanner.xml:4
 #: dat/outfits/utility/catalytic_energy_drill.xml:4
@@ -6139,7 +6563,7 @@ msgstr ""
 #: dat/outfits/weapons/mining_lance_mk2.xml:4
 #: dat/outfits/weapons/nexus_drill_lance.xml:4
 msgid "Mining System"
-msgstr ""
+msgstr "Těžební systém"
 
 #: dat/outfits/utility/asteroid_scanner.xml:9
 msgid ""
@@ -6150,16 +6574,22 @@ msgid ""
 "composition via inverse electrical impedance. Of course, that comes at a "
 "price that not just any miner can pay."
 msgstr ""
+"Hmotnost, polohu a rychlost asteroidu může určit každý skener. Těžaři však "
+"raději znají hodnotu asteroidu. Za tímto účelem společnost Milspec navrhla "
+"soustavu skenerů, která je schopna odvodit složení povrchu ze spektroskopie, "
+"a co je ještě působivější, odvodit vnitřní složení pomocí inverzní "
+"elektrické impedance. To má samozřejmě svou cenu, kterou nemůže zaplatit jen "
+"tak nějaký těžař."
 
 #: dat/outfits/utility/berserk_chip.xml:2
 msgid "Berserk Chip"
-msgstr ""
+msgstr "Berserk čip"
 
 #: dat/outfits/utility/berserk_chip.xml:4
 #: dat/outfits/utility/emergency_stasis_inducer.xml:4
 #: dat/outfits/utility/neural_accelerator_interface.xml:4
 msgid "Speed Modifier"
-msgstr ""
+msgstr "Modifikátor rychlosti"
 
 #: dat/outfits/utility/berserk_chip.xml:9
 msgid ""
@@ -6170,6 +6600,12 @@ msgid ""
 "used for a short time. Newer versions have a safety shutoff which "
 "automatically turn off the chip before hull integrity collapses."
 msgstr ""
+"Čip Berserk je nebezpečná věc, kterou používají jen ti nejbezohlednější "
+"piloti. Lze jej plně integrovat do lodi a zrušit tak většinu základních "
+"funkcí a přesměrovat ji na bojové schopnosti. To je spojeno s velmi vysokými "
+"náklady na integritu trupu a systémů lodi a lze jej používat pouze po "
+"krátkou dobu. Novější verze mají bezpečnostní vypínání, které automaticky "
+"vypne čip dříve, než se zhroutí integrita trupu."
 
 #: dat/outfits/utility/berserk_chip.xml:10
 msgid ""
@@ -6178,12 +6614,15 @@ msgid ""
 "second cooldown period during which movement and damage output is decreased "
 "by 20%."
 msgstr ""
+"Časem způsobuje velké poškození štítů a pancíře a automaticky se vypne, když "
+"integrita trupu klesne pod 30 %. Po použití nastává 8sekundové období "
+"ochlazení, během něhož se pohyb a poškození sníží o 20 %."
 
 #: dat/outfits/utility/blink_drive.xml:2 dat/outfits/utility/blink_drive.xml:4
 #: dat/outfits/utility/flicker_drive.xml:4
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:4
 msgid "Blink Drive"
-msgstr ""
+msgstr "Bleskový pohon"
 
 #: dat/outfits/utility/blink_drive.xml:10
 msgid ""
@@ -6192,6 +6631,10 @@ msgid ""
 "often use such devices tend to have a higher amount of strong headaches than "
 "usual, but it must be safe, right?"
 msgstr ""
+"Bleskový pohon využívá technologii hyperpohonu upravenou tak, aby vytvořila "
+"malý časoprostorový záhyb umožňující lodím okamžitě překonávat krátké "
+"vzdálenosti. Piloti, kteří taková zařízení často používají, mívají větší "
+"množství silných bolestí hlavy než obvykle, ale musí to být bezpečné, ne?"
 
 #: dat/outfits/utility/blink_drive.xml:11
 msgid ""
@@ -6199,15 +6642,18 @@ msgid ""
 "right allows blinking 250 units to the side. Can only be run once every 7 "
 "seconds. Performance degrades over 1,000 tonnes of mass."
 msgstr ""
+"Bliká 500 jednotek ve směru, kterým se nacházíte. Dvojité klepnutí vlevo "
+"nebo vpravo umožňuje blikání 250 jednotek do strany. Lze spustit pouze "
+"jednou za 7 sekund. Výkon se snižuje nad 1 000 tun hmotnosti."
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
-msgstr ""
+msgstr "Nalodění Androidů MK1"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:4
 #: dat/outfits/utility/boarding_androids_mk2.xml:4
 msgid "Boarding Androids"
-msgstr ""
+msgstr "Nalodění Androidů"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:9
 msgid ""
@@ -6216,10 +6662,14 @@ msgid ""
 "torch/can opener/spatula, the Boarding Android is ready for any situation, "
 "be it tactical or culinary."
 msgstr ""
+"Asimov Destructicorp Boarding Android je nejnovější robotická technologie "
+"nepřátelského převzetí. Nalodǒvací Android je vybaven multifunkčním "
+"plazmovým blasterem/řeznou svítilnou/otvírákem na konzervy/špachtlí a je "
+"připraven na každou situaci, ať už taktickou, nebo kulinářskou."
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:2
 msgid "Boarding Androids MK2"
-msgstr ""
+msgstr "Nalodění Androidů MK2"
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:9
 msgid ""
@@ -6227,17 +6677,19 @@ msgid ""
 "sported by its predecessor, additionally including scissor-hands and a "
 "sewing needle."
 msgstr ""
+"Naloďovací Android Mark 2 vylepšuje širokou škálu nástrojů, které měl jeho "
+"předchůdce, a navíc obsahuje nůžky a šicí jehlu."
 
 #: dat/outfits/utility/camouflage_burster.xml:2
 msgid "Camouflage Burster"
-msgstr ""
+msgstr "Kamufláž Burster"
 
 #: dat/outfits/utility/camouflage_burster.xml:4
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:4
 #: dat/outfits/utility/targeting_conduit.xml:4
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:4
 msgid "System Improvement"
-msgstr ""
+msgstr "Zdokonalení systému"
 
 #: dat/outfits/utility/camouflage_burster.xml:10
 msgid ""
@@ -6249,16 +6701,24 @@ msgid ""
 "temporary effect, and the device takes a long time to recalibrate and load "
 "the capacitors."
 msgstr ""
+"Původ maskovacího bursteru nikdo nezná, nicméně se zdá, že byl odvozen z "
+"primitivnější provizorní verze, kterou používali pašeráci, aby se vyhnuli "
+"hlídkám. Tím, že vysílá příval silných signálů, dokáže dočasně zmást senzory "
+"blízkých lodí a výrazně zvýšit schopnost utajení. Jedná se však pouze o "
+"krátkodobý dočasný účinek a zařízení dlouho trvá, než se překalibruje a "
+"nabije kondenzátory."
 
 #: dat/outfits/utility/camouflage_burster.xml:11
 msgid ""
 "8 second duration with 30 second cooldown. Will not activate if the ship is "
 "unable to stealth with the bonus."
 msgstr ""
+"Trvání 8 sekund s 30sekundovým cooldownem. Neaktivuje se, pokud loď není "
+"schopna se s tímto bonusem skrýt."
 
 #: dat/outfits/utility/catalytic_energy_drill.xml:2
 msgid "Catalytic Energy Drill"
-msgstr ""
+msgstr "Katalytický energetický vrták"
 
 #: dat/outfits/utility/catalytic_energy_drill.xml:10
 msgid ""
@@ -6271,30 +6731,38 @@ msgid ""
 "significantly reduced, making skill an important factor in its successful "
 "usage."
 msgstr ""
+"Katalytický energetický vrták, navržený důlním cechem Vrata, představuje "
+"radikálně nový přístup k těžbě asteroidů a zvyšuje účinnost a výkon na úkor "
+"snadného používání. Namísto toho, aby se opíral o stabilnější plazmovou "
+"technologii, využívá k soustředění energetického paprsku vícestupňový "
+"krystalický urychlovač. Ačkoli je výsledkem skutečně kompaktní a účinná "
+"konstrukce, kvůli tendenci k přehřívání a sebedestrukci se výrazně zkracuje "
+"doba provozu, takže dovednost je důležitým faktorem pro jeho úspěšné využití."
 
 #: dat/outfits/utility/catalytic_energy_drill.xml:11
 #: dat/outfits/utility/sk_heavy_plasma_drill.xml:11
 #: dat/outfits/utility/sk_plasma_drill.xml:11
 msgid "#gAllows precise mining of asteroids to extract rare minerals.#0"
 msgstr ""
+"#gUmožňuje přesnou těžbu asteroidů za účelem získání vzácných minerálů.#0"
 
 #: dat/outfits/utility/cloaking_device.xml:2
 #: dat/outfits/utility/cloaking_device.xml:4
 #: dat/outfits/utility/cloaking_device.xml:9
 msgid "Cloaking Device"
-msgstr ""
+msgstr "Maskovací zařízení"
 
 #: dat/outfits/utility/cloaking_device.xml:10
 msgid "Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds."
-msgstr ""
+msgstr "Spotřebuje 1 MJ energie na 10 hmotností a vyčerpá štít za 0,5 sekundy."
 
 #: dat/outfits/utility/combat_hologram_projector.xml:2
 msgid "Combat Hologram Projector"
-msgstr ""
+msgstr "Bojový holografický projektor"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:4
 msgid "Holograph Projector"
-msgstr ""
+msgstr "Holografický projektor"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:12
 msgid ""
@@ -6304,15 +6772,20 @@ msgid ""
 "confusion, however, when engaged in actual combat the cover is usually "
 "quickly blown away."
 msgstr ""
+"Projektor bojových hologramů využívá nejmodernější technologii k vytvoření "
+"hologramu lodi, který je téměř k nerozeznání od skutečného. Taková "
+"holografická zobrazení jsou velmi účinná při odlákávání nepřátelské palby a "
+"vytváření zmatku, avšak při skutečném boji je krytí obvykle rychle rozmetáno."
 
 #: dat/outfits/utility/combat_hologram_projector.xml:13
 msgid ""
 "Creates a hologram of the current ship to distract the enemy ship target."
 msgstr ""
+"Vytvoří hologram aktuální lodi, aby odlákal pozornost cíle nepřátelské lodi."
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:2
 msgid "Agility Combat AI"
-msgstr ""
+msgstr "Agilní bojová AI"
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:4
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:4
@@ -6323,7 +6796,7 @@ msgstr ""
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:4
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:4
 msgid "Combat AI"
-msgstr ""
+msgstr "Bojová AI"
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:11
 msgid ""
@@ -6332,10 +6805,14 @@ msgid ""
 "to increase both the overall acceleration and turn of the ship without "
 "actually modifying the hardware nor increasing the energy consumption."
 msgstr ""
+"Tato bojová umělá inteligence rozšiřuje běžné funkce lodi a zaměřuje se na "
+"obratnost. Pečlivou regulací lodních trysek dokáže UI zvýšit celkové "
+"zrychlení i zatáčení lodi, aniž by ve skutečnosti upravovala hardware nebo "
+"zvyšovala spotřebu energie."
 
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:2
 msgid "Bio-Neural Combat AI"
-msgstr ""
+msgstr "Bio-neurální bojová AI"
 
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:11
 msgid ""
@@ -6345,10 +6822,16 @@ msgid ""
 "process all ship sensory data to predict future events, allowing the ship to "
 "seemingly gain an edge over other ships in reaction time."
 msgstr ""
+"Na rozdíl od běžné bojové umělé inteligence, která se skládá z čistého "
+"softwaru, se tato umělá inteligence skládá z kvaziorganického koprocesoru "
+"vyrobeného z živé tkáně a anorganického materiálu. Koprocesor funguje jako "
+"malý časový lalok a je schopen zpracovávat všechna smyslová data lodi a "
+"předvídat budoucí události, což lodi umožňuje zdánlivě získat výhodu nad "
+"ostatními loděmi v reakčním čase."
 
 #: dat/outfits/utility/combatai/cyclic_combat_ai.xml:2
 msgid "Cyclic Combat AI"
-msgstr ""
+msgstr "Cyklická bojová AI"
 
 #: dat/outfits/utility/combatai/cyclic_combat_ai.xml:11
 msgid ""
@@ -6357,10 +6840,14 @@ msgid ""
 "weapons, the AI is able to perform seemingly trivial modifications of "
 "parameters that lead to an overall increase in fire rate."
 msgstr ""
+"Tato bojová umělá inteligence se zaměřuje na optimalizaci rytmu střelby z "
+"předsunutých zbraní. Díky pečlivé analýze cyklu střelby ze zbraní je AI "
+"schopna provádět zdánlivě triviální úpravy parametrů, které vedou k "
+"celkovému zvýšení rychlosti střelby."
 
 #: dat/outfits/utility/combatai/efficiency_combat_ai.xml:2
 msgid "Efficiency Combat AI"
-msgstr ""
+msgstr "Efektivní bojová AI"
 
 #: dat/outfits/utility/combatai/efficiency_combat_ai.xml:11
 msgid ""
@@ -6368,14 +6855,17 @@ msgid ""
 "power more efficient, allowing more power to be packed into the same energy "
 "usage."
 msgstr ""
+"Tato bojová umělá inteligence využívá pokročilé směrování energie k "
+"zefektivnění výpočetního výkonu lodi, díky čemuž lze při stejné spotřebě "
+"energie využít více energie."
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:2
 msgid "Hive Combat AI"
-msgstr ""
+msgstr "Bojová AI úlu"
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:10
 msgid "You need at least 10 reputation with House Za'lek."
-msgstr ""
+msgstr "Potřebujete alespoň 10 reputace u rodu Za'lek."
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:13
 msgid ""
@@ -6385,10 +6875,15 @@ msgid ""
 "in more efficient movement of the fighters, and a better ability to respond "
 "to mishaps such as lost fighters."
 msgstr ""
+"Bojová AI úlu, která je silně inspirována včelími a jinými hmyzími "
+"koloniemi, zvyšuje sdílení dat a parametrů mezi letadlovou lodí a jejími "
+"bojovníky, což umožňuje zvýšit efektivitu komunikace. Výsledkem je "
+"efektivnější pohyb stíhaček a lepší schopnost reagovat na nehody, například "
+"na ztracené stíhačky."
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:2
 msgid "Hunting Combat AI"
-msgstr ""
+msgstr "Lovecká bojová AI"
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:11
 msgid ""
@@ -6397,10 +6892,14 @@ msgid ""
 "resulting in a significant increase in damage for turret weapons, albeit "
 "with a reduced fire rate."
 msgstr ""
+"Podobně jako při lovu ze zálohy se bojová umělá inteligence při lovu dokáže "
+"zaměřit na využití momentu překvapení a slabin trupů nepřátelských lodí, což "
+"vede k výraznému zvýšení poškození věžových zbraní, i když se sníženou "
+"rychlostí střelby."
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:2
 msgid "Pinpoint Combat AI"
-msgstr ""
+msgstr "Pinpoint bojová AI"
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:11
 msgid ""
@@ -6410,10 +6909,14 @@ msgid ""
 "to increase both the range and the lock-on speed of all missile launchers on "
 "the ship."
 msgstr ""
+"Pinpoint bojová AI, která byla vyvinuta k řešení problémů typu hledání jehly "
+"v kupce sena, vyniká v hledání a zaměřování malých objektů v rozlehlém "
+"vesmíru. Díky spojení s lodními odpalovacími systémy je AI schopna zvýšit "
+"dosah i rychlost zaměření všech raketometů na lodi."
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:2
 msgid "Scanning Combat AI"
-msgstr ""
+msgstr "Skenovací bojová AI"
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:11
 msgid ""
@@ -6421,15 +6924,18 @@ msgid ""
 "infrastructure. By making small tweaks online, it is able to effectively "
 "increase the range at which other ships are detected."
 msgstr ""
+"Tato bojová umělá inteligence se zaměřuje na optimalizaci senzorové "
+"infrastruktury lodi. Drobnými úpravami online dokáže účinně zvýšit dosah, na "
+"který jsou ostatní lodě detekovány."
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:2
 msgid "Cryogenic Repair Nanobots"
-msgstr ""
+msgstr "Kryogenní opravárenští nanoboti"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:4
 #: dat/outfits/utility/droid_repair_crew.xml:4
 msgid "Armour Repair"
-msgstr ""
+msgstr "Oprava pancíře"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:10
 msgid ""
@@ -6441,14 +6947,20 @@ msgid ""
 "fully capable of, however when the ship is in motion they go into "
 "hibernation."
 msgstr ""
+"Opravárenští nanoboti jsou schopni provést něco, co se zdá být zázrakem, a "
+"obnovit trup a pancíř lodí do původního stavu. Zatímco v laboratorních "
+"podmínkách vykazují pozoruhodné chování, v praxi potřebují k práci poměrně "
+"klidné prostředí. Fáze aktivního chlazení lodi poskytuje nanobotům "
+"vynikající příležitost ukázat, čeho jsou plně schopni, avšak když je loď v "
+"pohybu, upadají do hibernace."
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:11
 msgid "Restores armour to full when performing an active cooldown."
-msgstr ""
+msgstr "Obnovuje brnění na plnou hodnotu při aktivním cooldownu."
 
 #: dat/outfits/utility/droid_repair_crew.xml:2
 msgid "Droid Repair Crew"
-msgstr ""
+msgstr "Posádka opravárenských droidů"
 
 #: dat/outfits/utility/droid_repair_crew.xml:10
 msgid ""
@@ -6459,19 +6971,25 @@ msgid ""
 "having a robotic repair crew. Due to the simplicity of the droid tools, they "
 "are unable to restore armour beyond 50%."
 msgstr ""
+"Tato nenáročná posádka droidů bude prohledávat vaši loď a opravovat škody "
+"způsobené vesmírnými nebezpečími. Jsou velmi malí a mohou pracovat jak v "
+"interiéru, tak v exteriéru lodi. Pro napájení robotů se odebírá energie z "
+"lodi, ačkoli zatížení je obecně velmi nízké v porovnání s výhodami, které "
+"přináší robotická opravárenská posádka. Vzhledem k jednoduchosti nástrojů "
+"droidů nejsou schopni obnovit pancíř na více než 50 %."
 
 #: dat/outfits/utility/droid_repair_crew.xml:11
 msgid "Can only restore armour when below 50%."
-msgstr ""
+msgstr "Obnoví brnění pouze tehdy, když je nižší než 50 %."
 
 #: dat/outfits/utility/emergency_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
 msgid "Emergency Shield Booster"
-msgstr ""
+msgstr "Posilovač nouzového štítu"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:4
 msgid "Shield Modification"
-msgstr ""
+msgstr "Úprava štítu"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:9
 msgid ""
@@ -6482,16 +7000,24 @@ msgid ""
 "disproportionally high and the outfit can't be active for more than a "
 "certain period of time before needing entering a cooldown cycle."
 msgstr ""
+"Toto zařízení zajišťuje pomocný energetický přepínač mezi lodním reaktorem a "
+"štítovým systémem. Po aktivaci toto zařízení výrazně zvyšuje regeneraci "
+"štítu lodi tím, že dodává surovou energii přímo do kondenzátorů štítu. Tento "
+"proces je velmi neefektivní, takže spotřeba energie je neúměrně vysoká a "
+"výbava nemůže být aktivní déle než určitou dobu, než musí vstoupit do cyklu "
+"ochlazování."
 
 #: dat/outfits/utility/emergency_shield_booster.xml:10
 msgid ""
 "Increases shield regeneration by 500%. Active for 4 seconds with a cooldown "
 "of 8 seconds. Uses 3 MJ of energy for each MJ of shield recovered."
 msgstr ""
+"Zvyšuje regeneraci štítu o 500 %. Aktivní po dobu 4 sekund s cooldownem 8 "
+"sekund. Spotřebuje 3 MJ energie za každý MJ obnoveného štítu."
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:2
 msgid "Emergency Stasis Inducer"
-msgstr ""
+msgstr "Nouzový induktor stáze"
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:9
 msgid ""
@@ -6504,14 +7030,22 @@ msgid ""
 "how this effect is created, however, doctors do not recommend prolonged "
 "usage."
 msgstr ""
+"Nouzový induktor stáze funguje tak, že kolem lodi vytvoří silné "
+"elektromagnetické pole, které způsobí, že se čas pro všechno mimo loď zdá "
+"být pomalejší než normálně, a zároveň zrychlí loď a veškeré její vybavení a "
+"činnosti. Díky tomu se můžete pohybovat rychleji a způsobovat mnohem větší "
+"škody než obvykle. Mechanismus se spouští automaticky při poškození pancíře "
+"bez nutnosti ručního zásahu. Není zcela jasné, jak tento efekt vzniká, "
+"nicméně lékaři nedoporučují dlouhodobé používání."
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:10
 msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
 msgstr ""
+"Spouští se při poškození brnění. Trvá 3 sekundy s 8sekundovým cooldownem."
 
 #: dat/outfits/utility/flicker_drive.xml:2
 msgid "Flicker Drive"
-msgstr ""
+msgstr "Flicker jednotka"
 
 #: dat/outfits/utility/flicker_drive.xml:10
 msgid ""
@@ -6523,6 +7057,12 @@ msgid ""
 "make use of afterburners to increase mobility, the Flicker Driver has a "
 "strong following who claim it is superior to all the alternatives."
 msgstr ""
+"Flicker jednotka je zkrácená verze Blink jednotky, která snižuje spotřebu "
+"energie, dosah blikání a množství hmoty, kterou lze blikat, avšak výhodou je "
+"mnohem vyšší mobilita díky nižšímu cooldownu. Nejistota, kterou mrkací pohon "
+"poskytuje, má také sekundární účinek v podobě snížení signatury lodi. Ačkoli "
+"většina lodí běžně využívá ke zvýšení mobility přídavné spalování, blikavý "
+"pohon má silné zastánce, kteří tvrdí, že je lepší než všechny alternativy."
 
 #: dat/outfits/utility/flicker_drive.xml:11
 msgid ""
@@ -6530,11 +7070,14 @@ msgid ""
 "the sides. Can only be run once every 3 seconds. Performance degrades over "
 "400 tonnes of mass."
 msgstr ""
+"Blikne vás 300 jednotek dopředu. Dvojitým poklepáním vlevo nebo vpravo "
+"můžete blikat do stran. Lze spustit pouze jednou za 3 sekundy. Výkon se "
+"snižuje při překročení hmotnosti 400 tun."
 
 #: dat/outfits/utility/hellburner.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:234
 msgid "Hellburner"
-msgstr ""
+msgstr "Hellburner"
 
 #: dat/outfits/utility/hellburner.xml:8
 msgid ""
@@ -6544,10 +7087,15 @@ msgid ""
 "efficiency is significantly lower than common models, so it consumes energy "
 "more rapidly and overheats much more quickly."
 msgstr ""
+"Hellburner je jedním z nejlepších lehkých přídavných spalovačů na trhu. Díky "
+"patentovaným tlakovým kanálům je Hellburner schopen generovat mnohem větší "
+"tah než běžné alternativy. Bohužel je jeho účinnost přeměny energie výrazně "
+"nižší než u běžných modelů, takže rychleji spotřebovává energii a mnohem "
+"rychleji se přehřívá."
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:2
 msgid "Hidden Jump Scanner"
-msgstr ""
+msgstr "Skener skrytých skoků"
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:9
 msgid ""
@@ -6557,10 +7105,15 @@ msgid ""
 "needing to recharge, this scanner is capable of discovering jump points that "
 "regular sensors can't detect."
 msgstr ""
+"Specializovaná senzorová technologie, která dokáže skenovat své "
+"bezprostřední okolí a hledat neobvyklé anomálie ve struktuře vesmíru. Ačkoli "
+"má krátký dosah a dokáže skenovat pouze po omezenou dobu, než se musí dobít, "
+"dokáže tento skener objevit místa skoku, která běžné senzory nedokážou "
+"odhalit."
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:2
 msgid "Faraday Tempest Coating"
-msgstr ""
+msgstr "Povlak Faraday Tempest"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:4
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:4
@@ -6569,7 +7122,7 @@ msgstr ""
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:4
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:4
 msgid "Hull Coating"
-msgstr ""
+msgstr "Povlak trupu"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:9
 msgid ""
@@ -6579,10 +7132,14 @@ msgid ""
 "harmless evanescent fields, greatly speeding up the recovery from system "
 "damage."
 msgstr ""
+"Moderní iontové zbraně našly způsob, jak překonat pancéřování lodi a přímo "
+"zaútočit na zranitelné elektronické systémy. Povlak Faraday Tempest dokáže "
+"čelit zneškodnění zbraní tím, že je rozptýlí prostřednictvím neškodných "
+"evanescentních polí, což značně urychluje obnovu po poškození systému."
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:2
 msgid "Lattice Thermal Coating"
-msgstr ""
+msgstr "Mřížkový tepelný povlak"
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:9
 msgid ""
@@ -6592,10 +7149,15 @@ msgid ""
 "a special nano-material that is able to radiate through itself, allowing for "
 "increased heat dissipation."
 msgstr ""
+"Vzhledem k tomu, že ve vesmíru neexistuje atmosféra, jsou lodě odkázány na "
+"záření, které je pasivně zbavuje přebytečného tepla. Toto vyzařování je "
+"obecně omezeno velikostí lodi. Mřížkový tepelný povlak toto omezení "
+"překonává použitím speciálního nanomateriálu, který je schopen vyzařovat "
+"skrze sebe sama, což umožňuje zvýšený odvod tepla."
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:2
 msgid "Milspec Impacto-Plastic Coating"
-msgstr ""
+msgstr "Impakto-plastový povlak Milspec"
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:9
 msgid ""
@@ -6603,10 +7165,13 @@ msgid ""
 "resist both impact and damage, quickly restoring the protected surface to "
 "its original state."
 msgstr ""
+"Impakto-plastový povlak Milspec je založen na paměťových nanoslitinách, "
+"které odolávají nárazům i poškození a rychle obnovují chráněný povrch do "
+"původního stavu."
 
 #: dat/outfits/utility/hullcoating/nebula_resistant_coating.xml:2
 msgid "Nebula Resistant Coating"
-msgstr ""
+msgstr "Povlak odolný proti mlhovině"
 
 #: dat/outfits/utility/hullcoating/nebula_resistant_coating.xml:10
 msgid ""
@@ -6617,10 +7182,15 @@ msgid ""
 "significantly more resistant, although prolonged exposure is still not "
 "recommended."
 msgstr ""
+"Ochrana lodí před zářením mlhovin není snadným úkolem vzhledem ke kolísání a "
+"parametrům různých typů vyzařovaného záření, z nichž většina není zcela "
+"pochopena. Přestože loď není vůči účinkům mlhoviny imunní, tento povlak "
+"trupu ji činí výrazně odolnější, ačkoli dlouhodobé vystavení se stále "
+"nedoporučuje."
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:2
 msgid "Nexus Stealth Coating"
-msgstr ""
+msgstr "Povlak Nexus Stealth"
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:9
 msgid ""
@@ -6629,10 +7199,14 @@ msgid ""
 "developed a breakthrough hull coating that uses quantum entangled self-"
 "projections that can confuse gravitational readings."
 msgstr ""
+"Moderní lodní senzory jsou založeny na detekci gravitačních anomálií, které "
+"umožňují odhalit lodě, a jsou ve většině situací velmi odolné. Loděnice "
+"Nexus vyvinuly průlomový nátěr trupu, který využívá kvantově provázané "
+"samoprojekce, jež mohou zmást gravitační snímání."
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:2
 msgid "Photo-Voltaic Nanobot Coating"
-msgstr ""
+msgstr "Foto-voltaický nanobotový povlak"
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:9
 msgid ""
@@ -6641,10 +7215,14 @@ msgid ""
 "ship. The nanobots are self-regulating and self-repairing, requiring no "
 "maintenance once a colony has been established."
 msgstr ""
+"Celý trup lodi pokrývá vrstva fotovoltaického nanobotového nátěru, který "
+"dokáže využívat sluneční energii a přesměrovávat ji do energetického systému "
+"lodi. Nanoboti jsou samoregulační a samoopravitelní a po vytvoření kolonie "
+"nevyžadují žádnou údržbu."
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:2
 msgid "Hyperbolic Blink Engine"
-msgstr ""
+msgstr "Hyperbolický mžikový motor"
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:10
 msgid ""
@@ -6656,6 +7234,12 @@ msgid ""
 "each space-time fold or \"blink\", it takes a while for the ship to be fully "
 "responsive again."
 msgstr ""
+"Zdá se, že hyperbolický mžikový motor byl navržen jako odpověď na otázku "
+"\"Kolik hmoty je možné přesunout přes časoprostorový záhyb?\". Zdá se, že "
+"výrazně nedbá na udržení pečlivé kontroly časoprostorového skládání, místo "
+"toho se zaměřuje na maximální možnou propustnost. Vzhledem k velkému "
+"narušení systémů a personálu lodi trvá po každém časoprostorovém přehybu "
+"nebo \"mžiknutí\" nějakou dobu, než loď opět plně reaguje."
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:11
 msgid ""
@@ -6664,10 +7248,14 @@ msgid ""
 "and turn penalty during cooldown. Performance degrades over 6000 tonnes of "
 "mass."
 msgstr ""
+"Zahřívá se 2 sekundy a poté vám bliká 2000 jednotek přibližně ve směru, "
+"kterým jste otočeni. Lze spustit pouze jednou za 8 sekund a během chladnutí "
+"má 20% postih za zrychlení a otočení. Výkon se snižuje nad 6000 tun "
+"hmotnosti."
 
 #: dat/outfits/utility/jump_scanner.xml:2
 msgid "Jump Scanner"
-msgstr ""
+msgstr "Skener skoků"
 
 #: dat/outfits/utility/jump_scanner.xml:8
 msgid ""
@@ -6680,10 +7268,17 @@ msgid ""
 "scanner will not detect jump points whose signature differs from the "
 "standard type."
 msgstr ""
+"Toto zařízení instaluje na loď sekundární skenovací soustavu. Soustava je "
+"naprogramována podle známých charakteristik prostorových anomálií spojených "
+"s hyperprostorovými skoky. Protože skener detekuje velmi specifický druh "
+"signatury, lze snadno zvýšit jeho dosah, aniž by to bylo na úkor přesnosti. "
+"V podstatě to znamená, že loď s jedním nebo více těmito skenery může "
+"detekovat body skoku na větší vzdálenost. Skener nedetekuje skokové body, "
+"jejichž signatura se liší od standardního typu."
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
-msgstr ""
+msgstr "Modulátor senzoru s nízkou radiací"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:10
 msgid ""
@@ -6692,15 +7287,19 @@ msgid ""
 "ships while also giving more sensitivity to jump point signatures when "
 "stealthed."
 msgstr ""
+"Pomocí speciální modulace vysoce vyladěné pro prostředí s nízkou radiací je "
+"modulátor senzoru s nízkou radiací schopen zvýšit detekci blízkých lodí a "
+"zároveň zvýšit citlivost na signatury skokových bodů, když jsou v maskovacím "
+"módu."
 
 #: dat/outfits/utility/milspec_jammer.xml:2
 msgid "Milspec Jammer"
-msgstr ""
+msgstr "Milspec rušička"
 
 #: dat/outfits/utility/milspec_jammer.xml:4
 #: dat/outfits/utility/unicorp_jammer.xml:4
 msgid "Electronic Warfare Jammer"
-msgstr ""
+msgstr "Rušička elektronického boje"
 
 #: dat/outfits/utility/milspec_jammer.xml:9
 msgid ""
@@ -6711,15 +7310,20 @@ msgid ""
 "garbage they're getting on their sensors, you will have already made your "
 "escape! Fly safe, fly Milspec."
 msgstr ""
+"Vyžaduje vaše práce, abyste se vydali na nebezpečné území? Setkáváte se s "
+"odporem, který vaše štíty nezvládnou? Pak potřebujete rušičku Milspec U-9 "
+"\"Magus\"! Stisknutím tlačítka zaženete stopy ohařů. Zatímco se vaši "
+"nepřátelé stále snaží pochopit, co se jim na senzorech objevuje za smetí, vy "
+"už budete mít útěk za sebou! Létejte bezpečně, létejte s Milspec."
 
 #: dat/outfits/utility/milspec_scrambler.xml:2
 msgid "Milspec Scrambler"
-msgstr ""
+msgstr "Milspec skrambler"
 
 #: dat/outfits/utility/milspec_scrambler.xml:4
 #: dat/outfits/utility/unicorp_scrambler.xml:4
 msgid "Electronic Warfare Scrambler"
-msgstr ""
+msgstr "Elektronický bojový skrambler"
 
 #: dat/outfits/utility/milspec_scrambler.xml:9
 msgid ""
@@ -6728,10 +7332,15 @@ msgid ""
 "Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at "
 "a minimal cost to you or your ship's reactor! Fly safe, fly Milspec."
 msgstr ""
+"Společnost Milspec ví, co je tam venku důležité. Je to to, aby vás "
+"nezastřelili! A nejlepší způsob, jak se nenechat zastřelit, je vůbec se "
+"nenechat zaměřit. Skrambler Milspec RX 500-C zacloní senzory nepřátel, a to "
+"za minimální cenu pro vás nebo reaktor vaší lodi! Létejte bezpečně, létejte "
+"s Milspecem."
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:2
 msgid "Neural Accelerator Interface"
-msgstr ""
+msgstr "Rozhraní neurálního akcelerátoru"
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:11
 msgid ""
@@ -6741,14 +7350,18 @@ msgid ""
 "large amounts of ship energy to change the perception of time and accelerate "
 "the piloted ship."
 msgstr ""
+"Tok času obecně není vnímán jako konstantní hodnota, spíše značně kolísá v "
+"závislosti na okolnostech. Pomocí nejnovějších technologií neurorozhraní "
+"dokáže rozhraní neuronového akcelerátoru využívat velké množství energie "
+"lodi ke změně vnímání času a zrychlení pilotované lodi."
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:12
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
-msgstr ""
+msgstr "Aktivní po dobu 5 sekund s dobou ochlazení 20 sekund."
 
 #: dat/outfits/utility/sensor_array.xml:2
 msgid "Sensor Array"
-msgstr ""
+msgstr "Soustava senzorů"
 
 #: dat/outfits/utility/sensor_array.xml:9
 msgid ""
@@ -6759,10 +7372,16 @@ msgid ""
 "increases the accuracy of short-range tracking information used by your "
 "ship's weapons system."
 msgstr ""
+"Tato soustava senzorů využívá modulaci fotonů zvětšených kvadralensem, aby "
+"snáze detekovala slabé signály vysílané vzdálenou lodí, čímž účinně zvyšuje "
+"běžnou schopnost vaší lodi vidět a identifikovat jiné lodě ve vesmíru. To "
+"může být užitečné pro potlačení účinku maskovacích přístrojů a také to "
+"zvyšuje přesnost informací o sledování na krátkou vzdálenost, které používá "
+"zbraňový systém vaší lodi."
 
 #: dat/outfits/utility/sk_heavy_plasma_drill.xml:2
 msgid "S&K Heavy Plasma Drill"
-msgstr ""
+msgstr "S&K těžká plazmová vrtačka"
 
 #: dat/outfits/utility/sk_heavy_plasma_drill.xml:10
 msgid ""
@@ -6773,10 +7392,16 @@ msgid ""
 "ships that can outfit it, the Heavy Plasma Drill can convert them into "
 "formidable mining vessels."
 msgstr ""
+"Vzhledem k popularitě plazmového vrtáku a nevyčerpatelné poptávce lidské "
+"civilizace po zdrojích vyrobila společnost Schafer & Kane Industries jeho "
+"těžkou variantu. Nový design nepřináší žádné kompromisy ve funkčnosti za "
+"cenu výrazně zvýšených požadavků na velikost. Pro lodě, které jej mohou "
+"vybavit, však těžký plazmový vrták dokáže proměnit v impozantní těžební "
+"plavidla."
 
 #: dat/outfits/utility/sk_plasma_drill.xml:2
 msgid "S&K Plasma Drill"
-msgstr ""
+msgstr "S&K plazmová vrtačka"
 
 #: dat/outfits/utility/sk_plasma_drill.xml:10
 msgid ""
@@ -6785,14 +7410,18 @@ msgid ""
 "to be able to extract minerals, it obtains significantly better yields. An "
 "integrated asteroid scanner is just the icing on the cake."
 msgstr ""
+"Plazmový vrták S&K představuje alternativní přístup k běžným důlním kopím. "
+"Přestože vyžaduje přiblížení k asteroidu a přesné ovládání, aby bylo možné "
+"těžit minerály, dosahuje výrazně lepších výnosů. Integrovaný skener "
+"asteroidů je jen třešničkou na dortu."
 
 #: dat/outfits/utility/targeting_array.xml:2
 msgid "Targeting Array"
-msgstr ""
+msgstr "Zaměřovací pole"
 
 #: dat/outfits/utility/targeting_array.xml:4
 msgid "Weapon Modifier (Turret)"
-msgstr ""
+msgstr "Modifikátor zbraně (věž)"
 
 #: dat/outfits/utility/targeting_array.xml:9
 msgid ""
@@ -6800,10 +7429,13 @@ msgid ""
 "targets, and minimises accuracy losses at range. It requires a short period "
 "to compute an ideal vector, slightly slowing firing rates."
 msgstr ""
+"Vylepšená zaměřovací soustava umožňuje věžím rychleji zaměřovat cíle a "
+"minimalizuje ztráty přesnosti na dálku. Vyžaduje krátkou dobu pro výpočet "
+"ideálního vektoru, což mírně zpomaluje rychlost střelby."
 
 #: dat/outfits/utility/targeting_conduit.xml:2
 msgid "Targeting Conduit"
-msgstr ""
+msgstr "Zaměřovací kanál"
 
 #: dat/outfits/utility/targeting_conduit.xml:10
 msgid ""
@@ -6812,14 +7444,17 @@ msgid ""
 "the cost of reduced range due to the inherent instability caused by "
 "overloading the systems."
 msgstr ""
+"Zaměřovací kanál přesměrovává přebytečnou energii štítu do zaměřovacích "
+"systémů lodi, což umožňuje mnohem rychlejší zaměření cíle, i když za cenu "
+"snížení dosahu kvůli nestabilitě způsobené přetížením systémů."
 
 #: dat/outfits/utility/targeting_conduit.xml:11
 msgid "Only active when shield is above 70%."
-msgstr ""
+msgstr "Aktivní pouze tehdy, když je štít vyšší než 70 %."
 
 #: dat/outfits/utility/unicorp_jammer.xml:2
 msgid "Unicorp Jammer"
-msgstr ""
+msgstr "Unicorp Rušička"
 
 #: dat/outfits/utility/unicorp_jammer.xml:9
 msgid ""
@@ -6830,10 +7465,16 @@ msgid ""
 "effective, but it also uses a lot more power. For this reason, jammer "
 "systems are inactive until needed, and must be activated manually."
 msgstr ""
+"Na rozdíl od skramblerových systémů pro všeobecné použití jsou rušičky "
+"těžkým hardwarem, který se používá pro vážný elektronický boj ve vesmíru. "
+"Rušička funguje tak, že aktivně ruší senzorové systémy blízkých lodí, "
+"nikoliv moduluje signaturu lodi, na které je nainstalována. To je mnohem "
+"účinnější, ale také to spotřebuje mnohem více energie. Z tohoto důvodu jsou "
+"systémy rušiček neaktivní, dokud nejsou potřeba, a musí se aktivovat ručně."
 
 #: dat/outfits/utility/unicorp_light_afterburner.xml:2
 msgid "Unicorp Light Afterburner"
-msgstr ""
+msgstr "Lehké přídavné spalování Unicorp"
 
 #: dat/outfits/utility/unicorp_light_afterburner.xml:8
 #: dat/outfits/utility/unicorp_medium_afterburner.xml:8
@@ -6844,14 +7485,18 @@ msgid ""
 "gets too hot its effect will diminish, and eventually it will shut off "
 "entirely."
 msgstr ""
+"Přídavné spalování poskytuje lodi po aktivaci okamžité zvýšení zrychlení a "
+"rychlosti. Dokud je však přídavné spalování aktivní, neustále vyčerpává "
+"energii lodi a také vytváří teplo. Pokud se přídavné spalování příliš "
+"zahřeje, jeho účinek se sníží a nakonec se zcela vypne."
 
 #: dat/outfits/utility/unicorp_medium_afterburner.xml:2
 msgid "Unicorp Medium Afterburner"
-msgstr ""
+msgstr "Střední přídavné spalování Unicorp"
 
 #: dat/outfits/utility/unicorp_scrambler.xml:2
 msgid "Unicorp Scrambler"
-msgstr ""
+msgstr "Unicorp skrambler"
 
 #: dat/outfits/utility/unicorp_scrambler.xml:9
 msgid ""
@@ -6862,10 +7507,15 @@ msgid ""
 "scramblers put a minimal strain on the ship's resources, and are always "
 "active."
 msgstr ""
+"Skramblery zkreslují elektromagnetickou signaturu lodi, takže ji různé "
+"senzory hůře zachytí. Ve skutečnosti skrambler zvyšuje vzdálenost, na kterou "
+"lze loď detekovat a skenovat, a ztěžuje zaměření střel. Účinek je poměrně "
+"omezený, ale na druhou stranu scramblery minimálně zatěžují zdroje lodi a "
+"jsou vždy aktivní."
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:2
 msgid "Weakness Harmonizer AI"
-msgstr ""
+msgstr "Harmonizátor slabin AI"
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:11
 msgid ""
@@ -6875,20 +7525,27 @@ msgid ""
 "weaknesses in enemy ships. The more ships it is able to analyse and "
 "extrapolate from, the stronger the effect."
 msgstr ""
+"Jedná se o vylepšení senzorových systémů, které se dokáže poučit z běžných "
+"slabin nepřátelských lodí v okolí. Umělá inteligence je schopna extrahovat "
+"jemné rysy, které lidské oko přehlédne, a extrapolovat je do velkých "
+"detailů, aby poukázala na slabiny nepřátelských lodí. Čím více lodí je "
+"schopna analyzovat a extrapolovat, tím je efekt silnější."
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:12
 msgid ""
 "10% additional damage for each hostile ship of same class or higher within "
 "2000 distance. Range is affected by detection bonus."
 msgstr ""
+"10% poškození navíc za každou nepřátelskou loď stejné třídy nebo vyšší do "
+"vzdálenosti 2000. Dosah je ovlivněn bonusem za detekci."
 
 #: dat/outfits/utility/weapons_ionizer.xml:2
 msgid "Weapons Ionizer"
-msgstr ""
+msgstr "Ionizátor zbraní"
 
 #: dat/outfits/utility/weapons_ionizer.xml:4
 msgid "Weapon Modification"
-msgstr ""
+msgstr "Úprava zbraně"
 
 #: dat/outfits/utility/weapons_ionizer.xml:9
 msgid ""
@@ -6899,14 +7556,20 @@ msgid ""
 "automatically activate when the target's armour is below 50%, but can also "
 "be triggered manually."
 msgstr ""
+"Ionizátor zbraní funguje na principu přesměrování obrovského množství "
+"energie zbraní do generátoru iontového pole. Zatímco spotřeba energie se "
+"zvyšuje a výkon poškození výrazně klesá, iontové pole umožňuje konvenčním "
+"zbraním způsobovat ionizující poškození, zatímco je výstroj aktivní. Je "
+"navržen tak, aby se automaticky aktivoval, když je pancíř cíle nižší než 50 "
+"%, ale lze jej spustit i ručně."
 
 #: dat/outfits/utility/weapons_ionizer.xml:12
 msgid "Automatically triggers when target armour is below 50%."
-msgstr ""
+msgstr "Automaticky se spustí, když je brnění cíle nižší než 50 %."
 
 #: dat/outfits/weapons/antimatter_lance.xml:2
 msgid "Antimatter Lance"
-msgstr ""
+msgstr "Antihmotové kopí"
 
 #: dat/outfits/weapons/antimatter_lance.xml:9
 msgid ""
@@ -6915,18 +7578,22 @@ msgid ""
 "ships. The procedure dissipates large amounts of Birkhoff-Kerr radiation "
 "that is able to have significantly adverse effects on the ship being shot at."
 msgstr ""
+"Antihmotové kopí útočí přímo na integritu lodi na molekulární úrovni, místo "
+"aby se snažilo hrubou silou prorazit pancíř nepřátelských lodí. Tento postup "
+"rozptyluje velké množství Birkhoff-Kerrova záření, které je schopno mít "
+"výrazně nepříznivé účinky na loď, na kterou je stříleno."
 
 #: dat/outfits/weapons/antimatter_lance.xml:10
 msgid "Lowers the action speed upon hit by 10% for 7 seconds."
-msgstr ""
+msgstr "Sníží rychlost akce při zásahu o 10 % na 7 sekund."
 
 #: dat/outfits/weapons/disruptor_artillery_s1.xml:2
 msgid "Disruptor Artillery S1"
-msgstr ""
+msgstr "Dělostřelectvo Disruptor S1"
 
 #: dat/outfits/weapons/disruptor_artillery_s1.xml:4
 msgid "Disruptor A. S1"
-msgstr ""
+msgstr "Disruptor A. S1"
 
 #: dat/outfits/weapons/disruptor_artillery_s1.xml:11
 msgid ""
@@ -6937,14 +7604,19 @@ msgid ""
 "stabilizing balls of ions that can make short work of energy shields and "
 "systems."
 msgstr ""
+"Řada zbraní Disruptor volně navazuje na řadu Razor. Dům Sirius zjistil, že "
+"není možné jednoduše rozšířit dělostřelectvo Razor S3, a nakonec je musel "
+"téměř od základu přepracovat, ačkoli se obě ovládají velmi podobně. "
+"Disruptor Artillery S1 vrhá vysokoenergetické samostabilizující se iontové "
+"koule, které dokáží v krátké době vyřídit energetické štíty a systémy."
 
 #: dat/outfits/weapons/disruptor_artillery_s2.xml:2
 msgid "Disruptor Artillery S2"
-msgstr ""
+msgstr "Dělostřelectvo Disruptor S2"
 
 #: dat/outfits/weapons/disruptor_artillery_s2.xml:4
 msgid "Disruptor A. S2"
-msgstr ""
+msgstr "Disruptor A. S2"
 
 #: dat/outfits/weapons/disruptor_artillery_s2.xml:11
 msgid ""
@@ -6952,14 +7624,17 @@ msgid ""
 "the larger dimensions limit the applicability to destroyer-class ships and "
 "up, this comes with perks of longer range and significant more damage."
 msgstr ""
+"Disruptor Artillery S2 je vylepšená verze modelu S1. Větší rozměry sice "
+"omezují použitelnost pro lodě třídy torpédoborec a vyšší, ale výhodou je "
+"větší dostřel a výrazně větší poškození."
 
 #: dat/outfits/weapons/disruptor_battery_s2.xml:2
 msgid "Disruptor Battery S2"
-msgstr ""
+msgstr "Baterie Disruptor S2"
 
 #: dat/outfits/weapons/disruptor_battery_s2.xml:4
 msgid "Disruptor B. S2"
-msgstr ""
+msgstr "Disruptor B. S2"
 
 #: dat/outfits/weapons/disruptor_battery_s2.xml:11
 msgid ""
@@ -6972,10 +7647,17 @@ msgid ""
 "survive being the brunt of a barrage from Disruptor Battery S2s, it may be "
 "that they have a point."
 msgstr ""
+"Rod Sirius obvykle vybavuje svá nejtěžší plavidla disruptorovými bateriemi "
+"S2. Tam, kde jsou břitové baterie neúčinné, poskytují disruptorové baterie "
+"S2 potřebnou palebnou sílu, která dokáže rozbít prakticky jakýkoli štít a "
+"zároveň způsobit těžké poškození systémů. Přestože palebná síla je nižší než "
+"u jiných standardních zbraní pro kapitální lodě, znalci Disruptorů tvrdí, že "
+"zbraň to bohatě vynahrazuje svou celkovou užitečností. Vzhledem k tomu, že "
+"jen málokdo přežije palbu z Disruptorové baterie S2, možná mají pravdu."
 
 #: dat/outfits/weapons/energy_harpoon.xml:2
 msgid "Energy Harpoon"
-msgstr ""
+msgstr "Energetická harpuna"
 
 #: dat/outfits/weapons/energy_harpoon.xml:8
 msgid ""
@@ -6989,14 +7671,23 @@ msgid ""
 "pirates, the weapon seems poised to strike fear in the heart of merchants "
 "everywhere."
 msgstr ""
+"Energetická harpuna je souborem ukradených a hacknutých technologií, které "
+"inženýři společnosti Skull and Bones vyvíjeli po mnoho cyklů a které se "
+"nakonec podařilo vyvinout v hrozivou zbraň. Na rozdíl od standardních "
+"energetických zbraní využívají sílu pečlivě kalibrovaných "
+"elektromagnetických harmonických a výbuchy z Energetické harpuny nejsou "
+"navrženy tak, aby poškozovaly přímo, ale místo toho využívají kavitační "
+"efekt, který způsobuje těžké poškození a zároveň loď táhne. Ačkoli je tato "
+"zbraň v potenciálním arzenálu pirátů zcela nová, zdá se, že je připravena "
+"nahnat strach obchodníkům na celém světě."
 
 #: dat/outfits/weapons/energy_harpoon.xml:9
 msgid "#oOn hit pulls target.#0"
-msgstr ""
+msgstr "#oPo zásahu přitáhne cíl.#0"
 
 #: dat/outfits/weapons/gauss_gun.xml:2
 msgid "Gauss Gun"
-msgstr ""
+msgstr "Gaussova zbraň"
 
 #: dat/outfits/weapons/gauss_gun.xml:8
 msgid ""
@@ -7006,10 +7697,15 @@ msgid ""
 "impact. Gauss Guns are popular among small time pirates for being an easy to "
 "use, reliable weapon."
 msgstr ""
+"Gaussova zbraň je jednou z nejstarších zbraní v současné galaxii, která "
+"pochází z dob Federace. Vystřeluje na cíl rychlý proud vysokorychlostních "
+"projektilů, které způsobují poškození pouhým kinetickým nárazem. Gaussovy "
+"zbraně jsou oblíbené mezi drobnými piráty, protože se snadno používají a "
+"jsou spolehlivé."
 
 #: dat/outfits/weapons/grave_beam.xml:2
 msgid "Grave Beam"
-msgstr ""
+msgstr "Hrobový paprsek"
 
 #: dat/outfits/weapons/grave_beam.xml:10
 msgid ""
@@ -7017,10 +7713,13 @@ msgid ""
 "not deal as much damage, but its lighter size and more forgiving CPU "
 "requirements makes it a competitive contender."
 msgstr ""
+"Hrobový paprsek je lehčí a rychlejší verze paprsku Ragnarok. Nepůsobí tak "
+"velké poškození, ale jeho menší velikost a šetrnější požadavky na procesor z "
+"něj dělají konkurenceschopného soupeře."
 
 #: dat/outfits/weapons/grave_lance.xml:2
 msgid "Grave Lance"
-msgstr ""
+msgstr "Hrobové kopí"
 
 #: dat/outfits/weapons/grave_lance.xml:10
 msgid ""
@@ -7028,10 +7727,13 @@ msgid ""
 "technology behind it is poorly understood by everyone except the Za'lek, who "
 "use it as a standard weapon."
 msgstr ""
+"Hrobové kopí je jednou z nejsilnějších kopiníků. Technologii, která za ním "
+"stojí, rozumí jen málokdo kromě Za'leků, kteří ho používají jako standardní "
+"zbraň."
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:2
 msgid "Heavy Ion Cannon"
-msgstr ""
+msgstr "Těžké iontové dělo"
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:9
 msgid ""
@@ -7040,10 +7742,14 @@ msgid ""
 "weapons on specialized capture teams, but the design is licensed for public "
 "use as well."
 msgstr ""
+"Těžké iontové dělo dokáže zneškodnit lodě mnohem lépe než standardní model, "
+"ale vyžaduje střední montáž. Většina armád používá tyto zbraně u "
+"specializovaných záchytných týmů, ale konstrukce je licencována i pro "
+"veřejné použití."
 
 #: dat/outfits/weapons/heavy_ion_turret.xml:2
 msgid "Heavy Ion Turret"
-msgstr ""
+msgstr "Těžká iontová věž"
 
 #: dat/outfits/weapons/heavy_ion_turret.xml:10
 msgid ""
@@ -7051,10 +7757,13 @@ msgid ""
 "its target's internal systems. When coupled with Razor weaponry, it is "
 "terribly efficient at reducing enemy warships to tumbling hunks of junk."
 msgstr ""
+"Těžká iontová věž je vojenská konstrukce Sirius, která na vnitřní systémy "
+"cíle působí hrubou silou. Ve spojení se zbraněmi Razor je velmi účinná při "
+"redukci nepřátelských válečných lodí na trosky."
 
 #: dat/outfits/weapons/heavy_laser_turret.xml:2
 msgid "Heavy Laser Turret"
-msgstr ""
+msgstr "Těžká laserová věž"
 
 #: dat/outfits/weapons/heavy_laser_turret.xml:10
 msgid ""
@@ -7064,10 +7773,15 @@ msgid ""
 "design only fits larger ships, very few pilots who equip them regret their "
 "purchase."
 msgstr ""
+"Těžká laserová věž je víceméně vylepšenou verzí laserové věže, ačkoli "
+"některé základní mechanismy musely být přepracovány, aby se přizpůsobily "
+"vyššímu energetickému výkonu této zbraně. Ačkoli se výsledná konstrukce hodí "
+"pouze pro větší lodě, jen málo pilotů, kteří si ji pořídí, lituje jejího "
+"nákupu."
 
 #: dat/outfits/weapons/heavy_ripper_cannon.xml:2
 msgid "Heavy Ripper Cannon"
-msgstr ""
+msgstr "Těžké dělo Ripper"
 
 #: dat/outfits/weapons/heavy_ripper_cannon.xml:10
 msgid ""
@@ -7077,10 +7791,14 @@ msgid ""
 "Cannon. The main drawback to this model is its increased bulk, which makes "
 "it unsuitable for smaller ships."
 msgstr ""
+"Modulací frekvence základního děla Ripper zvýšila armáda Impéria jeho dosah, "
+"přesnost a ničivou sílu. Po přepracování energetických kanálů vyvrcholilo "
+"jejich úsilí v ničivý těžký Ripper Cannon. Hlavní nevýhodou tohoto modelu je "
+"jeho zvýšená hmotnost, kvůli které není vhodný pro menší lodě."
 
 #: dat/outfits/weapons/heavy_ripper_turret.xml:2
 msgid "Heavy Ripper Turret"
-msgstr ""
+msgstr "Těžká věž Ripper"
 
 #: dat/outfits/weapons/heavy_ripper_turret.xml:10
 msgid ""
@@ -7088,10 +7806,14 @@ msgid ""
 "conventionally available to civilians. It's bulk, high energy requirements, "
 "and high damage make it unsuitable for non-capital ships."
 msgstr ""
+"Věž ripper je postavena na základě těžkého děla ripper a je nejtěžší věží, "
+"která je běžně dostupná pro civilní použití. Kvůli své hmotnosti, vysokým "
+"energetickým nárokům a vysokému poškození je nevhodná pro jiné než hlavní "
+"lodě."
 
 #: dat/outfits/weapons/ion_cannon.xml:2
 msgid "Ion Cannon"
-msgstr ""
+msgstr "Iontové dělo"
 
 #: dat/outfits/weapons/ion_cannon.xml:8
 msgid ""
@@ -7102,10 +7824,16 @@ msgid ""
 "most popular weapons for pirates, although it also finds heavy use in "
 "policing and militia when nonlethal force is needed."
 msgstr ""
+"Iontová děla jsou primárně nesmrtící zbraně určené ke zkratování vnitřních "
+"systémů lodi a jejímu vyřazení z provozu, aniž by přitom došlo k usmrcení "
+"posádky. Standardní iontové dělo je nejzákladnější a nejkompaktnější "
+"konstrukce, která umožňuje jeho montáž na malá plavidla. Díky tomu je "
+"iontový kanón jednou z nejoblíbenějších zbraní pirátů, ačkoli v případě "
+"potřeby nesmrtící síly nachází velké uplatnění také u policie a milice."
 
 #: dat/outfits/weapons/laser_cannon_mk1.xml:2
 msgid "Laser Cannon MK1"
-msgstr ""
+msgstr "Laserové dělo MK1"
 
 #: dat/outfits/weapons/laser_cannon_mk1.xml:8
 msgid ""
@@ -7114,10 +7842,14 @@ msgid ""
 "a decent amount of damage to both shield and armour of offending vessels, "
 "while remaining efficient enough to mount several even on small ships."
 msgstr ""
+"Laserové dělo MK1 je standardní zbraní na mnoha plavidlech a první obranou "
+"obchodníků všude na světě. Dělo střílí nabitou energii, která dokáže slušně "
+"poškodit štíty i pancíř útočících plavidel, přičemž je dostatečně účinné, "
+"aby se jich dalo namontovat několik i na malé lodě."
 
 #: dat/outfits/weapons/laser_cannon_mk2.xml:2
 msgid "Laser Cannon MK2"
-msgstr ""
+msgstr "Laserové dělo MK2"
 
 #: dat/outfits/weapons/laser_cannon_mk2.xml:9
 msgid ""
@@ -7126,10 +7858,14 @@ msgid ""
 "keep order among the civilian populace and pirates at bay. It is even "
 "capable of dealing with larger Corvette vessels with some effort."
 msgstr ""
+"Výkonnější verze laserového děla MK1, MK2, se obvykle nachází na "
+"imperiálních donucovacích a vojenských lodích. Jeho vynikající palebná síla "
+"pomáhá udržovat pořádek mezi civilním obyvatelstvem a piráty na uzdě. S "
+"jistým úsilím si poradí i s většími korvetními plavidly."
 
 #: dat/outfits/weapons/laser_turret_mk1.xml:2
 msgid "Laser Turret MK1"
-msgstr ""
+msgstr "Laserová věž MK1"
 
 #: dat/outfits/weapons/laser_turret_mk1.xml:9
 msgid ""
@@ -7139,10 +7875,15 @@ msgid ""
 "They are highly valued among civilian ships to provide defenses against "
 "stray pirates and marauders."
 msgstr ""
+"Dvojice upravených laserových kanónů MK1 umístěných na otočné věži, které "
+"poskytují vynikající obranné schopnosti. Laserové věže s možností otáčení o "
+"plných 360 stupňů poskytují kurýrním plavidlům cenově dostupnou a "
+"energeticky úspornou palebnou sílu. Mezi civilními loděmi jsou vysoce ceněny "
+"jako obrana proti zbloudilým pirátům a nájezdníkům."
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:2
 msgid "Laser Turret MK2"
-msgstr ""
+msgstr "Laserová věž MK2"
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:9
 msgid ""
@@ -7150,10 +7891,14 @@ msgid ""
 "use against fleets of small to medium ships. Due to the low cost and high "
 "firepower, this weapon is one of the mainstays in the Imperial space forces."
 msgstr ""
+"Laserová věž MK2 se často vyskytuje v imperiálních flotilách rychlé reakce, "
+"kde se používá proti flotilám malých a středních lodí. Díky nízké ceně a "
+"vysoké palebné síle je tato zbraň jednou z hlavních opor císařských "
+"vesmírných sil."
 
 #: dat/outfits/weapons/mass_driver.xml:2
 msgid "Mass Driver"
-msgstr ""
+msgstr "Hmotový pohon"
 
 #: dat/outfits/weapons/mass_driver.xml:9
 msgid ""
@@ -7161,10 +7906,13 @@ msgid ""
 "through kinetic impact and knocking the target back. One of the most "
 "economical heavy weapons in the galaxy."
 msgstr ""
+"Hmotové pohony vystřelují na nepřátelské lodě obrovské projektily hmoty, "
+"které způsobují poškození kinetickým nárazem a srážejí cíl zpět. Jedna z "
+"nejúspornějších těžkých zbraní v galaxii."
 
 #: dat/outfits/weapons/mining_lance_mk1.xml:2
 msgid "Mining Lance MK1"
-msgstr ""
+msgstr "Těžební kopí MK1"
 
 #: dat/outfits/weapons/mining_lance_mk1.xml:9
 msgid ""
@@ -7173,10 +7921,15 @@ msgid ""
 "damage to heavy armour, they are impractical against shields, however, there "
 "are stories of miners using them to get away from marauders in a clutch.."
 msgstr ""
+"Těžební kopí jsou optimalizována pro vysokou ničivou sílu na krátkou "
+"vzdálenost a specializují se na těžbu vesmírných asteroidů. Zatímco těžkému "
+"pancíři mohou způsobit značné poškození, proti štítům jsou nepraktická, "
+"nicméně existují příběhy o hornících, kteří je používali k útěku před "
+"nájezdníky v sevřeném..."
 
 #: dat/outfits/weapons/mining_lance_mk2.xml:2
 msgid "Mining Lance MK2"
-msgstr ""
+msgstr "Těžební kopí MK2"
 
 #: dat/outfits/weapons/mining_lance_mk2.xml:9
 msgid ""
@@ -7189,10 +7942,18 @@ msgid ""
 "Vrata reports a large number of such incidents every year in their mining "
 "safety analysis reports."
 msgstr ""
+"Těžební kopí jsou optimalizována pro vysokou ničivou sílu na krátkou "
+"vzdálenost a specializují se na těžbu vesmírných asteroidů. Mohou způsobit "
+"značné poškození těžkému pancíři, ale proti štítům jsou nepraktická. Těžební "
+"kopí MK2 využívá své větší velikosti k překonání jedné z hlavních nevýhod "
+"těžebního kopí MK1, a sice že krátký dosah způsobuje tendenci těžebních lodí "
+"k zachycení a poškození explodujícími asteroidy. Těžební Vrata ve svých "
+"zprávách o analýze bezpečnosti těžby každoročně uvádějí velký počet takových "
+"incidentů."
 
 #: dat/outfits/weapons/neutron_disruptor.xml:2
 msgid "Neutron Disruptor"
-msgstr ""
+msgstr "Neutronový disruptor"
 
 #: dat/outfits/weapons/neutron_disruptor.xml:10
 msgid ""
@@ -7201,10 +7962,14 @@ msgid ""
 "popular with the Collective, whose drones were immune to early versions' "
 "lethal backscatter radiation."
 msgstr ""
+"Neutronový disruptor používá vysokoenergetické pulzy, které mění základní "
+"složení molekul a způsobují těžké poškození. Tuto zbraň si nejprve oblíbil "
+"Kolektiv, jehož bezpilotní letouny byly imunní vůči smrtícímu zpětnému "
+"záření prvních verzí."
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:2
 msgid "Heavy Neutron Disruptor"
-msgstr ""
+msgstr "Těžký neutronový disruptor"
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:10
 msgid ""
