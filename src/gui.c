@@ -311,6 +311,7 @@ void player_messageRaw( const char *str )
 
       /* See if same message. */
       if ((m->t > 0.) && strcmp(mesg_stack[mesg_pointer].str,str)==0) {
+         free( m->dstr );
          m->dup++;
          SDL_asprintf( &m->dstr, p_("player_message","%s x%d"), str, m->dup );
          if (gl_printWidthRaw( &gl_smallFont, m->dstr ) <= gui_mesg_w - ((str[0]=='\t') ? 45 : 15)) {
@@ -1974,6 +1975,9 @@ int gui_load( const char *name )
  */
 void gui_cleanup (void)
 {
+   /* Clear messages. */
+   gui_clearMessages();
+
    /* Disable mouse voodoo. */
    gui_mouseClickEnable( 0 );
    gui_mouseMoveEnable( 0 );
@@ -2030,8 +2034,6 @@ void gui_free (void)
 {
    gui_cleanup();
 
-   for (int i = 0; i < mesg_max; i++)
-      free( mesg_stack[i].str );
    free(mesg_stack);
    mesg_stack = NULL;
 
