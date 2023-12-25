@@ -144,7 +144,7 @@ static int asteroid_updateSingle( void *data )
          /* Transition states. */
          case ASTEROID_FG:
             /* Don't go away if player is close. */
-            if (vec2_dist2( &player.p->solid.pos, &a->sol.pos ) < pow2(1500.))
+            if ((player.p!=NULL) && (vec2_dist2( &player.p->solid.pos, &a->sol.pos ) < pow2(1500.)))
                a->state = ASTEROID_FG-1; /* So it gets turned back into ASTEROID_FG. */
             else
                /* This should be thread safe as a single pilot can only target a single asteroid. */
