@@ -114,7 +114,7 @@ And please hurry. Someone was sent to assassinate him. I don't have much to give
    }
 
    -- Set hooks
-   hook.jumpin("sys_enter")
+   hook.enter("sys_enter")
 end
 
 -- gets the nearest jumppoint from a pilot
