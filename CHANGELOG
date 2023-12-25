@@ -4,6 +4,7 @@
       * Exposed more colourblind options to the user
       * Can modify game speed directly instead of using a slowmode difficulty for accessibility
       * Messages get folded instead of repeating
+      * Asteroids no longer fade out if close to the player
    * Engine
       * Threaded more loading components
       * Lua require now caches chunks
