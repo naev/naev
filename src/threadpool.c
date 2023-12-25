@@ -576,7 +576,7 @@ void vpool_wait( ThreadQueue *queue )
 {
    /* Number of tasks we have. */
    int cnt;
-   queue->cnt  = array_size( queue->arg );
+   queue->cnt = array_size( queue->arg );
    cnt = queue->cnt;
 
    if (global_queue == NULL) {

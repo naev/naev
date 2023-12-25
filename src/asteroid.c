@@ -77,16 +77,6 @@ static int asteroid_updateSingle( void *data )
    double offx, offy, d;
    int setvel = 0;
 
-   /* Skip inexistent asteroids. */
-   if (a->state == ASTEROID_XX) {
-      a->timer -= dt;
-      if (a->timer < 0.) {
-         a->state = ASTEROID_XX_TO_BG;
-         a->timer_max = a->timer = 1. + 3.*RNGF();
-      }
-      return 0;
-   }
-
    /* Push back towards center. */
    offx = ast->pos.x - a->sol.pos.x;
    offy = ast->pos.y - a->sol.pos.y;
@@ -121,10 +111,10 @@ static int asteroid_updateSingle( void *data )
 
    if (setvel) {
       /* Enforce max speed. */
-      d = MOD(a->sol.vel.x, a->sol.vel.y);
-      if (d > ast->maxspeed) {
-         a->sol.vel.x *= ast->maxspeed / d;
-         a->sol.vel.y *= ast->maxspeed / d;
+      double speed = MOD(a->sol.vel.x, a->sol.vel.y);
+      if (speed > ast->maxspeed) {
+         a->sol.vel.x *= ast->maxspeed / speed;
+         a->sol.vel.y *= ast->maxspeed / speed;
       }
    }
 
@@ -211,12 +201,23 @@ void asteroids_update( double dt )
       }
 
       /* Now just thread it and zoom. */
+      asteroid_dt = dt;
       for (int j=0; j<ast->nb; j++) {
          Asteroid *a = &ast->asteroids[j];
-         vpool_enqueue( asteroid_vpool, asteroid_updateSingle, a );
+         /* Skip inexistent asteroids. */
+         if (a->state == ASTEROID_XX) {
+            a->timer -= dt;
+            if (a->timer < 0.) {
+               a->state = ASTEROID_XX_TO_BG;
+               a->timer_max = a->timer = 1. + 3.*RNGF();
+            }
+            continue;
+         }
+         /* TODO figure out why this vpool stuff is hanging. */
+         asteroid_updateSingle( a );
+         //vpool_enqueue( asteroid_vpool, asteroid_updateSingle, a );
       }
-      asteroid_dt = dt;
-      vpool_wait( asteroid_vpool );
+      //vpool_wait( asteroid_vpool );
 
       /* Do quadtree stuff. Can't be threaded. */
       qt_clear( &ast->qt );
