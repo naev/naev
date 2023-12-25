@@ -488,19 +488,17 @@ void asteroids_computeInternals( AsteroidAnchor *a )
  */
 int asteroids_load (void)
 {
-   int ret;
-   char **asteroid_files, file[PATH_MAX];
+   char **asteroid_files;
 
    /* Load asteroid types. */
-   ret = asttype_load();
-   if (ret < 0)
-      return ret;
+   asttype_load();
 
    /* Load asteroid graphics. */
    asteroid_files = PHYSFS_enumerateFiles( SPOB_GFX_SPACE_PATH"asteroid/" );
    asteroid_gfx = array_create( glTexture* );
 
    for (size_t i=0; asteroid_files[i]!=NULL; i++) {
+      char file[PATH_MAX];
       snprintf( file, sizeof(file), "%s%s", SPOB_GFX_SPACE_PATH"asteroid/", asteroid_files[i] );
       array_push_back( &asteroid_gfx, gl_newImage( file, OPENGL_TEX_MIPMAPS ) );
    }
