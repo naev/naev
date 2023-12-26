@@ -6,6 +6,7 @@
       * Messages get folded instead of repeating
       * Asteroids no longer fade out if close to the player
    * Engine
+      * Fixed ai.idir giving wrong answer by M_PI_2 in some cases
       * Threaded more loading components
       * Lua require now caches chunks
       * Dropped SDL_image fallback
