@@ -101,24 +101,21 @@ function create ()
    if fdv > 1 then
       msg = tmergei( msg, ads_dvaered )
       local badwords = {
-         _("Butthead"),
-         _("Nincompoop"),
-         _("Dunderhead"),
-         _("Ass"),
-         _("Fool"),
-         _("Coward"),
+         _("a Butthead"),
+         _("a Nincompoop"),
+         _("a Dunderhead"),
+         _("an Ass"),
+         _("a Fool"),
+         _("a Coward"),
       }
       local lords = dv.warlords () -- Gets all warlorlds
       local r = rnd.rnd(1,#lords)
       local butthead = lords[r]
       table.remove( lords, r )
       local sponsor = lords[ rnd.rnd(1,#lords) ]
-      local params = {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponsor=sponsor, article="a"}
-      if params.badword == "Ass" then
-         params.article = "an"
-      end
-      table.insert(msg, fmt.f(_("I hereby declare {butthead} is {article} {badword}. -{sponsor}"), params))
-      table.insert(msg, fmt.f(_("Let it be known that {butthead} is {article} {badword}. -{sponsor}"), params))
+      local params = {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponsor=sponsor}
+      table.insert(msg, fmt.f(_("I hereby declare {butthead} is {badword}. -{sponsor}"), params))
+      table.insert(msg, fmt.f(_("Let it be known that {butthead} is {badword}. -{sponsor}"), params))
    end
 
    -- Soromid messages
