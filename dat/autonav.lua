@@ -63,6 +63,10 @@ local function autonav_setup ()
    autonav_timer = 0
 end
 
+local function autonav_set( func )
+   autonav = func
+end
+
 local function resetSpeed ()
    tc_mod = 1
    tc_rampdown = false
@@ -180,9 +184,9 @@ function autonav_system ()
    end
 
    if pilot.canHyperspace(pp) then
-      autonav = autonav_jump_brake
+      autonav_set( autonav_jump_brake )
    else
-      autonav = autonav_jump_approach
+      autonav_set( autonav_jump_approach )
    end
 end
 
@@ -206,10 +210,10 @@ function autonav_spob( spb, tryland )
    local spobstr = get_spob_name( spb )
    if tryland then
       player.msg("#o"..fmt.f(_("Autonav: landing on {spob}."),{spob=spobstr}).."#0")
-      autonav = autonav_spob_land_approach
+      autonav_set( autonav_spob_land_approach )
    else
       player.msg("#o"..fmt.f(_("Autonav: approaching {spob}."),{spob=spobstr}).."#0")
-      autonav = autonav_spob_approach
+      autonav_set( autonav_spob_approach )
    end
 
 end
@@ -231,7 +235,7 @@ function autonav_pilot( plt )
    end
 
    player.msg("#o"..fmt.f(_("Autonav: following {plt}."),{plt=pltstr}).."#0")
-   autonav = autonav_plt_follow
+   autonav_set( autonav_plt_follow )
 end
 
 --[[
@@ -250,7 +254,7 @@ function autonav_board( plt )
       target_name = nil
    end
    player.msg("#o"..fmt.f(_("Autonav: boarding {plt}."),{plt=pltstr}).."#0")
-   autonav = autonav_plt_board_approach
+   autonav_set( autonav_plt_board_approach )
 end
 
 --[[
@@ -259,7 +263,7 @@ Autonav to a position specified by the plyaer
 function autonav_pos( pos )
    autonav_setup()
    player.msg("#o".._("Autonav: heading to target position.").."#0")
-   autonav = autonav_pos_approach
+   autonav_set( autonav_pos_approach )
    player.autonavSetPos( pos )
    target_pos = pos
 end
@@ -313,12 +317,7 @@ local function autonav_approach( pos, count_target )
    local pp = player.pilot()
    local dist = ai.minbrakedist()
    local d = pos:dist( pp:pos() )
-   local off
-   if d < dist*3 then
-      off = ai.iface( pos )
-   else
-      off = ai.face( pos )
-   end
+   local off = ai.iface( pos )
    if off < math.rad(10) then
       ai.accel(1)
    end
@@ -376,7 +375,7 @@ function autonav_jump_delay ()
    else
       path = {target_pos}
    end
-   autonav = autonav_jump_approach
+   autonav_set( autonav_jump_approach )
 end
 
 local function recompute_jump_pos ()
@@ -404,7 +403,7 @@ function autonav_jump_approach ()
          if jmp:pos():dist(path[1]) > jmp:jumpDist( pp ) then
             recompute_jump_pos()
          else
-            autonav = autonav_jump_brake
+            autonav_set( autonav_jump_brake )
          end
       end
    elseif not tc_rampdown and map_npath<=1 and #path==1 then
@@ -468,7 +467,7 @@ function autonav_jump_brake ()
    elseif ret then
       -- Recompute the location for a better position
       recompute_jump_pos()
-      autonav = autonav_jump_approach
+      autonav_set( autonav_jump_approach )
    end
 
    if not tc_rampdown and map_npath<=1 then
@@ -494,7 +493,7 @@ function autonav_pos_approach ()
    local ret, d = autonav_approach( target_pos, true )
    if ret then
       if brake_pos then
-         autonav = autonav_pos_approach_brake
+         autonav_set( autonav_pos_approach_brake )
       else
          player.msg("#o".._("Autonav: arrived at position.").."#0")
          return autonav_end()
@@ -524,7 +523,7 @@ function autonav_spob_approach ()
          table.remove( path, 1 )
       else
          if brake_pos then
-            autonav = autonav_spob_approach_brake
+            autonav_set( autonav_spob_approach_brake )
          else
             player.msg("#o"..fmt.f(_("Autonav: arrived at {spob}."),{spob=get_spob_name(target_spb)}).."#0")
             return autonav_end()
@@ -549,7 +548,7 @@ function autonav_spob_land_approach ()
       if #path > 1 then
          table.remove( path, 1 )
       else
-         autonav = autonav_spob_land_brake
+         autonav_set( autonav_spob_land_brake )
       end
    elseif not tc_rampdown then
       -- Use distance to end
@@ -574,7 +573,7 @@ function autonav_spob_land_brake ()
       local pos = target_spb:pos()
       target_pos = pos + (pp:pos()-pos):normalize( 0.6*target_spb:radius() )
       path = {target_pos} -- Have to update path also
-      autonav = autonav_spob_land_approach
+      autonav_set( autonav_spob_land_approach )
    end
 
    if not tc_rampdown then
@@ -737,6 +736,6 @@ function autonav_enter ()
       if uselanes_jump then
          lanes.clearCache( pp )
       end
-      autonav = autonav_jump_delay
+      autonav_set( autonav_jump_delay )
    end
 end
