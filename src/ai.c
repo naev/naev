@@ -2032,7 +2032,6 @@ static int aiL_iface( lua_State *L )
    else {
       /* signal that we're not in a productive direction for accelerating */
       diff = M_PI;
-      azimuthal_sign = 1;
 
       if (heading_offset_azimuth > 0.)
          pilot_turn = 1.;
