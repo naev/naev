@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-25 07:47+0900\n"
+"POT-Creation-Date: 2023-12-26 17:24+0900\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -5358,7 +5358,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_i.xml:9
 msgid ""
-"A large battery unit designed to hold 250 MJ of energy. Small enough to "
+"A large battery unit designed to hold 250 GJ of energy. Small enough to "
 "mount on many light vessels."
 msgstr ""
 
@@ -5368,7 +5368,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_ii.xml:9
 msgid ""
-"A large battery unit designed to hold 500 MJ of energy. Ideally mounted on "
+"A large battery unit designed to hold 500 GJ of energy. Ideally mounted on "
 "medium-to-large vessels."
 msgstr ""
 
@@ -5378,7 +5378,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_iii.xml:9
 msgid ""
-"A very large battery unit designed to hold 1200 MJ of energy. It can only be "
+"A very large battery unit designed to hold 1000 GJ of energy. It can only be "
 "mounted on very large ships."
 msgstr ""
 
@@ -5388,7 +5388,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_iv.xml:9
 msgid ""
-"A massive battery unit designed to hold 2000 MJ of energy. Given the mass of "
+"A massive battery unit designed to hold 2000 GJ of energy. Given the mass of "
 "this battery, it's advisable to only mount it on capital ships."
 msgstr ""
 
@@ -5544,8 +5544,8 @@ msgstr ""
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:12
 msgid ""
-"Able to compensate up to 30 MW of nebula volatility. Uses 1 MW of energy per "
-"MW of damage prevented."
+"Able to compensate up to 30 GW of nebula volatility. Uses 1 GW of energy per "
+"GW of damage prevented."
 msgstr ""
 
 #: dat/outfits/structure/plasteel_plating.xml:2
@@ -116556,17 +116556,17 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2376 src/nlua_pilot.c:6034
+#: src/ai.c:2365 src/nlua_pilot.c:6034
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr "시스템 '%s'에서 Spob '%s'을(를) 찾을 수 없습니다"
 
-#: src/ai.c:2382
+#: src/ai.c:2371
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2427 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
+#: src/ai.c:2416 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
 #: src/player.c:1688 src/space.c:1960 src/space.c:2066 src/space.c:2084
 #: src/space.c:2136 src/space.c:3535 src/space.c:3556 src/space.c:4384
 #, c-format
@@ -116575,11 +116575,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/ai.c:2456 src/ai.c:2489
+#: src/ai.c:2445 src/ai.c:2478
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2610
+#: src/ai.c:2599
 #, fuzzy, c-format
 #| msgid "Planet '%s' does not belong to a system."
 msgid "Pilot '%s' can't find jump to leave system!"
