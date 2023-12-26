@@ -12,7 +12,9 @@
       * Dropped SDL_image fallback
 
 * 0.11.1 (unreleased)
+   * Fixed autonav wobble
    * Point defense won't shoot at disabled pilots anymore
+   * Fixed battery descriptions
    * `kidnapped/traffic_00`: fixed formating string telling the player what system to go to
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
    * Fixed many typos

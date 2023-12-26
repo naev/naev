@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>120</mass>
   <price>225000</price>
-  <description>A very large battery unit designed to hold 1200 MJ of energy. It can only be mounted on very large ships.</description>
+  <description>A very large battery unit designed to hold 1000 GJ of energy. It can only be mounted on very large ships.</description>
   <gfx_store>capacitor4-g.webp</gfx_store>
  </general>
  <specific type="modification">
