@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.0-alpha.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-26 17:24+0900\n"
+"POT-Creation-Date: 2023-12-26 17:31+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -26224,36 +26224,36 @@ msgstr ""
 #. Empire messages
 #. Dvaered messages
 #: dat/ai/advertiser.lua:104
-msgid "Butthead"
+msgid "a Butthead"
 msgstr ""
 
 #: dat/ai/advertiser.lua:105
-msgid "Nincompoop"
+msgid "a Nincompoop"
 msgstr ""
 
 #: dat/ai/advertiser.lua:106
-msgid "Dunderhead"
+msgid "a Dunderhead"
 msgstr ""
 
 #: dat/ai/advertiser.lua:107
-msgid "Ass"
+msgid "an Ass"
 msgstr ""
 
 #: dat/ai/advertiser.lua:108
-msgid "Fool"
+msgid "a Fool"
 msgstr ""
 
 #: dat/ai/advertiser.lua:109
-msgid "Coward"
+msgid "a Coward"
 msgstr ""
 
 #. Gets all warlorlds
 #: dat/ai/advertiser.lua:117
-msgid "I hereby declare {butthead} is a {badword}. -{sponsor}"
+msgid "I hereby declare {butthead} is {badword}. -{sponsor}"
 msgstr ""
 
 #: dat/ai/advertiser.lua:118
-msgid "Let it be known that {butthead} is a {badword}. -{sponsor}"
+msgid "Let it be known that {butthead} is {badword}. -{sponsor}"
 msgstr ""
 
 #. Soromid messages
@@ -29307,13 +29307,13 @@ msgstr ""
 #. Recompute the location for a better position
 #. Brakes at a position
 #. Approaching a position specified by target_pos
-#: dat/autonav.lua:483 dat/autonav.lua:499
+#: dat/autonav.lua:478 dat/autonav.lua:494
 msgid "Autonav: arrived at position."
 msgstr ""
 
 #. Brakes at a position
 #. Approaching a spob, not interested in landing
-#: dat/autonav.lua:510 dat/autonav.lua:529
+#: dat/autonav.lua:505 dat/autonav.lua:524
 msgid "Autonav: arrived at {spob}."
 msgstr ""
 
@@ -29324,20 +29324,20 @@ msgstr ""
 #. Reset to good position
 #. Have to update path also
 #. Following a target pilot
-#: dat/autonav.lua:594
+#: dat/autonav.lua:589
 msgid "Autonav: following target {plt} has jumped to {sys}."
 msgstr ""
 
-#: dat/autonav.lua:599 dat/autonav.lua:619
+#: dat/autonav.lua:594 dat/autonav.lua:614
 msgid "Autonav: following target {plt} has been lost."
 msgstr ""
 
-#: dat/autonav.lua:610
+#: dat/autonav.lua:605
 msgid "Autonav: following target {plt} has landed on {spb}."
 msgstr ""
 
 #. Geting close to board a pilot
-#: dat/autonav.lua:648
+#: dat/autonav.lua:643
 msgid "Autonav: boarding target {plt} has been lost."
 msgstr ""
 
@@ -29346,17 +29346,17 @@ msgstr ""
 #. Run with the physics backend where realdt is user time
 #. If we reset we skip the iteration
 #. Made it to target
-#: dat/autonav.lua:717
+#: dat/autonav.lua:712
 msgid "Autonav arrived at the {sys} system."
 msgstr ""
 
 #. Must have fuel to continue
-#: dat/autonav.lua:724
+#: dat/autonav.lua:719
 msgid "Not enough fuel for autonav to continue"
 msgstr ""
 
 #. Keep on going
-#: dat/autonav.lua:730
+#: dat/autonav.lua:725
 msgid "Autonav continuing until {sys} ({n} jump left)."
 msgid_plural "Autonav continuing until {sys} ({n} jumps left)."
 msgstr[0] ""
@@ -112883,17 +112883,17 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2365 src/nlua_pilot.c:6034
+#: src/ai.c:2364 src/nlua_pilot.c:6034
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr ""
 
-#: src/ai.c:2371
+#: src/ai.c:2370
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2416 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
+#: src/ai.c:2415 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
 #: src/player.c:1688 src/space.c:1960 src/space.c:2066 src/space.c:2084
 #: src/space.c:2136 src/space.c:3535 src/space.c:3556 src/space.c:4384
 #, c-format
@@ -112902,11 +112902,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/ai.c:2445 src/ai.c:2478
+#: src/ai.c:2444 src/ai.c:2477
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2599
+#: src/ai.c:2598
 #, c-format
 msgid "Pilot '%s' can't find jump to leave system!"
 msgstr ""
