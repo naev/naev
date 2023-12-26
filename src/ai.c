@@ -1982,7 +1982,6 @@ static int aiL_iface( lua_State *L )
    vec2 *vec, drift, reference_vector; /* get the position to face */
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
-   int azimuthal_sign;
 
    /* Get first parameter, aka what to face. */
    p  = NULL;
@@ -2024,18 +2023,8 @@ static int aiL_iface( lua_State *L )
          number will give a more dramatic 'lead' */
       double speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
       diff = angle_diff(heading_offset_azimuth, speedmap);
-      azimuthal_sign = -1;
 
-      /* This indicates we're drifting to the right of the target
-       * And we need to turn CCW */
-      if (diff > 0.)
-         pilot_turn = azimuthal_sign;
-      /* This indicates we're drifting to the left of the target
-       * And we need to turn CW */
-      else if (diff < 0.)
-         pilot_turn = -1*azimuthal_sign;
-      else
-         pilot_turn = 0.;
+      pilot_turn = -10.*diff;
    }
    /* turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in */
    /* some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
@@ -2046,9 +2035,9 @@ static int aiL_iface( lua_State *L )
       azimuthal_sign = 1;
 
       if (heading_offset_azimuth > 0.)
-         pilot_turn = azimuthal_sign;
+         pilot_turn = 1.;
       else
-         pilot_turn = -1.*azimuthal_sign;
+         pilot_turn = -1.;
    }
 
    /* Return angle in degrees away from target. */
