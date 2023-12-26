@@ -313,12 +313,7 @@ local function autonav_approach( pos, count_target )
    local pp = player.pilot()
    local dist = ai.minbrakedist()
    local d = pos:dist( pp:pos() )
-   local off
-   if d < dist*3 then
-      off = ai.iface( pos )
-   else
-      off = ai.face( pos )
-   end
+   local off = ai.iface( pos )
    if off < math.rad(10) then
       ai.accel(1)
    end
