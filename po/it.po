@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-25 07:47+0900\n"
+"POT-Creation-Date: 2023-12-26 17:24+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -6219,8 +6219,12 @@ msgid "Energy Modifier"
 msgstr "Modificatore d'Energia"
 
 #: dat/outfits/structure/battery_i.xml:9
+#, fuzzy
+#| msgid ""
+#| "A large battery unit designed to hold 250 MJ of energy. Small enough to "
+#| "mount on many light vessels."
 msgid ""
-"A large battery unit designed to hold 250 MJ of energy. Small enough to "
+"A large battery unit designed to hold 250 GJ of energy. Small enough to "
 "mount on many light vessels."
 msgstr ""
 "Un voluminoso gruppo di batterie progettato per contenere 250 MJ d'energia. "
@@ -6231,8 +6235,12 @@ msgid "Battery II"
 msgstr "Batteria II"
 
 #: dat/outfits/structure/battery_ii.xml:9
+#, fuzzy
+#| msgid ""
+#| "A large battery unit designed to hold 500 MJ of energy. Ideally mounted "
+#| "on medium-to-large vessels."
 msgid ""
-"A large battery unit designed to hold 500 MJ of energy. Ideally mounted on "
+"A large battery unit designed to hold 500 GJ of energy. Ideally mounted on "
 "medium-to-large vessels."
 msgstr ""
 "Un voluminoso gruppo di batterie progettato per contenere 500 MJ d'energia. "
@@ -6243,8 +6251,12 @@ msgid "Battery III"
 msgstr "Batteria III"
 
 #: dat/outfits/structure/battery_iii.xml:9
+#, fuzzy
+#| msgid ""
+#| "A very large battery unit designed to hold 1200 MJ of energy. It can only "
+#| "be mounted on very large ships."
 msgid ""
-"A very large battery unit designed to hold 1200 MJ of energy. It can only be "
+"A very large battery unit designed to hold 1000 GJ of energy. It can only be "
 "mounted on very large ships."
 msgstr ""
 "Un gruppo di batterie, veramente voluminoso, progettato per contenere 1200 "
@@ -6255,8 +6267,12 @@ msgid "Battery IV"
 msgstr "Batteria IV"
 
 #: dat/outfits/structure/battery_iv.xml:9
+#, fuzzy
+#| msgid ""
+#| "A massive battery unit designed to hold 2000 MJ of energy. Given the mass "
+#| "of this battery, it's advisable to only mount it on capital ships."
 msgid ""
-"A massive battery unit designed to hold 2000 MJ of energy. Given the mass of "
+"A massive battery unit designed to hold 2000 GJ of energy. Given the mass of "
 "this battery, it's advisable to only mount it on capital ships."
 msgstr ""
 "Un gruppo di batterie massivo progettato per contenere 2000 MJ d'energia. "
@@ -6457,9 +6473,13 @@ msgstr ""
 "volatilità nebulare."
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:12
+#, fuzzy
+#| msgid ""
+#| "Able to compensate up to 30 MW of nebula volatility. Uses 1 MW of energy "
+#| "per MW of damage prevented."
 msgid ""
-"Able to compensate up to 30 MW of nebula volatility. Uses 1 MW of energy per "
-"MW of damage prevented."
+"Able to compensate up to 30 GW of nebula volatility. Uses 1 GW of energy per "
+"GW of damage prevented."
 msgstr ""
 "In grado di compensare fino a 30 MW di volatilità nebulare. Utilizza 1 MW "
 "d'energia per ogni MW di danno impedito."
@@ -115783,17 +115803,17 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2376 src/nlua_pilot.c:6034
+#: src/ai.c:2365 src/nlua_pilot.c:6034
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr ""
 
-#: src/ai.c:2382
+#: src/ai.c:2371
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2427 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
+#: src/ai.c:2416 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
 #: src/player.c:1688 src/space.c:1960 src/space.c:2066 src/space.c:2084
 #: src/space.c:2136 src/space.c:3535 src/space.c:3556 src/space.c:4384
 #, c-format
@@ -115802,11 +115822,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/ai.c:2456 src/ai.c:2489
+#: src/ai.c:2445 src/ai.c:2478
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2610
+#: src/ai.c:2599
 #, c-format
 msgid "Pilot '%s' can't find jump to leave system!"
 msgstr ""
