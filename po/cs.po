@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-12-26 17:31+0900\n"
-"PO-Revision-Date: 2023-12-26 08:25+0000\n"
+"PO-Revision-Date: 2023-12-26 18:00+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "cs/>\n"
@@ -8014,10 +8014,16 @@ msgid ""
 "also has the downside of significantly lowering the amount of extractable "
 "materials."
 msgstr ""
+"Těžební kopí jsou známá svými ničivými schopnostmi, bohužel taková síla může "
+"být pro těžbu rozumných materiálů škodlivá. Vrtné kopí Nexus volí jiný "
+"přístup a namísto maximalizace výkonu pracuje na méně účinných, ale "
+"stabilnějších vlnových délkách. To mu sice umožňuje těžit materiály, kterých "
+"jiná těžební kopí nejsou schopna, ale má to i tu nevýhodu, že se výrazně "
+"snižuje množství těžitelných materiálů."
 
 #: dat/outfits/weapons/orion_beam.xml:2
 msgid "Orion Beam"
-msgstr ""
+msgstr "Paprsek Orion"
 
 #: dat/outfits/weapons/orion_beam.xml:9
 msgid ""
@@ -8025,10 +8031,13 @@ msgid ""
 "exceptional short-duration firepower, a potent deterrent against enemy "
 "vessels that dare venture within firing range."
 msgstr ""
+"Věžová verze kopí Orion nabízí lodím střední velikosti výjimečnou palebnou "
+"sílu krátkého dosahu, která je silným odstrašujícím prostředkem proti "
+"nepřátelským plavidlům, jež se odváží přiblížit na dostřel."
 
 #: dat/outfits/weapons/orion_lance.xml:2
 msgid "Orion Lance"
-msgstr ""
+msgstr "Kopí Orion"
 
 #: dat/outfits/weapons/orion_lance.xml:9
 msgid ""
@@ -8039,10 +8048,16 @@ msgid ""
 "shares a fairly limiting short range. That said, very few enemy ships "
 "survive the encounter once they are in range."
 msgstr ""
+"Orion kopí je pevně namontovaná zbraň určená pro montáž na stíhačky a vyšší. "
+"Je založena na silně modifikovaném, kapalinou chlazeném laseru a je schopna "
+"nepřetržité palby, jejímž výsledkem je ničivý paprsek. Vzhledem k velké "
+"spotřebě energie a potřebě soustředění má paprsek Orion, stejně jako "
+"Částicové kopí, poměrně omezující krátký dosah. Přesto jen velmi málo "
+"nepřátelských lodí přežije střetnutí, jakmile se dostanou na dostřel."
 
 #: dat/outfits/weapons/particle_beam.xml:2
 msgid "Particle Beam"
-msgstr ""
+msgstr "Částicový paprsek"
 
 #: dat/outfits/weapons/particle_beam.xml:9
 msgid ""
@@ -8051,10 +8066,14 @@ msgid ""
 "it can simultaneously hit multiple targets, however, this comes at the cost "
 "of a significantly reduced range."
 msgstr ""
+"Částicové kopí namontované na věži. Nejmenší možná paprsková zbraň s věží, "
+"která se používá jako poslední zbraň proti lehkým nepřátelům. Stejně jako "
+"částicové kopí může zasáhnout více cílů současně, avšak za cenu výrazně "
+"menšího dosahu."
 
 #: dat/outfits/weapons/particle_lance.xml:2
 msgid "Particle Lance"
-msgstr ""
+msgstr "Částicové kopí"
 
 #: dat/outfits/weapons/particle_lance.xml:8
 msgid ""
@@ -8063,16 +8082,18 @@ msgid ""
 "simultaneously, it comes at a downside of a really short range, requiring "
 "the pilot to get very close to their target risking enemy fire."
 msgstr ""
+"Jedná se o nejmenší zbraň s přímým paprskem, kterou Za'lekové speciálně "
+"zkonstruovali pro své drony. Paprsek sice dokáže okamžitě zasáhnout více "
+"cílů najednou, ale jeho nevýhodou je opravdu malý dosah, takže se pilot musí "
+"dostat velmi blízko k cíli a riskovat nepřátelskou palbu."
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:2
 msgid "Plasma Blaster MK1"
-msgstr ""
+msgstr "Plazmový blaster MK1"
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:4
-#, fuzzy
-#| msgid "Plasma Burn II"
 msgid "Plasma Bl. MK1"
-msgstr "Plazmový požár II"
+msgstr "Plazmový Bl. MK1"
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:9
 msgid ""
@@ -8083,16 +8104,20 @@ msgid ""
 "and mercenaries for its high killing potential, although the plasma burns "
 "tend to make it harder to disable ships."
 msgstr ""
+"Plazmový blaster M1 vystřeluje přehřátou plazmu, která je velmi účinná při "
+"poškozování pancíře, ale méně účinná proti štítům. I když způsobuje přímé "
+"poškození, přetrvávající plazma poškozuje cílovou loď ještě nějakou dobu po "
+"prvním zásahu. Tuto zbraň často používají lovci odměn a žoldnéři pro její "
+"vysoký potenciál zabíjení, ačkoli spálení plazmou obvykle ztěžuje vyřazení "
+"lodí."
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:2
 msgid "Plasma Blaster MK2"
-msgstr ""
+msgstr "Plazmový blaster MK2"
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:4
-#, fuzzy
-#| msgid "Plasma Burn II"
 msgid "Plasma Bl. MK2"
-msgstr "Plazmový požár II"
+msgstr "Plazmový Bl. MK2"
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:10
 msgid ""
@@ -8103,10 +8128,16 @@ msgid ""
 "model, the lingering plasma will significantly damage any ship that is "
 "unlucky enough to get hit."
 msgstr ""
+"Plazmový blaster MK2 je výkonná verze plazmového blasteru MK1, která je "
+"dostatečně silná na to, aby smetla z oblohy všechny pirátské lodě kromě těch "
+"nejtěžších. Jeho síla je natolik značná, že jej dokonce používají některé "
+"armády, obvykle v kombinaci s protištítovými zbraněmi. Stejně jako u "
+"původního modelu MK1 i zde dlouhotrvající plazma výrazně poškodí každou loď, "
+"která má tu smůlu, že ji zasáhne."
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
-msgstr ""
+msgstr "Plazmové dělo"
 
 #: dat/outfits/weapons/plasma_cannon.xml:9
 msgid ""
@@ -8115,14 +8146,18 @@ msgid ""
 "engineering complexities of fitting such a powerful weapon into a small slot "
 "lead to much higher dependence on guidance from the ship's central computer."
 msgstr ""
+"Plazmové dělo je zmenšená verze konstrukce plazmového blasteru pro použití "
+"na korvetách. Dokáže vyvinout výrazně silnější úder, ale inženýrské "
+"složitosti spojené s umístěním tak silné zbraně do malého prostoru vedou k "
+"mnohem větší závislosti na navádění z centrálního lodního počítače."
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:2
 msgid "Plasma Cluster Cannon"
-msgstr ""
+msgstr "Plazmové klastrové dělo"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:4
 msgid "Plasma C. Cannon"
-msgstr ""
+msgstr "Plazmové K. dělo"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:10
 msgid ""
@@ -8134,14 +8169,21 @@ msgid ""
 "medium mounts, but this also means biological Soromid ships are able to "
 "handle its computational load despite being a synthetic construct."
 msgstr ""
+"Plazmové dělo je soromidské vylepšení standardní konstrukce plazmového děla. "
+"Díky tomu, že se masivní shluk přehřáté plazmy uzavře do malého prostoru "
+"uvnitř specializovaného \"membránového štítu\", vzniknou při dopadu velké "
+"exploze, které protrhnou i ty nejsilnější trupy. Nevýhodou této konstrukce "
+"je, že vyžaduje hodně místa, což omezuje její použití na středně těžká děla, "
+"ale to také znamená, že biologické lodě Soromidů jsou schopny zvládnout její "
+"výpočetní zátěž, přestože se jedná o syntetickou konstrukci."
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:2
 msgid "Plasma Turret MK1"
-msgstr ""
+msgstr "Plazmová věž MK1"
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:4
 msgid "Plasma T. MK1"
-msgstr ""
+msgstr "Plazmová V. MK1"
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:10
 msgid ""
@@ -8151,14 +8193,18 @@ msgid ""
 "among inexperienced mercenaries who are not as well-practiced at aiming as "
 "the pros."
 msgstr ""
+"Plazmová věž v podstatě využívá plazmový blaster a je namontována na věž. "
+"Díky krátkému dosahu se nehodí k obraně, takže není příliš oblíbená u "
+"obchodníků a kupců, ale našla si mezeru mezi nezkušenými žoldáky, kteří "
+"nemají tak dobrou praxi v míření jako profesionálové."
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:2
 msgid "Plasma Turret MK2"
-msgstr ""
+msgstr "Plazmová věž MK2"
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:4
 msgid "Plasma T. MK2"
-msgstr ""
+msgstr "Plazmová V. MK2"
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:10
 msgid ""
@@ -8166,10 +8212,13 @@ msgid ""
 "medium-size turrets, but it is sometimes favoured by corvettes for its "
 "unusually low weight compared to its range and damage output."
 msgstr ""
+"Plazmová věž Mark 2 není ve srovnání s jinými středně velkými věžemi nijak "
+"zvlášť působivá, ale korvety ji někdy upřednostňují pro její neobvykle "
+"nízkou hmotnost v porovnání s jejím dosahem a poškozením."
 
 #: dat/outfits/weapons/ragnarok_beam.xml:2
 msgid "Ragnarok Beam"
-msgstr ""
+msgstr "Paprsek Ragnarok"
 
 #: dat/outfits/weapons/ragnarok_beam.xml:10
 msgid ""
@@ -8181,10 +8230,18 @@ msgid ""
 "fact it can slice through battleship heavy armour like butter makes it a "
 "favourite of pilots who like to get close to their enemies."
 msgstr ""
+"Paprsek Ragnarok je jednou z nejsilnějších paprskových zbraní na trhu. Byl "
+"navržen Rodem Za'leků pro boj s kapitálními loděmi, ačkoli jeho extrémně "
+"velká nosnost jej činí do jisté míry užitečným pro likvidaci nepřátelských "
+"stíhaček, které zabloudí do zásahu. Ačkoli je jeho dosah ve srovnání s "
+"ostatními zbraněmi pro kapitální lodě poměrně omezený, extrémní síla v "
+"kombinaci s faktem, že dokáže prorazit těžký pancíř bitevní lodi jako máslo, "
+"z něj dělá oblíbenou zbraň pilotů, kteří se rádi dostávají do blízkosti "
+"svých nepřátel."
 
 #: dat/outfits/weapons/railgun.xml:2
 msgid "Railgun"
-msgstr ""
+msgstr "Railgun"
 
 #: dat/outfits/weapons/railgun.xml:10
 msgid ""
@@ -8194,10 +8251,14 @@ msgid ""
 "weapon of House Dvaered, who take particular delight in the havoc these "
 "weapons can cause on their targets."
 msgstr ""
+"Railgun je dělo, které využívá silné magnetické pulzy k urychlování úlomků "
+"na extrémně vysoké rychlosti. Nárazy způsobené úlomky mohou roztrhat i ty "
+"nejsilnější trupy lodí. Je to oblíbená zbraň rodu Dvaeredů, kteří si "
+"obzvlášť libují ve spoušti, kterou tyto zbraně mohou způsobit svým cílům."
 
 #: dat/outfits/weapons/railgun_turret.xml:2
 msgid "Railgun Turret"
-msgstr ""
+msgstr "Railgunová věž"
 
 #: dat/outfits/weapons/railgun_turret.xml:10
 msgid ""
@@ -8207,14 +8268,19 @@ msgid ""
 "associated with railguns at a slight velocity cost. Very few capital ships "
 "can survive being pounded by these weapons for long."
 msgstr ""
+"I když je jeden railgun impozantní zbraní, vrcholem brutální síly na "
+"vlajkové lodi je věž s railgunem. Montáž dvou railgunů ve specializovaném "
+"pouzdře věže dokáže zmírnit zpětný ráz, který je obvykle spojen s railguny, "
+"a to za cenu mírného snížení rychlosti. Jen velmi málo kapitálních lodí "
+"vydrží dlouho pod palbou těchto zbraní."
 
 #: dat/outfits/weapons/razor_artillery_s1.xml:2
 msgid "Razor Artillery S1"
-msgstr ""
+msgstr "Razor Artilérie S1"
 
 #: dat/outfits/weapons/razor_artillery_s1.xml:4
 msgid "Razor A. S1"
-msgstr ""
+msgstr "Razor A. S1"
 
 #: dat/outfits/weapons/razor_artillery_s1.xml:9
 msgid ""
@@ -8227,14 +8293,22 @@ msgid ""
 "proclaims their use as non-lethal weapons, if care is not taken, they can "
 "prove to be quite lethal."
 msgstr ""
+"Razor artilérie S1, navržená a používaná rodem Sirius, vystřeluje "
+"koncentrované kapsy vysoce energetických iontů, které jsou velmi účinné při "
+"vyčerpávání štítů, ale na pancíř lodi mají jen omezený účinek. Iontová "
+"energie je však také velmi účinná při poškozování systémových komponent, "
+"čímž účinně vyřazuje lodě z provozu. Ionizační účinek trvá několik sekund a "
+"během této doby může vyčerpat značné zásoby energie. Ačkoli dům Sirius "
+"prohlašuje, že se jedná o nesmrtící zbraně, při nedostatečné opatrnosti "
+"mohou být poměrně smrtící."
 
 #: dat/outfits/weapons/razor_artillery_s2.xml:2
 msgid "Razor Artillery S2"
-msgstr ""
+msgstr "Razor Artilérie S2"
 
 #: dat/outfits/weapons/razor_artillery_s2.xml:4
 msgid "Razor A. S2"
-msgstr ""
+msgstr "Razor A. S2"
 
 #: dat/outfits/weapons/razor_artillery_s2.xml:10
 msgid ""
@@ -8243,14 +8317,17 @@ msgid ""
 "overloading corvette and destroyer-grade shielding, and disabling critical "
 "components."
 msgstr ""
+"Vylepšený model Razor artilérie S2 má ve srovnání s kompaktnějším modelem S2 "
+"vyšší celkovou účinnost a má menší potíže s přetížením štítů korvet a "
+"torpédoborců a s vyřazením kritických součástí."
 
 #: dat/outfits/weapons/razor_artillery_s3.xml:2
 msgid "Razor Artillery S3"
-msgstr ""
+msgstr "Razor Artilérie S3"
 
 #: dat/outfits/weapons/razor_artillery_s3.xml:4
 msgid "Razor A. S3"
-msgstr ""
+msgstr "Razor A. S3"
 
 #: dat/outfits/weapons/razor_artillery_s3.xml:10
 msgid ""
@@ -8259,14 +8336,17 @@ msgid ""
 "against House Sirius. It is commonly employed by Sirius Preachers and other "
 "corvettes."
 msgstr ""
+"Razor Artilérie S3 je nejsilnějším členem řady Razor, který se osvědčil při "
+"odstraňování štítů z těch, kteří se chtějí postavit proti rodu Sirius. Běžně "
+"ji používají Siriovi Kazatelé a další korvety."
 
 #: dat/outfits/weapons/razor_battery_s2.xml:2
 msgid "Razor Battery S2"
-msgstr ""
+msgstr "Baterie Razor S2"
 
 #: dat/outfits/weapons/razor_battery_s2.xml:4
 msgid "Razor B. S2"
-msgstr ""
+msgstr "Razor B. S2"
 
 #: dat/outfits/weapons/razor_battery_s2.xml:10
 msgid ""
@@ -8275,10 +8355,14 @@ msgid ""
 "shield stripping effect in combination with the heavy systems damage can "
 "quickly demoralize pirates and marauders looking to make some quick credits."
 msgstr ""
+"Jako jediná věžová verze dělostřelectva řady Razor nachází baterie Razor S2 "
+"široké uplatnění na středních eskortních lodích. Silný efekt ničení štítů v "
+"kombinaci s velkým poškozením systémů může rychle demoralizovat piráty a "
+"nájezdníky, kteří chtějí rychle získat nějaké kredity."
 
 #: dat/outfits/weapons/repeating_railgun.xml:2
 msgid "Repeating Railgun"
-msgstr ""
+msgstr "Opakovací railgun"
 
 #: dat/outfits/weapons/repeating_railgun.xml:10
 msgid ""
@@ -8287,10 +8371,14 @@ msgid ""
 "enhance the weapon into a heavier, faster firing variant that isn't so much "
 "a gun as it is a miniature meteor shower generator."
 msgstr ""
+"Přestože měl Railgun ničivé účinky, pro Dvaeredské vrchní velení nebyl "
+"dostatečně ničivý. Nechali své inženýry vylepšit zbraň na těžší a rychleji "
+"střílející variantu, která není ani tak zbraní, jako spíše miniaturním "
+"generátorem meteoritického deště."
 
 #: dat/outfits/weapons/ripper_cannon.xml:2
 msgid "Ripper Cannon"
-msgstr ""
+msgstr "Dělo Ripper"
 
 #: dat/outfits/weapons/ripper_cannon.xml:9
 msgid ""
@@ -8300,10 +8388,15 @@ msgid ""
 "Ripper Cannon is mostly used by Corvettes which possess small weapon mounts, "
 "but need heavy firepower so they can take on heavier ships effectively."
 msgstr ""
+"Ripper dělo je varianta laserového děla se silnějšími kondenzátory a dvěma "
+"synchronními hlavněmi. Výsledkem je zvýšení poškození na zásah za cenu "
+"enormně zvýšených nároků na procesor. Ripper dělo se většinou používá na "
+"korvetách, které mají malé zbraňové systémy, ale potřebují silnou palebnou "
+"sílu, aby mohly účinně čelit těžším lodím."
 
 #: dat/outfits/weapons/shredder.xml:2
 msgid "Shredder"
-msgstr ""
+msgstr "Shredder"
 
 #: dat/outfits/weapons/shredder.xml:9
 msgid ""
@@ -8311,10 +8404,13 @@ msgid ""
 "The sheer damage dealing capacity of this weapon makes Dvaered Corvettes "
 "dangerous to engage by ships that aren't substantially larger than they are."
 msgstr ""
+"Shredder zcela odpovídá jménu, které mu dali jeho výrobci ze společnosti "
+"Dvaered. Díky obrovskému poškození, které tato zbraň způsobuje, jsou korvety "
+"Dvaered nebezpečné pro lodě, které nejsou podstatně větší než ony."
 
 #: dat/outfits/weapons/turbolaser.xml:2
 msgid "Turbolaser"
-msgstr ""
+msgstr "Turbolaser"
 
 #: dat/outfits/weapons/turbolaser.xml:10
 msgid ""
@@ -8324,10 +8420,15 @@ msgid ""
 "energy particles lobbed by the Turbolaser make it very hard for enemy ships "
 "to perform evasive maneuvers."
 msgstr ""
+"Tento speciální model těžké laserové věže je jednou z nejtěžších zbraní v "
+"galaxii. Imperiální vlajkové lodě ji používají k ničivému ostřelování "
+"nepřátelských plavidel z velké vzdálenosti. Vysoká rychlost energetických "
+"částic vyvrhovaných turbolaserem velmi ztěžuje nepřátelským lodím úhybné "
+"manévry."
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:2
 msgid "Turreted Gauss Gun"
-msgstr ""
+msgstr "Gaussovo věžové dělo"
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:9
 msgid ""
@@ -8335,10 +8436,14 @@ msgid ""
 "ships, the turret version of the Gauss Gun provides basic defence against "
 "lone pirates. A more determined attacker is unlikely to be deterred, however."
 msgstr ""
+"Věžová verze Gaussova děla je jedním z nejběžnějších protiopatření "
+"používaných na nízkorozpočtových obchodních lodích a poskytuje základní "
+"obranu proti osamělým pirátům. Odhodlanějšího útočníka však pravděpodobně "
+"neodradí."
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:2
 msgid "Turreted Vulcan Gun"
-msgstr ""
+msgstr "Věžové dělo Vulcan"
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:10
 msgid ""
@@ -8346,10 +8451,13 @@ msgid ""
 "brethren. Ships not nimble enough to evade its relentless stream of "
 "projectiles might find themselves riddled with hull punctures before long."
 msgstr ""
+"Věžová děla Vulcan mají munici stejné ráže jako jejich pevně namontovaní "
+"bratři. Lodě, které nejsou dostatečně hbité, aby se vyhnuly jejich "
+"neúnavnému proudu střel, mohou být brzy zasaženy průstřelem trupu."
 
 #: dat/outfits/weapons/vulcan_gun.xml:2
 msgid "Vulcan Gun"
-msgstr ""
+msgstr "Dělo Vulcan"
 
 #: dat/outfits/weapons/vulcan_gun.xml:9
 msgid ""
@@ -8358,31 +8466,37 @@ msgid ""
 "some serious havoc even to medium-sized vessels with a pair of Vulcan Guns "
 "installed on their ship."
 msgstr ""
+"Vulkánské dělo má oproti Gaussově dělu větší dostřel a poškození, čehož je "
+"dosaženo použitím munice těžší ráže. Zkušený pilot může s dvojicí "
+"vulkanských děl na lodi způsobit pořádnou spoušť i na středně velkých "
+"plavidlech."
 
 #: dat/ships/collective/drone.xml:2 dat/missions/minerva/pirate1.lua:170
 msgid "Drone"
-msgstr ""
+msgstr "Dron"
 
 #: dat/ships/collective/drone.xml:9 dat/ships/collective/drone_hyena.xml:13
 #: dat/ships/zalek/zalek_drone_light.xml:8
 msgid "Robotic Interceptor"
-msgstr "Robotický záchytný systém"
+msgstr "Robotický interceptor"
 
 #: dat/ships/collective/drone.xml:13 dat/ships/collective/drone_carrier.xml:16
 #: dat/ships/collective/drone_heavy.xml:13
 #: dat/ships/collective/drone_hyena.xml:19
 msgid "Robosys"
-msgstr ""
+msgstr "Robosys"
 
 #: dat/ships/collective/drone.xml:14
 msgid ""
 "This is a modified version of the Collective Drone that now includes a life "
 "support system for humans."
 msgstr ""
+"Jedná se o upravenou verzi dronu Kolektivu, která nyní obsahuje systém "
+"podpory života pro lidi."
 
 #: dat/ships/collective/drone_carrier.xml:2
 msgid "Drone Carrier"
-msgstr ""
+msgstr "Nosič dronů"
 
 #: dat/ships/collective/drone_carrier.xml:9
 msgid "Robotic Carrier"
@@ -8396,10 +8510,15 @@ msgid ""
 "remotely controlled droids. Due to the lack of unnecessary crew facilities "
 "and heavy armor the Drone Carrier is an unusual lightweight and fast carrier."
 msgstr ""
+"Tento nosič je vysoce automatizovaný a je určen k řízení flotil dronů "
+"Kolektivu. Může ji obsluhovat jen kostra posádky, přestože většina částí "
+"lodi není přetlaková. Údržbu mohou provádět dálkově ovládaní droidi. "
+"Vzhledem k absenci zbytečného zázemí pro posádku a těžkého pancéřování je "
+"Nosič dronů neobvykle lehká a rychlá letadlová loď."
 
 #: dat/ships/collective/drone_heavy.xml:2
 msgid "Heavy Drone"
-msgstr ""
+msgstr "Těžký dron"
 
 #: dat/ships/collective/drone_heavy.xml:9
 msgid "Robotic Drone"
@@ -8410,18 +8529,20 @@ msgid ""
 "This Collective Heavy Drone has been modified by engineers to support a "
 "human pilot."
 msgstr ""
+"Tento těžký dron Kolektivu byl inženýry upraven tak, aby podporoval lidského "
+"pilota."
 
 #: dat/ships/collective/drone_hyena.xml:2
 msgid "Drone (Hyena)"
-msgstr ""
+msgstr "Dron (Hyena)"
 
 #: dat/ships/collective/drone_hyena.xml:20
 msgid "A fully sentient drone disguised as a Hyena."
-msgstr ""
+msgstr "Plně vnímající dron převlečený za hyenu."
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:2
 msgid "Dvaered Ancestor"
-msgstr ""
+msgstr "Dvaered Ancestor"
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:18
 #: dat/ships/dvaered/dvaered_vendetta.xml:19
@@ -8434,10 +8555,12 @@ msgid ""
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
+"U této vojenské verze modelu Ancestor bylo optimalizováno rozložení "
+"hmotnosti na konstrukci, aby bylo možné naložit více užitečného nákladu."
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:2
 msgid "Dvaered Arsenal"
-msgstr "Dvaeredský Arsenál"
+msgstr "Dvaered Arsenal"
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:21
 #: dat/ships/dvaered/dvaered_retribution.xml:19
@@ -8454,10 +8577,16 @@ msgid ""
 "even basic necessities. Colloquially they have been also been known to be "
 "called \"Dvaered Gunboxes\"."
 msgstr ""
+"Arsenal je těžce vyzbrojená nákladní loď, kterou rod Dvaeredů používá k "
+"přepravě velkého množství zásob a vojáků, kdykoli by takový úkol byl pro "
+"lehčí obrněné nákladní lodě příliš nebezpečný. Název je odvozen od "
+"skutečnosti, že dopravní lodě rodu Dvaered se obvykle zaměřují na distribuci "
+"a rozmístění zbraní a vojáků přednostně před surovinami, zbožím nebo dokonce "
+"základními potřebami. Hovorově se jim také říkalo \"Dvaeredské zbrojovky\"."
 
 #: dat/ships/dvaered/dvaered_goddard.xml:2
 msgid "Dvaered Goddard"
-msgstr ""
+msgstr "Dvaered Goddard"
 
 #: dat/ships/dvaered/dvaered_goddard.xml:21
 msgid "You need at least 70 reputation with House Dvaered."
@@ -8473,10 +8602,17 @@ msgid ""
 "grade version has been adapted to the needs of the Dvaered Warlords, which "
 "means better armour and forwards weapon damage at the cost of increased mass."
 msgstr ""
+"Kdysi dávno byl bitevní křižník Goddard objednán císařstvím k vojenské "
+"službě. Během dvaeredských povstání se však většina goddardských kapitánů "
+"postavila na stranu povstalců a po založení rodu Dvaeredů jim Impérium "
+"předalo licenci na stárnoucí plavidlo. Dnes je rod Dvaered největším "
+"klientem rodu Goddardů a tato vojenská verze Dvaeredu byla upravena pro "
+"potřeby válečníků z Dvaeredu, což znamená lepší pancéřování a poškození "
+"předsunutých zbraní za cenu zvýšení hmotnosti."
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:2
 msgid "Dvaered Phalanx"
-msgstr ""
+msgstr "Dvaered Phalanx"
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:19
 msgid "You need at least 40 reputation with House Dvaered."
@@ -8488,10 +8624,12 @@ msgid ""
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
+"U této vojenské verze Phalanxu bylo optimalizováno rozložení hmotnosti na "
+"konstrukci, aby bylo možné naložit více užitečného nákladu."
 
 #: dat/ships/dvaered/dvaered_retribution.xml:2
 msgid "Dvaered Retribution"
-msgstr "Dvaeredská Odplata"
+msgstr "Dvaered Retribution"
 
 #: dat/ships/dvaered/dvaered_retribution.xml:20
 msgid ""
@@ -8502,11 +8640,16 @@ msgid ""
 "points. Afterwards, the ship was renamed to Retribution. However, the "
 "electronics remained outdated."
 msgstr ""
+"Když Impérium nahradilo své stárnoucí křižníky novou třídou Hawking, využil "
+"dům Dvaered příležitosti a získal licenci na křižník a většinu zbývajících "
+"lodí. Dvaeredští inženýři posílili pancéřování a přepracovali konstrukci "
+"lodi a zároveň na ni připevnili další pevné zbraňové body. Poté byla loď "
+"přejmenována na Retribution. Elektronika však zůstala zastaralá."
 
 #: dat/ships/dvaered/dvaered_vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:214
 msgid "Dvaered Vendetta"
-msgstr ""
+msgstr "Dvaered Vendetta"
 
 #: dat/ships/dvaered/dvaered_vendetta.xml:20
 msgid ""
@@ -8514,10 +8657,12 @@ msgid ""
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
+"U této vojenské verze modelu Vendetta bylo optimalizováno rozložení "
+"hmotnosti na konstrukci, aby bylo možné naložit více užitečného nákladu."
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:2
 msgid "Dvaered Vigilance"
-msgstr ""
+msgstr "Dvaered Vigilance"
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:18
 msgid "You need at least 50 reputation with House Dvaered."
@@ -8528,10 +8673,12 @@ msgid ""
 "This military grade version of the Vigilance has an optimized weight "
 "distribution allowing it to carry more payload."
 msgstr ""
+"Tato vojenská verze modelu Vigilance má optimalizované rozložení hmotnosti, "
+"což jí umožňuje nést větší užitečné zatížení."
 
 #: dat/ships/empire/empire_admonisher.xml:2
 msgid "Empire Admonisher"
-msgstr ""
+msgstr "Imperiální Admonisher"
 
 #: dat/ships/empire/empire_admonisher.xml:17
 #: dat/ships/empire/empire_hawking.xml:18
@@ -8544,11 +8691,11 @@ msgstr ""
 #: dat/ships/neutral/lancelot.xml:14 dat/ships/neutral/pacifier.xml:14
 #: dat/ships/neutral/shark.xml:15 dat/scripts/common/shark.lua:17
 msgid "Nexus Shipyards"
-msgstr ""
+msgstr "Loděnice Nexus"
 
 #: dat/ships/empire/empire_admonisher.xml:20
 msgid "You need at least 40 reputation with the Empire."
-msgstr ""
+msgstr "Potřebujete alespoň 40 reputace u Impéria."
 
 #: dat/ships/empire/empire_admonisher.xml:21
 msgid ""
@@ -8556,15 +8703,17 @@ msgid ""
 "function to a standard Admonisher, but with slightly better armour, shields, "
 "and heat dissipation."
 msgstr ""
+"Tato vojenská verze Admonisheru je z větší části funkčně shodná se "
+"standardním Admonisherem, ale má o něco lepší pancíř, štíty a odvod tepla."
 
 #: dat/ships/empire/empire_hawking.xml:2
 msgid "Empire Hawking"
-msgstr ""
+msgstr "Imperiální Hawking"
 
 #: dat/ships/empire/empire_hawking.xml:21
 #: dat/ships/empire/empire_rainmaker.xml:22
 msgid "You need at least 60 reputation with the Empire."
-msgstr ""
+msgstr "Potřebujete alespoň 60 reputace u Impéria."
 
 #: dat/ships/empire/empire_hawking.xml:22
 msgid ""
@@ -8572,14 +8721,16 @@ msgid ""
 "to a standard Hawking, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
+"Tato vojenská verze Hawkingu je z větší části funkčně shodná se standardním "
+"Hawkingem, ale má o něco lepší pancéřování, štíty a odvod tepla."
 
 #: dat/ships/empire/empire_lancelot.xml:2
 msgid "Empire Lancelot"
-msgstr ""
+msgstr "Imperiální Lancelot"
 
 #: dat/ships/empire/empire_lancelot.xml:18
 msgid "You need at least 30 reputation with the Empire."
-msgstr ""
+msgstr "Potřebujete alespoň 30 reputace u Impéria."
 
 #: dat/ships/empire/empire_lancelot.xml:19
 msgid ""
@@ -8587,10 +8738,12 @@ msgid ""
 "to a standard Lancelot, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
+"Tato vojenská verze Lancelotu je z větší části funkčně shodná se standardním "
+"Lancelotem, ale má o něco lepší pancéřování, štíty a odvod tepla."
 
 #: dat/ships/empire/empire_pacifier.xml:2
 msgid "Empire Pacifier"
-msgstr ""
+msgstr "Imperiální Pacifier"
 
 #: dat/ships/empire/empire_pacifier.xml:19
 msgid ""
@@ -8598,14 +8751,16 @@ msgid ""
 "to a standard Pacifier, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
+"Tato vojenská verze Pacifieru je z větší části funkčně shodná se standardním "
+"Pacifierem, ale má o něco lepší pancéřování, štíty a odvod tepla."
 
 #: dat/ships/empire/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
-msgstr ""
+msgstr "Imperiální Peacemaker"
 
 #: dat/ships/empire/empire_peacemaker.xml:20
 msgid "You need at least 70 reputation with the Empire."
-msgstr ""
+msgstr "Potřebujete alespoň 70 reputace u Impéria."
 
 #: dat/ships/empire/empire_peacemaker.xml:21
 msgid ""
@@ -8615,10 +8770,16 @@ msgid ""
 "provide the fighter and bomber squadrons with much needed resupplies. Like "
 "most capital ships, however, it is vulnerable to attack from enemy bombers."
 msgstr ""
+"Peacemaker, postavený na zakázku pro Impérium v loděnicích Nexus, je jednou "
+"z nejvelkolepějších lodí v galaxii, která předčí i mocný Goddard. "
+"Peacemakery obvykle fungují jako vlajkové lodě v imperiálních flotilách a "
+"mohou poskytovat stíhacím a bombardovacím letkám tolik potřebné zásoby. "
+"Stejně jako většina hlavních lodí je však zranitelný vůči útokům "
+"nepřátelských bombardérů."
 
 #: dat/ships/empire/empire_rainmaker.xml:2
 msgid "Empire Rainmaker"
-msgstr ""
+msgstr "Imperiální Rainmaker"
 
 #: dat/ships/empire/empire_rainmaker.xml:23
 msgid ""
@@ -8631,14 +8792,22 @@ msgid ""
 "supplies. After the events an EE-1891-392 official ship rename form was "
 "approved and Rainmaker became the ship's official name."
 msgstr ""
+"Rainmaker je největší nákladní loď používaná Impériem. Je schopna "
+"přepravovat rozsáhlé množství materiálu přes nebezpečné území, protože malé "
+"skupiny pirátů nepředstavují díky jejímu těžkému pancéřování žádnou hrozbu. "
+"Název je odvozen od série událostí, kdy byly krátce po Incidentu použity k "
+"doručení zásob hladovějícím, odříznutým světům, a to tak, že prováděly "
+"průlety nízkou atmosférou a zároveň otevíraly nákladové prostory, což vedlo "
+"k doslova dešti zásob. Po těchto událostech byl schválen oficiální formulář "
+"EE-1891-392 na přejmenování lodi a oficiálním jménem lodi se stal Rainmaker."
 
 #: dat/ships/empire/empire_shark.xml:2
 msgid "Empire Shark"
-msgstr ""
+msgstr "Imperiální Shark"
 
 #: dat/ships/empire/empire_shark.xml:19
 msgid "You need at least 20 reputation with the Empire."
-msgstr ""
+msgstr "Potřebujete alespoň 20 reputace u Impéria."
 
 #: dat/ships/empire/empire_shark.xml:20
 msgid ""
@@ -8647,28 +8816,32 @@ msgid ""
 "heat dissipation. The military-grade materials used also result in the ship "
 "being slightly lighter than its generic counterpart."
 msgstr ""
+"Vojenská verze Sharku pro Impérium je z větší části funkčně shodná se "
+"standardním Sharkem, ale má o něco lepší pancéřování, štíty a odvod tepla. "
+"Díky použitým vojenským materiálům je loď také o něco lehčí než její běžný "
+"protějšek."
 
 #: dat/ships/feral_bioship/kauweke.xml:2
 msgid "Kauweke"
-msgstr ""
+msgstr "Kauweke"
 
 #: dat/ships/feral_bioship/kauweke.xml:12
 msgid "Elder Feral Bioship"
-msgstr ""
+msgstr "Starší ferální bioloď"
 
 #: dat/ships/feral_bioship/kauweke.xml:24
 #: dat/ships/feral_bioship/taitamariki.xml:19
 msgid "Still to do..."
-msgstr ""
+msgstr "Ještě zbývá udělat..."
 
 #: dat/ships/feral_bioship/nohinohi.xml:2
 msgid "Nohinohi"
-msgstr ""
+msgstr "Nohinohi"
 
 #: dat/ships/feral_bioship/nohinohi.xml:12
 #: dat/ships/soromid/soromid_reaver.xml:9
 msgid "Bio-Fighter"
-msgstr ""
+msgstr "Bio-Stíhač"
 
 #: dat/ships/feral_bioship/nohinohi.xml:17
 msgid ""
@@ -8679,25 +8852,30 @@ msgid ""
 "the synthetic parts. These ships are commonly referred to as \"Feral "
 "Bioships\" and not much is known about them."
 msgstr ""
+"Nohinohi byli původně vytvořeni jako Soromid Reaver Bio-Stíhače. Ačkoli však "
+"proces není zcela jasný, když je původní Soromid Reaver opuštěn nebo ztracen "
+"nešťastnou náhodou, může projít pozoruhodnou transformací, při níž "
+"biologické složky lodi nakonec převládnou nad syntetickými částmi. Tyto lodě "
+"se běžně označují jako \"ferální biolodě\" a není o nich mnoho známo."
 
 #: dat/ships/feral_bioship/taitamariki.xml:2
 msgid "Taitamariki"
-msgstr ""
+msgstr "Taitamariki"
 
 #: dat/ships/feral_bioship/taitamariki.xml:12
 #: dat/ships/pirate/pirate_revenant.xml:9 dat/ships/soromid/soromid_odium.xml:9
 msgid "Bio-Corvette"
-msgstr ""
+msgstr "Bio-Korveta"
 
 #: dat/ships/misc/fort_raelid.xml:2 dat/spob/fort_raelid.xml:2
 msgid "Fort Raelid"
-msgstr ""
+msgstr "Pevnost Raelid"
 
 #: dat/ships/misc/fort_raelid.xml:8 dat/ships/misc/fort_raglan.xml:8
 #: dat/ships/misc/onewing_goddard.xml:8 dat/ships/misc/sindbad.xml:8
 #: dat/events/minerva/station.lua:261
 msgid "Station"
-msgstr ""
+msgstr "Stanice"
 
 #. l +=
 #: dat/ships/misc/fort_raelid.xml:11 dat/ships/misc/fort_raglan.xml:11
@@ -8713,24 +8891,26 @@ msgstr ""
 #: src/land_trade.c:233 src/land_trade.c:234 src/map.c:665 src/map.c:666
 #: src/outfit.c:340 src/outfit.c:361
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: dat/ships/misc/fort_raelid.xml:12 dat/ships/misc/fort_raglan.xml:12
 #: dat/ships/misc/onewing_goddard.xml:12 dat/ships/misc/sindbad.xml:12
 msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
 msgstr ""
+"Jedná se o základnu. Je určena pouze pro umělou inteligenci. Nekupujte ji. "
+"Vážně."
 
 #: dat/ships/misc/fort_raglan.xml:2 dat/spob/fort_raglan.xml:2
 msgid "Fort Raglan"
-msgstr ""
+msgstr "Pevnost Raglan"
 
 #: dat/ships/misc/onewing_goddard.xml:2 dat/spob/onewing_goddard.xml:2
 msgid "One-Wing Goddard"
-msgstr ""
+msgstr "Jednokřídlý Goddard"
 
 #: dat/ships/misc/psychic_orb.xml:2
 msgid "Psychic Orb"
-msgstr ""
+msgstr "Psychický orb"
 
 #. Some defaults
 #.
@@ -8842,21 +9022,19 @@ msgstr ""
 #: src/ship.c:226
 #, c-format
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámý"
 
 #: dat/ships/misc/psychic_orb.xml:11
-#, fuzzy
-#| msgid "Makes the game significantly harder for the player."
 msgid "Not meant for the player."
-msgstr "Hra je pro hráče výrazně obtížnější."
+msgstr "Není určeno pro hráče."
 
 #: dat/ships/misc/sindbad.xml:2 dat/spob/sindbad.xml:2
 msgid "Sindbad"
-msgstr ""
+msgstr "Sindbad"
 
 #: dat/ships/neutral/admonisher.xml:2
 msgid "Admonisher"
-msgstr ""
+msgstr "Admonisher"
 
 #: dat/ships/neutral/admonisher.xml:18
 msgid ""
@@ -8864,10 +9042,13 @@ msgid ""
 "between the ruggedness of the Pacifier and the agility of the Lancelot. "
 "Overall a very solid combat ship."
 msgstr ""
+"Velmi všestranná bojová loď. Nexus definuje Admonisher jako kompromis mezi "
+"robustností Pacifieru a hbitostí Lancelotu. Celkově jde o velmi solidní "
+"bojovou loď."
 
 #: dat/ships/neutral/ancestor.xml:2
 msgid "Ancestor"
-msgstr ""
+msgstr "Ancestor"
 
 #: dat/ships/neutral/ancestor.xml:15
 msgid ""
@@ -8876,15 +9057,19 @@ msgid ""
 "Goddard though, the electronics are manufactured by House Dvaered, making it "
 "considerably inferior in that area."
 msgstr ""
+"Ancestor, běžně označovaný jako \"Malý Goddard\", má také kořeny v "
+"primitivních létajících strojích, které lidé používali před mnoha věky. Na "
+"rozdíl od Goddardu však elektroniku vyrábí rod Dvaeredů, takže v této "
+"oblasti je podstatně horší."
 
 #: dat/ships/neutral/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
 msgid "Gawain"
-msgstr ""
+msgstr "Gawain"
 
 #: dat/ships/neutral/gawain.xml:7
 msgid "Luxury Yacht"
-msgstr ""
+msgstr "Luxusní jachta"
 
 #: dat/ships/neutral/gawain.xml:14
 msgid ""
@@ -8894,6 +9079,11 @@ msgid ""
 "though they rarely survive combat due to their meagre weapons space and "
 "relative fragility."
 msgstr ""
+"Gawain je velmi špičková loď, která předčí téměř všechna ostatní výrobní "
+"plavidla. Vychází z technologií, které byly poprvé použity na lodi Lancelot, "
+"a je hojně využívána jako sportovní plavidlo, protože je mimořádně obratná, "
+"ačkoli v boji přežije jen zřídka kvůli svému skromnému zbraňovému prostoru a "
+"relativní křehkosti."
 
 #: dat/ships/neutral/goddard.xml:18
 msgid ""
@@ -8903,10 +9093,15 @@ msgid ""
 "specialization and improvements on the original design have kept it very "
 "competitive in the market. It's a classic of space."
 msgstr ""
+"Bitevní loď Goddard, kterou navrhl výstřední génius Eduard Manuel Goddard, "
+"vynesla rod Goddard ke slávě a bohatství. Výroba probíhá výhradně na Zhiru v "
+"Goddardově systému v centrále Goddard. Postupem času se díky specializaci a "
+"vylepšování původního designu udržuje na trhu velmi konkurenceschopná. Jedná "
+"se o vesmírnou klasiku."
 
 #: dat/ships/neutral/hawking.xml:2
 msgid "Hawking"
-msgstr ""
+msgstr "Hawking"
 
 #: dat/ships/neutral/hawking.xml:19
 msgid ""
@@ -8916,14 +9111,19 @@ msgid ""
 "second only to the flagship of House Goddard, though its narrower frame "
 "allows it to present a smaller target to the enemy."
 msgstr ""
+"Hawking je vlajkovou lodí loděnic Nexus. Je to velký křižník určený pro "
+"rozsáhlé boje, který Impérium hojně využívá k vykonávání kontroly nad svými "
+"územími. Co se týče hrubé palebné síly, je Hawking druhý po vlajkové lodi "
+"rodu Goddardů, ačkoli jeho užší rám mu umožňuje představovat pro nepřítele "
+"menší cíl."
 
 #: dat/ships/neutral/hyena.xml:2
 msgid "Hyena"
-msgstr ""
+msgstr "Hyena"
 
 #: dat/ships/neutral/hyena.xml:14
 msgid "Aerosys"
-msgstr ""
+msgstr "Aerosys"
 
 #: dat/ships/neutral/hyena.xml:15
 msgid ""
@@ -8935,14 +9135,21 @@ msgid ""
 "anyone willing to pay, as it seems there are countless Hyenas among the "
 "ranks of the more notorious and unruly pilots."
 msgstr ""
+"Hvězdný produkt společnosti Aerosys, Hyena, se rychle stal oblíbeným modelem "
+"partyzánských a polovojenských skupin široko daleko. Jejich špičkové "
+"zrychlení v kombinaci s rychlou reakcí jim umožňuje vyčerpat zásoby energie "
+"nepřítele a zároveň ho vyčerpat. Ačkoli Aerosys tvrdí, že jejich lodě "
+"prodává pouze renomovaným pilotům, existuje podezření, že je prodává "
+"komukoli, kdo je ochoten zaplatit, protože se zdá, že v řadách známějších a "
+"neukázněných pilotů je Hyen nespočet."
 
 #: dat/ships/neutral/kestrel.xml:2
 msgid "Kestrel"
-msgstr ""
+msgstr "Kestrel"
 
 #: dat/ships/neutral/kestrel.xml:14 dat/ships/neutral/starbridge.xml:14
 msgid "Krain Industries"
-msgstr ""
+msgstr "Krain Industries"
 
 #: dat/ships/neutral/kestrel.xml:16
 msgid ""
@@ -8952,16 +9159,21 @@ msgid ""
 "firepower with state-of-the-art electronics, making for a truly fearsome "
 "ship in the hands of an able captain."
 msgstr ""
+"Loď Kestrel, která společnost Krain Industries jednoznačně proslavila, byla "
+"navržena jako elegantní těžký útočný křižník. Obecně je křehčí než ostatní "
+"křižníky, ale dokáže kombinovat vynikající manévrovací schopnosti a palebnou "
+"sílu s nejmodernější elektronikou, což z něj v rukou schopného kapitána dělá "
+"skutečně obávanou loď."
 
 #: dat/ships/neutral/koala.xml:2
 msgid "Koala"
-msgstr ""
+msgstr "Koala"
 
 #: dat/ships/neutral/koala.xml:13 dat/ships/neutral/llama.xml:15
 #: dat/ships/neutral/mule.xml:14 dat/ships/neutral/quicksilver.xml:14
 #: dat/ships/neutral/rhino.xml:15 dat/ships/neutral/zebra.xml:18
 msgid "Melendez Corp."
-msgstr ""
+msgstr "Melendez Corp."
 
 #: dat/ships/neutral/koala.xml:14
 msgid ""
@@ -8969,10 +9181,13 @@ msgid ""
 "weapon space but a decent amount of cargo space. Good for the entrepreneur "
 "working looking to turn a profit while making their way across the stars."
 msgstr ""
+"Koala je standardní nákladní loď. Je to malá loď s malým prostorem pro "
+"zbraně, ale slušným množstvím nákladového prostoru. Hodí se pro pracující "
+"podnikatele, kteří chtějí vydělat na své cestě po hvězdách."
 
 #: dat/ships/neutral/lancelot.xml:2
 msgid "Lancelot"
-msgstr ""
+msgstr "Lancelot"
 
 #: dat/ships/neutral/lancelot.xml:16
 msgid ""
@@ -8983,11 +9198,17 @@ msgid ""
 "is used by security agencies all over the galaxy for its reliability and "
 "availability."
 msgstr ""
+"Jeden z ceněných těžkých stíhačů loděnic Nexus. Lancelot byl původně "
+"utajovaným projektem pro armádu Impéria, ale jeho existence byla odhalena "
+"během přerušeného zkušebního letu. Nyní je k dispozici upravená verze pro "
+"civilisty, i když zcela neodpovídá původním specifikacím. Pro svou "
+"spolehlivost a dostupnost je používán bezpečnostními agenturami po celé "
+"galaxii."
 
 #: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
 msgid "Llama"
-msgstr ""
+msgstr "Llama"
 
 #: dat/ships/neutral/llama.xml:16
 msgid ""
@@ -8996,10 +9217,15 @@ msgid ""
 "many, many cycles ago. It was one of the first civilian use spacecrafts, "
 "first used by aristocracy and now used by everyone who cannot afford better."
 msgstr ""
+"Jedna z nejpoužívanějších lodí v galaxii. Proslulá svou stabilitou a "
+"tvrdohlavostí. Konstrukce nebyla od svého vzniku před mnoha a mnoha cykly "
+"příliš upravována. Byla to jedna z prvních vesmírných lodí pro civilní "
+"použití, kterou nejprve používala aristokracie a nyní ji používají všichni, "
+"kdo si nemohou dovolit lepší."
 
 #: dat/ships/neutral/mule.xml:2
 msgid "Mule"
-msgstr ""
+msgstr "Mule"
 
 #: dat/ships/neutral/mule.xml:16
 msgid ""
@@ -9008,10 +9234,14 @@ msgid ""
 "allowing for enjoyable cruises. The Mule is a favourite target of pirates, "
 "so avoiding dangerous systems is strongly advised."
 msgstr ""
+"Těžká nákladní loď specializovaná na přepravu nákladu po celé galaxii. V "
+"závislosti na modelu má také dostatek prostoru pro cestující, což umožňuje "
+"příjemné plavby. Mula je oblíbeným cílem pirátů, proto se důrazně doporučuje "
+"vyhýbat se nebezpečným systémům."
 
 #: dat/ships/neutral/pacifier.xml:2
 msgid "Pacifier"
-msgstr ""
+msgstr "Pacifier"
 
 #: dat/ships/neutral/pacifier.xml:16
 msgid ""
@@ -9020,10 +9250,14 @@ msgid ""
 "withstand heavy punishment from raiding parties. The Pacifier features high "
 "fuel capacity to facilitate lengthy patrol routes."
 msgstr ""
+"Pacifier je jedním ze starších a důvěryhodnějších projektů loděnic Nexus. "
+"Byl navržen především jako pohraniční hlídkové plavidlo, a proto je schopen "
+"odolávat těžkým nájezdům. Pacifier má vysokou kapacitu paliva, která "
+"usnadňuje dlouhé hlídkové trasy."
 
 #: dat/ships/neutral/phalanx.xml:2
 msgid "Phalanx"
-msgstr ""
+msgstr "Phalanx"
 
 #: dat/ships/neutral/phalanx.xml:16
 msgid ""
@@ -9032,10 +9266,14 @@ msgid ""
 "construction. Its high armor makes it a capable corvette provided one equips "
 "it with turrets."
 msgstr ""
+"Phalanx je podle dvaeredských standardů rychlá korveta, kterou lze použít "
+"jako raketovou platformu, která také špatně manévruje, je standardní "
+"dvaeredské konstrukce. Její vysoké pancéřování z ní dělá schopnou korvetu za "
+"předpokladu, že ji někdo vybaví věžemi."
 
 #: dat/ships/neutral/quicksilver.xml:2
 msgid "Quicksilver"
-msgstr ""
+msgstr "Quicksilver"
 
 #: dat/ships/neutral/quicksilver.xml:15
 msgid ""
@@ -9043,10 +9281,13 @@ msgid ""
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
 "engines, it's the prime choice for expedient shipping."
 msgstr ""
+"Quicksilver je sice stále nákladním vozem, ale od ostatních Melendezových "
+"nabídek se značně liší. Má zjednodušený rám a nadměrné motory, a je tak "
+"nejlepší volbou pro účelnou přepravu."
 
 #: dat/ships/neutral/rhino.xml:2
 msgid "Rhino"
-msgstr ""
+msgstr "Rhino"
 
 #: dat/ships/neutral/rhino.xml:17
 msgid ""
@@ -9056,10 +9297,15 @@ msgid ""
 "Its modular bays allow it to function as a personnel transport, a fact not "
 "lost on modern militaries."
 msgstr ""
+"Vozidlo Rhino je mimořádně odolné konstrukce Melendez a je vhodné pro "
+"přepravu vysoce hodnotného a rizikového nákladu. Ačkoli má mnohem nižší "
+"hustotu nákladu než specializované nákladní lodě, chrání se velmi účinně. "
+"Jeho modulární prostory umožňují, aby fungoval i jako transportní loď pro "
+"přepravu osob, což je skutečnost, která moderním armádám neunikla."
 
 #: dat/ships/neutral/schroedinger.xml:2
 msgid "Schroedinger"
-msgstr ""
+msgstr "Schroedinger"
 
 #: dat/ships/neutral/schroedinger.xml:14
 #: dat/ships/sirius/sirius_divinity.xml:14 dat/ships/sirius/sirius_dogma.xml:14
@@ -9068,7 +9314,7 @@ msgstr ""
 #: dat/ships/sirius/sirius_providence.xml:18
 #: dat/ships/sirius/sirius_shaman.xml:13
 msgid "Sirius Systems"
-msgstr ""
+msgstr "Systémy Sirius"
 
 #: dat/ships/neutral/schroedinger.xml:15
 msgid ""
@@ -9079,10 +9325,16 @@ msgid ""
 "and low amount of weapons space. It is also equipped with a pair of Eraedon "
 "engines, making it highly manoeuvrable."
 msgstr ""
+"Schroedinger se používá především jako průzkumné plavidlo. Díky pokročilým "
+"automatizačním subsystémům potřebuje jen kostru posádky a jeho vlastní "
+"palivové nádrže mu umožňují mnohem větší dolet než většině lodí. Nevýhodou "
+"je, že loď je extrémně zranitelná vůči útokům kvůli svému lehkému pancíři a "
+"malému množství zbraňového prostoru. Je také vybavena dvojicí motorů "
+"Eraedon, díky nimž je velmi obratná."
 
 #: dat/ships/neutral/shark.xml:2 dat/scripts/pilotname/generic.lua:77
 msgid "Shark"
-msgstr ""
+msgstr "Shark"
 
 #: dat/ships/neutral/shark.xml:17
 msgid ""
@@ -9090,10 +9342,13 @@ msgid ""
 "designed for in-system patrolling. While it's not as capable as its larger "
 "relative, the Lancelot, it's still an effective addition to any fleet."
 msgstr ""
+"Shark je novější konstrukce loděnic Nexus a je to hbitý, lehký stíhací "
+"letoun určený k hlídkování v systému. I když není tak výkonný jako jeho "
+"větší příbuzný Lancelot, stále je účinným doplňkem každé flotily."
 
 #: dat/ships/neutral/starbridge.xml:2
 msgid "Starbridge"
-msgstr ""
+msgstr "Starbridge"
 
 #: dat/ships/neutral/starbridge.xml:16
 msgid ""
@@ -9102,11 +9357,15 @@ msgid ""
 "comparable maximum speed. It's low mass comes at the cost of reduced "
 "structural space."
 msgstr ""
+"Starbridge je nejnovější loď navržená společností Krain Industries. Je to "
+"lehký torpédoborec, který dosahuje stejné manévrovatelnosti jako korveta a "
+"srovnatelné maximální rychlosti. Nízká hmotnost je cenou za zmenšený "
+"konstrukční prostor."
 
 #: dat/ships/neutral/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:217
 msgid "Vendetta"
-msgstr ""
+msgstr "Vendetta"
 
 #: dat/ships/neutral/vendetta.xml:16
 msgid ""
@@ -9118,10 +9377,17 @@ msgid ""
 "other hand it has a  truly fearsome barrage it can unleash that has "
 "precisely the power to transform extended battles into short fights."
 msgstr ""
+"Vendetta velmi dobře ukazuje filozofii rodu Dvaered. Dejte lodi mnoho "
+"hrozivých děl, obložte ji těžkým pancířem a zanedbejte elektroniku. Kvůli "
+"zastaralé elektronice použité na Vendettě se hodí spíše na krátké souboje "
+"než na delší bitvy, protože má horší regeneraci energie ve srovnání s jinými "
+"loděmi své třídy. Na druhou stranu má skutečně děsivou palbu, kterou dokáže "
+"spustit a která má přesně takovou sílu, aby dokázala změnit delší bitvy na "
+"krátké boje."
 
 #: dat/ships/neutral/vigilance.xml:2
 msgid "Vigilance"
-msgstr ""
+msgstr "Vigilance"
 
 #: dat/ships/neutral/vigilance.xml:15
 msgid ""
@@ -9130,10 +9396,14 @@ msgid ""
 "possible with forward weapons. Given its Dvaered origins, it possesses "
 "inferior technology relative to its counterparts."
 msgstr ""
+"Vigilance je ztělesněním filozofie Dvaered. Díky obrovským zásobám energie a "
+"šesti zbraňovým hardpointům je navržen tak, aby co nejsilněji zasáhl "
+"předními zbraněmi. Vzhledem ke svému dvaeredskému původu disponuje horší "
+"technologií oproti svým protějškům."
 
 #: dat/ships/neutral/zebra.xml:2
 msgid "Zebra"
-msgstr ""
+msgstr "Zebra"
 
 #: dat/ships/neutral/zebra.xml:20
 msgid ""
@@ -9142,10 +9412,14 @@ msgid ""
 "traders. The Zebra offers an unmatched cargo density with reasonable "
 "protection."
 msgstr ""
+"Nákladní loď Zebra je největší ze všech nákladních lodí vyráběných "
+"společností Melendez a patří mezi nejžádanější lodě všech nezávislých "
+"civilních obchodníků. Zebra nabízí bezkonkurenční hustotu nákladu s "
+"přiměřenou ochranou."
 
 #: dat/ships/pirate/pirate_admonisher.xml:2
 msgid "Pirate Admonisher"
-msgstr ""
+msgstr "Pirátský Admonisher"
 
 #: dat/ships/pirate/pirate_admonisher.xml:17
 #: dat/ships/pirate/pirate_ancestor.xml:14 dat/ships/pirate/pirate_hyena.xml:15
@@ -9156,7 +9430,7 @@ msgstr ""
 #: dat/ships/pirate/pirate_starbridge.xml:15
 #: dat/ships/pirate/pirate_vendetta.xml:15 dat/ships/pirate/pirate_zebra.xml:19
 msgid "Skull and Bones"
-msgstr ""
+msgstr "Skull and Bones"
 
 #: dat/ships/pirate/pirate_admonisher.xml:18
 msgid ""
@@ -9165,10 +9439,14 @@ msgid ""
 "manoeuvrability, more weapons space and slightly improved defences, at a "
 "cost of cargo capacity and armour regeneration rates."
 msgstr ""
+"Zásobní Admonisher je výkonné plavidlo, zejména vzhledem ke své velikosti. "
+"Pirátský Admonisher se díky obvyklé úpravě Skull and Bones vyznačuje lepší "
+"manévrovací schopností, větším prostorem pro zbraně a mírně vylepšenou "
+"obranou na úkor kapacity nákladu a rychlosti regenerace pancíře."
 
 #: dat/ships/pirate/pirate_ancestor.xml:2
 msgid "Pirate Ancestor"
-msgstr ""
+msgstr "Pirátský Ancestor"
 
 #: dat/ships/pirate/pirate_ancestor.xml:15
 msgid ""
@@ -9177,10 +9455,14 @@ msgid ""
 "without firing a shot. As better ships came out in the market, their use has "
 "fallen due to their archaic electronics and targeting systems."
 msgstr ""
+"Ancestor byla jednou z prvních lodí, které si oblíbili piráti. Velká "
+"zastrašující křídla a vysoká maximální rychlost obvykle přiměly lodě vzdát "
+"se bez jediného výstřelu. Jak se na trhu objevovaly lepší lodě, jejich "
+"používání klesalo kvůli archaické elektronice a zaměřovacím systémům."
 
 #: dat/ships/pirate/pirate_hyena.xml:2
 msgid "Pirate Hyena"
-msgstr ""
+msgstr "Pirátská Hyena"
 
 #: dat/ships/pirate/pirate_hyena.xml:16
 msgid ""
@@ -9191,10 +9473,16 @@ msgid ""
 "them even more efficient as scavengers and harder to hit than their Aerosys "
 "counterparts."
 msgstr ""
+"Pirátská hyena se rychle stala oblíbenou mezi piráty široko daleko. Není to "
+"moc dobrý stíhač, ani nemá příliš velkou sílu, ale ve skupinách dokáže "
+"překonat téměř každé plavidlo a její pilotování je tak jednoduché, že se "
+"výrazně zlepšila reakční doba. Společnost Skull and Bones je doplnila o "
+"úpravy, díky nimž jsou jako mrchožrouti ještě účinnější a hůře zasažitelní "
+"než jejich protějšky z Aerosysu."
 
 #: dat/ships/pirate/pirate_kestrel.xml:2
 msgid "Pirate Kestrel"
-msgstr ""
+msgstr "Pirátský Kestrel"
 
 #: dat/ships/pirate/pirate_kestrel.xml:16
 msgid ""
@@ -9203,10 +9491,14 @@ msgid ""
 "authority of the Empire. A very strong ship for those pirates who can afford "
 "it."
 msgstr ""
+"Kestrel je nejlepší loď, kterou společnost Skull and Bones nabízí. Na "
+"křižník je mimořádně obratná, přesto jí nechybí palebná síla potřebná ke "
+"zpochybnění autority Impéria. Velmi silná loď pro ty piráty, kteří si ji "
+"mohou dovolit."
 
 #: dat/ships/pirate/pirate_phalanx.xml:2
 msgid "Pirate Phalanx"
-msgstr ""
+msgstr "Pirátský Phalanx"
 
 #: dat/ships/pirate/pirate_phalanx.xml:16
 msgid ""
@@ -9214,12 +9506,12 @@ msgid ""
 "engineers have substantially improved the ship's performance, while only "
 "minorly sacrificing protection."
 msgstr ""
+"Na základě již schopného podvozku Phalanx inženýři Skull and Bones podstatně "
+"zlepšili výkon lodi, přičemž jen nepatrně snížili její ochranu."
 
 #: dat/ships/pirate/pirate_revenant.xml:2
-#, fuzzy
-#| msgid "Pirate Raid"
 msgid "Pirate Revenant"
-msgstr "Nájezd pirátů"
+msgstr "Pirátský Revenant"
 
 #: dat/ships/pirate/pirate_revenant.xml:19
 msgid ""
@@ -9232,10 +9524,18 @@ msgid ""
 "externals, and there are many stories of pirates that have developed strong "
 "bonds with their bioships."
 msgstr ""
+"Protože Skull and Bones nemají technologii na pěstování nových biolodí od "
+"nuly, zachraňují ukradené soromidské lodě. Ačkoli proces adaptace může být z "
+"antropomorfního hlediska považován za krutý, což vede k některým konfliktům "
+"s pirátskými organizacemi bojujícími proti týrání zvířat, zastánci tvrdí, že "
+"tento proces nezpůsobuje lodím bolest ani výrazný stres. Úpravy se "
+"nezaměřují na vnitřní orgány a soustředí se na předělání zevnějšku a "
+"existuje mnoho příběhů pirátů, kteří si se svými bioloděmi vytvořili silné "
+"pouto."
 
 #: dat/ships/pirate/pirate_rhino.xml:2
 msgid "Pirate Rhino"
-msgstr ""
+msgstr "Pirátský Rhino"
 
 #: dat/ships/pirate/pirate_rhino.xml:17
 msgid ""
@@ -9243,10 +9543,13 @@ msgid ""
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
 "and durability, the Rhino has become an excellent scavenger ship."
 msgstr ""
+"Díky tradiční úpravě Skull and Bones je Rhino podstatně obratnější, i když "
+"poněkud hůře pancéřovaný. Díky velkému nákladovému prostoru a odolnosti se "
+"Rhino stal vynikající mrchožroutskou lodí."
 
 #: dat/ships/pirate/pirate_shark.xml:2
 msgid "Pirate Shark"
-msgstr ""
+msgstr "Pirátský Shark"
 
 #: dat/ships/pirate/pirate_shark.xml:17
 msgid ""
@@ -9255,10 +9558,14 @@ msgid ""
 "handling suffers minimally while it's able to bring substantially more "
 "firepower to bear."
 msgstr ""
+"Hbitý Shark z loděnic Nexus se ukázal jako skvělé plátno pro techniky z "
+"loděnice Skull and Bones. Je vybaven přídavným držákem zbraní, takže jeho "
+"ovladatelnost trpí minimálně, zatímco je schopen vyvinout podstatně větší "
+"palebnou sílu."
 
 #: dat/ships/pirate/pirate_starbridge.xml:2
 msgid "Pirate Starbridge"
-msgstr "Pirátský hvězdný most"
+msgstr "Pirátský Starbridge"
 
 #: dat/ships/pirate/pirate_starbridge.xml:16
 msgid ""
@@ -9267,10 +9574,14 @@ msgid ""
 "firepower and relatively high speed, for its ship class, the Starbridge is "
 "truly a fearsome sight."
 msgstr ""
+"Přestože je Starbridge již nyní lehkým a rychlým torpédoborcem, inženýrům "
+"společnosti Skull and Bones se podařilo jeho rychlost ještě zvýšit. Díky své "
+"velké palebné síle a relativně vysoké rychlosti je Starbridge na svou třídu "
+"lodí skutečně děsivým zjevem."
 
 #: dat/ships/pirate/pirate_vendetta.xml:2
 msgid "Pirate Vendetta"
-msgstr ""
+msgstr "Pirátská Vendetta"
 
 #: dat/ships/pirate/pirate_vendetta.xml:16
 msgid ""
@@ -9282,12 +9593,16 @@ msgid ""
 "reactor goes nova, destroying the ship. You hope it won't happen to you if "
 "you get in one."
 msgstr ""
+"Pirátská Vendetta je ještě hrozivější než její běžný protějšek. Byl výrazně "
+"upraven, aby byl více přizpůsoben pirátskému stylu létání. Část pancíře byla "
+"odstraněna, aby bylo více místa na kořist, zatímco reaktor byl vylepšen "
+"nějakým pochybným pupkatým technikem. Loď je ve výsledku podstatně lepší než "
+"původní, ale každou chvíli se reaktor rozpadne na novu a zničí loď. Doufáte, "
+"že se to nestane vám, pokud se do ní dostanete."
 
 #: dat/ships/pirate/pirate_zebra.xml:2
-#, fuzzy
-#| msgid "Pirate Raid"
 msgid "Pirate Zebra"
-msgstr "Nájezd pirátů"
+msgstr "Pirátská Zebra"
 
 #: dat/ships/pirate/pirate_zebra.xml:20
 msgid ""
@@ -9297,33 +9612,36 @@ msgid ""
 "significantly lower. The pirate version of the Zebra is nevertheless used as "
 "freighter occasionally."
 msgstr ""
+"Zebra, jedna z největších nákladních lodí pro nezávislé civilní obchodníky, "
+"byla společností Skull and Bones přestavěna na letadlovou loď. Velká část "
+"nákladových prostor byla přebudována na hangáry, takže kapacita nákladu je "
+"výrazně nižší. Pirátská verze Zebry je nicméně příležitostně používána jako "
+"nákladní loď."
 
 #: dat/ships/proteron/proteron_archimedes.xml:2
 msgid "Proteron Archimedes"
-msgstr ""
+msgstr "Proteronský Archimedes"
 
 #: dat/ships/proteron/proteron_archimedes.xml:20
 #: dat/ships/proteron/proteron_watson.xml:20
-#, fuzzy
-#| msgid "You need at least 50 reputation with the Sirius."
 msgid "You need at least 70 reputation with the Proteron."
-msgstr "Potřebujete alespoň 50 reputace u Siria."
+msgstr "Potřebujete alespoň 70 reputací u Proteronu."
 
 #: dat/ships/proteron/proteron_archimedes.xml:21
 msgid ""
 "The Archimedes is the backbone of the Proteron fleet. Offering heavy "
 "firepower and high durability, it can always be found in the heat of battle."
 msgstr ""
+"Archimedes je páteří flotily Proteronu. Nabízí velkou palebnou sílu a "
+"vysokou odolnost a vždy se nachází v bitevní vřavě."
 
 #: dat/ships/proteron/proteron_dalton.xml:2
 msgid "Proteron Dalton"
-msgstr ""
+msgstr "Proteronský Dalton"
 
 #: dat/ships/proteron/proteron_dalton.xml:18
-#, fuzzy
-#| msgid "You need at least 50 reputation with the Sirius."
 msgid "You need at least 20 reputation with the Proteron."
-msgstr "Potřebujete alespoň 50 reputace u Siria."
+msgstr "Potřebujete alespoň 20 reputací u Proteronu."
 
 #: dat/ships/proteron/proteron_dalton.xml:19
 msgid ""
@@ -9335,10 +9653,17 @@ msgid ""
 "suited to duelling, but a carrier group unleashing several squadrons has "
 "been known to turn the tide of battle on many occasions."
 msgstr ""
+"Ačkoli jsou menší a méně hrozivé než jejich větší sourozenci z arzenálu "
+"Proteronů, smečka Daltonů je stále nepřítelem, se kterým je třeba počítat. "
+"Je to poslední z dlouhé řady převážně letadlových stíhačů. Pancéřový plášť "
+"Daltonu lze zasunout a funguje jako nákladový box pro pohodlnější manipulaci "
+"a skladování. Mají relativně malou palebnou sílu, takže se nehodí k "
+"soubojům, ale je známo, že skupina letadlových lodí, která vypustí několik "
+"letek, mnohokrát zvrátí průběh bitvy."
 
 #: dat/ships/proteron/proteron_euler.xml:2
 msgid "Proteron Euler"
-msgstr ""
+msgstr "Proteronský Euler"
 
 #: dat/ships/proteron/proteron_euler.xml:15
 msgid ""
@@ -9348,10 +9673,15 @@ msgid ""
 "reconnaissance vessel. Not geared for combat, this ship relies on stealth "
 "and speed to avoid hostiles."
 msgstr ""
+"Proteronci si své bitvy pečlivě vybírají, protože jejich pomalé hlavní lodě "
+"nemohou z bitvy snadno ustoupit. Proto mají poměrně velkou flotilu "
+"průzkumných plavidel, přičemž Euler je primárně používaným průzkumným "
+"plavidlem. Tato loď není uzpůsobena k boji, spoléhá na utajení a rychlost, "
+"aby se vyhnula nepřátelům."
 
 #: dat/ships/proteron/proteron_gauss.xml:2
 msgid "Proteron Gauss"
-msgstr ""
+msgstr "Proteronský Gauss"
 
 #: dat/ships/proteron/proteron_gauss.xml:17
 msgid ""
@@ -9360,16 +9690,18 @@ msgid ""
 "combat vessel. While possessing fewer weapon mounts than the Pacifier, it "
 "makes up for it with its lower mass and expanded structural space."
 msgstr ""
+"Gauss je špičkové plavidlo. Jeho konstrukce byla dokončena krátce před "
+"incidentem a mělo se stát hlavním bojovým plavidlem proteronské armády. Má "
+"sice méně zbraňových zařízení než Pacifier, ale vynahrazuje to nižší "
+"hmotností a rozšířeným konstrukčním prostorem."
 
 #: dat/ships/proteron/proteron_hippocrates.xml:2
 msgid "Proteron Hippocrates"
-msgstr ""
+msgstr "Proteronský Hippocrates"
 
 #: dat/ships/proteron/proteron_hippocrates.xml:20
-#, fuzzy
-#| msgid "You need at least 50 reputation with the Sirius."
 msgid "You need at least 50 reputation with the Proteron."
-msgstr "Potřebujete alespoň 50 reputace u Siria."
+msgstr "Potřebujete alespoň 50 reputací u Proteronu."
 
 #: dat/ships/proteron/proteron_hippocrates.xml:21
 msgid ""
@@ -9379,16 +9711,19 @@ msgid ""
 "fleets. The Hippocrates can also be used as missile platform using the "
 "hangar bay to store additional ammo crates."
 msgstr ""
+"Protože Proteron používá pouze stíhačky na letadlových lodích, malým "
+"flotilám chybí stíhací podpora. Aby se tento problém vyřešil, byla vyvinuta "
+"ultralehká letadlová loď Hippocrates, specializovaná na poskytování stíhací "
+"podpory proteronským přepadovým flotilám. Hippokratés může sloužit také jako "
+"raketová platforma, přičemž hangár slouží k uložení dalších beden s municí."
 
 #: dat/ships/proteron/proteron_pythagoras.xml:2
 msgid "Proteron Pythagoras"
-msgstr ""
+msgstr "Proteronský Pythagoras"
 
 #: dat/ships/proteron/proteron_pythagoras.xml:19
-#, fuzzy
-#| msgid "You need at least 50 reputation with the Sirius."
 msgid "You need at least 60 reputation with the Proteron."
-msgstr "Potřebujete alespoň 50 reputace u Siria."
+msgstr "Potřebujete alespoň 60 reputací u Proteronu."
 
 #: dat/ships/proteron/proteron_pythagoras.xml:20
 msgid ""
@@ -9398,10 +9733,15 @@ msgid ""
 "the defence of the enemy trying to find a weak spot for the heavy Proteron "
 "fleets to break through."
 msgstr ""
+"Zatímco Proteron se většinou spoléhá na těžké a silné vlajkové lodě, "
+"Pythagoras je výjimkou. Je to lehký a rychlý křižník, který je často "
+"nasazován v malých střetech proti středně velkým lodím. Obvykle ho lze "
+"nalézt, jak testuje obranu nepřítele a snaží se najít slabé místo, kterým by "
+"mohly prorazit těžké proteronské flotily."
 
 #: dat/ships/proteron/proteron_watson.xml:2
 msgid "Proteron Watson"
-msgstr ""
+msgstr "Proteronský Watson"
 
 #: dat/ships/proteron/proteron_watson.xml:21
 msgid ""
@@ -9409,32 +9749,35 @@ msgid ""
 "mobile launch base as well as a command and control unit, this vessel co-"
 "ordinates the rest of the fleet in the fight for dominance over the galaxy."
 msgstr ""
+"Srdce proteronské bitevní flotily tvoří loď Watson. Toto plavidlo slouží "
+"jako mobilní odpalovací základna a zároveň jako velitelská a řídicí jednotka "
+"a koordinuje zbytek flotily v boji o nadvládu nad galaxií."
 
 #: dat/ships/sirius/astral_projection_greater.xml:2
 msgid "Astral Projection Greater"
-msgstr ""
+msgstr "Větší astrální projekce"
 
 #: dat/ships/sirius/astral_projection_greater.xml:11
 #: dat/ships/sirius/astral_projection_lesser.xml:11
 #: dat/ships/sirius/astral_projection_normal.xml:11
 msgid "Sirius Psychic Powers"
-msgstr ""
+msgstr "Psychické síly Siria"
 
 #: dat/ships/sirius/astral_projection_lesser.xml:2
 msgid "Astral Projection Lesser"
-msgstr ""
+msgstr "Menší astrální projekce"
 
 #: dat/ships/sirius/astral_projection_normal.xml:2
 msgid "Astral Projection Normal"
-msgstr ""
+msgstr "Normální astrální projekce"
 
 #: dat/ships/sirius/sirius_divinity.xml:2
 msgid "Sirius Divinity"
-msgstr ""
+msgstr "Božství Siria"
 
 #: dat/ships/sirius/sirius_divinity.xml:17 dat/ships/sirius/sirius_dogma.xml:17
 msgid "You need at least 70 reputation with House Sirius."
-msgstr ""
+msgstr "Potřebujete alespoň 70 reputací u rodu Sirius."
 
 #: dat/ships/sirius/sirius_divinity.xml:18
 msgid ""
@@ -9444,16 +9787,24 @@ msgid ""
 "multitude of fighters gives it unparalleled flexibility in combat, serving "
 "as a key logistical vessel in any sizable fleet."
 msgstr ""
+"Ačkoli se říká, že Dogma tvoří jádro každé sirianské flotily, jen málo "
+"bojových pilotů by odmítlo význam Divinity. Ačkoli v přímém boji není "
+"Divinity nijak výjimečně hrozivá, její schopnost nasadit množství stíhaček "
+"jí dává jedinečnou flexibilitu v boji a slouží jako klíčové logistické "
+"plavidlo v každé velké flotile."
 
 #: dat/ships/sirius/sirius_divinity.xml:19
 msgid ""
 "Every second applies a buff to all fighters within 3000 range that increases "
 "damage by 8% per 100 flow over 250 flow. Range is affected by detection."
 msgstr ""
+"Každou vteřinu se na všechny bojovníky v dosahu 3000 použije bonus, který "
+"zvyšuje poškození o 8 % za 100 proudů nad 250 proudů. Dosah je ovlivněn "
+"detekcí."
 
 #: dat/ships/sirius/sirius_dogma.xml:2
 msgid "Sirius Dogma"
-msgstr ""
+msgstr "Sirianské Dogma"
 
 #: dat/ships/sirius/sirius_dogma.xml:18
 msgid ""
@@ -9461,18 +9812,21 @@ msgid ""
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
 "is seldom surpassed in either prestige or military might."
 msgstr ""
+"Dogma je páteří flotily rodu Sirius a je na co se dívat. Dogma, ověšená "
+"zlatem a stříbrem a vybavená velkým množstvím zbraní, je jen málokdy "
+"překonána v prestiži i vojenské síle."
 
 #: dat/ships/sirius/sirius_dogma.xml:19
 msgid "Gains 4% weapon damage per 100 flow over 250 flow."
-msgstr ""
+msgstr "Získává 4 % poškození zbraně za 100 průtoků nad 250 průtoků."
 
 #: dat/ships/sirius/sirius_fidelity.xml:2
 msgid "Sirius Fidelity"
-msgstr ""
+msgstr "Sirianská Fidelity"
 
 #: dat/ships/sirius/sirius_fidelity.xml:16
 msgid "You need at least 20 reputation with House Sirius."
-msgstr ""
+msgstr "Potřebujete alespoň 20 reputací u rodu Sirius."
 
 #: dat/ships/sirius/sirius_fidelity.xml:17
 msgid ""
@@ -9480,20 +9834,25 @@ msgid ""
 "competent alone, it's often employed as a forward scout, bringing with it "
 "far deadlier allies."
 msgstr ""
+"Fidelity je stíhač rodu Sirius. Ačkoli sama o sobě není nijak zvlášť "
+"schopná, je často využívána jako předsunutý průzkumník, který s sebou "
+"přináší mnohem smrtonosnější spojence."
 
 #: dat/ships/sirius/sirius_fidelity.xml:18
 msgid ""
 "For each 10 flow over 25 flow, increases action speed by 3% up to a maximum "
 "of 25%."
 msgstr ""
+"Za každých 10 průtoků nad 25 průtoků se zvýší akční rychlost o 3 %, "
+"maximálně však o 25 %."
 
 #: dat/ships/sirius/sirius_preacher.xml:2
 msgid "Sirius Preacher"
-msgstr ""
+msgstr "Sirianský Preacher"
 
 #: dat/ships/sirius/sirius_preacher.xml:16
 msgid "You need at least 40 reputation with House Sirius."
-msgstr ""
+msgstr "Potřebujete alespoň 40 reputace v domě Sirius."
 
 #: dat/ships/sirius/sirius_preacher.xml:17
 msgid ""
@@ -9501,19 +9860,24 @@ msgid ""
 "Sirius projects its message and will. Fielding a large array of weaponry, "
 "the Preacher is adept at making converts out of unbelievers."
 msgstr ""
+"Preacher, jak už název napovídá, je hlavním prostředkem, kterým Dům Sirius "
+"předává své poselství a vůli. Preacher disponuje velkým množstvím zbraní a "
+"umí z nevěřících udělat konvertity."
 
 #: dat/ships/sirius/sirius_preacher.xml:18
 msgid ""
 "For each 10 flow above 80 flow, increases shield regeneration rate by 4%."
 msgstr ""
+"Za každých 10 průtoků nad 80 průtoků se zvýší rychlost regenerace štítu o 4 "
+"%."
 
 #: dat/ships/sirius/sirius_providence.xml:2
 msgid "Sirius Providence"
-msgstr ""
+msgstr "Sirianská Providence"
 
 #: dat/ships/sirius/sirius_providence.xml:21
 msgid "You need at least 60 reputation with House Sirius."
-msgstr "Potřebujete alespoň 60 reputace u klanu Sirius."
+msgstr "Potřebujete alespoň 60 reputace u rodu Sirius."
 
 #: dat/ships/sirius/sirius_providence.xml:22
 msgid ""
@@ -9522,18 +9886,21 @@ msgid ""
 "transport pilgrims, even though most Sirii dislike these overcrowded mass "
 "transports."
 msgstr ""
+"Providence je nákladní loď rodu Sirius a slouží především k přepravě velkého "
+"množství zásob. Některé z nich se používají také k přepravě poutníků, i když "
+"většina Siriů tyto přeplněné hromadné transporty nemá ráda."
 
 #: dat/ships/sirius/sirius_providence.xml:23
 msgid "For every 100 flow over 150, increases damage absorption by 15%."
-msgstr ""
+msgstr "Za každých 100 průtoků nad 150 zvyšuje absorpci poškození o 15 %."
 
 #: dat/ships/sirius/sirius_shaman.xml:2
 msgid "Sirius Shaman"
-msgstr ""
+msgstr "Sirianský Shaman"
 
 #: dat/ships/sirius/sirius_shaman.xml:16
 msgid "You need at least 30 reputation with House Sirius."
-msgstr ""
+msgstr "Potřebujete alespoň 30 reputace u rodu Sirius."
 
 #: dat/ships/sirius/sirius_shaman.xml:17
 msgid ""
@@ -9541,24 +9908,30 @@ msgid ""
 "fighter from a distance, the Shaman is anything but. A purpose-built light "
 "missile platform, few enemies escape the reach of the Shaman."
 msgstr ""
+"Ačkoli jeho relativně elegantní stavba může být z dálky mylně považována za "
+"lehkého bojovníka, Shaman je něco jiného. Je to speciálně zkonstruovaná "
+"lehká raketová platforma a jen málo nepřátel unikne z dosahu Shamana."
 
 #: dat/ships/sirius/sirius_shaman.xml:18
 msgid ""
 "For every 10 flow above 25 flow, increases launcher fire rate and range by "
 "5% and lock-on, calibration, and reload rates by 10%."
 msgstr ""
+"Za každých 10 průtoků nad 25 průtoků se zvýší rychlost střelby a dosah "
+"odpalovacího zařízení o 5 % a rychlost zaměřování, kalibrace a nabíjení o 10 "
+"%."
 
 #: dat/ships/soromid/soromid_arx.xml:2
 msgid "Soromid Arx"
-msgstr ""
+msgstr "Soromidský Arx"
 
 #: dat/ships/soromid/soromid_arx.xml:9
 msgid "Bio-Carrier"
-msgstr ""
+msgstr "Bio-Letadlová loď"
 
 #: dat/ships/soromid/soromid_arx.xml:23 dat/ships/soromid/soromid_vox.xml:20
 msgid "You need at least 70 reputation with the Soromid."
-msgstr ""
+msgstr "Potřebujete alespoň 70 reputace u rodu Soromid."
 
 #: dat/ships/soromid/soromid_arx.xml:24
 msgid ""
@@ -9568,18 +9941,23 @@ msgid ""
 "Arx tends to be a more lightweight carrier than is typically found in non-"
 "Soromid fleets, without sacrificing carrying capacity."
 msgstr ""
+"Soromidský Arx se obvykle vyskytuje v soromidských flotilách jako velitelské "
+"plavidlo a nosič stíhaček. Jeho jedinečné vlastnosti mu umožňují značně "
+"zvýšit sílu nesených lodí, což snadno vynahradí jeho snížený počet slotů. "
+"Arx bývá lehčí letadlovou lodí, než jaká se obvykle vyskytuje v "
+"nesoromidských flotilách, aniž by tím utrpěla nosnost."
 
 #: dat/ships/soromid/soromid_brigand.xml:2
 msgid "Soromid Brigand"
-msgstr ""
+msgstr "Soromidský Brigand"
 
 #: dat/ships/soromid/soromid_brigand.xml:9
 msgid "Bio-Interceptor"
-msgstr ""
+msgstr "Bio-Interceptor"
 
 #: dat/ships/soromid/soromid_brigand.xml:16
 msgid "You need at least 20 reputation with the Soromid."
-msgstr ""
+msgstr "Potřebujete alespoň 20 reputace u rodu Soromid."
 
 #: dat/ships/soromid/soromid_brigand.xml:17
 msgid ""
@@ -9588,18 +9966,21 @@ msgid ""
 "but it makes up for this by being fast to grow and therefore relatively "
 "expendable."
 msgstr ""
+"Brigand je rychlá a obratná loď, kterou Soromidé používají k hlídkování v "
+"systému a k policejním účelům. Loď je slabě pancéřovaná a poměrně křehká, "
+"ale vynahrazuje to tím, že rychle roste, a je tedy relativně postradatelná."
 
 #: dat/ships/soromid/soromid_copia.xml:2
 msgid "Soromid Copia"
-msgstr ""
+msgstr "Soromidská Copia"
 
 #: dat/ships/soromid/soromid_copia.xml:9
 msgid "Bio-Freighter"
-msgstr ""
+msgstr "Bio-nákladní loď"
 
 #: dat/ships/soromid/soromid_copia.xml:23 dat/ships/soromid/soromid_ira.xml:21
 msgid "You need at least 60 reputation with the Soromid."
-msgstr ""
+msgstr "Potřebujete alespoň 60 reputace u rodu Soromid."
 
 #: dat/ships/soromid/soromid_copia.xml:24
 msgid ""
@@ -9608,14 +9989,18 @@ msgid ""
 "supplies. Unlike most cargo ships, the Copia is designed to not shy away "
 "from combat, and can be a very deadly ship in the right hands."
 msgstr ""
+"Biologická nákladní loď Copia je páteří konvojů Soromidů a často se používá "
+"k zásobování flotil Soromidů nebo vojenských zařízení důležitými zásobami. "
+"Na rozdíl od většiny nákladních lodí je Copia navržena tak, aby se "
+"nevyhýbala boji, a ve správných rukou může být velmi smrtící lodí."
 
 #: dat/ships/soromid/soromid_ira.xml:2
 msgid "Soromid Ira"
-msgstr ""
+msgstr "Soromidská Ira"
 
 #: dat/ships/soromid/soromid_ira.xml:9
 msgid "Bio-Cruiser"
-msgstr ""
+msgstr "Bio-Křižník"
 
 #: dat/ships/soromid/soromid_ira.xml:22
 msgid ""
@@ -9623,19 +10008,22 @@ msgid ""
 "While its armour is somewhat weak, this rarely saves those met with its "
 "devastating barrage."
 msgstr ""
+"Ira je speciálně upravený křižník, který se běžně nachází v čele "
+"soromidských sil. Jeho pancíř je sice poněkud slabý, ale to jen zřídkakdy "
+"zachrání ty, kteří se setkají s jeho ničivou palbou."
 
 #: dat/ships/soromid/soromid_marauder.xml:2
 msgid "Soromid Marauder"
-msgstr ""
+msgstr "Soromidský Marauder"
 
 #: dat/ships/soromid/soromid_marauder.xml:9
 msgid "Bio-Bomber"
-msgstr ""
+msgstr "Bio-Bombardér"
 
 #: dat/ships/soromid/soromid_marauder.xml:17
 #: dat/ships/soromid/soromid_reaver.xml:16
 msgid "You need at least 30 reputation with the Soromid."
-msgstr ""
+msgstr "Potřebujete alespoň 30 reputace u rodu Soromid."
 
 #: dat/ships/soromid/soromid_marauder.xml:18
 msgid ""
@@ -9644,14 +10032,18 @@ msgid ""
 "which calls for increased durability and ammunition chambers. This makes it "
 "quite a bit slower than its distant cousin."
 msgstr ""
+"Marauder byl vyvinut na stejném základě jako Brigand, ale obě lodě jsou "
+"zcela odlišné. Marauder byl vyvinut pro roli bombardéru, což vyžaduje "
+"zvýšenou odolnost a muniční komory. Díky tomu je o dost pomalejší než jeho "
+"vzdálený bratranec."
 
 #: dat/ships/soromid/soromid_nyx.xml:2
 msgid "Soromid Nyx"
-msgstr ""
+msgstr "Soromidský Nyx"
 
 #: dat/ships/soromid/soromid_nyx.xml:9
 msgid "Bio-Destroyer"
-msgstr ""
+msgstr "Bio-Torpédoborec"
 
 #: dat/ships/soromid/soromid_nyx.xml:18
 msgid ""
@@ -9659,14 +10051,18 @@ msgid ""
 "firepower in heated battles and agile enough to withdraw when needed, this "
 "ship usually forms the backbone of any sizable Soromid fleet."
 msgstr ""
+"Nyx je symbolem vojenské síly Soromidů. Tato loď, která je schopna "
+"poskytnout silnou palebnou sílu v prudkých bitvách a je dostatečně obratná, "
+"aby se v případě potřeby stáhla, obvykle tvoří páteř každé velké soromidské "
+"flotily."
 
 #: dat/ships/soromid/soromid_odium.xml:2
 msgid "Soromid Odium"
-msgstr ""
+msgstr "Soromidský Odium"
 
 #: dat/ships/soromid/soromid_odium.xml:18
 msgid "You need at least 40 reputation with the Soromid."
-msgstr ""
+msgstr "Potřebujete alespoň 40 reputace u rodu Soromid."
 
 #: dat/ships/soromid/soromid_odium.xml:19
 msgid ""
@@ -9674,10 +10070,13 @@ msgid ""
 "impressive amount of system hardpoints for a ship its size. It can often be "
 "found dominating smaller military engagements."
 msgstr ""
+"Odium nabízí dobrou rovnováhu mezi štíty a pancířem a na svou velikost také "
+"působivé množství systémových pevných bodů. Často se s ní setkáte v menších "
+"vojenských střetech."
 
 #: dat/ships/soromid/soromid_reaver.xml:2
 msgid "Soromid Reaver"
-msgstr ""
+msgstr "Soromidský Reaver"
 
 #: dat/ships/soromid/soromid_reaver.xml:17
 msgid ""
@@ -9685,14 +10084,17 @@ msgid ""
 "Their good speed and maneuverability are compounded by their durability, "
 "making the Reaver one of the most effective heavy fighters in the galaxy."
 msgstr ""
+"Reavery se často nacházejí v popředí soromidských vojenských střetnutí. "
+"Jejich dobrá rychlost a ovladatelnost jsou umocněny jejich odolností, díky "
+"čemuž je Reaver jedním z nejúčinnějších těžkých stíhačů v galaxii."
 
 #: dat/ships/soromid/soromid_vox.xml:2
 msgid "Soromid Vox"
-msgstr ""
+msgstr "Soromidský Vox"
 
 #: dat/ships/soromid/soromid_vox.xml:9
 msgid "Bio-Battleship"
-msgstr ""
+msgstr "Bio-Bitevní loď"
 
 #: dat/ships/soromid/soromid_vox.xml:21
 msgid ""
@@ -9700,10 +10102,13 @@ msgid ""
 "serves as the core of any given Soromid war fleet and is only called upon in "
 "notable engagements."
 msgstr ""
+"Vox je největší plavidlo Soromidského pole. Tato bitevní loď slouží jako "
+"jádro jakékoli dané Soromidské válečné flotily a je využívána pouze při "
+"významných střetnutích."
 
 #: dat/ships/thurion/thurion_apprehension.xml:2
 msgid "Thurion Apprehension"
-msgstr ""
+msgstr "Thurionský Apprehension"
 
 #: dat/ships/thurion/thurion_apprehension.xml:17
 #: dat/ships/thurion/thurion_certitude.xml:18
@@ -9713,7 +10118,7 @@ msgstr ""
 #: dat/ships/thurion/thurion_taciturnity.xml:16
 #: dat/ships/thurion/thurion_virtuosity.xml:18
 msgid "Thurion shipyards"
-msgstr ""
+msgstr "Thurionské loděnice"
 
 #: dat/ships/thurion/thurion_apprehension.xml:21
 #: dat/ships/thurion/thurion_certitude.xml:22
@@ -9728,19 +10133,19 @@ msgstr ""
 #: dat/missions/sirius/sirius_awakening.lua:89
 #: dat/missions/sirius/sirius_awakening.lua:105
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: dat/ships/thurion/thurion_certitude.xml:2
 msgid "Thurion Certitude"
-msgstr ""
+msgstr "Thurionský Certitude"
 
 #: dat/ships/thurion/thurion_certitude.xml:21
 msgid "You need at least 70 reputation with the Thurion."
-msgstr ""
+msgstr "Potřebujete alespoň 70 reputace u Thurionu."
 
 #: dat/ships/thurion/thurion_ingenuity.xml:2
 msgid "Thurion Ingenuity"
-msgstr ""
+msgstr "Thurionská Ingenuity"
 
 #: dat/ships/thurion/thurion_ingenuity.xml:20
 msgid ""
@@ -9751,24 +10156,32 @@ msgid ""
 "hot, it can quickly retreat to recharge and regenerate. Also, like every "
 "Thurian ship, the electronics are well above average."
 msgstr ""
+"Thurionská Ingenuity je stíhačka postavená pro přežití. Stejně jako všechny "
+"thurionské lodě klade obranné schopnosti na první a útočné schopnosti na "
+"druhé. V žádném případě však Ingenuity není špatné bojové plavidlo. Je "
+"schopen zůstat v boji a setřást ho, a když je příliš horko, může rychle "
+"ustoupit, aby se dobil a zregeneroval. Stejně jako každá Thurionská loď je "
+"také elektronika vysoce nadprůměrná."
 
 #: dat/ships/thurion/thurion_perspicacity.xml:2
 msgid "Thurion Perspicacity"
-msgstr ""
+msgstr "Thurionská Perspicacity"
 
 #: dat/ships/thurion/thurion_perspicacity.xml:21
 msgid "You need at least 20 reputation with the Thurion."
-msgstr ""
+msgstr "Potřebujete alespoň 20 reputace u Thurionu."
 
 #: dat/ships/thurion/thurion_perspicacity.xml:22
 msgid ""
 "The Thurion Perspicacity is a fast, light fighter typically used for "
 "scouting or attacking in swarms."
 msgstr ""
+"Thurionská Perspicacity je rychlá, lehká stíhačka typicky používaná pro "
+"průzkum nebo útok v rojích."
 
 #: dat/ships/thurion/thurion_scintillation.xml:2
 msgid "Thurion Scintillation"
-msgstr ""
+msgstr "Thurionský Scintillation"
 
 #: dat/ships/thurion/thurion_scintillation.xml:21
 msgid ""
@@ -9776,24 +10189,29 @@ msgid ""
 "distance. It is better armed than any other Thurion ship of comparable size, "
 "but still not as well as other non-Thurion bombers."
 msgstr ""
+"Thurionský Scintillation je bombardér navržený k útoku z velké vzdálenosti. "
+"Je lépe vyzbrojena než jakákoli jiná loď Thurionu srovnatelné velikosti, ale "
+"stále ne tak dobře jako jiné bombardéry než Thurionské."
 
 #: dat/ships/thurion/thurion_taciturnity.xml:2
 msgid "Thurion Taciturnity"
-msgstr ""
+msgstr "Thurionská Taciturnity"
 
 #: dat/ships/thurion/thurion_taciturnity.xml:20
 msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both "
 "of surviving the harsh nebula and defending itself from attack."
 msgstr ""
+"Thurionská Taciturnity je obrněná a tajná transportní loď schopná jak přežít "
+"drsnou mlhovinu, tak se ubránit před útokem."
 
 #: dat/ships/thurion/thurion_virtuosity.xml:2
 msgid "Thurion Virtuosity"
-msgstr ""
+msgstr "Thurionská Virtuosity"
 
 #: dat/ships/thurion/thurion_virtuosity.xml:21
 msgid "You need at least 40 reputation with the Thurion."
-msgstr ""
+msgstr "Potřebujete alespoň 40 reputace u Thurionu."
 
 #: dat/ships/thurion/thurion_virtuosity.xml:22
 msgid ""
@@ -9802,16 +10220,19 @@ msgid ""
 "superior electronics and resistance to the harsh nebula more than make up "
 "for it."
 msgstr ""
+"Thurionská Virtuosity je středně velká loď používaná Thuriony pro čelní "
+"útoky. Zatímco zbraňový prostor je méně než hvězdný, vynikající elektronika "
+"plavidla a odolnost vůči drsné mlhovině to více než vynahrazují."
 
 #: dat/ships/zalek/zalek_demon.xml:2
 msgid "Za'lek Demon"
-msgstr ""
+msgstr "Za'lekský Demon"
 
 #: dat/ships/zalek/zalek_demon.xml:16 dat/ships/zalek/zalek_diablo.xml:16
 #: dat/ships/zalek/zalek_hephaestus.xml:16 dat/ships/zalek/zalek_mammon.xml:20
 #: dat/ships/zalek/zalek_mephisto.xml:14 dat/ships/zalek/zalek_sting.xml:16
 msgid "Za'lek Fabricators"
-msgstr ""
+msgstr "Výrobci Za'leku"
 
 #: dat/ships/zalek/zalek_demon.xml:20
 msgid ""
@@ -9820,14 +10241,18 @@ msgid ""
 "Its handling suffers and it has poor armour, like all Za'lek ships, but this "
 "comes as little consolation to the Za'lek's enemies."
 msgstr ""
+"Divoce pojmenovaný torpédoborec rodu Za'lek si vysloužil přezdívku neúměrně "
+"silnými štíty a hospodařením s energií a také velikostí. Jeho ovládání trpí "
+"a má špatné pancéřování, jako všechny Za'lekské lodě, ale to je pro "
+"Za'lekské nepřátele jen malá útěcha."
 
 #: dat/ships/zalek/zalek_diablo.xml:2
 msgid "Za'lek Diablo"
-msgstr ""
+msgstr "Za'lekský Diablo"
 
 #: dat/ships/zalek/zalek_diablo.xml:19 dat/ships/zalek/zalek_mephisto.xml:17
 msgid "You need at least 70 reputation with House Za'lek."
-msgstr ""
+msgstr "Potřebujete alespoň 70 reputace u rodu Za'lek."
 
 #: dat/ships/zalek/zalek_diablo.xml:20
 msgid ""
@@ -9835,10 +10260,13 @@ msgid ""
 "equipped with heavy shields, they are, however, meant to serve as a platform "
 "for devastating drone swarms, not frontline combat."
 msgstr ""
+"Tento nosič je archetypická válečná loď Za'leku. Prakticky neozbrojené a "
+"vybavené těžkými štíty však mají sloužit jako platforma pro devastující roje "
+"dronů, nikoli pro boj v první linii."
 
 #: dat/ships/zalek/zalek_drone_bomber.xml:2
 msgid "Za'lek Bomber Drone"
-msgstr ""
+msgstr "Za'lekský bombardovací dron"
 
 #: dat/ships/zalek/zalek_drone_bomber.xml:8
 msgid "Robotic Bomber"
@@ -9849,17 +10277,19 @@ msgstr "Robotický bombardér"
 #: dat/ships/zalek/zalek_drone_light.xml:13
 #: dat/ships/zalek/zalek_drone_scout.xml:13
 msgid "Za'lek Robotics"
-msgstr ""
+msgstr "Za'lek Robotics"
 
 #: dat/ships/zalek/zalek_drone_bomber.xml:14
 msgid ""
 "This is the Za'lek Bomber Drone. Built for attacking heavy ships. Not to be "
 "flown by the player."
 msgstr ""
+"Toto je bombardovací dron Za'lek. Postaveno pro útok na těžké lodě. Není "
+"určeno k pilotování hráčem."
 
 #: dat/ships/zalek/zalek_drone_heavy.xml:2
 msgid "Za'lek Heavy Drone"
-msgstr ""
+msgstr "Za'lekský těžký dron"
 
 #: dat/ships/zalek/zalek_drone_heavy.xml:8
 msgid "Robotic Fighter"
@@ -9870,20 +10300,24 @@ msgid ""
 "This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by "
 "the player."
 msgstr ""
+"Toto je těžký dron Za'lek. Je jich méně a nejsou tak hloupé. Nemá být řízen "
+"hráčem."
 
 #: dat/ships/zalek/zalek_drone_light.xml:2
 msgid "Za'lek Light Drone"
-msgstr ""
+msgstr "Za'lekský lehký dron"
 
 #: dat/ships/zalek/zalek_drone_light.xml:14
 msgid ""
 "This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be "
 "flown by the player."
 msgstr ""
+"Toto je Za'lekský lehký dron. Velmi slabý, levný a početný. Nesmí být řízen "
+"hráčem."
 
 #: dat/ships/zalek/zalek_drone_scout.xml:2
 msgid "Za'lek Scout Drone"
-msgstr ""
+msgstr "Za'lekský průzkumný dron"
 
 #: dat/ships/zalek/zalek_drone_scout.xml:8
 msgid "Robotic Scout"
@@ -9894,10 +10328,12 @@ msgid ""
 "This is the Za'lek Scout Drone. Built for scouting, not for battle. Not to "
 "be flown by the player."
 msgstr ""
+"Toto je průzkumný dron Za'leku. Stvořený pro průzkum, ne pro boj. Není určen "
+"k tomu, aby ho pilotoval hráč."
 
 #: dat/ships/zalek/zalek_hephaestus.xml:2
 msgid "Za'lek Hephaestus"
-msgstr ""
+msgstr "Za'lekský Hephaestus"
 
 #: dat/ships/zalek/zalek_hephaestus.xml:18
 msgid ""
@@ -9906,6 +10342,10 @@ msgid ""
 "fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, "
 "but commands respect."
 msgstr ""
+"Tyto hrdé opory za'lekských ideálů, které jsou korunou obranné flotily rodu "
+"Za'lek, často slouží jako nervové centrum za'lekské bitevní flotily díky své "
+"vynikající senzorové výbavě. Hefaistos je k vidění jen zřídka, ale budí "
+"respekt."
 
 #: dat/ships/zalek/zalek_mammon.xml:2
 msgid "Za'lek Mammon"
@@ -9922,10 +10362,17 @@ msgid ""
 "However, the standard strategy is to rely on drones for fighting while "
 "making a getaway."
 msgstr ""
+"Rod Za'lek se sice na drony spoléhá téměř ve všem, ale kvůli omezenému "
+"množství paliva jsou pro přepravu na dlouhé vzdálenosti nevhodné. K "
+"překonání tohoto omezení byla vyvinuta nákladní loď Mammon Bulk Freighter. "
+"Má velké množství úložného prostoru, do kterého se vejdou celá mobilní "
+"výzkumná centra. Stejně jako většina lodí rodu Za'leků má poměrně slabé "
+"pancéřování, i když to částečně vynahrazuje pokročilá technologie štítů. "
+"Standardní strategií je však spoléhat se při útěku na bojové drony."
 
 #: dat/ships/zalek/zalek_mephisto.xml:2
 msgid "Za'lek Mephisto"
-msgstr ""
+msgstr "Za'lekský Mephisto"
 
 #: dat/ships/zalek/zalek_mephisto.xml:18
 msgid ""
@@ -9933,10 +10380,13 @@ msgid ""
 "its shields allow it to shrug off a lot of abuse. A core of these ships can "
 "reduce even powerful fleets to slag in short order."
 msgstr ""
+"Mefisto je mohutná loď, která skvěle hospodaří s energií a štíty a díky nimž "
+"se dokáže vypořádat s velkým množstvím útoků. Jádro těchto lodí dokáže v "
+"krátké době proměnit i silné flotily ve strusku."
 
 #: dat/ships/zalek/zalek_sting.xml:2
 msgid "Za'lek Sting"
-msgstr ""
+msgstr "Za'lekský Sting"
 
 #: dat/ships/zalek/zalek_sting.xml:20
 msgid ""
@@ -9946,6 +10396,10 @@ msgid ""
 "and high autonomy, due to the embedded carrier functionality, make it also "
 "an ideal ship for reconnaissance missions."
 msgstr ""
+"Korveta Sting je na svou třídu poměrně velká, ale díky pokročilé senzorové "
+"výbavě, působivé výzbroji, odolným štítům a celkové flexibilitě je základní "
+"součástí flotil rodu Za'lek. Nízká spotřeba paliva a vysoká autonomie díky "
+"zabudované funkci nosiče z ní činí ideální loď pro průzkumné mise."
 
 #: dat/slots/accessory.xml:4
 msgid ""
@@ -9953,20 +10407,25 @@ msgid ""
 "performance. Outfits that fit in these slots are not generally acquirable by "
 "normal means."
 msgstr ""
+"Tento slot slouží k vybavení příslušenstvím, které může zvýšit výkon lodi. "
+"Vybavení, které se do těchto slotů vejde, není obvykle možné získat běžnými "
+"prostředky."
 
 #: dat/slots/bio_engines.xml:3
 msgid "Bioship Gene Drives"
-msgstr ""
+msgstr "Genové jednotky biolodě"
 
 #: dat/slots/bio_engines.xml:4
 msgid ""
 "This slot is used for the gene drives, the biological equivalent to Engines. "
 "Gene drives propel the organism through space."
 msgstr ""
+"Tento slot se používá pro genové pohony, biologickou obdobu motorů. Genové "
+"pohony pohánějí organismus v prostoru."
 
 #: dat/slots/bio_hull.xml:3
 msgid "Bioship Shells"
-msgstr ""
+msgstr "Pláště biolodě"
 
 #: dat/slots/bio_hull.xml:4
 msgid ""
@@ -9975,10 +10434,13 @@ msgid ""
 "protecting critical organs from damage. It is also helps determine the "
 "organism's cargo space."
 msgstr ""
+"Tento slot se používá pro plášť, biologickou obdobu modifikací trupu. "
+"Schránka je poslední obrannou linií organismu, která chrání kritické orgány "
+"před poškozením. Pomáhá také určovat nákladový prostor organismu."
 
 #: dat/slots/bio_organ.xml:3
 msgid "Bioship Organs"
-msgstr ""
+msgstr "Orgány biolodě"
 
 #: dat/slots/bio_organ.xml:4
 msgid ""
@@ -9986,10 +10448,12 @@ msgid ""
 "organs for many different purposes without the need of any external "
 "equipment."
 msgstr ""
+"Díky biologické syntéze jsou biolodě schopny upravovat a přizpůsobovat své "
+"orgány k mnoha různým účelům bez potřeby jakéhokoli externího vybavení."
 
 #: dat/slots/bio_systems.xml:3
 msgid "Bioship Brains"
-msgstr ""
+msgstr "Mozky biolodě"
 
 #: dat/slots/bio_systems.xml:4
 msgid ""
@@ -9998,10 +10462,13 @@ msgid ""
 "rest of the organism and allocating energy reserves for the battery and "
 "shield."
 msgstr ""
+"Tento slot se používá pro mozek, biologickou obdobu základních systémů. "
+"Mozek organismu je zodpovědný za řízení funkce zbytku organismu a "
+"přidělování energetických rezerv pro baterii a štít."
 
 #: dat/slots/bio_weapon.xml:3
 msgid "Bioship Weapons"
-msgstr ""
+msgstr "Zbraně biolodě"
 
 #: dat/slots/bio_weapon.xml:4
 msgid ""
@@ -10010,28 +10477,34 @@ msgid ""
 "be more efficient to do the strong coupling with the ship in comparison to "
 "purely synthetic constructs."
 msgstr ""
+"Tento slot lze použít k pěstování speciálních organických zbraní na "
+"biolodích. Organické zbraně jsou obecně podobné svým syntetickým protějškům, "
+"ale mají tendenci být účinnější pro silné spojení s lodí ve srovnání s čistě "
+"syntetickými konstrukcemi."
 
 #: dat/slots/engines.xml:3
 msgid "Engines"
-msgstr ""
+msgstr "Motory"
 
 #: dat/slots/engines.xml:4
 msgid ""
 "This slot is used for engines. Engines propel the ship, which is kind of "
 "important. Engines require energy from the core system to function."
 msgstr ""
+"Tento slot se používá pro motory. Motory pohánějí loď, což je docela "
+"důležité. Motory potřebují ke svému fungování energii z jádrového systému."
 
 #: dat/slots/fighter_bay.xml:3
 msgid "Fighter Bays"
-msgstr ""
+msgstr "Prostory pro stíhačky"
 
 #: dat/slots/fighter_bay.xml:4
 msgid "This slot can be used for fighter bays."
-msgstr ""
+msgstr "Tento slot lze použít pro prostory stíhaček."
 
 #: dat/slots/hull.xml:3
 msgid "Hull Modifications"
-msgstr ""
+msgstr "Úpravy trupu"
 
 #: dat/slots/hull.xml:4
 msgid ""
@@ -10039,10 +10512,13 @@ msgid ""
 "represents the base layer of armour plating, and also greatly affects mass, "
 "cargo space and available weapon slots."
 msgstr ""
+"Tento slot se používá pro konstrukční úpravy trupu lodi. Tento slot "
+"představuje základní vrstvu pancéřování a také výrazně ovlivňuje hmotnost, "
+"nákladový prostor a dostupné sloty pro zbraně."
 
 #: dat/slots/systems.xml:3
 msgid "Core Systems"
-msgstr ""
+msgstr "Jádrové systémy"
 
 #: dat/slots/systems.xml:4
 msgid ""
@@ -10050,6 +10526,9 @@ msgid ""
 "rely on this system to manage them, and the bulk of the ship's power and "
 "shield generation also happens here."
 msgstr ""
+"Tento slot se používá pro vyhrazené jádrové systémy lodi. Ostatní subsystémy "
+"se spoléhají na tento systém, který je řídí, a také se zde generuje většina "
+"energie a štítů lodi."
 
 #: dat/spob/abacus.xml:2
 msgid "Abacus"
@@ -10191,7 +10670,7 @@ msgstr "Abacus"
 #: dat/spob/wolf_i.xml:9 dat/spob/wunomi.xml:9 dat/spob/zeroeleven.xml:9
 #: dat/spob/zesta.xml:15
 msgid "A"
-msgstr ""
+msgstr "A"
 
 #: dat/spob/abacus.xml:25
 msgid ""
@@ -10201,10 +10680,10 @@ msgid ""
 "researchers on site at any one time. Tourism is out of the question, so is a "
 "bar."
 msgstr ""
-"Abacus na kamenné světy obří. Soromidové zde založili výzkumnou základnu, "
-"která má zjistit více o struktuře planety. Základna je docela malá a na "
-"místě může být jen několik desítek výzkumníků. Není tu místo pro turisty, "
-"dokonce ani pro bar."
+"Abakus je na poměry skalnatých planet velmi velká planeta. Soromidé zde "
+"zřídili výzkumnou základnu, aby zjistili více o struktuře planety. Základna "
+"je poměrně malá, na místě je vždy jen několik desítek výzkumníků. Turistický "
+"ruch nepřipadá v úvahu, stejně jako bar."
 
 #: dat/spob/adham.xml:2
 msgid "Adham"
@@ -10231,7 +10710,7 @@ msgstr "Adham"
 #: dat/spob/wsthvn_p1.xml:9 dat/spob/wyrmwood.xml:15 dat/spob/yrina.xml:15
 #: dat/spob/zaals.xml:16 dat/spob/zerofive.xml:9
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: dat/spob/adham.xml:23
 msgid ""
@@ -10241,11 +10720,12 @@ msgid ""
 "considered neutral territory, most of the planet's surface is subject to the "
 "destructive sport that is so popular among Totoran's visitors."
 msgstr ""
-"Adham je chladná planeta bez života. Jediným důvodem, proč je zde přistávací "
-"dráha, je že planeta hostí tři arény s arktickou tematikou pro gladiátorské "
-"hry Totoranu. Zatímco přistávací zóna a úzké pásmo kolem ní jsou považovány "
-"za neutrální území, většina povrchu planety podléhá destruktivnímu sportu, "
-"který je mezi návštěvníky Totoranu tak populární."
+"Adham je chladná planeta bez života. Jediným důvodem, proč zde přistávací "
+"dráha vůbec je, je to, že se na planetě nacházejí tři arktické arény pro "
+"gladiátorské hry na Totoranu. Zatímco přistávací zóna a malé nárazníkové "
+"pásmo kolem ní jsou považovány za neutrální území, většina povrchu planety "
+"je předmětem ničivého sportu, který je mezi návštěvníky Totoranu tak "
+"oblíbený."
 
 #: dat/spob/adius.xml:2
 msgid "Adius"
@@ -10263,10 +10743,10 @@ msgid ""
 "it was a matter of a few cycles before the Sirii came to power. Today Adrian "
 "persists, despite having served its only purpose."
 msgstr ""
-"Chladný a nepříjemný svět, Sirius založil svou kolonii na Adrianu ve dnech, "
-"kdy se právě rozšiřovali do Eiderdownu. V té době byla soustava pod vládou "
-"Impéria, ale s pevným předmostím v systému bylo otázkou několika cyklů, než "
-"se Siriané dostali k moci. Dnes Adrian přetrvává, přestože splnil svůj "
+"Na chladném a nepříjemném světě založili Siriané svou kolonii na Adrianě v "
+"době, kdy se teprve rozšiřovali do Eiderdownu. V té době soustavu ovládalo "
+"Impérium, ale s pevným předmostím v soustavě bylo otázkou několika cyklů, "
+"než se Siriané dostali k moci. Dnes Adrian přetrvává, přestože splnil svůj "
 "jediný účel."
 
 #: dat/spob/adrian.xml:26
@@ -10275,9 +10755,9 @@ msgid ""
 "kept at an acceptable, though uncomfortable, low. Most patrons of this "
 "spaceport bar are in full winter gear."
 msgstr ""
-"Vytápění na planetách třídy P je často nákladná záležitost, takže teplota se "
-"udržuje na přijatelné, i když nepříjemné, nízké hodnotě. Většina štamgastů v "
-"baru u kosmoportu sedí v zimní variantě plné polní."
+"Vytápění ve světech třídy P je často nákladnou záležitostí, takže teplota je "
+"udržována na přijatelné, i když nepříjemně nízké úrovni. Většina návštěvníků "
+"tohoto baru na kosmodromu je oblečena do zimní výstroje."
 
 #: dat/spob/aera.xml:2
 msgid "Aera"
@@ -10309,7 +10789,7 @@ msgstr "Aera"
 #: dat/spob/ux_vii.xml:9 dat/spob/vanir_ii.xml:9 dat/spob/vauban_i1.xml:9
 #: dat/spob/virginis_beta.xml:9 dat/spob/zethus.xml:9 dat/spob/zintar_v.xml:9
 msgid "I"
-msgstr ""
+msgstr "I"
 
 #: dat/spob/aera.xml:24
 msgid ""
@@ -10318,10 +10798,10 @@ msgid ""
 "subduction, which coaxes them out of the planet's dangerous core and into "
 "the upper atmosphere where they can be safely collected."
 msgstr ""
-"Tento plynový gigant je dostatečně bohatý na cenné minerály, takže se zde "
-"Proteron rozhodl založit těžební kolonii. Minerály jsou extrahovány tepelnou "
-"subdukcí OOA, která je přivádí z nebezpečného jádra planety do horních "
-"vrstev atmosféry, kde je lze bezpečně shromažďovat."
+"Tento plynný obr je natolik bohatý na cenné nerosty, že se Proteron rozhodl "
+"založit zde těžební kolonii. Nerosty se těží pomocí tepelné subdukce OOA, "
+"která je vytahuje z nebezpečného jádra planety do horních vrstev atmosféry, "
+"kde se dají bezpečně sbírat."
 
 #: dat/spob/aesir_iv.xml:2
 msgid "Aesir IV"
@@ -10375,7 +10855,7 @@ msgstr "Agino"
 #: dat/spob/zembla_shakar.xml:16 dat/spob/zeo.xml:15 dat/spob/zhiru.xml:15
 #: dat/spob/zuner.xml:16
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: dat/spob/agino.xml:27
 msgid ""
@@ -10384,10 +10864,10 @@ msgid ""
 "core but, this being a remote part of Soromid space, it is still a local "
 "highlight."
 msgstr ""
-"Agino je rušná planeta většinou plná Soromidských občanů střední třídy. "
-"Planeta nevyniká v žádné oblasti ve srovnání se světy v jádru říše Soromidů, "
-"ale jelikož jde o vzdálenou část Soromidského prostoru, je stále místním "
-"vrcholem."
+"Agino je rušná planeta plná převážně středostavovských Soromidů. Planeta "
+"nevyniká v žádné oblasti ve srovnání se světy v soromidském jádru, ale "
+"vzhledem k tomu, že se jedná o odlehlou část soromidského prostoru, je stále "
+"místní zajímavostí."
 
 #: dat/spob/agino.xml:28
 msgid ""
@@ -10398,11 +10878,11 @@ msgid ""
 "who you are and cheerfully pour you a drink. Some spacers secretly suspect "
 "he has an audiovisual database installed in his head."
 msgstr ""
-"Osoba, která provozuje tento bar, je statný Soromidský muž jménem Alverik "
-"Sogheem. Alverik obvykle obsluhuje bar sám a všechny své zákazníky zná podle "
-"jména a obličeje. Nezáleží na tom, jak dlouho jste pryč nebo kde jste byli v "
-"galaxii, při vašem návratu do Agina si Alverik pamatuje, kdo jste, a vesele "
-"vám nalije drink. Někteří vesmírní cestovatelé ho tajně podezřívají, že má v "
+"Provozovatelem tohoto baru na kosmodromu je podsaditý Soromid jménem Alverik "
+"Sogheem. Alverik obvykle obsluhuje bar sám a všechny své zákazníky zná "
+"jménem i tváří. Nezáleží na tom, jak dlouho jste byli pryč nebo kde v "
+"galaxii jste byli, po návratu do Agina si Alverik vzpomene, kdo jste, a "
+"vesele vám nalije drink. Někteří vesmířané ho tajně podezřívají, že má v "
 "hlavě nainstalovanou audiovizuální databázi."
 
 #: dat/spob/ahmed.xml:2
@@ -10423,7 +10903,7 @@ msgstr "Ahmed"
 #: dat/spob/tartarus.xml:15 dat/spob/verex_iii.xml:9 dat/spob/vlexon_i.xml:9
 #: dat/spob/zemur_iii.xml:9
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: dat/spob/ahmed.xml:26
 msgid ""
@@ -10433,9 +10913,9 @@ msgid ""
 "businessmen looking for turn a credit or two."
 msgstr ""
 "Měsíc Ahmed je malá kolonie vážně smýšlejících lidí, ale vzhledem k tomu, že "
-"jsou to většinou horníci, tak to není příliš překvapivé. Těch pár lidí, "
-"kteří netěží, dělají administrativu nebo sem přicházejí za obchodem a "
-"hledají, kde otočit kredit nebo dva."
+"jsou to většinou horníci, to není příliš velké překvapení. Těch pár lidí, "
+"kteří netěží, se zabývá administrativou nebo sem přicházejí jako obchodníci "
+"a podnikatelé, kteří chtějí otočit jeden či dva kredity."
 
 #: dat/spob/ahmed.xml:27
 msgid ""
@@ -10444,10 +10924,10 @@ msgid ""
 "gas extraction. The Soromid might understand comfort and how to have a good "
 "time but this is clearly not the place where they are doing it."
 msgstr ""
-"Velmi utilitární bar s poměrně laxním přístupem k pohodlí, přinejmenším "
-"podle standardů Impéria. Lidé sem chodí obchodovat a mluvit o těžbě rud, "
-"minerálů a plynu. Soromidové možná chápou pojmy jako pohodlí nebo zábava, "
-"ale zjevně si je dopřávají někde jinde."
+"Velmi utilitární bar s poněkud laxním přístupem k pohodlí, alespoň na poměry "
+"Empire. Lidé sem chodí obchodovat a mluvit o těžbě rudy, nerostů a plynu. "
+"Soromidé možná rozumí pohodlí a tomu, jak se dobře bavit, ale tohle zjevně "
+"není místo, kde by to dělali."
 
 #: dat/spob/aillis.xml:2
 msgid "Aillis"
@@ -10461,15 +10941,14 @@ msgid ""
 "valuable, and so Aillis offers a fair living for those who don't shun heavy, "
 "dangerous labour."
 msgstr ""
-"Aillis je operační základnou pro horníky, kteří těží Koralis VI. Samotný "
-"Koralis VI je vysoce radioaktivní, takže trvalé obydlení planety je i do "
-"budoucna vyloučeno. Některé z těžkých prvků na planetě jsou však docela "
-"cenné, a proto Aillis nabízí spravedlivý život těm, kteří se nevyhýbají "
-"těžké a nebezpečné práci."
+"Aillis je základnou horníků, kteří těží na Koralis VI. Samotný Koralis VI je "
+"vysoce radioaktivní, takže zde není a nikdy nebude možné lidské obydlí. "
+"Některé těžké prvky na planetě jsou však poměrně cenné, a tak Aillis nabízí "
+"slušné živobytí těm, kteří se nevyhýbají těžké a nebezpečné práci."
 
 #: dat/spob/akios_terminal.xml:2
 msgid "Akios Terminal"
-msgstr ""
+msgstr "Terminál Akios"
 
 #: dat/spob/akios_terminal.xml:16 dat/spob/arcturus_enclave.xml:16
 #: dat/spob/bastion_center.xml:15 dat/spob/belltower_nest.xml:16
@@ -10513,16 +10992,9 @@ msgstr ""
 #: dat/spob/vigilance_center.xml:16 dat/spob/violin_monastery.xml:16
 #: dat/spob/wildwood_nest.xml:15 dat/spob/yak_nest.xml:16
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: dat/spob/akios_terminal.xml:26
-#, fuzzy
-#| msgid ""
-#| "Akios Station is a Za'lek border station meant to keep the pirates from "
-#| "the Kretogg system out of Za'lek space. Because of the real threat that "
-#| "the loathsome criminals pose to the great house's security, there is "
-#| "(comparatively) little debate over the necessity over this station's "
-#| "existence."
 msgid ""
 "Akios Terminal is a Za'lek border station meant to keep the pirates from the "
 "Kretogg system out of Za'lek space. Because of the real threat that the "
@@ -10530,11 +11002,10 @@ msgid ""
 "(comparatively) little debate over the necessity over this station's "
 "existence."
 msgstr ""
-"Stanice Akios je hraniční stanice Za'leků, která má zabránit pirátům "
-"expandovat ze systému Kretogg, který je mimo za'lekský vesmír. Kvůli "
-"skutečné hrozbě, kterou odporní zločinci představují pro bezpečnost této "
-"velké frakce, se o nutnosti existence této stanice nevedou (relativně vzato) "
-"žádné spory."
+"Terminál Akios je za'lekská hraniční stanice, která má udržet piráty ze "
+"soustavy Kretogg mimo za'lekský prostor. Vzhledem ke skutečné hrozbě, kterou "
+"odporní zločinci představují pro bezpečnost velkého rodu, se o nutnosti "
+"existence této stanice (relativně) málo diskutuje."
 
 #: dat/spob/akra_iii.xml:2
 msgid "Akra III"
@@ -10550,7 +11021,7 @@ msgstr "Akra V"
 #: dat/spob/petaat.xml:15 dat/spob/qoral.xml:15 dat/spob/vanir_i.xml:9
 #: dat/spob/xo4.xml:9
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: dat/spob/akrikos.xml:2
 msgid "Akrikos"
@@ -10593,7 +11064,7 @@ msgstr "Akrikos"
 #: dat/spob/wahri_iv.xml:9 dat/spob/warnecke.xml:15 dat/spob/warnecke_ii.xml:9
 #: dat/spob/wolf_vii.xml:9 dat/spob/wunomi_i.xml:9
 msgid "J"
-msgstr ""
+msgstr "J"
 
 #: dat/spob/aldarus.xml:2
 msgid "Aldarus"
@@ -10619,16 +11090,9 @@ msgstr "Aldarus"
 #: dat/spob/valt.xml:15 dat/spob/valur_gem_i.xml:9 dat/spob/vanir_ia.xml:9
 #: dat/spob/vean_ii.xml:9 dat/spob/voproid_prime.xml:9 dat/spob/wakan.xml:15
 msgid "K"
-msgstr ""
+msgstr "K"
 
 #: dat/spob/aldarus.xml:28
-#, fuzzy
-#| msgid ""
-#| "Aldarus has vast oceans filled with an organic sludge that has little to "
-#| "do with water. The atmosphere is toxic and will kill an unprotected human "
-#| "within hectoseconds. The sludge in the seas is a good source of raw "
-#| "materials for all sorts of industries though, and the lack of pollution "
-#| "controls on the planet make it very attractive for corporations."
 msgid ""
 "Aldarus has vast oceans filled with an organic sludge that has little to do "
 "with water. The atmosphere is toxic and will kill an unprotected human "
@@ -10638,11 +11102,13 @@ msgid ""
 "for all sorts of industries though, and the lack of pollution controls on "
 "the planet make it very attractive for unscrupulous corporations."
 msgstr ""
-"Aldarus má obrovské oceány naplněné organickým kalem, který má málo "
-"společného s vodou. Atmosféra je toxická a zabije nechráněného člověka během "
-"pár hektosekund. Kal v mořích je dobrým zdrojem surovin pro nejrůznější "
-"průmyslová odvětví a vzhledem k nedostatečné kontrole znečištění na planetě "
-"je pro podniky velmi atraktivní."
+"Aldarus má obrovské oceány plné organického bahna, které má s vodou pramálo "
+"společného. Atmosféra je jedovatá a nechráněného člověka zabije během "
+"hektosekund, takže při výstupu ven je třeba mít celotělový oblek a obyvatelé "
+"jsou většinou uzavřeni v hermeticky uzavřených obytných prostorách, "
+"podobných vesmírným stanicím. Kal v mořích je však dobrým zdrojem surovin "
+"pro nejrůznější průmyslové obory a díky absenci kontroly znečištění je "
+"planeta velmi atraktivní pro bezohledné korporace."
 
 #: dat/spob/aldarus.xml:29
 msgid ""
@@ -10651,10 +11117,10 @@ msgid ""
 "for private conversations, in case the bar's main area is a little too "
 "public for comfort. The music here can also be a bit grating on the ears."
 msgstr ""
-"Kosmodromový bar na Aldarusu nabízí celou řadu rekreačních aktivit, jako "
-"jsou hazardní hry a soutěže. K dispozici jsou také salonky pro soukromé "
-"rozhovory, pro případ, že by hlavní oblast baru byla pro pohodlí příliš "
-"veřejná. Místní hudba může být také trochu drsná na uši."
+"V baru na kosmodromu Aldarus se můžete věnovat různým rekreačním aktivitám, "
+"například hazardním hrám a soutěžním hrám. Jsou zde také oddělené kabinky "
+"pro soukromé rozhovory pro případ, že je hlavní prostor baru příliš veřejný. "
+"Hudba zde může být také trochu drásavá pro uši."
 
 #: dat/spob/aldernael.xml:2
 msgid "Aldernael"
@@ -10680,7 +11146,7 @@ msgstr "Aldernael"
 #: dat/spob/waterholes_moon.xml:16 dat/spob/zazarin.xml:16
 #: dat/spob/zeroone.xml:9
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: dat/spob/aldernael.xml:26
 msgid ""
@@ -10708,11 +11174,11 @@ msgid ""
 "more customers but also the occasional move from one building to another to "
 "make room for renovations."
 msgstr ""
-"Kvůli těžkému vývoji na Aldernaelu je místní bar čas od času přemístěn. "
-"Kosmodrom je samozřejmě ve středu toho všeho, a tak bar z toho střídavě trpí "
-"i těží. Tento růst vede k většímu počtu zákazníků, ale také k "
-"příležitostnému přechodu z jedné budovy do druhé, aby se vytvořil prostor "
-"pro renovace."
+"Vzhledem k intenzivnímu rozvoji na Aldernaelu je bar na kosmodromu občas "
+"přemisťován. Kosmodrom je samozřejmě v centru dění, a tak bar střídavě trpí "
+"a těží z toho. Tento rozvoj vede k většímu počtu zákazníků, ale také k "
+"občasnému stěhování z jedné budovy do druhé, aby se uvolnilo místo pro "
+"rekonstrukci."
 
 #: dat/spob/aldous.xml:2
 msgid "Aldous"
@@ -10727,12 +11193,12 @@ msgid ""
 "their home. The ocean may be toxic, but it also happens to be the perfect "
 "environment for producing high quality positronic circuitry."
 msgstr ""
-"Planeta Aldous je obří moře tekutiny toxické pro člověka. I ta nejmenší "
-"expozice toxickému materiálu v oceánu na Aldousu je smrtelná. Pokud jde o "
-"obyvatelnost, jsou mrtvé planety jako je tato, jako poslední na seznamu. "
-"Přesto se hrstka odvážných duší rozhodla udělat z této planety svůj domov. "
-"Oceán může být toxický, ale také se stává dokonalým prostředím pro výrobu "
-"vysoce kvalitních pozitronických obvodů."
+"Planeta Aldous je obrovské moře tekutiny, která je pro člověka jedovatá. I "
+"sebemenší kontakt s toxickým materiálem v oceánu Aldous je smrtelný. Co se "
+"týče obyvatelnosti, jsou planety jako tato na posledním místě seznamu. "
+"Přesto se hrstka odvážných duší rozhodla učinit tuto planetu svým domovem. "
+"Oceán je sice toxický, ale zároveň je to ideální prostředí pro výrobu vysoce "
+"kvalitních pozitronických obvodů."
 
 #: dat/spob/aldous.xml:27
 msgid ""
@@ -10743,11 +11209,12 @@ msgid ""
 "occurs. Some spacers even insist on wearing breathing masks, even in the "
 "spaceport bar, just to be on the safe side."
 msgstr ""
-"Zařízení kosmodromu je součástí větší stavby, ve které sídlí celé lidské "
-"obyvatelstvo této planety. Komplex víceméně plave na povrchu a je proti "
-"vnějšímu prostředí vzduchotěsný. Kromě toho je komplex velmi rozčleněný, pro "
-"případ, že by nějak došlo k úniku. Někteří vesmířané dokonce i uvnitř pro "
-"jistotu nosí dýchací masky - dokonce i v místním baru."
+"Zařízení kosmodromu je součástí většího komplexu, v němž žijí všichni "
+"obyvatelé této planety. Komplex se víceméně vznáší na povrchu a je pevně "
+"uzavřen proti vnějšímu prostředí. Kromě toho je komplex vysoce rozdělený pro "
+"případ, že by nějakým způsobem došlo k úniku. Někteří vesmířané dokonce "
+"trvají na tom, aby nosili dýchací masky, a to i v baru na kosmodromu, jen "
+"pro jistotu."
 
 #: dat/spob/aldous_moon.xml:2
 msgid "Aldous' moon"
@@ -10764,10 +11231,10 @@ msgid ""
 "primarily residential and sports no superheavy industry, the wastefulness of "
 "the Dvaered inhabitants more than makes up for that."
 msgstr ""
-"Dvaeredové přeměnili Aleph z hraniční planety třídy M na holou pustinu. "
-"Opravdu úctyhodný výkon v oblasti deterraformace. I když je planeta hlavně "
-"obytnou a sportovní zónou bez supertěžkého průmyslu, jeho následky více než "
-"nahrazuje prosté plýtvání Dvaeredského obyvatelstva."
+"Dvaeredové dokázali působivým de-terraformingem přeměnit Aleph z hraniční "
+"třídy M na neúrodnou pustinu. Ačkoli je svět převážně obytný a nemá žádný "
+"supertěžký průmysl, marnotratnost dvaeredských obyvatel to bohatě "
+"vynahrazuje."
 
 #: dat/spob/aleph.xml:26
 msgid ""
@@ -10776,9 +11243,9 @@ msgid ""
 "the staleness completely. The drinks do little to relieve the stuffiness "
 "either."
 msgstr ""
-"Vzduch v kosmodromu je dusný. Všude na této planetě je vzduch dusný. Žádné "
-"množství klimatizace a filtrování úplně tento problém neřeší. Ani nápoje od "
-"dušnosti příliš nepomáhají."
+"Vzduch v baru na kosmodromu je vydýchaný. Vzduch je na této planetě dusný "
+"všude. Žádná klimatizace a filtrace ho úplně neeliminuje. Ani nápoje toho "
+"dusna příliš nezbaví."
 
 #: dat/spob/alleyway.xml:2
 msgid "Alleyway"
@@ -10831,7 +11298,7 @@ msgstr "Alleyway"
 #: dat/spob/urbanus_crops.xml:15 dat/spob/westeros_nest.xml:15
 #: dat/spob/yaroslav_farming_station.xml:15 dat/spob/zabween_outpost.xml:15
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: dat/spob/alleyway.xml:25
 msgid ""
@@ -10840,10 +11307,10 @@ msgid ""
 "hunters. Authorities have long ago given up any hope of controlling the "
 "chaos, so everyone knows to be armed and remain vigilant at all times."
 msgstr ""
-"I když byla stanice vybudována jako obchodní a zásobovací, nyní je z ní "
-"doupě pirátů, korzárů a lovců odměn. Úřady se již dávno vzdaly jakékoli "
-"naděje na ovládnutí chaosu. Když se něco přihodí, jste v tom sami, takže "
-"každý chodí ozbrojený a všichni si pečlivě hlídají okolí."
+"Původně měla sloužit jako obchodní uzel a zastávka pro obchodníky, ale stala "
+"se centrem pirátů a lovců odměn. Úřady už dávno ztratily naději na zvládnutí "
+"chaosu, takže všichni vědí, že je třeba být ozbrojen a zůstat neustále ve "
+"střehu."
 
 #: dat/spob/alleyway.xml:26
 msgid ""
@@ -10851,27 +11318,15 @@ msgid ""
 "merchants and gamblers. Fights often break out and it's hard to tell who to "
 "trust, so most people keep to themselves and avoid eye contact with others."
 msgstr ""
-"Osazenstvo je tvořené piráty a lovci odměn, jen občas se tu objeví obchodník "
-"nebo hazardní hráč. Rvačky jsou tu na denním pořádku. Nikdo neví, komu se dá "
-"věřit, takže lidé se jeden druhého straní a oční kontakt je tu opravdovou "
-"vzácností."
+"V baru se scházejí převážně piráti a lovci odměn a několik obchodníků a "
+"hráčů. Často zde dochází ke rvačkám a je těžké určit, komu věřit, takže se "
+"většina lidí drží stranou a vyhýbá se očnímu kontaktu s ostatními."
 
 #: dat/spob/allous_citadel.xml:2
-#, fuzzy
-#| msgid "Allous Station"
 msgid "Allous Citadel"
-msgstr "Stanice Allous"
+msgstr "Citadela Allous"
 
 #: dat/spob/allous_citadel.xml:24
-#, fuzzy
-#| msgid ""
-#| "Despite the name, Allous Station is not a military outpost, it is more of "
-#| "a scientific observation centre and deep-space observatory. Originally it "
-#| "was meant to keep an eye on the high-interference nebula of PSO. Even the "
-#| "Dvaered have a scientific community, and they paid for this station out "
-#| "of their own pockets. Of course, once it was built, there was no longer "
-#| "any need for them to pay for it as numerous warlords, with dreams of "
-#| "intellectualism, are happy to offer their patronage."
 msgid ""
 "Despite the name, Allous Citadel is not a military outpost, it is more of a "
 "scientific observation centre and deep-space observatory. Originally it was "
@@ -10881,12 +11336,12 @@ msgid ""
 "need for them to pay for it as numerous warlords, with dreams of "
 "intellectualism, are happy to offer their patronage."
 msgstr ""
-"Navzdory jménu není stanice Allous vojenskou základnou, je to spíše vědecká "
-"observatoř pro pozorování hlubokého vesmíru. Původně měla být pozorovatelnou "
-"vysoce interferenční mlhoviny PSO. Dokonce i Dvaeredové mají vědeckou "
-"komunitu a tuto stanici zaplatili z vlastních kapes. Samozřejmě s provozem "
-"už rozpočet nepočítal - stanici si pod svá křídla vezme některý z válečných "
-"magnátů, snící o intelektualismu."
+"Navzdory svému názvu není citadela Allous vojenskou základnou, ale spíše "
+"vědeckým pozorovacím střediskem a observatoří hlubokého vesmíru. Původně "
+"měla sledovat mlhovinu PSO s vysokým rušením. I Dvaeredové mají svou "
+"vědeckou komunitu a tuto stanici zaplatili z vlastní kapsy. Jakmile byla "
+"postavena, nebylo už samozřejmě potřeba, aby ji platili, protože četní "
+"válečníci se sny o intelektuálství rádi nabízejí svou záštitu."
 
 #: dat/spob/allous_citadel.xml:25
 msgid ""
@@ -10894,9 +11349,9 @@ msgid ""
 "and soldiers are interacting with surprising friendliness and conviviality. "
 "Of course, the local warlords would, and do, tolerate nothing less."
 msgstr ""
-"Tento bar vypadá jako něco, co by se dalo očekávat od Za'lekského vesmírného "
-"prostoru. Vědci a vojáci komunikují s překvapivou vstřícností a "
-"pohostinností. Místní válečníci by samozřejmě netolerovali nic menšího."
+"Tento bar vypadá jako něco, co bychom očekávali v za'leckém prostoru. Vědci "
+"a vojáci spolu komunikují překvapivě přátelsky a družně. Samozřejmě, že "
+"místní vojevůdci by nic jiného netolerovali a netolerují."
 
 #: dat/spob/allous_gg3.xml:2
 msgid "Allous GG-3"
@@ -10911,20 +11366,16 @@ msgid "Allous II"
 msgstr "Allous II"
 
 #: dat/spob/alpha_aquilea.xml:2
-#, fuzzy
-#| msgid "Aquilia"
 msgid "Alpha Aquilea"
-msgstr "Aquilia"
+msgstr "Alpha Aquilea"
 
 #: dat/spob/alsafi_i.xml:2
 msgid "Alsafi I"
-msgstr ""
+msgstr "Alsafi I"
 
 #: dat/spob/alsafi_ia.xml:2
-#, fuzzy
-#| msgid "Amatiri Ia"
 msgid "Alsafi Ia"
-msgstr "Amatiri Ia"
+msgstr "Alsafi Ia"
 
 #: dat/spob/alsafi_ia.xml:15
 msgid ""
@@ -10936,16 +11387,20 @@ msgid ""
 "Only the left behind garbage and worthless buildings give an indication that "
 "there used to be civilization here."
 msgstr ""
+"Kdysi malá obchodní kolonie, která obchodovala se surovinami získanými z "
+"Alsafi I a blízkého pole asteroidů, byla opuštěna krátce po incidentu se "
+"ztrátou atmosféry a zhoršenou obyvatelností v důsledku mlhoviny. Vše, co si "
+"obyvatelé při útěku nestihli vzít s sebou, bylo zcela vypleněno mrchožrouty. "
+"Pouze pozůstatky odpadků a bezcenných budov dávají tušit, že zde kdysi "
+"existovala civilizace."
 
 #: dat/spob/alsafi_ib.xml:2
 msgid "Alsafi Ib"
-msgstr ""
+msgstr "Alsafi Ib"
 
 #: dat/spob/alsafi_ii.xml:2
-#, fuzzy
-#| msgid "Amatiri II"
 msgid "Alsafi II"
-msgstr "Amatiri II"
+msgstr "Alsafi II"
 
 #: dat/spob/alsafi_ii.xml:9 dat/spob/amhurst.xml:15 dat/spob/antlejos_v.xml:9
 #: dat/spob/arcadia.xml:15 dat/spob/arcturus_ii.xml:9
@@ -10972,13 +11427,15 @@ msgstr "Amatiri II"
 #: dat/spob/warnecke_i.xml:9 dat/spob/werlen.xml:16 dat/spob/worgen.xml:9
 #: dat/spob/wsthvn_d1.xml:9 dat/spob/wunomi_ia.xml:9 dat/spob/zintar_iv.xml:9
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: dat/spob/alsafi_ii.xml:15
 msgid ""
 "Alsafi II is a barren world that other than some indications of prospection "
 "sites looking for mineral, is devoid of anything of interest."
 msgstr ""
+"Alsafi II je pustý svět, který kromě několika náznaků průzkumných míst pro "
+"hledání nerostných surovin postrádá cokoli zajímavého."
 
 #: dat/spob/alteris_i.xml:2
 msgid "Alteris I"
@@ -11024,7 +11481,7 @@ msgstr "Amaroq III"
 #: dat/spob/waterhole.xml:9 dat/spob/wigheta.xml:16 dat/spob/zepei.xml:15
 #: dat/spob/ziz.xml:9
 msgid "O"
-msgstr ""
+msgstr "O"
 
 #: dat/spob/amatiri_i.xml:2
 msgid "Amatiri I"
@@ -11050,7 +11507,7 @@ msgstr "Amatiri II"
 #: dat/spob/wayline_m2.xml:9 dat/spob/wunomis_moon.xml:9
 #: dat/spob/zalek_iv.xml:9
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: dat/spob/ambre.xml:2
 msgid "Ambre"
@@ -11067,11 +11524,11 @@ msgid ""
 "independence."
 msgstr ""
 "Ambre byla jednou z planet, které hrály klíčovou roli v dělnických "
-"vzpourách, které nakonec vedly k vzestupu rodu Dvaeredů. V té době byla "
-"planeta domovem značného procenta imperiální pracovní síly místního sektoru "
-"vesmíru. Bez dělníků, kteří by pracovali v dolech a na staveništích, říše "
-"každý cyklus ztrácela astronomické částky peněz. To byl jeden z důležitých "
-"důvodů, proč císař udělil rodu Dvaeredů jeho nezávislost."
+"povstáních, jež nakonec vedla k založení rodu Dvaered. V té době na planetě "
+"žilo značné procento císařských dělníků v tomto sektoru vesmíru. Bez "
+"dělníků, kteří by pracovali v dolech a na staveništích, přicházelo Impérium "
+"každý cyklus o astronomické částky. To byl jeden z důležitých důvodů, proč "
+"císař udělil rodu Dvaered nezávislost."
 
 #: dat/spob/ambre.xml:28
 msgid ""
@@ -11083,12 +11540,13 @@ msgid ""
 "into one of the only remaining spaces available, which was right over the "
 "freight lines."
 msgstr ""
-"Bar na Ambre není nikdy tichý. V pravidelných intervalech je veškerý další "
-"hluk v baru přehlušen zvukem nákladních zásobníků, které se stáčejí podél "
-"železnice těsně pod ním. Bar byl postaven teprve v nedávné planetární "
-"historii; imperiální vláda neviděla důvod dělat z Ambre něco víc než "
-"pracovní tábor. Po získání nezávislosti byl bar vtěsnaný do jednoho z mála "
-"zbývajících dostupných prostor. Přímo nad nákladní linky."
+"V baru na kosmodromu Ambre není nikdy klid. V pravidelných intervalech je "
+"veškerý ostatní hluk v baru přehlušován zvukem nákladních modulů, které se "
+"řítí po železnici přímo pod ním. Bar byl postaven poměrně pozdě v průběhu "
+"vývoje planety; imperiální vláda nepovažovala za nutné, aby tu byl, když "
+"Ambre byla jen o málo víc než pracovní tábor. Po získání nezávislosti byl "
+"bar vtěsnán do jednoho z mála zbývajících volných prostorů, který se "
+"nacházel přímo nad nákladní tratí."
 
 #: dat/spob/amhurst.xml:2
 msgid "Amhurst"
@@ -11101,10 +11559,10 @@ msgid ""
 "has not been hit as hard as many, it has seen its population dip in recent "
 "cycles. Most of the population are miners and other working-class folk."
 msgstr ""
-"Tato planeta je oslavovaným světem těžby a obchodování a je jednou z obětí "
-"odlivu mozků ovlivňující jižní hranici Za'leku. I když nebyla zasažena tak "
-"silně jako mnohé jiné, v posledních cyklech zaznamenala pokles populace. "
-"Většina populace jsou horníci a další příslušníci dělnické třídy."
+"Tato planeta, proslavená těžařským a obchodním světem, je jednou z lepších "
+"obětí odlivu mozků, který postihl jižní hranici Za'leku. Ačkoli nebyla "
+"zasažena tak tvrdě jako mnohé jiné, zaznamenala v posledních cyklech pokles "
+"populace. Většinu obyvatelstva tvoří horníci a další dělníci."
 
 #: dat/spob/amhurst.xml:29
 msgid ""
@@ -11112,9 +11570,9 @@ msgid ""
 "rough aesthetic, the clientele, almost everything. There is little sign of "
 "the usual Za'lek trappings here."
 msgstr ""
-"Kdybyste nevěděli své, předpokládali byste, že se jedná o dvaeredský bar. "
-"Drsná estetika, klientela, téměř všechno. Po obvyklé Za'lekské výzdobě je tu "
-"jen málo známek."
+"Kdyby to člověk nevěděl, myslel by si, že se jedná o Dvaeredský bar. Drsná "
+"estetika, klientela, téměř všechno. Po obvyklých za'lekských atributech je "
+"tu jen málo stop."
 
 #: dat/spob/amianta.xml:2
 msgid "Amianta"
@@ -11126,8 +11584,9 @@ msgid ""
 "Proteron colonized it anyway due to the rich source of both food and water "
 "found underneath the ice."
 msgstr ""
-"Chladné teploty Amianty by některé lidi odháněly, ale Proteron ji stejně "
-"kolonizoval kvůli bohatému zdroji jídla i vody pod ledem."
+"Mrazivé teploty Amianty by některé lidi vyhnaly, ale Proteronci ji přesto "
+"kolonizovali díky bohatým zdrojům potravy i vody, které se nacházejí pod "
+"ledem."
 
 #: dat/spob/ammu.xml:2
 msgid "Ammu"
@@ -11148,7 +11607,7 @@ msgstr ""
 "to, jak to místní obyvatele nerozhází, vás uklidní. Láva má sice "
 "pozitivnější aspekt v tom, že přitahuje průmyslová odvětví, která ke svému "
 "efektivnímu fungování potřebují vysoký tlak a teplotu, ale kvůli klimatu je "
-"Ammu závislá na blízkých planetách, jako je Reidd, pokud jde o zásobování "
+"Ammu závislý na blízkých planetách, jako je Reidd, pokud jde o zásobování "
 "potravinami."
 
 #: dat/spob/ammu.xml:28
@@ -11162,7 +11621,7 @@ msgstr ""
 "Bar na kosmodromu Ammu, kterému se kvůli mrazivým teplotám říká \"chladič\", "
 "je v kontrastu se zbytkem stanice, ačkoli na většině planet by byl považován "
 "za poměrně teplý. Ačkoli je známý především svou teplotou, neznamená to, že "
-"si zde nemůžete dát pořádný Pangalaktický megacloumák."
+"si zde nemůžete dát pořádný pangalaktický Gargle Blaster."
 
 #: dat/spob/amphion.xml:2
 msgid "Amphion"
@@ -11176,11 +11635,11 @@ msgid ""
 "calm and the many underwater cities are famous all over the Empire for their "
 "grandeur and opulence."
 msgstr ""
-"Amphion je oblíbeným místem, kde důstojníci Impéria tráví svůj důchod. Je "
-"dostatečně blízko k jádru Impéria, aby vyvolalo příjemné vzpomínky na "
-"službu, ale dost daleko na poklidný život. Oceány, dominující povrchu "
-"planety, jsou klidné a mnoho podmořských měst je proslulých po celé říši "
-"svou majestátností a bohatstvím."
+"Amphion je oblíbeným místem odchodu důstojníků Impéria do důchodu. Je "
+"dostatečně blízko jádra Impéria, aby vyvolával vděčné vzpomínky na službu, "
+"ale zároveň dostatečně daleko, aby byl klid. Oceány, které dominují povrchu "
+"planety, jsou klidné a mnohá podmořská města jsou proslulá po celém Impériu "
+"svou velkolepostí a bohatstvím."
 
 #: dat/spob/amphion.xml:27
 msgid ""
@@ -11189,9 +11648,9 @@ msgid ""
 "cheery. You wind up making easy friends in the amiable and relaxing "
 "atmosphere."
 msgstr ""
-"Průměrný věk zdejších štamgastů je někde v pozdním středním věku. Bar sám je "
-"zařízený ve stylu starozemské hospůdky, s nízkým stropem a přítmím je tu "
-"veselo a útulno. V takovém prostředí se dá velmi snadno skamarádit."
+"Průměrný věk návštěvníků se zdá být pozdní střední věk. Samotný bar je "
+"zařízen ve stylu starosvětské krčmy, nízký a tmavý, útulný a veselý. V "
+"příjemné a uvolněné atmosféře se snadno spřátelíte."
 
 #: dat/spob/anarbalis_ii.xml:2
 msgid "Anarbalis II"
@@ -11224,7 +11683,7 @@ msgstr "Andee III"
 #: dat/spob/tomas_x1.xml:9 dat/spob/vennis.xml:15 dat/spob/vercingetorix.xml:15
 #: dat/spob/xavier.xml:9
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: dat/spob/andee_iiia.xml:2
 msgid "Andee IIIa"
@@ -11241,9 +11700,9 @@ msgid ""
 "resources. Unlike more developed Za'lek settlements, there is little in the "
 "way of scholarly presence here."
 msgstr ""
-"Tento pustý svět má pod kilometry ledu ukryté přírodní bohatství a Za'lekové "
-"nasadili značné zdroje, aby se k cenným minerálům dostali. Na rozdíl od více "
-"rozvinutých Za'lekských sídel tu není zrovna moc vědeckých pracovníků."
+"Tento neúrodný svět ukrývá pod kilometry ledu bohatství nerostných surovin a "
+"Za'lekové vynaložili značné prostředky, aby je využili. Na rozdíl od "
+"rozvinutějších za'lekských osad se zde nachází jen málo vědců."
 
 #: dat/spob/andors.xml:29
 msgid ""
@@ -11252,20 +11711,16 @@ msgid ""
 "beverages and hearty food, and the patrons are almost exclusively off-duty "
 "Za'lek workers."
 msgstr ""
-"V tomto baru naleznete vítanou úlevu od ostrých větrů a mrazivých teplot, "
-"které prostupují planetu. Nabídka se z velké části skládá z teplých nápojů a "
-"vydatného jídla a štamgasti jsou téměř výlučně Za'lekští pracovníci po směně."
+"Tento bar je vítaným útočištěm před kousavým větrem a mrazivými teplotami, "
+"které sužují celou planetu. Jídelní lístek se skládá převážně z teplých "
+"nápojů a vydatného jídla a návštěvníci jsou téměř výhradně za'lekští dělníci "
+"mimo službu."
 
 #: dat/spob/andors_refining.xml:2
 msgid "Andors Refining"
 msgstr "Rafinérie Andors"
 
 #: dat/spob/andors_refining.xml:23
-#, fuzzy
-#| msgid ""
-#| "This simple refining plant is where the ore collected on Andors is turned "
-#| "into a more useful form and shipped out to other worlds to be turned into "
-#| "whatever is needed."
 msgid ""
 "This simple refining plant is where the ore collected on Andors is turned "
 "into a more useful form and shipped out to other worlds to be turned into "
@@ -11273,9 +11728,10 @@ msgid ""
 "bare minimum of staff manning the station. Work consists mainly in the "
 "maintenance of the droids and playing card games."
 msgstr ""
-"V této jednoduché rafinérii se ruda shromážděná na Andorsu přeměňuje na "
-"užitečnější formu a odesílá se do jiných světů, aby se z ní stalo vše, co je "
-"potřeba."
+"V tomto jednoduchém rafinačním závodě se ruda nasbíraná na Andorsu přeměňuje "
+"na užitečnější formu a posílá se do jiných světů, kde se z ní vyrábí, co je "
+"potřeba. Celá stanice je silně automatizovaná a obsluhuje ji jen minimum "
+"zaměstnanců. Práce spočívá především v údržbě droidů a hraní karetních her."
 
 #: dat/spob/anecu.xml:2
 msgid "Anecu"
@@ -11290,11 +11746,11 @@ msgid ""
 "which use the high pressure of the water as a benchmark against which ships "
 "can be measured."
 msgstr ""
-"Anecu je vodní svět. Celý povrch planety je pokrytý vodou, ale v mělkých "
-"oblastech jsou vybudována velká podmořská města. Klima nad vodou může být "
-"velmi drsné; byly zaznamenány vlny vysoké až dva kilometry. Na planetě se "
-"nachází proslulé zkušebny, které testují lodě na namáhání v tlaku ponořením "
-"pod vodu."
+"Anecu je zcela vodní planeta. Její povrch je zcela pokrytý vodou, ale v "
+"mělkých oblastech jsou vybudována velká podmořská města. Klima nad vodou "
+"může být velmi drsné; byly zaznamenány vlny vysoké až dva kilometry. Planeta "
+"se pyšní rozsáhlými zařízeními pro konstrukci lodí, která využívají vysoký "
+"tlak vody jako měřítko, podle něhož lze lodě měřit."
 
 #: dat/spob/anecu.xml:29
 msgid ""
@@ -11304,10 +11760,10 @@ msgid ""
 "gelatinous creatures sliding around, barely illuminated by the bar's "
 "lighting."
 msgstr ""
-"Bar kosmodromu je přibližně tři kilometry pod povrchem planety. Stěny jsou "
-"vyrobeny z tvrzeného, průhledného polymeru, který vám umožní vidět do "
-"temnoty vody. Každou chvíli můžete vidět po nich klouzat želatinové tvory, "
-"kteří jsou sotva k zahlédnutí jen díky barovým světlům."
+"Tyč kosmodromu se nachází přibližně tři kilometry pod povrchem planety. "
+"Stěny jsou zhotoveny z tvrzeného průhledného polymeru, který umožňuje vidět "
+"do temnoty vody. Tu a tam můžete spatřit želatinové tvory, kteří se tu "
+"sunou, sotva osvětleni osvětlením baru."
 
 #: dat/spob/anger_i.xml:2
 msgid "Anger I"
@@ -11324,7 +11780,7 @@ msgstr "Anger II"
 #: dat/spob/silverstone.xml:15 dat/spob/sternguard.xml:15
 #: dat/spob/tanulwa.xml:16 dat/spob/thar.xml:16
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: dat/spob/anifta.xml:2
 msgid "Anifta"
@@ -11369,10 +11825,10 @@ msgid ""
 "finest food and drink, this Arcturian bar is often a traveller's "
 "introduction to Empire cuisine."
 msgstr ""
-"Bar na Antice je poměrně luxusní záležitost, na rozdíl od drsného exteriéru "
-"obíhající vojenské stanice. Tento Arkturiánský bar, který podává některé z "
-"nejlepších pokrmů a nápojů Impéria, je často vstupenkou do světa imperiální "
-"kuchyně."
+"Anticanský bar je poměrně honosná záležitost, zcela kontrastující se strohým "
+"exteriérem vojenské stanice na oběžné dráze. Tento arkturiánský bar, kde se "
+"podávají nejlepší jídla a nápoje Impéria, je často místem, kde se cestující "
+"seznamují s kuchyní Impéria."
 
 #: dat/spob/antlejos_iii.xml:2
 msgid "Antlejos III"
@@ -11380,7 +11836,7 @@ msgstr "Antlejos III"
 
 #: dat/spob/antlejos_iii.xml:9
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: dat/spob/antlejos_iv.xml:2
 msgid "Antlejos IV"
@@ -11413,19 +11869,9 @@ msgstr "Anubis"
 #: dat/spob/ullnorn.xml:15 dat/spob/vert.xml:9 dat/spob/vorca.xml:16
 #: dat/spob/zalek_ii.xml:9 dat/spob/zaren.xml:15 dat/spob/zhang_lu.xml:15
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: dat/spob/anubis.xml:28
-#, fuzzy
-#| msgid ""
-#| "Named after the Egyptian god of death, Anubis was established as a mining "
-#| "base by a mining faction even before the Faction Wars. The abundance of "
-#| "radioactive and heavy elements made the planet a good location to produce "
-#| "weapons, a lucrative business given its proximity to Sol. During the "
-#| "Faction Wars, Anubis was annexed by the Empire but the local population "
-#| "subsequently joined the protest movement that eventually led to the "
-#| "establishment of House Dvaered. Today, the Dvaered use Anubis to produce "
-#| "ammunition and light combat ships to supply Raelid Outpost."
 msgid ""
 "Named after the Egyptian god of death, Anubis was established as a mining "
 "base by a mining faction even before the Faction Wars. The abundance of "
@@ -11436,14 +11882,14 @@ msgid ""
 "establishment of House Dvaered. Today, the Dvaered use Anubis to produce "
 "ammunition and light combat ships to supply Fort Raelid."
 msgstr ""
-"Anubis, pojmenovaný podle egyptského boha smrti, byl používaný jako základna "
-"těžařů hornickou frakcí už před válkou frakcí. Díky hojnosti radioaktivních "
-"a těžkých prvků byla planeta dobrým místem pro výrobu zbraní, což, vzhledem "
-"k blízkosti Sol, byl celkem výnosný podnik. Během válek frakcí byl Anubis "
-"anektován Impériem, ale místní obyvatelstvo se následně připojilo k "
-"protestnímu hnutí, které nakonec vedlo k ustanovení rodu Dvaeredů. Dnes "
-"Dvaeredové používají Anubis k výrobě munice a lehkých bojových lodí k "
-"zásobování Raelidské základny."
+"Anubis, pojmenovaný po egyptském bohu smrti, byl založen jako těžební "
+"základna těžební frakcí ještě před válkami frakcí. Díky velkému množství "
+"radioaktivních a těžkých prvků byla planeta vhodným místem pro výrobu "
+"zbraní, což byl vzhledem k relativní blízkosti Sol lukrativní byznys. Během "
+"Válek frakcí byla Anubis anektována Impériem, ale místní obyvatelstvo se "
+"následně připojilo k protestnímu hnutí, které nakonec vedlo k založení rodu "
+"Dvaered. Dnes Dvaeredové využívají Anubis k výrobě munice a lehkých bojových "
+"lodí pro zásobování pevnosti Raelid."
 
 #: dat/spob/anubis.xml:29
 msgid ""
@@ -11454,11 +11900,11 @@ msgid ""
 "the locals know how unpleasant it is to have to work in such raging, "
 "radioactive conditions."
 msgstr ""
-"To, co je krásné, je často nebezpečné, ale někdy to funguje i naopak. Bar "
-"kosmodromu na Anubisu má výhled na rokli na povrchu planety a radioaktivní "
-"bouře, které tam často zuří, jsou na pohled docela působivé. Oceňují je však "
-"pouze cizinci, většina místních obyvatel ví, jak nepříjemné je muset "
-"pracovat v takových zuřivých, radioaktivních podmínkách."
+"Co je krásné, je často nebezpečné, ale někdy to funguje i naopak. Z baru na "
+"kosmodromu Anubis je výhled na rokli na povrchu planety a na radioaktivní "
+"bouře, které v ní často zuří, je docela pěkný pohled. Ocení to však jen "
+"mimozemšťané, většina místních obyvatel ví, jak nepříjemné je muset pracovat "
+"v takových zuřících radioaktivních podmínkách."
 
 #: dat/spob/anya.xml:2
 msgid "Anya"
@@ -11466,7 +11912,7 @@ msgstr "Anya"
 
 #: dat/spob/anya.xml:15 dat/spob/sevlow.xml:15 dat/spob/wellen.xml:16
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: dat/spob/anya.xml:26
 msgid ""
@@ -11478,12 +11924,12 @@ msgid ""
 "capital world. This is due, at least in part, to the geological "
 "instabilities of the planet."
 msgstr ""
-"Anya je dvojče planety Sabe, obíhající kolem jejich společného gravitačního "
-"pole v tandemu. Anya je však v důsledku geologické činnosti zahalena "
-"permanentní oblačností popela a sněhu. Na povrchu Anyy žije malý počet "
-"Thurionů, ale dosud nebylo zahájeno žádné kolonizační úsilí, a to navzdory "
-"blízkosti planety k Sabe, thurianskému hlavnímu světu. Kolonizaci brání, "
-"mimo jiné, geologická nestabilita."
+"Anya je dvojčetem planety Sabe a obíhá kolem společného těžiště v tandemu. "
+"Anya je však v důsledku geologické činnosti zahalena do trvalého oblaku "
+"popela a sněhu. Na povrchu Anyi žije malý počet Thurionů, ale navzdory "
+"blízkosti planety k Sabe, hlavnímu světu Thurionů, zatím nezačaly žádné "
+"rozsáhlé kolonizační snahy. To je přinejmenším částečně způsobeno "
+"geologickou nestabilitou planety."
 
 #: dat/spob/anya.xml:27
 msgid ""
@@ -11491,9 +11937,9 @@ msgid ""
 "is usual for Thurion bars, no alcohol or other substances deemed to be "
 "damaging to the brain are served."
 msgstr ""
-"Bar na Anyě je malý a kuriózní, zalidněný místními obyvateli, kteří zde "
-"žijí. Jak je u thurionských barů obvyklé, nepodává se žádný alkohol ani jiné "
-"látky považované za škodlivé pro mozek."
+"Bar na planetě Anya je malý a malebný, obývaný místními obyvateli, kteří zde "
+"žijí. Jak je v thurionských barech obvyklé, nepodává se zde alkohol ani jiné "
+"látky, které jsou považovány za škodlivé pro mozek."
 
 #: dat/spob/apez_ii.xml:2
 msgid "Apez II"
@@ -11516,19 +11962,14 @@ msgid "Apik Shipyard"
 msgstr "Loděnice Apik"
 
 #: dat/spob/apik_shipyard.xml:25
-#, fuzzy
-#| msgid ""
-#| "Unlike Sigma Station on Protera, Apik Shipyard is designed to cater to "
-#| "the needs of the general population. It efficiently churns out and "
-#| "services civilian vessels on an as-needed basis."
 msgid ""
 "Unlike Sigma Bastion in Leporis, Apik Shipyard is designed to cater to the "
 "needs of the general population. It efficiently churns out and services "
 "civilian vessels on an as-needed basis."
 msgstr ""
-"Na rozdíl od stanice Sigma na Proteře je loděnice Apik navržena tak, aby "
-"uspokojovala potřeby běžné populace. Účinně chrlí a obsluhuje civilní "
-"plavidla podle potřeby."
+"Na rozdíl od Leporiské bašty Sigma je loděnice Apik určena pro potřeby "
+"běžného obyvatelstva. Efektivně vyrábí a servisuje civilní plavidla podle "
+"potřeby."
 
 #: dat/spob/aquilia.xml:2
 msgid "Aquilia"
@@ -11539,16 +11980,12 @@ msgid "Arai"
 msgstr "Arai"
 
 #: dat/spob/arandon_station.xml:2
-#, fuzzy
-#| msgid "Abandoned Station"
 msgid "Arandon Station"
-msgstr "Opuštěná stanice"
+msgstr "Arandon Station"
 
 #: dat/spob/arandon_station.xml:3 dat/spob/eye_of_night_station.xml:3
-#, fuzzy
-#| msgid "Brandt Station"
 msgid "Ruined Station"
-msgstr "Stanice Brandt"
+msgstr "Zničená stanice"
 
 #: dat/spob/arandon_station.xml:23
 msgid ""
@@ -11557,6 +11994,10 @@ msgid ""
 "that it seems like large nebula crystals have started to grow on the station "
 "ruins. Wait, is this really Arandon Station?"
 msgstr ""
+"Stanice, která kdysi bývala rušným obchodním centrem, byla při nehodě "
+"nenávratně zničena a od té doby ji vybírají mrchožrouti. Nevysvětlitelnou "
+"věcí je, že na troskách stanice jako by začaly růst velké mlhovinové "
+"krystaly. Počkat, je tohle opravdu stanice Arandon?"
 
 #: dat/spob/arashu.xml:2
 msgid "Arashu"
@@ -11572,13 +12013,13 @@ msgid ""
 "platforms so the workers and equipment are safe from the constant seismic "
 "activity."
 msgstr ""
-"Arashu je zvláštní planeta, je oceánská i vysoce vulkanická. Oceánská kůra "
-"planety je náchylná k zemětřesení, což způsobuje přílivové vlny, které "
-"omývají těch pár oblastí souše. Jedna sirianská korporace investovala do "
-"využití energie, kterou v sobě vlny skrývají, a přeměnila planetu na ziskový "
-"závod na výrobu zbraní. Veškerá výroba probíhá na plovoucích plošinách, "
-"takže pracovníci a vybavení jsou v bezpečí před neustálou seismickou "
-"činností."
+"Arashu je zvláštní planeta, která je zároveň oceánská i silně vulkanická. "
+"Oceánská kůra planety je náchylná k zemětřesením, což způsobuje přílivové "
+"vlny, které omývají několik málo oblastí suché země. Sirianská korporace "
+"investovala do využití energií uvolňovaných tímto procesem a přeměnila "
+"planetu na výnosný závod na výrobu zbraní. Veškerá výroba probíhá na "
+"plovoucích plošinách, takže pracovníci a zařízení jsou v bezpečí před "
+"neustálou seismickou aktivitou."
 
 #: dat/spob/arashu.xml:29
 msgid ""
@@ -11588,15 +12029,15 @@ msgid ""
 "at the moment, so it is actually quite fascinating interesting to watch, "
 "especially once you can place the spaceport and bar!"
 msgstr ""
-"Bar je vybaven velkým displejem, který zobrazuje geologickou mapu planety. "
-"Ten díky tomu, že je většina světa pokryta oceánem, na první pohled zajímavě "
-"nepůsobí. Zobrazuje ale také veškerou sopečnou činnost v reálném čase, takže "
-"je ve skutečnosti docela fascinující ho sledovat, zvláště když na něm "
-"najdete bar a kosmoport!"
+"Na panelu je velký displej, který zobrazuje geologickou mapu planety, která "
+"je vzhledem k tomu, že většinu světa pokrývá oceán, poměrně nezajímavá. "
+"Displej také zobrazuje veškerou sopečnou činnost, která právě probíhá, takže "
+"je vlastně docela fascinující zajímavé ji sledovat, zejména když můžete "
+"umístit kosmodrom a bar!"
 
 #: dat/spob/arcadia.xml:2
 msgid "Arcadia"
-msgstr "Arkádie"
+msgstr "Arcadia"
 
 #: dat/spob/arcadia.xml:26
 msgid ""
@@ -11607,13 +12048,13 @@ msgid ""
 "technology and procedures. The project was in fact so successful that "
 "Arcadia became a hub for food distribution throughout localized Za'lek space."
 msgstr ""
-"Svět, pojmenovaný ironicky - i když výstižně - Arkádie, je pravidelně "
-"bombardovaný kyselým deštěm a dalšími, stejně ošklilvými výkyvy počasí. Díky "
-"extrémnímu klimatu byla Arkádie vybrána jako dějiště experimentu, který "
-"zkoumal, jak takové prostředí ovlivňuje růst plodin, pěstovaných na "
-"izolovaných polích. Tento experiment se setkal s tak velkým úspěchem, že se "
-"Arkádie stala centrálním uzlem pro distribuci potravin v místním Za'lekském "
-"prostoru."
+"Arcadia je poněkud ironicky, ale výstižně pojmenovaná, svět bombardovaný "
+"kyselými dešti a dalšími, stejně nepříjemnými projevy počasí. Jako takový se "
+"stal základním světem úspěšného experimentu, který měl zjistit, zda takové "
+"prostředí může při použití správné izolační technologie a postupů ještě "
+"podporovat masivní pěstování plodin. Projekt byl ve skutečnosti tak úspěšný, "
+"že se Arcadia stala centrem pro distribuci potravin v celém lokalizovaném "
+"za'lekském prostoru."
 
 #: dat/spob/arcadia.xml:27
 msgid ""
@@ -11621,15 +12062,13 @@ msgid ""
 "discussing new and better ways to improve farming technology and get more "
 "and better food for less cost."
 msgstr ""
-"Mnoho kapitánů obchodního loďstva, farmářů i vědců se zde mírumilovně mísí a "
-"diskutují o nových a lepších farmářských technikách, aby vyprodukovali co "
-"nejvíce kvalitního jídla za co nejmenší ceny."
+"Mnoho kapitánů nákladní dopravy, zemědělců a vědců se zde pokojně mísí a "
+"diskutuje o nových a lepších způsobech, jak zlepšit zemědělskou technologii "
+"a získat více a kvalitnějších potravin za nižší náklady."
 
 #: dat/spob/arcania.xml:2
-#, fuzzy
-#| msgid "Arcadia"
 msgid "Arcania"
-msgstr "Arkádie"
+msgstr "Arcania"
 
 #: dat/spob/arcania.xml:15
 msgid ""
@@ -11642,18 +12081,20 @@ msgid ""
 "all traces of human occupation, clearing what were once cities to dust "
 "mixing with the arid sand of the planet surface."
 msgstr ""
+"V Arkánii se kdysi nacházela prestižní Arkánijská vojenská akademie, o "
+"kterou císařské síly velmi stály. Incident sice planetu přímo výrazně "
+"nezasáhl, ale změny ve hvězdném a gravitačním poli soustavy Arcanis vedly k "
+"tomu, že planeta sdílela novou oběžnou dráhu s polem asteroidů Arcanis, což "
+"mělo ničivé následky. Neustálé dunění povrchu planety meteority všech "
+"velikostí zlikvidovalo všechny stopy po lidském osídlení a vyčistilo místa, "
+"kde kdysi bývala města, na prach mísící se s vyprahlým pískem na povrchu "
+"planety."
 
 #: dat/spob/arch_arai.xml:2
 msgid "Arch Arai"
 msgstr "Arch Arai"
 
 #: dat/spob/arch_arai.xml:28
-#, fuzzy
-#| msgid ""
-#| "Once an independent world, home to pirates and black market traders, Arch "
-#| "Arai has long since fallen under the spell of the Touched. Now it is a "
-#| "fairly law-abiding Sirius world, earning its existence through trade and "
-#| "industry like almost every other planet."
 msgid ""
 "Once an independent world, home to pirates and black market traders, Arch "
 "Arai has long since fallen under the spell of the Touched. Now it is a "
@@ -11663,9 +12104,11 @@ msgid ""
 "that have recently entered Sirius space."
 msgstr ""
 "Kdysi nezávislý svět, domov pirátů a obchodníků na černém trhu, Arch Arai už "
-"dávno propadl kouzlu Dotčených. Nyní je to poměrně zákonný svět Siria, který "
-"si na svou existenci vydělává obchodem a průmyslem jako téměř každá jiná "
-"planeta."
+"dávno propadl kouzlu Doteků. Nyní je to poměrně spořádaný svět Siriusu, "
+"který si na svou existenci vydělává legálním obchodem a průmyslem jako téměř "
+"každá jiná planeta. Vzhledem ke své blízkosti s dvaeredskou hranicí stále "
+"přitahuje nové přistěhovalce a konvertity, kteří nedávno vstoupili do "
+"prostoru Siria."
 
 #: dat/spob/arch_arai.xml:29
 msgid ""
@@ -11674,13 +12117,14 @@ msgid ""
 "effect is contagious making newcomers follow the example of those who are "
 "already there, almost instinctively."
 msgstr ""
-"Tento bar je klidné místo. Ačkoliv tu štamgasti nechybí, nezdá se, že by "
-"kvůli čemukoliv chtěli dělat rozruch. Jejich postoj je natolik nakažlivý, že "
-"nově příchozí následují příklad štamgastů téměř instinktivně."
+"Tento bar je klidné místo. Ačkoli mu rozhodně nechybí návštěvnost, nezdá se, "
+"že by lidé, kteří sem chodí, dělali kvůli něčemu rozruch. Působí to "
+"nakažlivě a nově příchozí téměř instinktivně následují příkladu těch, kteří "
+"tu už jsou."
 
 #: dat/spob/arck.xml:2
 msgid "Arck"
-msgstr "Ark"
+msgstr "Arck"
 
 #: dat/spob/arck.xml:26
 msgid ""
@@ -11691,11 +12135,11 @@ msgid ""
 "doing here is a form of reverse terraforming - an attempt to turn Arck into "
 "an X class planet."
 msgstr ""
-"S devíti miliardami obyvatel je Ark jedním z nejhustěji obydlených světů v "
-"galaxii. Většinu povrchu planety pokrývá obrovské, rozlehlé město. "
-"Přirozeně, s tolika obyvateli přichází i obrovské znečištění životního "
-"prostředí. Mnoho skeptiků věří, že to, co tu Dvaeredové provádí je jistou "
-"formou reverzní terraformace - pokus o proměnu Arku v planetu typu X."
+"Arck je s devíti miliardami obyvatel jedním z nejhustěji osídlených světů v "
+"galaxii. Většinu povrchu planety pokrývá obrovské, rozlehlé město. S tak "
+"velkým počtem obyvatel samozřejmě přichází i masivní znečištění životního "
+"prostředí a mnozí skeptici se domnívají, že to, co zde Dvaeredové provádějí, "
+"je forma obráceného teraformingu - pokus přeměnit Arck na planetu třídy X."
 
 #: dat/spob/arck.xml:27
 msgid ""
@@ -11705,50 +12149,37 @@ msgid ""
 "often irritates traders who come here to do business, only to find "
 "themselves in the middle of a Dvaered Turborave party."
 msgstr ""
-"Kosmodrom na Arku se nachází přímo uprostřed obzvlášť hustě osídleného "
-"městského uzlu. Přidružený bar byl rozšířen a přeměněn na všeobecné zařízení "
-"pro trávení volného času, určené pro místní obyvatele, což často dráždí "
-"obchodníky, kteří sem přicházejí podnikat. Místo obchodní zóny se ocitnou "
-"uprostřed dvaeredské turborave párty."
+"Kosmodrom na Arcku se nachází přímo uprostřed obzvlášť hustě osídleného "
+"městského centra. Přidružený bar byl rozšířen a přeměněn na všeobecné "
+"zábavní zařízení pro místní obyvatele, což často dráždí obchodníky, kteří "
+"sem přicházejí za obchodem, jen aby se ocitli uprostřed Turborave večírku "
+"Dvaeredu."
 
 #: dat/spob/arcturus_enclave.xml:2
-#, fuzzy
-#| msgid "Arcturus I"
 msgid "Arcturus Enclave"
-msgstr "Arcturus I"
+msgstr "Enkláva Arcturus"
 
 #: dat/spob/arcturus_enclave.xml:29
-#, fuzzy
-#| msgid ""
-#| "Arcturus Gamma is the Empire's first line of defence when it comes to "
-#| "their core systems from the east. An imposing force force stationed here "
-#| "with constant routine patrols tries to make sure no undesirable ships "
-#| "make it into Empire space."
 msgid ""
 "Arcturus Enclave is the Empire's first line of defence when it comes to "
 "their core systems from the east. An imposing force force stationed here "
 "with constant routine patrols tries to make sure no undesirable ships make "
 "it into Empire space."
 msgstr ""
-"Arcturus Gamma je první obrannou linií Impéria, pokud jde o jeho hlavní "
-"systémy z východu. Impozantní vojenská jednotka, která je zde umístěna, se "
+"Enkláva Arcturus je první obrannou linií Impéria, pokud jde o jeho hlavní "
+"systémy z východu. Stojí zde impozantní vojenská jednotka, která se "
 "neustálými rutinními hlídkami snaží zajistit, aby se do prostoru Impéria "
 "nedostaly žádné nežádoucí lodě."
 
 #: dat/spob/arcturus_enclave.xml:30
-#, fuzzy
-#| msgid ""
-#| "A truly utilitarian place, the Arcturus Gamma bar is metallic grey, "
-#| "meticulously maintained and full of off-duty Empire soldiers - not a "
-#| "place to get into a fight."
 msgid ""
 "A truly utilitarian place, the Arcturus Enclave bar is metallic grey, "
 "meticulously maintained and full of off-duty Empire soldiers - not a place "
 "to get into a fight."
 msgstr ""
-"Bar na Arcturu Gamma je čistě užitkové místo. Je kovově šedý, pečlivě "
-"udržovaný a plný vojáků říše mimo službu - není to místo, kde byste se mohli "
-"dostat do šarvátky."
+"Bar Enklávy Arcturus je skutečně utilitární, kovově šedý, pečlivě udržovaný "
+"a plný vojáků Impéria mimo službu - není to místo, kde by se člověk chtěl "
+"poprat."
 
 #: dat/spob/arcturus_i.xml:2
 msgid "Arcturus I"
@@ -11795,14 +12226,6 @@ msgid "Arrakis"
 msgstr "Arrakis"
 
 #: dat/spob/arrakis.xml:26
-#, fuzzy
-#| msgid ""
-#| "Arrakis is a desert planet with no natural precipitation and the dust "
-#| "storms can rage for many periods at a time. Due to the expense of "
-#| "constantly importing water, lots of care is taken to minimize evaporation "
-#| "with most buildings are almost completely hermetic. The locals are "
-#| "continuously discussing sandworms, though you're not sure what to make of "
-#| "it."
 msgid ""
 "Arrakis is a desert planet with no natural precipitation and the dust storms "
 "can rage for many periods at a time. Due to the expense of constantly "
@@ -11812,9 +12235,9 @@ msgid ""
 msgstr ""
 "Arrakis je pouštní planeta bez přirozených srážek a prachové bouře na ní "
 "mohou zuřit po mnoho období. Vzhledem k nákladům na neustálý dovoz vody se "
-"hodně dbá na minimalizaci odpařování a většina budov je téměř zcela "
-"hermetická. Místní obyvatelé neustále diskutují o písečných červech, i když "
-"si nejste jisti, co si o tom myslet."
+"věnuje velká pozornost minimalizaci odpařování a většina budov je téměř "
+"zcela hermetická. Místní obyvatelé neustále diskutují o písečných červech, i "
+"když si nejste jisti, co si o tom myslet."
 
 #: dat/spob/arrakis.xml:27
 msgid ""
@@ -11823,10 +12246,10 @@ msgid ""
 "mercenaries can be found plying their trade. \"The spice must flow\", they "
 "say, it may not, but at least the rum does."
 msgstr ""
-"Arrakenská jídelna je jedním z těch špinavějších barů v říšském prostoru. "
-"Protože se nachází na hranici Říše, je tu jen málo hlídek, zato dost žoldáků "
-"a darebáků, kteří zde uzavírají své „obchody“. Místní říkají, že „koření "
-"musí proudit,“ a když ne koření, tak aspoň rum."
+"Arrakénská jídelna je jedním z nejstinnějších barů v prostoru Empire. Leží "
+"na hranicích Impéria, prochází tudy jen málo hlídek a najdete zde mnoho "
+"darebáků a žoldáků, kteří se živí svým řemeslem. \"Koření musí téct\", říká "
+"se, možná ne, ale alespoň rum ano."
 
 #: dat/spob/arrentil.xml:2
 msgid "Arrentil"
@@ -11841,12 +12264,11 @@ msgid ""
 "population is thriving and the industry-focused economy is stable. By all "
 "means, Arrentil is an example of Soromid persistence."
 msgstr ""
-"Jak je pro Soromidské světy typické, zbytek lidstva by Arrentil považoval za "
-"naprosto nehostinný. Atmosféra je toxická a povrch nestabilní, ale Soromidům "
-"se podařilo tento svět zkrotit. Samozřejmě dokonce i oni potřebují žít na "
-"chráněných stanovištích, ale přesto se populaci daří a ekonomika orientovaná "
-"na průmysl je stabilní. Arrentil je ve všech případech příkladem vytrvalosti "
-"Soromidů."
+"Jak je pro soromidské světy typické, Arrentil je pro zbytek lidstva naprosto "
+"nehostinný. Atmosféra je toxická a povrch nestabilní, ale Soromidům se "
+"podařilo tento svět zkrotit. Samozřejmě i oni musí žít v chráněných "
+"obydlích, ale přesto se obyvatelstvu daří a ekonomika zaměřená na průmysl je "
+"stabilní. Arrentil je každopádně příkladem vytrvalosti Soromidů."
 
 #: dat/spob/arrentil.xml:27
 msgid ""
@@ -11857,11 +12279,11 @@ msgid ""
 "but here in Soromid space it has given it a more organic feel, so much so "
 "that it almost feels like it is growing."
 msgstr ""
-"Při budování stanovišť tohoto nehostinného světa se uvažovalo jen o naprosto "
-"nezbytném vybavení. Tento bar byl vybudován \"naroubováním\" na stranu "
-"kosmodromu. Kdekoli jinde v galaxii by takový nápad pravděpodobně vyústil v "
-"poněkud stísněný, zchátralý bar, ale tady v Soromidském prostoru mu to "
-"dodalo organičtější pocit, dokonce do té míry, že téměř cítíte, že roste."
+"Při budování obydlí v tomto nehostinném světě se málo myslelo na méně "
+"podstatné vybavení. Tento bar byl přidán naroubováním na bok kosmodromu. "
+"Kdekoli jinde v galaxii by to, že je to dodatečně vymyšlené, pravděpodobně "
+"vedlo k poněkud stísněnému, zchátralému baru, ale tady v soromidském "
+"prostoru to působilo organičtěji, až to skoro působí, jako by rostl."
 
 #: dat/spob/astana.xml:2 dat/ssys/astana.xml:2
 msgid "Astana"
@@ -11875,11 +12297,11 @@ msgid ""
 "active service. This planet is an ideal spot for this as, besides the "
 "scientists who work here, no one else wants to land on the planet."
 msgstr ""
-"Astana je domovem Imperiální Experimentální Zbraně Testovací Továrny, běžně "
-"označované zkratkou IEWTF. Právě zde je testována a kvalifikována pro "
-"aktivní službu většina novějších zbraní a oblečení vybavených říšskou "
-"armádou. Tato planeta je pro to ideálním místem, protože kromě vědců, kteří "
-"zde pracují, nikdo jiný nechce na planetě přistát."
+"Astana je sídlem Imperiálního experimentálního zkušebního zařízení pro "
+"zbraně, běžně označovaného zkratkou IEWTF. Zde se testuje většina novějších "
+"zbraní a výstroje, kterými je vybavena imperiální armáda, a zde se testuje a "
+"kvalifikuje pro aktivní službu. Tato planeta je pro to ideálním místem, "
+"protože kromě vědců, kteří zde pracují, na ní nikdo jiný nechce přistát."
 
 #: dat/spob/astana.xml:27
 msgid ""
@@ -11888,9 +12310,9 @@ msgid ""
 "than the IEWTF there is little reason to remain on the world for very long "
 "apart from the bar."
 msgstr ""
-"Bar je místem, kde si mnoho pracovníků střelnice na chvilku odpočine. "
-"Několik z nich mluví o projektu, kterému vůbec nerozumíte. Kromě střelnice "
-"je bar snad jediným místem, kvůli kterému stojí za to zůstávat na povrchu."
+"V baru si mnozí pracovníci IEWTF na chvíli odpočinou a několik z nich se "
+"baví o projektu, který vás přivádí do rozpaků. Kromě IEWTF není příliš "
+"důvodů, proč se na planetě zdržovat příliš dlouho, kromě baru."
 
 #: dat/spob/astana_iiv.xml:2
 msgid "Astana IIV"
@@ -11907,9 +12329,9 @@ msgid ""
 "making a decent enough living thanks to the caches of heavy elements trapped "
 "under the ice."
 msgstr ""
-"Atalanta je pojmenována přímo po své kolonizační lodi, Atalantě. Přestože je "
-"planeta příliš studená na to, aby měla skutečnou hodnotu, obyvatelstvo si "
-"díky ložiskům těžkých prvků uvězněných pod ledem vydělává dost slušně."
+"Atalanta je pojmenována přímo po lodi Atalanta, která ji osídlila. Ačkoli je "
+"planeta příliš chladná na to, aby měla nějakou skutečnou hodnotu, obyvatelé "
+"se díky zásobám těžkých prvků uvězněných pod ledem docela slušně uživí."
 
 #: dat/spob/atalanta.xml:28
 msgid ""
@@ -11919,10 +12341,10 @@ msgid ""
 "Atalanta's orbit makes this a rare occurrence but the bar's profits soar "
 "every cycle."
 msgstr ""
-"Stejně jako všechny budovy na planetě je místní bar postaven pod ledem, ale "
-"je docela blízko povrchu, a to kvůli světelným efektům, které slunce na ledě "
-"vytváří, když svítí přímo na něj. Na oběžné dráze Atalanty je tento jev "
-"vzácný, ale zisky baru stoupají každým cyklem."
+"Stejně jako všechny stavby na planetě je i bar Atalanta postaven pod ledem, "
+"ale je poměrně blízko povrchu. Je to proto, že když slunce svítí přímo na "
+"led, lze nad ním pozorovat velkolepý světelný efekt. Díky oběžné dráze "
+"Atalanty je to vzácný jev, ale zisky baru stoupají každý cyklus."
 
 #: dat/spob/atlantis_i.xml:2
 msgid "Atlantis I"
@@ -11939,10 +12361,10 @@ msgid ""
 "Ruadan. Beyond these two things there is little to recommend it (though one "
 "of these may, at least, be plenty enough)."
 msgstr ""
-"Atryssa je díky technologii Za'leků ekonomicky bohatým světem. Je to také "
-"planeta nejblíže Ruadanu, na které ještě mohou přístát cizinci. Kromě těchto "
-"dvou věcí lze doporučit jen málo (i když alespoň jedna z nich by důvodem pro "
-"návštěvu být mohla)."
+"Atryssa je díky za'lecké technologii ekonomicky bohatý svět. Je také k "
+"Ruadanu nejbližší pozoruhodnou za'lekskou planetou, kde mohou přistát "
+"cizinci. Kromě těchto dvou věcí není příliš co doporučit (i když minimálně "
+"jedna z nich může bohatě stačit)."
 
 #: dat/spob/atryssa.xml:29
 msgid ""
@@ -11951,10 +12373,10 @@ msgid ""
 "There are also one or two people wandering about with notepads, though "
 "everyone goes quiet when they approach."
 msgstr ""
-"Archetyp Za'lekského baru, i když velmi přeplněný. Dav se zdá být rozdělen "
-"do skupin lidí diskutujících o věcech tlumenými hlasy. Také se zde potuluje "
-"jeden nebo dva lidé s poznámkovými bloky, i když každý ztichne, když se "
-"přiblíží."
+"Archetyp za'lekského baru, i když velmi přeplněného. Zdá se, že dav je "
+"rozdělen do skupinek lidí, kteří tlumeně diskutují. Také se tu potuluje "
+"jeden nebo dva lidé s poznámkovými bloky, ačkoli když se přiblíží, všichni "
+"ztichnou."
 
 #. Finish event (removes npc)
 #.
@@ -11989,19 +12411,18 @@ msgid ""
 "residential world, primarily for the scientists working on Warnecke who, "
 "after a hard week's work, don't want to see another lab for a while."
 msgstr ""
-"August je celkem standardní, i když chladný svět. Na planetu Za'leků se zde "
-"nachází netypicky málo výzkumných stanic. Je to téměř čistě obytný svět, "
-"především pro vědce pracující na Warnecke, kteří po náročném týdnu práce "
-"nechtějí aspoň na chvíli vidět jinou laboratoř."
+"August je poměrně standardní, i když chladný svět. Na za'lekskou planetu je "
+"vzácný, nemá na sobě tolik výzkumných stanic. Je to téměř čistě obytný svět, "
+"především pro vědce pracující na Warnecku, kteří po náročné týdenní práci "
+"nechtějí na chvíli vidět jinou laboratoř."
 
 #: dat/spob/august.xml:27
 msgid ""
 "This bar has the feel of an old-world pub, with plenty of wood furnishing on "
 "display, good food and better beer. A great place to relax and unwind."
 msgstr ""
-"Tento bar má atmosféru starozemské hospody se spoustou vystaveného dřevěného "
-"nábytku, dobrým jídlem a ještě lepším pivem. Skvělé místo k uvolnění a "
-"odpočinku."
+"Tento bar působí dojmem starosvětské hospody se spoustou dřevěného nábytku, "
+"dobrým jídlem a ještě lepším pivem. Skvělé místo k odpočinku a relaxaci."
 
 #: dat/spob/avoss.xml:2
 msgid "Avoss"
@@ -12018,13 +12439,13 @@ msgid ""
 "devastated, a mere shadow of its former self. The colonists have managed to "
 "survive, however, and the hardy remain even today."
 msgstr ""
-"Avoss byl původně průměrný, ale obyvatelný svět. Když dorazila čtrnáctá "
-"kolonizační loď, Petrovsk, považovali se její kolonisté za docela šťastné, "
-"že našli místo, které by mohli nazvat domovem. Asi padesát let poté, co se "
-"expedice vylodila, se svět začal měnit. Seismická aktivita všude začala "
-"přesahovat stupnice a způsobovala zemětřesení a sopečné erupce po celém "
-"světě. Svět je nyní zpustošen, pouhý stín jeho bývalého já. Kolonistům se "
-"však podařilo přežít a houževnatě zde setrvávají dodnes."
+"Avoss byl původně průměrný, ale obyvatelný svět. Když sem dorazila čtrnáctá "
+"koloniální loď Petrovsk, považovali se její kolonisté za šťastlivce, že "
+"našli místo, které mohou nazývat domovem. Avšak asi padesát let po přistání "
+"expedice se svět začal měnit. Seismická aktivita všude na světě se začala "
+"stupňovat a způsobovala zemětřesení a sopečné erupce po celém světě. Svět je "
+"nyní zničený a je pouhým stínem svého dřívějšího já. Kolonistům se však "
+"podařilo přežít a ti odolní zůstali i dnes."
 
 #: dat/spob/awowa_iv.xml:2
 msgid "Awowa IV"
@@ -12060,15 +12481,15 @@ msgstr "Baf IV"
 
 #: dat/spob/barnards_star_ruined_ringworld.xml:2
 msgid "Barnard's Star Ruined Ringworld"
-msgstr ""
+msgstr "Barnardova hvězda zničeného prstencového světa"
 
 #: dat/spob/barnards_star_ruined_ringworld.xml:3
 msgid "Ruined Ringworld"
-msgstr ""
+msgstr "Zničený prstencový svět"
 
 #: dat/spob/barnards_star_ruined_ringworld.xml:16
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: dat/spob/barnards_star_ruined_ringworld.xml:23
 msgid ""
@@ -12086,25 +12507,28 @@ msgid ""
 "scavengers and artefact hunters, there is not much reason to search the "
 "structure either way."
 msgstr ""
+"Barnardův hvězdný prstenec, první známý prstenec vybudovaný lidstvem, se v "
+"době svého největšího rozmachu pyšnil téměř miliardou obyvatel. Díky "
+"rozmanitým ekosystémům, které podporovala umělá gravitace, byl chválen jako "
+"jeden z největších úspěchů lidstva v oblasti megastrukturního inženýrství. "
+"Přestože stavba trvala více než 30 cyklů, stačil jediný okamžik, aby exploze "
+"vyvolaná Incidentem zcela rozmetala atmosféru, rozbila strukturu a odsoudila "
+"ty, kteří přežili, k pomalému udušení ve vesmírném vakuu.\n"
+"Zkoumání struktury, která již není tvořena jediným spojeným prstencem, je "
+"velmi časově náročné, protože vyžaduje mnoho složitých manévrů ve "
+"skafandrech s nulovou gravitací. Vzhledem k tomu, že většina struktury byla "
+"vyčištěna od všeho cenného mnoha mrchožrouty a lovci artefaktů, není příliš "
+"důvodů k prohledávání struktury tak jako tak."
 
 #: dat/spob/basel_i.xml:2
 msgid "Basel I"
 msgstr "Basel I"
 
 #: dat/spob/bastion_center.xml:2
-#, fuzzy
-#| msgid "Bastion Station"
 msgid "Bastion Center"
-msgstr "Stanice Bastion"
+msgstr "Středisko Bastion"
 
 #: dat/spob/bastion_center.xml:26
-#, fuzzy
-#| msgid ""
-#| "Bastion Station is one of the two primary defence, border guard, and "
-#| "patrol base stations leading into Za'lek space. As such, it is one of the "
-#| "few military expenditures that goes (largely) unchallenged even by the "
-#| "notorious Za'lek political scene. The House Za'lek Defence Force conducts "
-#| "most of their foreign contact here, where they can keep an eye on affairs."
 msgid ""
 "Bastion Center is one of the two primary defence, border guard, and patrol "
 "base stations leading into Za'lek space. As such, it is one of the few "
@@ -12112,12 +12536,11 @@ msgid ""
 "Za'lek political scene. The House Za'lek Defence Force conducts most of "
 "their foreign contact here, where they can keep an eye on affairs."
 msgstr ""
-"Stanice Bastion je jednou ze dvou primárních obranných, pohraničních a "
-"hlídkových základnových stanic vedoucích do Za'lekského prostoru. Jako "
-"takový je to jeden z mála vojenských výdajů, který (většinou) nezpochybňuje "
-"ani Za'lekská notoricky známá politická scéna. Zde zabírají většinu svých "
-"zahraničních kontaktů obranné síly frakce Za'lek, kde mohou dohlížet na "
-"záležitosti."
+"Středisko Bastion je jednou ze dvou hlavních obranných, pohraničních a "
+"hlídkových základen vedoucích do za'leckého prostoru. Jako taková je jedním "
+"z mála vojenských výdajů, které zůstávají (do značné míry) bez odezvy i na "
+"pověstné za'lecké politické scéně. Obranné síly Domu Za'leků zde udržují "
+"většinu svých zahraničních kontaktů, protože zde mohou mít přehled o dění."
 
 #: dat/spob/bedimann_shipyards.xml:2
 msgid "Bedimann Shipyards"
@@ -12129,9 +12552,9 @@ msgid ""
 "sent out to the defence forces. It also maintains a small contingent of "
 "Za'lek vessels at home to serve as a in-system guard."
 msgstr ""
-"Tyto loděnice jsou jedním z míst, kde jsou za'lekská plavidla stavěna a "
-"posílána k obranným silám. Udržují zde také malý kontingent za'lekských "
-"plavidel, který slouží jako vnitřní obrana v systému."
+"Tyto loděnice jsou jedním z míst, kde se staví za'lekské lodě a posílají se "
+"obranným silám. Doma také udržuje malý kontingent za'lekských lodí, které "
+"slouží jako stráž v systému."
 
 #: dat/spob/beeklo_ii.xml:2
 msgid "Beeklo II"
@@ -12150,10 +12573,10 @@ msgid ""
 "strategic location for Soromid fleets."
 msgstr ""
 "Beene je bohatý na nejrůznější běžné minerály, takže Soromidé využívají "
-"tento svět stejným způsobem jako kdokoli jiný: jako zdroj surovin. Zde "
-"vytěžené prvky jsou zpracovány do standardních balíčků, které využívají "
-"Soromidské organické lodě. Tato zásoba minerálů znamená, že Beene je pro "
-"flotily Soromidů velmi důležitým strategickým místem."
+"tento svět stejně jako každý jiný: jako zdroj surovin. Prvky, které se zde "
+"těží, se zpracovávají do standardních obalů, které používají soromidské "
+"biolodě. Díky těmto zásobám minerálů je Beene pro soromidské flotily poměrně "
+"důležitým strategickým místem."
 
 #: dat/spob/beene.xml:30
 msgid ""
@@ -12163,27 +12586,23 @@ msgid ""
 "population. As such, having a drink in Beene's bar is a bit of an ordeal. "
 "It's one of the less popular places among traders looking for a drink."
 msgstr ""
-"Pilotům se doporučuje, aby při návštěvě baru na Beene nosili skafandry. "
-"Atmosféra planety může běžným lidem způsobit vážné problémy a Soromidé se "
-"neobtěžovali instalovat dekontaminační filtry pro místní obyvatelstvo. Proto "
-"je pití v baru trochu utrpení. Je to jedno z těch méně populárních míst mezi "
-"obchodníky, kteří hledají drink."
+"Pilotům se doporučuje, aby při návštěvě Beene's baru nosili vzduchotěsné "
+"obleky. Atmosféra planety může normálním lidem způsobit vážné problémy a "
+"Soromidé se neobtěžovali instalovat dekontaminační filtry pro místní "
+"obyvatelstvo. Dávat si v Beenově baru drink je proto docela utrpení. Je to "
+"jedno z méně oblíbených míst mezi obchodníky, kteří hledají pití."
 
 #: dat/spob/behar_prime.xml:2
 msgid "Behar Prime"
-msgstr ""
+msgstr "Behar Prime"
 
 #: dat/spob/behar_station.xml:2
-#, fuzzy
-#| msgid "Tesla Station"
 msgid "Behar Station"
-msgstr "Stanice Tesla"
+msgstr "Stanice Behar"
 
 #: dat/spob/behar_station.xml:3
-#, fuzzy
-#| msgid "Apik Shipyard"
 msgid "Ruined Shipyard"
-msgstr "Loděnice Apik"
+msgstr "Zničená loděnice"
 
 #: dat/spob/behar_station.xml:23
 msgid ""
@@ -12193,25 +12612,21 @@ msgid ""
 "impressive and able to turn out three full Peacemakers each cycle, the ruins "
 "have been picked clean by countless scavengers following its destruction."
 msgstr ""
+"Stanice Behar, kdysi rušná a produktivní císařská loděnice, utrpěla při "
+"incidentu těžké strukturální poškození. Systémy podpory života rychle "
+"selhaly a většina obyvatel v následujících okamžicích zahynula. Ačkoli byla "
+"původně velmi impozantní a dokázala každý cyklus vyprodukovat tři plné "
+"Peacemakery, po jejím zničení byly trosky vybrány nesčetnými mrchožrouty."
 
 #: dat/spob/behemoth.xml:2
 msgid "Behemoth"
 msgstr "Behemoth"
 
 #: dat/spob/belltower_nest.xml:2
-#, fuzzy
-#| msgid "Belltower Station"
 msgid "Belltower Nest"
-msgstr "Stanice Belltower"
+msgstr "Belltower Nest"
 
 #: dat/spob/belltower_nest.xml:27
-#, fuzzy
-#| msgid ""
-#| "Belltower Station is a small Soromid military outpost whose main purpose "
-#| "is to keep the Adiadus system in line. Being this far from the Soromid "
-#| "core there is little interstellar traffic, some of the inhabitants "
-#| "occasionally start to wonder if they're really part of the Soromid "
-#| "collective at all. Belltower is here to remind them that they are."
 msgid ""
 "Belltower Nest is a small Soromid military outpost whose main purpose is to "
 "keep the Adiadus system in line. Being this far from the Soromid core there "
@@ -12219,12 +12634,11 @@ msgid ""
 "to wonder if they're really part of the Soromid collective at all. Belltower "
 "is here to remind them that they are."
 msgstr ""
-"Stanice Belltower je malá Soromidská vojenská základna, jejímž hlavním "
-"účelem je udržovat řád v systém Adiadus. Systém je dost daleko od jádra "
-"soromidského prostoru a to s sebou nese malý objem mezihvězdného provozu. "
-"Někteří obyvatelé si občas kladou otázku, zda jsou vůbec ještě součástí "
-"Soromidského kolektivu. Belltower je tu, aby jim připomněla, že ano, stále "
-"jsou."
+"Belltower je malá soromidská vojenská základna, jejímž hlavním účelem je "
+"udržovat systém Adiadus v pořádku. Vzhledem k tomu, že je tak daleko od "
+"soromidského jádra, je zde malý mezihvězdný provoz, někteří obyvatelé občas "
+"začínají pochybovat, zda jsou vůbec součástí soromidského kolektivu. Zvonice "
+"je tu od toho, aby jim připomněla, že jsou."
 
 #: dat/spob/belltower_nest.xml:28
 msgid ""
@@ -12235,23 +12649,15 @@ msgid ""
 "system."
 msgstr ""
 "Bar má dveře, které vedou přímo do vězeňského bloku. Vězni zde obvykle "
-"nezůstávají příliš dlouho. Belltower nemá ani kapacitu, ani pravomoc "
-"individuálně jednat s kýmkoliv větším, než jsou ti nejdrobnější zločinci. "
-"Vážnější pachatelé jsou převezeni do trestních zařízení na Agino v systému "
-"Zintar."
+"nezůstávají příliš dlouho. Zvonice nemá kapacitu ani pravomoci, aby se sama "
+"zabývala něčím víc než drobnými zločinci. Závažnější pachatelé jsou "
+"převáženi do vězeňských zařízení na Aginu v systému Zintar."
 
 #: dat/spob/benedict.xml:2
 msgid "Benedict"
 msgstr "Benedict"
 
 #: dat/spob/benedict.xml:28
-#, fuzzy
-#| msgid ""
-#| "Another gas giant, another Soromid outpost. This particular outpost is "
-#| "rather larger than some due to the large amount of mineral and element "
-#| "extraction performed here. The planet is high in organic matter as well "
-#| "as elements used to produce them, this makes it an, almost literal, gold "
-#| "mine for Soromid building materials."
 msgid ""
 "Another gas giant, another Soromid outpost. This particular outpost is "
 "rather larger than some due to the large amounts of mineral and element "
@@ -12260,20 +12666,13 @@ msgid ""
 "produce them, it's an almost literal gold mine for Soromid building "
 "materials."
 msgstr ""
-"Další plynový obr, další základna Soromidů. Tato konkrétní základna je větší "
-"než obvykle, a to kvůli velkému množství těžby minerálů a prvků, která se "
-"zde koná. Planeta má vysoký obsah organické hmoty i prvků použitých k jejich "
-"výrobě, což z ní dělá téměř doslovný zlatý důl pro stavební materiály "
-"Soromidů."
+"Další plynný obr, další soromidská základna. Tato konkrétní základna je "
+"poněkud větší než jiné, protože se zde těží velké množství minerálů a prvků."
+"\n"
+"Protože je planeta bohatá na organické látky i prvky používané k jejich "
+"výrobě, je to téměř doslova zlatý důl pro soromidské stavební materiály."
 
 #: dat/spob/benedict.xml:30
-#, fuzzy
-#| msgid ""
-#| "As per the case for many Soromid bars in less than hospitable places, the "
-#| "atmosphere in this bar is rather stuffy with an element of danger for non-"
-#| "Soromids, the air isn't too great either. Most of the drinks here are "
-#| "served with straws, which is a thoughtful touch for those traders who are "
-#| "forced to wear air-breathers."
 msgid ""
 "Typical of many Soromid bars in less than hospitable places, there's an "
 "element of danger for an unaccostomed visitor. The atmosphere in this bar is "
@@ -12281,23 +12680,17 @@ msgid ""
 "Most of the drinks here are served with straws, which is a thoughtful touch "
 "for those traders who are forced to wear air-breathers."
 msgstr ""
-"Jak je pravidlem Soromidských barů na těch méně pohostinných místech, "
-"atmosféra zde je poměrně dusná, s prvkem nebezpečí pro nesoromidy. Vzduch "
-"také není příliš skvělý. Většina nápojů se zde podává s brčky, což je "
-"promyšlená vychytávka pro ty obchodníky, kteří jsou nuceni nosit dýchací "
-"přístroje."
+"Typické pro mnoho soromidských barů na méně než pohostinných místech, je zde "
+"prvek nebezpečí pro nezvyklého návštěvníka. Atmosféra v tomto baru je "
+"poměrně dusná a vzduch není pro ne-soromidy tak příjemný.\n"
+"Většina nápojů se zde podává s brčkem, což je pro obchodníky, kteří jsou "
+"nuceni nosit dýchací přístroje, promyšlený dotek."
 
 #: dat/spob/benteen.xml:2
 msgid "Benteen"
 msgstr "Benteen"
 
 #: dat/spob/benteen.xml:26
-#, fuzzy
-#| msgid ""
-#| "Benteen is one of the Empire's primary agriworlds. It grows most of the "
-#| "crops that are bound for the western systems. It is a quiet world, with "
-#| "little in the way of the bustle and fuss of other, more core, planets. It "
-#| "is not uncommon for people to migrate here looking for a calmer lifestyle."
 msgid ""
 "Benteen has become one of the Empire's primary agriworlds, growing most of "
 "the crops that are bound for the quickly developing western systems. It is a "
@@ -12306,18 +12699,20 @@ msgid ""
 "It is not uncommon for people to migrate here looking for a calmer "
 "lifestyle, away from the chaos and people near the major trade lanes."
 msgstr ""
-"Benteen je jedním z hlavních zemědělských světů Impéria. Pěstuje většinu "
-"plodin určených pro západní systémy. Je to klidný svět, na kterém není tolik "
-"ruchu a povyku jako na jiných planetách. Lidé se sem nezřídka stěhují za "
-"klidnějším životním stylem."
+"Benteen se stal jedním z primárních zemědělských světů Impéria, kde se "
+"pěstuje většina plodin, které jsou určeny pro rychle se rozvíjející západní "
+"systémy. Je to tichý svět, jen málo v cestě shonu a rozruchu ostatních "
+"jádrových planet.\n"
+"Není neobvyklé, že sem lidé migrují a hledají klidnější životní styl, daleko "
+"od chaosu a lidí poblíž hlavních obchodních cest."
 
 #: dat/spob/benteen.xml:28
 msgid ""
 "The bar is a place to relax after a long trip or a hard day's work. The beer "
 "is fine and the locals seem friendly enough. Mostly harmless."
 msgstr ""
-"Bar je místem k odpočinku po dlouhé cestě nebo náročném pracovním dni. Pivo "
-"je v pořádku a místní se zdají dost přátelští. Převážně neškodní."
+"Bar je místem k odpočinku po dlouhé cestě nebo náročném dni v práci. Pivo je "
+"v pořádku a místní se zdají být dostatečně přátelští. Převážně neškodní."
 
 #: dat/spob/berkhere.xml:2
 msgid "Berkhere"
@@ -12330,10 +12725,10 @@ msgid ""
 "mineral wealth for survival. Crops will not grow on this arid planet, so all "
 "food has to be imported."
 msgstr ""
-"Většina povrchu Berkhere je kámen, prach a písek. Ale pod tímto povrchem "
-"leží vzácné a cenné drahokamy a minerály. Přežití místní kolonie stojí a "
-"padá s místním minerálním bohatstvím. Na této vyprahlé planetě nebudou růst "
-"plodiny, takže je nutné veškeré jídlo dovážet."
+"Většina povrchu Berkhere je skála, prach a písek. Ale pod tímto povrchem "
+"leží vzácné a cenné drahokamy a minerály. Zdejší kolonie spoléhá na toto "
+"nerostné bohatství k přežití. Plodiny na této vyprahlé planetě neporostou, "
+"takže veškeré jídlo se musí dovážet."
 
 #: dat/spob/berkhere.xml:28
 msgid ""
@@ -12344,12 +12739,12 @@ msgid ""
 "sold, the reasoning goes, Berkhere's future isn't in peril. Needless to say, "
 "the gem is heavily protected by security systems."
 msgstr ""
-"Bar kosmodromu je uspořádán kolem centrální oblasti, která slouží jako "
-"výkladní skříň největšího neopracovaného drahokamu, jaký se kdy našel pod "
-"pískem Berkhere. Návštěvníkům i místním obyvatelům připomíná, že Berkhere je "
-"stále bohatým světem. Dokud drahokam zůstává vystavený a nemusí být prodán, "
-"znamená to, že budoucnost Berkhere není ohrožena. Není třeba říkat, že "
-"klenot je silně chráněn všemožnými bezpečnostními systémy."
+"Kosmodromový bar je uspořádán kolem centrální oblasti, která slouží jako "
+"výkladní skříň pro největší nebroušený drahokam, jaký byl kdy nalezen pod "
+"písky Berkhere. Je to připomínka návštěvníkům i místnímu obyvatelstvu, že "
+"Berkhere je stále bohaté. Dokud vystavený drahokam nemusí být prodán, "
+"zdůvodnění zní, že budoucnost Berkhere není v ohrožení. Netřeba dodávat, že "
+"klenot je silně chráněn bezpečnostními systémy."
 
 #: dat/spob/beth.xml:2
 msgid "Beth"
@@ -12373,23 +12768,13 @@ msgstr "Blackwell VII"
 
 #: dat/spob/blunderbuss_ii.xml:2
 msgid "Blunderbuss II"
-msgstr "Mušketa II"
+msgstr "Blunderbuss II"
 
 #: dat/spob/bolero.xml:2
 msgid "Bolero"
 msgstr "Bolero"
 
 #: dat/spob/bolero.xml:29
-#, fuzzy
-#| msgid ""
-#| "Bolero is one of the Empire's most successful planets. The population is "
-#| "prosperous and successful, and the planet's conditions are mild. Although "
-#| "it is still treated as something of a backwater due to its location, it "
-#| "is becoming increasingly important in Imperial politics. A lot of "
-#| "Bolero's popularity comes from its Earth-like climate, giving a "
-#| "reassuring sense of nostalgia to all those who were able to visit Earth "
-#| "before the Incident. However, some people avoid it for exactly the same "
-#| "reason…"
 msgid ""
 "Bolero has quickly become of the Empire's most successful planets due to its "
 "recent growth. The population is prosperous and successful, and the planet's "
@@ -12401,23 +12786,15 @@ msgid ""
 "before the Incident. However, some people avoid it for exactly the same "
 "reason…"
 msgstr ""
-"Bolero je jednou z nejúspěšnějších planet Impéria. Obyvatelstvo je "
-"prosperující a úspěšné a podmínky na planetě jsou mírné. Ačkoli je vzhledem "
-"ke své poloze stále považována za jakýsi zapadákov, nabývá stále většího "
-"významu v císařské politice. Velká část popularity Bolera pochází z jeho "
-"klimatu podobného pozemskému, což dává uklidňující pocit nostalgie všem, "
-"kteří měli možnost navštívit Zemi před Incidentem. Někteří lidé se mu však "
-"vyhýbají přesně ze stejného důvodu…"
+"Bolero se rychle stalo z nejúspěšnějších planet Impéria díky svému nedávnému "
+"růstu. Populace je prosperující a úspěšná a podmínky planety jsou mírné. I "
+"když je kvůli své poloze stále považován za zapadákov, v imperiální politice "
+"se stává stále důležitějším.\n"
+"Velká část popularity Bolera pochází z jeho zemského klimatu, které dává "
+"uklidňující pocit nostalgie všem, kteří byli schopni navštívit Zemi před "
+"Incidentem. Někteří lidé se mu však vyhýbají ze stejného důvodu…"
 
 #: dat/spob/bolero.xml:31
-#, fuzzy
-#| msgid ""
-#| "Making the most of Bolero's similarity with Earth, the bar here is an old-"
-#| "Earth style pub, with a low ceiling, warm beer and good food. The "
-#| "atmosphere is warm and welcoming, the clients are all polite and cheerful "
-#| "and the bouncers barely loom at all. There seems to be relatively few "
-#| "locals mixed in with the patrons, with the majority of people looking "
-#| "like temporary visitors, either arriving for vacations or business trips."
 msgid ""
 "Making the most of Bolero's similarity with Earth, the bar here is an old-"
 "Earth style pub, with a low ceiling, warm beer and good food. The atmosphere "
@@ -12427,12 +12804,13 @@ msgid ""
 "majority of people appear to be temporary visitors, either arriving for "
 "vacations or business trips."
 msgstr ""
-"Zdejší bar, který maximálně využívá podobnosti Bolera se Zemí, je hospoda ve "
-"stylu staré Země s nízkým stropem, teplým pivem a dobrým jídlem. Atmosféra "
-"je vřelá a přívětivá, všichni zákazníci jsou zdvořilí a veselí a vyhazovači "
-"se tu skoro vůbec nevyskytují. Zdá se, že mezi návštěvníky se mísí poměrně "
-"málo místních, většina lidí vypadá jako dočasní návštěvníci, kteří dorazili "
-"buď na dovolenou, nebo na služební cestu."
+"Bar, který maximálně využívá podobnosti Bolera se Zemí, je hospoda ve stylu "
+"staré Země s nízkým stropem, teplým pivem a dobrým jídlem. Atmosféra je "
+"vřelá a přívětivá, klienti jsou všichni zdvořilí a veselí a vyhazovači se "
+"sotva zjevují.\n"
+"Zdá se, že mezi patrony se mísí relativně málo místních; většina lidí se "
+"jeví jako dočasní návštěvníci, kteří přijíždějí na dovolenou nebo na "
+"služební cesty."
 
 #: dat/spob/bon_sebb.xml:2
 msgid "Bon Sebb"
@@ -12445,10 +12823,10 @@ msgid ""
 "gigantic junk yard, known as the \"Junkle\", where the locals \"hunt\" for "
 "useful equipment they can sell to each other, or to passing travellers."
 msgstr ""
-"Bon Sebb je tajemné místo. Věci z celé galaxie se nakonec objeví i tady. "
-"Velkou část povrchu planety vlastně tvoří obří skládka, známá jako „tržiště“ "
-"kde místní obyvatelé „nakupují“ užitečné vybavení, které pak prodávají ať už "
-"mezi sebou, nebo mimoplanetárním návštěvníkům."
+"Bon Sebb je tajemné místo. Objekty z celé galaxie mají ve zvyku se zde "
+"objevovat. Ve skutečnosti je velká plocha povrchu planety gigantickým "
+"vrakovištěm, známým jako „Junkle“, kde místní „loví“ užitečné vybavení, "
+"které mohou prodat sobě nebo kolemjdoucím cestovatelům."
 
 #: dat/spob/bon_sebb.xml:30
 msgid ""
@@ -12457,10 +12835,10 @@ msgid ""
 "only somewhat symmetrical feature of the bar is a holoportrait of the "
 "Creator of the Universe, hanging over the lopsided bar."
 msgstr ""
-"Bar na Bon Sebb je postaven z věcí „nakoupených“ na „tržnici“. Stěny a "
-"nábytek jsou slepencem různých designů a materiálů. Jediným poněkud "
-"symetrickým rysem baru je holoportrét Stvořitele vesmíru, visícího nad "
-"šikmým barem."
+"Bar na Bon Sebb je postaven z věcí vyhrabaných z Junkle. Všechny stěny a "
+"nábytek jsou patchworky různých vzorů a materiálů. Jediným poněkud "
+"symetrickým prvkem lišty je holoportrét Stvořitele vesmíru, visící přes "
+"nakloněný bar."
 
 #: dat/spob/bonanza_i.xml:2
 msgid "Bonanza I"
@@ -12507,42 +12885,29 @@ msgstr "Botarn I"
 
 #: dat/spob/brandt_cloister.xml:2
 msgid "Brandt Cloister"
-msgstr ""
+msgstr "Brandt Cloister"
 
 #: dat/spob/brandt_cloister.xml:25
-#, fuzzy
-#| msgid ""
-#| "Serving as a local security checkpoint, Brandt Station sports two "
-#| "squadrons of light response ships. The station is mainly responsible for "
-#| "Niger, Lazuli and Anarbalis. The ships here, however, are not equipped to "
-#| "handle the stress of the border conflicts with the Dvaered at Eye of "
-#| "Night."
 msgid ""
 "Serving as a local security checkpoint, Brandt Cloister sports two squadrons "
 "of light response ships. The station is mainly responsible for Rhu, Niger, "
 "and Anarbalis. The ships here, however, are not equipped to handle the "
 "stress of the border conflicts with the Dvaered at Eye of Night."
 msgstr ""
-"Stanice Brandt slouží jako místní bezpečnostně-kontrolní stanoviště a "
-"základnu zde mají dvě letky lehkých lodí. Stanice je zodpovědná hlavně za "
-"Niger, Lazuli a Anarbalis. Lodě zde však nejsou vybaveny na zvládnutí "
-"hraničních konfliktů s Dvaeredy v Eye of Night."
+"Brandt Cloister slouží jako místní bezpečnostní kontrolní stanoviště a "
+"provozuje dvě eskadry lehkých záchranných lodí. Stanice je zodpovědná hlavně "
+"za Rhu, Niger a Anarbalis. Zdejší lodě však nejsou vybaveny, aby zvládly "
+"stres z hraničních konfliktů s Dvaeredy z Eye of Night."
 
 #: dat/spob/brandt_cloister.xml:26
-#, fuzzy
-#| msgid ""
-#| "Curiously, this spacedock bar seems to make no distinction between the "
-#| "three Sirian echelons in any way. However, the soldiers and sailors "
-#| "stationed on Brandt Station all know their place and treat each other "
-#| "accordingly."
 msgid ""
 "Curiously, this spacedock bar seems to make no distinction between the three "
 "Sirian echelons in any way. However, the soldiers and sailors stationed on "
 "Brandt Cloister all know their place and treat each other accordingly."
 msgstr ""
-"Kupodivu se zdá, že tento dokovací bar s nijak nerozlišuje mezi třemi "
-"sirianskými vrstvami. Vojáci a kosmoplavci umístění na stanici Brandt však "
-"všichni znají své místo a podle toho se k sobě chovají."
+"Kupodivu se zdá, že tento dokovací bar nijak nerozlišuje mezi třemi "
+"sirianskými patry. Všichni vojáci a námořníci na Brandt Cloister však znají "
+"své místo a podle toho se k sobě chovají."
 
 #: dat/spob/brendon_i.xml:2
 msgid "Brendon I"
@@ -12579,9 +12944,10 @@ msgid ""
 "for this purpose and no other, comfort was the last thing on the designers' "
 "minds."
 msgstr ""
-"Dvaeredští sem umístili zařízení k těžbě plynu. Ten je rafinován a přeměněn "
-"na palivo pro Dvaeredské lodě. Rafinerie je postavena čistě účelově - vyrábí "
-"palivo a nějaké pohodlí návrhářům ani nepřišlo na mysl."
+"Nachází se zde jedna z plynárenských těžebních operací Dvaered. Plyn je "
+"rafinován a přeměněn na palivo pro Dvaeredské lodě. Zdejší prostory jsou "
+"postaveny výhradně pro tento účel a nic jiného, pohodlí bylo to poslední, na "
+"co designéři mysleli."
 
 #: dat/spob/brock.xml:28
 msgid ""
@@ -12599,14 +12965,6 @@ msgid "Brooks"
 msgstr "Brooks"
 
 #: dat/spob/brooks.xml:26
-#, fuzzy
-#| msgid ""
-#| "Brooks is a bustling, highly populated Imperial civilian planet. With the "
-#| "decline of the Empire, it has found itself on the border of dangerous "
-#| "space, a rather uncomfortable position. As Brooks is a rich planet with a "
-#| "lot of economic and political weight within the Empire, the Imperial Navy "
-#| "protects Arcturus for Brooks' sake, as much as for the Imperial core "
-#| "systems."
 msgid ""
 "Brooks is a bustling, highly populated Imperial civilian planet. But with "
 "the decline of the Empire and especially after the Incident, it has found "
@@ -12615,20 +12973,14 @@ msgid ""
 "within the Empire, the Imperial Navy protects Arcturus for Brooks' sake, as "
 "much as for the Imperial core systems."
 msgstr ""
-"Brooks je rušná Říšská planeta s vysokým počtem civilního obyvatelstva. S "
-"úpadkem Říše se ocitla na hranici nebezpečného prostoru, což je docela "
-"nepohodlné postavení. Jelikož je Brooks bohatá planeta s velkou ekonomickou "
-"a politickou váhou v Říši, chrání Říšské námořnictvo soustavu Arcturus právě "
-"kvůli Brooksu, a to stejně dobře jako kterýkoliv centrální svět Říše."
+"Brooks je rušná, vysoce osídlená imperiální civilní planeta. S úpadkem "
+"Impéria a zvláště po Incidentu se ale ocitla v dost nepohodlné pozici na "
+"hranicích nepřátelského prostoru.\n"
+"Protože Brooks je bohatá planeta s velkou ekonomickou a politickou váhou v "
+"rámci Impéria, Imperiální námořnictvo chrání Arcturus kvůli planetě Brooks, "
+"stejně jako pro centrální systémy Impéria."
 
 #: dat/spob/brooks.xml:28
-#, fuzzy
-#| msgid ""
-#| "On Brooks everything is expensive, something that comes with most "
-#| "economically booming worlds. However, most traders put up with the "
-#| "inflated prices for refreshments and services at the spaceport bar, "
-#| "Brooks, after all, is a boom world and where profit is to made, and "
-#| "nobody wants to miss out on such a chance."
 msgid ""
 "On Brooks everything is expensive, something that comes with most "
 "economically booming worlds. However, most traders put up with the inflated "
@@ -12636,11 +12988,10 @@ msgid ""
 "all, is a boom world and where profit is to made, nobody wants to miss out "
 "on such a chance."
 msgstr ""
-"Na Brooksu je všechno drahé, což je typické pro většinu ekonomicky "
-"vzkvétajících světů. Většina obchodníků se však s nadsazenými cenami za "
-"občerstvení a služby v baru na kosmodromu smíří, Brooks je přece světem "
-"konjunktury a místem, kde se dá vydělat, a nikdo si takovou příležitost "
-"nechce nechat ujít."
+"Na Brooks je všechno drahé, něco, co přichází s většinou ekonomicky "
+"prosperujících světů. Většina obchodníků si však potrpí na přemrštěné ceny "
+"za občerstvení a služby na kosmodromu, Brooks je koneckonců svět boomu a kde "
+"se má vydělávat, nikdo si takovou šanci nechce nechat ujít."
 
 #: dat/spob/buritt.xml:2
 msgid "Buritt"
@@ -12674,13 +13025,6 @@ msgid "Burnan"
 msgstr "Burnan"
 
 #: dat/spob/burnan.xml:29
-#, fuzzy
-#| msgid ""
-#| "Burnan counts as the unofficial local capital. Aesir is far away and many "
-#| "government services are better rendered locally than over a distance of "
-#| "many hyperspace jumps. Burnan has a large political district in its "
-#| "primary city, this also houses one of the largest Sirian temples in all "
-#| "of Sirius space."
 msgid ""
 "As Aesir is so far away and many government services are better rendered "
 "locally than over a distance of many hyperspace jumps, Burnan serves as the "
@@ -12690,11 +13034,13 @@ msgid ""
 "Due to the highly political nature of the planet, the cities and districts "
 "are designed with specific echelons in mind, and mixing is kept to a minimum."
 msgstr ""
-"Burnan je de facto neoficiální hlavní planeta. Aesir je daleko a mnoho "
-"vládních služeb lépe poskytnou místní, než je řešit na vzdálenost mnoha "
-"hyperprostorových skoků. Burnan má ve svém hlavním městě velkou politickou "
-"čtvrť, kde se také nachází jeden z největších sirianských chrámů v celém "
-"prostoru Sirianů."
+"Protože Aesir je tak daleko a mnoho vládních služeb je lépe poskytováno "
+"lokálně než na vzdálenost mnoha hyperprostorových skoků, Burnan slouží jako "
+"místní hlavní město v tomto sektoru vesmíru Sirius. Z tohoto důvodu má "
+"hlavní město Burnan ve svém hlavním městě atypicky velkou politickou čtvrť a "
+"také jeden z největších sirianských chrámů v celém prostoru Sirius.\n"
+"Vzhledem k vysoce politické povaze planety jsou města a čtvrti navrženy s "
+"ohledem na konkrétní vrstvy a míchání je omezeno na minimum."
 
 #: dat/spob/burnan.xml:31
 msgid ""
@@ -12741,32 +13087,24 @@ msgstr ""
 "zvířata, zejména dobytek."
 
 #: dat/spob/caladan.xml:29
-#, fuzzy
-#| msgid ""
-#| "The bar is just off the starport with a great view of the harbor. You "
-#| "could watch the fishermen run frantically about attending their duties "
-#| "for hours. You could also tuck into some of the local cuisine which is "
-#| "rather refined, with most dishes containing meat."
 msgid ""
 "The bar is just off the starport with a great view of the harbour. You could "
 "watch the fishermen run frantically about attending their duties for hours. "
 "You could also tuck into some of the local cuisine which is rather refined, "
 "with most dishes containing meat."
 msgstr ""
-"Bar je hned vedle kosmodromu se skvělým výhledem na vodní přístav. Mohli "
-"byste hodiny sledovat, jak rybáři zběsile utíkají a plní své povinnosti. "
-"Dalo by se také zajít do některé z místních kuchyní, které jsou poměrně "
-"rafinované. Většina místních pokrmů obsahuje maso."
+"Bar je hned vedle přístavu s krásným výhledem na přístav. Mohli jste se "
+"dívat, jak rybáři zběsile pobíhají a plní své povinnosti celé hodiny. Můžete "
+"si také dát něco z místní kuchyně, která je poměrně vytříbená a většina "
+"jídel obsahuje maso."
 
 #: dat/spob/calvin.xml:2
 msgid "Calvin"
 msgstr "Calvin"
 
 #: dat/spob/cantina_center.xml:2
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Cantina Center"
-msgstr "Stanice Cantina"
+msgstr "Středisko Cantina"
 
 #: dat/spob/cantina_center.xml:26
 msgid ""
@@ -12850,7 +13188,7 @@ msgstr "Castellan VI"
 
 #: dat/spob/castellum_hystera.xml:2
 msgid "Castellum Hystera"
-msgstr ""
+msgstr "Castellum Hystera"
 
 #: dat/spob/castellum_hystera.xml:26
 msgid ""
@@ -12863,16 +13201,25 @@ msgid ""
 "of Korifa, the station had fulfilled its purpose and was converted for use "
 "as a trade hub."
 msgstr ""
+"Po incidentu se přeživší Proteron na Protera Sigma snažil založit nové "
+"kolonie, které by nahradily ty, které ztratili. Hystera byla prvním "
+"objeveným blízkým systémem, ale bylo zjištěno, že obsahuje plynného obra a "
+"nepřátelskou planetu, na které není nic zajímavého. Proteron se proto místo "
+"toho rozhodl zřídit tuto základnu, obíhající kolem Hystery II, s cílem najít "
+"další systémy v okolí. Objevením stanice Korifa splnila svůj účel a byla "
+"přeměněna pro použití jako obchodní uzel."
 
 #: dat/spob/castellum_hystera.xml:27
 msgid ""
 "Proteron civilians enter and exit the bar with incredible efficiency, not "
 "wasting a moment of their time."
 msgstr ""
+"Proteronští civilisté vstupují a vystupují z baru s neuvěřitelnou "
+"efektivitou a neztrácejí ani okamžik svého času."
 
 #: dat/spob/castellum_telika.xml:2
 msgid "Castellum Telika"
-msgstr ""
+msgstr "Castellum Telika"
 
 #: dat/spob/castellum_telika.xml:25
 msgid ""
@@ -12880,6 +13227,9 @@ msgid ""
 "so they built this station. The greatest Proteron scientific minds come "
 "together here to further the technological prowess of the Proteron."
 msgstr ""
+"Proteron se rozhodl, že by měl mít centrum pro vědecký pokrok, a tak "
+"postavil tuto stanici. Největší proteronské vědecké mozky se zde sešly, aby "
+"podpořily technologickou zdatnost Proteronu."
 
 #: dat/spob/castellum_telika.xml:26
 msgid ""
@@ -12887,40 +13237,36 @@ msgid ""
 "scientists. Other than that, it's essentially the same as other Proteron "
 "bars."
 msgstr ""
+"Bar je většinou prázdný, pravděpodobně kvůli vytíženosti vědců stanice. "
+"Kromě toho je v podstatě stejný jako ostatní Proteronské bary."
 
 #: dat/spob/castrum_akra.xml:2
 msgid "Castrum Akra"
-msgstr ""
+msgstr "Castrum Akra"
 
 #: dat/spob/castrum_akra.xml:26
-#, fuzzy
-#| msgid ""
-#| "Built to service ships in the area, Akra Station also serves as an "
-#| "essential communication and trade hub for residents of Akra. People from "
-#| "all over the system congregate here, leading to more inter-planetary "
-#| "personal relationships than normal."
 msgid ""
 "Built to service ships in the area, Akra Bastion also serves as an essential "
 "communication and trade hub for residents of Akra. People from all over the "
 "system congregate here, leading to more inter-planetary personal "
 "relationships than normal."
 msgstr ""
-"Stanice Akra, postavená pro údržbu lodí v této oblasti, slouží také jako "
-"základní komunikační a obchodní uzel pro obyvatele Akry. Shromažďují se zde "
-"lidé z celého systému, což vede k více meziplanetárním osobním vztahům, než "
-"je obvyklé."
+"Bastion Akra, postavený pro obsluhu lodí v této oblasti, slouží také jako "
+"základní komunikační a obchodní uzel pro obyvatele Akry. Lidé z celého "
+"systému se zde shromažďují, což vede k více meziplanetárním osobním vztahům, "
+"než je obvyklé."
 
 #: dat/spob/castrum_akra.xml:27
 msgid ""
 "The bar is bustling and seemingly constantly packed, yet never seems to "
 "cause anyone any problem due to how efficient everything is."
 msgstr ""
-"Bar je rušný a zdánlivě neustále nabitý, ale zdá se, že nikdy nikomu "
-"nezpůsobí žádný problém díky tomu, jak je všechno efektivní."
+"Bar je rušný a zdánlivě neustále přecpaný, ale zdá se, že to nikdy nikomu "
+"nezpůsobuje problémy díky tomu, jak je tu vše efektivní."
 
 #: dat/spob/castrum_sigma.xml:2
 msgid "Castrum Sigma"
-msgstr ""
+msgstr "Castrum Sigma"
 
 #: dat/spob/castrum_sigma.xml:28
 msgid ""
@@ -12928,18 +13274,20 @@ msgid ""
 "ships. Regular Proteron civilians typically aren't allowed access to this "
 "facility."
 msgstr ""
+"Jediným úkolem této stanice je vypouštět mocné vojenské lodě Proteron. "
+"Obyčejní Proteronští civilisté obvykle nemají přístup do tohoto zařízení."
 
 #: dat/spob/castrum_sigma.xml:29
 msgid ""
 "Even for a Proteron bar, this one is heavily business-oriented. Most patrons "
 "seem to be here for a specific purpose."
 msgstr ""
+"Dokonce i Proteronský bar jako je tento je silně obchodně orientovaný. Zdá "
+"se, že většina patronů je zde za určitým účelem."
 
 #: dat/spob/cebus_prime.xml:2
-#, fuzzy
-#| msgid "Antlejos Prime"
 msgid "Cebus Prime"
-msgstr "Antlejos Prime"
+msgstr "Cebus Prime"
 
 #: dat/spob/cebus_prime.xml:23
 msgid ""
@@ -12951,28 +13299,33 @@ msgid ""
 "locals mainly live in the underground installations around the spaceport, "
 "using the abandoned spacious accommodations freely."
 msgstr ""
+"Ačkoli původně mlhovina byla původně klidným světem, zbavila se většiny "
+"atmosféry a stala se téměř neobyvatelnou. Většina obyvatel už dávno odešla a "
+"Impérium ho oficiálně prohlásilo za zničený svět, nicméně někteří tvrdohlaví "
+"jedinci stále přetrvávají a přežívají v převážně soběstačnosti mimo to, co "
+"by se dalo považovat za civilizovanou společnost. Místní obyvatelé žijí "
+"převážně v podzemních instalacích kolem kosmodromu a volně využívají "
+"opuštěné prostorné ubikace."
 
 #: dat/spob/cerberus_i.xml:2
 msgid "Cerberus I"
-msgstr "Kerberos I"
+msgstr "Cerberus I"
 
 #: dat/spob/cerberus_ii.xml:2
 msgid "Cerberus II"
-msgstr "Kerberos II"
+msgstr "Cerberus II"
 
 #: dat/spob/cerberus_iia.xml:2
 msgid "Cerberus IIa"
-msgstr "Kerberos IIa"
+msgstr "Cerberus IIa"
 
 #: dat/spob/cerberus_iv.xml:2
 msgid "Cerberus IV"
-msgstr "Kerberos IV"
+msgstr "Cerberus IV"
 
 #: dat/spob/cerberus_outpost.xml:2
-#, fuzzy
-#| msgid "Cerberus I"
 msgid "Cerberus Outpost"
-msgstr "Kerberos I"
+msgstr "Základna Cerberus"
 
 #: dat/spob/cerberus_outpost.xml:26
 msgid ""
@@ -12987,6 +13340,15 @@ msgid ""
 "for sale and is mainly used to repair and maintain ships that have been "
 "damaged by forays into the depths of the nebula."
 msgstr ""
+"Základna Cerberus, příhodně pojmenovaná po strážném psovi podsvětí, byla "
+"založena brzy po stabilizaci obrovské mlhoviny Sol.\n"
+"Zatímco stanoveným účelem stanice je monitorovat a zkoumat účinky mlhoviny, "
+"její přesné detaily jsou důvěrné; pro některé je na stanici víc než dost "
+"vojenského vlivu, aby to bylo podezřelé. Se všemi teoriemi kolem Incidentu "
+"si člověk nikdy nemůže být příliš jistý, kde končí realita a začíná fikce.\n"
+"Přestože je na stanici přítomna loděnice, nenabízí žádné lodě k prodeji a "
+"slouží především k opravám a údržbě lodí, které byly poškozeny nájezdy do "
+"hlubin mlhoviny."
 
 #: dat/spob/cerberus_outpost.xml:29
 msgid ""
