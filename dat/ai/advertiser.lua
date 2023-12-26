@@ -115,7 +115,7 @@ function create ()
       local sponsor = lords[ rnd.rnd(1,#lords) ]
       local params = {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponsor=sponsor, article="a"}
       if params.badword == "Ass" then
-         params.article = "an";
+         params.article = "an"
       end
       table.insert(msg, fmt.f(_("I hereby declare {butthead} is {article} {badword}. -{sponsor}"), params))
       table.insert(msg, fmt.f(_("Let it be known that {butthead} is {article} {badword}. -{sponsor}"), params))
