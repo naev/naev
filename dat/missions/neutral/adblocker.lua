@@ -64,7 +64,7 @@ function accept()
     vn.done()
 
     vn.label("accept")
-    man(_([["Thank you! Again, just disable that thing!"]]))
+    man(_([["Thank you! Again, just stop that thing! Do what you have to!"]]))
     vn.func(function()
         accepted = true
     end)
