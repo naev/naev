@@ -53,8 +53,8 @@ function accept()
     vn.scene()
     local man = vn.newCharacter(mission.npc.name, { image = mission.npc.img_fp })
     vn.transition()
-    man(_([["Look, I don't have much time! There's this annoying ship that's been spamming the local comms with tons of advertisements! I can't take it anymore! Please, you've got to stop it! I'll give you ${creds} if you stop it!"]])
-        , { creds = fmt.credits(mission.reward) })
+    man(fmt.f(_([["Look, I don't have much time! There's this annoying ship that's been spamming the local comms with tons of advertisements! I can't take it anymore! Please, you've got to stop it! I'll give you ${creds} if you stop it!"]])
+        , { creds = fmt.credits(mission.reward) }))
     vn.menu {
         { _([[Accept]]), "accept" },
         { _([[Refuse]]), "refuse" },
