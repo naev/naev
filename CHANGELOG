@@ -2,6 +2,7 @@
    * Fixed autonav wobble
    * Point defense won't shoot at disabled pilots anymore
    * Fixed battery descriptions
+   * Discovering a hidden jump will make both directions known
    * `kidnapped/traffic_00`: fixed formating string telling the player what system to go to
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
    * Fixed many typos

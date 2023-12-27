@@ -431,6 +431,8 @@ static int jumpL_isKnown( lua_State *L )
 /**
  * @brief Sets a jump's known state.
  *
+ * Note that this affects both sides of the jump connection to avoid getting the player locked away.
+ *
  * @usage j:setKnown( false ) -- Makes jump unknown.
  *    @luatparam Jump j Jump to set known.
  *    @luatparam[opt=true] boolean value Whether or not to set as known.
@@ -450,12 +452,16 @@ static int jumpL_setKnown( lua_State *L )
    else
       b = 1;
 
-   changed = (b != (int)jp_isKnown(jp));
+   changed = ((b != (int)jp_isKnown(jp)) || (b != (int)jp_isKnown(jp->returnJump)));
 
-   if (b)
+   if (b) {
       jp_setFlag( jp, JP_KNOWN );
-   else
+      jp_setFlag( jp->returnJump, JP_KNOWN );
+   }
+   else {
       jp_rmFlag( jp, JP_KNOWN );
+      jp_rmFlag( jp->returnJump, JP_KNOWN );
+   }
 
    if (changed) {
       /* Update overlay. */
