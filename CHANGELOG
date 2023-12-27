@@ -12,6 +12,7 @@
       * Dropped SDL_image fallback
 
 * 0.11.1 (unreleased)
+   * Fixed asteroids spawning in not proper shapes
    * Fixed autonav wobble
    * Point defense won't shoot at disabled pilots anymore
    * Fixed battery descriptions
