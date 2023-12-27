@@ -322,7 +322,7 @@ function enter ()
       mem.misn_state = 1
 
    elseif mem.misn_state==2 and system.cur() == mem.retsys then
-      hook.timer( 5e3, "talk_derelict" )
+      hook.timer( 5, "talk_derelict" )
 
       local pos = player.pos() * 0.6 -- Should be to the center of the system
       derelict = pilot.add( "Koala", "Derelict", pos, p_("ship", "Derelict") )
