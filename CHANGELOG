@@ -21,6 +21,7 @@
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
    * `tutorial/nelly01`: fixed derelict message not appearing
    * `minerva/pirate4`: fixed save me spam only being print once
+   * `seek_n_destroy`: fixed warnings when taking off in the same system
    * Fixed many typos
    * Translation updates
 
