@@ -50,12 +50,17 @@ void main (void)
       // colour because both rods and cones are active. However, as we expect
       // a player to be looking at a lit screen, this simulation of high
       // light conditions is more useful.
-      l = m = s = 0.01775f * L + 0.10945f * M + 0.87262f * S;
+      l = m = s = 0.01775f * L + 0.10945f * M + 0.87262f * S;;
    }
    else if (type==ROD_MONOCHROMACY) {
       // Rod Monochromat (Achromatopsia) - only brightness can be detected
       // (0.003% population)
       l = m = s = 0.212656f * L + 0.715158f * M + 0.072186f * S;
+   }
+   else {
+      /* Not supported. */
+      colour_out = tex;
+      return;
    }
 
    // Convert to RGB
