@@ -48,6 +48,7 @@ void main (void)
    }
    else {
       /* Unhandled cases here. */
+      l = m = s = 0.0; /* Hopefully quiets some warnings on some systems. */
       colour_out = tex;
       return;
    }

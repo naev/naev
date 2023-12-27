@@ -271,7 +271,7 @@ function mainship_attacked ()
 
    mainship:comm(_("We are under attack!"), true)
    mem.attacked_spam = true
-   hook.timer( 6e3, "attack_spam_over" )
+   hook.timer( 10, "attack_spam_over" )
 end
 function attack_spam_over ()
    mem.attacked_spam = false

@@ -359,8 +359,7 @@ void asteroids_init (void)
  */
 static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
 {
-   double mod, theta, wmax, r, r2;
-   double x,y;
+   double mod, theta, wmax, r;
    AsteroidType *at = NULL;
    int outfield, id;
    int attempts = 0;
@@ -368,19 +367,20 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
 
    ast->parent  = field->id;
    ast->scanned = 0;
-   r2 = pow2( field->radius );
 
    do {
+      double n, a;
+      n = sqrt(RNGF())*field->radius;
+      a = RNGF() * 2. * M_PI;
       /* Try to keep density uniform using cartesian coordinates. */
-      x = field->pos.x + (RNGF()*2.-1.)*field->radius;
-      y = field->pos.y + (RNGF()*2.-1.)*field->radius;
+      vec2_cset( &pos, field->pos.x + n*cos(a), field->pos.y + n*sin(a) );
 
       /* Check if out of the field. */
-      outfield = (asteroids_inField(&ast->sol.pos) < 0);
+      outfield = (asteroids_inField(&pos) < 0);
 
       /* If this is the first time and it's spawned outside the field,
        * we get rid of it so that density remains roughly consistent. */
-      if (asteroid_creating && outfield && (vec2_dist2( &ast->sol.pos, &field->pos ) < r2)) {
+      if (asteroid_creating && outfield) {
          ast->state = ASTEROID_XX;
          ast->timer_max = ast->timer = HUGE_VAL; /* Don't reappear. */
          /* TODO probably do a more proper solution removing total number of asteroids. */
@@ -428,7 +428,7 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
    ast->ang = RNGF() * M_PI * 2.;
 
    /* Set up the solid. */
-   vec2_cset( &pos, x, y );
+   //vec2_cset( &pos, x, y );
    vec2_pset( &vel, mod, theta );
    /* TODO set a proper mass. */
    solid_init( &ast->sol, 1., theta, &pos, &vel, SOLID_UPDATE_EULER );
