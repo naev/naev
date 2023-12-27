@@ -23,7 +23,8 @@
 
    I was bored and had nothing better to do, so I made this Naev mission,
    my first.
-    --]]
+--]]
+
 local fmt = require "format"
 local neu = require 'common.neutral'
 local vn = require "vn"
@@ -31,133 +32,133 @@ local vntk = require "vntk"
 local portrait = require "portrait"
 
 local mission = {
-    name = _("Adblocker"),
-    description = "Destroy a ship spamming the {sys} system with excessive advertising transmissions",
-    reward = 300e3,
-    npc = {
-        name = "Desperate captain",
-        img = "neutral/male7.webp",
-        description = _("You see a desperate looking captain.")
-    }
+   name = _("Adblocker"),
+   description = "Destroy a ship spamming the {sys} system with excessive advertising transmissions",
+   reward = 300e3,
+   npc = {
+      name = "Desperate captain",
+      img = "neutral/male7.webp",
+      description = _("You see a desperate looking captain.")
+   }
 }
 
 -- fp means "full path"
 mission.npc["img_fp"] = portrait.getFullPath(mission.npc.img)
 
 function create()
-    mem.current_system = system.cur()
-    mem.current_spob = spob.cur()
-    misn.setNPC(mission.npc.name, mission.npc.img, mission.npc.description)
+   mem.current_system = system.cur()
+   mem.current_spob = spob.cur()
+   misn.setNPC(mission.npc.name, mission.npc.img, mission.npc.description)
 end
 
 function accept()
-    local accepted = false
+   local accepted = false
 
-    vn.clear()
-    vn.scene()
-    local man = vn.newCharacter(mission.npc.name, { image = mission.npc.img_fp })
-    vn.transition()
-    man(fmt.f(_([["Look, I don't have much time! There's this annoying ship that's been spamming the local comms with tons of advertisements! I can't take it anymore! Please, you've got to stop it! I'll give you ${creds} if you stop it!"]])
-        , { creds = fmt.credits(mission.reward) }))
-    vn.menu {
-        { _([[Accept]]), "accept" },
-        { _([[Refuse]]), "refuse" },
-    }
+   vn.clear()
+   vn.scene()
+   local man = vn.newCharacter(mission.npc.name, { image = mission.npc.img_fp })
+   vn.transition()
+   man(fmt.f(_([["Look, I don't have much time! There's this annoying ship that's been spamming the local comms with tons of advertisements! I can't take it anymore! Please, you've got to stop it! I'll give you ${creds} if you stop it!"]])
+      , { creds = fmt.credits(mission.reward) }))
+   vn.menu {
+      { _([[Accept]]), "accept" },
+      { _([[Refuse]]), "refuse" },
+   }
 
-    vn.label("refuse")
-    vn.done()
+   vn.label("refuse")
+   vn.done()
 
-    vn.label("accept")
-    man(_([["Thank you! Again, just stop that thing! Do what you have to!"]]))
-    vn.func(function()
-        accepted = true
-    end)
-    vn.run()
+   vn.label("accept")
+   man(_([["Thank you! Again, just stop that thing! Do what you have to!"]]))
+   vn.func(function()
+      accepted = true
+   end)
+   vn.run()
 
-    if not accepted then return end
+   if not accepted then return end
 
-    misn.accept()
-    misn.setTitle(mission.name)
-    misn.setDesc(fmt.f(_("A ship is currently spamming {sys} with tons of unwanted advertisements. A desperate captain has asked you to destroy, or disable it.")
-        , { sys = mem.current_system }))
-    misn.setReward(fmt.credits(mission.reward))
-    misn.osdCreate(mission.name, {
-        mission.name,
-        fmt.f(_(mission.description), { sys = mem.current_system })
-    })
-    misn.osdActive(1)
-    hook.enter("enter")
+   misn.accept()
+   misn.setTitle(mission.name)
+   misn.setDesc(fmt.f(_("A ship is currently spamming {sys} with tons of unwanted advertisements. A desperate captain has asked you to destroy, or disable it.")
+      , { sys = mem.current_system }))
+   misn.setReward(fmt.credits(mission.reward))
+   misn.osdCreate(mission.name, {
+      mission.name,
+      fmt.f(_(mission.description), { sys = mem.current_system })
+   })
+   misn.osdActive(1)
+   hook.enter("enter")
 end
 
 function enter()
-    if system.cur() == mem.current_system then
-        local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.angle())
-        local fct = faction.dynAdd("Independent", "adspammer", _("Independent"), { clear_enemies = true,
-            clear_allies = true })
-        spammer = pilot.add("Gawain", fct, location, _("Advertiser 108CK"))
-        spammer:control()
-        spammer:memory().aggressive = true
-        spammer:setHilight(true)
-        spammer:setVisplayer(true)
-        spammer:setHostile(true)
-        mem.hk_advert_spam = hook.timer(1, "timer_advert_spam")
-        hook.pilot(spammer, "exploded", "on_target_stopped")
-        hook.pilot(spammer, "death", "on_target_stopped")
-    end
+   if system.cur() == mem.current_system then
+      local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.angle())
+      local fct = faction.dynAdd("Independent", "adspammer", _("Independent"), { clear_enemies = true,
+         clear_allies = true })
+      spammer = pilot.add("Gawain", fct, location, _("Advertiser 108CK"))
+      spammer:control()
+      spammer:memory().aggressive = true
+      spammer:setHilight(true)
+      spammer:setVisplayer(true)
+      spammer:setHostile(true)
+      mem.hk_advert_spam = hook.timer(1, "timer_advert_spam")
+      hook.pilot(spammer, "exploded", "on_target_stopped")
+      hook.pilot(spammer, "death", "on_target_stopped")
+   end
 end
 
 local ads_generic = {
-    _("Fly safe, fly Milspec."),
-    _("Reynir's Hot Dogs: enjoy the authentic taste of tradition."),
-    _("Everyone is faster than light, but only Tricon engines are faster than thought!"),
-    _("Dare excellence! Dare Teracom rockets!"),
-    _("Most people are ordinary. For the others, Nexus designed the Shark fighter."),
-    _("Never take off without your courage. Never take off without your Vendetta."),
-    _("Unicorp: low price and high quality!"),
-    _("Life is short, spend it at Minerva Station in the Limbo System!"),
-    _("Insuperable Sleekness. Introducing the Krain Industries Starbridge."),
-    _("Take care of the ones you do love. Let your Enygma System Turreted Launchers deal with the ones you don't!"),
+   _("Fly safe, fly Milspec."),
+   _("Reynir's Hot Dogs: enjoy the authentic taste of tradition."),
+   _("Everyone is faster than light, but only Tricon engines are faster than thought!"),
+   _("Dare excellence! Dare Teracom rockets!"),
+   _("Most people are ordinary. For the others, Nexus designed the Shark fighter."),
+   _("Never take off without your courage. Never take off without your Vendetta."),
+   _("Unicorp: low price and high quality!"),
+   _("Life is short, spend it at Minerva Station in the Limbo System!"),
+   _("Insuperable Sleekness. Introducing the Krain Industries Starbridge."),
+   _("Take care of the ones you do love. Let your Enygma System Turreted Launchers deal with the ones you don't!"),
 }
 
 function timer_advert_spam()
-    if not spammer:exists() then return end
+   if not spammer:exists() then return end
 
-    mem.spammer = mem.spammer or 0
-    mem.spammer = math.fmod(mem.spammer, #ads_generic) + 1
-    spammer:broadcast(ads_generic[mem.spammer], true)
+   mem.spammer = mem.spammer or 0
+   mem.spammer = math.fmod(mem.spammer, #ads_generic) + 1
+   spammer:broadcast(ads_generic[mem.spammer], true)
 
-    mem.hk_advert_spam = hook.timer(1, "timer_advert_spam")
+   mem.hk_advert_spam = hook.timer(1, "timer_advert_spam")
 end
 
 function on_target_stopped()
-    if stopped then
-        return
-    end
-    misn.osdCreate(mission.name, {fmt.f(_("Return to {spob}"), {spob=mem.current_spob})})
-    misn.osdActive(2)
-    mem.marker_return = misn.markerAdd(mem.current_spob, "low")
-    hook.rm(mem.hk_advert_spam)
-    hook.land("on_land")
-    stopped = true
+   if stopped then
+      return
+   end
+   misn.osdCreate(mission.name, { fmt.f(_("Return to {spob}"), { spob = mem.current_spob }) })
+   misn.osdActive(2)
+   mem.marker_return = misn.markerAdd(mem.current_spob, "low")
+   hook.rm(mem.hk_advert_spam)
+   hook.land("on_land")
+   stopped = true
 end
 
 function on_land()
-    if spob.cur() ~= mem.current_spob then
-        return
-    end
+   if spob.cur() ~= mem.current_spob then
+      return
+   end
 
-    vn.clear()
-    vn.scene()
-    local man = vn.newCharacter(mission.npc.name, { image = mission.npc.img_fp })
-    vn.transition()
-    man(_([[The man runs towards you. "Thank you so much for destroying that ship! The advertisements were about to drive me crazy! Man they're so annoying!"]]))
-    vn.sfxVictory()
-    vn.func(function()
-        player.pay(mission.reward)
-    end)
-    vn.na(fmt.reward(mission.reward))
-    vn.run()
+   vn.clear()
+   vn.scene()
+   local man = vn.newCharacter(mission.npc.name, { image = mission.npc.img_fp })
+   vn.transition()
+   man(_([[The man runs towards you. "Thank you so much for destroying that ship! The advertisements were about to drive me crazy! Man they're so annoying!"]]))
+   vn.sfxVictory()
+   vn.func(function()
+      player.pay(mission.reward)
+   end)
+   vn.na(fmt.reward(mission.reward))
+   vn.run()
 
-    neu.addMiscLog(_("You destroyed a ship spamming advertisements."))
-    misn.finish(true)
+   neu.addMiscLog(_("You destroyed a ship spamming advertisements."))
+   misn.finish(true)
 end
