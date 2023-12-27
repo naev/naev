@@ -55,7 +55,7 @@ void main (void)
    else if (type==ROD_MONOCHROMACY) {
       // Rod Monochromat (Achromatopsia) - only brightness can be detected
       // (0.003% population)
-      l = m = s= 0.212656f * L + 0.715158f * M + 0.072186f * S;
+      l = m = s = 0.212656f * L + 0.715158f * M + 0.072186f * S;
    }
 
    // Convert to RGB
