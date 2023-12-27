@@ -16,10 +16,14 @@
 --]]
 --[[
     Adblocker
+    Author: Lemuria
 
     Player has to kill a ship that's been spamming the local comms with
     excessive advertisements.
---]]
+
+   I was bored and had nothing better to do, so I made this Naev mission,
+   my first.
+    --]]
 local fmt = require "format"
 local neu = require 'common.neutral'
 local vn = require "vn"
