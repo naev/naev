@@ -23,10 +23,10 @@
  */
 void pfleet_update (void)
 {
-   const PlayerShip_t *player_ships = player_getShipStack();
+   const PlayerShip_t *pships = player_getShipStack();
    player.fleet_used = player.p->ship->points;
-   for (int i=0; i<array_size(player_ships); i++) {
-      const PlayerShip_t *ps = &player_ships[i];
+   for (int i=0; i<array_size(pships); i++) {
+      const PlayerShip_t *ps = &pships[i];
       if (ps->deployed)
          player.fleet_used += ps->p->ship->points;
    }
@@ -61,8 +61,8 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
       /* Try to make room for the commodities. */
       idx = -1;
       for (int i=0; i<array_size(player.p->escorts); i++) {
-         Escort_t *e = &player.p->escorts[i];
-         Pilot *pe = pilot_get( e->id );
+         const Escort_t *e = &player.p->escorts[i];
+         const Pilot *pe = pilot_get( e->id );
          if (pe == NULL)
             continue;
          if (e->type != ESCORT_TYPE_FLEET)
@@ -79,7 +79,7 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
 
       /* Try to add the cargo. */
       for (int i=0; i<array_size(p->commodities); i++) {
-         PilotCommodity *pc = &p->commodities[i];
+         const PilotCommodity *pc = &p->commodities[i];
          pfleet_cargoAdd( pc->commodity, pc->quantity );
          pilot_cargoRm( p, pc->commodity, pc->quantity );
       }
@@ -136,14 +136,13 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p, int remove )
    for (int i=array_size(p->commodities)-1; i>=0; i--) {
       const PilotCommodity *pc = &p->commodities[i];
       int q = pc->quantity;
-      int added;
 
       /* Mission cargo gets added independently. */
       if (pc->id > 0)
          array_push_back( pclist, *pc );
       else {
          /* See if it can be added. */
-         added = 0;
+         int added = 0;
          for (int j=0; j<array_size(*pclist); j++) {
             PilotCommodity *lc = &(*pclist)[j];
 
@@ -192,7 +191,7 @@ void pfleet_cargoRedistribute (void)
    /* First build up a list of all the potential cargo. */
    shipCargo( &pclist, player.p, 1 );
    for (int i=0; i<array_size(player.p->escorts); i++) {
-      Escort_t *e = &player.p->escorts[i];
+      const Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
          continue;
@@ -207,7 +206,7 @@ void pfleet_cargoRedistribute (void)
    /* Re-add the cargo. */
    for (int i=0; i<array_size(pclist); i++) {
       int q;
-      PilotCommodity *pc = &pclist[i];
+      const PilotCommodity *pc = &pclist[i];
 
       if (pc->id > 0)
          q = pilot_cargoAdd( player.p, pc->commodity, pc->quantity, pc->id );
@@ -215,7 +214,7 @@ void pfleet_cargoRedistribute (void)
          q = pfleet_cargoAdd( pc->commodity, pc->quantity );
 #ifdef DEBUGGING
       if (q != pc->quantity)
-         WARN(_("Failure to add cargo '%s' to player fleeet. Only %d of %d added."), pc->commodity->name, q, pc->quantity );
+         WARN(_("Failure to add cargo '%s' to player fleet. Only %d of %d added."), pc->commodity->name, q, pc->quantity );
 #endif /* DEBUGGING */
       (void) q;
    }
@@ -311,7 +310,7 @@ int pfleet_cargoAdd( const Commodity *com, int q )
    if ((player.fleet_capacity <= 0) || (q-added <= 0))
       return added;
    for (int i=0; i<array_size(player.p->escorts); i++) {
-      Escort_t *e = &player.p->escorts[i];
+      const Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
          continue;
@@ -341,7 +340,7 @@ int pfleet_cargoRm( const Commodity *com, int q, int jet )
       return pilot_cargoRm( player.p, com, q );
    removed = 0;
    for (int i=0; i<array_size(player.p->escorts); i++) {
-      Escort_t *e = &player.p->escorts[i];
+      const Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
          continue;
@@ -375,7 +374,7 @@ PilotCommodity* pfleet_cargoList (void)
    PilotCommodity *pclist = array_create( PilotCommodity );
    shipCargo( &pclist, player.p, 0 );
    for (int i=0; i<array_size(player.p->escorts); i++) {
-      Escort_t *e = &player.p->escorts[i];
+      const Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
          continue;
@@ -401,7 +400,7 @@ PFleetCargo* pfleet_cargoListShips( const Commodity *com )
       array_push_back( &plist, fc );
    }
    for (int i=0; i<array_size(player.p->escorts); i++) {
-      Escort_t *e = &player.p->escorts[i];
+      const Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
          continue;
