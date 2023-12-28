@@ -142,6 +142,7 @@ function _srs_return_obelisk ()
    pp:setDir( sdir )
    pp:setPos( spos )
    pp:setVel( vec2.new() )
+   pp:fillAmmo() -- They lose fighters because ship swapping, so at least give ammo back
    srs.sfxGong()
    music.stop()
 end

@@ -1,4 +1,5 @@
 * 0.11.1 (unreleased)
+   * Give all ammo back to player after doing obelisk
    * Fixed player being invincible after completing an obelisk
    * Fixed a crash when loading games while a landing hook was running
    * Fixed race condition in threadpool
