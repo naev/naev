@@ -702,9 +702,9 @@ control_funcs.inspect_moveto = function ()
          if scans.check_visible( ls ) then
             mem._scan_last = nil
             ai.poptask()
-            if ai.isenemy(target) then
-               if should_attack(target) then
-                  ai.pushtask( "attack", target )
+            if ai.isenemy(ls) then
+               if should_attack(ls) then
+                  ai.pushtask( "attack", ls )
                   return true
                end
             else
