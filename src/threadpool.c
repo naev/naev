@@ -544,10 +544,8 @@ static int vpool_worker( void *data )
    if (cnt <= 0)                    /* All jobs done. */
       SDL_CondSignal( work->cond );  /* Signal waiting thread */
    *(work->count) = cnt;
+   free( work->node );     /* Clean up data before worker gets freed. */
    SDL_mutexV( work->mutex );
-
-   /* Clean up data. */
-   free( work->node );
 
    return 0;
 }

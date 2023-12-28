@@ -1,4 +1,5 @@
 * 0.11.1 (unreleased)
+   * Fixed race condition in threadpool
    * Fixed asteroids spawning in not proper shapes
    * Fixed autonav wobble and overshooting
    * Point defense won't shoot at disabled pilots anymore
