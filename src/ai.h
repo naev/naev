@@ -11,7 +11,6 @@ struct Pilot_;
 typedef struct Pilot_ Pilot;
 
 #define MIN_DIR_ERR     5.0*M_PI/180. /**< Minimum direction error. */
-#define MAX_DIR_ERR     0.5*M_PI/180. /**< Maximum direction error. */
 #define MIN_VEL_ERR     5.0 /**< Minimum velocity error. */
 
 /* maximum number of AI timers */
@@ -95,9 +94,9 @@ void ai_discovered( Pilot* discovered );
 void ai_hail( Pilot* recipient );
 void ai_refuel( Pilot* refueler, unsigned int target );
 void ai_getDistress( const Pilot *p, const Pilot *distressed, const Pilot *attacker );
-void ai_think( Pilot* pilot, int dotask );
+void ai_think( Pilot* pilot, double dt, int dotask );
 AIMemory ai_setPilot( Pilot *p );
 void ai_unsetPilot( AIMemory oldmem );
-void ai_thinkSetup (void);
+void ai_thinkSetup( double dt );
 void ai_thinkApply( Pilot *p );
 void ai_init( Pilot *p );

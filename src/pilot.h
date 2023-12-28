@@ -424,10 +424,10 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       const Damage *dmg, const Outfit *outfit, int lua_mem, int reset );
 void pilot_updateDisable( Pilot* p, unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
-double pilot_face( Pilot* p, const double dir );
+double pilot_face( Pilot* p, double dir, double dt );
 int pilot_brakeCheckReverseThrusters( const Pilot *p );
-double pilot_minbrakedist( const Pilot *p );
-int pilot_brake( Pilot* p );
+double pilot_minbrakedist( const Pilot *p, double dt );
+int pilot_brake( Pilot* p, double dt );
 void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 double pilot_aimAngle( Pilot *p, const vec2* pos, const vec2* vel );
@@ -443,7 +443,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount );
 
 /* Creation. */
 Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const vec2* pos, const vec2* vel,
+      double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, PilotFlags flags );
