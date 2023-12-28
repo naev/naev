@@ -12667,8 +12667,8 @@ msgid ""
 "materials."
 msgstr ""
 "Další plynný obr, další soromidská základna. Tato konkrétní základna je "
-"poněkud větší než jiné, protože se zde těží velké množství minerálů a prvků."
-"\n"
+"poněkud větší než jiné, protože se zde těží velké množství minerálů a "
+"prvků.\n"
 "Protože je planeta bohatá na organické látky i prvky používané k jejich "
 "výrobě, je to téměř doslova zlatý důl pro soromidské stavební materiály."
 
@@ -13435,8 +13435,8 @@ msgstr ""
 "Základna Cole je poslední civilní stanicí na cestě do Doestonu a byla "
 "vybudována v rámci rozsáhlého hnutí po incidentu, jehož cílem bylo získat "
 "zpět území z Mlhoviny. Mnoho transportních lodí se zde zastavuje, aby "
-"doplnily palivo a zregenerovaly štíty, bezpečně mimo dosah radiace Mlhoviny."
-"\n"
+"doplnily palivo a zregenerovaly štíty, bezpečně mimo dosah radiace "
+"Mlhoviny.\n"
 "Stanice není příliš obydlená a její obyvatelé se živí především obsluhou "
 "lodí směřujících do Mlhoviny a zpět."
 
@@ -46780,7 +46780,7 @@ msgstr ""
 #: dat/events/sirius/eye_of_night_mystery.lua:512
 msgid ""
 "You tap the cardkey you found and the door opens with cold air billowing "
-"forth until it envelopes you completely."
+"forth until it envelops you completely."
 msgstr ""
 
 #: dat/events/sirius/eye_of_night_mystery.lua:514
@@ -46818,7 +46818,7 @@ msgstr ""
 
 #: dat/events/sirius/eye_of_night_mystery.lua:530
 msgid ""
-"The room grows eerie calm as the chair slowly turns around, only to find "
+"The room grows eerily calm as the chair slowly turns around, only to find "
 "yourself staring at you. The other you grins at you and your head starts to "
 "throb."
 msgstr ""
@@ -68030,7 +68030,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/judgement.lua:194
-msgid "Except for the odd cough, silence envelopes the room."
+msgid "Except for the odd cough, silence envelops the room."
 msgstr ""
 
 #: dat/missions/minerva/judgement.lua:195
@@ -70071,7 +70071,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:325
 msgid ""
 "You try to remove the gear, but it's too late. The virtual reality of the "
-"Crimson Gauntlet envelopes you…"
+"Crimson Gauntlet envelops you…"
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:329
@@ -71129,7 +71129,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:547
 msgid ""
-"You don't know how to answer and silence envelopes the room. Finally, he "
+"You don't know how to answer and silence envelops the room. Finally, he "
 "breaks the calmness.\n"
 "\"I should have been the one to try to defuse the reactor core, not you. I "
 "should have been the one vaporized in the resulting explosion, not you.\""
@@ -71248,7 +71248,7 @@ msgstr ""
 #. Stop music
 #: dat/missions/minerva/kex5.lua:623
 msgid ""
-"Silence once again envelopes the room. You look around and decide to try to "
+"Silence once again envelops the room. You look around and decide to try to "
 "access the command console to see if there is any information left. It is a "
 "bit unsettling with a corpse nearby, but you try to focus on getting the "
 "grime off the console and interfacing with it. "
