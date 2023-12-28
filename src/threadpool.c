@@ -534,9 +534,10 @@ static int vpool_worker( void *data )
 {
    int cnt;
    vpoolThreadData *work = (vpoolThreadData*) data;
+   ThreadQueueData *node = work->node;
 
    /* Do work */
-   work->node->function( work->node->data );
+   node->function( node->data );
 
    /* Decrement the counter and signal vpool_wait if all threads are done */
    SDL_mutexP( work->mutex );
@@ -544,8 +545,10 @@ static int vpool_worker( void *data )
    if (cnt <= 0)                    /* All jobs done. */
       SDL_CondSignal( work->cond );  /* Signal waiting thread */
    *(work->count) = cnt;
-   free( work->node );     /* Clean up data before worker gets freed. */
    SDL_mutexV( work->mutex );
+
+   /* 'work' may not be valid memory anymore. */
+   free( node );
 
    return 0;
 }
