@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2023-12-26 17:31+0900\n"
-"PO-Revision-Date: 2023-12-26 18:00+0000\n"
+"PO-Revision-Date: 2023-12-27 18:09+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "cs/>\n"
@@ -12667,8 +12667,8 @@ msgid ""
 "materials."
 msgstr ""
 "Další plynný obr, další soromidská základna. Tato konkrétní základna je "
-"poněkud větší než jiné, protože se zde těží velké množství minerálů a prvků."
-"\n"
+"poněkud větší než jiné, protože se zde těží velké množství minerálů a "
+"prvků.\n"
 "Protože je planeta bohatá na organické látky i prvky používané k jejich "
 "výrobě, je to téměř doslova zlatý důl pro soromidské stavební materiály."
 
@@ -13365,13 +13365,6 @@ msgid "Cetrat"
 msgstr "Cetrat"
 
 #: dat/spob/cetrat.xml:27
-#, fuzzy
-#| msgid ""
-#| "Cetrat is an aquatic planet known for its medical algae. No one has been "
-#| "able to reproduce it exactly as it is in the wild but, with the abundance "
-#| "of it throughout the planet's massive ocean, there has been little effort "
-#| "in that field. Cetrat was colonized by the eighth colony ship launched "
-#| "during the First Growth, Brooklyn."
 msgid ""
 "Cetrat is an aquatic planet known for its medical algae. No one has been "
 "able to reproduce it exactly as it is in the wild, but with the abundance of "
@@ -13380,10 +13373,12 @@ msgid ""
 "Cetrat was colonized by the eighth colony ship launched during the First "
 "Growth, Brooklyn."
 msgstr ""
-"Cetrat je vodní svět, známý pro řasy, které se používají v medicíně. Ještě "
-"se je nepodařilo pěstovat v umělém prostředí, ale protože se jim daří v "
-"celém planetárním oceánu, na pokrok není žádný velký tlak. Cerat byl "
-"kolonizován osmou z kolonizačních lodí První diaspory, Brooklynem."
+"Cetrat je vodní planeta známá svými léčivými řasami. Nikomu se ji nepodařilo "
+"reprodukovat přesně tak, jak se vyskytuje ve volné přírodě, ale vzhledem k "
+"jejímu hojnému výskytu v obrovských oceánech planety se v této oblasti "
+"vyvíjelo jen málo úsilí.\n"
+"Cetrat byl kolonizován osmou koloniální lodí vypuštěnou během Prvního růstu, "
+"Brooklynem."
 
 #: dat/spob/cetrat.xml:29
 msgid ""
@@ -13425,16 +13420,9 @@ msgstr "Claudius Mehan"
 
 #: dat/spob/cole_outpost.xml:2
 msgid "Cole Outpost"
-msgstr ""
+msgstr "Základna Cole"
 
 #: dat/spob/cole_outpost.xml:24
-#, fuzzy
-#| msgid ""
-#| "Cole station is the last civilian station on the route to Doeston. Many "
-#| "transport ships stop to refuel and regenerate their shields within, "
-#| "safely away from the brunt of the nebula radiation. It has relative few "
-#| "people living here, mainly to support the passing ships to and from the "
-#| "nebula."
 msgid ""
 "Cole Outpost is the last civilian station on the route to Doeston, and was "
 "constructed as part of a large post-Incident movement to try to recover "
@@ -13444,10 +13432,13 @@ msgid ""
 "The station isn't well populated, and its inhabitants mainly make a living "
 "off servicing the ships going to and from the Nebula."
 msgstr ""
-"Stanice Cole je poslední civilní stanicí na trase do Doestonu. Mnoho "
-"dopravních lodí se zde zastavuje, aby doplnily palivo a zregenerovaly štíty, "
-"bezpečně mimo dosah radiace mlhoviny. Žije zde relativně málo lidí, hlavně "
-"kvůli podpoře projíždějících lodí do mlhoviny a zpět."
+"Základna Cole je poslední civilní stanicí na cestě do Doestonu a byla "
+"vybudována v rámci rozsáhlého hnutí po incidentu, jehož cílem bylo získat "
+"zpět území z Mlhoviny. Mnoho transportních lodí se zde zastavuje, aby "
+"doplnily palivo a zregenerovaly štíty, bezpečně mimo dosah radiace "
+"Mlhoviny.\n"
+"Stanice není příliš obydlená a její obyvatelé se živí především obsluhou "
+"lodí směřujících do Mlhoviny a zpět."
 
 #: dat/spob/colley.xml:2
 msgid "Colley"
@@ -13459,9 +13450,9 @@ msgid ""
 "unassuming nature. The world has mild weather and is ideally closeted away "
 "from the cares and worries of the wider galaxy."
 msgstr ""
-"Colley je svět, kde se tráví dovolené a výslužby, protože je tichý a "
-"nenáročný. Počasí je mírné planeta je hezky uzavřená od starostí a strastí "
-"běžného dne v galaxii."
+"Colley je díky své klidné a nenápadné povaze oblíbeným místem pro důchodce a "
+"dovolenou. Svět má mírné počasí a je ideálně uzavřen daleko od starostí a "
+"problémů širší galaxie."
 
 #: dat/spob/colley.xml:28
 msgid ""
@@ -13475,7 +13466,7 @@ msgstr ""
 
 #: dat/spob/coral_cloister.xml:2
 msgid "Coral Cloister"
-msgstr ""
+msgstr "Coral Cloister"
 
 #: dat/spob/coral_cloister.xml:24
 msgid ""
@@ -13486,6 +13477,12 @@ msgid ""
 "station inspects all traffic entering Sirius space this way as well as "
 "keeping an eye on outbound traffic too."
 msgstr ""
+"Coral Cloister byl založen jako nová pohraniční stanice krátce po incidentu, "
+"aby se pokusil organizovat uprchlíky a nový provoz v prostoru Sirius a mimo "
+"něj na nové hranici Siriusu. Síly zde umístěné představují první linii "
+"obrany proti hrozbám přicházejícím z vnějšího sirianského prostoru. Stanice "
+"kontroluje veškerý provoz, který tímto způsobem vstupuje do prostoru Síria, "
+"a dohlíží také na provoz vycházející ze Síria."
 
 #: dat/spob/coran.xml:2
 msgid "Coran"
@@ -13533,7 +13530,7 @@ msgstr "Corinth 2"
 
 #: dat/spob/corinth_foods.xml:2
 msgid "Corinth Foods"
-msgstr ""
+msgstr "Corinth Foods"
 
 #: dat/spob/corinth_foods.xml:25
 msgid ""
@@ -46783,7 +46780,7 @@ msgstr ""
 #: dat/events/sirius/eye_of_night_mystery.lua:512
 msgid ""
 "You tap the cardkey you found and the door opens with cold air billowing "
-"forth until it envelopes you completely."
+"forth until it envelops you completely."
 msgstr ""
 
 #: dat/events/sirius/eye_of_night_mystery.lua:514
@@ -46821,7 +46818,7 @@ msgstr ""
 
 #: dat/events/sirius/eye_of_night_mystery.lua:530
 msgid ""
-"The room grows eerie calm as the chair slowly turns around, only to find "
+"The room grows eerily calm as the chair slowly turns around, only to find "
 "yourself staring at you. The other you grins at you and your head starts to "
 "throb."
 msgstr ""
@@ -68033,7 +68030,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/judgement.lua:194
-msgid "Except for the odd cough, silence envelopes the room."
+msgid "Except for the odd cough, silence envelops the room."
 msgstr ""
 
 #: dat/missions/minerva/judgement.lua:195
@@ -70074,7 +70071,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:325
 msgid ""
 "You try to remove the gear, but it's too late. The virtual reality of the "
-"Crimson Gauntlet envelopes you…"
+"Crimson Gauntlet envelops you…"
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:329
@@ -71132,7 +71129,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:547
 msgid ""
-"You don't know how to answer and silence envelopes the room. Finally, he "
+"You don't know how to answer and silence envelops the room. Finally, he "
 "breaks the calmness.\n"
 "\"I should have been the one to try to defuse the reactor core, not you. I "
 "should have been the one vaporized in the resulting explosion, not you.\""
@@ -71251,7 +71248,7 @@ msgstr ""
 #. Stop music
 #: dat/missions/minerva/kex5.lua:623
 msgid ""
-"Silence once again envelopes the room. You look around and decide to try to "
+"Silence once again envelops the room. You look around and decide to try to "
 "access the command console to see if there is any information left. It is a "
 "bit unsettling with a corpse nearby, but you try to focus on getting the "
 "grime off the console and interfacing with it. "
