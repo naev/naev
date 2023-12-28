@@ -57,6 +57,11 @@ function srs.obeliskEnter( oblk )
    spos = pp:pos()
    sdir = pp:dir()
 
+   -- Have to claim the system or other missions/events can affect it
+   if naev.evt then
+      naev.evt.claim( system.cur() )
+   end
+
    -- Hide rest of the universe
    for k,s in ipairs(system.getAll()) do
       s:setHidden(true)
