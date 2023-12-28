@@ -142,7 +142,6 @@ function _srs_return_obelisk ()
    pp:setDir( sdir )
    pp:setPos( spos )
    pp:setVel( vec2.new() )
-   pp:setInvincible(false)
    srs.sfxGong()
    music.stop()
 end
