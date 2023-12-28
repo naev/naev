@@ -1131,16 +1131,12 @@ void hook_cleanup (void)
 }
 
 /**
- * @brief Clears hooks related to a specific stack.
- *
- *    @param stack Stack to clear hooks of.
+ * @brief Clears the hooks.
  */
-void hook_clear( const char *stack )
+void hook_clear (void)
 {
    for (Hook *h=hook_list; h!=NULL; h=h->next) {
       if (h->delete)
-         continue;
-      if (strcmp(stack, h->stack) != 0)
          continue;
       hook_rmRaw( h );
    }

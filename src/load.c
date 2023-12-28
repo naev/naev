@@ -1135,7 +1135,7 @@ static int load_gameInternal( const char* file, const char* version )
 
    /* Some global cleaning has to be done here. */
    toolkit_closeAll();
-   hook_cleanup();
+   hook_clear();
 
    data = malloc( sizeof(const char*) * 2 );
    data[0] = file;
