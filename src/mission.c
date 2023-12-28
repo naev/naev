@@ -1315,6 +1315,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
       xmlw_elem(writer,"title","%s",misn->title);
       xmlw_elem(writer,"desc","%s",misn->desc);
       xmlw_elem(writer,"reward","%s",misn->reward);
+      xmlw_elem(writer,"reward_value","%"CREDITS_PRI,misn->reward_value);
 
       /* Markers. */
       xmlw_startElem( writer, "markers" );
@@ -1550,6 +1551,7 @@ static int missions_parseActive( xmlNodePtr parent )
             xmlr_strd(cur,"title",misn->title);
             xmlr_strd(cur,"desc",misn->desc);
             xmlr_strd(cur,"reward",misn->reward);
+            xmlr_ulong(cur,"reward_value",misn->reward_value);
 
             /* Get the markers. */
             if (xml_isNode(cur,"markers")) {
