@@ -153,7 +153,7 @@ function puzzle02_idle( p )
          break
       end
    end
-   assert( n~=0 )
+   if n==0 then return end
    local mm = markers[n]
    local mp = puzzle02_pos[n]
    mm.t = math.fmod( mm.t, #mp )+1
