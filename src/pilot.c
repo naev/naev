@@ -846,10 +846,10 @@ double pilot_minbrakedist( const Pilot *p, double dt )
 {
    double vel = MIN( MIN( VMOD(p->solid.vel), p->speed ), solid_maxspeed( &p->solid, p->speed, p->accel ) );
    double accel = p->accel;
-   double t = vel / accel + dt; /* Try to improve accuracy. */
+   double t = vel / accel; /* Try to improve accuracy. */
    if (pilot_brakeCheckReverseThrusters(p))
-      return vel * t - 0.5 * PILOT_REVERSE_THRUST * accel * t * t;
-   return vel*(t+M_PI/p->turn) - 0.5 * accel * t * t;
+      return vel * (t+dt) - 0.5 * PILOT_REVERSE_THRUST * accel * pow2(t-dt);
+   return vel*(t+M_PI/p->turn+dt) - 0.5 * accel * pow2(t-dt);
 }
 
 /**
