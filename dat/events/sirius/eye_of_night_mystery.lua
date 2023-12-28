@@ -509,7 +509,7 @@ What do you do?]])
       end
    end )
    effect_change( 1.0 )
-   vn.na(_([[You tap the cardkey you found and the door opens with cold air billowing forth until it envelopes you completely.]]))
+   vn.na(_([[You tap the cardkey you found and the door opens with cold air billowing forth until it envelops you completely.]]))
    vn.menu{
       {_("Enter the room"), "controlroom_enter"},
       {_("Enter the room"), "controlroom_enter"},
@@ -527,7 +527,7 @@ What do you do?]])
    vn.na(_([[The distance between you and the chair feels like it is growing instead of shrinking as you slowly approach it.]]))
    vn.na(_([[Almost there...]]))
    vn.musicStop()
-   vn.na(_([[The room grows eerie calm as the chair slowly turns around, only to find yourself staring at you. The other you grins at you and your head starts to throb.]]))
+   vn.na(_([[The room grows eerily calm as the chair slowly turns around, only to find yourself staring at you. The other you grins at you and your head starts to throb.]]))
 
    vn.scene()
    vn.func( function ()
