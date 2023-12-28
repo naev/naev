@@ -332,7 +332,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 {
    AIMemory oldmem;
 
-   ai_thinkSetup();
+   ai_thinkSetup( dt );
    oldmem = ai_setPilot( pplayer ); /* Uses AI functionality. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_think );
    lua_pushnumber( naevL, dt );

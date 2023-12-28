@@ -1,6 +1,6 @@
 * 0.11.1 (unreleased)
    * Fixed asteroids spawning in not proper shapes
-   * Fixed autonav wobble
+   * Fixed autonav wobble and overshooting
    * Point defense won't shoot at disabled pilots anymore
    * Fixed battery descriptions
    * Discovering a hidden jump will make both directions known

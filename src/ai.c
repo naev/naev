@@ -113,7 +113,8 @@
  */
 static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
 static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
-static IntList ai_qtquery; /*< Quadtree query. */
+static IntList ai_qtquery; /**< Quadtree query. */
+static double ai_dt = 0.; /**< Current update tick, useful in some cases. **/
 
 /*
  * prototypes
@@ -434,12 +435,13 @@ void ai_unsetPilot( AIMemory oldmem )
 /**
  * @brief Sets up the pilot for thinking.
  */
-void ai_thinkSetup (void)
+void ai_thinkSetup( double dt )
 {
    /* Clean up some variables */
    pilot_acc   = 0.;
    pilot_turn  = 0.;
    pilot_flags = 0;
+   ai_dt       = dt;
 }
 
 /**
@@ -789,9 +791,10 @@ void ai_exit (void)
  * @brief Heart of the AI, brains of the pilot.
  *
  *    @param pilot Pilot that needs to think.
+ *    @param dt Current delta tick.
  *    @param dotask Whether or not to do the task, or just control tick.
  */
-void ai_think( Pilot* pilot, int dotask )
+void ai_think( Pilot* pilot, double dt, int dotask )
 {
    nlua_env env;
    AIMemory oldmem;
@@ -804,7 +807,7 @@ void ai_think( Pilot* pilot, int dotask )
    oldmem = ai_setPilot(pilot);
    env = cur_pilot->ai->env; /* set the AI profile to the current pilot's */
 
-   ai_thinkSetup();
+   ai_thinkSetup( dt );
    pilot_rmFlag( pilot, PILOT_SCANNING ); /* Reset each frame, only set if the pilot is checking ai.scandone. */
    /* So the way this works is that, for other than the player, we reset all
     * the weapon sets every frame, so that the AI has to redo them over and
@@ -1567,19 +1570,19 @@ static int aiL_minbrakedist( lua_State *L )
             p->solid.vel.y - cur_pilot->solid.vel.y );
 
       /* Run the same calculations. */
-      time = VMOD(vv) / cur_pilot->accel;
+      time = VMOD(vv) / cur_pilot->accel + ai_dt;
 
       /* Get relative velocity. */
       vel = MIN(cur_pilot->speed - VMOD(p->solid.vel), VMOD(vv));
       if (vel < 0.)
          vel = 0.;
       /* Get distance to brake. */
-      dist = vel*(time+1.1*M_PI/cur_pilot->turn) -
+      dist = vel*(time+M_PI/cur_pilot->turn+ai_dt) -
          0.5*(cur_pilot->accel)*time*time;
       lua_pushnumber(L, dist);
    }
    else
-      lua_pushnumber( L, pilot_minbrakedist(cur_pilot) );
+      lua_pushnumber( L, pilot_minbrakedist(cur_pilot, ai_dt) );
    return 1;
 }
 
@@ -1764,7 +1767,7 @@ static int aiL_face( lua_State *L )
    int vel;
 
    /* Default gain. */
-   k_diff = 10.;
+   k_diff = 1./(cur_pilot->turn*ai_dt);
    k_vel  = 100.; /* overkill gain! */
 
    /* Check if must invert. */
@@ -1858,7 +1861,7 @@ static int aiL_careful_face( lua_State *L )
    int x, y, r;
 
    /* Default gains. */
-   const double k_diff = 10.;
+   const double k_diff = 1./(cur_pilot->turn*ai_dt);
    const double k_goal = 1.;
    const double k_enemy = 6e6;
 
@@ -1961,7 +1964,7 @@ static int aiL_aim( lua_State *L )
    }
 
    /* Calculate what we need to turn */
-   mod = 10.;
+   mod = 1./(cur_pilot->turn*ai_dt);
    diff = angle_diff(cur_pilot->solid.dir, angle);
    pilot_turn = mod * diff;
 
@@ -2023,8 +2026,7 @@ static int aiL_iface( lua_State *L )
          number will give a more dramatic 'lead' */
       double speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
       diff = angle_diff(heading_offset_azimuth, speedmap);
-
-      pilot_turn = -10.*diff;
+      pilot_turn = -diff / (ai_dt * cur_pilot->turn);
    }
    /* turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in */
    /* some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
@@ -2032,11 +2034,7 @@ static int aiL_iface( lua_State *L )
    else {
       /* signal that we're not in a productive direction for accelerating */
       diff = M_PI;
-
-      if (heading_offset_azimuth > 0.)
-         pilot_turn = 1.;
-      else
-         pilot_turn = -1.;
+      pilot_turn = heading_offset_azimuth / (ai_dt * cur_pilot->turn);
    }
 
    /* Return angle in degrees away from target. */
@@ -2050,7 +2048,6 @@ static int aiL_iface( lua_State *L )
  *    @luatparam Pilot|Vec2 target Position or pilot to compare facing to
  *    @luatreturn number The facing offset to the target (in radians).
  * @luafunc dir
- *
  */
 static int aiL_dir( lua_State *L )
 {
@@ -2168,12 +2165,30 @@ static int aiL_drift_facing( lua_State *L )
  */
 static int aiL_brake( lua_State *L )
 {
-   int ret = pilot_brake( cur_pilot );
+   double dir, accel, diff;
+   int isstopped = pilot_isStopped(cur_pilot);
 
-   pilot_acc = cur_pilot->solid.accel / cur_pilot->accel;
-   pilot_turn = cur_pilot->solid.dir_vel / cur_pilot->turn;
+   if (isstopped){
+      lua_pushboolean(L,1);
+      return 1;
+   }
 
-   lua_pushboolean(L, ret);
+   if (pilot_brakeCheckReverseThrusters(cur_pilot)) {
+      dir    = VANGLE(cur_pilot->solid.vel);
+      accel = -PILOT_REVERSE_THRUST;
+   }
+   else {
+      dir    = VANGLE(cur_pilot->solid.vel) + M_PI;
+      accel = 1.;
+   }
+
+   diff = angle_diff( cur_pilot->solid.dir, dir );
+   pilot_turn = diff / (cur_pilot->turn * ai_dt);
+   if (ABS(diff) < MIN_DIR_ERR)
+      pilot_acc = accel / (cur_pilot->accel * ai_dt);
+   else
+      pilot_acc = 0.;
+   lua_pushboolean(L, 0);
    return 1;
 }
 

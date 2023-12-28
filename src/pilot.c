@@ -804,14 +804,14 @@ void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 )
  *
  *    @param p Pilot to turn.
  *    @param dir Direction to attempt to face.
+ *    @param dt Current deltatick.
  *    @return The distance left to turn to match dir.
  */
-double pilot_face( Pilot* p, const double dir )
+double pilot_face( Pilot* p, double dir, double dt )
 {
    double diff = angle_diff( p->solid.dir, dir );
-   double turn = CLAMP( -1., 1., -10.*diff );
-   pilot_setTurn( p, -turn );
-
+   double turn = CLAMP( -1., 1., diff/dt );
+   pilot_setTurn( p, turn );
    return diff;
 }
 
@@ -842,23 +842,24 @@ int pilot_brakeCheckReverseThrusters( const Pilot *p )
 /**
  * @brief Gets the minimum braking distance for the pilot.
  */
-double pilot_minbrakedist( const Pilot *p )
+double pilot_minbrakedist( const Pilot *p, double dt )
 {
    double vel = MIN( MIN( VMOD(p->solid.vel), p->speed ), solid_maxspeed( &p->solid, p->speed, p->accel ) );
    double accel = p->accel;
-   double t = vel / accel;
+   double t = vel / accel + dt; /* Try to improve accuracy. */
    if (pilot_brakeCheckReverseThrusters(p))
       return vel * t - 0.5 * PILOT_REVERSE_THRUST * accel * t * t;
-   return vel*(t+1.1*M_PI/p->turn) - 0.5 * accel * t * t;
+   return vel*(t+M_PI/p->turn) - 0.5 * accel * t * t;
 }
 
 /**
  * @brief Causes the pilot to turn around and brake.
  *
  *    @param p Pilot to brake.
+ *    @param dt Current delta-tick.
  *    @return 1 when braking has finished.
  */
-int pilot_brake( Pilot *p )
+int pilot_brake( Pilot *p, double dt )
 {
    double dir, accel, diff;
    int isstopped = pilot_isStopped(p);
@@ -875,8 +876,8 @@ int pilot_brake( Pilot *p )
       accel = 1.;
    }
 
-   diff = pilot_face(p, dir);
-   if (ABS(diff) < MAX_DIR_ERR)
+   diff = pilot_face(p, dir, dt);
+   if (ABS(diff) < MIN_DIR_ERR)
       pilot_setAccel(p, accel);
    else
       pilot_setAccel(p, 0.);
@@ -2384,7 +2385,7 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Special handling for braking. */
    if (pilot_isFlag(pilot, PILOT_BRAKING )) {
-      if (pilot_brake( pilot )) {
+      if (pilot_brake( pilot, dt )) {
          if (pilot_isFlag(pilot, PILOT_COOLDOWN_BRAKE))
             pilot_cooldown( pilot, 1 );
          else {
@@ -2812,7 +2813,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
          /* If the ship needs to charge up its hyperdrive, brake. */
          if (!p->stats.misc_instant_jump &&
                !pilot_isFlag(p, PILOT_HYP_BRAKE) && !pilot_isStopped(p))
-            pilot_brake(p);
+            pilot_brake(p, dt);
          /* face target */
          else {
             /* Done braking or no braking required. */
@@ -2822,9 +2823,9 @@ static void pilot_hyperspace( Pilot* p, double dt )
             /* Face system headed to. */
             sys  = cur_system->jumps[p->nav_hyperspace].target;
             a    = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
-            diff = pilot_face( p, a );
+            diff = pilot_face( p, a, dt );
 
-            if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
+            if (ABS(diff) < MIN_DIR_ERR) { /* we can now prepare the jump */
                if (jp_isFlag( &cur_system->jumps[p->nav_hyperspace], JP_EXITONLY )) {
                   WARN( _("Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"),
                         p->name, cur_system->name, sys->name );
@@ -3042,7 +3043,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param dockslot The outfit slot which launched this pilot (-1 if N/A).
  */
 static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int faction,
-      const double dir, const vec2* pos, const vec2* vel,
+      double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
    PilotOutfitSlot *dslot;
@@ -3859,7 +3860,7 @@ void pilots_update( double dt )
       /* Hyperspace gets special treatment */
       if (pilot_isFlag(p, PILOT_HYP_PREP)) {
          if (!pilot_isFlag(p, PILOT_HYPERSPACE))
-            ai_think( p, 0 );
+            ai_think( p, dt, 0 );
          pilot_hyperspace(p, dt);
       }
       /* Entering hyperspace. */
@@ -3878,7 +3879,7 @@ void pilots_update( double dt )
          if (pilot_isFlag(p, PILOT_PLAYER))
             player_think( p, dt );
          else
-            ai_think( p, 1 );
+            ai_think( p, dt, 1 );
       }
    }
 
