@@ -4,6 +4,7 @@
  <location>enter</location>
  <chance>100</chance>
  <system>Test of Enlightenment</system>
+ <priority>0</priority>
 </event>
 --]]
 local textoverlay = require "textoverlay"
