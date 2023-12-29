@@ -2185,7 +2185,7 @@ static int aiL_brake( lua_State *L )
    diff = angle_diff( cur_pilot->solid.dir, dir );
    pilot_turn = diff / (cur_pilot->turn * ai_dt);
    if (ABS(diff) < MIN_DIR_ERR)
-      pilot_acc = accel / (cur_pilot->accel * ai_dt);
+      pilot_acc = accel;
    else
       pilot_acc = 0.;
    lua_pushboolean(L, 0);
