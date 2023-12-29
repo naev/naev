@@ -1027,7 +1027,7 @@ void pilot_calcStats( Pilot* pilot )
     * Relative increases.
     */
    /* Movement. */
-   pilot->accel_base  *= s->accel_mod;
+   pilot->accel_base   *= s->accel_mod;
    pilot->turn_base    *= s->turn_mod;
    pilot->speed_base   *= s->speed_mod;
    /* Health. */
@@ -1046,6 +1046,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->cpu          += pilot->cpu_max; /* CPU is negative, this just sets it so it's based off of cpu_max. */
    /* Misc. */
    pilot->crew          = pilot->crew * s->crew_mod + s->crew;
+   pilot->fuel_consumption *= s->fuel_usage_mod;
    pilot->fuel_max     *= s->fuel_mod;
    pilot->cap_cargo    *= s->cargo_mod;
    s->engine_limit     *= s->engine_limit_rel;

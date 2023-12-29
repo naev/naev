@@ -27,6 +27,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_ACCEL_MOD,        /**< Acceleration multiplier. */
    SS_TYPE_D_CARGO_MOD,        /**< Cargo space multiplier. */
    SS_TYPE_D_FUEL_MOD,         /**< Fuel capacity multiplier. */
+   SS_TYPE_D_FUEL_USAGE_MOD,   /**< Fuel usage modifier. */
    SS_TYPE_D_ARMOUR_MOD,       /**< Armour multiplier. */
    SS_TYPE_D_ARMOUR_REGEN_MOD, /**< Armour regeneration multiplier. */
    SS_TYPE_D_SHIELD_MOD,       /**< Shield multiplier. */
@@ -227,6 +228,7 @@ typedef struct ShipStats_ {
    /* General */
    double cargo_mod;          /**< Cargo space multiplier. */
    double fuel_mod;           /**< Fuel capacity multiplier. */
+   double fuel_usage_mod;     /**< Fuel usage modifier. */
    double cpu_mod;            /**< CPU multiplier. */
    double cpu_max;            /**< CPU modifier. */
    double absorb;             /**< Flat damage absorption. */
@@ -242,7 +244,7 @@ typedef struct ShipStats_ {
    double ew_signature;    /**< Electronic warfare signature modifier. */
    double ew_stealth;      /**< Electronic warfare stealth modifier. */
    double ew_detect;       /**< Electronic warfare detection modifier. */
-   double ew_track;
+   double ew_track;        /**< Electronic warfare tracking modifier. */
    double ew_jump_detect;  /**< Electronic warfare jump point detection modifier. */
    double ew_stealth_timer; /**< Stealth timer decrease speed. */
    double ew_scanned_time; /**< Time to scan. */

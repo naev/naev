@@ -91,6 +91,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_ACCEL_MOD,          accel_mod,           N_("Accel") ),
    D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,           N_("Cargo Space") ),
    D__ELEM( SS_TYPE_D_FUEL_MOD,           fuel_mod,            N_("Fuel Cpacity") ),
+   D__ELEM( SS_TYPE_D_FUEL_USAGE_MOD,     fuel_usage_mod,      N_("Fuel Usage") ),
    D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,          N_("Armour Strength") ),
    D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod,    N_("Armour Regeneration") ),
    D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,          N_("Shield Strength") ),
