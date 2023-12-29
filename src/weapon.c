@@ -1090,7 +1090,9 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
          wipos.y = s2y + t * vy2;
          wpos = &wipos;
       }
-      /* Purpose fallthrough. If beam doesn't intersect with lines, we try a spherical collision. */
+      /* Purpose fallthrough. If beam doesn't intersect with lines, we try a spherical collision.
+       * This works because wc.range should be set up for a spherical collision using the beam width
+       * and can use the code below. */
    }
 
    /* Try to do polygon first. */
@@ -1277,7 +1279,8 @@ static void weapon_updateCollide( Weapon* w, double dt )
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
-         /* Early in-range check with the asteroid field. */
+         /* Early in-range check with the asteroid field.
+          * Since range for beam weapons is set to width, we have to use the max. */
          if (vec2_dist2( &w->solid.pos, &ast->pos ) >
                pow2( ast->radius + ast->margin + MAX(wc.range, wc.beamrange) ))
             continue;
