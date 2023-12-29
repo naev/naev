@@ -1278,7 +1278,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
 
          /* Early in-range check with the asteroid field. */
          if (vec2_dist2( &w->solid.pos, &ast->pos ) >
-               pow2( ast->radius + ast->margin + wc.range ))
+               pow2( ast->radius + ast->margin + wc.beamrange ))
             continue;
 
          /* Quadtree collisions. */
@@ -1293,7 +1293,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
 
             /* In-range check with the actual asteroid. */
             /* This is advantageous because we are going to rotate the polygon afterwards. */
-            if (vec2_dist2( &w->solid.pos, &a->sol.pos ) > pow2( wc.range ))
+            if (vec2_dist2( &w->solid.pos, &a->sol.pos ) > pow2( wc.beamrange ))
                continue;
 
             if (a->polygon->npt!=0) {

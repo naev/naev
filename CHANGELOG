@@ -30,6 +30,7 @@
    * Fixed AI trying to scan hostile targets they lost track of
    * Properly save and load reward_value to and from saves
    * Fixed events and missions being able to trigger in obelisk tests
+   * Fixed beam weapons not hitting asteroids
    * `kidnapped/traffic_00`: fixed formating string telling the player what system to go to
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
    * `tutorial/nelly01`: fixed derelict message not appearing
