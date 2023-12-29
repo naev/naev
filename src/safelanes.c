@@ -251,7 +251,9 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
  */
 void safelanes_recalculate (void)
 {
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
 
    /* Don't recompute on exit. */
    if (naev_isQuit())
@@ -263,9 +265,10 @@ void safelanes_recalculate (void)
       ;
    safelanes_destroyOptimizer();
    /* Stacks remain available for queries. */
-   time = SDL_GetTicks() - time;
+#if DEBUGGING
    if (conf.devmode)
-      DEBUG( n_("Charted safe lanes for %d object in %.3f s", "Charted safe lanes for %d objects in %.3f s", array_size(vertex_stack)), array_size(vertex_stack), time/1000. );
+      DEBUG( n_("Charted safe lanes for %d object in %.3f s", "Charted safe lanes for %d objects in %.3f s", array_size(vertex_stack)), array_size(vertex_stack), (SDL_GetTicks()-time)/1000. );
+#endif /* DEBUGGING */
 
    safelanes_calculated_once = 1;
 }
