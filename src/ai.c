@@ -452,7 +452,7 @@ void ai_thinkSetup( double dt )
 void ai_thinkApply( Pilot *p )
 {
    /* Make sure pilot_acc and pilot_turn are legal */
-   pilot_acc   = CLAMP( -1., 1., pilot_acc );
+   pilot_acc   = CLAMP( -PILOT_REVERSE_THRUST, 1., pilot_acc );
    pilot_turn  = CLAMP( -1., 1., pilot_turn );
 
    /* Set turn and accel. */
@@ -2183,7 +2183,7 @@ static int aiL_brake( lua_State *L )
    diff = angle_diff( cur_pilot->solid.dir, dir );
    pilot_turn = diff / (cur_pilot->turn * ai_dt);
    if (ABS(diff) < MIN_DIR_ERR)
-      pilot_acc = accel / (cur_pilot->accel * ai_dt);
+      pilot_acc = accel;
    else
       pilot_acc = 0.;
    lua_pushboolean(L, 0);
