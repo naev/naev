@@ -1443,6 +1443,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps, in
             _("%.2f DPS [%.2f EPS]\n"), dps, eps );
    if (s->ship->desc_extra != NULL)
       l += scnprintf( &buf[l], (max_len-l), "%s\n", _(s->ship->desc_extra) );
+   l += scnprintf( &buf[l], (max_len-l), _("%.0f fuel per jump\n"), s->fuel_consumption );
    l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 0 );
    return l;
 }

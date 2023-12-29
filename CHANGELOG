@@ -7,7 +7,9 @@
       * Can modify game speed directly instead of using a slowmode difficulty for accessibility
       * Messages get folded instead of repeating
       * Asteroids no longer fade out if close to the player
+      * Display fuel consumption for ships in the equipment overlay
    * Engine
+      * Added fuel_usage_mod ship stat.
       * Fixed player losing navigation targets when unidiff is applied
       * Fixed ai.idir giving wrong answer by M_PI_2 in some cases
       * Threaded more loading components
