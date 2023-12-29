@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-29 00:43+0900\n"
+"POT-Creation-Date: 2023-12-29 18:04+0900\n"
 "PO-Revision-Date: 2023-01-30 00:36+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -2026,8 +2026,8 @@ msgstr ""
 #. start
 #: dat/factions/independent.xml:2 dat/factions/miner.xml:3
 #: dat/factions/strangelove.xml:5 dat/factions/trader.xml:3
-#: dat/events/sirius/test_of_devotion.lua:107
-#: dat/events/sirius/test_of_renewal.lua:95
+#: dat/events/sirius/test_of_devotion.lua:108
+#: dat/events/sirius/test_of_renewal.lua:96
 #: dat/missions/dvaered/gauntlet/gui.lua:142
 #: dat/missions/neutral/teenager.lua:95 dat/missions/taiomi/taiomi10.lua:137
 msgid "Independent"
@@ -6216,7 +6216,7 @@ msgstr "Bateria IV"
 #| "A massive battery unit designed to hold 2000 MJ of energy. Given the mass "
 #| "of this battery, it's advisable to only mount it on capital ships."
 msgid ""
-"A massive battery unit designed to hold 2000 GJ of energy. Given the mass of "
+"A massive battery unit designed to hold 1500 GJ of energy. Given the mass of "
 "this battery, it's advisable to only mount it on capital ships."
 msgstr ""
 "Uma grande unidade de bateria projetada para estocar 2000 MJ de energia. "
@@ -28683,7 +28683,7 @@ msgstr ""
 #. Ship is too fast otherwise
 #. overwrite all
 #. First puzzle
-#: dat/ssys/test_of_alacrity.xml:2 dat/events/sirius/test_of_alacrity.lua:112
+#: dat/ssys/test_of_alacrity.xml:2 dat/events/sirius/test_of_alacrity.lua:113
 msgid "Test of Alacrity"
 msgstr ""
 
@@ -28691,7 +28691,7 @@ msgstr ""
 #. Set up position
 #. Ship is too fast otherwise
 #. overwrite all
-#: dat/ssys/test_of_devotion.xml:2 dat/events/sirius/test_of_devotion.lua:43
+#: dat/ssys/test_of_devotion.xml:2 dat/events/sirius/test_of_devotion.lua:44
 msgid "Test of Devotion"
 msgstr ""
 
@@ -28701,7 +28701,7 @@ msgstr ""
 #. overwrite all
 #. First puzzle
 #: dat/ssys/test_of_enlightenment.xml:2
-#: dat/events/sirius/test_of_enlightenment.lua:74
+#: dat/events/sirius/test_of_enlightenment.lua:75
 msgid "Test of Enlightenment"
 msgstr ""
 
@@ -28716,7 +28716,7 @@ msgstr "Modificador de Escudo"
 #. Ship is too fast otherwise
 #. overwrite all
 #. First puzzle
-#: dat/ssys/test_of_renewal.xml:2 dat/events/sirius/test_of_renewal.lua:51
+#: dat/ssys/test_of_renewal.xml:2 dat/events/sirius/test_of_renewal.lua:52
 msgid "Test of Renewal"
 msgstr ""
 
@@ -29663,8 +29663,8 @@ msgstr ""
 #. Should be taking off from the Lab
 #. Spawn
 #: dat/ai/collective.lua:11 dat/ai/drone_miner.lua:10 dat/ai/dummy.lua:10
-#: dat/ai/feralbioship.lua:10 dat/events/sirius/test_of_devotion.lua:122
-#: dat/events/sirius/test_of_renewal.lua:108
+#: dat/ai/feralbioship.lua:10 dat/events/sirius/test_of_devotion.lua:123
+#: dat/events/sirius/test_of_renewal.lua:109
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:297
 #: dat/missions/empire/collective/ec00.lua:117
 #: dat/missions/minerva/kex5.lua:294 dat/missions/tutorial/nelly02.lua:248
@@ -44962,6 +44962,7 @@ msgstr ""
 msgid "Obelisk event run with no target!"
 msgstr ""
 
+#. Some obelisk change the player's pilot, so we have to clean up here
 #. Clear obelisk
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -47349,6 +47350,7 @@ msgstr ""
 #. <location>enter</location>
 #. <chance>100</chance>
 #. <system>Test of Alacrity</system>
+#. <priority>0</priority>
 #. </event>
 #. --
 #. Swap player's ship
@@ -47359,6 +47361,7 @@ msgstr ""
 #. <location>enter</location>
 #. <chance>100</chance>
 #. <system>Test of Devotion</system>
+#. <priority>0</priority>
 #. </event>
 #. --
 #. in seconds
@@ -47370,6 +47373,7 @@ msgstr ""
 #. <location>enter</location>
 #. <chance>100</chance>
 #. <system>Test of Enlightenment</system>
+#. <priority>0</priority>
 #. </event>
 #. --
 #. Swap player's ship
@@ -47379,24 +47383,25 @@ msgstr ""
 #. <location>enter</location>
 #. <chance>100</chance>
 #. <system>Test of Renewal</system>
+#. <priority>0</priority>
 #. </event>
 #. --
 #. Swap player's ship
-#: dat/events/sirius/test_of_alacrity.lua:69
-#: dat/events/sirius/test_of_devotion.lua:24
-#: dat/events/sirius/test_of_enlightenment.lua:38
-#: dat/events/sirius/test_of_renewal.lua:23
+#: dat/events/sirius/test_of_alacrity.lua:70
+#: dat/events/sirius/test_of_devotion.lua:25
+#: dat/events/sirius/test_of_enlightenment.lua:39
+#: dat/events/sirius/test_of_renewal.lua:24
 msgid "Psyche"
 msgstr ""
 
-#: dat/events/sirius/test_of_alacrity.lua:69
-#: dat/events/sirius/test_of_devotion.lua:24
-#: dat/events/sirius/test_of_enlightenment.lua:38
-#: dat/events/sirius/test_of_renewal.lua:23
+#: dat/events/sirius/test_of_alacrity.lua:70
+#: dat/events/sirius/test_of_devotion.lua:25
+#: dat/events/sirius/test_of_enlightenment.lua:39
+#: dat/events/sirius/test_of_renewal.lua:24
 msgid "Psychic powers."
 msgstr ""
 
-#: dat/events/sirius/test_of_alacrity.lua:113
+#: dat/events/sirius/test_of_alacrity.lua:114
 msgid "Collect All the Orbs"
 msgstr ""
 
@@ -47411,11 +47416,11 @@ msgstr ""
 #. TODO proper puzzle
 #. Anything will finish the event
 #. Heal up to avoid game over if necessary
-#: dat/events/sirius/test_of_alacrity.lua:137
-#: dat/events/sirius/test_of_devotion.lua:71
-#: dat/events/sirius/test_of_devotion.lua:81
-#: dat/events/sirius/test_of_renewal.lua:74
-#: dat/events/sirius/test_of_renewal.lua:84
+#: dat/events/sirius/test_of_alacrity.lua:138
+#: dat/events/sirius/test_of_devotion.lua:72
+#: dat/events/sirius/test_of_devotion.lua:82
+#: dat/events/sirius/test_of_renewal.lua:75
+#: dat/events/sirius/test_of_renewal.lua:85
 msgid "Test Failed"
 msgstr ""
 
@@ -47447,39 +47452,39 @@ msgstr ""
 #. ??
 #. Get rid of enemies
 #. All done, so give ability
-#: dat/events/sirius/test_of_alacrity.lua:171
-#: dat/events/sirius/test_of_devotion.lua:150
-#: dat/events/sirius/test_of_enlightenment.lua:188
-#: dat/events/sirius/test_of_renewal.lua:212
+#: dat/events/sirius/test_of_alacrity.lua:172
+#: dat/events/sirius/test_of_devotion.lua:151
+#: dat/events/sirius/test_of_enlightenment.lua:189
+#: dat/events/sirius/test_of_renewal.lua:213
 msgid "Test Completed"
 msgstr ""
 
-#: dat/events/sirius/test_of_alacrity.lua:175
-#: dat/events/sirius/test_of_devotion.lua:154
-#: dat/events/sirius/test_of_enlightenment.lua:192
-#: dat/events/sirius/test_of_renewal.lua:216
+#: dat/events/sirius/test_of_alacrity.lua:176
+#: dat/events/sirius/test_of_devotion.lua:155
+#: dat/events/sirius/test_of_enlightenment.lua:193
+#: dat/events/sirius/test_of_renewal.lua:217
 msgid "New Flow Ability Unlocked"
 msgstr ""
 
-#: dat/events/sirius/test_of_devotion.lua:44
+#: dat/events/sirius/test_of_devotion.lua:45
 msgid "Survive for {amt} seconds"
 msgstr ""
 
-#: dat/events/sirius/test_of_devotion.lua:45
+#: dat/events/sirius/test_of_devotion.lua:46
 msgid ""
 "{key1}: use cleansing flames\n"
 "{key2}: use astral projection"
 msgstr ""
 
-#: dat/events/sirius/test_of_enlightenment.lua:75
+#: dat/events/sirius/test_of_enlightenment.lua:76
 msgid "Activate the Orbs"
 msgstr ""
 
-#: dat/events/sirius/test_of_renewal.lua:52
+#: dat/events/sirius/test_of_renewal.lua:53
 msgid "Feather Drive through All the Orbs"
 msgstr ""
 
-#: dat/events/sirius/test_of_renewal.lua:53
+#: dat/events/sirius/test_of_renewal.lua:54
 msgid ""
 "{key1}: use seeking chakra\n"
 "{key2}: use feather drive"
@@ -109045,6 +109050,7 @@ msgstr ""
 msgid "Heretic"
 msgstr ""
 
+#. Have to claim the system or other missions/events can affect it
 #. Hide rest of the universe
 #. Clean up the escorts
 #. Don't remove or it'll mess cargo
@@ -109053,6 +109059,7 @@ msgstr ""
 #. Restore the escorts
 #. Don't remove or it'll mess cargo
 #. Played backwards from entering
+#. They lose fighters because ship swapping, so at least give ammo back
 #. Forces the player (and other ships) to stay in the radius of the system
 #.
 #.
@@ -121809,30 +121816,30 @@ msgstr ""
 msgid "Mission Lua '%s' syntax error: %s"
 msgstr ""
 
-#: src/mission.c:1437
+#: src/mission.c:1438
 msgid "Mission cargo without name!"
 msgstr ""
 
-#: src/mission.c:1449
+#: src/mission.c:1450
 #, c-format
 msgid "Mission temporary cargo '%s' missing description!"
 msgstr ""
 
-#: src/mission.c:1530
+#: src/mission.c:1531
 #, c-format
 msgid "Mission '%s' from saved game not found in game - ignoring."
 msgstr ""
 
-#: src/mission.c:1537
+#: src/mission.c:1538
 #, c-format
 msgid "Mission '%s' from saved game failed to load properly - ignoring."
 msgstr ""
 
-#: src/mission.c:1587
+#: src/mission.c:1589
 msgid "Inconsistency with 'nitems' in save file."
 msgstr ""
 
-#: src/mission.c:1620
+#: src/mission.c:1622
 #, c-format
 msgid ""
 "Mission '%s' from saved game failed to unpersist Lua properly - ignoring."
@@ -122878,7 +122885,7 @@ msgid "Unknown standing type '%s'!"
 msgstr ""
 
 #: src/nlua_safelanes.c:123 src/nlua_safelanes.c:155 src/safelanes.c:242
-#: src/safelanes.c:869 src/safelanes.c:885
+#: src/safelanes.c:872 src/safelanes.c:888
 msgid "Safe-lane vertex type is invalid."
 msgstr ""
 
@@ -125356,7 +125363,7 @@ msgstr ""
 msgid "Unknown post-processing shader layer '%d'!"
 msgstr ""
 
-#: src/safelanes.c:268
+#: src/safelanes.c:270
 #, c-format
 msgid "Charted safe lanes for %d object in %.3f s"
 msgid_plural "Charted safe lanes for %d objects in %.3f s"
