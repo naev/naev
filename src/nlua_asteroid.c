@@ -119,7 +119,7 @@ Asteroid* luaL_validasteroid( lua_State *L, int ind )
 #endif /* DEBUGGING */
       AsteroidAnchor *field = &cur_system->asteroids[ la->parent ];
 #if DEBUGGING
-      if ((la->id < 0) || (la->id >= field->nb)) {
+      if ((la->id < 0) || (la->id >= array_size(field->asteroids))) {
          NLUA_ERROR(L,_("Asteroid '%d' in field '%d' is out of range!"),la->id,la->parent);
          return NULL;
       }
@@ -211,7 +211,7 @@ static int asteroidL_getAll( lua_State *L )
    lua_newtable(L);
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       const AsteroidAnchor *ast = &cur_system->asteroids[i];
-      for (int j=0; j<ast->nb; j++) {
+      for (int j=0; j<array_size(ast->asteroids); j++) {
          const Asteroid *a = &ast->asteroids[j];
          LuaAsteroid_t la = {
             .parent = a->parent,
@@ -264,15 +264,16 @@ static int asteroidL_get( lua_State *L )
    /* Get random asteroid. */
    if ((pos==NULL) && (field >= 0)) {
       /* Random asteroid. */
-      int ast   = RNG(0,cur_system->asteroids[field].nb-1);
+      int ast   = RNG(0,array_size(cur_system->asteroids[field].asteroids)-1);
       int bad_asteroid = 0;
       Asteroid *a = &cur_system->asteroids[field].asteroids[ast];
 
       if (a->state != ASTEROID_FG) {
+         int n = array_size( cur_system->asteroids[field].asteroids );
          /* Switch to next index until we find a valid one, or until we come full-circle. */
          bad_asteroid = 1;
-         for (int i=0; i<cur_system->asteroids[field].nb; i++) {
-            ast = (ast+1) % cur_system->asteroids[field].nb;
+         for (int i=0; i<n; i++) {
+            ast = (ast+1) % n;
             a = &cur_system->asteroids[field].asteroids[ast];
             if (a->state == ASTEROID_FG) {
                bad_asteroid = 0;
@@ -295,7 +296,7 @@ static int asteroidL_get( lua_State *L )
    double dist2 = HUGE_VAL;
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
-      for (int j=0; j<ast->nb; j++) {
+      for (int j=0; j<array_size(ast->asteroids); j++) {
          double d2;
          Asteroid *a = &ast->asteroids[j];
 
@@ -341,7 +342,7 @@ static int asteroidL_exists( lua_State *L )
    }
 
    AsteroidAnchor *field = &cur_system->asteroids[ la->parent ];
-   if ((la->id < 0) || (la->id >= field->nb)) {
+   if ((la->id < 0) || (la->id >= array_size(field->asteroids))) {
       lua_pushboolean(L, 0);
       return 1;
    }

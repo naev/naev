@@ -1390,7 +1390,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
             continue;
 
          r2 = pow2(range);
-         for (int j=0; j<ast->nb; j++) {
+         for (int j=0; j<array_size(ast->asteroids); j++) {
             HookParam hparam[2];
             Asteroid *a = &ast->asteroids[j];
 

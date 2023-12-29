@@ -710,7 +710,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    /* Asteroids. */
    for (int i=0; i<array_size(sys->asteroids); i++) {
       AsteroidAnchor *f = &sys->asteroids[i];
-      for (int k=0; k<f->nb; k++) {
+      for (int k=0; k<array_size(f->asteroids); k++) {
          double td;
          Asteroid *as = &f->asteroids[k];
 
@@ -785,7 +785,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
    /* Asteroids. */
    for (int i=0; i<array_size(sys->asteroids); i++) {
       AsteroidAnchor *f = &sys->asteroids[i];
-      for (int k=0; k<f->nb; k++) {
+      for (int k=0; k<array_size(f->asteroids); k++) {
          double ta;
          Asteroid *as = &f->asteroids[k];
 
