@@ -1169,6 +1169,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
          wc.polygon = NULL;
          wc.range = wc.gfx->col_size;
       }
+      wc.beamrange = 0.;
 
       /* Determine quadtree location. */
       x  = round(w->solid.pos.x);
@@ -1278,7 +1279,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
 
          /* Early in-range check with the asteroid field. */
          if (vec2_dist2( &w->solid.pos, &ast->pos ) >
-               pow2( ast->radius + ast->margin + wc.beamrange ))
+               pow2( ast->radius + ast->margin + MAX(wc.range, wc.beamrange) ))
             continue;
 
          /* Quadtree collisions. */
@@ -1289,11 +1290,6 @@ static void weapon_updateCollide( Weapon* w, double dt )
             WeaponHit hit;
 
             if (a->state != ASTEROID_FG)
-               continue;
-
-            /* In-range check with the actual asteroid. */
-            /* This is advantageous because we are going to rotate the polygon afterwards. */
-            if (vec2_dist2( &w->solid.pos, &a->sol.pos ) > pow2( wc.beamrange ))
                continue;
 
             if (a->polygon->npt!=0) {
