@@ -452,7 +452,7 @@ void ai_thinkSetup( double dt )
 void ai_thinkApply( Pilot *p )
 {
    /* Make sure pilot_acc and pilot_turn are legal */
-   pilot_acc   = CLAMP( -1., 1., pilot_acc );
+   pilot_acc   = CLAMP( -PILOT_REVERSE_THRUST, 1., pilot_acc );
    pilot_turn  = CLAMP( -1., 1., pilot_turn );
 
    /* Set turn and accel. */
