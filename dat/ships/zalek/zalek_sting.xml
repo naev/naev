@@ -53,6 +53,7 @@
   <shield_regen_mod>30</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
   <fbay_rate>25</fbay_rate>
+  <ew_detect>10</ew_detect>
  </stats>
  <tags>
   <tag>zalek</tag>
