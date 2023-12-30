@@ -42,16 +42,17 @@ static const char *outfitkeytostr( OutfitKey key );
  *    @param p Pilot being updated.
  *    @param o Slot being updated.
  *    @param t Pilot that is currently the target of p (or NULL if not applicable).
+ *    @param wt Pilot's target.
  *    @param a Angle to update if necessary. Should be initialized to -1 before the loop.
  *    @param dt Current delta tick.
  */
-void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt )
+void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt, double *a, double dt )
 {
    double arc, max;
    int locked;
 
    /* No target. */
-   if (t == NULL)
+   if (wt->type==TARGET_NONE)
       return;
 
    /* Nota  seeker. */
@@ -65,8 +66,18 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
       /* We use an external variable to set and update the angle if necessary. */
       if (*a < 0.) {
          double x, y, ang;
-         x     = t->solid.pos.x - p->solid.pos.x;
-         y     = t->solid.pos.y - p->solid.pos.y;
+         if (wt->type==TARGET_PILOT) {
+            x  = t->solid.pos.x - p->solid.pos.x;
+            y  = t->solid.pos.y - p->solid.pos.y;
+         }
+         else if (wt->type==TARGET_ASTEROID) {
+            const Asteroid *ast = &cur_system->asteroids[ wt->u.ast.anchor ].asteroids[ wt->u.ast.asteroid ];
+            x  = ast->sol.pos.x - p->solid.pos.x;
+            y  = ast->sol.pos.y - p->solid.pos.y;
+         }
+         else {
+            x = y = 0.;
+         }
          ang   = ANGLE( x, y );
          *a    = FABS( angle_diff( ang, p->solid.dir ) );
       }

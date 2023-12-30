@@ -2109,14 +2109,14 @@ void pilot_update( Pilot* pilot, double dt )
 {
    int cooling, nchg;
    Pilot *target;
-   double a, px,py, vx,vy;
-   double Q;
+   double a, px,py, vx,vy, Q;
+   Target wt;
 
    /* Modify the dt with speedup. */
    dt *= pilot->stats.time_speedup;
 
    /* Check target validity. */
-   target = pilot_getTarget( pilot );
+   target = pilot_weaponTarget( pilot, &wt );
    cooling = pilot_isFlag(pilot, PILOT_COOLDOWN);
 
    /*
@@ -2233,7 +2233,7 @@ void pilot_update( Pilot* pilot, double dt )
          Q  += pilot_heatUpdateSlot( pilot, o, dt );
 
       /* Handle lockons. */
-      pilot_lockUpdateSlot( pilot, o, target, &a, dt );
+      pilot_lockUpdateSlot( pilot, o, target, &wt, &a, dt );
    }
 
    /* Global heat. */

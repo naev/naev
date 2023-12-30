@@ -5,6 +5,8 @@
 
 #include "pilot.h"
 
+#include "target.h"
+
 #define PILOT_OUTFIT_LUA_UPDATE_DT     (1.0/10.0)   /* How often the Lua outfits run their update script (in seconds).  */
 
 typedef enum OutfitKey_ {
@@ -49,7 +51,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int buffSize );
 const char* pilot_canEquip( const Pilot *p, const PilotOutfitSlot *s, const Outfit *o );
 
 /* Lock-ons. */
-void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt );
+void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt, double *a, double dt );
 void pilot_lockClear( Pilot *p );
 
 /* Other. */

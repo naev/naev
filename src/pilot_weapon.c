@@ -1289,6 +1289,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, doubl
          pilot_weaponTarget( p, &wt );
          target = &wt;
       }
+      //if ((w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) && !((target->type==TARGET_PILOT) || (target->type==TARGET_ASTEROID)))
       if ((w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) && (target->type!=TARGET_PILOT))
          return 0;
 
