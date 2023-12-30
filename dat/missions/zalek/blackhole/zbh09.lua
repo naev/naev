@@ -152,7 +152,7 @@ local function icarus_talk ()
    z(_([["It looks like there's been a misunderstanding. Could this be from where Icarus came from? I have no idea where we are, but the rough coordinates seem to indicate we are near Soromid space."]]))
    i(_([["Elders. Ahaeosrc."
 The translation system struggles with what Icarus is saying.]]))
-   z(_([["Mmmm, this seems to be a word that wasn't in the original notes. I'm not sure we're going to be able to translate it."]]))
+   z(_([["Mmmm, this seems to be a word that wasn't in the original notes. I'm not sure how we're going to be able to translate it."]]))
    i(_([["Ahaeosrc. Zach."]]))
    z(_([["Wait, what? How did my name get picked up in the translation system?… Does this mean that…"
 He goes silent, lost in thought.]]))
@@ -251,7 +251,7 @@ function enter ()
       hook.timer( 18, "heartbeat_ferals" )
 
    elseif mem.state == 2 and system.cur() == mainsys then
-      hook.timer( 15, "zach_say", _("It's a bit quiet without Icarus around anymore…") )
+      hook.timer( 15, "zach_say", _("It's a bit quiet without Icarus around any more…") )
 
    end
 end
@@ -491,10 +491,12 @@ function heartbeat_ferals ()
          icarus:face( l )
 
          for k,p in ipairs(pack) do
-            p:setInvisible(false)
-            p:taskClear()
-            p:brake()
-            p:face( icarus )
+            if p:exists() then
+               p:setInvisible(false)
+               p:taskClear()
+               p:brake()
+               p:face( icarus )
+            end
          end
 
          nexttime = 3
