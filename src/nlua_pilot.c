@@ -939,7 +939,7 @@ static int pilotL_canSpawn( lua_State *L )
    return 1;
 }
 
-void toggleSpawn( int f, int b )
+static void toggleSpawn( int f, int b )
 {
    /* Find the faction and set. */
    for (int i=0; i<array_size(cur_system->presence); i++) {
