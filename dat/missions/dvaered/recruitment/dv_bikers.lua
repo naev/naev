@@ -138,7 +138,7 @@ function enter()
       local pp = player.pilot()
       local ps = pp:ship()
       if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
-         pilot.toggleSpawn()
+         pilot.toggleSpawn(false)
          pilot.clear()
          local targetF = faction.dynAdd( "Independent", "targets", _("Targets"), {clear_enemies=true, clear_allies=true} )
 
@@ -218,7 +218,7 @@ So, don't try to auto-target around, and just shoot at the targets I will be ind
       local pp = player.pilot()
       local ps = pp:ship()
       if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
-         pilot.toggleSpawn()
+         pilot.toggleSpawn(false)
          pilot.clear()
 
          local targetF = faction.dynAdd( "Marauder", "targets", _("Targets"))
