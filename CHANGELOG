@@ -17,7 +17,9 @@
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
    * `tutorial/nelly01`: fixed derelict message not appearing
    * `minerva/pirate4`: fixed save me spam only being print once
-   * `seek_n_destroy`: fixed warnings when taking off in the same system
+   * `neutral/seek_n_destroy`: fixed warnings when taking off in the same system
+   * `sirius/achack/achack01`: fixed not being able to accept mission
+   * `neutral/kidnapped`: fixed inconsistency in the name of the system to go to
    * Fixed many typos
    * Translation updates
 
