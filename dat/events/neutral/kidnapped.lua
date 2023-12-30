@@ -29,7 +29,7 @@ local ccomm = require "common.comm"
 local vn = require "vn"
 local fmt = require "format"
 
-local pnt1, sys3 = spob.getS("Praxis")
+local pnt1, sys3 = spob.getS("Waterhole's Moon")
 
 local panma, yohail -- Non-persistent state
 

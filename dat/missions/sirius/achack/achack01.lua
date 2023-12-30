@@ -59,6 +59,7 @@ function accept()
    vn.done()
 
    vn.label("accept")
+   vn.func( function () accepted = true end )
    harja(fmt.f(_([["Great! I was about to give up hope that I would find anyone with enough guts to do this for me. Okay, so, let me tell you about your target. She's a member of the Serra echelon, and she's got long, brown hair and blue eyes. She can usually be found in Sirius space, I believe she'll be on {pnt} in the {sys} system right now. Come back to me when she's dead, and I'll give you your reward!"]]),
       {pnt=destplanet, sys=destsys}))
    vn.na(_([[Harja leaves the spacedock bar, satisfied that he's finally found someone to take his request. You can't help but wonder why he would try to hire a mercenary in a place like the Wringer, though. If the target is such a dangerous criminal, then wouldn't he be better off posting a bounty mission on the public board? Oh well, it's none of your business. You accepted the job, now all that's left is to complete it.]]))
