@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2023-12-29 18:04+0900\n"
+"POT-Creation-Date: 2023-12-30 17:32+0900\n"
 "PO-Revision-Date: 2023-12-27 18:09+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
@@ -76815,7 +76815,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh05.lua:98
 #: dat/missions/zalek/blackhole/zbh06.lua:76
 #: dat/missions/zalek/blackhole/zbh08.lua:95
-#: dat/missions/zalek/blackhole/zbh09.lua:540
+#: dat/missions/zalek/blackhole/zbh09.lua:542
 #: dat/missions/zalek/blackhole/zbh10.lua:79
 #: dat/missions/zalek/blackhole/zbh11.lua:202
 msgid "Return to {pnt} ({sys} system)"
@@ -100878,7 +100878,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh09.lua:155
 msgid ""
 "\"Mmmm, this seems to be a word that wasn't in the original notes. I'm not "
-"sure we're going to be able to translate it.\""
+"sure how we're going to be able to translate it.\""
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh09.lua:156
@@ -100977,7 +100977,7 @@ msgid "I'm getting some ship readings. Wait, what is that?"
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh09.lua:254
-msgid "It's a bit quiet without Icarus around anymore…"
+msgid "It's a bit quiet without Icarus around any more…"
 msgstr ""
 
 #. Don't allow boarding again
@@ -123154,7 +123154,7 @@ msgid "Unknown standing type '%s'!"
 msgstr "Neznámý typ stání '%s'!"
 
 #: src/nlua_safelanes.c:123 src/nlua_safelanes.c:155 src/safelanes.c:242
-#: src/safelanes.c:872 src/safelanes.c:888
+#: src/safelanes.c:869 src/safelanes.c:885
 msgid "Safe-lane vertex type is invalid."
 msgstr "Typ vrcholu bezpečného pruhu je neplatný."
 
@@ -125652,7 +125652,7 @@ msgstr ""
 msgid "Unknown post-processing shader layer '%d'!"
 msgstr ""
 
-#: src/safelanes.c:270
+#: src/safelanes.c:268
 #, c-format
 msgid "Charted safe lanes for %d object in %.3f s"
 msgid_plural "Charted safe lanes for %d objects in %.3f s"
@@ -127483,7 +127483,7 @@ msgid "Weapon of type '%s' has no render implemented yet!"
 msgstr ""
 
 #.
-#: src/weapon.c:1733
+#: src/weapon.c:1732
 #, c-format
 msgid ""
 "Outfit '%s' -> '%s':\n"
@@ -127492,20 +127492,20 @@ msgstr ""
 "Vybavení '%s' -> '%s':\n"
 "%s"
 
-#: src/weapon.c:2487
+#: src/weapon.c:2486
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr ""
 
-#: src/weapon.c:2523
+#: src/weapon.c:2522
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 
-#: src/weapon.c:2592
+#: src/weapon.c:2591
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
 
-#: src/weapon.c:2613
+#: src/weapon.c:2612
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
