@@ -596,7 +596,7 @@ void pilot_weapSetAdd( Pilot* p, int id, const PilotOutfitSlot *o, int level )
    slot->level = level;
    slot->slotid= o->id;
    if (o->outfit!=NULL)
-      slot->range2 = pow2(outfit_range(o->outfit));
+      slot->range2 = pow2(pilot_outfitRange( p, o->outfit ));
    else
       slot->range2 = 0.;
    pilot_weapSetUpdateOutfits( p, ws );
@@ -727,9 +727,7 @@ static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
          continue;
 
       /* Get range. */
-      range = outfit_range(pos->outfit);
-      if (outfit_isLauncher(pos->outfit))
-         range *= p->stats.launch_range;
+      range = pilot_outfitRange( p, pos->outfit );
       if (range >= 0.) {
          /* Calculate. */
          range_accum[ lev ] += range;

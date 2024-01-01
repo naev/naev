@@ -39,6 +39,7 @@
 #include "nxml.h"
 #include "pilot.h"
 #include "pilot_heat.h"
+#include "pilot_outfit.h"
 #include "ship.h"
 #include "slots.h"
 #include "spfx.h"
@@ -785,29 +786,7 @@ double outfit_cpu( const Outfit* o )
  */
 double outfit_range( const Outfit* o )
 {
-   if (outfit_isBolt(o))
-      return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
-   else if (outfit_isBeam(o))
-      return o->u.bem.range;
-   else if (outfit_isLauncher(o)) {
-      if (o->u.lau.accel) {
-         double speedinc;
-         if (o->u.lau.speed > 0.) /* Ammo that don't start stopped don't have max speed. */
-            speedinc = INFINITY;
-         else
-            speedinc = o->u.lau.speed_max - o->u.lau.speed;
-         double at = speedinc / o->u.lau.accel;
-         if (at < o->u.lau.duration)
-            return speedinc * (o->u.lau.duration - at / 2.) + o->u.lau.speed * o->u.lau.duration;
-
-         /* Maximum speed will never be reached. */
-         return pow2(o->u.lau.duration) * o->u.lau.accel / 2. + o->u.lau.duration * o->u.lau.speed;
-      }
-      return o->u.lau.speed * o->u.lau.duration;
-   }
-   else if (outfit_isFighterBay(o))
-      return INFINITY;
-   return -1.;
+   return pilot_outfitRange( NULL, o );
 }
 /**
  * @brief Gets the outfit's speed.

@@ -39,6 +39,7 @@ int pilot_countAmmo( const Pilot* pilot );
 int pilot_maxAmmo( const Pilot* pilot );
 int pilot_maxAmmoO( const Pilot* p, const Outfit *o );
 void pilot_fillAmmo( Pilot* pilot );
+double pilot_outfitRange( const Pilot *p, const Outfit *o );
 
 /* Checks. */
 int pilot_hasOutfitLimit( const Pilot *p, const char *limit );
