@@ -163,7 +163,7 @@ function hail()
 
       vn.clear()
       vn.scene()
-      local hrj = achack.vn_harja{shader=love_shaders.hologram()}
+      local hrj = vn.newCharacter( achack.vn_harja{shader=love_shaders.hologram()} )
       vn.transition("electric")
       vn.na(_([[You hail Harja's ship. A few moments later his face appears on your console. When he recognizes you, his face sets in an angry scowl.]]))
       hrj(_([["You! How dare you show your face to me again after double-crossing me like that! I had a perfect shot at taking out that damn woman, but you had to go and tip her off instead. Worse, you even helped her fight off the other guys I hired to blast her into space dust! You ruined everything! The past cycles of my life, completely wasted! Damn you!"]]))
@@ -190,7 +190,7 @@ end
 function board()
    vn.clear()
    vn.scene()
-   local hrj = achack.vn_harja{shader=love_shaders.hologram()}
+   local hrj = vn.newCharacter( achack.vn_harja() )
    vn.transition()
    vn.na(_([[You step through the airlock onto Harja's ship. Harja comes storming out of the cockpit, his face red with rage, but he pipes down considerably when you draw your sidearm and point it at his chest. It takes little further persuasion to get him to take his captain's seat again and hear you out.]]))
    hrj(_([["What do you mean, my side of the story?" Harja grumbles after you've explained your actions. "I'm taking revenge, that's all there is to it. Did she tell you about the academy on Sinass? Okay. Did she also tell you how she framed me for the computer hack? No, I bet she didn't! But that's the truth of it, mark my words! She knew I was at least as good as she was, so she needed to get rid of me to be sure she'd get the promotion."]]))

@@ -38,6 +38,8 @@
    * `minerva/pirate4`: fixed save me spam only being print once
    * `neutral/seek_n_destroy`: fixed warnings when taking off in the same system
    * `sirius/achack/achack01`: fixed not being able to accept mission
+   * `dvaered/dv_diversion`: fixed not being able to accept mission
+   * `sirius/achack03`: fixed not being able to complete the mission
    * `neutral/kidnapped`: fixed inconsistency in the name of the system to go to
    * Fixed many typos
    * Translation updates
