@@ -16,6 +16,8 @@
       * Threaded more loading components
       * Lua require now caches chunks
       * Dropped SDL_image fallback
+   * Fixes
+      * PSO and Mizar nebulas have trails again
 
 * 0.11.1 (unreleased)
    * Give all ammo back to player after doing obelisk
