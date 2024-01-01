@@ -122,7 +122,8 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_elem( writer, "interference", "%f", sys->interference );
    if (sys->nebu_density > 0.) {
       xmlw_startElem( writer, "nebula" );
-      xmlw_attr( writer, "volatility", "%f", sys->nebu_volatility );
+      if (sys->nebu_volatility >= 0.)
+         xmlw_attr( writer, "volatility", "%f", sys->nebu_volatility );
       if (fabs(sys->nebu_hue*360.0 - NEBULA_DEFAULT_HUE) > 1e-5)
          xmlw_attr( writer, "hue", "%f", sys->nebu_hue*360.0 );
       xmlw_str( writer, "%f", sys->nebu_density );
