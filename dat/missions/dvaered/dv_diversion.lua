@@ -79,6 +79,7 @@ function accept()
    vn.done()
 
    vn.label("accept")
+   vn.func( function () accepted = true end )
    dv(_([["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces seem insufficient to take on any existing planetary defence forces head on."]]))
    dv(fmt.f(_([["However, it looks like there may be an opportunity for us in {sys}. Warlord Khan of {pnt} has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself."]]),
       {sys=destsys, pnt=destplanet}))
