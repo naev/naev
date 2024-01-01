@@ -202,7 +202,7 @@ void asteroids_update( double dt )
 
       /* Now just thread it and zoom. */
       asteroid_dt = dt;
-      for (int j=0; j<ast->nb; j++) {
+      for (int j=0; j<array_size(ast->asteroids); j++) {
          Asteroid *a = &ast->asteroids[j];
          /* Skip inexistent asteroids. */
          if (a->state == ASTEROID_XX) {
@@ -214,14 +214,14 @@ void asteroids_update( double dt )
             continue;
          }
          /* TODO figure out why this vpool stuff is hanging. */
-         asteroid_updateSingle( a );
          //vpool_enqueue( asteroid_vpool, asteroid_updateSingle, a );
+         asteroid_updateSingle( a );
       }
       //vpool_wait( asteroid_vpool );
 
       /* Do quadtree stuff. Can't be threaded. */
       qt_clear( &ast->qt );
-      for (int j=0; j<ast->nb; j++) {
+      for (int j=0; j<array_size(ast->asteroids); j++) {
          const Asteroid *a = &ast->asteroids[j];
          /* Add to quadtree if in foreground. */
          if (a->state == ASTEROID_FG) {
@@ -315,23 +315,26 @@ void asteroids_init (void)
       ast->qt_init = 1;
 
       /* Add the asteroids to the anchor */
-      ast->asteroids = realloc( ast->asteroids, (ast->nb) * sizeof(Asteroid) );
-      for (int j=0; j<ast->nb; j++) {
+      array_erase( &ast->asteroids, array_begin(ast->asteroids), array_end(ast->asteroids) );
+      for (int j=0; j<ast->nmax; j++) {
          double r = RNGF();
-         Asteroid *a = &ast->asteroids[j];
-         a->id = j;
-         if (asteroid_init(a, ast))
+         Asteroid a;
+         if (asteroid_init(&a, ast)) {
             continue;
+         }
+         a.id = array_size(ast->asteroids);
          if (r > 0.6)
-            a->state = ASTEROID_FG;
+            a.state = ASTEROID_FG;
          else if (r > 0.8)
-            a->state = ASTEROID_XB;
+            a.state = ASTEROID_XB;
          else if (r > 0.9)
-            a->state = ASTEROID_BX;
+            a.state = ASTEROID_BX;
          else
-            a->state = ASTEROID_XX;
-         a->timer = a->timer_max = 30.*RNGF();
-         a->ang = RNGF() * M_PI * 2.;
+            a.state = ASTEROID_XX;
+         a.timer = a.timer_max = 30.*RNGF();
+         a.ang = RNGF() * M_PI * 2.;
+         /* Push into array. */
+         array_push_back( &ast->asteroids, a );
       }
 
       density_max = MAX( density_max, ast->density );
@@ -471,10 +474,12 @@ void asteroids_computeInternals( AsteroidAnchor *a )
    a->area = M_PI * pow2(a->radius);
 
    /* Compute number of asteroids */
-   a->nb      = floor( a->area / ASTEROID_REF_AREA * a->density );
+   a->nmax = floor( a->area / ASTEROID_REF_AREA * a->density );
+   if (a->asteroids==NULL)
+      a->asteroids = array_create_size( Asteroid, a->nmax );
 
    /* Computed from your standard physics equations (with a bit of margin). */
-   a->margin  = pow2(a->maxspeed) / (4.*a->accel) + 50.;
+   a->margin = pow2(a->maxspeed) / (4.*a->accel) + 50.;
 
    /* Compute weight total. */
    a->groupswtotal = 0.;
@@ -862,7 +867,7 @@ void asteroids_render (void)
          continue;
 
       /* Render all asteroids. */
-      for (int j=0; j<ast->nb; j++)
+      for (int j=0; j<array_size(ast->asteroids); j++)
         asteroid_renderSingle( &ast->asteroids[j] );
    }
 
@@ -963,7 +968,7 @@ void asteroid_free( AsteroidAnchor *ast )
    if (ast->qt_init)
       qt_destroy( &ast->qt );
    free(ast->label);
-   free(ast->asteroids);
+   array_free(ast->asteroids);
    array_free(ast->groups);
    array_free(ast->groupsw);
 }
@@ -978,6 +983,9 @@ void asteroids_free (void)
       gl_freeTexture(asteroid_gfx[i]);
    array_free(asteroid_gfx);
    array_free(debris_gfx);
+
+   /* Clean up thread pool. */
+   vpool_cleanup( asteroid_vpool );
 
    /* Free the asteroid types. */
    for (int i=0; i<array_size(asteroid_types); i++) {

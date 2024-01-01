@@ -544,7 +544,7 @@ His voice tears up slightly.]]))
    vn.label("2cont")
    dr(_([["Why did you have to kill yourself?"
 His sightless eyes look vacantly while tears flow down his face.]]))
-   dr(_([[You don't know how to answer and silence envelopes the room. Finally, he breaks the calmness.
+   dr(_([[You don't know how to answer and silence envelops the room. Finally, he breaks the calmness.
 "I should have been the one to try to defuse the reactor core, not you. I should have been the one vaporized in the resulting explosion, not you."]]))
    dr(_([[The vitals monitor starts flashing red, and the medical droid begins to tweak and make adjustments to intravenous drips and other medical devices.
 He coughs a bit and you can see blood flecks splatter onto his clothes.]]))
@@ -620,7 +620,7 @@ His talking is slowing down and starting to get muddled. You have trouble making
    vn.disappear( dr, "slideup", nil, "ease-out" ) -- played backwards so should be down
    vn.label("dr_death")
    vn.musicStop() -- Stop music
-   vn.na(_([[Silence once again envelopes the room. You look around and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
+   vn.na(_([[Silence once again envelops the room. You look around and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
    vn.na(_([[You notice that everything seems to be heavily encrypted, much more so than the standard on even military Za'lek vessels, and try to break into the system. After a few unsuccessful attempts you manage to find what looks like a flaw in the cryptographic armour and try to access it.]]))
    vn.na(_([[Suddenly a bright message starts flashing on all the monitors:
 #rHONEYPOT ##329 ACTIVATED

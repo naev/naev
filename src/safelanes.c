@@ -119,7 +119,7 @@ static int safelanes_calculated_once = 0; /**< Whether or not the safe lanes hav
  * Prototypes.
  */
 static int safelanes_buildOneTurn( int iters_done );
-static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_done );
+static int safelanes_activateByGradient( const cholmod_dense* Lambda_tilde, int iters_done );
 static void safelanes_initStacks (void);
 static void safelanes_initStacks_edge (void);
 static void safelanes_initStacks_faction (void);
@@ -144,7 +144,7 @@ static inline FactionMask MASK_ONE_FACTION( int id );
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 );
 static int cmp_key( const void* p1, const void* p2 );
 static inline void triplet_entry( cholmod_triplet* m, int i, int j, double v );
-static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPresence );
+static cholmod_dense* safelanes_sliceByPresence( const cholmod_dense* m, const double* sysPresence );
 static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_dense* B );
 static double safelanes_row_dot_row( cholmod_dense* A, cholmod_dense* B, int i, int j );
 
@@ -251,7 +251,9 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
  */
 void safelanes_recalculate (void)
 {
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
 
    /* Don't recompute on exit. */
    if (naev_isQuit())
@@ -263,9 +265,10 @@ void safelanes_recalculate (void)
       ;
    safelanes_destroyOptimizer();
    /* Stacks remain available for queries. */
-   time = SDL_GetTicks() - time;
+#if DEBUGGING
    if (conf.devmode)
-      DEBUG( n_("Charted safe lanes for %d object in %.3f s", "Charted safe lanes for %d objects in %.3f s", array_size(vertex_stack)), array_size(vertex_stack), time/1000. );
+      DEBUG( n_("Charted safe lanes for %d object in %.3f s", "Charted safe lanes for %d objects in %.3f s", array_size(vertex_stack)), array_size(vertex_stack), (SDL_GetTicks()-time)/1000. );
+#endif /* DEBUGGING */
 
    safelanes_calculated_once = 1;
 }
@@ -693,7 +696,7 @@ static void safelanes_initPPl (void)
  * @brief Per-system, per-faction, activates the affordable lane with best (grad phi)/L
  * @return How many builds (upper bound) have to happen next turn.
  */
-static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_done )
+static int safelanes_activateByGradient( const cholmod_dense* Lambda_tilde, int iters_done )
 {
    int *facind_opts, *edgeind_opts, turns_next_time;
    double *facind_vals, Linv;
@@ -713,7 +716,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
 
    for (int si=0; si<array_size(sys_to_first_vertex)-1; si++) {
       /* Factions with most presence here choose first. */
-      StarSystem *sys = system_getIndex( si );
+      const StarSystem *sys = system_getIndex( si );
       for (int fi=0; fi<array_size(faction_stack); fi++)
          facind_vals[fi] = -system_getPresence( sys, faction_stack[fi].id ); /* FIXME: Is this better, or presence_budget? */
       cmp_key_ref = facind_vals;
@@ -926,7 +929,7 @@ static inline void triplet_entry( cholmod_triplet* m, int i, int j, double x )
 /**
  * @brief Construct the matrix-slice of m, selecting those rows where the corresponding presence value is positive.
  */
-static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPresence )
+static cholmod_dense* safelanes_sliceByPresence( const cholmod_dense* m, const double* sysPresence )
 {
    size_t nr, nc, in_r, out_r;
    cholmod_dense *out;

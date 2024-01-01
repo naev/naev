@@ -170,7 +170,7 @@ static void player_renderAimHelper( double dt );
 static int player_filterSuitableSpob( Spob *p );
 static void player_spobOutOfRangeMsg (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
-static int player_thinkMouseFly(void);
+static int player_thinkMouseFly( double dt );
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
 
 /*
@@ -1182,7 +1182,7 @@ void player_think( Pilot* pplayer, const double dt )
 
    /* We always have to run ai_think in the case the player has escorts so that
     * they properly form formations, however, we only have to do the task under manual control.. */
-   ai_think( pplayer, pilot_isFlag(pplayer, PILOT_MANUAL_CONTROL) );
+   ai_think( pplayer, dt, pilot_isFlag(pplayer, PILOT_MANUAL_CONTROL) );
 
    /* Under manual control is special. */
    if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL ) || pilot_isFlag( pplayer, PILOT_HIDE ))
@@ -1201,7 +1201,7 @@ void player_think( Pilot* pplayer, const double dt )
 
    /* Mouse-flying is enabled. */
    if (!facing && player_isFlag(PLAYER_MFLY))
-      facing = player_thinkMouseFly();
+      facing = player_thinkMouseFly( dt );
 
    /* turning taken over by PLAYER_FACE */
    if (!facing && player_isFlag(PLAYER_FACE)) {
@@ -1210,7 +1210,8 @@ void player_think( Pilot* pplayer, const double dt )
          target = pilot_getTarget( player.p );
          if (target != NULL) {
             pilot_face( pplayer,
-                  vec2_angle( &player.p->solid.pos, &target->solid.pos ));
+                  vec2_angle( &player.p->solid.pos, &target->solid.pos ),
+                  dt );
 
             /* Disable turning. */
             facing = 1;
@@ -1221,7 +1222,8 @@ void player_think( Pilot* pplayer, const double dt )
          AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
          Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
          pilot_face( pplayer,
-               vec2_angle( &player.p->solid.pos, &ast->sol.pos ));
+               vec2_angle( &player.p->solid.pos, &ast->sol.pos ),
+               dt);
          /* Disable turning. */
          facing = 1;
       }
@@ -1229,14 +1231,16 @@ void player_think( Pilot* pplayer, const double dt )
       else if ((player.p->nav_spob != -1) && ((preemption == 0) || (player.p->nav_hyperspace == -1))) {
          pilot_face( pplayer,
                vec2_angle( &player.p->solid.pos,
-                  &cur_system->spobs[ player.p->nav_spob ]->pos ));
+                  &cur_system->spobs[ player.p->nav_spob ]->pos ),
+               dt);
          /* Disable turning. */
          facing = 1;
       }
       else if (player.p->nav_hyperspace != -1) {
          pilot_face( pplayer,
                vec2_angle( &player.p->solid.pos,
-                  &cur_system->jumps[ player.p->nav_hyperspace ].pos ));
+                  &cur_system->jumps[ player.p->nav_hyperspace ].pos ),
+               dt);
          /* Disable turning. */
          facing = 1;
       }
@@ -1248,7 +1252,7 @@ void player_think( Pilot* pplayer, const double dt )
        * If the player has reverse thrusters, fire those.
        */
       if (!player.p->stats.misc_reverse_thrust && !facing) {
-         pilot_face( pplayer, VANGLE(player.p->solid.vel) + M_PI );
+         pilot_face( pplayer, VANGLE(player.p->solid.vel) + M_PI, dt );
          /* Disable turning. */
          facing = 1;
       }
@@ -1386,7 +1390,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
             continue;
 
          r2 = pow2(range);
-         for (int j=0; j<ast->nb; j++) {
+         for (int j=0; j<array_size(ast->asteroids); j++) {
             HookParam hparam[2];
             Asteroid *a = &ast->asteroids[j];
 
@@ -2498,9 +2502,10 @@ void player_cooldownBrake(void)
 /**
  * @brief Handles mouse flying based on cursor position.
  *
+ *    @param dt Current delta tick.
  *    @return 1 if cursor is outside the dead zone, 0 if it isn't.
  */
-static int player_thinkMouseFly (void)
+static int player_thinkMouseFly( double dt )
 {
    double px, py, r, x, y;
 
@@ -2509,7 +2514,7 @@ static int player_thinkMouseFly (void)
    gl_screenToGameCoords( &x, &y, player.mousex, player.mousey );
    r = sqrt(pow2(x-px) + pow2(y-py));
    if (r > 50.) { /* Ignore mouse input within a 50 px radius of the centre. */
-      pilot_face(player.p, atan2( y - py, x - px));
+      pilot_face(player.p, atan2( y-py, x-px), dt);
       if (conf.mouse_accel) { /* Only alter thrust if option is enabled. */
          double acc = CLAMP(0., 1., (r - 100.) / 200.);
          acc = 3. * pow2(acc) - 2. * pow(acc, 3.);

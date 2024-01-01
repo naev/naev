@@ -678,7 +678,13 @@ function control_funcs.loiter ()
    if mem.doscans and rnd.rnd() < 0.1 then
       local target = scans.get_target()
       if target then
-         scans.push( target )
+         if ai.isenemy(target) then
+            if should_attack(target) then
+               ai.pushtask( "attack", target )
+            end
+         else
+            scans.push( target )
+         end
       end
    end
    return false
@@ -692,12 +698,19 @@ control_funcs.inspect_moveto = function ()
    if ls then
       if not ls:exists() then
          mem._scan_last = nil
-      else
+      elseif mem.doscans then
          if scans.check_visible( ls ) then
             mem._scan_last = nil
             ai.poptask()
-            scans.push( ls )
-            return true
+            if ai.isenemy(ls) then
+               if should_attack(ls) then
+                  ai.pushtask( "attack", ls )
+                  return true
+               end
+            else
+               scans.push( ls )
+               return true
+            end
          end
       end
    end

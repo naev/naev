@@ -103,7 +103,7 @@ typedef struct AsteroidAnchor_ {
    vec2 pos;      /**< Position in the system (from center). */
    double density;/**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
-   int nb;        /**< Number of asteroids. */
+   int nmax;      /**< Maximum number of asteroids. */
    double radius; /**< Radius of the anchor. */
    double area;   /**< Field's area. */
    AsteroidTypeGroup **groups; /**< Groups of asteroids. */

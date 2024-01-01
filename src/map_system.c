@@ -438,7 +438,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       if (array_size(sys->asteroids) > 0 ) {
          ast_nb = ast_area = 0.;
          for (i=0; i<array_size(sys->asteroids); i++) {
-            ast_nb += sys->asteroids[i].nb;
+            ast_nb += sys->asteroids[i].nmax;
             ast_area = MAX( ast_area, sys->asteroids[i].area );
          }
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nAsteroid field density:#0 %.2g\n"), ast_nb*ASTEROID_REF_AREA/ast_area );

@@ -191,7 +191,7 @@ function trial_start ()
    judge(_([[A judge floats up to the center of the room.
 "Order! Order!"
 She hits her gavel.]]))
-   vn.na(_([[Except for the odd cough, silence envelopes the room.]]))
+   vn.na(_([[Except for the odd cough, silence envelops the room.]]))
    judge(_([["We are gathered here to day to deliberate over the future of Minerva Station, which has been accused of falling into debauchery and lawlessness. These are very serious accusation that question the sovereignty of Minerva Station, which currently enjoys the privilege of independent rule."]]))
    judge(_([[According to Principle of System Sovereignty, the parties who have claims on the system have the right for equal, fair, and honest deliberations of the partake in the distribution of powers.]]))
 

@@ -1,22 +1,36 @@
 * 0.12.0 (unreleased)
+   * Gameplay
+      * Gave the Za'lek sting a slight detection buff
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
       * Can modify game speed directly instead of using a slowmode difficulty for accessibility
       * Messages get folded instead of repeating
       * Asteroids no longer fade out if close to the player
+      * Display fuel consumption for ships in the equipment overlay
    * Engine
+      * Faster handling of asteroids with large exclusion areas
+      * Added fuel_usage_mod ship stat.
+      * Fixed player losing navigation targets when unidiff is applied
       * Fixed ai.idir giving wrong answer by M_PI_2 in some cases
       * Threaded more loading components
       * Lua require now caches chunks
       * Dropped SDL_image fallback
 
 * 0.11.1 (unreleased)
+   * Give all ammo back to player after doing obelisk
+   * Fixed player being invincible after completing an obelisk
+   * Fixed a crash when loading games while a landing hook was running
+   * Fixed race condition in threadpool
    * Fixed asteroids spawning in not proper shapes
-   * Fixed autonav wobble
+   * Fixed autonav wobble and overshooting
    * Point defense won't shoot at disabled pilots anymore
    * Fixed battery descriptions
    * Discovering a hidden jump will make both directions known
+   * Fixed AI trying to scan hostile targets they lost track of
+   * Properly save and load reward_value to and from saves
+   * Fixed events and missions being able to trigger in obelisk tests
+   * Fixed beam weapons not hitting asteroids
    * `kidnapped/traffic_00`: fixed formating string telling the player what system to go to
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
    * `tutorial/nelly01`: fixed derelict message not appearing

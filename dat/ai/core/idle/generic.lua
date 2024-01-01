@@ -74,12 +74,14 @@ function idle ()
          if target then
             -- Don't scan if they're going to be attacked anyway
             if ai.isenemy(target) then
-               -- TODO probably use should_attack here
-               ai.pushtask( "attack", target )
+               if should_attack(target) then
+                  ai.pushtask( "attack", target )
+                  return
+               end
             else
                scans.push( target )
+               return
             end
-            return
          end
       end
 

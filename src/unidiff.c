@@ -158,6 +158,8 @@ static UniDiff_t *diff_stack = NULL; /**< Currently applied universe diffs. */
 /* Useful variables. */
 static int diff_universe_changed = 0; /**< Whether or not the universe changed. */
 static int diff_universe_defer = 0; /**< Defers changes to later. */
+static const char *diff_nav_spob = NULL; /**< Stores the player's spob target if necessary. */
+static const char *diff_nav_hyperspace = NULL; /**< Stores the player's hyperspace target if necessary. */
 
 /*
  * Prototypes.
@@ -242,8 +244,7 @@ int diff_loadAvailable (void)
 
 #if DEBUGGING
    if (conf.devmode) {
-      time = SDL_GetTicks() - time;
-      DEBUG( n_("Loaded %d UniDiff in %.3f s", "Loaded %d UniDiffs in %.3f s", array_size(diff_available) ), array_size(diff_available), time/1000. );
+      DEBUG( n_("Loaded %d UniDiff in %.3f s", "Loaded %d UniDiffs in %.3f s", array_size(diff_available) ), array_size(diff_available), (SDL_GetTicks()-time)/1000. );
    }
    else
       DEBUG( n_("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
@@ -287,6 +288,14 @@ static UniDiff_t* diff_get( const char *name )
  */
 int diff_apply( const char *name )
 {
+   diff_nav_hyperspace = NULL;
+   diff_nav_spob = NULL;
+   if (player.p) {
+      if (player.p->nav_hyperspace >= 0)
+         diff_nav_hyperspace = cur_system->jumps[ player.p->nav_hyperspace ].target->name;
+      if (player.p->nav_spob >= 0)
+         diff_nav_spob = cur_system->spobs[ player.p->nav_spob ]->name;
+   }
    return diff_applyInternal( name, 1 );
 }
 
@@ -1806,6 +1815,8 @@ int diff_load( xmlNodePtr parent )
    /* Don't update universe here. */
    diff_universe_defer = 1;
    diff_universe_changed = 0;
+   diff_nav_spob = NULL;
+   diff_nav_hyperspace = NULL;
    diff_clear();
    diff_universe_defer = defer;
 
@@ -1878,9 +1889,37 @@ static int diff_checkUpdateUniverse (void)
          pilot_hyperspaceAbort( p );
    }
 
-   /* Player has to update the GUI so we send again. */
-   player_targetSpobSet( -1 );
-   player_targetHyperspaceSet( -1, 0 );
+   /* Try to restore the targets if possible. */
+   if (diff_nav_spob != NULL) {
+      int found = 0;
+      for (int i=0; i<array_size(cur_system->spobs); i++) {
+         if (strcmp(cur_system->spobs[i]->name,diff_nav_spob)==0) {
+            found = 1;
+            player.p->nav_spob = i;
+            player_targetSpobSet( i );
+            break;
+         }
+      }
+      if (!found)
+         player_targetSpobSet( -1 );
+   }
+   else
+      player_targetSpobSet( -1 );
+   if (diff_nav_hyperspace != NULL) {
+      int found = 0;
+      for (int i=0; i<array_size(cur_system->jumps); i++) {
+         if (strcmp(cur_system->jumps[i].target->name,diff_nav_hyperspace)==0) {
+            found = 1;
+            player.p->nav_hyperspace = i;
+            player_targetHyperspaceSet( i, 0 );
+            break;
+         }
+      }
+      if (!found)
+         player_targetHyperspaceSet( -1, 0 );
+   }
+   else
+      player_targetHyperspaceSet( -1, 0 );
 
    diff_universe_changed = 0;
    return 1;
