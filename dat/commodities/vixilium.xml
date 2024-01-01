@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commodity>
  <name>Vixilium</name>
- <description>Originally known as Ghost Ore given the how hard it was originally for sensors and even the naked eye to detect until the advent of quantum photography, due to the low presence of standard matter. While prized in artist creation, the superb quantum and quasi-matter properties have led to a surge in demand throughout the galaxy, especially in cryptographic and security applications.</description>
+ <description>Vixilium was originally known as "ghost ore" because of how hard it was for sensors and the naked eye to detect before the invention of quantum photography, due to the low presence of normal matter. While also prized for artistic creation, its superb quantum and quasi-matter properties are what has led to a surge in demand throughout the galaxy, especially in cryptographic and security applications.</description>
  <gfx_store>vixilium.webp</gfx_store>
  <gfx_space>diamonds.webp</gfx_space>
  <price>2600</price>
