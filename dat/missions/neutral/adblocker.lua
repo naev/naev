@@ -3,6 +3,7 @@
 <mission name="Adblocker">
  <unique />
  <chance>20</chance>
+ <cond>return require("misn_test").reweight_active()</cond>
  <location>Bar</location>
  <faction>Dvaered</faction>
  <faction>Empire</faction>
@@ -30,35 +31,38 @@ local neu = require 'common.neutral'
 local vn = require "vn"
 local vntk = require "vntk"
 local portrait = require "portrait"
+local vnimage  = require "vnimage"
 
 local mission = {
    name = _("Adblocker"),
-   description = "Destroy a ship spamming the {sys} system with excessive advertising transmissions",
+   description = _("Destroy a ship spamming the {sys} system with excessive advertising transmissions"),
    reward = 300e3,
    npc = {
-      name = "Desperate captain",
-      img = "neutral/male7.webp",
+      name = _("Desperate captain"),
       description = _("You see a desperate looking captain.")
    }
 }
-
--- fp means "full path"
-mission.npc["img_fp"] = portrait.getFullPath(mission.npc.img)
 
 function create()
    mem.current_system = system.cur()
    mem.current_spob = spob.cur()
    misn.setNPC(mission.npc.name, mission.npc.img, mission.npc.description)
+
+    if not misn.claim(mem.current_system) then
+      misn.finish(false)
+   end
 end
 
 function accept()
    local accepted = false
 
+   mem.desperate_captain_npc = vnimage.genericMale()
+
    vn.clear()
    vn.scene()
-   local man = vn.newCharacter(mission.npc.name, { image = mission.npc.img_fp })
+   local man = vn.newCharacter(mission.npc.name, { image = mem.desperate_captain_npc })
    vn.transition()
-   man(fmt.f(_([["Look, I don't have much time! There's this annoying ship that's been spamming the local comms with tons of advertisements! I can't take it anymore! Please, you've got to stop it! I'll give you ${creds} if you stop it!"]])
+   man(fmt.f(_([["Look, I don't have much time! There's this annoying ship that's been spamming the local comms with tons of advertisements! I can't take it anymore! Please, you've got to stop it! I'll give you {creds} if you stop it!"]])
       , { creds = fmt.credits(mission.reward) }))
    vn.menu {
       { _([[Accept]]), "accept" },
@@ -81,11 +85,13 @@ function accept()
    misn.setTitle(mission.name)
    misn.setDesc(fmt.f(_("A ship is currently spamming {sys} with tons of unwanted advertisements. A desperate captain has asked you to destroy, or disable it.")
       , { sys = mem.current_system }))
-   misn.setReward(fmt.credits(mission.reward))
+   misn.setReward(mission.reward)
    misn.osdCreate(mission.name, {
       mission.name,
       fmt.f(_(mission.description), { sys = mem.current_system })
    })
+   misn.osdCreate(mission.name, {
+      fmt.f(_("Return to {spob}"), { spob = mem.current_spob }) })
    misn.osdActive(1)
    hook.enter("enter")
 end
@@ -134,7 +140,6 @@ function on_target_stopped()
    if stopped then
       return
    end
-   misn.osdCreate(mission.name, { fmt.f(_("Return to {spob}"), { spob = mem.current_spob }) })
    misn.osdActive(2)
    mem.marker_return = misn.markerAdd(mem.current_spob, "low")
    hook.rm(mem.hk_advert_spam)
@@ -149,7 +154,7 @@ function on_land()
 
    vn.clear()
    vn.scene()
-   local man = vn.newCharacter(mission.npc.name, { image = mission.npc.img_fp })
+   local man = vn.newCharacter(mission.npc.name, { image = mem.desperate_captain_npc })
    vn.transition()
    man(_([[The man runs towards you. "Thank you so much for destroying that ship! The advertisements were about to drive me crazy! Man they're so annoying!"]]))
    vn.sfxVictory()
