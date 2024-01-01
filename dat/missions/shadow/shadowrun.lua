@@ -33,8 +33,8 @@ local fleet = require "fleet"
 local fmt = require "format"
 local shadow = require "common.shadow"
 
-local pnt, sys = spob.getS("Durea") -- Where SHITMAN lives
-local sys2 = system.get("Uhriabi") -- The system where the ship is
+local pnt, sys = spob.getS("Anubis") -- Where SHITMAN lives (used to be Durea). Should be non-empire, but nearby
+local sys2 = system.get("Gammacron") -- The system where the ship is
 local shipname = _("Seiryuu")
 
 local seiryuu -- Non-persistent state
@@ -62,7 +62,7 @@ function accept()
    vn.transition()
 
    if var.peek("shadowrun") == 1 then
-      rebina(_([[Rebina nods at you to acknowledge your existence. "We meet again. I'm glad to see you've not gotten yourself killed yet." She smiles meaningfully. "As it happens I haven't found anyone to take care of my business yet. Perhaps you would reconsider? Allow me to remind you what this is about."]]))
+      rebina(_([[Rebina nods at you to acknowledge your existence. "We meet again. I'm glad to see you've not got yourself killed yet." She smiles meaningfully. "As it happens I haven't found anyone to take care of my business yet. Perhaps you would reconsider? Allow me to remind you what this is about."]]))
    else
       rebina(_([[The woman calmly watches you as you approach her, seemingly not at all surprised to see you. Clad in a plain yet expensive-looking black dress and sipping from her martini, she emits an aura of class that is almost intimidating.]]))
       rebina(_([["Hello," she greets you. "I had a feeling you might want to talk to me. You are different from most..." she gestures at the other patrons of the bar, "And so am I. But where are my manners, I haven't introduced myself. My name is Rebina. I am what you might call a talent hunter. I visit places such as these to find people of exceptional skill. People such as you."]]))
@@ -78,7 +78,7 @@ function accept()
    }
 
    vn.label("decline")
-   rebina(_([["I see. What a shame." Rebina's demeanor conveys that she's disappointed but not upset. "I can understand your decision. One should not bite off more than one can chew, after all. It seems I will have to try to find another candidate." She tilts her head slightly. Then, "Although if you change your mind before I do, you're welcome to seek me out again. I'll be around."]]))
+   rebina(_([["I see. What a shame." Rebina's demeanour conveys that she's disappointed but not upset. "I can understand your decision. One should not bite off more than one can chew, after all. It seems I will have to try to find another candidate." She tilts her head slightly. Then, "Although if you change your mind before I do, you're welcome to seek me out again. I'll be around."]]))
    vn.na(_([[Rebina finishes her drink and gets up. Then, with a cordial wave of her, hand she sweeps out of the door. You momentarily regret not taking her up on her offer, but it passes. You've made the right decision, and that is that.]]))
    vn.func( function ()
       var.push("shadowrun", 1) -- For future appearances of this mission
@@ -142,8 +142,8 @@ function land()
       sol3img, sol3prt = vni.empireMilitary()
 
       misn.npcAdd( "jorek", _("An unpleasant man."), "neutral/unique/jorek.webp", _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.") )
-      misn.npcAdd( "officer", _("Officer at the bar"), offprt, _("You see a military officer with a drink at the bar. They doesn't seem to be very interested in it, though...") )
-      misn.npcAdd( "soldier1", _("Soldier at the news kiosk"), sol1prt, _("You see a soldier at a news kiosk. For some reason, they keeps reading the same articles over and over again.") )
+      misn.npcAdd( "officer", _("Officer at the bar"), offprt, _("You see a military officer with a drink at the bar. They don't seem to be very interested in it, though...") )
+      misn.npcAdd( "soldier1", _("Soldier at the news kiosk"), sol1prt, _("You see a soldier at a news kiosk. For some reason, they keep reading the same articles over and over again.") )
       local desc = _("Two soldiers are sharing a table near the exit, playing cards. Neither of them seems very into the game.")
       misn.npcAdd( "soldier2", _("Card-playing soldier"), sol2prt, desc )
       misn.npcAdd( "soldier2", _("Card-playing soldier"), sol3prt, desc )
@@ -171,7 +171,7 @@ function jorek()
       vn.label("yes")
       jorek(_([[Jorek roars with laughter. "Hah! Yeah, I'm sure you don't! I know what you're thinkin', I do. You'll take me outta here, pull a heroic bust past them Empire ships, save me, and the day while you're at it, then earn your stripes with the lady, am I right? S'yeah, I bet you'd take on the world for a pretty face and a coy smile." He doesn't so much as make an attempt to keep the mocking tone out of his voice.]]))
       jorek(_([["Well, good for you. You're a real hero, right enough. But you know what? I'm stayin' put. I don't care if you have the vixen's approval. I'm not gettin' on some random Joe's boat just so he can get us both blasted to smithereens."]]))
-      jorek(_([[Your patience with Jorek's abuse is finally at an end, and you heatedly make it clear to him that your abilities as a pilot aren't deserving of this treatment. Jorek, however, seems unimpressed. He tells you to stick it where the sun doesn't shine, gets up from his chair and squarely deposits himself at another table. Unwilling to stoop to his level, you choose not to follow him.]]))
+      jorek(_([[Your patience with Jorek's abuse is finally at an end, and you heatedly make it clear to him that your abilities as a pilot you don't deserve of this treatment. Jorek, however, seems unimpressed. He tells you to stick it where the sun doesn't shine, gets up from his chair and squarely deposits himself at another table. Unwilling to stoop to his level, you choose not to follow him.]]))
       vn.done()
 
       vn.label("no")
@@ -198,7 +198,7 @@ function officer()
    vn.scene()
    vn.newCharacter( "Officer", {image=offimg} )
    vn.transition()
-   vn.na(_("You try to strike a conversation with the officer, but they doesn't seem interested what you have to say, so you give up."))
+   vn.na(_("You try to strike a conversation with the officer, but they don't seem interested what you have to say, so you give up."))
    vn.run()
 end
 function soldier1()
@@ -332,7 +332,7 @@ function board()
       rebina(fmt.f(_([["That is what Jorek was keeping for us on {pnt}, and that is what we need," Rebina explains. "Jorek is nothing but a decoy to draw the Empire's attention away from our real operations. While you were talking to him, his subordinates secured our cargo aboard your ship. We chose not to inform you about this because, well... It's best you didn't know what was in that crate. I'm sure we understand each other."]]),
          {pnt=pnt}))
       rebina(_([[Rebina turns to follow her men back into the ship, but before she closes the airlock hatch she looks back at you over her shoulder, shooting you a casual glance that nevertheless seems to see right through you. "I'm glad to see my trust in you was not misplaced," she remarks. "Perhaps we'll see each other again someday, and when we do perhaps we can do some more business."]]))
-      vn.na(_([[Then she is gone. You stare at the airlock hatch, then down at the credit chip in your hand, first marveling at the wealth it represents and then astonished to realize you can't remember how it got there.]]))
+      vn.na(_([[Then she is gone. You stare at the airlock hatch, then down at the credit chip in your hand, first marvelling at the wealth it represents and then astonished to realize you can't remember how it got there.]]))
       vn.sfxVictory()
       vn.func( function ()
          player.pay(mem.credits)

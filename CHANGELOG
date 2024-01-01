@@ -36,7 +36,7 @@
    * Properly compute weapon range with launch_range modifiers
    * Fixed some range checks with inrange weapon sets
    * `zalek/blackhole/zbh09`: don't error out when a bioship ceases to exist
-   * `kidnapped/traffic_00`: fixed formating string telling the player what system to go to
+   * `kidnapped/traffic_00`: fixed formatting string telling the player what system to go to
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
    * `tutorial/nelly01`: fixed derelict message not appearing
    * `minerva/pirate4`: fixed save me spam only being print once
@@ -46,6 +46,7 @@
    * `sirius/achack03`: fixed not being able to complete the mission
    * `neutral/kidnapped`: fixed inconsistency in the name of the system to go to
    * `shadow/shadowrun`: fixed VN issues not allowing mission completion
+   * `shadow/shadowrun`: changed locations to make it possible to do in the allotted time-frame
    * `shadow/shadowvigil`: fixed Seiryuu not appearing
    * Fixed many typos
    * Translation updates
