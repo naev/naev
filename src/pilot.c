@@ -2676,7 +2676,7 @@ void pilot_sample_trails( Pilot* p, int none )
  */
 static int pilot_trail_generated( Pilot* p, int generator )
 {
-   return !p->ship->trail_emitters[generator].trail_spec->nebula || cur_system->nebu_density>0;
+   return !p->ship->trail_emitters[generator].trail_spec->nebula || (cur_system->nebu_density>0) || (sys_isFlag(cur_system, SYSTEM_NEBULATRAIL));
 }
 
 /**

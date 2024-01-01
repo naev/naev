@@ -401,28 +401,30 @@ void nebu_prep( double density, double volatility, double hue )
    /* Done setting shaders. */
    glUseProgram(0);
 
-   /* Set density parameters. */
-   nebu_density = density;
-   nebu_update( 0. );
-   nebu_dt   = (2.*density + 200.) / 10e3; /* Faster at higher density */
-   nebu_dx   = 15e3 / pow(density, 1./3.); /* Closer at higher density */
-   nebu_time = 0.;
+   if (density > 0.) {
+      /* Set density parameters. */
+      nebu_density = density;
+      nebu_update( 0. );
+      nebu_dt   = (2.*density + 200.) / 10e3; /* Faster at higher density */
+      nebu_dx   = 15e3 / pow(density, 1./3.); /* Closer at higher density */
+      nebu_time = 0.;
 
-   nebu_npuffs = density/2.;
-   nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);
-   for (int i=0; i<nebu_npuffs; i++) {
-      NebulaPuff *np = &nebu_puffs[i];
+      nebu_npuffs = density/2.;
+      nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);
+      for (int i=0; i<nebu_npuffs; i++) {
+         NebulaPuff *np = &nebu_puffs[i];
 
-      /* Position */
-      np->pos.x = (SCREEN_W+2.*NEBULA_PUFF_BUFFER)*RNGF();
-      np->pos.y = (SCREEN_H+2.*NEBULA_PUFF_BUFFER)*RNGF();
+         /* Position */
+         np->pos.x = (SCREEN_W+2.*NEBULA_PUFF_BUFFER)*RNGF();
+         np->pos.y = (SCREEN_H+2.*NEBULA_PUFF_BUFFER)*RNGF();
 
-      /* Maybe make size related? */
-      np->s = RNG(10,32);
-      np->height = RNGF() + 0.2;
+         /* Maybe make size related? */
+         np->s = RNG(10,32);
+         np->height = RNGF() + 0.2;
 
-      /* Seed. */
-      np->rx = RNGF()*2000.-1000.;
-      np->ry = RNGF()*2000.-1000.;
+         /* Seed. */
+         np->rx = RNGF()*2000.-1000.;
+         np->ry = RNGF()*2000.-1000.;
+      }
    }
 }

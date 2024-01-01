@@ -1582,10 +1582,11 @@ void space_init( const char* sysname, int do_simulate )
       free(nt);
 
       /* Handle background */
-      if (cur_system->nebu_density > 0.) {
+      if ((cur_system->nebu_density > 0.) || sys_isFlag(cur_system, SYSTEM_NEBULATRAIL)) {
          /* Background is Nebula */
          nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility, cur_system->nebu_hue );
-
+      }
+      if (cur_system->nebu_density > 0.) {
          /* Set up sound. */
          sound_env( SOUND_ENV_NEBULA, cur_system->nebu_density );
       }
@@ -2946,9 +2947,13 @@ static int system_parse( StarSystem *sys, const char *filename )
                continue;
             }
             if (xml_isNode(cur,"nebula")) {
+               int trails = 0;
                xmlr_attr_float( cur, "volatility", sys->nebu_volatility );
                xmlr_attr_float_def( cur, "hue", sys->nebu_hue, NEBULA_DEFAULT_HUE );
+               xmlr_attr_int( cur, "trails", trails );
                sys->nebu_density = xml_getFloat(cur);
+               if (trails || (sys->nebu_density>0.))
+                  sys_setFlag(sys, SYSTEM_NEBULATRAIL);
                continue;
             }
             if (xml_isNode(cur,"nolanes")) {
