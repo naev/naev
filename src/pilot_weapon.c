@@ -121,7 +121,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* Only "inrange" outfits.
        * XXX for simplicity we are using pilot position / velocity instead of mount point, which might be a bit off. */
-      if (ws->inrange && !outfit_isFighterBay(o) && ((outfit_duration(o)<time) ||
+      if (ws->inrange && !outfit_isFighterBay(o) && ((outfit_duration(o) * p->stats.launch_range < time) ||
                (!weapon_inArc( o, p, &wt, &p->solid.pos, &p->solid.vel, p->solid.dir, time))))
          continue;
 

@@ -55,6 +55,7 @@ function create()
    misn.accept()
    mem.stage = 0
    hook.jumpin("jumpin")
+   hook.enter("enter")
    hook.timer(1.0, "delayedClaim")
 
    misn.setDesc(fmt.f(_([[You are invited to a meeting in {sys}]]), {sys=rebinasys}))
@@ -160,7 +161,6 @@ function accept_m()
    })
 
    hook.land("land")
-   hook.enter("enter")
    hook.jumpout("jumpout")
    hook.takeoff("takeoff")
 end

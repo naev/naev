@@ -34,6 +34,7 @@
    * Fixed events and missions being able to trigger in obelisk tests
    * Fixed beam weapons not hitting asteroids
    * Properly compute weapon range with launch_range modifiers
+   * Fixed some range checks with inrange weapon sets
    * `zalek/blackhole/zbh09`: don't error out when a bioship ceases to exist
    * `kidnapped/traffic_00`: fixed formating string telling the player what system to go to
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
@@ -44,6 +45,8 @@
    * `dvaered/dv_diversion`: fixed not being able to accept mission
    * `sirius/achack03`: fixed not being able to complete the mission
    * `neutral/kidnapped`: fixed inconsistency in the name of the system to go to
+   * `shadow/shadowrun`: fixed VN issues not allowing mission completion
+   * `shadow/shadowvigil`: fixed Seiryuu not appearing
    * Fixed many typos
    * Translation updates
 
