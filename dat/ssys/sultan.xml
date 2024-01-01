@@ -6,7 +6,7 @@
   <radius>20300.000000</radius>
   <spacedust>0</spacedust>
   <interference>65.000000</interference>
-  <nebula hue="0.000000" trails="1">0.000000</nebula>
+  <nebula hue="310.000000" trails="1">0.000000</nebula>
  </general>
  <pos x="300.018247" y="-959.864381"/>
  <spobs>
