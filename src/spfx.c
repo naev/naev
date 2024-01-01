@@ -1114,7 +1114,7 @@ void spfx_render( int layer, double dt )
 
          /* Trails are special (for now?). */
          for (int i=0; i<array_size(trail_spfx_stack); i++) {
-            Trail_spfx *trail = trail_spfx_stack[i];
+            const Trail_spfx *trail = trail_spfx_stack[i];
             if (!trail->ontop)
                spfx_trail_draw( trail );
          }
@@ -1173,7 +1173,7 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
          return 0;
       }
       else {
-         TrailSpec *tsparent = trailSpec_getRaw( inherits );
+         const TrailSpec *tsparent = trailSpec_getRaw( inherits );
          if (tsparent == NULL)
             WARN(_("Trail '%s' that inherits from '%s' has missing reference!"), tc->name, inherits );
          else {
