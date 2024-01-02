@@ -70,6 +70,7 @@ function accept()
    }
 
    vn.label("refuse")
+   vn.na("You walk away, ignoring him.")
    vn.done()
 
    vn.label("accept")
