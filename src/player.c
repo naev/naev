@@ -265,19 +265,27 @@ void player_new (void)
 
       /* Try to see if we can save the game for a valid player name. */
       snprintf( buf, sizeof(buf), "%s/%s", SAVEPATH, player.name );
-      if (PHYSFS_mkdir(buf)==0) /* In particular should be PHYSFS_ERR_BAD_FILENAME error. */
-         dialogue_alert(_("'%s' is an invalid player name as it can not be saved to your filesystem! Please choose another."), player.name);
-      else {
-         int ret = PHYSFS_delete( buf );
-         if (ret==0)
-            WARN(_("Unable to delete temporary file '%s': %s"), buf, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ));
-         else {
-            ret = PHYSFS_delete( SAVEPATH );
+      if (PHYSFS_mkdir(buf)!=0) { /* In particular should be PHYSFS_ERR_BAD_FILENAME erro when mkdir==0. */
+         PHYSFS_Stat stat;
+         int ret = PHYSFS_stat( buf, &stat );
+         /* When ret==0, we somehow created a directory, but we don't actually know the name
+          * nor where it is. This can happen on Windows when using a '.' as the
+          * final character.  */
+         if ((ret!=0) && (stat.filetype==PHYSFS_FILETYPE_DIRECTORY)) {
+            /* Here the directory should have been properly created, so we can tell the player it's good. */
+            ret = PHYSFS_delete( buf );
             if (ret==0)
-               WARN(_("Unable to delete temporary file '%s': %s"), SAVEPATH, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ));
+               WARN(_("Unable to delete temporary file '%s': %s"), buf, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ));
+            else {
+               ret = PHYSFS_delete( SAVEPATH );
+               if (ret==0)
+                  WARN(_("Unable to delete temporary file '%s': %s"), SAVEPATH, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ));
+            }
+            invalid = 0;
          }
-         invalid = 0;
       }
+      if (invalid)
+         dialogue_alert(_("'%s' is an invalid player name as it can not be saved to your filesystem! Please choose another."), player.name);
       PHYSFS_getLastErrorCode(); /* Clear error code. */
    } while (invalid);
 
