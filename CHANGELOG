@@ -23,6 +23,7 @@
    * `neutral/seek_n_destroy`: fixed warnings when taking off in the same system
    * `sirius/achack/achack01`: fixed not being able to accept mission
    * `dvaered/dv_diversion`: fixed not being able to accept mission
+   * `dvaered/dv_bikers`: don't allow the player to use escorts and properly update mission TODO
    * `sirius/achack03`: fixed not being able to complete the mission
    * `neutral/kidnapped`: fixed inconsistency in the name of the system to go to
    * `shadow/shadowrun`: fixed VN issues not allowing mission completion
