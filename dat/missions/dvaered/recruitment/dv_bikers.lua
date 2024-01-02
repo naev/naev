@@ -150,17 +150,14 @@ function enter()
          mem.pil1 = pilot.add("Llama", targetF, t1, _("Kill Me"))
          mem.pil2 = pilot.add("Llama", targetF, t2, _("Kill Me"))
          mem.pil3 = pilot.add("Llama", targetF, t3, _("Kill Me"))
-         mem.pil1:setHealth(10)
-         mem.pil2:setHealth(10)
-         mem.pil3:setHealth(10)
+         for k,p in ipairs{ mem.pil1, mem.pil2, mem.pil3 } do
+            p:setHeath(10)
+            p:disable()
+            p:setVisible()
+            p:setNoBoard()
+         end
          mem.pil1:setHilight()
          pp:setTarget(mem.pil1)
-         mem.pil1:disable()
-         mem.pil2:disable()
-         mem.pil3:disable()
-         mem.pil1:setVisible()
-         mem.pil2:setVisible()
-         mem.pil3:setVisible()
 
          -- Compute timer
          -- Max vel of a top notch Hyena is 476 (without extra outfits). We give a bit of margin
