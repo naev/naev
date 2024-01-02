@@ -105,6 +105,7 @@ static int pilotL_weapsetRm( lua_State *L );
 static int pilotL_weapsetCleanup( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_weapsetSetInrange( lua_State *L );
+static int pilotL_weapsetAmmo( lua_State *L );
 static int pilotL_actives( lua_State *L );
 static int pilotL_outfitsList( lua_State *L );
 static int pilotL_outfits( lua_State *L );
@@ -293,6 +294,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "weapsetCleanup", pilotL_weapsetCleanup },
    { "weapsetHeat", pilotL_weapsetHeat },
    { "weapsetSetInrange", pilotL_weapsetSetInrange },
+   { "weapsetAmmo", pilotL_weapsetAmmo },
    { "actives", pilotL_actives },
    { "outfitsList", pilotL_outfitsList },
    { "outfits", pilotL_outfits },
@@ -2281,6 +2283,24 @@ static int pilotL_weapsetSetInrange( lua_State *L )
       pilot_weapSetInrange( p, id, inrange );
    }
    return 0;
+}
+
+/**
+ * @brief Gets the ammo left of a weapon set.
+ *
+ *    @luatparam Pilot p Pilot to get weapon set ammo for.
+ *    @luatparam[opt] number id Optional parameter indicating id of weapon set to get ammo of, defaults to selected one.
+ *    @luatparam[opt=-1] number level Level of weapon set to get range of.
+ *    @luatreturn number The range of the weapon set.
+ * @luafunc weapsetAmmo
+ */
+static int pilotL_weapsetAmmo( lua_State *L )
+{
+   Pilot *p  = luaL_validpilot( L, 1 );
+   int id    = luaL_optinteger( L, 2, p->active_set );
+   int level = luaL_optinteger( L, 3, -1 );
+   lua_pushnumber(L, pilot_weapSetAmmo( p, id, level ) );
+   return 1;
 }
 
 /**
