@@ -275,7 +275,10 @@ int load_refresh (void)
       qsort( ps->saves, array_size(ps->saves), sizeof(nsave_t), load_sortCompare );
    }
 
-   /* Dedup as necessary. */
+   /* Dedup as necessary, this can be caused by some OS secretly renaming files
+    * when creating. In particular, windows seems to dislike directory names
+    * ending with a '.' which can cause the player save directory to mismatch
+    * the player save name.. */
    qsort( load_saves, array_size(load_saves), sizeof(player_saves_t), load_sortComparePlayersName );
    for (int i=array_size(load_saves)-1; i>0; i--) {
       player_saves_t *ps = &load_saves[i];

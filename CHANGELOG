@@ -9,6 +9,7 @@
       * Asteroids no longer fade out if close to the player
       * Display fuel consumption for ships in the equipment overlay
    * Engine
+      * Try to merge saves if multiple directories correpsond to the same player
       * Faster handling of asteroids with large exclusion areas
       * Added fuel_usage_mod ship stat.
       * Fixed player losing navigation targets when unidiff is applied
