@@ -68,7 +68,7 @@ local all_tags = merge_tables{ faction_tags, {"standard"} }
 local tagged_ships = {}
 for i, ship in ipairs(ship.getAll()) do
    local tags = ship:tags()
-   if not tags["noplayer"] then
+   if not tags["noplayer"] and not tags["nosteal"] then
       for j, tag in ipairs(all_tags) do
          if tags[tag] then
             tagged_ships[tag] = tagged_ships[tag] or {}
