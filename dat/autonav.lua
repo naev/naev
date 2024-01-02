@@ -70,7 +70,9 @@ local function autonav_setup ()
    autonav_timer = 0
 end
 
+local approach_brake = false
 local function autonav_set( func )
+   approach_brake = false
    autonav = func
 end
 
@@ -325,9 +327,29 @@ local function autonav_approach( pos, count_target )
    local dist = ai.minbrakedist()
    local d = pos:dist( pp:pos() )
    local off = ai.iface( pos )
-   -- TODO probably should do something smarter than just multiplying by 0.95
-   if off < math.rad(10) and ((not match_fleet) or (pp:vel():mod() < 0.95*fleet_speed)) then
-      ai.accel(1)
+   if not match_fleet then
+      if off < math.rad(10) then
+         ai.accel(1)
+      end
+   else
+      local dir = vec2.newP( 1, pp:dir() )
+      local vel = pp:vel()
+      local dot = (vel+dir*0.001):normalize():dot( dir )
+      local mod = vel:mod()
+      if approach_brake then
+         if mod > 0.8*fleet_speed and (mod*dot > 0.7*fleet_speed or dot < 0.8) then
+            ai.brake(true)
+         else
+            approach_brake = false
+         end
+      else
+         if off < math.rad(10) and (mod*dot < 0.95*fleet_speed) then
+            ai.accel(1)
+         elseif mod > fleet_speed and ((dot < 0.86) or pp:speed() > 0.98*fleet_speed) then -- More than 30 degree error
+            ai.brake(true)
+            approach_brake = true
+         end
+      end
    end
 
    dist = d - dist
