@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Adblocker">
  <unique />
- <chance>20</chance>
+ <chance>10</chance>
  <cond>return require("misn_test").reweight_active()</cond>
  <location>Bar</location>
  <faction>Dvaered</faction>
@@ -48,7 +48,7 @@ function create()
    mem.current_spob = spob.cur()
    misn.setNPC(mission.npc.name, mem.npc_portrait, mission.npc.description)
 
-   if not misn.claim(mem.current_system) then
+   if not misn.claim(mem.current_system,true) then
       misn.finish(false)
    end
 end
@@ -85,13 +85,10 @@ function accept()
    misn.setDesc(fmt.f(_("A ship is currently spamming {sys} with tons of unwanted advertisements. A desperate captain has asked you to destroy, or disable it.")
       , { sys = mem.current_system }))
    misn.setReward(mission.reward)
-   misn.osdCreate(mission.name, {
-      mission.name,
-      fmt.f(_(mission.description), { sys = mem.current_system })
+   misn.osdCreate( mission.name, {
+      fmt.f(_(mission.description), { sys = mem.current_system }),
+      fmt.f(_("Return to {spob} ({sys} system)"), { spob = mem.current_spob, sys = mem.current_system })
    })
-   misn.osdCreate(mission.name, {
-      fmt.f(_("Return to {spob}"), { spob = mem.current_spob }) })
-   misn.osdActive(1)
    hook.enter("enter")
 end
 
@@ -130,9 +127,12 @@ local ads_generic = {
 function timer_advert_spam()
    if not spammer:exists() then return end
 
-   mem.spammer = mem.spammer or 0
-   mem.spammer = math.fmod(mem.spammer, #ads_generic) + 1
-   spammer:broadcast(ads_generic[mem.spammer], true)
+   -- Only spam if not disabled
+   if not spammer:flags("disabled") then
+      mem.spammer = mem.spammer or 0
+      mem.spammer = math.fmod(mem.spammer, #ads_generic) + 1
+      spammer:broadcast(ads_generic[mem.spammer], true)
+   end
 
    mem.hk_advert_spam = hook.timer(1, "timer_advert_spam")
 end

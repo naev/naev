@@ -50,7 +50,7 @@ local ads_zalek = {
    _("Love non-convex minimization? Join Ruadan's Computation Science Lab!"),
    _("Keeping your drones in top shape. Prof. Imarisha's Robotic Laboratory."),
    _("Interested in Genetic Lifeforms research? Apply to Interstice Science!"), -- Reference to Aperture Science (synonyms) from Portal
-   _("Want to learn about Anti-Mass Spectometry? Join Ebony Plateau today!"), -- Reference to Black Mesa (synonyms) from Half-Life
+   _("Want to learn about Anti-Mass Spectrometry? Join Ebony Plateau today!"), -- Reference to Black Mesa (synonyms) from Half-Life
 }
 local ads_sirius = {
    _("Want a new look? Try Verrill's Ceremonial Robes at Burnan!"),
