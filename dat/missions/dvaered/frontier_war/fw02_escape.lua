@@ -40,6 +40,7 @@ local fw = require "common.frontier_war"
 local fmt = require "format"
 local pir = require "common.pirate"
 local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 
 local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots -- Non-persistent state
 local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron, barAgents -- Forward-declared functions
@@ -335,13 +336,12 @@ function enter()
          origin = mem.lastSys
       end
 
-      strafer = pilot.add("Vendetta", fw.fct_dhc(), origin, _("Lieutenant Strafer"), {ai="baddie_norun"})
+      strafer = pilot.add("Vendetta", fw.fct_dhc(), origin, _("Lieutenant Strafer"), {ai="baddie_norun", naked=true})
       strafer:setHilight()
       strafer:setVisplayer()
 
       -- give him top equipment
-      strafer:outfitRm("all")
-      strafer:outfitRm("cores")
+      -- TODO switch to equipopt
       strafer:outfitAdd("S&K Light Combat Plating")
       strafer:outfitAdd("Tricon Zephyr II Engine")
       --strafer:outfitAdd("Solar Panel")
@@ -352,6 +352,7 @@ function enter()
       strafer:setHealth(100,100)
       strafer:setEnergy(100)
       strafer:setFuel(true)
+      ai_setup.setup(strafer)
 
       -- Behaviour
       strafer:control(true)

@@ -34,6 +34,7 @@ require "proximity"
 local portrait = require "portrait"
 local fmt = require "format"
 local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 
 local alpha, attackers, canland, controls, hamelsen, jules, spy, targpos, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
@@ -466,7 +467,7 @@ end
 
 -- Spawn Hamelsen in a hyena
 function spawnHam()
-   hamelsen = pilot.add( "Hyena", "Independent", system.get("Beeklo") )
+   hamelsen = pilot.add( "Hyena", "Independent", system.get("Beeklo"), {naked=true} )
    equipHyena( hamelsen )
    hamelsen:control()
    hamelsen:land(targpla)
@@ -475,7 +476,7 @@ function spawnHam()
    hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = "incomingHamelsen", focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
-   jules = pilot.add( "Hyena", "Independent", system.get("Beeklo") )
+   jules = pilot.add( "Hyena", "Independent", system.get("Beeklo"), {naked=true} )
    equipHyena( jules )
    jules:control()
    jules:follow( hamelsen )
@@ -483,8 +484,7 @@ end
 
 -- Equips a quick and strong Hyena
 function equipHyena( p )
-   p:outfitRm("cores")
-   p:outfitRm("all")
+   -- TODO switch to equipopt
    p:outfitAdd("Tricon Zephyr Engine")
    p:outfitAdd("Milspec Orion 2301 Core System")
    p:outfitAdd("S&K Ultralight Combat Plating")
@@ -496,6 +496,8 @@ function equipHyena( p )
 
    -- Remove all cargo (to make them lighter)
    p:cargoRm( "all" )
+
+   ai_setup.setup(p)
 end
 
 function hamelsenLanded()

@@ -33,6 +33,7 @@ local fw = require "common.frontier_war"
 local lmisn = require "lmisn"
 local fmt = require "format"
 local pir = require "common.pirate"
+local ai_setup = require "ai.core.setup"
 
 -- Mission constants
 local destpla1, destsys1 = spob.getS("Ginni")
@@ -172,13 +173,12 @@ function meeting_msg3()
 end
 
 function spawnTam( origin )
-   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin, _("Major Tam") )
+   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin, _("Major Tam"), {naked=true} )
    majorTam:setHilight()
    majorTam:setVisplayer()
    majorTam:setFaction( fw.fct_dhc() )
 
-   majorTam:outfitRm("all")
-   majorTam:outfitRm("cores")
+   -- TODO switch to equipopt
    majorTam:outfitAdd("S&K Light Combat Plating")
    majorTam:outfitAdd("Milspec Orion 3701 Core System")
    majorTam:outfitAdd("Tricon Zephyr II Engine")
@@ -190,6 +190,7 @@ function spawnTam( origin )
    majorTam:setEnergy(100)
    majorTam:setFuel(true)
    majorTam:cargoRm( "all" )
+   ai_setup.setup(majorTam)
 
    mem.dyingTam = hook.pilot(majorTam, "death", "tamDied")
 end
@@ -361,11 +362,10 @@ function hamelsenAmbush()
    x = 1000 * rnd.rnd() + 2000
    y = 1000 * rnd.rnd() + 2000
    pos = jp:pos() + vec2.new(x,y)
-   hamelsen = pilot.add( "Shark", fwarlords, pos, _("Colonel Hamelsen"), {ai="baddie_norun"} )
+   hamelsen = pilot.add( "Shark", fwarlords, pos, _("Colonel Hamelsen"), {ai="baddie_norun", naked=true} )
 
    -- Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
-   hamelsen:outfitRm("all")
-   hamelsen:outfitRm("cores")
+   -- TODO switch to equipopt
    hamelsen:outfitAdd("S&K Ultralight Combat Plating")
    hamelsen:outfitAdd("Milspec Orion 2301 Core System")
    hamelsen:outfitAdd("Tricon Zephyr Engine")
@@ -378,6 +378,7 @@ function hamelsenAmbush()
    hamelsen:setFuel(true)
    hamelsen:setNoDeath() -- We can't afford to loose our main baddie
    hamelsen:setNoDisable()
+   ai_setup.setup(hamelsen)
 
    mem.attack = hook.pilot( hamelsen, "attacked", "hamelsen_attacked" )
 

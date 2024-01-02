@@ -34,6 +34,7 @@ local fw = require "common.frontier_war"
 require "proximity"
 local fmt = require "format"
 local pir = require "common.pirate"
+local ai_setup = require "ai.core.setup"
 
 local attackhooks, badguys, escort, hamelsen, tamteam, target, targetList, toldya -- Non-persistent state
 local compute_reward, elt_dest_inlist, increment_baddie, payNfinish, spawnBaddies, spawnEscort, spawnHamelsen, start_battle -- Forward-declared functions
@@ -44,16 +45,16 @@ escort_hailed = fw.escort_hailed -- common hooks
 local destpla, destsys = spob.getS("Mannannan")
 local lore_text = {}
 
-lore_text[1] = _([["Good question, citizen! It is likely the intelligence services of the other nations know that General Klank and I are involved in the invasion project. Though, they probably don't know how imminent it is. It's likely they hired henchmen to hound or outright stop us. We have identified some of the henchmen actually. They are the kind of independent mercenaries we find in any kind of shady operations... A bit like you in fact."]])
+lore_text[1] = _([["Good question, citizen! It is likely the intelligence services of the other nations know that General Klank and I are involved in the invasion project. Though, they probably don't know how imminent it is. It's likely they hired henchmen to hound or outright stop us. We have identified some of the henchmen, actually. They are the kind of independent mercenaries we find in any kind of shady operations... A bit like you in fact."]])
 
 lore_text[2] = _([["Aha! You're worrying about the soldiers of the warlord we killed last time? Don't worry too much about them, most of them did not stay unemployed for long. When a warlord dies, his surviving followers are sent to the Dvaered Military Reserve, and they apply for positions in other warlords' armies, or in the DHC. The only one I'm worried about is Colonel Hamelsen: it will be very difficult for her to find a position with a warlord since they prefer to have people they know at higher ranks, and the DHC only rarely recruits new colonels.
    "That's a pity actually because she is probably the most talented officer of her generation. Do you know that she was the first one since the Independence War who managed to become an ace before the end of her training?"]])
 
 lore_text[3] = _([[You ask Major Tam to continue his story about when he used to be a fighter pilot at the DHC base on Rhaana. A small smile appears on his face and he turns his eyes to the cieling.
-   "Do you want me to tell you how I became an ace? Oh yes, you do. So. To become a Dvaered ace, one has to score four confirmed fighter victories. An confirmed victory is recorded when you, alone, destroy any kind of enemy warship. As we tend to work in squads, we pretty often destroy ships without scoring any confirmed victories. My first victory was a Pirate Hyena. The pilot was probably drunk or something. They headed right towards my Vendetta, broadcasting stupid taunts. My sergeant was nice and left the Hyena all to me. My second victory was against a freak... I mean a local warlord's pilot who claimed she could kill any DHC pilot in fair fight. Apparently, it was not true.
-   "But the two others... Actually those are a much longer story. I'll tell you another time maybe."]])
+   "Do you want me to tell you how I became an ace? Oh yes, you do. So. To become a Dvaered ace, one has to score four confirmed fighter victories. A confirmed victory is recorded when you, alone, destroy any kind of enemy warship. As we tend to work in squads, we pretty often destroy ships without scoring any confirmed victories. My first victory was a Pirate Hyena. The pilot was probably drunk or something. They headed right towards my Vendetta, broadcasting stupid taunts. My sergeant was nice and left the Hyena all to me. My second victory was against a freak... I mean a local warlord's pilot who claimed she could kill any DHC pilot in fair fight. Apparently, it was not true.
+   "But the two others... Actually those are a much longer story. I'll tell you another time, maybe."]])
 
-lore_text[4] = _([["Oh, the captain is doing well. He spent a few periods at the hospital, but it was not so serious. The rest of his squad, I'm not too sure. I don't know them very well actually. They are more like statistics to me. I know it's bad, but hey, I have so many things to think about right now.
+lore_text[4] = _([["Oh, the captain is doing well. He spent a few periods at the hospital, but it was not so serious. The rest of his squad, I'm not too sure. I don't know them very well, actually. They are more like statistics to me. I know it's bad, but hey, I have so many things to think about right now.
    "Oh, and we went to the funeral of private Amadeus Tronk, officially killed in training, of course. It was nice. Leblanc's squadron made an aerial display with a mace rocket concerto for the occasion, and we organized a fight to death between a convicted criminal and a gladiator in General Klank's private arena. Not only to honour the memory of the dead warrior, but also to have some fun."]])
 
 local flee_text = _("You were supposed to wait for Strafer to scan the system, and then if needed, kill the hostiles.")
@@ -93,7 +94,7 @@ function accept()
    misn.accept()
    misn.osdCreate( _("Dvaered Diplomacy"), {_("Go to next system"), _("Wait until Strafer has scanned the system"), _("Wait for Tam and destroy the highlighted hostile ships"), _("Land anywhere to collect your pay") } )
    misn.setDesc(_("You take part in an operation to trap and destroy a group of well armed henchmen who are after Major Tam."))
-   misn.setReward(_("It depends how many of your wingmen come back."))
+   misn.setReward(_("It depends on how many of your wingmen come back."))
 
    -- Markers
    mem.marklist = {}
@@ -254,11 +255,10 @@ end
 function spawnEscort( origin )
    escort = {}
    if mem.alive[1] then
-      escort[1] = pilot.add( "Schroedinger", fw.fct_dhc(), origin, _("Lieutenant Strafer") )
+      escort[1] = pilot.add( "Schroedinger", fw.fct_dhc(), origin, _("Lieutenant Strafer"), {naked=true} )
 
       -- Give him nice outfits
-      escort[1]:outfitRm("all")
-      escort[1]:outfitRm("cores")
+      -- TODO switch to equipopt
       escort[1]:outfitAdd("Nexus Light Stealth Plating")
       escort[1]:outfitAdd("Tricon Zephyr Engine")
       escort[1]:outfitAdd("Milspec Orion 2301 Core System")
@@ -273,6 +273,7 @@ function spawnEscort( origin )
       escort[1]:setFuel(true)
       escort[1]:setHilight()
       escort[1]:setVisplayer()
+      ai_setup.setup( escort[1] )
 
       escort[1]:memory().angle = math.rad(225)
       escort[1]:memory().radius = 200

@@ -36,6 +36,7 @@ local fw = require "common.frontier_war"
 local fmt = require "format"
 local pir = require "common.pirate"
 local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 
 -- Mission constants
 local bombMass = 100
@@ -138,7 +139,7 @@ function enter()
       pilot.clearSelect("FLF")
       pir.clearPirates()
 
-      warlord = pilot.add( "Dvaered Goddard", "Dvaered", sabotpla, _("Lord Battleaddict") )
+      warlord = pilot.add( "Dvaered Goddard", "Dvaered", sabotpla, _("Lord Battleaddict"), {naked=true} )
       warlord:control(true)
       warlord:moveto( sabotpla:pos() + vec2.newP(rnd.rnd(1000), rnd.angle()) )
       warlord:memory().formation = "circleLarge"
@@ -184,12 +185,12 @@ function enter()
       mypos = duelpla:pos()
       step = 150
 
-      klank = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(-step, step/2), _("General Klank") )
+      klank = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(-step, step/2), _("General Klank"), {naked=true} )
       klank:control(true)
       klank:setFaction( fw.fct_dhc() )
       equipGoddard( klank, true ) -- Klank's superior equipment should ensure victory
 
-      battleaddict = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(step, step/2), _("Lord Battleaddict") )
+      battleaddict = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(step, step/2), _("Lord Battleaddict"), {naked=true} )
       battleaddict:control(true)
       battleaddict:setFaction( fw.fct_warlords() )
       equipGoddard( battleaddict, false )
@@ -197,7 +198,7 @@ function enter()
       klank:face(battleaddict)
       battleaddict:face(klank)
 
-      urnus = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(0, 3*step/2), _("Colonel Urnus") )
+      urnus = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(0, 3*step/2), _("Colonel Urnus"), {naked=true} )
       urnus:control(true)
       urnus:face( mypos + vec2.new(0, step/2) )
 
@@ -231,24 +232,23 @@ function enter()
 end
 
 -- Equips a Goddard for a duel, with or without repeating railguns
-function equipGoddard( pilot, repeating )
-   pilot:outfitRm("all")
-   pilot:outfitRm("cores")
-   pilot:outfitAdd("S&K Superheavy Combat Plating")
-   pilot:outfitAdd("Melendez Mammoth XL Engine")
-   pilot:outfitAdd("Milspec Orion 9901 Core System")
-   pilot:outfitAdd("Nanobond Plating", 6)
-   pilot:outfitAdd("Milspec Impacto-Plastic Coating")
-   pilot:outfitAdd("Droid Repair Crew",4)
-
+function equipGoddard( plt, repeating )
+   -- TODO switch to equipopt
+   plt:outfitAdd("S&K Superheavy Combat Plating")
+   plt:outfitAdd("Melendez Mammoth XL Engine")
+   plt:outfitAdd("Milspec Orion 9901 Core System")
+   plt:outfitAdd("Nanobond Plating", 6)
+   plt:outfitAdd("Milspec Impacto-Plastic Coating")
+   plt:outfitAdd("Droid Repair Crew",4)
    if repeating then
-      pilot:outfitAdd("Repeating Railgun", 7)
+      plt:outfitAdd("Repeating Railgun", 7)
    else
-      pilot:outfitAdd("Railgun", 7)
+      plt:outfitAdd("Railgun", 7)
    end
-   pilot:setHealth(100,100)
-   pilot:setEnergy(100)
-   pilot:setFuel(true)
+   plt:setHealth(100,100)
+   plt:setEnergy(100)
+   plt:setFuel(true)
+   ai_setup.setup( plt )
 end
 
 function enter1_message()
@@ -305,7 +305,7 @@ end
 
 -- Spawn the Phalanx to disable
 function spawn_phalanx()
-   p = pilot.add( "Dvaered Phalanx", "Dvaered", intpla, _("Gorgon") )
+   p = pilot.add( "Dvaered Phalanx", "Dvaered", intpla, _("Gorgon"), {naked=true} )
    p:setFaction(fw.fct_warlords())
    p:setHilight()
    p:control()
@@ -313,8 +313,7 @@ function spawn_phalanx()
    mem.nextsys = lmisn.getNextSystem(system.cur(), sabotsys)
    p:hyperspace( mem.nextsys, true ) -- Go towards Battleaddict's place
 
-   p:outfitRm("all")
-   p:outfitRm("cores")
+   -- TODO switch to equipopt
    p:outfitAdd("S&K Medium Combat Plating")
    p:outfitAdd("Milspec Orion 4801 Core System")
    p:outfitAdd("Tricon Cyclone Engine")
@@ -326,6 +325,7 @@ function spawn_phalanx()
    p:setHealth(100,100)
    p:setEnergy(100)
    p:setFuel(true)
+   ai_setup.setup(p)
 
    mem.pattacked = hook.pilot( p, "attacked", "phalanx_attacked" )
    mem.pboarded = hook.pilot( p, "board", "phalanx_boarded" )
