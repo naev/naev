@@ -61,9 +61,14 @@ local function autonav_setup ()
    last_shield, last_armour = pp:health()
 
    -- Compute slowest fleet speed
-   fleet_speed = pp:speedMax()
-   for k,p in pairs(pp:followers()) do
-      fleet_speed = math.min( fleet_speed, p:speedMax() )
+   local followers = pp:followers()
+   fleet_speed = math.huge
+   if #followers <= 0 then
+      match_fleet = false
+   else
+      for k,p in pairs(followers) do
+         fleet_speed = math.min( fleet_speed, p:speedMax() )
+      end
    end
 
    -- Start timer to begin time compressing right away
