@@ -133,14 +133,23 @@ So, as the negotiations with Goddard shareholders is making progress, we identif
    hook.load("loading")
 end
 
+local function enter_setup ()
+   pilot.toggleSpawn(false)
+   pilot.clear()
+
+   -- Disable followers
+   for k,p in ipairs(player.pilot():followers()) do
+      p:setHide(true)
+   end
+end
+
 function enter()
    -- Player will perform the Hallway to Hell
    if mem.misn_state==2 and system.cur()==mem.convsys then
       local pp = player.pilot()
       local ps = pp:ship()
       if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
-         pilot.toggleSpawn(false)
-         pilot.clear()
+         enter_setup()
          local targetF = faction.dynAdd( "Independent", "targets", _("Targets"), {clear_enemies=true, clear_allies=true} )
 
          -- Put the targets
@@ -213,8 +222,7 @@ So, don't try to auto-target around, and just shoot at the targets I will be ind
       local pp = player.pilot()
       local ps = pp:ship()
       if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
-         pilot.toggleSpawn(false)
-         pilot.clear()
+         enter_setup()
 
          local targetF = faction.dynAdd( "Marauder", "targets", _("Targets"))
          mem.bbb = pilot.add("Hyena", targetF, mem.convpnt, _("Blue Belly Billy"))
@@ -680,9 +688,11 @@ end
 
 -- Start duel against Blue Belly Billy
 function startDuel()
-   player.pilot():control(false)
+   local pp = player.pilot()
+   pp:control(false)
    mem.bbb:taskClear()
-   mem.bbb:attack(player.pilot())
+   mem.bbb:attack(pp)
+   misn.osdActive(2)
 end
 
 -- Player killed BBB
@@ -700,7 +710,7 @@ function boardBBB()
    mem.misn_state = 6
    misn.osdActive(3)
    misn.markerMove( mem.misn_marker, mem.baronpnt )
-   pilot.toggleSpawn()
+   pilot.toggleSpawn(true)
 
    local c = commodity.new( N_("Nozzle Hubcap"), N_("This looks like a prehistoric trash top.") )
    misn.cargoAdd( c, 0 )
