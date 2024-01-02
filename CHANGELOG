@@ -14,6 +14,7 @@
    * Fixed beam weapons not hitting asteroids
    * Properly compute weapon range with launch_range modifiers
    * Fixed some range checks with inrange weapon sets
+   * Fixed Empire Pacifier mass being too low
    * `zalek/blackhole/zbh09`: don't error out when a bioship ceases to exist
    * `kidnapped/traffic_00`: fixed formatting string telling the player what system to go to
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
