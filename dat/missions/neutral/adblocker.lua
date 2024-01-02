@@ -68,7 +68,7 @@ function accept()
    }
 
    vn.label("refuse")
-   vn.na("You walk away, ignoring him.")
+   vn.na(_("You walk away, ignoring him."))
    vn.done()
 
    vn.label("accept")
@@ -86,7 +86,7 @@ function accept()
       , { sys = mem.current_system }))
    misn.setReward(mission.reward)
    misn.osdCreate( mission.name, {
-      fmt.f(_(mission.description), { sys = mem.current_system }),
+      fmt.f(mission.description, { sys = mem.current_system }),
       fmt.f(_("Return to {spob} ({sys} system)"), { spob = mem.current_spob, sys = mem.current_system })
    })
    hook.enter("enter")
