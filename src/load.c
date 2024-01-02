@@ -106,9 +106,12 @@ static int load_enumerateCallbackPlayer( void* data, const char* origdir, const 
 static int load_compatibilityTest( const nsave_t *ns );
 static const char* load_compatibilityString( const nsave_t *ns );
 static SaveCompatibility load_compatibility( const nsave_t *ns );
+static int load_sortComparePlayersName( const void *p1, const void *p2 );
 static int load_sortComparePlayers( const void *p1, const void *p2 );
+static int load_sortCompareName( const void *p1, const void *p2 );
 static int load_sortCompare( const void *p1, const void *p2 );
 static xmlDocPtr load_xml_parsePhysFS( const char* filename );
+static void load_freeSave( nsave_t *ns );
 
 /**
  * @brief Loads an individual save.
@@ -271,6 +274,41 @@ int load_refresh (void)
       player_saves_t *ps = &load_saves[i];
       qsort( ps->saves, array_size(ps->saves), sizeof(nsave_t), load_sortCompare );
    }
+
+   /* Dedup as necessary. */
+   qsort( load_saves, array_size(load_saves), sizeof(player_saves_t), load_sortComparePlayersName );
+   for (int i=array_size(load_saves)-1; i>0; i--) {
+      player_saves_t *ps = &load_saves[i];
+      if (strcmp(ps->name, ps[-1].name)!=0)
+         continue;
+
+      /* Copy saves over. */
+      for (int j=0; j<array_size(ps->saves); j++) {
+         const nsave_t *ns = &ps->saves[j];
+         array_push_back( &ps[-1].saves, *ns );
+      }
+
+      /* Now have to dedup saves. */
+      qsort( ps[-1].saves, array_size(ps[-1].saves), sizeof(nsave_t), load_sortCompareName );
+      for (int j=array_size(ps[-1].saves)-1; j>0; j--) {
+         nsave_t *ns = &ps[-1].saves[j];
+         if (strcmp(ns->save_name, ns[-1].save_name)!=0)
+            continue;
+
+         load_freeSave( ns );
+         array_erase( &ps[-1].saves, ns, &ns[1] );
+      }
+
+      /* Properly resort saves. */
+      qsort( ps[-1].saves, array_size(ps[-1].saves), sizeof(nsave_t), load_sortCompare );
+
+      /* Erase current iterator. */
+      array_free( ps->saves );
+      free( ps->name );
+      array_erase( &load_saves, ps, &ps[1] );
+   }
+
+   /* Resort based on time. */
    qsort( load_saves, array_size(load_saves), sizeof(player_saves_t), load_sortComparePlayers );
 
    return 0;
@@ -441,12 +479,47 @@ static SaveCompatibility load_compatibility( const nsave_t *ns )
 /**
  * @brief qsort compare function for files.
  */
+static int load_sortComparePlayersName( const void *p1, const void *p2 )
+{
+   const player_saves_t *ps1, *ps2;
+   ps1 = (const player_saves_t*) p1;
+   ps2 = (const player_saves_t*) p2;
+   return strcmp( ps1->name, ps2->name );
+}
+
+/**
+ * @brief qsort compare function for files.
+ */
 static int load_sortComparePlayers( const void *p1, const void *p2 )
 {
    const player_saves_t *ps1, *ps2;
    ps1 = (const player_saves_t*) p1;
    ps2 = (const player_saves_t*) p2;
    return load_sortCompare( &ps1->saves[0], &ps2->saves[0] );
+}
+
+static int load_sortCompareName( const void *p1, const void *p2 )
+{
+   int ret;
+   const nsave_t *ns1 = (const nsave_t*) p1;
+   const nsave_t *ns2 = (const nsave_t*) p2;
+   ret = strcmp( ns1->save_name, ns2->save_name );
+   if (ret)
+      return ret;
+
+   /* Sort by compatibility first. */
+   if (!ns1->compatible && ns2->compatible)
+      return -1;
+   else if (ns1->compatible && !ns2->compatible)
+      return +1;
+
+   /* Search by file modification date. */
+   if (ns1->modtime > ns2->modtime)
+      return -1;
+   else if (ns1->modtime < ns2->modtime)
+      return +1;
+
+   return 0;
 }
 
 /**
@@ -474,6 +547,23 @@ static int load_sortCompare( const void *p1, const void *p2 )
    return strcmp( ns1->save_name, ns2->save_name );
 }
 
+static void load_freeSave( nsave_t *ns )
+{
+   for (int k=0; k<array_size(ns->plugins); k++)
+      free( ns->plugins[k] );
+   array_free( ns->plugins );
+   free(ns->save_name);
+   free(ns->player_name);
+   free(ns->path);
+   free(ns->version);
+   free(ns->data);
+   free(ns->spob);
+   free(ns->chapter);
+   free(ns->difficulty);
+   free(ns->shipname);
+   free(ns->shipmodel);
+}
+
 /**
  * @brief Frees loaded save stuff.
  */
@@ -483,20 +573,7 @@ void load_free (void)
       player_saves_t *ps = &load_saves[i];
       free( ps->name );
       for (int j=0; j<array_size(ps->saves); j++) {
-         nsave_t *ns = &ps->saves[j];
-         for (int k=0; k<array_size(ns->plugins); k++)
-            free( ns->plugins[k] );
-         array_free( ns->plugins );
-         free(ns->save_name);
-         free(ns->player_name);
-         free(ns->path);
-         free(ns->version);
-         free(ns->data);
-         free(ns->spob);
-         free(ns->chapter);
-         free(ns->difficulty);
-         free(ns->shipname);
-         free(ns->shipmodel);
+         load_freeSave( &ps->saves[j] );
       }
       array_free( ps->saves );
    }
