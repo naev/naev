@@ -42,6 +42,7 @@ local vn       = require 'vn'
 local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
+local ai_setup = require "ai.core.setup"
 
 local agentPort = "dvaered/dv_military_m2.webp"
 local BBB1Port = "pirate/pirate4.webp"
@@ -151,7 +152,7 @@ function enter()
          mem.pil2 = pilot.add("Llama", targetF, t2, _("Kill Me"))
          mem.pil3 = pilot.add("Llama", targetF, t3, _("Kill Me"))
          for k,p in ipairs{ mem.pil1, mem.pil2, mem.pil3 } do
-            p:setHeath(10)
+            p:setHealth(10)
             p:disable()
             p:setVisible()
             p:setNoBoard()
@@ -165,27 +166,24 @@ function enter()
          mem.timer = dist/430
          misn.osdDestroy()
          misn.osdCreate( _("Dvaered Negotiation 2"), {
-            fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=mem.timer} ),
+            fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=string.format("%.0f",mem.timer)} ),
             fmt.f(_("Land on {pnt} and talk to Blue Belly Billy"), {pnt=mem.convpnt} ),
             _("Disable and board Blue Belly Billy"),
             fmt.f(_("Go back to {pnt} in {sys}"), {pnt=mem.baronpnt,sys=mem.baronsys} ),
          } )
 
          local weap = outfit.get("Bikers Fury Launcher") -- Easier to dodge version of the Fury
-         local function equip_zebra( p )
-            p:outfitAdd( weap, 4 ) -- Difficulty can be tuned here (1<=nb<=6)
-            --p:outfitAdd( "Sensor Array", 4 ) -- Apparently, they do stack
-            p:setSpeedLimit( 0.0001 )
-            p:memory().ranged_ammo = 1 -- AI was initialized before the launchers did exist so it's not aware it has ammo
-            p:control()
-         end
          -- Put the platforms
          mem.pla1 = pilot.add("Zebra", targetF, .5*(t1+t2), _("Dodge Me"), {naked=true})
          mem.pla2 = pilot.add("Zebra", targetF, .5*(t1+t3), _("Dodge Me"), {naked=true})
          mem.pla3 = pilot.add("Zebra", targetF, .5*(t2+t3), _("Dodge Me"), {naked=true})
-         equip_zebra( mem.pla1 )
-         equip_zebra( mem.pla2 )
-         equip_zebra( mem.pla3 )
+         for k,p in ipairs{ mem.pla1, mem.pla2, mem.pla3 } do
+            p:outfitAdd( weap, 4 ) -- Difficulty can be tuned here (1<=nb<=6)
+            --p:outfitAdd( "Sensor Array", 4 ) -- Apparently, they do stack
+            p:setSpeedLimit( 0.0001 )
+            p:control()
+            ai_setup.setup(p)
+         end
 
          -- Block the player and set timers
          pp:control()
@@ -602,7 +600,7 @@ function tick()
    if mem.misn_state == 2 then -- If player didnt already win
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Negotiation 2"), {
-         fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=string.format("%.1f",mem.timer)} ),
+         fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=string.format("%.0f",mem.timer)} ),
          fmt.f(_("Land on {pnt} and talk to Blue Belly Billy"), {pnt=mem.convpnt} ),
          _("Disable and board Blue Belly Billy"),
          fmt.f(_("Go back to {pnt} in {sys}"), {pnt=mem.baronpnt,sys=mem.baronsys} ),
