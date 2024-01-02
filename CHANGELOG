@@ -50,6 +50,7 @@
    * `shadow/shadowrun`: fixed VN issues not allowing mission completion
    * `shadow/shadowrun`: changed locations to make it possible to do in the allotted time-frame
    * `shadow/shadowvigil`: fixed Seiryuu not appearing
+   * `shiplover`: don't ask the player about ships they can't obtain
    * Fixed many typos
    * Translation updates
 
