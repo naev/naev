@@ -48,7 +48,7 @@ function create()
    mem.current_spob = spob.cur()
    misn.setNPC(mission.npc.name, mission.npc.img, mission.npc.description)
 
-    if not misn.claim(mem.current_system) then
+   if not misn.claim(mem.current_system) then
       misn.finish(false)
    end
 end
