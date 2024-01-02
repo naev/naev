@@ -2158,20 +2158,22 @@ static int aiL_drift_facing( lua_State *L )
 /**
  * @brief Brakes the pilot.
  *
+ *    @luatparam[opt=false] boolean prefer_reverse Whether or not to prefer reverse thrusters.
  *    @luatreturn boolean Whether braking is finished.
- *    @luafunc brake
+ * @luafunc brake
  */
 static int aiL_brake( lua_State *L )
 {
    double dir, accel, diff;
    int isstopped = pilot_isStopped(cur_pilot);
+   int prefer_rev = lua_toboolean(L,1) * cur_pilot->stats.misc_reverse_thrust;
 
    if (isstopped){
       lua_pushboolean(L,1);
       return 1;
    }
 
-   if (pilot_brakeCheckReverseThrusters(cur_pilot)) {
+   if (prefer_rev || pilot_brakeCheckReverseThrusters(cur_pilot)) {
       dir    = VANGLE(cur_pilot->solid.vel);
       accel = -PILOT_REVERSE_THRUST;
    }
