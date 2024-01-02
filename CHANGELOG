@@ -8,6 +8,7 @@
       * Messages get folded instead of repeating
       * Asteroids no longer fade out if close to the player
       * Display fuel consumption for ships in the equipment overlay
+      * Added option to match speed with slowest ship in the fleet (on by default)
    * Engine
       * Try to merge saves if multiple directories correpsond to the same player
       * Faster handling of asteroids with large exclusion areas

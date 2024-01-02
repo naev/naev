@@ -2894,6 +2894,8 @@ static int pilotL_accel( lua_State *L )
 /**
  * @brief Gets the speed of a pilot.
  *
+ * Note that this is not current velocity.
+ *
  *    @luatparam Pilot p Pilot to get speed of.
  *    @luatreturn number The pilot's current speed.
  * @luafunc speed

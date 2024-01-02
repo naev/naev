@@ -7,8 +7,8 @@ local autonav_pos_approach_brake, autonav_pos_approach
 local autonav_spob_approach_brake, autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
-local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon
-local path, uselanes_jump, uselanes_spob, uselanes_thr, follow_jump, brake_pos
+local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon, fleet_speed
+local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_jump, brake_pos
 
 -- Some defaults
 autonav_timer = 0
@@ -39,6 +39,7 @@ local function autonav_setup ()
    uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
    uselanes_spob = var.peek("autonav_uselanes_spob") and not stealth
    uselanes_thr = var.peek("autonav_uselanes_thr") or 2
+   match_fleet = var.peek("autonav_match_fleet")
    follow_jump = var.peek("autonav_follow_jump")
    reset_shield = var.peek("autonav_reset_shield")
    reset_dist = var.peek("autonav_reset_dist")
@@ -58,6 +59,12 @@ local function autonav_setup ()
 
    -- Initialize health
    last_shield, last_armour = pp:health()
+
+   -- Compute slowest fleet speed
+   fleet_speed = pp:speedMax()
+   for k,p in pairs(pp:followers()) do
+      fleet_speed = math.min( fleet_speed, p:speedMax() )
+   end
 
    -- Start timer to begin time compressing right away
    autonav_timer = 0
@@ -318,7 +325,8 @@ local function autonav_approach( pos, count_target )
    local dist = ai.minbrakedist()
    local d = pos:dist( pp:pos() )
    local off = ai.iface( pos )
-   if off < math.rad(10) then
+   -- TODO probably should do something smarter than just multiplying by 0.95
+   if off < math.rad(10) and ((not match_fleet) or (pp:vel():mod() < 0.95*fleet_speed)) then
       ai.accel(1)
    end
 
