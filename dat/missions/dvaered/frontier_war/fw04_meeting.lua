@@ -50,7 +50,7 @@ local haltpla = spob.get("Laarss")
 local lore_text = {}
 
 lore_text[1] = _([["Both squadrons of the DHC station's space security force will be deployed with a full range ships from Vendettas to Goddards. Those squadrons are the 'Beta-Storks' and the 'Beta-Hammer' and their mission will be to control medium and heavy ships and to provide heavy firepower in case of need. Our squadron, named 'Alpha-NightClaws', is in charge of fast ships (Yachts and Fighters). We will be flying Hyenas.
-   "The plan is the following: any ship approaching the station will be assigned to a squad by the fleet leader, and then to a pilot by the squad leader (Captain Leblanc). When a ship is assigned to you, you will have to approach the ship within 1000m. Their security clearance code will be automatically requested and processed by the system we'll install in your core unit. Afterwards, the ship will be allowed to land, or ordered to fly away. The same thing happens for ships that leave the station.
+   "The plan is the following: any ship approaching the station will be assigned to a squad by the fleet leader, and then to a pilot by the squad leader (Captain Leblanc). When a ship is assigned to you, you will have to approach the ship within 1000 km. Their security clearance code will be automatically requested and processed by the system we'll install in your core unit. Afterwards, the ship will be allowed to land, or ordered to fly away. The same thing happens for ships that leave the station.
    "Finally, in case something unexpected happens, you will, of course, have to obey orders. Watch your messages closely. A few pilots will be kept in reserve close to the station.
    "Oh, and there is another thing I must warn you about: it's the warlord's odd sense of humour. When they see a small ship close to their Goddard, they may get the idea to shoot a small railgun-volley in your direction. Some of them tend to enjoy seeing pilots fend for their lives. Dvaered law allows warlords to do so provided they can assure the High Command that there was no hostile intention. That can be a bit annoying, sometimes."]])
 
@@ -102,10 +102,10 @@ function accept()
    if not tk.yesno( _("We need you once more"), _([[As you sit at his table, the clearly anxious Dvaered pilot stops biting his nails and explains why he is here.
    "The High Command summoned, under request of General Klank, a special meeting of the high council of Warlords, and all of them have agreed to come..." You frown, and before you have a chance to ask why that's a problem, he continues: "... but we received an intelligence report according to which the ex-Colonel Hamelsen, who has already tried to murder Major Tam several times, is going to take advantage of this meeting to take action against us."
    "Do you want to help us against this threat?"]]) ) then
-      tk.msg(_("Too bad"), _([[Mm. I see. you probably have much more interesting things to do than being loyal to the Dvaered Nation...]]))
+      tk.msg(_("Too bad"), _([[Mm. I see. You probably have much more interesting things to do than being loyal to the Dvaered Nation...]]))
       return
    end
-   tk.msg(_("Here is the situation"), _([["General Klank has summoned the Warlords in order to present them with the Frontier invasion plan. When a meeting of the high council of Warlords occurs, a short truce takes place and they all come to the DHC station with their Goddards. This fact alone is already enough to put the station's security service under pressure, as the warlords constantly provoke each other and start brawls. But this time, we believe that Hamelsen will try to either assassinate warlords, or record our invasion plan in order to sell it to hostile foreign powers.
+   tk.msg(_("Here is the situation"), _([["General Klank has summoned the Warlords in order to present them with the Frontier invasion plan. When a meeting of the high council of Warlords occurs, a short truce takes place, and they all come to the DHC station with their Goddards. This fact alone is already enough to put the station's security service under pressure, as the warlords constantly provoke each other and start brawls. But this time, we believe that Hamelsen will try to either assassinate warlords, or record our invasion plan in order to sell it to hostile foreign powers.
    "This is why Major Tam wants our squadron from the Special Operations Forces to support the regular units of the station. Fly to Dvaer Prime and meet me in the bar there."]]))
 
    misn.accept()
@@ -151,7 +151,7 @@ function land()
       tk.msg( _("Time for a gorgeous reward?"), _([[When you step out of your ship, you see an officer alone on the dock, obviously waiting for you. As you get closer, you recognize Major Tam. The cold wind pulls the lapels of his coat, and make them whip his sad face.
    "We had better days, eh, citizen? A spy managed to run away with what seems to be a copy of our invasion plan, they killed one of my best pilots, and Hamelsen escaped... Once more." Tam looks at the sky as it starts to rain "... and it's winter on the spacedock of Dvaer Prime. Shall we enter the building? I was told that the chemical plant works twice as hard in winter, and the rain often turns to acid."
    You enter and head to the military bar. Tam looks at you: "I grew up on Nanek in Allous. For 13 years, the only part of the universe I knew was my village on Nanek, and the only people I knew were its inhabitants. And now, I've seen hundreds of planets, and thousands of people all around the galaxy. But most of them have been killed at some point. Now they are corpses, drifting here and there in space, along with the pitiful remains of their defeated ships. The night sky is filled with the souls of dead pilots. Our control of space gave us access to experiences our forefathers could not even dream of, but you know what? No matter how cold the graves of my ancestors on Nanek are, they are warmer than the emptiness of infinite space."]]), ("portraits/" .. fw.portrait_tam) )
-      tk.msg( _("Time for a gorgeous reward?"), fmt.f(_([[You start wondering if the major will remember to pay you, but his voice suddenly changes: "We definitely had better days, but you know, the true valor of a warrior reveals itself in times of adversity. The dark clouds that drift above the horizon, pushed by the cruel winds of despair, are here to challenge the strength of our Dvaered souls. And it is up to us to accept this challenge.
+      tk.msg( _("Time for a gorgeous reward?"), fmt.f(_([[You start wondering if the major will remember to pay you, but his voice suddenly changes: "We definitely had better days, but you know, the true valour of a warrior reveals itself in times of adversity. The dark clouds that drift above the horizon, pushed by the cruel winds of despair, are here to challenge the strength of our Dvaered souls. And it is up to us to accept this challenge.
    "I did not anticipate that the traitor Hamelsen could reassemble her group of mercenaries so fast, but you already killed some of them, and Leblanc's squadron will kill even more in the near future. We will then hunt ex-Colonel Hamelsen down, and finally we will continue the invasion.
    "Anyway, for now, we will transfer {credits} to your account, as a reward for this mission, and be certain that we will need you again soon!"]]), {credits=fmt.credits(mem.reward)}), ("portraits/" .. fw.portrait_tam) )
       player.pay(mem.reward)
@@ -220,7 +220,7 @@ end
 
 -- Player discusses with Lieutenant Strafer
 function discussStr()
-   local c = tk.choice( _("Lieutenant Strafer"), _("What do you want to ask to the lieutenant before taking off?"), _("Ask for a briefing"), _("Ask about Colonel Hamelsen"), _("Ask why you were hired for this mission"), _("Ask how one becomes a warlord"), _("I am ready for action!") )
+   local c = tk.choice( _("Lieutenant Strafer"), _("What do you want to ask the lieutenant before taking off?"), _("Ask for a briefing"), _("Ask about Colonel Hamelsen"), _("Ask why you were hired for this mission"), _("Ask how one becomes a warlord"), _("I am ready for action!") )
    if c <= 4 then
       if toldya[c] >= 3 then -- Strafer gets annoyed if one asks several times the same question
          tk.msg( _("Lieutenant Strafer"), _("Is this some kind of joke?") )
@@ -505,9 +505,9 @@ function hamelsenLanded()
       tk.msg( _("An unidentified ship landed on the station"), _("A ship managed to land on the station, and you failed to confirm it. Unidentified and potentially hostile individuals have entered the Dvaered High Command station: The mission is a failure.") )
       misn.finish(false)
    else -- Landing on Laarss: indicate the player he has to follow her
-      tk.msg( _("Hi there!"), fmt.f(_([[The fleeing ship suddenly hails you. You answer and the face of Colonel Hamelsen emerges from your holoscreen. "No, you won't best me, {player}. Not this time. Not anymore." Aware that she is now too far away for you to catch her, you ask her why she constantly harasses Major Tam. "This is all that I have left," she answers.
+      tk.msg( _("Hi there!"), fmt.f(_([[The fleeing ship suddenly hails you. You answer and the face of Colonel Hamelsen emerges from your holoscreen. "No, you won't best me, {player}. Not this time. Not any more." Aware that she is now too far away for you to catch her, you ask her why she constantly harasses Major Tam. "This is all that I have left," she answers.
    "My hate for Tam and Klank is all that remains now that my Lord is dead. I dedicated my entire life to the glory of House Dvaered, I practiced and honed my skills to serve the Army. When I was recruited by Lord Battleaddict, I became faithful to him because he gave me the opportunity to serve House Dvaered through him. And then...
-   "Since the day Klank assassinated my Lord, I have been rejected by the High Command. Rejected by the Warlords. Rejected by the nation that claims to reward Valor and Righteousness. Tell me, when did I give up Valor?! Tell me, when did I give up Righteousness?! Never! The Dvaered social contract is broken as far as I am concerned.
+   "Since the day Klank assassinated my Lord, I have been rejected by the High Command. Rejected by the Warlords. Rejected by the nation that claims to reward Valour and Righteousness. Tell me, when did I give up Valour?! Tell me, when did I give up Righteousness?! Never! The Dvaered social contract is broken as far as I am concerned.
    "All that remains of me is a vassal without a ruler, a colonel without a regiment, a corpse without a grave. I will haunt you until your demise. I will squash all your hopes and dreams, be they big or small. There will be no forgiveness, no respite, no relief, neither for you nor for me."
    After this very rousing speech, Hamelsen cuts off the communication channel and lands.]]), {player=player.name()}) )
       tk.msg( _("Follow her!"), fmt.f(_([[A new message comes from Captain Leblanc. "This is obviously a diversion! Everyone, back to your positions! {player}, go and investigate on {pnt}. Bring me the head of ex-Colonel Hamelsen!"]]), {player=player.name(), pnt=haltpla} ) )
@@ -528,7 +528,7 @@ end
 
 -- Player checks security clearance of Hamelsen: let the fun begin
 function checkHamelsen()
-   tk.msg( _("Incoming ship refuses confirmation"), fmt.f(_([[As you come within range, an alarm goes off. This ship does not have an invitation. Suddenly, the pilot charges the the blockade around the station. You hear an order from Captain Leblanc: "A-NightClaws Leader to {player}: intercept and destroy {plt}".]]), {player=player.name(), plt=hamelsen} ) )
+   tk.msg( _("Incoming ship refuses confirmation"), fmt.f(_([[As you come within range, an alarm goes off. This ship does not have an invitation. Suddenly, the pilot charges the blockade around the station. You hear an order from Captain Leblanc: "A-NightClaws Leader to {player}: intercept and destroy {plt}".]]), {player=player.name(), plt=hamelsen} ) )
    hamelsen:setHostile()
    --hamelsen:rename( _("Suspect Hyena") )
 
