@@ -146,7 +146,7 @@ end
 
 -- Introduction scene (with flowers everywhere)
 function introduction()
-   tk.msg( _("The Mace Ballet"), _([[Your sensors detect a group of warships doing maneuvers around Dvaer Prime. When you approach, a Vigilance hails you and you recognize the voice of Major Tam:
+   tk.msg( _("The Mace Ballet"), _([[Your sensors detect a group of warships doing manoeuvres around Dvaer Prime. When you approach, a Vigilance hails you, and you recognize the voice of Major Tam:
    "Greetings, citizen. Are you here for the ceremony? Of course, you are! You see? We have already thrown a few garlands. The funeral parade will soon be over, and after that we will start with the mace ballet. Meet us in the bar of Dvaer Prime."
    Before giving you any chance to ask him what the event is about, Tam closes the communication channel, and your find yourself surrounded by a field of giant blooms of white flowers. You let your mind idly navigate among the bio-engineered plants that have invaded Dvaer's orbit, and think that even if your alliance with the Dvaered has not been very lucrative until now, it has at least rewarded you with this unique view of overgrown flowers aimlessly drifting on the starry background.]]) )
    leader:taskClear()
@@ -249,11 +249,11 @@ function spawnNpcs()
             tk.msg(_("Goodbye, Lieutenant Strafer"),_([[Once the participants have collected their rewards, you follow everyone to an arena that has been reserved for the occasion. While cyborg-gladiators slaughter convicted criminals in the fighting ring, Captain Leblanc, as the direct superior to Strafer, gives a speech:
    "How can space be so dark with all the bright blood we have shed up there? How can planets be so majestic with all the ships that have crashed on their surfaces? How can stars be so quiet with all the horrors they have witnessed? If one of you has a good answer, please tell me! Please interrupt me! Please reassure me!
    "For an answer I already have. And it is all but pleasant."]]))
-            tk.msg(_("Goodbye, Lieutenant Strafer"),_([["Space, planets, and stars. The reason why they stay unmoved by human horrors is simple and cruel: they do not care. The universe did not require us to exist. It did not even want it. Nevertheless we are here, aimless, clueless, ripping each others' throats to pass the time. It is my fate, as a captain, to lead a group of lost men, all meant to die in this dark and empty universe.
+            tk.msg(_("Goodbye, Lieutenant Strafer"),_([["Space, planets, and stars. The reason why they stay unmoved by human horrors is simple and cruel: they do not care. The universe did not require us to exist. It did not even want it. Nevertheless, we are here, aimless, clueless, ripping each other's throats to pass the time. It is my fate, as a captain, to lead a group of lost men, all meant to die in this dark and empty universe.
    "But what do we know of emptiness? How can we say in the first place, that the universe is empty? Because our hearts are full. Full of beauty and ugliness. Full of love and hate. Full of desires and despair. Our hearts are full of all these contrary things that can't be found anywhere else in the universe. Space has no compassion for us? Planets don't care for our ships? Stars have no big plan for us? So much the better! Because we, humans, already have made our own big plans!
    "And Helmut Strafer's big plan is named Great House Dvaered."]]))
             tk.msg(_("Goodbye, Lieutenant Strafer"),_([["Great House Dvaered turns scarlet when its citizens spill their blood for it. Great House Dvaered loses a bit of its majesty anytime one of its ships crashes. Great House Dvaered is horrified when it witnesses atrocities.
-   "Helmut Strafer dedicated his life to Great House Dvaered, and I have the great honour to speak of him at this occasion. I could tell you how right, loyal, and strong this man was. I could tell you the confidence his very presence next to my ship made me feel. But you already know. So I will only tell you this story: We were flying, side by side, in the Arandon nebula. We had spent hours in there, with the abrasive gases slowly gnawing on our shields. All to find and destroy a single terrorist fighter. I asked Strafer if he thought it was worth it and he gave this simple answer: 'Everything is worth it when it is done for the Dvaered Nation'.
+   "Helmut Strafer dedicated his life to Great House Dvaered, and I have the great honour to speak of him at this occasion. I could tell you how right, loyal, and strong this man was. I could tell you the confidence his very presence next to my ship made me feel. But you already know. So I will only tell you this story: We were flying, side by side, in the Arandon nebula. We had spent hours in there, with the abrasive gases slowly gnawing on our shields. All to find and destroy a single terrorist fighter. I asked Strafer if he thought it was worth it, and he gave this simple answer: 'Everything is worth it when it is done for the Dvaered Nation'.
    "In conclusion, if you want to honour the memory of Helmut Strafer, do worthy things: do work for the Nation!"]]))
 
             shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
@@ -284,9 +284,9 @@ end
 
 -- Add the random people
 function populate_bar()
-   misn.npcAdd("discussLbl", _("Captain Leblanc"), fw.portrait_leblanc, _("Leblanc is surrounded by her pilots, who somehow exchange jokes about their respective collections of decapitated heads. Their demeanor feels surprisingly relaxed."))
+   misn.npcAdd("discussLbl", _("Captain Leblanc"), fw.portrait_leblanc, _("Leblanc is surrounded by her pilots, who somehow exchange jokes about their respective collections of decapitated heads. Their demeanour feels surprisingly relaxed."))
    misn.npcAdd("discussKlk", _("General Klank"), fw.portrait_klank, _("The general is talking to Major Tam."))
-   misn.npcAdd("discussNkv", _("Sergeant Nikolov"), fw.portrait_nikolov, _("Nikolov is arm-wrestling half a dozen soldiers. The cyborg sergeant seems to be very cautious in order so as to not harm them."))
+   misn.npcAdd("discussNkv", _("Sergeant Nikolov"), fw.portrait_nikolov, _("Nikolov is arm-wrestling half a dozen soldiers. The cyborg sergeant seems to be very cautious in order to not harm them."))
    misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, _("Hamfresser attempts to converse with a group of army technicians, but no one seems to give him any attention. His face seems to reflect not only boredom, but also shame in not being able to fit in among the group."))
    misn.npcAdd("discussWdw", _("Well-dressed woman"), mem.portrait_wdw, _("One of the few civilians around, this woman seems however to fit in with the place. You think that she must be used to hanging out with soldiers."))
    misn.npcAdd("discussDad", _("Retired soldier"), mem.portrait_dad, _("An old captain who seems to have ironed his dress uniform for the occasion is talking to some civilians. His shoulders carry the weight of years spent fighting in space while his face sags from days of anguish over comrades he loved and lost fighting up there."))
@@ -302,10 +302,10 @@ function discussKlk()
    tk.msg( "", _([[Good day, citizen. You are the private pilot helping us in our task, right? I have heard that you are doing a fairly good job. Continue and you will get rewarded for your merit, be sure of that!]]) )
 end
 function discussNkv()
-   tk.msg( "", _([[Yeah, he was for sure a good guy. Of course, he was an "educated" man, like the others here, always calling everyone "citizen", and annoying people with "righteousness", "valor" and stuff. But he was one of the few who did not despise us spacemarines, and we could count on him. He certainly will be missed.]]) )
+   tk.msg( "", _([[Yeah, he was for sure a good guy. Of course, he was an "educated" man, like the others here, always calling everyone "citizen", and annoying people with "righteousness", "valour" and stuff. But he was one of the few who did not despise us spacemarines, and we could count on him. He certainly will be missed.]]) )
 end
 function discussHam()
-   tk.msg( "", fmt.f(_([[Hey, {player}! Long time no see, huh? How are you doing? I've been stuck at the hospital due to all the damage I took during the last mission. I got a brand new right arm, see? It has the latest bio and cyber enhancements. Targeting abilities have been increased by 0.23 percent, pulling force by 0.26 percent, and pushing by 0.22 percent. But its best feature is that I can now scratch my nose without leaving oil marks on it. Everyone is jealous at the barracks.]]), {player=player.name()}) )
+   tk.msg( "", fmt.f(_([[Hey, {player}! Long time no see, huh? How are you doing? I've been stuck at the hospital due to all the damage I took during the last mission. I got a brand-new right arm, see? It has the latest bio and cyber enhancements. Targeting abilities have been increased by 0.23 percent, pulling force by 0.26 percent, and pushing by 0.22 percent. But its best feature is that I can now scratch my nose without leaving oil marks on it. Everyone is jealous at the barracks.]]), {player=player.name()}) )
 end
 function discussWdw()
    tk.msg( "", _([[It feels so strange. I knew this day could come sooner or later, but yet... I can't really figure out how the children and I will live without my husband from now on. It makes me so sad. Do you think that creating the next generation of Dvaered warriors is the sole purpose of marriage?]]) )
@@ -317,7 +317,7 @@ function discussSst()
    tk.msg( "", _([[You will take part to the mace ballet too? Ah! I can't wait to fight the friends of my big brother!]]) )
 end
 function discussPvt()
-   tk.msg( "", fmt.f(_([["Hello, citizen {player}, how are you?" You ask the soldier how he knows your name and he answers: "Well, I am part of the Nightclaws, and everyone knows you in the squadron. You private pilots aren't used to speaking with technicians, right? This is normal: at each port, you encounter different workers.  It's hard to make friends that way. In our army, the situation is different. We hang out together a lot and are united by hard work and by our faith in the Nation.
+   tk.msg( "", fmt.f(_([["Hello, citizen {player}, how are you?" You ask the soldier how he knows your name, and he answers: "Well, I am part of the Nightclaws, and everyone knows you in the squadron. You private pilots aren't used to speaking with technicians, right? This is normal: at each port, you encounter different workers.  It's hard to make friends that way. In our army, the situation is different. We hang out together a lot and are united by hard work and by our faith in the Nation.
    "You know what they say? Joining the Dvaered army is the best way to find your place in the society."]]), {player=player.name()}) )
 end
 
@@ -588,7 +588,7 @@ end
 function compDie( _victim, attacker )
    -- This was a bad idea
    if attacker and attacker:withPlayer() then
-      tk.msg( _("That was not very smart."), _([[While watching the hull of your opponent's ship collapsing under the impact of your rockets, you suddently remember with horror that this is all just a competition. You think that the Dvaered might be upset at you for this, but then you realize they will probably just kill you instead.]]) )
+      tk.msg( _("That was not very smart."), _([[While watching the hull of your opponent's ship collapsing under the impact of your rockets, you suddenly remember with horror that this is all just a competition. You think that the Dvaered might be upset at you for this, but then you realize they will probably just kill you instead.]]) )
       faction.get("Dvaered").setPlayerStanding(-100)
       for i, p in ipairs(competitors) do
          p:taskClear()
@@ -689,7 +689,7 @@ end
 -- A competitor is hit during Stadion (problematic if the player is the agressor)
 function compHitS( _victim, attacker )
    if attacker and attacker:withPlayer() then
-      tk.msg( _("This is not allowed!"), _("You are not supposed to shoot at the other competitors during the Mace Stadion. The Stadion must now be interrupted and you receive 5 penalty points. Land and speak again with Major Tam.") )
+      tk.msg( _("This is not allowed!"), _("You are not supposed to shoot at the other competitors during the Mace Stadion. The Stadion must now be interrupted, and you receive 5 penalty points. Land and speak again with Major Tam.") )
       for i, p in ipairs(competitors) do
          p:taskClear()
          p:land( destpla )
