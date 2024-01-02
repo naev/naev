@@ -29,8 +29,6 @@
 local fmt = require "format"
 local neu = require 'common.neutral'
 local vn = require "vn"
-local vntk = require "vntk"
-local portrait = require "portrait"
 local vnimage  = require "vnimage"
 
 local mission = {
@@ -44,9 +42,11 @@ local mission = {
 }
 
 function create()
+   mem.npc_image, mem.npc_portrait = vnimage.genericMale()
+
    mem.current_system = system.cur()
    mem.current_spob = spob.cur()
-   misn.setNPC(mission.npc.name, mission.npc.img, mission.npc.description)
+   misn.setNPC(mission.npc.name, mem.npc_portrait, mission.npc.description)
 
    if not misn.claim(mem.current_system) then
       misn.finish(false)
@@ -56,13 +56,11 @@ end
 function accept()
    local accepted = false
 
-   mem.desperate_captain_npc = vnimage.genericMale()
-
    vn.clear()
    vn.scene()
-   local man = vn.newCharacter(mission.npc.name, { image = mem.desperate_captain_npc })
+   local man = vn.newCharacter(mission.npc.name, { image = mem.npc_image } )
    vn.transition()
-   man(fmt.f(_([["Look, I don't have much time! There's this annoying ship that's been spamming the local comms with tons of advertisements! I can't take it anymore! Please, you've got to stop it! I'll give you {creds} if you stop it!"]])
+   man(fmt.f(_([["Look, I don't have much time! There's this annoying ship that's been spamming the local comms with tons of advertisements! I can't take it any more! Please, you've got to stop it! I'll give you {creds} if you stop it!"]])
       , { creds = fmt.credits(mission.reward) }))
    vn.menu {
       { _([[Accept]]), "accept" },
@@ -97,6 +95,7 @@ function accept()
    hook.enter("enter")
 end
 
+local spammer
 function enter()
    if system.cur() == mem.current_system then
       local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.angle())
@@ -114,6 +113,7 @@ function enter()
    end
 end
 
+-- TODO probably not hardcode the advertisements here, but share with dat/ai/advertiser.lua
 local ads_generic = {
    _("Fly safe, fly Milspec."),
    _("Reynir's Hot Dogs: enjoy the authentic taste of tradition."),
@@ -137,6 +137,7 @@ function timer_advert_spam()
    mem.hk_advert_spam = hook.timer(1, "timer_advert_spam")
 end
 
+local stopped
 function on_target_stopped()
    if stopped then
       return
@@ -155,7 +156,7 @@ function on_land()
 
    vn.clear()
    vn.scene()
-   local man = vn.newCharacter(mission.npc.name, { image = mem.desperate_captain_npc })
+   local man = vn.newCharacter(mission.npc.name, { image = mem.npc_image })
    vn.transition()
    man(_([[The man runs towards you. "Thank you so much for destroying that ship! The advertisements were about to drive me crazy! Man they're so annoying!"]]))
    vn.sfxVictory()
