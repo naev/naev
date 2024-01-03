@@ -2748,10 +2748,10 @@ static int aiL_follow_accurate( lua_State *L )
  *
  *    @luatparam vec2 pos The objective vector
  *    @luatparam vec2 vel The objective velocity
- *    @luatparam number radius The requested distance between p and target
- *    @luatparam number angle The requested angle between p and target (radians)
- *    @luatparam number Kp The first controller parameter
- *    @luatparam number Kd The second controller parameter
+ *    @luatparam[opt=0.] number radius The requested distance between p and target
+ *    @luatparam[opt=0.] number angle The requested angle between p and target (radians)
+ *    @luatparam[opt=10.] number Kp The first controller parameter
+ *    @luatparam[opt=20.] number Kd The second controller parameter
  *    @luareturn The point to go to as a vector2.
  * @luafunc face_accurate
  */
@@ -2763,10 +2763,10 @@ static int aiL_face_accurate( lua_State *L )
 
    pos = lua_tovector(L,1);
    vel = lua_tovector(L,2);
-   radius = luaL_checknumber(L,3);
-   angle = luaL_checknumber(L,4);
-   Kp = luaL_checknumber(L,5);
-   Kd = luaL_checknumber(L,6);
+   radius = luaL_optnumber(L,3,0.);
+   angle = luaL_optnumber(L,4,0.);
+   Kp = luaL_optnumber(L,5,10.);
+   Kd = luaL_optnumber(L,6,20.);
 
    vec2_cset( &point, pos->x + radius * cos(angle),
          pos->y + radius * sin(angle) );
