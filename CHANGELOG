@@ -10,7 +10,7 @@
       * Display fuel consumption for ships in the equipment overlay
       * Added option to match speed with slowest ship in the fleet (on by default)
    * Engine
-      * Stats are now additive instead of multiplicative
+      * Stats (except inverted stats) are now additive instead of multiplicative
       * Try to merge saves if multiple directories correspond to the same player
       * Faster handling of asteroids with large exclusion areas
       * Added fuel_usage_mod ship stat.
