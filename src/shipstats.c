@@ -205,6 +205,7 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLookup *sl );
 static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type );
 static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal );
+static void ss_adjustDoubleStat( double* statptr, double adjustment, int inverted );
 
 ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double value, int overwrite, int raw )
 {
@@ -492,15 +493,15 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
 
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
-            destdbl = (double*) &destptr[ sl->offset ];
-            srcdbl = (const double*) &srcptr[ sl->offset ];
+            destdbl = (double*) (void*)&destptr[ sl->offset ];
+            srcdbl = (const double*) (const void*)&srcptr[ sl->offset ];
             *destdbl = (*destdbl) * (*srcdbl);
             break;
 
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-            destdbl = (double*) &destptr[ sl->offset ];
-            srcdbl = (const double*) &srcptr[ sl->offset ];
+            destdbl = (double*) (void*)&destptr[ sl->offset ];
+            srcdbl = (const double*) (const void*)&srcptr[ sl->offset ];
             *destdbl = (*destdbl) + (*srcdbl);
             break;
 
@@ -530,43 +531,21 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
  */
 int ss_statsMergeSingle( ShipStats *stats, const ShipStatList *list )
 {
-   char *ptr;
-   char *fieldptr;
-   double *dbl;
-   int *i;
-   const ShipStatsLookup *sl = &ss_lookup[ list->type ];
+   return ss_statsMergeSingleScale(stats, list, 1);
+}
 
-   ptr = (char*) stats;
-   switch (sl->data) {
-      case SS_DATA_TYPE_DOUBLE:
-         fieldptr = &ptr[ sl->offset ];
-         memcpy(&dbl, &fieldptr, sizeof(double*));
-         *dbl *= 1.0+list->d.d;
-         if (*dbl < 0.) /* Don't let the values go negative. */
-            *dbl = 0.;
-         break;
-
-      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         fieldptr = &ptr[ sl->offset ];
-         memcpy(&dbl, &fieldptr, sizeof(double*));
-         *dbl += list->d.d;
-         break;
-
-      case SS_DATA_TYPE_INTEGER:
-         fieldptr = &ptr[ sl->offset ];
-         memcpy(&i, &fieldptr, sizeof(int*));
-         *i   += list->d.i;
-         break;
-
-      case SS_DATA_TYPE_BOOLEAN:
-         fieldptr = &ptr[ sl->offset ];
-         memcpy(&i, &fieldptr, sizeof(int*));
-         *i    = 1; /* Can only set to true. */
-         break;
-   }
-
-   return 0;
+/**
+ * @brief Makes adjustments so the stats are positively additive.
+ */
+static void ss_adjustDoubleStat(double* statptr, double adjustment, int inverted)
+{
+   double currstat = *statptr;
+   /*
+    * Normal stats are additive, as having them multiplicative resulted in rediculous positive values for stacked builds
+    * Inverted stats remain multiplicative, for the same reason as above, except in this case we want to avoid
+    * excessively low stats due to stacking, and making the inverted stats multiplicative achieves this.
+    */
+   *statptr = (inverted) ? (currstat * (1 + adjustment)) : (currstat + adjustment);
 }
 
 /**
@@ -590,11 +569,8 @@ int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list, double
       case SS_DATA_TYPE_DOUBLE:
          fieldptr = &ptr[ sl->offset ];
          memcpy(&dbl, &fieldptr, sizeof(double*));
-         *dbl *= 1.0+list->d.d * scale;
-         if (*dbl < 0.) /* Don't let the values go negative. */
-            *dbl = 0.;
+         ss_adjustDoubleStat(dbl, list->d.d * scale, sl->inverted);
          break;
-
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
          fieldptr = &ptr[ sl->offset ];
@@ -699,8 +675,8 @@ ShipStatsType ss_typeFromName( const char *name )
 static const char* ss_printD_colour( double d, const ShipStatsLookup *sl )
 {
    if (sl->inverted)
-      return d < 0. ? "g" : "r";
-   return d > 0. ? "g" : "r";
+      return (d < 0.) ? "g" : "r";
+   return (d > 0.) ? "g" : "r";
 }
 
 /**
@@ -709,8 +685,8 @@ static const char* ss_printD_colour( double d, const ShipStatsLookup *sl )
 static const char* ss_printI_colour( int i, const ShipStatsLookup *sl )
 {
    if (sl->inverted)
-         return i < 0 ? "g" : "r";
-   return i > 0 ? "g" : "r";
+         return (i < 0) ? "g" : "r";
+   return (i > 0) ? "g" : "r";
 }
 
 /**
@@ -916,16 +892,15 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
    ptr = (char*) s;
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
-         destdbl = (double*) &ptr[ sl->offset ];
-         v = 1.0 + value / 100.;
+         destdbl = (double*) (void*)&ptr[ sl->offset ];
+         v = value / 100.;
          if (overwrite)
-            *destdbl = v;
-         else
-            *destdbl *= v;
+            *destdbl = 1.0;
+         ss_adjustDoubleStat(destdbl, v, sl->inverted);
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         destdbl  = (double*) &ptr[ sl->offset ];
+         destdbl  = (double*) (void*)&ptr[ sl->offset ];
          if (overwrite)
             *destdbl = value / 100.;
          else
@@ -933,7 +908,7 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-         destdbl  = (double*) &ptr[ sl->offset ];
+         destdbl  = (double*) (void*)&ptr[ sl->offset ];
          if (overwrite)
             *destdbl = value;
          else
@@ -971,15 +946,15 @@ static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type )
    ptr = (const char*) s;
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
-         destdbl = (const double*) &ptr[ sl->offset ];
+         destdbl = (const double*) (const void*)&ptr[ sl->offset ];
          return 100.*((*destdbl) - 1.0);
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         destdbl = (const double*) &ptr[ sl->offset ];
+         destdbl = (const double*) (const void*)&ptr[ sl->offset ];
          return 100.*(*destdbl);
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-         destdbl  = (const double*) &ptr[ sl->offset ];
+         destdbl  = (const double*) (const void*)&ptr[ sl->offset ];
          return *destdbl;
 
       case SS_DATA_TYPE_BOOLEAN:
@@ -1001,7 +976,7 @@ static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsTy
    ptr = (const char*) s;
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
-         destdbl = (const double*) &ptr[ sl->offset ];
+         destdbl = (const double*) (const void*)&ptr[ sl->offset ];
          if (internal)
             lua_pushnumber(L, *destdbl );
          else
@@ -1009,7 +984,7 @@ static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsTy
          return 0;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         destdbl = (const double*) &ptr[ sl->offset ];
+         destdbl = (const double*) (const void*)&ptr[ sl->offset ];
          if (internal)
             lua_pushnumber(L, *destdbl );
          else
@@ -1017,7 +992,7 @@ static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsTy
          return 0;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-         destdbl  = (const double*) &ptr[ sl->offset ];
+         destdbl  = (const double*) (const void*)&ptr[ sl->offset ];
          lua_pushnumber(L, *destdbl);
          return 0;
 
