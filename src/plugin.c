@@ -56,6 +56,7 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
       xmlr_strd( node, "description", plg->description );
       xmlr_strd( node, "compatibility", plg->compatibility );
       xmlr_int( node, "priority", plg->priority );
+      xmlr_strd( node, "source", plg->source );
       if (xml_isNode( node, "blacklist" )) {
          blacklist_append( xml_get(node) );
          continue;
@@ -201,6 +202,7 @@ void plugin_exit (void)
       free( p->version );
       free( p->description );
       free( p->compatibility );
+      free( p->source );
       free( p->mountpoint );
    }
    array_free(plugins);
