@@ -207,7 +207,7 @@ function enter()
          vn.scene()
          local sai = vn.newCharacter( tut.vn_shipai() )
          vn.transition( tut.shipai.transition )
-         sai(_([["Hello, sir. I compiled the available data on the very stupid challenge you just accepted. During this challenge, you will have to destroy three disabled ships in a certain order. Each time you destroy a ship, I will automatically set the target focus to the next ship, so that you will be able to focus on piloting and shooting.
+         sai(_([["Hello. I compiled the available data on the very stupid challenge you just accepted. During this challenge, you will have to destroy three disabled ships in a certain order. Each time you destroy a ship, I will automatically set the target focus to the next ship, so that you will be able to focus on piloting and shooting.
 So, don't try to auto-target around, and just shoot at the targets I will be indicating, and it will be fine."]]))
          vn.done( tut.shipai.transition )
          vn.run()
