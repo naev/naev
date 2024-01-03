@@ -1050,13 +1050,15 @@ void update_routine( double dt, int dohooks )
    space_update( dt, real_dt );
    spfx_update( dt, real_dt );
 
-   /* First compute weapon collisions. */
-   weapons_updateCollide( dt );
-   pilots_update( dt );
-   weapons_update( dt ); /* Has weapons think and update positions. */
+   if (dt > 0.) {
+      /* First compute weapon collisions. */
+      weapons_updateCollide( dt );
+      pilots_update( dt );
+      weapons_update( dt ); /* Has weapons think and update positions. */
 
-   /* Update camera. */
-   cam_update( dt );
+      /* Update camera. */
+      cam_update( dt );
+   }
 
    /* Update the elapsed time, should be with all the modifications and such. */
    elapsed_time_mod += dt;
