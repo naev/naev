@@ -2692,10 +2692,10 @@ static int aiL_relvel( lua_State *L )
  *        follow another pilot using a PD controller.
  *
  *    @luatparam Pilot target The pilot to follow
- *    @luatparam number radius The requested distance between p and target
- *    @luatparam number angle The requested angle between p and target (radians)
- *    @luatparam number Kp The first controller parameter
- *    @luatparam number Kd The second controller parameter
+ *    @luatparam[opt=0.] number radius The requested distance between p and target
+ *    @luatparam[opt=0.] number angle The requested angle between p and target (radians)
+ *    @luatparam[opt=10.] number Kp The first controller parameter
+ *    @luatparam[opt=20.] number Kd The second controller parameter
  *    @luatparam[opt] string method Method to compute goal angle
  *    @luareturn The point to go to as a vector2.
  * @luafunc follow_accurate
@@ -2709,10 +2709,10 @@ static int aiL_follow_accurate( lua_State *L )
 
    p = cur_pilot;
    target = luaL_validpilot(L,1);
-   radius = luaL_checknumber(L,2);
-   angle = luaL_checknumber(L,3);
-   Kp = luaL_checknumber(L,4);
-   Kd = luaL_checknumber(L,5);
+   radius = luaL_optnumber(L,2,0.);
+   angle = luaL_optnumber(L,3,0.);
+   Kp = luaL_optnumber(L,4,10.);
+   Kd = luaL_optnumber(L,5,20.);
    method = luaL_optstring(L,6,"velocity");
 
    if (strcmp( method, "absolute" ) == 0)
