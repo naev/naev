@@ -13,9 +13,9 @@
 #include "vec3.h"
 #include "shader_min.h"
 
-//const vec3 primary_light = { .v = {4., 2., -20.} };
-//const vec3 primary_light = { .v = {20., 0., 0.} };
-const vec3 primary_light = { .v = {0., 0., -3.} };
+const vec3 primary_light = { .v = {4., 2., -5.} };
+//const vec3 primary_light = { .v = {2., 2., 2.} };
+//const vec3 primary_light = { .v = {0., 0., -3.} };
 
 /* Horrible hack that turns a variable name into a string. */
 #define STR_HELPER(x) #x
@@ -23,7 +23,7 @@ const vec3 primary_light = { .v = {0., 0., -3.} };
 
 #define MAX_LIGHTS 4    /**< Maximum amount of lights. TODO deferred rendering. */
 
-#define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
+#define SHADOWMAP_SIZE  1024   /**< Size of the shadow map. */
 
 /**
  * @brief Simple point light model.
@@ -761,14 +761,12 @@ int object_init (void)
    /* Set up shadow buffer depth tex. */
    glGenTextures(1, &tex_shadow);
    glBindTexture(GL_TEXTURE_2D, tex_shadow);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOWMAP_SIZE, SHADOWMAP_SIZE, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
-   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
-   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-   //glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, b);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, SHADOWMAP_SIZE, SHADOWMAP_SIZE, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+   glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, b);
    glBindTexture(GL_TEXTURE_2D, 0);
    /* Set up shadow buffer FBO. */
    glGenFramebuffers( 1, &fbo_shadow );

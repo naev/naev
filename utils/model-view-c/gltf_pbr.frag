@@ -18,7 +18,6 @@ uniform sampler2D emissive_tex; /**< Emission texture. */
 /* misc */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform int u_blend = 0;
-uniform sampler2DShadow shadowmap; /**< Shadow map. */
 uniform sampler2D shadowmap_tex; /**< Shadow map. */
 
 in vec2 tex_coord0;
@@ -255,23 +254,12 @@ void main (void)
 
    /* Set up shadows. */
    float shadowFactor;
-   vec4 sc = shadow / shadow.w;
+   vec3 sc = shadow.rgb / shadow.z;
    /* Check to see if in the shadowmap frustrum. */
-   //if ((shadow.w < 0.0) || (sc.x < 0.0 || sc.y < 0.0) || (sc.x > 1.0 || sc.y > 1.0))
-   //if (sc.y < 0.5 )
-   if (texture( shadowmap_tex, sc.xy ).r < sc.z)
-      shadowFactor = 0.1;
+   if (texture( shadowmap_tex, sc.xy ).r < sc.z - 0.01)
+      shadowFactor = 0.0;
    else
       shadowFactor = 1.0;
-   //else
-   //   shadowFactor = 0.1 + 0.9 * textureProj(shadowmap, sc);
-   //shadowFactor = 1.0;
-   //shadowFactor = texture( shadowmap_tex, shadow.xy ).r;
-   //shadowFactor = textureProj(shadowmap, sc);
-   //colour_out = vec4( vec3(shadowFactor), 1.0 );
-   //colour_out = vec4( shadow.rgb, 1.0 );
-   //colour_out = vec4( vec3(sc.z), 1.0 );
-   //return;
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
@@ -315,10 +303,10 @@ void main (void)
    f_clearcoat *= M.clearcoat;
    colour_out.rgb = colour_out.rgb * (1.0 - M.clearcoat * clearcoatFresnel) + f_clearcoat;
 
-   //colour_out = vec4( M.albedo, 1.0 );
+   //colour_out = vec4( M.albedo.rgb, 1.0 );
    //colour_out = vec4( vec3(M.metallic), 1.0 );
    //colour_out = vec4( vec3(M.perceptualRoughness), 1.0 );
    //colour_out = vec4( vec3(ao), 1.0 );
    //colour_out = vec4( f_emissive, 1.0 );
-   //colour_out = vec4( (n*0.5+0.5), 1.0 );
+   colour_out = vec4( (n*0.5+0.5), 1.0 );
 }
