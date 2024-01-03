@@ -61,6 +61,10 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
          blacklist_append( xml_get(node) );
          continue;
       }
+      if (xml_isNode( node, "whitelist" )) {
+         whitelist_append( xml_get(node) );
+         continue;
+      }
       if (xml_isNode( node, "total_conversion" )) {
          const char *blk[] = {
             "^ssys/.*\\.xml",
@@ -77,10 +81,16 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
             "^unidiff/.*\\.xml",
             "^map_decorator/.*\\.xml",
             "^intro",
-            NULL
+            NULL,
+         };
+         const char *wht[] = {
+            "^events/settings.lua",
+            NULL,
          };
          for (int i=0; blk[i]!=NULL; i++)
             blacklist_append( blk[i] );
+         for (int i=0; wht[i]!=NULL; i++)
+            whitelist_append( wht[i] );
          plg->total_conversion = 1;
          continue;
       }
