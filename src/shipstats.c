@@ -530,43 +530,49 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
  */
 int ss_statsMergeSingle( ShipStats *stats, const ShipStatList *list )
 {
-   char *ptr;
-   char *fieldptr;
-   double *dbl;
-   int *i;
-   const ShipStatsLookup *sl = &ss_lookup[ list->type ];
+   return ss_statsMergeSingleScale(stats, list, 1);
+}
 
-   ptr = (char*) stats;
-   switch (sl->data) {
-      case SS_DATA_TYPE_DOUBLE:
-         fieldptr = &ptr[ sl->offset ];
-         memcpy(&dbl, &fieldptr, sizeof(double*));
-         *dbl *= 1.0+list->d.d;
-         if (*dbl < 0.) /* Don't let the values go negative. */
-            *dbl = 0.;
-         break;
-
-      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         fieldptr = &ptr[ sl->offset ];
-         memcpy(&dbl, &fieldptr, sizeof(double*));
-         *dbl += list->d.d;
-         break;
-
-      case SS_DATA_TYPE_INTEGER:
-         fieldptr = &ptr[ sl->offset ];
-         memcpy(&i, &fieldptr, sizeof(int*));
-         *i   += list->d.i;
-         break;
-
-      case SS_DATA_TYPE_BOOLEAN:
-         fieldptr = &ptr[ sl->offset ];
-         memcpy(&i, &fieldptr, sizeof(int*));
-         *i    = 1; /* Can only set to true. */
-         break;
-   }
-
-   return 0;
+void ss_adjustDoubleStat(double* statptr, double adjustment, int inverted)
+{
+   double currstat = *statptr;
+   /*
+    * For inverted stats, we first invert the stat, apply the adjustment, and then reinvert the stat
+    * 
+    * This is because for inverted stats "infinitely good" = 0. We don't want to be able to get
+    * "infinitely good" with a finite improvement. So we first invert the current stat,
+    * so like normal stats "infinitely good" is actually infinity. Then we apply the adjustment
+    * (we need to subtract the adjustment as the inverting has flipped the direction of "good" and "bad")
+    * and then reinvert to get back to the real value.
+    * 
+    * For example, consider a "cargo inertia" penalty of 20%, when our current cargo interia is 125%.
+    * 
+    * We invert 125% to get 80%, subtract 20% to get 60%, and then invert to get 166.67%. 
+    * 
+    * The way to think of this is to imagine "cargo inertia" was a "positive stat" 
+    * called say "cargo goodness". Lets say a "cargo goodness" of 200% made cargo mass only have 50% effect.
+    * 
+    * Then one could assume "cargo goodness" of 80% would make cargo have a 125% effect. 
+    * 
+    * Basically you invert the "cargo goodness" to get the "cargo inertia".
+    * 
+    * In this case, lowering the "cargo goodness" by another 20% would take the "cargo goodness" to 60%,
+    * making cargo have a 166.67% effect, namely the inverse of 60%.
+    * 
+    * With non-inverted stats, adding 100% makes the stat "twice as good", but you only have to remove 50%
+    * to make it "half as good". Removing 100% from a non-inverted stat makes your ship non-functional.
+    * 
+    * Stat inversion is just for readability's sake, because "jump time" or "cargo inertia" is easier to
+    * understand than "jump fastness" or "cargo goodness". But it should still work the same.
+    * A 100% improvement in jump time should half the jump time, and a 50% loss should double jump time.
+    * 
+    * We don't actually get that holding true without doing this inversion before applying adjustments.
+    * 
+    * In the formula used in the code, we actually do the following rearrangement, which saves one division:
+    * 
+    * 1 / (1 / currstat - adjustment)) = currstat / (1 - currstat * adjustment)
+    */
+   *statptr = inverted ? currstat / (1 - currstat * adjustment) : currstat + adjustment;
 }
 
 /**
@@ -590,11 +596,8 @@ int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list, double
       case SS_DATA_TYPE_DOUBLE:
          fieldptr = &ptr[ sl->offset ];
          memcpy(&dbl, &fieldptr, sizeof(double*));
-         *dbl *= 1.0+list->d.d * scale;
-         if (*dbl < 0.) /* Don't let the values go negative. */
-            *dbl = 0.;
+         ss_adjustDoubleStat(dbl, list->d.d * scale, sl->inverted);
          break;
-
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
          fieldptr = &ptr[ sl->offset ];
@@ -917,11 +920,10 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
          destdbl = (double*) &ptr[ sl->offset ];
-         v = 1.0 + value / 100.;
+         v = value / 100.;
          if (overwrite)
-            *destdbl = v;
-         else
-            *destdbl *= v;
+            *destdbl = 1.0;
+         ss_adjustDoubleStat(destdbl, v, sl->inverted);
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
