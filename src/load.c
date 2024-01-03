@@ -105,6 +105,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
 static int load_enumerateCallbackPlayer( void* data, const char* origdir, const char* fname );
 static int load_compatibilityTest( const nsave_t *ns );
 static const char* load_compatibilityString( const nsave_t *ns );
+static int has_plugin( const char *plugin );
 static SaveCompatibility load_compatibility( const nsave_t *ns );
 static int load_sortComparePlayersName( const void *p1, const void *p2 );
 static int load_sortComparePlayers( const void *p1, const void *p2 );
@@ -454,25 +455,29 @@ static const char* load_compatibilityString( const nsave_t *ns )
 }
 
 /**
+ * @brief Checks to see if has a plugin.
+ */
+static int has_plugin( const char *plugin )
+{
+   const plugin_t *plugins = plugin_list();
+   for (int j=0; j<array_size(plugins); j++)
+      if (strcmp( plugin, plugin_name(&plugins[j]) )==0)
+         return 1;
+   return 0;
+}
+
+/**
  * @brief Checks to see if a save is compatible with current Naev.
  */
 static SaveCompatibility load_compatibility( const nsave_t *ns )
 {
    int diff = naev_versionCompare( ns->version );
-   const plugin_t *plugins = plugin_list();
 
    if (ABS(diff) >= 2)
       return SAVE_COMPATIBILITY_NAEV_VERSION;
 
    for (int i=0; i<array_size(ns->plugins); i++) {
-      int found = 0;
-      for (int j=0; j<array_size(plugins); j++) {
-         if (strcmp( ns->plugins[i], plugin_name(&plugins[j]) )==0) {
-            found = 1;
-            break;
-         }
-      }
-      if (!found)
+      if (!has_plugin( ns->plugins[i] ))
          return SAVE_COMPATIBILITY_PLUGINS;
    }
 
@@ -870,7 +875,15 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Name:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->shipname );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Model:") );
-   /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", _(ns->shipmodel) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", _(ns->shipmodel) );
+   if (array_size(ns->plugins)>0) {
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Plugins:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   #%c%s#0", has_plugin(ns->plugins[0]) ? '0' : 'r', ns->plugins[0] );
+      for (int i=1; i<array_size(ns->plugins); i++) {
+         l += scnprintf( &buf[l], sizeof(buf)-l, p_("plugins list",", #%c%s#0"),
+               has_plugin(ns->plugins[i]) ? '0' : 'r', ns->plugins[i] );
+      }
+   }
    window_modifyText( wid, "txtPilot", buf );
 }
 
