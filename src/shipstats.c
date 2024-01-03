@@ -537,7 +537,7 @@ int ss_statsMergeSingle( ShipStats *stats, const ShipStatList *list )
 /**
  * @brief Makes adjustments so the stats are positively additive.
  */
-static void ss_adjustDoubleStat(double* statptr, double adjustment, int inverted)
+static void ss_adjustDoubleStat( double* statptr, double adjustment, int inverted )
 {
    double currstat = *statptr;
    /*
@@ -545,7 +545,7 @@ static void ss_adjustDoubleStat(double* statptr, double adjustment, int inverted
     * Inverted stats remain multiplicative, for the same reason as above, except in this case we want to avoid
     * excessively low stats due to stacking, and making the inverted stats multiplicative achieves this.
     */
-   *statptr = (inverted) ? (currstat * (1 + adjustment)) : (currstat + adjustment);
+   *statptr = (inverted) ? (currstat * (1. + adjustment)) : (currstat + adjustment);
 }
 
 /**
@@ -569,7 +569,7 @@ int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list, double
       case SS_DATA_TYPE_DOUBLE:
          fieldptr = &ptr[ sl->offset ];
          memcpy(&dbl, &fieldptr, sizeof(double*));
-         ss_adjustDoubleStat(dbl, list->d.d * scale, sl->inverted);
+         ss_adjustDoubleStat( dbl, list->d.d * scale, sl->inverted );
          break;
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
@@ -896,7 +896,7 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
          v = value / 100.;
          if (overwrite)
             *destdbl = 1.0;
-         ss_adjustDoubleStat(destdbl, v, sl->inverted);
+         ss_adjustDoubleStat( destdbl, v, sl->inverted );
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
