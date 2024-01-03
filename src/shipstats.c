@@ -205,6 +205,7 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLookup *sl );
 static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type );
 static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal );
+static void ss_adjustDoubleStat( double* statptr, double adjustment, int inverted );
 
 ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double value, int overwrite, int raw )
 {
@@ -492,15 +493,15 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
 
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
-            destdbl = (double*) &destptr[ sl->offset ];
-            srcdbl = (const double*) &srcptr[ sl->offset ];
+            destdbl = (double*) (void*)&destptr[ sl->offset ];
+            srcdbl = (const double*) (const void*)&srcptr[ sl->offset ];
             *destdbl = (*destdbl) * (*srcdbl);
             break;
 
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-            destdbl = (double*) &destptr[ sl->offset ];
-            srcdbl = (const double*) &srcptr[ sl->offset ];
+            destdbl = (double*) (void*)&destptr[ sl->offset ];
+            srcdbl = (const double*) (const void*)&srcptr[ sl->offset ];
             *destdbl = (*destdbl) + (*srcdbl);
             break;
 
@@ -533,46 +534,49 @@ int ss_statsMergeSingle( ShipStats *stats, const ShipStatList *list )
    return ss_statsMergeSingleScale(stats, list, 1);
 }
 
-void ss_adjustDoubleStat(double* statptr, double adjustment, int inverted)
+/**
+ * @brief Makes adjustments so the stats are positively additive.
+ */
+static void ss_adjustDoubleStat(double* statptr, double adjustment, int inverted)
 {
    double currstat = *statptr;
    /*
     * For inverted stats, we first invert the stat, apply the adjustment, and then reinvert the stat
-    * 
+    *
     * This is because for inverted stats "infinitely good" = 0. We don't want to be able to get
     * "infinitely good" with a finite improvement. So we first invert the current stat,
     * so like normal stats "infinitely good" is actually infinity. Then we apply the adjustment
     * (we need to subtract the adjustment as the inverting has flipped the direction of "good" and "bad")
     * and then reinvert to get back to the real value.
-    * 
+    *
     * For example, consider a "cargo inertia" penalty of 20%, when our current cargo interia is 125%.
-    * 
-    * We invert 125% to get 80%, subtract 20% to get 60%, and then invert to get 166.67%. 
-    * 
-    * The way to think of this is to imagine "cargo inertia" was a "positive stat" 
+    *
+    * We invert 125% to get 80%, subtract 20% to get 60%, and then invert to get 166.67%.
+    *
+    * The way to think of this is to imagine "cargo inertia" was a "positive stat"
     * called say "cargo goodness". Lets say a "cargo goodness" of 200% made cargo mass only have 50% effect.
-    * 
-    * Then one could assume "cargo goodness" of 80% would make cargo have a 125% effect. 
-    * 
+    *
+    * Then one could assume "cargo goodness" of 80% would make cargo have a 125% effect.
+    *
     * Basically you invert the "cargo goodness" to get the "cargo inertia".
-    * 
+    *
     * In this case, lowering the "cargo goodness" by another 20% would take the "cargo goodness" to 60%,
     * making cargo have a 166.67% effect, namely the inverse of 60%.
-    * 
+    *
     * With non-inverted stats, adding 100% makes the stat "twice as good", but you only have to remove 50%
     * to make it "half as good". Removing 100% from a non-inverted stat makes your ship non-functional.
-    * 
+    *
     * Stat inversion is just for readability's sake, because "jump time" or "cargo inertia" is easier to
     * understand than "jump fastness" or "cargo goodness". But it should still work the same.
     * A 100% improvement in jump time should half the jump time, and a 50% loss should double jump time.
-    * 
+    *
     * We don't actually get that holding true without doing this inversion before applying adjustments.
-    * 
+    *
     * In the formula used in the code, we actually do the following rearrangement, which saves one division:
-    * 
+    *
     * 1 / (1 / currstat - adjustment)) = currstat / (1 - currstat * adjustment)
     */
-   *statptr = inverted ? currstat / (1 - currstat * adjustment) : currstat + adjustment;
+   *statptr = (inverted) ? (currstat / (1. - currstat * adjustment)) : (currstat + adjustment);
 }
 
 /**
@@ -702,8 +706,8 @@ ShipStatsType ss_typeFromName( const char *name )
 static const char* ss_printD_colour( double d, const ShipStatsLookup *sl )
 {
    if (sl->inverted)
-      return d < 0. ? "g" : "r";
-   return d > 0. ? "g" : "r";
+      return (d < 0.) ? "g" : "r";
+   return (d > 0.) ? "g" : "r";
 }
 
 /**
@@ -712,8 +716,8 @@ static const char* ss_printD_colour( double d, const ShipStatsLookup *sl )
 static const char* ss_printI_colour( int i, const ShipStatsLookup *sl )
 {
    if (sl->inverted)
-         return i < 0 ? "g" : "r";
-   return i > 0 ? "g" : "r";
+         return (i < 0) ? "g" : "r";
+   return (i > 0) ? "g" : "r";
 }
 
 /**
@@ -919,7 +923,7 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
    ptr = (char*) s;
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
-         destdbl = (double*) &ptr[ sl->offset ];
+         destdbl = (double*) (void*)&ptr[ sl->offset ];
          v = value / 100.;
          if (overwrite)
             *destdbl = 1.0;
@@ -927,7 +931,7 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         destdbl  = (double*) &ptr[ sl->offset ];
+         destdbl  = (double*) (void*)&ptr[ sl->offset ];
          if (overwrite)
             *destdbl = value / 100.;
          else
@@ -935,7 +939,7 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-         destdbl  = (double*) &ptr[ sl->offset ];
+         destdbl  = (double*) (void*)&ptr[ sl->offset ];
          if (overwrite)
             *destdbl = value;
          else
@@ -973,15 +977,15 @@ static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type )
    ptr = (const char*) s;
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
-         destdbl = (const double*) &ptr[ sl->offset ];
+         destdbl = (const double*) (const void*)&ptr[ sl->offset ];
          return 100.*((*destdbl) - 1.0);
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         destdbl = (const double*) &ptr[ sl->offset ];
+         destdbl = (const double*) (const void*)&ptr[ sl->offset ];
          return 100.*(*destdbl);
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-         destdbl  = (const double*) &ptr[ sl->offset ];
+         destdbl  = (const double*) (const void*)&ptr[ sl->offset ];
          return *destdbl;
 
       case SS_DATA_TYPE_BOOLEAN:
@@ -1003,7 +1007,7 @@ static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsTy
    ptr = (const char*) s;
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
-         destdbl = (const double*) &ptr[ sl->offset ];
+         destdbl = (const double*) (const void*)&ptr[ sl->offset ];
          if (internal)
             lua_pushnumber(L, *destdbl );
          else
@@ -1011,7 +1015,7 @@ static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsTy
          return 0;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         destdbl = (const double*) &ptr[ sl->offset ];
+         destdbl = (const double*) (const void*)&ptr[ sl->offset ];
          if (internal)
             lua_pushnumber(L, *destdbl );
          else
@@ -1019,7 +1023,7 @@ static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsTy
          return 0;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-         destdbl  = (const double*) &ptr[ sl->offset ];
+         destdbl  = (const double*) (const void*)&ptr[ sl->offset ];
          lua_pushnumber(L, *destdbl);
          return 0;
 

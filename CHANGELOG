@@ -4,13 +4,14 @@
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
-      * Can modify game speed directly instead of using a slowmode difficulty for accessibility
+      * Can modify game speed directly instead of using a slow mode difficulty for accessibility
       * Messages get folded instead of repeating
       * Asteroids no longer fade out if close to the player
       * Display fuel consumption for ships in the equipment overlay
       * Added option to match speed with slowest ship in the fleet (on by default)
    * Engine
-      * Try to merge saves if multiple directories correpsond to the same player
+      * Stats are now additive instead of multiplicative
+      * Try to merge saves if multiple directories correspond to the same player
       * Faster handling of asteroids with large exclusion areas
       * Added fuel_usage_mod ship stat.
       * Fixed player losing navigation targets when unidiff is applied
