@@ -818,11 +818,15 @@ void land_updateMainTab (void)
    if (!land_hasLocalMap())
       return;
 
-   o = outfit_get( LOCAL_MAP_NAME );
-   if (o == NULL) {
-      WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
-      return;
+   if (LOCAL_MAP_NAME != NULL) {
+      o = outfit_get( LOCAL_MAP_NAME );
+      if (o == NULL) {
+         WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
+         return;
+      }
    }
+   else
+      return;
 
    /* Just enable button if it exists. */
    if (widget_exists( land_windows[0], "btnMap" ))
