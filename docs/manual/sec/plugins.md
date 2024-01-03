@@ -89,6 +89,8 @@ The important fields are listed below:
 
 Furthermore, it is also possible to use regex to hide files from the base game with `<blacklist>` nodes. For example, `<blacklist>^ssys/.*\.xml</blacklist>` would hide all the XML files in the `ssys` directory. This is especially useful when planning total conversions or plugins that modify significantly the base game, and you don't want updates to add new files you have to hide. By using the appropriate blacklists, you increase compatibility with future versions of Naev. Furthermore, given the popularity of *total conversion*-type plugins, you can use the `<total_conversion/>` tag to apply a large set of blacklist rules which will remove all explicit content from Naev. This means you will have to define at least a star system, a spob, and a flyable ship for the game to run.
 
+In additiona to the blacklist, a whitelist can also be defined with `<whitelist>`, which takes priority over the blacklist. In other words, whitlelist stuff will ignore the blacklist. *Total conversions* automatically get a few critical files such as the `settings.lua` event included, although they can still be overwritten.
+
 ## Plugin Repository
 
 Naev has a [plugin repository](https://github.com/naev/naev-plugins) which tries to centralize know plugins. To add your plugin, please create a pull request on the repository. This repository contains only the minimum information of the plugins necessary to be able to download and look up the rest of the information.
