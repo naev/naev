@@ -1,11 +1,5 @@
-const mat4 I = mat4(
-   1.0, 0.0, 0.0, 0.0,
-   0.0, 1.0, 0.0, 0.0,
-   0.0, 0.0, 1.0, 0.0,
-   0.0, 0.0, 0.0, 1.0 );
-
-uniform mat4 shadow_projection = I;
-uniform mat4 model = I;
+uniform mat4 shadow_projection;
+uniform mat4 model;
 
 in vec3 vertex;
 

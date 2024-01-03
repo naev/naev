@@ -25,7 +25,6 @@ in vec2 tex_coord0;
 in vec3 position;
 in vec4 shadow;
 in vec3 normal;
-in mat3 normalH;
 out vec4 colour_out;
 
 float pow5( float x ) {
