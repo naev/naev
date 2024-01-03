@@ -99,6 +99,15 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
 
    xmlFreeDoc(doc);
 
+#define MELEMENT(o,s) \
+if (o) WARN(_("Plugin '%s' missing/invalid '%s' element"), plg->name, s) /**< Define to help check for data errors. */
+   MELEMENT( plg->author==NULL, "author" );
+   MELEMENT( plg->version==NULL, "version" );
+   MELEMENT( plg->description==NULL, "description" );
+   MELEMENT( plg->compatibility==NULL, "compatibility" );
+   MELEMENT( plg->source==NULL, "source" );
+#undef MELEMENT
+
    return 0;
 }
 
