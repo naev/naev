@@ -14,8 +14,7 @@ function init( p, po )
 
    -- Doubles effect
    if hasunguided then
-      -- It's multiplicative so we add a bonus such that multiplied by the base bonus we get double the original amount
-      po:set( "launch_damage", 110/1.05-100 )
+      po:set( "launch_damage", 5 )
    else
       po:clear()
    end
