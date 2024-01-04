@@ -13,27 +13,51 @@
 #include "vec3.h"
 #include "shader_min.h"
 
-//const vec3 primary_light = { .v = {4., 2., -5.} };
-//const vec3 primary_light = { .v = {2., 2., 2.} };
-const vec3 primary_light = { .v = {0., 1., 1.} };
-
 /* Horrible hack that turns a variable name into a string. */
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-#define MAX_LIGHTS 4    /**< Maximum amount of lights. TODO deferred rendering. */
+#define MAX_LIGHTS 2    /**< Maximum amount of lights. TODO deferred rendering. */
 
-#define SHADOWMAP_SIZE  1024   /**< Size of the shadow map. */
+#define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
 
 /**
  * @brief Simple point light model.
  */
 typedef struct ShaderLight_ {
+   GLuint Hshadow;   /* mat4 */
    GLuint position;  /* vec3 */
    GLuint range;     /* float */
    GLuint colour;    /* vec3 */
    GLuint intensity; /* float */
+   GLuint shadowmap_tex; /* sampler2D */
 } ShaderLight;
+
+typedef struct Light_ {
+   vec3 pos;
+   double intensity;
+   double range;
+   vec3 colour;
+   GLuint fbo;
+   GLuint tex;
+} Light;
+//const vec3 primary_light = { .v = {-10., 25., 25.} };
+//const vec3 primary_light = { .v = {0., 3., 50.} };
+
+static Light lights[MAX_LIGHTS] = {
+   {
+      .pos = { .v = {-10., 25., 25.} },
+      .range = -1.,
+      .colour = { .v = {1., 1., 1.} },
+      .intensity = 25e3,
+   },
+   {
+      .pos = { .v = {0., 3., 50.} },
+      .range = -1.,
+      .colour = { .v = {1., 1., 1.} },
+      .intensity = 5e3,
+   },
+};
 
 /**
  * @brief Shader to use witha material.
@@ -63,12 +87,9 @@ typedef struct Shader_ {
    ShaderLight lights[MAX_LIGHTS];
    GLuint nlights;
    GLuint blend;
-   GLuint shadowmap_tex;
 } Shader;
 static Shader object_shader;
 static Shader shadow_shader;
-static GLuint shadow_fbo;
-static GLuint shadow_tex;
 static GLuint tex_zero;
 static GLuint tex_ones;
 
@@ -399,13 +420,14 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
    return 0;
 }
 
-static void shadow_matrix( mat4 *m )
+static void shadow_matrix( mat4 *m, const Light *light )
 {
-   const vec3 up        = { .v = {1., 0., 0.} };
-   const vec3 light_pos = primary_light; //{ .v = {4., 2., -20.} };
+   const vec3 up        = { .v = {0., 1., 0.} };
+   const vec3 light_pos = light->pos;
    const vec3 center    = { .v = {0., 0., 0.} };
    const mat4 L = mat4_lookat( &center, &light_pos, &up );
-   const mat4 O = mat4_ortho( -1., 1., -1., 1., -1., 1. );
+   //const mat4 O = mat4_ortho( -1., 1., -1., 1., -1., 1. );
+   const mat4 O = mat4_ortho( -0.6, 0.6, -0.6, 0.6, -0.6, 0.6 );
    mat4_mul( m, &O, &L );
 }
 
@@ -537,12 +559,12 @@ static void object_renderNodeMesh( const Object *obj, const Node *node, const ma
    gl_checkErr();
 }
 
-static void object_renderShadow( const Object *obj, const mat4 *H )
+static void object_renderShadow( const Object *obj, const mat4 *H, const Light *light )
 {
    const Shader *shd = &shadow_shader;
 
    /* Set up the shadow map and render. */
-   glBindFramebuffer(GL_FRAMEBUFFER, shadow_fbo);
+   glBindFramebuffer(GL_FRAMEBUFFER, light->fbo);
    glClear(GL_DEPTH_BUFFER_BIT);
    glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
 
@@ -553,7 +575,7 @@ static void object_renderShadow( const Object *obj, const mat4 *H )
    /* Set up shader. */
    glUseProgram( shd->program );
    mat4 Hshadow;
-   shadow_matrix( &Hshadow );
+   shadow_matrix( &Hshadow, light );
    glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, Hshadow.ptr );
 
    for (size_t i=0; i<obj->nnodes; i++)
@@ -579,11 +601,16 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    const Shader *shd = &object_shader;
    glUseProgram( shd->program );
    mat4 Hshadow;
-   shadow_matrix( &Hshadow );
-   glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, Hshadow.ptr );
-   glActiveTexture( GL_TEXTURE5 );
-      glBindTexture( GL_TEXTURE_2D, shadow_tex );
-      glUniform1i( shd->shadowmap_tex, 5 );
+   for (int i=0; i<MAX_LIGHTS; i++) {
+      const Light *l = &lights[i];
+
+      shadow_matrix( &Hshadow, l );
+      glUniformMatrix4fv( shd->lights[i].Hshadow, 1, GL_FALSE, Hshadow.ptr );
+
+      glActiveTexture( GL_TEXTURE5+i );
+         glBindTexture( GL_TEXTURE_2D, l->tex );
+         glUniform1i( shd->lights[i].shadowmap_tex, 5+i );
+   }
    gl_checkErr();
 
    glEnable(GL_BLEND);
@@ -624,18 +651,23 @@ void object_render( const Object *obj, const mat4 *H )
    const Shader *shd = &object_shader;
    glUseProgram( shd->program );
    /* Lighting. */
+   //glUniform1i( shd->nlights, MAX_LIGHTS );
    glUniform1i( shd->nlights, 1 );
-   const ShaderLight *sl = &shd->lights[0];
-   glUniform3f( sl->position, primary_light.v[0], primary_light.v[1], primary_light.v[2] );
-   glUniform1f( sl->range, -1. );
-   glUniform3f( sl->colour, 1., 1., 1. );
-   glUniform1f( sl->intensity, 500. );
+   for (int i=0; i<MAX_LIGHTS; i++) {
+      const Light *l = &lights[i];
+      const ShaderLight *sl = &shd->lights[i];
+      glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
+      glUniform1f( sl->range, l->range );
+      glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
+      glUniform1f( sl->intensity, l->intensity );
+   }
 
    /* Depth testing. */
    glEnable( GL_DEPTH_TEST );
    glDepthFunc( GL_LESS );
 
-   object_renderShadow( obj, Hptr );
+   for (int i=0; i<MAX_LIGHTS; i++)
+      object_renderShadow( obj, Hptr, &lights[i] );
    object_renderMesh( obj, Hptr );
 
    glDisable( GL_DEPTH_TEST );
@@ -767,26 +799,28 @@ int object_init (void)
    /* Set up default material. */
    object_loadMaterial( &material_default, NULL );
 
-   /* Set up shadow buffer depth tex. */
-   glGenTextures(1, &shadow_tex);
-   glBindTexture(GL_TEXTURE_2D, shadow_tex);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, SHADOWMAP_SIZE, SHADOWMAP_SIZE, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-   glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, b);
-   glBindTexture(GL_TEXTURE_2D, 0);
-   /* Set up shadow buffer FBO. */
-   glGenFramebuffers( 1, &shadow_fbo );
-   glBindFramebuffer(GL_FRAMEBUFFER, shadow_fbo);
-   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadow_tex, 0);
-   glDrawBuffer(GL_NONE);
-   glReadBuffer(GL_NONE);
-   glBindFramebuffer(GL_FRAMEBUFFER, 0);
-   status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-   if (status != GL_FRAMEBUFFER_COMPLETE)
-      WARN(_("Error setting up shadowmap framebuffer!"));
+   for (int i=0; i<MAX_LIGHTS; i++) {
+      /* Set up shadow buffer depth tex. */
+      glGenTextures(1, &lights[i].tex);
+      glBindTexture(GL_TEXTURE_2D, lights[i].tex);
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, SHADOWMAP_SIZE, SHADOWMAP_SIZE, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+      glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, b);
+      glBindTexture(GL_TEXTURE_2D, 0);
+      /* Set up shadow buffer FBO. */
+      glGenFramebuffers( 1, &lights[i].fbo );
+      glBindFramebuffer(GL_FRAMEBUFFER, lights[i].fbo);
+      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, lights[i].tex, 0);
+      glDrawBuffer(GL_NONE);
+      glReadBuffer(GL_NONE);
+      glBindFramebuffer(GL_FRAMEBUFFER, 0);
+      status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+      if (status != GL_FRAMEBUFFER_COMPLETE)
+         WARN(_("Error setting up shadowmap framebuffer!"));
+   }
 
    /* Compile the shadow shader. */
    shd = &shadow_shader;
@@ -811,7 +845,6 @@ int object_init (void)
    shd->vertex_normal   = glGetAttribLocation( shd->program, "vertex_normal" );
    shd->vertex_tex0     = glGetAttribLocation( shd->program, "vertex_tex0" );
    /* Vertex uniforms. */
-   shd->Hshadow         = glGetUniformLocation( shd->program, "u_shadow");
    shd->Hmodel          = glGetUniformLocation( shd->program, "u_model");
    /* Fragment uniforms. */
    shd->blend           = glGetUniformLocation( shd->program, "u_blend" );
@@ -838,9 +871,12 @@ int object_init (void)
       sl->colour        = glGetUniformLocation( shd->program, buf );
       snprintf( buf, sizeof(buf), "u_lights[%d].intensity", i );
       sl->intensity     = glGetUniformLocation( shd->program, buf );
+      snprintf( buf, sizeof(buf), "shadowmap_tex[%d]", i );
+      sl->shadowmap_tex = glGetUniformLocation( shd->program, buf );
+      snprintf( buf, sizeof(buf), "u_shadow[%d]", i );
+      sl->Hshadow         = glGetUniformLocation( shd->program, buf );
    }
    shd->nlights         = glGetUniformLocation( shd->program, "u_nlights" );
-   shd->shadowmap_tex   = glGetUniformLocation( shd->program, "shadowmap_tex" );
    glUseProgram(0);
    gl_checkErr();
 
@@ -849,8 +885,10 @@ int object_init (void)
 
 void object_exit (void)
 {
-   glDeleteTextures( 1, &shadow_tex );
-   glDeleteFramebuffers( 1, &shadow_fbo );
+   for (int i=0; i<MAX_LIGHTS; i++) {
+      glDeleteTextures( 1, &lights[i].tex );
+      glDeleteFramebuffers( 1, &lights[i].fbo );
+   }
    glDeleteTextures( 1, &tex_zero );
    glDeleteTextures( 1, &tex_ones );
    glDeleteProgram( object_shader.program );
@@ -859,5 +897,5 @@ void object_exit (void)
 
 GLuint object_shadowmap (void)
 {
-   return shadow_tex;
+   return lights[0].tex;
 }

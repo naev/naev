@@ -7,14 +7,14 @@ const mat4 view = mat4(
       0.0,  cos(view_angle), sin(view_angle), 0.0,
       0.0, -sin(view_angle), cos(view_angle), 0.0,
       0.0,             0.0,              0.0, 1.0 );
-uniform mat4 u_shadow;
+uniform mat4 u_shadow[MAX_LIGHTS];
 uniform mat4 u_model;
 
 in vec3 vertex;
 in vec3 vertex_normal;
 in vec2 vertex_tex0;
 out vec3 position;
-out vec3 shadow;
+out vec3 shadow[MAX_LIGHTS];
 out vec3 normal;
 out vec2 tex_coord0;
 
@@ -32,7 +32,9 @@ void main (void)
    gl_Position = view * pos;
 
    /* Shadows. */
-   vec4 shadow_pos = u_shadow * pos;
-   shadow = shadow_pos.rgb / shadow_pos.w;
-   shadow = shadow * 0.5 + 0.5;
+   for (int i=0; i<MAX_LIGHTS; i++) {
+      vec4 shadow_pos = u_shadow[i] * pos;
+      shadow[i] = shadow_pos.rgb / shadow_pos.w;
+      shadow[i] = shadow[i] * 0.5 + 0.5;
+   }
 }

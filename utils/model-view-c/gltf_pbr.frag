@@ -19,11 +19,10 @@ uniform sampler2D emissive_tex; /**< Emission texture. */
 /* misc */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform int u_blend = 0;
-uniform sampler2D shadowmap_tex; /**< Shadow map. */
 
 in vec2 tex_coord0;
 in vec3 position;
-in vec3 shadow;
+in vec3 shadow[MAX_LIGHTS];
 in vec3 normal;
 out vec4 colour_out;
 
@@ -143,8 +142,9 @@ struct Light {
    float intensity;
 };
 
-uniform Light u_lights[ MAX_LIGHTS ];
 uniform int u_nlights = 1;
+uniform Light u_lights[ MAX_LIGHTS ];
+uniform sampler2D shadowmap_tex[ MAX_LIGHTS ];
 
 vec3 light_intensity( Light L, float dist )
 {
@@ -287,14 +287,16 @@ void main (void)
    //f_specular += getIBLRadianceGGX(n, v, materialInfo.perceptualRoughness, materialInfo.f0, materialInfo.specularWeight);
    //f_diffuse += getIBLRadianceLambertian(n, v, materialInfo.perceptualRoughness, materialInfo.c_diff, materialInfo.f0, materialInfo.specularWeight);
    //f_clearcoat += getIBLRadianceGGX(materialInfo.clearcoatNormal, v, materialInfo.clearcoatRoughness, materialInfo.clearcoatF0, 1.0);
-   f_diffuse += 0.5 * M.c_diff; /* Just use ambience for now. */
+   //f_diffuse += 0.5 * M.c_diff; /* Just use ambience for now. */
 
    /* Ambient occlusion. */
    float ao = texture(occlusion_tex, tex_coord0).r;
    f_diffuse *= ao;
 
    /* Variance Shadow Mapping. */
-   float f_shadow = shadow_map( shadowmap_tex, shadow );
+   float f_shadow[2];
+   f_shadow[0] = shadow_map( shadowmap_tex[0], shadow[0] );
+   f_shadow[1] = shadow_map( shadowmap_tex[1], shadow[1] );
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
@@ -315,7 +317,7 @@ void main (void)
       /* TODO this check will always be true if we do the NoV trick above. */
       //if (NoL > 0.0 || NoV > 0.0) {
          vec3 intensity = light_intensity( L, length(pointToLight) );
-         vec3 NoLintensity = NoL * intensity;
+         vec3 NoLintensity = NoL * intensity * f_shadow[i];
 
          //f_diffuse  += intensity * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
          f_diffuse  += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL, LoH );
@@ -331,7 +333,7 @@ void main (void)
 
    /* Combine diffuse, emissive, and specular.. */
    float alpha = (u_blend==1) ? M.albedo.a : 1.0;
-   colour_out = vec4( f_emissive + f_shadow*(f_diffuse + f_specular), alpha );
+   colour_out = vec4( f_emissive + f_diffuse + f_specular, alpha );
 
    /* Apply clearcoat. */
    vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, clampedDot(n, v));
