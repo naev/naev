@@ -513,6 +513,7 @@ static int naevL_conf( lua_State *L )
    PUSH_DOUBLE( L, "colourblind_sim", conf.colourblind_sim );
    PUSH_DOUBLE( L, "colourblind_correct", conf.colourblind_correct );
    PUSH_INT( L, "colourblind_type", conf.colourblind_type );
+   PUSH_DOUBLE( L, "game_speed", conf.game_speed );
    PUSH_DOUBLE( L, "bg_brightness", conf.bg_brightness );
    PUSH_DOUBLE( L, "nebu_nonuniformity", conf.nebu_nonuniformity );
    PUSH_DOUBLE( L, "gamma_correction", conf.gamma_correction );
