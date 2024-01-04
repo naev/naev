@@ -525,25 +525,6 @@ static void object_renderNodeMesh( const Object *obj, const Node *node, const ma
    mat4 HH = node->H;
    mat4_apply( &HH, H );
 
-   /* Load common shader variables. */
-   const Shader *shd = &object_shader;
-   glUseProgram( shd->program );
-   mat4 Hshadow;
-   shadow_matrix( &Hshadow );
-   glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
-   glActiveTexture( GL_TEXTURE5 );
-      glBindTexture( GL_TEXTURE_2D, shadow_tex );
-      glUniform1i( shd->shadowmap_tex, 5 );
-   gl_checkErr();
-
-   /* Lighting. */
-   glUniform1i( shd->nlights, 1 );
-   const ShaderLight *sl = &shd->lights[0];
-   glUniform3f( sl->position, primary_light.v[0], primary_light.v[1], primary_light.v[2] );
-   glUniform1f( sl->range, -1. );
-   glUniform3f( sl->colour, 1.0, 1.0, 1.0 );
-   glUniform1f( sl->intensity, 500. );
-
    /* Draw meshes. */
    for (size_t i=0; i<node->nmesh; i++)
       renderMesh( obj, &node->mesh[i], &HH );
@@ -593,6 +574,17 @@ static void object_renderShadow( const Object *obj, const mat4 *H )
 
 static void object_renderMesh( const Object *obj, const mat4 *H )
 {
+   /* Load constant stuff. */
+   const Shader *shd = &object_shader;
+   glUseProgram( shd->program );
+   mat4 Hshadow;
+   shadow_matrix( &Hshadow );
+   glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
+   glActiveTexture( GL_TEXTURE5 );
+      glBindTexture( GL_TEXTURE_2D, shadow_tex );
+      glUniform1i( shd->shadowmap_tex, 5 );
+   gl_checkErr();
+
    glEnable(GL_BLEND);
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
    glViewport(0, 0, SCREEN_W, SCREEN_H );
@@ -626,6 +618,17 @@ void object_render( const Object *obj, const mat4 *H )
 {
    const mat4 I = mat4_identity();
    const mat4 *Hptr = (H!=NULL) ? H : &I;
+
+   /* Some constant stuff. */
+   const Shader *shd = &object_shader;
+   glUseProgram( shd->program );
+   /* Lighting. */
+   glUniform1i( shd->nlights, 1 );
+   const ShaderLight *sl = &shd->lights[0];
+   glUniform3f( sl->position, primary_light.v[0], primary_light.v[1], primary_light.v[2] );
+   glUniform1f( sl->range, -1. );
+   glUniform3f( sl->colour, 1., 1., 1. );
+   glUniform1f( sl->intensity, 500. );
 
    /* Depth testing. */
    glEnable( GL_DEPTH_TEST );
