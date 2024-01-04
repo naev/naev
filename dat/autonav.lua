@@ -7,7 +7,7 @@ local autonav_pos_approach_brake, autonav_pos_approach
 local autonav_spob_approach_brake, autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
-local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon, fleet_speed
+local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon, fleet_speed, game_speed
 local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_jump, brake_pos
 
 -- Some defaults
@@ -25,6 +25,7 @@ local function autonav_setup ()
    -- Get player / game info
    local pp = player.pilot()
    instant_jump = pp:shipstat("misc_instant_jump")
+   game_speed = naev.conf().game_speed
 
    -- Some safe defaults
    autonav     = nil
@@ -317,7 +318,7 @@ local function autonav_rampdown( d )
    local pp = player.pilot()
    local speed = pp:speed()
 
-   local vel = math.min( 1.5*speed, pp:vel():mod() )
+   local vel = math.min( 1.5*speed, pp:vel():mod() ) * game_speed
    local t   = d / vel * (1 - 0.075 * tc_base)
    local tint= 3 + 0.5*3*(tc_mod-tc_base)
    if t < tint then
