@@ -584,6 +584,10 @@ void vpool_wait( ThreadQueue *queue )
       return;
    }
 
+   /* Nothing to do. */
+   if (cnt <= 0)
+      return;
+
    /* Allocate all vpoolThreadData objects */
    SDL_mutexP( queue->mutex );
    /* Initialize the vpoolThreadData */
