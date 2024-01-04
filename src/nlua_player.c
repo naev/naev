@@ -775,7 +775,7 @@ static int playerL_dt_default( lua_State *L )
  */
 static int playerL_speed( lua_State *L )
 {
-   lua_pushnumber( L, player.speed );
+   lua_pushnumber( L, player.speed / conf.game_speed );
    return 1;
 }
 
