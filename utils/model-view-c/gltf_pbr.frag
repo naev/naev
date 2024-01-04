@@ -218,6 +218,29 @@ vec3 get_normal (void)
    return n;
 }
 
+float shadow_map( sampler2D tex, vec3 pos )
+{
+   /* Variance Shadow Mapping. */
+   /* Compute Moments (gpu gems 3 chapter 8). */
+   float m1 = texture( tex, pos.xy ).r;
+   float m1dx = dFdx(m1);
+   float m1dy = dFdy(m1);
+   float m2 = m1*m1 + 0.25*(m1dx*m1dx + m1dy*m1dy);
+
+   /* Chebyshev Uppe Bound. */
+   float p = float(pos.z <= m1);
+   float var = m2 - m1*m1;
+   const float minvar = 0.0001;
+   var = max( var, minvar );
+   float d = pos.z - m1;
+   float p_max = var / (var + d*d);
+   return max( p, p_max );
+
+   /* Regular Shadow Mapping. */
+   //float f_shadow = (l_depth_m1 + 0.05 > shadow.z) ? 1.0 : 0.0;
+   //return f_shadow;
+}
+
 void main (void)
 {
    vec3 n = get_normal();
@@ -252,13 +275,10 @@ void main (void)
    float ao = texture(occlusion_tex, tex_coord0).r;
    f_diffuse *= ao;
 
-   /* Set up shadows. */
-   float shadowFactor;
-   if (texture( shadowmap_tex, shadow.xy ).r < shadow.z)
-      shadowFactor = 0.0;
-   else
-      shadowFactor = 1.0;
-   colour_out = vec4( vec3(shadowFactor), 1.0 );
+   /* Variance Shadow Mapping. */
+   //float f_shadow = shadow_map( shadowmap_tex, length(u_lights[0].position-position) );
+   float f_shadow = shadow_map( shadowmap_tex, shadow );
+   colour_out = vec4( vec3(f_shadow), 1.0 );
    return;
 
    /* Point light for now. */
@@ -296,7 +316,7 @@ void main (void)
 
    /* Combine diffuse, emissive, and specular.. */
    float alpha = (u_blend==1) ? M.albedo.a : 1.0;
-   colour_out = vec4( f_emissive + shadowFactor*(f_diffuse + f_specular), alpha );
+   colour_out = vec4( f_emissive + f_shadow*(f_diffuse + f_specular), alpha );
 
    /* Apply clearcoat. */
    vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, clampedDot(n, v));
