@@ -995,11 +995,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* toggle speed mode */
    } else if (KEY("speed") && !repeat) {
       if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
-         if (player.speed < 4.) {
+         if (player.speed < 4.*conf.game_speed)
             player.speed *= 2.;
-         } else {
-            player.speed = 1.;
-         }
+         else
+            player.speed = conf.game_speed;
          player_resetSpeed();
       }
    /* opens a small menu */
