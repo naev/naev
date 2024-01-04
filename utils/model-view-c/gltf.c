@@ -52,10 +52,10 @@ static Light lights[MAX_LIGHTS] = {
       .intensity = 25e3,
    },
    {
-      .pos = { .v = {0., 3., 50.} },
+      .pos = { .v = {0., 3., 30.} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 5e3,
+      .intensity = 100e3,
    },
 };
 
@@ -651,8 +651,7 @@ void object_render( const Object *obj, const mat4 *H )
    const Shader *shd = &object_shader;
    glUseProgram( shd->program );
    /* Lighting. */
-   //glUniform1i( shd->nlights, MAX_LIGHTS );
-   glUniform1i( shd->nlights, 1 );
+   glUniform1i( shd->nlights, MAX_LIGHTS );
    for (int i=0; i<MAX_LIGHTS; i++) {
       const Light *l = &lights[i];
       const ShaderLight *sl = &shd->lights[i];
