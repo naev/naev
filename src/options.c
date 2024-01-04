@@ -480,8 +480,8 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkDoubletap" );
-   if (!!conf.doubletap_sens != f)
-      conf.doubletap_sens = (!!f)*250;
+   if ( conf.doubletap_sens != 0 != f)
+      conf.doubletap_sens = ( f != 0 ) *250;
 
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );

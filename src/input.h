@@ -81,7 +81,7 @@ typedef enum KeySemanticType_ {
    KST_COMM_HAIL,
    KST_COMM_RECEIVE,
    KST_COMM_UP,
-   KST_COMM_DOWN
+   KST_COMM_DOWN,
 
    KST_ZOOM_IN,
    KST_ZOOM_OUT,
@@ -107,7 +107,7 @@ typedef enum {
    KEYBIND_JHAT_RIGHT /**< Joystick hat right direction keybinding. */
 } KeybindType; /**< Keybind types. */
 
-extern const char *keybind_info[][ 3 ];
+extern const char *keybind_info[KST_PASTE+1][2];
 extern const int   input_numbinds;
 
 /*
@@ -118,8 +118,8 @@ SDL_Keycode input_keyConv( const char *name );
 void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod );
 const char *input_modToText( SDL_Keymod mod );
 SDL_Keycode input_getKeybind( KeySemanticType keybind, KeybindType *type, SDL_Keymod *mod );
-void input_getKeybindDisplay( const char *keybind, char *buf, int len );
-const char *input_getKeybindDescription( const char *keybind );
+void input_getKeybindDisplay( KeySemanticType keybind, char *buf, int len );
+const char *input_getKeybindDescription( KeySemanticType keybind );
 const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod mod );
 
 /*
@@ -128,7 +128,7 @@ const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod
 SDL_Keymod input_translateMod( SDL_Keymod mod );
 void input_enableAll (void);
 void input_disableAll (void);
-void input_toggleEnable( const char *key, int enable );
+void input_toggleEnable( KeySemanticType key, int enable );
 int input_clickPos( SDL_Event *event, double x, double y, double zoom, double minpr, double minr );
 int input_clickedJump( int jump, int autonav );
 int input_clickedSpob( int spob, int autonav );
@@ -146,7 +146,6 @@ void input_handle( SDL_Event* event );
  * init/exit
  */
 void input_init (void);
-void input_exit (void);
 
 /*
  * Updating.
