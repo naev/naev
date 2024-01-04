@@ -218,6 +218,11 @@ vec3 get_normal (void)
    return n;
 }
 
+float linstep( float minval, float maxval, float val )
+{
+   return clamp( (val-minval) / (maxval-minval), 0., 1. );
+}
+
 float shadow_map( sampler2D tex, vec3 pos )
 {
    /* Variance Shadow Mapping. */
@@ -234,6 +239,8 @@ float shadow_map( sampler2D tex, vec3 pos )
    var = max( var, minvar );
    float d = pos.z - m1;
    float p_max = var / (var + d*d);
+   /* Trick to reduce light-bleeding. */
+   p_max = linstep( 0.3, 1.0, p_max );
    return max( p, p_max );
 
    /* Regular Shadow Mapping. */
