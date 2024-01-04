@@ -14,15 +14,9 @@ in vec3 vertex;
 in vec3 vertex_normal;
 in vec2 vertex_tex0;
 out vec3 position;
-out vec4 shadow;
+out vec3 shadow;
 out vec3 normal;
 out vec2 tex_coord0;
-
-const mat4 bias = mat4(
-      0.5, 0.0, 0.0, 0.0,
-      0.0, 0.5, 0.0, 0.0,
-      0.0, 0.0, 0.5, 0.0,
-      0.5, 0.5, 0.5, 1.0 );
 
 void main (void)
 {
@@ -38,5 +32,7 @@ void main (void)
    gl_Position = view * pos;
 
    /* Shadows. */
-   shadow      = bias * shadow_projection * pos;
+   vec4 shadow_pos = shadow_projection * pos;
+   shadow = shadow_pos.rgb / shadow_pos.w;
+   shadow = shadow * 0.5 + 0.5;
 }

@@ -22,7 +22,7 @@ uniform sampler2D shadowmap_tex; /**< Shadow map. */
 
 in vec2 tex_coord0;
 in vec3 position;
-in vec4 shadow;
+in vec3 shadow;
 in vec3 normal;
 out vec4 colour_out;
 
@@ -254,12 +254,12 @@ void main (void)
 
    /* Set up shadows. */
    float shadowFactor;
-   vec3 sc = shadow.rgb / shadow.z;
-   /* Check to see if in the shadowmap frustrum. */
-   if (texture( shadowmap_tex, sc.xy ).r < sc.z - 0.01)
+   if (texture( shadowmap_tex, shadow.xy ).r < shadow.z)
       shadowFactor = 0.0;
    else
       shadowFactor = 1.0;
+   colour_out = vec4( vec3(shadowFactor), 1.0 );
+   return;
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
@@ -308,5 +308,5 @@ void main (void)
    //colour_out = vec4( vec3(M.perceptualRoughness), 1.0 );
    //colour_out = vec4( vec3(ao), 1.0 );
    //colour_out = vec4( f_emissive, 1.0 );
-   colour_out = vec4( (n*0.5+0.5), 1.0 );
+   //colour_out = vec4( (n*0.5+0.5), 1.0 );
 }
