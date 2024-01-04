@@ -50,6 +50,7 @@ typedef struct Shader_ {
    /* Fragment uniforms. */
    GLuint baseColour_tex;
    GLuint metallic_tex;
+   GLuint u_has_normal;
    GLuint normal_tex;
    GLuint metallicFactor;
    GLuint roughnessFactor;
@@ -470,6 +471,7 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
    glUniform3f( shd->emissive, mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
    glUniform1i( shd->blend, mat->blend );
+   glUniform1i( shd->u_has_normal, (mat->normal_tex!=tex_zero) );
    gl_checkErr();
 
    /* Texture. */
@@ -815,6 +817,7 @@ int object_init (void)
    shd->blend           = glGetUniformLocation( shd->program, "u_blend" );
    shd->baseColour_tex  = glGetUniformLocation( shd->program, "baseColour_tex" );
    shd->metallic_tex    = glGetUniformLocation( shd->program, "metallic_tex" );
+   shd->u_has_normal    = glGetUniformLocation( shd->program, "u_has_normal" );
    shd->normal_tex      = glGetUniformLocation( shd->program, "normal_tex" );
    shd->metallicFactor  = glGetUniformLocation( shd->program, "metallicFactor" );
    shd->roughnessFactor = glGetUniformLocation( shd->program, "roughnessFactor" );

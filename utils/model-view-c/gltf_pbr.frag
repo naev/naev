@@ -6,6 +6,7 @@ const float M_PI        = 3.14159265358979323846;  /* pi */
 /* pbr_metallic_roughness */
 uniform sampler2D baseColour_tex; /**< Base colour. */
 uniform sampler2D metallic_tex; /**< Metallic texture. */
+uniform bool u_has_normal; /**< Whether or not has a normal map. */
 uniform sampler2D normal_tex; /**< Normal map. */
 uniform float metallicFactor;
 uniform float roughnessFactor;
@@ -198,8 +199,12 @@ float clampedDot( vec3 x, vec3 y )
    return clamp(dot(x, y), 0.0, 1.0);
 }
 
+/* Taken from https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/source/Renderer/shaders */
 vec3 get_normal (void)
 {
+   if (u_has_normal==false)
+      return normalize(normal);
+
    vec2 uv    = tex_coord0;
    vec2 uv_dx = dFdx(uv);
    vec2 uv_dy = dFdy(uv);
@@ -219,10 +224,8 @@ vec3 get_normal (void)
    }
 
    vec3 n = texture(normal_tex, tex_coord0).rgb * 2.0 - vec3(1.0);
-   //n *= vec3(u_NormalScale, u_NormalScale, 1.0);
-   n = mat3(t, b, ng) * normalize(n);
+   n = normalize( mat3(t, b, ng) * n);
 
-   //return normalize(normal);
    return n;
 }
 
@@ -291,11 +294,7 @@ void main (void)
    f_diffuse *= ao;
 
    /* Variance Shadow Mapping. */
-   //float f_shadow = shadow_map( shadowmap_tex, length(u_lights[0].position-position) );
    float f_shadow = shadow_map( shadowmap_tex, shadow );
-   f_shadow = 1.0;
-   //colour_out = vec4( vec3(f_shadow), 1.0 );
-   //return;
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
