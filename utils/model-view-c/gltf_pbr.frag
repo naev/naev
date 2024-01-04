@@ -201,20 +201,28 @@ float clampedDot( vec3 x, vec3 y )
 vec3 get_normal (void)
 {
    vec2 uv    = tex_coord0;
-   vec3 uv_dx = dFdx(vec3(uv, 0.0));
-   vec3 uv_dy = dFdy(vec3(uv, 0.0));
+   vec2 uv_dx = dFdx(uv);
+   vec2 uv_dy = dFdy(uv);
+
    vec3 t_ = (uv_dy.t * dFdx(position) - uv_dx.t * dFdy(position)) /
              (uv_dx.s * uv_dy.t - uv_dy.s * uv_dx.t);
-   vec3 n, t, b, ng;
 
-   ng = normalize(normal);
-   t = normalize(t_ - ng * dot(ng, t_));
-   b = cross(ng, t);
+   vec3 ng = normalize(normal);
+   vec3 t = normalize(t_ - ng * dot(ng, t_));
+   vec3 b = cross(ng, t);
 
-   n = texture(normal_tex, tex_coord0).rgb * 2.0 - vec3(1.0);
+   /* Negate for back facing surfaces. */
+   if (gl_FrontFacing == false) {
+      t *= -1.0;
+      b *= -1.0;
+      ng *= -1.0;
+   }
+
+   vec3 n = texture(normal_tex, tex_coord0).rgb * 2.0 - vec3(1.0);
    //n *= vec3(u_NormalScale, u_NormalScale, 1.0);
    n = mat3(t, b, ng) * normalize(n);
 
+   //return normalize(normal);
    return n;
 }
 
@@ -285,8 +293,9 @@ void main (void)
    /* Variance Shadow Mapping. */
    //float f_shadow = shadow_map( shadowmap_tex, length(u_lights[0].position-position) );
    float f_shadow = shadow_map( shadowmap_tex, shadow );
-   colour_out = vec4( vec3(f_shadow), 1.0 );
-   return;
+   f_shadow = 1.0;
+   //colour_out = vec4( vec3(f_shadow), 1.0 );
+   //return;
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );

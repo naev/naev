@@ -46,8 +46,7 @@ typedef struct Shader_ {
    GLuint vertex_tex0;
    /* Vertex Uniforms. */
    GLuint Hmodel;
-   GLuint Hprojection;
-   GLuint Hshadow_projection;
+   GLuint Hshadow;
    /* Fragment uniforms. */
    GLuint baseColour_tex;
    GLuint metallic_tex;
@@ -553,7 +552,7 @@ static void object_renderShadow( const Object *obj, const mat4 *H )
    glUseProgram( shd->program );
    mat4 Hshadow;
    shadow_matrix( &Hshadow );
-   glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
+   glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, Hshadow.ptr );
 
    for (size_t i=0; i<obj->nnodes; i++)
       object_renderNodeShadow( obj, &obj->nodes[i], H );
@@ -579,7 +578,7 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    glUseProgram( shd->program );
    mat4 Hshadow;
    shadow_matrix( &Hshadow );
-   glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
+   glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, Hshadow.ptr );
    glActiveTexture( GL_TEXTURE5 );
       glBindTexture( GL_TEXTURE_2D, shadow_tex );
       glUniform1i( shd->shadowmap_tex, 5 );
@@ -796,9 +795,8 @@ int object_init (void)
    /** Attributes. */
    shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
    /* Vertex uniforms. */
-   shd->Hprojection     = glGetUniformLocation( shd->program, "projection");
-   shd->Hshadow_projection = glGetUniformLocation( shd->program, "shadow_projection");
-   shd->Hmodel          = glGetUniformLocation( shd->program, "model");
+   shd->Hshadow         = glGetUniformLocation( shd->program, "u_shadow");
+   shd->Hmodel          = glGetUniformLocation( shd->program, "u_model");
 
    /* Compile the shader. */
    shd = &object_shader;
@@ -811,9 +809,8 @@ int object_init (void)
    shd->vertex_normal   = glGetAttribLocation( shd->program, "vertex_normal" );
    shd->vertex_tex0     = glGetAttribLocation( shd->program, "vertex_tex0" );
    /* Vertex uniforms. */
-   shd->Hprojection     = glGetUniformLocation( shd->program, "projection");
-   shd->Hshadow_projection = glGetUniformLocation( shd->program, "shadow_projection");
-   shd->Hmodel          = glGetUniformLocation( shd->program, "model");
+   shd->Hshadow         = glGetUniformLocation( shd->program, "u_shadow");
+   shd->Hmodel          = glGetUniformLocation( shd->program, "u_model");
    /* Fragment uniforms. */
    shd->blend           = glGetUniformLocation( shd->program, "u_blend" );
    shd->baseColour_tex  = glGetUniformLocation( shd->program, "baseColour_tex" );
