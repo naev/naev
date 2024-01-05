@@ -289,14 +289,14 @@ void main (void)
    //f_clearcoat += getIBLRadianceGGX(materialInfo.clearcoatNormal, v, materialInfo.clearcoatRoughness, materialInfo.clearcoatF0, 1.0);
    //f_diffuse += 0.5 * M.c_diff; /* Just use ambience for now. */
 
-   /* Ambient occlusion. */
-   float ao = texture(occlusion_tex, tex_coord0).r;
-   f_diffuse *= ao;
-
    /* Variance Shadow Mapping. */
-   float f_shadow[2];
-   f_shadow[0] = shadow_map( shadowmap_tex[0], shadow[0] );
-   f_shadow[1] = shadow_map( shadowmap_tex[1], shadow[1] );
+   float f_shadow[MAX_LIGHTS];
+   if (u_nlights>0)
+      f_shadow[0] = shadow_map( shadowmap_tex[0], shadow[0] );
+   if (u_nlights>1)
+      f_shadow[1] = shadow_map( shadowmap_tex[1], shadow[1] );
+   if (u_nlights>2)
+      f_shadow[2] = shadow_map( shadowmap_tex[2], shadow[2] );
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
@@ -327,6 +327,10 @@ void main (void)
          f_clearcoat += intensity * BRDF_specularGGX( M.f0, M.f90, M.clearcoat_roughness, VoH, NoL, NoV, NoH );
       //}
    }
+
+   /* Ambient occlusion. */
+   float ao = texture(occlusion_tex, tex_coord0).r;
+   f_diffuse *= ao;
 
    /* Do emissive. */
    f_emissive = emissive * texture(emissive_tex, tex_coord0).rgb;

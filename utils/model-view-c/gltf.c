@@ -17,7 +17,7 @@
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-#define MAX_LIGHTS 2    /**< Maximum amount of lights. TODO deferred rendering. */
+#define MAX_LIGHTS 3    /**< Maximum amount of lights. TODO deferred rendering. */
 
 #define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
 
@@ -47,13 +47,19 @@ static Light lights[MAX_LIGHTS] = {
       .pos = { .v = {-10., 25., 25.} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 25e3,
+      .intensity = 0e3,
    },
    {
-      .pos = { .v = {0., 3., 30.} },
+      .pos = { .v = {-0., 5., 30.} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 100e3,
+      .intensity = 50e3,
+   },
+   {
+      .pos = { .v = {2., 3., 30.} },
+      .range = -1.,
+      .colour = { .v = {1., 1., 1.} },
+      .intensity = 0e3,
    },
 };
 
@@ -992,5 +998,5 @@ void object_exit (void)
 
 GLuint object_shadowmap (void)
 {
-   return lights[0].tex;
+   return lights[1].tex;
 }
