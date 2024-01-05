@@ -28,11 +28,11 @@ return function ( mem )
          vn.transition()
 
          vn.na(_([[BEGIN PLAYBACK OF AUDIO DATA]]))
-         v01(_([["What a bunch of assholes! I've spent my entire life toiling for the greater good of the Empire and they decide to retire me to the Za'lek consulate! Ungrateful imbeciles!"]]))
-         v01(_([["Lack of condecorations they say. Not my fault we haven't had a proper war in ages. 'Waste of resources' my ass! If the Emperor and his court got their collective heads out of the sky they'd realize we need a proper military, and not just a dozen ships to parade around and guard their newest plaything. No wonder piracy is getting worse than ever."]]))
+         v01(_([["What a bunch of assholes! I've spent my entire life toiling for the greater good of the Empire, and they decide to retire me to the Za'lek consulate! Ungrateful imbeciles!"]]))
+         v01(_([["Lack of medals they say. Not my fault we haven't had a proper war in ages. 'Waste of resources' my ass! If the Emperor and his court got their collective heads out of the sky they'd realize we need a proper military, and not just a dozen ships to parade around and guard their newest plaything. No wonder piracy is getting worse than ever."]]))
          v01(_([["What the hell am I going to do in Za'lek space? They're as closed as ever. I'll just be locked up all day at the spaceport, wasting the precious cycles I have left. This is a 'waste of resources' if I've ever seen any. The only way to get through their thick skulls is by a display of force. They would damn well open their borders if we had a proper armada with Peacemakers covering the skies, but those days are long gone…"]]))
          v01(_([[There is a loud sound of something being hit.
-"Damnit! I won't let them get away with this! Wait, what the hell is this?"
+"Dammit! I won't let them get away with this! Wait, what the hell is this?"
 It sounds like the atmosphere is being vented. You hear some struggling before the recording becomes completely silent.]]))
          vn.na(_([[END OF AUDIO DATA]]))
 

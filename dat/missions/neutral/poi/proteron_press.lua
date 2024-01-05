@@ -55,7 +55,7 @@ return function ( mem )
          log(_([[Long live the Sov...n Pr...n A...chy!]]))
 
          vne.flashbackTextEnd()
-         vn.na(_([[Some of the text on that last page was illegible, and the logo following it was indecipherable. Still, a curious document. You wonder who could have made it.]]))
+         vn.na(_([[Some text on that last page was illegible, and the logo following it was indecipherable. Still, a curious document. You wonder who could have made it.]]))
 
          if faction.known("Proteron") then
             vn.na(_([[You suspect this might be a document of the Sovereign Proteron Autarchy, given their reputation for autocracy.]]))
@@ -63,7 +63,7 @@ return function ( mem )
 
          local sai = tut.vn_shipai()
          vn.appear( sai, tut.shipai.transition )
-         sai(_([["I wonder... these ship systems are highly sophisticated, posibly even more than mine... It seems strangely familiar."]]))
+         sai(_([["I wonder... these ship systems are highly sophisticated, possibly even more than mine... It seems strangely familiar."]]))
          sai(_([["I bet it was the voices!"]]))
 
          vn.menu{
