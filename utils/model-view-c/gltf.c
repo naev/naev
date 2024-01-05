@@ -586,15 +586,6 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    for (size_t i=0; i<obj->nnodes; i++)
       object_renderNodeShadow( obj, &obj->nodes[i], H );
 
-   glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-   glUseProgram( 0 );
-
-   glBindTexture( GL_TEXTURE_2D, 0 );
-
-   glBindBuffer( GL_ARRAY_BUFFER, 0 );
-   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-
    //glDisable(GL_CULL_FACE);
    gl_checkErr();
 
@@ -602,6 +593,7 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    /* First pass for X. */
    shd = &shadow_shader_blurX;
    glBindFramebuffer(GL_FRAMEBUFFER, shadow_fbo);
+   glClear(GL_DEPTH_BUFFER_BIT);
    glUseProgram( shd->program );
 
    glBindBuffer( GL_ARRAY_BUFFER, shadow_vbo );
@@ -609,14 +601,14 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    glEnableVertexAttribArray( shd->vertex );
 
    glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE, light->tex );
-   glUniform1i( shd->baseColour_tex, 0 ); // HERE
+      glBindTexture( GL_TEXTURE_2D, light->tex );
 
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    gl_checkErr();
    /* Second pass for Y and back into the proper framebuffer. */
    shd = &shadow_shader_blurY;
    glBindFramebuffer(GL_FRAMEBUFFER, light->fbo);
+   glClear(GL_DEPTH_BUFFER_BIT);
 
    glUseProgram( shd->program );
 
@@ -625,16 +617,18 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    glEnableVertexAttribArray( shd->vertex );
 
    glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE, shadow_tex );
-   glUniform1i( shd->baseColour_tex, 0 );
+      glBindTexture( GL_TEXTURE_2D, shadow_tex );
 
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    /* Clean up. */
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glDisableVertexAttribArray( shd->vertex );
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
    glUseProgram( 0 );
+
+   glBindTexture( GL_TEXTURE_2D, 0 );
 
    gl_checkErr();
 }
@@ -914,17 +908,19 @@ int object_init (void)
    shd->program = gl_program_vert_frag( "blur.vert", "blurX.frag", prepend );
    if (shd->program==0)
       return -1;
+   glUseProgram( shd->program );
    /* Attributes. */
    shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
    /* Uniforms. */
    shd->baseColour_tex  = glGetUniformLocation( shd->program, "sampler" );
-   assert( shd->baseColour_tex != 0 );
+   glUniform1i( shd->baseColour_tex, 0 );
 
    /* Compile the Y blur shader. */
-   shd = &shadow_shader_blurX;
+   shd = &shadow_shader_blurY;
    shd->program = gl_program_vert_frag( "blur.vert", "blurX.frag", prepend );
    if (shd->program==0)
       return -1;
+   glUseProgram( shd->program );
    /* Attributes. */
    shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
    /* Uniforms. */
