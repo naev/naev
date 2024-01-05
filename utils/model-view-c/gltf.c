@@ -917,7 +917,7 @@ int object_init (void)
 
    /* Compile the Y blur shader. */
    shd = &shadow_shader_blurY;
-   shd->program = gl_program_vert_frag( "blur.vert", "blurX.frag", prepend );
+   shd->program = gl_program_vert_frag( "blur.vert", "blurY.frag", prepend );
    if (shd->program==0)
       return -1;
    glUseProgram( shd->program );
