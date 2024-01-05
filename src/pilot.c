@@ -236,12 +236,29 @@ unsigned int pilot_getPrevID( unsigned int id, int mode )
  */
 int pilot_validTarget( const Pilot* p, const Pilot* target )
 {
+   int inrange;
+   return pilot_validTargetRange( p, target, &inrange );
+}
+
+/**
+ * @brief Checks to see if a pilot is a valid target for another pilot while storing the result of pilot_inRangePilot in inrange.
+ *
+ *    @param p Reference pilot.
+ *    @param target Pilot to see if is a valid target of the reference.
+ *    @param[out] inrange Stores the value of pilot_inRangePilot.
+ *    @return 1 if it is valid, 0 otherwise.
+ */
+int pilot_validTargetRange( const Pilot* p, const Pilot* target, int *inrange )
+{
    /* Must be targetable. */
-   if (!pilot_canTarget( target ))
+   if (!pilot_canTarget( target )) {
+      *inrange = 0;
       return 0;
+   }
 
    /* Must be in range. */
-   if (!pilot_inRangePilot( p, target, NULL ))
+   *inrange = pilot_inRangePilot( p, target, NULL );
+   if (!(*inrange))
       return 0;
 
    /* Pilot is a valid target. */
@@ -276,14 +293,8 @@ int pilot_canTarget( const Pilot* p )
  */
 int pilot_validEnemy( const Pilot* p, const Pilot* target )
 {
-   return pilot_validEnemyDist( p, target, NULL );
-}
+   int inrange;
 
-/**
- * @brief Same as pilot_validEnemy, but able to store the distance too.
- */
-int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
-{
    /* Shouldn't be disabled. */
    if (pilot_isDisabled(target))
       return 0;
@@ -299,7 +310,7 @@ int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
       return 0;
 
    /* Must be a valid target. */
-   if (!pilot_validTarget( p, target ))
+   if (!pilot_validTargetRange( p, target, &inrange ))
       return 0;
 
    /* Should either be hostile by faction or by player. */
@@ -307,7 +318,7 @@ int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
       return 0;
 
    /* Must not be fuzzy. */
-   if (pilot_inRangePilot( p, target, dist ) != 1)
+   if (inrange != 1)
       return 0;
 
    /* They're ok. */
@@ -571,6 +582,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
    *tp = PLAYER_ID;
    for (int i=0; i<array_size(pilot_stack); i++) {
       double rx, ry, ta;
+      int inrange;
 
       /* Must not be self. */
       if (pilot_stack[i] == p)
@@ -586,11 +598,11 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
          continue;
 
       /* Must be a valid target. */
-      if (!pilot_validTarget( p, pilot_stack[i] ))
+      if (!pilot_validTargetRange( p, pilot_stack[i], &inrange ))
          continue;
 
       /* Must be in range. */
-      if (!pilot_inRangePilot( p, pilot_stack[i], NULL ))
+      if (!inrange)
          continue;
 
       /* Only allow selection if off-screen. */

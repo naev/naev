@@ -411,6 +411,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
 int pilot_getJumps( const Pilot* p );
 const glColour* pilot_getColour( const Pilot* p );
 int pilot_validTarget( const Pilot* p, const Pilot* target );
+int pilot_validTargetRange( const Pilot* p, const Pilot* target, int *inrange );
 int pilot_canTarget( const Pilot* p );
 
 /* non-lua wrappers */
@@ -486,7 +487,6 @@ void pilot_setCommMsg( Pilot *p, const char *s );
 
 /* Faction stuff. */
 int pilot_validEnemy( const Pilot* p, const Pilot* target );
-int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist );
 int pilot_areAllies( const Pilot *p, const Pilot *target );
 int pilot_areEnemies( const Pilot *p, const Pilot *target );
 void pilot_setHostile( Pilot *p );
