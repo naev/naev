@@ -256,7 +256,7 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
       return 1;
 
    /* Stealth detection. */
-   if (pilot_isFlag( target, PILOT_STEALTH ))
+   if (pilot_isFlag( target, PILOT_STEALTH ) && !pilot_areAllies( p, target ))
       return 0;
 
    /* No stealth so normal detection. */
@@ -431,9 +431,7 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
          continue;
 
       /* Allies are ignored. */
-      if (areAllies( p->faction, t->faction ) ||
-            ((p->faction == FACTION_PLAYER) && pilot_isFriendly(t)) ||
-            ((t->faction == FACTION_PLAYER) && pilot_isFriendly(p)))
+      if (pilot_areAllies( p, t ))
          continue;
 
       /* Stealthed pilots don't reduce stealth. */
