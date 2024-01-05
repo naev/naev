@@ -262,7 +262,7 @@ function enter ()
    hook.pilot( mothership, "board", "mothershipboard" )
 
    local function spawn_ship( s, pos )
-      local p = pilot.add( s, puaaa, pos, _("PUAAA Figher") )
+      local p = pilot.add( s, puaaa, pos, _("PUAAA Fighter") )
       p:setHostile(true)
       return p
    end
