@@ -41,8 +41,6 @@ typedef struct Light_ {
    GLuint fbo;
    GLuint tex;
 } Light;
-//const vec3 primary_light = { .v = {-10., 25., 25.} };
-//const vec3 primary_light = { .v = {0., 3., 50.} };
 
 static Light lights[MAX_LIGHTS] = {
    {
@@ -92,6 +90,13 @@ static Shader object_shader;
 static Shader shadow_shader;
 static GLuint tex_zero;
 static GLuint tex_ones;
+
+/* Below here are for blurring purposes. */
+static GLuint shadow_vbo;
+static GLuint shadow_fbo;
+static GLuint shadow_tex;
+static Shader shadow_shader_blurX;
+static Shader shadow_shader_blurY;
 
 /**
  * @brief PBR Material of an object.
@@ -591,6 +596,45 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
    //glDisable(GL_CULL_FACE);
+   gl_checkErr();
+
+   /* Now we have to blur. We'll do a separable filter approach and do two passes. */
+   /* First pass for X. */
+   shd = &shadow_shader_blurX;
+   glBindFramebuffer(GL_FRAMEBUFFER, shadow_fbo);
+   glUseProgram( shd->program );
+
+   glBindBuffer( GL_ARRAY_BUFFER, shadow_vbo );
+   glVertexAttribPointer( shd->vertex, 2, GL_FLOAT, GL_FALSE, 0, NULL );
+   glEnableVertexAttribArray( shd->vertex );
+
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE, light->tex );
+   glUniform1i( shd->baseColour_tex, 0 ); // HERE
+
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   gl_checkErr();
+   /* Second pass for Y and back into the proper framebuffer. */
+   shd = &shadow_shader_blurY;
+   glBindFramebuffer(GL_FRAMEBUFFER, light->fbo);
+
+   glUseProgram( shd->program );
+
+   glBindBuffer( GL_ARRAY_BUFFER, shadow_vbo );
+   glVertexAttribPointer( shd->vertex, 2, GL_FLOAT, GL_FALSE, 0, NULL );
+   glEnableVertexAttribArray( shd->vertex );
+
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE, shadow_tex );
+   glUniform1i( shd->baseColour_tex, 0 );
+
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   /* Clean up. */
+   glBindBuffer( GL_ARRAY_BUFFER, 0 );
+   glDisableVertexAttribArray( shd->vertex );
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+   glUseProgram( 0 );
 
    gl_checkErr();
 }
@@ -784,6 +828,7 @@ int object_init (void)
    const GLfloat b[4] = { 1., 1., 1., 1. };
    GLenum status;
    Shader *shd;
+   const char *prepend = "#define MAX_LIGHTS "STR(MAX_LIGHTS)"\n#define SHADOWMAP_SIZE "STR(SHADOWMAP_SIZE)"\n";
 
    /* Load textures. */
    glGenTextures( 1, &tex_zero );
@@ -797,6 +842,37 @@ int object_init (void)
 
    /* Set up default material. */
    object_loadMaterial( &material_default, NULL );
+
+   /* We'll have to set up some rendering stuff for blurring purposes. */
+   const GLfloat vbo_data[8] = {
+      0., 0.,
+      1., 0.,
+      0., 1.,
+      1., 1. };
+   glGenBuffers( 1, &shadow_vbo );
+   glBindBuffer( GL_ARRAY_BUFFER, shadow_vbo );
+   glBufferData( GL_ARRAY_BUFFER, sizeof(GLfloat) * 8, vbo_data, GL_STATIC_DRAW );
+   glBindBuffer( GL_ARRAY_BUFFER, 0 );
+   /* Gen the texture. */
+   glGenTextures(1, &shadow_tex);
+   glBindTexture(GL_TEXTURE_2D, shadow_tex);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, SHADOWMAP_SIZE, SHADOWMAP_SIZE, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+   glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, b);
+   glBindTexture(GL_TEXTURE_2D, 0);
+   /* Set up shadow buffer FBO. */
+   glGenFramebuffers( 1, &shadow_fbo );
+   glBindFramebuffer(GL_FRAMEBUFFER, shadow_fbo);
+   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadow_tex, 0);
+   glDrawBuffer(GL_NONE);
+   glReadBuffer(GL_NONE);
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+   status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+   if (status != GL_FRAMEBUFFER_COMPLETE)
+      WARN(_("Error setting up shadowmap framebuffer!"));
 
    for (int i=0; i<MAX_LIGHTS; i++) {
       /* Set up shadow buffer depth tex. */
@@ -823,23 +899,44 @@ int object_init (void)
 
    /* Compile the shadow shader. */
    shd = &shadow_shader;
-   shd->program = gl_program_vert_frag( "shadow.vert", "shadow.frag", "" );
+   shd->program = gl_program_vert_frag( "shadow.vert", "shadow.frag", prepend );
    if (shd->program==0)
       return -1;
    glUseProgram( shd->program );
-   /** Attributes. */
+   /* Attributes. */
    shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
    /* Vertex uniforms. */
    shd->Hshadow         = glGetUniformLocation( shd->program, "u_shadow");
    shd->Hmodel          = glGetUniformLocation( shd->program, "u_model");
 
+   /* Compile the X blur shader. */
+   shd = &shadow_shader_blurX;
+   shd->program = gl_program_vert_frag( "blur.vert", "blurX.frag", prepend );
+   if (shd->program==0)
+      return -1;
+   /* Attributes. */
+   shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
+   /* Uniforms. */
+   shd->baseColour_tex  = glGetUniformLocation( shd->program, "sampler" );
+   assert( shd->baseColour_tex != 0 );
+
+   /* Compile the Y blur shader. */
+   shd = &shadow_shader_blurX;
+   shd->program = gl_program_vert_frag( "blur.vert", "blurX.frag", prepend );
+   if (shd->program==0)
+      return -1;
+   /* Attributes. */
+   shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
+   /* Uniforms. */
+   shd->baseColour_tex  = glGetUniformLocation( shd->program, "sampler" );
+
    /* Compile the shader. */
    shd = &object_shader;
-   shd->program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag", "#define MAX_LIGHTS "STR(MAX_LIGHTS)"\n" );
+   shd->program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag", prepend );
    if (shd->program==0)
       return -1;
    glUseProgram( shd->program );
-   /** Attributes. */
+   /* Attributes. */
    shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
    shd->vertex_normal   = glGetAttribLocation( shd->program, "vertex_normal" );
    shd->vertex_tex0     = glGetAttribLocation( shd->program, "vertex_tex0" );
@@ -884,6 +981,9 @@ int object_init (void)
 
 void object_exit (void)
 {
+   glDeleteBuffers( 1, &shadow_vbo );
+   glDeleteTextures( 1, &shadow_tex );
+   glDeleteFramebuffers( 1, &shadow_fbo );
    for (int i=0; i<MAX_LIGHTS; i++) {
       glDeleteTextures( 1, &lights[i].tex );
       glDeleteFramebuffers( 1, &lights[i].fbo );
