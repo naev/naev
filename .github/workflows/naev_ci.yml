@@ -224,15 +224,17 @@ jobs:
       matrix:
         include:
           - image: naev-macos
-            tag: latest
+            arch: x86_64
             config: macos_cross_osxcross.ini
           - image: naev-macos
-            tag: latest-aarch64
+            arch: aarch64
             config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/naev/${{ matrix.image }}:${{ matrix.tag }}"
+      image: "ghcr.io/naev/${{ matrix.image }}:latest"
+      env:
+        BUILD_ARCH: "${{ matrix.arch }}"
 
     steps:
       - name: Get Source
