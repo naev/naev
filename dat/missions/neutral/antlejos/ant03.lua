@@ -48,7 +48,7 @@ function create ()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
    vn.na(_("As soon as you land, Verner comes bouncing up to you."))
-   v(fmt.f(_([["Everything is going great, thanks to you! However, the debris we are creating is getting very abrasive and we need to start setting up an atmosphere. I've found a Za'lek factory that seems to provide exactly what we need. Would you go to {pnt} in the {sys} system to pick up an atmosphere generator? It should be {amount}. If you do me this favour I'll pay you {creds}. What do you say?"]]),
+   v(fmt.f(_([["Everything is going great, thanks to you! However, the debris we are creating is getting very abrasive, and we need to start setting up an atmosphere. I've found a Za'lek factory that seems to provide exactly what we need. Would you go to {pnt} in the {sys} system to pick up an atmosphere generator? It should be {amount}. If you do me this favour I'll pay you {creds}. What do you say?"]]),
       {pnt=mem.destpnt, sys=mem.destsys, amount=fmt.tonnes(cargo_amount), creds=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},

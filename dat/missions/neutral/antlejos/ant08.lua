@@ -47,7 +47,7 @@ function accept ()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
    vn.na(_("You find Verner enjoying a horrible smelling drink."))
-   v(fmt.f(_([["Hey, you seen how everything is chugging along? This beats my wildest expectations. However, we've recently run into a small setback. We're trying to strengthen the gravitational field to minimize the effect of space adaptation syndrome, however, the core seems to be much harder than expected and our current machinery is unable to cut it. Our contacts at Gordon's Exchange will loan us a Melendez Zebra that has been adapted as a core miner, but given the recent PUAAA activity, I need someone to escort it over here from {pnt} in the {sys} system. Would you be willing to do me the favour?"]]),
+   v(fmt.f(_([["Hey, have you seen how everything is chugging along? This beats my wildest expectations. However, we've recently run into a small setback. We're trying to strengthen the gravitational field to minimize the effect of space adaptation syndrome, however, the core seems to be much harder than expected, and our current machinery is unable to cut it. Our contacts at Gordon's Exchange will loan us a Melendez Zebra that has been adapted as a core miner, but given the recent PUAAA activity, I need someone to escort it over here from {pnt} in the {sys} system. Would you be willing to do me the favour?"]]),
       {pnt=mainpnt, sys=mainsys}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -59,7 +59,7 @@ function accept ()
    vn.done()
 
    vn.label("accept")
-   v(fmt.f(_([["Great! The core miner isn't really equipped with proper defences, so it's somewhat of a sitting duck. It was recently doing some operations on the Sander seafloor, but I gave them an offer they can't refuse and they're willing to come immediately if they get some protection given the recent… incidents. I've been feeding some fake data to the PUAAA to hopefully distract them a bit, but I don't think we'll be able to sneak in such a large ship, so prepare for the worst. Try to protect the core miner at all costs on the way here from {pnt}! It'll be nearly impossible to replace if lost."]]),
+   v(fmt.f(_([["Great! The core miner isn't really equipped with proper defences, so it's somewhat of a sitting duck. It was recently doing some operations on the Sander seafloor, but I gave them an offer they can't refuse, and they're willing to come immediately if they get some protection given the recent… incidents. I've been feeding some fake data to the PUAAA to hopefully distract them a bit, but I don't think we'll be able to sneak in such a large ship, so prepare for the worst. Try to protect the core miner at all costs on the way here from {pnt}! It'll be nearly impossible to replace if lost."]]),
       {pnt=mainpnt}))
    vn.func( function () accepted = true end )
 
@@ -123,7 +123,7 @@ function escort_success ()
    vn.transition()
    vn.na(_([[You land and are met with an awe-struck Verner, who seems earnestly impressive by the massive GE Talpini that dwarfs most of the spaceport.]]))
    v(_([["Damn, look at all those drills! It's much more impressive in person that what you see on the holograms. This should make the core mining look like child's play! Thanks a bunch for bringing it over here in one piece."]]))
-   v(_([["Oh, by the way, in one of our routine patrols around the system, we recently found a really curious peculiarity. It seems like there is a very faint jump lane leading out of Antlejos. It doesn't seem like it goes anywhere really interesting, but you might want to take a look. I've updated your system navigation so you should be able to use it now."]]))
+   v(_([["Oh, by the way, in one of our routine patrols around the system, we recently found a really curious peculiarity. It seems like there is a very faint jump lane leading out of Antlejos. It doesn't seem like it goes anywhere really interesting, but you might want to take a look. I've updated your system navigation, so you should be able to use it now."]]))
    v(_([["If you're still interested, we still need all the help we can get with terraforming. There are still a lot of tasks to do!"]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )

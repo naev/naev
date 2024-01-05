@@ -102,7 +102,7 @@ function land ()
             {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))
          return
       end
-      vntk.msg(_("Cargo Loaded"), fmt.f(_("The dock workers load the {amount} of {cargo} onto your ship."),{cargo=cargo_name, amount=fmt.tonnes(cargo_amount)}))
+      vntk.msg(_("Cargo Loaded"), fmt.f(_("The dockworkers load the {amount} of {cargo} onto your ship."),{cargo=cargo_name, amount=fmt.tonnes(cargo_amount)}))
 
       local c = commodity.new( N_("Morphogenic Archaea"), N_("Containers filled to the brim with organisms that are suitable for creating life from scratch.") )
       misn.cargoAdd( c, cargo_amount )
