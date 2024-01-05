@@ -342,6 +342,8 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
 static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur, double *vmax )
 {
    GLuint texture;
+   SDL_Surface *rgba;
+   SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
 
    SDL_mutexP( tex_lock );
    tex_ctxSet();
@@ -349,30 +351,37 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    /* Get texture. */
    texture = gl_texParameters( flags );
 
-   /* now load the texture data up */
-   SDL_LockSurface( surface );
+   /* Now load the texture data up
+    * It doesn't work with indexed ones, so I guess converting is best bet. */
+   if (surface->format->format != fmt)
+      rgba = SDL_ConvertSurfaceFormat( surface, fmt, 0 );
+   else
+      rgba = surface;
+
+   SDL_LockSurface(rgba);
    if (flags & OPENGL_TEX_SDF) {
-      /* It doesn't work with indexed ones, so I guess converting is best bet. */
-      SDL_Surface *s = SDL_ConvertSurfaceFormat( surface, SDL_PIXELFORMAT_ARGB8888, 0 );
       float border[] = { 0., 0., 0., 0. };
-      uint8_t *trans = SDL_MapAlpha( s, s->w, s->h, 0 );
-      GLfloat *dataf = make_distance_mapbf( trans, s->w, s->h, vmax );
+      uint8_t *trans = SDL_MapAlpha( rgba, rgba->w, rgba->h, 0 );
+      GLfloat *dataf = make_distance_mapbf( trans, rgba->w, rgba->h, vmax );
       free( trans );
       glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
       glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, s->w, s->h, 0, GL_RED, GL_FLOAT, dataf );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, rgba->w, rgba->h, 0, GL_RED, GL_FLOAT, dataf );
+      glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       free( dataf );
-      SDL_FreeSurface(s);
    }
    else {
       *vmax = 1.;
-      glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
+      glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( rgba->pitch&-rgba->pitch, 8 ) );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
-            surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
+            rgba->w, rgba->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, rgba->pixels );
+      glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
    }
-   SDL_UnlockSurface( surface );
+   SDL_UnlockSurface(rgba);
+   if (rgba != surface)
+      SDL_FreeSurface(rgba);
 
    /* Create mipmaps. */
    if (flags & OPENGL_TEX_MIPMAPS) {
