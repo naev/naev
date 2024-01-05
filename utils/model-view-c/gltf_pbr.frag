@@ -251,7 +251,7 @@ float shadow_map( sampler2D tex, vec3 pos )
    float d = pos.z - m1;
    float p_max = var / (var + d*d);
    /* Trick to reduce light-bleeding. */
-   p_max = linstep( 0.3, 1.0, p_max );
+   p_max = linstep( 0.1, 1.0, p_max );
    return max( p, p_max );
 
    /* Regular Shadow Mapping. */
