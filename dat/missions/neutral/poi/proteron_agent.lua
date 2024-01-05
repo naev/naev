@@ -60,7 +60,7 @@ return function ( mem )
          v02(_([["When is the strike planned?"]]))
          v01(_([["Do not get ahead of yourself agent. The Leaders are the only ones who can know. Just make sure you are prepared to take action when the motion starts."]]))
          v02(_([["Understood."]]))
-         vn.na(_([[END  OF AUDIO DATA ##2969]]))
+         vn.na(_([[END OF AUDIO DATA ##2969]]))
 
          vn.disappear( v01 )
 
@@ -70,7 +70,7 @@ return function ( mem )
          v02(fmt.f(_([["…possibly end of civilization. The little functionality left in my scanners has not picked up any objects, just this dense fog or whatever… {n1}"]]),
             {n1=noise()}))
          v02(_([["…rations will not last much longer. I just hope that was just part of the plan, if not all my work will have been in vain.""]]))
-         vn.na(_([[END  OF AUDIO DATA ##4189]]))
+         vn.na(_([[END OF AUDIO DATA ##4189]]))
 
          vn.disappear( v02 )
 
