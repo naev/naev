@@ -234,9 +234,13 @@ jobs:
     container:
       image: "ghcr.io/naev/${{ matrix.image }}:latest"
       env:
-        BUILD_ARCH: "${{ matrix.arch }}"
+        BUILDARCH: "${{ matrix.arch }}"
 
     steps:
+      - name: Configure MacPorts
+        run: |
+          source macports-configure.sh
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
