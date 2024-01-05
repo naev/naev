@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2024-01-02 15:05+0900\n"
+"POT-Creation-Date: 2024-01-05 12:31+0900\n"
 "PO-Revision-Date: 2023-12-27 18:09+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
@@ -12775,10 +12775,21 @@ msgid "Bolero"
 msgstr "Bolero"
 
 #: dat/spob/bolero.xml:29
+#, fuzzy
+#| msgid ""
+#| "Bolero has quickly become of the Empire's most successful planets due to "
+#| "its recent growth. The population is prosperous and successful, and the "
+#| "planet's conditions are mild. Although it is still treated as something "
+#| "of a backwater due to its location, it is becoming increasingly important "
+#| "in Imperial politics.\n"
+#| "A lot of Bolero's popularity comes from its Earth-like climate, giving a "
+#| "reassuring sense of nostalgia to all those who were able to visit Earth "
+#| "before the Incident. However, some people avoid it for exactly the same "
+#| "reason…"
 msgid ""
-"Bolero has quickly become of the Empire's most successful planets due to its "
-"recent growth. The population is prosperous and successful, and the planet's "
-"conditions are mild. Although it is still treated as something of a "
+"Bolero has quickly become one of the Empire's most successful planets due to "
+"its recent growth. The population is prosperous and successful, and the "
+"planet's conditions are mild. Although it is still treated as something of a "
 "backwater due to its location, it is becoming increasingly important in "
 "Imperial politics.\n"
 "A lot of Bolero's popularity comes from its Earth-like climate, giving a "
@@ -53114,7 +53125,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant03.lua:54
 #: dat/missions/neutral/antlejos/ant04.lua:60
 #: dat/missions/neutral/antlejos/ant05.lua:51
-#: dat/missions/neutral/antlejos/ant06.lua:58
+#: dat/missions/neutral/antlejos/ant06.lua:57
 #: dat/missions/neutral/antlejos/ant07.lua:48
 #: dat/missions/neutral/antlejos/ant08.lua:53
 #: dat/missions/neutral/antlejos/ant09.lua:54
@@ -57994,11 +58005,11 @@ msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:210
 msgid ""
-"\"Hello, sir. I compiled the available data on the very stupid challenge you "
-"just accepted. During this challenge, you will have to destroy three "
-"disabled ships in a certain order. Each time you destroy a ship, I will "
-"automatically set the target focus to the next ship, so that you will be "
-"able to focus on piloting and shooting.\n"
+"\"Hello. I compiled the available data on the very stupid challenge you just "
+"accepted. During this challenge, you will have to destroy three disabled "
+"ships in a certain order. Each time you destroy a ship, I will automatically "
+"set the target focus to the next ship, so that you will be able to focus on "
+"piloting and shooting.\n"
 "So, don't try to auto-target around, and just shoot at the targets I will be "
 "indicating, and it will be fine.\""
 msgstr ""
@@ -62291,7 +62302,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant03.lua:55
 #: dat/missions/neutral/antlejos/ant04.lua:61
 #: dat/missions/neutral/antlejos/ant05.lua:52
-#: dat/missions/neutral/antlejos/ant06.lua:59
+#: dat/missions/neutral/antlejos/ant06.lua:58
 #: dat/missions/neutral/antlejos/ant07.lua:49
 #: dat/missions/neutral/antlejos/ant08.lua:54
 #: dat/missions/neutral/antlejos/ant09.lua:55
@@ -65798,7 +65809,7 @@ msgstr ""
 "Vezměte Zacha, aby se podíval, co se stalo jeho kolegům v {pnt} systému "
 "{sys}."
 
-#: dat/missions/minerva/finale1.lua:50
+#: dat/missions/minerva/finale1.lua:50 dat/outfits/flow/flow_amplifier.lua:18
 msgid "??"
 msgstr ""
 
@@ -76149,7 +76160,7 @@ msgstr ""
 #.
 #. --
 #: dat/missions/neutral/antlejos/ant01.lua:38
-#: dat/missions/neutral/antlejos/ant06.lua:35
+#: dat/missions/neutral/antlejos/ant06.lua:34
 #: dat/missions/neutral/antlejos/ant07.lua:35
 #: dat/missions/neutral/antlejos/ant08.lua:39
 #: dat/missions/neutral/antlejos/ant09.lua:39
@@ -76237,8 +76248,8 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant01.lua:112
 msgid ""
-"\"I'm going to be setting up camp, but come back in a bit and I'll have more "
-"work for you. This is going to be very exciting indeed!\""
+"\"I'm going to be setting up camp, but come back in a bit, and I'll have "
+"more work for you. This is going to be very exciting indeed!\""
 msgstr ""
 
 #. Apply first diff
@@ -76290,7 +76301,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant03.lua:59
 #: dat/missions/neutral/antlejos/ant04.lua:65
 #: dat/missions/neutral/antlejos/ant05.lua:56
-#: dat/missions/neutral/antlejos/ant06.lua:63
+#: dat/missions/neutral/antlejos/ant06.lua:62
 #: dat/missions/neutral/antlejos/ant07.lua:53
 #: dat/missions/neutral/antlejos/ant08.lua:58
 #: dat/missions/neutral/antlejos/ant09.lua:59
@@ -76377,7 +76388,7 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant02.lua:98
 #: dat/missions/neutral/antlejos/ant04.lua:105
-msgid "The dock workers load the {amount} of {cargo} onto your ship."
+msgid "The dockworkers load the {amount} of {cargo} onto your ship."
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant02.lua:100
@@ -76402,7 +76413,7 @@ msgid ""
 "He slaps the hull of a heavy machine.\n"
 "\"With these beauties we'll be able to make progress ten times faster now. "
 "That said, it does seem like this might not be enough. Come back to me once "
-"I get the {cargo} set up and I should have another task for you if you are "
+"I get the {cargo} set up, and I should have another task for you if you are "
 "interested.\""
 msgstr ""
 
@@ -76443,7 +76454,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant03.lua:51
 msgid ""
 "\"Everything is going great, thanks to you! However, the debris we are "
-"creating is getting very abrasive and we need to start setting up an "
+"creating is getting very abrasive, and we need to start setting up an "
 "atmosphere. I've found a Za'lek factory that seems to provide exactly what "
 "we need. Would you go to {pnt} in the {sys} system to pick up an atmosphere "
 "generator? It should be {amount}. If you do me this favour I'll pay you "
@@ -76658,7 +76669,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant05.lua:95
 msgid ""
 "\"That was incredible! All the ships made it through in one piece. You're a "
-"real life saver!\""
+"real lifesaver!\""
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant05.lua:97
@@ -76677,7 +76688,7 @@ msgstr ""
 msgid ""
 "\"With these supplies, I think we will be able to start the next important "
 "step on scaling up the terraforming operation. We're almost there, but we'll "
-"still need more assistance. The mission terminal should be up and working "
+"still need more assistance. The mission terminal should be up and working, "
 "and you should be able to find new supply requests there if you want to "
 "help. We still need all the hands we can get!\""
 msgstr ""
@@ -76704,7 +76715,7 @@ msgstr "Zásobovací loď pod útokem! Žádáme o pomoc!"
 #. Nothing to do here
 #. Wrong system
 #: dat/missions/neutral/antlejos/ant05.lua:173
-#: dat/missions/neutral/antlejos/ant06.lua:125
+#: dat/missions/neutral/antlejos/ant06.lua:124
 #: dat/missions/neutral/antlejos/ant09.lua:186
 msgid "You were not supposed to leave {sys}!"
 msgstr ""
@@ -76733,13 +76744,13 @@ msgstr ""
 msgid "No supply ships made it through!"
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:47
+#: dat/missions/neutral/antlejos/ant06.lua:46
 msgid ""
 "You find Verner relaxing at the bar. He calls you towards him the moment he "
 "sees you."
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:48
+#: dat/missions/neutral/antlejos/ant06.lua:47
 msgid ""
 "While you walk towards him, you suddenly hear a commotion towards the "
 "entrance of the bar. You hear what sounds like an anti-terraforming slogan "
@@ -76749,13 +76760,13 @@ msgid ""
 "the ground."
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:49
+#: dat/missions/neutral/antlejos/ant06.lua:48
 msgid ""
 "Quickly a security team runs over and apprehends the guy, while Verner walks "
 "over to you barely breaking a sweat."
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:50
+#: dat/missions/neutral/antlejos/ant06.lua:49
 msgid ""
 "\"It seems like the PUAAA is getting braver these days. We heard of a supply "
 "ship in {sys} providing them with more resources to continue their senseless "
@@ -76763,47 +76774,47 @@ msgid ""
 "He points to the unconscious individual being carried away."
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:52
+#: dat/missions/neutral/antlejos/ant06.lua:51
 msgid ""
 "\"Would you be willing to go over to {sys} and take out the supply ship? I "
 "would be able to pay you {credits} for your trouble.\""
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:55
+#: dat/missions/neutral/antlejos/ant06.lua:54
 msgid ""
 "\"Have you changed your mind about dealing with the PUAAA supply ship?\""
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:67
+#: dat/missions/neutral/antlejos/ant06.lua:66
 msgid ""
-"\"Great! Just take out the supply ship with any means necessary and we "
+"\"Great! Just take out the supply ship with any means necessary, and we "
 "should be all good. I've got to go take care of this now.\"\n"
 "He points towards a glancing burn mark on his abdomen. It looks like the "
-"shot fired during the commotion grazed him, but it doesn't look life "
+"shot fired during the commotion grazed him, but it doesn't look life-"
 "threatening. He chugs down his drink, and gets up before heading off.\n"
 "\"Take care!\""
 msgstr ""
 
 #. Not accepted
-#: dat/missions/neutral/antlejos/ant06.lua:80
-#: dat/missions/neutral/antlejos/ant06.lua:83
+#: dat/missions/neutral/antlejos/ant06.lua:79
+#: dat/missions/neutral/antlejos/ant06.lua:82
 msgid "Eliminate the PUAAA Supply Ship"
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:81
+#: dat/missions/neutral/antlejos/ant06.lua:80
 msgid "Eliminate the PUAAA supply ship at {sys}."
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:84
+#: dat/missions/neutral/antlejos/ant06.lua:83
 #: dat/missions/neutral/antlejos/ant09.lua:83
 msgid "Go to {sys}"
 msgstr "Přejděte na {sys}"
 
-#: dat/missions/neutral/antlejos/ant06.lua:85
+#: dat/missions/neutral/antlejos/ant06.lua:84
 msgid "Destroy the PUAAA supply ship"
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:86
+#: dat/missions/neutral/antlejos/ant06.lua:85
 #: dat/missions/neutral/antlejos/ant07.lua:74
 #: dat/missions/neutral/antlejos/ant09.lua:85
 #: dat/missions/pirate/lucas/lucas01.lua:126
@@ -76825,50 +76836,50 @@ msgid "Return to {pnt} ({sys} system)"
 msgstr "Návrat do systému {pnt} ({sys})"
 
 #. Land hook.
-#: dat/missions/neutral/antlejos/ant06.lua:102
+#: dat/missions/neutral/antlejos/ant06.lua:101
 msgid ""
 "You land and go meet up with Verner, who is overseeing the terraforming."
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:103
+#: dat/missions/neutral/antlejos/ant06.lua:102
 msgid ""
 "\"You got rid of the pesky supply ship? Great to hear that. Hopefully with "
-"fewer supplies the PUAAA will less active and we'll be able to progress "
+"fewer supplies the PUAAA will less active, and we'll be able to progress "
 "more. It's almost starting to look like a place I can call home.\"\n"
-"He looks over the terraforming site and you can see a mix of happiness and "
+"He looks over the terraforming site, and you can see a mix of happiness and "
 "sorrow on his face."
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:105
+#: dat/missions/neutral/antlejos/ant06.lua:104
 msgid ""
-"Without turning to you he continues.\n"
+"Without turning to you, he continues.\n"
 "\"It's going to be great. Thanks for your hard work.\""
 msgstr ""
 
 #. Done
-#: dat/missions/neutral/antlejos/ant06.lua:112
+#: dat/missions/neutral/antlejos/ant06.lua:111
 #: dat/missions/neutral/antlejos/ant07.lua:113
 msgid "You eliminated a PUAAA supply ship bringing more security to {pnt}."
 msgstr ""
 
 #. Initialize ship stuff
-#: dat/missions/neutral/antlejos/ant06.lua:143
+#: dat/missions/neutral/antlejos/ant06.lua:142
 msgid "PUAAA Supply Ship"
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:151
+#: dat/missions/neutral/antlejos/ant06.lua:150
 msgid "PUAAA Escort"
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:163
+#: dat/missions/neutral/antlejos/ant06.lua:162
 msgid "You eliminated the target!"
 msgstr "Zlikvidoval jsi cíl!"
 
-#: dat/missions/neutral/antlejos/ant06.lua:170
+#: dat/missions/neutral/antlejos/ant06.lua:169
 msgid "No more supplies"
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant06.lua:170
+#: dat/missions/neutral/antlejos/ant06.lua:169
 msgid ""
 "You board the ship and blast out the entire control panel rendering the ship "
 "unrepairable and not operational. That should satisfy Verner."
@@ -76881,9 +76892,9 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant07.lua:46
 msgid ""
 "\"How's it going? {pnt} is starting to take off, but the PUAAA don't cut us "
-"any slack. I tried to see if the Empire would do anything about it and they "
+"any slack. I tried to see if the Empire would do anything about it, and they "
 "just send me running around filing paperwork to no avail. Damn useless. "
-"However, I've starting getting in contact with other independent worlds, and "
+"However, I've started getting in contact with other independent worlds, and "
 "it seems like we could form a trade alliance, hopefully bringing stability "
 "to {pnt}. Would you be willing to go to {destpnt} in the {destsys} system to "
 "seal an agreement for me?\""
@@ -76947,7 +76958,7 @@ msgstr ""
 msgid ""
 "You meet up with a trader who is surprised you aren't Verner, but quickly "
 "adjusts to the situation. They discuss trivial topics with you at first "
-"before entering in the trade details. They seem to be all in order and you "
+"before entering the trade details. They seem to be all in order, and you "
 "sign as a representative of {pnt}. After shaking hands, you are sent on your "
 "way. Dealing with traders is much more efficient than the Empire bureaucracy."
 msgstr ""
@@ -76987,14 +76998,14 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant08.lua:50
 msgid ""
-"\"Hey, you seen how everything is chugging along? This beats my wildest "
+"\"Hey, have you seen how everything is chugging along? This beats my wildest "
 "expectations. However, we've recently run into a small setback. We're trying "
 "to strengthen the gravitational field to minimize the effect of space "
-"adaptation syndrome, however, the core seems to be much harder than expected "
-"and our current machinery is unable to cut it. Our contacts at Gordon's "
-"Exchange will loan us a Melendez Zebra that has been adapted as a core "
-"miner, but given the recent PUAAA activity, I need someone to escort it over "
-"here from {pnt} in the {sys} system. Would you be willing to do me the "
+"adaptation syndrome, however, the core seems to be much harder than "
+"expected, and our current machinery is unable to cut it. Our contacts at "
+"Gordon's Exchange will loan us a Melendez Zebra that has been adapted as a "
+"core miner, but given the recent PUAAA activity, I need someone to escort it "
+"over here from {pnt} in the {sys} system. Would you be willing to do me the "
 "favour?\""
 msgstr ""
 
@@ -77002,7 +77013,7 @@ msgstr ""
 msgid ""
 "\"Great! The core miner isn't really equipped with proper defences, so it's "
 "somewhat of a sitting duck. It was recently doing some operations on the "
-"Sander seafloor, but I gave them an offer they can't refuse and they're "
+"Sander seafloor, but I gave them an offer they can't refuse, and they're "
 "willing to come immediately if they get some protection given the recent… "
 "incidents. I've been feeding some fake data to the PUAAA to hopefully "
 "distract them a bit, but I don't think we'll be able to sneak in such a "
@@ -77068,7 +77079,7 @@ msgid ""
 "recently found a really curious peculiarity. It seems like there is a very "
 "faint jump lane leading out of Antlejos. It doesn't seem like it goes "
 "anywhere really interesting, but you might want to take a look. I've updated "
-"your system navigation so you should be able to use it now.\""
+"your system navigation, so you should be able to use it now.\""
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant08.lua:127
@@ -77132,7 +77143,7 @@ msgstr ""
 msgid ""
 "\"Hello! The core drilling is going slow but great. The dust is a pain to "
 "get off though, it seems to permeate into clothing. This was my favourite "
-"set too. Oh well.\"\n"
+"set too. Oh, well.\"\n"
 "\"Speaking of which, some of my scouts have recently been able to track down "
 "some PUAAA activity to be originating from {sys}. It seems like there is a "
 "mothership or something like that over there. I know it's quite a challenge, "
@@ -77144,11 +77155,11 @@ msgstr ""
 msgid ""
 "\"Great! I know you're thinking about doing the same you did with the supply "
 "ship you took out in the Knave system, but this time it won't be that easy. "
-"This seems to be the source of almost all of the PUAAA attacks. In "
-"particular, I believe it's the notorious '{shipname}', which is well-known "
-"for having stopped the terraforming of Em 2. Normally, we wouldn't have much "
-"of a chance against the {shipname}, but in a stroke of luck, it seems like "
-"they've had some trouble and they're now stuck offline in {sys}, meaning "
+"This seems to be the source of almost all the PUAAA attacks. In particular, "
+"I believe it's the notorious '{shipname}', which is well-known for having "
+"stopped the terraforming of Em 2. Normally, we wouldn't have much of a "
+"chance against the {shipname}, but in a stroke of luck, it seems like "
+"they've had some trouble, and they're now stuck offline in {sys}, meaning "
 "it's the perfect time to take it down once and for all.\""
 msgstr ""
 
@@ -77170,7 +77181,7 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant09.lua:79
 msgid ""
-"Eliminate the PUAAA mothership named {shipname} that islocated in the {sys} "
+"Eliminate the PUAAA mothership named {shipname} that is located in the {sys} "
 "system. You have been provided explosives to detonate the mothership if you "
 "are able to get close enough to it."
 msgstr ""
@@ -77201,7 +77212,7 @@ msgid ""
 "sloppily dumps it into two steel mugs. He notices you giving him a following "
 "look.\n"
 "\"Ah, don't worry about that, I cleaned the barrel before filling it. This "
-"is the bartender's specialty \"Antlejos Brew'! It's made with all natural "
+"is the bartender's speciality \"Antlejos Brew'! It's made with all natural "
 "ingredients found exclusively here!\""
 msgstr ""
 
@@ -77234,7 +77245,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant09.lua:119
 msgid ""
 "Immediately the indescribable taste invades your mouth, overloading your "
-"sensory system. Your body reflexively curls up and you almost struggle to "
+"sensory system. Your body reflexively curls up, and you almost struggle to "
 "keep consciousness. You spend a while trying to regain your senses and catch "
 "your breath, all the while under Verner's sly grin."
 msgstr ""
@@ -77250,9 +77261,9 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant09.lua:127
 msgid ""
 "You grab the mug, and in an extreme act of determination, ignore all the "
-"warning signs your body screams at you and you begin to chug the drink. With "
-"the first sip, your body convulses briefly, but you continue to drink until "
-"nothing is left. Or at least that's what you think happened before you "
+"warning signs your body screams at you, and you begin to chug the drink. "
+"With the first sip, your body convulses briefly, but you continue to drink "
+"until nothing is left. Or at least that's what you think happened before you "
 "passed out."
 msgstr ""
 
@@ -77330,7 +77341,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant09.lua:166
 msgid ""
 "He gives you a strong handshake and is off, busy as ever. Alone, you now "
-"spend a while roaming around the base, more like a small city now, and make "
+"spend awhile roaming around the base, more like a small city now, and make "
 "note of all the incredible progress that has gone on this small moon in such "
 "a small amount of time."
 msgstr ""
@@ -77410,10 +77421,10 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant10.lua:46
 msgid ""
 "He leads you to the largest room at the base, which is the not very elegant "
-"cafeteria. He opens the door and your are greeted by a myriad of faces, some "
+"cafeteria. He opens the door, and you are greeted by a myriad of faces, some "
 "which you recognize as colonists you helped bring over to Antlejos V from "
 "different parts of the galaxy. A cheer erupt from the crowd as you go to the "
-"center of the room."
+"centre of the room."
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant10.lua:47
@@ -77422,7 +77433,7 @@ msgid ""
 "the new gravity, and then helps you up. People start pouring and sharing "
 "foul smelling drinks, but Verner hands you a glass with something that "
 "smells much better and winks at you. After a bit it seems like everyone has "
-"gotten their drinks, and Verner directs himself to the crowd."
+"got their drinks, and Verner directs himself to the crowd."
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant10.lua:48
@@ -80722,7 +80733,7 @@ msgid "A pair of orphans looking for a better life."
 msgstr ""
 
 #: dat/missions/neutral/majesteka_stowaways.lua:47
-msgid "They are trying to away from {spb}"
+msgid "They are trying to get away from {spb}"
 msgstr ""
 
 #: dat/missions/neutral/majesteka_stowaways.lua:52
@@ -80845,7 +80856,7 @@ msgstr ""
 
 #: dat/missions/neutral/majesteka_stowaways.lua:152
 msgid ""
-"The orphans look ecstatic at their new home and thank you for all you've "
+"The orphans look ecstatic at their new home, and thank you for all you've "
 "done for them. Seeing that they are in good hands, you now return to your "
 "ship with peace of mind."
 msgstr ""
@@ -81129,7 +81140,7 @@ msgstr "Vezměte Vernera do systému {pnt} ({sys})"
 
 #: dat/missions/neutral/new_europe_refugees.lua:55
 msgid ""
-"The procession of refugees slowly boards your ship, with more then one "
+"The procession of refugees slowly boards your ship, with more than one "
 "person looking back at the dying planet they used to call home. They make "
 "themselves as comfortable as they can in your cargo holds and seem to "
 "resigned to hoping what they will find at {spob} is better than what they "
@@ -81138,9 +81149,9 @@ msgstr ""
 
 #: dat/missions/neutral/new_europe_refugees.lua:75
 msgid ""
-"You open your cargo holds and the Nebula refugees make their way off your "
+"You open your cargo holds, and the Nebula refugees make their way off your "
 "ship and are promptly greeted by an immigration officer. It looks like "
-"hardships are not yer over for the refugees. On the positive side, it can "
+"hardships are not yet over for the refugees. On the positive side, it can "
 "only get better, right?"
 msgstr ""
 
@@ -81519,7 +81530,7 @@ msgstr ""
 #: dat/missions/neutral/poi/caretaker.lua:31
 msgid ""
 "Your ship AI appears as you access the system.\n"
-"\"This derelict seems to be quite a mess. I've completed a scan and it is "
+"\"This derelict seems to be quite a mess. I've completed a scan, and it is "
 "full of biological waste. Be careful.\""
 msgstr ""
 
@@ -81546,7 +81557,7 @@ msgid ""
 "still haven't figured out the paperwork I have to do to even start "
 "considering that option. The Chief Caretaker told me that in the 30 cycles "
 "since he started working here that they haven't figured out any of the forms "
-"they have to do. I feel like it's all just a ruse so we can't claim "
+"they have to do. I feel like it's all just a ruse, so we can't claim "
 "healthcare, but it could just be all the accumulated bureaucratic cruft."
 msgstr ""
 
@@ -81554,7 +81565,7 @@ msgstr ""
 msgid ""
 "I've started to get used to the Iguana Armour, which is apparently the "
 "closest I'll get to healthcare. It stinks horrible from many cycles of "
-"usage, but apparently it can't be washed and I have no choice but to get "
+"usage, but apparently it can't be washed, and I have no choice but to get "
 "used to it. I've stopped eating before work to minimize it all coming back "
 "up with the horrible combination of stench and filth. Can I really get used "
 "to this?"
@@ -81580,7 +81591,7 @@ msgstr ""
 
 #: dat/missions/neutral/poi/caretaker.lua:44
 msgid ""
-"Although I am busy with the Iguana most of the time and it has for me to "
+"Although I am busy with the Iguana most of the time, and it has for me to "
 "notice, things seem to be changing throughout the Imperial Palace. You see "
 "people huddled and whispering with constant new proclamations. Work is also "
 "being started on some very large space structures in the solar system. It is "
@@ -81623,7 +81634,7 @@ msgstr ""
 msgid ""
 "You keep on exploring the filthy vessel and eventually find {reward} stashed "
 "away in the ship systems, before heading back to your ship. The smell isn't "
-"going to go away easily is it?\n"
+"going to go away easily, is it?\n"
 "\n"
 "{rewardmsg}"
 msgstr ""
@@ -81658,14 +81669,14 @@ msgstr ""
 #: dat/missions/neutral/poi/data_intro.lua:31
 msgid ""
 "\"What a bunch of assholes! I've spent my entire life toiling for the "
-"greater good of the Empire and they decide to retire me to the Za'lek "
+"greater good of the Empire, and they decide to retire me to the Za'lek "
 "consulate! Ungrateful imbeciles!\""
 msgstr ""
 
 #: dat/missions/neutral/poi/data_intro.lua:32
 msgid ""
-"\"Lack of condecorations they say. Not my fault we haven't had a proper war "
-"in ages. 'Waste of resources' my ass! If the Emperor and his court got their "
+"\"Lack of medals they say. Not my fault we haven't had a proper war in ages. "
+"'Waste of resources' my ass! If the Emperor and his court got their "
 "collective heads out of the sky they'd realize we need a proper military, "
 "and not just a dozen ships to parade around and guard their newest "
 "plaything. No wonder piracy is getting worse than ever.\""
@@ -81684,7 +81695,7 @@ msgstr ""
 #: dat/missions/neutral/poi/data_intro.lua:34
 msgid ""
 "There is a loud sound of something being hit.\n"
-"\"Damnit! I won't let them get away with this! Wait, what the hell is this?"
+"\"Dammit! I won't let them get away with this! Wait, what the hell is this?"
 "\"\n"
 "It sounds like the atmosphere is being vented. You hear some struggling "
 "before the recording becomes completely silent."
@@ -81747,13 +81758,13 @@ msgid ""
 "metaspace breakdowns. While it is very interesting, it relies on some "
 "hypothesis that our initial safety experiments have disproved over and over "
 "again. We remind you that we at the Empire take security and protocol very "
-"seriously and we do not believe such a dangerous flaw could have escaped our "
-"experimental protocols.\n"
+"seriously, and we do not believe such a dangerous flaw could have escaped "
+"our experimental protocols.\n"
 "\n"
 "If you have any questions on our experimental protocols, please file an EE-"
 "X-232 form with your inquiry.\n"
 "\n"
-"We remind you to refrain from publicising your view, as it is subject to "
+"We remind you to refrain from publicizing your view, as it is subject to "
 "Article 8914-3b.\n"
 "\n"
 "Sincerely,\n"
@@ -81777,7 +81788,7 @@ msgid ""
 "you not? My theory irrefutably shows that if the right conditions are met, "
 "this could result in a catastrophe not seen in all of human history! "
 "Considering the potential risk, I do stress that the points I elaborate "
-"throughout the 523 page document should be taken into account before further "
+"throughout the 523-page document should be taken into account before further "
 "experiments.\n"
 "\n"
 "Regards,\n"
@@ -82001,7 +82012,7 @@ msgid "\"Understood.\""
 msgstr ""
 
 #: dat/missions/neutral/poi/proteron_agent.lua:63
-msgid "END  OF AUDIO DATA ##2969"
+msgid "END OF AUDIO DATA ##2969"
 msgstr ""
 
 #: dat/missions/neutral/poi/proteron_agent.lua:67
@@ -82030,7 +82041,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/poi/proteron_agent.lua:73
-msgid "END  OF AUDIO DATA ##4189"
+msgid "END OF AUDIO DATA ##4189"
 msgstr ""
 
 #: dat/missions/neutral/poi/proteron_agent.lua:78
@@ -82167,9 +82178,8 @@ msgstr "Ať žije Proteron!"
 
 #: dat/missions/neutral/poi/proteron_press.lua:58
 msgid ""
-"Some of the text on that last page was illegible, and the logo following it "
-"was indecipherable. Still, a curious document. You wonder who could have "
-"made it."
+"Some text on that last page was illegible, and the logo following it was "
+"indecipherable. Still, a curious document. You wonder who could have made it."
 msgstr ""
 
 #: dat/missions/neutral/poi/proteron_press.lua:61
@@ -82180,8 +82190,8 @@ msgstr ""
 
 #: dat/missions/neutral/poi/proteron_press.lua:66
 msgid ""
-"\"I wonder... these ship systems are highly sophisticated, posibly even more "
-"than mine... It seems strangely familiar.\""
+"\"I wonder... these ship systems are highly sophisticated, possibly even "
+"more than mine... It seems strangely familiar.\""
 msgstr ""
 
 #: dat/missions/neutral/poi/proteron_press.lua:67
@@ -82260,8 +82270,8 @@ msgstr ""
 #: dat/missions/neutral/poi/red_rackham.lua:53
 msgid ""
 "A quick exploration of the ship reveals that its systems are mostly "
-"operational, but the engines are dead and the cargo hold is full of nothing "
-"but spoiled liqour. You do however recover an age-weathered notebook from "
+"operational, but the engines are dead, and the cargo hold is full of nothing "
+"but spoiled liquor. You do however recover an age-weathered notebook from "
 "the crew quarters. You flip carefully through the few legible entries on "
 "your way back to the bridge."
 msgstr ""
@@ -82283,16 +82293,16 @@ msgid ""
 "Become a pirate they said. Riches and infamy they said. Well we've been "
 "sitting out here for the devil knows how many periods now, and we've barely "
 "got 10k to show for it! It's not just the convoys, oh no that'd be bad "
-"enough, but now a couple gangs have moved into the area and they're snapping "
-"up what few stragglers there were! If this keeps up, we won't even be able "
-"to keep theaw ship running much longer."
+"enough, but now a couple gangs have moved into the area, and they're "
+"snapping up what few stragglers there were! If this keeps up, we won't even "
+"be able to keep the ship running much longer."
 msgstr ""
 
 #: dat/missions/neutral/poi/red_rackham.lua:59
 msgid ""
 "Captain's log, UST 548:3953\n"
 "That's torn it. Some hotshot got a lucky torp through our shields, now our "
-"left retroburner's busted and we can barely manage 50 clicks a second. I "
+"left retroburner's busted, and we can barely manage 50 clicks a second. I "
 "guess I should be grateful it didn't blow a hole in the hull instead. Even "
 "if we manage to limp back to a station, I don't know if we have enough for "
 "repairs.\n"
@@ -82325,7 +82335,7 @@ msgstr ""
 #: dat/missions/neutral/poi/red_rackham.lua:76
 msgid ""
 "Captain's log, UST 551:1348\n"
-"Another Empire patrol spotted us today, but the wolfpack chased them off. I "
+"Another Empire patrol spotted us today, but the wolf pack chased them off. I "
 "couldn't help but laugh seeing them falling over themselves trying to get "
 "away once they realized how many of us there were! I tell you, it was a "
 "thing of beauty. Running into a patrol that size used to keep me up at "
@@ -82363,8 +82373,8 @@ msgid ""
 "Damn it. I can't believe it, it just isn't possible. The boss can't just be "
 "gone, right? There's no way that massive ship of his could've been taken "
 "down, but the boys are saying he hasn't been seen in almost 200 periods. He "
-"just disappeared without a trace. There are rumors that his last message was "
-"about ambushing some trader convoy full of gold, but the higher ups are "
+"just disappeared without a trace. There are rumours that his last message "
+"was about ambushing some trader convoy full of gold, but the higher ups are "
 "refusing to tell us anything. Some people think they're trying to hoard the "
 "treasure for themselves.\n"
 "\n"
@@ -82406,7 +82416,7 @@ msgid ""
 "You quickly search the room, and discover evidence of a fight between the "
 "captain and the pirate. Blaster burns pockmark the walls, and the captain's "
 "uniform is covered in bloodstained slashes. You note with some curiosity "
-"that the pirate seemed to have been using a curved, nanosteel saber instead "
+"that the pirate seemed to have been using a curved, nanosteel sabre instead "
 "of a blaster. You pick up the dusty blade and note its excellent "
 "craftsmanship. With the ornate engravings covering the blade, the sword is "
 "as much a work of art as it is a weapon."
@@ -82441,7 +82451,7 @@ msgid ""
 "merchantmen are spooked, and they've taken to hiding under the shadow of a "
 "bigger fish. Another half dozen joined up with us in the last period alone! "
 "No doubt they hope that in the event of a pirate attack, the slowest vessel "
-"will be left behind as a sacrifice. Particularly since that vessal, namely "
+"will be left behind as a sacrifice. Particularly since that vessel, namely "
 "mine, is hauling such an appetizing cargo. I almost hope pirates do attack, "
 "if only so that I can show those cowards what a real trader looks like."
 msgstr ""
@@ -82461,7 +82471,7 @@ msgid ""
 "They've taken over entire ship now, with Rackham himself leading the charge. "
 "He only left enough of us alive to make up his missing crew, no doubt he's "
 "planning to commandeer the ship and make us fly it back to some pirate "
-"station. After that though, they won't need us anymore. All I have is my "
+"station. After that though, they won't need us any more. All I have is my "
 "blaster and one thermal detonator. If I am to die, then on my honour as "
 "captain I swear I will take Red Rackham with me."
 msgstr ""
@@ -82527,7 +82537,7 @@ msgid ""
 "I found an interesting rumour today while visiting the bar at Neurri. I was "
 "told that, although most bioships are completely domesticated, with little "
 "in the ways of autonomy and higher level cognition, it seems like this is "
-"not always the case. Some times the bioships can end up too smart for their "
+"not always the case. Sometimes the bioships can end up too smart for their "
 "own good. What happens to them depends on the tribe in this case, but it is "
 "not uncommon for them to go missing. This is very interesting and could be "
 "related to my research. I am going to try to see if I can find any more "
@@ -82542,13 +82552,13 @@ msgid ""
 "have been talking with the bioship producers. They seem to reject the notion "
 "of \"feral\" bioships. I was almost about to call it quits and return home, "
 "when I managed to talk to a younger employee who sees to confirm my "
-"suspicions. Indeed, although rare, some times random mutations in the DNA "
-"can lead to not fully controllable bioships. They swear that they are as "
-"cunning and intelligent as humans. The future of such ships is uncertain, "
-"but they can be taken away or escape. However, only the tribe elders deal "
-"with such bioships. It seems like most head towards the Haze, and that is "
-"the next place I must travel to. For this trip I will leave behind my trusty "
-"Koala and go with a Soromid Brigand. This may arouse less suspicion should I "
+"suspicions. Indeed, although rare, sometimes random mutations in the DNA can "
+"lead to not fully controllable bioships. They swear that they are as cunning "
+"and intelligent as humans. The future of such ships is uncertain, but they "
+"can be taken away or escape. However, only the tribe elders deal with such "
+"bioships. It seems like most head towards the Haze, and that is the next "
+"place I must travel to. For this trip I will leave behind my trusty Koala "
+"and go with a Soromid Brigand. This may arouse less suspicion should I "
 "happen upon feral bioships."
 msgstr ""
 
@@ -82613,7 +82623,7 @@ msgstr ""
 #: dat/missions/neutral/poi/soromid_biologist.lua:67
 msgid ""
 "You found a derelict bioship in {sys}. It belonged to a researcher searching "
-"for \"feral\" bioships and you found a {reward}."
+"for \"feral\" bioships, and you found a {reward}."
 msgstr ""
 
 #. Must be locked
@@ -82656,14 +82666,14 @@ msgid ""
 "CONTINUING ANALYSIS OF EVENT.\n"
 "ENERGY EMITTED ESTIMATED TO BE 10e50 JOULES WITH MARGIN OF ERROR OF 10e51 "
 "JOULES.\n"
-"EPICENTER ESTIMATED TO BE WITHIN 50 LIGHT YEARS OF THE POLARIS SYSTEM.\n"
-"SURVIVABILITY WITHIN 500 LIGHT YEARS OF EPICENTER ESTIMATED TO BE "
+"EPICENTRE ESTIMATED TO BE WITHIN 50 LIGHT YEARS OF THE POLARIS SYSTEM.\n"
+"SURVIVABILITY WITHIN 500 LIGHT YEARS OF EPICENTRE ESTIMATED TO BE "
 "0.00000000001%."
 msgstr ""
 
 #: dat/missions/neutral/poi/zalek_drone.lua:47
 msgid ""
-"STRONG SUBSPACE ANOMALITIES DETECTED. SPECIALIZED HARDWARE NECESSARY FOR "
+"STRONG SUBSPACE ABNORMALITIES DETECTED. SPECIALIZED HARDWARE NECESSARY FOR "
 "ANALYSIS.\n"
 "DELTA WAVES RECEDING, 10 CYCLES EXPECTED FOR DECREASE TO MINIMUM LEVELS "
 "NECESSARY FOR HUMAN SURVIVAL.\n"
@@ -105948,7 +105958,7 @@ msgstr ""
 msgid "Requires psychic powers to use."
 msgstr ""
 
-#: dat/outfits/flow/flow_amplifier.lua:12
+#: dat/outfits/flow/flow_amplifier.lua:23
 msgid ""
 "Provides {flow} maximum flow capacity and allows a ship to use flow and "
 "allows gaining 10% of damage received as flow.{powers}"
