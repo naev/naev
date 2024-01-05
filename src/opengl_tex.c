@@ -363,6 +363,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
       glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, s->w, s->h, 0, GL_RED, GL_FLOAT, dataf );
+      glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       free( dataf );
       SDL_FreeSurface(s);
    }
@@ -371,6 +372,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
             surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
+      glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
    }
    SDL_UnlockSurface( surface );
 

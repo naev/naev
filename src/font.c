@@ -285,6 +285,7 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    else
       glTexSubImage2D( GL_TEXTURE_2D, 0, gr->x, gr->y, ch->w, ch->h,
             GL_RED, GL_UNSIGNED_BYTE, ch->data );
+   glPixelStorei(GL_UNPACK_ALIGNMENT,4);
 
    /* Check for error. */
    gl_checkErr();
