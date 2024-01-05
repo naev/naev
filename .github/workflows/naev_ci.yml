@@ -234,7 +234,7 @@ jobs:
     container:
       image: "ghcr.io/naev/${{ matrix.image }}:latest"
       env:
-        BUILD_ARCH: "${{ matrix.arch }}"
+        BUILDARCH: "${{ matrix.arch }}"
 
     steps:
       - name: Get Source
@@ -262,6 +262,16 @@ jobs:
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
+
+      - name: Debug workflow..
+        run: |
+          echo "This works locally, why does this not work here?"
+
+          echo $HOST
+          echo $MACOSX_DEPLOYMENT_TARGET
+          ls -l /usr/lib/osxcross/
+          ls -l /usr/lib/osxcross/macports
+          "$HOST-pkg-config" --version
 
       - name: Upload Setup Log
         uses: actions/upload-artifact@v3
