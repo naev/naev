@@ -19,6 +19,7 @@
    * Removed Soromid Ira turret and forward weapon stats
    * Fixed reality rip and avatar of sirichana abilities giving errors when the AI tries to use them
    * Fixed issue on some systems with indexed images
+   * Fixed pirates and pilots that don't care being able to disable the fake transponder
    * `zalek/blackhole/zbh09`: don't error out when a bioship ceases to exist
    * `kidnapped/traffic_00`: fixed formatting string telling the player what system to go to
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
