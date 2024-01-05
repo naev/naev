@@ -76878,7 +76878,7 @@ msgstr ""
 #. Can board them to blow them up
 #: dat/missions/neutral/antlejos/ant09.lua:265
 #, fuzzy
-msgid "PUAAA Figher"
+msgid "PUAAA Fighter"
 msgstr "랜슬롯"
 
 #. route0 and route1 can't be random or it might spawn directly on the player
