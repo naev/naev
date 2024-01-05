@@ -369,10 +369,12 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    }
    else {
       *vmax = 1.;
-      glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
+      SDL_Surface *s = SDL_ConvertSurfaceFormat( surface, SDL_PIXELFORMAT_ARGB8888, 0 );
+      glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( s->pitch&-surface->pitch, 8 ) );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
-            surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
+            s->w, s->h, 0, s->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, s->pixels );
       glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
+      SDL_FreeSurface(s);
    }
    SDL_UnlockSurface( surface );
 
