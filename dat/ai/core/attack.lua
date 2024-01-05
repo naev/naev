@@ -148,7 +148,7 @@ function atk.think( target, si, noretarget )
             -- Want enemy to be in shooting range
             local range = ai.getweaprange(3, 0) -- all turrets
             if ai.dist( target ) < 0.8*range then
-               p:outfitToggle( mem._o.house_mirrors, true )
+               p:outfitToggle( mem._o.avatar_sirichana, true )
             end
          end
          if mem._o.house_mirrors and f > fm * 0.4 and rnd.rnd() < 0.5 then
@@ -163,7 +163,7 @@ function atk.think( target, si, noretarget )
             local range = ai.getweaprange(3, 0) -- all turrets
             local d = ai.dist( target )
             if d > 300 and d < 0.8*range  then
-               p:outfitToggle( mem._o.house_mirrors, true )
+               p:outfitToggle( mem._o.reality_rip, true )
             end
          end
       end
