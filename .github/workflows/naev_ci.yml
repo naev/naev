@@ -248,12 +248,12 @@ jobs:
             rm -f /usr/lib/osxcross/macports
             ln -s /usr/lib/osxcross/macports.aarch64 /usr/lib/osxcross/macports
           elif [[ "$BUILDARCH" == "x86_64" ]] then
-                rm -f /usr/lib/osxcross/macports
-                ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
           # Fallback
           else
-                rm -f /usr/lib/osxcross/macports
-                ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
           fi
 
       - name: Get Source
@@ -265,17 +265,6 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
-
-
-      - name: Debug workflow..
-        run: |
-          echo "This works locally, why does this not work here?"
-
-          echo $HOST
-          echo $MACOSX_DEPLOYMENT_TARGET
-          ls -l /usr/lib/osxcross/
-          ls -l /usr/lib/osxcross/macports
-          "$HOST-pkg-config" --version
 
       - name: Meson Setup
         id: setup
