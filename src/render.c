@@ -240,15 +240,21 @@ void render_all( double game_dt, double real_dt )
    render_reset();
 
    /* Process game stuff only. */
-   if (pp_game)
+   if (pp_game) {
+      NTracingZoneName( _ctx_pp_game, "postprocess_shader[game]", 1 );
       render_fbo_list( dt, pp_shaders_list[PP_LAYER_GAME], &cur, !(pp_core || pp_final || pp_gui) );
+      NTracingZoneEnd( _ctx_pp_game );
+   }
 
    /* GUi stuff. */
    gui_render(dt);
    render_reset();
 
-   if (pp_gui)
+   if (pp_gui) {
+      NTracingZoneName( _ctx_pp_gui, "postprocess_shader[gui]", 1 );
       render_fbo_list( dt, pp_shaders_list[PP_LAYER_GUI], &cur, !(pp_core || pp_final) );
+      NTracingZoneEnd( _ctx_pp_gui );
+   }
 
    /* We set the to fullscreen, ignoring the GUI modifications. */
    gl_viewport( 0, 0, gl_screen.nw, gl_screen.nh );
@@ -264,15 +270,21 @@ void render_all( double game_dt, double real_dt )
       toolkit_render( real_dt );
 
    /* Final post-processing. */
-   if (pp_final)
+   if (pp_final) {
+      NTracingZoneName( _ctx_pp_final, "postprocess_shader[final]", 1 );
       render_fbo_list( dt, pp_shaders_list[PP_LAYER_FINAL], &cur, !(pp_core) );
+      NTracingZoneEnd( _ctx_pp_final );
+   }
 
    if (menu_open)
       toolkit_render( real_dt );
 
    /* Final post-processing. */
-   if (pp_core)
+   if (pp_core) {
+      NTracingZoneName( _ctx_pp_core, "postprocess_shader[core]", 1 );
       render_fbo_list( dt, pp_shaders_list[PP_LAYER_CORE], &cur, 1 );
+      NTracingZoneEnd( _ctx_pp_core );
+   }
 
    /* check error every loop */
    gl_checkErr();
