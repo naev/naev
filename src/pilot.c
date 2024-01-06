@@ -3716,6 +3716,7 @@ void pilots_free (void)
 void pilots_clean( int persist )
 {
    int persist_count = 0;
+   NTracingZone( _ctx, 1 );
 
    /* First pass to stop outfits without clearing stuff - this can call all
     * sorts of Lua stuff. */
@@ -3767,6 +3768,8 @@ void pilots_clean( int persist )
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3776,6 +3779,8 @@ void pilots_newSystem (void)
 {
    double r = cur_system->radius * 1.1;
 
+   NTracingZone( _ctx, 1 );
+
    pilot_updateSensorRange();
    for (int i=0; i < array_size(pilot_stack); i++)
       pilot_init_trails( pilot_stack[i] );
@@ -3784,6 +3789,8 @@ void pilots_newSystem (void)
       qt_destroy( &pilot_quadtree );
    qt_create( &pilot_quadtree, -r, -r, r, r, qt_max_elem, qt_depth );
    qt_init = 1;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

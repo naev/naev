@@ -222,6 +222,8 @@ void ovr_refresh (void)
    if (!ovr_isOpen())
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* Clean up leftovers. */
    if (ovr_refresh_mo)
      free( ovr_refresh_mo );
@@ -324,6 +326,8 @@ void ovr_refresh (void)
    /* Sove the moos. */
    ovr_refresh_pos = pos;
    ovr_refresh_mo = mo;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

@@ -187,10 +187,14 @@ Weapon *weapon_getID( unsigned int id )
 void weapon_newSystem (void)
 {
    double r = cur_system->radius * 1.1;
+   NTracingZone( _ctx, 1 );
+
    if (qt_init)
       qt_destroy( &weapon_quadtree );
    qt_create( &weapon_quadtree, -r, -r, r, r, 4, 6 ); /* TODO tune parameters. */
    qt_init = 1;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -2697,6 +2701,8 @@ static void weapon_free( Weapon* w )
  */
 void weapon_clear (void)
 {
+   NTracingZone( _ctx, 1 );
+
    /* Don't forget to stop the sounds. */
    for (int i=0; i < array_size(weapon_stack); i++) {
       Weapon *w = &weapon_stack[i];
@@ -2706,6 +2712,8 @@ void weapon_clear (void)
    array_erase( &weapon_stack, array_begin(weapon_stack), array_end(weapon_stack) );
    /* We can restart the idgen. */
    weapon_idgen = 0; /* May mess up Lua stuff... */
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

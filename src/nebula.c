@@ -389,6 +389,8 @@ void nebu_prep( double density, double volatility, double hue )
 {
    glColour col;
 
+   NTracingZone( _ctx, 1 );
+
    /* Set the hue. */
    nebu_hue = hue;
    glUseProgram(shaders.nebula.program);
@@ -436,4 +438,6 @@ void nebu_prep( double density, double volatility, double hue )
          np->ry = RNGF()*2000.-1000.;
       }
    }
+
+   NTracingZoneEnd( _ctx );
 }

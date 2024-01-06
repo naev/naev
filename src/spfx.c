@@ -157,8 +157,8 @@ static void spfx_trail_free( Trail_spfx* trail );
  */
 static int spfx_base_cmp( const void *p1, const void *p2 )
 {
-   const SPFX_Base *s1 = (const SPFX_Base*) p1;
-   const SPFX_Base *s2 = (const SPFX_Base*) p2;
+   const SPFX_Base *s1 = p1;
+   const SPFX_Base *s2 = p2;
    return strcmp( s1->name, s2->name );
 }
 
@@ -525,6 +525,8 @@ void spfx_add( int effect,
  */
 void spfx_clear (void)
 {
+   NTracingZone( _ctx, 1 );
+
    /* Clear rumble */
    shake_force_mod = 0.;
    shake_force_mean = 0.;
@@ -543,6 +545,8 @@ void spfx_clear (void)
 
    /* Clear the Lua spfx. */
    spfxL_clear();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1119,12 +1123,14 @@ void spfx_render( int layer, double dt )
          spfx_renderStack( spfx_stack_back );
          spfxL_renderbg( dt );
 
+         NTracingZoneName( _ctx_trails, "spfx_render[trails]", 1 );
          /* Trails are special (for now?). */
          for (int i=0; i<array_size(trail_spfx_stack); i++) {
             const Trail_spfx *trail = trail_spfx_stack[i];
             if (!trail->ontop)
                spfx_trail_draw( trail );
          }
+         NTracingZoneEnd( _ctx_trails );
          break;
 
       default:

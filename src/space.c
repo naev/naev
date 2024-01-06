@@ -1268,6 +1268,8 @@ const char *jump_getSymbol( const JumpPoint *jp )
  */
 static void system_scheduler( double dt, int init )
 {
+   NTracingZone( _ctx, 1 );
+
    /* Go through all the factions and reduce the timer. */
    for (int i=0; i < array_size(cur_system->presence); i++) {
       int n;
@@ -1380,6 +1382,8 @@ static void system_scheduler( double dt, int init )
       }
       lua_pop(naevL,2);
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1551,6 +1555,12 @@ void space_init( const char* sysname, int do_simulate )
    const StarSystem *oldsys = cur_system;
 
    NTracingFrameMarkStart( "space_init" );
+   NTracingZone( _ctx, 1 );
+#if HAVE_TRACY
+   char buf[STRMAX_SHORT];
+   size_t l = snprintf( buf, sizeof(buf), "Entering system '%s'", sysname );
+   NTracingMessage( buf, l );
+#endif /* TRACY */
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1648,6 +1658,7 @@ void space_init( const char* sysname, int do_simulate )
    /* we now know this system */
    sys_setFlag(cur_system,SYSTEM_KNOWN);
 
+   NTracingZoneName( _ctx_simulating, "space_init[simulation]", 1 );
    /* Simulate system. */
    space_simulating = 1;
    space_simulating_effects = 0;
@@ -1677,10 +1688,6 @@ void space_init( const char* sysname, int do_simulate )
          update_routine( fps_min_simulation, 0 );
       ntime_allowUpdate( 1 );
       sound_disabled = s;
-      /*
-      if (conf.devmode)
-         DEBUG(_("System simulated in %.3f s"), (SDL_GetTicks()-time)/1000.);
-      */
    }
    player_messageToggle( 1 );
    if (player.p != NULL) {
@@ -1694,6 +1701,7 @@ void space_init( const char* sysname, int do_simulate )
    }
    space_simulating_effects = 1;
    space_simulating = 0;
+   NTracingZoneEnd( _ctx_simulating );
 
    /* Refresh overlay if necessary (player kept it open). */
    ovr_refresh();
@@ -1704,6 +1712,7 @@ void space_init( const char* sysname, int do_simulate )
    /* Start background. */
    background_load( cur_system->background );
 
+   NTracingZoneEnd( _ctx );
    NTracingFrameMarkEnd( "space_init" );
 }
 
@@ -1951,6 +1960,8 @@ void spob_updateLand( Spob *p )
       return;
    }
 
+   NTracingZone( _ctx, 1 );
+
    /* Clean up old stuff. */
    free( p->land_msg );
    p->can_land    = 0;
@@ -1963,6 +1974,7 @@ void spob_updateLand( Spob *p )
       if (nlua_pcall( p->lua_env, 0, 2 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), p->name, "can_land", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
+         NTracingZoneEnd( _ctx );
          return;
       }
 
@@ -1971,6 +1983,7 @@ void spob_updateLand( Spob *p )
          p->land_msg = strdup( lua_tostring(naevL,-1) );
       lua_pop(naevL,2);
 
+      NTracingZoneEnd( _ctx );
       return;
    }
 
@@ -1982,6 +1995,8 @@ void spob_updateLand( Spob *p )
       p->can_land = 1;
       p->land_msg = strdup(_("Landing permission granted."));
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
