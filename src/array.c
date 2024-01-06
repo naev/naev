@@ -6,6 +6,8 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "naev.h"
 /** @endcond */
 
 #include "array.h"
@@ -18,10 +20,7 @@ void *_array_create_helper(size_t e_size, size_t capacity)
    if ( capacity <= 0 )
       capacity = 1;
 
-   size_t s = sizeof(_private_container) + e_size * capacity;
-   _private_container *c = malloc( s );
-
-   NTracingAlloc( c, s );
+   _private_container *c = nmalloc( sizeof(_private_container) + e_size * capacity );
 
 #if DEBUG_ARRAYS
    c->_sentinel = ARRAY_SENTINEL;
@@ -42,10 +41,7 @@ static void _array_resize_container(_private_container **c_, size_t e_size, size
          c->_reserved *= 2;
       while (new_size > c->_reserved);
 
-      size_t s = sizeof(_private_container) + e_size * c->_reserved;
-      NTracingFree( c );
-      c = realloc( c, s );
-      NTracingAlloc( c, s );
+      c = nrealloc( c, sizeof(_private_container) + e_size * c->_reserved );
    }
 
    c->_size = new_size;
@@ -65,10 +61,7 @@ void *_array_grow_helper(void **a, size_t e_size)
    if (c->_size == c->_reserved) {
       /* Array full, doubles the reserved memory */
       c->_reserved *= 2;
-      size_t s = sizeof(_private_container) + e_size * c->_reserved;
-      NTracingFree( c );
-      c = realloc( c, s );
-      NTracingAlloc( c, s );
+      c = nrealloc( c, sizeof(_private_container) + e_size * c->_reserved );
       *a = c->_array;
    }
 
@@ -95,16 +88,10 @@ void _array_shrink_helper(void **a, size_t e_size)
 {
    _private_container *c = _array_private_container(*a);
    if (c->_size != 0) {
-      size_t s = sizeof(_private_container) + e_size * c->_reserved;
-      NTracingFree( c );
-      c = realloc( c, s );
-      NTracingAlloc( c, s );
+      c = nrealloc( c, sizeof(_private_container) + e_size * c->_size );
       c->_reserved = c->_size;
    } else {
-      size_t s = sizeof(_private_container) + e_size;
-      NTracingFree( c );
-      c = realloc( c, s );
-      NTracingAlloc( c, s );
+      c = nrealloc( c, sizeof(_private_container) + e_size );
       c->_reserved = 1;
    }
    *a = c->_array;
@@ -114,9 +101,7 @@ void _array_free_helper(void *a)
 {
    if (a==NULL)
       return;
-   void *ptr = _array_private_container(a);
-   NTracingFree( ptr );
-   free( ptr );
+   nfree( _array_private_container(a) );
 }
 
 void *_array_copy_helper(size_t e_size, void *a)

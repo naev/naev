@@ -30,6 +30,7 @@
 /** @endcond */
 
 #include "ncompat.h"
+#include "attributes.h"
 
 #define APPNAME            "Naev" /**< Application name. */
 
@@ -64,6 +65,40 @@
 #ifndef M_SQRT2
 #  define M_SQRT2       1.41421356237309504880
 #endif
+
+/* Memory tracing stuff. */
+#include "ntracing.h"
+#if HAVE_TRACY
+ALWAYS_INLINE static inline void *nmalloc(size_t size)
+{
+   void *ptr = malloc(size);
+   NTracingAlloc( ptr, size );
+   return ptr;
+}
+ALWAYS_INLINE static inline void nfree(void *ptr)
+{
+   NTracingFree( ptr );
+   free( ptr );
+}
+ALWAYS_INLINE static inline void *ncalloc(size_t nmemb, size_t size)
+{
+   void *ptr = calloc( nmemb, size );
+   NTracingAlloc( ptr, nmemb*size );
+   return ptr;
+}
+ALWAYS_INLINE static inline void *nrealloc(void *ptr, size_t size)
+{
+   NTracingFree( ptr );
+   void *newptr = realloc( ptr, size );
+   NTracingAlloc( newptr, size );
+   return newptr;
+}
+#else /* HAVE_TRACY */
+#define nmalloc(size)      malloc(size)
+#define ncalloc(nmemb,size) calloc(nmemb,size)
+#define nfree(ptr)         free(ptr)
+#define nrealloc(ptr,size) realloc(ptr,size)
+#endif /* HAVE_TRACY */
 
 /*
  * Misc stuff.
