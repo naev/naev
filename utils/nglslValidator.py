@@ -8,6 +8,8 @@ def parse_includes( linesin ):
     lines = linesin.copy()
     i = 0
     while i < len(lines):
+        lines[i] = lines[i].replace("%d","0");
+        lines[i] = lines[i].replace("%f","0.0");
         m = re.match('#include\s+"([^"]+)"', lines[i].strip())
         if m:
             with open("dat/glsl/" + m.group(1)) as f:
@@ -24,16 +26,33 @@ def preprocess( shader, shadertype ):
 
     # Detect if it's a love shader, must be run after #includes are tested
     islove = False
+    ispp = False
     for l in lines:
-        if not islove:
+        if not islove and not ispp:
             # Pretty bad detection, but no false positives... for now
             if shadertype=="frag" and re.match("vec4 effect\(\s*vec4", l.strip()):
                 islove = True
             elif shadertype=="vert" and re.match("vec4 position\(\s*mat4", l.strip()):
                 islove = True
+            elif shadertype=="frag" and re.match("vec4 effect\(\s*sampler2D", l.strip()):
+                ispp = True
 
     # Love shaders need some additional voodoo
     prepend = "#version 150 core\n"
+    if ispp: # special post-processing shaders
+        prepend += """
+uniform sampler2D MainTex;
+uniform vec4 love_ScreenSize;
+in vec4 VaryingTexCoord;
+out vec4 colour_out;
+
+vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord );
+
+void main (void)
+{
+    colour_out = effect( MainTex, VaryingTexCoord.st, vec2(VaryingTexCoord.s,1.0-VaryingTexCoord.t) * love_ScreenSize.xy );
+}
+"""
     if islove:
         prepend += """
 #define _LOVE
