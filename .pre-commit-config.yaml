@@ -27,7 +27,7 @@ repos:
 - repo: local
   hooks:
     - id: nluacheck
-      name: Wrapper for luacheck that understands Naev hooks
+      name: wrapper for luacheck that understands Naev hooks
       entry: utils/nluacheck.py
       files: '^dat/'
       types: [lua]
@@ -44,7 +44,7 @@ repos:
       files: dat/.*\.(frag|vert)$
       language: python
     - id: potfiles
-      name: Check for stale POTFILES.in
+      name: check for stale POTFILES.in
       entry: utils/update-po.sh . --pre-commit
       language: script
       always_run: true
