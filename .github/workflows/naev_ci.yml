@@ -237,6 +237,13 @@ jobs:
         BUILDARCH: "${{ matrix.arch }}"
 
     steps:
+      - name: Configure Build Environment
+        run: |
+          echo "Configuring MacPorts packages and build env variables for $BUILDARCH."
+          macports-configure.sh
+          echo "HOST=$HOST" >> "$GITHUB_ENV"
+          echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET" >> "$GITHUB_ENV"
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
