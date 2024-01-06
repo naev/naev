@@ -226,7 +226,7 @@ if buildExec.disabled() == false
 
    if get_option('tracy')
       naev_deps += subproject('tracy').get_variable('tracy_dep')
-      config_data.set10('TRACY_ENABLE', true)
+      config_data.set10('HAVE_TRACY', true)
    endif
 
    # Standard library feature tests

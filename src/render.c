@@ -3,8 +3,6 @@
  */
 #include "render.h"
 
-#include "tracy/TracyC.h"
-
 #include "array.h"
 #include "conf.h"
 #include "font.h"
@@ -18,6 +16,7 @@
 #include "pause.h"
 #include "player.h"
 #include "nlua_canvas.h"
+#include "ntracing.h"
 #include "space.h"
 #include "spfx.h"
 #include "toolkit.h"

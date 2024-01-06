@@ -3758,6 +3758,7 @@ src/nstring.c
 src/nstring.h
 src/ntime.c
 src/ntime.h
+src/ntracing.h
 src/nxml.c
 src/nxml.h
 src/nxml_lua.c

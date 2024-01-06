@@ -328,6 +328,7 @@ headers = files(
    'nopenal.h',
    'npc.h',
    'nstring.h',
+   'ntracing.h',
    'ntime.h',
    'nxml.h',
    'nxml_lua.h',
