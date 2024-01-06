@@ -3261,7 +3261,7 @@ Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
    /* Allocate pilot memory. */
-   Pilot *p = malloc(sizeof(Pilot));
+   Pilot *p = nmalloc(sizeof(Pilot));
    if (p == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
@@ -3630,7 +3630,7 @@ void pilot_free( Pilot *p )
    memset( p, 0, sizeof(Pilot) );
 #endif /* DEBUGGING */
 
-   free(p);
+   nfree(p);
 }
 
 /**
