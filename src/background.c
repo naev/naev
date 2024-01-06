@@ -28,6 +28,7 @@
 #include "nlua_gfx.h"
 #include "nluadef.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "nxml.h"
 #include "opengl.h"
 #include "pause.h"
@@ -150,6 +151,8 @@ void background_renderDust( const double dt )
    mat4 projection;
    int points = 1;
 
+   NTracingZone( _ctx, 1 );
+
    /* Do some scaling for now. */
    z = cam_getZoom();
    m = 1.;
@@ -219,6 +222,8 @@ void background_renderDust( const double dt )
 
    /* Check for errors. */
    gl_checkErr();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -228,6 +233,8 @@ void background_renderDust( const double dt )
  */
 void background_render( double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    if (bkg_L_renderbg != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
       lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
@@ -259,6 +266,8 @@ void background_render( double dt )
          lua_pop( naevL, 1 );
       }
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -266,6 +275,8 @@ void background_render( double dt )
  */
 void background_renderOverlay( double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    if (bkg_L_renderov != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderov );
       lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
@@ -274,6 +285,8 @@ void background_renderOverlay( double dt )
          lua_pop( naevL, 1 );
       }
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

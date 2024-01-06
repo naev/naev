@@ -279,9 +279,8 @@ void render_all( double game_dt, double real_dt )
  */
 static int ppshader_compare( const void *a, const void *b )
 {
-   PPShader *ppa, *ppb;
-   ppa = (PPShader*) a;
-   ppb = (PPShader*) b;
+   const PPShader *ppa = a;
+   const PPShader *ppb = b;
    if (ppa->priority > ppb->priority)
       return +1;
    if (ppa->priority < ppb->priority)

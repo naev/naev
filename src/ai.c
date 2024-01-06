@@ -88,6 +88,7 @@
 #include "nlua_rnd.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
+#include "ntracing.h"
 #include "nstring.h"
 #include "physics.h"
 #include "pilot.h"
@@ -804,6 +805,8 @@ void ai_think( Pilot* pilot, double dt, int dotask )
    if (pilot->ai == NULL)
       return;
 
+   NTracingZone( _ctx, 1 );
+
    oldmem = ai_setPilot(pilot);
    env = cur_pilot->ai->env; /* set the AI profile to the current pilot's */
 
@@ -842,6 +845,7 @@ void ai_think( Pilot* pilot, double dt, int dotask )
 
    if (!dotask) {
       ai_unsetPilot( oldmem );
+      NTracingZoneEnd( _ctx );
       return;
    }
 
@@ -864,7 +868,8 @@ void ai_think( Pilot* pilot, double dt, int dotask )
       if (data != LUA_NOREF) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, data );
          ai_run(env, 1);
-      } else
+      }
+      else
          ai_run(env, 0);
 
       /* Manual control must check if IDLE hook has to be run. */
@@ -883,6 +888,8 @@ void ai_think( Pilot* pilot, double dt, int dotask )
 
    /* Clean up if necessary. */
    ai_taskGC( cur_pilot );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

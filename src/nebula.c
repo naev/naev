@@ -19,6 +19,7 @@
 #include "menu.h"
 #include "opengl.h"
 #include "player.h"
+#include "ntracing.h"
 #include "rng.h"
 #include "spfx.h"
 #include "vec2.h"
@@ -146,8 +147,12 @@ void nebu_exit (void)
  */
 void nebu_render( const double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    nebu_renderBackground(dt);
    nebu_renderPuffs( 1 );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -273,6 +278,8 @@ void nebu_renderOverlay( const double dt )
    (void) dt;
    double gx, gy, z;
 
+   NTracingZone( _ctx, 1 );
+
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
 
@@ -315,6 +322,8 @@ void nebu_renderOverlay( const double dt )
    /* Reset puff movement. */
    puff_x = 0.;
    puff_y = 0.;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

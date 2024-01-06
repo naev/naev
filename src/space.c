@@ -1550,6 +1550,8 @@ void space_init( const char* sysname, int do_simulate )
    const double fps_min_simulation = fps_min;
    const StarSystem *oldsys = cur_system;
 
+   NTracingFrameMarkStart( "space_init" );
+
    /* cleanup some stuff */
    player_clear(); /* clears targets */
    ovr_mrkClear(); /* Clear markers when jumping. */
@@ -1701,6 +1703,8 @@ void space_init( const char* sysname, int do_simulate )
 
    /* Start background. */
    background_load( cur_system->background );
+
+   NTracingFrameMarkEnd( "space_init" );
 }
 
 /**

@@ -22,6 +22,7 @@
 #include "opengl.h"
 #include "toolkit.h"
 #include "ndata.h"
+#include "ntracing.h"
 #include "player.h"
 #include "nlua_asteroid.h"
 
@@ -182,6 +183,8 @@ static int asteroid_updateSingle( Asteroid *a )
  */
 void asteroids_update( double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    /* Asteroids/Debris update */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
@@ -265,6 +268,8 @@ void asteroids_update( double dt )
             d->alpha = MAX( 0.0, d->alpha - 0.5 * dt );
       }
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -826,12 +831,16 @@ void asteroids_renderOverlay (void)
    cx -= SCREEN_W/2.;
    cy -= SCREEN_H/2.;
 
+   NTracingZone( _ctx, 1 );
+
    /* Render the debris. */
    for (int j=0; j<array_size(debris_stack); j++) {
       const Debris *d = &debris_stack[j];
       if (d->height > 1.)
          debris_renderSingle( d, cx, cy );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -844,6 +853,8 @@ void asteroids_render (void)
    z = cam_getZoom();
    cx -= SCREEN_W/2.;
    cy -= SCREEN_H/2.;
+
+   NTracingZone( _ctx, 1 );
 
    /* Render the asteroids & debris. */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
@@ -871,6 +882,8 @@ void asteroids_render (void)
 
    /* Render gatherable stuff. */
    gatherable_render();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

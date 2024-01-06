@@ -636,6 +636,8 @@ static void loadscreen_unload (void)
 #define LOADING_STAGES     17. /**< Amount of loading stages. */
 void load_all (void)
 {
+   NTracingFrameMarkStart( "load_all" );
+
    int stage = 0;
    /* We can do fast stuff here. */
    sp_load();
@@ -703,6 +705,8 @@ void load_all (void)
    weapon_init();
    player_init(); /* Initialize player stuff. */
    loadscreen_update( 1., _("Loading Completed!") );
+
+   NTracingFrameMarkEnd( "load_all" );
 }
 /**
  * @brief Unloads all data, simplifies main().
