@@ -29,11 +29,13 @@ repos:
     - id: nluacheck
       name: Wrapper for luacheck that understands Naev hooks
       entry: utils/nluacheck.py
+      files: '^dat/'
       types: [lua]
       language: python
     - id: check_fmt_f_usage
       name: Lua f-string validation
       entry: utils/check_fmt_f_usage.py
+      files: '^dat/'
       types: [lua]
       language: python
     - id: potfiles
