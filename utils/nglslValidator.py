@@ -123,9 +123,12 @@ if __name__ == "__main__":
     with Pool() as pool:
         retlist = pool.map( glslvalidate, filelist )
     err = 0
-    for r in retlist:
+    for i,r in enumerate(retlist):
         if r[0]!=0:
             err += r[0]
             # only write to stdeout in class of error for less spam
-            sys.stdout.buffer.write( r[1] )
+            lines = str(r[1],'utf-8').strip().splitlines()
+            lines[0] = "\n"+filelist[i]
+            for l in lines:
+                sys.stdout.buffer.write( bytes(l+'\n','utf-8') )
     sys.exit( err )
