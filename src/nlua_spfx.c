@@ -25,6 +25,7 @@
 #include "sound.h"
 #include "opengl.h"
 #include "nopenal.h"
+#include "ntracing.h"
 #include "player.h"
 
 #define SPFX_GLOBAL     (1<<1) /**< Spfx sound ignores pitch changes. */
@@ -631,6 +632,8 @@ void spfxL_exit (void)
  */
 void spfxL_update( double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    spfx_lock();
    for (int i=array_size(lua_spfx)-1; i>=0; i--) {
       LuaSpfxData_t *ls = &lua_spfx[i];
@@ -675,6 +678,8 @@ void spfxL_update( double dt )
       }
    }
    spfx_unlock();
+
+   NTracingZoneEnd( _ctx );
 }
 
 static void spfxL_renderLayer( int func, const char *funcname, double dt )
@@ -737,7 +742,9 @@ static void spfxL_renderLayer( int func, const char *funcname, double dt )
  */
 void spfxL_renderbg( double dt )
 {
+   NTracingZone( _ctx, 1 );
    spfxL_renderLayer( 0, "renderbg", dt );
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -745,7 +752,9 @@ void spfxL_renderbg( double dt )
  */
 void spfxL_rendermg( double dt )
 {
+   NTracingZone( _ctx, 1 );
    spfxL_renderLayer( 1, "rendermg", dt );
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -753,7 +762,9 @@ void spfxL_rendermg( double dt )
  */
 void spfxL_renderfg( double dt )
 {
+   NTracingZone( _ctx, 1 );
    spfxL_renderLayer( 2, "rendermg", dt );
+   NTracingZoneEnd( _ctx );
 }
 
 /**

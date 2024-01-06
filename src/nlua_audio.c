@@ -26,6 +26,7 @@
 #include "nstring.h"
 #include "sound.h"
 #include "nopenal.h"
+#include "ntracing.h"
 
 /**
  * @brief Default pre-amp in dB.
@@ -394,7 +395,7 @@ void audio_cleanup( LuaAudio_t *la )
             la->buf->refcount--;
             if (la->buf->refcount <= 0) {
                alDeleteBuffers( 1, &la->buf->buffer );
-               free( la->buf );
+               nfree( la->buf );
             }
          }
          al_checkErr();
@@ -566,7 +567,7 @@ static int audioL_new( lua_State *L )
    /* Deal with stream. */
    if (!stream) {
       la.type = LUA_AUDIO_STATIC;
-      la.buf = malloc( sizeof(LuaBuffer_t) );
+      la.buf = nmalloc( sizeof(LuaBuffer_t) );
       la.buf->refcount = 1;
       sound_al_buffer( &la.buf->buffer, rw, name );
 
