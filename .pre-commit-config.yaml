@@ -38,6 +38,11 @@ repos:
       files: '^dat/'
       types: [lua]
       language: python
+    - id: glsl_validator
+      name: GLSL Validator
+      entry: utils/nglslValidator.py
+      files: dat/.*\.(frag|vert)$
+      language: python
     - id: potfiles
       name: Check for stale POTFILES.in
       entry: utils/update-po.sh . --pre-commit

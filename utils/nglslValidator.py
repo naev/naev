@@ -1,7 +1,8 @@
 #!/usr/bin/python
-import os
 import re
+import sys
 import subprocess
+from multiprocessing import Pool
 
 def preprocess( shader, shadertype ):
     lines = shader.splitlines()
@@ -97,18 +98,34 @@ void main(void) {
 """
     return prepend+'\n'.join(lines)
 
-for i in os.listdir("dat/glsl"):
-    if i.endswith(".vert"):
+def glslvalidate( filename ):
+    if filename.endswith(".vert"):
         s = "vert"
-    elif i.endswith(".frag"):
+    elif filename.endswith(".frag"):
         s = "frag"
     else:
-        continue
+        return
 
-    with open("dat/glsl/" + i) as f:
-        contents = preprocess( f.read(), s )
+    with open(filename) as f:
+        data = preprocess( f.read(), s )
 
-    print(f"{i}:")
-    p = subprocess.Popen(["glslangValidator", "--stdin", "-S", s, "--enhanced-msgs"], stdin=subprocess.PIPE)
-    p.communicate(contents.encode())
-    p.wait()
+    #print(f"{i}:")
+    #p = subprocess.Popen(["glslangValidator", "--stdin", "-S", s, "--enhanced-msgs"], stdin=subprocess.PIPE)
+    #p.communicate(contents.encode())
+    #p.wait()
+    args = ["glslangValidator", "--stdin", "-S", s, "--enhanced-msgs"]
+    ret = subprocess.run( args, capture_output=True, input=bytes(data,'utf-8') )
+    return ret.returncode, ret.stdout
+
+if __name__ == "__main__":
+    filelist = sys.argv[1:]
+    filelist.sort()
+    with Pool() as pool:
+        retlist = pool.map( glslvalidate, filelist )
+    err = 0
+    for r in retlist:
+        if r[0]!=0:
+            err += r[0]
+            # only write to stdeout in class of error for less spam
+            sys.stdout.buffer.write( r[1] )
+    sys.exit( err )
