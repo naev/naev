@@ -558,6 +558,8 @@ void spfx_clear (void)
 void spfx_update( const double dt, const double real_dt )
 {
    NTracingZone( _ctx, 1 );
+   NTracingPlotI( "spfx", array_size(spfx_stack_front)+array_size(spfx_stack_middle)+array_size(spfx_stack_back) );
+   NTracingPlotI( "trails", array_size(trail_spfx_stack) );
 
    spfx_update_layer( spfx_stack_front, dt );
    spfx_update_layer( spfx_stack_middle, dt );

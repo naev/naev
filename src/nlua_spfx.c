@@ -633,6 +633,7 @@ void spfxL_exit (void)
 void spfxL_update( double dt )
 {
    NTracingZone( _ctx, 1 );
+   NTracingPlotI( "Lua spfx", array_size(lua_spfx) );
 
    spfx_lock();
    for (int i=array_size(lua_spfx)-1; i>=0; i--) {
