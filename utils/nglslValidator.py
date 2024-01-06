@@ -124,7 +124,7 @@ def glslvalidate( filename ):
     #p.wait()
     args = ["glslangValidator", "--stdin", "-S", s, "--enhanced-msgs"]
     ret = subprocess.run( args, capture_output=True, input=bytes(data,'utf-8') )
-    return ret.returncode, ret.stdout
+    return ret.returncode, ret.stdout, data
 
 if __name__ == "__main__":
     filelist = sys.argv[1:]
@@ -137,7 +137,11 @@ if __name__ == "__main__":
             err += r[0]
             # only write to stdeout in class of error for less spam
             lines = str(r[1],'utf-8').strip().splitlines()
-            lines[0] = "\n"+filelist[i]
+            sys.stdout.buffer.write(bytes("\n",'utf-8'))
+            # TODO something better than inserting all code
+            for j,l in enumerate(r[2].splitlines()):
+                sys.stdout.buffer.write(bytes(f"{j:04d}:"+l+'\n','utf-8'))
+            lines[0] = filelist[i]
             for l in lines:
                 sys.stdout.buffer.write( bytes(l+'\n','utf-8') )
     sys.exit( err )
