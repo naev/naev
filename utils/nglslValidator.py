@@ -4,24 +4,33 @@ import sys
 import subprocess
 from multiprocessing import Pool
 
-def preprocess( shader, shadertype ):
-    lines = shader.splitlines()
-
-    islove = False
+def parse_includes( linesin ):
+    lines = linesin.copy()
     i = 0
     while i < len(lines):
-        if not islove:
-            # Pretty bad detection, but no false positives... for now
-            if shadertype=="frag" and re.match("vec4 effect\(\s*vec4", lines[i].strip()):
-                islove = True
-            elif shadertype=="vert" and re.match("vec4 position\(\s*mat4", lines[i].strip()):
-                islove = True
         m = re.match('#include\s+"([^"]+)"', lines[i].strip())
         if m:
             with open("dat/glsl/" + m.group(1)) as f:
                 contents = f.read()
-            lines = lines[:i] + contents.splitlines() + lines[i+1:]
+            lines = lines[:i] + parse_includes(contents.splitlines()) + lines[i+1:]
         i += 1
+    return lines
+
+def preprocess( shader, shadertype ):
+    lines = shader.splitlines()
+
+    # Recursively process includes
+    lines = parse_includes( lines )
+
+    # Detect if it's a love shader, must be run after #includes are tested
+    islove = False
+    for l in lines:
+        if not islove:
+            # Pretty bad detection, but no false positives... for now
+            if shadertype=="frag" and re.match("vec4 effect\(\s*vec4", l.strip()):
+                islove = True
+            elif shadertype=="vert" and re.match("vec4 position\(\s*mat4", l.strip()):
+                islove = True
 
     # Love shaders need some additional voodoo
     prepend = "#version 150 core\n"
