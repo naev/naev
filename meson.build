@@ -229,8 +229,8 @@ if buildExec.disabled() == false
    if tracy
       use_system_tracy = ('tracy' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
       if use_system_tracy
-         system_tracy = dependency('tracy', required: false )
-         use_system_tracy =  system_tracy.found()
+         system_tracy = cc.find_library('tracy', required: false, has_headers: ['tracy/TracyC.h'] )
+         use_system_tracy = system_tracy.found()
       endif
       naev_deps += use_system_tracy ? system_tracy : subproject('tracy').get_variable('tracy_dep')
       config_data.set10('HAVE_TRACY', true)
