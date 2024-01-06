@@ -59,6 +59,7 @@ if buildExec.disabled() == false
    debug = get_option('debug')
    debug_arrays = get_option('debug_arrays')
    debug_gl = get_option('debug_gl')
+   tracy = get_option('tracy')
    paranoid = get_option('paranoid')
    # The next three are sometimes expected by GNU tools and headers, sometimes for mere existence. Provide stable values.
    config_data.set_quoted('PACKAGE', meson.project_name())
@@ -224,10 +225,18 @@ if buildExec.disabled() == false
 
    naev_deps += [openal, ogg, vorbis, vorbisfile]
 
-   if get_option('tracy')
-      naev_deps += subproject('tracy').get_variable('tracy_dep')
+   have_tracy = false
+   if tracy
+      use_system_tracy = ('tracy' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
+      if use_system_tracy
+         system_tracy = dependency('tracy', required: false )
+         use_system_tracy =  system_tracy.found()
+      endif
+      naev_deps += use_system_tracy ? system_tracy : subproject('tracy').get_variable('tracy_dep')
       config_data.set10('HAVE_TRACY', true)
+      have_tracy = true
    endif
+   summary('tracy', have_tracy, section: 'Debug', bool_yn: true )
 
    # Standard library feature tests
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
