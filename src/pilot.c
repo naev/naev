@@ -3312,7 +3312,7 @@ Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, PilotFlags flags )
 {
-   Pilot *dyn = malloc(sizeof(Pilot));
+   Pilot *dyn = nmalloc(sizeof(Pilot));
    if (dyn == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
@@ -3336,7 +3336,7 @@ unsigned int pilot_clone( const Pilot *ref )
    pilot_setFlagRaw( pf, PILOT_NO_OUTFITS );
 
    /* Allocate pilot memory. */
-   dyn = malloc(sizeof(Pilot));
+   dyn = nmalloc(sizeof(Pilot));
    if (dyn == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
