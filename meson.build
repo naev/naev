@@ -227,6 +227,9 @@ if buildExec.disabled() == false
 
    have_tracy = false
    if tracy
+      if not debug
+         error('tracy requires a debug build!')
+      endif
       use_system_tracy = ('tracy' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
       if use_system_tracy
          system_tracy = cc.find_library('tracy', required: false, has_headers: ['tracy/TracyC.h'] )
