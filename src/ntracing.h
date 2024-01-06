@@ -40,7 +40,11 @@ ALWAYS_INLINE static inline void *nrealloc(void *ptr, size_t size)
    NTracingAlloc( newptr, size );
    return newptr;
 }
-#  define NTracingMessageL( txt )  TracyCMessageL( txt )
+#  define NTracingMessage( txt, size ) TracyCMessage( txt, size )
+#  define NTracingMessageL( txt )      TracyCMessageL( txt )
+#  define NTracingPlot( name, val )    TracyCPlot( name, val )
+#  define NTracingPlotF( name, val )   TracyCPlotF( name, val )
+#  define NTracingPlotI( name, val )   TracyCPlotI( name, val )
 #else
 #  define NTracingFrameMark
 #  define NTracingFrameMarkStart( name )
@@ -55,4 +59,7 @@ ALWAYS_INLINE static inline void *nrealloc(void *ptr, size_t size)
 #  define nfree(ptr)         free(ptr)
 #  define nrealloc(ptr,size) realloc(ptr,size)
 #  define NTracingMessageL( msg )
+#  define NTracingPlot( name, val )
+#  define NTracingPlotF( name, val )
+#  define NTracingPlotI( name, val )
 #endif /* HAVE_TRACY */

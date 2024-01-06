@@ -634,6 +634,7 @@ void weapons_updatePurge (void)
 void weapons_updateCollide( double dt )
 {
    NTracingZone( _ctx, 1 );
+   NTracingPlotI( "weapons", array_size(weapon_stack) );
 
    for (int i=0; i<array_size(weapon_stack); i++) {
       Weapon *w = &weapon_stack[i];

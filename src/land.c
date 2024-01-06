@@ -1142,7 +1142,11 @@ void land( Spob* p, int load )
    if (landed)
       return;
 
-   NTracingMessageL( "Player landed" );
+#if HAVE_TRACY
+   char buf[STRMAX_SHORT];
+   size_t l = snprintf( buf, sizeof(buf), "Player landed on '%s'", p->name );
+   NTracingMessage( buf, l );
+#endif /* HAVE_TRACY */
    NTracingFrameMarkStart( "land" );
 
    /* Incrcement times player landed. */
@@ -1402,6 +1406,7 @@ void takeoff( int delay, int nosave )
    int h;
    char *nt;
    double a, r;
+   const Spob *spb = land_spob;
 
    if (!landed)
       return;
@@ -1567,6 +1572,12 @@ void takeoff( int delay, int nosave )
     * all sorts of things. We have to refresh the GUI to reflect those changes.
     * This is particular important for Lua-side mechanics such as flow. */
    gui_setSystem();
+
+#if HAVE_TRACY
+   char buf[STRMAX_SHORT];
+   size_t l = snprintf( buf, sizeof(buf), "Player took off from '%s'", spb->name );
+   NTracingMessage( buf, l );
+#endif /* HAVE_TRACY */
 }
 
 /**

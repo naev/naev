@@ -125,12 +125,6 @@ static int load_load( nsave_t *save )
    xmlDocPtr doc;
    xmlNodePtr root, parent;
 
-#if HAVE_TRACY
-   char buf[STRMAX_SHORT];
-   snprintf( buf, sizeof(buf), "Loading save '%s'", save->path );
-   NTracingMessageL( buf );
-#endif /* TRACY */
-
    /* Load the XML. */
    doc = load_xml_parsePhysFS( save->path );
    if (doc == NULL) {
@@ -1260,6 +1254,12 @@ static int load_gameInternal( const char* file, const char* version )
       dialogue_alert( _("Saved game file seems to have been deleted.") );
       return -1;
    }
+
+#if HAVE_TRACY
+   char buf[STRMAX_SHORT];
+   size_t l = snprintf( buf, sizeof(buf), "Loading save '%s'", file );
+   NTracingMessage( buf, l );
+#endif /* TRACY */
 
    /* Some global cleaning has to be done here. */
    toolkit_closeAll();

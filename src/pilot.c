@@ -3864,6 +3864,7 @@ void pilots_updatePurge (void)
 void pilots_update( double dt )
 {
    NTracingZone( _ctx, 1 );
+   NTracingPlotI( "pilots", array_size(pilot_stack) );
 
    /* Have all the pilots think. */
    for (int i=0; i<array_size(pilot_stack); i++) {
