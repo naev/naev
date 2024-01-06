@@ -1,2 +1,2 @@
 #define TIMER  u_elapsed
-#include "effects/shared/hypergate.frag"
+#include "effects/shared/hypergate.glsl"
