@@ -225,9 +225,11 @@ jobs:
         include:
           - image: naev-macos
             arch: x86_64
+            deploymenttarget: "10.13"
             config: macos_cross_osxcross.ini
           - image: naev-macos
             arch: aarch64
+            deploymenttarget: "11.0"
             config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest
@@ -235,14 +237,24 @@ jobs:
       image: "ghcr.io/naev/${{ matrix.image }}:latest"
       env:
         BUILDARCH: "${{ matrix.arch }}"
+        HOST: "${{ matrix.arch }}-apple-darwin23"
+        MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
 
     steps:
       - name: Configure Build Environment
         run: |
           echo "Configuring MacPorts packages and build env variables for $BUILDARCH."
-          macports-configure.sh
-          echo "HOST=$HOST" >> "$GITHUB_ENV"
-          echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET" >> "$GITHUB_ENV"
+          if [[ "$BUILDARCH" == "aarch64" ]] then
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.aarch64 /usr/lib/osxcross/macports
+          elif [[ "$BUILDARCH" == "x86_64" ]] then
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
+          # Fallback
+          else
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
+          fi
 
       - name: Get Source
         uses: actions/download-artifact@v3
@@ -253,17 +265,6 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
-
-
-      - name: Debug workflow..
-        run: |
-          echo "This works locally, why does this not work here?"
-
-          echo $HOST
-          echo $MACOSX_DEPLOYMENT_TARGET
-          ls -l /usr/lib/osxcross/
-          ls -l /usr/lib/osxcross/macports
-          "$HOST-pkg-config" --version
 
       - name: Meson Setup
         id: setup
