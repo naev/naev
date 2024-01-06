@@ -42,6 +42,7 @@
 #include "nlua_outfit.h"
 #include "nlua_ship.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "nxml.h"
 #include "player.h"
 #include "space.h"

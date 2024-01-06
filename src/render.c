@@ -215,7 +215,9 @@ void render_all( double game_dt, double real_dt )
    /* Background stuff */
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
    render_reset(); /* space_render can use a lua background. */
+   NTracingZoneName( _ctx_renderbg, "hooks[renderbg]", 1 );
    hooks_run( "renderbg" );
+   NTracingZoneEnd( _ctx_renderbg );
    render_reset();
    spobs_render();
    spfx_render(SPFX_LAYER_BACK, dt);
@@ -232,7 +234,9 @@ void render_all( double game_dt, double real_dt )
    render_reset(); /* space_render can use a lua background. */
    gui_renderReticles(dt);
    pilots_renderOverlay();
+   NTracingZoneName( _ctx_renderfg, "hooks[renderfg]", 1 );
    hooks_run( "renderfg" );
+   NTracingZoneEnd( _ctx_renderfg );
    render_reset();
 
    /* Process game stuff only. */
@@ -251,7 +255,9 @@ void render_all( double game_dt, double real_dt )
 
    /* Top stuff. */
    ovr_render( real_dt ); /* Using real_dt is sort of a hack for now. */
+   NTracingZoneName( _ctx_rendertop, "hooks[rendertop]", 1 );
    hooks_run( "rendertop" );
+   NTracingZoneEnd( _ctx_rendertop );
    render_reset();
    fps_display( real_dt ); /* Exception using real_dt. */
    if (!menu_open)
