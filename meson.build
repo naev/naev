@@ -234,6 +234,7 @@ if buildExec.disabled() == false
       endif
       naev_deps += use_system_tracy ? system_tracy : subproject('tracy').get_variable('tracy_dep')
       config_data.set10('HAVE_TRACY', true)
+      config_data.set10('TRACY_ENABLE', true) # Needed for tracy to actually work
       have_tracy = true
    endif
    summary('tracy', have_tracy, section: 'Debug', bool_yn: true )
