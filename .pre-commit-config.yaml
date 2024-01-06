@@ -39,7 +39,7 @@ repos:
       types: [lua]
       language: python
     - id: glsl_validator
-      name: GLSL Validator
+      name: glsl validator
       entry: utils/nglslValidator.py
       files: dat/.*\.(frag|vert)$
       language: python
