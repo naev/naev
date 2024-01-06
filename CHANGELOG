@@ -19,6 +19,7 @@
       * Threaded more loading components
       * Lua require now caches chunks
       * Dropped SDL_image fallback
+      * Support for Tracy
    * Fixes
       * PSO and Mizar nebulas have trails again
 
