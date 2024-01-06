@@ -3,6 +3,8 @@
  */
 #include "render.h"
 
+#include "tracy/TracyC.h"
+
 #include "array.h"
 #include "conf.h"
 #include "font.h"
@@ -10,6 +12,7 @@
 #include "hook.h"
 #include "map_overlay.h"
 #include "naev.h"
+#include "ntracing.h"
 #include "menu.h"
 #include "opengl.h"
 #include "pause.h"
@@ -173,6 +176,8 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
  */
 void render_all( double game_dt, double real_dt )
 {
+   NTracingZone( ctx, 1 );
+
    double dt;
    int pp_core, pp_final, pp_gui, pp_game;
    int cur = 0;
@@ -266,6 +271,8 @@ void render_all( double game_dt, double real_dt )
 
    /* check error every loop */
    gl_checkErr();
+
+   NTracingZoneEnd( ctx );
 }
 
 /**

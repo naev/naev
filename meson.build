@@ -224,6 +224,11 @@ if buildExec.disabled() == false
 
    naev_deps += [openal, ogg, vorbis, vorbisfile]
 
+   if get_option('tracy')
+      naev_deps += subproject('tracy').get_variable('tracy_dep')
+      config_data.set10('TRACY_ENABLE', true)
+   endif
+
    # Standard library feature tests
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
