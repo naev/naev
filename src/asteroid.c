@@ -24,7 +24,6 @@
 #include "ndata.h"
 #include "player.h"
 #include "nlua_asteroid.h"
-#include "threadpool.h"
 
 /**
  * @brief Represents a small asteroid debris rendered in the player frame.
@@ -44,7 +43,6 @@ static const double SCAN_FADE = 10.; /**< 1/time it takes to fade in/out scannin
 
 static Debris *debris_stack = NULL; /**< All the debris in the current system (array.h). */
 static glTexture **debris_gfx = NULL; /**< Graphics to use for debris. */
-static ThreadQueue *asteroid_vpool = NULL; /**< For threading. */
 static double asteroid_dt = 0.; /**< Used as a global variable when threading. */
 
 /*
@@ -63,15 +61,14 @@ static int astgroup_cmp( const void *p1, const void *p2 );
 static int astgroup_parse( AsteroidTypeGroup *ag, const char *file );
 static int asttype_load (void);
 
-static int asteroid_updateSingle( void *data );
+static int asteroid_updateSingle( Asteroid *a );
 static void asteroid_renderSingle( const Asteroid *a );
 static void debris_renderSingle( const Debris *d, double cx, double cy );
 static void debris_init( Debris *deb );
 static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field );
 
-static int asteroid_updateSingle( void *data )
+static int asteroid_updateSingle( Asteroid *a )
 {
-   Asteroid *a    = data;
    const AsteroidAnchor *ast = &cur_system->asteroids[a->parent];
    double dt      = asteroid_dt;
    double offx, offy, d;
@@ -213,11 +210,8 @@ void asteroids_update( double dt )
             }
             continue;
          }
-         /* TODO figure out why this vpool stuff is hanging. */
-         //vpool_enqueue( asteroid_vpool, asteroid_updateSingle, a );
          asteroid_updateSingle( a );
       }
-      //vpool_wait( asteroid_vpool );
 
       /* Do quadtree stuff. Can't be threaded. */
       qt_clear( &ast->qt );
@@ -281,9 +275,6 @@ void asteroids_init (void)
    double density_max = 0.;
    int ndebris;
    asteroid_creating = 1;
-
-   if (asteroid_vpool==NULL)
-      asteroid_vpool = vpool_create();
 
    if (debris_gfx==NULL)
       debris_gfx = array_create( glTexture* );
@@ -983,9 +974,6 @@ void asteroids_free (void)
       gl_freeTexture(asteroid_gfx[i]);
    array_free(asteroid_gfx);
    array_free(debris_gfx);
-
-   /* Clean up thread pool. */
-   vpool_cleanup( asteroid_vpool );
 
    /* Free the asteroid types. */
    for (int i=0; i<array_size(asteroid_types); i++) {
