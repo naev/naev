@@ -633,6 +633,8 @@ void weapons_updatePurge (void)
  */
 void weapons_updateCollide( double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(weapon_stack); i++) {
       Weapon *w = &weapon_stack[i];
 
@@ -691,6 +693,8 @@ void weapons_updateCollide( double dt )
       if (!weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
          weapon_updateCollide( w, dt );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

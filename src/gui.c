@@ -562,6 +562,8 @@ static void gui_renderBorder( double dt )
    const glColour *col;
    Pilot *const* pilot_stack;
 
+   NTracingZone( _ctx, 1 );
+
    /* Get player position. */
    hw    = SCREEN_W/2;
    hh    = SCREEN_H/2;
@@ -633,6 +635,8 @@ static void gui_renderBorder( double dt )
          gl_renderRectEmpty(cx-5, cy-5, 10, 10, col);
       }
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -920,6 +924,8 @@ void gui_radarRender( double x, double y )
    if (!conf.always_radar && ovr_isOpen())
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* The global radar. */
    radar = &gui_radar;
    gui_radar.x = x;
@@ -998,6 +1004,8 @@ void gui_radarRender( double x, double y )
    gl_view_matrix = view_matrix_prev;
    if (radar->shape==RADAR_RECT)
       gl_unclipRect();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1033,6 +1041,8 @@ static void gui_renderMessages( double dt )
    int v, o;
    glColour c = {.r=1., .g=1., .b=1.};
    const glColour msgc = {.r=0., .g=0., .b=0., .a=0.6};
+
+   NTracingZone( _ctx, 1 );
 
    /* Coordinate translation. */
    x = gui_mesg_x;
@@ -1106,6 +1116,8 @@ static void gui_renderMessages( double dt )
       c.a = 0.5;
       gl_renderRect( vx + gui_mesg_w-10., vy + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)), 10, hs, &c );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

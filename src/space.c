@@ -2119,8 +2119,12 @@ void spob_gfxLoad( Spob *spob )
  */
 void space_gfxLoad( StarSystem *sys )
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(sys->spobs); i++)
       spob_gfxLoad( sys->spobs[i] );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -2741,6 +2745,8 @@ void system_reconstructJumps( StarSystem *sys )
  */
 void systems_reconstructJumps (void)
 {
+   NTracingZone( _ctx, 1 );
+
    /* So we need to calculate the shortest jump. */
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
@@ -2749,6 +2755,8 @@ void systems_reconstructJumps (void)
       for (int j=0; j<array_size(sys->jumps); j++)
          sys->jumps[j].targetid = sys->jumps[j].target->id;
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -2756,11 +2764,15 @@ void systems_reconstructJumps (void)
  */
 void systems_reconstructSpobs (void)
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
       for (int j=0; j<array_size(sys->spobsid); j++)
          sys->spobs[j] = &spob_stack[ sys->spobsid[j] ];
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

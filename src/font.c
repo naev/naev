@@ -32,6 +32,7 @@
 #include "ndata.h"
 #include "nfile.h"
 #include "utf8.h"
+#include "ntracing.h"
 
 #define MAX_EFFECT_RADIUS 4 /**< Maximum pixel distance from glyph to outline/shadow/etc. */
 #define FONT_DISTANCE_FIELD_SIZE   55 /**< Size to render the fonts at. */

@@ -23,6 +23,7 @@
 #include "toolkit.h"
 #include "ndata.h"
 #include "ntracing.h"
+#include "ntracing.h"
 #include "player.h"
 #include "nlua_asteroid.h"
 
@@ -281,6 +282,8 @@ void asteroids_init (void)
    int ndebris;
    asteroid_creating = 1;
 
+   NTracingZone( _ctx, 1 );
+
    if (debris_gfx==NULL)
       debris_gfx = array_create( glTexture* );
    array_erase( &debris_gfx, array_begin(debris_gfx), array_end(debris_gfx) );
@@ -349,6 +352,8 @@ void asteroids_init (void)
       debris_init( &debris_stack[j] );
 
    asteroid_creating = 0;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

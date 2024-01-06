@@ -94,6 +94,8 @@ void background_initDust( int n )
    double size;
    GLfloat *dust_vertex;
 
+   NTracingZone( _ctx, 1 );
+
    /* Calculate size. */
    size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
    size /= pow2(conf.zoom_far);
@@ -127,6 +129,8 @@ void background_initDust( int n )
          ndust * sizeof(GLfloat) * 3, dust_vertex );
 
    free(dust_vertex);
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -435,6 +439,8 @@ int background_load( const char *name )
    int ret;
    nlua_env env;
 
+   NTracingZone( _ctx, 1 );
+
    /* Free if exists. */
    background_clear();
 
@@ -447,8 +453,10 @@ int background_load( const char *name )
 
    /* Comfort. */
    env = bkg_cur_env;
-   if (env == LUA_NOREF)
+   if (env == LUA_NOREF) {
+      NTracingZoneEnd( _ctx );
       return -1;
+   }
 
    /* Run Lua. */
    nlua_getenv(naevL, env,"background");
@@ -466,6 +474,8 @@ int background_load( const char *name )
    bkg_L_renderfg = nlua_refenv( env, "renderfg" );
    bkg_L_renderov = nlua_refenv( env, "renderov" );
 
+   NTracingZoneEnd( _ctx );
+
    return ret;
 }
 
@@ -474,9 +484,8 @@ int background_load( const char *name )
  */
 static void background_clearCurrent (void)
 {
-   if (bkg_cur_env != bkg_def_env) {
+   if (bkg_cur_env != bkg_def_env)
       nlua_freeEnv( bkg_cur_env );
-   }
    bkg_cur_env = LUA_NOREF;
 
    luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );

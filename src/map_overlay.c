@@ -951,6 +951,8 @@ void ovr_render( double dt )
  */
 static void ovr_mrkRenderAll( double res, int fg )
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(ovr_markers); i++) {
       double x, y;
       ovr_marker_t *mrk = &ovr_markers[i];
@@ -989,6 +991,8 @@ static void ovr_mrkRenderAll( double res, int fg )
          }
       }
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
