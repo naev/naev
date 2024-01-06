@@ -27,6 +27,7 @@
 #include "nlua_pilot.h"
 #include "nlua_pilotoutfit.h"
 #include "nlua_outfit.h"
+#include "ntracing.h"
 
 static int stealth_break = 0; /**< Whether or not to break stealth. */
 
@@ -1530,7 +1531,10 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
 {
    if (!pilot->outfitlupdate)
       return;
+
+   NTracingZone( _ctx, 1 );
    pilot_outfitLRun( pilot, outfitLUpdate, &dt );
+   NTracingZoneEnd( _ctx );
 }
 
 static void outfitLOutofenergy( const Pilot *pilot, PilotOutfitSlot *po, const void *data )

@@ -3267,6 +3267,8 @@ Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char
       return 0;
    }
 
+   NTracingZone( _ctx, 1 );
+
    /* Set the pilot in the stack -- must be there before initializing */
    array_push_back( &pilot_stack, p );
 
@@ -3296,6 +3298,8 @@ Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char
 
    /* Pilot creation hook. */
    pilot_runHook( p, PILOT_HOOK_CREATION );
+
+   NTracingZoneEnd( _ctx );
 
    return p;
 }
@@ -3565,6 +3569,8 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
  */
 void pilot_free( Pilot *p )
 {
+   NTracingZone( _ctx, 1 );
+
    /* Clear some useful things. */
    pilot_clearHooks(p);
    effect_cleanup( p->effects );
@@ -3583,6 +3589,7 @@ void pilot_free( Pilot *p )
    /* We don't actually free internals of the pilot once we cleaned up stuff. */
    if (pilot_isFlag( p, PILOT_NOFREE )) {
       p->id = 0; /* Invalidate ID. */
+      NTracingZoneEnd( _ctx );
       return;
    }
 
@@ -3631,6 +3638,8 @@ void pilot_free( Pilot *p )
 #endif /* DEBUGGING */
 
    nfree(p);
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

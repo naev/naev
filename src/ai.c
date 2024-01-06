@@ -578,8 +578,8 @@ void ai_destroy( Pilot* p )
 
 static int ai_sort( const void *p1, const void *p2 )
 {
-   const AI_Profile *ai1 = (const AI_Profile*) p1;
-   const AI_Profile *ai2 = (const AI_Profile*) p2;
+   const AI_Profile *ai1 = p1;
+   const AI_Profile *ai2 = p2;
    return strcmp( ai1->name, ai2->name );
 }
 
@@ -594,6 +594,8 @@ int ai_load (void)
 #if DEBUGGING
    Uint32 time = SDL_GetTicks();
 #endif /* DEBUGGING */
+
+   NTracingZone( _ctx, 1 );
 
    /* get the file list */
    files = PHYSFS_enumerateFiles( AI_PATH );
@@ -637,8 +639,13 @@ int ai_load (void)
    /* Create collision stuff. */
    il_create( &ai_qtquery, 1 );
 
+
    /* Load equipment thingy. */
-   return ai_loadEquip();
+   ai_loadEquip();
+
+   NTracingZoneEnd( _ctx );
+
+   return 0;
 }
 
 /**
@@ -649,6 +656,8 @@ static int ai_loadEquip (void)
    char *buf;
    size_t bufsize;
    const char *filename = AI_EQUIP_PATH;
+
+   NTracingZone( _ctx, 1 );
 
    /* Make sure doesn't already exist. */
    nlua_freeEnv(equip_env);
@@ -664,9 +673,12 @@ static int ai_loadEquip (void)
           "%s\n"
           "Most likely Lua file has improper syntax, please check"),
             filename, lua_tostring(naevL, -1));
+      NTracingZoneEnd( _ctx );
       return -1;
    }
    free(buf);
+
+   NTracingZoneEnd( _ctx );
 
    return 0;
 }
@@ -825,6 +837,8 @@ void ai_think( Pilot* pilot, double dt, int dotask )
 
    /* control function if pilot is idle or tick is up */
    if ((cur_pilot->tcontrol < 0.) || (t == NULL)) {
+      NTracingZoneName( _ctx_control, "ai_think[control]", 1 );
+
       double crate = cur_pilot->ai->control_rate;
       if (pilot_isFlag(pilot,PILOT_PLAYER) ||
           pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
@@ -841,6 +855,8 @@ void ai_think( Pilot* pilot, double dt, int dotask )
 
       /* Task may have changed due to control tick. */
       t = ai_curTask( cur_pilot );
+
+      NTracingZoneEnd( _ctx_control );
    }
 
    if (!dotask) {
@@ -852,6 +868,8 @@ void ai_think( Pilot* pilot, double dt, int dotask )
    /* pilot has a currently running task */
    if (t != NULL) {
       int data;
+      NTracingZoneName( _ctx_task, "ai_think[task]", 1 );
+
       /* Run subtask if available, otherwise run main task. */
       if (t->subtask != NULL) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, t->subtask->func );
@@ -878,6 +896,8 @@ void ai_think( Pilot* pilot, double dt, int dotask )
          if (ai_curTask( cur_pilot ) == NULL)
             pilot_runHook( cur_pilot, PILOT_HOOK_IDLE );
       }
+
+      NTracingZoneEnd( _ctx_task );
    }
 
    /* Applies local variables to the pilot. */
@@ -899,6 +919,8 @@ void ai_think( Pilot* pilot, double dt, int dotask )
  */
 void ai_init( Pilot *p )
 {
+   NTracingZone( _ctx, 1 );
+
    AIMemory oldmem;
    if ((p->ai==NULL) || (p->ai->ref_create==LUA_NOREF))
       return;
@@ -906,6 +928,8 @@ void ai_init( Pilot *p )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ai->ref_create );
    ai_run( p->ai->env, 0 ); /* run control */
    ai_unsetPilot( oldmem );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1032,7 +1056,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
    }
 
    /* Create the task. */
-   t           = calloc( 1, sizeof(Task) );
+   t           = ncalloc( 1, sizeof(Task) );
    t->name     = strdup("refuel");
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_refuel);
    t->func     = luaL_ref(naevL, LUA_REGISTRYINDEX);
@@ -1080,6 +1104,8 @@ void ai_getDistress( const Pilot *p, const Pilot *distressed, const Pilot *attac
  */
 static void ai_create( Pilot* pilot )
 {
+   NTracingZone( _ctx, 1 );
+
    /* Set creation mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
       aiL_status = AI_STATUS_CREATE;
@@ -1107,8 +1133,10 @@ static void ai_create( Pilot* pilot )
    }
 
    /* Must have AI. */
-   if (pilot->ai == NULL)
+   if (pilot->ai == NULL) {
+      NTracingZoneEnd( _ctx );
       return;
+   }
 
    /* Set up. */
    ai_init( pilot );
@@ -1116,6 +1144,7 @@ static void ai_create( Pilot* pilot )
    /* Recover normal mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
       aiL_status = AI_STATUS_NORMAL;
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1135,10 +1164,10 @@ Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos
    luaL_checktype( L, -1, LUA_TFUNCTION );
 
    /* Create the new task. */
-   t           = calloc( 1, sizeof(Task) );
-   t->name     = strdup(func);
-   t->func     = luaL_ref( L, LUA_REGISTRYINDEX );
-   t->dat      = LUA_NOREF;
+   t        = ncalloc( 1, sizeof(Task) );
+   t->name  = strdup(func);
+   t->func  = luaL_ref( L, LUA_REGISTRYINDEX );
+   t->dat   = LUA_NOREF;
 
    /* Handle subtask and general task. */
    if (!subtask) {
@@ -1200,7 +1229,7 @@ void ai_freetask( Task* t )
    }
 
    free(t->name);
-   free(t);
+   nfree(t);
 }
 
 /**
