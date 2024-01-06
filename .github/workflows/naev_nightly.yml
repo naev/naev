@@ -248,8 +248,27 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-macos:latest"
+      env:
+        BUILDARCH: "x86_64"
+        HOST: "$BUILDARCH-apple-darwin23"
+        MACOSX_DEPLOYMENT_TARGET: "10.13"
 
     steps:
+      - name: Configure Build Environment
+        run: |
+          echo "Configuring MacPorts packages and build env variables for $BUILDARCH."
+          if [[ "$BUILDARCH" == "aarch64" ]] then
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.aarch64 /usr/lib/osxcross/macports
+          elif [[ "$BUILDARCH" == "x86_64" ]] then
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
+          # Fallback
+          else
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
+          fi
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
