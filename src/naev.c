@@ -783,10 +783,10 @@ void main_loop( int nested )
       /* Draw buffer. */
       SDL_GL_SwapWindow( gl_screen.window );
 
-      NTracingFrameMark
+      NTracingFrameMark;
    }
 
-   NTracingZoneEnd(ctx);
+   NTracingZoneEnd( ctx );
 }
 
 /**
