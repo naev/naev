@@ -265,7 +265,7 @@ Widget* window_newWidget( Window* w, const char *name )
 
    /* Must grow widgets. */
    if (wgt == NULL)
-      wgt = malloc( sizeof(Widget) );
+      wgt = nmalloc( sizeof(Widget) );
 
    /* Safe defaults. */
    memset( wgt, 0, sizeof(Widget) );
@@ -710,7 +710,7 @@ unsigned int window_create( const char* name, const char *displayname,
 unsigned int window_createFlags( const char* name, const char *displayname,
       const int x, const int y, const int w, const int h, unsigned int flags )
 {
-   Window *wdw = calloc( 1, sizeof(Window) );
+   Window *wdw = ncalloc( 1, sizeof(Window) );
 
    const int wid = (++genwid); /* unique id */
 
@@ -1127,7 +1127,7 @@ static void window_remove( Window *wdw )
       wgt = wgtkill->next;
       widget_kill(wgtkill);
    }
-   free(wdw);
+   nfree(wdw);
 
    /* Clear key repeat, since toolkit could miss the keyup event. */
    toolkit_clearKey();
@@ -1197,7 +1197,7 @@ static void widget_kill( Widget *wgt )
 {
    /* Clean up. */
    widget_cleanup(wgt);
-   free(wgt);
+   nfree(wgt);
 }
 
 /**
