@@ -10,4 +10,4 @@ float marker_func( vec2 pos, float rad )
    return min( dcirc, dplus );
 }
 
-#include "spobmarker_base.frag"
+#include "spobmarker_base.glsl"
