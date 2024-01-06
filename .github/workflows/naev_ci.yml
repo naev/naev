@@ -247,6 +247,17 @@ jobs:
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
 
+
+      - name: Debug workflow..
+        run: |
+          echo "This works locally, why does this not work here?"
+
+          echo $HOST
+          echo $MACOSX_DEPLOYMENT_TARGET
+          ls -l /usr/lib/osxcross/
+          ls -l /usr/lib/osxcross/macports
+          "$HOST-pkg-config" --version
+
       - name: Meson Setup
         id: setup
         run: |
@@ -263,15 +274,6 @@ jobs:
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
 
-      - name: Debug workflow..
-        run: |
-          echo "This works locally, why does this not work here?"
-
-          echo $HOST
-          echo $MACOSX_DEPLOYMENT_TARGET
-          ls -l /usr/lib/osxcross/
-          ls -l /usr/lib/osxcross/macports
-          "$HOST-pkg-config" --version
 
       - name: Upload Setup Log
         uses: actions/upload-artifact@v3
