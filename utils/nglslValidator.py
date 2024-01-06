@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import re
 import sys
+import shutil
 import subprocess
 from multiprocessing import Pool
 
@@ -137,15 +138,14 @@ def glslvalidate( filename ):
     with open(filename) as f:
         data = preprocess( f.read(), s )
 
-    #print(f"{i}:")
-    #p = subprocess.Popen(["glslangValidator", "--stdin", "-S", s, "--enhanced-msgs"], stdin=subprocess.PIPE)
-    #p.communicate(contents.encode())
-    #p.wait()
     args = ["glslangValidator", "--stdin", "-S", s, "--enhanced-msgs"]
     ret = subprocess.run( args, capture_output=True, input=bytes(data,'utf-8') )
     return ret.returncode, ret.stdout, data
 
 if __name__ == "__main__":
+    if shutil.which("glslangValidator") is None:
+        sys.exit(0) # Not installed so skip
+
     filelist = sys.argv[1:]
     filelist.sort()
     with Pool() as pool:
