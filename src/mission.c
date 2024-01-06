@@ -37,6 +37,7 @@
 #include "player_fleet.h"
 #include "rng.h"
 #include "space.h"
+#include "ntracing.h"
 
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
 
@@ -918,6 +919,8 @@ Mission* missions_genList( int *n, int faction,
    int rep;
    Mission* tmp;
 
+   NTracingZone( _ctx, 1 );
+
    /* Find available missions. */
    tmp      = NULL;
    m        = 0;
@@ -965,6 +968,8 @@ Mission* missions_genList( int *n, int faction,
    }
    else
       (*n) = 0;
+
+   NTracingZoneEnd( _ctx );
 
    return tmp;
 }

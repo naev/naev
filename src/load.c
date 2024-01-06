@@ -43,6 +43,7 @@
 #include "threadpool.h"
 #include "toolkit.h"
 #include "unidiff.h"
+#include "ntracing.h"
 
 #define LOAD_WIDTH      600 /**< Load window width. */
 #define LOAD_HEIGHT     530 /**< Load window height. */
@@ -123,6 +124,12 @@ static int load_load( nsave_t *save )
 {
    xmlDocPtr doc;
    xmlNodePtr root, parent;
+
+#if HAVE_TRACY
+   char buf[STRMAX_SHORT];
+   snprintf( buf, sizeof(buf), "Loading save '%s'", save->path );
+   NTracingMessageL( buf );
+#endif /* TRACY */
 
    /* Load the XML. */
    doc = load_xml_parsePhysFS( save->path );

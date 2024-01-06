@@ -24,6 +24,7 @@
 #include "nstring.h"
 #include "opengl.h"
 #include "ndata.h"
+#include "ntracing.h"
 
 /**
  * @brief NPC types.
@@ -367,6 +368,8 @@ void npc_generateMissions (void)
    Mission *missions;
    int nmissions;
 
+   NTracingZone( _ctx, 1 );
+
    if (npc_missions == NULL)
       npc_missions = array_create( Mission );
 
@@ -408,6 +411,8 @@ void npc_generateMissions (void)
 
    /* Sort NPC. */
    npc_sort();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

@@ -51,6 +51,7 @@
 #include "save.h"
 #include "shiplog.h"
 #include "toolkit.h"
+#include "ntracing.h"
 
 /*
  * we use visited flags to not duplicate missions generated
@@ -385,7 +386,9 @@ void bar_regen (void)
       return;
    if (!land_loaded)
       return;
+   NTracingZone( _ctx, 1 );
    bar_genList( land_getWid(LAND_WINDOW_BAR) );
+   NTracingZoneEnd( _ctx );
 }
 /**
  * @brief Updates the missions in the spaceport bar.
@@ -965,6 +968,8 @@ void land_genWindows( int load )
    int regen;
    unsigned int pntservices;
 
+   NTracingZone( _ctx, 1 );
+
    /* Destroy old window if exists. */
    if (land_wid > 0) {
       land_regen = 2; /* Mark we're regenning. */
@@ -1014,17 +1019,21 @@ void land_genWindows( int load )
       landed = 1;
       music_choose("land"); /* Must be before hooks in case hooks change music. */
 
+      NTracingZoneName( _ctx_landhooks, "hooks_run(\"land\")", 1 );
       /* We don't run the "land" hook when loading. If you want to have it do stuff when loading, use the "load" hook.
        * Note that you can use the same function for both hooks. */
       if (!load)
          hooks_run("land");
       else
          hooks_run("load"); /* Should be run before generating missions, so if the load hook cancels a mission, it can reappear. */
+      NTracingZoneEnd( _ctx_landhooks );
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* An event, hook or the likes made Naev quit. */
-      if (naev_isQuit())
+      if (naev_isQuit()) {
+         NTracingZoneEnd( _ctx );
          return;
+      }
 
       /* Make sure services didn't change or we have to do the tab window. */
       if (land_spob->services != pntservices) {
@@ -1103,6 +1112,8 @@ void land_genWindows( int load )
    /* Necessary if player.land() was run in an abort() function. */
    if (!load)
       window_lower( land_wid );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1130,6 +1141,9 @@ void land( Spob* p, int load )
    /* Do not land twice. */
    if (landed)
       return;
+
+   NTracingMessageL( "Player landed" );
+   NTracingFrameMarkStart( "land" );
 
    /* Incrcement times player landed. */
    if (!load) {
@@ -1188,6 +1202,8 @@ void land( Spob* p, int load )
 
    /* Mission forced take off. */
    land_needsTakeoff( 0 );
+
+   NTracingFrameMarkEnd( "land" );
 }
 
 /**

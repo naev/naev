@@ -48,6 +48,7 @@
 #include "safelanes.h"
 #include "tk/toolkit_priv.h" /* Needed for menu_main_resize */
 #include "toolkit.h"
+#include "ntracing.h"
 
 #define MAIN_WIDTH      200 /**< Main menu width. */
 
@@ -551,6 +552,7 @@ static int menu_small_exit_hook( void* unused )
    /* Stop player sounds because sometimes they hang. */
    player_restoreControl( 0, _("Exited game.") );
    player_soundStop();
+   NTracingMessageL( "Exited to main menu" );
 
    /* Clean up. */
    wid = window_get("wdwMenuSmall");

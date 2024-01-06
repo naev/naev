@@ -378,6 +378,7 @@ int main( int argc, char** argv )
       LOG( _( "Reached main menu in %.3f s" ), (SDL_GetTicks()-starttime)/1000. );
    else
       LOG( _( "Reached main menu" ) );
+   NTracingMessageL( _( "Reached main menu" ) );
 
    fps_init(); /* initializes the time_ms */
 
