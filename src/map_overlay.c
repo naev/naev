@@ -16,6 +16,7 @@
 #include "input.h"
 #include "log.h"
 #include "naev.h"
+#include "ntracing.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "pilot.h"
@@ -720,6 +721,8 @@ void ovr_render( double dt )
    if (player_isFlag( PLAYER_DESTROYED ) || (player.p == NULL))
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* Have to clear for text. */
    glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -937,6 +940,8 @@ void ovr_render( double dt )
 
    /* Render the player. */
    gui_renderPlayer( res, 1 );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

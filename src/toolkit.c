@@ -21,6 +21,7 @@
 #include "opengl.h"
 #include "pause.h"
 #include "nmath.h"
+#include "ntracing.h"
 #include "tk/toolkit_priv.h"
 
 #define INPUT_DELAY      conf.repeat_delay /**< Delay before starting to repeat. */
@@ -1595,6 +1596,8 @@ void toolkit_render( double dt )
    (void) dt;
    Window *top = toolkit_getActiveWindow();
 
+   NTracingZone( _ctx, 1 );
+
    if (toolkit_needsRender) {
       toolkit_needsRender = 0;
 
@@ -1653,6 +1656,8 @@ void toolkit_render( double dt )
       window_renderDynamic( top );
       window_renderOverlay( top );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

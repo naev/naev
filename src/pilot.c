@@ -41,6 +41,7 @@
 #include "nlua_outfit.h"
 #include "ndata.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "ntime.h"
 #include "nxml.h"
 #include "pause.h"
@@ -3806,6 +3807,8 @@ void pilots_cleanAll (void)
  */
 void pilots_updatePurge (void)
 {
+   NTracingZone( _ctx, 1 );
+
    /* Delete loop - this should be atomic or we get hook fuckery! */
    for (int i=array_size(pilot_stack)-1; i>=0; i--) {
       Pilot *p = pilot_stack[i];
@@ -3840,6 +3843,8 @@ void pilots_updatePurge (void)
       h2 = ceil(p->ship->gfx_space->sh * 0.5);
       qt_insert( &pilot_quadtree, i, MIN(x,px)-w2, MIN(y,py)-h2, MAX(x,px)+w2, MAX(y,py)+h2 );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3849,6 +3854,8 @@ void pilots_updatePurge (void)
  */
 void pilots_update( double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    /* Have all the pilots think. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
@@ -3911,6 +3918,8 @@ void pilots_update( double dt )
       else
          pilot_update( p, dt );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3918,6 +3927,8 @@ void pilots_update( double dt )
  */
 void pilots_render (void)
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
 
@@ -3928,6 +3939,8 @@ void pilots_render (void)
       if (!pilot_isFlag( p, PILOT_PLAYER ))
          pilot_render( p );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3935,6 +3948,8 @@ void pilots_render (void)
  */
 void pilots_renderOverlay (void)
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
 
@@ -3945,6 +3960,8 @@ void pilots_renderOverlay (void)
       if (!pilot_isFlag( p, PILOT_PLAYER ))
          pilot_renderOverlay( p );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

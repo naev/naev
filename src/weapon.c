@@ -25,6 +25,7 @@
 #include "explosion.h"
 #include "gui.h"
 #include "log.h"
+#include "ntracing.h"
 #include "nstring.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
@@ -584,6 +585,8 @@ static void think_beam( Weapon* w, double dt )
  */
 void weapons_updatePurge (void)
 {
+   NTracingZone( _ctx, 1 );
+
    /* Clear quadtree. */
    qt_clear( &weapon_quadtree );
 
@@ -621,6 +624,8 @@ void weapons_updatePurge (void)
       h2 = ceil(range * 0.5);
       qt_insert( &weapon_quadtree, i, MIN(x,px)-w2, MIN(y,py)-h2, MAX(x,px)+w2, MAX(y,py)+h2 );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -695,12 +700,16 @@ void weapons_updateCollide( double dt )
  */
 void weapons_update( double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(weapon_stack); i++) {
       Weapon *w = &weapon_stack[i];
       /* Only increment if weapon wasn't destroyed. */
       if (!weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
          weapon_update( w, dt );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -711,11 +720,15 @@ void weapons_update( double dt )
  */
 void weapons_render( const WeaponLayer layer, double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(weapon_stack); i++) {
       Weapon *w = &weapon_stack[i];
       if (w->layer==layer)
          weapon_render( w, dt );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 static void weapon_renderBeam( Weapon* w, double dt )

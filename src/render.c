@@ -175,7 +175,7 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
  */
 void render_all( double game_dt, double real_dt )
 {
-   NTracingZone( ctx, 1 );
+   NTracingZone( _ctx, 1 );
 
    double dt;
    int pp_core, pp_final, pp_gui, pp_game;
@@ -271,7 +271,7 @@ void render_all( double game_dt, double real_dt )
    /* check error every loop */
    gl_checkErr();
 
-   NTracingZoneEnd( ctx );
+   NTracingZoneEnd( _ctx );
 }
 
 /**

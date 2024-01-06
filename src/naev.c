@@ -742,7 +742,7 @@ void unload_all (void)
  */
 void main_loop( int nested )
 {
-   NTracingZone( ctx, 1 );
+   NTracingZone( _ctx, 1 );
 
    /*
     * Control FPS.
@@ -786,7 +786,7 @@ void main_loop( int nested )
       NTracingFrameMark;
    }
 
-   NTracingZoneEnd( ctx );
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -998,11 +998,11 @@ double fps_current (void)
  */
 static void update_all( int dohooks )
 {
-   NTracingZone( ctx, 1 );
+   NTracingZone( _ctx, 1 );
 
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       fps_skipped = 1;
-      NTracingZoneEnd( ctx );
+      NTracingZoneEnd( _ctx );
       return;
    }
    else if (game_dt > fps_min) { /* We'll force a minimum FPS for physics to work alright. */
@@ -1036,7 +1036,7 @@ static void update_all( int dohooks )
 
    fps_skipped = 0;
 
-   NTracingZoneEnd( ctx );
+   NTracingZoneEnd( _ctx );
 }
 
 /**

@@ -51,6 +51,7 @@
 #include "nlua_ship.h"
 #include "nlua_var.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "ntime.h"
 #include "nxml.h"
 #include "opengl.h"
@@ -1005,6 +1006,8 @@ void player_render( double dt )
          pilot_isFlag( player.p, PILOT_HIDE))
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* Render stealth overlay. */
    if (pilot_isFlag( player.p, PILOT_STEALTH ))
       player_renderStealthOverlay( dt );
@@ -1021,6 +1024,8 @@ void player_render( double dt )
 
    /* Render the player's overlay. */
    pilot_renderOverlay( player.p );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

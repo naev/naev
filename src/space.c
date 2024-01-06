@@ -44,6 +44,7 @@
 #include "nluadef.h"
 #include "nmath.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "ntime.h"
 #include "nxml.h"
 #include "opengl.h"
@@ -1412,6 +1413,8 @@ void space_update( double dt, double real_dt )
    if (cur_system == NULL)
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* If spawning is enabled, call the scheduler. */
    if (space_spawn)
       system_scheduler( dt, 0 );
@@ -1516,6 +1519,8 @@ void space_update( double dt, double real_dt )
 
    /* Asteroids/Debris update */
    asteroids_update( dt );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3442,10 +3447,14 @@ void space_render( const double dt )
    if (cur_system == NULL)
       return;
 
+   NTracingZone( _ctx, 1 );
+
    if (cur_system->nebu_density > 0.)
       nebu_render(dt);
    else
       background_render(dt);
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3458,6 +3467,8 @@ void space_renderOverlay( const double dt )
    if (cur_system == NULL)
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* Render the debris. */
    asteroids_renderOverlay();
 
@@ -3467,6 +3478,8 @@ void space_renderOverlay( const double dt )
    if ((cur_system->nebu_density > 0.) &&
          !menu_isOpen( MENU_MAIN ) && !menu_isOpen( MENU_EDITORS ))
       nebu_renderOverlay(dt);
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3477,6 +3490,8 @@ void spobs_render (void)
    /* Must be a system. */
    if (cur_system==NULL)
       return;
+
+   NTracingZone( _ctx, 1 );
 
    /* Render the jumps. */
    for (int i=0; i < array_size(cur_system->jumps); i++)
@@ -3491,6 +3506,8 @@ void spobs_render (void)
 
    /* Render gatherable stuff. */
    gatherable_render();
+
+   NTracingZoneEnd( _ctx );
 
 }
 

@@ -27,6 +27,7 @@
 #include "pause.h"
 #include "physics.h"
 #include "perlin.h"
+#include "ntracing.h"
 #include "render.h"
 #include "rng.h"
 #include "space.h"
@@ -552,6 +553,8 @@ void spfx_clear (void)
  */
 void spfx_update( const double dt, const double real_dt )
 {
+   NTracingZone( _ctx, 1 );
+
    spfx_update_layer( spfx_stack_front, dt );
    spfx_update_layer( spfx_stack_middle, dt );
    spfx_update_layer( spfx_stack_back, dt );
@@ -569,6 +572,8 @@ void spfx_update( const double dt, const double real_dt )
 
    /* Update Lua ones. */
    spfxL_update( dt );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1096,6 +1101,8 @@ static void spfx_renderStack( SPFX *spfx_stack )
  */
 void spfx_render( int layer, double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    /* get the appropriate layer */
    switch (layer) {
       case SPFX_LAYER_FRONT:
@@ -1122,8 +1129,10 @@ void spfx_render( int layer, double dt )
 
       default:
          WARN(_("Rendering invalid SPFX layer."));
-         return;
+         break;
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

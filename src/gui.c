@@ -48,6 +48,7 @@
 #include "nluadef.h"
 #include "nmath.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "ntime.h"
 #include "nxml.h"
 #include "opengl.h"
@@ -751,9 +752,13 @@ void gui_render( double dt )
    if (!menu_isOpen(MENU_MAIN) &&
          (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
             ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD)))) {
+      NTracingZone( _ctx, 1 );
+
       gl_viewport( 0., 0., SCREEN_W, SCREEN_H );
       spfx_cinematic();
       gl_defViewport();
+
+      NTracingZoneEnd( _ctx );
       return;
    }
 
@@ -764,6 +769,8 @@ void gui_render( double dt )
    /* Cinematics mode. */
    if (player_isFlag( PLAYER_CINEMATICS_GUI ))
       return;
+
+   NTracingZone( _ctx, 1 );
 
    /*
     * Countdown timers.
@@ -869,6 +876,8 @@ void gui_render( double dt )
 
    /* Render messages. */
    omsg_render( dt );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
