@@ -93,6 +93,11 @@ end
 local nextjump, lastsys
 local spawned = false
 function pheromones ()
+   -- Don't do anything if system is not inclusively claimed
+   if not naev.claimTest( system.cur(), true ) then
+      return
+   end
+
    if not spawned and system.cur() ~= targetsys then
       spawned = true
       hook.timer( 5, "spawn_ferals" )
