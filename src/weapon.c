@@ -212,6 +212,8 @@ void weapon_minimap( double res, double w,
    int rc, p;
    GLsizei offset;
 
+   NTracingZone( _ctx, 1 );
+
    /* Get offset. */
    p = 0;
    offset = weapon_vboSize;
@@ -294,6 +296,8 @@ void weapon_minimap( double res, double w,
       glUseProgram(0);
       gl_checkErr();
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

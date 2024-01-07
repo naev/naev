@@ -621,6 +621,7 @@ void gl_printRaw( const glFont *ft_font, double x, double y, const glColour* c,
    int s;
    size_t i;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -633,6 +634,8 @@ void gl_printRaw( const glFont *ft_font, double x, double y, const glColour* c,
    while ((ch = u8_nextchar( text, &i )))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -652,6 +655,7 @@ void gl_printRawH( const glFont *ft_font, const mat4 *H,
    int s;
    size_t i;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -664,6 +668,8 @@ void gl_printRawH( const glFont *ft_font, const mat4 *H,
    while ((ch = u8_nextchar( text, &i )))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
+
+   NTracingZoneEnd( _ctx);
 }
 
 /**
@@ -693,18 +699,18 @@ void gl_print( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    gl_printRaw( ft_font, x, y, c, -1., text );
+
+
 }
 
 /**
@@ -725,6 +731,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max, double x, double y,
    int s;
    size_t ret, i;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -741,6 +748,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max, double x, double y,
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
 
+   NTracingZoneEnd( _ctx );
    return ret;
 }
 
@@ -758,16 +766,14 @@ int gl_printMaxRaw( const glFont *ft_font, const int max, double x, double y,
 int gl_printMax( const glFont *ft_font, const int max, double x, double y,
       const glColour* c, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return -1;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    return gl_printMaxRaw( ft_font, max, x, y, c, -1., text );
 }
@@ -799,6 +805,7 @@ int gl_printMidRaw(
    int n, s;
    size_t ret, i;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -817,6 +824,7 @@ int gl_printMidRaw(
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
 
+   NTracingZoneEnd( _ctx );
    return ret;
 }
 
@@ -837,16 +845,14 @@ int gl_printMid( const glFont *ft_font, const int width,
       double x, double y,
       const glColour* c, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return -1;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    return gl_printMidRaw( ft_font, width, x, y, c, -1., text );
 }
@@ -880,6 +886,7 @@ int gl_printTextRaw( const glFont *ft_font,
    int s;
    double x,y;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -912,6 +919,7 @@ int gl_printTextRaw( const glFont *ft_font,
       y -= line_height; /* move position down */
    }
 
+   NTracingZoneEnd( _ctx );
    return 0;
 }
 
@@ -964,6 +972,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
    GLfloat n, nmax;
    size_t i;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -987,6 +996,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
    }
    nmax = MAX( nmax, n );
 
+   NTracingZoneEnd( _ctx );
    return (int)round(nmax);
 }
 
@@ -1001,16 +1011,14 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
  */
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return 0;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    return gl_printWidthRaw( ft_font, text );
 }
@@ -1060,16 +1068,14 @@ int gl_printHeightRaw( const glFont *ft_font,
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return -1;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    return gl_printHeightRaw( ft_font, width, text );
 }
@@ -1117,16 +1123,14 @@ int gl_printLinesRaw( const glFont *ft_font,
 int gl_printLines( const glFont *ft_font,
       const int width, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return -1;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    return gl_printLinesRaw( ft_font, width, text );
 }
