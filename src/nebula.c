@@ -108,8 +108,7 @@ int nebu_resize (void)
 
    /* Set up the matrices. */
    nebu_render_P = mat4_identity();
-   mat4_translate_xy( &nebu_render_P, -nebu_render_w/2., -nebu_render_h/2. );
-   mat4_scale_xy( &nebu_render_P, nebu_render_w, nebu_render_h );
+   mat4_translate_scale_xy( &nebu_render_P, -nebu_render_w/2., -nebu_render_h/2., nebu_render_w, nebu_render_h );
    glUseProgram(shaders.nebula_background.program);
    gl_uniformMat4(shaders.nebula_background.projection, &nebu_render_P);
    glUseProgram(shaders.nebula.program);
@@ -360,8 +359,7 @@ static void nebu_renderPuffs( int below_player )
       glUseProgram( shaders.nebula_puff.program );
 
       projection = gl_view_matrix;
-      mat4_translate_xy( &projection, x, y );
-      mat4_scale_xy( &projection, s, s );
+      mat4_translate_scale_xy( &projection, x, y, s, s );
       glEnableVertexAttribArray(shaders.nebula_puff.vertex);
       gl_vboActivateAttribOffset( gl_circleVBO, shaders.nebula_puff.vertex, 0, 2, GL_FLOAT, 0 );
 

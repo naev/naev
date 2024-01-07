@@ -91,8 +91,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 {
    /* Set the vertex. */
    mat4 projection = gl_view_matrix;
-   mat4_translate_xy( &projection, x, y );
-   mat4_scale_xy( &projection, w, h );
+   mat4_translate_scale_xy( &projection, x, y, w, h );
 
    gl_renderRectH( &projection, c, 1 );
 }
@@ -109,8 +108,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c )
 {
    mat4 projection = gl_view_matrix;
-   mat4_translate_xy( &projection, x, y );
-   mat4_scale_xy( &projection, w, h );
+   mat4_translate_scale_xy( &projection, x, y, w, h );
 
    gl_renderRectH( &projection, c, 0 );
 }
@@ -215,8 +213,7 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
    /* Set the vertex. */
    projection = gl_view_matrix;
    if (angle==0.) {
-     mat4_translate_xy( &projection, x, y );
-     mat4_scale_xy( &projection, w, h );
+     mat4_translate_scale_xy( &projection, x, y, w, h );
    }
    else {
      mat4_translate_xy( &projection, x+hw, y+hh );
@@ -230,8 +227,7 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
 
    /* Set the texture. */
    tex_mat = (flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
-   mat4_translate_xy( &tex_mat, tx, ty );
-   mat4_scale_xy( &tex_mat, tw, th );
+   mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    /* Set shader uniforms. */
    gl_uniformColour(shaders.texture.colour, c);
@@ -309,8 +305,7 @@ void gl_renderSDF( const glTexture *texture,
    /* Set the vertex. */
    projection = gl_view_matrix;
    if (angle==0.) {
-     mat4_translate_xy( &projection, x+hw, y+hh );
-     mat4_scale_xy( &projection, hw, hh );
+     mat4_translate_scale_xy( &projection, x+hw, y+hh, hw, hh );
    }
    else {
      mat4_translate_xy( &projection, x+hw, y+hh );
@@ -403,15 +398,14 @@ void gl_renderTextureInterpolate(  const glTexture* ta,
 
    /* Set the vertex. */
    projection = gl_view_matrix;
-   mat4_translate_xy( &projection, x, y );
+   mat4_translate_scale_xy( &projection, x, y, w, h );
    mat4_scale_xy( &projection, w, h );
    glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
    tex_mat = (ta->flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
-   mat4_translate_xy( &tex_mat, tx, ty );
-   mat4_scale_xy( &tex_mat, tw, th );
+   mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    /* Set shader uniforms. */
    glUniform1i(shaders.texture_interpolate.sampler1, 0);
@@ -470,8 +464,7 @@ mat4 gl_gameToScreenMatrix( mat4 lhs )
    z = cam_getZoom();
    gui_getOffset( &gx, &gy );
 
-   mat4_translate_xy( &projection, gx + SCREEN_W*0.5, gy + SCREEN_H*0.5 );
-   mat4_scale_xy( &projection, z, z );
+   mat4_translate_scale_xy( &projection, gx+SCREEN_W*0.5, gy+SCREEN_H*0.5, z, z );
    mat4_translate_xy( &projection, -cx, cy );
    return projection;
 }
@@ -1004,8 +997,7 @@ void gl_renderCircle( double cx, double cy,
 {
    /* Set the vertex. */
    mat4 projection = gl_view_matrix;
-   mat4_translate_xy( &projection, cx, cy );
-   mat4_scale_xy( &projection, r, r );
+   mat4_translate_scale_xy( &projection, cx, cy, r, r );
 
    /* Draw! */
    gl_renderCircleH( &projection, c, filled );

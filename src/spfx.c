@@ -1052,8 +1052,7 @@ static void spfx_renderStack( SPFX *spfx_stack )
 
          /* Set up the vertex. */
          projection = gl_view_matrix;
-         mat4_translate_xy( &projection, x, y );
-         mat4_scale_xy( &projection, w, h );
+         mat4_translate_scale_xy( &projection, x, y, w, h );
          glEnableVertexAttribArray( effect->vertex );
          gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex,
                0, 2, GL_FLOAT, 0 );

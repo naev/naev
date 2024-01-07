@@ -1969,8 +1969,7 @@ void pilot_render( Pilot *p )
          gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
 
          projection = gl_view_matrix;
-         mat4_translate_xy( &projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2. );
-         mat4_scale_xy( &projection, scale*z*w, scale*z*h );
+         mat4_translate_scale_xy( &projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., scale*z*w, scale*z*h );
          gl_uniformMat4(ed->projection, &projection);
 
          tex_mat = mat4_identity();

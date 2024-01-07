@@ -1194,8 +1194,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
 
          /* Set the vertex. */
          projection = gl_view_matrix;
-         mat4_translate_xy( &projection, tx-sw/2., ty-sh/2. );
-         mat4_scale_xy( &projection, sw, sh );
+         mat4_translate_scale_xy( &projection, tx-sw/2., ty-sh/2., sw, sh );
 
          /* Start the program. */
          glUseProgram(shaders.nebula_map.program);
@@ -1226,8 +1225,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
 
          /* Set the vertex. */
          projection = gl_view_matrix;
-         mat4_translate_xy( &projection, tx-sw/2., ty-sh/2. );
-         mat4_scale_xy( &projection, sw, sh );
+         mat4_translate_scale_xy( &projection, tx-sw/2., ty-sh/2., sw, sh );
 
          /* Start the program. */
          glUseProgram( sys->ms->program );

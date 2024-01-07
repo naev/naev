@@ -118,6 +118,14 @@ void mat4_translate_xy( mat4 *m, double x, double y )
    for (int i=0; i<4; i++)
       m->m[3][i] += m->m[0][i] * x + m->m[1][i] * y;
 }
+void mat4_translate_scale_xy( mat4 *m, double x, double y, double w, double h )
+{
+   for (int i=0; i<4; i++) {
+      m->m[3][i] += m->m[0][i] * x + m->m[1][i] * y;
+      m->m[0][i] *= w;
+      m->m[1][i] *= h;
+   }
+}
 
 /**
  * @brief Rotates an angle, in radians, around the z axis.
