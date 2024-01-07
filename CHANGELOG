@@ -1,6 +1,7 @@
 * 0.12.0 (unreleased)
    * Gameplay
       * Gave the Za'lek sting a slight detection buff
+      * Excess energy to battery recharge efficiency is now a flat 50% instead of varying based on charge level.
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
