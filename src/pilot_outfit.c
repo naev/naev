@@ -1110,12 +1110,6 @@ void pilot_calcStats( Pilot* pilot )
    /* Dump excess fuel */
    pilot->fuel   = MIN( pilot->fuel, pilot->fuel_max );
 
-   /* Set final energy tau. */
-   if (pilot->energy_regen > 0.)
-      pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
-   else
-      pilot->energy_tau = 1.;
-
    /* Cargo has to be reset. */
    pilot_cargoCalc(pilot); /* Calls pilot_updateMass. */
 

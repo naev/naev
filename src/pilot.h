@@ -264,7 +264,6 @@ typedef struct Pilot_ {
    double energy;    /**< Current energy. */
    double energy_max; /**< Maximum energy. */
    double energy_regen; /**< Energy regeneration rate (per second). */
-   double energy_tau; /**< Tau regeneration rate for energy. */
    double energy_loss; /**< Linear loss that bypasses the actual RC circuit stuff. */
 
    /* Defensive Electronic Warfare. */

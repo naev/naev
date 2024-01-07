@@ -2433,20 +2433,28 @@ void pilot_update( Pilot* pilot, double dt )
       pilot->fuel = MIN( pilot->fuel_max, pilot->fuel + pilot->stats.fuel_regen * dt );
 
       /*
-      * Using RC circuit energy loading.
-      *
-      * Calculations (using y = [0:1])
-      *
-      *                                          \
-      *    y = 1 - exp( -x / tau )               |
-      *    y + dy = 1 - exp( -( x + dx ) / tau ) |  ==>
-      *                                          /
-      *
-      *    ==> dy = exp( -x / tau ) * ( 1 - exp( -dx / tau ) ==>
-      *    ==> [ dy = (1 - y) * ( 1 - exp( -dx / tau ) ) ]
+      * Recharge rate used to be proportional to the current state of the battery:
+      * i.e. if the battery was 0% charged, the recharge rate would be at it's maximum,
+      * but if it was 70% charge, the battery would only recharge at 30% of it's normal rate.
+      * 
+      * So instead now we just recharge at a 50% rate. This does look weird, 
+      * as what's happening in reality doesn't match what's on the stats display.
+      * 
+      * But neither was what was happening matching the stats display previously.
+      * 
+      * This is a bit of a hack to maintain balance, but it's easier than adjusting all the weapons etc. 
+      * 
+      * To get rid of this hack but maintain the current game balance, one would have to double the
+      * energy usage of all items that take their energy from the battery, i.e. not engines
+      * just directly reduce the energy_regen. One would then also need to double the 
+      * energy storage of all items.
+      * 
+      * One other alternative to removing this hack instead have a stat called "battery efficiency". 
+      * There could be some core modules with inefficient batteries, 
+      * which are slower to recharge but have a larger storage, 
+      * or alternatively ones which have a fast recharge but significantly less capacity. 
       */
-      pilot->energy += (pilot->energy_max - pilot->energy) *
-            (1. - exp( -dt / pilot->energy_tau));
+      pilot->energy += 0.5 * pilot->energy_regen * dt;
       pilot->energy -= pilot->energy_loss * dt;
       if (pilot->energy > pilot->energy_max)
          pilot->energy = pilot->energy_max;
