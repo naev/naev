@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-01-05 12:31+0900\n"
-"PO-Revision-Date: 2024-01-06 17:21+0000\n"
+"PO-Revision-Date: 2024-01-07 22:06+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "cs/>\n"
@@ -13752,11 +13752,10 @@ msgid ""
 "fashion. Most of the facility is filled with recreational facilities and "
 "even a dance floor."
 msgstr ""
-"Culex zná jen velmi málo dopravního ruchu, který nemá za cíl Myonei, a tak "
-"se baru u kosmoportu dostal nový účel, jako místní komunitní centrum. "
-"Všechno standardní vybavení tu stále je, a dokonce je funkční, ale není ho "
-"tu mnoho. Většina prostoru je věnovanána odpočinkové zóně a dokonce se tu "
-"nachází taneční parket."
+"Protože na Culexu je jen malý provoz, kromě lidí dojíždějících do Myonei a "
+"zpět, místní obyvatelé využili bar na kosmodromu jako komunitní centrum. "
+"Standardní zařízení je stále přítomno a funguje, ale v minimální míře. "
+"Většinu objektu vyplňuje rekreační zařízení a dokonce i taneční parket."
 
 #: dat/spob/curie.xml:2
 msgid "Curie"
@@ -13770,6 +13769,11 @@ msgid ""
 "it a potentially valuable Za'lek world despite the unpleasantness of its "
 "environment."
 msgstr ""
+"Tato planeta je stále ještě v plenkách a je hlavním zdrojem geologického "
+"výzkumu pro vědce ze Za'leku, protože se na ní nachází jedno z hlavních "
+"středisek materiálového výzkumu. To a vysoká hustota vzácných a cenných "
+"těžkých kovů z ní činí potenciálně cenný za'lecký svět, a to i přes "
+"nepříjemnost jejího prostředí."
 
 #: dat/spob/curie.xml:29
 msgid ""
@@ -13778,9 +13782,9 @@ msgid ""
 "phenomena on the planet that those whose interests in geology might find "
 "interesting."
 msgstr ""
-"V baru jsou vystavené portréty slavných vědců, podle kterých je planeta "
-"pojmenována, a dále také obrazy a holoobrazy fenoménů, které mohou přijít "
-"zajímavé těm, co se o geologii zajímají."
+"Na baru jsou obrázky slavných vědců, po nichž byla planeta pojmenována, a "
+"také různé obrázky a holomalby některých jevů na planetě, které by mohly "
+"zajímat ty, kdo se zajímají o geologii."
 
 #: dat/spob/cutha.xml:2
 msgid "Cutha"
@@ -13796,6 +13800,13 @@ msgid ""
 "Nowadays, Cutha houses most of the Soromid involved in the military "
 "operations at Heronus."
 msgstr ""
+"Cutha je zázrakem planetárního inženýrství. Zpočátku to byl poměrně "
+"nepřátelský svět, jehož atmosféra byla plná toxických látek, ale Soromidé ho "
+"zkrotili a udělali z něj docela slušné místo k životu. Samozřejmě i "
+"soromidské inženýrství má své meze, takže Cutha není tak pěkný svět jako "
+"Turawee v Sarcophagusu, ale výsledek je přesto působivý. V současnosti na "
+"Cutě sídlí většina Soromidů, kteří se podílejí na vojenských operacích na "
+"Heronu."
 
 #: dat/spob/cutha.xml:28
 msgid ""
@@ -13807,18 +13818,24 @@ msgid ""
 "outside. Only on rainy days is the effect spoiled, something the regular "
 "patrons, if not the outworlders, appreciate."
 msgstr ""
+"Cutha's bar má velmi blízko k baru pod širým nebem. Vzdušný prostor je stále "
+"zcela uzavřený, ale většina ploch, které nejsou skutečnou podlahou, je "
+"průhledná. Zejména strop je vyroben z materiálu, který je pouhým okem téměř "
+"neviditelný, a díky umělému větru, který barem vane, je velmi snadné uvěřit "
+"iluzi, že se člověk skutečně nachází venku. Pouze v deštivých dnech je tento "
+"efekt pokažen, což ocení pravidelní návštěvníci, ne-li outsideři."
 
 #: dat/spob/cygnus_iv.xml:2
 msgid "Cygnus IV"
-msgstr ""
+msgstr "Cygnus IV"
 
 #: dat/spob/cyrene.xml:2
 msgid "Cyrene"
-msgstr ""
+msgstr "Cyrene"
 
 #: dat/spob/daahrax.xml:2
 msgid "Daahrax"
-msgstr ""
+msgstr "Daahrax"
 
 #: dat/spob/daahrax.xml:25
 msgid ""
@@ -13830,6 +13847,13 @@ msgid ""
 "suggestions are promptly rejected. It doesn't seem the Soromid are going to "
 "come up with a good name anytime soon."
 msgstr ""
+"Když si Soromidé nárokovali neúrodný svět Hadosh I, měli tu čest pojmenovat "
+"jej i jeho měsíc. Planeta se začala nazývat Daahrax. Působivým projevem "
+"byrokratické nerozhodnosti je však fakt, že měsíc planety zůstal "
+"nepojmenován. V různých vládních institucích probíhají neustálé debaty a "
+"znovu a znovu jsou vytvářeny komise pro pojmenování, jejichž návrhy jsou "
+"okamžitě zamítány. Nezdá se, že by Soromidé v dohledné době přišli s dobrým "
+"jménem."
 
 #: dat/spob/daahrax.xml:26
 msgid ""
@@ -13837,10 +13861,13 @@ msgid ""
 "don't ask about the moon. Trust me, don't do it. The locals are a little "
 "touchy on the subject. How about a drink instead?"
 msgstr ""
+"Dobrý den, cestující, vítejte v baru na kosmodromu Daahrax. Jedna rada, "
+"neptejte se na Měsíc. Věřte mi, nedělejte to. Místní jsou na toto téma "
+"trochu hákliví. Co takhle dát si místo toho něco k pití?"
 
 #: dat/spob/daal.xml:2
 msgid "Daal"
-msgstr ""
+msgstr "Daal"
 
 #: dat/spob/daal.xml:27
 msgid ""
@@ -13850,6 +13877,11 @@ msgid ""
 "them end up serving a lifetime in the Sirius army. The Fyrra are especially "
 "well represented on this world."
 msgstr ""
+"Malý měsíc, který obíhá kolem Rhu IV jménem Daal, je snadno přehlédnutelný, "
+"ale jak už to tak bývá, je pro Sirii docela důležitým kouskem majetku. Lidé, "
+"kteří zde žijí, jsou obzvláště horliví ve své víře a většina z nich nakonec "
+"slouží celý život v siriuské armádě. Fyrrové jsou na tomto světě obzvlášť "
+"hojně zastoupeni."
 
 #: dat/spob/daal.xml:28
 msgid ""
@@ -13860,34 +13892,39 @@ msgid ""
 "Mutris is displayed on the largest table, but Daal itself comes a good "
 "second."
 msgstr ""
+"Na Daalu si lidé rádi připomínají, že jsou součástí velké galaktické frakce. "
+"Stoly v tomto baru na kosmodromu mají do svých povrchů zabudované low-tech "
+"displeje, každý stůl zobrazuje jeden ze sirianských světů a aktuální "
+"informace o daném světě. Na největším stole je samozřejmě zobrazen Mutris, "
+"ale samotný Daal je až na druhém místě."
 
 #: dat/spob/dakron_iii.xml:2
 msgid "Dakron III"
-msgstr ""
+msgstr "Dakron III"
 
 #: dat/spob/dakron_v.xml:2
 msgid "Dakron V"
-msgstr ""
+msgstr "Dakron V"
 
 #: dat/spob/damien_vii.xml:2
 msgid "Damien VII"
-msgstr ""
+msgstr "Damien VII"
 
 #: dat/spob/damphyr.xml:2
 msgid "Damphyr"
-msgstr ""
+msgstr "Damphyr"
 
 #: dat/spob/daravon_i.xml:2
 msgid "Daravon I"
-msgstr ""
+msgstr "Daravon I"
 
 #: dat/spob/daravon_iii.xml:2
 msgid "Daravon III"
-msgstr ""
+msgstr "Daravon III"
 
 #: dat/spob/darkshed.xml:2
 msgid "Darkshed"
-msgstr ""
+msgstr "Darkshed"
 
 #: dat/spob/darkshed.xml:28
 msgid ""
@@ -13898,6 +13935,12 @@ msgid ""
 "shadier characters in the universe, leading to frequent fights in which they "
 "test their newly bought outfits."
 msgstr ""
+"Stanice Darkshed je proslulá svým technologickým trhem a loděnicemi a téměř "
+"celá je věnována obchodu s vybavením a loděmi. Přicházejí sem žoldáci a "
+"lovci odměn z celé galaxie, aby si prohlédli a vyzkoušeli nejnovější "
+"vylepšení dostupná na trhu. Přitahuje také mnoho pochybných postav ve "
+"vesmíru, což vede k častým soubojům, ve kterých testují své nově zakoupené "
+"vybavení."
 
 #: dat/spob/darkshed.xml:29
 msgid ""
