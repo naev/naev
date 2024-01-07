@@ -1406,7 +1406,9 @@ void takeoff( int delay, int nosave )
    int h;
    char *nt;
    double a, r;
+#if HAVE_TRACY
    const Spob *spb = land_spob;
+#endif /* HAVE_TRACY */
 
    if (!landed)
       return;
