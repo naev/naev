@@ -162,8 +162,8 @@ void background_renderDust( const double dt )
    m = 1.;
    angle = 0.;
    projection = gl_view_matrix;
-   mat4_translate( &projection, SCREEN_W/2., SCREEN_H/2., 0 );
-   mat4_scale( &projection, z, z, 1 );
+   mat4_translate_xy( &projection, SCREEN_W/2., SCREEN_H/2. );
+   mat4_scale_xy( &projection, z, z );
 
    /* Decide on shade mode. */
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&

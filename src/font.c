@@ -1226,7 +1226,7 @@ static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, con
 {
    /* OpenGL has pixel centers at 0.5 offset. */
    mat4 H = gl_view_matrix;
-   mat4_translate( &H, x+0.5*gl_screen.wscale, y+0.5*gl_screen.hscale, 0 );
+   mat4_translate_xy( &H, x+0.5*gl_screen.wscale, y+0.5*gl_screen.hscale );
    gl_fontRenderStartH( stsh, &H, c, outlineR );
 }
 static void gl_fontRenderStartH( const glFontStash* stsh, const mat4 *H, const glColour *c, double outlineR )
@@ -1451,10 +1451,8 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    /* Kern if possible. */
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
    kern_adv_x = gl_fontKernGlyph( stsh, ch, glyph );
-   if (kern_adv_x) {
-      mat4_translate( &font_projection_mat,
-            kern_adv_x/scale, 0, 0 );
-   }
+   if (kern_adv_x)
+      mat4_translate_x( &font_projection_mat, kern_adv_x/scale );
 
    /* Activate texture. */
    glBindTexture(GL_TEXTURE_2D, stsh->tex[glyph->tex_index].id);
@@ -1466,8 +1464,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
 
    /* Translate matrix. */
-   mat4_translate( &font_projection_mat,
-         glyph->adv_x/scale, 0, 0 );
+   mat4_translate_x( &font_projection_mat, glyph->adv_x/scale );
 
    return 0;
 }

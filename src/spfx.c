@@ -876,10 +876,10 @@ void spfx_trail_draw( const Trail_spfx* trail )
 
       /* Set vertex. */
       projection = gl_view_matrix;
-      mat4_translate( &projection, x1, y1, 0. );
+      mat4_translate_xy( &projection, x1, y1 );
       mat4_rotate2dv( &projection, (x2-x1)/s, (y2-y1)/s );
-      mat4_scale( &projection, s, z*(sp->thick+spp->thick), 1. );
-      mat4_translate( &projection, 0., -0.5, 0. );
+      mat4_scale_xy( &projection, s, z*(sp->thick+spp->thick) );
+      mat4_translate_xy( &projection, 0., -0.5 );
 
       /* Set uniforms. */
       gl_uniformMat4(shaders.trail.projection, &projection);
@@ -1052,8 +1052,8 @@ static void spfx_renderStack( SPFX *spfx_stack )
 
          /* Set up the vertex. */
          projection = gl_view_matrix;
-         mat4_translate( &projection, x, y, 0. );
-         mat4_scale( &projection, w, h, 1. );
+         mat4_translate_xy( &projection, x, y );
+         mat4_scale_xy( &projection, w, h );
          glEnableVertexAttribArray( effect->vertex );
          gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex,
                0, 2, GL_FLOAT, 0 );

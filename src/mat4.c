@@ -87,6 +87,13 @@ void mat4_scale( mat4 *m, double x, double y, double z )
       m->m[2][i] *= z;
    }
 }
+void mat4_scale_xy( mat4 *m, double x, double y )
+{
+   for (int i=0; i<4; i++) {
+      m->m[0][i] *= x;
+      m->m[1][i] *= y;
+   }
+}
 
 /**
  * @brief Translates a homogenous transformation matrix.
@@ -100,6 +107,16 @@ void mat4_translate( mat4 *m, double x, double y, double z )
 {
    for (int i=0; i<4; i++)
       m->m[3][i] += m->m[0][i] * x + m->m[1][i] * y + m->m[2][i] * z;
+}
+void mat4_translate_x( mat4 *m, double x )
+{
+   for (int i=0; i<4; i++)
+      m->m[3][i] += m->m[0][i] * x;
+}
+void mat4_translate_xy( mat4 *m, double x, double y )
+{
+   for (int i=0; i<4; i++)
+      m->m[3][i] += m->m[0][i] * x + m->m[1][i] * y;
 }
 
 /**

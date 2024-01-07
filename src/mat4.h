@@ -22,7 +22,10 @@ void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 );
 /* Affine transformations. */
 void mat4_apply( mat4 *lhs, const mat4 *rhs );
 void mat4_scale( mat4 *m, double x, double y, double z );
+void mat4_scale_xy( mat4 *m, double x, double y );
 void mat4_translate( mat4 *m, double x, double y, double z );
+void mat4_translate_x( mat4 *m, double x );
+void mat4_translate_xy( mat4 *m, double x, double y );
 void mat4_rotate( mat4 *m, double angle, double x, double y, double z );
 void mat4_rotate2d( mat4 *m, double angle );
 void mat4_rotate2dv( mat4 *m, double x, double y );

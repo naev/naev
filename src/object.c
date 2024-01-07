@@ -453,7 +453,7 @@ void object_renderSolidPart( const Object *object, const Solid *solid, const cha
    glUseProgram(shaders.material.program);
 
    projection = gl_gameToScreenMatrix(gl_view_matrix);
-   mat4_translate( &projection, x, y, 0. );
+   mat4_translate_xy( &projection, x, y );
    ortho = mat4_ortho(-os, os, -os, os, od, -od);
    mat4_mul( &view, &projection, &ortho );
    //projection = mat4_rotate(projection, M_PI/4., 1., 0., 0.);

@@ -579,7 +579,7 @@ void gl_viewport( int x, int y, int w, int h )
    /* Take into account possible translation. */
    gl_screen.x = x;
    gl_screen.y = y;
-   mat4_translate( &proj, x, y, 0. );
+   mat4_translate_xy( &proj, x, y );
 
    /* Set screen size. */
    gl_screen.w = w;

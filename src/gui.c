@@ -936,12 +936,10 @@ void gui_radarRender( double x, double y )
    view_matrix_prev = gl_view_matrix;
    if (radar->shape==RADAR_RECT) {
       gl_clipRect( x, y, radar->w, radar->h );
-      mat4_translate( &gl_view_matrix,
-            x + radar->w/2., y + radar->h/2., 0 );
+      mat4_translate_xy( &gl_view_matrix, x + radar->w/2., y + radar->h/2. );
    }
    else if (radar->shape==RADAR_CIRCLE)
-      mat4_translate( &gl_view_matrix,
-            x, y, 0 );
+      mat4_translate_xy( &gl_view_matrix, x, y );
 
    /*
     * spobs

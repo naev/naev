@@ -762,10 +762,10 @@ static void weapon_renderBeam( Weapon* w, double dt )
    gl_gameToScreenCoords( &x, &y, w->solid.pos.x, w->solid.pos.y );
 
    projection = gl_view_matrix;
-   mat4_translate( &projection, x, y, 0. );
+   mat4_translate_xy( &projection, x, y );
    mat4_rotate2d( &projection, w->solid.dir );
-   mat4_scale( &projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1. );
-   mat4_translate( &projection, 0., -0.5, 0. );
+   mat4_scale_xy( &projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z );
+   mat4_translate_xy( &projection, 0., -0.5 );
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.beam.vertex );
@@ -892,9 +892,9 @@ static void weapon_render( Weapon* w, double dt )
                   return;
 
                mat4 projection = gl_view_matrix;
-               mat4_translate( &projection, x, y, 0. );
+               mat4_translate_xy( &projection, x, y );
                mat4_rotate2d( &projection, w->solid.dir );
-               mat4_scale( &projection, r, r, 1. );
+               mat4_scale_xy( &projection, r, r );
 
                glUseProgram( gfx->program );
                glUniform2f( gfx->dimensions, r, r );
