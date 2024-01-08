@@ -16,8 +16,8 @@
  * Only really matters for rendering order.
  */
 typedef enum {
-   WEAPON_LAYER_BG,
-   WEAPON_LAYER_FG
+   WEAPON_LAYER_BG,  /**< Background layer, behind the pilots. */
+   WEAPON_LAYER_FG,  /**< Foreground layer, infront of pilots, behind player. */
 } WeaponLayer;
 
 /* Weapon status */
