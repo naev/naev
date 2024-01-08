@@ -9,8 +9,8 @@
 #include "tracy/TracyC.h"
 #define _uninitialized_var(x) x = *(&(x))
 #  define NTracingFrameMark            TracyCFrameMark
-#  define NTracingFrameMarkStart( name ) ___tracy_emit_frame_mark_start( name )
-#  define NTracingFrameMarkEnd( name ) ___tracy_emit_frame_mark_end( name )
+#  define NTracingFrameMarkStart( name ) TracyCFrameMarkStart( name )
+#  define NTracingFrameMarkEnd( name ) TracyCFrameMarkEnd( name )
 #  define NTracingZone( ctx, active )  TracyCZone( ctx, active )
 #  define NTracingZoneName( ctx, name, active )  TracyCZoneN( ctx, name, active )
 #  define NTracingZoneEnd( ctx )       TracyCZoneEnd( ctx )
