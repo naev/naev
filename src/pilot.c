@@ -2536,30 +2536,26 @@ void pilot_update( Pilot* pilot, double dt )
 
       /* pilot is afterburning */
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER)) {
+         const Outfit *afb = pilot->afterburner->outfit;
+
          /* Heat up the afterburner. */
          pilot_heatAddSlotTime(pilot, pilot->afterburner, dt);
 
          /* If the afterburner's efficiency is reduced to 0, shut it off. */
-         if (pilot_heatEfficiencyMod(pilot->afterburner->heat_T,
-               pilot->afterburner->outfit->overheat_min,
-               pilot->afterburner->outfit->overheat_max)<=0.)
+         if (pilot_heatEfficiencyMod(pilot->afterburner->heat_T, afb->overheat_min, afb->overheat_max)<=0.)
             pilot_afterburnOver(pilot);
          else {
-            double efficiency, accel;
+            double efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T, afb->overheat_min, afb->overheat_max );
+            efficiency = MIN( 1., afb->u.afb.mass_limit / pilot->solid.mass ) * efficiency;
 
             if (pilot->id == PLAYER_ID)
                spfx_shake( 0.75*SPFX_SHAKE_DECAY * dt ); /* shake goes down at quarter speed */
-            efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
-                  pilot->afterburner->outfit->overheat_min,
-                  pilot->afterburner->outfit->overheat_max );
-            accel = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid.mass ) * efficiency;
 
             /* Adjust speed. Speed bonus falls as heat rises. */
-            pilot->solid.speed_max = pilot->speed * (1. +
-                  pilot->afterburner->outfit->u.afb.speed * accel);
+            pilot->solid.speed_max = pilot->speed * (1.+afb->u.afb.speed * efficiency);
 
             /* Adjust accel. Thrust bonus falls as heat rises. */
-            pilot_setAccel(pilot, 1. + pilot->afterburner->outfit->u.afb.accel * accel);
+            pilot_setAccel(pilot, 1.+afb->u.afb.accel * efficiency);
          }
       }
       else
