@@ -37,7 +37,6 @@ typedef enum WeaponStatus_ {
 #define weapon_isFlag(w,f)    ((w)->flags & (f))
 #define weapon_setFlag(w,f)   ((w)->flags |= (f))
 #define weapon_rmFlag(w,f)    ((w)->flags &= ~(f))
-#define weapon_isSmart(w)     (outfit_isSeeker(w->outfit)) /**< Checks if the weapon w is smart. */
 
 /**
  * @struct Weapon

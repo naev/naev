@@ -1264,7 +1264,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
             continue; /* pilot is self */
 
          /* Smart weapons only collide with their target */
-         if (weapon_isSmart(w)) {
+         if (outfit_isSeeker(w->outfit)) {
             int isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
             if (!isjammed && (w->target.type==TARGET_PILOT) && (p->id != w->target.u.id))
                continue;
