@@ -1685,7 +1685,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
       /* Add sprite, layer depends on whether player shot or not. */
       spfx_add( spfx, hit->pos->x, hit->pos->y,
             VX(ptarget->solid.vel), VY(ptarget->solid.vel),
-            (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK );
+            pilot_isPlayer(ptarget) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE );
    }
    else if (hit->type==TARGET_ASTEROID) {
       Asteroid *ast = hit->u.ast;
@@ -1693,7 +1693,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
       double mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
       int spfx = outfit_spfxArmour(w->outfit);
       spfx_add( spfx, hit->pos->x, hit->pos->y,
-            VX(ast->sol.vel), VY(ast->sol.vel), SPFX_LAYER_MIDDLE );
+            VX(ast->sol.vel), VY(ast->sol.vel), SPFX_LAYER_BACK );
       asteroid_hit( ast, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
    }
    else if (hit->type==TARGET_WEAPON) {
@@ -1701,7 +1701,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
       int spfx = outfit_spfxArmour(w->outfit);
       spfx_add( spfx, hit->pos->x, hit->pos->y,
             VX(wpn->solid.vel), VY(wpn->solid.vel),
-            (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK );
+            (wpn->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE );
       weapon_damage( wpn, &dmg );
    }
 

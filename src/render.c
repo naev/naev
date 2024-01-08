@@ -225,8 +225,8 @@ void render_all( double game_dt, double real_dt )
    /* Middle stuff */
    player_renderUnderlay(dt);
    pilots_render();
-   weapons_render(WEAPON_LAYER_FG, dt);
    spfx_render(SPFX_LAYER_MIDDLE, dt);
+   weapons_render(WEAPON_LAYER_FG, dt);
    /* Foreground stuff */
    player_render(dt);
    spfx_render(SPFX_LAYER_FRONT, dt);
