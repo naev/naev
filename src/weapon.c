@@ -1375,7 +1375,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
 static void weapon_update( Weapon* w, double dt )
 {
    /* Smart weapons also get to think their next move */
-   if (weapon_isSmart(w))
+   if (w->think!=NULL)
       (*w->think)( w, dt );
 
    /* Update the solid position. */
