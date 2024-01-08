@@ -838,6 +838,7 @@ int toolkit_getImageArrayPos( unsigned int wid, const char* name )
    if (wgt == NULL)
       return -1;
 
+   DEBUG("getImageArrayPos: %d", wgt->dat.iar.selected);
    return wgt->dat.iar.selected;
 }
 
@@ -901,6 +902,7 @@ int toolkit_setImageArrayPos( unsigned int wid, const char* name, int pos )
       wgt->dat.iar.fptr( wgt->wdw, wgt->name );
 
    iar_centerSelected( wgt );
+   DEBUG("getImageArrayPos: %d => %d", pos, wgt->dat.iar.selected);
 
    return 0;
 }
