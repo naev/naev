@@ -387,6 +387,8 @@ static void think_seeker( Weapon* w, double dt )
       case WEAPON_STATUS_JAMMED_SLOWED: /* Slowed down. */
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
          turn_max = w->outfit->u.lau.turn;// * ewtrack;
+         if (w->status==WEAPON_STATUS_JAMMED_SLOWED)
+            turn_max *= w->falloff;
 
          /* Smart seekers take into account ship velocity. */
          if (w->outfit->u.lau.ai == AMMO_AI_SMART) {
