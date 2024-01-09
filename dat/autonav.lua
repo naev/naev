@@ -281,6 +281,7 @@ function autonav_pos( pos )
    autonav_set( autonav_pos_approach )
    player.autonavSetPos( pos )
    target_pos = pos
+   path = {target_pos}
 end
 
 --[[
@@ -314,23 +315,40 @@ use to calculate the actual "game time" that'll pass when decreasing the
 tc_mod to 1 during 3 seconds. This can be used then to compare when we want to
 start decrementing.
 --]]
-local function autonav_rampdown( d )
-   local pp = player.pilot()
-   local speed = pp:speed()
+local function autonav_rampdown( count_brake )
+   -- Compute accurate distance to the end
+   local d = 0
+   local pos = player.pos()
+   for k,v in ipairs(path) do
+      d = d+pos:dist( v )
+      pos = v
+   end
 
-   local vel = math.min( 1.5*speed, pp:vel():mod() ) * game_speed
-   local t   = d / vel * (1 - 0.075 * tc_base)
-   local tint= 3 + 0.5*3*(tc_mod-tc_base)
-   if t < tint then
+   local pp = player.pilot()
+   -- Compute velocity in "real pixels / second"
+   local vel = math.min( pp:speedMax(), pp:vel():mod() ) * game_speed
+   local acc = (tc_mod - tc_base) / 3 -- Acceleration
+   local dtravel = vel * 3 * (tc_mod - 0.5 * 3 * acc)
+   local bdist, btime = ai.minbrakedist()
+   if not count_brake then
+      -- Autonav stops at minbrakedist, so this synchronizes it
+      d = d - bdist
+   else
+      d = d + btime * vel * tc_base
+   end
+   if dtravel > d then -- Slight margin to brake early
       tc_rampdown = true
-      tc_down     = (tc_mod-tc_base) / 3
+      tc_down     = acc
    end
 end
 
--- For getting close to a static target
-local function autonav_approach( pos, count_target )
+--[[
+   For approaching a static target.
+
+--]]
+local function autonav_approach( pos, count_brakedist )
    local pp = player.pilot()
-   local dist = ai.minbrakedist()
+   local brakedist = ai.minbrakedist()
    local d = pos:dist( pp:pos() )
    local off = ai.iface( pos )
    if not match_fleet then
@@ -358,9 +376,10 @@ local function autonav_approach( pos, count_target )
       end
    end
 
-   dist = d - dist
+   -- Distance left to start breaking
+   local dist = d - brakedist
    local retd
-   if count_target then
+   if count_brakedist then
       retd = dist
    else
       retd = d
@@ -430,7 +449,7 @@ function autonav_jump_approach ()
    if not jmp then
       return autonav_abort()
    end
-   local ret, d = autonav_approach( path[1], false )
+   local ret = autonav_approach( path[1], true )
    if ret then
       if #path > 1 then
          table.remove( path, 1 )
@@ -442,8 +461,8 @@ function autonav_jump_approach ()
             autonav_set( autonav_jump_brake )
          end
       end
-   elseif not tc_rampdown and map_npath<=1 and #path==1 then
-      autonav_rampdown( d )
+   elseif not tc_rampdown and map_npath<=1 then
+      autonav_rampdown( true )
    end
 end
 
@@ -504,11 +523,8 @@ function autonav_jump_brake ()
       -- Recompute the location for a better position
       recompute_jump_pos()
       autonav_set( autonav_jump_approach )
-   end
-
-   if not tc_rampdown and map_npath<=1 then
-      tc_rampdown = true
-      tc_down     = (tc_mod-tc_base) / 3
+   elseif not tc_rampdown and map_npath<=1 then
+      autonav_rampdown( true )
    end
 end
 
@@ -520,13 +536,13 @@ function autonav_pos_approach_brake ()
    end
    if not tc_rampdown then
       tc_rampdown = true
-      tc_down     = (tc_mod-tc_base) / 3
+      tc_down     = (tc_mod - tc_base) / 3
    end
 end
 
 -- Approaching a position specified by target_pos
 function autonav_pos_approach ()
-   local ret, d = autonav_approach( target_pos, true )
+   local ret = autonav_approach( target_pos, brake_pos )
    if ret then
       if brake_pos then
          autonav_set( autonav_pos_approach_brake )
@@ -535,7 +551,7 @@ function autonav_pos_approach ()
          return autonav_end()
       end
    elseif not tc_rampdown then
-      autonav_rampdown( d )
+      autonav_rampdown( brake_pos )
    end
 end
 
@@ -547,13 +563,13 @@ function autonav_spob_approach_brake ()
    end
    if not tc_rampdown then
       tc_rampdown = true
-      tc_down     = (tc_mod-tc_base) / 3
+      tc_down     = (tc_mod - tc_base) / 3
    end
 end
 
 -- Approaching a spob, not interested in landing
 function autonav_spob_approach ()
-   local ret = autonav_approach( path[1], true )
+   local ret = autonav_approach( path[1], brake_pos )
    if ret then
       if #path > 1 then
          table.remove( path, 1 )
@@ -566,14 +582,7 @@ function autonav_spob_approach ()
          end
       end
    elseif not tc_rampdown then
-      -- Use distance to end
-      local d = 0
-      local pos = player.pos()
-      for k,v in ipairs(path) do
-         d = d+pos:dist( v )
-         pos = v
-      end
-      autonav_rampdown( d )
+      autonav_rampdown( brake_pos )
    end
 end
 
@@ -587,14 +596,7 @@ function autonav_spob_land_approach ()
          autonav_set( autonav_spob_land_brake )
       end
    elseif not tc_rampdown then
-      -- Use distance to end
-      local d = 0
-      local pos = player.pos()
-      for k,v in ipairs(path) do
-         d = d+pos:dist( v )
-         pos = v
-      end
-      autonav_rampdown( d )
+      autonav_rampdown( true )
    end
 end
 
@@ -610,11 +612,9 @@ function autonav_spob_land_brake ()
       target_pos = pos + (pp:pos()-pos):normalize( 0.6*target_spb:radius() )
       path = {target_pos} -- Have to update path also
       autonav_set( autonav_spob_land_approach )
-   end
-
-   if not tc_rampdown then
+   elseif not tc_rampdown then
       tc_rampdown = true
-      tc_down     = (tc_mod-tc_base) / 3
+      tc_down     = (tc_mod - tc_base) / 3
    end
 end
 
@@ -664,9 +664,12 @@ function autonav_plt_follow ()
    if canboard then
       radius = 0
    end
-   local d = autonav_approach_vel( plt:pos(), plt:vel(), radius )
+   local pos = plt:pos()
+   autonav_approach_vel( pos, plt:vel(), radius )
+   -- Only ramps down if we can board
    if canboard and not tc_rampdown then
-      autonav_rampdown( d )
+      path = {pos}
+      autonav_rampdown(true)
    end
 end
 
@@ -687,9 +690,11 @@ function autonav_plt_board_approach ()
       target_name = "#"..plt:colourChar()..plt:name().."#o"
    end
 
-   local d = autonav_approach_vel( plt:pos(), plt:vel(), 0 )
+   local pos = plt:pos()
+   autonav_approach_vel( pos, plt:vel(), 0 )
    if not tc_rampdown then
-      autonav_rampdown( d )
+      path = {pos}
+      autonav_rampdown(true)
    end
 
    -- Finally try to board
@@ -712,17 +717,17 @@ function autonav_think( dt )
    end
 end
 
--- Run with the physics backend where realdt is user time
+-- Run with the physics backend
 function autonav_update( realdt )
    -- If we reset we skip the iteration
    if shouldResetSpeed() then
       return
    end
-
    local dt_default = player.dt_default()
    if tc_rampdown then
-      if tc_mod ~= tc_base then
-         tc_mod = math.max( tc_base, tc_mod - tc_down*realdt )
+      if tc_mod > tc_base then
+         tc_mod = tc_mod - tc_down * realdt
+         tc_mod = math.max( tc_mod, tc_base )
          player.setSpeed( tc_mod, tc_mod / dt_default, true )
       end
       return
@@ -731,6 +736,7 @@ function autonav_update( realdt )
    if tc_mod == tc_max then
       return
    end
+   -- 5 seconds to reach max speed
    tc_mod = tc_mod + 0.2 * realdt * (tc_max - tc_base )
    tc_mod = math.min( tc_mod, tc_max )
    player.setSpeed( tc_mod, tc_mod / dt_default, true )
