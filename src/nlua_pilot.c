@@ -2365,7 +2365,7 @@ static int pilotL_actives( lua_State *L )
       int active;
       if (o->outfit == NULL)
          continue;
-      if (!o->active)
+      if (!(o->flags & PILOTOUTFIT_ACTIVE))
          continue;
       if (!outfit_isMod(o->outfit) &&
             !outfit_isAfterburner(o->outfit))

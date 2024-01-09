@@ -117,7 +117,6 @@ typedef struct PilotOutfitSlot_ {
    /* Outfit slot properties. */
    const Outfit* outfit;  /**< Associated outfit. */
    int flags;             /**< Slot flags. */
-   int active;            /**< Slot is an active slot. */
    ShipOutfitSlot *sslot; /**< Ship outfit slot. */
 
    /* Heat. */

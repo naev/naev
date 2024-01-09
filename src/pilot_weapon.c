@@ -1454,7 +1454,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
          pilot_stopBeam(p, o);
       }
    }
-   else if (!o->active)
+   else if (!(o->flags & PILOTOUTFIT_ACTIVE))
       /* Case of a mod we can't toggle. */
       return 0;
    else if (o->outfit->lua_ontoggle != LUA_NOREF)
