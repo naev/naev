@@ -853,14 +853,18 @@ int pilot_brakeCheckReverseThrusters( const Pilot *p )
 /**
  * @brief Gets the minimum braking distance for the pilot.
  */
-double pilot_minbrakedist( const Pilot *p, double dt )
+double pilot_minbrakedist( const Pilot *p, double dt, double *flytime )
 {
    double vel = MIN( MIN( VMOD(p->solid.vel), p->speed ), solid_maxspeed( &p->solid, p->speed, p->accel ) );
    double accel = p->accel;
    double t = vel / accel; /* Try to improve accuracy. */
-   if (pilot_brakeCheckReverseThrusters(p))
+   if (pilot_brakeCheckReverseThrusters(p)) {
+      t /= PILOT_REVERSE_THRUST; /* Have to compensate slower accel. */
+      *flytime = t+dt;
       return vel * (t+dt) - 0.5 * PILOT_REVERSE_THRUST * accel * pow2(t-dt);
-   return vel*(t+M_PI/p->turn+dt) - 0.5 * accel * pow2(t-dt);
+   }
+   *flytime = t+M_PI/p->turn+dt;
+   return vel*(*flytime) - 0.5 * accel * pow2(t-dt);
 }
 
 /**
@@ -2436,23 +2440,23 @@ void pilot_update( Pilot* pilot, double dt )
       * Recharge rate used to be proportional to the current state of the battery:
       * i.e. if the battery was 0% charged, the recharge rate would be at it's maximum,
       * but if it was 70% charge, the battery would only recharge at 30% of it's normal rate.
-      * 
-      * So instead now we just recharge at a 50% rate. This does look weird, 
+      *
+      * So instead now we just recharge at a 50% rate. This does look weird,
       * as what's happening in reality doesn't match what's on the stats display.
-      * 
+      *
       * But neither was what was happening matching the stats display previously.
-      * 
-      * This is a bit of a hack to maintain balance, but it's easier than adjusting all the weapons etc. 
-      * 
+      *
+      * This is a bit of a hack to maintain balance, but it's easier than adjusting all the weapons etc.
+      *
       * To get rid of this hack but maintain the current game balance, one would have to double the
       * energy usage of all items that take their energy from the battery, i.e. not engines
-      * just directly reduce the energy_regen. One would then also need to double the 
+      * just directly reduce the energy_regen. One would then also need to double the
       * energy storage of all items.
-      * 
-      * One other alternative to removing this hack instead have a stat called "battery efficiency". 
-      * There could be some core modules with inefficient batteries, 
-      * which are slower to recharge but have a larger storage, 
-      * or alternatively ones which have a fast recharge but significantly less capacity. 
+      *
+      * One other alternative to removing this hack instead have a stat called "battery efficiency".
+      * There could be some core modules with inefficient batteries,
+      * which are slower to recharge but have a larger storage,
+      * or alternatively ones which have a fast recharge but significantly less capacity.
       */
       pilot->energy += 0.5 * pilot->energy_regen * dt;
       pilot->energy -= pilot->energy_loss * dt;

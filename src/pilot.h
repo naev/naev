@@ -426,7 +426,7 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, double dir, double dt );
 int pilot_brakeCheckReverseThrusters( const Pilot *p );
-double pilot_minbrakedist( const Pilot *p, double dt );
+double pilot_minbrakedist( const Pilot *p, double dt, double *flytime );
 int pilot_brake( Pilot* p, double dt );
 void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
