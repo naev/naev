@@ -1872,10 +1872,12 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p, const PilotOutfitSlot *s
       if (!ws->active)
          continue;
       for (int i=0; i<array_size(po_list); i++) {
-         if (po_list[i].slotid==slot->id) {
-            active = 1;
-            break;
-         }
+         if (po_list[i].slotid!=slot->id)
+            continue;
+         if (!((1<<po_list[i].level) & ws->active))
+            continue;
+         active = 1;
+         break;
       }
       if (active)
          break;

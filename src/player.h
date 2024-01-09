@@ -17,9 +17,7 @@ enum {
    PLAYER_DESTROYED,    /**< player is destroyed */
    PLAYER_FACE,         /**< player is facing target */
    PLAYER_PRIMARY,      /**< player is shooting primary weapon */
-   PLAYER_PRIMARY_L,    /**< player shot primary weapon last frame. */
    PLAYER_SECONDARY,    /**< player is shooting secondary weapon */
-   PLAYER_SECONDARY_L,  /**< player shot secondary last frame. */
    PLAYER_LANDACK,      /**< player has permission to land */
    PLAYER_CREATING,     /**< player is being created */
    PLAYER_AUTONAV,      /**< player has autonavigation on. */

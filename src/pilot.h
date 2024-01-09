@@ -102,6 +102,12 @@ typedef struct PilotOutfitAmmo_ {
    int in_arc;          /**< In arc. */
 } PilotOutfitAmmo;
 
+#define PILOTOUTFIT_ISON         (1<<0)
+#define PILOTOUTFIT_ACTIVE       (1<<1)
+#define PILOTOUTFIT_VOLLEY       (1<<2)
+#define PILOTOUTFIT_INRANGE      (1<<3)
+#define PILOTOUTFIT_MANUAL       (1<<4)
+
 /**
  * @brief Stores an outfit the pilot has.
  */
@@ -110,6 +116,7 @@ typedef struct PilotOutfitSlot_ {
 
    /* Outfit slot properties. */
    const Outfit* outfit;  /**< Associated outfit. */
+   int flags;             /**< Slot flags. */
    int active;            /**< Slot is an active slot. */
    ShipOutfitSlot *sslot; /**< Ship outfit slot. */
 

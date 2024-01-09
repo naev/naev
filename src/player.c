@@ -1286,25 +1286,7 @@ void player_think( Pilot* pplayer, const double dt )
     * Weapon shooting stuff
     */
    fired = 0;
-
-   /* Primary weapon. */
-   if (player_isFlag(PLAYER_PRIMARY)) {
-      fired |= pilot_shoot( pplayer, 0 );
-      player_setFlag(PLAYER_PRIMARY_L);
-   }
-   else if (player_isFlag(PLAYER_PRIMARY_L)) {
-      pilot_shootStop( pplayer, 0 );
-      player_rmFlag(PLAYER_PRIMARY_L);
-   }
-   /* Secondary weapon - we use PLAYER_SECONDARY_L to track last frame. */
-   if (player_isFlag(PLAYER_SECONDARY)) { /* needs target */
-      fired |= pilot_shoot( pplayer, 1 );
-      player_setFlag(PLAYER_SECONDARY_L);
-   }
-   else if (player_isFlag(PLAYER_SECONDARY_L)) {
-      pilot_shootStop( pplayer, 1 );
-      player_rmFlag(PLAYER_SECONDARY_L);
-   }
+   pilot_shoot( pplayer, player_isFlag(PLAYER_PRIMARY), player_isFlag(PLAYER_SECONDARY) );
 
    if (fired)
       player_autonavReset( 1. );
@@ -2011,8 +1993,7 @@ int player_jump (void)
       /* Stop acceleration noise. */
       player_accelOver();
       /* Stop possible shooting. */
-      pilot_shootStop( player.p, 0 );
-      pilot_shootStop( player.p, 1 );
+      pilot_shoot( player.p, 0, 0 );
 
       /* Order escorts to jump; just for aesthetics (for now) */
       escorts_jump( player.p, &cur_system->jumps[player.p->nav_hyperspace] );

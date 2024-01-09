@@ -460,11 +460,8 @@ void ai_thinkApply( Pilot *p )
    pilot_setTurn( p, pilot_turn );
    pilot_setAccel( p, pilot_acc );
 
-   /* fire weapons if needed */
-   if (ai_isFlag(AI_PRIMARY))
-      pilot_shoot(p, 0); /* primary */
-   if (ai_isFlag(AI_SECONDARY))
-      pilot_shoot(p, 1 ); /* secondary */
+   /* Fire weapons if needed */
+   pilot_shoot( p, ai_isFlag(AI_PRIMARY), ai_isFlag(AI_SECONDARY) );
 
    /* other behaviours. */
    if (ai_isFlag(AI_DISTRESS))
@@ -2505,8 +2502,7 @@ static int aiL_hyperspace( lua_State *L )
 
    dist = space_hyperspace(cur_pilot);
    if (dist == 0) {
-      pilot_shootStop( cur_pilot, 0 );
-      pilot_shootStop( cur_pilot, 1 );
+      pilot_shoot( cur_pilot, 0, 0 );
       return 0;
    }
 
