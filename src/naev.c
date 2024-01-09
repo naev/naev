@@ -761,8 +761,6 @@ void main_loop( int nested )
    sound_update( real_dt ); /* Update sounds. */
    toolkit_update(); /* to simulate key repetition and get rid of windows */
    if (!paused) {
-      /* Important that we pass real_dt here otherwise we get a dt feedback loop which isn't pretty. */
-      player_updateAutonav( real_dt );
       update_all( !nested ); /* update game */
    }
    else if (!nested) {
@@ -1052,6 +1050,8 @@ static void update_all( int dohooks )
  */
 void update_routine( double dt, int dohooks )
 {
+   double real_update = dt / dt_mod;
+
    if (dohooks) {
       hook_exclusionStart();
 
@@ -1064,8 +1064,8 @@ void update_routine( double dt, int dohooks )
    weapons_updatePurge();
 
    /* Core stuff independent of collisions. */
-   space_update( dt, real_dt );
-   spfx_update( dt, real_dt );
+   space_update( dt, real_update );
+   spfx_update( dt, real_update );
 
    if (dt > 0.) {
       /* First compute weapon collisions. */
@@ -1077,6 +1077,9 @@ void update_routine( double dt, int dohooks )
       cam_update( dt );
    }
 
+   /* Player autonav. */
+   player_updateAutonav( real_update );
+
    /* Update the elapsed time, should be with all the modifications and such. */
    elapsed_time_mod += dt;
 
@@ -1087,7 +1090,7 @@ void update_routine( double dt, int dohooks )
       h[0].type = HOOK_PARAM_NUMBER;
       h[0].u.num = dt;
       h[1].type = HOOK_PARAM_NUMBER;
-      h[1].u.num = real_dt;
+      h[1].u.num = real_update;
       h[2].type = HOOK_PARAM_SENTINEL;
       /* Run the update hook. */
       hooks_runParam( "update", h );
