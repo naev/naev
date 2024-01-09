@@ -336,7 +336,7 @@ local function autonav_rampdown( count_brake )
    else
       d = d + btime * vel * tc_base
    end
-   if dtravel > d then -- Slight margin to brake early
+   if dtravel > d then
       tc_rampdown = true
       tc_down     = acc
    end
