@@ -242,8 +242,6 @@ void pilot_weapSetUpdate( Pilot* p )
       n++;
    }
 
-   /* Finally figure out how to handle weapons. */
-
    /* Now update stats and shit as necessary. */
    if ((n > 0) || pilotoutfit_modified) {
       /* pilot_destealth should run calcStats already. */
@@ -253,7 +251,7 @@ void pilot_weapSetUpdate( Pilot* p )
          pilot_calcStats( p );
 
       /* Firing stuff aborts active cooldown. */
-      if (pilot_isFlag(p, PILOT_COOLDOWN) && (n>0))
+      if (pilot_isFlag(p, PILOT_COOLDOWN) && (nweap>0))
          pilot_cooldownEnd(p, NULL);
 
       /* Trigger onshoot after stealth gets broken. */
