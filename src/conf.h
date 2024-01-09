@@ -49,7 +49,7 @@
 #define NEBU_NONUNIFORMITY_DEFAULT     1.    /**< How much to darken (or lighten) the nebula stuff. */
 #define GAMMA_CORRECTION_DEFAULT       1.    /**< How much gamma correction to do. */
 #define BACKGROUND_FANCY_DEFAULT       0     /**< Default fancy background. */
-#define JUMP_BRIGHTNESS_DEFAULT        1.    /**< Default jump brightness.*/
+#define JUMP_BRIGHTNESS_DEFAULT        0.8   /**< Default jump brightness.*/
 #define BIG_ICONS_DEFAULT              0     /**< Whether to display BIGGER icons. */
 #define FONT_SIZE_CONSOLE_DEFAULT      10    /**< Default console font size. */
 #define FONT_SIZE_INTRO_DEFAULT        18    /**< Default intro font size. */
