@@ -1590,7 +1590,9 @@ static int aiL_getflybydistance( lua_State *L )
  *
  * I hate this function and it'll probably need to get changed in the future
  *
+ *    @luatparam number vel Velocity of target.
  *    @luatreturn number Minimum braking distance.
+ *    @luatreturn number Time it will take to brake.
  *    @luafunc minbrakedist
  */
 static int aiL_minbrakedist( lua_State *L )
@@ -1613,13 +1615,18 @@ static int aiL_minbrakedist( lua_State *L )
       if (vel < 0.)
          vel = 0.;
       /* Get distance to brake. */
-      dist = vel*(time+M_PI/cur_pilot->turn+ai_dt) -
-         0.5*(cur_pilot->accel)*time*time;
+      double flytime = time + M_PI/cur_pilot->turn+ai_dt;
+      dist = vel*(flytime) - 0.5*(cur_pilot->accel)*time*time;
       lua_pushnumber(L, dist);
+      lua_pushnumber(L, flytime);
    }
-   else
-      lua_pushnumber( L, pilot_minbrakedist(cur_pilot, ai_dt) );
-   return 1;
+   else {
+      double flytime;
+      double dist = pilot_minbrakedist( cur_pilot, ai_dt, &flytime );
+      lua_pushnumber( L, dist );
+      lua_pushnumber( L, flytime );
+   }
+   return 2;
 }
 
 /**
