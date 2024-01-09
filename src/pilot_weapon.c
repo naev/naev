@@ -346,7 +346,7 @@ static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
    const PilotWeaponSet *wsa = pilot_weapSet( p, p->active_set );
    if (wsa->type != WEAPSET_TYPE_SWITCH) {
       for (int i=0; i<PILOT_WEAPON_SETS; i++) {
-         const PilotWeaponSet *wsi = pilot_weapSet( p, p->active_set );
+         const PilotWeaponSet *wsi = pilot_weapSet( p, i );
          if (wsi->type == WEAPSET_TYPE_SWITCH) {
             p->active_set = i;
             wsa = pilot_weapSet( p, p->active_set );
