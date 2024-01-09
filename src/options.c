@@ -1293,8 +1293,9 @@ static void opt_accessibilityDefaults( unsigned int wid, const char *str )
    (void) str;
 
    /* Faders. */
-   window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadNebuNonuniformity", NEBU_NONUNIFORMITY_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadJumpBrightness", JUMP_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
    window_faderSetBoundedValue( wid, "fadColourblindCorrect", COLOURBLIND_CORRECT_DEFAULT );
    window_faderSetBoundedValue( wid, "fadColourblindSimulate", COLOURBLIND_CORRECT_DEFAULT );
