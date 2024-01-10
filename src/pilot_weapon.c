@@ -164,9 +164,11 @@ static void pilot_weapSetUpdateState( Pilot* p )
       const Outfit *o = pos->outfit;
       if (o == NULL)
          continue;
+      if (!(pos->flags & PILOTOUTFIT_ACTIVE))
+         continue;
 
       /* Se whether to turn on or off. */
-      if ((pos->flags & PILOTOUTFIT_ACTIVE) && (pos->flags & PILOTOUTFIT_ISON)) {
+      if (pos->flags & PILOTOUTFIT_ISON) {
          if (pos->state == PILOT_OUTFIT_OFF)
             n += pilot_outfitOn( p, pos );
       }
@@ -210,9 +212,11 @@ void pilot_weapSetUpdate( Pilot* p )
       int volley;
       if (o == NULL)
          continue;
+      if (!(pos->flags & PILOTOUTFIT_ACTIVE))
+         continue;
 
       /* Turn on if off. */
-      if ((pos->flags & PILOTOUTFIT_ACTIVE) && (pos->flags & PILOTOUTFIT_ISON)) {
+      if (pos->flags & PILOTOUTFIT_ISON) {
          if (pos->state == PILOT_OUTFIT_OFF)
             n += pilot_outfitOn( p, pos );
       }
