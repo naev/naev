@@ -168,13 +168,11 @@ static void pilot_weapSetUpdateState( Pilot* p )
       /* Se whether to turn on or off. */
       if ((pos->flags & PILOTOUTFIT_ACTIVE) && (pos->flags & PILOTOUTFIT_ISON)) {
          if (pos->state == PILOT_OUTFIT_OFF)
-            continue;
-         n += pilot_outfitOn( p, pos );
+            n += pilot_outfitOn( p, pos );
       }
       else {
-         if (pos->state != PILOT_OUTFIT_ON)
-            continue;
-         n += pilot_outfitOff( p, pos );
+         if (pos->state == PILOT_OUTFIT_ON)
+            n += pilot_outfitOff( p, pos );
       }
    }
 
@@ -218,8 +216,14 @@ void pilot_weapSetUpdate( Pilot* p )
          if (pos->state == PILOT_OUTFIT_OFF)
             n += pilot_outfitOn( p, pos );
       }
+      else {
+         if (pos->state == PILOT_OUTFIT_ON)
+            n += pilot_outfitOff( p, pos );
+      }
 
       /* Handle volley sets below. */
+      if (!(pos->flags & PILOTOUTFIT_ISON))
+         continue;
       if (pos->state!=PILOT_OUTFIT_ON)
          continue;
       if (!outfit_isWeapon(o))
