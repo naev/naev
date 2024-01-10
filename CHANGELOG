@@ -13,6 +13,7 @@
    * Engine
       * Stats (except inverted stats) are now additive instead of multiplicative
       * Try to merge saves if multiple directories correspond to the same player
+      * More robust weapon set support that can handle multiple overlapping weapon sets
       * Faster handling of asteroids with large exclusion areas
       * Added fuel_usage_mod ship stat.
       * Fixed player losing navigation targets when unidiff is applied
