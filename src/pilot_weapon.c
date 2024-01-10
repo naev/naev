@@ -861,7 +861,7 @@ int pilot_shoot( Pilot* p, int primary, int secondary )
          ws->active |= WEAPSET_ACTIVE_SECONDARY;
       /* Update state if something changed. */
       if (ws->active != old)
-         pilot_weapSetUpdateState( p );
+         pilot_weapSetUpdateOutfitState( p );
    }
    return 0;
 }
