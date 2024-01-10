@@ -102,11 +102,12 @@ typedef struct PilotOutfitAmmo_ {
    int in_arc;          /**< In arc. */
 } PilotOutfitAmmo;
 
-#define PILOTOUTFIT_ISON         (1<<0)
-#define PILOTOUTFIT_ACTIVE       (1<<1)
+#define PILOTOUTFIT_ACTIVE       (1<<0)
+#define PILOTOUTFIT_ISON         (1<<1)
 #define PILOTOUTFIT_VOLLEY       (1<<2)
 #define PILOTOUTFIT_INRANGE      (1<<3)
 #define PILOTOUTFIT_MANUAL       (1<<4)
+#define PILOTOUTFIT_DYNAMIC_FLAGS (PILOTOUTFIT_ISON | PILOTOUTFIT_VOLLEY | PILOTOUTFIT_INRANGE | PILOTOUTFIT_MANUAL)
 
 /**
  * @brief Stores an outfit the pilot has.

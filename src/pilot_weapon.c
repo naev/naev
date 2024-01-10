@@ -130,7 +130,7 @@ void pilot_weapSetUpdate( Pilot* p )
    /* First pass to remove activeness. */
    for (int i=0; i<array_size(p->outfits); i++) {
       PilotOutfitSlot *pos = p->outfits[i];
-      pos->flags &= ~PILOTOUTFIT_ACTIVE;
+      pos->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
    }
 
    /* Now mark all the outfits as on or off. */
