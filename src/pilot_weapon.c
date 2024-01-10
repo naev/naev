@@ -4,7 +4,13 @@
 /**
  * @file pilot_weapon.c
  *
- * @brief Handles pilot weapon sets.
+ * @brief Handles pilot weapon sets which server to manage and interface with
+ * active outfits..
+ *
+ * The basic approach is a flag and sweep operation. Outfits are flagged based
+ * on what weapon sets they belong to when weapon sets change or weapons are
+ * fired. Afterwards, the weapons will be updated every iteration to fire or
+ * change states as necessary.
  */
 /** @cond */
 #include "naev.h"
@@ -24,7 +30,7 @@
 /*
  * Prototypes.
  */
-static void pilot_weapSetUpdateState( Pilot* p );
+static void pilot_weapSetUpdateOutfitState( Pilot* p );
 static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
 static int pilot_shootWeaponSetOutfit( Pilot* p, const Outfit *o, const Target *target, double time, int aim );
 static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
@@ -113,13 +119,13 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          break;
    }
 
-   pilot_weapSetUpdateState( p );
+   pilot_weapSetUpdateOutfitState( p );
 }
 
 /**
- * @brief Updates the local state of all the pilot's outfits.
+ * @brief Updates the local state of all the pilot's outfits based on the weapon sets.
  */
-static void pilot_weapSetUpdateState( Pilot* p )
+static void pilot_weapSetUpdateOutfitState( Pilot* p )
 {
    int n;
 
@@ -181,7 +187,7 @@ static void pilot_weapSetUpdateState( Pilot* p )
    /* Now update stats and shit as necessary. */
    if ((n > 0) || pilotoutfit_modified) {
       /* pilot_destealth should run calcStats already. */
-      if (pilot_isFlag(p,PILOT_STEALTH))
+      if (pilot_isFlag(p,PILOT_STEALTH) && (n>0))
          pilot_destealth( p );
       else
          pilot_calcStats( p );
@@ -281,7 +287,7 @@ void pilot_weapSetUpdate( Pilot* p )
    /* Now update stats and shit as necessary. */
    if ((n > 0) || pilotoutfit_modified) {
       /* pilot_destealth should run calcStats already. */
-      if (pilot_isFlag(p,PILOT_STEALTH))
+      if (pilot_isFlag(p,PILOT_STEALTH) && (n>0))
          pilot_destealth( p );
       else
          pilot_calcStats( p );
