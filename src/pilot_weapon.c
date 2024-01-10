@@ -24,6 +24,7 @@
 /*
  * Prototypes.
  */
+static void pilot_weapSetUpdateState( Pilot* p );
 static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
 static int pilot_shootWeaponSetOutfit( Pilot* p, const Outfit *o, const Target *target, double time, int aim );
 static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
@@ -111,23 +112,18 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             ws->active = 0;
          break;
    }
+
+   pilot_weapSetUpdateState( p );
 }
 
 /**
- * @brief Updates the pilot's weapon sets.
- *
- *    @param p Pilot to update.
+ * @brief Updates the local state of all the pilot's outfits.
  */
-void pilot_weapSetUpdate( Pilot* p )
+static void pilot_weapSetUpdateState( Pilot* p )
 {
-   int n, nweap, target_set;
-   double time;
-   Target wt;
+   int n;
 
-   if (pilot_isFlag( p, PILOT_HYP_BEGIN))
-      return;
-
-   /* First pass to remove activeness. */
+   /* First pass to remove all dynamic flags. */
    for (int i=0; i<array_size(p->outfits); i++) {
       PilotOutfitSlot *pos = p->outfits[i];
       pos->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
@@ -148,22 +144,20 @@ void pilot_weapSetUpdate( Pilot* p )
          PilotOutfitSlot *pos = p->outfits[ ws->slots[j].slotid ];
          if (pos->outfit == NULL)
             continue;
-         if ((1<<ws->slots[j].level) & ws->active) {
-            pos->flags |= PILOTOUTFIT_ACTIVE;
-            if (ws->volley)
-               pos->flags |= PILOTOUTFIT_VOLLEY;
-            if (ws->inrange)
-               pos->flags |= PILOTOUTFIT_INRANGE;
-            if (ws->manual)
-               pos->flags |= PILOTOUTFIT_MANUAL;
-         }
+         if (!((1<<ws->slots[j].level) & ws->active))
+            continue;
+         pos->flags |= PILOTOUTFIT_ISON;
+         if (ws->volley)
+            pos->flags |= PILOTOUTFIT_VOLLEY;
+         if (ws->inrange)
+            pos->flags |= PILOTOUTFIT_INRANGE;
+         if (ws->manual)
+            pos->flags |= PILOTOUTFIT_MANUAL;
       }
    }
 
    /* Last pass figures out what to do. */
    n = 0;
-   nweap = 0;
-   target_set = 0;
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(p->outfits); i++) {
       PilotOutfitSlot *pos = p->outfits[i];
@@ -172,8 +166,8 @@ void pilot_weapSetUpdate( Pilot* p )
          continue;
 
       /* Se whether to turn on or off. */
-      if (pos->flags & PILOTOUTFIT_ACTIVE) {
-         if (pos->state != PILOT_OUTFIT_OFF)
+      if ((pos->flags & PILOTOUTFIT_ACTIVE) && (pos->flags & PILOTOUTFIT_ISON)) {
+         if (pos->state == PILOT_OUTFIT_OFF)
             continue;
          n += pilot_outfitOn( p, pos );
       }
@@ -184,12 +178,46 @@ void pilot_weapSetUpdate( Pilot* p )
       }
    }
 
+   /* Now update stats and shit as necessary. */
+   if ((n > 0) || pilotoutfit_modified) {
+      /* pilot_destealth should run calcStats already. */
+      if (pilot_isFlag(p,PILOT_STEALTH))
+         pilot_destealth( p );
+      else
+         pilot_calcStats( p );
+   }
+}
+
+/**
+ * @brief Updates the pilot's weapon sets.
+ *
+ *    @param p Pilot to update.
+ */
+void pilot_weapSetUpdate( Pilot* p )
+{
+   int n, nweap, target_set;
+   double time;
+   Target wt;
+
+   if (pilot_isFlag( p, PILOT_HYP_BEGIN))
+      return;
+
+   n = 0;
+   nweap = 0;
+   target_set = 0;
+   pilotoutfit_modified = 0;
    for (int i=0; i<array_size(p->outfits); i++) {
       PilotOutfitSlot *pos = p->outfits[i];
       const Outfit *o = pos->outfit;
       int volley;
       if (o == NULL)
          continue;
+
+      /* Turn on if off. */
+      if ((pos->flags & PILOTOUTFIT_ACTIVE) && (pos->flags & PILOTOUTFIT_ISON)) {
+         if (pos->state == PILOT_OUTFIT_OFF)
+            n += pilot_outfitOn( p, pos );
+      }
 
       /* Handle volley sets below. */
       if (pos->state!=PILOT_OUTFIT_ON)
@@ -810,12 +838,16 @@ int pilot_shoot( Pilot* p, int primary, int secondary )
 {
    PilotWeaponSet *ws = pilot_weapSet( p, p->active_set );
    if (ws->type == WEAPSET_TYPE_SWITCH) {
+      int old = ws->active;
       /* Set new state. */
       ws->active = 0;
       if (primary)
          ws->active |= WEAPSET_ACTIVE_PRIMARY;
       if (secondary)
          ws->active |= WEAPSET_ACTIVE_SECONDARY;
+      /* Update state if something changed. */
+      if (ws->active != old)
+         pilot_weapSetUpdateState( p );
    }
    return 0;
 }

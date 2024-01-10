@@ -282,9 +282,8 @@ int pilot_hasDeployed( const Pilot *p )
  */
 int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 {
-   const Outfit *o;
-
    /* Set the outfit. */
+   s->flags    = 0;
    s->state    = PILOT_OUTFIT_OFF;
    s->outfit   = outfit;
 
@@ -314,8 +313,7 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
    }
 
    /* Check if active. */
-   o = s->outfit;
-   if (outfit_isActive(o))
+   if (outfit_isActive(outfit))
       s->flags |= PILOTOUTFIT_ACTIVE;
    else
       s->flags &= ~PILOTOUTFIT_ACTIVE;
