@@ -1495,14 +1495,19 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
                return 0;
          }
          beam_end( o->u.beamid );
-         pilot_stopBeam(p, o);
+         pilot_stopBeam(p, o); /* Sets the state. */
       }
+      else
+         o->state  = PILOT_OUTFIT_OFF;
    }
    else if (!(o->flags & PILOTOUTFIT_ACTIVE))
       /* Case of a mod we can't toggle. */
       return 0;
-   else if (o->outfit->lua_ontoggle != LUA_NOREF)
-      return pilot_outfitLOntoggle( p, o, 0 );
+   else if (o->outfit->lua_ontoggle != LUA_NOREF) {
+      int ret = pilot_outfitLOntoggle( p, o, 0 );
+      if (ret && outfit_isWeapon(o->outfit))
+         o->state = PILOT_OUTFIT_OFF;
+   }
    else {
       o->stimer = outfit_cooldown( o->outfit );
       if (o->stimer < 0.)
@@ -1527,8 +1532,12 @@ int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o )
       return 0;
    if (outfit_isAfterburner(o->outfit))
       pilot_afterburn( p );
-   else if (o->outfit->lua_ontoggle != LUA_NOREF)
-      return pilot_outfitLOntoggle( p, o, 1 );
+   else if (o->outfit->lua_ontoggle != LUA_NOREF) {
+      int ret = pilot_outfitLOntoggle( p, o, 1 );
+      if (ret && outfit_isWeapon(o->outfit))
+         o->state = PILOT_OUTFIT_ON;
+      return ret;
+   }
    else {
       o->state  = PILOT_OUTFIT_ON;
       o->stimer = outfit_duration( o->outfit ) * p->stats.cooldown_mod;
