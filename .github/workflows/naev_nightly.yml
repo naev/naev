@@ -284,6 +284,9 @@ jobs:
             config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     container:
       image: "ghcr.io/naev/${{ matrix.image }}:latest"
       env:
@@ -342,7 +345,7 @@ jobs:
 
       - name: Fix zip name
         run: |
-          mv ${{ github.workspace }}/build/dist/naev-macos.zip ${{ github.workspace }}/build/dist/naev-macos-${{ matrix.arch }}.zip
+          mv build/dist/naev-macos.zip build/dist/naev-macos-${{ matrix.arch }}.zip
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -358,6 +361,9 @@ jobs:
         Darwin_Compile_Naev
       ]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     container:
       image: "ghcr.io/naev/naev-macos:latest"
 
