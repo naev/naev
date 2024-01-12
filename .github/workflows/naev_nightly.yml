@@ -377,6 +377,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: naev-macos-dmg
+          path: dmg_assets
 
       - name: Get Entitlements PLIST
         uses: actions/download-artifact@v3
