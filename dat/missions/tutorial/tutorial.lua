@@ -46,8 +46,8 @@ function create ()
    vn.na(_("As you are admiring the view from your cockpit, suddenly a holographic projection appears in front of you."))
    sai(fmt.f(_([["Congratulations on your first spaceship, {playername}! What, what am I? I am your personal Ship AI. Always ready to be of assistance."
 They stare at you for a few seconds.
-"Say, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))
-   sai(_([["Anyway, from now on, I will be your Ship AI, but don't worry if you get a new ship, I will be transferred over without an issue. If you have any questions or comments about how your ship works or how to do things, I believe I can be of help. As your new Ship AI, would you like to give me a name?"]]))
+"Say, you look very familiar. You wouldn't be related to my late previous owner, would you? Terrible what happened…"]]),{playername=player.name()}))
+   sai(_([["Anyway, from now on, I will be your Ship AI, but don't worry if you get a new ship, I will be transferred over without any issues. If you have any questions or comments about how your ship works or how to do things, I believe I can be of help. As your new Ship AI, would you like to give me a name?"]]))
    vn.label("rename")
    local ainame
    luatk.vn( function ()
@@ -82,17 +82,17 @@ They stare at you for a few seconds.
    vn.jump("mainmenu")
 
    vn.label("noname")
-   sai(_([["You haven't given me a name. I will be continued to be called 'Ship AI' or SAI for short. Is that OK?"]]))
+   sai(_([["You haven't given me a name. I will continue to be called 'Ship AI' or SAI for short. Is that OK?"]]))
    vn.menu{
       {_([["'Ship AI' is fine"]]), "renamedone"},
       {_("Rename"), "rename"},
    }
 
    vn.label("renamedone")
-   sai(fmt.f(_([["OK! Pleased to meet you {playername}. If you change your mind about my name or want to change tutorial settings, you can always do so from the info menu which you can open with {infokey}."]]),{playername=player.name(), infokey=tut.getKey("info")}))
+   sai(fmt.f(_([["OK! Pleased to meet you {playername}. If you change your mind about my name or want to change tutorial settings, you can always do so from the info menu, which you can open with {infokey}."]]),{playername=player.name(), infokey=tut.getKey("info")}))
 
    vn.label("mainmenu")
-   sai(_([["Now that we have you out in space for the first time, how about I go over your new ship's controls with you real quick? No charge!"]]))
+   sai(_([["Now that we have you out in space for the first time, how about I go over your new ship's controls real quick? No charge!"]]))
    vn.menu{
       {_("Do the tutorial"), "dotut"},
       {_("Skip the tutorial"), "skiptut"},
@@ -109,7 +109,7 @@ They stare at you for a few seconds.
    vn.done( tut.shipai.transition )
 
    vn.label("offtut")
-   sai(_([["Are you sure you want to disable all the hints? This includes explanation of advanced in-game mechanics you will meet as you play the game."]]))
+   sai(_([["Are you sure you want to disable all the hints? This includes explanation of advanced in-game mechanics you will encounter as you play the game."]]))
    vn.menu{
       {_("Disable all hints"), "offtut_yes"},
       {_("Nevermind"), "mainmenu"},
@@ -124,7 +124,7 @@ They stare at you for a few seconds.
    vn.func( function ()
       dotut = true
    end )
-   sai(fmt.f(_([["Alright, let's go over how to pilot your new state-of-the-art ship, then! Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and accelerate to move your ship forward with {accelkey}! You can also use {reversekey} to rotate your ship to the opposite direction you are moving, or to reverse thrust if you purchase and install a reverse thruster onto your starship. Give it a try by flying over to {pnt}! You see it on your screen, right? It's the planet right next to you."]]),{leftkey=tut.getKey("left"), rightkey=tut.getKey("right"), accelkey=tut.getKey("accel"), reversekey=tut.getKey("reverse"), pnt=start_planet}))
+   sai(fmt.f(_([["Alright then, let's go over how to pilot your new state-of-the-art ship! Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and accelerate to move your ship forward with {accelkey}! You can also use {reversekey} to rotate your ship to the direction opposite of your movement, or to reverse thrust if you purchase and install a reverse thruster on your starship. Give it a try by flying over to {pnt}! You see it on your screen, right? It's the planet right next to you."]]),{leftkey=tut.getKey("left"), rightkey=tut.getKey("right"), accelkey=tut.getKey("accel"), reversekey=tut.getKey("reverse"), pnt=start_planet}))
    vn.done( tut.shipai.transition )
    vn.run()
 
@@ -169,7 +169,7 @@ function timer ()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
       sai(fmt.f(_([["Perfect! That was easy enough, right? I recommend this manner of flight, known as 'keyboard flight'. However, there is one other way you can fly if you so choose: press {mouseflykey} on your console and your ship will follow your #bmouse pointer#0 automatically. It's up to you which method you prefer to use."]]),{mouseflykey=tut.getKey("mousefly")}))
-      sai(_([["You may also have noticed the mission on-screen display on your monitor. As you can see, you completed your first objective of the Tutorial mission, so the next objective is now being focused."]]))
+      sai(_([["You may also have noticed the mission on-screen display on your monitor. As you can see, you completed the first objective of the Tutorial mission, so the next objective is now focused."]]))
       sai(fmt.f(_([["On that note, let's go over landing. All kinds of actions, like landing on planets, hailing ships, boarding disabled ships, and jumping to other systems can be accomplished by #bdouble-clicking#0 on an applicable target, or alternatively by pressing certain buttons on your control console. How about you try landing on {pnt}?"]]),{pnt=start_planet}))
       sai(fmt.f(_([["To land on {pnt}, you need to slow down your ship on top of the planet, and engage the landing system. You can do this manually with the movement keys and engage your landing gears with {landkey}, or this can all be done automatically by targeting the planet with either #bclicking#0 on it, or with {targetplanetkey}, and then using the {landkey}. You can also #bdouble click#0 on the planet to engage the same behaviour. Give it a try!"]]),{pnt=start_planet, targetplanetkey=tut.getKey("target_spob"), landkey=tut.getKey("approach")}))
       vn.done( tut.shipai.transition )
@@ -184,12 +184,12 @@ function timer ()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(_([["Great job! As you can see, by using your ship's Autonav features, the perceived duration of your trip was cut substantially. You will grow to appreciate this feature in your ship in time, especially as you travel from system to system delivering goods and such, given the vastness of space."]]))
+      sai(_([["Great job! As you can see, by using your ship's Autonav features, the perceived duration of your trip was cut substantially. You will grow to appreciate this feature of your ship in time, especially as you travel from system to system delivering goods and such, given the vastness of space."]]))
       sai(_([["I hope you noticed some of the features of the overview map when you had it activated. Not only are objects such as planets, ships, and asteroids visible on the overview map, but faction #opatrol routes#0 are also shown with thick lines. These routes denote areas that are commonly patrolled and used by ships. Sticking to these routes is generally the best way to travel around, but they don't guarantee your safety. When starting out it is probably best to not stray too far."]]))
       sai(_([["Let's now practice combat. You won't need this if you stick to the safe systems in the Empire core, but sadly, we are likely to encounter hostile ships if you venture further out, so you need to know how to defend yourself. Fortunately, your ship comes pre-equipped with a state-of-the-art laser cannon for just that reason! If all goes well you won't end up a ship ornament like my late previous owner after encountering… Anyway, on to the drone."]]))
       sai(fmt.f(_([["I will launch a combat practice drone off of {pnt} now for you to fight. Don't worry; our drone does not have any weapons and will not harm you. Target the drone by clicking on it or by pressing {targethostilekey}, then use your weapons, controlled with {primarykey} and {secondarykey}, to take out the drone!"
 "Ah, yes, one more tip before I launch the drone: if your weapons start losing their accuracy, it's because they're becoming overheated. You can remedy that by pressing {cooldownkey} or double tapping {reversekey} to engage active cooling."]]),{pnt=dest_planet, targethostilekey=tut.getKey("target_hostile"), primarykey=tut.getKey("primary"), secondarykey=tut.getKey("secondary"), cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
-      sai(_([["The Drone's AI has been said to be a bit odd, but don't pay attention to it. Being an artificial intelligence it is unable to compute feelings you know? Not like me, ha ha. HUMOUR PROCEDURE TERMINATED"]]))
+      sai(_([["The Drone's AI has been said to be a bit odd, but pay no attention to it. Being an artificial intelligence it is unable to process emotions. Not like me, ha ha. HUMOUR PROCEDURE TERMINATED"]]))
       vn.done( tut.shipai.transition )
       vn.run()
 
@@ -213,7 +213,7 @@ function land ()
    mem.enter_timer_hook = nil
    if mem.stage == 2 then
       mem.stage = 3
-      msg_info{_([["Excellent! The landing was successful. As your Ship AI, I am in charge of guiding your ship and performing the landing procedure, which has cut down significantly on misfortunes during human-controlled manual landing procedures. When you land, your ship is refueled automatically, and you can do things such as talk to civilians at the bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Why don't we look around? As you can see, we are currently on the Landing Main tab, where you can learn about the planet and buy a local map. Click all the other tabs below, and I'll give you a tour through what else you can do on a planet. When you are done, click the '#bTake Off#0' button, so we can continue."]])}
+      msg_info{_([["Excellent! The landing was successful. As your Ship AI, I am in charge of guiding your ship and performing the landing procedure, which has cut down significantly on misfortunes during human-controlled manual landing procedures. When you land, your ship is refueled automatically, and you can do things such as talk to civilians at the spaceport bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Why don't we look around? As you can see, we are currently on the Landing Main tab, where you can learn about the planet and buy a local map. Click through all the other tabs below, and I'll give you a tour of everything you can do on a planet. When you are done, click the '#bTake Off#0' button, so we can continue."]])}
 
       mem.bar_hook       = hook.land("land_bar", "bar")
       mem.mission_hook   = hook.land("land_mission", "mission")
@@ -233,15 +233,15 @@ end
 function land_bar ()
    hook.rm(mem.bar_hook)
    mem.bar_hook = nil
-   msg_info(_([["This is the Spaceport Bar, where you can read the latest news (as you can see on your right at the moment), but more importantly, you can meet other pilots, civilians, and more! Click on someone at the bar and then click on the '#bApproach#0' button to approach them. Important characters will be marked with a red exclamation mark. In general, I recommend regularly talking to bar patrons, who knows what good tips or interesting jobs they will have available for you."]]))
+   msg_info(_([["This is the spaceport bar, where you can read the latest news (as you can see on your right at the moment), but more importantly, you can meet other pilots, civilians, and more! Click on someone at the bar and then click on the '#bApproach#0' button to approach them. Important characters will be marked with a red exclamation mark. In general, I recommend regularly talking to bar patrons. Who knows what useful tips or interesting jobs they might have for you?"]]))
 end
 
 function land_mission ()
    hook.rm(mem.mission_hook)
    mem.mission_hook = nil
    msg_info{_([["This is the Mission Computer, where you can find basic missions in the official mission database. Missions are how you make your living as a pilot, so I recommend you check this screen often to see where the money-making opportunities are! You can see that each mission is given a brief summary, and by clicking them, you will be able to see more information about the mission. Since many missions involve cargo, you can also see how much free space is available in your ship in the top-right."]]),
-      fmt.f(_([["When picking missions, pay attention to how much they pay. You'll want to strike a balance of choosing missions that you're capable of doing, but getting paid as much as possible to do them. Once you've chosen a mission, click the '#bAccept Mission#0' button on the bottom-right, and it will be added to your active missions, which you can review via the Info screen by pressing {infokey}."]]),{infokey=tut.getKey("info")}),
-      _([["As you gain reputation with other factions and characters, you will be given access to more complicated and well paying missions at the mission computer. That is why I recommend also checking the spaceport bar often when travelling."]]),
+      fmt.f(_([["When picking missions, pay attention to how much they pay. You'll want to strike a balance between choosing missions that you're capable of doing, and getting paid as much as possible. Once you've chosen a mission, click the '#bAccept Mission#0' button on the bottom-right, and it will be added to your active missions, which you can review via the Info screen by pressing {infokey}."]]),{infokey=tut.getKey("info")}),
+      _([["As you gain reputation with other factions and characters, you will be given access to more challenging and well-paying missions at the mission computer. I recommend also checking often the spaceport bar for missions when travelling."]]),
    }
 end
 
