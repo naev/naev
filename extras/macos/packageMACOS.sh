@@ -37,7 +37,7 @@ fi
 debugbundle="${MESON_INSTALL_DESTDIR_PREFIX}/Contents/MacOS/naev.dSYM"
 
 if [ -f "$debugbundle" ] ; then
-   rm "$debugbundle"
+   rm -rf "$debugbundle"
 fi
 
 # Create dist dir in build root
