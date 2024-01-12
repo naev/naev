@@ -31,6 +31,15 @@ if ! [ -x "$(command -v zip)" ]; then
    exit 1
 fi
 
+# Clean up debug symbols bundle for debug/nightly builds
+# This causes issues when signing the bundle for ARM64.
+
+debugbundle="${MESON_INSTALL_DESTDIR_PREFIX}/Contents/MacOS/naev.dSYM"
+
+if [ -f "$debugbundle" ] ; then
+   rm "$debugbundle"
+fi
+
 # Create dist dir in build root
 mkdir -p "${MESON_BUILD_ROOT}"/dist
 
