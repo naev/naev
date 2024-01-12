@@ -142,6 +142,7 @@ build_bundle(){
     # Create placeholder app bundle
     cp -r "$ARM64BUNDLEPATH/Naev.app" "$BUILDPATH/Naev.app"
     rm "$BUILDPATH"/Naev.app/Contents/MacOS/naev
+    rm -rf "$BUILDPATH"/Naev.app/Contents/MacOS/naev.dSYM
     rm "$BUILDPATH"/Naev.app/Contents/Frameworks/*
 
     # Deploy Universal and extra ARM64 libraries
