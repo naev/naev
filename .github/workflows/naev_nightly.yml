@@ -72,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: naev-macos-dmg
-          path: ${{ github.workspace }}/build/dist/dmg_assets/*
+          path: ${{ github.workspace }}/build/dist/dmg_assets
           if-no-files-found: error
 
       - name: Upload Entitlements PLIST Artifact
