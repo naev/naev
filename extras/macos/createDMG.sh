@@ -50,6 +50,9 @@ mkdir -p "${MESON_BUILD_ROOT}"/dist
 # Create temp directory in build root
 mkdir -p "$WORKPATH"
 
+# Create Applications symlink for DMG installer in temp directory
+ln -s /Applications "$WORKPATH"/Applications
+
 # Copy all DMG assets to BundleDir
 cp -r "${MESON_SOURCE_ROOT}"/extras/macos/dmg_assets/. "$WORKPATH"
 
