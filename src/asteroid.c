@@ -74,6 +74,7 @@ static int asteroid_updateSingle( Asteroid *a )
    const AsteroidAnchor *ast = &cur_system->asteroids[a->parent];
    double dt      = asteroid_dt;
    double offx, offy, d;
+   int forced;
    int setvel = 0;
 
    /* Push back towards center. */
@@ -127,13 +128,14 @@ static int asteroid_updateSingle( Asteroid *a )
    a->ang += a->spin * dt;
 
    /* igure out state change if applicable. */
+   forced = a->timer < 0.; /* Forced by Lua or whatever. */
    a->timer -= dt;
    if (a->timer < 0.) {
       switch (a->state) {
          /* Transition states. */
          case ASTEROID_FG:
             /* Don't go away if player is close. */
-            if ((player.p!=NULL) && (vec2_dist2( &player.p->solid.pos, &a->sol.pos ) < pow2(1500.)))
+            if (!forced && (player.p!=NULL) && (vec2_dist2( &player.p->solid.pos, &a->sol.pos ) < pow2(1500.)))
                a->state = ASTEROID_FG-1; /* So it gets turned back into ASTEROID_FG. */
             else
                /* This should be thread safe as a single pilot can only target a single asteroid. */

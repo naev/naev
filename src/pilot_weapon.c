@@ -172,6 +172,9 @@ static void pilot_weapSetUpdateOutfitState( Pilot* p )
          continue;
       if (!(pos->flags & PILOTOUTFIT_ACTIVE))
          continue;
+      /* Ignore outfits handled by Lua. */
+      if (pos->flags & PILOTOUTFIT_ISON_LUA)
+         continue;
 
       /* Se whether to turn on or off. */
       if (pos->flags & PILOTOUTFIT_ISON) {
@@ -219,6 +222,9 @@ void pilot_weapSetUpdate( Pilot* p )
       if (o == NULL)
          continue;
       if (!(pos->flags & PILOTOUTFIT_ACTIVE))
+         continue;
+      /* Ignore outfits handled by Lua. */
+      if (pos->flags & PILOTOUTFIT_ISON_LUA)
          continue;
 
       /* Turn on if off. */
@@ -1467,6 +1473,9 @@ void pilot_weaponSafe( Pilot *p )
  */
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 {
+   /* Disable Lua trigger. */
+   o->flags &= ~PILOTOUTFIT_ISON_LUA;
+
    /* Must be equipped, not disabled, not cooling down. */
    if (o->outfit == NULL || (pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
       return 0;

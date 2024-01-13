@@ -2677,8 +2677,12 @@ static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
          (!activate && (po->state != PILOT_OUTFIT_ON)))
       return 0;
 
-   if (activate)
-      return pilot_outfitOn( p, po );
+   if (activate) {
+      int ret = pilot_outfitOn( p, po );
+      if (ret)
+         po->flags |= PILOTOUTFIT_ISON_LUA;
+      return ret;
+   }
    else
       return pilot_outfitOff( p, po );
 }
