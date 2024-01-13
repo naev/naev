@@ -826,7 +826,7 @@ void ai_think( Pilot* pilot, double dt, int dotask )
     * over. Now, this is a horrible hack so shit works and needs a proper fix.
     * TODO fix. */
    /* pilot_setTarget( cur_pilot, cur_pilot->id ); */
-   if (cur_pilot->id != PLAYER_ID)
+   if (!pilot_isPlayer(cur_pilot))
       pilot_weapSetAIClear( cur_pilot );
 
    /* Get current task. */
@@ -896,6 +896,10 @@ void ai_think( Pilot* pilot, double dt, int dotask )
 
       NTracingZoneEnd( _ctx_task );
    }
+
+   /* Have to update potential outfit state changes here. */
+   if (!pilot_isPlayer(cur_pilot))
+      pilot_weapSetUpdateOutfitState( cur_pilot );
 
    /* Applies local variables to the pilot. */
    ai_thinkApply( cur_pilot );

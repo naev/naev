@@ -29,6 +29,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent,
       const vec2 *pos, const vec2 *vel);
 
 /* Updating. */
+void pilot_weapSetUpdateOutfitState( Pilot* p );
 void pilot_weapSetUpdateStats( Pilot *p );
 void pilot_weapSetAIClear( Pilot* p );
 void pilot_weapSetPress( Pilot* p, int id, int type );

@@ -1435,6 +1435,7 @@ void player_weapSetPress( int id, double value, int repeat )
    }
 
    pilot_weapSetPress( player.p, id, type );
+   pilot_weapSetUpdateOutfitState( player.p );
 }
 
 /**

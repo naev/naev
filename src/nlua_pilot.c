@@ -1750,8 +1750,10 @@ static int pilotL_weapsetSetActive( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    int id = luaL_checkweapset(L,2);
-   if (pilot_weapSetTypeCheck(p,id)==WEAPSET_TYPE_SWITCH)
+   if (pilot_weapSetTypeCheck(p,id)==WEAPSET_TYPE_SWITCH) {
       pilot_weapSetPress(p,id,1);
+      pilot_weapSetUpdateOutfitState(p);
+   }
    return 0;
 }
 

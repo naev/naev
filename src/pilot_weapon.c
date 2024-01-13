@@ -30,7 +30,6 @@
 /*
  * Prototypes.
  */
-static void pilot_weapSetUpdateOutfitState( Pilot* p );
 static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
 static int pilot_shootWeaponSetOutfit( Pilot* p, const Outfit *o, const Target *target, double time, int aim );
 static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
@@ -125,7 +124,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
 /**
  * @brief Updates the local state of all the pilot's outfits based on the weapon sets.
  */
-static void pilot_weapSetUpdateOutfitState( Pilot* p )
+void pilot_weapSetUpdateOutfitState( Pilot* p )
 {
    int n;
 
@@ -1334,7 +1333,7 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetType( p, 4, WEAPSET_TYPE_HOLD ); /* Seekers. */
    pilot_weapSetType( p, 5, WEAPSET_TYPE_HOLD ); /* Fighter bays. */
    pilot_weapSetType( p, 6, WEAPSET_TYPE_HOLD );
-   pilot_weapSetType( p, 7, WEAPSET_TYPE_HOLD );
+   pilot_weapSetType( p, 7, WEAPSET_TYPE_HOLD ); /* Afterburner. */
    pilot_weapSetType( p, 8, WEAPSET_TYPE_HOLD );
    pilot_weapSetType( p, 9, WEAPSET_TYPE_HOLD ); /* Turret seekers. */
 
