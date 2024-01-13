@@ -10,6 +10,6 @@
   <gfx_store>/gfx/misc/icons/manta-ray.webp</gfx_store>
  </general>
  <specific type="modification">
-  <accel>50</accel>
+  <accel_mod>50</accel_mod>
  </specific>
 </outfit>
