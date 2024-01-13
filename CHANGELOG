@@ -54,6 +54,7 @@
    * Fixed rendering order making it so most effects were below the player
    * Fixed fallback switch weapon sets not being found properly
    * Fixed bioship "Wanderer" perk giving absolute accel bonus instead of relative
+   * Increased Neural Accelerator Interface energy regen malus to -100%
    * `zalek/blackhole/zbh09`: don't error out when a bioship ceases to exist
    * `kidnapped/traffic_00`: fixed formatting string telling the player what system to go to
    * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
