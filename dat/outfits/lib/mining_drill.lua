@@ -22,7 +22,6 @@ end
 
 function drill.ontoggle( p, _po, on )
    if not on then
-   if not on then return false end
       mem.lastmsg = nil -- clear helper.msgnospam timer
       return false
    end

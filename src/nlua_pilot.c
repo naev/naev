@@ -1750,8 +1750,10 @@ static int pilotL_weapsetSetActive( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    int id = luaL_checkweapset(L,2);
-   if (pilot_weapSetTypeCheck(p,id)==WEAPSET_TYPE_SWITCH)
+   if (pilot_weapSetTypeCheck(p,id)==WEAPSET_TYPE_SWITCH) {
       pilot_weapSetPress(p,id,1);
+      pilot_weapSetUpdateOutfitState(p);
+   }
    return 0;
 }
 
@@ -1872,10 +1874,12 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p, const PilotOutfitSlot *s
       if (!ws->active)
          continue;
       for (int i=0; i<array_size(po_list); i++) {
-         if (po_list[i].slotid==slot->id) {
-            active = 1;
-            break;
-         }
+         if (po_list[i].slotid!=slot->id)
+            continue;
+         if (!((1<<po_list[i].level) & ws->active))
+            continue;
+         active = 1;
+         break;
       }
       if (active)
          break;
@@ -2363,7 +2367,7 @@ static int pilotL_actives( lua_State *L )
       int active;
       if (o->outfit == NULL)
          continue;
-      if (!o->active)
+      if (!(o->flags & PILOTOUTFIT_ACTIVE))
          continue;
       if (!outfit_isMod(o->outfit) &&
             !outfit_isAfterburner(o->outfit))
@@ -2675,8 +2679,12 @@ static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
          (!activate && (po->state != PILOT_OUTFIT_ON)))
       return 0;
 
-   if (activate)
-      return pilot_outfitOn( p, po );
+   if (activate) {
+      int ret = pilot_outfitOn( p, po );
+      if (ret)
+         po->flags |= PILOTOUTFIT_ISON_LUA;
+      return ret;
+   }
    else
       return pilot_outfitOff( p, po );
 }

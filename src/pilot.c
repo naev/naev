@@ -2182,7 +2182,7 @@ void pilot_update( Pilot* pilot, double dt )
       /* Picky about our outfits. */
       if (o->outfit == NULL)
          continue;
-      if (!o->active)
+      if (!(o->flags & PILOTOUTFIT_ACTIVE))
          continue;
 
       /* Handle firerate timer. */

@@ -102,6 +102,14 @@ typedef struct PilotOutfitAmmo_ {
    int in_arc;          /**< In arc. */
 } PilotOutfitAmmo;
 
+#define PILOTOUTFIT_ACTIVE       (1<<0)   /**< Pilot outfit is an active outfit. */
+#define PILOTOUTFIT_ISON         (1<<1)   /**< Pilot outfit should be turned on. */
+#define PILOTOUTFIT_VOLLEY       (1<<2)   /**< Pilot outfit is part of a volley weapon set (and ison). */
+#define PILOTOUTFIT_INRANGE      (1<<3)   /**< Pilot outfit is part of an inrange weapon set (and ison). */
+#define PILOTOUTFIT_MANUAL       (1<<4)   /**< Pilot outfit is part of a manual weapon set (and ison). */
+#define PILOTOUTFIT_ISON_LUA     (1<<5)   /**< Pilot outfit is triggered by Lua. */
+#define PILOTOUTFIT_DYNAMIC_FLAGS (PILOTOUTFIT_ISON | PILOTOUTFIT_VOLLEY | PILOTOUTFIT_INRANGE | PILOTOUTFIT_MANUAL)
+
 /**
  * @brief Stores an outfit the pilot has.
  */
@@ -110,7 +118,7 @@ typedef struct PilotOutfitSlot_ {
 
    /* Outfit slot properties. */
    const Outfit* outfit;  /**< Associated outfit. */
-   int active;            /**< Slot is an active slot. */
+   int flags;             /**< Slot flags. */
    ShipOutfitSlot *sslot; /**< Ship outfit slot. */
 
    /* Heat. */

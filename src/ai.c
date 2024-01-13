@@ -460,11 +460,8 @@ void ai_thinkApply( Pilot *p )
    pilot_setTurn( p, pilot_turn );
    pilot_setAccel( p, pilot_acc );
 
-   /* fire weapons if needed */
-   if (ai_isFlag(AI_PRIMARY))
-      pilot_shoot(p, 0); /* primary */
-   if (ai_isFlag(AI_SECONDARY))
-      pilot_shoot(p, 1 ); /* secondary */
+   /* Fire weapons if needed */
+   pilot_shoot( p, ai_isFlag(AI_PRIMARY), ai_isFlag(AI_SECONDARY) );
 
    /* other behaviours. */
    if (ai_isFlag(AI_DISTRESS))
@@ -829,7 +826,7 @@ void ai_think( Pilot* pilot, double dt, int dotask )
     * over. Now, this is a horrible hack so shit works and needs a proper fix.
     * TODO fix. */
    /* pilot_setTarget( cur_pilot, cur_pilot->id ); */
-   if (cur_pilot->id != PLAYER_ID)
+   if (!pilot_isPlayer(cur_pilot))
       pilot_weapSetAIClear( cur_pilot );
 
    /* Get current task. */
@@ -899,6 +896,10 @@ void ai_think( Pilot* pilot, double dt, int dotask )
 
       NTracingZoneEnd( _ctx_task );
    }
+
+   /* Have to update potential outfit state changes here. */
+   if (!pilot_isPlayer(cur_pilot))
+      pilot_weapSetUpdateOutfitState( cur_pilot );
 
    /* Applies local variables to the pilot. */
    ai_thinkApply( cur_pilot );
@@ -2505,8 +2506,7 @@ static int aiL_hyperspace( lua_State *L )
 
    dist = space_hyperspace(cur_pilot);
    if (dist == 0) {
-      pilot_shootStop( cur_pilot, 0 );
-      pilot_shootStop( cur_pilot, 1 );
+      pilot_shoot( cur_pilot, 0, 0 );
       return 0;
    }
 

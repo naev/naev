@@ -282,9 +282,8 @@ int pilot_hasDeployed( const Pilot *p )
  */
 int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 {
-   const Outfit *o;
-
    /* Set the outfit. */
+   s->flags    = 0;
    s->state    = PILOT_OUTFIT_OFF;
    s->outfit   = outfit;
 
@@ -314,8 +313,10 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
    }
 
    /* Check if active. */
-   o = s->outfit;
-   s->active = outfit_isActive(o);
+   if (outfit_isActive(outfit))
+      s->flags |= PILOTOUTFIT_ACTIVE;
+   else
+      s->flags &= ~PILOTOUTFIT_ACTIVE;
 
    /* Update heat. */
    pilot_heatCalcSlot( s );
@@ -948,7 +949,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
    /* Apply modifications. */
    if (outfit_isMod(o)) { /* Modification */
       /* Active outfits must be on to affect stuff. */
-      if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
+      if ((slot->flags & PILOTOUTFIT_ACTIVE) && !(slot->state==PILOT_OUTFIT_ON))
          return;
       /* Add stats. */
       ss_statsMergeFromList( s, o->stats );
@@ -956,7 +957,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
    }
    else if (outfit_isAfterburner(o)) { /* Afterburner */
       /* Active outfits must be on to affect stuff. */
-      if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
+      if ((slot->flags & PILOTOUTFIT_ACTIVE) && !(slot->state==PILOT_OUTFIT_ON))
          return;
       /* Add stats. */
       ss_statsMergeFromList( s, o->stats );
@@ -1222,7 +1223,7 @@ void pilot_updateMass( Pilot *pilot )
 int pilot_slotIsToggleable( const PilotOutfitSlot *o )
 {
    const Outfit *oo;
-   if (!o->active)
+   if (!(o->flags & PILOTOUTFIT_ACTIVE))
       return 0;
 
    oo = o->outfit;

@@ -9,12 +9,17 @@
 
 #define WEAPSET_INRANGE_PLAYER_DEF  0 /**< Default weaponset inrange parameter for the player. */
 
+#define WEAPSET_ACTIVE_NONE         0
+#define WEAPSET_ACTIVE_PRIMARY      (1<<0)
+#define WEAPSET_ACTIVE_SECONDARY    (1<<1)
+#define WEAPSET_ACTIVE_ALL          (WEAPSET_ACTIVE_PRIMARY | WEAPSET_ACTIVE_SECONDARY)
+
 /* Freedom. */
 void pilot_weapSetFree( Pilot* p );
 
 /* Shooting. */
 Pilot *pilot_weaponTarget( Pilot *p, Target *wt );
-int pilot_shoot( Pilot* p, int level );
+int pilot_shoot( Pilot* p, int primary, int secondary );
 void pilot_shootStop( Pilot* p, int level );
 int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, double time, int aim );
 void pilot_stopBeam( const Pilot *p, PilotOutfitSlot *w );
@@ -24,6 +29,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent,
       const vec2 *pos, const vec2 *vel);
 
 /* Updating. */
+void pilot_weapSetUpdateOutfitState( Pilot* p );
 void pilot_weapSetUpdateStats( Pilot *p );
 void pilot_weapSetAIClear( Pilot* p );
 void pilot_weapSetPress( Pilot* p, int id, int type );

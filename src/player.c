@@ -1286,25 +1286,7 @@ void player_think( Pilot* pplayer, const double dt )
     * Weapon shooting stuff
     */
    fired = 0;
-
-   /* Primary weapon. */
-   if (player_isFlag(PLAYER_PRIMARY)) {
-      fired |= pilot_shoot( pplayer, 0 );
-      player_setFlag(PLAYER_PRIMARY_L);
-   }
-   else if (player_isFlag(PLAYER_PRIMARY_L)) {
-      pilot_shootStop( pplayer, 0 );
-      player_rmFlag(PLAYER_PRIMARY_L);
-   }
-   /* Secondary weapon - we use PLAYER_SECONDARY_L to track last frame. */
-   if (player_isFlag(PLAYER_SECONDARY)) { /* needs target */
-      fired |= pilot_shoot( pplayer, 1 );
-      player_setFlag(PLAYER_SECONDARY_L);
-   }
-   else if (player_isFlag(PLAYER_SECONDARY_L)) {
-      pilot_shootStop( pplayer, 1 );
-      player_rmFlag(PLAYER_SECONDARY_L);
-   }
+   pilot_shoot( pplayer, player_isFlag(PLAYER_PRIMARY), player_isFlag(PLAYER_SECONDARY) );
 
    if (fired)
       player_autonavReset( 1. );
@@ -1453,6 +1435,7 @@ void player_weapSetPress( int id, double value, int repeat )
    }
 
    pilot_weapSetPress( player.p, id, type );
+   pilot_weapSetUpdateOutfitState( player.p );
 }
 
 /**
@@ -2011,8 +1994,7 @@ int player_jump (void)
       /* Stop acceleration noise. */
       player_accelOver();
       /* Stop possible shooting. */
-      pilot_shootStop( player.p, 0 );
-      pilot_shootStop( player.p, 1 );
+      pilot_shoot( player.p, 0, 0 );
 
       /* Order escorts to jump; just for aesthetics (for now) */
       escorts_jump( player.p, &cur_system->jumps[player.p->nav_hyperspace] );
@@ -2587,7 +2569,7 @@ void player_destroyed (void)
 static int player_shipsCompare( const void *arg1, const void *arg2 )
 {
    PlayerShip_t *ps1, *ps2;
-   credits_t p1, p2;
+   int ret;
 
    /* Get the arguments. */
    ps1 = (PlayerShip_t*) arg1;
@@ -2603,6 +2585,13 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
    else if (ps2->deployed && !ps1->deployed)
       return +1;
 
+   if (ps1->p->ship->points < ps2->p->ship->points)
+      return +1;
+   else if (ps1->p->ship->points > ps2->p->ship->points)
+      return -1;
+
+#if 0
+   credits_t p1, p2;
    /* Get prices. */
    p1 = pilot_worth( ps1->p, 0 );
    p2 = pilot_worth( ps2->p, 0 );
@@ -2612,6 +2601,10 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
       return +1;
    else if (p1 > p2)
       return -1;
+#endif
+   ret = strcmp( ship_classDisplay( ps1->p->ship ), ship_classDisplay( ps2->p->ship ) );
+   if (ret != 0)
+      return ret;
 
    /* In case of tie sort by name so they don't flip or something. */
    return strcmp( ps1->p->name, ps2->p->name );
