@@ -10,6 +10,7 @@
       * Asteroids no longer fade out if close to the player
       * Display fuel consumption for ships in the equipment overlay
       * Added option to match speed with slowest ship in the fleet (on by default)
+      * Made it so ships in the equipment screen do not change order based on value
    * Engine
       * Stats (except inverted stats) are now additive instead of multiplicative
       * Try to merge saves if multiple directories correspond to the same player
