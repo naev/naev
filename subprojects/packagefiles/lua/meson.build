@@ -1,7 +1,7 @@
 project('lua', 'c', version : '5.1.5', license : 'mit')
 
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments(['-Wno-address', '-Wno-implicit-fallthrough', '-Wno-misleading-indentation'])
+c_args = cc.get_supported_arguments(['-Wno-address', '-Wno-implicit-fallthrough', '-Wno-misleading-indentation', '-Wno-pedantic'])
 add_project_arguments(c_args, language: 'c')
 
 system_deps = [cc.find_library('dl', required : false),
