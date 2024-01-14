@@ -44,6 +44,15 @@
       lua_pop( naevL, 1 );                      \
    }
 
+#define conf_loadTime( env, n, i )              \
+   {                                            \
+      nlua_getenv( naevL, env, n );             \
+      if ( lua_isnumber( naevL, -1 ) ) {        \
+         i = (time_t)lua_tonumber( naevL, -1 ); \
+      }                                         \
+      lua_pop( naevL, 1 );                      \
+   }
+
 #define conf_loadBool( env, n, b )                \
    {                                              \
       nlua_getenv( naevL, env, n );               \
@@ -415,7 +424,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "conf_nosave", conf.nosave );
       conf_loadString( lEnv, "lastversion", conf.lastversion );
       conf_loadBool( lEnv, "translation_warning_seen", conf.translation_warning_seen );
-      conf_loadInt( lEnv, "last_played", conf.last_played );
+      conf_loadTime( lEnv, "last_played", conf.last_played );
 
       /* Debugging. */
       conf_loadBool( lEnv, "fpu_except", conf.fpu_except );
@@ -732,6 +741,9 @@ pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
 
 #define  conf_saveULong(n,i)    \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %lu\n", n, i);
+
+#define  conf_saveTime(n,i)    \
+pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %llu\n", n, (unsigned long long) i);
 
 #define  conf_saveFloat(n,f)    \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
@@ -1054,7 +1066,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment(_("Time Naev was last played. This gets refreshed each time you exit Naev."));
-   conf_saveULong("last_played",time(NULL));
+   conf_saveTime("last_played",time(NULL));
    conf_saveEmptyLine();
 
    /* Debugging. */
