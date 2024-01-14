@@ -126,7 +126,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
  */
 void pilot_weapSetUpdateOutfitState( Pilot* p )
 {
-   int n;
+   int non, noff;
 
    /* First pass to remove all dynamic flags. */
    for (int i=0; i<array_size(p->outfits); i++) {
@@ -162,7 +162,7 @@ void pilot_weapSetUpdateOutfitState( Pilot* p )
    }
 
    /* Last pass figures out what to do. */
-   n = 0;
+   non = noff = 0;
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(p->outfits); i++) {
       PilotOutfitSlot *pos = p->outfits[i];
@@ -178,18 +178,18 @@ void pilot_weapSetUpdateOutfitState( Pilot* p )
       /* Se whether to turn on or off. */
       if (pos->flags & PILOTOUTFIT_ISON) {
          if (pos->state == PILOT_OUTFIT_OFF)
-            n += pilot_outfitOn( p, pos );
+            non += pilot_outfitOn( p, pos );
       }
       else {
          if (pos->state == PILOT_OUTFIT_ON)
-            n += pilot_outfitOff( p, pos );
+            noff += pilot_outfitOff( p, pos );
       }
    }
 
    /* Now update stats and shit as necessary. */
-   if ((n > 0) || pilotoutfit_modified) {
+   if ((non+noff > 0) || pilotoutfit_modified) {
       /* pilot_destealth should run calcStats already. */
-      if (pilot_isFlag(p,PILOT_STEALTH) && (n>0))
+      if (pilot_isFlag(p,PILOT_STEALTH) && (non>0))
          pilot_destealth( p );
       else
          pilot_calcStats( p );

@@ -925,6 +925,7 @@ void pilot_cooldown( Pilot *p, int dochecks )
 
    /* Turn off all weapon sets. */
    pilot_weapSetAIClear( p );
+   pilot_weapSetUpdateOutfitState( p );
 
    /* Disable active outfits. */
    if (pilot_outfitOffAll( p ) > 0)
