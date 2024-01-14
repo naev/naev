@@ -26,7 +26,7 @@
    * Fixes
       * PSO and Mizar nebulas have trails again
 
-* 0.11.1 (unreleased)
+* 0.11.1
    * Give all ammo back to player after doing obelisk
    * Fixed player being invincible after completing an obelisk
    * Fixed a crash when loading games while a landing hook was running
