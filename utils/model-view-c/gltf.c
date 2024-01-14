@@ -322,7 +322,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
  *    @param acc Accessor to load from.
  *    @return OpenGL ID of the new VBO.
  */
-static GLuint object_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *aabb_min, vec3 *aabb_max )
+static GLuint object_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *aabb_min, vec3 *aabb_max, const cgltf_node *cnode )
 {
    GLuint vid;
    cgltf_size num = cgltf_accessor_unpack_floats( acc, NULL, 0 );
@@ -337,17 +337,21 @@ static GLuint object_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *
 
    /* If applicable, store some useful stuff. */
    if (radius != NULL) {
+      mat4 H;
+      cgltf_node_transform_local( cnode, H.ptr );
       *radius = 0.;
       memset( aabb_min, 0, sizeof(vec3) );
       memset( aabb_max, 0, sizeof(vec3) );
       for (unsigned int i=0; i<num; i+=3) {
-         vec3 v;
+         vec3 v, d;
+         for (unsigned int j=0; j<3; j++)
+            d.v[j] = dat[i+j];
+         mat4_mul_vec( &v, &H, &d );
          for (unsigned int j=0; j<3; j++) {
-            aabb_min->v[j] = MIN( dat[i+j], aabb_min->v[j] );
-            aabb_max->v[j] = MAX( dat[i+j], aabb_max->v[j] );
-            v.v[j] = dat[i+j];
+            aabb_min->v[j] = MIN( v.v[j], aabb_min->v[j] );
+            aabb_max->v[j] = MAX( v.v[j], aabb_max->v[j] );
          }
-         *radius = vec3_length( &v );
+         *radius = MAX( *radius, vec3_length( &v ) );
       }
    }
 
@@ -400,18 +404,18 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
             cgltf_attribute *attr = &prim->attributes[j];
             switch (attr->type) {
                case cgltf_attribute_type_position:
-                  mesh->vbo_pos = object_loadVBO( attr->data, &mesh->radius, &mesh->aabb_min, &mesh->aabb_max );
+                  mesh->vbo_pos = object_loadVBO( attr->data, &mesh->radius, &mesh->aabb_min, &mesh->aabb_max, cnode );
                   node->radius = MAX( node->radius, mesh->radius );
                   vec3_max( &node->aabb_max, &node->aabb_max, &mesh->aabb_max );
                   vec3_min( &node->aabb_min, &node->aabb_min, &mesh->aabb_min );
                   break;
 
                case cgltf_attribute_type_normal:
-                  mesh->vbo_nor = object_loadVBO( attr->data, NULL, NULL, NULL );
+                  mesh->vbo_nor = object_loadVBO( attr->data, NULL, NULL, NULL, NULL );
                   break;
 
                case cgltf_attribute_type_texcoord:
-                  mesh->vbo_tex = object_loadVBO( attr->data, NULL, NULL, NULL );
+                  mesh->vbo_tex = object_loadVBO( attr->data, NULL, NULL, NULL, NULL );
                   break;
 
                case cgltf_attribute_type_color:
@@ -436,14 +440,15 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
    return 0;
 }
 
-static void shadow_matrix( mat4 *m, const Light *light )
+static void shadow_matrix( const Object *obj, mat4 *m, const Light *light )
 {
    const vec3 up        = { .v = {0., 1., 0.} };
    const vec3 light_pos = light->pos;
    const vec3 center    = { .v = {0., 0., 0.} };
    const mat4 L = mat4_lookat( &light_pos, &center, &up );
    const float norm = vec3_length( &light_pos );
-   const mat4 O = mat4_ortho( -0.6, 0.6, -0.6, 0.6, norm-1.0, norm+1.0 );
+   const float r = obj->radius * 0.1; /* TODO unhardcode this scaling factor. */
+   const mat4 O = mat4_ortho( -r, r, -r, r, norm-1.0, norm+1.0 );
    mat4_mul( m, &L, &O );
 }
 
@@ -591,7 +596,7 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    /* Set up shader. */
    glUseProgram( shd->program );
    mat4 Hshadow;
-   shadow_matrix( &Hshadow, light );
+   shadow_matrix( obj, &Hshadow, light );
    glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, Hshadow.ptr );
    glUniform1f( shd->u_time, obj->time );
 
@@ -655,7 +660,7 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    for (int i=0; i<MAX_LIGHTS; i++) {
       const Light *l = &lights[i];
 
-      shadow_matrix( &Hshadow, l );
+      shadow_matrix( obj, &Hshadow, l );
       glUniformMatrix4fv( shd->lights[i].Hshadow, 1, GL_FALSE, Hshadow.ptr );
 
       glActiveTexture( GL_TEXTURE5+i );
