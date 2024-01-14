@@ -291,7 +291,7 @@ void main (void)
    //f_diffuse += 0.5 * M.c_diff; /* Just use ambience for now. */
 
    /* Slight diffuse ambient lighting. */
-   f_diffuse += u_ambient * M.c_diff * (1.0 / M_PI);
+   f_diffuse += u_ambient * M.c_diff;/* * (1.0 / M_PI); premultiplied */
 
    /* Variance Shadow Mapping. */
    float f_shadow[MAX_LIGHTS];

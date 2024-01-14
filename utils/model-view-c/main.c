@@ -46,7 +46,9 @@ int main( int argc, char *argv[] )
 
    /* Load the object. */
    Object *obj = object_loadFromFile( argv[1] );
-   gl_checkErr();
+
+   /* Set some lighting parameters. */
+   object_lightAmbient( 0.5, 0.5, 0.5 );
 
    /* Set up some stuff. */
    GLuint shadowvbo;

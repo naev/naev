@@ -63,6 +63,7 @@ static Light lights[MAX_LIGHTS] = {
       .intensity = 3., // 3.
    },
 };
+static vec3 ambient = { .v = {0., 0., 0.} };
 
 /**
  * @brief Shader to use witha material.
@@ -649,7 +650,6 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    /* Load constant stuff. */
    const Shader *shd = &object_shader;
    glUseProgram( shd->program );
-   glUniform3f( shd->u_ambient, 0.5, 0.5, 0.5 );
    glUniform1f( shd->u_time, obj->time );
    mat4 Hshadow;
    for (int i=0; i<MAX_LIGHTS; i++) {
@@ -1015,6 +1015,21 @@ void object_exit (void)
    glDeleteTextures( 1, &tex_ones );
    glDeleteProgram( object_shader.program );
    glDeleteProgram( shadow_shader.program );
+}
+
+/**
+ * @brief Sets the ambient colour. Should be multiplied by intensity.
+ */
+void object_lightAmbient( double r, double g, double b )
+{
+   const double factor = 1.0/M_PI;
+   const Shader *shd = &object_shader;
+   ambient.v[0] = r * factor;
+   ambient.v[1] = g * factor;
+   ambient.v[2] = b * factor;
+   glUseProgram( shd->program );
+   glUniform3f( shd->u_ambient, ambient.v[0], ambient.v[1], ambient.v[2] );
+   glUseProgram( 0 );
 }
 
 GLuint object_shadowmap( int light )
