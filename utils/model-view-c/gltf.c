@@ -313,6 +313,28 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->blend           = 0;
    }
 
+#if 0
+   if (cmat) {
+      for (size_t i=0; i<cmat->extensions_count; i++) {
+         cgltf_extension *ext = &cmat->extensions[i];
+         jsmn_parser p;
+         jsmntok_t t[16]; /* Max number of expected tokens. */
+         jsmn_init(&p);
+         int r = jsmn_parse( &p, ext->data, strlen(ext->data), t, sizeof(t)/sizeof(jsmntok_t) );
+         for (int j=0; j<r; j++) {
+            jsmntok_t *tj = &t[j];
+            const char *str = "waxFactor";
+            if (strncmp( "str", &ext->data[tj->start], MIN(strlen(str),(size_t)(tj->end-tj->start)) )==0) {
+               if (j+1 >= r)
+                  break;
+               double waxFactor = atof(&ext->data[t[j+1].start]);
+               break;
+            }
+         }
+      }
+   }
+#endif
+
    return 0;
 }
 
