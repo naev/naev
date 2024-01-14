@@ -45,22 +45,22 @@ typedef struct Light_ {
 /* left(-)/right(+), down(-)/up(+), forward(-)/back(+) */
 static Light lights[MAX_LIGHTS] = {
    {
-      .pos = { .v = {5., 1., 0.} },
+      .pos = { .v = {5., 2., 0.} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 50,
+      .intensity = 100., // 250.
    },
    {
       .pos = { .v = {0.5, 0.05, -1.0} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 10., // 10.
+      .intensity = 3., // 10.
    },
    {
       .pos = { .v = {-0.5, 0.05, -1.0} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 10., // 10.
+      .intensity = 3., // 10.
    },
 };
 
