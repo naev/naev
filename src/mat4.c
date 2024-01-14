@@ -45,6 +45,25 @@ void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 )
 }
 
 /**
+ * @brief Multiplies a matrix with a vector (out = m * v);
+ *
+ * Note that out should not be v.
+ *
+ *    @param[out] out Output vector.
+ *    @param m Matrix to mulitply.
+ *    @param v Vector to multiply.
+ */
+void mat4_mul_vec( vec3 *out, const mat4 *m, const vec3 *v )
+{
+   for (int i=0; i<4; i++) {
+      GLfloat a = m->m[3][i];
+      for (int j=0; j<3; j++)
+         a += m->m[j][i] * v->v[j];
+      out->v[i] = a;
+   }
+}
+
+/**
  * @brief Applies a transformation to another, storing the result in the left hand side.
  *
  *    @param[in, out] lhs Left hand side matrix.

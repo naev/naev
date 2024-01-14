@@ -18,6 +18,7 @@ typedef struct mat4_ {
 /* Basic operations. */
 void mat4_print( const mat4 *m );
 void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 );
+void mat4_mul_vec( vec3 *out, const mat4 *m, const vec3 *v );
 
 /* Affine transformations. */
 void mat4_apply( mat4 *lhs, const mat4 *rhs );
