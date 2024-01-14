@@ -19,6 +19,7 @@ uniform sampler2D emissive_tex; /**< Emission texture. */
 /* misc */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform int u_blend = 0;
+uniform vec3 u_ambient; /**< Ambient lighting. */
 
 in vec2 tex_coord0;
 in vec3 position;
@@ -288,6 +289,9 @@ void main (void)
    //f_diffuse += getIBLRadianceLambertian(n, v, materialInfo.perceptualRoughness, materialInfo.c_diff, materialInfo.f0, materialInfo.specularWeight);
    //f_clearcoat += getIBLRadianceGGX(materialInfo.clearcoatNormal, v, materialInfo.clearcoatRoughness, materialInfo.clearcoatF0, 1.0);
    //f_diffuse += 0.5 * M.c_diff; /* Just use ambience for now. */
+
+   /* Slight diffuse ambient lighting. */
+   f_diffuse += u_ambient * M.c_diff * (1.0 / M_PI);
 
    /* Variance Shadow Mapping. */
    float f_shadow[MAX_LIGHTS];

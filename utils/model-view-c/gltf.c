@@ -48,19 +48,19 @@ static Light lights[MAX_LIGHTS] = {
       .pos = { .v = {5., 2., 0.} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 100., // 250.
+      .intensity = 200., // 100.
    },
    {
       .pos = { .v = {0.5, 0.05, -1.0} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 3., // 10.
+      .intensity = 3., // 3.
    },
    {
       .pos = { .v = {-0.5, 0.05, -1.0} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 3., // 10.
+      .intensity = 3., // 3.
    },
 };
 
@@ -93,6 +93,7 @@ typedef struct Shader_ {
    ShaderLight lights[MAX_LIGHTS];
    GLuint nlights;
    GLuint blend;
+   GLuint u_ambient;
 } Shader;
 static Shader object_shader;
 static Shader shadow_shader;
@@ -648,6 +649,7 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    /* Load constant stuff. */
    const Shader *shd = &object_shader;
    glUseProgram( shd->program );
+   glUniform3f( shd->u_ambient, 0.5, 0.5, 0.5 );
    glUniform1f( shd->u_time, obj->time );
    mat4 Hshadow;
    for (int i=0; i<MAX_LIGHTS; i++) {
@@ -964,6 +966,7 @@ int object_init (void)
    shd->u_time          = glGetUniformLocation( shd->program, "u_time" );
    /* Fragment uniforms. */
    shd->blend           = glGetUniformLocation( shd->program, "u_blend" );
+   shd->u_ambient       = glGetUniformLocation( shd->program, "u_ambient" );
    shd->baseColour_tex  = glGetUniformLocation( shd->program, "baseColour_tex" );
    shd->metallic_tex    = glGetUniformLocation( shd->program, "metallic_tex" );
    shd->u_has_normal    = glGetUniformLocation( shd->program, "u_has_normal" );
