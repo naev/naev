@@ -1,6 +1,10 @@
 project('libbacktrace', 'c', version: '1.0')
 
 cc = meson.get_compiler('c')
+# Specific to Naev's warning levels.
+c_args = cc.get_supported_arguments(['-Wno-pedantic'])
+add_project_arguments(c_args, language: 'c')
+
 c_args = cc.get_supported_arguments(['-funwind-tables', '-D_GNU_SOURCE'])
 add_project_arguments(c_args, language: 'c')
 

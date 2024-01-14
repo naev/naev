@@ -9,7 +9,7 @@ def parse_api( filename ):
     with open(filename, 'r', encoding='utf-8') as f:
         data = f.read()
 
-    result = re.findall("static const luaL_Reg.*?\[\] = {(.+?)};", data, re.S)
+    result = re.findall(r"static const luaL_Reg.*?\[\] = {(.+?)};", data, re.S)
     assert( len(result)==1 )
     result = re.findall( "\".*\"", result[0] )
     funclist = []
