@@ -332,6 +332,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 {
    AIMemory oldmem;
 
+   if (dt <= 1e-6) return;
    ai_thinkSetup( dt );
    oldmem = ai_setPilot( pplayer ); /* Uses AI functionality. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_think );
