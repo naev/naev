@@ -18,4 +18,4 @@ void object_free( Object *obj );
 
 void object_render( const Object *obj, const mat4 *H );
 
-GLuint object_shadowmap (void);
+GLuint object_shadowmap( int light );

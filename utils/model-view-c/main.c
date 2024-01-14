@@ -17,6 +17,7 @@ int main( int argc, char *argv[] )
    (void) argc;
    (void) argv;
    GLuint VaoId;
+   int shadowmap_sel = 0;
 
    if (argc < 2) {
       DEBUG("Usage: %s FILENAME", argv[0]);
@@ -49,7 +50,6 @@ int main( int argc, char *argv[] )
 
    /* Set up some stuff. */
    GLuint shadowvbo;
-   GLuint shadowmap = object_shadowmap();
    const GLfloat shadowvbo_data[8] = {
       0., 0.,
       1., 0.,
@@ -90,11 +90,15 @@ int main( int argc, char *argv[] )
                   break;
 
                case SDLK_1:
-                  rendermode = 0;
+                  shadowmap_sel = 0;
                   break;
 
                case SDLK_2:
-                  rendermode = 1;
+                  shadowmap_sel = 1;
+                  break;
+
+               case SDLK_3:
+                  shadowmap_sel = 2;
                   break;
 
                default:
@@ -149,6 +153,7 @@ int main( int argc, char *argv[] )
 
       /* Draw the shadowmap to see what's going on (clear the shadowmap). */
       if (rendermode) {
+         GLuint shadowmap = object_shadowmap( shadowmap_sel );
          glUseProgram( shadowshader );
 
          glBindBuffer( GL_ARRAY_BUFFER, shadowvbo );

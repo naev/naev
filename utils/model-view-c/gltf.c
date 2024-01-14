@@ -996,7 +996,7 @@ void object_exit (void)
    glDeleteProgram( shadow_shader.program );
 }
 
-GLuint object_shadowmap (void)
+GLuint object_shadowmap( int light )
 {
-   return lights[1].tex;
+   return lights[light].tex;
 }
