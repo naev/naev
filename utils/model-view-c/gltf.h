@@ -16,6 +16,7 @@ void object_exit (void);
 Object *object_loadFromFile( const char *filename );
 void object_free( Object *obj );
 
+void object_update( Object *obj, double dt );
 void object_render( const Object *obj, const mat4 *H );
 
 GLuint object_shadowmap( int light );

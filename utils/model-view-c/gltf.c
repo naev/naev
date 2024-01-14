@@ -76,6 +76,7 @@ typedef struct Shader_ {
    /* Vertex Uniforms. */
    GLuint Hmodel;
    GLuint Hshadow;
+   GLuint u_time;
    /* Fragment uniforms. */
    GLuint baseColour_tex;
    GLuint metallic_tex;
@@ -176,6 +177,7 @@ struct Object_ {
    Material *materials; /**< Available materials. */
    size_t nmaterials;   /**< Number of materials. */
    GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
+   GLfloat time;        /**< Current time. */
    vec3 aabb_min;       /**< Minimum value of AABB wrapping around it. */
    vec3 aabb_max;       /**< Maximum value of AABB wrapping around it. */
 };
@@ -589,6 +591,7 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    mat4 Hshadow;
    shadow_matrix( &Hshadow, light );
    glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, Hshadow.ptr );
+   glUniform1f( shd->u_time, obj->time );
 
    for (size_t i=0; i<obj->nnodes; i++)
       object_renderNodeShadow( obj, &obj->nodes[i], H );
@@ -645,6 +648,7 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    /* Load constant stuff. */
    const Shader *shd = &object_shader;
    glUseProgram( shd->program );
+   glUniform1f( shd->u_time, obj->time );
    mat4 Hshadow;
    for (int i=0; i<MAX_LIGHTS; i++) {
       const Light *l = &lights[i];
@@ -679,6 +683,17 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    //glDisable(GL_CULL_FACE);
 
    gl_checkErr();
+}
+
+/**
+ * @brief Updates an object.
+ *
+ *    @param obj Object to update.
+ *    @param dt Current delta tick.
+ */
+void object_update( Object *obj, double dt )
+{
+   obj->time += dt;
 }
 
 /**
@@ -909,6 +924,7 @@ int object_init (void)
    /* Vertex uniforms. */
    shd->Hshadow         = glGetUniformLocation( shd->program, "u_shadow");
    shd->Hmodel          = glGetUniformLocation( shd->program, "u_model");
+   shd->u_time          = glGetUniformLocation( shd->program, "u_time" );
 
    /* Compile the X blur shader. */
    shd = &shadow_shader_blurX;
@@ -945,6 +961,7 @@ int object_init (void)
    shd->vertex_tex0     = glGetAttribLocation( shd->program, "vertex_tex0" );
    /* Vertex uniforms. */
    shd->Hmodel          = glGetUniformLocation( shd->program, "u_model");
+   shd->u_time          = glGetUniformLocation( shd->program, "u_time" );
    /* Fragment uniforms. */
    shd->blend           = glGetUniformLocation( shd->program, "u_blend" );
    shd->baseColour_tex  = glGetUniformLocation( shd->program, "baseColour_tex" );

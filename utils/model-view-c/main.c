@@ -149,6 +149,7 @@ int main( int argc, char *argv[] )
       mat4_apply( &H, &Hscale );
 
       /* Draw the object. */
+      object_update( obj, (float)SDL_GetTicks64() / 1000. );
       object_render( obj, &H );
 
       /* Draw the shadowmap to see what's going on (clear the shadowmap). */
