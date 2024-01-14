@@ -279,24 +279,26 @@ mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up )
 
    /* First column. */
    H.m[0][0] = side.v[0];
-   H.m[0][1] = side.v[1];
-   H.m[0][2] = side.v[2];
-   H.m[0][3] = 0.;
+   H.m[1][0] = side.v[1];
+   H.m[2][0] = side.v[2];
+   H.m[3][0] = 0.;
    /* Second column. */
-   H.m[1][0] = upc.v[0];
+   H.m[0][1] = upc.v[0];
    H.m[1][1] = upc.v[1];
-   H.m[1][2] = upc.v[2];
-   H.m[1][3] = 0.;
+   H.m[2][1] = upc.v[2];
+   H.m[3][1] = 0.;
    /* Third column. */
-   H.m[2][0] = -forward.v[0];
-   H.m[2][1] = -forward.v[1];
+   H.m[0][2] = -forward.v[0];
+   H.m[1][2] = -forward.v[1];
    H.m[2][2] = -forward.v[2];
-   H.m[2][3] = 0.;
+   H.m[3][2] = 0.;
    /* Fourth column. */
-   H.m[3][0] = -eye->v[0];
-   H.m[3][1] = -eye->v[1];
-   H.m[3][2] = -eye->v[2];
+   H.m[0][3] = 0.;//-eye->v[0];
+   H.m[1][3] = 0.;//-eye->v[1];
+   H.m[2][3] = 0.;//-eye->v[2];
    H.m[3][3] = 1.;
+
+   mat4_translate( &H, -eye->v[0], -eye->v[1], -eye->v[2] );
 
    return H;
 }
