@@ -42,25 +42,25 @@ typedef struct Light_ {
    GLuint tex;
 } Light;
 
-/* left/right, up/down, forward/back */
+/* left(-)/right(+), down(-)/up(+), forward(-)/back(+) */
 static Light lights[MAX_LIGHTS] = {
    {
-      .pos = { .v = {50., 50., 50.} },
+      .pos = { .v = {5., 1., 0.} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 0e3, // 200e3
+      .intensity = 50,
    },
    {
-      .pos = { .v = {15., 5., 30.} },
+      .pos = { .v = {0.5, 0.05, -1.0} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 100e3,
+      .intensity = 10., // 10.
    },
    {
-      .pos = { .v = {-15., 5., 30.} },
+      .pos = { .v = {-0.5, 0.05, -1.0} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 100e3,
+      .intensity = 10., // 10.
    },
 };
 
@@ -439,10 +439,10 @@ static void shadow_matrix( mat4 *m, const Light *light )
    const vec3 up        = { .v = {0., 1., 0.} };
    const vec3 light_pos = light->pos;
    const vec3 center    = { .v = {0., 0., 0.} };
-   const mat4 L = mat4_lookat( &center, &light_pos, &up );
-   //const mat4 O = mat4_ortho( -1., 1., -1., 1., -1., 1. );
-   const mat4 O = mat4_ortho( -0.6, 0.6, -0.6, 0.6, -0.6, 0.6 );
-   mat4_mul( m, &O, &L );
+   const mat4 L = mat4_lookat( &light_pos, &center, &up );
+   const float norm = vec3_length( &light_pos );
+   const mat4 O = mat4_ortho( -0.6, 0.6, -0.6, 0.6, norm-1.0, norm+1.0 );
+   mat4_mul( m, &L, &O );
 }
 
 /**
