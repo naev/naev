@@ -42,24 +42,25 @@ typedef struct Light_ {
    GLuint tex;
 } Light;
 
+/* left/right, up/down, forward/back */
 static Light lights[MAX_LIGHTS] = {
    {
-      .pos = { .v = {-10., 25., 25.} },
+      .pos = { .v = {50., 50., 50.} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 0e3,
+      .intensity = 0e3, // 200e3
    },
    {
-      .pos = { .v = {-0., 5., 30.} },
+      .pos = { .v = {15., 5., 30.} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 50e3,
+      .intensity = 100e3,
    },
    {
-      .pos = { .v = {2., 3., 30.} },
+      .pos = { .v = {-15., 5., 30.} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 0e3,
+      .intensity = 100e3,
    },
 };
 
