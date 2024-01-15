@@ -156,18 +156,18 @@ if [ "$DRYRUN" == "false" ]; then
     run_butler -V
     if [ "$NIGHTLY" == "true" ]; then
         run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64-nightly
-        run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-x86-64-nightly
+        run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal-nightly
         run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64-nightly
 
     else
         if [ "$PRERELEASE" == "true" ]; then
             run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64-beta
-            run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-x86-64-beta
+            run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal-beta
             run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64-beta
 
         elif [ "$PRERELEASE" == "false" ]; then
             run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64
-            run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-x86-64
+            run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal
             run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64
             run_butler push --userversion="$VERSION" "$OUTDIR"/soundtrack naev/naev:soundtrack
 
