@@ -38,6 +38,9 @@ jobs:
           mkdir -p build/dist
           cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/gh build/dist/
           cp source/utils/buildAppImage.sh build/dist
+          cp source/utils/buildUniversalBundle.sh build/dist
+          cp -r source/extras/macos/dmg_assets build/dist
+          cp source/extras/macos/entitlements.plist build/dist
           mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
           cp source/CHANGELOG build/dist
           cp source/dat/VERSION build/dist
@@ -68,6 +71,27 @@ jobs:
         with:
           name: naev-appimage-packaging
           path: ${{ github.workspace }}/build/dist/buildAppImage.sh
+          if-no-files-found: error
+
+      - name: Upload Universal Bundle Packaging Script Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: naev-macos-packaging
+          path: ${{ github.workspace }}/build/dist/buildUniversalBundle.sh
+          if-no-files-found: error
+
+      - name: Upload DMG Assets Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: naev-macos-dmg
+          path: ${{ github.workspace }}/build/dist/dmg_assets
+          if-no-files-found: error
+
+      - name: Upload Entitlements PLIST Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: naev-macos-entitlements
+          path: ${{ github.workspace }}/build/dist/entitlements.plist
           if-no-files-found: error
 
       - name: Upload GitHub Deployment Artifact
@@ -255,15 +279,32 @@ jobs:
           path: ${{ github.workspace }}/build/dist/*
           if-no-files-found: error
 
-  "Darwin_Naev_Release":
+  "Darwin_Compile_Naev":
     needs: "Package_Source"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: naev-macos
+            arch: x86_64
+            deploymenttarget: "10.13"
+            config: macos_cross_osxcross.ini
+          - image: naev-macos
+            arch: aarch64
+            deploymenttarget: "11.0"
+            config: macos_aarch64_cross_osxcross.ini
+
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     container:
-      image: "ghcr.io/naev/naev-macos:latest"
+      image: "ghcr.io/naev/${{ matrix.image }}:latest"
       env:
-        BUILDARCH: "x86_64"
-        HOST: "x86_64-apple-darwin23"
-        MACOSX_DEPLOYMENT_TARGET: "10.13"
+        BUILDARCH: "${{ matrix.arch }}"
+        HOST: "${{ matrix.arch }}-apple-darwin23"
+        MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
 
     steps:
       - name: Configure Build Environment
@@ -297,9 +338,9 @@ jobs:
               --prefix="$(pwd)"/build/macos/Naev.app \
               --bindir=Contents/MacOS \
               -Dndata_path=Contents/Resources \
-              --cross-file='source/utils/build/macos_cross_osxcross.ini' \
+              --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=release \
-              -Dinstaller=true \
+              -Dinstaller=false \
               -Drelease=true \
               -Db_lto=true \
               -Dauto_features=enabled \
@@ -314,12 +355,70 @@ jobs:
         run: |
           meson install -C build
 
+      - name: Fix zip name
+        run: |
+          mv build/dist/naev-macos.zip build/dist/naev-macos-${{ matrix.arch }}.zip
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: naev-macos
-          path: ${{ github.workspace }}/build/dist/*
+          name: naev-macos-${{ matrix.arch }}
+          path: ${{ github.workspace }}/build/dist/naev-macos-${{ matrix.arch }}.zip
           if-no-files-found: error
+
+  "Darwin_Package_Release":
+    needs:
+      [
+        Package_Source,
+        Darwin_Compile_Naev
+      ]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    container:
+      image: "ghcr.io/naev/naev-macos:latest"
+
+    steps:
+      - name: Get Universal Bundle Packaging Script
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-macos-packaging
+
+      - name: Get DMG Assets
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-macos-dmg
+          path: dmg_assets
+
+      - name: Get Entitlements PLIST
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-macos-entitlements
+
+      - name: Get x86_64 macOS Bundle
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-macos-x86_64
+
+      - name: Get ARM64 macOS Bundle
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-macos-aarch64
+
+      - name: Package Universal Bundle
+        run: |
+              mkdir -p arm64 x86_64
+              chmod +x buildUniversalBundle.sh
+              unzip naev-macos-aarch64.zip -d arm64
+              unzip naev-macos-x86_64.zip -d x86_64
+              ./buildUniversalBundle.sh -d -i ./dmg_assets -e ./entitlements.plist -a ./arm64 -x ./x86_64 -b ./build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: naev-macos
+          path: "${{ github.workspace }}/build/dist/*"
 
   "Steam_Naev_Soundtrack_Release":
     needs: "Package_Source"
@@ -403,7 +502,7 @@ jobs:
         Package_Source,
         Linux_Package_Release,
         Windows_Naev_Release,
-        Darwin_Naev_Release,
+        Darwin_Package_Release,
         Steam_Naev_Soundtrack_Release,
       ]
     if: ${{ github.repository == 'naev/naev' }}
