@@ -1768,7 +1768,7 @@ static int aiL_face( lua_State *L )
    int vel;
 
    /* Default gain. */
-   k_diff = 1./(cur_pilot->turn*ai_dt);
+   k_diff = 1./(cur_pilot->turn*ai_dt + EPSILON);
    k_vel  = 100.; /* overkill gain! */
 
    /* Check if must invert. */
