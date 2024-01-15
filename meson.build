@@ -1,5 +1,5 @@
 project('naev', 'c',
-   version : '0.11.1',
+   version : '0.11.2',
    default_options : [
       'optimization=g',
       'c_std=gnu11',
@@ -8,7 +8,7 @@ project('naev', 'c',
    ],
    meson_version: '>=0.55.0')
 
-copyright_year = 2023
+copyright_year = 2024
 forced_fallbacks = get_option('force_fallback_for')
 
 issue_address = 'https://github.com/naev/naev/issues'
