@@ -115,6 +115,7 @@ static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
 static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
 static IntList ai_qtquery; /**< Quadtree query. */
 static double ai_dt = 0.; /**< Current update tick, useful in some cases. **/
+static const double EPSILON = 1e-6; /**< Very small number to ensure we don't get divide by zeros. */
 
 /*
  * prototypes
@@ -1861,7 +1862,7 @@ static int aiL_careful_face( lua_State *L )
    int x, y, r;
 
    /* Default gains. */
-   const double k_diff = 1./(cur_pilot->turn*ai_dt);
+   const double k_diff = 1./(cur_pilot->turn*ai_dt + EPSILON);
    const double k_goal = 1.;
    const double k_enemy = 6e6;
 
@@ -1964,7 +1965,7 @@ static int aiL_aim( lua_State *L )
    }
 
    /* Calculate what we need to turn */
-   mod = 1./(cur_pilot->turn*ai_dt);
+   mod = 1./(cur_pilot->turn*ai_dt + EPSILON);
    diff = angle_diff(cur_pilot->solid.dir, angle);
    pilot_turn = mod * diff;
 
@@ -2026,7 +2027,7 @@ static int aiL_iface( lua_State *L )
          number will give a more dramatic 'lead' */
       double speedmap = -1.*copysign(1. - 1. / (FABS(drift_azimuthal/200.) + 1.), drift_azimuthal) * M_PI_2;
       diff = angle_diff(heading_offset_azimuth, speedmap);
-      pilot_turn = -diff / (ai_dt * cur_pilot->turn);
+      pilot_turn = -diff / (ai_dt * cur_pilot->turn + EPSILON);
    }
    /* turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in */
    /* some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
@@ -2034,7 +2035,7 @@ static int aiL_iface( lua_State *L )
    else {
       /* signal that we're not in a productive direction for accelerating */
       diff = M_PI;
-      pilot_turn = heading_offset_azimuth / (ai_dt * cur_pilot->turn);
+      pilot_turn = heading_offset_azimuth / (ai_dt * cur_pilot->turn + EPSILON);
    }
 
    /* Return angle in degrees away from target. */
@@ -2183,7 +2184,7 @@ static int aiL_brake( lua_State *L )
    }
 
    diff = angle_diff( cur_pilot->solid.dir, dir );
-   pilot_turn = diff / (cur_pilot->turn * ai_dt);
+   pilot_turn = diff / (cur_pilot->turn * ai_dt + EPSILON);
    if (ABS(diff) < MIN_DIR_ERR)
       pilot_acc = accel;
    else
