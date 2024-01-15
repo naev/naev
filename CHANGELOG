@@ -26,7 +26,7 @@
    * Fixes
       * PSO and Mizar nebulas have trails again
 
-* 0.11.2 (unreleased)
+* 0.11.2
    * Stopped autonav from preventing wobble and overshooting by crashing the entire game
 
 * 0.11.1
