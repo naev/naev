@@ -132,7 +132,7 @@ vec3 BRDF_sheen( float LoH, vec3 baseColour, vec3 sheenTint, float sheen )
     float FH = pow5( clamp(1.0-LoH, 0.0, 1.0) ); /* Schlick Fresnel. */
     // Approximate luminance
     float Cdlum = 0.3*baseColour.r + 0.6*baseColour.g  + 0.1*baseColour.b;
-    vec3 Ctint = (Cdlum > 0.0) ? baseColour / Cdlum : vec3(1.);
+    vec3 Ctint = (Cdlum > 0.0) ? baseColour / Cdlum : vec3(1.0);
     vec3 Csheen = mix( vec3(1.0), Ctint, sheenTint );
     vec3 Fsheen = FH * sheen * Csheen;
     return FH * sheen * Csheen;
