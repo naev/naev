@@ -87,6 +87,8 @@ typedef struct Shader_ {
    GLuint metallicFactor;
    GLuint roughnessFactor;
    GLuint baseColour;
+   GLuint sheenTint;
+   GLuint sheen;
    GLuint clearcoat;
    GLuint clearcoat_roughness;
    GLuint emissive;
@@ -124,8 +126,10 @@ typedef struct Material_ {
    GLfloat roughnessFactor;/**< Roughness factor (single value). Multiplies the map if available. */
    GLfloat baseColour[4];  /**< Base colour of the material. Multiplies the texture if available. */
    /* pbr_specular_glossiness */
-   /* TODO */
-   /* clearcoat */
+   /* Sheen. */
+   GLfloat sheen[3];
+   GLfloat sheen_roughness;
+   /* Clearcoat */
    /*GLuint clearcoat_tex;
    GLuint clearcoat_roughness_tex;
    GLuint clearcoat_normal_tex; */
@@ -297,6 +301,16 @@ static int object_loadMaterial( Object *obj, Material *mat, const cgltf_material
       mat->baseColour_tex  = tex_ones;
       mat->metallic_tex    = tex_zero;
       mat->normal_tex      = tex_zero;
+   }
+
+   /* Sheen. */
+   if (cmat && cmat->has_sheen) {
+      memcpy( mat->sheen, cmat->sheen.sheen_color_factor, sizeof(mat->sheen) );
+      mat->sheen_roughness = cmat->sheen.sheen_roughness_factor;
+   }
+   else {
+      memset( mat->sheen, 0, sizeof(mat->sheen) );
+      mat->sheen_roughness = 0.;
    }
 
    /* Handle clearcoat. */
@@ -550,6 +564,8 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
    glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
+   glUniform3f( shd->sheenTint, mat->sheen[0], mat->sheen[1], mat->sheen[2] );
+   glUniform1f( shd->sheen, mat->sheen_roughness );
    glUniform1f( shd->clearcoat, mat->clearcoat );
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
    glUniform3f( shd->emissive, mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
@@ -1023,6 +1039,8 @@ int object_init (void)
    shd->metallicFactor  = glGetUniformLocation( shd->program, "metallicFactor" );
    shd->roughnessFactor = glGetUniformLocation( shd->program, "roughnessFactor" );
    shd->baseColour      = glGetUniformLocation( shd->program, "baseColour" );
+   shd->sheenTint       = glGetUniformLocation( shd->program, "sheenTint" );
+   shd->sheen           = glGetUniformLocation( shd->program, "sheen" );
    shd->clearcoat       = glGetUniformLocation( shd->program, "clearcoat" );
    shd->clearcoat_roughness = glGetUniformLocation( shd->program, "clearcoat_roughness" );
    shd->emissive        = glGetUniformLocation( shd->program, "emissive" );

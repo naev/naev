@@ -11,7 +11,11 @@ uniform sampler2D normal_tex; /**< Normal map. */
 uniform float metallicFactor;
 uniform float roughnessFactor;
 uniform vec4 baseColour;
-/* clearcoat */
+/* Sheen. */
+uniform vec3 sheenTint;
+uniform float sheen;
+
+/* Clearcoat */
 uniform float clearcoat;
 uniform float clearcoat_roughness;
 uniform vec3 emissive;
@@ -122,6 +126,18 @@ vec3 BRDF_specularGGX( vec3 f0, vec3 f90, float roughness, float VoH, float NoL,
    return (D * V) * F;
 }
 
+/* Disney Principled BRDF sheen. */
+vec3 BRDF_sheen( float LoH, vec3 baseColour, vec3 sheenTint, float sheen )
+ {
+    float FH = pow5( clamp(1.0-LoH, 0.0, 1.0) ); /* Schlick Fresnel. */
+    // Approximate luminance
+    float Cdlum = 0.3*baseColour.r + 0.6*baseColour.g  + 0.1*baseColour.b;
+    vec3 Ctint = (Cdlum > 0.0) ? baseColour / Cdlum : vec3(1.);
+    vec3 Csheen = mix( vec3(1.0), Ctint, sheenTint );
+    vec3 Fsheen = FH * sheen * Csheen;
+    return FH * sheen * Csheen;
+}
+
 struct Material {
    vec4 albedo;         /**< Surface albedo. */
    float perceptualRoughness;
@@ -130,6 +146,8 @@ struct Material {
    vec3 f0;             /**< Fresnel value at 0 degrees. */
    vec3 f90;            /**< Fresnel value at 90 degrees. */
    vec3 c_diff;
+   vec3 sheenTint;
+   float sheen;
    float clearcoat;     /**< Clear coat colour. */
    float clearcoat_roughness;/**< Clear coat roughness. */
 
@@ -276,6 +294,8 @@ void main (void)
    M.f0        = mix( vec3(0.04), M.albedo.rgb, M.metallic );
    M.f90       = vec3(1.0);
    M.c_diff    = mix( M.albedo.rgb * (vec3(1.0) - M.f0), vec3(0), M.metallic);
+   M.sheenTint = sheenTint;
+   M.sheen     = sheen;
    M.clearcoat = clearcoat;
    M.clearcoat_roughness = clearcoat_roughness * clearcoat_roughness;
    //M.specularWeight = 1.0;
@@ -334,6 +354,8 @@ void main (void)
          f_diffuse  += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL_diffuse, LoH );
 #endif
          f_diffuse  += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL, LoH );
+         if (M.sheen > 0.0)
+            f_diffuse  += BRDF_sheen( LoH, M.c_diff, M.sheenTint, M.sheen );
          f_specular += NoLintensity * BRDF_specularGGX( M.f0, M.f90, M.roughness, VoH, NoL, NoV, NoH );
 
          /* Clear coat lobe. */
@@ -350,7 +372,7 @@ void main (void)
 
    /* Combine diffuse, emissive, and specular.. */
    float alpha = (u_blend==1) ? M.albedo.a : 1.0;
-   colour_out = vec4( f_emissive + f_diffuse + f_specular, alpha );
+   colour_out = vec4( f_emissive + (1.0-M.metallic)*f_diffuse + f_specular, alpha );
 
    /* Apply clearcoat. */
    vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, clampedDot(n, v));
