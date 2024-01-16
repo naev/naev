@@ -289,6 +289,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->normal_tex      = tex_zero;
    }
 
+   /* Handle clearcoat. */
    if (cmat && cmat->has_clearcoat) {
       mat->clearcoat = cmat->clearcoat.clearcoat_factor;
       mat->clearcoat_roughness = cmat->clearcoat.clearcoat_roughness_factor;
@@ -298,6 +299,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->clearcoat_roughness = 0.;
    }
 
+   /* Handle emissiveness. */
    if (cmat) {
       memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
       mat->occlusion_tex= object_loadTexture( &cmat->occlusion_texture, tex_ones );
@@ -311,6 +313,11 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->occlusion_tex   = tex_ones;
       mat->normal_tex      = tex_ones;
       mat->blend           = 0;
+   }
+   /* Emissive strength extension just multiplies the emissiveness. */
+   if (cmat && cmat->has_emissive_strength) {
+      for (int i=0; i<3; i++)
+         mat->emissiveFactor[i] *= cmat->emissive_strength.emissive_strength;
    }
 
 #if 0
