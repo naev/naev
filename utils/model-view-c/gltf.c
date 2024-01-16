@@ -96,6 +96,8 @@ typedef struct Shader_ {
    GLuint nlights;
    GLuint blend;
    GLuint u_ambient;
+   /* Custom Naev. */
+   //GLuint waxiness;
 } Shader;
 static Shader object_shader;
 static Shader shadow_shader;
@@ -134,7 +136,8 @@ typedef struct Material_ {
    GLuint occlusion_tex;
    GLuint emissive_tex;
    GLfloat emissiveFactor[3];
-   //GLuint tex0;
+   /* Custom Naev. */
+   //GLfloat waxiness;
 } Material;
 static Material material_default;
 
@@ -328,6 +331,7 @@ static int object_loadMaterial( Object *obj, Material *mat, const cgltf_material
    }
 
 #if 0
+   mat->waxiness = 0.;
    if (cmat) {
       for (size_t i=0; i<cmat->extensions_count; i++) {
          cgltf_extension *ext = &cmat->extensions[i];
@@ -338,10 +342,10 @@ static int object_loadMaterial( Object *obj, Material *mat, const cgltf_material
          for (int j=0; j<r; j++) {
             jsmntok_t *tj = &t[j];
             const char *str = "waxFactor";
-            if (strncmp( "str", &ext->data[tj->start], MIN(strlen(str),(size_t)(tj->end-tj->start)) )==0) {
+            if (strncmp( str, &ext->data[tj->start], MIN(strlen(str),(size_t)(tj->end-tj->start)) )==0) {
                if (j+1 >= r)
                   break;
-               double waxFactor = atof(&ext->data[t[j+1].start]);
+               mat->waxiness = atof(&ext->data[t[j+1].start]);
                break;
             }
          }
@@ -551,6 +555,7 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glUniform3f( shd->emissive, mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
    glUniform1i( shd->blend, mat->blend );
    glUniform1i( shd->u_has_normal, (mat->normal_tex!=tex_zero) );
+   //glUniform1f( shd->waxiness, mat->waxiness );
    gl_checkErr();
 
    /* Texture. */
@@ -1023,6 +1028,9 @@ int object_init (void)
    shd->emissive        = glGetUniformLocation( shd->program, "emissive" );
    shd->occlusion_tex   = glGetUniformLocation( shd->program, "occlusion_tex" );
    shd->emissive_tex    = glGetUniformLocation( shd->program, "emissive_tex" );
+   /* Special. */
+   //shd->waxiness        = glGetUniformLocation( shd->program, "u_waxiness" );
+   /* Lights. */
    for (int i=0; i<MAX_LIGHTS; i++) {
       ShaderLight *sl = &shd->lights[i];
       char buf[128];

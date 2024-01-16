@@ -18,8 +18,9 @@ uniform vec3 emissive;
 uniform sampler2D emissive_tex; /**< Emission texture. */
 /* misc */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
-uniform int u_blend = 0;
+uniform int u_blend;
 uniform vec3 u_ambient; /**< Ambient lighting. */
+uniform float u_waxiness;
 
 in vec2 tex_coord0;
 in vec3 position;
@@ -324,6 +325,14 @@ void main (void)
          vec3 NoLintensity = NoL * intensity * f_shadow[i];
 
          //f_diffuse  += intensity * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
+#if 0
+         float NoL_diffuse;
+         if (u_waxiness > 0.0)
+            NoL_diffuse = u_waxiness + (1.0-u_waxiness) * NoL;
+         else
+            NoL_diffuse = NoL;
+         f_diffuse  += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL_diffuse, LoH );
+#endif
          f_diffuse  += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL, LoH );
          f_specular += NoLintensity * BRDF_specularGGX( M.f0, M.f90, M.roughness, VoH, NoL, NoV, NoH );
 
