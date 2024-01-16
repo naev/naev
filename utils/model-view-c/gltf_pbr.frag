@@ -42,6 +42,10 @@ vec3 pow5( vec3 x ) {
    return x2 * x2 * x;
 }
 
+float rgb2lum( vec3 color ) {
+   return dot( color, vec3( 0.2989, 0.5870, 0.1140 ) );
+}
+
 float D_GGX( float roughness, float NoH )
 {
    /* Walter et al. 2007, "Microfacet Models for Refraction through Rough Surfaces" */
@@ -131,7 +135,7 @@ vec3 BRDF_sheen( float LoH, vec3 baseColour, vec3 sheenTint, float sheen )
  {
     float FH = pow5( clamp(1.0-LoH, 0.0, 1.0) ); /* Schlick Fresnel. */
     // Approximate luminance
-    float Cdlum = 0.3*baseColour.r + 0.6*baseColour.g  + 0.1*baseColour.b;
+    float Cdlum = rgb2lum(baseColour);
     vec3 Ctint = (Cdlum > 0.0) ? baseColour / Cdlum : vec3(1.0);
     vec3 Csheen = mix( vec3(1.0), Ctint, sheenTint );
     vec3 Fsheen = FH * sheen * Csheen;
