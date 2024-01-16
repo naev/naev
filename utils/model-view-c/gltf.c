@@ -6,6 +6,7 @@
 #include "SDL_image.h"
 #include <assert.h>
 #include <math.h>
+#include <libgen.h>
 
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
@@ -796,7 +797,9 @@ Object *object_loadFromFile( const char *filename )
 #endif /* DEBUGGING */
 
    /* TODO load buffers properly from physfs. */
-   res = cgltf_load_buffers( &opts, data, "./" );
+   char path[PATH_MAX];
+   snprintf( path, sizeof(path), "%s/", dirname((char*)filename) );
+   res = cgltf_load_buffers( &opts, data, path );
    assert( res == cgltf_result_success );
 
    /* Load materials. */
