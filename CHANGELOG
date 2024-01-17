@@ -1,4 +1,5 @@
 * 0.11.3 (unreleased)
+   * Fixed not being able to turn off point defense weapons
    * `sciencegonewrong/02_sciwrong`: make the drones not hostile to other factions
    * `neutral/baron_comm`: fixed trivial warning when trying to clean up baron comm event
 
