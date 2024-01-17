@@ -1515,6 +1515,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       int ret = pilot_outfitLOntoggle( p, o, 0 );
       if (ret && outfit_isWeapon(o->outfit))
          o->state = PILOT_OUTFIT_OFF;
+      return ret;
    }
    else {
       o->stimer = outfit_cooldown( o->outfit );

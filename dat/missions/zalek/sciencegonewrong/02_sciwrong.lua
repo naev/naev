@@ -86,7 +86,6 @@ function accept()
    misn.setDesc(_("You've been hired by Dr. Geller to retrieve his prototype that ran away."))
    misn.setTitle(_("The one with the Runaway"))
    misn.setReward(_("A peek at the new prototype and some compensation for your efforts"))
-   misn.osdActive(1)
    mem.mmarker = misn.markerAdd(mem.t_sys[1], "high")
    hook.jumpin("sys_enter")
 end
@@ -108,21 +107,26 @@ local function get_nearest_jump(pil)
    end
    return jpts[index]
 end
+
+local function fdrone ()
+   return faction.dynAdd( "Za'lek", "bad_drone", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
+end
+
 --- create enemy ships
 local function spawn_baddies(sp)
-   local fdrone = faction.dynAdd( "Za'lek", "bad_drone", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
+   local fct = fdrone()
 
    -- light drones
    local scom = {}
    -- has eventually to be trimmed
    -- disabling some ships since this way it is really hard to win the mission
-   scom[1] = pilot.add("Za'lek Light Drone", fdrone, sp )
-   scom[2] = pilot.add("Za'lek Light Drone", fdrone, sp )
-   scom[3] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
-   scom[4] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
---   scom[5] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
---   scom[6] = pilot.add("Za'lek Light Drone", fdrone, sp )
---   scom[7] = pilot.add("Za'lek Light Drone", fdrone, sp )
+   scom[1] = pilot.add("Za'lek Light Drone", fct, sp )
+   scom[2] = pilot.add("Za'lek Light Drone", fct, sp )
+   scom[3] = pilot.add("Za'lek Heavy Drone", fct, sp )
+   scom[4] = pilot.add("Za'lek Heavy Drone", fct, sp )
+--   scom[5] = pilot.add("Za'lek Heavy Drone", fct, sp )
+--   scom[6] = pilot.add("Za'lek Light Drone", fct, sp )
+--   scom[7] = pilot.add("Za'lek Light Drone", fct, sp )
    for i=1,#scom do
      scom[i]:setHostile(false)
    end
@@ -155,7 +159,7 @@ function game_of_drones ()
    vn.run()
    -- spawn drones
 
-   t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", mem.t_pla[1], _("Prototype Drone"), {ai="trader"} ) -- prototype is a scout drone
+   t_drone = pilot.add( "Za'lek Scout Drone", fdrone(), mem.t_pla[1], _("Prototype Drone"), {ai="trader"} ) -- prototype is a scout drone
    -- add something so it is not insta-disabled with one shot?
    t_drone:setFaction("Independent")
    t_drone:setInvincible(true)
@@ -165,7 +169,7 @@ function game_of_drones ()
    t_drone:moveto(t_drone:pos() + vec2.new( 400, -400), false)
    -- just some moving around, stolen from baron missions ;D
    mem.idlehook = hook.pilot(t_drone, "idle", "targetIdle")
-   misn.osdActive(2)
+   misn.osdActive(1)
    -- wait for the drone to be hailed
    mem.hailhook = hook.pilot(t_drone,"hail","got_hailed",t_drone,badguys)
 end
@@ -187,6 +191,7 @@ function got_hailed()
    geller(_([["If you can disable the prototype, do it, but I'd prefer not to die at any rate!"]]))
    vn.run()
 
+   misn.osdActive(2)
    t_drone:setInvincible(false)
    t_drone:setHostile(true)
    t_drone:setHilight(true)
@@ -277,7 +282,7 @@ function chase_of_drones ()
 
    t_drone = pilot.add(
       "Za'lek Scout Drone",
-      "Za'lek",
+      fdrone(),
       vec2.newP(rnd.rnd(0,system.cur():radius()/5), rnd.angle()),
       _("Prototype Drone"),
       {ai="dummy"}

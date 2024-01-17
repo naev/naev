@@ -119,3 +119,7 @@ function hail()
    end
    evt.finish(false)
 end
+
+function finish ()
+   evt.finish(false)
+end
