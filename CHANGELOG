@@ -1,3 +1,7 @@
+* 0.11.3 (unreleased)
+   * `sciencegonewrong/02_sciwrong`: make the drones not hostile to other factions
+   * `neutral/baron_comm`: fixed trivial warning when trying to clean up baron comm event
+
 * 0.11.2
    * Stopped autonav from preventing wobble and overshooting by crashing the entire game
 
