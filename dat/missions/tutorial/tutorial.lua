@@ -29,8 +29,8 @@ local dest_planet_r = 200
 
 function create ()
    if not misn.claim( missys ) then
-      print(fmt.f(_( "Warning: 'Tutorial' mission was unable to claim system {sys}!"), {sys=missys} ) )
-      misn.finish( true ) -- We mark as clear anyway, but this is not good
+      warn(fmt.f(_( "Warning: 'Tutorial' mission was unable to claim system {sys}!"), {sys=missys} ) )
+      misn.finish( true ) -- We mark as cleared anyway, but this is not good
    end
 
    misn.setTitle( _("Tutorial") )
