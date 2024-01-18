@@ -213,7 +213,7 @@ function land ()
    mem.enter_timer_hook = nil
    if mem.stage == 2 then
       mem.stage = 3
-      msg_info{_([["Excellent! The landing was successful. As your Ship AI, I am in charge of guiding your ship and performing the landing procedure, which has cut down significantly on misfortunes during human-controlled manual landing procedures. When you land, your ship is refueled automatically, and you can do things such as talk to civilians at the spaceport bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Why don't we look around? As you can see, we are currently on the Landing Main tab, where you can learn about the planet and buy a local map. Click through all the other tabs below, and I'll give you a tour of everything you can do on a planet. When you are done, click the '#bTake Off#0' button, so we can continue."]])}
+      msg_info{_([["Excellent! The landing was successful. As your Ship AI, I am in charge of guiding your ship and performing the landing procedure, which has cut down significantly on misfortunes during human-controlled manual landing procedures. When you land, your ship is refuelled automatically, and you can do things such as talk to civilians at the spaceport bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Why don't we look around? As you can see, we are currently on the Landing Main tab, where you can learn about the planet and buy a local map. Click through all the other tabs below, and I'll give you a tour of everything you can do on a planet. When you are done, click the '#bTake Off#0' button, so we can continue."]])}
 
       mem.bar_hook       = hook.land("land_bar", "bar")
       mem.mission_hook   = hook.land("land_mission", "mission")
@@ -407,7 +407,7 @@ local tp_taunt_healthy = {
    _("When I'm done, you'll look like pastrami!"),
    _("I've got better things to do. Hurry up and die!"),
    _("You call that a barrage? Pah!"),
-   _("You mother isn't much to look at, either!"),
+   _("Your mother isn't much to look at, either!"),
    _("You're not exactly a crack-shot, are you?"),
    _("I've had meals that gave me more resistance than you!"),
    _("You're a pathetic excuse for a pilot!"),
