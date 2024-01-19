@@ -72,6 +72,7 @@ void land_updateMainTab (void);
 void land_buttonTakeoff( unsigned int wid, const char *unused );
 unsigned int land_getWid( int window );
 void bar_regen (void);
+void misn_regen (void);
 
 /*
  * Error dialogue generation and associated checks.

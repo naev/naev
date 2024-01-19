@@ -505,6 +505,12 @@ int shipyard_canBuy( const Ship *ship, const Spob *spob )
 int shipyard_canTrade( const Ship *ship, const Spob *spob )
 {
    credits_t price = ship_buyPrice(ship) - player_shipPrice(player.p->name,0);
+
+   if (pilot_cargoUsedMission(player.p)>0) {
+      land_errDialogueBuild( _("You can not trade in your ship when you have mission cargo!") );
+      return 0;
+   }
+
    return shipyard_canAcquire( ship, spob, price );
 }
 
@@ -541,7 +547,7 @@ static void shipyard_trade( unsigned int wid, const char* str )
    credits2str( buf4, playerprice - targetprice, 2 );
 
    /* Display the correct dialogue depending on the new ship's price versus the player's. */
-   if ( targetprice == playerprice ) {
+   if (targetprice == playerprice) {
       if (dialogue_YesNo(_("Are you sure?"), /* confirm */
          _("Your %s is worth %s, exactly as much as the new ship, so no credits need be exchanged. Are you sure you want to trade your ship in?"),
                _(player.p->ship->name), buf2)==0)

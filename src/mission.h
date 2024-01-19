@@ -115,7 +115,7 @@ extern Mission **player_missions; /**< Player's active missions. */
 /*
  * creates missions for a spob and such
  */
-Mission* missions_genList( int *n, int faction,
+Mission* missions_genList( int faction,
       const Spob *pnt, const StarSystem *sys, MissionAvailability loc );
 int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
 void missions_run( MissionAvailability loc, int faction, const Spob *pnt, const StarSystem *sys );

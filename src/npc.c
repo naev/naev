@@ -366,7 +366,6 @@ void npc_sort (void)
 void npc_generateMissions (void)
 {
    Mission *missions;
-   int nmissions;
 
    NTracingZone( _ctx, 1 );
 
@@ -374,14 +373,12 @@ void npc_generateMissions (void)
       npc_missions = array_create( Mission );
 
    /* Get the missions. */
-   missions = missions_genList( &nmissions,
-         land_spob->presence.faction, land_spob, cur_system,
-         MIS_AVAIL_BAR );
+   missions = missions_genList( land_spob->presence.faction, land_spob, cur_system, MIS_AVAIL_BAR );
    /* Mission sshould already be generated and have had their 'create' function
     * run, so NPCs should be running wild (except givers). */
 
    /* Add to the bar NPC stack and add npc. */
-   for (int i=0; i<nmissions; i++) {
+   for (int i=0; i<array_size(missions); i++) {
       Mission *m = &missions[i];
       array_push_back( &npc_missions, *m );
 
@@ -407,7 +404,7 @@ void npc_generateMissions (void)
    }
 
    /* Clean up. */
-   free( missions );
+   array_free( missions );
 
    /* Sort NPC. */
    npc_sort();

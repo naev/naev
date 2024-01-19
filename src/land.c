@@ -88,7 +88,6 @@ static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed spob.
  * mission computer stack
  */
 static Mission* mission_computer = NULL; /**< Missions at the computer. */
-static int mission_ncomputer = 0; /**< Number of missions at the computer. */
 
 /*
  * Bar stuff.
@@ -135,7 +134,7 @@ static int news_load (void);
 static void misn_open( unsigned int wid );
 static void misn_autonav( unsigned int wid, const char *str );
 static void misn_accept( unsigned int wid, const char *str );
-static void misn_genList( unsigned int wid, int first );
+static void misn_genList( unsigned int wid );
 static void misn_update( unsigned int wid, const char *str );
 
 /**
@@ -378,6 +377,17 @@ static int bar_genList( unsigned int wid )
    return 0;
 }
 /**
+ * @brief Regenerates the mission list.
+ */
+void misn_regen (void)
+{
+   if (!landed)
+      return;
+   if (!land_loaded)
+      return;
+   misn_genList( land_getWid(LAND_WINDOW_MISSION) );
+}
+/**
  * @brief Regenerates the bar list.
  */
 void bar_regen (void)
@@ -575,7 +585,7 @@ static void misn_open( unsigned int wid )
    /* map */
    map_show( wid, 20, 20, w/2 - 30, h/2 - 35, 0.75, 0., 0. );
 
-   misn_genList(wid, 1);
+   misn_genList(wid);
    space_clearComputerMarkers(); /* Don't want markers at the beginning. */
 }
 /**
@@ -630,15 +640,10 @@ static void misn_accept( unsigned int wid, const char *str )
          changed = 1;
 
       if (changed) {
-         memmove( &mission_computer[pos], &mission_computer[pos+1],
-               sizeof(Mission) * (mission_ncomputer-pos-1) );
-         mission_ncomputer--;
+         array_erase( &mission_computer, &mission_computer[pos], &mission_computer[pos+1] );
 
          /* Regenerate list. */
-         misn_genList(wid, 0);
-         /* Add position persistancey after a mission has been accepted */
-         /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
-         toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
+         misn_genList(wid);
       }
 
       /* Reset markers. */
@@ -648,15 +653,22 @@ static void misn_accept( unsigned int wid, const char *str )
 /**
  * @brief Generates the mission list.
  *    @param wid Window to generate the mission list for.
- *    @param first Is it the first time generated?
  */
-static void misn_genList( unsigned int wid, int first )
+static void misn_genList( unsigned int wid )
 {
    char** misn_names;
-   int j, w,h;
+   int j, w,h, pos;
 
-   if (!first)
+   /* Validity check. */
+   if (wid == 0)
+      return;
+
+   if (widget_exists( wid, "lstMission" )) {
+      pos = toolkit_getListPos( wid, "lstMission" );
       window_destroyWidget( wid, "lstMission" );
+   }
+   else
+      pos = -1;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -664,14 +676,14 @@ static void misn_genList( unsigned int wid, int first )
    /* list */
    j = 1; /* make sure we don't accidentally free the memory twice. */
    misn_names = NULL;
-   if (mission_ncomputer > 0) { /* there are missions */
-      misn_names = malloc(sizeof(char*) * mission_ncomputer);
+   if (array_size(mission_computer) > 0) { /* there are missions */
+      misn_names = malloc(sizeof(char*) * array_size(mission_computer));
       j = 0;
-      for (int i=0; i<mission_ncomputer; i++)
+      for (int i=0; i<array_size(mission_computer); i++)
          if (mission_computer[i].title != NULL)
             misn_names[j++] = strdup(mission_computer[i].title);
    }
-   if ((misn_names==NULL) || (mission_ncomputer==0) || (j==0)) { /* no missions. */
+   if ((misn_names==NULL) || (array_size(mission_computer)==0) || (j==0)) { /* no missions. */
       if (j==0)
          free(misn_names);
       misn_names = malloc(sizeof(char*));
@@ -684,6 +696,10 @@ static void misn_genList( unsigned int wid, int first )
 
    /* Set default keyboard focus. */
    window_setFocus( wid, "lstMission" );
+
+   /* Add position persistancey after a mission has been accepted */
+   /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
+   toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
 }
 /**
  * @brief Updates the mission list.
@@ -1047,8 +1063,7 @@ void land_genWindows( int load )
       if (spob_hasService(land_spob, SPOB_SERVICE_BAR))
          npc_generateMissions(); /* Generate bar npc. */
       if (spob_hasService(land_spob, SPOB_SERVICE_MISSIONS))
-         mission_computer = missions_genList( &mission_ncomputer,
-               land_spob->presence.faction, land_spob, cur_system,
+         mission_computer = missions_genList( land_spob->presence.faction, land_spob, cur_system,
                MIS_AVAIL_COMPUTER );
    }
 
@@ -1649,11 +1664,10 @@ void land_cleanup (void)
    space_clearComputerMarkers();
 
    /* Clean up mission computer. */
-   for (int i=0; i<mission_ncomputer; i++)
+   for (int i=0; i<array_size(mission_computer); i++)
       mission_cleanup( &mission_computer[i] );
-   free(mission_computer);
+   array_free(mission_computer);
    mission_computer  = NULL;
-   mission_ncomputer = 0;
 
    /* Clean up bar missions. */
    npc_clear();

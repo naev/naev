@@ -905,26 +905,21 @@ static int mission_compare( const void* arg1, const void* arg2 )
  * @brief Generates a mission list. This runs create() so won't work with all
  *        missions.
  *
- *    @param[out] n Missions created.
  *    @param faction Faction of the spob.
  *    @param pnt Spob to run on.
  *    @param sys System to run on.
  *    @param loc Location
  *    @return The stack of Missions created with n members.
  */
-Mission* missions_genList( int *n, int faction,
+Mission* missions_genList( int faction,
       const Spob *pnt, const StarSystem *sys, MissionAvailability loc )
 {
-   int m, alloced;
    int rep;
-   Mission* tmp;
+   Mission *tmp = array_create( Mission );
 
    NTracingZone( _ctx, 1 );
 
    /* Find available missions. */
-   tmp      = NULL;
-   m        = 0;
-   alloced  = 0;
    for (int i=0; i<array_size(mission_stack); i++) {
       double chance;
       MissionData *misn = &mission_stack[i];
@@ -939,6 +934,8 @@ Mission* missions_genList( int *n, int faction,
 
       /* random chance of rep appearances */
       for (int j=0; j<rep; j++) {
+         Mission newm;
+
          if (RNGF() > chance)
             continue;
 
@@ -946,28 +943,16 @@ Mission* missions_genList( int *n, int faction,
          if (!mission_meetReq( misn, faction, pnt, sys ))
             continue;
 
-         m++;
-         /* Extra allocation. */
-         if (m > alloced) {
-            if (alloced == 0)
-               alloced = 32;
-            else
-               alloced *= 2;
-            tmp      = realloc( tmp, sizeof(Mission) * alloced );
-         }
          /* Initialize the mission. */
-         if (mission_init( &tmp[m-1], misn, 1, 1, NULL ))
-            m--;
+         if (mission_init( &newm, misn, 1, 1, NULL ))
+            continue;
+         array_push_back( &tmp, newm );
       }
    }
 
    /* Sort. */
-   if (tmp != NULL) {
-      qsort( tmp, m, sizeof(Mission), mission_compare );
-      (*n) = m;
-   }
-   else
-      (*n) = 0;
+   if (array_size(tmp) > 0)
+      qsort( tmp, array_size(tmp), sizeof(Mission), mission_compare );
 
    NTracingZoneEnd( _ctx );
 

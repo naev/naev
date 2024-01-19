@@ -386,8 +386,10 @@ static int naevL_missionStart( lua_State *L )
    const char *str = luaL_checkstring(L, 1);
    int ret = mission_start( str, NULL );
 
-   if (cli_isOpen() && landed)
+   if (cli_isOpen() && landed) {
       bar_regen();
+      misn_regen();
+   }
 
    lua_pushboolean( L, (ret==0) || (ret==3) );
    lua_pushboolean( L, (ret==3) );
