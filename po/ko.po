@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2024-01-05 12:31+0900\n"
+"POT-Creation-Date: 2024-01-20 00:10+0900\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -2274,14 +2274,13 @@ msgstr ""
 #. general functions
 #. get nearest jumppoint
 #. basically the distance that the map can have at
-#. - create enemy ships
 #: dat/factions/zalek.xml:2 dat/ssys/zalek.xml:2
 #: dat/events/dvaered/fwB_repay.lua:90 dat/missions/minerva/finale1.lua:427
 #: dat/missions/minerva/pirate2.lua:178 dat/missions/minerva/pirate5.lua:245
 #: dat/missions/minerva/pirate6.lua:307
 #: dat/missions/zalek/blackhole/zbh03.lua:161
 #: dat/missions/zalek/particlephysics/zpp03.lua:135
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:113
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:112
 #: dat/scripts/common/nebu_research.lua:35
 #: dat/scripts/common/sciencegonewrong.lua:15 dat/scripts/common/zalek.lua:11
 #: dat/scripts/common/zalek.lua:17 dat/scripts/common/zalek_blackhole.lua:61
@@ -46377,16 +46376,17 @@ msgstr ""
 #. Must be uninhabited
 #. Needs a direct path to targetsys
 #. event ends on player leaving the system or landing
-#: dat/events/soromid/ferals.lua:124
+#. Don't do anything if system is not inclusively claimed
+#: dat/events/soromid/ferals.lua:129
 msgid "Signal"
 msgstr ""
 
-#: dat/events/soromid/ferals.lua:125
+#: dat/events/soromid/ferals.lua:130
 msgid "You have detected an unknown signal!"
 msgstr ""
 
 #. Just try to go to the next system
-#: dat/events/soromid/ferals.lua:173
+#: dat/events/soromid/ferals.lua:178
 msgid "You have discovered a jump point!"
 msgstr ""
 
@@ -105000,18 +105000,19 @@ msgstr ""
 msgid "A peek at the new prototype and some compensation for your efforts"
 msgstr ""
 
+#. - create enemy ships
 #. light drones
 #. has eventually to be trimmed
 #. disabling some ships since this way it is really hard to win the mission
-#. scom[5] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
-#. scom[6] = pilot.add("Za'lek Light Drone", fdrone, sp )
-#. scom[7] = pilot.add("Za'lek Light Drone", fdrone, sp )
+#. scom[5] = pilot.add("Za'lek Heavy Drone", fct, sp )
+#. scom[6] = pilot.add("Za'lek Light Drone", fct, sp )
+#. scom[7] = pilot.add("Za'lek Light Drone", fct, sp )
 #. Check to see if reaching target system
 #. wait til stars have settled and do stuff
 #. pilot.clear()
 #. pilot.toggleSpawn(false)
 #. do something else
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:154
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:158
 msgid ""
 "\"There! The tracker shows it must be here! It is right next to {pnt}! If "
 "you hail it I might be able to patch the software. That should give me "
@@ -105020,8 +105021,8 @@ msgid ""
 msgstr ""
 
 #. spawn drones
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:158
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:282
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:162
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:287
 msgid "Prototype Drone"
 msgstr ""
 
@@ -105029,17 +105030,17 @@ msgstr ""
 #. add something so it is not insta-disabled with one shot?
 #. just some moving around, stolen from baron missions ;D
 #. wait for the drone to be hailed
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:175
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:179
 msgid "Target out of range"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:185
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:189
 msgid ""
 "\"Huh, I don't understand. This should not be happening. Hold on. I can't "
 "get access.\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:186
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:190
 msgid ""
 "\"Um, there seems to be a glitch. Well, sort of. Um, if I deciphered this "
 "correctly, the drone just hijacked the unused drones on {pnt} and ordered "
@@ -105047,39 +105048,39 @@ msgid ""
 "pirates sold me!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:187
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:191
 msgid ""
 "\"If you can disable the prototype, do it, but I'd prefer not to die at any "
 "rate!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:223
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:228
 msgid ""
 "\"NOOOOOO! What have you done!? My prototype! It's going to take me weeks to "
 "rebuild it! You incompetent nincompoop!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:225
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:230
 #, fuzzy
 #| msgid "You owe me 20 credits!"
 msgid "you destroyed the drone!"
 msgstr "나한테 20 크레딧 빚졌잖아!"
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:229
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:234
 msgid "Geller: \"Excellent work! Now load it up and let's get out of here!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:231
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:236
 #, fuzzy
 msgid "Prototype"
 msgstr "자레크의 프로토타이"
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:231
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:236
 msgid "A disabled prototype drone."
 msgstr ""
 
 #. begin the chase:
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:246
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:251
 msgid ""
 "Geller: \"The drone has disappeared from my radar! It must have jumped to "
 "the {sys} system. Let's find it!\""
@@ -105091,56 +105092,56 @@ msgstr ""
 #. remove dead drones
 #. player.msg("If close worked")
 #. if it is the last attacking drone, make it run away from the player
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:256
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:371
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:411
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:261
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:376
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:416
 msgid "Geller: \"Interesting, the other drones are running away...\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:261
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:331
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:266
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:336
 msgid "Geller: \"NOOOOOOOOO! My drone! You imbecile! You failed me!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:262
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:267
 #, fuzzy
 msgid "you failed to recover the drone!"
 msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 
 #. the drone behaves differently depending on through how many systems it has been chased so far
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:275
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:280
 msgid ""
 "\"The scanner shows me that the drone has slowed down. It must have lost "
 "power. Go! Go! Now it should be much easier to catch it!\""
 msgstr ""
 
 #. add something so it is not insta-disabled with one shot?
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:303
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:308
 msgid ""
 "Something went terribly wrong here! If you see this message please reload "
 "and report a bug in this mission. Thank you!"
 msgstr ""
 
 #. just some moving around, stolen from baron missions ;D
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:316
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:321
 msgid ""
 "\"It seems the drone has found a way to shield itself from the EM pulses. I "
 "think I can adjust to that, give me a second.\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:332
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:337
 msgid "the drone self-destructed!"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:336
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:341
 msgid "On your ship"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:336
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:341
 msgid "\"There you go! Get it!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:343
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:348
 msgid ""
 "\"This is strange. The engines are starting to heat up... oh, shit, if they "
 "continue like this the drone will explode in about 20 seconds! You'd better "
@@ -105148,7 +105149,7 @@ msgid ""
 msgstr ""
 
 #. last hook
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:355
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:360
 msgid ""
 "\"The things I do for science! Now let me go back to my lab and analyse the "
 "drone. I need to figure out exactly what happened and what went wrong. Once "
@@ -105156,7 +105157,7 @@ msgid ""
 "small bag containing a credit chip and a tiny toy drone is tossed your way."
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:364
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:369
 msgid "You helped Dr. Geller retrieve his lost prototype drone."
 msgstr ""
 
@@ -106180,6 +106181,7 @@ msgid ""
 "systems, land, or cooldown!"
 msgstr ""
 
+#. Only uncovered by people who care
 #. local lg = require 'love.graphics'
 #. local audio = require 'love.audio'
 #. active time in seconds
@@ -116458,38 +116460,38 @@ msgid "Sleep"
 msgstr ""
 
 #. error has occurred
-#: src/ai.c:482
+#: src/ai.c:483
 #, c-format
 msgid "Pilot '%s' ai '%s' error: %s"
 msgstr "파일럿 '%s' ai '%s' 오류: %s"
 
-#: src/ai.c:507
+#: src/ai.c:508
 #, c-format
 msgid "AI Profile '%s' not found, using dummy fallback."
 msgstr ""
 
-#: src/ai.c:511
+#: src/ai.c:512
 msgid "Dummy AI Profile not valid! Things are going to break."
 msgstr ""
 
-#: src/ai.c:617
+#: src/ai.c:618
 #, c-format
 msgid "Error loading AI profile '%s'"
 msgstr ""
 
-#: src/ai.c:630
+#: src/ai.c:631
 #, c-format
 msgid "Loaded %d AI Profile in %.3f s"
 msgid_plural "Loaded %d AI Profiles in %.3f s"
 msgstr[0] ""
 
-#: src/ai.c:633
+#: src/ai.c:634
 #, c-format
 msgid "Loaded %d AI Profile"
 msgid_plural "Loaded %d AI Profiles"
 msgstr[0] ""
 
-#: src/ai.c:662 src/board.c:89 src/comm.c:160 src/land.c:1575 src/naev.c:543
+#: src/ai.c:663 src/board.c:89 src/comm.c:160 src/land.c:1575 src/naev.c:543
 #: src/player.c:3638 src/player_autonav.c:64
 #, c-format
 msgid ""
@@ -116498,7 +116500,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/ai.c:721
+#: src/ai.c:722
 #, c-format
 msgid ""
 "Error loading AI file: %s\n"
@@ -116507,33 +116509,33 @@ msgid ""
 msgstr ""
 
 #. Find and set up the necessary references.
-#: src/ai.c:733
+#: src/ai.c:734
 #, fuzzy, c-format
 #| msgid "Mission '%s' missing/invalid '%s' element"
 msgid "AI Profile '%s' is missing '%s' function!"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
-#: src/ai.c:766
+#: src/ai.c:767
 #, c-format
 msgid "AI Profile '%s' not found in AI stack"
 msgstr ""
 
-#: src/ai.c:937
+#: src/ai.c:938
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'attacked': %s"
 msgstr "파일럿 '%s' ai '%s' -> '공격당함': %s"
 
-#: src/ai.c:972
+#: src/ai.c:973
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'discovered': %s"
 msgstr "파일럿 '%s' ai '%s' -> '발견됨': %s"
 
-#: src/ai.c:1006
+#: src/ai.c:1007
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'hail': %s"
 msgstr "파일럿 '%s' ai '%s' -> '우박': %s"
 
-#: src/ai.c:1023
+#: src/ai.c:1024
 #, c-format
 msgid ""
 "Pilot '%s' (ai '%s') is trying to refuel when no 'refuel' function is "
@@ -116541,47 +116543,47 @@ msgid ""
 msgstr ""
 
 #. Error has occurred.
-#: src/ai.c:1094
+#: src/ai.c:1095
 #, c-format
 msgid "Pilot '%s' equip '%s' -> '%s': %s"
 msgstr "파일럿 '%s' 장비 '%s' -> '%s': %s"
 
-#: src/ai.c:1122
+#: src/ai.c:1123
 #, c-format
 msgid "Trying to create new task for pilot '%s' that has no AI!"
 msgstr ""
 
-#: src/ai.c:1152
+#: src/ai.c:1153
 #, c-format
 msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
-#: src/ai.c:1213 src/nlua_pilot.c:5604
+#: src/ai.c:1214 src/nlua_pilot.c:5604
 #, fuzzy, c-format
 #| msgid "Failed to create new Lua state."
 msgid "Failed to create new task for pilot '%s'."
 msgstr "새 Lua 상태를 생성하지 못했습니다."
 
-#: src/ai.c:1272 src/ai.c:1345 src/nlua_pilot.c:5561
+#: src/ai.c:1273 src/ai.c:1346 src/nlua_pilot.c:5561
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
-#: src/ai.c:1347
+#: src/ai.c:1348
 #, c-format
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2379 src/nlua_pilot.c:6054
+#: src/ai.c:2380 src/nlua_pilot.c:6054
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr "시스템 '%s'에서 Spob '%s'을(를) 찾을 수 없습니다"
 
-#: src/ai.c:2385
+#: src/ai.c:2386
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2430 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
+#: src/ai.c:2431 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
 #: src/player.c:1692 src/space.c:1960 src/space.c:2066 src/space.c:2084
 #: src/space.c:2136 src/space.c:3535 src/space.c:3556 src/space.c:4384
 #, c-format
@@ -116590,11 +116592,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/ai.c:2459 src/ai.c:2492
+#: src/ai.c:2460 src/ai.c:2493
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2613
+#: src/ai.c:2614
 #, fuzzy, c-format
 #| msgid "Planet '%s' does not belong to a system."
 msgid "Pilot '%s' can't find jump to leave system!"
@@ -116969,154 +116971,154 @@ msgstr ""
 msgid "Trying to run Lua Conditional chunk that is not referenced!"
 msgstr ""
 
-#: src/conf.c:91
+#: src/conf.c:100
 #, c-format
 msgid "Usage: %s [OPTIONS] [DATA]"
 msgstr ""
 
-#: src/conf.c:92
+#: src/conf.c:101
 msgid "Options are:"
 msgstr ""
 
-#: src/conf.c:93
+#: src/conf.c:102
 msgid "   -f, --fullscreen      activate fullscreen"
 msgstr ""
 
-#: src/conf.c:94
+#: src/conf.c:103
 msgid "   -F n, --fps n         limit frames per second to n"
 msgstr ""
 
-#: src/conf.c:95
+#: src/conf.c:104
 msgid "   -V, --vsync           enable vsync"
 msgstr ""
 
-#: src/conf.c:96
+#: src/conf.c:105
 msgid "   -W n                  set width to n"
 msgstr ""
 
-#: src/conf.c:97
+#: src/conf.c:106
 msgid "   -H n                  set height to n"
 msgstr ""
 
-#: src/conf.c:98
+#: src/conf.c:107
 msgid "   -j n, --joystick n    use joystick n"
 msgstr ""
 
-#: src/conf.c:99
+#: src/conf.c:108
 msgid "   -J s, --Joystick s    use joystick whose name contains s"
 msgstr ""
 
-#: src/conf.c:100
+#: src/conf.c:109
 msgid "   -M, --mute            disables sound"
 msgstr ""
 
-#: src/conf.c:101
+#: src/conf.c:110
 msgid "   -S, --sound           forces sound"
 msgstr ""
 
-#: src/conf.c:102
+#: src/conf.c:111
 msgid "   -m f, --mvol f        sets the music volume to f"
 msgstr ""
 
-#: src/conf.c:103
+#: src/conf.c:112
 msgid "   -s f, --svol f        sets the sound volume to f"
 msgstr ""
 
-#: src/conf.c:104
+#: src/conf.c:113
 msgid ""
 "   -d, --datapath        adds a new datapath to be mounted (i.e., appends it "
 "to the search path for game assets)"
 msgstr ""
 
-#: src/conf.c:105
+#: src/conf.c:114
 msgid "   -X, --scale           defines the scale factor"
 msgstr ""
 
-#: src/conf.c:106
+#: src/conf.c:115
 msgid "   --devmode             enables dev mode perks like the editors"
 msgstr ""
 
-#: src/conf.c:107
+#: src/conf.c:116
 msgid "   -h, --help            display this message and exit"
 msgstr ""
 
-#: src/conf.c:108
+#: src/conf.c:117
 msgid "   -v, --version         print the version and exit"
 msgstr ""
 
-#: src/conf.c:448
+#: src/conf.c:457
 msgid "Found keybind with no type field!"
 msgstr ""
 
-#: src/conf.c:452
+#: src/conf.c:461
 msgid "Found keybind with invalid type field!"
 msgstr ""
 
-#: src/conf.c:466
+#: src/conf.c:475
 msgid "Found keybind with no key field!"
 msgstr ""
 
-#: src/conf.c:470
+#: src/conf.c:479
 msgid "Found keybind with invalid key field!"
 msgstr ""
 
-#: src/conf.c:496
+#: src/conf.c:505
 #, c-format
 msgid "Unknown keybinding of type %s"
 msgstr ""
 
-#: src/conf.c:502
+#: src/conf.c:511
 #, c-format
 msgid "Keybind for '%s' is invalid"
 msgstr ""
 
-#: src/conf.c:515
+#: src/conf.c:524
 #, c-format
 msgid "Unknown keybinding mod of type %s"
 msgstr ""
 
-#: src/conf.c:526
+#: src/conf.c:535
 #, c-format
 msgid "Malformed keybind for '%s' in '%s'."
 msgstr ""
 
 #. failed to load the config file
-#: src/conf.c:533
+#: src/conf.c:542
 #, c-format
 msgid "Config file '%s' has invalid syntax:"
 msgstr ""
 
-#: src/conf.c:626
+#: src/conf.c:635
 msgid "Enabling developer mode."
 msgstr ""
 
 #. Write a nice header for new configuration files
-#: src/conf.c:799
+#: src/conf.c:811
 msgid "Naev configuration file"
 msgstr ""
 
-#: src/conf.c:805
+#: src/conf.c:817
 msgid "Not saving configuration."
 msgstr ""
 
-#: src/conf.c:811
+#: src/conf.c:823
 msgid "The contents of this section will be rewritten by Naev!"
 msgstr ""
 
 #. ndata.
-#: src/conf.c:815
+#: src/conf.c:827
 msgid "The location of Naev's data pack, usually called 'ndata'"
 msgstr ""
 
 #. Language.
-#: src/conf.c:820
+#: src/conf.c:832
 msgid ""
 "Language to use. Set to the two character identifier to the language (e.g., "
 "\"en\" for English), and nil for autodetect."
 msgstr ""
 
 #. Difficulty.
-#: src/conf.c:825
+#: src/conf.c:837
 msgid ""
 "Global difficulty to set the game to. Can be overwritten by saved game "
 "settings. Has to match one of the difficulties defined in \"difficulty.xml\" "
@@ -117124,301 +117126,301 @@ msgid ""
 msgstr ""
 
 #. OpenGL.
-#: src/conf.c:835
+#: src/conf.c:847
 msgid "The factor to use in Full-Scene Anti-Aliasing"
 msgstr ""
 
-#: src/conf.c:836
+#: src/conf.c:848
 msgid "Anything lower than 2 will simply disable FSAA"
 msgstr ""
 
-#: src/conf.c:840
+#: src/conf.c:852
 msgid "Synchronize framebuffer updates with the vertical blanking interval"
 msgstr ""
 
 #. Window.
-#: src/conf.c:845
+#: src/conf.c:857
 msgid "The window size or screen resolution"
 msgstr ""
 
-#: src/conf.c:846
+#: src/conf.c:858
 msgid "Set both of these to 0 to make Naev try the desktop resolution"
 msgstr ""
 
-#: src/conf.c:856
+#: src/conf.c:868
 msgid "Factor used to divide the above resolution with"
 msgstr ""
 
-#: src/conf.c:857
+#: src/conf.c:869
 msgid "This is used to lower the rendering resolution, and scale to the above"
 msgstr ""
 
-#: src/conf.c:861
+#: src/conf.c:873
 msgid "Scale factor for rendered nebula backgrounds."
 msgstr ""
 
-#: src/conf.c:862
+#: src/conf.c:874
 msgid "Larger values can save time but lead to a blurrier appearance."
 msgstr ""
 
-#: src/conf.c:866
+#: src/conf.c:878
 msgid "Run Naev in full-screen mode"
 msgstr ""
 
-#: src/conf.c:870
+#: src/conf.c:882
 msgid "Use video modesetting when fullscreen is enabled"
 msgstr "전체 화면이 활성화된 경우 비디오 모드 설정 사용"
 
-#: src/conf.c:874
+#: src/conf.c:886
 msgid "Disable allowing resizing the window."
 msgstr ""
 
-#: src/conf.c:878
+#: src/conf.c:890
 msgid ""
 "Disable window decorations. Use with care and know the keyboard controls to "
 "quit and toggle fullscreen."
 msgstr ""
 
-#: src/conf.c:882
+#: src/conf.c:894
 msgid "Minimize the game on focus loss."
 msgstr ""
 
-#: src/conf.c:886
+#: src/conf.c:898
 msgid "Enables colourblind mode. Good for simulating colourblindness."
 msgstr ""
 
-#: src/conf.c:890
+#: src/conf.c:902
 msgid ""
 "Enable health bars. These show hostility/friendliness and health of pilots "
 "on screen."
 msgstr ""
 
-#: src/conf.c:894
+#: src/conf.c:906
 msgid ""
 "Background brightness. 1 is normal brightness while setting it to 0 would "
 "make the backgrounds pitch black."
 msgstr ""
 
-#: src/conf.c:898
+#: src/conf.c:910
 msgid ""
 "Nebula non-uniformity. 1 is normal nebula while setting it to 0 would make "
 "the nebula a solid colour."
 msgstr ""
 
-#: src/conf.c:902
+#: src/conf.c:914
 msgid ""
 "Controls the intensity to which the screen fades when jumping. 1.0 would be "
 "pure white, while 0.0 would be pure black."
 msgstr ""
 
-#: src/conf.c:906
+#: src/conf.c:918
 msgid "Gamma correction parameter. A value of 1 disables it (no curve)."
 msgstr ""
 
-#: src/conf.c:910
+#: src/conf.c:922
 msgid "Expensive high quality shaders for the background. Defaults to false."
 msgstr ""
 
 #. FPS
-#: src/conf.c:915
+#: src/conf.c:927
 msgid "Display a frame rate counter"
 msgstr ""
 
-#: src/conf.c:919
+#: src/conf.c:931
 msgid "Limit the rendering frame rate"
 msgstr ""
 
 #. Pause
-#: src/conf.c:924
+#: src/conf.c:936
 msgid "Show 'PAUSED' on screen while paused"
 msgstr ""
 
 #. Sound.
-#: src/conf.c:929
+#: src/conf.c:941
 msgid "Enables EFX extension for OpenAL backend."
 msgstr ""
 
-#: src/conf.c:933
+#: src/conf.c:945
 msgid "Disable all sound"
 msgstr ""
 
-#: src/conf.c:937
+#: src/conf.c:949
 msgid "Volume of sound effects and music, between 0.0 and 1.0"
 msgstr ""
 
-#: src/conf.c:940
+#: src/conf.c:952
 msgid "Relative engine sound volume. Should be between 0.0 and 1.0"
 msgstr ""
 
 #. Joystick.
-#: src/conf.c:945
+#: src/conf.c:957
 msgid "The name or numeric index of the joystick to use"
 msgstr ""
 
-#: src/conf.c:946
+#: src/conf.c:958
 msgid "Setting this to nil disables the joystick support"
 msgstr ""
 
 #. GUI.
-#: src/conf.c:959
+#: src/conf.c:971
 msgid "Number of lines visible in the comm window."
 msgstr ""
 
-#: src/conf.c:961
+#: src/conf.c:973
 msgid "Opacity fraction (0-1) for the overlay map."
 msgstr ""
 
-#: src/conf.c:963
+#: src/conf.c:975
 msgid "Use bigger icons in the outfit, shipyard, and other lists."
 msgstr ""
 
-#: src/conf.c:965
+#: src/conf.c:977
 msgid "Always show the radar and don't hide it when the overlay is active."
 msgstr ""
 
 #. Key repeat.
-#: src/conf.c:970
+#: src/conf.c:982
 msgid "Delay in ms before starting to repeat (0 disables)"
 msgstr ""
 
-#: src/conf.c:972
+#: src/conf.c:984
 msgid "Delay in ms between repeats once it starts to repeat"
 msgstr ""
 
 #. Zoom.
-#: src/conf.c:977
+#: src/conf.c:989
 msgid "Minimum and maximum zoom factor to use in-game"
 msgstr ""
 
-#: src/conf.c:978
+#: src/conf.c:990
 msgid "At 1.0, no sprites are scaled"
 msgstr ""
 
-#: src/conf.c:979
+#: src/conf.c:991
 msgid "zoom_far should be less then zoom_near"
 msgstr ""
 
-#: src/conf.c:985
+#: src/conf.c:997
 msgid "Zooming speed in factor increments per second"
 msgstr ""
 
 #. Fonts.
-#: src/conf.c:990
+#: src/conf.c:1002
 msgid "Font sizes (in pixels) for Naev"
 msgstr ""
 
-#: src/conf.c:991
+#: src/conf.c:1003
 msgid "Warning, setting to other than the default can cause visual glitches!"
 msgstr ""
 
-#: src/conf.c:992
+#: src/conf.c:1004
 #, c-format
 msgid "-- Console default: %d\n"
 msgstr ""
 
-#: src/conf.c:994
+#: src/conf.c:1006
 #, c-format
 msgid "-- Intro default: %d\n"
 msgstr ""
 
-#: src/conf.c:996
+#: src/conf.c:1008
 #, c-format
 msgid "-- Default size: %d\n"
 msgstr ""
 
-#: src/conf.c:998
+#: src/conf.c:1010
 #, c-format
 msgid "-- Small size: %d\n"
 msgstr ""
 
 #. Misc.
-#: src/conf.c:1002
+#: src/conf.c:1014
 msgid "Redirects log and error output to files"
 msgstr ""
 
-#: src/conf.c:1006
+#: src/conf.c:1018
 msgid "Enables compression on saved games"
 msgstr ""
 
-#: src/conf.c:1010
+#: src/conf.c:1022
 msgid ""
 "Doubletap sensitivity (used for double tap accel for afterburner or double "
 "tap reverse for cooldown)"
 msgstr ""
 
-#: src/conf.c:1014
+#: src/conf.c:1026
 msgid "Time (in seconds) to wait until hiding mouse when not used."
 msgstr ""
 
-#: src/conf.c:1018
+#: src/conf.c:1030
 msgid ""
 "Whether or not clicking the middle mouse button toggles mouse flying mode."
 msgstr ""
 
-#: src/conf.c:1022
+#: src/conf.c:1034
 msgid "Mouse-flying accel control"
 msgstr ""
 
-#: src/conf.c:1026
+#: src/conf.c:1038
 msgid "Maximum interval to count as a double-click (0 disables)."
 msgstr ""
 
-#: src/conf.c:1030
+#: src/conf.c:1042
 msgid "Enables developer mode (universe editor and the likes)"
 msgstr ""
 
-#: src/conf.c:1034
+#: src/conf.c:1046
 msgid ""
 "Automatic saving for when using the universe editor whenever an edit is done"
 msgstr ""
 
-#: src/conf.c:1038
+#: src/conf.c:1050
 msgid ""
 "Enable the lua-enet library, for use by online/multiplayer mods (CAUTION: "
 "online Lua scripts may have security vulnerabilities!)"
 msgstr ""
 
-#: src/conf.c:1040
+#: src/conf.c:1052
 msgid "Enable the experimental CLI based on lua-repl."
 msgstr ""
 
-#: src/conf.c:1044
+#: src/conf.c:1056
 msgid "Save the config every time game exits (rewriting this bit)"
 msgstr ""
 
-#: src/conf.c:1048
+#: src/conf.c:1060
 msgid "Indicates the last version the game has run in before"
 msgstr ""
 
-#: src/conf.c:1052
+#: src/conf.c:1064
 msgid ""
 "Indicates whether we've already warned about incomplete game translations."
 msgstr ""
 
-#: src/conf.c:1056
+#: src/conf.c:1068
 msgid "Time Naev was last played. This gets refreshed each time you exit Naev."
 msgstr ""
 
 #. Debugging.
-#: src/conf.c:1061
+#: src/conf.c:1073
 msgid "Enables FPU exceptions - only works on DEBUG builds"
 msgstr ""
 
 #. Editor.
-#: src/conf.c:1066
+#: src/conf.c:1078
 msgid "Paths for saving different files from the editor"
 msgstr ""
 
 #. TODO remove the following in 0.12.0
-#: src/conf.c:1073
+#: src/conf.c:1085
 msgid "The following are for legacy purposes and will be removed in 0.12.0."
 msgstr ""
 
-#: src/conf.c:1083
+#: src/conf.c:1095
 msgid "Keybindings"
 msgstr ""
 
-#: src/conf.c:1159
+#: src/conf.c:1171
 msgid ""
 "Failed to write configuration!  You'll most likely have to restore it by "
 "copying your backup configuration over your current configuration."
@@ -118425,7 +118427,7 @@ msgid "Unable to create economy G Matrix."
 msgstr ""
 
 #: src/economy.c:532 src/gui.c:1635 src/ndata.c:195 src/nfile.c:479
-#: src/opengl_tex.c:174 src/opengl_tex.c:460
+#: src/opengl_tex.c:174 src/opengl_tex.c:469
 msgid "Out of Memory"
 msgstr ""
 
@@ -118604,7 +118606,7 @@ msgstr ""
 msgid "Right click to add"
 msgstr ""
 
-#: src/equipment.c:876 src/land_shipyard.c:741
+#: src/equipment.c:876 src/land_shipyard.c:747
 #, c-format
 msgid "#%c%s #%c%s #0slot"
 msgstr ""
@@ -119340,57 +119342,57 @@ msgid "Loaded %d Faction"
 msgid_plural "Loaded %d Factions"
 msgstr[0] ""
 
-#: src/font.c:1157
+#: src/font.c:1158
 #, c-format
 msgid ""
 "Font '%s' unicode character '%#x' not found in font! Using missing glyph."
 msgstr ""
 
-#: src/font.c:1164
+#: src/font.c:1165
 msgid "FT_Load_Glyph failed."
 msgstr ""
 
-#: src/font.c:1171
+#: src/font.c:1172
 #, c-format
 msgid "Font '%s' not using FT_PIXEL_MODE_GRAY!"
 msgstr ""
 
-#: src/font.c:1212
+#: src/font.c:1213
 #, fuzzy, c-format
 msgid "Unable to load character '%#x'!"
 msgstr "Nebula 이미지를 로드 할 수 없습니다. %s"
 
-#: src/font.c:1441
+#: src/font.c:1442
 #, c-format
 msgid "Unable to find glyph '%d'!"
 msgstr ""
 
-#: src/font.c:1526
+#: src/font.c:1527
 #, c-format
 msgid "FT_Init_FreeType failed with font %s."
 msgstr ""
 
-#: src/font.c:1674
+#: src/font.c:1675
 #, c-format
 msgid "Unable to read font: %s"
 msgstr ""
 
-#: src/font.c:1682
+#: src/font.c:1683
 #, c-format
 msgid "FT_New_Memory_Face failed loading library from %s"
 msgstr ""
 
 #. Create at 96 DPI
 #. Create at 96 DPI
-#: src/font.c:1695
+#: src/font.c:1696
 msgid "FT_Set_Char_Size failed."
 msgstr ""
 
-#: src/font.c:1701
+#: src/font.c:1702
 msgid "Font isn't resizable!"
 msgstr ""
 
-#: src/font.c:1705
+#: src/font.c:1706
 msgid "FT_Select_Charmap failed to change character mapping."
 msgstr ""
 
@@ -120554,7 +120556,7 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: src/input.c:525 src/opengl_tex.c:749
+#: src/input.c:525 src/opengl_tex.c:758
 msgid "unknown"
 msgstr ""
 
@@ -120953,8 +120955,8 @@ msgstr ""
 msgid "Fuel Use:"
 msgstr ""
 
-#: src/land_shipyard.c:438 src/land_shipyard.c:545 src/land_shipyard.c:551
-#: src/land_shipyard.c:557
+#: src/land_shipyard.c:438 src/land_shipyard.c:551 src/land_shipyard.c:557
+#: src/land_shipyard.c:563
 msgid "Are you sure?"
 msgstr ""
 
@@ -120966,7 +120968,7 @@ msgstr ""
 
 #. Player just got a new ship
 #. player just got a new ship
-#: src/land_shipyard.c:443 src/land_shipyard.c:564
+#: src/land_shipyard.c:443 src/land_shipyard.c:570
 #, fuzzy, c-format
 #| msgid "Frontier systems"
 msgid "Bought at %s in the %s system."
@@ -120977,8 +120979,12 @@ msgstr "프론티어 시스템"
 msgid "You need the '%s' license to buy this ship."
 msgstr ""
 
+#: src/land_shipyard.c:511
+msgid "You can not trade in your ship when you have mission cargo!"
+msgstr ""
+
 #. confirm
-#: src/land_shipyard.c:546
+#: src/land_shipyard.c:552
 #, c-format
 msgid ""
 "Your %s is worth %s, exactly as much as the new ship, so no credits need be "
@@ -120986,7 +120992,7 @@ msgid ""
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:552
+#: src/land_shipyard.c:558
 #, c-format
 msgid ""
 "Your %s is worth %s, more than the new ship. For your ship, you will get the "
@@ -120994,14 +121000,14 @@ msgid ""
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:558
+#: src/land_shipyard.c:564
 #, c-format
 msgid ""
 "Your %s is worth %s, so the new ship will cost %s. Are you sure you want to "
 "trade your ship in?"
 msgstr ""
 
-#: src/land_shipyard.c:598
+#: src/land_shipyard.c:604
 msgid "Slots:"
 msgstr ""
 
@@ -122839,27 +122845,27 @@ msgstr ""
 msgid "position argument out of bounds: %d of %d elements"
 msgstr ""
 
-#: src/nlua_data.c:291
+#: src/nlua_data.c:295
 #, c-format
 msgid "size mismatch: out of bound access dest: %d of %d elements"
 msgstr ""
 
-#: src/nlua_data.c:293
+#: src/nlua_data.c:297
 #, c-format
 msgid "size mismatch: out of bound access of source: %d of %d elements"
 msgstr ""
 
-#: src/nlua_data.c:327
+#: src/nlua_data.c:331
 #, c-format
 msgid "size mismatch: A has %d elements but B has %d elements"
 msgstr ""
 
-#: src/nlua_data.c:329 src/nlua_data.c:382
+#: src/nlua_data.c:333 src/nlua_data.c:386
 #, c-format
 msgid "%s is only implemented for number types"
 msgstr ""
 
-#: src/nlua_data.c:378 src/nlua_data.c:380
+#: src/nlua_data.c:382 src/nlua_data.c:384
 #, c-format
 msgid "size mismatch for data: got %dx%dx4x%d, expected %d"
 msgstr ""
@@ -123821,54 +123827,54 @@ msgstr ""
 
 #. We could hash raw pixel data here, but that's slower than just
 #. * generating the map from scratch.
-#: src/opengl_tex.c:494
+#: src/opengl_tex.c:503
 #, c-format
 msgid "Texture '%s' has no RWops"
 msgstr "텍스처 '%s '에 RWop이 없습니다"
 
-#: src/opengl_tex.c:717
+#: src/opengl_tex.c:726
 msgid "Trying to load image from NULL path."
 msgstr "NULL 경로에서 이미지를 로드하려고합니다."
 
-#: src/opengl_tex.c:724
+#: src/opengl_tex.c:733
 #, c-format
 msgid "Failed to load surface '%s' from ndata."
 msgstr "Ndata에서 표면 '%s'을(를) 로드하지 못했습니다."
 
-#: src/opengl_tex.c:755
+#: src/opengl_tex.c:764
 #, fuzzy, c-format
 #| msgid "Unable to load Nebula image: %s"
 msgid "Unable to load image '%s'."
 msgstr "Nebula 이미지를 로드 할 수 없습니다. %s"
 
-#: src/opengl_tex.c:760
+#: src/opengl_tex.c:769
 #, c-format
 msgid "'%s' could not be opened"
 msgstr "'%s'을 (를) 열 수 없습니다"
 
 #. Not found
 #. Surfaces will have NULL names
-#: src/opengl_tex.c:885
+#: src/opengl_tex.c:894
 #, c-format
 msgid "Attempting to free texture '%s' not found in stack!"
 msgstr "스택에서 찾을 수없는 '%s' 텍스처를 해제하려고합니다!"
 
 #. Invalid texture.
-#: src/opengl_tex.c:927
+#: src/opengl_tex.c:936
 #, c-format
 msgid "Unable to duplicate texture '%s'."
 msgstr "텍스처 '%s'을 (를) 복제 할 수 없습니다."
 
-#: src/opengl_tex.c:965
+#: src/opengl_tex.c:974
 #, c-format
 msgid "Angle not between 0 and 2.*M_PI [%f]."
 msgstr "각도가 0과 2 사이가 아닙니다. * M_PI [[%f]]."
 
-#: src/opengl_tex.c:1014
+#: src/opengl_tex.c:1023
 msgid "Texture leak detected!"
 msgstr "텍스처 누출 감지!"
 
-#: src/opengl_tex.c:1017
+#: src/opengl_tex.c:1026
 #, fuzzy, c-format
 msgid "   '%s' opened %d time"
 msgid_plural "   '%s' opened %d times"
@@ -125128,11 +125134,11 @@ msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다
 msgid "Unable to copy cargo over from pilot '%s' to '%s'. Leaving cargo as is."
 msgstr ""
 
-#: src/pilot_ew.c:504
+#: src/pilot_ew.c:502
 msgid "You have been uncovered!"
 msgstr ""
 
-#: src/pilot_ew.c:506
+#: src/pilot_ew.c:504
 #, c-format
 msgid "You have uncovered '#%c%s#0'!"
 msgstr ""
@@ -125364,7 +125370,7 @@ msgstr ""
 msgid "Shooting unknown weapon type: %s"
 msgstr ""
 
-#: src/pilot_weapon.c:1688
+#: src/pilot_weapon.c:1696
 #, c-format
 msgid "#r%s is overheating!#0"
 msgstr ""
