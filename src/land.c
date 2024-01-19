@@ -377,6 +377,14 @@ static int bar_genList( unsigned int wid )
    return 0;
 }
 /**
+ * @brief Patches a mission into the mission computer.
+ */
+void misn_patchMission( Mission *misn )
+{
+   array_push_back( &mission_computer, *misn );
+   /* TODO sort. */
+}
+/**
  * @brief Regenerates the mission list.
  */
 void misn_regen (void)

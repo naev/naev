@@ -6,6 +6,7 @@
 #include "conf.h"
 #include "nstring.h"
 #include "space.h"
+#include "mission.h"
 #include "start.h"
 
 /*
@@ -73,6 +74,7 @@ void land_buttonTakeoff( unsigned int wid, const char *unused );
 unsigned int land_getWid( int window );
 void bar_regen (void);
 void misn_regen (void);
+void misn_patchMission( Mission *misn );
 
 /*
  * Error dialogue generation and associated checks.

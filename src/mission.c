@@ -370,8 +370,14 @@ int mission_start( const char *name, unsigned int *id )
    /* Try to run the mission. */
    ret = mission_init( &mission, mdat, 1, 1, id );
    /* Add to mission giver if necessary. */
-   if (landed && (ret==0) && (mdat->avail.loc==MIS_AVAIL_BAR))
-      npc_patchMission( &mission );
+   if (landed && (ret==0)) {
+      if (mdat->avail.loc==MIS_AVAIL_BAR)
+         npc_patchMission( &mission );
+      else if (mdat->avail.loc==MIS_AVAIL_COMPUTER)
+         misn_patchMission( &mission );
+      else
+         mission_cleanup( &mission );
+   }
    else
       mission_cleanup( &mission ); /* Clean up in case not accepted. */
 
