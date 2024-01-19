@@ -320,6 +320,8 @@ void main (void)
 
    /* Variance Shadow Mapping. */
    float f_shadow[MAX_LIGHTS];
+   for (int i=0; i<u_nlights; i++)
+      f_shadow[i] = 0.0;
    if (u_nlights>0)
       f_shadow[0] = shadow_map( shadowmap_tex[0], shadow[0] );
    if (u_nlights>1)
