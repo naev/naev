@@ -323,7 +323,6 @@ static int bar_genList( unsigned int wid )
    if (widget_exists( wid, "iarMissions" )) {
       /* Store position. */
       pos = toolkit_getImageArrayPos( wid, "iarMissions" );
-
       window_destroyWidget( wid, "iarMissions" );
    }
    else
@@ -707,7 +706,7 @@ static void misn_genList( unsigned int wid )
 
    /* Add position persistancey after a mission has been accepted */
    /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
-   toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
+   toolkit_setListPos( wid, "lstMission", pos);
 }
 /**
  * @brief Updates the mission list.
