@@ -68,6 +68,7 @@
 #include "start.h"
 #include "toolkit.h"
 #include "unidiff.h"
+#include "utf8.h"
 
 /*
  * Player stuff
@@ -253,6 +254,9 @@ void player_new (void)
    do {
       const char *SAVEPATH = "_tmp";
       char buf[PATH_MAX];
+      uint32_t c;
+      size_t i;
+      int badname;
 
       /* Get the name. */
       player.name = dialogue_input( _("Player Name"), 1, 60,
@@ -261,6 +265,20 @@ void player_new (void)
       /* Player cancelled dialogue. */
       if (player.name == NULL) {
          menu_main();
+         return;
+      }
+
+      /* Warn about weird names, in this case, we only consider all spaces for now. */
+      badname = 1;
+      i = 0;
+      while ((c = u8_nextchar( player.name, &i ))) {
+         if (!isspace(c)) {
+            badname = 0;
+            break;
+         }
+      }
+      if (badname && !dialogue_YesNo( _("Player Name"), _("Your chosen name '%s' does not seem be very good. Are you sure you wish to proceed with this name?"), player.name )) {
+         player_new();
          return;
       }
 
