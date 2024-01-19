@@ -505,12 +505,12 @@ int shipyard_canBuy( const Ship *ship, const Spob *spob )
 int shipyard_canTrade( const Ship *ship, const Spob *spob )
 {
    credits_t price = ship_buyPrice(ship) - player_shipPrice(player.p->name,0);
+   land_errClear();
 
    if (pilot_cargoUsedMission(player.p)>0) {
       land_errDialogueBuild( _("You can not trade in your ship when you have mission cargo!") );
       return 0;
    }
-
    return shipyard_canAcquire( ship, spob, price );
 }
 
