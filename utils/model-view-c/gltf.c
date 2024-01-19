@@ -8,6 +8,8 @@
 #include <math.h>
 #include <libgen.h>
 
+#include "physfsrwops.h"
+
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
 
@@ -182,7 +184,6 @@ typedef struct Node_ {
  * @brief Defines a complete object.
  */
 struct Object_ {
-   char *path;          /**< Base location of the object. */
    Node *nodes;         /**< Nodes the object has. */
    size_t nnodes;       /**< Number of nodes. */
    Material *materials; /**< Available materials. */
@@ -200,7 +201,7 @@ struct Object_ {
  *    @param def Default texture to use if not defined.
  *    @return OpenGL ID of the new texture.
  */
-static GLuint object_loadTexture( Object *obj, const cgltf_texture_view *ctex, GLint def )
+static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
 {
    GLuint tex;
    SDL_Surface *surface = NULL;
@@ -211,14 +212,14 @@ static GLuint object_loadTexture( Object *obj, const cgltf_texture_view *ctex, G
 
    /* Load from path. */
    if (ctex->texture->image->uri != NULL) {
-      char path[PATH_MAX];
-      if (obj != NULL)
-         snprintf( path, sizeof(path), "%s%s", obj->path, ctex->texture->image->uri );
-      else
-         snprintf( path, sizeof(path), "%s", ctex->texture->image->uri );
-      surface = IMG_Load( path );
+      SDL_RWops *rw = PHYSFSRWOPS_openRead( ctex->texture->image->uri );
+      if (rw==NULL) {
+         WARN(_("Unable to open '%s': %s"), ctex->texture->image->uri, SDL_GetError() );
+         return def;
+      }
+      surface = IMG_Load_RW( rw, 1 );
       if (surface==NULL) {
-         WARN("Unable to load surface '%s'!", ctex->texture->image->uri);
+         WARN(_("Unable to load surface '%s': %s"), ctex->texture->image->uri, SDL_GetError());
          return def;
       }
    }
@@ -280,19 +281,19 @@ static GLuint object_loadTexture( Object *obj, const cgltf_texture_view *ctex, G
 /**
  * @brief Loads a material for the object.
  */
-static int object_loadMaterial( Object *obj, Material *mat, const cgltf_material *cmat )
+static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
 {
    const GLfloat white[4] = { 1., 1., 1., 1. };
    /* TODO complete this. */
    if (cmat && cmat->has_pbr_metallic_roughness) {
       mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
       mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
-      mat->baseColour_tex  = object_loadTexture( obj, &cmat->pbr_metallic_roughness.base_color_texture, tex_ones );
+      mat->baseColour_tex  = object_loadTexture( &cmat->pbr_metallic_roughness.base_color_texture, tex_ones );
       if (mat->baseColour_tex == tex_ones)
          memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
       else
          memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
-      mat->metallic_tex    = object_loadTexture( obj, &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_zero );
+      mat->metallic_tex    = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_zero );
    }
    else {
       memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
@@ -326,9 +327,9 @@ static int object_loadMaterial( Object *obj, Material *mat, const cgltf_material
    /* Handle emissiveness. */
    if (cmat) {
       memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
-      mat->occlusion_tex= object_loadTexture( obj, &cmat->occlusion_texture, tex_ones );
-      mat->emissive_tex = object_loadTexture( obj, &cmat->emissive_texture, tex_ones );
-      mat->normal_tex   = object_loadTexture( obj, &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_zero );
+      mat->occlusion_tex= object_loadTexture( &cmat->occlusion_texture, tex_ones );
+      mat->emissive_tex = object_loadTexture( &cmat->emissive_texture, tex_ones );
+      mat->normal_tex   = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_zero );
       mat->blend        = (cmat->alpha_mode == cgltf_alpha_mode_blend);
    }
    else {
@@ -796,6 +797,48 @@ void object_render( const Object *obj, const mat4 *H )
    glDisable( GL_DEPTH_TEST );
 }
 
+static cgltf_result object_read( const struct cgltf_memory_options* memory_options, const struct cgltf_file_options* file_options, const char* path, cgltf_size* size, void** data)
+{
+	(void)file_options;
+   PHYSFS_Stat path_stat;
+
+	void* (*memory_alloc)(void*, cgltf_size) = memory_options->alloc_func ? memory_options->alloc_func : &cgltf_default_alloc;
+	void (*memory_free)(void*, void*) = memory_options->free_func ? memory_options->free_func : &cgltf_default_free;
+
+   if (!PHYSFS_stat( path, &path_stat )) {
+      WARN(_("File '%s' not found!"), path);
+		return cgltf_result_file_not_found;
+   }
+
+	cgltf_size file_size = size ? *size : 0;
+   if (file_size==0)
+      file_size = path_stat.filesize;
+
+	char* file_data = (char*)memory_alloc(memory_options->user_data, file_size);
+	if (!file_data)
+		return cgltf_result_out_of_memory;
+
+   PHYSFS_file *pfile = PHYSFS_openRead( path );
+   if (pfile == NULL) {
+      WARN(_("Unable to open '%s' for reading: %s"), path, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      return cgltf_result_file_not_found;
+   }
+   cgltf_size read_size = PHYSFS_readBytes( pfile, file_data, file_size );
+   PHYSFS_close( pfile );
+
+	if (read_size != file_size) {
+		memory_free(memory_options->user_data, file_data);
+		return cgltf_result_io_error;
+	}
+
+	if (size)
+		*size = file_size;
+	if (data)
+		*data = file_data;
+
+	return cgltf_result_success;
+}
+
 /**
  * @brief Loads an object from a file.
  *
@@ -808,7 +851,9 @@ Object *object_loadFromFile( const char *filename )
    cgltf_result res;
    cgltf_data *data;
    cgltf_options opts;
+   const char *dirpath;
    memset( &opts, 0, sizeof(opts) );
+   opts.file.read = object_read;
 
    /* Initialize object. */
    obj = calloc( sizeof(Object), 1 );
@@ -823,18 +868,19 @@ Object *object_loadFromFile( const char *filename )
    assert( res == cgltf_result_success );
 #endif /* DEBUGGING */
 
-   /* TODO load buffers properly from physfs. */
-   char path[PATH_MAX];
-   snprintf( path, sizeof(path), "%s/", dirname((char*)filename) );
-   obj->path = strdup(path);
-   res = cgltf_load_buffers( &opts, data, obj->path );
+   /* Will load from PHYSFS. */
+   res = cgltf_load_buffers( &opts, data, filename );
    assert( res == cgltf_result_success );
+
+   /* Now mount the directory and try to do things. */
+   dirpath = PHYSFS_getRealDir( filename );
+   PHYSFS_mount( dirpath, "/", 0 ); /* Prefix so more priority. */
 
    /* Load materials. */
    obj->materials = calloc( data->materials_count, sizeof(Material) );
    obj->nmaterials = data->materials_count;
    for (size_t i=0; i<data->materials_count; i++)
-      object_loadMaterial( obj, &obj->materials[i], &data->materials[i] );
+      object_loadMaterial( &obj->materials[i], &data->materials[i] );
 
    /* Load nodes. */
    cgltf_scene *scene = &data->scenes[0]; /* data->scene may be NULL */
@@ -847,6 +893,9 @@ Object *object_loadFromFile( const char *filename )
       vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
       vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
    }
+
+   /* Unmount directory. */
+   PHYSFS_unmount( dirpath );
 
    cgltf_free(data);
 
@@ -924,7 +973,7 @@ int object_init (void)
    gl_checkErr();
 
    /* Set up default material. */
-   object_loadMaterial( NULL, &material_default, NULL );
+   object_loadMaterial( &material_default, NULL );
 
    /* We'll have to set up some rendering stuff for blurring purposes. */
    const GLfloat vbo_data[8] = {

@@ -1,10 +1,12 @@
 #include <assert.h>
 #include <stdio.h>
+#include <libgen.h>
 
 #include "common.h"
 
 #include "SDL.h"
 #include "SDL_image.h"
+#include "physfs.h"
 
 #include "glad.h"
 
@@ -18,15 +20,21 @@ int main( int argc, char *argv[] )
    (void) argv;
    GLuint VaoId;
    int shadowmap_sel = 0;
+   char *path;
 
    if (argc < 2) {
       DEBUG("Usage: %s FILENAME", argv[0]);
       return -1;
    }
 
+   PHYSFS_init( argv[0] );
+   path = strdup(argv[1]);
+   PHYSFS_mount( dirname(path), "/", 1 );
+   free(path);
+
    SDL_Init( SDL_INIT_VIDEO );
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
+   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 2 );
    SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 1);
    SDL_Window *win = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_W, SCREEN_H, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
    SDL_SetWindowTitle( win, "Naev Model Viewer" );
@@ -45,7 +53,9 @@ int main( int argc, char *argv[] )
       return -1;
 
    /* Load the object. */
-   Object *obj = object_loadFromFile( argv[1] );
+   path = strdup(argv[1]);
+   Object *obj = object_loadFromFile( basename(path) );
+   free( path );
 
    /* Set some lighting parameters. */
    object_lightAmbient( 0.5, 0.5, 0.5 );
@@ -183,6 +193,9 @@ int main( int argc, char *argv[] )
    object_free( obj );
 
    object_exit();
+
+   SDL_Quit();
+   PHYSFS_deinit();
 
    return 0;
 }
