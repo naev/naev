@@ -648,8 +648,8 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
 
    /* Cull faces. */
-   //glEnable(GL_CULL_FACE);
-   //glCullFace(GL_FRONT);
+   glEnable(GL_CULL_FACE);
+   glCullFace(GL_FRONT);
 
    /* Set up shader. */
    glUseProgram( shd->program );
@@ -661,7 +661,7 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    for (size_t i=0; i<obj->nnodes; i++)
       object_renderNodeShadow( obj, &obj->nodes[i], H );
 
-   //glDisable(GL_CULL_FACE);
+   glDisable(GL_CULL_FACE);
    gl_checkErr();
 
    /* Now we have to blur. We'll do a separable filter approach and do two passes. */
@@ -732,8 +732,9 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    glViewport(0, 0, SCREEN_W, SCREEN_H );
 
    /* Cull faces. */
-   //glEnable(GL_CULL_FACE);
-   //glCullFace(GL_BACK);
+   glFrontFace(GL_CW); /* TODO, why do we have to change from default? Is it a loading issue? */
+   glEnable(GL_CULL_FACE);
+   glCullFace(GL_BACK);
 
    for (size_t i=0; i<obj->nnodes; i++)
       object_renderNodeMesh( obj, &obj->nodes[i], H );
@@ -745,7 +746,7 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
-   //glDisable(GL_CULL_FACE);
+   glDisable(GL_CULL_FACE);
 
    gl_checkErr();
 }
