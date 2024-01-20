@@ -177,7 +177,6 @@ static int pc_cmp( const void *pa, const void *pb )
    const PilotCommodity *pca, *pcb;
    pca = (const PilotCommodity*) pa;
    pcb = (const PilotCommodity*) pb;
-
    return pcb->commodity->price - pca->commodity->price;
 }
 
@@ -209,9 +208,13 @@ void pfleet_cargoRedistribute (void)
       const PilotCommodity *pc = &pclist[i];
 
       if (pc->id > 0)
-         q = pilot_cargoAdd( player.p, pc->commodity, pc->quantity, pc->id );
-      else
+         q = pilot_cargoAddRaw( player.p, pc->commodity, pc->quantity, pc->id );
+      else {
          q = pfleet_cargoAdd( pc->commodity, pc->quantity );
+         /* When landed, just stuff everything on the player's ship as they may not be ready for take-off yet. */
+         if (landed && (q < pc->quantity))
+            q += pilot_cargoAddRaw( player.p, pc->commodity, pc->quantity-q, pc->id );
+      }
 #ifdef DEBUGGING
       if (q != pc->quantity)
          WARN(_("Failure to add cargo '%s' to player fleet. Only %d of %d added."), pc->commodity->name, q, pc->quantity );
