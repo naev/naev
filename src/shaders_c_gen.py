@@ -30,8 +30,10 @@ class Shader:
         yield f"   }} {self.name};\n"
 
     def source_chunks(self):
-        gshader = f"\"{self.geom_path}\"" if self.geom_path!=None else "NULL"
-        yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\", {gshader});\n"
+        if self.geom_path!=None:
+            yield f"   shaders.{self.name}.program = gl_program_vert_frag_geom(\"{self.vs_path}\", \"{self.fs_path}\", \"{self.geom_path}\");\n"
+        else:
+            yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n"
         for attribute in self.attributes:
             yield f"   shaders.{self.name}.{attribute} = glGetAttribLocation(shaders.{self.name}.program, \"{attribute}\");\n"
         for uniform in self.uniforms:
@@ -480,7 +482,7 @@ static int shaders_cmp( const void *p1, const void *p2 )
 static int shaders_loadSimple( const char *name, SimpleShader *shd, const char *fs_path )
 {
    shd->name   = name;
-   shd->program = gl_program_vert_frag( "project_pos.vert", fs_path, NULL );
+   shd->program = gl_program_vert_frag( "project_pos.vert", fs_path );
    shd->vertex = glGetAttribLocation( shd->program, "vertex" );
    shd->projection = glGetUniformLocation( shd->program, "projection" );
    shd->colour  = glGetUniformLocation( shd->program, "colour" );

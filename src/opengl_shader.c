@@ -203,6 +203,16 @@ static int gl_program_link( GLuint program )
    return 0;
 }
 
+GLuint gl_program_vert_frag_geom( const char *vert, const char *frag, const char *geom )
+{
+   return gl_program_backend( vert, frag, geom, NULL );
+}
+
+GLuint gl_program_vert_frag( const char *vert, const char *frag )
+{
+   return gl_program_backend( vert, frag, NULL, NULL );
+}
+
 /**
  * @brief Loads a vertex and fragment shader from files.
  *
@@ -211,7 +221,7 @@ static int gl_program_link( GLuint program )
  *    @param[in,opt] geomfile Optional geometry shader name.
  *    @return The shader compiled program or 0 on failure.
  */
-GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile, const char *geomfile )
+GLuint gl_program_backend( const char *vertfile, const char *fragfile, const char *geomfile, const char *prependtext )
 {
    char *vert_str, *frag_str, prepend[STRMAX];
    size_t vert_size, frag_size;
@@ -220,6 +230,8 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile, const c
    strncpy( prepend, GLSL_VERSION, sizeof(prepend)-1 );
    if (gl_has( OPENGL_SUBROUTINES ))
       strncat( prepend, GLSL_SUBROUTINE, sizeof(prepend)-strlen(prepend)-1 );
+   if (prependtext != NULL)
+      strncat( prepend, prependtext, sizeof(prepend)-strlen(prepend)-1 );
 
    vert_str = gl_shader_loadfile( vertfile, &vert_size, prepend );
    frag_str = gl_shader_loadfile( fragfile, &frag_size, prepend );
