@@ -177,6 +177,12 @@ static int pc_cmp( const void *pa, const void *pb )
    const PilotCommodity *pca, *pcb;
    pca = (const PilotCommodity*) pa;
    pcb = (const PilotCommodity*) pb;
+   /* Prioritize mission cargo first. */
+   if ((pca->id > 0) && (pcb->id==0))
+      return -1;
+   else if ((pca->id == 0) && (pcb->id > 0))
+      return +1;
+   /* Just do price at the end. */
    return pcb->commodity->price - pca->commodity->price;
 }
 
