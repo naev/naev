@@ -1,4 +1,5 @@
 * 0.11.3 (unreleased)
+   * Only do updates with positive delta ticks
    * Fixed cargo disappearing when buying a ship when over the cargo limit
    * Don't let the player trade ships when they have mission cargo
    * Fixed not being able to turn off point defense weapons
