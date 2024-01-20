@@ -55,11 +55,11 @@ void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 )
  */
 void mat4_mul_vec( vec3 *out, const mat4 *m, const vec3 *v )
 {
-   for (int i=0; i<4; i++) {
+   for (int i=0; i<3; i++) {
       GLfloat a = m->m[3][i];
       for (int j=0; j<3; j++)
          a += m->m[j][i] * v->v[j];
-      out->v[i] = a;
+      out->v[i] = a+m->m[3][i];
    }
 }
 
