@@ -58,7 +58,7 @@ int main( int argc, char *argv[] )
    free( path );
 
    /* Set some lighting parameters. */
-   object_lightAmbient( 0.5, 0.5, 0.5 );
+   object_lightAmbient( 0.15, 0.15, 0.15 );
 
    /* Set up some stuff. */
    GLuint shadowvbo;

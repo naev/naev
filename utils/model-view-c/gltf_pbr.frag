@@ -161,7 +161,7 @@ struct Material {
 
 struct Light {
    vec3 position;
-   float range;
+   //float range;
    vec3 colour;
    float intensity;
 };
@@ -172,11 +172,14 @@ uniform sampler2D shadowmap_tex[ MAX_LIGHTS ];
 
 vec3 light_intensity( Light L, float dist )
 {
+#if 0
    float attenuation;
    if (L.range < 0.0)
       attenuation =  1.0 / pow(dist,2.0);
    else
       attenuation = max(min(1.0 - pow(dist / L.range, 4.0), 1.0), 0.0) / pow(dist, 2.0);
+#endif
+   float attenuation =  1.0 / pow(dist,2.0);
    return L.colour * L.intensity * attenuation;
 }
 

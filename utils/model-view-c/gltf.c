@@ -30,7 +30,7 @@
 typedef struct ShaderLight_ {
    GLuint Hshadow;   /* mat4 */
    GLuint position;  /* vec3 */
-   GLuint range;     /* float */
+   //GLuint range;     /* float */
    GLuint colour;    /* vec3 */
    GLuint intensity; /* float */
    GLuint shadowmap_tex; /* sampler2D */
@@ -51,19 +51,19 @@ static Light lights[MAX_LIGHTS] = {
       .pos = { .v = {5., 2., 0.} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 200., // 100.
+      .intensity = 150.,
    },
    {
       .pos = { .v = {0.5, 0.05, -1.0} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 3., // 3.
+      .intensity = 3.,
    },
    {
       .pos = { .v = {-0.5, 0.05, -1.0} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 3., // 3.
+      .intensity = 3.,
    },
 };
 static vec3 ambient = { .v = {0., 0., 0.} };
@@ -781,7 +781,7 @@ void object_render( const Object *obj, const mat4 *H )
       const Light *l = &lights[i];
       const ShaderLight *sl = &shd->lights[i];
       glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
-      glUniform1f( sl->range, l->range );
+      //glUniform1f( sl->range, l->range );
       glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
       glUniform1f( sl->intensity, l->intensity );
    }
@@ -1103,8 +1103,8 @@ int object_init (void)
       char buf[128];
       snprintf( buf, sizeof(buf), "u_lights[%d].position", i );
       sl->position      = glGetUniformLocation( shd->program, buf );
-      snprintf( buf, sizeof(buf), "u_lights[%d].range", i );
-      sl->range         = glGetUniformLocation( shd->program, buf );
+      //snprintf( buf, sizeof(buf), "u_lights[%d].range", i );
+      //sl->range         = glGetUniformLocation( shd->program, buf );
       snprintf( buf, sizeof(buf), "u_lights[%d].colour", i );
       sl->colour        = glGetUniformLocation( shd->program, buf );
       snprintf( buf, sizeof(buf), "u_lights[%d].intensity", i );
