@@ -58,7 +58,8 @@ int main( int argc, char *argv[] )
    free( path );
 
    /* Set some lighting parameters. */
-   object_lightAmbient( 0.15, 0.15, 0.15 );
+   //object_lightAmbient( 0.1, 0.1, 0.1 );
+   object_lightAmbient( 0.3, 0.0, 0.0 );
 
    /* Set up some stuff. */
    GLuint shadowvbo;
@@ -149,7 +150,7 @@ int main( int argc, char *argv[] )
          {  s,  0.0,  c,  0.0 },
          { 0.0, 0.0, 0.0, 1.0 }
       } };
-      const GLfloat sca = 0.1;
+      const GLfloat sca = 1.0;
       const mat4 Hscale = { .m = {
          { sca, 0.0, 0.0, 0.0 },
          { 0.0, sca, 0.0, 0.0 },

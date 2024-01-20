@@ -502,7 +502,7 @@ static void shadow_matrix( const Object *obj, mat4 *m, const Light *light )
    const vec3 center    = { .v = {0., 0., 0.} };
    const mat4 L = mat4_lookat( &light_pos, &center, &up );
    const float norm = vec3_length( &light_pos );
-   const float r = obj->radius * 0.1; /* TODO unhardcode this scaling factor. */
+   const float r = 1.0;//obj->radius * 0.1;
    const mat4 O = mat4_ortho( -r, r, -r, r, norm-1.0, norm+1.0 );
    mat4_mul( m, &L, &O );
 }
@@ -770,8 +770,20 @@ void object_update( Object *obj, double dt )
  */
 void object_render( const Object *obj, const mat4 *H )
 {
-   const mat4 I = mat4_identity();
-   const mat4 *Hptr = (H!=NULL) ? H : &I;
+   const GLfloat sca = 1.0/obj->radius;
+   const mat4 Hscale = { .m = {
+      { sca, 0.0, 0.0, 0.0 },
+      { 0.0, sca, 0.0, 0.0 },
+      { 0.0, 0.0, sca, 0.0 },
+      { 0.0, 0.0, 0.0, 1.0 } } };
+   const mat4 *Hptr;
+
+   if (H==NULL)
+      Hptr = &Hscale;
+   else {
+      Hptr = H;
+      mat4_apply( H, &Hscale );
+   }
 
    /* Some constant stuff. */
    const Shader *shd = &object_shader;
