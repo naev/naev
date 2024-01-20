@@ -6,7 +6,7 @@
 #include "collision.h"
 #include "commodity.h"
 #include "nxml.h"
-#include "object.h"
+#include "gltf.h"
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"

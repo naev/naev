@@ -484,7 +484,7 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    base = delim==NULL ? strdup( buf ) : strndup( buf, delim-buf );
 
    /* Load the 3d model */
-   snprintf(str, sizeof(str), SHIP_3DGFX_PATH"%s/%s/%s.obj", base, buf, buf);
+   snprintf(str, sizeof(str), SHIP_3DGFX_PATH"%s/%s/%s.gltf", base, buf, buf);
    if (PHYSFS_exists(str))
       temp->gfx_3d = object_loadFromFile(str);
 

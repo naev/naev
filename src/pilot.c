@@ -1947,8 +1947,14 @@ void pilot_render( Pilot *p )
       if (e==NULL) {
          if (p->ship->gfx_3d != NULL) {
             /* 3d */
-            object_renderSolidPart(p->ship->gfx_3d, &p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
-            object_renderSolidPart(p->ship->gfx_3d, &p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
+            //object_renderSolidPart(p->ship->gfx_3d, &p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
+            //object_renderSolidPart(p->ship->gfx_3d, &p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
+            double s = p->ship->gfx_3d_scale * scale;
+            mat4 H = mat4_identity();
+            mat4_rotate2d( &H, p->solid.dir );
+            mat4_scale( &H, s, s, s );
+            /* TODO split engine and such. */
+            object_render( p->ship->gfx_3d, &H, 0. );
          }
          else {
             gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,

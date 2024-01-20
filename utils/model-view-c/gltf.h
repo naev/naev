@@ -19,8 +19,7 @@ Object *object_loadFromFile( const char *filename );
 void object_free( Object *obj );
 
 /* Rendering and updating. */
-void object_update( Object *obj, double dt );
-void object_render( const Object *obj, const mat4 *H );
+void object_render( const Object *obj, const mat4 *H, double time );
 
 /* Lighting. */
 void object_lightAmbient( double r, double g, double b );

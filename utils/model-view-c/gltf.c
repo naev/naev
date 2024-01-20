@@ -105,7 +105,7 @@ typedef struct Shader_ {
 } Shader;
 static Shader object_shader;
 static Shader shadow_shader;
-static GLuint tex_zero;
+static GLuint tex_zero = 0; /* Used to detect initialization for now. */
 static GLuint tex_ones;
 
 /* Below here are for blurring purposes. */
@@ -497,6 +497,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
 
 static void shadow_matrix( const Object *obj, mat4 *m, const Light *light )
 {
+   (void) obj;
    const vec3 up        = { .v = {0., 1., 0.} };
    const vec3 light_pos = light->pos;
    const vec3 center    = { .v = {0., 0., 0.} };
@@ -757,7 +758,7 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
  *    @param obj Object to update.
  *    @param dt Current delta tick.
  */
-void object_update( Object *obj, double dt )
+void object_setTime( Object *obj, double dt )
 {
    obj->time += dt;
 }
@@ -768,21 +769,22 @@ void object_update( Object *obj, double dt )
  *    @param obj Object to render.
  *    @param H Transformation to apply (or NULL to use identity).
  */
-void object_render( const Object *obj, const mat4 *H )
+void object_render( const Object *obj, const mat4 *H, double time )
 {
+   (void) time; /* TODO implement animations. */
    const GLfloat sca = 1.0/obj->radius;
    const mat4 Hscale = { .m = {
       { sca, 0.0, 0.0, 0.0 },
       { 0.0, sca, 0.0, 0.0 },
       { 0.0, 0.0, sca, 0.0 },
       { 0.0, 0.0, 0.0, 1.0 } } };
-   const mat4 *Hptr;
+   mat4 Hptr;
 
    if (H==NULL)
-      Hptr = &Hscale;
+      Hptr = Hscale;
    else {
-      Hptr = H;
-      mat4_apply( H, &Hscale );
+      Hptr = *H;
+      mat4_apply( &Hptr, &Hscale );
    }
 
    /* Some constant stuff. */
@@ -804,8 +806,8 @@ void object_render( const Object *obj, const mat4 *H )
    glDepthFunc( GL_LESS );
 
    for (int i=0; i<MAX_LIGHTS; i++)
-      object_renderShadow( obj, Hptr, &lights[i] );
-   object_renderMesh( obj, Hptr );
+      object_renderShadow( obj, &Hptr, &lights[i] );
+   object_renderMesh( obj, &Hptr );
 
    glDisable( GL_DEPTH_TEST );
 }
@@ -867,6 +869,10 @@ Object *object_loadFromFile( const char *filename )
    const char *dirpath;
    memset( &opts, 0, sizeof(opts) );
    opts.file.read = object_read;
+
+   /* First see if we have to initialize subsystem. */
+   if (tex_zero==0)
+      object_init();
 
    /* Initialize object. */
    obj = calloc( sizeof(Object), 1 );
@@ -949,6 +955,9 @@ static void object_freeTex( GLuint tex )
 
 void object_free( Object *obj )
 {
+   if (obj==NULL)
+      return;
+
    for (size_t i=0; i<obj->nnodes; i++)
       object_freeNode( &obj->nodes[i] );
    free( obj->nodes );
@@ -1136,6 +1145,10 @@ int object_init (void)
 
 void object_exit (void)
 {
+   /* Not initialized. */
+   if (tex_zero==0)
+      return;
+
    glDeleteBuffers( 1, &shadow_vbo );
    glDeleteTextures( 1, &shadow_tex );
    glDeleteFramebuffers( 1, &shadow_fbo );

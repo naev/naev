@@ -3763,8 +3763,6 @@ src/nxml.c
 src/nxml.h
 src/nxml_lua.c
 src/nxml_lua.h
-src/object.c
-src/object.h
 src/opengl.c
 src/opengl.h
 src/opengl_render.c
