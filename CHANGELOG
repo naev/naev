@@ -3,6 +3,7 @@
    * Fixed cargo disappearing when buying a ship when over the cargo limit
    * Don't let the player trade ships when they have mission cargo
    * Fixed not being able to turn off point defense weapons
+   * Fixed Za'lek drone bay being cheaper than the mini-bay
    * `sciencegonewrong/02_sciwrong`: make the drones not hostile to other factions
    * `neutral/baron_comm`: fixed trivial warning when trying to clean up baron comm event
    * `neutral/wastedump`: fixed getting rid of cargo while landed

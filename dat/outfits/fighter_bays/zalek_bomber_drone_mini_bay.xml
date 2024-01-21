@@ -9,7 +9,7 @@
   <condstr>You need at least 30 reputation with House Za'lek.</condstr>
   <rarity>2</rarity>
   <mass>75</mass>
-  <price>1700000</price>
+  <price>950000</price>
   <gfx_store>zalek_drone_bomber_fighter.webp</gfx_store>
   <description>This bay can launch a wing of bomber drones capable of bombarding enemy capital ships into submission without the mothership ever coming into danger. It comes with all the devices required for the maintenance and flight of the drones.</description>
   <cpu>-135</cpu>
