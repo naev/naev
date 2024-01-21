@@ -6,6 +6,7 @@
    * `sciencegonewrong/02_sciwrong`: make the drones not hostile to other factions
    * `neutral/baron_comm`: fixed trivial warning when trying to clean up baron comm event
    * `neutral/wastedump`: fixed getting rid of cargo while landed
+   * Translation updates
 
 * 0.11.2
    * Stopped autonav from preventing wobble and overshooting by crashing the entire game
