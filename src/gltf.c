@@ -384,6 +384,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
          glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(cgltf_uint) * num, idx, GL_STATIC_DRAW );
          mesh->nidx = acc->count;
          glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+         free( idx );
          gl_checkErr();
 
          for (size_t j=0; j<prim->attributes_count; j++) {
