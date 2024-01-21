@@ -3589,6 +3589,8 @@ src/gettext.c
 src/gettext.h
 src/glad.c
 src/glad.h
+src/gltf.c
+src/gltf.h
 src/glue_macos.h
 src/gui.c
 src/gui.h
