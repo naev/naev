@@ -1310,7 +1310,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       if (vertex == NULL)
          vertex = strdup("project_pos.vert");
       gl_contextSet();
-      gfx->program   = gl_program_vert_frag( vertex, xml_get(node), NULL );
+      gfx->program   = gl_program_vert_frag( vertex, xml_get(node) );
       free( vertex );
       gfx->vertex    = glGetAttribLocation(  gfx->program, "vertex" );
       gfx->projection= glGetUniformLocation( gfx->program, "projection" );

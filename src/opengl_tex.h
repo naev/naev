@@ -89,6 +89,7 @@ void gl_freeTexture( glTexture* texture );
  * FBO stuff.
  */
 int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height );
+int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height );
 
 /*
  * Misc.

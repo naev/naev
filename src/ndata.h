@@ -16,7 +16,7 @@
 #define GUI_GFX_PATH             "gfx/gui/" /**< Location of the GUI graphics. */
 #define PORTRAIT_GFX_PATH        "gfx/portraits/" /**< Location of the portrait graphics. */
 #define SHIP_GFX_PATH            "gfx/ship/" /**< Location of ship graphics. */
-#define SHIP_3DGFX_PATH          "gfx/ship/3d/" /**< Location of ship 3d graphics. */
+#define SHIP_3DGFX_PATH          "gfx/ship3d/" /**< Location of ship 3d graphics. */
 #define OUTFIT_GFX_PATH          "gfx/outfit/" /**< Path to outfit graphics. */
 #define SPFX_GFX_PATH            "gfx/spfx/" /**< location of the graphic */
 #define FACTION_LOGO_PATH        "gfx/logo/" /**< Path to logo gfx. */

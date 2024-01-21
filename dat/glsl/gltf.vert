@@ -1,3 +1,7 @@
+#ifndef MAX_LIGHTS
+#  define MAX_LIGHTS 3
+#endif
+
 /* Not including math.glsl here because a python script reads this also and
 	can't handle include preprocessor. */
 const float M_PI        = 3.14159265358979323846;  /* pi */

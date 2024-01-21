@@ -1,3 +1,7 @@
+#ifndef SHADOWMAP_SIZE
+#  define SHADOWMAP_SIZE 512
+#endif
+
 uniform sampler2D sampler;
 
 in vec2 tex_coord;
@@ -22,6 +26,6 @@ vec4 blurgaussian( sampler2D image, vec2 uv, vec2 resolution, vec2 direction, fl
 void main (void)
 {
    //float r = texture( sampler, tex_coord ).r;
-   float r = blurgaussian( sampler, tex_coord, vec2(SHADOWMAP_SIZE), vec2(0.0,1.0), 3.0 ).r;
+   float r = blurgaussian( sampler, tex_coord, vec2(SHADOWMAP_SIZE), vec2(1.0,0.0), 3.0 ).r;
    gl_FragDepth = r;
 }

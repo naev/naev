@@ -1,0 +1,110 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+#pragma once
+
+#include <stddef.h>
+
+#include "glad.h"
+
+#include "mat4.h"
+#include "vec3.h"
+
+#define MAX_LIGHTS 3    /**< Maximum amount of lights. TODO deferred rendering. */
+
+#define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
+
+/**
+ * @brief PBR Material of an object.
+ */
+typedef struct Material_ {
+   char *name; /**< Name of the material if applicable. */
+   int blend;  /**< Whether or not to blend it. */
+   /* pbr_metallic_roughness */
+   GLuint baseColour_tex;  /**< Base colour of the material. */
+   GLuint metallic_tex;    /**< Metallic/roughness map of the material. Metallic is stored in G channel, hile roughness is in the B channel. */
+   GLfloat metallicFactor; /**< Metallic factor (single value). Multplies the map if available. */
+   GLfloat roughnessFactor;/**< Roughness factor (single value). Multiplies the map if available. */
+   GLfloat baseColour[4];  /**< Base colour of the material. Multiplies the texture if available. */
+   /* pbr_specular_glossiness */
+   /* Sheen. */
+   GLfloat sheen[3];
+   GLfloat sheen_roughness;
+   /* Clearcoat */
+   /*GLuint clearcoat_tex;
+   GLuint clearcoat_roughness_tex;
+   GLuint clearcoat_normal_tex; */
+   GLfloat clearcoat;
+   GLfloat clearcoat_roughness;
+   /* misc. */
+   GLuint normal_tex;
+   GLuint occlusion_tex;
+   GLuint emissive_tex;
+   GLfloat emissiveFactor[3];
+   /* Custom Naev. */
+   //GLfloat waxiness;
+} Material;
+
+/**
+ * @brief Represents an underlying 3D mesh.
+ */
+typedef struct Mesh_ {
+   size_t nidx;      /**< Number of indices. */
+   GLuint vbo_idx;   /**< Index VBO. */
+   GLuint vbo_pos;   /**< Position VBO. */
+   GLuint vbo_nor;   /**< Normal VBO. */
+   GLuint vbo_tex;   /**< Texture coordinate VBO. */
+   int material;     /**< ID of material to use. */
+
+   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
+   vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
+   vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
+} Mesh;
+
+/**
+ * @brief Represents a node of an object. Each node can have multiple meshes and children nodes with an associated transformation.
+ */
+struct Node_;
+typedef struct Node_ {
+   char *name;       /**< Name information. */
+   mat4 H;           /**< Homogeneous transform. */
+   Mesh *mesh;       /**< Meshes. */
+   size_t nmesh;     /**< Number of meshes. */
+   struct Node_ *children; /**< Children mesh. */
+   size_t nchildren; /**< Number of children mesh. */
+
+   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
+   vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
+   vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
+} Node;
+
+/**
+ * @brief Defines a complete object.
+ */
+typedef struct Object_ {
+   Node *nodes;         /**< Nodes the object has. */
+   size_t nnodes;       /**< Number of nodes. */
+   Material *materials; /**< Available materials. */
+   size_t nmaterials;   /**< Number of materials. */
+   GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
+   GLfloat time;        /**< Current time. */
+   vec3 aabb_min;       /**< Minimum value of AABB wrapping around it. */
+   vec3 aabb_max;       /**< Maximum value of AABB wrapping around it. */
+} Object;
+
+/* Framework itself. */
+int object_init (void);
+void object_exit (void);
+
+/* Loading and freeing. */
+Object *object_loadFromFile( const char *filename );
+void object_free( Object *obj );
+
+/* Rendering and updating. */
+void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size );
+
+/* Lighting. */
+void object_lightAmbient( double r, double g, double b );
+
+/* Misc functions. */
+GLuint object_shadowmap( int light );

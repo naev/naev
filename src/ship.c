@@ -72,9 +72,8 @@ static void ship_freeSlot( ShipOutfitSlot* s );
  */
 static int ship_cmp( const void *p1, const void *p2 )
 {
-   const Ship *s1, *s2;
-   s1 = (const Ship*) p1;
-   s2 = (const Ship*) p2;
+   const Ship *s1 = p1;
+   const Ship *s2 = p2;
    return strcmp( s1->name, s2->name );
 }
 
@@ -484,9 +483,11 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    base = delim==NULL ? strdup( buf ) : strndup( buf, delim-buf );
 
    /* Load the 3d model */
-   snprintf(str, sizeof(str), SHIP_3DGFX_PATH"%s/%s/%s.obj", base, buf, buf);
-   if (PHYSFS_exists(str))
+   snprintf(str, sizeof(str), SHIP_3DGFX_PATH"%s/%s.gltf", base, buf);
+   if (PHYSFS_exists(str)) {
+      DEBUG("Found 3D graphics for '%s' at '%s'!", temp->name, str);
       temp->gfx_3d = object_loadFromFile(str);
+   }
 
    /* Load the space sprite. */
    ext = ".webp";

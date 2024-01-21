@@ -8,11 +8,13 @@
 
 #define DEBUGGING 1
 
+#ifndef PATH_MAX
 #define PATH_MAX  512
+#endif /* PATH_MAX */
 #define STRMAX    8192
 
-#define SCREEN_W  1280
-#define SCREEN_H  1280
+#define SCREEN_W  1024
+#define SCREEN_H  1024
 
 #define _(String) String
 #define gl_checkErr()   gl_checkHandleError( __func__, __LINE__ )

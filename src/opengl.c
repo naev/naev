@@ -557,8 +557,10 @@ void gl_resize (void)
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
          glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
+         glDeleteTextures( 1, &gl_screen.fbo_depth_tex[i] );
       }
       gl_fboCreate( &gl_screen.fbo[i], &gl_screen.fbo_tex[i], gl_screen.rw, gl_screen.rh );
+      gl_fboAddDepth( gl_screen.fbo[i], &gl_screen.fbo_depth_tex[i], gl_screen.rw, gl_screen.rh );
    }
 
    gl_checkErr();
@@ -725,8 +727,10 @@ void gl_exit (void)
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
          glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
+         glDeleteTextures( 1, &gl_screen.fbo_depth_tex[i] );
          gl_screen.fbo[i] = GL_INVALID_VALUE;
          gl_screen.fbo_tex[i] = GL_INVALID_VALUE;
+         gl_screen.fbo_depth_tex[i] = GL_INVALID_VALUE;
       }
    }
 

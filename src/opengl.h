@@ -70,6 +70,7 @@ typedef struct glInfo_ {
    GLuint current_fbo; /**< Current framebuffer. */
    GLuint fbo[OPENGL_NUM_FBOS]; /**< Framebuffers. */
    GLuint fbo_tex[OPENGL_NUM_FBOS]; /**< Texture for framebuffers. */
+   GLuint fbo_depth_tex[OPENGL_NUM_FBOS]; /**< Depth texture for framebuffers. */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 

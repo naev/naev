@@ -1,6 +1,9 @@
 #include "gltf.h"
 
-#include "common.h"
+/* We use this file in utils/model-view-c to debug things. */
+#ifdef PACKAGE
+#define HAVE_NAEV
+#endif
 
 #include "glad.h"
 #include "SDL_image.h"
@@ -13,16 +16,22 @@
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
 
-#include "vec3.h"
+#ifdef HAVE_NAEV
+#include "naev.h"
+#include "opengl_shader.h"
+#else /* HAVE_NAEV */
+#include "common.h"
 #include "shader_min.h"
+#define gl_contextSet()
+#define gl_contextUnset()
+#endif /* HAVE_NAEV */
+#include "vec3.h"
 
 /* Horrible hack that turns a variable name into a string. */
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-#define MAX_LIGHTS 3    /**< Maximum amount of lights. TODO deferred rendering. */
-
-#define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
+static Material material_default;
 
 /**
  * @brief Simple point light model.
@@ -105,7 +114,7 @@ typedef struct Shader_ {
 } Shader;
 static Shader object_shader;
 static Shader shadow_shader;
-static GLuint tex_zero;
+static GLuint tex_zero = 0; /* Used to detect initialization for now. */
 static GLuint tex_ones;
 
 /* Below here are for blurring purposes. */
@@ -115,84 +124,6 @@ static GLuint shadow_tex;
 static Shader shadow_shader_blurX;
 static Shader shadow_shader_blurY;
 
-/**
- * @brief PBR Material of an object.
- */
-typedef struct Material_ {
-   char *name; /**< Name of the material if applicable. */
-   int blend;  /**< Whether or not to blend it. */
-   /* pbr_metallic_roughness */
-   GLuint baseColour_tex;  /**< Base colour of the material. */
-   GLuint metallic_tex;    /**< Metallic/roughness map of the material. Metallic is stored in G channel, hile roughness is in the B channel. */
-   GLfloat metallicFactor; /**< Metallic factor (single value). Multplies the map if available. */
-   GLfloat roughnessFactor;/**< Roughness factor (single value). Multiplies the map if available. */
-   GLfloat baseColour[4];  /**< Base colour of the material. Multiplies the texture if available. */
-   /* pbr_specular_glossiness */
-   /* Sheen. */
-   GLfloat sheen[3];
-   GLfloat sheen_roughness;
-   /* Clearcoat */
-   /*GLuint clearcoat_tex;
-   GLuint clearcoat_roughness_tex;
-   GLuint clearcoat_normal_tex; */
-   GLfloat clearcoat;
-   GLfloat clearcoat_roughness;
-   /* misc. */
-   GLuint normal_tex;
-   GLuint occlusion_tex;
-   GLuint emissive_tex;
-   GLfloat emissiveFactor[3];
-   /* Custom Naev. */
-   //GLfloat waxiness;
-} Material;
-static Material material_default;
-
-/**
- * @brief Represents an underlying 3D mesh.
- */
-typedef struct Mesh_ {
-   size_t nidx;      /**< Number of indices. */
-   GLuint vbo_idx;   /**< Index VBO. */
-   GLuint vbo_pos;   /**< Position VBO. */
-   GLuint vbo_nor;   /**< Normal VBO. */
-   GLuint vbo_tex;   /**< Texture coordinate VBO. */
-   int material;     /**< ID of material to use. */
-
-   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
-   vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
-   vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
-} Mesh;
-
-/**
- * @brief Represents a node of an object. Each node can have multiple meshes and children nodes with an associated transformation.
- */
-struct Node_;
-typedef struct Node_ {
-   char *name;       /**< Name information. */
-   mat4 H;           /**< Homogeneous transform. */
-   Mesh *mesh;       /**< Meshes. */
-   size_t nmesh;     /**< Number of meshes. */
-   struct Node_ *children; /**< Children mesh. */
-   size_t nchildren; /**< Number of children mesh. */
-
-   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
-   vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
-   vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
-} Node;
-
-/**
- * @brief Defines a complete object.
- */
-struct Object_ {
-   Node *nodes;         /**< Nodes the object has. */
-   size_t nnodes;       /**< Number of nodes. */
-   Material *materials; /**< Available materials. */
-   size_t nmaterials;   /**< Number of materials. */
-   GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
-   GLfloat time;        /**< Current time. */
-   vec3 aabb_min;       /**< Minimum value of AABB wrapping around it. */
-   vec3 aabb_max;       /**< Maximum value of AABB wrapping around it. */
-};
 
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
@@ -453,6 +384,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
          glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(cgltf_uint) * num, idx, GL_STATIC_DRAW );
          mesh->nidx = acc->count;
          glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+         free( idx );
          gl_checkErr();
 
          for (size_t j=0; j<prim->attributes_count; j++) {
@@ -497,6 +429,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
 
 static void shadow_matrix( const Object *obj, mat4 *m, const Light *light )
 {
+   (void) obj;
    const vec3 up        = { .v = {0., 1., 0.} };
    const vec3 light_pos = light->pos;
    const vec3 center    = { .v = {0., 0., 0.} };
@@ -576,9 +509,6 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    gl_checkErr();
 
    /* Texture. */
-   glActiveTexture( GL_TEXTURE0 );
-      glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
-      glUniform1i( shd->baseColour_tex, 0 );
    glActiveTexture( GL_TEXTURE1 );
       glBindTexture( GL_TEXTURE_2D, mat->metallic_tex );
       glUniform1i( shd->metallic_tex, 1 );
@@ -591,6 +521,10 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glActiveTexture( GL_TEXTURE4 );
       glBindTexture( GL_TEXTURE_2D, mat->occlusion_tex );
       glUniform1i( shd->occlusion_tex, 4 );
+   /* Have to have GL_TEXTURE0 be last. */
+   glActiveTexture( GL_TEXTURE0 );
+      glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
+      glUniform1i( shd->baseColour_tex, 0 );
    gl_checkErr();
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
@@ -729,7 +663,6 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
 
    glEnable(GL_BLEND);
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-   glViewport(0, 0, SCREEN_W, SCREEN_H );
 
    /* Cull faces. */
    glFrontFace(GL_CW); /* TODO, why do we have to change from default? Is it a loading issue? */
@@ -752,37 +685,27 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
 }
 
 /**
- * @brief Updates an object.
- *
- *    @param obj Object to update.
- *    @param dt Current delta tick.
- */
-void object_update( Object *obj, double dt )
-{
-   obj->time += dt;
-}
-
-/**
  * @brief Renders an object (with a transformation).
  *
  *    @param obj Object to render.
  *    @param H Transformation to apply (or NULL to use identity).
  */
-void object_render( const Object *obj, const mat4 *H )
+void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size )
 {
+   (void) time; /* TODO implement animations. */
    const GLfloat sca = 1.0/obj->radius;
    const mat4 Hscale = { .m = {
       { sca, 0.0, 0.0, 0.0 },
       { 0.0, sca, 0.0, 0.0 },
       { 0.0, 0.0, sca, 0.0 },
       { 0.0, 0.0, 0.0, 1.0 } } };
-   const mat4 *Hptr;
+   mat4 Hptr;
 
    if (H==NULL)
-      Hptr = &Hscale;
+      Hptr = Hscale;
    else {
-      Hptr = H;
-      mat4_apply( H, &Hscale );
+      Hptr = *H;
+      mat4_apply( &Hptr, &Hscale );
    }
 
    /* Some constant stuff. */
@@ -804,10 +727,17 @@ void object_render( const Object *obj, const mat4 *H )
    glDepthFunc( GL_LESS );
 
    for (int i=0; i<MAX_LIGHTS; i++)
-      object_renderShadow( obj, Hptr, &lights[i] );
-   object_renderMesh( obj, Hptr );
+      object_renderShadow( obj, &Hptr, &lights[i] );
+
+   glViewport( 0, 0, size, size );
+   glBindFramebuffer(GL_FRAMEBUFFER, fb);
+   object_renderMesh( obj, &Hptr );
 
    glDisable( GL_DEPTH_TEST );
+   glUseProgram( 0 );
+#ifdef HAVE_NAEV
+   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
+#endif /* HAVE_NAEV */
 }
 
 static cgltf_result object_read( const struct cgltf_memory_options* memory_options, const struct cgltf_file_options* file_options, const char* path, cgltf_size* size, void** data)
@@ -864,9 +794,15 @@ Object *object_loadFromFile( const char *filename )
    cgltf_result res;
    cgltf_data *data;
    cgltf_options opts;
-   const char *dirpath;
+   char *dirpath;
+   char mountpath[PATH_MAX];
    memset( &opts, 0, sizeof(opts) );
    opts.file.read = object_read;
+
+   /* First see if we have to initialize subsystem. */
+   gl_contextSet();
+   if (tex_zero==0)
+      object_init();
 
    /* Initialize object. */
    obj = calloc( sizeof(Object), 1 );
@@ -886,8 +822,10 @@ Object *object_loadFromFile( const char *filename )
    assert( res == cgltf_result_success );
 
    /* Now mount the directory and try to do things. */
-   dirpath = PHYSFS_getRealDir( filename );
-   PHYSFS_mount( dirpath, "/", 0 ); /* Prefix so more priority. */
+   dirpath = strdup(filename);
+   snprintf( mountpath, sizeof(mountpath), "%s/%s", PHYSFS_getRealDir(filename), dirname(dirpath) );
+   PHYSFS_mount( mountpath, "/", 0 ); /* Prefix so more priority. */
+   free( dirpath );
 
    /* Load materials. */
    obj->materials = calloc( data->materials_count, sizeof(Material) );
@@ -908,9 +846,10 @@ Object *object_loadFromFile( const char *filename )
    }
 
    /* Unmount directory. */
-   PHYSFS_unmount( dirpath );
+   PHYSFS_unmount( mountpath );
 
    cgltf_free(data);
+   gl_contextUnset();
 
    return obj;
 }
@@ -949,6 +888,9 @@ static void object_freeTex( GLuint tex )
 
 void object_free( Object *obj )
 {
+   if (obj==NULL)
+      return;
+
    for (size_t i=0; i<obj->nnodes; i++)
       object_freeNode( &obj->nodes[i] );
    free( obj->nodes );
@@ -1044,7 +986,7 @@ int object_init (void)
 
    /* Compile the shadow shader. */
    shd = &shadow_shader;
-   shd->program = gl_program_vert_frag( "shadow.vert", "shadow.frag", prepend );
+   shd->program = gl_program_backend( "shadow.vert", "shadow.frag", NULL, prepend );
    if (shd->program==0)
       return -1;
    glUseProgram( shd->program );
@@ -1057,7 +999,7 @@ int object_init (void)
 
    /* Compile the X blur shader. */
    shd = &shadow_shader_blurX;
-   shd->program = gl_program_vert_frag( "blur.vert", "blurX.frag", prepend );
+   shd->program = gl_program_backend( "blur.vert", "blurX.frag", NULL, prepend );
    if (shd->program==0)
       return -1;
    glUseProgram( shd->program );
@@ -1069,7 +1011,7 @@ int object_init (void)
 
    /* Compile the Y blur shader. */
    shd = &shadow_shader_blurY;
-   shd->program = gl_program_vert_frag( "blur.vert", "blurY.frag", prepend );
+   shd->program = gl_program_backend( "blur.vert", "blurY.frag", NULL, prepend );
    if (shd->program==0)
       return -1;
    glUseProgram( shd->program );
@@ -1080,7 +1022,7 @@ int object_init (void)
 
    /* Compile the shader. */
    shd = &object_shader;
-   shd->program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag", prepend );
+   shd->program = gl_program_backend( "gltf.vert", "gltf_pbr.frag", NULL, prepend );
    if (shd->program==0)
       return -1;
    glUseProgram( shd->program );
@@ -1136,6 +1078,10 @@ int object_init (void)
 
 void object_exit (void)
 {
+   /* Not initialized. */
+   if (tex_zero==0)
+      return;
+
    glDeleteBuffers( 1, &shadow_vbo );
    glDeleteTextures( 1, &shadow_tex );
    glDeleteFramebuffers( 1, &shadow_fbo );

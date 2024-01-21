@@ -289,6 +289,42 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
    return (status==GL_FRAMEBUFFER_COMPLETE);
 }
 
+/**
+ * @brief Adds a depth attachment to an FBO.
+ */
+int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height )
+{
+   GLenum status;
+
+   SDL_mutexP( tex_lock );
+   //tex_ctxSet();
+
+   /* Create the render buffer. */
+   glGenTextures(1, tex);
+   glBindTexture(GL_TEXTURE_2D, *tex);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+   glBindTexture(GL_TEXTURE_2D, 0);
+
+   /* Attach the depth. */
+   glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, *tex, 0);
+
+   /* Check status. */
+   status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+   if (status != GL_FRAMEBUFFER_COMPLETE)
+      WARN(_("Error attaching depth to framebuffer!"));
+
+   /* Restore state. */
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+
+   //tex_ctxUnset();
+   SDL_mutexV( tex_lock );
+
+   gl_checkErr();
+
+   return (status==GL_FRAMEBUFFER_COMPLETE);
+}
+
 glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name )
 {
    SDL_mutexP( tex_lock );

@@ -1765,7 +1765,14 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
 
    if (p->ship->gfx_3d != NULL) {
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      /* TODO fix 3D rendering. */
+      //double s = p->ship->gfx_3d_scale;
+      double s = p->ship->gfx_space->sw / gl_screen.scale;
+      mat4 H = mat4_identity();
+      //mat4_rotate2d( &H, p->solid.dir );
+      mat4_rotate( &H, M_PI_2-p->solid.dir, 0.0, 1.0, 0.0 );
+      //mat4_scale( &H, s, s, s );
+      /* TODO split engine and such. */
+      object_render( fbo, p->ship->gfx_3d, &H, 0., s );
    }
    else {
       double tx,ty;
@@ -1946,9 +1953,17 @@ void pilot_render( Pilot *p )
       /* Render normally. */
       if (e==NULL) {
          if (p->ship->gfx_3d != NULL) {
-            /* 3d */
-            object_renderSolidPart(p->ship->gfx_3d, &p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
-            object_renderSolidPart(p->ship->gfx_3d, &p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
+            //double r = p->ship->gfx_3d_scale;
+
+            /* Render to framebuffer first. */
+            pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
+
+            /* Draw framebuffer on screen. */
+            gl_renderTextureRaw( gl_screen.fbo_tex[2], 0,
+                  x+(1.-scale)*z*w*0.5, y+(1.-scale)*z*h*0.5,
+                  w*scale*z, h*scale*z,
+                  0, 0, w/(double)gl_screen.nw, h/(double)gl_screen.nh, NULL, 0. );
+
          }
          else {
             gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
@@ -1974,7 +1989,7 @@ void pilot_render( Pilot *p )
          gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
 
          projection = gl_view_matrix;
-         mat4_translate_scale_xy( &projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., scale*z*w, scale*z*h );
+         mat4_translate_scale_xy( &projection, x + (1.-scale)*z*w*0.5, y + (1.-scale)*z*h*0.5, scale*z*w, scale*z*h );
          gl_uniformMat4(ed->projection, &projection);
 
          tex_mat = mat4_identity();
