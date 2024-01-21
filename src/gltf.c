@@ -1,5 +1,6 @@
 #include "gltf.h"
 
+/* We use this file in utils/model-view-c to debug things. */
 #ifdef PACKAGE
 #define HAVE_NAEV
 #endif
