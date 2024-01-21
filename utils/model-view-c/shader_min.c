@@ -252,8 +252,9 @@ static int gl_program_link( GLuint program )
  *    @param[in] fragfile Fragment shader filename.
  *    @return The shader compiled program or 0 on failure.
  */
-GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile, const char *prependtext )
+GLuint gl_program_backend( const char *vertfile, const char *fragfile, const char *geom, const char *prependtext )
 {
+   (void) geom;
    char *vert_str, *frag_str, prepend[STRMAX];
    size_t vert_size, frag_size;
    GLuint vertex_shader, fragment_shader, program;

@@ -72,7 +72,7 @@ int main( int argc, char *argv[] )
    glBindBuffer( GL_ARRAY_BUFFER, shadowvbo );
    glBufferData( GL_ARRAY_BUFFER, sizeof(GLfloat) * 8, shadowvbo_data, GL_STATIC_DRAW );
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
-   GLuint shadowshader = gl_program_vert_frag( "depth.vert", "depth.frag", "" );
+   GLuint shadowshader = gl_program_backend( "depth.vert", "depth.frag", NULL, "" );
    glUseProgram( shadowshader );
    GLuint shadowvertex = glGetAttribLocation( shadowshader, "vertex" );
    GLuint shadowtex    = glGetUniformLocation( shadowshader, "sampler" );
@@ -162,7 +162,7 @@ int main( int argc, char *argv[] )
       mat4_apply( &H, &Hscale );
 
       /* Draw the object. */
-      object_render( obj, &H, (float)SDL_GetTicks64() / 1000. );
+      object_render( 0, obj, &H, (float)SDL_GetTicks64() / 1000., SCREEN_W );
 
       /* Draw the shadowmap to see what's going on (clear the shadowmap). */
       if (rendermode) {

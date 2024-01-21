@@ -1,5 +1,9 @@
 #include "gltf.h"
 
+#ifdef PACKAGE
+#define HAVE_NAEV
+#endif
+
 #include "glad.h"
 #include "SDL_image.h"
 #include <assert.h>
@@ -11,9 +15,16 @@
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
 
+#ifdef HAVE_NAEV
 #include "naev.h"
-#include "vec3.h"
 #include "opengl_shader.h"
+#else /* HAVE_NAEV */
+#include "common.h"
+#include "shader_min.h"
+#define gl_contextSet()
+#define gl_contextUnset()
+#endif /* HAVE_NAEV */
+#include "vec3.h"
 
 /* Horrible hack that turns a variable name into a string. */
 #define STR_HELPER(x) #x
@@ -722,7 +733,9 @@ void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, do
 
    glDisable( GL_DEPTH_TEST );
    glUseProgram( 0 );
+#if HAVE_NAEV
    glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
+#endif /* HAVE_NAEV */
 }
 
 static cgltf_result object_read( const struct cgltf_memory_options* memory_options, const struct cgltf_file_options* file_options, const char* path, cgltf_size* size, void** data)
