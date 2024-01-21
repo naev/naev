@@ -1765,7 +1765,13 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
 
    if (p->ship->gfx_3d != NULL) {
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      /* TODO fix 3D rendering. */
+      double s = p->ship->gfx_3d_scale;
+      mat4 H = mat4_identity();
+      //mat4_rotate2d( &H, p->solid.dir );
+      mat4_rotate( &H, M_PI_2-p->solid.dir, 0.0, 1.0, 0.0 );
+      mat4_scale( &H, s, s, s );
+      /* TODO split engine and such. */
+      object_render( fbo, p->ship->gfx_3d, &H, 0. );
    }
    else {
       double tx,ty;
@@ -1946,16 +1952,19 @@ void pilot_render( Pilot *p )
       /* Render normally. */
       if (e==NULL) {
          if (p->ship->gfx_3d != NULL) {
-            /* 3d */
-            //object_renderSolidPart(p->ship->gfx_3d, &p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
-            //object_renderSolidPart(p->ship->gfx_3d, &p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
-            double s = p->ship->gfx_3d_scale * scale;
-            mat4 H = mat4_identity();
-            //mat4_rotate2d( &H, p->solid.dir );
-            mat4_rotate( &H, M_PI_2-p->solid.dir, 0.0, 1.0, 0.0 );
-            mat4_scale( &H, s, s, s );
-            /* TODO split engine and such. */
-            object_render( p->ship->gfx_3d, &H, 0. );
+            double r = p->ship->gfx_3d->radius;
+
+            /* Render to framebuffer first. */
+            //pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
+            pilot_renderFramebufferBase( p, 0, gl_screen.nw, gl_screen.nh );
+
+            /* Draw framebuffer on screen. */
+            /*
+            gl_renderTextureRaw( gl_screen.fbo_tex[2], 0,
+                  x, y, w, h,
+                  0, 0, r/w*scale, r/h*scale, NULL, 0. );
+            */
+
          }
          else {
             gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,

@@ -19,9 +19,7 @@
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-#define MAX_LIGHTS 3    /**< Maximum amount of lights. TODO deferred rendering. */
-
-#define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
+static Material material_default;
 
 /**
  * @brief Simple point light model.
@@ -114,84 +112,6 @@ static GLuint shadow_tex;
 static Shader shadow_shader_blurX;
 static Shader shadow_shader_blurY;
 
-/**
- * @brief PBR Material of an object.
- */
-typedef struct Material_ {
-   char *name; /**< Name of the material if applicable. */
-   int blend;  /**< Whether or not to blend it. */
-   /* pbr_metallic_roughness */
-   GLuint baseColour_tex;  /**< Base colour of the material. */
-   GLuint metallic_tex;    /**< Metallic/roughness map of the material. Metallic is stored in G channel, hile roughness is in the B channel. */
-   GLfloat metallicFactor; /**< Metallic factor (single value). Multplies the map if available. */
-   GLfloat roughnessFactor;/**< Roughness factor (single value). Multiplies the map if available. */
-   GLfloat baseColour[4];  /**< Base colour of the material. Multiplies the texture if available. */
-   /* pbr_specular_glossiness */
-   /* Sheen. */
-   GLfloat sheen[3];
-   GLfloat sheen_roughness;
-   /* Clearcoat */
-   /*GLuint clearcoat_tex;
-   GLuint clearcoat_roughness_tex;
-   GLuint clearcoat_normal_tex; */
-   GLfloat clearcoat;
-   GLfloat clearcoat_roughness;
-   /* misc. */
-   GLuint normal_tex;
-   GLuint occlusion_tex;
-   GLuint emissive_tex;
-   GLfloat emissiveFactor[3];
-   /* Custom Naev. */
-   //GLfloat waxiness;
-} Material;
-static Material material_default;
-
-/**
- * @brief Represents an underlying 3D mesh.
- */
-typedef struct Mesh_ {
-   size_t nidx;      /**< Number of indices. */
-   GLuint vbo_idx;   /**< Index VBO. */
-   GLuint vbo_pos;   /**< Position VBO. */
-   GLuint vbo_nor;   /**< Normal VBO. */
-   GLuint vbo_tex;   /**< Texture coordinate VBO. */
-   int material;     /**< ID of material to use. */
-
-   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
-   vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
-   vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
-} Mesh;
-
-/**
- * @brief Represents a node of an object. Each node can have multiple meshes and children nodes with an associated transformation.
- */
-struct Node_;
-typedef struct Node_ {
-   char *name;       /**< Name information. */
-   mat4 H;           /**< Homogeneous transform. */
-   Mesh *mesh;       /**< Meshes. */
-   size_t nmesh;     /**< Number of meshes. */
-   struct Node_ *children; /**< Children mesh. */
-   size_t nchildren; /**< Number of children mesh. */
-
-   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
-   vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
-   vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
-} Node;
-
-/**
- * @brief Defines a complete object.
- */
-struct Object_ {
-   Node *nodes;         /**< Nodes the object has. */
-   size_t nnodes;       /**< Number of nodes. */
-   Material *materials; /**< Available materials. */
-   size_t nmaterials;   /**< Number of materials. */
-   GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
-   GLfloat time;        /**< Current time. */
-   vec3 aabb_min;       /**< Minimum value of AABB wrapping around it. */
-   vec3 aabb_max;       /**< Maximum value of AABB wrapping around it. */
-};
 
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
@@ -576,9 +496,6 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    gl_checkErr();
 
    /* Texture. */
-   glActiveTexture( GL_TEXTURE0 );
-      glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
-      glUniform1i( shd->baseColour_tex, 0 );
    glActiveTexture( GL_TEXTURE1 );
       glBindTexture( GL_TEXTURE_2D, mat->metallic_tex );
       glUniform1i( shd->metallic_tex, 1 );
@@ -591,6 +508,10 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glActiveTexture( GL_TEXTURE4 );
       glBindTexture( GL_TEXTURE_2D, mat->occlusion_tex );
       glUniform1i( shd->occlusion_tex, 4 );
+   /* Have to have GL_TEXTURE0 be last. */
+   glActiveTexture( GL_TEXTURE0 );
+      glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
+      glUniform1i( shd->baseColour_tex, 0 );
    gl_checkErr();
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
@@ -729,7 +650,7 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
 
    glEnable(GL_BLEND);
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-   glViewport(0, 0, SCREEN_W, SCREEN_H );
+   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
 
    /* Cull faces. */
    glFrontFace(GL_CW); /* TODO, why do we have to change from default? Is it a loading issue? */
@@ -757,10 +678,10 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
  *    @param obj Object to render.
  *    @param H Transformation to apply (or NULL to use identity).
  */
-void object_render( const Object *obj, const mat4 *H, double time )
+void object_render( GLuint fb, const Object *obj, const mat4 *H, double time )
 {
    (void) time; /* TODO implement animations. */
-   const GLfloat sca = 1.0/obj->radius;
+   const GLfloat sca = 1.0/obj->radius * 0.005;
    const mat4 Hscale = { .m = {
       { sca, 0.0, 0.0, 0.0 },
       { 0.0, sca, 0.0, 0.0 },
@@ -795,9 +716,12 @@ void object_render( const Object *obj, const mat4 *H, double time )
 
    for (int i=0; i<MAX_LIGHTS; i++)
       object_renderShadow( obj, &Hptr, &lights[i] );
+
+   glBindFramebuffer(GL_FRAMEBUFFER, fb);
    object_renderMesh( obj, &Hptr );
 
    glDisable( GL_DEPTH_TEST );
+   glUseProgram( 0 );
 }
 
 static cgltf_result object_read( const struct cgltf_memory_options* memory_options, const struct cgltf_file_options* file_options, const char* path, cgltf_size* size, void** data)
