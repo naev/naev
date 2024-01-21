@@ -1951,7 +1951,8 @@ void pilot_render( Pilot *p )
             //object_renderSolidPart(p->ship->gfx_3d, &p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
             double s = p->ship->gfx_3d_scale * scale;
             mat4 H = mat4_identity();
-            mat4_rotate2d( &H, p->solid.dir );
+            //mat4_rotate2d( &H, p->solid.dir );
+            mat4_rotate( &H, M_PI_2-p->solid.dir, 0.0, 1.0, 0.0 );
             mat4_scale( &H, s, s, s );
             /* TODO split engine and such. */
             object_render( p->ship->gfx_3d, &H, 0. );
