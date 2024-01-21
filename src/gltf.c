@@ -734,7 +734,7 @@ void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, do
 
    glDisable( GL_DEPTH_TEST );
    glUseProgram( 0 );
-#if HAVE_NAEV
+#ifdef HAVE_NAEV
    glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
 #endif /* HAVE_NAEV */
 }
