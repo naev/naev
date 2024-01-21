@@ -28,6 +28,7 @@ int main( int argc, char *argv[] )
    }
 
    PHYSFS_init( argv[0] );
+   PHYSFS_mount( "../../dat/glsl/", "/", 1 );
    path = strdup(argv[1]);
    PHYSFS_mount( dirname(path), "/", 1 );
    free(path);
