@@ -101,7 +101,7 @@ Object *object_loadFromFile( const char *filename );
 void object_free( Object *obj );
 
 /* Rendering and updating. */
-void object_render( GLuint fb, const Object *obj, const mat4 *H, double time );
+void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size );
 
 /* Lighting. */
 void object_lightAmbient( double r, double g, double b );

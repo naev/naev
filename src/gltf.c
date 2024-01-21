@@ -650,7 +650,6 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
 
    glEnable(GL_BLEND);
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
 
    /* Cull faces. */
    glFrontFace(GL_CW); /* TODO, why do we have to change from default? Is it a loading issue? */
@@ -678,10 +677,10 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
  *    @param obj Object to render.
  *    @param H Transformation to apply (or NULL to use identity).
  */
-void object_render( GLuint fb, const Object *obj, const mat4 *H, double time )
+void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size )
 {
    (void) time; /* TODO implement animations. */
-   const GLfloat sca = 1.0/obj->radius * 0.005;
+   const GLfloat sca = 1.0/obj->radius;
    const mat4 Hscale = { .m = {
       { sca, 0.0, 0.0, 0.0 },
       { 0.0, sca, 0.0, 0.0 },
@@ -717,11 +716,13 @@ void object_render( GLuint fb, const Object *obj, const mat4 *H, double time )
    for (int i=0; i<MAX_LIGHTS; i++)
       object_renderShadow( obj, &Hptr, &lights[i] );
 
+   glViewport( 0, 0, size, size );
    glBindFramebuffer(GL_FRAMEBUFFER, fb);
    object_renderMesh( obj, &Hptr );
 
    glDisable( GL_DEPTH_TEST );
    glUseProgram( 0 );
+   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
 }
 
 static cgltf_result object_read( const struct cgltf_memory_options* memory_options, const struct cgltf_file_options* file_options, const char* path, cgltf_size* size, void** data)
