@@ -13,10 +13,10 @@
  <armour_max>350</armour_max>
  <commodity>
   <name>Ore</name>
-  <quantity>12</quantity>
+  <quantity>60</quantity>
  </commodity>
  <commodity>
   <name>Diamond</name>
-  <quantity>4</quantity>
+  <quantity>20</quantity>
  </commodity>
 </asteroid>

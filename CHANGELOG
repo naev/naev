@@ -35,6 +35,8 @@
    * Fixed not being able to turn off point defense weapons
    * Fixed Za'lek drone bay being cheaper than the mini-bay
    * Flicker drives can not be stacked and are mutually exclusivel with other blink drives
+   * Decreased Nexus Drill Lance mining malus from -80% to -15%
+   * Increased all mining yields by roughly 5 times
    * `sciencegonewrong/02_sciwrong`: make the drones not hostile to other factions
    * `neutral/baron_comm`: fixed trivial warning when trying to clean up baron comm event
    * `neutral/wastedump`: fixed getting rid of cargo while landed

@@ -14,14 +14,14 @@
  <absorb>20</absorb>
  <commodity>
   <name>Water</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Clay</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Nickel</name>
-  <quantity>1</quantity>
+  <quantity>5</quantity>
  </commodity>
 </asteroid>
