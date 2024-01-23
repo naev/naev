@@ -13,20 +13,20 @@
  <absorb>60</absorb>
  <commodity>
   <name>Iron</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Nickel</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Gold</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
   <rarity>1</rarity>
  </commodity>
  <commodity>
   <name>Platinum</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
   <rarity>1</rarity>
  </commodity>
 </asteroid>
