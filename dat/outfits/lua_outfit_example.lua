@@ -137,7 +137,7 @@ end
 function board( _p, _po, _target )
 end
 
--- Triggered when the player double taps a specific key, which can be either "accel", "left", or "right"
+-- Triggered when the player double taps a specific key, which can be either "accel", "left", or "right". Should return true if it activated something
 function keydoubletap( _p, _po, _key )
 end
 
