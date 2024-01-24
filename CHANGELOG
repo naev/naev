@@ -28,6 +28,7 @@
       * PSO and Mizar nebulas have trails again
 
 * 0.11.3 (unreleased)
+   * Fixed blinking not breaking stealth
    * Fixed auto-hail message colouring
    * Only do updates with positive delta ticks
    * Fixed cargo disappearing when buying a ship when over the cargo limit

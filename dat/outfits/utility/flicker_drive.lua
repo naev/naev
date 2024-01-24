@@ -94,10 +94,10 @@ end
 function keydoubletap( p, po, key )
    -- Only blink forward on double tap if no afterburner
    if not mem.afterburner and key=="accel" then
-      doblink( p, po, 0 )
+      return doblink( p, po, 0 )
    elseif key=="left" then
-      doblink( p, po, math.pi*0.5 )
+      return doblink( p, po, math.pi*0.5 )
    elseif key=="right" then
-      doblink( p, po, -math.pi*0.5 )
+      return doblink( p, po, -math.pi*0.5 )
    end
 end

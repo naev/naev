@@ -2038,15 +2038,16 @@ static void outfitLOnkeydoubletap( const Pilot *pilot, PilotOutfitSlot *po, cons
    lua_pushpilot(naevL, pilot->id); /* f, p */
    lua_pushpilotoutfit(naevL, po);  /* f, p, po */
    lua_pushstring(naevL, outfitkeytostr(key) );
-   if (nlua_pcall( env, 3, 0 )) {   /* */
+   if (nlua_pcall( env, 3, 1 )) {   /* */
       outfitLRunWarning( pilot, po->outfit, "keydoubletap", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
    pilot_outfitLunmem( env, oldmem );
 
    /* Broke stealth. */
-   if (po->state==PILOT_OUTFIT_ON)
+   if ((po->state==PILOT_OUTFIT_ON) || lua_toboolean(naevL,-1))
       stealth_break = 1;
+   lua_pop( naevL, 1 );
 }
 void pilot_outfitLOnkeydoubletap( Pilot *pilot, OutfitKey key )
 {
