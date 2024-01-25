@@ -1,4 +1,4 @@
-* 0.11.3 (unreleased)
+* 0.11.3
    * Don't run discovery event when in cinematic mode
    * Do a better job of updating old save autonav settings
    * Added more checks so tutorial messages don't appear in claimed systems
@@ -9,7 +9,7 @@
    * Don't let the player trade ships when they have mission cargo
    * Fixed not being able to turn off point defense weapons
    * Fixed Za'lek drone bay being cheaper than the mini-bay
-   * Flicker drives can not be stacked and are mutually exclusivel with other blink drives
+   * Flicker drives can not be stacked and are mutually exclusive with other blink drives
    * Decreased Nexus Drill Lance mining malus from -80% to -15%
    * Increased all mining yields by roughly 5 times
    * `sciencegonewrong/02_sciwrong`: make the drones not hostile to other factions
