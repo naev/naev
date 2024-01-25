@@ -2,6 +2,7 @@ local flow = require "ships.lua.lib.flow"
 
 local setup = {}
 
+-- Note that afterburners get added separately now
 local usable_outfits = {
    ["Emergency Shield Booster"]  = "shield_booster",
    ["Berserk Chip"]              = "berserk_chip",
@@ -65,6 +66,8 @@ function setup.setup( p )
                o[var] = k
             end
             added = true
+         elseif v:type()=="Afterburner" then
+            o["afterburner"] = k
          end
       end
    end

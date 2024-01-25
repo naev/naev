@@ -183,12 +183,11 @@ function backoff( target )
    local dir = ai.face( target, true )
    ai.accel()
 
-   -- Afterburner handling.
-   if ai.hasafterburner() and p:energy() > 30 then
-      ai.weapset( 8, true )
-   end
+   -- Handle outfits that help get away
    if mem._o and dir < math.rad(25) then
-      if mem._o.blink_drive then
+      if mem._o.afterburner and p:energy() > 30 then
+         p:toggleOutfit( mem._o.afterburner, true )
+      elseif mem._o.blink_drive then
          p:toggleOutfit( mem._o.blink_drive, true )
       elseif mem._o.blink_engine then
          p:toggleOutfit( mem._o.blink_engine, true )
