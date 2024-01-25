@@ -34,13 +34,16 @@ local function check_unused_oufits ()
    return o
 end
 
-function create ()
-   local enter_delay = 5
-
+local function tut_check ()
    -- Don't run if doing cinematics, or if system isn't inclusive. */
    if player.cinematicsCheck() or not naev.claimTest(system.cur(),true) then
       evt.finish(false)
    end
+end
+
+function create ()
+   local enter_delay = 5
+   tut_check() -- See if we should be doing the tutorial
 
    hook.land( "evt_done" )
 
@@ -74,6 +77,7 @@ function evt_done ()
 end
 
 function tut_illegal ()
+   tut_check() -- See if we should be doing the tutorial
    local pp = player.pilot()
    local badstuff = {}
    for k,o in ipairs(pp:outfitsList()) do
@@ -113,6 +117,7 @@ function tut_illegal ()
 end
 
 function tut_weapset ()
+   tut_check() -- See if we should be doing the tutorial
    local unused = check_unused_oufits()
    local hasunused = (next(unused)~=nil)
    if not hasunused then
@@ -188,6 +193,7 @@ function tut_weapset ()
 end
 
 function tut_volatility ()
+   tut_check() -- See if we should be doing the tutorial
    local sys = system.cur()
    local _nebden, nebvol = sys:nebula()
 

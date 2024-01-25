@@ -28,6 +28,7 @@
       * PSO and Mizar nebulas have trails again
 
 * 0.11.3 (unreleased)
+   * Added more checks so tutorial messages don't appear in claimed systems
    * Fixed blinking not breaking stealth
    * Fixed auto-hail message colouring
    * Only do updates with positive delta ticks
