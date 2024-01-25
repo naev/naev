@@ -74,7 +74,7 @@ function create ()
          table.insert( claimsys, h:system() )
       end
       if not evt.claim( claimsys ) then
-         evt.finish()
+         evt.finish(false)
       end
 
       hook.safe( "cutscene_start" )
