@@ -339,6 +339,11 @@ function heartbeat( event )
 end
 
 function discover_trigger( event )
+   -- Don't trigger stuff in cinematics (looking at your chapter 1)
+   if player.cinematicsCheck() then
+      return
+   end
+
    local template = (event.subtitle and _("You found #o{title} - {subtitle}#0!")) or _("You found #o{title}#0!")
    local msg = fmt.f(template, event)
    -- Log and message

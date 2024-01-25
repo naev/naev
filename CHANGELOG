@@ -28,6 +28,8 @@
       * PSO and Mizar nebulas have trails again
 
 * 0.11.3 (unreleased)
+   * Don't run discovery event when in cinematic mode
+   * Do a better job of updating old save autonav settings
    * Added more checks so tutorial messages don't appear in claimed systems
    * Fixed blinking not breaking stealth
    * Fixed auto-hail message colouring

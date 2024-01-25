@@ -22,26 +22,26 @@ local COMPR_MIN         = 1 -- Old default was 200
 local COMPR_MAX         = 100
 
 function create ()
+   local function var_peek_fix( varname, default )
+      local v = var.peek( varname )
+      if v==nil then
+         var.push( varname, default )
+         return default
+      end
+      return v
+   end
+
    -- Load variables
-   uselanes_jump = var.peek( "autonav_uselanes_jump" )
-   uselanes_spob = var.peek( "autonav_uselanes_spob" )
-   if uselanes_jump == nil then
-      -- Not set so default to true
-      uselanes_jump = true
-      var.push( "autonav_uselanes_jump", true )
-   end
-   uselanes_thr = var.peek("autonav_uselanes_thr") or 2
-   reset_shield = var.peek("autonav_reset_shield") or 1
-   reset_dist = var.peek("autonav_reset_dist") or 3e3
-   compr_speed = var.peek("autonav_compr_speed") or 5e3
-   compr_max = var.peek("autonav_compr_max") or 50
-   match_fleet = var.peek("autonav_match_fleet")
-   if match_fleet == nil then
-      match_fleet = true
-      var.push("autonav_match_fleet", true)
-   end
-   follow_jump = var.peek("autonav_follow_jump")
-   brake_pos = var.peek("autonav_brake_pos")
+   uselanes_jump=var_peek_fix( "autonav_uselanes_jump",false )
+   uselanes_spob=var_peek_fix( "autonav_uselanes_spob",false )
+   uselanes_thr= var_peek_fix( "autonav_uselanes_thr",2 )
+   reset_shield= var_peek_fix( "autonav_reset_shield",1 )
+   reset_dist  = var_peek_fix( "autonav_reset_dist",  3e3 )
+   compr_speed = var_peek_fix( "autonav_compr_speed", 5e3 )
+   compr_max   = var_peek_fix( "autonav_compr_max",   50 )
+   match_fleet = var_peek_fix( "autonav_match_fleet", true )
+   follow_jump = var_peek_fix( "autonav_follow_jump", false )
+   brake_pos   = var_peek_fix( "autonav_brake_pos",   false )
 
    -- Set an info button up
    player.infoButtonRegister( _("Settings"), settings, 1, "S" )
