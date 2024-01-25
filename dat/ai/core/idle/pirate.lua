@@ -186,11 +186,11 @@ function backoff( target )
    -- Handle outfits that help get away
    if mem._o and dir < math.rad(25) then
       if mem._o.afterburner and p:energy() > 30 then
-         p:toggleOutfit( mem._o.afterburner, true )
+         p:outfitToggle( mem._o.afterburner, true )
       elseif mem._o.blink_drive then
-         p:toggleOutfit( mem._o.blink_drive, true )
+         p:outfitToggle( mem._o.blink_drive, true )
       elseif mem._o.blink_engine then
-         p:toggleOutfit( mem._o.blink_engine, true )
+         p:outfitToggle( mem._o.blink_engine, true )
       end
    end
 
@@ -198,7 +198,7 @@ function backoff( target )
    if ai.dist2( target ) > math.pow(tdist,2) then
       -- Turn off afterburner if applicable
       if mem._o and mem._o.afterburner then
-         p:toggleOutfit( mem._o.afterburner, false )
+         p:outfitToggle( mem._o.afterburner, false )
       end
       ai.poptask()
       return
