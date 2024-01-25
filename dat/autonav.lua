@@ -17,6 +17,8 @@ map_npath = 0
 tc_down = 0
 uselanes_jump = true
 uselanes_spob = false
+last_shield = 0
+last_armour = 0
 
 --[[
 Common code for setting decent defaults and global variables when starting autonav.
