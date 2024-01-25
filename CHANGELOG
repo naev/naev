@@ -1,4 +1,5 @@
 * 0.11.3 (unreleased)
+   * Do a better job of updating old save autonav settings
    * Added more checks so tutorial messages don't appear in claimed systems
    * Fixed blinking not breaking stealth
    * Fixed auto-hail message colouring
