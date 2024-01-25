@@ -1484,7 +1484,6 @@ static void equipment_toggleDeploy( unsigned int wid, const char *wgt )
       }
       if (pfleet_toggleDeploy( ps, state ))
          return;
-      pfleet_update();
    }
    else
       window_checkboxSet( wid, wgt, 1 ); /* Player is always deployed. */
@@ -2181,8 +2180,6 @@ static void equipment_rightClickShips( unsigned int wid, const char *str )
    if (player.fleet_capacity > 0)
       window_checkboxSet( wid, "chkDeploy", ps->deployed );
 
-   pfleet_update();
-
    equipment_regenLists( wid, 0, 1 );
 }
 
@@ -2408,6 +2405,7 @@ static void equipment_sellShip( unsigned int wid, const char* str )
    (void) str;
    char buf[ECON_CRED_STRLEN], *name;
    credits_t price;
+   PlayerShip_t *ps;
    Pilot *p;
    const Ship *s;
    HookParam hparam[3];
@@ -2427,6 +2425,13 @@ static void equipment_sellShip( unsigned int wid, const char* str )
             _("Are you sure you want to sell your ship %s for %s?"),
             shipname, buf))
       return;
+
+   /* Check if deployed and undeploy. */
+   ps = player_getPlayerShip( shipname );
+   if (ps->deployed) {
+      if (pfleet_toggleDeploy( ps, 0 ))
+         return;
+   }
 
    /* Store ship type. */
    p = player_getShip( shipname );

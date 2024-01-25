@@ -1,3 +1,6 @@
+* 0.11.4 (unreleased)
+   * Fixed crash when selling deployed ship
+
 * 0.11.3
    * Don't run discovery event when in cinematic mode
    * Do a better job of updating old save autonav settings
