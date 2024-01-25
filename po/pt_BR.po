@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2024-01-20 00:10+0900\n"
+"POT-Creation-Date: 2024-01-25 17:50+0900\n"
 "PO-Revision-Date: 2023-01-30 00:36+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -9411,8 +9411,8 @@ msgstr ""
 #. mission details
 #. TODO maybe randomize somewhat?
 #. Initialize the map overlay stuff.
-#: dat/ships/misc/psychic_orb.xml:7 dat/autonav.lua:129 dat/autonav.lua:137
-#: dat/autonav.lua:229 dat/autonav.lua:249 dat/events/discovery.lua:203
+#: dat/ships/misc/psychic_orb.xml:7 dat/autonav.lua:131 dat/autonav.lua:139
+#: dat/autonav.lua:231 dat/autonav.lua:251 dat/events/discovery.lua:203
 #: dat/factions/spawn/lib/common.lua:189 dat/gui/brushed.lua:397
 #: dat/gui/brushed.lua:870 dat/gui/brushed.lua:909 dat/gui/legacy.lua:218
 #: dat/gui/legacy.lua:309 dat/gui/legacy.lua:323 dat/gui/slim.lua:415
@@ -32451,44 +32451,44 @@ msgstr ""
 #.
 #. Autonav to a system, destination is in the player's nav
 #. --
-#: dat/autonav.lua:167
+#: dat/autonav.lua:169
 msgid "Autonav: travelling to {sys}."
 msgstr ""
 
 #.
 #. Autonav to a spob, potentially trying to land
 #. --
-#: dat/autonav.lua:208
+#: dat/autonav.lua:210
 msgid "Autonav: landing on {spob}."
 msgstr ""
 
-#: dat/autonav.lua:211
+#: dat/autonav.lua:213
 msgid "Autonav: approaching {spob}."
 msgstr ""
 
-#: dat/autonav.lua:233
+#: dat/autonav.lua:235
 msgid "Autonav: following {plt}."
 msgstr ""
 
-#: dat/autonav.lua:252
+#: dat/autonav.lua:254
 msgid "Autonav: boarding {plt}."
 msgstr ""
 
 #.
 #. Autonav to a position specified by the plyaer
 #. --
-#: dat/autonav.lua:261
+#: dat/autonav.lua:263
 msgid "Autonav: heading to target position."
 msgstr ""
 
 #.
 #. Autonav was forcibly aborted for a reason or other.
 #. --
-#: dat/autonav.lua:272
+#: dat/autonav.lua:274
 msgid "Autonav: aborted due to '{reason}'!"
 msgstr ""
 
-#: dat/autonav.lua:274
+#: dat/autonav.lua:276
 msgid "Autonav: aborted!"
 msgstr ""
 
@@ -32532,13 +32532,13 @@ msgstr ""
 #. Recompute the location for a better position
 #. Brakes at a position
 #. Approaching a position specified by target_pos
-#: dat/autonav.lua:478 dat/autonav.lua:494
+#: dat/autonav.lua:480 dat/autonav.lua:496
 msgid "Autonav: arrived at position."
 msgstr ""
 
 #. Brakes at a position
 #. Approaching a spob, not interested in landing
-#: dat/autonav.lua:505 dat/autonav.lua:524
+#: dat/autonav.lua:507 dat/autonav.lua:526
 msgid "Autonav: arrived at {spob}."
 msgstr ""
 
@@ -32549,20 +32549,20 @@ msgstr ""
 #. Reset to good position
 #. Have to update path also
 #. Following a target pilot
-#: dat/autonav.lua:589
+#: dat/autonav.lua:591
 msgid "Autonav: following target {plt} has jumped to {sys}."
 msgstr ""
 
-#: dat/autonav.lua:594 dat/autonav.lua:614
+#: dat/autonav.lua:596 dat/autonav.lua:616
 msgid "Autonav: following target {plt} has been lost."
 msgstr ""
 
-#: dat/autonav.lua:605
+#: dat/autonav.lua:607
 msgid "Autonav: following target {plt} has landed on {spb}."
 msgstr ""
 
 #. Geting close to board a pilot
-#: dat/autonav.lua:643
+#: dat/autonav.lua:645
 msgid "Autonav: boarding target {plt} has been lost."
 msgstr ""
 
@@ -32571,17 +32571,17 @@ msgstr ""
 #. Run with the physics backend where realdt is user time
 #. If we reset we skip the iteration
 #. Made it to target
-#: dat/autonav.lua:712
+#: dat/autonav.lua:714
 msgid "Autonav arrived at the {sys} system."
 msgstr ""
 
 #. Must have fuel to continue
-#: dat/autonav.lua:719
+#: dat/autonav.lua:721
 msgid "Not enough fuel for autonav to continue"
 msgstr ""
 
 #. Keep on going
-#: dat/autonav.lua:725
+#: dat/autonav.lua:727
 msgid "Autonav continuing until {sys} ({n} jump left)."
 msgid_plural "Autonav continuing until {sys} ({n} jumps left)."
 msgstr[0] ""
@@ -32913,8 +32913,8 @@ msgstr ""
 #. Also set GUI
 #. Default setting GUI
 #: dat/board.lua:418 dat/board.lua:461 dat/comm.lua:171
-#: dat/events/escort_settings.lua:170 dat/events/settings.lua:170
-#: dat/events/settings.lua:206 dat/events/shipai.lua:35
+#: dat/events/escort_settings.lua:170 dat/events/settings.lua:174
+#: dat/events/settings.lua:210 dat/events/shipai.lua:35
 #: dat/events/shipai.lua:49 dat/missions/neutral/race_qex.lua:134
 #: dat/outfits/unique/fuel_recycler.lua:91 dat/spob/lua/lib/hypergate.lua:308
 #: dat/spob/lua/lib/obelisk.lua:48 dat/spob/lua/lib/spob.lua:269
@@ -34683,20 +34683,21 @@ msgstr ""
 #. Trigger
 #. Nothing triggered
 #. Ends when player lands or leaves either way
-#: dat/events/discovery.lua:342
+#. Don't trigger stuff in cinematics (looking at your chapter 1)
+#: dat/events/discovery.lua:347
 msgid "You found #o{title} - {subtitle}#0!"
 msgstr ""
 
-#: dat/events/discovery.lua:342
+#: dat/events/discovery.lua:347
 msgid "You found #o{title}#0!"
 msgstr ""
 
 #. Log and message
-#: dat/events/discovery.lua:346 src/map.c:2143
+#: dat/events/discovery.lua:351 src/map.c:2143
 msgid "Discovery"
 msgstr ""
 
-#: dat/events/discovery.lua:346 dat/events/shiplog.lua:23
+#: dat/events/discovery.lua:351 dat/events/shiplog.lua:23
 msgid "Travel"
 msgstr ""
 
@@ -45897,105 +45898,104 @@ msgstr ""
 #. Old default was 5e3
 #. Old default was 200
 #. Load variables
-#. Not set so default to true
 #. Set an info button up
-#: dat/events/settings.lua:42
+#: dat/events/settings.lua:46
 msgid "Settings"
 msgstr ""
 
-#: dat/events/settings.lua:52
+#: dat/events/settings.lua:56
 msgid "Player Settings"
 msgstr ""
 
-#: dat/events/settings.lua:55
+#: dat/events/settings.lua:59
 msgid "Stop Speedup At: "
 msgstr ""
 
-#: dat/events/settings.lua:59
+#: dat/events/settings.lua:63
 msgid "Enemy Presence"
 msgstr ""
 
-#: dat/events/settings.lua:63
+#: dat/events/settings.lua:67
 msgid "Enemy within {dist} distance"
 msgstr ""
 
-#: dat/events/settings.lua:67
+#: dat/events/settings.lua:71
 msgid "{shield:.0f}% Shield"
 msgstr ""
 
-#: dat/events/settings.lua:71
+#: dat/events/settings.lua:75
 #, fuzzy
 #| msgid "Armour Repair"
 msgctxt "settings"
 msgid "Armour Damage"
 msgstr "Reparo de Blindagem"
 
-#: dat/events/settings.lua:88
+#: dat/events/settings.lua:92
 msgid ""
 "Your current ship will have a time compression factor of #o{tc_max:.1f}x#0."
 msgstr ""
 
-#: dat/events/settings.lua:93 src/land.c:551 src/map.c:389
+#: dat/events/settings.lua:97 src/land.c:551 src/map.c:389
 msgid "Autonav"
 msgstr ""
 
-#: dat/events/settings.lua:100
+#: dat/events/settings.lua:104
 msgid "Lanes preference:"
 msgstr ""
 
-#: dat/events/settings.lua:106
+#: dat/events/settings.lua:110
 msgid "Compression velocity target:"
 msgstr ""
 
-#: dat/events/settings.lua:113
+#: dat/events/settings.lua:117
 msgid "Maximum compression:"
 msgstr ""
 
-#: dat/events/settings.lua:123
+#: dat/events/settings.lua:127
 msgid "Use patrol lanes when jumping"
 msgstr ""
 
-#: dat/events/settings.lua:125
+#: dat/events/settings.lua:129
 msgid "Use patrol lanes when travelling to a space object"
 msgstr ""
 
-#: dat/events/settings.lua:127
+#: dat/events/settings.lua:131
 msgid "Jump to follow pilots"
 msgstr ""
 
-#: dat/events/settings.lua:129
+#: dat/events/settings.lua:133
 msgid "Brake when heading to a position"
 msgstr ""
 
-#: dat/events/settings.lua:132 src/outfit.c:960 src/outfit.c:987
+#: dat/events/settings.lua:136 src/outfit.c:960 src/outfit.c:987
 msgid "GUI"
 msgstr ""
 
-#: dat/events/settings.lua:134
+#: dat/events/settings.lua:138
 msgid "Pick GUI"
 msgstr ""
 
-#: dat/events/settings.lua:136 src/options.c:282 src/options.c:575
+#: dat/events/settings.lua:140 src/options.c:282 src/options.c:575
 #: src/options.c:892 src/options.c:1206
 msgid "Defaults"
 msgstr ""
 
-#: dat/events/settings.lua:137
+#: dat/events/settings.lua:141
 msgid "Reset Player Settings?"
 msgstr ""
 
-#: dat/events/settings.lua:137
+#: dat/events/settings.lua:141
 #, fuzzy
 #| msgid "Are you sure you want to quit Naev?"
 msgid "Are you sure you want to reset the player settings?"
 msgstr "Tem certeza de que deseja sair do Naev?"
 
 #. Save as variables
-#: dat/events/settings.lua:192
+#: dat/events/settings.lua:196
 msgid "Select GUI"
 msgstr ""
 
-#: dat/events/settings.lua:207 src/dev_mapedit.c:681 src/load.c:544
+#: dat/events/settings.lua:211 src/dev_mapedit.c:681 src/load.c:544
 #: src/load.c:640 src/menu.c:460
 msgid "Load"
 msgstr ""
@@ -46119,7 +46119,7 @@ msgstr ""
 msgid "Fleets"
 msgstr ""
 
-#: dat/events/shipai.lua:126 dat/events/tutorial/tut_enter.lua:175
+#: dat/events/shipai.lua:126 dat/events/tutorial/tut_enter.lua:180
 msgid ""
 "\"A large part of combat is decided ahead of time by the ship classes and "
 "their load out. However, good piloting can turn the tables easily. It is "
@@ -46128,7 +46128,7 @@ msgid ""
 "weapon sets that can be configured separately for each ship.\""
 msgstr ""
 
-#: dat/events/shipai.lua:127 dat/events/tutorial/tut_enter.lua:176
+#: dat/events/shipai.lua:127 dat/events/tutorial/tut_enter.lua:181
 msgid ""
 "\"There are three different types of weapon sets:\n"
 "- #oSwitch#0: activating the hotkey will set your primary and secondary "
@@ -46138,7 +46138,7 @@ msgid ""
 "- #oHold#0: holding the hotkey will turn the outfits on"
 msgstr ""
 
-#: dat/events/shipai.lua:131 dat/events/tutorial/tut_enter.lua:180
+#: dat/events/shipai.lua:131 dat/events/tutorial/tut_enter.lua:185
 msgid ""
 "\"By default, the weapon sets will be automatically managed by me, with "
 "forward bolts in set 1 (switch), turret weapons in set 2 (switch), and both "
@@ -46315,7 +46315,7 @@ msgid ""
 "using a smaller ship will lower the overall visibility of your ship.\""
 msgstr ""
 
-#: dat/events/shipai.lua:170 dat/events/tutorial/tut_enter.lua:105
+#: dat/events/shipai.lua:170 dat/events/tutorial/tut_enter.lua:109
 msgid ""
 "\"You can check to see if your commodities or outfits are illegal from the "
 "#bInfo Menu#0 which you can open with {infokey}, and then looking at your "
@@ -49345,10 +49345,12 @@ msgstr ""
 #. mark slot as needs checking
 #. unmark as it is in weapon set
 #. Don't run if doing cinematics, or if system isn't inclusive. */
+#. See if we should be doing the tutorial
 #. TODO we should probably allow looking at any faction not just empire
 #. If the player has not set up an outfit in a weapon set we have to warn them
 #. Warn about remaining ones
-#: dat/events/tutorial/tut_enter.lua:99
+#. See if we should be doing the tutorial
+#: dat/events/tutorial/tut_enter.lua:103
 msgid ""
 "Just as after taking off, {ainame} materializes in front of you.\n"
 "\"I don't know how to say this to you, but it seems like you have acquired "
@@ -49358,7 +49360,7 @@ msgid ""
 "the form of a bribe, but that may not always be the case.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:102
+#: dat/events/tutorial/tut_enter.lua:106
 msgid ""
 "\"If you have to deal with illegal goods, I would recommend you to try to "
 "maximize the stealth functionality of your ship, that you can enable with "
@@ -49368,7 +49370,7 @@ msgid ""
 "chance of success.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:104
+#: dat/events/tutorial/tut_enter.lua:108
 msgid ""
 "\"If some ship begins to scan you, I'll turn your autonav system off, to "
 "give you time to do what you have to do. Furthermore, the ships scanning you "
@@ -49376,13 +49378,14 @@ msgid ""
 "away.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:107
+#: dat/events/tutorial/tut_enter.lua:111
 msgid ""
 "{ainame} vanishes and you are left wondering why they are so knowledgable "
 "about illegal activities."
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:130
+#. See if we should be doing the tutorial
+#: dat/events/tutorial/tut_enter.lua:135
 msgid ""
 "Just as after taking off, {ainame} materializes in front of you.\n"
 "\"I was reviewing the ship loadout to keep the urges away, and noticed that "
@@ -49390,32 +49393,32 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:134 src/menu.c:641
+#: dat/events/tutorial/tut_enter.lua:139 src/menu.c:641
 msgid "Continue"
 msgstr "Continuar"
 
-#: dat/events/tutorial/tut_enter.lua:135
+#: dat/events/tutorial/tut_enter.lua:140
 msgid "\"Urges?!\""
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:136
+#: dat/events/tutorial/tut_enter.lua:141
 msgid "Skip tutorial"
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:140
+#: dat/events/tutorial/tut_enter.lua:145
 msgid ""
 "\"Um, that's not important right now, what is important is that if you do "
 "not set {item} in a weapon set, you won't be able to use it when it becomes "
 "necessary!\""
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:145
+#: dat/events/tutorial/tut_enter.lua:150
 msgid ""
 "\"If you do not set {item} in a weapon set, you won't be able to use it when "
 "it becomes necessary!\""
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:150
+#: dat/events/tutorial/tut_enter.lua:155
 msgid ""
 "\"To be able to use your outfits, you have to open the info menu with "
 "{infokey}, and from there access the weapons tab. From there you will be "
@@ -49423,11 +49426,11 @@ msgid ""
 "you.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:155
+#: dat/events/tutorial/tut_enter.lua:160
 msgid "You tell {shipai} that you will solve it out yourself."
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:181
+#: dat/events/tutorial/tut_enter.lua:186
 msgid ""
 "\"Go ahead and try to add {item} to a weapon set! First click on an empty "
 "set on the list, then click on the icon of {item} to add it to the weapon "
@@ -49435,7 +49438,8 @@ msgid ""
 "type of weapon set.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:198
+#. See if we should be doing the tutorial
+#: dat/events/tutorial/tut_enter.lua:204
 msgid ""
 "As you jump the system you notice a small alarm lights up in the control "
 "panel:\n"
@@ -49443,7 +49447,7 @@ msgid ""
 "#0"
 msgstr ""
 
-#: dat/events/tutorial/tut_enter.lua:200
+#: dat/events/tutorial/tut_enter.lua:206
 msgid ""
 "{ainame} materializes in front of you.\n"
 "\"It looks like we entered part of the volatile nebula. The instability here "
@@ -106018,7 +106022,7 @@ msgstr ""
 #. Triggered when pilot takes off (player only)
 #. Triggered when pilot jumps in (player only)
 #. Triggered when pilot boards a target ship
-#. Triggered when the player double taps a specific key, which can be either "accel", "left", or "right"
+#. Triggered when the player double taps a specific key, which can be either "accel", "left", or "right". Should return true if it activated something
 #. Triggered when the player releases a specific key, same as "keydoubletap"
 #.
 #. Below are WEAPONS ONLY. However, they can be triggered by munitions,
@@ -116245,40 +116249,40 @@ msgid "Sleep"
 msgstr ""
 
 #. error has occurred
-#: src/ai.c:483
+#: src/ai.c:482
 #, c-format
 msgid "Pilot '%s' ai '%s' error: %s"
 msgstr ""
 
-#: src/ai.c:508
+#: src/ai.c:507
 #, c-format
 msgid "AI Profile '%s' not found, using dummy fallback."
 msgstr ""
 
-#: src/ai.c:512
+#: src/ai.c:511
 msgid "Dummy AI Profile not valid! Things are going to break."
 msgstr ""
 
-#: src/ai.c:618
+#: src/ai.c:617
 #, c-format
 msgid "Error loading AI profile '%s'"
 msgstr ""
 
-#: src/ai.c:631
+#: src/ai.c:630
 #, c-format
 msgid "Loaded %d AI Profile in %.3f s"
 msgid_plural "Loaded %d AI Profiles in %.3f s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ai.c:634
+#: src/ai.c:633
 #, c-format
 msgid "Loaded %d AI Profile"
 msgid_plural "Loaded %d AI Profiles"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ai.c:663 src/board.c:89 src/comm.c:160 src/land.c:1575 src/naev.c:543
+#: src/ai.c:662 src/board.c:89 src/comm.c:160 src/land.c:1575 src/naev.c:543
 #: src/player.c:3638 src/player_autonav.c:64
 #, c-format
 msgid ""
@@ -116287,7 +116291,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/ai.c:722
+#: src/ai.c:721
 #, c-format
 msgid ""
 "Error loading AI file: %s\n"
@@ -116296,32 +116300,32 @@ msgid ""
 msgstr ""
 
 #. Find and set up the necessary references.
-#: src/ai.c:734
+#: src/ai.c:733
 #, c-format
 msgid "AI Profile '%s' is missing '%s' function!"
 msgstr ""
 
-#: src/ai.c:767
+#: src/ai.c:766
 #, c-format
 msgid "AI Profile '%s' not found in AI stack"
 msgstr ""
 
-#: src/ai.c:938
+#: src/ai.c:937
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'attacked': %s"
 msgstr ""
 
-#: src/ai.c:973
+#: src/ai.c:972
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'discovered': %s"
 msgstr ""
 
-#: src/ai.c:1007
+#: src/ai.c:1006
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'hail': %s"
 msgstr ""
 
-#: src/ai.c:1024
+#: src/ai.c:1023
 #, c-format
 msgid ""
 "Pilot '%s' (ai '%s') is trying to refuel when no 'refuel' function is "
@@ -116329,47 +116333,47 @@ msgid ""
 msgstr ""
 
 #. Error has occurred.
-#: src/ai.c:1095
+#: src/ai.c:1094
 #, c-format
 msgid "Pilot '%s' equip '%s' -> '%s': %s"
 msgstr ""
 
-#: src/ai.c:1123
+#: src/ai.c:1122
 #, c-format
 msgid "Trying to create new task for pilot '%s' that has no AI!"
 msgstr ""
 
-#: src/ai.c:1153
+#: src/ai.c:1152
 #, c-format
 msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
-#: src/ai.c:1214 src/nlua_pilot.c:5604
+#: src/ai.c:1213 src/nlua_pilot.c:5604
 #, fuzzy, c-format
 #| msgid "Unable to equip core '%s' on '%s'!"
 msgid "Failed to create new task for pilot '%s'."
 msgstr "Impossível equipar núcleo '%s' em '%s'!"
 
-#: src/ai.c:1273 src/ai.c:1346 src/nlua_pilot.c:5561
+#: src/ai.c:1272 src/ai.c:1345 src/nlua_pilot.c:5561
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
-#: src/ai.c:1348
+#: src/ai.c:1347
 #, c-format
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2380 src/nlua_pilot.c:6054
+#: src/ai.c:2379 src/nlua_pilot.c:6054
 #, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr ""
 
-#: src/ai.c:2386
+#: src/ai.c:2385
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2431 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
+#: src/ai.c:2430 src/comm.c:218 src/nlua_player.c:1086 src/npc.c:531
 #: src/player.c:1692 src/space.c:1960 src/space.c:2066 src/space.c:2084
 #: src/space.c:2136 src/space.c:3535 src/space.c:3556 src/space.c:4384
 #, c-format
@@ -116378,11 +116382,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/ai.c:2460 src/ai.c:2493
+#: src/ai.c:2459 src/ai.c:2492
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2614
+#: src/ai.c:2613
 #, c-format
 msgid "Pilot '%s' can't find jump to leave system!"
 msgstr ""
@@ -121881,7 +121885,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/naev.c:198 src/naev.c:1124 src/nlua_naev.c:179 src/nlua_naev.c:181
+#: src/naev.c:198 src/naev.c:1126 src/nlua_naev.c:179 src/nlua_naev.c:181
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -122109,24 +122113,24 @@ msgstr ""
 msgid "PAUSED"
 msgstr ""
 
-#: src/naev.c:1091
+#: src/naev.c:1093
 msgid "Icon (icon.webp) not found!"
 msgstr ""
 
-#: src/naev.c:1096
+#: src/naev.c:1098
 msgid "Unable to load icon.webp!"
 msgstr ""
 
-#: src/naev.c:1151
+#: src/naev.c:1153
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr ""
 
-#: src/naev.c:1164
+#: src/naev.c:1166
 msgid "SDL is newer than compiled version"
 msgstr ""
 
-#: src/naev.c:1166
+#: src/naev.c:1168
 msgid "SDL is older than compiled version."
 msgstr ""
 
@@ -124995,7 +124999,7 @@ msgstr ""
 
 #: src/player.c:1930
 #, c-format
-msgid "#rReceiving hail! Press #b%s#0 to respond."
+msgid "#rReceiving hail! Press #b%s#r to respond.#0"
 msgstr ""
 
 #: src/player.c:1981
@@ -125333,7 +125337,7 @@ msgstr ""
 msgid "Player deployed ship '%s' not found in escort list!"
 msgstr ""
 
-#: src/player_fleet.c:217
+#: src/player_fleet.c:226
 #, c-format
 msgid "Failure to add cargo '%s' to player fleet. Only %d of %d added."
 msgstr ""
