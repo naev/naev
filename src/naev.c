@@ -100,7 +100,7 @@
 
 static int quit               = 0; /**< For primary loop */
 Uint32 SDL_LOOPDONE           = 0; /**< For custom event to exit loops. */
-static Uint64  time_ms        = 0; /**< used to calculate FPS and movement. */
+static Uint64  last_t         = 0; /**< used to calculate FPS and movement. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
@@ -311,7 +311,7 @@ int main( int argc, char** argv )
    /* Display the load screen. */
    loadscreen_load();
    loadscreen_update( 0., _("Initializing subsystems…") );
-   time_ms = SDL_GetTicks64();
+   last_t = SDL_GetPerformanceCounter();
 
    /*
     * Input
@@ -375,12 +375,12 @@ int main( int argc, char** argv )
    menu_main();
 
    if (conf.devmode)
-      LOG( _( "Reached main menu in %.3f s" ), (SDL_GetTicks()-starttime)/1000. );
+      LOG( _( "Reached main menu in %.3f s" ), (double)(SDL_GetTicks()-starttime)/1000. );
    else
       LOG( _( "Reached main menu" ) );
    NTracingMessageL( _( "Reached main menu" ) );
 
-   fps_init(); /* initializes the time_ms */
+   fps_init(); /* initializes the last_t */
 
    /*
     * main loop
@@ -854,26 +854,12 @@ void naev_toggleFullscreen (void)
    opt_setVideoMode( conf.width, conf.height, !conf.fullscreen, 0 );
 }
 
-#if HAS_POSIX && defined(CLOCK_MONOTONIC)
-static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
-static int use_posix_time; /**< Whether or not to use POSIX time. */
-#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 /**
  * @brief Initializes the fps engine.
  */
 static void fps_init (void)
 {
-#if HAS_POSIX && defined(CLOCK_MONOTONIC)
-   use_posix_time = 1;
-   /* We must use clock_gettime here instead of gettimeofday mainly because this
-    * way we are not influenced by changes to the time source like say ntp which
-    * could skew up the dt calculations. */
-   if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
-      return;
-   WARN( _("clock_gettime failed, disabling POSIX time.") );
-   use_posix_time = 0;
-#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
-   time_ms  = SDL_GetTicks64();
+   last_t = SDL_GetPerformanceCounter();
 }
 /**
  * @brief Gets the elapsed time.
@@ -885,24 +871,9 @@ static double fps_elapsed (void)
    double dt;
    Uint64 t;
 
-#if HAS_POSIX && defined(CLOCK_MONOTONIC)
-   struct timespec ts;
-
-   if (use_posix_time) {
-      if (clock_gettime(CLOCK_MONOTONIC, &ts)==0) {
-         dt  = ts.tv_sec - global_time.tv_sec;
-         dt += (ts.tv_nsec - global_time.tv_nsec) / 1e9;
-         global_time = ts;
-         return dt;
-      }
-      WARN( _("clock_gettime failed!") );
-   }
-#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
-
-   t        = SDL_GetTicks64();
-   dt       = (double)(t - time_ms); /* Get the elapsed ms. */
-   dt      /= 1000.; /* Convert to seconds. */
-   time_ms  = t;
+   t        = SDL_GetPerformanceCounter();
+   dt       = (double)(t - last_t) / (double)SDL_GetPerformanceFrequency(); /* Get the elapsed ms. */
+   last_t   = t;
 
    return dt;
 }

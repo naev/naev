@@ -243,7 +243,7 @@ static int naevL_ticksGame( lua_State *L )
  */
 static int naevL_ticks( lua_State *L )
 {
-   lua_pushnumber(L, (double)SDL_GetTicks64() / 1000.);
+   lua_pushnumber(L, (double)SDL_GetPerformanceCounter() / (double)SDL_GetPerformanceFrequency() );
    return 1;
 }
 

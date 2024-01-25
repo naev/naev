@@ -22,6 +22,7 @@
       * Threaded more loading components
       * Lua require now caches chunks
       * Dropped SDL_image fallback
+      * Use higher internal timer for all platforms
       * Support for Tracy
       * Warn the player if they try to use a name with all space characters
    * Fixes
