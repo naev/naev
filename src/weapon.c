@@ -1013,9 +1013,12 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
 static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
    int csx, int csy, const Solid *csol, const CollPoly *cpol, double cradius, vec2 crash[2] )
 {
+   NTracingZone( _ctx, 1 );
+
    const Weapon *w = wc->w;
    vec2 wipos, cipos; /* Interpolated positions. */
    const vec2 *wpos, *cpos;
+   int ret;
 
    /* Default to the real positions. */
    wpos = &w->solid.pos;
@@ -1051,7 +1054,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
    }
 
    if (wc->beam) {
-      int ret, pll;
+      int pll;
       /* Set up variables so we can use the equations from CollideLineLine as is.
        * Main idea is to just do a line-line collision*/
       double s1x = csol->pos.x;
@@ -1096,8 +1099,10 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
          const vec2 endpoint = { .x=e2x, .y=e2y };
          ret = CollideLineCircle( &w->solid.pos, &endpoint, cpos, cradius, crash );
       }
-      if (ret > 0)
+      if (ret > 0) {
+         NTracingZoneEnd( _ctx );
          return ret;
+      }
       /* Case non-parallel lines (or 0 length lines), we just compute the nearest point. */
       else if (!pll) {
          double ub_t = (e1x - s1x) * (s1y - s2y) - (e1y - s1y) * (s1x - s2x);
@@ -1128,39 +1133,42 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       int k = ctex->sx * csy + csx;
       /* Case full polygon on polygon collision. */
       if (wc->polygon!=NULL)
-         return CollidePolygon( &cpol[k], cpos, wc->polygon, wpos, crash );
+         ret = CollidePolygon( &cpol[k], cpos, wc->polygon, wpos, crash );
       /* GFX on polygon. */
       else if ((wc->gfx!=NULL) && (wc->gfx->tex != NULL))
-         return CollideSpritePolygon( &cpol[k], cpos, wc->gfx->tex, w->sx, w->sy, wpos, crash );
+         ret = CollideSpritePolygon( &cpol[k], cpos, wc->gfx->tex, w->sx, w->sy, wpos, crash );
       /* Circle on polygon. */
       else
-         return CollideCirclePolygon( wpos, wc->range, &cpol[k], cpos, crash );
+         ret = CollideCirclePolygon( wpos, wc->range, &cpol[k], cpos, crash );
    }
    /* Try to do texture next. */
    else if (ctex != NULL) {
       /* GFX on polygon. */
       if (wc->polygon!=NULL)
-         return CollideSpritePolygon( wc->polygon, wpos, ctex, csx, csy, cpos, crash );
+         ret = CollideSpritePolygon( wc->polygon, wpos, ctex, csx, csy, cpos, crash );
       /* Case texture on texture collision. */
       else if ((wc->gfx!=NULL) && (wc->gfx->tex!=NULL))
-         return CollideSprite( wc->gfx->tex, w->sx, w->sy, wpos,
+         ret = CollideSprite( wc->gfx->tex, w->sx, w->sy, wpos,
                   ctex, csx, csy, cpos, crash );
       /* Case no polygon and circle collision. */
       else
-         return CollideCircleSprite( wpos, wc->range, ctex, csx, csy, cpos, crash );
+         ret = CollideCircleSprite( wpos, wc->range, ctex, csx, csy, cpos, crash );
    }
    /* Finally radius only. */
    else {
       /* GFX on polygon. */
       if (wc->polygon!=NULL)
-         return CollideSpritePolygon( wc->polygon, wpos, ctex, csx, csy, cpos, crash );
+         ret = CollideSpritePolygon( wc->polygon, wpos, ctex, csx, csy, cpos, crash );
       /* Case texture on texture collision. */
       else if ((wc->gfx!=NULL) && (wc->gfx->tex!=NULL))
-         return CollideCircleSprite( cpos, cradius, wc->gfx->tex, w->sx, w->sy, wpos, crash );
+         ret = CollideCircleSprite( cpos, cradius, wc->gfx->tex, w->sx, w->sy, wpos, crash );
       /* Trivial circle on circle case. */
       else
-         return CollideCircleCircle( wpos, wc->range, cpos, cradius, crash );
+         ret = CollideCircleCircle( wpos, wc->range, cpos, cradius, crash );
    }
+
+   NTracingZoneEnd( _ctx );
+   return ret;
 }
 
 /**

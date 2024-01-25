@@ -1022,6 +1022,8 @@ static void update_all( int dohooks )
  */
 void update_routine( double dt, int dohooks )
 {
+   NTracingZone( _ctx, 1 );
+
    double real_update = dt / dt_mod;
 
    if (dohooks) {
@@ -1052,10 +1054,8 @@ void update_routine( double dt, int dohooks )
    /* Player autonav. */
    player_updateAutonav( real_update );
 
-   /* Update the elapsed time, should be with all the modifications and such. */
-   elapsed_time_mod += dt;
-
    if (dohooks) {
+      NTracingZoneName( _ctx_hook, "hooks[update]", 1 );
       HookParam h[3];
       hook_exclusionEnd( dt );
       /* Hook set up. */
@@ -1066,7 +1066,13 @@ void update_routine( double dt, int dohooks )
       h[2].type = HOOK_PARAM_SENTINEL;
       /* Run the update hook. */
       hooks_runParam( "update", h );
+      NTracingZoneEnd( _ctx_hook );
    }
+
+   /* Update the elapsed time, should be with all the modifications and such. */
+   elapsed_time_mod += dt;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

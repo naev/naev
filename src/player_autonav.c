@@ -33,6 +33,7 @@
 #include "sound.h"
 #include "space.h"
 #include "toolkit.h"
+#include "ntracing.h"
 
 static nlua_env autonav_env   = LUA_NOREF; /**< Autonav environment. */
 static int func_system        = LUA_NOREF;
@@ -401,12 +402,16 @@ void player_updateAutonav( double dt )
    if (!player_isFlag(PLAYER_AUTONAV))
       return;
 
+   NTracingZone( _ctx, 1 );
+
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_update );
    lua_pushnumber( naevL, dt );
    if (nlua_pcall( autonav_env, 1, 0 )) {
       WARN("%s",lua_tostring(naevL,-1));
       lua_pop(naevL, 1);
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 void player_autonavEnter (void)

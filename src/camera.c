@@ -21,6 +21,7 @@
 #include "pause.h"
 #include "player.h"
 #include "space.h"
+#include "ntracing.h"
 
 #define CAMERA_DIR      (M_PI/2.)
 
@@ -220,6 +221,7 @@ int cam_getTarget( void )
  */
 void cam_update( double dt )
 {
+   NTracingZone( _ctx, 1 );
    Pilot *p;
    double ox, oy;
 
@@ -280,6 +282,8 @@ void cam_update( double dt )
    /* Compute velocity. */
    camera_VX = camera_DX / dt;
    camera_VY = camera_DY / dt;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

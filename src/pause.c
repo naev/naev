@@ -17,6 +17,7 @@
 
 #include "player.h"
 #include "sound.h"
+#include "ntracing.h"
 
 int paused     = 0; /**< is paused? */
 int player_paused = 0; /**< Whether the player initiated the pause. */
@@ -64,6 +65,7 @@ void unpause_game (void)
 void pause_setSpeed( double mod )
 {
    dt_mod = mod;
+   NTracingPlotF( "speed", dt_mod );
 }
 
 /**
