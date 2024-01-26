@@ -1610,6 +1610,7 @@ void pilot_afterburn( Pilot *p )
    /* Turn it on. */
    if (p->afterburner->state == PILOT_OUTFIT_OFF) {
       p->afterburner->state  = PILOT_OUTFIT_ON;
+      p->afterburner->flags |= PILOTOUTFIT_ISON_LUA; /* Allow turning it on. */
       p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
       pilot_setFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
@@ -1638,6 +1639,7 @@ void pilot_afterburnOver( Pilot *p )
 
    if (p->afterburner->state == PILOT_OUTFIT_ON) {
       p->afterburner->state  = PILOT_OUTFIT_OFF;
+      p->afterburner->flags &= ~PILOTOUTFIT_ISON_LUA; /* Allow turning it on. */
       pilot_rmFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
 
