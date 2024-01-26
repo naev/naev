@@ -317,6 +317,12 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
    else
       s->flags &= ~PILOTOUTFIT_ACTIVE;
 
+   /* Check if toggleable. */
+   if (outfit_isToggleable(outfit))
+      s->flags |= PILOTOUTFIT_TOGGLEABLE;
+   else
+      s->flags &= ~PILOTOUTFIT_TOGGLEABLE;
+
    /* Update heat. */
    pilot_heatCalcSlot( s );
 
@@ -508,6 +514,7 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
    /* Remove the outfit. */
    ret         = (s->outfit==NULL);
    s->outfit   = NULL;
+   s->flags    = 0; /* Clear flags. */
    //s->weapset  = -1;
 
    /* Remove secondary and such if necessary. */
@@ -1221,17 +1228,7 @@ void pilot_updateMass( Pilot *pilot )
  */
 int pilot_slotIsToggleable( const PilotOutfitSlot *o )
 {
-   const Outfit *oo;
-   if (!(o->flags & PILOTOUTFIT_ACTIVE))
-      return 0;
-
-   oo = o->outfit;
-   if (oo == NULL)
-      return 0;
-   if (!outfit_isToggleable(oo))
-      return 0;
-
-   return 1;
+   return (o->flags & PILOTOUTFIT_TOGGLEABLE);
 }
 
 /**
