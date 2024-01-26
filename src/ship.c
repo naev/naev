@@ -397,10 +397,6 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
    temp->gfx_store = gl_loadImagePad( buf, gfx_store, OPENGL_TEX_VFLIP, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
-   /* Load the surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_target", temp->name );
-   temp->gfx_target = gl_loadImagePad( buf, gfx, OPENGL_TEX_VFLIP, sw, sh, 1, 1, 1 );
-
    return 0;
 }
 
@@ -1239,7 +1235,6 @@ void ships_free (void)
       object_free(s->gfx_3d);
       gl_freeTexture(s->gfx_space);
       gl_freeTexture(s->gfx_engine);
-      gl_freeTexture(s->gfx_target);
       gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
       for (int j=0; j<array_size(s->gfx_overlays); j++)
