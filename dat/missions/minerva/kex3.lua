@@ -47,7 +47,7 @@ local malik_image = "major_malik.webp"
 local money_reward = minerva.rewards.kex3
 
 function create ()
-   if not misn.claim( {targetsys, lastsys} ) then
+   if not misn.claim( {targetsys, lastsys, gauntletsys} ) then
       misn.finish( false )
    end
    misn.setReward( _("A step closer to Kex's freedom") )
