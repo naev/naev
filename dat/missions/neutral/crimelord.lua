@@ -106,7 +106,7 @@ function enter ()
 
    -- Only spawn if system can handle inclusive claims
    if naev.claimTest( system.cur(), true ) then
-      hook.timer(4.0, "spawnBaddies")
+      hook.timer(4, "spawnBaddies")
    end
 
    if system.cur() == mem.targetsystem then

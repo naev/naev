@@ -30,6 +30,9 @@
 
 * 0.11.4 (unreleased)
    * Fixed crash when selling deployed ship
+   * `shark/sh01_corvette`: have the pilot jump in from the same system as the player
+   * `minerva/kex03`: have mission claim the crimson gauntlet to prevent unwanted spawns
+   * `dvaered/gauntlet`: have mission claim the system if it can, but not fail if it can't
    * Fixed some typos and revised writing
 
 * 0.11.3

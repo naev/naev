@@ -68,6 +68,12 @@ function approach_gauntlet ()
    -- Accept mission
    misn.accept()
 
+   -- We try to claim if possible, but it's not a failure if we can't
+   -- This allows it to work with kex03
+   if naev.claimTest( gauntletsys ) then
+      misn.claim( gauntletsys )
+   end
+
    -- Set details
    misn.setDesc( _("Annihilate all enemies in the Crimson Gauntlet.") )
    misn.setReward( _("Great riches!") )
