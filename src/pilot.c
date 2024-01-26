@@ -1831,8 +1831,14 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
    Effect *e = NULL;
 
    /* Transform coordinates. */
-   w = p->ship->gfx_space->sw;
-   h = p->ship->gfx_space->sh;
+   if (p->ship->gfx_space != NULL) {
+      w = p->ship->gfx_space->sw;
+      h = p->ship->gfx_space->sh;
+   }
+   else {
+      w = p->ship->gfx_3d_scale;
+      h = p->ship->gfx_3d_scale;
+   }
    gl_gameToScreenCoords( &x, &y, p->solid.pos.x-w/2., p->solid.pos.y-h/2. );
 
    /* Render effects - already sorted by priority and then timer. */

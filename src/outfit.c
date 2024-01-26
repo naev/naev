@@ -1215,6 +1215,8 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
  *
  *    @param temp Outfit to load into.
  *    @param buf Name of the file.
+ *    @param sx Number of X sprites.
+ *    @param sy Number of Y sprites.
  */
 static int outfit_loadPLG( Outfit *temp, const char *buf, int sx, int sy )
 {

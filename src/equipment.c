@@ -915,7 +915,7 @@ static void equipment_renderShip( double bx, double by,
       double bw, double bh, void *data )
 {
    Pilot *p;
-   int sx, sy;
+   int sx, sy, w, h;
    double px, py;
    double pw, ph;
    vec2 v;
@@ -931,28 +931,43 @@ static void equipment_renderShip( double bx, double by,
       unsigned int tick = SDL_GetTicks();
       double dt = (double)(tick - equipment_lastick)/1000.;
       equipment_lastick = tick;
-      equipment_dir += p->turn * dt;
-      if (equipment_dir > 2.*M_PI)
-         equipment_dir = fmod( equipment_dir, 2.*M_PI );
+      p->solid.dir += p->turn * dt;
+      if (p->solid.dir > 2.*M_PI)
+         p->solid.dir = fmod( p->solid.dir, 2.*M_PI );
    }
    else
       equipment_lastick = SDL_GetTicks();
-   gl_getSpriteFromDir( &sx, &sy, p->ship->sx, p->ship->sy, equipment_dir );
+   gl_getSpriteFromDir( &sx, &sy, p->ship->sx, p->ship->sy, p->solid.dir );
+
+   if (p->ship->gfx_space != NULL) {
+      w = p->ship->gfx_space->sw;
+      h = p->ship->gfx_space->sh;
+   }
+   else {
+      w = p->ship->gfx_3d_scale;
+      h = p->ship->gfx_3d_scale;
+   }
 
    /* Render ship graphic. */
-   if (p->ship->gfx_space->sw > bw) {
+   if (w > bw) {
       pw = 128.;
       ph = 128.;
    }
    else {
-      pw = p->ship->gfx_space->sw;
-      ph = p->ship->gfx_space->sh;
+      pw = w;
+      ph = h;
    }
-
    px = bx + (bw-pw)/2;
    py = by + (bh-ph)/2;
+
+   /* Render background. */
    gl_renderRect( px, py, pw, ph, &cBlack );
-   gl_renderScaleSprite( p->ship->gfx_space, px, py, sx, sy, pw, ph, NULL );
+
+   /* Use framebuffer to draw. */
+   pilot_renderFramebuffer( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
+   gl_renderTextureRaw( gl_screen.fbo_tex[2], 0,
+         px, py, pw, ph,
+         0, 0, w/(double)gl_screen.nw, h/(double)gl_screen.nh, NULL, 0. );
 
 #ifdef DEBUGGING
    if (debug_isFlag(DEBUG_MARK_EMITTER)) {
