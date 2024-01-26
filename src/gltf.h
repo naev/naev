@@ -14,6 +14,8 @@
 
 #define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
 
+#define OBJECT_FLAG_NOLIGHTS  (1<<0)   /**< Do not run shadows computations. */
+
 /**
  * @brief PBR Material of an object.
  */
@@ -78,18 +80,26 @@ typedef struct Node_ {
    vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
 } Node;
 
+typedef struct Scene_ {
+   char *name;          /**< Name of the scene. */
+   Node *nodes;         /**< Nodes the object has. */
+   size_t nnodes;       /**< Number of nodes. */
+} Scene;
+
 /**
  * @brief Defines a complete object.
  */
 typedef struct Object_ {
-   Node *nodes;         /**< Nodes the object has. */
-   size_t nnodes;       /**< Number of nodes. */
+   Scene *scenes;       /**< Number of scenes. */
+   size_t nscenes;      /**< Number of scenes. */
    Material *materials; /**< Available materials. */
    size_t nmaterials;   /**< Number of materials. */
    GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
-   GLfloat time;        /**< Current time. */
    vec3 aabb_min;       /**< Minimum value of AABB wrapping around it. */
    vec3 aabb_max;       /**< Maximum value of AABB wrapping around it. */
+   /* Some useful default scenes. */
+   int scene_body;      /**< Body of the object. */
+   int scene_engine;    /**< Engine of the object (if applicable or -1) */
 } Object;
 
 /* Framework itself. */
@@ -102,6 +112,7 @@ void object_free( Object *obj );
 
 /* Rendering and updating. */
 void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size );
+void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H, double time, double size, unsigned int flags );
 
 /* Lighting. */
 void object_lightAmbient( double r, double g, double b );

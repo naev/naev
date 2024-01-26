@@ -1765,6 +1765,7 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
 
    if (p->ship->gfx_3d != NULL) {
       double s = p->ship->gfx_space->sw / gl_screen.scale;
+      Object *obj = p->ship->gfx_3d;
 
       /* Only clear the necessary area. */
       glEnable( GL_SCISSOR_TEST );
@@ -1775,8 +1776,10 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
       mat4 H = mat4_identity();
       mat4_rotate( &H, M_PI_2-p->solid.dir, 0.0, 1.0, 0.0 );
 
-      /* TODO split engine and such. */
-      object_render( fbo, p->ship->gfx_3d, &H, 0., s );
+      /* Actually render. */
+      object_renderScene( fbo, obj, obj->scene_body, &H, 0., s, 0 );
+      if (p->engine_glow > 0.5)
+         object_renderScene( fbo, obj, obj->scene_engine, &H, 0., s, OBJECT_FLAG_NOLIGHTS );
    }
    else {
       double tx,ty;
