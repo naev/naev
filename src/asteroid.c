@@ -418,7 +418,7 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
    /* Randomly init the gfx ID, and associated polygon */
    id = RNG(0, array_size(at->gfxs)-1);
    ast->gfx = at->gfxs[ id ];
-   ast->polygon = &at->polygon;
+   ast->polygon = &at->polygon[ id ];
 
    ast->type = at;
    ast->armour = at->armour_min + RNGF() * (at->armour_max-at->armour_min);
@@ -629,6 +629,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
    /* Set up the element. */
    memset( at, 0, sizeof(AsteroidType) );
    at->gfxs       = array_create( glTexture* );
+   at->polygon    = array_create( CollPoly );
    at->material   = array_create( AsteroidReward );
    at->damage     = 100;
    at->penetration = 100.;
@@ -750,8 +751,11 @@ static int asteroid_loadPLG( AsteroidType *temp, const char *buf )
    }
 
    do { /* load the polygon data */
-      if (xml_isNode(node,"polygons"))
-         poly_load( &temp->polygon, node, 1, 1 ); /* only one sprite. */
+      if (xml_isNode(node,"polygons")) {
+         CollPoly plg;
+         poly_load( &plg, node, 1, 1 ); /* only one sprite. */
+         array_push_back( &temp->polygon, plg );
+      }
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -992,7 +996,9 @@ void asteroids_free (void)
       array_free(at->gfxs);
 
       /* Free collision polygons. */
-      poly_free( &at->polygon );
+      for (int j=0; j<array_size(at->polygon); j++)
+         poly_free( &at->polygon[j] );
+      array_free( at->polygon );
    }
    array_free(asteroid_types);
    asteroid_types = NULL;

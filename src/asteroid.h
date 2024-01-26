@@ -49,7 +49,7 @@ typedef struct AsteroidType_ {
    char *name;          /**< Name of the asteroid type. */
    char *scanned_msg;   /**< Scanned message. */
    glTexture **gfxs;    /**< asteroid possible gfxs. */
-   CollPoly polygon;    /**< Collision polygons associated to gfxs. */
+   CollPoly *polygon;   /**< Collision polygons associated to gfxs. */
    AsteroidReward *material; /**< Materials contained in the asteroid. */
    double armour_min;   /**< Minimum "armour" of the asteroid. */
    double armour_max;   /**< Maximum "armour" of the asteroid. */
