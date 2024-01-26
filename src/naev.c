@@ -868,13 +868,9 @@ static void fps_init (void)
  */
 static double fps_elapsed (void)
 {
-   double dt;
-   Uint64 t;
-
-   t        = SDL_GetPerformanceCounter();
-   dt       = (double)(t - last_t) / (double)SDL_GetPerformanceFrequency(); /* Get the elapsed ms. */
+   Uint64 t = SDL_GetPerformanceCounter();
+   double dt= (double)(t - last_t) / (double)SDL_GetPerformanceFrequency();
    last_t   = t;
-
    return dt;
 }
 
@@ -883,7 +879,7 @@ static double fps_elapsed (void)
  */
 static void fps_control (void)
 {
-#if HAS_POSIX
+#if !SDL_VERSION_ATLEAST( 3, 0, 0 ) && HAS_POSIX
    struct timespec ts;
 #endif /* HAS_POSIX */
 
@@ -896,12 +892,14 @@ static void fps_control (void)
       const double fps_max = 1./(double)conf.fps_max;
       if (real_dt < fps_max) {
          double delay = fps_max - real_dt;
-#if HAS_POSIX
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+         SDL_DelayNS( delay * 1e9 );
+#elif HAS_POSIX
          ts.tv_sec  = floor( delay );
          ts.tv_nsec = fmod( delay, 1. ) * 1e9;
          nanosleep( &ts, NULL );
 #else /* HAS_POSIX */
-         SDL_Delay( (unsigned int)(delay * 1000) );
+         SDL_Delay( (unsigned int)(delay * 1000.) );
 #endif /* HAS_POSIX */
          fps_dt  += delay; /* makes sure it displays the proper fps */
       }
