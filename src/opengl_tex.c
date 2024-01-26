@@ -974,6 +974,41 @@ glTexture* gl_dupTexture( const glTexture *texture )
 }
 
 /**
+ * @brief Creates a texture from a raw opengl index.
+ */
+USE_RESULT glTexture* gl_rawTexture( const char *name, GLuint texid, double w, double h )
+{
+   glTexture *texture;
+   SDL_mutexP( tex_lock );
+
+   /* set up the texture defaults */
+   texture = calloc( 1, sizeof(glTexture) );
+
+   texture->w     = (double) w;
+   texture->h     = (double) h;
+   texture->sx    = (double) 1.;
+   texture->sy    = (double) 1.;
+
+   texture->texture = texid;
+
+   texture->sw    = texture->w / texture->sx;
+   texture->sh    = texture->h / texture->sy;
+   texture->srw   = texture->sw / texture->w;
+   texture->srh   = texture->sh / texture->h;
+   texture->flags = 0;
+
+   if (name != NULL) {
+      texture->name = strdup(name);
+      gl_texAdd( texture, 1, 1 );
+   }
+   else
+      texture->name = NULL;
+
+   SDL_mutexV( tex_lock );
+   return texture;
+}
+
+/**
  * @brief Checks to see if a pixel is transparent in a texture.
  *
  *    @param t Texture to check for transparency.
@@ -997,12 +1032,13 @@ int gl_isTrans( const glTexture* t, const int x, const int y )
  *
  *    @param[out] x X sprite to use.
  *    @param[out] y Y sprite to use.
- *    @param t Texture to get sprite from.
+ *    @param sx Number of sprites in X direction.
+ *    @param sy Number of sprites in Y direction.
  *    @param dir Direction to get sprite from.
  */
-void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
+void gl_getSpriteFromDir( int* x, int* y, int sx, int sy, double dir )
 {
-   int s, sx, sy;
+   int s;
    double shard, rdir;
 
 #ifdef DEBUGGING
@@ -1014,15 +1050,13 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 #endif /* DEBUGGING */
 
    /* what each image represents in angle */
-   shard = 2.*M_PI / (t->sy*t->sx);
+   shard = 2.*M_PI / (sy*sx);
 
    /* real dir is slightly moved downwards */
    rdir = dir + shard/2.;
 
    /* now calculate the sprite we need */
    s = (int)(rdir / shard);
-   sx = t->sx;
-   sy = t->sy;
 
    /* makes sure the sprite is "in range" */
    if (s > (sy*sx-1))
