@@ -97,6 +97,6 @@ int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height );
 void gl_contextSet (void);
 void gl_contextUnset (void);
 int gl_isTrans( const glTexture* t, const int x, const int y );
-void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
+void gl_getSpriteFromDir( int* x, int* y, int sx, int sy, double dir );
 glTexture** gl_copyTexArray( glTexture **tex );
 glTexture** gl_addTexArray( glTexture **tex, glTexture *t );

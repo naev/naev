@@ -6335,10 +6335,10 @@ static int pilotL_hookClear( lua_State *L )
    return 0;
 }
 
-static const CollPoly *getCollPoly( const Pilot *p )
+static const CollPolyView *getCollPoly( const Pilot *p )
 {
-   int k = p->ship->gfx_space->sx * p->tsy + p->tsx;
-   return &p->ship->polygon[k];
+   const CollPoly *plg = &p->ship->polygon;
+   return &p->ship->polygon.views[ plg->sx*p->tsy + p->tsx ];
 }
 /**
  * @brief Tests to see if two ships collide.
@@ -6356,8 +6356,8 @@ static int pilotL_collisionTest( lua_State *L )
    /* Asteroid treated separately. */
    if (lua_isasteroid(L,2)) {
       Asteroid *a = luaL_validasteroid( L, 2 );
-      CollPoly rpoly;
-      RotatePolygon( &rpoly, a->polygon, (float) a->ang );
+      CollPolyView rpoly;
+      poly_rotate( &rpoly, &a->polygon->views[0], (float) a->ang );
       int ret = CollidePolygon( getCollPoly(p), &p->solid.pos,
             &rpoly, &a->sol.pos, &crash );
       free(rpoly.x);

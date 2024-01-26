@@ -997,12 +997,13 @@ int gl_isTrans( const glTexture* t, const int x, const int y )
  *
  *    @param[out] x X sprite to use.
  *    @param[out] y Y sprite to use.
- *    @param t Texture to get sprite from.
+ *    @param sx Number of sprites in X direction.
+ *    @param sy Number of sprites in Y direction.
  *    @param dir Direction to get sprite from.
  */
-void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
+void gl_getSpriteFromDir( int* x, int* y, int sx, int sy, double dir )
 {
-   int s, sx, sy;
+   int s;
    double shard, rdir;
 
 #ifdef DEBUGGING
@@ -1014,15 +1015,13 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 #endif /* DEBUGGING */
 
    /* what each image represents in angle */
-   shard = 2.*M_PI / (t->sy*t->sx);
+   shard = 2.*M_PI / (sy*sx);
 
    /* real dir is slightly moved downwards */
    rdir = dir + shard/2.;
 
    /* now calculate the sprite we need */
    s = (int)(rdir / shard);
-   sx = t->sx;
-   sy = t->sy;
 
    /* makes sure the sprite is "in range" */
    if (s > (sy*sx-1))

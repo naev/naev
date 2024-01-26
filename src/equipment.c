@@ -937,7 +937,7 @@ static void equipment_renderShip( double bx, double by,
    }
    else
       equipment_lastick = SDL_GetTicks();
-   gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, equipment_dir );
+   gl_getSpriteFromDir( &sx, &sy, p->ship->sx, p->ship->sy, equipment_dir );
 
    /* Render ship graphic. */
    if (p->ship->gfx_space->sw > bw) {

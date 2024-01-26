@@ -477,7 +477,7 @@ static int texL_spriteFromDir( lua_State *L )
       if (a < 0.)
          a += 2.*M_PI;
    }
-   gl_getSpriteFromDir( &sx, &sy, tex, a );
+   gl_getSpriteFromDir( &sx, &sy, tex->sx, tex->sy, a );
 
    /* Return. */
    lua_pushinteger( L, sx+1 );

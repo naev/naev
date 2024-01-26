@@ -119,7 +119,7 @@ typedef struct OutfitSlot_ {
 typedef struct OutfitGFX_ {
    glTexture* tex;      /**< Graphic in case of texture. */
    glTexture* tex_end;  /**< End texture if applicable. */
-   CollPoly *polygon;   /**< Collision polygon. */
+   CollPoly polygon;   /**< Collision polygon. */
    double spin;         /**< Graphic spin rate. */
    GLuint program;      /**< Shader program. */
    GLuint vertex;       /**< Vertex info. */

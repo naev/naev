@@ -165,8 +165,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
    const ShipMount *m;
 
    /* Calculate the sprite angle. */
-   a  = (double)(p->tsy * p->ship->gfx_space->sx + p->tsx);
-   a *= p->ship->mangle;
+   a  = p->solid.dir;
 
    /* 2d rotation matrix
     * [ x' ]   [  cos  sin  ]   [ x ]
