@@ -919,6 +919,7 @@ static void equipment_renderShip( double bx, double by,
    double px, py;
    double pw, ph;
    vec2 v;
+   GLint fbo;
    const unsigned int *wid = data;
 
    /* Must have selected ship. */
@@ -964,7 +965,9 @@ static void equipment_renderShip( double bx, double by,
    gl_renderRect( px, py, pw, ph, &cBlack );
 
    /* Use framebuffer to draw. */
+   glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
    pilot_renderFramebuffer( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    gl_renderTextureRaw( gl_screen.fbo_tex[2], 0,
          px, py, pw, ph,
          0, 0, w/(double)gl_screen.nw, h/(double)gl_screen.nh, NULL, 0. );
