@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2024-01-25 17:50+0900\n"
+"POT-Creation-Date: 2024-01-26 12:28+0900\n"
 "PO-Revision-Date: 2023-01-30 00:36+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -9420,7 +9420,7 @@ msgstr ""
 #: dat/missions/shadow/darkshadow.lua:71 dat/missions/shadow/shadowvigil.lua:64
 #: dat/missions/zalek/blackhole/zbh11.lua:108 dat/scripts/common/comm.lua:34
 #: dat/scripts/common/comm.lua:40 dat/scripts/common/poi.lua:213
-#: dat/scripts/common/poi.lua:219 src/equipment.c:1916 src/escort.c:307
+#: dat/scripts/common/poi.lua:219 src/equipment.c:1915 src/escort.c:307
 #: src/gui.c:1558 src/map.c:599 src/map.c:605 src/map.c:611 src/map.c:617
 #: src/map.c:623 src/map.c:629 src/map.c:1932 src/map.c:2225
 #: src/map_overlay.c:256 src/map_system.c:490 src/outfit.c:351 src/outfit.c:370
@@ -23991,7 +23991,7 @@ msgstr ""
 #: dat/spob/tenalp.xml:24
 msgid ""
 "Tenal-P was once a prosperous trade station between the Empire and the "
-"Soromid, surviving the initial blast simply because of Iris' distance from "
+"Soromid, surviving the initial blast simply because of Akodu' distance from "
 "Sol. Since then, many residents have left the station, though a couple "
 "hundred stubborn individuals have kept the station going."
 msgstr ""
@@ -51211,7 +51211,7 @@ msgstr ""
 msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1145 src/equipment.c:1894 src/info.c:391 src/info.c:503
+#: dat/gui/slim.lua:1145 src/equipment.c:1893 src/info.c:391 src/info.c:503
 #: src/land_shipyard.c:312 src/map_system.c:699
 msgid "Fuel:"
 msgstr ""
@@ -86689,8 +86689,8 @@ msgstr ""
 
 #: dat/missions/pirate/lucas/lucas01.lua:100
 msgid ""
-"\"My name is Lucas, I was a Nebula refugee. When I was very young, me and my "
-"family escaped the Incident, but I don't know what happened and I got "
+"\"My name is Lucas, I was a Nebula refugee. When I was very young, my family "
+"and I escaped the Incident, but I don't know what happened and I got "
 "separated.\""
 msgstr ""
 
@@ -86830,8 +86830,8 @@ msgstr ""
 
 #: dat/missions/pirate/lucas/lucas01.lua:183
 msgid ""
-"You open the cell and find yourself with a very weakened old man. At first "
-"they are scared to death, believing you have come to take their meager "
+"You open the cell and find yourself with a very weakened old man. At first, "
+"they are scared to death, believing you have come to take their meagre "
 "possessions or their life, however, you are able to calm them down when you "
 "mention that Lucas sent you, and pass out."
 msgstr ""
@@ -86873,8 +86873,8 @@ msgstr ""
 
 #: dat/missions/pirate/lucas/lucas01.lua:202
 msgid ""
-"When Lucas sees the old man, his eyes tear up and he kneels to take a closer "
-"look.\n"
+"When Lucas sees the old man, his eyes tear up, and he kneels to take a "
+"closer look.\n"
 "\"Dear old man, what have they done to you?\""
 msgstr ""
 
@@ -86897,7 +86897,7 @@ msgstr ""
 msgid ""
 "You help Lucas take the old man off the ship, and also return the locket. "
 "Lucas thanks you fervently for all you've done and hands you a credit chip. "
-"He then heads off with his father towards the nearest medical center."
+"He then heads off with his father towards the nearest medical centre."
 msgstr ""
 
 #.
@@ -87005,7 +87005,7 @@ msgstr ""
 #: dat/missions/pirate/lucas/lucas02.lua:108
 msgid ""
 "\"My sister and mother succumbed at Maanen's Moon, and my father, my poor "
-"father, was refused any damn treatments in this so called civilized society."
+"father, was refused any damn treatments in this so-called civilized society."
 "\""
 msgstr ""
 
@@ -87172,7 +87172,7 @@ msgstr ""
 #: dat/missions/pirate/lucas/lucas02.lua:210
 msgid ""
 "You land on {spob}, which strikes you as a surprisingly normal-looking "
-"world. If you didn't know that it was the center of the operations of the "
+"world. If you didn't know that it was the centre of the operations of the "
 "Raven Pirate Clan, you would have thought it was just a regular trade world."
 msgstr ""
 
@@ -87202,7 +87202,7 @@ msgstr ""
 
 #: dat/missions/pirate/lucas/lucas02.lua:223
 msgid ""
-"You wish him the best and he tells you to look for him next time you are "
+"You wish him the best, and he tells you to look for him next time you are "
 "near Raven space."
 msgstr ""
 
@@ -87287,7 +87287,7 @@ msgstr ""
 
 #: dat/missions/pirate/lucas/lucas02.lua:330
 msgid ""
-"#rYou do not enough enough credits.#0\n"
+"#rYou do not enough credits.#0\n"
 "\"You think I'm going to accept less? Scram poor bum.\""
 msgstr ""
 
@@ -87303,7 +87303,7 @@ msgstr ""
 #: dat/missions/pirate/lucas/lucas02.lua:373
 msgid ""
 "You board the ship with Lucas and through methods you are not particularly "
-"proud of, are able to obtain information of a secret jmup likely leading to "
+"proud of, are able to obtain information of a secret jump likely leading to "
 "the Qorel tunnel. You are told that {spob} is somewhere there."
 msgstr ""
 
@@ -90406,17 +90406,18 @@ msgid ""
 "\"I have another job for you. The Baron was unfortunately not as impressed "
 "as we hoped. So we need a better demonstration, and we think we know what to "
 "do: we're going to demonstrate that the Lancelot, our higher-end fighter "
-"design, is more than capable of defeating Destroyer-class ships."
+"design, is more than capable of defeating Destroyer-class ships.\""
 msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:64
 msgid ""
-"\"Now, one small problem we face is that pirates almost never use Destroyer-"
-"class ships; they tend to stick to fighters, corvettes, and cruisers. More "
-"importantly, actually sending a fighter after a Destroyer is exceedingly "
-"dangerous, even if we could find a pirate piloting one. So we have another "
-"plan: we want someone to pilot a Destroyer-class ship and just let another "
-"pilot disable them with ion cannons."
+"\"Now, one small problem we face is that pirates prefer to use smaller "
+"ships, and few use Destroyer-class ships or larger; they tend to stick to "
+"interceptors, fighters, and corvettes. More importantly, actually sending a "
+"fighter after a Destroyer is exceedingly dangerous, even if we could find a "
+"pirate piloting one. So we have another plan: we want someone to pilot a "
+"Destroyer-class ship and just let another pilot disable them with ion "
+"cannons.\""
 msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:65
@@ -117607,7 +117608,7 @@ msgstr ""
 #. Update text.
 #. Text.
 #: src/dev_sysedit.c:1404 src/dev_uniedit.c:1922 src/dev_uniedit.c:2444
-#: src/equipment.c:1865 src/info.c:486 src/load.c:742
+#: src/equipment.c:1864 src/info.c:486 src/load.c:742
 msgid "Name:"
 msgstr ""
 
@@ -118261,7 +118262,7 @@ msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2426
+#: src/equipment.c:327 src/equipment.c:2424
 msgid "Sell Ship"
 msgstr ""
 
@@ -118381,11 +118382,11 @@ msgid_plural "You have %d tonnes more cargo than the new ship can hold."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1386 src/equipment.c:2282
+#: src/equipment.c:1386 src/equipment.c:2279
 msgid "Recall Fighters"
 msgstr ""
 
-#: src/equipment.c:1386 src/equipment.c:2282
+#: src/equipment.c:1386 src/equipment.c:2279
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
@@ -118398,327 +118399,327 @@ msgstr ""
 msgid "%.2f DPS [%.2f EPS]\n"
 msgstr ""
 
-#: src/equipment.c:1482 src/equipment.c:2173
+#: src/equipment.c:1482 src/equipment.c:2172
 msgid "Invalid Escort"
 msgstr ""
 
-#: src/equipment.c:1482 src/equipment.c:2173
+#: src/equipment.c:1482 src/equipment.c:2172
 #, c-format
 msgid "You can not set your ship '%s' as an escort!"
 msgstr ""
 
-#: src/equipment.c:1577
+#: src/equipment.c:1576
 #, c-format
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1676 src/land_outfits.c:370 src/shiplog.c:489
+#: src/equipment.c:1675 src/land_outfits.c:370 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
 
-#: src/equipment.c:1709
+#: src/equipment.c:1708
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1719 src/land_outfits.c:392
+#: src/equipment.c:1718 src/land_outfits.c:392
 msgid "Filter…"
 msgstr ""
 
-#: src/equipment.c:1852
+#: src/equipment.c:1851
 msgid "You do not remember how you acquired this ship."
 msgstr ""
 
-#: src/equipment.c:1868 src/info.c:487 src/land_shipyard.c:240
+#: src/equipment.c:1867 src/info.c:487 src/land_shipyard.c:240
 #: src/map_system.c:674
 msgid "Model:"
 msgstr ""
 
-#: src/equipment.c:1869 src/info.c:488 src/land.c:1240 src/land_shipyard.c:242
+#: src/equipment.c:1868 src/info.c:488 src/land.c:1240 src/land_shipyard.c:242
 #: src/map_system.c:675
 msgid "Class:"
 msgstr ""
 
-#: src/equipment.c:1870
+#: src/equipment.c:1869
 msgid "Acquired Date:"
 msgstr ""
 
-#: src/equipment.c:1874
+#: src/equipment.c:1873
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:1876 src/land_shipyard.c:249
+#: src/equipment.c:1875 src/land_shipyard.c:249
 msgid "Fleet Capacity:"
 msgstr ""
 
-#: src/equipment.c:1877 src/info.c:489 src/land_shipyard.c:246
+#: src/equipment.c:1876 src/info.c:489 src/land_shipyard.c:246
 #: src/map_system.c:678
 msgid "Crew:"
 msgstr ""
 
-#: src/equipment.c:1878 src/info.c:491 src/land_outfits.c:485
+#: src/equipment.c:1877 src/info.c:491 src/land_outfits.c:485
 #: src/land_shipyard.c:262 src/map_find.c:584 src/map_system.c:654
 #: src/map_system.c:681
 msgid "Mass:"
 msgstr ""
 
-#: src/equipment.c:1879 src/info.c:492
+#: src/equipment.c:1878 src/info.c:492
 msgid "Jump Time:"
 msgstr ""
 
-#: src/equipment.c:1880 src/info.c:493 src/land_shipyard.c:266
+#: src/equipment.c:1879 src/info.c:493 src/land_shipyard.c:266
 #: src/map_system.c:682
 msgid "Accel:"
 msgstr ""
 
-#: src/equipment.c:1881 src/info.c:494 src/land_shipyard.c:271
+#: src/equipment.c:1880 src/info.c:494 src/land_shipyard.c:271
 #: src/map_system.c:684
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:1882 src/info.c:495 src/land_shipyard.c:276
+#: src/equipment.c:1881 src/info.c:495 src/land_shipyard.c:276
 #: src/map_system.c:686
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:1883 src/info.c:496 src/land_shipyard.c:281
+#: src/equipment.c:1882 src/info.c:496 src/land_shipyard.c:281
 #: src/map_system.c:688
 msgid "Time Constant:"
 msgstr ""
 
-#: src/equipment.c:1884
+#: src/equipment.c:1883
 msgid "Detected at:"
 msgstr ""
 
-#: src/equipment.c:1885
+#: src/equipment.c:1884
 msgid "Signature:"
 msgstr ""
 
-#: src/equipment.c:1886
+#: src/equipment.c:1885
 #, fuzzy
 #| msgid "Nexus Stealth Coating"
 msgid "Stealth at:"
 msgstr "Revestimento Furtivo Nexo"
 
-#: src/equipment.c:1887
+#: src/equipment.c:1886
 #, fuzzy
 #| msgid "Scanning Combat AI"
 msgid "Scanning time:"
 msgstr "IA de Combate de Varredura"
 
 #. Misc
-#: src/equipment.c:1889 src/info.c:498 src/land_shipyard.c:286
+#: src/equipment.c:1888 src/info.c:498 src/land_shipyard.c:286
 #: src/map_system.c:690
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:1890 src/info.c:499 src/land_shipyard.c:291
+#: src/equipment.c:1889 src/info.c:499 src/land_shipyard.c:291
 #: src/map_system.c:692
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:1891 src/info.c:500 src/land_shipyard.c:296
+#: src/equipment.c:1890 src/info.c:500 src/land_shipyard.c:296
 #: src/map_system.c:694
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:1892 src/info.c:501 src/land_shipyard.c:301
+#: src/equipment.c:1891 src/info.c:501 src/land_shipyard.c:301
 #: src/map_system.c:696
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:1893 src/info.c:502 src/land_shipyard.c:308
+#: src/equipment.c:1892 src/info.c:502 src/land_shipyard.c:308
 #: src/map_system.c:698
 msgid "Cargo Space:"
 msgstr ""
 
-#: src/equipment.c:1896
+#: src/equipment.c:1895
 msgid "Ship Status:"
 msgstr ""
 
-#: src/equipment.c:1899
+#: src/equipment.c:1898
 msgid "Time Flown:"
 msgstr ""
 
-#: src/equipment.c:1900
+#: src/equipment.c:1899
 msgid "Jumped Times:"
 msgstr ""
 
-#: src/equipment.c:1901
+#: src/equipment.c:1900
 msgid "Landed Times:"
 msgstr ""
 
-#: src/equipment.c:1902
+#: src/equipment.c:1901
 msgid "Damage Done:"
 msgstr ""
 
-#: src/equipment.c:1903
+#: src/equipment.c:1902
 msgid "Damage Taken:"
 msgstr ""
 
-#: src/equipment.c:1904
+#: src/equipment.c:1903
 msgid "Ships Destroyed:"
 msgstr ""
 
-#: src/equipment.c:1905
+#: src/equipment.c:1904
 msgid "Intrinsic Outfits:"
 msgstr ""
 
-#: src/equipment.c:1935 src/info.c:547
+#: src/equipment.c:1934 src/info.c:547
 #, c-format
 msgid "%s average"
 msgstr ""
 
-#: src/equipment.c:1937
+#: src/equipment.c:1936
 #, c-format
 msgid "#%c%s%.0f#0 %s"
 msgstr ""
 
-#: src/equipment.c:1939
+#: src/equipment.c:1938
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 %s (max #%c%s%.0f#0 %s)"
 msgstr ""
 
-#: src/equipment.c:1943
+#: src/equipment.c:1942
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 %s"
 msgstr ""
 
-#: src/equipment.c:1947 src/equipment.c:1986 src/equipment.c:1988
+#: src/equipment.c:1946 src/equipment.c:1985 src/equipment.c:1987
 #: src/info.c:417 src/info.c:419 src/info.c:545
 #, c-format
 msgid "%s %s"
 msgstr ""
 
-#: src/equipment.c:1949
+#: src/equipment.c:1948
 #, c-format
 msgid "%.1f %s"
 msgstr ""
 
-#: src/equipment.c:1953 src/equipment.c:1958 src/equipment.c:1963
+#: src/equipment.c:1952 src/equipment.c:1957 src/equipment.c:1962
 #, c-format
 msgid "#%c%s%s#0 %s"
 msgstr ""
 
-#: src/equipment.c:1955 src/equipment.c:1960 src/equipment.c:1965
+#: src/equipment.c:1954 src/equipment.c:1959 src/equipment.c:1964
 #, c-format
 msgid " (#%c%s%s#0 %s)"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1969
+#: src/equipment.c:1968
 #, c-format
 msgid "%s / #%c%s%s#0 %s"
 msgstr ""
 
-#: src/equipment.c:1972
+#: src/equipment.c:1971
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1973 src/info.c:408 src/info.c:579
+#: src/equipment.c:1972 src/info.c:408 src/info.c:579
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1982
+#: src/equipment.c:1981
 #, c-format
 msgid "%s hours"
 msgstr ""
 
-#: src/equipment.c:2093 src/land_outfits.c:842
+#: src/equipment.c:2092 src/land_outfits.c:842
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:2094 src/land_outfits.c:843
+#: src/equipment.c:2093 src/land_outfits.c:843
 msgid "Show only outfits equipable on any of your ships"
 msgstr ""
 
-#: src/equipment.c:2095 src/land_outfits.c:844
+#: src/equipment.c:2094 src/land_outfits.c:844
 msgid "Show only outfits equipable on current ship"
 msgstr ""
 
-#: src/equipment.c:2096 src/land_outfits.c:845
+#: src/equipment.c:2095 src/land_outfits.c:845
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:2097 src/land_outfits.c:846
+#: src/equipment.c:2096 src/land_outfits.c:846
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:2098 src/land_outfits.c:847
+#: src/equipment.c:2097 src/land_outfits.c:847
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:2275
+#: src/equipment.c:2272
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 
-#: src/equipment.c:2278
+#: src/equipment.c:2275
 msgid "Unequip Ship"
 msgstr ""
 
 #. confirm
-#: src/equipment.c:2279
+#: src/equipment.c:2276
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:2359 src/land.c:1571
+#: src/equipment.c:2356 src/land.c:1571
 #, c-format
 msgid "File '%s' not found!"
 msgstr ""
 
-#: src/equipment.c:2367
+#: src/equipment.c:2364
 #, c-format
 msgid "Failed to run '%s': %s"
 msgstr ""
 
-#: src/equipment.c:2379
+#: src/equipment.c:2376
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2385
+#: src/equipment.c:2382
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2427
+#: src/equipment.c:2425
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr ""
 
 #. Display widget.
-#: src/equipment.c:2444
+#: src/equipment.c:2449
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2445
+#: src/equipment.c:2450
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2469 src/player.c:420
+#: src/equipment.c:2474 src/player.c:420
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2470
+#: src/equipment.c:2475
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2478
+#: src/equipment.c:2483
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2479 src/player.c:447
+#: src/equipment.c:2484 src/player.c:447
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
