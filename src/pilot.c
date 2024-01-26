@@ -1764,13 +1764,17 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
    glClearColor( 0., 0., 0., 0. );
 
    if (p->ship->gfx_3d != NULL) {
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      //double s = p->ship->gfx_3d_scale;
       double s = p->ship->gfx_space->sw / gl_screen.scale;
+
+      /* Only clear the necessary area. */
+      glEnable( GL_SCISSOR_TEST );
+      glScissor( 0, 0, s, s );
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glDisable( GL_SCISSOR_TEST );
+
       mat4 H = mat4_identity();
-      //mat4_rotate2d( &H, p->solid.dir );
       mat4_rotate( &H, M_PI_2-p->solid.dir, 0.0, 1.0, 0.0 );
-      //mat4_scale( &H, s, s, s );
+
       /* TODO split engine and such. */
       object_render( fbo, p->ship->gfx_3d, &H, 0., s );
    }
@@ -1779,10 +1783,14 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
       const glTexture *sa, *sb;
       mat4 tmpm;
 
-      glClear( GL_COLOR_BUFFER_BIT );
-
       sa = p->ship->gfx_space;
       sb = p->ship->gfx_engine;
+
+      /* Only clear the necessary area. */
+      glEnable( GL_SCISSOR_TEST );
+      glScissor( 0, 0, sa->sw, sa->sh );
+      glClear( GL_COLOR_BUFFER_BIT );
+      glDisable( GL_SCISSOR_TEST );
 
       /* texture coords */
       tx = sa->sw*(double)(p->tsx)/sa->w;
