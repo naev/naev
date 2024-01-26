@@ -61,6 +61,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
+static int ship_generateStore( Ship *temp );
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
 static int ship_loadPLG( Ship *temp, const char *buf, int sx, int sy );
 static int ship_parse( Ship *temp, const char *filename );
@@ -455,6 +456,32 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    }
    free( base );
 
+   return 0;
+}
+
+/**
+ * @brief Generates the store image for the ship.
+ *
+ * @TODO do we want to customize the lighting per planet and render on the fly?
+ *
+ *    @param temp Ship to generate store image for.
+ */
+static int ship_generateStore( Ship *temp )
+{
+   GLuint fbo, tex;
+   int tsx, tsy;
+   char buf[STRMAX_SHORT];
+   double dir = M_PI + M_PI_4;
+   snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
+   gl_contextSet();
+   gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
+   gl_fboCreate( &fbo, &tex, temp->size / gl_screen.scale, temp->size / gl_screen.scale );
+   ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., tsx, tsy, NULL );
+   temp->gfx_store = gl_rawTexture( buf, tex, temp->size, temp->size );
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
+   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+   gl_contextUnset();
    return 0;
 }
 
@@ -962,20 +989,7 @@ static int ship_parse( Ship *temp, const char *filename )
    }
 
    /* Generate store image. */
-   GLuint fbo, tex;
-   int tsx, tsy;
-   char buf[STRMAX_SHORT];
-   double dir = M_PI + M_PI_4;
-   snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
-   gl_contextSet();
-   gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
-   gl_fboCreate( &fbo, &tex, temp->size / gl_screen.scale, temp->size / gl_screen.scale );
-   ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., tsx, tsy, NULL );
-   temp->gfx_store = gl_rawTexture( buf, tex, temp->size, temp->size );
-   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-   glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
-   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
-   gl_contextUnset();
+   ship_generateStore( temp );
 
 #if DEBUGGING
    if ((temp->gfx_space != NULL) && (round(temp->size) != round(temp->gfx_space->sw)))
