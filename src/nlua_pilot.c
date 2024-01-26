@@ -6637,8 +6637,8 @@ static int pilotL_render( lua_State *L )
       h = p->ship->gfx_space->sh;
    }
    else {
-      w = p->ship->gfx_3d_scale;;
-      h = p->ship->gfx_3d_scale;;
+      w = p->ship->gfx_3d_scale;
+      h = p->ship->gfx_3d_scale;
    }
    if (canvas_new( &lc, w, h ))
       return NLUA_ERROR( L, _("Error setting up framebuffer!"));

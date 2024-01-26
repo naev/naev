@@ -650,7 +650,7 @@ static void gui_renderBorder( double dt )
 int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
 {
    double z;
-   int cw, ch;
+   int cw, ch, w, h;
    glTexture *tex;
 
    z = cam_getZoom();
@@ -665,9 +665,18 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
    *rx -= gui_xoff;
    *ry -= gui_yoff;
 
+   if (tex != NULL) {
+      w = tex->sw;
+      h = tex->sh;
+   }
+   else {
+      w = pilot->ship->gfx_3d_scale;
+      h = pilot->ship->gfx_3d_scale;
+   }
+
    /* Compare dimensions. */
-   cw = SCREEN_W/2 + tex->sw/2;
-   ch = SCREEN_H/2 + tex->sh/2;
+   cw = SCREEN_W/2 + w/2;
+   ch = SCREEN_H/2 + h/2;
 
    if ((ABS(*rx) > cw) || (ABS(*ry) > ch))
       return  0;
