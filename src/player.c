@@ -1119,7 +1119,7 @@ static void player_renderStealthOverlay( double dt )
    col.a = 0.5;
 
    /* Determine size. */
-   r = 1.2/2. * (double)player.p->ship->gfx_space->sw;
+   r = 1.2/2. * (double)player.p->ship->size;
 
    /* Draw the main circle. */
    glUseProgram( shaders.stealthmarker.program );

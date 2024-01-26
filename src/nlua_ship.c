@@ -617,8 +617,8 @@ static int shipL_gfx( lua_State *L )
 static int shipL_dims( lua_State *L )
 {
    const Ship *s = luaL_validship(L,1);
-   lua_pushnumber( L, s->gfx_space->sw );
-   lua_pushnumber( L, s->gfx_space->sh );
+   lua_pushnumber( L, s->size );
+   lua_pushnumber( L, s->size );
    return 2;
 }
 

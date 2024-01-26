@@ -496,7 +496,7 @@ static void gui_renderPilotTarget (void)
    else
       c = &cNeutral;
 
-   gui_renderTargetReticles( &shaders.targetship, p->solid.pos.x, p->solid.pos.y, p->ship->gfx_space->sw * 0.5, p->solid.dir, c );
+   gui_renderTargetReticles( &shaders.targetship, p->solid.pos.x, p->solid.pos.y, p->ship->size * 0.5, p->solid.dir, c );
 }
 
 /**
@@ -651,11 +651,8 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
 {
    double z;
    int cw, ch, w, h;
-   glTexture *tex;
 
    z = cam_getZoom();
-
-   tex = pilot->ship->gfx_space;
 
    /* Get relative positions. */
    *rx = (pilot->solid.pos.x - player.p->solid.pos.x)*z;
@@ -665,14 +662,9 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
    *rx -= gui_xoff;
    *ry -= gui_yoff;
 
-   if (tex != NULL) {
-      w = tex->sw;
-      h = tex->sh;
-   }
-   else {
-      w = pilot->ship->gfx_3d_scale;
-      h = pilot->ship->gfx_3d_scale;
-   }
+   /* Get size. */
+   w = pilot->ship->size;
+   h = pilot->ship->size;
 
    /* Compare dimensions. */
    cw = SCREEN_W/2 + w/2;

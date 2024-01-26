@@ -662,7 +662,7 @@ static int ship_parse( Ship *temp, const char *filename )
          }
 
          /* Get size. */
-         xmlr_attr_float_def(node, "size", temp->gfx_3d_scale, 1);
+         xmlr_attr_float_def(node, "size", temp->size, 1);
          xmlr_attr_int_def( node, "sx", temp->sx, 8 );
          xmlr_attr_int_def( node, "sy", temp->sy, 8 );
 
@@ -689,7 +689,7 @@ static int ship_parse( Ship *temp, const char *filename )
          snprintf( str, sizeof(str), GFX_PATH"%s", buf );
 
          /* Get sprite size. */
-         xmlr_attr_float_def(node, "size", temp->gfx_3d_scale, 1);
+         xmlr_attr_float_def(node, "size", temp->size, 1);
          xmlr_attr_int_def( node, "sx", temp->sx, 8 );
          xmlr_attr_int_def( node, "sy", temp->sy, 8 );
 
@@ -963,31 +963,23 @@ static int ship_parse( Ship *temp, const char *filename )
 
    /* Generate store image. */
    GLuint fbo, tex;
-   int w, h, tsx, tsy;
+   int tsx, tsy;
    char buf[STRMAX_SHORT];
    double dir = M_PI + M_PI_4;
-   if (temp->gfx_space != NULL) {
-      w = temp->gfx_space->sw;
-      h = temp->gfx_space->sh;
-   }
-   else {
-      w = temp->gfx_3d_scale;
-      h = temp->gfx_3d_scale;
-   }
    snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
    gl_contextSet();
    gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
-   gl_fboCreate( &fbo, &tex, w, h );
+   gl_fboCreate( &fbo, &tex, temp->size, temp->size );
    ship_renderFramebuffer( temp, fbo, gl_screen.rw, gl_screen.rh, dir, 0., tsx, tsy, NULL );
-   temp->gfx_store = gl_rawTexture( buf, tex, w, h );
+   temp->gfx_store = gl_rawTexture( buf, tex, temp->size, temp->size );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glBindFramebuffer( GL_FRAMEBUFFER, 0 );
    gl_contextUnset();
 
 #if DEBUGGING
-   if ((temp->gfx_space != NULL) && (round(temp->gfx_3d_scale) != round(temp->gfx_space->sw)))
-      WARN(("Mismatch between 'gfx_3d_scale' and 'gfx_space' sprite size for ship '%s'! 'gfx_3d_scale' should be %.0f!"), temp->name, temp->gfx_space->sw);
+   if ((temp->gfx_space != NULL) && (round(temp->size) != round(temp->gfx_space->sw)))
+      WARN(("Mismatch between 'size' and 'gfx_space' sprite size for ship '%s'! 'size' should be %.0f!"), temp->name, temp->gfx_space->sw);
 #endif /* DEBUGGING */
 
    /* Ship XML validator */
@@ -995,7 +987,7 @@ static int ship_parse( Ship *temp, const char *filename )
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->base_type==NULL,"base_type");
    MELEMENT(((temp->gfx_space==NULL) || (temp->gfx_comm==NULL)) && (temp->gfx_3d==NULL),"GFX");
-   MELEMENT(temp->gfx_3d_scale<=0., "GFX.size" );
+   MELEMENT(temp->size<=0., "GFX.size" );
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->points==0,"points");
    MELEMENT(temp->price==0,"price");
@@ -1037,7 +1029,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
    glClearColor( 0., 0., 0., 0. );
 
    if (s->gfx_3d != NULL) {
-      double scale = s->gfx_3d_scale / gl_screen.scale;
+      double scale = s->size / gl_screen.scale;
       Object *obj = s->gfx_3d;
 
       /* Only clear the necessary area. */

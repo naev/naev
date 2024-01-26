@@ -5271,7 +5271,7 @@ static int pilotL_ship( lua_State *L )
 static int pilotL_radius( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   lua_pushnumber(L, PILOT_SIZE_APPROX * 0.5 * p->ship->gfx_3d_scale);
+   lua_pushnumber(L, PILOT_SIZE_APPROX * 0.5 * p->ship->size);
    return 1;
 }
 
@@ -6632,14 +6632,8 @@ static int pilotL_render( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
 
    /* TODO handle when effects make the ship render larger than it really is. */
-   if (p->ship->gfx_space != NULL) {
-      w = p->ship->gfx_space->sw;
-      h = p->ship->gfx_space->sh;
-   }
-   else {
-      w = p->ship->gfx_3d_scale;
-      h = p->ship->gfx_3d_scale;
-   }
+   w = p->ship->size;
+   h = p->ship->size;
    if (canvas_new( &lc, w, h ))
       return NLUA_ERROR( L, _("Error setting up framebuffer!"));
 
@@ -6666,14 +6660,8 @@ static int pilotL_renderTo( lua_State *L )
    int w, h;
 
    /* TODO handle when effects make the ship render larger than it really is. */
-   if (p->ship->gfx_space != NULL) {
-      w = p->ship->gfx_space->sw;
-      h = p->ship->gfx_space->sh;
-   }
-   else {
-      w = p->ship->gfx_3d_scale;
-      h = p->ship->gfx_3d_scale;
-   }
+   w = p->ship->size;
+   h = p->ship->size;
    if ((lc->tex->w < w) || (lc->tex->h < h))
       WARN(_("Canvas is too small to fully render '%s': %.0f x %.0f < %d x %d"),
             p->name, lc->tex->w, lc->tex->h, w, h );

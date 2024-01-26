@@ -214,7 +214,7 @@ int pilot_dock( Pilot *p, Pilot *target )
 
    /* Must be close. */
    if (vec2_dist(&p->solid.pos, &target->solid.pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
+         target->ship->size * PILOT_SIZE_APPROX )
       return -1;
 
    /* Cannot be going much faster. */

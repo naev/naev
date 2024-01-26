@@ -1721,7 +1721,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
       ry = p->solid.pos.y - y;
       dist = pow2(rx) + pow2(ry);
       /* Take into account ship size. */
-      dist -= pow2(p->ship->gfx_space->sw);
+      dist -= pow2(p->ship->size);
       dist = MAX(0,dist);
 
       /* Pilot is not hit. */
@@ -1781,14 +1781,8 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
    Effect *e = NULL;
 
    /* Transform coordinates. */
-   if (p->ship->gfx_space != NULL) {
-      w = p->ship->gfx_space->sw;
-      h = p->ship->gfx_space->sh;
-   }
-   else {
-      w = p->ship->gfx_3d_scale;
-      h = p->ship->gfx_3d_scale;
-   }
+   w = p->ship->size;
+   h = p->ship->size;
    gl_gameToScreenCoords( &x, &y, p->solid.pos.x-w/2., p->solid.pos.y-h/2. );
 
    /* Render effects - already sorted by priority and then timer. */
@@ -1878,14 +1872,8 @@ void pilot_render( Pilot *p )
 
    /* Transform coordinates. */
    z = cam_getZoom();
-   if (p->ship->gfx_space != NULL) {
-      w = p->ship->gfx_space->sw;
-      h = p->ship->gfx_space->sh;
-   }
-   else {
-      w = p->ship->gfx_3d_scale;
-      h = p->ship->gfx_3d_scale;
-   }
+   w = p->ship->size;
+   h = p->ship->size;
    gl_gameToScreenCoords( &x, &y, p->solid.pos.x-w/2., p->solid.pos.y-h/2. );
 
    /* Check if inbounds */
@@ -1927,8 +1915,6 @@ void pilot_render( Pilot *p )
       /* Render normally. */
       if (e==NULL) {
          if (p->ship->gfx_3d != NULL) {
-            //double r = p->ship->gfx_3d_scale;
-
             /* Render to framebuffer first. */
             pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
 
@@ -2036,14 +2022,8 @@ void pilot_renderOverlay( Pilot* p )
    if (pilot_isFlag( p, PILOT_NORENDER ))
       return;
 
-   if (p->ship->gfx_space != NULL) {
-      sw = p->ship->gfx_space->sw;
-      sh = p->ship->gfx_space->sh;
-   }
-   else {
-      sw = p->ship->gfx_3d_scale;
-      sh = p->ship->gfx_3d_scale;
-   }
+   sw = p->ship->size;
+   sh = p->ship->size;
 
    playerdead = (player_isFlag(PLAYER_DESTROYED) || (player.p==NULL));
 
@@ -2339,8 +2319,8 @@ void pilot_update( Pilot* pilot, double dt )
             dmg.disable       = 0.;
             expl_explode( pilot->solid.pos.x, pilot->solid.pos.y,
                   pilot->solid.vel.x, pilot->solid.vel.y,
-                  pilot->ship->gfx_space->sw/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
-            debris_add( pilot->solid.mass, pilot->ship->gfx_space->sw/2.,
+                  pilot->ship->size/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
+            debris_add( pilot->solid.mass, pilot->ship->size/2.,
                   pilot->solid.pos.x, pilot->solid.pos.y,
                   pilot->solid.vel.x, pilot->solid.vel.y );
             pilot_setFlag(pilot,PILOT_EXPLODED);
@@ -2363,8 +2343,8 @@ void pilot_update( Pilot* pilot, double dt )
 
             /* random position on ship */
             a = RNGF()*2.*M_PI;
-            px = VX(pilot->solid.pos) +  cos(a)*RNGF()*pilot->ship->gfx_space->sw/2.;
-            py = VY(pilot->solid.pos) +  sin(a)*RNGF()*pilot->ship->gfx_space->sh/2.;
+            px = VX(pilot->solid.pos) +  cos(a)*RNGF()*pilot->ship->size/2.;
+            py = VY(pilot->solid.pos) +  sin(a)*RNGF()*pilot->ship->size/2.;
             vx = VX(pilot->solid.vel);
             vy = VY(pilot->solid.vel);
 
@@ -2908,7 +2888,7 @@ int pilot_refuelStart( Pilot *p )
 
    /* Conditions are the same as boarding, except disabled. */
    if (vec2_dist(&p->solid.pos, &target->solid.pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
+         target->ship->size * PILOT_SIZE_APPROX )
       return 0;
    else if (vec2_dist2( &p->solid.vel, &target->solid.vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
@@ -3866,14 +3846,8 @@ void pilots_updatePurge (void)
       y  = round(p->solid.pos.y);
       px = round(p->solid.pre.x);
       py = round(p->solid.pre.y);
-      if (p->ship->gfx_space != NULL) {
-         w2 = ceil(p->ship->gfx_space->sw * 0.5);
-         h2 = ceil(p->ship->gfx_space->sh * 0.5);
-      }
-      else {
-         w2 = ceil(p->ship->gfx_3d_scale * 0.5);
-         h2 = ceil(p->ship->gfx_3d_scale * 0.5);
-      }
+      w2 = ceil(p->ship->size * 0.5);
+      h2 = ceil(p->ship->size * 0.5);
       qt_insert( &pilot_quadtree, i, MIN(x,px)-w2, MIN(y,py)-h2, MAX(x,px)+w2, MAX(y,py)+h2 );
    }
 

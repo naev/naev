@@ -463,8 +463,8 @@ static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, doubl
          y += target->solid.pos.y - follow->solid.pos.y;
 
          /* Get distance ratio. */
-         dx = (SCREEN_W/2.) / (FABS(x) + 2.*target->ship->gfx_space->sw);
-         dy = (SCREEN_H/2.) / (FABS(y) + 2.*target->ship->gfx_space->sh);
+         dx = (SCREEN_W/2.) / (FABS(x) + 2.*target->ship->size);
+         dy = (SCREEN_H/2.) / (FABS(y) + 2.*target->ship->size);
 
          /* Get zoom. */
          tz = MIN( dx, dy );

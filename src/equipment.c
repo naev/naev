@@ -940,14 +940,8 @@ static void equipment_renderShip( double bx, double by,
       equipment_lastick = SDL_GetTicks();
    gl_getSpriteFromDir( &p->tsx, &p->tsy, p->ship->sx, p->ship->sy, p->solid.dir );
 
-   if (p->ship->gfx_space != NULL) {
-      w = p->ship->gfx_space->sw;
-      h = p->ship->gfx_space->sh;
-   }
-   else {
-      w = p->ship->gfx_3d_scale;
-      h = p->ship->gfx_3d_scale;
-   }
+   w = p->ship->size;
+   h = p->ship->size;
 
    /* Render ship graphic. */
    if (w > bw) {
@@ -985,8 +979,8 @@ static void equipment_renderShip( double bx, double by,
          v.y = p->ship->trail_emitters[i].x_engine * dirsin +
               p->ship->trail_emitters[i].y_engine * dircos +
               p->ship->trail_emitters[i].h_engine;
-         v.x *= pw / p->ship->gfx_space->sw;
-         v.y *= ph / p->ship->gfx_space->sh;
+         v.x *= pw / p->ship->size;
+         v.y *= ph / p->ship->size;
          if (p->ship->trail_emitters[i].trail_spec->nebula)
             gl_renderCross(px + pw/2. + v.x, py + ph/2. + v.y*M_SQRT1_2, 2., &cFontBlue);
          else
@@ -999,8 +993,8 @@ static void equipment_renderShip( double bx, double by,
       pilot_getMount( p, p->outfits[eq_wgt.slot], &v );
       px += pw/2.;
       py += ph/2.;
-      v.x *= pw / p->ship->gfx_space->sw;
-      v.y *= ph / p->ship->gfx_space->sh;
+      v.x *= pw / p->ship->size;
+      v.y *= ph / p->ship->size;
 
       /* Render it. */
       glUseProgram(shaders.crosshairs.program);
