@@ -1,5 +1,6 @@
 * 0.11.4 (unreleased)
    * Fixed crash when selling deployed ship
+   * `shark/sh01_corvette`: have the pilot jump in from the same system as the player
    * Fixed some typos and revised writing
 
 * 0.11.3

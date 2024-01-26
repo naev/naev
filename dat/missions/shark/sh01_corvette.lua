@@ -98,12 +98,14 @@ function accept()
    hook.jumpout("jumpout")
    hook.land("land")
    hook.enter("enter")
+   mem.lastsys = system.cur()
 end
 
 function jumpout()
    if mem.stage == 1 then --player trying to escape
       lmisn.fail( _("You ran away.") )
    end
+   mem.lastsys = system.cur()
 end
 
 function land()
@@ -143,7 +145,7 @@ end
 
 function lets_go()
    -- Spawn the enemy Lancelot, equipped with ion cannons (per the plot & to disable rather than murder the player).
-   sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Zacron"), nil, {ai="baddie_norun", naked=true} )
+   sharkboy = pilot.add( "Lancelot", "Mercenary", mem.lastsys, nil, {ai="baddie_norun", naked=true} )
    equipopt.generic( sharkboy, { disable=2, damage=0 }, "elite" )
    sharkboy:setHostile(true)
    sharkboy:setHilight(true)
