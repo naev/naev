@@ -689,6 +689,7 @@ static int ship_parse( Ship *temp, const char *filename )
          snprintf( str, sizeof(str), GFX_PATH"%s", buf );
 
          /* Get sprite size. */
+         xmlr_attr_float_def(node, "size", temp->gfx_3d_scale, 1);
          xmlr_attr_int_def( node, "sx", temp->sx, 8 );
          xmlr_attr_int_def( node, "sy", temp->sy, 8 );
 
@@ -959,6 +960,11 @@ static int ship_parse( Ship *temp, const char *filename )
                   temp->name, temp->polygon.sx*temp->polygon.sy, temp->sx*temp->sy);
       }
    }
+
+#if DEBUGGING
+   if ((temp->gfx_space != NULL) && (round(temp->gfx_3d_scale) != round(temp->gfx_space->sw)))
+      WARN(("Mismatch between 'gfx_3d_scale' and 'gfx_space' sprite size for ship '%s'! 'gfx_3d_scale' should be %.0f!"), temp->name, temp->gfx_space->sw);
+#endif /* DEBUGGING */
 
    /* Ship XML validator */
 #define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
