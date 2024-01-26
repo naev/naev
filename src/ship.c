@@ -347,60 +347,6 @@ int ship_size( const Ship *s )
 }
 
 /**
- * @brief Generates a target graphic for a ship.
- */
-static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
-{
-   SDL_Surface *gfx, *gfx_store;
-   int x, y, sw, sh;
-   SDL_Rect rtemp, dstrect;
-   char buf[PATH_MAX];
-
-   /* Get sprite size. */
-   sw = temp->gfx_space->w / sx;
-   sh = temp->gfx_space->h / sy;
-
-   /* Create the surface. */
-   SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
-
-   /* create the temp POT surface */
-   gfx = SDL_CreateRGBSurface( 0, sw, sh,
-         surface->format->BytesPerPixel*8, RGBAMASK );
-   gfx_store = SDL_CreateRGBSurface( 0, SHIP_TARGET_W, SHIP_TARGET_H,
-         surface->format->BytesPerPixel*8, RGBAMASK );
-
-   if (gfx == NULL) {
-      WARN( _("Unable to create ship '%s' targeting surface."), temp->name );
-      return -1;
-   }
-
-   /* Copy over for target. */
-   gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 5./4. );
-   rtemp.x = sw * x;
-   rtemp.y = sh * y;
-   rtemp.w = sw;
-   rtemp.h = sh;
-   dstrect.x = 0;
-   dstrect.y = 0;
-   dstrect.w = rtemp.w;
-   dstrect.h = rtemp.h;
-   SDL_BlitSurface( surface, &rtemp, gfx, &dstrect );
-
-   /* Copy over for store. */
-   dstrect.x = (SHIP_TARGET_W - sw) / 2;
-   dstrect.y = (SHIP_TARGET_H - sh) / 2;
-   dstrect.w = rtemp.w;
-   dstrect.h = rtemp.h;
-   SDL_BlitSurface( surface, &rtemp, gfx_store, &dstrect );
-
-   /* Load the store surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
-   temp->gfx_store = gl_loadImagePad( buf, gfx_store, OPENGL_TEX_VFLIP, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
-
-   return 0;
-}
-
-/**
  * @brief Loads the space graphics for a ship from an image.
  *
  *    @param temp Ship to load into.
@@ -412,7 +358,6 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
 {
    SDL_RWops *rw;
    SDL_Surface *surface;
-   int ret;
 
    /* Load the space sprite. */
    rw    = PHYSFSRWOPS_openRead( str );
@@ -431,11 +376,6 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
       temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
             OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
             surface->w, surface->h, sx, sy, 0 );
-
-   /* Create the target graphic. */
-   ret = ship_genTargetGFX( temp, surface, sx, sy );
-   if (ret != 0)
-      return ret;
 
    /* Free stuff. */
    SDL_RWclose( rw );
@@ -503,11 +443,8 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    }
 
    /* Get the comm graphic for future loading. */
-   if (temp->gfx_comm != NULL) {
-      WARN(_("Ship '%s' has doubly defined 'gfx_comm'!"),temp->name);
-      free(temp->gfx_comm);
-   }
-   SDL_asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM"%s", base, buf, ext );
+   if (temp->gfx_comm == NULL)
+      SDL_asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM"%s", base, buf, ext );
    free( base );
 
    return 0;
@@ -794,10 +731,8 @@ static int ship_parse( Ship *temp, const char *filename )
             continue;
          }
          snprintf( str, sizeof(str), GFX_PATH"%s", buf );
-         if (temp->gfx_comm != NULL) {
-            WARN(_("Ship '%s' has doubly defined 'gfx_comm'!"),temp->name);
+         if (temp->gfx_comm != NULL)
             free(temp->gfx_comm);
-         }
          temp->gfx_comm = strdup(str);
          continue;
       }
