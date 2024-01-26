@@ -226,10 +226,20 @@ static void iar_render( Widget* iar, double bx, double by )
          toolkit_drawRect( xcurs, ycurs, w, h, bgcolour, NULL );
 
          /* image */
-         if (cell->image != NULL)
-            gl_renderScaleAspect( cell->image,
-                  xcurs + 5., ycurs + gl_smallFont.h + 7.,
-                  iar->dat.iar.iw, iar->dat.iar.ih, NULL );
+         if (cell->image != NULL) {
+            if ((cell->image->sw < iar->dat.iar.iw) && (cell->image->sh < iar->dat.iar.ih)) {
+               double offx, offy;
+               offx = (iar->dat.iar.iw - cell->image->sw) * 0.5;
+               offy = (iar->dat.iar.iw - cell->image->sh) * 0.5;
+               gl_renderStatic( cell->image,
+                     xcurs + 5. + offx, ycurs + gl_smallFont.h + 7. + offy,
+                     NULL );
+            }
+            else
+               gl_renderScaleAspect( cell->image,
+                     xcurs + 5., ycurs + gl_smallFont.h + 7.,
+                     iar->dat.iar.iw, iar->dat.iar.ih, NULL );
+         }
 
          /* layers */
          for (int k=0; k<array_size(cell->layers); k++) {
