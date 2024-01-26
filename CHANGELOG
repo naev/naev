@@ -30,6 +30,7 @@
 
 * 0.11.4 (unreleased)
    * Fixed crash when selling deployed ship
+   * Fixed some typos and revised writing
 
 * 0.11.3
    * Don't run discovery event when in cinematic mode
