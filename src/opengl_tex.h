@@ -79,6 +79,7 @@ USE_RESULT glTexture* gl_newSprite( const char* path, const int sx, const int sy
 USE_RESULT glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
    const int sx, const int sy, const unsigned int flags );
 USE_RESULT glTexture* gl_dupTexture( const glTexture *texture );
+USE_RESULT glTexture* gl_rawTexture( const char *name, GLuint tex, double w, double h );
 
 /*
  * Clean up.

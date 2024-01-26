@@ -974,6 +974,41 @@ glTexture* gl_dupTexture( const glTexture *texture )
 }
 
 /**
+ * @brief Creates a texture from a raw opengl index.
+ */
+USE_RESULT glTexture* gl_rawTexture( const char *name, GLuint texid, double w, double h )
+{
+   glTexture *texture;
+   SDL_mutexP( tex_lock );
+
+   /* set up the texture defaults */
+   texture = calloc( 1, sizeof(glTexture) );
+
+   texture->w     = (double) w;
+   texture->h     = (double) h;
+   texture->sx    = (double) 1.;
+   texture->sy    = (double) 1.;
+
+   texture->texture = texid;
+
+   texture->sw    = texture->w / texture->sx;
+   texture->sh    = texture->h / texture->sy;
+   texture->srw   = texture->sw / texture->w;
+   texture->srh   = texture->sh / texture->h;
+   texture->flags = 0;
+
+   if (name != NULL) {
+      texture->name = strdup(name);
+      gl_texAdd( texture, 1, 1 );
+   }
+   else
+      texture->name = NULL;
+
+   SDL_mutexV( tex_lock );
+   return texture;
+}
+
+/**
  * @brief Checks to see if a pixel is transparent in a texture.
  *
  *    @param t Texture to check for transparency.

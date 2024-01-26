@@ -961,6 +961,30 @@ static int ship_parse( Ship *temp, const char *filename )
       }
    }
 
+   /* Generate store image. */
+   GLuint fbo, tex;
+   int w, h, tsx, tsy;
+   char buf[STRMAX_SHORT];
+   double dir = M_PI + M_PI_4;
+   if (temp->gfx_space != NULL) {
+      w = temp->gfx_space->sw;
+      h = temp->gfx_space->sh;
+   }
+   else {
+      w = temp->gfx_3d_scale;
+      h = temp->gfx_3d_scale;
+   }
+   snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
+   gl_contextSet();
+   gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
+   gl_fboCreate( &fbo, &tex, w, h );
+   ship_renderFramebuffer( temp, fbo, gl_screen.rw, gl_screen.rh, dir, 0., tsx, tsy, NULL );
+   temp->gfx_store = gl_rawTexture( buf, tex, w, h );
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
+   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+   gl_contextUnset();
+
 #if DEBUGGING
    if ((temp->gfx_space != NULL) && (round(temp->gfx_3d_scale) != round(temp->gfx_space->sw)))
       WARN(("Mismatch between 'gfx_3d_scale' and 'gfx_space' sprite size for ship '%s'! 'gfx_3d_scale' should be %.0f!"), temp->name, temp->gfx_space->sw);
@@ -999,6 +1023,67 @@ static int ship_parse( Ship *temp, const char *filename )
    xmlFreeDoc(doc);
 
    return 0;
+}
+
+/**
+ * @brief Renders a ship to a framebuffer.
+ */
+void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, double dir, double engine_glow, int sx, int sy, const glColour *c )
+{
+   if (c==NULL)
+      c = &cWhite;
+
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   glClearColor( 0., 0., 0., 0. );
+
+   if (s->gfx_3d != NULL) {
+      double scale = s->gfx_3d_scale / gl_screen.scale;
+      Object *obj = s->gfx_3d;
+
+      /* Only clear the necessary area. */
+      glEnable( GL_SCISSOR_TEST );
+      glScissor( 0, 0, scale, scale );
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glDisable( GL_SCISSOR_TEST );
+
+      mat4 H = mat4_identity();
+      mat4_rotate( &H, M_PI_2-dir, 0.0, 1.0, 0.0 );
+
+      /* Actually render. */
+      object_renderScene( fbo, obj, obj->scene_body, &H, 0., scale, 0 );
+      if (engine_glow > 0.5)
+         object_renderScene( fbo, obj, obj->scene_engine, &H, 0., scale, OBJECT_FLAG_NOLIGHTS );
+   }
+   else {
+      double tx,ty;
+      const glTexture *sa, *sb;
+      mat4 tmpm;
+
+      sa = s->gfx_space;
+      sb = s->gfx_engine;
+
+      /* Only clear the necessary area. */
+      glEnable( GL_SCISSOR_TEST );
+      glScissor( 0, 0, sa->sw / gl_screen.scale, sa->sh / gl_screen.scale );
+      glClear( GL_COLOR_BUFFER_BIT );
+      glDisable( GL_SCISSOR_TEST );
+
+      /* texture coords */
+      tx = sa->sw*(double)(sx)/sa->w;
+      ty = sa->sh*(sa->sy-(double)sy-1)/sa->h;
+
+      tmpm = gl_view_matrix;
+      gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
+
+      gl_renderTextureInterpolate( sa, sb,
+            1.-engine_glow, 0., 0., sa->sw, sa->sh,
+            tx, ty, sa->srw, sa->srh, c );
+
+      gl_view_matrix = tmpm;
+   }
+
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+   glClearColor( 0., 0., 0., 1. );
 }
 
 /**
