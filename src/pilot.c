@@ -1792,7 +1792,7 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
 
       /* Only clear the necessary area. */
       glEnable( GL_SCISSOR_TEST );
-      glScissor( 0, 0, sa->sw, sa->sh );
+      glScissor( 0, 0, sa->sw / gl_screen.scale, sa->sh / gl_screen.scale );
       glClear( GL_COLOR_BUFFER_BIT );
       glDisable( GL_SCISSOR_TEST );
 

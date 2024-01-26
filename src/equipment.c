@@ -915,7 +915,7 @@ static void equipment_renderShip( double bx, double by,
       double bw, double bh, void *data )
 {
    Pilot *p;
-   int sx, sy, w, h;
+   int w, h;
    double px, py;
    double pw, ph;
    vec2 v;
@@ -938,7 +938,7 @@ static void equipment_renderShip( double bx, double by,
    }
    else
       equipment_lastick = SDL_GetTicks();
-   gl_getSpriteFromDir( &sx, &sy, p->ship->sx, p->ship->sy, p->solid.dir );
+   gl_getSpriteFromDir( &p->tsx, &p->tsy, p->ship->sx, p->ship->sy, p->solid.dir );
 
    if (p->ship->gfx_space != NULL) {
       w = p->ship->gfx_space->sw;
@@ -964,11 +964,11 @@ static void equipment_renderShip( double bx, double by,
    /* Render background. */
    gl_renderRect( px, py, pw, ph, &cBlack );
 
-   /* Use framebuffer to draw. */
+   /* Use framebuffer to draw, have to use an additional one. */
    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
-   pilot_renderFramebuffer( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
+   pilot_renderFramebuffer( p, gl_screen.fbo[4], gl_screen.nw, gl_screen.nh );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-   gl_renderTextureRaw( gl_screen.fbo_tex[2], 0,
+   gl_renderTextureRaw( gl_screen.fbo_tex[4], 0,
          px, py, pw, ph,
          0, 0, w/(double)gl_screen.nw, h/(double)gl_screen.nh, NULL, 0. );
 
@@ -996,8 +996,6 @@ static void equipment_renderShip( double bx, double by,
 #endif /* DEBUGGING */
 
    if ((eq_wgt.slot >= 0) && p->outfits[eq_wgt.slot]->sslot->slot.type==OUTFIT_SLOT_WEAPON) {
-      p->tsx = sx;
-      p->tsy = sy;
       pilot_getMount( p, p->outfits[eq_wgt.slot], &v );
       px += pw/2.;
       py += ph/2.;
