@@ -3,7 +3,7 @@
  <lua>ships/lua/zalek.lua</lua>
  <points>40</points>
  <base_type>Za'lek Heavy Drone</base_type>
- <GFX size="45">zalek_drone_heavy</GFX>
+ <GFX size="34">zalek_drone_heavy</GFX>
  <sound>engine_zalek</sound>
  <class display="Robotic Fighter">Fighter</class>
  <price>350000</price>

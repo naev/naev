@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>30</points>
  <base_type>Brigand</base_type>
- <GFX>brigand</GFX>
+ <GFX size="60">brigand</GFX>
  <rarity>2</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Interceptor">Interceptor</class>

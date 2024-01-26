@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>60</points>
  <base_type>Revenant</base_type>
- <GFX>revenant</GFX>
+ <GFX size="76">revenant</GFX>
  <rarity>2</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Corvette">Corvette</class>
