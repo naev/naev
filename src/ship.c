@@ -969,8 +969,8 @@ static int ship_parse( Ship *temp, const char *filename )
    snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
    gl_contextSet();
    gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
-   gl_fboCreate( &fbo, &tex, temp->size, temp->size );
-   ship_renderFramebuffer( temp, fbo, gl_screen.rw, gl_screen.rh, dir, 0., tsx, tsy, NULL );
+   gl_fboCreate( &fbo, &tex, temp->size / gl_screen.scale, temp->size / gl_screen.scale );
+   ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., tsx, tsy, NULL );
    temp->gfx_store = gl_rawTexture( buf, tex, temp->size, temp->size );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
