@@ -380,7 +380,7 @@ def singlePolygonFromImg(px,py,minlen,maxlen,ppi):
 
 
 # Computes polygons from points
-def polygonFromPoints(points,minlen,maxlen):
+def polygonFromPoints( points, minlen, maxlen ):
     pxa = points[0]
     pya = points[1]
 
@@ -413,7 +413,7 @@ def polygonFromPoints(points,minlen,maxlen):
         for j in range(len(minlist)):
             stop = 1
 
-            pplg    = singlePolygonFromImg(px,py,minlist[j],maxlist[j],ppi)
+            pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi )
             polygon = pplg[0]
             ppx     = pplg[1]
             ppy     = pplg[2]
@@ -431,7 +431,7 @@ def polygonFromPoints(points,minlen,maxlen):
             if stop:
                 break
 
-        polysim = simplifyPolygon(polygon,ppx,ppy,math.pi/16) # Simplify the polygon
+        polysim = simplifyPolygon( polygon, ppx, ppy, math.pi/16) # Simplify the polygon
 
         ppxs.append(polysim[1])
         ppys.append(polysim[2])
@@ -443,10 +443,10 @@ def polygonFromPoints(points,minlen,maxlen):
 def polygonFromImg( address, sx, sy, ceil, minlen, maxlen ):
     points  = pointsFromImg( address, sx, sy, ceil )
     polygon = polygonFromPoints( points, minlen, maxlen )
-    return (points,polygon)
+    return (points, polygon)
 
 # Generates a XML file that contains the polygon
-def generateXML(polygon,address):
+def generateXML( polygon,address ):
 
     poly = polygon[0]
     px   = polygon[1]
@@ -455,24 +455,14 @@ def generateXML(polygon,address):
     nb   = len(poly)
 
     polygons = ET.Element('polygons')
-
+    polygons.set("num", f"{nb}")
     for i in range(nb):
-        ppx   = px[i]
-        ppy   = py[i]
-        npoly = len(ppx)
-
         polyg = ET.SubElement(polygons,'polygon')
+        polyg.set("num", f"{len(px[i])}" )
         x = ET.SubElement(polyg,'x')
         y = ET.SubElement(polyg,'y')
-
-        strx = str(ppx[0])
-        stry = str(ppy[0])
-        for j in range(npoly-1):
-            strx = strx + ',' + str(ppx[j+1])
-            stry = stry + ',' + str(ppy[j+1])
-
-        x.text = strx #strx
-        y.text = stry
+        x.text = ",".join(map(lambda x: str(x), px[i]))
+        y.text = ",".join(map(lambda x: str(x), py[i]))
 
     mydata = ET.tostring(polygons, encoding="UTF-8", method="xml")
     mydata = pretty.parseString(mydata)
@@ -701,19 +691,24 @@ def polygonify_all_ships( gfxPath, polyPath, overwrite ):
 
 
 def polygonify_ship( filename, outpath ):
-
     root = ET.parse( filename ).getroot()
     name = root.get('name')
     cls = root.find( "class" ).text
     tag = root.find( "GFX" )
     if tag != None:
         imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
-        sx = int(tag.get("sx"))
-        sy = int(tag.get("sy"))
-        ceil = 1
-        minlen = 3
-        maxlen = 6
-        img = arrFromImg( imgpath, sx, sy )
+        try:
+            sx = int(tag.get("sx"))
+        except:
+            sx = 8
+        try:
+            sy = int(tag.get("sy"))
+        except:
+            sy = 8
+        ceil    = 150
+        minlen  = 3
+        maxlen  = 6
+        img     = arrFromImg( imgpath, sx, sy )
         if img[0].shape[0] > 150:
             minlen = 4
             maxlen = 8
