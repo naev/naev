@@ -245,7 +245,7 @@ def pointsFromImg( address, sx, sy, ceil ):
     return (pointsx,pointsy)
 
 # Simplify a polygon by removing points that are aligned with other points
-def simplifyPolygon(indices,x,y,tol):
+def simplifyPolygon( indices, x, y, tol ):
     lim = len(indices)
 
     j = 0
@@ -272,23 +272,23 @@ def simplifyPolygon(indices,x,y,tol):
         if j >= len(indices)-2:
             break
 
-    return (indices,x,y)
+    return (indices, x, y)
 
-# Computes a single polygon from a PNG
-def singlePolygonFromImg(px,py,minlen,maxlen,ppi):
+# Computes a single polygon from an image
+def singlePolygonFromImg( px, py, minlen, maxlen, ppi ):
     npt = len(px)
     minlen2 = minlen**2
     maxlen2 = maxlen**2
 
     star    = np.argmax(px) # Choose the starting point
-    polygon = [star] #Initialize the polygon
+    polygon = [star] # Initialize the polygon
 
     # Now we do a loop
     pcur     = star
     pdir     = [1e-12,1]     # Previous direction
     d02      = 0             # This value will store the distance between first and second one
 
-    for i in range(1000): #1000 is the limit in nb of iterations
+    for i in range(1000): # Limit number of iterations
         xc = px[pcur]
         yc = py[pcur]
 
@@ -370,13 +370,13 @@ def singlePolygonFromImg(px,py,minlen,maxlen,ppi):
             polygon.append(mine)
 
         else: # Did not find any value
-            print(('No more eligible point for polygon at sprite '+str(ppi)))
+            print('No more eligible point for polygon at sprite '+str(ppi))
             break
 
     ppx = [ px[i] for i in polygon ]
     ppy = [ py[i] for i in polygon ]
 
-    return(polygon,ppx,ppy)
+    return(polygon, ppx, ppy)
 
 
 # Computes polygons from points
@@ -473,6 +473,15 @@ def polygonify_single( fileName, polyAddress, sx=1, sy=1, ceil=150, minlen=3, ma
     pntNplg = polygonFromImg( fileName, sx, sy, ceil, minlen, maxlen )
     polygon = pntNplg[1]
     generateXML( polygon, polyAddress )
+
+    """
+    points = pntNplg[0]
+    plt.figure()
+    plt.title(polyAddress)
+    plt.scatter(points[0][0],points[1][0])
+    plt.scatter(polygon[1][0],polygon[2][0])
+    plt.show()
+    """
 
 # Generates polygon for all outfits
 def polygonify_all_outfits(gfxPath, polyPath, overwrite):
@@ -700,7 +709,7 @@ def polygonify_ship( filename, outpath ):
             sy = int(tag.get("sy"))
         except:
             sy = 8
-        ceil    = 150
+        ceil    = 50
         minlen  = 3
         maxlen  = 6
         img     = arrFromImg( imgpath, sx, sy )
