@@ -111,6 +111,7 @@ from pygltflib import GLTF2
 from stl import mesh
 import struct
 import os
+import sys
 import argparse
 import tempfile
 import subprocess
@@ -326,12 +327,10 @@ def pointsFrom3D( address, slices, size, center, alpha ):
     """
 
     stlfile = tempfile.NamedTemporaryFile( suffix=".stl" )
-    #ret = subprocess.run([os.environ.get('BLENDER', 'blender'), '--background', '--python', 'blend_gltf_to_stl.py', '--', address, stlfile ])
-    #ret = subprocess.run(['blender', '--background', '--python', 'blend_gltf_to_stl.py', '--', address, stlfile ])
-    print(['blender', '--background', '--python', 'blend_gltf_to_stl.py', '--', address, stlfile.name ])
-    ret = subprocess.run(['blender', '--background', '--python', 'blend_gltf_to_stl.py', '--', address, stlfile.name ])
+    gltftostlpy = os.path.dirname(sys.argv[0])+"/blend_gltf_to_stl.py"
+    ret = subprocess.run(['blender', '--background', '--python', gltftostlpy, '--', address, stlfile.name ])
     if ret.returncode != 0:
-        print("Warning: STL export failed.")
+        print("Warning: GLTF to STL export failed.")
 
     shipMesh = mesh.Mesh.from_file( stlfile.name )
     v0 = np.transpose(shipMesh.v0) # TODO : take the center into account
@@ -667,22 +666,6 @@ def generateXML( polygon, address ):
     myfile.close()
 
 # Generates polygon for all outfits
-def polygonify_single( fileName, polyAddress, sx=1, sy=1, alpha_threshold=50, minlen=3, maxlen=6 ):
-    print("Generating " + polyAddress + "..." )
-    pntNplg = polygonFromImg( fileName, sx, sy, alpha_threshold, minlen, maxlen )
-    polygon = pntNplg[1]
-    generateXML( polygon, polyAddress )
-
-    """
-    points = pntNplg[0]
-    plt.figure()
-    plt.title(polyAddress)
-    plt.scatter(points[0][0],points[1][0])
-    plt.scatter(polygon[1][0],polygon[2][0])
-    plt.show()
-    """
-
-# Generates polygon for all outfits
 def polygonify_all_outfits(gfxPath, polyPath, overwrite):
 
     # Default parameters
@@ -775,25 +758,46 @@ def polygonify_ship( filename, outpath ):
     tag = root.find( "GFX" )
     if tag != None:
         outname = f"{outpath}/ship/{tag.text}.xml"
-        imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
-        if not os.path.isfile(imgpath):
-            imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.png"
+
+        # Try 3D first
         try:
-            sx = int(tag.get("sx"))
+            gltfpath = f"artwork/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
+            gltfpath = os.getenv("HOME")+f"/.local/share/naev/plugins/3dtest/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
+            pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
+        # Fall back to image
         except:
-            sx = 8
-        try:
-            sy = int(tag.get("sy"))
-        except:
-            sy = 8
-        alpha_threshold    = 50
-        minlen  = 3
-        maxlen  = 6
-        img     = arrFromImg( imgpath, sx, sy )
-        if img[0].shape[0] > 50:
-            minlen = 4
-            maxlen = 8
-        polygonify_single( img, outname, sx=sx, sy=sy, alpha_threshold=alpha_threshold, minlen=minlen, maxlen=maxlen )
+            imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
+            if not os.path.isfile(imgpath):
+                imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.png"
+            try:
+                sx = int(tag.get("sx"))
+            except:
+                sx = 8
+            try:
+                sy = int(tag.get("sy"))
+            except:
+                sy = 8
+            alpha_threshold    = 50
+            minlen  = 3
+            maxlen  = 6
+            img     = arrFromImg( imgpath, sx, sy )
+            if img[0].shape[0] > 50:
+                minlen = 4
+                maxlen = 8
+            pntNplg = polygonFromImg( img, sx, sy, alpha_threshold, minlen, maxlen )
+
+        # Now Generate the
+        polygon = pntNplg[1]
+        generateXML( polygon, outname )
+
+        """
+        points = pntNplg[0]
+        plt.figure()
+        plt.title(polyAddress)
+        plt.scatter(points[0][0],points[1][0])
+        plt.scatter(polygon[1][0],polygon[2][0])
+        plt.show()
+        """
 
 # Run stuff
 if __name__ == "__main__":
