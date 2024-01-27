@@ -396,15 +396,8 @@ def polygonFromPoints( points, minlen, maxlen ):
     llist = 5
 
     # Adapt minlist and maxlist in order to match presripted values
-    j = 0
-    for i in range(llist):
-        if minlist[j] > minlen or maxlist[j] > maxlen:
-            del(minlist[j])
-            del(maxlist[j])
-            j -= 1
-        j += 1
-        if j >= len(minlist):
-            break
+    minlist = list(filter(lambda x: x <= minlen, minlist))
+    maxlist = list(filter(lambda x: x <= maxlen, maxlist))
 
     for ppi in range(npict):
         px = pxa[ppi]
@@ -431,13 +424,13 @@ def polygonFromPoints( points, minlen, maxlen ):
             if stop:
                 break
 
-        polysim = simplifyPolygon( polygon, ppx, ppy, math.pi/16) # Simplify the polygon
+        polysim = simplifyPolygon( polygon, ppx, ppy, math.pi/16 ) # Simplify the polygon
 
         ppxs.append(polysim[1])
         ppys.append(polysim[2])
         polyall.append(polysim[0])
 
-    return (polyall,ppxs,ppys)
+    return (polyall, ppxs, ppys)
 
 # Computes a polygon from an image
 def polygonFromImg( address, sx, sy, ceil, minlen, maxlen ):
@@ -476,11 +469,8 @@ def generateXML( polygon, address ):
 
 # Generates polygon for all outfits
 def polygonify_single( fileName, polyAddress, sx=1, sy=1, ceil=150, minlen=3, maxlen=6 ):
-
     print("Generating " + polyAddress + "..." )
-
     pntNplg = polygonFromImg( fileName, sx, sy, ceil, minlen, maxlen )
-
     polygon = pntNplg[1]
     generateXML( polygon, polyAddress )
 
@@ -718,7 +708,6 @@ def polygonify_ship( filename, outpath ):
             minlen = 4
             maxlen = 8
         polygonify_single( img, outname, sx=sx, sy=sy, ceil=ceil, minlen=minlen, maxlen=maxlen )
-
 
 # Run stuff
 if __name__ == "__main__":
