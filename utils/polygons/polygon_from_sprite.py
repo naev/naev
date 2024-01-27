@@ -700,6 +700,8 @@ def polygonify_ship( filename, outpath ):
     if tag != None:
         outname = f"{outpath}/ship/{tag.text}.xml"
         imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
+        if not os.path.isfile(imgpath):
+            imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.png"
         try:
             sx = int(tag.get("sx"))
         except:
