@@ -319,6 +319,6 @@ The communication software once more flickers and reboots.]]))
    feral:follow( player.pilot() )
    misn.osdActive(2)
    mem.state = 2
-
+   misn.markerAdd(mainsys)
    player.commClose()
 end
