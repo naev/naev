@@ -725,17 +725,10 @@ if (o) WARN(_("Asteroid Type '%s' missing/invalid '%s' element"), at->name, s) /
 static int asteroid_loadPLG( AsteroidType *temp, const char *buf )
 {
    char file[PATH_MAX];
-   CollPoly *polygon;
    xmlDocPtr doc;
    xmlNodePtr node;
 
    snprintf( file, sizeof(file), "%s%s.xml", ASTEROID_POLYGON_PATH, buf );
-
-   /* There is only one polygon per gfx, but it has to be added to all the other polygons */
-   /* associated to each gfx of current AsteroidType. */
-   /* In case it fails to load for some reason, its size will be set to 0. */
-   polygon = &array_grow( &temp->polygon );
-   polygon->npt = 0;
 
    /* See if the file does exist. */
    if (!PHYSFS_exists(file)) {
@@ -759,12 +752,9 @@ static int asteroid_loadPLG( AsteroidType *temp, const char *buf )
 
    do { /* load the polygon data */
       if (xml_isNode(node,"polygons")) {
-         xmlNodePtr cur = node->children;
-         do {
-            if (xml_isNode(cur,"polygon")) {
-               LoadPolygon( polygon, cur );
-            }
-         } while (xml_nextNode(cur));
+         CollPoly plg;
+         poly_load( &plg, node, 1, 1 ); /* only one sprite. */
+         array_push_back( &temp->polygon, plg );
       }
    } while (xml_nextNode(node));
 
@@ -1007,8 +997,8 @@ void asteroids_free (void)
 
       /* Free collision polygons. */
       for (int j=0; j<array_size(at->polygon); j++)
-         FreePolygon( &at->polygon[j] );
-      array_free(at->polygon);
+         poly_free( &at->polygon[j] );
+      array_free( at->polygon );
    }
    array_free(asteroid_types);
    asteroid_types = NULL;

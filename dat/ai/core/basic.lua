@@ -543,12 +543,11 @@ function __run_target( target )
       ai.accel()
    end
 
-   -- Afterburner handling.
-   if ai.hasafterburner() and plt:energy() > 10 then
-      ai.weapset( 8, true )
-   end
+   -- Outfits for running away
    if mem._o then
-      if mem._o.blink_drive then
+      if mem._o.afterburner and plt:energy() > 30 then
+         plt:outfitToggle( mem._o.afterburner, true )
+      elseif mem._o.blink_drive then
          plt:outfitToggle( mem._o.blink_drive, true )
       elseif mem._o.blink_engine then
          plt:outfitToggle( mem._o.blink_engine, true )
@@ -627,16 +626,16 @@ function _run_hyp( data )
       end
    end
 
-   --Afterburner: activate while far away from jump
-   if ai.hasafterburner() and plt:energy() > 10 then
-      if jdist > 3 * bdist then
-         ai.weapset( 8, true )
-      else
-         ai.weapset( 8, false )
-      end
-   end
    -- Hyperbolic blink drives have a distance of 2000
    if mem._o then
+      if mem._o.afterburner then
+         -- Afterburner: activate while far away from jump
+         if jdist > 3 * bdist and plt:energy() > 30 then
+            plt:outfitToggle( mem._o.afterburner, true )
+         else
+            plt:outfitToggle( mem._o.afterburner, false )
+         end
+      end
       if mem._o.blink_drive and jdist > 500 + 3 * bdist then
          plt:outfitToggle( mem._o.blink_drive, true )
       elseif mem._o.blink_engine and jdist > 2000 + 3 * bdist then
@@ -662,7 +661,10 @@ function _run_landgo( data )
    if dist < bdist then -- Need to start braking
       ai.pushsubtask( "_landland", planet )
       ai.pushsubtask( "_subbrake" )
-      ai.weapset( 8, false ) -- Turn off afterburner just in case
+      -- Turn off afterburner just in case
+      if mem._o and mem._o.afterburner then
+         plt:outfitToggle( mem._o.afterburner, false )
+      end
       return -- Don't try to afterburn
 
    else
@@ -691,16 +693,16 @@ function _run_landgo( data )
       end
    end
 
-   --Afterburner
-   if ai.hasafterburner() and plt:energy() > 10 then
-      if dist > 3 * bdist then
-         ai.weapset( 8, true )
-      else
-         ai.weapset( 8, false )
-      end
-   end
    -- Hyperbolic blink drives have a distance of 2000
    if mem._o and dir < math.rad(25) then
+      if mem._o.afterburner then
+         -- Afterburner: activate while far away from jump
+         if dist > 3 * bdist and plt:energy() > 30 then
+            plt:outfitToggle( mem._o.afterburner, true )
+         else
+            plt:outfitToggle( mem._o.afterburner, false )
+         end
+      end
       if mem._o.blink_drive and dist > 500 + 3 * bdist then
          plt:outfitToggle( mem._o.blink_drive, true )
       elseif mem._o.blink_engine and dist > 2000 + 3 * bdist then

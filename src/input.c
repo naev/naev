@@ -702,12 +702,17 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             if (NODEAD()) {
                pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_ACCEL );
                pilot_afterburn( player.p );
+               /* Allow keeping it on outside of weapon sets. */
+               if (player.p->afterburner != NULL)
+                  player.p->afterburner->flags |= PILOTOUTFIT_ISON_LUA;
             }
          }
          else if (value==KEY_RELEASE) {
             if (NODEAD()) {
                pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_ACCEL );
-               pilot_afterburnOver( player.p );
+               /* Make sure to release the weapon set lock. */
+               if (player.p->afterburner != NULL)
+                  player.p->afterburner->flags &= ~PILOTOUTFIT_ISON_LUA;
             }
          }
 
@@ -1250,7 +1255,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    }
 
    d  = system_getClosest( cur_system, &pntid, &jpid, &astid, &fieid, x, y );
-   rp = MAX( 1.5 * PILOT_SIZE_APPROX * p->ship->gfx_space->sw / 2 * zoom,  minpr);
+   rp = MAX( 1.5 * PILOT_SIZE_APPROX * p->ship->size / 2 * zoom,  minpr);
 
    if (pntid >=0) { /* Spob is closer. */
       Spob *pnt = cur_system->spobs[ pntid ];

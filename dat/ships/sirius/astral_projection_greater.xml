@@ -3,7 +3,7 @@
  <lua>ships/lua/sirius_projection.lua</lua>
  <points>30</points>
  <base_type>Astral Projection Greater</base_type>
- <gfx_space sx="12" sy="12" size="60" polygon="apparition_cruiser">ship/apparition/apparition_cruiser.webp</gfx_space>
+ <GFX size="140" sx="12" sy="12" noengine="1">apparition_cruiser</GFX>
  <gfx_comm>outfit/store/placeholder.webp</gfx_comm>
  <sound>engine</sound>
  <class>Cruiser</class>

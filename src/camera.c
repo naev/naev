@@ -21,6 +21,7 @@
 #include "pause.h"
 #include "player.h"
 #include "space.h"
+#include "ntracing.h"
 
 #define CAMERA_DIR      (M_PI/2.)
 
@@ -220,6 +221,7 @@ int cam_getTarget( void )
  */
 void cam_update( double dt )
 {
+   NTracingZone( _ctx, 1 );
    Pilot *p;
    double ox, oy;
 
@@ -280,6 +282,8 @@ void cam_update( double dt )
    /* Compute velocity. */
    camera_VX = camera_DX / dt;
    camera_VY = camera_DY / dt;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -459,8 +463,8 @@ static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, doubl
          y += target->solid.pos.y - follow->solid.pos.y;
 
          /* Get distance ratio. */
-         dx = (SCREEN_W/2.) / (FABS(x) + 2.*target->ship->gfx_space->sw);
-         dy = (SCREEN_H/2.) / (FABS(y) + 2.*target->ship->gfx_space->sh);
+         dx = (SCREEN_W/2.) / (FABS(x) + 2.*target->ship->size);
+         dy = (SCREEN_H/2.) / (FABS(y) + 2.*target->ship->size);
 
          /* Get zoom. */
          tz = MIN( dx, dy );

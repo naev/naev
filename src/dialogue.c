@@ -995,7 +995,7 @@ int dialogue_customResize( int width, int height )
  */
 static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
-   Uint64 time_ms = SDL_GetTicks64();
+   Uint64 last_t = SDL_GetPerformanceCounter();
    const double fps_max = (conf.fps_max > 0) ? 1./(double)conf.fps_max : fps_min;
    int quit_game = 0;
 
@@ -1039,10 +1039,9 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
       }
 
       /* FPS Control. */
-      /* Get elapsed. */
-      t  = SDL_GetTicks64();
-      dt = (double)(t - time_ms) / 1000.;
-      time_ms = t;
+      t  = SDL_GetPerformanceCounter();
+      dt = (double)(t - last_t) / (double)SDL_GetPerformanceFrequency();
+      last_t = t;
       /* Sleep if necessary. */
       if (dt < fps_max) {
          double delay = fps_max - dt;

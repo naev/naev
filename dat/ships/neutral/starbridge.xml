@@ -2,7 +2,7 @@
 <ship name="Starbridge">
  <points>80</points>
  <base_type>Starbridge</base_type>
- <GFX sx="10" sy="10">starbridge</GFX>
+ <GFX sx="10" sy="10" size="80">starbridge</GFX>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1700000</price>

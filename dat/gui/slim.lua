@@ -339,7 +339,6 @@ end
 function update_target()
    ptarget = pp:target()
    if ptarget then
-      --ptarget_gfx = ptarget:ship():gfxTarget()
       ptarget_gfx = ptarget:render():getTex()
       ptarget_gfx_w, ptarget_gfx_h = ptarget_gfx:dim()
       local ptargetfact = ptarget:faction()

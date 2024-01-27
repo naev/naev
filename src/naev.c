@@ -100,7 +100,7 @@
 
 static int quit               = 0; /**< For primary loop */
 Uint32 SDL_LOOPDONE           = 0; /**< For custom event to exit loops. */
-static Uint64  time_ms        = 0; /**< used to calculate FPS and movement. */
+static Uint64  last_t         = 0; /**< used to calculate FPS and movement. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
@@ -311,7 +311,7 @@ int main( int argc, char** argv )
    /* Display the load screen. */
    loadscreen_load();
    loadscreen_update( 0., _("Initializing subsystems…") );
-   time_ms = SDL_GetTicks64();
+   last_t = SDL_GetPerformanceCounter();
 
    /*
     * Input
@@ -375,12 +375,12 @@ int main( int argc, char** argv )
    menu_main();
 
    if (conf.devmode)
-      LOG( _( "Reached main menu in %.3f s" ), (SDL_GetTicks()-starttime)/1000. );
+      LOG( _( "Reached main menu in %.3f s" ), (double)(SDL_GetTicks()-starttime)/1000. );
    else
       LOG( _( "Reached main menu" ) );
    NTracingMessageL( _( "Reached main menu" ) );
 
-   fps_init(); /* initializes the time_ms */
+   fps_init(); /* initializes the last_t */
 
    /*
     * main loop
@@ -854,26 +854,12 @@ void naev_toggleFullscreen (void)
    opt_setVideoMode( conf.width, conf.height, !conf.fullscreen, 0 );
 }
 
-#if HAS_POSIX && defined(CLOCK_MONOTONIC)
-static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
-static int use_posix_time; /**< Whether or not to use POSIX time. */
-#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 /**
  * @brief Initializes the fps engine.
  */
 static void fps_init (void)
 {
-#if HAS_POSIX && defined(CLOCK_MONOTONIC)
-   use_posix_time = 1;
-   /* We must use clock_gettime here instead of gettimeofday mainly because this
-    * way we are not influenced by changes to the time source like say ntp which
-    * could skew up the dt calculations. */
-   if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
-      return;
-   WARN( _("clock_gettime failed, disabling POSIX time.") );
-   use_posix_time = 0;
-#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
-   time_ms  = SDL_GetTicks64();
+   last_t = SDL_GetPerformanceCounter();
 }
 /**
  * @brief Gets the elapsed time.
@@ -882,28 +868,9 @@ static void fps_init (void)
  */
 static double fps_elapsed (void)
 {
-   double dt;
-   Uint64 t;
-
-#if HAS_POSIX && defined(CLOCK_MONOTONIC)
-   struct timespec ts;
-
-   if (use_posix_time) {
-      if (clock_gettime(CLOCK_MONOTONIC, &ts)==0) {
-         dt  = ts.tv_sec - global_time.tv_sec;
-         dt += (ts.tv_nsec - global_time.tv_nsec) / 1e9;
-         global_time = ts;
-         return dt;
-      }
-      WARN( _("clock_gettime failed!") );
-   }
-#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
-
-   t        = SDL_GetTicks64();
-   dt       = (double)(t - time_ms); /* Get the elapsed ms. */
-   dt      /= 1000.; /* Convert to seconds. */
-   time_ms  = t;
-
+   Uint64 t = SDL_GetPerformanceCounter();
+   double dt= (double)(t - last_t) / (double)SDL_GetPerformanceFrequency();
+   last_t   = t;
    return dt;
 }
 
@@ -912,7 +879,7 @@ static double fps_elapsed (void)
  */
 static void fps_control (void)
 {
-#if HAS_POSIX
+#if !SDL_VERSION_ATLEAST( 3, 0, 0 ) && HAS_POSIX
    struct timespec ts;
 #endif /* HAS_POSIX */
 
@@ -925,12 +892,14 @@ static void fps_control (void)
       const double fps_max = 1./(double)conf.fps_max;
       if (real_dt < fps_max) {
          double delay = fps_max - real_dt;
-#if HAS_POSIX
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+         SDL_DelayNS( delay * 1e9 );
+#elif HAS_POSIX
          ts.tv_sec  = floor( delay );
          ts.tv_nsec = fmod( delay, 1. ) * 1e9;
          nanosleep( &ts, NULL );
 #else /* HAS_POSIX */
-         SDL_Delay( (unsigned int)(delay * 1000) );
+         SDL_Delay( (unsigned int)(delay * 1000.) );
 #endif /* HAS_POSIX */
          fps_dt  += delay; /* makes sure it displays the proper fps */
       }
@@ -1051,6 +1020,8 @@ static void update_all( int dohooks )
  */
 void update_routine( double dt, int dohooks )
 {
+   NTracingZone( _ctx, 1 );
+
    double real_update = dt / dt_mod;
 
    if (dohooks) {
@@ -1081,10 +1052,8 @@ void update_routine( double dt, int dohooks )
    /* Player autonav. */
    player_updateAutonav( real_update );
 
-   /* Update the elapsed time, should be with all the modifications and such. */
-   elapsed_time_mod += dt;
-
    if (dohooks) {
+      NTracingZoneName( _ctx_hook, "hooks[update]", 1 );
       HookParam h[3];
       hook_exclusionEnd( dt );
       /* Hook set up. */
@@ -1095,7 +1064,13 @@ void update_routine( double dt, int dohooks )
       h[2].type = HOOK_PARAM_SENTINEL;
       /* Run the update hook. */
       hooks_runParam( "update", h );
+      NTracingZoneEnd( _ctx_hook );
    }
+
+   /* Update the elapsed time, should be with all the modifications and such. */
+   elapsed_time_mod += dt;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

@@ -162,7 +162,7 @@ int player_tryBoard( int noisy )
    c = pilot_getFactionColourChar( p );
 
    if (vec2_dist(&player.p->solid.pos,&p->solid.pos) >
-         p->ship->gfx_space->sw * PILOT_SIZE_APPROX) {
+         p->ship->size * PILOT_SIZE_APPROX) {
       if (noisy)
          player_message( "#r%s", _("You are too far away to board your target.") );
       return PLAYER_BOARD_RETRY;
@@ -232,7 +232,7 @@ int pilot_board( Pilot *p )
    if (!pilot_isDisabled(target))
       return 0;
    else if (vec2_dist(&p->solid.pos, &target->solid.pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
+         target->ship->size * PILOT_SIZE_APPROX )
       return 0;
    else if (vec2_dist2( &p->solid.vel, &target->solid.vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;

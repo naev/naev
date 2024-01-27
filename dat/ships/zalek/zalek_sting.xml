@@ -3,7 +3,7 @@
  <lua>ships/lua/zalek.lua</lua>
  <points>70</points>
  <base_type>Sting</base_type>
- <GFX sx="10" sy="10">sting</GFX>
+ <GFX sx="10" sy="10" size="95">sting</GFX>
  <rarity>2</rarity>
  <sound>engine_zalek</sound>
  <class>Corvette</class>

@@ -169,7 +169,7 @@ void pilot_weapSetUpdateOutfitState( Pilot* p )
       const Outfit *o = pos->outfit;
       if (o == NULL)
          continue;
-      if (!(pos->flags & PILOTOUTFIT_ACTIVE))
+      if (!(pos->flags & PILOTOUTFIT_TOGGLEABLE))
          continue;
       /* Ignore outfits handled by Lua. */
       if (pos->flags & PILOTOUTFIT_ISON_LUA)
@@ -220,7 +220,7 @@ void pilot_weapSetUpdate( Pilot* p )
       int volley;
       if (o == NULL)
          continue;
-      if (!(pos->flags & PILOTOUTFIT_ACTIVE))
+      if (!(pos->flags & PILOTOUTFIT_TOGGLEABLE))
          continue;
       /* Ignore outfits handled by Lua. */
       if (pos->flags & PILOTOUTFIT_ISON_LUA)
@@ -1508,7 +1508,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       else
          o->state  = PILOT_OUTFIT_OFF;
    }
-   else if (!(o->flags & PILOTOUTFIT_ACTIVE))
+   else if (!(o->flags & PILOTOUTFIT_TOGGLEABLE))
       /* Case of a mod we can't toggle. */
       return 0;
    else if (o->outfit->lua_ontoggle != LUA_NOREF) {

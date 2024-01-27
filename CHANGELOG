@@ -22,18 +22,33 @@
       * Threaded more loading components
       * Lua require now caches chunks
       * Dropped SDL_image fallback
+      * Use higher internal timer for all platforms
       * Support for Tracy
       * Warn the player if they try to use a name with all space characters
    * Fixes
       * PSO and Mizar nebulas have trails again
 
-* 0.11.3 (unreleased)
+* 0.11.4 (unreleased)
+   * Fixed crash when selling deployed ship
+   * `shark/sh01_corvette`: have the pilot jump in from the same system as the player
+   * `minerva/kex03`: have mission claim the crimson gauntlet to prevent unwanted spawns
+   * `dvaered/gauntlet`: have mission claim the system if it can, but not fail if it can't
+   * Fixed some typos and revised writing
+
+* 0.11.3
+   * Don't run discovery event when in cinematic mode
+   * Do a better job of updating old save autonav settings
+   * Added more checks so tutorial messages don't appear in claimed systems
+   * Fixed blinking not breaking stealth
+   * Fixed auto-hail message colouring
    * Only do updates with positive delta ticks
    * Fixed cargo disappearing when buying a ship when over the cargo limit
    * Don't let the player trade ships when they have mission cargo
    * Fixed not being able to turn off point defense weapons
    * Fixed Za'lek drone bay being cheaper than the mini-bay
-   * Flicker drives can not be stacked and are mutually exclusivel with other blink drives
+   * Flicker drives can not be stacked and are mutually exclusive with other blink drives
+   * Decreased Nexus Drill Lance mining malus from -80% to -15%
+   * Increased all mining yields by roughly 5 times
    * `sciencegonewrong/02_sciwrong`: make the drones not hostile to other factions
    * `neutral/baron_comm`: fixed trivial warning when trying to clean up baron comm event
    * `neutral/wastedump`: fixed getting rid of cargo while landed

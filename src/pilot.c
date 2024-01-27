@@ -81,6 +81,7 @@ static void pilot_init( Pilot* dest, const Ship* ship, const char* name, int fac
 /* Update. */
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
+static void pilot_updateSolid( Pilot *p, double dt );
 /* Clean up. */
 static void pilot_erase( Pilot *p );
 /* Misc. */
@@ -1720,7 +1721,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
       ry = p->solid.pos.y - y;
       dist = pow2(rx) + pow2(ry);
       /* Take into account ship size. */
-      dist -= pow2(p->ship->gfx_space->sw);
+      dist -= pow2(p->ship->size);
       dist = MAX(0,dist);
 
       /* Pilot is not hit. */
@@ -1760,46 +1761,7 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
    if (!pilot_isPlayer(p) && pilot_isFlag(p, PILOT_STEALTH))
       c.a = 0.5;
 
-   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-   glClearColor( 0., 0., 0., 0. );
-
-   if (p->ship->gfx_3d != NULL) {
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      //double s = p->ship->gfx_3d_scale;
-      double s = p->ship->gfx_space->sw / gl_screen.scale;
-      mat4 H = mat4_identity();
-      //mat4_rotate2d( &H, p->solid.dir );
-      mat4_rotate( &H, M_PI_2-p->solid.dir, 0.0, 1.0, 0.0 );
-      //mat4_scale( &H, s, s, s );
-      /* TODO split engine and such. */
-      object_render( fbo, p->ship->gfx_3d, &H, 0., s );
-   }
-   else {
-      double tx,ty;
-      const glTexture *sa, *sb;
-      mat4 tmpm;
-
-      glClear( GL_COLOR_BUFFER_BIT );
-
-      sa = p->ship->gfx_space;
-      sb = p->ship->gfx_engine;
-
-      /* texture coords */
-      tx = sa->sw*(double)(p->tsx)/sa->w;
-      ty = sa->sh*(sa->sy-(double)p->tsy-1)/sa->h;
-
-      tmpm = gl_view_matrix;
-      gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
-
-      gl_renderTextureInterpolate( sa, sb,
-            1.-p->engine_glow, 0., 0., sa->sw, sa->sh,
-            tx, ty, sa->srw, sa->srh, &c );
-
-      gl_view_matrix = tmpm;
-   }
-
-   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-   glClearColor( 0., 0., 0., 1. );
+   ship_renderFramebuffer( p->ship, fbo, fw, fh, p->solid.dir, p->engine_glow, p->tsx, p->tsy, &c );
 }
 
 /**
@@ -1819,8 +1781,8 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
    Effect *e = NULL;
 
    /* Transform coordinates. */
-   w = p->ship->gfx_space->sw;
-   h = p->ship->gfx_space->sh;
+   w = p->ship->size;
+   h = p->ship->size;
    gl_gameToScreenCoords( &x, &y, p->solid.pos.x-w/2., p->solid.pos.y-h/2. );
 
    /* Render effects - already sorted by priority and then timer. */
@@ -1910,8 +1872,8 @@ void pilot_render( Pilot *p )
 
    /* Transform coordinates. */
    z = cam_getZoom();
-   w = p->ship->gfx_space->sw;
-   h = p->ship->gfx_space->sh;
+   w = p->ship->size;
+   h = p->ship->size;
    gl_gameToScreenCoords( &x, &y, p->solid.pos.x-w/2., p->solid.pos.y-h/2. );
 
    /* Check if inbounds */
@@ -1953,8 +1915,6 @@ void pilot_render( Pilot *p )
       /* Render normally. */
       if (e==NULL) {
          if (p->ship->gfx_3d != NULL) {
-            //double r = p->ship->gfx_3d_scale;
-
             /* Render to framebuffer first. */
             pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
 
@@ -2056,10 +2016,14 @@ void pilot_render( Pilot *p )
 void pilot_renderOverlay( Pilot* p )
 {
    int playerdead;
+   double sw, sh;
 
    /* Don't render the pilot. */
    if (pilot_isFlag( p, PILOT_NORENDER ))
       return;
+
+   sw = p->ship->size;
+   sh = p->ship->size;
 
    playerdead = (player_isFlag(PLAYER_DESTROYED) || (player.p==NULL));
 
@@ -2071,8 +2035,8 @@ void pilot_renderOverlay( Pilot* p )
 
          /* Render. */
          gl_renderSprite( ico_hail,
-               p->solid.pos.x + PILOT_SIZE_APPROX*p->ship->gfx_space->sw/2. + ico_hail->sw/4.,
-               p->solid.pos.y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2. + ico_hail->sh/4.,
+               p->solid.pos.x + PILOT_SIZE_APPROX*sw/2. + ico_hail->sw/4.,
+               p->solid.pos.y + PILOT_SIZE_APPROX*sh/2. + ico_hail->sh/4.,
                p->hail_pos % sx, p->hail_pos / sx, NULL );
       }
    }
@@ -2093,7 +2057,7 @@ void pilot_renderOverlay( Pilot* p )
 
       /* Position to render at. */
       dx = x - p->comm_msgWidth/2.;
-      dy = y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2.;
+      dy = y + PILOT_SIZE_APPROX*sh/2.;
 
       /* Background. */
       gl_renderRect( dx-2., dy-2., p->comm_msgWidth+4., gl_defFont.h+4., &cBlackHilight );
@@ -2110,16 +2074,16 @@ void pilot_renderOverlay( Pilot* p )
       /* Coordinate translation. */
       gl_gameToScreenCoords( &x, &y, p->solid.pos.x, p->solid.pos.y );
 
-      w = p->ship->gfx_space->sw + 4.;
-      h = p->ship->gfx_space->sh + 4.;
+      w = sw + 4.;
+      h = sh + 4.;
 
       /* Can do an inbounds check now. */
       if ((x < -w) || (x > SCREEN_W+w) ||
             (y < -h) || (y > SCREEN_H+h))
          return;
 
-      w = PILOT_SIZE_APPROX * p->ship->gfx_space->sw;
-      h = PILOT_SIZE_APPROX * p->ship->gfx_space->sh / 3.;
+      w = PILOT_SIZE_APPROX * sw;
+      h = PILOT_SIZE_APPROX * sh / 3.;
 
       glUseProgram( shaders.healthbar.program );
       glUniform2f( shaders.healthbar.dimensions, 5., h );
@@ -2355,8 +2319,8 @@ void pilot_update( Pilot* pilot, double dt )
             dmg.disable       = 0.;
             expl_explode( pilot->solid.pos.x, pilot->solid.pos.y,
                   pilot->solid.vel.x, pilot->solid.vel.y,
-                  pilot->ship->gfx_space->sw/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
-            debris_add( pilot->solid.mass, pilot->ship->gfx_space->sw/2.,
+                  pilot->ship->size/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
+            debris_add( pilot->solid.mass, pilot->ship->size/2.,
                   pilot->solid.pos.x, pilot->solid.pos.y,
                   pilot->solid.vel.x, pilot->solid.vel.y );
             pilot_setFlag(pilot,PILOT_EXPLODED);
@@ -2379,8 +2343,8 @@ void pilot_update( Pilot* pilot, double dt )
 
             /* random position on ship */
             a = RNGF()*2.*M_PI;
-            px = VX(pilot->solid.pos) +  cos(a)*RNGF()*pilot->ship->gfx_space->sw/2.;
-            py = VY(pilot->solid.pos) +  sin(a)*RNGF()*pilot->ship->gfx_space->sh/2.;
+            px = VX(pilot->solid.pos) +  cos(a)*RNGF()*pilot->ship->size/2.;
+            py = VY(pilot->solid.pos) +  sin(a)*RNGF()*pilot->ship->size/2.;
             vx = VX(pilot->solid.vel);
             vy = VY(pilot->solid.vel);
 
@@ -2503,11 +2467,8 @@ void pilot_update( Pilot* pilot, double dt )
       pilot_setAccel( pilot, 0. );
       pilot_setTurn( pilot, 0. );
 
-      /* update the solid */
-      pilot->solid.update( &pilot->solid, dt );
-
-      gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
-            pilot->ship->gfx_space, pilot->solid.dir );
+      /* Update the solid */
+      pilot_updateSolid( pilot, dt );
 
       /* Engine glow decay. */
       if (pilot->engine_glow > 0.) {
@@ -2606,9 +2567,7 @@ void pilot_update( Pilot* pilot, double dt )
    }
 
    /* Update the solid, must be run after limit_speed. */
-   pilot->solid.update( &pilot->solid, dt );
-   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
-         pilot->ship->gfx_space, pilot->solid.dir );
+   pilot_updateSolid( pilot, dt );
 
    /* Update the trail. */
    pilot_sample_trails( pilot, 0 );
@@ -2929,7 +2888,7 @@ int pilot_refuelStart( Pilot *p )
 
    /* Conditions are the same as boarding, except disabled. */
    if (vec2_dist(&p->solid.pos, &target->solid.pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
+         target->ship->size * PILOT_SIZE_APPROX )
       return 0;
    else if (vec2_dist2( &p->solid.vel, &target->solid.vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
@@ -2938,6 +2897,17 @@ int pilot_refuelStart( Pilot *p )
    pilot_setFlag(p, PILOT_REFUELBOARDING);
    p->ptimer  = PILOT_REFUEL_TIME; /* Use timer to handle refueling. */
    return 1;
+}
+
+/**
+ * @brief Updates the pilot solid.
+ */
+static void pilot_updateSolid( Pilot *p, double dt )
+{
+   p->solid.update( &p->solid, dt );
+   gl_getSpriteFromDir( &p->tsx, &p->tsy,
+         p->ship->sx, p->ship->sy,
+         p->solid.dir );
 }
 
 /**
@@ -3188,9 +3158,8 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    /* Clear timers. */
    pilot_clearTimers(pilot);
 
-   /* Update the x and y sprite positions. */
-   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
-         pilot->ship->gfx_space, pilot->solid.dir );
+   /* Update the solid as necessary. */
+   pilot_updateSolid( pilot, 0. );
 
    /* Targets. */
    pilot_setTarget( pilot, pilot->id ); /* No target. */
@@ -3234,9 +3203,8 @@ void pilot_reset( Pilot* pilot )
    /* Clear timers. */
    pilot_clearTimers(pilot);
 
-   /* Update the x and y sprite positions. */
-   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
-         pilot->ship->gfx_space, pilot->solid.dir );
+   /* Update the solid as necessary. */
+   pilot_updateSolid( pilot, 0. );
 
    /* Heal up. */
    pilot_healLanded( pilot );
@@ -3878,8 +3846,8 @@ void pilots_updatePurge (void)
       y  = round(p->solid.pos.y);
       px = round(p->solid.pre.x);
       py = round(p->solid.pre.y);
-      w2 = ceil(p->ship->gfx_space->sw * 0.5);
-      h2 = ceil(p->ship->gfx_space->sh * 0.5);
+      w2 = ceil(p->ship->size * 0.5);
+      h2 = ceil(p->ship->size * 0.5);
       qt_insert( &pilot_quadtree, i, MIN(x,px)-w2, MIN(y,py)-h2, MAX(x,px)+w2, MAX(y,py)+h2 );
    }
 

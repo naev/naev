@@ -61,8 +61,9 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
+static int ship_generateStore( Ship *temp );
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
-static int ship_loadPLG( Ship *temp, const char *buf, int size_hint );
+static int ship_loadPLG( Ship *temp, const char *buf, int sx, int sy );
 static int ship_parse( Ship *temp, const char *filename );
 static int ship_parseThread( void *ptr );
 static void ship_freeSlot( ShipOutfitSlot* s );
@@ -347,64 +348,6 @@ int ship_size( const Ship *s )
 }
 
 /**
- * @brief Generates a target graphic for a ship.
- */
-static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
-{
-   SDL_Surface *gfx, *gfx_store;
-   int x, y, sw, sh;
-   SDL_Rect rtemp, dstrect;
-   char buf[PATH_MAX];
-
-   /* Get sprite size. */
-   sw = temp->gfx_space->w / sx;
-   sh = temp->gfx_space->h / sy;
-
-   /* Create the surface. */
-   SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
-
-   /* create the temp POT surface */
-   gfx = SDL_CreateRGBSurface( 0, sw, sh,
-         surface->format->BytesPerPixel*8, RGBAMASK );
-   gfx_store = SDL_CreateRGBSurface( 0, SHIP_TARGET_W, SHIP_TARGET_H,
-         surface->format->BytesPerPixel*8, RGBAMASK );
-
-   if (gfx == NULL) {
-      WARN( _("Unable to create ship '%s' targeting surface."), temp->name );
-      return -1;
-   }
-
-   /* Copy over for target. */
-   gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 5./4. );
-   rtemp.x = sw * x;
-   rtemp.y = sh * y;
-   rtemp.w = sw;
-   rtemp.h = sh;
-   dstrect.x = 0;
-   dstrect.y = 0;
-   dstrect.w = rtemp.w;
-   dstrect.h = rtemp.h;
-   SDL_BlitSurface( surface, &rtemp, gfx, &dstrect );
-
-   /* Copy over for store. */
-   dstrect.x = (SHIP_TARGET_W - sw) / 2;
-   dstrect.y = (SHIP_TARGET_H - sh) / 2;
-   dstrect.w = rtemp.w;
-   dstrect.h = rtemp.h;
-   SDL_BlitSurface( surface, &rtemp, gfx_store, &dstrect );
-
-   /* Load the store surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
-   temp->gfx_store = gl_loadImagePad( buf, gfx_store, OPENGL_TEX_VFLIP, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
-
-   /* Load the surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_target", temp->name );
-   temp->gfx_target = gl_loadImagePad( buf, gfx, OPENGL_TEX_VFLIP, sw, sh, 1, 1, 1 );
-
-   return 0;
-}
-
-/**
  * @brief Loads the space graphics for a ship from an image.
  *
  *    @param temp Ship to load into.
@@ -416,7 +359,6 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
 {
    SDL_RWops *rw;
    SDL_Surface *surface;
-   int ret;
 
    /* Load the space sprite. */
    rw    = PHYSFSRWOPS_openRead( str );
@@ -427,7 +369,7 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    surface = IMG_Load_RW( rw, 0 );
 
    /* Load the texture. */
-   if (temp->polygon != NULL)
+   if (array_size(temp->polygon.views)>0)
       temp->gfx_space = gl_loadImagePad( str, surface,
             OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
             surface->w, surface->h, sx, sy, 0 );
@@ -435,11 +377,6 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
       temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
             OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
             surface->w, surface->h, sx, sy, 0 );
-
-   /* Create the target graphic. */
-   ret = ship_genTargetGFX( temp, surface, sx, sy );
-   if (ret != 0)
-      return ret;
 
    /* Free stuff. */
    SDL_RWclose( rw );
@@ -489,13 +426,25 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
       temp->gfx_3d = object_loadFromFile(str);
    }
 
-   /* Load the space sprite. */
+   /* Determine extension path. */
    ext = ".webp";
    snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
    if (!PHYSFS_exists(str)) {
       ext = ".png";
       snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
    }
+
+   /* Get the comm graphic for future loading. */
+   if (temp->gfx_comm == NULL)
+      SDL_asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM"%s", base, buf, ext );
+
+   /* If we have 3D and polygons, we'll ignore the 2D stuff. */
+   if ((temp->gfx_3d != NULL) && (array_size(temp->polygon.views)>0)) {
+      free( base );
+      return 0;
+   }
+
+   /* Load the space sprite. */
    ship_loadSpaceImage( temp, str, sx, sy );
 
    /* Load the engine sprite .*/
@@ -505,15 +454,34 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
       if (temp->gfx_engine == NULL)
          WARN(_("Ship '%s' does not have an engine sprite (%s)."), temp->name, str );
    }
-
-   /* Get the comm graphic for future loading. */
-   if (temp->gfx_comm != NULL) {
-      WARN(_("Ship '%s' has doubly defined 'gfx_comm'!"),temp->name);
-      free(temp->gfx_comm);
-   }
-   SDL_asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM"%s", base, buf, ext );
    free( base );
 
+   return 0;
+}
+
+/**
+ * @brief Generates the store image for the ship.
+ *
+ * @TODO do we want to customize the lighting per planet and render on the fly?
+ *
+ *    @param temp Ship to generate store image for.
+ */
+static int ship_generateStore( Ship *temp )
+{
+   GLuint fbo, tex;
+   int tsx, tsy;
+   char buf[STRMAX_SHORT];
+   double dir = M_PI + M_PI_4;
+   snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
+   gl_contextSet();
+   gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
+   gl_fboCreate( &fbo, &tex, temp->size / gl_screen.scale, temp->size / gl_screen.scale );
+   ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., tsx, tsy, NULL );
+   temp->gfx_store = gl_rawTexture( buf, tex, temp->size, temp->size );
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
+   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+   gl_contextUnset();
    return 0;
 }
 
@@ -522,9 +490,10 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
  *
  *    @param temp Ship to load into.
  *    @param buf Name of the file.
- *    @param size_hint Expected array length required.
+ *    @param sx X sprites.
+ *    @param sy Y sprites.
  */
-static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
+static int ship_loadPLG( Ship *temp, const char *buf, int sx, int sy )
 {
    char file[PATH_MAX];
    xmlDocPtr doc;
@@ -554,16 +523,8 @@ static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
    }
 
    do { /* load the polygon data */
-      if (xml_isNode(node,"polygons")) {
-         xmlNodePtr cur = node->children;
-         temp->polygon = array_create_size( CollPoly, size_hint );
-         do {
-            if (xml_isNode(cur,"polygon")) {
-               CollPoly *polygon = &array_grow( &temp->polygon );
-               LoadPolygon( polygon, cur );
-            }
-         } while (xml_nextNode(cur));
-      }
+      if (xml_isNode(node,"polygons"))
+         poly_load( &temp->polygon, node, sx, sy );
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -666,7 +627,6 @@ static int ship_parse( Ship *temp, const char *filename )
 {
    xmlNodePtr parent, node;
    xmlDocPtr doc;
-   int sx = 8, sy = 8;
    char str[PATH_MAX];
    int noengine;
    ShipStatList *ll;
@@ -729,17 +689,17 @@ static int ship_parse( Ship *temp, const char *filename )
          }
 
          /* Get size. */
-         xmlr_attr_float_def(node, "size", temp->gfx_3d_scale, 1);
-         xmlr_attr_int_def( node, "sx", sx, 8 );
-         xmlr_attr_int_def( node, "sy", sy, 8 );
+         xmlr_attr_float_def(node, "size", temp->size, 1);
+         xmlr_attr_int_def( node, "sx", temp->sx, 8 );
+         xmlr_attr_int_def( node, "sy", temp->sy, 8 );
 
          xmlr_attr_int(node, "noengine", noengine );
 
          /* Load the polygon, run before graphics!. */
-         ship_loadPLG( temp, buf, sx*sy );
+         ship_loadPLG( temp, buf, temp->sx, temp->sy );
 
          /* Load the graphics. */
-         ship_loadGFX( temp, buf, sx, sy, !noengine );
+         ship_loadGFX( temp, buf, temp->sx, temp->sy, !noengine );
 
          continue;
       }
@@ -756,17 +716,18 @@ static int ship_parse( Ship *temp, const char *filename )
          snprintf( str, sizeof(str), GFX_PATH"%s", buf );
 
          /* Get sprite size. */
-         xmlr_attr_int_def( node, "sx", sx, 8 );
-         xmlr_attr_int_def( node, "sy", sy, 8 );
+         xmlr_attr_float_def(node, "size", temp->size, 1);
+         xmlr_attr_int_def( node, "sx", temp->sx, 8 );
+         xmlr_attr_int_def( node, "sy", temp->sy, 8 );
 
          /* Get polygon. */
          xmlr_attr_strd( node, "polygon", plg );
          if (plg)
-            ship_loadPLG( temp, plg, sx*sy );
+            ship_loadPLG( temp, plg, temp->sx, temp->sy );
          free( plg );
 
          /* Load the graphics. */
-         ship_loadSpaceImage( temp, str, sx, sy );
+         ship_loadSpaceImage( temp, str, temp->sx, temp->sy );
 
          continue;
       }
@@ -781,11 +742,11 @@ static int ship_parse( Ship *temp, const char *filename )
          snprintf( str, sizeof(str), GFX_PATH"%s", buf );
 
          /* Get sprite size. */
-         xmlr_attr_int_def( node, "sx", sx, 8 );
-         xmlr_attr_int_def( node, "sy", sy, 8 );
+         xmlr_attr_int_def( node, "sx", temp->sx, 8 );
+         xmlr_attr_int_def( node, "sy", temp->sy, 8 );
 
          /* Load the graphics. */
-         ship_loadEngineImage( temp, str, sx, sy );
+         ship_loadEngineImage( temp, str, temp->sx, temp->sy );
 
          continue;
       }
@@ -798,10 +759,8 @@ static int ship_parse( Ship *temp, const char *filename )
             continue;
          }
          snprintf( str, sizeof(str), GFX_PATH"%s", buf );
-         if (temp->gfx_comm != NULL) {
-            WARN(_("Ship '%s' has doubly defined 'gfx_comm'!"),temp->name);
+         if (temp->gfx_comm != NULL)
             free(temp->gfx_comm);
-         }
          temp->gfx_comm = strdup(str);
          continue;
       }
@@ -1018,22 +977,31 @@ static int ship_parse( Ship *temp, const char *filename )
       WARN(_("Ship '%s' has inexistent license requirement '%s'!"), temp->name, temp->license);
 
    /* Check polygon. */
-   if (temp->polygon == NULL)
+   if (array_size(temp->polygon.views) <= 0)
       WARN(_("Ship '%s' has no collision polygon!"), temp->name );
    else {
       /* Validity check: there must be 1 polygon per sprite. */
-      if (array_size(temp->polygon) != sx*sy) {
+      if ((temp->polygon.sx != temp->sx) || (temp->polygon.sy != temp->sy)) {
          WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
                   npolygon = %i and sx*sy = %i"),
-                  temp->name, array_size(temp->polygon), sx*sy);
+                  temp->name, temp->polygon.sx*temp->polygon.sy, temp->sx*temp->sy);
       }
    }
+
+   /* Generate store image. */
+   ship_generateStore( temp );
+
+#if DEBUGGING
+   if ((temp->gfx_space != NULL) && (round(temp->size) != round(temp->gfx_space->sw)))
+      WARN(("Mismatch between 'size' and 'gfx_space' sprite size for ship '%s'! 'size' should be %.0f!"), temp->name, temp->gfx_space->sw);
+#endif /* DEBUGGING */
 
    /* Ship XML validator */
 #define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->base_type==NULL,"base_type");
-   MELEMENT((temp->gfx_space==NULL) || (temp->gfx_comm==NULL),"GFX");
+   MELEMENT(((temp->gfx_space==NULL) || (temp->gfx_comm==NULL)) && (temp->gfx_3d==NULL),"GFX");
+   MELEMENT(temp->size<=0., "GFX.size" );
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->points==0,"points");
    MELEMENT(temp->price==0,"price");
@@ -1061,6 +1029,67 @@ static int ship_parse( Ship *temp, const char *filename )
    xmlFreeDoc(doc);
 
    return 0;
+}
+
+/**
+ * @brief Renders a ship to a framebuffer.
+ */
+void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, double dir, double engine_glow, int sx, int sy, const glColour *c )
+{
+   if (c==NULL)
+      c = &cWhite;
+
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   glClearColor( 0., 0., 0., 0. );
+
+   if (s->gfx_3d != NULL) {
+      double scale = s->size / gl_screen.scale;
+      Object *obj = s->gfx_3d;
+
+      /* Only clear the necessary area. */
+      glEnable( GL_SCISSOR_TEST );
+      glScissor( 0, 0, scale, scale );
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glDisable( GL_SCISSOR_TEST );
+
+      mat4 H = mat4_identity();
+      mat4_rotate( &H, M_PI_2-dir, 0.0, 1.0, 0.0 );
+
+      /* Actually render. */
+      object_renderScene( fbo, obj, obj->scene_body, &H, 0., scale, 0 );
+      if (engine_glow > 0.5)
+         object_renderScene( fbo, obj, obj->scene_engine, &H, 0., scale, OBJECT_FLAG_NOLIGHTS );
+   }
+   else {
+      double tx,ty;
+      const glTexture *sa, *sb;
+      mat4 tmpm;
+
+      sa = s->gfx_space;
+      sb = s->gfx_engine;
+
+      /* Only clear the necessary area. */
+      glEnable( GL_SCISSOR_TEST );
+      glScissor( 0, 0, sa->sw / gl_screen.scale, sa->sh / gl_screen.scale );
+      glClear( GL_COLOR_BUFFER_BIT );
+      glDisable( GL_SCISSOR_TEST );
+
+      /* texture coords */
+      tx = sa->sw*(double)(sx)/sa->w;
+      ty = sa->sh*(sa->sy-(double)sy-1)/sa->h;
+
+      tmpm = gl_view_matrix;
+      gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
+
+      gl_renderTextureInterpolate( sa, sb,
+            1.-engine_glow, 0., 0., sa->sw, sa->sh,
+            tx, ty, sa->srw, sa->srh, c );
+
+      gl_view_matrix = tmpm;
+   }
+
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+   glClearColor( 0., 0., 0., 1. );
 }
 
 /**
@@ -1239,7 +1268,6 @@ void ships_free (void)
       object_free(s->gfx_3d);
       gl_freeTexture(s->gfx_space);
       gl_freeTexture(s->gfx_engine);
-      gl_freeTexture(s->gfx_target);
       gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
       for (int j=0; j<array_size(s->gfx_overlays); j++)
@@ -1247,10 +1275,9 @@ void ships_free (void)
       array_free(s->gfx_overlays);
 
       /* Free collision polygons. */
-      for (int j=0; j<array_size(s->polygon); j++)
-         FreePolygon(&s->polygon[j]);
-      array_free(s->polygon);
+      poly_free( &s->polygon );
 
+      /* Free trail emitters. */
       array_free(s->trail_emitters);
 
       /* Free tags. */

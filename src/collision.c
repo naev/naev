@@ -21,66 +21,86 @@
 /*
  * Prototypes
  */
-static int PointInPolygon( const CollPoly* at, const vec2* ap,
+static int PointInPolygon( const CollPolyView* at, const vec2* ap,
       float x, float y );
-static int LineOnPolygon( const CollPoly* at, const vec2* ap,
+static int LineOnPolygon( const CollPolyView* at, const vec2* ap,
       float x1, float y1, float x2, float y2, vec2* crash );
 
 /**
  * @brief Loads a polygon from an xml node.
  *
  *    @param[out] polygon Polygon.
- *    @param[in] node xml node.
+ *    @param[in] base XML node to parse.
+ *    @param sx Number of X sprites.
+ *    @param sy Number of Y sprites.
  */
-void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
+void poly_load( CollPoly* polygon, xmlNodePtr base, int sx, int sy )
 {
-   xmlNodePtr cur = node->children;
-   do {
-      if (xml_isNode(cur,"x")) {
-         char *saveptr;
-         char *list = xml_get(cur);
-         /* split the list of coordiantes */
-         char *ch = SDL_strtokr(list, ",", &saveptr);
-         polygon->x = array_create_size(float, 32);
-         polygon->xmin = 0;
-         polygon->xmax = 0;
-         while (ch != NULL) {
-            float d = atof(ch);
-            array_push_back( &polygon->x, d );
-            polygon->xmin = MIN( polygon->xmin, d );
-            polygon->xmax = MAX( polygon->xmax, d );
-            ch = SDL_strtokr(NULL, ",", &saveptr);
-         }
-      }
-      else if (xml_isNode(cur,"y")) {
-         char *saveptr;
-         char *list = xml_get(cur);
-         /* split the list of coordiantes */
-         char *ch = SDL_strtokr(list, ",", &saveptr);
-         polygon->y = array_create_size(float, 32);
-         polygon->ymin = 0;
-         polygon->ymax = 0;
-         while (ch != NULL) {
-            float d = atof(ch);
-            array_push_back( &polygon->y, d );
-            polygon->ymin = MIN( polygon->ymin, d );
-            polygon->ymax = MAX( polygon->ymax, d );
-            ch = SDL_strtokr(NULL, ",", &saveptr);
-         }
-      }
-   } while (xml_nextNode(cur));
+   polygon->views = array_create_size( CollPolyView, sx*sy );
+   polygon->sx = sx;
+   polygon->sy = sy;
 
-   polygon->npt = array_size(polygon->x);
-   if (array_size(polygon->y) != polygon->npt)
-      WARN(_("Polygon with mismatch of number of |x|=%d and |y|=%d coordinates detected!"), polygon->npt, array_size(polygon->y) );
+   xmlNodePtr node = base->children;
+   do {
+      if (!xml_isNode(node,"polygon"))
+         continue;
+
+      CollPolyView *view = &array_grow( &polygon->views );
+      view->x = array_create_size(float, 32);
+      view->xmin = 0;
+      view->xmax = 0;
+      view->y = array_create_size(float, 32);
+      view->ymin = 0;
+      view->ymax = 0;
+
+      xmlNodePtr cur = node->children;
+      do {
+         if (xml_isNode(cur,"x")) {
+            char *saveptr;
+            char *list = xml_get(cur);
+            /* split the list of coordiantes */
+            char *ch = SDL_strtokr(list, ",", &saveptr);
+            while (ch != NULL) {
+               float d = atof(ch);
+               array_push_back( &view->x, d );
+               view->xmin = MIN( view->xmin, d );
+               view->xmax = MAX( view->xmax, d );
+               ch = SDL_strtokr(NULL, ",", &saveptr);
+            }
+            continue;
+         }
+         else if (xml_isNode(cur,"y")) {
+            char *saveptr;
+            char *list = xml_get(cur);
+            /* split the list of coordiantes */
+            char *ch = SDL_strtokr(list, ",", &saveptr);
+            while (ch != NULL) {
+               float d = atof(ch);
+               array_push_back( &view->y, d );
+               view->ymin = MIN( view->ymin, d );
+               view->ymax = MAX( view->ymax, d );
+               ch = SDL_strtokr(NULL, ",", &saveptr);
+            }
+            continue;
+         }
+      } while (xml_nextNode(cur));
+
+      view->npt = array_size(view->x);
+      if (array_size(view->y) != view->npt)
+         WARN(_("Polygon with mismatch of number of |x|=%d and |y|=%d coordinates detected!"), view->npt, array_size(view->y) );
+   } while (xml_nextNode(node));
 
    return;
 }
 
-void FreePolygon( CollPoly *polygon )
+void poly_free( CollPoly *poly )
 {
-   array_free( polygon->x );
-   array_free( polygon->y );
+   for (int i=0; i<array_size(poly->views); i++) {
+      CollPolyView *view = &poly->views[i];
+      array_free( view->x );
+      array_free( view->y );
+   }
+   array_free( poly->views );
 }
 
 /**
@@ -182,8 +202,8 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const vec2
  *    @param[out] crash Actual position of the collision (only set on collision).
  *    @return 1 on collision, 0 else.
  */
-int CollideSpritePolygon( const CollPoly* at, const vec2* ap,
-      const glTexture* bt, const int bsx, const int bsy, const vec2* bp,
+int CollideSpritePolygon( const CollPolyView* at, const vec2* ap,
+      const glTexture* bt, int bsx, int bsy, const vec2* bp,
       vec2* crash )
 {
    int x,y;
@@ -257,8 +277,8 @@ int CollideSpritePolygon( const CollPoly* at, const vec2* ap,
  *    @param[out] crash Actual position of the collision (only set on collision).
  *    @return 1 on collision, 0 else.
  */
-int CollidePolygon( const CollPoly* at, const vec2* ap,
-      const CollPoly* bt, const vec2* bp, vec2* crash )
+int CollidePolygon( const CollPolyView* at, const vec2* ap,
+      const CollPolyView* bt, const vec2* bp, vec2* crash )
 {
    int ax1,ax2, ay1,ay2;
    int bx1,bx2, by1,by2;
@@ -329,7 +349,7 @@ int CollidePolygon( const CollPoly* at, const vec2* ap,
  *    @param[in] ipolygon Imput polygon.
  *    @param[in] theta Rotation angle (radian).
  */
-void RotatePolygon( CollPoly* rpolygon, CollPoly* ipolygon, float theta )
+void poly_rotate( CollPolyView* rpolygon, const CollPolyView* ipolygon, float theta )
 {
    float ct, st;
 
@@ -366,7 +386,7 @@ void RotatePolygon( CollPoly* rpolygon, CollPoly* ipolygon, float theta )
  *    @param[in] y Coordinate of point.
  *    @return 1 on collision, 0 else.
  */
-static int PointInPolygon( const CollPoly* at, const vec2* ap,
+static int PointInPolygon( const CollPolyView* at, const vec2* ap,
       float x, float y )
 {
    float vprod, sprod, angle;
@@ -412,7 +432,7 @@ static int PointInPolygon( const CollPoly* at, const vec2* ap,
  *    @param[out] crash coordinates of the intersection.
  *    @return 1 on collision, 0 else.
  */
-static int LineOnPolygon( const CollPoly* at, const vec2* ap,
+static int LineOnPolygon( const CollPolyView* at, const vec2* ap,
       float x1, float y1, float x2, float y2, vec2* crash )
 {
    float xi, xip, yi, yip;
@@ -655,7 +675,7 @@ int CollideLineSprite( const vec2* ap, double ad, double al,
  * @sa CollideLinePolygon
  */
 int CollideLinePolygon( const vec2* ap, double ad, double al,
-      const CollPoly* bt, const vec2* bp, vec2 crash[2] )
+      const CollPolyView* bt, const vec2* bp, vec2 crash[2] )
 {
    double ep[2];
    double xi, yi, xip, yip;
@@ -788,7 +808,7 @@ int CollideLinePolygon( const vec2* ap, double ad, double al,
  * @sa CollideCirclePolygon
  */
 int CollideCirclePolygon( const vec2* ap, double ar,
-      const CollPoly* bt, const vec2* bp, vec2 crash[2] )
+      const CollPolyView* bt, const vec2* bp, vec2 crash[2] )
 {
 	vec2 p1, p2;
    int real_hits;

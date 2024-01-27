@@ -12,11 +12,6 @@
 #include "sound.h"
 #include "spfx.h"
 
-/* Target gfx dimensions */
-/* TODO remove this and handle it all in the GUIs */
-#define SHIP_TARGET_W   128 /**< Ship target graphic width. */
-#define SHIP_TARGET_H   128 /**< Ship target graphic height. */
-
 /* Ship Flags. */
 #define SHIP_NOPLAYER   (1<<0)   /**< Player is not allowed to fly the ship. */
 #define SHIP_NOESCORT   (1<<1)   /**< Player is not allowed to set the ship as an escort. */
@@ -133,18 +128,19 @@ typedef struct Ship_ {
    double dmg_absorb;   /**< Damage absorption in per one [0:1] with 1 being 100% absorption. */
 
    /* Graphics */
+   double size;            /**< Size of the ship. */
    Object *gfx_3d;         /**< 3d model of the ship */
-   double gfx_3d_scale;    /**< scale for 3d model of the ship */
    glTexture *gfx_space;   /**< Space sprite sheet. */
    glTexture *gfx_engine;  /**< Space engine glow sprite sheet. */
-   glTexture *gfx_target;  /**< Targeting window graphic. */
    glTexture *gfx_store;   /**< Store graphic. */
    char* gfx_comm;         /**< Name of graphic for communication. */
    glTexture **gfx_overlays; /**< Array (array.h): Store overlay graphics. */
    ShipTrailEmitter *trail_emitters; /**< Trail emitters. */
+   int sx;
+   int sy;
 
    /* Collision polygon */
-   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
+   CollPoly polygon; /**< Array (array.h): Collision polygons. */
 
    /* Sound */
    int sound;        /**< Sound engine uses. */
@@ -204,3 +200,4 @@ int ship_size( const Ship *s );
  * Misc.
  */
 int ship_compareTech( const void *arg1, const void *arg2 );
+void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, double dir, double engine_glow, int sx, int sy, const glColour *c );

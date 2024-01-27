@@ -2748,7 +2748,7 @@ void system_reconstructJumps( StarSystem *sys )
          vec2_pset( &jp->pos, sys->radius, a );
 
       /* Update jump specific data. */
-      gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx, a );
+      gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx->sx, jumppoint_gfx->sy, a );
       jp->angle = 2.*M_PI-a;
       jp->cosa  = cos(jp->angle);
       jp->sina  = sin(jp->angle);

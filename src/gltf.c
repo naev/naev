@@ -572,7 +572,7 @@ static void object_renderNodeMesh( const Object *obj, const Node *node, const ma
    gl_checkErr();
 }
 
-static void object_renderShadow( const Object *obj, const mat4 *H, const Light *light )
+static void object_renderShadow( const Object *obj, int scene, const mat4 *H, const Light *light, double time )
 {
    const Shader *shd = &shadow_shader;
 
@@ -590,10 +590,10 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    mat4 Hshadow;
    shadow_matrix( obj, &Hshadow, light );
    glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, Hshadow.ptr );
-   glUniform1f( shd->u_time, obj->time );
+   glUniform1f( shd->u_time, time );
 
-   for (size_t i=0; i<obj->nnodes; i++)
-      object_renderNodeShadow( obj, &obj->nodes[i], H );
+   for (size_t i=0; i<obj->scenes[scene].nnodes; i++)
+      object_renderNodeShadow( obj, &obj->scenes[scene].nodes[i], H );
 
    glDisable(GL_CULL_FACE);
    gl_checkErr();
@@ -642,12 +642,12 @@ static void object_renderShadow( const Object *obj, const mat4 *H, const Light *
    gl_checkErr();
 }
 
-static void object_renderMesh( const Object *obj, const mat4 *H )
+static void object_renderMesh( const Object *obj, int scene, const mat4 *H, double time )
 {
    /* Load constant stuff. */
    const Shader *shd = &object_shader;
    glUseProgram( shd->program );
-   glUniform1f( shd->u_time, obj->time );
+   glUniform1f( shd->u_time, time );
    mat4 Hshadow;
    for (int i=0; i<MAX_LIGHTS; i++) {
       const Light *l = &lights[i];
@@ -669,8 +669,8 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    glEnable(GL_CULL_FACE);
    glCullFace(GL_BACK);
 
-   for (size_t i=0; i<obj->nnodes; i++)
-      object_renderNodeMesh( obj, &obj->nodes[i], H );
+   for (size_t i=0; i<obj->scenes[scene].nnodes; i++)
+      object_renderNodeMesh( obj, &obj->scenes[scene].nodes[i], H );
 
    glUseProgram( 0 );
 
@@ -692,7 +692,14 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
  */
 void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size )
 {
+   return object_renderScene( fb, obj, obj->scene_body, H, time, size, 0 );
+}
+
+void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H, double time, double size, unsigned int flags )
+{
    (void) time; /* TODO implement animations. */
+   if (scene < 0)
+      return;
    const GLfloat sca = 1.0/obj->radius;
    const mat4 Hscale = { .m = {
       { sca, 0.0, 0.0, 0.0 },
@@ -712,26 +719,34 @@ void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, do
    const Shader *shd = &object_shader;
    glUseProgram( shd->program );
    /* Lighting. */
-   glUniform1i( shd->nlights, MAX_LIGHTS );
-   for (int i=0; i<MAX_LIGHTS; i++) {
-      const Light *l = &lights[i];
-      const ShaderLight *sl = &shd->lights[i];
-      glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
-      //glUniform1f( sl->range, l->range );
-      glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
-      glUniform1f( sl->intensity, l->intensity );
+   if (flags & OBJECT_FLAG_NOLIGHTS) {
+      glUniform1i( shd->nlights, 0 );
+   }
+   else {
+      glUniform1i( shd->nlights, MAX_LIGHTS );
+      for (int i=0; i<MAX_LIGHTS; i++) {
+         const Light *l = &lights[i];
+         const ShaderLight *sl = &shd->lights[i];
+         glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
+         //glUniform1f( sl->range, l->range );
+         glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
+         glUniform1f( sl->intensity, l->intensity );
+      }
    }
 
    /* Depth testing. */
    glEnable( GL_DEPTH_TEST );
    glDepthFunc( GL_LESS );
 
-   for (int i=0; i<MAX_LIGHTS; i++)
-      object_renderShadow( obj, &Hptr, &lights[i] );
+   /* Only render shadows if applicable. */
+   if (!(flags & OBJECT_FLAG_NOLIGHTS)) {
+      for (int i=0; i<MAX_LIGHTS; i++)
+         object_renderShadow( obj, scene, &Hptr, &lights[i], time );
+   }
 
    glViewport( 0, 0, size, size );
    glBindFramebuffer(GL_FRAMEBUFFER, fb);
-   object_renderMesh( obj, &Hptr );
+   object_renderMesh( obj, scene, &Hptr, time );
 
    glDisable( GL_DEPTH_TEST );
    glUseProgram( 0 );
@@ -833,16 +848,31 @@ Object *object_loadFromFile( const char *filename )
    for (size_t i=0; i<data->materials_count; i++)
       object_loadMaterial( &obj->materials[i], &data->materials[i] );
 
-   /* Load nodes. */
-   cgltf_scene *scene = &data->scenes[0]; /* data->scene may be NULL */
-   obj->nodes = calloc( scene->nodes_count, sizeof(Node) );
-   obj->nnodes = scene->nodes_count;
-   for (size_t i=0; i<scene->nodes_count; i++) {
-      Node *n = &obj->nodes[i];
-      object_loadNodeRecursive( data, n, scene->nodes[i] );
-      obj->radius = MAX( obj->radius, n->radius );
-      vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
-      vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
+   /* Load scenes. */
+   obj->scenes = calloc( data->scenes_count, sizeof(Scene) );
+   obj->nscenes = data->scenes_count;
+   obj->scene_body = 0; /**< Always the default scene. */
+   obj->scene_engine = -1;
+   for (size_t s=0; s<obj->nscenes; s++) {
+      /* Load nodes. */
+      cgltf_scene *cscene = &data->scenes[s]; /* data->scene may be NULL */
+      Scene *scene = &obj->scenes[s];
+      scene->name = strdup( cscene->name );
+      if (strcmp(scene->name,"body")==0)
+         obj->scene_body = s;
+      else if (strcmp(scene->name,"engine")==0)
+         obj->scene_engine = s;
+
+      /* Set up and allocate scene. */
+      scene->nodes = calloc( cscene->nodes_count, sizeof(Node) );
+      scene->nnodes = cscene->nodes_count;
+      for (size_t i=0; i<cscene->nodes_count; i++) {
+         Node *n = &scene->nodes[i];
+         object_loadNodeRecursive( data, n, cscene->nodes[i] );
+         obj->radius = MAX( obj->radius, n->radius );
+         vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
+         vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
+      }
    }
 
    /* Unmount directory. */
@@ -891,9 +921,14 @@ void object_free( Object *obj )
    if (obj==NULL)
       return;
 
-   for (size_t i=0; i<obj->nnodes; i++)
-      object_freeNode( &obj->nodes[i] );
-   free( obj->nodes );
+   for (size_t s=0; s<obj->nscenes; s++) {
+      Scene *scene = &obj->scenes[s];
+      for (size_t i=0; i<scene->nnodes; i++)
+         object_freeNode( &scene->nodes[i] );
+      free( scene->name );
+      free( scene->nodes );
+   }
+   free( obj->scenes );
 
    for (size_t i=0; i<obj->nmaterials; i++) {
       Material *m = &obj->materials[i];

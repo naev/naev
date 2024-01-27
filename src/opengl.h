@@ -21,11 +21,12 @@
 #include "mat4.h"
 #include "shaders.gen.h"
 
-#define OPENGL_NUM_FBOS    4 /**< Number of FBOs to allocate and deal with. */
+#define OPENGL_NUM_FBOS    5 /**< Number of FBOs to allocate and deal with. */
 /** Currently used FBO IDs:
  * 0/1: front/back buffer for rendering
  * 2: temporary scratch buffer to use as necessary
- * 3: used by toolkit. */
+ * 3: used by toolkit.
+ * 4: additional scratch buffer */
 
 /*
  * Contains info about the opengl screen

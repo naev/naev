@@ -11,7 +11,7 @@
   <cpu>-50</cpu>
  </general>
  <stats>
-  <mining_bonus>-80</mining_bonus>
+  <mining_bonus>-15</mining_bonus>
  </stats>
  <specific type="beam">
   <delay>1.1</delay>

@@ -915,10 +915,11 @@ static void equipment_renderShip( double bx, double by,
       double bw, double bh, void *data )
 {
    Pilot *p;
-   int sx, sy;
+   int w, h;
    double px, py;
    double pw, ph;
    vec2 v;
+   GLint fbo;
    const unsigned int *wid = data;
 
    /* Must have selected ship. */
@@ -931,28 +932,39 @@ static void equipment_renderShip( double bx, double by,
       unsigned int tick = SDL_GetTicks();
       double dt = (double)(tick - equipment_lastick)/1000.;
       equipment_lastick = tick;
-      equipment_dir += p->turn * dt;
-      if (equipment_dir > 2.*M_PI)
-         equipment_dir = fmod( equipment_dir, 2.*M_PI );
+      p->solid.dir += p->turn * dt;
+      if (p->solid.dir > 2.*M_PI)
+         p->solid.dir = fmod( p->solid.dir, 2.*M_PI );
    }
    else
       equipment_lastick = SDL_GetTicks();
-   gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, equipment_dir );
+   gl_getSpriteFromDir( &p->tsx, &p->tsy, p->ship->sx, p->ship->sy, p->solid.dir );
+
+   w = p->ship->size;
+   h = p->ship->size;
 
    /* Render ship graphic. */
-   if (p->ship->gfx_space->sw > bw) {
+   if (w > bw) {
       pw = 128.;
       ph = 128.;
    }
    else {
-      pw = p->ship->gfx_space->sw;
-      ph = p->ship->gfx_space->sh;
+      pw = w;
+      ph = h;
    }
-
    px = bx + (bw-pw)/2;
    py = by + (bh-ph)/2;
+
+   /* Render background. */
    gl_renderRect( px, py, pw, ph, &cBlack );
-   gl_renderScaleSprite( p->ship->gfx_space, px, py, sx, sy, pw, ph, NULL );
+
+   /* Use framebuffer to draw, have to use an additional one. */
+   glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
+   pilot_renderFramebuffer( p, gl_screen.fbo[4], gl_screen.nw, gl_screen.nh );
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   gl_renderTextureRaw( gl_screen.fbo_tex[4], 0,
+         px, py, pw, ph,
+         0, 0, w/(double)gl_screen.nw, h/(double)gl_screen.nh, NULL, 0. );
 
 #ifdef DEBUGGING
    if (debug_isFlag(DEBUG_MARK_EMITTER)) {
@@ -967,8 +979,8 @@ static void equipment_renderShip( double bx, double by,
          v.y = p->ship->trail_emitters[i].x_engine * dirsin +
               p->ship->trail_emitters[i].y_engine * dircos +
               p->ship->trail_emitters[i].h_engine;
-         v.x *= pw / p->ship->gfx_space->sw;
-         v.y *= ph / p->ship->gfx_space->sh;
+         v.x *= pw / p->ship->size;
+         v.y *= ph / p->ship->size;
          if (p->ship->trail_emitters[i].trail_spec->nebula)
             gl_renderCross(px + pw/2. + v.x, py + ph/2. + v.y*M_SQRT1_2, 2., &cFontBlue);
          else
@@ -978,13 +990,11 @@ static void equipment_renderShip( double bx, double by,
 #endif /* DEBUGGING */
 
    if ((eq_wgt.slot >= 0) && p->outfits[eq_wgt.slot]->sslot->slot.type==OUTFIT_SLOT_WEAPON) {
-      p->tsx = sx;
-      p->tsy = sy;
       pilot_getMount( p, p->outfits[eq_wgt.slot], &v );
       px += pw/2.;
       py += ph/2.;
-      v.x *= pw / p->ship->gfx_space->sw;
-      v.y *= ph / p->ship->gfx_space->sh;
+      v.x *= pw / p->ship->size;
+      v.y *= ph / p->ship->size;
 
       /* Render it. */
       glUseProgram(shaders.crosshairs.program);
@@ -1485,7 +1495,6 @@ static void equipment_toggleDeploy( unsigned int wid, const char *wgt )
       }
       if (pfleet_toggleDeploy( ps, state ))
          return;
-      pfleet_update();
    }
    else
       window_checkboxSet( wid, wgt, 1 ); /* Player is always deployed. */
@@ -2182,8 +2191,6 @@ static void equipment_rightClickShips( unsigned int wid, const char *str )
    if (player.fleet_capacity > 0)
       window_checkboxSet( wid, "chkDeploy", ps->deployed );
 
-   pfleet_update();
-
    equipment_regenLists( wid, 0, 1 );
 }
 
@@ -2409,6 +2416,7 @@ static void equipment_sellShip( unsigned int wid, const char* str )
    (void) str;
    char buf[ECON_CRED_STRLEN], *name;
    credits_t price;
+   PlayerShip_t *ps;
    Pilot *p;
    const Ship *s;
    HookParam hparam[3];
@@ -2428,6 +2436,13 @@ static void equipment_sellShip( unsigned int wid, const char* str )
             _("Are you sure you want to sell your ship %s for %s?"),
             shipname, buf))
       return;
+
+   /* Check if deployed and undeploy. */
+   ps = player_getPlayerShip( shipname );
+   if (ps->deployed) {
+      if (pfleet_toggleDeploy( ps, 0 ))
+         return;
+   }
 
    /* Store ship type. */
    p = player_getShip( shipname );

@@ -5271,7 +5271,7 @@ static int pilotL_ship( lua_State *L )
 static int pilotL_radius( lua_State *L )
 {
    const Pilot *p = luaL_validpilot(L,1);
-   lua_pushnumber(L, PILOT_SIZE_APPROX * 0.5 * (p->ship->gfx_space->sw+p->ship->gfx_space->sh));
+   lua_pushnumber(L, PILOT_SIZE_APPROX * 0.5 * p->ship->size);
    return 1;
 }
 
@@ -6335,10 +6335,10 @@ static int pilotL_hookClear( lua_State *L )
    return 0;
 }
 
-static const CollPoly *getCollPoly( const Pilot *p )
+static const CollPolyView *getCollPoly( const Pilot *p )
 {
-   int k = p->ship->gfx_space->sx * p->tsy + p->tsx;
-   return &p->ship->polygon[k];
+   const CollPoly *plg = &p->ship->polygon;
+   return &p->ship->polygon.views[ plg->sx*p->tsy + p->tsx ];
 }
 /**
  * @brief Tests to see if two ships collide.
@@ -6356,8 +6356,8 @@ static int pilotL_collisionTest( lua_State *L )
    /* Asteroid treated separately. */
    if (lua_isasteroid(L,2)) {
       Asteroid *a = luaL_validasteroid( L, 2 );
-      CollPoly rpoly;
-      RotatePolygon( &rpoly, a->polygon, (float) a->ang );
+      CollPolyView rpoly;
+      poly_rotate( &rpoly, &a->polygon->views[0], (float) a->ang );
       int ret = CollidePolygon( getCollPoly(p), &p->solid.pos,
             &rpoly, &a->sol.pos, &crash );
       free(rpoly.x);
@@ -6632,8 +6632,8 @@ static int pilotL_render( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
 
    /* TODO handle when effects make the ship render larger than it really is. */
-   w = p->ship->gfx_space->sw;
-   h = p->ship->gfx_space->sh;
+   w = p->ship->size;
+   h = p->ship->size;
    if (canvas_new( &lc, w, h ))
       return NLUA_ERROR( L, _("Error setting up framebuffer!"));
 
@@ -6657,17 +6657,19 @@ static int pilotL_renderTo( lua_State *L )
 {
    Pilot *p = luaL_validpilot( L, 1 );
    LuaCanvas_t *lc = luaL_checkcanvas( L, 2 );
+   int w, h;
 
    /* TODO handle when effects make the ship render larger than it really is. */
-   if ((lc->tex->w < p->ship->gfx_space->sw) || (lc->tex->h < p->ship->gfx_space->sh))
-      WARN(_("Canvas is too small to fully render '%s': %.0f x %.0f < %.0f x %.0f"),
-            p->name, lc->tex->w, lc->tex->h,
-            p->ship->gfx_space->sw, p->ship->gfx_space->sh );
+   w = p->ship->size;
+   h = p->ship->size;
+   if ((lc->tex->w < w) || (lc->tex->h < h))
+      WARN(_("Canvas is too small to fully render '%s': %.0f x %.0f < %d x %d"),
+            p->name, lc->tex->w, lc->tex->h, w, h );
 
    /* I'me really stumped at why we need to pass gl_screen here for it to work... */
    pilot_renderFramebuffer( p, lc->fbo, gl_screen.rw, gl_screen.rh );
 
-   lua_pushnumber( L, p->ship->gfx_space->sw );
-   lua_pushnumber( L, p->ship->gfx_space->sh );
+   lua_pushnumber( L, w );
+   lua_pushnumber( L, h );
    return 2;
 }

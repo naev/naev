@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>200</points>
  <base_type>Arx</base_type>
- <GFX size="124" sx="12" sy="12">arx_feral</GFX>
+ <GFX size="128" sx="12" sy="12">arx_feral</GFX>
  <rarity>5</rarity>
  <flags>
   <noplayer/>

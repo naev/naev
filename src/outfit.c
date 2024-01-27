@@ -94,7 +94,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
-static int outfit_loadPLG( Outfit *temp, const char *buf );
+static int outfit_loadPLG( Outfit *temp, const char *buf, int sx, int sy );
 static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node );
 static void sdesc_miningRarity( int *l, Outfit *temp, int rarity );
 /* Display */
@@ -680,8 +680,8 @@ const OutfitGFX* outfit_gfx( const Outfit* o )
  */
 const CollPoly* outfit_plg( const Outfit* o )
 {
-   if (outfit_isBolt(o)) return o->u.blt.gfx.polygon;
-   else if (outfit_isLauncher(o)) return o->u.lau.gfx.polygon;
+   if (outfit_isBolt(o)) return &o->u.blt.gfx.polygon;
+   else if (outfit_isLauncher(o)) return &o->u.lau.gfx.polygon;
    return NULL;
 }
 /**
@@ -1215,8 +1215,10 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
  *
  *    @param temp Outfit to load into.
  *    @param buf Name of the file.
+ *    @param sx Number of X sprites.
+ *    @param sy Number of Y sprites.
  */
-static int outfit_loadPLG( Outfit *temp, const char *buf )
+static int outfit_loadPLG( Outfit *temp, const char *buf, int sx, int sy )
 {
    char *file;
    OutfitGFX *gfx;
@@ -1258,20 +1260,11 @@ that can be found in Naev's artwork repo."), file);
       free(file);
       return 0;
    }
-
    free(file);
 
    do { /* load the polygon data */
-      if (xml_isNode(node,"polygons")) {
-         xmlNodePtr cur = node->children;
-         gfx->polygon = array_create_size( CollPoly, 36 );
-         do {
-            if (xml_isNode(cur,"polygon")) {
-               CollPoly *polygon = &array_grow( &gfx->polygon );
-               LoadPolygon( polygon, cur );
-            }
-         } while (xml_nextNode(cur));
-      }
+      if (xml_isNode(node,"polygons"))
+         poly_load( &gfx->polygon, node, sx, sy );
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -1285,7 +1278,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
 {
    char *type;
    OutfitGFX *gfx;
-   int flags;
+   int flags, sx, sy;
 
    if (outfit_isLauncher(temp))
       gfx = &temp->u.lau.gfx;
@@ -1335,22 +1328,25 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       return -1;
    }
 
+   xmlr_attr_int_def(node, "sx", sx, 6 );
+   xmlr_attr_int_def(node, "sy", sy, 6 );
+
    /* Load the collision polygon. */
    const char *buf = xml_get(node);
-   outfit_loadPLG( temp, buf );
+   outfit_loadPLG( temp, buf, sx, sy );
 
    /* Load normal graphics. */
    flags = OPENGL_TEX_MIPMAPS;
-   if (gfx->polygon==NULL)
+   if (array_size(gfx->polygon.views)==0)
       flags |= OPENGL_TEX_MAPTRANS;
    gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH"space/%s", 6, 6, flags );
    gfx->size = (gfx->tex->sw + gfx->tex->sh)*0.5;
 
    /* Validity check: there must be 1 polygon per sprite. */
-   if (array_size(gfx->polygon) != 36) {
+   if (array_size(gfx->polygon.views) != 36) {
       WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
                npolygon = %i and sx*sy = %i"),
-               temp->name, array_size(gfx->polygon), 36);
+               temp->name, array_size(gfx->polygon.views), 36);
    }
 
    return 0;
@@ -3075,13 +3071,15 @@ void outfit_free (void)
       free( o->filename );
 
       /* Free graphics */
-      const OutfitGFX *gfx = outfit_gfx(o);
+      OutfitGFX *gfx = NULL;
+      if (outfit_isBolt(o))
+         gfx = &o->u.blt.gfx;
+      else if (outfit_isLauncher(o))
+         gfx = &o->u.lau.gfx;
       if (gfx != NULL) {
          gl_freeTexture( gfx->tex );
          gl_freeTexture( gfx->tex_end );
-         for (int j=0; j<array_size(gfx->polygon); j++)
-            FreePolygon( &gfx->polygon[j] );
-         array_free(gfx->polygon);
+         poly_free( &gfx->polygon );
          glDeleteProgram(gfx->program);
       }
 

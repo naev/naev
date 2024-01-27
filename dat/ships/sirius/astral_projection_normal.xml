@@ -3,7 +3,7 @@
  <lua>ships/lua/sirius_projection.lua</lua>
  <points>30</points>
  <base_type>Astral Projection Normal</base_type>
- <gfx_space sx="10" sy="10" size="60" polygon="apparition_corvette">ship/apparition/apparition_corvette.webp</gfx_space>
+ <GFX size="128" sx="10" sy="10" noengine="1">apparition_corvette</GFX>
  <gfx_comm>outfit/store/placeholder.webp</gfx_comm>
  <sound>engine</sound>
  <class>Corvette</class>

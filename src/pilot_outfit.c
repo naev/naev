@@ -165,8 +165,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
    const ShipMount *m;
 
    /* Calculate the sprite angle. */
-   a  = (double)(p->tsy * p->ship->gfx_space->sx + p->tsx);
-   a *= p->ship->mangle;
+   a  = p->solid.dir;
 
    /* 2d rotation matrix
     * [ x' ]   [  cos  sin  ]   [ x ]
@@ -215,7 +214,7 @@ int pilot_dock( Pilot *p, Pilot *target )
 
    /* Must be close. */
    if (vec2_dist(&p->solid.pos, &target->solid.pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
+         target->ship->size * PILOT_SIZE_APPROX )
       return -1;
 
    /* Cannot be going much faster. */
@@ -317,6 +316,12 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
       s->flags |= PILOTOUTFIT_ACTIVE;
    else
       s->flags &= ~PILOTOUTFIT_ACTIVE;
+
+   /* Check if toggleable. */
+   if (outfit_isToggleable(outfit))
+      s->flags |= PILOTOUTFIT_TOGGLEABLE;
+   else
+      s->flags &= ~PILOTOUTFIT_TOGGLEABLE;
 
    /* Update heat. */
    pilot_heatCalcSlot( s );
@@ -509,6 +514,7 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
    /* Remove the outfit. */
    ret         = (s->outfit==NULL);
    s->outfit   = NULL;
+   s->flags    = 0; /* Clear flags. */
    //s->weapset  = -1;
 
    /* Remove secondary and such if necessary. */
@@ -1222,17 +1228,7 @@ void pilot_updateMass( Pilot *pilot )
  */
 int pilot_slotIsToggleable( const PilotOutfitSlot *o )
 {
-   const Outfit *oo;
-   if (!(o->flags & PILOTOUTFIT_ACTIVE))
-      return 0;
-
-   oo = o->outfit;
-   if (oo == NULL)
-      return 0;
-   if (!outfit_isToggleable(oo))
-      return 0;
-
-   return 1;
+   return (o->flags & PILOTOUTFIT_TOGGLEABLE);
 }
 
 /**
@@ -2038,15 +2034,16 @@ static void outfitLOnkeydoubletap( const Pilot *pilot, PilotOutfitSlot *po, cons
    lua_pushpilot(naevL, pilot->id); /* f, p */
    lua_pushpilotoutfit(naevL, po);  /* f, p, po */
    lua_pushstring(naevL, outfitkeytostr(key) );
-   if (nlua_pcall( env, 3, 0 )) {   /* */
+   if (nlua_pcall( env, 3, 1 )) {   /* */
       outfitLRunWarning( pilot, po->outfit, "keydoubletap", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
    pilot_outfitLunmem( env, oldmem );
 
    /* Broke stealth. */
-   if (po->state==PILOT_OUTFIT_ON)
+   if ((po->state==PILOT_OUTFIT_ON) || lua_toboolean(naevL,-1))
       stealth_break = 1;
+   lua_pop( naevL, 1 );
 }
 void pilot_outfitLOnkeydoubletap( Pilot *pilot, OutfitKey key )
 {
