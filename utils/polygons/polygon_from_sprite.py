@@ -446,7 +446,9 @@ def polygonFromImg( address, sx, sy, ceil, minlen, maxlen ):
     return (points, polygon)
 
 # Generates a XML file that contains the polygon
-def generateXML( polygon,address ):
+def generateXML( polygon, address ):
+
+    os.makedirs( os.path.dirname(address), exist_ok=True )
 
     poly = polygon[0]
     px   = polygon[1]
@@ -696,6 +698,7 @@ def polygonify_ship( filename, outpath ):
     cls = root.find( "class" ).text
     tag = root.find( "GFX" )
     if tag != None:
+        outname = f"{outpath}/ship/{tag.text}.xml"
         imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
         try:
             sx = int(tag.get("sx"))
@@ -712,7 +715,7 @@ def polygonify_ship( filename, outpath ):
         if img[0].shape[0] > 150:
             minlen = 4
             maxlen = 8
-        polygonify_single( img, outpath, sx=sx, sy=sy, ceil=ceil, minlen=minlen, maxlen=maxlen )
+        polygonify_single( img, outname, sx=sx, sy=sy, ceil=ceil, minlen=minlen, maxlen=maxlen )
 
 
 # Run stuff
