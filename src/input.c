@@ -702,12 +702,17 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             if (NODEAD()) {
                pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_ACCEL );
                pilot_afterburn( player.p );
+               /* Allow keeping it on outside of weapon sets. */
+               if (player.p->afterburner != NULL)
+                  player.p->afterburner->flags |= PILOTOUTFIT_ISON_LUA;
             }
          }
          else if (value==KEY_RELEASE) {
             if (NODEAD()) {
                pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_ACCEL );
-               pilot_afterburnOver( player.p );
+               /* Make sure to release the weapon set lock. */
+               if (player.p->afterburner != NULL)
+                  player.p->afterburner->flags &= ~PILOTOUTFIT_ISON_LUA;
             }
          }
 
