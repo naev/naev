@@ -40,7 +40,7 @@
 
 # Using the algorithm for one png :
 
-# 1)Run polygonFromPng('address_of_my_png',sx,sy,150,3,6)
+# 1)Run polygonFromImg('address_of_my_png',sx,sy,150,3,6)
 # sx and sy are the nb of sprites in the picture (ex for Lancelot, its 8 and 8)
 # If the code doesn't give any warning, run generateXML and put the generated
 # file in ship_polygon or space_polygon directory.
@@ -48,7 +48,7 @@
 # Usually, I use (3,6) for ships and (2,4) for outfits.
 
 # 2)If the set of points is not connex, while the png is, decrease the ceil
-# (4th argument of polygonFromPng, down to 1 if needed)
+# (4th argument of polygonFromImg, down to 1 if needed)
 
 # 3)If the code says that sx or sy are wrong, check that the values you have
 # given are right. If they are, as written in the warning message, the error
@@ -70,7 +70,7 @@
 # Principle of the algorithm :
 
 # 1 ) The transparency array is transformed into a set of points in
-# PointsFromPng.
+# PointsFromImg.
 # Each point is adjacent to 4 pixels. In order for that point
 # to be activated, at least 1 of the 4 pixels must have an opacity value that
 # is greater than the ceil (150 for most ships, 1 for Zlk ships that have
@@ -82,7 +82,7 @@
 
 # Rem 2 : The value of ceil of 150 is totally arbitrary
 
-# 2 ) The set of points is transformed into a polygon in polygonFromPng.
+# 2 ) The set of points is transformed into a polygon in polygonFromImg.
 # The algo picks up one of the rightmost points. This point is the starting
 # point. We define as well the starting direction as nearly vertical
 #   Then the following recurcive algo runs :
@@ -107,11 +107,12 @@ import matplotlib.pyplot as plt
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as pretty
 import os
+import argparse
 
 # Create an array from the picture
-def arrFromPng( address,sx,sy ):
+def arrFromImg( address, sx, sy ):
 
-    buffer = plt.imread(address)
+    buffer = plt.imread( address )
 
     if np.shape(buffer)[2] == 4:
         picture = buffer[:,:,3]
@@ -161,9 +162,11 @@ def arrFromPng( address,sx,sy ):
 
 
 # Defines points from png
-def pointsFromPng(address,sx,sy,ceil):
-
-    picture = arrFromPng(address,sx,sy)
+def pointsFromImg( address, sx, sy, ceil ):
+    if type(address)==str:
+        picture = arrFromImg( address, sx, sy )
+    else:
+        picture = address
     npict = len(picture)
 
     pointsx = [] # This list of list will contian the abscissae of the points
@@ -272,7 +275,7 @@ def simplifyPolygon(indices,x,y,tol):
     return (indices,x,y)
 
 # Computes a single polygon from a PNG
-def singlePolygonFromPng(px,py,minlen,maxlen,ppi):
+def singlePolygonFromImg(px,py,minlen,maxlen,ppi):
     npt = len(px)
     minlen2 = minlen**2
     maxlen2 = maxlen**2
@@ -388,8 +391,8 @@ def polygonFromPoints(points,minlen,maxlen):
     polyall = []
 
     # List of values for minlen and maxlen. Both list should have len of llist
-    minlist = [5,4,3,2,1]
-    maxlist = [10,8,6,4,1.5]
+    minlist = [ 5,  4, 3, 2, 1 ]
+    maxlist = [ 10, 8, 6, 4, 1.5 ]
     llist = 5
 
     # Adapt minlist and maxlist in order to match presripted values
@@ -410,7 +413,7 @@ def polygonFromPoints(points,minlen,maxlen):
         for j in range(len(minlist)):
             stop = 1
 
-            pplg    = singlePolygonFromPng(px,py,minlist[j],maxlist[j],ppi)
+            pplg    = singlePolygonFromImg(px,py,minlist[j],maxlist[j],ppi)
             polygon = pplg[0]
             ppx     = pplg[1]
             ppy     = pplg[2]
@@ -436,10 +439,10 @@ def polygonFromPoints(points,minlen,maxlen):
 
     return (polyall,ppxs,ppys)
 
-# Computes a polygon from PNG
-def polygonFromPng(address,sx,sy,ceil,minlen,maxlen):
-    points  = pointsFromPng(address,sx,sy,ceil)
-    polygon = polygonFromPoints(points,minlen,maxlen)
+# Computes a polygon from an image
+def polygonFromImg( address, sx, sy, ceil, minlen, maxlen ):
+    points  = pointsFromImg( address, sx, sy, ceil )
+    polygon = polygonFromPoints( points, minlen, maxlen )
     return (points,polygon)
 
 # Generates a XML file that contains the polygon
@@ -480,17 +483,14 @@ def generateXML(polygon,address):
     myfile.close()
 
 # Generates polygon for all outfits
-def polygonify_single(fileName, polyAddress, sx=1, sy=1, ceil=150, minlen=3, maxlen=6, overwrite=False ):
-    # Test if the file already exists
-    if ( not overwrite and os.path.exists(polyAddress) ) :
-        return
+def polygonify_single( fileName, polyAddress, sx=1, sy=1, ceil=150, minlen=3, maxlen=6 ):
 
-    print("Generation of " + polyAddress)
+    print("Generating " + polyAddress + "..." )
 
-    pntNplg = polygonFromPng( fileName, sx, sy, ceil, minlen, maxlen )
+    pntNplg = polygonFromImg( fileName, sx, sy, ceil, minlen, maxlen )
 
     polygon = pntNplg[1]
-    generateXML(polygon,polyAddress)
+    generateXML( polygon, polyAddress )
 
 # Generates polygon for all outfits
 def polygonify_all_outfits(gfxPath, polyPath, overwrite):
@@ -530,7 +530,7 @@ def polygonify_all_outfits(gfxPath, polyPath, overwrite):
 
             print("Generation of " + polyAddress)
 
-            pntNplg = polygonFromPng(pngAddress,6,6,150,lmin,lmax)
+            pntNplg = polygonFromImg( pngAddress, 6, 6, 150, lmin, lmax )
 
             polygon = pntNplg[1]
             generateXML(polygon,polyAddress)
@@ -566,7 +566,7 @@ def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
 
         print("Generation of " + polyAddress)
 
-        pntNplg = polygonFromPng(pngAddress,1,1,ceil,lmin,lmax)
+        pntNplg = polygonFromImg( pngAddress, 1, 1, ceil, lmin, lmax )
         polygon = pntNplg[1]
 
 #        points  = pntNplg[0]
@@ -694,34 +694,61 @@ def polygonify_all_ships( gfxPath, polyPath, overwrite ):
                        + str(sx) + ", " + str(sy) + ", " + str(ceil) + ", "\
                        + str(lmin) + ", " + str(lmax) + ")")
 
-                pntNplg = polygonFromPng(pngAddress,sx,sy,ceil,lmin,lmax)
+                pntNplg = polygonFromImg( pngAddress, sx, sy, ceil, lmin, lmax )
 
                 polygon = pntNplg[1]
                 generateXML(polygon,polyAddress)
 
+
+def polygonify_ship( filename, outpath ):
+
+    root = ET.parse( filename ).getroot()
+    name = root.get('name')
+    cls = root.find( "class" ).text
+    tag = root.find( "GFX" )
+    if tag != None:
+        imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
+        sx = int(tag.get("sx"))
+        sy = int(tag.get("sy"))
+        ceil = 1
+        minlen = 3
+        maxlen = 6
+        img = arrFromImg( imgpath, sx, sy )
+        if img[0].shape[0] > 150:
+            minlen = 4
+            maxlen = 8
+        polygonify_single( img, outpath, sx=sx, sy=sy, ceil=ceil, minlen=minlen, maxlen=maxlen )
+
+
 # Run stuff
 if __name__ == "__main__":
-    basepath = "artwork/"
-    overwrite = True
+    parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
+    parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
+    parser.add_argument('--outpath', type=str, default="dat/polygon" )
+    args, unknown = parser.parse_known_args()
 
+    for a in args.path:
+        polygonify_ship( a, args.outpath )
+
+    """
     # Special cases where we use spob assets for ships
-    polygonify_single( basepath+'gfx/spob/space/000.webp', basepath+'gfx/ship_polygon/000.webp.xml', overwrite=overwrite )
-    polygonify_single( basepath+'gfx/spob/space/002.webp', basepath+'gfx/ship_polygon/002.webp.xml', overwrite=overwrite )
-    polygonify_single( basepath+'gfx/spob/space/station-battlestation.webp', basepath+'gfx/ship_polygon/station-battlestation.webp.xml', overwrite=overwrite )
-    polygonify_single( basepath+'gfx/spob/space/derelict_goddard.webp', basepath+'gfx/ship_polygon/derelict_goddard.webp.xml', minlen=1, overwrite=overwrite )
+    polygonify_single( inpath, 'spob/space/000.webp', outpath, overwrite=overwrite )
+    polygonify_single( inpath, 'spob/space/002.webp', outpath, overwrite=overwrite )
+    polygonify_single( inpath, 'spob/space/station-battlestation.webp', outpath, overwrite=overwrite )
+    polygonify_single( inpath, 'spob/space/derelict_goddard.webp', outpath, minlen=1, overwrite=overwrite )
     # All ships
-    polygonify_all_ships( basepath+'gfx/ship/', basepath+'gfx/ship_polygon/', overwrite=overwrite )
+    polygonify_all_ships( inpath, 'ship/', outpath, overwrite=overwrite )
     # All outfits
-    polygonify_all_outfits( basepath+'gfx/outfit/space/', basepath+'gfx/outfit/space_polygon/', overwrite=overwrite )
+    polygonify_all_outfits( inpath, 'outfit/space/', outpath+'gfx/outfit/space_polygon/', overwrite=overwrite )
     # All Asteroids
-    polygonify_all_asteroids( basepath+'gfx/spob/space/asteroid/', basepath+'gfx/spob/space/asteroid_polygon/', overwrite=overwrite )
+    polygonify_all_asteroids( inpath, 'spob/space/asteroid/', outpath+'gfx/spob/space/asteroid_polygon/', overwrite=overwrite )
 
     # Use the above stuff to generate only one ship or outfit polygon :
 
-    #pntNplg = polygonFromPng('../../../naev-artwork-production/gfx/spob/space/asteroid/asteroid-D51.webp',1,1,150,3,6)
-    #pntNplg = polygonFromPng('../../../naev-artwork-production/gfx/spob/space/asteroid/asteroid-D51_bis.png',1,1,150,3,6)
-    #pntNplg = polygonFromPng('../naev/dat/gfx/ship/shark/shark.png',8,8,150,3,6)
-    #pntNplg = polygonFromPng('../../../naev/dat/gfx/outfit/space/caesar.png',6,6,1,2,4)
+    #pntNplg = polygonFromImg('../../../naev-artwork-production/gfx/spob/space/asteroid/asteroid-D51.webp',1,1,150,3,6)
+    #pntNplg = polygonFromImg('../../../naev-artwork-production/gfx/spob/space/asteroid/asteroid-D51_bis.png',1,1,150,3,6)
+    #pntNplg = polygonFromImg('../naev/dat/gfx/ship/shark/shark.png',8,8,150,3,6)
+    #pntNplg = polygonFromImg('../../../naev/dat/gfx/outfit/space/caesar.png',6,6,1,2,4)
 
 #    points  = pntNplg[0]
 #    polygon = pntNplg[1]
@@ -732,3 +759,4 @@ if __name__ == "__main__":
 #    plt.scatter(polygon[1][0],polygon[2][0])
 
     #generateXML(polygon,'caesar.xml')
+    """
