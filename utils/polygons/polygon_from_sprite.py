@@ -21,7 +21,7 @@
 # Then, commentarize the line "polygonify_all_outfits".
 # If your png has more than 8X8 sprites,
 # go in the function "polygonify_all_ships" and add the name of your
-# png in the dictionnary maxNmin, along with (sx,sy,150,3,6).
+# png in the dictionnary maxNmin, along with (sx,sy,50,3,6).
 # If your sprite is very big (2048), replace 3,6 by 4,8
 # Then,run the script from shell
 # (or any other interface that prints warnings).
@@ -40,14 +40,14 @@
 
 # Using the algorithm for one png :
 
-# 1)Run polygonFromImg('address_of_my_png',sx,sy,150,3,6)
+# 1)Run polygonFromImg('address_of_my_png',sx,sy,50,3,6)
 # sx and sy are the nb of sprites in the picture (ex for Lancelot, its 8 and 8)
 # If the code doesn't give any warning, run generateXML and put the generated
 # file in ship_polygon or space_polygon directory.
 # The last two arguments are the min and max length of the polygon's faces.
 # Usually, I use (3,6) for ships and (2,4) for outfits.
 
-# 2)If the set of points is not connex, while the png is, decrease the ceil
+# 2)If the set of points is not connex, while the png is, decrease the alpha_threshold
 # (4th argument of polygonFromImg, down to 1 if needed)
 
 # 3)If the code says that sx or sy are wrong, check that the values you have
@@ -73,14 +73,13 @@
 # PointsFromImg.
 # Each point is adjacent to 4 pixels. In order for that point
 # to be activated, at least 1 of the 4 pixels must have an opacity value that
-# is greater than the ceil (150 for most ships, 1 for Zlk ships that have
-# very small features and could end up non-connex otherwise)
+# is greater than the alpha_threshold (50 is a good value for most ships)
 
-# Rem 1 : If all the pixels have opacity>=ceil, the point is not activated as
+# Rem 1 : If all the pixels have opacity>=alpha_threshold, the point is not activated as
 # this point is for sure not on the boundary and only boundary are important
 # in what we want to do
 
-# Rem 2 : The value of ceil of 150 is totally arbitrary
+# Rem 2 : The value of alpha_threshold of 50 is totally arbitrary
 
 # 2 ) The set of points is transformed into a polygon in polygonFromImg.
 # The algo picks up one of the rightmost points. This point is the starting
@@ -162,7 +161,7 @@ def arrFromImg( address, sx, sy ):
 
 
 # Defines points from png
-def pointsFromImg( address, sx, sy, ceil ):
+def pointsFromImg( address, sx, sy, alpha_threshold ):
     if type(address)==str:
         picture = arrFromImg( address, sx, sy )
     else:
@@ -184,7 +183,7 @@ def pointsFromImg( address, sx, sy, ceil ):
         buffery = []
 
         # loop over the corners (between pixels) if at least one pixel adjacent
-        # to corner is > ceil, put a point at this corner
+        # to corner is > alpha_threshold, put a point at this corner
         # + + + + + + + +
         #  0 1 1 1 0 0 0
         # + + + + + + + +
@@ -195,47 +194,47 @@ def pointsFromImg( address, sx, sy, ceil ):
             for j in range(ssy+1):
                 if i==0:
                     if j==0:
-                        if pictcur[0,0] >= ceil:
+                        if pictcur[0,0] >= alpha_threshold:
                             bufferx.append(-i+sx2) # -i because image vs coordinates
                             buffery.append(j-sy2)
                     elif j==ssy:
-                        if pictcur[0,ssy-1] >= ceil:
+                        if pictcur[0,ssy-1] >= alpha_threshold:
                             bufferx.append(-i+sx2)
                             buffery.append(j-sy2)
                     else:
-                        if pictcur[0,j-1] >= ceil or pictcur[0,j] >= ceil:
+                        if pictcur[0,j-1] >= alpha_threshold or pictcur[0,j] >= alpha_threshold:
                             bufferx.append(-i+sx2)
                             buffery.append(j-sy2)
 
                 elif i==ssx:
                     if j==0:
-                        if pictcur[ssx-1,0] >= ceil:
+                        if pictcur[ssx-1,0] >= alpha_threshold:
                             bufferx.append(-i+sx2)
                             buffery.append(j-sy2)
                     elif j==ssy:
-                        if pictcur[ssx-1,ssy-1] >= ceil:
+                        if pictcur[ssx-1,ssy-1] >= alpha_threshold:
                             bufferx.append(-i+sx2)
                             buffery.append(j-sy2)
                     else:
-                        if pictcur[ssx-1,j-1] >= ceil or pictcur[ssx-1,j] >= ceil:
+                        if pictcur[ssx-1,j-1] >= alpha_threshold or pictcur[ssx-1,j] >= alpha_threshold:
                             bufferx.append(-i+sx2)
                             buffery.append(j-sy2)
 
                 else:
                     if j==0:
-                        if pictcur[i-1,0] >= ceil or pictcur[i,0] >= ceil:
+                        if pictcur[i-1,0] >= alpha_threshold or pictcur[i,0] >= alpha_threshold:
                             bufferx.append(-i+sx2)
                             buffery.append(j-sy2)
                     elif j==ssy:
-                        if pictcur[i-1,ssy-1] >= ceil or pictcur[i,ssy-1] >= ceil:
+                        if pictcur[i-1,ssy-1] >= alpha_threshold or pictcur[i,ssy-1] >= alpha_threshold:
                             bufferx.append(-i+sx2)
                             buffery.append(j-sy2)
                     else:
                         # This is the most general case. Remove points inside the domain
-                        if (pictcur[i-1,j-1] >= ceil or pictcur[i-1,j] >= ceil \
-                            or pictcur[i,j-1] >= ceil or pictcur[i,j] >= ceil) \
-                            and not (pictcur[i-1,j-1] >= ceil and pictcur[i-1,j] >= ceil \
-                            and pictcur[i,j-1] >= ceil and pictcur[i,j] >= ceil):
+                        if (pictcur[i-1,j-1] >= alpha_threshold or pictcur[i-1,j] >= alpha_threshold \
+                            or pictcur[i,j-1] >= alpha_threshold or pictcur[i,j] >= alpha_threshold) \
+                            and not (pictcur[i-1,j-1] >= alpha_threshold and pictcur[i-1,j] >= alpha_threshold \
+                            and pictcur[i,j-1] >= alpha_threshold and pictcur[i,j] >= alpha_threshold):
                             bufferx.append(-i+sx2)
                             buffery.append(j-sy2)
 
@@ -433,8 +432,8 @@ def polygonFromPoints( points, minlen, maxlen ):
     return (polyall, ppxs, ppys)
 
 # Computes a polygon from an image
-def polygonFromImg( address, sx, sy, ceil, minlen, maxlen ):
-    points  = pointsFromImg( address, sx, sy, ceil )
+def polygonFromImg( address, sx, sy, alpha_threshold, minlen, maxlen ):
+    points  = pointsFromImg( address, sx, sy, alpha_threshold )
     polygon = polygonFromPoints( points, minlen, maxlen )
     return (points, polygon)
 
@@ -468,9 +467,9 @@ def generateXML( polygon, address ):
     myfile.close()
 
 # Generates polygon for all outfits
-def polygonify_single( fileName, polyAddress, sx=1, sy=1, ceil=150, minlen=3, maxlen=6 ):
+def polygonify_single( fileName, polyAddress, sx=1, sy=1, alpha_threshold=50, minlen=3, maxlen=6 ):
     print("Generating " + polyAddress + "..." )
-    pntNplg = polygonFromImg( fileName, sx, sy, ceil, minlen, maxlen )
+    pntNplg = polygonFromImg( fileName, sx, sy, alpha_threshold, minlen, maxlen )
     polygon = pntNplg[1]
     generateXML( polygon, polyAddress )
 
@@ -521,19 +520,19 @@ def polygonify_all_outfits(gfxPath, polyPath, overwrite):
 
             print("Generation of " + polyAddress)
 
-            pntNplg = polygonFromImg( pngAddress, 6, 6, 150, lmin, lmax )
+            pntNplg = polygonFromImg( pngAddress, 6, 6, 50, lmin, lmax )
 
             polygon = pntNplg[1]
-            generateXML(polygon,polyAddress)
+            generateXML( polygon, polyAddress )
 
 # Generates polygon for all asteroids
 def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
 
     # Default parameters
-    default_maxNmin = (3,6,150)
+    default_maxNmin = (3,6,50)
 
     # First define the parameters for special files
-    maxNmin = { "flower01" : (5,10,150) } # Actually, the algorithm automatically refines this one, so it could be skipped
+    maxNmin = { "flower01" : (5,10,50) } # Actually, the algorithm automatically refines this one, so it could be skipped
 
     for fileName in os.listdir(gfxPath):
 
@@ -546,18 +545,18 @@ def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
         # Manage parameters
         lmin = default_maxNmin[0]
         lmax = default_maxNmin[1]
-        ceil = default_maxNmin[2]
+        alpha_threshold = default_maxNmin[2]
         if fileName in maxNmin:
             mNm = maxNmin[fileName]
             lmin = mNm[0]
             lmax = mNm[1]
-            ceil = mNm[2]
+            alpha_threshold = mNm[2]
 
         pngAddress  = (gfxPath+fileName)
 
         print("Generation of " + polyAddress)
 
-        pntNplg = polygonFromImg( pngAddress, 1, 1, ceil, lmin, lmax )
+        pntNplg = polygonFromImg( pngAddress, 1, 1, alpha_threshold, lmin, lmax )
         polygon = pntNplg[1]
 
 #        points  = pntNplg[0]
@@ -567,128 +566,6 @@ def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
 #        plt.scatter(polygon[1][0],polygon[2][0])
 
         generateXML(polygon,polyAddress)
-
-# Generates polygon for all ships
-def polygonify_all_ships( gfxPath, polyPath, overwrite ):
-
-    # Default parameters
-    default_maxNmin = (8,8,150,3,6)
-
-    # First define the parameters for special files
-    maxNmin = {
-               "apprehension" : (12,12,150,3,6),
-               "archimedes" : (12,12,150,3,6),
-               "arx" : (12,12,150,3,6),
-               "arx_feral" : (12,12,150,3,6),
-               "certitude" : (12,12,150,3,6),
-               "demon" : (12,12,150,3,6),
-               "diablo" : (12,12,1,4,8),
-               "divinity" : (12,12,150,3,6),
-               "dogma" : (12,12,150,3,6),
-               "drone_heavy" : (10,10,150,3,6),
-               "drone_carrier": (12,12,150,3,6),
-               "goddard" : (12,12,150,3,6),
-               "goddard_dvaered" : (12,12,150,3,6),
-               "hawking" : (12,12,150,3,6),
-               "hawking_empire" : (12,12,150,3,6),
-               "hephaestus" : (12,12,1,4,8),
-               "imp" : (12,12,150,3,6),
-               "ira" : (12,12,150,3,6),
-               "kahan" : (10,10,150,3,6),
-               "kestrel" : (10,10,150,3,6),
-               "kestrel_pirate" : (10,10,150,3,6),
-               "mephisto" : (12,12,150,3,6),
-               "mule" : (10,10,150,3,6),
-               "nyx" : (10,10,150,3,6),
-               "pacifier" : (10,10,150,3,6),
-               "pacifier_empire" : (10,10,150,3,6),
-               "peacemaker" : (12,12,150,3,6),
-               "phalanx" : (10,10,150,3,6),
-               "phalanx_pirate" : (10,10,150,3,6),
-               "phalanx_dvaered" : (10,10,150,3,6),
-               "preacher" : (10,10,150,3,6),
-               "prototype" : (12,12,150,3,6),
-               "quicksilver" : (10,10,150,3,6),
-               "rhino" : (10,10,150,3,6),
-               "rhino_pirate" : (10,10,150,3,6),
-               "sting" : (10,10,1,3,6),
-               "taciturnity" : (10,10,150,3,6),
-               "vigilance" : (10,10,150,3,6),
-               "vigilance_dvaered" : (10,10,150,3,6),
-               "vox" : (12,12,150,4,8),
-               "watson" : (12,12,150,3,6),
-               "apparition_fighter": (8,8,150,3,6),
-               "apparition_corvette": (10,10,150,3,6),
-               "apparition_cruiser": (12,12,150,3,6),
-               "mammon_zalek": (12,12,150,3,6),
-               "arsenal_dvaered": (12,12,150,3,6),
-               "retribution_dvaered": (12,12,150,3,6),
-               "rainmaker_empire": (12,12,150,3,6),
-               "copia": (12,12,150,3,6),
-               "providence": (12,12,150,3,6),
-               "zebra": (12,12,150,3,6),
-               "zebra_pirate": (12,12,150,3,6),
-               "pythagoras": (12,12,150,3,6),
-               "gauss": (10,10,150,3,6),
-               "starbridge": (10,10,150,3,6),
-               "starbridge_pirate": (10,10,150,3,6),
-               "hippocrates": (10,10,150,3,6),
-              }
-
-    def goodfile( filename ):
-        if (fileName.endswith(".png") and \
-            not fileName.endswith("_comm.png")) \
-            and not fileName.endswith("_engine.png"):
-           return True
-        if (fileName.endswith(".webp") and \
-            not fileName.endswith("_comm.webp")) \
-            and not fileName.endswith("_engine.webp"):
-           return True
-        return False
-
-    for root, directories, filenames in os.walk(gfxPath):
-        for fileName in filenames:
-            if goodfile( fileName ):
-
-                # Remove the .png
-                name = os.path.splitext(fileName)[0]
-
-                polyAddress = (polyPath+name+".xml")
-
-                # Test if the file already exists
-                if ( not overwrite and os.path.exists(polyAddress) ) :
-                    continue
-
-                # Manage parameters
-                sx   = default_maxNmin[0]
-                sy   = default_maxNmin[1]
-                ceil = default_maxNmin[2]
-                lmin = default_maxNmin[3]
-                lmax = default_maxNmin[4]
-
-                basefileName = fileName
-                if basefileName[-4:] == '.png':
-                    basefileName = basefileName[:-4]
-                if basefileName[-5:] == '.webp':
-                    basefileName = basefileName[:-5]
-                if basefileName in maxNmin:
-                    mNm = maxNmin[basefileName]
-                    sx   = mNm[0]
-                    sy   = mNm[1]
-                    ceil = mNm[2]
-                    lmin = mNm[3]
-                    lmax = mNm[4]
-
-                pngAddress  = (root+"/"+fileName)
-
-                print("Generation of " + polyAddress + ". Parameters are : ("\
-                       + str(sx) + ", " + str(sy) + ", " + str(ceil) + ", "\
-                       + str(lmin) + ", " + str(lmax) + ")")
-
-                pntNplg = polygonFromImg( pngAddress, sx, sy, ceil, lmin, lmax )
-
-                polygon = pntNplg[1]
-                generateXML(polygon,polyAddress)
 
 
 def polygonify_ship( filename, outpath ):
@@ -709,14 +586,14 @@ def polygonify_ship( filename, outpath ):
             sy = int(tag.get("sy"))
         except:
             sy = 8
-        ceil    = 50
+        alpha_threshold    = 50
         minlen  = 3
         maxlen  = 6
         img     = arrFromImg( imgpath, sx, sy )
-        if img[0].shape[0] > 150:
+        if img[0].shape[0] > 50:
             minlen = 4
             maxlen = 8
-        polygonify_single( img, outname, sx=sx, sy=sy, ceil=ceil, minlen=minlen, maxlen=maxlen )
+        polygonify_single( img, outname, sx=sx, sy=sy, alpha_threshold=alpha_threshold, minlen=minlen, maxlen=maxlen )
 
 # Run stuff
 if __name__ == "__main__":
@@ -743,9 +620,9 @@ if __name__ == "__main__":
 
     # Use the above stuff to generate only one ship or outfit polygon :
 
-    #pntNplg = polygonFromImg('../../../naev-artwork-production/gfx/spob/space/asteroid/asteroid-D51.webp',1,1,150,3,6)
-    #pntNplg = polygonFromImg('../../../naev-artwork-production/gfx/spob/space/asteroid/asteroid-D51_bis.png',1,1,150,3,6)
-    #pntNplg = polygonFromImg('../naev/dat/gfx/ship/shark/shark.png',8,8,150,3,6)
+    #pntNplg = polygonFromImg('../../../naev-artwork-production/gfx/spob/space/asteroid/asteroid-D51.webp',1,1,50,3,6)
+    #pntNplg = polygonFromImg('../../../naev-artwork-production/gfx/spob/space/asteroid/asteroid-D51_bis.png',1,1,50,3,6)
+    #pntNplg = polygonFromImg('../naev/dat/gfx/ship/shark/shark.png',8,8,50,3,6)
     #pntNplg = polygonFromImg('../../../naev/dat/gfx/outfit/space/caesar.png',6,6,1,2,4)
 
 #    points  = pntNplg[0]
