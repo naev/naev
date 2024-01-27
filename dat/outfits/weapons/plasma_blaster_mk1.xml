@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>3</mass>
   <price>19000</price>
-  <description>The Plasma Blaster M1 fires superheated plasma which is very effective at damaging armour, but less effective against shields. While dealing direct damage, the lingering plasma will continue to damage the target ship for a while after the inicial impact. This weapon is often used by bounty hunters and mercenaries for its high killing potential, although the plasma burns tend to make it harder to disable ships.</description>
+  <description>The Plasma Blaster M1 fires superheated plasma which is very effective at damaging armour, but less effective against shields. While dealing direct damage, the lingering plasma will continue to damage the target ship for a while after the initial impact. This weapon is often used by bounty hunters and mercenaries for its high killing potential, although the plasma burns tend to make it harder to disable ships.</description>
   <gfx_store>plasma.webp</gfx_store>
   <cpu>-5</cpu>
  </general>
