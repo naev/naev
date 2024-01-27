@@ -1,116 +1,122 @@
 #!/usr/bin/env python3
 
-# Generates polygons from image files
+"""
+Generates collision polygons from image or gltf files
 
-# WARNING : this script uses python 3
-# For needed depandancies, please see the import section
+WARNING : this script uses python 3
+For needed depandancies, please see the import section
 
-# If you added a space ammo/bolt png:
-# Go to bottom of the file, and replace '../naev/dat/gfx/outfit/space/' and
-# '../naev/dat/gfx/outfit/space_polygon/' by the right paths in naev repo
-# Then, commertarize the line "polygonify_all_ships" and run this script
-# from shell (or any other interface that prints warnings).
-# If the script refines the polygon a lot (more than 3-4 times), there
-# is maybe something wrong. You'll have to add your file to special files
-# in "polygonify_all_outfits" function. To see what parameters to put,
-# read the rest of this text, or request help on discord.
+If you added a space ammo/bolt png:
+Go to bottom of the file, and replace '../naev/dat/gfx/outfit/space/' and
+'../naev/dat/gfx/outfit/space_polygon/' by the right paths in naev repo
+Then, commertarize the line "polygonify_all_ships" and run this script
+from shell (or any other interface that prints warnings).
+If the script refines the polygon a lot (more than 3-4 times), there
+is maybe something wrong. You'll have to add your file to special files
+in "polygonify_all_outfits" function. To see what parameters to put,
+read the rest of this text, or request help on discord.
 
-# If you added a ship png:
-# Go to bottom of the file, and replace '../naev/dat/gfx/ship/' and
-# '../naev/dat/gfx/ship_polygon/' by the right paths in naev repo
-# Then, commentarize the line "polygonify_all_outfits".
-# If your png has more than 8X8 sprites,
-# go in the function "polygonify_all_ships" and add the name of your
-# png in the dictionnary maxNmin, along with (sx,sy,50,3,6).
-# If your sprite is very big (2048), replace 3,6 by 4,8
-# Then,run the script from shell
-# (or any other interface that prints warnings).
-# If the script refines the polygon a lot (more than 10-15 times), there
-# is maybe something wrong. To see what parameters to use,
-# read the rest of this text, or request help on discord.
+If you added a ship png:
+Go to bottom of the file, and replace '../naev/dat/gfx/ship/' and
+'../naev/dat/gfx/ship_polygon/' by the right paths in naev repo
+Then, commentarize the line "polygonify_all_outfits".
+If your png has more than 8X8 sprites,
+go in the function "polygonify_all_ships" and add the name of your
+png in the dictionnary maxNmin, along with (sx,sy,50,3,6).
+If your sprite is very big (2048), replace 3,6 by 4,8
+Then,run the script from shell
+(or any other interface that prints warnings).
+If the script refines the polygon a lot (more than 10-15 times), there
+is maybe something wrong. To see what parameters to use,
+read the rest of this text, or request help on discord.
 
-# Generating data for all outfits :
-# polygonify_all_outfits( origin_address, destination_address, overwrite )
+Generating data for all outfits :
+polygonify_all_outfits( origin_address, destination_address, overwrite )
 
-# Generating data for all ships :
-# polygonify_all_ships( origin_address, destination_address, overwrite )
+Generating data for all ships :
+polygonify_all_ships( origin_address, destination_address, overwrite )
 
-# If the third argument (overwrite) is 0, only new file will be generated
-# if overwrite == 1, all the polygons will be generated
+If the third argument (overwrite) is 0, only new file will be generated
+if overwrite == 1, all the polygons will be generated
 
-# Using the algorithm for one png :
+Using the algorithm for one png :
 
-# 1)Run polygonFromImg('address_of_my_png',sx,sy,50,3,6)
-# sx and sy are the nb of sprites in the picture (ex for Lancelot, its 8 and 8)
-# If the code doesn't give any warning, run generateXML and put the generated
-# file in ship_polygon or space_polygon directory.
-# The last two arguments are the min and max length of the polygon's faces.
-# Usually, I use (3,6) for ships and (2,4) for outfits.
+1)Run polygonFromImg('address_of_my_png',sx,sy,50,3,6)
+sx and sy are the nb of sprites in the picture (ex for Lancelot, its 8 and 8)
+If the code doesn't give any warning, run generateXML and put the generated
+file in ship_polygon or space_polygon directory.
+The last two arguments are the min and max length of the polygon's faces.
+Usually, I use (3,6) for ships and (2,4) for outfits.
 
-# 2)If the set of points is not connex, while the png is, decrease the alpha_threshold
-# (4th argument of polygonFromImg, down to 1 if needed)
+2)If the set of points is not connex, while the png is, decrease the alpha_threshold
+(4th argument of polygonFromImg, down to 1 if needed)
 
-# 3)If the code says that sx or sy are wrong, check that the values you have
-# given are right. If they are, as written in the warning message, the error
-# will not be greater as 1 pixel.
+3)If the code says that sx or sy are wrong, check that the values you have
+given are right. If they are, as written in the warning message, the error
+will not be greater as 1 pixel.
 
-# 4)For extremely big ships, like the diablo, it could be interesting to use
-# coarser dimensions like 4 and 8 for the last two arguments
+4)For extremely big ships, like the diablo, it could be interesting to use
+coarser dimensions like 4 and 8 for the last two arguments
 
-# 5)For purposely non-connex objects (like the ripper shot), the aim is to
-# build a polygon that contains all the parts of the object. For that purpose,
-# increase the last 2 arguments up to (4,8), or even (5,10).
-# Remark: for these cases, a convex polygon algorithm could be preferable...
+5)For purposely non-connex objects (like the ripper shot), the aim is to
+build a polygon that contains all the parts of the object. For that purpose,
+increase the last 2 arguments up to (4,8), or even (5,10).
+Remark: for these cases, a convex polygon algorithm could be preferable...
 
-# /!\ Very important : once you've found the right parameters to generate the
-# polygon from your png, add them in the dictionnary maxNmin
-# (except if the default values are right)
+/!\ Very important : once you've found the right parameters to generate the
+polygon from your png, add them in the dictionnary maxNmin
+(except if the default values are right)
 
 
-# Principle of the algorithm :
+Principle of the algorithm :
 
-# 1 ) The transparency array is transformed into a set of points in
-# PointsFromImg.
-# Each point is adjacent to 4 pixels. In order for that point
-# to be activated, at least 1 of the 4 pixels must have an opacity value that
-# is greater than the alpha_threshold (50 is a good value for most ships)
+1 ) The transparency array is transformed into a set of points in
+PointsFromImg.
+Each point is adjacent to 4 pixels. In order for that point
+to be activated, at least 1 of the 4 pixels must have an opacity value that
+is greater than the alpha_threshold (50 is a good value for most ships)
 
-# Rem 1 : If all the pixels have opacity>=alpha_threshold, the point is not activated as
-# this point is for sure not on the boundary and only boundary are important
-# in what we want to do
+Rem 1 : If all the pixels have opacity>=alpha_threshold, the point is not activated as
+this point is for sure not on the boundary and only boundary are important
+in what we want to do
 
-# Rem 2 : The value of alpha_threshold of 50 is totally arbitrary
+Rem 2 : The value of alpha_threshold of 50 is totally arbitrary
 
-# 2 ) The set of points is transformed into a polygon in polygonFromImg.
-# The algo picks up one of the rightmost points. This point is the starting
-# point. We define as well the starting direction as nearly vertical
-#   Then the following recurcive algo runs :
-#   a/ From the current point, find the next point that is at a distance
-#      between minlen and maxlen and that makes the minimal angle with the
-#      previous direction.
-#   b/ Compute the next direction in order to prevent going backwards.
-#      This direction makes the maximal angle with the direction going from
-#      current point to previous point, and is chosen among the points that
-#      are at a distance < maxlen from the previous point.
-#      This step is necessary in the concave parts of ships.
-#   After that, a few checks are performed. If the generated polygon fails,
-#   a new finer polygon is generated.
+2 ) The set of points is transformed into a polygon in polygonFromImg.
+The algo picks up one of the rightmost points. This point is the starting
+point. We define as well the starting direction as nearly vertical
+  Then the following recurcive algo runs :
+  a/ From the current point, find the next point that is at a distance
+     between minlen and maxlen and that makes the minimal angle with the
+     previous direction.
+  b/ Compute the next direction in order to prevent going backwards.
+     This direction makes the maximal angle with the direction going from
+     current point to previous point, and is chosen among the points that
+     are at a distance < maxlen from the previous point.
+     This step is necessary in the concave parts of ships.
+  After that, a few checks are performed. If the generated polygon fails,
+  a new finer polygon is generated.
 
-# 3 ) The polygon is simplified in simplifyPolygon.
-# A loop is run among the points of the polygon. Any point which angle is too
-# close to pi is suppressed.
+3 ) The polygon is simplified in simplifyPolygon.
+A loop is run among the points of the polygon. Any point which angle is too
+close to pi is suppressed.
+"""
 
 import numpy as np
 import math
 import matplotlib.pyplot as plt
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as pretty
+from pygltflib import GLTF2
+from stl import mesh
+import struct
 import os
 import argparse
+import tempfile
+import subprocess
 
-# Create an array from the picture
+# Create an array from an image
 def arrFromImg( address, sx, sy ):
-
     buffer = plt.imread( address )
 
     if np.shape(buffer)[2] == 4:
@@ -246,6 +252,8 @@ def pointsFromImg( address, sx, sy, alpha_threshold ):
 # Simplify a polygon by removing points that are aligned with other points
 def simplifyPolygon( indices, x, y, tol ):
     lim = len(indices)
+    if lim < 3:
+        return (indices, x, y)
 
     j = 0
     for i in range(lim-1): # Actually, it works as a while, with a safety bound
@@ -272,6 +280,177 @@ def simplifyPolygon( indices, x, y, tol ):
             break
 
     return (indices, x, y)
+
+# Create the projections of the ship from the STL data
+def pointsFrom3D( address, slices, size, center, alpha ):
+    """
+    # Extract the mesh and the points
+    gltf = GLTF2().load( address )
+    for s in gltf.scenes:
+        if s.name=="body":
+            scene = s
+            break
+    vertices = []
+    triangles = []
+    for meshid in scene.nodes:
+        mesh = gltf.meshes[ meshid ]
+        for primitive in mesh.primitives:
+            # get the binary data for this mesh primitive from the buffer
+            accessor = gltf.accessors[ primitive.attributes.POSITION ]
+            bufferView = gltf.bufferViews[ accessor.bufferView ]
+            buffer = gltf.buffers[ bufferView.buffer ]
+            data = gltf.get_data_from_buffer_uri( buffer.uri )
+
+            # pull each vertex from the binary buffer and convert it into a tuple of python floats
+            for i in range(accessor.count):
+                index = bufferView.byteOffset + accessor.byteOffset + i*12  # the location in the buffer of this vertex
+                d = data[index:index+12]  # the vertex data
+                v = struct.unpack("<fff", d)   # convert from base64 to three floats
+                vertices.append(v)
+
+            # unpack floats
+            vertices2 = []
+            for a,b,c in vertices:
+                vertices2 += [a,b,c]
+
+            # create triangles
+            vertices = vertices2
+            # TODO not sure why there's not a good amount of triangles...
+            for i in range(0,math.floor(len(vertices)/9)*9,9):
+                triangles.append(vertices[i:i+9])
+
+    triangles = np.array(triangles).transpose()
+    v0 = np.array(triangles[:][0:3])
+    v1 = np.array(triangles[:][3:6])
+    v2 = np.array(triangles[:][6:9])
+    """
+
+    stlfile = tempfile.NamedTemporaryFile( suffix=".stl" )
+    #ret = subprocess.run([os.environ.get('BLENDER', 'blender'), '--background', '--python', 'blend_gltf_to_stl.py', '--', address, stlfile ])
+    #ret = subprocess.run(['blender', '--background', '--python', 'blend_gltf_to_stl.py', '--', address, stlfile ])
+    print(['blender', '--background', '--python', 'blend_gltf_to_stl.py', '--', address, stlfile.name ])
+    ret = subprocess.run(['blender', '--background', '--python', 'blend_gltf_to_stl.py', '--', address, stlfile.name ])
+    if ret.returncode != 0:
+        print("Warning: STL export failed.")
+
+    shipMesh = mesh.Mesh.from_file( stlfile.name )
+    v0 = np.transpose(shipMesh.v0) # TODO : take the center into account
+    v1 = np.transpose(shipMesh.v1)
+    v2 = np.transpose(shipMesh.v2)
+
+    # Compute x and y max and min
+    xM = max( [np.amax(v0[0,:]), np.amax(v1[0,:]), np.amax(v2[0,:])] )
+    xm = min( [np.amin(v0[0,:]), np.amin(v1[0,:]), np.amin(v2[0,:])] )
+    yM = max( [np.amax(v0[1,:]), np.amax(v1[1,:]), np.amax(v2[1,:])] )
+    ym = min( [np.amin(v0[1,:]), np.amin(v1[1,:]), np.amin(v2[1,:])] )
+
+    # Rescale the data
+    leng   = max(xM-xm,yM-ym)
+    factor = size/leng
+
+    v0 = factor*v0
+    v1 = factor*v1
+    v2 = factor*v2
+
+    # Rotate the stuff for any angle
+    dtheta = 2*math.pi/slices
+
+    xlist = []
+    ylist = []
+
+    for it in range(slices):
+        # Rotate the points
+        theta = it*dtheta + math.pi/2
+        rot = np.matrix([[math.cos(theta), -math.sin(theta), 0],\
+                         [math.sin(theta), math.cos(theta), 0],\
+                         [0, 0, 1]])
+        vt0 = rot * v0
+        vt1 = rot * v1
+        vt2 = rot * v2
+
+        # Projection for the view
+        proj = np.matrix([[1, 0, 0],\
+                          [0, 1, math.tan(alpha)],\
+                          [0, 0, 0]])
+        vt0 = proj * vt0
+        vt1 = proj * vt1
+        vt2 = proj * vt2
+
+        # Extract x and y coordinates
+        x0 = vt0[0,:]
+        x1 = vt1[0,:]
+        x2 = vt2[0,:]
+        y0 = vt0[1,:]
+        y1 = vt1[1,:]
+        y2 = vt2[1,:]
+
+        xmax = max( [np.amax(x0), np.amax(x1), np.amax(x2)] )
+        xmin = min( [np.amin(x0), np.amin(x1), np.amin(x2)] )
+        ymax = max( [np.amax(y0), np.amax(y1), np.amax(y2)] )
+        ymin = min( [np.amin(y0), np.amin(y1), np.amin(y2)] )
+
+        # Now we create a grid of points that are inside the ship.
+        # We need this regular grid because its the only way to have a
+        # non-convex polygon generation algo that is guaranteed to work.
+        xgrid = []
+        ygrid = []
+        fullDots = np.zeros( ( int(xmax)-int(xmin)+1 , int(ymax)-int(ymin)+1 ) )
+
+        for ai, i in enumerate( range(int(xmin),int(xmax)+1) ):
+            for aj, j in enumerate( range(int(ymin),int(ymax)+1) ):
+                # Test if there is a triangle for which the point (i,j) is inside
+                # Here, we do vector operations to speed up computations
+                D1 = np.multiply(x1-i,y2-j) - np.multiply(x2-i,y1-j);
+                D2 = np.multiply(x2-i,y0-j) - np.multiply(x0-i,y2-j);
+                D3 = np.multiply(x0-i,y1-j) - np.multiply(x1-i,y0-j);
+                D0 = D1+D2+D3;
+
+                j1 = np.where(np.multiply(D0,D1) > 0)[1];
+                j2 = np.where(np.multiply(D0,D2) > 0)[1];
+                j3 = np.where(np.multiply(D0,D3) > 0)[1];
+                j4 = np.intersect1d( np.intersect1d(j1,j2) , j3);
+
+                # Hell, there are flat triangles. As a consequence, > cannot
+                # be replaced by >= in np.where
+                if len(j4) >= 1: # point is in a triangle
+                    fullDots[ai,aj] = 1
+
+        # Second loop to remove points that are inside the domain
+        # (to speedup polygon generation)
+        for ai, i in enumerate( range(int(xmin),int(xmax)+1) ):
+            for aj, j in enumerate( range(int(ymin),int(ymax)+1) ):
+                if fullDots[ai,aj] == 1:
+                    if (i == int(xmin) or i == int(xmax) or \
+                       j == int(ymin) or j == int(ymax)):
+                           # We're on the boundary : activate the point
+                           xgrid.append(i)
+                           ygrid.append(j)
+                    elif (fullDots[ai-1,aj] == 1 and fullDots[ai,aj-1] == 1\
+                       and fullDots[ai+1,aj] == 1 and fullDots[ai,aj+1] == 1) :
+                           # This point is inside the shape. Don't activate it
+                           pass
+                    else:
+                        xgrid.append(i)
+                        ygrid.append(j)
+
+        xlist.append(xgrid)
+        ylist.append(ygrid)
+
+        #plt.scatter(xgrid,ygrid)
+        #plt.scatter(x0.tolist()[0],y0.tolist()[0])
+        #break
+
+        # A nice progress bar
+        progress = str( int(100 * (it / slices)) )
+        nbars = int(50 * it / slices)
+        bar = '=' * nbars + ' ' * (50 - nbars)
+        print('\rTransforming model... [%s] %s%%' % (bar, progress), end = '\r')
+
+    bar = '=' * 50
+    progress = 100
+    print('\rTransforming model... [%s] %s%%' % (bar, progress), end = '\n')
+
+    return (xlist,ylist,factor)
 
 # Computes a single polygon from an image
 def singlePolygonFromImg( px, py, minlen, maxlen, ppi ):
@@ -389,10 +568,10 @@ def polygonFromPoints( points, minlen, maxlen ):
     ppys    = []
     polyall = []
 
-    # List of values for minlen and maxlen. Both list should have len of llist
+    # List of values for minlen and maxlen. Both list should have same length
     minlist = [ 5,  4, 3, 2, 1 ]
     maxlist = [ 10, 8, 6, 4, 1.5 ]
-    llist = 5
+    assert( len(minlist)==len(maxlist) )
 
     # Adapt minlist and maxlist in order to match presripted values
     minlist = list(filter(lambda x: x <= minlen, minlist))
@@ -425,9 +604,9 @@ def polygonFromPoints( points, minlen, maxlen ):
 
         polysim = simplifyPolygon( polygon, ppx, ppy, math.pi/16 ) # Simplify the polygon
 
-        ppxs.append(polysim[1])
-        ppys.append(polysim[2])
-        polyall.append(polysim[0])
+        ppxs.append( polysim[1] )
+        ppys.append( polysim[2] )
+        polyall.append( polysim[0] )
 
     return (polyall, ppxs, ppys)
 
@@ -436,6 +615,27 @@ def polygonFromImg( address, sx, sy, alpha_threshold, minlen, maxlen ):
     points  = pointsFromImg( address, sx, sy, alpha_threshold )
     polygon = polygonFromPoints( points, minlen, maxlen )
     return (points, polygon)
+
+# Computes a polygon from an STL
+def polygonFrom3D( address, slices=72, scale=30, center=[0,0,0], alpha=math.pi/4, minlen=3, maxlen=6 ):
+    points  = pointsFrom3D( address, slices, scale, center, alpha )
+    xlist   = points[0]
+    ylist   = points[1]
+    factor  = points[2]
+    polygon = polygonFromPoints( (xlist, ylist), minlen, maxlen )
+
+    # Rescale by dividing by factor
+    xlist = polygon[1]
+    ylist = polygon[2]
+    xlist = [np.array(i)/factor for i in xlist]
+    ylist = [np.array(i)/factor for i in ylist]
+
+    xpoint = points[0]
+    ypoint = points[1]
+    xpoint = [np.array(i)/factor for i in xpoint]
+    ypoint = [np.array(i)/factor for i in ypoint]
+
+    return ( (xpoint,ypoint), (polygon[0],xlist,ylist) )
 
 # Generates a XML file that contains the polygon
 def generateXML( polygon, address ):
@@ -601,6 +801,20 @@ if __name__ == "__main__":
     parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
     parser.add_argument('--outpath', type=str, default="dat/polygon" )
     args, unknown = parser.parse_known_args()
+
+    """
+    pntNplg = polygonFrom3D( args.path[0], scale=95 )
+    polygon = pntNplg[1]
+    #generateXML( polygon, polyAddress )
+
+    points = pntNplg[0]
+    plt.figure()
+    plt.title( "Test" )
+    plt.scatter(points[0][0],points[1][0])
+    plt.scatter(polygon[1][0],polygon[2][0])
+    plt.show()
+    aoeu()
+    """
 
     for a in args.path:
         polygonify_ship( a, args.outpath )
