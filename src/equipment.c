@@ -1227,7 +1227,8 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          pilot_addOutfitRaw( eq_wgt.selected->p, o, slot );
 
          /* Recalculate stats. */
-         pilot_calcStats( eq_wgt.selected->p );
+         pilot_outfitLInitAll( eq_wgt.selected->p );
+         pilot_calcStats( eq_wgt.selected->p ); /* TODO avoid running twice. */
       }
 
       equipment_addAmmo();

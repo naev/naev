@@ -29,10 +29,16 @@
       * PSO and Mizar nebulas have trails again
 
 * 0.11.4 (unreleased)
+   * Updated flicker drive, blink drive, and hyperbolic blink engine descriptions to be more complete and correct
+   * Initialize outfit Lua scripts when added in the equipment view so that flicker drive signature gets properly computed
+   * Flicker drive no longer displays -10% signature range bonus twice when equipped
    * Fixed crash when selling deployed ship
+   * Gave the Dvaered warlord event better criteria so they don't attack the hypergate
    * `shark/sh01_corvette`: have the pilot jump in from the same system as the player
    * `minerva/kex03`: have mission claim the crimson gauntlet to prevent unwanted spawns
    * `dvaered/gauntlet`: have mission claim the system if it can, but not fail if it can't
+   * `trader/trader_escort`: player can only escort one group of traders at a time
+   * `neburesearch/neburesearch_01`: use the correct faction when complaining
    * Fixed some typos and revised writing
 
 * 0.11.3

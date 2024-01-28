@@ -3,7 +3,8 @@ local luaspfx = require 'luaspfx'
 local fmt = require "format"
 local helper = require "outfits.lib.helper"
 
-local masslimit = 6000^2 -- squared
+local limit = 6000
+local masslimit = limit^2 -- squared
 local jumpdist = 2000
 local cooldown = 8
 local warmup = 2
@@ -13,6 +14,19 @@ local heat
 
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
 local sfx_warmup = audio.newSource( 'snd/sounds/activate1.ogg' )
+
+function descextra( _p, _o )
+   return fmt.f(_([[Warms up for {warmup} seconds, then blinks you {jumpdist} {unit_dist} roughly in the direction you are facing. Can only be run once every {cooldown} seconds and incurs a {penalty}% accel and turn penalty during cooldown. Performance degrades over {masslimit} of mass. Blinking costs {energy} {unit_energy} energy and generates heat.]]), {
+      warmup = warmup,
+      jumpdist = fmt.number(jumpdist),
+      cooldown = cooldown,
+      masslimit = fmt.tonnes(limit),
+      energy = tostring(energy),
+      unit_dist = naev.unit("distance"),
+      unit_energy = naev.unit("energy"),
+      penalty = penalty,
+   })
+end
 
 function onload( o )
    heat = o:heatFor( 30/cooldown ) -- Roughly overheat in 30 secs of continious usage (more in reality)

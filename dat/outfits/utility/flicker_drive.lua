@@ -3,13 +3,28 @@ local luaspfx = require 'luaspfx'
 local fmt = require "format"
 local helper = require "outfits.lib.helper"
 
-local masslimit = 500^2 -- squared
+local limit = 500
+local masslimit = limit^2 -- squared
 local jumpdist = 300
 local cooldown = 3
 local energy = 40
+local sigbonus = -10
 local heat
 
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
+
+function descextra( _p, _o )
+   return fmt.f(_([[Blinks you {jumpdist} {unit_dist} forward. Double-tapping left or right lets you blink to the sides. Can only be run once every {cooldown} seconds. Performance degrades over {masslimit} of mass. Blinking costs {energy} {unit_energy} energy and generates heat.
+Gives a #g{sigbonus}% Signature Range#0 bonus when equipped.]]), {
+      jumpdist = jumpdist,
+      cooldown = cooldown,
+      masslimit = fmt.tonnes(limit),
+      energy = tostring(energy),
+      sigbonus = sigbonus,
+      unit_dist = naev.unit("distance"),
+      unit_energy = naev.unit("energy"),
+   })
+end
 
 function onload( o )
    heat = o:heatFor( 20/cooldown ) -- Roughly overheat in 20 secs of continious usage (more in reality)
@@ -19,7 +34,7 @@ function init( p, po )
    po:state("off")
    mem.timer = 0
    mem.isp = (p == player.pilot())
-   po:set("ew_signature",-10) -- Have to set here because the outfit is never "on"
+   po:set("ew_signature",sigbonus) -- Have to set here because the outfit is never "on"
 
    if mem.isp then
       for k,v in ipairs(p:outfits()) do
