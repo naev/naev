@@ -2905,6 +2905,7 @@ int pilot_refuelStart( Pilot *p )
 static void pilot_updateSolid( Pilot *p, double dt )
 {
    p->solid.update( &p->solid, dt );
+   /* TODO remove this from below when moving more towards 3D ships. */
    gl_getSpriteFromDir( &p->tsx, &p->tsy,
          p->ship->sx, p->ship->sy, p->solid.dir );
 }

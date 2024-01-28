@@ -136,7 +136,7 @@ typedef struct Ship_ {
    char* gfx_comm;         /**< Name of graphic for communication. */
    glTexture **gfx_overlays; /**< Array (array.h): Store overlay graphics. */
    ShipTrailEmitter *trail_emitters; /**< Trail emitters. */
-   int sx;
+   int sx; /* TODO remove this and sy when possible. */
    int sy;
 
    /* Collision polygon */
