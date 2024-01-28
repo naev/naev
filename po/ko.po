@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2024-01-26 12:28+0900\n"
+"POT-Creation-Date: 2024-01-28 22:52+0900\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -6289,7 +6289,7 @@ msgstr ""
 msgid ""
 "Blinks you 300 units forward. Double-tapping left or right lets you blink to "
 "the sides. Can only be run once every 3 seconds. Performance degrades over "
-"400 tonnes of mass."
+"400 tonnes of mass. Gives a #g-10% Signature Range#0 bonus when equipped."
 msgstr ""
 
 #: dat/outfits/utility/hellburner.xml:2
@@ -7092,7 +7092,7 @@ msgid ""
 "The Plasma Blaster M1 fires superheated plasma which is very effective at "
 "damaging armour, but less effective against shields. While dealing direct "
 "damage, the lingering plasma will continue to damage the target ship for a "
-"while after the inicial impact. This weapon is often used by bounty hunters "
+"while after the initial impact. This weapon is often used by bounty hunters "
 "and mercenaries for its high killing potential, although the plasma burns "
 "tend to make it harder to disable ships."
 msgstr ""
@@ -8014,7 +8014,7 @@ msgstr ""
 #: dat/missions/shadow/darkshadow.lua:71 dat/missions/shadow/shadowvigil.lua:64
 #: dat/missions/zalek/blackhole/zbh11.lua:108 dat/scripts/common/comm.lua:34
 #: dat/scripts/common/comm.lua:40 dat/scripts/common/poi.lua:213
-#: dat/scripts/common/poi.lua:219 src/equipment.c:1915 src/escort.c:307
+#: dat/scripts/common/poi.lua:219 src/equipment.c:1916 src/escort.c:307
 #: src/gui.c:1558 src/map.c:599 src/map.c:605 src/map.c:611 src/map.c:617
 #: src/map.c:623 src/map.c:629 src/map.c:1932 src/map.c:2225
 #: src/map_overlay.c:256 src/map_system.c:490 src/outfit.c:351 src/outfit.c:370
@@ -24911,7 +24911,7 @@ msgstr ""
 
 #. Create the OSD
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:140
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:80
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:86
 msgid "Crimson Gauntlet"
 msgstr ""
 
@@ -27542,7 +27542,7 @@ msgstr "\"%d 크레딧 정도의 여분의 연료는 내가 줄 수 있을 것 �
 #: dat/ai/collective.lua:11 dat/ai/drone_miner.lua:10 dat/ai/dummy.lua:10
 #: dat/ai/feralbioship.lua:10 dat/events/sirius/test_of_devotion.lua:123
 #: dat/events/sirius/test_of_renewal.lua:109
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:297
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:303
 #: dat/missions/empire/collective/ec00.lua:117
 #: dat/missions/minerva/kex5.lua:294 dat/missions/tutorial/nelly02.lua:248
 msgid "No response."
@@ -50113,7 +50113,7 @@ msgstr "크레딧:"
 msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1145 src/equipment.c:1893 src/info.c:391 src/info.c:503
+#: dat/gui/slim.lua:1145 src/equipment.c:1894 src/info.c:391 src/info.c:503
 #: src/land_shipyard.c:312 src/map_system.c:699
 msgid "Fuel:"
 msgstr ""
@@ -56528,25 +56528,27 @@ msgstr ""
 #. TODO only give emblems from bosses or special clears?
 #. See if we start the event
 #. Accept mission
+#. We try to claim if possible, but it's not a failure if we can't
+#. This allows it to work with kex03
 #. Set details
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:72
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:78
 msgid "Annihilate all enemies in the Crimson Gauntlet."
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:73
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:79
 msgid "Great riches!"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:74
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:80
 msgid "Crimson Gauntlet Challenge"
 msgstr ""
 
 #. Add to log
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:77
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:83
 msgid "Totoran Tournament"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:81
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:87
 msgid "Defeat all the other adversaries!"
 msgstr ""
 
@@ -56570,12 +56572,12 @@ msgstr ""
 #.
 #. Countdown stuff
 #. --
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:130
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:136
 #: dat/missions/minerva/kex3.lua:399
 msgid "5…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:131
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:137
 #: dat/missions/minerva/kex3.lua:400
 msgid "4…"
 msgstr ""
@@ -56590,24 +56592,24 @@ msgstr ""
 #. This should trigger the timer hook
 #. TODO sound effect?
 #. TODO music?
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:132
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:138
 #: dat/missions/minerva/kex3.lua:401 dat/missions/neutral/race_qex.lua:292
 msgid "3…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:133
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:139
 #: dat/missions/minerva/kex3.lua:402 dat/missions/neutral/race_qex.lua:294
 msgid "2…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:134
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:140
 #: dat/missions/minerva/kex3.lua:403 dat/missions/neutral/race_qex.lua:295
 msgid "1…"
 msgstr ""
 
 #. TODO play countdown sound
 #. TODO play sound and cooler text
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:143
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:149
 #: dat/missions/minerva/kex3.lua:412
 msgid "FIGHT!"
 msgstr ""
@@ -56631,111 +56633,111 @@ msgstr ""
 #. luacheck: globals enter_wave (passed by reference)
 #. Get rid of pilots
 #. Metafactions
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:224
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:230
 msgid "Combatant"
 msgstr ""
 
 #. Don't allow talking
 #. Count down
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:324
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:330
 #, lua-format
 msgid "WAVE %d"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:336
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:342
 #, lua-format
 msgid "%.1f seconds"
 msgstr ""
 
 #. Store all the stuff the pilot killed
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:361
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:382
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:401
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:367
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:388
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:407
 #, lua-format
 msgid "Corvette %d%%"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:363
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:403
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:369
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:409
 #, lua-format
 msgid "Destroyer %d%%"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:365
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:384
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:405
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:371
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:390
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:411
 #, lua-format
 msgid "Cruiser %d%%"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:367
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:386
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:373
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:392
 #, fuzzy, lua-format
 msgid "Carrier %d%%"
 msgstr "프론티어 시스템"
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:369
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:388
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:375
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:394
 #, fuzzy, lua-format
 msgid "Battleship %d%%"
 msgstr "바이오함선 수직 안정핀"
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:372
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:378
 #, lua-format
 msgid "Fast Clear (<15s) %d%%"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:374
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:380
 #, lua-format
 msgid "Slow Clear (>90s) %d%%"
 msgstr ""
 
 #. I'd love to see someone take down a kestrel in a fighter
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:378
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:397
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:384
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:403
 #, fuzzy, lua-format
 #| msgid "Light "
 msgid "Fighter %d%%"
 msgstr "빛 "
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:380
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:399
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:386
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:405
 #, lua-format
 msgid "Bomber %d%%"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:391
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:397
 #, lua-format
 msgid "Fast Clear (<25s) %d%%"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:393
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:399
 #, lua-format
 msgid "Slow Clear (>120s) %d%%"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:408
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:414
 #, lua-format
 msgid "Fast Clear (<40s) %d%%"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:410
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:416
 #, lua-format
 msgid "Slow Clear (>180s) %d%%"
 msgstr ""
 
 #. Implement global modifier bonuses here
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:416
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:422
 #, lua-format
 msgid "Double Damage Enemies %d%%"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:419
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:425
 #, lua-format
 msgid "No Healing Between Waves %d%%"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:425
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:431
 #, lua-format
 msgid "TOTAL %d (#g+%d#0)"
 msgstr ""
@@ -56743,14 +56745,14 @@ msgstr ""
 #. TODO add sound
 #. TODO Cooler animation or something
 #. time to display each message
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:440
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:446
 #, lua-format
 msgid "WAVE %d CLEAR"
 msgstr ""
 
 #. can't be done in the same frame as it is run on an enemy hook
 #. TODO play sound and cooler text
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:453
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:459
 msgid "YOU ARE VICTORIOUS!"
 msgstr ""
 
@@ -90186,12 +90188,12 @@ msgid "Go to {pnt} in {sys} to collect your pay"
 msgstr "프론티어 시스템"
 
 #. player trying to escape
-#: dat/missions/shark/sh01_corvette.lua:105
-#: dat/missions/shark/sh01_corvette.lua:111
+#: dat/missions/shark/sh01_corvette.lua:106
+#: dat/missions/shark/sh01_corvette.lua:113
 msgid "You ran away."
 msgstr ""
 
-#: dat/missions/shark/sh01_corvette.lua:118
+#: dat/missions/shark/sh01_corvette.lua:120
 msgid ""
 "As you land, you see Arnold Smith waiting for you. He explains that the "
 "Baron was so impressed by the battle that he signed an updated contract with "
@@ -90200,7 +90202,7 @@ msgid ""
 "you."
 msgstr ""
 
-#: dat/missions/shark/sh01_corvette.lua:128
+#: dat/missions/shark/sh01_corvette.lua:130
 msgid ""
 "You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to "
 "disable your Destroyer class ship."
@@ -90209,7 +90211,7 @@ msgstr ""
 #. Jumping in Toaxis for the battle with a Destroyer class ship
 #. Spawn the enemy Lancelot, equipped with ion cannons (per the plot & to disable rather than murder the player).
 #. you killed the shark
-#: dat/missions/shark/sh01_corvette.lua:158
+#: dat/missions/shark/sh01_corvette.lua:160
 #, fuzzy
 #| msgid "You owe me 20 credits!"
 msgid "You destroyed the Lancelot."
@@ -117848,7 +117850,7 @@ msgstr ""
 #. Update text.
 #. Text.
 #: src/dev_sysedit.c:1404 src/dev_uniedit.c:1922 src/dev_uniedit.c:2444
-#: src/equipment.c:1864 src/info.c:486 src/load.c:742
+#: src/equipment.c:1865 src/info.c:486 src/load.c:742
 msgid "Name:"
 msgstr "이름:"
 
@@ -118532,7 +118534,7 @@ msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2424
+#: src/equipment.c:327 src/equipment.c:2425
 msgid "Sell Ship"
 msgstr ""
 
@@ -118625,378 +118627,378 @@ msgid " [locked]"
 msgstr ""
 
 #. Already on-board.
-#: src/equipment.c:1336
+#: src/equipment.c:1337
 msgid "You can't sell the ship you're piloting!"
 msgstr ""
 
 #. Already onboard.
-#: src/equipment.c:1355
+#: src/equipment.c:1356
 #, c-format
 msgid "You're already onboard the %s."
 msgstr ""
 
-#: src/equipment.c:1361
+#: src/equipment.c:1362
 #, c-format
 msgid "You can not pilot the %s! The ship can only be used as an escort."
 msgstr ""
 
-#: src/equipment.c:1367
+#: src/equipment.c:1368
 #, c-format
 msgid "You can not swap ships and set %s as an escort!"
 msgstr ""
 
-#: src/equipment.c:1379
+#: src/equipment.c:1380
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
 msgstr[0] ""
 
-#: src/equipment.c:1386 src/equipment.c:2279
+#: src/equipment.c:1387 src/equipment.c:2280
 #, fuzzy
 msgid "Recall Fighters"
 msgstr "랜슬롯"
 
-#: src/equipment.c:1386 src/equipment.c:2279
+#: src/equipment.c:1387 src/equipment.c:2280
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:1387
+#: src/equipment.c:1388
 #, fuzzy
 msgid "You have deployed fighters."
 msgstr "너는 제국에 걸맞지 않아!"
 
-#: src/equipment.c:1443
+#: src/equipment.c:1444
 #, c-format
 msgid "%.2f DPS [%.2f EPS]\n"
 msgstr ""
 
-#: src/equipment.c:1482 src/equipment.c:2172
+#: src/equipment.c:1483 src/equipment.c:2173
 #, fuzzy
 #| msgid "Dvaered Ancestor"
 msgid "Invalid Escort"
 msgstr "드 베어드 조상"
 
-#: src/equipment.c:1482 src/equipment.c:2172
+#: src/equipment.c:1483 src/equipment.c:2173
 #, c-format
 msgid "You can not set your ship '%s' as an escort!"
 msgstr ""
 
-#: src/equipment.c:1576
+#: src/equipment.c:1577
 #, c-format
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1675 src/land_outfits.c:370 src/shiplog.c:489
+#: src/equipment.c:1676 src/land_outfits.c:370 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
 
-#: src/equipment.c:1708
+#: src/equipment.c:1709
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1718 src/land_outfits.c:392
+#: src/equipment.c:1719 src/land_outfits.c:392
 msgid "Filter…"
 msgstr ""
 
-#: src/equipment.c:1851
+#: src/equipment.c:1852
 msgid "You do not remember how you acquired this ship."
 msgstr ""
 
-#: src/equipment.c:1867 src/info.c:487 src/land_shipyard.c:240
+#: src/equipment.c:1868 src/info.c:487 src/land_shipyard.c:240
 #: src/map_system.c:674
 #, fuzzy
 #| msgid "Mode"
 msgid "Model:"
 msgstr "모드"
 
-#: src/equipment.c:1868 src/info.c:488 src/land.c:1240 src/land_shipyard.c:242
+#: src/equipment.c:1869 src/info.c:488 src/land.c:1240 src/land_shipyard.c:242
 #: src/map_system.c:675
 msgid "Class:"
 msgstr ""
 
-#: src/equipment.c:1869
+#: src/equipment.c:1870
 msgid "Acquired Date:"
 msgstr ""
 
-#: src/equipment.c:1873
+#: src/equipment.c:1874
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:1875 src/land_shipyard.c:249
+#: src/equipment.c:1876 src/land_shipyard.c:249
 msgid "Fleet Capacity:"
 msgstr ""
 
-#: src/equipment.c:1876 src/info.c:489 src/land_shipyard.c:246
+#: src/equipment.c:1877 src/info.c:489 src/land_shipyard.c:246
 #: src/map_system.c:678
 msgid "Crew:"
 msgstr ""
 
-#: src/equipment.c:1877 src/info.c:491 src/land_outfits.c:485
+#: src/equipment.c:1878 src/info.c:491 src/land_outfits.c:485
 #: src/land_shipyard.c:262 src/map_find.c:584 src/map_system.c:654
 #: src/map_system.c:681
 msgid "Mass:"
 msgstr ""
 
-#: src/equipment.c:1878 src/info.c:492
+#: src/equipment.c:1879 src/info.c:492
 #, fuzzy
 msgid "Jump Time:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1879 src/info.c:493 src/land_shipyard.c:266
+#: src/equipment.c:1880 src/info.c:493 src/land_shipyard.c:266
 #: src/map_system.c:682
 msgid "Accel:"
 msgstr ""
 
-#: src/equipment.c:1880 src/info.c:494 src/land_shipyard.c:271
+#: src/equipment.c:1881 src/info.c:494 src/land_shipyard.c:271
 #: src/map_system.c:684
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:1881 src/info.c:495 src/land_shipyard.c:276
+#: src/equipment.c:1882 src/info.c:495 src/land_shipyard.c:276
 #: src/map_system.c:686
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:1882 src/info.c:496 src/land_shipyard.c:281
+#: src/equipment.c:1883 src/info.c:496 src/land_shipyard.c:281
 #: src/map_system.c:688
 msgid "Time Constant:"
 msgstr ""
 
-#: src/equipment.c:1883
+#: src/equipment.c:1884
 msgid "Detected at:"
 msgstr ""
 
-#: src/equipment.c:1884
+#: src/equipment.c:1885
 msgid "Signature:"
 msgstr ""
 
-#: src/equipment.c:1885
+#: src/equipment.c:1886
 #, fuzzy
 msgid "Stealth at:"
 msgstr "투리온의 불꽃"
 
-#: src/equipment.c:1886
+#: src/equipment.c:1887
 #, fuzzy
 msgid "Scanning time:"
 msgstr "조판됨:"
 
 #. Misc
-#: src/equipment.c:1888 src/info.c:498 src/land_shipyard.c:286
+#: src/equipment.c:1889 src/info.c:498 src/land_shipyard.c:286
 #: src/map_system.c:690
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:1889 src/info.c:499 src/land_shipyard.c:291
+#: src/equipment.c:1890 src/info.c:499 src/land_shipyard.c:291
 #: src/map_system.c:692
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:1890 src/info.c:500 src/land_shipyard.c:296
+#: src/equipment.c:1891 src/info.c:500 src/land_shipyard.c:296
 #: src/map_system.c:694
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:1891 src/info.c:501 src/land_shipyard.c:301
+#: src/equipment.c:1892 src/info.c:501 src/land_shipyard.c:301
 #: src/map_system.c:696
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:1892 src/info.c:502 src/land_shipyard.c:308
+#: src/equipment.c:1893 src/info.c:502 src/land_shipyard.c:308
 #: src/map_system.c:698
 msgid "Cargo Space:"
 msgstr ""
 
-#: src/equipment.c:1895
+#: src/equipment.c:1896
 msgid "Ship Status:"
 msgstr ""
 
-#: src/equipment.c:1898
+#: src/equipment.c:1899
 #, fuzzy
 msgid "Time Flown:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1899
+#: src/equipment.c:1900
 #, fuzzy
 msgid "Jumped Times:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1900
+#: src/equipment.c:1901
 #, fuzzy
 msgid "Landed Times:"
 msgstr "조판됨:"
 
-#: src/equipment.c:1901
+#: src/equipment.c:1902
 msgid "Damage Done:"
 msgstr ""
 
-#: src/equipment.c:1902
+#: src/equipment.c:1903
 msgid "Damage Taken:"
 msgstr ""
 
-#: src/equipment.c:1903
+#: src/equipment.c:1904
 msgid "Ships Destroyed:"
 msgstr ""
 
-#: src/equipment.c:1904
+#: src/equipment.c:1905
 msgid "Intrinsic Outfits:"
 msgstr ""
 
-#: src/equipment.c:1934 src/info.c:547
+#: src/equipment.c:1935 src/info.c:547
 #, c-format
 msgid "%s average"
 msgstr ""
 
-#: src/equipment.c:1936
+#: src/equipment.c:1937
 #, c-format
 msgid "#%c%s%.0f#0 %s"
 msgstr ""
 
-#: src/equipment.c:1938
+#: src/equipment.c:1939
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 %s (max #%c%s%.0f#0 %s)"
 msgstr ""
 
-#: src/equipment.c:1942
+#: src/equipment.c:1943
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 %s"
 msgstr ""
 
-#: src/equipment.c:1946 src/equipment.c:1985 src/equipment.c:1987
+#: src/equipment.c:1947 src/equipment.c:1986 src/equipment.c:1988
 #: src/info.c:417 src/info.c:419 src/info.c:545
 #, c-format
 msgid "%s %s"
 msgstr ""
 
-#: src/equipment.c:1948
+#: src/equipment.c:1949
 #, c-format
 msgid "%.1f %s"
 msgstr ""
 
-#: src/equipment.c:1952 src/equipment.c:1957 src/equipment.c:1962
+#: src/equipment.c:1953 src/equipment.c:1958 src/equipment.c:1963
 #, c-format
 msgid "#%c%s%s#0 %s"
 msgstr ""
 
-#: src/equipment.c:1954 src/equipment.c:1959 src/equipment.c:1964
+#: src/equipment.c:1955 src/equipment.c:1960 src/equipment.c:1965
 #, c-format
 msgid " (#%c%s%s#0 %s)"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1968
+#: src/equipment.c:1969
 #, c-format
 msgid "%s / #%c%s%s#0 %s"
 msgstr ""
 
-#: src/equipment.c:1971
+#: src/equipment.c:1972
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1972 src/info.c:408 src/info.c:579
+#: src/equipment.c:1973 src/info.c:408 src/info.c:579
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 
-#: src/equipment.c:1981
+#: src/equipment.c:1982
 #, c-format
 msgid "%s hours"
 msgstr ""
 
-#: src/equipment.c:2092 src/land_outfits.c:842
+#: src/equipment.c:2093 src/land_outfits.c:842
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:2093 src/land_outfits.c:843
+#: src/equipment.c:2094 src/land_outfits.c:843
 msgid "Show only outfits equipable on any of your ships"
 msgstr ""
 
-#: src/equipment.c:2094 src/land_outfits.c:844
+#: src/equipment.c:2095 src/land_outfits.c:844
 msgid "Show only outfits equipable on current ship"
 msgstr ""
 
-#: src/equipment.c:2095 src/land_outfits.c:845
+#: src/equipment.c:2096 src/land_outfits.c:845
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:2096 src/land_outfits.c:846
+#: src/equipment.c:2097 src/land_outfits.c:846
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:2097 src/land_outfits.c:847
+#: src/equipment.c:2098 src/land_outfits.c:847
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:2272
+#: src/equipment.c:2273
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 
-#: src/equipment.c:2275
+#: src/equipment.c:2276
 msgid "Unequip Ship"
 msgstr ""
 
 #. confirm
-#: src/equipment.c:2276
+#: src/equipment.c:2277
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:2356 src/land.c:1571
+#: src/equipment.c:2357 src/land.c:1571
 #, fuzzy, c-format
 msgid "File '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 
-#: src/equipment.c:2364
+#: src/equipment.c:2365
 #, fuzzy, c-format
 #| msgid "Failure to copy '%s' to '%s': %s"
 msgid "Failed to run '%s': %s"
 msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
 
-#: src/equipment.c:2376
+#: src/equipment.c:2377
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2382
+#: src/equipment.c:2383
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2425
+#: src/equipment.c:2426
 #, fuzzy, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "Naev를 나가겠습니까?"
 
 #. Display widget.
-#: src/equipment.c:2449
+#: src/equipment.c:2450
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2450
+#: src/equipment.c:2451
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2474 src/player.c:420
+#: src/equipment.c:2475 src/player.c:420
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2475
+#: src/equipment.c:2476
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2483
+#: src/equipment.c:2484
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2484 src/player.c:447
+#: src/equipment.c:2485 src/player.c:447
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
