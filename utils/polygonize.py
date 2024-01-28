@@ -346,8 +346,8 @@ def pointsFrom3D( address, slices, size, center, alpha ):
     ym = min( [np.amin(v0[1,:]), np.amin(v1[1,:]), np.amin(v2[1,:])] )
 
     # Rescale the data
-    leng   = max(xM-xm,yM-ym)
-    factor = size/leng
+    radius = max( np.max(np.linalg.norm(v0,axis=0)), np.max(np.linalg.norm(v1,axis=0)), np.max(np.linalg.norm(v2,axis=0)) )
+    factor = size/radius * 0.5
 
     v0 = factor*v0
     v1 = factor*v1
@@ -371,7 +371,7 @@ def pointsFrom3D( address, slices, size, center, alpha ):
 
         # Projection for the view
         proj = np.matrix([[1, 0, 0],\
-                          [0, 1, math.tan(alpha)],\
+                          [0, math.sin(alpha), math.cos(alpha)],\
                           [0, 0, 0]])
         vt0 = proj * vt0
         vt1 = proj * vt1
@@ -608,7 +608,7 @@ def polygonFromImg( address, sx, sy, alpha_threshold, minlen, maxlen ):
     return (points, polygon)
 
 # Computes a polygon from an STL
-def polygonFrom3D( address, slices=72, scale=30, center=[0,0,0], alpha=math.pi/4, minlen=3, maxlen=6 ):
+def polygonFrom3D( address, slices=120, scale=30, center=[0,0,0], alpha=math.pi/4, minlen=3, maxlen=6 ):
     points  = pointsFrom3D( address, slices, scale, center, alpha )
     xlist   = points[0]
     ylist   = points[1]
@@ -618,13 +618,13 @@ def polygonFrom3D( address, slices=72, scale=30, center=[0,0,0], alpha=math.pi/4
     # Rescale by dividing by factor
     xlist = polygon[1]
     ylist = polygon[2]
-    xlist = [np.array(i)/factor for i in xlist]
-    ylist = [np.array(i)/factor for i in ylist]
+    #xlist = [np.array(i)/factor for i in xlist]
+    #ylist = [np.array(i)/factor for i in ylist]
 
     xpoint = points[0]
     ypoint = points[1]
-    xpoint = [np.array(i)/factor for i in xpoint]
-    ypoint = [np.array(i)/factor for i in ypoint]
+    #xpoint = [np.array(i)/factor for i in xpoint]
+    #ypoint = [np.array(i)/factor for i in ypoint]
 
     return ( (xpoint,ypoint), (polygon[0],xlist,ylist) )
 
@@ -754,16 +754,15 @@ def polygonify_ship( filename, outpath, use_3d=True ):
         if outpath != None:
             outname = f"{outpath}/ship/{tag.text}.xml"
 
+        pntNplg = None
         if use_3d:
             # Try 3D first
-            try:
-                gltfpath = f"artwork/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
-                gltfpath = os.getenv("HOME")+f"/.local/share/naev/plugins/3dtest/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
+            gltfpath = f"artwork/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
+            gltfpath = os.getenv("HOME")+f"/.local/share/naev/plugins/3dtest/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
+            if os.path.isfile(gltfpath):
                 pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
-            except:
-                use_3d = False
         # Fall back to image
-        if not use_3d:
+        if not use_3d or pntNplg==None:
             print("Failed to find 3D model, falling back to 2D")
             imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
             if not os.path.isfile(imgpath):
@@ -806,21 +805,24 @@ if __name__ == "__main__":
     parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
     parser.add_argument('--outpath', type=str, default="dat/polygon" )
     parser.add_argument("--use_3d", type=bool, default=True )
-    parser.add_argument("--compare", type=bool, default=False)
+    parser.add_argument("--compare", action=argparse.BooleanOptionalAction )
     args, unknown = parser.parse_known_args()
 
     if args.compare:
         polya = polygonify_ship( args.path[0], None, False )
         polyb = polygonify_ship( args.path[0], None, True )
-        def display( poly, name ):
+        def display( poly, name, idx ):
             points = poly[0]
             polygon = poly[1]
-            plt.figure()
-            plt.title( name )
+            plt.subplot(1, 2, idx)
+            plt.title( name + f" ({len(polygon[0][0])} points)" )
             plt.scatter(points[0][0],points[1][0])
             plt.scatter(polygon[1][0],polygon[2][0])
-        display( polya, "From Image" )
-        display( polyb, "From GLTF" )
+            ax = plt.gca()
+            ax.set_aspect('equal', 'box')
+        plt.figure()
+        display( polya, "From Image", 1 )
+        display( polyb, "From GLTF", 2 )
         plt.show()
         sys.exit(0)
 
