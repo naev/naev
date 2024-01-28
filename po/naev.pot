@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2024-01-28 22:52+0900\n"
+"POT-Creation-Date: 2024-01-28 23:28+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5689,13 +5689,6 @@ msgid ""
 "usual, but it must be safe, right?"
 msgstr ""
 
-#: dat/outfits/utility/blink_drive.xml:11
-msgid ""
-"Blinks you 500 units in the direction you are facing. Double tapping left or "
-"right allows blinking 250 units to the side. Can only be run once every 7 "
-"seconds. Performance degrades over 1,000 tonnes of mass."
-msgstr ""
-
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
 msgstr ""
@@ -6018,13 +6011,6 @@ msgid ""
 "effect of lowering the signature of the ship. Although most ships commonly "
 "make use of afterburners to increase mobility, the Flicker Driver has a "
 "strong following who claim it is superior to all the alternatives."
-msgstr ""
-
-#: dat/outfits/utility/flicker_drive.xml:11
-msgid ""
-"Blinks you 300 units forward. Double-tapping left or right lets you blink to "
-"the sides. Can only be run once every 3 seconds. Performance degrades over "
-"400 tonnes of mass. Gives a #g-10% Signature Range#0 bonus when equipped."
 msgstr ""
 
 #: dat/outfits/utility/hellburner.xml:2
@@ -102808,9 +102794,47 @@ msgstr ""
 #. clear stat modifications
 #. clear stat modifications
 #. squared
+#: dat/outfits/utility/blink_drive.lua:16
+msgid ""
+"Blinks you {jumpdist} {unit_dist} forward. Double-tapping left or right lets "
+"you blink to the sides. Can only be run once every {cooldown} seconds. "
+"Performance degrades over {masslimit} of mass. Blinking costs {energy} "
+"{unit_energy} energy and generates heat."
+msgstr ""
+
 #. Roughly overheat in 30 s of continuous use (much more in reality)
 #. Not ready yet
 #. Test energy
+#. Roughly overheat in 20 secs of continious usage (more in reality)
+#. Have to set here because the outfit is never "on"
+#. Not ready yet
+#. Test energy
+#. Roughly overheat in 30 secs of continious usage (more in reality)
+#. Blink!
+#. We use squared values here so twice the masslimit is 25% efficiency
+#. Blink afterimage
+#. Cool "blink in" effect
+#. Direction is random
+#. Play the sound
+#. Set cooldown and maluses
+#. Cooldown is over
+#. Cancel maluses
+#. Update progress
+#. Not ready yet
+#. Test energy
+#: dat/outfits/utility/blink_drive.lua:59
+#: dat/outfits/utility/flicker_drive.lua:63
+#: dat/outfits/utility/hyperbolic_blink_engine.lua:100
+msgid "Not enough energy to use {outfit}!"
+msgstr ""
+
+#. Test heat
+#: dat/outfits/utility/blink_drive.lua:66
+#: dat/outfits/utility/flicker_drive.lua:70
+#: dat/outfits/utility/hyperbolic_blink_engine.lua:106
+msgid "{outfit} is overheating!"
+msgstr ""
+
 #. Pay the cost
 #. Blink!
 #. We use squared values here so twice the masslimit is 25% efficiency
@@ -102897,10 +102921,15 @@ msgstr ""
 #. Don't run while cooling off
 #. Visual effect
 #. squared
-#. Roughly overheat in 20 secs of continious usage (more in reality)
-#. Have to set here because the outfit is never "on"
-#. Not ready yet
-#. Test energy
+#: dat/outfits/utility/flicker_drive.lua:17
+msgid ""
+"Blinks you {jumpdist} {unit_dist} forward. Double-tapping left or right lets "
+"you blink to the sides. Can only be run once every {cooldown} seconds. "
+"Performance degrades over {masslimit} of mass. Blinking costs {energy} "
+"{unit_energy} energy and generates heat.\n"
+"Gives a #g{sigbonus}% Signature Range#0 bonus when equipped."
+msgstr ""
+
 #. Pay the cost
 #. Blink!
 #. We use squared values here so twice the masslimit is 25% efficiency
@@ -102912,30 +102941,13 @@ msgstr ""
 #. Goes forward
 #. Only blink forward on double tap if no afterburner
 #. squared
-#. Roughly overheat in 30 secs of continious usage (more in reality)
-#. Blink!
-#. We use squared values here so twice the masslimit is 25% efficiency
-#. Blink afterimage
-#. Cool "blink in" effect
-#. Direction is random
-#. Play the sound
-#. Set cooldown and maluses
-#. Cooldown is over
-#. Cancel maluses
-#. Update progress
-#. Not ready yet
-#. Test energy
-#: dat/outfits/utility/blink_drive.lua:47
-#: dat/outfits/utility/flicker_drive.lua:48
-#: dat/outfits/utility/hyperbolic_blink_engine.lua:86
-msgid "Not enough energy to use {outfit}!"
-msgstr ""
-
-#. Test heat
-#: dat/outfits/utility/blink_drive.lua:54
-#: dat/outfits/utility/flicker_drive.lua:55
-#: dat/outfits/utility/hyperbolic_blink_engine.lua:92
-msgid "{outfit} is overheating!"
+#: dat/outfits/utility/hyperbolic_blink_engine.lua:19
+msgid ""
+"Warms up for {warmup} seconds, then blinks you {jumpdist} {unit_dist} "
+"roughly in the direction you are facing. Can only be run once every "
+"{cooldown} seconds and incurs a {penalty}% accel and turn penalty during "
+"cooldown. Performance degrades over {masslimit} of mass. Blinking costs "
+"{energy} {unit_energy} energy and generates heat."
 msgstr ""
 
 #. Pay the cost
