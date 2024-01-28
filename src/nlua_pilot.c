@@ -6337,8 +6337,7 @@ static int pilotL_hookClear( lua_State *L )
 
 static const CollPolyView *getCollPoly( const Pilot *p )
 {
-   const CollPoly *plg = &p->ship->polygon;
-   return &p->ship->polygon.views[ plg->sx*p->tsy + p->tsx ];
+   return poly_view( &p->ship->polygon, p->solid.dir );
 }
 /**
  * @brief Tests to see if two ships collide.

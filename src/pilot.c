@@ -2906,8 +2906,7 @@ static void pilot_updateSolid( Pilot *p, double dt )
 {
    p->solid.update( &p->solid, dt );
    gl_getSpriteFromDir( &p->tsx, &p->tsy,
-         p->ship->sx, p->ship->sy,
-         p->solid.dir );
+         p->ship->sx, p->ship->sy, p->solid.dir );
 }
 
 /**

@@ -63,7 +63,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
  */
 static int ship_generateStore( Ship *temp );
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
-static int ship_loadPLG( Ship *temp, const char *buf, int sx, int sy );
+static int ship_loadPLG( Ship *temp, const char *buf );
 static int ship_parse( Ship *temp, const char *filename );
 static int ship_parseThread( void *ptr );
 static void ship_freeSlot( ShipOutfitSlot* s );
@@ -490,10 +490,8 @@ static int ship_generateStore( Ship *temp )
  *
  *    @param temp Ship to load into.
  *    @param buf Name of the file.
- *    @param sx X sprites.
- *    @param sy Y sprites.
  */
-static int ship_loadPLG( Ship *temp, const char *buf, int sx, int sy )
+static int ship_loadPLG( Ship *temp, const char *buf )
 {
    char file[PATH_MAX];
    xmlDocPtr doc;
@@ -524,7 +522,7 @@ static int ship_loadPLG( Ship *temp, const char *buf, int sx, int sy )
 
    do { /* load the polygon data */
       if (xml_isNode(node,"polygons"))
-         poly_load( &temp->polygon, node, sx, sy );
+         poly_load( &temp->polygon, node );
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -696,7 +694,7 @@ static int ship_parse( Ship *temp, const char *filename )
          xmlr_attr_int(node, "noengine", noengine );
 
          /* Load the polygon, run before graphics!. */
-         ship_loadPLG( temp, buf, temp->sx, temp->sy );
+         ship_loadPLG( temp, buf );
 
          /* Load the graphics. */
          ship_loadGFX( temp, buf, temp->sx, temp->sy, !noengine );
@@ -723,7 +721,7 @@ static int ship_parse( Ship *temp, const char *filename )
          /* Get polygon. */
          xmlr_attr_strd( node, "polygon", plg );
          if (plg)
-            ship_loadPLG( temp, plg, temp->sx, temp->sy );
+            ship_loadPLG( temp, plg );
          free( plg );
 
          /* Load the graphics. */
@@ -979,14 +977,6 @@ static int ship_parse( Ship *temp, const char *filename )
    /* Check polygon. */
    if (array_size(temp->polygon.views) <= 0)
       WARN(_("Ship '%s' has no collision polygon!"), temp->name );
-   else {
-      /* Validity check: there must be 1 polygon per sprite. */
-      if ((temp->polygon.sx != temp->sx) || (temp->polygon.sy != temp->sy)) {
-         WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
-                  npolygon = %i and sx*sy = %i"),
-                  temp->name, temp->polygon.sx*temp->polygon.sy, temp->sx*temp->sy);
-      }
-   }
 
    /* Generate store image. */
    ship_generateStore( temp );

@@ -22,16 +22,19 @@ typedef struct CollPolyView_ {
 
 typedef struct CollPoly_ {
    CollPolyView *views;
-   int sx;
-   int sy;
+   double dir_inc;
+   double dir_off;
 } CollPoly;
 
 /* Loads a polygon data from xml. */
-void poly_load( CollPoly *polygon, xmlNodePtr node, int sx, int sy );
+void poly_load( CollPoly *polygon, xmlNodePtr node );
 void poly_free( CollPoly *polygon );
 
 /* Rotates a polygon. */
 void poly_rotate( CollPolyView *rpolygon, const CollPolyView *ipolygon, float theta );
+
+/* Gets a polygon view for an angle. */
+const CollPolyView *poly_view( const CollPoly *poly, double dir );
 
 /* Returns 1 if collision is detected */
 int CollideSprite( const glTexture* at, const int asx, const int asy, const vec2* ap,

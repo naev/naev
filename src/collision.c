@@ -31,14 +31,12 @@ static int LineOnPolygon( const CollPolyView* at, const vec2* ap,
  *
  *    @param[out] polygon Polygon.
  *    @param[in] base XML node to parse.
- *    @param sx Number of X sprites.
- *    @param sy Number of Y sprites.
  */
-void poly_load( CollPoly* polygon, xmlNodePtr base, int sx, int sy )
+void poly_load( CollPoly* polygon, xmlNodePtr base )
 {
-   polygon->views = array_create_size( CollPolyView, sx*sy );
-   polygon->sx = sx;
-   polygon->sy = sy;
+   int n;
+   xmlr_attr_int_def( base, "num", n, 32 );
+   polygon->views = array_create_size( CollPolyView, n );
 
    xmlNodePtr node = base->children;
    do {
@@ -90,7 +88,9 @@ void poly_load( CollPoly* polygon, xmlNodePtr base, int sx, int sy )
          WARN(_("Polygon with mismatch of number of |x|=%d and |y|=%d coordinates detected!"), view->npt, array_size(view->y) );
    } while (xml_nextNode(node));
 
-   return;
+   /* Compute useful offsets. */
+   polygon->dir_inc = 2. * M_PI / array_size(polygon->views);
+   polygon->dir_off = polygon->dir_inc*0.5;
 }
 
 void poly_free( CollPoly *poly )
@@ -375,6 +375,20 @@ void poly_rotate( CollPolyView* rpolygon, const CollPolyView* ipolygon, float th
       rpolygon->ymin = MIN( rpolygon->ymin, d );
       rpolygon->ymax = MAX( rpolygon->ymax, d );
    }
+}
+
+const CollPolyView *poly_view( const CollPoly *poly, double dir )
+{
+#ifdef DEBUGGING
+   if ((dir > 2.*M_PI) || (dir < 0.)) {
+      WARN(_("Angle not between 0 and 2.*M_PI [%f]."), dir);
+      return &poly->views[0];
+   }
+#endif /* DEBUGGING */
+
+   int s = (dir + poly->dir_off) / poly->dir_inc;
+   s = s % array_size(poly->views);
+   return &poly->views[s];
 }
 
 /**

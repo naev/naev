@@ -1193,11 +1193,8 @@ static void weapon_updateCollide( Weapon* w, double dt )
       if (wc.gfx->tex != NULL) {
          const CollPoly *plg = outfit_plg(w->outfit);
          if (plg!=NULL) {
-            int sx = wc.gfx->tex->sx;
-            int sy = wc.gfx->tex->sy;
-            gl_getSpriteFromDir( &w->sx, &w->sy, sx, sy, w->solid.dir );
             wc.polygon = plg;
-            wc.polyview = &plg->views[ sx * w->sx + w->sy ];
+            wc.polyview = poly_view( plg, w->solid.dir );
          }
          else {
             wc.polygon = NULL;
@@ -1266,7 +1263,6 @@ static void weapon_updateCollide( Weapon* w, double dt )
       pilot_collideQueryIL( &weapon_qtquery, x1, y1, x2, y2 );
       for (int i=0; i<il_size(&weapon_qtquery); i++) {
          Pilot *p = pilot_stack[ il_get( &weapon_qtquery, i, 0 ) ];
-         const CollPoly *plg;
          WeaponHit hit;
 
          /* Ignore pilots being deleted. */
@@ -1295,9 +1291,8 @@ static void weapon_updateCollide( Weapon* w, double dt )
             continue;
 
          /* Test if hit. */
-         plg = &p->ship->polygon;
          if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
-               &p->solid, &plg->views[ plg->sx*p->tsy+p->tsx ], 0., crash ))
+               &p->solid, poly_view( &p->ship->polygon, p->solid.dir ), 0., crash ))
             continue;
 
          /* Handle the hit. */
@@ -1380,8 +1375,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
          wchit.gfx      = outfit_gfx(w->outfit);
          if (wchit.gfx->tex != NULL) {
             wchit.polygon = outfit_plg(w->outfit);
-            gl_getSpriteFromDir( &whit->sx, &whit->sy, wchit.polygon->sx, wchit.polygon->sy, w->solid.dir );
-            wchit.polyview = &wchit.polygon->views[ wchit.polygon->sx * whit->sy + whit->sx ];
+            wchit.polyview = poly_view( wchit.polygon, w->solid.dir );
             wchit.range = wchit.gfx->size; /* Range is set to size in this case. */
          }
          else {
@@ -1542,7 +1536,6 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
       for (int i=0; i<il_size(&weapon_qtexp); i++) {
          vec2 crash[2];
          double damage;
-         const CollPoly *plg;
          Pilot *p = pilot_stack[ il_get( &weapon_qtexp, i, 0 ) ];
 
          /* Ignore pilots being deleted. */
@@ -1560,9 +1553,8 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
          }
 
          /* Test if hit. */
-         plg = &p->ship->polygon;
          if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
-                  &p->solid, &plg->views[ plg->sx*p->tsy + p->tsx ], 0., crash ))
+                  &p->solid, poly_view( &p->ship->polygon, p->solid.dir ), 0., crash ))
             continue;
 
          /* Have pilot take damage and get real damage done. */
@@ -1625,9 +1617,8 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
          if (wchit.gfx->tex != NULL) {
             const CollPoly *plg = outfit_plg(w->outfit);
             if (plg!=NULL) {
-               gl_getSpriteFromDir( &w->sx, &w->sy, wchit.gfx->tex->sx, wchit.gfx->tex->sy, w->solid.dir );
                wchit.polygon = plg;
-               wchit.polyview = &plg->views[ plg->sx * w->sy + w->sx ];
+               wchit.polyview = poly_view( plg, w->solid.dir );
             }
             else {
                wchit.polygon = NULL;

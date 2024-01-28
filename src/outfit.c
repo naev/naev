@@ -94,7 +94,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
-static int outfit_loadPLG( Outfit *temp, const char *buf, int sx, int sy );
+static int outfit_loadPLG( Outfit *temp, const char *buf );
 static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node );
 static void sdesc_miningRarity( int *l, Outfit *temp, int rarity );
 /* Display */
@@ -1215,10 +1215,8 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
  *
  *    @param temp Outfit to load into.
  *    @param buf Name of the file.
- *    @param sx Number of X sprites.
- *    @param sy Number of Y sprites.
  */
-static int outfit_loadPLG( Outfit *temp, const char *buf, int sx, int sy )
+static int outfit_loadPLG( Outfit *temp, const char *buf )
 {
    char *file;
    OutfitGFX *gfx;
@@ -1264,7 +1262,7 @@ that can be found in Naev's artwork repo."), file);
 
    do { /* load the polygon data */
       if (xml_isNode(node,"polygons"))
-         poly_load( &gfx->polygon, node, sx, sy );
+         poly_load( &gfx->polygon, node );
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -1278,7 +1276,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
 {
    char *type;
    OutfitGFX *gfx;
-   int flags, sx, sy;
+   int flags;
 
    if (outfit_isLauncher(temp))
       gfx = &temp->u.lau.gfx;
@@ -1328,12 +1326,9 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       return -1;
    }
 
-   xmlr_attr_int_def(node, "sx", sx, 6 );
-   xmlr_attr_int_def(node, "sy", sy, 6 );
-
    /* Load the collision polygon. */
    const char *buf = xml_get(node);
-   outfit_loadPLG( temp, buf, sx, sy );
+   outfit_loadPLG( temp, buf );
 
    /* Load normal graphics. */
    flags = OPENGL_TEX_MIPMAPS;
@@ -1343,11 +1338,8 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
    gfx->size = (gfx->tex->sw + gfx->tex->sh)*0.5;
 
    /* Validity check: there must be 1 polygon per sprite. */
-   if (array_size(gfx->polygon.views) != 36) {
-      WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
-               npolygon = %i and sx*sy = %i"),
-               temp->name, array_size(gfx->polygon.views), 36);
-   }
+   if (array_size(gfx->polygon.views) <= 0)
+      WARN(_("Outfit '%s' is missing collision polygon!"), temp->name );
 
    return 0;
 }
