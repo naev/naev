@@ -32,6 +32,9 @@ int main( int argc, char *argv[] )
    path = strdup(argv[1]);
    PHYSFS_mount( dirname(path), "/", 1 );
    free(path);
+   path = strdup(argv[0]);
+   PHYSFS_mount( dirname(path), "/", 1 );
+   free(path);
 
    SDL_Init( SDL_INIT_VIDEO );
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
