@@ -10,7 +10,7 @@
    if system.get("Provectus Nova"):jumpDist() &gt; 2 then
       return false
    end
-   if system.cur():faction() == faction.get("Za'lek") then
+   if spob.cur():faction() == faction.get("Za'lek") then
       return false
    end
    return true
