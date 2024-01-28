@@ -107,14 +107,15 @@ import math
 import matplotlib.pyplot as plt
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as pretty
-from pygltflib import GLTF2
+#from pygltflib import GLTF2
+#import struct
 from stl import mesh
-import struct
 import os
 import sys
 import argparse
 import tempfile
 import subprocess
+from tqdm import tqdm
 
 # Create an array from an image
 def arrFromImg( address, sx, sy ):
@@ -284,6 +285,7 @@ def simplifyPolygon( indices, x, y, tol ):
 
 # Create the projections of the ship from the STL data
 def pointsFrom3D( address, slices, size, center, alpha ):
+    # Note doing it directly from GLTF is not working, so we use blender to drop to STL
     """
     # Extract the mesh and the points
     gltf = GLTF2().load( address )
@@ -357,7 +359,7 @@ def pointsFrom3D( address, slices, size, center, alpha ):
     xlist = []
     ylist = []
 
-    for it in range(slices):
+    for it in tqdm(range(slices), desc="Transforming model", ascii=True):
         # Rotate the points
         theta = it*dtheta + math.pi/2
         rot = np.matrix([[math.cos(theta), -math.sin(theta), 0],\
@@ -407,7 +409,7 @@ def pointsFrom3D( address, slices, size, center, alpha ):
                 j1 = np.where(np.multiply(D0,D1) > 0)[1];
                 j2 = np.where(np.multiply(D0,D2) > 0)[1];
                 j3 = np.where(np.multiply(D0,D3) > 0)[1];
-                j4 = np.intersect1d( np.intersect1d(j1,j2) , j3);
+                j4 = np.intersect1d( np.intersect1d(j1,j2), j3);
 
                 # Hell, there are flat triangles. As a consequence, > cannot
                 # be replaced by >= in np.where
@@ -439,17 +441,7 @@ def pointsFrom3D( address, slices, size, center, alpha ):
         #plt.scatter(x0.tolist()[0],y0.tolist()[0])
         #break
 
-        # A nice progress bar
-        progress = str( int(100 * (it / slices)) )
-        nbars = int(50 * it / slices)
-        bar = '=' * nbars + ' ' * (50 - nbars)
-        print('\rTransforming model... [%s] %s%%' % (bar, progress), end = '\r')
-
-    bar = '=' * 50
-    progress = 100
-    print('\rTransforming model... [%s] %s%%' % (bar, progress), end = '\n')
-
-    return (xlist,ylist,factor)
+    return (xlist, ylist, factor)
 
 # Computes a single polygon from an image
 def singlePolygonFromImg( px, py, minlen, maxlen, ppi ):
@@ -510,7 +502,7 @@ def singlePolygonFromImg( px, py, minlen, maxlen, ppi ):
             # TODO : find a way to be sure that the last point is not after the start point
             break
 
-        if mine<npt: # Move forward
+        if mine < npt: # Move forward
             x = px[mine]
             y = py[mine]
             if pcur == star: # Store the distance between first and second one (to avoid getting back)
@@ -742,16 +734,18 @@ def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
         pntNplg = polygonFromImg( pngAddress, 1, 1, alpha_threshold, lmin, lmax )
         polygon = pntNplg[1]
 
-#        points  = pntNplg[0]
-#        plt.figure()
-#        plt.title(polyAddress)
-#        plt.scatter(points[0][0],points[1][0])
-#        plt.scatter(polygon[1][0],polygon[2][0])
+        """
+        points  = pntNplg[0]
+        plt.figure()
+        plt.title(polyAddress)
+        plt.scatter(points[0][0],points[1][0])
+        plt.scatter(polygon[1][0],polygon[2][0])
+        """
 
         generateXML(polygon,polyAddress)
 
 
-def polygonify_ship( filename, outpath ):
+def polygonify_ship( filename, outpath, use_3d=True ):
     root = ET.parse( filename ).getroot()
     name = root.get('name')
     cls = root.find( "class" ).text
@@ -759,13 +753,17 @@ def polygonify_ship( filename, outpath ):
     if tag != None:
         outname = f"{outpath}/ship/{tag.text}.xml"
 
-        # Try 3D first
-        try:
-            gltfpath = f"artwork/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
-            gltfpath = os.getenv("HOME")+f"/.local/share/naev/plugins/3dtest/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
-            pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
+        if use_3d:
+            # Try 3D first
+            try:
+                gltfpath = f"artwork/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
+                gltfpath = os.getenv("HOME")+f"/.local/share/naev/plugins/3dtest/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
+                pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
+            except:
+                use_3d = False
         # Fall back to image
-        except:
+        if not use_3d:
+            print("Failed to find 3D model, falling back to 2D")
             imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
             if not os.path.isfile(imgpath):
                 imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.png"
@@ -793,7 +791,7 @@ def polygonify_ship( filename, outpath ):
         """
         points = pntNplg[0]
         plt.figure()
-        plt.title(polyAddress)
+        plt.title( outname )
         plt.scatter(points[0][0],points[1][0])
         plt.scatter(polygon[1][0],polygon[2][0])
         plt.show()
@@ -804,24 +802,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
     parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
     parser.add_argument('--outpath', type=str, default="dat/polygon" )
+    parser.add_argument("--use_3d", type=bool, default=True )
     args, unknown = parser.parse_known_args()
 
-    """
-    pntNplg = polygonFrom3D( args.path[0], scale=95 )
-    polygon = pntNplg[1]
-    #generateXML( polygon, polyAddress )
-
-    points = pntNplg[0]
-    plt.figure()
-    plt.title( "Test" )
-    plt.scatter(points[0][0],points[1][0])
-    plt.scatter(polygon[1][0],polygon[2][0])
-    plt.show()
-    aoeu()
-    """
-
     for a in args.path:
-        polygonify_ship( a, args.outpath )
+        print(f"Processing {a}...")
+        polygonify_ship( a, args.outpath, args.use_3d )
 
     """
     # Special cases where we use spob assets for ships
