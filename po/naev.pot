@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2024-01-28 23:28+0900\n"
+"POT-Creation-Date: 2024-01-28 23:33+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93518,57 +93518,66 @@ msgstr ""
 msgid ""
 "A convoy of traders needs protection while they go to {pnt} ({sys} system). "
 "You must stick with the convoy at all times, waiting to jump or land until "
-"the entire convoy has done so."
+"the entire convoy has done so. You may only escort one group of traders at a "
+"time."
 msgstr ""
 
 #: dat/missions/trader/trader_escort.lua:112
+msgid "Hands Full"
+msgstr ""
+
+#: dat/missions/trader/trader_escort.lua:112
+msgid "You may only escort one group of traders at a time!"
+msgstr ""
+
+#: dat/missions/trader/trader_escort.lua:117
 msgid "Not enough fuel"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:112
+#: dat/missions/trader/trader_escort.lua:117
 msgid ""
 "The destination is {1} away, but you only have enough fuel for {2}. You "
 "cannot stop to refuel. Accept the mission anyway?"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:118
+#: dat/missions/trader/trader_escort.lua:123
 msgid "Convoy Escort"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:119
+#: dat/missions/trader/trader_escort.lua:124
 msgid "Escort a convoy of traders to {pnt} ({sys} system)"
 msgstr ""
 
 #. Choose convoy
 #. Begin the escort
 #. luacheck: globals success
-#: dat/missions/trader/trader_escort.lua:153
+#: dat/missions/trader/trader_escort.lua:158
 msgid "Success!"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:153
+#: dat/missions/trader/trader_escort.lua:158
 msgid ""
 "You successfully escorted the trading convoy to the destination. There "
-"wasn't a single casualty and you are rewarded the full amount of #g{credits}"
+"wasn't a single casualty, and you are rewarded the full amount of #g{credits}"
 "#0."
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:156
+#: dat/missions/trader/trader_escort.lua:161
 msgid "Success with Casualties"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:156
+#: dat/missions/trader/trader_escort.lua:161
 msgid ""
 "You've arrived with the trading convoy more or less intact. Your pay is "
 "docked slightly due to the loss of part of the convoy. You receive "
 "#g{credits}#0 of the original promised reward of {reward}."
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:159
+#: dat/missions/trader/trader_escort.lua:164
 msgid "Success with Heavy Casualties"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:159
+#: dat/missions/trader/trader_escort.lua:164
 msgid ""
 "You arrive with what's left of the convoy. It's not much, but it's better "
 "than nothing. You are paid a steeply discounted amount of #g{credits}#0 from "
@@ -93576,13 +93585,13 @@ msgid ""
 msgstr ""
 
 #. luacheck: globals trader_create
-#: dat/missions/trader/trader_escort.lua:172
+#: dat/missions/trader/trader_escort.lua:177
 msgid "Convoy "
 msgstr ""
 
 #. Handle the convoy getting attacked.
 #. luacheck: globals trader_attacked
-#: dat/missions/trader/trader_escort.lua:187
+#: dat/missions/trader/trader_escort.lua:192
 msgid "Convoy ships under attack! Requesting immediate assistance!"
 msgstr ""
 
