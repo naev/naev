@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2024-01-28 23:33+0900\n"
+"POT-Creation-Date: 2024-01-28 23:43+0900\n"
 "PO-Revision-Date: 2023-01-30 00:36+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -38642,7 +38642,7 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:118 dat/missions/minerva/pirate4.lua:98
 #: dat/missions/minerva/pirate5.lua:119 dat/missions/minerva/pirate6.lua:194
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:74
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:95
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:100
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:62
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:69
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:60
@@ -71704,7 +71704,7 @@ msgstr ""
 #: dat/missions/tutorial/nelly03.lua:94
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:75
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:82
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:96
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:101
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:63
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:70
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:79
@@ -101981,6 +101981,9 @@ msgstr ""
 #. if system.get("Provectus Nova"):jumpDist() &gt; 2 then
 #. return false
 #. end
+#. if spob.cur():faction() == faction.get("Za'lek") then
+#. return false
+#. end
 #. return true
 #. </cond>
 #. <notes>
@@ -102001,18 +102004,18 @@ msgstr ""
 #. Non-persistent state
 #. Forward-declared functions
 #. Mission info stuff
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:43
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:46
 msgid "Escort the transport ship to {pnt} in the {sys} system"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:44
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:47
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:89
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:101
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:106
 msgid "Land on {pnt} in the {sys} system"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:45
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:48
 msgid "Fly back to {pnt} in the {sys} system"
 msgstr ""
 
@@ -102026,225 +102029,225 @@ msgstr ""
 #. Spaceport bar stuff
 #. Variable set up and clean up
 #. Spaceport bar stuff
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:81
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:89
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:84
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:92
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:66
 msgid "A scientist"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:81
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:84
 msgid "You see a scientist who is apparently looking for someone."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:92
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:95
 msgid ""
 "\"Captain {player} if I'm not mistaken? Well met. I heard you recently "
 "helped one of our students. My name is Dr. Mensing and I am working for "
 "professor Voges as well.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:93
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:96
 msgid ""
 "\"Your timing is just perfect. You see, we planned an expedition but the "
 "captain we hired to escort our transport ship backed out in the last minute. "
-"It's quite bothersome being stranded right in Dvaered space. Would you be "
+"It's quite bothersome being stranded right in {fct} space. Would you be "
 "willing to assist us instead?\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:100
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:105
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:72
 msgid ""
 "You don't want to be involved again in a dangerous, poorly paid job so you "
 "decline and leave the bar."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:105
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:110
 msgid ""
 "\"While the data recorded by Robert is of good quality, he seems to have "
 "completely forgotten that we need reference data of similarly dense nebulae. "
 "We have already installed his sensors on a transport ship. The nearby PSO "
-"nebula should be a good candidate but there are the pirate systems in "
-"between. Also the target systems are controlled by the Dvaered. Hard to say "
+"nebula should be a good candidate, but there are the pirate systems in "
+"between. Also, the target systems are controlled by the Dvaered. Hard to say "
 "whether the Dvaered or the pirates are more dangerous. So this is why we "
 "need an escort.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:106
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:111
 msgid ""
 "\"We will travel through {sys2}, {sys3}, and {sys4}. Just passing through "
 "the systems should be sufficient. Also, I want to visit the {station} "
-"station before returning back to {pnt}. You have to make sure no one shoots "
-"us down during our expedition.\""
+"station before returning to {pnt}. You have to make sure no one shoots us "
+"down during our expedition.\""
 msgstr ""
 
 #. Set up mission information
 #. This variable holds the system the player is supposed to jump to NEXT.
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:127
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:154
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:132
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:159
 msgid "Advanced Nebula Research"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:129
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:134
 msgid ""
 "Escort the transport ship to the {station} in the {sys} system. Make sure to "
 "stay close to the transport ship and wait until they jumped out of the "
 "system safely."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:164
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:169
 msgid ""
 "\"Please follow us, {player}. Make sure to jump to the next system after we "
 "jumped out. We'll have to land on some planets on our way to refuel.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:176
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:181
 msgid "You jumped into the wrong system. You failed science miserably!"
 msgstr ""
 
 #. j:control(true)
 #. j:attack(transporter)
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:197
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:202
 msgid "You jumped before the transport ship you were escorting."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:213
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:218
 #: dat/scripts/escort.lua:483
 msgid "You abandoned your mission!"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:213
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:218
 msgid ""
 "You have landed, abandoning your mission to escort the transport ship. You "
 "failed science miserably!"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:220
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:225
 msgid ""
 "Once you are done with the refuel operations, you meet Dr. Mensing on her "
 "way back to the transport ship."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:221
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:226
 msgid ""
 "\"I just met up with another 'scientist' working on this station. The "
 "purpose of this station is to collect data about the PSO nebula, but their "
 "scans are absolute garbage. Apparently the station is being run by an "
-"independent university. They couldn't possible keep up with the Za'lek "
+"independent university. They couldn't possibly keep up with the Za'lek "
 "standards in terms of proper scientific methods.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:222
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:227
 msgid ""
 "She is visibly upset about the apparent lack of dedication to science. "
 "\"Let's head back to {pnt}. Our own measurements are completed by now.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:231
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:236
 msgid ""
 "After leaving the ship, you meet up with Dr. Mensing who hands you a chip "
-"worth {credits} and thanks you for your help."
+"worth {credits}, and thanks you for your help."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:232
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:237
 msgid ""
 "\"We'll be able to return to Jorla safely from here on. You did science a "
 "great favour today. I'm sure the data we collected will help us to "
 "understand the cause for the Sol nebula's volatility.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:236
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:241
 msgid "You helped Dr. Mensing to collect sensor data of the PSO nebula."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:260
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:265
 #: dat/scripts/escort.lua:324
 msgid "{plt} has jumped to {sys}."
 msgstr ""
 
 #. Set a new leader and tell them to move on
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:267
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:272
 #: dat/scripts/escort.lua:307
 msgid "{plt} has landed on {pnt}."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:281
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:286
 msgid "We're under attack!"
 msgstr ""
 
 #. Shuts him up for at least 5s.
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:300
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:305
 msgid "Research Shuttle"
 msgstr ""
 
 #. Hack to make ambushes more reliable.
 #. j:control(true)
 #. j:moveto(vec2.new(-4000,-12000))
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:340
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:345
 msgid ""
 "Suddenly, your comm system turns on, receiving a conversation between the "
 "ship you are escorting and a Dvaered patrol ship."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:341
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:346
 msgid ""
 "\"I assure you, we mean no harm. We are just a convoy of scientists passing "
 "through Dvaered space.\" says Dr. Mensing."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:342
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:347
 msgid ""
 "The response sounds harsh. \"Do you think we're naïve? You're obviously a "
 "spy scouting our systems' defences.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:343
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:348
 msgid ""
 "\"Please calm down. I'm sure there is a diplomatic solution for our "
 "misunderstanding.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:344
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:349
 msgid ""
 "The Dvaered officer replies \"We can see that your ship is stuffed with "
 "sensors. Your intentions are obvious. Prepare for your ship to be boarded.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:345
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:350
 msgid ""
 "Dr. Mensing  pauses, apparently choosing her words with care.\n"
 "\"Fine, do whatever you want. Our reasoning is obviously beyond the "
 "imagination of your degenerate intellect.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:347
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:352
 msgid ""
 "With this answer the comm shuts off. Your sensors show that a Dvaered patrol "
 "changed their course and is heading straight towards the transporter."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:348
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:353
 msgid ""
 "\"The situation would have escalated anyway.\" argues Dr. Mensing, this time "
 "directly speaking to you."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:349
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:354
 msgid ""
 "\"I must admit, it is suspicious for a refitted transport ship with such "
 "advanced sensor suites to show up in Dvaered space. I hadn't considered this "
 "point.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:350
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:355
 msgid "\"I'm counting on you, {player}. Please help us.\""
 msgstr ""
 
 #. Handle the destruction of the transporter. Abort the mission.
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:357
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:362
 msgid "The transport was destroyed!"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:357
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:362
 msgid ""
 "The transport was destroyed and all scientists died! Even worse, you failed "
 "science!"
