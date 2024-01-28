@@ -1,4 +1,5 @@
 * 0.11.4 (unreleased)
+   * Initialize outfit Lua scripts when added in the equipment view so that flicker drive signature gets properly computed
    * Fixed crash when selling deployed ship
    * `shark/sh01_corvette`: have the pilot jump in from the same system as the player
    * `minerva/kex03`: have mission claim the crimson gauntlet to prevent unwanted spawns
