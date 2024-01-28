@@ -10,6 +10,9 @@
    if system.get("Provectus Nova"):jumpDist() &gt; 2 then
       return false
    end
+   if system.cur():faction() == faction.get("Za'lek") then
+      return false
+   end
    return true
  </cond>
  <notes>
@@ -90,7 +93,9 @@ function accept()
    vn.transition("fade")
 
    mensing(fmt.f(_([["Captain {player} if I'm not mistaken? Well met. I heard you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well."]]), {player=player.name()}))
-   mensing(_([["Your timing is just perfect. You see, we planned an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us instead?"]]))
+   mensing(fmt.f(_([["Your timing is just perfect. You see, we planned an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in {fct} space. Would you be willing to assist us instead?"]]), {
+      fct = spob.cur():faction(),
+   }))
    vn.menu( {
       { _("Accept the job"), "accept" },
       { _("Decline to help"), "decline" },
@@ -102,8 +107,8 @@ function accept()
 
    vn.label( "accept" )
    vn.func( function () accepted = true end )
-   mensing(_([["While the data recorded by Robert is of good quality, he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controlled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort."]]))
-   mensing(fmt.f(_([["We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]),
+   mensing(_([["While the data recorded by Robert is of good quality, he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate, but there are the pirate systems in between. Also, the target systems are controlled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort."]]))
+   mensing(fmt.f(_([["We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning to {pnt}. You have to make sure no one shoots us down during our expedition."]]),
       {sys2=t_sys[3], sys3=t_sys[4], sys4=t_sys[6], station=station, pnt=homeworld}))
    vn.done()
    vn.run()
@@ -218,7 +223,7 @@ function land()
       local mensing = vn.newCharacter( nebu_research.vn_mensing() )
       vn.transition("fade")
       vn.na(_("Once you are done with the refuel operations, you meet Dr. Mensing on her way back to the transport ship."))
-      mensing(_([["I just met up with another 'scientist' working on this station. The purpose of this station is to collect data about the PSO nebula, but their scans are absolute garbage. Apparently the station is being run by an independent university. They couldn't possible keep up with the Za'lek standards in terms of proper scientific methods."]]))
+      mensing(_([["I just met up with another 'scientist' working on this station. The purpose of this station is to collect data about the PSO nebula, but their scans are absolute garbage. Apparently the station is being run by an independent university. They couldn't possibly keep up with the Za'lek standards in terms of proper scientific methods."]]))
       mensing(fmt.f(_([[She is visibly upset about the apparent lack of dedication to science. "Let's head back to {pnt}. Our own measurements are completed by now."]]), {pnt=homeworld}))
       vn.done()
       vn.run()
@@ -228,7 +233,7 @@ function land()
       vn.scene()
       local mensing = vn.newCharacter( nebu_research.vn_mensing() )
       vn.transition("fade")
-      vn.na(fmt.f(_("After leaving the ship, you meet up with Dr. Mensing who hands you a chip worth {credits} and thanks you for your help."), {credits=fmt.credits(credits)}))
+      vn.na(fmt.f(_("After leaving the ship, you meet up with Dr. Mensing who hands you a chip worth {credits}, and thanks you for your help."), {credits=fmt.credits(credits)}))
       mensing(_([["We'll be able to return to Jorla safely from here on. You did science a great favour today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]]))
       vn.done()
       vn.run()
