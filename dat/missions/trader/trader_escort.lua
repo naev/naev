@@ -102,12 +102,17 @@ function create()
    mem.reward = 2.0 * (mem.avgrisk * mem.numjumps * mem.jumpreward + mem.traveldist * mem.distreward) * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f( misn_title[mem.convoysize], {pnt=mem.destspob, sys=mem.destsys} ) )
-   car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} ({sys} system). You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."), {pnt=mem.destspob, sys=mem.destsys} ), mem.cargo, nil, mem.destspob, nil, piracyrisk )
+   car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} ({sys} system). You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so. You may only escort one group of traders at a time."), {pnt=mem.destspob, sys=mem.destsys} ), mem.cargo, nil, mem.destspob, nil, piracyrisk )
    misn.markerAdd(mem.destspob, "computer")
    misn.setReward(mem.reward)
 end
 
 function accept()
+   if player.misnActive("Trader Escort")  then
+      vntk.msg(_([[Hands Full]]),_([[You may only escort one group of traders at a time!]]))
+      return
+   end
+
    if player.jumps() < mem.numjumps then
       if not vntk.yesno( _("Not enough fuel"), fmt.f( _([[The destination is {1} away, but you only have enough fuel for {2}. You cannot stop to refuel. Accept the mission anyway?]]), {fmt.jumps(mem.numjumps), fmt.jumps(player.jumps())} ) ) then
          return
@@ -150,7 +155,7 @@ function success ()
    mem.reward = mem.reward * alive_frac
 
    if alive_frac >= 1 then
-      vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount of #g{credits}#0."), {credits=fmt.credits(mem.reward)}) )
+      vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty, and you are rewarded the full amount of #g{credits}#0."), {credits=fmt.credits(mem.reward)}) )
       faction.get("Traders Society"):modPlayer(rnd.rnd(2,3))
    elseif alive_frac >= 0.6 then
       vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive #g{credits}#0 of the original promised reward of {reward}."), {credits=fmt.credits(mem.reward), reward=fmt.credits(reward_orig)}) )
