@@ -283,7 +283,7 @@ def simplifyPolygon( indices, x, y, tol ):
 
     return (indices, x, y)
 
-# Create the projections of the ship from the STL data
+# Create the projections of the ship from the 3D data
 def pointsFrom3D( address, slices, size, center, alpha ):
     # Note doing it directly from GLTF is not working, so we use blender to drop to STL
     """
@@ -333,6 +333,7 @@ def pointsFrom3D( address, slices, size, center, alpha ):
     ret = subprocess.run(['blender', '--background', '--python', gltftostlpy, '--', address, stlfile.name ])
     if ret.returncode != 0:
         print("Warning: GLTF to STL export failed.")
+        return None
 
     shipMesh = mesh.Mesh.from_file( stlfile.name )
     v0 = np.transpose(shipMesh.v0) # TODO : take the center into account
@@ -358,7 +359,6 @@ def pointsFrom3D( address, slices, size, center, alpha ):
 
     xlist = []
     ylist = []
-
     for it in tqdm(range(slices), desc="Transforming model", ascii=True):
         # Rotate the points
         theta = it*dtheta + math.pi/2
@@ -767,15 +767,9 @@ def polygonify_ship( filename, outpath, use_3d=True ):
             imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
             if not os.path.isfile(imgpath):
                 imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.png"
-            try:
-                sx = int(tag.get("sx"))
-            except:
-                sx = 8
-            try:
-                sy = int(tag.get("sy"))
-            except:
-                sy = 8
-            alpha_threshold    = 50
+            sx = int(tag.get("sx")) if tag.get("sx")!=None else 8
+            sy = int(tag.get("sy")) if tag.get("sy")!=None else 8
+            alpha_threshold = 50
             minlen  = 3
             maxlen  = 6
             img     = arrFromImg( imgpath, sx, sy )
@@ -808,24 +802,35 @@ if __name__ == "__main__":
     parser.add_argument("--compare", action=argparse.BooleanOptionalAction )
     args, unknown = parser.parse_known_args()
 
+    # Comparison mode shows difference between 3D and 2D
     if args.compare:
+        import matplotlib.animation as animation
         polya = polygonify_ship( args.path[0], None, False )
         polyb = polygonify_ship( args.path[0], None, True )
-        def display( poly, name, idx ):
+        def display( poly, name, idx, frame=0 ):
+            frame = frame % len(poly[0][0])
             points = poly[0]
             polygon = poly[1]
             plt.subplot(1, 2, idx)
-            plt.title( name + f" ({len(polygon[0][0])} points)" )
-            plt.scatter(points[0][0],points[1][0])
-            plt.scatter(polygon[1][0],polygon[2][0])
             ax = plt.gca()
             ax.set_aspect('equal', 'box')
-        plt.figure()
+            plt.title( name + f" ({len(polygon[0][0])} points)" )
+            plt.scatter(points[0][frame],points[1][frame])
+            plt.scatter(polygon[1][frame],polygon[2][frame])
+
+        fig = plt.figure()
         display( polya, "From Image", 1 )
         display( polyb, "From GLTF", 2 )
+        def animate( i ):
+            plt.clf()
+            display( polya, "From Image", 1, i )
+            display( polyb, "From GLTF", 2, i )
+
+        ani = animation.FuncAnimation( fig, animate, repeat=True, interval=500, cache_frame_data=False )
         plt.show()
         sys.exit(0)
 
+    # Normal mode we just try to process the files
     for a in args.path:
         print(f"Processing {a}...")
         polygonify_ship( a, args.outpath, args.use_3d )
