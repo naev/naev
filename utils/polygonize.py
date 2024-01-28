@@ -751,7 +751,8 @@ def polygonify_ship( filename, outpath, use_3d=True ):
     cls = root.find( "class" ).text
     tag = root.find( "GFX" )
     if tag != None:
-        outname = f"{outpath}/ship/{tag.text}.xml"
+        if outpath != None:
+            outname = f"{outpath}/ship/{tag.text}.xml"
 
         if use_3d:
             # Try 3D first
@@ -786,7 +787,9 @@ def polygonify_ship( filename, outpath, use_3d=True ):
 
         # Now Generate the
         polygon = pntNplg[1]
-        generateXML( polygon, outname )
+        if outpath != None:
+            generateXML( polygon, outname )
+        return pntNplg
 
         """
         points = pntNplg[0]
@@ -803,7 +806,23 @@ if __name__ == "__main__":
     parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
     parser.add_argument('--outpath', type=str, default="dat/polygon" )
     parser.add_argument("--use_3d", type=bool, default=True )
+    parser.add_argument("--compare", type=bool, default=False)
     args, unknown = parser.parse_known_args()
+
+    if args.compare:
+        polya = polygonify_ship( args.path[0], None, False )
+        polyb = polygonify_ship( args.path[0], None, True )
+        def display( poly, name ):
+            points = poly[0]
+            polygon = poly[1]
+            plt.figure()
+            plt.title( name )
+            plt.scatter(points[0][0],points[1][0])
+            plt.scatter(polygon[1][0],polygon[2][0])
+        display( polya, "From Image" )
+        display( polyb, "From GLTF" )
+        plt.show()
+        sys.exit(0)
 
     for a in args.path:
         print(f"Processing {a}...")
