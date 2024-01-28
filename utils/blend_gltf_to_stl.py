@@ -3,8 +3,8 @@
 # blender --background --python blend_to_stl.py -- infile.gltf outfile.stl
 import bpy
 import os
-
 import sys
+
 argv = sys.argv
 argv = argv[argv.index("--") + 1:]  # get all args after "--"
 gltfpath = argv[0]
@@ -20,11 +20,20 @@ bpy.ops.object.delete()
 
 # Import GLTF
 bpy.ops.import_scene.gltf( 'EXEC_DEFAULT', filepath=gltfpath )
-for s in bpy.data.scenes:
-    if s.name != "body":
+# New model starts selected, so have to deselect
+for obj in bpy.data.objects:
+    obj.select_set(False)
+# Select only body, ignore engines and other things
+# TODO support for collision shapes
+selected = False
+for i in bpy.data.objects:
+    if i.name != "body":
         continue
-    for obj in s.objects:
-        obj.select_set(True)
+    i.select_set(True)
+    selected = True
+if not selected:
+    print(f"{gltfpath}: Failed to find any objects to select!")
+    sys.exit(-1)
 
 # Export to STL
 bpy.ops.export_mesh.stl( "EXEC_DEFAULT",  use_selection=True, filepath=stlpath )
