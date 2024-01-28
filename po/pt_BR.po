@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2024-01-28 22:52+0900\n"
+"POT-Creation-Date: 2024-01-28 23:33+0900\n"
 "PO-Revision-Date: 2023-01-30 00:36+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -6910,20 +6910,6 @@ msgstr ""
 "tais dispositivos tendem a ter dores de cabeça mais fortes do que o "
 "habitual, mas deve ser seguro, certo?"
 
-#: dat/outfits/utility/blink_drive.xml:11
-#, fuzzy
-#| msgid ""
-#| "Blinks you 500 units in the direction you are facing. Can only be run "
-#| "once every 8 seconds. Performance degrades over 800 tonnes of mass."
-msgid ""
-"Blinks you 500 units in the direction you are facing. Double tapping left or "
-"right allows blinking 250 units to the side. Can only be run once every 7 "
-"seconds. Performance degrades over 1,000 tonnes of mass."
-msgstr ""
-"Transporta a nave por 500 unidades de distância na direção em que o nariz "
-"está apontado. Só pode ser ativado uma vez a cada 8 segundos. A performance "
-"degrada com massas acima de 800 toneladas."
-
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
 msgstr "Androides de Abordagem Mk 1"
@@ -7356,20 +7342,6 @@ msgid ""
 "make use of afterburners to increase mobility, the Flicker Driver has a "
 "strong following who claim it is superior to all the alternatives."
 msgstr ""
-
-#: dat/outfits/utility/flicker_drive.xml:11
-#, fuzzy
-#| msgid ""
-#| "Blinks you 500 units in the direction you are facing. Can only be run "
-#| "once every 8 seconds. Performance degrades over 800 tonnes of mass."
-msgid ""
-"Blinks you 300 units forward. Double-tapping left or right lets you blink to "
-"the sides. Can only be run once every 3 seconds. Performance degrades over "
-"400 tonnes of mass. Gives a #g-10% Signature Range#0 bonus when equipped."
-msgstr ""
-"Transporta a nave por 500 unidades de distância na direção em que o nariz "
-"está apontado. Só pode ser ativado uma vez a cada 8 segundos. A performance "
-"degrada com massas acima de 800 toneladas."
 
 #: dat/outfits/utility/hellburner.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:234
@@ -96934,57 +96906,66 @@ msgstr ""
 msgid ""
 "A convoy of traders needs protection while they go to {pnt} ({sys} system). "
 "You must stick with the convoy at all times, waiting to jump or land until "
-"the entire convoy has done so."
+"the entire convoy has done so. You may only escort one group of traders at a "
+"time."
 msgstr ""
 
 #: dat/missions/trader/trader_escort.lua:112
+msgid "Hands Full"
+msgstr ""
+
+#: dat/missions/trader/trader_escort.lua:112
+msgid "You may only escort one group of traders at a time!"
+msgstr ""
+
+#: dat/missions/trader/trader_escort.lua:117
 msgid "Not enough fuel"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:112
+#: dat/missions/trader/trader_escort.lua:117
 msgid ""
 "The destination is {1} away, but you only have enough fuel for {2}. You "
 "cannot stop to refuel. Accept the mission anyway?"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:118
+#: dat/missions/trader/trader_escort.lua:123
 msgid "Convoy Escort"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:119
+#: dat/missions/trader/trader_escort.lua:124
 msgid "Escort a convoy of traders to {pnt} ({sys} system)"
 msgstr ""
 
 #. Choose convoy
 #. Begin the escort
 #. luacheck: globals success
-#: dat/missions/trader/trader_escort.lua:153
+#: dat/missions/trader/trader_escort.lua:158
 msgid "Success!"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:153
+#: dat/missions/trader/trader_escort.lua:158
 msgid ""
 "You successfully escorted the trading convoy to the destination. There "
-"wasn't a single casualty and you are rewarded the full amount of #g{credits}"
+"wasn't a single casualty, and you are rewarded the full amount of #g{credits}"
 "#0."
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:156
+#: dat/missions/trader/trader_escort.lua:161
 msgid "Success with Casualties"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:156
+#: dat/missions/trader/trader_escort.lua:161
 msgid ""
 "You've arrived with the trading convoy more or less intact. Your pay is "
 "docked slightly due to the loss of part of the convoy. You receive "
 "#g{credits}#0 of the original promised reward of {reward}."
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:159
+#: dat/missions/trader/trader_escort.lua:164
 msgid "Success with Heavy Casualties"
 msgstr ""
 
-#: dat/missions/trader/trader_escort.lua:159
+#: dat/missions/trader/trader_escort.lua:164
 msgid ""
 "You arrive with what's left of the convoy. It's not much, but it's better "
 "than nothing. You are paid a steeply discounted amount of #g{credits}#0 from "
@@ -96992,7 +96973,7 @@ msgid ""
 msgstr ""
 
 #. luacheck: globals trader_create
-#: dat/missions/trader/trader_escort.lua:172
+#: dat/missions/trader/trader_escort.lua:177
 #, fuzzy
 #| msgid "Pirate Rhino"
 msgid "Convoy "
@@ -97000,7 +96981,7 @@ msgstr "Rinoceronte Pirata"
 
 #. Handle the convoy getting attacked.
 #. luacheck: globals trader_attacked
-#: dat/missions/trader/trader_escort.lua:187
+#: dat/missions/trader/trader_escort.lua:192
 msgid "Convoy ships under attack! Requesting immediate assistance!"
 msgstr ""
 
@@ -106241,9 +106222,54 @@ msgstr ""
 #. clear stat modifications
 #. clear stat modifications
 #. squared
+#: dat/outfits/utility/blink_drive.lua:16
+#, fuzzy
+#| msgid ""
+#| "Blinks you 500 units in the direction you are facing. Can only be run "
+#| "once every 8 seconds. Performance degrades over 800 tonnes of mass."
+msgid ""
+"Blinks you {jumpdist} {unit_dist} forward. Double-tapping left or right lets "
+"you blink to the sides. Can only be run once every {cooldown} seconds. "
+"Performance degrades over {masslimit} of mass. Blinking costs {energy} "
+"{unit_energy} energy and generates heat."
+msgstr ""
+"Transporta a nave por 500 unidades de distância na direção em que o nariz "
+"está apontado. Só pode ser ativado uma vez a cada 8 segundos. A performance "
+"degrada com massas acima de 800 toneladas."
+
 #. Roughly overheat in 30 s of continuous use (much more in reality)
 #. Not ready yet
 #. Test energy
+#. Roughly overheat in 20 secs of continious usage (more in reality)
+#. Have to set here because the outfit is never "on"
+#. Not ready yet
+#. Test energy
+#. Roughly overheat in 30 secs of continious usage (more in reality)
+#. Blink!
+#. We use squared values here so twice the masslimit is 25% efficiency
+#. Blink afterimage
+#. Cool "blink in" effect
+#. Direction is random
+#. Play the sound
+#. Set cooldown and maluses
+#. Cooldown is over
+#. Cancel maluses
+#. Update progress
+#. Not ready yet
+#. Test energy
+#: dat/outfits/utility/blink_drive.lua:59
+#: dat/outfits/utility/flicker_drive.lua:63
+#: dat/outfits/utility/hyperbolic_blink_engine.lua:100
+msgid "Not enough energy to use {outfit}!"
+msgstr ""
+
+#. Test heat
+#: dat/outfits/utility/blink_drive.lua:66
+#: dat/outfits/utility/flicker_drive.lua:70
+#: dat/outfits/utility/hyperbolic_blink_engine.lua:106
+msgid "{outfit} is overheating!"
+msgstr ""
+
 #. Pay the cost
 #. Blink!
 #. We use squared values here so twice the masslimit is 25% efficiency
@@ -106330,10 +106356,22 @@ msgstr ""
 #. Don't run while cooling off
 #. Visual effect
 #. squared
-#. Roughly overheat in 20 secs of continious usage (more in reality)
-#. Have to set here because the outfit is never "on"
-#. Not ready yet
-#. Test energy
+#: dat/outfits/utility/flicker_drive.lua:17
+#, fuzzy
+#| msgid ""
+#| "Blinks you 500 units in the direction you are facing. Can only be run "
+#| "once every 8 seconds. Performance degrades over 800 tonnes of mass."
+msgid ""
+"Blinks you {jumpdist} {unit_dist} forward. Double-tapping left or right lets "
+"you blink to the sides. Can only be run once every {cooldown} seconds. "
+"Performance degrades over {masslimit} of mass. Blinking costs {energy} "
+"{unit_energy} energy and generates heat.\n"
+"Gives a #g{sigbonus}% Signature Range#0 bonus when equipped."
+msgstr ""
+"Transporta a nave por 500 unidades de distância na direção em que o nariz "
+"está apontado. Só pode ser ativado uma vez a cada 8 segundos. A performance "
+"degrada com massas acima de 800 toneladas."
+
 #. Pay the cost
 #. Blink!
 #. We use squared values here so twice the masslimit is 25% efficiency
@@ -106345,31 +106383,24 @@ msgstr ""
 #. Goes forward
 #. Only blink forward on double tap if no afterburner
 #. squared
-#. Roughly overheat in 30 secs of continious usage (more in reality)
-#. Blink!
-#. We use squared values here so twice the masslimit is 25% efficiency
-#. Blink afterimage
-#. Cool "blink in" effect
-#. Direction is random
-#. Play the sound
-#. Set cooldown and maluses
-#. Cooldown is over
-#. Cancel maluses
-#. Update progress
-#. Not ready yet
-#. Test energy
-#: dat/outfits/utility/blink_drive.lua:47
-#: dat/outfits/utility/flicker_drive.lua:48
-#: dat/outfits/utility/hyperbolic_blink_engine.lua:86
-msgid "Not enough energy to use {outfit}!"
+#: dat/outfits/utility/hyperbolic_blink_engine.lua:19
+#, fuzzy
+#| msgid ""
+#| "Warms up for 2 seconds then blinks you 2000 units in roughly the "
+#| "direction you are facing. Can only be run once every 8 seconds and incurs "
+#| "a 20% thrust and turn penalty during cooldown. Performance degrades over "
+#| "6000 tonnes of mass."
+msgid ""
+"Warms up for {warmup} seconds, then blinks you {jumpdist} {unit_dist} "
+"roughly in the direction you are facing. Can only be run once every "
+"{cooldown} seconds and incurs a {penalty}% accel and turn penalty during "
+"cooldown. Performance degrades over {masslimit} of mass. Blinking costs "
+"{energy} {unit_energy} energy and generates heat."
 msgstr ""
-
-#. Test heat
-#: dat/outfits/utility/blink_drive.lua:54
-#: dat/outfits/utility/flicker_drive.lua:55
-#: dat/outfits/utility/hyperbolic_blink_engine.lua:92
-msgid "{outfit} is overheating!"
-msgstr ""
+"Aquece por 2 segundos e depois pisca 2000 unidades aproximadamente na "
+"direção em que estás. Só pode ser executado uma vez a cada 8 segundos e "
+"incorre em 20% de impulso e penalidade de rotação durante o resfriamento. O "
+"rendimento é reduzido a partir das 6000 toneladas de massa."
 
 #. Pay the cost
 #. Start the warmup
@@ -127504,6 +127535,19 @@ msgstr ""
 #: dat/outfits/bioship/generate.py:484
 msgid "Immanis Cortex III"
 msgstr ""
+
+#, fuzzy
+#~| msgid ""
+#~| "Blinks you 500 units in the direction you are facing. Can only be run "
+#~| "once every 8 seconds. Performance degrades over 800 tonnes of mass."
+#~ msgid ""
+#~ "Blinks you 500 units in the direction you are facing. Double tapping left "
+#~ "or right allows blinking 250 units to the side. Can only be run once "
+#~ "every 7 seconds. Performance degrades over 1,000 tonnes of mass."
+#~ msgstr ""
+#~ "Transporta a nave por 500 unidades de distância na direção em que o nariz "
+#~ "está apontado. Só pode ser ativado uma vez a cada 8 segundos. A "
+#~ "performance degrada com massas acima de 800 toneladas."
 
 #, fuzzy
 #~| msgid "permission denied"
