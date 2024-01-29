@@ -63,16 +63,16 @@ static Light lights[MAX_LIGHTS] = {
       .intensity = 150.,
    },
    {
-      .pos = { .v = {0.5, 0.05, -1.0} },
+      .pos = { .v = {0.5, 0.05, -2.0} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 3.,
+      .intensity = 6.,
    },
    {
-      .pos = { .v = {-0.5, 0.05, -1.0} },
+      .pos = { .v = {-0.5, 0.05, -2.0} },
       .range = -1.,
       .colour = { .v = {1., 1., 1.} },
-      .intensity = 3.,
+      .intensity = 6.,
    },
 };
 static vec3 ambient = { .v = {0., 0., 0.} };
