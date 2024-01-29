@@ -435,7 +435,7 @@ static void shadow_matrix( const Object *obj, mat4 *m, const Light *light )
    const vec3 center    = { .v = {0., 0., 0.} };
    const mat4 L = mat4_lookat( &light_pos, &center, &up );
    const float norm = vec3_length( &light_pos );
-   const float r = 1.0;//obj->radius * 0.1;
+   const float r = 1.0;
    const mat4 O = mat4_ortho( -r, r, -r, r, norm-1.0, norm+1.0 );
    mat4_mul( m, &L, &O );
 }
@@ -728,7 +728,6 @@ void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H,
          const Light *l = &lights[i];
          const ShaderLight *sl = &shd->lights[i];
          glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
-         //glUniform1f( sl->range, l->range );
          glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
          glUniform1f( sl->intensity, l->intensity );
       }

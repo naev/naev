@@ -337,7 +337,7 @@ void main (void)
       f_shadow[2] = shadow_map( shadowmap_tex[2], shadow[2] );
 
    /* Point light for now. */
-   const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
+   const vec3 v = normalize( vec3(0.0, 0.0, -1.0) );
    for (int i=0; i<u_nlights; i++) {
       Light L = u_lights[i];
 
