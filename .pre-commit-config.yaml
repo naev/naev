@@ -49,3 +49,8 @@ repos:
       language: script
       always_run: true
       pass_filenames: false
+    - id: optipng
+      name: PNG Optimizer
+      entry: optipng
+      types: [png]
+      language: system
