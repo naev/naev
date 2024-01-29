@@ -12,7 +12,7 @@
 
 #define MAX_LIGHTS 3    /**< Maximum amount of lights. TODO deferred rendering. */
 
-#define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
+#define SHADOWMAP_SIZE  128   /**< Size of the shadow map. */
 
 #define OBJECT_FLAG_NOLIGHTS  (1<<0)   /**< Do not run shadows computations. */
 
