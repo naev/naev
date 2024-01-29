@@ -224,14 +224,14 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
          memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
       else
          memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
-      mat->metallic_tex    = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_zero );
+      mat->metallic_tex    = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_ones );
    }
    else {
       memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
-      mat->metallicFactor  = 1.;
+      mat->metallicFactor  = 0.;
       mat->roughnessFactor = 1.;
       mat->baseColour_tex  = tex_ones;
-      mat->metallic_tex    = tex_zero;
+      mat->metallic_tex    = tex_ones;
       mat->normal_tex      = tex_zero;
    }
 
@@ -494,17 +494,17 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    /* Set up shader. */
    glUseProgram( shd->program );
 
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
-   glUniform1f( shd->metallicFactor, mat->metallicFactor );
-   glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
-   glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
-   glUniform3f( shd->sheenTint, mat->sheen[0], mat->sheen[1], mat->sheen[2] );
-   glUniform1f( shd->sheen, mat->sheen_roughness );
-   glUniform1f( shd->clearcoat, mat->clearcoat );
+   glUniformMatrix4fv( shd->Hmodel,    1, GL_FALSE, H->ptr );
+   glUniform1f( shd->metallicFactor,   mat->metallicFactor );
+   glUniform1f( shd->roughnessFactor,  mat->roughnessFactor );
+   glUniform4f( shd->baseColour,       mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
+   glUniform3f( shd->sheenTint,        mat->sheen[0], mat->sheen[1], mat->sheen[2] );
+   glUniform1f( shd->sheen,            mat->sheen_roughness );
+   glUniform1f( shd->clearcoat,        mat->clearcoat );
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
-   glUniform3f( shd->emissive, mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
-   glUniform1i( shd->blend, mat->blend );
-   glUniform1i( shd->u_has_normal, (mat->normal_tex!=tex_zero) );
+   glUniform3f( shd->emissive,         mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
+   glUniform1i( shd->blend,            mat->blend );
+   glUniform1i( shd->u_has_normal,     (mat->normal_tex!=tex_zero) );
    //glUniform1f( shd->waxiness, mat->waxiness );
    gl_checkErr();
 

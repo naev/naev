@@ -299,7 +299,7 @@ void main (void)
    //M.albedo    = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
    M.albedo    = baseColour * texture(baseColour_tex, tex_coord0);
    vec4 metallicroughness = texture(metallic_tex, tex_coord0);
-   M.perceptualRoughness = metallicroughness.g;
+   M.perceptualRoughness = roughnessFactor * metallicroughness.g;
    M.roughness = M.perceptualRoughness * M.perceptualRoughness; /* Convert from perceptual roughness. */
    M.metallic  = metallicFactor * metallicroughness.b;
    M.f0        = mix( vec3(0.04), M.albedo.rgb, M.metallic );
