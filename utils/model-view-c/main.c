@@ -84,6 +84,7 @@ int main( int argc, char *argv[] )
    glUseProgram( 0 );
 
    int rendermode = 1;
+   int engine = 0;
    int quit = 0;
    float rotx = 0.;
    float roty = M_PI_2;
@@ -104,6 +105,10 @@ int main( int argc, char *argv[] )
 
                case SDLK_m:
                   rendermode = !rendermode;
+                  break;
+
+               case SDLK_e:
+                  engine = !engine;
                   break;
 
                case SDLK_1:
@@ -166,7 +171,7 @@ int main( int argc, char *argv[] )
       mat4_apply( &H, &Hscale );
 
       /* Draw the object. */
-      object_render( 0, obj, &H, (float)SDL_GetTicks64() / 1000., SCREEN_W );
+      object_renderScene( 0, obj, 0, &H, (float)SDL_GetTicks64() / 1000., SCREEN_W, 0 );
 
       /* Draw the shadowmap to see what's going on (clear the shadowmap). */
       if (rendermode) {
@@ -186,6 +191,10 @@ int main( int argc, char *argv[] )
          glDisableVertexAttribArray( shadowvertex );
          glUseProgram( 0 );
       }
+
+      /* Draw the engine. */
+      if (engine)
+         object_renderScene( 0, obj, 1, &H, (float)SDL_GetTicks64() / 1000., SCREEN_W, OBJECT_FLAG_NOLIGHTS );
 
       SDL_GL_SwapWindow( win );
 
