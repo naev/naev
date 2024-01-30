@@ -134,6 +134,7 @@ static Shader shadow_shader_blurY;
  */
 static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
 {
+   const SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
    GLuint tex;
    SDL_Surface *surface = NULL;
 
@@ -173,16 +174,17 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
    }
 
    if (surface != NULL) {
-      SDL_Surface *temp = surface;
-      surface = SDL_ConvertSurfaceFormat( temp, SDL_PIXELFORMAT_RGBA32, 0 );
-      SDL_FreeSurface( temp );
+      if (surface->format->format != fmt) {
+         SDL_Surface *temp = surface;
+         surface = SDL_ConvertSurfaceFormat( temp, fmt, 0 );
+         SDL_FreeSurface( temp );
+      }
 
       SDL_LockSurface( surface );
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
-            surface->w, surface->h, 0,
-            surface->format->Amask ? GL_RGBA : GL_RGB,
-            GL_UNSIGNED_BYTE, surface->pixels );
+            surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
+      glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       SDL_UnlockSurface( surface );
    }
    else {
@@ -260,7 +262,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
       mat->occlusion_tex= object_loadTexture( &cmat->occlusion_texture, tex_ones );
       mat->emissive_tex = object_loadTexture( &cmat->emissive_texture, tex_ones );
-      mat->normal_tex   = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_zero );
+      mat->normal_tex   = object_loadTexture( &cmat->normal_texture, tex_zero );
       mat->blend        = (cmat->alpha_mode == cgltf_alpha_mode_blend);
    }
    else {
