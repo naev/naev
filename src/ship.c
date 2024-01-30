@@ -1060,7 +1060,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
       /* Only clear the necessary area. */
       glEnable( GL_SCISSOR_TEST );
-      glScissor( 0, 0, sa->sw / gl_screen.scale, sa->sh / gl_screen.scale );
+      glScissor( 0, 0, sa->sw / gl_screen.scale+1, sa->sh / gl_screen.scale+1 );
       glClear( GL_COLOR_BUFFER_BIT );
       glDisable( GL_SCISSOR_TEST );
 
