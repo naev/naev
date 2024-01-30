@@ -281,6 +281,8 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
    if (cmat) {
       for (size_t i=0; i<cmat->extensions_count; i++) {
          cgltf_extension *ext = &cmat->extensions[i];
+         if (strcmp(ext->name,"NAEV_ext")!=0)
+            continue;
          jsmn_parser p;
          jsmntok_t t[16]; /* Max number of expected tokens. */
          jsmn_init(&p);
