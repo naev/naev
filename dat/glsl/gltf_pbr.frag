@@ -338,6 +338,7 @@ void main (void)
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, -1.0) );
+   float NoV = clamp(dot(n,v), 1e-4, 1.0); /* Neubelt and Pettineo 2013, "Crafting a Next-gen Material Pipeline for The Order: 1886" */
    for (int i=0; i<u_nlights; i++) {
       Light L = u_lights[i];
 
@@ -346,7 +347,6 @@ void main (void)
       vec3 h = normalize(l + v); /* Halfway vector. */
       float NoL = clampedDot(n, l);
       //float NoV = clampedDot(n, v);
-      float NoV = clamp(dot(n,v), 1e-4, 1.0); /* Neubelt and Pettineo 2013, "Crafting a Next-gen Material Pipeline for The Order: 1886" */
       float NoH = clampedDot(n, h);
       float LoH = clampedDot(l, h);
       float VoH = clampedDot(v, h);
@@ -388,7 +388,7 @@ void main (void)
    colour_out = vec4( f_emissive + f_diffuse + f_specular, alpha );
 
    /* Apply clearcoat. */
-   vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, clampedDot(n, v));
+   vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, NoV );
    f_clearcoat *= M.clearcoat;
    colour_out.rgb = colour_out.rgb * (1.0 - M.clearcoat * clearcoatFresnel) + f_clearcoat;
 
