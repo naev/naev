@@ -95,6 +95,7 @@ typedef struct Shader_ {
    GLuint metallic_tex;
    GLuint u_has_normal;
    GLuint normal_tex;
+   GLuint normal_scale;
    GLuint metallicFactor;
    GLuint roughnessFactor;
    GLuint baseColour;
@@ -235,6 +236,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->baseColour_tex  = tex_ones;
       mat->metallic_tex    = tex_ones;
       mat->normal_tex      = tex_zero;
+      mat->normal_scale    = 1.;
    }
 
    /* Sheen. */
@@ -263,6 +265,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->occlusion_tex= object_loadTexture( &cmat->occlusion_texture, tex_ones );
       mat->emissive_tex = object_loadTexture( &cmat->emissive_texture, tex_ones );
       mat->normal_tex   = object_loadTexture( &cmat->normal_texture, tex_zero );
+      mat->normal_scale = cmat->normal_texture.scale;
       mat->blend        = (cmat->alpha_mode == cgltf_alpha_mode_blend);
    }
    else {
@@ -270,6 +273,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->emissive_tex    = tex_ones;
       mat->occlusion_tex   = tex_ones;
       mat->normal_tex      = tex_ones;
+      mat->normal_scale    = 1.;
       mat->blend           = 0;
    }
    /* Emissive strength extension just multiplies the emissiveness. */
@@ -509,6 +513,7 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glUniform3f( shd->emissive,         mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
    glUniform1i( shd->blend,            mat->blend );
    glUniform1i( shd->u_has_normal,     (mat->normal_tex!=tex_zero) );
+   glUniform1f( shd->normal_scale,     mat->normal_scale );
    //glUniform1f( shd->waxiness, mat->waxiness );
    gl_checkErr();
 
@@ -1078,6 +1083,7 @@ int object_init (void)
    shd->metallic_tex    = glGetUniformLocation( shd->program, "metallic_tex" );
    shd->u_has_normal    = glGetUniformLocation( shd->program, "u_has_normal" );
    shd->normal_tex      = glGetUniformLocation( shd->program, "normal_tex" );
+   shd->normal_scale    = glGetUniformLocation( shd->program, "normal_scale" );
    shd->metallicFactor  = glGetUniformLocation( shd->program, "metallicFactor" );
    shd->roughnessFactor = glGetUniformLocation( shd->program, "roughnessFactor" );
    shd->baseColour      = glGetUniformLocation( shd->program, "baseColour" );

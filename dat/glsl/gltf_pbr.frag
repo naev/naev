@@ -12,6 +12,7 @@ uniform sampler2D baseColour_tex; /**< Base colour. */
 uniform sampler2D metallic_tex; /**< Metallic texture. */
 uniform bool u_has_normal; /**< Whether or not has a normal map. */
 uniform sampler2D normal_tex; /**< Normal map. */
+uniform float normal_scale;
 uniform float metallicFactor;
 uniform float roughnessFactor;
 uniform vec4 baseColour;
@@ -264,7 +265,7 @@ vec3 get_normal (void)
       ng *= -1.0;
    }
 
-   vec3 n = texture(normal_tex, tex_coord0).rgb * 2.0 - vec3(1.0);
+   vec3 n = texture(normal_tex, tex_coord0).rgb * vec3(normal_scale, normal_scale, 1.0) * 2.0 - vec3(1.0);
    n = normalize( mat3(t, b, ng) * n);
 
    return n;

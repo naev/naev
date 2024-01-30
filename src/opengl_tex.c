@@ -377,9 +377,9 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
  */
 static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur, double *vmax )
 {
+   const SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
    GLuint texture;
    SDL_Surface *rgba;
-   SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
 
    SDL_mutexP( tex_lock );
    tex_ctxSet();

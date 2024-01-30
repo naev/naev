@@ -40,6 +40,7 @@ typedef struct Material_ {
    GLfloat clearcoat_roughness;
    /* misc. */
    GLuint normal_tex;
+   GLfloat normal_scale;
    GLuint occlusion_tex;
    GLuint emissive_tex;
    GLfloat emissiveFactor[3];
