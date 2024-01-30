@@ -304,7 +304,7 @@ void main (void)
    M.metallic  = metallicFactor * metallicroughness.b;
    M.f0        = mix( vec3(0.04), M.albedo.rgb, M.metallic );
    M.f90       = vec3(1.0);
-   M.c_diff    = mix( M.albedo.rgb * (vec3(1.0) - M.f0), vec3(0), M.metallic);
+   M.c_diff    = mix( M.albedo.rgb, vec3(0.), M.metallic );
    M.sheenTint = sheenTint;
    M.sheen     = sheen;
    M.clearcoat = clearcoat;
@@ -385,7 +385,7 @@ void main (void)
 
    /* Combine diffuse, emissive, and specular.. */
    float alpha = (u_blend==1) ? M.albedo.a : 1.0;
-   colour_out = vec4( f_emissive + (1.0-M.metallic)*f_diffuse + f_specular, alpha );
+   colour_out = vec4( f_emissive + f_diffuse + f_specular, alpha );
 
    /* Apply clearcoat. */
    vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, clampedDot(n, v));
