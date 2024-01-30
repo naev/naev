@@ -183,7 +183,7 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
 
       SDL_LockSurface( surface );
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
+      glTexImage2D( GL_TEXTURE_2D, 0, surface->format->Amask ? GL_SRGB_ALPHA : GL_SRGB,
             surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
       glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       SDL_UnlockSurface( surface );
@@ -259,7 +259,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->clearcoat_roughness = 0.;
    }
 
-   /* Handle emissiveness. */
+   /* Handle emissiveness and such. */
    if (cmat) {
       memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
       mat->occlusion_tex= object_loadTexture( &cmat->occlusion_texture, tex_ones );

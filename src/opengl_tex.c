@@ -411,7 +411,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    else {
       *vmax = 1.;
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( rgba->pitch&-rgba->pitch, 8 ) );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
+      glTexImage2D( GL_TEXTURE_2D, 0, rgba->format->Amask ? GL_SRGB_ALPHA : GL_SRGB,
             rgba->w, rgba->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, rgba->pixels );
       glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
    }
