@@ -175,6 +175,7 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
    }
 
    if (surface != NULL) {
+      int has_alpha = surface->format->Amask;
       if (surface->format->format != fmt) {
          SDL_Surface *temp = surface;
          surface = SDL_ConvertSurfaceFormat( temp, fmt, 0 );
@@ -183,7 +184,7 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
 
       SDL_LockSurface( surface );
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
-      glTexImage2D( GL_TEXTURE_2D, 0, surface->format->Amask ? GL_SRGB_ALPHA : GL_SRGB,
+      glTexImage2D( GL_TEXTURE_2D, 0, has_alpha ? GL_SRGB_ALPHA : GL_SRGB,
             surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
       glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       SDL_UnlockSurface( surface );
