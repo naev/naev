@@ -51,9 +51,10 @@
   <structure size="large" />
  </slots>
  <stats>
-  <armour_mod>-30</armour_mod>
-  <shield_mod>40</shield_mod>
-  <shield_regen_mod>30</shield_regen_mod>
+  <turn_mod>-10</turn_mod>
+  <armour_mod>-40</armour_mod>
+  <shield_mod>30</shield_mod>
+  <shield_regen_mod>20</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
   <fbay_rate>50</fbay_rate>
   <fbay_reload>25</fbay_reload>
