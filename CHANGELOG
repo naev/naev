@@ -30,6 +30,7 @@
       * PSO and Mizar nebulas have trails again
 
 * 0.11.4 (unreleased)
+   * Tweaked Za'lek Diablo and Mephisto stats so that they are better suited to their respective roles
    * Updated flicker drive, blink drive, and hyperbolic blink engine descriptions to be more complete and correct
    * Initialize outfit Lua scripts when added in the equipment view so that flicker drive signature gets properly computed
    * Flicker drive no longer displays -10% signature range bonus twice when equipped
