@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2024-01-28 23:43+0900\n"
+"POT-Creation-Date: 2024-02-04 01:39+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -18378,11 +18378,12 @@ msgstr ""
 msgid ""
 "Marius Enclave used to be a customs station of the old Empire, checking "
 "traffic bound for Sol and the core Imperial systems. Now, in the post-"
-"Incident era, the station serves as the first line of defence from hostile "
-"elements that threaten the isolated colonies at Tau Prime and beyond. But "
-"since it is perpetually under-staffed and under-equipped, Marius Enclave is "
-"barely capable of maintaining its own presence in Raelid, let alone protect "
-"anything else."
+"Incident era, the station had been first repurposed to handle those fleeing "
+"from the irradiated worlds and to serve as a first line of defence from "
+"anything that can come out of the Sol Nebula. But since it is perpetually "
+"under-staffed and under-equipped, Marius Enclave is barely capable of "
+"maintaining its own presence in Raelid, let alone protect or manage anything "
+"else."
 msgstr ""
 
 #: dat/spob/marius_enclave.xml:28
@@ -35044,18 +35045,18 @@ msgstr ""
 #. Test if an element is in a list
 #. Gets someone to make a message (useful for hook.timer)
 #. Equips a Vendetta with full mace rockets
-#: dat/events/dvaered/warlords_battle.lua:71
 #: dat/events/dvaered/warlords_battle.lua:72
+#: dat/events/dvaered/warlords_battle.lua:73
 #: dat/scripts/common/frontier_war.lua:81
 msgid "Warlords"
 msgstr ""
 
 #. Spawns a merchant ship that explains what happens
-#: dat/events/dvaered/warlords_battle.lua:88
+#: dat/events/dvaered/warlords_battle.lua:89
 msgid "Trader {ship}"
 msgstr ""
 
-#: dat/events/dvaered/warlords_battle.lua:104
+#: dat/events/dvaered/warlords_battle.lua:105
 msgid ""
 "\"Hey, you,\" the captain of the ship says. \"You seem not to know what is "
 "going to happen here: a mighty warlord from {sys} is going to attack {pnt}. "
@@ -35069,14 +35070,14 @@ msgstr ""
 #. chooses the first non nil pilot in a list
 #. Prepares the reward
 #. Simultaneous destruction?
-#: dat/events/dvaered/warlords_battle.lua:165
+#: dat/events/dvaered/warlords_battle.lua:166
 msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
 "am authorized to give you {credits} as a reward.\""
 msgstr ""
 
 #. Returns leader of fleet
-#: dat/events/dvaered/warlords_battle.lua:203
+#: dat/events/dvaered/warlords_battle.lua:204
 msgid "Invader"
 msgstr ""
 
@@ -35084,7 +35085,7 @@ msgstr ""
 #. The transport ships tend to run away
 #. The heaviest ships will surround the leader
 #. mass of the player's victims
-#: dat/events/dvaered/warlords_battle.lua:259
+#: dat/events/dvaered/warlords_battle.lua:260
 msgid "Local Warlord's Force"
 msgstr ""
 
