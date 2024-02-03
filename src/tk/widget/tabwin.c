@@ -262,6 +262,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       /* Create event. */
       if (tab->dat.tab.onChange != NULL)
          tab->dat.tab.onChange( tab->wdw, tab->name, old, tab->dat.tab.active );
+      toolkit_rerender();
       break;
    }
 
@@ -341,6 +342,8 @@ static int tab_key( Widget* tab, SDL_Event *event )
           tab->dat.tab.onChange( tab->wdw, tab->name, old, tab->dat.tab.active );
       ret = 1;
    }
+   if (ret)
+      toolkit_rerender();
 
    return ret;
 }
@@ -502,6 +505,7 @@ int window_tabWinSetActive( unsigned int wid, const char *tab, int active )
    /* Create event. */
    if (wgt->dat.tab.onChange != NULL)
       wgt->dat.tab.onChange( wid, wgt->name, old, wgt->dat.tab.active );
+   toolkit_rerender();
 
    return 0;
 }
