@@ -16,6 +16,12 @@
 
 #define OBJECT_FLAG_NOLIGHTS  (1<<0)   /**< Do not run shadows computations. */
 
+typedef struct Texture_ {
+   GLuint tex;
+   GLuint texcoord;
+   GLfloat strength;
+} Texture;
+
 /**
  * @brief PBR Material of an object.
  */
@@ -23,8 +29,8 @@ typedef struct Material_ {
    char *name; /**< Name of the material if applicable. */
    int blend;  /**< Whether or not to blend it. */
    /* pbr_metallic_roughness */
-   GLuint baseColour_tex;  /**< Base colour of the material. */
-   GLuint metallic_tex;    /**< Metallic/roughness map of the material. Metallic is stored in G channel, hile roughness is in the B channel. */
+   Texture baseColour_tex;  /**< Base colour of the material. */
+   Texture metallic_tex;    /**< Metallic/roughness map of the material. Metallic is stored in G channel, hile roughness is in the B channel. */
    GLfloat metallicFactor; /**< Metallic factor (single value). Multplies the map if available. */
    GLfloat roughnessFactor;/**< Roughness factor (single value). Multiplies the map if available. */
    GLfloat baseColour[4];  /**< Base colour of the material. Multiplies the texture if available. */
@@ -39,10 +45,9 @@ typedef struct Material_ {
    GLfloat clearcoat;
    GLfloat clearcoat_roughness;
    /* misc. */
-   GLuint normal_tex;
-   GLfloat normal_scale;
-   GLuint occlusion_tex;
-   GLuint emissive_tex;
+   Texture normal_tex;
+   Texture occlusion_tex;
+   Texture emissive_tex;
    GLfloat emissiveFactor[3];
    /* Custom Naev. */
    //GLfloat waxiness;
@@ -56,7 +61,8 @@ typedef struct Mesh_ {
    GLuint vbo_idx;   /**< Index VBO. */
    GLuint vbo_pos;   /**< Position VBO. */
    GLuint vbo_nor;   /**< Normal VBO. */
-   GLuint vbo_tex;   /**< Texture coordinate VBO. */
+   GLuint vbo_tex0;  /**< Texture 0 coordinate VBO. */
+   GLuint vbo_tex1;  /**< Texture 1 coordinate VBO. */
    int material;     /**< ID of material to use. */
 
    GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */

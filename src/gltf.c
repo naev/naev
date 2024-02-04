@@ -86,6 +86,7 @@ typedef struct Shader_ {
    GLuint vertex;
    GLuint vertex_normal;
    GLuint vertex_tex0;
+   GLuint vertex_tex1;
    /* Vertex Uniforms. */
    GLuint Hmodel;
    GLuint Hshadow;
@@ -105,6 +106,7 @@ typedef struct Shader_ {
    GLuint clearcoat_roughness;
    GLuint emissive;
    GLuint emissive_tex;
+   GLuint emissive_texcoord;
    GLuint occlusion_tex;
    ShaderLight lights[MAX_LIGHTS];
    GLuint nlights;
@@ -115,8 +117,8 @@ typedef struct Shader_ {
 } Shader;
 static Shader object_shader;
 static Shader shadow_shader;
-static GLuint tex_zero = 0; /* Used to detect initialization for now. */
-static GLuint tex_ones;
+static Texture tex_zero = {.tex=0, .texcoord=0, .strength=1.}; /* Used to detect initialization for now. */
+static Texture tex_ones = {.tex=0, .texcoord=0, .strength=1.};
 
 /* Below here are for blurring purposes. */
 static GLuint shadow_vbo;
@@ -129,31 +131,36 @@ static Shader shadow_shader_blurY;
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
  *
+ *    @param otex Texture to output to.
  *    @param ctex Texture to load.
  *    @param def Default texture to use if not defined.
  *    @return OpenGL ID of the new texture.
  */
-static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
+static int object_loadTexture( Texture *otex, const cgltf_texture_view *ctex, const Texture *def )
 {
    const SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
    GLuint tex;
    SDL_Surface *surface = NULL;
 
    /* Must haev texture to load it. */
-   if ((ctex==NULL) || (ctex->texture==NULL))
-      return def;
+   if ((ctex==NULL) || (ctex->texture==NULL)) {
+      *otex = *def;
+      return 0;
+   }
 
    /* Load from path. */
    if (ctex->texture->image->uri != NULL) {
       SDL_RWops *rw = PHYSFSRWOPS_openRead( ctex->texture->image->uri );
       if (rw==NULL) {
          WARN(_("Unable to open '%s': %s"), ctex->texture->image->uri, SDL_GetError() );
-         return def;
+         *otex = *def;
+         return 0;
       }
       surface = IMG_Load_RW( rw, 1 );
       if (surface==NULL) {
          WARN(_("Unable to load surface '%s': %s"), ctex->texture->image->uri, SDL_GetError());
-         return def;
+         *otex = *def;
+         return 0;
       }
    }
 
@@ -210,7 +217,11 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
 
    gl_checkErr();
 
-   return tex;
+   otex->tex = tex;
+   otex->texcoord = ctex->texcoord;
+   otex->strength = ctex->transform.scale[0];
+
+   return 0;
 }
 
 /**
@@ -223,12 +234,12 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
    if (cmat && cmat->has_pbr_metallic_roughness) {
       mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
       mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
-      mat->baseColour_tex  = object_loadTexture( &cmat->pbr_metallic_roughness.base_color_texture, tex_ones );
-      if (mat->baseColour_tex == tex_ones)
+      object_loadTexture( &mat->baseColour_tex, &cmat->pbr_metallic_roughness.base_color_texture, &tex_ones );
+      if (mat->baseColour_tex.tex == tex_ones.tex)
          memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
       else
          memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
-      mat->metallic_tex    = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_ones );
+      object_loadTexture( &mat->metallic_tex, &cmat->pbr_metallic_roughness.metallic_roughness_texture, &tex_ones );
    }
    else {
       memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
@@ -237,7 +248,6 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->baseColour_tex  = tex_ones;
       mat->metallic_tex    = tex_ones;
       mat->normal_tex      = tex_zero;
-      mat->normal_scale    = 1.;
    }
 
    /* Sheen. */
@@ -263,10 +273,9 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
    /* Handle emissiveness and such. */
    if (cmat) {
       memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
-      mat->occlusion_tex= object_loadTexture( &cmat->occlusion_texture, tex_ones );
-      mat->emissive_tex = object_loadTexture( &cmat->emissive_texture, tex_ones );
-      mat->normal_tex   = object_loadTexture( &cmat->normal_texture, tex_zero );
-      mat->normal_scale = cmat->normal_texture.scale;
+      object_loadTexture( &mat->occlusion_tex, &cmat->occlusion_texture, &tex_ones );
+      object_loadTexture( &mat->emissive_tex, &cmat->emissive_texture, &tex_ones );
+      object_loadTexture( &mat->normal_tex, &cmat->normal_texture, &tex_zero );
       mat->blend        = (cmat->alpha_mode == cgltf_alpha_mode_blend);
    }
    else {
@@ -274,7 +283,6 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->emissive_tex    = tex_ones;
       mat->occlusion_tex   = tex_ones;
       mat->normal_tex      = tex_ones;
-      mat->normal_scale    = 1.;
       mat->blend           = 0;
    }
    /* Emissive strength extension just multiplies the emissiveness. */
@@ -411,7 +419,11 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
                   break;
 
                case cgltf_attribute_type_texcoord:
-                  mesh->vbo_tex = object_loadVBO( attr->data, NULL, NULL, NULL, NULL );
+                  if (attr->index==0)
+                     mesh->vbo_tex0 = object_loadVBO( attr->data, NULL, NULL, NULL, NULL );
+                  else
+                     mesh->vbo_tex1 = object_loadVBO( attr->data, NULL, NULL, NULL, NULL );
+                  /* TODO handle other cases? */
                   break;
 
                case cgltf_attribute_type_color:
@@ -493,10 +505,16 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
       glEnableVertexAttribArray( shd->vertex_normal );
    }
    gl_checkErr();
-   if (mesh->vbo_tex) {
-      glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_tex );
+   if (mesh->vbo_tex0) {
+      glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_tex0 );
       glVertexAttribPointer( shd->vertex_tex0, 2, GL_FLOAT, GL_FALSE, 0, NULL );
       glEnableVertexAttribArray( shd->vertex_tex0 );
+   }
+   gl_checkErr();
+   if (mesh->vbo_tex1) {
+      glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_tex1 );
+      glVertexAttribPointer( shd->vertex_tex1, 2, GL_FLOAT, GL_FALSE, 0, NULL );
+      glEnableVertexAttribArray( shd->vertex_tex1 );
    }
    gl_checkErr();
 
@@ -513,27 +531,28 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
    glUniform3f( shd->emissive,         mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
    glUniform1i( shd->blend,            mat->blend );
-   glUniform1i( shd->u_has_normal,     (mat->normal_tex!=tex_zero) );
-   glUniform1f( shd->normal_scale,     mat->normal_scale );
+   glUniform1i( shd->u_has_normal,     (mat->normal_tex.tex!=tex_zero.tex) );
+   glUniform1f( shd->normal_scale,     mat->normal_tex.strength );
+   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
    //glUniform1f( shd->waxiness, mat->waxiness );
    gl_checkErr();
 
    /* Texture. */
    glActiveTexture( GL_TEXTURE1 );
-      glBindTexture( GL_TEXTURE_2D, mat->metallic_tex );
+      glBindTexture( GL_TEXTURE_2D, mat->metallic_tex.tex );
       glUniform1i( shd->metallic_tex, 1 );
    glActiveTexture( GL_TEXTURE2 );
-      glBindTexture( GL_TEXTURE_2D, mat->normal_tex );
+      glBindTexture( GL_TEXTURE_2D, mat->normal_tex.tex );
       glUniform1i( shd->normal_tex, 2 );
    glActiveTexture( GL_TEXTURE3 );
-      glBindTexture( GL_TEXTURE_2D, mat->emissive_tex );
+      glBindTexture( GL_TEXTURE_2D, mat->emissive_tex.tex );
       glUniform1i( shd->emissive_tex, 3 );
    glActiveTexture( GL_TEXTURE4 );
-      glBindTexture( GL_TEXTURE_2D, mat->occlusion_tex );
+      glBindTexture( GL_TEXTURE_2D, mat->occlusion_tex.tex );
       glUniform1i( shd->occlusion_tex, 4 );
    /* Have to have GL_TEXTURE0 be last. */
    glActiveTexture( GL_TEXTURE0 );
-      glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
+      glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex.tex );
       glUniform1i( shd->baseColour_tex, 0 );
    gl_checkErr();
 
@@ -825,7 +844,7 @@ Object *object_loadFromFile( const char *filename )
 
    /* First see if we have to initialize subsystem. */
    gl_contextSet();
-   if (tex_zero==0)
+   if (tex_zero.tex==0)
       object_init();
 
    /* Initialize object. */
@@ -903,8 +922,10 @@ static void object_freeNode( Node *node )
          glDeleteBuffers( 1, &m->vbo_pos );
       if (m->vbo_nor)
          glDeleteBuffers( 1, &m->vbo_nor );
-      if (m->vbo_tex)
-         glDeleteBuffers( 1, &m->vbo_tex );
+      if (m->vbo_tex0)
+         glDeleteBuffers( 1, &m->vbo_tex0 );
+      if (m->vbo_tex1)
+         glDeleteBuffers( 1, &m->vbo_tex1 );
    }
    free( node->mesh );
    gl_checkErr();
@@ -914,14 +935,14 @@ static void object_freeNode( Node *node )
    free( node->children );
 }
 
-static void object_freeTex( GLuint tex )
+static void object_freeTex( Texture *tex )
 {
    /* Don't have to free default textures. */
-   if (tex==tex_zero || tex==tex_ones)
+   if (tex->tex==tex_zero.tex || tex->tex==tex_ones.tex)
       return;
 
    if (tex)
-      glDeleteTextures( 1, &tex );
+      glDeleteTextures( 1, &tex->tex );
    gl_checkErr();
 }
 
@@ -941,11 +962,11 @@ void object_free( Object *obj )
 
    for (size_t i=0; i<obj->nmaterials; i++) {
       Material *m = &obj->materials[i];
-      object_freeTex( m->baseColour_tex );
-      object_freeTex( m->metallic_tex );
-      object_freeTex( m->normal_tex );
-      object_freeTex( m->occlusion_tex );
-      object_freeTex( m->emissive_tex );
+      object_freeTex( &m->baseColour_tex );
+      object_freeTex( &m->metallic_tex );
+      object_freeTex( &m->normal_tex );
+      object_freeTex( &m->occlusion_tex );
+      object_freeTex( &m->emissive_tex );
    }
    free( obj->materials );
 
@@ -962,11 +983,11 @@ int object_init (void)
    const char *prepend = "#define MAX_LIGHTS "STR(MAX_LIGHTS)"\n#define SHADOWMAP_SIZE "STR(SHADOWMAP_SIZE)"\n";
 
    /* Load textures. */
-   glGenTextures( 1, &tex_zero );
-   glBindTexture( GL_TEXTURE_2D, tex_zero );
+   glGenTextures( 1, &tex_zero.tex );
+   glBindTexture( GL_TEXTURE_2D, tex_zero.tex );
    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_zero );
-   glGenTextures( 1, &tex_ones );
-   glBindTexture( GL_TEXTURE_2D, tex_ones );
+   glGenTextures( 1, &tex_ones.tex );
+   glBindTexture( GL_TEXTURE_2D, tex_ones.tex );
    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_ones );
    glBindTexture( GL_TEXTURE_2D, 0 );
    gl_checkErr();
@@ -1074,6 +1095,7 @@ int object_init (void)
    shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
    shd->vertex_normal   = glGetAttribLocation( shd->program, "vertex_normal" );
    shd->vertex_tex0     = glGetAttribLocation( shd->program, "vertex_tex0" );
+   shd->vertex_tex1     = glGetAttribLocation( shd->program, "vertex_tex1" );
    /* Vertex uniforms. */
    shd->Hmodel          = glGetUniformLocation( shd->program, "u_model");
    shd->u_time          = glGetUniformLocation( shd->program, "u_time" );
@@ -1095,6 +1117,7 @@ int object_init (void)
    shd->emissive        = glGetUniformLocation( shd->program, "emissive" );
    shd->occlusion_tex   = glGetUniformLocation( shd->program, "occlusion_tex" );
    shd->emissive_tex    = glGetUniformLocation( shd->program, "emissive_tex" );
+   shd->emissive_texcoord = glGetUniformLocation( shd->program, "emissive_texcoord" );
    /* Special. */
    //shd->waxiness        = glGetUniformLocation( shd->program, "u_waxiness" );
    /* Lights. */
@@ -1124,7 +1147,7 @@ int object_init (void)
 void object_exit (void)
 {
    /* Not initialized. */
-   if (tex_zero==0)
+   if (tex_zero.tex==0)
       return;
 
    glDeleteBuffers( 1, &shadow_vbo );
@@ -1134,8 +1157,8 @@ void object_exit (void)
       glDeleteTextures( 1, &lights[i].tex );
       glDeleteFramebuffers( 1, &lights[i].fbo );
    }
-   glDeleteTextures( 1, &tex_zero );
-   glDeleteTextures( 1, &tex_ones );
+   glDeleteTextures( 1, &tex_zero.tex );
+   glDeleteTextures( 1, &tex_ones.tex );
    glDeleteProgram( object_shader.program );
    glDeleteProgram( shadow_shader.program );
 }

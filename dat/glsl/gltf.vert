@@ -18,10 +18,12 @@ uniform float u_time;
 in vec3 vertex;
 in vec3 vertex_normal;
 in vec2 vertex_tex0;
+in vec2 vertex_tex1;
 out vec3 position;
 out vec3 shadow[MAX_LIGHTS];
 out vec3 normal;
 out vec2 tex_coord0;
+out vec2 tex_coord1;
 
 void main (void)
 {
@@ -29,6 +31,7 @@ void main (void)
    vec4 pos    = u_model * vec4( vertex, 1.0 );
    position    = pos.xyz;
    tex_coord0  = vertex_tex0;
+   tex_coord1  = vertex_tex1;
 
    /* Compute normal vector. */
    normal      = transpose(inverse(mat3(u_model))) * vertex_normal;

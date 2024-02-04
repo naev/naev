@@ -171,7 +171,10 @@ int main( int argc, char *argv[] )
       mat4_apply( &H, &Hscale );
 
       /* Draw the object. */
-      object_renderScene( 0, obj, 0, &H, (float)SDL_GetTicks64() / 1000., SCREEN_W, 0 );
+      int scene = obj->scene_body;
+      if (obj->scene_engine >= 0 && engine)
+         scene = obj->scene_engine;
+      object_renderScene( 0, obj, scene, &H, (float)SDL_GetTicks64() / 1000., SCREEN_W, 0 );
 
       /* Draw the shadowmap to see what's going on (clear the shadowmap). */
       if (rendermode) {
@@ -191,10 +194,6 @@ int main( int argc, char *argv[] )
          glDisableVertexAttribArray( shadowvertex );
          glUseProgram( 0 );
       }
-
-      /* Draw the engine. */
-      if (engine)
-         object_renderScene( 0, obj, 1, &H, (float)SDL_GetTicks64() / 1000., SCREEN_W, OBJECT_FLAG_NOLIGHTS );
 
       SDL_GL_SwapWindow( win );
 

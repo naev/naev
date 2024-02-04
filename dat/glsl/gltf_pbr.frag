@@ -25,6 +25,7 @@ uniform float clearcoat;
 uniform float clearcoat_roughness;
 uniform vec3 emissive;
 uniform sampler2D emissive_tex; /**< Emission texture. */
+uniform bool emissive_texcoord;
 /* misc */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform int u_blend;
@@ -32,6 +33,7 @@ uniform vec3 u_ambient; /**< Ambient lighting. */
 uniform float u_waxiness;
 
 in vec2 tex_coord0;
+in vec2 tex_coord1;
 in vec3 position;
 in vec3 shadow[MAX_LIGHTS];
 in vec3 normal;
@@ -395,7 +397,7 @@ void main (void)
    f_diffuse *= ao;
 
    /* Do emissive. */
-   f_emissive = emissive * texture(emissive_tex, tex_coord0).rgb;
+   f_emissive = emissive * texture(emissive_tex, (emissive_texcoord ? tex_coord1 : tex_coord0) ).rgb;
 
    /* Combine diffuse, emissive, and specular.. */
    float alpha = (u_blend==1) ? M.albedo.a : 1.0;
