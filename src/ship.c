@@ -1046,9 +1046,10 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       mat4_rotate( &H, M_PI_2-dir, 0.0, 1.0, 0.0 );
 
       /* Actually render. */
-      object_renderScene( fbo, obj, obj->scene_body, &H, 0., scale, 0 );
-      if (engine_glow > 0.5)
-         object_renderScene( fbo, obj, obj->scene_engine, &H, 0., scale, OBJECT_FLAG_NOLIGHTS );
+      if ((engine_glow > 0.5) && (obj->scene_engine >= 0))
+         object_renderScene( fbo, obj, obj->scene_engine, &H, 0., scale, 0 );
+      else
+         object_renderScene( fbo, obj, obj->scene_body, &H, 0., scale, 0 );
    }
    else {
       double tx,ty;
