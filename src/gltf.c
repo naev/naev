@@ -231,7 +231,7 @@ static int object_loadTexture( Texture *otex, const cgltf_texture_view *ctex, co
 /**
  * @brief Loads a material for the object.
  */
-static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
+static int object_loadMaterial( Material *mat, const cgltf_material *cmat, const cgltf_data *data )
 {
    const GLfloat white[4] = { 1., 1., 1., 1. };
    /* TODO complete this. */
@@ -293,6 +293,28 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
    if (cmat && cmat->has_emissive_strength) {
       for (int i=0; i<3; i++)
          mat->emissiveFactor[i] *= cmat->emissive_strength.emissive_strength;
+   }
+
+   mat->noshadows = 0;
+   if (cmat && data) {
+      char buf[STRMAX_SHORT];
+      cgltf_size len = sizeof(buf);
+      cgltf_copy_extras_json( data, &cmat->extras, buf, &len );
+      jsmn_parser p;
+      jsmntok_t t[16]; /* Max number of expected tokens. */
+      jsmn_init(&p);
+      int r = jsmn_parse( &p, buf, len, t, sizeof(t)/sizeof(jsmntok_t) );
+      for (int j=0; j<r; j++) {
+         jsmntok_t *tj = &t[j];
+         const char *str = "NAEV_noShadows";
+         if (strncmp( str, &buf[tj->start], MIN(strlen(str),(size_t)(tj->end-tj->start)) )==0) {
+            if (j+1 >= r)
+               break;
+            /* Disables shadows. */
+            mat->noshadows = 1;
+            break;
+         }
+      }
    }
 
 #if 0
@@ -472,6 +494,10 @@ static void renderMeshShadow( const Object *obj, const Mesh *mesh, const mat4 *H
 {
    (void) obj;
    const Shader *shd = &shadow_shader;
+
+   /* Skip with no shadows. */
+   if (obj->materials[ mesh->material ].noshadows)
+      return;
 
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
@@ -883,7 +909,7 @@ Object *object_loadFromFile( const char *filename )
    obj->materials = calloc( data->materials_count, sizeof(Material) );
    obj->nmaterials = data->materials_count;
    for (size_t i=0; i<data->materials_count; i++)
-      object_loadMaterial( &obj->materials[i], &data->materials[i] );
+      object_loadMaterial( &obj->materials[i], &data->materials[i], data );
 
    /* Load scenes. */
    obj->scenes = calloc( data->scenes_count, sizeof(Scene) );
@@ -1002,7 +1028,7 @@ int object_init (void)
    gl_checkErr();
 
    /* Set up default material. */
-   object_loadMaterial( &material_default, NULL );
+   object_loadMaterial( &material_default, NULL, NULL );
 
    /* We'll have to set up some rendering stuff for blurring purposes. */
    const GLfloat vbo_data[8] = {

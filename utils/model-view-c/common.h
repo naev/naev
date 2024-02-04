@@ -9,9 +9,10 @@
 #define DEBUGGING 1
 
 #ifndef PATH_MAX
-#define PATH_MAX  512
+#  define PATH_MAX  256
 #endif /* PATH_MAX */
-#define STRMAX    8192
+#define STRMAX             4096
+#define STRMAX_SHORT       1024
 
 #define SCREEN_W  1024
 #define SCREEN_H  1024

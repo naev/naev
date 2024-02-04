@@ -28,6 +28,7 @@ typedef struct Texture_ {
 typedef struct Material_ {
    char *name; /**< Name of the material if applicable. */
    int blend;  /**< Whether or not to blend it. */
+   int noshadows; /**< Whether or not it ignores shadows. */
    /* pbr_metallic_roughness */
    Texture baseColour_tex;  /**< Base colour of the material. */
    Texture metallic_tex;    /**< Metallic/roughness map of the material. Metallic is stored in G channel, hile roughness is in the B channel. */
