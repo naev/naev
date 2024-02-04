@@ -539,11 +539,11 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glUniform1f( shd->normal_scale,     mat->normal_tex.strength );
    //glUniform1f( shd->waxiness, mat->waxiness );
    /* Texture coordinates. */
-   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
-   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
-   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
-   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
-   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
+   glUniform1i( shd->baseColour_texcoord, mat->baseColour_tex.texcoord);
+   glUniform1i( shd->metallic_texcoord,   mat->metallic_tex.texcoord);
+   glUniform1i( shd->normal_texcoord,     mat->normal_tex.texcoord);
+   glUniform1i( shd->emissive_texcoord,   mat->emissive_tex.texcoord);
+   glUniform1i( shd->occlusion_texcoord,  mat->occlusion_tex.texcoord);
    gl_checkErr();
 
    /* Texture. */
@@ -1112,9 +1112,12 @@ int object_init (void)
    shd->blend           = glGetUniformLocation( shd->program, "u_blend" );
    shd->u_ambient       = glGetUniformLocation( shd->program, "u_ambient" );
    shd->baseColour_tex  = glGetUniformLocation( shd->program, "baseColour_tex" );
+   shd->baseColour_texcoord = glGetUniformLocation( shd->program, "baseColour_texcoord" );
    shd->metallic_tex    = glGetUniformLocation( shd->program, "metallic_tex" );
+   shd->metallic_texcoord = glGetUniformLocation( shd->program, "metallic_texcoord" );
    shd->u_has_normal    = glGetUniformLocation( shd->program, "u_has_normal" );
    shd->normal_tex      = glGetUniformLocation( shd->program, "normal_tex" );
+   shd->normal_texcoord = glGetUniformLocation( shd->program, "normal_texcoord" );
    shd->normal_scale    = glGetUniformLocation( shd->program, "normal_scale" );
    shd->metallicFactor  = glGetUniformLocation( shd->program, "metallicFactor" );
    shd->roughnessFactor = glGetUniformLocation( shd->program, "roughnessFactor" );
@@ -1125,6 +1128,7 @@ int object_init (void)
    shd->clearcoat_roughness = glGetUniformLocation( shd->program, "clearcoat_roughness" );
    shd->emissive        = glGetUniformLocation( shd->program, "emissive" );
    shd->occlusion_tex   = glGetUniformLocation( shd->program, "occlusion_tex" );
+   shd->occlusion_texcoord = glGetUniformLocation( shd->program, "occlusion_texcoord" );
    shd->emissive_tex    = glGetUniformLocation( shd->program, "emissive_tex" );
    shd->emissive_texcoord = glGetUniformLocation( shd->program, "emissive_texcoord" );
    /* Special. */

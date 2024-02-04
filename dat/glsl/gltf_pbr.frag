@@ -253,7 +253,9 @@ vec3 get_normal (void)
    if (u_has_normal==false)
       return normalize(normal);
 
-   vec2 uv    = tex_coord0;
+   vec2 coords = (normal_texcoord ? tex_coord1 : tex_coord0);
+
+   vec2 uv    = coords;
    vec2 uv_dx = dFdx(uv);
    vec2 uv_dy = dFdy(uv);
 
@@ -271,7 +273,7 @@ vec3 get_normal (void)
       ng *= -1.0;
    }
 
-   vec3 n = texture(normal_tex, tex_coord0).rgb * vec3(normal_scale, normal_scale, 1.0) * 2.0 - vec3(1.0);
+   vec3 n = texture(normal_tex, coords).rgb * vec3(normal_scale, normal_scale, 1.0) * 2.0 - vec3(1.0);
    n = normalize( mat3(t, b, ng) * n);
 
    return n;
@@ -314,8 +316,8 @@ void main (void)
    /* Material values. */
    Material M;
    //M.albedo    = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
-   M.albedo    = baseColour * texture(baseColour_tex, tex_coord0);
-   vec4 metallicroughness = texture(metallic_tex, tex_coord0);
+   M.albedo    = baseColour * texture(baseColour_tex, (baseColour_texcoord ? tex_coord1 : tex_coord0));
+   vec4 metallicroughness = texture(metallic_tex, (metallic_texcoord ? tex_coord1: tex_coord0));
    M.perceptualRoughness = roughnessFactor * metallicroughness.g;
    M.roughness = M.perceptualRoughness * M.perceptualRoughness; /* Convert from perceptual roughness. */
    M.metallic  = metallicFactor * metallicroughness.b;
@@ -397,7 +399,7 @@ void main (void)
    }
 
    /* Ambient occlusion. */
-   float ao = texture(occlusion_tex, tex_coord0).r;
+   float ao = texture(occlusion_tex, (occlusion_texcoord ? tex_coord1 : tex_coord0)).r;
    f_diffuse *= ao;
 
    /* Do emissive. */
