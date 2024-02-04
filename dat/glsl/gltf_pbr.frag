@@ -9,9 +9,12 @@ const float M_PI        = 3.14159265358979323846;  /* pi */
 
 /* pbr_metallic_roughness */
 uniform sampler2D baseColour_tex; /**< Base colour. */
+uniform bool baseColour_texcoord;
 uniform sampler2D metallic_tex; /**< Metallic texture. */
+uniform bool metallic_texcoord;
 uniform bool u_has_normal; /**< Whether or not has a normal map. */
 uniform sampler2D normal_tex; /**< Normal map. */
+uniform bool normal_texcoord;
 uniform float normal_scale;
 uniform float metallicFactor;
 uniform float roughnessFactor;
@@ -28,6 +31,7 @@ uniform sampler2D emissive_tex; /**< Emission texture. */
 uniform bool emissive_texcoord;
 /* misc */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
+uniform bool occlusion_texcoord;
 uniform int u_blend;
 uniform vec3 u_ambient; /**< Ambient lighting. */
 uniform float u_waxiness;

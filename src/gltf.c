@@ -93,9 +93,12 @@ typedef struct Shader_ {
    GLuint u_time;
    /* Fragment uniforms. */
    GLuint baseColour_tex;
+   GLuint baseColour_texcoord;
    GLuint metallic_tex;
+   GLuint metallic_texcoord;
    GLuint u_has_normal;
    GLuint normal_tex;
+   GLuint normal_texcoord;
    GLuint normal_scale;
    GLuint metallicFactor;
    GLuint roughnessFactor;
@@ -108,6 +111,7 @@ typedef struct Shader_ {
    GLuint emissive_tex;
    GLuint emissive_texcoord;
    GLuint occlusion_tex;
+   GLuint occlusion_texcoord;
    ShaderLight lights[MAX_LIGHTS];
    GLuint nlights;
    GLuint blend;
@@ -533,8 +537,13 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glUniform1i( shd->blend,            mat->blend );
    glUniform1i( shd->u_has_normal,     (mat->normal_tex.tex!=tex_zero.tex) );
    glUniform1f( shd->normal_scale,     mat->normal_tex.strength );
-   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
    //glUniform1f( shd->waxiness, mat->waxiness );
+   /* Texture coordinates. */
+   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
+   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
+   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
+   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
+   glUniform1i( shd->emissive_texcoord,mat->emissive_tex.texcoord);
    gl_checkErr();
 
    /* Texture. */
