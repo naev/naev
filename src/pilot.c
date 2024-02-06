@@ -1970,7 +1970,17 @@ void pilot_render( Pilot *p )
       }
    }
 
+   /* Re-draw backwards trails. */
+   for (int i=0,g=0; g<array_size(p->ship->trail_emitters); g++) {
+      if (pilot_trail_generated( p, g )) {
+         if (p->trail[i]->ontop)
+            spfx_trail_draw( p->trail[i] );
+         i++;
+      }
+   }
+
 #ifdef DEBUGGING
+   /* Draw trail emitters on top in debug mode. */
    double dircos, dirsin;
    int debug_mark_emitter = debug_isFlag(DEBUG_MARK_EMITTER);
    vec2 v;
@@ -1978,11 +1988,7 @@ void pilot_render( Pilot *p )
       dircos = cos(p->solid.dir);
       dirsin = sin(p->solid.dir);
    }
-#endif /* DEBUGGING */
-
-   /* Re-draw backwards trails. */
    for (int i=0,g=0; g<array_size(p->ship->trail_emitters); g++) {
-#ifdef DEBUGGING
       if (debug_mark_emitter) {
          /* Visualize the trail emitters. */
          v.x = p->ship->trail_emitters[g].x_engine * dircos -
@@ -1998,14 +2004,8 @@ void pilot_render( Pilot *p )
          else
             gl_renderCross(x, y, 4, &cInert);
       }
-#endif /* DEBUGGING */
-
-      if (pilot_trail_generated( p, g )) {
-         if (p->trail[i]->ontop)
-            spfx_trail_draw( p->trail[i] );
-         i++;
-      }
    }
+#endif /* DEBUGGING */
 }
 
 /**
