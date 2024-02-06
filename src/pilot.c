@@ -1985,20 +1985,21 @@ void pilot_render( Pilot *p )
       static gl_vbo *poly_vbo = NULL;
       GLfloat data[1024];
       const CollPolyView *poly = poly_view( &p->ship->polygon, p->solid.dir );
-      size_t n = MIN( 512, poly->npt );
+      int n = MIN( 512, poly->npt );
+      size_t ndata =  n * sizeof(GLfloat) * 2;
       mat4 projection = gl_view_matrix;
 
       /* Set up the vector data. */
-      for (size_t i=0; i<n-1; i++) {
+      for (int i=0; i<n-1; i++) {
          data[i*2+0] = poly->x[i];
          data[i*2+1] = poly->y[i];
       }
 
       /* Upload to VBO, creating as necessary. */
       if (poly_vbo==NULL)
-         poly_vbo = gl_vboCreateDynamic( n, data );
+         poly_vbo = gl_vboCreateDynamic( ndata, data );
       else
-         gl_vboData( poly_vbo, n, data );
+         gl_vboData( poly_vbo, ndata, data );
 
       /* Draw. */
       glUseProgram( shaders.lines.program );
@@ -2006,8 +2007,7 @@ void pilot_render( Pilot *p )
       gl_vboActivateAttribOffset( gl_squareVBO, shaders.lines.vertex, 0, 2, GL_FLOAT, 0 );
 
       /* Do projection. */
-      mat4_translate_xy( &projection, x, y );
-      mat4_scale_xy( &projection, z, z );
+      mat4_translate_scale_xy( &projection, x, y, z*w, z*h );
       gl_uniformMat4( shaders.lines.projection, &projection );
 
       /* Do colour. */
