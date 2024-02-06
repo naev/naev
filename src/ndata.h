@@ -23,6 +23,7 @@
 #define SOUND_PATH               "snd/sounds/" /**< Location of the sounds. */
 #define COMMODITY_GFX_PATH       "gfx/commodity/" /**< Path to commodities graphics. */
 #define MAP_DECORATOR_GFX_PATH   "gfx/map/"
+#define SHIP_POLYGON_PATH3D      "collision/ship/" /**< Path to ship's collision polygon. */
 #define SHIP_POLYGON_PATH        "gfx/ship_polygon/" /**< Path to ship's collision polygon. */
 #define OUTFIT_POLYGON_PATH      "gfx/outfit/space_polygon/" /**< Path to outfit collision polygon. */
 #define ASTEROID_POLYGON_PATH    "gfx/spob/space/asteroid_polygon/" /**< Path to asteroid collision polygon. */

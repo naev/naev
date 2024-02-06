@@ -497,7 +497,10 @@ static int ship_loadPLG( Ship *temp, const char *buf )
    xmlDocPtr doc;
    xmlNodePtr node;
 
-   snprintf( file, sizeof(file), "%s%s.xml", SHIP_POLYGON_PATH, buf );
+   if (temp->gfx_3d != NULL)
+      snprintf( file, sizeof(file), "%s%s.xml", SHIP_POLYGON_PATH3D, buf );
+   else
+      snprintf( file, sizeof(file), "%s%s.xml", SHIP_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
    if (!PHYSFS_exists(file)) {
@@ -693,11 +696,11 @@ static int ship_parse( Ship *temp, const char *filename )
 
          xmlr_attr_int(node, "noengine", noengine );
 
-         /* Load the polygon, run before graphics!. */
-         ship_loadPLG( temp, buf );
-
          /* Load the graphics. */
          ship_loadGFX( temp, buf, temp->sx, temp->sy, !noengine );
+
+         /* Load the polygon, run after graphics!. */
+         ship_loadPLG( temp, buf );
 
          continue;
       }
@@ -718,14 +721,14 @@ static int ship_parse( Ship *temp, const char *filename )
          xmlr_attr_int_def( node, "sx", temp->sx, 8 );
          xmlr_attr_int_def( node, "sy", temp->sy, 8 );
 
+         /* Load the graphics. */
+         ship_loadSpaceImage( temp, str, temp->sx, temp->sy );
+
          /* Get polygon. */
          xmlr_attr_strd( node, "polygon", plg );
          if (plg)
             ship_loadPLG( temp, plg );
          free( plg );
-
-         /* Load the graphics. */
-         ship_loadSpaceImage( temp, str, temp->sx, temp->sy );
 
          continue;
       }
