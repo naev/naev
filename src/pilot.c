@@ -1979,30 +1979,70 @@ void pilot_render( Pilot *p )
       }
    }
 
+   /* Useful debug stuff below. */
 #ifdef DEBUGGING
+   if (debug_isFlag(DEBUG_MARK_COLLISION)) {
+      static gl_vbo *poly_vbo = NULL;
+      GLfloat data[1024];
+      const CollPolyView *poly = poly_view( &p->ship->polygon, p->solid.dir );
+      size_t n = MIN( 512, poly->npt );
+      mat4 projection = gl_view_matrix;
+
+      /* Set up the vector data. */
+      for (size_t i=0; i<n-1; i++) {
+         data[i*2+0] = poly->x[i];
+         data[i*2+1] = poly->y[i];
+      }
+
+      /* Upload to VBO, creating as necessary. */
+      if (poly_vbo==NULL)
+         poly_vbo = gl_vboCreateDynamic( n, data );
+      else
+         gl_vboData( poly_vbo, n, data );
+
+      /* Draw. */
+      glUseProgram( shaders.lines.program );
+      glEnableVertexAttribArray( shaders.lines.vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.lines.vertex, 0, 2, GL_FLOAT, 0 );
+
+      /* Do projection. */
+      mat4_translate_xy( &projection, x, y );
+      mat4_scale_xy( &projection, z, z );
+      gl_uniformMat4( shaders.lines.projection, &projection );
+
+      /* Do colour. */
+      gl_uniformColour( shaders.lines.colour, &cWhite );
+
+      /* Draw. */
+      glDrawArrays( GL_LINE_LOOP, 0, n );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.lines.vertex );
+
+      gl_checkErr();
+      glUseProgram(0);
+   }
+
    /* Draw trail emitters on top in debug mode. */
-   double dircos, dirsin;
-   int debug_mark_emitter = debug_isFlag(DEBUG_MARK_EMITTER);
-   vec2 v;
-   if (debug_mark_emitter) {
+   if (debug_isFlag(DEBUG_MARK_EMITTER)) {
+      double dircos, dirsin;
+      vec2 v;
       dircos = cos(p->solid.dir);
       dirsin = sin(p->solid.dir);
-   }
-   for (int i=0,g=0; g<array_size(p->ship->trail_emitters); g++) {
-      if (debug_mark_emitter) {
-         /* Visualize the trail emitters. */
-         v.x = p->ship->trail_emitters[g].x_engine * dircos -
-              p->ship->trail_emitters[g].y_engine * dirsin;
-         v.y = p->ship->trail_emitters[g].x_engine * dirsin +
-              p->ship->trail_emitters[g].y_engine * dircos +
-              p->ship->trail_emitters[g].h_engine;
+      for (int i=0,g=0; g<array_size(p->ship->trail_emitters); g++) {
+            /* Visualize the trail emitters. */
+            v.x = p->ship->trail_emitters[g].x_engine * dircos -
+               p->ship->trail_emitters[g].y_engine * dirsin;
+            v.y = p->ship->trail_emitters[g].x_engine * dirsin +
+               p->ship->trail_emitters[g].y_engine * dircos +
+               p->ship->trail_emitters[g].h_engine;
 
-         gl_gameToScreenCoords( &x, &y, p->solid.pos.x + v.x,
-                                p->solid.pos.y + v.y*M_SQRT1_2 );
-         if (p->ship->trail_emitters[i].trail_spec->nebula)
-            gl_renderCross(x, y, 2, &cFontBlue);
-         else
-            gl_renderCross(x, y, 4, &cInert);
+            gl_gameToScreenCoords( &x, &y, p->solid.pos.x + v.x,
+                                 p->solid.pos.y + v.y*M_SQRT1_2 );
+            if (p->ship->trail_emitters[i].trail_spec->nebula)
+               gl_renderCross(x, y, 2, &cFontBlue);
+            else
+               gl_renderCross(x, y, 4, &cInert);
       }
    }
 #endif /* DEBUGGING */

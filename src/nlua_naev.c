@@ -31,6 +31,7 @@
 #include "player.h"
 #include "plugin.h"
 #include "semver.h"
+#include "debug.h"
 
 static int cache_table = LUA_NOREF; /* No reference. */
 
@@ -72,6 +73,8 @@ static int naevL_unit( lua_State *L );
 static int naevL_quadtreeParams( lua_State *L );
 #if DEBUGGING
 static int naevL_envs( lua_State *L );
+static int naevL_debugTrails( lua_State *L );
+static int naevL_debugCollisions( lua_State *L );
 #endif /* DEBUGGING */
 static const luaL_Reg naev_methods[] = {
    { "version", naevL_version },
@@ -111,6 +114,8 @@ static const luaL_Reg naev_methods[] = {
    { "quadtreeParams", naevL_quadtreeParams },
 #if DEBUGGING
    { "envs", naevL_envs },
+   { "debugTrails", naevL_debugTrails },
+   { "debugCollisions", naevL_debugCollisions },
 #endif /* DEBUGGING */
    {0,0}
 }; /**< Naev Lua methods. */
@@ -934,5 +939,40 @@ static int naevL_envs( lua_State *L )
 {
    nlua_pushEnvTable( L );
    return 1;
+}
+
+/**
+ * @brief Toggles the trail emitters.
+ *
+ * @usage naev.debugTrails() -- Trail emitters are marked with crosses.
+ * @usage naev.debugTrails(false) -- Remove the markers.
+ *
+ *    @luatparam[opt=true] boolean state Whether to set or unset markers.
+ * @luafunc debugTrails
+ */
+static int naevL_debugTrails( lua_State *L )
+{
+   int state = (lua_gettop(L) > 0) ? lua_toboolean(L,1) : 1;
+   if (state)
+      debug_setFlag(DEBUG_MARK_EMITTER);
+   else
+      debug_rmFlag(DEBUG_MARK_EMITTER);
+   return 0;
+}
+
+/**
+ * @brief Toggles the collision polygons.
+ *
+ *    @luatparam[opt=true] boolean state Whether or not to show the collision polygons.
+ * @luafunc debugCollisions
+ */
+static int naevL_debugCollisions( lua_State *L )
+{
+   int state = (lua_gettop(L) > 0) ? lua_toboolean(L,1) : 1;
+   if (state)
+      debug_setFlag(DEBUG_MARK_COLLISION);
+   else
+      debug_rmFlag(DEBUG_MARK_COLLISION);
+   return 0;
 }
 #endif /* DEBUGGING */
