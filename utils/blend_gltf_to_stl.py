@@ -26,9 +26,11 @@ for obj in bpy.data.objects:
 # Select only body, ignore engines and other things
 # TODO support for collision shapes
 selected = False
-for i in bpy.data.objects:
-    if i.name != "body":
-        continue
+scene = bpy.data.scenes[0]
+for s in bpy.data.scenes:
+    if s.name=="base":
+        scene = s
+for i in scene.objects:
     i.select_set(True)
     selected = True
 if not selected:

@@ -656,6 +656,7 @@ def generateXML( polygon, address ):
     myfile = open(address, "w")
     myfile.write(mydata.decode("utf-8") )
     myfile.close()
+    print(f"   Saved to {address}!")
 
 # Generates polygon for all outfits
 def polygonify_all_outfits(gfxPath, polyPath, overwrite):
@@ -745,7 +746,7 @@ def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
         generateXML(polygon,polyAddress)
 
 
-def polygonify_ship( filename, outpath, use_3d=True ):
+def polygonify_ship( filename, outpath, use2d=True, use3d=True ):
     root = ET.parse( filename ).getroot()
     name = root.get('name')
     cls = root.find( "class" ).text
@@ -755,14 +756,14 @@ def polygonify_ship( filename, outpath, use_3d=True ):
             outname = f"{outpath}/ship/{tag.text}.xml"
 
         pntNplg = None
-        if use_3d:
+        if use3d:
             # Try 3D first
             gltfpath = f"artwork/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
             gltfpath = os.getenv("HOME")+f"/.local/share/naev/plugins/3dtest/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
             if os.path.isfile(gltfpath):
                 pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
         # Fall back to image
-        if not use_3d or pntNplg==None:
+        if use2d and pntNplg==None:
             print("Failed to find 3D model, falling back to 2D")
             imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
             if not os.path.isfile(imgpath):
@@ -777,6 +778,11 @@ def polygonify_ship( filename, outpath, use_3d=True ):
                 minlen = 4
                 maxlen = 8
             pntNplg = polygonFromImg( img, sx, sy, alpha_threshold, minlen, maxlen )
+
+        # Not generated
+        if pntNplg==None:
+            print(f"Skipping '{filename}'...")
+            return None
 
         # Now Generate the
         polygon = pntNplg[1]
@@ -798,7 +804,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
     parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
     parser.add_argument('--outpath', type=str, default="dat/polygon" )
-    parser.add_argument("--use_3d", type=bool, default=True )
+    parser.add_argument("--use2d", default=True, action=argparse.BooleanOptionalAction )
+    parser.add_argument("--use3d", default=True, action=argparse.BooleanOptionalAction )
     parser.add_argument("--compare", action=argparse.BooleanOptionalAction )
     args, unknown = parser.parse_known_args()
 
@@ -833,35 +840,4 @@ if __name__ == "__main__":
     # Normal mode we just try to process the files
     for a in args.path:
         print(f"Processing {a}...")
-        polygonify_ship( a, args.outpath, args.use_3d )
-
-    """
-    # Special cases where we use spob assets for ships
-    polygonify_single( inpath, 'spob/space/000.webp', outpath, overwrite=overwrite )
-    polygonify_single( inpath, 'spob/space/002.webp', outpath, overwrite=overwrite )
-    polygonify_single( inpath, 'spob/space/station-battlestation.webp', outpath, overwrite=overwrite )
-    polygonify_single( inpath, 'spob/space/derelict_goddard.webp', outpath, minlen=1, overwrite=overwrite )
-    # All ships
-    polygonify_all_ships( inpath, 'ship/', outpath, overwrite=overwrite )
-    # All outfits
-    polygonify_all_outfits( inpath, 'outfit/space/', outpath+'gfx/outfit/space_polygon/', overwrite=overwrite )
-    # All Asteroids
-    polygonify_all_asteroids( inpath, 'spob/space/asteroid/', outpath+'gfx/spob/space/asteroid_polygon/', overwrite=overwrite )
-
-    # Use the above stuff to generate only one ship or outfit polygon :
-
-    #pntNplg = polygonFromImg('../../../naev-artwork-production/gfx/spob/space/asteroid/asteroid-D51.webp',1,1,50,3,6)
-    #pntNplg = polygonFromImg('../../../naev-artwork-production/gfx/spob/space/asteroid/asteroid-D51_bis.png',1,1,50,3,6)
-    #pntNplg = polygonFromImg('../naev/dat/gfx/ship/shark/shark.png',8,8,50,3,6)
-    #pntNplg = polygonFromImg('../../../naev/dat/gfx/outfit/space/caesar.png',6,6,1,2,4)
-
-#    points  = pntNplg[0]
-#    polygon = pntNplg[1]
-#
-#    poly = polygon[0]
-#
-#    plt.scatter(points[0][0],points[1][0])
-#    plt.scatter(polygon[1][0],polygon[2][0])
-
-    #generateXML(polygon,'caesar.xml')
-    """
+        polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d )
