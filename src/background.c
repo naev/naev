@@ -502,6 +502,9 @@ static void background_clearCurrent (void)
  */
 void background_clear (void)
 {
+   /* Reset ambient lighting. */
+   object_lightAmbient( 0., 0., 0. );
+
    /* Destroy current background script. */
    background_clearCurrent();
 
