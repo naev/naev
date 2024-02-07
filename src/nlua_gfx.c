@@ -1047,9 +1047,10 @@ static int gfxL_lightAmbient( lua_State *L )
    double r, g, b;
    if (lua_iscolour(L,1)) {
       const glColour *c = lua_tocolour(L,1);
-      r = c->r;
-      g = c->g;
-      b = c->b;
+      /* Premultiply alpha. */
+      r = c->r * c->a;
+      g = c->g * c->a;
+      b = c->b * c->a;
    }
    else {
       r = luaL_checknumber(L,1);
