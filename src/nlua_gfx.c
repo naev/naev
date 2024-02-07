@@ -28,6 +28,7 @@
 #include "nluadef.h"
 #include "opengl.h"
 #include "array.h"
+#include "gltf.h"
 
 /* GFX methods. */
 static int gfxL_dim( lua_State *L );
@@ -55,6 +56,7 @@ static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
 static int gfxL_setBlendMode( lua_State *L );
 static int gfxL_setScissor( lua_State *L );
+static int gfxL_lightAmbient( lua_State *L );
 static int gfxL_screenshot( lua_State *L );
 static const luaL_Reg gfxL_methods[] = {
    /* Information. */
@@ -82,6 +84,8 @@ static const luaL_Reg gfxL_methods[] = {
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
+   /* 3D rendering. */
+   { "lightAmbient", gfxL_lightAmbient },
    /* Misc. */
    { "setBlendMode", gfxL_setBlendMode },
    { "setScissor", gfxL_setScissor },
@@ -1028,4 +1032,30 @@ static int gfxL_screenshot( lua_State * L )
    if (mustfree)
       free( lc );
    return 1;
+}
+
+/**
+ * @brief Sets the ambient lighting.
+ *
+ *    @luatparam Colour|number r Colour or red channel to use for ambient lighting.
+ *    @luatparam[opt=r] number g Green channel to use for ambient lighting.
+ *    @luatparam[opt=r] number b Blue channel to use  for ambient lighting.
+ * @func lightAmbient
+ */
+static int gfxL_lightAmbient( lua_State *L )
+{
+   double r, g, b;
+   if (lua_iscolour(L,1)) {
+      const glColour *c = lua_tocolour(L,1);
+      r = c->r;
+      g = c->g;
+      b = c->b;
+   }
+   else {
+      r = luaL_checknumber(L,1);
+      g = luaL_optnumber(L,2,r);
+      b = luaL_optnumber(L,3,r);
+   }
+   object_lightAmbient( r, g, b );
+   return 0;
 }
