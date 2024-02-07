@@ -1209,12 +1209,22 @@ void object_lightAmbient( double r, double g, double b )
 {
    const double factor = 1.0/M_PI;
    const Shader *shd = &object_shader;
-   ambient.v[0] = r * factor;
-   ambient.v[1] = g * factor;
-   ambient.v[2] = b * factor;
+   ambient.v[0] = r;
+   ambient.v[1] = g;
+   ambient.v[2] = b;
    glUseProgram( shd->program );
-   glUniform3f( shd->u_ambient, ambient.v[0], ambient.v[1], ambient.v[2] );
+   glUniform3f( shd->u_ambient, ambient.v[0]*factor, ambient.v[1]*factor, ambient.v[2]*factor );
    glUseProgram( 0 );
+}
+
+/**
+ * @brief Gets the ambient light values.
+ */
+void object_lightAmbientGet( double *r, double *g, double *b )
+{
+   *r = ambient.v[0];
+   *g = ambient.v[1];
+   *b = ambient.v[2];
 }
 
 GLuint object_shadowmap( int light )

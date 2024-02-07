@@ -124,6 +124,7 @@ void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H,
 
 /* Lighting. */
 void object_lightAmbient( double r, double g, double b );
+void object_lightAmbientGet( double *r, double *g, double *b );
 
 /* Misc functions. */
 GLuint object_shadowmap( int light );

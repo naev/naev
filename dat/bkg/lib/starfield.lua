@@ -162,7 +162,11 @@ function starfield.init( params )
 
    if not params.nolocalstars then
       add_local_stars()
+      -- TODO 3D lighting
    end
+
+   -- Default to some weak ambient light
+   gfx.lightAmbient( 0.1 )
 end
 
 function starfield.canvas ()

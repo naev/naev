@@ -57,6 +57,7 @@ static int gfxL_printText( lua_State *L );
 static int gfxL_setBlendMode( lua_State *L );
 static int gfxL_setScissor( lua_State *L );
 static int gfxL_lightAmbient( lua_State *L );
+static int gfxL_lightAmbientGet( lua_State *L );
 static int gfxL_screenshot( lua_State *L );
 static const luaL_Reg gfxL_methods[] = {
    /* Information. */
@@ -86,6 +87,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "printText", gfxL_printText },
    /* 3D rendering. */
    { "lightAmbient", gfxL_lightAmbient },
+   { "lightAmbientGet", gfxL_lightAmbientGet },
    /* Misc. */
    { "setBlendMode", gfxL_setBlendMode },
    { "setScissor", gfxL_setScissor },
@@ -1040,7 +1042,7 @@ static int gfxL_screenshot( lua_State * L )
  *    @luatparam Colour|number r Colour or red channel to use for ambient lighting.
  *    @luatparam[opt=r] number g Green channel to use for ambient lighting.
  *    @luatparam[opt=r] number b Blue channel to use  for ambient lighting.
- * @func lightAmbient
+ * @luafunc lightAmbient
  */
 static int gfxL_lightAmbient( lua_State *L )
 {
@@ -1059,4 +1061,22 @@ static int gfxL_lightAmbient( lua_State *L )
    }
    object_lightAmbient( r, g, b );
    return 0;
+}
+
+/**
+ * @brief Gets the ambient lighting values.
+ *
+ *    @luatreturn number r Red colour value.
+ *    @luatreturn number g Green colour value.
+ *    @luatreturn number b Blue colour value.
+ * @luafunc lightAmbientGet
+ */
+static int gfxL_lightAmbientGet( lua_State *L )
+{
+   double r, g, b;
+   object_lightAmbientGet( &r, &g, &b );
+   lua_pushnumber( L, r );
+   lua_pushnumber( L, g );
+   lua_pushnumber( L, b );
+   return 3;
 }

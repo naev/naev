@@ -115,6 +115,8 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    end
    sov = bgshaders.init( shader_ov, sf, {nobright=true} )
 
+   gfx.lightAmbient( colour.new(92/255, 230/255, 23/255, 0.3) )
+
    -- Set some fancy effects
    --[[
    audio.setEffect( "haze", require("reverb_preset").forest() )
