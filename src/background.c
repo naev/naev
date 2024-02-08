@@ -425,8 +425,6 @@ static nlua_env background_create( const char *name )
  */
 int background_init (void)
 {
-   /* Load Lua. */
-   bkg_def_env = background_create( "default" );
    return 0;
 }
 
