@@ -29,6 +29,9 @@ function background ()
 
    -- Default nebula background
    background_default()
+
+   -- Ambient light is coloured now
+   gfx.lightAmbient( colour.new(0.9, 0.475, 0.95, 0.2) )
 end
 
 function renderfg( dt )

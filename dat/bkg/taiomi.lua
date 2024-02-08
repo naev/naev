@@ -197,6 +197,9 @@ function background ()
 
    -- Default nebula background (no star)
    starfield.init{ nolocalstars = true }
+
+   -- Almost no ambient
+   gfx.lightAmbient( 0.02 )
 end
 local function update ()
    -- Calculate player motion
