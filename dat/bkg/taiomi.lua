@@ -199,7 +199,7 @@ function background ()
    starfield.init{ nolocalstars = true }
 
    -- Almost no ambient
-   gfx.lightAmbient( 0.02 )
+   gfx.lightAmbient( 0.2 )
 end
 local function update ()
    -- Calculate player motion

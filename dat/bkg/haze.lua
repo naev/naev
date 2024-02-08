@@ -69,7 +69,7 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    audio.setGlobalDopplerFactor( 0.6 ) -- More than normal
 
    -- Ambient light is coloured now
-   gfx.lightAmbient( colour.new(0xE5/0xFF, 0x1A/0xFF, 0x4C/0xFF, 0.2) )
+   gfx.lightAmbient( 0xE5/0xFF, 0x1A/0xFF, 0x4C/0xFF, 2 )
 end
 
 function renderov( dt )

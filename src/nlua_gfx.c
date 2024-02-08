@@ -1039,9 +1039,10 @@ static int gfxL_screenshot( lua_State * L )
 /**
  * @brief Sets the ambient lighting.
  *
- *    @luatparam Colour|number r Colour or red channel to use for ambient lighting.
+ *    @luatparam Colour|number r Colour or red channel to use for ambient lighting. In the case of a colour, the alpha channel is used as the radiance value of the ambient light.
  *    @luatparam[opt=r] number g Green channel to use for ambient lighting.
  *    @luatparam[opt=r] number b Blue channel to use  for ambient lighting.
+ *    @luatparam[opt] number strength If defined, normalizes the values of r, g, and b so that the total radiance is equal to strength. If not, the values of r, g, and b are considered to be radiance values.
  * @luafunc lightAmbient
  */
 static int gfxL_lightAmbient( lua_State *L )
@@ -1049,15 +1050,22 @@ static int gfxL_lightAmbient( lua_State *L )
    double r, g, b;
    if (lua_iscolour(L,1)) {
       const glColour *c = lua_tocolour(L,1);
+      double n = c->a * sqrt( pow2(c->r)+pow2(c->g)+pow2(c->b) );
       /* Premultiply alpha. */
-      r = c->r * c->a;
-      g = c->g * c->a;
-      b = c->b * c->a;
+      r = c->r * n;
+      g = c->g * n;
+      b = c->b * n;
    }
    else {
       r = luaL_checknumber(L,1);
       g = luaL_optnumber(L,2,r);
       b = luaL_optnumber(L,3,r);
+      if (!lua_isnoneornil(L,4)) {
+         double n = luaL_checknumber(L,4) / sqrt(pow2(r)+pow2(g)+pow2(b));
+         r *= n;
+         g *= n;
+         b *= n;
+      }
    }
    object_lightAmbient( r, g, b );
    return 0;
