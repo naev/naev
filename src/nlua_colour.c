@@ -143,7 +143,7 @@ int lua_iscolour( lua_State *L, int ind )
  */
 static int colL_eq( lua_State *L )
 {
-   glColour *c1, *c2;
+   const glColour *c1, *c2;
    c1 = luaL_checkcolour(L,1);
    c2 = luaL_checkcolour(L,2);
    lua_pushboolean( L, (memcmp( c1, c2, sizeof(glColour) )==0) );
@@ -227,7 +227,7 @@ static int colL_new( lua_State *L )
  */
 static int colL_alpha( lua_State *L )
 {
-   glColour *col = luaL_checkcolour(L,1);
+   const glColour *col = luaL_checkcolour(L,1);
    lua_pushnumber( L, col->a );
    return 1;
 }
@@ -248,7 +248,7 @@ static int colL_alpha( lua_State *L )
  */
 static int colL_rgb( lua_State *L )
 {
-   glColour *col = luaL_checkcolour(L,1);
+   const glColour *col = luaL_checkcolour(L,1);
    if (lua_toboolean(L,2)) {
       lua_pushnumber( L, linearToGamma( col->r ) );
       lua_pushnumber( L, linearToGamma( col->g ) );
