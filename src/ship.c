@@ -474,6 +474,7 @@ static int ship_generateStore( Ship *temp )
    double dir = M_PI + M_PI_4;
    snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
    gl_contextSet();
+   object_light( 2., 2., 2., 0.8 );
    gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
    gl_fboCreate( &fbo, &tex, temp->size / gl_screen.scale, temp->size / gl_screen.scale );
    ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., tsx, tsy, NULL );

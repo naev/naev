@@ -916,8 +916,7 @@ static void equipment_renderShip( double bx, double by,
 {
    Pilot *p;
    int w, h;
-   double px, py;
-   double pw, ph;
+   double px, py, pw, ph, lr, lg, lb, li;
    vec2 v;
    GLint fbo;
    const unsigned int *wid = data;
@@ -960,7 +959,10 @@ static void equipment_renderShip( double bx, double by,
 
    /* Use framebuffer to draw, have to use an additional one. */
    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
+   object_lightGet( &lr, &lg, &lb, &li );
+   object_light( 2., 2., 2., 0.8 );
    pilot_renderFramebuffer( p, gl_screen.fbo[4], gl_screen.nw, gl_screen.nh );
+   object_light( lr, lg, lb, li );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    gl_renderTextureRaw( gl_screen.fbo_tex[4], 0,
          px, py, pw, ph,

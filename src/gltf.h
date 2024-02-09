@@ -123,8 +123,12 @@ void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, do
 void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H, double time, double size, unsigned int flags );
 
 /* Lighting. */
+void object_light( double r, double g, double b, double intensity );
+void object_lightGet( double *r, double *g, double *b, double *intensity );
 void object_lightAmbient( double r, double g, double b );
 void object_lightAmbientGet( double *r, double *g, double *b );
+void object_lightIntensity( double strength );
+double object_lightIntensityGet (void);
 
 /* Misc functions. */
 GLuint object_shadowmap( int light );

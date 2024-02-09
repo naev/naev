@@ -34,7 +34,7 @@
 static Material material_default;
 
 /**
- * @brief Simple point light model.
+ * @brief Simple point light model for shaders.
  */
 typedef struct ShaderLight_ {
    GLuint Hshadow;   /* mat4 */
@@ -45,11 +45,13 @@ typedef struct ShaderLight_ {
    GLuint shadowmap_tex; /* sampler2D */
 } ShaderLight;
 
+/**
+ * @brief Simple point light model.
+ */
 typedef struct Light_ {
-   vec3 pos;
-   double intensity;
-   double range;
-   vec3 colour;
+   vec3 pos;         /**< Position of the light in normalized coordinates. */
+   double intensity; /**< Radiosity of the lights. */
+   vec3 colour;      /**< Light colour. */
    GLuint fbo;
    GLuint tex;
 } Light;
@@ -58,23 +60,21 @@ typedef struct Light_ {
 static Light lights[MAX_LIGHTS] = {
    {
       .pos = { .v = {5., 2., 0.} },
-      .range = -1.,
       .colour = { .v = {1., 1., 1.} },
       .intensity = 150.,
    },
    {
       .pos = { .v = {0.5, 0.15, -2.0} },
-      .range = -1.,
       .colour = { .v = {1., 1., 1.} },
       .intensity = 10.,
    },
    {
       .pos = { .v = {-0.5, 0.15, -2.0} },
-      .range = -1.,
       .colour = { .v = {1., 1., 1.} },
       .intensity = 10.,
    },
 };
+static double light_intensity = 1.;
 static vec3 ambient = { .v = {0., 0., 0.} };
 
 /**
@@ -131,6 +131,10 @@ static GLuint shadow_tex;
 static Shader shadow_shader_blurX;
 static Shader shadow_shader_blurY;
 
+/*
+ * Prototypes.
+ */
+static void object_lightSetup( int doambient, int dogeneral );
 
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
@@ -761,6 +765,7 @@ void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, do
 void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H, double time, double size, unsigned int flags )
 {
    (void) time; /* TODO implement animations. */
+   (void) flags;
    if (scene < 0)
       return;
    const GLfloat sca = 1.0/obj->radius;
@@ -781,30 +786,14 @@ void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H,
    /* Some constant stuff. */
    const Shader *shd = &object_shader;
    glUseProgram( shd->program );
-   /* Lighting. */
-   if (flags & OBJECT_FLAG_NOLIGHTS) {
-      glUniform1i( shd->nlights, 0 );
-   }
-   else {
-      glUniform1i( shd->nlights, MAX_LIGHTS );
-      for (int i=0; i<MAX_LIGHTS; i++) {
-         const Light *l = &lights[i];
-         const ShaderLight *sl = &shd->lights[i];
-         glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
-         glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
-         glUniform1f( sl->intensity, l->intensity );
-      }
-   }
 
    /* Depth testing. */
    glEnable( GL_DEPTH_TEST );
    glDepthFunc( GL_LESS );
 
-   /* Only render shadows if applicable. */
-   if (!(flags & OBJECT_FLAG_NOLIGHTS)) {
-      for (int i=0; i<MAX_LIGHTS; i++)
-         object_renderShadow( obj, scene, &Hptr, &lights[i], time );
-   }
+   /* TODO only render shadows if applicable. */
+   for (int i=0; i<MAX_LIGHTS; i++)
+      object_renderShadow( obj, scene, &Hptr, &lights[i], time );
 
    glViewport( 0, 0, size, size );
    glBindFramebuffer(GL_FRAMEBUFFER, fb);
@@ -1176,7 +1165,8 @@ int object_init (void)
       sl->Hshadow         = glGetUniformLocation( shd->program, buf );
    }
    shd->nlights         = glGetUniformLocation( shd->program, "u_nlights" );
-   glUseProgram(0);
+   /* Light default values set on init. */
+   object_lightSetup( 1, 1 ); /* Unsets the program. */
    gl_checkErr();
 
    return 0;
@@ -1201,19 +1191,57 @@ void object_exit (void)
    glDeleteProgram( shadow_shader.program );
 }
 
+static void object_lightSetup( int doambient, int dogeneral )
+{
+   const Shader *shd = &object_shader;
+   /* Skip if not initialized. */
+   if (tex_zero.tex==0)
+      return;
+   glUseProgram( shd->program );
+   if (doambient) {
+      const double factor = 1.0/M_PI;
+      glUniform3f( shd->u_ambient, ambient.v[0]*factor, ambient.v[1]*factor, ambient.v[2]*factor );
+   }
+   if (dogeneral) {
+      glUniform1i( shd->nlights, MAX_LIGHTS );
+      for (int i=0; i<MAX_LIGHTS; i++) {
+         const Light *l = &lights[i];
+         const ShaderLight *sl = &shd->lights[i];
+         glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
+         glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
+         glUniform1f( sl->intensity, l->intensity * light_intensity );
+      }
+   }
+   glUseProgram(0);
+   gl_checkErr();
+}
+
+void object_light( double r, double g, double b, double intensity )
+{
+   ambient.v[0] = r;
+   ambient.v[1] = g;
+   ambient.v[2] = b;
+   light_intensity = intensity;
+   object_lightSetup( 1, 1 );
+}
+
+void object_lightGet( double *r, double *g, double *b, double *intensity )
+{
+   *r = ambient.v[0];
+   *g = ambient.v[1];
+   *b = ambient.v[2];
+   *intensity = light_intensity;
+}
+
 /**
  * @brief Sets the ambient colour. Should be multiplied by intensity.
  */
 void object_lightAmbient( double r, double g, double b )
 {
-   const double factor = 1.0/M_PI;
-   const Shader *shd = &object_shader;
    ambient.v[0] = r;
    ambient.v[1] = g;
    ambient.v[2] = b;
-   glUseProgram( shd->program );
-   glUniform3f( shd->u_ambient, ambient.v[0]*factor, ambient.v[1]*factor, ambient.v[2]*factor );
-   glUseProgram( 0 );
+   object_lightSetup( 1, 0 );
 }
 
 /**
@@ -1226,6 +1254,26 @@ void object_lightAmbientGet( double *r, double *g, double *b )
    *b = ambient.v[2];
 }
 
+/**
+ * @brief Sets the general light intensity.
+ */
+void object_lightIntensity( double strength )
+{
+   light_intensity = strength;
+   object_lightSetup( 0, 1 );
+}
+
+/**
+ * @brief Gets the general light intensity.
+ */
+double object_lightIntensityGet (void)
+{
+   return light_intensity;
+}
+
+/**
+ * @brief Gets the shadow map texture.
+ */
 GLuint object_shadowmap( int light )
 {
    return lights[light].tex;

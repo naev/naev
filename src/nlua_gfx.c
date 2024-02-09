@@ -58,6 +58,8 @@ static int gfxL_setBlendMode( lua_State *L );
 static int gfxL_setScissor( lua_State *L );
 static int gfxL_lightAmbient( lua_State *L );
 static int gfxL_lightAmbientGet( lua_State *L );
+static int gfxL_lightIntensity( lua_State *L );
+static int gfxL_lightIntensityGet( lua_State *L );
 static int gfxL_screenshot( lua_State *L );
 static const luaL_Reg gfxL_methods[] = {
    /* Information. */
@@ -88,6 +90,8 @@ static const luaL_Reg gfxL_methods[] = {
    /* 3D rendering. */
    { "lightAmbient", gfxL_lightAmbient },
    { "lightAmbientGet", gfxL_lightAmbientGet },
+   { "lightIntensity", gfxL_lightIntensity },
+   { "lightIntensityGet", gfxL_lightIntensityGet },
    /* Misc. */
    { "setBlendMode", gfxL_setBlendMode },
    { "setScissor", gfxL_setScissor },
@@ -1087,4 +1091,28 @@ static int gfxL_lightAmbientGet( lua_State *L )
    lua_pushnumber( L, g );
    lua_pushnumber( L, b );
    return 3;
+}
+
+/**
+ * @brief Sets the intensity of the main lights excluding ambient lighting. Multiplies the default radiosity values.
+ *
+ *    @luatparam number intensity Intensity to set the lights to.
+ * @luafunc lightIntensity
+ */
+static int gfxL_lightIntensity( lua_State *L )
+{
+   object_lightIntensity( luaL_checknumber(L,1) );
+   return 0;
+}
+
+/**
+ * @brief Gets the light intensity.
+ *
+ *    @luatreturn number Light intensity.
+ * @luafunc lightIntensityGet
+ */
+static int gfxL_lightIntensityGet( lua_State *L )
+{
+   lua_pushnumber( L, object_lightIntensityGet() );
+   return 1;
 }
