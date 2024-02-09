@@ -32,6 +32,7 @@ function background ()
 
    -- Ambient light is coloured now
    gfx.lightAmbient( 0.9, 0.475, 0.95, 0.2, 2 )
+   gfx.lightIntensity( 0.6 )
 end
 
 function renderfg( dt )

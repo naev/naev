@@ -200,6 +200,7 @@ function background ()
 
    -- Almost no ambient
    gfx.lightAmbient( 0.2 )
+   gfx.lightIntensity( 1.3 )
 end
 local function update ()
    -- Calculate player motion

@@ -389,6 +389,10 @@ void nebu_prep( double density, double volatility, double hue )
 
    NTracingZone( _ctx, 1 );
 
+   /* Set up ambient colour. */
+   col_hsv2rgb( &col, nebu_hue*360., 1., 1.  );
+   object_light( 3.0*col.r, 3.0*col.g, 3.0*col.b, 0.5 );
+
    /* Set the hue. */
    nebu_hue = hue;
    glUseProgram(shaders.nebula.program);

@@ -1597,23 +1597,6 @@ void space_init( const char* sysname, int do_simulate )
       if (cur_system->nebu_volatility > 0.)
          player_message(_("#rWARNING - Volatile nebula detected in %s! Taking %.1f %s damage!"), _(sysname), cur_system->nebu_volatility, UNIT_POWER );
       free(nt);
-
-      /* Handle background */
-      if ((cur_system->nebu_density > 0.) || sys_isFlag(cur_system, SYSTEM_NEBULATRAIL)) {
-         /* Background is Nebula */
-         nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility, cur_system->nebu_hue );
-      }
-      if (cur_system->nebu_density > 0.) {
-         /* Set up sound. */
-         sound_env( SOUND_ENV_NEBULA, cur_system->nebu_density );
-      }
-      else {
-         /* Background is starry */
-         background_initDust( cur_system->spacedust );
-
-         /* Set up sound. */
-         sound_env( SOUND_ENV_NORMAL, 0. );
-      }
    }
 
    /* Update after setting cur_system. */
@@ -1709,8 +1692,23 @@ void space_init( const char* sysname, int do_simulate )
    /* Update gui. */
    gui_setSystem();
 
-   /* Start background. */
-   background_load( cur_system->background );
+   /* Handle background */
+   if ((cur_system->nebu_density > 0.) || sys_isFlag(cur_system, SYSTEM_NEBULATRAIL)) {
+      /* Background is Nebula */
+      nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility, cur_system->nebu_hue );
+   }
+   if (cur_system->nebu_density > 0.) {
+      /* Set up sound. */
+      sound_env( SOUND_ENV_NEBULA, cur_system->nebu_density );
+   }
+   else {
+      /* Background is starry */
+      background_initDust( cur_system->spacedust );
+      background_load( cur_system->background );
+
+      /* Set up sound. */
+      sound_env( SOUND_ENV_NORMAL, 0. );
+   }
 
    NTracingZoneEnd( _ctx );
    NTracingFrameMarkEnd( "space_init" );
