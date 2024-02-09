@@ -1046,7 +1046,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glDisable( GL_SCISSOR_TEST );
 
       mat4 H = mat4_identity();
-      mat4_rotate( &H, M_PI_2-dir, 0.0, 1.0, 0.0 );
+      mat4_rotate( &H, dir+M_PI_2, 0.0, 1.0, 0.0 );
 
       /* Actually render. */
       if ((engine_glow > 0.5) && (obj->scene_engine >= 0))

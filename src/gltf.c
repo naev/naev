@@ -729,7 +729,6 @@ static void object_renderMesh( const Object *obj, int scene, const mat4 *H, doub
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
    /* Cull faces. */
-   glFrontFace(GL_CW); /* TODO, why do we have to change from default? Is it a loading issue? */
    glEnable(GL_CULL_FACE);
    glCullFace(GL_BACK);
 
@@ -768,7 +767,7 @@ void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H,
    const mat4 Hscale = { .m = {
       { sca, 0.0, 0.0, 0.0 },
       { 0.0, sca, 0.0, 0.0 },
-      { 0.0, 0.0, sca, 0.0 },
+      { 0.0, 0.0,-sca, 0.0 },
       { 0.0, 0.0, 0.0, 1.0 } } };
    mat4 Hptr;
 

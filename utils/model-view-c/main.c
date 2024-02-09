@@ -88,7 +88,7 @@ int main( int argc, char *argv[] )
    int engine = 0;
    int quit = 0;
    float rotx = 0.;
-   float roty = M_PI_2;
+   float roty = -M_PI_2;
    const double dt = 1.0/60.0;
    while (!quit) {
       SDL_Event event;
@@ -147,17 +147,17 @@ int main( int argc, char *argv[] )
       GLfloat c = cos(rotx);
       GLfloat s = sin(rotx);
       mat4 Hx = { .m = {
-         { 1.0, 0.0, 0.0, 0.0 },
-         { 0.0,  c,   s,  0.0 },
-         { 0.0, -s,   c,  0.0 },
+         {  c,  -s,  0.0, 0.0 },
+         {  s,   c,  0.0, 0.0 },
+         { 0.0, 0.0, 1.0, 0.0 },
          { 0.0, 0.0, 0.0, 1.0 }
       } };
       c = cos(roty);
       s = sin(roty);
       mat4 Hy = { .m = {
-         {  c,  0.0, -s,  0.0 },
+         {  c,  0.0,  s,  0.0 },
          { 0.0, 1.0, 0.0, 0.0 },
-         {  s,  0.0,  c,  0.0 },
+         { -s,  0.0,  c,  0.0 },
          { 0.0, 0.0, 0.0, 1.0 }
       } };
       const GLfloat sca = 1.0;
@@ -168,7 +168,7 @@ int main( int argc, char *argv[] )
          { 0.0, 0.0, 0.0, 1.0 } } };
 
       mat4 H;
-      mat4_mul( &H, &Hy, &Hx );
+      mat4_mul( &H, &Hx, &Hy );
       mat4_apply( &H, &Hscale );
 
       /* Draw the object. */
