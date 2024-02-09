@@ -762,6 +762,8 @@ def polygonify_ship( filename, outpath, use2d=True, use3d=True ):
             gltfpath = os.getenv("HOME")+f"/.local/share/naev/plugins/3dtest/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
             if os.path.isfile(gltfpath):
                 pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
+            else:
+                print(f"{gltfpath} is not a 3D model!")
         # Fall back to image
         if use2d and pntNplg==None:
             print("Failed to find 3D model, falling back to 2D")
