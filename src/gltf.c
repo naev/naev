@@ -414,6 +414,11 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
          Mesh *mesh = &node->mesh[i];
          cgltf_primitive *prim = &cmesh->primitives[i];
          cgltf_accessor *acc = prim->indices;
+         if (acc==NULL) {
+            mesh->material = -1;
+            continue;
+         }
+
          cgltf_size num = cgltf_num_components(acc->type) * acc->count;
          GLuint *idx = malloc( sizeof(cgltf_uint) * num );
          for (size_t j=0; j<num; j++)
@@ -500,7 +505,7 @@ static void renderMeshShadow( const Object *obj, const Mesh *mesh, const mat4 *H
    const Shader *shd = &shadow_shader;
 
    /* Skip with no shadows. */
-   if (obj->materials[ mesh->material ].noshadows)
+   if ((mesh->material>=0) && (obj->materials[ mesh->material ].noshadows))
       return;
 
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
