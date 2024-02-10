@@ -104,7 +104,7 @@ function board()
       local brn = vn.newCharacter(baron.vn_baron())
       vn.transition()
 
-      vn.na(_([[You find yourself once again aboard the Pinnacle, Baron Sauterfeldt's flag ship. After a short time, an attendant ushers you into the Baron's personal quarters, which are as extravagant as you remember them. You notice the holopainting is now firmly fixed on one of the walls.]]))
+      vn.na(_([[You find yourself once again aboard the Pinnacle, Baron Sauterfeldt's flagship. After a short time, an attendant ushers you into the Baron's personal quarters, which are as extravagant as you remember them. You notice the holopainting is now firmly fixed on one of the walls.]]))
       brn(fmt.f(_([[Baron Dovai Sauterfeldt greets you with a pompous wave of his hand. "Ahh yes, there you are at last. {wrongname1}, was it? Do have a seat." He then offers you a drink, but you decline on the basis that you still have to drive. "Now then, {wrongname2}, I assume you're wondering why I've called you here. As you've no doubt heard, I have an interest in the unique, the exquisite." The Baron gestures around the room. "I have built up quite an impressive collection, as you can see, but it is still lacking something. Fortunately, news has reached me about a priceless artefact from Earth itself, dating back to before the Faction Wars. I must have it. It belongs in the hands of a connoisseur like myself."]]),
          {wrongname1=mangle(player.name()), wrongname2=mangle(player.name())}))
       brn(_([["Unfortunately, news of this artefact has reached more ears than just mine. All over the galaxy there are people who will try to sell you 'ancient artefacts', which always turn out to be imitations at best and worthless scrap they picked up from the streets at worst." The Baron snorts derisively. "Even the contacts who usually fenc- ah, I mean, supply me with new items for my collection are in on the frenzy.]]))
@@ -112,7 +112,7 @@ function board()
          {wrongname=mangle(player.name()), pnt=flintplanet, sys=flintsys}))
       brn(fmt.f(_([["I should warn you, {wrongname}. Some of my, ah, colleagues have also set their sights on this item, and so you can expect their henchmen to try to take it off you. I trust you are equipped to defend yourself against their despicable sort."]]),
          {wrongname=mangle(player.name())}))
-      vn.na(_([[You are swiftly escorted back to your ship. You didn't really get the chance to ask the Baron any questions, such as who these potential attackers are, how you're supposed to pay for the artefacts once you locate the sellers, or what you will get out of all this. You do, however, find an update to your galaxy map that shows the location of the sellers, as well as a list of names and portraits. It would seem that the only way to find out what you're dealing with is the hard way.]]))
+      vn.na(_([[You are swiftly escorted back to your ship. You didn't really get the chance to ask the Baron any questions, such as whom these potential attackers are, how you're supposed to pay for the artefacts once you locate the sellers, or what you will get out of all this. You do, however, find an update to your galaxy map that shows the location of the sellers, as well as a list of names and portraits. It would seem that the only way to find out what you're dealing with is the hard way.]]))
       vn.run()
 
       misn.osdCreate(_("Prince"), {
@@ -153,7 +153,7 @@ function board()
       local brn = vn.newCharacter(baron.vn_baron())
       vn.transition()
       brn(_([[Baron Dovai Sauterfeldt turns the skate-board over in his hands, inspecting every nick, every scratch on the surface. His eyes are gleaming with delight.]]))
-      brn(fmt.f(_([["Oh, this is marvelous, marvelous indeed, {wrongname}! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centrepiece in my collection of relics and artefacts. Yes indeed!"]]),
+      brn(fmt.f(_([["Oh, this is marvellous, marvellous indeed, {wrongname}! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centrepiece in my collection of relics and artefacts. Yes indeed!"]]),
          {wrongname=mangle(player.name())}))
       brn(fmt.f(_([["I was right to send you, {wrongname1}, you've beautifully lived up to my expectations. And I'm a man of my word, I will reward you as promised. What was it we agreed on again? What, I never promised you anything? Well, that won't do. I'll have my assistant place a suitable amount of money in your account. You will not find me ungrateful! Ah, but you must excuse me. I need time to revel in this fantastic piece of art! Goodbye, {wrongname2}, I will call on you when I have need of you again."]]),
          {wrongname1=mangle(player.name()), wrongname2=mangle(player.name())}))
@@ -425,7 +425,7 @@ function idle()
 end
 
 function hail()
-   vntk.msg(_("Green light for docking"), _([[Your comm is answered by a communications officer on the bridge of the Pinnacle. You tell her you've got a delivery for the baron. She runs a few checks on a console off the screen, then tells you you've been cleared for docking and that the Pinnacle will be brought to a halt.]]))
+   vntk.msg(_("Green light for docking"), _([[Your comm is answered by a communications officer on the bridge of the Pinnacle. You tell her you've got a delivery for the baron. She runs a few checks on a console off the screen, then tells you that you've been cleared for docking and that the Pinnacle will be brought to a halt.]]))
 
    pinnacle:taskClear()
    pinnacle:brake()
