@@ -346,6 +346,10 @@ void main (void)
    /* Slight diffuse ambient lighting. */
    f_diffuse += u_ambient * M.c_diff;/* * (1.0 / M_PI); premultiplied */
 
+   /* Ambient occlusion. */
+   float ao = texture(occlusion_tex, (occlusion_texcoord ? tex_coord1 : tex_coord0)).r;
+   f_diffuse *= ao;
+
    /* Variance Shadow Mapping. */
    float f_shadow[MAX_LIGHTS];
    for (int i=0; i<u_nlights; i++)
@@ -397,10 +401,6 @@ void main (void)
          f_clearcoat += intensity * BRDF_specularGGX( M.f0, M.f90, M.clearcoat_roughness, VoH, NoL, NoV, NoH );
       //}
    }
-
-   /* Ambient occlusion. */
-   float ao = texture(occlusion_tex, (occlusion_texcoord ? tex_coord1 : tex_coord0)).r;
-   f_diffuse *= ao;
 
    /* Do emissive. */
    f_emissive = emissive * texture(emissive_tex, (emissive_texcoord ? tex_coord1 : tex_coord0) ).rgb;
