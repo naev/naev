@@ -389,6 +389,7 @@ typedef struct Pilot_ {
    double player_damage;/**< Accumulates damage done by player for hostileness.
                              In per one of max shield + armour. */
    double engine_glow;/**< Amount of engine glow to display. */
+   double tilt;      /**< Amount of ship tilting in a direction. */
    int messages;     /**< Queued messages (Lua ref). */
    lvar *shipvar;    /**< Per-ship version of lua mission variables. */
 } Pilot;

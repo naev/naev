@@ -477,7 +477,7 @@ static int ship_generateStore( Ship *temp )
    object_light( 2., 2., 2., 0.8 );
    gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
    gl_fboCreate( &fbo, &tex, temp->size / gl_screen.scale, temp->size / gl_screen.scale );
-   ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., tsx, tsy, NULL );
+   ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., 0., tsx, tsy, NULL );
    temp->gfx_store = gl_rawTexture( buf, tex, temp->size, temp->size );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
@@ -1028,7 +1028,7 @@ static int ship_parse( Ship *temp, const char *filename )
 /**
  * @brief Renders a ship to a framebuffer.
  */
-void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, double dir, double engine_glow, int sx, int sy, const glColour *c )
+void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, double dir, double engine_glow, double tilt, int sx, int sy, const glColour *c )
 {
    if (c==NULL)
       c = &cWhite;
@@ -1047,7 +1047,13 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glDisable( GL_SCISSOR_TEST );
 
       mat4 H = mat4_identity();
-      mat4_rotate( &H, dir+M_PI_2, 0.0, 1.0, 0.0 );
+      if (fabs(tilt) > 1e-5) {
+         mat4_rotate( &H, M_PI_2,0.0, 1.0, 0.0 );
+         mat4_rotate( &H, -tilt, 1.0, 0.0, 0.0 );
+         mat4_rotate( &H, dir,   0.0, 1.0, 0.0 );
+      }
+      else
+         mat4_rotate( &H, dir+M_PI_2, 0.0, 1.0, 0.0 );
 
       /* Actually render. */
       if ((engine_glow > 0.5) && (obj->scene_engine >= 0))

@@ -1761,7 +1761,7 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
    if (!pilot_isPlayer(p) && pilot_isFlag(p, PILOT_STEALTH))
       c.a = 0.5;
 
-   ship_renderFramebuffer( p->ship, fbo, fw, fh, p->solid.dir, p->engine_glow, p->tsx, p->tsy, &c );
+   ship_renderFramebuffer( p->ship, fbo, fw, fh, p->solid.dir, p->engine_glow, p->tilt, p->tsx, p->tsy, &c );
 }
 
 /**
@@ -2605,6 +2605,27 @@ void pilot_update( Pilot* pilot, double dt )
       pilot->engine_glow -= pilot->speed / pilot->accel * dt;
       if (pilot->engine_glow < 0.)
          pilot->engine_glow = 0.;
+   }
+
+   /* Set tilt. */
+   const double tilt_max = M_PI / 8.;
+   const double tilt_mod = tilt_max * 3.;
+   if (pilot->solid.dir_vel > 1e-5) {
+      pilot->tilt += pilot->solid.dir_vel / tilt_mod * dt;
+      pilot->tilt = MIN( pilot->tilt, tilt_max );
+   }
+   else if (pilot->solid.dir_vel < -1e-5) {
+      /* Already negative. */
+      pilot->tilt += pilot->solid.dir_vel / tilt_mod * dt;
+      pilot->tilt = MAX( pilot->tilt, -tilt_max );
+   }
+   else if (pilot->tilt > 0.) {
+      pilot->tilt -= pilot->turn / tilt_mod * dt;
+      pilot->tilt = MAX( pilot->tilt, 0. );
+   }
+   else if (pilot->tilt < 0.) {
+      pilot->tilt += pilot->turn / tilt_mod * dt;
+      pilot->tilt = MIN( pilot->tilt, 0. );
    }
 
    /* Update the solid, must be run after limit_speed. */
