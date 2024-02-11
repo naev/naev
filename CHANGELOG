@@ -11,6 +11,8 @@
       * Display fuel consumption for ships in the equipment overlay
       * Added option to match speed with slowest ship in the fleet (on by default)
       * Made it so ships in the equipment screen do not change order based on value
+   * Content
+      * New portraits
    * Engine
       * Stats (except inverted stats) are now additive instead of multiplicative
       * Try to merge saves if multiple directories correspond to the same player
@@ -26,6 +28,7 @@
       * Support for Tracy
       * Warn the player if they try to use a name with all space characters
       * Decoupled the collision system from the rendering system
+      * Support for 3D models with fancy new effects
    * Fixes
       * PSO and Mizar nebulas have trails again
 
