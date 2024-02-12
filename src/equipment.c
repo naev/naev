@@ -468,7 +468,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       const glTexture *icon;
 
       /* Skip slots hat are empty and the player can't do anything about. */
-      if (lst[i].sslot->locked && (lst[i].outfit == NULL))
+      if (lst[i].sslot->locked && !lst[i].sslot->visible && (lst[i].outfit == NULL))
          continue;
 
       cantoggle = pilot_slotIsToggleable( &lst[i] );
