@@ -575,6 +575,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
       slot->slot.spid = sp_get( buf );
       slot->exclusive = sp_exclusive( slot->slot.spid );
       slot->required  = sp_required( slot->slot.spid );
+      slot->visible   = sp_visible( slot->slot.spid );
       slot->locked    = sp_locked( slot->slot.spid );
       free( buf );
    }

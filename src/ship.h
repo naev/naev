@@ -68,6 +68,7 @@ typedef struct ShipOutfitSlot_ {
    int exclusive;    /**< Outfits must match property to fit. */
    int required;     /**< Outfit slot must be equipped for the ship to work. */
    int locked;       /**< Outfit slot is locked. */
+   int visible;      /**< Outfit slot is always visible, even if locked. */
    const Outfit *data;/**< Outfit by default if applicable. */
    ShipMount mount;  /**< Mountpoint, only used for weapon slots. */
 } ShipOutfitSlot;

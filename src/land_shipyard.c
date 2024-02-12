@@ -637,7 +637,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
       const int size = 14;
 
       /* Ignore locked slots. */
-      if (s[i].locked)
+      if (s[i].locked && !s[i].visible && (s[i].data==NULL))
          continue;
 
       /* Get the colour. */
