@@ -408,8 +408,12 @@ They get uncomfortably close
       special_virtue    = outfit.get("Machiavellian Virtue"),
    }
    vn.label("special")
-   mm(fmt.f(_([["So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}."]]),
-      {cost=poi.data_str(upgrade_cost)}))
+   mm( function ()
+      return fmt.f(_([["So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}."
+
+You currently have {amount}.]]),
+         {cost=poi.data_str(upgrade_cost), amount=poi.data_str(poi.data_get())})
+   end )
    vn.menu( function ()
       local opts = {
          { _("Info"), "special_info" },
