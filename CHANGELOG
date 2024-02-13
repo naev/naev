@@ -29,8 +29,10 @@
       * Warn the player if they try to use a name with all space characters
       * Decoupled the collision system from the rendering system
       * Support for 3D models with fancy new effects
+      * Added a low memory mode to use fewer and smaller textures with 3D
    * Fixes
       * PSO and Mizar nebulas have trails again
+      * Removed fancy background mode
 
 * 0.11.4 (unreleased)
    * Fixed toolkit not rerendering when right-clicking on tabbed windows
