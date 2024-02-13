@@ -20,3 +20,8 @@
 #define _(String) String
 #define gl_checkErr()   gl_checkHandleError( __func__, __LINE__ )
 void gl_checkHandleError( const char *func, int line );
+
+typedef struct PlayerConf_ {
+   int low_memory;
+} PlayerConf_t;
+extern PlayerConf_t conf;

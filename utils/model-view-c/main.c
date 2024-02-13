@@ -14,6 +14,10 @@
 #include "shader_min.h"
 #include "mat4.h"
 
+PlayerConf_t conf = {
+   .low_memory = 0
+};
+
 int main( int argc, char *argv[] )
 {
    (void) argc;

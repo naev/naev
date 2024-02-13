@@ -12,10 +12,12 @@ uniform sampler2D baseColour_tex; /**< Base colour. */
 uniform bool baseColour_texcoord;
 uniform sampler2D metallic_tex; /**< Metallic texture. */
 uniform bool metallic_texcoord;
+#ifdef HAS_NORMAL
 uniform bool u_has_normal; /**< Whether or not has a normal map. */
 uniform sampler2D normal_tex; /**< Normal map. */
 uniform bool normal_texcoord;
 uniform float normal_scale;
+#endif /* HAS_NORMAL */
 uniform float metallicFactor;
 uniform float roughnessFactor;
 uniform vec4 baseColour;
@@ -30,8 +32,10 @@ uniform vec3 emissive;
 uniform sampler2D emissive_tex; /**< Emission texture. */
 uniform bool emissive_texcoord;
 /* misc */
+#ifdef HAS_AO
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform bool occlusion_texcoord;
+#endif /* HAS_AO */
 uniform int u_blend;
 uniform vec3 u_ambient; /**< Ambient lighting. */
 uniform float u_waxiness;
@@ -250,6 +254,7 @@ float clampedDot( vec3 x, vec3 y )
 /* Taken from https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/source/Renderer/shaders */
 vec3 get_normal (void)
 {
+#if HAS_NORMAL
    if (u_has_normal==false)
       return normalize(normal);
 
@@ -274,9 +279,10 @@ vec3 get_normal (void)
    }
 
    vec3 n = texture(normal_tex, coords).rgb * vec3(normal_scale, normal_scale, 1.0) * 2.0 - vec3(1.0);
-   n = normalize( mat3(t, b, ng) * n);
-
-   return n;
+   return normalize( mat3(t, b, ng) * n);
+#else /* HAS_NORMAL */
+   return normalize(normal);
+#endif /* HAS_NORMAL */
 }
 
 float linstep( float minval, float maxval, float val )
@@ -347,8 +353,10 @@ void main (void)
    f_diffuse += u_ambient * M.c_diff;/* * (1.0 / M_PI); premultiplied */
 
    /* Ambient occlusion. */
+#ifdef HAS_AO
    float ao = texture(occlusion_tex, (occlusion_texcoord ? tex_coord1 : tex_coord0)).r;
    f_diffuse *= ao;
+#endif /* HAS_AO */
 
    /* Variance Shadow Mapping. */
    float f_shadow[MAX_LIGHTS];
@@ -362,7 +370,7 @@ void main (void)
       f_shadow[2] = shadow_map( shadowmap_tex[2], shadow[2] );
 
    /* Point light for now. */
-   const vec3 v = normalize( vec3(0.0, 0.0, -1.0) );
+   const vec3 v = normalize( vec3(0.0, 0.0, -1.0) ); /* Fixed view vector. */
    float NoV = clamp(dot(n,v), 1e-4, 1.0); /* Neubelt and Pettineo 2013, "Crafting a Next-gen Material Pipeline for The Order: 1886" */
    for (int i=0; i<u_nlights; i++) {
       Light L = u_lights[i];

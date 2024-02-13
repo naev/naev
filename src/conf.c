@@ -258,6 +258,7 @@ void conf_setVideoDefaults (void)
    conf.jump_brightness = JUMP_BRIGHTNESS_DEFAULT;
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
    conf.background_fancy = BACKGROUND_FANCY_DEFAULT;
+   conf.low_memory = LOW_MEMORY_DEFAULT;
 
    if (cur_system)
       background_load( cur_system->background );
@@ -367,6 +368,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "jump_brightness", conf.jump_brightness );
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
       conf_loadBool( lEnv, "background_fancy", conf.background_fancy );
+      conf_loadBool( lEnv, "low_memory", conf.low_memory );
 
       /* FPS */
       conf_loadBool( lEnv, "showfps", conf.fps_show );
@@ -948,6 +950,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Expensive high quality shaders for the background. Defaults to false."))
    conf_saveBool("background_fancy",conf.background_fancy);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Enables low memory mode which foregoes using normal textures and ambient occlusion. Useful when you want to run Naev or more limited hardware."))
+   conf_saveBool("low_memory", conf.low_memory);
    conf_saveEmptyLine();
 
    /* FPS */

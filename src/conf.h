@@ -55,6 +55,7 @@
 #define FONT_SIZE_INTRO_DEFAULT        18    /**< Default intro font size. */
 #define FONT_SIZE_DEF_DEFAULT          12    /**< Default font size. */
 #define FONT_SIZE_SMALL_DEFAULT        11    /**< Default small font size. */
+#define LOW_MEMORY_DEFAULT             0     /**< Default for low memory mode. */
 /* Audio options */
 #define USE_EFX_DEFAULT                1     /**< Whether or not to use EFX (if using OpenAL). */
 #define MUTE_SOUND_DEFAULT             0     /**< Whether sound should be disabled. */
@@ -106,6 +107,7 @@ typedef struct PlayerConf_s {
    double jump_brightness; /**< Intensity to fade to/from when jumping. */
    double gamma_correction; /**< How much gamma correction to do. */
    int background_fancy; /**< High quality moving, but slow background. */
+   int low_memory; /**< Low memory mode. */
 
    /* Sound. */
    int al_efx; /**< Should EFX extension be used? (only applicable for OpenAL) */

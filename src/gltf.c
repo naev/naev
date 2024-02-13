@@ -19,6 +19,7 @@
 #ifdef HAVE_NAEV
 #include "naev.h"
 #include "opengl_shader.h"
+#include "conf.h"
 #else /* HAVE_NAEV */
 #include "common.h"
 #include "shader_min.h"
@@ -130,6 +131,10 @@ static GLuint shadow_fbo;
 static GLuint shadow_tex;
 static Shader shadow_shader_blurX;
 static Shader shadow_shader_blurY;
+
+/* Options. */
+static int use_normal_mapping = 1;
+static int use_ambient_occlusion = 1;
 
 /*
  * Prototypes.
@@ -281,9 +286,15 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat, const
    /* Handle emissiveness and such. */
    if (cmat) {
       memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
-      object_loadTexture( &mat->occlusion_tex, &cmat->occlusion_texture, &tex_ones );
       object_loadTexture( &mat->emissive_tex, &cmat->emissive_texture, &tex_ones );
-      object_loadTexture( &mat->normal_tex, &cmat->normal_texture, &tex_zero );
+      if (use_ambient_occlusion)
+         object_loadTexture( &mat->occlusion_tex, &cmat->occlusion_texture, &tex_ones );
+      else
+         mat->occlusion_tex = tex_ones;
+      if (use_normal_mapping)
+         object_loadTexture( &mat->normal_tex, &cmat->normal_texture, &tex_zero );
+      else
+         mat->normal_tex = tex_ones;
       mat->blend        = (cmat->alpha_mode == cgltf_alpha_mode_blend);
    }
    else {
@@ -570,15 +581,18 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
    glUniform3f( shd->emissive,         mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
    glUniform1i( shd->blend,            mat->blend );
-   glUniform1i( shd->u_has_normal,     (mat->normal_tex.tex!=tex_zero.tex) );
-   glUniform1f( shd->normal_scale,     mat->normal_tex.strength );
+   if (use_normal_mapping) {
+      glUniform1i( shd->u_has_normal,     (mat->normal_tex.tex!=tex_zero.tex) );
+      glUniform1f( shd->normal_scale,     mat->normal_tex.strength );
+      glUniform1i( shd->normal_texcoord,     mat->normal_tex.texcoord);
+   }
    //glUniform1f( shd->waxiness, mat->waxiness );
    /* Texture coordinates. */
    glUniform1i( shd->baseColour_texcoord, mat->baseColour_tex.texcoord);
    glUniform1i( shd->metallic_texcoord,   mat->metallic_tex.texcoord);
-   glUniform1i( shd->normal_texcoord,     mat->normal_tex.texcoord);
    glUniform1i( shd->emissive_texcoord,   mat->emissive_tex.texcoord);
-   glUniform1i( shd->occlusion_texcoord,  mat->occlusion_tex.texcoord);
+   if (use_ambient_occlusion)
+      glUniform1i( shd->occlusion_texcoord,  mat->occlusion_tex.texcoord);
    gl_checkErr();
 
    /* Texture. */
@@ -586,14 +600,18 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
       glBindTexture( GL_TEXTURE_2D, mat->metallic_tex.tex );
       glUniform1i( shd->metallic_tex, 1 );
    glActiveTexture( GL_TEXTURE2 );
-      glBindTexture( GL_TEXTURE_2D, mat->normal_tex.tex );
-      glUniform1i( shd->normal_tex, 2 );
-   glActiveTexture( GL_TEXTURE3 );
       glBindTexture( GL_TEXTURE_2D, mat->emissive_tex.tex );
-      glUniform1i( shd->emissive_tex, 3 );
-   glActiveTexture( GL_TEXTURE4 );
-      glBindTexture( GL_TEXTURE_2D, mat->occlusion_tex.tex );
-      glUniform1i( shd->occlusion_tex, 4 );
+      glUniform1i( shd->emissive_tex, 2 );
+   if (use_normal_mapping) {
+      glActiveTexture( GL_TEXTURE3 );
+         glBindTexture( GL_TEXTURE_2D, mat->normal_tex.tex );
+         glUniform1i( shd->normal_tex, 3 );
+   }
+   if (use_ambient_occlusion) {
+      glActiveTexture( GL_TEXTURE4 );
+         glBindTexture( GL_TEXTURE_2D, mat->occlusion_tex.tex );
+         glUniform1i( shd->occlusion_tex, 4 );
+   }
    /* Have to have GL_TEXTURE0 be last. */
    glActiveTexture( GL_TEXTURE0 );
       glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex.tex );
@@ -1008,7 +1026,16 @@ int object_init (void)
    const GLfloat b[4] = { 1., 1., 1., 1. };
    GLenum status;
    Shader *shd;
-   const char *prepend = "#define MAX_LIGHTS "STR(MAX_LIGHTS)"\n#define SHADOWMAP_SIZE "STR(SHADOWMAP_SIZE)"\n";
+   const char *prepend_fix = "#define MAX_LIGHTS "STR(MAX_LIGHTS)"\n#define SHADOWMAP_SIZE "STR(SHADOWMAP_SIZE)"\n";
+   char prepend[STRMAX];
+
+   /* Set global options. */
+   use_normal_mapping = !conf.low_memory;
+   use_ambient_occlusion = !conf.low_memory;
+
+   /* Set prefix stuff. */
+   snprintf( prepend, sizeof(prepend), "%s\n#define HAS_NORMAL %d\n#define HAS_AO %d\n",
+         prepend_fix, use_normal_mapping, use_ambient_occlusion );
 
    /* Load textures. */
    glGenTextures( 1, &tex_zero.tex );
@@ -1134,10 +1161,12 @@ int object_init (void)
    shd->baseColour_texcoord = glGetUniformLocation( shd->program, "baseColour_texcoord" );
    shd->metallic_tex    = glGetUniformLocation( shd->program, "metallic_tex" );
    shd->metallic_texcoord = glGetUniformLocation( shd->program, "metallic_texcoord" );
-   shd->u_has_normal    = glGetUniformLocation( shd->program, "u_has_normal" );
-   shd->normal_tex      = glGetUniformLocation( shd->program, "normal_tex" );
-   shd->normal_texcoord = glGetUniformLocation( shd->program, "normal_texcoord" );
-   shd->normal_scale    = glGetUniformLocation( shd->program, "normal_scale" );
+   if (use_normal_mapping) {
+      shd->u_has_normal    = glGetUniformLocation( shd->program, "u_has_normal" );
+      shd->normal_tex      = glGetUniformLocation( shd->program, "normal_tex" );
+      shd->normal_texcoord = glGetUniformLocation( shd->program, "normal_texcoord" );
+      shd->normal_scale    = glGetUniformLocation( shd->program, "normal_scale" );
+   }
    shd->metallicFactor  = glGetUniformLocation( shd->program, "metallicFactor" );
    shd->roughnessFactor = glGetUniformLocation( shd->program, "roughnessFactor" );
    shd->baseColour      = glGetUniformLocation( shd->program, "baseColour" );
@@ -1146,8 +1175,10 @@ int object_init (void)
    shd->clearcoat       = glGetUniformLocation( shd->program, "clearcoat" );
    shd->clearcoat_roughness = glGetUniformLocation( shd->program, "clearcoat_roughness" );
    shd->emissive        = glGetUniformLocation( shd->program, "emissive" );
-   shd->occlusion_tex   = glGetUniformLocation( shd->program, "occlusion_tex" );
-   shd->occlusion_texcoord = glGetUniformLocation( shd->program, "occlusion_texcoord" );
+   if (use_ambient_occlusion) {
+      shd->occlusion_tex   = glGetUniformLocation( shd->program, "occlusion_tex" );
+      shd->occlusion_texcoord = glGetUniformLocation( shd->program, "occlusion_texcoord" );
+   }
    shd->emissive_tex    = glGetUniformLocation( shd->program, "emissive_tex" );
    shd->emissive_texcoord = glGetUniformLocation( shd->program, "emissive_texcoord" );
    /* Special. */
