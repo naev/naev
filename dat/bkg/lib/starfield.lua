@@ -1,7 +1,6 @@
 --[[
    Some sort of stellar wind type background.
 --]]
-local bgshaders = require "bkg.lib.bgshaders"
 local love = require 'love'
 local love_shaders = require 'love_shaders'
 local lg = require "love.graphics"
@@ -28,8 +27,7 @@ starfield.stars = {
 
 local starfield_frag = lf.read('bkg/shaders/starfield.frag')
 
-local cvs, texw, texh -- For static shader
-local shader, sstarfield, sf, sz, sb -- For dynamic shader
+local cvs, texw, texh, sb
 
 local function star_add( added, num_added )
    -- Set up parameters
@@ -99,16 +97,14 @@ local function add_local_stars ()
    end
 end
 
-local static = true
 function starfield.init( params )
    params = params or {}
    local nconf = naev.conf()
-   static = params.static or not nconf.background_fancy
    local seed = params.seed or system.cur():nameRaw()
 
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
-   sf = math.max( 1.0, nconf.nebu_scale * 0.5 )
+   local sf = math.max( 1.0, nconf.nebu_scale * 0.5 )
 
    -- Per system parameters
    prng:setSeed( seed )
@@ -118,47 +114,38 @@ function starfield.init( params )
    local rx, ry = vec2.newP( 3+1*prng:random(), 7+1*prng:random() ):get()
    local rz = 5+1*prng:random()
    --rx, ry, rz = 5, 7, 11
-   sz = 1+1*prng:random()
+   local sz = 1+1*prng:random()
    sb = nconf.bg_brightness
-
-   local motionblur = 1
-   if static then
-      motionblur = 0
-   end
 
    -- Ensure we're caught up with the current window/screen dimensions.
    love.origin()
    -- Initialize shader
-   shader = lg.newShader( string.format(starfield_frag, motionblur, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
+   local shader = lg.newShader( string.format(starfield_frag, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
 
-   if static then
-      if params.size then
-         texw = params.size
-         texh = params.size
-      else
-         local nw, nh = gfx.dim()
-         texw = nw
-         texh = nh
-         local texs = 4096 / math.max( texw, texh )
-         if texs < 1 then
-            texw = texw / texs
-            texh = texh / texs
-         end
-      end
-      cvs = lg.newCanvas( texw, texh, {dpiscale=1} )
-      shader:send( "u_camera", 0, 0, sz, 0.0008*sf )
-
-      local oldcanvas = lg.getCanvas()
-      lg.setCanvas( cvs )
-      lg.clear( 0, 0, 0, 0 )
-      lg.setShader( shader )
-      lg.setColour( {1,1,1,1} )
-      love_shaders.img:draw( 0, 0, 0, texw, texh )
-      lg.setShader()
-      lg.setCanvas( oldcanvas )
+   if params.size then
+      texw = params.size
+      texh = params.size
    else
-      sstarfield = bgshaders.init( shader, sf, {usetex=true} )
+      local nw, nh = gfx.dim()
+      texw = nw
+      texh = nh
+      local texs = 4096 / math.max( texw, texh )
+      if texs < 1 then
+         texw = texw / texs
+         texh = texh / texs
+      end
    end
+   cvs = lg.newCanvas( texw, texh, {dpiscale=1} )
+   shader:send( "u_camera", 0, 0, sz, 0.0008*sf )
+
+   local oldcanvas = lg.getCanvas()
+   lg.setCanvas( cvs )
+   lg.clear( 0, 0, 0, 0 )
+   lg.setShader( shader )
+   lg.setColour( {1,1,1,1} )
+   love_shaders.img:draw( 0, 0, 0, texw, texh )
+   lg.setShader()
+   lg.setCanvas( oldcanvas )
 
    if not params.nolocalstars then
       add_local_stars()
@@ -173,19 +160,9 @@ function starfield.canvas ()
    return cvs
 end
 
-function starfield.render( dt )
-   if static then
-      lg.setColour( {sb,sb,sb,1} )
-      cvs:draw( 0, 0 )
-      return
-   end
-   -- Get camera properties
-   local x, y, z = camera.get()
-   x = x / 1e6
-   y = y / 1e6
-   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, sz, z*0.0008*sf )
-
-   sstarfield:render( dt )
+function starfield.render( _dt )
+   lg.setColour( {sb,sb,sb,1} )
+   cvs:draw( 0, 0 )
 end
 
 return starfield

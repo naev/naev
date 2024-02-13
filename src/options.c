@@ -1575,7 +1575,7 @@ static void opt_listColourblind( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Handles the fancy background checkbox.
+ * @brief Handles the health bar checkbox.
  */
 static void opt_checkHealth( unsigned int wid, const char *str )
 {

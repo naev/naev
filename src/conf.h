@@ -48,7 +48,6 @@
 #define BG_BRIGHTNESS_DEFAULT          0.5   /**< How much to darken (or lighten) the backgrounds. */
 #define NEBU_NONUNIFORMITY_DEFAULT     1.    /**< How much to darken (or lighten) the nebula stuff. */
 #define GAMMA_CORRECTION_DEFAULT       1.    /**< How much gamma correction to do. */
-#define BACKGROUND_FANCY_DEFAULT       0     /**< Default fancy background. */
 #define JUMP_BRIGHTNESS_DEFAULT        0.8   /**< Default jump brightness.*/
 #define BIG_ICONS_DEFAULT              0     /**< Whether to display BIGGER icons. */
 #define FONT_SIZE_CONSOLE_DEFAULT      10    /**< Default console font size. */
@@ -106,7 +105,6 @@ typedef struct PlayerConf_s {
    double nebu_nonuniformity; /**< How much to darken the nebula stuff. */
    double jump_brightness; /**< Intensity to fade to/from when jumping. */
    double gamma_correction; /**< How much gamma correction to do. */
-   int background_fancy; /**< High quality moving, but slow background. */
    int low_memory; /**< Low memory mode. */
 
    /* Sound. */

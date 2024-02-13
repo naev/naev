@@ -38,14 +38,13 @@ local function load_shader ()
    local starfield_frag = lf.read('bkg/shaders/starfield.frag')
 
    prng:setSeed( 43 )
-   local motionblur = 0
    local theta = prng:random() * math.pi/10.0
    local phi = prng:random() * math.pi/10.0
    local psi = prng:random() * math.pi/10.0
    local rx, ry = vec2.newP( 3+1*prng:random(), 7+1*prng:random() ):get()
    local rz = 5+1*prng:random()
    local sz = 1+1*prng:random()
-   local shader = lg.newShader( string.format(starfield_frag, motionblur, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
+   local shader = lg.newShader( string.format(starfield_frag, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
 
    local nw, nh = naev.gfx.dim()
 
