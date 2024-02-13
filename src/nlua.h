@@ -24,6 +24,7 @@ extern nlua_env __NLUA_CURENV;
  */
 void lua_init (void);
 void lua_exit (void);
+void lua_clearCache (void);
 nlua_env nlua_newEnv (void);
 void nlua_freeEnv(nlua_env env);
 void nlua_pushenv(lua_State* L, nlua_env env);

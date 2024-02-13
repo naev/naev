@@ -226,16 +226,26 @@ static int luaB_loadstring( lua_State *L )
  */
 void lua_exit (void)
 {
+   lua_clearCache();
+   array_free(lua_cache);
+   lua_cache = NULL;
+
    free( common_script );
    lua_close(naevL);
    naevL = NULL;
+}
+
+/**
+ * @brief Clears the cached stuff.
+ */
+void lua_clearCache (void)
+{
    for (int i=0; i<array_size(lua_cache); i++) {
       LuaCache_t *lc = &lua_cache[i];
       free(lc->path);
-      /*luaL_unref(naevL, LUA_REGISTRYINDEX, lc->idx);*/ /* lua_close should have taken care of this. */
+      luaL_unref(naevL, LUA_REGISTRYINDEX, lc->idx); /* lua_close should have taken care of this. */
    }
-   array_free(lua_cache);
-   lua_cache = NULL;
+   array_erase( &lua_cache, array_begin(lua_cache), array_end(lua_cache) );
 }
 
 /*
