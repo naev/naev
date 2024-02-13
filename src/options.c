@@ -107,6 +107,7 @@ static void opt_setScalefactor( unsigned int wid, const char *str );
 static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
 static void opt_checkHealth( unsigned int wid, const char *str );
+static void opt_checkRestart( unsigned int wid, const char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
 static int opt_audioSave( unsigned int wid, const char *str );
@@ -1426,7 +1427,10 @@ static void opt_video( unsigned int wid )
          NULL, cHeader, _("OpenGL:") );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkVSync", _("Vertical Sync"), NULL, conf.vsync );
+         "chkLowMemory", _("Optimize for low memory systems"), opt_checkRestart, conf.low_memory );
+   y -= 25;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkVSync", _("Vertical Sync"), opt_checkRestart, conf.vsync );
    y -= 40;
 
    /* Features. */
@@ -1512,6 +1516,11 @@ static int opt_videoSave( unsigned int wid, const char *str )
    conf.fps_max = atoi(inp);
 
    /* OpenGL. */
+   f = window_checkboxState( wid, "chkLowMemory" );
+   if (conf.low_memory != f) {
+      conf.low_memory = f;
+      opt_needRestart();
+   }
    f = window_checkboxState( wid, "chkVSync" );
    if (conf.vsync != f) {
       conf.vsync = f;
@@ -1581,6 +1590,16 @@ static void opt_checkHealth( unsigned int wid, const char *str )
 {
    int f = window_checkboxState( wid, str );
    conf.healthbars = f;
+}
+
+/**
+ * @brief Basically flags for needing a restart.
+ */
+static void opt_checkRestart( unsigned int wid, const char *str )
+{
+   (void) wid;
+   (void) str;
+   opt_needRestart();
 }
 
 /**
