@@ -57,6 +57,10 @@
 
 typedef struct ShipWidgetData_ {
    unsigned int wid;
+   GLuint fbo;
+   GLuint tex;
+   GLuint texd;
+   double s;
 } ShipWidgetData;
 
 /*
@@ -409,6 +413,9 @@ void equipment_open( unsigned int wid )
    /* Spinning ship. */
    swd = malloc(sizeof(ShipWidgetData));
    swd->wid = wid;
+   swd->s = 256. / gl_screen.scale; /* TODO handle cases ships are >256 px. */
+   gl_fboCreate( &swd->fbo, &swd->tex, swd->s, swd->s );
+   gl_fboAddDepth( swd->fbo, &swd->texd, swd->s, swd->s );
    window_addRect( wid, -20+4, -40+4, 128+8, 128+8, "rctShip", &cBlack, 1 );
    window_addCust( wid, -20, -40, 128, 128, "cstShip", 0,
          equipment_renderShip, NULL, NULL, NULL, swd );
@@ -920,7 +927,7 @@ static void equipment_renderShip( double bx, double by,
       double bw, double bh, void *data )
 {
    Pilot *p;
-   int w, h;
+   int s;
    double px, py, pw, ph, lr, lg, lb, li;
    vec2 v;
    GLint fbo;
@@ -945,17 +952,16 @@ static void equipment_renderShip( double bx, double by,
       equipment_lastick = SDL_GetTicks();
    gl_getSpriteFromDir( &p->tsx, &p->tsy, p->ship->sx, p->ship->sy, p->solid.dir );
 
-   w = p->ship->size;
-   h = p->ship->size;
+   s = p->ship->size;
 
    /* Render ship graphic. */
-   if (w > bw) {
-      pw = 128.;
-      ph = 128.;
+   if (s > bw) {
+      pw = bw;
+      ph = bh;
    }
    else {
-      pw = w;
-      ph = h;
+      pw = s;
+      ph = s;
    }
    px = bx + (bw-pw)/2;
    py = by + (bh-ph)/2;
@@ -964,15 +970,16 @@ static void equipment_renderShip( double bx, double by,
    gl_renderRect( px, py, pw, ph, &cBlack );
 
    /* Use framebuffer to draw, have to use an additional one. */
+   s = ceil( s / gl_screen.scale ); /* Have to correct for the true rendered size. */
    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
    object_lightGet( &lr, &lg, &lb, &li );
    object_light( 2., 2., 2., 0.8 );
-   pilot_renderFramebuffer( p, gl_screen.fbo[4], gl_screen.nw, gl_screen.nh );
+   pilot_renderFramebuffer( p, swd->fbo, gl_screen.nw, gl_screen.nh );
    object_light( lr, lg, lb, li );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-   gl_renderTextureRaw( gl_screen.fbo_tex[4], 0,
+   gl_renderTextureRaw( swd->tex, 0,
          px, py, pw, ph,
-         0, 0, w/(double)gl_screen.nw, h/(double)gl_screen.nh, NULL, 0. );
+         0., 0., s/swd->s, s/swd->s, NULL, 0. );
 
 #ifdef DEBUGGING
    if (debug_isFlag(DEBUG_MARK_EMITTER)) {
@@ -1015,6 +1022,9 @@ static void equipment_freeShipData( unsigned int wid, const char *unused )
 {
    (void) unused;
    ShipWidgetData *swd = window_custGetData( wid, "cstShip" );
+   glDeleteFramebuffers( 1, &swd->fbo );
+   glDeleteTextures( 1, &swd->tex );
+   glDeleteTextures( 1, &swd->texd );
    free(swd);
 }
 
