@@ -147,9 +147,10 @@ static void object_lightSetup( int doambient, int dogeneral );
  *    @param otex Texture to output to.
  *    @param ctex Texture to load.
  *    @param def Default texture to use if not defined.
+ *    @param notsrgb Whether or not the texture should use SRGB.
  *    @return OpenGL ID of the new texture.
  */
-static int object_loadTexture( Texture *otex, const cgltf_texture_view *ctex, const Texture *def )
+static int object_loadTexture( Texture *otex, const cgltf_texture_view *ctex, const Texture *def, int notsrgb )
 {
    const SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
    GLuint tex;
@@ -204,8 +205,12 @@ static int object_loadTexture( Texture *otex, const cgltf_texture_view *ctex, co
 
       SDL_LockSurface( surface );
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
-      glTexImage2D( GL_TEXTURE_2D, 0, has_alpha ? GL_SRGB_ALPHA : GL_SRGB,
-            surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
+      if (notsrgb)
+         glTexImage2D( GL_TEXTURE_2D, 0, has_alpha ? GL_RGBA : GL_RGB,
+               surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
+      else
+         glTexImage2D( GL_TEXTURE_2D, 0, has_alpha ? GL_SRGB_ALPHA : GL_SRGB,
+               surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
       glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       SDL_UnlockSurface( surface );
    }
@@ -247,12 +252,12 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat, const
    if (cmat && cmat->has_pbr_metallic_roughness) {
       mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
       mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
-      object_loadTexture( &mat->baseColour_tex, &cmat->pbr_metallic_roughness.base_color_texture, &tex_ones );
+      object_loadTexture( &mat->baseColour_tex, &cmat->pbr_metallic_roughness.base_color_texture, &tex_ones, 0 );
       if (mat->baseColour_tex.tex == tex_ones.tex)
          memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
       else
          memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
-      object_loadTexture( &mat->metallic_tex, &cmat->pbr_metallic_roughness.metallic_roughness_texture, &tex_ones );
+      object_loadTexture( &mat->metallic_tex, &cmat->pbr_metallic_roughness.metallic_roughness_texture, &tex_ones, 1 );
    }
    else {
       memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
@@ -286,13 +291,13 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat, const
    /* Handle emissiveness and such. */
    if (cmat) {
       memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
-      object_loadTexture( &mat->emissive_tex, &cmat->emissive_texture, &tex_ones );
+      object_loadTexture( &mat->emissive_tex, &cmat->emissive_texture, &tex_ones, 0 );
       if (use_ambient_occlusion)
-         object_loadTexture( &mat->occlusion_tex, &cmat->occlusion_texture, &tex_ones );
+         object_loadTexture( &mat->occlusion_tex, &cmat->occlusion_texture, &tex_ones, 1 );
       else
          mat->occlusion_tex = tex_ones;
       if (use_normal_mapping)
-         object_loadTexture( &mat->normal_tex, &cmat->normal_texture, &tex_zero );
+         object_loadTexture( &mat->normal_tex, &cmat->normal_texture, &tex_zero, 1 );
       else
          mat->normal_tex = tex_ones;
       mat->blend        = (cmat->alpha_mode == cgltf_alpha_mode_blend);
