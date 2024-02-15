@@ -472,8 +472,10 @@ static int ship_generateStoreGFX( Ship *temp )
    int tsx, tsy;
    char buf[STRMAX_SHORT];
    const double dir = M_PI + M_PI_4;
+   double r, g, b, it;
    snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
    gl_contextSet();
+   object_lightGet( &r, &g, &b, &it );
    object_light( 2., 2., 2., 0.8 );
    gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
    gl_fboCreate( &fbo, &tex, temp->size / gl_screen.scale, temp->size / gl_screen.scale );
@@ -482,6 +484,7 @@ static int ship_generateStoreGFX( Ship *temp )
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+   object_light( r, g, b, it );
    gl_contextUnset();
    return 0;
 }
