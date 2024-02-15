@@ -97,6 +97,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
 static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
       void *data );
 static void equipment_renderShip( double bx, double by, double bw, double bh, void *data );
+static void equipment_freeShipData( unsigned int wid, const char *unused );
 static int equipment_mouseInColumn( const PilotOutfitSlot *lst, double y, double h, double my );
 static int equipment_mouseSlots( unsigned int wid, const SDL_Event* event,
       double x, double y, double w, double h, double rx, double ry, void *data );
@@ -413,7 +414,7 @@ void equipment_open( unsigned int wid )
          equipment_renderShip, NULL, NULL, NULL, swd );
    window_custSetDynamic( wid, "cstShip", 1 );
    window_canFocusWidget( wid, "cstShip", 0 );
-   window_custAutoFreeData( wid, "cstShip" );
+   window_onClose( wid, equipment_freeShipData );
 
    /* Focus the ships image array. */
    window_setFocus( wid , EQUIPMENT_SHIPS );
@@ -1009,6 +1010,14 @@ static void equipment_renderShip( double bx, double by,
       gl_renderShader( px+v.x, py+v.y, 7., 7., 0., &shaders.crosshairs, &cRadar_player, 1 );
    }
 }
+
+static void equipment_freeShipData( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   ShipWidgetData *swd = window_custGetData( wid, "cstShip" );
+   free(swd);
+}
+
 /**
  * @brief Handles a mouse press in column.
  *
