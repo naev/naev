@@ -1546,7 +1546,7 @@ static void equipment_genShipList( unsigned int wid )
       nships   = 1;
    cships   = calloc( nships, sizeof(ImageArrayCell) );
    /* Add player's current ship. */
-   cships[0].image = gl_dupTexture(player.p->ship->gfx_store);
+   cships[0].image = gl_dupTexture( ship_gfxStore(player.p->ship) );
    cships[0].caption = strdup(player.p->name);
    cships[0].layers = gl_copyTexArray( player.p->ship->gfx_overlays );
    t = gl_newImage( OVERLAY_GFX_PATH"active.webp", 0 );
@@ -1564,7 +1564,7 @@ static void equipment_genShipList( unsigned int wid )
       player_shipsSort();
       ps = player_getShipStack();
       for (int i=1; i<=array_size(ps); i++) {
-         cships[i].image = gl_dupTexture( ps[i-1].p->ship->gfx_store );
+         cships[i].image = gl_dupTexture( ship_gfxStore(ps[i-1].p->ship) );
          cships[i].caption = strdup( ps[i-1].p->name );
          cships[i].layers = gl_copyTexArray( ps[i-1].p->ship->gfx_overlays );
          if (ps[i-1].favourite) {

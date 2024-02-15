@@ -948,7 +948,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
 
    cships = calloc( nships, sizeof(ImageArrayCell) );
    for ( i=0; i<nships; i++ ) {
-      cships[i].image = gl_dupTexture( cur_spob_sel_ships[i]->gfx_store );
+      cships[i].image = gl_dupTexture( ship_gfxStore(cur_spob_sel_ships[i]) );
       cships[i].caption = strdup( _(cur_spob_sel_ships[i]->name) );
    }
    xw = (w - nameWidth - pitch - 60)/2;

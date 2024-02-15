@@ -61,7 +61,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
-static int ship_generateStore( Ship *temp );
+static int ship_generateStoreGFX( Ship *temp );
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
 static int ship_loadPLG( Ship *temp, const char *buf );
 static int ship_parse( Ship *temp, const char *filename );
@@ -466,19 +466,19 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
  *
  *    @param temp Ship to generate store image for.
  */
-static int ship_generateStore( Ship *temp )
+static int ship_generateStoreGFX( Ship *temp )
 {
    GLuint fbo, tex;
    int tsx, tsy;
    char buf[STRMAX_SHORT];
-   double dir = M_PI + M_PI_4;
+   const double dir = M_PI + M_PI_4;
    snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
    gl_contextSet();
    object_light( 2., 2., 2., 0.8 );
    gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
    gl_fboCreate( &fbo, &tex, temp->size / gl_screen.scale, temp->size / gl_screen.scale );
    ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., 0., tsx, tsy, NULL );
-   temp->gfx_store = gl_rawTexture( buf, tex, temp->size, temp->size );
+   temp->_gfx_store = gl_rawTexture( buf, tex, temp->size, temp->size );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glBindFramebuffer( GL_FRAMEBUFFER, 0 );
@@ -735,25 +735,6 @@ static int ship_parse( Ship *temp, const char *filename )
          continue;
       }
 
-      if (xml_isNode(node,"gfx_engine")) {
-         /* Get path */
-         char *buf = xml_get(node);
-         if (buf==NULL) {
-            WARN(_("Ship '%s': gfx_engine element is NULL"), temp->name);
-            continue;
-         }
-         snprintf( str, sizeof(str), GFX_PATH"%s", buf );
-
-         /* Get sprite size. */
-         xmlr_attr_int_def( node, "sx", temp->sx, 8 );
-         xmlr_attr_int_def( node, "sy", temp->sy, 8 );
-
-         /* Load the graphics. */
-         ship_loadEngineImage( temp, str, temp->sx, temp->sy );
-
-         continue;
-      }
-
       if (xml_isNode(node,"gfx_comm")) {
          /* Get path */
          char *buf = xml_get(node);
@@ -983,9 +964,6 @@ static int ship_parse( Ship *temp, const char *filename )
    if (array_size(temp->polygon.views) <= 0)
       WARN(_("Ship '%s' has no collision polygon!"), temp->name );
 
-   /* Generate store image. */
-   ship_generateStore( temp );
-
 #if DEBUGGING
    if ((temp->gfx_space != NULL) && (round(temp->size) != round(temp->gfx_space->sw)))
       WARN(("Mismatch between 'size' and 'gfx_space' sprite size for ship '%s'! 'size' should be %.0f!"), temp->name, temp->gfx_space->sw);
@@ -1092,6 +1070,16 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    glClearColor( 0., 0., 0., 1. );
+}
+
+/**
+ * @brief Get the store gfx.
+ */
+glTexture* ship_gfxStore( const Ship* s )
+{
+   if (s->_gfx_store==NULL)
+      ship_generateStoreGFX( (Ship*) s );
+   return s->_gfx_store;
 }
 
 /**
@@ -1270,7 +1258,7 @@ void ships_free (void)
       object_free(s->gfx_3d);
       gl_freeTexture(s->gfx_space);
       gl_freeTexture(s->gfx_engine);
-      gl_freeTexture(s->gfx_store);
+      gl_freeTexture(s->_gfx_store);
       free(s->gfx_comm);
       for (int j=0; j<array_size(s->gfx_overlays); j++)
          gl_freeTexture(s->gfx_overlays[j]);

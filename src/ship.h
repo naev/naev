@@ -133,7 +133,7 @@ typedef struct Ship_ {
    Object *gfx_3d;         /**< 3d model of the ship */
    glTexture *gfx_space;   /**< Space sprite sheet. */
    glTexture *gfx_engine;  /**< Space engine glow sprite sheet. */
-   glTexture *gfx_store;   /**< Store graphic. */
+   glTexture *_gfx_store;   /**< Store graphic. */
    char* gfx_comm;         /**< Name of graphic for communication. */
    glTexture **gfx_overlays; /**< Array (array.h): Store overlay graphics. */
    ShipTrailEmitter *trail_emitters; /**< Trail emitters. */
@@ -195,6 +195,7 @@ ShipClass ship_classFromString( const char* str );
 credits_t ship_basePrice( const Ship* s );
 credits_t ship_buyPrice( const Ship* s );
 glTexture* ship_loadCommGFX( const Ship* s );
+glTexture* ship_gfxStore( const Ship* s );
 int ship_size( const Ship *s );
 
 /*

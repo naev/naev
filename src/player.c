@@ -2656,7 +2656,7 @@ int player_ships( char** sships, glTexture** tships )
    /* Create the struct. */
    for (int i=0; i < array_size(player_stack); i++) {
       sships[i] = strdup(player_stack[i].p->name);
-      tships[i] = player_stack[i].p->ship->gfx_store;
+      tships[i] = ship_gfxStore(player_stack[i].p->ship);
    }
 
    return array_size(player_stack);
