@@ -413,7 +413,7 @@ void equipment_open( unsigned int wid )
    /* Spinning ship. */
    swd = malloc(sizeof(ShipWidgetData));
    swd->wid = wid;
-   swd->s = 256. / gl_screen.scale; /* TODO handle cases ships are >256 px. */
+   swd->s = ship_maxSize() / gl_screen.scale;
    gl_fboCreate( &swd->fbo, &swd->tex, swd->s, swd->s );
    gl_fboAddDepth( swd->fbo, &swd->texd, swd->s, swd->s );
    window_addRect( wid, -20+4, -40+4, 128+8, 128+8, "rctShip", &cBlack, 1 );

@@ -58,6 +58,8 @@ typedef struct ShipThreadData_ {
 
 static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 
+static double max_size = 0.;
+
 /*
  * Prototypes
  */
@@ -976,6 +978,9 @@ static int ship_parse( Ship *temp, const char *filename )
       WARN(("Mismatch between 'size' and 'gfx_space' sprite size for ship '%s'! 'size' should be %.0f!"), temp->name, temp->gfx_space->sw);
 #endif /* DEBUGGING */
 
+   /* Update max size. */
+   max_size = MAX( max_size, temp->size );
+
    /* Ship XML validator */
 #define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
    MELEMENT(temp->name==NULL,"name");
@@ -1296,4 +1301,12 @@ static void ship_freeSlot( ShipOutfitSlot* s )
 {
    outfit_freeSlot( &s->slot );
    free( s->name );
+}
+
+/**
+ * @brief Gets the maximum size of a ship.
+ */
+double ship_maxSize (void)
+{
+   return max_size;
 }
