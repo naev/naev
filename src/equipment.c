@@ -55,6 +55,10 @@
 #define BUTTON_WIDTH    200 /**< Default button width. */
 #define BUTTON_HEIGHT   40 /**< Default button height. */
 
+typedef struct ShipWidgetData_ {
+   unsigned int wid;
+} ShipWidgetData;
+
 /*
  * equipment stuff
  */
@@ -299,7 +303,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 void equipment_open( unsigned int wid )
 {
    int w,h, sw,sh, ow,oh, bw,bh, ew,eh, cw,ch, x,y;
-   unsigned int *widptr;
+   ShipWidgetData *swd;
 
    /* Load the outfit mode. */
    equipment_outfitMode = player.eq_outfitMode;
@@ -402,11 +406,11 @@ void equipment_open( unsigned int wid )
    window_canFocusWidget( wid, "cstMisc", 0 );
 
    /* Spinning ship. */
-   widptr = malloc(sizeof(unsigned int));
-   *widptr = wid;
+   swd = malloc(sizeof(ShipWidgetData));
+   swd->wid = wid;
    window_addRect( wid, -20+4, -40+4, 128+8, 128+8, "rctShip", &cBlack, 1 );
    window_addCust( wid, -20, -40, 128, 128, "cstShip", 0,
-         equipment_renderShip, NULL, NULL, NULL, widptr );
+         equipment_renderShip, NULL, NULL, NULL, swd );
    window_custSetDynamic( wid, "cstShip", 1 );
    window_canFocusWidget( wid, "cstShip", 0 );
    window_custAutoFreeData( wid, "cstShip" );
@@ -919,7 +923,8 @@ static void equipment_renderShip( double bx, double by,
    double px, py, pw, ph, lr, lg, lb, li;
    vec2 v;
    GLint fbo;
-   const unsigned int *wid = data;
+   ShipWidgetData *swd = data;
+   const unsigned int wid = swd->wid;
 
    /* Must have selected ship. */
    if (eq_wgt.selected == NULL)
@@ -927,7 +932,7 @@ static void equipment_renderShip( double bx, double by,
    p = eq_wgt.selected->p;
 
    /* Don't update if not selected. */
-   if (window_isTop(*wid)) {
+   if (window_isTop(wid)) {
       unsigned int tick = SDL_GetTicks();
       double dt = (double)(tick - equipment_lastick)/1000.;
       equipment_lastick = tick;
