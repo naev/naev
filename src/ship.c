@@ -482,8 +482,8 @@ static int ship_generateStoreGFX( Ship *temp )
    gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
    gl_fboCreate( &fbo, &tex, size, size );
    gl_fboAddDepth( fbo, &depth_tex, size, size );
-   ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 1., 0., tsx, tsy, NULL );
-   temp->_gfx_store = gl_rawTexture( buf, tex, temp->size, temp->size );
+   ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., 0., tsx, tsy, NULL );
+   temp->_gfx_store = gl_rawTexture( buf, tex, size, size );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glDeleteTextures( 1, &depth_tex );
