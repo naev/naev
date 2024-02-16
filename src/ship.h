@@ -130,10 +130,10 @@ typedef struct Ship_ {
 
    /* Graphics */
    double size;            /**< Size of the ship. */
-   Object *gfx_3d;         /**< 3d model of the ship */
+   GltfObject *gfx_3d;     /**< 3d model of the ship */
    glTexture *gfx_space;   /**< Space sprite sheet. */
    glTexture *gfx_engine;  /**< Space engine glow sprite sheet. */
-   glTexture *_gfx_store;   /**< Store graphic. */
+   glTexture *_gfx_store;  /**< Store graphic. */
    char* gfx_comm;         /**< Name of graphic for communication. */
    glTexture **gfx_overlays; /**< Array (array.h): Store overlay graphics. */
    ShipTrailEmitter *trail_emitters; /**< Trail emitters. */

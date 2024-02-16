@@ -97,7 +97,7 @@ typedef struct Scene_ {
 /**
  * @brief Defines a complete object.
  */
-typedef struct Object_ {
+typedef struct GltfObject_ {
    Scene *scenes;       /**< Number of scenes. */
    size_t nscenes;      /**< Number of scenes. */
    Material *materials; /**< Available materials. */
@@ -108,19 +108,19 @@ typedef struct Object_ {
    /* Some useful default scenes. */
    int scene_body;      /**< Body of the object. */
    int scene_engine;    /**< Engine of the object (if applicable or -1) */
-} Object;
+} GltfObject;
 
 /* Framework itself. */
 int gltf_init (void);
 void gltf_exit (void);
 
 /* Loading and freeing. */
-Object *gltf_loadFromFile( const char *filename );
-void gltf_free( Object *obj );
+GltfObject *gltf_loadFromFile( const char *filename );
+void gltf_free( GltfObject *obj );
 
 /* Rendering and updating. */
-void gltf_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size );
-void gltf_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H, double time, double size, unsigned int flags );
+void gltf_render( GLuint fb, const GltfObject *obj, const mat4 *H, double time, double size );
+void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *H, double time, double size, unsigned int flags );
 
 /* Lighting. */
 void gltf_light( double r, double g, double b, double intensity );

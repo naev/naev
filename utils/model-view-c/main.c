@@ -62,7 +62,7 @@ int main( int argc, char *argv[] )
 
    /* Load the object. */
    path = strdup(argv[1]);
-   Object *obj = gltf_loadFromFile( basename(path) );
+   GltfObject *obj = gltf_loadFromFile( basename(path) );
    free( path );
 
    /* Set some lighting parameters. */

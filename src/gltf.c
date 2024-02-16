@@ -517,7 +517,7 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_nod
    return 0;
 }
 
-static void shadow_matrix( const Object *obj, mat4 *m, const Light *light )
+static void shadow_matrix( const GltfObject *obj, mat4 *m, const Light *light )
 {
    (void) obj;
    const vec3 up        = { .v = {0., 1., 0.} };
@@ -533,7 +533,7 @@ static void shadow_matrix( const Object *obj, mat4 *m, const Light *light )
 /**
  * @brief Renders a mesh shadow with a transform.
  */
-static void renderMeshShadow( const Object *obj, const Mesh *mesh, const mat4 *H )
+static void renderMeshShadow( const GltfObject *obj, const Mesh *mesh, const mat4 *H )
 {
    (void) obj;
    const Shader *shd = &shadow_shader;
@@ -556,7 +556,7 @@ static void renderMeshShadow( const Object *obj, const Mesh *mesh, const mat4 *H
 /**
  * @brief Renders a mesh with a transform.
  */
-static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
+static void renderMesh( const GltfObject *obj, const Mesh *mesh, const mat4 *H )
 {
    const Material *mat;
    const Shader *shd = &gltf_shader;
@@ -647,7 +647,7 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
 /**
  * @brief Recursive rendering to the shadow buffer.
  */
-static void gltf_renderNodeShadow( const Object *obj, const Node *node, const mat4 *H )
+static void gltf_renderNodeShadow( const GltfObject *obj, const Node *node, const mat4 *H )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
@@ -668,7 +668,7 @@ static void gltf_renderNodeShadow( const Object *obj, const Node *node, const ma
 /**
  * @brief Recursive rendering of a mesh.
  */
-static void gltf_renderNodeMesh( const Object *obj, const Node *node, const mat4 *H )
+static void gltf_renderNodeMesh( const GltfObject *obj, const Node *node, const mat4 *H )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
@@ -686,7 +686,7 @@ static void gltf_renderNodeMesh( const Object *obj, const Node *node, const mat4
    gl_checkErr();
 }
 
-static void gltf_renderShadow( const Object *obj, int scene, const mat4 *H, const Light *light, double time, int i )
+static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H, const Light *light, double time, int i )
 {
    const Shader *shd = &shadow_shader;
 
@@ -756,7 +756,7 @@ static void gltf_renderShadow( const Object *obj, int scene, const mat4 *H, cons
    gl_checkErr();
 }
 
-static void gltf_renderMesh( const Object *obj, int scene, const mat4 *H, double time )
+static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H, double time )
 {
    /* Load constant stuff. */
    const Shader *shd = &gltf_shader;
@@ -800,15 +800,15 @@ static void gltf_renderMesh( const Object *obj, int scene, const mat4 *H, double
 /**
  * @brief Renders an object (with a transformation).
  *
- *    @param obj Object to render.
+ *    @param obj GltfObject to render.
  *    @param H Transformation to apply (or NULL to use identity).
  */
-void gltf_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size )
+void gltf_render( GLuint fb, const GltfObject *obj, const mat4 *H, double time, double size )
 {
    return gltf_renderScene( fb, obj, obj->scene_body, H, time, size, 0 );
 }
 
-void gltf_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H, double time, double size, unsigned int flags )
+void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *H, double time, double size, unsigned int flags )
 {
    (void) time; /* TODO implement animations. */
    (void) flags;
@@ -900,9 +900,9 @@ static cgltf_result gltf_read( const struct cgltf_memory_options* memory_options
  *    @param filename Name of the file to load from.
  *    @return Newly loaded object file.
  */
-Object *gltf_loadFromFile( const char *filename )
+GltfObject *gltf_loadFromFile( const char *filename )
 {
-   Object *obj;
+   GltfObject *obj;
    cgltf_result res;
    cgltf_data *data;
    cgltf_options opts;
@@ -917,7 +917,7 @@ Object *gltf_loadFromFile( const char *filename )
       gltf_init();
 
    /* Initialize object. */
-   obj = calloc( sizeof(Object), 1 );
+   obj = calloc( sizeof(GltfObject), 1 );
 
    /* Start loading the file. */
    res = cgltf_parse_file( &opts, filename, &data );
@@ -1015,7 +1015,7 @@ static void gltf_freeTex( Texture *tex )
    gl_checkErr();
 }
 
-void gltf_free( Object *obj )
+void gltf_free( GltfObject *obj )
 {
    if (obj==NULL)
       return;

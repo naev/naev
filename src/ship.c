@@ -1029,7 +1029,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
    if (s->gfx_3d != NULL) {
       double scale = s->size / gl_screen.scale;
-      Object *obj = s->gfx_3d;
+      GltfObject *obj = s->gfx_3d;
 
       /* Only clear the necessary area. */
       glEnable( GL_SCISSOR_TEST );
