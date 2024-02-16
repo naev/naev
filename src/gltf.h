@@ -11,10 +11,7 @@
 #include "vec3.h"
 
 #define MAX_LIGHTS 3    /**< Maximum amount of lights. TODO deferred rendering. */
-
 #define SHADOWMAP_SIZE  128   /**< Size of the shadow map. */
-
-#define OBJECT_FLAG_NOLIGHTS  (1<<0)   /**< Do not run shadows computations. */
 
 typedef struct Texture_ {
    GLuint tex;
@@ -110,6 +107,23 @@ typedef struct GltfObject_ {
    int scene_engine;    /**< Engine of the object (if applicable or -1) */
 } GltfObject;
 
+/**
+ * @brief Simple point/sun light model.
+ */
+typedef struct Light_ {
+   int sun;          /**< Whether or not it's a sun-type light source. */
+   /* left(-)/right(+), down(-)/up(+), forward(-)/back(+) */
+   vec3 pos;         /**< Position of the light in normalized coordinates, or orientation for pos (defined as vector from origin to opposite direction). */
+   double intensity; /**< Radiosity of the lights. */
+   vec3 colour;      /**< Light colour. */
+} Light;
+
+typedef struct Lighting_ {
+   double ambient_r, ambient_g, ambient_b; /**< Ambient lighting. */
+   Light lights[MAX_LIGHTS];  /**< Standard lights. */
+   int nlights; /**< Number of lights being used. Has to be less than MAX_LIGHTS. */
+} Lighting;
+
 /* Framework itself. */
 int gltf_init (void);
 void gltf_exit (void);
@@ -120,7 +134,7 @@ void gltf_free( GltfObject *obj );
 
 /* Rendering and updating. */
 void gltf_render( GLuint fb, const GltfObject *obj, const mat4 *H, double time, double size );
-void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *H, double time, double size, unsigned int flags );
+void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *H, double time, double size, const Lighting *L );
 
 /* Lighting. */
 void gltf_light( double r, double g, double b, double intensity );

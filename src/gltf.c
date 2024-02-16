@@ -46,17 +46,28 @@ typedef struct ShaderLight_ {
    GLuint shadowmap_tex; /* sampler2D */
 } ShaderLight;
 
-/**
- * @brief Simple point light model.
- */
-typedef struct Light_ {
-   int sun;          /**< Whether or not it's a sun-type light source. */
-   vec3 pos;         /**< Position of the light in normalized coordinates. */
-   double intensity; /**< Radiosity of the lights. */
-   vec3 colour;      /**< Light colour. */
-} Light;
+static const Lighting L_default_const = {
+   .ambient_r = 0.,
+   .ambient_g = 0.,
+   .ambient_b = 0.,
+   .nlights = 2,
+   .lights = { {
+         .sun = 1,
+         .pos = { .v = {1., 0.5, 1.0} },
+         .colour = { .v = {1., 1., 1.} },
+         .intensity = 1.5,
+      },
+      {
+         .sun = 0,
+         .pos = { .v = {-6., 5.5, -5.} },
+         .colour = { .v = {0.7, 0.85, 1.} },
+         .intensity = 600.,
+      },
+   },
+};
+static Lighting L_default;
+static double light_intensity = 1.;
 
-/* left(-)/right(+), down(-)/up(+), forward(-)/back(+) */
 #if 0
 static Light lights[MAX_LIGHTS] = {
    {
@@ -72,7 +83,6 @@ static Light lights[MAX_LIGHTS] = {
       .intensity = 600.,
    },
 };
-#else
 static Light lights[MAX_LIGHTS] = {
    {
       .pos = { .v = {5., 2., 0.} },
@@ -91,8 +101,6 @@ static Light lights[MAX_LIGHTS] = {
    },
 };
 #endif
-static double light_intensity = 1.;
-static vec3 ambient = { .v = {0., 0., 0.} };
 static GLuint light_fbo[MAX_LIGHTS]; /**< FBO correpsonding to the light. */
 static GLuint light_tex[MAX_LIGHTS]; /**< Texture corresponding to the light. */
 
@@ -153,11 +161,6 @@ static Shader shadow_shader_blurY;
 /* Options. */
 static int use_normal_mapping = 1;
 static int use_ambient_occlusion = 1;
-
-/*
- * Prototypes.
- */
-static void gltf_lightSetup( int doambient, int dogeneral );
 
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
@@ -756,19 +759,30 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H, 
    gl_checkErr();
 }
 
-static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H, double time )
+static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H, double time, const Lighting *L )
 {
    /* Load constant stuff. */
    const Shader *shd = &gltf_shader;
    glUseProgram( shd->program );
    glUniform1f( shd->u_time, time );
    mat4 Hshadow;
-   for (int i=0; i<MAX_LIGHTS; i++) {
-      const Light *l = &lights[i];
+   const double factor = 1.0/M_PI;
+   glUniform3f( shd->u_ambient, L->ambient_r*factor, L->ambient_g*factor, L->ambient_b*factor );
+   glUniform1i( shd->nlights, L->nlights );
+   for (int i=0; i<L->nlights; i++) {
+      const Light *l = &L->lights[i];
+      const ShaderLight *sl = &shd->lights[i];
 
+      /* Other parameters. */
+      glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
+      glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
+      glUniform1f( sl->intensity, l->intensity );
+
+      /* Set up matrix. */
       shadow_matrix( obj, &Hshadow, l );
-      glUniformMatrix4fv( shd->lights[i].Hshadow, 1, GL_FALSE, Hshadow.ptr );
+      glUniformMatrix4fv( sl->Hshadow, 1, GL_FALSE, Hshadow.ptr );
 
+      /* Set up textures. */
       glActiveTexture( GL_TEXTURE5+i );
          glBindTexture( GL_TEXTURE_2D, light_tex[i] );
          glUniform1i( shd->lights[i].shadowmap_tex, 5+i );
@@ -808,10 +822,9 @@ void gltf_render( GLuint fb, const GltfObject *obj, const mat4 *H, double time, 
    return gltf_renderScene( fb, obj, obj->scene_body, H, time, size, 0 );
 }
 
-void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *H, double time, double size, unsigned int flags )
+void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *H, double time, double size, const Lighting *L )
 {
    (void) time; /* TODO implement animations. */
-   (void) flags;
    if (scene < 0)
       return;
    const GLfloat sca = 1.0/obj->radius;
@@ -829,6 +842,9 @@ void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *
       mat4_apply( &Hptr, &Hscale );
    }
 
+   if (L==NULL)
+      L = &L_default;
+
    /* Some constant stuff. */
    const Shader *shd = &gltf_shader;
    glUseProgram( shd->program );
@@ -837,13 +853,12 @@ void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *
    glEnable( GL_DEPTH_TEST );
    glDepthFunc( GL_LESS );
 
-   /* TODO only render shadows if applicable. */
-   for (int i=0; i<MAX_LIGHTS; i++)
-      gltf_renderShadow( obj, scene, &Hptr, &lights[i], time, i );
+   for (int i=0; i<L->nlights; i++)
+      gltf_renderShadow( obj, scene, &Hptr, &L->lights[i], time, i );
 
    glViewport( 0, 0, size, size );
    glBindFramebuffer(GL_FRAMEBUFFER, fb);
-   gltf_renderMesh( obj, scene, &Hptr, time );
+   gltf_renderMesh( obj, scene, &Hptr, time, L );
 
    glDisable( GL_DEPTH_TEST );
    glUseProgram( 0 );
@@ -1052,6 +1067,9 @@ int gltf_init (void)
    const char *prepend_fix = "#define MAX_LIGHTS "STR(MAX_LIGHTS)"\n#define SHADOWMAP_SIZE "STR(SHADOWMAP_SIZE)"\n";
    char prepend[STRMAX];
 
+   /* Set up lighting. */
+   L_default = L_default_const;
+
    /* Set global options. */
    use_normal_mapping = !conf.low_memory;
    use_ambient_occlusion = !conf.low_memory;
@@ -1225,7 +1243,6 @@ int gltf_init (void)
    }
    shd->nlights         = glGetUniformLocation( shd->program, "u_nlights" );
    /* Light default values set on init. */
-   gltf_lightSetup( 1, 1 ); /* Unsets the program. */
    gl_checkErr();
 
    return 0;
@@ -1248,46 +1265,16 @@ void gltf_exit (void)
    glDeleteProgram( shadow_shader.program );
 }
 
-static void gltf_lightSetup( int doambient, int dogeneral )
-{
-   const Shader *shd = &gltf_shader;
-   /* Skip if not initialized. */
-   if (tex_zero.tex==0)
-      return;
-   glUseProgram( shd->program );
-   if (doambient) {
-      const double factor = 1.0/M_PI;
-      glUniform3f( shd->u_ambient, ambient.v[0]*factor, ambient.v[1]*factor, ambient.v[2]*factor );
-   }
-   if (dogeneral) {
-      glUniform1i( shd->nlights, MAX_LIGHTS );
-      for (int i=0; i<MAX_LIGHTS; i++) {
-         const Light *l = &lights[i];
-         const ShaderLight *sl = &shd->lights[i];
-         glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
-         glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
-         glUniform1f( sl->intensity, l->intensity * light_intensity );
-      }
-   }
-   glUseProgram(0);
-   gl_checkErr();
-}
-
 void gltf_light( double r, double g, double b, double intensity )
 {
-   ambient.v[0] = r;
-   ambient.v[1] = g;
-   ambient.v[2] = b;
-   light_intensity = intensity;
-   gltf_lightSetup( 1, 1 );
+   gltf_lightAmbient( r, g, b );
+   gltf_lightIntensity( intensity );
 }
 
 void gltf_lightGet( double *r, double *g, double *b, double *intensity )
 {
-   *r = ambient.v[0];
-   *g = ambient.v[1];
-   *b = ambient.v[2];
-   *intensity = light_intensity;
+   gltf_lightAmbientGet( r, g, b );
+   *intensity = gltf_lightIntensityGet();
 }
 
 /**
@@ -1295,10 +1282,9 @@ void gltf_lightGet( double *r, double *g, double *b, double *intensity )
  */
 void gltf_lightAmbient( double r, double g, double b )
 {
-   ambient.v[0] = r;
-   ambient.v[1] = g;
-   ambient.v[2] = b;
-   gltf_lightSetup( 1, 0 );
+   L_default.ambient_r = r;
+   L_default.ambient_g = g;
+   L_default.ambient_b = b;
 }
 
 /**
@@ -1306,9 +1292,9 @@ void gltf_lightAmbient( double r, double g, double b )
  */
 void gltf_lightAmbientGet( double *r, double *g, double *b )
 {
-   *r = ambient.v[0];
-   *g = ambient.v[1];
-   *b = ambient.v[2];
+   *r = L_default.ambient_r;
+   *g = L_default.ambient_g;
+   *b = L_default.ambient_b;
 }
 
 /**
@@ -1316,8 +1302,9 @@ void gltf_lightAmbientGet( double *r, double *g, double *b )
  */
 void gltf_lightIntensity( double strength )
 {
+   for (int i=0; i<MAX_LIGHTS; i++)
+      L_default.lights[i].intensity = strength * L_default_const.lights[i].intensity;
    light_intensity = strength;
-   gltf_lightSetup( 0, 1 );
 }
 
 /**

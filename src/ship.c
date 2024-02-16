@@ -1048,9 +1048,9 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
       /* Actually render. */
       if ((engine_glow > 0.5) && (obj->scene_engine >= 0))
-         gltf_renderScene( fbo, obj, obj->scene_engine, &H, 0., scale, 0 );
+         gltf_renderScene( fbo, obj, obj->scene_engine, &H, 0., scale, NULL );
       else
-         gltf_renderScene( fbo, obj, obj->scene_body, &H, 0., scale, 0 );
+         gltf_renderScene( fbo, obj, obj->scene_body, &H, 0., scale, NULL );
    }
    else {
       double tx,ty;
