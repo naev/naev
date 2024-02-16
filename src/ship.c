@@ -425,7 +425,7 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    snprintf(str, sizeof(str), SHIP_3DGFX_PATH"%s/%s.gltf", base, buf);
    if (PHYSFS_exists(str)) {
       DEBUG("Found 3D graphics for '%s' at '%s'!", temp->name, str);
-      temp->gfx_3d = object_loadFromFile(str);
+      temp->gfx_3d = gltf_loadFromFile(str);
    }
 
    /* Determine extension path. */
@@ -479,8 +479,8 @@ static int ship_generateStoreGFX( Ship *temp )
 
    snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
    gl_contextSet();
-   object_lightGet( &r, &g, &b, &it );
-   object_light( 2., 2., 2., 0.8 );
+   gltf_lightGet( &r, &g, &b, &it );
+   gltf_light( 2., 2., 2., 0.8 );
    gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
    gl_fboCreate( &fbo, &tex, size, size );
    gl_fboAddDepth( fbo, &depth_tex, size, size );
@@ -490,7 +490,7 @@ static int ship_generateStoreGFX( Ship *temp )
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glDeleteTextures( 1, &depth_tex );
    glBindFramebuffer( GL_FRAMEBUFFER, 0 );
-   object_light( r, g, b, it );
+   gltf_light( r, g, b, it );
    gl_contextUnset();
    return 0;
 }
@@ -1048,9 +1048,9 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
       /* Actually render. */
       if ((engine_glow > 0.5) && (obj->scene_engine >= 0))
-         object_renderScene( fbo, obj, obj->scene_engine, &H, 0., scale, 0 );
+         gltf_renderScene( fbo, obj, obj->scene_engine, &H, 0., scale, 0 );
       else
-         object_renderScene( fbo, obj, obj->scene_body, &H, 0., scale, 0 );
+         gltf_renderScene( fbo, obj, obj->scene_body, &H, 0., scale, 0 );
    }
    else {
       double tx,ty;
@@ -1267,7 +1267,7 @@ void ships_free (void)
       ss_free( s->stats );
 
       /* Free graphics. */
-      object_free(s->gfx_3d);
+      gltf_free(s->gfx_3d);
       gl_freeTexture(s->gfx_space);
       gl_freeTexture(s->gfx_engine);
       gl_freeTexture(s->_gfx_store);

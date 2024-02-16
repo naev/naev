@@ -1071,7 +1071,7 @@ static int gfxL_lightAmbient( lua_State *L )
          b *= n;
       }
    }
-   object_lightAmbient( r, g, b );
+   gltf_lightAmbient( r, g, b );
    return 0;
 }
 
@@ -1086,7 +1086,7 @@ static int gfxL_lightAmbient( lua_State *L )
 static int gfxL_lightAmbientGet( lua_State *L )
 {
    double r, g, b;
-   object_lightAmbientGet( &r, &g, &b );
+   gltf_lightAmbientGet( &r, &g, &b );
    lua_pushnumber( L, r );
    lua_pushnumber( L, g );
    lua_pushnumber( L, b );
@@ -1101,7 +1101,7 @@ static int gfxL_lightAmbientGet( lua_State *L )
  */
 static int gfxL_lightIntensity( lua_State *L )
 {
-   object_lightIntensity( luaL_checknumber(L,1) );
+   gltf_lightIntensity( luaL_checknumber(L,1) );
    return 0;
 }
 
@@ -1113,6 +1113,6 @@ static int gfxL_lightIntensity( lua_State *L )
  */
 static int gfxL_lightIntensityGet( lua_State *L )
 {
-   lua_pushnumber( L, object_lightIntensityGet() );
+   lua_pushnumber( L, gltf_lightIntensityGet() );
    return 1;
 }

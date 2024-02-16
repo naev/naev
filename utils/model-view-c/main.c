@@ -57,18 +57,18 @@ int main( int argc, char *argv[] )
    glEnable( GL_FRAMEBUFFER_SRGB );
    glClearColor( 0.2, 0.2, 0.2, 1.0 );
 
-   if (object_init())
+   if (gltf_init())
       return -1;
 
    /* Load the object. */
    path = strdup(argv[1]);
-   Object *obj = object_loadFromFile( basename(path) );
+   Object *obj = gltf_loadFromFile( basename(path) );
    free( path );
 
    /* Set some lighting parameters. */
    double al = 0.5;
-   object_lightAmbient( al, al, al );
-   //object_lightAmbient( 3., 0.0, 0.0 );
+   gltf_lightAmbient( al, al, al );
+   //gltf_lightAmbient( 3., 0.0, 0.0 );
 
    /* Set up some stuff. */
    GLuint shadowvbo;
@@ -179,11 +179,11 @@ int main( int argc, char *argv[] )
       int scene = obj->scene_body;
       if (obj->scene_engine >= 0 && engine)
          scene = obj->scene_engine;
-      object_renderScene( 0, obj, scene, &H, (float)SDL_GetTicks64() / 1000., SCREEN_W, 0 );
+      gltf_renderScene( 0, obj, scene, &H, (float)SDL_GetTicks64() / 1000., SCREEN_W, 0 );
 
       /* Draw the shadowmap to see what's going on (clear the shadowmap). */
       if (rendermode) {
-         GLuint shadowmap = object_shadowmap( shadowmap_sel );
+         GLuint shadowmap = gltf_shadowmap( shadowmap_sel );
          glUseProgram( shadowshader );
 
          glBindBuffer( GL_ARRAY_BUFFER, shadowvbo );
@@ -207,9 +207,9 @@ int main( int argc, char *argv[] )
       SDL_Delay( 1000 * dt );
    }
 
-   object_free( obj );
+   gltf_free( obj );
 
-   object_exit();
+   gltf_exit();
 
    SDL_Quit();
    PHYSFS_deinit();

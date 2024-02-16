@@ -506,7 +506,7 @@ int main( int argc, char** argv )
    log_clean();
 
    /* Really turn the lights off. */
-   object_exit();
+   gltf_exit();
    PHYSFS_deinit();
    gl_fontExit();
    gettext_exit();

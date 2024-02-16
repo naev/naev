@@ -111,24 +111,24 @@ typedef struct Object_ {
 } Object;
 
 /* Framework itself. */
-int object_init (void);
-void object_exit (void);
+int gltf_init (void);
+void gltf_exit (void);
 
 /* Loading and freeing. */
-Object *object_loadFromFile( const char *filename );
-void object_free( Object *obj );
+Object *gltf_loadFromFile( const char *filename );
+void gltf_free( Object *obj );
 
 /* Rendering and updating. */
-void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size );
-void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H, double time, double size, unsigned int flags );
+void gltf_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size );
+void gltf_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H, double time, double size, unsigned int flags );
 
 /* Lighting. */
-void object_light( double r, double g, double b, double intensity );
-void object_lightGet( double *r, double *g, double *b, double *intensity );
-void object_lightAmbient( double r, double g, double b );
-void object_lightAmbientGet( double *r, double *g, double *b );
-void object_lightIntensity( double strength );
-double object_lightIntensityGet (void);
+void gltf_light( double r, double g, double b, double intensity );
+void gltf_lightGet( double *r, double *g, double *b, double *intensity );
+void gltf_lightAmbient( double r, double g, double b );
+void gltf_lightAmbientGet( double *r, double *g, double *b );
+void gltf_lightIntensity( double strength );
+double gltf_lightIntensityGet (void);
 
 /* Misc functions. */
-GLuint object_shadowmap( int light );
+GLuint gltf_shadowmap( int light );

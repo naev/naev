@@ -972,10 +972,10 @@ static void equipment_renderShip( double bx, double by,
    /* Use framebuffer to draw, have to use an additional one. */
    s = ceil( s / gl_screen.scale ); /* Have to correct for the true rendered size. */
    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
-   object_lightGet( &lr, &lg, &lb, &li );
-   object_light( 2., 2., 2., 0.8 );
+   gltf_lightGet( &lr, &lg, &lb, &li );
+   gltf_light( 2., 2., 2., 0.8 );
    pilot_renderFramebuffer( p, swd->fbo, gl_screen.nw, gl_screen.nh );
-   object_light( lr, lg, lb, li );
+   gltf_light( lr, lg, lb, li );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    gl_renderTextureRaw( swd->tex, 0,
          px, py, pw, ph,

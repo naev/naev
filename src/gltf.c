@@ -138,7 +138,7 @@ typedef struct Shader_ {
    /* Custom Naev. */
    //GLuint waxiness;
 } Shader;
-static Shader object_shader;
+static Shader gltf_shader;
 static Shader shadow_shader;
 static Texture tex_zero = {.tex=0, .texcoord=0, .strength=1.}; /* Used to detect initialization for now. */
 static Texture tex_ones = {.tex=0, .texcoord=0, .strength=1.};
@@ -157,7 +157,7 @@ static int use_ambient_occlusion = 1;
 /*
  * Prototypes.
  */
-static void object_lightSetup( int doambient, int dogeneral );
+static void gltf_lightSetup( int doambient, int dogeneral );
 
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
@@ -168,7 +168,7 @@ static void object_lightSetup( int doambient, int dogeneral );
  *    @param notsrgb Whether or not the texture should use SRGB.
  *    @return OpenGL ID of the new texture.
  */
-static int object_loadTexture( Texture *otex, const cgltf_texture_view *ctex, const Texture *def, int notsrgb )
+static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex, const Texture *def, int notsrgb )
 {
    const SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
    GLuint tex;
@@ -263,19 +263,19 @@ static int object_loadTexture( Texture *otex, const cgltf_texture_view *ctex, co
 /**
  * @brief Loads a material for the object.
  */
-static int object_loadMaterial( Material *mat, const cgltf_material *cmat, const cgltf_data *data )
+static int gltf_loadMaterial( Material *mat, const cgltf_material *cmat, const cgltf_data *data )
 {
    const GLfloat white[4] = { 1., 1., 1., 1. };
    /* TODO complete this. */
    if (cmat && cmat->has_pbr_metallic_roughness) {
       mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
       mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
-      object_loadTexture( &mat->baseColour_tex, &cmat->pbr_metallic_roughness.base_color_texture, &tex_ones, 0 );
+      gltf_loadTexture( &mat->baseColour_tex, &cmat->pbr_metallic_roughness.base_color_texture, &tex_ones, 0 );
       if (mat->baseColour_tex.tex == tex_ones.tex)
          memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
       else
          memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
-      object_loadTexture( &mat->metallic_tex, &cmat->pbr_metallic_roughness.metallic_roughness_texture, &tex_ones, 1 );
+      gltf_loadTexture( &mat->metallic_tex, &cmat->pbr_metallic_roughness.metallic_roughness_texture, &tex_ones, 1 );
    }
    else {
       memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
@@ -309,13 +309,13 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat, const
    /* Handle emissiveness and such. */
    if (cmat) {
       memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
-      object_loadTexture( &mat->emissive_tex, &cmat->emissive_texture, &tex_ones, 0 );
+      gltf_loadTexture( &mat->emissive_tex, &cmat->emissive_texture, &tex_ones, 0 );
       if (use_ambient_occlusion)
-         object_loadTexture( &mat->occlusion_tex, &cmat->occlusion_texture, &tex_ones, 1 );
+         gltf_loadTexture( &mat->occlusion_tex, &cmat->occlusion_texture, &tex_ones, 1 );
       else
          mat->occlusion_tex = tex_ones;
       if (use_normal_mapping)
-         object_loadTexture( &mat->normal_tex, &cmat->normal_texture, &tex_zero, 1 );
+         gltf_loadTexture( &mat->normal_tex, &cmat->normal_texture, &tex_zero, 1 );
       else
          mat->normal_tex = tex_ones;
       mat->blend        = (cmat->alpha_mode == cgltf_alpha_mode_blend);
@@ -389,7 +389,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat, const
  *    @param acc Accessor to load from.
  *    @return OpenGL ID of the new VBO.
  */
-static GLuint object_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *aabb_min, vec3 *aabb_max, const cgltf_node *cnode )
+static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *aabb_min, vec3 *aabb_max, const cgltf_node *cnode )
 {
    GLuint vid;
    cgltf_size num = cgltf_accessor_unpack_floats( acc, NULL, 0 );
@@ -430,7 +430,7 @@ static GLuint object_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *
 /**
  * @brief Loads a mesh for the object.
  */
-static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_node *cnode )
+static int gltf_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_node *cnode )
 {
    cgltf_mesh *cmesh = cnode->mesh;
    /* Get transform for node. */
@@ -477,21 +477,21 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
             cgltf_attribute *attr = &prim->attributes[j];
             switch (attr->type) {
                case cgltf_attribute_type_position:
-                  mesh->vbo_pos = object_loadVBO( attr->data, &mesh->radius, &mesh->aabb_min, &mesh->aabb_max, cnode );
+                  mesh->vbo_pos = gltf_loadVBO( attr->data, &mesh->radius, &mesh->aabb_min, &mesh->aabb_max, cnode );
                   node->radius = MAX( node->radius, mesh->radius );
                   vec3_max( &node->aabb_max, &node->aabb_max, &mesh->aabb_max );
                   vec3_min( &node->aabb_min, &node->aabb_min, &mesh->aabb_min );
                   break;
 
                case cgltf_attribute_type_normal:
-                  mesh->vbo_nor = object_loadVBO( attr->data, NULL, NULL, NULL, NULL );
+                  mesh->vbo_nor = gltf_loadVBO( attr->data, NULL, NULL, NULL, NULL );
                   break;
 
                case cgltf_attribute_type_texcoord:
                   if (attr->index==0)
-                     mesh->vbo_tex0 = object_loadVBO( attr->data, NULL, NULL, NULL, NULL );
+                     mesh->vbo_tex0 = gltf_loadVBO( attr->data, NULL, NULL, NULL, NULL );
                   else
-                     mesh->vbo_tex1 = object_loadVBO( attr->data, NULL, NULL, NULL, NULL );
+                     mesh->vbo_tex1 = gltf_loadVBO( attr->data, NULL, NULL, NULL, NULL );
                   /* TODO handle other cases? */
                   break;
 
@@ -509,7 +509,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
    node->nchildren = cnode->children_count;
    for (size_t i=0; i<cnode->children_count; i++) {
       Node *child = &node->children[i];
-      object_loadNodeRecursive( data, child, cnode->children[i] );
+      gltf_loadNodeRecursive( data, child, cnode->children[i] );
       node->radius = MAX( node->radius, child->radius );
       vec3_max( &node->aabb_max, &node->aabb_max, &child->aabb_max );
       vec3_min( &node->aabb_min, &node->aabb_min, &child->aabb_min );
@@ -559,7 +559,7 @@ static void renderMeshShadow( const Object *obj, const Mesh *mesh, const mat4 *H
 static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
 {
    const Material *mat;
-   const Shader *shd = &object_shader;
+   const Shader *shd = &gltf_shader;
 
    if (mesh->material < 0)
       mat = &material_default;
@@ -647,7 +647,7 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
 /**
  * @brief Recursive rendering to the shadow buffer.
  */
-static void object_renderNodeShadow( const Object *obj, const Node *node, const mat4 *H )
+static void gltf_renderNodeShadow( const Object *obj, const Node *node, const mat4 *H )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
@@ -660,7 +660,7 @@ static void object_renderNodeShadow( const Object *obj, const Node *node, const 
 
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
-      object_renderNodeShadow( obj, &node->children[i], &HH );
+      gltf_renderNodeShadow( obj, &node->children[i], &HH );
 
    gl_checkErr();
 }
@@ -668,7 +668,7 @@ static void object_renderNodeShadow( const Object *obj, const Node *node, const 
 /**
  * @brief Recursive rendering of a mesh.
  */
-static void object_renderNodeMesh( const Object *obj, const Node *node, const mat4 *H )
+static void gltf_renderNodeMesh( const Object *obj, const Node *node, const mat4 *H )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
@@ -681,12 +681,12 @@ static void object_renderNodeMesh( const Object *obj, const Node *node, const ma
 
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
-      object_renderNodeMesh( obj, &node->children[i], &HH );
+      gltf_renderNodeMesh( obj, &node->children[i], &HH );
 
    gl_checkErr();
 }
 
-static void object_renderShadow( const Object *obj, int scene, const mat4 *H, const Light *light, double time, int i )
+static void gltf_renderShadow( const Object *obj, int scene, const mat4 *H, const Light *light, double time, int i )
 {
    const Shader *shd = &shadow_shader;
 
@@ -706,8 +706,8 @@ static void object_renderShadow( const Object *obj, int scene, const mat4 *H, co
    glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, Hshadow.ptr );
    glUniform1f( shd->u_time, time );
 
-   for (size_t i=0; i<obj->scenes[scene].nnodes; i++)
-      object_renderNodeShadow( obj, &obj->scenes[scene].nodes[i], H );
+   for (size_t j=0; j<obj->scenes[scene].nnodes; j++)
+      gltf_renderNodeShadow( obj, &obj->scenes[scene].nodes[j], H );
 
    glDisable(GL_CULL_FACE);
    gl_checkErr();
@@ -756,10 +756,10 @@ static void object_renderShadow( const Object *obj, int scene, const mat4 *H, co
    gl_checkErr();
 }
 
-static void object_renderMesh( const Object *obj, int scene, const mat4 *H, double time )
+static void gltf_renderMesh( const Object *obj, int scene, const mat4 *H, double time )
 {
    /* Load constant stuff. */
-   const Shader *shd = &object_shader;
+   const Shader *shd = &gltf_shader;
    glUseProgram( shd->program );
    glUniform1f( shd->u_time, time );
    mat4 Hshadow;
@@ -783,7 +783,7 @@ static void object_renderMesh( const Object *obj, int scene, const mat4 *H, doub
    glCullFace(GL_BACK);
 
    for (size_t i=0; i<obj->scenes[scene].nnodes; i++)
-      object_renderNodeMesh( obj, &obj->scenes[scene].nodes[i], H );
+      gltf_renderNodeMesh( obj, &obj->scenes[scene].nodes[i], H );
 
    glUseProgram( 0 );
 
@@ -803,12 +803,12 @@ static void object_renderMesh( const Object *obj, int scene, const mat4 *H, doub
  *    @param obj Object to render.
  *    @param H Transformation to apply (or NULL to use identity).
  */
-void object_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size )
+void gltf_render( GLuint fb, const Object *obj, const mat4 *H, double time, double size )
 {
-   return object_renderScene( fb, obj, obj->scene_body, H, time, size, 0 );
+   return gltf_renderScene( fb, obj, obj->scene_body, H, time, size, 0 );
 }
 
-void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H, double time, double size, unsigned int flags )
+void gltf_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H, double time, double size, unsigned int flags )
 {
    (void) time; /* TODO implement animations. */
    (void) flags;
@@ -830,7 +830,7 @@ void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H,
    }
 
    /* Some constant stuff. */
-   const Shader *shd = &object_shader;
+   const Shader *shd = &gltf_shader;
    glUseProgram( shd->program );
 
    /* Depth testing. */
@@ -839,11 +839,11 @@ void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H,
 
    /* TODO only render shadows if applicable. */
    for (int i=0; i<MAX_LIGHTS; i++)
-      object_renderShadow( obj, scene, &Hptr, &lights[i], time, i );
+      gltf_renderShadow( obj, scene, &Hptr, &lights[i], time, i );
 
    glViewport( 0, 0, size, size );
    glBindFramebuffer(GL_FRAMEBUFFER, fb);
-   object_renderMesh( obj, scene, &Hptr, time );
+   gltf_renderMesh( obj, scene, &Hptr, time );
 
    glDisable( GL_DEPTH_TEST );
    glUseProgram( 0 );
@@ -852,7 +852,7 @@ void object_renderScene( GLuint fb, const Object *obj, int scene, const mat4 *H,
 #endif /* HAVE_NAEV */
 }
 
-static cgltf_result object_read( const struct cgltf_memory_options* memory_options, const struct cgltf_file_options* file_options, const char* path, cgltf_size* size, void** data)
+static cgltf_result gltf_read( const struct cgltf_memory_options* memory_options, const struct cgltf_file_options* file_options, const char* path, cgltf_size* size, void** data)
 {
 	(void)file_options;
    PHYSFS_Stat path_stat;
@@ -900,7 +900,7 @@ static cgltf_result object_read( const struct cgltf_memory_options* memory_optio
  *    @param filename Name of the file to load from.
  *    @return Newly loaded object file.
  */
-Object *object_loadFromFile( const char *filename )
+Object *gltf_loadFromFile( const char *filename )
 {
    Object *obj;
    cgltf_result res;
@@ -909,12 +909,12 @@ Object *object_loadFromFile( const char *filename )
    char *dirpath;
    char mountpath[PATH_MAX];
    memset( &opts, 0, sizeof(opts) );
-   opts.file.read = object_read;
+   opts.file.read = gltf_read;
 
    /* First see if we have to initialize subsystem. */
    gl_contextSet();
    if (tex_zero.tex==0)
-      object_init();
+      gltf_init();
 
    /* Initialize object. */
    obj = calloc( sizeof(Object), 1 );
@@ -943,7 +943,7 @@ Object *object_loadFromFile( const char *filename )
    obj->materials = calloc( data->materials_count, sizeof(Material) );
    obj->nmaterials = data->materials_count;
    for (size_t i=0; i<data->materials_count; i++)
-      object_loadMaterial( &obj->materials[i], &data->materials[i], data );
+      gltf_loadMaterial( &obj->materials[i], &data->materials[i], data );
 
    /* Load scenes. */
    obj->scenes = calloc( data->scenes_count, sizeof(Scene) );
@@ -965,7 +965,7 @@ Object *object_loadFromFile( const char *filename )
       scene->nnodes = cscene->nodes_count;
       for (size_t i=0; i<cscene->nodes_count; i++) {
          Node *n = &scene->nodes[i];
-         object_loadNodeRecursive( data, n, cscene->nodes[i] );
+         gltf_loadNodeRecursive( data, n, cscene->nodes[i] );
          obj->radius = MAX( obj->radius, n->radius );
          vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
          vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
@@ -981,7 +981,7 @@ Object *object_loadFromFile( const char *filename )
    return obj;
 }
 
-static void object_freeNode( Node *node )
+static void gltf_freeNode( Node *node )
 {
    for (size_t i=0; i<node->nmesh; i++) {
       Mesh *m = &node->mesh[i];
@@ -1000,11 +1000,11 @@ static void object_freeNode( Node *node )
    gl_checkErr();
 
    for (size_t i=0; i<node->nchildren; i++)
-      object_freeNode( &node->children[i] );
+      gltf_freeNode( &node->children[i] );
    free( node->children );
 }
 
-static void object_freeTex( Texture *tex )
+static void gltf_freeTex( Texture *tex )
 {
    /* Don't have to free default textures. */
    if (tex->tex==tex_zero.tex || tex->tex==tex_ones.tex)
@@ -1015,7 +1015,7 @@ static void object_freeTex( Texture *tex )
    gl_checkErr();
 }
 
-void object_free( Object *obj )
+void gltf_free( Object *obj )
 {
    if (obj==NULL)
       return;
@@ -1023,7 +1023,7 @@ void object_free( Object *obj )
    for (size_t s=0; s<obj->nscenes; s++) {
       Scene *scene = &obj->scenes[s];
       for (size_t i=0; i<scene->nnodes; i++)
-         object_freeNode( &scene->nodes[i] );
+         gltf_freeNode( &scene->nodes[i] );
       free( scene->name );
       free( scene->nodes );
    }
@@ -1031,18 +1031,18 @@ void object_free( Object *obj )
 
    for (size_t i=0; i<obj->nmaterials; i++) {
       Material *m = &obj->materials[i];
-      object_freeTex( &m->baseColour_tex );
-      object_freeTex( &m->metallic_tex );
-      object_freeTex( &m->normal_tex );
-      object_freeTex( &m->occlusion_tex );
-      object_freeTex( &m->emissive_tex );
+      gltf_freeTex( &m->baseColour_tex );
+      gltf_freeTex( &m->metallic_tex );
+      gltf_freeTex( &m->normal_tex );
+      gltf_freeTex( &m->occlusion_tex );
+      gltf_freeTex( &m->emissive_tex );
    }
    free( obj->materials );
 
    free( obj );
 }
 
-int object_init (void)
+int gltf_init (void)
 {
    const GLubyte data_zero[4] = { 0, 0, 0, 0 };
    const GLubyte data_ones[4] = { 255, 255, 255, 255 };
@@ -1071,7 +1071,7 @@ int object_init (void)
    gl_checkErr();
 
    /* Set up default material. */
-   object_loadMaterial( &material_default, NULL, NULL );
+   gltf_loadMaterial( &material_default, NULL, NULL );
 
    /* We'll have to set up some rendering stuff for blurring purposes. */
    const GLfloat vbo_data[8] = {
@@ -1164,7 +1164,7 @@ int object_init (void)
    shd->baseColour_tex  = glGetUniformLocation( shd->program, "sampler" );
 
    /* Compile the shader. */
-   shd = &object_shader;
+   shd = &gltf_shader;
    shd->program = gl_program_backend( "gltf.vert", "gltf_pbr.frag", NULL, prepend );
    if (shd->program==0)
       return -1;
@@ -1225,13 +1225,13 @@ int object_init (void)
    }
    shd->nlights         = glGetUniformLocation( shd->program, "u_nlights" );
    /* Light default values set on init. */
-   object_lightSetup( 1, 1 ); /* Unsets the program. */
+   gltf_lightSetup( 1, 1 ); /* Unsets the program. */
    gl_checkErr();
 
    return 0;
 }
 
-void object_exit (void)
+void gltf_exit (void)
 {
    /* Not initialized. */
    if (tex_zero.tex==0)
@@ -1244,13 +1244,13 @@ void object_exit (void)
    glDeleteFramebuffers( MAX_LIGHTS, light_fbo );
    glDeleteTextures( 1, &tex_zero.tex );
    glDeleteTextures( 1, &tex_ones.tex );
-   glDeleteProgram( object_shader.program );
+   glDeleteProgram( gltf_shader.program );
    glDeleteProgram( shadow_shader.program );
 }
 
-static void object_lightSetup( int doambient, int dogeneral )
+static void gltf_lightSetup( int doambient, int dogeneral )
 {
-   const Shader *shd = &object_shader;
+   const Shader *shd = &gltf_shader;
    /* Skip if not initialized. */
    if (tex_zero.tex==0)
       return;
@@ -1273,16 +1273,16 @@ static void object_lightSetup( int doambient, int dogeneral )
    gl_checkErr();
 }
 
-void object_light( double r, double g, double b, double intensity )
+void gltf_light( double r, double g, double b, double intensity )
 {
    ambient.v[0] = r;
    ambient.v[1] = g;
    ambient.v[2] = b;
    light_intensity = intensity;
-   object_lightSetup( 1, 1 );
+   gltf_lightSetup( 1, 1 );
 }
 
-void object_lightGet( double *r, double *g, double *b, double *intensity )
+void gltf_lightGet( double *r, double *g, double *b, double *intensity )
 {
    *r = ambient.v[0];
    *g = ambient.v[1];
@@ -1293,18 +1293,18 @@ void object_lightGet( double *r, double *g, double *b, double *intensity )
 /**
  * @brief Sets the ambient colour. Should be multiplied by intensity.
  */
-void object_lightAmbient( double r, double g, double b )
+void gltf_lightAmbient( double r, double g, double b )
 {
    ambient.v[0] = r;
    ambient.v[1] = g;
    ambient.v[2] = b;
-   object_lightSetup( 1, 0 );
+   gltf_lightSetup( 1, 0 );
 }
 
 /**
  * @brief Gets the ambient light values.
  */
-void object_lightAmbientGet( double *r, double *g, double *b )
+void gltf_lightAmbientGet( double *r, double *g, double *b )
 {
    *r = ambient.v[0];
    *g = ambient.v[1];
@@ -1314,16 +1314,16 @@ void object_lightAmbientGet( double *r, double *g, double *b )
 /**
  * @brief Sets the general light intensity.
  */
-void object_lightIntensity( double strength )
+void gltf_lightIntensity( double strength )
 {
    light_intensity = strength;
-   object_lightSetup( 0, 1 );
+   gltf_lightSetup( 0, 1 );
 }
 
 /**
  * @brief Gets the general light intensity.
  */
-double object_lightIntensityGet (void)
+double gltf_lightIntensityGet (void)
 {
    return light_intensity;
 }
@@ -1331,7 +1331,7 @@ double object_lightIntensityGet (void)
 /**
  * @brief Gets the shadow map texture.
  */
-GLuint object_shadowmap( int light )
+GLuint gltf_shadowmap( int light )
 {
    return light_tex[light];
 }
