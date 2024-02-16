@@ -1061,7 +1061,6 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       /*
        * First do sharpen pass.
        */
-#if 0
       glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
       glEnable( GL_SCISSOR_TEST );
       glScissor( 0, 0, scale+1, scale+1 );
@@ -1072,7 +1071,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glBindTexture( GL_TEXTURE_2D, ship_tex[0] );
 
       projection = ortho;
-      mat4_translate_scale_xy( &projection, 0., 0., scale, scale );
+      mat4_translate_scale_xy( &projection, 0., 0., scale * gl_screen.scale, scale * gl_screen.scale );
       glEnableVertexAttribArray( shaders.texture_sharpen.vertex );
       gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_sharpen.vertex,
             0, 2, GL_FLOAT, 0 );
@@ -1092,7 +1091,6 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
       /* anything failed? */
       gl_checkErr();
-#endif
 
       /*
        * Now bicubic downsample pass.
@@ -1104,7 +1102,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glDisable( GL_SCISSOR_TEST );
 
       glUseProgram(shaders.texture_bicubic.program);
-      glBindTexture( GL_TEXTURE_2D, ship_tex[0] );
+      glBindTexture( GL_TEXTURE_2D, ship_tex[1] );
 
       projection = ortho;
       mat4_translate_scale_xy( &projection, 0., 0., s->size, s->size );
