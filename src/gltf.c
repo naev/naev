@@ -336,7 +336,7 @@ static int gltf_loadMaterial( Material *mat, const cgltf_material *cmat, const c
          mat->emissiveFactor[i] *= cmat->emissive_strength.emissive_strength;
    }
 
-   mat->noshadows = 0;
+   mat->noshadows = mat->blend; /* Transparent things don't cast shadows. */
    if (cmat && data) {
       char buf[STRMAX_SHORT];
       cgltf_size len = sizeof(buf);
