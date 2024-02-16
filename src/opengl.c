@@ -43,11 +43,6 @@
 #include "log.h"
 #include "render.h"
 
-/*
- * Requirements
- */
-#define OPENGL_REQ_MULTITEX         2 /**< 2 is minimum OpenGL 1.2 must have */
-
 glInfo gl_screen; /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
 
@@ -389,9 +384,6 @@ static int gl_getGLInfo (void)
    DEBUG(_("Version: %s"), glGetString(GL_VERSION));
 
    /* Now check for things that can be bad. */
-   if (gl_screen.multitex_max < OPENGL_REQ_MULTITEX)
-      WARN(_("Missing texture units (%d required, %d found)"),
-            OPENGL_REQ_MULTITEX, gl_screen.multitex_max );
    if ((conf.fsaa > 1) && (gl_screen.fsaa != conf.fsaa))
       WARN(_("Unable to get requested FSAA level (%d requested, got %d)"),
             conf.fsaa, gl_screen.fsaa );
