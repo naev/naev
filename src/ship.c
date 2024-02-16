@@ -1032,7 +1032,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
    if (s->gfx_3d != NULL) {
       double scale = ship_aa_scale*s->size / gl_screen.scale;
       GltfObject *obj = s->gfx_3d;
-      mat4 tmpm;
+      mat4 projection, tex_mat;
 
       glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo );
 
@@ -1062,12 +1062,34 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glScissor( 0, 0, s->size / gl_screen.scale+1, s->size / gl_screen.scale+1 );
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       glDisable( GL_SCISSOR_TEST );
-      tmpm = gl_view_matrix;
-      gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
-      gl_renderTextureRaw( ship_tex, 0,
-            0., 0., s->size, s->size,
-            0., 0., scale/ship_fbos, scale/ship_fbos, NULL, 0. );
-      gl_view_matrix = tmpm;
+
+      glUseProgram(shaders.texture_bicubic.program);
+      glBindTexture( GL_TEXTURE_2D, ship_tex );
+
+      projection = mat4_ortho( 0., fw, 0, fh, -1., 1. );
+      mat4_translate_scale_xy( &projection, 0., 0., s->size, s->size );
+      glEnableVertexAttribArray( shaders.texture_bicubic.vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_bicubic.vertex,
+            0, 2, GL_FLOAT, 0 );
+
+      tex_mat = mat4_identity();
+      mat4_translate_scale_xy( &tex_mat, 0., 0., scale/ship_fbos, scale/ship_fbos );
+
+      /* Set shader uniforms. */
+      gl_uniformColour(shaders.texture_bicubic.colour, c);
+      gl_uniformMat4(shaders.texture_bicubic.projection, &projection);
+      gl_uniformMat4(shaders.texture_bicubic.tex_mat, &tex_mat);
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.texture_bicubic.vertex );
+
+      /* anything failed? */
+      gl_checkErr();
+
+      glUseProgram(0);
    }
    else {
       double tx,ty;

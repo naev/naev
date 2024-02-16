@@ -201,7 +201,7 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
    glUseProgram(shaders.texture.program);
 
    /* Bind the texture. */
-   glBindTexture( GL_TEXTURE_2D, texture);
+   glBindTexture( GL_TEXTURE_2D, texture );
 
    /* Must have colour for now. */
    if (c == NULL)
@@ -213,12 +213,12 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
    /* Set the vertex. */
    projection = gl_view_matrix;
    if (angle==0.) {
-     mat4_translate_scale_xy( &projection, x, y, w, h );
+      mat4_translate_scale_xy( &projection, x, y, w, h );
    }
    else {
-     mat4_translate_xy( &projection, x+hw, y+hh );
-     mat4_rotate2d( &projection, angle );
-     mat4_translate_scale_xy( &projection, -hw, -hh, w, h );
+      mat4_translate_xy( &projection, x+hw, y+hh );
+      mat4_rotate2d( &projection, angle );
+      mat4_translate_scale_xy( &projection, -hw, -hh, w, h );
    }
    glEnableVertexAttribArray( shaders.texture.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,

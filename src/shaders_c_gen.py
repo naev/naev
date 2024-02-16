@@ -104,6 +104,14 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "texture_bicubic",
+      vs_path = "texture.vert",
+      fs_path = "texture_bicubic.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "colour", "tex_mat", "sampler"],
+      subroutines = {},
+   ),
+   Shader(
       name = "texture_interpolate",
       vs_path = "texture.vert",
       fs_path = "texture_interpolate.frag",
