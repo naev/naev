@@ -38,6 +38,8 @@
  * @brief Stores data about the current opengl environment.
  */
 typedef struct glInfo_ {
+   int major; /**< OpenGL major version. */
+   int minor; /**< OpenGL minor version. */
    int x; /**< X offset of window viewport. */
    int y; /**< Y offset of window viewport. */
    /* Viewport considers x/y offset. */
