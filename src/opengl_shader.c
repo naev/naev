@@ -13,7 +13,7 @@
 #include "nstring.h"
 #include "opengl.h"
 
-#define GLSL_VERSION    "#version 150\n\n" /**< Version to use for all shaders. */
+#define GLSL_VERSION    "#version 420\n\n" /**< Version to use for all shaders. */
 #define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
 
 /*
