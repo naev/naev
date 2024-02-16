@@ -59,9 +59,9 @@ static const Lighting L_default_const = {
       },
       {
          .sun = 0,
-         .pos = { .v = {-6., 5.5, -5.} },
+         .pos = { .v = {-2., 1.85, -1.7} },
          .colour = { .v = {0.7, 0.85, 1.} },
-         .intensity = 600.,
+         .intensity = 100.,
       },
    },
 };
