@@ -1,4 +1,3 @@
-uniform vec4 colour;
 uniform sampler2D sampler;
 
 in vec2 tex_coord;
@@ -49,5 +48,5 @@ vec4 texture_bicubic( sampler2D sampler, vec2 texCoords )
 }
 
 void main(void) {
-   colour_out = colour * texture_bicubic( sampler, tex_coord );
+   colour_out = texture_bicubic( sampler, tex_coord );
 }

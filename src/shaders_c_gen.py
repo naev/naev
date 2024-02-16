@@ -108,7 +108,15 @@ SHADERS = [
       vs_path = "texture.vert",
       fs_path = "texture_bicubic.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "colour", "tex_mat", "sampler"],
+      uniforms = ["projection", "tex_mat", "sampler"],
+      subroutines = {},
+   ),
+   Shader(
+      name = "texture_sharpen",
+      vs_path = "texture.vert",
+      fs_path = "texture_sharpen.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "tex_mat", "sampler"],
       subroutines = {},
    ),
    Shader(
