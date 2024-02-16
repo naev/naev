@@ -27,6 +27,7 @@
 #include "nlua_camera.h"
 #include "nstring.h"
 #include "nxml.h"
+#include "opengl_tex.h"
 #include "shipstats.h"
 #include "slots.h"
 #include "toolkit.h"
@@ -58,7 +59,12 @@ typedef struct ShipThreadData_ {
 
 static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 
-static double max_size = 0.;
+static double max_size  = 0.;
+static double ship_fbos = 0.;
+static GLuint ship_fbo  = GL_INVALID_ENUM;
+static GLuint ship_tex  = GL_INVALID_ENUM;
+static GLuint ship_texd = GL_INVALID_ENUM;
+static double ship_aa_scale = 2.;
 
 /*
  * Prototypes
@@ -978,9 +984,6 @@ static int ship_parse( Ship *temp, const char *filename )
       WARN(("Mismatch between 'size' and 'gfx_space' sprite size for ship '%s'! 'size' should be %.0f!"), temp->name, temp->gfx_space->sw);
 #endif /* DEBUGGING */
 
-   /* Update max size. */
-   max_size = MAX( max_size, temp->size );
-
    /* Ship XML validator */
 #define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
    MELEMENT(temp->name==NULL,"name");
@@ -1024,12 +1027,14 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
    if (c==NULL)
       c = &cWhite;
 
-   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    glClearColor( 0., 0., 0., 0. );
 
    if (s->gfx_3d != NULL) {
-      double scale = s->size / gl_screen.scale;
+      double scale = ship_aa_scale*s->size / gl_screen.scale;
       GltfObject *obj = s->gfx_3d;
+      mat4 tmpm;
+
+      glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo );
 
       /* Only clear the necessary area. */
       glEnable( GL_SCISSOR_TEST );
@@ -1048,14 +1053,28 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
       /* Actually render. */
       if ((engine_glow > 0.5) && (obj->scene_engine >= 0))
-         gltf_renderScene( fbo, obj, obj->scene_engine, &H, 0., scale, NULL );
+         gltf_renderScene( ship_fbo, obj, obj->scene_engine, &H, 0., scale, NULL );
       else
-         gltf_renderScene( fbo, obj, obj->scene_body, &H, 0., scale, NULL );
+         gltf_renderScene( ship_fbo, obj, obj->scene_body, &H, 0., scale, NULL );
+
+      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+      glEnable( GL_SCISSOR_TEST );
+      glScissor( 0, 0, s->size / gl_screen.scale+1, s->size / gl_screen.scale+1 );
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glDisable( GL_SCISSOR_TEST );
+      tmpm = gl_view_matrix;
+      gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
+      gl_renderTextureRaw( ship_tex, 0,
+            0., 0., s->size, s->size,
+            0., 0., scale/ship_fbos, scale/ship_fbos, NULL, 0. );
+      gl_view_matrix = tmpm;
    }
    else {
       double tx,ty;
       const glTexture *sa, *sb;
       mat4 tmpm;
+
+      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
 
       sa = s->gfx_space;
       sb = s->gfx_engine;
@@ -1180,6 +1199,8 @@ int ships_load (void)
    /* Second pass to load Lua. */
    for (int i=0; i<array_size(ship_stack); i++) {
       Ship *s = &ship_stack[i];
+      /* Update max size. */
+      max_size = MAX( max_size, s->size );
       if (s->lua_file==NULL)
          continue;
 
@@ -1229,6 +1250,18 @@ int ships_load (void)
    else
       DEBUG( n_( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
 
+   /* Set up OpenGL rendering stuff. */
+   ship_fbos = ceil( ship_aa_scale * max_size / gl_screen.scale );
+   gl_fboCreate( &ship_fbo, &ship_tex, ship_fbos, ship_fbos );
+   gl_fboAddDepth( ship_fbo, &ship_texd, ship_fbos, ship_fbos );
+   if (GLAD_GL_ARB_texture_filter_anisotropic) {
+      GLfloat param;
+      glBindTexture( GL_TEXTURE_2D, ship_tex );
+      glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &param);
+      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY, param);
+      glBindTexture( GL_TEXTURE_2D, 0 );
+   }
+
    return 0;
 }
 
@@ -1237,6 +1270,12 @@ int ships_load (void)
  */
 void ships_free (void)
 {
+   /* Clean up opengl. */
+   glDeleteFramebuffers( 1, &ship_fbo );
+   glDeleteTextures( 1, &ship_tex );
+   glDeleteTextures( 1, &ship_texd );
+
+   /* Now ships. */
    for (int i=0; i < array_size(ship_stack); i++) {
       Ship *s = &ship_stack[i];
 
