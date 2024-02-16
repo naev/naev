@@ -91,7 +91,7 @@ static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsi
    subs = buf;
    while ((substart = strnstr( subs, keyword, bufsize-(subs-buf) ))!=NULL) {
       subs = substart+strlen(keyword)+1;
-      if ((substart!=buf) && (substart[-1]!='\n'))
+      if ((substart!=buf) && (substart[-1]!='\n') && (substart[-1]!='\r'))
          continue;
       i = 0;
       /* Find the argument - we only support " atm. */
