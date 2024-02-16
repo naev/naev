@@ -39,8 +39,8 @@ static Material material_default;
  */
 typedef struct ShaderLight_ {
    GLuint Hshadow;   /* mat4 */
+   GLuint sun;       /* bool */
    GLuint position;  /* vec3 */
-   //GLuint range;     /* float */
    GLuint colour;    /* vec3 */
    GLuint intensity; /* float */
    GLuint shadowmap_tex; /* sampler2D */
@@ -50,14 +50,32 @@ typedef struct ShaderLight_ {
  * @brief Simple point light model.
  */
 typedef struct Light_ {
+   int sun;          /**< Whether or not it's a sun-type light source. */
    vec3 pos;         /**< Position of the light in normalized coordinates. */
    double intensity; /**< Radiosity of the lights. */
    vec3 colour;      /**< Light colour. */
-   GLuint fbo;
-   GLuint tex;
+   /* Below are added automatically. */
+   GLuint fbo;       /**< FBO correpsonding to the light. */
+   GLuint tex;       /**< Texture corresponding to the light. */
 } Light;
 
 /* left(-)/right(+), down(-)/up(+), forward(-)/back(+) */
+#if 0
+static Light lights[MAX_LIGHTS] = {
+   {
+      .sun = 1,
+      .pos = { .v = {1., 0.5, 1.0} },
+      .colour = { .v = {1., 1., 1.} },
+      .intensity = 1.5,
+   },
+   {
+      .sun = 0,
+      .pos = { .v = {-6., 5.5, -5.} },
+      .colour = { .v = {0.7, 0.85, 1.} },
+      .intensity = 600.,
+   },
+};
+#else
 static Light lights[MAX_LIGHTS] = {
    {
       .pos = { .v = {5., 2., 0.} },
@@ -75,6 +93,7 @@ static Light lights[MAX_LIGHTS] = {
       .intensity = 10.,
    },
 };
+#endif
 static double light_intensity = 1.;
 static vec3 ambient = { .v = {0., 0., 0.} };
 
@@ -503,8 +522,8 @@ static void shadow_matrix( const Object *obj, mat4 *m, const Light *light )
 {
    (void) obj;
    const vec3 up        = { .v = {0., 1., 0.} };
-   const vec3 light_pos = light->pos;
    const vec3 center    = { .v = {0., 0., 0.} };
+   const vec3 light_pos = light->pos;
    const mat4 L = mat4_lookat( &light_pos, &center, &up );
    const float norm = vec3_length( &light_pos );
    const float r = 1.0;
@@ -1194,8 +1213,8 @@ int object_init (void)
       char buf[128];
       snprintf( buf, sizeof(buf), "u_lights[%d].position", i );
       sl->position      = glGetUniformLocation( shd->program, buf );
-      //snprintf( buf, sizeof(buf), "u_lights[%d].range", i );
-      //sl->range         = glGetUniformLocation( shd->program, buf );
+      snprintf( buf, sizeof(buf), "u_lights[%d].sun", i );
+      sl->sun           = glGetUniformLocation( shd->program, buf );
       snprintf( buf, sizeof(buf), "u_lights[%d].colour", i );
       sl->colour        = glGetUniformLocation( shd->program, buf );
       snprintf( buf, sizeof(buf), "u_lights[%d].intensity", i );
@@ -1203,7 +1222,7 @@ int object_init (void)
       snprintf( buf, sizeof(buf), "shadowmap_tex[%d]", i );
       sl->shadowmap_tex = glGetUniformLocation( shd->program, buf );
       snprintf( buf, sizeof(buf), "u_shadow[%d]", i );
-      sl->Hshadow         = glGetUniformLocation( shd->program, buf );
+      sl->Hshadow       = glGetUniformLocation( shd->program, buf );
    }
    shd->nlights         = glGetUniformLocation( shd->program, "u_nlights" );
    /* Light default values set on init. */

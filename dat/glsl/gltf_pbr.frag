@@ -40,6 +40,20 @@ uniform int u_blend;
 uniform vec3 u_ambient; /**< Ambient lighting. */
 uniform float u_waxiness;
 
+/**
+ * @brief Lighting information.
+ */
+struct Light {
+   bool sun;         /**< Whether or not a sun. */
+   vec3 position;    /**< Position or orientation if sun. */
+   vec3 colour;      /**< Colour to use. */
+   float intensity;  /**< Strength of the light. */
+};
+uniform int u_nlights = 1;
+uniform Light u_lights[ MAX_LIGHTS ];
+uniform sampler2D shadowmap_tex[ MAX_LIGHTS ];
+
+/* Input/Output */
 in vec2 tex_coord0;
 in vec2 tex_coord1;
 in vec3 position;
@@ -183,17 +197,6 @@ struct Material {
    /* KHR_materials_specular */
    //float specularWeight; /**< product of specularFactor and specularTexture.a */
 };
-
-struct Light {
-   vec3 position;
-   //float range;
-   vec3 colour;
-   float intensity;
-};
-
-uniform int u_nlights = 1;
-uniform Light u_lights[ MAX_LIGHTS ];
-uniform sampler2D shadowmap_tex[ MAX_LIGHTS ];
 
 vec3 light_intensity( Light L, float dist )
 {
@@ -362,21 +365,37 @@ void main (void)
    float f_shadow[MAX_LIGHTS];
    for (int i=0; i<u_nlights; i++)
       f_shadow[i] = 0.0;
+#if MAX_LIGHTS > 0
    if (u_nlights>0)
       f_shadow[0] = shadow_map( shadowmap_tex[0], shadow[0] );
+#endif /* MAX_LIGHTS > 0 */
+#if MAX_LIGHTS > 1
    if (u_nlights>1)
       f_shadow[1] = shadow_map( shadowmap_tex[1], shadow[1] );
+#endif /* MAX_LIGHTS > 1 */
+#if MAX_LIGHTS > 2
    if (u_nlights>2)
       f_shadow[2] = shadow_map( shadowmap_tex[2], shadow[2] );
+#endif /* MAX_LIGHTS > 2 */
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, -1.0) ); /* Fixed view vector. */
    float NoV = clamp(dot(n,v), 1e-4, 1.0); /* Neubelt and Pettineo 2013, "Crafting a Next-gen Material Pipeline for The Order: 1886" */
    for (int i=0; i<u_nlights; i++) {
       Light L = u_lights[i];
+      vec3 l;
+      vec3 intensity;
 
-      vec3 pointToLight = L.position - position;
-      vec3 l = normalize(pointToLight);
+      if (L.sun) {
+         l = normalize(L.position);
+         intensity = L.colour * L.intensity;
+      }
+      else {
+         vec3 pointToLight = L.position - position;
+         l = normalize(pointToLight);
+         intensity = light_intensity( L, length(pointToLight) );
+      }
+
       vec3 h = normalize(l + v); /* Halfway vector. */
       float NoL = clampedDot(n, l);
       //float NoV = clampedDot(n, v);
@@ -387,7 +406,6 @@ void main (void)
       /* Habemus light. */
       /* TODO this check will always be true if we do the NoV trick above. */
       //if (NoL > 0.0 || NoV > 0.0) {
-         vec3 intensity = light_intensity( L, length(pointToLight) );
          vec3 NoLintensity = NoL * intensity * f_shadow[i];
 
 #if 0
