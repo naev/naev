@@ -13,7 +13,7 @@
 #include "nstring.h"
 #include "opengl.h"
 
-#define GLSL_VERSION    "#version 150\n\n" /**< Version to use for all shaders. */
+#define GLSL_VERSION    "#version 450\n\n" /**< Version to use for all shaders. */
 #define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
 
 /*
@@ -91,6 +91,8 @@ static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsi
    subs = buf;
    while ((substart = strnstr( subs, keyword, bufsize-(subs-buf) ))!=NULL) {
       subs = substart+strlen(keyword)+1;
+      if ((substart!=buf) && (substart[-1]!='\n'))
+         continue;
       i = 0;
       /* Find the argument - we only support " atm. */
       subss = strnstr( subs, "\"", bufsize-(subs-buf));
