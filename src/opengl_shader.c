@@ -13,9 +13,6 @@
 #include "nstring.h"
 #include "opengl.h"
 
-#define GLSL_VERSION    "#version 420\n\n" /**< Version to use for all shaders. */
-#define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
-
 /*
  * Prototypes.
  */
@@ -228,10 +225,13 @@ GLuint gl_program_backend( const char *vertfile, const char *fragfile, const cha
    char *vert_str, *frag_str, prepend[STRMAX];
    size_t vert_size, frag_size;
    GLuint vertex_shader, fragment_shader, geometry_shader, program;
+   GLuint version = 150;
 
-   strncpy( prepend, GLSL_VERSION, sizeof(prepend)-1 );
+   if (gl_screen.major*100+gl_screen.minor*10 > 320)
+      version = 100*gl_screen.major+10*gl_screen.minor;
+   snprintf( prepend, sizeof(prepend)-1, "#version %d\n\n#define GLSL_VERSION %d\n", version, version );
    if (gl_has( OPENGL_SUBROUTINES ))
-      strncat( prepend, GLSL_SUBROUTINE, sizeof(prepend)-strlen(prepend)-1 );
+      strncat( prepend, "#define HAS_GL_ARB_shader_subroutine 1\n", sizeof(prepend)-strlen(prepend)-1 );
    if (prependtext != NULL)
       strncat( prepend, prependtext, sizeof(prepend)-strlen(prepend)-1 );
 
