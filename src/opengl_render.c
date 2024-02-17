@@ -364,6 +364,58 @@ void gl_renderSDF( const glTexture *texture,
 /**
  * @brief Texture blitting backend for interpolated texture.
  *
+ *    @param ta Texture id A to blit.
+ *    @param tb Texture id B to blit.
+ *    @param inter Amount of interpolation to do.
+ *    @param projection Projection matrix tu use.
+ *    @param tex_mat Texture matrix to use.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, double inter,
+      const mat4 *projection ,const mat4 *tex_mat, const glColour *c )
+{
+   /* Corner cases. */
+   if (inter >= 1.)
+      return gl_renderTextureRawH( tb, projection, tex_mat, c );
+   else if (inter <= 0.)
+      return gl_renderTextureRawH( ta, projection, tex_mat, c );
+
+   glUseProgram(shaders.texture_interpolate.program);
+
+   /* Bind the textures. */
+   glActiveTexture( GL_TEXTURE1 );
+   glBindTexture( GL_TEXTURE_2D, tb );
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE_2D, ta );
+   /* Always end with TEXTURE0 active. */
+
+   /* Set the vertex. */
+   glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   glUniform1i(shaders.texture_interpolate.sampler1, 0);
+   glUniform1i(shaders.texture_interpolate.sampler2, 1);
+   gl_uniformColour(shaders.texture_interpolate.colour, c);
+   glUniform1f(shaders.texture_interpolate.inter, inter);
+   gl_uniformMat4(shaders.texture_interpolate.projection, projection);
+   gl_uniformMat4(shaders.texture_interpolate.tex_mat, tex_mat);
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
+
+   /* anything failed? */
+   gl_checkErr();
+
+   glUseProgram(0);
+}
+
+/**
+ * @brief Texture blitting backend for interpolated texture.
+ *
  * Value blitted is  ta*inter + tb*(1.-inter).
  *
  *    @param ta Texture A to blit.
@@ -384,65 +436,22 @@ void gl_renderTextureInterpolate(  const glTexture* ta,
       double x, double y, double w, double h,
       double tx, double ty, double tw, double th, const glColour *c )
 {
-   /* No interpolation. */
-   if (tb == NULL) {
-      gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
-      return;
-   }
-
-   /* Corner cases. */
-   if (inter >= 1.) {
-      gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
-      return;
-   }
-   else if (inter <= 0.) {
-      gl_renderTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
-      return;
-   }
-
    mat4 projection, tex_mat;
 
-   glUseProgram(shaders.texture_interpolate.program);
-
-   /* Bind the textures. */
-   glActiveTexture( GL_TEXTURE1 );
-   glBindTexture( GL_TEXTURE_2D, tb->texture);
-   glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE_2D, ta->texture);
-   /* Always end with TEXTURE0 active. */
+   /* Case no need for interpolation. */
+   if (tb==NULL)
+      return gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
 
    /* Must have colour for now. */
    if (c == NULL)
       c = &cWhite;
 
-   /* Set the vertex. */
    projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
-   glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
-
-   /* Set the texture. */
    tex_mat = (ta->flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
-   /* Set shader uniforms. */
-   glUniform1i(shaders.texture_interpolate.sampler1, 0);
-   glUniform1i(shaders.texture_interpolate.sampler2, 1);
-   gl_uniformColour(shaders.texture_interpolate.colour, c);
-   glUniform1f(shaders.texture_interpolate.inter, inter);
-   gl_uniformMat4(shaders.texture_interpolate.projection, &projection);
-   gl_uniformMat4(shaders.texture_interpolate.tex_mat, &tex_mat);
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
-
-   /* anything failed? */
-   gl_checkErr();
-
-   glUseProgram(0);
+   return gl_renderTextureInterpolateRawH( ta->texture, tb->texture, inter, &projection, &tex_mat, c );
 }
 
 /**

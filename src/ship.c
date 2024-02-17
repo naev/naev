@@ -1069,41 +1069,12 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
          /* Now merge to main framebuffer. */
          glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
 
-         glUseProgram(shaders.texture_interpolate.program);
-
-         /* Bind the textures. */
-         glActiveTexture( GL_TEXTURE1 );
-         glBindTexture( GL_TEXTURE_2D, ship_tex[1]);
-         glActiveTexture( GL_TEXTURE0 );
-         glBindTexture( GL_TEXTURE_2D, ship_tex[2]);
-         /* Always end with TEXTURE0 active. */
-
-         /* Set the vertex. */
          projection = ortho;
          mat4_translate_scale_xy( &projection, 0., 0., scale * gl_screen.scale, scale * gl_screen.scale );
-         glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
-         gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
-
-         /* Set the texture. */
          tex_mat = mat4_identity();
          mat4_translate_scale_xy( &tex_mat, 0., 0., scale/ship_fbos, scale/ship_fbos );
 
-         /* Set shader uniforms. */
-         glUniform1i(shaders.texture_interpolate.sampler1, 0);
-         glUniform1i(shaders.texture_interpolate.sampler2, 1);
-         gl_uniformColour(shaders.texture_interpolate.colour, &cWhite);
-         glUniform1f(shaders.texture_interpolate.inter, engine_glow);
-         gl_uniformMat4(shaders.texture_interpolate.projection, &projection);
-         gl_uniformMat4(shaders.texture_interpolate.tex_mat, &tex_mat);
-
-         /* Draw. */
-         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-         /* Clear state. */
-         glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
-
-         /* anything failed? */
-         gl_checkErr();
+         gl_renderTextureInterpolateRawH( ship_tex[1], ship_tex[2], engine_glow, &projection, &tex_mat, &cWhite );
       }
       else
          gltf_renderScene( ship_fbo[0], obj, obj->scene_body, &H, 0., scale, NULL );
