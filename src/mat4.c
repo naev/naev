@@ -59,7 +59,7 @@ void mat4_mul_vec( vec3 *out, const mat4 *m, const vec3 *v )
       GLfloat a = m->m[3][i];
       for (int j=0; j<3; j++)
          a += m->m[j][i] * v->v[j];
-      out->v[i] = a+m->m[3][i];
+      out->v[i] = a;
    }
 }
 

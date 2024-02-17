@@ -610,7 +610,7 @@ static void renderMesh( const GltfObject *obj, const Mesh *mesh, const mat4 *H )
    if (use_normal_mapping) {
       glUniform1i( shd->u_has_normal,     (mat->normal_tex.tex!=tex_zero.tex) );
       glUniform1f( shd->normal_scale,     mat->normal_tex.strength );
-      glUniform1i( shd->normal_texcoord,     mat->normal_tex.texcoord);
+      glUniform1i( shd->normal_texcoord,  mat->normal_tex.texcoord);
    }
    //glUniform1f( shd->waxiness, mat->waxiness );
    /* Texture coordinates. */
