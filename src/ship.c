@@ -59,10 +59,11 @@ typedef struct ShipThreadData_ {
 
 static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 
+#define SHIP_FBO     3
 static double max_size  = 0.;
 static double ship_fbos = 0.;
-static GLuint ship_fbo[2] = { GL_INVALID_ENUM };
-static GLuint ship_tex[2] = { GL_INVALID_ENUM };
+static GLuint ship_fbo[SHIP_FBO] = { GL_INVALID_ENUM };
+static GLuint ship_tex[SHIP_FBO] = { GL_INVALID_ENUM };
 static GLuint ship_texd = GL_INVALID_ENUM;
 static double ship_aa_scale = 2.;
 
@@ -1053,8 +1054,56 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
          mat4_rotate( &H, dir+M_PI_2, 0.0, 1.0, 0.0 );
 
       /* Actually render. */
-      if ((engine_glow > 0.5) && (obj->scene_engine >= 0))
-         gltf_renderScene( ship_fbo[0], obj, obj->scene_engine, &H, 0., scale, NULL );
+      if ((engine_glow > 0.) && (obj->scene_engine >= 0)) {
+         /* More scissors. */
+         glEnable( GL_SCISSOR_TEST );
+         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
+         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[2] );
+         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+         /* First render separately. */
+         gltf_renderScene( ship_fbo[1], obj, obj->scene_body, &H, 0., scale, NULL );
+         gltf_renderScene( ship_fbo[2], obj, obj->scene_engine, &H, 0., scale, NULL );
+
+         /* Now merge to main framebuffer. */
+         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
+         glUseProgram(shaders.texture_interpolate.program);
+
+         /* Bind the textures. */
+         glActiveTexture( GL_TEXTURE1 );
+         glBindTexture( GL_TEXTURE_2D, ship_tex[1]);
+         glActiveTexture( GL_TEXTURE0 );
+         glBindTexture( GL_TEXTURE_2D, ship_tex[2]);
+         /* Always end with TEXTURE0 active. */
+
+         /* Set the vertex. */
+         projection = ortho;
+         mat4_translate_scale_xy( &projection, 0., 0., scale * gl_screen.scale, scale * gl_screen.scale );
+         glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
+         gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
+
+         /* Set the texture. */
+         tex_mat = mat4_identity();
+         mat4_translate_scale_xy( &tex_mat, 0., 0., scale/ship_fbos, scale/ship_fbos );
+
+         /* Set shader uniforms. */
+         glUniform1i(shaders.texture_interpolate.sampler1, 0);
+         glUniform1i(shaders.texture_interpolate.sampler2, 1);
+         gl_uniformColour(shaders.texture_interpolate.colour, &cWhite);
+         glUniform1f(shaders.texture_interpolate.inter, engine_glow);
+         gl_uniformMat4(shaders.texture_interpolate.projection, &projection);
+         gl_uniformMat4(shaders.texture_interpolate.tex_mat, &tex_mat);
+
+         /* Draw. */
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+         /* Clear state. */
+         glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
+
+         /* anything failed? */
+         gl_checkErr();
+      }
       else
          gltf_renderScene( ship_fbo[0], obj, obj->scene_body, &H, 0., scale, NULL );
 
@@ -1093,7 +1142,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       gl_checkErr();
 
       /*
-       * Now bicubic downsample pass.
+       * Now downsample pass.
        */
       glBindFramebuffer( GL_FRAMEBUFFER, fbo );
       glEnable( GL_SCISSOR_TEST );
@@ -1311,7 +1360,7 @@ int ships_load (void)
 
    /* Set up OpenGL rendering stuff. */
    ship_fbos = ceil( ship_aa_scale * max_size / gl_screen.scale );
-   for (int i=0; i<2; i++)
+   for (int i=0; i<SHIP_FBO; i++)
       gl_fboCreate( &ship_fbo[i], &ship_tex[i], ship_fbos, ship_fbos );
    gl_fboAddDepth( ship_fbo[0], &ship_texd, ship_fbos, ship_fbos );
 
@@ -1324,7 +1373,7 @@ int ships_load (void)
 void ships_free (void)
 {
    /* Clean up opengl. */
-   for (int i=0; i<2; i++) {
+   for (int i=0; i<SHIP_FBO; i++) {
       glDeleteFramebuffers( 1, &ship_fbo[i] );
       glDeleteTextures( 1, &ship_tex[i] );
    }
