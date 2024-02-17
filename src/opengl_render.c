@@ -376,9 +376,9 @@ void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, double inter,
 {
    /* Corner cases. */
    if (inter >= 1.)
-      return gl_renderTextureRawH( tb, projection, tex_mat, c );
-   else if (inter <= 0.)
       return gl_renderTextureRawH( ta, projection, tex_mat, c );
+   else if (inter <= 0.)
+      return gl_renderTextureRawH( tb, projection, tex_mat, c );
 
    glUseProgram(shaders.texture_interpolate.program);
 

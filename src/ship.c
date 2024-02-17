@@ -493,7 +493,6 @@ static int ship_generateStoreGFX( Ship *temp )
    gl_fboAddDepth( fbo, &depth_tex, size, size );
    ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., 0., tsx, tsy, NULL );
    temp->_gfx_store = gl_rawTexture( buf, tex, size, size );
-   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glDeleteTextures( 1, &depth_tex );
    glBindFramebuffer( GL_FRAMEBUFFER, 0 );
@@ -1074,7 +1073,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
          tex_mat = mat4_identity();
          mat4_translate_scale_xy( &tex_mat, 0., 0., scale/ship_fbos, scale/ship_fbos );
 
-         gl_renderTextureInterpolateRawH( ship_tex[1], ship_tex[2], engine_glow, &projection, &tex_mat, &cWhite );
+         gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1], engine_glow, &projection, &tex_mat, &cWhite );
       }
       else
          gltf_renderScene( ship_fbo[0], obj, obj->scene_body, &H, 0., scale, NULL );
@@ -1153,8 +1152,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       tmpm = gl_view_matrix;
       gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
 
-      gl_renderTextureInterpolate( sa, sb,
-            1.-engine_glow, 0., 0., sa->sw, sa->sh,
+      gl_renderTextureInterpolate( sb, sa,
+            engine_glow, 0., 0., sa->sw, sa->sh,
             tx, ty, sa->srw, sa->srh, c );
 
       gl_view_matrix = tmpm;
