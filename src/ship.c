@@ -1069,9 +1069,9 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
          glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
 
          projection = ortho;
-         mat4_translate_scale_xy( &projection, 0., 0., scale * gl_screen.scale, scale * gl_screen.scale );
+         mat4_scale_xy( &projection, scale * gl_screen.scale, scale * gl_screen.scale );
          tex_mat = mat4_identity();
-         mat4_translate_scale_xy( &tex_mat, 0., 0., scale/ship_fbos, scale/ship_fbos );
+         mat4_scale_xy( &tex_mat, scale/ship_fbos, scale/ship_fbos );
 
          gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1], engine_glow, &projection, &tex_mat, &cWhite );
       }
@@ -1091,13 +1091,13 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glBindTexture( GL_TEXTURE_2D, ship_tex[0] );
 
       projection = ortho;
-      mat4_translate_scale_xy( &projection, 0., 0., scale * gl_screen.scale, scale * gl_screen.scale );
+      mat4_scale_xy( &projection, scale * gl_screen.scale, scale * gl_screen.scale );
       glEnableVertexAttribArray( shaders.texture_sharpen.vertex );
       gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_sharpen.vertex,
             0, 2, GL_FLOAT, 0 );
 
       tex_mat = mat4_identity();
-      mat4_translate_scale_xy( &tex_mat, 0., 0., scale/ship_fbos, scale/ship_fbos );
+      mat4_scale_xy( &tex_mat, scale/ship_fbos, scale/ship_fbos );
 
       /* Set shader uniforms. */
       gl_uniformMat4(shaders.texture_sharpen.projection, &projection);
@@ -1122,9 +1122,9 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glDisable( GL_SCISSOR_TEST );
 
       projection = ortho;
-      mat4_translate_scale_xy( &projection, 0., 0., s->size, s->size );
+      mat4_scale_xy( &projection, s->size, s->size );
       tex_mat = mat4_identity();
-      mat4_translate_scale_xy( &tex_mat, 0., 0., scale/ship_fbos, scale/ship_fbos );
+      mat4_scale_xy( &tex_mat, scale/ship_fbos, scale/ship_fbos );
 
       /* Tests show that for 2x AA, linear is visually indifferent from bicubic. */
       gl_renderTextureRawH( ship_tex[1], &projection, &tex_mat, c ); /* This last call will apply the colour if necessary. */
