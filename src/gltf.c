@@ -59,10 +59,10 @@ const Lighting L_default_const = {
       },
       {
          .sun = 0,
-         .pos = { .v = {-2., 1.85, -1.7} },
+         .pos = { .v = {-3., 2.75, -3.5} },
          //.colour = { .v = {0.7, 0.85, 1.} },
          .colour = { .v = {1., 1., 1.} },
-         .intensity = 100.,
+         .intensity = 120.,
       },
    },
 };
