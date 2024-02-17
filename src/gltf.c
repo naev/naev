@@ -46,7 +46,7 @@ typedef struct ShaderLight_ {
    GLuint shadowmap_tex; /* sampler2D */
 } ShaderLight;
 
-static const Lighting L_default_const = {
+const Lighting L_default_const = {
    .ambient_r = 0.,
    .ambient_g = 0.,
    .ambient_b = 0.,
@@ -60,7 +60,8 @@ static const Lighting L_default_const = {
       {
          .sun = 0,
          .pos = { .v = {-2., 1.85, -1.7} },
-         .colour = { .v = {0.7, 0.85, 1.} },
+         //.colour = { .v = {0.7, 0.85, 1.} },
+         .colour = { .v = {1., 1., 1.} },
          .intensity = 100.,
       },
    },

@@ -123,6 +123,7 @@ typedef struct Lighting_ {
    Light lights[MAX_LIGHTS];  /**< Standard lights. */
    int nlights; /**< Number of lights being used. Has to be less than MAX_LIGHTS. */
 } Lighting;
+extern const Lighting L_default_const;
 
 /* Framework itself. */
 int gltf_init (void);

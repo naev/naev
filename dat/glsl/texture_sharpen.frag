@@ -1,3 +1,4 @@
+uniform vec4 colour;
 uniform sampler2D sampler;
 
 in vec2 tex_coord;
@@ -21,6 +22,7 @@ void main()
    FsrRcasCon(con0, 0.0); /* Max sharpening. */
    AU2 gxy = AU2( tex_coord.xy * textureSize(sampler, 0) );
    FsrRcasF( colour_out.r, colour_out.g, colour_out.b, colour_out.a, gxy, con0 );
+   colour_out *= colour;
 
 #else /* GLSL_VERSION > 420 */
    /* mpv's unsharpen mask. */
@@ -38,6 +40,6 @@ void main()
       + texture( sampler, st2 * vec2(-d.x,  0.0))
       + texture( sampler, st2 * vec2( 0.0, -d.y));
    vec4 t = p * 0.859375 + sum2 * -0.1171875 + sum1 * -0.09765625;
-   colour_out = p + t * PARAM;
+   colour_out = colour * (p + t * PARAM);
 #endif /* GLSL_VERSION > 420 */
 }

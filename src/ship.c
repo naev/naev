@@ -1042,6 +1042,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       glDisable( GL_SCISSOR_TEST );
 
+      /* Determine the model transformation. */
       mat4 H = mat4_identity();
       if (fabs(tilt) > 1e-5) {
          mat4_rotate( &H, M_PI_2,0.0, 1.0, 0.0 );
@@ -1094,6 +1095,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
             0, 2, GL_FLOAT, 0 );
 
       /* Set shader uniforms. */
+      gl_uniformColour(shaders.texture.colour, c);
       gl_uniformMat4(shaders.texture_sharpen.projection, &projection);
       gl_uniformMat4(shaders.texture_sharpen.tex_mat, &tex_mat);
 

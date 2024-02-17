@@ -116,7 +116,7 @@ SHADERS = [
       vs_path = "texture.vert",
       fs_path = "texture_sharpen.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "tex_mat", "sampler"],
+      uniforms = ["projection", "colour", "tex_mat", "sampler"],
       subroutines = {},
    ),
    Shader(
