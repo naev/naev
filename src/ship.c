@@ -1128,7 +1128,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       mat4_translate_scale_xy( &tex_mat, 0., 0., scale/ship_fbos, scale/ship_fbos );
 
       /* Tests show that for 2x AA, linear is visually indifferent from bicubic. */
-      gl_renderTextureRawH( ship_tex[1], &projection, &tex_mat, &cWhite );
+      gl_renderTextureRawH( ship_tex[1], &projection, &tex_mat, c ); /* This last call will apply the colour if necessary. */
    }
    else {
       double tx,ty;

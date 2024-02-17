@@ -1922,7 +1922,7 @@ void pilot_render( Pilot *p )
             gl_renderTextureRaw( gl_screen.fbo_tex[2], 0,
                   x+(1.-scale)*z*w*0.5, y+(1.-scale)*z*h*0.5,
                   w*scale*z, h*scale*z,
-                  0, 0, w/(double)gl_screen.nw, h/(double)gl_screen.nh, NULL, 0. );
+                  0, 0, w/(double)gl_screen.nw, h/(double)gl_screen.nh, NULL, 0. ); /* Colour should already be applied. */
 
          }
          else {
