@@ -1033,7 +1033,6 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       double scale = ship_aa_scale*s->size / gl_screen.scale;
       GltfObject *obj = s->gfx_3d;
       mat4 projection, tex_mat;
-      const mat4 ortho = mat4_ortho( 0., fw, 0, fh, -1., 1. );
 
       glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
 
@@ -1052,6 +1051,12 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       else
          mat4_rotate( &H, dir+M_PI_2, 0.0, 1.0, 0.0 );
 
+      /* Compute projection and texture matrices. */
+      projection = mat4_ortho( 0., fw, 0, fh, -1., 1. );
+      mat4_scale_xy( &projection, scale * gl_screen.scale, scale * gl_screen.scale );
+      tex_mat = mat4_identity();
+      mat4_scale_xy( &tex_mat, scale/ship_fbos, scale/ship_fbos );
+
       /* Actually render. */
       if ((engine_glow > 0.) && (obj->scene_engine >= 0)) {
          /* More scissors. */
@@ -1067,12 +1072,6 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
          /* Now merge to main framebuffer. */
          glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
-
-         projection = ortho;
-         mat4_scale_xy( &projection, scale * gl_screen.scale, scale * gl_screen.scale );
-         tex_mat = mat4_identity();
-         mat4_scale_xy( &tex_mat, scale/ship_fbos, scale/ship_fbos );
-
          gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1], engine_glow, &projection, &tex_mat, &cWhite );
       }
       else
@@ -1090,14 +1089,9 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glUseProgram(shaders.texture_sharpen.program);
       glBindTexture( GL_TEXTURE_2D, ship_tex[0] );
 
-      projection = ortho;
-      mat4_scale_xy( &projection, scale * gl_screen.scale, scale * gl_screen.scale );
       glEnableVertexAttribArray( shaders.texture_sharpen.vertex );
       gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_sharpen.vertex,
             0, 2, GL_FLOAT, 0 );
-
-      tex_mat = mat4_identity();
-      mat4_scale_xy( &tex_mat, scale/ship_fbos, scale/ship_fbos );
 
       /* Set shader uniforms. */
       gl_uniformMat4(shaders.texture_sharpen.projection, &projection);
@@ -1115,19 +1109,12 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       /*
        * Now downsample pass.
        */
-      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-      glEnable( GL_SCISSOR_TEST );
-      glScissor( 0, 0, s->size / gl_screen.scale+1, s->size / gl_screen.scale+1 );
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      glDisable( GL_SCISSOR_TEST );
-
-      projection = ortho;
-      mat4_scale_xy( &projection, s->size, s->size );
-      tex_mat = mat4_identity();
-      mat4_scale_xy( &tex_mat, scale/ship_fbos, scale/ship_fbos );
-
       /* Tests show that for 2x AA, linear is visually indifferent from bicubic. */
-      gl_renderTextureRawH( ship_tex[1], &projection, &tex_mat, c ); /* This last call will apply the colour if necessary. */
+      GLint sin = ceil(scale);
+      GLint sout = ceil(s->size/gl_screen.scale);
+      glBindFramebuffer(GL_READ_FRAMEBUFFER, ship_fbo[1]);
+      glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
+      glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_COLOR_BUFFER_BIT, GL_LINEAR );
    }
    else {
       double tx,ty;
