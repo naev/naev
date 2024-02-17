@@ -62,7 +62,7 @@ const Lighting L_default_const = {
          .pos = { .v = {-3., 2.75, -3.5} },
          //.colour = { .v = {0.7, 0.85, 1.} },
          .colour = { .v = {1., 1., 1.} },
-         .intensity = 120.,
+         .intensity = 200.,
       },
    },
 };
