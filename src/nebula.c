@@ -198,28 +198,9 @@ static void nebu_blitFBO (void)
       return;
 
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-
-   glUseProgram(shaders.texture.program);
-
-   glBindTexture( GL_TEXTURE_2D, nebu_tex );
-
-   glEnableVertexAttribArray( shaders.texture.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
-         0, 2, GL_FLOAT, 0 );
-
-   /* Set shader uniforms. */
-   gl_uniformColour(shaders.texture.colour, &cWhite);
-
    const mat4 ortho = mat4_ortho(0, 1, 0, 1, 1, -1);
    const mat4 I = mat4_identity();
-   gl_uniformMat4( shaders.texture.projection, &ortho );
-   gl_uniformMat4( shaders.texture.tex_mat, &I );
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   glDisableVertexAttribArray( shaders.texture.vertex );
+   gl_renderTextureRawH( nebu_tex, &ortho, &I, &cWhite );
 }
 
 /**

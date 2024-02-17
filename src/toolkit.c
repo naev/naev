@@ -1622,33 +1622,10 @@ void toolkit_render( double dt )
       glClearColor( 0., 0., 0., 1. );
    }
 
-   glUseProgram(shaders.texture.program);
-
-   /* Set texture. */
-   glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[3] );
-   glUniform1i(shaders.texture.sampler, 0);
-
-   /* Set vertex data. */
-   glEnableVertexAttribArray( shaders.texture.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
-         0, 2, GL_FLOAT, 0 );
-
-   /* Set shader uniforms. */
-   gl_uniformColour(shaders.texture.colour, &cWhite);
+   /* We can just rendered stored FBO onto the screen. */
    const mat4 ortho = mat4_ortho(0., 1., 0., 1., 1., -1.);
    const mat4 I = mat4_identity();
-   gl_uniformMat4(shaders.texture.projection, &ortho);
-   gl_uniformMat4(shaders.texture.tex_mat, &I);
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clean up. */
-   glDisableVertexAttribArray( shaders.texture.vertex );
-   glBindTexture( GL_TEXTURE_2D, 0 );
-   gl_checkErr();
-   glUseProgram(0);
+   gl_renderTextureRawH( gl_screen.fbo_tex[3], &ortho, &I, &cWhite );
 
    /* We render only the active window dynamically, otherwise we wouldn't be able to respect the order.
     * However, since the dynamic stuff is also rendered to the framebuffer below, it shouldn't be too bad. */
