@@ -64,7 +64,7 @@ static double max_size  = 0.;
 static double ship_fbos = 0.;
 static GLuint ship_fbo[SHIP_FBO] = { GL_INVALID_ENUM };
 static GLuint ship_tex[SHIP_FBO] = { GL_INVALID_ENUM };
-static GLuint ship_texd = GL_INVALID_ENUM;
+static GLuint ship_texd[SHIP_FBO] = { GL_INVALID_ENUM };
 static double ship_aa_scale = 2.;
 
 /*
@@ -1068,6 +1068,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
          /* Now merge to main framebuffer. */
          glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
+
          glUseProgram(shaders.texture_interpolate.program);
 
          /* Bind the textures. */
@@ -1150,32 +1151,13 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       glDisable( GL_SCISSOR_TEST );
 
-      glUseProgram(shaders.texture_bicubic.program);
-      glBindTexture( GL_TEXTURE_2D, ship_tex[1] );
-
       projection = ortho;
       mat4_translate_scale_xy( &projection, 0., 0., s->size, s->size );
-      glEnableVertexAttribArray( shaders.texture_bicubic.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_bicubic.vertex,
-            0, 2, GL_FLOAT, 0 );
-
       tex_mat = mat4_identity();
       mat4_translate_scale_xy( &tex_mat, 0., 0., scale/ship_fbos, scale/ship_fbos );
 
-      /* Set shader uniforms. */
-      gl_uniformMat4(shaders.texture_bicubic.projection, &projection);
-      gl_uniformMat4(shaders.texture_bicubic.tex_mat, &tex_mat);
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clear state. */
-      glDisableVertexAttribArray( shaders.texture_bicubic.vertex );
-
-      /* anything failed? */
-      gl_checkErr();
-
-      glUseProgram(0);
+      /* Tests show that for 2x AA, linear is visually indifferent from bicubic. */
+      gl_renderTextureRawH( ship_tex[1], &projection, &tex_mat, &cWhite );
    }
    else {
       double tx,ty;
@@ -1193,7 +1175,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       glClear( GL_COLOR_BUFFER_BIT );
       glDisable( GL_SCISSOR_TEST );
 
-      /* texture coords */
+      /* Texture coords */
       tx = sa->sw*(double)(sx)/sa->w;
       ty = sa->sh*(sa->sy-(double)sy-1)/sa->h;
 
@@ -1360,9 +1342,10 @@ int ships_load (void)
 
    /* Set up OpenGL rendering stuff. */
    ship_fbos = ceil( ship_aa_scale * max_size / gl_screen.scale );
-   for (int i=0; i<SHIP_FBO; i++)
+   for (int i=0; i<SHIP_FBO; i++) {
       gl_fboCreate( &ship_fbo[i], &ship_tex[i], ship_fbos, ship_fbos );
-   gl_fboAddDepth( ship_fbo[0], &ship_texd, ship_fbos, ship_fbos );
+      gl_fboAddDepth( ship_fbo[i], &ship_texd[i], ship_fbos, ship_fbos );
+   }
 
    return 0;
 }
@@ -1376,8 +1359,8 @@ void ships_free (void)
    for (int i=0; i<SHIP_FBO; i++) {
       glDeleteFramebuffers( 1, &ship_fbo[i] );
       glDeleteTextures( 1, &ship_tex[i] );
+      glDeleteTextures( 1, &ship_texd[i] );
    }
-   glDeleteTextures( 1, &ship_texd );
 
    /* Now ships. */
    for (int i=0; i < array_size(ship_stack); i++) {

@@ -177,6 +177,49 @@ void gl_renderTriangleEmpty( double x, double y, double a, double s, double leng
  * @brief Texture blitting backend.
  *
  *    @param texture Texture to blit.
+ *    @param projection Projection matrix tu use.
+ *    @param tex_mat Texture matrix to use.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_renderTextureRawH( GLuint texture,
+      const mat4 *projection, const mat4 *tex_mat,
+      const glColour *c )
+{
+   glUseProgram(shaders.texture.program);
+
+   /* Bind the texture. */
+   glBindTexture( GL_TEXTURE_2D, texture );
+
+   /* Must have colour for now. */
+   if (c == NULL)
+      c = &cWhite;
+
+   /* Set the vertex. */
+   glEnableVertexAttribArray( shaders.texture.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
+         0, 2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   gl_uniformColour(shaders.texture.colour, c);
+   gl_uniformMat4(shaders.texture.projection, projection);
+   gl_uniformMat4(shaders.texture.tex_mat, tex_mat);
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.texture.vertex );
+
+   /* anything failed? */
+   gl_checkErr();
+
+   glUseProgram(0);
+}
+
+/**
+ * @brief Texture blitting backend.
+ *
+ *    @param texture Texture to blit.
  *    @param flags Texture flags,.
  *    @param x X position of the texture on the screen. (units pixels)
  *    @param y Y position of the texture on the screen. (units pixels)
@@ -194,14 +237,8 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
       double tx, double ty, double tw, double th,
       const glColour *c, double angle )
 {
-   // Half width and height
-   double hw, hh;
+   double hw, hh; /* Half width and height. */
    mat4 projection, tex_mat;
-
-   glUseProgram(shaders.texture.program);
-
-   /* Bind the texture. */
-   glBindTexture( GL_TEXTURE_2D, texture );
 
    /* Must have colour for now. */
    if (c == NULL)
@@ -220,29 +257,12 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
       mat4_rotate2d( &projection, angle );
       mat4_translate_scale_xy( &projection, -hw, -hh, w, h );
    }
-   glEnableVertexAttribArray( shaders.texture.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
-         0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
    tex_mat = (flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
-   /* Set shader uniforms. */
-   gl_uniformColour(shaders.texture.colour, c);
-   gl_uniformMat4(shaders.texture.projection, &projection);
-   gl_uniformMat4(shaders.texture.tex_mat, &tex_mat);
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   glDisableVertexAttribArray( shaders.texture.vertex );
-
-   /* anything failed? */
-   gl_checkErr();
-
-   glUseProgram(0);
+   gl_renderTextureRawH( texture, &projection, &tex_mat, c );
 }
 
 /**

@@ -26,6 +26,9 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by );
  * Rendering.
  */
 /* blits texture */
+void gl_renderTextureRawH( GLuint texture,
+      const mat4 *projection, const mat4 *tex_mat,
+      const glColour *c );
 void gl_renderTextureRaw( GLuint texture, uint8_t flags,
       double x, double y, double w, double h,
       double tx, double ty, double tw, double th,
