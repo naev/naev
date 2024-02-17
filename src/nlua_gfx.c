@@ -61,6 +61,7 @@ static int gfxL_lightAmbientGet( lua_State *L );
 static int gfxL_lightIntensity( lua_State *L );
 static int gfxL_lightIntensityGet( lua_State *L );
 static int gfxL_screenshot( lua_State *L );
+static int gfxL_glVersion( lua_State *L );
 static const luaL_Reg gfxL_methods[] = {
    /* Information. */
    { "dim", gfxL_dim },
@@ -96,6 +97,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "setBlendMode", gfxL_setBlendMode },
    { "setScissor", gfxL_setScissor },
    { "screenshot", gfxL_screenshot },
+   { "glVersion", gfxL_glVersion },
    {0,0}
 }; /**< GFX methods. */
 
@@ -1115,4 +1117,20 @@ static int gfxL_lightIntensityGet( lua_State *L )
 {
    lua_pushnumber( L, gltf_lightIntensityGet() );
    return 1;
+}
+
+/**
+ * @brief Gets the OpenGL version.
+ *
+ *    @luatreturn integer Major OpenGL version.
+ *    @luatreturn integer Minor OpenGL version.
+ *    @luatreturn integer GLSL version.
+ * @luafunc glVersion
+ */
+static int gfxL_glVersion( lua_State *L )
+{
+   lua_pushinteger( L, gl_screen.major );
+   lua_pushinteger( L, gl_screen.minor );
+   lua_pushinteger( L, gl_screen.glsl );
+   return 3;
 }

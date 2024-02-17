@@ -326,8 +326,14 @@ static int gl_createWindow( unsigned int flags )
    }
    if (!gl_screen.context)
       ERR(_("Unable to create OpenGL context! %s"), SDL_GetError());
+
+   /* Save and store version. */
    SDL_GL_GetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, &gl_screen.major );
    SDL_GL_GetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, &gl_screen.minor );
+   if (gl_screen.major*100+gl_screen.minor*10 > 320)
+      gl_screen.glsl = 100*gl_screen.major+10*gl_screen.minor;
+   else
+      gl_screen.glsl = 150;
 
    /* Set Vsync. */
    if (conf.vsync) {
