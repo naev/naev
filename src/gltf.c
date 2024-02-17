@@ -161,6 +161,7 @@ static Shader shadow_shader_blurY;
 /* Options. */
 static int use_normal_mapping = 1;
 static int use_ambient_occlusion = 1;
+static int max_tex_size = 0;
 
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
@@ -244,6 +245,48 @@ static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex, cons
             GL_UNSIGNED_BYTE, surface->pixels );
       */
    }
+
+#ifdef HAVE_NAEV
+   /* Downsample as necessary. */
+   if ((max_tex_size > 0) && (surface!=NULL) && (MAX(surface->w,surface->h) > max_tex_size)) {
+      GLuint fbo, downfbo, downtex;
+
+      /* Create the downsampling framebuffers. */
+      gl_fboCreate( &downfbo, &downtex, max_tex_size, max_tex_size );
+
+      /* Attach a framebuffer to the current texture. */
+      glGenFramebuffers( 1, &fbo );
+      glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex, 0);
+
+      /* Blit to framebuffer. */
+      glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
+      glBindFramebuffer(GL_DRAW_FRAMEBUFFER, downfbo);
+      glBlitFramebuffer( 0, 0, surface->w, surface->h, 0, 0, max_tex_size, max_tex_size, GL_COLOR_BUFFER_BIT, GL_LINEAR );
+      glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+      /* Clean up. */
+      glDeleteTextures( 1, &tex );
+      glDeleteFramebuffers( 1, &downfbo );
+      glDeleteFramebuffers( 1, &fbo );
+      tex = downtex;
+      glBindTexture( GL_TEXTURE_2D, tex );
+
+      /* Reapply sampling. */
+      if (ctex->texture->sampler != NULL) {
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, ctex->texture->sampler->mag_filter);
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, ctex->texture->sampler->min_filter);
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ctex->texture->sampler->wrap_s);
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ctex->texture->sampler->wrap_t);
+      }
+      else {
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+      }
+   }
+#endif /* HAVE_NAEV */
 
    /* Set up mipmaps. */
    /* TODO only generate if necessary. */
@@ -1073,6 +1116,7 @@ int gltf_init (void)
    /* Set global options. */
    use_normal_mapping = !conf.low_memory;
    use_ambient_occlusion = !conf.low_memory;
+   max_tex_size = (conf.low_memory ? 512 : 0);
 
    /* Set prefix stuff. */
    snprintf( prepend, sizeof(prepend), "%s\n#define HAS_NORMAL %d\n#define HAS_AO %d\n",
