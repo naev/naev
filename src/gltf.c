@@ -960,11 +960,15 @@ static int cmp_node( const void *p1, const void *p2 )
    const Node *n2 = p2;
    int b1 = 0;
    int b2 = 0;
+   int b;
    for (size_t i=0; i<n1->nmesh; i++)
       b1 |= cmp_obj->materials[ n1->mesh->material ].blend;
    for (size_t i=0; i<n2->nmesh; i++)
       b2 |= cmp_obj->materials[ n2->mesh->material ].blend;
-   return b1-b2;
+   b = b1-b2;
+   if (b)
+      return b;
+   return n1->aabb_max.v[1]-n2->aabb_max.v[1];
 }
 
 /**
