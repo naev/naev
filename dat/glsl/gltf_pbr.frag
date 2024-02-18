@@ -432,9 +432,9 @@ void main (void)
    f_emissive = emissive * texture(emissive_tex, (emissive_texcoord ? tex_coord1 : tex_coord0) ).rgb;
 
    /* Combine diffuse, emissive, and specular.. */
-   float alpha = (u_blend==1) ? M.albedo.a : 1.0;
+   colour_out.a = (u_blend==1) ? M.albedo.a : 1.0;
    //colour_out = vec4( f_emissive + mix(f_diffuse,f_subsurface,sheen) + f_sheen + f_specular, alpha );
-   colour_out = vec4( f_emissive + f_diffuse + f_sheen + f_specular, alpha );
+   colour_out.rgb = f_emissive + f_diffuse + f_sheen + f_specular;
 
    /* Apply clearcoat. */
    vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, NoV );
