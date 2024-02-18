@@ -953,6 +953,20 @@ static cgltf_result gltf_read( const struct cgltf_memory_options* memory_options
 	return cgltf_result_success;
 }
 
+static const GltfObject *cmp_obj;
+static int cmp_node( const void *p1, const void *p2 )
+{
+   const Node *n1 = p1;
+   const Node *n2 = p2;
+   int b1 = 0;
+   int b2 = 0;
+   for (size_t i=0; i<n1->nmesh; i++)
+      b1 |= cmp_obj->materials[ n1->mesh->material ].blend;
+   for (size_t i=0; i<n2->nmesh; i++)
+      b2 |= cmp_obj->materials[ n2->mesh->material ].blend;
+   return b1-b2;
+}
+
 /**
  * @brief Loads an object from a file.
  *
@@ -1029,6 +1043,10 @@ GltfObject *gltf_loadFromFile( const char *filename )
          vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
          vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
       }
+
+      /* Sort scenes based on blending. */
+      cmp_obj = obj;
+      qsort( scene->nodes, scene->nnodes, sizeof(Node), cmp_node );
    }
 
    /* Unmount directory. */
