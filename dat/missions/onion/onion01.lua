@@ -6,7 +6,7 @@
  <chance>10</chance>
  <location>Computer</location>
  <cond>
-   if spob.get("Gordon's Exchange"):system():jumpDist() < 4 then
+   if spob.get("Gordon's Exchange"):system():jumpDist() &lt; 4 then
       return false
    end
    return require("misn_test").cargo()
