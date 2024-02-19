@@ -88,8 +88,23 @@ static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsi
    subs = buf;
    while ((substart = strnstr( subs, keyword, bufsize-(subs-buf) ))!=NULL) {
       subs = substart+strlen(keyword)+1;
-      if ((substart!=buf) && (substart[-1]!='\n') && (substart[-1]!='\r'))
+      /* Allow whitespace infront of #include, but not other characters. */
+      int whitespaceonly = 1;
+      int off = 0;
+      while (&substart[off]!=buf) {
+         off -= 1;
+         if ((substart[off]=='\n') || (substart[off]=='\r'))
+            break;
+         else if (isspace(substart[off]))
+            continue;
+         else {
+            whitespaceonly = 0;
+            break;
+         }
+      }
+      if (!whitespaceonly) {
          continue;
+      }
       i = 0;
       /* Find the argument - we only support " atm. */
       subss = strnstr( subs, "\"", bufsize-(subs-buf));
