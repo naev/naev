@@ -26,6 +26,8 @@ local strmess = require "strmess"
 local pp_shaders = require 'pp_shaders'
 local lg = require "love.graphics"
 local car = require "common.cargo"
+local vn = require "vn"
+local onion = require "common.onion"
 
 local destpnt, destsys = spob.getS("Gordon's Exchange")
 
@@ -100,6 +102,9 @@ to {pnt} in the {sys} system]]),
       osd_update()
       hook.enter("enter")
       hook.land("land")
+
+      local c = commodity.new( N_("Small Box"), N_("The box is sealed tight. You think you can hear a faint beeping sound occasionally.") )
+      mem.carg_id = misn.cargoAdd( c, 0 )
    end
 end
 
@@ -114,6 +119,11 @@ end
 
 local noise_shader, onion_hook, update_hook, onion_gfx, glitch_isworse, nextonion, onions
 function glitch ()
+   -- Want to allow inclusive claims
+   if not naev.claimTest( system.cur(), true ) then
+      return
+   end
+
    player.autonavReset( 10 )
    noise_shader = pp_shaders.corruption( 0.5 )
    shader.addPPShader( noise_shader, "gui" )
@@ -187,4 +197,16 @@ function land ()
    end
 
    -- TODO final mission + cutscene
+   vn.clear()
+   vn.scene()
+   vn.transition()
+   vn.na(_([[You get off your ship with the small box in hand, and go to deliver it to the spacedock cargo office. However, when you go to pull up the delivery information, it seems to be missing from your computer logs. Puzzled, you hand over the small box anyway, which they proceed to do the routine scan.]]))
+   vn.na(_([[The moment the box is scanned, the lights slightly flicker, and you hear the inspector performing some improvized percussive maintenance on the scanning equipment. They give a puzzled look and tell you there's an issue with the system, and it might take a while to get it solved.]]))
+   vn.na(_([[With nothing better to do, you walk around the station to kill time.]]))
+   vn.func( function () music.stop() end )
+   local oni = onion.vn_onion()
+   vn.appear( oni )
+   oni(_([[]]))
+   vn.disappear( oni )
+   vn.run()
 end
