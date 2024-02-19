@@ -81,6 +81,7 @@ static int misn_osdGetActiveItem( lua_State *L );
 static int misn_npcAdd( lua_State *L );
 static int misn_npcRm( lua_State *L );
 static int misn_claim( lua_State *L );
+static int misn_computerRefresh( lua_State *L );
 static const luaL_Reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
@@ -103,6 +104,7 @@ static const luaL_Reg misn_methods[] = {
    { "npcAdd", misn_npcAdd },
    { "npcRm", misn_npcRm },
    { "claim", misn_claim },
+   { "computerRefresh", misn_computerRefresh },
    {0,0}
 }; /**< Mission Lua methods. */
 
@@ -1072,4 +1074,18 @@ void misn_pushMissionData( lua_State *L, const MissionData *md )
       lua_rawset( L, -3 );
    }
    lua_setfield(L,-2,"tags");
+}
+
+/**
+ * @brief Refreshes the mission computer offerings.
+ *
+ * Do not use from a mission 'create' function.
+ *
+ * @luafunc computerRefresh
+ */
+static int misn_computerRefresh( lua_State *L )
+{
+   (void) L;
+   misn_regen();
+   return 0;
 }
