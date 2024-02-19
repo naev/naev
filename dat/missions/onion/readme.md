@@ -15,6 +15,7 @@ Meddle with the Onion Society, an eclectic group of the Nexus denizens and hacke
    * DOG: one of the original Project Thurion researchers that is uploaded
    * notasockpuppet: puppet master with large botnet. A Za'lek postdocs side project
    * lonewolf4: grey hat dramatic hacker
+   * Ogre: dvaered agent
 * **Notable Rewards:**
    * Player's own space station
    * Advance to Chapter 2

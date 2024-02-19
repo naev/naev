@@ -6,6 +6,9 @@
  <chance>10</chance>
  <location>Computer</location>
  <cond>
+   if spob.get("Gordon's Exchange"):system():jumpDist() < 4 then
+      return false
+   end
    return require("misn_test").cargo()
  </cond>
  <chapter>1</chapter>
@@ -20,6 +23,9 @@
 local fmt = require "format"
 local vntk = require "vntk"
 local strmess = require "strmess"
+local pp_shaders = require 'pp_shaders'
+local lg = require "love.graphics"
+local car = require "common.cargo"
 
 local destpnt, destsys = spob.getS("Gordon's Exchange")
 
@@ -48,13 +54,27 @@ function create()
    misn.setReward(_("-∞ ¤"))
 end
 
+-- Messes up the text a bit every time the player jumps
+local function osd_update ()
+   misn.osdCreate( strmess.messup(_("Strange Shipment")), {
+      strmess.messup(fmt.f(_("Deliver a small package to {pnt} ({sys} system)"),
+      {pnt=destpnt, sys=destsys})),
+   })
+end
+
 local accepted_tries = 0
 function accept ()
    accepted_tries = accepted_tries + 1
    if accepted_tries == 1 then
       vntk.msg(_([[You try to accept the mission, but a bunch of errors pop out, and the mission computer ends up crashing and rebooting. That was weird.]]))
+
+      -- Generate next iteration of the mission
+      misn.markerRm()
+      misn.markerAdd( destpnt, "computer" )
       local title = _("Shipment to Shipment to Shipment to Shipment to")
       misn.setTitle( strmess.messup( title, 0.1 ) )
+      local numjumps   = system.cur():jumpDist( destsys, false )
+      local dist = car.calculateDistance( system.cur(), spob.cur():pos(), destsys, destpnt, false )
       local desc = fmt.f(_([[ERROR: BufferOverrua80ho0ajqnc
 hq;8eoa 8q0 h
 08qj h
@@ -64,7 +84,107 @@ hq;8eoa 8q0 h
 to {pnt} in the {sys} system]]),
          {pnt=destpnt, sys=destsys} )
       desc = desc.."\n\n"..fmt.f(_("#nCargo:#0 {amount}"),{amount=_("Small Box")})
+      desc = desc.."\n"..fmt.f( n_( "#nJumps:#0 {jumps}", "#nJumps:#0 {jumps}", numjumps ), {jumps=numjumps} )
+      desc = desc.."\n".. fmt.f( n_("#nTravel distance:#0 {dist}", "#nTravel distance:#0 {dist}", dist), {dist=fmt.number(dist)} )
       misn.setDesc( strmess.messup( desc, 0.1 ) )
       misn.computerRefresh()
+   else
+
+      vntk.msg({
+         _([[You try to accept the mission again, but the mission computer seems to lock up. After a while, it starts spamming errors, but it seems like you somehow managed to accept it.]]),
+         fmt.f(_([[You return to your ship to find a puzzled dockworker scratching his head. They say it looks like the system is acting weirdly, but since it's not their job to figure it out, they end up handing you a small box. You guess this is the cargo you have to take to {pnt}?]]),
+            {pnt=destpnt}),
+      })
+
+      misn.accept()
+      osd_update()
+      hook.enter("enter")
+      hook.land("land")
    end
+end
+
+local glitched = false
+function enter ()
+   osd_update()
+
+   if not glitched then
+      hook.timer( 5, "glitch" )
+   end
+end
+
+local noise_shader, onion_hook, update_hook, onion_gfx, glitch_isworse, nextonion, onions
+function glitch ()
+   player.autonavReset( 10 )
+   noise_shader = pp_shaders.corruption( 0.5 )
+   shader.addPPShader( noise_shader, "gui" )
+   onion_hook = hook.renderfg( "welcome_to_onion" )
+   update_hook = hook.update( "update" )
+   onion_gfx = lg.newImage( "onion_society.png" ) -- TODO path
+   hook.timer( 5, "glitch_worsen" )
+   glitch_isworse = false
+   nextonion = 0
+   onions = {}
+end
+
+function glitch_worsen ()
+   shader.rmPPShader( noise_shader )
+   noise_shader = pp_shaders.corruption( 1.0 )
+   shader.addPPShader( noise_shader, "gui" )
+   hook.timer( 5, "glitch_end" )
+   glitch_isworse = true
+end
+
+function glitch_end ()
+   shader.rmPPShader( noise_shader )
+   hook.rm( onion_hook )
+   hook.rm( update_hook )
+   glitched = true
+end
+
+function update( dt )
+   -- Update onions
+   local newonions = {}
+   for k,o in ipairs(onions) do
+      o.t = o.t - dt
+      if o.t > 0 then
+         table.insert( newonions, o )
+      end
+   end
+   onions = newonions
+
+   -- See if we add a new one
+   nextonion = nextonion - dt
+   if nextonion < 0 then
+      nextonion = rnd.rnd()
+      local w, h = gfx.dim()
+      local x = rnd.rnd(1,w)
+      local y = rnd.rnd(1,h)
+      local ow, oh = onion_gfx:getDimensions()
+      table.insert( onions, {
+         x = x,
+         y = y,
+         s = rnd.rnd(50,150) / (0.5*ow+0.5*oh),
+         a = rnd.rnd(),
+         t = rnd.rnd(2,5),
+      } )
+      nextonion = rnd.rnd(1,3)
+      if glitch_isworse then
+         nextonion = nextonion * 0.5
+      end
+   end
+end
+function welcome_to_onion ()
+   for k,o in ipairs(onions) do
+      local s = o.s
+      lg.setColour( 1, 1, 1, o.a )
+      onion_gfx:draw( o.x-s*0.5, o.y-s*0.5, 0, s, s )
+   end
+end
+
+function land ()
+   if spob.cur() ~= destpnt then
+      return
+   end
+
+   -- TODO final mission + cutscene
 end
