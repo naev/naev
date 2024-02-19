@@ -1004,6 +1004,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 
    /* Defaults. */
    temp->chunk = LUA_NOREF;
+   temp->avail.chance = -1.;
    temp->avail.priority = 5;
    temp->avail.loc = MIS_AVAIL_UNSET;
    temp->avail.cond_chunk = LUA_NOREF;
@@ -1085,7 +1086,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
    if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT(temp->avail.loc==MIS_AVAIL_UNSET,"location");
-   MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
+   MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance<0.),"chance");
    MELEMENT( ((temp->avail.spob!=NULL) && spob_get(temp->avail.spob)==NULL), "spob" );
    MELEMENT( ((temp->avail.system!=NULL) && system_get(temp->avail.system)==NULL), "system" );
 #undef MELEMENT
