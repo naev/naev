@@ -15,7 +15,8 @@
 #include "mat4.h"
 
 PlayerConf_t conf = {
-   .low_memory = 0
+   .low_memory = 0,
+   .max_3d_tex_size = 0,
 };
 
 int main( int argc, char *argv[] )

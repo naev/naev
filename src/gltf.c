@@ -1139,7 +1139,7 @@ int gltf_init (void)
    /* Set global options. */
    use_normal_mapping = !conf.low_memory;
    use_ambient_occlusion = !conf.low_memory;
-   max_tex_size = (conf.low_memory ? 512 : 0);
+   max_tex_size = (conf.low_memory ? conf.max_3d_tex_size : 0);
 
    /* Set prefix stuff. */
    snprintf( prepend, sizeof(prepend), "%s\n#define HAS_NORMAL %d\n#define HAS_AO %d\n",

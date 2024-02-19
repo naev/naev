@@ -257,7 +257,8 @@ void conf_setVideoDefaults (void)
    conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;
    conf.jump_brightness = JUMP_BRIGHTNESS_DEFAULT;
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
-   conf.low_memory = LOW_MEMORY_DEFAULT;
+   conf.low_memory   = LOW_MEMORY_DEFAULT;
+   conf.max_3d_tex_size = MAX_3D_TEX_SIZE;
 
    if (cur_system)
       background_load( cur_system->background );
@@ -367,6 +368,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "jump_brightness", conf.jump_brightness );
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
       conf_loadBool( lEnv, "low_memory", conf.low_memory );
+      conf_loadInt( lEnv, "max_3d_tex_size", conf.max_3d_tex_size );
 
       /* FPS */
       conf_loadBool( lEnv, "showfps", conf.fps_show );
@@ -948,6 +950,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Enables low memory mode which foregoes using normal textures and ambient occlusion. Useful when you want to run Naev or more limited hardware."))
    conf_saveBool("low_memory", conf.low_memory);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Maximum texture size to use for 3D models when in low memory mode. A value of less than or equal to 0 disables texture resizing."))
+   conf_saveBool("max_3d_tex_size", conf.max_3d_tex_size);
    conf_saveEmptyLine();
 
    /* FPS */

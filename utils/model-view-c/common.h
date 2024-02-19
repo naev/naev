@@ -23,5 +23,6 @@ void gl_checkHandleError( const char *func, int line );
 
 typedef struct PlayerConf_ {
    int low_memory;
+   int max_3d_tex_size;
 } PlayerConf_t;
 extern PlayerConf_t conf;
