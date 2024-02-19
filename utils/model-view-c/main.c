@@ -57,6 +57,7 @@ int main( int argc, char *argv[] )
 
    glEnable( GL_FRAMEBUFFER_SRGB );
    glClearColor( 0.2, 0.2, 0.2, 1.0 );
+   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
    if (gltf_init())
       return -1;
