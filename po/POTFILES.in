@@ -3432,6 +3432,7 @@ dat/scripts/prng.lua
 dat/scripts/prob.lua
 dat/scripts/proximity.lua
 dat/scripts/reverb_preset.lua
+dat/scripts/strmess.lua
 dat/scripts/swapship.lua
 dat/scripts/term.lua
 dat/scripts/textoverlay.lua
