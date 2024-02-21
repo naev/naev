@@ -441,6 +441,8 @@ void gl_renderTextureInterpolate(  const glTexture* ta,
    /* Case no need for interpolation. */
    if (tb==NULL)
       return gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
+   else if (ta==NULL)
+      return gl_renderTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
 
    /* Must have colour for now. */
    if (c == NULL)
