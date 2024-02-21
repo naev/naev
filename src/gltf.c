@@ -972,6 +972,17 @@ static int cmp_node( const void *p1, const void *p2 )
       return b;
    return n1->aabb_max.v[1]-n2->aabb_max.v[1];
 }
+static int cmp_mesh( const void *p1, const void *p2 )
+{
+   const Mesh *m1 = p1;
+   const Mesh *m2 = p2;
+   int b1 = cmp_obj->materials[ m1->material ].blend;
+   int b2 = cmp_obj->materials[ m2->material ].blend;
+   int b = b1-b2;
+   if (b)
+      return b;
+   return m1->aabb_max.v[1]-m2->aabb_max.v[1];
+}
 
 /**
  * @brief Loads an object from a file.
@@ -1029,6 +1040,7 @@ GltfObject *gltf_loadFromFile( const char *filename )
    obj->nscenes = data->scenes_count;
    obj->scene_body = 0; /**< Always the default scene. */
    obj->scene_engine = -1;
+   cmp_obj = obj; /* For comparisons. */
    for (size_t s=0; s<obj->nscenes; s++) {
       /* Load nodes. */
       cgltf_scene *cscene = &data->scenes[s]; /* data->scene may be NULL */
@@ -1048,12 +1060,15 @@ GltfObject *gltf_loadFromFile( const char *filename )
          obj->radius = MAX( obj->radius, n->radius );
          vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
          vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
+
+         /* Sort meshes based on blending. */
+         qsort( n->mesh, n->nmesh, sizeof(Mesh), cmp_mesh );
       }
 
-      /* Sort scenes based on blending. */
-      cmp_obj = obj;
+      /* Sort scene nodes based on blending. */
       qsort( scene->nodes, scene->nnodes, sizeof(Node), cmp_node );
    }
+   cmp_obj = NULL; /* No more comparisons. */
 
    /* Unmount directory. */
    PHYSFS_unmount( mountpath );
