@@ -104,7 +104,9 @@ static Light lights[MAX_LIGHTS] = {
 #endif
 static GLuint light_fbo[MAX_LIGHTS]; /**< FBO correpsonding to the light. */
 static GLuint light_tex[MAX_LIGHTS]; /**< Texture corresponding to the light. */
-static mat4 light_mat[MAX_LIGHTS]; /**< Shadow matrices. */
+static mat4 light_mat_def[MAX_LIGHTS]; /**< Shadow matrices. */
+static mat4 light_mat_alt[MAX_LIGHTS];
+static mat4 *light_mat = light_mat_def;
 
 /**
  * @brief Shader to use witha material.
@@ -567,9 +569,8 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_nod
    return 0;
 }
 
-static void shadow_matrix( const GltfObject *obj, mat4 *m, const Light *light )
+static void shadow_matrix( mat4 *m, const Light *light )
 {
-   (void) obj;
    const vec3 up        = { .v = {0., 1., 0.} };
    const vec3 center    = { .v = {0., 0., 0.} };
    const vec3 light_pos = light->pos;
@@ -742,6 +743,7 @@ static void gltf_renderNodeMesh( const GltfObject *obj, const Node *node, const 
 
 static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H, const Light *light, double time, int i )
 {
+   (void) light;
    const Shader *shd = &shadow_shader;
 
    /* Set up the shadow map and render. */
@@ -751,7 +753,6 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H, 
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   shadow_matrix( obj, &light_mat[i], light );
    glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, light_mat[i].ptr );
    glUniform1f( shd->u_time, time );
 
@@ -872,8 +873,17 @@ void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *
       mat4_apply( &Hptr, &Hscale );
    }
 
-   if (L==NULL)
+   if (L==NULL) {
+      /* Use default light and shadow matrices. */
       L = &L_default;
+      light_mat = light_mat_def;
+   }
+   else {
+      /* Compute shadow matrices. */
+      for (int i=0; i<L->nlights; i++)
+         shadow_matrix( &light_mat_alt[i], &L->lights[i] );
+      light_mat = light_mat_alt;
+   }
 
    /* Set up blend mode. */
    glEnable(GL_BLEND);
@@ -1125,8 +1135,10 @@ int gltf_init (void)
    const char *prepend_fix = "#define MAX_LIGHTS "STR(MAX_LIGHTS)"\n#define SHADOWMAP_SIZE "STR(SHADOWMAP_SIZE)"\n";
    char prepend[STRMAX];
 
-   /* Set up lighting. */
+   /* Set up default lighting. */
    L_default = L_default_const;
+   for (int i=0; i<L_default.nlights; i++)
+      shadow_matrix( &light_mat_def[i], &L_default.lights[i] );
 
    /* Set global options. */
    use_normal_mapping = !conf.low_memory;
