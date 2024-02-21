@@ -366,6 +366,8 @@ static int gltf_loadMaterial( Material *mat, const cgltf_material *cmat, const c
       else
          mat->normal_tex = tex_ones;
       mat->blend        = (cmat->alpha_mode == cgltf_alpha_mode_blend);
+      mat->double_sided = cmat->double_sided;
+      mat->unlit = cmat->unlit;
    }
    else {
       memset( mat->emissiveFactor, 0, sizeof(GLfloat)*3 );
@@ -688,7 +690,11 @@ static void renderMesh( const GltfObject *obj, const Mesh *mesh, const mat4 *H )
       glUniform1i( shd->baseColour_tex, 0 );
    gl_checkErr();
 
+   if (mat->double_sided)
+      glDisable(GL_CULL_FACE);
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
+   if (mat->double_sided)
+      glEnable(GL_CULL_FACE);
 }
 
 /**
@@ -900,7 +906,7 @@ void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *
 
    /* Some clean up. */
    glDisable(GL_CULL_FACE);
-   glDisable( GL_DEPTH_TEST );
+   glDisable(GL_DEPTH_TEST);
    glUseProgram( 0 );
 #ifdef HAVE_NAEV
    glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
