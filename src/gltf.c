@@ -104,6 +104,7 @@ static Light lights[MAX_LIGHTS] = {
 #endif
 static GLuint light_fbo[MAX_LIGHTS]; /**< FBO correpsonding to the light. */
 static GLuint light_tex[MAX_LIGHTS]; /**< Texture corresponding to the light. */
+static mat4 light_mat[MAX_LIGHTS]; /**< Shadow matrices. */
 
 /**
  * @brief Shader to use witha material.
@@ -750,9 +751,8 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H, 
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   mat4 Hshadow;
-   shadow_matrix( obj, &Hshadow, light );
-   glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, Hshadow.ptr );
+   shadow_matrix( obj, &light_mat[i], light );
+   glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, light_mat[i].ptr );
    glUniform1f( shd->u_time, time );
 
    for (size_t j=0; j<obj->scenes[scene].nnodes; j++)
@@ -798,10 +798,6 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H, 
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
-   glUseProgram( 0 );
-
-   glBindTexture( GL_TEXTURE_2D, 0 );
-
    gl_checkErr();
 }
 
@@ -809,7 +805,6 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H, do
 {
    /* Load constant stuff. */
    const Shader *shd = &gltf_shader;
-   mat4 Hshadow;
    glUseProgram( shd->program );
    glUniform1f( shd->u_time, time );
    glUniform3f( shd->u_ambient, L->ambient_r, L->ambient_g, L->ambient_b );
@@ -824,8 +819,7 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H, do
       glUniform1f( sl->intensity, l->intensity );
 
       /* Set up matrix. */
-      shadow_matrix( obj, &Hshadow, l );
-      glUniformMatrix4fv( sl->Hshadow, 1, GL_FALSE, Hshadow.ptr );
+      glUniformMatrix4fv( sl->Hshadow, 1, GL_FALSE, light_mat[i].ptr );
 
       /* Set up textures. */
       glActiveTexture( GL_TEXTURE5+i );
@@ -836,12 +830,11 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H, do
 
    /* Cull faces. */
    glEnable(GL_CULL_FACE);
+   glCullFace(GL_BACK);
    for (size_t i=0; i<obj->scenes[scene].nnodes; i++)
       gltf_renderNodeMesh( obj, &obj->scenes[scene].nodes[i], H );
-   glUseProgram( 0 );
 
    glBindTexture( GL_TEXTURE_2D, 0 );
-
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
@@ -896,12 +889,9 @@ void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *
    for (int i=0; i<L->nlights; i++)
       gltf_renderShadow( obj, scene, &Hptr, &L->lights[i], time, i );
 
-   /* Set up for the final render. */
-   glCullFace(GL_BACK);
+   /* Finally render the scene. */
    glViewport( 0, 0, size, size );
    glBindFramebuffer(GL_FRAMEBUFFER, fb);
-
-   /* Finally render the scene. */
    gltf_renderMesh( obj, scene, &Hptr, time, L );
 
    /* Some clean up. */
