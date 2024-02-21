@@ -742,10 +742,6 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H, 
    glClear(GL_DEPTH_BUFFER_BIT);
    glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
 
-   /* Cull faces. */
-   glEnable(GL_CULL_FACE);
-   glCullFace(GL_FRONT);
-
    /* Set up shader. */
    glUseProgram( shd->program );
    mat4 Hshadow;
@@ -807,11 +803,10 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H, do
 {
    /* Load constant stuff. */
    const Shader *shd = &gltf_shader;
+   mat4 Hshadow;
    glUseProgram( shd->program );
    glUniform1f( shd->u_time, time );
-   mat4 Hshadow;
-   const double factor = 1.0/M_PI;
-   glUniform3f( shd->u_ambient, L->ambient_r*factor, L->ambient_g*factor, L->ambient_b*factor );
+   glUniform3f( shd->u_ambient, L->ambient_r, L->ambient_g, L->ambient_b );
    glUniform1i( shd->nlights, L->nlights );
    for (int i=0; i<L->nlights; i++) {
       const Light *l = &L->lights[i];
@@ -833,24 +828,16 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H, do
    }
    gl_checkErr();
 
-   glEnable(GL_BLEND);
-   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-
    /* Cull faces. */
    glEnable(GL_CULL_FACE);
-   glCullFace(GL_BACK);
-
    for (size_t i=0; i<obj->scenes[scene].nnodes; i++)
       gltf_renderNodeMesh( obj, &obj->scenes[scene].nodes[i], H );
-
    glUseProgram( 0 );
 
    glBindTexture( GL_TEXTURE_2D, 0 );
 
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-
-   glDisable(GL_CULL_FACE);
 
    gl_checkErr();
 }
@@ -889,21 +876,30 @@ void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *
    if (L==NULL)
       L = &L_default;
 
-   /* Some constant stuff. */
-   const Shader *shd = &gltf_shader;
-   glUseProgram( shd->program );
+   /* Set up blend mode. */
+   glEnable(GL_BLEND);
+   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
    /* Depth testing. */
    glEnable( GL_DEPTH_TEST );
    glDepthFunc( GL_LESS );
 
+   /* Render shadows for each light. */
+   glCullFace(GL_FRONT);
+   glEnable(GL_CULL_FACE);
    for (int i=0; i<L->nlights; i++)
       gltf_renderShadow( obj, scene, &Hptr, &L->lights[i], time, i );
 
+   /* Set up for the final render. */
+   glCullFace(GL_BACK);
    glViewport( 0, 0, size, size );
    glBindFramebuffer(GL_FRAMEBUFFER, fb);
+
+   /* Finally render the scene. */
    gltf_renderMesh( obj, scene, &Hptr, time, L );
 
+   /* Some clean up. */
+   glDisable(GL_CULL_FACE);
    glDisable( GL_DEPTH_TEST );
    glUseProgram( 0 );
 #ifdef HAVE_NAEV
@@ -1349,9 +1345,10 @@ void gltf_lightGet( double *r, double *g, double *b, double *intensity )
  */
 void gltf_lightAmbient( double r, double g, double b )
 {
-   L_default.ambient_r = r;
-   L_default.ambient_g = g;
-   L_default.ambient_b = b;
+   const double factor = 1.0/M_PI;
+   L_default.ambient_r = r * factor;
+   L_default.ambient_g = g * factor;
+   L_default.ambient_b = b * factor;
 }
 
 /**
@@ -1359,9 +1356,9 @@ void gltf_lightAmbient( double r, double g, double b )
  */
 void gltf_lightAmbientGet( double *r, double *g, double *b )
 {
-   *r = L_default.ambient_r;
-   *g = L_default.ambient_g;
-   *b = L_default.ambient_b;
+   *r = L_default.ambient_r * M_PI;
+   *g = L_default.ambient_g * M_PI;
+   *b = L_default.ambient_b * M_PI;
 }
 
 /**
