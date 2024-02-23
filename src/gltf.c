@@ -181,6 +181,7 @@ static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex, cons
    const SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
    GLuint tex;
    SDL_Surface *surface = NULL;
+   int has_alpha = 0;
 
    /* Must haev texture to load it. */
    if ((ctex==NULL) || (ctex->texture==NULL)) {
@@ -222,7 +223,7 @@ static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex, cons
    }
 
    if (surface != NULL) {
-      int has_alpha = surface->format->Amask;
+      has_alpha = surface->format->Amask;
       if (surface->format->format != fmt) {
          SDL_Surface *temp = surface;
          surface = SDL_ConvertSurfaceFormat( temp, fmt, 0 );
@@ -254,9 +255,27 @@ static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex, cons
    /* Downsample as necessary. */
    if ((max_tex_size > 0) && (surface!=NULL) && (MAX(surface->w,surface->h) > max_tex_size)) {
       GLuint fbo, downfbo, downtex;
+      GLint status;
 
       /* Create the downsampling framebuffers. */
       gl_fboCreate( &downfbo, &downtex, max_tex_size, max_tex_size );
+
+      /* Create the render buffer, keeping RGB status. */
+      glGenTextures(1, &downtex);
+      glBindTexture(GL_TEXTURE_2D, downtex);
+      glTexImage2D(GL_TEXTURE_2D, 0, has_alpha ? GL_SRGB_ALPHA : GL_SRGB, max_tex_size, max_tex_size, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+
+      /* Create the frame buffer. */
+      glGenFramebuffers( 1, &downfbo );
+      glBindFramebuffer(GL_FRAMEBUFFER, downfbo);
+
+      /* Attach the colour buffer. */
+      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, downtex, 0);
+
+      /* Check status. */
+      status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+      if (status != GL_FRAMEBUFFER_COMPLETE)
+         WARN(_("Error setting up framebuffer!"));
 
       /* Attach a framebuffer to the current texture. */
       glGenFramebuffers( 1, &fbo );
