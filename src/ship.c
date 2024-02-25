@@ -782,8 +782,9 @@ static int ship_parse( Ship *temp, const char *filename )
          continue;
       }
       if (xml_isNode(node,"base_type")) {
+         const char *nstr = xml_get(node);
          xmlr_attr_strd( node, "path", temp->base_path );
-         temp->base_type = strdup( xml_get(node) );
+         temp->base_type = (nstr!=NULL) ? strdup(nstr) : NULL;
          continue;
       }
       xmlr_float(node,"time_mod",temp->dt_default);
