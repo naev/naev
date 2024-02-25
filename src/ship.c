@@ -1299,8 +1299,7 @@ int ships_load (void)
 
    /* Debugging timings. */
    if (conf.devmode) {
-      time = SDL_GetTicks() - time;
-      DEBUG( n_( "Loaded %d Ship in %.3f s", "Loaded %d Ships in %.3f s", array_size(ship_stack) ), array_size(ship_stack), time/1000. );
+      DEBUG( n_( "Loaded %d Ship in %.3f s", "Loaded %d Ships in %.3f s", array_size(ship_stack) ), array_size(ship_stack), (SDL_GetTicks()-time)/1000. );
    }
    else
       DEBUG( n_( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
