@@ -90,6 +90,7 @@ typedef struct ShipTrailEmitter_ {
 typedef struct Ship_ {
    char *name;       /**< Ship name. */
    char *base_type;  /**< Ship's base type, basically used for figuring out what ships are related. */
+   char *base_path;  /**< Ship's base type path, used for finding graphics and such. */
    ShipClass class;  /**< Ship class. */
    char *class_display;/**< Custom ship class, overrides class when displaying. */
    int points;       /**< Number of points the ship costs (used for presence et al.) */

@@ -2,7 +2,7 @@
 <ship name="Drone Carrier">
  <lua>ships/lua/thurion.lua</lua>
  <points>160</points>
- <base_type>Drone Carrier</base_type>
+ <base_type path="Drone_Carrier">Drone Carrier</base_type>
  <GFX size="96" sx="12" sy="12">drone_carrier</GFX>
  <rarity>3</rarity>
  <sound>engine</sound>

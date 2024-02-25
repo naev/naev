@@ -422,14 +422,15 @@ static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
  */
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine )
 {
-   char str[PATH_MAX], *ext, *base, *delim;
+   char str[PATH_MAX], *ext, *base, *delim, *base_path;
 
    /* Get base path. */
    delim = strchr( buf, '_' );
    base = delim==NULL ? strdup( buf ) : strndup( buf, delim-buf );
+   base_path = (temp->base_path != NULL) ? temp->base_path : temp->base_type;
 
    /* Load the 3d model */
-   snprintf(str, sizeof(str), SHIP_3DGFX_PATH"%s/%s.gltf", base, buf);
+   snprintf(str, sizeof(str), SHIP_3DGFX_PATH"%s/%s.gltf", base_path, buf);
    if (PHYSFS_exists(str)) {
       DEBUG("Found 3D graphics for '%s' at '%s'!", temp->name, str);
       temp->gfx_3d = gltf_loadFromFile(str);
@@ -780,7 +781,11 @@ static int ship_parse( Ship *temp, const char *filename )
          temp->sound = sound_get( xml_get(node) );
          continue;
       }
-      xmlr_strd(node,"base_type",temp->base_type);
+      if (xml_isNode(node,"base_type")) {
+         xmlr_attr_strd( node, "path", temp->base_path );
+         temp->base_type = strdup( xml_get(node) );
+         continue;
+      }
       xmlr_float(node,"time_mod",temp->dt_default);
       xmlr_long(node,"price",temp->price);
       xmlr_strd(node,"license",temp->license);
@@ -1331,6 +1336,7 @@ void ships_free (void)
       free(s->description);
       free(s->desc_extra);
       free(s->base_type);
+      free(s->base_path);
       free(s->fabricator);
       free(s->license);
       free(s->cond);

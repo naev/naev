@@ -2,7 +2,7 @@
 <ship name="Za'lek Bomber Drone">
  <lua>ships/lua/zalek.lua</lua>
  <points>40</points>
- <base_type>Za'lek Bomber Drone</base_type>
+ <base_type path="Zalek_Bomber_Drone">Za'lek Bomber Drone</base_type>
  <GFX size="36">zalek_drone_bomber</GFX>
  <sound>engine_zalek</sound>
  <class display="Robotic Bomber">Bomber</class>
