@@ -751,6 +751,10 @@ def polygonify_ship( filename, outpath, use2d=True, use3d=True ):
     name = root.get('name')
     cls = root.find( "class" ).text
     tag = root.find( "GFX" )
+    basetag = root.find( "base_type" )
+    basetype = basetag.get("path")
+    if basetype == None:
+        basetype = basetag.text
     if tag != None:
         if outpath != None:
             outname = f"{outpath}/ship/{tag.text}.xml"
@@ -758,8 +762,8 @@ def polygonify_ship( filename, outpath, use2d=True, use3d=True ):
         pntNplg = None
         if use3d:
             # Try 3D first
-            gltfpath = f"artwork/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
-            gltfpath = os.getenv("HOME")+f"/.local/share/naev/plugins/3dtest/gfx/ship3d/{tag.text.split('_')[0]}/{tag.text}.gltf"
+            gltfpath = f"artwork/gfx/ship3d/{basetype}/{tag.text}.gltf"
+            gltfpath = os.getenv("HOME")+f"/.local/share/naev/plugins/3dtest/gfx/ship3d/{basetype}/{tag.text}.gltf"
             if os.path.isfile(gltfpath):
                 pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
             else:
