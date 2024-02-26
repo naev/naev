@@ -736,7 +736,7 @@ static int vectorL_normalize( lua_State *L )
 {
    vec2 *v = luaL_checkvector(L,1);
    double n = luaL_optnumber(L,2,1.);
-   double m = n/VMOD(*v);
+   double m = n/MAX(VMOD(*v),1e-6);
    v->x *= m;
    v->y *= m;
    lua_pushvector(L, *v);
