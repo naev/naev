@@ -392,7 +392,7 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, dou
    if (t==NULL)
       return 1.;
    mod = p->stats.ew_track * p->stats.ew_detect;
-   return CLAMP( 0., 1., (t->ew_signature * mod - trackmin) / (trackmax - trackmin + 1e-5) ); /* Avoid divide by zero if trackmax==trackmin. */
+   return CLAMP( 0., 1., (t->ew_signature * mod - trackmin) / MAX(trackmax - trackmin, DOUBLE_TOL) ); /* Avoid divide by zero if trackmax==trackmin. */
 }
 
 /**

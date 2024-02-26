@@ -442,7 +442,7 @@ void ai_thinkSetup( double dt )
    pilot_acc   = 0.;
    pilot_turn  = 0.;
    pilot_flags = 0;
-   ai_dt       = MAX( dt, 1e-5 );
+   ai_dt       = MAX( dt, DOUBLE_TOL );
 }
 
 /**

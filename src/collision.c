@@ -428,7 +428,7 @@ static int PointInPolygon( const CollPolyView* at, const vec2* ap,
    vprod = dxi * dyip - dyi * dxip;
    angle += atan2(vprod, sprod);
 
-   if (FABS(angle) < 1e-5)
+   if (FABS(angle) < DOUBLE_TOL)
       return 0;
 
    return 1;
@@ -968,7 +968,7 @@ static int linePointOnSegment( double d1, double x1, double y1, double x2, doubl
    //double d1 = hypot( x2-x1, y2-y1 ); /* Distance between end-points. */
    double d2 = hypot( x-x1,  y-y1 );  /* Distance from point to one end. */
    double d3 = hypot( x2-x,  y2-y );  /* Distance to the other end. */
-   return fabs(d1 - d2 - d3) < 1e-8;   /* True if smaller than some tolerance. */
+   return fabs(d1 - d2 - d3) < DOUBLE_TOL;   /* True if smaller than some tolerance. */
 }
 
 #define FX( A, B, C, x )   (-(A * x + C) / B)

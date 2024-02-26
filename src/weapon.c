@@ -1040,7 +1040,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       double d = vy1 - vy2;
 
       /* Make sure we have to do a correction. */
-      if ((fabs(b)>1e-5) || (fabs(d)>1e-5)) {
+      if ((fabs(b)>DOUBLE_TOL) || (fabs(d)>DOUBLE_TOL)) {
          double a = w->solid.pos.x - csol->pos.x;
          double c = w->solid.pos.y - csol->pos.y;
          double t = CLAMP( 0., 1., -(a*b+c*d) / (b*b+d*d) );
@@ -1071,7 +1071,7 @@ static int weapon_testCollision( const WeaponCollision *wc, const glTexture *cte
       double u_b = (e2y - s2y) * (e1x - s1x) - (e2x - s2x) * (e1y - s1y);
 
       /* Only handle case not coincident or parallel. */
-      if (fabs(u_b) > 1e-5) {
+      if (fabs(u_b) > DOUBLE_TOL) {
          double ua_t = (e2x - s2x) * (s1y - s2y) - (e2y - s2y) * (s1x - s2x);
 
          /* Interested in closest point only on the csol line. */
@@ -2081,7 +2081,7 @@ static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
          /* We compute more precisely ta and tt. */
          /* (times for the ammo and the target to get to intersection point) */
          /* The aim is to nullify ta-tt. */
-         if (fabs(ang) > 1e-7) { /* No need to iterate if it's already nearly aligned. */
+         if (fabs(ang) > DOUBLE_TOL) { /* No need to iterate if it's already nearly aligned. */
             int niter = 5;
             for (int i=0; i<niter; i++) {
                double dtdd;

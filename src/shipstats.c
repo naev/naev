@@ -274,7 +274,7 @@ ShipStatList* ss_statsSetList( ShipStatList *head, ShipStatsType type, double va
          break;
 
       case SS_DATA_TYPE_BOOLEAN:
-         ll->d.i |= (fabs(value) > 1e-5);
+         ll->d.i |= (fabs(value) > DOUBLE_TOL);
          break;
 
       case SS_DATA_TYPE_INTEGER:
@@ -694,7 +694,7 @@ static const char* ss_printI_colour( int i, const ShipStatsLookup *sl )
  */
 static int ss_printD( char *buf, int len, int newline, double d, const ShipStatsLookup *sl )
 {
-   if (FABS(d) < 1e-10)
+   if (FABS(d) < DOUBLE_TOL)
       return 0;
 
    return scnprintf( buf, len, p_("shipstats_double","%s#%s%s: %+g %s#0"),
@@ -709,7 +709,7 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
  */
 static int ss_printA( char *buf, int len, int newline, double d, const ShipStatsLookup *sl )
 {
-   if (FABS(d) < 1e-10)
+   if (FABS(d) < DOUBLE_TOL)
       return 0;
    return scnprintf( buf, len, p_("shipstats_absolute","%s#%s%s: %+g %s#0"),
          (newline) ? "\n" : "",
@@ -918,9 +918,9 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
       case SS_DATA_TYPE_BOOLEAN:
          destint  = (int*) &ptr[ sl->offset ];
          if (overwrite)
-            *destint = (fabs(value) > 1e-5);
+            *destint = (fabs(value) > DOUBLE_TOL);
          else
-            *destint |= (fabs(value) > 1e-5);
+            *destint |= (fabs(value) > DOUBLE_TOL);
          break;
 
       case SS_DATA_TYPE_INTEGER:

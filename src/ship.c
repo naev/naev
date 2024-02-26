@@ -1050,7 +1050,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
       /* Determine the model transformation. */
       mat4 H = mat4_identity();
-      if (fabs(tilt) > 1e-5) {
+      if (fabs(tilt) > DOUBLE_TOL) {
          mat4_rotate( &H, M_PI_2,0.0, 1.0, 0.0 );
          mat4_rotate( &H, -tilt, 1.0, 0.0, 0.0 );
          mat4_rotate( &H, dir,   0.0, 1.0, 0.0 );

@@ -904,7 +904,7 @@ int gl_printTextRaw( const glFont *ft_font,
 
    s = 0;
    gl_printLineIteratorInit( &iter, ft_font, text, width );
-   while ((y - by > -1e-5) && gl_printLineIteratorNext( &iter )) {
+   while ((y - by > -DOUBLE_TOL) && gl_printLineIteratorNext( &iter )) {
       /* Must restore stuff. */
       gl_printRestoreLast();
 

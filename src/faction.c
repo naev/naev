@@ -812,7 +812,7 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
 
    /* Run hook if necessary. */
    delta = faction->player - old;
-   if (FABS(delta) > 1e-10) {
+   if (FABS(delta) > DOUBLE_TOL) {
       HookParam hparam[3];
       hparam[0].type    = HOOK_PARAM_FACTION;
       hparam[0].u.lf    = f;

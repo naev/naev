@@ -318,7 +318,7 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
                if (el->strength > strength)
                   return 0;
                /* Case the base effect has a longer timer with same strength we ignore. */
-               if ((fabs(el->strength-strength)<1e-5) && (el->timer > duration))
+               if ((fabs(el->strength-strength)<DOUBLE_TOL) && (el->timer > duration))
                   return 0;
                /* Procede to overwrite. */
                overwrite = 1;

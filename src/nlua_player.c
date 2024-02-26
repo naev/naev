@@ -483,7 +483,7 @@ static int playerL_omsgAdd( lua_State *L )
    col      = luaL_optcolour(L,4,&cWhite);
 
    /* Infinity. */
-   if (duration < 1e-10)
+   if (duration < DOUBLE_TOL)
       duration = INFINITY;
 
    /* Output. */
@@ -516,7 +516,7 @@ static int playerL_omsgChange( lua_State *L )
    duration = luaL_checknumber(L,3);
 
    /* Infinity. */
-   if (duration < 1e-10)
+   if (duration < DOUBLE_TOL)
       duration = INFINITY;
 
    /* Output. */

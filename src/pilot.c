@@ -2610,11 +2610,11 @@ void pilot_update( Pilot* pilot, double dt )
    /* Set tilt. */
    const double tilt_max = M_PI/8.;
    const double tilt_mod = tilt_max * 8.;
-   if (pilot->solid.dir_vel > 1e-5) {
+   if (pilot->solid.dir_vel > DOUBLE_TOL) {
       pilot->tilt += pilot->solid.dir_vel / tilt_mod * dt;
       pilot->tilt = MIN( pilot->tilt, tilt_max );
    }
-   else if (pilot->solid.dir_vel < -1e-5) {
+   else if (pilot->solid.dir_vel < -DOUBLE_TOL) {
       /* Already negative. */
       pilot->tilt += pilot->solid.dir_vel / tilt_mod * dt;
       pilot->tilt = MAX( pilot->tilt, -tilt_max );
@@ -4162,7 +4162,7 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
    pilot_dpseps( p, &DPSaccum_target, NULL );
    pilot_dpseps( cur_pilot, &DPSaccum_pilot, NULL );
 
-   if ((DPSaccum_target > 1e-6) && (DPSaccum_pilot > 1e-6))
+   if ((DPSaccum_target > DOUBLE_TOL) && (DPSaccum_pilot > DOUBLE_TOL))
       return DPSaccum_pilot / (DPSaccum_target + DPSaccum_pilot);
    else if (DPSaccum_pilot > 0.)
       return 1.;

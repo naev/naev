@@ -293,7 +293,7 @@ static int linoptL_setcol( lua_State *L )
 
    /* Determine bounds. */
    if (haslb && hasub) {
-      if (fabs(lb-ub) < 1e-5)
+      if (fabs(lb-ub) < DOUBLE_TOL)
          type = GLP_FX;
       else
          type = GLP_DB;
@@ -347,7 +347,7 @@ static int linoptL_setrow( lua_State *L )
    lb    = luaL_optnumber(L,4,0.0);
    ub    = luaL_optnumber(L,5,0.0);
    if (haslb && hasub) {
-      if (fabs(lb-ub) < 1e-5)
+      if (fabs(lb-ub) < DOUBLE_TOL)
          type = GLP_FX;
       else
          type = GLP_DB;

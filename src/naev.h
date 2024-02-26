@@ -65,6 +65,8 @@
 #  define M_SQRT2       1.41421356237309504880
 #endif
 
+#define DOUBLE_TOL       1e-6
+
 /*
  * Misc stuff.
  */
