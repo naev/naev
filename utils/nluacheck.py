@@ -27,12 +27,10 @@ NPC_REGEX = re.compile( r'(evt|misn)\.npcAdd\( *?"(.+?)"' )
 AI_REGEX = re.compile( r'ai.pushtask\( *?"(.+?)"' )
 PROXIMITY_REGEX = re.compile( r'hook\.timer\(.*?, "(proximity|proximityScan|invProximity)", *?{.*?funcname *?= *?"(.+?)"' )
 
-stdin = sys.stdin.read()
-
 def nluacheck( filename, extra_opts=[] ):
     isstdin = False
     if filename=='-':
-        data = stdin
+        data = sys.stdin.read()
         isstdin = True
     else:
         with open( filename, 'r', encoding='utf-8' ) as f:
