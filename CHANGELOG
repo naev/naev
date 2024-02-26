@@ -1,4 +1,5 @@
 * 0.11.4 (unreleased)
+   * More guards against divides by zero in autonav
    * Fixed warnings on certain OpenGL drivers
    * Fixed toolkit not rerendering when right-clicking on tabbed windows
    * Fixed Marius enclave description
