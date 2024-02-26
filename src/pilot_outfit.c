@@ -718,11 +718,6 @@ const char* pilot_canEquip( const Pilot *p, const PilotOutfitSlot *s, const Outf
       if (outfit_isProp(o,OUTFIT_PROP_UNIQUE) && (pilot_numOutfit(p,o)>0))
          return _("Can only install unique outfit once.");
    }
-   else {
-      /* Check fighter bay. */
-      if ((o==NULL) && (s!=NULL) && (s->u.ammo.deployed > 0))
-         return _("Recall the fighters first");
-   }
 
    return NULL;
 }

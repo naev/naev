@@ -1223,6 +1223,23 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
       if (pilot_canEquip( eq_wgt.selected->p, slot, NULL ) != NULL)
          return 0;
 
+      /* Force recall fighters. */
+      if (slot->u.ammo.deployed>0) {
+         int dockslot = -1;
+         if (!dialogue_YesNo(_("Recall Fighters"), _("This action will recall your deployed fighters. Is that OK?"))) {
+            return 0;
+         }
+
+         /* Get index of outfit slot */
+         for (int j=0; j<array_size(p->outfits); j++) {
+            if (p->outfits[j] == slot)
+               dockslot = j;
+         }
+
+         /* Recall fighters. */
+         escort_clearDeployed( player.p, dockslot );
+      }
+
       /* Remove ammo first. */
       pilot_rmAmmo( eq_wgt.selected->p, slot, slot->u.ammo.quantity );
 
@@ -1425,7 +1442,7 @@ int equipment_canSwapPlayerShip( const char *shipname )
          return 0;
       }
       /* Recall fighters. */
-      escort_clearDeployed( player.p );
+      escort_clearDeployed( player.p, -1 );
    }
    return 1;
 }
@@ -2317,7 +2334,7 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
       if (!dialogue_YesNo(_("Recall Fighters"), _("This action will recall your deployed fighters. Is that OK?")))
          return;
       /* Recall fighters. */
-      escort_clearDeployed( ship );
+      escort_clearDeployed( ship, -1 );
    }
 
    /* Remove all outfits. */

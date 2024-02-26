@@ -33,6 +33,7 @@
    * Fixes
       * PSO and Mizar nebulas have trails again
       * Removed fancy background mode
+      * Can remove fighter bays with deployed fighters
 
 * 0.11.4 (unreleased)
    * More guards against divides by zero in autonav

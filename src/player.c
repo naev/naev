@@ -580,7 +580,7 @@ void player_swapShip( const char *shipname, int move_cargo )
       pilot_outfitLRemove( player.p, player.p->outfits[i] );
 
    /* Get rid of deployed escorts and swap existing escorts. */
-   escort_clearDeployed( player.p );
+   escort_clearDeployed( player.p, -1 );
    escort_freeList( ps->p );
    ps->p->escorts = array_create( Escort_t );
    /* Just copying the array over has unforeseen consequences, so recreate. */

@@ -225,7 +225,7 @@ unsigned int escort_createRef( Pilot *p, Pilot *pe,
 /**
  * @brief Clears deployed escorts of a pilot.
  */
-int escort_clearDeployed( Pilot *p )
+int escort_clearDeployed( Pilot *p, int slot )
 {
    int q = 0;
    /* Iterate backwards so we don't have to care about indices. */
@@ -240,6 +240,11 @@ int escort_clearDeployed( Pilot *p )
       pe = pilot_get( e->id );
       if (pe==NULL)
          continue;
+
+      /* See if matches slot. */
+      if ((slot>=0) && (slot!=pe->dockslot))
+         continue;
+
       /* Hack so it can dock. */
       memcpy( &pe->solid.pos, &p->solid.pos, sizeof(vec2) );
       memcpy( &pe->solid.vel, &p->solid.vel, sizeof(vec2) );
