@@ -518,7 +518,7 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_nod
       for (size_t i=0; i<cmesh->primitives_count; i++) {
          Mesh *mesh = &node->mesh[i];
          cgltf_primitive *prim = &cmesh->primitives[i];
-         cgltf_accessor *acc = prim->indices;
+         const cgltf_accessor *acc = prim->indices;
          if (acc==NULL) {
             mesh->material = -1;
             continue;
@@ -545,7 +545,7 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_nod
          gl_checkErr();
 
          for (size_t j=0; j<prim->attributes_count; j++) {
-            cgltf_attribute *attr = &prim->attributes[j];
+            const cgltf_attribute *attr = &prim->attributes[j];
             switch (attr->type) {
                case cgltf_attribute_type_position:
                   mesh->vbo_pos = gltf_loadVBO( attr->data, &mesh->radius, &mesh->aabb_min, &mesh->aabb_max, cnode );
