@@ -3302,6 +3302,7 @@ dat/scripts/common/nebu_research.lua
 dat/scripts/common/nebula.lua
 dat/scripts/common/neutral.lua
 dat/scripts/common/npc.lua
+dat/scripts/common/onion.lua
 dat/scripts/common/pirate.lua
 dat/scripts/common/poi.lua
 dat/scripts/common/prefix.lua
@@ -3383,6 +3384,7 @@ dat/scripts/luaspfx/emp.lua
 dat/scripts/luaspfx/emp_blast.lua
 dat/scripts/luaspfx/explosion.lua
 dat/scripts/luaspfx/feather_drive.lua
+dat/scripts/luaspfx/onion.lua
 dat/scripts/luaspfx/pheromones.lua
 dat/scripts/luaspfx/pulse.lua
 dat/scripts/luaspfx/racetrack.lua
