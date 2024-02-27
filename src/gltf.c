@@ -10,6 +10,7 @@
 #include <assert.h>
 #include <math.h>
 #include <libgen.h>
+#include <threads.h>
 
 #include "physfsrwops.h"
 
@@ -205,6 +206,8 @@ static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex, cons
       }
    }
 
+   gl_contextSet();
+
    glGenTextures( 1, &tex );
    glBindTexture( GL_TEXTURE_2D, tex );
 
@@ -321,6 +324,7 @@ static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex, cons
    glBindTexture( GL_TEXTURE_2D, 0 );
 
    gl_checkErr();
+   gl_contextUnset();
 
    otex->tex = tex;
    otex->texcoord = ctex->texcoord;
@@ -468,6 +472,7 @@ static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *aa
    cgltf_accessor_unpack_floats( acc, dat, num );
 
    /* OpenGL magic. */
+   gl_contextSet();
    glGenBuffers( 1, &vid );
    glBindBuffer( GL_ARRAY_BUFFER, vid );
    glBufferData( GL_ARRAY_BUFFER, sizeof(cgltf_float) * num, dat, GL_STATIC_DRAW );
@@ -494,6 +499,7 @@ static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *aa
    }
 
    gl_checkErr();
+   gl_contextUnset();
    free( dat );
    return vid;
 }
@@ -537,6 +543,7 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_nod
             mesh->material = -1;
 
          /* Store indices. */
+         gl_contextSet();
          glGenBuffers( 1, &mesh->vbo_idx );
          glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
          glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(cgltf_uint) * num, idx, GL_STATIC_DRAW );
@@ -544,6 +551,7 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_nod
          glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
          free( idx );
          gl_checkErr();
+         gl_contextUnset();
 
          for (size_t j=0; j<prim->attributes_count; j++) {
             const cgltf_attribute *attr = &prim->attributes[j];
@@ -975,7 +983,7 @@ static cgltf_result gltf_read( const struct cgltf_memory_options* memory_options
 	return cgltf_result_success;
 }
 
-static const GltfObject *cmp_obj;
+static thread_local const GltfObject *cmp_obj;
 static int cmp_node( const void *p1, const void *p2 )
 {
    const Node *n1 = p1;
@@ -1021,8 +1029,6 @@ GltfObject *gltf_loadFromFile( const char *filename )
    memset( &opts, 0, sizeof(opts) );
    opts.file.read = gltf_read;
 
-   gl_contextSet();
-
    /* Initialize object. */
    obj = calloc( sizeof(GltfObject), 1 );
 
@@ -1057,7 +1063,6 @@ GltfObject *gltf_loadFromFile( const char *filename )
    obj->nscenes = data->scenes_count;
    obj->scene_body = 0; /**< Always the default scene. */
    obj->scene_engine = -1;
-   cmp_obj = obj; /* For comparisons. */
    for (size_t s=0; s<obj->nscenes; s++) {
       /* Load nodes. */
       cgltf_scene *cscene = &data->scenes[s]; /* data->scene may be NULL */
@@ -1077,12 +1082,18 @@ GltfObject *gltf_loadFromFile( const char *filename )
          obj->radius = MAX( obj->radius, n->radius );
          vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
          vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
+      }
+   }
 
-         /* Sort meshes based on blending. */
+   /* Sort stuff afterwards so we can lock it. */
+   cmp_obj = obj; /* For comparisons. */
+   for (size_t s=0; s<obj->nscenes; s++) {
+      Scene *scene = &obj->scenes[s];
+      const cgltf_scene *cscene = &data->scenes[s]; /* data->scene may be NULL */
+      for (size_t i=0; i<cscene->nodes_count; i++) {
+         Node *n = &scene->nodes[i];
          qsort( n->mesh, n->nmesh, sizeof(Mesh), cmp_mesh );
       }
-
-      /* Sort scene nodes based on blending. */
       qsort( scene->nodes, scene->nnodes, sizeof(Node), cmp_node );
    }
    cmp_obj = NULL; /* No more comparisons. */
@@ -1091,7 +1102,6 @@ GltfObject *gltf_loadFromFile( const char *filename )
    PHYSFS_unmount( mountpath );
 
    cgltf_free(data);
-   gl_contextUnset();
 
    return obj;
 }
