@@ -10,7 +10,6 @@
 #include <assert.h>
 #include <math.h>
 #include <libgen.h>
-#include <threads.h>
 
 #include "physfsrwops.h"
 
@@ -983,7 +982,8 @@ static cgltf_result gltf_read( const struct cgltf_memory_options* memory_options
 	return cgltf_result_success;
 }
 
-static thread_local const GltfObject *cmp_obj;
+//static thread_local const GltfObject *cmp_obj;
+static _Thread_local const GltfObject *cmp_obj;
 static int cmp_node( const void *p1, const void *p2 )
 {
    const Node *n1 = p1;
