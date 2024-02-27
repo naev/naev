@@ -258,8 +258,12 @@ float clampedDot( vec3 x, vec3 y )
 vec3 get_normal (void)
 {
 #if HAS_NORMAL
-   if (u_has_normal==false)
-      return normalize(normal);
+   if (u_has_normal==false) {
+      if (gl_FrontFacing)
+         return normalize(normal);
+      else
+         return -normalize(normal);
+   }
 
    vec2 coords = (normal_texcoord ? tex_coord1 : tex_coord0);
 
@@ -271,6 +275,8 @@ vec3 get_normal (void)
              (uv_dx.s * uv_dy.t - uv_dy.s * uv_dx.t);
 
    vec3 ng = normalize(normal);
+   if (!gl_FrontFacing)
+      ng *= -1.;
    vec3 t = normalize(t_ - ng * dot(ng, t_));
    vec3 b = cross(ng, t);
 

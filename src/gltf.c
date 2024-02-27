@@ -507,6 +507,7 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_nod
    /* Get transform for node. */
    cgltf_node_transform_local( cnode, node->H.ptr );
    //cgltf_node_transform_world( cnode, node->H.ptr );
+   node->invert = (cnode->scale[0]*cnode->scale[1]*cnode->scale[2] < 0.);
 
    if (cmesh == NULL) {
       node->nmesh = 0;
@@ -727,6 +728,7 @@ static void gltf_renderNodeShadow( const GltfObject *obj, const Node *node, cons
    /* TODO cache when not animated. */
    mat4 HH = node->H;
    mat4_apply( &HH, H );
+   glCullFace( node->invert ? GL_BACK : GL_FRONT );
 
    /* Draw meshes. */
    for (size_t i=0; i<node->nmesh; i++)
@@ -748,6 +750,7 @@ static void gltf_renderNodeMesh( const GltfObject *obj, const Node *node, const 
    /* TODO cache when not animated. */
    mat4 HH = node->H;
    mat4_apply( &HH, H );
+   glCullFace( node->invert ? GL_FRONT : GL_BACK );
 
    /* Draw meshes. */
    for (size_t i=0; i<node->nmesh; i++)
@@ -850,7 +853,6 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H, do
 
    /* Cull faces. */
    glEnable(GL_CULL_FACE);
-   glCullFace(GL_BACK);
    for (size_t i=0; i<obj->scenes[scene].nnodes; i++)
       gltf_renderNodeMesh( obj, &obj->scenes[scene].nodes[i], H );
 
@@ -914,7 +916,6 @@ void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene, const mat4 *
 
    /* Render shadows for each light. */
    glCullFace(GL_FRONT);
-   glEnable(GL_CULL_FACE);
    for (int i=0; i<L->nlights; i++)
       gltf_renderShadow( obj, scene, &Hptr, &L->lights[i], time, i );
 

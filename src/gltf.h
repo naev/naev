@@ -81,6 +81,7 @@ typedef struct Node_ {
    size_t nmesh;     /**< Number of meshes. */
    struct Node_ *children; /**< Children mesh. */
    size_t nchildren; /**< Number of children mesh. */
+   int invert;       /**< Whether or not it's inverted. */
 
    GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
    vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
