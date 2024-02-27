@@ -42,6 +42,7 @@
 #include "debug.h"
 #include "log.h"
 #include "render.h"
+#include "gltf.h"
 
 glInfo gl_screen; /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
@@ -536,6 +537,9 @@ int gl_init (void)
    /* Set colourspace. */
    glEnable( GL_FRAMEBUFFER_SRGB );
 
+   /* Load the gltf framework. */
+   gltf_init();
+
    /* Cosmetic new line. */
    DEBUG_BLANK();
 
@@ -735,6 +739,7 @@ void gl_exit (void)
    }
 
    /* Exit the OpenGL subsystems. */
+   gltf_exit();
    gl_exitRender();
    gl_exitVBO();
    gl_exitTextures();

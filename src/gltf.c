@@ -1021,10 +1021,7 @@ GltfObject *gltf_loadFromFile( const char *filename )
    memset( &opts, 0, sizeof(opts) );
    opts.file.read = gltf_read;
 
-   /* First see if we have to initialize subsystem. */
    gl_contextSet();
-   if (tex_zero.tex==0)
-      gltf_init();
 
    /* Initialize object. */
    obj = calloc( sizeof(GltfObject), 1 );
