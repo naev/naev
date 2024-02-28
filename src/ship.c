@@ -422,7 +422,8 @@ static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
  */
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine )
 {
-   char str[PATH_MAX], *ext, *base, *delim, *base_path;
+   char str[PATH_MAX], *base, *delim, *base_path;
+   const char *ext = ".webp";
 
    /* Get base path. */
    delim = strchr( buf, '_' );
@@ -437,11 +438,14 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    }
 
    /* Determine extension path. */
-   ext = ".webp";
-   snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
-   if (!PHYSFS_exists(str)) {
-      ext = ".png";
+   if (buf[0]=='/') /* absolute path. */
+      snprintf(str, sizeof(str), "%s", buf );
+   else {
       snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
+      if (!PHYSFS_exists(str)) {
+         ext = ".png";
+         snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
+      }
    }
 
    /* Get the comm graphic for future loading. */
@@ -646,7 +650,6 @@ static int ship_parse( Ship *temp, const char *filename )
 {
    xmlNodePtr parent, node;
    xmlDocPtr doc;
-   char str[PATH_MAX];
    int noengine;
    ShipStatList *ll;
    ShipTrailEmitter trail;
@@ -701,69 +704,31 @@ static int ship_parse( Ship *temp, const char *filename )
       }
       if (xml_isNode(node,"GFX")) {
          /* Get base graphic name. */
-         char *buf = xml_get(node);
+         const char *buf = xml_get(node);
+         char *polygon = NULL;
          if (buf==NULL) {
             WARN(_("Ship '%s': GFX element is NULL"), temp->name);
             continue;
          }
 
-         /* Get size. */
+         /* Parse attributes. */
          xmlr_attr_float_def(node, "size", temp->size, 1);
          xmlr_attr_int_def( node, "sx", temp->sx, 8 );
          xmlr_attr_int_def( node, "sy", temp->sy, 8 );
-
+         xmlr_attr_strd( node, "comm", temp->gfx_comm );
          xmlr_attr_int(node, "noengine", noengine );
+         xmlr_attr_strd(node, "polygon", polygon );
 
          /* Load the graphics. */
          ship_loadGFX( temp, buf, temp->sx, temp->sy, !noengine );
 
          /* Load the polygon, run after graphics!. */
-         ship_loadPLG( temp, buf );
+         ship_loadPLG( temp, (polygon!=NULL)?polygon:buf );
+         free(polygon);
 
          continue;
       }
 
-      if (xml_isNode(node,"gfx_space")) {
-         char *plg;
-
-         /* Get path */
-         char *buf = xml_get(node);
-         if (buf==NULL) {
-            WARN(_("Ship '%s': gfx_space element is NULL"), temp->name);
-            continue;
-         }
-         snprintf( str, sizeof(str), GFX_PATH"%s", buf );
-
-         /* Get sprite size. */
-         xmlr_attr_float_def(node, "size", temp->size, 1);
-         xmlr_attr_int_def( node, "sx", temp->sx, 8 );
-         xmlr_attr_int_def( node, "sy", temp->sy, 8 );
-
-         /* Load the graphics. */
-         ship_loadSpaceImage( temp, str, temp->sx, temp->sy );
-
-         /* Get polygon. */
-         xmlr_attr_strd( node, "polygon", plg );
-         if (plg)
-            ship_loadPLG( temp, plg );
-         free( plg );
-
-         continue;
-      }
-
-      if (xml_isNode(node,"gfx_comm")) {
-         /* Get path */
-         char *buf = xml_get(node);
-         if (buf==NULL) {
-            WARN(_("Ship '%s': gfx_comm element is NULL"), temp->name);
-            continue;
-         }
-         snprintf( str, sizeof(str), GFX_PATH"%s", buf );
-         if (temp->gfx_comm != NULL)
-            free(temp->gfx_comm);
-         temp->gfx_comm = strdup(str);
-         continue;
-      }
       if (xml_isNode(node,"gfx_overlays")) {
          xmlNodePtr cur = node->children;
          temp->gfx_overlays = array_create_size( glTexture*, 2 );

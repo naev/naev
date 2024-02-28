@@ -2,8 +2,7 @@
 <ship name="Fort Raglan">
  <points>1000</points>
  <base_type>Fort Raglan</base_type>
- <gfx_space sx="1" sy="1" size="150" polygon="station-battlestation.webp">spob/space/station-battlestation.webp</gfx_space>
- <gfx_comm>spob/exterior/station05.webp</gfx_comm>
+ <GFX sx="1" sy="1" size="150" polygon="station-battlestation.webp" comm="spob/exterior/station05.webp" noengine="1">/gfx/spob/space/station-battlestation.webp</GFX>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>

@@ -3,8 +3,7 @@
  <lua>ships/lua/sirius_projection.lua</lua>
  <points>30</points>
  <base_type>Astral Projection Lesser</base_type>
- <GFX size="80" sx="8" sy="8" noengine="1">apparition_fighter</GFX>
- <gfx_comm>outfit/store/placeholder.webp</gfx_comm>
+ <GFX size="80" sx="8" sy="8" noengine="1" comm="outfit/store/placeholder.webp">apparition_fighter</GFX>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>1</price>
