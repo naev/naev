@@ -41,6 +41,8 @@
 #include "slots.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 #include "toolkit.h"
+#include "equipment.h"
+#include "threadpool.h"
 
 /*
  * Image array names.
@@ -1889,7 +1891,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    ship        = ps->p;
    favourite   = ps->favourite;
    prevship    = eq_wgt.selected;
-   eq_wgt.selected = ps;
+   equipment_slotSelect( &eq_wgt, ps );
 
    /* update text */
    credits2str( buf_price, player_shipPrice(shipname,0), 2 ); /* sell price */
@@ -2602,4 +2604,21 @@ void equipment_slotDeselect( CstSlotWidget *wgt )
    wgt->slot      = -1;
    wgt->mouseover = -1;
    wgt->weapons   = -1;
+}
+
+void equipment_slotSelect( CstSlotWidget *wgt, PlayerShip_t *p )
+{
+   wgt->selected = p;
+
+   /* Threaded loading of graphics for speed. */
+   ThreadQueue *tq = vpool_create();
+   for (int i=0; i<array_size(p->p->outfits); i++) {
+      PilotOutfitSlot *pos = p->p->outfits[i];
+      if (pos->outfit != NULL)
+         vpool_enqueueUnique( tq, (int(*)(void*)) outfit_loadStoreGFX, (Outfit*) pos->outfit );
+   }
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
+   vpool_wait( tq );
+   vpool_cleanup( tq );
+   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
 }

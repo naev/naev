@@ -158,6 +158,27 @@ static int outfit_cmp( const void *p1, const void *p2 )
 }
 
 /**
+ * @brief Loads the store graphics for the outfit.
+ */
+int outfit_loadStoreGFX( Outfit *o )
+{
+   char filename[PATH_MAX];
+
+   if (o->gfx_store!=NULL)
+      return 0;
+
+   /* Check for absolute pathe. */
+   if (o->gfx_store_path[0]=='/')
+      snprintf( filename, sizeof(filename), "%s", o->gfx_store_path );
+   else
+      snprintf( filename, sizeof(filename), OUTFIT_GFX_PATH"store/%s", o->gfx_store_path );
+
+   /* Load the graphic. */
+   o->gfx_store = gl_newImage( filename, OPENGL_TEX_MIPMAPS );
+   return 0;
+}
+
+/**
  * @brief Gets an outfit by name.
  *
  *    @param name Name to match.
@@ -2511,8 +2532,7 @@ static int outfit_parse( Outfit* temp, const char* file )
                continue;
             }
             else if (xml_isNode(cur,"gfx_store")) {
-               temp->gfx_store = xml_parseTexture( cur,
-                     OUTFIT_GFX_PATH"store/%s", 1, 1, OPENGL_TEX_MIPMAPS );
+               temp->gfx_store_path = strdup( xml_get(cur) );
                continue;
             }
             else if (xml_isNode(cur,"gfx_overlays")) {
@@ -2680,7 +2700,7 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
    if (!outfit_isProp(temp,OUTFIT_PROP_TEMPLATE)) {
       MELEMENT(temp->slot.type==OUTFIT_SLOT_NULL,"slot");
       MELEMENT((temp->slot.type!=OUTFIT_SLOT_NA) && (temp->slot.type!=OUTFIT_SLOT_INTRINSIC) && (temp->slot.size==OUTFIT_SLOT_SIZE_NA),"size");
-      MELEMENT(temp->gfx_store==NULL,"gfx_store");
+      MELEMENT(temp->gfx_store_path==NULL,"gfx_store");
       MELEMENT(temp->desc_raw==NULL,"description");
    }
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
@@ -3114,6 +3134,7 @@ void outfit_free (void)
       free(o->name);
       free(o->shortname);
       gl_freeTexture(o->gfx_store);
+      free(o->gfx_store_path);
       for (int j=0; j<array_size(o->gfx_overlays); j++)
          gl_freeTexture(o->gfx_overlays[j]);
       array_free(o->gfx_overlays);

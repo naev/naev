@@ -350,6 +350,7 @@ typedef struct Outfit_ {
    char *desc_extra; /**< Extra description string (if static). */
    int priority;     /**< Sort priority, highest first. */
 
+   char *gfx_store_path;   /**< Store graphic path. */
    glTexture *gfx_store;   /**< Store graphic. */
    glTexture **gfx_overlays;/**< Array (array.h): Store overlay graphics. */
 
@@ -417,6 +418,7 @@ typedef struct Outfit_ {
 /*
  * Access stuff.
  */
+int outfit_loadStoreGFX( Outfit *o );
 const Outfit* outfit_get( const char* name );
 const Outfit* outfit_getW( const char* name );
 const Outfit* outfit_getAll (void);

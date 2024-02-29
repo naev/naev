@@ -41,3 +41,4 @@ void equipment_slotWidget( unsigned int wid,
       double x, double y, double w, double h,
       CstSlotWidget *data );
 void equipment_slotDeselect( CstSlotWidget *wgt );
+void equipment_slotSelect( CstSlotWidget *wgt, PlayerShip_t *p );
