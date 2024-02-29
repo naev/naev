@@ -982,7 +982,7 @@ static cgltf_result gltf_read( const struct cgltf_memory_options* memory_options
 	return cgltf_result_success;
 }
 
-//static thread_local const GltfObject *cmp_obj;
+/* TODO replace _Thread_local and friends with SDL_qsort_r when we switch to SDL3. */
 static _Thread_local const GltfObject *cmp_obj;
 static int cmp_node( const void *p1, const void *p2 )
 {

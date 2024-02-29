@@ -405,7 +405,7 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
  *    @param sx Number of X sprites in image.
  *    @param sy Number of Y sprites in image.
  */
-static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
+static int ship_loadEngineImage( Ship *temp, const char *str, int sx, int sy )
 {
    temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
    return (temp->gfx_engine != NULL);
@@ -921,7 +921,7 @@ static int ship_parse( Ship *temp, const char *filename )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &temp->tags, strdup(tmp) );
                continue;
@@ -1002,7 +1002,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
    if (s->gfx_3d != NULL) {
       double scale = ship_aa_scale*s->size / gl_screen.scale;
-      GltfObject *obj = s->gfx_3d;
+      const GltfObject *obj = s->gfx_3d;
       mat4 projection, tex_mat;
 
       glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
@@ -1159,7 +1159,9 @@ int ships_load (void)
 {
    char **ship_files;
    int nfiles;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
    ThreadQueue *tq = vpool_create();
    ShipThreadData *shipdata = array_create( ShipThreadData );
 
