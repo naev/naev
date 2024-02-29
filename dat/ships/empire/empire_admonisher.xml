@@ -2,7 +2,7 @@
 <ship name="Empire Admonisher">
  <points>60</points>
  <base_type>Admonisher</base_type>
- <GFX size="68">admonisher_empire</GFX>
+ <gfx size="68">admonisher_empire</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Corvette</class>

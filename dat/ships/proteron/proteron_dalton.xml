@@ -2,7 +2,7 @@
 <ship name="Proteron Dalton">
  <points>30</points>
  <base_type>Dalton</base_type>
- <GFX size="40">dalton</GFX>
+ <gfx size="40">dalton</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Interceptor</class>

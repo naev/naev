@@ -3,7 +3,7 @@
  <lua>ships/lua/dvaered.lua</lua>
  <points>50</points>
  <base_type>Vendetta</base_type>
- <GFX size="49">vendetta_dvaered</GFX>
+ <gfx size="49">vendetta_dvaered</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Fighter</class>

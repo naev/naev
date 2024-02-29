@@ -2,7 +2,7 @@
 <ship name="Pirate Ancestor">
  <points>40</points>
  <base_type>Ancestor</base_type>
- <GFX size="65">ancestor_pirate</GFX>
+ <gfx size="65">ancestor_pirate</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Bomber</class>

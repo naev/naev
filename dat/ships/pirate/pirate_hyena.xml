@@ -2,7 +2,7 @@
 <ship name="Pirate Hyena">
  <points>30</points>
  <base_type>Hyena</base_type>
- <GFX size="44">hyena_pirate</GFX>
+ <gfx size="44">hyena_pirate</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Interceptor</class>

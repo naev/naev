@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>40</points>
  <base_type>Marauder</base_type>
- <GFX size="66">marauder</GFX>
+ <gfx size="66">marauder</gfx>
  <rarity>2</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Bomber">Bomber</class>

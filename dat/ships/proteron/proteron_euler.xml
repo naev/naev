@@ -2,7 +2,7 @@
 <ship name="Proteron Euler">
  <points>20</points>
  <base_type>Euler</base_type>
- <GFX size="45">euler</GFX>
+ <gfx size="45">euler</gfx>
  <sound>engine</sound>
  <class>Scout</class>
  <price>200000</price>

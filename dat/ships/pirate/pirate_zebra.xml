@@ -2,7 +2,7 @@
 <ship name="Pirate Zebra">
  <points>160</points>
  <base_type>Zebra</base_type>
- <GFX size="128" sx="12" sy="12">zebra_pirate</GFX>
+ <gfx size="128" sx="12" sy="12">zebra_pirate</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Carrier</class>

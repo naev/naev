@@ -3,7 +3,7 @@
  <lua>ships/lua/sirius_fidelity.lua</lua>
  <points>30</points>
  <base_type>Fidelity</base_type>
- <GFX size="60">fidelity</GFX>
+ <gfx size="60">fidelity</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Interceptor</class>

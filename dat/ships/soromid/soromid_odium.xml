@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>60</points>
  <base_type>Odium</base_type>
- <GFX size="72">odium</GFX>
+ <gfx size="72">odium</gfx>
  <rarity>2</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Corvette">Corvette</class>

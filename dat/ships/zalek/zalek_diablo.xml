@@ -3,7 +3,7 @@
  <lua>ships/lua/zalek.lua</lua>
  <points>200</points>
  <base_type>Diablo</base_type>
- <GFX size="171" sx="12" sy="12">diablo</GFX>
+ <gfx size="171" sx="12" sy="12">diablo</gfx>
  <rarity>2</rarity>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Carrier</class>

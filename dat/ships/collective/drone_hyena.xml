@@ -3,7 +3,7 @@
  <lua>ships/lua/scavenger.lua</lua>
  <points>20</points>
  <base_type>Drone</base_type>
- <GFX size="70">drone_hyena</GFX>
+ <gfx size="70">drone_hyena</gfx>
  <flags>
   <unique/>
   <noplayer/>

@@ -3,7 +3,7 @@
  <lua>ships/lua/zalek.lua</lua>
  <points>200</points>
  <base_type>Mephisto</base_type>
- <GFX size="139" sx="12" sy="12">mephisto</GFX>
+ <gfx size="139" sx="12" sy="12">mephisto</gfx>
  <rarity>2</rarity>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Battleship</class>

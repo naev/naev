@@ -3,7 +3,7 @@
  <lua>ships/lua/thurion.lua</lua>
  <points>90</points>
  <base_type>Apprehension</base_type>
- <GFX size="90" sx="12" sy="12">apprehension</GFX>
+ <gfx size="90" sx="12" sy="12">apprehension</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>

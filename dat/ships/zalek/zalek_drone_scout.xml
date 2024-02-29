@@ -3,7 +3,7 @@
  <lua>ships/lua/zalek.lua</lua>
  <points>24</points>
  <base_type path="Zalek_Scout_Drone">Za'lek Scout Drone</base_type>
- <GFX size="28">zalek_drone_scout</GFX>
+ <gfx size="28">zalek_drone_scout</gfx>
  <sound>engine_zalek</sound>
  <class display="Robotic Scout">Scout</class>
  <price>180000</price>

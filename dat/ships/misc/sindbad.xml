@@ -2,7 +2,7 @@
 <ship name="Sindbad">
  <points>1000</points>
  <base_type>Sindbad</base_type>
- <GFX sx="1" sy="1" size="150" polygon="000.webp" comm="spob/exterior/station00.webp" noengine="1">/gfx/spob/space/000.webp</GFX>
+ <gfx sx="1" sy="1" size="150" polygon="000.webp" comm="spob/exterior/station00.webp" noengine="1">/gfx/spob/space/000.webp</gfx>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>

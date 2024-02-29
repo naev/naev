@@ -2,7 +2,7 @@
 <ship name="Psychic Orb">
  <points>1</points>
  <base_type>Psychic Orb</base_type>
- <GFX size="46">koala</GFX><!-- TODO fix-->
+ <gfx size="46">koala</gfx><!-- TODO fix-->
  <sound>engine</sound>
  <class display="Unknown">Interceptor</class>
  <price>1</price>

@@ -2,7 +2,7 @@
 <ship name="Vigilance">
  <points>90</points>
  <base_type>Vigilance</base_type>
- <GFX size="95" sx="10" sy="10">vigilance</GFX>
+ <gfx size="95" sx="10" sy="10">vigilance</gfx>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2050000</price>

@@ -2,7 +2,7 @@
 <ship name="Pirate Kestrel">
  <points>130</points>
  <base_type>Kestrel</base_type>
- <GFX size="125" sx="10" sy="10">kestrel_pirate</GFX>
+ <gfx size="125" sx="10" sy="10">kestrel_pirate</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Cruiser</class>

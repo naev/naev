@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>240</points>
  <base_type>Vox</base_type>
- <GFX size="171" sx="12" sy="12">vox</GFX>
+ <gfx size="171" sx="12" sy="12">vox</gfx>
  <rarity>2</rarity>
  <sound pitch="0.5">engine_soromid</sound>
  <class display="Bio-Battleship">Battleship</class>

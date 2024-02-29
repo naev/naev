@@ -2,7 +2,7 @@
 <ship name="Proteron Archimedes">
  <points>200</points>
  <base_type>Archimedes</base_type>
- <GFX size="122" sx="12" sy="12">archimedes</GFX>
+ <gfx size="122" sx="12" sy="12">archimedes</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Battleship</class>

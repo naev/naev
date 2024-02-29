@@ -3,7 +3,7 @@
  <lua>ships/lua/sirius_providence.lua</lua>
  <points>120</points>
  <base_type>Providence</base_type>
- <GFX size="126" sx="12" sy="12">providence</GFX>
+ <gfx size="126" sx="12" sy="12">providence</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Bulk Freighter</class>

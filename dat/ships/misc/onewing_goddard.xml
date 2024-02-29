@@ -2,7 +2,7 @@
 <ship name="One-Wing Goddard">
  <points>1000</points>
  <base_type>One-Wing Goddard</base_type>
- <GFX sx="1" sy="1" size="110" polygon="derelict_goddard.webp" comm="spob/exterior/onewing_goddard.webp" noengine="1">/gfx/spob/space/derelict_goddard.webp</GFX>
+ <gfx sx="1" sy="1" size="110" polygon="derelict_goddard.webp" comm="spob/exterior/onewing_goddard.webp" noengine="1">/gfx/spob/space/derelict_goddard.webp</gfx>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>

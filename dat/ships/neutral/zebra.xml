@@ -2,7 +2,7 @@
 <ship name="Zebra">
  <points>110</points>
  <base_type>Zebra</base_type>
- <GFX size="120" sx="12" sy="12">zebra</GFX>
+ <gfx size="120" sx="12" sy="12">zebra</gfx>
  <sound>engine</sound>
  <class>Bulk Freighter</class>
  <price>3500000</price>

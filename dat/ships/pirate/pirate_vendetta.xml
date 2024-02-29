@@ -2,7 +2,7 @@
 <ship name="Pirate Vendetta">
  <points>50</points>
  <base_type>Vendetta</base_type>
- <GFX size="49">vendetta_pirate</GFX>
+ <gfx size="49">vendetta_pirate</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Fighter</class>

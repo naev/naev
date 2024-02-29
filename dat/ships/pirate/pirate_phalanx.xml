@@ -2,7 +2,7 @@
 <ship name="Pirate Phalanx">
  <points>60</points>
  <base_type>Phalanx</base_type>
- <GFX size="95" sx="10" sy="10">phalanx_pirate</GFX>
+ <gfx size="95" sx="10" sy="10">phalanx_pirate</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Corvette</class>

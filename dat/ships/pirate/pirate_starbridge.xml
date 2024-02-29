@@ -2,7 +2,7 @@
 <ship name="Pirate Starbridge">
  <points>80</points>
  <base_type>Starbridge</base_type>
- <GFX sx="10" sy="10" size="80">starbridge_pirate</GFX>
+ <gfx sx="10" sy="10" size="80">starbridge_pirate</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>

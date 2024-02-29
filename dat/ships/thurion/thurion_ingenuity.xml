@@ -3,7 +3,7 @@
  <lua>ships/lua/thurion.lua</lua>
  <points>40</points>
  <base_type>Ingenuity</base_type>
- <GFX size="56">ingenuity</GFX>
+ <gfx size="56">ingenuity</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Fighter</class>

@@ -2,7 +2,7 @@
 <ship name="Proteron Gauss">
  <points>90</points>
  <base_type>Gauss</base_type>
- <GFX size="100" sx="10" sy="10">gauss</GFX>
+ <gfx size="100" sx="10" sy="10">gauss</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>

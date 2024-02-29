@@ -3,7 +3,7 @@
  <lua>ships/lua/thurion.lua</lua>
  <points>80</points>
  <base_type>Taciturnity</base_type>
- <GFX size="80" sx="10" sy="10">taciturnity</GFX>
+ <gfx size="80" sx="10" sy="10">taciturnity</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <trail_generator x="-20" y="0" h="0" />

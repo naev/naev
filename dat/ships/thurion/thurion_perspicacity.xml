@@ -3,7 +3,7 @@
  <lua>ships/lua/thurion.lua</lua>
  <points>30</points>
  <base_type>Perspicacity</base_type>
- <GFX size="50">perspicacity</GFX>
+ <gfx size="50">perspicacity</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Interceptor</class>

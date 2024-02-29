@@ -3,7 +3,7 @@
  <lua>ships/lua/thurion.lua</lua>
  <points>200</points>
  <base_type>Certitude</base_type>
- <GFX size="120" sx="12" sy="12">certitude</GFX>
+ <gfx size="120" sx="12" sy="12">certitude</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Battleship</class>

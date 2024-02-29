@@ -2,7 +2,7 @@
 <ship name="Empire Shark">
  <points>30</points>
  <base_type>Shark</base_type>
- <GFX size="54">shark_empire</GFX>
+ <gfx size="54">shark_empire</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Interceptor</class>
