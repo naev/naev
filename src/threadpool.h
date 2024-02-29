@@ -27,6 +27,7 @@ ThreadQueue* vpool_create (void);
  * another job to be done as this could lead to a deadlock. Also do not enqueue
  * jobs from enqueued threads. */
 void vpool_enqueue( ThreadQueue* queue, int (*function)(void *), void *data );
+void vpool_enqueueUnique( ThreadQueue *queue, int (*function)(void *), void *data );
 
 /* Run every job in the vpool queue and block until every job in the queue is
  * done. */

@@ -523,9 +523,6 @@ ThreadQueue* vpool_create (void)
  *
  * @warning Do NOT enqueue jobs that wait for another job to be done, as this
  *          could lead to a deadlock.
- *
- * @warning Do NOT enqueue jobs that wait for a vpool, as this could lead to a
- *          deadlock.
  */
 void vpool_enqueue( ThreadQueue *queue, int (*function)(void *), void *data )
 {
@@ -540,6 +537,24 @@ void vpool_enqueue( ThreadQueue *queue, int (*function)(void *), void *data )
    arg->node.function = function;
    SDL_SemPost( queue->semaphore );
    arg->wrapper.function = vpool_worker;
+}
+
+/**
+ * @brief Same as vpool_enqueue, but only adds to the queue if it is unique, i.e., the set of (function,data) is not already in the queu.
+ */
+void vpool_enqueueUnique( ThreadQueue *queue, int (*function)(void *), void *data )
+{
+   int found = 0;
+   for (int i=0; i<array_size(queue->arg); i++) {
+      vpoolThreadData *arg = &queue->arg[i];
+      if (arg->node.data==data && arg->node.function==function) {
+         found = 1;
+         break;
+      }
+   }
+   if (found)
+      return;
+   return vpool_enqueue( queue, function, data );
 }
 
 /**

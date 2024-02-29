@@ -157,6 +157,7 @@ void shipyard_open( unsigned int wid )
       /* Threaded loading of graphics for speed. */
       ThreadQueue *tq = vpool_create();
       for (int i=0; i<nships; i++)
+         /* We assume no duplicate ships being sold. */
          vpool_enqueue( tq, (int(*)(void*)) ship_loadGFX, shipyard_list[i] );
       SDL_GL_MakeCurrent( gl_screen.window, NULL );
       vpool_wait( tq );

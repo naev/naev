@@ -3904,10 +3904,10 @@ static Spob* player_parse( xmlNodePtr parent )
       return NULL;
    }
 
-/* Threaded loading of graphics for speed. */
+   /* Threaded loading of graphics for speed. */
    ThreadQueue *tq = vpool_create();
    for (int i=0; i<array_size(player_stack); i++)
-      vpool_enqueue( tq, (int(*)(void*)) ship_loadGFX, (Ship*) player_stack[i].p->ship );
+      vpool_enqueueUnique( tq, (int(*)(void*)) ship_loadGFX, (Ship*) player_stack[i].p->ship );
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
    vpool_wait( tq );
    vpool_cleanup( tq );
