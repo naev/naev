@@ -31,6 +31,7 @@
 #include "slots.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
+#include "threadpool.h"
 
 #define  SHIP_GFX_W     256
 #define  SHIP_GFX_H     256
@@ -153,6 +154,16 @@ void shipyard_open( unsigned int wid )
       nships    = 1;
    }
    else {
+      /* Threaded loading of graphics for speed. */
+      ThreadQueue *tq = vpool_create();
+      for (int i=0; i<nships; i++)
+         vpool_enqueue( tq, (int(*)(void*)) ship_loadGFX, shipyard_list[i] );
+      SDL_GL_MakeCurrent( gl_screen.window, NULL );
+      vpool_wait( tq );
+      vpool_cleanup( tq );
+      SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+
+      /* Properly create the array. */
       for (int i=0; i<nships; i++) {
          cships[i].caption = strdup( _(shipyard_list[i]->name) );
          cships[i].image = gl_dupTexture( ship_gfxStore(shipyard_list[i]) );
