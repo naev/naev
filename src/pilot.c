@@ -3116,6 +3116,9 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    PilotOutfitSlot **pilot_list_ptr[] = { &pilot->outfit_structure, &pilot->outfit_utility, &pilot->outfit_weapon };
    ShipOutfitSlot *ship_list[] = { ship->outfit_structure, ship->outfit_utility, ship->outfit_weapon };
 
+   /* Load ship graphics. */
+   ship_loadGFX( (Ship*) ship ); /* TODO no casting. */
+
    /* Clear memory. */
    memset( pilot, 0, sizeof(Pilot) );
 

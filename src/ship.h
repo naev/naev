@@ -131,6 +131,9 @@ typedef struct Ship_ {
 
    /* Graphics */
    double size;            /**< Size of the ship. */
+   char *gfx_path;         /**< Path to load GFX from (lazy loading). */
+   char *polygon_path;     /**< Path to load polygon. */
+   int noengine;           /**< Don't try to load engine graphics. */
    GltfObject *gfx_3d;     /**< 3d model of the ship */
    glTexture *gfx_space;   /**< Space sprite sheet. */
    glTexture *gfx_engine;  /**< Space engine glow sprite sheet. */
@@ -202,6 +205,7 @@ int ship_size( const Ship *s );
 /*
  * Misc.
  */
+int ship_loadGFX( Ship *s );
 int ship_compareTech( const void *arg1, const void *arg2 );
 void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, double dir, double engine_glow, double tilt, int sx, int sy, const glColour *c );
 double ship_maxSize (void);

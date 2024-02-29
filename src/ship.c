@@ -71,7 +71,6 @@ static double ship_aa_scale = 2.;
  * Prototypes
  */
 static int ship_generateStoreGFX( Ship *temp );
-static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
 static int ship_loadPLG( Ship *temp, const char *buf );
 static int ship_parse( Ship *temp, const char *filename );
 static int ship_parseThread( void *ptr );
@@ -412,18 +411,22 @@ static int ship_loadEngineImage( Ship *temp, const char *str, int sx, int sy )
 }
 
 /**
- * @brief Loads the graphics for a ship.
+ * @brief Loads the graphics for a ship if necessary.
  *
  *    @param temp Ship to load into.
- *    @param buf Name of the texture to work with.
- *    @param sx Number of X sprites in image.
- *    @param sy Number of Y sprites in image.
- *    @param engine Whether there is also an engine image to load.
  */
-static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine )
+int ship_loadGFX( Ship *temp )
 {
    char str[PATH_MAX], *base, *delim, *base_path;
    const char *ext = ".webp";
+   const char *buf = temp->gfx_path;
+   int sx = temp->sx;
+   int sy = temp->sy;
+   int engine = !temp->noengine;
+
+   /* If already loaded, just ignore. */
+   if ((temp->gfx_3d!=NULL) || (temp->gfx_space!=NULL))
+      return 0;
 
    /* Get base path. */
    delim = strchr( buf, '_' );
@@ -452,6 +455,9 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    if (temp->gfx_comm == NULL)
       SDL_asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM"%s", base, buf, ext );
 
+   /* Load the polygon. */
+   ship_loadPLG( temp, (temp->polygon_path!=NULL)?temp->polygon_path:temp->gfx_path );
+
    /* If we have 3D and polygons, we'll ignore the 2D stuff. */
    if ((temp->gfx_3d != NULL) && (array_size(temp->polygon.views)>0)) {
       free( base );
@@ -469,6 +475,11 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
          WARN(_("Ship '%s' does not have an engine sprite (%s)."), temp->name, str );
    }
    free( base );
+
+#if DEBUGGING
+   if ((temp->gfx_space != NULL) && (round(temp->size) != round(temp->gfx_space->sw)))
+      WARN(("Mismatch between 'size' and 'gfx_space' sprite size for ship '%s'! 'size' should be %.0f!"), temp->name, temp->gfx_space->sw);
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -489,6 +500,10 @@ static int ship_generateStoreGFX( Ship *temp )
    double r, g, b, it;
    GLsizei size = ceil(temp->size / gl_screen.scale);
 
+   /* Load base gfx first. */
+   ship_loadGFX( temp );
+
+   /* Load store graphics. */
    snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
    gl_contextSet();
    gltf_lightGet( &r, &g, &b, &it );
@@ -650,7 +665,6 @@ static int ship_parse( Ship *temp, const char *filename )
 {
    xmlNodePtr parent, node;
    xmlDocPtr doc;
-   int noengine;
    ShipStatList *ll;
    ShipTrailEmitter trail;
 
@@ -704,9 +718,8 @@ static int ship_parse( Ship *temp, const char *filename )
       }
       if (xml_isNode(node,"GFX")) {
          /* Get base graphic name. */
-         const char *buf = xml_get(node);
-         char *polygon = NULL;
-         if (buf==NULL) {
+         temp->gfx_path = strdup( xml_get(node) );
+         if (temp->gfx_path==NULL) {
             WARN(_("Ship '%s': GFX element is NULL"), temp->name);
             continue;
          }
@@ -716,15 +729,10 @@ static int ship_parse( Ship *temp, const char *filename )
          xmlr_attr_int_def( node, "sx", temp->sx, 8 );
          xmlr_attr_int_def( node, "sy", temp->sy, 8 );
          xmlr_attr_strd( node, "comm", temp->gfx_comm );
-         xmlr_attr_int(node, "noengine", noengine );
-         xmlr_attr_strd(node, "polygon", polygon );
+         xmlr_attr_int(node, "noengine", temp->noengine );
+         xmlr_attr_strd(node, "polygon", temp->polygon_path );
 
-         /* Load the graphics. */
-         ship_loadGFX( temp, buf, temp->sx, temp->sy, !noengine );
-
-         /* Load the polygon, run after graphics!. */
-         ship_loadPLG( temp, (polygon!=NULL)?polygon:buf );
-         free(polygon);
+         /* Graphics are now lazy loaded. */
 
          continue;
       }
@@ -946,20 +954,11 @@ static int ship_parse( Ship *temp, const char *filename )
    if (temp->license && !outfit_licenseExists(temp->license))
       WARN(_("Ship '%s' has inexistent license requirement '%s'!"), temp->name, temp->license);
 
-   /* Check polygon. */
-   if (array_size(temp->polygon.views) <= 0)
-      WARN(_("Ship '%s' has no collision polygon!"), temp->name );
-
-#if DEBUGGING
-   if ((temp->gfx_space != NULL) && (round(temp->size) != round(temp->gfx_space->sw)))
-      WARN(("Mismatch between 'size' and 'gfx_space' sprite size for ship '%s'! 'size' should be %.0f!"), temp->name, temp->gfx_space->sw);
-#endif /* DEBUGGING */
-
    /* Ship XML validator */
 #define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->base_type==NULL,"base_type");
-   MELEMENT(((temp->gfx_space==NULL) || (temp->gfx_comm==NULL)) && (temp->gfx_3d==NULL),"GFX");
+   MELEMENT((temp->gfx_path==NULL),"GFX");
    MELEMENT(temp->size<=0., "GFX.size" );
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->points==0,"points");
@@ -1333,6 +1332,8 @@ void ships_free (void)
       for (int j=0; j<array_size(s->gfx_overlays); j++)
          gl_freeTexture(s->gfx_overlays[j]);
       array_free(s->gfx_overlays);
+      free(s->gfx_path);
+      free(s->polygon_path);
 
       /* Free collision polygons. */
       poly_free( &s->polygon );
