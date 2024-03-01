@@ -638,7 +638,6 @@ void mapedit_loadMapMenu_open (void)
 {
    unsigned int wid;
    char **names;
-   mapOutfitsList_t *ns;
    int n;
 
    /* window */
@@ -657,7 +656,7 @@ void mapedit_loadMapMenu_open (void)
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
       for (int i=0; i<n; i++) {
-         ns       = &mapList[i];
+         mapOutfitsList_t *ns = &mapList[i];
          names[i] = strdup(ns->mapName);
       }
    }
