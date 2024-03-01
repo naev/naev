@@ -5,15 +5,52 @@ local utf8 = require "utf8"
 
 local strmess = {}
 
-local function _split( inputstr, sep )
-   if sep == nil then
-      sep = " "
+local function _split( str, sep, n )
+   local t = {}
+   --local i = {}
+   local o = {}
+   local s, e
+   local position = 1
+   n = n or #sep
+   s, e = utf8.find(str, sep, position)
+   while s do
+      --i[#i+1] = #t+1
+      local si = utf8.sub(str, position, s-1)
+      if #si > 0 then
+         o[#t+1] = true
+         t[#t+1] = si
+      end
+      t[#t+1] = utf8.sub(str, s, s+n-1 )
+      position = e + 1
+      s, e = utf8.find(str, sep, position)
    end
-   local t={}
-   for str in utf8.gmatch(inputstr, "([^"..sep.."]+)") do
-      table.insert(t, str)
+   s = utf8.sub(str, position)
+   if #s>0 then
+      --i[#i+1] = #t+1
+      o[#t+1] = true
+      t[#t+1] = s
    end
-   return t
+   return t, o
+end
+
+local function _wordsplit( str )
+   local t = {}
+   local x = {}
+   local ls, lo = _split(str,"#%w",2)
+   for i,is in ipairs(ls) do
+      if lo[i] then
+         local ss, so = _split(is," ")
+         for j,js in ipairs(ss) do
+            if so[j] then
+               x[#x+1] = #t+1
+            end
+            t[#t+1] = js
+         end
+      else
+         t[#t+1] = is
+      end
+   end
+   return t, x
 end
 
 local function _uniquechar( str )
@@ -39,10 +76,11 @@ function strmess.messup( str, strength )
    local symbols = _uniquechar( str )
 
    -- Split into words and try to mess them up
-   local t = _split(str)
-   for k,s in ipairs(t) do
+   local t,idx = _wordsplit(str)
+   for k,v in ipairs(idx) do
+      local s = t[v]
       local l = utf8.len(s)
-      if l > 1 then
+      if l > 1 and not utf8.match(s,"#%w") then
          for i=1,l do
             if rnd.rnd() < strength then
                local r = rnd.rnd()
@@ -82,9 +120,9 @@ function strmess.messup( str, strength )
             end
          end
       end
-      t[k] = s
+      t[v] = s
    end
-   return table.concat(t," ")
+   return table.concat(t,"")
 end
 
 --[[-
