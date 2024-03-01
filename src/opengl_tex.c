@@ -328,11 +328,6 @@ int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height )
 
 glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name )
 {
-   /* TODO something smarter here. */
-   SDL_mutexP( tex_lock );
-   SDL_mutexP( gl_lock );
-   tex_ctxSet();
-
    /* Set up the texture defaults */
    glTexture *texture = calloc( 1, sizeof(glTexture) );
 
@@ -342,6 +337,8 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
    texture->sy    = (double) sy;
 
    /* Set up texture. */
+   SDL_mutexP( gl_lock );
+   tex_ctxSet();
    texture->texture = gl_texParameters( 0 );
 
    /* Copy over. */
@@ -350,6 +347,8 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
 
    /* Check errors. */
    gl_checkErr();
+   tex_ctxUnset();
+   SDL_mutexV( gl_lock );
 
    /* Set up values. */
    texture->sw    = texture->w / texture->sx;
@@ -360,12 +359,10 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
    /* Add to list. */
    if (name != NULL) {
       texture->name = strdup(name);
+      SDL_mutexP( tex_lock );
       gl_texAdd( texture, sx, sy, OPENGL_TEX_SKIPCACHE );
+      SDL_mutexV( tex_lock );
    }
-
-   tex_ctxUnset();
-   SDL_mutexV( gl_lock );
-   SDL_mutexV( tex_lock );
 
    return texture;
 }
@@ -870,7 +867,6 @@ glTexture* gl_dupTexture( const glTexture *texture )
 USE_RESULT glTexture* gl_rawTexture( const char *name, GLuint texid, double w, double h )
 {
    glTexture *texture;
-   SDL_mutexP( gl_lock );
 
    /* set up the texture defaults */
    texture = calloc( 1, sizeof(glTexture) );
@@ -890,12 +886,13 @@ USE_RESULT glTexture* gl_rawTexture( const char *name, GLuint texid, double w, d
 
    if (name != NULL) {
       texture->name = strdup(name);
+      SDL_mutexP( tex_lock );
       gl_texAdd( texture, 1, 1, OPENGL_TEX_SKIPCACHE );
+      SDL_mutexV( tex_lock );
    }
    else
       texture->name = NULL;
 
-   SDL_mutexV( gl_lock );
    return texture;
 }
 
