@@ -41,9 +41,11 @@ typedef struct glTexList_ {
     * avoid this increase of memory (without sharing other parameters). */
    int sx; /**< X sprites */
    int sy; /**< Y sprites */
+   unsigned int flags; /**< Flags being used. */
 } glTexList;
 static glTexList* texture_list = NULL; /**< Texture list. */
 static SDL_threadID tex_mainthread;
+static SDL_mutex* gl_lock = NULL;
 static SDL_mutex* tex_lock = NULL;
 
 /*
@@ -52,16 +54,17 @@ static SDL_mutex* tex_lock = NULL;
 /* misc */
 static uint8_t SDL_GetAlpha( SDL_Surface* s, int x, int y );
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
-static uint8_t* SDL_MapAlpha( SDL_Surface* s, int w, int h, int tight );
+static USE_RESULT uint8_t* SDL_MapAlpha( SDL_Surface* s, int tight );
 static size_t gl_transSize( const int w, const int h );
 /* glTexture */
-static GLuint gl_texParameters( unsigned int flags );
-static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur, double *vmax );
-static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
-static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags );
+static USE_RESULT GLuint gl_texParameters( unsigned int flags );
+static USE_RESULT GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur, double *vmax );
+static int gl_loadNewImage( glTexture *tex, const char* path, int sx, int sy, unsigned int flags );
+static int gl_loadNewImageRWops( glTexture *tex, const char *path, SDL_RWops *rw, int sx, int sy, unsigned int flags );
 /* List. */
-static glTexture* gl_texExists( const char* path, int sx, int sy );
-static int gl_texAdd( glTexture *tex, int sx, int sy );
+static glTexture* gl_texExistsOrCreate( const char* path, unsigned int flags, int sx, int sy, int *created );
+static glTexture* gl_texCreate( const char *path, int sx, int sy, unsigned int flags );
+static int gl_texAdd( glTexture *tex, int sx, int sy, unsigned int flags );
 static int tex_cmp( const void *p1, const void *p2 );
 
 static void tex_ctxSet (void)
@@ -78,27 +81,31 @@ static void tex_ctxUnset (void)
 
 void gl_contextSet (void)
 {
-   SDL_mutexP( tex_lock );
+   SDL_mutexP( gl_lock );
    tex_ctxSet();
 }
 
 void gl_contextUnset (void)
 {
    tex_ctxUnset();
-   SDL_mutexV( tex_lock );
+   SDL_mutexV( gl_lock );
 }
 
 static int tex_cmp( const void *p1, const void *p2 )
 {
    const glTexList *t1 = (const glTexList*) p1;
    const glTexList *t2 = (const glTexList*) p2;
+   const unsigned int testflags = OPENGL_TEX_SDF | OPENGL_TEX_VFLIP | OPENGL_TEX_MAPTRANS;
    int ret = strcmp( t1->path, t2->path );
    if (ret != 0)
       return ret;
    ret = t1->sx - t2->sx;
    if (ret != 0)
       return ret;
-   return t1->sy - t2->sy;
+   ret = t1->sy - t2->sy;
+   if (ret != 0)
+      return ret;
+   return (t1->flags & testflags) - (t2->flags & testflags);
 }
 
 /**
@@ -151,20 +158,14 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
  *  perfect collision routines.
  *
  *    @param s Surface to map it's transparency.
- *    @param w Width to map.
- *    @param h Height to map.
  *    @param tight Whether or not to store transparency per bit or
  *    @return 0 on success.
  */
-static uint8_t* SDL_MapAlpha( SDL_Surface* s, int w, int h, int tight )
+static uint8_t* SDL_MapAlpha( SDL_Surface* s, int tight )
 {
    uint8_t *t;
-
-   /* Get limit.s */
-   if (w < 0)
-      w = s->w;
-   if (h < 0)
-      h = s->h;
+   int w = s->w;
+   int h = s->h;
 
    if (tight) {
       /* alloc memory for just enough bits to hold all the data we need */
@@ -253,7 +254,7 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
 {
    GLenum status;
 
-   SDL_mutexP( tex_lock );
+   SDL_mutexP( gl_lock );
    //tex_ctxSet();
 
    /* Create the render buffer. */
@@ -282,7 +283,7 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
 
    //tex_ctxUnset();
-   SDL_mutexV( tex_lock );
+   SDL_mutexV( gl_lock );
 
    gl_checkErr();
 
@@ -296,7 +297,7 @@ int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height )
 {
    GLenum status;
 
-   SDL_mutexP( tex_lock );
+   SDL_mutexP( gl_lock );
    //tex_ctxSet();
 
    /* Create the render buffer. */
@@ -318,7 +319,7 @@ int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height )
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
 
    //tex_ctxUnset();
-   SDL_mutexV( tex_lock );
+   SDL_mutexV( gl_lock );
 
    gl_checkErr();
 
@@ -327,7 +328,9 @@ int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height )
 
 glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name )
 {
+   /* TODO something smarter here. */
    SDL_mutexP( tex_lock );
+   SDL_mutexP( gl_lock );
    tex_ctxSet();
 
    /* Set up the texture defaults */
@@ -357,10 +360,11 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
    /* Add to list. */
    if (name != NULL) {
       texture->name = strdup(name);
-      gl_texAdd( texture, sx, sy );
+      gl_texAdd( texture, sx, sy, OPENGL_TEX_SKIPCACHE );
    }
 
    tex_ctxUnset();
+   SDL_mutexV( gl_lock );
    SDL_mutexV( tex_lock );
 
    return texture;
@@ -382,8 +386,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    SDL_Surface *rgba;
    int has_alpha = surface->format->Amask;
 
-   SDL_mutexP( tex_lock );
-   tex_ctxSet();
+   gl_contextSet();
 
    /* Get texture. */
    texture = gl_texParameters( flags );
@@ -398,7 +401,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    SDL_LockSurface(rgba);
    if (flags & OPENGL_TEX_SDF) {
       float border[] = { 0., 0., 0., 0. };
-      uint8_t *trans = SDL_MapAlpha( rgba, rgba->w, rgba->h, 0 );
+      uint8_t *trans = SDL_MapAlpha( rgba, 0 );
       GLfloat *dataf = make_distance_mapbf( trans, rgba->w, rgba->h, vmax );
       free( trans );
       glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
@@ -441,63 +444,216 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
       SDL_FreeSurface( surface );
    gl_checkErr();
 
-   tex_ctxUnset();
-   SDL_mutexV( tex_lock );
+   gl_contextUnset();
 
    return texture;
 }
 
 /**
- * @brief Wrapper for gl_loadImagePad that includes transparency mapping.
+ * @brief Creates a new texture.
+ */
+static glTexture* gl_texCreate( const char *path, int sx, int sy, unsigned int flags )
+{
+   glTexture *tex = calloc( sizeof(glTexture), 1 );
+   tex->name = strdup(path);
+   tex->sx = (double) sx;
+   tex->sy = (double) sy;
+   tex->flags = flags;
+   gl_texAdd( tex, sx, sy, flags );
+   return tex;
+}
+
+/**
+ * @brief Check to see if a texture matching a path already exists.
  *
- *    @param name Name to load with.
- *    @param surface Surface to load.
- *    @param rw RWops containing data to hash.
- *    @param flags Flags to use.
- *    @param w Non-padded width.
- *    @param h Non-padded height.
+ * Note this increments the used counter if it exists.
+ *
+ *    @param path Path to the texture.
+ *    @param flags Flags used by the new texture.
  *    @param sx X sprites.
  *    @param sy Y sprites.
- *    @param freesur Whether or not to free the surface.
- *    @return The glTexture for surface.
+ *    @param[out] created Whether or not the texture was created.
+ *    @return The texture
  */
-glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
-      unsigned int flags, int w, int h, int sx, int sy, int freesur )
+static glTexture* gl_texExistsOrCreate( const char* path, unsigned int flags, int sx, int sy, int *created )
 {
-   glTexture *texture = NULL;
-   size_t filesize, cachesize;
-   uint8_t *trans;
-   char *cachefile;
-   char digest[33];
-
+   /* Null does never exist. */
+   if ((path==NULL) || (flags & OPENGL_TEX_SKIPCACHE)) {
+      *created = 1;
+      return gl_texCreate( path, sx, sy, flags );
+   }
    SDL_mutexP( tex_lock );
 
-   if ((name != NULL) && !(flags & OPENGL_TEX_SKIPCACHE)) {
-      texture = gl_texExists( name, sx, sy );
-      if ((texture != NULL) && (texture->trans != NULL)) {
-         if (freesur)
-            SDL_FreeSurface( surface );
-         SDL_mutexV( tex_lock );
-         return texture;
-      }
+   /* Check to see if it already exists */
+   if (texture_list == NULL) {
+      glTexture *tex = gl_texCreate( path, sx, sy, flags );
+      *created = 1;
+      SDL_mutexV( tex_lock );
+      return tex;
    }
 
-   if (flags & OPENGL_TEX_MAPTRANS)
-      flags ^= OPENGL_TEX_MAPTRANS;
+   /* Do some fancy binary search. */
+   const glTexList q = { .path=path, .sx=sx, .sy=sy, .flags=flags };
+   glTexList *t = bsearch( &q, texture_list, array_size(texture_list), sizeof(glTexList), tex_cmp );
+   if (t==NULL) {
+      glTexture *tex = gl_texCreate( path, sx, sy, flags );
+      *created = 1;
+      SDL_mutexV( tex_lock );
+      return tex;
+   }
 
-   /* Appropriate size for the transparency map, see SDL_MapAlpha */
-   cachesize = gl_transSize(w, h);
+   /* Use new texture. */
+   t->used++;
+   *created = 0;
+   SDL_mutexV( tex_lock );
+   return t->tex;
+}
 
-   cachefile = NULL;
-   trans     = NULL;
+/**
+ * @brief Adds a texture to the list under the name of path.
+ */
+static int gl_texAdd( glTexture *tex, int sx, int sy, unsigned int flags )
+{
+   glTexList *new;
 
-   if (rw != NULL) {
-      size_t pngsize;
+   /* Get the new list element. */
+   if (texture_list == NULL)
+      texture_list = array_create( glTexList );
+
+   /* Create the new node */
+   new = &array_grow( &texture_list );
+   new->used = 1;
+   new->tex  = tex;
+   new->sx   = sx;
+   new->sy   = sy;
+   new->flags = flags;
+   new->path = tex->name;
+
+   /* Sort the list. */
+   qsort( texture_list, array_size(texture_list), sizeof(glTexList), tex_cmp );
+   return 0;
+}
+
+/**
+ * @brief Loads an image as a texture.
+ *
+ * May not necessarily load the image but use one if it's already open.
+ *
+ *    @param path Image to load.
+ *    @param flags Flags to control image parameters.
+ *    @return Texture loaded from image.
+ */
+glTexture* gl_newImage( const char* path, const unsigned int flags )
+{
+   int created;
+   glTexture *t = gl_texExistsOrCreate( path, flags, 1, 1, &created );
+   if (!created)
+      return t;
+
+   /* Load the image */
+   gl_loadNewImage( t, path, 1, 1, flags );
+   return t;
+}
+
+/**
+ * @brief Loads an image as a texture.
+ *
+ * May not necessarily load the image but use one if it's already open.
+ *
+ * @note Does not close the SDL_RWops file.
+ *
+ *    @param path Path name used for checking cache and error reporting.
+ *    @param rw SDL_RWops structure to load from.
+ *    @param flags Flags to control image parameters.
+ *    @return Texture loaded from image.
+ */
+glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int flags )
+{
+   int created;
+   glTexture *t = gl_texExistsOrCreate( path, flags, 1, 1, &created );
+   if (!created)
+      return t;
+
+   /* Load the image */
+   gl_loadNewImageRWops( t, path, rw, 1, 1, flags );
+   return t;
+}
+
+/**
+ * @brief Only loads the image, does not add to stack unlike gl_newImage.
+ *
+ *    @param tex Texture to load to.
+ *    @param path Image to load.
+ *    @param sx X sprites to load.
+ *    @param sy Y sprites to load.
+ *    @param flags Flags to control image parameters.
+ *    @return 0 on success.
+ */
+static int gl_loadNewImage( glTexture *tex, const char* path, int sx, int sy, unsigned int flags )
+{
+   SDL_RWops *rw;
+
+   if (path==NULL) {
+      WARN(_("Trying to load image from NULL path."));
+      return -1;
+   }
+
+   /* Load from packfile */
+   rw = PHYSFSRWOPS_openRead( path );
+   if (rw == NULL) {
+      WARN(_("Failed to load surface '%s' from ndata."), path);
+      return -1;
+   }
+
+   gl_loadNewImageRWops( tex, path, rw, sx, sy, flags );
+   SDL_RWclose( rw );
+   return 0;
+}
+
+/**
+ * @brief Only loads the image, does not add to stack unlike gl_newImage.
+ *
+ *    @param tex Texture to load to.
+ *    @param path Image to load.
+ *    @param sx X sprites to load.
+ *    @param sy Y sprites to load.
+ *    @param rw SDL_Rwops structure to use to load.
+ *    @param flags Flags to control image parameters.
+ *    @return 0 on success.
+ */
+static int gl_loadNewImageRWops( glTexture *tex, const char *path, SDL_RWops *rw, int sx, int sy, unsigned int flags )
+{
+   SDL_Surface *surface;
+
+   /* Placeholder for warnings. */
+   if (path==NULL) {
+      path = _("unknown");
+      flags |= OPENGL_TEX_SKIPCACHE; /* Don't want caching here. */
+   }
+
+   surface = IMG_Load_RW( rw, 0 );
+
+   flags  |= OPENGL_TEX_VFLIP;
+   if (surface == NULL) {
+      WARN(_("'%s' could not be opened"), path );
+      return -1;
+   }
+
+   /* Create a transparency map if necessary. */
+   if (flags & OPENGL_TEX_MAPTRANS) {
+      size_t pngsize, filesize, cachesize;
       md5_state_t md5;
       char *data;
+      char *cachefile = NULL;
+      uint8_t *trans = NULL;
       md5_byte_t *md5val = malloc(16);
       md5_init(&md5);
+      char digest[33];
 
+      /* Appropriate size for the transparency map, see SDL_MapAlpha */
+      cachesize = gl_transSize( surface->w, surface->h );
+
+      /* Go to the start of the file. */
       pngsize = SDL_RWseek( rw, 0, SEEK_END );
       SDL_RWseek( rw, 0, SEEK_SET );
 
@@ -533,287 +689,42 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
             cachefile = NULL;
          }
       }
-   }
-   else {
-      /* We could hash raw pixel data here, but that's slower than just
-       * generating the map from scratch. */
-      WARN(_("Texture '%s' has no RWops"), name);
-   }
 
-   if (trans == NULL) {
-      SDL_LockSurface(surface);
-      trans = SDL_MapAlpha( surface, w, h, 1 );
-      SDL_UnlockSurface(surface);
+      if (trans == NULL) {
+         SDL_LockSurface(surface);
+         trans = SDL_MapAlpha( surface, 1 );
+         SDL_UnlockSurface(surface);
 
-      if (cachefile != NULL) {
-         /* Cache newly-generated transparency map. */
-         char dirpath[PATH_MAX];
-         snprintf( dirpath, sizeof(dirpath), "%s/%s", nfile_cachePath(), "collisions/" );
-         nfile_dirMakeExist( dirpath );
-         nfile_writeFile( (char*)trans, cachesize, cachefile );
-         free(cachefile);
+         if (cachefile != NULL) {
+            /* Cache newly-generated transparency map. */
+            char dirpath[PATH_MAX];
+            snprintf( dirpath, sizeof(dirpath), "%s/%s", nfile_cachePath(), "collisions/" );
+            nfile_dirMakeExist( dirpath );
+            nfile_writeFile( (char*)trans, cachesize, cachefile );
+            free(cachefile);
+         }
       }
+
+      tex->trans = trans;
    }
 
-   if (texture == NULL)
-      texture = gl_loadImagePad( name, surface, flags, w, h, sx, sy, freesur );
-   else if (freesur)
-      SDL_FreeSurface( surface );
-   texture->trans = trans;
-   SDL_mutexV( tex_lock );
-   return texture;
-}
+   /* Load image if necessary. */
+   tex->w     = (double) surface->w;
+   tex->h     = (double) surface->h;
+   tex->sx    = (double) sx;
+   tex->sy    = (double) sy;
 
-/**
- * @brief Loads the already padded SDL_Surface to a glTexture.
- *
- *    @param name Name to load with.
- *    @param surface Surface to load.
- *    @param flags Flags to use.
- *    @param w Non-padded width.
- *    @param h Non-padded height.
- *    @param sx X sprites.
- *    @param sy Y sprites.
- *    @param freesur Whether or not to free the surface.
- *    @return The glTexture for surface.
- */
-glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
-      unsigned int flags, int w, int h, int sx, int sy, int freesur )
-{
-   glTexture *texture;
-   SDL_mutexP( tex_lock );
+   tex->texture = gl_loadSurface( surface, flags, 0, &tex->vmax );
 
-   /* Make sure doesn't already exist. */
-   if ((name != NULL) && !(flags & OPENGL_TEX_SKIPCACHE)) {
-      texture = gl_texExists( name, sx, sy );
-      if (texture != NULL) {
-         SDL_mutexV( tex_lock );
-         return texture;
-      }
-   }
+   tex->sw    = tex->w / tex->sx;
+   tex->sh    = tex->h / tex->sy;
+   tex->srw   = tex->sw / tex->w;
+   tex->srh   = tex->sh / tex->h;
+   tex->flags = flags;
 
-   if (flags & OPENGL_TEX_MAPTRANS) {
-      texture = gl_loadImagePadTrans( name, surface, NULL, flags, w, h,
-            sx, sy, freesur );
-      SDL_mutexV( tex_lock );
-      return texture;
-   }
-
-   /* set up the texture defaults */
-   texture = calloc( 1, sizeof(glTexture) );
-
-   texture->w     = (double) w;
-   texture->h     = (double) h;
-   texture->sx    = (double) sx;
-   texture->sy    = (double) sy;
-
-   texture->texture = gl_loadSurface( surface, flags, freesur, &texture->vmax );
-
-   texture->sw    = texture->w / texture->sx;
-   texture->sh    = texture->h / texture->sy;
-   texture->srw   = texture->sw / texture->w;
-   texture->srh   = texture->sh / texture->h;
-   texture->flags = flags;
-
-   if (name != NULL) {
-      texture->name = strdup(name);
-      gl_texAdd( texture, sx, sy );
-   }
-   else
-      texture->name = NULL;
-
-   SDL_mutexV( tex_lock );
-   return texture;
-}
-
-/**
- * @brief Loads the SDL_Surface to a glTexture.
- *
- *    @param surface Surface to load.
- *    @param flags Flags to use.
- *    @return The glTexture for surface.
- */
-glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
-{
-   return gl_loadImagePad( NULL, surface, flags, surface->w, surface->h, 1, 1, 1 );
-}
-
-/**
- * @brief Check to see if a texture matching a path already exists.
- *
- * Note this increments the used counter if it exists.
- *
- *    @param path Path to the texture.
- *    @param sx X sprites.
- *    @param sy Y sprites.
- *    @return The texture, or NULL if none was found.
- */
-static glTexture* gl_texExists( const char* path, int sx, int sy )
-{
-   /* Null does never exist. */
-   if (path==NULL) {
-      return NULL;
-   }
-   SDL_mutexP( tex_lock );
-
-   /* Check to see if it already exists */
-   if (texture_list == NULL) {
-      SDL_mutexV( tex_lock );
-      return NULL;
-   }
-
-   /* Do some fancy binary search. */
-   const glTexList q = { .path=path, .sx=sx, .sy=sy };
-   glTexList *t = bsearch( &q, texture_list, array_size(texture_list), sizeof(glTexList), tex_cmp );
-   if (t==NULL) {
-      SDL_mutexV( tex_lock );
-      return NULL;
-   }
-
-   /* Use new texture. */
-   t->used++;
-   SDL_mutexV( tex_lock );
-   return t->tex;
-}
-
-/**
- * @brief Adds a texture to the list under the name of path.
- */
-static int gl_texAdd( glTexture *tex, int sx, int sy )
-{
-   glTexList *new;
-
-   /* Get the new list element. */
-   if (texture_list == NULL)
-      texture_list = array_create( glTexList );
-
-   /* Create the new node */
-   new = &array_grow( &texture_list );
-   new->used = 1;
-   new->tex  = tex;
-   new->sx   = sx;
-   new->sy   = sy;
-   new->path = tex->name;
-
-   /* Sort the list. */
-   qsort( texture_list, array_size(texture_list), sizeof(glTexList), tex_cmp );
+   /* Clean up. */
+   SDL_FreeSurface( surface );
    return 0;
-}
-
-/**
- * @brief Loads an image as a texture.
- *
- * May not necessarily load the image but use one if it's already open.
- *
- *    @param path Image to load.
- *    @param flags Flags to control image parameters.
- *    @return Texture loaded from image.
- */
-glTexture* gl_newImage( const char* path, const unsigned int flags )
-{
-   /* Check if it already exists. */
-   if (!(flags & OPENGL_TEX_SKIPCACHE)) {
-      glTexture *t = gl_texExists( path, 1, 1 );
-      if (t != NULL)
-         return t;
-   }
-
-   /* Load the image */
-   return gl_loadNewImage( path, flags );
-}
-
-/**
- * @brief Loads an image as a texture.
- *
- * May not necessarily load the image but use one if it's already open.
- *
- * @note Does not close the SDL_RWops file.
- *
- *    @param path Path name used for checking cache and error reporting.
- *    @param rw SDL_RWops structure to load from.
- *    @param flags Flags to control image parameters.
- *    @return Texture loaded from image.
- */
-glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int flags )
-{
-   /* Check if it already exists. */
-   if (!(flags & OPENGL_TEX_SKIPCACHE)) {
-      glTexture *t = gl_texExists( path, 1, 1 );
-      if (t != NULL)
-         return t;
-   }
-
-   /* Load the image */
-   return gl_loadNewImageRWops( path, rw, flags );
-}
-
-/**
- * @brief Only loads the image, does not add to stack unlike gl_newImage.
- *
- *    @param path Image to load.
- *    @param flags Flags to control image parameters.
- *    @return Texture loaded from image.
- */
-static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
-{
-   glTexture *texture;
-   SDL_RWops *rw;
-
-   if (path==NULL) {
-      WARN(_("Trying to load image from NULL path."));
-      return NULL;
-   }
-
-   /* Load from packfile */
-   rw = PHYSFSRWOPS_openRead( path );
-   if (rw == NULL) {
-      WARN(_("Failed to load surface '%s' from ndata."), path);
-      return NULL;
-   }
-
-   texture = gl_loadNewImageRWops( path, rw, flags );
-
-   SDL_RWclose( rw );
-   return texture;
-}
-
-/**
- * @brief Only loads the image, does not add to stack unlike gl_newImage.
- *
- *    @param path Only used for debugging. Can be set to NULL.
- *    @param rw SDL_Rwops structure to use to load.
- *    @param flags Flags to control image parameters.
- *    @return Texture loaded from image.
- */
-static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags )
-{
-   SDL_Surface *surface;
-   glTexture *tex;
-
-   /* Placeholder for warnings. */
-   if (path==NULL)
-      path = _("unknown");
-
-   surface = IMG_Load_RW( rw, 0 );
-
-   flags  |= OPENGL_TEX_VFLIP;
-   if (surface == NULL) {
-      WARN(_("Unable to load image '%s'."), path );
-      return NULL;
-   }
-
-   if (surface == NULL) {
-      WARN(_("'%s' could not be opened"), path );
-      return NULL;
-   }
-
-   SDL_mutexP( tex_lock );
-   if (flags & OPENGL_TEX_MAPTRANS)
-      tex = gl_loadImagePadTrans( path, surface, rw, flags, surface->w, surface->h, 1, 1, 1 );
-   else
-      tex = gl_loadImagePad( path, surface, flags, surface->w, surface->h, 1, 1, 1 );
-   SDL_mutexV( tex_lock );
-   return tex;
 }
 
 /**
@@ -828,29 +739,14 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
 glTexture* gl_newSprite( const char* path, const int sx, const int sy,
       const unsigned int flags )
 {
-   glTexture* texture;
-
-   /* Check if it already exists. */
-   if (!(flags & OPENGL_TEX_SKIPCACHE)) {
-      texture = gl_texExists( path, sx, sy );
-      if (texture != NULL)
-         return texture;
-   }
+   int created;
+   glTexture *t = gl_texExistsOrCreate( path, flags, sx, sy, &created );
+   if (!created)
+      return t;
 
    /* Create new image. */
-   texture = gl_newImage( path, flags | OPENGL_TEX_SKIPCACHE );
-   if (texture == NULL)
-      return NULL;
-
-   /* will possibly overwrite an existing texture properties
-    * so we have to load same texture always the same sprites */
-   texture->sx    = (double) sx;
-   texture->sy    = (double) sy;
-   texture->sw    = texture->w / texture->sx;
-   texture->sh    = texture->h / texture->sy;
-   texture->srw   = texture->sw / texture->w;
-   texture->srh   = texture->sh / texture->h;
-   return texture;
+   gl_loadNewImage( t, path, sx, sy, flags );
+   return t;
 }
 
 /**
@@ -866,29 +762,23 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
 glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
    const int sx, const int sy, const unsigned int flags )
 {
-   glTexture* texture;
-
-   /* Check if it already exists. */
-   if (!(flags & OPENGL_TEX_SKIPCACHE)) {
-      texture = gl_texExists( path, sx, sy );
-      if (texture != NULL)
-         return texture;
-   }
+   int created;
+   glTexture *t = gl_texExistsOrCreate( path, flags, sx, sy, &created );
+   if (!created)
+      return t;
 
    /* Create new image. */
-   texture = gl_newImageRWops( path, rw, flags | OPENGL_TEX_SKIPCACHE );
-   if (texture == NULL)
-      return NULL;
+   gl_loadNewImageRWops( t, path, rw, sx, sy, flags | OPENGL_TEX_SKIPCACHE );
 
    /* will possibly overwrite an existing texture properties
     * so we have to load same texture always the same sprites */
-   texture->sx    = (double) sx;
-   texture->sy    = (double) sy;
-   texture->sw    = texture->w / texture->sx;
-   texture->sh    = texture->h / texture->sy;
-   texture->srw   = texture->sw / texture->w;
-   texture->srh   = texture->sh / texture->h;
-   return texture;
+   t->sx    = (double) sx;
+   t->sy    = (double) sy;
+   t->sw    = t->w / t->sx;
+   t->sh    = t->h / t->sy;
+   t->srw   = t->sw / t->w;
+   t->srh   = t->sh / t->h;
+   return t;
 }
 
 /**
@@ -901,7 +791,7 @@ void gl_freeTexture( glTexture *texture )
    if (texture == NULL)
       return;
 
-   SDL_mutexP( tex_lock );
+   SDL_mutexP( gl_lock );
 
    /* see if we can find it in stack */
    for (int i=0; i<array_size(texture_list); i++) {
@@ -922,7 +812,7 @@ void gl_freeTexture( glTexture *texture )
          /* free the list node */
          array_erase( &texture_list, &texture_list[i], &texture_list[i+1] );
       }
-      SDL_mutexV( tex_lock );
+      SDL_mutexV( gl_lock );
       return; /* we already found it so we can exit */
    }
 
@@ -942,7 +832,7 @@ void gl_freeTexture( glTexture *texture )
    gl_checkErr();
 
    tex_ctxUnset();
-   SDL_mutexV( tex_lock );
+   SDL_mutexV( gl_lock );
 }
 
 /**
@@ -958,16 +848,16 @@ glTexture* gl_dupTexture( const glTexture *texture )
       return NULL;
 
    /* check to see if it already exists */
-   SDL_mutexP( tex_lock );
+   SDL_mutexP( gl_lock );
    for (int i=0; i<array_size(texture_list); i++) {
       glTexList *cur = &texture_list[i];
       if (texture == cur->tex) {
          cur->used++;
-         SDL_mutexV( tex_lock );
+         SDL_mutexV( gl_lock );
          return cur->tex;
       }
    }
-   SDL_mutexV( tex_lock );
+   SDL_mutexV( gl_lock );
 
    /* Invalid texture. */
    WARN(_("Unable to duplicate texture '%s'."), texture->name);
@@ -980,7 +870,7 @@ glTexture* gl_dupTexture( const glTexture *texture )
 USE_RESULT glTexture* gl_rawTexture( const char *name, GLuint texid, double w, double h )
 {
    glTexture *texture;
-   SDL_mutexP( tex_lock );
+   SDL_mutexP( gl_lock );
 
    /* set up the texture defaults */
    texture = calloc( 1, sizeof(glTexture) );
@@ -1000,12 +890,12 @@ USE_RESULT glTexture* gl_rawTexture( const char *name, GLuint texid, double w, d
 
    if (name != NULL) {
       texture->name = strdup(name);
-      gl_texAdd( texture, 1, 1 );
+      gl_texAdd( texture, 1, 1, OPENGL_TEX_SKIPCACHE );
    }
    else
       texture->name = NULL;
 
-   SDL_mutexV( tex_lock );
+   SDL_mutexV( gl_lock );
    return texture;
 }
 
@@ -1074,6 +964,7 @@ void gl_getSpriteFromDir( int* x, int* y, int sx, int sy, double dir )
  */
 int gl_initTextures (void)
 {
+   gl_lock = SDL_CreateMutex();
    tex_lock = SDL_CreateMutex();
    tex_mainthread = SDL_ThreadID();
    return 0;
@@ -1101,6 +992,7 @@ void gl_exitTextures (void)
    array_free(texture_list);
 
    SDL_DestroyMutex( tex_lock );
+   SDL_DestroyMutex( gl_lock );
 }
 
 /**

@@ -365,34 +365,13 @@ int ship_size( const Ship *s )
  */
 static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
 {
-   SDL_RWops *rw;
-   SDL_Surface *surface;
-
-   /* Load the space sprite. */
-   rw    = PHYSFSRWOPS_openRead( str );
-   if (rw==NULL) {
-      WARN(_("Unable to open '%s' for reading!"), str);
-      return -1;
-   }
-   surface = IMG_Load_RW( rw, 0 );
-
-   /* Load the texture. */
-   if (array_size(temp->polygon.views)>0)
-      temp->gfx_space = gl_loadImagePad( str, surface,
-            OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
-            surface->w, surface->h, sx, sy, 0 );
-   else
-      temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
-            OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
-            surface->w, surface->h, sx, sy, 0 );
-
-   /* Free stuff. */
-   SDL_RWclose( rw );
-   SDL_FreeSurface( surface );
-
+   unsigned int flags = OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP;
+   /* If no collision polygon, we use transparency mapping. */
+   if (array_size(temp->polygon.views)<=0)
+      flags |= OPENGL_TEX_MAPTRANS;
+   temp->gfx_space = gl_newSprite( str, sx, sy, flags );
    /* Calculate mount angle. */
-   temp->mangle  = 2.*M_PI;
-   temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
+   temp->mangle  = 2.*M_PI / (double)(sx*sy);
    return 0;
 }
 

@@ -67,17 +67,12 @@ void gl_exitTextures (void);
  * Creating.
  */
 USE_RESULT glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name );
-USE_RESULT glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
-      unsigned int flags, int w, int h, int sx, int sy, int freesur );
-USE_RESULT glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
-      unsigned int flags, int w, int h, int sx, int sy, int freesur );
-USE_RESULT glTexture* gl_loadImage( SDL_Surface* surface, const unsigned int flags ); /* Frees the surface. */
 USE_RESULT glTexture* gl_newImage( const char* path, const unsigned int flags );
 USE_RESULT glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int flags ); /* Does not close the RWops. */
 USE_RESULT glTexture* gl_newSprite( const char* path, const int sx, const int sy,
       const unsigned int flags );
 USE_RESULT glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
-   const int sx, const int sy, const unsigned int flags );
+      const int sx, const int sy, const unsigned int flags );
 USE_RESULT glTexture* gl_dupTexture( const glTexture *texture );
 USE_RESULT glTexture* gl_rawTexture( const char *name, GLuint tex, double w, double h );
 
