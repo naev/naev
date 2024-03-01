@@ -45,8 +45,8 @@ typedef struct glTexList_ {
 } glTexList;
 static glTexList* texture_list = NULL; /**< Texture list. */
 static SDL_threadID tex_mainthread;
-static SDL_mutex* gl_lock = NULL;
-static SDL_mutex* tex_lock = NULL;
+static SDL_mutex* gl_lock = NULL; /**< Lock for OpenGL functions. */
+static SDL_mutex* tex_lock = NULL; /**< Lock for texture list manipulation. */
 
 /*
  * prototypes
@@ -608,7 +608,7 @@ static int gl_loadNewImage( glTexture *tex, const char* path, int sx, int sy, un
 }
 
 /**
- * @brief Only loads the image, does not add to stack unlike gl_newImage.
+ * @brief The heavy loading image backend image function. It loads images and does transparency mapping if necessary.
  *
  *    @param tex Texture to load to.
  *    @param path Image to load.
