@@ -201,12 +201,40 @@ function land ()
    vn.scene()
    vn.transition()
    vn.na(_([[You get off your ship with the small box in hand, and go to deliver it to the spacedock cargo office. However, when you go to pull up the delivery information, it seems to be missing from your computer logs. Puzzled, you hand over the small box anyway, which they proceed to do the routine scan.]]))
-   vn.na(_([[The moment the box is scanned, the lights slightly flicker, and you hear the inspector performing some improvized percussive maintenance on the scanning equipment. They give a puzzled look and tell you there's an issue with the system, and it might take a while to get it solved.]]))
+   vn.na(_([[The moment the box is scanned, the lights slightly flicker, and you hear the inspector performing some improvised percussive maintenance on the scanning equipment. They give a puzzled look and tell you there's an issue with the system, and it might take a while to get it solved.]]))
    vn.na(_([[With nothing better to do, you walk around the station to kill time.]]))
-   vn.func( function () music.stop() end )
+   -- TODO silly 8-bit music
+   --vn.music( onion.loops.circus )
    local oni = onion.vn_onion()
    vn.appear( oni )
-   oni(_([[]]))
+   oni(_([[Suddenly, all the lights go off and all the holoscreens throughout the station flash into activity.
+"How are you gentlemen?"]]))
+   oni(_([["Tsk tsk tsk. Such sloppy security. You should be ashamed of yourselves. "]]))
+   oni(_([["Oh, look at all these finance records. Shame if something were to happen to them..."]]))
+   oni(_([["Oops, I accidentally crashed the database. They don't make them how they used to. Quite a mess I'm making here. Can't be helped, I'm Ogre."]]))
+   oni(_([["Anyway, it was fun crashing this place. Lots of interesting things to see. Got to get going. By the way, you guys should do something about the life control systems, it seems like they're going critical. Toodaloo〜♪."]]))
+   oni:rename(_("Ogre"))
+   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   vn.na(_([[The hologram fades and the alarms start blaring, probably indicating that life control systems are critical. People begin to scramble like wild trying to save themselves, and it looks like you're about to get dragged into it.
+
+What do you do?]]))
+   vn.menu{
+      {_([[Run to your ship]]), "01_docks"},
+      {_([[Try to get to the station control room]]), "01_control"},
+   }
+
+   vn.label("01_docks")
+   vn.na(_([[You follow the flow of people streaming towards the docks, however, the sheer amount of people makes progress slow. Eventually you get stuck in the hallway, with people pressing on all sides. The stench of pure fear is almost unbearable, and you do your best to not suffocate.]]))
+   vn.na(_([[Time seems to freeze as the yelling gets louder. The oxygen seems to be thinning, is this the end? Not going out in a bang, but in a whimper, crushed by humans as the life support system fails?]]))
+   vn.jump("01_cont")
+
+   vn.label("01_control")
+   vn.na(_([[You try to work yourself to the centre of the station to see if you can somehow solve the issue. You see people all around you trying to run towards the spacedocks, bumping into you and slowing your progress. ]]))
+   vn.jump("01_cont")
+
+   vn.label("01_cont")
+   vn.na(_([[]]))
+
    vn.disappear( oni )
    vn.run()
 end
