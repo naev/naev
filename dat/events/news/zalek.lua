@@ -35,7 +35,7 @@ local articles = {
    --]]
    {
       head = N_([[New Startup to Harness Power of Nebula]]),
-      body = _([[A new local startup at Stein has claimed they have found a way to stabilizer power generators in volatile nebula. They are seeking to secure funding to begin experiments this cycle. Skeptics point out that this contradicts Yang-Mills theory.]]),
+      body = _([[A new local startup at Stein has claimed they have found a way to stabilizer power generators in volatile nebula. They are seeking to secure funding to begin experiments this cycle. Sceptics point out that this contradicts Yang-Mills theory.]]),
    },
    {
       head = N_([[Company Selling Prisms Surprisingly a Pyramid Scheme]]),

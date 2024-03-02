@@ -42,7 +42,7 @@ local articles = {
    },
    {
       head = N_([[Shameful display]]),
-      body = _([[Sorom Remembrance Day ceremony marred by incident of public drunkedness and overall inconsiderate displays. Several delinquents arrested.]]),
+      body = _([[Sorom Remembrance Day ceremony marred by incident of public drunkenness and overall inconsiderate displays. Several delinquents arrested.]]),
    },
    --[[
       Human interest.
