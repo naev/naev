@@ -131,4 +131,22 @@ function extras.flashbackTextStart( name, params )
 end
 extras.flashbackTextEnd = fullscreenEnd
 
+function extras.alarmStart ()
+   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   local shd = love_shaders.tint{ colour={1.0, 0.0, 0.0} }
+   local t = math.pi * 0.5 -- Start at max value
+   shd:send( "strength", 0.6+0.2*math.sin(t) )
+   vn.setShader( shd )
+   vn.setUpdate( function ( dt )
+      t = t + dt
+      shd:send( "strength", 0.6+0.2*math.sin(t) )
+   end )
+end
+
+function extras.alarmEnd ()
+   vn.music()
+   vn.setShader()
+   vn.setUpdate()
+end
+
 return extras
