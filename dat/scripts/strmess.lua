@@ -80,7 +80,7 @@ function strmess.messup( str, strength )
    for k,v in ipairs(idx) do
       local s = t[v]
       local l = utf8.len(s)
-      if l > 1 and not utf8.match(s,"#%w") then
+      if l > 1 then
          for i=1,l do
             if rnd.rnd() < strength then
                local r = rnd.rnd()
