@@ -724,4 +724,30 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 end
 
 
+--[[--
+Simple colour modulation shader.
+
+Same as love_shaders.colour, except it has an additional uniform 'strength' that controls how the tint is applied.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "colour" field is used.
+--]]
+function love_shaders.tint( params )
+   local colour = params.colour or {1, 1, 1, 1}
+   colour[4] = colour[4] or 1
+   local pixelcode = string.format([[
+uniform float strength = 1.0;
+const vec4 basecolour = vec4( %f, %f, %f, %f );
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
+{
+   vec4 texcolour = Texel(tex, uv);
+   return mix( basecolour, vec4(1.0), strength) * colour * texcolour;
+}
+]], colour[1], colour[2], colour[3], colour[4] )
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader:send( "strengh", 1 )
+   return shader
+end
+
+
 return love_shaders
