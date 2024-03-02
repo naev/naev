@@ -27,6 +27,7 @@ local pp_shaders = require 'pp_shaders'
 local lg = require "love.graphics"
 local car = require "common.cargo"
 local vn = require "vn"
+local vne = require "vnextras"
 local onion = require "common.onion"
 
 local destpnt, destsys = spob.getS("Gordon's Exchange")
@@ -214,7 +215,8 @@ function land ()
    oni(_([["Oops, I accidentally crashed the database. They don't make them how they used to. Quite a mess I'm making here. Can't be helped, I'm Ogre."]]))
    oni(_([["Anyway, it was fun crashing this place. Lots of interesting things to see. Got to get going. By the way, you guys should do something about the life control systems, it seems like they're going critical. Toodaloo〜♪."]]))
    oni:rename(_("Ogre"))
-   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+
+   vne.alarmStart()
    vn.na(_([[The hologram fades and the alarms start blaring, probably indicating that life control systems are critical. People begin to scramble like wild trying to save themselves, and it looks like you're about to get dragged into it.
 
 What do you do?]]))
@@ -234,6 +236,7 @@ What do you do?]]))
 
    vn.label("01_cont")
    vn.na(_([[]]))
+   vne.alarmEnd()
 
    vn.disappear( oni )
    vn.run()
