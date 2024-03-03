@@ -596,7 +596,7 @@ static void info_openWeapons( unsigned int wid )
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
-   equipment_slotSelect( &info_eq, &player.ps );
+   equipment_slotSelect( &info_eq_weaps, &player.ps );
    info_eq_weaps.weapons = 0;
    info_eq_weaps.canmodify = 0;
 
