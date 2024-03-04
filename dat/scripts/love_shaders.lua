@@ -745,7 +745,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 }
 ]], colour[1], colour[2], colour[3], colour[4] )
    local shader = graphics.newShader( pixelcode, _vertexcode )
-   shader:send( "strengh", 1 )
+   shader:send( "strength", 1 )
    return shader
 end
 
