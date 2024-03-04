@@ -134,7 +134,7 @@ function glitch ()
    snd_onion:setVolume( 0.2 )
    --]]
 
-   player.autonavReset( 10 )
+   player.autonavReset( 10 ) -- total animation length
    noise_shader = pp_shaders.corruption( 0.5 )
    shader.addPPShader( noise_shader, "gui" )
    onion_hook = hook.renderfg( "welcome_to_onion" )
@@ -261,6 +261,7 @@ What do you do?]]))
    vn.label("01_cont")
    vne.alarmEnd()
    vn.appear( oni )
+   oni:rename(_("Ogre"))
    vn.na(_([[Suddenly, the alarm goes quiet, lights are restored, and the holograms flash back into life.]]))
    oni(_([["Psyche! But seriously though, your database is toast."]]))
    vn.disappear( oni )
