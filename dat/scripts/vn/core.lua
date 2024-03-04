@@ -1322,27 +1322,31 @@ local function _appear_setup( c, shader )
    vn.func( function ()
       shader:send( "texprev", vn._emptycanvas )
       for k,v in ipairs(c) do
-         local d = graphics.Drawable.new()
-         d.image = v.image
-         d.getDimensions = function ( self, ... )
-            return self.image:getDimensions(...)
-         end
-         d.draw = function ( self, ... )
-            local oldcanvas = graphics.getCanvas()
-            graphics.setCanvas( vn._curcanvas )
-            graphics.clear( 0, 0, 0, 0 )
-            self.image:draw( ... )
-            graphics.setCanvas( oldcanvas )
+         if v.image then
+            local d = graphics.Drawable.new()
+            d.image = v.image
+            d.getDimensions = function ( self, ... )
+               return self.image:getDimensions(...)
+            end
+            d.draw = function ( self, ... )
+               local oldcanvas = graphics.getCanvas()
+               graphics.setCanvas( vn._curcanvas )
+               graphics.clear( 0, 0, 0, 0 )
+               self.image:draw( ... )
+               graphics.setCanvas( oldcanvas )
 
-            local oldshader = graphics.getShader()
-            graphics.setShader( shader )
-            vn.setColour( {1, 1, 1, 1} )
-            graphics.setBlendMode( "alpha", "premultiplied" )
-            vn._curcanvas:draw( 0, 0 )
-            graphics.setBlendMode( "alpha" )
-            graphics.setShader( oldshader )
+               local oldshader = graphics.getShader()
+               graphics.setShader( shader )
+               vn.setColour( {1, 1, 1, 1} )
+               graphics.setBlendMode( "alpha", "premultiplied" )
+               vn._curcanvas:draw( 0, 0 )
+               graphics.setBlendMode( "alpha" )
+               graphics.setShader( oldshader )
+            end
+            v.image = d
+         else
+            warn(fmt.f(_("vn: Appearing character '{c}' without an image!"),{c=(v.displayname or v.who)}))
          end
-         v.image = d
       end
    end )
 end
@@ -1350,7 +1354,9 @@ local function _appear_cleanup( c )
    -- Undo new drawables
    vn.func( function ()
       for k,v in ipairs(c) do
-         v.image = v.image.image
+         if v.image then
+            v.image = v.image.image
+         end
       end
    end )
 end
