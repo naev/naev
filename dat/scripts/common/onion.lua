@@ -15,4 +15,13 @@ function onion.vn_onion( params )
          }, params) )
 end
 
+function onion.log( text )
+   shiplog.create( "onion", _("Onion Society"), _("Onion Society") )
+   shiplog.append( "onion", text )
+end
+
+onion.rewards = {
+   misn01 = 200e3,
+}
+
 return onion

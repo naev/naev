@@ -31,6 +31,7 @@ local vne = require "vnextras"
 local onion = require "common.onion"
 
 local destpnt, destsys = spob.getS("Gordon's Exchange")
+local money_reward = onion.rewards.misn01
 
 -- Create the mission
 function create()
@@ -213,8 +214,11 @@ function land ()
    oni(_([["Tsk tsk tsk. Such sloppy security. You should be ashamed of yourselves. "]]))
    oni(_([["Oh, look at all these finance records. Shame if something were to happen to them..."]]))
    oni(_([["Oops, I accidentally crashed the database. They don't make them how they used to. Quite a mess I'm making here. Can't be helped, I'm Ogre."]]))
-   oni(_([["Anyway, it was fun crashing this place. Lots of interesting things to see. Got to get going. By the way, you guys should do something about the life control systems, it seems like they're going critical. Toodaloo〜♪."]]))
    oni:rename(_("Ogre"))
+   --[=[oni(_([["Anyway, it was fun crashing this place. Lots of interesting things to see. Got to get going. By the way, you guys should do something about the life control systems, it seems like they're going critical. Toodaloo〜♪."]]))--]=]
+   -- Probably better to use the Toodaloo with another less script-kiddy one.
+   oni(_([["Anyway, it was fun crashing this place. Lots of interesting things to see. Got to get going. By the way, you guys should do something about the life control systems, it seems like they're going critical."]]))
+   vn.disappear( oni )
 
    vne.alarmStart()
    vn.na(_([[The hologram fades and the alarms start blaring, probably indicating that life control systems are critical. People begin to scramble like wild trying to save themselves, and it looks like you're about to get dragged into it.
@@ -227,17 +231,46 @@ What do you do?]]))
 
    vn.label("01_docks")
    vn.na(_([[You follow the flow of people streaming towards the docks, however, the sheer amount of people makes progress slow. Eventually you get stuck in the hallway, with people pressing on all sides. The stench of pure fear is almost unbearable, and you do your best to not suffocate.]]))
-   vn.na(_([[Time seems to freeze as the yelling gets louder. The oxygen seems to be thinning, is this the end? Not going out in a bang, but in a whimper, crushed by humans as the life support system fails?]]))
+   vn.na(_([[Time seems to freeze as the yelling gets louder. You think you feel the oxygen thinning, is this the end? Not going out in a bang, but in a whimper, crushed by humans as the life support system fails?]]))
    vn.jump("01_cont")
 
    vn.label("01_control")
    vn.na(_([[You try to work yourself to the centre of the station to see if you can somehow solve the issue. You see people all around you trying to run towards the spacedocks, bumping into you and slowing your progress. ]]))
+   vn.na(_([[After what seems like an eternity, you manage to make it to the station terminal room. The door is wide open, and you see a frenzy of commotion inside. You try to figure out what is going on, but there is only chaos. ]]))
+   vn.na(_([[As you struggle to make sense of the controls and what can be done, you start to have a sinking feeling that it may have not been the best idea to come to the control room.]]))
    vn.jump("01_cont")
 
    vn.label("01_cont")
-   vn.na(_([[]]))
    vne.alarmEnd()
-
+   vn.appear( oni )
+   vn.na(_([[Suddenly, the alarm goes quiet, lights are restored, and the holograms flash back into life.]]))
+   oni(_([["Psyche! But seriously though, your database is toast."]]))
    vn.disappear( oni )
+   vn.na(_([[Despite the apparently reassuring message, the chaos continues for quite a while. Eventually, you manage to make it back to your ship, extremely worn out and tired, but at least in one piece. That so-called "Ogre" seems like quite a pain in the ass.]]))
+   vn.na(_([[As you let out a big sigh, you suddenly notice you have an unnoticed message. It seems like you have an anonymous transfer to your account.]]))
+   vn.sfxMoney()
+   vn.func( function ()
+      player.pay( money_reward )
+   end )
+   vn.na(fmt.reward(money_reward))
    vn.run()
+
+   news.add{
+      {
+         faction = "Generic",
+         head = fmt.f(_("Chaos on {spb}"),{spb=destpnt}),
+         body = fmt.f(_("{spb} in the {sys} system devolved into chaos on {date} when a hacker who identifies as 'Ogre' broke into the station control system. Local authorities estimate the damages in the order of billions of credits, and have issued a reward for any information that will lead to the capture of the saboteur."), {
+            spb = destpnt,
+            sys = destsys,
+            date = time.get(),
+         } ),
+         date_to_rm = time.get()+time.new(0,50,0)
+      },
+   }
+   onion.log(fmt.f(_([[You accepted a mysterious and buggy mission from the local mission computer, and delivered a package to {spb} in the {sys} system. To your dismay, this triggered a hack on the station, a lot of chaos, and more stress than is healthy. In the end, you got rewarded for your troubles, but you are not sure it was worth it.]]), {
+      spb=destpnt,
+      sys=destsys,
+   }))
+
+   misn.finish(true)
 end
