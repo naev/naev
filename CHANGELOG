@@ -12,6 +12,8 @@
       * Added option to match speed with slowest ship in the fleet (on by default)
       * Made it so ships in the equipment screen do not change order based on value
    * Content
+      * 1 new mission
+         * Hack the Gibson!
       * New portraits
    * Engine
       * Stats (except inverted stats) are now additive instead of multiplicative
