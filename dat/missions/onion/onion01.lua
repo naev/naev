@@ -79,12 +79,12 @@ function accept ()
       misn.setTitle( strmess.messup( title, 0.1 ) )
       local numjumps   = system.cur():jumpDist( destsys, false )
       local dist = car.calculateDistance( system.cur(), spob.cur():pos(), destsys, destpnt, false )
-      local desc = fmt.f(_([[ERROR: BufferOverrua80ho0ajqnc
+      local desc = fmt.f(_([[#rERROR: BufferOverru]])..strmess.messup(_([[a80ho0ajqnc
 hq;8eoa 8q0 h
-08qj h
+08qj#0 h
 2
 
-5 250arcqj0a8eSmall shipment of of of ofof of
+5 250arcqji8204930a8e]]), 1).._([[Small shipment of of of ofof of
 to {pnt} in the {sys} system]]),
          {pnt=destpnt, sys=destsys} )
       desc = desc.."\n\n"..fmt.f(_("#nCargo:#0 {amount}"),{amount=_("Small Box")})
