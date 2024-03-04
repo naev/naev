@@ -70,7 +70,7 @@ local accepted_tries = 0
 function accept ()
    accepted_tries = accepted_tries + 1
    if accepted_tries == 1 then
-      vntk.msg(_([[You try to accept the mission, but a bunch of errors pop out, and the mission computer ends up crashing and rebooting. That was weird.]]))
+      vntk.msg(_([[System Error]]),_([[You try to accept the mission, but a bunch of errors pop out, and the mission computer ends up crashing and rebooting. That was weird.]]))
 
       -- Generate next iteration of the mission
       misn.markerRm()
@@ -94,7 +94,7 @@ to {pnt} in the {sys} system]]),
       misn.computerRefresh()
    else
 
-      vntk.msg({
+      vntk.msg(_([[Mission Accepted?]]), {
          _([[You try to accept the mission again, but the mission computer seems to lock up. After a while, it starts spamming errors, but it seems like you somehow managed to accept it.]]),
          fmt.f(_([[You return to your ship to find a puzzled dockworker scratching his head. They say it looks like the system is acting weirdly, but since it's not their job to figure it out, they end up handing you a small box. You guess this is the cargo you have to take to {pnt}?]]),
             {pnt=destpnt}),
