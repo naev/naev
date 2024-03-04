@@ -184,10 +184,16 @@ function update( dt )
       local x = rnd.rnd(1,w)
       local y = rnd.rnd(1,h)
       local ow, oh = onion_gfx:getDimensions()
+      local s = rnd.rnd(50,150) / (0.5*ow+0.5*oh)
+      local flip = 1
+      if rnd.rnd() > 0.5 then
+         flip = -1
+      end
       table.insert( onions, {
          x = x,
          y = y,
-         s = rnd.rnd(50,150) / (0.5*ow+0.5*oh),
+         s = s,
+         flip = flip,
          a = rnd.rnd(),
          t = rnd.rnd(2,5),
       } )
@@ -201,7 +207,7 @@ function welcome_to_onion ()
    for k,o in ipairs(onions) do
       local s = o.s
       lg.setColour( 1, 1, 1, o.a )
-      onion_gfx:draw( o.x-s*0.5, o.y-s*0.5, 0, s, s )
+      onion_gfx:draw( o.x-s*0.5, o.y-s*0.5, 0, s*o.flip, s )
    end
 end
 
