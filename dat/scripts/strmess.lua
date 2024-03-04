@@ -55,8 +55,19 @@ end
 
 local function _uniquechar( str )
    local uniquesymbols = {}
-   for pos, code in utf8.next, str do
-      uniquesymbols[ utf8.char(code) ] = 1
+   -- We have to process special codes and hide them
+   local ls, lo = _split(str,"#%w",2)
+   for k,s in ipairs(ls) do
+      if lo[k] then
+         for pos, code in utf8.next, s do
+            uniquesymbols[ utf8.char(code) ] = 1
+         end
+      end
+   end
+   -- If '#' is a unique symbol, we created escaped version
+   if uniquesymbols["#"] then
+      uniquesymbols["#"] = nil
+      uniquesymbols["##"] = 1
    end
    local symbols = {}
    for k,v in pairs(uniquesymbols) do
