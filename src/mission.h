@@ -126,6 +126,7 @@ const char *mission_availabilityStr( MissionAvailability loc );
 /*
  * misc
  */
+int mission_compare( const void* arg1, const void* arg2 );
 const MissionData *mission_list (void);
 int mission_alreadyRunning( const MissionData* misn );
 int mission_getID( const char* name );

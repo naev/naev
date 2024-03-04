@@ -62,7 +62,6 @@ static unsigned int mission_genID (void);
 static int mission_init( Mission* mission, const MissionData* misn, int genid, int create, unsigned int *id );
 static void mission_freeData( MissionData* mission );
 /* Matching. */
-static int mission_compare( const void* arg1, const void* arg2 );
 static int mission_meetConditionals( const MissionData *misn );
 static int mission_meetReq( const MissionData *misn, int faction,
       const Spob *pnt, const StarSystem *sys );
@@ -881,13 +880,10 @@ void missions_activateClaims (void)
 /**
  * @brief Compares to missions to see which has more priority.
  */
-static int mission_compare( const void* arg1, const void* arg2 )
+int mission_compare( const void* arg1, const void* arg2 )
 {
-   Mission *m1, *m2;
-
-   /* Get arguments. */
-   m1 = (Mission*) arg1;
-   m2 = (Mission*) arg2;
+   const Mission *m1 = (Mission*) arg1;
+   const Mission *m2 = (Mission*) arg2;
 
    /* Check priority - lower is more important. */
    if (m1->data->avail.priority < m2->data->avail.priority)

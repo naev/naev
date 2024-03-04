@@ -657,6 +657,7 @@ static void misn_accept( unsigned int wid, const char *str )
       mission_sysMark();
    }
 }
+
 /**
  * @brief Generates the mission list.
  *    @param wid Window to generate the mission list for.
@@ -679,6 +680,9 @@ static void misn_genList( unsigned int wid )
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
+
+   /* Resort just in case. */
+   qsort( mission_computer, array_size(mission_computer), sizeof(Mission), mission_compare );
 
    /* list */
    j = 1; /* make sure we don't accidentally free the memory twice. */
