@@ -120,11 +120,19 @@ function enter ()
 end
 
 local noise_shader, onion_hook, update_hook, onion_gfx, glitch_isworse, nextonion, onions
+--local snd_onion
 function glitch ()
    -- Want to allow inclusive claims
    if not naev.claimTest( system.cur(), true ) then
       return
    end
+
+   --[[
+   snd_onion = audio.new( onion.loops.circus, "stream" )
+   snd_onion:setLooping(true)
+   snd_onion:play()
+   snd_onion:setVolume( 0.2 )
+   --]]
 
    player.autonavReset( 10 )
    noise_shader = pp_shaders.corruption( 0.5 )
@@ -139,6 +147,8 @@ function glitch ()
 end
 
 function glitch_worsen ()
+   --snd_onion:setVolume( 0.2 )
+
    shader.rmPPShader( noise_shader )
    noise_shader = pp_shaders.corruption( 1.0 )
    shader.addPPShader( noise_shader, "gui" )
@@ -147,6 +157,8 @@ function glitch_worsen ()
 end
 
 function glitch_end ()
+   --snd_onion:stop()
+
    shader.rmPPShader( noise_shader )
    hook.rm( onion_hook )
    hook.rm( update_hook )
@@ -179,7 +191,7 @@ function update( dt )
          a = rnd.rnd(),
          t = rnd.rnd(2,5),
       } )
-      nextonion = rnd.rnd(1,3)
+      nextonion = 0.5 + 0.5*rnd.rnd()
       if glitch_isworse then
          nextonion = nextonion * 0.5
       end
