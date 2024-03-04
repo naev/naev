@@ -139,7 +139,7 @@ function glitch ()
    shader.addPPShader( noise_shader, "gui" )
    onion_hook = hook.renderfg( "welcome_to_onion" )
    update_hook = hook.update( "update" )
-   onion_gfx = lg.newImage( "onion_society.png" ) -- TODO path
+   onion_gfx = onion.img_onion()
    hook.timer( 5, "glitch_worsen" )
    glitch_isworse = false
    nextonion = 0

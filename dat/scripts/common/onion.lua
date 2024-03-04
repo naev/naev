@@ -3,13 +3,22 @@
 --]]
 local love_shaders = require "love_shaders"
 local vn = require "vn"
+local lg = require "love.graphics"
 
 local onion = {}
+
+local img_onion
+function onion.img_onion ()
+   if not img_onion then
+      img_onion = lg.newImage( "gfx/misc/onion_society.webp" )
+   end
+   return img_onion
+end
 
 function onion.vn_onion( params )
    return vn.Character.new( _("Hologram"),
          tmerge( {
-            image=nil,
+            image=onion.img_onion(),
             colour=nil,
             shader=love_shaders.hologram{strength=0.2},
          }, params) )
