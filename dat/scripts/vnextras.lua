@@ -133,20 +133,33 @@ extras.flashbackTextEnd = fullscreenEnd
 
 function extras.alarmStart ()
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
-   local shd = love_shaders.tint{ colour={1.0, 0.0, 0.0} }
-   local t = math.pi * 0.5 -- Start at max value
-   shd:send( "strength", 0.6+0.2*math.sin(t) )
-   vn.setShader( shd )
-   vn.setUpdateFunc( function ( dt )
-      t = t + dt
-      shd:send( "strength", 0.6+0.2*math.sin(t) )
+   vn.func( function ()
+      local shd = love_shaders.tint{ colour={1.0, 0.0, 0.0} }
+      local t = 0
+      local v = math.sin(t)
+      vn.setShader( shd )
+      vn.setBackground( function ()
+         local nw, nh = gfx.dim()
+         lg.setColour{ 1, 0, 0, 0.03-0.03*v+0.02*math.min(t,1) }
+         lg.rectangle( "fill", 0, 0, nw, nh )
+      end )
+      local function up( dt )
+         t = t + dt
+         v = math.cos( t * (math.pi*2) / 1.375)
+         shd:send( "strength", 0.8+0.2*v-0.2*math.min(t,1) )
+      end
+      vn.setUpdateFunc( up )
+      up(0)
    end )
 end
 
 function extras.alarmEnd ()
    vn.music()
-   vn.setShader()
-   vn.setUpdateFunc()
+   vn.func( function ()
+      vn.setShader()
+      vn.setBackground()
+      vn.setUpdateFunc()
+   end )
 end
 
 return extras
