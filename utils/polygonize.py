@@ -750,7 +750,7 @@ def polygonify_ship( filename, outpath, use2d=True, use3d=True ):
     root = ET.parse( filename ).getroot()
     name = root.get('name')
     cls = root.find( "class" ).text
-    tag = root.find( "GFX" )
+    tag = root.find( "gfx" )
     basetag = root.find( "base_type" )
     basetype = basetag.get("path")
     if basetype == None:
