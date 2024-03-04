@@ -96,7 +96,7 @@ to {pnt} in the {sys} system]]),
 
       vntk.msg(_([[Mission Accepted?]]), {
          _([[You try to accept the mission again, but the mission computer seems to lock up. After a while, it starts spamming errors, but it seems like you somehow managed to accept it.]]),
-         fmt.f(_([[You return to your ship to find a puzzled dockworker scratching his head. They say it looks like the system is acting weirdly, but since it's not their job to figure it out, they end up handing you a small box. You guess this is the cargo you have to take to {pnt}?]]),
+         fmt.f(_([[You return to your ship to find a puzzled dockworker scratching their head. They say it looks like the system is acting weirdly, but since it's not their job to figure it out, they end up handing you a small box. You guess this is the cargo you have to take to {pnt}?]]),
             {pnt=destpnt}),
       })
 
