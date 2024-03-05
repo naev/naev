@@ -456,7 +456,7 @@ static int outfitL_limit( lua_State *L )
 static int outfitL_icon( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit(L,1);
-   outfit_loadStoreGFX( (Outfit*) o );
+   outfit_gfxStoreLoad( (Outfit*) o );
    lua_pushtex( L, gl_dupTexture( o->gfx_store ) );
    return 1;
 }

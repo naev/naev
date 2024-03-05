@@ -14,7 +14,9 @@
 /*
  * properties
  */
-#define outfit_isProp(o,p)          ((o)->properties & p) /**< Checks an outfit for property. */
+#define outfit_isProp(o,p)          ((o)->properties & (p)) /**< Checks an outfit for property. */
+#define outfit_setProp(o,p)         ((o)->properties |= (p)) /**< Sets property. */
+#define outfit_rmProp(o,p)          ((o)->properties &= ~(p)) /**< Removes property. */
 /* property flags */
 #define OUTFIT_PROP_UNIQUE             (1<<0)  /**< Unique item (can only have one). Not sellable.*/
 #define OUTFIT_PROP_SHOOT_DRY          (1<<1)  /**< Weapon that doesn't actually create particles. Should be handled in ontoggle. */
@@ -31,6 +33,7 @@
 #define OUTFIT_PROP_WEAP_MISS_ASTEROIDS (1<<11) /**< Weapon can not hit asteroids. */
 #define OUTFIT_PROP_WEAP_MISS_EXPLODE  (1<<12) /**< The weapon particle blows up on miss. */
 #define OUTFIT_PROP_WEAP_ONLYHITTARGET (1<<13) /**< The weapon can only hit the target (and asteroids or whatever). */
+#define OUTFIT_PROP_NEEDSGFX           (1<<14) /**< The outfit needs to load graphics. */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Colour-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
@@ -418,7 +421,9 @@ typedef struct Outfit_ {
 /*
  * Access stuff.
  */
-int outfit_loadStoreGFX( Outfit *o );
+int outfit_gfxStoreLoaded( const Outfit *o );
+int outfit_gfxStoreLoadNeeded (void);
+int outfit_gfxStoreLoad( Outfit *o );
 const Outfit* outfit_get( const char* name );
 const Outfit* outfit_getW( const char* name );
 const Outfit* outfit_getAll (void);

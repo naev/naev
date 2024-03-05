@@ -772,14 +772,17 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, 
    }
    else {
       /* Threaded loading of graphics for speed. */
-      ThreadQueue *tq = vpool_create();
-      SDL_GL_MakeCurrent( gl_screen.window, NULL );
-      for (int i=0; i<*noutfits; i++)
+      int needsgfx = 0;
+      for (int i=0; i<*noutfits; i++) {
+         Outfit *o = (Outfit*) outfits[i];
+         if (!outfit_gfxStoreLoaded(o)) {
+            outfit_setProp( o, OUTFIT_PROP_NEEDSGFX );
+            needsgfx = 1;
+         }
+      }
+      if (needsgfx)
+         outfit_gfxStoreLoadNeeded();
          /* Just to be safe, we assume some ships colud potentially be duplicated. */
-         vpool_enqueueUnique( tq, (int(*)(void*)) outfit_loadStoreGFX, (Outfit*) outfits[i] );
-      vpool_wait( tq );
-      vpool_cleanup( tq );
-      SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
 
       /* Set alt text. */
       for (int i=0; i<*noutfits; i++) {

@@ -47,8 +47,6 @@
 #include "threadpool.h"
 #include "unistd.h"
 
-#define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
-
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
 #define OUTFIT_SHORTDESC_MAX  STRMAX_SHORT /**< Max length of the short description of the outfit. */
@@ -157,14 +155,36 @@ static int outfit_cmp( const void *p1, const void *p2 )
    return strcmp( o1->name, o2->name );
 }
 
+int outfit_gfxStoreLoaded( const Outfit *o )
+{
+   return (o->gfx_store!=NULL);
+}
+
+int outfit_gfxStoreLoadNeeded (void)
+{
+   ThreadQueue *tq = vpool_create();
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
+   for (int i=0; i<array_size(outfit_stack); i++) {
+      Outfit *o = &outfit_stack[i];
+      if (!outfit_isProp(o, OUTFIT_PROP_NEEDSGFX))
+         continue;
+      vpool_enqueue( tq, (int(*)(void*)) outfit_gfxStoreLoad, o );
+      outfit_rmProp( o, OUTFIT_PROP_NEEDSGFX );
+   }
+   vpool_wait( tq );
+   vpool_cleanup( tq );
+   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+   return 0;
+}
+
 /**
  * @brief Loads the store graphics for the outfit.
  */
-int outfit_loadStoreGFX( Outfit *o )
+int outfit_gfxStoreLoad( Outfit *o )
 {
    char filename[PATH_MAX];
 
-   if (o->gfx_store!=NULL)
+   if (outfit_gfxStoreLoaded(o))
       return 0;
 
    /* Check for absolute pathe. */

@@ -2610,15 +2610,14 @@ void equipment_slotSelect( CstSlotWidget *wgt, PlayerShip_t *p )
 {
    wgt->selected = p;
 
-   /* Threaded loading of graphics for speed. */
-   SDL_GL_MakeCurrent( gl_screen.window, NULL );
-   ThreadQueue *tq = vpool_create();
+   int needsgfx = 0;
    for (int i=0; i<array_size(p->p->outfits); i++) {
-      PilotOutfitSlot *pos = p->p->outfits[i];
-      if (pos->outfit != NULL)
-         vpool_enqueueUnique( tq, (int(*)(void*)) outfit_loadStoreGFX, (Outfit*) pos->outfit );
+      Outfit *o = (Outfit*) p->p->outfits[i]->outfit;
+      if ((o!=NULL) && !outfit_gfxStoreLoaded(o)) {
+         outfit_setProp( o, OUTFIT_PROP_NEEDSGFX );
+         needsgfx = 1;
+      }
    }
-   vpool_wait( tq );
-   vpool_cleanup( tq );
-   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+   if (needsgfx)
+      outfit_gfxStoreLoadNeeded();
 }

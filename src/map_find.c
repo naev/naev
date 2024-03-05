@@ -620,7 +620,7 @@ static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, 
     * a 20 px gap, 280 px for the outfit's name and a final 20 px gap. */
    iw = w - 452;
 
-   outfit_loadStoreGFX( (Outfit*) outfit );
+   outfit_gfxStoreLoad( (Outfit*) outfit );
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
    l = outfit_getNameWithClass( outfit, buf, sizeof(buf) );
    l += scnprintf( &buf[l], sizeof(buf)-l, " %s", pilot_outfitSummary( player.p, outfit, 0 ) );
