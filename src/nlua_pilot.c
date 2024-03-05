@@ -6592,6 +6592,7 @@ static int pilotL_render( lua_State *L )
 {
    LuaCanvas_t lc;
    int w, h;
+   double eg;
    Pilot *p = luaL_validpilot(L,1);
 
    /* TODO handle when effects make the ship render larger than it really is. */
@@ -6600,8 +6601,14 @@ static int pilotL_render( lua_State *L )
    if (canvas_new( &lc, w, h ))
       return NLUA_ERROR( L, _("Error setting up framebuffer!"));
 
-   /* I'me really stumped at why we need to pass gl_screen here for it to work... */
+   /* The code path below is really buggy.
+    * 1. engine_glow seems to scale 3D models improperly when interpolating, so it's disabled.
+    * 2. for some reason, have to pass real dimensions and not fbo dimensions.
+    * TODO fix this shit. */
+   eg = p->engine_glow;
+   p->engine_glow = (eg > 0.5) ? 1.0 : 0.0;
    pilot_renderFramebuffer( p, lc.fbo, gl_screen.rw, gl_screen.rh );
+   p->engine_glow = eg;
 
    lua_pushcanvas( L, lc );
    return 1;
@@ -6621,6 +6628,7 @@ static int pilotL_renderTo( lua_State *L )
    Pilot *p = luaL_validpilot( L, 1 );
    LuaCanvas_t *lc = luaL_checkcanvas( L, 2 );
    int w, h;
+   double eg;
 
    /* TODO handle when effects make the ship render larger than it really is. */
    w = p->ship->size;
@@ -6629,8 +6637,14 @@ static int pilotL_renderTo( lua_State *L )
       WARN(_("Canvas is too small to fully render '%s': %.0f x %.0f < %d x %d"),
             p->name, lc->tex->w, lc->tex->h, w, h );
 
-   /* I'me really stumped at why we need to pass gl_screen here for it to work... */
+   /* The code path below is really buggy.
+    * 1. engine_glow seems to scale 3D models improperly when interpolating, so it's disabled.
+    * 2. for some reason, have to pass real dimensions and not fbo dimensions.
+    * TODO fix this shit. */
+   eg = p->engine_glow;
+   p->engine_glow = (eg > 0.5) ? 1.0 : 0.0;
    pilot_renderFramebuffer( p, lc->fbo, gl_screen.rw, gl_screen.rh );
+   p->engine_glow = eg;
 
    lua_pushnumber( L, w );
    lua_pushnumber( L, h );
