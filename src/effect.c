@@ -101,6 +101,8 @@ static int effect_parse( EffectData *efx, const char *file )
          xmlr_attr_strd(node,"vertex",vertex);
          if (vertex == NULL)
             vertex = strdup("effect.vert");
+         else
+            efx->flags |= EFFECT_VERTEX;
          xmlr_attr_strd(node,"img",img);
          if (img != NULL) {
             efx->img = gl_newImage( img, OPENGL_TEX_MIPMAPS | OPENGL_TEX_CLAMP_ALPHA );

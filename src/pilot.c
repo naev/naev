@@ -1950,6 +1950,16 @@ void pilot_render( Pilot *p )
          mat4 projection, tex_mat;
          const EffectData *ed = e->data;
 
+         /* Have to scissors a bit more in case of custom vertex effects. */
+         if (ed->flags & EFFECT_VERTEX) {
+            double s = ceil(2.0*p->ship->size/gl_screen.scale);
+            glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+            glEnable( GL_SCISSOR_TEST );
+            glScissor( 0, 0, s, s );
+            glClear( GL_COLOR_BUFFER_BIT );
+            glDisable( GL_SCISSOR_TEST );
+         }
+
          /* Render onto framebuffer. */
          pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
 

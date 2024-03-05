@@ -9,6 +9,7 @@
 
 #define EFFECT_BUFF     (1<<0)   /**< Effect is a buff. */
 #define EFFECT_DEBUFF   (1<<1)   /**< Effect is a debuff. */
+#define EFFECT_VERTEX   (1<<2)   /**< Effect uses a custom vertex shader. */
 
 /**
  * @brief Pilot ship effect data.
