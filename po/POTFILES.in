@@ -2885,6 +2885,7 @@ dat/events/npc/trader.lua
 dat/events/npc/wild_ones.lua
 dat/events/npc/zalek.lua
 dat/events/obelisk.lua
+dat/events/onion/onion02.lua
 dat/events/pers.lua
 dat/events/pers/dvaered.lua
 dat/events/pers/empire.lua
