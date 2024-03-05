@@ -226,7 +226,7 @@ function land ()
    -- TODO silly 8-bit music
    --vn.music( onion.loops.circus )
    local oni = onion.vn_onion()
-   vn.appear( oni )
+   vn.appear( oni, "electric" )
    oni(_([[Suddenly, all the lights go off and all the holoscreens throughout the station flash into activity.
 "How are you gentlemen?"]]))
    oni(_([["Tsk tsk tsk. Such sloppy security. You should be ashamed of yourselves. "]]))
@@ -236,7 +236,7 @@ function land ()
    --[=[oni(_([["Anyway, it was fun crashing this place. Lots of interesting things to see. Got to get going. By the way, you guys should do something about the life control systems, it seems like they're going critical. Toodaloo〜♪."]]))--]=]
    -- Probably better to use the Toodaloo with another less script-kiddy one.
    oni(_([["Anyway, it was fun crashing this place. Lots of interesting things to see. Got to get going. By the way, you guys should do something about the life control systems, it seems like they're going critical."]]))
-   vn.disappear( oni )
+   vn.disappear( oni, "electric" )
 
    vne.alarmStart()
    vn.na(_([[The hologram fades and the alarms start blaring, probably indicating that life control systems are critical. People begin to scramble like wild trying to save themselves, and it looks like you're about to get dragged into it.
@@ -260,11 +260,11 @@ What do you do?]]))
 
    vn.label("01_cont")
    vne.alarmEnd()
-   vn.appear( oni )
+   vn.appear( oni, "electric" )
    oni:rename(_("Ogre"))
    vn.na(_([[Suddenly, the alarm goes quiet, lights are restored, and the holograms flash back into life.]]))
    oni(_([["Psyche! But seriously though, your database is toast."]]))
-   vn.disappear( oni )
+   vn.disappear( oni, "electric" )
    vn.na(_([[Despite the apparently reassuring message, the chaos continues for quite a while. Eventually, you manage to make it back to your ship, extremely worn out and tired, but at least in one piece. That so-called "Ogre" seems like quite a pain in the ass.]]))
    vn.na(_([[As you let out a big sigh, you suddenly notice you have an unnoticed message. It seems like you have an anonymous transfer to your account.]]))
    vn.sfxMoney()
