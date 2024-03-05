@@ -1816,6 +1816,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
          double s = ceil(2.0*p->ship->size/gl_screen.scale);
          glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
          glEnable( GL_SCISSOR_TEST );
+         glClearColor( 0., 0., 0., 0. );
          glScissor( 0, 0, s, s );
          glClear( GL_COLOR_BUFFER_BIT );
          glDisable( GL_SCISSOR_TEST );
@@ -1966,8 +1967,10 @@ void pilot_render( Pilot *p )
             glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
             glEnable( GL_SCISSOR_TEST );
             glScissor( 0, 0, s, s );
+            glClearColor( 0., 0., 0., 0. );
             glClear( GL_COLOR_BUFFER_BIT );
             glDisable( GL_SCISSOR_TEST );
+            glClearColor( 0., 0., 0., 1. );
          }
 
          /* Render onto framebuffer. */
