@@ -1014,20 +1014,25 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
 
       /* Actually render. */
       if ((engine_glow > 0.) && (obj->scene_engine >= 0)) {
-         /* More scissors. */
-         glEnable( GL_SCISSOR_TEST );
-         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[2] );
-         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
-         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+         if (engine_glow >= 1.) {
+            gltf_renderScene( ship_fbo[0], obj, obj->scene_engine, &H, 0., scale, NULL );
+         }
+         else {
+            /* More scissors. */
+            glEnable( GL_SCISSOR_TEST );
+            glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[2] );
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-         /* First render separately. */
-         gltf_renderScene( ship_fbo[1], obj, obj->scene_body, &H, 0., scale, NULL );
-         gltf_renderScene( ship_fbo[2], obj, obj->scene_engine, &H, 0., scale, NULL );
+            /* First render separately. */
+            gltf_renderScene( ship_fbo[1], obj, obj->scene_body, &H, 0., scale, NULL );
+            gltf_renderScene( ship_fbo[2], obj, obj->scene_engine, &H, 0., scale, NULL );
 
-         /* Now merge to main framebuffer. */
-         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
-         gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1], engine_glow, &projection, &tex_mat, &cWhite );
+            /* Now merge to main framebuffer. */
+            glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
+            gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1], engine_glow, &projection, &tex_mat, &cWhite );
+         }
       }
       else
          gltf_renderScene( ship_fbo[0], obj, obj->scene_body, &H, 0., scale, NULL );
