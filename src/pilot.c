@@ -3378,7 +3378,7 @@ Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char
    array_push_back( &pilot_stack, p );
 
    /* Load ship graphics. */
-   ship_loadGFX( (Ship*) ship ); /* TODO no casting. */
+   ship_gfxLoad( (Ship*) ship ); /* TODO no casting. */
 
    /* Initialize the pilot. */
    pilot_init( p, ship, name, faction, dir, pos, vel, flags, dockpilot, dockslot );
@@ -3486,7 +3486,7 @@ unsigned int pilot_addStack( Pilot *p )
    array_push_back( &pilot_stack, p );
 
    /* Load ship graphics. */
-   ship_loadGFX( (Ship*) p->ship ); /* TODO no casting. */
+   ship_gfxLoad( (Ship*) p->ship ); /* TODO no casting. */
 
    /* Have to reset after adding to stack, as some Lua functions will run code on the pilot. */
    pilot_reset( p );
@@ -3538,7 +3538,7 @@ Pilot* pilot_setPlayer( Pilot* after )
    qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
 
    /* Load graphics if necessary. */
-   ship_loadGFX( (Ship*) after->ship );
+   ship_gfxLoad( (Ship*) after->ship );
 
    /* Set up stuff. */
    player.p = after;

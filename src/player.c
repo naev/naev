@@ -3905,13 +3905,16 @@ static Spob* player_parse( xmlNodePtr parent )
    }
 
    /* Threaded loading of graphics for speed. */
-   ThreadQueue *tq = vpool_create();
-   for (int i=0; i<array_size(player_stack); i++)
-      vpool_enqueueUnique( tq, (int(*)(void*)) ship_loadGFX, (Ship*) player_stack[i].p->ship );
-   SDL_GL_MakeCurrent( gl_screen.window, NULL );
-   vpool_wait( tq );
-   vpool_cleanup( tq );
-   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+   int needsgfx = 0;
+   for (int i=0; i<array_size(player_stack); i++) {
+      Ship *s = (Ship*) player_stack[i].p->ship;
+      if (!ship_gfxLoaded(s)) {
+         s->flags |= SHIP_NEEDSGFX;
+         needsgfx = 1;
+      }
+   }
+   if (needsgfx)
+      ship_gfxLoadNeeded();
 
    /* Reset player speed */
    player.speed = conf.game_speed;

@@ -155,14 +155,16 @@ void shipyard_open( unsigned int wid )
    }
    else {
       /* Threaded loading of graphics for speed. */
-      ThreadQueue *tq = vpool_create();
-      for (int i=0; i<nships; i++)
-         /* Just to be safe, we assume some ships colud potentially be duplicated. */
-         vpool_enqueueUnique( tq, (int(*)(void*)) ship_loadGFX, shipyard_list[i] );
-      SDL_GL_MakeCurrent( gl_screen.window, NULL );
-      vpool_wait( tq );
-      vpool_cleanup( tq );
-      SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+      int needsgfx = 0;
+      for (int i=0; i<nships; i++) {
+         Ship *s = (Ship*) shipyard_list[i];
+         if (!ship_gfxLoaded(s)) {
+            s->flags |= SHIP_NEEDSGFX;
+            needsgfx = 1;
+         }
+      }
+      if (needsgfx)
+         ship_gfxLoadNeeded();
 
       /* Properly create the array. */
       for (int i=0; i<nships; i++) {

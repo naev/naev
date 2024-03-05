@@ -16,6 +16,7 @@
 #define SHIP_NOPLAYER   (1<<0)   /**< Player is not allowed to fly the ship. */
 #define SHIP_NOESCORT   (1<<1)   /**< Player is not allowed to set the ship as an escort. */
 #define SHIP_UNIQUE     (1<<2)   /**< Ship is unique and player can only have one. */
+#define SHIP_NEEDSGFX   (1<<3)   /**< Ship needs to load graphics. */
 #define ship_isFlag(s,f)   ((s)->flags & (f)) /**< Checks ship flag. */
 #define ship_setFlag(s,f)  ((s)->flags |= (f)) /**< Sets ship flag. */
 #define ship_rmFlag(s,f)   ((s)->flags &= ~(f)) /**< Removes ship flag. */
@@ -206,7 +207,9 @@ int ship_size( const Ship *s );
  * Misc.
  */
 void ships_resize (void);
-int ship_loadGFX( Ship *s );
+int ship_gfxLoaded( const Ship *s );
+int ship_gfxLoadNeeded (void);
+int ship_gfxLoad( Ship *temp );
 int ship_compareTech( const void *arg1, const void *arg2 );
 void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, double dir, double engine_glow, double tilt, int sx, int sy, const glColour *c );
 double ship_maxSize (void);

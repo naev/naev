@@ -390,12 +390,37 @@ static int ship_loadEngineImage( Ship *temp, const char *str, int sx, int sy )
    return (temp->gfx_engine != NULL);
 }
 
+int ship_gfxLoaded( const Ship *s )
+{
+   return ((s->gfx_3d!=NULL) || (s->gfx_space!=NULL));
+}
+
+int ship_gfxLoadNeeded (void)
+{
+   ThreadQueue *tq = vpool_create();
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
+
+   for (int i=0; i<array_size(ship_stack); i++) {
+      Ship *s = &ship_stack[i];
+      if (!ship_isFlag( s, SHIP_NEEDSGFX ))
+         continue;
+      vpool_enqueue( tq, (int(*)(void*)) ship_gfxLoad, s );
+      ship_rmFlag( s, SHIP_NEEDSGFX );
+   }
+
+   vpool_wait( tq );
+   vpool_cleanup( tq );
+
+   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+   return 0;
+}
+
 /**
  * @brief Loads the graphics for a ship if necessary.
  *
  *    @param temp Ship to load into.
  */
-int ship_loadGFX( Ship *temp )
+int ship_gfxLoad( Ship *temp )
 {
    char str[PATH_MAX], *base, *delim, *base_path;
    const char *ext = ".webp";
@@ -405,7 +430,7 @@ int ship_loadGFX( Ship *temp )
    int engine = !temp->noengine;
 
    /* If already loaded, just ignore. */
-   if ((temp->gfx_3d!=NULL) || (temp->gfx_space!=NULL))
+   if (ship_gfxLoaded( temp ))
       return 0;
 
    /* Get base path. */
@@ -481,7 +506,7 @@ static int ship_generateStoreGFX( Ship *temp )
    GLsizei size = ceil(temp->size / gl_screen.scale);
 
    /* Load base gfx first. */
-   ship_loadGFX( temp );
+   ship_gfxLoad( temp );
 
    /* Load store graphics. */
    snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
