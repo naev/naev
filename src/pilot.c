@@ -3995,7 +3995,7 @@ void pilots_update( double dt )
       /* See if should think. */
       if (pilot_isDisabled(p))
          continue;
-      if (pilot_isFlag(p,PILOT_DEAD))
+      if (pilot_isFlag(p,PILOT_DEAD) || pilot_isFlag(p, PILOT_DELETE))
          continue;
 
       /* Ignore persisting pilots during simulation since they don't get cleared. */
