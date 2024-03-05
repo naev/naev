@@ -40,7 +40,7 @@
  */
 typedef struct Keybind_ {
    int disabled; /**< Whether or not it's disabled. */
-   const char *brief, *detailed; /**< Descriptions of the keybinds */
+   const char *brief, *name; /**< Descriptions of the keybinds */
    KeybindType type; /**< type, defined in player.h */
    SDL_Keycode key; /**< key/axis/button event number */
    SDL_Keymod mod; /**< Key modifiers (where applicable). */
@@ -1565,4 +1565,104 @@ void input_handle( SDL_Event* event )
       default:
          break;
    }
+}
+
+typedef struct {
+   const char* str;
+   int val;
+} Matching;
+
+const Matching keybind_name[KST_PASTE+1] = {
+   {"accel", KST_ACCEL},
+   {"left", KST_LEFT},
+   {"right", KST_RIGHT },
+   {"reverse", KST_REVERSE },
+   {"face", KST_FACE },
+
+   { "stealth", KST_STEALTH },
+   { "speed", KST_GAME_SPEED },
+   { "pause", KST_PAUSE },
+   {"autonav", KST_AUTONAV},
+   {"approach", KST_APPROACH},
+   {"mousefly", KST_MOUSE_FLYING},
+   {"jump", KST_JUMP},
+   {"target_next", KST_TARGET_NEXT },
+   { "target_prev", KST_TARGET_PREV },
+   { "target_nearest",KST_TARGET_CLOSE },
+   { "target_spob", KST_TARGET_SPOB },
+   {"thyperspace", KST_TARGET_JUMP},
+
+   { "target_nextHostile", KST_HTARGET_NEXT },
+   { "target_prevHostile", KST_HTARGET_NEXT },
+   { "target_hostile", KST_HTARGET_NEXT },
+
+   { "target_clear", KST_HTARGET_NEXT },
+
+   {"primary", KST_FIRE_PRIMARY},
+   {"secondary", KST_FIRE_SECONDARY},
+   {"cooldown",KST_INIT_COOLDOWN},
+
+   { "switchtab1", KST_TAB_1},
+   { "switchtab2", KST_TAB_2},
+   { "switchtab3", KST_TAB_3},
+   { "switchtab4", KST_TAB_4},
+   { "switchtab5", KST_TAB_5},
+   { "switchtab6", KST_TAB_6},
+   { "switchtab7", KST_TAB_7},
+   { "switchtab8", KST_TAB_8},
+   { "switchtab9", KST_TAB_9},
+   { "switchtab0", KST_TAB_0},
+
+   {"overlay", KST_LOCAL_MAP},
+   {"starmap", KST_GLOBAL_MAP},
+
+   {"menu", KST_MENU_SMALL},
+   {"info", KST_MENU_INFO},
+   {"console", KST_MENU_LUA},
+
+   { "e_targetNext",KST_ESCORT_NEXT},
+   { "e_targetPrev",KST_ESCORT_PREV},
+   { "e_attack",KST_ESCORT_ATTACK},
+   { "e_hold",KST_ESCORT_HALT},
+   { "e_return",KST_ESCORT_RETURN},
+   { "e_clear", KST_ESCORT_CLEAR},
+
+   { "hail",KST_COMM_HAIL},
+   { "autohail",KST_COMM_RECEIVE},
+   { "log_up", KST_COMM_UP},
+   { "log_down",KST_COMM_DOWN},
+
+   {"mapzoomin",KST_ZOOM_IN},
+   {"mapzoomout",KST_ZOOM_IN},
+
+   {"togglefullscreen",KST_FULLSCREEN},
+
+   {"screenshot", KST_SCREENSHOT},
+
+   {"paste",KST_PASTE},
+};
+
+KeySemanticType find_key( const char *target )
+{
+   int low = 0;
+   int high = KST_PASTE;
+
+   while (low <= high) {
+      int mid = low + (high - low) / 2;
+      int cmp = strcmp(target, keybind_name[mid].str);
+
+      if (cmp == 0) {
+         // The target string matches the string in the current struct.
+         return keybind_name[mid].val;
+      } else if (cmp < 0) {
+         // Target string is lexicographically smaller than the mid struct's string.
+         high = mid - 1;
+      } else {
+         // Target string is lexicographically larger than the mid struct's string.
+         low = mid + 1;
+      }
+   }
+
+   // Return a special value indicating the target string was not found.
+   return KST_PASTE+1;
 }

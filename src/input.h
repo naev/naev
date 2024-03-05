@@ -121,7 +121,7 @@ SDL_Keycode input_getKeybind( KeySemanticType keybind, KeybindType *type, SDL_Ke
 void input_getKeybindDisplay( KeySemanticType keybind, char *buf, int len );
 const char *input_getKeybindDescription( KeySemanticType keybind );
 const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod mod );
-
+KeySemanticType find_key( const char *name );
 /*
  * Misc.
  */

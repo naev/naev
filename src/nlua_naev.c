@@ -282,7 +282,7 @@ static int naevL_keyGet( lua_State *L )
    char buf[128];
    const char *keyname = luaL_checkstring( L, 1 );
 
-   input_getKeybindDisplay( keyname, buf, sizeof(buf) );
+   input_getKeybindDisplay( find_key(keyname), buf, sizeof(buf) );
    lua_pushstring( L, buf );
 
    return 1;
@@ -303,7 +303,7 @@ static int naevL_keyEnable( lua_State *L )
    const char *key = luaL_checkstring(L,1);
    int enable = lua_toboolean(L,2);
 
-   input_toggleEnable( key, enable );
+   input_toggleEnable( find_key(key), enable );
    return 0;
 }
 
