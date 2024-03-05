@@ -1032,6 +1032,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
             /* Now merge to main framebuffer. */
             glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
             gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1], engine_glow, &projection, &tex_mat, &cWhite );
+
+            /* TODO fix this area, it causes issues with rendering pilots to the framebuffer in the gui. */
          }
       }
       else
