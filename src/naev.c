@@ -830,6 +830,7 @@ void naev_resize (void)
    toolkit_resize();
    menu_main_resize();
    nebu_resize();
+   ships_resize();
 
    /* Lua stuff. */
    nlua_resize();

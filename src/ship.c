@@ -65,7 +65,8 @@ static double ship_fbos = 0.;
 static GLuint ship_fbo[SHIP_FBO] = { GL_INVALID_ENUM };
 static GLuint ship_tex[SHIP_FBO] = { GL_INVALID_ENUM };
 static GLuint ship_texd[SHIP_FBO] = { GL_INVALID_ENUM };
-static double ship_aa_scale = 2.;
+static const double ship_aa_scale_base = 2.;
+static double ship_aa_scale = -1.;
 
 /*
  * Prototypes
@@ -983,7 +984,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
    glClearColor( 0., 0., 0., 0. );
 
    if (s->gfx_3d != NULL) {
-      double scale = ship_aa_scale*s->size / gl_screen.scale;
+      double scale = ship_aa_scale*s->size;
       const GltfObject *obj = s->gfx_3d;
       mat4 projection, tex_mat;
 
@@ -1015,9 +1016,9 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, do
       if ((engine_glow > 0.) && (obj->scene_engine >= 0)) {
          /* More scissors. */
          glEnable( GL_SCISSOR_TEST );
-         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
-         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
          glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[2] );
+         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
          glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
          /* First render separately. */
@@ -1253,14 +1254,27 @@ int ships_load (void)
    else
       DEBUG( n_( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
 
+   ships_resize();
+   return 0;
+}
+
+void ships_resize (void)
+{
+   if (ship_aa_scale > 0.) {
+      for (int i=0; i<SHIP_FBO; i++) {
+         glDeleteFramebuffers( 1, &ship_fbo[i] );
+         glDeleteTextures( 1, &ship_tex[i] );
+         glDeleteTextures( 1, &ship_texd[i] );
+      }
+   }
+
    /* Set up OpenGL rendering stuff. */
-   ship_fbos = ceil( ship_aa_scale * max_size / gl_screen.scale );
+   ship_aa_scale = ship_aa_scale_base / gl_screen.scale;
+   ship_fbos = ceil( ship_aa_scale * max_size );
    for (int i=0; i<SHIP_FBO; i++) {
       gl_fboCreate( &ship_fbo[i], &ship_tex[i], ship_fbos, ship_fbos );
       gl_fboAddDepth( ship_fbo[i], &ship_texd[i], ship_fbos, ship_fbos );
    }
-
-   return 0;
 }
 
 /**
