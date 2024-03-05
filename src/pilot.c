@@ -2658,11 +2658,12 @@ void pilot_update( Pilot* pilot, double dt )
    /* Set tilt. */
    const double tilt_max = M_PI/8.;
    const double tilt_mod = tilt_max * 8.;
-   if (pilot->solid.dir_vel > DOUBLE_TOL) {
+   const double tilt_threshold = 0.05; /* A bit under 5 degrees/sec. */
+   if (pilot->solid.dir_vel > tilt_threshold) {
       pilot->tilt += pilot->solid.dir_vel / tilt_mod * dt;
       pilot->tilt = MIN( pilot->tilt, tilt_max );
    }
-   else if (pilot->solid.dir_vel < -DOUBLE_TOL) {
+   else if (pilot->solid.dir_vel < -tilt_threshold) {
       /* Already negative. */
       pilot->tilt += pilot->solid.dir_vel / tilt_mod * dt;
       pilot->tilt = MAX( pilot->tilt, -tilt_max );
