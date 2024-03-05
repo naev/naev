@@ -18,7 +18,7 @@
 </mission>
 --]]
 --[[
-   Stub mission to trigger onion01
+   Introduction to the Onion Society campaign
 --]]
 local fmt = require "format"
 local vntk = require "vntk"
