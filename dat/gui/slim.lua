@@ -12,7 +12,7 @@ local ta_pane_w, ta_pane_x, ta_pane_y, ta_pnt_pane_x, ta_pnt_pane_y, pl_pane_x, 
 local slot, slotend, slotframe
 -- This script has a lot of globals. It really loves them.
 -- The below variables aren't part of the GUI API and aren't accessed via _G:
--- luacheck: globals active bardata bar_offsets bar_ready_h bar_ready_w bars bar_weapon_h bar_weapon_w blinkcol bottom_bar buttons cargofree cargofreel cargo_light_off cargo_light_on cargoterml cooldown cooldown_bg cooldown_bg_h cooldown_bg_w cooldown_bg_x cooldown_bg_y cooldown_frame cooldown_frame_h cooldown_frame_w cooldown_frame_x cooldown_frame_y cooldown_panel cooldown_panel_x cooldown_panel_y cooldown_sheen cooldown_sheen_x cooldown_sheen_y gfxWarn lmouse missile_lock_length missile_lock_text nav_hyp navstring planet_bg planet_pane_b planet_pane_m planet_pane_t player_pane_b player_pane_m player_pane_t pl_pane_h_b pl_pane_w_b pname pntflags ptarget_faction_gfx ptarget_gfx ptarget_gfx_draw_h ptarget_gfx_draw_w ptarget_gfx_h ptarget_gfx_w ptarget_target question sheen sheen_sm sheen_tiny sheen_weapon slotend_h slotend_w slot_img_offs_x slot_img_offs_y slot_img_w slot_start_x stats sysname ta_cargo ta_cargo_x ta_cargo_y ta_center_x ta_center_y ta_fact_x ta_fact_y ta_image_x ta_image_y ta_pane_h ta_pnt_center_x ta_pnt_center_y ta_pnt_faction_gfx ta_pnt_fact_x ta_pnt_fact_y ta_pnt_gfx ta_pnt_gfx_draw_h ta_pnt_gfx_draw_w ta_pnt_gfx_h ta_pnt_gfx_w ta_pnt_image_x ta_pnt_image_y ta_pnt_pane_h ta_pnt_pane_h_b ta_pnt_pane_w ta_pnt_pane_w_b ta_question_h ta_question_w target_bg target_dir target_light_off target_light_on target_pane ta_speed ta_stats ta_warning_x ta_warning_y tflags track_h tracking_light track_w warnlight1 warnlight2 warnlight3 warnlight4 warnlight5 wset wset_name x_ammo y_ammo
+-- luacheck: globals active bardata bar_offsets bar_ready_h bar_ready_w bars bar_weapon_h bar_weapon_w blinkcol bottom_bar buttons cargofree cargofreel cargo_light_off cargo_light_on cargoterml cooldown cooldown_bg cooldown_bg_h cooldown_bg_w cooldown_bg_x cooldown_bg_y cooldown_frame cooldown_frame_h cooldown_frame_w cooldown_frame_x cooldown_frame_y cooldown_panel cooldown_panel_x cooldown_panel_y cooldown_sheen cooldown_sheen_x cooldown_sheen_y gfxWarn lmouse missile_lock_length missile_lock_text nav_hyp navstring planet_bg planet_pane_b planet_pane_m planet_pane_t player_pane_b player_pane_m player_pane_t pl_pane_h_b pl_pane_w_b pname pntflags ptarget_faction_gfx ptarget_cvs ptarget_gfx ptarget_gfx_draw_h ptarget_gfx_draw_w ptarget_gfx_h ptarget_gfx_w ptarget_target question sheen sheen_sm sheen_tiny sheen_weapon slotend_h slotend_w slot_img_offs_x slot_img_offs_y slot_img_w slot_start_x stats sysname ta_cargo ta_cargo_x ta_cargo_y ta_center_x ta_center_y ta_fact_x ta_fact_y ta_image_x ta_image_y ta_pane_h ta_pnt_center_x ta_pnt_center_y ta_pnt_faction_gfx ta_pnt_fact_x ta_pnt_fact_y ta_pnt_gfx ta_pnt_gfx_draw_h ta_pnt_gfx_draw_w ta_pnt_gfx_h ta_pnt_gfx_w ta_pnt_image_x ta_pnt_image_y ta_pnt_pane_h ta_pnt_pane_h_b ta_pnt_pane_w ta_pnt_pane_w_b ta_question_h ta_question_w target_bg target_dir target_light_off target_light_on target_pane ta_speed ta_stats ta_warning_x ta_warning_y tflags track_h tracking_light track_w warnlight1 warnlight2 warnlight3 warnlight4 warnlight5 wset wset_name x_ammo y_ammo
 -- Unfortunately, it is an error to make any function a closure over more than 60 variables.
 -- Caution: the below **are** accessed via _G.
 -- luacheck: globals armour energy shield speed stress (_G[v])
@@ -339,7 +339,8 @@ end
 function update_target()
    ptarget = pp:target()
    if ptarget then
-      ptarget_gfx = ptarget:render():getTex()
+      ptarget_cvs = ptarget:render()
+      ptarget_gfx = ptarget_cvs:getTex()
       ptarget_gfx_w, ptarget_gfx_h = ptarget_gfx:dim()
       local ptargetfact = ptarget:faction()
       ptarget_target = ptarget:target()
@@ -943,6 +944,7 @@ function render( dt, dt_mod )
             ta_energy = ptarget:energy()
 
             --Render target graphic
+            ptarget:renderTo( ptarget_cvs )
             if ptarget_gfx_w > 62 or ptarget_gfx_h > 62 then
                gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_draw_w / 2, ta_center_y - ptarget_gfx_draw_h / 2, ptarget_gfx_draw_w, ptarget_gfx_draw_h, 1, 1, 0, 0, 1, -1)
             else
