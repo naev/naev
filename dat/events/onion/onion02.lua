@@ -37,7 +37,6 @@
 local vn = require "vn"
 --local fmt = require "format"
 local onion = require "common.onion"
-local spfx = require "luaspfx.onion"
 
 function create ()
    -- Inclusive claims, so not an issue they overlap with the mission itself
@@ -66,7 +65,7 @@ function trigger ()
 
    possessed:control()
    possessed:follow( player.pilot() )
-   spfx( possessed )
+   possessed:effectAdd("Onionized")
    hook.pilot( possessed, "death", "trigger" ) -- Retrigger if dies
    hook.pilot( possessed, "hail", "hail" )
    hook.timer( 1, "heartbeat" )
@@ -100,6 +99,11 @@ function hail()
    vn.done("electric")
    vn.run()
 
+   -- Reset the NPC
+   possessed:effectRm("Onionized")
+   possessed:control(false)
+
+   -- Clean up and start mission
    player.commClose()
    if accepted then
       naev.missionStart("Onion Society 02")

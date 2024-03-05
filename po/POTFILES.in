@@ -79,6 +79,7 @@ dat/effects/fractured_reality.xml
 dat/effects/hypergate_enter.xml
 dat/effects/hypergate_exit.xml
 dat/effects/ionization.xml
+dat/effects/onionized.xml
 dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
@@ -3385,7 +3386,6 @@ dat/scripts/luaspfx/emp.lua
 dat/scripts/luaspfx/emp_blast.lua
 dat/scripts/luaspfx/explosion.lua
 dat/scripts/luaspfx/feather_drive.lua
-dat/scripts/luaspfx/onion.lua
 dat/scripts/luaspfx/pheromones.lua
 dat/scripts/luaspfx/pulse.lua
 dat/scripts/luaspfx/racetrack.lua
