@@ -417,7 +417,7 @@ static int gltf_loadMaterial( Material *mat, const cgltf_material *cmat, const c
       jsmn_init(&p);
       int r = jsmn_parse( &p, buf, len, t, sizeof(t)/sizeof(jsmntok_t) );
       for (int j=0; j<r; j++) {
-         jsmntok_t *tj = &t[j];
+         const jsmntok_t *tj = &t[j];
          const char *str = "NAEV_noShadows";
          if (strncmp( str, &buf[tj->start], MIN(strlen(str),(size_t)(tj->end-tj->start)) )==0) {
             if (j+1 >= r)
@@ -476,6 +476,8 @@ static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *aa
    glBindBuffer( GL_ARRAY_BUFFER, vid );
    glBufferData( GL_ARRAY_BUFFER, sizeof(cgltf_float) * num, dat, GL_STATIC_DRAW );
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+   gl_checkErr();
+   gl_contextUnset();
 
    /* If applicable, store some useful stuff. */
    if (radius != NULL) {
@@ -497,8 +499,6 @@ static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *aa
       }
    }
 
-   gl_checkErr();
-   gl_contextUnset();
    free( dat );
    return vid;
 }
@@ -548,9 +548,9 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_nod
          glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(cgltf_uint) * num, idx, GL_STATIC_DRAW );
          mesh->nidx = acc->count;
          glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-         free( idx );
          gl_checkErr();
          gl_contextUnset();
+         free( idx );
 
          for (size_t j=0; j<prim->attributes_count; j++) {
             const cgltf_attribute *attr = &prim->attributes[j];
@@ -584,14 +584,16 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_nod
    }
 
    /* Iterate over children. */
-   node->children = calloc( cnode->children_count, sizeof(Node) );
    node->nchildren = cnode->children_count;
-   for (size_t i=0; i<cnode->children_count; i++) {
-      Node *child = &node->children[i];
-      gltf_loadNodeRecursive( data, child, cnode->children[i] );
-      node->radius = MAX( node->radius, child->radius );
-      vec3_max( &node->aabb_max, &node->aabb_max, &child->aabb_max );
-      vec3_min( &node->aabb_min, &node->aabb_min, &child->aabb_min );
+   if (node->nchildren > 0) {
+      node->children = calloc( cnode->children_count, sizeof(Node) );
+      for (size_t i=0; i<cnode->children_count; i++) {
+         Node *child = &node->children[i];
+         gltf_loadNodeRecursive( data, child, cnode->children[i] );
+         node->radius = MAX( node->radius, child->radius );
+         vec3_max( &node->aabb_max, &node->aabb_max, &child->aabb_max );
+         vec3_min( &node->aabb_min, &node->aabb_min, &child->aabb_min );
+      }
    }
    return 0;
 }
