@@ -181,7 +181,7 @@ static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex, cons
    const SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
    GLuint tex;
    SDL_Surface *surface = NULL;
-   int has_alpha = 0;
+   int has_alpha;
 
    /* Must haev texture to load it. */
    if ((ctex==NULL) || (ctex->texture==NULL)) {
