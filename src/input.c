@@ -1574,34 +1574,52 @@ typedef struct {
 
 const Matching keybind_name[KST_PASTE+1] = {
    {"accel", KST_ACCEL},
-   {"left", KST_LEFT},
-   {"right", KST_RIGHT },
-   {"reverse", KST_REVERSE },
+   {"approach", KST_APPROACH},
+   {"autohail",KST_COMM_RECEIVE},
+   {"autonav", KST_AUTONAV},
+
+   {"console", KST_MENU_LUA},
+   {"cooldown",KST_INIT_COOLDOWN},
+
+   { "e_attack",KST_ESCORT_ATTACK},
+   { "e_clear", KST_ESCORT_CLEAR},
+   { "e_hold",KST_ESCORT_HALT},
+   { "e_return",KST_ESCORT_RETURN},
+   { "e_targetNext",KST_ESCORT_NEXT},
+   { "e_targetPrev",KST_ESCORT_PREV},
+
    {"face", KST_FACE },
+
+   { "hail",KST_COMM_HAIL},
+
+   {"info", KST_MENU_INFO},
+
+   {"jump", KST_JUMP},
+
+   {"left", KST_LEFT},
+   { "log_down",KST_COMM_DOWN},
+   { "log_up", KST_COMM_UP},
+
+   {"mapzoomin",KST_ZOOM_IN},
+   {"mapzoomout",KST_ZOOM_IN},
+   {"menu", KST_MENU_SMALL},
+   {"mousefly", KST_MOUSE_FLYING},
+
+   {"overlay", KST_LOCAL_MAP},
+
+   {"paste",KST_PASTE},
+   {"pause", KST_PAUSE },
+   {"primary", KST_FIRE_PRIMARY},
+
+   {"reverse", KST_REVERSE },
+   {"right", KST_RIGHT },
 
    { "stealth", KST_STEALTH },
    { "speed", KST_GAME_SPEED },
-   { "pause", KST_PAUSE },
-   {"autonav", KST_AUTONAV},
-   {"approach", KST_APPROACH},
-   {"mousefly", KST_MOUSE_FLYING},
-   {"jump", KST_JUMP},
-   {"target_next", KST_TARGET_NEXT },
-   { "target_prev", KST_TARGET_PREV },
-   { "target_nearest",KST_TARGET_CLOSE },
-   { "target_spob", KST_TARGET_SPOB },
-   {"thyperspace", KST_TARGET_JUMP},
 
-   { "target_nextHostile", KST_HTARGET_NEXT },
-   { "target_prevHostile", KST_HTARGET_NEXT },
-   { "target_hostile", KST_HTARGET_NEXT },
-
-   { "target_clear", KST_HTARGET_NEXT },
-
-   {"primary", KST_FIRE_PRIMARY},
+   {"screenshot", KST_SCREENSHOT},
    {"secondary", KST_FIRE_SECONDARY},
-   {"cooldown",KST_INIT_COOLDOWN},
-
+   { "switchtab0", KST_TAB_0},
    { "switchtab1", KST_TAB_1},
    { "switchtab2", KST_TAB_2},
    { "switchtab3", KST_TAB_3},
@@ -1611,35 +1629,22 @@ const Matching keybind_name[KST_PASTE+1] = {
    { "switchtab7", KST_TAB_7},
    { "switchtab8", KST_TAB_8},
    { "switchtab9", KST_TAB_9},
-   { "switchtab0", KST_TAB_0},
-
-   {"overlay", KST_LOCAL_MAP},
    {"starmap", KST_GLOBAL_MAP},
 
-   {"menu", KST_MENU_SMALL},
-   {"info", KST_MENU_INFO},
-   {"console", KST_MENU_LUA},
-
-   { "e_targetNext",KST_ESCORT_NEXT},
-   { "e_targetPrev",KST_ESCORT_PREV},
-   { "e_attack",KST_ESCORT_ATTACK},
-   { "e_hold",KST_ESCORT_HALT},
-   { "e_return",KST_ESCORT_RETURN},
-   { "e_clear", KST_ESCORT_CLEAR},
-
-   { "hail",KST_COMM_HAIL},
-   { "autohail",KST_COMM_RECEIVE},
-   { "log_up", KST_COMM_UP},
-   { "log_down",KST_COMM_DOWN},
-
-   {"mapzoomin",KST_ZOOM_IN},
-   {"mapzoomout",KST_ZOOM_IN},
-
+   { "target_clear", KST_HTARGET_NEXT },
+   { "target_hostile", KST_HTARGET_NEXT },
+   { "target_nearest",KST_TARGET_CLOSE },
+   {"target_next", KST_TARGET_NEXT },
+   { "target_nextHostile", KST_HTARGET_NEXT },
+   { "target_prev", KST_TARGET_PREV },
+   { "target_prevHostile", KST_HTARGET_NEXT },
+   { "target_spob", KST_TARGET_SPOB },
+   {"thyperspace", KST_TARGET_JUMP},
    {"togglefullscreen",KST_FULLSCREEN},
 
-   {"screenshot", KST_SCREENSHOT},
 
-   {"paste",KST_PASTE},
+
+
 };
 
 KeySemanticType find_key( const char *target )
