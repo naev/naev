@@ -773,10 +773,10 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, 
    else {
       /* Threaded loading of graphics for speed. */
       ThreadQueue *tq = vpool_create();
+      SDL_GL_MakeCurrent( gl_screen.window, NULL );
       for (int i=0; i<*noutfits; i++)
          /* Just to be safe, we assume some ships colud potentially be duplicated. */
          vpool_enqueueUnique( tq, (int(*)(void*)) outfit_loadStoreGFX, (Outfit*) outfits[i] );
-      SDL_GL_MakeCurrent( gl_screen.window, NULL );
       vpool_wait( tq );
       vpool_cleanup( tq );
       SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );

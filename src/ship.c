@@ -1202,11 +1202,10 @@ int ships_load (void)
    array_free( ship_files );
 
    /* Enqueue the jobs after the data array is done. */
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
    for (int i=0; i<array_size(shipdata); i++)
       vpool_enqueue( tq, ship_parseThread, &shipdata[i] );
-
    /* Wait until done processing. */
-   SDL_GL_MakeCurrent( gl_screen.window, NULL );
    vpool_wait( tq );
    vpool_cleanup( tq );
    SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );

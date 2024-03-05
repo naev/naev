@@ -2751,11 +2751,10 @@ static int outfit_loadDir( const char *dir )
    array_free( outfit_files );
 
    /* Enqueue the jobs after the data array is done. */
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
    for (int i=0; i<array_size(odata); i++)
       vpool_enqueue( tq, outfit_parseThread, &odata[i] );
-
    /* Wait until done processing. */
-   SDL_GL_MakeCurrent( gl_screen.window, NULL );
    vpool_wait( tq );
    vpool_cleanup( tq );
    SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
