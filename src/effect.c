@@ -97,10 +97,15 @@ static int effect_parse( EffectData *efx, const char *file )
          continue;
       }
       if (xml_isNode(node,"shader")) {
-         char *vertex;
+         char *vertex, *img;
          xmlr_attr_strd(node,"vertex",vertex);
          if (vertex == NULL)
             vertex = strdup("effect.vert");
+         xmlr_attr_strd(node,"img",img);
+         if (img != NULL) {
+            efx->img = gl_newImage( img, OPENGL_TEX_MIPMAPS | OPENGL_TEX_CLAMP_ALPHA );
+            free(img);
+         }
          efx->program   = gl_program_vert_frag( vertex, xml_get(node) );
          free( vertex );
          efx->vertex    = glGetAttribLocation( efx->program, "vertex" );
@@ -112,6 +117,7 @@ static int effect_parse( EffectData *efx, const char *file )
          efx->u_timer   = glGetUniformLocation( efx->program, "u_timer" );
          efx->u_elapsed = glGetUniformLocation( efx->program, "u_elapsed" );
          efx->u_dir     = glGetUniformLocation( efx->program, "u_dir" );
+         efx->u_img     = glGetUniformLocation( efx->program, "u_img" );
          continue;
       }
       if (xml_isNode(node,"lua")) {
@@ -230,6 +236,7 @@ void effect_exit (void)
       free( e->desc );
       free( e->overwrite );
       gl_freeTexture( e->icon );
+      gl_freeTexture( e->img );
       ss_free( e->stats );
    }
    array_free( effect_list );

@@ -232,8 +232,16 @@ static GLuint gl_texParameters( unsigned int flags )
    }
 
    /* Always wrap just in case. */
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+   if (flags & OPENGL_TEX_CLAMP_ALPHA) {
+      const float border[] = { 0., 0., 0., 0. };
+      glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+   }
+   else {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+   }
 
    /* Check errors. */
    gl_checkErr();
@@ -397,7 +405,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
 
    SDL_LockSurface(rgba);
    if (flags & OPENGL_TEX_SDF) {
-      float border[] = { 0., 0., 0., 0. };
+      const float border[] = { 0., 0., 0., 0. };
       uint8_t *trans = SDL_MapAlpha( rgba, 0 );
       GLfloat *dataf = make_distance_mapbf( trans, rgba->w, rgba->h, vmax );
       free( trans );

@@ -27,6 +27,7 @@
 #define OPENGL_TEX_VFLIP      (1<<2) /**< Assume loaded from an image (where positive y means down). */
 #define OPENGL_TEX_SKIPCACHE  (1<<3) /**< Skip caching checks and create new texture. */
 #define OPENGL_TEX_SDF        (1<<4) /**< Convert to an SDF. Only the alpha channel gets used. */
+#define OPENGL_TEX_CLAMP_ALPHA (1<<5) /**< Clamp image border to transparency. */
 
 /**
  * @brief Abstraction for rendering sprite sheets.

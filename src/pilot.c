@@ -1821,6 +1821,13 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 
       glUseProgram( ed->program );
 
+      /* Has an image to use. */
+      if (ed->img != NULL) {
+         glActiveTexture( GL_TEXTURE1 );
+         glBindTexture( GL_TEXTURE_2D, ed->img->texture );
+         glUniform1i( ed->u_img, 1 );
+      }
+
       glActiveTexture( GL_TEXTURE0 );
       glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
       glUniform1i( ed->u_tex, 0 );
@@ -1844,6 +1851,13 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clean up texture. */
+      if (ed->img != NULL) {
+         glActiveTexture( GL_TEXTURE1 );
+         glBindTexture( GL_TEXTURE_2D, 0 );
+         glActiveTexture( GL_TEXTURE0 );
+      }
 
       /* Clear state. */
       glDisableVertexAttribArray( ed->vertex );
@@ -1941,6 +1955,13 @@ void pilot_render( Pilot *p )
 
          glUseProgram( ed->program );
 
+         /* Has an image to use. */
+         if (ed->img != NULL) {
+            glActiveTexture( GL_TEXTURE1 );
+            glBindTexture( GL_TEXTURE_2D, ed->img->texture );
+            glUniform1i( ed->u_img, 1 );
+         }
+
          glActiveTexture( GL_TEXTURE0 );
          glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
          glUniform1i( ed->u_tex, 0 );
@@ -1964,6 +1985,13 @@ void pilot_render( Pilot *p )
 
          /* Draw. */
          glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+         /* Clean up texture. */
+         if (ed->img != NULL) {
+            glActiveTexture( GL_TEXTURE1 );
+            glBindTexture( GL_TEXTURE_2D, 0 );
+            glActiveTexture( GL_TEXTURE0 );
+         }
 
          /* Clear state. */
          glDisableVertexAttribArray( ed->vertex );
