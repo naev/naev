@@ -15,6 +15,10 @@ function onion.img_onion ()
    return img_onion
 end
 
+onion.loops = {
+   circus = "snd/loops/onion_circus.ogg",
+}
+
 function onion.vn_onion( params )
    return vn.Character.new( _("Hologram"),
          tmerge( {

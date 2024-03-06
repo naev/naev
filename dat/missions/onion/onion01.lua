@@ -120,19 +120,16 @@ function enter ()
 end
 
 local noise_shader, onion_hook, update_hook, onion_gfx, glitch_isworse, nextonion, onions
---local snd_onion
+local snd_onion
 function glitch ()
    -- Want to allow inclusive claims
    if not naev.claimTest( system.cur(), true ) then
       return
    end
 
-   --[[
    snd_onion = audio.new( onion.loops.circus, "stream" )
-   snd_onion:setLooping(true)
    snd_onion:play()
-   snd_onion:setVolume( 0.2 )
-   --]]
+   snd_onion:setVolume( music.getVolume()*0.15 )
 
    player.autonavReset( 10 ) -- total animation length
    noise_shader = pp_shaders.corruption( 0.5 )
@@ -147,7 +144,7 @@ function glitch ()
 end
 
 function glitch_worsen ()
-   --snd_onion:setVolume( 0.2 )
+   snd_onion:setVolume( music.getVolume()*0.3, true )
 
    shader.rmPPShader( noise_shader )
    noise_shader = pp_shaders.corruption( 1.0 )
@@ -157,7 +154,7 @@ function glitch_worsen ()
 end
 
 function glitch_end ()
-   --snd_onion:stop()
+   snd_onion:stop()
 
    shader.rmPPShader( noise_shader )
    hook.rm( onion_hook )
@@ -216,15 +213,13 @@ function land ()
       return
    end
 
-   -- TODO final mission + cutscene
    vn.clear()
    vn.scene()
    vn.transition()
    vn.na(_([[You get off your ship with the small box in hand, and go to deliver it to the spacedock cargo office. However, when you go to pull up the delivery information, it seems to be missing from your computer logs. Puzzled, you hand over the small box anyway, which they proceed to do the routine scan.]]))
    vn.na(_([[The moment the box is scanned, the lights slightly flicker, and you hear the inspector performing some improvised percussive maintenance on the scanning equipment. They give a puzzled look and tell you there's an issue with the system, and it might take a while to get it solved.]]))
    vn.na(_([[With nothing better to do, you walk around the station to kill time.]]))
-   -- TODO silly 8-bit music
-   --vn.music( onion.loops.circus )
+   vn.music( onion.loops.circus )
    local oni = onion.vn_onion()
    vn.appear( oni, "electric" )
    oni(_([[Suddenly, all the lights go off and all the holoscreens throughout the station flash into activity.
@@ -238,7 +233,7 @@ function land ()
    oni(_([["Anyway, it was fun crashing this place. Lots of interesting things to see. Got to get going. By the way, you guys should do something about the life control systems, it seems like they're going critical."]]))
    vn.disappear( oni, "electric" )
 
-   vne.alarmStart()
+   vne.alarmStart() -- Does music stuff
    vn.na(_([[The hologram fades and the alarms start blaring, probably indicating that life control systems are critical. People begin to scramble like wild trying to save themselves, and it looks like you're about to get dragged into it.
 
 What do you do?]]))
@@ -260,11 +255,13 @@ What do you do?]]))
 
    vn.label("01_cont")
    vne.alarmEnd()
+   vn.music( onion.loops.circus )
    vn.appear( oni, "electric" )
    oni:rename(_("Ogre"))
    vn.na(_([[Suddenly, the alarm goes quiet, lights are restored, and the holograms flash back into life.]]))
    oni(_([["Psyche! But seriously though, your database is toast."]]))
    vn.disappear( oni, "electric" )
+   vn.music() -- Back to normal
    vn.na(_([[Despite the apparently reassuring message, the chaos continues for quite a while. Eventually, you manage to make it back to your ship, extremely worn out and tired, but at least in one piece. That so-called "Ogre" seems like quite a pain in the ass.]]))
    vn.na(_([[As you let out a big sigh, you suddenly notice you have an unnoticed message. It seems like you have an anonymous transfer to your account.]]))
    vn.sfxMoney()
