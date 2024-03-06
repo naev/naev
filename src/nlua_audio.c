@@ -29,11 +29,6 @@
 #include "ntracing.h"
 
 /**
- * @brief Default pre-amp in dB.
- */
-#define RG_PREAMP_DB       0.0
-
-/**
  * @brief Handles the OpenAL effects that have been set up Lua side.
  */
 typedef struct LuaAudioEfx_s {
@@ -49,7 +44,6 @@ static LuaAudioEfx_t *lua_efx = NULL;
 
 static int stream_thread( void *la_data );
 static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer );
-static void rg_filter( float **pcm, long channels, long samples, void *filter_param );
 static int audio_genSource( ALuint *source );
 
 /* Audio methods. */
@@ -188,18 +182,22 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
    size = 0;
    while (size < sizeof(buf)) { /* file up the entire data buffer */
       int section, result;
+      rg_filter_t param = {
+         .rg_scale_factor = la->rg_scale_factor,
+         .rg_max_scale = la->rg_max_scale,
+      };
 
       SDL_mutexP( la->lock );
       result = ov_read_filter(
-            &la->stream,   /* stream */
+            &la->stream,            /* stream */
             &buf[size],             /* data */
-            sizeof(buf) - size,    /* amount to read */
+            sizeof(buf) - size,     /* amount to read */
             (SDL_BYTEORDER == SDL_BIG_ENDIAN),
             2,                      /* 16 bit */
             1,                      /* signed */
             &section,               /* current bitstream */
             rg_filter,              /* filter function */
-            la );                   /* filter parameter */
+            &param );                   /* filter parameter */
       SDL_mutexV( la->lock );
 
       /* End of file. */
@@ -230,43 +228,6 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
    al_checkErr();
 
    return ret;
-}
-
-/**
- * @brief This is the filter function for the decoded Ogg Vorbis stream.
- *
- * base on:
- * vgfilter.c (c) 2007,2008 William Poetra Yoga Hadisoeseno
- * based on:
- * vgplay.c 1.0 (c) 2003 John Morton
- */
-static void rg_filter( float **pcm, long channels, long samples, void *filter_param )
-{
-   const LuaAudio_t *param = filter_param;
-   float scale_factor   = param->rg_scale_factor;
-   float max_scale      = param->rg_max_scale;
-
-   /* Apply the gain, and any limiting necessary */
-   if (scale_factor > max_scale) {
-      for (int i=0; i < channels; i++)
-         for (int j=0; j < samples; j++) {
-            float cur_sample = pcm[i][j] * scale_factor;
-            /*
-             * This is essentially the scaled hard-limiting algorithm
-             * It looks like the soft-knee to me
-             * I haven't found a better limiting algorithm yet...
-             */
-            if (cur_sample < -0.5)
-               cur_sample = tanh((cur_sample + 0.5) / (1-0.5)) * (1-0.5) - 0.5;
-            else if (cur_sample > 0.5)
-               cur_sample = tanh((cur_sample - 0.5) / (1-0.5)) * (1-0.5) + 0.5;
-            pcm[i][j] = cur_sample;
-         }
-   }
-   else if (scale_factor > 0.0)
-      for (int i=0; i < channels; i++)
-         for (int j=0; j < samples; j++)
-            pcm[i][j] *= scale_factor;
 }
 
 /**
