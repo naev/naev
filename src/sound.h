@@ -117,10 +117,10 @@ int sound_env( SoundEnv_t env, double param );
  * Vorbis filtering.
  */
 #define RG_PREAMP_DB       0.0 /**< Default pre-amp in dB. */
-typedef struct rg_filter_s {
+typedef struct rg_filter_param_s {
    float rg_scale_factor;
    float rg_max_scale;
-} rg_filter_t;
+} rg_filter_param_t;
 void rg_filter( float **pcm, long channels, long samples, void *filter_param );
 
 /* Lock for OpenAL operations. */

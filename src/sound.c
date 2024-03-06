@@ -1940,7 +1940,7 @@ static const char* vorbis_getErr( int err )
  */
 void rg_filter( float **pcm, long channels, long samples, void *filter_param )
 {
-   const rg_filter_t *param = filter_param;
+   const rg_filter_param_t *param = filter_param;
    float scale_factor= param->rg_scale_factor;
    float max_scale   = param->rg_max_scale;
 
@@ -1987,7 +1987,7 @@ static int al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    vorbis_comment *vc;
    ALfloat track_gain_db, track_peak;
    char *tag;
-   rg_filter_t param;
+   rg_filter_param_t param;
 
    /* Finish opening the file. */
    ret = ov_test_open(vf);

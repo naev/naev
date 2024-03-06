@@ -182,7 +182,7 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
    size = 0;
    while (size < sizeof(buf)) { /* file up the entire data buffer */
       int section, result;
-      rg_filter_t param = {
+      rg_filter_param_t param = {
          .rg_scale_factor = la->rg_scale_factor,
          .rg_max_scale = la->rg_max_scale,
       };
