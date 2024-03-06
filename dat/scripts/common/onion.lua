@@ -16,7 +16,7 @@ function onion.img_onion ()
 end
 
 onion.loops = {
-   circus = "snd/loops/onion_circus.ogg",
+   circus = "snd/sounds/loops/onion_circus.ogg",
 }
 
 function onion.vn_onion( params )

@@ -129,7 +129,7 @@ function glitch ()
 
    snd_onion = audio.new( onion.loops.circus, "stream" )
    snd_onion:play()
-   snd_onion:setVolume( music.getVolume()*0.15 )
+   snd_onion:setVolume( music.getVolume()*0.15, true )
 
    player.autonavReset( 10 ) -- total animation length
    noise_shader = pp_shaders.corruption( 0.5 )
