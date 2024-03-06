@@ -2552,7 +2552,11 @@ static int outfit_parse( Outfit* temp, const char* file )
                continue;
             }
             else if (xml_isNode(cur,"gfx_store")) {
-               temp->gfx_store_path = strdup( xml_get(cur) );
+               const char *str = xml_get(cur);
+               if (str != NULL)
+                  temp->gfx_store_path = strdup(str);
+               else
+                  WARN(_("Outfit '%s' has NULL tag '%s'!"),temp->name,"gfx_store");
                continue;
             }
             else if (xml_isNode(cur,"gfx_overlays")) {

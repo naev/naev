@@ -722,16 +722,18 @@ static int ship_parse( Ship *temp, const char *filename )
          continue;
       }
       if (xml_isNode(node,"gfx") || xml_isNode(node,"GFX")) {
+         const char *str = xml_get(node);
          /* TODO remove for 0.13.0 */
          if (xml_isNode(node,"GFX"))
             WARN(_("Ship '%s': using <GFX> instead of <gfx>!"), temp->name);
 
          /* Get base graphic name. */
-         temp->gfx_path = strdup( xml_get(node) );
-         if (temp->gfx_path==NULL) {
-            WARN(_("Ship '%s': GFX element is NULL"), temp->name);
+         if (str==NULL) {
+            WARN(_("Ship '%s' has NULL tag '%s'!"),temp->name,"gfx");
             continue;
          }
+         else
+            temp->gfx_path = strdup( str );
 
          /* Parse attributes. */
          xmlr_attr_float_def(node, "size", temp->size, 1);
