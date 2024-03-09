@@ -15,6 +15,7 @@
    * `trader/trader_escort`: player can only escort one group of traders at a time
    * `neburesearch/neburesearch_01`: use the correct faction when complaining
    * Fixed some typos and revised writing
+   * Translation updates
 
 * 0.11.3
    * Don't run discovery event when in cinematic mode

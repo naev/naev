@@ -1,5 +1,5 @@
 project('naev', 'c',
-   version : '0.11.3',
+   version : '0.11.4',
    default_options : [
       'optimization=g',
       'c_std=gnu11',
