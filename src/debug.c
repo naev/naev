@@ -9,7 +9,6 @@
  */
 
 /** @cond */
-#include <assert.h>
 #include <signal.h>
 
 #if DEBUGGING
