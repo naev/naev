@@ -9,7 +9,6 @@
 /** @cond */
 #include <lauxlib.h>
 #include <lua.h>
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -28,7 +27,6 @@
 #include "nlua_pilot.h"
 #include "nlua_time.h"
 #include "nluadef.h"
-#include "nstring.h"
 
 /* Hook methods. */
 static int hookL_rm( lua_State *L );
