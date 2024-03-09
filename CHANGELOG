@@ -1,4 +1,4 @@
-* 0.11.4 (unreleased)
+* 0.11.4
    * More guards against divides by zero in autonav
    * Fixed warnings on certain OpenGL drivers
    * Fixed toolkit not rerendering when right-clicking on tabbed windows
