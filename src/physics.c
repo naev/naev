@@ -9,7 +9,6 @@
 /** @endcond */
 
 #include "log.h"
-#include "nstring.h"
 #include "physics.h"
 
 /**

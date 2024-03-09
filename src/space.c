@@ -7,7 +7,6 @@
  * @brief Handles all the space stuff, namely systems and space objects (spobs).
  */
 /** @cond */
-#include <float.h>
 #include <math.h>
 #include <stdlib.h>
 #include "physfs.h"
@@ -17,6 +16,7 @@
 
 #include "space.h"
 
+#include "array.h"
 #include "background.h"
 #include "conf.h"
 #include "damagetype.h"
@@ -34,21 +34,17 @@
 #include "music.h"
 #include "ndata.h"
 #include "nebula.h"
-#include "nfile.h"
 #include "nlua.h"
 #include "nlua_pilot.h"
 #include "nlua_spob.h"
 #include "nlua_gfx.h"
 #include "nlua_camera.h"
 #include "nlua_tex.h"
-#include "nluadef.h"
 #include "nmath.h"
 #include "nstring.h"
 #include "ntracing.h"
 #include "ntime.h"
 #include "nxml.h"
-#include "opengl.h"
-#include "pause.h"
 #include "pilot.h"
 #include "player.h"
 #include "queue.h"
@@ -56,7 +52,6 @@
 #include "sound.h"
 #include "spfx.h"
 #include "start.h"
-#include "toolkit.h"
 #include "weapon.h"
 
 #define XML_SPOB_TAG   "spob" /**< Individual spob xml tag. */

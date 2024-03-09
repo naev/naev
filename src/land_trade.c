@@ -7,8 +7,6 @@
  * @brief Handles the Trading Center at land.
  */
 /** @cond */
-#include <assert.h>
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,19 +17,14 @@
 
 #include "array.h"
 #include "commodity.h"
-#include "dialogue.h"
 #include "economy.h"
 #include "hook.h"
-#include "land_shipyard.h"
-#include "log.h"
-#include "map_find.h"
-#include "ndata.h"
 #include "nstring.h"
 #include "player.h"
 #include "player_fleet.h"
 #include "space.h"
-#include "tk/toolkit_priv.h"
 #include "toolkit.h"
+#include "land.h"
 
 /*
  * Quantity to buy on one click

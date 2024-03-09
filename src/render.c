@@ -5,7 +5,6 @@
 
 #include "array.h"
 #include "conf.h"
-#include "font.h"
 #include "gui.h"
 #include "hook.h"
 #include "map_overlay.h"

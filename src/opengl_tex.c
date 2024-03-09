@@ -17,12 +17,9 @@
 
 #include "distance_field.h"
 #include "array.h"
-#include "conf.h"
-#include "gui.h"
 #include "log.h"
 #include "md5.h"
 #include "nfile.h"
-#include "nstring.h"
 #include "opengl.h"
 
 /*

@@ -3,8 +3,8 @@
  */
 #pragma once
 
-#include "land.h"
 #include "ship.h"
+#include "space.h"
 
 /*
  * Window stuff.

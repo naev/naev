@@ -6,10 +6,8 @@
 #include "space_fdecl.h"
 
 #include "commodity.h"
-#include "explosion.h"
-#include "faction.h"
 #include "mission_markers.h"
-#include "opengl.h"
+#include "opengl_tex.h"
 #include "pilot.h"
 #include "shipstats.h"
 #include "tech.h"

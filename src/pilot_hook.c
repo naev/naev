@@ -7,11 +7,7 @@
  * @brief Handles the pilot hook stuff.
  */
 /** @cond */
-#include <limits.h>
-#include <math.h>
 #include <stdlib.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "pilot_hook.h"
@@ -19,8 +15,7 @@
 #include "array.h"
 #include "hook.h"
 #include "log.h"
-#include "nstring.h"
-#include "nxml.h"
+#include "claim.h"
 
 static PilotHook *pilot_globalHooks = NULL; /**< Global hooks that affect all pilots. */
 static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
@@ -36,14 +31,14 @@ static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
  */
 int pilot_runHookParam( Pilot* p, int hook_type, const HookParam* param, int nparam )
 {
-   int n, run;
+   int run;
    HookParam hstaparam[5], *hdynparam, *hparam;
 
    /* Set up hook parameters. */
    if (nparam <= 3) {
+      int n  = 1;
       hstaparam[0].type = HOOK_PARAM_PILOT;
       hstaparam[0].u.lp = p->id;
-      n  = 1;
       if (nparam != 0)
          memcpy( &hstaparam[n], param, sizeof(HookParam)*nparam );
       n += nparam;

@@ -6,10 +6,6 @@
  *
  * @brief Contains all the player fleet related stuff.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
-
 #include "player_fleet.h"
 
 #include "array.h"

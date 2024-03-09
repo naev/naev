@@ -3,7 +3,6 @@
  */
 #pragma once
 
-#include "land.h"
 #include "outfit.h"
 #include "pilot.h"
 #include "tk/widget/imagearray.h"

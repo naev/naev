@@ -27,6 +27,7 @@
 #include "player.h"
 #include "nlua_asteroid.h"
 #include "rng.h"
+#include "explosion.h"
 
 /**
  * @brief Represents a small asteroid debris rendered in the player frame.

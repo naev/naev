@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "nlua.h"
+#include "SDL_keycode.h"
 
 #define INFO_MAIN       0 /**< Main info window. */
 #define INFO_SHIP       1 /**< Ship info window. */

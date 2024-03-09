@@ -15,7 +15,7 @@
 
 #include "conf.h"
 #include "array.h"
-#include "economy.h"
+#include "commodity.h"
 #include "log.h"
 #include "ndata.h"
 #include "nxml.h"

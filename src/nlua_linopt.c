@@ -12,6 +12,7 @@
 #include <glpk.h>
 #include <lauxlib.h>
 #include "physfs.h"
+#include "SDL_timer.h"
 
 #include "naev.h"
 /** @endcond */
@@ -19,7 +20,6 @@
 #include "nlua_linopt.h"
 
 #include "log.h"
-#include "nstring.h"
 #include "nluadef.h"
 
 #define LINOPT_MAX_TM   1000  /**< Maximum time to optimize (in ms). Applied to linear relaxation and MIP independently. */

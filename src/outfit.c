@@ -12,7 +12,6 @@
 /** @cond */
 #include <math.h>
 #include <stdlib.h>
-#include "SDL_thread.h"
 #include "physfs.h"
 
 #include "naev.h"
@@ -24,15 +23,12 @@
 #include "conf.h"
 #include "damagetype.h"
 #include "log.h"
-#include "mapData.h"
 #include "ndata.h"
-#include "nfile.h"
 #include "nlua.h"
 #include "nlua_gfx.h"
 #include "nlua_pilotoutfit.h"
 #include "nlua_outfit.h"
 #include "nlua_camera.h"
-#include "nlua_hook.h"
 #include "nlua_munition.h"
 #include "nstring.h"
 #include "nstring.h"
@@ -44,8 +40,9 @@
 #include "slots.h"
 #include "spfx.h"
 #include "start.h"
+#include "space.h"
+#include "mapData.h"
 #include "threadpool.h"
-#include "unistd.h"
 
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 

@@ -6,11 +6,6 @@
  *
  * @brief Handles OpenGL vbos.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
-
-#include "log.h"
 #include "opengl.h"
 
 #define BUFFER_OFFSET(i) ((char *)(sizeof(char) * (i))) /**< Taken from OpengL spec. */

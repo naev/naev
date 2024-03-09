@@ -14,7 +14,6 @@
 
 #include "array.h"
 #include "hook.h"
-#include "log.h"
 #include "pilot.h"
 #include "player.h"
 #include "player_autonav.h"

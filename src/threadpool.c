@@ -28,8 +28,6 @@
 /** @cond */
 #include <stdlib.h>
 #include "SDL.h"
-#include "SDL_error.h"
-#include "SDL_thread.h"
 /** @endcond */
 
 #include "threadpool.h"

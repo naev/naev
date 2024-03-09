@@ -7,9 +7,7 @@
  * @brief Handles the ship details.
  */
 /** @cond */
-#include <limits.h>
-#include "physfsrwops.h"
-#include "SDL_image.h"
+#include "physfs.h"
 
 #include "naev.h"
 /** @endcond */
@@ -21,7 +19,6 @@
 #include "conf.h"
 #include "log.h"
 #include "ndata.h"
-#include "nfile.h"
 #include "nlua.h"
 #include "nlua_gfx.h"
 #include "nlua_camera.h"
@@ -30,9 +27,7 @@
 #include "opengl_tex.h"
 #include "shipstats.h"
 #include "slots.h"
-#include "toolkit.h"
 #include "threadpool.h"
-#include "unistd.h"
 
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
 

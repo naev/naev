@@ -30,9 +30,7 @@
 #include "conf.h"
 #include "menu.h"
 #include "ndata.h"
-#include "nstring.h"
 #include "opengl.h"
-#include "pause.h"
 #include "toolkit.h"
 
 static int dialogue_open; /**< Number of dialogues open. */

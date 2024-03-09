@@ -9,10 +9,6 @@
  * Main trick to pausing/unpausing is to allow things based on time to
  *  behavie properly when the toolkit opens a window.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
-
 #include "pause.h"
 
 #include "player.h"

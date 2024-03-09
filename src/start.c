@@ -17,7 +17,6 @@
 #include "log.h"
 #include "ndata.h"
 #include "nxml.h"
-#include "damagetype.h"
 
 #define XML_START_ID    "Start"  /**< XML document tag of module start file. */
 

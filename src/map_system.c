@@ -2,7 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 /** @cond */
-#include <float.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,20 +17,15 @@
 #include "dialogue.h"
 #include "economy.h"
 #include "faction.h"
-#include "gui.h"
 #include "land_outfits.h"
 #include "log.h"
-#include "mapData.h"
-#include "map_find.h"
 #include "map_system.h"
-#include "mission.h"
-#include "ndata.h"
-#include "nmath.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "player.h"
 #include "space.h"
 #include "toolkit.h"
+#include "land.h"
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */

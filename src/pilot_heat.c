@@ -16,7 +16,6 @@
 #include "pilot_heat.h"
 
 #include "array.h"
-#include "log.h"
 
 /*
  * Prototypes.

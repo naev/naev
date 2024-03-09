@@ -7,7 +7,6 @@
  * @brief Handles the special effects.
  */
 /** @cond */
-#include <inttypes.h>
 #include "SDL.h"
 #include "SDL_haptic.h"
 
@@ -25,12 +24,11 @@
 #include "nxml.h"
 #include "opengl.h"
 #include "pause.h"
-#include "physics.h"
+#include "vec2.h"
 #include "perlin.h"
 #include "ntracing.h"
 #include "render.h"
 #include "rng.h"
-#include "space.h"
 #include "nlua_shader.h"
 #include "nlua_spfx.h"
 

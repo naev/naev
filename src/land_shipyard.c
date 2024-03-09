@@ -7,7 +7,6 @@
  * @brief Handles the shipyard at land.
  */
 /** @cond */
-#include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,17 +20,14 @@
 #include "cond.h"
 #include "dialogue.h"
 #include "hook.h"
-#include "log.h"
 #include "map_find.h"
-#include "ndata.h"
 #include "nstring.h"
 #include "player.h"
-#include "player_fleet.h"
 #include "space.h"
 #include "slots.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
-#include "threadpool.h"
+#include "land.h"
 
 #define  SHIP_GFX_W     256
 #define  SHIP_GFX_H     256

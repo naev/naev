@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "opengl.h"
+#include "opengl_tex.h"
 #include "pilot.h"
 #include "space.h"
 

@@ -7,20 +7,16 @@
  * @brief Handles windows and widgets.
  */
 /** @cond */
-#include <stdarg.h>
-
 #include "naev.h"
 /** @endcond */
 
 #include "toolkit.h"
 
-#include "conf.h"
 #include "dialogue.h"
 #include "input.h"
 #include "log.h"
 #include "opengl.h"
 #include "pause.h"
-#include "nmath.h"
 #include "ntracing.h"
 #include "tk/toolkit_priv.h"
 

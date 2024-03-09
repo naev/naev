@@ -33,9 +33,7 @@
 /** @cond */
 #include <sys/stat.h>
 #include "physfs.h"
-#include "SDL.h"
 #include "SDL_mutex.h"
-#include "SDL_thread.h"
 
 #include "naev.h"
 /** @endcond */
@@ -47,14 +45,11 @@
 #include "array.h"
 #include "camera.h"
 #include "conf.h"
-#include "env.h"
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
-#include "nstring.h"
-#include "physics.h"
-#include "player.h"
 #include "nopenal.h"
+#include "pilot.h"
 #include "nlua_spfx.h"
 
 #define SOUND_FADEOUT         100

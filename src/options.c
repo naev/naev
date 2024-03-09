@@ -9,7 +9,6 @@
 /** @cond */
 #include <ctype.h>
 #include "physfs.h"
-#include "SDL.h"
 
 #include "naev.h"
 /** @endcond */

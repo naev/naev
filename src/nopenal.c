@@ -3,6 +3,8 @@
  */
 #include "nopenal.h"
 
+#include "log.h"
+
 /* Auxiliary Effect Slot. */
 ALvoid (AL_APIENTRY *nalGenAuxiliaryEffectSlots)(ALsizei,ALuint*);
 ALvoid (AL_APIENTRY *nalDeleteAuxiliaryEffectSlots)(ALsizei,ALuint*);

@@ -19,8 +19,6 @@
 #include "array.h"
 #include "escort.h"
 #include "log.h"
-#include "nxml.h"
-#include "nlua_pilot.h"
 #include "nlua_pilotoutfit.h"
 #include "pilot.h"
 #include "player.h"

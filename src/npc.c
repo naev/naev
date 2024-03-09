@@ -8,21 +8,15 @@
  */
 /** @cond */
 #include <lua.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "npc.h"
 
 #include "array.h"
-#include "dialogue.h"
-#include "event.h"
 #include "land.h"
 #include "log.h"
 #include "nlua_evt.h"
 #include "nlua_tex.h"
-#include "nstring.h"
-#include "opengl.h"
 #include "ndata.h"
 #include "ntracing.h"
 

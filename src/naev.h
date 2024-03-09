@@ -24,7 +24,7 @@
 /** @cond */
 #include <math.h>
 
-#include "SDL.h"
+#include "SDL_stdinc.h"
 /** @endcond */
 
 #define APPNAME            "Naev" /**< Application name. */

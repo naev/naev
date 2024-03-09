@@ -4,10 +4,10 @@
 #pragma once
 
 /** @cond */
+#include "SDL_keycode.h"
 #include "naev.h"
 /** @endcond */
 
-#include "log.h"
 #include "tk/widget.h"
 
 /*

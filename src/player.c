@@ -15,6 +15,7 @@
 
 #include "player.h"
 
+#include "array.h"
 #include "ai.h"
 #include "board.h"
 #include "camera.h"
@@ -27,7 +28,6 @@
 #include "equipment.h"
 #include "escort.h"
 #include "event.h"
-#include "font.h"
 #include "gui.h"
 #include "gui_omsg.h"
 #include "hook.h"
@@ -45,8 +45,7 @@
 #include "music.h"
 #include "ndata.h"
 #include "news.h"
-#include "nfile.h"
-#include "nlua_misn.h"
+#include "player.h"
 #include "nlua_outfit.h"
 #include "nlua_ship.h"
 #include "nlua_var.h"
@@ -64,12 +63,10 @@
 #include "shiplog.h"
 #include "sound.h"
 #include "space.h"
-#include "spfx.h"
 #include "start.h"
 #include "toolkit.h"
 #include "unidiff.h"
 #include "utf8.h"
-#include "threadpool.h"
 
 /*
  * Player stuff

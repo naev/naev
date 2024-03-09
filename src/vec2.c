@@ -1,13 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-/** @cond */
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "naev.h"
-/** @endcond */
-
 #include "vec2.h"
 
 /**

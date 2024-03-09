@@ -15,10 +15,6 @@
 #include "player.h"
 
 #include "ai.h"
-#include "array.h"
-#include "board.h"
-#include "conf.h"
-#include "map.h"
 #include "pause.h"
 #include "pilot.h"
 #include "pilot_ew.h"
@@ -29,7 +25,6 @@
 #include "nlua_vec2.h"
 #include "nlua_pilot.h"
 #include "nlua_spob.h"
-#include "nlua_system.h"
 #include "sound.h"
 #include "space.h"
 #include "toolkit.h"

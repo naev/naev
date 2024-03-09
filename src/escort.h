@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "physics.h"
+#include "vec2.h"
 #include "pilot.h"
 #include "space.h"
 

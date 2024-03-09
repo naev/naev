@@ -24,7 +24,6 @@
 #include "log.h"
 #include "map_overlay.h"
 #include "ndata.h"
-#include "nstring.h"
 #include "nxml.h"
 #include "safelanes.h"
 #include "space.h"

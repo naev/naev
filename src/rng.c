@@ -30,7 +30,6 @@
 
 #include "rng.h"
 
-
 /*
  * mersenne twister state
  */

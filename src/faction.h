@@ -5,7 +5,7 @@
 
 #include "colour.h"
 #include "nlua.h"
-#include "opengl.h"
+#include "opengl_tex.h"
 
 extern int faction_player;
 

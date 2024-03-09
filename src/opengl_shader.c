@@ -7,7 +7,6 @@
 #include "naev.h"
 /** @endcond */
 
-#include "conf.h"
 #include "log.h"
 #include "ndata.h"
 #include "nstring.h"

@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include "SDL_events.h"
+
 #include "nstring.h"
 
 /*

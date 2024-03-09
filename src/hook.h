@@ -3,7 +3,6 @@
  */
 #pragma once
 
-#include "mission.h"
 #include "nlua_asteroid.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"

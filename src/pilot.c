@@ -7,7 +7,6 @@
  * @brief Handles the pilot stuff.
  */
 /** @cond */
-#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
 
@@ -27,31 +26,18 @@
 #include "explosion.h"
 #include "faction.h"
 #include "font.h"
-#include "gatherable.h"
 #include "gui.h"
 #include "hook.h"
-#include "land.h"
-#include "land_outfits.h"
-#include "land_shipyard.h"
 #include "log.h"
-#include "map.h"
-#include "music.h"
-#include "nlua_pilotoutfit.h"
 #include "nlua_vec2.h"
 #include "nlua_outfit.h"
-#include "ndata.h"
-#include "nstring.h"
 #include "ntracing.h"
 #include "ntime.h"
-#include "nxml.h"
-#include "pause.h"
 #include "player.h"
 #include "player_autonav.h"
 #include "pilot_ship.h"
 #include "quadtree.h"
-#include "start.h"
 #include "rng.h"
-#include "weapon.h"
 
 #define PILOT_SIZE_MIN 128 /**< Minimum chunks to increment pilot_stack by */
 
