@@ -10,12 +10,9 @@
  */
 /** @cond */
 #include <dirent.h>
-#include <limits.h>
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "physfs.h"
 
 #include "naev.h"
 
@@ -32,13 +29,11 @@
 
 #include "nfile.h"
 
-#include "array.h"
 #include "conf.h"
 #if __MACOSX__
 #include "glue_macos.h"
 #endif /* __MACOSX__ */
 #include "log.h"
-#include "nstring.h"
 
 #if HAS_UNIX && !__MACOSX__
 //! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
@@ -67,8 +62,7 @@ static char* xdgGetEnv(const char *name)
  */
 static char* xdgEnvDup(const char *name)
 {
-    const char *env;
-    env = xdgGetEnv( name );
+    const char *env = xdgGetEnv( name );
     if (env != NULL)
         return strdup(env);
      return NULL;
@@ -84,12 +78,11 @@ static char* xdgEnvDup(const char *name)
  */
 static char * xdgGetRelativeHome( const char *envname, const char *relativefallback )
 {
-    char *relhome;
-    relhome = xdgEnvDup(envname);
+    char *relhome = xdgEnvDup(envname);
     if ((relhome == NULL) && (errno != ENOMEM)) {
-        errno = 0;
         const char *home;
         unsigned int homelen;
+        errno = 0;
         home = xdgGetEnv( "HOME" );
         if (home == NULL)
             return NULL;
