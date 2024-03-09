@@ -110,7 +110,7 @@ to {pnt} in the {sys} system]]),
    end
 end
 
-local glitched = false
+local glitched = false -- local variable so it happens again after loading
 function enter ()
    osd_update()
 
@@ -119,7 +119,7 @@ function enter ()
    end
 end
 
-local noise_shader, onion_hook, update_hook, onion_gfx, glitch_isworse, nextonion, onions
+local noise_shader, onion_gfx, glitch_isworse, nextonion, onions
 local snd_onion
 function glitch ()
    -- Want to allow inclusive claims
@@ -134,13 +134,14 @@ function glitch ()
    player.autonavReset( 10 ) -- total animation length
    noise_shader = pp_shaders.corruption( 0.5 )
    shader.addPPShader( noise_shader, "gui" )
-   onion_hook = hook.renderfg( "welcome_to_onion" )
-   update_hook = hook.update( "update" )
+   mem.onion_hook = hook.renderfg( "welcome_to_onion" )
+   mem.update_hook = hook.update( "update" )
    onion_gfx = onion.img_onion()
    hook.timer( 5, "glitch_worsen" )
    glitch_isworse = false
    nextonion = 0
    onions = {}
+   hook.land("glitch_end")
 end
 
 function glitch_worsen ()
@@ -154,12 +155,22 @@ function glitch_worsen ()
 end
 
 function glitch_end ()
-   snd_onion:stop()
-
-   shader.rmPPShader( noise_shader )
-   hook.rm( onion_hook )
-   hook.rm( update_hook )
-   glitched = true
+   if snd_onion then
+      snd_onion:stop()
+   end
+   if noise_shader then
+      shader.rmPPShader( noise_shader )
+   end
+   if mem.onion_hook then
+      hook.rm( mem.onion_hook )
+   end
+   if mem.update_hook then
+      hook.rm( mem.update_hook )
+   end
+   -- Only clear this if they were not landed
+   if not player.isLanded() then
+      glitched = true
+   end
 end
 
 function update( dt )
