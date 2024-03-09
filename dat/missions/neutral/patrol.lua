@@ -183,7 +183,7 @@ end
 
 function accept ()
    if player.misnActive("Patrol") then
-      vntk(_([[Already Patrolling]]),_([[You can only accept a single patrol mission at a given time.]]))
+      vntk.msg(_([[Already Patrolling]]),_([[You can only accept a single patrol mission at a given time.]]))
       return
    end
 
