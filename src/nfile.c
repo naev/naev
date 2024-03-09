@@ -186,12 +186,12 @@ const char* nfile_cachePath (void)
    return naev_cachePath;
 }
 
-#if HAS_POSIX
-#define MKDIR mkdir( opath, mode )
-static int mkpath( const char *path, mode_t mode )
-#elif __WIN32__
+#if __WIN32__
 #define MKDIR !CreateDirectory( opath, NULL )
 static int mkpath( const char *path )
+#elif HAS_POSIX
+#define MKDIR mkdir( opath, mode )
+static int mkpath( const char *path, mode_t mode )
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
