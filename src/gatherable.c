@@ -8,8 +8,7 @@
  */
 /** @cond */
 #include <stdio.h>
-#include <stdint.h>
-#include "physfs.h"
+#include "vec2.h"
 
 #include "naev.h"
 /** @endcond */
@@ -19,6 +18,7 @@
 #include "array.h"
 #include "hook.h"
 #include "player.h"
+#include "rng.h"
 
 /* Gatherables */
 #define GATHER_DIST 30. /**< Maximum distance a gatherable can be gathered. */

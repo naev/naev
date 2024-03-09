@@ -4,7 +4,6 @@
 #pragma once
 
 #include "nlua.h"
-#include "physics.h"
 
 /* Forward declaration to avoid cyclical import. */
 struct Pilot_;

@@ -4,7 +4,7 @@
 #pragma once
 
 #include "colour.h"
-#include "opengl.h"
+#include "opengl_tex.h"
 
 /* Render. */
 void background_render( double dt );

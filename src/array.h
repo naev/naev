@@ -39,7 +39,6 @@
 #include <assert.h>
 #include <stddef.h>
 #include <stdalign.h>
-#include <stdint.h>
 /** @endcond */
 
 #include "attributes.h"

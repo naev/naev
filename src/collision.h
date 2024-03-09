@@ -4,8 +4,8 @@
 #pragma once
 
 #include "nxml.h"
-#include "opengl.h"
-#include "physics.h"
+#include "opengl_tex.h"
+#include "vec2.h"
 
 /**
  * @brief Represents a polygon used for collision detection.

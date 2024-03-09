@@ -17,6 +17,7 @@
 #include "escort.h"
 #include "land.h"
 #include "equipment.h"
+#include "rng.h"
 
 /**
  * @brief Updates the used fleet capacity of the player.

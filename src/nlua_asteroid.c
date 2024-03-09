@@ -20,6 +20,7 @@
 #include "nlua_vec2.h"
 #include "nlua_commodity.h"
 #include "nlua_pilot.h"
+#include "rng.h"
 
 /* Asteroid methods. */
 static int asteroidL_eq( lua_State *L );

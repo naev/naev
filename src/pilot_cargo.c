@@ -13,9 +13,10 @@
 #include "pilot_cargo.h"
 
 #include "array.h"
-#include "economy.h"
 #include "gui.h"
 #include "log.h"
+#include "rng.h"
+#include "commodity.h"
 
 /* Private common implementation */
 static int pilot_cargoAddInternal( Pilot* pilot, const Commodity* cargo,

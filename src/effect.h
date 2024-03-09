@@ -5,7 +5,6 @@
 
 #include "opengl.h"
 #include "shipstats.h"
-#include "rng.h"
 
 #define EFFECT_BUFF     (1<<0)   /**< Effect is a buff. */
 #define EFFECT_DEBUFF   (1<<1)   /**< Effect is a debuff. */

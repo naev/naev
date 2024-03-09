@@ -45,7 +45,6 @@
 #include "nlua_vec2.h"
 #include "nlua_misn.h"
 #include "nluadef.h"
-#include "nstring.h"
 #include "pause.h"
 #include "player.h"
 #include "player_fleet.h"
@@ -53,6 +52,7 @@
 #include "player_gui.h"
 #include "save.h"
 #include "start.h"
+#include "rng.h"
 
 #define PLAYER_CHECK() if (player.p == NULL) return 0
 

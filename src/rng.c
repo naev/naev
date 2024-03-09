@@ -12,13 +12,13 @@
 #include <errno.h>
 #include <math.h>
 #include <stdint.h>
-#include <time.h>
 #include <unistd.h>
-#include "SDL.h"
 
 #include "naev.h"
+#include "ncompat.h"
 
 #if HAS_POSIX
+#include <time.h>
 #include <fcntl.h>
 #include <sys/time.h>
 #endif /* HAS_POSIX */
@@ -30,7 +30,6 @@
 
 #include "rng.h"
 
-#include "log.h"
 
 /*
  * mersenne twister state

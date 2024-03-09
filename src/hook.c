@@ -31,7 +31,6 @@
 #include "array.h"
 #include "claim.h"
 #include "event.h"
-#include "gatherable.h"
 #include "log.h"
 #include "menu.h"
 #include "mission.h"
@@ -41,9 +40,6 @@
 #include "nlua_pilot.h"
 #include "nlua_outfit.h"
 #include "nlua_ship.h"
-#include "nstring.h"
-#include "ntracing.h"
-#include "nxml.h"
 #include "player.h"
 #include "space.h"
 

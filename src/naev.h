@@ -22,14 +22,10 @@
 #pragma once
 
 /** @cond */
-#include <inttypes.h>
-#include <limits.h>
 #include <math.h>
 
 #include "SDL.h"
 /** @endcond */
-
-#include "ncompat.h"
 
 #define APPNAME            "Naev" /**< Application name. */
 

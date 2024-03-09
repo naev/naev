@@ -9,8 +9,6 @@
 #include "claim.h"
 #include "commodity.h"
 #include "nlua.h"
-#include "nxml.h"
-#include "opengl.h"
 #include "space.h"
 #include "mission_markers.h"
 

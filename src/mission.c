@@ -7,7 +7,6 @@
  * @brief Handles missions.
  */
 /** @cond */
-#include <stdint.h>
 #include <stdlib.h>
 
 #include "naev.h"
@@ -24,11 +23,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
-#include "nlua_faction.h"
 #include "nlua_misn.h"
-#include "nlua_ship.h"
-#include "nlua_shiplog.h"
-#include "nluadef.h"
 #include "npc.h"
 #include "nstring.h"
 #include "nxml.h"

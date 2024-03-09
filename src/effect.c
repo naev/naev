@@ -19,6 +19,7 @@
 #include "ndata.h"
 #include "gui.h"
 #include "nlua_pilot.h"
+#include "rng.h"
 
 static EffectData *effect_list = NULL; /* List of all available effects. */
 

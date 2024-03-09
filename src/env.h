@@ -3,10 +3,6 @@
  */
 #pragma once
 
-/** @cond */
-#include <stdlib.h>
-/** @endcond */
-
 typedef struct _env_t {
    short isAppImage;
    char *appimage;

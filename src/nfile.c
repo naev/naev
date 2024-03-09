@@ -16,10 +16,10 @@
 
 #include "naev.h"
 
+#include <errno.h>
 #if HAS_POSIX
 #include <sys/types.h>
 #include <unistd.h>
-#include <errno.h>
 #include <libgen.h>
 #endif /* HAS_POSIX */
 #if __WIN32__
