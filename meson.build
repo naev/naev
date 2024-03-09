@@ -84,8 +84,8 @@ if buildExec.disabled() == false
    assert(debug or not debug_gl, 'debug_gl option is only valid for debug builds. Try "meson configure --buildtype=debug" for example.')
 
    # Some OS voodoo TODO maybe use .system?
-   config_data.set10('HAS_POSIX', cc.has_define('__unix__') or cc.has_define('__unix') or cc.has_define('__MACOSX__'))
-   config_data.set('HAS_UNIX', 'HAS_POSIX')
+   config_data.set10('HAS_POSIX', cc.has_header('unistd.h'))
+   config_data.set10('HAS_UNIX', cc.has_define('__unix__') or cc.has_define('__unix') or cc.has_define('__MACOSX__'))
 
    ### Hard deps (required: true)
 

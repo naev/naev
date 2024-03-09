@@ -76,7 +76,7 @@ static char* xdgEnvDup(const char *name)
  *    @param relativefallback Path starting with "/" and relative to @c \$HOME to use as fallback.
  *    @return The home directory path or @c NULL of an error occurs.
  */
-static char * xdgGetRelativeHome( const char *envname, const char *relativefallback )
+static char *xdgGetRelativeHome( const char *envname, const char *relativefallback )
 {
    char *relhome = xdgEnvDup(envname);
    if ((relhome == NULL) && (errno != ENOMEM)) {
@@ -98,7 +98,7 @@ static char * xdgGetRelativeHome( const char *envname, const char *relativefallb
    }
    return relhome;
 }
-#endif
+#endif /* HAS_UNIX && !__MACOSX__ */
 
 static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
 /**
