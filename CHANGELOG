@@ -2,6 +2,7 @@
    * Gameplay
       * Excess energy to battery recharge efficiency is now a flat 50% instead of varying based on charge level
       * Gave the Za'lek sting a slight detection buff
+      * Can only have a single patrol mission active at a given time
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user

@@ -182,6 +182,11 @@ function create ()
 end
 
 function accept ()
+   if player.misnActive("Patrol") then
+      vntk(_([[Already Patrolling]]),_([[You can only accept a single patrol mission at a given time.]]))
+      return
+   end
+
    misn.accept()
 
    mem.osd_msg[1] = fmt.f( mem.osd_msg[1], {sys=mem.missys} )
