@@ -75,7 +75,7 @@ void rng_init (void)
 
    if (need_init)
       mt_initArray( i );
-   for (i=0; i<10; i++) /* generate numbers to get away from poor initial values */
+   for (int j=0; j<10; j++) /* generate numbers to get away from poor initial values */
       mt_genArray();
 }
 
