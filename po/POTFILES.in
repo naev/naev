@@ -3660,7 +3660,6 @@ src/music.h
 src/naev.c
 src/naev.h
 src/naev_version.c
-src/ncompat.h
 src/ndata.c
 src/ndata.h
 src/nebula.c

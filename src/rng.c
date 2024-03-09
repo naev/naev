@@ -15,7 +15,6 @@
 #include <unistd.h>
 
 #include "naev.h"
-#include "ncompat.h"
 
 #if HAS_POSIX
 #include <time.h>

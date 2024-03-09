@@ -30,7 +30,6 @@
 #include "nfile.h"
 
 #include "conf.h"
-#include "ncompat.h"
 #if __MACOSX__
 #include "glue_macos.h"
 #endif /* __MACOSX__ */

@@ -83,6 +83,10 @@ if buildExec.disabled() == false
    summary('OpenGL'  , debug_gl    , section: 'Debug', bool_yn: true)
    assert(debug or not debug_gl, 'debug_gl option is only valid for debug builds. Try "meson configure --buildtype=debug" for example.')
 
+   # Some OS voodoo TODO maybe use .system?
+   config_data.set10('HAS_POSIX', cc.has_define('__unix__') or cc.has_define('__unix') or cc.has_define('__MACOSX__'))
+   config_data.set('HAS_UNIX', 'HAS_POSIX')
+
    ### Hard deps (required: true)
 
    naev_deps += cc.find_library('m', required : false)

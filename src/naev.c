@@ -27,7 +27,6 @@
 /** @endcond */
 
 #include "ai.h"
-#include "ncompat.h"
 #include "background.h"
 #include "camera.h"
 #include "cond.h"

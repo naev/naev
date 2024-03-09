@@ -276,7 +276,6 @@ headers = files(
    'msgcat.h',
    'music.h',
    'naev.h',
-   'ncompat.h',
    'ndata.h',
    'nebula.h',
    'news.h',
