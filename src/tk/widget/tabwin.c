@@ -593,7 +593,7 @@ unsigned int* window_tabWinGet( unsigned int wid, const char *tab )
  */
 int window_tabWinGetBarWidth( unsigned int wid, const char* tab )
 {
-   Widget *wgt = tab_getWgt( wid, tab );
+   const Widget *wgt = tab_getWgt( wid, tab );
    return tab_getBarWidth( wgt );
 }
 
@@ -612,4 +612,15 @@ int tab_getBarWidth( const Widget* wgt )
       w += (TAB_HMARGIN + TAB_HPADDING) + wgt->dat.tab.namelen[i] + (TAB_HPADDING);
 
    return w;
+}
+
+/**
+ * @brief Sets the tab window name.
+ */
+int window_tabWinSetTabName( unsigned int wid, const char *tab, int id, const char *name )
+{
+   const Widget *wgt = tab_getWgt( wid, tab );
+   free( wgt->dat.tab.tabnames[id] );
+   wgt->dat.tab.tabnames[id] = strdup(name);
+   return 0;
 }

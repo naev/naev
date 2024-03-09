@@ -23,7 +23,6 @@
 #include "dialogue.h"
 #include "economy.h"
 #include "equipment.h"
-#include "escort.h"
 #include "event.h"
 #include "gui.h"
 #include "gui_omsg.h"
@@ -310,7 +309,7 @@ static int bar_genList( unsigned int wid )
 {
    ImageArrayCell *portraits;
    int w, h, iw, ih, bw, bh;
-   int n, pos;
+   int n, pos, marktab;
 
    /* Validity check. */
    if (wid == 0)
@@ -318,6 +317,7 @@ static int bar_genList( unsigned int wid )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
+   marktab = 0;
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" )) {
@@ -356,8 +356,10 @@ static int bar_genList( unsigned int wid )
          }
          else
             p->image = gl_dupTexture( npc_getTexture(i) );
-         if (npc_isImportant(i))
+         if (npc_isImportant(i)) {
             p->layers = gl_addTexArray( p->layers, gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.webp", 0 ) );
+            marktab = 1;
+         }
       }
    }
    window_addImageArray( wid, 20, -40,
@@ -372,6 +374,12 @@ static int bar_genList( unsigned int wid )
 
    /* Set default keyboard focus. */
    window_setFocus( wid, "iarMissions" );
+
+   /* Determine if we want to mark the spaceport bar tab. */
+   if (marktab)
+      window_tabWinSetTabName( land_wid, "tabLand", land_windowsMap[LAND_WINDOW_BAR], _("Spaceport Bar #r!!#0") );
+   else
+      window_tabWinSetTabName( land_wid, "tabLand", land_windowsMap[LAND_WINDOW_BAR], _("Spaceport Bar") );
 
    return 0;
 }
