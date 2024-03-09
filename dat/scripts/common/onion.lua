@@ -35,6 +35,7 @@ end
 
 onion.rewards = {
    misn01 = 200e3,
+   misn02 = 500e3,
 }
 
 return onion
