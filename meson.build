@@ -84,7 +84,7 @@ if buildExec.disabled() == false
    assert(debug or not debug_gl, 'debug_gl option is only valid for debug builds. Try "meson configure --buildtype=debug" for example.')
 
    # Some OS voodoo TODO these are not very correct, but ported from ncompat.h . Maybe use .system?
-   has_posix = cc.compiles('''#if !(defined(__unix) || defined(__unix__) || __MACOSX__)
+   has_posix = host_machine.system()=='darwin' or cc.compiles('''#if !(defined(__unix) || defined(__unix__))
 #error "Not unix"
 #endif
 int main (void) { return 0; }''')
