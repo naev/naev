@@ -46,12 +46,12 @@
  */
 static char* xdgGetEnv(const char *name)
 {
-    char *env = SDL_getenv(name);
-    if ((env != NULL) && (env[0] != '\0'))
-        return env;
-    /* What errno signifies missing env var? */
-    errno = EINVAL;
-    return NULL;
+   char *env = SDL_getenv(name);
+   if ((env != NULL) && (env[0] != '\0'))
+      return env;
+   /* What errno signifies missing env var? */
+   errno = EINVAL;
+   return NULL;
 }
 
 /**
@@ -62,10 +62,10 @@ static char* xdgGetEnv(const char *name)
  */
 static char* xdgEnvDup(const char *name)
 {
-    const char *env = xdgGetEnv( name );
-    if (env != NULL)
-        return strdup(env);
-     return NULL;
+   const char *env = xdgGetEnv( name );
+   if (env != NULL)
+      return strdup(env);
+   return NULL;
 }
 
 /**
@@ -78,25 +78,25 @@ static char* xdgEnvDup(const char *name)
  */
 static char * xdgGetRelativeHome( const char *envname, const char *relativefallback )
 {
-    char *relhome = xdgEnvDup(envname);
-    if ((relhome == NULL) && (errno != ENOMEM)) {
-        const char *home;
-        unsigned int homelen;
-        errno = 0;
-        home = xdgGetEnv( "HOME" );
-        if (home == NULL)
-            return NULL;
-        homelen = strlen(home);
-        unsigned int fallbacklength;
-        fallbacklength = strlen( relativefallback );
-        relhome = malloc( homelen + fallbacklength + 1 );
-        if (relhome == NULL)
-           return NULL;
-        memcpy( relhome, home, homelen );
-        memcpy( &relhome[ homelen ], relativefallback, fallbacklength + 1 );
-        relhome[ homelen + fallbacklength ] = '\0'; /* Just in case. */
-    }
-    return relhome;
+   char *relhome = xdgEnvDup(envname);
+   if ((relhome == NULL) && (errno != ENOMEM)) {
+      const char *home;
+      unsigned int homelen;
+      errno = 0;
+      home = xdgGetEnv( "HOME" );
+      if (home == NULL)
+         return NULL;
+      homelen = strlen(home);
+      unsigned int fallbacklength;
+      fallbacklength = strlen( relativefallback );
+      relhome = malloc( homelen + fallbacklength + 1 );
+      if (relhome == NULL)
+         return NULL;
+      memcpy( relhome, home, homelen );
+      memcpy( &relhome[ homelen ], relativefallback, fallbacklength + 1 );
+      relhome[ homelen + fallbacklength ] = '\0'; /* Just in case. */
+   }
+   return relhome;
 }
 #endif
 
@@ -108,26 +108,26 @@ static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
  */
 const char* nfile_configPath (void)
 {
-    if (naev_configPath[0] == '\0') {
-        /* Global override is set. */
-        if (conf.datapath) {
-           snprintf( naev_configPath, sizeof(naev_configPath), "%s/", conf.datapath );
-           return naev_configPath;
-        }
+   if (naev_configPath[0] == '\0') {
+      /* Global override is set. */
+      if (conf.datapath) {
+         snprintf( naev_configPath, sizeof(naev_configPath), "%s/", conf.datapath );
+         return naev_configPath;
+      }
 #if __MACOSX__
-        if (macos_configPath( naev_configPath, sizeof(naev_configPath) ) != 0) {
-           WARN(_("Cannot determine config path, using current directory."));
-           snprintf( naev_configPath, sizeof(naev_configPath), "./naev/" );
-        }
+      if (macos_configPath( naev_configPath, sizeof(naev_configPath) ) != 0) {
+         WARN(_("Cannot determine config path, using current directory."));
+         snprintf( naev_configPath, sizeof(naev_configPath), "./naev/" );
+      }
 #elif HAS_UNIX
-        char *path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
-        if (path == NULL) {
-            WARN(_("$XDG_CONFIG_HOME isn't set, using current directory."));
-            path = strdup(".");
-        }
+      char *path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
+      if (path == NULL) {
+         WARN(_("$XDG_CONFIG_HOME isn't set, using current directory."));
+         path = strdup(".");
+      }
 
-        snprintf( naev_configPath, sizeof(naev_configPath), "%s/naev/", path );
-        free (path);
+      snprintf( naev_configPath, sizeof(naev_configPath), "%s/naev/", path );
+      free (path);
 #elif __WIN32__
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
@@ -138,9 +138,9 @@ const char* nfile_configPath (void)
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
-    }
+   }
 
-    return naev_configPath;
+   return naev_configPath;
 }
 
 static char naev_cachePath[PATH_MAX] = "\0"; /**< Store Naev's cache path. */
@@ -151,26 +151,26 @@ static char naev_cachePath[PATH_MAX] = "\0"; /**< Store Naev's cache path. */
  */
 const char* nfile_cachePath (void)
 {
-    if (naev_cachePath[0] == '\0') {
-        /* Global override is set. */
-        if (conf.datapath) {
-           snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/", conf.datapath );
-           return naev_cachePath;
-        }
+   if (naev_cachePath[0] == '\0') {
+      /* Global override is set. */
+      if (conf.datapath) {
+         snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/", conf.datapath );
+         return naev_cachePath;
+      }
 #if __MACOSX__
-        if (macos_cachePath( naev_cachePath, sizeof(naev_cachePath) ) != 0) {
-           WARN(_("Cannot determine cache path, using current directory."));
-           snprintf( naev_cachePath, sizeof(naev_cachePath), "./naev/" );
-        }
+      if (macos_cachePath( naev_cachePath, sizeof(naev_cachePath) ) != 0) {
+         WARN(_("Cannot determine cache path, using current directory."));
+         snprintf( naev_cachePath, sizeof(naev_cachePath), "./naev/" );
+      }
 #elif HAS_UNIX
-        char *path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
-        if (path == NULL) {
-            WARN(_("$XDG_CACHE_HOME isn't set, using current directory."));
-            path = strdup(".");
-        }
+      char *path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
+      if (path == NULL) {
+         WARN(_("$XDG_CACHE_HOME isn't set, using current directory."));
+         path = strdup(".");
+      }
 
-        snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/naev/", path );
-        free (path);
+      snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/naev/", path );
+      free (path);
 #elif __WIN32__
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
@@ -181,9 +181,9 @@ const char* nfile_cachePath (void)
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
-    }
+   }
 
-    return naev_cachePath;
+   return naev_cachePath;
 }
 
 #if HAS_POSIX
