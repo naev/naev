@@ -234,7 +234,7 @@ static int mkpath( const char *path )
       if (nfile_isSeparator(p[0])) {
          p[0] = '\0';
          ret = MKDIR;
-         if (ret)
+         if (ret && (errno!=EEXIST))
             return ret;
          p[0] = '/';
       }
