@@ -12,7 +12,7 @@
       return false
    end
    local _spb, sys = spob.getS("Ulios")
-   if sys:jumpDist() &gt; 15 then
+   if sys:jumpDist() &gt; 15 or sys:jumpDist() &lt; 3 then
       return false
    end
    local sf = system.cur():faction()
