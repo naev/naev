@@ -38,9 +38,6 @@
  */
 typedef struct Keybind_ {
    int disabled; /**< Whether or not it's disabled. */
-   const char *brief; /**< Brief description. TODO remove in 0.13.0 or so. */
-   const char *name; /**< Descriptions of the keybinds */
-   const char* detailed; /**< Longer description of the keybinds*/
    KeybindType type; /**< type, defined in player.h */
    SDL_Keycode key; /**< key/axis/button event number */
    SDL_Keymod mod; /**< Key modifiers (where applicable). */
@@ -139,7 +136,7 @@ static Keybind *input_paste;
 /*
  * accel hacks
  */
-static int doubletap_key         = -1; /**< Last key double tapped. */
+static KeySemanticType doubletap_key = -1; /**< Last key double tapped. */
 static unsigned int doubletap_t  = 0; /**< Used to see if double tap accel. */
 
 /*
@@ -166,7 +163,7 @@ extern double player_right; /**< player.c */
 /*
  * Prototypes.
  */
-static void input_key( int keynum, double value, double kabs, int repeat );
+static void input_key( KeySemanticType keynum, double value, double kabs, int repeat );
 static void input_clickZoom( double modifier );
 static void input_clickevent( SDL_Event* event );
 static void input_mouseMove( SDL_Event* event );
@@ -412,9 +409,6 @@ void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode ke
       input_keybinds[keybind].key = key;
       /* Non-keyboards get mod NMOD_ANY to always match. */
       input_keybinds[keybind].mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ANY;
-      input_keybinds[keybind].brief=keybind_info[keybind][2];
-      input_keybinds[keybind].name=keybind_info[keybind][0];
-      input_keybinds[keybind].detailed=keybind_info[keybind][1];
       return;
    }
    WARN(_("Unable to set keybinding '%d', that command doesn't exist"), keybind);
@@ -666,7 +660,7 @@ void input_update( double dt )
  *    @param kabs The absolute value.
  *    @param repeat Whether the key is still held down, rather than newly pressed.
  */
-static void input_key( int keynum, double value, double kabs, int repeat )
+static void input_key( KeySemanticType keynum, double value, double kabs, int repeat )
 {
    HookParam hparam[3];
    int isdoubletap = 0;
@@ -1013,7 +1007,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* Run the hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = input_keybinds[keynum].detailed;
+   hparam[0].u.str   = input_getKeybindDescription(keynum);
    hparam[1].type    = HOOK_PARAM_BOOL;
    hparam[1].u.b     = (value > 0.);
    hparam[2].type    = HOOK_PARAM_SENTINEL;
