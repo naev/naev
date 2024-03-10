@@ -3,7 +3,7 @@
  <lua>ships/lua/zalek.lua</lua>
  <points>70</points>
  <base_type>Sting</base_type>
- <GFX sx="10" sy="10">sting</GFX>
+ <gfx sx="10" sy="10" size="95">sting</gfx>
  <rarity>2</rarity>
  <sound>engine_zalek</sound>
  <class>Corvette</class>
@@ -24,7 +24,7 @@
  </health>
  <characteristics>
   <crew>12</crew>
-  <mass>180</mass>
+  <mass>150</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>25</cargo>
  </characteristics>
@@ -38,12 +38,14 @@
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
-  <utility size="small" />
+  <utility size="medium" />
+  <utility size="medium" />
   <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
-  <structure size="medium" />
+  <structure size="small" />
+  <structure size="small" />
  </slots>
  <stats>
   <armour_mod>-30</armour_mod>
@@ -51,6 +53,7 @@
   <shield_regen_mod>30</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
   <fbay_rate>25</fbay_rate>
+  <ew_detect>10</ew_detect>
  </stats>
  <tags>
   <tag>zalek</tag>

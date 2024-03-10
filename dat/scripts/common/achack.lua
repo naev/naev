@@ -1,3 +1,6 @@
+local vn = require "vn"
+local portrait = require "portrait"
+
 local achack = {}
 
 local function make_fct ()
@@ -21,6 +24,31 @@ end
 function achack.fct_thugs ()
    local _f, f = make_fct()
    return f
+end
+
+achack.harja = {
+   name = _("Harja"),
+   portrait = "sirius/unique/harja.webp",
+   image = portrait.getFullPath("sirius/unique/harja.webp"),
+}
+achack.joanne = {
+   name = _("Joanne"),
+   portrait = "sirius/unique/joanne.webp",
+   image = portrait.getFullPath("sirius/unique/joanne.webp"),
+}
+
+function achack.vn_harja( params )
+   return vn.Character.new( achack.harja.name,
+         tmerge( {
+            image = achack.harja.image,
+         }, params) )
+end
+
+function achack.vn_joanne( params )
+   return vn.Character.new( achack.joanne.name,
+         tmerge( {
+            image = achack.joanne.image,
+         }, params) )
 end
 
 return achack

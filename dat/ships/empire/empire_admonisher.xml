@@ -2,7 +2,7 @@
 <ship name="Empire Admonisher">
  <points>60</points>
  <base_type>Admonisher</base_type>
- <GFX size="68">admonisher_empire</GFX>
+ <gfx size="68">admonisher_empire</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Corvette</class>
@@ -25,7 +25,7 @@
  </health>
  <characteristics>
   <crew>13</crew>
-  <mass>160</mass>
+  <mass>170</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>25</cargo>
  </characteristics>
@@ -39,9 +39,11 @@
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
+  <utility size="medium" />
   <utility size="small" />
   <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
+  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

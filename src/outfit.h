@@ -14,7 +14,9 @@
 /*
  * properties
  */
-#define outfit_isProp(o,p)          ((o)->properties & p) /**< Checks an outfit for property. */
+#define outfit_isProp(o,p)          ((o)->properties & (p)) /**< Checks an outfit for property. */
+#define outfit_setProp(o,p)         ((o)->properties |= (p)) /**< Sets property. */
+#define outfit_rmProp(o,p)          ((o)->properties &= ~(p)) /**< Removes property. */
 /* property flags */
 #define OUTFIT_PROP_UNIQUE             (1<<0)  /**< Unique item (can only have one). Not sellable.*/
 #define OUTFIT_PROP_SHOOT_DRY          (1<<1)  /**< Weapon that doesn't actually create particles. Should be handled in ontoggle. */
@@ -30,15 +32,17 @@
 #define OUTFIT_PROP_WEAP_MISS_SHIPS    (1<<10) /**< Weapon can not hit ships. */
 #define OUTFIT_PROP_WEAP_MISS_ASTEROIDS (1<<11) /**< Weapon can not hit asteroids. */
 #define OUTFIT_PROP_WEAP_MISS_EXPLODE  (1<<12) /**< The weapon particle blows up on miss. */
+#define OUTFIT_PROP_WEAP_ONLYHITTARGET (1<<13) /**< The weapon can only hit the target (and asteroids or whatever). */
+#define OUTFIT_PROP_NEEDSGFX           (1<<14) /**< The outfit needs to load graphics. */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
-/** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_WEAPON            N_("#p W ")
-/** Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_UTILITY           N_("#g U ")
-/** Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_STRUCTURE         N_("#n S ")
-/** Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
+/** Colour-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_WEAPON            N_("#pWeapon")
+/** Colour-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_UTILITY           N_("#gUtility")
+/** Colour-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_STRUCTURE         N_("#nStructural")
+/** Colour-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_CORE              N_("#oCore")
 
 /*
@@ -77,6 +81,7 @@ typedef enum OutfitType_ {
 typedef enum OutfitSlotType_ {
    OUTFIT_SLOT_NULL,       /**< Invalid slot type. */
    OUTFIT_SLOT_NA,         /**< Slot type not applicable. */
+   OUTFIT_SLOT_INTRINSIC,  /**< Internal outfits that don't use slots. */
    OUTFIT_SLOT_STRUCTURE,  /**< Low energy slot. */
    OUTFIT_SLOT_UTILITY,    /**< Medium energy slot. */
    OUTFIT_SLOT_WEAPON      /**< High energy slot. */
@@ -117,7 +122,7 @@ typedef struct OutfitSlot_ {
 typedef struct OutfitGFX_ {
    glTexture* tex;      /**< Graphic in case of texture. */
    glTexture* tex_end;  /**< End texture if applicable. */
-   CollPoly *polygon;   /**< Collision polygon. */
+   CollPoly polygon;   /**< Collision polygon. */
    double spin;         /**< Graphic spin rate. */
    GLuint program;      /**< Shader program. */
    GLuint vertex;       /**< Vertex info. */
@@ -191,7 +196,7 @@ typedef struct OutfitBeamData_ {
    int mining_rarity;/**< Maximum mining rarity the weapon can mine. */
 
    /* Graphics and sound. */
-   glColour colour;  /**< Color to use for the shader. */
+   glColour colour;  /**< Colour to use for the shader. */
    GLfloat width;    /**< Width of the beam. */
    GLuint shader;    /**< Shader subroutine to use. */
    int spfx_armour;  /**< special effect on hit */
@@ -231,7 +236,7 @@ typedef struct OutfitLauncherData_ {
    double speed;     /**< Initial speed. */
    double speed_max; /**< Maximum speed. Defaults to speed if not set. */
    double turn;      /**< Turn velocity in rad/s. */
-   double thrust;    /**< Acceleration */
+   double accel;     /**< Acceleration */
    double energy;    /**< Energy usage */
    Damage dmg;       /**< Damage done. */
    double radius;    /**< Explosion radius. */
@@ -272,23 +277,22 @@ typedef struct OutfitAfterburnerData_ {
    int sound_on;     /**< Sound of the afterburner turning on */
    int sound;        /**< Sound of the afterburner being on */
    int sound_off;    /**< Sound of the afterburner turning off */
-   double thrust;    /**< Percent of thrust increase based on ship base. */
+   double accel;     /**< Percent of accel increase based on ship base. */
    double speed;     /**< Percent of speed to increase based on ship base. */
    double energy;    /**< Energy usage while active */
    double mass_limit;/**< Limit at which effectiveness starts to drop. */
    double heatup;    /**< How long it takes for the afterburner to overheat. */
    double heat;      /**< Heat per second. */
-   double heat_cap;  /**< Temperature at which the outfit overheats (K). */
-   double heat_base; /**< Temperature at which the outfit BEGINS to overheat(K). */
 } OutfitAfterburnerData;
 
+struct Ship_; /* Bit of a horrible hack to allow us to avoid circular definitions. */
 /**
  * @brief Represents a fighter bay.
  */
 typedef struct OutfitFighterBayData_ {
-   char *ship;       /**< Name of the ships to use as ammo. */
+   char *shipname;   /**< Name of the ships to use as ammo. */
+   const struct Ship_ *ship; /**< Ship to use as ammo. */
    double ship_mass; /**< Mass of a fighter. */
-   const struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
    int amount;       /**< Amount of ammo it can store. */
    double reload_time;/**< Time it takes to reload 1 ammo. */
@@ -303,7 +307,7 @@ typedef struct OutfitMapData_s OutfitMapData_t;
  * @brief Represents a local map.
  */
 typedef struct OutfitLocalMapData_ {
-   double jump_detect;  /**< Ability to detect jumps. */
+   double jump_detect; /**< Ability to detect jumps. */
    double spob_detect; /**< Ability to detect spobs. */
 } OutfitLocalMapData;
 
@@ -327,6 +331,7 @@ typedef struct OutfitLicenseData_ {
 typedef struct Outfit_ {
    char *name;       /**< Name of the outfit. */
    char *typename;   /**< Overrides the base type. */
+   char *shortname;  /**< Shorter version of the name for GUI and such. */
    int rarity;       /**< Rarity of the outfit. */
    char *filename;   /**< File data was loaded from. */
 
@@ -348,8 +353,13 @@ typedef struct Outfit_ {
    char *desc_extra; /**< Extra description string (if static). */
    int priority;     /**< Sort priority, highest first. */
 
+   char *gfx_store_path;   /**< Store graphic path. */
    glTexture *gfx_store;   /**< Store graphic. */
    glTexture **gfx_overlays;/**< Array (array.h): Store overlay graphics. */
+
+   /* Heat limits. */
+   double overheat_min; /**< Temperature at which the outfit BEGINS to overheat(K). */
+   double overheat_max;  /**< Temperature at which the outfit overheats (K). */
 
    unsigned int properties;/**< Properties stored bitwise. */
    unsigned int group;     /**< Weapon group to use when autoweap is enabled. */
@@ -370,9 +380,10 @@ typedef struct Outfit_ {
    int lua_cleanup;  /**< Run when the pilot is erased. */
    int lua_update;   /**< Run periodically. */
    int lua_ontoggle; /**< Run when toggled. */
+   int lua_onshoot;  /**< Run when shooting. */
    int lua_onhit;    /**< Run when pilot takes damage. */
    int lua_outofenergy;/**< Run when the pilot runs out of energy. */
-   int lua_onshoot;  /**< Run when pilot shoots. */
+   int lua_onshootany; /**< Run when pilot shoots ANY weapon. */
    int lua_onstealth;/**< Run when pilot toggles stealth. */
    int lua_onscanned;/**< Run when the pilot is scanned by another pilot. */
    int lua_onscan;   /**< Run when the pilot scans another pilot. */
@@ -380,6 +391,9 @@ typedef struct Outfit_ {
    int lua_land;     /**< Run when the player lands. */
    int lua_takeoff;  /**< Run when the player takes off. */
    int lua_jumpin;   /**< Run when the player jumps in. */
+   int lua_board;    /**< Run when the player boards a ship. */
+   int lua_keydoubletap; /**< Run when a key is double tapped. */
+   int lua_keyrelease; /**< Run when a key is released. */
    /* Weapons only. */
    int lua_onimpact; /**< Run when weapon hits the enemy. */
    int lua_onmiss;   /**< Run when weapon particle expires. */
@@ -393,7 +407,7 @@ typedef struct Outfit_ {
    union {
       OutfitBoltData blt;         /**< BOLT */
       OutfitBeamData bem;         /**< BEAM */
-      OutfitLauncherData lau;     /**< MISSILE */
+      OutfitLauncherData lau;     /**< LAUNCHER */
       OutfitModificationData mod; /**< MODIFICATION */
       OutfitAfterburnerData afb;  /**< AFTERBURNER */
       OutfitFighterBayData bay;   /**< FIGHTER_BAY */
@@ -407,6 +421,9 @@ typedef struct Outfit_ {
 /*
  * Access stuff.
  */
+int outfit_gfxStoreLoaded( const Outfit *o );
+int outfit_gfxStoreLoadNeeded (void);
+int outfit_gfxStoreLoad( Outfit *o );
 const Outfit* outfit_get( const char* name );
 const Outfit* outfit_getW( const char* name );
 const Outfit* outfit_getAll (void);
@@ -414,6 +431,7 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 );
 /* outfit types */
 int outfit_isActive( const Outfit *o );
 int outfit_isToggleable( const Outfit *o );
+int outfit_isWeapon( const Outfit *o );
 int outfit_isForward( const Outfit *o );
 int outfit_isBolt( const Outfit *o );
 int outfit_isBeam( const Outfit *o );
@@ -475,6 +493,7 @@ double outfit_heat( const Outfit* o );
 double outfit_cpu( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );
+double outfit_swivel( const Outfit* o );
 double outfit_spin( const Outfit* o );
 double outfit_trackmin( const Outfit* o );
 double outfit_trackmax( const Outfit* o );

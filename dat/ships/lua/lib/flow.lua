@@ -46,6 +46,7 @@ local flow_regen = {
 flow.list_regen = flow_regen
 
 local flow_mod = {
+--[[
    -- Ships
    ["Sirius Divinity"]           = 1.3,
    ["Sirius Dogma"]              = 1.3,
@@ -65,6 +66,7 @@ local flow_mod = {
    ["House of Mirrors"]          = 1/1.3,
    ["Reality Rip"]               = 1/1.3,
    ["Seeking Chakra"]            = 1/1.3,
+--]]
 }
 flow.list_mod = flow_mod
 
@@ -186,9 +188,9 @@ function flow.recalculate( p )
 end
 
 local amp_size = {
-   ["Small Flow Amplifier"]      = 1,
-   ["Medium Flow Amplifier"]     = 2,
-   ["Large Flow Amplifier"]      = 3,
+   ["Small Flow Amplifier"]   = 1,
+   ["Medium Flow Amplifier"]  = 2,
+   ["Large Flow Amplifier"]   = 3,
 }
 function flow.size( p )
    -- Sirius ships are determined by their size

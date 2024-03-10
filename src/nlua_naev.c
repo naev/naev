@@ -31,6 +31,7 @@
 #include "player.h"
 #include "plugin.h"
 #include "semver.h"
+#include "debug.h"
 
 static int cache_table = LUA_NOREF; /* No reference. */
 
@@ -68,9 +69,12 @@ static int naevL_pause( lua_State *L );
 static int naevL_unpause( lua_State *L );
 static int naevL_hasTextInput( lua_State *L );
 static int naevL_setTextInput( lua_State *L );
+static int naevL_unit( lua_State *L );
 static int naevL_quadtreeParams( lua_State *L );
 #if DEBUGGING
 static int naevL_envs( lua_State *L );
+static int naevL_debugTrails( lua_State *L );
+static int naevL_debugCollisions( lua_State *L );
 #endif /* DEBUGGING */
 static const luaL_Reg naev_methods[] = {
    { "version", naevL_version },
@@ -106,9 +110,12 @@ static const luaL_Reg naev_methods[] = {
    { "unpause", naevL_unpause },
    { "hasTextInput", naevL_hasTextInput },
    { "setTextInput", naevL_setTextInput },
+   { "unit", naevL_unit },
    { "quadtreeParams", naevL_quadtreeParams },
 #if DEBUGGING
    { "envs", naevL_envs },
+   { "debugTrails", naevL_debugTrails },
+   { "debugCollisions", naevL_debugCollisions },
 #endif /* DEBUGGING */
    {0,0}
 }; /**< Naev Lua methods. */
@@ -241,7 +248,7 @@ static int naevL_ticksGame( lua_State *L )
  */
 static int naevL_ticks( lua_State *L )
 {
-   lua_pushnumber(L, (double)SDL_GetTicks() / 1000.);
+   lua_pushnumber(L, (double)SDL_GetPerformanceCounter() / (double)SDL_GetPerformanceFrequency() );
    return 1;
 }
 
@@ -384,8 +391,10 @@ static int naevL_missionStart( lua_State *L )
    const char *str = luaL_checkstring(L, 1);
    int ret = mission_start( str, NULL );
 
-   if (cli_isOpen() && landed)
+   if (cli_isOpen() && landed) {
       bar_regen();
+      misn_regen();
+   }
 
    lua_pushboolean( L, (ret==0) || (ret==3) );
    lua_pushboolean( L, (ret==3) );
@@ -508,11 +517,14 @@ static int naevL_conf( lua_State *L )
    PUSH_BOOL( L, "notresizable", conf.notresizable );
    PUSH_BOOL( L, "borderless", conf.borderless );
    PUSH_BOOL( L, "minimize", conf.minimize );
-   PUSH_BOOL( L, "colorblind", conf.colorblind );
+   PUSH_DOUBLE( L, "colourblind_sim", conf.colourblind_sim );
+   PUSH_DOUBLE( L, "colourblind_correct", conf.colourblind_correct );
+   PUSH_INT( L, "colourblind_type", conf.colourblind_type );
+   PUSH_DOUBLE( L, "game_speed", conf.game_speed );
    PUSH_DOUBLE( L, "bg_brightness", conf.bg_brightness );
    PUSH_DOUBLE( L, "nebu_nonuniformity", conf.nebu_nonuniformity );
    PUSH_DOUBLE( L, "gamma_correction", conf.gamma_correction );
-   PUSH_BOOL( L, "background_fancy", conf.background_fancy );
+   PUSH_BOOL( L, "low_memory", conf.low_memory );
    PUSH_BOOL( L, "showfps", conf.fps_show );
    PUSH_INT( L, "maxfps", conf.fps_max );
    PUSH_BOOL( L, "showpause", conf.pause_show );
@@ -539,7 +551,7 @@ static int naevL_conf( lua_State *L )
    PUSH_INT( L, "doubletap_sensitivity", conf.doubletap_sens );
    PUSH_DOUBLE( L, "mouse_hide", conf.mouse_hide );
    PUSH_BOOL( L, "mouse_fly", conf.mouse_fly );
-   PUSH_INT( L, "mouse_thrust", conf.mouse_thrust );
+   PUSH_INT( L, "mouse_accel", conf.mouse_accel );
    PUSH_DOUBLE( L, "mouse_doubleclick", conf.mouse_doubleclick );
    PUSH_BOOL( L, "devmode", conf.devmode );
    PUSH_BOOL( L, "devautosave", conf.devautosave );
@@ -552,11 +564,6 @@ static int naevL_conf( lua_State *L )
    PUSH_STRING( L, "dev_save_sys", conf.dev_save_sys );
    PUSH_STRING( L, "dev_save_map", conf.dev_save_map );
    PUSH_STRING( L, "dev_save_spob", conf.dev_save_spob );
-   /* TODO remove the following in 0.12.0 */
-   PUSH_DOUBLE( L, "compression_velocity", conf.compression_velocity );
-   PUSH_DOUBLE( L, "compression_mult", conf.compression_mult );
-   PUSH_DOUBLE( L, "autonav_reset_dist", conf.autonav_reset_dist );
-   PUSH_DOUBLE( L, "autonav_reset_shield", conf.autonav_reset_shield );
    return 1;
 }
 #undef PUSH_STRING
@@ -575,8 +582,7 @@ static int naevL_confSet( lua_State *L )
 {
    (void) L;
    /* TODO implement. */
-   NLUA_ERROR(L, _("unimplemented"));
-   return 0;
+   return NLUA_ERROR(L, _("unimplemented"));
 }
 
 /**
@@ -659,7 +665,7 @@ static int naevL_claimTest( lua_State *L )
    else if (lua_isstring(L, 1))
       claim_addStr( claim, lua_tostring( L, 1 ) );
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Only test, but don't apply case. */
    lua_pushboolean( L, !claim_test( claim ) );
@@ -733,7 +739,6 @@ static int naevL_menuInfo( lua_State *L )
    const char *str;
    int window;
 
-
    if (menu_open)
       return 0;
 
@@ -758,10 +763,8 @@ static int naevL_menuInfo( lua_State *L )
       window = INFO_MISSIONS;
    else if (strcasecmp( str, "standings" )==0)
       window = INFO_STANDINGS;
-   else {
-      NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
-      return 0;
-   }
+   else
+      return NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
 
    /* Open window. */
    menu_info( window );
@@ -819,7 +822,7 @@ static int naevL_pause( lua_State *L )
 static int naevL_unpause( lua_State *L )
 {
    if (landed)
-      NLUA_ERROR(L, _("Unable to unpause the game when landed!"));
+      return NLUA_ERROR(L, _("Unable to unpause the game when landed!"));
    unpause_game();
    return 0;
 }
@@ -865,6 +868,56 @@ static int naevL_setTextInput( lua_State *L )
    return 0;
 }
 
+static const char *unittbl[] = {
+   "time",     _UNIT_TIME,
+   "per_time", _UNIT_PER_TIME,
+   "distance", _UNIT_DISTANCE,
+   "speed",    _UNIT_SPEED,
+   "accel",    _UNIT_ACCEL,
+   "energy",   _UNIT_ENERGY,
+   "power",    _UNIT_POWER,
+   "angle",    _UNIT_ANGLE,
+   "rotation", _UNIT_ROTATION,
+   "mass",     _UNIT_MASS,
+   "cpu",      _UNIT_CPU,
+   "unit",     _UNIT_UNIT,
+   "percent",  _UNIT_PERCENT,
+};
+/**
+ * @brief Gets the translated string corresponding to an in-game unit.
+ *    @luaparam[opt=nil] string str Name of the unit to get or nil to get a table with all of them.
+ *    @luareturn Translated string corresponding to the unit or table of all strings if no parameter is passed.
+ * @luafunc unit
+ */
+static int naevL_unit( lua_State *L )
+{
+   if (lua_isnoneornil(L,1)) {
+      lua_newtable( L );
+      for (unsigned int i=0; i<sizeof(unittbl)/sizeof(unittbl[0]); i+=2) {
+         lua_pushstring( L, _(unittbl[i+1]) );
+         lua_setfield( L, -2, unittbl[i] );
+      }
+      return 1;
+   }
+   else {
+      const char *str = luaL_checkstring(L,1);
+      for (unsigned int i=0; i<sizeof(unittbl)/sizeof(unittbl[0]); i+=2) {
+         if (strcmp(unittbl[i],str)==0) {
+            lua_pushstring( L, _(unittbl[i+1]) );
+            return 1;
+         }
+      }
+   }
+   NLUA_INVALID_PARAMETER(L,1);
+}
+
+/**
+ * @brief Modifies the Naev internal quadtree lookup parameters.
+ *
+ *    @luatparam number max_elem Maximum amount of elements to allow in a leaf node.
+ *    @luatparam number depth depth Maximum depth to allow.
+ * @luafunc quadtreeParams
+ */
 static int naevL_quadtreeParams( lua_State *L )
 {
    int max_elem = luaL_checkinteger( L, 1 );
@@ -886,5 +939,40 @@ static int naevL_envs( lua_State *L )
 {
    nlua_pushEnvTable( L );
    return 1;
+}
+
+/**
+ * @brief Toggles the trail emitters.
+ *
+ * @usage naev.debugTrails() -- Trail emitters are marked with crosses.
+ * @usage naev.debugTrails(false) -- Remove the markers.
+ *
+ *    @luatparam[opt=true] boolean state Whether to set or unset markers.
+ * @luafunc debugTrails
+ */
+static int naevL_debugTrails( lua_State *L )
+{
+   int state = (lua_gettop(L) > 0) ? lua_toboolean(L,1) : 1;
+   if (state)
+      debug_setFlag(DEBUG_MARK_EMITTER);
+   else
+      debug_rmFlag(DEBUG_MARK_EMITTER);
+   return 0;
+}
+
+/**
+ * @brief Toggles the collision polygons.
+ *
+ *    @luatparam[opt=true] boolean state Whether or not to show the collision polygons.
+ * @luafunc debugCollisions
+ */
+static int naevL_debugCollisions( lua_State *L )
+{
+   int state = (lua_gettop(L) > 0) ? lua_toboolean(L,1) : 1;
+   if (state)
+      debug_setFlag(DEBUG_MARK_COLLISION);
+   else
+      debug_rmFlag(DEBUG_MARK_COLLISION);
+   return 0;
 }
 #endif /* DEBUGGING */

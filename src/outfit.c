@@ -12,7 +12,6 @@
 /** @cond */
 #include <math.h>
 #include <stdlib.h>
-#include "SDL_thread.h"
 #include "physfs.h"
 
 #include "naev.h"
@@ -24,31 +23,39 @@
 #include "conf.h"
 #include "damagetype.h"
 #include "log.h"
-#include "mapData.h"
 #include "ndata.h"
-#include "nfile.h"
 #include "nlua.h"
 #include "nlua_gfx.h"
 #include "nlua_pilotoutfit.h"
 #include "nlua_outfit.h"
 #include "nlua_camera.h"
-#include "nlua_hook.h"
 #include "nlua_munition.h"
 #include "nstring.h"
 #include "nstring.h"
 #include "nxml.h"
 #include "pilot.h"
 #include "pilot_heat.h"
+#include "pilot_outfit.h"
 #include "ship.h"
 #include "slots.h"
 #include "spfx.h"
-#include "unistd.h"
-
-#define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
+#include "start.h"
+#include "space.h"
+#include "mapData.h"
+#include "threadpool.h"
 
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
 #define OUTFIT_SHORTDESC_MAX  STRMAX_SHORT /**< Max length of the short description of the outfit. */
+
+/**
+ * @brief For threaded loading of outfits.
+ */
+typedef struct OutfitThreadData_ {
+   char *filename;
+   Outfit outfit;
+   int ret;
+} OutfitThreadData;
 
 /*
  * the stack
@@ -60,25 +67,7 @@ static char **license_stack = NULL; /**< Stack of available licenses. */
  * Helper stuff for setting up short descriptions for outfits.
  */
 #define SDESC_ADD( l, temp, txt, ... ) \
-(l) += scnprintf( &(temp)->summary_raw[l], OUTFIT_SHORTDESC_MAX-(l), (txt), ## __VA_ARGS__ )
-#define SDESC_COLOUR( l, temp, txt, val, ... ) \
-SDESC_ADD( l, temp, "#%c", ((val)>0)?'g':(((val)<0)?'r':'0') ); \
-SDESC_ADD( l, temp, txt, (val), ## __VA_ARGS__ ); \
-SDESC_ADD( l, temp, "#0" )
-
-#define SDESC_COLOURT( l, temp, txt, threshold, val, ... ) \
-SDESC_ADD( l, temp, "#%c", ((val)>threshold)?'g':(((val)<threshold)?'r':'0') ); \
-SDESC_ADD( l, temp, txt, (val), ## __VA_ARGS__ ); \
-SDESC_ADD( l, temp, "#0" )
-
-#define SDESC_COND( l, temp, txt, val, ... ) \
-if (fabs(val) > 1e-5) { \
-   SDESC_ADD( l, temp, txt, (val), ## __VA_ARGS__ ); \
-}
-#define SDESC_COND_COLOUR( l, temp, txt, val, ... ) \
-if (fabs(val) > 1e-5) { \
-   SDESC_COLOUR( l, temp, txt, (val), ## __VA_ARGS__ ); \
-}
+(l) += scnprintf( &(temp)->summary_raw[l], OUTFIT_SHORTDESC_MAX - (l), (txt), ## __VA_ARGS__ )
 
 /*
  * Prototypes
@@ -86,8 +75,9 @@ if (fabs(val) > 1e-5) { \
 /* misc */
 static OutfitType outfit_strToOutfitType( char *buf );
 /* parsing */
-static int outfit_loadDir( char *dir );
+static int outfit_loadDir( const char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
+static int outfit_parseThread( void *ptr );
 static int outfit_parse( Outfit* temp, const char* file );
 static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent );
@@ -102,6 +92,57 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 static int outfit_loadPLG( Outfit *temp, const char *buf );
 static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node );
 static void sdesc_miningRarity( int *l, Outfit *temp, int rarity );
+/* Display */
+
+typedef struct s_Outfitstat {
+    const char *name;
+    const char *unit;
+    int colour;
+    int colour_threshold;
+    int hide_zero;
+    int precision;
+} t_os_stat;
+typedef const t_os_stat os_opts;
+
+/* Printing functions. */
+static int os_printD( char *buf, int len, double value, const os_opts *opts );
+static int os_printD_range( char *buffer, int i, double minValue, double maxValue, const t_os_stat *opts );
+static int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val_opts, int multiplier, double rate, const t_os_stat *rate_opts );
+
+/* Helpers for different attributes. */
+static os_opts darmour_opts = { N_("Armour Damage"), _UNIT_PERCENT, 1, 100, 0, 0 };
+static os_opts dshield_opts = { N_("Shield Damage"), _UNIT_PERCENT, 1, 100, 0, 0 };
+static os_opts dknockback_opts = { N_("Knockback"), _UNIT_PERCENT, 0, 0, 1, 0 };
+static os_opts cpu_opts = { N_("CPU"), _UNIT_CPU, 1, 0, 1, 0 };
+static os_opts mass_opts = { N_("Mass"), _UNIT_MASS, 0, 0, 1, 0 };
+static os_opts penetration_opts = { N_("Penetration"), _UNIT_PERCENT, 0, 0, 1, 0 };
+static os_opts damage_opts = {N_("Damage"), _UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts dps_opts = {N_("Damage Rate"), _UNIT_POWER, 0, 0, 1, 1 };
+static os_opts disable_opts = {N_("Disable"), _UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts disable_rate_opts = {N_("Disable Rate"), _UNIT_POWER, 0, 0, 1, 1 };
+static os_opts fire_rate_opts = {N_("Fire Rate"), _UNIT_PER_TIME, 0, 0, 0, 1 };
+static os_opts energy_opts = { N_("Energy"), _UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts power_opts = { N_("Power"), _UNIT_POWER, 0, 0, 1, 1 };
+static os_opts range_opts = { N_("Range"), _UNIT_DISTANCE, 0, 0, 1, 0 };
+static os_opts speed_opts = { N_("Speed"), _UNIT_SPEED, 0, 0, 1, 0 };
+static os_opts heatup_opts = { N_("Overheat"), _UNIT_TIME, 0, 0, 1, 1 };
+static os_opts dispersion_opts = { N_("Dispersion"), _UNIT_ANGLE, 0, 0, 1, 0 };
+static os_opts swivel_opts = { N_("Swivel"), _UNIT_ANGLE, 0, 0, 1, 0 };
+static os_opts tracking_opts = { N_("Tracking"), _UNIT_DISTANCE, 0, 0, 1, 0 };
+static os_opts duration_opts = { N_("Duration"), _UNIT_TIME, 0, 0, 1, 1 };
+static os_opts cooldown_opts = { N_("Cooldown"), _UNIT_TIME, 0, 0, 1, 1 };
+static os_opts lockon_opts = { N_("Lock On"), _UNIT_TIME, 0, 0, 1, 0 };
+static os_opts inflight_calib_opts = { N_("Inflight Calibration"), _UNIT_TIME, 0, 0, 1, 1 };
+static os_opts initial_speed_opts = { N_("Launch Speed"), _UNIT_SPEED, 0, 0, 1, 0 };
+static os_opts accel_opts = { N_("Accel"), _UNIT_ACCEL, 0, 0, 1, 0 };
+static os_opts max_speed_opts = { N_("Max Speed"), _UNIT_SPEED, 0, 0, 1, 0 };
+static os_opts reload_opts = { N_("Reload Time"), _UNIT_TIME, 0, 0, 1, 1 };
+static os_opts armour_opts = { N_("Armour"), _UNIT_ENERGY, 0, 0, 1, 1 };
+static os_opts absorp_opts = { N_("Absorption"), _UNIT_PERCENT, 0, 0, 1, 1 };
+static os_opts jam_res_opts = { N_("Jam Resistance"), _UNIT_PERCENT, 0, 0, 1, 0 };
+static os_opts max_mass_opts = { N_("Max Effective Mass"), _UNIT_MASS, 0, 0, 1, 0 };
+static os_opts rumble_opts = { N_("Rumble"), NULL, 0, 0, 1, 1 };
+static os_opts shots_delay_opts = { N_("Shots Delay"), _UNIT_TIME, 0, 0, 1, 1 };
 
 static int outfit_cmp( const void *p1, const void *p2 )
 {
@@ -109,6 +150,49 @@ static int outfit_cmp( const void *p1, const void *p2 )
    o1 = (const Outfit*) p1;
    o2 = (const Outfit*) p2;
    return strcmp( o1->name, o2->name );
+}
+
+int outfit_gfxStoreLoaded( const Outfit *o )
+{
+   return (o->gfx_store!=NULL);
+}
+
+int outfit_gfxStoreLoadNeeded (void)
+{
+   ThreadQueue *tq = vpool_create();
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
+   for (int i=0; i<array_size(outfit_stack); i++) {
+      Outfit *o = &outfit_stack[i];
+      if (!outfit_isProp(o, OUTFIT_PROP_NEEDSGFX))
+         continue;
+      vpool_enqueue( tq, (int(*)(void*)) outfit_gfxStoreLoad, o );
+      outfit_rmProp( o, OUTFIT_PROP_NEEDSGFX );
+   }
+   vpool_wait( tq );
+   vpool_cleanup( tq );
+   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+   return 0;
+}
+
+/**
+ * @brief Loads the store graphics for the outfit.
+ */
+int outfit_gfxStoreLoad( Outfit *o )
+{
+   char filename[PATH_MAX];
+
+   if (outfit_gfxStoreLoaded(o))
+      return 0;
+
+   /* Check for absolute pathe. */
+   if (o->gfx_store_path[0]=='/')
+      snprintf( filename, sizeof(filename), "%s", o->gfx_store_path );
+   else
+      snprintf( filename, sizeof(filename), OUTFIT_GFX_PATH"store/%s", o->gfx_store_path );
+
+   /* Load the graphic. */
+   o->gfx_store = gl_newImage( filename, OPENGL_TEX_MIPMAPS );
+   return 0;
 }
 
 /**
@@ -292,15 +376,17 @@ const char *slotName( const OutfitSlotType type )
       case OUTFIT_SLOT_NULL:
          return "NULL";
       case OUTFIT_SLOT_NA:
-         return gettext_noop("N/A");
+         return N_("N/A");
+      case OUTFIT_SLOT_INTRINSIC:
+         return N_("Intrinsic");
       case OUTFIT_SLOT_STRUCTURE:
-         return gettext_noop("Structure");
+         return N_("Structure");
       case OUTFIT_SLOT_UTILITY:
-         return gettext_noop("Utility");
+         return N_("Utility");
       case OUTFIT_SLOT_WEAPON:
-         return gettext_noop("Weapon");
+         return N_("Weapon");
       default:
-         return gettext_noop("Unknown");
+         return N_("Unknown");
    }
 }
 
@@ -311,15 +397,15 @@ const char *slotSize( const OutfitSlotSize o )
 {
    switch (o) {
       case OUTFIT_SLOT_SIZE_NA:
-         return gettext_noop("N/A");
+         return N_("N/A");
       case OUTFIT_SLOT_SIZE_LIGHT:
-         return gettext_noop("Small");
+         return N_("Small");
       case OUTFIT_SLOT_SIZE_MEDIUM:
-         return gettext_noop("Medium");
+         return N_("Medium");
       case OUTFIT_SLOT_SIZE_HEAVY:
-         return gettext_noop("Large");
+         return N_("Large");
       default:
-         return gettext_noop("Unknown");
+         return N_("Unknown");
    }
 }
 
@@ -460,6 +546,22 @@ int outfit_isToggleable( const Outfit *o )
       return 0;
 
    return 1;
+}
+
+/**
+ * @brief Checks to see if an outfit is a weapon.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a weapon.
+ */
+int outfit_isWeapon( const Outfit *o )
+{
+   return ( (o->type==OUTFIT_TYPE_BOLT) ||
+            (o->type==OUTFIT_TYPE_BEAM) ||
+            (o->type==OUTFIT_TYPE_TURRET_BOLT) ||
+            (o->type==OUTFIT_TYPE_TURRET_BEAM) ||
+            (o->type==OUTFIT_TYPE_LAUNCHER) ||
+            (o->type==OUTFIT_TYPE_TURRET_LAUNCHER) ||
+            (o->type==OUTFIT_TYPE_FIGHTER_BAY));
 }
 
 /**
@@ -616,8 +718,8 @@ const OutfitGFX* outfit_gfx( const Outfit* o )
  */
 const CollPoly* outfit_plg( const Outfit* o )
 {
-   if (outfit_isBolt(o)) return o->u.blt.gfx.polygon;
-   else if (outfit_isLauncher(o)) return o->u.lau.gfx.polygon;
+   if (outfit_isBolt(o)) return &o->u.blt.gfx.polygon;
+   else if (outfit_isLauncher(o)) return &o->u.lau.gfx.polygon;
    return NULL;
 }
 /**
@@ -722,29 +824,7 @@ double outfit_cpu( const Outfit* o )
  */
 double outfit_range( const Outfit* o )
 {
-   if (outfit_isBolt(o))
-      return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
-   else if (outfit_isBeam(o))
-      return o->u.bem.range;
-   else if (outfit_isLauncher(o)) {
-      if (o->u.lau.thrust) {
-         double speedinc;
-         if (o->u.lau.speed > 0.) /* Ammo that don't start stopped don't have max speed. */
-            speedinc = INFINITY;
-         else
-            speedinc = o->u.lau.speed_max - o->u.lau.speed;
-         double at = speedinc / o->u.lau.thrust;
-         if (at < o->u.lau.duration)
-            return speedinc * (o->u.lau.duration - at / 2.) + o->u.lau.speed * o->u.lau.duration;
-
-         /* Maximum speed will never be reached. */
-         return pow2(o->u.lau.duration) * o->u.lau.thrust / 2. + o->u.lau.duration * o->u.lau.speed;
-      }
-      return o->u.lau.speed * o->u.lau.duration;
-   }
-   else if (outfit_isFighterBay(o))
-      return INFINITY;
-   return -1.;
+   return pilot_outfitRange( NULL, o );
 }
 /**
  * @brief Gets the outfit's speed.
@@ -756,23 +836,35 @@ double outfit_speed( const Outfit* o )
    if (outfit_isBolt(o))
       return o->u.blt.speed;
    else if (outfit_isLauncher(o)) {
-      if (o->u.lau.thrust == 0.)
+      if (o->u.lau.accel == 0.)
          return o->u.lau.speed;
       else { /* Gets the average speed. */
          double t;
          if (o->u.lau.speed > 0.) /* Ammo that don't start stopped don't have max speed. */
             t = INFINITY;
          else
-            t = (o->u.lau.speed_max - o->u.lau.speed) / o->u.lau.thrust; /* Time to reach max speed */
+            t = (o->u.lau.speed_max - o->u.lau.speed) / o->u.lau.accel; /* Time to reach max speed */
 
          /* Reaches max speed. */
          if (t < o->u.lau.duration)
-            return (o->u.lau.thrust * t * t / 2. + (o->u.lau.speed_max - o->u.lau.speed) * (o->u.lau.duration - t)) / o->u.lau.duration + o->u.lau.speed;
+            return (o->u.lau.accel * t * t / 2. + (o->u.lau.speed_max - o->u.lau.speed) * (o->u.lau.duration - t)) / o->u.lau.duration + o->u.lau.speed;
          /* Doesn't reach max speed. */
          else
-            return o->u.lau.thrust * o->u.lau.duration / 2. + o->u.lau.speed;
+            return o->u.lau.accel * o->u.lau.duration / 2. + o->u.lau.speed;
       }
    }
+   return -1.;
+}
+/**
+ * @brief Gets the swivel of an outfit.
+ *    @param o Outfit to get swivel of.
+ *    @return Outfit's swivel (in radians).
+ */
+double outfit_swivel( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.swivel;
+   else if (outfit_isLauncher(o)) return o->u.lau.swivel;
+   else if (outfit_isBeam(o)) return o->u.bem.swivel;
    return -1.;
 }
 /**
@@ -996,7 +1088,8 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
 
    /* Outfit must have valid slot type. */
    if ((os->type == OUTFIT_SLOT_NULL) ||
-      (os->type == OUTFIT_SLOT_NA))
+      (os->type == OUTFIT_SLOT_NA) ||
+      (os->type == OUTFIT_SLOT_INTRINSIC))
       return 0;
 
    /* Outfit type must match outfit slot. */
@@ -1040,7 +1133,8 @@ int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s )
 
    /* Outfit must have valid slot type. */
    if ((os->type == OUTFIT_SLOT_NULL) ||
-      (os->type == OUTFIT_SLOT_NA))
+      (os->type == OUTFIT_SLOT_NA) ||
+      (os->type == OUTFIT_SLOT_INTRINSIC))
       return 0;
 
    /* Outfit type must match outfit slot. */
@@ -1120,7 +1214,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
    xmlNodePtr cur;
 
    /* Defaults. */
-   dmg->type         = dtype_get("normal");
+   dmg->type         = dtype_get( start_dtype_default() );
    dmg->damage       = 0.;
    dmg->penetration  = 0.;
    dmg->disable      = 0.;
@@ -1143,7 +1237,8 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
             WARN(_("Unknown damage type '%s'"), buf);
          }
       }
-      else WARN(_("Damage has unknown node '%s'"), cur->name);
+      else
+         WARN(_("Damage has unknown node '%s'"), cur->name);
 
    } while (xml_nextNode(cur));
 
@@ -1163,9 +1258,8 @@ static int outfit_loadPLG( Outfit *temp, const char *buf )
 {
    char *file;
    OutfitGFX *gfx;
-   CollPoly *polygon;
    xmlDocPtr doc;
-   xmlNodePtr node, cur;
+   xmlNodePtr node;
 
    if (outfit_isLauncher(temp))
       gfx = &temp->u.lau.gfx;
@@ -1202,20 +1296,11 @@ that can be found in Naev's artwork repo."), file);
       free(file);
       return 0;
    }
-
    free(file);
 
    do { /* load the polygon data */
-      if (xml_isNode(node,"polygons")) {
-         cur = node->children;
-         gfx->polygon = array_create_size( CollPoly, 36 );
-         do {
-            if (xml_isNode(cur,"polygon")) {
-               polygon = &array_grow( &gfx->polygon );
-               LoadPolygon( polygon, cur );
-            }
-         } while (xml_nextNode(cur));
-      }
+      if (xml_isNode(node,"polygons"))
+         poly_load( &gfx->polygon, node );
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -1229,6 +1314,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
 {
    char *type;
    OutfitGFX *gfx;
+   int flags;
 
    if (outfit_isLauncher(temp))
       gfx = &temp->u.lau.gfx;
@@ -1252,7 +1338,8 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       xmlr_attr_strd(node,"vertex",vertex);
       if (vertex == NULL)
          vertex = strdup("project_pos.vert");
-      gfx->program   = gl_program_vert_frag( vertex, xml_get(node), NULL );
+      gl_contextSet();
+      gfx->program   = gl_program_vert_frag( vertex, xml_get(node) );
       free( vertex );
       gfx->vertex    = glGetAttribLocation(  gfx->program, "vertex" );
       gfx->projection= glGetUniformLocation( gfx->program, "projection" );
@@ -1260,6 +1347,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       gfx->u_r       = glGetUniformLocation( gfx->program, "u_r" );
       gfx->u_time    = glGetUniformLocation( gfx->program, "u_time" );
       gfx->u_fade    = glGetUniformLocation( gfx->program, "u_fade" );
+      gl_contextUnset();
 
       xmlr_attr_float_def(node,"size",gfx->size,-1.);
       if (gfx->size < 0.)
@@ -1276,20 +1364,20 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       return -1;
    }
 
-   /* Load normal graphics. */
-   gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH"space/%s", 6, 6,
-         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
    /* Load the collision polygon. */
-   char *buf = xml_get(node);
+   const char *buf = xml_get(node);
    outfit_loadPLG( temp, buf );
+
+   /* Load normal graphics. */
+   flags = OPENGL_TEX_MIPMAPS;
+   if (array_size(gfx->polygon.views)==0)
+      flags |= OPENGL_TEX_MAPTRANS;
+   gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH"space/%s", 6, 6, flags );
    gfx->size = (gfx->tex->sw + gfx->tex->sh)*0.5;
 
    /* Validity check: there must be 1 polygon per sprite. */
-   if (array_size(gfx->polygon) != 36) {
-      WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
-               npolygon = %i and sx*sy = %i"),
-               temp->name, array_size(gfx->polygon), 36);
-   }
+   if (array_size(gfx->polygon.views) <= 0)
+      WARN(_("Outfit '%s' is missing collision polygon!"), temp->name );
 
    return 0;
 }
@@ -1359,6 +1447,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          outfit_setProp(temp, OUTFIT_PROP_WEAP_MISS_EXPLODE);
          continue;
       }
+      if (xml_isNode(node,"onlyhittarget")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_ONLYHITTARGET);
+         continue;
+      }
       if (xml_isNode(node,"range")) {
          char *buf;
          xmlr_attr_strd(node,"blowup",buf);
@@ -1384,8 +1476,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       }
       if (xml_isNode(node,"gfx_end")) {
          temp->u.blt.gfx.tex_end = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
+               OUTFIT_GFX_PATH"space/%s", 6, 6, OPENGL_TEX_MIPMAPS );
          continue;
       }
 
@@ -1444,37 +1535,54 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    C = pilot_heatCalcOutfitC(temp);
    area = pilot_heatCalcOutfitArea(temp);
    temp->u.blt.heat     = ((800.-CONST_SPACE_STAR_TEMP)*C +
-            STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
+            STEEL_HEAT_CONDUCTIVITY * ((800.-CONST_SPACE_STAR_TEMP) * area)) /
          temp->u.blt.heatup * temp->u.blt.delay;
 
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
-   SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
+   SDESC_ADD( l, temp, p_("outfitstats","%s [%s]"), _(outfit_getType(temp)),
          _(dtype_damageTypeToStr(temp->u.blt.dmg.type)) );
    dtype_raw( temp->u.blt.dmg.type, &dshield, &darmour, &dknockback );
-   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs armour"), 100., darmour*100. );
-   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs shield"), 100., dshield*100. );
-   SDESC_COND( l, temp, _("\n     %.0f%% knockback"), dknockback*100. );
-   SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
-   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
-   SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.blt.dmg.penetration*100. );
-   SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
-         1./temp->u.blt.delay * temp->u.blt.dmg.damage * (double)temp->u.blt.shots, temp->u.blt.dmg.damage * (double)temp->u.blt.shots );
-   SDESC_COND( l, temp, _("\n%.2f Disable/s [%.0f Disable]"),
-         1./temp->u.blt.delay * temp->u.blt.dmg.disable * (double)temp->u.blt.shots, temp->u.blt.dmg.disable * (double)temp->u.blt.shots );
-   SDESC_COND( l, temp, _("\n%.0f Hit Radius%s"), temp->u.blt.radius, (outfit_isProp(temp,OUTFIT_PROP_WEAP_FRIENDLYFIRE)?"!!":"") );
-   SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1./temp->u.blt.delay );
-   SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"),
-         1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy );
-   SDESC_ADD(  l, temp, _("\n%s Range"), num2strU( temp->u.blt.range, 0 ) );
-   SDESC_ADD(  l, temp, _("\n%.0f Speed"), temp->u.blt.speed );
-   SDESC_COND( l, temp, _("\n%.1f second heat up"), temp->u.blt.heatup);
-   SDESC_COND( l, temp, _("\n%.1f Degree Dispersion"), temp->u.blt.dispersion*180./M_PI );
+   // new_opts(name, unit, colour, threshold, hidezero, precision)
+   l = os_printD( temp->summary_raw, l, darmour*100., &darmour_opts );
+   l = os_printD( temp->summary_raw, l, dshield*100., &dshield_opts );
+   l = os_printD( temp->summary_raw, l, dknockback*100., &dknockback_opts );
+   l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
+   l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+   /* Higher level stats. */
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.blt.dmg.damage, &damage_opts, temp->u.blt.shots,
+         (double)temp->u.blt.shots * temp->u.blt.dmg.damage / temp->u.blt.delay, &dps_opts );
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.blt.dmg.disable, &disable_opts, temp->u.blt.shots,
+         (double) temp->u.blt.shots * temp->u.blt.dmg.disable / temp->u.blt.delay, &disable_rate_opts );
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.blt.energy, &energy_opts, 1,
+         (double)temp->u.blt.energy / temp->u.blt.delay, &power_opts );
+   /* Standard stats. */
+   l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.penetration * 100., &penetration_opts );
+   l = os_printD( temp->summary_raw, l, 1./temp->u.blt.delay, &fire_rate_opts );
+   if (temp->u.blt.radius > 0.) {
+      char radius[STRMAX_SHORT];
+      snprintf(radius, sizeof(radius), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? p_("friendlyfire","#r!! %s !!#0") : "%s", _("Hit radius"));
+      const t_os_stat radius_opts = {
+         .name = radius,
+         .unit = _UNIT_DISTANCE,
+         .colour = 0,
+         .colour_threshold = 0,
+         .hide_zero = 1,
+         .precision = 0,
+      };
+      l = os_printD( temp->summary_raw, l, temp->u.blt.radius, &radius_opts );
+   }
+   l = os_printD( temp->summary_raw, l, temp->u.blt.range, &range_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.blt.speed, &speed_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.blt.heatup, &heatup_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.blt.dispersion*180./M_PI, &dispersion_opts );
    if (!outfit_isTurret(temp))
-      SDESC_ADD(  l, temp, _("\n%.1f Degree Swivel"), temp->u.blt.swivel*180./M_PI );
-   SDESC_ADD(  l, temp, _("\n%s Optimal Tracking"), num2strU( temp->u.blt.trackmax, 0 ) );
-   SDESC_ADD(  l, temp, _("\n%s Minimal Tracking"), num2strU( temp->u.blt.trackmin, 0 ) );
+      l = os_printD( temp->summary_raw, l, temp->u.blt.swivel*180./M_PI, &swivel_opts );
+   l = os_printD_range( temp->summary_raw, l, temp->u.blt.trackmin, temp->u.blt.trackmax, &tracking_opts );
    sdesc_miningRarity( &l, temp, temp->u.blt.mining_rarity );
 
 #define MELEMENT(o,s) \
@@ -1565,9 +1673,11 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          col_gammaToLinear( &temp->u.bem.colour );
          shader = xml_get(node);
          if (gl_has( OPENGL_SUBROUTINES )) {
+            gl_contextSet();
             temp->u.bem.shader = glGetSubroutineIndex( shaders.beam.program, GL_FRAGMENT_SHADER, shader );
             if (temp->u.bem.shader == GL_INVALID_INDEX)
                WARN("Beam outfit '%s' has unknown shader function '%s'", temp->name, shader);
+            gl_contextUnset();
          }
          continue;
       }
@@ -1610,33 +1720,34 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    C = pilot_heatCalcOutfitC(temp);
    area = pilot_heatCalcOutfitArea(temp);
    temp->u.bem.heat     = ((800.-CONST_SPACE_STAR_TEMP)*C +
-            STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
+            STEEL_HEAT_CONDUCTIVITY * ((800.-CONST_SPACE_STAR_TEMP) * area)) /
          temp->u.bem.heatup * (temp->u.bem.delay+temp->u.bem.warmup+temp->u.bem.duration) / temp->u.bem.delay;
 
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
-   SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
-         _(dtype_damageTypeToStr(temp->u.bem.dmg.type)) );
+   SDESC_ADD(  l, temp, "%s [%s]", _(outfit_getType(temp)),_(dtype_damageTypeToStr(temp->u.bem.dmg.type)) );
    dtype_raw( temp->u.bem.dmg.type, &dshield, &darmour, &dknockback );
-   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs armour"), 100., darmour*100. );
-   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs shield"), 100., dshield*100. );
-   SDESC_COND( l, temp, _("\n     %.0f%% knockback"), dknockback*100. );
-   SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
-   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
-   SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.bem.dmg.penetration*100 );
-   SDESC_ADD(  l, temp, _("\n%.2f DPS [%s]"),
-         temp->u.bem.dmg.damage * temp->u.bem.duration / (temp->u.bem.duration + temp->u.bem.delay),
-         _(dtype_damageTypeToStr(temp->u.bem.dmg.type) ) );
-   SDESC_COND( l, temp, _("\n%.0f Disable/s"),  temp->u.bem.dmg.disable );
-   SDESC_COND( l, temp, _("\n%.1f EPS"),        temp->u.bem.energy );
-   SDESC_ADD(  l, temp, _("\n%.1f Duration"),   temp->u.bem.duration );
-   SDESC_COND( l, temp, _(" (%.1f minimum)"),   temp->u.bem.min_duration );
-   SDESC_ADD(  l, temp, _("\n%.1f Cooldown"),   temp->u.bem.duration );
-   SDESC_ADD(  l, temp, _("\n%s Range"),        num2strU(temp->u.bem.range,0) );
-   SDESC_COND( l, temp, _("\n%.1f second heat up"),temp->u.bem.heatup );
+   l = os_printD( temp->summary_raw, l, darmour*100., &darmour_opts );
+   l = os_printD( temp->summary_raw, l, dshield*100., &dshield_opts );
+   l = os_printD( temp->summary_raw, l, dknockback*100., &dknockback_opts );
+   l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
+   l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+   /* Higher level stats. */
+   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.damage, &dps_opts ); /* TODO display DPS also? */
+   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.disable, &disable_rate_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.bem.energy, &power_opts );
+   /* Standard stats. */
+   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.penetration * 100, &penetration_opts );
+   l = os_printD_range( temp->summary_raw, l,
+                 temp->u.bem.min_duration,
+                 temp->u.bem.duration,
+                 &duration_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.bem.delay, &cooldown_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.bem.range, &range_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.bem.heatup, &heatup_opts );
    if (!outfit_isTurret(temp))
-      SDESC_ADD(  l, temp, _("\n%.1f Degree Swivel"), temp->u.bem.swivel*180./M_PI );
+      l = os_printD( temp->summary_raw, l, temp->u.bem.swivel*180./M_PI, &swivel_opts );
    sdesc_miningRarity( &l, temp, temp->u.bem.mining_rarity );
 
 #define MELEMENT(o,s) \
@@ -1727,6 +1838,10 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
          outfit_setProp(temp, OUTFIT_PROP_WEAP_MISS_EXPLODE);
          continue;
       }
+      if (xml_isNode(node,"onlyhittarget")) {
+         outfit_setProp(temp, OUTFIT_PROP_WEAP_ONLYHITTARGET);
+         continue;
+      }
 
       if (!outfit_isTurret(temp))
          xmlr_float(node,"arc",temp->u.lau.arc); /* This is in semi-arc like swivel. */
@@ -1751,7 +1866,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       }
       xmlr_float(node,"resist",temp->u.lau.resist);
       /* Movement */
-      xmlr_float(node,"thrust",temp->u.lau.thrust);
+      xmlr_float(node,"accel",temp->u.lau.accel);
       xmlr_float(node,"turn",temp->u.lau.turn);
       xmlr_float(node,"speed",temp->u.lau.speed);
       xmlr_float(node,"speed_max",temp->u.lau.speed_max);
@@ -1815,68 +1930,92 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
+   if (!outfit_isProp(temp,OUTFIT_PROP_TEMPLATE)) {
+      temp->mass -= temp->u.lau.ammo_mass*temp->u.lau.amount;
+      if (temp->mass < 0.)
+         WARN(_("Launcher outfit '%s' has negative mass when subtracting ammo mass!"), temp->name);
+   }
    temp->u.lau.dmg_absorb /= 100.;
    temp->u.lau.swivel *= M_PI/180.;
    temp->u.lau.arc *= M_PI/180.;
    /* Note that arc will be 0. for turrets. */
+   if (outfit_isTurret(temp))
+      temp->u.lau.swivel = M_PI;
    temp->u.lau.dispersion *= M_PI/180.;
    temp->u.lau.turn *= M_PI/180.; /* Convert to rad/s. */
    if (temp->u.lau.speed_max < 0.)
       temp->u.lau.speed_max = temp->u.lau.speed;
-   else if (temp->u.lau.speed > 0. && temp->u.lau.thrust > 0.) /* Condition for not taking max_speed into account. */
+   else if (temp->u.lau.speed > 0. && temp->u.lau.accel > 0.) /* Condition for not taking max_speed into account. */
       WARN(_("Max speed of ammo '%s' will be ignored."), temp->name);
    temp->u.lau.resist /= 100.;
 
    /* Short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
-   SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
+   SDESC_ADD(  l, temp, "%s [%s]", _(outfit_getType(temp)),
          _(dtype_damageTypeToStr(temp->u.lau.dmg.type)) );
    dtype_raw( temp->u.lau.dmg.type, &dshield, &darmour, &dknockback );
-   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs armour"), 100., darmour*100. );
-   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs shield"), 100., dshield*100. );
-   SDESC_COND( l, temp, _("\n     %.0f%% knockback"), dknockback*100. );
-   SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
-   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
-
+   l = os_printD( temp->summary_raw, l, darmour*100., &darmour_opts );
+   l = os_printD( temp->summary_raw, l, dshield*100., &dshield_opts );
+   l = os_printD( temp->summary_raw, l, dknockback*100., &dknockback_opts );
+   l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
+   l = os_printD( temp->summary_raw, l, temp->mass+temp->u.lau.ammo_mass*temp->u.lau.amount, &mass_opts ); /* Include ammo. */
+   /* Higher level stats. */
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.lau.dmg.damage, &damage_opts, temp->u.lau.shots,
+         temp->u.lau.dmg.damage * (double)temp->u.lau.shots / temp->u.lau.delay, &dps_opts );
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.lau.dmg.disable, &disable_opts, temp->u.lau.shots,
+         temp->u.lau.dmg.disable * (double)temp->u.lau.shots / temp->u.lau.delay, &disable_rate_opts );
+   l = os_printD_rate( temp->summary_raw, l,
+         temp->u.lau.energy, &energy_opts, 1,
+         temp->u.lau.delay * temp->u.lau.energy, &power_opts );
+   /* Standard stats. */
+   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.penetration*100., &penetration_opts );
    if (outfit_isSeeker(temp)) {
-      SDESC_ADD(  l, temp, _("\n%.1f Second Lock-on"), temp->u.lau.lockon );
-      SDESC_ADD(  l, temp, _("\n%.1f Second In-Flight Calibration"), temp->u.lau.iflockon );
-      SDESC_ADD(  l, temp, _("\n%s Optimal Tracking"), num2strU( temp->u.lau.trackmax, 0 ) );
-      SDESC_ADD(  l, temp, _("\n%s Minimal Tracking"), num2strU( temp->u.lau.trackmin, 0 ) );
+      l = os_printD( temp->summary_raw, l, temp->u.lau.lockon, &lockon_opts );
+      l = os_printD( temp->summary_raw, l, temp->u.lau.iflockon, &inflight_calib_opts );
+      l = os_printD_range( temp->summary_raw, l, temp->u.lau.trackmin, temp->u.lau.trackmax, &tracking_opts );
    }
    else {
-      SDESC_ADD(  l, temp, _("\nNo Seeking") );
+      SDESC_ADD(  l, temp, "\n%s", _("No Seeking") );
       if (outfit_isTurret(temp) || temp->u.lau.swivel > 0.) {
-         SDESC_ADD(  l, temp, _("\n%s Optimal Tracking"), num2strU( temp->u.lau.trackmax, 0 ) );
-         SDESC_ADD(  l, temp, _("\n%s Minimal Tracking"), num2strU( temp->u.lau.trackmin, 0 ) );
-         SDESC_COND( l, temp, _("\n%.1f Degree Swivel"), temp->u.lau.swivel*180./M_PI );
+         l = os_printD_range( temp->summary_raw, l, temp->u.lau.trackmin, temp->u.lau.trackmax, &tracking_opts );
+         l = os_printD( temp->summary_raw, l, temp->u.lau.swivel*180./M_PI, &swivel_opts );
       }
    }
 
-   SDESC_ADD(  l, temp, _("\nHolds %d ammo"), temp->u.lau.amount );
-   SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.lau.dmg.penetration * 100. );
-   SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
-         1. / temp->u.lau.delay * temp->u.lau.dmg.damage * (double)temp->u.lau.shots, temp->u.lau.dmg.damage * (double)temp->u.lau.shots );
-   SDESC_COND( l, temp, _("\n%.1f Disable/s [%.0f Disable]"),
-         1. / temp->u.lau.delay * temp->u.lau.dmg.disable * (double)temp->u.lau.shots, temp->u.lau.dmg.disable * (double)temp->u.lau.shots );
-   SDESC_COND( l, temp, _("\n%.0f Hit Radius%s"), temp->u.lau.radius, (outfit_isProp(temp,OUTFIT_PROP_WEAP_FRIENDLYFIRE)?"!!":"") );
-   SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1. / temp->u.lau.delay );
-   SDESC_ADD(  l, temp, _("\n%s Range [%.1f duration]"), num2strU( outfit_range(temp), 0 ), temp->u.lau.duration );
-   if (temp->u.lau.thrust > 0.) {
+   SDESC_ADD(  l, temp, _("\n  Holds %d ammo"), temp->u.lau.amount );
+   if (temp->u.lau.radius > 0.) {
+      char radius[STRMAX_SHORT];
+      snprintf(radius, sizeof(radius), outfit_isProp(temp, OUTFIT_PROP_WEAP_FRIENDLYFIRE) ? p_("friendlyfire","#r!! %s !!#0") : "%s", _("Hit radius"));
+      t_os_stat radius_opts = {
+         .name = radius,
+         .unit = _UNIT_DISTANCE,
+         .colour = 0,
+         .colour_threshold = 0,
+         .hide_zero = 1,
+         .precision = 0,
+      };
+      l = os_printD( temp->summary_raw, l, temp->u.lau.radius, &radius_opts );
+   }
+   l = os_printD( temp->summary_raw, l, 1. / temp->u.lau.delay, &fire_rate_opts);
+   l = os_printD( temp->summary_raw, l, outfit_range(temp), &range_opts );
+   //l = os_printD( temp->summary_raw, l, temp->u.lau.duration, &duration_opts );
+
+   if (temp->u.lau.accel > 0.) {
       if (temp->u.lau.speed > 0.)
-         SDESC_ADD( l, temp, _("\n%.0f Initial Speed (%.0f Thrust)"), temp->u.lau.speed, temp->u.lau.thrust );
-      else
-         SDESC_ADD( l, temp, _("\n%.0f Thrust"), temp->u.lau.thrust );
+         l = os_printD( temp->summary_raw, l, temp->u.lau.speed, &initial_speed_opts );
+      l = os_printD( temp->summary_raw, l, temp->u.lau.accel, &accel_opts );
    }
    else
-      SDESC_COND( l, temp, _("\n%.0f Speed"), temp->u.lau.speed );
-   if (!(temp->u.lau.thrust > 0. && temp->u.lau.speed > 0.))
-      SDESC_ADD(  l, temp, _("\n%.0f Maximum Speed"), temp->u.lau.speed_max );
-   SDESC_ADD(  l, temp, _("\n%.1f Seconds to Reload"), temp->u.lau.reload_time );
-   SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"), temp->u.lau.delay * temp->u.lau.energy, temp->u.lau.energy );
-   SDESC_COND( l, temp, _("\n%.1f MJ Armour [%.0f%%]"), temp->u.lau.armour, temp->u.lau.dmg_absorb*100.);
-   SDESC_COND( l, temp, _("\n%.0f%% Jam Resistance"), temp->u.lau.resist * 100. );
+      l = os_printD( temp->summary_raw, l, temp->u.lau.speed, &initial_speed_opts );
+   if (!(temp->u.lau.accel > 0. && temp->u.lau.speed > 0.))
+      l = os_printD( temp->summary_raw, l, temp->u.lau.speed_max, &max_speed_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.lau.reload_time, &reload_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.lau.armour, &armour_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg_absorb*100., &absorp_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.lau.resist*100., &jam_res_opts );
    sdesc_miningRarity( &l, temp, temp->u.lau.mining_rarity );
 
 #define MELEMENT(o,s) \
@@ -1890,7 +2029,7 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
    MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.spfx_shield==-1,"spfx_shield");
    MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.lau.sound<0),"sound");
-   /* MELEMENT(temp->u.lau.thrust==0,"thrust"); */
+   /* MELEMENT(temp->u.lau.accel==0,"accel"); */
    /* Unguided missiles don't need everything */
    if (outfit_isSeeker(temp)) {
       MELEMENT(temp->u.lau.turn==0,"turn");
@@ -1904,8 +2043,8 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
    MELEMENT(temp->u.lau.dmg.damage==0,"damage");
    /*MELEMENT(temp->u.lau.energy==0.,"energy");*/
 #undef MELEMENT
-   if (!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.speed==0. && temp->u.lau.thrust==0.)
-      WARN(_("Outfit '%s' has no speed nor thrust set!"), temp->name);
+   if (!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.speed==0. && temp->u.lau.accel==0.)
+      WARN(_("Outfit '%s' has no speed nor accel set!"), temp->name);
    if (!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.iflockon >= temp->u.lau.duration)
       WARN(_("Outfit '%s' has longer 'iflockon' than ammo 'duration'"), temp->name);
 }
@@ -1918,7 +2057,6 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
  */
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
-   int l;
    xmlNodePtr node = parent->children;
 
    do { /* load all the data */
@@ -1952,14 +2090,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
-   l = 0;
-   SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
-   if (temp->u.mod.active || temp->lua_ontoggle != LUA_NOREF)
-      SDESC_ADD( l, temp, "%s", _("\n#rActivated Outfit#0") );
-   if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
-      SDESC_ADD( l, temp, _(" #r(%.1f s Cooldown)#0"), temp->u.mod.cooldown );
-   SDESC_COND_COLOUR( l, temp, _("\n%+.0f CPU"), temp->cpu );
-   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
+   /* Modifier outfits are actually done in the third pass... */
 }
 
 /**
@@ -1980,8 +2111,8 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->u.afb.sound_off = -1;
 
    /* must be >= 1. */
-   temp->u.afb.thrust = 1.;
-   temp->u.afb.speed  = 1.;
+   temp->u.afb.accel = 1.;
+   temp->u.afb.speed = 1.;
 
    do { /* parse the data */
       ShipStatList *ll;
@@ -2001,13 +2132,13 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          temp->u.afb.sound_off = sound_get( xml_get(node) );
          continue;
       }
-      xmlr_float(node,"thrust",temp->u.afb.thrust);
+      xmlr_float(node,"accel",temp->u.afb.accel);
       xmlr_float(node,"speed",temp->u.afb.speed);
       xmlr_float(node,"energy",temp->u.afb.energy);
       xmlr_float(node,"mass_limit",temp->u.afb.mass_limit);
       xmlr_float(node,"heatup",temp->u.afb.heatup);
-      xmlr_float(node,"heat_cap",temp->u.afb.heat_cap);
-      xmlr_float(node,"heat_base",temp->u.afb.heat_base);
+      xmlr_float(node,"heat_cap",temp->overheat_max);
+      xmlr_float(node,"heat_base",temp->overheat_min);
 
       /* Stats. */
       ll = ss_listFromXML( node );
@@ -2023,28 +2154,29 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
-   SDESC_ADD( l, temp, _("\n#rActivated Outfit#0") );
-   SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
-   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
-   SDESC_ADD( l, temp, _("\nOnly one can be equipped") );
-   SDESC_ADD( l, temp, _("\n%.0f Maximum Effective Mass"), temp->u.afb.mass_limit );
-   SDESC_ADD( l, temp, _("\n%.0f%% Thrust"), temp->u.afb.thrust + 100. );
-   SDESC_ADD( l, temp, _("\n%.0f%% Maximum Speed"), temp->u.afb.speed + 100. );
-   SDESC_COND( l, temp, _("\n%.1f EPS"), temp->u.afb.energy );
-   SDESC_COND( l, temp, _("\n%.1f Rumble"), temp->u.afb.rumble );
+   SDESC_ADD( l, temp, "\n#o%s#0", _("Activated Outfit") );
+
+   l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
+   l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.afb.mass_limit, &max_mass_opts );
+   SDESC_ADD( l, temp, "\n%s", _("Only one can be equipped") );
+   l = os_printD( temp->summary_raw, l, temp->u.afb.accel+100., &accel_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.afb.speed+100., &max_speed_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.afb.energy, &power_opts );
+   /*l =*/ os_printD( temp->summary_raw, l, temp->u.afb.rumble, &rumble_opts );
 
    /* Post processing. */
-   temp->u.afb.thrust /= 100.;
-   temp->u.afb.speed  /= 100.;
+   temp->u.afb.accel /= 100.;
+   temp->u.afb.speed /= 100.;
    C = pilot_heatCalcOutfitC(temp);
    area = pilot_heatCalcOutfitArea(temp);
-   temp->u.afb.heat    = ((800.-CONST_SPACE_STAR_TEMP)*C +
-            STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
+   temp->u.afb.heat   = ((800.-CONST_SPACE_STAR_TEMP)*C +
+            STEEL_HEAT_CONDUCTIVITY * ((800.-CONST_SPACE_STAR_TEMP) * area)) /
          temp->u.afb.heatup;
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
-   MELEMENT(temp->u.afb.thrust==0.,"thrust");
+   MELEMENT(temp->u.afb.accel==0.,"accel");
    MELEMENT(temp->u.afb.speed==0.,"speed");
    MELEMENT(temp->u.afb.energy==0.,"energy");
    //MELEMENT(temp->cpu==0.,"cpu");
@@ -2070,7 +2202,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
       xmlr_float(node,"delay",temp->u.bay.delay);
       xmlr_float(node,"reload_time",temp->u.bay.reload_time);
-      xmlr_strd(node,"ship",temp->u.bay.ship);
+      xmlr_strd(node,"ship",temp->u.bay.shipname);
       xmlr_float(node,"ship_mass",temp->u.bay.ship_mass);
       xmlr_int(node,"amount",temp->u.bay.amount);
       xmlr_strd(node,"lua",temp->lua_file);
@@ -2085,19 +2217,24 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
 
+   /* Post-processing. */
+   temp->mass -= temp->u.bay.ship_mass*temp->u.bay.amount;
+   if (temp->mass < 0.)
+      WARN(_("Fighter bay outfit '%s' has negative mass when subtracting ship mass!"), temp->name);
+
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
-   SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
-   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
-   SDESC_COND( l, temp, _("\n%.1f Seconds Per Launch"), temp->u.bay.delay );
-   SDESC_ADD( l, temp, _("\nHolds %d ships"), temp->u.bay.amount );
-   SDESC_COND( l, temp, _("\n%.1f Seconds to Reload"), temp->u.bay.reload_time );
+   l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
+   l = os_printD( temp->summary_raw, l, temp->mass+temp->u.bay.ship_mass*temp->u.bay.amount, &mass_opts );
+   SDESC_ADD( l, temp, _("\n  Holds %d ships"), temp->u.bay.amount );
+   l = os_printD( temp->summary_raw, l, temp->u.bay.delay, &shots_delay_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.bay.reload_time, &reload_opts );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
-   MELEMENT(temp->u.bay.ship==NULL,"ship");
+   MELEMENT(temp->u.bay.shipname==NULL,"ship");
    MELEMENT(temp->u.bay.ship_mass<=0.,"ship_mass");
    MELEMENT(temp->u.bay.delay==0,"delay");
    MELEMENT(temp->u.bay.reload_time==0.,"reload_time");
@@ -2186,7 +2323,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    array_shrink( &temp->u.map->systems );
-   array_shrink( &temp->u.map->spobs  );
+   array_shrink( &temp->u.map->spobs   );
    array_shrink( &temp->u.map->jumps   );
 
    if (temp->summary_raw == NULL) {
@@ -2225,7 +2362,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    temp->u.lmap.spob_detect = pow2( temp->u.lmap.spob_detect );
-   temp->u.lmap.jump_detect  = pow2( temp->u.lmap.jump_detect );
+   temp->u.lmap.jump_detect = pow2( temp->u.lmap.jump_detect );
 
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
@@ -2296,10 +2433,6 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
    if (temp->u.lic.provides==NULL)
       temp->u.lic.provides = strdup( temp->name );
 
-   if (license_stack == NULL)
-      license_stack = array_create( char* );
-   array_push_back( &license_stack, temp->u.lic.provides );
-
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX,
@@ -2324,9 +2457,9 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
 static int outfit_parse( Outfit* temp, const char* file )
 {
    xmlNodePtr node, parent;
-   char *prop, *desc_extra;
+   char *prop;
    const char *cprop;
-   int group, l;
+   int group;
 
    xmlDocPtr doc = xml_parsePhysFS( file );
    if (doc == NULL)
@@ -2341,9 +2474,10 @@ static int outfit_parse( Outfit* temp, const char* file )
    /* Clear data. */
    memset( temp, 0, sizeof(Outfit) );
    temp->filename = strdup( file );
-   desc_extra = NULL;
 
    /* Defaults. */
+   temp->overheat_min   = 350.;
+   temp->overheat_max   = 500.;
    temp->lua_env        = LUA_NOREF;
    temp->lua_descextra  = LUA_NOREF;
    temp->lua_onadd      = LUA_NOREF;
@@ -2352,9 +2486,10 @@ static int outfit_parse( Outfit* temp, const char* file )
    temp->lua_cleanup    = LUA_NOREF;
    temp->lua_update     = LUA_NOREF;
    temp->lua_ontoggle   = LUA_NOREF;
-   temp->lua_onhit      = LUA_NOREF;
-   temp->lua_outofenergy = LUA_NOREF;
    temp->lua_onshoot    = LUA_NOREF;
+   temp->lua_onhit      = LUA_NOREF;
+   temp->lua_outofenergy= LUA_NOREF;
+   temp->lua_onshootany = LUA_NOREF;
    temp->lua_onstealth  = LUA_NOREF;
    temp->lua_onscanned  = LUA_NOREF;
    temp->lua_onscan     = LUA_NOREF;
@@ -2362,6 +2497,9 @@ static int outfit_parse( Outfit* temp, const char* file )
    temp->lua_land       = LUA_NOREF;
    temp->lua_takeoff    = LUA_NOREF;
    temp->lua_jumpin     = LUA_NOREF;
+   temp->lua_board      = LUA_NOREF;
+   temp->lua_keydoubletap=LUA_NOREF;
+   temp->lua_keyrelease = LUA_NOREF;
    temp->lua_onimpact   = LUA_NOREF;
    temp->lua_onmiss     = LUA_NOREF;
    temp->lua_price      = LUA_NOREF;
@@ -2384,6 +2522,7 @@ static int outfit_parse( Outfit* temp, const char* file )
          do {
             xml_onlyNodes(cur);
             xmlr_int(cur,"rarity",temp->rarity);
+            xmlr_strd(cur,"shortname",temp->shortname);
             xmlr_strd(cur,"license",temp->license);
             xmlr_strd(cur,"cond",temp->cond);
             xmlr_strd(cur,"condstr",temp->condstr);
@@ -2392,9 +2531,11 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_long(cur,"price",temp->price);
             xmlr_strd(cur,"limit",temp->limit);
             xmlr_strd(cur,"description",temp->desc_raw);
-            xmlr_strd(cur,"desc_extra",desc_extra);
+            xmlr_strd(cur,"desc_extra",temp->desc_extra);
             xmlr_strd(cur,"typename",temp->typename);
             xmlr_int(cur,"priority",temp->priority);
+            xmlr_float(cur,"overheat_min",temp->overheat_min);
+            xmlr_float(cur,"overheat_max",temp->overheat_max);
             if (xml_isNode(cur,"unique")) {
                outfit_setProp(temp, OUTFIT_PROP_UNIQUE);
                continue;
@@ -2408,8 +2549,11 @@ static int outfit_parse( Outfit* temp, const char* file )
                continue;
             }
             else if (xml_isNode(cur,"gfx_store")) {
-               temp->gfx_store = xml_parseTexture( cur,
-                     OUTFIT_GFX_PATH"store/%s", 1, 1, OPENGL_TEX_MIPMAPS );
+               const char *str = xml_get(cur);
+               if (str != NULL)
+                  temp->gfx_store_path = strdup(str);
+               else
+                  WARN(_("Outfit '%s' has NULL tag '%s'!"),temp->name,"gfx_store");
                continue;
             }
             else if (xml_isNode(cur,"gfx_overlays")) {
@@ -2434,7 +2578,7 @@ static int outfit_parse( Outfit* temp, const char* file )
                else if (strcmp(cprop,"weapon") == 0)
                   temp->slot.type = OUTFIT_SLOT_WEAPON;
                else if (strcmp(cprop,"intrinsic") == 0)
-                  temp->slot.type = OUTFIT_SLOT_NA;
+                  temp->slot.type = OUTFIT_SLOT_INTRINSIC;
                else if (strcmp(cprop,"none") == 0)
                   temp->slot.type = OUTFIT_SLOT_NA;
                else
@@ -2497,7 +2641,7 @@ static int outfit_parse( Outfit* temp, const char* file )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &temp->tags, strdup(tmp) );
                continue;
@@ -2563,18 +2707,8 @@ static int outfit_parse( Outfit* temp, const char* file )
          else if (outfit_isLicense(temp))
             outfit_parseSLicense( temp, node );
 
-         /* We add the ship stats to the description here. */
-         if (temp->summary_raw != NULL) {
-            l = strlen(temp->summary_raw);
-            ss_statsListDesc( temp->stats, &temp->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, 1 );
-            /* Add extra description task if available. */
-            if (desc_extra != NULL) {
-               l = strlen(temp->summary_raw);
-               snprintf( &temp->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", _(desc_extra) );
-               free( desc_extra );
-               desc_extra = NULL;
-            }
-         }
+         /* Sort stats. */
+         ss_sort( &temp->stats );
 
          continue;
       }
@@ -2586,8 +2720,8 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
    MELEMENT(temp->name==NULL,"name");
    if (!outfit_isProp(temp,OUTFIT_PROP_TEMPLATE)) {
       MELEMENT(temp->slot.type==OUTFIT_SLOT_NULL,"slot");
-      MELEMENT((temp->slot.type!=OUTFIT_SLOT_NA) && (temp->slot.size==OUTFIT_SLOT_SIZE_NA),"size");
-      MELEMENT(temp->gfx_store==NULL,"gfx_store");
+      MELEMENT((temp->slot.type!=OUTFIT_SLOT_NA) && (temp->slot.type!=OUTFIT_SLOT_INTRINSIC) && (temp->slot.size==OUTFIT_SLOT_SIZE_NA),"size");
+      MELEMENT(temp->gfx_store_path==NULL,"gfx_store");
       MELEMENT(temp->desc_raw==NULL,"description");
    }
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
@@ -2602,28 +2736,61 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
    return 0;
 }
 
+static int outfit_parseThread( void *ptr )
+{
+   OutfitThreadData *data = ptr;
+   data->ret = outfit_parse( &data->outfit, data->filename );
+   /* Render if necessary. */
+   if (naev_shouldRenderLoadscreen()) {
+      gl_contextSet();
+      naev_renderLoadscreen();
+      gl_contextUnset();
+   }
+   return data->ret;
+}
+
 /**
  * @brief Loads all the files in a directory.
  *
  *    @param dir Directory to load files from.
  *    @return 0 on success.
  */
-static int outfit_loadDir( char *dir )
+static int outfit_loadDir( const char *dir )
 {
    char **outfit_files = ndata_listRecursive( dir );
+   ThreadQueue *tq = vpool_create();
+   OutfitThreadData *odata = array_create( OutfitThreadData );
+
    for (int i=0; i < array_size( outfit_files ); i++) {
       if (ndata_matchExt( outfit_files[i], "xml" )) {
-         Outfit o;
-         int ret = outfit_parse( &o, outfit_files[i] );
-         if (ret == 0)
-            array_push_back( &outfit_stack, o );
-
-         /* Render if necessary. */
-         naev_renderLoadscreen();
+         OutfitThreadData *od = &array_grow( &odata );
+         od->filename = outfit_files[i];
       }
-      free( outfit_files[i] );
+      else
+         free( outfit_files[i] );
    }
    array_free( outfit_files );
+
+   /* Enqueue the jobs after the data array is done. */
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
+   for (int i=0; i<array_size(odata); i++)
+      vpool_enqueue( tq, outfit_parseThread, &odata[i] );
+   /* Wait until done processing. */
+   vpool_wait( tq );
+   vpool_cleanup( tq );
+   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+
+   /* Properly load the data. */
+   license_stack = array_create( char* );
+   for (int i=0; i<array_size(odata); i++) {
+      OutfitThreadData *od = &odata[i];
+      if (!od->ret)
+         array_push_back( &outfit_stack, od->outfit );
+      if (outfit_isLicense( &od->outfit ))
+         array_push_back( &license_stack, od->outfit.u.lic.provides );
+      free( od->filename );
+   }
+   array_free(odata);
 
    return 0;
 }
@@ -2635,8 +2802,10 @@ static int outfit_loadDir( char *dir )
  */
 int outfit_load (void)
 {
-   int noutfits;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   int noutfits;
 
    /* First pass, Loads up all outfits, without filling ammunition and the likes. */
    outfit_stack = array_create(Outfit);
@@ -2696,9 +2865,10 @@ int outfit_load (void)
       o->lua_cleanup    = nlua_refenvtype( env, "cleanup",  LUA_TFUNCTION );
       o->lua_update     = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
       o->lua_ontoggle   = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
+      o->lua_onshoot    = nlua_refenvtype( env, "onshoot", LUA_TFUNCTION );
       o->lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
       o->lua_outofenergy= nlua_refenvtype( env, "outofenergy",LUA_TFUNCTION );
-      o->lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
+      o->lua_onshootany = nlua_refenvtype( env, "onshootany",LUA_TFUNCTION );
       o->lua_onstealth  = nlua_refenvtype( env, "onstealth",LUA_TFUNCTION );
       o->lua_onscanned  = nlua_refenvtype( env, "onscanned",LUA_TFUNCTION );
       o->lua_onscan     = nlua_refenvtype( env, "onscan",   LUA_TFUNCTION );
@@ -2706,6 +2876,9 @@ int outfit_load (void)
       o->lua_land       = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
       o->lua_takeoff    = nlua_refenvtype( env, "takeoff",  LUA_TFUNCTION );
       o->lua_jumpin     = nlua_refenvtype( env, "jumpin",   LUA_TFUNCTION );
+      o->lua_board      = nlua_refenvtype( env, "board",    LUA_TFUNCTION );
+      o->lua_keydoubletap= nlua_refenvtype(env, "keydoubletap",LUA_TFUNCTION );
+      o->lua_keyrelease = nlua_refenvtype( env, "keyrelease",LUA_TFUNCTION );
       o->lua_onimpact   = nlua_refenvtype( env, "onimpact", LUA_TFUNCTION );
       o->lua_onmiss     = nlua_refenvtype( env, "onmiss",   LUA_TFUNCTION );
       o->lua_price      = nlua_refenvtype( env, "price",    LUA_TFUNCTION );
@@ -2721,6 +2894,40 @@ int outfit_load (void)
                WARN(_("Outfit '%s' has 'ontoggle' Lua function defined, but is set as 'notactive'!"),o->name);
          }
          lua_pop(naevL,1);
+
+         /* Regenerate the description... TODO not duplicate code... */
+         int l = 0;
+         SDESC_ADD( l, o, "%s", _(outfit_getType(o)) );
+         if (o->u.mod.active)
+            SDESC_ADD( l, o, "\n#o%s#0", _("Activated Outfit") );
+         if (o->u.mod.active && o->u.mod.cooldown > 0.)
+            l = os_printD( o->summary_raw, l, o->u.mod.cooldown, &cooldown_opts );
+         l = os_printD( o->summary_raw, l, o->cpu, &cpu_opts );
+         l = os_printD( o->summary_raw, l, o->mass, &mass_opts );
+      }
+   }
+
+   /* Third pass for descriptions. */
+   for (int i=0; i<noutfits; i++) {
+      Outfit *o = &outfit_stack[i];
+      if (outfit_isMod(o)) {
+         int l = 0;
+         Outfit *temp = o; /* Needed for SDESC_ADD macro. */
+         SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
+         if (temp->u.mod.active) /* Ignore Lua since it's handled later. */
+            SDESC_ADD( l, temp, "\n#o%s#0", _("Activated Outfit") );
+         if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
+            l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown, &cooldown_opts );
+         l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
+         l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+      }
+      /* We add the ship stats to the description here. */
+      if (o->summary_raw != NULL) {
+         int l = strlen(o->summary_raw);
+         l += ss_statsListDesc( o->stats, &o->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, 1 );
+         /* Add extra description task if available. */
+         //if (o->desc_extra != NULL)
+         //   snprintf( &o->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", _(o->desc_extra) );
       }
    }
 
@@ -2747,13 +2954,14 @@ int outfit_load (void)
    free(outfit_names);
 #endif /* DEBUGGING */
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Outfit in %.3f s", "Loaded %d Outfits in %.3f s", noutfits ), noutfits, time/1000. );
    }
    else
       DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
-
+#endif /* DEBUGGING */
    return 0;
 }
 
@@ -2767,8 +2975,8 @@ int outfit_loadPost (void)
    for (int i=0; i<array_size(outfit_stack); i++) {
       Outfit *o = &outfit_stack[i];
 
-      if (outfit_isFighterBay(o) && (o->u.bay.ship!=NULL) && ship_get(o->u.bay.ship)==NULL)
-         WARN(_("Fighter Bay Outfit '%s' has not found ship '%s'!"),o->name,o->u.bay.ship);
+      if (outfit_isFighterBay(o) && (o->u.bay.shipname!=NULL))
+         o->u.bay.ship = ship_get(o->u.bay.shipname);
 
       /* Add illegality as necessary. */
       if (array_size(o->illegaltoS) > 0) {
@@ -2782,7 +2990,7 @@ int outfit_loadPost (void)
          o->illegaltoS = NULL;
 
          int l = strlen( o->summary_raw );
-         SDESC_ADD( l, o, _("\n#rIllegal to:#0") );
+         SDESC_ADD( l, o, "\n#r%s#0", _("Illegal to:") );
          for (int j=0; j<array_size(o->illegalto); j++)
             SDESC_ADD( l, o, _("\n#r- %s#0"), _(faction_name(o->illegalto[j])) );
       }
@@ -2880,7 +3088,7 @@ int outfit_licenseExists( const char *name )
 {
    if (license_stack==NULL)
       return 0;
-   char *lic = bsearch( &name, license_stack, array_size(license_stack), sizeof(char*), strsort );
+   const char *lic = bsearch( &name, license_stack, array_size(license_stack), sizeof(char*), strsort );
    return (lic!=NULL);
 }
 
@@ -2895,15 +3103,15 @@ void outfit_free (void)
       free( o->filename );
 
       /* Free graphics */
-      const OutfitGFX *gfx = outfit_gfx(o);
+      OutfitGFX *gfx = NULL;
+      if (outfit_isBolt(o))
+         gfx = &o->u.blt.gfx;
+      else if (outfit_isLauncher(o))
+         gfx = &o->u.lau.gfx;
       if (gfx != NULL) {
          gl_freeTexture( gfx->tex );
          gl_freeTexture( gfx->tex_end );
-         for (int j=0; j<array_size(gfx->polygon); j++) {
-            free(gfx->polygon[j].x);
-            free(gfx->polygon[j].y);
-         }
-         array_free(gfx->polygon);
+         poly_free( &gfx->polygon );
          glDeleteProgram(gfx->program);
       }
 
@@ -2917,7 +3125,7 @@ void outfit_free (void)
       array_free( o->illegalto );
 
       if (outfit_isFighterBay(o))
-         free(o->u.bay.ship);
+         free(o->u.bay.shipname);
       else if (outfit_isGUI(o))
          free(o->u.gui.gui);
       else if (outfit_isLicense(o))
@@ -2937,13 +3145,16 @@ void outfit_free (void)
       /* strings */
       free(o->typename);
       free(o->desc_raw);
+      free(o->desc_extra);
       free(o->limit);
       free(o->summary_raw);
       free(o->license);
       free(o->cond);
       free(o->condstr);
       free(o->name);
+      free(o->shortname);
       gl_freeTexture(o->gfx_store);
+      free(o->gfx_store_path);
       for (int j=0; j<array_size(o->gfx_overlays); j++)
          gl_freeTexture(o->gfx_overlays[j]);
       array_free(o->gfx_overlays);
@@ -2956,4 +3167,115 @@ void outfit_free (void)
 
    array_free(outfit_stack);
    array_free(license_stack);
+}
+
+/**
+ * @brief Writes an outfit statistic to a buffer.
+ *
+ *    @param buffer Buffer to write to.
+ *    @param i Position to write at.
+ *    @param value Value to write.
+ *    @param opts Format to use to write value.
+ *    @return Up until where was written in the buffer.
+ */
+static int os_printD( char *buffer, int i, double value, const t_os_stat *opts )
+{
+   const int MAXLEN = OUTFIT_SHORTDESC_MAX-i;
+   int precision;
+   char buf[NUM2STRLEN];
+
+   if (opts->hide_zero && fabs(value) < 1e-2)
+       return i;
+
+   if (value > 1.)
+      precision = opts->precision;
+   else
+      precision = MAX( opts->precision, 2 );
+
+   i += scnprintf(buffer + i, MAXLEN, "\n");
+   if (opts->colour)
+      i += scnprintf(buffer + i, MAXLEN,
+                     value > opts->colour_threshold ? "#g" :
+                     value < opts->colour_threshold ? "#r" : "");
+   /* The brochure of the International System of Units declares in chapter 5: "a space separates the number and the symbol %". The ISO 31-0 standard also specifies a space, and the TeX typesetting system encourages using one. */
+   num2str( buf, value, precision );
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s"), _(opts->name), buf, opts->unit ? _(opts->unit) : "" );
+   if (opts->colour)
+      i += scnprintf(buffer + i, MAXLEN, "#0");
+   return i;
+}
+
+/**
+ * @brief Writes an outfit statistic representing a range between two values to a buffer.
+ *
+ *    @param buffer Buffer to write to.
+ *    @param i Position to write at.
+ *    @param minValue Lower value bound.
+ *    @param maxValue Upper value bound.
+ *    @param opts Format to use to write value.
+ *    @return Up until where was written in the buffer.
+ */
+static int os_printD_range( char *buffer, int i, double minValue, double maxValue, const t_os_stat *opts )
+{
+   const int MAXLEN = OUTFIT_SHORTDESC_MAX-i;
+   char buf1[NUM2STRLEN], buf2[NUM2STRLEN];
+
+   if (opts->hide_zero && fabs(maxValue) < 1e-2)
+       return i;
+
+   num2str( buf1, minValue, opts->precision );
+   num2str( buf2, maxValue, opts->precision );
+
+   i += scnprintf(buffer + i, MAXLEN, "\n");
+   if (opts->colour)
+      i += scnprintf(buffer + i, MAXLEN,
+                     maxValue > opts->colour_threshold ? "#g" :
+                     maxValue < opts->colour_threshold ? "#r" : "");
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s %s - %s %s"), _(opts->name),
+         buf1, _(opts->unit), buf2, _(opts->unit) );
+   if (opts->colour)
+      i += scnprintf(buffer + i, MAXLEN, "#0");
+   return i;
+}
+
+/**
+ * @brief Writes an outfit statistic representing a "per unit" value and rate of change value.
+ *
+ *    @param buffer Buffer to write to.
+ *    @param i Position to write at.
+ *    @param val Main "per unit value".
+ *    @param val_opts Format used to write val.
+ *    @param multiplier Multiplication value for val, or <=1 to disable.
+ *    @param rate Rate of change value.
+ *    @param rate_opts Format to use to write rate.
+ *    @return Up until where was written in the buffer.
+ */
+static int os_printD_rate( char *buffer, int i, double val, const t_os_stat *val_opts, int multiplier, double rate, const t_os_stat *rate_opts )
+{
+   const int MAXLEN = OUTFIT_SHORTDESC_MAX-i;
+   char mult[128];
+   char buf1[NUM2STRLEN], buf2[NUM2STRLEN];
+
+   if (val_opts->hide_zero && fabs(val) < 1e-2)
+       return i;
+
+   i += scnprintf(buffer + i, MAXLEN, "\n");
+   if (val_opts->colour)
+      i += scnprintf(buffer + i, MAXLEN,
+                     val > val_opts->colour_threshold ? "#g" :
+                     val < val_opts->colour_threshold ? "#r" : "");
+
+   if (multiplier > 1)
+      snprintf( mult, sizeof(mult), p_("multiplier", " x %d"), multiplier );
+   else
+      mult[0] = '\0';
+
+   num2str( buf1, val, val_opts->precision );
+   num2str( buf2, rate, rate_opts->precision );
+
+   i += scnprintf(buffer + i, MAXLEN, p_("outfitstats", "%s: %s%s %s [%s %s]"), _(val_opts->name),
+                  buf1, mult, _(val_opts->unit), buf2, _(rate_opts->unit) );
+   if (val_opts->colour)
+      i += scnprintf(buffer + i, MAXLEN, "#0");
+   return i;
 }

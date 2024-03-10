@@ -234,6 +234,24 @@ function choose_table.takeoff ()
    return true
 end
 
+local function sys_strongest_faction( sys, combat )
+   sys = sys or system.cur()
+   local strongest = var.peek("music_ambient_force")
+   if strongest == nil then
+      local strongest_amount = 0
+      for k, v in pairs( sys:presences() ) do
+         local f = faction.get(k)
+         if f:tags().pirate then
+            k = "Pirate" -- We don't distinguish between pirate factions ATM
+         end
+         if (not combat or f:playerStanding() < 0) and v > strongest_amount then
+            strongest = k
+            strongest_amount = v
+         end
+      end
+   end
+   return strongest
+end
 
 -- Save old data
 local last_sysFaction  = nil
@@ -265,7 +283,6 @@ function choose_table.ambient ()
 
    -- Get information about the current system
    local sys       = system.cur()
-   local factions  = sys:presences()
    local nebu_dens = sys:nebula()
 
    -- System
@@ -275,16 +292,7 @@ function choose_table.ambient ()
       return true
    end
 
-   local strongest = var.peek("music_ambient_force")
-   if strongest == nil then
-      local strongest_amount = 0
-      for k, v in pairs( factions ) do
-         if v > strongest_amount then
-            strongest = k
-            strongest_amount = v
-         end
-      end
-   end
+   local strongest = sys_strongest_faction( sys, false )
 
    -- Check to see if changing faction zone
    if strongest ~= last_sysFaction then
@@ -366,7 +374,7 @@ local factional_combat = {
    Pirate     = { "battlesomething2.ogg", "blackmoor_tides.ogg", add_neutral = true },
    Empire     = { "galacticbattle.ogg", "battlesomething2.ogg", add_neutral = true },
    Goddard    = { "flf_battle1.ogg", "battlesomething1.ogg", add_neutral = true },
-   Dvaered    = { "flf_battle1.ogg", "battlesomething1.ogg", "battlesomething2.ogg", add_neutral = true },
+   Dvaered    = { "flf_battle1.ogg", "battlesomething2.ogg", "for_grandeur.ogg", add_neutral = true },
    ["FLF"]    = { "flf_battle1.ogg", "battlesomething2.ogg", add_neutral = true },
    Frontier   = { "flf_battle1.ogg", add_neutral = true },
    Sirius     = { "galacticbattle.ogg", "battlesomething1.ogg", add_neutral = true },
@@ -383,17 +391,7 @@ function choose_table.combat ()
    local nebu_dens = sys:nebula()
    local combat
 
-   local strongest = var.peek("music_combat_force")
-   if strongest == nil then
-      local presences = sys:presences()
-      local strongest_amount = 0
-      for k, v in pairs( presences ) do
-         if faction.get(k):playerStanding() < 0 and v > strongest_amount then
-            strongest = k
-            strongest_amount = v
-         end
-      end
-   end
+   local strongest = sys_strongest_faction( sys, true )
 
    local nebu = nebu_dens > 0
    if nebu then

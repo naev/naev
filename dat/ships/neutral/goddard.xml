@@ -2,7 +2,7 @@
 <ship name="Goddard">
  <points>200</points>
  <base_type>Goddard</base_type>
- <GFX size="125" sx="12" sy="12">goddard</GFX>
+ <gfx size="125" sx="12" sy="12">goddard</gfx>
  <sound>engine</sound>
  <class>Battleship</class>
  <price>7500000</price>
@@ -31,7 +31,6 @@
   <weapon size="large" x="-10" y="13" h="2" />
   <weapon size="large" x="-15" y="-25" h="3" />
   <weapon size="large" x="-15" y="25" h="3" />
-  <weapon size="large" x="16" y="0" h="3" />
   <weapon size="large" prop="fighter_bay" x="0" y="0" h="5" />
   <weapon size="large" prop="fighter_bay" x="-20" y="0" h="5" />
   <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
@@ -41,9 +40,8 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines">Unicorp Eagle 7000 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
-  <structure size="large" />
+  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

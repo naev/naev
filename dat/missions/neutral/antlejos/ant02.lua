@@ -95,7 +95,7 @@ function land ()
             {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))
          return
       end
-      vntk.msg(_("Cargo Loaded"), fmt.f(_("The dock workers load the {amount} of {cargo} onto your ship."),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
+      vntk.msg(_("Cargo Loaded"), fmt.f(_("The dockworkers load the {amount} of {cargo} onto your ship."),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
 
       local c = commodity.new( N_("Heavy Machinery"), N_("Heavy machinery of Dvaered manufacture. Seems like it could be fairly useful for terraforming.") )
       misn.cargoAdd( c, cargo_amount )
@@ -112,7 +112,7 @@ function land ()
       vn.na(fmt.f(_([[You land and Verner, who now seems to be accompanied by a small team, quickly unloads the {cargo} and starts putting it to use.]]),{cargo=cargo_name}))
       v(fmt.f(_([["That was faster than expected."
 He slaps the hull of a heavy machine.
-"With these beauties we'll be able to make progress ten times faster now. That said, it does seem like this might not be enough. Come back to me once I get the {cargo} set up and I should have another task for you if you are interested."]]),{cargo=cargo_name}))
+"With these beauties we'll be able to make progress ten times faster now. That said, it does seem like this might not be enough. Come back to me once I get the {cargo} set up, and I should have another task for you if you are interested."]]),{cargo=cargo_name}))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()

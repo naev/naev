@@ -2,7 +2,7 @@
 
 uniform sampler2D MainTex;
 in vec4 VaryingTexCoord;
-out vec4 color_out;
+out vec4 colour_out;
 
 uniform vec4 love_ScreenSize;
 uniform float damage_strength = 0.0; /**< 0 to 1 value where 1 indicates a ton of damage. */
@@ -24,8 +24,8 @@ void main (void)
    float offset = step( 0.5 * (noise1 + noise2), 0.5 ); // this is a 0 or 1 value
    offset = min( OFFSET_MAX, OFFSET_MOD * offset * damage_strength ) / love_ScreenSize.x;
 
-   color_out.r = texture( MainTex, uv + vec2(offset,0.0) ).r;
-   color_out.g = texture( MainTex, uv ).g;
-   color_out.b = texture( MainTex, uv - vec2(offset,0.0) ).b;
-   color_out.a = 1.0;
+   colour_out.r = texture( MainTex, uv + vec2(offset,0.0) ).r;
+   colour_out.g = texture( MainTex, uv ).g;
+   colour_out.b = texture( MainTex, uv - vec2(offset,0.0) ).b;
+   colour_out.a = 1.0;
 }

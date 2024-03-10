@@ -11,74 +11,37 @@ local scopia      = ship.get("Soromid Copia")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()
-   local pilots = { __doscans = true }
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, sreaver )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, smarauder )
-      scom.addPilot( pilots, sbrigand )
-   else
-      scom.addPilot( pilots, snyx )
-   end
-
-   return pilots
+   return scom.doTable( { __doscans=true }, {
+      { w=0.5, sreaver },
+      { w=0.8, smarauder, sbrigand },
+      { snyx },
+   } )
 end
 
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
-   local pilots = {}
-   if rnd.rnd() < 0.5 then
-      pilots.__doscans = true
-   end
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, sodium )
-      scom.addPilot( pilots, smarauder )
-      scom.addPilot( pilots, sbrigand )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sodium )
-      scom.addPilot( pilots, sreaver )
-   else
-      scom.addPilot( pilots, snyx )
-      scom.addPilot( pilots, sreaver )
-      scom.addPilot( pilots, sbrigand )
-   end
-
-   return pilots
+   return scom.doTable( { __doscans=(rnd.rnd() < 0.5) }, {
+      { w=0.5, sodium, smarauder, sbrigand },
+      { w=0.8, sodium, sreaver },
+      { snyx, sreaver, sbrigand },
+   } )
 end
 
 -- @brief Spawns a capship with escorts.
 local function spawn_capship ()
-   local pilots = {}
-   local r = rnd.rnd()
-
    -- Generate the capship
-   if r < 0.1 then
-      scom.addPilot( pilots, scopia )
-   elseif r < 0.7 then
-      scom.addPilot( pilots, sira )
-   else
-      scom.addPilot( pilots, sarx )
-   end
+   local pilots = scom.doTable( {}, {
+      { w=0.1, scopia },
+      { w=0.7, sira },
+      { sarx },
+   } )
 
    -- Generate the escorts
-   r = rnd.rnd()
-   if r < 0.5 then
-      scom.addPilot( pilots, sreaver )
-      scom.addPilot( pilots, smarauder )
-      scom.addPilot( pilots, sbrigand )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sodium )
-      scom.addPilot( pilots, sreaver )
-   else
-      scom.addPilot( pilots, snyx )
-      scom.addPilot( pilots, sreaver )
-   end
-
-   return pilots
+   return scom.doTable( pilots, {
+      { w=0.5, sreaver, smarauder, sbrigand },
+      { w=0.8, sodium, sreaver },
+      { snyx, sreaver },
+   } )
 end
 
 local fsoromid = faction.get("Soromid")

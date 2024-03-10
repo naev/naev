@@ -26,6 +26,7 @@
 #include "nlua_outfit.h"
 #include "nluadef.h"
 #include "toolkit.h"
+#include "tk/toolkit_priv.h"
 
 /* Stuff for the custom toolkit. */
 #define TK_CUSTOMDONE   "__customDone"
@@ -63,6 +64,7 @@ static int tkL_customFullscreen( lua_State *L );
 static int tkL_customResize( lua_State *L );
 static int tkL_customSize( lua_State *L );
 static int tkL_customDone( lua_State *L );
+static int tkL_refresh( lua_State *L );
 static const luaL_Reg tkL_methods[] = {
    { "isOpen", tkL_isOpen },
    { "query", tkL_query },
@@ -78,6 +80,7 @@ static const luaL_Reg tkL_methods[] = {
    { "customResize", tkL_customResize },
    { "customSize", tkL_customSize },
    { "customDone", tkL_customDone },
+   { "refresh", tkL_refresh },
    {0,0}
 }; /**< Toolkit Lua methods. */
 
@@ -181,15 +184,13 @@ static int tkL_query( lua_State *L )
  */
 static int tkL_msg( lua_State *L )
 {
-   const char *title, *str, *img;
-   int width, height;
-
-   // Get fixed arguments : title, string to display and image filename
-   title = luaL_checkstring(L,1);
-   str   = luaL_checkstring(L,2);
+   /* Get fixed arguments : title, string to display and image filename. */
+   const char *title = luaL_checkstring(L,1);
+   const char *str   = luaL_checkstring(L,2);
 
    if (lua_gettop(L) > 2) {
-      img   = luaL_checkstring(L,3);
+      int width, height;
+      const char *img = luaL_checkstring(L,3);
 
       // Get optional arguments : width and height
       width  = (lua_gettop(L) < 4) ? -1 : luaL_checkinteger(L,4);
@@ -213,13 +214,10 @@ static int tkL_msg( lua_State *L )
  */
 static int tkL_yesno( lua_State *L )
 {
-   int ret;
-   const char *title, *str;
+   const char *title = luaL_checkstring(L,1);
+   const char *str   = luaL_checkstring(L,2);
 
-   title = luaL_checkstring(L,1);
-   str   = luaL_checkstring(L,2);
-
-   ret = dialogue_YesNoRaw( title, str );
+   int ret = dialogue_YesNoRaw( title, str );
    lua_pushboolean(L,ret);
    return 1;
 }
@@ -375,7 +373,7 @@ static int tkL_merchantOutfit( lua_State *L )
    name = luaL_checkstring(L,1);
 
    if (!lua_istable(L,2))
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
 
    outfits = array_create_size( const Outfit*, lua_objlen(L,2) );
    /* Iterate over table. */
@@ -412,6 +410,7 @@ static int tkL_merchantOutfit( lua_State *L )
  *    @luatparam Function mouse Function to call when mouse events are received.
  *    @luatparam Function resize Function to call when mouse events are received.
  *    @luatparam Function textinput Function to call when textinput events are received.
+ *    @luatparam boolean nodynamic Whether or not the dialogue should be not dynamic, or use tk.refresh to force rerenders.
  * @luafunc custom
  */
 static int tkL_custom( lua_State *L )
@@ -420,6 +419,7 @@ static int tkL_custom( lua_State *L )
    int h = luaL_checkinteger(L, 3);
    const char *caption = luaL_checkstring(L, 1);
    custom_functions_t *cf = calloc( 1, sizeof(custom_functions_t) );
+   int nodynamic;
 
    /* Set up custom function pointers. */
    cf->L = L;
@@ -436,13 +436,14 @@ do { \
    GETFUNC( cf->resize,    8 );
    GETFUNC( cf->textinput, 9 );
 #undef GETFUNC
+   nodynamic = lua_toboolean(L,10);
 
    /* Set done condition. */
    lua_pushboolean(L, 0);
    lua_setglobal(L, TK_CUSTOMDONE );
 
    /* Create the dialogue. */
-   dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, cf, 1 );
+   dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, cf, 1, !nodynamic );
 
    /* Clean up. */
    cf->done = 1;
@@ -467,7 +468,7 @@ static int tkL_customRename( lua_State *L )
    const char *s = luaL_checkstring(L,1);
    unsigned int wid = window_get( "dlgMsg" );
    if (wid == 0)
-      NLUA_ERROR(L, _("custom dialogue not open"));
+      return NLUA_ERROR(L, _("custom dialogue not open"));
    window_setDisplayname( wid, s );
    return 0;
 }
@@ -483,7 +484,7 @@ static int tkL_customFullscreen( lua_State *L )
    int enable = lua_toboolean(L,1);
    unsigned int wid = window_get( "dlgMsg" );
    if (wid == 0)
-      NLUA_ERROR(L, _("custom dialogue not open"));
+      return NLUA_ERROR(L, _("custom dialogue not open"));
    dialogue_customFullscreen( enable );
    return 0;
 }
@@ -500,7 +501,7 @@ static int tkL_customResize( lua_State *L )
    int w, h;
    unsigned int wid = window_get( "dlgMsg" );
    if (wid == 0)
-      NLUA_ERROR(L, _("custom dialogue not open"));
+      return NLUA_ERROR(L, _("custom dialogue not open"));
    w = luaL_checkinteger(L,1);
    h = luaL_checkinteger(L,2);
    dialogue_customResize( w, h );
@@ -519,7 +520,7 @@ static int tkL_customSize( lua_State *L )
    int w, h;
    unsigned int wid = window_get( "dlgMsg" );
    if (wid == 0)
-      NLUA_ERROR(L, _("custom dialogue not open"));
+      return NLUA_ERROR(L, _("custom dialogue not open"));
    window_dimWindow( wid, &w, &h );
    lua_pushinteger(L,w);
    lua_pushinteger(L,h);
@@ -534,7 +535,7 @@ static int tkL_customDone( lua_State *L )
 {
    unsigned int wid = window_get( "dlgMsg" );
    if (wid == 0)
-      NLUA_ERROR(L, _("custom dialogue not open"));
+      return NLUA_ERROR(L, _("custom dialogue not open"));
    lua_pushboolean(L, 1);
    lua_setglobal(L, TK_CUSTOMDONE );
    return 0;
@@ -722,4 +723,14 @@ static int cust_event_window( SDL_WindowEventID event, Sint32 w, Sint32 h, custo
    b = lua_toboolean(L, -1);
    lua_pop(L,1);
    return b;
+}
+
+/**
+ * @brief Forces the toolkit to rerender the screen.
+ */
+static int tkL_refresh( lua_State *L )
+{
+   (void) L;
+   toolkit_rerender();
+   return 0;
 }

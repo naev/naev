@@ -155,11 +155,10 @@ LuaSystem luaL_checksystem( lua_State *L, int ind )
  */
 StarSystem* luaL_validsystem( lua_State *L, int ind )
 {
-   LuaSystem ls;
    StarSystem *s;
 
    if (lua_issystem(L, ind)) {
-      ls = luaL_checksystem(L, ind);
+      LuaSystem ls = luaL_checksystem(L, ind);
       s = system_getIndex( ls );
    }
    else if (lua_isstring(L, ind))
@@ -261,13 +260,11 @@ static int systemL_get( lua_State *L )
       return 1;
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Error checking. */
-   if (ss == NULL) {
-      NLUA_ERROR(L, _("No matching systems found."));
-      return 0;
-   }
+   if (ss == NULL)
+      return NLUA_ERROR(L, _("No matching systems found."));
 
    /* return the system */
    lua_pushsystem(L,system_index(ss));
@@ -329,7 +326,7 @@ static int systemL_eq( lua_State *L )
  */
 static int systemL_name( lua_State *L )
 {
-   StarSystem *sys = luaL_validsystem(L,1);
+   const StarSystem *sys = luaL_validsystem(L,1);
    lua_pushstring(L, _(sys->name));
    return 1;
 }
@@ -343,7 +340,7 @@ static int systemL_name( lua_State *L )
  */
 static int systemL_position( lua_State *L )
 {
-   StarSystem *sys = luaL_validsystem(L,1);
+   const StarSystem *sys = luaL_validsystem(L,1);
    lua_pushvector(L, sys->pos);
    return 1;
 }
@@ -377,7 +374,7 @@ static int systemL_nameRaw( lua_State *L )
  */
 static int systemL_faction( lua_State *L )
 {
-   StarSystem *s = luaL_validsystem(L,1);
+   const StarSystem *s = luaL_validsystem(L,1);
    if (s->faction == -1)
       return 0;
    lua_pushfaction(L,s->faction);
@@ -470,11 +467,11 @@ static int systemL_jumpdistance( lua_State *L )
       if (lua_isstring(L,2))
          goal = lua_tostring(L,2);
       else if (lua_issystem(L,2)) {
-         StarSystem *sysp = luaL_validsystem(L,2);
+         const StarSystem *sysp = luaL_validsystem(L,2);
          goal = sysp->name;
       }
       else
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,2);
    }
    else {
       goal  = sys->name;
@@ -609,12 +606,9 @@ static int systemL_adjacent( lua_State *L )
  */
 static int systemL_jumps( lua_State *L )
 {
-   int exitonly, pushed;
-   StarSystem *s;
-
-   s = luaL_validsystem(L,1);
-   exitonly = lua_toboolean(L,2);
-   pushed = 0;
+   StarSystem *s = luaL_validsystem(L,1);
+   int exitonly = lua_toboolean(L,2);
+   int pushed = 0;
 
    /* Push all jumps. */
    lua_newtable(L);
@@ -622,7 +616,7 @@ static int systemL_jumps( lua_State *L )
       LuaJump lj;
       /* Skip exit-only jumps if requested. */
       if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
-            continue;
+         continue;
 
       lj.srcid  = s->id;
       lj.destid = s->jumps[i].targetid;
@@ -744,7 +738,7 @@ static int systemL_presences( lua_State *L )
  */
 static int systemL_spobs( lua_State *L )
 {
-   StarSystem *s = luaL_validsystem(L,1);
+   const StarSystem *s = luaL_validsystem(L,1);
    /* Push all spobs. */
    lua_newtable(L);
    for (int i=0; i<array_size(s->spobs); i++) {
@@ -857,7 +851,7 @@ static int systemL_radius( lua_State *L )
  */
 static int systemL_isknown( lua_State *L )
 {
-   StarSystem *sys = luaL_validsystem(L, 1);
+   const StarSystem *sys = luaL_validsystem(L, 1);
    lua_pushboolean(L, sys_isKnown(sys));
    return 1;
 }
@@ -893,13 +887,13 @@ static int systemL_setknown( lua_State *L )
             spob_setKnown( sys->spobs[i] );
          for (int i=0; i < array_size(sys->jumps); i++)
             jp_setFlag( &sys->jumps[i], JP_KNOWN );
-     }
-     else {
+      }
+      else {
          for (int i=0; i < array_size(sys->spobs); i++)
             spob_rmFlag( sys->spobs[i], SPOB_KNOWN );
          for (int i=0; i < array_size(sys->jumps); i++)
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );
-     }
+      }
    }
 
    /* Update outfits image array. */
@@ -920,7 +914,7 @@ static int systemL_setknown( lua_State *L )
  */
 static int systemL_hidden( lua_State *L )
 {
-   StarSystem *sys = luaL_validsystem(L, 1);
+   const StarSystem *sys = luaL_validsystem(L, 1);
    lua_pushboolean(L, sys_isFlag( sys, SYSTEM_HIDDEN ));
    return 1;
 }

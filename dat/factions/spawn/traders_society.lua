@@ -10,55 +10,33 @@ local srhino      = ship.get("Rhino")
 
 -- @brief Spawns a small trade fleet.
 local function spawn_patrol ()
-   local pilots = {}
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, sllama )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sllama )
-      scom.addPilot( pilots, sllama )
-   else
-      scom.addPilot( pilots, skoala )
-      scom.addPilot( pilots, sllama )
-   end
-
-   return pilots
+   return scom.doTable( {}, {
+      { w=0.5, sllama },
+      { w=0.8, sllama, sllama },
+      { skoala, sllama },
+   } )
 end
 
 -- @brief Spawns a larger trade fleet.
 local function spawn_squad ()
-   local pilots = {}
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, skoala )
-      if rnd.rnd() < 0.6 then
-         scom.addPilot( pilots, sllama )
-         scom.addPilot( pilots, sllama )
-      else
-         scom.addPilot( pilots, sgawain )
-         scom.addPilot( pilots, sgawain )
-      end
+   if rnd.rnd() < 0.5 then
+      return scom.doTable( {}, {
+         { w=0.5, skoala, sllama, sllama },
+         { skoala, sgawain, sgawain },
+      } )
    else
+      local pilots = {}
       if rnd.rnd() < 0.7 then
          scom.addPilot( pilots, smule )
       else
          scom.addPilot( pilots, srhino )
       end
-      if rnd.rnd() < 0.4 then
-         scom.addPilot( pilots, sllama )
-         scom.addPilot( pilots, sllama )
-      elseif rnd.rnd() < 0.7 then
-         scom.addPilot( pilots, skoala )
-         scom.addPilot( pilots, skoala )
-      else
-         scom.addPilot( pilots, squicksilver )
-         scom.addPilot( pilots, squicksilver )
-      end
+      return scom.doTable( {}, {
+         { w=0.4, sllama, sllama },
+         { w=0.7, skoala, skoala },
+         { squicksilver, squicksilver },
+      } )
    end
-
-   return pilots
 end
 
 local ftraderssociety = faction.get("Traders Society")

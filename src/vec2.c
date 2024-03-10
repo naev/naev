@@ -1,13 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-/** @cond */
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "naev.h"
-/** @endcond */
-
 #include "vec2.h"
 
 /**
@@ -123,7 +116,7 @@ void vec2_reflect( vec2* r, const vec2* v, const vec2* n )
    r->x     = v->x - ((2. * dot) * n->x);
    r->y     = v->y - ((2. * dot) * n->y);
    r->mod   = MOD(r->x,r->y);
-   r->angle = MOD(r->x,r->y);
+   r->angle = ANGLE(r->x,r->y);
 }
 
 /**

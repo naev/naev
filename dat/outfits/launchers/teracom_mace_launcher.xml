@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="TeraCom Mace Launcher">
  <general>
+  <shortname>T. Mace L.</shortname>
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
@@ -25,10 +26,10 @@
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="-10">fire-missileS</trail_generator>
   <duration blowup="armour">1.5</duration>
-  <thrust>600</thrust>
+  <accel>600</accel>
   <speed>600</speed>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>12</penetrate>
    <physical>15</physical>
   </damage>

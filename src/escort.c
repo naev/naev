@@ -25,7 +25,7 @@
  * Prototypes.
  */
 /* Static */
-static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
+static int escort_command( const Pilot *parent, const char *cmd, unsigned int index );
 
 /**
  * @brief Adds an escort to the escort list of a pilot.
@@ -37,17 +37,17 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
  *    @param persist True if escort should respawn on takeoff/landing.
  *    @return 0 on success.
  */
-int escort_addList( Pilot *p, const char *ship, EscortType_t type,
+int escort_addList( Pilot *p, const Ship *ship, EscortType_t type,
       unsigned int id, int persist )
 {
    Escort_t *escort;
    if (p->escorts == NULL)
       p->escorts = array_create( Escort_t );
-   escort = &array_grow( &p->escorts );
-   escort->ship = strdup(ship);
-   escort->type = type;
-   escort->id   = id;
-   escort->persist = persist;
+   escort         = &array_grow( &p->escorts );
+   escort->ship   = ship;
+   escort->type   = type;
+   escort->id     = id;
+   escort->persist= persist;
 
    return 0;
 }
@@ -59,8 +59,6 @@ int escort_addList( Pilot *p, const char *ship, EscortType_t type,
  */
 void escort_freeList( Pilot *p )
 {
-   for (int i=0; i<array_size(p->escorts); i++)
-      free(p->escorts[i].ship);
    array_free(p->escorts);
    p->escorts = NULL;
 }
@@ -74,7 +72,6 @@ void escort_freeList( Pilot *p )
  */
 void escort_rmListIndex( Pilot *p, int i )
 {
-   free(p->escorts[i].ship);
    array_erase( &p->escorts, &p->escorts[i], &p->escorts[i+1] );
 }
 
@@ -108,22 +105,20 @@ void escort_rmList( Pilot *p, unsigned int id )
  *    @param dockslot The outfit slot which launched the escort (-1 if N/A)
  *    @return The ID of the escort on success.
  */
-unsigned int escort_create( Pilot *p, const char *ship,
+unsigned int escort_create( Pilot *p, const Ship *ship,
       const vec2 *pos, const vec2 *vel, double dir,
       EscortType_t type, int add, int dockslot )
 {
-   const Ship *s;
    Pilot *pe;
    PilotFlags f;
    unsigned int parent;
 
    /* Get important stuff. */
    parent = p->id;
-   s = ship_get(ship);
 
    /* Set flags. */
    pilot_clearFlagsRaw( f );
-   pilot_setFlagRaw( f, PILOT_NOJUMP );
+   //pilot_setFlagRaw( f, PILOT_NOJUMP );
    if (p->faction == FACTION_PLAYER) {
       pilot_setFlagRaw( f, PILOT_PERSIST );
       pilot_setFlagRaw( f, PILOT_NOCLEAR );
@@ -132,7 +127,7 @@ unsigned int escort_create( Pilot *p, const char *ship,
       pilot_setFlagRaw( f, PILOT_CARRIED );
 
    /* Create the pilot. */
-   pe = pilot_create( s, NULL, p->faction, "escort", dir, pos, vel, f, parent, dockslot );
+   pe = pilot_create( ship, NULL, p->faction, "escort", dir, pos, vel, f, parent, dockslot );
    pe->parent = parent;
 
    /* Make invincible to player. */
@@ -162,7 +157,7 @@ unsigned int escort_create( Pilot *p, const char *ship,
       if (p->stats.fbay_movement != 1.) {;
          pe->intrinsic_stats = ss_statsSetList( pe->intrinsic_stats, SS_TYPE_D_SPEED_MOD, p->stats.fbay_movement, 0, 1 );
          pe->intrinsic_stats = ss_statsSetList( pe->intrinsic_stats, SS_TYPE_D_TURN_MOD, p->stats.fbay_movement, 0, 1 );
-         pe->intrinsic_stats = ss_statsSetList( pe->intrinsic_stats, SS_TYPE_D_THRUST_MOD, p->stats.fbay_movement, 0, 1 );
+         pe->intrinsic_stats = ss_statsSetList( pe->intrinsic_stats, SS_TYPE_D_ACCEL_MOD, p->stats.fbay_movement, 0, 1 );
       }
       /* Update stats. */
       pilot_calcStats( pe );
@@ -221,7 +216,7 @@ unsigned int escort_createRef( Pilot *p, Pilot *pe,
 
    /* Add to escort list. */
    if (add != 0)
-      escort_addList( p, pe->ship->name, type, pe->id, 1 );
+      escort_addList( p, pe->ship, type, pe->id, 1 );
    pe->dockslot = dockslot;
 
    return pe->id;
@@ -230,13 +225,13 @@ unsigned int escort_createRef( Pilot *p, Pilot *pe,
 /**
  * @brief Clears deployed escorts of a pilot.
  */
-int escort_clearDeployed( Pilot *p )
+int escort_clearDeployed( Pilot *p, int slot )
 {
    int q = 0;
    /* Iterate backwards so we don't have to care about indices. */
    for (int j=array_size(p->escorts)-1; j>=0; j--) {
       Pilot *pe;
-      Escort_t *e = &p->escorts[j];
+      const Escort_t *e = &p->escorts[j];
 
       /* Only try to dock fighters. */
       if (e->type != ESCORT_TYPE_BAY)
@@ -245,6 +240,11 @@ int escort_clearDeployed( Pilot *p )
       pe = pilot_get( e->id );
       if (pe==NULL)
          continue;
+
+      /* See if matches slot. */
+      if ((slot>=0) && (slot!=pe->dockslot))
+         continue;
+
       /* Hack so it can dock. */
       memcpy( &pe->solid.pos, &p->solid.pos, sizeof(vec2) );
       memcpy( &pe->solid.vel, &p->solid.vel, sizeof(vec2) );
@@ -264,13 +264,13 @@ int escort_clearDeployed( Pilot *p )
  *    @param idx Lua index of argument or 0.
  *    @return 0 on success, 1 if no orders given.
  */
-static int escort_command( Pilot *parent, const char *cmd, unsigned int idx )
+static int escort_command( const Pilot *parent, const char *cmd, unsigned int idx )
 {
    if (array_size(parent->escorts) == 0)
       return 1;
 
    for (int i=0; i<array_size(parent->escorts); i++) {
-      Pilot *e = pilot_get( parent->escorts[i].id );
+      const Pilot *e = pilot_get( parent->escorts[i].id );
       if (e == NULL) /* Most likely died. */
          continue;
 
@@ -305,10 +305,16 @@ int escorts_attack( Pilot *parent )
       lua_pop(naevL, 1);
    }
    if ((ret == 0) && (parent == player.p)) {
-      if (pilot_isFlag(t, PILOT_DISABLED))
-         player_message(_("#gEscorts: #0Destroying %s."), t->name);
+      const char *pltname;
+      if (pilot_inRangePilot( parent, t, NULL ) > 0)
+         pltname = t->name;
       else
-         player_message(_("#gEscorts: #0Engaging %s."), t->name);
+         pltname = _("Unknown");
+
+      if (pilot_isFlag(t, PILOT_DISABLED))
+         player_message(_("#gEscorts: #0Destroying %s."), pltname);
+      else
+         player_message(_("#gEscorts: #0Engaging %s."), pltname);
    }
    return ret;
 }
@@ -318,11 +324,11 @@ int escorts_attack( Pilot *parent )
  *
  *    @param parent Pilot giving the order.
  */
-int escorts_hold( Pilot *parent )
+int escorts_hold( const Pilot *parent )
 {
    int ret = escort_command( parent, "e_hold", 0 );
    if ((ret == 0) && (parent == player.p))
-         player_message(_("#gEscorts: #0Holding formation."));
+      player_message(_("#gEscorts: #0Holding formation."));
    return ret;
 }
 
@@ -331,7 +337,7 @@ int escorts_hold( Pilot *parent )
  *
  *    @param parent Pilot giving the order.
  */
-int escorts_return( Pilot *parent )
+int escorts_return( const Pilot *parent )
 {
    int ret = escort_command( parent, "e_return", 0 );
    if ((ret == 0) && (parent == player.p))
@@ -344,7 +350,7 @@ int escorts_return( Pilot *parent )
  *
  *    @param parent Pilot giving the order.
  */
-int escorts_clear( Pilot *parent )
+int escorts_clear( const Pilot *parent )
 {
    int ret = escort_command( parent, "e_clear", 0 );
    if ((ret == 0) && (parent == player.p))
@@ -358,7 +364,7 @@ int escorts_clear( Pilot *parent )
  *    @param e The pilot for the player to issue an order to.
  *    @return 0 on success, 1 if no orders given.
  */
-int escort_playerCommand( Pilot *e )
+int escort_playerCommand( const Pilot *e )
 {
    const char *title, *caption;
    char *choice;
@@ -367,7 +373,7 @@ int escort_playerCommand( Pilot *e )
    /* "Attack My Target" order is omitted deliberately since e is your
     * target, making "Attack My Target" a useless command. */
    const char *opts[] = {
-      _("Hold Position"),
+      _("Hold Formation"),
       _("Return To Ship"),
       _("Clear Orders"),
       _("Cancel")
@@ -410,7 +416,7 @@ int escort_playerCommand( Pilot *e )
  *    @param parent Pilot giving the order.
  *    @param jp Where to jump.
  */
-int escorts_jump( Pilot *parent, JumpPoint *jp )
+int escorts_jump( const Pilot *parent, const JumpPoint *jp )
 {
    int ret;
    LuaJump lj;

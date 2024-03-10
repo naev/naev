@@ -67,34 +67,28 @@ function accept()
         { _("Accept"), "accept" },
         { _("Decline"), "decline" },
     } )
+
     vn.label( "decline" )
     vn.na(_("You don't want to be involved again in a dangerous, poorly paid job so you decline and leave the bar."))
     vn.done()
+
     vn.label( "accept" )
     vn.func( function () accepted = true end )
-    vn.run()
-
-    if not accepted then
-        return
-    end
-
-    vn.clear()
-    vn.scene()
-    mensing = vn.newCharacter( nebu_research.vn_mensing() )
     mensing(_([["Splendid! I'd like to start with my work as soon as possible.
 But before I forget, there's some issue..."]]))
     mensing(_([["You see, I'm not allowed to leave officially. Therefore I'd rather let them think that I was kidnapped. I'm sure it'll be fine! But don't let an Empire ship scan your ship! I don't know how they would react finding me onboard of your ship. Try to be stealthy and once we're in Za'lek territory there will be no problem."]]))
     vn.menu( {
-        { fmt.f(_("Take her to {sys}"), {sys=homeworld_sys}), "accept" },
-        { _("Leave her"), "decline" },
+        { fmt.f(_("Take her to {sys}"), {sys=homeworld_sys}), "accept2" },
+        { _("Leave her"), "decline2" },
     } )
-    vn.label( "decline" )
+    vn.label( "decline2" )
     vn.func( function () accepted = false end )
     vn.na(_("That sounds too risky for you. You'll probably end up dead or in prison."))
     vn.done()
-    vn.label( "accept" )
+    vn.label( "accept2" )
     vn.func( function () accepted = true end )
     vn.run()
+
     if not accepted then
         misn.finish()
         return
@@ -131,7 +125,6 @@ function land()
         vn.done()
         vn.run()
         player.pay(credits)
-        misn.markerRm(mem.misn_marker)
         nebu_research.log(_([[You brought Dr. Mensing back from a Empire scientific conference.]]))
         misn.finish(true)
     end

@@ -39,19 +39,15 @@
 #include "opengl.h"
 
 #include "conf.h"
-#include "debug.h"
 #include "log.h"
 #include "render.h"
-
-/*
- * Requirements
- */
-#define OPENGL_REQ_MULTITEX         2 /**< 2 is minimum OpenGL 1.2 must have */
+#include "gltf.h"
 
 glInfo gl_screen; /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
 
-static unsigned int colorblind_pp = 0; /**< Colorblind post-process shader id. */
+static unsigned int cb_correct_pp = 0; /**< Colourblind post-process shader id for correction. */
+static unsigned int cb_simulate_pp = 0; /**< Colourblind post-process shader id for simulation. */
 
 /*
  * Viewport offsets
@@ -236,7 +232,7 @@ static void GLAPIENTRY gl_debugCallback( GLenum source, GLenum type, GLuint id, 
 static int gl_setupAttributes( int fallback )
 {
    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, fallback ? 3 : 4);
-   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, fallback ? 1 : 0);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, fallback ? 2 : 6);
    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
    if (conf.fsaa > 1) {
@@ -331,6 +327,14 @@ static int gl_createWindow( unsigned int flags )
    if (!gl_screen.context)
       ERR(_("Unable to create OpenGL context! %s"), SDL_GetError());
 
+   /* Save and store version. */
+   SDL_GL_GetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, &gl_screen.major );
+   SDL_GL_GetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, &gl_screen.minor );
+   if (gl_screen.major*100+gl_screen.minor*10 > 320)
+      gl_screen.glsl = 100*gl_screen.major+10*gl_screen.minor;
+   else
+      gl_screen.glsl = 150;
+
    /* Set Vsync. */
    if (conf.vsync) {
       int ret = SDL_GL_SetSwapInterval( 1 );
@@ -388,9 +392,6 @@ static int gl_getGLInfo (void)
    DEBUG(_("Version: %s"), glGetString(GL_VERSION));
 
    /* Now check for things that can be bad. */
-   if (gl_screen.multitex_max < OPENGL_REQ_MULTITEX)
-      WARN(_("Missing texture units (%d required, %d found)"),
-            OPENGL_REQ_MULTITEX, gl_screen.multitex_max );
    if ((conf.fsaa > 1) && (gl_screen.fsaa != conf.fsaa))
       WARN(_("Unable to get requested FSAA level (%d requested, got %d)"),
             conf.fsaa, gl_screen.fsaa );
@@ -529,11 +530,14 @@ int gl_init (void)
 
    shaders_load();
 
-   /* Set colorblind shader if necessary. */
-   gl_colorblind( conf.colorblind );
+   /* Set colourblind shader if necessary. */
+   gl_colourblind();
 
    /* Set colourspace. */
    glEnable( GL_FRAMEBUFFER_SRGB );
+
+   /* Load the gltf framework. */
+   gltf_init();
 
    /* Cosmetic new line. */
    DEBUG_BLANK();
@@ -556,8 +560,10 @@ void gl_resize (void)
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
          glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
+         glDeleteTextures( 1, &gl_screen.fbo_depth_tex[i] );
       }
       gl_fboCreate( &gl_screen.fbo[i], &gl_screen.fbo_tex[i], gl_screen.rw, gl_screen.rh );
+      gl_fboAddDepth( gl_screen.fbo[i], &gl_screen.fbo_depth_tex[i], gl_screen.rw, gl_screen.rh );
    }
 
    gl_checkErr();
@@ -578,7 +584,7 @@ void gl_viewport( int x, int y, int w, int h )
    /* Take into account possible translation. */
    gl_screen.x = x;
    gl_screen.y = y;
-   mat4_translate( &proj, x, y, 0. );
+   mat4_translate_xy( &proj, x, y );
 
    /* Set screen size. */
    gl_screen.w = w;
@@ -667,26 +673,51 @@ GLint gl_stringToClamp( const char *s )
 }
 
 /**
- * @brief Enables or disables the colorblind shader.
- *
- *    @param enable Whether or not to enable or disable the colorblind shader.
+ * @brief Enables or disables the colourblind shader.
  */
-void gl_colorblind( int enable )
+void gl_colourblind (void)
 {
-   if (enable) {
+   /* Load up shader uniforms. */
+   glUseProgram( shaders.colourblind_sim.program );
+   glUniform1i( shaders.colourblind_sim.type, conf.colourblind_type );
+   glUniform1f( shaders.colourblind_sim.intensity, conf.colourblind_sim );
+   glUseProgram( shaders.colourblind_correct.program );
+   glUniform1i( shaders.colourblind_correct.type, conf.colourblind_type );
+   glUniform1f( shaders.colourblind_correct.intensity, conf.colourblind_correct );
+   glUseProgram( 0 );
+
+   /* See if we have to correct. */
+   if (conf.colourblind_sim > 0.) {
       LuaShader_t shader;
-      if (colorblind_pp != 0)
+      if (cb_simulate_pp != 0)
          return;
       memset( &shader, 0, sizeof(LuaShader_t) );
-      shader.program    = shaders.colorblind.program;
-      shader.VertexPosition = shaders.colorblind.VertexPosition;
-      shader.ClipSpaceFromLocal = shaders.colorblind.ClipSpaceFromLocal;
-      shader.MainTex    = shaders.colorblind.MainTex;
-      colorblind_pp = render_postprocessAdd( &shader, PP_LAYER_FINAL, 99, PP_SHADER_PERMANENT );
+      shader.program    = shaders.colourblind_sim.program;
+      shader.VertexPosition = shaders.colourblind_sim.VertexPosition;
+      shader.ClipSpaceFromLocal = shaders.colourblind_sim.ClipSpaceFromLocal;
+      shader.MainTex    = shaders.colourblind_sim.MainTex;
+      cb_simulate_pp = render_postprocessAdd( &shader, PP_LAYER_CORE, 99, PP_SHADER_PERMANENT );
    } else {
-      if (colorblind_pp != 0)
-         render_postprocessRm( colorblind_pp );
-      colorblind_pp = 0;
+      if (cb_simulate_pp != 0)
+         render_postprocessRm( cb_simulate_pp );
+      cb_simulate_pp = 0;
+   }
+
+   /* See if we have to correct. */
+   if (conf.colourblind_correct > 0.) {
+      LuaShader_t shader;
+      if (cb_correct_pp != 0)
+         return;
+      memset( &shader, 0, sizeof(LuaShader_t) );
+      shader.program    = shaders.colourblind_correct.program;
+      shader.VertexPosition = shaders.colourblind_correct.VertexPosition;
+      shader.ClipSpaceFromLocal = shaders.colourblind_correct.ClipSpaceFromLocal;
+      shader.MainTex    = shaders.colourblind_correct.MainTex;
+      cb_correct_pp = render_postprocessAdd( &shader, PP_LAYER_CORE, 100, PP_SHADER_PERMANENT );
+   } else {
+      if (cb_correct_pp != 0)
+         render_postprocessRm( cb_correct_pp );
+      cb_correct_pp = 0;
    }
 }
 
@@ -699,12 +730,15 @@ void gl_exit (void)
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
          glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
+         glDeleteTextures( 1, &gl_screen.fbo_depth_tex[i] );
          gl_screen.fbo[i] = GL_INVALID_VALUE;
          gl_screen.fbo_tex[i] = GL_INVALID_VALUE;
+         gl_screen.fbo_depth_tex[i] = GL_INVALID_VALUE;
       }
    }
 
    /* Exit the OpenGL subsystems. */
+   gltf_exit();
    gl_exitRender();
    gl_exitVBO();
    gl_exitTextures();

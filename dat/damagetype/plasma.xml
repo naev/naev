@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dtype name="plasma" display="#rPlasma#0">
+ <shield>0.7</shield>
+ <armour>1.3</armour>
+ <knockback>0.3</knockback>
+</dtype>

@@ -10,11 +10,13 @@
   <price>650000</price>
   <gfx_store>/gfx/misc/icons/portal.webp</gfx_store>
   <description>A technique developed by a dreamer pirate only known as "Snort", by focusing large amounts of flow into a very concentrated area, and then letting it overpower your psyche to become one with the void, it is possible to create what can only be described as a rip in reality. Unlike the more controlled flow abilities that can distinguish between friend and foe, the uncontrolled field affects all ships alike, seemingly slowing time on the outside.</description>
+  <limit>reality_rip</limit>
  </general>
  <specific type="modification">
   <lua>outfits/flow/abilities/reality_rip.lua</lua>
  </specific>
  <tags>
   <tag>flow_ability</tag>
+  <tag>nosteal</tag>
  </tags>
 </outfit>

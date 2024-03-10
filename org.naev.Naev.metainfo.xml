@@ -47,6 +47,21 @@
   </categories>
 
   <releases>
+    <release version="0.11.4" type="stable" date="2024-03-09">
+      <url>https://naev.org/blarg/2024-03-09_0.11.4/</url>
+    </release>
+    <release version="0.11.3" type="stable" date="2024-01-25">
+      <url>https://naev.org/blarg/2024-01-25_0.11.3/</url>
+    </release>
+    <release version="0.11.2" type="stable" date="2024-01-15">
+      <url>https://naev.org/blarg/2024-01-15_0.11.2/</url>
+    </release>
+    <release version="0.11.1" type="stable" date="2024-01-14">
+      <url>https://naev.org/blarg/2024-01-14_0.11.1/</url>
+    </release>
+    <release version="0.11.0" type="stable" date="2023-12-23">
+      <url>https://naev.org/blarg/2023-12-23_0.11.0/</url>
+    </release>
     <release version="0.10.6" type="stable" date="2023-07-07">
       <url>https://naev.org/blarg/2023-07-07_0.10.6/</url>
     </release>

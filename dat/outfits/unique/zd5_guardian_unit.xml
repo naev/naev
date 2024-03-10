@@ -9,7 +9,7 @@
   <price>30000</price>
   <description>The ZD-5 Guardian Unit is designed as a last resort defense system. It strong magnetic fields to forcibly keep the ship hull integrity as long as energy can hold out. The small layout limits the maximum damage the unit can compensate. Originally meant to be used for next generation Za'lek drones, although the reasons are not very clear, the project was cancelled only very few experimental models exist.</description>
   <desc_extra>Uses energy to stop lethal damage with 50% efficiency. Can only stop a maximum of 200 damage per second.</desc_extra>
-  <gfx_store>shield.webp</gfx_store>
+  <gfx_store>zd5_guardian_unit.webp</gfx_store>
  </general>
  <specific type="modification">
   <lua>outfits/unique/zd5_guardian_unit.lua</lua>

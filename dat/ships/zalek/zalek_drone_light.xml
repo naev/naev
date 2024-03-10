@@ -2,8 +2,8 @@
 <ship name="Za'lek Light Drone">
  <lua>ships/lua/zalek.lua</lua>
  <points>26</points>
- <base_type>Za'lek Light Drone</base_type>
- <GFX size="40">zalek_drone_light</GFX>
+ <base_type path="Zalek_Light_Drone">Za'lek Light Drone</base_type>
+ <gfx size="30">zalek_drone_light</gfx>
  <sound>engine_zalek</sound>
  <class display="Robotic Interceptor">Interceptor</class>
  <price>90000</price>
@@ -13,7 +13,7 @@
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be flown by the player.</description>
  <movement>
-  <thrust>230</thrust>
+  <accel>230</accel>
   <speed>450</speed>
   <turn>200</turn>
  </movement>

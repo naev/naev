@@ -15,8 +15,8 @@
  * @brief Lua Munition wrapper.
  */
 typedef struct LuaMunition_ {
-   unsigned int id;
-   size_t idx;
+   unsigned int id;  /**< Munition ID. */
+   size_t idx;       /**< Munition location in stack. */
 } LuaMunition;
 
 /*

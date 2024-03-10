@@ -15,10 +15,6 @@
 #include "player.h"
 
 #include "ai.h"
-#include "array.h"
-#include "board.h"
-#include "conf.h"
-#include "map.h"
 #include "pause.h"
 #include "pilot.h"
 #include "pilot_ew.h"
@@ -29,10 +25,10 @@
 #include "nlua_vec2.h"
 #include "nlua_pilot.h"
 #include "nlua_spob.h"
-#include "nlua_system.h"
 #include "sound.h"
 #include "space.h"
 #include "toolkit.h"
+#include "ntracing.h"
 
 static nlua_env autonav_env   = LUA_NOREF; /**< Autonav environment. */
 static int func_system        = LUA_NOREF;
@@ -197,8 +193,7 @@ void player_autonavPos( double x, double y )
    if (player_autonavSetup())
       return;
 
-   pos.x = x;
-   pos.y = y;
+   vec2_cset( &pos, x, y );
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_pos );
    lua_pushvector( naevL, pos );
    if (nlua_pcall( autonav_env, 1, 0 )) {
@@ -213,7 +208,7 @@ void player_autonavPos( double x, double y )
  */
 void player_autonavSpob( const char *name, int tryland )
 {
-   Spob *spb;
+   const Spob *spb;
 
    if (player_autonavSetup())
       return;
@@ -236,7 +231,7 @@ void player_autonavSpob( const char *name, int tryland )
  */
 void player_autonavPil( unsigned int p )
 {
-   Pilot *pilot = pilot_get( p );
+   const Pilot *pilot = pilot_get( p );
    int inrange  = pilot_inRangePilot( player.p, pilot, NULL );
    if (player_autonavSetup() || !inrange)
       return;
@@ -255,7 +250,7 @@ void player_autonavPil( unsigned int p )
  */
 void player_autonavBoard( unsigned int p )
 {
-   Pilot *pilot = pilot_get( p );
+   const Pilot *pilot = pilot_get( p );
    int inrange  = pilot_inRangePilot( player.p, pilot, NULL );
    if (player_autonavSetup() || !inrange)
       return;
@@ -331,9 +326,9 @@ void player_autonavReset( double s )
  */
 void player_thinkAutonav( Pilot *pplayer, double dt )
 {
-   int oldmem;
+   AIMemory oldmem;
 
-   ai_thinkSetup();
+   ai_thinkSetup( dt );
    oldmem = ai_setPilot( pplayer ); /* Uses AI functionality. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_think );
    lua_pushnumber( naevL, dt );
@@ -352,7 +347,6 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
  */
 void player_updateAutonav( double dt )
 {
-   static double tc_mod  = 1.0;
    const double dis_dead = 1.0; /* Time it takes to start ramping up. */
    const double dis_mod  = 2.0;
    //const double dis_max  = 5.0;
@@ -366,6 +360,7 @@ void player_updateAutonav( double dt )
    /* TODO maybe handle in autonav? */
    /* We handle disabling here. */
    if (pilot_isFlag(player.p, PILOT_DISABLED)) {
+      static double tc_mod  = 1.0;
       /* It is somewhat like:
        *        /------------\        4x
        *       /              \
@@ -402,12 +397,16 @@ void player_updateAutonav( double dt )
    if (!player_isFlag(PLAYER_AUTONAV))
       return;
 
+   NTracingZone( _ctx, 1 );
+
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_update );
    lua_pushnumber( naevL, dt );
    if (nlua_pcall( autonav_env, 1, 0 )) {
       WARN("%s",lua_tostring(naevL,-1));
       lua_pop(naevL, 1);
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 void player_autonavEnter (void)

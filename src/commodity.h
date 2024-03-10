@@ -7,7 +7,7 @@
 #include <stdint.h>
 /** @endcond */
 
-#include "opengl.h"
+#include "opengl_tex.h"
 
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str/price2str string can reach. */
 #define ECON_MASS_STRLEN      32 /**< Maximum length a tonnes2str string can reach. */

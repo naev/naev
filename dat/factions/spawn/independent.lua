@@ -41,22 +41,13 @@ end
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_solitary_civilians ()
-   local pilots = {}
-   local r = rnd.rnd()
-
-   if r < 0.3 then
-      scom.addPilot( pilots, sllama )
-   elseif r < 0.55 then
-      scom.addPilot( pilots, shyena )
-   elseif r < 0.75 then
-      scom.addPilot( pilots, sgawain )
-   elseif r < 0.9 then
-      scom.addPilot( pilots, sschroedinger )
-   else
-      scom.addPilot( pilots, skoala )
-   end
-
-   return pilots
+   return scom.doTable( {}, {
+      { w=0.3, sllama },
+      { w=0.55, shyena },
+      { w=0.75, sgawain },
+      { w=0.9, sschroedinger },
+      { skoala },
+   } )
 end
 
 local function spawn_bounty_hunter( shiplist )

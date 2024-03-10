@@ -1,6 +1,8 @@
 --[[--
 Functions for handling portraits in Naev.
 
+Note that this is mainly a transitional package and is deprecated. Use vnimage when possible instead.
+
 @module portrait
 --]]
 --[[

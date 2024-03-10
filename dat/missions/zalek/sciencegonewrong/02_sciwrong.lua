@@ -56,6 +56,7 @@ function accept()
    vn.clear()
    vn.scene()
    local geller = vn.newCharacter( sciwrong.vn_geller() )
+   vn.transition()
 
    -- Mission details:
    geller(_([["Hey there again! I need your help. I was finishing up my prototype, you see. It's ingenious. But, there was a minor hiccup. It's nothing major, it is just, well, that I lost it. But I would not be Dr. Geller if I had not put a tracking mechanism into it! So I want you to catch it and bring it back, OK? You can do that, right?"]]))
@@ -85,7 +86,6 @@ function accept()
    misn.setDesc(_("You've been hired by Dr. Geller to retrieve his prototype that ran away."))
    misn.setTitle(_("The one with the Runaway"))
    misn.setReward(_("A peek at the new prototype and some compensation for your efforts"))
-   misn.osdActive(1)
    mem.mmarker = misn.markerAdd(mem.t_sys[1], "high")
    hook.jumpin("sys_enter")
 end
@@ -94,7 +94,7 @@ end
 
 -- get nearest jumppoint
 local function get_nearest_jump(pil)
-   local jpts = system.cur():jumps()
+   local jpts = system.cur():jumps(true)
    -- basically the distance that the map can have at
    local dist = 2*system.cur():radius()
    local index = 0
@@ -107,21 +107,26 @@ local function get_nearest_jump(pil)
    end
    return jpts[index]
 end
+
+local function fdrone ()
+   return faction.dynAdd( "Za'lek", "bad_drone", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
+end
+
 --- create enemy ships
 local function spawn_baddies(sp)
-   local fdrone = faction.dynAdd( "Za'lek", "bad_drone", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
+   local fct = fdrone()
 
    -- light drones
    local scom = {}
    -- has eventually to be trimmed
    -- disabling some ships since this way it is really hard to win the mission
-   scom[1] = pilot.add("Za'lek Light Drone", fdrone, sp )
-   scom[2] = pilot.add("Za'lek Light Drone", fdrone, sp )
-   scom[3] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
-   scom[4] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
---   scom[5] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
---   scom[6] = pilot.add("Za'lek Light Drone", fdrone, sp )
---   scom[7] = pilot.add("Za'lek Light Drone", fdrone, sp )
+   scom[1] = pilot.add("Za'lek Light Drone", fct, sp )
+   scom[2] = pilot.add("Za'lek Light Drone", fct, sp )
+   scom[3] = pilot.add("Za'lek Heavy Drone", fct, sp )
+   scom[4] = pilot.add("Za'lek Heavy Drone", fct, sp )
+--   scom[5] = pilot.add("Za'lek Heavy Drone", fct, sp )
+--   scom[6] = pilot.add("Za'lek Light Drone", fct, sp )
+--   scom[7] = pilot.add("Za'lek Light Drone", fct, sp )
    for i=1,#scom do
      scom[i]:setHostile(false)
    end
@@ -149,11 +154,12 @@ function game_of_drones ()
    vn.clear()
    vn.scene()
    local geller = vn.newCharacter( sciwrong.vn_geller() )
+   vn.transition()
    geller(fmt.f(_([["There! The tracker shows it must be here! It is right next to {pnt}! If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]]), {pnt=mem.t_pla[1]}))
    vn.run()
    -- spawn drones
 
-   t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", mem.t_pla[1], _("Prototype Drone"), {ai="trader"} ) -- prototype is a scout drone
+   t_drone = pilot.add( "Za'lek Scout Drone", fdrone(), mem.t_pla[1], _("Prototype Drone"), {ai="trader"} ) -- prototype is a scout drone
    -- add something so it is not insta-disabled with one shot?
    t_drone:setFaction("Independent")
    t_drone:setInvincible(true)
@@ -163,7 +169,7 @@ function game_of_drones ()
    t_drone:moveto(t_drone:pos() + vec2.new( 400, -400), false)
    -- just some moving around, stolen from baron missions ;D
    mem.idlehook = hook.pilot(t_drone, "idle", "targetIdle")
-   misn.osdActive(2)
+   misn.osdActive(1)
    -- wait for the drone to be hailed
    mem.hailhook = hook.pilot(t_drone,"hail","got_hailed",t_drone,badguys)
 end
@@ -179,11 +185,13 @@ function got_hailed()
    vn.clear()
    vn.scene()
    local geller = vn.newCharacter( sciwrong.vn_geller() )
+   vn.transition()
    geller(_([["Huh, I don't understand. This should not be happening. Hold on. I can't get access."]]))
    geller(fmt.f(_([["Um, there seems to be a glitch. Well, sort of. Um, if I deciphered this correctly, the drone just hijacked the unused drones on {pnt} and ordered them to attack us. I never should have tampered with that weird chip those pirates sold me!"]]), {pnt=mem.t_pla[1]}))
    geller(_([["If you can disable the prototype, do it, but I'd prefer not to die at any rate!"]]))
    vn.run()
 
+   misn.osdActive(2)
    t_drone:setInvincible(false)
    t_drone:setHostile(true)
    t_drone:setHilight(true)
@@ -206,7 +214,7 @@ function sp_baddies()
    for i=1,#badguys do
       bghook[i] = hook.pilot(badguys[i], "exploded", "dead_drone",i)
    end
-   local jps = system.cur():jumps()
+   local jps = system.cur():jumps(true)
    t_drone:taskClear()
    mem.t_sys[3] = jps[1]:dest()
    t_drone:hyperspace(jps[1]:dest())
@@ -216,6 +224,7 @@ function failed ()
    vn.clear()
    vn.scene()
    local geller = vn.newCharacter( sciwrong.vn_geller() )
+   vn.transition()
    geller(_([["NOOOOOO! What have you done!? My prototype! It's going to take me weeks to rebuild it! You incompetent nincompoop!"]]))
    vn.run()
    lmisn.fail(_("you destroyed the drone!"))
@@ -267,12 +276,13 @@ function chase_of_drones ()
    vn.clear()
    vn.scene()
    local geller = vn.newCharacter( sciwrong.vn_geller() )
+   vn.transition()
    geller(_([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! Now it should be much easier to catch it!"]]))
    vn.run()
 
    t_drone = pilot.add(
       "Za'lek Scout Drone",
-      "Za'lek",
+      fdrone(),
       vec2.newP(rnd.rnd(0,system.cur():radius()/5), rnd.angle()),
       _("Prototype Drone"),
       {ai="dummy"}
@@ -307,12 +317,13 @@ function drone_attacked()
    vn.clear()
    vn.scene()
    local geller = vn.newCharacter( sciwrong.vn_geller() )
+   vn.transition()
    geller(_([["It seems the drone has found a way to shield itself from the EM pulses. I think I can adjust to that, give me a second."]]))
    vn.run()
    t_drone:setHostile(true)
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)
-   local jps = system.cur():jumps()
+   local jps = system.cur():jumps(true)
    t_drone:taskClear()
    mem.t_sys[3] = jps[1]:dest()
    t_drone:hyperspace(jps[1]:dest())
@@ -333,6 +344,7 @@ function drone_disableable()
       vn.clear()
       vn.scene()
       local geller = vn.newCharacter( sciwrong.vn_geller() )
+      vn.transition()
       geller(_([["This is strange. The engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]]))
       vn.run()
       hook.timer(18.0+rnd.uniform(0.001, 4.0), "drone_selfdestruct")
@@ -344,6 +356,7 @@ function land_home()
       vn.clear()
       vn.scene()
       local geller = vn.newCharacter( sciwrong.vn_geller() )
+      vn.transition()
       geller(_([["The things I do for science! Now let me go back to my lab and analyse the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]]))
       vn.sfxVictory()
       vn.func( function ()
@@ -390,7 +403,7 @@ function dead_drone ()
       badguys[2]:control()
       local jpt = get_nearest_jump(badguys[1])
       local jpt2 = jpt
-      local jpts = system.cur():jumps()
+      local jpts = system.cur():jumps(true)
       for i,j_pt in ipairs(jpts) do
          if j_pt ~= jpt2 then
             jpt2 = j_pt

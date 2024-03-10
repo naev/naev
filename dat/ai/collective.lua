@@ -4,6 +4,7 @@ require 'ai.core.core'
 mem.control_rate = 0.5 -- Lower control rate
 mem.aggressive = true
 mem.land_planet = false
+mem.doscans = false
 
 function create ()
    create_pre()

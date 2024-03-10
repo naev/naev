@@ -11,6 +11,7 @@ void debug_enableLeakSanitizer (void);
 
 enum {
    DEBUG_MARK_EMITTER,  /**< Mark the trail emitters with a cross. */
+   DEBUG_MARK_COLLISION, /**< Mark collisions. */
    /* Sentinel. */
    DEBUG_FLAGS_MAX      /**< Maximum number of flags. */
 };

@@ -3,11 +3,20 @@ local chakra = require "luaspfx.chakra_explosion"
 
 local explib = require "ships.lua.lib.explode"
 
+local exp_params = {
+   colourbase = {1.0, 0.8, 0.8, 0.7},
+   coloursmoke = {0.3, 0.3, 0.3, 0.1},
+   smokiness = 0.4,
+   --smokefade = 1.6,
+   --rollspeed = 0.3,
+   --grain = 0.1 + size*0.001,
+}
+
 local amp = outfit.get("Internal Flow Amplifier")
 
 function init( p )
    -- Sirius ships need the Internal Flow Amplifier for now, add if missing
-   -- TODO get rid of the hack
+   -- TODO get rid of before 0.12.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
    local found = false
    for k,o in ipairs(p:outfitsList("intrinsic")) do
       if o==amp then
@@ -19,15 +28,6 @@ function init( p )
 
    p:outfitAddIntrinsic( amp )
 end
-
-local exp_params = {
-   colorbase = {1.0, 0.8, 0.8, 0.7},
-   colorsmoke = {0.3, 0.3, 0.3, 0.1},
-   smokiness = 0.4,
-   --smokefade = 1.6,
-   --rollspeed = 0.3,
-   --grain = 0.1 + size*0.001,
-}
 
 explode_init, explode_update = explib{
    boom_func = function( p )

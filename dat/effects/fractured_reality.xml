@@ -5,6 +5,7 @@
  <icon>/gfx/misc/icons/hidden.webp</icon>
  <overwrite>reality_rip</overwrite>
  <shader>effects/fractured_reality.frag</shader>
+ <priority>3</priority>
  <stats>
   <energy_regen_mod>-50</energy_regen_mod>
   <shield_regen_mod>-50</shield_regen_mod>

@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Enygma Systems Turreted Fury Launcher">
  <general>
+  <shortname>E. Fury T. L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
-  <mass>25</mass>
+  <mass>30</mass>
   <price>140000</price>
   <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but Fury missiles can be a powerful means of discouraging pirate fighters and an effective means of defending against hostile bombers.</description>
   <gfx_store>turreted_fury_launcher.webp</gfx_store>
@@ -26,12 +27,12 @@
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="-7">fire-missile</trail_generator>
   <duration blowup="armour">8</duration>
-  <thrust>300</thrust>
+  <accel>300</accel>
   <turn>35</turn>
   <speed_max>800</speed_max>
   <resist>10</resist>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>12</penetrate>
    <physical>80</physical>
   </damage>

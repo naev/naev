@@ -237,7 +237,7 @@ function boardFLF()
       if j:exists() then
          j:setHilight(false)
          j:setVisplayer(false)
-         j:setNoboard(true)
+         j:setNoBoard(true)
       end
    end
 end

@@ -135,8 +135,8 @@ int lua_istransform( lua_State *L, int ind )
  */
 static int transformL_eq( lua_State *L )
 {
-   mat4 *t1 = luaL_checktransform(L,1);
-   mat4 *t2 = luaL_checktransform(L,2);
+   const mat4 *t1 = luaL_checktransform(L,1);
+   const mat4 *t2 = luaL_checktransform(L,2);
    lua_pushboolean( L, (memcmp( t1, t2, sizeof(mat4) )==0) );
    return 1;
 }
@@ -150,7 +150,7 @@ static int transformL_eq( lua_State *L )
 static int transformL_new( lua_State *L )
 {
    if (lua_istransform(L,1)) {
-      mat4 *M = lua_totransform(L,1);
+      const mat4 *M = lua_totransform(L,1);
       lua_pushtransform( L, *M );
    }
    else
@@ -168,8 +168,8 @@ static int transformL_new( lua_State *L )
  */
 static int transformL_mul( lua_State *L )
 {
-   mat4 *A = luaL_checktransform(L, 1);
-   mat4 *B = luaL_checktransform(L, 2);
+   const mat4 *A = luaL_checktransform(L, 1);
+   const mat4 *B = luaL_checktransform(L, 2);
    mat4 C;
    mat4_mul( &C, A, B );
    lua_pushtransform(L, C);
@@ -241,7 +241,7 @@ static int transformL_set( lua_State *L )
  */
 static int transformL_scale( lua_State *L )
 {
-   mat4 *M = luaL_checktransform(L, 1);
+   const mat4 *M = luaL_checktransform(L, 1);
    double x = luaL_checknumber(L,2);
    double y = luaL_checknumber(L,3);
    double z = luaL_optnumber(L,4,1.);
@@ -263,7 +263,7 @@ static int transformL_scale( lua_State *L )
  */
 static int transformL_translate( lua_State *L )
 {
-   mat4 *M = luaL_checktransform(L, 1);
+   const mat4 *M = luaL_checktransform(L, 1);
    double x = luaL_checknumber(L,2);
    double y = luaL_checknumber(L,3);
    double z = luaL_optnumber(L,4,0.);
@@ -282,7 +282,7 @@ static int transformL_translate( lua_State *L )
  */
 static int transformL_rotate2d( lua_State *L )
 {
-   mat4 *M = luaL_checktransform(L, 1);
+   const mat4 *M = luaL_checktransform(L, 1);
    double a = luaL_checknumber(L,2);
    mat4 out = *M;
    mat4_rotate2d( &out, a );

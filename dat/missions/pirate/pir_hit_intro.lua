@@ -15,6 +15,9 @@
  <notes>
   <tier>3</tier>
  </notes>
+ <tags>
+  <tag>pir_cap_ch01_lrg</tag>
+ </tags>
 </mission>
 --]]
 --[[
@@ -254,7 +257,5 @@ They grin and then fade into the shadows.]]))
 
    pir.addMiscLog(_("You performed a 'hit' on a debt-ridden pilot for some unknown clients. They were satisfied with your job and this opened up more similar missions at the mission computer."))
 
-   -- Pirate rep cap increase
-   pir.modReputation( 5 )
    misn.finish( true )
 end

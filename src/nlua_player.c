@@ -31,6 +31,7 @@
 #include "log.h"
 #include "map.h"
 #include "map_overlay.h"
+#include "menu.h"
 #include "mission.h"
 #include "ndata.h"
 #include "nlua_colour.h"
@@ -44,13 +45,14 @@
 #include "nlua_vec2.h"
 #include "nlua_misn.h"
 #include "nluadef.h"
-#include "nstring.h"
 #include "pause.h"
 #include "player.h"
 #include "player_fleet.h"
 #include "player_inventory.h"
 #include "player_gui.h"
 #include "save.h"
+#include "start.h"
+#include "rng.h"
 
 #define PLAYER_CHECK() if (player.p == NULL) return 0
 
@@ -85,6 +87,7 @@ static int playerL_dt_default( lua_State *L );
 static int playerL_speed( lua_State *L );
 static int playerL_setSpeed( lua_State *L );
 static int playerL_cinematics( lua_State *L );
+static int playerL_cinematicsCheck( lua_State *L );
 static int playerL_damageSPFX( lua_State *L );
 static int playerL_screenshot( lua_State *L );
 /* Board stuff. */
@@ -152,6 +155,8 @@ static int playerL_infoButtonUnregister( lua_State *L );
 static int playerL_canDiscover( lua_State *L );
 static int playerL_save( lua_State *L );
 static int playerL_saveBackup( lua_State *L );
+static int playerL_gameover( lua_State *L );
+static int playerL_start( lua_State *L );
 static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -180,6 +185,7 @@ static const luaL_Reg playerL_methods[] = {
    { "speed", playerL_speed },
    { "setSpeed", playerL_setSpeed },
    { "cinematics", playerL_cinematics },
+   { "cinematicsCheck", playerL_cinematicsCheck },
    { "damageSPFX", playerL_damageSPFX },
    { "screenshot", playerL_screenshot },
    { "tryBoard", playerL_tryBoard },
@@ -237,6 +243,8 @@ static const luaL_Reg playerL_methods[] = {
    { "canDiscover", playerL_canDiscover },
    { "save", playerL_save },
    { "saveBackup", playerL_saveBackup },
+   { "gameover", playerL_gameover },
+   { "start", playerL_start },
    {0,0}
 }; /**< Player Lua methods. */
 
@@ -300,7 +308,6 @@ static int playerL_pay( lua_State *L )
 {
    PLAYER_CHECK();
 
-   HookParam p[3];
    credits_t money;
    int nohooks;
    const char *reason;
@@ -317,6 +324,7 @@ static int playerL_pay( lua_State *L )
    }
 
    if (!nohooks) {
+      HookParam p[3];
       p[0].type = HOOK_PARAM_NUMBER;
       p[0].u.num = (double)money;
       if (reason != NULL) {
@@ -475,7 +483,7 @@ static int playerL_omsgAdd( lua_State *L )
    col      = luaL_optcolour(L,4,&cWhite);
 
    /* Infinity. */
-   if (duration < 1e-10)
+   if (duration < DOUBLE_TOL)
       duration = INFINITY;
 
    /* Output. */
@@ -508,7 +516,7 @@ static int playerL_omsgChange( lua_State *L )
    duration = luaL_checknumber(L,3);
 
    /* Infinity. */
-   if (duration < 1e-10)
+   if (duration < DOUBLE_TOL)
       duration = INFINITY;
 
    /* Output. */
@@ -747,15 +755,27 @@ static int playerL_autonavEnd( lua_State *L )
    return 0;
 }
 
+/**
+ * @brief Gets the current time modifier for the player.
+ *
+ *    @luatreturn number Current time modifier.
+ * @luafunc dt_defaults
+ */
 static int playerL_dt_default( lua_State *L )
 {
    lua_pushnumber( L, player_dt_default() );
    return 1;
 }
 
+/**
+ * @brief Gets the current speed of the player.
+ *
+ *    @luatreturn number Current speed modifier.
+ * @luafunc sped
+ */
 static int playerL_speed( lua_State *L )
 {
-   lua_pushnumber( L, player.speed );
+   lua_pushnumber( L, player.speed / conf.game_speed );
    return 1;
 }
 
@@ -775,13 +795,13 @@ static int playerL_setSpeed( lua_State *L )
 
    if (speed > 0.) {
       if (!noset)
-         player.speed = speed;
-      pause_setSpeed( speed );
+         player.speed = speed * conf.game_speed;
+      pause_setSpeed( speed * conf.game_speed );
       sound_setSpeed( sound );
    }
    else {
       if (!noset)
-         player.speed = 1.;
+         player.speed = conf.game_speed;
       player_resetSpeed();
    }
 
@@ -819,10 +839,8 @@ static int playerL_cinematics( lua_State *L )
    /* Parse parameters. */
    b = lua_toboolean( L, 1 );
    if (!lua_isnoneornil(L,2)) {
-      if (!lua_istable(L,2)) {
-         NLUA_ERROR( L, _("Second parameter to cinematics should be a table of options or omitted!") );
-         return 0;
-      }
+      if (!lua_istable(L,2))
+         return NLUA_ERROR( L, _("Second parameter to cinematics should be a table of options or omitted!") );
 
       lua_getfield( L, 2, "abort" );
       if (!lua_isnil( L, -1 ))
@@ -876,6 +894,15 @@ static int playerL_cinematics( lua_State *L )
    }
 
    return 0;
+}
+
+/**
+ * @brief Checks to see if the game is in cinematics mode.
+ */
+static int playerL_cinematicsCheck( lua_State *L )
+{
+   lua_pushboolean( L, player_isFlag( PLAYER_CINEMATICS ) );
+   return 1;
 }
 
 /**
@@ -971,14 +998,10 @@ static int playerL_takeoff( lua_State *L )
 {
    PLAYER_CHECK();
 
-   if (!landed) {
-      NLUA_ERROR(L,_("Player must be landed to force takeoff."));
-      return 0;
-   }
-   if (!pilot_isSpaceworthy( player.p )) {
-      NLUA_ERROR(L,_("Player must be spaceworthy to force takeoff!"));
-      return 0;
-   }
+   if (!landed)
+      return NLUA_ERROR(L,_("Player must be landed to force takeoff."));
+   if (!pilot_isSpaceworthy( player.p ))
+      return NLUA_ERROR(L,_("Player must be spaceworthy to force takeoff!"));
 
    land_queueTakeoff();
 
@@ -1027,7 +1050,7 @@ static int playerL_land( lua_State *L )
    Spob *spob = luaL_validspob(L,1);
    const char *sysname = spob_getSystem( spob->name );
    if (sysname == NULL)
-      NLUA_ERROR(L,_("Spob '%s' is not in a system!"), spob->name);
+      return NLUA_ERROR(L,_("Spob '%s' is not in a system!"), spob->name);
 
    /* Unboard just in case. */
    board_unboard();
@@ -1050,6 +1073,20 @@ static int playerL_land( lua_State *L )
       ovr_initAlpha();
    }
    player.p->solid.pos = spob->pos; /* Set position to target. */
+
+   /* End autonav. */
+   player_autonavEnd();
+
+   /* Stop afterburning. */
+   pilot_afterburnOver( player.p );
+   /* Stop accelerating. */
+   player_accelOver();
+   /* Stop stealth. */
+   pilot_destealth( player.p );
+
+   /* Stop all on outfits. */
+   if (pilot_outfitOffAll( player.p ) > 0)
+      pilot_calcStats( player.p );
 
    /* Do whatever the spob wants to do. */
    if (spob->lua_land != LUA_NOREF) {
@@ -1128,10 +1165,8 @@ static int playerL_landWindow( lua_State *L )
    const char *str;
    int win;
 
-   if (!landed) {
-      NLUA_ERROR(L, _("Must be landed to set the active land window."));
-      return 0;
-   }
+   if (!landed)
+      return NLUA_ERROR(L, _("Must be landed to set the active land window."));
 
    str = luaL_checkstring(L,1);
    if (strcasecmp(str,"main")==0)
@@ -1149,7 +1184,7 @@ static int playerL_landWindow( lua_State *L )
    else if (strcasecmp(str,"commodity")==0)
       win = LAND_WINDOW_COMMODITY;
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Sets the window. */
    ret = land_setWindow( win );
@@ -1191,7 +1226,7 @@ static int playerL_shipvarPeek( lua_State *L )
    PLAYER_CHECK();
    const char *str  = luaL_checkstring(L,1);
    PlayerShip_t *ps = playerL_shipvarShip(L,2);
-   lvar *var        = lvar_get( ps->p->shipvar, str );
+   const lvar *var  = lvar_get( ps->p->shipvar, str );
    if (var != NULL)
       return lvar_push( L, var );
    return 0;
@@ -1309,10 +1344,8 @@ static int playerL_shipOutfits( lua_State *L )
       }
    }
 
-   if (p == NULL) {
-      NLUA_ERROR( L, _("Player does not own a ship named '%s'"), str );
-      return 0;
-   }
+   if (p == NULL)
+      return NLUA_ERROR( L, _("Player does not own a ship named '%s'"), str );
 
    lua_newtable( L );
    j = 1;
@@ -1353,10 +1386,8 @@ static int playerL_shipMetadata( lua_State *L )
          }
       }
    }
-   if (ps == NULL) {
-      NLUA_ERROR( L, _("Player does not own a ship named '%s'"), str );
-      return 0;
-   }
+   if (ps == NULL)
+      return NLUA_ERROR( L, _("Player does not own a ship named '%s'"), str );
 
    lua_newtable(L);
 
@@ -1691,10 +1722,8 @@ static int playerL_misnActive( lua_State *L )
    PLAYER_CHECK();
    const char *str = luaL_checkstring(L,1);
    const MissionData *misn = mission_getFromName( str );
-   if (misn == NULL) {
-      NLUA_ERROR(L, _("Mission '%s' not found in stack"), str);
-      return 0;
-   }
+   if (misn == NULL)
+      return NLUA_ERROR(L, _("Mission '%s' not found in stack"), str);
    int n = mission_alreadyRunning( misn );
    if (n > 0)
       lua_pushinteger( L, n );
@@ -1718,10 +1747,8 @@ static int playerL_misnDone( lua_State *L )
    PLAYER_CHECK();
    const char *str = luaL_checkstring(L, 1);
    int id          = mission_getID( str );
-   if (id == -1) {
-      NLUA_ERROR(L, _("Mission '%s' not found in stack"), str);
-      return 0;
-   }
+   if (id == -1)
+      return NLUA_ERROR(L, _("Mission '%s' not found in stack"), str);
    lua_pushboolean( L, player_missionAlreadyDone( id ) );
    return 1;
 }
@@ -1738,7 +1765,7 @@ static int playerL_misnDoneList( lua_State *L )
       lua_newtable(L);
       return 1;
    }
-   int *done = player_missionsDoneList();
+   const int *done = player_missionsDoneList();
    lua_newtable(L);
    for (int i=0; i<array_size(done); i++) {
       mission_toLuaTable( L, mission_get( done[i] ) );
@@ -1761,10 +1788,8 @@ static int playerL_evtActive( lua_State *L )
    PLAYER_CHECK();
    const char *str= luaL_checkstring(L,1);
    int evtid      = event_dataID( str );
-   if (evtid < 0) {
-      NLUA_ERROR(L, _("Event '%s' not found in stack"), str);
-      return 0;
-   }
+   if (evtid < 0)
+      return NLUA_ERROR(L, _("Event '%s' not found in stack"), str);
    lua_pushboolean( L, event_alreadyRunning( evtid ) );
    return 1;
 }
@@ -1784,10 +1809,8 @@ static int playerL_evtDone( lua_State *L )
    PLAYER_CHECK();
    const char *str = luaL_checkstring(L, 1);
    int id          = event_dataID( str );
-   if (id == -1) {
-      NLUA_ERROR(L, _("Event '%s' not found in stack"), str);
-      return 0;
-   }
+   if (id == -1)
+      return NLUA_ERROR(L, _("Event '%s' not found in stack"), str);
    lua_pushboolean( L, player_eventAlreadyDone( id ) );
    return 1;
 }
@@ -1804,7 +1827,7 @@ static int playerL_evtDoneList( lua_State *L )
       lua_newtable(L);
       return 1;
    }
-   int *done = player_eventsDoneList();
+   const int *done = player_eventsDoneList();
    lua_newtable(L);
    for (int i=0; i<array_size(done); i++) {
       event_toLuaTable( L, done[i] );
@@ -1854,7 +1877,7 @@ static int playerL_guiSet( lua_State *L )
 {
    const char *name = luaL_checkstring(L,1);
    if (!gui_exists(name))
-      NLUA_ERROR(L,_("GUI '%s' does not exist!"),name);
+      return NLUA_ERROR(L,_("GUI '%s' does not exist!"),name);
    free( player.gui );
    player.gui = strdup(name);
    gui_load( gui_pick() );
@@ -1932,7 +1955,7 @@ static int playerL_fleetCargoUsed( lua_State *L )
  */
 static int playerL_fleetCargoOwned( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity( L, 1 );
+   const Commodity *c = luaL_validcommodity( L, 1 );
    if (player.p==NULL)
       lua_pushinteger(L,0);
    else
@@ -1950,7 +1973,7 @@ static int playerL_fleetCargoOwned( lua_State *L )
  */
 static int playerL_fleetCargoAdd( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity( L, 1 );
+   const Commodity *c = luaL_validcommodity( L, 1 );
    int q = luaL_checkinteger( L, 2 );
    if (player.p==NULL)
       lua_pushinteger(L,0);
@@ -1969,7 +1992,7 @@ static int playerL_fleetCargoAdd( lua_State *L )
  */
 static int playerL_fleetCargoRm( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity( L, 1 );
+   const Commodity *c = luaL_validcommodity( L, 1 );
    int q = luaL_checkinteger( L, 2 );
    if (player.p==NULL)
       lua_pushinteger(L,0);
@@ -1988,7 +2011,7 @@ static int playerL_fleetCargoRm( lua_State *L )
  */
 static int playerL_fleetCargoJet( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity( L, 1 );
+   const Commodity *c = luaL_validcommodity( L, 1 );
    int q = luaL_checkinteger( L, 2 );
    if (player.p==NULL)
       lua_pushinteger(L,0);
@@ -2144,26 +2167,24 @@ static int playerL_teleport( lua_State *L )
 
    /* Must not be landed. */
    if (landed)
-      NLUA_ERROR(L,_("Can not teleport the player while landed!"));
+      return NLUA_ERROR(L,_("Can not teleport the player while landed!"));
    if (comm_isOpen())
-      NLUA_ERROR(L,_("Can not teleport the player while the comm is open!"));
+      return NLUA_ERROR(L,_("Can not teleport the player while the comm is open!"));
    if (player_isBoarded())
-      NLUA_ERROR(L,_("Can not teleport the player while they are boarded!"));
+      return NLUA_ERROR(L,_("Can not teleport the player while they are boarded!"));
    pnt = NULL;
 
    /* Get a system. */
    if (lua_issystem(L,1)) {
-      StarSystem *sys = luaL_validsystem(L,1);
+      const StarSystem *sys = luaL_validsystem(L,1);
       name = system_getIndex(sys->id)->name;
    }
    /* Get a spob. */
    else if (lua_isspob(L,1)) {
       pnt   = luaL_validspob(L,1);
       name  = spob_getSystem( pnt->name );
-      if (name == NULL) {
-         NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), pnt->name );
-         return 0;
-      }
+      if (name == NULL)
+         return NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), pnt->name );
    }
    /* Get destination from string. */
    else if (lua_isstring(L,1)) {
@@ -2175,30 +2196,24 @@ static int playerL_teleport( lua_State *L )
          pntname = name;
          name = spob_getSystem( pntname );
          pnt  = spob_get( pntname );
-         if (pnt == NULL) {
-            NLUA_ERROR( L, _("'%s' is not a valid teleportation target."), name );
-            return 0;
-         }
+         if (pnt == NULL)
+            return NLUA_ERROR( L, _("'%s' is not a valid teleportation target."), name );
 
-         if (name == NULL) {
-            NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), pntname );
-            return 0;
-         }
+         if (name == NULL)
+            return NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), pntname );
       }
       else
          name = sysname;
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    no_simulate = lua_toboolean(L,2);
    silent = lua_toboolean(L,3);
 
    /* Check if system exists. */
-   if (system_get( name ) == NULL) {
-      NLUA_ERROR( L, _("System '%s' does not exist."), name );
-      return 0;
-   }
+   if (system_get( name ) == NULL)
+      return NLUA_ERROR( L, _("System '%s' does not exist."), name );
 
    /* Unboard just in case. */
    board_unboard();
@@ -2401,14 +2416,14 @@ static int playerL_save( lua_State *L )
 {
    const char *savename = luaL_optstring( L, 1, "autosave" );
    Spob *savespob = NULL;
-   Spob *prevspob;
+   Spob *prevspob = NULL;
    if (!lua_isnoneornil(L,2))
       savespob = luaL_validspob(L,2);
 
    if (!landed && (savespob==NULL))
-      NLUA_ERROR(L,_("Unable to save when not landed and land spob is not specified!"));
-   else if (landed && (savespob!=land_spob))
-      NLUA_ERROR(L,_("Unable to save when landed and land_spob does not match landed spob!"));
+      return NLUA_ERROR(L,_("Unable to save when not landed and land spob is not specified!"));
+   else if (landed && (savespob!=NULL))
+      return NLUA_ERROR(L,_("Unable to save when landed and land_spob does not match landed spob!"));
 
    if (savespob != NULL) {
       prevspob = land_spob;
@@ -2433,9 +2448,85 @@ static int playerL_saveBackup( lua_State *L )
    char file[PATH_MAX], backup[PATH_MAX];
    const char *filename = luaL_checkstring(L,1); /* TODO sanitize path and such. */
    if (strcmp(filename,"autosave")==0)
-      NLUA_ERROR(L,_("Can not back up save to 'autosave'."));
+      return NLUA_ERROR(L,_("Can not back up save to 'autosave'."));
    snprintf( file, sizeof(file), "saves/%s/autosave.ns", player.name );
    snprintf( backup, sizeof(backup), "saves/%s/%s.ns", player.name, filename );
    lua_pushboolean( L, ndata_copyIfExists(file, backup) );
+   return 1;
+}
+
+/**
+ * @brief Gives the player a game over message.
+ *
+ * @luafunc gameover
+ */
+static int playerL_gameover( lua_State *L )
+{
+   (void) L;
+   player_setFlag( PLAYER_DESTROYED );
+   menu_death();
+   return 0;
+}
+
+/**
+ * @brief Gets information about the player's starting point.
+ *
+ *    @luatreturn Returns a table containing the different start information as keys and the corresponding information as values. Fields include things such as "name" for the campaign name, "ship" for the starting ship, "shipname" for the starting shp name, etc. Please refer to `dat/start.xml` for more details of available fields.
+ * @luafunc start
+ */
+static int playerL_start( lua_State *L )
+{
+   double x, y;
+   vec2 v;
+   lua_newtable(L);
+
+   lua_pushstring( L, start_name() );
+   lua_setfield( L, -2, "name" );
+
+   lua_pushship( L, ship_get(start_ship()) );
+   lua_setfield( L, -2, "ship" );
+
+   lua_pushstring( L, start_shipname() );
+   lua_setfield( L, -2, "shipname" );
+
+   lua_pushstring( L, start_acquired() );
+   lua_setfield( L, -2, "acquired" );
+
+   lua_pushstring( L, start_gui() );
+   lua_setfield( L, -2, "gui" );
+
+   lua_pushinteger( L, start_credits() );
+   lua_setfield( L, -2, "credits" );
+
+   lua_pushtime( L, start_date() );
+   lua_setfield( L, -2, "date" );
+
+   lua_pushsystem( L, system_index(system_get(start_system())) );
+   lua_setfield( L, -2, "system" );
+
+   start_position( &x, &y );
+   vec2_cset( &v, x, y );
+   lua_pushvector( L, v );
+   lua_setfield( L, -2, "position" );
+
+   if (start_mission() != NULL) {
+      lua_pushstring( L, start_mission() );
+      lua_setfield( L, -2, "mission" );
+   }
+
+   if (start_event() != NULL) {
+      lua_pushstring( L, start_event() );
+      lua_setfield( L, -2, "event" );
+   }
+
+   lua_pushstring( L, start_chapter() );
+   lua_setfield( L, -2, "chapter" );
+
+   lua_pushstring( L, start_spob_lua_default() );
+   lua_setfield( L, -2, "spob_lua_default" );
+
+   lua_pushstring( L, start_dtype_default() );
+   lua_setfield( L, -2, "dtype_default" );
+
    return 1;
 }

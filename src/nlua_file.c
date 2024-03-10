@@ -36,6 +36,7 @@ static int fileL_isopen( lua_State *L );
 static int fileL_filetype( lua_State *L );
 static int fileL_mkdir( lua_State *L );
 static int fileL_enumerate( lua_State *L );
+static int fileL_remove( lua_State *L );
 static const luaL_Reg fileL_methods[] = {
    { "__gc", fileL_gc },
    { "__eq", fileL_eq },
@@ -52,6 +53,7 @@ static const luaL_Reg fileL_methods[] = {
    { "filetype", fileL_filetype },
    { "mkdir", fileL_mkdir },
    { "enumerate", fileL_enumerate },
+   { "remove", fileL_remove },
    {0,0}
 }; /**< File metatable methods. */
 
@@ -181,8 +183,8 @@ static int fileL_new( lua_State *L )
 {
    LuaFile_t lf;
    const char *str = luaL_checkstring(L,1);
+   memset( &lf, 0, sizeof(lf) );
    strncpy( lf.path, str, sizeof(lf.path)-1 );
-
    lf.mode = 'c';
    lf.rw = NULL;
    lua_pushfile( L, lf );
@@ -256,7 +258,7 @@ static int fileL_read( lua_State *L )
    char *buf;
 
    if (lf->rw == NULL)
-      NLUA_ERROR(L, _("file not open!"));
+      return NLUA_ERROR(L, _("file not open!"));
 
    /* Figure out how much to read. */
    readlen = luaL_optinteger(L,2,SDL_RWsize(lf->rw));
@@ -287,7 +289,7 @@ static int fileL_write( lua_State *L )
 
 
    if (lf->rw == NULL)
-      NLUA_ERROR(L, _("file not open!"));
+      return NLUA_ERROR(L, _("file not open!"));
 
    buf   = luaL_checklstring(L,2,&len);
    write = luaL_optlong(L,3,len);
@@ -379,7 +381,7 @@ static int fileL_size( lua_State *L )
  */
 static int fileL_isopen( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
+   const LuaFile_t *lf = luaL_checkfile(L,1);
    lua_pushboolean(L, lf->rw!=NULL);
    return 1;
 }
@@ -421,7 +423,11 @@ static int fileL_mkdir( lua_State *L )
 {
    const char *path = luaL_checkstring(L,1);
    int ret = PHYSFS_mkdir( path );
-   lua_pushboolean(L,ret==0);
+   lua_pushboolean(L,ret);
+   if (ret==0) {
+      lua_pushstring(L, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) );
+      return 2;
+   }
    return 1;
 }
 
@@ -440,12 +446,31 @@ static int fileL_enumerate( lua_State *L )
    lua_newtable(L);
    items = PHYSFS_enumerateFiles( path );
    if (items==NULL)
-      NLUA_ERROR(L,_("Directory '%s' enumerate error: %s"), path,
+      return NLUA_ERROR(L,_("Directory '%s' enumerate error: %s"), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
    for (int i=0; items[i]!=NULL; i++) {
       lua_pushstring(L,items[i]);
       lua_rawseti(L,-2,i+1);
    }
    PHYSFS_freeList( items );
+   return 1;
+}
+
+/**
+ * @brief Removes a file or directory.
+ *
+ *    @luatparam string path Name of the path to remove.
+ *    @luatreturn boolean True on success.
+ * @luafunc remove
+ */
+static int fileL_remove( lua_State *L )
+{
+   const char *path = luaL_checkstring(L,1);
+   int ret = PHYSFS_delete( path );
+   lua_pushboolean(L,ret);
+   if (ret==0) {
+      lua_pushstring(L, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) );
+      return 2;
+   }
    return 1;
 }

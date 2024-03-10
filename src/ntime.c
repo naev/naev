@@ -33,15 +33,12 @@
 /** @cond */
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "ntime.h"
 
 #include "economy.h"
 #include "hook.h"
-#include "nstring.h"
 
 #define NT_SECONDS_DIV   (1000)      /* Divider for extracting seconds. */
 #define NT_SECONDS_DT    (30)        /* Update rate, how many seconds are in a real second. */

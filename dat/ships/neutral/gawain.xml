@@ -2,7 +2,7 @@
 <ship name="Gawain">
  <points>20</points>
  <base_type>Gawain</base_type>
- <GFX size="56">gawain</GFX>
+ <gfx size="56">gawain</gfx>
  <sound>engine</sound>
  <class display="Luxury Yacht">Yacht</class>
  <price>500000</price>
@@ -30,7 +30,8 @@
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
@@ -38,7 +39,7 @@
  <stats>
   <speed_mod>15</speed_mod>
   <turn_mod>10</turn_mod>
-  <thrust_mod>10</thrust_mod>
+  <accel_mod>10</accel_mod>
   <cargo_mod>-10</cargo_mod>
   <armour_mod>-10</armour_mod>
   <land_delay>-20</land_delay>

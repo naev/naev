@@ -2,7 +2,7 @@
 <ship name="Zebra">
  <points>110</points>
  <base_type>Zebra</base_type>
- <GFX size="120" sx="12" sy="12">zebra</GFX>
+ <gfx size="120" sx="12" sy="12">zebra</gfx>
  <sound>engine</sound>
  <class>Bulk Freighter</class>
  <price>3500000</price>
@@ -23,33 +23,30 @@
  </health>
  <characteristics>
   <crew>20</crew>
-  <mass>1400</mass>
+  <mass>1500</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>340</cargo>
  </characteristics>
  <slots>
   <weapon size="large" prop="fighter_bay" x="-18" y="22" h="4" />
   <weapon size="large" prop="fighter_bay" x="-18" y="-22" h="4" />
-  <weapon size="medium" x="28" y="18" h="-4" />
-  <weapon size="medium" x="28" y="-18" h="-4" />
-  <weapon size="medium" x="26" y="24" h="-4" />
-  <weapon size="medium" x="26" y="24" h="-4" />
+  <weapon size="large" x="28" y="18" h="-4" />
   <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="large" prop="engines">Nexus Bolt 3500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
+  <structure size="large" prop="engines">Nexus Bolt 3000 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>
  <stats>
+  <accel_mod>-10</accel_mod>
   <turn_mod>-20</turn_mod>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>

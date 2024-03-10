@@ -64,5 +64,11 @@
    <spob>P-8493</spob>
    <spob>Pirate's Cove</spob>
   </sys>
+  <sys name="Pas">
+   <spob>Shangris Station</spob>
+  </sys>
+  <sys name="Doranthex">
+   <spob>Fort Secundus</spob>
+  </sys>
  </specific>
 </outfit>

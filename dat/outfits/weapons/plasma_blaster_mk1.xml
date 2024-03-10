@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Plasma Blaster MK1">
  <general>
+  <shortname>Plasma Bl. MK1</shortname>
   <slot>weapon</slot>
   <size>small</size>
-  <mass>6</mass>
+  <mass>3</mass>
   <price>19000</price>
-  <description>The Plasma Blaster fires superheated plasma which is very effective at damaging armour, but less effective against shields. This weapon is often used by bounty hunters and mercenaries for its high killing potential.</description>
+  <description>The Plasma Blaster M1 fires superheated plasma which is very effective at damaging armour, but less effective against shields. While dealing direct damage, the lingering plasma will continue to damage the target ship for a while after the initial impact. This weapon is often used by bounty hunters and mercenaries for its high killing potential, although the plasma burns tend to make it harder to disable ships.</description>
   <gfx_store>plasma.webp</gfx_store>
   <cpu>-5</cpu>
  </general>
@@ -15,19 +16,19 @@
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS</spfx_armour>
-  <delay>0.8</delay>
+  <delay>1.2</delay>
   <speed>700</speed>
-  <range>900</range>
-  <falloff>750</falloff>
-  <energy>4</energy>
+  <range>700</range>
+  <falloff>600</falloff>
+  <energy>6</energy>
   <heatup>40</heatup>
   <trackmin>0</trackmin>
   <trackmax>2000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>impact</type>
+   <type>plasma</type>
    <penetrate>0</penetrate>
-   <physical>13</physical>
+   <physical>19.5</physical>
   </damage>
  </specific>
 </outfit>

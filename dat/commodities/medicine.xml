@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commodity>
  <name>Medicine</name>
- <description>An assortment of medicines suitable for curing all sorts of ailments.</description>
+ <description>An assortment of medicines suitable for curing all kinds of ailments.</description>
  <price>750</price>
  <gfx_store>medicine.webp</gfx_store>
  <standard/>

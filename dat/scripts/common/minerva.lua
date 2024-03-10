@@ -21,6 +21,12 @@ local minerva = {
       image = "cyborg_chicken.png",
       colour = {0.9, 0.5, 0.1}, -- Orangish
    },
+   kexP = {
+      name = _("Kex"),
+      portrait = "cyborg_chicken_pirate.webp",
+      image = "cyborg_chicken_pirate.webp",
+      colour = {0.9, 0.5, 0.1}, -- Orangish
+   },
    maikki = {
       name = _("Maikki"),
       description = _("You see a very cutely dressed young woman. She seems to have a worried expression on her face."),
@@ -54,6 +60,12 @@ local minerva = {
       portrait = "zuri.webp",
       description = _("You see Zuri who seems to be motioning for you to come."),
       image = "zuri.webp",
+      colour = {0.73, 1, 0.73},
+   },
+   zuriH = {
+      name = _("Zuri"),
+      portrait = "zuri_hurt.webp",
+      image = "zuri_hurt.webp",
       colour = {0.73, 1, 0.73},
    },
    -- Secondary characters
@@ -138,6 +150,7 @@ local minerva = {
       pirate4 = 800e3, -- Defend torture ship destroying Dvaered Goddard!!
       pirate5 = 800e3, -- Za'lek hacking station
       pirate6 = 900e3, -- Take down both targets
+      finale2 = 3e6, -- For both finale missions
    },
 }
 
@@ -146,70 +159,84 @@ function minerva.vn_cyborg_chicken( params )
    return vn.Character.new( minerva.chicken.name,
          tmerge( {
             image=minerva.chicken.image,
-            color=minerva.chicken.colour,
+            colour=minerva.chicken.colour,
          }, params) )
 end
 function minerva.vn_kex( params )
    return vn.Character.new( minerva.kex.name,
          tmerge( {
             image=minerva.kex.image,
-            color=minerva.kex.colour,
+            colour=minerva.kex.colour,
+         }, params) )
+end
+function minerva.vn_kexP( params )
+   return vn.Character.new( minerva.kexP.name,
+         tmerge( {
+            image=minerva.kexP.image,
+            colour=minerva.kexP.colour,
          }, params) )
 end
 function minerva.vn_maikki( params )
    return vn.Character.new( minerva.maikki.name,
          tmerge( {
             image=minerva.maikki.image,
-            color=minerva.maikki.colour,
+            colour=minerva.maikki.colour,
          }, params) )
 end
 function minerva.vn_maikkiP( params )
    return vn.Character.new( minerva.maikkiP.name,
          tmerge( {
             image=minerva.maikkiP.image,
-            color=minerva.maikkiP.colour,
+            colour=minerva.maikkiP.colour,
          }, params) )
 end
 function minerva.vn_terminal( params )
    return vn.Character.new( minerva.terminal.name,
          tmerge( {
             image=minerva.terminal.image,
-            color=minerva.terminal.colour,
+            colour=minerva.terminal.colour,
          }, params) )
 end
 function minerva.vn_pirate( params )
    return vn.Character.new( minerva.pirate.name,
          tmerge( {
             image=minerva.pirate.image,
-            color=minerva.pirate.colour,
+            colour=minerva.pirate.colour,
          }, params) )
 end
 function minerva.vn_zuri( params )
    return vn.Character.new( minerva.zuri.name,
          tmerge( {
             image=minerva.zuri.image,
-            color=minerva.zuri.colour,
+            colour=minerva.zuri.colour,
+         }, params) )
+end
+function minerva.vn_zuriH( params )
+   return vn.Character.new( minerva.zuriH.name,
+         tmerge( {
+            image=minerva.zuriH.image,
+            colour=minerva.zuriH.colour,
          }, params) )
 end
 function minerva.vn_ceo( params )
    return vn.Character.new( minerva.ceo.name,
          tmerge( {
             image=minerva.ceo.image,
-            color=minerva.ceo.colour,
+            colour=minerva.ceo.colour,
          }, params) )
 end
 function minerva.vn_strangelove( params )
    return vn.Character.new( minerva.strangelove.name,
          tmerge( {
             image=minerva.strangelove.image,
-            color=minerva.strangelove.colour,
+            colour=minerva.strangelove.colour,
          }, params) )
 end
 function minerva.vn_mole( params )
    return vn.Character.new( minerva.mole.name,
          tmerge( {
             image=minerva.mole.image,
-            color=minerva.mole.colour,
+            colour=minerva.mole.colour,
          }, params) )
 end
 

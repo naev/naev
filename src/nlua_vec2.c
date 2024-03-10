@@ -33,6 +33,7 @@ static int vectorL_mul__( lua_State *L );
 static int vectorL_mul( lua_State *L );
 static int vectorL_div__( lua_State *L );
 static int vectorL_div( lua_State *L );
+static int vectorL_unm( lua_State *L );
 static int vectorL_dot( lua_State *L );
 static int vectorL_cross( lua_State *L );
 static int vectorL_get( lua_State *L );
@@ -59,6 +60,7 @@ static const luaL_Reg vector_methods[] = {
    { "mul", vectorL_mul__ },
    { "__div", vectorL_div },
    { "div", vectorL_div__ },
+   { "__unm", vectorL_unm},
    { "dot", vectorL_dot },
    { "cross", vectorL_cross },
    { "get", vectorL_get },
@@ -258,7 +260,7 @@ static int vectorL_copy( lua_State *L )
 static int vectorL_tostring( lua_State *L )
 {
    char buf[STRMAX_SHORT];
-   vec2 *v = luaL_checkvector(L,1);
+   const vec2 *v = luaL_checkvector(L,1);
    snprintf( buf, sizeof(buf), "vec2( %g, %g )", v->x, v->y );
    lua_pushstring(L, buf);
    return 1;
@@ -295,7 +297,7 @@ static int vectorL_add( lua_State *L )
 
       /* Get rest of parameters. */
       if (lua_isvector(L,2)) {
-         vec2 *v2 = lua_tovector(L,2);
+         const vec2 *v2 = lua_tovector(L,2);
          x = v2->x;
          y = v2->y;
       }
@@ -324,7 +326,7 @@ static int vectorL_add__( lua_State *L )
 
    /* Get rest of parameters. */
    if (lua_isvector(L,2)) {
-      vec2 *v2 = lua_tovector(L,2);
+      const vec2 *v2 = lua_tovector(L,2);
       x = v2->x;
       y = v2->y;
    }
@@ -511,6 +513,14 @@ static int vectorL_div__( lua_State *L )
    lua_pushvector( L, *v1 );
    return 1;
 }
+static int vectorL_unm( lua_State *L )
+{
+   vec2 vout;
+   const vec2 *vin = luaL_checkvector(L,1);
+   vec2_cset( &vout, -vin->x, -vin->y );
+   lua_pushvector( L, vout );
+   return 1;
+}
 
 /**
  * @brief Dot product of two vectors.
@@ -644,23 +654,16 @@ static int vectorL_setP( lua_State *L )
  */
 static int vectorL_distance( lua_State *L )
 {
-   const vec2 *v1, *v2;
    double dist;
-
-   /* Get self. */
-   v1 = luaL_checkvector(L,1);
+   const vec2 *v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
-   if (!lua_isnoneornil(L,2))
-      v2 = luaL_checkvector(L,2);
-   else
-      v2 = NULL;
-
-   /* Get distance. */
-   if (v2 == NULL)
-      dist = vec2_odist(v1);
-   else
+   if (!lua_isnoneornil(L,2)) {
+      const vec2 *v2 = luaL_checkvector(L,2);
       dist = vec2_dist(v1, v2);
+   }
+   else
+      dist = vec2_odist(v1);
 
    /* Return the distance. */
    lua_pushnumber(L, dist);
@@ -680,23 +683,16 @@ static int vectorL_distance( lua_State *L )
  */
 static int vectorL_distance2( lua_State *L )
 {
-   const vec2 *v1, *v2;
    double dist2;
-
-   /* Get self. */
-   v1 = luaL_checkvector(L,1);
+   const vec2 *v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
-   if (!lua_isnoneornil(L,2))
-      v2 = luaL_checkvector(L,2);
-   else
-      v2 = NULL;
-
-   /* Get distance. */
-   if (v2 == NULL)
-      dist2 = vec2_odist2(v1);
-   else
+   if (!lua_isnoneornil(L,2)) {
+      const vec2 *v2 = luaL_checkvector(L,2);
       dist2 = vec2_dist2(v1, v2);
+   }
+   else
+      dist2 = vec2_odist2(v1);
 
    /* Return the distance. */
    lua_pushnumber(L, dist2);
@@ -740,7 +736,7 @@ static int vectorL_normalize( lua_State *L )
 {
    vec2 *v = luaL_checkvector(L,1);
    double n = luaL_optnumber(L,2,1.);
-   double m = n/VMOD(*v);
+   double m = n/MAX(VMOD(*v),DOUBLE_TOL);
    v->x *= m;
    v->y *= m;
    lua_pushvector(L, *v);

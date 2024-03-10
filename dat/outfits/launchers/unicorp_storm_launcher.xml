@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp Storm Launcher">
  <general>
+  <shortname>U. Storm L.</shortname>
   <slot>weapon</slot>
+  <rarity>2</rarity>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>12</mass>
+  <mass>22</mass>
   <price>90000</price>
   <description>Storm missiles and launchers were designed by Unicorp in order to be the guided equivalent to a Mace rocket. However, despite the undeniable ability of Unicorp to design functionnal and cheap outfits, the result turned out to be way too costly to mass-equip the Navy. This is the reason why only the Imperial elite squadrons use this very deadly weapon.</description>
   <gfx_store>unicorp_fury_launcher.webp</gfx_store>
@@ -27,12 +29,12 @@
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="-7">fire-missileS</trail_generator>
   <duration blowup="armour">3</duration>
-  <thrust>500</thrust>
+  <accel>500</accel>
   <turn>100</turn>
   <speed_max>800</speed_max>
   <resist>20</resist>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>12</penetrate>
    <physical>20</physical>
   </damage>

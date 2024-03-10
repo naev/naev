@@ -38,8 +38,8 @@ local function render( sp, x, y, z )
    explosion_shader:send( "u_speed", d.speed )
    explosion_shader:send( "u_steps", d.steps )
    explosion_shader:send( "u_smokiness", d.smokiness )
-   explosion_shader:send( "u_colorbase", d.colorbase )
-   explosion_shader:send( "u_colorsmoke", d.colorsmoke )
+   explosion_shader:send( "u_colourbase", d.colourbase )
+   explosion_shader:send( "u_coloursmoke", d.coloursmoke )
    explosion_shader:send( "u_smoke_fade", d.smokefade )
    explosion_shader:send( "u_roll_speed", d.rollspeed )
    explosion_shader:send( "u_r", d.r )
@@ -66,8 +66,8 @@ local function spfx_explosion( pos, vel, size, params )
    d.speed  = speed
    d.steps  = params.steps or math.min( math.floor(0.0111688 * size + 8.16463 + 0.5), 16 )
    d.smokiness = params.smokiness or 0.588
-   d.colorbase = params.colorbase or {1.2, 0.9, 0.5, 0.7}
-   d.colorsmoke = params.colorsmoke or {0.15, 0.15, 0.15, 0.1}
+   d.colourbase = params.colourbase or {1.2, 0.9, 0.5, 0.7}
+   d.coloursmoke = params.coloursmoke or {0.15, 0.15, 0.15, 0.1}
    d.smokefade = params.smokefade or 1.4
    d.rollspeed = params.rollspeed or 1.0
    d.r      = rnd.rnd()
@@ -93,7 +93,7 @@ local function explosion( pos, vel, radius, damage, params )
 
    -- Do damage if applicable
    if damage then
-      local dmgtype = params.dmgtype or "normal"
+      local dmgtype = params.dmgtype -- nil will default to raw damage
       local disable = params.disable or 0
       do_damage( pos, radius, damage, params.penetration, params.parent, dmgtype, disable )
    end

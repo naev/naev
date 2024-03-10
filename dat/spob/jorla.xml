@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>0</range>
  </presence>
  <general>
@@ -37,10 +37,10 @@
   <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>
-  <item>High Tech Upgrades 1</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
   <item>Za'lek Outfits Low</item>
+  <item>High Tech Upgrades 3</item>
  </tech>
  <tags>
   <tag>research</tag>

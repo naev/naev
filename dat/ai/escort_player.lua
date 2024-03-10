@@ -4,6 +4,8 @@ require 'ai.escort'
 mem.aggressive = true
 
 function create ()
+   mem.bribe_no = true
+   mem.refuel_no = true
 end
 
 function idle ()

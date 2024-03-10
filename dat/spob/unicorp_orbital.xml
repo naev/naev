@@ -24,7 +24,7 @@
   </services>
   <commodities/>
   <description>Acting as the focal point of the Unicorp corporation, 70% of all company employees are located at Unicorp Orbital. Although the station does not have the full fabrication facilities necessary for producing all the Unicorp products, it has a small workshop mainly focused with collaborating with the research department located at the same station. Once you leave the spaceport you are greeted with the company motto "Quality for All" and a frenzy of employees going to and fro. Quite a lively station.</description>
-  <bar>The Unicorp Mess Hall serves as a meeting point for all employees and visitors regardless of status. It is a self-service style with automated food dispensers to minimize waits and latency, which seems to be quite useful with the amount of employees constantly visiting the bar. Not very elegant, but very functional.</bar>
+  <bar>The Unicorp Mess Hall serves as a meeting point for all employees and visitors regardless of status. It is a self-service style with automated food dispensers to minimise waits and latency, which seems to be quite useful with the amount of employees constantly visiting the bar. Not very elegant, but very functional.</bar>
  </general>
  <tech>
   <item>Unicorp Outfits</item>

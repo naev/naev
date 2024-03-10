@@ -9,7 +9,11 @@
    if system.get("Ogat"):jumpDist() ~= 4 or player.jumps() &lt; 4 then
       return false
    end
-   return require("misn_test").reweight_active()
+   local misn_test = require("misn_test")
+   if not misn_test.heavy_combat_vessel(true) then
+      return false
+   end
+   return misn_test.reweight_active()
  </cond>
  <notes>
   <tier>2</tier>
@@ -102,7 +106,7 @@ function enter ()
 
    -- Only spawn if system can handle inclusive claims
    if naev.claimTest( system.cur(), true ) then
-      hook.timer(4.0, "spawnBaddies")
+      hook.timer(4, "spawnBaddies")
    end
 
    if system.cur() == mem.targetsystem then

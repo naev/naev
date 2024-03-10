@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Cheater's Ragnarok Beam">
+ <general>
+  <slot>weapon</slot>
+  <size>small</size>
+  <mass>1</mass>
+  <price>180000</price>
+  <description>This weapon is a cheat. It is not meant to be used by players.</description>
+  <gfx_store>ragnarok.webp</gfx_store>
+  <cpu>-1</cpu>
+ <rarity>6</rarity></general>
+ <specific type="beam">
+  <delay>2</delay>
+  <duration min="2">6</duration>
+  <range>500</range>
+  <turn>35</turn>
+  <energy>20</energy>
+  <damage>
+   <type>energy</type>
+   <penetrate>100</penetrate>
+   <physical>130</physical>
+   <disable>18</disable>
+  </damage>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <heatup>60</heatup>
+  <sound>beam0</sound>
+  <sound_off>beam_off0</sound_off>
+  <shader r="0.9" g="0.5" b="0.8" a="1." width="22.">beam_helix</shader>
+ </specific>
+ <tags>
+  <tag>noplayer</tag>
+ </tags>
+</outfit>

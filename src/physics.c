@@ -9,11 +9,28 @@
 /** @endcond */
 
 #include "log.h"
-#include "nstring.h"
 #include "physics.h"
 
-/*
- * M I S C
+/**
+ * Lists of names for some internal units we use. These just translate them
+ * game values to human readable form.
+ */
+const char _UNIT_TIME[]       = N_("sec");
+const char _UNIT_PER_TIME[]   = N_("/sec");
+const char _UNIT_DISTANCE[]   = N_("km");
+const char _UNIT_SPEED[]      = N_("km/s");
+const char _UNIT_ACCEL[]      = N_("km/s²");
+const char _UNIT_ENERGY[]     = N_("GJ");
+const char _UNIT_POWER[]      = N_("GW");
+const char _UNIT_ANGLE[]      = N_("°");
+const char _UNIT_ROTATION[]   = N_("°/s");
+const char _UNIT_MASS[]       = N_("t");
+const char _UNIT_CPU[]        = N_("PFLOP");
+const char _UNIT_UNIT[]       = N_("u");
+const char _UNIT_PERCENT[]    = N_("%");
+
+/**
+ * @brief Converts an angle to the [0, 2*M_PI] range.
  */
 static double angle_cleanup( double a )
 {
@@ -57,14 +74,16 @@ double angle_diff( double ref, double a )
  *
  *   since dt isn't actually differential this gives us ERROR!
  *   so watch out with big values for dt
- *
  */
 static void solid_update_euler( Solid *obj, double dt )
 {
    double px,py, vx,vy, ax,ay, th;
    double cdir, sdir;
 
-   /* make sure angle doesn't flip */
+   /* Save previous position. */
+   obj->pre = obj->pos;
+
+   /* Make sure angle doesn't flip */
    obj->dir += obj->dir_vel*dt;
    if (obj->dir >= 2*M_PI)
       obj->dir -= 2*M_PI;
@@ -76,17 +95,17 @@ static void solid_update_euler( Solid *obj, double dt )
    py = obj->pos.y;
    vx = obj->vel.x;
    vy = obj->vel.y;
-   th = obj->thrust;
+   th = obj->accel;
 
    /* Save direction. */
    sdir = sin(obj->dir);
    cdir = cos(obj->dir);
 
    /* Get acceleration. */
-   ax = th*cdir / obj->mass;
-   ay = th*sdir / obj->mass;
+   ax = th*cdir;
+   ay = th*sdir;
 
-   /* Symplectic Euler */
+   /* Symplectic Euler should reduce a bit the approximation error. */
    vx += ax*dt;
    vy += ay*dt;
    px += vx*dt;
@@ -125,10 +144,12 @@ static void solid_update_rk4( Solid *obj, double dt )
 {
    int N; /* for iteration, and pass calculation */
    double h, px,py, vx,vy; /* pass, and position/velocity values */
-   double ix,iy, tx,ty, th; /* initial and temporary cartesian vector values */
-   double vmod, vang;
+   double vmod, vang, th;
    int vint;
    int limit; /* limit speed? */
+
+   /* Save previous position. */
+   obj->pre = obj->pos;
 
    /* Initial positions and velocity. */
    px = obj->pos.x;
@@ -149,9 +170,10 @@ static void solid_update_rk4( Solid *obj, double dt )
    h = dt / (double)N; /* step */
 
    /* Movement Quantity Theorem:  m*a = \sum f */
-   th = obj->thrust  / obj->mass;
+   th = obj->accel;
 
    for (int i=0; i < N; i++) { /* iterations */
+      double ix, iy, tx, ty;
       /* Calculate acceleration for the frame. */
       double ax = th*cos(obj->dir);
       double ay = th*sin(obj->dir);
@@ -204,11 +226,12 @@ static void solid_update_rk4( Solid *obj, double dt )
 }
 
 /**
- * @brief Gets the maximum speed of any object with speed and thrust.
+ * @brief Gets the maximum speed of any object with speed and accel.
  */
-double solid_maxspeed( const Solid *s, double speed, double thrust )
+double solid_maxspeed( const Solid *s, double speed, double accel )
 {
-   return speed + thrust / (s->mass * 3.);
+   (void) s;
+   return speed + accel / 3.;
 }
 
 /**
@@ -230,8 +253,8 @@ void solid_init( Solid* dest, double mass, double dir,
    /* Set direction velocity. */
    dest->dir_vel = 0.;
 
-   /* Set force. */
-   dest->thrust  = 0.;
+   /* Set acceleration. */
+   dest->accel = 0.;
 
    /* Set direction. */
    dest->dir = dir;
@@ -249,6 +272,7 @@ void solid_init( Solid* dest, double mass, double dir,
       vectnull( &dest->pos );
    else
       dest->pos = *pos;
+   dest->pre = dest->pos; /* Store previous position. */
 
    /* Misc. */
    dest->speed_max = -1.; /* Negative is invalid. */
@@ -268,33 +292,4 @@ void solid_init( Solid* dest, double mass, double dir,
          dest->update = solid_update_rk4;
          break;
    }
-}
-
-/**
- * @brief Creates a new Solid.
- *
- *    @param mass Mass to set solid to.
- *    @param dir Solid initial direction.
- *    @param pos Initial solid position.
- *    @param vel Initial solid velocity.
- *    @return A newly created solid.
- */
-Solid* solid_create( double mass, double dir,
-      const vec2* pos, const vec2* vel, int update )
-{
-   Solid* dyn = malloc(sizeof(Solid));
-   if (dyn==NULL)
-      ERR(_("Out of Memory"));
-   solid_init( dyn, mass, dir, pos, vel, update );
-   return dyn;
-}
-
-/**
- * @brief Frees an existing solid.
- *
- *    @param src Solid to free.
- */
-void solid_free( Solid* src )
-{
-   free(src);
 }

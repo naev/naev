@@ -448,8 +448,8 @@ Scavenger goes silent for a second, as if thinking.
          vn.label("04_yes")
          d(fmt.f(_([["Excellence. We need about {amount} of {resource}. It should be possible to mine the resource directly at {minesys}, however, our last excursion to Haven found that there exist caravans of mining ships also carrying these resources. The mining ships seem to have struck a non-aggression pact with the Pirates and roam freely around. It may be possible to directly acquire the {resource} from the caravans instead of relying on the mining."]]),
             {amount=fmt.tonnes(amount), resource=resource, minesys=minesys}))
-         d(fmt.f(_([["We will leave the acquiring of {resource} up to you, use whatever method you prefer. Aim true pilot!"]]),
-            {resource=resource}))
+         d(fmt.f(_([["We will leave the acquiring of {resource} up to you, use whatever method you prefer. Although we only require {amount}, we can make use of any excess you can bring. Aim true pilot!"]]),
+            {resource=resource, amount=fmt.tonnes(amount)}))
          vn.func( function ()
             naev.missionStart("Taiomi 4")
          end )

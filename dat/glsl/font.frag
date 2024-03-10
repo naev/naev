@@ -1,21 +1,22 @@
 #include "lib/math.glsl"
 
 uniform float m;
-uniform vec4 color;
-uniform vec4 outline_color;
+uniform vec4 colour;
+uniform vec4 outline_colour;
 uniform sampler2D sampler;
 
 in vec2 tex_coord_out;
-out vec4 color_out;
+out vec4 colour_out;
 
 void main(void)
 {
    // d is the signed distance to the glyph; m is the distance value corresponding to 1 "pixel".
-   float d  = texture(sampler, tex_coord_out).r - 0.5;
+   float t = texture(sampler, tex_coord_out).r;
+   float d = (t-0.5)*m;
    // Map the signed distance to mixing parameters for outline..foreground, transparent..opaque.
-   float alpha = smoothstep(-0.5    *m, +0.5*m, d);
-   float beta  = smoothstep(-M_SQRT2*m, -1.0*m, d);
-   vec4 fg_c   = mix( outline_color, color, alpha );
-   color_out   = vec4( fg_c.rgb, beta*fg_c.a );
-   gl_FragDepth = -d*0.5 + 0.5;
+   float alpha = smoothstep(-0.5    , +0.5, d);
+   float beta  = smoothstep(-M_SQRT2, -1.0, d);
+   vec4 fg_c   = mix( outline_colour, colour, alpha );
+   colour_out   = vec4( fg_c.rgb, beta*fg_c.a );
+   gl_FragDepth = -t+1.0;
 }

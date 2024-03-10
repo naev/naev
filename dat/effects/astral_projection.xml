@@ -5,4 +5,5 @@
  <icon>/gfx/misc/icons/angel-outfit.webp</icon>
  <overwrite>astral_projection</overwrite>
  <shader vertex="effect15x.vert">effects/astral_projection.frag</shader>
+ <priority>-1</priority>
 </effect>

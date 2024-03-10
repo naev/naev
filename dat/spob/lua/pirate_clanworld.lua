@@ -40,6 +40,7 @@ Pay {credits}?]]),
       _([["Pleasure doing business with you. Now get moving."]]),
    },
 }
+luaspob.setup( mem.params )
 
 local function initparams ()
    mem.std_land = 20
@@ -60,6 +61,3 @@ load = function ()
    initparams()
    return luaspob.load()
 end
-unload = luaspob.unload
-can_land = luaspob.can_land
-comm = luaspob.comm

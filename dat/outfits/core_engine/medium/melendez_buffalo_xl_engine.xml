@@ -15,7 +15,7 @@
   <engine_limit>1600</engine_limit>
   <fuel>1000</fuel>
   <speed>135</speed>
-  <thrust>70</thrust>
+  <accel>70</accel>
   <turn>65</turn>
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>

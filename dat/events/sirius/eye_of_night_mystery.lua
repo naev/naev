@@ -196,7 +196,7 @@ function pir_dead ()
    hook.land( "land" )
 end
 
-local shader_fadeout, hook_update
+local shader_fadeout
 function land ()
    if event_done then
       evt.finish(true)
@@ -219,7 +219,7 @@ function land ()
    vn.func( function ()
       vn.setBackground( function ()
          local nw, nh = naev.gfx.dim()
-         vn.setColor( {0, 0, 0, effectstr} )
+         vn.setColour( {0, 0, 0, effectstr} )
          lg.rectangle("fill", 0, 0, nw, nh )
       end )
    end )
@@ -309,7 +309,7 @@ What do you do?]])
 
    vn.label("commodityexchange_look")
    --vn.func( function () commodity_looked = true end )
-   vn.na(_([[You look around the room. Nothing seems to really remarkable. You find an opened drink on a table near the back, and large amounts of minerals and some assorted goods.]]))
+   vn.na(_([[You look around the room. Nothing seems to be really remarkable. You find an opened drink on a table near the back, and large amounts of minerals and some assorted goods.]]))
    effect_change( 0.25 )
    vn.sfxEerie()
    vn.na(_([[Eventually, you find a ledger with logs of commodity exchanges. Hey wait, some of the dates are in the future...]]))
@@ -357,13 +357,13 @@ What do you do?]])
          vn.jump("spaceport_bar_look_drink")
       end
    end )
-   vn.na(_([[You began to look around more carefully. There is a large assortment of bottles of drinks from Sirius space, many are still unopened. Behind the bar there is a cocktail mixer that is cold to the touch.]]))
+   vn.na(_([[You begin to look around more carefully. There is a large assortment of bottles of drinks from Sirius space, many are still unopened. Behind the bar there is a cocktail mixer that is cold to the touch.]]))
    vn.na(_([[You look around the tables and found an assortment of half-empty drinks on coasters that are still wet. It's almost as if people were here until a moment ago.]]))
    vn.na(_([[You look around the rest of the bar, including the lavatories, and find nothing particularly interesting. However, for a reason you can't quite fathom, you feel a strange attraction to the cocktail mixer you found behind the bar.]]))
    vn.jump("spaceport_bar_menu")
 
    vn.label("spaceport_bar_look_drink")
-   vn.na(_([[You once again look around the bar,including the lavatories, and find nothing particularly interesting.]]))
+   vn.na(_([[You once again look around the bar, including the lavatories, and find nothing particularly interesting.]]))
    vn.jump("spaceport_bar_menu")
 
    vn.label("spaceport_bar_drink")
@@ -509,7 +509,7 @@ What do you do?]])
       end
    end )
    effect_change( 1.0 )
-   vn.na(_([[You tap the cardkey you found and the door opens with cold air billowing forth until it envelopes you completely.]]))
+   vn.na(_([[You tap the cardkey you found and the door opens with cold air billowing forth until it envelops you completely.]]))
    vn.menu{
       {_("Enter the room"), "controlroom_enter"},
       {_("Enter the room"), "controlroom_enter"},
@@ -527,7 +527,7 @@ What do you do?]])
    vn.na(_([[The distance between you and the chair feels like it is growing instead of shrinking as you slowly approach it.]]))
    vn.na(_([[Almost there...]]))
    vn.musicStop()
-   vn.na(_([[The room grows eerie calm as the chair slowly turns around, only to find yourself staring at you. The other you grins at you and your head starts to throb.]]))
+   vn.na(_([[The room grows eerily calm as the chair slowly turns around, only to find yourself staring at you. The other you grins at you and your head starts to throb.]]))
 
    vn.scene()
    vn.func( function ()
@@ -535,7 +535,7 @@ What do you do?]])
       vn.show_options = false
       vn.setBackground( function ()
          local nw, nh = naev.gfx.dim()
-         vn.setColor( {1, 1, 1, 1} )
+         vn.setColour( {1, 1, 1, 1} )
          lg.rectangle("fill", 0, 0, nw, nh )
       end )
    end )
@@ -571,16 +571,15 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 
    var.push("sirius_awakening", true)
    hook.takeoff( "takeoff" )
-   hook_update = hook.update("shader_update")
+   hook.update("shader_update")
    event_done = true
    player.takeoff()
 end
 
 function shader_update( dt )
    shader_fadeout:_update( dt )
-   if shader_fadeout._dt < 0 then
+   if shader_fadeout._dt > 1 then
       shader_fadeout.shader:rmPPShader()
-      hook.rm( hook_update )
       evt.finish(true)
    end
 end

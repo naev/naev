@@ -6,7 +6,7 @@
   <license>Medium Weapon</license>
   <mass>24</mass>
   <price>93000</price>
-  <description>The turret-mounted edition of the Orion design offers mid-sized ships exceptional short-duration firepower, a potent deterrent against lighter vessels.</description>
+  <description>The turret-mounted edition of the Orion Lance offers mid-sized ships exceptional short-duration firepower, a potent deterrent against enemy vessels that dare venture within firing range.</description>
   <gfx_store>orion_beam.webp</gfx_store>
   <cpu>-50</cpu>
  </general>
@@ -18,7 +18,7 @@
   <energy>30</energy>
   <heatup>50</heatup>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>36</penetrate>
    <physical>76</physical>
   </damage>
@@ -26,6 +26,6 @@
   <spfx_armour>ExpS</spfx_armour>
   <sound>beam_wave</sound>
   <sound_off>beam_wave_off</sound_off>
-  <shader r="0.2" g="0.6" b="0.9" a="1." width="16.">beam_wave</shader>
+  <shader r="0.2" g="0.6" b="0.9" a="1." width="14.">beam_wave</shader>
  </specific>
 </outfit>

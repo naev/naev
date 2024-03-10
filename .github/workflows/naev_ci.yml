@@ -224,13 +224,38 @@ jobs:
       matrix:
         include:
           - image: naev-macos
+            arch: x86_64
+            deploymenttarget: "10.13"
             config: macos_cross_osxcross.ini
+          - image: naev-macos
+            arch: aarch64
+            deploymenttarget: "11.0"
+            config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/${{ matrix.image }}:latest"
+      env:
+        BUILDARCH: "${{ matrix.arch }}"
+        HOST: "${{ matrix.arch }}-apple-darwin23"
+        MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
 
     steps:
+      - name: Configure Build Environment
+        run: |
+          echo "Configuring MacPorts packages and build env variables for $BUILDARCH."
+          if [[ "$BUILDARCH" == "aarch64" ]] then
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.aarch64 /usr/lib/osxcross/macports
+          elif [[ "$BUILDARCH" == "x86_64" ]] then
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
+          # Fallback
+          else
+            rm -f /usr/lib/osxcross/macports
+            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
+          fi
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -257,11 +282,12 @@ jobs:
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
 
+
       - name: Upload Setup Log
         uses: actions/upload-artifact@v3
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
-          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
+          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-setup-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Meson Compile
@@ -273,13 +299,13 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
-          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
+          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
+          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-buildArtifacts
           path: |
             ${{ github.workspace }}/build
           if-no-files-found: error
@@ -293,7 +319,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
-          name: ${{ matrix.image }}-${{ github.sha }}-install-log
+          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
   "Luacheck":
@@ -375,7 +401,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ steps.compile.outcome == 'failure' }}
         with:
-          name: ${{ matrix.image }}-${{ github.sha }}-ldoc-log
+          name: ${{ github.sha }}-ldoc-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Trigger API Documentation Update

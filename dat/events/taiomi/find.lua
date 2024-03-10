@@ -4,7 +4,7 @@
  <location>enter</location>
  <unique />
  <chance>100</chance>
- <cond>system.cur() == system.get("Bastion")</cond>
+ <system>Bastion</system>
  <chapter>[^0]</chapter>
  <notes>
   <campaign>Taiomi</campaign>

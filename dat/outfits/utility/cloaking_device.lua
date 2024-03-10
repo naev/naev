@@ -12,10 +12,10 @@ const vec3 colmod = vec3( 0.0, 0.5, 1.0 );
 uniform float progress = 0;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
-   vec4 color     = texture( tex, texcoord );
+   vec4 colour     = texture( tex, texcoord );
    float opacity  = 0.5 * clamp( progress, 0.0, 1.0 );
-   color.rgb      = blendGlow( color.rgb, colmod, opacity );
-   return color;
+   colour.rgb      = blendGlow( colour.rgb, colmod, opacity );
+   return colour;
 }
 ]])
 oshader.fade = 1
@@ -70,7 +70,7 @@ local function turnoff( p, po )
 end
 
 function init( p, po )
-   turnoff()
+   turnoff( p, po )
    mem.timer = nil
    po:state("off")
    mem.isp = (p == player.pilot())
@@ -104,7 +104,7 @@ function onhit( p, po, _armour, _shield )
 end
 
 -- Disable on shoot
-function onshoot( p, po )
+function onshootany( p, po )
    if mem.active then
       turnoff( p, po )
    end

@@ -97,7 +97,7 @@ function mining.load()
       shd_target = lg.newShader( frag_target )
       shd_shot = lg.newShader( frag_shot )
    end
-   lg.setBackgroundColor(0, 0, 0, 0)
+   lg.setBackgroundColour(0, 0, 0, 0)
 
    -- Load audio
    if not mining.sfx then
@@ -110,7 +110,7 @@ function mining.load()
    end
 
    -- Center on player
-   cx, cy = naev.gfx.screencoords( naev.camera.get(), true ):get()
+   cx, cy = naev.gfx.screencoords( naev.camera.pos(), true ):get()
 
    -- Generate targets
    local difficulty = cc.difficulty or 0
@@ -181,11 +181,11 @@ function mining.draw()
    local lw, lh = love.window.getDesktopDimensions()
 
    -- Background
-   lg.setColor( 0.0, 0.0, 0.0, 0.7*alpha )
+   lg.setColour( 0.0, 0.0, 0.0, 0.7*alpha )
    lg.rectangle( "fill", 0, 0, lw, lh )
 
    -- Background
-   lg.setColor( 0.3, 0.3, 0.3, 0.5*alpha )
+   lg.setColour( 0.3, 0.3, 0.3, 0.5*alpha )
    shd_background:send( "radius", radius )
    lg.setShader( shd_background )
    lg.draw( img, cx-radius, cy-radius, 0, radius*2, radius*2 )
@@ -193,14 +193,14 @@ function mining.draw()
 
    -- Pointer
    shd_pointer:send( "pointer", pointer )
-   lg.setColor( 0.0, 1.0, 1.0, 0.9*alpha )
+   lg.setColour( 0.0, 1.0, 1.0, 0.9*alpha )
    shd_pointer:send( "radius", radius*1.2 )
    lg.setShader( shd_pointer )
    lg.draw( img, cx-radius, cy-radius, 0, radius*2, radius*2 )
    lg.setShader()
 
    -- Start Area
-   lg.setColor( 0.1, 0.1, 0.1, 0.9*alpha )
+   lg.setColour( 0.1, 0.1, 0.1, 0.9*alpha )
    lg.rectangle( "fill", cx+radius*0.7, cy-2, radius*0.4, 5 )
 
    -- Targets
@@ -213,10 +213,10 @@ function mining.draw()
          local s = r*t.size
          local p = t.cur
          if t.hit then
-            lg.setColor( 1, 1, 0, a*0.8 )
+            lg.setColour( 1, 1, 0, a*0.8 )
             r = r * y
          else
-            lg.setColor( 1, 0.4, 0, a*0.8 )
+            lg.setColour( 1, 0.4, 0, a*0.8 )
             r = r * (2-y)
          end
          if not t.hit and t.z >= z_cur then
@@ -246,12 +246,12 @@ function mining.draw()
    local am = 5
    local ax = cx - ((aw+am)*shots_max-am)/2
    local ay = cy + radius + 20
-   lg.setColor( 0, 0, 0, 0.5*alpha )
+   lg.setColour( 0, 0, 0, 0.5*alpha )
    lg.rectangle( "fill", ax-10, ay-10, (aw+am)*shots_max+20-am, ah+20 )
    for i=1,shots_max do
       local a = 1-shots_timer[i]
       if a > 0 then
-         lg.setColor( 1, 1, 1, a )
+         lg.setColour( 1, 1, 1, a )
          lg.rectangle( "fill", ax+(i-1)*(aw+am), ay, aw, ah )
       end
    end
@@ -273,7 +273,7 @@ function mining.draw()
       lg.translate( cx+math.cos(p)*r, cy+math.sin(p)*r )
       lg.rotate( p )
 
-      lg.setColor( 1, 0.6, 0.2, a )
+      lg.setColour( 1, 0.6, 0.2, a )
       lg.draw( img, -sx, -sy/2, 0, 2*sx, 2*sy )
 
       lg.pop()
@@ -292,16 +292,16 @@ function mining.draw()
 
       local ta = alpha * ease( math.min(tcompleted/0.1,1.0) )
       local text = _("MINING COMPLETED")
-      lg.setColor( 1, 1, 1, ta )
+      lg.setColour( 1, 1, 1, ta )
       lg.printf( text, mfont, cx-radius, y, 2*radius, "center" )
 
       if reward then
          y = y+10+fh
          lg.printf( _("ACQUIRED:"), mfont, cx-radius, y, 2*radius, "center" )
          y = y+64
-         lg.setColor( 0, 0, 0, 0.8*ta )
+         lg.setColour( 0, 0, 0, 0.8*ta )
          lg.rectangle( "fill", cx-36, y-36, 72, 72 )
-         lg.setColor( 1, 1, 1, ta )
+         lg.setColour( 1, 1, 1, ta )
          lg.draw( reward.icon, cx-32, y-32, 0, 64/reward.sw, 64/reward.sh )
          y = y+2*fh+10
          lg.printf( reward.text, mfont, cx-radius, y, 2*radius, "center" )
@@ -310,7 +310,7 @@ function mining.draw()
    elseif not moving or tsincestart < 0.1 then
       local ta = alpha * (1-ease( tsincestart / 0.1 ))
       local text = _("PRESS ANY KEY TO START")
-      lg.setColor( 1, 1, 1, ta )
+      lg.setColour( 1, 1, 1, ta )
       local _width, wrappedtext = mfont:getWrap( text, radius )
       local th = mfont:getHeight() * #wrappedtext
       lg.printf( text, mfont, cx-radius/2, cy-th/2, radius, "center" )

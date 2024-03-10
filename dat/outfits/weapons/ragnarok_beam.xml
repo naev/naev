@@ -5,10 +5,10 @@
   <size>large</size>
   <license>Heavy Weapon</license>
   <rarity>1</rarity>
-  <mass>55</mass>
+  <mass>72</mass>
   <price>810000</price>
-  <description>The Ragnarok Beam is one of the most powerful beam class weapons on the market. It's designed for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters.</description>
-  <gfx_store>ragnarok.webp</gfx_store>
+  <description>The Ragnarok Beam is one of the most powerful beam class weapons on the market. It was designed by House Za'lek for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters that stray into the blast. Although the range is quite limited compared to other capital ship weapons, the extreme power combined with the fact it can slice through battleship heavy armour like butter makes it a favourite of pilots who like to get close to their enemies.</description>
+  <gfx_store>ragnarok_beam.webp</gfx_store>
   <cpu>-350</cpu>
  </general>
  <specific type="turret beam">
@@ -19,7 +19,7 @@
   <energy>160</energy>
   <heatup>60</heatup>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>100</penetrate>
    <physical>152</physical>
   </damage>
@@ -27,6 +27,6 @@
   <spfx_armour>ExpS</spfx_armour>
   <sound>beam0</sound>
   <sound_off>beam_off0</sound_off>
-  <shader r="0.8" g="0.1" b="0.4" a="1." width="22.">beam_helix</shader>
+  <shader r="0.8" g="0.1" b="0.4" a="1." width="20.">beam_helix</shader>
  </specific>
 </outfit>

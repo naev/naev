@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include <stdlib.h>
+
 /*
  * Define various paths
  */
@@ -14,13 +16,14 @@
 #define GUI_GFX_PATH             "gfx/gui/" /**< Location of the GUI graphics. */
 #define PORTRAIT_GFX_PATH        "gfx/portraits/" /**< Location of the portrait graphics. */
 #define SHIP_GFX_PATH            "gfx/ship/" /**< Location of ship graphics. */
-#define SHIP_3DGFX_PATH          "gfx/ship/3d/" /**< Location of ship 3d graphics. */
+#define SHIP_3DGFX_PATH          "gfx/ship3d/" /**< Location of ship 3d graphics. */
 #define OUTFIT_GFX_PATH          "gfx/outfit/" /**< Path to outfit graphics. */
 #define SPFX_GFX_PATH            "gfx/spfx/" /**< location of the graphic */
 #define FACTION_LOGO_PATH        "gfx/logo/" /**< Path to logo gfx. */
 #define SOUND_PATH               "snd/sounds/" /**< Location of the sounds. */
 #define COMMODITY_GFX_PATH       "gfx/commodity/" /**< Path to commodities graphics. */
 #define MAP_DECORATOR_GFX_PATH   "gfx/map/"
+#define SHIP_POLYGON_PATH3D      "collision/ship/" /**< Path to ship's collision polygon. */
 #define SHIP_POLYGON_PATH        "gfx/ship_polygon/" /**< Path to ship's collision polygon. */
 #define OUTFIT_POLYGON_PATH      "gfx/outfit/space_polygon/" /**< Path to outfit collision polygon. */
 #define ASTEROID_POLYGON_PATH    "gfx/spob/space/asteroid_polygon/" /**< Path to asteroid collision polygon. */

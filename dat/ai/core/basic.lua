@@ -193,7 +193,7 @@ end
 
 
 --[[
--- Lunges towards the target always thrusting
+-- Lunges towards the target always accelerating
 --]]
 function lunge( target )
    if not target:exists() then
@@ -543,12 +543,11 @@ function __run_target( target )
       ai.accel()
    end
 
-   -- Afterburner handling.
-   if ai.hasafterburner() and plt:energy() > 10 then
-      ai.weapset( 8, true )
-   end
+   -- Outfits for running away
    if mem._o then
-      if mem._o.blink_drive then
+      if mem._o.afterburner and plt:energy() > 30 then
+         plt:outfitToggle( mem._o.afterburner, true )
+      elseif mem._o.blink_drive then
          plt:outfitToggle( mem._o.blink_drive, true )
       elseif mem._o.blink_engine then
          plt:outfitToggle( mem._o.blink_engine, true )
@@ -627,16 +626,16 @@ function _run_hyp( data )
       end
    end
 
-   --Afterburner: activate while far away from jump
-   if ai.hasafterburner() and plt:energy() > 10 then
-      if jdist > 3 * bdist then
-         ai.weapset( 8, true )
-      else
-         ai.weapset( 8, false )
-      end
-   end
    -- Hyperbolic blink drives have a distance of 2000
    if mem._o then
+      if mem._o.afterburner then
+         -- Afterburner: activate while far away from jump
+         if jdist > 3 * bdist and plt:energy() > 30 then
+            plt:outfitToggle( mem._o.afterburner, true )
+         else
+            plt:outfitToggle( mem._o.afterburner, false )
+         end
+      end
       if mem._o.blink_drive and jdist > 500 + 3 * bdist then
          plt:outfitToggle( mem._o.blink_drive, true )
       elseif mem._o.blink_engine and jdist > 2000 + 3 * bdist then
@@ -662,7 +661,10 @@ function _run_landgo( data )
    if dist < bdist then -- Need to start braking
       ai.pushsubtask( "_landland", planet )
       ai.pushsubtask( "_subbrake" )
-      ai.weapset( 8, false ) -- Turn off afterburner just in case
+      -- Turn off afterburner just in case
+      if mem._o and mem._o.afterburner then
+         plt:outfitToggle( mem._o.afterburner, false )
+      end
       return -- Don't try to afterburn
 
    else
@@ -691,16 +693,16 @@ function _run_landgo( data )
       end
    end
 
-   --Afterburner
-   if ai.hasafterburner() and plt:energy() > 10 then
-      if dist > 3 * bdist then
-         ai.weapset( 8, true )
-      else
-         ai.weapset( 8, false )
-      end
-   end
    -- Hyperbolic blink drives have a distance of 2000
    if mem._o and dir < math.rad(25) then
+      if mem._o.afterburner then
+         -- Afterburner: activate while far away from jump
+         if dist > 3 * bdist and plt:energy() > 30 then
+            plt:outfitToggle( mem._o.afterburner, true )
+         else
+            plt:outfitToggle( mem._o.afterburner, false )
+         end
+      end
       if mem._o.blink_drive and dist > 500 + 3 * bdist then
          plt:outfitToggle( mem._o.blink_drive, true )
       elseif mem._o.blink_engine and dist > 2000 + 3 * bdist then
@@ -733,8 +735,9 @@ function hyperspace( target )
          ai.poptask()
          return
       else
-         -- Push the new task
-         ai.pushsubtask("hyperspace", target)
+         -- Switch to a new task with the target
+         ai.poptask()
+         ai.pushtask("hyperspace", target)
          return
       end
    end
@@ -742,15 +745,26 @@ function hyperspace( target )
    ai.pushsubtask( "_hyp_approach", target )
 end
 
+-- luacheck: globals hyperspace_follow (AI Task functions passed by name)
+function hyperspace_follow( target )
+   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
+   ai.pushsubtask( "_hyp_approach_follow", target )
+end
+
 -- luacheck: globals _hyp_approach (AI Task functions passed by name)
 function _hyp_approach( target )
    __hyp_approach( target )
 end
-function __hyp_approach( target )
+-- luacheck: globals _hyp_approach_follow (AI Task functions passed by name)
+function _hyp_approach_follow( target )
+   __hyp_approach( target, "_hyp_jump_follow" )
+end
+function __hyp_approach( target, jumptsk )
    local dir
    local pos      = target:pos() + mem.target_bias
    local dist     = ai.dist( pos )
    local bdist    = ai.minbrakedist()
+   jumptsk  = jumptsk or "_hyp_jump"
 
    -- 2 methods for dir
    if not mem.careful or dist < 3*bdist then
@@ -765,9 +779,9 @@ function __hyp_approach( target )
    -- Need to start braking
    elseif dist < bdist then
       if ai.instantJump() then
-         ai.pushsubtask("_hyp_jump", target)
+         ai.pushsubtask(jumptsk, target)
       else
-         ai.pushsubtask("_hyp_jump", target)
+         ai.pushsubtask(jumptsk, target)
          ai.pushsubtask("_subbrake")
       end
    end
@@ -780,6 +794,22 @@ function _hyp_jump ( jump )
       p:msg(p:followers(), "hyperspace", jump)
    end
    ai.popsubtask() -- Keep the task even if succeeding in case pilot gets pushed away.
+end
+
+-- luacheck: globals _hyp_jump_follow (AI Task functions passed by name)
+function _hyp_jump_follow( jump )
+   local l = ai.pilot():leader()
+   if l and l:exists() then
+      -- Wait until leader is in hyperspace
+      if l:flags("jumpingout") then
+         _hyp_jump( jump )
+      elseif not ai.canHyperspace() then
+         -- Drifted away or whatever, so pop and go back
+         ai.popsubtask()
+      end
+   else
+      _hyp_jump( jump )
+   end
 end
 
 

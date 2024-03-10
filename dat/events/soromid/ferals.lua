@@ -15,6 +15,7 @@ local pilotai = require "pilotai"
 
 local targetsys = system.get( "Fertile Crescent" )
 
+local plts
 function create ()
    local scur = system.cur()
 
@@ -23,6 +24,7 @@ function create ()
 
    -- Special case final destination
    if scur == targetsys then
+      plts = {}
       for i = 1,rnd.rnd(20,30) do
          local shp
          local r = rnd.rnd()
@@ -33,7 +35,8 @@ function create ()
          else
             shp = "Nohinohi"
          end
-         pilot.add( shp, ferals.faction(), vec2.newP( scur:radius() * 0.8 * rnd.rnd(), rnd.angle() ) )
+         local p = pilot.add( shp, ferals.faction(), vec2.newP( scur:radius() * 0.8 * rnd.rnd(), rnd.angle() ) )
+         table.insert( plts, p )
       end
 
       hook.jumpout("leave")
@@ -87,14 +90,20 @@ local function whalesound( pos )
    luaspfx.sfx( pos, nil, sfx, { dist_ref = 5e3, dist_max = 50e3 } )
 end
 
-local plts, nextjump, lastsys
+local nextjump, lastsys
 local spawned = false
 function pheromones ()
-   if not spawned then
+   -- Don't do anything if system is not inclusively claimed
+   if not naev.claimTest( system.cur(), true ) then
+      return
+   end
+
+   if not spawned and system.cur() ~= targetsys then
       spawned = true
       hook.timer( 5, "spawn_ferals" )
    else
       if plts then
+         plts = rnd.permutation(plts)
          for k,p in ipairs(plts) do
             if p:exists() then
                hook.timer( 3, "delay_sfx", p:pos() )

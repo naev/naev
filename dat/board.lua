@@ -84,7 +84,7 @@ local function cargo_loot( c, q, m )
    local desc = fmt.f(_("{name}\n{desc}"), {name=c:name(),desc=_(c:description())})
    local illegalto = c:illegality()
    if #illegalto > 0 then
-      desc = desc.._("\n#rIllegalized by the following factions:\n")
+      desc = desc.."#r".._("\nIllegalized by the following factions:\n")
       for _k,f in ipairs(illegalto) do
          if f:known() then
             desc = desc..fmt.f(_("\n   - {fct}"), {fct=f})
@@ -128,7 +128,7 @@ local function compute_lootables ( plt )
       table.insert( lootables, {
          image = nil,
          text = _("Fuel"),
-         q = math.floor( 0.5 + fuel*loot_mod ),
+         q = math.min( math.floor( 0.5 + fuel*loot_mod ), ps.fuel_max ),
          type = "fuel",
          bg = nil,
          alt = _("Fuel\nNecessary for the activation of jump drives that allow inter-system travel."),
@@ -152,17 +152,25 @@ local function compute_lootables ( plt )
          local _name, _size, _prop, req = o:slot()
          local ot = o:tags()
          -- Don't allow looting required outfits
-         if not req and not ot.noplayer and o~=oloot then
+         if not req and not ot.noplayer and not ot.nosteal and o~=oloot then
             table.insert( ocand, o )
          end
       end
-      -- Get random candidate if available
-      if #ocand > 0 then
-         -- TODO better criteria
-         local o = ocand[ rnd.rnd(1,#ocand) ]
-         local price = o:price() * (10+ps.crew) / (10+pps.crew)
-         local lo = outfit_loot( o, price )
-         table.insert( lootables, lo )
+      local numoutfits = math.floor(loot_mod)
+      if rnd.rnd() < math.fmod(loot_mod,1) then
+         numoutfits = numoutfits+1
+      end
+      for i=1,numoutfits do
+         -- Get random candidate if available
+         if #ocand > 0 then
+            -- TODO better criteria
+            local id = rnd.rnd(1,#ocand)
+            local o = ocand[id]
+            local price = o:price() * (10+ps.crew) / (10+pps.crew)
+            local lo = outfit_loot( o, price )
+            table.insert( lootables, lo )
+            table.remove( ocand, id ) -- Remove from candidates
+         end
       end
    end
 
@@ -226,15 +234,15 @@ function wgtBoard:draw( bx, by )
    local l = self.loot
    local a = self.selalpha
    if a < 1 then
-      lg.setColor( luatk.colour.outline )
+      lg.setColour( luatk.colour.outline )
       lg.rectangle( "fill", x-1, y-1, w+2, h+2 )
-      lg.setColor( (l and l.bg) or {0,0,0} )
+      lg.setColour( (l and l.bg) or {0,0,0} )
       lg.rectangle( "fill", x, y, w, h )
    end
    if a > 0 then
-      lg.setColor( {0,1,1,a} )
+      lg.setColour( {0,1,1,a} )
       lg.rectangle( "fill", x-3, y-3, w+6, h+6 )
-      lg.setColor( {0,0.5,0.5,a} )
+      lg.setColour( {0,0.5,0.5,a} )
       lg.rectangle( "fill", x, y, w, h )
    end
    -- Ignore anything that isn't loot from now on
@@ -243,19 +251,19 @@ function wgtBoard:draw( bx, by )
    local img = l.image
    if img then
       local iw, ih = img:getDimensions()
-      lg.setColor( {1,1,1} )
+      lg.setColour( {1,1,1} )
       img:draw( x, y, 0, w / iw, h / ih )
    end
    local txt = l.text
    if txt and (self.mouseover or not img) then
-      lg.setColor( luatk.colour.text )
+      lg.setColour( luatk.colour.text )
       local font = luatk._deffont
       local _maxw, wrap = font:getWrap( txt, w )
       local th = #wrap * font:getLineHeight()
       lg.printf( txt, luatk._deffont, x, y+(h-th)/2, w, 'center' )
    end
    if l.qs then
-      lg.setColor( luatk.colour.text )
+      lg.setColour( luatk.colour.text )
       lg.printf( l.qs, luatk._deffont, x+5, y+5, w-10, 'right' )
    end
 end
@@ -346,7 +354,7 @@ local function board_cannibalize ()
       heal_armour = dmg*2/3
    end
    pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
-   player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=heal_armour, plt=board_plt}))
+   player.msg(fmt.f(_("Your ship cannibalized {armour} armour from {plt}."),{armour=fmt.number(heal_armour), plt=board_plt}))
 end
 
 local function cargo_list ()

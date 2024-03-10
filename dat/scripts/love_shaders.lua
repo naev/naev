@@ -18,7 +18,7 @@ local love_shaders = {}
 Shader common parameter table.
 @tfield number strength Strength of the effect normalized such that 1.0 is the default value.
 @tfield number speed Speed of the effect normalized such that 1.0 is the default value. Negative values run the effect backwards. Only used for those shaders with temporal components.
-@tfield Color color Color component to be used. Should be in the form of {r, g, b} where r, g, and b are numbers.
+@tfield Colour colour Colour component to be used. Should be in the form of {r, g, b} where r, g, and b are numbers.
 @tfield number size Affects the size of the effect.
 @table shaderparams
 --]]
@@ -32,10 +32,10 @@ love_shaders.img = graphics.newImage( idata )
 Default fragment code that doesn't do anything fancy.
 --]]
 local _pixelcode = [[
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec4 texcolor = Texel(tex, texture_coords);
-   return texcolor * color;
+   vec4 texcolour = Texel(tex, texture_coords);
+   return texcolour * colour;
 }
 ]]
 --[[--
@@ -63,7 +63,7 @@ local function _shader2canvas( shader, image, w, h, sx, sy )
    graphics.setCanvas( newcanvas )
    graphics.clear( 0, 0, 0, 0 )
    graphics.setShader( shader )
-   graphics.setColor( 1, 1, 1, 1 )
+   graphics.setColour( 1, 1, 1, 1 )
    image:draw( 0, 0, 0, sx, sy )
    graphics.setShader( oldshader )
    graphics.setCanvas( oldcanvas )
@@ -119,9 +119,9 @@ precision highp float;
 const float u_r = %f;
 const float u_sharp = %f;
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = color * texture( tex, uv );
+   vec4 texcolour = colour * texture( tex, uv );
 
    float n = 0.0;
    for (float i=1.0; i<8.0; i=i+1.0) {
@@ -129,9 +129,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
       n += snoise( px * u_sharp * 0.003 * m + 1000.0 * u_r ) * (1.0 / m);
    }
 
-   texcolor.rgb *= 0.68 + 0.3 * n;
+   texcolour.rgb *= 0.68 + 0.3 * n;
 
-   return texcolor;
+   return texcolour;
 }
 ]], love_math.random(), sharpness )
    local shader = graphics.newShader( pixelcode, _vertexcode )
@@ -158,10 +158,10 @@ precision highp float;
 uniform vec2 blurvec;
 const vec2 wh = vec2( %f, %f );
 const float strength = %f;
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = blur%s( tex, uv, wh, blurvec, strength );
-   return texcolor;
+   vec4 texcolour = blur%s( tex, uv, wh, blurvec, strength );
+   return texcolour;
 }
 ]], w, h, kernel_size, blurtype )
    local shader = graphics.newShader( pixelcode, _vertexcode )
@@ -202,7 +202,7 @@ float grain(vec2 uv, vec2 mult, float frame, float multiplier) {
    float n1 = pnoise(vec3(mult, offset), vec3(1.0/uv * love_ScreenSize.xy, 1.0));
    return n1 / 2.0 + 0.5;
 }
-vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
+vec4 graineffect( vec4 bgcolour, vec2 uv, vec2 px ) {
    const float fps = 15.0;
    const float zoom = 0.2;
    float frame = floor(fps*u_time) / fps;
@@ -211,28 +211,28 @@ vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
    vec3 g = vec3( grain( uv, px * zoom, frame, 2.5 ) );
 
    // get the luminance of the image
-   float luminance = rgb2lum( bgcolor.rgb );
+   float luminance = rgb2lum( bgcolour.rgb );
    vec3 desaturated = vec3(luminance);
 
    // now blend the noise over top the backround
    // in our case soft-light looks pretty good
-   vec4 color;
-   color = vec4( vec3(1.2,1.0,0.4)*luminance, bgcolor.a );
-   color = vec4( blendSoftLight(color.rgb, g), bgcolor.a );
+   vec4 colour;
+   colour = vec4( vec3(1.2,1.0,0.4)*luminance, bgcolour.a );
+   colour = vec4( blendSoftLight(colour.rgb, g), bgcolour.a );
 
    // and further reduce the noise strength based on some
    // threshold of the background luminance
    float response = smoothstep(0.05, 0.5, luminance);
-   color.rgb = mix(desaturated, color.rgb, pow(response,2.0));
+   colour.rgb = mix(desaturated, colour.rgb, pow(response,2.0));
 
    // Vertical tears
    if (distance( love_ScreenSize.x * random(vec2(frame, 0.0)), px.x) < tearing*random(vec2(frame, 1000.0))-(tearing-1.0))
-      color.rgb *= vec3( random( vec2(frame, 5000.0) ));
+      colour.rgb *= vec3( random( vec2(frame, 5000.0) ));
 
    // Flickering
-   color.rgb *= 1.0 + 0.05*snoise( vec2(3.0*frame, M_PI) );
+   colour.rgb *= 1.0 + 0.05*snoise( vec2(3.0*frame, M_PI) );
 
-   return color;
+   return colour;
 }
 vec4 vignette( vec2 uv )
 {
@@ -241,16 +241,16 @@ vec4 vignette( vec2 uv )
    vig = pow(vig, 0.3); // change pow for modifying the extend of the  vignette
    return vec4(vig);
 }
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 screen_coords )
 {
-   vec4 texcolor = color * texture( tex, uv );
+   vec4 texcolour = colour * texture( tex, uv );
 
-   texcolor = graineffect( texcolor, uv, screen_coords );
+   texcolour = graineffect( texcolour, uv, screen_coords );
    vec4 v = vignette( uv );
-   texcolor.rgb *= v.rgb;
-   //texcolor = mix( texcolor, v, v.a );
+   texcolour.rgb *= v.rgb;
+   //texcolour = mix( texcolour, v, v.a );
 
-   return texcolor;
+   return texcolour;
 }
 ]], strength )
 
@@ -287,7 +287,7 @@ float onOff(float a, float b, float c)
    return step(c, sin(u_time + a*cos(u_time*b)));
 }
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 screen_coords )
 {
    const float strength = %f; /* Simple parameter to control everything. */
 
@@ -323,24 +323,24 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    look.y = mod( look.y + vShift, 1.0 );
 
    /* Blur a bit. */
-   vec4 texcolor  = color * texture( tex, look );
+   vec4 texcolour  = colour * texture( tex, look );
    float blurdir  = snoise( vec2( BLURSPEED*u_time, 0.0 ) );
    vec2 blurvec   = BLURAMPLITUDE * vec2( cos(blurdir), sin(blurdir) );
    vec4 blurbg    = blur9( tex, look, love_ScreenSize.xy, blurvec );
-   texcolor.rgb   = blendSoftLight( texcolor.rgb, blurbg.rgb );
-   texcolor.a     = max( texcolor.a, blurbg.a );
+   texcolour.rgb   = blendSoftLight( texcolour.rgb, blurbg.rgb );
+   texcolour.a     = max( texcolour.a, blurbg.a );
 
    /* Drop to greyscale while increasing brightness and contrast */
-   float greyscale= rgb2lum( texcolor.rgb ); // percieved
-   texcolor.xyz   = CONTRAST * vec3(greyscale) + BRIGHTNESS;
+   float greyscale= rgb2lum( texcolour.rgb ); // percieved
+   texcolour.xyz   = CONTRAST * vec3(greyscale) + BRIGHTNESS;
 
    /* Shadows. */
    float shadow   = 1.0 + SHADOWRANGE * sin((uv.y + (u_time * SHADOWSPEED)) * SHADOWCOUNT);
-   texcolor.xyz  *= shadow;
+   texcolour.xyz  *= shadow;
 
    /* Highlights */
    float highlight= HIGHLIGHTRANGE * (0.5 + 0.5 * sin((uv.y + (u_time * -HIGHLIGHTSPEED)) * HIGHLIGHTCOUNT) );
-   texcolor.xyz  += highlight;
+   texcolour.xyz  += highlight;
 
    // Other effects.
    float x = (uv.x + 4.0) * (uv.y + 4.0) * u_time * 10.0;
@@ -348,8 +348,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    float flicker = max(1.0, random(u_time * uv) * 1.5);
    float scanlines = SCANLINEMEAN + SCANLINEAMPLITUDE*step( 0.5, sin(0.5*screen_coords.y + SCANLINESPEED*u_time)-0.1 );
 
-   texcolor.xyz *= grain * flicker * scanlines * bluetint;
-   return texcolor * color;
+   texcolour.xyz *= grain * flicker * scanlines * bluetint;
+   return texcolour * colour;
 }
 ]], strength )
 
@@ -380,15 +380,15 @@ uniform float u_time;
 const int fps        = 15;
 const float strength = %f;
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px ) {
    float time = u_time - mod( u_time, 1.0 / float(fps) );
 
    float glitchStep = mix(4.0, 32.0, random(vec2(time)));
 
-   vec4 screenColor = texture( tex, uv );
+   vec4 screenColour = texture( tex, uv );
    uv.x = round(uv.x * glitchStep ) / glitchStep;
-   vec4 glitchColor = texture( tex, uv );
-   return color * mix(screenColor, glitchColor, vec4(0.03*strength));
+   vec4 glitchColour = texture( tex, uv );
+   return colour * mix(screenColour, glitchColour, vec4(0.03*strength));
 }
 ]], strength )
 
@@ -422,9 +422,9 @@ const float strength = %f;
 const float speed    = %f;
 const float u_r      = %f;
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = color * texture( tex, uv );
+   vec4 texcolour = colour * texture( tex, uv );
 
    vec2 offset = vec2( 50.0*sin( M_PI*u_time * 0.001 * speed ), -0.3*u_time*speed );
 
@@ -434,9 +434,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
       n += snoise( offset +  px * strength * 0.0015 * m + 1000.0 * u_r ) * (1.0 / m);
    }
 
-   texcolor.a *= 0.68 + 0.3 * n;
+   texcolour.a *= 0.68 + 0.3 * n;
 
-   return color * texcolor;
+   return colour * texcolour;
 }
 ]], strength, speed, love_math.random() )
 
@@ -505,7 +505,7 @@ float voronoi( vec2 x )
    return res.y - res.x;
 }
 
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    /* Calculate coordinates relative to camera. */
    vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy + u_r;
@@ -549,12 +549,12 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       a *= 0.7;
    }
 
-   /* Blueish color set */
+   /* Blueish colour set */
    vec3 cexp = vec3(6.0, 4.0, 2.0);
 
    /* Convert to colour, clamp and multiply by base colour. */
    vec3 col = vec3(pow(v, cexp.x), pow(v, cexp.y), pow(v, cexp.z)) * 2.0;
-   return color * vec4( clamp( col, 0.0, 1.0 ), 1.0);
+   return colour * vec4( clamp( col, 0.0, 1.0 ), 1.0);
 }
 ]], strength, speed, love_math.random() )
 
@@ -606,7 +606,7 @@ float getNoise(vec3 v) {
    return fbm3(v) / 2.0 + 0.5;
 }
 
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    float f = 0.0;
    vec3 uv;
@@ -620,7 +620,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    float noise = getNoise( uv );
    noise = pow( noise, 4.0 / density ) * 2.0;  //more contrast
-   return color * vec4( 1.0, 1.0, 1.0, noise );
+   return colour * vec4( 1.0, 1.0, 1.0, noise );
 }
 ]], strength, speed, density, love_math.random() )
 
@@ -640,11 +640,11 @@ An aura effect for characters.
 The default size is 40 and refers to the standard deviation of the Gaussian blur being applied.
 
 @see shaderparams
-@tparam @{shaderparams} params Parameter table where "strength", "speed", "color", and "size" fields are used.
+@tparam @{shaderparams} params Parameter table where "strength", "speed", "colour", and "size" fields are used.
 --]]
 function love_shaders.aura( params )
    params = params or {}
-   local color = params.color or {1, 0, 0}
+   local colour = params.colour or {1, 0, 0}
    local strength = params.strength or 1
    local speed = params.speed or 1
    local size = params.size or 40 -- Gaussian blur sigma
@@ -656,20 +656,20 @@ function love_shaders.aura( params )
 uniform float u_time;
 uniform Image blurtex;
 
-const vec3 basecolor = vec3( %f, %f, %f );
+const vec3 basecolour = vec3( %f, %f, %f );
 const float strength = %f;
 const float speed = %f;
 const float u_r = %f;
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
-   vec4 blurcolor = texture( blurtex, uv );
+   vec4 blurcolour = texture( blurtex, uv );
 
    // Hack to hopefully speed up
-   if (blurcolor.a <= 0.0)
+   if (blurcolour.a <= 0.0)
       return vec4(0.0);
 
-   vec4 texcolor = texture( tex, uv );
+   vec4 texcolour = texture( tex, uv );
    vec2 offset = vec2( 50.0*sin( M_PI*u_time * 0.001 * speed ), -3.0*u_time*speed );
 
    float n = 0.0;
@@ -679,14 +679,14 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    }
    n = 0.5*n + 0.5;
 
-   blurcolor.a = 1.0-2.0*distance( 0.5, blurcolor.a );
-   blurcolor.a *= n;
+   blurcolour.a = 1.0-2.0*distance( 0.5, blurcolour.a );
+   blurcolour.a *= n;
 
-   texcolor.rgb = blendScreen( texcolor.rgb, basecolor, blurcolor.a );
-   texcolor.a = max( texcolor.a, blurcolor.a );
-   return color * texcolor;
+   texcolour.rgb = blendScreen( texcolour.rgb, basecolour, blurcolour.a );
+   texcolour.a = max( texcolour.a, blurcolour.a );
+   return colour * texcolour;
 }
-]], color[1], color[2], color[3], strength, speed, love_math.random() )
+]], colour[1], colour[2], colour[3], strength, speed, love_math.random() )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader.prerender = function( self, image )
       self._blurtex = love_shaders.blur( image, size )
@@ -703,23 +703,49 @@ end
 
 
 --[[--
-Simple color modulation shader.
+Simple colour modulation shader.
 
 @see shaderparams
-@tparam @{shaderparams} params Parameter table where "color" field is used.
+@tparam @{shaderparams} params Parameter table where "colour" field is used.
 --]]
-function love_shaders.color( params )
-   local color = params.color or {1, 1, 1, 1}
-   color[4] = color[4] or 1
+function love_shaders.colour( params )
+   local colour = params.colour or {1, 1, 1, 1}
+   colour[4] = colour[4] or 1
    local pixelcode = string.format([[
-const vec4 basecolor = vec4( %f, %f, %f, %f );
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+const vec4 basecolour = vec4( %f, %f, %f, %f );
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = Texel(tex, uv);
-   return basecolor * color * texcolor;
+   vec4 texcolour = Texel(tex, uv);
+   return basecolour * colour * texcolour;
 }
-]], color[1], color[2], color[3], color[4] )
+]], colour[1], colour[2], colour[3], colour[4] )
    local shader = graphics.newShader( pixelcode, _vertexcode )
+   return shader
+end
+
+
+--[[--
+Simple colour modulation shader.
+
+Same as love_shaders.colour, except it has an additional uniform 'strength' that controls how the tint is applied.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "colour" field is used.
+--]]
+function love_shaders.tint( params )
+   local colour = params.colour or {1, 1, 1, 1}
+   colour[4] = colour[4] or 1
+   local pixelcode = string.format([[
+uniform float strength = 1.0;
+const vec4 basecolour = vec4( %f, %f, %f, %f );
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
+{
+   vec4 texcolour = Texel(tex, uv);
+   return mix( basecolour, vec4(1.0), strength) * colour * texcolour;
+}
+]], colour[1], colour[2], colour[3], colour[4] )
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader:send( "strength", 1 )
    return shader
 end
 

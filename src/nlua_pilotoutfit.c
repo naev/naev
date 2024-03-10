@@ -36,6 +36,8 @@ static int poL_set( lua_State *L );
 static int poL_clear( lua_State *L );
 static int poL_munition( lua_State *L );
 static int poL_shoot( lua_State *L );
+static int poL_heat( lua_State *L );
+static int poL_heatup( lua_State *L );
 static const luaL_Reg poL_methods[] = {
    { "slot", poL_slot },
    { "outfit", poL_outfit },
@@ -45,6 +47,8 @@ static const luaL_Reg poL_methods[] = {
    { "clear", poL_clear },
    { "munition", poL_munition },
    { "shoot", poL_shoot },
+   { "heat", poL_heat },
+   { "heatup", poL_heatup },
    {0,0}
 }; /**< Pilot outfit metatable methods. */
 
@@ -204,7 +208,7 @@ static int poL_slot( lua_State *L )
  */
 static int poL_outfit( lua_State *L )
 {
-   PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
+   const PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
    lua_pushoutfit(L, po->outfit );
    return 1;
 }
@@ -223,7 +227,7 @@ static int poL_state( lua_State *L )
    PilotOutfitState pos = po->state;
 
    if (!outfit_isMod( po->outfit ))
-      NLUA_ERROR( L, _("'pilotoutfit.%s' only works with modifier outfits!"), "state");
+      return NLUA_ERROR( L, _("'pilotoutfit.%s' only works with modifier outfits!"), "state");
 
    if (state==NULL || strcmp(state,"off")==0)
       po->state = PILOT_OUTFIT_OFF;
@@ -234,7 +238,7 @@ static int poL_state( lua_State *L )
    else if (strcmp(state,"cooldown")==0)
       po->state = PILOT_OUTFIT_COOLDOWN;
    else
-      NLUA_ERROR( L, _("Unknown PilotOutfit state '%s'!"), state );
+      return NLUA_ERROR( L, _("Unknown PilotOutfit state '%s'!"), state );
 
    /* Mark as modified if state changed. */
    if (pos != po->state)
@@ -255,7 +259,7 @@ static int poL_progress( lua_State *L )
    PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
 
    if (!outfit_isMod( po->outfit ))
-      NLUA_ERROR( L, _("'pilotoutfit.%s' only works with modifier outfits!"), "progress");
+      return NLUA_ERROR( L, _("'pilotoutfit.%s' only works with modifier outfits!"), "progress");
 
    po->progress = CLAMP( 0., 1., luaL_checknumber(L,2) );
    return 0;
@@ -300,7 +304,7 @@ static Target lua_totarget( lua_State *L, int idx )
    /* Handle target. */
    if (lua_isnoneornil(L,idx))
       t.type = TARGET_NONE;
-   if (lua_ispilot(L,idx)) {
+   else if (lua_ispilot(L,idx)) {
       t.type = TARGET_PILOT;
       t.u.id = lua_topilot(L,idx);
    }
@@ -315,6 +319,10 @@ static Target lua_totarget( lua_State *L, int idx )
       t.type = TARGET_WEAPON;
       t.u.id = lm->id;
    }
+   else {
+      NLUA_INVALID_PARAMETER_NORET(L,idx);
+      t.type = TARGET_NONE;
+   }
    return t;
 }
 
@@ -328,20 +336,23 @@ static Target lua_totarget( lua_State *L, int idx )
  *    @luatparam[opt=p:dir()] number dir Direction the munition should face.
  *    @luatparam[opt=p:pos()] Vec2 pos Position to create the munition at.
  *    @luatparam[opt=p:vel()] Vec2 vel Initial velocity of the munition. The munition's base velocity gets added to this.
+ *    @luatparam[opt=false] boolean noaim Whether or not to disable the tracking and aiming framework when shooting.
+ *    @luatreturn Munition The newly created munition.
  * @luafunc munition
  */
 static int poL_munition( lua_State *L )
 {
    PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
-   Pilot *p    = luaL_validpilot( L, 2 );
-   const Outfit *o = luaL_optoutfit( L, 3, po->outfit );
-   Target t = lua_totarget( L, 4 );
-   double dir  = luaL_optnumber( L, 5, p->solid.dir );
-   vec2 *vp    = luaL_optvector( L, 6, &p->solid.pos );
-   vec2 *vv    = luaL_optvector( L, 7, &p->solid.vel );
-
-   weapon_add( po, o,dir, vp, vv, p, &t, 0., 1 );
-   return 0;
+   Pilot *p       = luaL_validpilot( L, 2 );
+   const Outfit *o= luaL_optoutfit( L, 3, po->outfit );
+   Target t       = lua_totarget( L, 4 );
+   double dir     = luaL_optnumber( L, 5, p->solid.dir );
+   const vec2 *vp = luaL_optvector( L, 6, &p->solid.pos );
+   const vec2 *vv = luaL_optvector( L, 7, &p->solid.vel );
+   int noaim      = lua_toboolean( L, 8 );
+   const Weapon *w = weapon_add( po, o, dir, vp, vv, p, &t, 0., !noaim );
+   lua_pushmunition( L, w );
+   return 1;
 }
 
 /**
@@ -429,4 +440,45 @@ static int poL_shoot( lua_State *L )
 
    lua_pushboolean( L, ret );
    return 1;
+}
+
+/**
+ * @brief Gets the heat status of the pilot outfit.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to get heat of.
+ *    @luatparam Boolean absolute If true returns the value in kelvin, otherwise it returns how overheated it is with 1. being normal and 0. being overheated.
+ *    @luatreturn Number heat of the pilot outfit in kelvin or closeness to 800 kelvin.
+ * @luafunc heat
+ */
+static int poL_heat( lua_State *L )
+{
+   PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
+   if (lua_isboolean(L,2))
+      lua_pushnumber( L, po->heat_T );
+   else
+      lua_pushnumber( L, pilot_heatEfficiencyMod(po->heat_T, po->outfit->overheat_min, po->outfit->overheat_max) );
+   return 1;
+}
+
+/**
+ * @brief Heats up a pilot outfit.
+ *
+ * @code
+ * local heat = po:outfit():heatFor( 5 ) -- 5 pulses should heat up fully
+ * ...
+ * po:heatup( heat ) -- one pulse
+ * @endcode
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to heat up.
+ * @luafunc heatup
+ * @see heatFor
+ */
+static int poL_heatup( lua_State *L )
+{
+   PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
+   double heat = luaL_checknumber( L, 2 );
+   po->heat_T += heat / po->heat_C;
+   /* Enforce a minimum value as a safety measure. */
+   po->heat_T = MAX( po->heat_T, CONST_SPACE_STAR_TEMP );
+   return 0;
 }

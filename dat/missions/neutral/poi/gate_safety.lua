@@ -34,11 +34,11 @@ return function ( mem )
 
 Dear Postdoc Krellis,
 
-Thank you for the detailed explanation of your theory on heterogenic metaspace breakdowns. While it is very interesting, it relies on some hypothesis that our initial safety experiments have disproved over and over again. We remind you that we at the Empire take security and protocol very seriously and we do not believe such a dangerous flaw could have escaped our experimental protocols.
+Thank you for the detailed explanation of your theory on heterogenic metaspace breakdowns. While it is very interesting, it relies on some hypothesis that our initial safety experiments have disproved over and over again. We remind you that we at the Empire take security and protocol very seriously, and we do not believe such a dangerous flaw could have escaped our experimental protocols.
 
 If you have any questions on our experimental protocols, please file an EE-X-232 form with your inquiry.
 
-We remind you to refrain from publicising your view, as it is subject to Article 8914-3b.
+We remind you to refrain from publicizing your view, as it is subject to Article 8914-3b.
 
 Sincerely,
 Imperial Gate Experiment Safety Committee]]))
@@ -50,7 +50,7 @@ Dear Safety Committee,
 
 I would like to point out that I have addressed the flaws of the experimental protocols in appendix G. The "worst case" considered is too conservative, a margin coefficient of 2 is clearly insufficient in this case.
 
-You do realize that this is not a hypothetical, but practical concern, do you not? My theory irrefutably shows that if the right conditions are met, this could result in a catastrophe not seen in all of human history! Considering the potential risk, I do stress that the points I elaborate throughout the 523 page document should be taken into account before further experiments.
+You do realize that this is not a hypothetical, but practical concern, do you not? My theory irrefutably shows that if the right conditions are met, this could result in a catastrophe not seen in all of human history! Considering the potential risk, I do stress that the points I elaborate throughout the 523-page document should be taken into account before further experiments.
 
 Regards,
 Dr. Krellis

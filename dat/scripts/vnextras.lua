@@ -43,7 +43,7 @@ local function fullscreenStart( func, params )
    end )
    local name = params.name or _("Notebook")
    local colour = params.textcolour or {1, 1, 1}
-   local log = vn.newCharacter( name, { color=colour, hidetitle=true } )
+   local log = vn.newCharacter( name, { colour=colour, hidetitle=true } )
    vn.transition( params.transition )
    return log
 end
@@ -91,9 +91,9 @@ function extras.notebookStart( name, params )
    local oldify = love_shaders.oldify()
    return fullscreenStart( function ()
       vn.setBackground( function ()
-         vn.setColor( {1, 1, 1, 1} )
+         vn.setColour( {1, 1, 1, 1} )
          lg.rectangle("fill", 0, 0, nw, nh )
-         vn.setColor( {1, 1, 1, 0.3} )
+         vn.setColour( {1, 1, 1, 0.3} )
          lg.setShader( oldify )
          paperbg:draw( 0, 0 )
          lg.setShader()
@@ -119,7 +119,7 @@ function extras.flashbackTextStart( name, params )
    return fullscreenStart( function ()
       --ft_oldify.shader:addPPShader( "final" )
       vn.setBackground( function ()
-         vn.setColor( {0, 0, 0, 1} )
+         vn.setColour( {0, 0, 0, 1} )
          lg.rectangle("fill", 0, 0, nw, nh )
       end )
    end, {
@@ -130,5 +130,36 @@ function extras.flashbackTextStart( name, params )
    } )
 end
 extras.flashbackTextEnd = fullscreenEnd
+
+function extras.alarmStart ()
+   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   vn.func( function ()
+      local shd = love_shaders.tint{ colour={1.0, 0.0, 0.0} }
+      local t = 0
+      local v = math.sin(t)
+      vn.setShader( shd )
+      vn.setBackground( function ()
+         local nw, nh = gfx.dim()
+         lg.setColour{ 1, 0, 0, 0.03-0.03*v+0.02*math.min(t,1) }
+         lg.rectangle( "fill", 0, 0, nw, nh )
+      end )
+      local function up( dt )
+         t = t + dt
+         v = math.cos( t * (math.pi*2) / 1.375)
+         shd:send( "strength", 0.8+0.2*v-0.2*math.min(t,1) )
+      end
+      vn.setUpdateFunc( up )
+      up(0)
+   end )
+end
+
+function extras.alarmEnd ()
+   vn.music()
+   vn.func( function ()
+      vn.setShader()
+      vn.setBackground()
+      vn.setUpdateFunc()
+   end )
+end
 
 return extras

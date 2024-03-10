@@ -16,6 +16,8 @@
   <spob>Kretogg III</spob>
   <spob>Vorca</spob>
   <spob>Warden's End</spob>
+  <spob_virtual>Dvaered Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="NGC-1098">

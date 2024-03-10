@@ -3,23 +3,23 @@
  <general>
   <slot>utility</slot>
   <size>small</size>
-  <mass>10</mass>
+  <mass>5</mass>
   <price>95000</price>
   <description>The Hellburner is one of the best light afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives. Unfortunately, its energy conversion efficiency is significantly lower than common models, so it consumes energy more rapidly and overheats much more quickly.</description>
   <gfx_store>hellburner.webp</gfx_store>
   <limit>afterburner</limit>
   <cpu>0</cpu>
+  <overheat_min>400</overheat_min>
+  <overheat_max>650</overheat_max>
  </general>
  <specific type="afterburner" group="8">
   <rumble>0.9</rumble>
   <sound>afterburner</sound>
   <sound_off>afb_disengage</sound_off>
-  <thrust>300</thrust>
+  <accel>300</accel>
   <speed>45</speed>
   <energy>65</energy>
   <mass_limit>250</mass_limit>
   <heatup>10</heatup>
-  <heat_base>400</heat_base>
-  <heat_cap>650</heat_cap>
  </specific>
 </outfit>

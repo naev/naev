@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>200</points>
  <base_type>Ira</base_type>
- <GFX size="112" sx="12" sy="12">ira</GFX>
+ <gfx size="112" sx="12" sy="12">ira</gfx>
  <rarity>2</rarity>
  <sound pitch="0.6">engine_soromid</sound>
  <class display="Bio-Cruiser">Cruiser</class>
@@ -34,9 +34,8 @@
   <weapon size="large" prop="bio_weapon" name="weap2" x="25" y="0" h="2">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" name="weap3" x="12" y="-6" h="0">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" name="weap4" x="12" y="6" h="0">Tentacle Organ I</weapon>
-  <weapon size="large" x="0" y="0" h="7" />
-  <weapon size="large" x="-15" y="0" h="7" />
-  <weapon size="large" x="-33" y="0" h="7" />
+  <weapon size="medium" x="-15" y="0" h="7" />
+  <weapon size="medium" x="-33" y="0" h="7" />
   <utility size="large" prop="bio_systems" name="brain">Ponderosum Cerebrum I</utility>
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
@@ -48,15 +47,14 @@
   <structure size="large" prop="bio_hull" name="shell">Ponderosus Cortex I</structure>
   <structure size="large" />
   <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <speed_mod>5</speed_mod>
   <turn_mod>5</turn_mod>
-  <thrust_mod>5</thrust_mod>
+  <accel_mod>5</accel_mod>
   <armour_mod>-20</armour_mod>
   <ew_hide>-10</ew_hide>
-  <fwd_damage>10</fwd_damage>
-  <tur_damage>-10</tur_damage>
  </stats>
  <tags>
   <tag>soromid</tag>

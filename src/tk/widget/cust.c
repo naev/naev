@@ -8,10 +8,8 @@
  * @brief Custom widget.
  */
 
-
 #include "opengl.h"
 #include "tk/toolkit_priv.h"
-
 
 static void cst_render( Widget* cst, double bx, double by );
 static void cst_renderOverlay( Widget* cst, double bx, double by );
@@ -19,7 +17,6 @@ static void cst_focusGain( Widget* cst );
 static void cst_focusLose( Widget* cst );
 static void cst_cleanup( Widget* cst );
 static Widget *cst_getWidget( unsigned int wid, const char *name );
-
 
 /**
  * @brief Adds a custom widget to a window.
@@ -47,7 +44,7 @@ void window_addCust( unsigned int wid,
                      const int w, const int h, /* size */
                      char* name, const int border,
                      void (*render) (double x, double y, double w, double h, void *data),
-                     int (*mouse) (unsigned int wid, SDL_Event* event,
+                     int (*mouse) (unsigned int wid, const SDL_Event* event,
                                     double x, double y, double w, double h,
                                     double rx, double ry, void *data),
                      void (*focusGain) (unsigned int wid, const char* wgtname),
@@ -84,7 +81,6 @@ void window_addCust( unsigned int wid,
    toolkit_setPos( wdw, wgt, x, y );
 }
 
-
 /**
  * @brief Custom widget gains focus.
  */
@@ -94,7 +90,6 @@ static void cst_focusGain( Widget* cst )
       cst->dat.cst.focusGain( cst->wdw, cst->name );
 }
 
-
 /**
  * @brief Custom widget loses focus.
  */
@@ -103,7 +98,6 @@ static void cst_focusLose( Widget* cst )
    if (cst->dat.cst.focusLose)
       cst->dat.cst.focusLose( cst->wdw, cst->name );
 }
-
 
 /**
  * @brief Renders a custom widget.
@@ -118,6 +112,8 @@ static void cst_render( Widget* cst, double bx, double by )
 
    x = bx + cst->x;
    y = by + cst->y;
+
+   glClear( GL_DEPTH_BUFFER_BIT );
 
    if (cst->dat.cst.border) {
       /* inner outline */
@@ -134,7 +130,6 @@ static void cst_render( Widget* cst, double bx, double by )
    if (cst->dat.cst.clip != 0)
       gl_unclipRect();
 }
-
 
 /**
  * @brief Renders the widget overlay.
@@ -154,7 +149,6 @@ static void cst_renderOverlay( Widget* cst, double bx, double by )
       gl_unclipRect();
 }
 
-
 /**
  * @brief Clean up function for custom widgets.
  *
@@ -165,7 +159,6 @@ static void cst_cleanup( Widget *cst )
    if (cst->dat.cst.autofree)
       free( cst->dat.cst.userdata );
 }
-
 
 /**
  * @brief Gets a custom widget.
@@ -188,7 +181,6 @@ static Widget *cst_getWidget( unsigned int wid, const char *name )
    return wgt;
 }
 
-
 /**
  * @brief Changes clipping settings on a custom widget.
  *
@@ -205,7 +197,6 @@ void window_custSetClipping( unsigned int wid, const char *name, int clip )
    /* Set the clipping. */
    wgt->dat.cst.clip = clip;
 }
-
 
 /**
  * @brief Sets the widget overlay.
@@ -224,7 +215,6 @@ void window_custSetOverlay( unsigned int wid, const char *name,
    wgt->dat.cst.renderOverlay = renderOverlay;
 }
 
-
 /**
  * @brief Gets the widget user data.
  *
@@ -241,7 +231,6 @@ void* window_custGetData( unsigned int wid, const char *name )
    return wgt->dat.cst.userdata;
 }
 
-
 /**
  * @brief Marks the widget's data as owned, so that it will be freed upon cleanup.
  *
@@ -253,4 +242,18 @@ void window_custAutoFreeData( unsigned int wid, const char *name )
    Widget *wgt = cst_getWidget( wid, name );
    if (wgt != NULL)
       wgt->dat.cst.autofree = 1;
+}
+
+/**
+ * @brief Marks a widget as being rendered dynamically, which forces it to be updated every frame.
+ */
+void window_custSetDynamic( unsigned int wid, const char *name, int dynamic )
+{
+   Widget *wgt = cst_getWidget( wid, name );
+   if (wgt != NULL) {
+      if (dynamic)
+         wgt->flags |= WGT_FLAG_DYNAMIC;
+      else
+         wgt->flags &= ~WGT_FLAG_DYNAMIC;
+   }
 }

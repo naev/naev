@@ -78,7 +78,7 @@ int nlua_loadEvt( nlua_env env )
 void event_runStart( unsigned int eventid, const char *func )
 {
    uintptr_t *evptr;
-   Event_t *ev = event_get( eventid );
+   const Event_t *ev = event_get( eventid );
    if (ev == NULL)
       return;
 
@@ -131,7 +131,6 @@ Event_t *event_getFromLua( lua_State *L )
 int event_runFunc( unsigned int eventid, const char *func, int nargs )
 {
    int ret;
-   const char* err;
    int evt_delete;
    Event_t *ev;
 
@@ -141,7 +140,7 @@ int event_runFunc( unsigned int eventid, const char *func, int nargs )
 
    ret = nlua_pcall(ev->env, nargs, 0);
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
+      const char* err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN(_("Event '%s' -> '%s': %s"),
                event_getData(ev->id), func, (err) ? err : _("unknown error"));
@@ -241,7 +240,7 @@ static int evtL_npcRm( lua_State *L )
    bar_regen();
 
    if (ret != 0)
-      NLUA_ERROR(L, _("Invalid NPC ID!"));
+      return NLUA_ERROR(L, _("Invalid NPC ID!"));
    return 0;
 }
 
@@ -255,7 +254,7 @@ static int evtL_npcRm( lua_State *L )
  */
 static int evtL_finish( lua_State *L )
 {
-   Event_t *cur_event = event_getFromLua(L);
+   const Event_t *cur_event = event_getFromLua(L);
    int b = lua_toboolean(L,1);
    lua_pushboolean( L, 1 );
    nlua_setenv( L, cur_event->env, "__evt_delete" );
@@ -319,10 +318,8 @@ static int evtL_claim( lua_State *L )
    inclusive = lua_toboolean(L,2);
 
    /* Check to see if already claimed. */
-   if (!claim_isNull(cur_event->claims)) {
-      NLUA_ERROR(L, _("Event trying to claim but already has."));
-      return 0;
-   }
+   if (!claim_isNull(cur_event->claims))
+      return NLUA_ERROR(L, _("Event trying to claim but already has."));
 
    /* Create the claim. */
    claim = claim_create( !inclusive );
@@ -344,7 +341,7 @@ static int evtL_claim( lua_State *L )
    else if (lua_isstring(L, 1))
       claim_addStr( claim, lua_tostring( L, 1 ) );
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Test claim. */
    if (claim_test( claim )) {

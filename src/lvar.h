@@ -35,10 +35,10 @@ typedef struct lvar_ {
 /*
  * Creating and stuff.
  */
-int lvar_addArray( lvar **arr, lvar *new_var, int sort );
+int lvar_addArray( lvar **arr, const lvar *new_var, int sort );
 void lvar_rmArray( lvar **arr, lvar *rm_var );
 void lvar_freeArray( lvar *var );
-lvar *lvar_get( lvar *arr, const char *str );
+lvar *lvar_get( const lvar *arr, const char *str );
 
 /*
  * Lua stuff.

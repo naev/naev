@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Disruptor Artillery S1">
+ <general>
+  <shortname>Disruptor A. S1</shortname>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Heavy Weapon</license>
+  <rarity>1</rarity>
+  <mass>16</mass>
+  <price>135000</price>
+  <description>The Disruptor series of weapons is loosely based on the Razor series. House Sirius found it impossible to simply upscale the Razor Artillery S3, and ended up nearly having to redesign them from scratch, although the they both handle very similarly. The Disruptor Artillery S1 lobs high energy self-stabilizing balls of ions that can make short work of energy shields and systems.</description>
+  <gfx_store>razor1.webp</gfx_store>
+  <cpu>-50</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx type="shader" size="8" col_size="7">particles/disruptor_s1.frag</gfx>
+  <lua>outfits/weapons/razor.lua</lua>
+  <sound>tesla</sound>
+  <sound_hit>bansheeexp</sound_hit>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>1.1</delay>
+  <speed>800</speed>
+  <range>1850</range>
+  <falloff>1500</falloff>
+  <energy>34</energy>
+  <heatup>70</heatup>
+  <trackmin>1000</trackmin>
+  <trackmax>7000</trackmax>
+  <swivel>26</swivel>
+  <damage>
+   <type>ion</type>
+   <penetrate>45</penetrate>
+   <physical>18</physical>
+   <disable>12</disable>
+  </damage>
+ </specific>
+ <tags>
+  <tag>sirius</tag>
+ </tags>
+</outfit>

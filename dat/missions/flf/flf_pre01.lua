@@ -42,7 +42,7 @@ function create()
 
    tk.msg(_("Gregar joins the party"), fmt.f( _([[A haggard-looking man emerges from the airlock. He says, "Thank goodness you're here. My name is Gregar, I'm with the Frontier Liberation Front. I mean you no harm." He licks his lips in hesitation before continuing. "I have come under attack from a Dvaered patrol. I wasn't violating any laws, and we're not even in Dvaered territory! Anyway, my ship is unable to fly."
    You help Gregar to your cockpit and install him in a vacant seat. He is obviously very tired, but he forces himself to speak. "Listen, I was on my way back from a mission when those Dvaered bastards jumped me. I know this is a lot to ask, but I have little choice seeing how my ship is a lost cause. Can you take me the rest of the way? It's not far. We have a secret base in the {sys} system. Fly there and contact my comrades. They will take you the rest of the way."
-   Gregar nods off, leaving you to decide what to do next. Gregar wants you to find his friends, but harboring a known terrorist, let alone helping him, might not be looked kindly upon by the authorities...]]), {sys=mem.destsys}))
+   Gregar nods off, leaving you to decide what to do next. Gregar wants you to find his friends, but harbouring a known terrorist, let alone helping him, might not be looked kindly upon by the authorities...]]), {sys=mem.destsys}))
 
    misn.osdCreate(_("Deal with the FLF agent"), {
       fmt.f( _("Take Gregar, the FLF agent, to the {sys} system and make contact with the FLF"), {sys=mem.destsys}),
@@ -118,7 +118,7 @@ function land()
       misn.finish(true)
    -- Case Dvaered planet
    elseif spob.cur():faction() == faction.get("Dvaered") and not mem.basefound then
-      if tk.yesno(_("An opportunity to uphold the law"), _([[You have arrived at a Dvaered controlled world, and you are harboring a FLF fugitive on your ship. Fortunately, Gregar is still asleep. You could choose to alert the authorities and turn him in, and possibly collect a reward.
+      if tk.yesno(_("An opportunity to uphold the law"), _([[You have arrived at a Dvaered controlled world, and you are harbouring a FLF fugitive on your ship. Fortunately, Gregar is still asleep. You could choose to alert the authorities and turn him in, and possibly collect a reward.
    Would you like to do so?]])) then
          tk.msg(_("Another criminal caught"), _([[It doesn't take Dvaered security long to arrive at your landing bay. They board your ship, seize Gregar, and take him away before he even comprehends what's going on.
    "You have served House Dvaered adequately, citizen," the stone-faced captain of the security detail tells you. "In recognition of your service, we may allow you to participate in other operations regarding the FLF terrorists. If you have further questions, direct them to our public liaison."
@@ -226,7 +226,7 @@ function spawnbase()
 
       -- Safety measure to ensure the player can land.
       mem.base = spob.get("Sindbad")
-      mem.base:landOverride()
+      mem.base:landAllow()
 
       mem.basefound = true
       hook.rm(mem.OORT)

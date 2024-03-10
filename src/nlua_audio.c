@@ -26,11 +26,7 @@
 #include "nstring.h"
 #include "sound.h"
 #include "nopenal.h"
-
-/**
- * @brief Default pre-amp in dB.
- */
-#define RG_PREAMP_DB       0.0
+#include "ntracing.h"
 
 /**
  * @brief Handles the OpenAL effects that have been set up Lua side.
@@ -48,7 +44,6 @@ static LuaAudioEfx_t *lua_efx = NULL;
 
 static int stream_thread( void *la_data );
 static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer );
-static void rg_filter( float **pcm, long channels, long samples, void *filter_param );
 static int audio_genSource( ALuint *source );
 
 /* Audio methods. */
@@ -187,18 +182,22 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
    size = 0;
    while (size < sizeof(buf)) { /* file up the entire data buffer */
       int section, result;
+      rg_filter_param_t param = {
+         .rg_scale_factor = la->rg_scale_factor,
+         .rg_max_scale = la->rg_max_scale,
+      };
 
       SDL_mutexP( la->lock );
       result = ov_read_filter(
-            &la->stream,   /* stream */
+            &la->stream,            /* stream */
             &buf[size],             /* data */
-            sizeof(buf) - size,    /* amount to read */
+            sizeof(buf) - size,     /* amount to read */
             (SDL_BYTEORDER == SDL_BIG_ENDIAN),
             2,                      /* 16 bit */
             1,                      /* signed */
             &section,               /* current bitstream */
             rg_filter,              /* filter function */
-            la );                   /* filter parameter */
+            &param );                   /* filter parameter */
       SDL_mutexV( la->lock );
 
       /* End of file. */
@@ -232,48 +231,11 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
 }
 
 /**
- * @brief This is the filter function for the decoded Ogg Vorbis stream.
- *
- * base on:
- * vgfilter.c (c) 2007,2008 William Poetra Yoga Hadisoeseno
- * based on:
- * vgplay.c 1.0 (c) 2003 John Morton
- */
-static void rg_filter( float **pcm, long channels, long samples, void *filter_param )
-{
-   LuaAudio_t *param    = filter_param;
-   float scale_factor   = param->rg_scale_factor;
-   float max_scale      = param->rg_max_scale;
-
-   /* Apply the gain, and any limiting necessary */
-   if (scale_factor > max_scale) {
-      for (int i=0; i < channels; i++)
-         for (int j=0; j < samples; j++) {
-            float cur_sample = pcm[i][j] * scale_factor;
-            /*
-             * This is essentially the scaled hard-limiting algorithm
-             * It looks like the soft-knee to me
-             * I haven't found a better limiting algorithm yet...
-             */
-            if (cur_sample < -0.5)
-               cur_sample = tanh((cur_sample + 0.5) / (1-0.5)) * (1-0.5) - 0.5;
-            else if (cur_sample > 0.5)
-               cur_sample = tanh((cur_sample - 0.5) / (1-0.5)) * (1-0.5) + 0.5;
-            pcm[i][j] = cur_sample;
-         }
-   }
-   else if (scale_factor > 0.0)
-      for (int i=0; i < channels; i++)
-         for (int j=0; j < samples; j++)
-            pcm[i][j] *= scale_factor;
-}
-
-/**
  * @brief Checks to see a boolean property of a source.
  */
 static int audioL_isBool( lua_State *L, ALenum param )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
    int b = 1;
    if (!sound_disabled) {
       soundLock();
@@ -290,7 +252,7 @@ static int audioL_isBool( lua_State *L, ALenum param )
  */
 static int audioL_isState( lua_State *L, ALenum state )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
    int s = AL_STOPPED;
    if (!sound_disabled) {
       soundLock();
@@ -394,7 +356,7 @@ void audio_cleanup( LuaAudio_t *la )
             la->buf->refcount--;
             if (la->buf->refcount <= 0) {
                alDeleteBuffers( 1, &la->buf->buffer );
-               free( la->buf );
+               nfree( la->buf );
             }
          }
          al_checkErr();
@@ -473,7 +435,7 @@ static int audio_genSource( ALuint *source )
 {
    ALenum err;
    alGenSources( 1, source );
-   if (alIsSource( *source)==AL_TRUE)
+   if (alIsSource(*source)==AL_TRUE)
       return 0;
    err = alGetError();
    switch (err) {
@@ -486,6 +448,8 @@ static int audio_genSource( ALuint *source )
          soundLock();
          /* Try to create source again. */
          alGenSources( 1, source );
+         if (alIsSource(*source)==AL_TRUE)
+            return 0;
          al_checkErr();
          break;
 
@@ -493,9 +457,9 @@ static int audio_genSource( ALuint *source )
 #if DEBUGGING
          al_checkHandleError( err, __func__, __LINE__ );
 #endif /* DEBUGGING */
-         return -1;
+         break;
    }
-   return 0;
+   return -1;
 }
 
 /**
@@ -523,7 +487,7 @@ static int audioL_new( lua_State *L )
       name = lf->path;
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Second parameter. */
    if (lua_isnoneornil(L,2)) {
@@ -536,7 +500,7 @@ static int audioL_new( lua_State *L )
       else if (strcmp(type,"stream")==0)
          stream = 1;
       else
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,2);
    }
 
    memset( &la, 0, sizeof(LuaAudio_t) );
@@ -547,18 +511,24 @@ static int audioL_new( lua_State *L )
    }
    rw = PHYSFSRWOPS_openRead( name );
    if (rw==NULL)
-      NLUA_ERROR(L,"Unable to open '%s'", name );
+      return NLUA_ERROR(L,"Unable to open '%s'", name );
 #if DEBUGGING
    la.name = strdup( name );
 #endif /* DEBUGGING */
 
    soundLock();
-   audio_genSource( &la.source );
+   la.ok = audio_genSource( &la.source );
+   if (la.ok) {
+      SDL_RWclose( rw ); /* Clean up. */
+      la.nocleanup = 1; /* Not initialized so no need to clean up. */
+      lua_pushaudio(L, la);
+      return 1;
+   }
 
    /* Deal with stream. */
    if (!stream) {
       la.type = LUA_AUDIO_STATIC;
-      la.buf = malloc( sizeof(LuaBuffer_t) );
+      la.buf = nmalloc( sizeof(LuaBuffer_t) );
       la.buf->refcount = 1;
       sound_al_buffer( &la.buf->buffer, rw, name );
 
@@ -577,7 +547,7 @@ static int audioL_new( lua_State *L )
       /* ov_clear will close rw for us. */
       if (ov_open_callbacks( rw, &la.stream, NULL, 0, sound_al_ovcall ) < 0) {
          SDL_RWclose( rw );
-         NLUA_ERROR(L,_("Audio '%s' does not appear to be a Vorbis bitstream."), name );
+         return NLUA_ERROR(L,_("Audio '%s' does not appear to be a Vorbis bitstream."), name );
       }
       la.info = ov_info( &la.stream, -1 );
 
@@ -631,13 +601,17 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
    double master;
 
    memset( la, 0, sizeof(LuaAudio_t) );
-   if (sound_disabled) {
+   if (sound_disabled || source->ok) {
       la->nocleanup = 1;
       return;
    }
 
    soundLock();
-   audio_genSource( &la->source );
+   la->ok = audio_genSource( &la->source );
+   if (la->ok) {
+      la->nocleanup = 1;
+      return;
+   }
 
    switch (source->type) {
       case LUA_AUDIO_STATIC:
@@ -681,10 +655,8 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
 static int audioL_clone( lua_State *L )
 {
    LuaAudio_t la;
-   LuaAudio_t *source = luaL_checkaudio(L,1);
-
+   const LuaAudio_t *source = luaL_checkaudio(L,1);
    audio_clone( &la, source );
-
    lua_pushaudio(L, la);
    return 1;
 }
@@ -699,7 +671,7 @@ static int audioL_clone( lua_State *L )
 static int audioL_play( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    if ((la->type == LUA_AUDIO_STREAM) && (la->th == NULL)) {
@@ -737,8 +709,8 @@ static int audioL_play( lua_State *L )
  */
 static int audioL_pause( lua_State *L )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled || la->ok)
       return 0;
    soundLock();
    alSourcePause( la->source );
@@ -770,7 +742,7 @@ static int audioL_stop( lua_State *L )
    ALint alstate;
    ALuint removed[2];
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    soundLock();
@@ -833,7 +805,7 @@ static int audioL_isStopped( lua_State *L )
 static int audioL_rewind( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    switch (la->source) {
@@ -872,9 +844,9 @@ static int audioL_seek( lua_State *L )
    if (strcmp(unit,"samples")==0)
       seconds = 0;
    else if (strcmp(unit,"seconds")!=0)
-      NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+      return NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    switch (la->type) {
@@ -923,9 +895,9 @@ static int audioL_tell( lua_State *L )
    if (strcmp(unit,"samples")==0)
       seconds = 0;
    else if (strcmp(unit,"seconds")!=0)
-      NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+      return NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
-   if (sound_disabled) {
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L, -1.);
       return 1;
    }
@@ -979,9 +951,9 @@ static int audioL_getDuration( lua_State *L )
    if (strcmp(unit,"samples")==0)
       seconds = 0;
    else if (strcmp(unit,"seconds")!=0)
-      NLUA_ERROR(L, _("Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+      return NLUA_ERROR(L, _("Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
-   if (sound_disabled) {
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L, -1.);
       return 1;
    }
@@ -1037,7 +1009,7 @@ static int audioL_setVolume( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double volume = CLAMP( 0.0, 1.0, luaL_checknumber(L,2) );
    int ignorevol = lua_toboolean(L,3);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
 
    soundLock();
@@ -1081,8 +1053,8 @@ static int audioL_getVolume( lua_State *L )
  */
 static int audioL_setRelative( lua_State *L )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled || la->ok)
       return 0;
 
    soundLock();
@@ -1104,8 +1076,8 @@ static int audioL_setRelative( lua_State *L )
 static int audioL_setPosition( lua_State *L )
 {
    ALfloat pos[3];
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled || la->ok)
       return 0;
 
    pos[0] = luaL_optnumber(L,2,0.);
@@ -1131,8 +1103,8 @@ static int audioL_setPosition( lua_State *L )
 static int audioL_getPosition( lua_State *L )
 {
    ALfloat pos[3];
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled) {
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
@@ -1162,8 +1134,8 @@ static int audioL_getPosition( lua_State *L )
 static int audioL_setVelocity( lua_State *L )
 {
    ALfloat vel[3];
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled || la->ok)
       return 0;
 
    vel[0] = luaL_optnumber(L,2,0.);
@@ -1189,8 +1161,8 @@ static int audioL_setVelocity( lua_State *L )
 static int audioL_getVelocity( lua_State *L )
 {
    ALfloat vel[3];
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled) {
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
@@ -1217,9 +1189,9 @@ static int audioL_getVelocity( lua_State *L )
  */
 static int audioL_setLooping( lua_State *L )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
    int b = lua_toboolean(L,2);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
    soundLock();
    alSourcei( la->source, AL_LOOPING, b );
@@ -1249,9 +1221,9 @@ static int audioL_isLooping( lua_State *L )
  */
 static int audioL_setPitch( lua_State *L )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
    double pitch = luaL_checknumber(L,2);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
    soundLock();
    alSourcef( la->source, AL_PITCH, pitch );
@@ -1269,9 +1241,9 @@ static int audioL_setPitch( lua_State *L )
  */
 static int audioL_getPitch( lua_State *L )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
    float p = 1.0;
-   if (!sound_disabled) {
+   if (!sound_disabled && !la->ok) {
       soundLock();
       alGetSourcef( la->source, AL_PITCH, &p );
       al_checkErr();
@@ -1335,10 +1307,10 @@ static int audioL_soundPlay( lua_State *L )
  */
 static int audioL_setAttenuationDistances( lua_State *L )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
    double ref = luaL_checknumber(L,2);
    double max = luaL_checknumber(L,3);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
    soundLock();
    alSourcef( la->source, AL_REFERENCE_DISTANCE, ref );
@@ -1358,8 +1330,8 @@ static int audioL_setAttenuationDistances( lua_State *L )
 static int audioL_getAttenuationDistances( lua_State *L )
 {
    ALfloat ref, max;
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled) {
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
       return 2;
@@ -1382,9 +1354,9 @@ static int audioL_getAttenuationDistances( lua_State *L )
  */
 static int audioL_setRolloff( lua_State *L )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
    double rolloff = luaL_checknumber(L,2);
-   if (sound_disabled)
+   if (sound_disabled || la->ok)
       return 0;
    soundLock();
    alSourcef( la->source, AL_ROLLOFF_FACTOR, rolloff );
@@ -1402,8 +1374,8 @@ static int audioL_setRolloff( lua_State *L )
 static int audioL_getRolloff( lua_State *L )
 {
    ALfloat rolloff;
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled) {
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled || la->ok) {
       lua_pushnumber(L,0.);
       return 1;
    }
@@ -1587,7 +1559,7 @@ static int audioL_setEffectGlobal( lua_State *L )
    }
    else {
       soundUnlock();
-      NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
+      return NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
    }
 
    if (volume > 0.)
@@ -1631,13 +1603,13 @@ static int audioL_setEffect( lua_State *L )
    if (!lua_isaudio(L,1))
       return audioL_setEffectGlobal(L);
 
-   LuaAudio_t *la = luaL_checkaudio(L,1);
+   const LuaAudio_t *la = luaL_checkaudio(L,1);
    const char *name = luaL_checkstring(L,2);
    int enable = (lua_isnoneornil(L,3)) ? 1 : lua_toboolean(L,3);
 
    soundLock();
    if (enable) {
-      LuaAudioEfx_t *lae = audio_getEffectByName( name );
+      const LuaAudioEfx_t *lae = audio_getEffectByName( name );
       if (lae == NULL) {
          soundUnlock();
          return 0;

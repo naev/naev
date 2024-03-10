@@ -60,8 +60,8 @@ function accept()
    local arnold = vn.newCharacter( shark.vn_arnold() )
    vn.transition( shark.arnold.transition )
 
-   arnold(_([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating Destroyer-class ships.]]))
-   arnold(_([["Now, one small problem we face is that pirates almost never use Destroyer-class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a Destroyer-class ship and just let another pilot disable them with ion cannons.]]))
+   arnold(_([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating Destroyer-class ships."]]))
+   arnold(_([["Now, one small problem we face is that pirates prefer to use smaller ships, and few use Destroyer-class ships or larger; they tend to stick to interceptors, fighters, and corvettes. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a Destroyer-class ship and just let another pilot disable them with ion cannons."]]))
    arnold(_([["What do you say? Are you interested?"]]))
    vn.menu{
       {_([[Accept]]), "accept"},
@@ -98,12 +98,14 @@ function accept()
    hook.jumpout("jumpout")
    hook.land("land")
    hook.enter("enter")
+   mem.lastsys = system.cur()
 end
 
 function jumpout()
    if mem.stage == 1 then --player trying to escape
       lmisn.fail( _("You ran away.") )
    end
+   mem.lastsys = system.cur()
 end
 
 function land()
@@ -143,7 +145,7 @@ end
 
 function lets_go()
    -- Spawn the enemy Lancelot, equipped with ion cannons (per the plot & to disable rather than murder the player).
-   sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Zacron"), nil, {ai="baddie_norun", naked=true} )
+   sharkboy = pilot.add( "Lancelot", "Mercenary", mem.lastsys, nil, {ai="baddie_norun", naked=true} )
    equipopt.generic( sharkboy, { disable=2, damage=0 }, "elite" )
    sharkboy:setHostile(true)
    sharkboy:setHilight(true)

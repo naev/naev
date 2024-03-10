@@ -133,10 +133,19 @@ end
 function spawn_fleet ()
    fleet = {}
 
-   local j = system.cur():jumps()
-   j = rnd.permutation( j )
-   local startpos = j[1]
-   local endpos = j[2]
+   local jmps = system.cur():jumps()
+   jmps = rnd.permutation( jmps )
+   local startpos, endpos
+   for k,j in ipairs(jmps) do
+      if not j:exitonly() and not endpos then
+         endpos = j
+      elseif not startpos then
+         startpos = j
+      end
+      if endpos and startpos then
+         break
+      end
+   end
 
    -- Create the pirates
    local fct = faction.get("Pirate")
@@ -165,6 +174,7 @@ function board_convoy( _p )
    vn.scene()
    vn.sfx( der.sfx.board )
    vn.music( der.sfx.ambient )
+   vn.transition()
    if mem.state == 0 then
       vn.na(_([[You board the ship and first quickly download the system log information. It seems to have quite a lot of details of pirate convoy operations done in the vicinity.]]))
       vn.func( function ()

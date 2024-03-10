@@ -14,6 +14,11 @@ function create ()
    end
 end
 
+-- They don't investigate
+function should_investigate ()
+   return false
+end
+
 -- Just tries to guard mem.escort
 function idle ()
    ai.pushtask("follow_fleet")

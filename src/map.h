@@ -3,8 +3,9 @@
  */
 #pragma once
 
-#include "attributes.h"
 #include "space.h"
+#include "outfit.h"
+#include "opengl_tex.h"
 
 #define MAP_WDWNAME     "wdwStarMap" /**< Map window name. */
 

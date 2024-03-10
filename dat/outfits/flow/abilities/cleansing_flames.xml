@@ -10,11 +10,13 @@
   <price>650000</price>
   <gfx_store>/gfx/misc/icons/fire-ring.webp</gfx_store>
   <description>Flow can be used to purify the immediate environment of the ship, bathing allies in soothing psychic emanations, while scorching enemies in damaging chakra burns.</description>
+  <limit>cleansing_flames</limit>
  </general>
  <specific type="modification">
   <lua>outfits/flow/abilities/cleansing_flames.lua</lua>
  </specific>
  <tags>
   <tag>flow_ability</tag>
+  <tag>nosteal</tag>
  </tags>
 </outfit>

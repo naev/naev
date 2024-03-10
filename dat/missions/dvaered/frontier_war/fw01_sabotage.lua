@@ -36,6 +36,7 @@ local fw = require "common.frontier_war"
 local fmt = require "format"
 local pir = require "common.pirate"
 local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 
 -- Mission constants
 local bombMass = 100
@@ -73,8 +74,8 @@ function accept()
    end
    tk.msg(_("The plan"), _([["I knew you would accept!" Says Major Tam. "Here is the situation:
    "The general I am working for, General Klank, is in charge of... hem... in charge of a crucial operation the High Command wants to carry out. This operation will involve troops of the High Command, but also Warlords, including Battleaddict. The problem is that General Klank and Lord Battleaddict disagree on everything about this plan. As a consequence, they are going to have a Goddard duel, which is usually how two important Dvaered generals settle deep disagreements."]]))
-   tk.msg(_("The plan"), fmt.f(_([["The problem is that Battleaddict's plan is far too stupid. It would weaken the Dvaered Nation in the long run and leave us at the mercy of all the other nations around us. We can't afford to show any signs of weakness or they will attack us and impose their iniquitous and obsolete political systems on our citizenry." Tam takes a deep breath and looks you in the eyes. "You don't know, citizen, all the dreadful enemies who are waiting in the shadows, their hearts filled with hatred against House Dvaered. Sometimes I look at the star-filled night sky and I wonder. I wonder why the Dvaered Nation has to be the only threatened islet of justice and compassion in this... in this Sea of Darkness.
-   "Hey, citizen! But I have good news! We won't fall to the Barbarian hordes! Because I myself, Major Archibald Tam, I have a plan. We will make sure that Lord Battleaddict loses his duel. Please note, however, that if the very existence of House Dvaered was not threatened, we would never allow ourselves to interfere in a honorable duel between two respectable gentlemen. Go to {pnt} in {sys} and meet Captain Hamfresser. His portrait is attached in the data I will give you. He will explain the details. It is very important that you use a civilian ship that can transport at least {tonnes} of cargo."]]), {pnt=hampla, sys=hamsys, tonnes=fmt.tonnes(bombMass)}))
+   tk.msg(_("The plan"), fmt.f(_([["The problem is that Battleaddict's plan is far too stupid. It would weaken the Dvaered Nation in the long run and leave us at the mercy of all the other nations around us. We can't afford to show any signs of weakness, or they will attack us and impose their iniquitous and obsolete political systems on our citizenry." Tam takes a deep breath and looks you in the eyes. "You don't know, citizen, all the dreadful enemies who are waiting in the shadows, their hearts filled with hatred against House Dvaered. Sometimes I look at the star-filled night sky and I wonder. I wonder why the Dvaered Nation has to be the only threatened islet of justice and compassion in this... in this Sea of Darkness.
+   "Hey, citizen! But I have good news! We won't fall to the Barbarian hordes! Because I myself, Major Archibald Tam, I have a plan. We will make sure that Lord Battleaddict loses his duel. Please note, however, that if the very existence of House Dvaered was not threatened, we would never allow ourselves to interfere in a honourable duel between two respectable gentlemen. Go to {pnt} in {sys} and meet Captain Hamfresser. His portrait is attached in the data I will give you. He will explain the details. It is very important that you use a civilian ship that can transport at least {tonnes} of cargo."]]), {pnt=hampla, sys=hamsys, tonnes=fmt.tonnes(bombMass)}))
 
    misn.accept()
    misn.setDesc(_("You have to sabotage Lord Battleaddict's cruiser in order to ensure General Klank's victory at a duel."))
@@ -112,9 +113,9 @@ end
 function hamfresser()
    if (player.pilot():cargoFree() >= bombMass) then
       tk.msg( _("New passengers"), fmt.f(_([["H... hi", you say, waving timidly. "Are you Captain Hamfresser?". The soldier answers "Of course, as it is written on my name tag." Next to his Captain's insignia, and the logo of the Dvaered Space Infantry (a mace with wings), he points to a small label on his chest that reads "Hamfresser". Hamfresser looks at you from top to bottom "You're the private pilot, right? Tell me your ship's dock number, and I'll meet you there. Oh, and please make room for {tonnes} of cargo."
-   The captain then gets up, delicately puts his empty glass on the counter, and leaves. While his hair brushes the ceiling, you wonder if {tonnes} are enough to accomodate him. When you arrive at the dock, you see Hamfresser, with five other soldiers and two androids that load a huge and strange machine into your ship. "Hey," you say, "what are you doing with your... your death machine?" Hamfresser approaches and answers at low voice "But, mate, this is not a death machine, It's just a bomb. Or even just a bomblet."]]), {tonnes=fmt.tonnes(bombMass)}) )
+   The captain then gets up, delicately puts his empty glass on the counter, and leaves. While his hair brushes the ceiling, you wonder if {tonnes} are enough to accommodate him. When you arrive at the dock, you see Hamfresser, with five other soldiers and two androids that load a huge and strange machine into your ship. "Hey," you say, "what are you doing with your... your death machine?" Hamfresser approaches and answers at low voice "But, mate, this is not a death machine, It's just a bomb. Or even just a bomblet."]]), {tonnes=fmt.tonnes(bombMass)}) )
       tk.msg( _("New passengers"), _([["Very well," you acquiesce, "do what you have to do." Once the cargo is loaded and the team has taken their places in the cabin, you start to talk with the captain. "And I suppose this bomblet is destined for Battleaddict's Goddard. How are we supposed to put it there? Are we going to pretend it's a gift from the High Command to his granddaughter?". Hamfresser looks at you surprised. "No... that's not what the Major... do you think it could work?" You realize it would take too long to explain that it was a sarcastic comment (assuming that this guy knew what sarcasm is) and simply ask him to explain the major's plan.
-   "Last period, we intercepted a message from Battleaddict to a plumber. His cruiser has issues with sewage disposal and he requested an intervention. So, we abducted the plumber and we disguised an EMP bomb as a replacement sewage disposal. We will dock with his ship, plant the bomb, repair the breakdown (so he won't suspect us) and leave. Private Ling here is a Goddard-plumber, so she will lead us." A young and smiling soldier raises her hand, and says "Hi".]]) )
+   "Last period, we intercepted a message from Battleaddict to a plumber. His cruiser has issues with sewage disposal, and he requested an intervention. So, we abducted the plumber, and we disguised an EMP bomb as a replacement sewage disposal. We will dock with his ship, plant the bomb, repair the breakdown (so he won't suspect us) and leave. Private Ling here is a Goddard-plumber, so she will lead us." A young and smiling soldier raises her hand, and says "Hi".]]) )
       tk.msg( _("New passengers"), fmt.f(_([[While you wonder whether the plan is insanely brilliant or dead stupid, Hamfresser begins the introductions. "This is Sergeant Nikolov, she is my second in command, this is Private Tronk, from my squad, and Corporal Therus, our medical support. Oh, and the guy in the corner over there is Lieutenant Strafer. He is a pilot from Special Operations. He is here in case we need to switch to plan B." As you ask what plan B is, Hamfresser simply answers, "you don't want to switch to plan B.
    "As usual, Lord Battleaddict's cruiser should be in orbit around {pnt} in {sys}".]]), {pnt=sabotpla, sys=sabotsys}) )
       mem.stage = 1
@@ -134,14 +135,11 @@ end
 function enter()
    -- Spawn Battleaddict and his team
    if mem.stage == 1 and system.cur() == sabotsys then
-      pilot.toggleSpawn("FLF") -- This helps when testing the mission using the Lua console. Normally, the FLF should be dead.
+      pilot.toggleSpawn("FLF", false) -- This helps when testing the mission using the Lua console. Normally, the FLF should be dead.
       pilot.clearSelect("FLF")
-      for k,f in ipairs(pir.factions) do
-         pilot.toggleSpawn(f)
-         pilot.clearSelect(f)
-      end
+      pir.clearPirates()
 
-      warlord = pilot.add( "Dvaered Goddard", "Dvaered", sabotpla, _("Lord Battleaddict") )
+      warlord = pilot.add( "Dvaered Goddard", "Dvaered", sabotpla, _("Lord Battleaddict"), {naked=true} )
       warlord:control(true)
       warlord:moveto( sabotpla:pos() + vec2.newP(rnd.rnd(1000), rnd.angle()) )
       warlord:memory().formation = "circleLarge"
@@ -187,12 +185,12 @@ function enter()
       mypos = duelpla:pos()
       step = 150
 
-      klank = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(-step, step/2), _("General Klank") )
+      klank = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(-step, step/2), _("General Klank"), {naked=true} )
       klank:control(true)
       klank:setFaction( fw.fct_dhc() )
       equipGoddard( klank, true ) -- Klank's superior equipment should ensure victory
 
-      battleaddict = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(step, step/2), _("Lord Battleaddict") )
+      battleaddict = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(step, step/2), _("Lord Battleaddict"), {naked=true} )
       battleaddict:control(true)
       battleaddict:setFaction( fw.fct_warlords() )
       equipGoddard( battleaddict, false )
@@ -200,7 +198,7 @@ function enter()
       klank:face(battleaddict)
       battleaddict:face(klank)
 
-      urnus = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(0, 3*step/2), _("Colonel Urnus") )
+      urnus = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(0, 3*step/2), _("Colonel Urnus"), {naked=true} )
       urnus:control(true)
       urnus:face( mypos + vec2.new(0, step/2) )
 
@@ -234,24 +232,23 @@ function enter()
 end
 
 -- Equips a Goddard for a duel, with or without repeating railguns
-function equipGoddard( pilot, repeating )
-   pilot:outfitRm("all")
-   pilot:outfitRm("cores")
-   pilot:outfitAdd("S&K Superheavy Combat Plating")
-   pilot:outfitAdd("Melendez Mammoth XL Engine")
-   pilot:outfitAdd("Milspec Orion 9901 Core System")
-   pilot:outfitAdd("Nanobond Plating", 6)
-   pilot:outfitAdd("Milspec Impacto-Plastic Coating")
-   pilot:outfitAdd("Droid Repair Crew",4)
-
+function equipGoddard( plt, repeating )
+   -- TODO switch to equipopt
+   plt:outfitAdd("S&K Superheavy Combat Plating")
+   plt:outfitAdd("Melendez Mammoth XL Engine")
+   plt:outfitAdd("Milspec Orion 9901 Core System")
+   plt:outfitAdd("Nanobond Plating", 6)
+   plt:outfitAdd("Milspec Impacto-Plastic Coating")
+   plt:outfitAdd("Droid Repair Crew",4)
    if repeating then
-      pilot:outfitAdd("Repeating Railgun", 7)
+      plt:outfitAdd("Repeating Railgun", 7)
    else
-      pilot:outfitAdd("Railgun", 7)
+      plt:outfitAdd("Railgun", 7)
    end
-   pilot:setHealth(100,100)
-   pilot:setEnergy(100)
-   pilot:setFuel(true)
+   plt:setHealth(100,100)
+   plt:setEnergy(100)
+   plt:setFuel(true)
+   ai_setup.setup( plt )
 end
 
 function enter1_message()
@@ -308,7 +305,7 @@ end
 
 -- Spawn the Phalanx to disable
 function spawn_phalanx()
-   p = pilot.add( "Dvaered Phalanx", "Dvaered", intpla, _("Gorgon") )
+   p = pilot.add( "Dvaered Phalanx", "Dvaered", intpla, _("Gorgon"), {naked=true} )
    p:setFaction(fw.fct_warlords())
    p:setHilight()
    p:control()
@@ -316,8 +313,7 @@ function spawn_phalanx()
    mem.nextsys = lmisn.getNextSystem(system.cur(), sabotsys)
    p:hyperspace( mem.nextsys, true ) -- Go towards Battleaddict's place
 
-   p:outfitRm("all")
-   p:outfitRm("cores")
+   -- TODO switch to equipopt
    p:outfitAdd("S&K Medium Combat Plating")
    p:outfitAdd("Milspec Orion 4801 Core System")
    p:outfitAdd("Tricon Cyclone Engine")
@@ -329,6 +325,7 @@ function spawn_phalanx()
    p:setHealth(100,100)
    p:setEnergy(100)
    p:setFuel(true)
+   ai_setup.setup(p)
 
    mem.pattacked = hook.pilot( p, "attacked", "phalanx_attacked" )
    mem.pboarded = hook.pilot( p, "board", "phalanx_boarded" )

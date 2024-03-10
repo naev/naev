@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>40</points>
  <base_type>Reaver</base_type>
- <GFX size="68">reaver</GFX>
+ <gfx size="68">reaver</gfx>
  <rarity>2</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Fighter">Fighter</class>
@@ -38,6 +38,7 @@
   <utility size="small" />
   <structure size="small" prop="bio_engines" name="genedrive">Laevis Gene Drive I</structure>
   <structure size="small" prop="bio_hull" name="shell">Laevis Cortex I</structure>
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>

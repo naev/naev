@@ -6,10 +6,8 @@
 #include "space_fdecl.h"
 
 #include "commodity.h"
-#include "explosion.h"
-#include "faction.h"
 #include "mission_markers.h"
-#include "opengl.h"
+#include "opengl_tex.h"
 #include "pilot.h"
 #include "shipstats.h"
 #include "tech.h"
@@ -145,6 +143,8 @@ typedef struct Spob_ {
    int lua_render;   /**< Run when rendering. */
    int lua_update;   /**< Run when updating. */
    int lua_comm;     /**< Run when player communicates with the spob. */
+   int lua_population; /**< Run when getting a string representing the population of the spob. */
+   int lua_barbg;    /**< Run to generate bar backgrounds as necessary. */
 } Spob;
 
 /*
@@ -161,6 +161,7 @@ typedef struct Spob_ {
 #define SYSTEM_NOLANES     (1<<8) /**< System should not use safe lanes at all. */
 #define SYSTEM_PMARKED     (1<<9) /**< System is marked by a player. */
 #define SYSTEM_INTEREST    (1<<10) /**< System is temporary marked as "of interest". Used when rendering map. */
+#define SYSTEM_NEBULATRAIL (1<<11) /**< System uses nebula trails. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
@@ -415,7 +416,7 @@ int system_index( const StarSystem *sys );
 int space_sysReachable( const StarSystem *sys );
 int space_sysReallyReachable( const char* sysname );
 int space_sysReachableFromSys( const StarSystem *target, const StarSystem *sys );
-char** space_getFactionSpob( int *factions, int landable );
+char** space_getFactionSpob( const int *factions, int landable );
 const char* space_getRndSpob( int landable, unsigned int services,
       int (*filter)(Spob *p));
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );
@@ -447,4 +448,4 @@ void system_setFaction( StarSystem *sys );
 void space_checkLand (void);
 void space_factionChange (void);
 void space_queueLand( Spob *pnt );
-const char *space_populationStr( uint64_t population );
+const char *space_populationStr( const Spob *spb );

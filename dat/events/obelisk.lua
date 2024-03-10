@@ -54,9 +54,9 @@ end
 
 function obelisk ()
    time.inc( time.new( 0, 0, 1000 + 2000*rnd.rnd() ) )
-   player.teleport( target, true, true )
-   local pp = player.pilot()
+   local pp = player.pilot() -- Some obelisk change the player's pilot, so we have to clean up here
    pp:shipvarPop( "obelisk" ) -- Clear obelisk
-   sfx:play()
    pp:setInvincible(false)
+   player.teleport( target, true, true )
+   sfx:play()
 end

@@ -2,15 +2,18 @@ local flow = require "ships.lua.lib.flow"
 
 local setup = {}
 
+-- Note that afterburners get added separately now
 local usable_outfits = {
    ["Emergency Shield Booster"]  = "shield_booster",
    ["Berserk Chip"]              = "berserk_chip",
    ["Combat Hologram Projector"] = "hologram_projector",
    ["Neural Accelerator Interface"] = "neural_interface",
+   ["Flicker Drive"]             = "blink_drive",
    ["Blink Drive"]               = "blink_drive",
    ["Hyperbolic Blink Engine"]   = "blink_engine",
    ["Unicorp Jammer"]            = "jammer",
    ["Milspec Jammer"]            = "jammer",
+   ["Weapons Ionizer"]           = "ionizer",
    -- Mining stuff, not strictly combat...
    ["S&K Plasma Drill"]          = "plasma_drill",
    ["S&K Heavy Plasma Drill"]    = "plasma_drill",
@@ -47,6 +50,7 @@ function setup.setup( p )
    local o = {}
 
    -- Check flow
+   flow.recalculate( p )
    o.flow = flow.has( p )
 
    -- Check out what interesting outfits there are
@@ -62,6 +66,8 @@ function setup.setup( p )
                o[var] = k
             end
             added = true
+         elseif v:type()=="Afterburner" then
+            o["afterburner"] = k
          end
       end
    end
@@ -70,7 +76,7 @@ function setup.setup( p )
    -- TODO probably move atk.choose here if we use this in all cases we initialize pilots (see issue #2197)
 
    -- Set up some ammo variables
-   --m.ranged_ammo = ai.getweapammo(4) -- uses ai
+   m.ranged_ammo = p:weapsetAmmo(4)
    m.equipopt_params = m.equipopt_params or {}
 
    -- Actually added an outfit, so we set the list

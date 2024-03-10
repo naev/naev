@@ -10,69 +10,36 @@ local swatson     = ship.get("Proteron Watson")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()
-   local pilots = { __doscans = true }
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, seuler )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, seuler )
-      scom.addPilot( pilots, seuler )
-   else
-      scom.addPilot( pilots, sdalton )
-      scom.addPilot( pilots, sdalton )
-      scom.addPilot( pilots, sdalton )
-   end
-
-   return pilots
+   return scom.doTable( { __doscans=true }, {
+      { w=0.5, seuler },
+      { w=0.8, seuler, seuler },
+      { sdalton, sdalton, sdalton },
+   } )
 end
 
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
-   local pilots = {}
-   if rnd.rnd() < 0.5 then
-      pilots.__doscans = true
-   end
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, sgauss )
-      scom.addPilot( pilots, shippocrates )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sgauss )
-      scom.addPilot( pilots, sgauss )
-      scom.addPilot( pilots, shippocrates )
-   else
-      scom.addPilot( pilots, spythagoras )
-   end
-
-   return pilots
+   return scom.doTable( { __doscans=(rnd.rnd() < 0.5) }, {
+      { w=0.5, sgauss, shippocrates },
+      { w=0.8, sgauss, sgauss, shippocrates },
+      { spythagoras },
+   } )
 end
 
 -- @brief Spawns a capship with escorts.
 local function spawn_capship ()
-   local pilots = {}
-   local r = rnd.rnd()
-
    -- Generate the capship
-   if rnd.rnd() < 0.5 then
-      scom.addPilot( pilots, sarchimedes )
-   else
-      scom.addPilot( pilots, swatson )
-   end
+   local pilots = scom.doTable( {}, {
+      { w=0.5, sarchimedes },
+      { swatson },
+   } )
 
    -- Generate the escorts
-   if r < 0.5 then
-      scom.addPilot( pilots, sgauss )
-      scom.addPilot( pilots, shippocrates )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sgauss )
-      scom.addPilot( pilots, sgauss )
-   else
-      scom.addPilot( pilots, spythagoras )
-   end
-
-   return pilots
+   return scom.doTable( pilots, {
+      { w=0.5, sgauss, shippocrates },
+      { w=0.8, sgauss, sgauss },
+      { spythagoras },
+   } )
 end
 
 local fproteron = faction.get("Proteron")

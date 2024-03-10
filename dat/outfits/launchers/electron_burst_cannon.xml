@@ -1,13 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Electron Burst Cannon">
  <general>
+  <shortname>Electron Burst C.</shortname>
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
   <rarity>3</rarity>
-  <mass>10</mass>
+  <mass>12</mass>
   <price>40000</price>
-  <description>This powerful energy weapon is built to bombard a target from great range with ion bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively defenceless. It was developed by the Za'lek to be used by their heavier droness to supplement the short range and high damage of their beams.</description>
+  <description>This powerful energy weapon is built to bombard a target from great range with EMP bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively defenceless. It was developed by the Za'lek to be used by their heavier droness to supplement the short range and high damage of their beams.</description>
   <gfx_store>weapon01.webp</gfx_store>
   <cpu>-10</cpu>
  </general>
@@ -25,10 +26,10 @@
   <spfx_shield>EmpS</spfx_shield>
   <spfx_armour>EmpM</spfx_armour>
   <duration blowup="shield">1</duration>
-  <thrust>0</thrust>
+  <accel>0</accel>
   <speed>1500</speed>
   <damage>
-   <type>shieldbreaker</type>
+   <type>emp</type>
    <penetrate>24</penetrate>
    <physical>13</physical>
    <disable>3</disable>

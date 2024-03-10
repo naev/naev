@@ -9,15 +9,20 @@ mem.whiteknight   = true
 mem.formation     = "wedge"
 
 local bribe_no_list = {
-   _([["Your money is of no interest to me."]])
+   _([["Your money is of no interest to me."]]),
+   _([["I have no need of your dirty credits."]]),
 }
 local taunt_list_offensive = {
-   _("The universe shall be cleansed of your presence!")
+   _("The universe shall be cleansed of your presence!"),
+   _("Time for some cleansing!"),
+   _("House Sirius has no need of you. Begone!"),
+   _("Prepare to pay for your sins!"),
 }
 local taunt_list_defensive = {
    _("Sirichana protect me!"),
    _("You have made a grave error!"),
-   _("You do wrong in your provocations!")
+   _("You do wrong in your provocations!"),
+   _("I shall overcome this test!"),
 }
 
 function create ()

@@ -6,13 +6,14 @@
  <overwrite>avatar_of_sirichana</overwrite>
  <shader vertex="effect2x.vert">effects/avatar_of_sirichana.frag</shader>
  <buff/>
+ <priority>4</priority>
  <stats>
   <fwd_damage>25</fwd_damage>
   <tur_damage>25</tur_damage>
   <launch_damage>25</launch_damage>
   <speed_mod>25</speed_mod>
   <turn_mod>25</turn_mod>
-  <thrust_mod>25</thrust_mod>
+  <accel_mod>25</accel_mod>
   <time_speedup>25</time_speedup>
   <time_mod>-25</time_mod>
   <absorb>20</absorb>

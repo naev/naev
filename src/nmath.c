@@ -25,7 +25,7 @@
  *    @param a Quadratic parameter.
  *    @param b Linear parameter.
  *    @param c Offset coefficient.
- *    @return 0 on success, -1 on error.
+ *    @return 0 on success, -1 on error (or complex).
  */
 int nmath_solve2Eq( double results[2], double a, double b, double c )
 {
@@ -34,11 +34,9 @@ int nmath_solve2Eq( double results[2], double a, double b, double c )
    if (root < 0.)
       return -1;
    root = sqrt(root);
-
    /* Set the results. */
    results[0] = (-b + root) / (2 * a);
    results[1] = (-b - root) / (2 * a);
-
    return 0;
 }
 
@@ -58,7 +56,6 @@ double max3( double v1, double v2, double v3 )
 double min3( double v1, double v2, double v3 )
 {
    double min;
-
    min = (v1 < v2) ? v1 : v2;
    min = (min < v3) ? min : v3;
    return(min);

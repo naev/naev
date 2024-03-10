@@ -4,27 +4,37 @@
 #pragma once
 
 #include "nxml.h"
-#include "opengl.h"
-#include "physics.h"
+#include "opengl_tex.h"
+#include "vec2.h"
 
 /**
  * @brief Represents a polygon used for collision detection.
  */
-typedef struct CollPoly_ {
-   float* x; /**< List of X coordinates of the points. */
-   float* y; /**< List of Y coordinates of the points. */
+typedef struct CollPolyView_ {
+   float *x;   /**< List of X coordinates of the points. */
+   float *y;   /**< List of Y coordinates of the points. */
    float xmin; /**< Min of x. */
    float xmax; /**< Max of x. */
    float ymin; /**< Min of y. */
    float ymax; /**< Max of y. */
-   int npt; /**< Nb of points in the polygon. */
+   int npt;    /**< Nb of points in the polygon. */
+} CollPolyView;
+
+typedef struct CollPoly_ {
+   CollPolyView *views;
+   double dir_inc;
+   double dir_off;
 } CollPoly;
 
 /* Loads a polygon data from xml. */
-void LoadPolygon( CollPoly* polygon, xmlNodePtr node );
+void poly_load( CollPoly *polygon, xmlNodePtr node );
+void poly_free( CollPoly *polygon );
 
 /* Rotates a polygon. */
-void RotatePolygon( CollPoly* rpolygon, CollPoly* ipolygon, float theta );
+void poly_rotate( CollPolyView *rpolygon, const CollPolyView *ipolygon, float theta );
+
+/* Gets a polygon view for an angle. */
+const CollPolyView *poly_view( const CollPoly *poly, double dir );
 
 /* Returns 1 if collision is detected */
 int CollideSprite( const glTexture* at, const int asx, const int asy, const vec2* ap,
@@ -36,16 +46,16 @@ int CollideLineSprite( const vec2* ap, double ad, double al,
       const glTexture* bt, const int bsx, const int bsy, const vec2* bp,
       vec2 crash[2]);
 int CollideCirclePolygon( const vec2* ap, double ar,
-      const CollPoly* bt, const vec2* bp, vec2 crash[2] );
+      const CollPolyView* bt, const vec2* bp, vec2 crash[2] );
 int CollideCircleSprite( const vec2 *ap, double ar, const glTexture* bt,
       const int bsx, const int bsy, const vec2* bp,vec2* crash );
 int CollideLinePolygon( const vec2* ap, double ad, double al,
-      const CollPoly* bt, const vec2* bp, vec2 crash[2] );
-int CollideSpritePolygon( const CollPoly* at, const vec2* ap,
+      const CollPolyView* bt, const vec2* bp, vec2 crash[2] );
+int CollideSpritePolygon( const CollPolyView* apoly, const vec2* ap,
       const glTexture* bt, const int bsx, const int bsy, const vec2* bp,
       vec2* crash );
-int CollidePolygon( const CollPoly* at, const vec2* ap,
-      const CollPoly* bt, const vec2* bp, vec2* crash );
+int CollidePolygon( const CollPolyView* at, const vec2* ap,
+      const CollPolyView* bt, const vec2* bp, vec2* crash );
 int CollideLineCircle( const vec2* p1, const vec2* p2,
       const vec2 *cc, double cr, vec2 crash[2] );
 int CollideCircleCircle( const vec2 *p1, double r1,

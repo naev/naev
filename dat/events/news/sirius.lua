@@ -1,5 +1,5 @@
 local head = {
-   _("Sirius News Reel. Words of the Sirichana for all."),
+   _("Sirius Newsreel. Words of the Sirichana for all."),
 }
 local greeting = {
    _("Stay faithful."),

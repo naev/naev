@@ -106,8 +106,10 @@ return function ()
          local sai = vn.newCharacter( tut.vn_shipai() )
          vn.transition( "blinkout" )
 
-         vn.na(fmt.f(_("You awake to your ship AI {shipai} looming over you."),{shipai=tut.ainame()}))
-         sai(fmt.f(_([["Are you alright, {pilotname}? You usually wake up after a single electric shock, but this time you did not respond and had me worried."]]),{pilotname=player.name()}))
+         vn.na(fmt.f(_("You awake to your ship AI {shipai} looming over you."),
+            {shipai=tut.ainame()}))
+         sai(fmt.f(_([["Are you alright, {pilotname}? You usually wake up after a single electric shock, but this time you did not respond and had me worried."]]),
+            {pilotname=player.name()}))
 
          vn.menu{
             {_([["Electric shock?"]]), "cont02"},
@@ -117,7 +119,8 @@ return function ()
          vn.label("cont02")
          sai(_([["It's great to have you back! Maybe you should get a doctor to look at your head this time."]]))
          vn.disappear( sai, tut.shipai.transition )
-         vn.na(fmt.f(_("{shipai} quickly dematerializes, leaving you alone with your throbbing headache. It'll probably go away soon..."),{}))
+         vn.na(fmt.f(_("{shipai} quickly dematerializes, leaving you alone with your throbbing headache. It'll probably go away soon..."),
+            {shipai=tut.ainame()}))
 
          vn.run()
          player.unboard()

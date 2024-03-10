@@ -8,7 +8,7 @@ local idle_generic = idle
 -- Get a nearby enemy using pirate heuristics
 local function __getenemy ()
    local p, d = atk.preferred_enemy( nil, true )
-   if p and d.v then -- Must be vulnerable
+   if p and (d.v or mem.norun) then -- Must be vulnerable or the pirate must not run
       return p, d.F, d.H
    end
 end
@@ -183,20 +183,23 @@ function backoff( target )
    local dir = ai.face( target, true )
    ai.accel()
 
-   -- Afterburner handling.
-   if ai.hasafterburner() and p:energy() > 30 then
-      ai.weapset( 8, true )
-   end
+   -- Handle outfits that help get away
    if mem._o and dir < math.rad(25) then
-      if mem._o.blink_drive then
-         p:toggleOutfit( mem._o.blink_drive, true )
+      if mem._o.afterburner and p:energy() > 30 then
+         p:outfitToggle( mem._o.afterburner, true )
+      elseif mem._o.blink_drive then
+         p:outfitToggle( mem._o.blink_drive, true )
       elseif mem._o.blink_engine then
-         p:toggleOutfit( mem._o.blink_engine, true )
+         p:outfitToggle( mem._o.blink_engine, true )
       end
    end
 
    -- When out of range pop task
    if ai.dist2( target ) > math.pow(tdist,2) then
+      -- Turn off afterburner if applicable
+      if mem._o and mem._o.afterburner then
+         p:outfitToggle( mem._o.afterburner, false )
+      end
       ai.poptask()
       return
    end
@@ -227,18 +230,17 @@ control_funcs.ambush_stalk = function ()
    end
 end
 control_funcs.attack = function ()
-   -- Ignore non-vulnerable targets
+   -- Make sure current target exists
    local target = ai.taskdata()
    if not target or not target:exists() then
       ai.poptask()
       return false
    end
 
+   -- If our current target is not vulnerable, and we don't run, see if we can swap enemies
    local p = ai.pilot()
-   if not careful.checkVulnerable( p, target, mem.vulnabort ) then
+   if not mem.norun and not careful.checkVulnerable( p, target, mem.vulnabort ) then
       ai.poptask()
-
-      -- Try to get a new enemy
       local enemy = __getenemy()
       if enemy ~= nil then
          ai.pushtask( "attack", enemy )
@@ -248,6 +250,7 @@ control_funcs.attack = function ()
       return true
    end
 
+   -- Think normally
    return control_funcs.generic_attack()
 end
 control_funcs.inspect_moveto = function ()

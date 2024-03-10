@@ -30,6 +30,7 @@ static int tab_key( Widget* tab, SDL_Event *event );
 static int tab_raw( Widget* tab, SDL_Event *event );
 static int tab_scroll( Widget *tab, int dir );
 static void tab_render( Widget* tab, double bx, double by );
+static void tab_renderDynamic( Widget* tab, double bx, double by );
 static void tab_renderOverlay( Widget* tab, double bx, double by );
 static void tab_cleanup( Widget* tab );
 static int tab_getBarWidth( const Widget* wgt );
@@ -76,6 +77,7 @@ unsigned int* window_addTabbedWindow( unsigned int wid,
    wgt->exposeevent        = tab_expose;
    wgt->rawevent           = tab_raw;
    wgt->render             = tab_render;
+   wgt->renderDynamic      = tab_renderDynamic;
    wgt->renderOverlay      = tab_renderOverlay;
    wgt->cleanup            = tab_cleanup;
    wgt->dat.tab.ntabs      = ntabs;
@@ -260,6 +262,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       /* Create event. */
       if (tab->dat.tab.onChange != NULL)
          tab->dat.tab.onChange( tab->wdw, tab->name, old, tab->dat.tab.active );
+      toolkit_rerender();
       break;
    }
 
@@ -339,6 +342,8 @@ static int tab_key( Widget* tab, SDL_Event *event )
           tab->dat.tab.onChange( tab->wdw, tab->name, old, tab->dat.tab.active );
       ret = 1;
    }
+   if (ret)
+      toolkit_rerender();
 
    return ret;
 }
@@ -353,18 +358,16 @@ static int tab_key( Widget* tab, SDL_Event *event )
  */
 static void tab_render( Widget* tab, double bx, double by )
 {
-   int i, x, y;
-   Window *wdw;
-
-   /** Get window. */
-   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
+   int x, y;
+   /* Get window. */
+   Window *wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    if (wdw == NULL) {
       WARN( _("Active window in widget '%s' not found in stack."), tab->name);
       return;
    }
 
    /* Render the active window. */
-   window_render( wdw );
+   window_render( wdw, wgt_isFlag(tab, WGT_FLAG_FOCUSED) );
 
    /* Render tabs ontop. */
    x = bx+tab->x+3.;
@@ -378,7 +381,7 @@ static void tab_render( Widget* tab, double bx, double by )
 
    /* Iterate through tabs */
    x += TAB_HMARGIN;
-   for (i=0; i<tab->dat.tab.ntabs; i++) {
+   for (int i=0; i<tab->dat.tab.ntabs; i++) {
       /* Draw contents rect */
       toolkit_drawRect(
           x, y, tab->dat.tab.namelen[i] + (TAB_HPADDING * 2),
@@ -394,6 +397,28 @@ static void tab_render( Widget* tab, double bx, double by )
       /* Go to next line. */
       x += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
    }
+}
+
+/**
+ * @brief Renders a button widget.
+ *
+ *    @param tab WIDGET_BUTTON widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
+ */
+static void tab_renderDynamic( Widget* tab, double bx, double by )
+{
+   (void) bx;
+   (void) by;
+   /* Get window. */
+   Window *wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
+   if (wdw == NULL) {
+      WARN( _("Active window in widget '%s' not found in stack."), tab->name);
+      return;
+   }
+
+   /* Render the active window. */
+   window_renderDynamic( wdw );
 }
 
 /**
@@ -480,6 +505,7 @@ int window_tabWinSetActive( unsigned int wid, const char *tab, int active )
    /* Create event. */
    if (wgt->dat.tab.onChange != NULL)
       wgt->dat.tab.onChange( wid, wgt->name, old, wgt->dat.tab.active );
+   toolkit_rerender();
 
    return 0;
 }
@@ -567,7 +593,7 @@ unsigned int* window_tabWinGet( unsigned int wid, const char *tab )
  */
 int window_tabWinGetBarWidth( unsigned int wid, const char* tab )
 {
-   Widget *wgt = tab_getWgt( wid, tab );
+   const Widget *wgt = tab_getWgt( wid, tab );
    return tab_getBarWidth( wgt );
 }
 
@@ -586,4 +612,15 @@ int tab_getBarWidth( const Widget* wgt )
       w += (TAB_HMARGIN + TAB_HPADDING) + wgt->dat.tab.namelen[i] + (TAB_HPADDING);
 
    return w;
+}
+
+/**
+ * @brief Sets the tab window name.
+ */
+int window_tabWinSetTabName( unsigned int wid, const char *tab, int id, const char *name )
+{
+   const Widget *wgt = tab_getWgt( wid, tab );
+   free( wgt->dat.tab.tabnames[id] );
+   wgt->dat.tab.tabnames[id] = strdup(name);
+   return 0;
 }

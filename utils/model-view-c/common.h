@@ -8,12 +8,21 @@
 
 #define DEBUGGING 1
 
-#define PATH_MAX  512
-#define STRMAX    8192
+#ifndef PATH_MAX
+#  define PATH_MAX  256
+#endif /* PATH_MAX */
+#define STRMAX             4096
+#define STRMAX_SHORT       1024
 
-#define SCREEN_W  1280
-#define SCREEN_H  1280
+#define SCREEN_W  1024
+#define SCREEN_H  1024
 
 #define _(String) String
 #define gl_checkErr()   gl_checkHandleError( __func__, __LINE__ )
 void gl_checkHandleError( const char *func, int line );
+
+typedef struct PlayerConf_ {
+   int low_memory;
+   int max_3d_tex_size;
+} PlayerConf_t;
+extern PlayerConf_t conf;

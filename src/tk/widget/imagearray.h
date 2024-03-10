@@ -32,6 +32,9 @@ typedef struct WidgetImageArrayData_ {
    int altx; /**< Alt x position. */
    int alty; /**< Alt y position. */
    double pos; /**< Current y position. */
+   int iwref; /**< Reference image width to use. */
+   int ihref; /**< Reference image height to use. */
+   double zoom; /**< How zoomed in it is. */
    int iw; /**< Image width to use. */
    int ih; /**< Image height to use. */
    int mx; /**< Last mouse x position. */
@@ -46,8 +49,9 @@ typedef struct WidgetImageArrayData_ {
  * @brief Stores position and offset data for an image array.
  */
 typedef struct iar_data_s {
-   int pos;        /**< Position (index) of the selected item. */
-   double offset;  /**< Scroll position of the image array. */
+   int pos;       /**< Position (index) of the selected item. */
+   double offset; /**< Scroll position of the image array. */
+   double zoom;   /**< Current amount of zoom. */
 } iar_data_t;
 
 /* Required functions. */
@@ -67,8 +71,13 @@ int toolkit_getImageArrayPos( unsigned int wid, const char* name );
 int toolkit_setImageArrayPos( unsigned int wid, const char* name, int pos );
 double toolkit_getImageArrayOffset( unsigned int wid, const char* name );
 int toolkit_setImageArrayOffset( unsigned int wid, const char* name, double off );
+double toolkit_getImageArrayZoom( unsigned int wid, const char *name );
+int toolkit_setImageArrayZoom( unsigned int wid, const char *name, double zoom );
 int toolkit_saveImageArrayData( unsigned int wid, const char *name,
       iar_data_t *iar_data );
+int toolkit_loadImageArrayData( unsigned int wid, const char *name,
+      const iar_data_t *iar_data );
+void toolkit_initImageArrayData( iar_data_t *iar_data );
 int toolkit_unsetSelection( unsigned int wid, const char *name );
 void toolkit_setImageArrayAccept( unsigned int wid, const char *name, void (*fptr)(unsigned int,const char*) );
 int toolkit_getImageArrayVisibleElements( unsigned int wid, const char *name );

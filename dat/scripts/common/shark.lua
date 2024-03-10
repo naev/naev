@@ -37,7 +37,7 @@ function shark.vn_arnold( params )
    return vn.Character.new( shark.arnold.name,
       tmerge( {
          image=shark.arnold.image,
-         color=shark.arnold.colour,
+         colour=shark.arnold.colour,
       }, params) )
 end
 
@@ -45,7 +45,7 @@ function shark.vn_agent( params )
    return vn.Character.new( shark.agent.name,
       tmerge( {
          image=shark.agent.image,
-         color=shark.agent.colour,
+         colour=shark.agent.colour,
       }, params) )
 end
 

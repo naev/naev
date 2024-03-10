@@ -17,11 +17,15 @@
    if spob.cur():services().shipyard == nil then
       return false
    end
-   return require("misn_test").reweight_active()
+   --return require("misn_test").reweight_active() -- don't reweight for licenses
+   return true
  </cond>
  <notes>
   <campaign>Dvaered Recruitment</campaign>
  </notes>
+ <tags>
+  <tag>dva_cap_ch01_lrg</tag>
+ </tags>
 </mission>
 --]]
 --[[
@@ -74,7 +78,7 @@ function accept()
    local doaccept = false
 
    vn.transition()
-   sol(fmt.f(_([["Hello, citizen. We finally got the formal agreement of The Goddard Company for the obtention of our second battlecruiser. We would like you to escort our convoy to and from Zhiru. I can pay you {credits} Are you interested for that mission?"]]), {credits=fmt.credits(pay)}))
+   sol(fmt.f(_([["Hello, citizen. We finally got the formal agreement of The Goddard Company for the obtention of our second battlecruiser. We would like you to escort our convoy to and from Zhiru. I can pay you {credits} Are you interested in that mission?"]]), {credits=fmt.credits(pay)}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Refuse"), "refuse"},
@@ -151,7 +155,7 @@ function enter()
          hook.pilot( mem.conv_leader, "jump", "OkranMoves" )
          hook.pilot( mem.conv_leader, "land", "OkranMoves" )
       else -- Player went to the wrong system
-         vntk.msg(_("Wrong system"),_("It appears you jumped in the wrong system somehow. you lost your convoy and failed your mission."))
+         vntk.msg(_("Wrong system"),_("It appears you jumped in the wrong system somehow. You lost your convoy and failed your mission."))
          misn.finish(false)
       end
 
@@ -162,7 +166,7 @@ function enter()
       mem.conv_leader:memory().formation = "vee" -- This is less of a death trap if the player is just behind the leader
       DvFleet( true, mem.godpnt )
 
-      local target = system.get("Arcturus")
+      local target = system.get("Waterhole")
       mem.conv_leader:control()
       mem.conv_leader:hyperspace( target )
       misn.osdCreate( _("Dvaered Shopping"), {
@@ -205,7 +209,7 @@ function land()
       vn.transition()
       vn.na(_([[After landing, Okran tells you and the rest of the escort pilots to wait for him at the spaceport's bar. As a member of his crew, you are granted access to the special VIP customers restricted bar.
 The walls are covered with pictures of different versions of the Goddard battlecruiser, each of which is accompanied by a small explicative text and a series of important facts: "Did you know that 365 Goddards Mk VII-DM were constructed between UST-510 and UST-567? This model is the most successful ever, and about 120 of them are reportedly still in use at date of UST-601."]]))
-      vn.na(_([[Some time later, Colonel Okran finally comes and shows you a fancy key-chain representing a crossed-eyed gorilla lifting a Goddard cruiser. "They have nice goodies!" Before you have time to ask one for yourself, it is time to depart.]]))
+      vn.na(_([[Some time later, Colonel Okran finally comes and shows you a fancy keychain representing a crossed-eyed gorilla lifting a Goddard cruiser. "They have nice goodies!" Before you have time to ask one for yourself, it is time to depart.]]))
       vn.done()
       vn.run()
 
@@ -222,8 +226,16 @@ The walls are covered with pictures of different versions of the Goddard battlec
 "Congratulations, citizen {player}. Our data suggests you have won your first honourable fight against a gentleman. Please reach the spaceport's military contact office for further information."
 When you arrive at the said office, a soldier greets you.]]), {player=player.name()}))
       local sol = vn.newCharacter( _("Dvaered Soldier"), { image=portrait.getFullPath(solPort) } )
-      sol(fmt.f(_([["Good day, citizen. We got the information that you destroyed the Colonel Okran in a fair space fight in the framework of a Warlords rivalry. This achievement gives you the respect of the Dvaered High Command. As such, you will be allowed to purchase the Heavy Combat Vessel License if you did not already have it. Moreover, our cleaning team did find a fancy key chain among the remains of Okran's ship. As the customs requires it, this item is now yours, for what it's worth."
-"And finally, two Warlords, namely Lady Proserpina and Lord Richthofen, required us to give you the sum of {credits} and their greetings. I wish you to stay right, loyal and strong, citizen."]]), {credits=fmt.credits(amount)}))
+      if diff.isApplied( "heavy_combat_vessel_license" ) then
+         sol(_([["Good day, citizen. We got the information that you destroyed the Colonel Okran in a fair space fight in the framework of a Warlords rivalry. This achievement gives you the respect of the Dvaered High Command. Moreover, our cleaning team did find a fancy keychain among the remains of Okran's ship. As the customs requires it, this item is now yours, for what it's worth."]]))
+      else
+         sol(_([["Good day, citizen. We got the information that you destroyed the Colonel Okran in a fair space fight in the framework of a Warlords rivalry. This achievement gives you the respect of the Dvaered High Command. As such, you will be allowed to purchase the Heavy Combat Vessel License. Moreover, our cleaning team did find a fancy keychain among the remains of Okran's ship. As the customs requires it, this item is now yours, for what it's worth."]]))
+         vn.sfxBingo()
+         vn.na(_([[You can now purchase the #bHeavy Combat Vessel License#0.]]))
+      end
+      vn.sfxVictory()
+      sol(fmt.f(_([["And finally, two Warlords, namely Lady Proserpina and Lord Richthofen, required us to give you the sum of {credits} and their greetings. I wish you to stay right, loyal and strong, citizen."]]),
+            {credits=fmt.credits(amount)}))
       vn.done()
       vn.run()
 
@@ -323,7 +335,7 @@ function veryBadThings()
    sol(_([["I am sorry, but I do not know you, citizen."]]))
    trick(_([["Ya do not know me? Hewhewhew! Of course! But really, you were expectin' to do all your shameful manoeuvring without ever meeting me? Ya all know that you are still subjects to his Imperial Majesty, right? No! You forgot that! Luckily, I'm here to remind that to you!"]]))
    sol(_([["I see. You are the… trickster, true? Lord Fatgun told me once I could run into you at some point.]]))
-   trick(_([["Hewhewhew! Different people call me differently. You boars tend to use that name indeed. So? happy to finally meet me?"]]))
+   trick(_([["Hewhewhew! Different people call me differently. You boars tend to use that name indeed. So? Happy to finally meet me?"]]))
    sol(_([["Look. I am running some serious business here. And I am not in need of a buffoon right now, so please proceed getting lost."]]))
    trick(_([["Your Fatgun bro got killed one period ago."]]))
    sol(_([[…]]))
@@ -336,7 +348,7 @@ function veryBadThings()
    trick(fmt.f(_([["{player} told them."]]), {player=player.name()}))
    vn.na(_([[You scratch your head, trying to remember if you were part to a scheming to kill Lord Fatgun when you notice Colonel Okran has been ejected from the communication channel. It's only you and the wild newcomer now.]]))
    trick(fmt.f(_([["I hope you got an afterburner, mate! Hewhewhew!
-So, seriously, what do you think of that? You chose the Dvaered way, we make it the Dvaered way! Ya know what? Meet me in orbit of {pnt} in {sys} and I'll explain you why I actually just made you a huge favour!
+So, seriously, what do you think of that? You chose the Dvaered way, we make it the Dvaered way! Ya know what? Meet me in orbit of {pnt} in {sys} and I'll explain to you why I actually just made you a huge favour!
 Oh. If ya manage to kill Okran right now, you won't need to meet me. Just land on any Dvaered planet and you'll understand everything! All ya got to do is destroying a Dvaered Goddard! Piece of cake, right?
 Bye, mate!"]]), {pnt=mem.tripnt,sys=mem.trisys}))
    vn.na(_([[The Hyena goes away, letting you alone with the group of angry Dvaered.]]))
@@ -361,6 +373,7 @@ Bye, mate!"]]), {pnt=mem.tripnt,sys=mem.trisys}))
       p:setHostile()
    end
 
+   player.autonavAbort() -- Just in case
    mem.conv_leader:control(false)
    mem.trickster:taskClear()
    mem.trickster:runaway( mem.conv_leader, true ) -- Trickster just runs away without a goal because he is a freak
@@ -410,7 +423,7 @@ So I guess you want to know why I told the pack of boars that you betrayed them,
    vn.label("why")
    trick(_([["Guess what, mate? When I told Okran you betrayed him, I made you the greatest favour possible! Yep for real!
 You know how to work your way up among the Dvaereds? Hewhewhew! By killing Dvaereds! Totally true! Hundred percent fact-checked! Dvaereds weirdos are the only kind of weirdos that will love you more if you kill other Dvaered weirdos.
-But watch out, mate! For killing Dvaereds weirdos is a subtle art, ya know? You can't just attack random Vendettas in space and win the High Command's respect. You need to kill people in the context of a "honorable fight between two respectable gentlemen". Yo, because Dvaered are for sure respectable gentlemen!"]]))
+But watch out, mate! For killing Dvaereds weirdos is a subtle art, ya know? You can't just attack random Vendettas in space and win the High Command's respect. You need to kill people in the context of a "honourable fight between two respectable gentlemen". Yo, because Dvaered are for sure respectable gentlemen!"]]))
    trick(_([["So, I gave you the occasion to fight a respectable asshol… hem… gentleman. And if you kill him, the Dvaered will fully accept you among them. You'll be like their mate, ya know? Hewhewhew! For what it's worth. But you decided to join them.
 So here I am! Your white knight on his white horse. I give you not only the occasion to fight one Colonel, but also one Colonel in a Goddard. Ya'll never have any better occasion!"]]))
    vn.menu{
@@ -429,7 +442,7 @@ I'm so annoying! Am I not? Hewhewhew! Yep I totally am!"]]))
    vn.label("how")
    trick(_([["C'mon! You're a adult, no? Ya know how to obliterate a Goddard. Don't you? Oh, I'm dumb. Maybe you don't even have the Heavy Combat Vessel License! Hewhewhew! Did I put you in a shitty situation? Kof kof kof!
 No, of course not! Now that Lord Fatass… Fatgun died, all his soldiers have been put to the Dvaered Military Reserve, and Okran don't command them anymore. Officially, he was also sent to the Reserve, but custom needs him to avenge his lord first, by at least killing one person (you). So he will be flying an unescorted Goddard.
-And as they teach at school, an unescorted capship is a dead capship. I recommend to use a corvette with torpedoes. Unless of course you have an other capship stronger than a Dvaered Goddard. Of course. Hewhewhew!"]]))
+And as they teach at school, an unescorted capship is a dead capship. I recommend using a corvette with torpedoes. Unless of course you have another capship stronger than a Dvaered Goddard. Of course. Hewhewhew!"]]))
    vn.menu{
       {who, "who"}, {where, "where"}, {why, "why"}, {what, "what"}, {leave, "leave"},
    }
@@ -473,8 +486,5 @@ end
 
 -- Remove the Pirates form the equation
 function noPirates()
-   for k,f in ipairs(pir.factions) do
-      pilot.toggleSpawn(f)
-      pilot.clearSelect(f)
-   end
+   pir.clearPirates()
 end

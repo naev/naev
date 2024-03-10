@@ -38,14 +38,13 @@ local function load_shader ()
    local starfield_frag = lf.read('bkg/shaders/starfield.frag')
 
    prng:setSeed( 43 )
-   local motionblur = 0
    local theta = prng:random() * math.pi/10.0
    local phi = prng:random() * math.pi/10.0
    local psi = prng:random() * math.pi/10.0
    local rx, ry = vec2.newP( 3+1*prng:random(), 7+1*prng:random() ):get()
    local rz = 5+1*prng:random()
    local sz = 1+1*prng:random()
-   local shader = lg.newShader( string.format(starfield_frag, motionblur, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
+   local shader = lg.newShader( string.format(starfield_frag, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
 
    local nw, nh = naev.gfx.dim()
 
@@ -63,7 +62,7 @@ local function load_shader ()
    lg.setCanvas( cvs )
    lg.clear( 0, 0, 0, 0 )
    lg.setShader( shader )
-   lg.setColor( {1,1,1,1} )
+   lg.setColour( {1,1,1,1} )
    love_shaders.img:draw( 0, 0, 0, texw, texh )
    lg.setShader()
    lg.setCanvas( oldcanvas )
@@ -74,7 +73,7 @@ end
 local function load_gfx ()
    local basepath = "gfx/loading/"
    local files = {}
-   for k,f in ipairs( lf.enumerate( basepath ) ) do
+   for k,f in ipairs( lf.getDirectoryItems( basepath ) ) do
       if string.match( f, ".webp$" ) then
          table.insert( files, f )
       end
@@ -127,11 +126,11 @@ function render ()
    end
 
    -- Draw starfield background
-   lg.setColor( sb, sb, sb, 1 )
+   lg.setColour( sb, sb, sb, 1 )
    bg:draw( 0, 0, 0, 1, 1 )
 
    -- Draw ship
-   lg.setColor( 1, 1, 1, 1 )
+   lg.setColour( 1, 1, 1, 1 )
    shipgfx:draw( bx, by )
    lg.print( shipcaption, font, bx+shipw-captionw, by+shiph-20 )
 

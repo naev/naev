@@ -44,8 +44,18 @@ piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 function create()
-   --This mission does not make any system claims
-   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( 1 )
+   -- Try to cache the route to make it so that the same route doesn't appear over and over
+   local c = naev.cache()
+   local t = time.get()
+   if not c.misn_escorts then
+      c.misn_escorts = {}
+   end
+   if c.misn_escorts._t ~= t then
+      c.misn_escorts = { _t=t } -- Regenerate
+   end
+
+   -- This mission does not make any system claims
+   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(1,2), {remove_spob=c.misn_escorts} )
 
    if mem.destspob == nil then
       misn.finish(false)
@@ -53,7 +63,11 @@ function create()
       misn.finish(false) -- have to escort them at least one jump!
    elseif mem.avgrisk * mem.numjumps <= 25 then
       misn.finish(false) -- needs to be a little bit of piracy possible along route
+   -- Have to be able to do an inclusive claim
+   elseif not misn.claim( lmisn.getRoute( system.cur(), mem.destsys ), true ) then
+      misn.finish(false)
    end
+   c.misn_escorts[ mem.destspob:nameRaw() ] = true -- Mark system
 
    if mem.avgrisk == 0 then
       piracyrisk = piracyrisk[1]
@@ -88,12 +102,17 @@ function create()
    mem.reward = 2.0 * (mem.avgrisk * mem.numjumps * mem.jumpreward + mem.traveldist * mem.distreward) * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f( misn_title[mem.convoysize], {pnt=mem.destspob, sys=mem.destsys} ) )
-   car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} ({sys} system). You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."), {pnt=mem.destspob, sys=mem.destsys} ), mem.cargo, nil, mem.destspob, nil, piracyrisk )
+   car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} ({sys} system). You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so. You may only escort one group of traders at a time."), {pnt=mem.destspob, sys=mem.destsys} ), mem.cargo, nil, mem.destspob, nil, piracyrisk )
    misn.markerAdd(mem.destspob, "computer")
    misn.setReward(mem.reward)
 end
 
 function accept()
+   if player.misnActive("Trader Escort")  then
+      vntk.msg(_([[Hands Full]]),_([[You may only escort one group of traders at a time!]]))
+      return
+   end
+
    if player.jumps() < mem.numjumps then
       if not vntk.yesno( _("Not enough fuel"), fmt.f( _([[The destination is {1} away, but you only have enough fuel for {2}. You cannot stop to refuel. Accept the mission anyway?]]), {fmt.jumps(mem.numjumps), fmt.jumps(player.jumps())} ) ) then
          return
@@ -136,7 +155,7 @@ function success ()
    mem.reward = mem.reward * alive_frac
 
    if alive_frac >= 1 then
-      vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount of #g{credits}#0."), {credits=fmt.credits(mem.reward)}) )
+      vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty, and you are rewarded the full amount of #g{credits}#0."), {credits=fmt.credits(mem.reward)}) )
       faction.get("Traders Society"):modPlayer(rnd.rnd(2,3))
    elseif alive_frac >= 0.6 then
       vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive #g{credits}#0 of the original promised reward of {reward}."), {credits=fmt.credits(mem.reward), reward=fmt.credits(reward_orig)}) )
@@ -199,15 +218,15 @@ function spawn_ambush ()
       {"Pirate Kestrel", "Pirate Admonisher", "Pirate Rhino", "Pirate Shark", "Pirate Shark", "Pirate Hyena", "Pirate Hyena", "Pirate Hyena"},
    }
    if mem.convoysize == 1 then
-      ambush = fleet.add( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[1], "Marauder", ambush_src, nil, {ai="baddie_norun"} )
    elseif mem.convoysize == 2 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(1,2)], "Marauder", ambush_src, nil, {ai="baddie_norun"} )
    elseif mem.convoysize == 3 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(2,3)], "Marauder", ambush_src, nil, {ai="baddie_norun"} )
    elseif mem.convoysize == 4 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(2,4)], "Marauder", ambush_src, nil, {ai="baddie_norun"} )
    else
-      ambush = fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(3,5)], "Marauder", ambush_src, nil, {ai="baddie_norun"} )
    end
    for _,p in ipairs(ambush) do
       p:setHostile(true)

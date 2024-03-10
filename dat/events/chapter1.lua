@@ -68,6 +68,15 @@ function create ()
          return sa > sb
       end )
 
+      -- Let us claim the systems
+      local claimsys = {}
+      for k,h in ipairs(hypergate_list) do
+         table.insert( claimsys, h:system() )
+      end
+      if not evt.claim( claimsys ) then
+         evt.finish(false)
+      end
+
       hook.safe( "cutscene_start" )
       return -- Don't finish
 
@@ -134,11 +143,11 @@ end
 
 function foreground ()
    if fg.alpha > 0 then
-      lg.setColor( 0, 0, 0, fg.alpha )
+      lg.setColour( 0, 0, 0, fg.alpha )
       lg.rectangle( "fill", 0, 0, nw, nh )
 
       if fg.text then
-         lg.setColor( 1, 1, 1, fg.alpha )
+         lg.setColour( 1, 1, 1, fg.alpha )
          lg.printf( fg.text, fg.font, fg.x, fg.y, 0.6*nw, "center" )
       end
    end
@@ -208,7 +217,7 @@ local function getFactionStuff( fct )
          end
       end
       tester_broadcast = _("For science!")
-      boss_broadcast = _("Comencing procedure!")
+      boss_broadcast = _("Commencing procedure!")
    elseif fct == "Sirius" then
       bossship = "Sirius Divinity"
       testership = "Sirius Preacher"

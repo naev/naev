@@ -157,7 +157,7 @@ function sokoban.load()
    end
 
    -- Defaults
-   lg.setBackgroundColor(0, 0, 0, 0)
+   lg.setBackgroundColour(0, 0, 0, 0)
    lg.setNewFont( 16 )
    headerfont = lg.newFont(24)
    headertext = params.header
@@ -323,7 +323,7 @@ end
 local function setcol( col )
    local r, g, b, a = table.unpack( col )
    a = a or 1
-   lg.setColor( r, g, b, a*alpha )
+   lg.setColour( r, g, b, a*alpha )
 end
 
 local function drawLevel( cx, cy, lvl, t )

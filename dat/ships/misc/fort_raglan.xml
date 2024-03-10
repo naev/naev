@@ -2,8 +2,7 @@
 <ship name="Fort Raglan">
  <points>1000</points>
  <base_type>Fort Raglan</base_type>
- <gfx_space sx="1" sy="1" polygon="station-battlestation.webp">spob/space/station-battlestation.webp</gfx_space>
- <gfx_comm>spob/exterior/station05.webp</gfx_comm>
+ <gfx sx="1" sy="1" size="150" polygon="station-battlestation.webp" comm="spob/exterior/station05.webp" noengine="1">/gfx/spob/space/station-battlestation.webp</gfx>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>
@@ -12,7 +11,7 @@
  <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
  <mission />
  <movement>
-  <thrust>1</thrust>
+  <accel>1</accel>
   <turn>100</turn>
   <speed>1</speed>
  </movement>

@@ -155,7 +155,6 @@ With this she hands you a credit chip worth {credits}.]]), {credits=fmt.credits(
 
       player.outfitAdd("Broken Nebular Shielding Prototype")
       player.pay(credits)
-      misn.markerRm(mem.misn_marker)
       nebu_research.log( _("You helped Dr. Mensing to test the nebula resistant shielding prototype by flying deep into the Sol nebula. However, the prototype failed and you almost died due to the volatility of the nebula. It is a major setback for the project.") )
       misn.finish(true)
    end
@@ -326,6 +325,7 @@ function peacemaker()
 
    vn.clear()
    vn.scene()
+   vn.transition()
    vn.na(fmt.f(_("An empire Peacemaker emerged! The ship approaches slowly towards your direction, as if they knew exactly your current position. Finally, you receive a message from the Peacemaker. They command you to dock with their ship so that their shields can protect your ship on the way back to the {sys} system."), {sys=dest_sys}))
    vn.na(_("You have no time to lose!"))
    vn.done()
@@ -345,6 +345,7 @@ function rescue()
    vn.clear()
    vn.scene()
    local captain = vn.newCharacter( nebu_research.vn_empire_captain() )
+   vn.transition()
    vn.na(_("After docking to the Peacemaker its captain invited you on her ship. It turned out that she is as curious about your rescue as you are. Unfortunately, you are not able to answer any of her questions satisfactorily."))
    vn.na(_("She tells you that her crew received a distress signal and followed it to your position. With the heavy interference of the nebula this should be impossible, or at least extremely unlikely."))
    captain(_([["It is nearly impossible that a signal passes through the nebula out here. So either there's something you're hiding or you had incredible luck. And just what were you doing out there? I did saw those Za'lek doing even more ridiculous stuff, though."]]))
@@ -368,6 +369,6 @@ You decide that it's better not to tell her about your finding.]]))
    vn.run()
 
    mem.stage = 6
-   misn.markerMove(mem.misn_marker, homeworld_sys)
+   misn.markerMove(mem.misn_marker, homeworld)
    misn.osdActive(2)
 end

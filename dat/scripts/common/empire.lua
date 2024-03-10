@@ -42,7 +42,7 @@ function emp.vn_czesc( params )
    return vn.Character.new( emp.czesc.name,
       tmerge( {
          image=emp.czesc.image,
-         color=emp.czesc.colour,
+         colour=emp.czesc.colour,
       }, params) )
 end
 
@@ -50,7 +50,7 @@ function emp.vn_soldner( params )
    return vn.Character.new( emp.soldner.name,
       tmerge( {
          image=emp.soldner.image,
-         color=emp.soldner.colour,
+         colour=emp.soldner.colour,
       }, params) )
 end
 

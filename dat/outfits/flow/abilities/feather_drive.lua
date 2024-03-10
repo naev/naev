@@ -5,7 +5,7 @@ local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
 local chakraexp = require "luaspfx.chakra_explosion"
 
-local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
+local sfx = audio.newSource( 'snd/sounds/feather_drive.ogg' )
 
 local function getStats( p, size )
    local flow_cost, cooldown, masslimit, range, drain
@@ -25,7 +25,7 @@ local function getStats( p, size )
    else
       flow_cost   = 160
       range       = 500
-      masslimit   = 5000^2 --squared
+      masslimit   = 7000^2 --squared
       cooldown    = 9
       drain       = 400
    end
@@ -46,8 +46,8 @@ function descextra( p, _o )
       if i==size then
          pfx = "#b"..pfx.."#n"
       end
-      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {masslimit} tonne limit, {drain} MJ energy drained per ship hit"),
-         {prefix=pfx, cost=cost, range=range, cooldown=cooldown, masslimit=math.sqrt(masslimit), drain=drain}).."#0"
+      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {masslimit} tonne limit, {drain} GJ energy drained per ship hit"),
+         {prefix=pfx, cost=cost, range=range, cooldown=cooldown, masslimit=fmt.number(math.sqrt(masslimit)), drain=drain}).."#0"
    end
    return s
 end

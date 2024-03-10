@@ -70,7 +70,10 @@ return function ()
                local p = pilot.add("Empire Pacifier", "Empire", nil, _("ECB Bolten"), {naked=true, ai="pers_patrol"})
                p:intrinsicSet( "fwd_damage", 10 )
                p:intrinsicSet( "shield_mod", 25 )
-               equipopt.empire( p, {turret=0, beam=0, launcher=0} )
+               equipopt.empire( p, {
+                  turret=0, beam=0, launcher=0,
+                  outfits_add = {"Unicorp Storm Launcher",}
+               } )
                local m = p:memory()
                m.ad = _("Empire is recruiting new Combat Bureaucrats. Inquire at your nearest Bureau.")
                m.comm_greet = _([["You wouldn't be interested in becoming an Empire Combat Bureaucrat, would you?"]])

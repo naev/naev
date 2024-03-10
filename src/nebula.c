@@ -19,6 +19,7 @@
 #include "menu.h"
 #include "opengl.h"
 #include "player.h"
+#include "ntracing.h"
 #include "rng.h"
 #include "spfx.h"
 #include "vec2.h"
@@ -107,8 +108,7 @@ int nebu_resize (void)
 
    /* Set up the matrices. */
    nebu_render_P = mat4_identity();
-   mat4_translate( &nebu_render_P, -nebu_render_w/2., -nebu_render_h/2., 0. );
-   mat4_scale( &nebu_render_P, nebu_render_w, nebu_render_h, 1. );
+   mat4_translate_scale_xy( &nebu_render_P, -nebu_render_w/2., -nebu_render_h/2., nebu_render_w, nebu_render_h );
    glUseProgram(shaders.nebula_background.program);
    gl_uniformMat4(shaders.nebula_background.projection, &nebu_render_P);
    glUseProgram(shaders.nebula.program);
@@ -146,8 +146,12 @@ void nebu_exit (void)
  */
 void nebu_render( const double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    nebu_renderBackground(dt);
    nebu_renderPuffs( 1 );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -194,28 +198,9 @@ static void nebu_blitFBO (void)
       return;
 
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-
-   glUseProgram(shaders.texture.program);
-
-   glBindTexture( GL_TEXTURE_2D, nebu_tex );
-
-   glEnableVertexAttribArray( shaders.texture.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
-         0, 2, GL_FLOAT, 0 );
-
-   /* Set shader uniforms. */
-   gl_uniformColor(shaders.texture.color, &cWhite);
-
    const mat4 ortho = mat4_ortho(0, 1, 0, 1, 1, -1);
    const mat4 I = mat4_identity();
-   gl_uniformMat4( shaders.texture.projection, &ortho );
-   gl_uniformMat4( shaders.texture.tex_mat, &I );
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   glDisableVertexAttribArray( shaders.texture.vertex );
+   gl_renderTextureRawH( nebu_tex, &ortho, &I, &cWhite );
 }
 
 /**
@@ -273,6 +258,8 @@ void nebu_renderOverlay( const double dt )
    (void) dt;
    double gx, gy, z;
 
+   NTracingZone( _ctx, 1 );
+
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
 
@@ -315,6 +302,8 @@ void nebu_renderOverlay( const double dt )
    /* Reset puff movement. */
    puff_x = 0.;
    puff_y = 0.;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -351,8 +340,7 @@ static void nebu_renderPuffs( int below_player )
       glUseProgram( shaders.nebula_puff.program );
 
       projection = gl_view_matrix;
-      mat4_translate( &projection, x, y, 0. );
-      mat4_scale( &projection, s, s, 1. );
+      mat4_translate_scale_xy( &projection, x, y, s, s );
       glEnableVertexAttribArray(shaders.nebula_puff.vertex);
       gl_vboActivateAttribOffset( gl_circleVBO, shaders.nebula_puff.vertex, 0, 2, GL_FLOAT, 0 );
 
@@ -380,6 +368,12 @@ void nebu_prep( double density, double volatility, double hue )
 {
    glColour col;
 
+   NTracingZone( _ctx, 1 );
+
+   /* Set up ambient colour. */
+   col_hsv2rgb( &col, nebu_hue*360., 1., 1.  );
+   gltf_light( 3.0*col.r, 3.0*col.g, 3.0*col.b, 0.5 );
+
    /* Set the hue. */
    nebu_hue = hue;
    glUseProgram(shaders.nebula.program);
@@ -401,28 +395,32 @@ void nebu_prep( double density, double volatility, double hue )
    /* Done setting shaders. */
    glUseProgram(0);
 
-   /* Set density parameters. */
-   nebu_density = density;
-   nebu_update( 0. );
-   nebu_dt   = (2.*density + 200.) / 10e3; /* Faster at higher density */
-   nebu_dx   = 15e3 / pow(density, 1./3.); /* Closer at higher density */
-   nebu_time = 0.;
+   if (density > 0.) {
+      /* Set density parameters. */
+      nebu_density = density;
+      nebu_update( 0. );
+      nebu_dt   = (2.*density + 200.) / 10e3; /* Faster at higher density */
+      nebu_dx   = 15e3 / pow(density, 1./3.); /* Closer at higher density */
+      nebu_time = 0.;
 
-   nebu_npuffs = density/2.;
-   nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);
-   for (int i=0; i<nebu_npuffs; i++) {
-      NebulaPuff *np = &nebu_puffs[i];
+      nebu_npuffs = density/2.;
+      nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);
+      for (int i=0; i<nebu_npuffs; i++) {
+         NebulaPuff *np = &nebu_puffs[i];
 
-      /* Position */
-      np->pos.x = (SCREEN_W+2.*NEBULA_PUFF_BUFFER)*RNGF();
-      np->pos.y = (SCREEN_H+2.*NEBULA_PUFF_BUFFER)*RNGF();
+         /* Position */
+         np->pos.x = (SCREEN_W+2.*NEBULA_PUFF_BUFFER)*RNGF();
+         np->pos.y = (SCREEN_H+2.*NEBULA_PUFF_BUFFER)*RNGF();
 
-      /* Maybe make size related? */
-      np->s = RNG(10,32);
-      np->height = RNGF() + 0.2;
+         /* Maybe make size related? */
+         np->s = RNG(10,32);
+         np->height = RNGF() + 0.2;
 
-      /* Seed. */
-      np->rx = RNGF()*2000.-1000.;
-      np->ry = RNGF()*2000.-1000.;
+         /* Seed. */
+         np->rx = RNGF()*2000.-1000.;
+         np->ry = RNGF()*2000.-1000.;
+      }
    }
+
+   NTracingZoneEnd( _ctx );
 }

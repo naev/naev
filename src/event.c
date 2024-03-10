@@ -144,10 +144,9 @@ int event_start( const char *name, unsigned int *id )
  */
 const char *event_getData( unsigned int eventid )
 {
-   Event_t *ev = event_get( eventid );
+   const Event_t *ev = event_get( eventid );
    if (ev == NULL)
       return NULL;
-
    return event_data[ ev->data ].name;
 }
 
@@ -159,10 +158,9 @@ const char *event_getData( unsigned int eventid )
  */
 int event_isUnique( unsigned int eventid )
 {
-   Event_t *ev = event_get( eventid );
+   const Event_t *ev = event_get( eventid );
    if (ev == NULL)
       return -1;
-
    return !!(event_data[ ev->data ].flags & EVENT_FLAG_UNIQUE);
 }
 
@@ -290,7 +288,7 @@ void event_remove( unsigned int eventid )
  */
 int event_save( unsigned int eventid )
 {
-   Event_t *ev = event_get(eventid);
+   const Event_t *ev = event_get(eventid);
    if (ev == NULL)
       return 0;
    return ev->save;
@@ -305,7 +303,7 @@ int event_alreadyRunning( int data )
 {
    /* Find events. */
    for (int i=0; i<array_size(event_active); i++) {
-      Event_t *ev = &event_active[i];
+      const Event_t *ev = &event_active[i];
       if (ev->data == data)
          return 1;
    }
@@ -355,8 +353,10 @@ void events_trigger( EventTrigger_t trigger )
             fct = cur_system->faction;
          else if (trigger==EVENT_TRIGGER_LOAD || trigger==EVENT_TRIGGER_LAND)
             fct = land_spob->presence.faction;
-         else
+         else {
+            fct = -1;
             match = -1; /* Don't hae to check factions. */
+         }
 
          if (match==0) {
             for (int j=0; j<array_size(ed->factions); j++) {
@@ -485,7 +485,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &temp->tags, strdup(tmp) );
                continue;
@@ -552,8 +552,10 @@ static int event_cmp( const void* a, const void* b )
  */
 int events_load (void)
 {
-   char **event_files = ndata_listRecursive( EVENT_DATA_PATH );
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   char **event_files = ndata_listRecursive( EVENT_DATA_PATH );
 
    /* Run over events. */
    event_data = array_create_size( EventData, array_size( event_files ) );
@@ -576,12 +578,14 @@ int events_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_("Loaded %d Event in %.3f s", "Loaded %d Events in %.3f s", array_size(event_data) ), array_size(event_data), time/1000. );
    }
    else
       DEBUG( n_("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -774,7 +778,7 @@ void event_activateClaims (void)
  */
 int event_testClaims( unsigned int eventid, int sys )
 {
-   Event_t *ev = event_get( eventid );
+   const Event_t *ev = event_get( eventid );
    if (ev==NULL) {
       WARN(_("Trying to test claims of unknown event with id '%d'!"), eventid);
       return 0;
@@ -789,7 +793,7 @@ void event_checkValidity (void)
 {
    /* Iterate. */
    for (int i=0; i<array_size(event_active); i++) {
-      Event_t *ev = &event_active[i];
+      const Event_t *ev = &event_active[i];
 
       /* Check if has children. */
       if (hook_hasEventParent( ev->id ) > 0)

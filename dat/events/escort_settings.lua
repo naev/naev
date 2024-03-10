@@ -152,16 +152,16 @@ function escort_gui ()
    lst_profiles = luatk.newList( wdw, 20, 55, 260, 120, profiles_list, function ( itm, idx )
       if itm=="Custom" then return end
       local prof = profiles[idx]
-      if prof.aggressive then
+      if prof.aggressive~=nil then
          chk_aggressive:set( prof.aggressive, true )
       end
-      if prof.enemyclose then
+      if prof.enemyclose~=nil then
          fad_enemyclose:set( prof.enemyclose, true )
       end
-      if prof.leadermaxdist then
+      if prof.leadermaxdist~=nil then
          fad_returndist:set( prof.leadermaxdist, true )
       end
-      if prof.armour_run then
+      if prof.armour_run~=nil then
          fad_armourrun:set(  prof.armour_run, true )
       end
       update_pilots()

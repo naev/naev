@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="minerva_2">
+ <spob name="Minerva Station">
+  <description>The station consists of essentially one gigantic gambling complex. While it is usually a very high-energy frenetic environment full of gambling, the station seems to undergoing renovation, especially since a hole was blown off the side of it. Only the spaceport area is still available to the public, where you can still buy horrible souvenirs if you are so inclined. Except for the workers and the occasional tourist who didn't know the station was under renovation, the station is mainly empty.</description>
+  <bar>Like most of the station, the bar is directly built into the gambling complex. It's mainly empty except for some workers who seem to be taking a break from whatever they are doing.</bar>
+  <service_remove>missions</service_remove>
+  <service_remove>commodity</service_remove>
+  <service_remove>outfits</service_remove>
+  <service_remove>shipyard</service_remove>
+  <tag_add>nonpc</tag_add>
+  <nomissionspawn_add/>
+ </spob>
+</unidiff>

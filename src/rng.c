@@ -12,25 +12,22 @@
 #include <errno.h>
 #include <math.h>
 #include <stdint.h>
-#include <time.h>
 #include <unistd.h>
-#include "SDL.h"
 
 #include "naev.h"
 
 #if HAS_POSIX
+#include <time.h>
 #include <fcntl.h>
 #include <sys/time.h>
 #endif /* HAS_POSIX */
-#if WIN32
+#if __WIN32__
 #include <sys/timeb.h>
 #include <sys/types.h>
-#endif /* WIN32 */
+#endif /* __WIN32__ */
 /** @endcond */
 
 #include "rng.h"
-
-#include "log.h"
 
 /*
  * mersenne twister state
@@ -59,7 +56,7 @@ void rng_init (void)
    int need_init;
 
    need_init = 1; /* initialize by default */
-#if LINUX
+#if __LINUX__
    int fd;
    fd = open("/dev/urandom", O_RDONLY); /* /dev/urandom is better than time seed */
    if (fd != -1) {
@@ -72,13 +69,13 @@ void rng_init (void)
    }
    else
       i = rng_timeEntropy();
-#else /* LINUX */
+#else /* __LINUX__ */
    i = rng_timeEntropy();
-#endif /* LINUX */
+#endif /* __LINUX__ */
 
    if (need_init)
       mt_initArray( i );
-   for (i=0; i<10; i++) /* generate numbers to get away from poor initial values */
+   for (int j=0; j<10; j++) /* generate numbers to get away from poor initial values */
       mt_genArray();
 }
 
@@ -96,7 +93,7 @@ static uint32_t rng_timeEntropy (void)
    struct timeval tv;
    gettimeofday( &tv, NULL );
    i = tv.tv_sec * 1000000 + tv.tv_usec;
-#elif WIN32
+#elif __WIN32__
    struct _timeb tb;
    _ftime( &tb );
    i = tb.time * 1000 + tb.millitm;

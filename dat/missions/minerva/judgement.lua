@@ -1,6 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Minerva Judgement">
+ <unique />
  <priority>3</priority>
  <chance>100</chance>
  <location>Bar</location>
@@ -56,7 +57,7 @@ function accept ()
    vn.transition()
 
    vn.na(_([[You find Zuri waving to you at the bar. It seems like she finished whatever she had to do.]]))
-   zuri(fmt.f(_([["OK, I've got some help, they'll meet up with us on {spb}. I have no idea to expect out of all of this, but it seems like a pretty good damn chance to clear up Minerva Station if we play our cards right."]]),
+   zuri(fmt.f(_([["OK, I've got some help, they'll meet up with us on {spb}. I have no idea what to expect out of all of this, but it seems like a pretty good damn chance to clear up Minerva Station if we play our cards right."]]),
       {spb=trialspb}))
    zuri(fmt.f(_([["I'll be going with you on your ship to {spb}. We don't really have much of a plan but to show up, and hope that all the data collected will be useful for us. You ready to take us to the {sys} system and do this?"]]),
       {spb=trialspb, sys=trialsys}))
@@ -122,10 +123,10 @@ function trial_start ()
    local maikki = minerva.vn_maikki()
    local ceo = minerva.vn_ceo()
    local judge = vn.Character.new( _("Judge Holmes"), { image="judge_holmes.webp" } )
-   local zlk = vn.Character.new( _("Za'lek Lawyer"), { image=zalek_image, color=zalek_colour } )
-   local dvd = vn.Character.new( _("Dvaered Representative"), { image=dvaered_image, color=dvaered_colour } )
+   local zlk = vn.Character.new( _("Za'lek Lawyer"), { image=zalek_image, colour=zalek_colour } )
+   local dvd = vn.Character.new( _("Dvaered Representative"), { image=dvaered_image, colour=dvaered_colour } )
    local scv = vn.Character.new( minerva.scavengera.name,
-         { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="farleft" } )
+         { image=minerva.scavengera.image, colour=minerva.scavengera.colour, pos="farleft" } )
 
    vn.clear()
    vn.scene()
@@ -141,7 +142,7 @@ function trial_start ()
    }
 
    vn.label("01_later")
-   vn.na(_([[You decide to post-pone deciding the future of Minerva Station.]]))
+   vn.na(_([[You decide to postpone deciding the future of Minerva Station.]]))
    vn.done()
 
    vn.label("01_start")
@@ -158,7 +159,7 @@ function trial_start ()
    vn.scene()
    vn.newCharacter( ceo )
    vn.transition( "slideleft" )
-   vn.na(_([[The Minerva CEO is near the front of the crowd, he seems to be quite pale and looking very well.]]))
+   vn.na(_([[The Minerva CEO is near the front of the crowd, he seems to be quite pale and not looking very well.]]))
 
    vn.scene()
    vn.newCharacter( zlk )
@@ -190,7 +191,7 @@ function trial_start ()
    judge(_([[A judge floats up to the center of the room.
 "Order! Order!"
 She hits her gavel.]]))
-   vn.na(_([[Except for the odd cough, silence envelopes the room.]]))
+   vn.na(_([[Except for the odd cough, silence envelops the room.]]))
    judge(_([["We are gathered here to day to deliberate over the future of Minerva Station, which has been accused of falling into debauchery and lawlessness. These are very serious accusation that question the sovereignty of Minerva Station, which currently enjoys the privilege of independent rule."]]))
    judge(_([[According to Principle of System Sovereignty, the parties who have claims on the system have the right for equal, fair, and honest deliberations of the partake in the distribution of powers.]]))
 
@@ -225,7 +226,7 @@ She hits her gavel.]]))
 The judge nods towards Maikki, giving her permission to speak.]]))
    maikki(_([["Your honour."
 Maikki gives an impeccable formal bow.]]))
-   maikki(_([["I would like to submit an EJ-7777 motion to substitute the Minera CEO."]]))
+   maikki(_([["I would like to submit an EJ-7777 motion to substitute the Minerva CEO."]]))
    judge(_([[The judge makes a curious expression and hovers down to collect the papers from Maikki. She quickly skims over it, and gives a sly grin.]]))
    judge(_([["Well it seems like the deliberations will be able to proceed today. Replacing the previous individual, we have Maisie McPherson, who will be representing the independent interests of Minerva Station. Please sit down."]]))
    vn.disappear( maikki, "slideup" )
@@ -246,7 +247,7 @@ Maikki gives an impeccable formal bow.]]))
 "Ladies and gentlemen, it is long known that Minerva Station is a stain on the galactic map. Despite all the excellent potential, it has been squandered away during cycles neither benefiting the Empire nor the Great Houses."]]))
    zlk(_([["Today, I stand before you as the representative of House Za'lek, armed not only with legal expertise, but intellect that has guided our House to prosperity throughout the Empire. I shall present a compelling case as to why Minerva Station rightfully belongs to House Za'lek."]]))
    local log = vne.flashbackTextStart(_("Narrator"))
-   log(_([[The Za'lek Lawyer gives a meticulously prepared and organized speech regarding the plans and benefits that House Za'lek can bring to Minerva Station with a focus on the track record of House Za'lek and the potential for refocusing the station as a cultural enlightenment center to improve collaboration among the great houses.]]))
+   log(_([[The Za'lek Lawyer gives a meticulously prepared and organized speech regarding the plans and benefits that House Za'lek can bring to Minerva Station with a focus on the track record of House Za'lek and the potential for refocusing the station as a cultural enlightenment center to improve collaboration amongst the great houses.]]))
    vne.flashbackTextEnd()
    zlk(_([["...In conclusion, I am confident that your wisdom and discernment will lead you to make the just and informed decision, aligning the fate of this space station with the unmatched expertise and vision of House Za'lek."]]))
 
@@ -275,7 +276,7 @@ Maikki gives an impeccable formal bow.]]))
    vn.newCharacter( maikki )
    vn.transition( "slideleft" )
    maikki(_([[Maikki stands up to begin her exposition.
-"You honour."]]))
+"Your honour."]]))
    maikki(_([["Today, we gather here to determine the fate of a celestial jewel, a bastion of hope, and a symbol of untethered possibility—the sovereignty of Minerva Station. I stand before you as an advocate for the voice of freedom, the embodiment of autonomy, and the guardian of neutrality."]]))
    maikki(_([["We find ourselves in the midst of a clash between the titans of power and influence: the sly House Za'lek and the aggressive House Dvaered. They seek dominion over this station, driven by their thirst for control and their insatiable desire for conquest."]]))
    maikki(_([["Yet, amidst this power struggle, we must not lose sight of the value inherent in independence. Minerva Station, free from the shackles of allegiance, stands as a sanctuary away from the clutches of power-hungry houses. In its independence, Minerva Station supports trade and diplomacy throughout the Empire."]]))
@@ -356,9 +357,10 @@ Maikki gives an impeccable formal bow.]]))
    maikki(_([["Was or was not Minerva Station infiltrated by House Dvaered, who went so far to plant a mole employee in the gambling operations?"]]))
    vn.na(_([[You state the facts you remember, avoiding mentioning the fact you helped kidnap them and so forth.]]))
    maikki(_([["Your honour, this establishes that House Dvaered was actively attempting to undermine Minerva Station even though it is under independence rule!"]]))
-   maikki(_([["Furthermore, {playername}, is it true or not that House Za'lek established listening post in order to capture communications near Minerva Station and thus violate the sovereignty of the independent space?"]]))
+   maikki(fmt.f(_([["Furthermore, {playername}, is it true or not that House Za'lek established listening post in order to capture communications near Minerva Station and thus violate the sovereignty of the independent space?"]]),
+         {playername=player.name()}))
    vn.na(_([[You once again state the facts, avoiding mentioning you were the one who blew it all up.]]))
-   maikki(_([["See, Your Honour, not only can we put in doubt House Dvaered's ill intentions, House Za'lek was also undermining the independent of Minerva Station!"]]))
+   maikki(_([["See, Your Honour, not only can we put in doubt House Dvaered's ill intentions, House Za'lek was also undermining the independence of Minerva Station!"]]))
    maikki(_([["House Dvaered and House Za'lek can not be trusted, and the only way to ensure the local prosperity is to ensure the independence of Minerva Station."
 Having finished her interrogation, Maikki sits down.]]))
 
@@ -396,7 +398,7 @@ Having finished her interrogation, Maikki sits down.]]))
       vn.disappear( scv, "slideup" )
       dvd(_([[Murmurs spread across the room as the Dvaered Representative frowns.]]))
       vn.func( function ()
-         zl_points = zl_points-1
+         dv_points = dv_points-1
       end )
    else
       dvd(fmt.f(_([["Here is the proof in the black box we recovered from the scavenger ships. We can see that the last moments clearly log {playername}'s ship attacking them."]]),
@@ -489,7 +491,7 @@ Having finished her interrogation, Maikki sits down.]]))
       vn.jump("cont04")
 
       vn.label("cont04_took")
-      zlk(fmt.f(_([["Let it be noted that {playername} admits to using intimidation and force te deprive a legal Imperial citizen of their possessions!"]]),
+      zlk(fmt.f(_([["Let it be noted that {playername} admits to using intimidation and force to deprive a legal Imperial citizen of their possessions!"]]),
          {playername=player.name()}))
       vn.jump("cont04")
    end
@@ -537,7 +539,7 @@ Having finished her interrogation, Maikki sits down.]]))
    vn.jump("05")
 
    vn.label("05")
-   zlk(fmt.f(_([["Although the exact details of what happened between {playername} and Dr. Strangelove is not clear, that should be subject to another trial, what is clear is that {playername} can not be trusted and their testimony should be invalidated."]]),
+   zlk(fmt.f(_([["Although the exact details of what happened between {playername} and Dr. Strangelove is not clear, that should be subject to another trial, what is clear is that {playername} can not be trusted, and their testimony should be invalidated."]]),
       {playername=player.name()}))
    zlk(_([["That is all I have to say."
 The Za'lek Lawyer sits down.]]))
@@ -550,7 +552,7 @@ The Za'lek Lawyer sits down.]]))
    log = vne.flashbackTextStart(_("Narrator"))
    log(_([[The dispositions continue with more formalities with all sides calling for motions and objecting, however, it does not seem like much is being added to the arguments.
 
-House Za'lek and House Dvaered seem to be generally on the passive, while Maikki is very aggressive pressing the houses without giving them much room to breath.
+House Za'lek and House Dvaered seem to be generally on the passive, while Maikki is very aggressive pressing the houses without giving them much room to breathe.
 
 Eventually when all argumentation is exhausted the different representatives repeat their main points before judgement is passed.]]))
    vne.flashbackTextEnd()
@@ -601,13 +603,13 @@ Eventually when all argumentation is exhausted the different representatives rep
    vn.na(_([[You can see the judge and House representatives shift around uncomfortably.]]))
    kex(_([["Well, it all ends here!"]]))
    vn.func( function () kex.shader = love_shaders.aura() end )
-   vn.sfx( "snd/sounds/activate3.ogg" ) -- activation sound
+   vn.sfx( love_audio.newSource( "snd/sounds/activate3.ogg" ) ) -- activation sound
    kex(_([[Kex's eyes glow red and you hear the activation sound of some sort of weapon.]]))
    vn.func( function () kex.shader = nil end )
    vn.disappear( kex, "slideup" )
-   vn.sfx( "snd/sounds/crowdpanic01.ogg" ) -- some yelling
+   vn.sfx( love_audio.newSource( "snd/sounds/crowdpanic01.ogg" ) ) -- some yelling
    vn.na(_([[As people start scrambling and yelling, you hear a shot and Kex falls down as chaos unfolds.]]))
-   vn.sfx( "snd/sounds/autocannon.ogg" ) -- autocannon
+   vn.sfx( love_audio.newSource( "snd/sounds/autocannon.ogg" ) ) -- autocannon
    vn.na(_([[You hear shots being fired left and right as you duck for cover. The Judge's levitating desk crashes in the background creating a small explosion as things take a turn for the worst.]]))
    vn.menu{
       {_([[Go for the door.]]),"06_getout"},
@@ -630,20 +632,23 @@ Eventually when all argumentation is exhausted the different representatives rep
    -- Music is a bit slower and sadder
    love_audio.setEffect( "reverb_sad", reverb_preset.drugged() )
    vn.music( minerva.loops.pirate, {pitch=0.6, effect="reverb_sad"} )
-   vn.newCharacter( zuri )
+   local zuriH = vn.newCharacter( minerva.vn_zuriH() )
    vn.transition()
-   zuri(fmt.f(_([["Hey {playername}..."
+   zuriH(fmt.f(_([["Hey {playername}..."
 Zuri coughs a bit, she doesn't look like she's in good shape and seems to be clutching something.]]),
       {playername=player.name()}))
    vn.na(_([[You get closer and you see that she is covered in a fair amount of blood and seems to be holding onto Kex!]]))
-   zuri(_([["Things didn't turn out quite how I expected..."
+   zuriH(_([["Things didn't turn out quite how I expected..."
 She grimaces in pain as she talks.]]))
    vn.na(_([[You shush her and try to help her stop her bleeding. This doesn't look too good.]]))
-   zuri(_([["I'm going to have to ask another favour of you..."
+   zuriH(_([["I'm going to have to ask another favour of you..."
 She tries to adjust her position a bit to breath more easily, the pain is clear in her eyes.]]))
-   zuri(_([["Give me a second to catch my breath and we can go."]]))
+   zuriH(_([["Give me a second to catch my breath and we can go."]]))
 
    vn.run()
+
+   -- Since it was triggered by talking to an NPC, we have to trigger the next mission so the next NPC appears
+   naev.missionStart("Minerva Finale 1")
 
    if didtrial then
       local winnerstr
@@ -663,5 +668,5 @@ end
 -- Make sure can land on the Jade Court
 function enter ()
    if system.cur()~=trialsys then return end
-   trialspb:landOverride(true)
+   trialspb:landAllow(true)
 end

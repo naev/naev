@@ -4,10 +4,10 @@
 #pragma once
 
 /** @cond */
+#include "SDL_keycode.h"
 #include "naev.h"
 /** @endcond */
 
-#include "log.h"
 #include "tk/widget.h"
 
 /*
@@ -61,6 +61,7 @@ typedef enum WidgetStatus_ {
 #define WGT_FLAG_RAWINPUT     (1<<1)   /**< Widget should always get raw input. */
 #define WGT_FLAG_ALWAYSMMOVE  (1<<2)   /**< Widget should always get mouse motion events. */
 #define WGT_FLAG_FOCUSED      (1<<3)   /**< Widget is focused. */
+#define WGT_FLAG_DYNAMIC      (1<<4)   /**< Widget should dynamically render. */
 #define WGT_FLAG_KILL         (1<<9)   /**< Widget should die. */
 #define wgt_setFlag(w,f)      ((w)->flags |= (f)) /**< Sets a widget flag. */
 #define wgt_rmFlag(w,f)       ((w)->flags &= ~(f)) /**< Removes a widget flag. */
@@ -103,6 +104,7 @@ typedef struct Widget_ {
 
    /* Misc. routines. */
    void (*render) ( struct Widget_ *wgt, double x, double y ); /**< Render function for the widget. */
+   void (*renderDynamic) ( struct Widget_ *wgt, double x, double y ); /**< Dynamic render function for the widget. */
    void (*renderOverlay) ( struct Widget_ *wgt, double x, double y ); /**< Overlay render fuction for the widget. */
    void (*cleanup) ( struct Widget_ *wgt ); /**< Clean up function for the widget. */
    void (*focusGain) ( struct Widget_ *wgt ); /**< Get focus. */
@@ -134,10 +136,8 @@ typedef struct Widget_ {
 #define WINDOW_FULLSCREEN  (1<<4) /**< Window is fullscreen. */
 #define WINDOW_CENTERX     (1<<5) /**< Window is X-centered. */
 #define WINDOW_CENTERY     (1<<6) /**< Window is Y-centered. */
+#define WINDOW_DYNAMIC     (1<<7) /**< Window should be rerendered every frame. */
 #define WINDOW_KILL        (1<<9) /**< Window should die. */
-#define WINDOW_FADEIN      (1<<10) /**< Window is fading in. */
-#define WINDOW_FADEOUT     (1<<11) /**< Window is fading out. */
-#define WINDOW_FADEDELAY   (1<<12) /**< Fade has just started and may be delayed. */
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
 #define window_rmFlag(w,f) ((w)->flags &= ~(f)) /**< Removes a window flag. */
@@ -163,7 +163,7 @@ typedef struct Window_ {
 
    void (*accept_fptr)(unsigned int wid,const char* name); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
    void (*cancel_fptr)(unsigned int wid,const char* name); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
-   void (*cleanup_fptr)(unsigned int wid,const char* name); /**< Triggered when window is finally freed. */
+   void (*focus_fptr)(unsigned int wid); /**< Triggered when window's focus status changes. */
    int (*keyevent)(unsigned int wid,SDL_Keycode,SDL_Keymod,int); /**< User defined custom key event handler. */
    int (*eventevent)(unsigned int wid,SDL_Event *evt); /**< User defined event handler. */
 
@@ -188,15 +188,17 @@ Window* window_wgetW( const unsigned int wid );
 Window* window_wgetNameW( const char *name );
 void toolkit_setWindowPos( Window *wdw, int x, int y );
 int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge );
-void window_render( Window* w );
+void window_render( Window* w, int top );
+void window_renderDynamic( Window *w );
 void window_renderOverlay( Window* w );
 void window_kill( Window *wdw );
 
 /* Widget stuff. */
 Widget* window_newWidget( Window* w, const char *name );
 void widget_cleanup( Widget *widget );
+void widget_setStatus( Widget *widget, WidgetStatus sts );
 Widget* window_getwgt( const unsigned int wid, const char* name );
-void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
+void toolkit_setPos( const Window *wdw, Widget *wgt, int x, int y );
 void toolkit_focusSanitize( Window *wdw );
 void toolkit_focusClear( Window *wdw );
 void toolkit_nextFocus( Window *wdw );
@@ -217,5 +219,5 @@ void toolkit_drawTriangle( int x1, int y1, int x2, int y2, int x3, int y3,
 void toolkit_drawAltText( int bx, int by, const char *alt );
 
 /* Input stuff. */
-Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
+Uint32 toolkit_inputTranslateCoords( const Window *w, SDL_Event *event,
       int *x, int *y, int *rx, int *ry );

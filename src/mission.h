@@ -9,8 +9,6 @@
 #include "claim.h"
 #include "commodity.h"
 #include "nlua.h"
-#include "nxml.h"
-#include "opengl.h"
 #include "space.h"
 #include "mission_markers.h"
 
@@ -115,7 +113,7 @@ extern Mission **player_missions; /**< Player's active missions. */
 /*
  * creates missions for a spob and such
  */
-Mission* missions_genList( int *n, int faction,
+Mission* missions_genList( int faction,
       const Spob *pnt, const StarSystem *sys, MissionAvailability loc );
 int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
 void missions_run( MissionAvailability loc, int faction, const Spob *pnt, const StarSystem *sys );
@@ -126,6 +124,7 @@ const char *mission_availabilityStr( MissionAvailability loc );
 /*
  * misc
  */
+int mission_compare( const void* arg1, const void* arg2 );
 const MissionData *mission_list (void);
 int mission_alreadyRunning( const MissionData* misn );
 int mission_getID( const char* name );
@@ -166,7 +165,7 @@ int mission_reload( const char *name );
  */
 int misn_tryRun( Mission *misn, const char *func );
 void misn_runStart( Mission *misn, const char *func );
-int misn_runFunc( Mission *misn, const char *func, int nargs );
+int misn_runFunc( const Mission *misn, const char *func, int nargs );
 int misn_run( Mission *misn, const char *func );
 
 /*

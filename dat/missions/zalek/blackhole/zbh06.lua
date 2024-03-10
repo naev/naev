@@ -45,7 +45,7 @@ function accept ()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
    vn.na(_([[You find Zach analyzing what seems to be a blueprint of Icarus, likely preparing for surgery.]]))
-   z(_([["It looks like deep down inside, bioships are not that different from your standard ship. I've looked carefully over Icarus, and it seems like they have what you could call a 'fracture' on the left module, that has healed poorly. I'll have to cut through most of the armoured flesh to reach it and do some welding to set the injury. Other than that, it seems like bioships are really resiliant, as most old wounds are just scars now."]]))
+   z(_([["It looks like deep down inside, bioships are not that different from your standard ship. I've looked carefully over Icarus, and it seems like they have what you could call a 'fracture' on the left module, that has healed poorly. I'll have to cut through most of the armoured flesh to reach it and do some welding to set the injury. Other than that, it seems like bioships are really resilient, as most old wounds are just scars now."]]))
    z(_([["What's curious is that most of the scars seem to be from Za'lek weaponry. The fracture is also likely the result of a ferromagnetohydraulic explosion, likely a hunter drone. However, I can not fathom who would want to kill a bioship instead of take the opportunity to study and examine it. It's like a crime against science itself!"]]))
    z(_([["The main thing I'm not clear about is how to get Icarus to understand the procedure and getting it prepped up. Since I don't have a brain mapping, I can't manipulate the pain receptors either, however, I do have a rough idea that might work."]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
@@ -89,7 +89,7 @@ function land ()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[You land amidst a Icarus spinning around joyfully around the station.]]))
+   vn.na(_([[You land amidst an Icarus spinning around joyfully around the station.]]))
    z(_([["That was great flying out there! They didn't stand a chance! Icarus is also in one piece, so all is well. Not the best way to prepare for surgery, huh?"]]))
    z(_([["What's really puzzling is that someone or something is really bent on covering up what happened here. Other than Icarus, we haven't really been able to find anything that I could imagine would be worth killing an entire Za'lek expedition for. Furthermore, we are constantly being attacked by Za'lek vessels, which makes even less sense. In-fighting should be left to the Dvaereds!"]]))
    z(_([["I'm going to start preparations for the surgery. Once Icarus is in tiptop shape, we can try to get to the bottom of the mysteries here. Meet me up at the spaceport bar when you are ready."]]))
@@ -133,12 +133,12 @@ function enter ()
    -- Fleets should have leaders with different speeds or they clump together
    local _fcp, fleet_used = player.fleetCapacity()
    if fleet_used > 120 then
-      create_fleet{"Za'lek Demon", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
-      create_fleet{"Za'lek Sting", "Za'lek Bomber Drone", "Za'lek Bomber Drone" }
-      create_fleet{"Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
+      create_fleet{"Za'lek Demon"}
+      create_fleet{"Za'lek Sting", "Za'lek Bomber Drone", "Za'lek Light Drone" }
+      create_fleet{"Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
    else
-      create_fleet{"Za'lek Sting", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
-      create_fleet{"Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
+      create_fleet{"Za'lek Sting", "Za'lek Heavy Drone"}
+      create_fleet{"Za'lek Heavy Drone", "Za'lek Light Drone"}
       create_fleet{"Za'lek Light Drone", "Za'lek Light Drone"}
    end
 

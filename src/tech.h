@@ -49,3 +49,8 @@ Ship** tech_getShip( const tech_group_t *tech );
 Ship** tech_getShipArray( tech_group_t **tech, int num );
 Commodity** tech_getCommodity( const tech_group_t *tech );
 Commodity** tech_getCommodityArray( tech_group_t **tech, int num );
+
+/*
+ * Check.
+ */
+int tech_checkOutfit( const tech_group_t *tech, const Outfit *o );

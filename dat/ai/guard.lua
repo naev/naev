@@ -73,7 +73,7 @@ function idle ()
    -- Scan if possible
    if mem.doscans then
       local target = scans.get_target()
-      if target and gdist(target) < mem.guarddodist then
+      if target and not ai.isenemy(target) and gdist(target) < mem.guarddodist then
          scans.push( target )
          return
       end

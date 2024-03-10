@@ -1,14 +1,36 @@
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
+local fmt = require "format"
+local helper = require "outfits.lib.helper"
 
-local masslimit = 6000^2 -- squared
+local limit = 6000
+local masslimit = limit^2 -- squared
 local jumpdist = 2000
 local cooldown = 8
 local warmup = 2
 local penalty = -50
+local energy = 400
+local heat
 
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
 local sfx_warmup = audio.newSource( 'snd/sounds/activate1.ogg' )
+
+function descextra( _p, _o )
+   return fmt.f(_([[Warms up for {warmup} seconds, then blinks you {jumpdist} {unit_dist} roughly in the direction you are facing. Can only be run once every {cooldown} seconds and incurs a {penalty}% accel and turn penalty during cooldown. Performance degrades over {masslimit} of mass. Blinking costs {energy} {unit_energy} energy and generates heat.]]), {
+      warmup = warmup,
+      jumpdist = fmt.number(jumpdist),
+      cooldown = cooldown,
+      masslimit = fmt.tonnes(limit),
+      energy = tostring(energy),
+      unit_dist = naev.unit("distance"),
+      unit_energy = naev.unit("energy"),
+      penalty = penalty,
+   })
+end
+
+function onload( o )
+   heat = o:heatFor( 30/cooldown ) -- Roughly overheat in 30 secs of continious usage (more in reality)
+end
 
 function init( p, po )
    po:state("off")
@@ -34,7 +56,7 @@ function update( p, po, dt )
          luaspfx.blink( p, pos ) -- Blink afterimage
          p:effectAdd( "Blink" ) -- Cool "blink in" effect
          -- Direction is random
-         p:setPos( pos + vec2.newP( dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
+         p:setPos( pos + vec2.newP( po:heat()*dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
 
          -- Play the sound
          if mem.isp then
@@ -46,7 +68,7 @@ function update( p, po, dt )
          -- Set cooldown and maluses
          po:state("cooldown")
          po:progress(1)
-         po:set("thrust_mod", penalty)
+         po:set("accel_mod", penalty)
          po:set("turn_mod", penalty)
          mem.cooldown = true
          mem.timer = cooldown * p:shipstat("cooldown_mod",true)
@@ -69,12 +91,25 @@ function update( p, po, dt )
    end
 end
 
-function ontoggle( p, po, on )
-   -- Only care about turning on (outfit never has the "on" state)
-   if not on then return false end
-
+local function doblink( p, po )
    -- Not ready yet
    if mem.timer > 0 then return false end
+
+   -- Test energy
+   if p:energy(true) < energy then
+      helper.msgnospam("#r"..fmt.f(_("Not enough energy to use {outfit}!"),{outfit=po:outfit()}).."#0")
+      return false
+   end
+
+   -- Test heat
+   if po:heat() <= 0 then
+      helper.msgnospam("#r"..fmt.f(_("{outfit} is overheating!"),{outfit=po:outfit()}).."#0")
+      return false
+   end
+
+   -- Pay the cost
+   p:addEnergy( -energy )
+   po:heatup( heat )
 
    -- Start the warmup
    mem.warmup = true
@@ -87,4 +122,13 @@ function ontoggle( p, po, on )
       luaspfx.sfx( p:pos(), p:vel(), sfx_warmup )
    end
    return true
+end
+
+function ontoggle( p, po, on )
+   -- Only care about turning on (outfit never has the "on" state)
+   if not on then
+      mem.lastmsg = nil -- clear helper.msgnospam timer
+      return false
+   end
+   return doblink( p, po )
 end

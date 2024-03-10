@@ -129,7 +129,7 @@ static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset )
    b = NULL;
 
    if (lua_isjump(L, ind)) {
-      LuaJump *lj = luaL_checkjump(L, ind);
+      const LuaJump *lj = luaL_checkjump(L, ind);
       a = system_getIndex( lj->srcid );
       b = system_getIndex( lj->destid );
       if (offset != NULL)
@@ -230,18 +230,16 @@ int lua_isjump( lua_State *L, int ind )
  */
 static int jumpL_get( lua_State *L )
 {
-   LuaJump lj;
    StarSystem *a, *b;
 
    a = luaL_validsystem(L,1);
    b = luaL_validsystem(L,2);
 
-   if ((a == NULL) || (b == NULL)) {
-      NLUA_ERROR(L, _("No matching jump points found."));
-      return 0;
-   }
+   if ((a == NULL) || (b == NULL))
+      return NLUA_ERROR(L, _("No matching jump points found."));
 
    if (jump_getTarget(b, a) != NULL) {
+      LuaJump lj;
       lj.srcid  = a->id;
       lj.destid = b->id;
       lua_pushjump(L, lj);
@@ -283,9 +281,9 @@ static int jumpL_eq( lua_State *L )
 static int jumpL_tostring( lua_State *L )
 {
    char buf[STRMAX_SHORT];
-   LuaJump *lj = luaL_checkjump(L,1);
-   StarSystem *src = system_getIndex( lj->srcid );
-   StarSystem *dst = system_getIndex( lj->destid );
+   const LuaJump *lj = luaL_checkjump(L,1);
+   const StarSystem *src = system_getIndex( lj->srcid );
+   const StarSystem *dst = system_getIndex( lj->destid );
    snprintf( buf, sizeof(buf), _("Jump( %s -> %s )"), _(src->name), _(dst->name) );
    lua_pushstring( L, buf );
    return 1;
@@ -301,7 +299,7 @@ static int jumpL_tostring( lua_State *L )
  */
 static int jumpL_radius( lua_State *L )
 {
-   JumpPoint *jp = luaL_validjump(L,1);
+   const JumpPoint *jp = luaL_validjump(L,1);
    lua_pushnumber(L,jp->radius);
    return 1;
 }
@@ -316,7 +314,7 @@ static int jumpL_radius( lua_State *L )
  */
 static int jumpL_position( lua_State *L )
 {
-   JumpPoint *jp = luaL_validjump(L,1);
+   const JumpPoint *jp = luaL_validjump(L,1);
    lua_pushvector(L, jp->pos);
    return 1;
 }
@@ -331,7 +329,7 @@ static int jumpL_position( lua_State *L )
  */
 static int jumpL_angle( lua_State *L )
 {
-   JumpPoint *jp = luaL_validjump(L,1);
+   const JumpPoint *jp = luaL_validjump(L,1);
    lua_pushnumber(L, jp->angle);
    return 1;
 }
@@ -346,7 +344,7 @@ static int jumpL_angle( lua_State *L )
  */
 static int jumpL_hidden( lua_State *L )
 {
-   JumpPoint *jp = luaL_validjump(L,1);
+   const JumpPoint *jp = luaL_validjump(L,1);
    lua_pushboolean(L, jp_isFlag(jp, JP_HIDDEN) );
    return 1;
 }
@@ -361,7 +359,7 @@ static int jumpL_hidden( lua_State *L )
  */
 static int jumpL_exitonly( lua_State *L )
 {
-   JumpPoint *jp = luaL_validjump(L,1);
+   const JumpPoint *jp = luaL_validjump(L,1);
    lua_pushboolean(L, jp_isFlag(jp, JP_EXITONLY) );
    return 1;
 }
@@ -376,7 +374,7 @@ static int jumpL_exitonly( lua_State *L )
  */
 static int jumpL_system( lua_State *L )
 {
-   JumpPoint *jp = luaL_validjumpSystem( L, 1, NULL );
+   const JumpPoint *jp = luaL_validjumpSystem( L, 1, NULL );
    lua_pushsystem( L, jp->from->id );
    return 1;
 }
@@ -391,7 +389,7 @@ static int jumpL_system( lua_State *L )
  */
 static int jumpL_dest( lua_State *L )
 {
-   JumpPoint *jp = luaL_validjump(L,1);
+   const JumpPoint *jp = luaL_validjump(L,1);
    lua_pushsystem(L,jp->targetid);
    return 1;
 }
@@ -408,8 +406,8 @@ static int jumpL_dest( lua_State *L )
  */
 static int jumpL_jumpDist( lua_State *L )
 {
-   JumpPoint *jp = luaL_validjump(L,1);
-   Pilot *p = luaL_validpilot(L,2);
+   const JumpPoint *jp = luaL_validjump(L,1);
+   const Pilot *p = luaL_validpilot(L,2);
    lua_pushnumber( L, space_jumpDistance(p,jp) );
    return 1;
 }
@@ -425,13 +423,15 @@ static int jumpL_jumpDist( lua_State *L )
  */
 static int jumpL_isKnown( lua_State *L )
 {
-   JumpPoint *jp = luaL_validjump(L,1);
+   const JumpPoint *jp = luaL_validjump(L,1);
    lua_pushboolean(L, jp_isKnown(jp));
    return 1;
 }
 
 /**
  * @brief Sets a jump's known state.
+ *
+ * Note that this affects both sides of the jump connection to avoid getting the player locked away.
  *
  * @usage j:setKnown( false ) -- Makes jump unknown.
  *    @luatparam Jump j Jump to set known.
@@ -452,12 +452,16 @@ static int jumpL_setKnown( lua_State *L )
    else
       b = 1;
 
-   changed = (b != (int)jp_isKnown(jp));
+   changed = ((b != (int)jp_isKnown(jp)) || (b != (int)jp_isKnown(jp->returnJump)));
 
-   if (b)
+   if (b) {
       jp_setFlag( jp, JP_KNOWN );
-   else
+      jp_setFlag( jp->returnJump, JP_KNOWN );
+   }
+   else {
       jp_rmFlag( jp, JP_KNOWN );
+      jp_rmFlag( jp->returnJump, JP_KNOWN );
+   }
 
    if (changed) {
       /* Update overlay. */

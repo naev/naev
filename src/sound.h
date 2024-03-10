@@ -113,6 +113,16 @@ void sound_pitchGroup( int group, double pitch );
 void sound_setAbsorption( double value );
 int sound_env( SoundEnv_t env, double param );
 
+/*
+ * Vorbis filtering.
+ */
+#define RG_PREAMP_DB       0.0 /**< Default pre-amp in dB. */
+typedef struct rg_filter_param_s {
+   float rg_scale_factor;
+   float rg_max_scale;
+} rg_filter_param_t;
+void rg_filter( float **pcm, long channels, long samples, void *filter_param );
+
 /* Lock for OpenAL operations. */
 int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name );
 extern SDL_mutex *sound_lock; /**< Global sound lock, used for all OpenAL calls. */

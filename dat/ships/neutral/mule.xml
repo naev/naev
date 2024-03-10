@@ -2,7 +2,7 @@
 <ship name="Mule">
  <points>80</points>
  <base_type>Mule</base_type>
- <GFX size="96" sx="10" sy="10">mule</GFX>
+ <gfx size="96" sx="10" sy="10">mule</gfx>
  <sound>engine</sound>
  <class>Freighter</class>
  <price>900000</price>
@@ -20,7 +20,7 @@
  </health>
  <characteristics>
   <crew>13</crew>
-  <mass>730</mass>
+  <mass>630</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>230</cargo>
  </characteristics>
@@ -32,15 +32,17 @@
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
-  <structure size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
+  <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>
  <stats>
+  <accel_mod>-10</accel_mod>
   <turn_mod>-20</turn_mod>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>

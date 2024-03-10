@@ -21,6 +21,7 @@ release.log
 Naev.app
 po/credits.pot
 
+/.ccls-cache
 /.cproject
 /.project
 

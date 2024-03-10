@@ -42,9 +42,10 @@ static int shipL_getSlots( lua_State *L );
 static int shipL_fitsSlot( lua_State *L );
 static int shipL_CPU( lua_State *L );
 static int shipL_gfxComm( lua_State *L );
-static int shipL_gfxTarget( lua_State *L );
+static int shipL_gfxStore( lua_State *L );
 static int shipL_gfx( lua_State *L );
 static int shipL_dims( lua_State *L );
+static int shipL_screenSize( lua_State *L );
 static int shipL_price( lua_State *L );
 static int shipL_time_mod( lua_State *L );
 static int shipL_getSize( lua_State *L );
@@ -71,9 +72,10 @@ static const luaL_Reg shipL_methods[] = {
    { "time_mod", shipL_time_mod },
    { "size", shipL_getSize },
    { "gfxComm", shipL_gfxComm },
-   { "gfxTarget", shipL_gfxTarget },
+   { "gfxStore", shipL_gfxStore },
    { "gfx", shipL_gfx },
    { "dims", shipL_dims },
+   { "screenSize", shipL_screenSize },
    { "description", shipL_description },
    { "shipstat", shipL_getShipStat },
    { "shipstatDesc", shipL_getShipStatDesc },
@@ -587,22 +589,22 @@ static int shipL_gfxComm( lua_State *L )
 }
 
 /**
- * @brief Gets the ship's target graphics.
+ * @brief Gets the ship's store graphics.
  *
  * Will not work without access to the Tex module.
  *
- * @usage gfx = s:gfxTarget()
+ * @usage gfx = s:gfxStore()
  *
- *    @luatparam Ship s Ship to get target graphics of.
- *    @luatreturn Tex The target graphics of the ship.
- * @luafunc gfxTarget
+ *    @luatparam Ship s Ship to get store graphics of.
+ *    @luatreturn Tex The store graphics of the ship.
+ * @luafunc gfxStore
  */
-static int shipL_gfxTarget( lua_State *L )
+static int shipL_gfxStore( lua_State *L )
 {
    const Ship *s  = luaL_validship(L,1);
-   glTexture *tex = gl_dupTexture( s->gfx_target );
+   glTexture *tex = ship_gfxStore( s );
    if (tex == NULL) {
-      WARN(_("Unable to get ship target graphic for '%s'."), s->name);
+      WARN(_("Unable to get ship store graphic for '%s'."), s->name);
       return 0;
    }
    lua_pushtex( L, tex );
@@ -623,6 +625,7 @@ static int shipL_gfxTarget( lua_State *L )
 static int shipL_gfx( lua_State *L )
 {
    const Ship *s  = luaL_validship(L,1);
+   ship_gfxLoad( (Ship*) s );
    glTexture *tex = gl_dupTexture( s->gfx_space );
    if (tex == NULL) {
       WARN(_("Unable to get ship graphic for '%s'."), s->name);
@@ -642,9 +645,22 @@ static int shipL_gfx( lua_State *L )
 static int shipL_dims( lua_State *L )
 {
    const Ship *s = luaL_validship(L,1);
-   lua_pushnumber( L, s->gfx_space->sw );
-   lua_pushnumber( L, s->gfx_space->sh );
+   lua_pushnumber( L, s->size );
+   lua_pushnumber( L, s->size );
    return 2;
+}
+
+/**
+ * @brief Gets the onscreen size of the ship.
+ *
+ *    @luatreturn number Size of the ship.
+ * @luafunc screenSize
+ */
+static int shipL_screenSize( lua_State *L )
+{
+   const Ship *s = luaL_validship(L,1);
+   lua_pushnumber( L, s->size );
+   return 1;
 }
 
 /**

@@ -1,29 +1,51 @@
-local range, range2, hitships, trackmin
+local fmt = require "format"
+local range, range2, hitships, trackmax
+local pd = {}
+
+function pd.setTrack( track )
+   trackmax = track
+end
 
 function onload( o )
-   local _dps, _disps, _eps, _trackmax
-   _dps, _disps, _eps, range, trackmin, _trackmax = o:weapstats()
-   range2 = range*range
+   local _dps, _disps, _eps, _trackmin, trackmax_local
+   _dps, _disps, _eps, range, _trackmin, trackmax_local = o:weapstats()
+   trackmax = trackmax or trackmax_local -- Replace if not defined
+   range2 = range*range -- Effective range
    hitships = not o:missShips()
 end
 
-function init( _p, _po )
-   mem.on = true
-   mem.target = nil -- current target
-   mem.tpilot = false -- hether or not the target is a pilot
+function descextra( _p, _o )
+   if not hitships then
+      return "#b".._("When on, automatically fires at nearby incoming missiles.").."#0"
+   end
+   return "#b"..fmt.f(_("When on, automatically fires at nearby incoming missiles and hostile ships with under {trackmax} {unit} signature.").."#0",
+      {trackmax=fmt.number(trackmax), unit=naev.unit("distance")})
 end
 
-function ontoggle( _p, _po, _on )
-   -- Doesn't fire normally, TODO some way to turn on/off
+function init( _p, _po )
+   mem.on = false
+   mem.target = nil -- current target
+   mem.tpilot = false -- whether or not the target is a pilot
+end
+
+function ontoggle( _p, _po, on )
+   mem.on = on
+   return true
+end
+
+function onshoot( _p, _po, _on )
+   -- Doesn't fire normally,
    return false
 end
 
 function update( p, po, _dt )
+   if not mem.on then return end
+
    local pos = p:pos()
    local m = mem.target
 
    -- Clear target if doesn't exist
-   if not m or not m:exists() then
+   if not m or not m:exists() or (mem.tpilot and m:flags("disabled")) then
       mem.target = nil
       mem.tpilot = false
       m = nil
@@ -49,11 +71,11 @@ function update( p, po, _dt )
 
       -- If no current target, shoot at enemies too
       if not m and hitships then
-         local pall = p:getEnemies( range )
+         local pall = p:getEnemies( range, nil, nil, false, true )
          if #pall > 0 then
             local ptarget = {}
             for k,e in ipairs(pall) do
-               if e:signature() < trackmin then
+               if e:signature() < trackmax then
                   table.insert( ptarget, e )
                end
             end
@@ -71,3 +93,5 @@ function update( p, po, _dt )
       po:shoot( p, m, true )
    end
 end
+
+return pd

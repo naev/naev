@@ -115,7 +115,6 @@ const char *keybind_info[KST_PASTE+1][2] = {
    [KST_ESCORT_HALT]={ N_("Escort Hold Command"), N_("Orders escorts to hold their formation.") },
    [KST_ESCORT_RETURN]={ N_("Escort Return Command"), N_("Orders escorts to return to your ship hangars.") },
    [KST_ESCORT_CLEAR]={ N_("Escort Clear Commands"), N_("Clears your escorts of commands.") },
-
    /* Communication */
    [KST_COMM_HAIL]={ N_("Hail Target"), N_("Attempts to initialize communication with the targeted ship.") },
    [KST_COMM_RECEIVE]={ N_("Autohail"), N_("Automatically initialize communication with a ship that is hailing you.") },
@@ -139,9 +138,8 @@ static Keybind *input_paste;
 /*
  * accel hacks
  */
-static unsigned int input_accelLast = 0; /**< Used to see if double tap accel. */
-static unsigned int input_revLast   = 0; /**< Used to see if double tap reverse. */
-static int input_accelButton        = 0; /**< Used to show whether accel is pressed. */
+static int doubletap_key         = -1; /**< Last key double tapped. */
+static unsigned int doubletap_t  = 0; /**< Used to see if double tap accel. */
 
 /*
  * Key repeat hack.
@@ -650,18 +648,30 @@ void input_update( double dt )
 static void input_key( int keynum, double value, double kabs, int repeat )
 {
    HookParam hparam[3];
+   int isdoubletap = 0;
 
    /* Repetition stuff. */
    if (conf.repeat_delay != 0) {
-      if ((value == KEY_PRESS) && !repeat) {
+      if ((value==KEY_PRESS) && !repeat) {
          repeat_key        = keynum;
          repeat_keyTimer   = SDL_GetTicks();
          repeat_keyCounter = 0;
       }
-      else if (value == KEY_RELEASE) {
+      else if (value==KEY_RELEASE) {
          repeat_key        = -1;
          repeat_keyTimer   = 0;
          repeat_keyCounter = 0;
+      }
+   }
+
+   /* Detect if double tap. */
+   if (value==KEY_PRESS) {
+      unsigned int t = SDL_GetTicks();
+      if ((keynum == doubletap_key) && (t-doubletap_t <= conf.doubletap_sens))
+         isdoubletap = 1;
+      else {
+         doubletap_key = keynum;
+         doubletap_t = t;
       }
    }
 
@@ -673,40 +683,39 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (kabs >= 0.) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_accel(kabs);
-         input_accelButton = 1;
       }
       else { /* prevent it from getting stuck */
-         unsigned int t;
+         if (isdoubletap) {
+            if (NODEAD()) {
+               pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_ACCEL );
+               pilot_afterburn( player.p );
+               /* Allow keeping it on outside of weapon sets. */
+               if (player.p->afterburner != NULL)
+                  player.p->afterburner->flags |= PILOTOUTFIT_ISON_LUA;
+            }
+         }
+         else if (value==KEY_RELEASE) {
+            if (NODEAD()) {
+               pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_ACCEL );
+               /* Make sure to release the weapon set lock. */
+               if (player.p->afterburner != NULL)
+                  player.p->afterburner->flags &= ~PILOTOUTFIT_ISON_LUA;
+            }
+         }
 
          if (value==KEY_PRESS) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag(PLAYER_ACCEL);
             player_accel(1.);
-            input_accelButton = 1;
          }
-
          else if (value==KEY_RELEASE) {
             player_rmFlag(PLAYER_ACCEL);
-            input_accelButton = 0;
             if (!player_isFlag(PLAYER_REVERSE))
                player_accelOver();
          }
-
-         /* double tap accel = afterburn! */
-         t = SDL_GetTicks();
-         if ((conf.doubletap_sens != 0) &&
-               (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
-               (t-input_accelLast <= conf.doubletap_sens))
-            pilot_afterburn( player.p );
-         else if (value==KEY_RELEASE)
-            pilot_afterburnOver( player.p );
-
-         if (value==KEY_PRESS)
-            input_accelLast = t;
       }
 
    /* turning left */
-   } else if (KEY(KST_LEFT) && !repeat) {
       if (kabs >= 0.) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_TURN_LEFT);
@@ -726,7 +735,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
 
    /* turning right */
-   } else if (KEY(KST_RIGHT) && !repeat) {
       if (kabs >= 0.) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_TURN_RIGHT);
@@ -746,9 +754,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
 
    /* turn around to face vel */
-   } else if (KEY(KST_REVERSE) && !repeat) {
-      unsigned int t;
-
       if (value==KEY_PRESS) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_REVERSE);
@@ -760,15 +765,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             player_accelOver();
       }
 
-      /* double tap reverse = cooldown! */
-      t = SDL_GetTicks();
-      if ((conf.doubletap_sens != 0) &&
-            (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
-            (t-input_revLast <= conf.doubletap_sens))
-         player_brake();
-
-      if (value==KEY_PRESS)
-         input_revLast = t;
+      /* Double tap reverse = cooldown! */
+      if (isdoubletap)
+         player_cooldownBrake();
 
    /* try to enter stealth mode. */
    } else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
@@ -894,18 +893,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY(KST_APPROACH) && INGAME() && NOHYP() && NOLAND() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_restoreControl( 0, NULL );
-         /* Only do noisy if there is no land target. */
-         int board_status = player_tryBoard( player.p->nav_spob<0 );
-         if (board_status == PLAYER_BOARD_RETRY)
-            player_board();
-         else {
-            if (player.p->nav_spob != -1) {
-               if (player_land(0) == PLAYER_LAND_AGAIN) {
-                  player_autonavSpob( cur_system->spobs[player.p->nav_spob]->name, 1 );
-               }
-            } else
-               player_land(1);
-         }
+         player_approach();
       }
    } else if (KEY(KST_TARGET_JUMP) && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) player_targetHyperspace();
@@ -927,7 +915,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY(KST_INIT_COOLDOWN) && NOHYP() && NOLAND() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_restoreControl( PINPUT_BRAKING, NULL );
-         player_brake();
+         player_cooldownBrake();
       }
 
    /*
@@ -978,11 +966,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* toggle speed mode */
    } else if (KEY(KST_GAME_SPEED) && !repeat) {
       if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
-         if (player.speed < 4.) {
+         if (player.speed < 4.*conf.game_speed)
             player.speed *= 2.;
-         } else {
-            player.speed = 1.;
-         }
+         else
+            player.speed = conf.game_speed;
          player_resetSpeed();
       }
    /* opens a small menu */
@@ -1234,7 +1221,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    }
 
    d  = system_getClosest( cur_system, &pntid, &jpid, &astid, &fieid, x, y );
-   rp = MAX( 1.5 * PILOT_SIZE_APPROX * p->ship->gfx_space->sw / 2 * zoom,  minpr);
+   rp = MAX( 1.5 * PILOT_SIZE_APPROX * p->ship->size / 2 * zoom,  minpr);
 
    if (pntid >=0) { /* Spob is closer. */
       Spob *pnt = cur_system->spobs[ pntid ];
@@ -1288,8 +1275,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
       /* Go to position, if the position is >= 1500 px away. */
       if ((pow2(x - player.p->solid.pos.x) + pow2(y - player.p->solid.pos.y))
             >= pow2(1500))
-
-      player_autonavPos( x, y );
+         player_autonavPos( x, y );
       return 1;
    }
 
@@ -1414,7 +1400,7 @@ int input_clickedPilot( unsigned int pilot, int autonav )
    if (pilot == player.p->target && input_isDoubleClick( (void*)p )) {
       if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE)) {
          if (player_tryBoard(0)==PLAYER_BOARD_RETRY)
-            player_board();
+            player_autonavBoard( player.p->target );
       }
       else
          player_hail();

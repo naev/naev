@@ -7,7 +7,6 @@
  * @brief Handles the special effects.
  */
 /** @cond */
-#include <inttypes.h>
 #include "SDL.h"
 #include "SDL_haptic.h"
 
@@ -25,11 +24,11 @@
 #include "nxml.h"
 #include "opengl.h"
 #include "pause.h"
-#include "physics.h"
+#include "vec2.h"
 #include "perlin.h"
+#include "ntracing.h"
 #include "render.h"
 #include "rng.h"
-#include "space.h"
 #include "nlua_shader.h"
 #include "nlua_spfx.h"
 
@@ -139,6 +138,7 @@ static SPFX *spfx_stack_back = NULL; /**< Back special effect layer. */
  * prototypes
  */
 /* General. */
+static int spfx_base_cmp( const void *p1, const void *p2 );
 static int spfx_base_parse( SPFX_Base *temp, const char *filename );
 static void spfx_base_free( SPFX_Base *effect );
 static void spfx_update_layer( SPFX *layer, const double dt );
@@ -151,6 +151,16 @@ static void spfx_trail_update( Trail_spfx* trail, double dt );
 static void spfx_trail_free( Trail_spfx* trail );
 
 /**
+ * @brief For sorting and stuff.
+ */
+static int spfx_base_cmp( const void *p1, const void *p2 )
+{
+   const SPFX_Base *s1 = p1;
+   const SPFX_Base *s2 = p2;
+   return strcmp( s1->name, s2->name );
+}
+
+/**
  * @brief Parses an xml node containing a SPFX.
  *
  *    @param temp Address to load SPFX into.
@@ -161,9 +171,6 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
 {
    xmlNodePtr node, cur, uniforms;
    char *shadervert, *shaderfrag;
-   const char *name;
-   int isint;
-   GLint loc, dim;
    xmlDocPtr doc;
 
    /* Load and read the data. */
@@ -222,7 +229,7 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
 
    /* Has shaders. */
    if (shadervert != NULL && shaderfrag != NULL) {
-      temp->shader      = gl_program_vert_frag( shadervert, shaderfrag, NULL );
+      temp->shader      = gl_program_vert_frag( shadervert, shaderfrag );
       temp->vertex      = glGetAttribLocation( temp->shader, "vertex");
       temp->projection  = glGetUniformLocation( temp->shader, "projection");
       temp->u_r         = glGetUniformLocation( temp->shader, "u_r" );
@@ -233,8 +240,10 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
          node = uniforms->xmlChildrenNode;
          do {
             xml_onlyNodes(node);
-            name = (char*)node->name;
-            loc = glGetUniformLocation( temp->shader, name );
+            int isint;
+            GLint dim;
+            const char *name = (char*)node->name;
+            GLint loc = glGetUniformLocation( temp->shader, name );
             if (loc < 0) {
                WARN(_("SPFX '%s' is trying to set uniform '%s' not in shader!"), temp->name, name );
                continue;
@@ -328,12 +337,15 @@ static void spfx_base_free( SPFX_Base *effect )
  *    @param name Name to match.
  *    @return ID of the special effect or -1 on error.
  */
-int spfx_get( char* name )
+int spfx_get( const char *name )
 {
-   for (int i=0; i<array_size(spfx_effects); i++)
-      if (strcmp(spfx_effects[i].name, name)==0)
-         return i;
-   return -1;
+   const SPFX_Base sq = { .name = (char*)name };
+   const SPFX_Base *sout = bsearch( &sq, spfx_effects, array_size(spfx_effects), sizeof(SPFX_Base), spfx_base_cmp );
+   if (sout==NULL) {
+      //WARN(_("SPFX '%s' not found!"),name);
+      return -1;
+   }
+   return sout-spfx_effects;
 }
 
 /**
@@ -345,8 +357,10 @@ int spfx_get( char* name )
  */
 int spfx_load (void)
 {
-   char **spfx_files;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   char **spfx_files;
 
    spfx_effects = array_create(SPFX_Base);
 
@@ -363,6 +377,7 @@ int spfx_load (void)
    array_free( spfx_files );
 
    /* Reduce size. */
+   qsort( spfx_effects, array_size(spfx_effects), sizeof(SPFX_Base), spfx_base_cmp );
    array_shrink( &spfx_effects );
 
    /* Trail colour sets. */
@@ -393,12 +408,14 @@ int spfx_load (void)
    spfx_stack_middle = array_create( SPFX );
    spfx_stack_back = array_create( SPFX );
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Special Effect in %.3f s", "Loaded %d Special Effects in %.3f s", array_size(spfx_effects) ), array_size(spfx_effects), time/1000. );
    }
    else
       DEBUG( n_( "Loaded %d Special Effect", "Loaded %d Special Effects", array_size(spfx_effects) ), array_size(spfx_effects) );
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -506,6 +523,8 @@ void spfx_add( int effect,
  */
 void spfx_clear (void)
 {
+   NTracingZone( _ctx, 1 );
+
    /* Clear rumble */
    shake_force_mod = 0.;
    shake_force_mean = 0.;
@@ -524,6 +543,8 @@ void spfx_clear (void)
 
    /* Clear the Lua spfx. */
    spfxL_clear();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -534,6 +555,10 @@ void spfx_clear (void)
  */
 void spfx_update( const double dt, const double real_dt )
 {
+   NTracingZone( _ctx, 1 );
+   NTracingPlotI( "spfx", array_size(spfx_stack_front)+array_size(spfx_stack_middle)+array_size(spfx_stack_back) );
+   NTracingPlotI( "trails", array_size(trail_spfx_stack) );
+
    spfx_update_layer( spfx_stack_front, dt );
    spfx_update_layer( spfx_stack_middle, dt );
    spfx_update_layer( spfx_stack_back, dt );
@@ -551,6 +576,8 @@ void spfx_update( const double dt, const double real_dt )
 
    /* Update Lua ones. */
    spfxL_update( dt );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -582,7 +609,7 @@ static void spfx_update_layer( SPFX *layer, const double dt )
  */
 static void spfx_updateShake( double dt )
 {
-   double mod, vmod, angle;
+   double mod, vmod;
    double force_x, force_y;
    double dupdate;
    int forced;
@@ -620,6 +647,7 @@ static void spfx_updateShake( double dt )
 
    /* Apply force if necessary. */
    if (forced) {
+      double angle;
       shake_force_ang  += dt;
       angle             = noise_simplex1( shake_noise, &shake_force_ang ) * 5.*M_PI;
       force_x          += shake_force_mod * cos(angle);
@@ -846,15 +874,15 @@ void spfx_trail_draw( const Trail_spfx* trail )
 
       /* Set vertex. */
       projection = gl_view_matrix;
-      mat4_translate( &projection, x1, y1, 0. );
+      mat4_translate_xy( &projection, x1, y1 );
       mat4_rotate2dv( &projection, (x2-x1)/s, (y2-y1)/s );
-      mat4_scale( &projection, s, z*(sp->thick+spp->thick), 1. );
-      mat4_translate( &projection, 0., -0.5, 0. );
+      mat4_scale_xy( &projection, s, z*(sp->thick+spp->thick) );
+      mat4_translate_xy( &projection, 0., -0.5 );
 
       /* Set uniforms. */
       gl_uniformMat4(shaders.trail.projection, &projection);
-      gl_uniformColor(shaders.trail.c1, &sp->col);
-      gl_uniformColor(shaders.trail.c2, &spp->col);
+      gl_uniformColour(shaders.trail.c1, &sp->col);
+      gl_uniformColour(shaders.trail.c2, &spp->col);
       glUniform1f(shaders.trail.t1, tp->t);
       glUniform1f(shaders.trail.t2, tpp->t);
       glUniform2f(shaders.trail.pos2, len, sp->thick);
@@ -1022,8 +1050,7 @@ static void spfx_renderStack( SPFX *spfx_stack )
 
          /* Set up the vertex. */
          projection = gl_view_matrix;
-         mat4_translate( &projection, x, y, 0. );
-         mat4_scale( &projection, w, h, 1. );
+         mat4_translate_scale_xy( &projection, x, y, w, h );
          glEnableVertexAttribArray( effect->vertex );
          gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex,
                0, 2, GL_FLOAT, 0 );
@@ -1077,6 +1104,8 @@ static void spfx_renderStack( SPFX *spfx_stack )
  */
 void spfx_render( int layer, double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    /* get the appropriate layer */
    switch (layer) {
       case SPFX_LAYER_FRONT:
@@ -1093,18 +1122,22 @@ void spfx_render( int layer, double dt )
          spfx_renderStack( spfx_stack_back );
          spfxL_renderbg( dt );
 
+         NTracingZoneName( _ctx_trails, "spfx_render[trails]", 1 );
          /* Trails are special (for now?). */
          for (int i=0; i<array_size(trail_spfx_stack); i++) {
-            Trail_spfx *trail = trail_spfx_stack[i];
+            const Trail_spfx *trail = trail_spfx_stack[i];
             if (!trail->ontop)
                spfx_trail_draw( trail );
          }
+         NTracingZoneEnd( _ctx_trails );
          break;
 
       default:
          WARN(_("Rendering invalid SPFX layer."));
-         return;
+         break;
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1154,7 +1187,7 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
          return 0;
       }
       else {
-         TrailSpec *tsparent = trailSpec_getRaw( inherits );
+         const TrailSpec *tsparent = trailSpec_getRaw( inherits );
          if (tsparent == NULL)
             WARN(_("Trail '%s' that inherits from '%s' has missing reference!"), tc->name, inherits );
          else {

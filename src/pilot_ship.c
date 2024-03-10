@@ -6,12 +6,7 @@
  *
  * @brief Handles pilot ship Lua stuff.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
-
 #include "nlua_pilot.h"
-#include "nlua_ship.h"
 
 static int pilot_shipLmem( const Pilot *p )
 {

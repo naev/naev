@@ -53,7 +53,7 @@ function accept ()
    vn.transition( emp.czesc.transition )
 
    -- Intro Text
-   czesc(_([[You approach Lieutenant Czesc. His demeanor brightens as he sees you. "Hello! I've been looking for you. You've done a great job with those Empire Shipping missions and we have a new exciting opportunity. You see, the head office is looking to expand business with other factions, which has enormous untapped potential. They need someone competent and trustworthy to help them out. That's where you come in. Interested?"]]))
+   czesc(_([[You approach Lieutenant Czesc. His demeanor brightens as he sees you. "Hello! I've been looking for you. You've done a great job with those Empire Shipping missions, and we have a new exciting opportunity. You see, the head office is looking to expand business with other factions, which has enormous untapped potential. They need someone competent and trustworthy to help them out. That's where you come in. Interested?"]]))
    vn.menu{
       {_([[Accept]]), "accept"},
       {_([[Decline]]), "decline"},
@@ -106,6 +106,6 @@ function land()
    vntk.msg( _("Mission Accomplished"), fmt.f( _([[You drop the bureaucrat off at {pnt}, and he hands you a credit chip. Lieutenant Czesc told you to keep an eye out for him in Empire space to continue the operation.]]),
       {pnt=targetworld}).."\n\n"..fmt.reward(emp.rewards.ldc1) )
 
-   emp.addShippingLog( fmt.f( _([[You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant Czesc told you to keep an eye out out for him in Empire space to continue the operation.]]), {pnt=targetworld} ) )
+   emp.addShippingLog( fmt.f( _([[You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant Czesc told you to keep an eye out for him in Empire space to continue the operation.]]), {pnt=targetworld} ) )
    misn.finish(true)
 end

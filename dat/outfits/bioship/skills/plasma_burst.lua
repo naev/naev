@@ -24,7 +24,7 @@ local function activate( p, po )
       local mod = 1 - norm / radius
       local mass = math.pow( damage / 15, 2 )
       -- Damage and knockback
-      t:damage( damage, 0, penetration, "impact", p )
+      t:damage( damage, 0, penetration, "plasma", p )
       t:knockback( mass, vec2.newP( mod*radius, angle ), pos, 1 )
       -- Nasty effects
       t:effectAdd( "Plasma Burn", dur, dmg )
@@ -46,8 +46,8 @@ local function activate( p, po )
       smokiness = 0.4,
       rollspeed = 0.3,
       smokefade = 1.6,
-      colorbase = {0.9, 0.1, 0.1, 0.1},
-      colorsmoke = {0.6, 0.3, 0.3, 0.25},
+      colourbase = {0.9, 0.1, 0.1, 0.1},
+      coloursmoke = {0.6, 0.3, 0.3, 0.25},
    } )
 
    mem.timer = cooldown * p:shipstat("cooldown_mod",true)

@@ -55,13 +55,13 @@ function descextra( p )
          dur = dur + 0.5 * dur * bonus_mod
       end
       if map.crippling then -- Learned at 3
-         return fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}, while reducing the targets turn, speed, and thrust by 25% [Paralyzing Plasma], and lowering fire rate by 20% [Crippling Plasma]."),{damage=dmg, duration=dur, corrosion=cor})
+         return "#p"..fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}, while reducing the targets turn, speed, and accel by 25% [Paralyzing Plasma], and lowering fire rate by 20% [Crippling Plasma]."),{damage=dmg, duration=dur, corrosion=cor}).."#0"
       elseif map.paralyzing then -- Learned at 2
-         return fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}, while reducing the targets turn, speed, and thrust by 25% [Paralyzing Plasma]."),{damage=dmg, duration=dur, corrosion=cor})
+         return "#p"..fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}, while reducing the targets turn, speed, and accel by 25% [Paralyzing Plasma]."),{damage=dmg, duration=dur, corrosion=cor}).."#0"
       end
    end
 
-   return fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}."),{damage=dmg, duration=dur, corrosion=cor})
+   return "#p"..fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}."),{damage=dmg, duration=dur, corrosion=cor}).."#0"
 end
 
 function onimpact( p, target )

@@ -5,7 +5,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>The "Gauntlet Deluxe" service provides a full retweak and overhaul of the systems forward and turret weapon circuitry. The optimizations are able to slightly increase the power without any significant drawback other than the high cost of the service itself. Due to the nature of the service, only one can be applied to each ship.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>/gfx/misc/crimson_gauntlet.webp</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">

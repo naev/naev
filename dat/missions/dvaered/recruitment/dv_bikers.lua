@@ -27,10 +27,10 @@
 
    Stages :
    0) Way to Ulios to encounter the Baron
-   1) Way to Vault in Mason for the biker's convention
+   1) Way to Norpin II in Norpin for the biker's convention
    2) Taking off for the "Hallway to Hell" with Big Bunny Benny
-   3) Land back on Vault
-   4) Discussions on Vault
+   3) Land back on Norpin II
+   4) Discussions on Norpin II
    5) Taking off for the duel with Blue Belly Billy
    6) Way back to Ulios for getting paid
 --]]
@@ -42,8 +42,9 @@ local vn       = require 'vn'
 local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
-
-
+local ai_setup = require "ai.core.setup"
+local baron    = require "common.baron"
+local love_shaders = require "love_shaders"
 
 local agentPort = "dvaered/dv_military_m2.webp"
 local BBB1Port = "pirate/pirate4.webp"
@@ -66,7 +67,7 @@ local spawnGang, land_state1, land_state3
 
 function create()
    mem.baronpnt, mem.baronsys  = spob.getS("Ulios") -- Where you get paid
-   mem.convpnt,   mem.convsys  = spob.getS("Vault") -- Where you do the fights
+   mem.convpnt,   mem.convsys  = spob.getS("Norpin II") -- Where you do the fights
 
    if not misn.claim(mem.convsys) then misn.finish(false) end -- Claim
 
@@ -134,83 +135,81 @@ So, as the negotiations with Goddard shareholders is making progress, we identif
    hook.load("loading")
 end
 
+local function enter_setup ()
+   pilot.toggleSpawn(false)
+   pilot.clear()
+
+   -- Disable followers
+   for k,p in ipairs(player.pilot():followers()) do
+      p:setHide(true)
+   end
+end
+
 function enter()
    -- Player will perform the Hallway to Hell
-   if mem.misn_state == 2 and system.cur() == mem.convsys then
-      if player.pilot():ship():nameRaw() == "Hyena" or player.pilot():ship():nameRaw() == "Pirate Hyena" then
-         pilot.toggleSpawn()
-         pilot.clear()
+   if mem.misn_state==2 and system.cur()==mem.convsys then
+      local pp = player.pilot()
+      local ps = pp:ship()
+      if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
+         enter_setup()
          local targetF = faction.dynAdd( "Independent", "targets", _("Targets"), {clear_enemies=true, clear_allies=true} )
 
          -- Put the targets
-         local center = player.pilot():pos()
+         local center = pp:pos()
          local t1 = center + vec2.new(0,5000)
          local t2 = center + vec2.new(-4000,-2000)
          local t3 = center + vec2.new(4000,-2000)
          mem.pil1 = pilot.add("Llama", targetF, t1, _("Kill Me"))
          mem.pil2 = pilot.add("Llama", targetF, t2, _("Kill Me"))
          mem.pil3 = pilot.add("Llama", targetF, t3, _("Kill Me"))
-         mem.pil1:setHealth(10)
-         mem.pil2:setHealth(10)
-         mem.pil3:setHealth(10)
+         for k,p in ipairs{ mem.pil1, mem.pil2, mem.pil3 } do
+            p:setHealth(10)
+            p:disable()
+            p:setVisible()
+            p:setNoBoard()
+         end
          mem.pil1:setHilight()
-         player.pilot():setTarget(mem.pil1)
-         mem.pil1:disable()
-         mem.pil2:disable()
-         mem.pil3:disable()
-         mem.pil1:setVisible()
-         mem.pil2:setVisible()
-         mem.pil3:setVisible()
+         pp:setTarget(mem.pil1)
 
          -- Compute timer
          -- Max vel of a top notch Hyena is 476 (without extra outfits). We give a bit of margin
          local dist = 5000 + vec2.dist( t1, t2 ) + vec2.dist( t2, t3 )
-         mem.timer = dist/460
+         mem.timer = dist/430
          misn.osdDestroy()
          misn.osdCreate( _("Dvaered Negotiation 2"), {
-            fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=mem.timer} ),
+            fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=string.format("%.0f",mem.timer)} ),
             fmt.f(_("Land on {pnt} and talk to Blue Belly Billy"), {pnt=mem.convpnt} ),
             _("Disable and board Blue Belly Billy"),
             fmt.f(_("Go back to {pnt} in {sys}"), {pnt=mem.baronpnt,sys=mem.baronsys} ),
          } )
 
+         local weap = outfit.get("Bikers Fury Launcher") -- Easier to dodge version of the Fury
          -- Put the platforms
-         mem.pla1 = pilot.add("Zebra", targetF, .5*(t1+t2), _("Dodge Me"))
-         mem.pla2 = pilot.add("Zebra", targetF, .5*(t1+t3), _("Dodge Me"))
-         mem.pla3 = pilot.add("Zebra", targetF, .5*(t2+t3), _("Dodge Me"))
-         mem.pla1:outfitRm( "all" )
-         mem.pla1:outfitAdd( "Enygma Systems Turreted Fury Launcher", 3 ) -- Difficulty can be tuned here (1<=nb<=6)
-         mem.pla1:outfitAdd( "Sensor Array", 4 ) -- Apparently, they do stack
-         mem.pla1:setSpeedLimit( .0001 )
-         mem.pla1:memory().ranged_ammo = 1 -- AI was initialized before the launchers did exist so it's not aware it has ammo
-         mem.pla1:control()
-         mem.pla2:outfitRm( "all" )
-         mem.pla2:outfitAdd( "Enygma Systems Turreted Fury Launcher", 3 )
-         mem.pla2:outfitAdd( "Sensor Array", 4 )
-         mem.pla2:setSpeedLimit( .0001 )
-         mem.pla2:memory().ranged_ammo = 1
-         mem.pla2:control()
-         mem.pla3:outfitRm( "all" )
-         mem.pla3:outfitAdd( "Enygma Systems Turreted Fury Launcher", 3 )
-         mem.pla3:outfitAdd( "Sensor Array", 4 )
-         mem.pla3:setSpeedLimit( .0001 )
-         mem.pla3:memory().ranged_ammo = 1
-         mem.pla3:control()
+         mem.pla1 = pilot.add("Zebra", targetF, .5*(t1+t2), _("Dodge Me"), {naked=true})
+         mem.pla2 = pilot.add("Zebra", targetF, .5*(t1+t3), _("Dodge Me"), {naked=true})
+         mem.pla3 = pilot.add("Zebra", targetF, .5*(t2+t3), _("Dodge Me"), {naked=true})
+         for k,p in ipairs{ mem.pla1, mem.pla2, mem.pla3 } do
+            p:outfitAdd( weap, 4 ) -- Difficulty can be tuned here (1<=nb<=6)
+            --p:outfitAdd( "Sensor Array", 4 ) -- Apparently, they do stack
+            p:setSpeedLimit( 0.0001 )
+            p:control()
+            ai_setup.setup(p)
+         end
 
          -- Block the player and set timers
-         player.pilot():control()
-         player.pilot():face( mem.pil1 )
+         pp:control()
+         pp:face( mem.pil1 )
          mem.countdown = 10
          mem.omsg = player.omsgAdd(tostring(mem.countdown), 0, 50)
-         hook.timer( 1.0, "timerIncrement", _("GO!") )
-         hook.timer( 10.0, "startHallway" )
+         hook.timer( 1, "timerIncrement", _("GO!") )
+         hook.timer( 10, "startHallway" )
          hook.pilot( mem.pil1, "death", "killPil1" )
 
          vn.clear()
          vn.scene()
          local sai = vn.newCharacter( tut.vn_shipai() )
          vn.transition( tut.shipai.transition )
-         sai(_([["Hello, sir. I compiled the available data on the very stupid challenge you just accepted. During this challenge, you will have to destroy three disabled ships in a certain order. Each time you destroy a ship, I will automatically set the target focus to the next ship, so that you will be able to focus on piloting and shooting.
+         sai(_([["Hello. I compiled the available data on the very stupid challenge you just accepted. During this challenge, you will have to destroy three disabled ships in a certain order. Each time you destroy a ship, I will automatically set the target focus to the next ship, so that you will be able to focus on piloting and shooting.
 So, don't try to auto-target around, and just shoot at the targets I will be indicating, and it will be fine."]]))
          vn.done( tut.shipai.transition )
          vn.run()
@@ -222,9 +221,10 @@ So, don't try to auto-target around, and just shoot at the targets I will be ind
    -- Player fights Blue Belly Billy
    elseif mem.misn_state == 4 and system.cur() == mem.convsys then
 
-      if player.pilot():ship():nameRaw() == "Hyena" or player.pilot():ship():nameRaw() == "Pirate Hyena" then
-         pilot.toggleSpawn()
-         pilot.clear()
+      local pp = player.pilot()
+      local ps = pp:ship()
+      if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
+         enter_setup()
 
          local targetF = faction.dynAdd( "Marauder", "targets", _("Targets"))
          mem.bbb = pilot.add("Hyena", targetF, mem.convpnt, _("Blue Belly Billy"))
@@ -232,8 +232,8 @@ So, don't try to auto-target around, and just shoot at the targets I will be ind
          mem.bbb:moveto( mem.convpnt:pos() + vec2.new(3000, 0) )
          mem.misn_state = 5
 
-         player.pilot():control()
-         player.pilot():face(mem.bbb)
+         pp:control()
+         pp:face(mem.bbb)
 
          mem.countdown = 10
          mem.omsg = player.omsgAdd(tostring(mem.countdown), 0, 50)
@@ -248,10 +248,7 @@ So, don't try to auto-target around, and just shoot at the targets I will be ind
 
    -- Player enters Mason, where the Hyena festival is happening
    elseif system.cur() == mem.convsys then
-      for k,f in ipairs(pir.factions) do -- No pirates
-         pilot.toggleSpawn(f)
-         pilot.clearSelect(f)
-      end
+      pir.clearPirates() -- No pirates
 
       -- Spawn the gangs
       for i, g in ipairs(gangs) do
@@ -267,23 +264,30 @@ function land()
    if mem.misn_state == 0 and spob.cur() == mem.baronpnt then
       vn.clear()
       vn.scene()
+      local brn = baron.vn_baron{ shader=love_shaders.hologram() }
       vn.transition( ) -- TODO: rework that part once Baron Sauterfeldt has a portrait
-      vn.na(_([[After landing, you are approached by a group of well-dressed people: "His Lordship, the Baron Sauterfeldt, will encounter you. Please follow us to the presidential palace."
-They guide you to the urban transport station, and while a crowd of workers are waiting for the next train in a suffocating heat, you enter a small shuttle: "His Lordship decided the creation of the hypervelocity shuttles system last cycle. Since then, this system saves much time to first-class citizen who used to get stuck in traffic jams or in over-crowded heliports. His genial idea was to use the same tunnel net as the subway."]]))
-      vn.na(_([["The shuttle system leads us directly under the presidential palace. I'm afraid you won't see its new pediment that His Lordship had built recently."
-You proceed to follow your guides through a checkpoint into the administrative part of the palace, the kind of place where people wear moccasins and the carpets have no spots. You enter a seemingly common and empty meeting room and start to ask yourself where the Baron is.]])) -- Remark: implicitly, we suggest the baron is in his Gauss, the Pinnacle.
-      vn.na(fmt.f(_([[Suddenly, a huge holographic face appears in the centre of the room:
-"Hello, and welcome on the planet Ulios, {player}! I am the Baron Dovai Sauterfeldt. I hope you got a smooth travel to our very remote humble piece of land! I am truly delighted to meet you, {player}, truly… Or did we already meet before? Mmmm! I am afraid I am perfectly incapable to remember most of the astonishingly inspiring people I tend to meet.
-"Anyway, you are truly most certainly one very inspiring person, {player}, aren't you? Yes, you are! You know what? I am really happy to finally have time to discuss with such a notable person as you."]]), {player=player.name()}))
-      vn.na(fmt.f(_([[You start to wonder if the "special service" you came to provide was simply to endure the baron's spiel, but he continues:
+      vn.na(_([[After landing, you are approached by a group of well-dressed people: "His Lordship, the Baron Sauterfeldt, will encounter you. Please follow us to the presidential palace."]]))
+      vn.na(_([[They guide you to the urban transport station, and while a crowd of workers are waiting for the next train in a suffocating heat, you enter a small shuttle: "His Lordship decided the creation of the hypervelocity shuttles system last cycle. Since then, this system saves much time to first-class citizen who used to get stuck in traffic jams or in over-crowded heliports. His genial idea was to use the same tunnel net as the subway."]]))
+      vn.na(_([["The shuttle system leads us directly under the presidential palace. I'm afraid you won't see its new pediment that His Lordship had built recently."]]))
+      vn.na(_([[You proceed to follow your guides through a checkpoint into the administrative part of the palace, the kind of place where people wear moccasins and the carpets have no spots. You enter a seemingly common and empty meeting room and start to ask yourself where the Baron is.]])) -- Remark: implicitly, we suggest the baron is in his Gauss, the Pinnacle.
+      vn.appear( brn )
+      brn(fmt.f(_([[Suddenly, a huge holographic face appears in the centre of the room:
+"Hello, and welcome on the planet Ulios, {player1}! I am the Baron Dovai Sauterfeldt. I hope you got a smooth travel to our very remote humble piece of land! I am truly delighted to meet you, {player2}, truly… Or did we already meet before? Mmmm! I am afraid I am perfectly incapable to remember most of the astonishingly inspiring people I tend to meet."]]),
+         {player1=baron.mangle(player.name()), player2=baron.mangle(player.name())}))
+      brn(fmt.f(_([["Anyway, you are truly most certainly one very inspiring person, {player}, aren't you? Yes, you are! You know what? I am really happy to finally have time to discuss with such a notable person as you."]]),
+         {player=baron.mangle(player.name())}))
+      brn(fmt.f(_([[You start to wonder if the "special service" you came to provide was simply to endure the baron's spiel, but he continues:
 "{player}, do you know the Lady named Blue Belly Billy? Oh, of course you don't! For she is not the inspiring kind of person! She is the leader of a group… or rather a gang of young people. Nestor, do you like young people?"
-The man on your right answers: "Certainly not, your Lordship."]]), {player=player.name()}))
-      vn.na(_([[The baron continues: "I don't either, Nestor, they are rude and dirty and… young. Anyway, I got lost… So, this gang of young people have the particularity to fly Hyena interceptors. It is what one calls a Hyena bikers gang. Those bikers like to tune their ships, as they say, by using scavenged pieces of, preferably shiny, metal. A bit like magpies do with their nests, except they have worst taste.
-"That lady uses a fake pre-space-age trash top as left nozzle hubcap. My art historian, Flintley, examined it once, and noticed that this piece was constructed by the famous counterfeiter Themistocle Zweihundertshrittenausdaheim, who became later a famous artist. So this piece, although being a fake archaeological relic, is a true piece of Themistocle Zweihundertshrittenausdaheim!
-And as such, it belongs to my collection, is that true, Nestor?"
-The man on your right answers: "Certainly, your Lordship."]]))
-      vn.na(fmt.f(_([[The baron explains his plan: "Hyena bikers will soon gather for a festival on {pnt} in {sys}. I want you to go there, find Blue Belly Billy, defy her in a Hyena duel, disable her ship, get her nozzle hubcap and come back." You ask if it would not be preferable to steal the hubcap while the ship is at dock, but the baron answers:
-"Yes, maybe you are right, but when I offered her to sell it to me, she refused and said very unfriendly words to me, so I would prefer her to get humiliated in a duel. Besides, this humiliation will ensure that her gang will reject her and not try to avenge her."]]), {pnt=mem.convpnt,sys=mem.convsys}))
+The man on your right answers: "Certainly not, your Lordship."]]),
+         {player=baron.mangle(player.name())}))
+      brn(_([[The baron continues: "I don't either, Nestor, they are rude and dirty and… young. Anyway, I got lost… So, this gang of young people have the particularity to fly Hyena interceptors. It is what one calls a Hyena bikers gang. Those bikers like to tune their ships, as they say, by using scavenged pieces of, preferably shiny, metal. A bit like magpies do with their nests, except they have worst taste."]]))
+      brn(_([["That lady uses a fake pre-space-age trash top as left nozzle hubcap. My art historian, Flintley, examined it once, and noticed that this piece was constructed by the famous counterfeiter Themistocle Zweihundertshrittenausdaheim, who became later a famous artist. So this piece, although being a fake archaeological relic, is a true piece of Themistocle Zweihundertshrittenausdaheim!"
+"And as such, it belongs to my collection, is that true, Nestor?"]]))
+      vn.na(_([[The man on your right answers: "Certainly, your Lordship."]]))
+      brn(fmt.f(_([[The baron explains his plan: "Hyena bikers will soon gather for a festival on {pnt} in {sys}. I want you to go there, find Blue Belly Billy, defy her in a Hyena duel, disable her ship, get her nozzle hubcap and come back."]]),
+         {pnt=mem.convpnt,sys=mem.convsys}))
+      brn(_([[You ask if it would not be preferable to steal the hubcap while the ship is at dock, but the baron answers:
+"Yes, maybe you are right, but when I offered her to sell it to me, she refused and said very unfriendly words to me, so I would prefer her to get humiliated in a duel. Besides, this humiliation will ensure that her gang will reject her and not try to avenge her."]]))
       vn.na(_([[After a final "good luck" wished to you by the Baron, the connection is cut and you are guided back to the spaceport and to your ship. It is time for you to buy a Hyena and go to that festival.]]))
       vn.done()
       vn.run()
@@ -313,9 +317,11 @@ The man on your right answers: "Certainly, your Lordship."]]))
       local pay = 200e3
       vn.clear()
       vn.scene()
+      local brn = vn.newCharacter(baron.vn_baron{ shader=love_shaders.hologram() })
       vn.transition( )
-      vn.na(_([[This time, after landing, you see the Colonel Okran among the people waiting for you. All of them accompany you once again to the meeting room in the presidential palace of Baron Sauterfeldt. They examine the nozzle hubcap, looking satisfied, while the Baron appears through the holoprojectors:
-"That is awesome, my little colonel Orcon! The pilot you recruited for me really made it. I am very pleased. Now, I guess I have no further objections to let your little friend, the Lord Whatsoever, add a new toy to his arsenal. As promised, I will call the sales manager of Goddard right now!"]])) -- TODO: once everyone has a portrait, rework that part
+      vn.na(_([[This time, after landing, you see the Colonel Okran among the people waiting for you. All of them accompany you once again to the meeting room in the presidential palace of Baron Sauterfeldt. They examine the nozzle hubcap, looking satisfied, while the Baron appears through the holoprojectors.]]))
+      brn(_([["That is awesome, my little colonel Orcon! The pilot you recruited for me really made it. I am very pleased. Now, I guess I have no further objections to let your little friend, the Lord Whatsoever, add a new toy to his arsenal. As promised, I will call the sales manager of Goddard right now!"]])) -- TODO: once everyone has a portrait, rework that part
+      vn.disappear(brn)
       vn.na(_([[The Dvaered colonel and you get promptly dismissed, and he talks with you on the way back.]]))
       local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
       sol(fmt.f(_([["Citizen, you apparently did a pretty good job, out there. I did not fully understand why the Baron Sauterfeldt did want you to get your hands on that… piece of… stuff, but what is certain is that we can now count on him for getting our second battleship."
@@ -366,15 +372,19 @@ end
 
 -- Tests to determine if the player is running away
 function escape()
-   -- Player quits in the middle of the Hallway to Hell
-   if mem.misn_state == 2 then
-      vntk.msg(_("Mission Failure"),_([[You were supposed to cross the Hallway to Hell, not to cowardly run away.]]))
-      misn.finish(false)
+   local pp = player.pilot()
+   local ps = pp:ship()
+   if ps==ship.get("Hyena") or ps==ship.get("Pirate Hyena") then
+      -- Player quits in the middle of the Hallway to Hell
+      if mem.misn_state == 2 then
+         vntk.msg(_("Mission Failure"),_([[You were supposed to cross the Hallway to Hell, not to cowardly run away.]]))
+         misn.finish(false)
 
-   -- Player escapes the fight with BBB
-   elseif mem.misn_state == 5 then
-      vntk.msg(_("Mission Failure"),_([[You were supposed to defeat Blue Belly Billy, not to run away.]]))
-      misn.finish(false)
+      -- Player escapes the fight with BBB
+      elseif mem.misn_state == 5 then
+         vntk.msg(_("Mission Failure"),_([[You were supposed to defeat Blue Belly Billy, not to run away.]]))
+         misn.finish(false)
+      end
    end
 end
 
@@ -470,17 +480,17 @@ Please tell your boss we will pay him very soon! I promise! Don't get angry, I c
    vn.jump("hallway")
 
    vn.label("challenge")
-   biker(_([["There are plenty of kinds of challenges! Some consist in doing acrobatic figures, other are races. There is also the 'Bad Boar Battle' challenge, it is the one you must beat to enter my gang: the Big Bang Band, and it consists in flying to Dvaer Prime, broadcasting messages of insults against House Dvaered, and then… if you manage to get to a civilized planet in one piece, you have beaten the challenge."
-"Oh, and there is also the 'Hallway to Hell'. It was invented by my gang leader, Blue Belly Billy, and nowadays, she requires anybody who wants to defy her to first beat the Hallway to Hell. Do you want to try it out?"]]))
+   biker(_([["There are plenty of kinds of challenges! Some consist in doing acrobatic figures, other are races. There is also the 'Bad Boar Battle' challenge, it is the one you must beat to enter my gang: the Big Bang Band, and it consists in flying to Dvaer Prime, broadcasting messages of insults against House Dvaered, and then… if you manage to get to a civilized planet in one piece, you have beaten the challenge."]]))
+   biker(_([["Oh, and there is also the 'Hallway to Hell'. It was invented by my gang leader, Blue Belly Billy, and nowadays, she requires anybody who wants to defy her to first beat the Hallway to Hell. Do you want to try it out?"]]))
    vn.na(_([[You answer you would like to try it out.]]))
    biker(_([["Hey? I was joking, you know. The Hallway to Hell is the most deadly of all challenges. And if you survive it, you'll have to fight to death against Blue Belly Billy. No-one ever won against her!"]]))
    vn.na(_([[You insist.]])) -- This is a bit too directive, any reorganization is welcome to get the player feel they can actually decide what they say.
    vn.jump("hallway")
 
    vn.label("hallway")
-   biker(_([["If you want to approach Blue Belly Billy, you have to prove that you are worth of it. You need to cross the 'Hallway to Hell' inside a Hyena.
-It is a very simple challenge in principle, but only few manage to make it alive through the Hallway to Hell. And even fewer manage to make it in a time short enough for Blue Belly Billy to accept them to defy her.
-Let me explain: there are 3 weak targets in a triangle, and you need to destroy all those 3 targets with your Hyena. Sounds pretty simple, no? But between those targets, there are platforms that fire fury missiles at you. You'll have to dodge the missiles and destroy the 3 buoys before the timer runs out… unless you are too scared for our challenge and you did already pee your pants.
+   biker(_([["If you want to approach Blue Belly Billy, you have to prove that you are worth of it. You need to cross the 'Hallway to Hell' inside a Hyena."
+"It is a very simple challenge in principle, but only few manage to make it alive through the Hallway to Hell. And even fewer manage to make it in a time short enough for Blue Belly Billy to accept them to defy her."]]))
+   biker(_([[Let me explain: there are 3 weak targets in a triangle, and you need to destroy all those 3 targets with your Hyena. Sounds pretty simple, no? But between those targets, there are platforms that fire fury missiles at you. You'll have to dodge the missiles and destroy the 3 buoys before the timer runs out… unless you are too scared for our challenge and you did already pee your pants.
 We are preparing the set. Just take off to start the challenge!"]]))
 
    vn.done()
@@ -585,7 +595,7 @@ end
 -- Start the Hallway to Hell challenge
 function startHallway()
    player.pilot():control(false)
-   hook.timer( 5., "tick" )
+   hook.timer( 1., "tick" )
    mem.finishH = hook.timer( mem.timer-10., "finishHallway" ) -- Final countdown
    mem.loseH = hook.timer( mem.timer, "timeOver" )
    mem.pla1:attack(player.pilot())
@@ -602,16 +612,16 @@ end
 
 -- Manage timer in OSD
 function tick()
-   mem.timer = mem.timer - 5. -- TODO: I guess it will deviate with time
+   mem.timer = mem.timer-1. -- TODO: I guess it will deviate with time
    if mem.misn_state == 2 then -- If player didnt already win
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Negotiation 2"), {
-         fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=mem.timer} ),
+         fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=string.format("%.0f",mem.timer)} ),
          fmt.f(_("Land on {pnt} and talk to Blue Belly Billy"), {pnt=mem.convpnt} ),
          _("Disable and board Blue Belly Billy"),
          fmt.f(_("Go back to {pnt} in {sys}"), {pnt=mem.baronpnt,sys=mem.baronsys} ),
       } )
-      hook.timer( 5., "tick" )
+      hook.timer( 1., "tick" )
    end
 end
 
@@ -686,9 +696,11 @@ end
 
 -- Start duel against Blue Belly Billy
 function startDuel()
-   player.pilot():control(false)
+   local pp = player.pilot()
+   pp:control(false)
    mem.bbb:taskClear()
-   mem.bbb:attack(player.pilot())
+   mem.bbb:attack(pp)
+   misn.osdActive(2)
 end
 
 -- Player killed BBB
@@ -706,7 +718,7 @@ function boardBBB()
    mem.misn_state = 6
    misn.osdActive(3)
    misn.markerMove( mem.misn_marker, mem.baronpnt )
-   pilot.toggleSpawn()
+   pilot.toggleSpawn(true)
 
    local c = commodity.new( N_("Nozzle Hubcap"), N_("This looks like a prehistoric trash top.") )
    misn.cargoAdd( c, 0 )

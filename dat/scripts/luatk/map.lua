@@ -76,7 +76,7 @@ function Map:draw( bx, by )
    lg.push()
    lg.translate( x, y )
 
-   lg.setColor( {0, 0, 0} )
+   lg.setColour( {0, 0, 0} )
    lg.rectangle( "fill", 0, 0, w, h )
 
    -- Set scissors
@@ -85,7 +85,7 @@ function Map:draw( bx, by )
    local c = vec2.new( w, h )*0.5
 
    -- Display edges
-   lg.setColor( {0.5, 0.5, 0.5} )
+   lg.setColour( {0.5, 0.5, 0.5} )
    for i,e in ipairs(self.edges) do
       local px, py = ((e.c-self.pos)*scale + c):get()
       local l = (e.l-sys_radius*2)*scale
@@ -107,7 +107,7 @@ function Map:draw( bx, by )
       local p = (s:pos()*inv-self.pos)*scale + c
       local px, py = p:get()
       if not (px < -r or px > w+r or py < -r or py > h+r) then
-         lg.setColor( sys.c )
+         lg.setColour( sys.c )
          lg.circle( "line", px, py, r )
       end
    end

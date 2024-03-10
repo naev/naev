@@ -179,7 +179,7 @@ static int fontL_new( lua_State *L )
       prefix = "";
 
    if (gl_fontInit( &font, fname, h, prefix, FONT_FLAG_DONTREUSE ))
-      NLUA_ERROR(L, _("failed to load font '%s'"), fname);
+      return NLUA_ERROR(L, _("failed to load font '%s'"), fname);
 
    lua_pushfont( L, font );
    lua_pushstring( L, fname );
@@ -211,7 +211,7 @@ static int fontL_height( lua_State *L )
  */
 static int fontL_width( lua_State *L )
 {
-   glFont *font = luaL_checkfont(L,1);
+   const glFont *font = luaL_checkfont(L,1);
    const char *text = luaL_checkstring(L,2);
    int width = gl_printWidthRaw( font, text );
    lua_pushinteger(L, width);
@@ -228,7 +228,7 @@ static int fontL_width( lua_State *L )
  */
 static int fontL_setFilter( lua_State *L )
 {
-   glFont *font = luaL_checkfont(L,1);
+   const glFont *font = luaL_checkfont(L,1);
    const char *smin = luaL_checkstring(L,2);
    const char *smag = luaL_optstring(L,3,smin);
    GLint min, mag;
@@ -237,7 +237,7 @@ static int fontL_setFilter( lua_State *L )
    mag = gl_stringToFilter( smag );
 
    if (min==0 || mag==0)
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
 
    gl_fontSetFilter( font, min, mag );
 

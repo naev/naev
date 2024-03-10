@@ -29,6 +29,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
 /* window */
 void window_setAccept( unsigned int wid, void (*fptr)(unsigned int,const char*) );
 void window_setCancel( unsigned int wid, void (*cancel)(unsigned int,const char*) );
+void window_setOnFocus( unsigned int wid, void (*focus)(unsigned int) );
 void window_setBorder( unsigned int wid, int enable );
 void window_setFocus( unsigned int wid, const char* wgtname );
 void window_handleKeys( unsigned int wid,
@@ -40,7 +41,7 @@ void window_resize( unsigned int wid, int w, int h );
 void window_raise( unsigned int wid );
 void window_lower( unsigned int wid );
 int window_setDisplayname( unsigned int wid, const char *displayname );
-void window_setFade( unsigned int wid, const SimpleShader *shd, double length );
+void window_setDynamic( unsigned int wid, int dynamic );
 
 /*
  * get
@@ -71,7 +72,6 @@ void window_destroyWidget( unsigned int wid, const char* wgtname );
 void window_setParent( unsigned int wid, unsigned int parent );
 unsigned int window_getParent( unsigned int wid );
 void window_onClose( unsigned int wid, void (*fptr)(unsigned int,const char*) );
-void window_onCleanup( unsigned int wid, void (*fptr)(unsigned int,const char*) );
 
 /*
  * data
@@ -82,6 +82,7 @@ void* window_getData( unsigned int wid );
 /*
  * render
  */
+void toolkit_rerender (void);
 void toolkit_render( double dt );
 
 /*
@@ -100,5 +101,5 @@ void toolkit_exit (void);
 /*
  * hacks
  */
-void toolkit_reposition (void);
+void toolkit_resize (void);
 void toolkit_delay (void);

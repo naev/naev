@@ -6,7 +6,7 @@
   <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
-  <faction>Independent</faction>
+  <faction>Traders Society</faction>
   <base>50.000000</base>
   <bonus>25.000000</bonus>
   <range>3</range>

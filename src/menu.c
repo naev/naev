@@ -48,6 +48,7 @@
 #include "safelanes.h"
 #include "tk/toolkit_priv.h" /* Needed for menu_main_resize */
 #include "toolkit.h"
+#include "ntracing.h"
 
 #define MAIN_WIDTH      200 /**< Main menu width. */
 
@@ -101,8 +102,10 @@ static void menu_editors_close( unsigned int wid, const char *str );
 /* options button. */
 static void menu_options_button( unsigned int wid, const char *str );
 
-/*
+/**
  * Background system for the menu.
+ *
+ * @TODO optimize this, it's too slow
  */
 static int menu_main_bkg_system (void)
 {
@@ -131,7 +134,7 @@ static int menu_main_bkg_system (void)
 
       /* Get start position. */
       if (spob_exists( ns[0].spob )) {
-         Spob *pnt = spob_get( ns[0].spob );
+         const Spob *pnt = spob_get( ns[0].spob );
          if (pnt != NULL) {
             sys = spob_getSystem( ns[0].spob );
             if (sys != NULL) {
@@ -157,7 +160,7 @@ static int menu_main_bkg_system (void)
    cy += SCREEN_H/8. / conf.zoom_far;
 
    /* Initialize. */
-   space_init( sys, 1 ); /* More lively with simulation. */
+   space_init( sys, 0 ); /* More lively with simulation. */
    cam_setTargetPos( cx, cy, 0 );
    cam_setZoom( conf.zoom_far );
    pause_setSpeed( 1. );
@@ -180,6 +183,10 @@ void menu_main (void)
       WARN( _("Menu main is already open.") );
       return;
    }
+
+   /* Clean up land if triggered with player.gameover() while landed. */
+   if (landed)
+      land_cleanup();
 
    /* Close all open windows. */
    toolkit_closeAll();
@@ -221,7 +228,7 @@ void menu_main (void)
 
    /* create background image window */
    bwid = window_create( "wdwBG", "", -1, -1, -1, -1 );
-   window_onCleanup( bwid, menu_main_cleanBG );
+   window_onClose( bwid, menu_main_cleanBG );
    window_setBorder( bwid, 0 );
    window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, 0, 0, "imgLogo", tex, 0 );
    window_addText( bwid, 0, 10, SCREEN_W, 30., 1, "txtBG", NULL,
@@ -230,10 +237,6 @@ void menu_main (void)
    /* create menu window */
    wid = window_create( "wdwMainMenu", _("Main Menu"), -1, offset_wdw, MAIN_WIDTH, h );
    window_setCancel( wid, main_menu_promptClose );
-
-   /* Handle the fade. */
-   window_setFade( bwid, NULL, 0. );
-   //window_setFade( wid, NULL, 1. );
 
    /* Buttons. */
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -282,7 +285,6 @@ void menu_main_resize (void)
    int w, h, bgw, bgh, tw, th;
    int offset_logo, offset_wdw, freespace;
    int menu_id, bg_id;
-   Widget *wgt;
 
    if (!menu_isOpen(MENU_MAIN))
       return;
@@ -311,7 +313,7 @@ void menu_main_resize (void)
    if (tw > SCREEN_W) {
       /* RIP abstractions. X must be set manually because window_moveWidget
        * transforms negative coordinates. */
-      wgt = window_getwgt( bg_id, "txtBG" );
+      Widget *wgt = window_getwgt( bg_id, "txtBG" );
       if (wgt)
          wgt->x = (SCREEN_W - tw) / 2;
    }
@@ -550,6 +552,7 @@ static int menu_small_exit_hook( void* unused )
    /* Stop player sounds because sometimes they hang. */
    player_restoreControl( 0, _("Exited game.") );
    player_soundStop();
+   NTracingMessageL( "Exited to main menu" );
 
    /* Clean up. */
    wid = window_get("wdwMenuSmall");
@@ -652,7 +655,8 @@ void menu_death (void)
    menu_Open(MENU_DEATH);
 
    /* Makes it all look cooler since everything still goes on. */
-   unpause_game();
+   if (!landed)
+      unpause_game();
 }
 /**
  * @brief Closes the player death menu.

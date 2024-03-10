@@ -8,7 +8,7 @@
   <price>1000000</price>
   <description>It's not clear how Misi got the goods to sell and they evade questions on the topic, however, the Squadron Synchronizer Module can be easily connected to any ship to increase the amount of ships it can command efficiently and accurately. At its core it seems to change some of the underlying algorithms to be more efficient to use less bandwidth.</description>
   <desc_extra>Increases Fleet Capacity by 10. Does not need to be equipped.</desc_extra>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>efficiency_turret.webp</gfx_store>
   <cpu>0</cpu>
  </general>
  <specific type="modification">

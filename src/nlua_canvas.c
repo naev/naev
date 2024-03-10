@@ -18,6 +18,7 @@
 #include "nluadef.h"
 #include "nlua_tex.h"
 #include "nlua_colour.h"
+#include "render.h"
 
 static int nlua_canvas_counter = 0;
 static GLuint previous_fbo = 0;
@@ -133,7 +134,7 @@ int lua_iscanvas( lua_State *L, int ind )
  */
 static int canvasL_gc( lua_State *L )
 {
-   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   const LuaCanvas_t *lc = luaL_checkcanvas(L,1);
    glDeleteFramebuffers( 1, &lc->fbo );
    gl_freeTexture( lc->tex );
    gl_checkErr();
@@ -215,7 +216,7 @@ static int canvasL_new( lua_State *L )
    int h = luaL_checkint(L,2);
 
    if (canvas_new( &lc, w, h ))
-      NLUA_ERROR( L, _("Error setting up framebuffer!"));
+      return NLUA_ERROR( L, _("Error setting up framebuffer!"));
    lua_pushcanvas( L, lc );
    return 1;
 }
@@ -229,10 +230,8 @@ static int canvasL_new( lua_State *L )
  */
 static int canvasL_set( lua_State *L )
 {
-   LuaCanvas_t *lc;
-
-   if (lua_iscanvas(L,1)) {
-      lc = luaL_checkcanvas(L,1);
+   if (!lua_isnoneornil(L,1)) {
+      const LuaCanvas_t *lc = luaL_checkcanvas(L,1);
       if (!previous_fbo_set) {
          previous_fbo = gl_screen.current_fbo;
          previous_fbo_set = 1;
@@ -242,17 +241,10 @@ static int canvasL_set( lua_State *L )
       glDisable(GL_SCISSOR_TEST);
       glViewport( 0, 0, lc->tex->w, lc->tex->h );
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-   }
-   else if ((lua_gettop(L)<=0) || lua_isnil(L,1)) {
-      gl_screen.current_fbo = previous_fbo;
-      previous_fbo_set = 0;
-      if (was_scissored)
-         glEnable(GL_SCISSOR_TEST);
-      glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
-      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+      render_needsReset();
    }
    else
-      NLUA_ERROR(L,_("Unexpected parameter"));
+      canvas_reset();
 
    return 0;
 }
@@ -266,7 +258,7 @@ static int canvasL_set( lua_State *L )
  */
 static int canvasL_dims( lua_State *L )
 {
-   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   const LuaCanvas_t *lc = luaL_checkcanvas(L,1);
    lua_pushnumber( L, lc->tex->w );
    lua_pushnumber( L, lc->tex->h );
    return 2;
@@ -281,7 +273,7 @@ static int canvasL_dims( lua_State *L )
  */
 static int canvasL_getTex( lua_State *L )
 {
-   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   const LuaCanvas_t *lc = luaL_checkcanvas(L,1);
    lua_pushtex( L, gl_dupTexture(lc->tex) );
    return 1;
 }
@@ -295,11 +287,26 @@ static int canvasL_getTex( lua_State *L )
  */
 static int canvasL_clear( lua_State *L )
 {
-   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   const LuaCanvas_t *lc = luaL_checkcanvas(L,1);
    (void) lc; /* Just to enforce good practice, canvas should be already set. */
    const glColour *c = luaL_optcolour(L,2,&cBlack);
    glClearColor( c->r, c->g, c->b, c->a );
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glClearColor( 0.0, 0.0, 0.0, 1.0 );
    return 0;
+}
+
+/**
+ * @brief Resets the canvas state if applicable.
+ */
+void canvas_reset (void)
+{
+   if (!previous_fbo_set)
+      return;
+   gl_screen.current_fbo = previous_fbo;
+   previous_fbo_set = 0;
+   if (was_scissored)
+      glEnable(GL_SCISSOR_TEST);
+   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
 }

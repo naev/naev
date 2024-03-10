@@ -15,7 +15,6 @@
 #include "array.h"
 #include "dialogue.h"
 #include "equipment.h"
-#include "gui.h"
 #include "gui_osd.h"
 #include "hook.h"
 #include "land.h"
@@ -23,18 +22,14 @@
 #include "map.h"
 #include "menu.h"
 #include "mission.h"
-#include "ndata.h"
 #include "nlua.h"
-#include "nlua_tk.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "pilot.h"
 #include "player.h"
 #include "player_fleet.h"
-#include "player_gui.h"
 #include "player_inventory.h"
 #include "shiplog.h"
-#include "space.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 
@@ -112,8 +107,10 @@ static void standings_close( unsigned int wid, const char *str );
 static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
 static void weapons_updateList( unsigned int wid, const char *str );
+static void weapons_toggleList( unsigned int wid, const char *str );
+static void weapons_clear( unsigned int wid, const char *str );
+static void weapons_clearAll( unsigned int wid, const char *str );
 static void weapons_autoweap( unsigned int wid, const char *str );
-static void weapons_fire( unsigned int wid, const char *str );
 static void weapons_inrange( unsigned int wid, const char *str );
 static void weapons_manual( unsigned int wid, const char *str );
 static void weapons_volley( unsigned int wid, const char *str );
@@ -164,7 +161,7 @@ static void info_buttonRegen (void)
    rows = 1 + (array_size(info_buttons)) / cols;
 
    for (int i=0; i<array_size(info_buttons); i++) {
-      InfoButton_t *btn = &info_buttons[i];
+      const InfoButton_t *btn = &info_buttons[i];
       int r = (i+1)/cols, c = (i+1)%cols;
       if (widget_exists( wid, btn->button ))
          window_destroyWidget( wid, btn->button );
@@ -335,6 +332,9 @@ static void info_close( unsigned int wid, const char *str )
    if (info_wid > 0) {
       info_lastTab = window_tabWinGetActive( info_wid, "tabInfo" );
 
+      /* Update weapon sets. */
+      pilot_weaponSafe( player.p );
+
       /* Copy weapon sets over if changed. */
       ws_copy( player.ps.weapon_sets, player.p->weapon_sets );
 
@@ -391,7 +391,7 @@ static void info_openMain( unsigned int wid )
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Times landed:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Damage done:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Damage taken:") );
-   k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Ships destroyed:") );
+   /*k +=*/ scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Ships destroyed:") );
    window_addText( wid, 20, 20, 160, h-80, 0, "txtDPilot", &gl_smallFont, &cFontGrey, str );
 
    credits2str( creds, player.p->credits, 2 );
@@ -399,20 +399,20 @@ static void info_openMain( unsigned int wid )
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", nt );
    l += scnprintf( &str[l], sizeof(str)-l, "\n\n%s", creds );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", player.p->name );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%.0f (%d %s)",
-         player.p->fuel, pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%.0f %s (%d %s)",
+         player.p->fuel, UNIT_UNIT, pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
    cargo_used = pfleet_cargoUsed();
    cargo_total = cargo_used + pfleet_cargoFree();
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%d / %d %s", cargo_used, cargo_total, n_( "tonne", "tonnes", cargo_total ) );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%d / %d %s", cargo_used, cargo_total, UNIT_MASS );
    l += scnprintf( &str[l], sizeof(str)-l, "%s", "\n\n" );
    l += scnprintf( &str[l], sizeof(str)-l, _("%.1f hours"), player.time_played / 3600. );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU((double)player.death_counter,0) );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU((double)player.jumped_times, 0) );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s\n", num2strU((double)player.landed_times, 0) );
-   l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), num2strU(player.dmg_done_shield + player.dmg_done_armour, 0) );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", "" );
-   l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), num2strU(player.dmg_taken_shield + player.dmg_taken_armour, 0) );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU(destroyed, 0) );
+   l += scnprintf( &str[l], sizeof(str)-l, _("%s %s"), num2strU(player.dmg_done_shield + player.dmg_done_armour, 0), UNIT_ENERGY );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n" );
+   l += scnprintf( &str[l], sizeof(str)-l, _("%s %s"), num2strU(player.dmg_taken_shield + player.dmg_taken_armour, 0), UNIT_ENERGY );
+   /*l +=*/ scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU(destroyed, 0) );
    window_addText( wid, 200, 20,
          w-80-200-40+20-180, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
@@ -445,7 +445,7 @@ static void info_openMain( unsigned int wid )
          if (pi->quantity == 0)
             SDL_asprintf( &inventory[nlic+i], "%s", _(pi->name) );
          else
-            SDL_asprintf( &inventory[nlic+i], _("%s (%d)"), _(pi->name), pi->quantity );
+            SDL_asprintf( &inventory[nlic+i], _("%s (%s)"), _(pi->name), num2strU(pi->quantity,0) );
       }
       qsort( &inventory[nlic], ninv, sizeof(char*), strsort );
    }
@@ -482,29 +482,29 @@ static void info_openShip( unsigned int wid )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Accel:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Speed:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Armour:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Energy:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stats:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+   /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stats:") );
    window_addText( wid, 20, -40, 160, h-60, 0, "txtSDesc", &gl_smallFont, &cFontGrey, buf );
    window_addText( wid, 200, -40, w-20-20-20-200-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
 
    /* Custom widget. */
    equipment_slotWidget( wid, -20, -40, 180, h-60, &info_eq );
-   info_eq.selected  = &player.ps;
+   equipment_slotSelect( &info_eq, &player.ps );
    info_eq.canmodify = 0;
 
    /* Update ship. */
@@ -517,8 +517,17 @@ static void info_openShip( unsigned int wid )
 static void ship_update( unsigned int wid )
 {
    char buf[STRMAX_SHORT], *hyp_delay;
+   char sshield[NUM2STRLEN], sarmour[NUM2STRLEN], senergy[NUM2STRLEN];
+   char scargo[NUM2STRLEN], sfuel[NUM2STRLEN];
    size_t l = 0;
    int cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
+
+   /* Some helpers. */
+   num2str( sshield, player.p->shield, 0 );
+   num2str( sarmour, player.p->armour, 0 );
+   num2str( senergy, player.p->energy, 0 );
+   num2str( scargo, pilot_cargoUsed(player.p), 0 );
+   num2str( sfuel, player.p->fuel, 0 );
 
    hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
    /* Generic */
@@ -527,30 +536,41 @@ static void ship_update( unsigned int wid )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship_class(player.p->ship)) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", (int)floor(player.p->crew) );
    /* Movement. */
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", player.p->solid.mass, n_( "tonne", "tonnes", player.p->solid.mass ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s"), num2strU(player.p->solid.mass,0), UNIT_MASS );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), hyp_delay );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f kN/tonne"), player.p->thrust / player.p->solid.mass );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f m/s (max %.0f m/s)"),
-         player.p->speed, solid_maxspeed( &player.p->solid, player.p->speed, player.p->thrust ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f deg/s"), player.p->turn*180./M_PI );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", player.p->stats.time_mod * player.p->ship->dt_default * 100. );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), player.p->accel, UNIT_ACCEL );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s (max %.0f %s)"),
+         player.p->speed, UNIT_SPEED, solid_maxspeed( &player.p->solid, player.p->speed, player.p->accel ), UNIT_SPEED );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), player.p->turn*180./M_PI, UNIT_ROTATION );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", player.p->stats.time_mod * player.p->ship->dt_default*100. );
    /* Health. */
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", player.p->dmg_absorb * 100. );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f / %.0f MJ (%.1f MW)"), player.p->shield, player.p->shield_max, player.p->shield_regen );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f / %.0f MJ (%.1f MW)"), player.p->armour, player.p->armour_max, player.p->armour_regen );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f / %.0f MJ (%.1f MW)"), player.p->energy, player.p->energy_max, player.p->energy_regen );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d / %d %s", pilot_cargoUsed( player.p ), cargo, n_( "tonne", "tonnes", cargo ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f / %.0f %s (%d %s)",
-         player.p->fuel, player.p->fuel_max, n_( "unit", "units", player.p->fuel_max ),
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", player.p->dmg_absorb*100. );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s / %s %s"),
+         sshield, num2strU(player.p->shield_max,0), UNIT_ENERGY );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _(" (%s %s)"),
+         num2strU(player.p->shield_regen,1), UNIT_POWER );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s / %s %s"),
+         sarmour, num2strU(player.p->armour_max,0), UNIT_ENERGY );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _(" (%s %s)"),
+         num2strU(player.p->armour_regen,1), UNIT_POWER );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s / %s %s"),
+         senergy, num2strU(player.p->energy_max,0), UNIT_ENERGY );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _(" (%s %s)"),
+         num2strU(player.p->energy_regen,1), UNIT_POWER );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s / %s %s"), scargo, num2strU(cargo,0), UNIT_MASS );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s / %s %s (%d %s)"),
+         sfuel, num2strU(player.p->fuel_max,0), UNIT_UNIT,
          pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n\n" );
 
@@ -571,48 +591,50 @@ static void info_openWeapons( unsigned int wid )
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
-   info_eq_weaps.selected  = &player.ps;
+   equipment_slotSelect( &info_eq_weaps, &player.ps );
    info_eq_weaps.weapons = 0;
    info_eq_weaps.canmodify = 0;
 
    /* Custom widget for legend. */
-   y = -220;
+   y = -240;
    window_addCust( wid, 220, y, w-200-60, 100, "cstLegend", 0,
          weapons_renderLegend, NULL, NULL, NULL, NULL );
 
    /* Checkboxes. */
    wlen = w - 220 - 20;
    x = 220;
-   y -= 100;
-   window_addText( wid, x, y, wlen, 20, 0, "txtLocal", NULL, NULL,
-         _("Current Weapon Set Settings"));
-   y -= 20;
+   y -= 95;
+   window_addButton( wid, x+10, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnCycle", _("Cycle Mode"), weapons_toggleList );
+   window_addButton( wid, x+10+(BUTTON_WIDTH+10), y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClear", _("Clear"), weapons_clear );
+   window_addButton( wid, x+10+(BUTTON_WIDTH+10)*2, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClearAll", _("Clear All"), weapons_clearAll );
+   y -= BUTTON_HEIGHT+10;
+   window_addText( wid, x+10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
+         _("Cycles through the following modes:\n"
+           "- Switch: sets the selected weapons as primary and secondary weapons.\n"
+           "- Hold: turns on the selected outfits as long as key is held\n"
+           "- Toggle: toggles the selected outfits to on or off state"
+           ));
+   y -= 8+window_getTextHeight( wid, "txtSMode" );
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkFire", _("Enable instant Mode"), weapons_fire,
-         (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_WEAPON) );
-   y -= 30;
-   window_addText( wid, x+10, y, wlen, 20, 0, "txtSInstant", NULL, NULL, _("(Weapons fire when this weapon set key is pressed)"));
-   y -= 20;
+         "chkManual", _("Enable manual aiming mode"), weapons_manual,
+         pilot_weapSetManualCheck( player.p, info_eq_weaps.weapons ) );
+   y -= 28;
+   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
+         "chkVolley", _("Enable volley mode (weapons fire jointly)"), weapons_volley,
+         pilot_weapSetVolleyCheck( player.p, info_eq_weaps.weapons ) );
+   y -= 28;
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
-   y -= 30;
+   y -= 28;
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkManual", _("Enable manual aiming mode."), weapons_manual,
-         pilot_weapSetManualCheck( player.p, info_eq_weaps.weapons ) );
-   y -= 30;
+         "chkHelper", _("Dogfight visual aiming helper (all sets)"), aim_lines, player.p->aimLines );
+   y -= 28;
    window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkVolley", _("Enable volley mode."), weapons_volley,
-         pilot_weapSetVolleyCheck( player.p, info_eq_weaps.weapons ) );
-   y -= 40;
-   window_addText( wid, x, y, wlen, 20, 0, "txtGlobal", NULL, NULL,
-         _("Global Settings"));
-   y -= 20;
-   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkAutoweap", _("Automatically handle weapons"), weapons_autoweap, player.p->autoweap );
-   y -= 30;
-   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
-         "chkHelper", _("Dogfight aiming helper"), aim_lines, player.p->aimLines );
+         "chkAutoweap", _("Automatically handle all weapons sets"), weapons_autoweap, player.p->autoweap );
 
    /* List. Has to be generated after checkboxes. */
    weapons_genList( wid );
@@ -652,9 +674,9 @@ static void weapons_genList( unsigned int wid )
       buf[i] = strdup( tbuf );
    }
    window_addList( wid, 20+180+20, -40,
-         w - (20+180+20+20), 180,
+         w - (20+180+20+20), 200,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
-         0, weapons_updateList, NULL );
+         0, weapons_updateList, weapons_toggleList );
    window_setFocus( wid, "lstWeapSets" );
 
    /* Restore position. */
@@ -676,10 +698,6 @@ static void weapons_updateList( unsigned int wid, const char *str )
       return;
    info_eq_weaps.weapons = pos;
 
-   /* Update fire mode. */
-   window_checkboxSet( wid, "chkFire",
-         (pilot_weapSetTypeCheck( player.p, pos ) == WEAPSET_TYPE_WEAPON) );
-
    /* Update inrange. */
    window_checkboxSet( wid, "chkInrange",
          pilot_weapSetInrangeCheck( player.p, pos ) );
@@ -690,6 +708,79 @@ static void weapons_updateList( unsigned int wid, const char *str )
 
    /* Update autoweap. */
    window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
+}
+
+static void weapons_toggleList( unsigned int wid, const char *str )
+{
+   int i, t, c;
+   (void) str;
+
+   /* See how to handle. */
+   t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
+   switch (t) {
+      case WEAPSET_TYPE_SWITCH:
+         c = WEAPSET_TYPE_HOLD;
+         break;
+      case WEAPSET_TYPE_HOLD:
+         c = WEAPSET_TYPE_TOGGLE;
+         break;
+      case WEAPSET_TYPE_TOGGLE:
+         c = WEAPSET_TYPE_SWITCH;
+         break;
+      default:
+         /* Shouldn't happen... but shuts up GCC */
+         c = WEAPSET_TYPE_SWITCH;
+         break;
+   }
+   pilot_weapSetType( player.p, info_eq_weaps.weapons, c );
+
+   /* Check to see if they are all fire groups. */
+   for (i=0; i<PILOT_WEAPON_SETS; i++)
+      if (pilot_weapSetTypeCheck( player.p, i )==WEAPSET_TYPE_SWITCH)
+         break;
+
+   /* Not able to set them all to fire groups. */
+   if (i >= PILOT_WEAPON_SETS) {
+      dialogue_alert(_("You need at least one switch group!"));
+      pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_SWITCH );
+   }
+
+   /* Set default if needs updating. */
+   pilot_weaponSetDefault( player.p );
+
+   /* Must regen. */
+   weapons_genList( wid );
+}
+
+/**
+ * @brief Clears the currently selected weapon set.
+ */
+static void weapons_clear( unsigned int wid, const char *str )
+{
+   (void) str;
+   pilot_weapSetClear( player.p, info_eq_weaps.weapons );
+
+   /* Must regen. */
+   weapons_genList( wid );
+}
+
+/**
+ * @brief Clears all the weapon sets.
+ */
+static void weapons_clearAll( unsigned int wid, const char *str )
+{
+   (void) str;
+   int sure = dialogue_YesNoRaw( _("Clear All Weapon Sets?"),
+         _("Are you sure you want to clear all your current weapon sets?") );
+   if (!sure)
+      return;
+
+   /* Clear them all. */
+   for (int i=0; i<PILOT_WEAPON_SETS; i++)
+      pilot_weapSetClear( player.p, i );
+
+   /* Must regen. */
+   weapons_genList( wid );
 }
 
 /**
@@ -715,46 +806,6 @@ static void weapons_autoweap( unsigned int wid, const char *str )
    }
    else
       player.p->autoweap = 0;
-}
-
-/**
- * @brief Sets the fire mode.
- */
-static void weapons_fire( unsigned int wid, const char *str )
-{
-   int i, state, t, c;
-
-   /* Set state. */
-   state = window_checkboxState( wid, str );
-
-   /* See how to handle. */
-   t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
-   if (t == WEAPSET_TYPE_ACTIVE)
-      return;
-
-   if (state)
-      c = WEAPSET_TYPE_WEAPON;
-   else
-      c = WEAPSET_TYPE_CHANGE;
-   pilot_weapSetType( player.p, info_eq_weaps.weapons, c );
-
-   /* Check to see if they are all fire groups. */
-   for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (!pilot_weapSetTypeCheck( player.p, i ))
-         break;
-
-   /* Not able to set them all to fire groups. */
-   if (i >= PILOT_WEAPON_SETS) {
-      dialogue_alert( _("You can not set all your weapon sets to fire groups!") );
-      pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_CHANGE );
-      window_checkboxSet( wid, str, 0 );
-   }
-
-   /* Set default if needs updating. */
-   pilot_weaponSetDefault( player.p );
-
-   /* Must regen. */
-   weapons_genList( wid );
 }
 
 /**
@@ -955,8 +1006,7 @@ static void cargo_update( unsigned int wid, const char *str )
 static void cargo_jettison( unsigned int wid, const char *str )
 {
    (void)str;
-   int pos, ret;
-   Mission *misn;
+   int pos;
    HookParam hparam[3];
    PilotCommodity *pclist = pfleet_cargoList();
 
@@ -969,7 +1019,8 @@ static void cargo_jettison( unsigned int wid, const char *str )
 
    /* Special case mission cargo. */
    if (pclist[pos].id != 0) {
-      int f;
+      int f, ret;
+      Mission *misn;
 
       if (!dialogue_YesNo( _("Abort Mission"),
                _("Are you sure you want to abort this mission?") )) {
@@ -1025,9 +1076,9 @@ static void cargo_jettison( unsigned int wid, const char *str )
    cargo_update( wid, NULL );
 
    /* Run hooks. */
-   hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = pclist[pos].commodity->name,
-      hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[0].type    = HOOK_PARAM_COMMODITY;
+   hparam[0].u.commodity = (Commodity*) pclist[pos].commodity; /* TODO not cast */
+   hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = pclist[pos].quantity;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "comm_jettison", hparam );
@@ -1083,7 +1134,7 @@ static void info_openStandings( unsigned int wid )
    info_getDim( wid, &w, &h, &lw );
 
    /* On close. */
-   window_onCleanup( wid, standings_close );
+   window_onClose( wid, standings_close );
 
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -1093,9 +1144,9 @@ static void info_openStandings( unsigned int wid )
    window_addImage( wid, 0, 0, 0, 0, "imgLogo", NULL, 0 );
 
    /* Text. */
-   window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtName",
+   window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 0, "txtName",
          &gl_defFont, NULL, NULL );
-   window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtStanding",
+   window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 0, "txtStanding",
          &gl_defFont, NULL, NULL );
    window_addText( wid, lw+40, 0, (w-(lw+60)), h-80, 0, "txtDescription",
          &gl_defFont, NULL, NULL );
@@ -1125,7 +1176,7 @@ static void info_openStandings( unsigned int wid )
 static void standings_update( unsigned int wid, const char *str )
 {
    (void) str;
-   int p, y;
+   int p, x, y;
    const glTexture *t;
    int w, h, lw, m, l;
    const int *flist;
@@ -1138,32 +1189,32 @@ static void standings_update( unsigned int wid, const char *str )
    p = toolkit_getListPos( wid, "lstStandings" );
 
    /* Render logo. */
+   x = lw+40;
+   y = -40;
    t = faction_logo( info_factions[p] );
    if (t != NULL) {
       int tw = t->w * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
       int th = t->h * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
       window_modifyImage( wid, "imgLogo", t, tw, th );
-      y  = -40;
-      window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-tw)/2, y - (FACTION_LOGO_SM-th)/2 );
-      y -= FACTION_LOGO_SM;
+      window_moveWidget( wid, "imgLogo", x + (FACTION_LOGO_SM-tw), y - (FACTION_LOGO_SM-th)/2 );
+      x += FACTION_LOGO_SM+20;
+      //y -= FACTION_LOGO_SM;
    }
-   else {
+   else
       window_modifyImage( wid, "imgLogo", NULL, 0, 0 );
-      y = -20;
-   }
 
    /* Modify text. */
    y -= 10;
    m = round( faction_getPlayer( info_factions[p] ) );
-   snprintf( buf, sizeof(buf), "#%c%+d%%#0   [ %s ]",
+   snprintf( buf, sizeof(buf), p_("standings","#%c%+d%%#0   [ %s ]"),
          faction_getColourChar( info_factions[p] ), m,
          faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
-   window_moveWidget( wid, "txtName", lw+40, y );
+   window_moveWidget( wid, "txtName", x, y );
    y -= 20;
    window_modifyText( wid, "txtStanding", buf );
-   window_moveWidget( wid, "txtStanding", lw+40, y );
-   y -= 30;
+   window_moveWidget( wid, "txtStanding", x, y );
+   y -= 50;
    l  = scnprintf( buf, sizeof(buf), "%s\n\n", faction_description( info_factions[p] ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("You can have a maximum reputation of %.0f%% with this faction."), round(faction_reputationMax( info_factions[p] )) );
 
@@ -1235,7 +1286,7 @@ static void info_openMissions( unsigned int wid )
    /* Mission Description */
    window_addText( wid, 300+40, -40,
          w-300-60, h - BUTTON_HEIGHT - 120, 0, "txtDesc",
-         &gl_smallFont, NULL, NULL );
+         NULL, NULL, NULL );
 
    /* Put a map. */
    map_show( wid, 20, 20, 300, 260, 0.75, 0., 0. );
@@ -1304,7 +1355,7 @@ static void mission_menu_update( unsigned int wid, const char *str )
    window_enableButton( wid, "btnAbortMission" );
    window_enableCheckbox( wid, "chkHide" );
    window_enableCheckbox( wid, "chkPrefer" );
-   if (misn->osd <= 0) {
+   if (misn->osd == 0) {
       window_checkboxSet( wid, "chkHide", 0 );
       window_checkboxSet( wid, "chkPrefer", 0 );
    }
@@ -1326,7 +1377,7 @@ static void mission_menu_chk_hide( unsigned int wid, const char *str )
       return;
    misn = player_missions[pos];
 
-   if (misn->osd <= 0)
+   if (misn->osd == 0)
       return;
    osd_setHide( misn->osd, window_checkboxState(wid,str) );
 }
@@ -1338,7 +1389,7 @@ static void mission_menu_chk_priority( unsigned int wid, const char *str )
       return;
    misn = player_missions[pos];
 
-   if (misn->osd <= 0)
+   if (misn->osd == 0)
       return;
    osd_setPriority( misn->osd, misn->data->avail.priority-100*window_checkboxState(wid,str) );
 }
@@ -1391,9 +1442,7 @@ static void mission_menu_abort( unsigned int wid, const char *str )
  */
 static void shiplog_menu_update( unsigned int wid, const char *str )
 {
-   int regenerateEntries=0;
    int w, h;
-   int logType, log;
    int nentries;
    char **logentries;
 
@@ -1404,6 +1453,9 @@ static void shiplog_menu_update( unsigned int wid, const char *str )
     * If a new log type has been selected, need to regenerate the log lists.
     * If a new log has been selected, need to regenerate the entries. */
    if (strcmp(str, "lstLogEntries" ) != 0) {
+      int regenerateEntries=0;
+      int logType, log;
+
       /* has selected a type of log or a log */
       window_dimWindow( wid, &w, &h );
       logWidgetsReady=0;
@@ -1558,7 +1610,6 @@ static void info_shiplogAdd( unsigned int wid, const char *str )
 {
    char *tmp;
    int logType, log;
-   int logid;
    (void) str;
 
    logType = toolkit_getListPos( wid, "lstLogType" );
@@ -1574,7 +1625,7 @@ static void info_shiplogAdd( unsigned int wid, const char *str )
    } else {
       tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logs[log] );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
-         logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(logType), log-1 );
+         int logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(logType), log-1 );
          if ( logid >= 0 )
             shiplog_appendByID( logid, tmp );
          else

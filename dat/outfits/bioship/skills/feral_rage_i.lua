@@ -12,10 +12,10 @@ const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
 uniform float progress = 0;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
-   vec4 color     = texture( tex, texcoord );
+   vec4 colour     = texture( tex, texcoord );
    float opacity  = clamp( progress, 0.0, 1.0 );
-   color.rgb      = blendSoftLight( color.rgb, colmod, opacity );
-   return color;
+   colour.rgb      = blendSoftLight( colour.rgb, colmod, opacity );
+   return colour;
 }
 ]])
 --]=]

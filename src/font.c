@@ -32,6 +32,7 @@
 #include "ndata.h"
 #include "nfile.h"
 #include "utf8.h"
+#include "ntracing.h"
 
 #define MAX_EFFECT_RADIUS 4 /**< Maximum pixel distance from glyph to outline/shadow/etc. */
 #define FONT_DISTANCE_FIELD_SIZE   55 /**< Size to render the fonts at. */
@@ -285,6 +286,7 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    else
       glTexSubImage2D( GL_TEXTURE_2D, 0, gr->x, gr->y, ch->w, ch->h,
             GL_RED, GL_UNSIGNED_BYTE, ch->data );
+   glPixelStorei(GL_UNPACK_ALIGNMENT,4);
 
    /* Check for error. */
    gl_checkErr();
@@ -619,6 +621,7 @@ void gl_printRaw( const glFont *ft_font, double x, double y, const glColour* c,
    int s;
    size_t i;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -631,6 +634,8 @@ void gl_printRaw( const glFont *ft_font, double x, double y, const glColour* c,
    while ((ch = u8_nextchar( text, &i )))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -650,6 +655,7 @@ void gl_printRawH( const glFont *ft_font, const mat4 *H,
    int s;
    size_t i;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -662,6 +668,8 @@ void gl_printRawH( const glFont *ft_font, const mat4 *H,
    while ((ch = u8_nextchar( text, &i )))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
+
+   NTracingZoneEnd( _ctx);
 }
 
 /**
@@ -691,18 +699,18 @@ void gl_print( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    gl_printRaw( ft_font, x, y, c, -1., text );
+
+
 }
 
 /**
@@ -723,6 +731,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max, double x, double y,
    int s;
    size_t ret, i;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -739,6 +748,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max, double x, double y,
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
 
+   NTracingZoneEnd( _ctx );
    return ret;
 }
 
@@ -756,16 +766,14 @@ int gl_printMaxRaw( const glFont *ft_font, const int max, double x, double y,
 int gl_printMax( const glFont *ft_font, const int max, double x, double y,
       const glColour* c, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return -1;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    return gl_printMaxRaw( ft_font, max, x, y, c, -1., text );
 }
@@ -797,6 +805,7 @@ int gl_printMidRaw(
    int n, s;
    size_t ret, i;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -815,6 +824,7 @@ int gl_printMidRaw(
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
 
+   NTracingZoneEnd( _ctx );
    return ret;
 }
 
@@ -835,16 +845,14 @@ int gl_printMid( const glFont *ft_font, const int width,
       double x, double y,
       const glColour* c, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return -1;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    return gl_printMidRaw( ft_font, width, x, y, c, -1., text );
 }
@@ -878,6 +886,7 @@ int gl_printTextRaw( const glFont *ft_font,
    int s;
    double x,y;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -895,7 +904,7 @@ int gl_printTextRaw( const glFont *ft_font,
 
    s = 0;
    gl_printLineIteratorInit( &iter, ft_font, text, width );
-   while ((y - by > -1e-5) && gl_printLineIteratorNext( &iter )) {
+   while ((y - by > -DOUBLE_TOL) && gl_printLineIteratorNext( &iter )) {
       /* Must restore stuff. */
       gl_printRestoreLast();
 
@@ -910,6 +919,7 @@ int gl_printTextRaw( const glFont *ft_font,
       y -= line_height; /* move position down */
    }
 
+   NTracingZoneEnd( _ctx );
    return 0;
 }
 
@@ -962,6 +972,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
    GLfloat n, nmax;
    size_t i;
    uint32_t ch;
+   NTracingZone( _ctx, 1 );
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -985,6 +996,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
    }
    nmax = MAX( nmax, n );
 
+   NTracingZoneEnd( _ctx );
    return (int)round(nmax);
 }
 
@@ -999,16 +1011,14 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
  */
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return 0;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    return gl_printWidthRaw( ft_font, text );
 }
@@ -1058,16 +1068,14 @@ int gl_printHeightRaw( const glFont *ft_font,
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return -1;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    return gl_printHeightRaw( ft_font, width, text );
 }
@@ -1115,16 +1123,14 @@ int gl_printLinesRaw( const glFont *ft_font,
 int gl_printLines( const glFont *ft_font,
       const int width, const char *fmt, ... )
 {
-   char text[STRMAX_SHORT]; /* holds the string */
-
    if (fmt == NULL)
       return -1;
-   else { /* convert the symbols to text */
-      va_list ap;
-      va_start(ap, fmt);
-      vsnprintf(text, sizeof(text), fmt, ap);
-      va_end(ap);
-   }
+
+   char text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start(ap, fmt);
+   vsnprintf(text, sizeof(text), fmt, ap);
+   va_end(ap);
 
    return gl_printLinesRaw( ft_font, width, text );
 }
@@ -1201,7 +1207,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       }
       c->w     = rw;
       c->h     = rh;
-      c->m     = FONT_DISTANCE_FIELD_SIZE / (2. * vmax * stsh->h);
+      c->m     = (2. * vmax * stsh->h) / FONT_DISTANCE_FIELD_SIZE;
       c->off_x = slot->bitmap_left-b;
       c->off_y = slot->bitmap_top +b;
       c->adv_x = (GLfloat)slot->metrics.horiAdvance / 64.;
@@ -1220,7 +1226,7 @@ static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, con
 {
    /* OpenGL has pixel centers at 0.5 offset. */
    mat4 H = gl_view_matrix;
-   mat4_translate( &H, x+0.5*gl_screen.wscale, y+0.5*gl_screen.hscale, 0 );
+   mat4_translate_xy( &H, x+0.5*gl_screen.wscale, y+0.5*gl_screen.hscale );
    gl_fontRenderStartH( stsh, &H, c, outlineR );
 }
 static void gl_fontRenderStartH( const glFontStash* stsh, const mat4 *H, const glColour *c, double outlineR )
@@ -1240,11 +1246,11 @@ static void gl_fontRenderStartH( const glFontStash* stsh, const mat4 *H, const g
       col = c;
 
    glUseProgram(shaders.font.program);
-   gl_uniformAColor(shaders.font.color, col, a);
+   gl_uniformAColour(shaders.font.colour, col, a);
    if (outlineR == 0.)
-      gl_uniformAColor(shaders.font.outline_color, col, 0.);
+      gl_uniformAColour(shaders.font.outline_colour, col, 0.);
    else
-      gl_uniformAColor(shaders.font.outline_color, &cGrey10, a);
+      gl_uniformAColour(shaders.font.outline_colour, &cGrey10, a);
 
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
    font_projection_mat = *H;
@@ -1425,11 +1431,11 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
       const glColour *col = gl_fontGetColour( ch );
       double a = (c==NULL) ? 1. : c->a;
       if (col != NULL)
-         gl_uniformAColor(shaders.font.color, col, a );
+         gl_uniformAColour(shaders.font.colour, col, a );
       else if (c==NULL)
-         gl_uniformColor(shaders.font.color, &cWhite);
+         gl_uniformColour(shaders.font.colour, &cWhite);
       else
-         gl_uniformColor(shaders.font.color, c);
+         gl_uniformColour(shaders.font.colour, c);
       font_lastCol = col;
       return 0;
    }
@@ -1445,10 +1451,8 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    /* Kern if possible. */
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
    kern_adv_x = gl_fontKernGlyph( stsh, ch, glyph );
-   if (kern_adv_x) {
-      mat4_translate( &font_projection_mat,
-            kern_adv_x/scale, 0, 0 );
-   }
+   if (kern_adv_x)
+      mat4_translate_x( &font_projection_mat, kern_adv_x/scale );
 
    /* Activate texture. */
    glBindTexture(GL_TEXTURE_2D, stsh->tex[glyph->tex_index].id);
@@ -1460,8 +1464,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
 
    /* Translate matrix. */
-   mat4_translate( &font_projection_mat,
-         glyph->adv_x/scale, 0, 0 );
+   mat4_translate_x( &font_projection_mat, glyph->adv_x/scale );
 
    return 0;
 }
@@ -1747,7 +1750,8 @@ void gl_freeFont( glFont* font )
    free(stsh->vbo_vert_data);
 
    memset( stsh, 0, sizeof(glFontStash) );
-   /* TODO handle empty font stashes accumulating. */
+   /* Font stash will get reused when possible, and we can't erase because IDs
+    * will get messed up. */
 }
 
 /**

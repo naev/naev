@@ -43,7 +43,7 @@ function accept ()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
    vn.na(_("You meet up with Verner at the spaceport bar."))
-   v(fmt.f(_([["How's it going? {pnt} is starting to take off, but the PUAAA don't cut us any slack. I tried to see if the Empire would do anything about it and they just send me running around filing paperwork to no avail. Damn useless. However, I've starting getting in contact with other independent worlds, and it seems like we could form a trade alliance, hopefully bringing stability to {pnt}. Would you be willing to go to {destpnt} in the {destsys} system to seal an agreement for me?"]]),{pnt=retpnt, destpnt=mainpnt, destsys=mainsys}))
+   v(fmt.f(_([["How's it going? {pnt} is starting to take off, but the PUAAA don't cut us any slack. I tried to see if the Empire would do anything about it, and they just send me running around filing paperwork to no avail. Damn useless. However, I've started getting in contact with other independent worlds, and it seems like we could form a trade alliance, hopefully bringing stability to {pnt}. Would you be willing to go to {destpnt} in the {destsys} system to seal an agreement for me?"]]),{pnt=retpnt, destpnt=mainpnt, destsys=mainsys}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -88,7 +88,7 @@ function land ()
       vn.transition()
       vn.na(_("You land and head towards the planet hall to do the signing."))
       vn.na(_("After confirming your appointment at the reception, you are led to an extravagant waiting room filled with famous craftsmanship from all over the universe. There are elegant carpets, ceremonial pottery, and lavish holoart displays. You are ogling them when an assistant comes to take you to another room."))
-      vn.na(fmt.f(_("You meet up with a trader who is surprised you aren't Verner, but quickly adjusts to the situation. They discuss trivial topics with you at first before entering in the trade details. They seem to be all in order and you sign as a representative of {pnt}. After shaking hands, you are sent on your way. Dealing with traders is much more efficient than the Empire bureaucracy."),{pnt=retpnt}))
+      vn.na(fmt.f(_("You meet up with a trader who is surprised you aren't Verner, but quickly adjusts to the situation. They discuss trivial topics with you at first before entering the trade details. They seem to be all in order, and you sign as a representative of {pnt}. After shaking hands, you are sent on your way. Dealing with traders is much more efficient than the Empire bureaucracy."),{pnt=retpnt}))
       vn.na(_("As you leave the planet hall, you notice some figures that seem to be trailing you. It looks like you might have company."))
       vn.run()
 

@@ -1,22 +1,37 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Achack04 Helper">
-  <location>enter</location>
-  <chance>5</chance>
-  <cond>not player.misnActive("Sirian Truce") and not player.misnDone("Sirian Truce") and player.misnDone("Joanne's Doubt") and system.cur():presences()["Sirius"] ~= nil and (var.peek("achack04repeat") == nil or time.get() - time.fromnumber(var.peek("achack04repeat")) &gt; time.new(0, 30, 0))</cond>
-  <notes>
-   <done_misn name="Joanne's Doubt"/>
-   <campaign>Academy Hack</campaign>
-  </notes>
- </event>
- --]]
---[[
--- This is a helper event for the fourth mission in the Academy Hack minor campaign.
+ <location>enter</location>
+ <chance>10</chance>
+ <cond>
+   if player.misnActive("Sirian Truce") or player.misnDone("Sirian Truce") then
+      return false
+   end
+   if not player.misnDone("Joanne's Doubt") then
+      return false
+   end
+   local pres = system.cur():presences()["Sirius"] or 0
+   if pres &lt; 50 then
+      return false
+   end
+   return true
+ </cond>
+ <notes>
+  <done_misn name="Joanne's Doubt"/>
+  <campaign>Academy Hack</campaign>
+ </notes>
+</event>
 --]]
-
-
+--[[
+   This is a helper event for the fourth mission in the Academy Hack minor campaign.
+--]]
 function create()
-   local delay = rnd.uniform(10.0, 40.0)
+   -- Don't want to interrupt anything important
+   if not naev.claimTest{system.cur(),true} then
+      evt.finish()
+   end
+
+   local delay = rnd.uniform(10, 40)
    hook.timer(delay, "startMission")
    hook.land("cleanup")
    hook.jumpout("cleanup")

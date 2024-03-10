@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="A Journey To Arandon">
+<mission name="A Journey To Arandon"><!-- Actually Behar though... -->
  <unique />
  <priority>3</priority>
  <done>The FLF Contact</done>
@@ -14,10 +14,10 @@
 </mission>
 --]]
 --[[
-   This is the seventh mission of the Shark's teeth campaign. The player has to meet the FLF in Arandon.
+   This is the seventh mission of the Shark's teeth campaign. The player has to meet the FLF in Behar.
 
    Stages :
-   0) Way to Arandon
+   0) Way to Behar
    1) Way back to Darkshed
 --]]
 local pir = require "common.pirate"
@@ -30,7 +30,7 @@ local ccomm = require "common.comm"
 local pacifier -- Non-persistent state
 
 --Change here to change the planets and the systems
-local missys = system.get("Arandon")
+local missys = system.get("Behar")
 local paypla, paysys = spob.getS("Darkshed")
 
 function create ()
@@ -110,7 +110,7 @@ function land()
 end
 
 function enter()
-   --Entering in Arandon in order to find the FLF Pacifier
+   -- Entering in Behar in order to find the FLF Pacifier
    if system.cur() ~= missys then
       return
    end
