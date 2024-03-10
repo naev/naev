@@ -301,8 +301,7 @@ void conf_loadConfigPath( void )
  */
 int conf_loadConfig ( const char* file )
 {
-   int i, t, cb;
-   const char *str, *mod;
+   int t, cb;
    SDL_Keycode key;
    int type;
    int w,h;
@@ -450,106 +449,110 @@ int conf_loadConfig ( const char* file )
       /*
        * Keybindings.
        */
-      for (i=0; i<=KST_PASTE; i++) {
-         nlua_getenv( naevL, lEnv, keybind_info[ i ][ 0 ] );
-         /* Handle "none". */
-         if (lua_isstring(naevL,-1)) {
-            str = lua_tostring(naevL,-1);
-            if (strcmp(str,"none")==0) {
-               input_setKeybind( find_key( (const char *)keybind_info ),
-                     KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+      nlua_getenv( naevL, lEnv, "keybinds" );
+      if (!lua_isnil( naevL, -1 )) {
+         for (int i=0; i<=KST_PASTE; i++) {
+            lua_getfield( naevL, -1, keybind_info[ i ][ 0 ] );
+            if (lua_isnil(naevL,-1)) {
+               input_setKeybind( i, KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
             }
-         }
-         else if (lua_istable(naevL, -1)) { /* it's a table */
-            /* gets the event type */
-            lua_pushstring(naevL, "type");
-            lua_gettable(naevL, -2);
-            if (lua_isstring(naevL, -1))
-               str = lua_tostring(naevL, -1);
-            else if (lua_isnil(naevL, -1)) {
-               WARN(_("Found keybind with no type field!"));
-               str = "null";
+            /* Handle old format. TODO remove around 0.13.0 */
+            else if (lua_isstring(naevL,-1)) {
+               const char *str = lua_tostring(naevL,-1);
+               if (strcmp(str,"none")==0) {
+                  input_setKeybind( i, KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+               }
             }
-            else {
-               WARN(_("Found keybind with invalid type field!"));
-               str = "null";
-            }
-            lua_pop(naevL,1);
-
-            /* gets the key */
-            lua_pushstring(naevL, "key");
-            lua_gettable(naevL, -2);
-            t = lua_type(naevL, -1);
-            if (t == LUA_TNUMBER)
-               key = (int)lua_tonumber(naevL, -1);
-            else if (t == LUA_TSTRING)
-               key = input_keyConv( lua_tostring(naevL, -1));
-            else if (t == LUA_TNIL) {
-               WARN(_("Found keybind with no key field!"));
-               key = SDLK_UNKNOWN;
-            }
-            else {
-               WARN(_("Found keybind with invalid key field!"));
-               key = SDLK_UNKNOWN;
-            }
-            lua_pop(naevL,1);
-
-            /* Get the modifier. */
-            lua_pushstring(naevL, "mod");
-            lua_gettable(naevL, -2);
-            if (lua_isstring(naevL, -1))
-               mod = lua_tostring(naevL, -1);
-            else
-               mod = NULL;
-            lua_pop(naevL,1);
-
-            if (str != NULL) { /* keybind is valid */
-               /* get type */
-               if (strcmp(str,"null")==0)          type = KEYBIND_NULL;
-               else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
-               else if (strcmp(str,"jaxispos")==0) type = KEYBIND_JAXISPOS;
-               else if (strcmp(str,"jaxisneg")==0) type = KEYBIND_JAXISNEG;
-               else if (strcmp(str,"jbutton")==0)  type = KEYBIND_JBUTTON;
-               else if (strcmp(str,"jhat_up")==0)  type = KEYBIND_JHAT_UP;
-               else if (strcmp(str,"jhat_down")==0)  type = KEYBIND_JHAT_DOWN;
-               else if (strcmp(str,"jhat_left")==0)  type = KEYBIND_JHAT_LEFT;
-               else if (strcmp(str,"jhat_right")==0)  type = KEYBIND_JHAT_RIGHT;
+            else if (lua_istable(naevL, -1)) { /* it's a table */
+               const char *str, *mod;
+               /* gets the event type */
+               lua_getfield(naevL, -1, "type");
+               if (lua_isstring(naevL, -1))
+                  str = lua_tostring(naevL, -1);
+               else if (lua_isnil(naevL, -1)) {
+                  WARN(_("Found keybind with no type field!"));
+                  str = "null";
+               }
                else {
-                  WARN(_("Unknown keybinding of type %s"), str);
-                  continue;
+                  WARN(_("Found keybind with invalid type field!"));
+                  str = "null";
                }
+               lua_pop(naevL,1);
 
-               /* Check to see if it is valid. */
-               if ((key == SDLK_UNKNOWN) && (type == KEYBIND_KEYBOARD)) {
-                  WARN(_("Keybind for '%s' is invalid"), keybind_info[i][0]);
-                  continue;
+               /* gets the key */
+               lua_getfield(naevL, -1, "key");
+               t = lua_type(naevL, -1);
+               if (t == LUA_TNUMBER)
+                  key = (int)lua_tonumber(naevL, -1);
+               else if (t == LUA_TSTRING)
+                  key = input_keyConv( lua_tostring(naevL, -1));
+               else if (t == LUA_TNIL) {
+                  WARN(_("Found keybind with no key field!"));
+                  key = SDLK_UNKNOWN;
                }
+               else {
+                  WARN(_("Found keybind with invalid key field!"));
+                  key = SDLK_UNKNOWN;
+               }
+               lua_pop(naevL,1);
 
-               /* Set modifier, probably should be able to handle two at a time. */
-               if (mod != NULL) {
-                  if      (strcmp(mod,"ctrl")==0)    m = NMOD_CTRL;
-                  else if (strcmp(mod,"shift")==0)   m = NMOD_SHIFT;
-                  else if (strcmp(mod,"alt")==0)     m = NMOD_ALT;
-                  else if (strcmp(mod,"meta")==0)    m = NMOD_META;
-                  else if (strcmp(mod,"any")==0)     m = NMOD_ANY;
-                  else if (strcmp(mod,"none")==0)    m = NMOD_NONE;
+               /* Get the modifier. */
+               lua_getfield(naevL, -1, "mod");
+               if (lua_isstring(naevL, -1))
+                  mod = lua_tostring(naevL, -1);
+               else
+                  mod = NULL;
+               lua_pop(naevL,1);
+
+               if (str != NULL) { /* keybind is valid */
+                  /* get type */
+                  if (strcmp(str,"null")==0)          type = KEYBIND_NULL;
+                  else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
+                  else if (strcmp(str,"jaxispos")==0) type = KEYBIND_JAXISPOS;
+                  else if (strcmp(str,"jaxisneg")==0) type = KEYBIND_JAXISNEG;
+                  else if (strcmp(str,"jbutton")==0)  type = KEYBIND_JBUTTON;
+                  else if (strcmp(str,"jhat_up")==0)  type = KEYBIND_JHAT_UP;
+                  else if (strcmp(str,"jhat_down")==0)  type = KEYBIND_JHAT_DOWN;
+                  else if (strcmp(str,"jhat_left")==0)  type = KEYBIND_JHAT_LEFT;
+                  else if (strcmp(str,"jhat_right")==0)  type = KEYBIND_JHAT_RIGHT;
                   else {
-                     WARN(_("Unknown keybinding mod of type %s"), mod);
-                     m = NMOD_NONE;
+                     WARN(_("Unknown keybinding of type %s"), str);
+                     continue;
                   }
+
+                  /* Check to see if it is valid. */
+                  if ((key == SDLK_UNKNOWN) && (type == KEYBIND_KEYBOARD)) {
+                     WARN(_("Keybind for '%s' is invalid"), keybind_info[i][0]);
+                     continue;
+                  }
+
+                  /* Set modifier, probably should be able to handle two at a time. */
+                  if (mod != NULL) {
+                     if      (strcmp(mod,"ctrl")==0)    m = NMOD_CTRL;
+                     else if (strcmp(mod,"shift")==0)   m = NMOD_SHIFT;
+                     else if (strcmp(mod,"alt")==0)     m = NMOD_ALT;
+                     else if (strcmp(mod,"meta")==0)    m = NMOD_META;
+                     else if (strcmp(mod,"any")==0)     m = NMOD_ANY;
+                     else if (strcmp(mod,"none")==0)    m = NMOD_NONE;
+                     else {
+                        WARN(_("Unknown keybinding mod of type %s"), mod);
+                        m = NMOD_NONE;
+                     }
+                  }
+                  else
+                     m = NMOD_NONE;
+
+                  /* set the keybind */
+                  input_setKeybind( i, type, key, m );
                }
                else
-                  m = NMOD_NONE;
-
-               /* set the keybind */
-               input_setKeybind( find_key( (const char *)keybind_info ), type, key, m );
+                  WARN(_("Malformed keybind for '%s' in '%s'."), keybind_info[i][0], file);
             }
-            else
-               WARN(_("Malformed keybind for '%s' in '%s'."), keybind_info[i][0], file);
+            /* clean up after table stuff */
+            lua_pop(naevL,1);
          }
-         /* clean up after table stuff */
-         lua_pop(naevL,1);
       }
+      lua_pop(naevL,1);
    }
    else { /* failed to load the config file */
       WARN(_("Config file '%s' has invalid syntax:"), file );
