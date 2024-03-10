@@ -13,7 +13,6 @@
 
 #include "font.h"
 #include "../../input.h" /* Hack for now. */
-#include "nstring.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 
@@ -58,7 +57,6 @@ unsigned int* window_addTabbedWindow( unsigned int wid,
       const int w, const int h, /* size */
       const char* name, int ntabs, const char **tabnames, int tabpos )
 {
-   int i;
    int wx,wy, ww,wh;
    Window *wdw;
    Widget *wgt;
@@ -109,7 +107,7 @@ unsigned int* window_addTabbedWindow( unsigned int wid,
    wgt->dat.tab.tabnames   = malloc( sizeof(char*) * ntabs );
    wgt->dat.tab.windows    = malloc( sizeof(unsigned int) * ntabs );
    wgt->dat.tab.namelen    = malloc( sizeof(int) * ntabs );
-   for (i=0; i<ntabs; i++) {
+   for (int i=0; i<ntabs; i++) {
       /* Get name and length. */
       wgt->dat.tab.tabnames[i] = strdup( tabnames[i] );
       wgt->dat.tab.namelen[i]  = gl_printWidthRaw( wgt->dat.tab.font,
@@ -290,16 +288,16 @@ static int tab_key( Widget* tab, SDL_Event *event )
 
    /* Handle tab changing. */
    change = -1;
-   CHECK_CHANGE( "switchtab1", 0 );
-   CHECK_CHANGE( "switchtab2", 1 );
-   CHECK_CHANGE( "switchtab3", 2 );
-   CHECK_CHANGE( "switchtab4", 3 );
-   CHECK_CHANGE( "switchtab5", 4 );
-   CHECK_CHANGE( "switchtab6", 5 );
-   CHECK_CHANGE( "switchtab7", 6 );
-   CHECK_CHANGE( "switchtab8", 7 );
-   CHECK_CHANGE( "switchtab9", 8 );
-   CHECK_CHANGE( "switchtab0", 9 );
+   CHECK_CHANGE( KST_TAB_1, 0 );
+   CHECK_CHANGE( KST_TAB_2, 1 );
+   CHECK_CHANGE( KST_TAB_3, 2 );
+   CHECK_CHANGE( KST_TAB_4, 3 );
+   CHECK_CHANGE( KST_TAB_5, 4 );
+   CHECK_CHANGE( KST_TAB_6, 5 );
+   CHECK_CHANGE( KST_TAB_7, 6 );
+   CHECK_CHANGE( KST_TAB_8, 7 );
+   CHECK_CHANGE( KST_TAB_9, 8 );
+   CHECK_CHANGE( KST_TAB_0, 9 );
 
    /* Window. */
    ret = 0;

@@ -450,13 +450,13 @@ int conf_loadConfig ( const char* file )
       /*
        * Keybindings.
        */
-      for (i=0; keybind_info[i][0] != NULL; i++) {
+      for (i=0; i<=KST_PASTE; i++) {
          nlua_getenv( naevL, lEnv, keybind_info[ i ][ 0 ] );
          /* Handle "none". */
          if (lua_isstring(naevL,-1)) {
             str = lua_tostring(naevL,-1);
             if (strcmp(str,"none")==0) {
-               input_setKeybind( keybind_info[i][0],
+               input_setKeybind( find_key( (const char *)keybind_info ),
                      KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
             }
          }
@@ -542,7 +542,7 @@ int conf_loadConfig ( const char* file )
                   m = NMOD_NONE;
 
                /* set the keybind */
-               input_setKeybind( keybind_info[i][0], type, key, m );
+               input_setKeybind( find_key( (const char *)keybind_info ), type, key, m );
             }
             else
                WARN(_("Malformed keybind for '%s' in '%s'."), keybind_info[i][0], file);
@@ -1122,7 +1122,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Iterate over the keybinding names */
-   for (int i=0; keybind_info[i][0] != NULL; i++) {
+   for (int i=0; i<=KST_PASTE; i++) {
       SDL_Keycode key;
       KeybindType type;
       const char *typename;
@@ -1134,10 +1134,10 @@ int conf_saveConfig ( const char* file )
       keyname[sizeof(keyname)-1] = '\0';
 
       /* Save a comment line containing the description */
-      conf_saveComment(input_getKeybindDescription( keybind_info[i][0] ));
+      conf_saveComment(input_getKeybindDescription( find_key( (const char *)keybind_info ) ));
 
       /* Get the keybind */
-      key = input_getKeybind( keybind_info[i][0], &type, &mod );
+      key = input_getKeybind( find_key( (const char *)keybind_info ), &type, &mod );
 
       /* Determine the textual name for the keybind type */
       switch (type) {
