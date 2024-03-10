@@ -768,7 +768,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
       }
    }
    /* turn around to face vel */
-   else if (KEY(KST_FACE) && !repeat) {
+   else if (KEY(KST_REVERSE) && !repeat) {
       if ( value == KEY_PRESS ) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag( PLAYER_REVERSE );
@@ -779,12 +779,12 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
 
          if ( !player_isFlag( PLAYER_ACCEL ) )
             player_accelOver();
-      /* Double tap reverse = cooldown! */
-      if ( isdoubletap )
-         player_cooldownBrake();
+         /* Double tap reverse = cooldown! */
+         if ( isdoubletap )
+            player_cooldownBrake();
    }
    /* try to enter stealth mode. */
-    else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
+   else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
       if (value==KEY_PRESS)
          player_stealth();
 
