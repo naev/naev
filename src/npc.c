@@ -8,21 +8,17 @@
  */
 /** @cond */
 #include <lua.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "npc.h"
 
 #include "array.h"
-#include "dialogue.h"
-#include "event.h"
 #include "land.h"
 #include "log.h"
 #include "nlua_evt.h"
-#include "nstring.h"
-#include "opengl.h"
+#include "nlua_tex.h"
 #include "ndata.h"
+#include "ntracing.h"
 
 /**
  * @brief NPC types.
@@ -364,20 +360,19 @@ void npc_sort (void)
 void npc_generateMissions (void)
 {
    Mission *missions;
-   int nmissions;
+
+   NTracingZone( _ctx, 1 );
 
    if (npc_missions == NULL)
       npc_missions = array_create( Mission );
 
    /* Get the missions. */
-   missions = missions_genList( &nmissions,
-         land_spob->presence.faction, land_spob, cur_system,
-         MIS_AVAIL_BAR );
+   missions = missions_genList( land_spob->presence.faction, land_spob, cur_system, MIS_AVAIL_BAR );
    /* Mission sshould already be generated and have had their 'create' function
     * run, so NPCs should be running wild (except givers). */
 
    /* Add to the bar NPC stack and add npc. */
-   for (int i=0; i<nmissions; i++) {
+   for (int i=0; i<array_size(missions); i++) {
       Mission *m = &missions[i];
       array_push_back( &npc_missions, *m );
 
@@ -403,10 +398,12 @@ void npc_generateMissions (void)
    }
 
    /* Clean up. */
-   free( missions );
+   array_free( missions );
 
    /* Sort NPC. */
    npc_sort();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -514,14 +511,34 @@ const char *npc_getName( int i )
  */
 glTexture *npc_getBackground( int i )
 {
+   NPC_t *npc;
+
    /* Make sure in bounds. */
    if (i<0 || npc_array == NULL || i>=array_size(npc_array))
       return NULL;
+   npc = &npc_array[i];
 
    /* TODO choose the background based on the spob or something. */
-   if (npc_array[i].background == NULL)
-      npc_array[i].background = gl_newImage( GFX_PATH"portraits/background.png", 0 );
-   return npc_array[i].background;
+   if (npc->background == NULL) {
+      if (land_spob->lua_barbg != LUA_NOREF) {
+         spob_luaInitMem( land_spob );
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, land_spob->lua_barbg); /* f */
+         if (nlua_pcall( land_spob->lua_env, 0, 1 )) {
+            WARN(_("Spob '%s' failed to run '%s':\n%s"), land_spob->name, "barbg", lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+         }
+
+         if (lua_istex(naevL,-1))
+            npc->background = gl_dupTexture( lua_totex(naevL,-1) );
+         else
+            WARN(_("Spob '%s''s '%s' did not return a texture!"), land_spob->name, "barbg");
+         lua_pop(naevL,1);
+      }
+      if (npc->background == NULL)
+         npc->background = gl_newImage( GFX_PATH"portraits/background.png", 0 );
+   }
+
+   return npc->background;
 }
 
 /**

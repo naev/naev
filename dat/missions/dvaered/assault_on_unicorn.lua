@@ -36,8 +36,7 @@
 local pir = require 'common.pirate'
 local fmt = require "format"
 local dv  = require "common.dvaered"
-local vntk = require "vntk"
-local lmisn = require "lmisn"
+local vn = require "vn"
 
 -- Mission constants
 local misn_target_sys = system.get("Unicorn")
@@ -47,10 +46,11 @@ local function update_osd()
    local osd_msg = {}
    osd_msg[1] = _("Fly to the Unicorn system.")
    if mem.bounty_earned == mem.max_payment then
-      osd_msg[2] = fmt.f(_("You have reached your maximum payment. Return to {pnt}."), {pnt=mem.planet_start})
+      osd_msg[2] = fmt.f(_("You have reached your maximum payment. Return to {pnt} ({sys} system)."),
+         {pnt=mem.planet_start, sys=mem.system_start})
    else
-      osd_msg[2] = fmt.f(_("Destroy some pirates! You have killed {n} and have earned {credits}. If finished, return to {pnt}."),
-                         {n=mem.pirates_killed, credits=fmt.credits(mem.bounty_earned), pnt=mem.planet_start})
+      osd_msg[2] = fmt.f(_("Destroy some pirates! You have killed {n} and have earned {credits}. If finished, return to {pnt} ({sys} system)."),
+         {n=mem.pirates_killed, credits=fmt.credits(mem.bounty_earned), pnt=mem.planet_start, sys=mem.system_start})
    end
    misn.osdCreate(_("Assault on Unicorn"), osd_msg)
 end
@@ -61,7 +61,8 @@ function create ()
    mem.max_payment = rep * 50e3
    misn.setTitle(dv.prefix.._("Assault on Unicorn"))
    misn.setReward(_("Variable"))
-   misn.setDesc(fmt.f(_("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is {credits}."), {credits=fmt.credits(mem.max_payment)} ))
+   misn.setDesc(fmt.f(_("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is {credits}."),
+      {credits=fmt.credits(mem.max_payment)} ))
 
    mem.marker = misn.markerAdd( misn_target_sys, "computer" )
 end
@@ -70,7 +71,7 @@ function accept ()
    -- This mission makes no system claims.
    if misn.accept() then
       mem.pirates_killed = 0
-      mem.planet_start = spob.cur()
+      mem.planet_start, mem.system_start = spob.cur()
       mem.marker2 = misn.markerAdd( mem.planet_start, "low" )
       mem.pirates_killed = 0
       mem.bounty_earned = 0
@@ -91,7 +92,7 @@ function jumpin()
 end
 
 function death( pilot, killer )
-   if pir.factionIsPirate(pilot:faction()) and killer:withPlayer() then
+   if pir.factionIsPirate(pilot:faction()) and killer and killer:withPlayer() then
       local reward_earned = pilot:ship():price()/10
       mem.pirates_killed = mem.pirates_killed + 1
       mem.bounty_earned = math.min( mem.max_payment, mem.bounty_earned + reward_earned )
@@ -102,11 +103,20 @@ end
 
 function land()
    if spob.cur() == mem.planet_start and mem.pirates_killed > 0 then
-      lmisn.sfxMoney()
-      player.pay(mem.bounty_earned)
-      faction.modPlayerSingle( "Dvaered", math.pow( mem.bounty_earned, 0.5 ) / 100 )
-      vntk.msg(_("Mission accomplished"), fmt.f(_("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth {credits}."),
+
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.na(fmt.f(_("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth {credits}."),
          {credits=fmt.credits(mem.bounty_earned)}))
+      vn.sfxMoney()
+      vn.func( function ()
+         player.pay(mem.bounty_earned)
+         faction.modPlayerSingle( "Dvaered", math.pow( mem.bounty_earned, 0.5 ) / 100 )
+      end )
+      vn.na(fmt.reward(mem.bounty_earned))
+      vn.run()
+
       misn.finish(true)
    end
 end

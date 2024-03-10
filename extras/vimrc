@@ -1,0 +1,30 @@
+" Load ALE with plugged
+call plug#begin('~/.vim/plugged')
+ Plug 'dense-analysis/ale'
+call plug#end()
+
+" Have to also specify path here
+autocmd BufRead,BufNewFile /path/to/naev/* call NaevOptions()
+function NaevOptions()
+   " Location where the Naev repo is
+   let naev = "/path/to/naev/"
+   call ale#handlers#languagetool#DefineLinter('lua')
+   let g:ale_languagetool_executable = naev.'utils/gettextlanguagetool.py'
+   let g:ale_lua_luacheck_executable = naev.'utils/nluacheck.py'
+   let g:ale_lua_luacheck_options = '--config '.naev.'/.luacheckrc'
+   let g:ale_c_cppcheck_options = '--enable=style --suppress=objectIndex --suppress=memleakOnRealloc'
+   let g:ale_c_flawfinder_minlevel = 5
+   let g:ale_linters = {
+   \  'lua':['languagetool', 'cspell', 'lua_language_server', 'luac', 'luacheck', 'selene'],
+   \}
+
+   " indentation
+   set expandtab    " Make sure that every file uses real tabs, not spaces
+   set shiftround   " Round indent to multiple of 'shiftwidth'
+   set smartindent  " Do smart indenting when starting a new line
+   set autoindent   " Copy indent from current line, over to the new line
+   let s:tabwidth=3 " Set the tab width
+   exec 'set tabstop='    .s:tabwidth
+   exec 'set shiftwidth=' .s:tabwidth
+   exec 'set softtabstop='.s:tabwidth
+endfunction

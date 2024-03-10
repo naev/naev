@@ -36,7 +36,7 @@ local function get_route( sys )
    local dist = 0
    for i,j1 in ipairs(adj) do
       for j,j2 in ipairs(adj) do
-         if i ~= j then
+         if i~=j and not j1:exitonly() and not j1:hidden() and not j2:hidden() then
             local d = j1:pos():dist2(j2:pos())
             if d > dist then
                dist = d
@@ -296,7 +296,7 @@ function spawn_convoy ()
    end
    -- Only slow down leader, or it can be faster than other guys
    sconvoy[1]:intrinsicSet( "speed_mod", -33 )
-   sconvoy[1]:intrinsicSet( "thrust_mod", -33 )
+   sconvoy[1]:intrinsicSet( "accel_mod", -33 )
    sconvoy[1]:intrinsicSet( "turn_mod", -33 )
    sconvoy[1]:setHilight(true)
    sconvoy[1]:control()

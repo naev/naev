@@ -121,7 +121,7 @@ int claim_test( const Claim_t *claim )
 
    /* See if the system is claimed. */
    for (int i=0; i<array_size(claim->ids); i++) {
-      StarSystem *sys = system_getIndex( claim->ids[i] );
+      const StarSystem *sys = system_getIndex( claim->ids[i] );
       int claimed = sys_isFlag( sys, SYSTEM_CLAIMED );
       if (claimed || (exc && (sys->claims_soft>0)))
          return 1;
@@ -318,14 +318,14 @@ Claim_t *claim_xmlLoad( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"sys")) {
-         StarSystem *sys = system_get( xml_get(node) );
+         const StarSystem *sys = system_get( xml_get(node) );
          if (sys != NULL)
             claim_addSys( claim, system_index(sys) );
          else
             WARN(_("System Claim trying to load system '%s' which doesn't exist"), xml_get(node));
       }
       else if (xml_isNode(node,"str")) {
-         char *str = xml_get(node);
+         const char *str = xml_get(node);
          claim_addStr( claim, str );
       }
    } while (xml_nextNode(node));

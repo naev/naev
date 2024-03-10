@@ -1,15 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Super-Fast Collider Launcher">
  <general>
+  <shortname>SFC L.</shortname>
   <slot>weapon</slot>
   <size>large</size>
   <license>Heavy Weapon</license>
   <rarity>2</rarity>
-  <mass>40</mass>
+  <mass>70</mass>
   <price>110000</price>
   <description>Mostly referred by its initials SFC, the Super-Fast Collider is basically a giant Mace rocket used by Dvaered Capships in order to strike distant enemies.</description>
-  <gfx_store>macelauncher.webp</gfx_store>
-  <cpu>-15</cpu>
+  <gfx_store>sfc.png</gfx_store>
+  <cpu>-30</cpu>
  </general>
  <specific type="launcher">
   <delay>10</delay>
@@ -19,17 +20,17 @@
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>
   <ammo_mass>10</ammo_mass>
-  <gfx>mace.png</gfx>
+  <gfx>sfc.webp</gfx>
   <sound>mace</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>ExpM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="-10">fire-missileS</trail_generator>
   <duration blowup="armour">4</duration>
-  <thrust>300</thrust>
+  <accel>300</accel>
   <speed>800</speed>
   <damage>
-   <type>impact</type>
+   <type>plasma</type>
    <penetrate>100</penetrate>
    <physical>500</physical>
   </damage>

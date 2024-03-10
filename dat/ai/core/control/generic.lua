@@ -6,7 +6,7 @@ local formation = require "formation"
 local lanes = require 'ai.core.misc.lanes'
 local scans = require 'ai.core.misc.scans'
 
-local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown, consider_taunt -- Forward-declared functions
+local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown, consider_taunt, distress_handler -- Forward-declared functions
 
 --[[
 -- Variables to adjust AI
@@ -38,7 +38,7 @@ mem.land_planet   = true -- Should land on planets?
 mem.land_friendly = false -- Only land on friendly planets?
 mem.distress      = true -- AI distresses
 mem.distress_hit  = 0 -- Amount of faction lost on distress
-mem.distressrate  = 3 -- Number of ticks before calling for help
+mem.distressrate  = 8 -- Number of ticks before calling for help. Should default to about 16 seconds with defaults.
 mem.distressmsg   = nil -- Message when calling for help
 mem.distressmsgfunc = nil -- Function to call when distressing
 mem.weapset       = 3 -- Weapon set that should be used (tweaked based on heat).
@@ -54,6 +54,7 @@ mem.form_pos      = nil -- Position in formation (for follower)
 mem.leadermaxdist = nil -- Distance from leader to run back to leader
 mem.gather_range  = 800 -- Radius in which the pilot looks for gatherables
 mem.lanes_useneutral = false -- Whether or not to use neutral lanes
+mem.uselanes       = true -- Try to use lanes
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates
 of the point the pilot has to follow when using follow_accurate.
@@ -195,12 +196,22 @@ function control_manual( dt )
    ai.combat( si.fighting )
 
    lead_fleet( p )
-   handle_messages( si, false )
+   handle_messages( p, si, false )
 end
 
-function handle_messages( si, dopush )
+--[[
+-- Helper function to see if two pilots belong to the same fleet or not
+--]]
+local function sameFleet( pa, pb )
+   local la = pa:leader()
+   local lb = pa:leader()
+   if not la or not la:exists() then la = pa end
+   if not lb or not lb:exists() then lb = pb end
+   return la == lb
+end
+
+function handle_messages( p, si, dopush )
    local taskchange = false
-   local p = ai.pilot()
    local l = p:leader()
    for i, msg in ipairs(ai.messages()) do
       local sender, msgtype, data = msg[1], msg[2], msg[3]
@@ -224,12 +235,15 @@ function handle_messages( si, dopush )
             end
          end
       else
+         if msgtype=="distress" then
+            taskchange = distress_handler( sender, data )
+         end
 
-         -- Special case leader is gone but we want to follow, so we ignore if they're non-existent.
-         if l==nil or sender==l then
+         -- Special case where we accept messages from all pilots in the same fleet
+         if l==nil or sameFleet( p, sender ) then
             if msgtype == "hyperspace" then
-               if dopush then
-                  ai.pushtask("hyperspace", data)
+               if dopush and ai.taskname()~="hyperspace_follow" then
+                  ai.pushtask("hyperspace_follow", data)
                   taskchange = true
                end
             elseif msgtype == "land" then
@@ -286,6 +300,12 @@ function handle_messages( si, dopush )
                         taskchange = true
                      end
                   end
+               elseif msgtype=="hyperspace_abort" then
+                  if ai.taskname()=="hyperspace_follow" then
+                     ai.poptask()
+                     ai.hyperspaceAbort()
+                     taskchange = true
+                  end
 
                -- Escort commands
                elseif dopush then
@@ -322,17 +342,6 @@ function handle_messages( si, dopush )
       end
    end
    return taskchange
-end
-
---[[
--- Helper function to see if two pilots belong to the same fleet or not
---]]
-local function sameFleet( pa, pb )
-   local la = pa:leader()
-   local lb = pa:leader()
-   if not la or not la:exists() then la = pa end
-   if not lb or not lb:exists() then lb = pb end
-   return la == lb
 end
 
 --[[
@@ -486,13 +495,33 @@ function control( dt )
    mem.elapsed = mem.elapsed + dt
    local p = ai.pilot()
 
+   -- Preparing for a jump, so we don't actually try to do anything else
+   if p:flags("jumpprep") then
+      local l = p:leader()
+      if l then
+         for i, msg in ipairs(ai.messages()) do
+            local sender, msgtype, _data = msg[1], msg[2], msg[3]
+            if l==sender and msgtype=="hyperspace_abort" then
+               if ai.taskname()=="hyperspace_follow" then
+                  ai.poptask()
+                  ai.hyperspaceAbort()
+               end
+               return
+            end
+         end
+      end
+      -- Tell followers to jump if not doing so
+      --p:msg(p:followers(), "hyperspace", ai.taskdata())
+      return
+   end
+
    -- Task information stuff
    local task = ai.taskname()
    local si = _stateinfo( task )
    ai.combat( si.fighting )
 
    lead_fleet( p )
-   local taskchange = handle_messages( si, true )
+   local taskchange = handle_messages( p, si, true )
 
    -- Select new leader
    local l = p:leader()
@@ -649,7 +678,13 @@ function control_funcs.loiter ()
    if mem.doscans and rnd.rnd() < 0.1 then
       local target = scans.get_target()
       if target then
-         scans.push( target )
+         if ai.isenemy(target) then
+            if should_attack(target) then
+               ai.pushtask( "attack", target )
+            end
+         else
+            scans.push( target )
+         end
       end
    end
    return false
@@ -659,6 +694,26 @@ control_funcs.inspect_moveto = function ()
    local p = ai.pilot()
    local target = ai.taskdata()
    local lr = mem.enemyclose
+   local ls = mem._scan_last -- Should only be set for scanning pilots
+   if ls then
+      if not ls:exists() then
+         mem._scan_last = nil
+      elseif mem.doscans then
+         if scans.check_visible( ls ) then
+            mem._scan_last = nil
+            ai.poptask()
+            if ai.isenemy(ls) then
+               if should_attack(ls) then
+                  ai.pushtask( "attack", ls )
+                  return true
+               end
+            else
+               scans.push( ls )
+               return true
+            end
+         end
+      end
+   end
    if mem.natural and target and lr and lanes.getDistance2P( p, target ) > lr*lr then
       ai.poptask()
       return false
@@ -875,7 +930,7 @@ function create_pre ()
 
    -- Tune PD parameter (with a nice heuristic formula)
    local ps = p:stats()
-   mem.Kd = math.max( 5., 10.84 * (180./ps.turn + ps.speed/ps.thrust) - 10.82 )
+   mem.Kd = math.max( 5., 10.84 * (180./ps.turn + ps.speed/ps.accel) - 10.82 )
 
    -- Just give some random fuel
    if p ~= player.pilot() then
@@ -906,7 +961,7 @@ function create_post ()
 
    -- Fighters give much smaller faction hits
    if mem.carried then
-      mem.distress_hit = mem.distress_hit * 0.1
+      mem.distress_hit = mem.distress_hit * 0.05
    end
 end
 
@@ -939,11 +994,12 @@ function consider_taunt( target, offensive )
 end
 
 -- Handle distress signals
-function distress( pilot, attacker )
-   local p = ai.pilot()
+function distress_handler( pilot, attacker )
+   -- Make sure sender exists
+   if not pilot or not pilot:exists() then return end
 
    -- Make sure target exists
-   if not attacker:exists() then return end
+   if not attacker or not attacker:exists() then return end
 
    -- Make sure pilot is setting their target properly
    if pilot == attacker then return end
@@ -951,6 +1007,7 @@ function distress( pilot, attacker )
    -- Ignore pleas of help when bribed by the attacker
    if ai.isbribed(attacker) then return end
 
+   local p       = ai.pilot()
    local pfact   = pilot:faction()
    local afact   = attacker:faction()
    local aifact  = p:faction()
@@ -961,7 +1018,7 @@ function distress( pilot, attacker )
 
    local badguy
    -- Victim is ally
-   if p_ally then
+   if p_ally and not pilot:withPlayer() then
       -- When your allies are fighting, stay out of it.
       if a_ally then
          return
@@ -969,7 +1026,7 @@ function distress( pilot, attacker )
       -- Victim is an ally, but the attacker isn't.
       badguy = attacker
    -- Victim isn't an ally. Attack the victim if the attacker is our ally.
-   elseif a_ally then
+   elseif a_ally and not attacker:withPlayer() then
       badguy = pilot
    elseif p_enemy then
       -- If they're both enemies, may as well let them destroy each other.
@@ -1000,6 +1057,7 @@ function distress( pilot, attacker )
       if not target:exists() or ai.dist2(target) > ai.dist2(badguy) then
          if p:inrange( badguy ) then
             ai.pushtask( "attack", badguy )
+            return true
          end
       end
    -- If not fleeing or refueling, begin attacking
@@ -1010,15 +1068,17 @@ function distress( pilot, attacker )
          if p:inrange( badguy ) then -- TODO: something to help in the other case
             clean_task( task )
             ai.pushtask( "attack", badguy )
+            return true
          end
       else
          if p:inrange(badguy) and ai.dist(badguy) < mem.safe_distance and not mem.norun then
             ai.pushtask( "runaway", badguy )
+            return true
          end
       end
    end
+   return false
 end
-
 
 -- Handles generating distress messages
 function gen_distress( target )
@@ -1036,7 +1096,7 @@ function gen_distress( target )
 
    -- Initialize if unset.
    if mem.distressed == nil then
-      mem.distressed = 1
+      mem.distressed = rnd.rnd(1,math.ceil(mem.distressrate*0.5+0.5))
    end
 
    -- Update distress counter
@@ -1126,11 +1186,7 @@ function should_cooldown()
       mem.cooldown = true
       p:setCooldown(true)
    end
-   if pshield == nil then
-      player.msg("pshield = nil")
-   end
 end
-
 
 -- Decide if the task is likely to become obsolete once attack is finished
 function clean_task( task )

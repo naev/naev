@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>40</points>
  <base_type>Marauder</base_type>
- <GFX size="66">marauder</GFX>
+ <gfx size="66">marauder</gfx>
  <rarity>2</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Bomber">Bomber</class>
@@ -36,8 +36,10 @@
   <utility size="small" prop="bio_organ" name="the_bite" />
   <utility size="small" prop="accessory" />
   <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="bio_engines" name="genedrive">Laevis Gene Drive I</structure>
   <structure size="small" prop="bio_hull" name="shell">Laevis Cortex I</structure>
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>

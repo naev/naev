@@ -3,11 +3,6 @@
  */
 #pragma once
 
-/** @cond */
-#include <stdint.h>
-/** @endcond */
-
-#include "opengl.h"
 #include "space.h"
 
 /*

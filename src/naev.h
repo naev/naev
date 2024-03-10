@@ -22,14 +22,10 @@
 #pragma once
 
 /** @cond */
-#include <inttypes.h>
-#include <limits.h>
 #include <math.h>
 
-#include "SDL.h"
+#include "SDL_stdinc.h"
 /** @endcond */
-
-#include "ncompat.h"
 
 #define APPNAME            "Naev" /**< Application name. */
 
@@ -65,6 +61,8 @@
 #  define M_SQRT2       1.41421356237309504880
 #endif
 
+#define DOUBLE_TOL       1e-6
+
 /*
  * Misc stuff.
  */
@@ -83,4 +81,6 @@ void naev_quit (void);
 int naev_isQuit (void);
 double naev_getrealdt (void);
 
+int naev_shouldRenderLoadscreen (void);
+void naev_doRenderLoadscreen (void);
 void naev_renderLoadscreen (void);

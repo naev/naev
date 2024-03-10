@@ -462,6 +462,7 @@ function land ()
       local w = taiomi.vn_elder{ pos="farleft", flip=true }
       local sai = tut.vn_shipai()
       local died = taiomi.young_died()
+      vn.transition()
 
       vn.na(fmt.f(_("You return to the {base} to try to process what happened… Not only was the life of {dead} lost, but Scavenger has also gone missing in their thirst for revenge…"),
          {base=base, dead=taiomi.young_died()}))

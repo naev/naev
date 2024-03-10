@@ -6,7 +6,7 @@
   <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
-  <faction>Traders Society</faction>
+  <faction>Empire</faction>
   <base>70.000000</base>
   <bonus>40.000000</bonus>
   <range>2</range>

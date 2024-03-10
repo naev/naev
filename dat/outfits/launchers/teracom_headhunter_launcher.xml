@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="TeraCom Headhunter Launcher">
  <general>
+  <shortname>T. Headhunter L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
-  <mass>25</mass>
+  <mass>23</mass>
   <price>85000</price>
   <description>The Headhunter class interceptor missile is a medium calibre missile that can deal devastating damage to small and medium sized targets, while remaining reasonably fast and agile. Most effective when launched at distant enemies.
 
@@ -29,12 +30,12 @@ This is TeraCom's model Headhunter launcher. Though somewhat pricey and demandin
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="-7">fire-missile</trail_generator>
   <duration blowup="armour">10.5</duration>
-  <thrust>200</thrust>
+  <accel>200</accel>
   <turn>25</turn>
   <speed_max>600</speed_max>
   <resist>20</resist>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>24</penetrate>
    <physical>160</physical>
   </damage>

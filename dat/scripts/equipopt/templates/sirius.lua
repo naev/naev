@@ -5,9 +5,11 @@ local eparams = require 'equipopt.params'
 
 local sirius_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Fidelity Bay", "Sirius Shaman Bay",
-   "Heavy Razor Turret", "Ragnarok Beam",
-   "Heavy Ion Turret", "Grave Beam",
+   "Sirius Fidelity Bay", "Sirius Shaman Bay",
+   "Heavy Ion Turret",
+   "Ragnarok Beam", "Grave Beam",
+   "Disruptor Battery S2",
+   "Disruptor Artillery S2",
    -- Medium Weapons
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
@@ -15,8 +17,10 @@ local sirius_outfits = eoutfits.merge{{
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "TeraCom Imperator Launcher",
+   "Disruptor Artillery S2", "Razor Battery S2",
    -- Small Weapons
-   "Slicer", "Razor MK1", "Razor MK2", "Ion Cannon",
+   "Razor Artillery S3", "Razor Artillery S2", "Razor Artillery S1",
+   "Ion Cannon",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Targeting Array", "Agility Combat AI",
@@ -24,17 +28,43 @@ local sirius_outfits = eoutfits.merge{{
    "Weapons Ionizer", "Sensor Array",
    "Pinpoint Combat AI", "Lattice Thermal Coating",
    -- Heavy Structural
-   "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
-   "Reactor Class III",
-   "Large Shield Booster",
+   "Battery III", "Shield Capacitor III",
+   "Reactor Class III", "Large Shield Booster",
    -- Medium Structural
-   "Battery II", "Shield Capacitor II", "Reactor Class II",
-   "Medium Shield Booster",
+   "Battery II", "Shield Capacitor II",
+   "Reactor Class II", "Medium Shield Booster",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
-   "Battery I", "Shield Capacitor I", "Reactor Class I",
-   "Small Shield Booster",
+   "Battery I", "Shield Capacitor I",
+   "Reactor Class I", "Small Shield Booster",
+   -- Flow stuff
+   "Large Flow Amplifier", "Medium Flow Amplifier", "Small Flow Amplifier",
+   "Large Flow Resonator", "Medium Flow Resonator", "Small Flow Resonator",
+   --"Large Meditation Chamber", "Medium Meditation Chamber", "Small Meditation Chamber",
 }}
+
+local sirius_abilities = {
+   outfit.get("Seeking Chakra"),
+   outfit.get("Feather Drive"),
+   outfit.get("Cleansing Flames"),
+   outfit.get("Astral Projection"),
+   outfit.get("Avatar of Sirichana"),
+}
+local sirius_abilities_w = {
+   10,
+   6,
+   2,
+   2,
+   1,
+}
+local nw = 0
+for k,v in ipairs(sirius_abilities_w) do
+   nw = nw+v
+   sirius_abilities_w[k] = nw+v
+end
+for k,v in ipairs(sirius_abilities_w) do
+   sirius_abilities_w[k] = sirius_abilities_w[k] / nw
+end
 
 local sirius_params = {
    --["Sirius Demon"] = function () return {
@@ -60,6 +90,10 @@ local sirius_params_overwrite = {
 --[[
 -- @brief Does Sirius pilot equipping
 --
+-- Some useful parameters for opt_params:
+--  * noflow=true: pilot will not spawn with flow abilities
+--  * flow_ability=X: pilot will spawn with flow ability X (and outfits necessary to use it)
+--
 --    @param p Pilot to equip
 --]]
 local function equip_sirius( p, opt_params )
@@ -75,7 +109,7 @@ local function equip_sirius( p, opt_params )
    if sp then
       params = tmerge_r( params, sp() )
    end
-   params = tmerge( params, opt_params )
+   params = tmerge_r( params, opt_params )
 
    -- Outfits
    local outfits = sirius_outfits
@@ -92,6 +126,30 @@ local function equip_sirius( p, opt_params )
       else
          cores = ecores.get( p, { all="elite" } )
       end
+   end
+
+   -- Try to give a flow ability if not from a fighter bay randomly
+   local issirius = ps:tags().sirius
+   if (not opt_params.noflow and (issirius and rnd.rnd() < 0.8) or (not issirius and rnd.rnd() < 0.6)) and not p:flags("carried") then
+      -- Choose ability (only get 1)
+      local ability = opt_params.flow_ability
+      if not ability then
+      local r = rnd.rnd()
+         for k,v in ipairs(sirius_abilities_w) do
+            if r <= v then
+               ability = sirius_abilities[k]
+               break
+            end
+         end
+      end
+      params.type_range = params.type_range or {}
+      if not issirius then
+         -- Needs flow structurals
+         params.type_range["Flow Amplifier"] = { min=1 }
+      end
+      params.type_range["Flow Modifier"] = { max=1 }
+      p:outfitAdd( ability ) -- Just add the ability here, shouldn't get cleared
+      params.noremove = true -- Don't clear outfits
    end
 
    -- Set some meta-data

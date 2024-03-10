@@ -5,12 +5,7 @@
  * Adapted to the Naev engine by bobbens
  */
 
-#define MOTIONBLUR   %d
-
 uniform vec4 u_camera = vec4(1.0); /* xy corresponds to screen space */
-#if MOTIONBLUR==1
-uniform sampler2D u_prevtex;
-#endif /* MOTIONBLUR==1 */
 
 const vec3 R      = vec3( %f, %f, %f);
 const vec3 UP     = vec3( 0.0, 1.0, 0.0 );
@@ -95,12 +90,6 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
 
    /* Colour conversion. */
    colour.rgb = clamp( pow( colour.rgb, vec3(2.0) ), 0.0, 1.0 );
-
-   /* Motion blur to increase temporal coherence and provide motion blur. */
-#if MOTIONBLUR==1
-   vec3 oldValue = texture(u_prevtex, texture_coords).rgb;
-   colour.rgb = mix(oldValue - vec3(0.004), colour.rgb, 0.5);
-#endif /* MOTIONBLUR==1 */
 
    /* Darken it all a bit. */
    colour.rgb *= 0.6;

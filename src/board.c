@@ -70,6 +70,9 @@ int board_hook( void *data )
    hooks_runParam( "board", hparam );
    pilot_runHookParam(player.p, PILOT_HOOK_BOARDING, hparam, 1);
 
+   /* Run outfit stuff. */
+   pilot_outfitLOnboard( player.p, p );
+
    if (board_stopboard) {
       board_boarded = 0;
       return 0;
@@ -106,37 +109,20 @@ int board_hook( void *data )
 }
 
 /**
- * @brief Attempt to board the player's target.
- *
- * Creates the window on success.
+ * @brief Sees if the pilot can board a pilot.
  */
-int player_tryBoard( int noisy )
+int player_canBoard( int noisy )
 {
    Pilot *p;
-   char c;
 
    /* Not disabled. */
    if (pilot_isDisabled(player.p))
       return PLAYER_BOARD_IMPOSSIBLE;
 
-   if (player.p->target==PLAYER_ID) {
-      /* We don't try to find far away targets, only nearest and see if it matches.
-       * However, perhaps looking for first boardable target within a certain range
-       * could be more interesting. */
-      player_targetNearest();
-      p = pilot_getTarget( player.p );
-      if ((p == NULL) ||
-            (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
-            pilot_isFlag(p,PILOT_NOBOARD)) {
-         player_targetClear();
-         if (noisy)
-            player_message( "#r%s", _("You need a target to board first!") );
-         return PLAYER_BOARD_IMPOSSIBLE;
-      }
-   }
-   else
-      p = pilot_getTarget( player.p );
-   c = pilot_getFactionColourChar( p );
+   /* Can't board if no pilot. */
+   if (player.p->target==PLAYER_ID)
+      return PLAYER_BOARD_IMPOSSIBLE;
+   p = pilot_getTarget( player.p );
 
    /* More checks. */
    if (pilot_isFlag(p,PILOT_NOBOARD)) {
@@ -154,8 +140,29 @@ int player_tryBoard( int noisy )
          player_message( "#r%s", _("Your target cannot be boarded again.") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
-   else if (vec2_dist(&player.p->solid.pos,&p->solid.pos) >
-         p->ship->gfx_space->sw * PILOT_SIZE_APPROX) {
+
+   return PLAYER_BOARD_OK;
+}
+
+/**
+ * @brief Attempt to board the player's target.
+ *
+ * Creates the window on success.
+ */
+int player_tryBoard( int noisy )
+{
+   Pilot *p;
+   char c;
+
+   if (player_canBoard( noisy )==PLAYER_BOARD_IMPOSSIBLE)
+      return PLAYER_BOARD_IMPOSSIBLE;
+
+   /* Should have a pilot target by now or failed. */
+   p = pilot_getTarget( player.p );
+   c = pilot_getFactionColourChar( p );
+
+   if (vec2_dist(&player.p->solid.pos,&p->solid.pos) >
+         p->ship->size * PILOT_SIZE_APPROX) {
       if (noisy)
          player_message( "#r%s", _("You are too far away to board your target.") );
       return PLAYER_BOARD_RETRY;
@@ -225,7 +232,7 @@ int pilot_board( Pilot *p )
    if (!pilot_isDisabled(target))
       return 0;
    else if (vec2_dist(&p->solid.pos, &target->solid.pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
+         target->ship->size * PILOT_SIZE_APPROX )
       return 0;
    else if (vec2_dist2( &p->solid.vel, &target->solid.vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
@@ -249,6 +256,9 @@ int pilot_board( Pilot *p )
    pilot_runHookParam(target, PILOT_HOOK_BOARD_ALL, hparam, 1);
    hparam[0].u.lp = target->id;
    pilot_runHookParam(p, PILOT_HOOK_BOARDING, hparam, 1);
+
+   /* Run outfit stuff. */
+   pilot_outfitLOnboard( p, target );
 
    return 1;
 }

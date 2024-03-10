@@ -8,9 +8,9 @@
  <tur_damage>50</tur_damage>
  <launch_damage>50</launch_damage>
  <fbay_damage>50</fbay_damage>
- <thrust_mod>25</thrust_mod>
+ <accel_mod>25</accel_mod>
  <speed_mod>25</speed_mod>
  <turn_mod>15</turn_mod>
  <time_mod>-20</time_mod>
- <time_speedup>125</time_speedup>
+ <time_speedup>25</time_speedup>
 </difficulty>

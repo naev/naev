@@ -58,7 +58,7 @@ extern Commodity* commodity_stack;
 static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int econ_queued        = 0; /**< Whether there are any queued updates. */
 static cs *econ_G             = NULL; /**< Admittance matrix. */
-int *econ_comm         = NULL; /**< Commodities to calculate. */
+int *econ_comm                = NULL; /**< Commodities to calculate. */
 
 /*
  * Prototypes.

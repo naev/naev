@@ -55,10 +55,13 @@ static int spobL_position( lua_State *L );
 static int spobL_services( lua_State *L );
 static int spobL_flags( lua_State *L );
 static int spobL_canland( lua_State *L );
-static int spobL_landOverride( lua_State *L );
-static int spobL_getLandOverride( lua_State *L );
+static int spobL_landAllow( lua_State *L );
+static int spobL_landDeny( lua_State *L );
+static int spobL_getLandAllow( lua_State *L );
+static int spobL_getLandDeny( lua_State *L );
 static int spobL_gfxSpace( lua_State *L );
 static int spobL_gfxExterior( lua_State *L );
+static int spobL_gfxExteriorPath( lua_State *L );
 static int spobL_gfxComm( lua_State *L );
 static int spobL_shipsSold( lua_State *L );
 static int spobL_outfitsSold( lua_State *L );
@@ -90,10 +93,13 @@ static const luaL_Reg spob_methods[] = {
    { "services", spobL_services },
    { "flags", spobL_flags },
    { "canLand", spobL_canland },
-   { "landOverride", spobL_landOverride },
-   { "getLandOverride", spobL_getLandOverride },
+   { "landAllow", spobL_landAllow },
+   { "landDeny", spobL_landDeny },
+   { "getLandAllow", spobL_getLandAllow },
+   { "getLandDeny", spobL_getLandDeny },
    { "gfxSpace", spobL_gfxSpace },
    { "gfxExterior", spobL_gfxExterior },
+   { "gfxExteriorPath", spobL_gfxExteriorPath },
    { "gfxComm", spobL_gfxComm },
    { "shipsSold", spobL_shipsSold },
    { "outfitsSold", spobL_outfitsSold },
@@ -167,11 +173,10 @@ LuaSpob luaL_checkspob( lua_State *L, int ind )
  */
 Spob* luaL_validspob( lua_State *L, int ind )
 {
-   LuaSpob lp;
    Spob *p;
 
    if (lua_isspob(L, ind)) {
-      lp = luaL_checkspob(L, ind);
+      LuaSpob lp = luaL_checkspob(L, ind);
       p  = spob_getIndex(lp);
    }
    else if (lua_isstring(L, ind))
@@ -236,10 +241,8 @@ int lua_isspob( lua_State *L, int ind )
 static int spobL_cur( lua_State *L )
 {
    LuaSystem sys;
-   if (land_spob == NULL) {
-      NLUA_ERROR(L,_("Attempting to get landed spob when player not landed."));
-      return 0; /* Not landed. */
-   }
+   if (land_spob == NULL)
+      return NLUA_ERROR(L,_("Attempting to get landed spob when player not landed."));
    lua_pushspob(L,spob_index(land_spob));
    sys = system_index( system_get( spob_getSystem(land_spob->name) ) );
    lua_pushsystem(L,sys);
@@ -260,7 +263,6 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
       pnt = spob_get( space_getRndSpob(landable, 0, NULL) );
       rndspob = pnt->name;
    }
-
    /* Get a spob by faction */
    else if (lua_isfaction(L,1)) {
       int *factions = array_create( int );
@@ -268,17 +270,14 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
       spobs  = space_getFactionSpob( factions, landable );
       array_free( factions );
    }
-
    /* Get a spob by name */
    else if (lua_isstring(L,1)) {
       rndspob = lua_tostring(L,1);
 
       if (landable) {
          pnt = spob_get( rndspob );
-         if (pnt == NULL) {
-            NLUA_ERROR(L, _("Spob '%s' not found in stack"), rndspob);
-            return 0;
-         }
+         if (pnt == NULL)
+            return NLUA_ERROR(L, _("Spob '%s' not found in stack"), rndspob);
 
          /* Check if can land. */
          spob_updateLand( pnt );
@@ -286,7 +285,6 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
             return 0;
       }
    }
-
    /* Get a spob from faction list */
    else if (lua_istable(L,1)) {
       /* Get table length and preallocate. */
@@ -303,7 +301,6 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
       spobs = space_getFactionSpob( factions, landable );
       array_free(factions);
    }
-
    /* Just get a spob. */
    else if (lua_isspob(L,1)) {
       pnt = luaL_validspob( L, 1 );
@@ -315,9 +312,8 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
       }
       rndspob = pnt->name;
    }
-
    else
-      NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
+      NLUA_INVALID_PARAMETER(L,1); /* Bad Parameter */
 
    /* Pick random spob */
    if (rndspob == NULL) {
@@ -347,10 +343,8 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
 
    /* Push the spob */
    pnt = spob_get(rndspob); /* The real spob */
-   if (pnt == NULL) {
-      NLUA_ERROR(L, _("Spob '%s' not found in stack"), rndspob);
-      return 0;
-   }
+   if (pnt == NULL)
+      return NLUA_ERROR(L, _("Spob '%s' not found in stack"), rndspob);
    lua_pushspob(L,spob_index( pnt ));
    if (system) {
       LuaSystem sys;
@@ -457,7 +451,7 @@ static int spobL_getAll( lua_State *L )
 static int spobL_system( lua_State *L )
 {
    LuaSystem sys;
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    const char *sysname = spob_getSystem( p->name );
    if (sysname == NULL)
       return 0;
@@ -503,7 +497,7 @@ static int spobL_eq( lua_State *L )
  */
 static int spobL_name( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_pushstring(L, spob_name(p));
    return 1;
 }
@@ -587,7 +581,7 @@ static int spobL_faction( lua_State *L )
  */
 static int spobL_colour( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    const glColour *col = spob_getColour( p );
    lua_pushcolour( L, *col );
    return 1;
@@ -604,7 +598,7 @@ static int spobL_colour( lua_State *L )
  */
 static int spobL_colourChar( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    char str[2];
    str[0] = spob_getColourChar( p );
    str[1] = '\0';
@@ -640,7 +634,7 @@ static int spobL_class(lua_State *L )
  */
 static int spobL_classLong(lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_pushstring(L, spob_getClassName(p->class));
    return 1;
 }
@@ -667,7 +661,7 @@ static int spobL_classLong(lua_State *L )
  */
 static int spobL_services( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    /* Return result in table */
    lua_newtable(L);
    /* allows syntax like foo = spob.get("foo"); if foo["bar"] then ... end */
@@ -699,7 +693,7 @@ static int spobL_services( lua_State *L )
  */
 static int spobL_flags( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_newtable(L);
    if (spob_isFlag( p, SPOB_NOMISNSPAWN )) {
       lua_pushstring(L, "nomissionspawn");
@@ -720,45 +714,83 @@ static int spobL_flags( lua_State *L )
 static int spobL_canland( lua_State *L )
 {
    Spob *p = luaL_validspob(L,1);
-   spob_updateLand( p );
+   spob_updateLand( p ); /* Update to make sure it's correct. */
    lua_pushboolean( L, p->can_land );
    return 1;
 }
 
-/**
- * @brief Lets player land on a spob no matter what. The override lasts until the player jumps or lands.
- *
- * @usage p:landOverride( true ) -- Spob can land on p now.
- *    @luatparam Spob p Spob to forcibly allow the player to land on.
- *    @luatparam[opt=false] boolean b Whether or not the player should be allowed to land, true enables, false disables override.
- * @luafunc landOverride
- */
-static int spobL_landOverride( lua_State *L )
+static int landAllowDeny( lua_State *L, int allowdeny )
 {
    Spob *p = luaL_validspob(L,1);
    int old = p->land_override;
-
-   p->land_override = !!lua_toboolean(L,2);
+   p->land_override = allowdeny * !!lua_toboolean(L,2);
+   /* Set the message as necessary. */
+   free( p->land_msg );
+   p->land_msg = NULL;
+   if (!lua_isnoneornil(L,3))
+      p->land_msg = strdup( luaL_checkstring(L,3) );
 
    /* If the value has changed, re-run the landing Lua next frame. */
    if (p->land_override != old)
       space_factionChange();
-
    return 0;
 }
 
 /**
- * @brief Gets the land override status for a spob.
+ * @brief Allows the player land on a spob no matter what. The override lasts until the player jumps or lands.
  *
- * @usage if p:getLandOverride() then -- Player can definitely land.
+ * @usage p:landAllow( true ) -- Player can land on spob p now.
+ *    @luatparam Spob p Spob to forcibly allow the player to land on.
+ *    @luatparam[opt=false] boolean b Whether or not the player should be allowed to land, true enables, false disables override.
+ *    @luatparam[opt=nil] string msg Message to give the player when allowing them to land. Setting a message will bypass any custom Lua, otherwise it'll default to using Lua and, in the case there is no Lua, a default message.
+ * @luafunc landAllow
+ */
+static int spobL_landAllow( lua_State *L )
+{
+   return landAllowDeny( L, +1 );
+}
+
+/**
+ * @brief Disallows a player from landing on a spob. The override lasts until the player jumps or lands.
+ *
+ * @usage p:landDeny( true ) -- Player can land on spob p now.
+ *    @luatparam Spob p Spob to forcibly disallow the player to land on.
+ *    @luatparam[opt=false] boolean b Whether or not the player should be disallowed to land, true disables, false disables override.
+ *    @luatparam[opt=nil] string msg Message to give the player when disallowing them to land. Setting a message will bypass any custom Lua, otherwise it'll default to using Lua and, in the case there is no Lua, a default message.
+ * @luafunc landDeny
+ */
+static int spobL_landDeny( lua_State *L )
+{
+   return landAllowDeny( L, -1 );
+}
+
+/**
+ * @brief Gets the land allow override status for a spob.
+ *
+ * @usage if p:getLandAllow() then -- Player can definitely land.
  *    @luatparam Spob p Spob to check.
  *    @luatreturn b Whether or not the player is always allowed to land.
- * @luafunc getLandOverride
+ * @luafunc getLandAllow
  */
-static int spobL_getLandOverride( lua_State *L )
+static int spobL_getLandAllow( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
-   lua_pushboolean(L, p->land_override);
+   const Spob *p = luaL_validspob(L,1);
+   lua_pushboolean(L, p->land_override>0);
+   return 1;
+}
+
+/**
+ * @brief Gets the land deny override status for a spob.
+ *
+ * @usage if p:getLandDeny() then -- Player can definitely not land
+ *    @luatparam Spob p Spob to check.
+ *    @luatreturn b Whether or not the player is always disallowed to land.
+ * @luafunc getLandDeny
+ */
+static int spobL_getLandDeny( lua_State *L )
+{
+   const Spob *p = luaL_validspob(L,1);
+   lua_pushboolean(L, p->land_override<0);
    return 1;
 }
 
@@ -772,7 +804,7 @@ static int spobL_getLandOverride( lua_State *L )
  */
 static int spobL_position( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_pushvector(L, p->pos);
    return 1;
 }
@@ -788,7 +820,7 @@ static int spobL_position( lua_State *L )
 static int spobL_gfxSpace( lua_State *L )
 {
    glTexture *tex;
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    if (p->gfx_space == NULL) { /* Not loaded. */
       /* If the spob has no texture, just return nothing. */
       if (p->gfx_spaceName == NULL)
@@ -811,13 +843,27 @@ static int spobL_gfxSpace( lua_State *L )
  */
 static int spobL_gfxExterior( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
 
    /* If no exterior image just return nothing instead of crashing. */
    if (p->gfx_exterior==NULL)
       return 0;
 
    lua_pushtex( L, gl_newImage( p->gfx_exterior, 0 ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the path of the spob in exterior.
+ *
+ *    @luatparam Spob p Spob Spob to get texture of.
+ *    @luatreturn string The path to the exterior texture.
+ * @luafunc gfxExteriorPath
+ */
+static int spobL_gfxExteriorPath( lua_State *L )
+{
+   const Spob *p = luaL_validspob(L,1);
+   lua_pushstring( L, p->gfx_exteriorPath );
    return 1;
 }
 
@@ -831,7 +877,7 @@ static int spobL_gfxExterior( lua_State *L )
  */
 static int spobL_gfxComm( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    if (p->gfx_comm==NULL)
       return spobL_gfxSpace(L);
    lua_pushtex( L, gl_newImage( p->gfx_comm, 0 ) );
@@ -847,7 +893,7 @@ static int spobL_gfxComm( lua_State *L )
  */
 static int spobL_shipsSold( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    Ship **s = tech_getShip( p->tech );
 
    /* Push results in a table. */
@@ -870,7 +916,7 @@ static int spobL_shipsSold( lua_State *L )
  */
 static int spobL_outfitsSold( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    Outfit **o = tech_getOutfit( p->tech );
 
    /* Push results in a table. */
@@ -917,7 +963,7 @@ static int spobL_commoditiesSold( lua_State *L )
  */
 static int spobL_isBlackMarket( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    lua_pushboolean(L, spob_hasService(p, SPOB_SERVICE_BLACKMARKET));
    return 1;
 }
@@ -933,7 +979,7 @@ static int spobL_isBlackMarket( lua_State *L )
  */
 static int spobL_isKnown( lua_State *L )
 {
-   Spob *s = luaL_validspob(L,1);
+   const Spob *s = luaL_validspob(L,1);
    lua_pushboolean(L, spob_isKnown(s));
    return 1;
 }
@@ -977,7 +1023,7 @@ static int spobL_setKnown( lua_State *L )
  */
 static int spobL_recordCommodityPriceAtTime( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
+   const Spob *p = luaL_validspob(L,1);
    ntime_t t = luaL_validtime(L, 2);
    spob_averageSeenPricesAtTime( p, t );
    return 0;

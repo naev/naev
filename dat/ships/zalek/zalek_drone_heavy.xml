@@ -2,8 +2,8 @@
 <ship name="Za'lek Heavy Drone">
  <lua>ships/lua/zalek.lua</lua>
  <points>40</points>
- <base_type>Za'lek Heavy Drone</base_type>
- <GFX size="45">zalek_drone_heavy</GFX>
+ <base_type path="Zalek_Heavy_Drone">Za'lek Heavy Drone</base_type>
+ <gfx size="34">zalek_drone_heavy</gfx>
  <sound>engine_zalek</sound>
  <class display="Robotic Fighter">Fighter</class>
  <price>350000</price>
@@ -13,7 +13,7 @@
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by the player.</description>
  <movement>
-  <thrust>160</thrust>
+  <accel>160</accel>
   <speed>330</speed>
   <turn>140</turn>
  </movement>

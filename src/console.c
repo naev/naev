@@ -204,6 +204,9 @@ static int cli_script( lua_State *L )
    fname = luaL_checkstring(L, 1);
    n = lua_gettop(L);
 
+   /* Clear cache. */
+   lua_clearCache();
+
    /* Reset loaded buffer. */
    if (cli_env != LUA_NOREF) {
       nlua_getenv( L, cli_env, "_LOADED" );

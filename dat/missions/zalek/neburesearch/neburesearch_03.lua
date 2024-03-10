@@ -56,7 +56,7 @@ function accept()
     vn.scene()
     local student = vn.newCharacter( nebu_research.vn_student() )
     vn.transition("fade")
-    vn.na(_("You join the student and explain him that Dr. Mensing actually hasn't told you what you are supposed to do."))
+    vn.na(_("You join the student and explain to him that Dr. Mensing actually hasn't told you what you are supposed to do."))
     student(fmt.f(_([["Ah, right. There is a conference on {pnt} in the {sys} system soon. Actually she is supposed to be the substitute for professor Voges. He's been absent for weeks by now. No one knows what he is doing on Ruadan. Anyway, back to topic. You have to bring me there as ersatz-substitution for Dr. Mensing as she got seriously ill. But you already know that as you brought her here."]]), {pnt=dest_planet, sys=dest_sys}))
     vn.na(_("You tell him that she looked perfectly fine and said she wants to conduct her research instead of going to the conference."))
     student(_([["WHAT?? It was MY idea initially! She just wants to kick me out! I bet she thinks she could just pull it off entirely without me and be the only author! No way she could ever achieve that!"]]))
@@ -92,7 +92,7 @@ function land()
         vn.clear()
         vn.scene()
         vn.transition("fade")
-        vn.na(fmt.f(_("You arrived on {pnt} on time. There is even some time left to prepare your talk. During the flight, you glanced at the presentation on the data chip but you haven't managed to figure out the meaning of it. How is this supposed to work out??"), {pnt=dest_planet}))
+        vn.na(fmt.f(_("You arrived at {pnt} on time. There is even some time left to prepare your talk. During the flight, you glanced at the presentation on the data chip, but you haven't managed to figure out the meaning of it. How is this supposed to work out??"), {pnt=dest_planet}))
         local student = vn.newCharacter( nebu_research.vn_student() )
         student(_([[Your thoughts are interrupted by an incoming message from the student.
 "As promised I'm sending you the speech you have to recite. I hope you appreciate the time I wasted on typing that out. I hadn't considered that you'll have to answer questions after the talk, though. Do what every good scientist does and just talk about some random stuff that sounds like it may be related to the question. I'm sure you'll do it just fine. Good luck!"]]))
@@ -107,6 +107,7 @@ function enter_ship()
     mem.location = "ship"
     vn.clear()
     vn.scene()
+    vn.transition()
     vn.label( "next_turn" )
     vn.func( function ()
         mem.time_left = mem.time_left - 1
@@ -138,13 +139,13 @@ function enter_ship()
     vn.label( "at_ship" )
     vn.na(_("You wonder what to do."))
     vn.menu( {
-        { _("Explore the space port"), "spaceport" },
+        { _("Explore the spaceport"), "spaceport" },
         { _("Take off immediately"), "abbort" },
         { _("Start learning your speech"), "learn" },
     } )
     vn.label( "at_ship_learned" )
     vn.menu( {
-        { _("Explore the space port"), "spaceport" },
+        { _("Explore the spaceport"), "spaceport" },
         { _("Take off immediately"), "abbort" },
     } )
 
@@ -203,7 +204,7 @@ function enter_ship()
     vn.jump( "next_turn" )
 
     vn.label( "lab_coat_store" )
-    vn.na(fmt.f(_([[You enter a shop that sells only lab coats. The assortment of lab coats is impressive: lab coats of all colors, different materials, and cuts. There are distinct sections for casual and working lab coats. Whatever the difference is, it is too subtle for you to grasp. You settle on a "business" lab coat because something formal is probably suitable for your talk. The price tag reads {credits}.]]), {credits=fmt.credits(lab_coat_price)}))
+    vn.na(fmt.f(_([[You enter a shop that sells only lab coats. The assortment of lab coats is impressive: lab coats of all colours, different materials, and cuts. There are distinct sections for casual and working lab coats. Whatever the difference is, it is too subtle for you to grasp. You settle on a "business" lab coat because something formal is probably suitable for your talk. The price tag reads {credits}.]]), {credits=fmt.credits(lab_coat_price)}))
     vn.func( function ()
         if player.credits() < lab_coat_price then
             vn.jump("lab_coat_too_expensive")
@@ -277,10 +278,10 @@ function enter_ship()
             mem.text2 = _([[You start reciting the speech you got from the student. You realize that you should have learned the text as some of the occurring terms are difficult to pronounce correctly.]])
         end
     end )
-    vn.na(_([[You make your way to the institute where you are supposed to give the talk, following the signs. On arriving you ask around where you should head to for your talk. Apparently you were already awaited. You are led to a rather small seminar room. Finally you are ready to give your talk and a few scientists take seats. Actually you expected more than 17 listeners. Maybe this talk is not such a big deal as you expected. They wouldn't just send you to an important presentation, right?]]))
+    vn.na(_([[You make your way to the institute where you are supposed to give the talk, following the signs. On arriving you ask around where you should head to for your talk. Apparently you were already awaited. You are led to a rather small seminar room. Finally, you are ready to give your talk and a few scientists take seats. Actually you expected more than 17 listeners. Maybe this talk is not such a big deal as you expected. They wouldn't just send you to an important presentation, right?]]))
     vn.na(function() return mem.text1 end)
     vn.na(function() return mem.text2 end)
-    vn.na(_([[Finally, you are finished with your text and sigh in relief. After a brief applause, someone raises his hand. Apparently, he wants to ask a question. What should you do?
+    vn.na(_([[You finish with your text and sigh in relief. After a brief applause, someone raises his hand. Apparently, he wants to ask a question. What should you do?
 You haven't understood the question, not even a single word.]]))
     vn.menu( {
         { _("This is a good question."), "avoid_question" },

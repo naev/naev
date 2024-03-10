@@ -167,16 +167,41 @@ local function run_success ()
 end
 
 function escort.reset_ai ()
+   -- Clear speed limits and such
    for k,p in ipairs(_escort_convoy) do
-      p:control(false)
-      p:setNoJump(false)
-      p:setNoLand(false)
-      p:taskClear()
+      if p:exists() then
+         p:setSpeedLimit(0)
+         p:control(false)
+         p:setNoJump(false)
+         p:setNoLand(false)
+         local pt = p:taskname()
+         if pt~="hyperspace" and pt~="land" then
+            p:taskClear()
+         end
+      end
    end
 
    if not mem._escort.followplayer then
-      local l = _escort_convoy[1]
-      if not l or not l:exists() then return end
+      -- Find the leader
+      local l
+      for k,v in ipairs(_escort_convoy) do
+         if v:exists() then
+            l = v
+            break
+         end
+      end
+      if not l then return end
+
+      -- Find and limit max speed
+      local minspeed = player.pilot():stats().speed_max * 0.9
+      for k,p in ipairs(_escort_convoy) do
+         if p:exists() then
+            minspeed = math.min( p:stats().speed_max * 0.95, minspeed )
+         end
+      end
+      l:setSpeedLimit( minspeed )
+
+      -- Control leader and set new target
       l:control(true)
       local scur = system.cur()
       if scur == mem._escort.destsys then
@@ -189,6 +214,36 @@ function escort.reset_ai ()
          l:hyperspace( lmisn.getNextSystem( scur, mem._escort.destsys ) )
       end
    end
+end
+
+function escort.update_leader ()
+   local l
+   for k,v in ipairs(_escort_convoy) do
+      if v:exists() then
+         l = v
+         break
+      end
+   end
+   if not l then return end
+
+   l:setLeader()
+   l:setHilight(true)
+   for k,v in ipairs(_escort_convoy) do
+      if v~=l and v:exists() then
+         local pt = v:taskname()
+         if pt~="hyperspace" and pt~="land" then
+            v:taskClear()
+         end
+         v:setLeader(l)
+      end
+   end
+
+   if not l:flags("manualcontrol") then
+      escort.reset_ai()
+   end
+end
+function _escort_update_leader ()
+   escort.update_leader()
 end
 
 function _escort_e_death( p )
@@ -216,16 +271,7 @@ function _escort_e_death( p )
             -- Set a new leader and tell them to move on
             if not mem._escort.followplayer then
                if k==1 then
-                  local l = _escort_convoy[1]
-                  l:setLeader()
-                  l:setHilight(true)
-                  for i,e in ipairs(_escort_convoy) do
-                     if i~=1 then
-                        e:taskClear()
-                        e:setLeader( l )
-                     end
-                  end
-                  escort.reset_ai()
+                  hook.safe("_escort_update_leader")
                end
             end
          end
@@ -263,6 +309,8 @@ function _escort_e_land( p, landed_spob )
 
       if escorts_left() <= 1 then
          player.msg("#g"..fmt.f(_("All escorts have landed on {pnt}."), {pnt=landed_spob}).."#0")
+      else
+         hook.safe("_escort_update_leader")
       end
    else
       _escort_e_death( p )
@@ -278,6 +326,8 @@ function _escort_e_jump( p, j )
 
       if escorts_left() <= 1 then
          player.msg("#g"..fmt.f(_("All escorts have jumped to {sys}. Follow them."), {sys=j:dest()}).."#0")
+      else
+         hook.safe("_escort_update_leader")
       end
    else
       _escort_e_death( p )
@@ -292,6 +342,7 @@ Spawns the escorts at location. This can be useful at the beginning if you want 
 --]]
 function escort.spawn( pos )
    local have_outfits = (escort_outfits ~= nil)
+   local pp = player.pilot()
    pos = pos or mem._escort.origin
 
    -- Set up the new convoy for the new system
@@ -302,7 +353,7 @@ function escort.spawn( pos )
    end
    local l
    if mem._escort.followplayer then
-      l = player.pilot()
+      l = pp
    end
    for k,s in ipairs( mem._escort.ships ) do
       local params = tcopy( mem._escort.params.pilot_params or {} )
@@ -333,7 +384,6 @@ function escort.spawn( pos )
    end
 
    -- Some post-processing for the convoy
-   local minspeed = player.pilot():stats().speed_max * 0.9
    for k,p in ipairs(_escort_convoy) do
       p:setInvincPlayer(true)
       p:setFriendly(true)
@@ -347,13 +397,10 @@ function escort.spawn( pos )
          fcreate( p )
          aisetup.setup( p )
       end
-
-      minspeed = math.min( p:stats().speed_max, minspeed )
    end
 
    if not mem._escort.followplayer then
       -- Have the leader move as slow as the slowest ship
-      l:setSpeedLimit( minspeed )
       l:setHilight(true)
       -- Moving to system
       escort.reset_ai()

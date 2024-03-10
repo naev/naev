@@ -146,6 +146,12 @@ void window_modifyImage( unsigned int wid,
       return;
    }
 
+   /* Image must not be NULL. */
+   if (image==NULL) {
+      wgt->dat.img.image = NULL;
+      return;
+   }
+
    /* Free and set the image. */
    gl_freeTexture( wgt->dat.img.image );
    wgt->dat.img.image   = gl_dupTexture( image );

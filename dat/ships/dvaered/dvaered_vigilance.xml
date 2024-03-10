@@ -3,7 +3,7 @@
  <lua>ships/lua/dvaered.lua</lua>
  <points>90</points>
  <base_type>Vigilance</base_type>
- <GFX size="95" sx="10" sy="10">vigilance_dvaered</GFX>
+ <gfx size="95" sx="10" sy="10">vigilance_dvaered</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
@@ -39,10 +39,11 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <utility size="medium" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
   <structure size="large" />
-  <structure size="medium" />
+  <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>

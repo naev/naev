@@ -4,6 +4,7 @@
 #include "glad.h"
 
 #include "SDL.h"
+#include "physfs.h"
 
 #include <ctype.h>
 #include <stdio.h>
@@ -16,7 +17,8 @@
 #include "nstr.h"
 
 //#define GLSL_PATH "../../dat/glsl/"
-#define GLSL_PATH "./"
+//#define GLSL_PATH "./"
+#define GLSL_PATH ""
 
 #define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
 #define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
@@ -32,30 +34,74 @@ static GLuint gl_shader_compile( GLuint type, const char *buf,
 static int gl_program_link( GLuint program );
 static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
 
-static char* ndata_read( const char* filename, size_t *fsize )
- {
-	SDL_RWops *rw = SDL_RWFromFile(filename, "rb");
-	if (rw == NULL) return NULL;
+static void* ndata_read( const char* path, size_t *filesize )
+{
+   char *buf;
+   PHYSFS_file *file;
+   PHYSFS_sint64 len, n;
+   PHYSFS_Stat path_stat;
 
-	Sint64 res_size = SDL_RWsize(rw);
-   *fsize = res_size;
-	char* res = (char*)malloc(res_size + 1);
+   if (!PHYSFS_stat( path, &path_stat )) {
+      WARN( _( "Error occurred while opening '%s': %s" ), path,
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+      *filesize = 0;
+      return NULL;
+   }
+   if (path_stat.filetype != PHYSFS_FILETYPE_REGULAR) {
+      WARN( _( "Error occurred while opening '%s': It is not a regular file" ), path );
+      *filesize = 0;
+      return NULL;
+   }
 
-	Sint64 nb_read_total = 0, nb_read = 1;
-	char* buf = res;
-	while (nb_read_total < res_size && nb_read != 0) {
-		nb_read = SDL_RWread(rw, buf, 1, (res_size - nb_read_total));
-		nb_read_total += nb_read;
-		buf += nb_read;
-	}
-	SDL_RWclose(rw);
-	if (nb_read_total != res_size) {
-		free(res);
-		return NULL;
-	}
+   /* Open file. */
+   file = PHYSFS_openRead( path );
+   if ( file == NULL ) {
+      WARN( _( "Error occurred while opening '%s': %s" ), path,
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+      *filesize = 0;
+      return NULL;
+   }
 
-	res[nb_read_total] = '\0';
-	return res;
+   /* Get file size. TODO: Don't assume this is always possible? */
+   len = PHYSFS_fileLength( file );
+   if ( len == -1 ) {
+      WARN( _( "Error occurred while seeking '%s': %s" ), path,
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+      PHYSFS_close( file );
+      *filesize = 0;
+      return NULL;
+   }
+
+   /* Allocate buffer. */
+   buf = malloc( len+1 );
+   if (buf == NULL) {
+      WARN(_("Out of Memory"));
+      PHYSFS_close( file );
+      *filesize = 0;
+      return NULL;
+   }
+   buf[len] = '\0';
+
+   /* Read the file. */
+   n = 0;
+   while (n < len) {
+      size_t pos = PHYSFS_readBytes( file, &buf[ n ], len - n );
+      if (pos == 0) {
+         WARN( _( "Error occurred while reading '%s': %s" ), path,
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+         PHYSFS_close( file );
+         *filesize = 0;
+         free(buf);
+         return NULL;
+      }
+      n += pos;
+   }
+
+   /* Close the file. */
+   PHYSFS_close(file);
+
+   *filesize = len;
+   return buf;
 }
 
 /**
@@ -252,8 +298,9 @@ static int gl_program_link( GLuint program )
  *    @param[in] fragfile Fragment shader filename.
  *    @return The shader compiled program or 0 on failure.
  */
-GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile, const char *prependtext )
+GLuint gl_program_backend( const char *vertfile, const char *fragfile, const char *geom, const char *prependtext )
 {
+   (void) geom;
    char *vert_str, *frag_str, prepend[STRMAX];
    size_t vert_size, frag_size;
    GLuint vertex_shader, fragment_shader, program;

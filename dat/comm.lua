@@ -483,7 +483,7 @@ function comm( plt )
       }
       -- Only allow multiples of 100
       local maxfuel = math.floor( math.min( pps.fuel_max-pps.fuel, plts.fuel-plts.fuel_consumption ) / 100 ) * 100
-      if maxfuel > cons then
+      if maxfuel > cons and maxfuel > 100 then
          table.insert( opts, 2, {fmt.f(_("Pay #r{cost}#0 ({amount} fuel, {jumps:.1f} jumps)"),
                {cost=fmt.credits(cost*maxfuel/100), amount=maxfuel, jumps=maxfuel/cons}),
                "refuel_trypay_max"})

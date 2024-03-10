@@ -20,7 +20,7 @@ return function ( mem )
       vn.func( function ()
          added = player.fleetCargoAdd( cargo, q )
          var.push( "poi_nebula_crystals", (var.peek("poi_nebula_crystals") or 0)+1 )
-         poi.log(fmt.f(_([[You found large amounts of {cargo} on a pristine derelict in the {sys} system.]]),
+         poi.log(fmt.f(_([[You found large amounts of {cargo} on an unusual derelict in the {sys} system.]]),
             {cargo=cargo, sys=mem.sys}))
       end )
       vn.na( function ()

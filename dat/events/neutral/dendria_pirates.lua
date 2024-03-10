@@ -83,6 +83,8 @@ end
 -- Check to see if player is spotted
 local pirhook
 function pirate_check ()
+   if not pirboss or not pirboss:exists() then return end
+
    local spotted = false
    for k,p in ipairs(pirboss:getVisible()) do
       if p:withPlayer() then

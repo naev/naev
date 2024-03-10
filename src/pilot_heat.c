@@ -16,7 +16,6 @@
 #include "pilot_heat.h"
 
 #include "array.h"
-#include "log.h"
 
 /*
  * Prototypes.
@@ -120,7 +119,7 @@ static double pilot_heatOutfitMod( const Pilot *p, const Outfit *o )
          return p->stats.tur_heat;
 
       default:
-         return 1;
+         return 1.;
    }
 }
 
@@ -234,7 +233,7 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
  */
 double pilot_heatEfficiencyMod( double T, double Tb, double Tc )
 {
-   return CLAMP( 0., 1., 1 - (T - Tb) / Tc );
+   return CLAMP( 0., 1., 1. - (T - Tb) / Tc );
 }
 
 /**

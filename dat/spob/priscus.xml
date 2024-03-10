@@ -8,8 +8,8 @@
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>83.333333</base>
-  <bonus>41.666667</bonus>
+  <base>83.333300</base>
+  <bonus>41.666700</bonus>
   <range>0</range>
  </presence>
  <general>
@@ -36,9 +36,9 @@
   <item>Kinetic 1</item>
   <item>Low Tech Upgrades</item>
   <item>Star Maps</item>
-  <item>High Tech Upgrades 1</item>
   <item>Missiles 1</item>
   <item>Soromid Elite Outfits</item>
+  <item>High Tech Upgrades 3</item>
  </tech>
  <tags>
   <tag>restricted</tag>

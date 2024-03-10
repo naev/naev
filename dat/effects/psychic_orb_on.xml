@@ -5,4 +5,5 @@
  <icon>/gfx/misc/icons/angel-outfit.webp</icon>
  <overwrite>psychic_orb</overwrite>
  <shader>effects/psychic_orb_on.frag</shader>
+ <priority>-1</priority>
 </effect>

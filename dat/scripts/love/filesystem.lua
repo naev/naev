@@ -50,8 +50,14 @@ function filesystem.read( name, size )
    f:close()
    return buf, len
 end
-function filesystem.enumerate( dir )
+function filesystem.getDirectoryItems( dir )
    return naev.file.enumerate( dir )
+end
+function filesystem.createDirectory( path )
+   return naev.file.mkdir( path )
+end
+function filesystem.remove( path )
+   return naev.file.remove( path )
 end
 
 return filesystem

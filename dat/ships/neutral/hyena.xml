@@ -2,7 +2,7 @@
 <ship name="Hyena">
  <points>30</points>
  <base_type>Hyena</base_type>
- <GFX size="44">hyena</GFX>
+ <gfx size="44">hyena</gfx>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>210000</price>
@@ -12,14 +12,14 @@
  <trail_generator x="-15" y="-6" h="0">fire-thin</trail_generator>
  <trail_generator x="-15" y="6" h="0">fire-thin</trail_generator>
  <fabricator>Aerosys</fabricator>
- <description>The star product of Aerosys, the Hyena quickly has also become a favourite of guerrilla and paramilitary groups far and wide. Their top-notch thrust combined with fast reaction time allow them to exhaust enemy energy supplies while wearing them down. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the ranks of the more notorious and unruly pilots.</description>
+ <description>The star product of Aerosys, the Hyena quickly has also become a favourite of guerrilla and paramilitary groups far and wide. Their top-notch acceleration combined with fast reaction time allow them to exhaust enemy energy supplies while wearing them down. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the ranks of the more notorious and unruly pilots.</description>
  <health>
   <armour>25</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>2</crew>
-  <mass>30</mass>
+  <mass>40</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>5</cargo>
  </characteristics>
@@ -30,14 +30,18 @@
   <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" />
   <utility size="small" />
-  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>
   <speed_mod>5</speed_mod>
   <turn_mod>25</turn_mod>
-  <thrust_mod>75</thrust_mod>
+  <accel_mod>75</accel_mod>
   <armour_mod>-50</armour_mod>
  </stats>
  <tags>

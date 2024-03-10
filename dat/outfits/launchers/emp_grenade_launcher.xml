@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="EMP Grenade Launcher">
  <general>
+  <shortname>EMP Grenade L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
-  <mass>15</mass>
+  <mass>26</mass>
   <price>100000</price>
   <gfx_store>empgrenadelauncher_blue.webp</gfx_store>
   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. The grenades unleash an electromagnetic pulse upon impact, rapidly disabling the electronics of nearby ships, hostile or otherwise. Useful for taking ships alive; the EM pulses rarely destroy the ship, leaving it floating disabled in space. These are favoured by traders for keeping pirates at bay.</description>
@@ -22,7 +23,7 @@
   <spfx_shield>EmpBlastM</spfx_shield>
   <spfx_armour>EmpBlastM</spfx_armour>
   <duration blowup="shield">1.3</duration>
-  <thrust>0</thrust>
+  <accel>0</accel>
   <speed>500</speed>
   <damage>
    <type>emp</type>

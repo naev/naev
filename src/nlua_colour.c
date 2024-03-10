@@ -20,6 +20,7 @@
 
 /* Colour metatable methods. */
 static int colL_eq( lua_State *L );
+static int colL_tostring( lua_State * L );
 static int colL_new( lua_State *L );
 static int colL_alpha( lua_State *L );
 static int colL_rgb( lua_State *L );
@@ -31,6 +32,7 @@ static int colL_linearToGamma( lua_State *L );
 static int colL_gammaToLinear( lua_State *L );
 static const luaL_Reg colL_methods[] = {
    { "__eq", colL_eq },
+   { "__tostring", colL_tostring },
    { "new", colL_new },
    { "alpha", colL_alpha },
    { "rgb", colL_rgb },
@@ -141,10 +143,26 @@ int lua_iscolour( lua_State *L, int ind )
  */
 static int colL_eq( lua_State *L )
 {
-   glColour *c1, *c2;
+   const glColour *c1, *c2;
    c1 = luaL_checkcolour(L,1);
    c2 = luaL_checkcolour(L,2);
    lua_pushboolean( L, (memcmp( c1, c2, sizeof(glColour) )==0) );
+   return 1;
+}
+
+/**
+ * @brief Converts a colour to a string.
+ *
+ *    @luatparam Colour col Colour to get string from.
+ *    @luatreturn string A string representing the colour.
+ * @luafunc __tostring
+ */
+static int colL_tostring( lua_State * L )
+{
+   const glColour *col = luaL_checkcolour(L,1);
+   char buf[STRMAX_SHORT];
+   snprintf( buf, sizeof(buf), "Colour( %.2f, %.2f, %.2f, %.2f )", col->r, col->g, col->b, col->a );
+   lua_pushstring( L, buf );
    return 1;
 }
 
@@ -169,7 +187,6 @@ static int colL_new( lua_State *L )
    glColour col;
    const glColour *col2;
 
-
    if (lua_gettop(L)==0) {
       col.r = col.g = col.b = col.a = 1.;
    }
@@ -182,7 +199,7 @@ static int colL_new( lua_State *L )
    else if (lua_isstring(L,1)) {
       col2 = col_fromName( lua_tostring(L,1) );
       if (col2 == NULL) {
-         NLUA_ERROR( L, _("Colour '%s' does not exist!"), lua_tostring(L,1) );
+         return NLUA_ERROR( L, _("Colour '%s' does not exist!"), lua_tostring(L,1) );
          return 0;
       }
       col = *col2;
@@ -191,7 +208,7 @@ static int colL_new( lua_State *L )
    else if (lua_iscolour(L,1))
       col = *lua_tocolour(L,1);
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    lua_pushcolour( L, col );
    return 1;
@@ -210,7 +227,7 @@ static int colL_new( lua_State *L )
  */
 static int colL_alpha( lua_State *L )
 {
-   glColour *col = luaL_checkcolour(L,1);
+   const glColour *col = luaL_checkcolour(L,1);
    lua_pushnumber( L, col->a );
    return 1;
 }
@@ -231,7 +248,7 @@ static int colL_alpha( lua_State *L )
  */
 static int colL_rgb( lua_State *L )
 {
-   glColour *col = luaL_checkcolour(L,1);
+   const glColour *col = luaL_checkcolour(L,1);
    if (lua_toboolean(L,2)) {
       lua_pushnumber( L, linearToGamma( col->r ) );
       lua_pushnumber( L, linearToGamma( col->g ) );
@@ -262,7 +279,7 @@ static int colL_rgb( lua_State *L )
 static int colL_hsv( lua_State *L )
 {
    float h, s, v, r, g, b;
-   glColour *col = luaL_checkcolour(L,1);
+   const glColour *col = luaL_checkcolour(L,1);
    if (lua_toboolean(L,2)) {
       r = linearToGamma( col->r );
       g = linearToGamma( col->g );
@@ -352,7 +369,7 @@ static int colL_setalpha( lua_State *L )
  */
 static int colL_linearToGamma( lua_State *L )
 {
-   glColour *col = luaL_checkcolour(L,1);
+   const glColour *col = luaL_checkcolour(L,1);
    glColour out;
    out.r = linearToGamma( col->r );
    out.g = linearToGamma( col->g );
@@ -370,7 +387,7 @@ static int colL_linearToGamma( lua_State *L )
  */
 static int colL_gammaToLinear( lua_State *L )
 {
-   glColour *col = luaL_checkcolour(L,1);
+   const glColour *col = luaL_checkcolour(L,1);
    glColour out;
    out.r = gammaToLinear( col->r );
    out.g = gammaToLinear( col->g );

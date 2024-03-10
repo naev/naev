@@ -55,6 +55,7 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name );
 static int map_findSearchShips( unsigned int wid_map_find, const char *name );
 static void map_findSearch( unsigned int wid_map_find, const char* str );
 static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, int y, int w, int h);
+static void map_adjustButtonLabel( unsigned int wid_map_find, const char* name );
 /* Misc. */
 static void map_findAccumulateResult( map_find_t *found, int n, StarSystem *sys, Spob *spob );
 static void map_findSelect( const StarSystem *sys );
@@ -172,10 +173,10 @@ static void map_findDisplayMark( unsigned int wid_results, const char* str )
    StarSystem *sys = map_found_cur[ pos ].sys;
    int wid_map_find = window_getParent( wid_results );
 
-   map_findSelect( sys );
-
    /* Close parent. */
    window_close( wid_map_find, str );
+
+   map_findSelect( sys );
 }
 
 /**
@@ -278,7 +279,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
    /* Account final travel to spob for spob targets. */
    i = *jumps - 1;
    if (spob != NULL) {
-      vec2 *ve = &spob->pos;
+      const vec2 *ve = &spob->pos;
       vec2 *vs = NULL;
       if (i > 0) {
          StarSystem *ss = slist[ i ];
@@ -549,6 +550,7 @@ static char **map_outfitsMatch( const char *name )
    /* Get outfits and names. */
    o     = tech_getOutfitArray( map_known_techs, array_size(map_known_techs) );
    names = map_fuzzyOutfits( o, name );
+   qsort( names, array_size(names), sizeof(char*), strsort );
    array_free(o);
 
    return names;
@@ -618,6 +620,7 @@ static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, 
     * a 20 px gap, 280 px for the outfit's name and a final 20 px gap. */
    iw = w - 452;
 
+   outfit_gfxStoreLoad( (Outfit*) outfit );
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
    l = outfit_getNameWithClass( outfit, buf, sizeof(buf) );
    l += scnprintf( &buf[l], sizeof(buf)-l, " %s", pilot_outfitSummary( player.p, outfit, 0 ) );
@@ -652,6 +655,21 @@ static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, 
 }
 
 /**
+ * @brief Adjust "Show all"/"Find" button label.
+ *
+ *    @param wid_map_find The windowid of the find window.
+ *    @param name         The widget name of the input widget.
+ */
+static void map_adjustButtonLabel( unsigned int wid_map_find, const char* name )
+{
+   if ( window_getInput( wid_map_find, name )[0] != '\0' ) {
+      window_buttonCaption( wid_map_find, "btnSearch", _("Find") );
+   } else {
+      window_buttonCaption( wid_map_find, "btnSearch", _("Show all") );
+   }
+}
+
+/**
  * @brief Searches for a outfit.
  *
  *    @param name Name to match.
@@ -682,9 +700,14 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( _(map_foundOutfitNames[i]) );
-      i = dialogue_listPanel( _("Search Results"), list, len, 452, 650,
-            map_addOutfitDetailFields, map_showOutfitDetail,
-            _("Search results for outfits matching '%s':"), name );
+      if ((name==NULL) || (name[0]=='\0'))
+         i = dialogue_listPanelRaw( _("Search Results"), list, len, 452, 650,
+               map_addOutfitDetailFields, map_showOutfitDetail,
+               _("Showing all known outfits:") );
+      else
+         i = dialogue_listPanel( _("Search Results"), list, len, 452, 650,
+               map_addOutfitDetailFields, map_showOutfitDetail,
+               _("Search results for outfits matching '%s':"), name );
       if (i < 0) {
          array_free( map_foundOutfitNames );
          map_foundOutfitNames = NULL;
@@ -778,6 +801,7 @@ static char **map_shipsMatch( const char *name )
    /* Get ships and names. */
    s     = tech_getShipArray( map_known_techs, array_size( map_known_techs ) );
    names = map_fuzzyShips( s, name );
+   qsort( names, array_size(names), sizeof(char*), strsort );
    array_free(s);
 
    return names;
@@ -815,8 +839,12 @@ static int map_findSearchShips( unsigned int wid_map_find, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( _(names[i]) );
-      i = dialogue_list( _("Search Results"), list, len,
-            _("Search results for ships matching '%s':"), name );
+      if ((name==NULL) || (name[0]=='\0'))
+         i = dialogue_listRaw( _("Search Results"), list, len,
+               _("Showing all known ships:") );
+      else
+         i = dialogue_list( _("Search Results"), list, len,
+               _("Search results for ships matching '%s':"), name );
       if (i < 0) {
          array_free(names);
          return 0;
@@ -884,8 +912,6 @@ static void map_findSearch( unsigned int wid_map_find, const char* str )
 
    /* Get the name. */
    name = window_getInput( wid_map_find, "inpSearch" );
-   if (name[0] == '\0')
-      return;
 
    /* Prevent reentrancy, e.g. the toolkit spontaneously deciding a future mouseup event was the
     * user releasing the clicked "Find" button and should reactivate it, never mind that they were
@@ -952,17 +978,18 @@ void map_inputFind( unsigned int parent, const char* str )
    y = -40;
    window_addText( wid_map_find, 20, y, w - 50, gl_defFont.h+4, 0,
          "txtDescription", &gl_defFont, NULL,
-         _("Enter keyword to search for:") );
+         _("Enter keyword to search for:  (Partial match)") );
    y -= 30;
 
    /* Create input. */
    window_addInput( wid_map_find, 30, y, w - 60, 20,
          "inpSearch", 32, 1, &gl_defFont );
+   window_setInputCallback( wid_map_find, "inpSearch", map_adjustButtonLabel );
    y -= 40;
 
    /* Create buttons. */
    window_addButton( wid_map_find, -30, 20+BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSearch", _("Find"), map_findSearch );
+         "btnSearch", _("Show all"), map_findSearch );
    window_addButton( wid_map_find, -30, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", _("Close"), window_close );
 

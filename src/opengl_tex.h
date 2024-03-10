@@ -27,6 +27,7 @@
 #define OPENGL_TEX_VFLIP      (1<<2) /**< Assume loaded from an image (where positive y means down). */
 #define OPENGL_TEX_SKIPCACHE  (1<<3) /**< Skip caching checks and create new texture. */
 #define OPENGL_TEX_SDF        (1<<4) /**< Convert to an SDF. Only the alpha channel gets used. */
+#define OPENGL_TEX_CLAMP_ALPHA (1<<5) /**< Clamp image border to transparency. */
 
 /**
  * @brief Abstraction for rendering sprite sheets.
@@ -67,18 +68,14 @@ void gl_exitTextures (void);
  * Creating.
  */
 USE_RESULT glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name );
-USE_RESULT glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
-      unsigned int flags, int w, int h, int sx, int sy, int freesur );
-USE_RESULT glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
-      unsigned int flags, int w, int h, int sx, int sy, int freesur );
-USE_RESULT glTexture* gl_loadImage( SDL_Surface* surface, const unsigned int flags ); /* Frees the surface. */
 USE_RESULT glTexture* gl_newImage( const char* path, const unsigned int flags );
 USE_RESULT glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int flags ); /* Does not close the RWops. */
 USE_RESULT glTexture* gl_newSprite( const char* path, const int sx, const int sy,
       const unsigned int flags );
 USE_RESULT glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
-   const int sx, const int sy, const unsigned int flags );
+      const int sx, const int sy, const unsigned int flags );
 USE_RESULT glTexture* gl_dupTexture( const glTexture *texture );
+USE_RESULT glTexture* gl_rawTexture( const char *name, GLuint tex, double w, double h );
 
 /*
  * Clean up.
@@ -89,11 +86,14 @@ void gl_freeTexture( glTexture* texture );
  * FBO stuff.
  */
 int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height );
+int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height );
 
 /*
  * Misc.
  */
+void gl_contextSet (void);
+void gl_contextUnset (void);
 int gl_isTrans( const glTexture* t, const int x, const int y );
-void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
+void gl_getSpriteFromDir( int* x, int* y, int sx, int sy, double dir );
 glTexture** gl_copyTexArray( glTexture **tex );
 glTexture** gl_addTexArray( glTexture **tex, glTexture *t );

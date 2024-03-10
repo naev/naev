@@ -2,7 +2,7 @@
 <ship name="Psychic Orb">
  <points>1</points>
  <base_type>Psychic Orb</base_type>
- <GFX size="46">koala</GFX><!-- TODO fix-->
+ <gfx size="46">koala</gfx><!-- TODO fix-->
  <sound>engine</sound>
  <class display="Unknown">Interceptor</class>
  <price>1</price>
@@ -11,7 +11,7 @@
  <description>Not meant for the player.</description>
  <mission />
  <movement>
-  <thrust>0.001</thrust>
+  <accel>0.001</accel>
   <turn>0.001</turn>
   <speed>0.001</speed>
  </movement>

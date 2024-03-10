@@ -23,7 +23,6 @@
   <enemy>Dvaered</enemy>
   <enemy>Soromid</enemy>
   <enemy>Sirius</enemy>
-  <enemy>Thurion</enemy>
   <enemy>Goddard</enemy>
  </enemies>
  <lane_length_per_presence>250</lane_length_per_presence>

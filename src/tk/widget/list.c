@@ -115,7 +115,7 @@ void window_addList( unsigned int wid,
 static void lst_render( Widget* lst, double bx, double by )
 {
    double x,y, tx,ty, miny;
-   double w, scroll_pos;
+   double w;
 
    w = lst->w;
    x = bx + lst->x;
@@ -133,6 +133,7 @@ static void lst_render( Widget* lst, double bx, double by )
 
    /* Draw scrollbar. */
    if (lst->dat.lst.height > 0) {
+      double scroll_pos;
       /* We need to make room for list. */
       w -= 11.;
 
@@ -311,8 +312,7 @@ static int lst_focusElement( Widget *lst, double bx, double by )
  */
 static int lst_focus( Widget* lst, double bx, double by )
 {
-   double y, w;
-   double scroll_pos;
+   double w;
 
    /* Get the actual width. */
    w = lst->w;
@@ -328,8 +328,8 @@ static int lst_focus( Widget* lst, double bx, double by )
    }
    else {
       /* Get bar position (center). */
-      scroll_pos = (double)(lst->dat.lst.pos * CELLHEIGHT) / (lst->dat.lst.height - lst->h + 2);
-      y = (lst->h - 30.) * (1.-scroll_pos) + 15.;
+      double scroll_pos = (double)(lst->dat.lst.pos * CELLHEIGHT) / (lst->dat.lst.height - lst->h + 2);
+      double y = (lst->h - 30.) * (1.-scroll_pos) + 15.;
 
       /* Click below the bar. */
       if (by < y-15.)

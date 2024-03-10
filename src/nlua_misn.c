@@ -81,6 +81,7 @@ static int misn_osdGetActiveItem( lua_State *L );
 static int misn_npcAdd( lua_State *L );
 static int misn_npcRm( lua_State *L );
 static int misn_claim( lua_State *L );
+static int misn_computerRefresh( lua_State *L );
 static const luaL_Reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
@@ -103,6 +104,7 @@ static const luaL_Reg misn_methods[] = {
    { "npcAdd", misn_npcAdd },
    { "npcRm", misn_npcRm },
    { "claim", misn_claim },
+   { "computerRefresh", misn_computerRefresh },
    {0,0}
 }; /**< Mission Lua methods. */
 
@@ -212,16 +214,14 @@ void misn_runStart( Mission *misn, const char *func )
  *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
  *          3 if the mission got accepted, and 0 normally.
  */
-int misn_runFunc( Mission *misn, const char *func, int nargs )
+int misn_runFunc( const Mission *misn, const char *func, int nargs )
 {
-   int ret;
-   int misn_delete;
+   int ret, misn_delete;
    Mission *cur_mission;
    nlua_env env;
-   int isaccepted;
 
    /* Check to see if it is accepted first. */
-   isaccepted = misn->accepted;
+   int isaccepted = misn->accepted;
 
    /* Set up and run function. */
    env = misn->env;
@@ -366,10 +366,8 @@ static int misn_markerAdd( lua_State *L )
       type = SPOBMARKER_HIGH;
    else if (strcmp(stype, "plot")==0)
       type = SPOBMARKER_PLOT;
-   else {
-      NLUA_ERROR(L, _("Unknown marker type: %s"), stype);
-      return 0;
-   }
+   else
+      return NLUA_ERROR(L, _("Unknown marker type: %s"), stype);
 
    /* Convert spob -> system. */
    if (issys)
@@ -424,10 +422,8 @@ static int misn_markerMove( lua_State *L )
          break;
       }
    }
-   if (marker == NULL) {
-      NLUA_ERROR( L, _("Mission does not have a marker with id '%d'"), id );
-      return 0;
-   }
+   if (marker == NULL)
+      return NLUA_ERROR( L, _("Mission does not have a marker with id '%d'"), id );
 
    /* Update system. */
    if (issys)
@@ -567,7 +563,7 @@ static int misn_factions( lua_State *L )
  */
 static int misn_accept( lua_State *L )
 {
-   Mission *new_misn, *cur_mission, **misnptr;
+   Mission *new_misn, *cur_mission;
    int ret = 0;
 
    if (player_missions == NULL)
@@ -591,8 +587,9 @@ static int misn_accept( lua_State *L )
 
    /* no missions left */
    if (cur_mission->accepted)
-      NLUA_ERROR(L, _("Mission already accepted!"));
+      return NLUA_ERROR(L, _("Mission already accepted!"));
    else { /* copy it over */
+      Mission **misnptr;
       *new_misn = *cur_mission;
       memset( cur_mission, 0, sizeof(Mission) );
       cur_mission->env = LUA_NOREF;
@@ -839,7 +836,7 @@ static int misn_osdActive( lua_State *L )
  */
 static int misn_osdGetActiveItem( lua_State *L )
 {
-   Mission *cur_mission = misn_getFromLua(L);
+   const Mission *cur_mission = misn_getFromLua(L);
    char **items = osd_getItems(cur_mission->osd);
    int active   = osd_getActive(cur_mission->osd);
 
@@ -862,7 +859,7 @@ static int misn_osdGetActiveItem( lua_State *L )
  */
 static int misn_osdGet( lua_State *L )
 {
-   Mission *cur_mission = misn_getFromLua(L);
+   const Mission *cur_mission = misn_getFromLua(L);
    char **items;
 
    if (cur_mission->osd == 0)
@@ -941,14 +938,14 @@ static int misn_npcAdd( lua_State *L )
 static int misn_npcRm( lua_State *L )
 {
    unsigned int id = luaL_checklong(L, 1);
-   Mission *cur_mission = misn_getFromLua(L);
+   const Mission *cur_mission = misn_getFromLua(L);
    int ret = npc_rm_mission( id, cur_mission->id );
 
    /* Regenerate bar. */
    bar_regen();
 
    if (ret != 0)
-      NLUA_ERROR(L, _("Invalid NPC ID!"));
+      return NLUA_ERROR(L, _("Invalid NPC ID!"));
    return 0;
 }
 
@@ -982,10 +979,8 @@ static int misn_claim( lua_State *L )
    inclusive = lua_toboolean(L,2);
 
    /* Check to see if already claimed. */
-   if (!claim_isNull(cur_mission->claims)) {
-      NLUA_ERROR(L, _("Mission trying to claim but already has."));
-      return 0;
-   }
+   if (!claim_isNull(cur_mission->claims))
+      return NLUA_ERROR(L, _("Mission trying to claim but already has."));
 
    /* Create the claim. */
    claim = claim_create( !inclusive );
@@ -1006,7 +1001,7 @@ static int misn_claim( lua_State *L )
    else if (lua_isstring(L, 1))
       claim_addStr( claim, lua_tostring( L, 1 ) );
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Test claim. */
    if (claim_test( claim )) {
@@ -1079,4 +1074,18 @@ void misn_pushMissionData( lua_State *L, const MissionData *md )
       lua_rawset( L, -3 );
    }
    lua_setfield(L,-2,"tags");
+}
+
+/**
+ * @brief Refreshes the mission computer offerings.
+ *
+ * Do not use from a mission 'create' function.
+ *
+ * @luafunc computerRefresh
+ */
+static int misn_computerRefresh( lua_State *L )
+{
+   (void) L;
+   misn_regen();
+   return 0;
 }

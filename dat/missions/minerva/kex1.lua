@@ -72,7 +72,7 @@ function approach_kex ()
 
    if mem.misn_state==2 then
       local maikki = minerva.vn_maikkiP{
-            shader = love_shaders.color{ color={0,0,0,1} },
+            shader = love_shaders.colour{ colour={0,0,0,1} },
             pos = "right" }
 
       vn.na(_("You tell Kex about your encounter with the transports and how you weren't able to find the supposed cargo."))

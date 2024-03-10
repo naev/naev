@@ -3,7 +3,7 @@
  <lua>ships/lua/thurion.lua</lua>
  <points>200</points>
  <base_type>Certitude</base_type>
- <GFX size="120" sx="12" sy="12">certitude</GFX>
+ <gfx size="120" sx="12" sy="12">certitude</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Battleship</class>
@@ -45,12 +45,8 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <structure size="large" prop="engines">Unicorp Eagle 7000 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
-  <structure size="large" />
-  <structure size="large" />
+  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

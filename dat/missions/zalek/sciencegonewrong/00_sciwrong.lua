@@ -70,6 +70,7 @@ function accept()
    vn.clear()
    vn.scene()
    local geller = vn.newCharacter( sciwrong.vn_geller() )
+   vn.transition()
 
    -- Mission details:
    geller(_([["Oh, hello! You look like you're a pilot; is that right? I've got a job for you. Allow me to introduce myself; my name is Dr. Geller, and I am on the brink of revolutionizing science! I've basically already done it; there's just some minor fiddling to do. Would you like to help me out? I just need you to find some samples that I can study."]]))
@@ -122,6 +123,7 @@ function first_trd()
    vn.clear()
    vn.scene()
    local trader = vn.newCharacter( trader1.name, {image=trader1.image} )
+   vn.transition()
 
    if mem.talked then
       trader(_([["What are you still doing here? No phosphine, no trade."]]))
@@ -152,6 +154,7 @@ function second_trd()
    vn.clear()
    vn.scene()
    local trader = vn.newCharacter( trader2.name, {image=trader2.image} )
+   vn.transition()
 
    trader(fmt.f(_([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be {credits}. But if you get caught by the authorities, you're on your own. Far as I'm concerned, I never saw you. Deal?"]]), {credits=fmt.credits(pho_mny)}))
    vn.menu{
@@ -201,6 +204,7 @@ function third_trd()
    vn.clear()
    vn.scene()
    local trader = vn.newCharacter( trader1.name, {image=trader1.image} )
+   vn.transition()
    trader(_([["Ah, yes indeed," he says as he inspects a sample in front of him. "That will do. And here, as promised: a piece of a ghost ship from the Nebula. 100% authentic! At least, according to my supplier."]]))
    vn.run()
 
@@ -225,6 +229,7 @@ function fnl_ld ()
       vn.clear()
       vn.scene()
       local geller = vn.newCharacter( sciwrong.vn_geller() )
+      vn.transition()
       geller(_([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face lights up. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]))
       geller(_([[As he turns away, you audibly clear your throat, prompting him to turn back to you. "Oh, yes, of course you want some payment for your service. My apologies for forgetting." He hands you a credit chip with your payment. "I might need your services again in the future, so do stay in touch!"]]))
       vn.sfxVictory()
@@ -250,6 +255,7 @@ function call_the_police ()
    vn.reset()
    vn.scene()
    local p = ccomm.newCharacter( vn, adm1 )
+   vn.transition()
    p(_([["We have reason to believe you are carrying controlled substances without a proper license. Please stop your ship and prepare to be boarded."]]))
    p(_([["Stand down for inspection."]]))
    vn.run()
@@ -319,6 +325,7 @@ function fine_vanish ()
    elseif lance2:exists() then
       p = ccomm.newCharacter( vn, lance2 )
    end
+   vn.transition()
 
    local fine = 100e3
    p(_([["You are accused of violating regulations on the transport of toxic materials. Your ship will be searched now. If there are no contraband substances, we will be out of your hair in just a moment."]]))

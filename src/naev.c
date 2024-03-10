@@ -58,7 +58,6 @@
 #include "nebula.h"
 #include "news.h"
 #include "nfile.h"
-#include "nlua_misn.h"
 #include "nlua_var.h"
 #include "nlua_tex.h"
 #include "nlua_colour.h"
@@ -68,14 +67,12 @@
 #include "nlua_vec2.h"
 #include "nlua_file.h"
 #include "nlua_data.h"
+#include "ntracing.h"
 #include "npc.h"
-#include "nstring.h"
-#include "nxml.h"
 #include "opengl.h"
 #include "options.h"
 #include "outfit.h"
 #include "pause.h"
-#include "physics.h"
 #include "pilot.h"
 #include "player.h"
 #include "plugin.h"
@@ -99,7 +96,7 @@
 
 static int quit               = 0; /**< For primary loop */
 Uint32 SDL_LOOPDONE           = 0; /**< For custom event to exit loops. */
-static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
+static Uint64  last_t         = 0; /**< used to calculate FPS and movement. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
@@ -115,14 +112,13 @@ static double fps       = 0.; /**< FPS to finally display. */
 static double fps_cur   = 0.; /**< FPS accumulator to trigger change. */
 static double fps_x     =  15.; /**< FPS X position. */
 static double fps_y     = -15.; /**< FPS Y position. */
-const double fps_min    = 1./25.; /**< Minimum fps to run at. 1/25 seems to
-                                       be acceptable value for fast ships. 1/15
-                                       can cause issues with hyenas and such. */
+const double fps_min    = 1./10.; /**< New collisions allow larger fps_min. */
 double elapsed_time_mod = 0.; /**< Elapsed modified time. */
 
 static nlua_env load_env = LUA_NOREF; /**< Environment for displaying load messages and stuff. */
 static int load_force_render = 0;
 static unsigned int load_last_render = 0;
+static SDL_mutex *load_mutex;
 
 /*
  * prototypes
@@ -311,7 +307,7 @@ int main( int argc, char** argv )
    /* Display the load screen. */
    loadscreen_load();
    loadscreen_update( 0., _("Initializing subsystems…") );
-   time_ms = SDL_GetTicks();
+   last_t = SDL_GetPerformanceCounter();
 
    /*
     * Input
@@ -375,11 +371,12 @@ int main( int argc, char** argv )
    menu_main();
 
    if (conf.devmode)
-      LOG( _( "Reached main menu in %.3f s" ), (SDL_GetTicks()-starttime)/1000. );
+      LOG( _( "Reached main menu in %.3f s" ), (double)(SDL_GetTicks()-starttime)/1000. );
    else
       LOG( _( "Reached main menu" ) );
+   NTracingMessageL( _( "Reached main menu" ) );
 
-   fps_init(); /* initializes the time_ms */
+   fps_init(); /* initializes the last_t */
 
    /*
     * main loop
@@ -521,6 +518,8 @@ void loadscreen_load (void)
 {
    int r;
 
+   load_mutex = SDL_CreateMutex();
+
    load_env = nlua_newEnv();
    r  = nlua_loadStandard( load_env );
    r |= nlua_loadNaev( load_env );
@@ -548,17 +547,26 @@ void loadscreen_load (void)
 }
 
 /**
- * @brief Renders the loadscreen if necessary.
+ * @brief Whether or not we want to render the loadscreen.
  */
-void naev_renderLoadscreen (void)
+int naev_shouldRenderLoadscreen (void)
 {
-   SDL_Event event;
    unsigned int t = SDL_GetTicks();
-
+   int ret;
+   SDL_mutexP( load_mutex );
    /* Only render if forced or try for low 10 FPS. */
    if (!load_force_render && (t-load_last_render) < 100 )
-      return;
-   load_last_render = t;
+      ret = 0;
+   else
+      ret = 1;
+   SDL_mutexV( load_mutex );
+   return ret;
+}
+
+void naev_doRenderLoadscreen (void)
+{
+   SDL_mutexP( load_mutex );
+   load_last_render = SDL_GetTicks();
 
    /* Clear background. */
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -570,15 +578,22 @@ void naev_renderLoadscreen (void)
       lua_pop(naevL,1);
    }
 
-   /* Get rid of events again. */
-   while (SDL_PollEvent(&event));
-
    /* Flip buffers. HACK: Also try to catch a late-breaking resize from the WM (...or a crazy user?). */
    SDL_GL_SwapWindow( gl_screen.window );
    naev_resize();
 
    /* Clear forcing. */
    load_force_render = 0;
+   SDL_mutexV( load_mutex );
+}
+
+/**
+ * @brief Renders the loadscreen if necessary.
+ */
+void naev_renderLoadscreen (void)
+{
+   if (naev_shouldRenderLoadscreen())
+      naev_doRenderLoadscreen();
 }
 
 /**
@@ -609,6 +624,7 @@ void loadscreen_update( double done, const char *msg )
 static void loadscreen_unload (void)
 {
    nlua_freeEnv( load_env );
+   SDL_DestroyMutex( load_mutex );
 }
 
 /**
@@ -617,6 +633,8 @@ static void loadscreen_unload (void)
 #define LOADING_STAGES     17. /**< Amount of loading stages. */
 void load_all (void)
 {
+   NTracingFrameMarkStart( "load_all" );
+
    int stage = 0;
    /* We can do fast stuff here. */
    sp_load();
@@ -684,6 +702,8 @@ void load_all (void)
    weapon_init();
    player_init(); /* Initialize player stuff. */
    loadscreen_update( 1., _("Loading Completed!") );
+
+   NTracingFrameMarkEnd( "load_all" );
 }
 /**
  * @brief Unloads all data, simplifies main().
@@ -723,6 +743,8 @@ void unload_all (void)
  */
 void main_loop( int nested )
 {
+   NTracingZone( _ctx, 1 );
+
    /*
     * Control FPS.
     */
@@ -735,8 +757,6 @@ void main_loop( int nested )
    sound_update( real_dt ); /* Update sounds. */
    toolkit_update(); /* to simulate key repetition and get rid of windows */
    if (!paused) {
-      /* Important that we pass real_dt here otherwise we get a dt feedback loop which isn't pretty. */
-      player_updateAutonav( real_dt );
       update_all( !nested ); /* update game */
    }
    else if (!nested) {
@@ -761,7 +781,11 @@ void main_loop( int nested )
       render_all( game_dt, real_dt );
       /* Draw buffer. */
       SDL_GL_SwapWindow( gl_screen.window );
+
+      NTracingFrameMark;
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -784,8 +808,10 @@ void naev_resize (void)
    gl_resize();
 
    /* Regenerate the background space dust. */
-   if (cur_system != NULL)
+   if (cur_system != NULL) {
       background_initDust( cur_system->spacedust );
+      background_load( cur_system->background );
+   }
    else
       background_initDust( 1000. ); /* from loadscreen_load */
 
@@ -797,12 +823,16 @@ void naev_resize (void)
 
    /* Resets dimensions in other components which care. */
    ovr_refresh();
-   toolkit_reposition();
+   toolkit_resize();
    menu_main_resize();
    nebu_resize();
+   ships_resize();
 
    /* Lua stuff. */
    nlua_resize();
+
+   /* Have to rerender the toolkit too. */
+   toolkit_rerender();
 
    /* Finally do a render pass to avoid half-rendered stuff. */
    render_all( 0., 0. );
@@ -820,26 +850,12 @@ void naev_toggleFullscreen (void)
    opt_setVideoMode( conf.width, conf.height, !conf.fullscreen, 0 );
 }
 
-#if HAS_POSIX && defined(CLOCK_MONOTONIC)
-static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
-static int use_posix_time; /**< Whether or not to use POSIX time. */
-#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 /**
  * @brief Initializes the fps engine.
  */
 static void fps_init (void)
 {
-#if HAS_POSIX && defined(CLOCK_MONOTONIC)
-   use_posix_time = 1;
-   /* We must use clock_gettime here instead of gettimeofday mainly because this
-    * way we are not influenced by changes to the time source like say ntp which
-    * could skew up the dt calculations. */
-   if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
-      return;
-   WARN( _("clock_gettime failed, disabling POSIX time.") );
-   use_posix_time = 0;
-#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
-   time_ms  = SDL_GetTicks();
+   last_t = SDL_GetPerformanceCounter();
 }
 /**
  * @brief Gets the elapsed time.
@@ -848,28 +864,9 @@ static void fps_init (void)
  */
 static double fps_elapsed (void)
 {
-   double dt;
-   unsigned int t;
-
-#if HAS_POSIX && defined(CLOCK_MONOTONIC)
-   struct timespec ts;
-
-   if (use_posix_time) {
-      if (clock_gettime(CLOCK_MONOTONIC, &ts)==0) {
-         dt  = ts.tv_sec - global_time.tv_sec;
-         dt += (ts.tv_nsec - global_time.tv_nsec) / 1e9;
-         global_time = ts;
-         return dt;
-      }
-      WARN( _("clock_gettime failed!") );
-   }
-#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
-
-   t        = SDL_GetTicks();
-   dt       = (double)(t - time_ms); /* Get the elapsed ms. */
-   dt      /= 1000.; /* Convert to seconds. */
-   time_ms  = t;
-
+   Uint64 t = SDL_GetPerformanceCounter();
+   double dt= (double)(t - last_t) / (double)SDL_GetPerformanceFrequency();
+   last_t   = t;
    return dt;
 }
 
@@ -878,7 +875,7 @@ static double fps_elapsed (void)
  */
 static void fps_control (void)
 {
-#if HAS_POSIX
+#if !SDL_VERSION_ATLEAST( 3, 0, 0 ) && HAS_POSIX
    struct timespec ts;
 #endif /* HAS_POSIX */
 
@@ -891,12 +888,14 @@ static void fps_control (void)
       const double fps_max = 1./(double)conf.fps_max;
       if (real_dt < fps_max) {
          double delay = fps_max - real_dt;
-#if HAS_POSIX
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+         SDL_DelayNS( delay * 1e9 );
+#elif HAS_POSIX
          ts.tv_sec  = floor( delay );
          ts.tv_nsec = fmod( delay, 1. ) * 1e9;
          nanosleep( &ts, NULL );
 #else /* HAS_POSIX */
-         SDL_Delay( (unsigned int)(delay * 1000) );
+         SDL_Delay( (unsigned int)(delay * 1000.) );
 #endif /* HAS_POSIX */
          fps_dt  += delay; /* makes sure it displays the proper fps */
       }
@@ -968,8 +967,11 @@ double fps_current (void)
  */
 static void update_all( int dohooks )
 {
+   NTracingZone( _ctx, 1 );
+
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       fps_skipped = 1;
+      NTracingZoneEnd( _ctx );
       return;
    }
    else if (game_dt > fps_min) { /* We'll force a minimum FPS for physics to work alright. */
@@ -1002,6 +1004,8 @@ static void update_all( int dohooks )
       update_routine( game_dt, dohooks );
 
    fps_skipped = 0;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1012,6 +1016,10 @@ static void update_all( int dohooks )
  */
 void update_routine( double dt, int dohooks )
 {
+   NTracingZone( _ctx, 1 );
+
+   double real_update = dt / dt_mod;
+
    if (dohooks) {
       hook_exclusionStart();
 
@@ -1024,32 +1032,41 @@ void update_routine( double dt, int dohooks )
    weapons_updatePurge();
 
    /* Core stuff independent of collisions. */
-   space_update( dt, real_dt );
-   spfx_update( dt, real_dt );
+   space_update( dt, real_update );
+   spfx_update( dt, real_update );
 
-   /* First compute weapon collisions. */
-   weapons_updateCollide( dt );
-   pilots_update( dt );
-   weapons_update( dt ); /* Has weapons think and update positions. */
+   if (dt > 0.) {
+      /* First compute weapon collisions. */
+      weapons_updateCollide( dt );
+      pilots_update( dt );
+      weapons_update( dt ); /* Has weapons think and update positions. */
 
-   /* Update camera. */
-   cam_update( dt );
+      /* Update camera. */
+      cam_update( dt );
+   }
 
-   /* Update the elapsed time, should be with all the modifications and such. */
-   elapsed_time_mod += dt;
+   /* Player autonav. */
+   player_updateAutonav( real_update );
 
    if (dohooks) {
+      NTracingZoneName( _ctx_hook, "hooks[update]", 1 );
       HookParam h[3];
       hook_exclusionEnd( dt );
       /* Hook set up. */
       h[0].type = HOOK_PARAM_NUMBER;
       h[0].u.num = dt;
       h[1].type = HOOK_PARAM_NUMBER;
-      h[1].u.num = real_dt;
+      h[1].u.num = real_update;
       h[2].type = HOOK_PARAM_SENTINEL;
       /* Run the update hook. */
       hooks_runParam( "update", h );
+      NTracingZoneEnd( _ctx_hook );
    }
+
+   /* Update the elapsed time, should be with all the modifications and such. */
+   elapsed_time_mod += dt;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1126,6 +1143,9 @@ static void print_SDLversion (void)
    DEBUG( _("SDL: %d.%d.%d [compiled: %d.%d.%d]"),
          linked->major, linked->minor, linked->patch,
          compiled.major, compiled.minor, compiled.patch);
+#ifndef DEBUGGING /* Shuts up cppcheck. */
+   (void) compiled.patch;
+#endif /* DEBUGGING */
 
    /* Get version as number. */
    version_linked    = linked->major*100 + linked->minor;

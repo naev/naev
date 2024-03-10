@@ -3,7 +3,7 @@
  <lua>ships/lua/dvaered.lua</lua>
  <points>60</points>
  <base_type>Phalanx</base_type>
- <GFX size="95" sx="10" sy="10">phalanx_dvaered</GFX>
+ <gfx size="95" sx="10" sy="10">phalanx_dvaered</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Corvette</class>
@@ -39,8 +39,9 @@
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
+  <utility size="small" />
   <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
@@ -49,7 +50,7 @@
  <stats>
   <cpu_mod>-15</cpu_mod>
   <speed_mod>5</speed_mod>
-  <thrust_mod>-20</thrust_mod>
+  <accel_mod>-20</accel_mod>
   <turn_mod>-20</turn_mod>
   <armour_mod>15</armour_mod>
   <energy_regen_mod>-15</energy_regen_mod>

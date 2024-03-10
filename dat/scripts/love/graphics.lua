@@ -252,9 +252,10 @@ end
 function graphics.SpriteBatch.clear( _self )
    love._unimplemented()
 end
-function graphics.SpriteBatch.setColor( _self )
+function graphics.SpriteBatch.setColour( _self )
    love._unimplemented()
 end
+graphics.SpriteBatch.setColor =  graphics.SpriteBatch.setColour -- love2d actually uses US spelling
 function graphics.SpriteBatch.add( _self, ... )
    local _arg = {...}
    love._unimplemented()
@@ -270,14 +271,18 @@ end
 function graphics.getDimensions() return love.w, love.h end
 function graphics.getWidth()  return love.w end
 function graphics.getHeight() return love.h end
-function graphics.getBackgroundColor() return _gcol( graphics._bgcol ) end
-function graphics.setBackgroundColor( red, green, blue, alpha )
+function graphics.getBackgroundColour() return _gcol( graphics._bgcol ) end
+function graphics.setBackgroundColour( red, green, blue, alpha )
    graphics._bgcol = _scol( red, green, blue, alpha )
 end
-function graphics.getColor() return _gcol( graphics._fgcol ) end
-function graphics.setColor( red, green, blue, alpha )
+function graphics.getColour() return _gcol( graphics._fgcol ) end
+function graphics.setColour( red, green, blue, alpha )
    graphics._fgcol = _scol( red, green, blue, alpha )
 end
+graphics.setColor = graphics.setColour -- love2d actually uses US spelling
+graphics.getColor = graphics.getColour
+graphics.getBackgroundColor = graphics.getBackgroundColour
+graphics.setBackgroundColor = graphics.setBackgroundColour
 function graphics.setDefaultFilter( min, mag, anisotropy )
    graphics._minfilter = min
    graphics._magfilter = mag or min
@@ -325,7 +330,7 @@ function graphics.clear( ... )
    if graphics._canvas then
       graphics._canvas.canvas:clear( col )
    else
-      -- Minor optimization: just render when there is non-transparent color
+      -- Minor optimization: just render when there is non-transparent colour
       if col:alpha()>0 then
          naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
       end
@@ -511,10 +516,10 @@ end
 --]]
 -- Set some sane defaults.
 local _pixelcode = [[
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec4 texcolor = texture(tex, texture_coords );
-   return texcolor * color;
+   vec4 texcolour = texture(tex, texture_coords );
+   return texcolour * colour;
 }
 ]]
 local _vertexcode = [[
@@ -530,14 +535,15 @@ function graphics.newShader( pixelcode, vertexcode )
    vertexcode = vertexcode or _vertexcode
 
    local prepend = [[
-#version 140
+#version 150
 #define _LOVE
 // Syntax sugar
 #define Image           sampler2D
 #define ArrayImage      sampler2DArray
 #define VolumeImage     sampler3D
 #define Texel           texture
-#define love_PixelColor color_out
+#define love_PixelColor colour_out
+#define love_PixelColour colour_out
 #define love_Position   gl_Position
 #define love_PixelCoord love_getPixelCoord()
 
@@ -547,7 +553,7 @@ uniform mat4 ClipSpaceFromView;
 uniform mat4 ClipSpaceFromLocal;
 uniform mat3 ViewNormalFromLocal;
 uniform vec4 love_ScreenSize;
-uniform vec4 ConstantColor = vec4(1.0);
+uniform vec4 ConstantColour = vec4(1.0);
 
 // Compatibility
 #define TransformMatrix             ViewSpaceFromLocal
@@ -560,9 +566,9 @@ uniform vec4 ConstantColor = vec4(1.0);
 uniform sampler2D MainTex;
 
 in vec4 VaryingTexCoord;
-in vec4 VaryingColor;
+in vec4 VaryingColour;
 in vec2 VaryingPosition;
-out vec4 color_out;
+out vec4 colour_out;
 
 vec2 love_getPixelCoord() {
    vec2 uv = love_ScreenSize.xy * (0.5*VaryingPosition+0.5);
@@ -570,20 +576,20 @@ vec2 love_getPixelCoord() {
    return uv;
 }
 
-vec4 effect( vec4 vcolor, Image tex, vec2 texcoord, vec2 pixcoord );
+vec4 effect( vec4 vcolour, Image tex, vec2 texcoord, vec2 pixcoord );
 
 void main(void) {
-   love_PixelColor = effect( VaryingColor, MainTex, VaryingTexCoord.st, love_PixelCoord );
+   love_PixelColour = effect( VaryingColour, MainTex, VaryingTexCoord.st, love_PixelCoord );
 }
 ]]
    local vert = [[
 #define VERTEX
 in vec4 VertexPosition;
 in vec4 VertexTexCoord;
-in vec4 VertexColor;
+in vec4 VertexColour;
 
 out vec4 VaryingTexCoord;
-out vec4 VaryingColor;
+out vec4 VaryingColour;
 out vec2 VaryingPosition;
 
 vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
@@ -592,7 +598,7 @@ void main(void) {
     VaryingTexCoord  = VertexTexCoord;
     VaryingTexCoord.y= 1.0 - VaryingTexCoord.y;
     VaryingTexCoord  = ViewSpaceFromLocal * VaryingTexCoord;
-    VaryingColor     = ConstantColor;
+    VaryingColour     = ConstantColour;
     love_Position    = position( ClipSpaceFromLocal, VertexPosition );
     VaryingPosition  = love_Position.xy;
 }
@@ -626,7 +632,7 @@ function graphics.Shader:send( name, ... )
       self.shader:send( name, ... )
    end
 end
-function graphics.Shader:sendColor( name, col )
+function graphics.Shader:sendColour( name, col )
    -- Convert to naev colour so it does gamma conversion and return
    local c = naev.colour.new( table.unpack(col) )
    local t = { c:rgb() }
@@ -695,6 +701,7 @@ function graphics.Canvas:getDPIScale() return 1/self.s end
 --]]
 function graphics.isGammaCorrect() return true end
 function graphics.isActive() return true end
+function graphics.present() return end -- NOOP
 function graphics.getDPIScale()
    local _w, _h, scale = naev.gfx.dim()
    return 1/scale

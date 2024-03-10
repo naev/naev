@@ -52,7 +52,7 @@ function hail ()
    end
 
    pirlib.hail()
-   mem.refuel_msg = fmt.f(_([["The pack has got your back! I'll give you fuel for {credits} a jump!"]]), {credits=fmt.credits(mem.refuel)})
+   mem.refuel_msg = fmt.f(_([["Bummer, soul. I can hook you up with some fuel for {credits} a jump!"]]), {credits=fmt.credits(mem.refuel)})
 end
 
 function taunt( target, offense )

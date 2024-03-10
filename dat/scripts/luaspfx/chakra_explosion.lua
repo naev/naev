@@ -53,8 +53,7 @@ local function exp( pos, vel, radius, params )
       local exp_shader_frag = lf.read( "glsl/chakra_exp.frag" )
       exp_shader = lg.newShader( exp_shader_frag )
       exp_sfx = {
-         -- TODO sound
-         audio.new( "snd/sounds/empexplode.ogg" ),
+         audio.new( "snd/sounds/chakra_explosion.ogg" ),
       }
    end
 

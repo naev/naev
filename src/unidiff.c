@@ -24,7 +24,6 @@
 #include "log.h"
 #include "map_overlay.h"
 #include "ndata.h"
-#include "nstring.h"
 #include "nxml.h"
 #include "safelanes.h"
 #include "space.h"
@@ -98,6 +97,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SPOB_BAR_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_SERVICE_ADD,
    HUNK_TYPE_SPOB_SERVICE_REMOVE,
+   HUNK_TYPE_SPOB_NOMISNSPAWN_ADD,
+   HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE,
    HUNK_TYPE_SPOB_TECH_ADD,
    HUNK_TYPE_SPOB_TECH_REMOVE,
    HUNK_TYPE_SPOB_TAG_ADD,
@@ -156,6 +157,8 @@ static UniDiff_t *diff_stack = NULL; /**< Currently applied universe diffs. */
 /* Useful variables. */
 static int diff_universe_changed = 0; /**< Whether or not the universe changed. */
 static int diff_universe_defer = 0; /**< Defers changes to later. */
+static const char *diff_nav_spob = NULL; /**< Stores the player's spob target if necessary. */
+static const char *diff_nav_hyperspace = NULL; /**< Stores the player's hyperspace target if necessary. */
 
 /*
  * Prototypes.
@@ -168,8 +171,8 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node );
 static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node );
 static int diff_patch( xmlNodePtr parent );
 static int diff_patchHunk( UniHunk_t *hunk );
-static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk );
-static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk );
+static void diff_hunkFailed( UniDiff_t *diff, const UniHunk_t *hunk );
+static void diff_hunkSuccess( UniDiff_t *diff, const UniHunk_t *hunk );
 static void diff_cleanup( UniDiff_t *diff );
 static void diff_cleanupHunk( UniHunk_t *hunk );
 /* Misc. */
@@ -196,7 +199,9 @@ static int diff_cmp( const void *p1, const void *p2 )
  */
 int diff_loadAvailable (void)
 {
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
    char **diff_files = ndata_listRecursive( UNIDIFF_DATA_PATH );
    diff_available    = array_create_size( UniDiffData_t, array_size( diff_files ) );
    for (int i=0; i<array_size(diff_files); i++ ) {
@@ -231,17 +236,18 @@ int diff_loadAvailable (void)
    qsort( diff_available, array_size(diff_available), sizeof(UniDiffData_t), diff_cmp );
    for (int i=0; i<array_size(diff_available)-1; i++) {
       UniDiffData_t *d = &diff_available[i];
-      UniDiffData_t *dn = &diff_available[i+1];
+      const UniDiffData_t *dn = &diff_available[i+1];
       if (strcmp( d->name, dn->name )==0)
          WARN(_("Two unidiff have the same name '%s'!"), d->name );
    }
 
+#if DEBUGGING
    if (conf.devmode) {
-      time = SDL_GetTicks() - time;
-      DEBUG( n_("Loaded %d UniDiff in %.3f s", "Loaded %d UniDiffs in %.3f s", array_size(diff_available) ), array_size(diff_available), time/1000. );
+      DEBUG( n_("Loaded %d UniDiff in %.3f s", "Loaded %d UniDiffs in %.3f s", array_size(diff_available) ), array_size(diff_available), (SDL_GetTicks()-time)/1000. );
    }
    else
       DEBUG( n_("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -281,6 +287,14 @@ static UniDiff_t* diff_get( const char *name )
  */
 int diff_apply( const char *name )
 {
+   diff_nav_hyperspace = NULL;
+   diff_nav_spob = NULL;
+   if (player.p) {
+      if (player.p->nav_hyperspace >= 0)
+         diff_nav_hyperspace = cur_system->jumps[ player.p->nav_hyperspace ].target->name;
+      if (player.p->nav_spob >= 0)
+         diff_nav_spob = cur_system->spobs[ player.p->nav_spob ]->name;
+   }
    return diff_applyInternal( name, 1 );
 }
 
@@ -665,6 +679,30 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+      else if (xml_isNode(cur,"nomissionspawn_add")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SPOB_NOMISNSPAWN_ADD;
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"nomissionspawn_remove")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE;
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
       else if (xml_isNode(cur,"tech_add")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
@@ -1020,21 +1058,27 @@ static int diff_patch( xmlNodePtr parent )
                WARN(_("   [%s] spob service remove: '%s'"), target,
                      spob_getServiceName(fail->u.data) );
                break;
+            case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
+               WARN(_("   [%s] spob nomissionspawn add"), target );
+               break;
+            case HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE:
+               WARN(_("   [%s] spob nomissionspawn remove"), target );
+               break;
             case HUNK_TYPE_SPOB_TECH_ADD:
                WARN(_("   [%s] spob tech add: '%s'"), target,
-                     spob_getServiceName(fail->u.data) );
+                     fail->u.name );
                break;
             case HUNK_TYPE_SPOB_TECH_REMOVE:
                WARN(_("   [%s] spob tech remove: '%s'"), target,
-                     spob_getServiceName(fail->u.data) );
+                     fail->u.name );
                break;
             case HUNK_TYPE_SPOB_TAG_ADD:
                WARN(_("   [%s] spob tech add: '%s'"), target,
-                     spob_getServiceName(fail->u.data) );
+                     fail->u.name );
                break;
             case HUNK_TYPE_SPOB_TAG_REMOVE:
                WARN(_("   [%s] spob tech remove: '%s'"), target,
-                     spob_getServiceName(fail->u.data) );
+                     fail->u.name );
                break;
             case HUNK_TYPE_FACTION_VISIBLE:
                WARN(_("   [%s] faction visible: '%s'"), target,
@@ -1245,6 +1289,24 @@ static int diff_patchHunk( UniHunk_t *hunk )
          diff_universe_changed = 1;
          return 0;
 
+      /* Modifying mission spawn. */
+      case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         if (spob_isFlag( p, SPOB_NOMISNSPAWN ))
+            return -1;
+         spob_setFlag( p, SPOB_NOMISNSPAWN );
+         return 0;
+      case HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         if (!spob_isFlag( p, SPOB_NOMISNSPAWN ))
+            return -1;
+         spob_rmFlag( p, SPOB_NOMISNSPAWN );
+         return 0;
+
       /* Modifying tech stuff. */
       case HUNK_TYPE_SPOB_TECH_ADD:
          p = spob_get( hunk->target.u.name );
@@ -1425,7 +1487,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
  *    @param diff Diff to add hunk to.
  *    @param hunk Hunk that failed to apply.
  */
-static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk )
+static void diff_hunkFailed( UniDiff_t *diff, const UniHunk_t *hunk )
 {
    if (diff == NULL)
       return;
@@ -1440,7 +1502,7 @@ static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk )
  *    @param diff Diff to add hunk to.
  *    @param hunk Hunk that applied correctly.
  */
-static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk )
+static void diff_hunkSuccess( UniDiff_t *diff, const UniHunk_t *hunk )
 {
    if (diff == NULL)
       return;
@@ -1579,6 +1641,13 @@ static int diff_removeDiff( UniDiff_t *diff )
             break;
          case HUNK_TYPE_SPOB_SERVICE_REMOVE:
             hunk.type = HUNK_TYPE_SPOB_SERVICE_ADD;
+            break;
+
+         case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
+            hunk.type = HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE;
+            break;
+         case HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE:
+            hunk.type = HUNK_TYPE_SPOB_NOMISNSPAWN_ADD;
             break;
 
          case HUNK_TYPE_SPOB_TECH_ADD:
@@ -1745,6 +1814,8 @@ int diff_load( xmlNodePtr parent )
    /* Don't update universe here. */
    diff_universe_defer = 1;
    diff_universe_changed = 0;
+   diff_nav_spob = NULL;
+   diff_nav_hyperspace = NULL;
    diff_clear();
    diff_universe_defer = defer;
 
@@ -1754,7 +1825,7 @@ int diff_load( xmlNodePtr parent )
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if ( xml_isNode( cur, "diff" ) ) {
-               char *diffName = xml_get( cur );
+               const char *diffName = xml_get( cur );
                if ( diffName == NULL ) {
                   WARN( _( "Expected node \"diff\" to contain the name of a unidiff. Was empty." ) );
                   continue;
@@ -1781,6 +1852,7 @@ static int diff_checkUpdateUniverse (void)
    if (!diff_universe_changed || diff_universe_defer)
       return 0;
 
+   /* Update presences, then safelanes. */
    space_reconstructPresences();
    safelanes_recalculate();
 
@@ -1816,9 +1888,37 @@ static int diff_checkUpdateUniverse (void)
          pilot_hyperspaceAbort( p );
    }
 
-   /* Player has to update the GUI so we send again. */
-   player_targetSpobSet( -1 );
-   player_targetHyperspaceSet( -1, 0 );
+   /* Try to restore the targets if possible. */
+   if (diff_nav_spob != NULL) {
+      int found = 0;
+      for (int i=0; i<array_size(cur_system->spobs); i++) {
+         if (strcmp(cur_system->spobs[i]->name,diff_nav_spob)==0) {
+            found = 1;
+            player.p->nav_spob = i;
+            player_targetSpobSet( i );
+            break;
+         }
+      }
+      if (!found)
+         player_targetSpobSet( -1 );
+   }
+   else
+      player_targetSpobSet( -1 );
+   if (diff_nav_hyperspace != NULL) {
+      int found = 0;
+      for (int i=0; i<array_size(cur_system->jumps); i++) {
+         if (strcmp(cur_system->jumps[i].target->name,diff_nav_hyperspace)==0) {
+            found = 1;
+            player.p->nav_hyperspace = i;
+            player_targetHyperspaceSet( i, 0 );
+            break;
+         }
+      }
+      if (!found)
+         player_targetHyperspaceSet( -1, 0 );
+   }
+   else
+      player_targetHyperspaceSet( -1, 0 );
 
    diff_universe_changed = 0;
    return 1;

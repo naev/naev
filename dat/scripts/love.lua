@@ -15,8 +15,8 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 love = {
    _basepath = "",
    _version_major = 11,
-   _version_minor = 1,
-   _version_patch = 3,
+   _version_minor = 4,
+   _version_patch = 0,
    _codename = "naev",
    _default = {
       title = "LÖVE",
@@ -99,6 +99,10 @@ function love.origin()
    love.h = nh
    local lg = require "love.graphics"
    lg.origin()
+end
+-- Non-standard function to refresh the screen
+function love.refresh ()
+   tk.refresh()
 end
 
 
@@ -272,7 +276,7 @@ function love.exec( path )
    end
    love._focus = true
    love._started = true
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput, t.drawondemand )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
 

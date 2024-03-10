@@ -10,11 +10,13 @@
   <price>650000</price>
   <gfx_store>/gfx/misc/icons/feather.webp</gfx_store>
   <description>While most modern travel techniques rely on folding space to make long distance become short, the feather drive technique uses flow to unfold the ship instead. This not only allows a ship to nearly instantly travel short distances, hostile ships that are hit have their energy drain, and the residual psychic shockwaves additionally slow them down.</description>
+  <limit>feather_drive</limit>
  </general>
  <specific type="modification">
   <lua>outfits/flow/abilities/feather_drive.lua</lua>
  </specific>
  <tags>
   <tag>flow_ability</tag>
+  <tag>nosteal</tag>
  </tags>
 </outfit>

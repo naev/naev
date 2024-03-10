@@ -3,7 +3,8 @@ require "ships.lua.sirius"
 
 function update( p, _dt )
    local f = flow.get( p, mem )
-   local mod = math.max( (f-25)*0.4, 0 )
+   -- Maximum at 108.3333 flow
+   local mod = math.min( 25, math.max( (f-25)*0.3, 0 ) )
    p:shippropSet{
       time_speedup = mod,
    }

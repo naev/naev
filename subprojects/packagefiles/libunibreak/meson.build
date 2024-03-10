@@ -1,4 +1,4 @@
-project('libunibreak', 'c', version: '5.0')
+project('libunibreak', 'c', version: '6.0')
 
 subdir('src')
 

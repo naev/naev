@@ -9,71 +9,36 @@ local scertitude     = ship.get("Thurion Certitude")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()
-   local pilots = {}
-   local r = rnd.rnd()
-
-   if r < 0.3 then
-      scom.addPilot( pilots, singenuity )
-   elseif r < 0.6 then
-      scom.addPilot( pilots, singenuity )
-      scom.addPilot( pilots, sperspicacity )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, svirtuosity )
-   else
-      scom.addPilot( pilots, sapprehension )
-   end
-
-   return pilots
+   return scom.doTable( {}, {
+      { w=0.3, singenuity },
+      { w=0.6, singenuity, sperspicacity },
+      { w=0.8, svirtuosity },
+      { sapprehension },
+   } )
 end
 
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
-   local pilots = {}
-   local r = rnd.rnd()
-
-   if r < 0.4 then
-      scom.addPilot( pilots, svirtuosity )
-      scom.addPilot( pilots, singenuity )
-      scom.addPilot( pilots, sperspicacity )
-   elseif r < 0.6 then
-      scom.addPilot( pilots, svirtuosity )
-      scom.addPilot( pilots, singenuity )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, staciturnity )
-      scom.addPilot( pilots, sperspicacity )
-      scom.addPilot( pilots, sperspicacity )
-   else
-      scom.addPilot( pilots, sapprehension )
-      scom.addPilot( pilots, sperspicacity )
-      scom.addPilot( pilots, sperspicacity )
-   end
-
-   return pilots
+   return scom.doTable( {}, {
+      { w=0.4, svirtuosity, singenuity, sperspicacity },
+      { w=0.6, svirtuosity, singenuity },
+      { w=0.8, staciturnity, sperspicacity, sperspicacity },
+      { sapprehension, sperspicacity, sperspicacity },
+   } )
 end
 
 -- @brief Spawns a capship with escorts.
 local function spawn_capship ()
    local pilots = {}
-
    -- Generate the capship
    scom.addPilot( pilots, scertitude )
 
    -- Generate the escorts
-   local r = rnd.rnd()
-   if r < 0.5 then
-      scom.addPilot( pilots, singenuity )
-      scom.addPilot( pilots, singenuity )
-      scom.addPilot( pilots, sperspicacity )
-      scom.addPilot( pilots, sperspicacity )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, svirtuosity )
-      scom.addPilot( pilots, singenuity )
-   else
-      scom.addPilot( pilots, sapprehension )
-      scom.addPilot( pilots, singenuity )
-   end
-
-   return pilots
+   return scom.doTable( pilots, {
+      { w=0.5, singenuity, singenuity, sperspicacity, sperspicacity },
+      { w=0.8, svirtuosity, singenuity },
+      { sapprehension, singenuity },
+   } )
 end
 
 local fthurion = faction.get("Thurion")

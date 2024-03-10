@@ -16,9 +16,7 @@
 #include "log.h"
 #include "difficulty.h"
 #include "nstring.h"
-#include "nxml.h"
 #include "outfit.h"
-#include "pause.h"
 #include "pilot.h"
 #include "player.h"
 #include "slots.h"
@@ -27,12 +25,15 @@
 #include "nlua_pilot.h"
 #include "nlua_pilotoutfit.h"
 #include "nlua_outfit.h"
+#include "ntracing.h"
+
+static int stealth_break = 0; /**< Whether or not to break stealth. */
 
 /*
  * Prototypes.
  */
-static int pilot_hasOutfitLimit( const Pilot *p, const char *limit );
 static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot );
+static const char *outfitkeytostr( OutfitKey key );
 
 /**
  * @brief Updates the lockons on the pilot's launchers
@@ -40,17 +41,17 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot );
  *    @param p Pilot being updated.
  *    @param o Slot being updated.
  *    @param t Pilot that is currently the target of p (or NULL if not applicable).
+ *    @param wt Pilot's target.
  *    @param a Angle to update if necessary. Should be initialized to -1 before the loop.
  *    @param dt Current delta tick.
  */
-void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt )
+void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt, double *a, double dt )
 {
-   double max, old;
-   double x,y, ang, arc;
+   double arc, max;
    int locked;
 
    /* No target. */
-   if (t == NULL)
+   if (wt->type==TARGET_NONE)
       return;
 
    /* Nota  seeker. */
@@ -63,21 +64,31 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
 
       /* We use an external variable to set and update the angle if necessary. */
       if (*a < 0.) {
-         x     = t->solid.pos.x - p->solid.pos.x;
-         y     = t->solid.pos.y - p->solid.pos.y;
+         double x, y, ang;
+         if (wt->type==TARGET_PILOT) {
+            x  = t->solid.pos.x - p->solid.pos.x;
+            y  = t->solid.pos.y - p->solid.pos.y;
+         }
+         else if (wt->type==TARGET_ASTEROID) {
+            const Asteroid *ast = &cur_system->asteroids[ wt->u.ast.anchor ].asteroids[ wt->u.ast.asteroid ];
+            x  = ast->sol.pos.x - p->solid.pos.x;
+            y  = ast->sol.pos.y - p->solid.pos.y;
+         }
+         else {
+            x = y = 0.;
+         }
          ang   = ANGLE( x, y );
          *a    = FABS( angle_diff( ang, p->solid.dir ) );
       }
 
       /* Decay if not in arc. */
       if (*a > arc) {
-         /* Limit decay to the lockon time for this launcher. */
-         max = o->outfit->u.lau.lockon;
-
          /* When a lock is lost, immediately gain half the lock timer.
           * This is meant as an incentive for the aggressor not to lose the lock,
           * and for the target to try and break the lock. */
-         old = o->u.ammo.lockon_timer;
+         double old = o->u.ammo.lockon_timer;
+         /* Limit decay to the lockon time for this launcher. */
+         max = o->outfit->u.lau.lockon;
          o->u.ammo.lockon_timer += dt;
          if ((old <= 0.) && (o->u.ammo.lockon_timer > 0.))
             o->u.ammo.lockon_timer += o->outfit->u.lau.lockon / 2.;
@@ -152,8 +163,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
    const ShipMount *m;
 
    /* Calculate the sprite angle. */
-   a  = (double)(p->tsy * p->ship->gfx_space->sx + p->tsx);
-   a *= p->ship->mangle;
+   a  = p->solid.dir;
 
    /* 2d rotation matrix
     * [ x' ]   [  cos  sin  ]   [ x ]
@@ -202,7 +212,7 @@ int pilot_dock( Pilot *p, Pilot *target )
 
    /* Must be close. */
    if (vec2_dist(&p->solid.pos, &target->solid.pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
+         target->ship->size * PILOT_SIZE_APPROX )
       return -1;
 
    /* Cannot be going much faster. */
@@ -219,7 +229,7 @@ int pilot_dock( Pilot *p, Pilot *target )
 
    /* Add the pilot's outfit. */
    if (pilot_addAmmo(target, target->outfits[i], 1) != 1)
-      return -1;
+      WARN(_("Unable to add ammo to '%s' from docking pilot '%s'!"),target->name,p->name);
 
    /* Remove from pilot's escort list. */
    for (i=0; i<array_size(target->escorts); i++) {
@@ -229,12 +239,9 @@ int pilot_dock( Pilot *p, Pilot *target )
    }
    /* Not found as pilot's escorts. */
    if (i >= array_size(target->escorts))
-      return -1;
-   /* Free if last pilot. */
-   if (array_size(target->escorts) == 1)
-      escort_freeList(target);
-   else
-      escort_rmListIndex(target, i);
+      WARN(_("Docking pilot '%s' not found in pilot '%s's escort list!"),target->name,p->name);
+   /* Remove escort pilot. */
+   escort_rmListIndex(target, i);
 
    /* Destroy the pilot. */
    pilot_delete(p);
@@ -272,9 +279,8 @@ int pilot_hasDeployed( const Pilot *p )
  */
 int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 {
-   const Outfit *o;
-
    /* Set the outfit. */
+   s->flags    = 0;
    s->state    = PILOT_OUTFIT_OFF;
    s->outfit   = outfit;
 
@@ -304,8 +310,16 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
    }
 
    /* Check if active. */
-   o = s->outfit;
-   s->active = outfit_isActive(o);
+   if (outfit_isActive(outfit))
+      s->flags |= PILOTOUTFIT_ACTIVE;
+   else
+      s->flags &= ~PILOTOUTFIT_ACTIVE;
+
+   /* Check if toggleable. */
+   if (outfit_isToggleable(outfit))
+      s->flags |= PILOTOUTFIT_TOGGLEABLE;
+   else
+      s->flags &= ~PILOTOUTFIT_TOGGLEABLE;
 
    /* Update heat. */
    pilot_heatCalcSlot( s );
@@ -330,7 +344,7 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
  *    @param warn Whether or not should generate a warning.
  *    @return 0 if can add, -1 if can't.
  */
-int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s, int warn )
+int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, const PilotOutfitSlot *s, int warn )
 {
    const char *str;
 
@@ -384,6 +398,26 @@ int pilot_addOutfit( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 /**
  * @brief Adds an outfit as an intrinsic slot.
  */
+int pilot_addOutfitIntrinsicRaw( Pilot *pilot, const Outfit *outfit )
+{
+   PilotOutfitSlot *s;
+
+   if (!outfit_isMod(outfit)) {
+      WARN(_("Instrinsic outfits must be modifiers!"));
+      return -1;
+   }
+
+   if (pilot->outfit_intrinsic==NULL)
+      pilot->outfit_intrinsic = array_create( PilotOutfitSlot );
+
+   s = &array_grow( &pilot->outfit_intrinsic );
+   memset( s, 0, sizeof(PilotOutfitSlot) );
+   return pilot_addOutfitRaw( pilot, outfit, s );
+}
+
+/**
+ * @brief Adds an outfit as an intrinsic slot.
+ */
 int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
 {
    PilotOutfitSlot *s;
@@ -400,7 +434,7 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
    s = &array_grow( &pilot->outfit_intrinsic );
    memset( s, 0, sizeof(PilotOutfitSlot) );
    ret = pilot_addOutfitRaw( pilot, outfit, s );
-   if (pilot->id > 0 && ret==0)
+   if (pilot->id > 0)
       pilot_outfitLInit( pilot, s );
 
    return ret;
@@ -409,12 +443,35 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
 /**
  * @brief Removes an outfit from an intrinsic slot.
  */
-int pilot_rmOutfitIntrinsic( Pilot *pilot, PilotOutfitSlot *s )
+int pilot_rmOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
 {
-   int ret = pilot_rmOutfitRaw( pilot, s );
-   array_erase( &pilot->outfit_intrinsic, s, s+1 );
+   int ret = 0;
+   for (int i=0; i<array_size(pilot->outfit_intrinsic); i++) {
+      PilotOutfitSlot *s = &pilot->outfit_intrinsic[i];
+      if (s->outfit != outfit)
+         continue;
+      ret = pilot_rmOutfitRaw( pilot, s );
+      array_erase( &pilot->outfit_intrinsic, s, s+1 );
+      break;
+   }
    /* Recalculate the stats */
-   pilot_calcStats(pilot);
+   if (ret)
+      pilot_calcStats(pilot);
+   return ret;
+}
+
+/**
+ * @brief Gets how many copies of an intrinsic a pilot has.
+ */
+int pilot_hasIntrinsic( const Pilot *pilot, const Outfit *outfit )
+{
+   int ret = 0;
+   for (int i=0; i<array_size(pilot->outfit_intrinsic); i++) {
+      const PilotOutfitSlot *s = &pilot->outfit_intrinsic[i];
+      if (s->outfit != outfit)
+         continue;
+      ret++;
+   }
    return ret;
 }
 
@@ -455,7 +512,8 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
    /* Remove the outfit. */
    ret         = (s->outfit==NULL);
    s->outfit   = NULL;
-   s->weapset  = -1;
+   s->flags    = 0; /* Clear flags. */
+   //s->weapset  = -1;
 
    /* Remove secondary and such if necessary. */
    if (pilot->afterburner == s)
@@ -565,7 +623,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->cpu < 0, _("!! Insufficient CPU") );
 
    /* Movement. */
-   SPACEWORTHY_CHECK( p->thrust < 0, _("!! Insufficient Thrust") );
+   SPACEWORTHY_CHECK( p->accel < 0,  _("!! Insufficient Accel") );
    SPACEWORTHY_CHECK( p->speed < 0,  _("!! Insufficient Speed") );
    SPACEWORTHY_CHECK( p->turn < 0,   _("!! Insufficient Turn") );
 
@@ -600,7 +658,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
       if (ship_isFlag(p->ship, SHIP_NOPLAYER))
          pos += scnprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Escort only") );
       if (ship_isFlag(p->ship, SHIP_NOESCORT))
-         pos += scnprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Lead ship only") );
+        /* pos +=*/ scnprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Lead ship only") );
    }
 
    return ret;
@@ -614,12 +672,19 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
  *    @param limit Outfit (limiting) type to check.
  *    @return the amount of outfits of this type the pilot has.
  */
-static int pilot_hasOutfitLimit( const Pilot *p, const char *limit )
+int pilot_hasOutfitLimit( const Pilot *p, const char *limit )
 {
+   if (limit==NULL)
+      return 0;
    for (int i = 0; i<array_size(p->outfits); i++) {
       const Outfit *o = p->outfits[i]->outfit;
       if (o == NULL)
          continue;
+      if ((o->limit != NULL) && (strcmp(o->limit,limit)==0))
+         return 1;
+   }
+   for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
+      const Outfit *o = p->outfit_intrinsic[i].outfit;
       if ((o->limit != NULL) && (strcmp(o->limit,limit)==0))
          return 1;
    }
@@ -650,11 +715,6 @@ const char* pilot_canEquip( const Pilot *p, const PilotOutfitSlot *s, const Outf
       /* Check to see if already equipped unique. */
       if (outfit_isProp(o,OUTFIT_PROP_UNIQUE) && (pilot_numOutfit(p,o)>0))
          return _("Can only install unique outfit once.");
-   }
-   else {
-      /* Check fighter bay. */
-      if ((o==NULL) && (s!=NULL) && (s->u.ammo.deployed > 0))
-         return _("Recall the fighters first");
    }
 
    return NULL;
@@ -816,6 +876,36 @@ void pilot_fillAmmo( Pilot* pilot )
    }
 }
 
+double pilot_outfitRange( const Pilot *p, const Outfit *o )
+{
+   if (outfit_isBolt(o))
+      return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
+   else if (outfit_isBeam(o))
+      return o->u.bem.range;
+   else if (outfit_isLauncher(o)) {
+      double duration = o->u.lau.duration;
+      if (p!=NULL)
+         duration *= p->stats.launch_range;
+      if (o->u.lau.accel) {
+         double speedinc;
+         if (o->u.lau.speed > 0.) /* Ammo that don't start stopped don't have max speed. */
+            speedinc = INFINITY;
+         else
+            speedinc = o->u.lau.speed_max - o->u.lau.speed;
+         double at = speedinc / o->u.lau.accel;
+         if (at < duration)
+            return speedinc * (duration - at / 2.) + o->u.lau.speed * duration;
+
+         /* Maximum speed will never be reached. */
+         return pow2(duration) * o->u.lau.accel / 2. + duration * o->u.lau.speed;
+      }
+      return o->u.lau.speed * duration;
+   }
+   else if (outfit_isFighterBay(o))
+      return INFINITY;
+   return -1.;
+}
+
 /**
  * @brief Computes the stats for a pilot's slot.
  */
@@ -858,7 +948,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
    /* Apply modifications. */
    if (outfit_isMod(o)) { /* Modification */
       /* Active outfits must be on to affect stuff. */
-      if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
+      if ((slot->flags & PILOTOUTFIT_ACTIVE) && !(slot->state==PILOT_OUTFIT_ON))
          return;
       /* Add stats. */
       ss_statsMergeFromList( s, o->stats );
@@ -866,7 +956,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
    }
    else if (outfit_isAfterburner(o)) { /* Afterburner */
       /* Active outfits must be on to affect stuff. */
-      if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
+      if ((slot->flags & PILOTOUTFIT_ACTIVE) && !(slot->state==PILOT_OUTFIT_ON))
          return;
       /* Add stats. */
       ss_statsMergeFromList( s, o->stats );
@@ -893,12 +983,12 @@ void pilot_calcStats( Pilot* pilot )
     * Set up the basic stuff
     */
    /* mass */
-   pilot->solid.mass   = pilot->ship->mass;
+   pilot->solid.mass    = pilot->ship->mass;
    pilot->base_mass     = pilot->solid.mass;
    /* cpu */
    pilot->cpu           = 0.;
    /* movement */
-   pilot->thrust_base   = pilot->ship->thrust;
+   pilot->accel_base    = pilot->ship->accel;
    pilot->turn_base     = pilot->ship->turn;
    pilot->speed_base    = pilot->ship->speed;
    /* crew */
@@ -952,7 +1042,7 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Apply stealth malus. */
    if (pilot_isFlag(pilot, PILOT_STEALTH)) {
-      s->thrust_mod  *= 0.8;
+      s->accel_mod   *= 0.8;
       s->turn_mod    *= 0.8;
       s->speed_mod   *= 0.5;
    }
@@ -961,7 +1051,7 @@ void pilot_calcStats( Pilot* pilot )
     * Absolute increases.
     */
    /* Movement. */
-   pilot->thrust_base  += s->thrust;
+   pilot->accel_base   += s->accel;
    pilot->turn_base    += s->turn * M_PI / 180.;
    pilot->speed_base   += s->speed;
    /* Health. */
@@ -979,7 +1069,7 @@ void pilot_calcStats( Pilot* pilot )
     * Relative increases.
     */
    /* Movement. */
-   pilot->thrust_base  *= s->thrust_mod;
+   pilot->accel_base   *= s->accel_mod;
    pilot->turn_base    *= s->turn_mod;
    pilot->speed_base   *= s->speed_mod;
    /* Health. */
@@ -998,13 +1088,10 @@ void pilot_calcStats( Pilot* pilot )
    pilot->cpu          += pilot->cpu_max; /* CPU is negative, this just sets it so it's based off of cpu_max. */
    /* Misc. */
    pilot->crew          = pilot->crew * s->crew_mod + s->crew;
+   pilot->fuel_consumption *= s->fuel_usage_mod;
    pilot->fuel_max     *= s->fuel_mod;
    pilot->cap_cargo    *= s->cargo_mod;
    s->engine_limit     *= s->engine_limit_rel;
-
-   /* Set maximum speed. */
-   if (!pilot_isFlag( pilot, PILOT_AFTERBURNER ))
-      pilot->solid.speed_max = pilot->speed_base;
 
    /*
     * Flat increases.
@@ -1023,23 +1110,11 @@ void pilot_calcStats( Pilot* pilot )
    /* Dump excess fuel */
    pilot->fuel   = MIN( pilot->fuel, pilot->fuel_max );
 
-   /* Set final energy tau. */
-   if (pilot->energy_regen > 0.)
-      pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
-   else
-      pilot->energy_tau = 1.;
-
    /* Cargo has to be reset. */
-   pilot_cargoCalc(pilot);
-
-   /* Calculate mass. */
-   pilot->solid.mass = MAX( s->mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit, 0.);
+   pilot_cargoCalc(pilot); /* Calls pilot_updateMass. */
 
    /* Calculate the heat. */
    pilot_heatCalc( pilot );
-
-   /* Modulate by mass. */
-   pilot_updateMass( pilot );
 
    /* Update GUI as necessary. */
    gui_setGeneric( pilot );
@@ -1068,7 +1143,7 @@ void pilot_healLanded( Pilot *pilot )
    pilot_fillAmmo( pilot );
 
    for (int i=0; i<array_size(pilot->escorts); i++) {
-      Escort_t *e = &pilot->escorts[i];
+      const Escort_t *e = &pilot->escorts[i];
       Pilot *pe = pilot_get( e->id );
 
       if (pe != NULL)
@@ -1090,37 +1165,52 @@ PilotOutfitSlot *pilot_getSlotByName( Pilot *pilot, const char *name )
 }
 
 /**
+ * @brief Gets the factor at which speed gets worse.
+ */
+double pilot_massFactor( const Pilot *pilot )
+{
+   double mass = pilot->solid.mass;
+   if ((pilot->stats.engine_limit > 0.) && (mass > pilot->stats.engine_limit)) {
+      double f = (mass-pilot->stats.engine_limit) / pilot->stats.engine_limit;
+      return 1./(1.+f+f+4.*pow(f,3.));
+   }
+   return 1.;
+}
+
+/**
  * @brief Updates the pilot stats after mass change.
  *
  *    @param pilot Pilot to update his mass.
  */
 void pilot_updateMass( Pilot *pilot )
 {
-   double mass, factor;
+   double factor;
 
-   /* Set limit. */
-   mass = pilot->solid.mass;
-   if ((pilot->stats.engine_limit > 0.) && (mass > pilot->stats.engine_limit))
-      factor = pilot->stats.engine_limit / mass;
-   else
-      factor = 1.;
+   /* Recompute effective mass if something changed. */
+   pilot->solid.mass = MAX( pilot->stats.mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit, 0.);
 
-   pilot->thrust  = factor * pilot->thrust_base * mass;
+   /* Set and apply limit. */
+   factor = pilot_massFactor( pilot );
+   pilot->accel   = factor * pilot->accel_base;
    pilot->turn    = factor * pilot->turn_base;
    pilot->speed   = factor * pilot->speed_base;
 
-/* limit the maximum speed if limiter is active */
+   /* limit the maximum speed if limiter is active */
    if (pilot_isFlag(pilot, PILOT_HASSPEEDLIMIT)) {
-      pilot->speed = pilot->speed_limit - pilot->thrust / (mass * 3.);
+      pilot->speed = pilot->speed_limit - pilot->accel / 3.;
       /* Speed must never go negative. */
       if (pilot->speed < 0.) {
-         /* If speed DOES go negative, we have to lower thrust. */
-         pilot->thrust = 3 * pilot->speed_limit * mass;
+         /* If speed DOES go negative, we have to lower accel. */
+         pilot->accel = 3. * pilot->speed_limit;
          pilot->speed = 0.;
       }
    }
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );
+
+   /* Update ship stuff. */
+   if (pilot_isPlayer(pilot))
+      gui_setShip();
 }
 
 /**
@@ -1131,17 +1221,7 @@ void pilot_updateMass( Pilot *pilot )
  */
 int pilot_slotIsToggleable( const PilotOutfitSlot *o )
 {
-   const Outfit *oo;
-   if (!o->active)
-      return 0;
-
-   oo = o->outfit;
-   if (oo == NULL)
-      return 0;
-   if (!outfit_isToggleable(oo))
-      return 0;
-
-   return 1;
+   return (o->flags & PILOTOUTFIT_TOGGLEABLE);
 }
 
 /**
@@ -1206,7 +1286,7 @@ static const char* pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
    static char descextra[STRMAX];
    const char *de;
    if (o->lua_descextra == LUA_NOREF)
-      return o->desc_extra;
+      return (o->desc_extra != NULL) ? _(o->desc_extra) : NULL;
 
    /* Set up the function: init( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, o->lua_descextra); /* f */
@@ -1220,6 +1300,11 @@ static const char* pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
       lua_pop(naevL, 1);
       descextra[0] = '\0';
       return descextra;
+   }
+   /* Case no return we just pass nothing. */
+   if (lua_isnoneornil( naevL, -1 )) {
+      lua_pop( naevL, 1 );
+      return NULL;
    }
    de = luaL_checkstring( naevL, -1 );
    strncpy( descextra, de, sizeof(descextra)-1 );
@@ -1296,7 +1381,7 @@ void pilot_outfitLInitAll( Pilot *pilot )
 /**
  * @brief Outfit is added to a ship.
  */
-int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
+int pilot_outfitLAdd( const Pilot *pilot, PilotOutfitSlot *po )
 {
    int oldmem;
 
@@ -1325,7 +1410,7 @@ int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
 /**
  * @brief Outfit is removed froma ship.
  */
-int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
+int pilot_outfitLRemove( const Pilot *pilot, PilotOutfitSlot *po )
 {
    int oldmem;
 
@@ -1358,9 +1443,9 @@ int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
  *    @param po Pilot outfit to check.
  *    @return 0 if nothing was done, 1 if script was run, and -1 on error.
  */
-int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
+int pilot_outfitLInit( const Pilot *pilot, PilotOutfitSlot *po )
 {
-   int lua_init, oldmem;
+   int lua_oinit, oldmem;
    nlua_env lua_env;
 
    if (po->outfit==NULL)
@@ -1369,19 +1454,19 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
    if (po->outfit->lua_env==LUA_NOREF)
       return 0;
 
-   lua_init = po->outfit->lua_init;
+   lua_oinit = po->outfit->lua_init;
    lua_env = po->outfit->lua_env;
 
    /* Create the memory if necessary and initialize stats. */
    oldmem = pilot_outfitLmem( po, lua_env );
 
-   if (lua_init == LUA_NOREF) {
+   if (lua_oinit == LUA_NOREF) {
       pilot_outfitLunmem( po->outfit->lua_env, oldmem );
       return 0;
    }
 
    /* Set up the function: init( p, po ) */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_init); /* f */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_oinit); /* f */
    lua_pushpilot(naevL, pilot->id); /* f, p */
    lua_pushpilotoutfit(naevL, po); /* f, p, po */
    if (nlua_pcall( lua_env, 2, 0 )) { /* */
@@ -1430,7 +1515,10 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
 {
    if (!pilot->outfitlupdate)
       return;
+
+   NTracingZone( _ctx, 1 );
    pilot_outfitLRun( pilot, outfitLUpdate, &dt );
+   NTracingZoneEnd( _ctx );
 }
 
 static void outfitLOutofenergy( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
@@ -1527,7 +1615,7 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned in
  *    @param on Whether to toggle on or off.
  *    @return 1 if was able to toggle it, 0 otherwise.
  */
-int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
+int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on )
 {
    nlua_env env = po->outfit->lua_env;
    int ret, oldmem;
@@ -1543,6 +1631,40 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
    lua_pushboolean(naevL, on);      /* f, p, po, on */
    if (nlua_pcall( env, 3, 1 )) {   /* */
       outfitLRunWarning( pilot, po->outfit, "ontoggle", lua_tostring(naevL,-1) );
+      lua_pop(naevL, 1);
+      pilot_outfitLunmem( env, oldmem );
+      return 0;
+   }
+
+   /* Handle return boolean. */
+   ret = lua_toboolean(naevL, -1);
+   lua_pop(naevL, 1);
+   pilot_outfitLunmem( env, oldmem );
+   return ret || pilotoutfit_modified; /* Even if the script says it didn't change, it may have been modified. */
+}
+
+/**
+ * @brief Handle the manual shoot of an outfit.
+ *
+ *    @param pilot Pilot to shoot outfit of.
+ *    @param po Outfit to be toggling.
+ *    @return 1 if was able to shoot it, 0 otherwise.
+ */
+int pilot_outfitLOnshoot( const Pilot *pilot, PilotOutfitSlot *po )
+{
+   nlua_env env = po->outfit->lua_env;
+   int ret, oldmem;
+   pilotoutfit_modified = 0;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: onshoot( p, po, armour, shield ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onshoot); /* f */
+   lua_pushpilot(naevL, pilot->id); /* f, p */
+   lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+   if (nlua_pcall( env, 2, 1 )) {   /* */
+      outfitLRunWarning( pilot, po->outfit, "onshoot", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
       pilot_outfitLunmem( env, oldmem );
       return 0;
@@ -1608,11 +1730,11 @@ void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer )
    pilot_outfitLRun( pilot, outfitLCooldown, &data );
 }
 
-static void outfitLOnshoot( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
+static void outfitLOnshootany( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
 {
    (void) data;
    int oldmem;
-   if (po->outfit->lua_onshoot == LUA_NOREF)
+   if (po->outfit->lua_onshootany == LUA_NOREF)
       return;
 
    nlua_env env = po->outfit->lua_env;
@@ -1620,24 +1742,24 @@ static void outfitLOnshoot( const Pilot *pilot, PilotOutfitSlot *po, const void 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
 
-   /* Set up the function: onshoot( p, po ) */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onshoot); /* f */
+   /* Set up the function: onshootany( p, po ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_onshootany); /* f */
    lua_pushpilot(naevL, pilot->id); /* f, p */
    lua_pushpilotoutfit(naevL, po);  /* f, p, po */
    if (nlua_pcall( env, 2, 0 )) {   /* */
-      outfitLRunWarning( pilot, po->outfit, "onshoot", lua_tostring(naevL,-1) );
+      outfitLRunWarning( pilot, po->outfit, "onshootany", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
    }
    pilot_outfitLunmem( env, oldmem );
 }
 /**
- * @brief Runs the pilot's Lua outfits onshoot script.
+ * @brief Runs the pilot's Lua outfits onshootany script.
  *
  *    @param pilot Pilot to run Lua outfits for.
  */
-void pilot_outfitLOnshoot( Pilot *pilot )
+void pilot_outfitLOnshootany( Pilot *pilot )
 {
-   pilot_outfitLRun( pilot, outfitLOnshoot, NULL );
+   pilot_outfitLRun( pilot, outfitLOnshootany, NULL );
 }
 
 static void outfitLOnstealth( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
@@ -1839,6 +1961,120 @@ void pilot_outfitLOnjumpin( Pilot *pilot )
    pilot_outfitLRun( pilot, outfitLOnjumpin, NULL );
 }
 
+static void outfitLOnboard( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
+{
+   const Pilot *target;
+   int oldmem;
+   if (po->outfit->lua_board == LUA_NOREF)
+      return;
+
+   nlua_env env = po->outfit->lua_env;
+   target = (const Pilot*) data;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: board( p, po, stealthed ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_board); /* f */
+   lua_pushpilot(naevL, pilot->id); /* f, p */
+   lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+   lua_pushpilot(naevL, target->id); /* f, p, po, target */
+   if (nlua_pcall( env, 3, 0 )) {   /* */
+      outfitLRunWarning( pilot, po->outfit, "board", lua_tostring(naevL,-1) );
+      lua_pop(naevL, 1);
+   }
+   pilot_outfitLunmem( env, oldmem );
+}
+/**
+ * @brief Runs Lua outfits when pilot boards a target.
+ *
+ *    @param pilot Pilot being handled.
+ *    @param target Pilot being boarded.
+ */
+void pilot_outfitLOnboard( Pilot *pilot, const Pilot *target )
+{
+   pilot_outfitLRun( pilot, outfitLOnboard, target );
+}
+
+static const char *outfitkeytostr( OutfitKey key )
+{
+   switch (key) {
+      case OUTFIT_KEY_ACCEL:
+         return "accel";
+      case OUTFIT_KEY_LEFT:
+         return "left";
+      case OUTFIT_KEY_RIGHT:
+         return "right";
+   }
+   return NULL;
+}
+
+static void outfitLOnkeydoubletap( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
+{
+   int oldmem;
+   OutfitKey key;
+   if (po->outfit->lua_keydoubletap == LUA_NOREF)
+      return;
+   key = *((const OutfitKey*) data);
+
+   nlua_env env = po->outfit->lua_env;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: takeoff( p, po ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_keydoubletap); /* f */
+   lua_pushpilot(naevL, pilot->id); /* f, p */
+   lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+   lua_pushstring(naevL, outfitkeytostr(key) );
+   if (nlua_pcall( env, 3, 1 )) {   /* */
+      outfitLRunWarning( pilot, po->outfit, "keydoubletap", lua_tostring(naevL,-1) );
+      lua_pop(naevL, 1);
+   }
+   pilot_outfitLunmem( env, oldmem );
+
+   /* Broke stealth. */
+   if ((po->state==PILOT_OUTFIT_ON) || lua_toboolean(naevL,-1))
+      stealth_break = 1;
+   lua_pop( naevL, 1 );
+}
+void pilot_outfitLOnkeydoubletap( Pilot *pilot, OutfitKey key )
+{
+   stealth_break = 0;
+   pilot_outfitLRun( pilot, outfitLOnkeydoubletap, &key );
+   if (stealth_break && pilot_isFlag( pilot, PILOT_STEALTH ))
+      pilot_destealth( pilot );
+}
+
+static void outfitLOnkeyrelease( const Pilot *pilot, PilotOutfitSlot *po, const void *data )
+{
+   int oldmem;
+   OutfitKey key;
+   if (po->outfit->lua_keyrelease == LUA_NOREF)
+      return;
+   key = *((const OutfitKey*) data);
+
+   nlua_env env = po->outfit->lua_env;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: takeoff( p, po ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->lua_keyrelease); /* f */
+   lua_pushpilot(naevL, pilot->id); /* f, p */
+   lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+   lua_pushstring(naevL, outfitkeytostr(key) );
+   if (nlua_pcall( env, 3, 0 )) {   /* */
+      outfitLRunWarning( pilot, po->outfit, "keyrelease", lua_tostring(naevL,-1) );
+      lua_pop(naevL, 1);
+   }
+   pilot_outfitLunmem( env, oldmem );
+}
+void pilot_outfitLOnkeyrelease( Pilot *pilot, OutfitKey key )
+{
+   pilot_outfitLRun( pilot, outfitLOnkeyrelease, &key );
+}
+
 /**
  * @brief Handle cleanup hooks for outfits.
  *
@@ -1846,7 +2082,7 @@ void pilot_outfitLOnjumpin( Pilot *pilot )
  */
 void pilot_outfitLCleanup( Pilot *pilot )
 {
-   /* TODO we might want to run this on intrinsic outfits too.. */
+   /* TODO we might want to run this on intrinsic outfits too... */
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(pilot->outfits); i++) {
       int oldmem;

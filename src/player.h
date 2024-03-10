@@ -17,9 +17,7 @@ enum {
    PLAYER_DESTROYED,    /**< player is destroyed */
    PLAYER_FACE,         /**< player is facing target */
    PLAYER_PRIMARY,      /**< player is shooting primary weapon */
-   PLAYER_PRIMARY_L,    /**< player shot primary weapon last frame. */
    PLAYER_SECONDARY,    /**< player is shooting secondary weapon */
-   PLAYER_SECONDARY_L,  /**< player shot secondary last frame. */
    PLAYER_LANDACK,      /**< player has permission to land */
    PLAYER_CREATING,     /**< player is being created */
    PLAYER_AUTONAV,      /**< player has autonavigation on. */
@@ -219,6 +217,7 @@ PlayerShip_t* player_getPlayerShip( const char *shipname );
 void player_swapShip( const char *shipname, int move_cargo );
 credits_t player_shipPrice( const char *shipname, int count_unique );
 void player_rmShip( const char *shipname );
+void player_rmPlayerShip( PlayerShip_t *ps );
 
 /*
  * Player outfits.
@@ -226,7 +225,7 @@ void player_rmShip( const char *shipname );
 int player_outfitOwned( const Outfit *o );
 int player_outfitOwnedTotal( const Outfit* o );
 const PlayerOutfit_t* player_getOutfits (void);
-int player_getOutfitsFiltered( const Outfit **outfits,
+int player_getOutfitsFiltered( const Outfit ***outfits,
       int(*filter)( const Outfit *o ), const char *name );
 int player_numOutfits (void);
 int player_addOutfit( const Outfit *o, int quantity );
@@ -298,7 +297,7 @@ void player_targetEscort( int prev );
  */
 void player_weapSetPress( int id, double value, int repeat );
 int player_land( int loud );
-void player_board (void);
+void player_approach (void);
 int player_jump (void);
 void player_screenshot (void);
 void player_accel( double acc );
@@ -307,5 +306,5 @@ void player_hail (void);
 void player_hailSpob (void);
 void player_autohail (void);
 void player_toggleMouseFly (void);
-void player_brake (void);
+void player_cooldownBrake (void);
 void player_stealth (void);

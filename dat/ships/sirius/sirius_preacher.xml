@@ -3,7 +3,7 @@
  <lua>ships/lua/sirius_preacher.lua</lua>
  <points>60</points>
  <base_type>Preacher</base_type>
- <GFX size="70" sx="10" sy="10">preacher</GFX>
+ <gfx size="70" sx="10" sy="10">preacher</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Corvette</class>
@@ -22,26 +22,29 @@
  </health>
  <characteristics>
   <crew>11</crew>
-  <mass>140</mass>
+  <mass>150</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>20</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="15" y="1" h="2" />
-  <weapon size="medium" x="15" y="-1" h="2" />
   <weapon size="medium" x="-9" y="-10" h="2" />
   <weapon size="medium" x="-9" y="10" h="2" />
   <weapon size="medium" x="-9" y="-3" h="2" />
   <weapon size="medium" x="-9" y="3" h="2" />
+  <weapon size="small" x="15" y="0" h="2" />
   <utility size="medium" prop="systems">Unicorp PT-200 Core System</utility>
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
+  <utility size="small" />
   <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>

@@ -175,7 +175,7 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
    vn.func( function ()
       local lw, lh = lg.getDimensions()
       vn.setBackground( function ()
-         lg.setColor( 1, 1, 1, 1 )
+         lg.setColour( 1, 1, 1, 1 )
          lg.rectangle( "fill", 0, 0, lw, lh )
       end )
       music.stop()

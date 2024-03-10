@@ -9,9 +9,10 @@ local playerform = require "playerform"
 local radar_gfx, radar_x, radar_y, screen_h, screen_w
 local aset, cargo, nav_spob, nav_pnt, pp, ptarget, slot_w, slot_h, slot_y, timers
 local ta_pane_w, ta_pane_x, ta_pane_y, ta_pnt_pane_x, ta_pnt_pane_y, pl_pane_x, pl_pane_y
+local slot, slotend, slotframe
 -- This script has a lot of globals. It really loves them.
 -- The below variables aren't part of the GUI API and aren't accessed via _G:
--- luacheck: globals active active_icons aset bardata bar_offsets bar_ready_h bar_ready_w bars bar_weapon_h bar_weapon_w blinkcol bottom_bar buttons cargofree cargofreel cargo_light_off cargo_light_on cargoterml cooldown cooldown_bg cooldown_bg_h cooldown_bg_w cooldown_bg_x cooldown_bg_y cooldown_frame cooldown_frame_h cooldown_frame_w cooldown_frame_x cooldown_frame_y cooldown_panel cooldown_panel_x cooldown_panel_y cooldown_sheen cooldown_sheen_x cooldown_sheen_y deffont_h gfxWarn lmouse missile_lock_length missile_lock_text nav_hyp navstring planet_bg planet_pane_b planet_pane_m planet_pane_t player_pane_b player_pane_m player_pane_t pl_pane_h_b pl_pane_w_b pname pntflags ptarget_faction_gfx ptarget_gfx ptarget_gfx_draw_h ptarget_gfx_draw_w ptarget_gfx_h ptarget_gfx_w ptarget_target question sheen sheen_sm sheen_tiny sheen_weapon slot slotend slotend_h slotend_w slot_img_offs_x slot_img_offs_y slot_img_w slot_start_x stats sysname ta_cargo ta_cargo_x ta_cargo_y ta_center_x ta_center_y ta_fact_x ta_fact_y ta_image_x ta_image_y ta_pane_h ta_pnt_center_x ta_pnt_center_y ta_pnt_faction_gfx ta_pnt_fact_x ta_pnt_fact_y ta_pnt_gfx ta_pnt_gfx_draw_h ta_pnt_gfx_draw_w ta_pnt_gfx_h ta_pnt_gfx_w ta_pnt_image_x ta_pnt_image_y ta_pnt_pane_h ta_pnt_pane_h_b ta_pnt_pane_w ta_pnt_pane_w_b ta_question_h ta_question_w target_bg target_dir target_light_off target_light_on target_pane ta_speed ta_stats ta_warning_x ta_warning_y tflags track_h tracking_light track_w warnlight1 warnlight2 warnlight3 warnlight4 warnlight5 wset wset_name x_ammo y_ammo
+-- luacheck: globals active bardata bar_offsets bar_ready_h bar_ready_w bars bar_weapon_h bar_weapon_w blinkcol bottom_bar buttons cargofree cargofreel cargo_light_off cargo_light_on cargoterml cooldown cooldown_bg cooldown_bg_h cooldown_bg_w cooldown_bg_x cooldown_bg_y cooldown_frame cooldown_frame_h cooldown_frame_w cooldown_frame_x cooldown_frame_y cooldown_panel cooldown_panel_x cooldown_panel_y cooldown_sheen cooldown_sheen_x cooldown_sheen_y gfxWarn lmouse missile_lock_length missile_lock_text nav_hyp navstring planet_bg planet_pane_b planet_pane_m planet_pane_t player_pane_b player_pane_m player_pane_t pl_pane_h_b pl_pane_w_b pname pntflags ptarget_faction_gfx ptarget_cvs ptarget_gfx ptarget_gfx_draw_h ptarget_gfx_draw_w ptarget_gfx_h ptarget_gfx_w ptarget_target question sheen sheen_sm sheen_tiny sheen_weapon slotend_h slotend_w slot_img_offs_x slot_img_offs_y slot_img_w slot_start_x stats sysname ta_cargo ta_cargo_x ta_cargo_y ta_center_x ta_center_y ta_fact_x ta_fact_y ta_image_x ta_image_y ta_pane_h ta_pnt_center_x ta_pnt_center_y ta_pnt_faction_gfx ta_pnt_fact_x ta_pnt_fact_y ta_pnt_gfx ta_pnt_gfx_draw_h ta_pnt_gfx_draw_w ta_pnt_gfx_h ta_pnt_gfx_w ta_pnt_image_x ta_pnt_image_y ta_pnt_pane_h ta_pnt_pane_h_b ta_pnt_pane_w ta_pnt_pane_w_b ta_question_h ta_question_w target_bg target_dir target_light_off target_light_on target_pane ta_speed ta_stats ta_warning_x ta_warning_y tflags track_h tracking_light track_w warnlight1 warnlight2 warnlight3 warnlight4 warnlight5 wset wset_name x_ammo y_ammo
 -- Unfortunately, it is an error to make any function a closure over more than 60 variables.
 -- Caution: the below **are** accessed via _G.
 -- luacheck: globals armour energy shield speed stress (_G[v])
@@ -22,22 +23,21 @@ local bgs = {}
 local cols = {}
 local icons = {}
 local has_flow
-function create()
 
+function create()
    --Get player
    pp = player.pilot()
    pname = player.name()
 
    -- Set default formation
    local savedform = var.peek("player_formation") or "Circle"
-   player.pilot():memory().formation = formation.keys[savedform]
+   pp:memory().formation = formation.keys[savedform]
 
    --Get sizes
    screen_w, screen_h = gfx.dim()
-   deffont_h = gfx.fontSize()
    gui.viewport( 0, 28, screen_w, screen_h - 28 )
 
-   --Colors
+   --Colours
    cols.txt_bar = colour.new( 192/255, 198/255, 217/255 )
    cols.txt_top = colour.new( 148/255, 158/255, 192/255 )
    cols.txt_std = colour.new( 111/255, 125/255, 169/255 )
@@ -45,24 +45,28 @@ function create()
    cols.txt_enm = colour.new( 222/255,  28/255,  28/255 )
    --cols.txt_res = colour.new(     1.0,     0.6,     0.0 )
    cols.txt_una = colour.new(  66/255,  72/255,  84/255 )
-   cols.shield = colour.new( 40/255,  51/255,  88/255 )
-   cols.armour = colour.new( 72/255,  73/255,  60/255 )
-   cols.stress = colour.new( 64/255,  130/255,  148/255 )
-   cols.energy = colour.new( 41/255,  92/255,  47/255 )
-   cols.speed = colour.new( 77/255,  80/255,  21/255 )
-   cols.speed2 = colour.new(169/255,177/255,  46/255 )
-   cols.ammo = colour.new(140/255,94/255,  7/255 )
-   cols.heat = colour.new(114/255,26/255, 14/255 )
-   cols.heat2 = colour.new( 222/255, 51/255, 27/255 )
-   cols.afb = colour.new(cols.heat)
+   cols.shield  = colour.new(  40/255,  51/255,  88/255 )
+   cols.armour  = colour.new(  72/255,  73/255,  60/255 )
+   cols.stress  = colour.new(  64/255, 130/255, 148/255 )
+   cols.energy  = colour.new(  41/255,  92/255,  47/255 )
+   cols.speed   = colour.new(  77/255,  80/255,  21/255 )
+   cols.speed2  = colour.new( 169/255, 177/255,  46/255 )
+   cols.ammo    = colour.new( 140/255,  94/255,   7/255 )
+   cols.heat    = colour.new( 114/255,  26/255,  14/255 )
+   cols.heat2   = colour.new( 222/255,  51/255,  27/255 )
+   cols.afb     = colour.new(cols.heat)
    cols.afb:setAlpha(.5)
-   cols.ready = colour.new( 14/255,108/255, 114/255 )
+   cols.ready   = colour.new(  14/255, 108/255, 114/255 )
    cols.temperature = cols.heat
-   cols.flow = colour.new( 189/255, 166/255, 85/255 )
+   cols.flow    = colour.new( 189/255, 166/255,  85/255 )
    cols.missile = colour.new(cols.txt_enm)
-
+   -- Weaposn
+   cols.weap_off= colour.new( "FontGrey" )
+   cols.weap_pri= colour.new( "FontRed" )
+   cols.weap_sec= colour.new( "FontYellow" )
+   cols.weap_on = colour.new( "FontGreen" )
    -- Active outfit bar
-   cols.slot_bg = colour.new( 12/255, 14/255, 20/255 )
+   cols.slot_bg = colour.new(  12/255,  14/255,  20/255 )
 
    --Load Images
    local base = "gfx/gui/slim/"
@@ -93,9 +97,10 @@ function create()
    icons.speed_sm = tex_open( "speed_sm.png" )
    bgs.bar = tex_open( "bg_bar.png" )
    bgs.bar_sm = tex_open( "bg_bar_sm.png" )
-   bgs.bar_weapon = tex_open( "bg_bar_weapon.png" )
-   bgs.bar_weapon_prim = tex_open( "bg_bar_weapon_prim.png" )
-   bgs.bar_weapon_sec = tex_open( "bg_bar_weapon_sec.png" )
+   bgs.bar_weapon = tex_open( "bg_bar_weapon_blank.png" )
+   --bgs.bar_weapon = tex_open( "bg_bar_weapon.png" )
+   --bgs.bar_weapon_prim = tex_open( "bg_bar_weapon_prim.png" )
+   --bgs.bar_weapon_sec = tex_open( "bg_bar_weapon_sec.png" )
    bgs.shield = tex_open( "bg_shield.png" )
    bgs.armour = tex_open( "bg_armour.png" )
    bgs.energy = tex_open( "bg_energy.png" )
@@ -130,10 +135,11 @@ function create()
    gui.targetPilotGFX(  tex_open( "radar_ship.png", 2, 2 ) )
 
    -- Active outfit list.
-   slot = tex_open( "slot.png" )
-   slotend = tex_open( "slotend.png" )
-   cooldown = tex_open( "cooldown.png", 6, 6 )
-   active =  tex_open( "active.png" )
+   slot        = tex_open( "slot.png" )
+   slotframe   = tex_open( "slot_frame.png" )
+   slotend     = tex_open( "slotend.png" )
+   cooldown    = tex_open( "cooldown.png", 6, 6 )
+   active      = tex_open( "active.png" )
 
    -- Active outfit bar
    slot_w, slot_h = slot:dim()
@@ -260,7 +266,7 @@ function create()
          30, -- Bar X, relative to frame
           7, -- Icon X
          15, -- Sheen Y
-          6  -- Text Y
+          6, -- Text Y
       },
       small = { 22, 5, 9, 3 }, -- See above.
       ammo = {
@@ -270,8 +276,8 @@ function create()
          13, -- Sheen Y
          22, -- Refire sheen Y
           6, -- Text Y
-          2, -- Tracking icon X
-          5  -- Tracking icon Y
+          5, -- Tracking icon X
+          8, -- Tracking icon Y
       }
    }
 
@@ -299,8 +305,8 @@ function create()
 
    -- Planet image center
    local ta_pnt_image_w, ta_pnt_image_h = planet_bg:dim()
-   ta_pnt_center_x = ta_pnt_image_x + ta_pnt_image_w / 2
-   ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h / 2
+   ta_pnt_center_x = ta_pnt_image_x + ta_pnt_image_w * 0.5
+   ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h * 0.5
 
    -- Set FPS
    gui.fpsPos( 15, screen_h - fps_y )
@@ -333,8 +339,8 @@ end
 function update_target()
    ptarget = pp:target()
    if ptarget then
-      --ptarget_gfx = ptarget:ship():gfxTarget()
-      ptarget_gfx = ptarget:render():getTex()
+      ptarget_cvs = ptarget:render()
+      ptarget_gfx = ptarget_cvs:getTex()
       ptarget_gfx_w, ptarget_gfx_h = ptarget_gfx:dim()
       local ptargetfact = ptarget:faction()
       ptarget_target = ptarget:target()
@@ -380,10 +386,10 @@ function update_nav()
       end
 
       nav_spob = { -- Table for convenience.
-         name = nav_pnt:name(),
-         pos = nav_pnt:pos(),
+         name  = nav_pnt:name(),
+         pos   = nav_pnt:pos(),
          class = _(nav_pnt:class()),
-         col = nav_pnt:colour(),
+         col   = nav_pnt:colour(),
          services = {}
       }
       nav_spob.class_w = gfx.printDim( nil, nav_spob.class )
@@ -458,8 +464,8 @@ end
 
 local effects = {}
 function update_effects()
-   local buff_col = colour.new("Friend")
-   local debuff_col = colour.new("Hostile")
+   local buff_col    = colour.new("Friend")
+   local debuff_col  = colour.new("Hostile")
    effects = {}
    local effects_added = {}
    for k,e in ipairs(pp:effects()) do
@@ -481,22 +487,17 @@ function update_effects()
 end
 
 local function update_wset()
-   wset_name, wset  = pp:weapset()
+   wset_name, wset  = pp:weapset(true)
 
--- Currently unused.
---[[
-   weap_icons = {}
-
-   for k, v in ipairs( wset ) do
-      weap_icons[k] = outfit.get( v.name ):icon()
+   -- Set the names as short names
+   for k, w in ipairs( wset ) do
+      w.name = w.outfit:shortname()
    end
---]]
 
+   -- Set up icons for active outfits
    aset = pp:actives(true)
-   active_icons = {}
-
    for k, v in ipairs( aset ) do
-      active_icons[k] = outfit.get( v.name ):icon()
+      v.icon = v.outfit:icon()
    end
    slot_start_x = screen_w/2 - #aset/2 * slot_w
 end
@@ -600,7 +601,30 @@ local function render_armourBar( data, value, stress_value, txt, txtcol, size, c
    end
 end
 
-local function render_ammoBar( name, x, y, value, txt, txtcol )
+local function render_ammoBar( weap, x, y )
+   local name, txtcol, value, track
+   local txt = weap.name
+
+   if weap.left then
+      name = "ammo"
+      txt = txt .. " (" .. weap.left .. ")"
+      if weap.left == 0 then
+         txtcol = cols.txt_wrn
+      else
+         txtcol = cols.txt_bar
+      end
+      if not weap.in_arc and ptarget ~= nil then
+         txtcol = cols.txt_una
+      end
+      value = weap.left_p
+      track = weap.track or weap.lockon
+   else
+      name = "heat"
+      txtcol = cols.txt_bar
+      value = weap.heat
+      track = weap.track
+   end
+
    local offsets = bar_offsets['ammo']
    local l_bg = bgs[name]
    local l_col
@@ -608,10 +632,10 @@ local function render_ammoBar( name, x, y, value, txt, txtcol )
    gfx.renderTex( bgs.ready, x + offsets[1], y + offsets[2])
 
    -- Overheat or ammo capacity
-   if value[1] > 0 then
+   if value > 0 then
       if name == "heat" then
-         value[1] = value[1] / 2.
-         if value[1] > .5 then
+         value = value * 0.5
+         if value > 0.5 then
             l_col = cols.heat2
          else
             l_col = cols.heat
@@ -620,35 +644,49 @@ local function render_ammoBar( name, x, y, value, txt, txtcol )
          l_col = cols[name]
       end
 
-      gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
+      gfx.renderRect( x + offsets[1], y + offsets[1], value * bar_weapon_w, bar_weapon_h, l_col)
    end
 
    -- Refire indicator
-   gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, value[6])
-
-   if value[3] == 1 then
-      gfx.renderTex( bgs.bar_weapon_prim, x, y )
-   elseif value[3] == 2 then
-      gfx.renderTex( bgs.bar_weapon_sec, x, y )
-   else
-      gfx.renderTex( bgs.bar_weapon, x, y )
+   local colready = cols.ready
+   local charge = weap.cooldown
+   if weap.charge then
+      charge = weap.charge
+      if weap.charge==1 or weap.cooldown==0 then
+         colready = cols.energy
+      else
+         colready = cols.txt_wrn
+      end
    end
+   gfx.renderRect( x+offsets[1], y + offsets[2], charge * bar_ready_w, bar_ready_h, colready)
+
+   local col
+   if weap.active then
+      col = cols.weap_on
+   elseif weap.level==1 then
+      col = cols.weap_pri
+   elseif weap.level==2 then
+      col = cols.weap_sec
+   else
+      col = cols.weap_off
+   end
+   gfx.renderTex( bgs.bar_weapon, x, y, col )
 
    local textoffset = 0
    local trackcol
-   if value[4] then
-      if value[4] == -1 or ptarget == nil then
+   if track then
+      if track == -1 or ptarget == nil then
          trackcol = cols.txt_una
-      elseif value[5] then -- Handling missile lock-on.
-         if value[4] < 1. then
+      elseif weap.lockon then
+         if track < 1. then
             local h, s, v = cols.txt_una:hsv()
             trackcol = colour.new( cols.txt_una )
-            trackcol:setHSV( h, s, v + value[4] * (1-v))
+            trackcol:setHSV( h, s, v + track * (1-v))
          else
             trackcol = colour.new( "Green" )
          end
       else -- Handling turret tracking.
-         trackcol = colour.new(1-value[4], value[4], 0)
+         trackcol = colour.new(1-track, track, 0)
       end
       gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], trackcol )
       textoffset = track_w + 2
@@ -681,7 +719,6 @@ local function largeNumber( number, idp )
    return formatted
 end
 
-
 function render( dt, dt_mod )
    --Values
    armour, shield, stress = pp:health()
@@ -707,9 +744,12 @@ function render( dt, dt_mod )
       ex = ex - 48
    end
 
-   --Player pane
+   -- Player pane
    gfx.renderTex( player_pane_t, pl_pane_x, pl_pane_y )
    local filler_h = #wset * 28 -- extend the pane according to the number of weapon bars
+   if has_flow then
+      filler_h = filler_h + 28
+   end
    filler_h = math.max( filler_h - 6, 0 )
 
    gfx.renderTexRaw( player_pane_m, pl_pane_x + 33, pl_pane_y - filler_h, pl_pane_w_b, filler_h)
@@ -786,45 +826,8 @@ function render( dt, dt_mod )
    end
 
    --Weapon bars
-   for num, weapon in ipairs(wset) do
-      txt = _(weapon.name)
-      local values
-      if weapon.left then -- Truncate names for readability.
-         if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
-            txt = string.gsub(txt,"Cannon", "C.")
-         elseif weapon.type == "Bolt Turret" or weapon.type == "Beam Turret" then
-            txt = string.gsub(txt,"Turret", "T.")
-         elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
-            txt = string.gsub(txt,"Launcher", "L.")
-         end
-
-         txt = txt .. " (" .. weapon.left .. ")"
-         if weapon.left == 0 then
-            col = cols.txt_wrn
-         else
-            col = cols.txt_bar
-         end
-         if not weapon.in_arc and ptarget ~= nil then
-            col = cols.txt_una
-         end
-         values = {weapon.left_p, weapon.cooldown, weapon.level,
-               weapon.track or weapon.lockon, weapon.lockon, cols.ready }
-         render_ammoBar( "ammo", x_ammo, y_ammo - (num-1)*28, values, txt, col)
-      else
-         col = cols.txt_bar
-         values = {weapon.temp, weapon.cooldown, weapon.level, weapon.track, nil, cols.ready}
-
-         if weapon.charge then
-            values[2] = weapon.charge
-            if weapon.charge == 1 or weapon.cooldown == 0 then
-               values[6] = cols.energy
-            else
-               values[6] = cols.txt_wrn
-            end
-         end
-
-         render_ammoBar( "heat", x_ammo, y_ammo - (num-1)*28, values, txt, col )
-      end
+   for n, w in ipairs(wset) do
+      render_ammoBar( w, x_ammo, y_ammo-(n-1)*28 )
    end
 
    -- Formation selection button
@@ -895,33 +898,30 @@ function render( dt, dt_mod )
       gfx.renderTexRaw( slotend, slot_start_x - slotend_w, slot_y, slotend_w, slotend_h, 1, 1, 0, 0, -1, 1 )
 
       gfx.renderRect( slot_start_x, slot_y, slot_w * #aset, slot_h, cols.slot_bg ) -- Background for all slots.
-      for i=1,#aset do
+      for i,a in ipairs(aset) do
          local slot_x = screen_w - slot_start_x - i * slot_w
 
-         -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
-         if aset[i].type == "Afterburner" then
-            gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].temp, cols.heat ) -- Background (heat)
-         end
+         -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat-based somehow!
+         gfx.renderRect( slot_x, slot_y, slot_w, slot_h * a.heat, cols.heat ) -- Background (heat)
+         gfx.renderTexRaw( a.icon, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
+         gfx.renderRect( slot_x, slot_y, slot_w, slot_h * a.heat, cols.afb ) -- Foreground (heat)
 
-         gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
-
-         if aset[i].type == "Afterburner" then
-            gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].temp, cols.afb ) -- Foreground (heat)
-         end
-
-         if aset[i].state == "on" then
+         if a.state == "on" then
             gfx.renderTex( active, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y )
-         elseif aset[i].state == "cooldown" then
-            local texnum = round(aset[i].cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
+         elseif a.state == "cooldown" then
+            local texnum = round(a.cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
          end
 
-         if aset[i].weapset then
-            gfx.print( true, _(aset[i].weapset), slot_x + slot_img_offs_x + 5,
+         if a.weapset then
+            gfx.print( true, _(a.weapset), slot_x + slot_img_offs_x + 5,
                   slot_y + slot_img_offs_y + 5, cols.txt_bar, slot_w, false )
          end
 
          gfx.renderTex( slot, slot_x, slot_y ) -- Frame
+         if a.active then
+            gfx.renderTex( slotframe, slot_x, slot_y, cols.weap_on ) -- Indicator
+         end
       end
 
       -- Draw the right-side bar cap.
@@ -944,6 +944,7 @@ function render( dt, dt_mod )
             ta_energy = ptarget:energy()
 
             --Render target graphic
+            ptarget:renderTo( ptarget_cvs )
             if ptarget_gfx_w > 62 or ptarget_gfx_h > 62 then
                gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_draw_w / 2, ta_center_y - ptarget_gfx_draw_h / 2, ptarget_gfx_draw_w, ptarget_gfx_draw_h, 1, 1, 0, 0, 1, -1)
             else

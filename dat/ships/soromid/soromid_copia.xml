@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>120</points>
  <base_type>Copia</base_type>
- <GFX size="132" sx="12" sy="12">copia</GFX>
+ <gfx size="132" sx="12" sy="12">copia</gfx>
  <rarity>2</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Freighter">Bulk Freighter</class>
@@ -48,11 +48,12 @@
   <structure size="large" prop="bio_hull" name="shell">Ponderosus Cortex I</structure>
   <structure size="large" />
   <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <speed_mod>5</speed_mod>
   <turn_mod>5</turn_mod>
-  <thrust_mod>5</thrust_mod>
+  <accel_mod>5</accel_mod>
   <armour_mod>-10</armour_mod>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>

@@ -32,14 +32,13 @@ local function flames( pos, vel, radius, params )
       local flames_shader_frag = lf.read( "glsl/cleansing_flames.frag" )
       flames_shader = lg.newShader( flames_shader_frag )
       flames_sfx = {
-         -- TODO sound
-         audio.new( "snd/sounds/empexplode.ogg" ),
+         audio.new( "snd/sounds/cleansing_flames.ogg" ),
       }
    end
 
    -- Create the flames
    local size = radius * 1.5 -- Flames look a bit smaller in reality, so we increase in size
-   local speed = params.speed or math.max(3.0-(size/350)^0.5, 0.8)
+   local speed = params.speed or math.max(2.5-(size/300)^0.5, 0.5)
    local sfx
    if not params.silent then
       sfx = flames_sfx[ rnd.rnd(1,#flames_sfx) ]

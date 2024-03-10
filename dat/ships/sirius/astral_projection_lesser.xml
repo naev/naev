@@ -3,15 +3,14 @@
  <lua>ships/lua/sirius_projection.lua</lua>
  <points>30</points>
  <base_type>Astral Projection Lesser</base_type>
- <gfx_space sx="8" sy="8" size="60" polygon="apparition_fighter">ship/apparition/apparition_fighter.webp</gfx_space>
- <gfx_comm>outfit/store/placeholder.webp</gfx_comm>
+ <gfx size="80" sx="8" sy="8" noengine="1" comm="outfit/store/placeholder.webp">apparition_fighter</gfx>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>1</price>
  <fabricator>Sirius Psychic Powers</fabricator>
  <description>N/A</description>
  <movement>
-  <thrust>300</thrust>
+  <accel>300</accel>
   <speed>500</speed>
   <turn>230</turn>
  </movement>
@@ -36,6 +35,7 @@
   <weapon size="small" x="10" y="2" h="0">Lesser Astral Cannon</weapon>
   <utility size="small"/>
   <utility size="small"/>
+  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
   <stress_dissipation>10000</stress_dissipation>

@@ -65,7 +65,7 @@ function accept ()
 
    -- Mission data
    mem.misn_stage = 0
-   mem.misn_marker = misn.markerAdd( misn_target_sys2, "low" )
+   mem.misn_marker_prev = misn.markerAdd( misn_target_sys2, "low" )
    mem.misn_marker = misn.markerAdd( misn_final_sys, "high" )
 
    -- Mission details
@@ -108,6 +108,9 @@ function jumpin ()
       if system.cur() == misn_final_sys then
          pilot.clear()
          pilot.toggleSpawn(false)
+
+         -- Clear marker to previous system
+         misn.markerRm( mem.misn_marker_prev )
 
          local function setup_pilot( p, pos )
             pilotai.guard( p, pos )
@@ -257,6 +260,9 @@ function col_dead( _victim )
    addRefuelShip()
    mem.misn_stage = 4
 
+   -- Set marker back to base
+   misn.markerMove( mem.misn_marker, misn_base )
+
    -- Change back to normal AI
    for k,v in ipairs(fleetE) do
       if v:exists() then
@@ -271,7 +277,7 @@ function land ()
    -- Final landing stage
    if mem.misn_stage == 4 and spob.cur() == misn_base then
 
-      tk.msg( _("Mission Success"), fmt.f(_([[As you approach to land on {pnt} you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. Upon landing, you are saluted by the welcoming committee in charge of honoring all the returning pilots.
+      tk.msg( _("Mission Success"), fmt.f(_([[As you approach to land on {pnt} you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. Upon landing, you are saluted by the welcoming committee in charge of honouring all the returning pilots.
     You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]), {pnt=misn_base}) )
 
       diff.apply("collective_dead")

@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
-  <mass>45</mass>
+  <mass>19</mass>
   <price>75000</price>
   <description>The Heavy Ion Cannon does a far better job at disabling ships than the standard model, but it requires a medium mount. Most militaries employ these weapons on specialized capture teams, but the design is licensed for public use as well.</description>
   <gfx_store>heavy_ioncannon.webp</gfx_store>

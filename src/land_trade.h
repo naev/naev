@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "land.h"
+#include "commodity.h"
 
 /*
  * Helper functions.

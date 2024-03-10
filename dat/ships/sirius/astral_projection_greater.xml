@@ -3,15 +3,14 @@
  <lua>ships/lua/sirius_projection.lua</lua>
  <points>30</points>
  <base_type>Astral Projection Greater</base_type>
- <gfx_space sx="12" sy="12" size="60" polygon="apparition_cruiser">ship/apparition/apparition_cruiser.webp</gfx_space>
- <gfx_comm>outfit/store/placeholder.webp</gfx_comm>
+ <gfx size="140" sx="12" sy="12" noengine="1" comm="outfit/store/placeholder.webp">apparition_cruiser</gfx>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>1</price>
  <fabricator>Sirius Psychic Powers</fabricator>
  <description>N/A</description>
  <movement>
-  <thrust>180</thrust>
+  <accel>180</accel>
   <speed>300</speed>
   <turn>150</turn>
  </movement>
@@ -36,6 +35,7 @@
   <weapon size="medium" x="10" y="2" h="0">Greater Astral Cannon</weapon>
   <utility size="medium"/>
   <utility size="medium"/>
+  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
   <stress_dissipation>10000</stress_dissipation>

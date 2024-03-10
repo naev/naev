@@ -2,7 +2,7 @@
 <ship name="Proteron Gauss">
  <points>90</points>
  <base_type>Gauss</base_type>
- <GFX size="100" sx="10" sy="10">gauss</GFX>
+ <gfx size="100" sx="10" sy="10">gauss</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
@@ -36,8 +36,8 @@
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
@@ -46,7 +46,7 @@
  </slots>
  <stats>
   <speed_mod>5</speed_mod>
-  <thrust_mod>5</thrust_mod>
+  <accel_mod>5</accel_mod>
   <turn_mod>5</turn_mod>
   <shield_regen_mod>20</shield_regen_mod>
  </stats>

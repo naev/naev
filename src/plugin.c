@@ -56,8 +56,13 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
       xmlr_strd( node, "description", plg->description );
       xmlr_strd( node, "compatibility", plg->compatibility );
       xmlr_int( node, "priority", plg->priority );
+      xmlr_strd( node, "source", plg->source );
       if (xml_isNode( node, "blacklist" )) {
          blacklist_append( xml_get(node) );
+         continue;
+      }
+      if (xml_isNode( node, "whitelist" )) {
+         whitelist_append( xml_get(node) );
          continue;
       }
       if (xml_isNode( node, "total_conversion" )) {
@@ -76,10 +81,16 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
             "^unidiff/.*\\.xml",
             "^map_decorator/.*\\.xml",
             "^intro",
-            NULL
+            NULL,
+         };
+         const char *wht[] = {
+            "^events/settings.lua",
+            NULL,
          };
          for (int i=0; blk[i]!=NULL; i++)
             blacklist_append( blk[i] );
+         for (int i=0; wht[i]!=NULL; i++)
+            whitelist_append( wht[i] );
          plg->total_conversion = 1;
          continue;
       }
@@ -87,6 +98,15 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
+
+#define MELEMENT(o,s) \
+if (o) WARN(_("Plugin '%s' missing/invalid '%s' element"), plg->name, s) /**< Define to help check for data errors. */
+   MELEMENT( plg->author==NULL, "author" );
+   MELEMENT( plg->version==NULL, "version" );
+   MELEMENT( plg->description==NULL, "description" );
+   MELEMENT( plg->compatibility==NULL, "compatibility" );
+   MELEMENT( plg->source==NULL, "source" );
+#undef MELEMENT
 
    return 0;
 }
@@ -201,6 +221,7 @@ void plugin_exit (void)
       free( p->version );
       free( p->description );
       free( p->compatibility );
+      free( p->source );
       free( p->mountpoint );
    }
    array_free(plugins);

@@ -30,11 +30,7 @@
 #include "opengl_render.h"
 
 #include "camera.h"
-#include "conf.h"
 #include "gui.h"
-#include "log.h"
-#include "ndata.h"
-#include "nstring.h"
 #include "opengl.h"
 
 #define OPENGL_RENDER_VBO_SIZE      256 /**< Size of VBO. */
@@ -52,7 +48,7 @@ void gl_beginSolidProgram(mat4 projection, const glColour *c)
 {
    glUseProgram(shaders.solid.program);
    glEnableVertexAttribArray(shaders.solid.vertex);
-   gl_uniformColor(shaders.solid.color, c);
+   gl_uniformColour(shaders.solid.colour, c);
    gl_uniformMat4(shaders.solid.projection, &projection);
 }
 
@@ -67,13 +63,13 @@ void gl_beginSmoothProgram(mat4 projection)
 {
    glUseProgram(shaders.smooth.program);
    glEnableVertexAttribArray(shaders.smooth.vertex);
-   glEnableVertexAttribArray(shaders.smooth.vertex_color);
+   glEnableVertexAttribArray(shaders.smooth.vertex_colour);
    gl_uniformMat4(shaders.smooth.projection, &projection);
 }
 
 void gl_endSmoothProgram() {
    glDisableVertexAttribArray(shaders.smooth.vertex);
-   glDisableVertexAttribArray(shaders.smooth.vertex_color);
+   glDisableVertexAttribArray(shaders.smooth.vertex_colour);
    glUseProgram(0);
    gl_checkErr();
 }
@@ -91,8 +87,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 {
    /* Set the vertex. */
    mat4 projection = gl_view_matrix;
-   mat4_translate( &projection, x, y, 0. );
-   mat4_scale( &projection, w, h, 1. );
+   mat4_translate_scale_xy( &projection, x, y, w, h );
 
    gl_renderRectH( &projection, c, 1 );
 }
@@ -109,8 +104,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c )
 {
    mat4 projection = gl_view_matrix;
-   mat4_translate( &projection, x, y, 0. );
-   mat4_scale( &projection, w, h, 1. );
+   mat4_translate_scale_xy( &projection, x, y, w, h );
 
    gl_renderRectH( &projection, c, 0 );
 }
@@ -164,15 +158,58 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
 void gl_renderTriangleEmpty( double x, double y, double a, double s, double length, const glColour *c )
 {
    mat4 projection = gl_view_matrix;
-   mat4_translate( &projection, x, y, 0. );
+   mat4_translate_xy( &projection, x, y );
    if (a != 0.)
       mat4_rotate2d( &projection, a );
-   mat4_scale( &projection, s*length, s, 1. );
+   mat4_scale_xy( &projection, s*length, s );
 
    gl_beginSolidProgram(projection, c);
    gl_vboActivateAttribOffset( gl_triangleVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 4 );
    gl_endSolidProgram();
+}
+
+/**
+ * @brief Texture blitting backend.
+ *
+ *    @param texture Texture to blit.
+ *    @param projection Projection matrix tu use.
+ *    @param tex_mat Texture matrix to use.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_renderTextureRawH( GLuint texture,
+      const mat4 *projection, const mat4 *tex_mat,
+      const glColour *c )
+{
+   glUseProgram(shaders.texture.program);
+
+   /* Bind the texture. */
+   glBindTexture( GL_TEXTURE_2D, texture );
+
+   /* Must have colour for now. */
+   if (c == NULL)
+      c = &cWhite;
+
+   /* Set the vertex. */
+   glEnableVertexAttribArray( shaders.texture.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
+         0, 2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   gl_uniformColour(shaders.texture.colour, c);
+   gl_uniformMat4(shaders.texture.projection, projection);
+   gl_uniformMat4(shaders.texture.tex_mat, tex_mat);
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.texture.vertex );
+
+   /* anything failed? */
+   gl_checkErr();
+
+   glUseProgram(0);
 }
 
 /**
@@ -196,58 +233,32 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
       double tx, double ty, double tw, double th,
       const glColour *c, double angle )
 {
-   // Half width and height
-   double hw, hh;
+   double hw, hh; /* Half width and height. */
    mat4 projection, tex_mat;
-
-   glUseProgram(shaders.texture.program);
-
-   /* Bind the texture. */
-   glBindTexture( GL_TEXTURE_2D, texture);
 
    /* Must have colour for now. */
    if (c == NULL)
       c = &cWhite;
 
-   hw = w/2.;
-   hh = h/2.;
+   hw = w*0.5;
+   hh = h*0.5;
 
    /* Set the vertex. */
    projection = gl_view_matrix;
    if (angle==0.) {
-     mat4_translate( &projection, x, y, 0. );
-     mat4_scale( &projection, w, h, 1. );
+      mat4_translate_scale_xy( &projection, x, y, w, h );
    }
    else {
-     mat4_translate( &projection, x+hw, y+hh, 0. );
-     mat4_rotate2d( &projection, angle );
-     mat4_translate( &projection, -hw, -hh, 0. );
-     mat4_scale( &projection, w, h, 1. );
+      mat4_translate_xy( &projection, x+hw, y+hh );
+      mat4_rotate2d( &projection, angle );
+      mat4_translate_scale_xy( &projection, -hw, -hh, w, h );
    }
-   glEnableVertexAttribArray( shaders.texture.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
-         0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
    tex_mat = (flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
-   mat4_translate( &tex_mat, tx, ty, 0. );
-   mat4_scale( &tex_mat, tw, th, 1. );
+   mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
-   /* Set shader uniforms. */
-   gl_uniformColor(shaders.texture.color, c);
-   gl_uniformMat4(shaders.texture.projection, &projection);
-   gl_uniformMat4(shaders.texture.tex_mat, &tex_mat);
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   glDisableVertexAttribArray( shaders.texture.vertex );
-
-   /* anything failed? */
-   gl_checkErr();
-
-   glUseProgram(0);
+   gl_renderTextureRawH( texture, &projection, &tex_mat, c );
 }
 
 /**
@@ -289,8 +300,9 @@ void gl_renderSDF( const glTexture *texture,
       double x, double y, double w, double h,
       const glColour *c, double angle, double outline )
 {
-   // Half width and height
-   double hw, hh;
+   (void) outline; /* TODO handle outline. */
+   double hw, hh; /* Half width and height */
+   double sw, sh;
    mat4 projection, tex_mat;
 
    glUseProgram(shaders.texturesdf.program);
@@ -302,40 +314,94 @@ void gl_renderSDF( const glTexture *texture,
    if (c == NULL)
       c = &cWhite;
 
-   hw = w/2.;
-   hh = h/2.;
+   hw = w*0.5;
+   hh = h*0.5;
 
    /* Set the vertex. */
    projection = gl_view_matrix;
    if (angle==0.) {
-     mat4_translate( &projection, x, y, 0. );
-     mat4_scale( &projection, w, h, 1. );
+     mat4_translate_scale_xy( &projection, x+hw, y+hh, hw, hh );
    }
    else {
-     mat4_translate( &projection, x+hw, y+hh, 0. );
+     mat4_translate_xy( &projection, x+hw, y+hh );
      mat4_rotate2d( &projection, angle );
-     mat4_translate( &projection, -hw, -hh, 0. );
-     mat4_scale( &projection, w, h, 1. );
+     mat4_scale_xy( &projection, hw, hh );
    }
    glEnableVertexAttribArray( shaders.texturesdf.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texturesdf.vertex,
+   gl_vboActivateAttribOffset( gl_circleVBO, shaders.texturesdf.vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
+   /* TODO we would want to pad the texture a bit to get nice marked borders, but we have to actually pad the SDF first... */
+   sw = 0.;//1./w;
+   sh = 0.;//1./h;
    tex_mat = (texture->flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
-   mat4_scale( &tex_mat, texture->srw, texture->srh, 1. );
+   mat4_scale_xy( &tex_mat, texture->srw+2.*sw, texture->srh+2.*sh );
+   mat4_translate_xy( &tex_mat, -sw, -sh );
 
    /* Set shader uniforms. */
-   gl_uniformColor(shaders.texturesdf.color, c);
+   gl_uniformColour(shaders.texturesdf.colour, c);
    gl_uniformMat4(shaders.texturesdf.projection, &projection);
    gl_uniformMat4(shaders.texturesdf.tex_mat, &tex_mat);
-   glUniform1f( shaders.texturesdf.m, texture->vmax );
+   glUniform1f( shaders.texturesdf.m, (2.0*texture->vmax*(w+2.)/texture->w) );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
    glDisableVertexAttribArray( shaders.texturesdf.vertex );
+
+   /* anything failed? */
+   gl_checkErr();
+
+   glUseProgram(0);
+}
+
+/**
+ * @brief Texture blitting backend for interpolated texture.
+ *
+ *    @param ta Texture id A to blit.
+ *    @param tb Texture id B to blit.
+ *    @param inter Amount of interpolation to do.
+ *    @param projection Projection matrix tu use.
+ *    @param tex_mat Texture matrix to use.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, double inter,
+      const mat4 *projection ,const mat4 *tex_mat, const glColour *c )
+{
+   /* Corner cases. */
+   if (inter >= 1.)
+      return gl_renderTextureRawH( ta, projection, tex_mat, c );
+   else if (inter <= 0.)
+      return gl_renderTextureRawH( tb, projection, tex_mat, c );
+
+   glUseProgram(shaders.texture_interpolate.program);
+
+   /* Bind the textures. */
+   glActiveTexture( GL_TEXTURE1 );
+   glBindTexture( GL_TEXTURE_2D, tb );
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE_2D, ta );
+   /* Always end with TEXTURE0 active. */
+
+   /* Set the vertex. */
+   glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   glUniform1i(shaders.texture_interpolate.sampler1, 0);
+   glUniform1i(shaders.texture_interpolate.sampler2, 1);
+   gl_uniformColour(shaders.texture_interpolate.colour, c);
+   glUniform1f(shaders.texture_interpolate.inter, inter);
+   gl_uniformMat4(shaders.texture_interpolate.projection, projection);
+   gl_uniformMat4(shaders.texture_interpolate.tex_mat, tex_mat);
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
 
    /* anything failed? */
    gl_checkErr();
@@ -366,67 +432,24 @@ void gl_renderTextureInterpolate(  const glTexture* ta,
       double x, double y, double w, double h,
       double tx, double ty, double tw, double th, const glColour *c )
 {
-   /* No interpolation. */
-   if (tb == NULL) {
-      gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
-      return;
-   }
-
-   /* Corner cases. */
-   if (inter >= 1.) {
-      gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
-      return;
-   }
-   else if (inter <= 0.) {
-      gl_renderTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
-      return;
-   }
-
    mat4 projection, tex_mat;
 
-   glUseProgram(shaders.texture_interpolate.program);
-
-   /* Bind the textures. */
-   glActiveTexture( GL_TEXTURE1 );
-   glBindTexture( GL_TEXTURE_2D, tb->texture);
-   glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE_2D, ta->texture);
-   /* Always end with TEXTURE0 active. */
+   /* Case no need for interpolation. */
+   if (tb==NULL)
+      return gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
+   else if (ta==NULL)
+      return gl_renderTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
 
    /* Must have colour for now. */
    if (c == NULL)
       c = &cWhite;
 
-   /* Set the vertex. */
    projection = gl_view_matrix;
-   mat4_translate( &projection, x, y, 0. );
-   mat4_scale( &projection, w, h, 1. );
-   glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
-
-   /* Set the texture. */
+   mat4_translate_scale_xy( &projection, x, y, w, h );
    tex_mat = (ta->flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
-   mat4_translate( &tex_mat, tx, ty, 0. );
-   mat4_scale( &tex_mat, tw, th, 1. );
+   mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
-   /* Set shader uniforms. */
-   glUniform1i(shaders.texture_interpolate.sampler1, 0);
-   glUniform1i(shaders.texture_interpolate.sampler2, 1);
-   gl_uniformColor(shaders.texture_interpolate.color, c);
-   glUniform1f(shaders.texture_interpolate.inter, inter);
-   gl_uniformMat4(shaders.texture_interpolate.projection, &projection);
-   gl_uniformMat4(shaders.texture_interpolate.tex_mat, &tex_mat);
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
-
-   /* anything failed? */
-   gl_checkErr();
-
-   glUseProgram(0);
+   return gl_renderTextureInterpolateRawH( ta->texture, tb->texture, inter, &projection, &tex_mat, c );
 }
 
 /**
@@ -447,8 +470,8 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
    gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   *nx = (bx - cx) * z + gx + SCREEN_W/2.;
-   *ny = (by - cy) * z + gy + SCREEN_H/2.;
+   *nx = (bx - cx) * z + gx + SCREEN_W*0.5;
+   *ny = (by - cy) * z + gy + SCREEN_H*0.5;
 }
 
 /**
@@ -466,9 +489,8 @@ mat4 gl_gameToScreenMatrix( mat4 lhs )
    z = cam_getZoom();
    gui_getOffset( &gx, &gy );
 
-   mat4_translate( &projection, gx + SCREEN_W/2., gy + SCREEN_H/2., 0. );
-   mat4_scale( &projection, z, z, 1. );
-   mat4_translate( &projection, -cx, cy, 0. );
+   mat4_translate_scale_xy( &projection, gx+SCREEN_W*0.5, gy+SCREEN_H*0.5, z, z );
+   mat4_translate_xy( &projection, -cx, cy );
    return projection;
 }
 
@@ -490,8 +512,8 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
    gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   *nx = (bx - SCREEN_W/2. - gx) / z + cx;
-   *ny = (by - SCREEN_H/2. - gy) / z + cy;
+   *nx = (bx - SCREEN_W*0.5 - gx) / z + cx;
+   *ny = (by - SCREEN_H*0.5 - gy) / z + cy;
 }
 
 /**
@@ -514,7 +536,7 @@ void gl_renderSprite( const glTexture* sprite, double bx, double by,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw*0.5, by - sprite->sh*0.5 );
 
    /* Scaled sprite dimensions. */
    w = sprite->sw*z;
@@ -556,7 +578,7 @@ void gl_renderSpriteScale( const glTexture* sprite, double bx, double by,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw*0.5, by - sprite->sh*0.5 );
 
    /* Scaled sprite dimensions. */
    w = sprite->sw*z*scalew;
@@ -597,7 +619,7 @@ void gl_renderSpriteRotate( const glTexture* sprite,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw*0.5, by - sprite->sh*0.5 );
 
    /* Scaled sprite dimensions. */
    w = sprite->sw*z;
@@ -641,7 +663,7 @@ void gl_renderSpriteScaleRotate( const glTexture* sprite,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw*0.5, by - sprite->sh*0.5 );
 
    /* Scaled sprite dimensions. */
    w = sprite->sw*z*scalew;
@@ -711,7 +733,7 @@ void gl_renderSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
    double x,y, w,h, tx,ty, z;
 
    /* Translate coords. */
-   gl_gameToScreenCoords( &x, &y, bx - scalew * sa->sw/2., by - scaleh * sa->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - scalew * sa->sw*0.5, by - scaleh * sa->sh*0.5 );
 
    /* Scaled sprite dimensions. */
    z = cam_getZoom();
@@ -910,8 +932,8 @@ void gl_renderScaleAspect( const glTexture* texture,
    nw = scale * texture->w;
    nh = scale * texture->h;
 
-   bx += (bw-nw)/2.;
-   by += (bh-nh)/2.;
+   bx += (bw-nw)*0.5;
+   by += (bh-nh)*0.5;
 
    gl_renderScale( texture, bx, by, nw, nh, c );
 }
@@ -953,10 +975,10 @@ void gl_renderStatic( const glTexture* texture,
 void gl_renderShader( double x, double y, double w, double h, double r, const SimpleShader *shd, const glColour *c, int center )
 {
    mat4 projection = gl_view_matrix;
-   mat4_translate( &projection, x, y, 0. );
+   mat4_translate_xy( &projection, x, y );
    if (r != 0.)
       mat4_rotate2d( &projection, r );
-   mat4_scale( &projection, w, h, 1. );
+   mat4_scale_xy( &projection, w, h );
    glUniform2f( shd->dimensions, w, h );
    gl_renderShaderH( shd, &projection, c, center );
 }
@@ -975,7 +997,7 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H, const glColour *c
    gl_vboActivateAttribOffset( center ? gl_circleVBO : gl_squareVBO, shd->vertex, 0, 2, GL_FLOAT, 0 );
 
    if (c != NULL)
-      gl_uniformColor(shd->color, c);
+      gl_uniformColour(shd->colour, c);
 
    gl_uniformMat4(shd->projection, H);
 
@@ -1000,8 +1022,7 @@ void gl_renderCircle( double cx, double cy,
 {
    /* Set the vertex. */
    mat4 projection = gl_view_matrix;
-   mat4_translate( &projection, cx, cy, 0. );
-   mat4_scale( &projection, r, r, 1. );
+   mat4_translate_scale_xy( &projection, cx, cy, r, r );
 
    /* Draw! */
    gl_renderCircleH( &projection, c, filled );
@@ -1042,7 +1063,7 @@ void gl_renderLine( double x1, double y1,
 
    glUseProgram(shaders.sdfsolid.program);
    glUniform1f(shaders.sdfsolid.paramf, 1.); /* No outline. */
-   gl_renderShader( (x1+x2)/2., (y1+y2)/2., s/2.+0.5, 1.0, a, &shaders.sdfsolid, c, 1 );
+   gl_renderShader( (x1+x2)*0.5, (y1+y2)*0.5, s*0.5+0.5, 1.0, a, &shaders.sdfsolid, c, 1 );
 }
 
 /**

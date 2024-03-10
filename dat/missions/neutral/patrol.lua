@@ -49,7 +49,6 @@ abandon_text    = {
    _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not receive payment."),
 }
 
-
 -- Messages
 msg = {
    _("Point secure."),
@@ -69,7 +68,6 @@ mem.osd_msg = {
 
 mem.use_hidden_jumps = false
 
-
 -- Get the number of enemies in a particular system
 local function get_enemies( sys )
    local enemies = 0
@@ -81,7 +79,6 @@ local function get_enemies( sys )
    end
    return enemies
 end
-
 
 function create ()
    mem.paying_faction = spob.cur():faction()
@@ -99,7 +96,29 @@ function create ()
       misn.finish( false )
    end
 
+   -- Try to cache the route to make it so that the same route doesn't appear over and over
+   local c = naev.cache()
+   local t = time.get()
+   if not c.misn_patrols then
+      c.misn_patrols = {}
+   end
+   if c.misn_patrols._t ~= t then
+      c.misn_patrols = { _t=t } -- Regenerate
+   end
+   local newsystems = {}
+   for k,s in ipairs(systems) do
+      if not c.misn_patrols[s:nameRaw()]  then
+         newsystems[#newsystems+1] = s
+      end
+   end
+   systems = newsystems
+
+   if #systems <= 0 then
+      misn.finish( false )
+   end
+
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
+   -- Have to be able to do an inclusive claim
    if not misn.claim( mem.missys, true ) then misn.finish( false ) end
 
    local planets = mem.missys:spobs()
@@ -157,10 +176,17 @@ function create ()
    misn.setDesc(desc)
    misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
+
+   -- Mark the system as having a patrol mission
+   c.misn_patrols[mem.missys:nameRaw()] = true
 end
 
-
 function accept ()
+   if player.misnActive("Patrol") then
+      vntk.msg(_([[Already Patrolling]]),_([[You can only accept a single patrol mission at a given time.]]))
+      return
+   end
+
    misn.accept()
 
    mem.osd_msg[1] = fmt.f( mem.osd_msg[1], {sys=mem.missys} )
@@ -179,13 +205,11 @@ function accept ()
    hook.land( "land" )
 end
 
-
 function enter ()
    if system.cur() == mem.missys and not mem.job_done then
       timer()
    end
 end
-
 
 function jumpout ()
    if mem.mark ~= nil then
@@ -197,13 +221,12 @@ function jumpout ()
    local last_sys = system.cur()
    if not mem.job_done then
       if last_sys == mem.missys then
-         lmisn.fail( fmt.f( msg[6], {sys=last_sys} ) )
+         lmisn.fail( fmt.f(msg[6], {sys=last_sys} ) )
       elseif mem.jumps_permitted < 0 then
-         lmisn.fail( msg[5] )
+         lmisn.fail(msg[5])
       end
    end
 end
-
 
 function land ()
    if mem.mark ~= nil then
@@ -237,7 +260,6 @@ function land ()
    end
 end
 
-
 function pilot_leave ( pilot )
    local new_hostiles = {}
    for i, j in ipairs( mem.hostiles ) do
@@ -245,48 +267,45 @@ function pilot_leave ( pilot )
          new_hostiles[ #new_hostiles + 1 ] = j
       end
    end
-
    mem.hostiles = new_hostiles
 end
 
+local function patrol_msg( m )
+   player.msg(fmt.f(_("[Patrol]: {msg}"),{msg=m}))
+end
 
 function timer ()
-   hook.rm( mem.timer_hook )
-
    local player_pos = player.pos()
-   local enemies = pilot.get( mem.paying_faction:enemies() )
+   local enemies = pilot.getEnemies( mem.paying_faction, 1500, player_pos )
 
-   for i, j in ipairs( enemies ) do
-      if j ~= nil and j:exists() then
-         local already_in = false
-         for a, b in ipairs( mem.hostiles ) do
-            if j == b then
-               already_in = true
-            end
+   for i, j in ipairs(enemies) do
+      if j ~= nil and j:exists() and not inlist( mem.hostiles, j ) then
+         local m = j:memory()
+         if m.natural then
+            m.shield_run = -1
+            m.armour_run = -1
+            m.norun = true
+            m.enemyclose = nil
          end
-         if not already_in then
-            if player_pos:dist( j:pos() ) < 1500 then
-               j:setVisible( true )
-               j:setHilight( true )
-               j:setHostile( true )
-               hook.pilot( j, "death", "pilot_leave" )
-               hook.pilot( j, "jump", "pilot_leave" )
-               hook.pilot( j, "land", "pilot_leave" )
-               mem.hostiles[ #mem.hostiles + 1 ] = j
-            end
-         end
+         j:setVisible( true )
+         j:setHilight( true )
+         j:setHostile( true )
+         hook.pilot( j, "death", "pilot_leave" )
+         hook.pilot( j, "jump", "pilot_leave" )
+         hook.pilot( j, "land", "pilot_leave" )
+         mem.hostiles[ #mem.hostiles + 1 ] = j
       end
    end
 
    if #mem.hostiles > 0 then
       if not mem.hostiles_encountered then
-         player.msg( msg[2] )
+         patrol_msg("#r"..msg[2].."#0")
          mem.hostiles_encountered = true
       end
       misn.osdActive( 3 )
    elseif #mem.points > 0 then
       if mem.hostiles_encountered then
-         player.msg( msg[3] )
+         patrol_msg("#b"..msg[3].."#0")
          mem.hostiles_encountered = false
       end
       misn.osdActive( 2 )
@@ -304,7 +323,7 @@ function timer ()
          end
          mem.points = new_points
 
-         player.msg( msg[1] )
+         patrol_msg("#b"..msg[1].."#0")
          mem.osd_msg[2] = n_(
             "Go to indicated point (%d remaining)",
             "Go to indicated point (%d remaining)",
@@ -319,7 +338,7 @@ function timer ()
       end
    else
       mem.job_done = true
-      player.msg( msg[4] )
+      patrol_msg("#g"..msg[4].."#0")
       misn.osdActive( 4 )
       if mem.marker ~= nil then
          misn.markerRm( mem.marker )
@@ -327,6 +346,6 @@ function timer ()
    end
 
    if not mem.job_done then
-      mem.timer_hook = hook.timer( 0.05, "timer" )
+      mem.timer_hook = hook.timer( 0.3, "timer" )
    end
 end

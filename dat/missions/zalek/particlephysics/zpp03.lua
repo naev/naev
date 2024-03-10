@@ -104,6 +104,8 @@ She tosses you a credstick and runs to her room with the black box.]]))
       n(_([[Just before she disappears around the corner she turns back to you and yells.
 "Oh, and by the way, I was able to pull some strings with my friend and you should be cleared for the Heavy Weapon License now. Seeing the dangers you face, it would be good for you to have bigger guns."
 Without giving you time to process what she yelled, she vanishes.]]))
+      vn.sfxBingo()
+      vn.na(_([[You can now purchase the #bHeavy Weapon License#0.]]))
    end
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )

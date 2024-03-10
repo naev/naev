@@ -12,6 +12,9 @@
  <faction>Independent</faction>
  <faction>FLF</faction>
  <done>Pirate Hit Intro</done>
+ <tags>
+  <tag>pir_cap_ch01_med</tag>
+ </tags>
 </mission>
 --]]
 --[[
@@ -630,17 +633,19 @@ function succeed ()
    player.pay( mem.credits )
 
    -- Pirate rep cap increase
-   local bounty_done = var.peek( "pir_bounty_done" )
+   --local bounty_done = var.peek( "pir_bounty_done" )
    var.push( "pir_bounty_done", true )
+   --[[
    if bounty_done ~= true then
       pir.modReputation( 5 )
    end
+   --]]
 
    if mem.level >= 5 then
       local bounty_dangerous_done = var.peek( "pir_bounty_dangerous_done" )
       var.push( "pir_bounty_dangerous_done", true )
       if not bounty_dangerous_done then
-         pir.modReputation( 2 )
+         --pir.modReputation( 2 )
          pir.modDecayFloor( 2 )
       end
 
@@ -648,7 +653,7 @@ function succeed ()
          local bounty_highly_dangerous_done = var.peek( "pir_bounty_highly_dangerous_done" )
          var.push( "pir_bounty_highly_dangerous_done", true )
          if not bounty_highly_dangerous_done then
-            pir.modReputation( 3 )
+            --pir.modReputation( 3 )
             pir.modDecayFloor( 3 )
          end
       end

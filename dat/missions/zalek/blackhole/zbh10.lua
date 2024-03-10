@@ -24,7 +24,6 @@ local fleet = require "fleet"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
 
-
 local reward = zbh.rewards.zbh10
 local title = _("Sigma-13 Showdown")
 local pi_shipname = _("Godheart")

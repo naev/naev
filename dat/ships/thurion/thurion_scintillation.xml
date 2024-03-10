@@ -3,7 +3,7 @@
  <lua>ships/lua/thurion.lua</lua>
  <points>40</points>
  <base_type>Scintillation</base_type>
- <GFX size="70">scintillation</GFX>
+ <gfx size="70">scintillation</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Bomber</class>
@@ -25,7 +25,7 @@
  </health>
  <characteristics>
   <crew>4</crew>
-  <mass>70</mass>
+  <mass>65</mass>
   <fuel>200</fuel>
   <fuel_consumption>100</fuel_consumption>
   <cargo>20</cargo>
@@ -39,8 +39,9 @@
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 350 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
+  <utility size="small" />
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />

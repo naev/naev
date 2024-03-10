@@ -69,6 +69,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local w = vn.newCharacter( npc_name, {image=npc_image} )
+   vn.transition()
 
    w(_([["I must find my dear brother! Please help me. I think he is in danger! I don't have a ship and he is the only family I have left. Could you please help me?"]]) )
    vn.menu{
@@ -113,12 +114,12 @@ And please hurry. Someone was sent to assassinate him. I don't have much to give
    }
 
    -- Set hooks
-   hook.jumpin("sys_enter")
+   hook.enter("sys_enter")
 end
 
 -- gets the nearest jumppoint from a pilot
 local function get_nearest_jump(pilot)
-   local jpts = system.cur():jumps()
+   local jpts = system.cur():jumps(true)
    -- basically the distance that the map can have at
    local dist = 2*system.cur():radius()
    local index = 0

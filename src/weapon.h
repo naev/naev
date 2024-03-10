@@ -16,8 +16,8 @@
  * Only really matters for rendering order.
  */
 typedef enum {
-   WEAPON_LAYER_BG,
-   WEAPON_LAYER_FG
+   WEAPON_LAYER_BG,  /**< Background layer, behind the pilots. */
+   WEAPON_LAYER_FG,  /**< Foreground layer, infront of pilots, behind player. */
 } WeaponLayer;
 
 /* Weapon status */
@@ -30,12 +30,13 @@ typedef enum WeaponStatus_ {
 } WeaponStatus;
 
 /* Weapon flags. */
-#define WEAPON_FLAG_DESTROYED       (1<<0) /* Is awaiting clean up. */
-#define WEAPON_FLAG_HITTABLE        (1<<1) /* Can be hit by stuff. */
+#define WEAPON_FLAG_DESTROYED       (1<<0) /**< Is awaiting clean up. */
+#define WEAPON_FLAG_HITTABLE        (1<<1) /**< Can be hit by stuff. */
+#define WEAPON_FLAG_ONLYHITTARGET   (1<<2) /**< Can only hit target pilot (or asteroids). */
+#define WEAPON_FLAG_AIM             (1<<3) /**< Weapon should aim and not follow the mouse (only used for beams atm). */
 #define weapon_isFlag(w,f)    ((w)->flags & (f))
 #define weapon_setFlag(w,f)   ((w)->flags |= (f))
 #define weapon_rmFlag(w,f)    ((w)->flags &= ~(f))
-#define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
 /**
  * @struct Weapon
@@ -68,6 +69,7 @@ typedef struct Weapon_ {
    int lua_mem;         /**< Mem table, in case of a Pilot Outfit. */
    double falloff;      /**< Point at which damage falls off. Used to determine slowdown for smart seekers.  */
    double strength;     /**< Calculated with falloff. */
+   double strength_base;/**< Base strength, set via Lua. */
    int sx;              /**< Current X sprite to use. */
    int sy;              /**< Current Y sprite to use. */
    Trail_spfx *trail;   /**< Trail graphic if applicable, else NULL. */
@@ -83,11 +85,12 @@ Weapon *weapon_getStack (void);
 Weapon *weapon_getID( unsigned int id );
 
 /* Addition. */
-void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
+Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const Target *target, double time, int aim );
 
 /* Targetting. */
+int weapon_inArc( const Outfit *o, const Pilot *parent, const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time );
 double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const Target *t );
 
 /* Beam weapons. */

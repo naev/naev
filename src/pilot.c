@@ -7,7 +7,6 @@
  * @brief Handles the pilot stuff.
  */
 /** @cond */
-#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
 
@@ -27,29 +26,18 @@
 #include "explosion.h"
 #include "faction.h"
 #include "font.h"
-#include "gatherable.h"
 #include "gui.h"
 #include "hook.h"
-#include "land.h"
-#include "land_outfits.h"
-#include "land_shipyard.h"
 #include "log.h"
-#include "map.h"
-#include "music.h"
-#include "nlua_pilotoutfit.h"
 #include "nlua_vec2.h"
 #include "nlua_outfit.h"
-#include "ndata.h"
-#include "nstring.h"
+#include "ntracing.h"
 #include "ntime.h"
-#include "nxml.h"
-#include "pause.h"
 #include "player.h"
 #include "player_autonav.h"
 #include "pilot_ship.h"
 #include "quadtree.h"
 #include "rng.h"
-#include "weapon.h"
 
 #define PILOT_SIZE_MIN 128 /**< Minimum chunks to increment pilot_stack by */
 
@@ -79,6 +67,7 @@ static void pilot_init( Pilot* dest, const Ship* ship, const char* name, int fac
 /* Update. */
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
+static void pilot_updateSolid( Pilot *p, double dt );
 /* Clean up. */
 static void pilot_erase( Pilot *p );
 /* Misc. */
@@ -227,20 +216,35 @@ unsigned int pilot_getPrevID( unsigned int id, int mode )
 /**
  * @brief Checks to see if a pilot is a valid target for another pilot.
  *
- * @TODO this calls inRangePilot which can be called again right after. This should probably be optimized.
- *
  *    @param p Reference pilot.
  *    @param target Pilot to see if is a valid target of the reference.
  *    @return 1 if it is valid, 0 otherwise.
  */
 int pilot_validTarget( const Pilot* p, const Pilot* target )
 {
+   int inrange;
+   return pilot_validTargetRange( p, target, &inrange );
+}
+
+/**
+ * @brief Checks to see if a pilot is a valid target for another pilot while storing the result of pilot_inRangePilot in inrange.
+ *
+ *    @param p Reference pilot.
+ *    @param target Pilot to see if is a valid target of the reference.
+ *    @param[out] inrange Stores the value of pilot_inRangePilot.
+ *    @return 1 if it is valid, 0 otherwise.
+ */
+int pilot_validTargetRange( const Pilot* p, const Pilot* target, int *inrange )
+{
    /* Must be targetable. */
-   if (!pilot_canTarget( target ))
+   if (!pilot_canTarget( target )) {
+      *inrange = 0;
       return 0;
+   }
 
    /* Must be in range. */
-   if (!pilot_inRangePilot( p, target, NULL ))
+   *inrange = pilot_inRangePilot( p, target, NULL );
+   if (!(*inrange))
       return 0;
 
    /* Pilot is a valid target. */
@@ -275,14 +279,8 @@ int pilot_canTarget( const Pilot* p )
  */
 int pilot_validEnemy( const Pilot* p, const Pilot* target )
 {
-   return pilot_validEnemyDist( p, target, NULL );
-}
+   int inrange;
 
-/**
- * @brief Same as pilot_validEnemy, but able to store the distance too.
- */
-int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
-{
    /* Shouldn't be disabled. */
    if (pilot_isDisabled(target))
       return 0;
@@ -298,7 +296,7 @@ int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
       return 0;
 
    /* Must be a valid target. */
-   if (!pilot_validTarget( p, target ))
+   if (!pilot_validTargetRange( p, target, &inrange ))
       return 0;
 
    /* Should either be hostile by faction or by player. */
@@ -306,7 +304,7 @@ int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
       return 0;
 
    /* Must not be fuzzy. */
-   if (pilot_inRangePilot( p, target, dist ) != 1)
+   if (inrange != 1)
       return 0;
 
    /* They're ok. */
@@ -499,11 +497,10 @@ unsigned int pilot_getBoss( const Pilot* p )
  *    @param disabled Whether to return disabled pilots.
  *    @return The distance to the nearest pilot.
  */
-double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y, int disabled )
+double pilot_getNearestPosPilot( const Pilot *p, Pilot **tp, double x, double y, int disabled )
 {
    double d = 0.;
-
-   *tp = PLAYER_ID;
+   *tp = NULL;
    for (int i=0; i<array_size(pilot_stack); i++) {
       double td;
 
@@ -526,11 +523,32 @@ double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y
 
       /* Minimum distance. */
       td = pow2(x-pilot_stack[i]->solid.pos.x) + pow2(y-pilot_stack[i]->solid.pos.y);
-      if (((*tp==PLAYER_ID) || (td < d))) {
+      if (((*tp==NULL) || (td < d))) {
          d = td;
-         *tp = pilot_stack[i]->id;
+         *tp = pilot_stack[i];
       }
    }
+   return d;
+}
+
+/**
+ * @brief Get the nearest pilot to a pilot from a certain position.
+ *
+ *    @param p Pilot to get the nearest pilot of.
+ *    @param[out] tp The nearest pilot.
+ *    @param x X position to calculate from.
+ *    @param y Y position to calculate from.
+ *    @param disabled Whether to return disabled pilots.
+ *    @return The distance to the nearest pilot.
+ */
+double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y, int disabled )
+{
+   Pilot *pn;
+   double d = pilot_getNearestPosPilot( p, &pn, x, y, disabled );
+   if (pn==NULL)
+      *tp = PLAYER_ID;
+   else
+      *tp = pn->id;
    return d;
 }
 
@@ -550,6 +568,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
    *tp = PLAYER_ID;
    for (int i=0; i<array_size(pilot_stack); i++) {
       double rx, ry, ta;
+      int inrange;
 
       /* Must not be self. */
       if (pilot_stack[i] == p)
@@ -565,11 +584,11 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
          continue;
 
       /* Must be a valid target. */
-      if (!pilot_validTarget( p, pilot_stack[i] ))
+      if (!pilot_validTargetRange( p, pilot_stack[i], &inrange ))
          continue;
 
       /* Must be in range. */
-      if (!pilot_inRangePilot( p, pilot_stack[i], NULL ))
+      if (!inrange)
          continue;
 
       /* Only allow selection if off-screen. */
@@ -633,11 +652,11 @@ Pilot* pilot_getTarget( Pilot *p )
 }
 
 /**
- * @brief Sets the pilot's thrust.
+ * @brief Sets the pilot's accel.
  */
-void pilot_setThrust( Pilot *p, double thrust )
+void pilot_setAccel( Pilot *p, double accel )
 {
-   p->solid.thrust = p->thrust * thrust;
+   p->solid.accel = p->accel * accel;
 }
 
 /**
@@ -783,14 +802,14 @@ void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 )
  *
  *    @param p Pilot to turn.
  *    @param dir Direction to attempt to face.
+ *    @param dt Current deltatick.
  *    @return The distance left to turn to match dir.
  */
-double pilot_face( Pilot* p, const double dir )
+double pilot_face( Pilot* p, double dir, double dt )
 {
    double diff = angle_diff( p->solid.dir, dir );
-   double turn = CLAMP( -1., 1., -10.*diff );
-   pilot_setTurn( p, -turn );
-
+   double turn = CLAMP( -1., 1., diff/dt );
+   pilot_setTurn( p, turn );
    return diff;
 }
 
@@ -802,7 +821,7 @@ int pilot_brakeCheckReverseThrusters( const Pilot *p )
    if (p->stats.misc_reverse_thrust) {
       double diff, btime, ftime, vel, t;
       vel = MIN( VMOD(p->solid.vel), p->speed );
-      t = vel / p->thrust * p->solid.mass;
+      t = vel / p->accel;
 
       /* Calculate the time to face backward and apply forward thrust. */
       diff = angle_diff(p->solid.dir, VANGLE(p->solid.vel) + M_PI);
@@ -821,25 +840,30 @@ int pilot_brakeCheckReverseThrusters( const Pilot *p )
 /**
  * @brief Gets the minimum braking distance for the pilot.
  */
-double pilot_minbrakedist( const Pilot *p )
+double pilot_minbrakedist( const Pilot *p, double dt, double *flytime )
 {
-   double vel = MIN( VMOD(p->solid.vel), p->speed );
-   double thrust = p->thrust / p->solid.mass;
-   double t = vel / thrust;
-   if (pilot_brakeCheckReverseThrusters(p))
-      return vel * t - 0.5 * PILOT_REVERSE_THRUST * thrust * t * t;
-   return vel*(t+1.1*M_PI/p->turn) - 0.5 * thrust * t * t;
+   double vel = MIN( MIN( VMOD(p->solid.vel), p->speed ), solid_maxspeed( &p->solid, p->speed, p->accel ) );
+   double accel = p->accel;
+   double t = vel / accel; /* Try to improve accuracy. */
+   if (pilot_brakeCheckReverseThrusters(p)) {
+      t /= PILOT_REVERSE_THRUST; /* Have to compensate slower accel. */
+      *flytime = t+dt;
+      return vel * (t+dt) - 0.5 * PILOT_REVERSE_THRUST * accel * pow2(t-dt);
+   }
+   *flytime = t+M_PI/p->turn+dt;
+   return vel*(*flytime) - 0.5 * accel * pow2(t-dt);
 }
 
 /**
  * @brief Causes the pilot to turn around and brake.
  *
  *    @param p Pilot to brake.
+ *    @param dt Current delta-tick.
  *    @return 1 when braking has finished.
  */
-int pilot_brake( Pilot *p )
+int pilot_brake( Pilot *p, double dt )
 {
-   double dir, thrust, diff;
+   double dir, accel, diff;
    int isstopped = pilot_isStopped(p);
 
    if (isstopped)
@@ -847,21 +871,18 @@ int pilot_brake( Pilot *p )
 
    if (pilot_brakeCheckReverseThrusters(p)) {
       dir    = VANGLE(p->solid.vel);
-      thrust = -PILOT_REVERSE_THRUST;
+      accel = -PILOT_REVERSE_THRUST;
    }
    else {
       dir    = VANGLE(p->solid.vel) + M_PI;
-      thrust = 1.;
+      accel = 1.;
    }
 
-   diff = pilot_face(p, dir);
-   if (ABS(diff) < MAX_DIR_ERR && !isstopped)
-      pilot_setThrust(p, thrust);
-   else {
-      pilot_setThrust(p, 0.);
-      if (isstopped)
-         return 1;
-   }
+   diff = pilot_face(p, dir, dt);
+   if (ABS(diff) < MIN_DIR_ERR)
+      pilot_setAccel(p, accel);
+   else
+      pilot_setAccel(p, 0.);
    return 0;
 }
 
@@ -888,6 +909,10 @@ void pilot_cooldown( Pilot *p, int dochecks )
 
    if (p->id == PLAYER_ID)
       player_message(_("#oActive cooldown engaged."));
+
+   /* Turn off all weapon sets. */
+   pilot_weapSetAIClear( p );
+   pilot_weapSetUpdateOutfitState( p );
 
    /* Disable active outfits. */
    if (pilot_outfitOffAll( p ) > 0)
@@ -1316,7 +1341,7 @@ void pilot_setTarget( Pilot* p, unsigned int id )
 double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       const Damage *dmg, const Outfit *outfit, int lua_mem, int reset )
 {
-   int mod, shooter;
+   int shooter;
    double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, ddis, absorb, dmod, start;
    double tdshield, tdarmour;
 
@@ -1429,10 +1454,6 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       tdarmour = ddmg;
    }
 
-   /* Ensure stress never exceeds remaining armour. */
-   if (p->stress > p->armour)
-      p->stress = p->armour;
-
    /* Do not let pilot die. */
    if ((p->armour <= 0.) && pilot_isFlag( p, PILOT_NODEATH )) {
       p->armour = 1.;
@@ -1459,9 +1480,8 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       player.ps.dmg_taken_shield += tdshield;
       player.ps.dmg_taken_armour += tdarmour;
    }
-   /* TODO we might want to actually resolve shooter and check for
-    * FACTION_PLAYER so that escorts also get counted... */
-   else if (shooter == PLAYER_ID) {
+   /* See if shooter is with player. */
+   else if ((pshooter!=NULL) && pilot_isWithPlayer(pshooter)) {
       player.dmg_done_shield += tdshield;
       player.dmg_done_armour += tdarmour;
       player.ps.dmg_done_shield += tdshield;
@@ -1508,9 +1528,8 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
 
          /* adjust the combat rating based on pilot mass and ditto faction */
          if ((pshooter != NULL) && pilot_isWithPlayer(pshooter)) {
-
             /* About 6 for a llama, 52 for hawking. */
-            mod = 2. * (pow(p->base_mass, 0.4) - 1.);
+            int mod = 2. * (pow(p->base_mass, 0.4) - 1.);
 
             /* Modify faction for him and friends. */
             faction_modPlayer( p->faction, -mod, "kill" );
@@ -1666,7 +1685,7 @@ void pilot_dead( Pilot* p, unsigned int killer )
  */
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent )
 {
-   double dist, rad2;
+   double rad2;
    Solid s; /* Only need to manipulate mass and vel. */
    Damage ddmg;
    const IntList *qt;
@@ -1681,14 +1700,14 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
    qt = pilot_collideQuery( qx-qr, qy-qr, qx+qr, qy+qr );
    for (int i=0; i<il_size(qt); i++) {
       Pilot *p = pilot_stack[ il_get( qt, i, 0 ) ];
-      double rx, ry;
+      double rx, ry, dist;
 
       /* Calculate a bit. */
       rx = p->solid.pos.x - x;
       ry = p->solid.pos.y - y;
       dist = pow2(rx) + pow2(ry);
       /* Take into account ship size. */
-      dist -= pow2(p->ship->gfx_space->sw);
+      dist -= pow2(p->ship->size);
       dist = MAX(0,dist);
 
       /* Pilot is not hit. */
@@ -1728,39 +1747,7 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
    if (!pilot_isPlayer(p) && pilot_isFlag(p, PILOT_STEALTH))
       c.a = 0.5;
 
-   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-   glClearColor( 0., 0., 0., 0. );
-
-   if (p->ship->gfx_3d != NULL) {
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      /* TODO fix 3D rendering. */
-   }
-   else {
-      double tx,ty;
-      const glTexture *sa, *sb;
-      mat4 tmpm;
-
-      glClear( GL_COLOR_BUFFER_BIT );
-
-      sa = p->ship->gfx_space;
-      sb = p->ship->gfx_engine;
-
-      /* texture coords */
-      tx = sa->sw*(double)(p->tsx)/sa->w;
-      ty = sa->sh*(sa->sy-(double)p->tsy-1)/sa->h;
-
-      tmpm = gl_view_matrix;
-      gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
-
-      gl_renderTextureInterpolate( sa, sb,
-            1.-p->engine_glow, 0., 0., sa->sw, sa->sh,
-            tx, ty, sa->srw, sa->srh, &c );
-
-      gl_view_matrix = tmpm;
-   }
-
-   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-   glClearColor( 0., 0., 0., 1. );
+   ship_renderFramebuffer( p->ship, fbo, fw, fh, p->solid.dir, p->engine_glow, p->tilt, p->tsx, p->tsy, &c );
 }
 
 /**
@@ -1776,23 +1763,30 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw, double
 void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 {
    double x,y, w,h;
-   Effect *e = NULL;
+   double timeleft, elapsed;
+   const Effect *e = NULL;
 
    /* Transform coordinates. */
-   w = p->ship->gfx_space->sw;
-   h = p->ship->gfx_space->sh;
+   w = p->ship->size;
+   h = p->ship->size;
    gl_gameToScreenCoords( &x, &y, p->solid.pos.x-w/2., p->solid.pos.y-h/2. );
 
-   /* Render effects. */
+   /* Render effects - already sorted by priority and then timer. */
    for (int i=0; i<array_size(p->effects); i++) {
    //for (int i=array_size(p->effects)-1; i>=0; i--) {
-      Effect *eiter = &p->effects[i];
+      const Effect *eiter = &p->effects[i];
       if (eiter->data->program==0)
          continue;
 
-      /* Only render one effect for now. */
-      e = eiter;
-      break;
+      if (e==NULL) {
+         e = eiter;
+         timeleft = e->timer;
+         elapsed = e->elapsed;
+      }
+      else if (eiter->data==e->data) {
+         timeleft = MAX( e->timer, eiter->timer );
+         elapsed = MAX( e->elapsed, eiter->elapsed );
+      }
    }
 
    /* Render normally. */
@@ -1803,6 +1797,17 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
       mat4 projection, tex_mat;
       const EffectData *ed = e->data;
 
+      /* Have to scissors a bit more in case of custom vertex effects. */
+      if (ed->flags & EFFECT_VERTEX) {
+         double s = ceil(2.0*p->ship->size/gl_screen.scale);
+         glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+         glEnable( GL_SCISSOR_TEST );
+         glClearColor( 0., 0., 0., 0. );
+         glScissor( 0, 0, s, s );
+         glClear( GL_COLOR_BUFFER_BIT );
+         glDisable( GL_SCISSOR_TEST );
+      }
+
       /* Render onto framebuffer. */
       pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
 
@@ -1812,6 +1817,13 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
       glClear( GL_COLOR_BUFFER_BIT );
 
       glUseProgram( ed->program );
+
+      /* Has an image to use. */
+      if (ed->img != NULL) {
+         glActiveTexture( GL_TEXTURE1 );
+         glBindTexture( GL_TEXTURE_2D, ed->img->texture );
+         glUniform1i( ed->u_img, 1 );
+      }
 
       glActiveTexture( GL_TEXTURE0 );
       glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
@@ -1829,13 +1841,20 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
       gl_uniformMat4(ed->tex_mat, &tex_mat);
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, 1. );
-      glUniform1f( ed->u_timer, e->timer );
-      glUniform1f( ed->u_elapsed, e->elapsed );
+      glUniform1f( ed->u_timer, timeleft );
+      glUniform1f( ed->u_elapsed, elapsed );
       glUniform1f( ed->u_r, e->r );
       glUniform1f( ed->u_dir, p->solid.dir );
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clean up texture. */
+      if (ed->img != NULL) {
+         glActiveTexture( GL_TEXTURE1 );
+         glBindTexture( GL_TEXTURE_2D, 0 );
+         glActiveTexture( GL_TEXTURE0 );
+      }
 
       /* Clear state. */
       glDisableVertexAttribArray( ed->vertex );
@@ -1853,6 +1872,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 void pilot_render( Pilot *p )
 {
    double scale, x,y, w,h, z;
+   double timeleft, elapsed;
    int inbounds = 1;
    Effect *e = NULL;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
@@ -1863,8 +1883,8 @@ void pilot_render( Pilot *p )
 
    /* Transform coordinates. */
    z = cam_getZoom();
-   w = p->ship->gfx_space->sw;
-   h = p->ship->gfx_space->sh;
+   w = p->ship->size;
+   h = p->ship->size;
    gl_gameToScreenCoords( &x, &y, p->solid.pos.x-w/2., p->solid.pos.y-h/2. );
 
    /* Check if inbounds */
@@ -1880,9 +1900,15 @@ void pilot_render( Pilot *p )
          if (eiter->data->program==0)
             continue;
 
-         /* Only render one effect for now. */
-         e = eiter;
-         break;
+         if (e==NULL) {
+            e = eiter;
+            timeleft = e->timer;
+            elapsed = e->elapsed;
+         }
+         else if (eiter->data==e->data) {
+            timeleft = MAX( e->timer, eiter->timer );
+            elapsed = MAX( e->elapsed, eiter->elapsed );
+         }
       }
 
       /* Check if needs scaling. */
@@ -1900,9 +1926,15 @@ void pilot_render( Pilot *p )
       /* Render normally. */
       if (e==NULL) {
          if (p->ship->gfx_3d != NULL) {
-            /* 3d */
-            object_renderSolidPart(p->ship->gfx_3d, &p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
-            object_renderSolidPart(p->ship->gfx_3d, &p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
+            /* Render to framebuffer first. */
+            pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
+
+            /* Draw framebuffer on screen. */
+            gl_renderTextureRaw( gl_screen.fbo_tex[2], 0,
+                  x+(1.-scale)*z*w*0.5, y+(1.-scale)*z*h*0.5,
+                  w*scale*z, h*scale*z,
+                  0, 0, w/(double)gl_screen.nw, h/(double)gl_screen.nh, NULL, 0. ); /* Colour should already be applied. */
+
          }
          else {
             gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
@@ -1915,10 +1947,29 @@ void pilot_render( Pilot *p )
          mat4 projection, tex_mat;
          const EffectData *ed = e->data;
 
+         /* Have to scissors a bit more in case of custom vertex effects. */
+         if (ed->flags & EFFECT_VERTEX) {
+            double s = ceil(2.0*p->ship->size/gl_screen.scale);
+            glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+            glEnable( GL_SCISSOR_TEST );
+            glScissor( 0, 0, s, s );
+            glClearColor( 0., 0., 0., 0. );
+            glClear( GL_COLOR_BUFFER_BIT );
+            glDisable( GL_SCISSOR_TEST );
+            glClearColor( 0., 0., 0., 1. );
+         }
+
          /* Render onto framebuffer. */
          pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
 
          glUseProgram( ed->program );
+
+         /* Has an image to use. */
+         if (ed->img != NULL) {
+            glActiveTexture( GL_TEXTURE1 );
+            glBindTexture( GL_TEXTURE_2D, ed->img->texture );
+            glUniform1i( ed->u_img, 1 );
+         }
 
          glActiveTexture( GL_TEXTURE0 );
          glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
@@ -1928,8 +1979,7 @@ void pilot_render( Pilot *p )
          gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
 
          projection = gl_view_matrix;
-         mat4_translate( &projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0. );
-         mat4_scale( &projection, scale*z*w, scale*z*h, 1. );
+         mat4_translate_scale_xy( &projection, x + (1.-scale)*z*w*0.5, y + (1.-scale)*z*h*0.5, scale*z*w, scale*z*h );
          gl_uniformMat4(ed->projection, &projection);
 
          tex_mat = mat4_identity();
@@ -1937,55 +1987,103 @@ void pilot_render( Pilot *p )
          gl_uniformMat4(ed->tex_mat, &tex_mat);
 
          glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
-         glUniform1f( ed->u_timer, e->timer );
-         glUniform1f( ed->u_elapsed, e->elapsed );
+         glUniform1f( ed->u_timer, timeleft );
+         glUniform1f( ed->u_elapsed, elapsed );
          glUniform1f( ed->u_r, e->r );
          glUniform1f( ed->u_dir, p->solid.dir );
 
          /* Draw. */
          glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
+         /* Clean up texture. */
+         if (ed->img != NULL) {
+            glActiveTexture( GL_TEXTURE1 );
+            glBindTexture( GL_TEXTURE_2D, 0 );
+            glActiveTexture( GL_TEXTURE0 );
+         }
+
          /* Clear state. */
          glDisableVertexAttribArray( ed->vertex );
       }
    }
 
-#ifdef DEBUGGING
-   double dircos, dirsin;
-   int debug_mark_emitter = debug_isFlag(DEBUG_MARK_EMITTER);
-   vec2 v;
-   if (debug_mark_emitter) {
-      dircos = cos(p->solid.dir);
-      dirsin = sin(p->solid.dir);
-   }
-#endif /* DEBUGGING */
-
    /* Re-draw backwards trails. */
    for (int i=0,g=0; g<array_size(p->ship->trail_emitters); g++) {
-#ifdef DEBUGGING
-      if (debug_mark_emitter) {
-         /* Visualize the trail emitters. */
-         v.x = p->ship->trail_emitters[g].x_engine * dircos -
-              p->ship->trail_emitters[g].y_engine * dirsin;
-         v.y = p->ship->trail_emitters[g].x_engine * dirsin +
-              p->ship->trail_emitters[g].y_engine * dircos +
-              p->ship->trail_emitters[g].h_engine;
-
-         gl_gameToScreenCoords( &x, &y, p->solid.pos.x + v.x,
-                                p->solid.pos.y + v.y*M_SQRT1_2 );
-         if (p->ship->trail_emitters[i].trail_spec->nebula)
-            gl_renderCross(x, y, 2, &cFontBlue);
-         else
-            gl_renderCross(x, y, 4, &cInert);
-      }
-#endif /* DEBUGGING */
-
       if (pilot_trail_generated( p, g )) {
          if (p->trail[i]->ontop)
             spfx_trail_draw( p->trail[i] );
          i++;
       }
    }
+
+   /* Useful debug stuff below. */
+#ifdef DEBUGGING
+   if (debug_isFlag(DEBUG_MARK_COLLISION)) {
+      static gl_vbo *poly_vbo = NULL;
+      GLfloat data[1024];
+      const CollPolyView *poly = poly_view( &p->ship->polygon, p->solid.dir );
+      size_t n = MIN( sizeof(data)/(sizeof(GLfloat)*2), (size_t)poly->npt );
+      size_t ndata =  n * sizeof(GLfloat) * 2;
+      mat4 projection = gl_view_matrix;
+
+      /* Set up the vector data. */
+      for (size_t i=0; i<n; i++) {
+         data[i*2+0] = poly->x[i];
+         data[i*2+1] = poly->y[i];
+      }
+
+      /* Upload to VBO, creating as necessary. */
+      if (poly_vbo==NULL)
+         poly_vbo = gl_vboCreateDynamic( ndata, data );
+      else
+         gl_vboData( poly_vbo, ndata, data );
+
+      /* Draw. */
+      glUseProgram( shaders.lines.program );
+      glEnableVertexAttribArray( shaders.lines.vertex );
+      gl_vboActivateAttribOffset( poly_vbo, shaders.lines.vertex, 0, 2, GL_FLOAT, 0 );
+
+      /* Do projection. */
+      gl_gameToScreenCoords( &x, &y, p->solid.pos.x, p->solid.pos.y );
+      mat4_translate_scale_xy( &projection, x, y, z, z );
+      gl_uniformMat4( shaders.lines.projection, &projection );
+
+      /* Do colour. */
+      gl_uniformColour( shaders.lines.colour, &cWhite );
+
+      /* Draw. */
+      glDrawArrays( GL_LINE_LOOP, 0, n );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.lines.vertex );
+
+      gl_checkErr();
+      glUseProgram(0);
+   }
+
+   /* Draw trail emitters on top in debug mode. */
+   if (debug_isFlag(DEBUG_MARK_EMITTER)) {
+      double dircos, dirsin;
+      vec2 v;
+      dircos = cos(p->solid.dir);
+      dirsin = sin(p->solid.dir);
+      for (int i=0,g=0; g<array_size(p->ship->trail_emitters); g++) {
+            /* Visualize the trail emitters. */
+            v.x = p->ship->trail_emitters[g].x_engine * dircos -
+               p->ship->trail_emitters[g].y_engine * dirsin;
+            v.y = p->ship->trail_emitters[g].x_engine * dirsin +
+               p->ship->trail_emitters[g].y_engine * dircos +
+               p->ship->trail_emitters[g].h_engine;
+
+            gl_gameToScreenCoords( &x, &y, p->solid.pos.x + v.x,
+                                 p->solid.pos.y + v.y*M_SQRT1_2 );
+            if (p->ship->trail_emitters[i].trail_spec->nebula)
+               gl_renderCross(x, y, 2, &cFontBlue);
+            else
+               gl_renderCross(x, y, 4, &cInert);
+      }
+   }
+#endif /* DEBUGGING */
 }
 
 /**
@@ -1996,10 +2094,14 @@ void pilot_render( Pilot *p )
 void pilot_renderOverlay( Pilot* p )
 {
    int playerdead;
+   double sw, sh;
 
    /* Don't render the pilot. */
    if (pilot_isFlag( p, PILOT_NORENDER ))
       return;
+
+   sw = p->ship->size;
+   sh = p->ship->size;
 
    playerdead = (player_isFlag(PLAYER_DESTROYED) || (player.p==NULL));
 
@@ -2011,8 +2113,8 @@ void pilot_renderOverlay( Pilot* p )
 
          /* Render. */
          gl_renderSprite( ico_hail,
-               p->solid.pos.x + PILOT_SIZE_APPROX*p->ship->gfx_space->sw/2. + ico_hail->sw/4.,
-               p->solid.pos.y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2. + ico_hail->sh/4.,
+               p->solid.pos.x + PILOT_SIZE_APPROX*sw/2. + ico_hail->sw/4.,
+               p->solid.pos.y + PILOT_SIZE_APPROX*sh/2. + ico_hail->sh/4.,
                p->hail_pos % sx, p->hail_pos / sx, NULL );
       }
    }
@@ -2033,7 +2135,7 @@ void pilot_renderOverlay( Pilot* p )
 
       /* Position to render at. */
       dx = x - p->comm_msgWidth/2.;
-      dy = y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2.;
+      dy = y + PILOT_SIZE_APPROX*sh/2.;
 
       /* Background. */
       gl_renderRect( dx-2., dy-2., p->comm_msgWidth+4., gl_defFont.h+4., &cBlackHilight );
@@ -2050,21 +2152,21 @@ void pilot_renderOverlay( Pilot* p )
       /* Coordinate translation. */
       gl_gameToScreenCoords( &x, &y, p->solid.pos.x, p->solid.pos.y );
 
-      w = p->ship->gfx_space->sw + 4.;
-      h = p->ship->gfx_space->sh + 4.;
+      w = sw + 4.;
+      h = sh + 4.;
 
       /* Can do an inbounds check now. */
       if ((x < -w) || (x > SCREEN_W+w) ||
             (y < -h) || (y > SCREEN_H+h))
          return;
 
-      w = PILOT_SIZE_APPROX * p->ship->gfx_space->sw;
-      h = PILOT_SIZE_APPROX * p->ship->gfx_space->sh / 3.;
+      w = PILOT_SIZE_APPROX * sw;
+      h = PILOT_SIZE_APPROX * sh / 3.;
 
       glUseProgram( shaders.healthbar.program );
       glUniform2f( shaders.healthbar.dimensions, 5., h );
       glUniform1f( shaders.healthbar.paramf, (p->armour + p->shield) / (p->armour_max + p->shield_max) );
-      gl_uniformColor( shaders.healthbar.paramv, (p->shield > 0.) ? &cShield : &cArmour );
+      gl_uniformColour( shaders.healthbar.paramv, (p->shield > 0.) ? &cShield : &cArmour );
       gl_renderShader( x + w/2. + 2.5, y, 5., h, 0., &shaders.healthbar, pilot_getColour(p), 1 );
    }
 }
@@ -2079,15 +2181,14 @@ void pilot_update( Pilot* pilot, double dt )
 {
    int cooling, nchg;
    Pilot *target;
-   double a, px,py, vx,vy;
-   double Q;
+   double a, px,py, vx,vy, Q;
+   Target wt;
 
    /* Modify the dt with speedup. */
    dt *= pilot->stats.time_speedup;
 
    /* Check target validity. */
-   target = pilot_getTarget( pilot );
-
+   target = pilot_weaponTarget( pilot, &wt );
    cooling = pilot_isFlag(pilot, PILOT_COOLDOWN);
 
    /*
@@ -2139,7 +2240,7 @@ void pilot_update( Pilot* pilot, double dt )
       /* Picky about our outfits. */
       if (o->outfit == NULL)
          continue;
-      if (!o->active)
+      if (!(o->flags & PILOTOUTFIT_ACTIVE))
          continue;
 
       /* Handle firerate timer. */
@@ -2204,7 +2305,7 @@ void pilot_update( Pilot* pilot, double dt )
          Q  += pilot_heatUpdateSlot( pilot, o, dt );
 
       /* Handle lockons. */
-      pilot_lockUpdateSlot( pilot, o, target, &a, dt );
+      pilot_lockUpdateSlot( pilot, o, target, &wt, &a, dt );
    }
 
    /* Global heat. */
@@ -2234,7 +2335,7 @@ void pilot_update( Pilot* pilot, double dt )
    /* Damage effect. */
    if ((pilot->stats.damage > 0.) || (pilot->stats.disable > 0.)) {
       Damage dmg;
-      dmg.type          = dtype_get("normal");
+      dmg.type          = dtype_get("raw");
       dmg.damage        = pilot->stats.damage * dt;
       dmg.penetration   = 1.; /* Full penetration. */
       dmg.disable       = pilot->stats.disable * dt;
@@ -2277,7 +2378,7 @@ void pilot_update( Pilot* pilot, double dt )
             char buf[16];
 
             /* Play random explosion sound. */
-            snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
+            snprintf( buf, sizeof(buf), "explosion%d", RNG(0,2) );
             sound_playPos( sound_get(buf), pilot->solid.pos.x, pilot->solid.pos.y,
                   pilot->solid.vel.x, pilot->solid.vel.y );
 
@@ -2296,8 +2397,8 @@ void pilot_update( Pilot* pilot, double dt )
             dmg.disable       = 0.;
             expl_explode( pilot->solid.pos.x, pilot->solid.pos.y,
                   pilot->solid.vel.x, pilot->solid.vel.y,
-                  pilot->ship->gfx_space->sw/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
-            debris_add( pilot->solid.mass, pilot->ship->gfx_space->sw/2.,
+                  pilot->ship->size/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
+            debris_add( pilot->solid.mass, pilot->ship->size/2.,
                   pilot->solid.pos.x, pilot->solid.pos.y,
                   pilot->solid.vel.x, pilot->solid.vel.y );
             pilot_setFlag(pilot,PILOT_EXPLODED);
@@ -2320,8 +2421,8 @@ void pilot_update( Pilot* pilot, double dt )
 
             /* random position on ship */
             a = RNGF()*2.*M_PI;
-            px = VX(pilot->solid.pos) +  cos(a)*RNGF()*pilot->ship->gfx_space->sw/2.;
-            py = VY(pilot->solid.pos) +  sin(a)*RNGF()*pilot->ship->gfx_space->sh/2.;
+            px = VX(pilot->solid.pos) +  cos(a)*RNGF()*pilot->ship->size/2.;
+            py = VY(pilot->solid.pos) +  sin(a)*RNGF()*pilot->ship->size/2.;
             vx = VX(pilot->solid.vel);
             vy = VY(pilot->solid.vel);
 
@@ -2356,13 +2457,12 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Special handling for braking. */
    if (pilot_isFlag(pilot, PILOT_BRAKING )) {
-      if (pilot_brake( pilot )) {
+      if (pilot_brake( pilot, dt )) {
          if (pilot_isFlag(pilot, PILOT_COOLDOWN_BRAKE))
             pilot_cooldown( pilot, 1 );
          else {
             /* Normal braking is done (we're below MIN_VEL_ERR), now sidestep
-             * normal physics and bring the ship to a near-complete stop.
-             */
+             * normal physics and bring the ship to a near-complete stop. */
             pilot->solid.speed_max = 0.;
             pilot->solid.update( &pilot->solid, dt );
 
@@ -2395,20 +2495,28 @@ void pilot_update( Pilot* pilot, double dt )
       pilot->fuel = MIN( pilot->fuel_max, pilot->fuel + pilot->stats.fuel_regen * dt );
 
       /*
-      * Using RC circuit energy loading.
+      * Recharge rate used to be proportional to the current state of the battery:
+      * i.e. if the battery was 0% charged, the recharge rate would be at it's maximum,
+      * but if it was 70% charge, the battery would only recharge at 30% of it's normal rate.
       *
-      * Calculations (using y = [0:1])
+      * So instead now we just recharge at a 50% rate. This does look weird,
+      * as what's happening in reality doesn't match what's on the stats display.
       *
-      *                                          \
-      *    y = 1 - exp( -x / tau )               |
-      *    y + dy = 1 - exp( -( x + dx ) / tau ) |  ==>
-      *                                          /
+      * But neither was what was happening matching the stats display previously.
       *
-      *    ==> dy = exp( -x / tau ) * ( 1 - exp( -dx / tau ) ==>
-      *    ==> [ dy = (1 - y) * ( 1 - exp( -dx / tau ) ) ]
+      * This is a bit of a hack to maintain balance, but it's easier than adjusting all the weapons etc.
+      *
+      * To get rid of this hack but maintain the current game balance, one would have to double the
+      * energy usage of all items that take their energy from the battery, i.e. not engines
+      * just directly reduce the energy_regen. One would then also need to double the
+      * energy storage of all items.
+      *
+      * One other alternative to removing this hack instead have a stat called "battery efficiency".
+      * There could be some core modules with inefficient batteries,
+      * which are slower to recharge but have a larger storage,
+      * or alternatively ones which have a fast recharge but significantly less capacity.
       */
-      pilot->energy += (pilot->energy_max - pilot->energy) *
-            (1. - exp( -dt / pilot->energy_tau));
+      pilot->energy += 0.5 * pilot->energy_regen * dt;
       pilot->energy -= pilot->energy_loss * dt;
       if (pilot->energy > pilot->energy_max)
          pilot->energy = pilot->energy_max;
@@ -2431,21 +2539,18 @@ void pilot_update( Pilot* pilot, double dt )
       pilot_calcStats( pilot );
 
    /* purpose fallthrough to get the movement like disabled */
-   if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
+   if (pilot_isDisabled(pilot) || cooling) {
       /* Do the slow brake thing */
       pilot->solid.speed_max = 0.;
-      pilot_setThrust( pilot, 0. );
+      pilot_setAccel( pilot, 0. );
       pilot_setTurn( pilot, 0. );
 
-      /* update the solid */
-      pilot->solid.update( &pilot->solid, dt );
-
-      gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
-            pilot->ship->gfx_space, pilot->solid.dir );
+      /* Update the solid */
+      pilot_updateSolid( pilot, dt );
 
       /* Engine glow decay. */
       if (pilot->engine_glow > 0.) {
-         pilot->engine_glow -= pilot->speed / pilot->thrust * dt * pilot->solid.mass;
+         pilot->engine_glow -= pilot->speed / pilot->accel * dt;
          if (pilot->engine_glow < 0.)
             pilot->engine_glow = 0.;
       }
@@ -2453,6 +2558,17 @@ void pilot_update( Pilot* pilot, double dt )
       /* Update the trail. */
       pilot_sample_trails( pilot, 0 );
 
+      /* Cooldown still updates outfits. */
+      pilot_shipLUpdate( pilot, dt );
+
+      /* Update outfits if necessary. */
+      pilot->otimer += dt;
+      while (pilot->otimer >= PILOT_OUTFIT_LUA_UPDATE_DT) {
+         pilot_outfitLUpdate( pilot, PILOT_OUTFIT_LUA_UPDATE_DT );
+         if (pilot_isFlag( pilot, PILOT_DELETE ))
+            return; /* Same as with the effects, it is theoretically possible for the outfit to remove the pilot. */
+         pilot->otimer -= PILOT_OUTFIT_LUA_UPDATE_DT;
+      }
       return;
    }
 
@@ -2487,30 +2603,26 @@ void pilot_update( Pilot* pilot, double dt )
 
       /* pilot is afterburning */
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER)) {
+         const Outfit *afb = pilot->afterburner->outfit;
+
          /* Heat up the afterburner. */
          pilot_heatAddSlotTime(pilot, pilot->afterburner, dt);
 
          /* If the afterburner's efficiency is reduced to 0, shut it off. */
-         if (pilot_heatEfficiencyMod(pilot->afterburner->heat_T,
-               pilot->afterburner->outfit->u.afb.heat_base,
-               pilot->afterburner->outfit->u.afb.heat_cap)==0)
+         if (pilot_heatEfficiencyMod(pilot->afterburner->heat_T, afb->overheat_min, afb->overheat_max)<=0.)
             pilot_afterburnOver(pilot);
          else {
-            double efficiency, thrust;
+            double efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T, afb->overheat_min, afb->overheat_max );
+            efficiency = MIN( 1., afb->u.afb.mass_limit / pilot->solid.mass ) * efficiency;
 
             if (pilot->id == PLAYER_ID)
-               spfx_shake( 0.75*SPFX_SHAKE_DECAY * dt); /* shake goes down at quarter speed */
-            efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
-                  pilot->afterburner->outfit->u.afb.heat_base,
-                  pilot->afterburner->outfit->u.afb.heat_cap );
-            thrust = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid.mass ) * efficiency;
+               spfx_shake( 0.75*SPFX_SHAKE_DECAY * dt ); /* shake goes down at quarter speed */
 
             /* Adjust speed. Speed bonus falls as heat rises. */
-            pilot->solid.speed_max = pilot->speed * (1. +
-                  pilot->afterburner->outfit->u.afb.speed * thrust);
+            pilot->solid.speed_max = pilot->speed * (1.+afb->u.afb.speed * efficiency);
 
-            /* Adjust thrust. Thrust bonus falls as heat rises. */
-            pilot_setThrust(pilot, 1. + pilot->afterburner->outfit->u.afb.thrust * thrust);
+            /* Adjust accel. Thrust bonus falls as heat rises. */
+            pilot_setAccel(pilot, 1.+afb->u.afb.accel * efficiency);
          }
       }
       else
@@ -2520,22 +2632,42 @@ void pilot_update( Pilot* pilot, double dt )
       pilot->solid.speed_max = -1.; /* Disables max speed. */
 
    /* Set engine glow. */
-   if (pilot->solid.thrust > 0.) {
-      /*pilot->engine_glow += pilot->thrust / pilot->speed * dt;*/
-      pilot->engine_glow += pilot->speed / pilot->thrust * dt * pilot->solid.mass;
+   if (pilot->solid.accel > 0.) {
+      /*pilot->engine_glow += pilot->accel / pilot->speed * dt;*/
+      pilot->engine_glow += pilot->speed / pilot->accel * dt;
       if (pilot->engine_glow > 1.)
          pilot->engine_glow = 1.;
    }
    else if (pilot->engine_glow > 0.) {
-      pilot->engine_glow -= pilot->speed / pilot->thrust * dt * pilot->solid.mass;
+      pilot->engine_glow -= pilot->speed / pilot->accel * dt;
       if (pilot->engine_glow < 0.)
          pilot->engine_glow = 0.;
    }
 
+   /* Set tilt. */
+   const double tilt_max = M_PI/8.;
+   const double tilt_mod = tilt_max * 8.;
+   const double tilt_threshold = 0.05; /* A bit under 5 degrees/sec. */
+   if (pilot->solid.dir_vel > tilt_threshold) {
+      pilot->tilt += pilot->solid.dir_vel / tilt_mod * dt;
+      pilot->tilt = MIN( pilot->tilt, tilt_max );
+   }
+   else if (pilot->solid.dir_vel < -tilt_threshold) {
+      /* Already negative. */
+      pilot->tilt += pilot->solid.dir_vel / tilt_mod * dt;
+      pilot->tilt = MAX( pilot->tilt, -tilt_max );
+   }
+   else if (pilot->tilt > 0.) {
+      pilot->tilt -= pilot->turn / tilt_mod * dt;
+      pilot->tilt = MAX( pilot->tilt, 0. );
+   }
+   else if (pilot->tilt < 0.) {
+      pilot->tilt += pilot->turn / tilt_mod * dt;
+      pilot->tilt = MIN( pilot->tilt, 0. );
+   }
+
    /* Update the solid, must be run after limit_speed. */
-   pilot->solid.update( &pilot->solid, dt );
-   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
-         pilot->ship->gfx_space, pilot->solid.dir );
+   pilot_updateSolid( pilot, dt );
 
    /* Update the trail. */
    pilot_sample_trails( pilot, 0 );
@@ -2597,25 +2729,37 @@ void pilot_sample_trails( Pilot* p, int none )
 
    /* Compute the engine offset and decide where to draw the trail. */
    for (int i=0, g=0; g<array_size(p->ship->trail_emitters); g++) {
-      double dx, dy, prod;
+      const ShipTrailEmitter *trail = &p->ship->trail_emitters[g];
+      double dx, dy, scale;
 
       if (!pilot_trail_generated( p, g ))
          continue;
 
       p->trail[i]->ontop = 0;
-      if (!(p->ship->trail_emitters[g].always_under) && (dirsin > 0)) {
+      if (!(trail->always_under) && (dirsin > 0)) {
          /* See if the trail's front (tail) is in front of the ship. */
-         prod = (trail_front( p->trail[i] ).x - p->solid.pos.x) * dircos +
+         double prod = (trail_front( p->trail[i] ).x - p->solid.pos.x) * dircos +
                   (trail_front( p->trail[i] ).y - p->solid.pos.y) * dirsin;
 
          p->trail[i]->ontop = (prod < 0);
       }
 
-      dx = p->ship->trail_emitters[g].x_engine * dircos -
-            p->ship->trail_emitters[g].y_engine * dirsin;
-      dy = p->ship->trail_emitters[g].x_engine * dirsin +
-            p->ship->trail_emitters[g].y_engine * dircos +
-            p->ship->trail_emitters[g].h_engine;
+      /* Figure our relative position. */
+      dx = trail->x_engine * dircos - trail->y_engine * dirsin;
+      dy = trail->x_engine * dirsin + trail->y_engine * dircos +
+            trail->h_engine;
+
+      /* Check if needs scaling. */
+      if (pilot_isFlag( p, PILOT_LANDING ))
+         scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
+      else if (pilot_isFlag( p, PILOT_TAKEOFF ))
+         scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
+      else
+         scale = 1.;
+      dx *= scale;
+      dy *= scale;
+
+      /* Sample. */
       spfx_trail_sample( p->trail[i++], p->solid.pos.x + dx, p->solid.pos.y + dy*M_SQRT1_2, mode, mode==MODE_NONE );
    }
 }
@@ -2625,7 +2769,7 @@ void pilot_sample_trails( Pilot* p, int none )
  */
 static int pilot_trail_generated( Pilot* p, int generator )
 {
-   return !p->ship->trail_emitters[generator].trail_spec->nebula || cur_system->nebu_density>0;
+   return !p->ship->trail_emitters[generator].trail_spec->nebula || (cur_system->nebu_density>0) || (sys_isFlag(cur_system, SYSTEM_NEBULATRAIL));
 }
 
 /**
@@ -2700,7 +2844,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
       /* has jump happened? */
       if (p->ptimer < 0.) {
          pilot_setFlag( p, PILOT_HYP_END );
-         pilot_setThrust( p, 0. );
+         pilot_setAccel( p, 0. );
          if (p->id == PLAYER_ID) /* player.p just broke hyperspace */
             player_setFlag( PLAYER_HOOK_HYPER );
          else {
@@ -2717,7 +2861,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
       }
 
       /* keep acceling - hyperspace uses much bigger accel */
-      pilot_setThrust( p, HYPERSPACE_THRUST*p->solid.mass/p->thrust );
+      pilot_setAccel( p, HYPERSPACE_ACCEL/p->accel );
    }
    /* engines getting ready for the jump */
    else if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
@@ -2762,19 +2906,19 @@ static void pilot_hyperspace( Pilot* p, double dt )
          /* If the ship needs to charge up its hyperdrive, brake. */
          if (!p->stats.misc_instant_jump &&
                !pilot_isFlag(p, PILOT_HYP_BRAKE) && !pilot_isStopped(p))
-            pilot_brake(p);
+            pilot_brake(p, dt);
          /* face target */
          else {
             /* Done braking or no braking required. */
             pilot_setFlag( p, PILOT_HYP_BRAKE );
-            pilot_setThrust( p, 0. );
+            pilot_setAccel( p, 0. );
 
             /* Face system headed to. */
             sys  = cur_system->jumps[p->nav_hyperspace].target;
             a    = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
-            diff = pilot_face( p, a );
+            diff = pilot_face( p, a, dt );
 
-            if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
+            if (ABS(diff) < MIN_DIR_ERR) { /* we can now prepare the jump */
                if (jp_isFlag( &cur_system->jumps[p->nav_hyperspace], JP_EXITONLY )) {
                   WARN( _("Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"),
                         p->name, cur_system->name, sys->name );
@@ -2818,6 +2962,14 @@ void pilot_hyperspaceAbort( Pilot* p )
    pilot_rmFlag(p, PILOT_HYP_BEGIN);
    pilot_rmFlag(p, PILOT_HYP_BRAKE);
    pilot_rmFlag(p, PILOT_HYP_PREP);
+
+   /* Try to inform followers. */
+   for (int i=0; i<array_size(p->escorts); i++) {
+      const Pilot *e = pilot_get( p->escorts[i].id );
+      if (e == NULL) /* Most likely died. */
+         continue;
+      pilot_msg( p, e, "hyperspace_abort", 0 );
+   }
 }
 
 /**
@@ -2836,7 +2988,7 @@ int pilot_refuelStart( Pilot *p )
 
    /* Conditions are the same as boarding, except disabled. */
    if (vec2_dist(&p->solid.pos, &target->solid.pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
+         target->ship->size * PILOT_SIZE_APPROX )
       return 0;
    else if (vec2_dist2( &p->solid.vel, &target->solid.vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
@@ -2845,6 +2997,17 @@ int pilot_refuelStart( Pilot *p )
    pilot_setFlag(p, PILOT_REFUELBOARDING);
    p->ptimer  = PILOT_REFUEL_TIME; /* Use timer to handle refueling. */
    return 1;
+}
+
+/**
+ * @brief Updates the pilot solid.
+ */
+static void pilot_updateSolid( Pilot *p, double dt )
+{
+   p->solid.update( &p->solid, dt );
+   /* TODO remove this from below when moving more towards 3D ships. */
+   gl_getSpriteFromDir( &p->tsx, &p->tsy,
+         p->ship->sx, p->ship->sy, p->solid.dir );
 }
 
 /**
@@ -2900,8 +3063,8 @@ ntime_t pilot_hyperspaceDelay( const Pilot *p )
  */
 void pilot_untargetAsteroid( int anchor, int asteroid )
 {
-   for (int i=0; i < array_size(pilot_stack); i++) {
-      if ((pilot_stack[i]->nav_asteroid == asteroid) && (pilot_stack[i]->nav_anchor == anchor)) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      if ((pilot_stack[i]->nav_asteroid==asteroid) && (pilot_stack[i]->nav_anchor==anchor)) {
          pilot_stack[i]->nav_asteroid = -1;
          pilot_stack[i]->nav_anchor   = -1;
       }
@@ -2984,7 +3147,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param dockslot The outfit slot which launched this pilot (-1 if N/A).
  */
 static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int faction,
-      const double dir, const vec2* pos, const vec2* vel,
+      double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
    PilotOutfitSlot *dslot;
@@ -2992,7 +3155,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    ShipOutfitSlot *ship_list[] = { ship->outfit_structure, ship->outfit_utility, ship->outfit_weapon };
 
    /* Clear memory. */
-   memset(pilot, 0, sizeof(Pilot));
+   memset( pilot, 0, sizeof(Pilot) );
 
    /* Defaults. */
    pilot->lua_mem = LUA_NOREF;
@@ -3034,11 +3197,18 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
          array_push_back( &pilot->outfits, slot );
          if (pilot_list_ptr[i] != &pilot->outfit_weapon)
             slot->weapset = -1;
-         if (slot->sslot->data != NULL)
+         /* We'll ignore non-required outfits if NO_OUTFITS is set. */
+         if ((!pilot_isFlagRaw(flags, PILOT_NO_OUTFITS) || slot->sslot->required) && slot->sslot->data != NULL)
             pilot_addOutfitRaw( pilot, slot->sslot->data, slot );
       }
    }
    array_shrink( &pilot->outfits );
+
+   /* Add intrinsics if applicable. */
+   if (!pilot_isFlagRaw(flags, PILOT_NO_OUTFITS)) {
+      for (int i=0; i<array_size(ship->outfit_intrinsic); i++)
+         pilot_addOutfitIntrinsicRaw( pilot, ship->outfit_intrinsic[i] );
+   }
 
    /* We must set the weapon auto in case some of the outfits had a default
     * weapon equipped. */
@@ -3069,13 +3239,15 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 
    /* Safety check. */
 #ifdef DEBUGGING
-   char message[STRMAX_SHORT];
-   int notworthy = pilot_reportSpaceworthy( pilot, message, sizeof(message) );
-   if (notworthy) {
-      DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, message );
-      for (int i=0; i<array_size(pilot->outfits); i++) {
-         if (pilot->outfits[i]->outfit != NULL)
-            DEBUG(_("   [%d] %s"), i, _(pilot->outfits[i]->outfit->name) );
+   if (!pilot_isFlagRaw(flags, PILOT_NO_OUTFITS)) {
+      char message[STRMAX_SHORT];
+      int notworthy = pilot_reportSpaceworthy( pilot, message, sizeof(message) );
+      if (notworthy) {
+         DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, message );
+         for (int i=0; i<array_size(pilot->outfits); i++) {
+            if (pilot->outfits[i]->outfit != NULL)
+               DEBUG(_("   [%d] %s"), i, _(pilot->outfits[i]->outfit->name) );
+         }
       }
    }
 #endif /* DEBUGGING */
@@ -3086,12 +3258,8 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    /* Clear timers. */
    pilot_clearTimers(pilot);
 
-   /* Update the x and y sprite positions. */
-   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
-         pilot->ship->gfx_space, pilot->solid.dir );
-
-   /* Fill ammo. */
-   pilot_fillAmmo( pilot );
+   /* Update the solid as necessary. */
+   pilot_updateSolid( pilot, 0. );
 
    /* Targets. */
    pilot_setTarget( pilot, pilot->id ); /* No target. */
@@ -3099,6 +3267,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    pilot->nav_hyperspace   = -1;
    pilot->nav_anchor       = -1;
    pilot->nav_asteroid     = -1;
+   pilot->shoot_indicator  = 0;
 
    /* Check takeoff. */
    if (pilot_isFlagRaw( flags, PILOT_TAKEOFF )) {
@@ -3109,8 +3278,6 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    /* Create empty table for messages. */
    lua_newtable(naevL);
    pilot->messages = luaL_ref(naevL, LUA_REGISTRYINDEX);
-
-   pilot->shoot_indicator = 0;
 }
 
 /**
@@ -3136,9 +3303,8 @@ void pilot_reset( Pilot* pilot )
    /* Clear timers. */
    pilot_clearTimers(pilot);
 
-   /* Update the x and y sprite positions. */
-   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
-         pilot->ship->gfx_space, pilot->solid.dir );
+   /* Update the solid as necessary. */
+   pilot_updateSolid( pilot, 0. );
 
    /* Heal up. */
    pilot_healLanded( pilot );
@@ -3186,14 +3352,19 @@ Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
    /* Allocate pilot memory. */
-   Pilot *p = malloc(sizeof(Pilot));
+   Pilot *p = nmalloc(sizeof(Pilot));
    if (p == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
    }
 
+   NTracingZone( _ctx, 1 );
+
    /* Set the pilot in the stack -- must be there before initializing */
    array_push_back( &pilot_stack, p );
+
+   /* Load ship graphics. */
+   ship_gfxLoad( (Ship*) ship ); /* TODO no casting. */
 
    /* Initialize the pilot. */
    pilot_init( p, ship, name, faction, dir, pos, vel, flags, dockpilot, dockslot );
@@ -3222,6 +3393,8 @@ Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char
    /* Pilot creation hook. */
    pilot_runHook( p, PILOT_HOOK_CREATION );
 
+   NTracingZoneEnd( _ctx );
+
    return p;
 }
 
@@ -3237,7 +3410,7 @@ Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, PilotFlags flags )
 {
-   Pilot *dyn = malloc(sizeof(Pilot));
+   Pilot *dyn = nmalloc(sizeof(Pilot));
    if (dyn == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
@@ -3261,7 +3434,7 @@ unsigned int pilot_clone( const Pilot *ref )
    pilot_setFlagRaw( pf, PILOT_NO_OUTFITS );
 
    /* Allocate pilot memory. */
-   dyn = malloc(sizeof(Pilot));
+   dyn = nmalloc(sizeof(Pilot));
    if (dyn == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
@@ -3297,6 +3470,9 @@ unsigned int pilot_addStack( Pilot *p )
    pilot_setFlag( p, PILOT_NOFREE );
 
    array_push_back( &pilot_stack, p );
+
+   /* Load ship graphics. */
+   ship_gfxLoad( (Ship*) p->ship ); /* TODO no casting. */
 
    /* Have to reset after adding to stack, as some Lua functions will run code on the pilot. */
    pilot_reset( p );
@@ -3347,6 +3523,9 @@ Pilot* pilot_setPlayer( Pilot* after )
    after->id = PLAYER_ID;
    qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
 
+   /* Load graphics if necessary. */
+   ship_gfxLoad( (Ship*) after->ship );
+
    /* Set up stuff. */
    player.p = after;
    pilot_clearTrails( after );
@@ -3388,7 +3567,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
    /* Build landable spob table. */
    ind = array_create_size( int, array_size(cur_system->spobs) );
    for (int i=0; i<array_size(cur_system->spobs); i++) {
-      Spob *pnt = cur_system->spobs[i];
+      const Spob *pnt = cur_system->spobs[i];
       if (spob_hasService( pnt, SPOB_SERVICE_INHABITED ) &&
             !areEnemies( lf, pnt->presence.faction ))
          array_push_back( &ind, i );
@@ -3401,20 +3580,37 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
          /* The jump into the system must not be exit-only, and unless
           * ignore_rules is set, must also be non-hidden
           * (excepted if the pilot is guerilla) and have faction
-          * presence matching the pilot's on the remote side.
-          */
-         JumpPoint *target = cur_system->jumps[i].returnJump;
-         double limit = 0.;
-         if (guerilla) {/* Test enemy presence on the other side. */
-            const int *fact = faction_getEnemies( lf );
-            for (int j=0; j<array_size(fact); j++)
-               limit += system_getPresence( cur_system->jumps[i].target, fact[j] );
+          * presence matching the pilot's on the remote side. */
+         const JumpPoint *jmp = &cur_system->jumps[i];
+         JumpPoint *target = jmp->returnJump;
+         double limit, pres;
+         const int *fact;
+
+         /* Can't use exit only from the other-side. */
+         if (jp_isFlag( target, JP_EXITONLY ))
+            continue;
+
+         if (ignore_rules) {
+            array_push_back( &validJumpPoints, target );
+            continue;
          }
 
-         if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
-               ((!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) || guerilla) &&
-               (system_getPresence( cur_system->jumps[i].target, lf ) > limit))))
-            array_push_back(&validJumpPoints, target);
+         /* Only guerrila entrances can use hidden jumps. */
+         if (jp_isFlag( jmp, JP_HIDDEN ) && !guerilla)
+            continue;
+
+         /* Test presence on the other side, making sure there is presence. */
+         pres = system_getPresence( jmp->target, lf );
+         if (pres <= 0.)
+            continue;
+
+         /* See if the remote system isn't dominantly controlled by enemies. */
+         limit = 0.;
+         fact = faction_getEnemies( lf );
+         for (int j=0; j<array_size(fact); j++)
+            limit += system_getPresence( jmp->target, fact[j] );
+         if (pres > limit)
+            array_push_back( &validJumpPoints, target );
       }
    }
 
@@ -3425,8 +3621,21 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
       else if (array_size(cur_system->jumps) > 0) {
          for (int i=0; i<array_size(cur_system->jumps); i++) {
             JumpPoint *jp = &cur_system->jumps[i];
-            if (!jp_isFlag( jp->returnJump, JP_EXITONLY ))
+            if (jp_isFlag( jp->returnJump, JP_EXITONLY ))
+               continue;
+            /* Ignore hidden jumps for now. */
+            if (jp_isFlag( jp, JP_HIDDEN ))
+               continue;
+            array_push_back(&validJumpPoints, jp->returnJump);
+         }
+         /* Now add hidden jumps as a last resort - only for non guerillas as they should be added otherwise. */
+         if (!guerilla && array_size(validJumpPoints)<=0) {
+            for (int i=0; i<array_size(cur_system->jumps); i++) {
+               JumpPoint *jp = &cur_system->jumps[i];
+               if (jp_isFlag( jp->returnJump, JP_EXITONLY ))
+                  continue;
                array_push_back(&validJumpPoints, jp->returnJump);
+            }
          }
       }
       else {
@@ -3460,11 +3669,12 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
  */
 void pilot_free( Pilot *p )
 {
+   NTracingZone( _ctx, 1 );
+
    /* Clear some useful things. */
    pilot_clearHooks(p);
    effect_cleanup( p->effects );
    p->effects = NULL;
-   pilot_cargoRmAll( p, 1 );
    escort_freeList(p);
 
    /* If hostile, must remove counter. */
@@ -3479,8 +3689,12 @@ void pilot_free( Pilot *p )
    /* We don't actually free internals of the pilot once we cleaned up stuff. */
    if (pilot_isFlag( p, PILOT_NOFREE )) {
       p->id = 0; /* Invalidate ID. */
+      NTracingZoneEnd( _ctx );
       return;
    }
+
+   /* Only remove cargo at the end. */
+   pilot_cargoRmAll( p, 1 );
 
    /* Clean up stats. */
    ss_free( p->ship_stats );
@@ -3523,7 +3737,9 @@ void pilot_free( Pilot *p )
    memset( p, 0, sizeof(Pilot) );
 #endif /* DEBUGGING */
 
-   free(p);
+   nfree(p);
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3600,6 +3816,7 @@ void pilots_free (void)
 void pilots_clean( int persist )
 {
    int persist_count = 0;
+   NTracingZone( _ctx, 1 );
 
    /* First pass to stop outfits without clearing stuff - this can call all
     * sorts of Lua stuff. */
@@ -3651,6 +3868,8 @@ void pilots_clean( int persist )
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3660,6 +3879,8 @@ void pilots_newSystem (void)
 {
    double r = cur_system->radius * 1.1;
 
+   NTracingZone( _ctx, 1 );
+
    pilot_updateSensorRange();
    for (int i=0; i < array_size(pilot_stack); i++)
       pilot_init_trails( pilot_stack[i] );
@@ -3668,6 +3889,8 @@ void pilots_newSystem (void)
       qt_destroy( &pilot_quadtree );
    qt_create( &pilot_quadtree, -r, -r, r, r, qt_max_elem, qt_depth );
    qt_init = 1;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3688,10 +3911,8 @@ void pilots_cleanAll (void)
 {
    pilots_clean(0);
    if (player.p != NULL) {
-      pilot_rmFlag( player.p, PILOT_NOFREE );
-      pilot_free(player.p);
+      player_rmPlayerShip( &player.ps );
       player.p = NULL;
-      free( player.ps.acquired );
       memset( &player.ps, 0, sizeof(PlayerShip_t) );
    }
    array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) );
@@ -3702,6 +3923,8 @@ void pilots_cleanAll (void)
  */
 void pilots_updatePurge (void)
 {
+   NTracingZone( _ctx, 1 );
+
    /* Delete loop - this should be atomic or we get hook fuckery! */
    for (int i=array_size(pilot_stack)-1; i>=0; i--) {
       Pilot *p = pilot_stack[i];
@@ -3718,7 +3941,7 @@ void pilots_updatePurge (void)
    qt_clear( &pilot_quadtree ); /* Empty it. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
-      int x, y, w2, h2;
+      int x, y, w2, h2, px, py;
 
       /* Ignore pilots being deleted. */
       if (pilot_isFlag(p, PILOT_DELETE))
@@ -3728,12 +3951,16 @@ void pilots_updatePurge (void)
       if (pilot_isFlag(p, PILOT_HIDE))
          continue;
 
-      x = round(p->solid.pos.x);
-      y = round(p->solid.pos.y);
-      w2 = ceil(p->ship->gfx_space->sw * 0.5);
-      h2 = ceil(p->ship->gfx_space->sh * 0.5);
-      qt_insert( &pilot_quadtree, i, x-w2, y-h2, x+w2, y+h2 );
+      x  = round(p->solid.pos.x);
+      y  = round(p->solid.pos.y);
+      px = round(p->solid.pre.x);
+      py = round(p->solid.pre.y);
+      w2 = ceil(p->ship->size * 0.5);
+      h2 = ceil(p->ship->size * 0.5);
+      qt_insert( &pilot_quadtree, i, MIN(x,px)-w2, MIN(y,py)-h2, MAX(x,px)+w2, MAX(y,py)+h2 );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3743,6 +3970,9 @@ void pilots_updatePurge (void)
  */
 void pilots_update( double dt )
 {
+   NTracingZone( _ctx, 1 );
+   NTracingPlotI( "pilots", array_size(pilot_stack) );
+
    /* Have all the pilots think. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
@@ -3754,7 +3984,7 @@ void pilots_update( double dt )
       /* See if should think. */
       if (pilot_isDisabled(p))
          continue;
-      if (pilot_isFlag(p,PILOT_DEAD))
+      if (pilot_isFlag(p,PILOT_DEAD) || pilot_isFlag(p, PILOT_DELETE))
          continue;
 
       /* Ignore persisting pilots during simulation since they don't get cleared. */
@@ -3762,11 +3992,14 @@ void pilots_update( double dt )
          continue;
 
       /* Hyperspace gets special treatment */
-      if (pilot_isFlag(p, PILOT_HYP_PREP))
+      if (pilot_isFlag(p, PILOT_HYP_PREP)) {
+         if (!pilot_isFlag(p, PILOT_HYPERSPACE))
+            ai_think( p, dt, 0 );
          pilot_hyperspace(p, dt);
+      }
       /* Entering hyperspace. */
       else if (pilot_isFlag(p, PILOT_HYP_END)) {
-         if ((VMOD(p->solid.vel) < 2*solid_maxspeed( &p->solid, p->speed, p->thrust) ) && (p->ptimer < 0.))
+         if ((VMOD(p->solid.vel) < 2*solid_maxspeed( &p->solid, p->speed, p->accel) ) && (p->ptimer < 0.))
             pilot_rmFlag(p, PILOT_HYP_END);
       }
       /* Must not be boarding to think. */
@@ -3780,7 +4013,7 @@ void pilots_update( double dt )
          if (pilot_isFlag(p, PILOT_PLAYER))
             player_think( p, dt );
          else
-            ai_think( p, dt );
+            ai_think( p, dt, 1 );
       }
    }
 
@@ -3802,6 +4035,8 @@ void pilots_update( double dt )
       else
          pilot_update( p, dt );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3809,6 +4044,8 @@ void pilots_update( double dt )
  */
 void pilots_render (void)
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
 
@@ -3819,6 +4056,8 @@ void pilots_render (void)
       if (!pilot_isFlag( p, PILOT_PLAYER ))
          pilot_render( p );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3826,6 +4065,8 @@ void pilots_render (void)
  */
 void pilots_renderOverlay (void)
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
 
@@ -3836,6 +4077,8 @@ void pilots_renderOverlay (void)
       if (!pilot_isFlag( p, PILOT_PLAYER ))
          pilot_renderOverlay( p );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3966,7 +4209,7 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
    pilot_dpseps( p, &DPSaccum_target, NULL );
    pilot_dpseps( cur_pilot, &DPSaccum_pilot, NULL );
 
-   if ((DPSaccum_target > 1e-6) && (DPSaccum_pilot > 1e-6))
+   if ((DPSaccum_target > DOUBLE_TOL) && (DPSaccum_pilot > DOUBLE_TOL))
       return DPSaccum_pilot / (DPSaccum_target + DPSaccum_pilot);
    else if (DPSaccum_pilot > 0.)
       return 1.;
@@ -4018,28 +4261,28 @@ credits_t pilot_worth( const Pilot *p, int count_unique )
  *    @param type Type of message.
  *    @param idx Index of data on lua stack or 0
  */
-void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int idx )
+void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type, unsigned int idx )
 {
    if (idx != 0)
-      lua_pushvalue(naevL, idx); /* data */
+      lua_pushvalue(naevL, idx);    /* data */
    else
-      lua_pushnil(naevL); /* data */
+      lua_pushnil(naevL);           /* data */
 
-   lua_newtable(naevL); /* data, msg */
+   lua_newtable(naevL);             /* data, msg */
 
    if (p != NULL) {
-      lua_pushpilot(naevL, p->id); /* data, msg, sender */
-      lua_rawseti(naevL, -2, 1); /* data, msg */
+      lua_pushpilot(naevL, p->id);  /* data, msg, sender */
+      lua_rawseti(naevL, -2, 1);    /* data, msg */
    }
 
-   lua_pushstring(naevL, type); /* data, msg, type */
-   lua_rawseti(naevL, -2, 2); /* data, msg */
+   lua_pushstring(naevL, type);     /* data, msg, type */
+   lua_rawseti(naevL, -2, 2);       /* data, msg */
 
-   lua_pushvalue(naevL, -2); /* data, msg, data */
-   lua_rawseti(naevL, -2, 3); /* data, msg */
+   lua_pushvalue(naevL, -2);        /* data, msg, data */
+   lua_rawseti(naevL, -2, 3);       /* data, msg */
 
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, receiver->messages); /* data, msg, messages */
-   lua_pushvalue(naevL, -2); /* data, msg, messages, msg */
+   lua_pushvalue(naevL, -2);        /* data, msg, messages, msg */
    lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); /* data, msg, messages */
    lua_pop(naevL, 3); /*  */
 }

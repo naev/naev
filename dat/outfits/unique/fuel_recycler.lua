@@ -2,6 +2,7 @@ local fmt = require "format"
 local luatk = require "luatk"
 --local lg = require 'love.graphics'
 --local audio = require 'love.audio'
+local helper = require "outfits.lib.helper"
 
 local active = 10 -- active time in seconds
 local cooldown = 15 -- cooldown time in seconds
@@ -143,13 +144,13 @@ local function turnon( p, po )
 
    local ps = p:stats()
    if ps.fuel >= ps.fuel_max then
-      player.msg("#r".._("You already have maximum fuel!").."#0")
+      helper.msgnospam("#r".._("You already have maximum fuel!").."#0")
       return false
    end
 
    local ret = recycle_interface ()
    if ret < 0 then
-      player.msg("#r".._("You do not have any cargo you can recycle.").."#0")
+      helper.msgnospam("#r".._("You do not have any cargo you can recycle.").."#0")
       return false
    elseif ret == 0 then
       return false -- Didn't do anything
@@ -175,7 +176,7 @@ local function turnoff( p, po )
 end
 
 function init( p, po )
-   turnoff()
+   turnoff( p, po )
    mem.timer = nil
    po:state("off")
    mem.isp = (p == player.pilot())
@@ -203,6 +204,7 @@ function ontoggle( p, po, on )
    if on then
       return turnon( p, po )
    else
+      mem.lastmsg = nil -- clear helper.msgnospam timer
       return turnoff( p, po )
    end
 end

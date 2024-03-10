@@ -1,13 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="TeraCom Vengeance Launcher">
  <general>
+  <shortname>T. Vengeance L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
-  <mass>50</mass>
+  <mass>35</mass>
   <price>95000</price>
   <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. Its designed to excel at killing armoured targets at the expense of making it poor against shields. Best paired with anti-shield weapons. TeraCom's patented launcher hardware considerably reduces the time it takes to achieve a lock. Sometimes, those few seconds can make all the difference.</description>
-  <gfx_store>headhunterlauncher.webp</gfx_store>
+  <gfx_store>vengeance_launcher.webp</gfx_store>
   <cpu>-8</cpu>
  </general>
  <specific type="launcher" secondary="1">
@@ -20,14 +21,14 @@
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>
   <ammo_mass>3</ammo_mass>
-  <gfx>headhunter.png</gfx>
+  <gfx>vengeance.webp</gfx>
   <sound>missile</sound>
   <sound_hit>medexp0</sound_hit>
   <spfx_shield>ExpM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="-7">fire-missile</trail_generator>
   <duration blowup="armour">15</duration>
-  <thrust>100</thrust>
+  <accel>100</accel>
   <turn>25</turn>
   <speed_max>450</speed_max>
   <resist>20</resist>

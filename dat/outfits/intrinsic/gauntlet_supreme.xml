@@ -6,7 +6,7 @@
   <price>1000000</price>
   <description>This service focuses on refining and polishing the launcher systems to maximize the missile fire power of the ship. It is a comprehensive and in-depth optimization that has to be done on a per-ship basis, with specialized technicians tuning everything for maximum efficiency. Due to the nature of the service, only one can be applied to each ship.</description>
   <desc_extra>#oDoubles effect when using unguided launchers.#0</desc_extra>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>/gfx/misc/crimson_gauntlet.webp</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">

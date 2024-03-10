@@ -15,7 +15,7 @@
 
 #include "conf.h"
 #include "array.h"
-#include "economy.h"
+#include "commodity.h"
 #include "log.h"
 #include "ndata.h"
 #include "nxml.h"
@@ -85,13 +85,23 @@ static int tech_addItemGroup( tech_group_t *grp, const char* name );
 /* Getting by tech. */
 static void** tech_addGroupItem( void **items, tech_item_type_t type, const tech_group_t *tech );
 
+
+static int tech_cmp( const void *p1, const void *p2 )
+{
+   const tech_group_t *t1 = p1;
+   const tech_group_t *t2 = p2;
+   return strcmp(t1->name,t2->name);
+}
+
 /**
  * @brief Loads the tech information.
  */
 int tech_load (void)
 {
-   int s;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   int s;
    char **tech_files = ndata_listRecursive( TECH_DATA_PATH );
 
    /* Create the array. */
@@ -116,18 +126,22 @@ int tech_load (void)
    array_free( tech_files );
    array_shrink( &tech_groups );
 
+   /* Sort. */
+   qsort( tech_groups, array_size(tech_groups), sizeof(tech_group_t), tech_cmp );
+
    /* Now we load the data. */
    s = array_size( tech_groups );
    for (int i=0; i<s; i++)
       tech_parseFileData( &tech_groups[i] );
 
    /* Info. */
+#if DEBUGGING
    if (conf.devmode) {
-      time = SDL_GetTicks() - time;
-      DEBUG( n_( "Loaded %d tech group in %.3f s", "Loaded %d tech groups in %.3f s", s ), s, time/1000. );
+      DEBUG( n_( "Loaded %d tech group in %.3f s", "Loaded %d tech groups in %.3f s", s ), s, (SDL_GetTicks()-time)/1000. );
    }
    else
       DEBUG( n_( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -288,7 +302,7 @@ static int tech_parseXMLData( tech_group_t *tech, xmlNodePtr parent )
          xmlr_attr_strd( node, "type", buf );
          if (buf == NULL) {
             int ret = 1;
-            if (ret)
+            //if (ret)
                ret = tech_addItemGroup( tech, name );
             if (ret)
                ret = tech_addItemOutfit( tech, name );
@@ -487,7 +501,7 @@ int tech_rmItemTech( tech_group_t *tech, const char *value )
    /* Iterate over to find it. */
    int s = array_size( tech->items );
    for (int i=0; i<s; i++) {
-      char *buf = tech_getItemName( &tech->items[i] );
+      const char *buf = tech_getItemName( &tech->items[i] );
       if (strcmp(buf, value)==0) {
          array_erase( &tech->items, &tech->items[i], &tech->items[i+1] );
          return 0;
@@ -519,7 +533,7 @@ int tech_rmItem( const char *name, const char *value )
    /* Iterate over to find it. */
    s = array_size( tech->items );
    for (int i=0; i<s; i++) {
-      char *buf = tech_getItemName( &tech->items[i] );
+      const char *buf = tech_getItemName( &tech->items[i] );
       if (strcmp(buf, value)==0) {
          array_erase( &tech->items, &tech->items[i], &tech->items[i+1] );
          return 0;
@@ -535,15 +549,11 @@ int tech_rmItem( const char *name, const char *value )
  */
 static int tech_getID( const char *name )
 {
-   int s = array_size( tech_groups );
-   for (int i=0; i<s; i++) {
-      tech_group_t *tech= &tech_groups[i];
-      if (tech->name == NULL)
-         continue;
-      if (strcmp(tech->name, name)==0)
-         return i;
-   }
-   return -1L;
+   const tech_group_t q = { .name = (char*)name };
+   const tech_group_t *t = bsearch( &q, tech_groups, array_size(tech_groups), sizeof(tech_group_t), tech_cmp );
+   if (t==NULL)
+      return -1L;
+   return t-tech_groups;
 }
 
 /**
@@ -656,7 +666,7 @@ int tech_hasItem( const tech_group_t *tech, const char *item )
 {
    int s = array_size( tech->items );
    for (int i=0; i<s; i++) {
-      char *buf = tech_getItemName( &tech->items[i] );
+      const char *buf = tech_getItemName( &tech->items[i] );
       if (strcmp(buf,item)==0)
          return 1;
    }
@@ -858,4 +868,20 @@ Commodity** tech_getCommodity( const tech_group_t *tech )
       qsort( c, array_size(c), sizeof(Commodity*), commodity_compareTech );
 
    return c;
+}
+
+/**
+ * @brief Checks to see if there is an outfit in the tech group.
+ */
+int tech_checkOutfit( const tech_group_t *tech, const Outfit *o )
+{
+   Outfit **to = tech_getOutfit( tech );
+   for (int i=0; i<array_size(to); i++) {
+      if (to[i]==o) {
+         array_free(to);
+         return 1;
+      }
+   }
+   array_free(to);
+   return 0;
 }

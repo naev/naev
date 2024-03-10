@@ -152,7 +152,7 @@ static void uniedit_buttonZoom( unsigned int wid, const char* str );
 static void uniedit_render( double bx, double by, double w, double h, void *data );
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void uniedit_focusLose( unsigned int wid, const char* wgtname );
-static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int uniedit_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 static void uniedit_renderFactionDisks( double x, double y, double r );
 static void uniedit_renderVirtualSpobs( double x, double y, double r );
@@ -202,6 +202,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 
    /* Create the window. */
    wid = window_create( "wdwUniverseEditor", _("Universe Editor"), -1, -1, -1, -1 );
+   window_setDynamic( wid, 1 );
    window_handleKeys( wid, uniedit_keys );
    window_setBorder( wid, 0 );
    uniedit_wid = wid;
@@ -1112,7 +1113,7 @@ static void uniedit_focusLose( unsigned int wid, const char* wgtname )
 /**
  * @brief System editor custom widget mouse handling.
  */
-static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int uniedit_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
    (void) data;
@@ -1997,7 +1998,7 @@ static void uniedit_editSys (void)
    y -= gl_defFont.h + 15;
    l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags: ") );
    for (int i=0; i<array_size(sys->tags); i++)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (i==0)?"":_(", "), sys->tags[i] );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (i==0)?"":", ", sys->tags[i] );
    window_addText( wid, x, y, UNIEDIT_EDIT_WIDTH-40, 20, 0, "txtTags", NULL, NULL, buf );
 
    /* Load values */
@@ -2130,7 +2131,8 @@ static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused )
       return;
    }
 
-   /* Update economy due to galaxy modification. */
+   /* Run galaxy modifications. */
+   space_reconstructPresences();
    economy_execQueued();
 
    uniedit_editGenList( wid );
@@ -2196,7 +2198,8 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
       return;
    }
 
-   /* Update economy due to galaxy modification. */
+   /* Run galaxy modifications. */
+   space_reconstructPresences();
    economy_execQueued();
 
    /* Regenerate the list. */
@@ -2274,7 +2277,7 @@ static void uniedit_btnTagsClose( unsigned int wid, const char *unused )
    StarSystem *s = uniedit_sys[0];
    int l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags: ") );
    for (int i=0; i<array_size(s->tags); i++)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? _(", ") : ""), s->tags[i] );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? ", " : ""), s->tags[i] );
    window_modifyText( uniedit_widEdit, "txtTags", buf );
 
    window_close( wid, unused );

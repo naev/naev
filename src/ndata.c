@@ -12,9 +12,9 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#if WIN32
+#if __WIN32__
 #include <windows.h>
-#endif /* WIN32 */
+#endif /* __WIN32__ */
 
 #include "physfs.h"
 #include "SDL.h"
@@ -27,9 +27,9 @@
 #include "array.h"
 #include "conf.h"
 #include "env.h"
-#if MACOS
+#if __MACOSX__
 #include "glue_macos.h"
-#endif /* MACOS */
+#endif /* __MACOSX__ */
 #include "log.h"
 #include "nfile.h"
 #include "nstring.h"
@@ -92,12 +92,12 @@ void ndata_setupWriteDir (void)
       PHYSFS_setWriteDir( conf.datapath );
       return;
    }
-#if MACOS
+#if __MACOSX__
    /* For historical reasons predating physfs adoption, this case is different. */
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "org.naev.Naev" ) );
 #else
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "naev" ) );
-#endif /* MACOS */
+#endif /* __MACOSX__ */
    if (PHYSFS_getWriteDir() == NULL) {
       WARN(_("Cannot determine data path, using current directory."));
       PHYSFS_setWriteDir( "./naev/" );
@@ -114,12 +114,12 @@ void ndata_setupReadDirs (void)
    if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
       LOG(_("Added datapath from conf.lua file: %s"), conf.ndata);
 
-#if MACOS
+#if __MACOSX__
    if ( !ndata_found() && macos_isBundle() && macos_resourcesPath( buf, PATH_MAX-4 ) >= 0 && strncat( buf, "/dat", 4 ) ) {
       LOG(_("Trying default datapath: %s"), buf);
       PHYSFS_mount( buf, NULL, 1 );
    }
-#endif /* MACOS */
+#endif /* __MACOSX__ */
 
    if ( !ndata_found() && env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >= 0 ) {
       LOG(_("Trying default datapath: %s"), buf);
@@ -156,7 +156,6 @@ void* ndata_read( const char* path, size_t *filesize )
    char *buf;
    PHYSFS_file *file;
    PHYSFS_sint64 len, n;
-   size_t pos;
    PHYSFS_Stat path_stat;
 
    if (!PHYSFS_stat( path, &path_stat )) {
@@ -202,9 +201,9 @@ void* ndata_read( const char* path, size_t *filesize )
 
    /* Read the file. */
    n = 0;
-   while ( n < len ) {
-      pos = PHYSFS_readBytes( file, &buf[ n ], len - n );
-      if ( pos <= 0 ) {
+   while (n < len) {
+      size_t pos = PHYSFS_readBytes( file, &buf[ n ], len - n );
+      if (pos == 0) {
          WARN( _( "Error occurred while reading '%s': %s" ), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
          PHYSFS_close( file );

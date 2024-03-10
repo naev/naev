@@ -1,9 +1,9 @@
-uniform vec4 color;
+uniform vec4 colour;
 uniform sampler2D sampler;
 
 in vec2 tex_coord;
-out vec4 color_out;
+out vec4 colour_out;
 
 void main(void) {
-   color_out = color * texture(sampler, tex_coord);
+   colour_out = colour * texture(sampler, tex_coord);
 }

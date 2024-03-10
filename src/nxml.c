@@ -6,14 +6,9 @@
  *
  * Handles some complex xml parsing.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
-
 #include "nxml.h"
 
 #include "ndata.h"
-#include "nstring.h"
 
 /**
  * @brief Parses a texture handling the sx and sy elements.

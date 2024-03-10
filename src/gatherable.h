@@ -20,7 +20,7 @@ typedef struct Gatherable_ {
    int quantity;             /**< Quantity of material. */
    int sx;                   /**< X sprite to use. */
    int sy;                   /**< Y sprite to use. */
-   unsigned int player_only; /**< Can only be gathered by player. */
+   int player_only;           /**< Can only be gathered by player. */
 } Gatherable;
 
 /*

@@ -13,9 +13,10 @@
 #include "pilot_cargo.h"
 
 #include "array.h"
-#include "economy.h"
 #include "gui.h"
 #include "log.h"
+#include "rng.h"
+#include "commodity.h"
 
 /* Private common implementation */
 static int pilot_cargoAddInternal( Pilot* pilot, const Commodity* cargo,
@@ -204,7 +205,7 @@ int pilot_cargoUsedMission( const Pilot* p )
 {
    int q = 0;
    for (int i=0; i<array_size(p->commodities); i++) {
-      PilotCommodity *pc = &p->commodities[i];
+      const PilotCommodity *pc = &p->commodities[i];
       if (pc->id > 0)
          q += pc->quantity;
    }
@@ -221,7 +222,6 @@ void pilot_cargoCalc( Pilot* pilot )
 {
    pilot->mass_cargo  = pilot_cargoUsed( pilot );
    pilot->cargo_free  = pilot->cap_cargo - pilot->mass_cargo;
-   pilot->solid.mass = pilot->ship->mass + pilot->stats.cargo_inertia * pilot->mass_cargo + pilot->mass_outfit;
    pilot_updateMass( pilot );
 }
 
@@ -409,7 +409,7 @@ int pilot_cargoJet( Pilot *p, const Commodity *cargo, int quantity, int simulate
    if (!simulate)
       quantity = pilot_cargoRmRaw( p, cargo, quantity, 0 );
 
-   n   = MAX( 1, RNG(quantity/10, quantity/5) );
+   n   = MAX( 1, RNG((int)(quantity/10), (int)(quantity/5)) );
    px  = p->solid.pos.x;
    py  = p->solid.pos.y;
    bvx = p->solid.vel.x;

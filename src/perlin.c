@@ -42,19 +42,11 @@
 
 
 /** @cond */
-#include <math.h>
 #include <stdlib.h>
-#include "SDL.h"
-#include "SDL_thread.h"
-
-#include "naev.h"
 /** @endcond */
 
 #include "perlin.h"
 
-#include "log.h"
-#include "nfile.h"
-#include "nstring.h"
 #include "rng.h"
 
 #define SIMPLEX_SCALE 0.5f

@@ -27,7 +27,7 @@ local vntk = require "vntk"
 
 local kidnappers -- Non-persistent state
 
-local pnthome, sys1 = spob.get("Ian") -- Nartur, home system
+local pnthome, sys1 = spob.getS("Ian") -- Nartur, home system
 local sys2 = system.get("Goddard") -- Showdown system
 -- These are the two systems to get hints first
 local pnt1, sys3 = spob.getS("Waterhole's Moon") -- Waterhole
@@ -121,7 +121,7 @@ function secondpirates()
    vn.transition()
 
    vn.na(_([[You don't even bother sitting down too close to these two pirates considering how loudly they're talking. It doesn't take too much listening before you get exactly what you need as one of the pirates is telling his recent tales to the other.]]))
-   p1(_([["So this dummy thought he could out-fly me in his pathetic Llama! So I took him offline in, like, 2 seconds, got on that ship, and took the kids. The guy tried to fight back, but I stopped that quick enough. Then the woman says they was on a vacation, like I care! Ha! Fools think they can even bother to mess with me when I have work to do."]]))
+   p1(_([["So this dummy thought he could out-fly me in his pathetic Llama! So I took him offline in, like, 2 seconds, got on that ship, and took the kids. The guy tried to fight back, but I stopped that quick enough. Then the woman says they were on a vacation, like I care! Ha! Fools think they can even bother to mess with me when I have work to do."]]))
    p1(fmt.f(_([["So I took the kids to the {sys} system where they were loaded into this Trader Koala named the Progeny. Clever name if you ask me! No one will ever even wonder what it's carrying. It looks like the most innocent little guy flying around there. Little does everyone know it's waiting to fill up its load of brats!"]]),
       {sys=sys2}))
    vn.na(_([[Having listened to this dirt-bag, you feel like going over there and giving that pirate a good beating. But if you get yourself killed now you will never be able to save those children, and you don't even want to think what will happen to those children if you don't rescue them.]]))
@@ -217,7 +217,7 @@ function land3()
       vn.transition()
 
       vn.na(_([[As you step off the landing deck with a couple dozen children in tow, the two parents you spoke with over the comm run up to you. From behind you hear a few children yelling, "Mom! Dad!" Three children shove their way out to the front and the parents and children meet in a big group of hugs, kisses, tears, and smiles from ear to ear.]]))
-      vn.na(fmt.f(_([[You and the other children stand off to the side and watch one of the most beautiful reunions you have ever seen. After a little while the father approaches you, wiping a tear from his cheek, and takes you in an embrace. Releasing you and drying his eyes, he says, "Thank you so much, {player}. You have no idea what this means to us. I would love to be able to repay you somehow, but I just have no idea how I can do so right now. You have rescued my children and brought them back to me. Thank you isn't enough, but I'm afraid for now it's the best I can do. If there is anything I can ever do for you, feel free to ask me, my friend."]]),
+      vn.na(fmt.f(_([[You and the other children stand-off to the side and watch one of the most beautiful reunions you have ever seen. After a little while the father approaches you, wiping a tear from his cheek, and takes you in an embrace. Releasing you and drying his eyes, he says, "Thank you so much, {player}. You have no idea what this means to us. I would love to be able to repay you somehow, but I just have no idea how I can do so right now. You have rescued my children and brought them back to me. Thank you isn't enough, but I'm afraid for now it's the best I can do. If there is anything I can ever do for you, feel free to ask me, my friend."]]),
          {player=player.name()}))
       vn.na(_([[You assure him that it is alright, and you will not hesitate to take him up on his offer. After a while the smile fades from his face. "You see how happy my family is? Well, look at all these other children here who are still separated from their parents. I want to return them all home. I'd also like to fight against all this human trafficking, but that will take a lot of planning. For now, I want to be with my family. Come back soon though if you're willing. I would like to get something organized."]]))
       vn.na(fmt.f(_([[The father goes back to his children, and as you start walking back to your ship you notice the father and mother lavishing their children in love. You look over to the other children now sitting around, gazing at the loving family with envy. Sighing, you begin climbing into your ship as the mother runs up to you, "{player}, wait a second! We know your name, but you don't know ours. I'm Janice." As she looks to her husband, who's talking animatedly with the children, she smiles. "My husband's name is Andrew. Thank you for everything." A tear rolls down her face as she looks at you with her bright hazel eyes and she kisses you on the cheek.

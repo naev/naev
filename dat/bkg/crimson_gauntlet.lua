@@ -26,13 +26,17 @@ function background ()
 
    -- Let's add big nebula because we can
    nebula.init{ size=3000, movemod=0.2, opacity=50 }
+
+   -- Slighty blue
+   gfx.lightAmbient( 0.6, 0.8, 1.0, 2 )
+   gfx.lightIntensity( 0.5 )
 end
 
 renderbg = starfield.render
 
 function renderfg( dt )
    -- Get camera properties
-   --local x, y = camera.get():get()
+   --local x, y = camera.pos():get()
    local z = camera.getZoom()
    shader:send( "u_camera", 0, 0, z )
 

@@ -262,7 +262,7 @@ function _bounty_death( _p, attacker )
    local b = mem._bounty
 
    if b.alive_only then
-      lmisn.fail( fmt.f( _("{plt} has been killed."), {plt=mem.name} ) )
+      lmisn.fail( fmt.f( _("{plt} has been killed."), {plt=b.targetname} ) )
    end
 
    if attacker and attacker:withPlayer() then

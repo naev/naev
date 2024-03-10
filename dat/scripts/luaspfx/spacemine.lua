@@ -99,15 +99,15 @@ local function render( sp, x, y, z )
       if ew > d.trackmin then
          local r = math.min( (ew - d.trackmin) / (d.trackmax - d.trackmin), 1 ) * d.range * z
          lg.setShader( highlight_shader )
-         lg.setColor( {1, 0, 0, 0.1} )
+         lg.setColour( {1, 0, 0, 0.1} )
          love_shaders.img:draw( x-r, y-r, 0, 2*r )
       end
-      lg.setColor( {1, 0, 0, 1} )
+      lg.setColour( {1, 0, 0, 1} )
    else
       if d.triggered then
-         lg.setColor( {1, 0, 0, 1} )
+         lg.setColour( {1, 0, 0, 1} )
       else
-         lg.setColor( {0, 1, 0, 1} )
+         lg.setColour( {0, 1, 0, 1} )
       end
    end
 

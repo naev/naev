@@ -74,7 +74,7 @@ Subject: Extra funding request]]))
       {_("House Goddard"), "wrong"},
    }
    vn.label("r1")
-   vn.na(_([[Particuliar context: Task force 5613 has recenltly suffered a consequent series of issues that include (but are not limited to) the firm opposition of Lord #owxft#0 (see Annexes A and B), ambushes by private pilots paid by an unidentified organization (see Annexes C, D and E),]]))
+   vn.na(_([[Particuliar context: Task force 5613 has recently suffered a consequent series of issues that include (but are not limited to) the firm opposition of Lord #owxft#0 (see Annexes A and B), ambushes by private pilots paid by an unidentified organization (see Annexes C, D and E),]]))
    vn.menu{
       {_("Hamelsen"), "wrong"},
       {_("Battleaddict"), "r2"},
@@ -82,7 +82,7 @@ Subject: Extra funding request]]))
       {_("Oftherings"), "wrong"},
    }
    vn.label("r2")
-   vn.na(_([[and an unfortunate altercation with House #opokjngf#0 (see Annexes F and G). These issues have been adressed by appropriate means ie. strength, violence and bestiality (see all above mentioned Annexes). However, this comes at a certain pecuniary cost, that had not been accounted for when the initial budget of Task force 5613 was decided]]))
+   vn.na(_([[and an unfortunate altercation with House #opokjngf#0 (see Annexes F and G). These issues have been addressed by appropriate means ie. strength, violence and bestiality (see all above mentioned Annexes). However, this comes at a certain pecuniary cost, that had not been accounted for when the initial budget of Task force 5613 was decided]]))
    vn.menu{
       {_("of cards"), "wrong"},
       {_("Sirius"), "wrong"},

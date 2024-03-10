@@ -6,7 +6,7 @@
   <exterior>station05.webp</exterior>
  </GFX>
  <presence>
-  <faction>Za'lek</faction>
+  <faction>Independent</faction>
   <base>33.333300</base>
   <bonus>16.666700</bonus>
   <range>1</range>

@@ -138,7 +138,7 @@ function background ()
    }
 
    -- Set up hooks
-   pos = camera.get() -- Computes
+   pos = camera.pos() -- Computes
 
    -- Use cache
    local cache = naev.cache()
@@ -168,7 +168,7 @@ function background ()
       local oldcanvas = lg.getCanvas()
       lg.setCanvas( cvs )
       lg.clear( 0, 0, 0, 0 )
-      lg.setColor( g, g, g, 1 )
+      lg.setColour( g, g, g, 1 )
       local angle = math.rad( 20 + 10 * rnd.rnd() )
       for i = 1,n do
          local p = parts_create( true )
@@ -197,10 +197,14 @@ function background ()
 
    -- Default nebula background (no star)
    starfield.init{ nolocalstars = true }
+
+   -- Almost no ambient
+   gfx.lightAmbient( 0.2 )
+   gfx.lightIntensity( 1.3 )
 end
 local function update ()
    -- Calculate player motion
-   local npos = camera.get()
+   local npos = camera.pos()
    local z = camera.getZoom()
    local diff = npos - pos
    local dx, dy = diff:get()
@@ -256,14 +260,14 @@ function renderfg ()
    update()
 
    local z = camera.getZoom()
-   lg.setColor( 1, 1, 1, 1 )
+   lg.setColour( 1, 1, 1, 1 )
    for k,p in ipairs( bgparts ) do
       draw_part( p, 2, z )
    end
 end
 function renderov ()
    local z = camera.getZoom()
-   lg.setColor( 1, 1, 1, 1 )
+   lg.setColour( 1, 1, 1, 1 )
    for k,p in ipairs( fgparts ) do
       draw_part( p, 1, z )
    end

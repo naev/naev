@@ -16,7 +16,7 @@
 #define ASTEROID_DEFAULT_DENSITY    1.  /**< Default density of an asteroid field. */
 #define ASTEROID_DEFAULT_MAXSPEED   20. /**< Max speed of asteroids in an asteroid field. */
 #define ASTEROID_DEFAULT_MAXSPIN    M_PI/5 /**< Max spin of asteroids in an asteroid field. */
-#define ASTEROID_DEFAULT_THRUST     1.  /**< Thrust applied when asteroid leaves asteroid field. */
+#define ASTEROID_DEFAULT_ACCEL     1.  /**< Acceleration applied when asteroid leaves asteroid field. */
 
 #define ASTEROID_REF_AREA     250e3    /**< The "density" value in an asteroid field means 1 rock per this area. */
 
@@ -84,8 +84,7 @@ typedef struct Asteroid_ {
    CollPoly *polygon;   /**< Collision polygon associated to gfx. */
    double armour; /**< Current "armour" of the asteroid. */
    /* Movement. */
-   vec2 pos;      /**< Position. */
-   vec2 vel;      /**< Velocity. */
+   Solid sol;     /**< Solid. */
    double ang;    /**< Angle. */
    double spin;   /**< Spin. */
    /* Stats. */
@@ -104,7 +103,7 @@ typedef struct AsteroidAnchor_ {
    vec2 pos;      /**< Position in the system (from center). */
    double density;/**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
-   int nb;        /**< Number of asteroids. */
+   int nmax;      /**< Maximum number of asteroids. */
    double radius; /**< Radius of the anchor. */
    double area;   /**< Field's area. */
    AsteroidTypeGroup **groups; /**< Groups of asteroids. */
@@ -112,11 +111,12 @@ typedef struct AsteroidAnchor_ {
    double groupswtotal;/**< Sum of the weights of the groups. */
    double maxspeed;/**< Maxmimum speed the asteroids can have in the field. */
    double maxspin;/**< Maxmimum spin the asteroids can have in the field. */
-   double thrust; /**< Thrust applied when out of radius towards center. */
+   double accel; /**< Accel applied when out of radius towards center. */
    double margin; /**< Extra margin to use when doing distance computations. */
    /* Collision stuff. */
    Quadtree qt;   /**< Handles collisions. */
    int qt_init;   /**< Whether or not the quadtree has been initialized. */
+   int has_exclusion; /**< Used for updating. */
 } AsteroidAnchor;
 
 /**

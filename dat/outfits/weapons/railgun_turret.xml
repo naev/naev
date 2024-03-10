@@ -3,11 +3,11 @@
  <general>
   <slot>weapon</slot>
   <size>large</size>
-  <mass>65</mass>
+  <mass>85</mass>
   <license>Heavy Weapon</license>
   <rarity>1</rarity>
   <price>720000</price>
-  <description>While one 150mm railgun is a formidable weapon, the ultimate in brute-force capital ship weaponry is the 150mm railgun turret. Mounting two railguns in a specialized turret housing, it manages to mitigate the recoil normally associated with railguns at a slight velocity cost.</description>
+  <description>While one railgun is a formidable weapon, the ultimate in brute-force capital ship weaponry is the railgun turret. Mounting two railguns in a specialized turret housing, it manages to mitigate the recoil normally associated with railguns at a slight velocity cost. Very few capital ships can survive being pounded by these weapons for long.</description>
   <gfx_store>railgunturret.webp</gfx_store>
   <cpu>-350</cpu>
  </general>
@@ -17,7 +17,7 @@
   <spfx_shield>ShiM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
   <delay>1.7</delay>
-  <speed>650</speed>
+  <speed>700</speed>
   <range>2200</range>
   <falloff>1600</falloff>
   <gfx_end>massL-end.png</gfx_end>
@@ -26,9 +26,9 @@
   <trackmin>5000</trackmin>
   <trackmax>20000</trackmax>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>90</penetrate>
-   <physical>76</physical>
+   <physical>80</physical>
   </damage>
  </specific>
  <tags>

@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>240</points>
  <base_type>Vox</base_type>
- <GFX sx="12" sy="12">vox</GFX>
+ <gfx size="171" sx="12" sy="12">vox</gfx>
  <rarity>2</rarity>
  <sound pitch="0.5">engine_soromid</sound>
  <class display="Bio-Battleship">Battleship</class>
@@ -40,6 +40,7 @@
   <utility size="large" prop="bio_organ" name="feral_rage" />
   <utility size="large" prop="bio_organ" name="plasma_burst" />
   <utility size="large" prop="accessory" />
+  <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <structure size="large" prop="bio_engines" name="genedrive">Immanis Gene Drive I</structure>

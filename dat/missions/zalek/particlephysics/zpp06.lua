@@ -89,7 +89,7 @@ function land ()
 
    vn.clear()
    vn.scene()
-   local n = vn.newCharacter( zpp.noona.name, {color=zpp.noona.colour} ) -- Just for the letter
+   local n = vn.newCharacter( zpp.noona.name, {colour=zpp.noona.colour} ) -- Just for the letter
    vn.transition()
    vn.na(_([[You land and head to where Noona told you to drop off the package. On the way you get lost in the maze of research laboratories, coffee machines, dangerous looking experiments, and Za'lek scientists engaged in heated arguments who don't notice your presence.]]))
    vn.na(_([[Eventually, you find the hidden away room labeled "Particle Physics Experiments Registration Department", and enter to meet a unenthusiastic academic secretary. You hand them the package, and, after sighing, they proceed to inspect the contents. They mention something about Dr. Sanderaite being at it again, and hand you an envelope that was in the package mentioning that it is not part of the report.]]))
@@ -109,6 +109,8 @@ function land ()
    if getlicense then
       n(_([[You read the letter:
    Thanks for all your help at Katar I. By now you've probably realized I am not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
+      vn.sfxBingo()
+      vn.na(_([[You can now purchase the #bHeavy Combat Vessel License#0.]]))
    else
       n(_([[You read the letter:
    Thanks for all your help at Katar I. By now you've probably realized am I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))

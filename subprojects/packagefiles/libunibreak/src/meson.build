@@ -4,6 +4,7 @@ libunibreak_sources = [
    'linebreak.c',
    'linebreakdata.c',
    'linebreakdef.c',
+   'eastasianwidthdef.c',
    'emojidef.c',
    'graphemebreak.c',
    'wordbreak.c',

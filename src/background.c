@@ -28,6 +28,7 @@
 #include "nlua_gfx.h"
 #include "nluadef.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "nxml.h"
 #include "opengl.h"
 #include "pause.h"
@@ -47,8 +48,8 @@ typedef struct background_image_s {
    double angle; /**< Rotation (in radians). */
    glColour col; /**< Colour to use. */
 } background_image_t;
-static background_image_t *bkg_image_arr_bk = NULL; /**< Background image array to display (behind dust). */
-static background_image_t *bkg_image_arr_ft = NULL; /**< Background image array to display (in front of dust). */
+static background_image_t *bkg_image_arr_bk = NULL; /**< Background image array to display (behind dust). Assumed to be a debris layer. */
+static background_image_t *bkg_image_arr_ft = NULL; /**< Background image array to display (in front of dust). Assumed to be a star layer. */
 
 static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
 
@@ -93,6 +94,8 @@ void background_initDust( int n )
    double size;
    GLfloat *dust_vertex;
 
+   NTracingZone( _ctx, 1 );
+
    /* Calculate size. */
    size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
    size /= pow2(conf.zoom_far);
@@ -126,6 +129,8 @@ void background_initDust( int n )
          ndust * sizeof(GLfloat) * 3, dust_vertex );
 
    free(dust_vertex);
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -150,13 +155,14 @@ void background_renderDust( const double dt )
    mat4 projection;
    int points = 1;
 
+   NTracingZone( _ctx, 1 );
+
    /* Do some scaling for now. */
    z = cam_getZoom();
    m = 1.;
    angle = 0.;
    projection = gl_view_matrix;
-   mat4_translate( &projection, SCREEN_W/2., SCREEN_H/2., 0 );
-   mat4_scale( &projection, z, z, 1 );
+   mat4_translate_scale_xy( &projection, SCREEN_W/2., SCREEN_H/2., z, z );
 
    /* Decide on shade mode. */
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
@@ -219,6 +225,8 @@ void background_renderDust( const double dt )
 
    /* Check for errors. */
    gl_checkErr();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -228,6 +236,8 @@ void background_renderDust( const double dt )
  */
 void background_render( double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    if (bkg_L_renderbg != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
       lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
@@ -259,6 +269,8 @@ void background_render( double dt )
          lua_pop( naevL, 1 );
       }
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -266,6 +278,8 @@ void background_render( double dt )
  */
 void background_renderOverlay( double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    if (bkg_L_renderov != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderov );
       lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
@@ -274,6 +288,8 @@ void background_renderOverlay( double dt )
          lua_pop( naevL, 1 );
       }
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -281,16 +297,9 @@ void background_renderOverlay( double dt )
  */
 static int bkg_compare( const void *p1, const void *p2 )
 {
-   background_image_t *bkg1, *bkg2;
-
-   bkg1 = (background_image_t*) p1;
-   bkg2 = (background_image_t*) p2;
-
-   if (bkg1->move < bkg2->move)
-      return -1;
-   else if (bkg1->move > bkg2->move)
-      return +1;
-   return  0;
+   const background_image_t *bkg1 = (background_image_t*) p1;
+   const background_image_t *bkg2 = (background_image_t*) p2;
+   return bkg1->move - bkg2->move;
 }
 
 /**
@@ -304,7 +313,7 @@ static void bkg_sort( background_image_t *arr )
 /**
  * @brief Adds a new background image.
  */
-unsigned int background_addImage( glTexture *image, double x, double y,
+unsigned int background_addImage( const glTexture *image, double x, double y,
       double move, double scale, double angle, const glColour *col, int foreground )
 {
    background_image_t *bkg, **arr;
@@ -416,7 +425,7 @@ static nlua_env background_create( const char *name )
  */
 int background_init (void)
 {
-   /* Load Lua. */
+   /* Load and set up the default Lua background state. */
    bkg_def_env = background_create( "default" );
    return 0;
 }
@@ -428,6 +437,8 @@ int background_load( const char *name )
 {
    int ret;
    nlua_env env;
+
+   NTracingZone( _ctx, 1 );
 
    /* Free if exists. */
    background_clear();
@@ -441,8 +452,10 @@ int background_load( const char *name )
 
    /* Comfort. */
    env = bkg_cur_env;
-   if (env == LUA_NOREF)
+   if (env == LUA_NOREF) {
+      NTracingZoneEnd( _ctx );
       return -1;
+   }
 
    /* Run Lua. */
    nlua_getenv(naevL, env,"background");
@@ -460,6 +473,8 @@ int background_load( const char *name )
    bkg_L_renderfg = nlua_refenv( env, "renderfg" );
    bkg_L_renderov = nlua_refenv( env, "renderov" );
 
+   NTracingZoneEnd( _ctx );
+
    return ret;
 }
 
@@ -468,9 +483,8 @@ int background_load( const char *name )
  */
 static void background_clearCurrent (void)
 {
-   if (bkg_cur_env != bkg_def_env) {
+   if (bkg_cur_env != bkg_def_env)
       nlua_freeEnv( bkg_cur_env );
-   }
    bkg_cur_env = LUA_NOREF;
 
    luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
@@ -488,6 +502,9 @@ static void background_clearCurrent (void)
  */
 void background_clear (void)
 {
+   /* Reset ambient lighting. */
+   gltf_lightAmbient( 0., 0., 0. );
+
    /* Destroy current background script. */
    background_clearCurrent();
 
@@ -539,12 +556,25 @@ void background_free (void)
 }
 
 /**
- * @brief returns the background images, and number of these
+ * @brief Returns an array (array.h) of star background images in the system background.
  */
-glTexture** background_getTextures (void)
+glTexture** background_getStarTextures (void)
 {
-  glTexture **imgs = array_create_size( glTexture*, array_size( bkg_image_arr_bk ));
-  for (int i=0; i<array_size(bkg_image_arr_bk); i++)
-    array_push_back( &imgs, gl_dupTexture(bkg_image_arr_bk[i].image) );
+  glTexture **imgs = array_create_size( glTexture*, array_size( bkg_image_arr_ft ));
+  for (int i=0; i<array_size(bkg_image_arr_ft); i++)
+    array_push_back( &imgs, gl_dupTexture(bkg_image_arr_ft[i].image) );
   return imgs;
+}
+
+/**
+ * @brief Returns an overall background image (nebula, for instance), or NULL if none exists.
+ * @TODO With current background scripts, this only does anything on the border (1 jump from nebula)!
+ */
+glTexture* background_getAmbientTexture (void)
+{
+  /* Assume many bg-layer images => none is representative => we should return NULL. Example: Taiomi system's debris field. */
+  if (array_size( bkg_image_arr_bk ) == 1)
+    return gl_dupTexture(bkg_image_arr_bk[0].image);
+  else
+     return NULL;
 }

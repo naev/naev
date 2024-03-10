@@ -18,11 +18,15 @@
 </event>
 --]]
 --[[
-
    Travelling Merchant Event
 
 Spawns a travelling merchant that can sell the player if interested.
 
+Player variables:
+* travelling_trader_boarded: player has boarded once the merchant
+* travelling_trader_hailed: misi has been hailed once by the player
+* travelling_trader_hail2: misi has been hailed about new stuff by the player (chapter 1)
+* travelling_trader_data: player has been talked about the new data matrices stuff
 --]]
 local vn = require 'vn'
 local fmt = require "format"
@@ -211,6 +215,12 @@ function gen_outfits ()
       end
    end
 
+   -- Other special cases
+   local rr = "Rackham's Razor"
+   if player.outfitNum(rr) <= 0 and ((var.peek("poi_red_rackham") or 0)>=3) then
+      table.insert( outfits, rr )
+   end
+
    return outfits
 end
 
@@ -266,7 +276,7 @@ function hail ()
       vn.clear()
       vn.scene()
       local mm = vn.newCharacter( trader_name,
-         { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
+         { image=trader_image, colour=trader_colour, shader=love_shaders.hologram() } )
       vn.transition("electric")
       mm:say( _([["Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, … wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"]]) )
       vn.done("electric")
@@ -278,7 +288,7 @@ function hail ()
       vn.clear()
       vn.scene()
       local mm = vn.newCharacter( trader_name,
-         { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
+         { image=trader_image, colour=trader_colour, shader=love_shaders.hologram() } )
       vn.transition("electric")
       mm:say(_([["Howdy Human! I have new propitiuous and meretricious wares available. Come see the wares on my ship!"]]))
       vn.done("electric")
@@ -297,7 +307,7 @@ function board ()
 
    vn.clear()
    vn.scene()
-   local mm = vn.newCharacter( trader_name, { image=trader_image, color=trader_colour } )
+   local mm = vn.newCharacter( trader_name, { image=trader_image, colour=trader_colour } )
    vn.transition()
    if not var.peek('travelling_trader_boarded') then
       vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. As you look around the mess of different wares, most seemingly to be garbage, you suddenly notice a mysterious figure standing infront of you. You're surprised at how you didn't notice them getting so close to you, almost like a ghost.]]))
@@ -351,8 +361,13 @@ They get uncomfortably close
             _("Now with fewer side effects!"),
          }
 
-         mm(fmt.f(_([["I haven't seen you in a while old friend! I've gotten some new wares you may want to see. Always the best quality! {sillyphrase}"]]),
-            {sillyphrase = sillyphrases[ rnd.rnd(1,#sillyphrases) ]}))
+         if newoutfits then
+            mm(fmt.f(_([["I haven't seen you in a while old friend! I've gotten some new wares you may want to see. Always the best quality! {sillyphrase}"]]),
+               {sillyphrase = sillyphrases[ rnd.rnd(1,#sillyphrases) ]}))
+         else
+            mm(fmt.f(_([["I haven't seen you in a while old friend! Looking for a bargain again? Always the best quality! {sillyphrase}"]]),
+               {sillyphrase = sillyphrases[ rnd.rnd(1,#sillyphrases) ]}))
+         end
       end
    end
 
@@ -393,8 +408,12 @@ They get uncomfortably close
       special_virtue    = outfit.get("Machiavellian Virtue"),
    }
    vn.label("special")
-   mm(fmt.f(_([["So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}."]]),
-      {cost=poi.data_str(upgrade_cost)}))
+   mm( function ()
+      return fmt.f(_([["So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}."
+
+You currently have {amount}.]]),
+         {cost=poi.data_str(upgrade_cost), amount=poi.data_str(poi.data_get())})
+   end )
    vn.menu( function ()
       local opts = {
          { _("Info"), "special_info" },
@@ -428,12 +447,14 @@ They get uncomfortably close
             end
          end
       end )
-      mm(fmt.f(_([["I would be able to provide my special services for, let's say, {cost}, how does that sound?"
+      mm( function ()
+         return fmt.f(_([["I would be able to provide my special services for, let's say, {cost}, how does that sound?"
 
 {upgrade_desc}
 
 You have {amount}. Pay {cost} for {upgrade}?]]),
-         {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, upgrade_desc=upgrade:summary()} ))
+            {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, upgrade_desc=upgrade:summary()} )
+      end )
       vn.menu{
          { _("Pay"), s.."_yes" },
          { _("Back"), s.."_no" },
@@ -468,7 +489,7 @@ You have {amount}. Pay {cost} for replacing {replacement} with {upgrade}?]]),
          end
       end )
       mm(_([["This will take a second."
-They grab a toolbox and rush over to your boarded ship. You decide not to follow as somethings are best left not known. At least they know what they are doing right?]]))
+They grab a toolbox and rush over to your boarded ship. You decide not to follow as some things are best left not known. At least they know what they are doing right?]]))
       mm(_([[Eventually, they come back covered in what seems to be fish parts and slime.
 "That was fun! However, when I put it back together, I found some extra screws. Oh well, it does seem to hold together fairly well. Hope you enjoy the upgrades! The fish smell will go away in a few periods hopefully."]]))
       vn.func( function ()

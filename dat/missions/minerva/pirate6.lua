@@ -9,7 +9,7 @@
  <done>Minerva Pirates 5</done>
  <notes>
   <campaign>Minerva</campaign>
-  <done_misn>Kex's Freedom 5</done_misn>
+  <done_misn name="Kex's Freedom 5" />
  </notes>
 </mission>
 --]]
@@ -42,13 +42,11 @@ local dv_name = _("Lord Battlebloke")
 mem.state = nil
 
 function create ()
-   if not var.peek("testing") then misn.finish(false) end
-
    if not misn.claim( mainsys ) then
       misn.finish( false )
    end
    misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
-   misn.setDesc(_("Zuri wants you do help a Za'lek General and Dvaered Warlord finish each other off."))
+   misn.setDesc(_("Zuri wants you to help a Za'lek General and Dvaered Warlord finish each other off."))
    misn.setReward(_("Cold hard credits"))
    misn.setTitle( title )
 end
@@ -184,7 +182,7 @@ She shakes her head.
 "We get them to fight each other! I thought we were on the same wavelength!"]]))
       vn.jump("cont01")
 
-      vn.label("cont01_fight")
+      vn.label("cont01_noidea")
       zuri(_([["We get them to fight each other! I thought we were on the same wavelength!"]]))
       vn.jump("cont01")
 
@@ -379,7 +377,7 @@ local chatter = {
    {_([[So I was returning to Haven, when I saw a derelict.]]), 7 },
    {_([[Being the fellow I am, I boarded it.]]), 6 },
    {_([[Ship was all covered in blood and bodies.]]), 7 },
-   {_([[Fresh bodes means fresh goods, great I thought.]]), 7 },
+   {_([[Fresh bodies means fresh goods, great I thought.]]), 7 },
    {_([[Until I got to the command room.]]), 7 },
    {_([[Bloody Iguana chomping on the captain's leg!]]), 8 },
    {_([[Almost crapped my trousers!]]), 7 },

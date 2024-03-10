@@ -15,10 +15,10 @@
    FLF patrol elimination mission.
 
 --]]
-
 local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
+local vn = require "vn"
 
 -- luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (shared with derived missions flf_empatrol, flf_pre02)
 
@@ -207,9 +207,19 @@ function land_flf ()
    leave()
    mem.last_system = spob.cur()
    if spob.cur():faction() == faction.get("FLF") then
-      tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
-      player.pay( mem.credits )
-      faction.get("FLF"):modPlayer( mem.reputation )
+
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.na( text[ rnd.rnd(1,#text) ] )
+      vn.sfxMoney()
+      vn.func( function ()
+         player.pay( mem.credits )
+         faction.get("FLF"):modPlayer( mem.reputation )
+      end )
+      vn.na(fmt.reward(mem.credits))
+      vn.run()
+
       misn.finish( true )
    end
 end

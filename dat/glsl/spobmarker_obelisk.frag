@@ -6,4 +6,4 @@ float marker_func( vec2 pos, float rad )
    return abs(sdVesica( vec2(pos.x,-pos.y), rad*1.3, 0.5 ));
 }
 
-#include "spobmarker_base.frag"
+#include "spobmarker_base.glsl"

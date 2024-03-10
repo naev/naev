@@ -13,6 +13,9 @@
  <notes>
   <tier>2</tier>
  </notes>
+ <tags>
+  <tag>pir_cap_ch01_lrg</tag>
+ </tags>
 </mission>
 --]]
 --[[
@@ -27,7 +30,7 @@
 ]]--
 local fleet = require "fleet"
 local fmt = require "format"
-local pir = require "common.pirate"
+--local pir = require "common.pirate"
 local portrait = require "portrait"
 local vn = require "vn"
 local lmisn = require "lmisn"
@@ -122,11 +125,6 @@ function land()
 
    local n = var.peek("ps_clancargo_misn") or 0
    var.push("ps_clancargo_misn", n + 1)
-   -- The first time this mission is done, the player’s max standing is
-   -- increased by 5.
-   if n == 0 then
-      pir.modReputation( 5 )
-   end
 
    misn.finish(true)
 end

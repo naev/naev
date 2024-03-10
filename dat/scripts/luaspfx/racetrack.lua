@@ -32,12 +32,12 @@ local function render( sp, x, y, z )
       local old_shader = lg.getShader()
       track_shader:send( "u_dimensions", sw, sh );
       lg.setShader( track_shader )
-      lg.setColor( d.col )
+      lg.setColour( d.col )
       love_shaders.img:draw( x-sw*0.5, y-sh*0.5, d.rot, sw, sh )
       lg.setShader( old_shader )
    end
 
-   lg.setColor{1,1,1}
+   lg.setColour{1,1,1}
    local w, h = buoy_w*z, buoy_h*z
    render_buoy( d.seg1, z, w, h )
    render_buoy( d.seg2, z, w, h )

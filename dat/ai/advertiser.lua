@@ -50,7 +50,7 @@ local ads_zalek = {
    _("Love non-convex minimization? Join Ruadan's Computation Science Lab!"),
    _("Keeping your drones in top shape. Prof. Imarisha's Robotic Laboratory."),
    _("Interested in Genetic Lifeforms research? Apply to Interstice Science!"), -- Reference to Aperture Science (synonyms) from Portal
-   _("Want to learn about Anti-Mass Spectometry? Join Ebony Plateau today!"), -- Reference to Black Mesa (synonyms) from Half-Life
+   _("Want to learn about Anti-Mass Spectrometry? Join Ebony Plateau today!"), -- Reference to Black Mesa (synonyms) from Half-Life
 }
 local ads_sirius = {
    _("Want a new look? Try Verrill's Ceremonial Robes at Burnan!"),
@@ -101,12 +101,12 @@ function create ()
    if fdv > 1 then
       msg = tmergei( msg, ads_dvaered )
       local badwords = {
-         _("Butthead"),
-         _("Nincompoop"),
-         _("Dunderhead"),
-         _("Ass"),
-         _("Fool"),
-         _("Coward"),
+         _("a Butthead"),
+         _("a Nincompoop"),
+         _("a Dunderhead"),
+         _("an Ass"),
+         _("a Fool"),
+         _("a Coward"),
       }
       local lords = dv.warlords () -- Gets all warlorlds
       local r = rnd.rnd(1,#lords)
@@ -114,8 +114,8 @@ function create ()
       table.remove( lords, r )
       local sponsor = lords[ rnd.rnd(1,#lords) ]
       local params = {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponsor=sponsor}
-      table.insert(msg, fmt.f(_("I hereby declare {butthead} is a {badword}. -{sponsor}"), params))
-      table.insert(msg, fmt.f(_("Let it be known that {butthead} is a {badword}. -{sponsor}"), params))
+      table.insert(msg, fmt.f(_("I hereby declare {butthead} is {badword}. -{sponsor}"), params))
+      table.insert(msg, fmt.f(_("Let it be known that {butthead} is {badword}. -{sponsor}"), params))
    end
 
    -- Soromid messages

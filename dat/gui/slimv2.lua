@@ -29,7 +29,7 @@ local function update_wset()
       if k > max_slots then
          break
       end
-      weap_icons[k] = outfit.get( v.name ):icon()
+      weap_icons[k] = v.outfit:icon()
    end
 
    aset = pp:actives()
@@ -39,7 +39,7 @@ local function update_wset()
       if k > max_slots then
          break
       end
-      active_icons[k] = outfit.get( v.name ):icon()
+      active_icons[k] = v.outfit:icon()
     end
 end
 
@@ -64,7 +64,7 @@ function create()
    bars.speed2 = {}
    bars.stress = {}
 
-   --Colors
+   --Colours
    col_txt_std = colour.new( 192/255, 198/255, 217/255 )
    col_txt_wrn = colour.new( 127/255,  31/255,  31/255 )
    col_txt_enm = colour.new( 222/255,  28/255,  28/255 )
@@ -379,8 +379,8 @@ function render( dt, dt_mod )
 
          gfx.renderTexRaw( weap_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
 
-         if wset[i].temp > 0 then
-            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * wset[i].temp/2, col_slot_heat ) --Heat
+         if wset[i].heat > 0 then
+            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * wset[i].heat/2, col_slot_heat ) --Heat
          end
 
          --Cooldown
@@ -451,9 +451,9 @@ function render( dt, dt_mod )
          gfx.renderRect( slot_x, 0, slot_w, slot_h, col_slot_bg ) --Background
 
          -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
-         if aset[i].type == "Afterburner" then
-            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].temp, col_slot_heat ) -- Background (heat)
-         end
+         --if aset[i].type == "Afterburner" then
+            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].heat, col_slot_heat ) -- Background (heat)
+         --end
 
          gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
 

@@ -214,15 +214,15 @@ static int texL_new( lua_State *L )
       w = luaL_checkinteger(L,2);
       h = luaL_checkinteger(L,3);
       if ((w < 0 ) || (h < 0))
-         NLUA_ERROR( L, _("Texture dimensions must be positive") );
+         return NLUA_ERROR( L, _("Texture dimensions must be positive") );
       sx = luaL_optinteger(L,4,1);
       sy = luaL_optinteger(L,5,1);
       if ((sx < 0 ) || (sy < 0))
-         NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
+         return NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
       if (ld->type != LUADATA_NUMBER)
-         NLUA_ERROR( L, _("Data has invalid type for texture") );
+         return NLUA_ERROR( L, _("Data has invalid type for texture") );
       if (w*h*ld->elem*4 != ld->size)
-         NLUA_ERROR( L, _("Texture dimensions don't match data size!") );
+         return NLUA_ERROR( L, _("Texture dimensions don't match data size!") );
       SDL_asprintf( &name, "nlua_texture_%03d", ++nlua_tex_counter );
       tex = gl_loadImageData( (void*)ld->data, w, h, sx, sy, name  );
       free( name );
@@ -239,7 +239,7 @@ static int texL_new( lua_State *L )
    sx = luaL_optinteger(L,2,1);
    sy = luaL_optinteger(L,3,1);
    if ((sx < 0 ) || (sy < 0))
-      NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
+      return NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
 
    /* Push new texture. */
    if (path != NULL)
@@ -247,7 +247,7 @@ static int texL_new( lua_State *L )
    else {
       rw = PHYSFSRWOPS_openRead( lf->path );
       if (rw==NULL)
-         NLUA_ERROR(L,"Unable to open '%s'", lf->path );
+         return NLUA_ERROR(L,"Unable to open '%s'", lf->path );
       tex = gl_newSpriteRWops( lf->path, rw, sx, sy, 0 );
       SDL_RWclose( rw );
    }
@@ -310,7 +310,6 @@ static int texL_readData( lua_State *L )
    size_t size;
    uint8_t r, g, b, a;
    uint32_t pix;
-   int i, j;
    float *data;
 
    s = NULL;
@@ -322,12 +321,12 @@ static int texL_readData( lua_State *L )
       s = luaL_checkstring(L,1);
    rw = PHYSFSRWOPS_openRead( s );
    if (rw == NULL)
-      NLUA_ERROR(L, _("problem opening file '%s' for reading"), s );
+      return NLUA_ERROR(L, _("problem opening file '%s' for reading"), s );
 
    /* Try to read the image. */
    surface = IMG_Load_RW( rw, 1 );
    if (surface == NULL)
-      NLUA_ERROR(L, _("problem opening image for reading") );
+      return NLUA_ERROR(L, _("problem opening image for reading") );
 
    /* Convert surface to LuaData_t */
    SDL_LockSurface( surface );
@@ -337,8 +336,8 @@ static int texL_readData( lua_State *L )
    ld.data = calloc( ld.elem*4, size );
    ld.type = LUADATA_NUMBER;
    data = (float*)ld.data;
-   for (i=0; i<surface->h; i++) {
-      for (j=0; j<surface->w; j++) {
+   for (int i=0; i<surface->h; i++) {
+      for (int j=0; j<surface->w; j++) {
          pix = get_pixel( surface, j, i );
          SDL_GetRGBA( pix, surface->format, &r, &g, &b, &a );
          size_t pos = 4*((surface->h-i-1)*surface->w+j);
@@ -398,7 +397,7 @@ static int texL_writeData( lua_State *L )
 
    /* Save to file. */
    if (!(rw = PHYSFSRWOPS_openWrite( filename )))
-      NLUA_ERROR(L,_("Unable to open '%s' for writing!"),filename);
+      return NLUA_ERROR(L,_("Unable to open '%s' for writing!"),filename);
    else
       IMG_SavePNG_RW( surface, rw, 1 );
 
@@ -469,8 +468,7 @@ static int texL_spriteFromDir( lua_State *L )
 {
 
    int sx, sy;
-
-   glTexture *tex = luaL_checktex( L, 1 );
+   const glTexture *tex = luaL_checktex( L, 1 );
    double a = luaL_checknumber( L, 2 );
 
    /* Calculate with parameter validity.. */
@@ -479,7 +477,7 @@ static int texL_spriteFromDir( lua_State *L )
       if (a < 0.)
          a += 2.*M_PI;
    }
-   gl_getSpriteFromDir( &sx, &sy, tex, a );
+   gl_getSpriteFromDir( &sx, &sy, tex->sx, tex->sy, a );
 
    /* Return. */
    lua_pushinteger( L, sx+1 );
@@ -506,7 +504,7 @@ static int texL_setFilter( lua_State *L )
    mag = gl_stringToFilter( smag );
 
    if (min==0 || mag==0)
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
 
    glBindTexture( GL_TEXTURE_2D, tex->texture );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag );
@@ -538,7 +536,7 @@ static int texL_setWrap( lua_State *L )
    depth = gl_stringToClamp( sdepth );
 
    if (horiz==0 || vert==0 || depth==0)
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
 
    glBindTexture( GL_TEXTURE_2D, tex->texture );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, horiz );

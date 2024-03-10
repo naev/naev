@@ -24,9 +24,11 @@
 #include "nlua_transform.h"
 #include "nlua_canvas.h"
 #include "nlua_vec2.h"
+#include "render.h"
 #include "nluadef.h"
 #include "opengl.h"
 #include "array.h"
+#include "gltf.h"
 
 /* GFX methods. */
 static int gfxL_dim( lua_State *L );
@@ -54,7 +56,12 @@ static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
 static int gfxL_setBlendMode( lua_State *L );
 static int gfxL_setScissor( lua_State *L );
+static int gfxL_lightAmbient( lua_State *L );
+static int gfxL_lightAmbientGet( lua_State *L );
+static int gfxL_lightIntensity( lua_State *L );
+static int gfxL_lightIntensityGet( lua_State *L );
 static int gfxL_screenshot( lua_State *L );
+static int gfxL_glVersion( lua_State *L );
 static const luaL_Reg gfxL_methods[] = {
    /* Information. */
    { "dim", gfxL_dim },
@@ -81,10 +88,16 @@ static const luaL_Reg gfxL_methods[] = {
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
+   /* 3D rendering. */
+   { "lightAmbient", gfxL_lightAmbient },
+   { "lightAmbientGet", gfxL_lightAmbientGet },
+   { "lightIntensity", gfxL_lightIntensity },
+   { "lightIntensityGet", gfxL_lightIntensityGet },
    /* Misc. */
    { "setBlendMode", gfxL_setBlendMode },
    { "setScissor", gfxL_setScissor },
    { "screenshot", gfxL_screenshot },
+   { "glVersion", gfxL_glVersion },
    {0,0}
 }; /**< GFX methods. */
 
@@ -158,11 +171,13 @@ static int gfxL_dim( lua_State *L )
 static int gfxL_screencoords( lua_State *L )
 {
    vec2 screen;
-   vec2 *game = luaL_checkvector( L, 1 );
+   double x, y;
+   const vec2 *game = luaL_checkvector( L, 1 );
    int invert = lua_toboolean( L, 2 );
-   gl_gameToScreenCoords( &screen.x, &screen.y, game->x, game->y );
+   gl_gameToScreenCoords( &x, &y, game->x, game->y );
    if (invert)
-      screen.y = SCREEN_H-screen.y;
+      y = SCREEN_H-y;
+   vec2_cset( &screen, x, y );
    lua_pushvector( L, screen );
    return 1;
 }
@@ -187,36 +202,33 @@ static int gfxL_screencoords( lua_State *L )
  */
 static int gfxL_renderTex( lua_State *L )
 {
-   glTexture *tex;
-   glColour *col;
+   const glTexture *tex;
+   const glColour *col;
    double x, y;
    int sx, sy;
 
    /* Parameters. */
-   col = NULL;
    tex = luaL_checktex( L, 1 );
    x   = luaL_checknumber( L, 2 );
    y   = luaL_checknumber( L, 3 );
    if (lua_isnumber( L, 4 )) {
-      sx    = luaL_checkinteger( L, 4 ) - 1;
-      sy    = luaL_checkinteger( L, 5 ) - 1;
-      if (lua_iscolour(L, 6))
-         col = luaL_checkcolour(L,6);
+      sx    = luaL_checkinteger( L, 4 )-1;
+      sy    = luaL_checkinteger( L, 5 )-1;
+      col   = luaL_optcolour( L, 6, &cWhite );
    }
    else {
       sx    = 0;
       sy    = 0;
-      if (lua_iscolour(L, 4))
-         col = luaL_checkcolour(L,4);
+      col   = luaL_optcolour( L, 4, &cWhite );
    }
 
    /* Some safety checking. */
 #if DEBUGGING
-   if (sx >= tex->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
+   if (sx < 0 || sx >= tex->sx)
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
             tex->name, sx+1, tex->sx );
-   if (sx >= tex->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
+   if (sy < 0 || sy >= tex->sy)
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
             tex->name, sy+1, tex->sy );
 #endif /* DEBUGGING */
 
@@ -269,10 +281,10 @@ static int gfxL_renderTexScale( lua_State *L )
    /* Some safety checking. */
 #if DEBUGGING
    if (sx >= tex->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
             tex->name, sx+1, tex->sx );
    if (sx >= tex->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
             tex->name, sy+1, tex->sy );
 #endif /* DEBUGGING */
 
@@ -314,7 +326,6 @@ static int gfxL_renderTexRaw( lua_State *L )
    double angle;
    int sx, sy;
 
-
    /* Parameters. */
    t  = luaL_checktex( L, 1 );
    px = luaL_checknumber( L, 2 );
@@ -333,10 +344,10 @@ static int gfxL_renderTexRaw( lua_State *L )
    /* Some safety checking. */
 #if DEBUGGING
    if (sx >= t->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
             t->name, sx+1, t->sx );
    if (sx >= t->sx)
-      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
+      return NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
             t->name, sy+1, t->sy );
 #endif /* DEBUGGING */
 
@@ -372,7 +383,6 @@ static int gfxL_renderTexH( lua_State *L )
 
    ID = mat4_identity();
 
-
    /* Parameters. */
    t     = luaL_checktex( L,1 );
    shader = luaL_checkshader( L,2 );
@@ -407,7 +417,7 @@ static int gfxL_renderTexH( lua_State *L )
    glActiveTexture( GL_TEXTURE0 );
 
    /* Set shader uniforms. */
-   gl_uniformColor( shader->ConstantColor, col );
+   gl_uniformColour( shader->ConstantColour, col );
    gl_uniformMat4( shader->ClipSpaceFromLocal, H );
 
    /* Draw. */
@@ -445,7 +455,6 @@ static int gfxL_renderRect( lua_State *L )
    glColour *col;
    double x,y, w,h;
    int empty;
-
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -500,7 +509,6 @@ static int gfxL_renderCircle( lua_State *L )
    glColour *col;
    double x,y, r;
    int empty;
-
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -576,7 +584,7 @@ static int gfxL_renderLinesH( lua_State *L )
          i+=2;
       }
       else {
-         vec2 *v = luaL_checkvector(L,i);
+         const vec2 *v = luaL_checkvector(L,i);
          buf[2*n+0] = v->x;
          buf[2*n+1] = v->y;
          n++;
@@ -591,7 +599,7 @@ static int gfxL_renderLinesH( lua_State *L )
    gl_vboActivateAttribOffset( vbo_lines, shaders.lines.vertex, 0,
          2, GL_FLOAT, 2*sizeof(GLfloat) );
 
-   gl_uniformColor(shaders.lines.colour, c);
+   gl_uniformColour(shaders.lines.colour, c);
    gl_uniformMat4(shaders.lines.projection, H);
 
    glDrawArrays( GL_LINE_STRIP, 0, n );
@@ -707,7 +715,7 @@ static int gfxL_printfWrap( lua_State *L )
    s     = luaL_checkstring(L,2);
    width = luaL_checkinteger(L,3);
    if (width < 0)
-      NLUA_ERROR(L,_("width has to be a positive value."));
+      return NLUA_ERROR(L,_("width has to be a positive value."));
 
    /* Process output into table. */
    lua_newtable(L);
@@ -776,7 +784,6 @@ static int gfxL_printf( lua_State *L )
    glColour *col;
    int max, mid;
 
-
    /* Parse parameters. */
    font  = luaL_checkfont(L,1);
    str   = luaL_checkstring(L,2);
@@ -813,7 +820,6 @@ static int gfxL_printH( lua_State *L )
    const char *str;
    const glColour *col;
    double outline;
-
 
    /* Parse parameters. */
    H     = luaL_checktransform(L,1);
@@ -893,7 +899,6 @@ static int gfxL_printText( lua_State *L )
    double x, y;
    glColour *col;
 
-
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
    str   = luaL_checkstring(L,2);
@@ -939,10 +944,10 @@ static int gfxL_setBlendMode( lua_State *L )
       srcRGB = srcA = GL_SRC_ALPHA;
    else if (!strcmp( alphamode, "premultiplied" )) {
       if (!strcmp( mode, "lighten" ) || !strcmp( mode, "darken" ) || !strcmp( mode, "multiply" ))
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,2);
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
 
    if (!strcmp( mode, "alpha" ))
       dstRGB = dstA = GL_ONE_MINUS_SRC_ALPHA;
@@ -962,12 +967,13 @@ static int gfxL_setBlendMode( lua_State *L )
    else if (!strcmp( mode, "screen" ))
       dstRGB = dstA = GL_ONE_MINUS_SRC_COLOR;
    else if (strcmp( mode, "replace" ))
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    glBlendEquation(func);
    glBlendFuncSeparate(srcRGB, dstRGB, srcA, dstA);
    gl_checkErr();
 
+   render_needsReset();
    return 0;
 }
 
@@ -990,6 +996,7 @@ static int gfxL_setScissor( lua_State *L )
       GLsizei w = luaL_optinteger(L,3,0);
       GLsizei h = luaL_optinteger(L,4,0);
       gl_clipRect( x, y, w, h );
+      render_needsReset();
    }
    else
       gl_unclipRect();
@@ -1025,12 +1032,104 @@ static int gfxL_screenshot( lua_State * L )
    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, lc->fbo);
    /* We flip it over because that seems to be what love2d API wants. */
    glBlitFramebuffer(0, 0, gl_screen.rw, gl_screen.rh, 0, lc->tex->h, lc->tex->w, 0,  GL_COLOR_BUFFER_BIT, GL_NEAREST);
-   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
    /* Return new or old canvas. */
    lua_pushcanvas(L, *lc);
    if (mustfree)
       free( lc );
    return 1;
+}
+
+/**
+ * @brief Sets the ambient lighting.
+ *
+ *    @luatparam Colour|number r Colour or red channel to use for ambient lighting. In the case of a colour, the alpha channel is used as the radiance value of the ambient light.
+ *    @luatparam[opt=r] number g Green channel to use for ambient lighting.
+ *    @luatparam[opt=r] number b Blue channel to use  for ambient lighting.
+ *    @luatparam[opt] number strength If defined, normalizes the values of r, g, and b so that the total radiance is equal to strength. If not, the values of r, g, and b are considered to be radiance values.
+ * @luafunc lightAmbient
+ */
+static int gfxL_lightAmbient( lua_State *L )
+{
+   double r, g, b;
+   if (lua_iscolour(L,1)) {
+      const glColour *c = lua_tocolour(L,1);
+      double n = c->a * sqrt( pow2(c->r)+pow2(c->g)+pow2(c->b) );
+      /* Premultiply alpha. */
+      r = c->r * n;
+      g = c->g * n;
+      b = c->b * n;
+   }
+   else {
+      r = luaL_checknumber(L,1);
+      g = luaL_optnumber(L,2,r);
+      b = luaL_optnumber(L,3,r);
+      if (!lua_isnoneornil(L,4)) {
+         double n = luaL_checknumber(L,4) / sqrt(pow2(r)+pow2(g)+pow2(b));
+         r *= n;
+         g *= n;
+         b *= n;
+      }
+   }
+   gltf_lightAmbient( r, g, b );
+   return 0;
+}
+
+/**
+ * @brief Gets the ambient lighting values.
+ *
+ *    @luatreturn number r Red colour value.
+ *    @luatreturn number g Green colour value.
+ *    @luatreturn number b Blue colour value.
+ * @luafunc lightAmbientGet
+ */
+static int gfxL_lightAmbientGet( lua_State *L )
+{
+   double r, g, b;
+   gltf_lightAmbientGet( &r, &g, &b );
+   lua_pushnumber( L, r );
+   lua_pushnumber( L, g );
+   lua_pushnumber( L, b );
+   return 3;
+}
+
+/**
+ * @brief Sets the intensity of the main lights excluding ambient lighting. Multiplies the default radiosity values.
+ *
+ *    @luatparam number intensity Intensity to set the lights to.
+ * @luafunc lightIntensity
+ */
+static int gfxL_lightIntensity( lua_State *L )
+{
+   gltf_lightIntensity( luaL_checknumber(L,1) );
+   return 0;
+}
+
+/**
+ * @brief Gets the light intensity.
+ *
+ *    @luatreturn number Light intensity.
+ * @luafunc lightIntensityGet
+ */
+static int gfxL_lightIntensityGet( lua_State *L )
+{
+   lua_pushnumber( L, gltf_lightIntensityGet() );
+   return 1;
+}
+
+/**
+ * @brief Gets the OpenGL version.
+ *
+ *    @luatreturn integer Major OpenGL version.
+ *    @luatreturn integer Minor OpenGL version.
+ *    @luatreturn integer GLSL version.
+ * @luafunc glVersion
+ */
+static int gfxL_glVersion( lua_State *L )
+{
+   lua_pushinteger( L, gl_screen.major );
+   lua_pushinteger( L, gl_screen.minor );
+   lua_pushinteger( L, gl_screen.glsl );
+   return 3;
 }

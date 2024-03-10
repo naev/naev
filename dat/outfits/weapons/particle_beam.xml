@@ -4,9 +4,9 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>14</mass>
+  <mass>8</mass>
   <price>47000</price>
-  <description>A turret-mounted particle beam. The smallest possible turreted beam weapon, used as a last-ditch weapon against light enemies.</description>
+  <description>A turret-mounted particle lance. The smallest possible turreted beam weapon, used as a last-ditch weapon against light enemies. Like the particle lance, it can simultaneously hit multiple targets, however, this comes at the cost of a significantly reduced range.</description>
   <gfx_store>particle_beam.webp</gfx_store>
   <cpu>-24</cpu>
  </general>
@@ -18,7 +18,7 @@
   <energy>10</energy>
   <heatup>35</heatup>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>6</penetrate>
    <physical>50</physical>
   </damage>

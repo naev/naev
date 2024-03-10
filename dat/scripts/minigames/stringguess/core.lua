@@ -9,6 +9,7 @@ local colours = {
    dark        = {0x00/0xFF, 0x00/0xFF, 0x00/0xFF},
    bg          = {0x1C/0xFF, 0x30/0xFF, 0x4A/0xFF},
    highlight   = {0x04/0xFF, 0x6B/0xFF, 0x99/0xFF},
+   mouseover   = {0x44/0xFF, 0xAB/0xFF, 0xD9/0xFF},
    ok          = {0x00/0xFF, 0xCF/0xFF, 0xFF/0xFF},
    --foobar      = {0xB3/0xFF, 0xEF/0xFF, 0xFF/0xFF},
    text        = {0xFF/0xFF, 0xFF/0xFF, 0xFF/0xFF},
@@ -24,7 +25,7 @@ local function getpos( tbl, elm )
    return false
 end
 
-local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by, sol_length
+local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by, sol_length, mouseover
 local bgshader, movekeys, standalone, headertext, headerfont
 function mg.load ()
    local c = naev.cache()
@@ -69,11 +70,12 @@ function mg.load ()
    round = true
    alpha = 0
    done = false
+   mouseover = nil
    attempts = {}
 
    -- Window properties
    local lw, lh = love.window.getDesktopDimensions()
-   lg.setBackgroundColor(0, 0, 0, 0)
+   lg.setBackgroundColour(0, 0, 0, 0)
    local ww, wh
    ww = 90 + 60*#sol+14 + 220 + 20 + 40*#sol+10+40
    wh = 25 + #keyset*40+10
@@ -128,17 +130,7 @@ local function inguess( k )
    return false
 end
 
-function mg.keypressed( key )
-   if key == "escape" then
-      done = true
-   end
-
-   if game ~= 0 then
-      done = true
-      return
-   end
-
-   local k = string.upper(key)
+local function dopress( k )
    if inlist( keyset, k ) then
       if not round then
          selected = 2
@@ -161,10 +153,10 @@ function mg.keypressed( key )
          end
          if #guess >= #sol then
             finish_round()
-            return
+            return true
          end
       end
-      return
+      return true
    end
 
    -- Next round if applicable
@@ -172,6 +164,22 @@ function mg.keypressed( key )
       guess = {}
       selected = 1
       round = true
+      return true
+   end
+end
+
+function mg.keypressed( key )
+   if key == "escape" then
+      done = true
+   end
+
+   if game ~= 0 then
+      done = true
+      return
+   end
+
+   -- Handle the press first before handling other keys
+   if dopress( string.upper(key) ) then
       return
    end
 
@@ -203,10 +211,55 @@ function mg.keypressed( key )
    end
 end
 
+local function mousepos( x, y )
+   local offx, offy = 20, 25
+   local s, b = 40, 10
+   x = x - offx - b - bx
+   y = y - offy - b - by
+
+   -- First test x
+   if x < 0 or x > s-b then
+      return false
+   end
+
+   -- Figure out index
+   local i = math.floor(y / s)+1
+   y = y - (i-1)*s
+   if y < 0 or y > s-b then
+      return false
+   end
+   if i < 1 or i > #keyset then
+      return false
+   end
+   return i
+end
+
+function mg.mousemoved( x, y )
+   local i = mousepos( x, y )
+   if i then
+      mouseover = i
+   else
+      mouseover = nil
+   end
+end
+
+function mg.mousepressed( x, y, _button )
+   if game ~= 0 then
+      done = true
+      return
+   end
+
+   local i = mousepos( x, y )
+   -- Apply click
+   if i then
+      dopress( keyset[i] )
+   end
+end
+
 local function setcol( col )
    local r, g, b, a = table.unpack( col )
    a = a or 1
-   lg.setColor( r, g, b, a*alpha )
+   lg.setColour( r, g, b, a*alpha )
 end
 
 local function drawglyph( g, f, x, y, w, h, col )
@@ -266,6 +319,8 @@ function mg.draw ()
       local col
       if inlist( guess, v ) then
          col = colours.highlight
+      elseif mouseover==k then
+         col = colours.mouseover
       else
          col = nil
       end

@@ -10,7 +10,7 @@ local desc_list = {}
 desc_list["generic"] = {
    _("A pirate idly drinking some grog."),
    _("An angry looking pirate with a drink."),
-   _("You seen an imposing pirate."),
+   _("You see an imposing pirate."),
    _("A pirate who may have had too much grog."),
    _("A careless pirate spilling their drink all over."),
    _("A pirate relaxing after a long day of pillaging."),
@@ -23,7 +23,7 @@ desc_list["generic"] = {
    _("A lone pirate silently sipping a drink in the corner."),
    _("A pirate with a menacing grin, scanning the room for trouble."),
    _("A seasoned pirate studying a star chart."),
-   _("A swashbuckling space pirate, sipping on a neon-colored cocktail."),
+   _("A swashbuckling space pirate, sipping on a neon-coloured cocktail."),
    _("A veteran space pirate, leaning back into their worn-out chair, puffing on a cigar."),
    _("A suave-looking well-groomed pirate sipping some finely aged space rum."),
 }
@@ -37,10 +37,10 @@ local msg_lore = {
    _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
    _([["Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see me again!"]]),
    _([["There's a pirate clanworld I really wanted to get to, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work…"]]),
-   _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]]),
+   _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking while the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]]),
    _([["Back when I started out in this business all you could do was go around delivering packages for other people. Becoming a pirate was real hard back then, but I got so bored I spent several decaperiods doing it. Nowadays things are way more exciting for normies, but I don't regret my choice one bit!"]]),
    _([["Flying a real big ship is impressive, but it's still no pirate ship. I mean, I respect ya more if you're flying a Goddard than if you're flying a civilian Lancelot, but the best pirates fly the good old Pirate Kestrel!"]]),
-   _([["I swear I saw a bunch of cats in a trench coat pretending to be a pirate once. Must have been a weird dream. I should quite drinking…"]]),
+   _([["I swear I saw a bunch of cats in a trench coat pretending to be a pirate once. Must have been a weird dream. I should quit drinking…"]]),
    _([["There are four major pirate clans: the Wild Ones, the Ravens, the Dreamers, and the Black Lotus. It's sometimes hard for them to get along."]]),
    _([["Pirate assemblies are the pinnacle of pirate society. Booze! Grog! Fights! Shanties! Jigs! More Grog! It's great fun, just don't drink as much to forget it all!"]]),
 -- This is the full 'space pirate shanty' (by theElerd)

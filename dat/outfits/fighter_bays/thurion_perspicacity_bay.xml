@@ -1,13 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Thurion Perspicacity Bay">
  <general>
+  <shortname>T. Perspicacity Bay</shortname>
   <slot prop="fighter_bay">weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel</license>
   <cond>faction.playerStanding("Thurion") &gt;= 50</cond>
   <condstr>You need at least 50 reputation with the Thurion.</condstr>
   <rarity>2</rarity>
-  <mass>200</mass>
+  <mass>107</mass>
   <price>1980000</price>
   <gfx_store>thurion_perspicacity_fighter.webp</gfx_store>
   <description>This bay allows your ship to carry four Thurion Perspicacity fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
@@ -18,6 +19,6 @@
   <reload_time>240</reload_time>
   <amount>4</amount>
   <ship>Thurion Perspicacity</ship>
-  <ship_mass>50</ship_mass>
+  <ship_mass>20</ship_mass>
  </specific>
 </outfit>

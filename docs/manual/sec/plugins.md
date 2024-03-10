@@ -73,6 +73,7 @@ The `plugin.xml` file is specific to plugins and does not exist in the base game
  <description>A cool example plugin.</description>
  <compatibility>^0\.10\..*</compatibility>
  <priority>3</priority>
+ <source>https://source</source>
 </plugin>
 ```
 
@@ -84,8 +85,11 @@ The important fields are listed below:
 * `description`: contains the description of the plugin. This should be easy to understand for players when searching for plugins.
 * `compatibility`: contains compatibility information. Specifically, it must be a regex string that will be tested against the current Naev string. Something like `^0\.10\..*` will match any version string that starts with `"0.10."`. Please refer to a regular expression guide such as [regexr](https://regexr.com/) for more information on how to write regex.
 * `priority`: indicates the loading order of the plugin. The default value is 5 and a lower value indicates higher priority. Higher priority allows the plugin to overwrite files of lower priority plugins. For example, if two plugins have a file `missions/test.lua`, the one with the lower priority would take preference and overwrite the file of the other plugin.
+* `source`: points to where a newer version can be obtained or downloaded. This could be a website or other location.
 
 Furthermore, it is also possible to use regex to hide files from the base game with `<blacklist>` nodes. For example, `<blacklist>^ssys/.*\.xml</blacklist>` would hide all the XML files in the `ssys` directory. This is especially useful when planning total conversions or plugins that modify significantly the base game, and you don't want updates to add new files you have to hide. By using the appropriate blacklists, you increase compatibility with future versions of Naev. Furthermore, given the popularity of *total conversion*-type plugins, you can use the `<total_conversion/>` tag to apply a large set of blacklist rules which will remove all explicit content from Naev. This means you will have to define at least a star system, a spob, and a flyable ship for the game to run.
+
+In additiona to the blacklist, a whitelist can also be defined with `<whitelist>`, which takes priority over the blacklist. In other words, whitlelist stuff will ignore the blacklist. *Total conversions* automatically get a few critical files such as the `settings.lua` event included, although they can still be overwritten.
 
 ## Plugin Repository
 

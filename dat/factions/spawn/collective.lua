@@ -5,65 +5,29 @@ local sheavy = ship.get("Heavy Drone")
 
 -- @brief Spawns a small swarm.
 local function spawn_patrol ()
-   local pilots = {}
-
-   scom.addPilot( pilots, sdrone )
-
-   return pilots
+   return scom.doTable( {}, {
+      { sdrone },
+   } )
 end
-
 
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
-   local pilots = {}
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, sdrone )
-      scom.addPilot( pilots, sdrone )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sheavy )
-      scom.addPilot( pilots, sdrone )
-      scom.addPilot( pilots, sdrone )
-   else
-      scom.addPilot( pilots, sheavy )
-      scom.addPilot( pilots, sheavy )
-      scom.addPilot( pilots, sdrone )
-      scom.addPilot( pilots, sdrone )
-   end
-
-   return pilots
+   return scom.doTable( {}, {
+      { w=0.5, sdrone, sdrone },
+      { w=0.8, sheavy, sdrone, sdrone },
+      { sheavy, sheavy, sdrone, sdrone },
+   } )
 end
-
 
 -- @brief Spawns a large swarm.
 local function spawn_capship ()
-   local pilots = {}
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, sheavy )
-      scom.addPilot( pilots, sdrone )
-      scom.addPilot( pilots, sdrone )
-      scom.addPilot( pilots, sdrone )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sheavy )
-      scom.addPilot( pilots, sheavy )
-      scom.addPilot( pilots, sdrone )
-      scom.addPilot( pilots, sdrone )
-      scom.addPilot( pilots, sdrone )
-   else
-      scom.addPilot( pilots, sheavy )
-      scom.addPilot( pilots, sheavy )
-      scom.addPilot( pilots, sheavy )
-      scom.addPilot( pilots, sdrone )
-      scom.addPilot( pilots, sdrone )
-      scom.addPilot( pilots, sdrone )
-   end
-
-   return pilots
+   -- TODO use mothership when redoing collective stuff
+   return scom.doTable( {}, {
+      { w=0.5, sheavy, sdrone, sdrone, sdrone },
+      { w=0.8, sheavy, sheavy, sdrone, sdrone, sdrone },
+      { sheavy, sheavy, sheavy, sdrone, sdrone, sdrone  },
+   } )
 end
-
 
 local fcollective = faction.get("Collective")
 -- @brief Creation hook.

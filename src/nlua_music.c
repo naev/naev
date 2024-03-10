@@ -73,7 +73,7 @@ static int musicL_choose( lua_State* L )
 {
    const char *situation = luaL_checkstring(L,1);
    if (music_choose( situation ))
-      NLUA_ERROR(L,"music.choose failed!");
+      return NLUA_ERROR(L,"music.choose failed!");
    return 0;
 }
 
@@ -86,7 +86,7 @@ static int musicL_play( lua_State *L )
 {
    const char *str = luaL_optstring(L,1,NULL);
    if (music_play( str ))
-      NLUA_ERROR(L,"music.play failed!");
+      return NLUA_ERROR(L,"music.play failed!");
    return 0;
 }
 
@@ -100,7 +100,7 @@ static int musicL_pause( lua_State* L )
 {
    int disable = lua_toboolean(L,1);
    if (music_pause(disable))
-      NLUA_ERROR(L,"music.pause failed!");
+      return NLUA_ERROR(L,"music.pause failed!");
    return 0;
 }
 
@@ -114,7 +114,7 @@ static int musicL_stop( lua_State *L )
 {
    int nodisable = lua_toboolean(L,1);
    if (music_stop(!nodisable))
-      NLUA_ERROR(L,"music.stop failed!");
+      return NLUA_ERROR(L,"music.stop failed!");
    return 0;
 }
 
@@ -132,7 +132,7 @@ static int musicL_isPlaying( lua_State* L )
    else {
       MusicInfo_t *minfo = music_info();
       if (minfo==NULL)
-         NLUA_ERROR(L,"Failed to get music info!");
+         return NLUA_ERROR(L,"Failed to get music info!");
       lua_pushboolean(L, minfo->playing);
    }
    return 1;
@@ -156,7 +156,7 @@ static int musicL_current( lua_State* L )
    else {
       MusicInfo_t *minfo = music_info();
       if (minfo==NULL)
-         NLUA_ERROR(L,"Failed to get music info!");
+         return NLUA_ERROR(L,"Failed to get music info!");
       lua_pushstring(L, minfo->name);
       lua_pushnumber(L, minfo->pos);
    }

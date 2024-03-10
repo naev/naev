@@ -119,7 +119,7 @@ function abort ()
    if player.isLanded() then
       local fine = math.min( player.credits(), 2 * mem.credits )
       local msg
-      local spb = spob.get()
+      local spb = spob.cur()
       if spb:services().inhabited then
          msg = fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation was an accident, the officials let you off with a fine of {credits}."), {credits=fmt.credits(fine)} )
       else

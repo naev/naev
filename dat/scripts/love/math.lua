@@ -119,7 +119,7 @@ function love_math.random( min, max )
       return naev.rnd.rnd( min, max )
    end
 end
-function love_math.colorToBytes(r, g, b, a)
+function love_math.colourToBytes(r, g, b, a)
    if type(r) == "table" then
       r, g, b, a = r[1], r[2], r[3], r[4]
    end
@@ -129,7 +129,7 @@ function love_math.colorToBytes(r, g, b, a)
    a = a ~= nil and math.floor(clamp01(a) * 255 + 0.5) or nil
    return r, g, b, a
 end
-function love_math.colorFromBytes(r, g, b, a)
+function love_math.colourFromBytes(r, g, b, a)
    if type(r) == "table" then
       r, g, b, a = r[1], r[2], r[3], r[4]
    end

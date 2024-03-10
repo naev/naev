@@ -11,7 +11,7 @@ local lf = require "love.filesystem"
 
 -- Parse directory to add personas
 local pers_func_list = {}
-for k,v in ipairs(lf.enumerate("events/pers")) do
+for k,v in ipairs(lf.getDirectoryItems("events/pers")) do
    local requirename = "events.pers."..string.gsub(v,".lua","")
    local pfunc = require( requirename )
    table.insert( pers_func_list, pfunc )

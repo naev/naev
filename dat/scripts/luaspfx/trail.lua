@@ -88,7 +88,7 @@ local function render( sp, x, y, z, dt )
       local px, py = v.p:get()
       local c = { v.c[1], v.c[2], v.c[3], v.c[4]*v.a }
       local s = v.s
-      lg.setColor( c )
+      lg.setColour( c )
       lg.rectangle( "fill", px*d.size, py*d.size, s, s )
    end
 

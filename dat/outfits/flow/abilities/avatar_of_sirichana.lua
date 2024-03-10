@@ -2,8 +2,9 @@ local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
 local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
+local helper = require "outfits.lib.helper"
 
-local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
+local sfx = audio.newSource( 'snd/sounds/avatar_of_sirichana.ogg' )
 
 local function getStats( p, size )
    local flow_cost, flow_drain, mass_limit
@@ -48,7 +49,7 @@ end
 
 local function turnon( p, po )
    if p:mass() > mem.mass_limit then
-      player.msg("#r".._("Your ship is above the mass limit to use Avatar of Sirichana.").."#0")
+      helper.msgnospam("#r".._("Your ship is above the mass limit to use Avatar of Sirichana.").."#0")
       return false
    end
 
@@ -92,7 +93,7 @@ function init( p, po )
 
    po:state("off")
    mem.isp = (p == player.pilot())
-   turnoff()
+   turnoff( p, po )
 end
 
 function update( p, po, dt )

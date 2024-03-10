@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>30</mass>
+  <mass>14</mass>
   <price>70000</price>
   <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered Corvettes dangerous to engage by ships that aren't substantially larger than they are.</description>
   <gfx_store>shredder.webp</gfx_store>
@@ -18,16 +18,16 @@
   <spfx_armour>ExpS</spfx_armour>
   <delay>0.3</delay>
   <speed>500</speed>
-  <range blowup="armour">1200</range>
-  <energy>7.5</energy>
+  <range blowup="armour">1250</range>
+  <energy>8.1</energy>
   <heatup>30</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>impact</type>
-   <penetrate>24</penetrate>
-   <physical>9</physical>
+   <type>kinetic</type>
+   <penetrate>28</penetrate>
+   <physical>10.5</physical>
   </damage>
  </specific>
  <tags>

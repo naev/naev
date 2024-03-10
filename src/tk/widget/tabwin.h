@@ -35,3 +35,4 @@ int window_tabWinOnChange( unsigned int wid, const char *tab,
 int window_tabSetFont( unsigned int wid, const char *tab, const glFont *font );
 unsigned int* window_tabWinGet( unsigned int wid, const char *tab );
 int window_tabWinGetBarWidth( unsigned int wid, const char *tab );
+int window_tabWinSetTabName( unsigned int wid, const char *tab, int id, const char *name );

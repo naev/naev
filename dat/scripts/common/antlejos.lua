@@ -11,7 +11,7 @@ antlejos.verner = {
    portrait = "verner.webp",
    image = "verner.webp",
    name = _("Verner"),
-   color = nil,
+   colour = nil,
    description = _("Verner seems to be taking a break from all the terraforming and relaxing at the new spaceport bar."),
    transition = nil, -- Use default
 }
@@ -20,7 +20,7 @@ function antlejos.vn_verner( params )
    return vn.Character.new( antlejos.verner.name,
          tmerge( {
             image=antlejos.verner.image,
-            color=antlejos.verner.colour,
+            colour=antlejos.verner.colour,
          }, params) )
 end
 

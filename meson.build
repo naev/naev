@@ -1,5 +1,5 @@
 project('naev', 'c',
-   version : '0.11.0-alpha.4',
+   version : '0.11.4',
    default_options : [
       'optimization=g',
       'c_std=gnu11',
@@ -8,7 +8,7 @@ project('naev', 'c',
    ],
    meson_version: '>=0.55.0')
 
-copyright_year = 2023
+copyright_year = 2024
 forced_fallbacks = get_option('force_fallback_for')
 
 issue_address = 'https://github.com/naev/naev/issues'
@@ -59,6 +59,7 @@ if buildExec.disabled() == false
    debug = get_option('debug')
    debug_arrays = get_option('debug_arrays')
    debug_gl = get_option('debug_gl')
+   tracy = get_option('tracy')
    paranoid = get_option('paranoid')
    # The next three are sometimes expected by GNU tools and headers, sometimes for mere existence. Provide stable values.
    config_data.set_quoted('PACKAGE', meson.project_name())
@@ -82,14 +83,24 @@ if buildExec.disabled() == false
    summary('OpenGL'  , debug_gl    , section: 'Debug', bool_yn: true)
    assert(debug or not debug_gl, 'debug_gl option is only valid for debug builds. Try "meson configure --buildtype=debug" for example.')
 
+   # Some OS voodoo TODO these are not very correct, but ported from ncompat.h . Maybe use .system?
+   has_posix = host_machine.system()=='darwin' or cc.compiles('''#if !(defined(__unix) || defined(__unix__))
+#error "Not unix"
+#endif
+int main (void) { return 0; }''')
+   # Version below requires meson 1.3.0 or later, so just use the horrible hack above for now
+   #has_posix = cc.has_define('__unix__') or cc.has_define('__unix') or host_machine.system()=='darwin'
+   config_data.set10('HAS_POSIX', has_posix)
+   config_data.set10('HAS_UNIX', has_posix)
+
    ### Hard deps (required: true)
 
    naev_deps += cc.find_library('m', required : false)
 
    enet = dependency('libenet', required: true, version: '>=1.3', fallback: ['enet', 'enet_dep'], static: get_option('steamruntime'))
    pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'], static: get_option('steamruntime'))
-   sdl = dependency('sdl2', version: '>=2.0.18', required: true)
-   sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
+   sdl = dependency('sdl2', version: '>=2.0.26', required: true)
+   sdl_image = dependency('SDL2_image', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'], static: get_option('steamruntime'))
 
    libxml2 = dependency('libxml-2.0', required: false)
@@ -224,11 +235,29 @@ if buildExec.disabled() == false
 
    naev_deps += [openal, ogg, vorbis, vorbisfile]
 
+   have_tracy = false
+   if tracy
+      if not debug
+         error('tracy requires a debug build!')
+      endif
+      use_system_tracy = ('tracy' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
+      if use_system_tracy
+         system_tracy = cc.find_library('tracy', required: false, has_headers: ['tracy/TracyC.h'] )
+         use_system_tracy = system_tracy.found()
+      endif
+      naev_deps += use_system_tracy ? system_tracy : subproject('tracy').get_variable('tracy_dep')
+      config_data.set10('HAVE_TRACY', true)
+      config_data.set10('TRACY_ENABLE', true) # Needed for tracy to actually work
+      have_tracy = true
+   endif
+   summary('tracy', have_tracy, section: 'Debug', bool_yn: true )
+
    # Standard library feature tests
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
+   # SDL_strndup and SDL_strnstr is in SDL3, so we can remove this once it is released
    # strndup() detection must work around this bug: https://github.com/mesonbuild/meson/issues/3672
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
    config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))
@@ -242,17 +271,6 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.links('#include <openblas/cblas.h>' + cblas_test, dependencies: blas))
    config_data.set10('HAVE_F77BLAS_H', cc.has_header('f77blas.h', dependencies: blas))
    config_data.set10('HAVE_OPENBLAS_F77BLAS_H', cc.has_header('openblas/f77blas.h', dependencies: blas))
-
-   # OS declaration (Shows which OS we built this with in the options menu)
-   if host_machine.system() == 'linux'
-      config_data.set10('LINUX', true)
-   elif host_machine.system() == 'freebsd'
-      config_data.set10('FREEBSD', true)
-   elif host_machine.system() == 'darwin'
-      config_data.set10('MACOS', true)
-   elif host_machine.system() == 'windows'
-      config_data.set10('WIN32', true)
-   endif
 
    ### Generated sources
 

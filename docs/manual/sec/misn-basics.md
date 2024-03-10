@@ -298,7 +298,7 @@ Naev supports translation through [Weblate](https://hosted.weblate.org/projects/
 * `n_()`: Takes two strings related to a number quantity and return the translated version that matches the number quantity. This is because some languages translate number quantities differently. For example "1 apple", but "2 apple**s**".
 * `p_()`: This function takes two strings, the first is a context string, and the second is the string to translate. It returns the translated string. This allows to disambiguate same strings based on context such as `p_( "main menu", "Close" )` and `p_( "some guy", "Close" )`. In this case `"Close"` can be translated differently based on the context strings.
 
-In general, you want to use `_()` and `n_()` to envelope all strings that are being shown to the player, which will allow for translations to work without extra effort. For example, when defining a new mission you want to translate all the strings as shown below:
+In general, you want to use `_()` and `n_()` to envelop all strings that are being shown to the player, which will allow for translations to work without extra effort. For example, when defining a new mission you want to translate all the strings as shown below:
 
 ```lua
 misn.setTitle( _("My Mission") )

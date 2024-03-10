@@ -43,7 +43,7 @@ local function turnoff( p, po )
 end
 
 function init( p, po )
-   turnoff()
+   turnoff( p, po )
    mem.timer = nil
    po:state("off")
    po:clear() -- clear stat modifications

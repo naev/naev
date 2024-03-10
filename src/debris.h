@@ -3,8 +3,6 @@
  */
 #pragma once
 
-#include "pilot.h"
-
 void debris_cleanup (void);
 void debris_add( double mass, double rad, double px, double py,
       double vx, double vy );

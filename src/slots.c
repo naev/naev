@@ -29,6 +29,7 @@ typedef struct SlotProperty_s {
    int required;     /**< Required slot property. */
    int exclusive;    /**< Exclusive slot property. */
    int locked;       /**< Locked and not modifyable by the player. */
+   int visible;      /**< Visible slot property. */
    glTexture *icon;  /**< Texture to use for the slot. */
 } SlotProperty_t;
 
@@ -85,6 +86,10 @@ int sp_load (void)
          }
          if (xml_isNode( cur, "locked" )) {
             sp->locked = 1;
+            continue;
+         }
+         if (xml_isNode( cur, "visible" )) {
+            sp->visible = 1;
             continue;
          }
          if (xml_isNode( cur, "icon" )) {
@@ -201,6 +206,16 @@ int sp_locked( unsigned int spid )
    if (sp_check(spid))
       return 0;
    return sp_array[ spid-1 ].locked;
+}
+
+/**
+ * @brief Whether or not the slot should be visible even if locked.
+ */
+int sp_visible( unsigned int spid )
+{
+   if (sp_check(spid))
+      return 0;
+   return sp_array[ spid-1 ].visible;
 }
 
 /**

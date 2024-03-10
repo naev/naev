@@ -1,13 +1,13 @@
 #include "lib/sdf.glsl"
 
-uniform vec4 color;
+uniform vec4 colour;
 uniform vec2 dimensions;
 uniform float paramf;
 uniform int parami;
 uniform float dt;
 
 in vec2 pos;
-out vec4 color_out;
+out vec4 colour_out;
 
 void main(void) {
    vec2 uv = pos*dimensions;
@@ -24,7 +24,7 @@ void main(void) {
    }
 
    float alpha    = smoothstep(-1.0, 0.0, -d);
-   color_out      = color;
-   color_out.a   *= alpha;
-   color_out.a   *= smoothstep(dimensions.x, dimensions.x-paramf, length(uv));
+   colour_out      = colour;
+   colour_out.a   *= alpha;
+   colour_out.a   *= smoothstep(dimensions.x, dimensions.x-paramf, length(uv));
 }

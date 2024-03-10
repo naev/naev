@@ -10,6 +10,5 @@
 --[[
    Rehabilitation Mission
 --]]
-require "missions.rehab_common"
-
-mem.fac = faction.get("Traders Society")
+require("common.rehab").init( faction.get("Traders Society"), {
+} )

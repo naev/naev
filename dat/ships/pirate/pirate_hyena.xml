@@ -2,7 +2,7 @@
 <ship name="Pirate Hyena">
  <points>30</points>
  <base_type>Hyena</base_type>
- <GFX size="44">hyena_pirate</GFX>
+ <gfx size="44">hyena_pirate</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Interceptor</class>
@@ -31,13 +31,17 @@
   <utility size="small" prop="systems">Previous Generation Small Systems</utility>
   <utility size="small" prop="accessory" />
   <utility size="small" />
+  <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="engines">Beat Up Small Engine</structure>
   <structure size="small" prop="hull">Patchwork Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>
   <turn_mod>20</turn_mod>
-  <thrust_mod>70</thrust_mod>
+  <accel_mod>70</accel_mod>
   <armour_mod>-50</armour_mod>
   <fwd_firerate>10</fwd_firerate>
   <ew_signature>-10</ew_signature>

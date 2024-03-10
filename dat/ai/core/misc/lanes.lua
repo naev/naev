@@ -161,7 +161,9 @@ local function dijkstra_full( vertices, edges, source, target )
    for k,v in ipairs(vertices) do
       local q = {
          v=k, -- Index of vertex
-         d=math.huge, -- Gigantic initial distance
+         c=math.huge, -- Gigantic huge cost
+         d=math.huge, -- Total distance travelled
+         dl=math.huge, -- Distance along lanes
          p=nil, -- No previous node
       }
       table.insert( Q, q )
@@ -174,7 +176,7 @@ local function dijkstra_full( vertices, edges, source, target )
    for i=1,n do
       P[i] = {}
       for j=1,n do
-         P[i][j] = 10 -- penalty
+         P[i][j] = 3 -- penalty for not connected edges
       end
    end
    for k,e in ipairs(edges) do
@@ -183,12 +185,14 @@ local function dijkstra_full( vertices, edges, source, target )
    end
 
    -- Initialize source
+   Q[source].c = 0
    Q[source].d = 0
+   Q[source].dl = 0
 
    -- Start iterating
    while #Q > 0 do
-      -- Vertex with minimum distance
-      table.sort( Q, function(a, b) return a.d < b.d end )
+      -- Vertex with minimum cost
+      table.sort( Q, function(a, b) return a.c < b.c end )
       local u = Q[1]
       table.remove( Q, 1 )
 
@@ -196,19 +200,24 @@ local function dijkstra_full( vertices, edges, source, target )
       if u.v == target then
          -- Create the path by iterating backwards
          local S = {}
+         local d = u.d
+         local dl = u.dl
          while u do
             table.insert( S, vertices[u.v] )
             u = u.p
          end
-         return S
+         return S, d, dl
       end
 
       -- Fully connected, so all are neighbours
       for k,v in ipairs(N) do
          local p = P[u.v][k]
-         local alt = u.d + p*vertices[u.v]:dist( vertices[v.v] )
-         if alt < v.d then
-            v.d = alt
+         local d = vertices[u.v]:dist( vertices[v.v] )
+         local alt = u.c + p*d -- cost
+         if alt < v.c then
+            v.c = alt
+            v.d = u.d + d
+            v.dl = u.dl + (((p < 3) and d) or 0) -- Save distance along lanes
             v.p = u
          end
       end
@@ -221,7 +230,6 @@ local function dijkstra_full( vertices, edges, source, target )
    -- Return the entire structure if no target
    return Q
 end
-
 
 --[[
 -- Gets the closest point to a point p on a line segment a-b.
@@ -259,7 +267,6 @@ function lanes.clearCache( p )
    mem.__lanes_H = nil
 end
 
-
 -- Same as safelanes.get but does caching
 function lanes.get( f, standing, isplayer )
    -- We try to cache the lane graph per system
@@ -280,7 +287,6 @@ function lanes.get( f, standing, isplayer )
    return ncl.L[key]
 end
 
-
 --[[
 -- Gets distance and nearest point to safe lanes from a position
 --]]
@@ -294,7 +300,6 @@ end
 function lanes.getDistancePH( p, pos )
    return lanes.getDistance( getCachePH(p), pos )
 end
-
 
 --[[
 -- Gets squared distance and nearest point to safe lanes from a position
@@ -318,7 +323,6 @@ end
 function lanes.getDistance2PH( p, pos )
    return lanes.getDistance2( getCachePH(p), pos )
 end
-
 
 function lanes.getPoint( L )
    local lv, le = L.v, L.e
@@ -347,7 +351,6 @@ end
 function lanes.getPointP( p )
    return lanes.getPoint( getCacheP(p) )
 end
-
 
 --[[
 -- Tries to get a point outside of the lanes, around a point at a radius rad.
@@ -434,11 +437,11 @@ function lanes.getPointInterestP( p, pos )
    return lanes.getPointInterest( L, pos )
 end
 
-
 --[[
 -- Computes the route for the pilot to get to target.
 --]]
-function lanes.getRoute( L, target, pos )
+function lanes.getRoute( L, target, pos, threshold )
+   threshold = threshold or 2 -- NPCs like to stick to lanes a lot
    local lv, le = L.v, L.e
 
    -- Case no lanes in the system
@@ -449,31 +452,58 @@ function lanes.getRoute( L, target, pos )
    -- Compute shortest path
    local sv = nearestVertex( lv, pos )
    local tv = nearestVertex( lv, target )
-   local S = dijkstra_full( lv, le, tv, sv )
-
-   -- No path or target is closer so just go straight
-   if #S==0 or pos:dist2( S[1] ) > pos:dist2(target) then
+   local S, _d, dl = dijkstra_full( lv, le, tv, sv )
+   local n = #S
+   if n==0 then
       return { target }
-   end
-
-   -- Add the final point if necessary (it is only approximated due to
-   -- djistra)
-   if S[#S]:dist2( target ) > 1e-5 then
-      table.insert( S, target )
    end
 
    -- Correct the first point, as we might want to start in the middle of a
    -- line segment
-   if #S > 1 then
+   if n > 1 then
       S[1] = closestPointLine( S[1], S[2], pos )
+      -- We would technically have to correct the distance here
+   end
+   -- We have to correct distance to consider movement to the first point
+   --d = d + pos:dist( S[1] )
+
+   -- Add the final point if necessary (it is only approximated due to djistra)
+   local dtarget = S[n]:dist( target )
+   if dtarget > 1e-3 then
+      table.insert( S, target )
+      -- Correct last point, as we may want to break off in the middle of a line segment
+      -- We only do this if it's not on a lane
+      if n > 1 then
+         S[n] = closestPointLine( S[n-1], S[n], target )
+         -- We would technically have to correct the distance here
+      end
+      --d = d + pos:dist( S[n], target ) -- Have to correct distance again
+   end
+
+   -- Recompute correct complete distance, probably faster than correcting in most cases
+   local d = 0
+   local p = pos
+   for k,v in ipairs(S) do
+      d = d + p:dist(v)
+      p = v
+   end
+
+   -- More distance off lanes than along
+   if d > dl*threshold then
+      return { target }
+   end
+
+   -- Path is too much of a work around
+   if d > threshold*pos:dist(target) then
+      return { target }
    end
 
    return S
 end
-function lanes.getRouteP( p, target, pos )
+function lanes.getRouteP( p, target, pos, threshold )
    pos = pos or p:pos()
    local L = getCacheP(p)
-   return lanes.getRoute( L, target, pos )
+   return lanes.getRoute( L, target, pos, threshold )
 end
 
 return lanes

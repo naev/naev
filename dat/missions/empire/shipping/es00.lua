@@ -7,7 +7,8 @@
    if faction.playerStanding("Empire") &lt; 0 or faction.playerStanding("Dvaered") &lt; 0 or faction.playerStanding("FLF") &gt;= 10 then
       return false
    end
-   return require("misn_test").reweight_active()
+   --return require("misn_test").reweight_active() -- Don't reweight as licenses are important!
+   return true
  </cond>
  <chance>35</chance>
  <done>Soromid Long Distance Recruitment</done>
@@ -67,7 +68,7 @@ function accept ()
 
    -- Flavour text and mini-briefing
    vn.label("accept")
-   soldner(fmt.f( _([["We've got a prisoner exchange set up with the FLF to take place on {dest_pnt} in the {dest_sys} system. They want a more 'neutral' pilot to do the exchange. You would have to go to {dest_pnt} with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will use ships in nearby sectors to monitor your status.
+   soldner(fmt.f( _([["We've got a prisoner exchange set up with the FLF to take place on {dest_pnt} in the {dest_sys} system. They want a more 'neutral' pilot to do the exchange. You would have to go to {dest_pnt} with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts, but we will use ships in nearby sectors to monitor your status.
 "Once you get our captured people back, bring them over to {ret_pnt} in {ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."]]),
       {dest_pnt=mem.dest, dest_sys=mem.destsys, ret_pnt=mem.ret, ret_sys=mem.retsys} ))
    vn.func( function () accepted = true end )
@@ -118,7 +119,7 @@ function land ()
       vn.na(_([[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.
 From the cockpit you see the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]]) )
       vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
-      vn.na(_([[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.]]))
+      vn.na(_([[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay, and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.]]))
       vn.na(_([[You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. This didn't go as you expected.]]) )
 
       vn.run()

@@ -4,6 +4,7 @@
  <location>enter</location>
  <chance>100</chance>
  <system>Test of Renewal</system>
+ <priority>0</priority>
 </event>
 --]]
 local textoverlay = require "textoverlay"
@@ -26,20 +27,17 @@ function create ()
 
    -- Set up position
    local pp = player.pilot()
-   pp:weapsetSetInrange(nil,false)
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
    pp:setPos( vec2.new(0,-200) )
    pp:intrinsicSet( { -- Ship is too fast otherwise
-      thrust_mod     = -30,
+      accel_mod      = -30,
       speed_mod      = -30,
       turn_mod       = -30,
    }, true ) -- overwrite all
    local _n1, seeking_chakra = pp:outfitAdd( "Seeking Chakra" )
    local _n2, feather_drive = pp:outfitAdd( "Feather Drive" )
-   pp:outfitAddIntrinsic( "Astral Flow Amplifier" )
-   pp:weapsetAdd( 1, seeking_chakra )
-   pp:weapsetAdd( 2, feather_drive )
+   srs.weapsets{ seeking_chakra, feather_drive }
 
    -- First puzzle
    local m = pilot.add("Psychic Orb", "Independent", vec2.new(), nil, {ai="dummy"} )
@@ -101,10 +99,9 @@ function puzzle01_addship ()
    e:setVisible(true)
    e:setNoDisable(true)
    e:intrinsicSet( { -- Ship is too fast otherwise
-      thrust_mod     = -30,
+      accel_mod      = -30,
       speed_mod      = -30,
       turn_mod       = -30,
-      fwd_damage     = -30, -- Don't instagib player
       armour_mod     = -90,
       shield_mod     = -90,
    }, true ) -- overwrite all
@@ -142,7 +139,7 @@ function puzzle01( p )
 
          local m = pilot.add(marker_ship, "Independent", start_marker:pos(), nil, {ai="dummy"} )
          m:intrinsicSet( {
-            thrust     = 200,
+            accel      = 200,
             speed      = 100,
             turn       = 900,
          }, true ) -- overwrite all

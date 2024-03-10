@@ -14,14 +14,14 @@
  <absorb>40</absorb>
  <commodity>
   <name>Silicate</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Olivine</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Iron</name>
-  <quantity>1</quantity>
+  <quantity>5</quantity>
  </commodity>
 </asteroid>

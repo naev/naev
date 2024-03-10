@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file queue.c
  *
  * @brief A dodgy implementation of a queue.
  */
-
 
 /** @cond */
 #include <stdlib.h>
@@ -16,7 +14,6 @@
 #include "queue.h"
 
 #include "log.h"
-
 
 /**
  * @brief Node struct.

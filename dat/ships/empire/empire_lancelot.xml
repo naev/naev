@@ -2,7 +2,7 @@
 <ship name="Empire Lancelot">
  <points>40</points>
  <base_type>Lancelot</base_type>
- <GFX size="56">lancelot_empire</GFX>
+ <gfx size="56">lancelot_empire</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Fighter</class>
@@ -37,8 +37,10 @@
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 350 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
   <structure size="small" />
   <structure size="small" />
  </slots>

@@ -2,7 +2,7 @@
 <ship name="Pirate Ancestor">
  <points>40</points>
  <base_type>Ancestor</base_type>
- <GFX size="65">ancestor_pirate</GFX>
+ <gfx size="65">ancestor_pirate</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Bomber</class>
@@ -32,8 +32,12 @@
   <utility size="small" prop="accessory" />
   <utility size="small" />
   <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="engines">Beat Up Small Engine</structure>
   <structure size="small" prop="hull">Patchwork Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>

@@ -3,10 +3,9 @@
  <general>
   <slot>weapon</slot>
   <size>small</size>
-  <license>Medium Weapon</license>
-  <mass>4</mass>
+  <mass>2</mass>
   <price>25000</price>
-  <description>This is the smallest direct beam weapon built, purpose-built by the Za'lek for their drones.</description>
+  <description>This is the smallest direct beam weapon built, purpose-built by the Za'lek for their drones. While the beam can instantaneously hit multiple targets simultaneously, it comes at a downside of a really short range, requiring the pilot to get very close to their target risking enemy fire.</description>
   <gfx_store>particle_lance.webp</gfx_store>
   <cpu>-5</cpu>
  </general>
@@ -18,7 +17,7 @@
   <heatup>40</heatup>
   <swivel>22</swivel>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>0</penetrate>
    <physical>46</physical>
   </damage>

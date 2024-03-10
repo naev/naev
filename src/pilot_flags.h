@@ -19,6 +19,7 @@ enum {
    PILOT_CARRIED,       /**< Pilot usually resides in a fighter bay. */
    PILOT_CREATED_AI,    /**< Pilot has already created AI. */
    PILOT_NO_OUTFITS,    /**< Do not create the pilot with outfits. */
+   PILOT_NO_EQUIP,      /**< Do not run the equip script on the pilot. */
    /*
     * Dynamic flags
     */
@@ -28,7 +29,7 @@ enum {
    PILOT_NOCLEAR,       /**< Pilot isn't removed by pilots_clear(). */
    /* Hyperspace. */
    PILOT_HYP_PREP,      /**< Pilot is getting ready for hyperspace. */
-   PILOT_HYP_BRAKE,     /**< PIlot has already braked before jumping. */
+   PILOT_HYP_BRAKE,     /**< Pilot has already braked before jumping. */
    PILOT_HYP_BEGIN,     /**< Pilot is starting engines. */
    PILOT_HYPERSPACE,    /**< Pilot is in hyperspace. */
    PILOT_HYP_END,       /**< Pilot is exiting hyperspace. */
@@ -54,6 +55,7 @@ enum {
    /* Player-related stuff. */
    PILOT_HOSTILE,       /**< Pilot is hostile to the player. */
    PILOT_FRIENDLY,      /**< Pilot is friendly to the player. */
+   PILOT_SCANNING,      /**< Pilot is scanning the pilot. */
    PILOT_COMBAT,        /**< Pilot is engaged in combat. */
    PILOT_BRIBED,        /**< Pilot has been bribed already. */
    PILOT_DISTRESSED,    /**< Pilot has distressed once already. */

@@ -3,7 +3,7 @@
  <lua>ships/lua/zalek.lua</lua>
  <points>100</points>
  <base_type>Demon</base_type>
- <GFX sx="12" sy="12">demon</GFX>
+ <gfx size="83" sx="12" sy="12">demon</gfx>
  <rarity>2</rarity>
  <sound pitch="0.76">engine_zalek</sound>
  <class>Destroyer</class>
@@ -40,8 +40,8 @@
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

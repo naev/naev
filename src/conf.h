@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include <time.h>
+
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 
 /**
@@ -14,7 +16,7 @@
 #define SAVE_COMPRESSION_DEFAULT       1     /**< Whether or not saved games should be compressed. */
 #define MOUSE_HIDE_DEFAULT             3.    /**< Time (in seconds) to hide mouse when not moved. */
 #define MOUSE_FLY_DEFAULT              1     /**< Whether or not middle clicking enables mouse flying. */
-#define MOUSE_THRUST_DEFAULT           1     /**< Whether or not to use mouse thrust controls. */
+#define MOUSE_ACCEL_DEFAULT            1     /**< Whether or not to use mouse accel controls. */
 #define MOUSE_DOUBLECLICK_TIME         0.5   /**< How long to consider double-clicks for. */
 #define MANUAL_ZOOM_DEFAULT            0     /**< Whether or not to enable manual zoom controls. */
 #define ZOOM_FAR_DEFAULT               0.5   /**< Far zoom distance (smaller is further) */
@@ -38,18 +40,22 @@
 #define FPS_MAX_DEFAULT                60    /**< Maximum FPS. */
 #define SHOW_PAUSE_DEFAULT             1     /**< Whether to display pause status. */
 #define MINIMIZE_DEFAULT               1     /**< Whether to minimize on focus loss. */
-#define COLORBLIND_DEFAULT             0     /**< Whether to enable colorblindness simulation. */
+#define COLOURBLIND_SIM_DEFAULT        0.    /**< Whether to enable colourblindness simulation. */
+#define COLOURBLIND_TYPE_DEFAULT       0     /**< Type of colourblindness to simulate. */
+#define COLOURBLIND_CORRECT_DEFAULT    0.    /**< Intensity of the colourblindness correction. */
+#define GAME_SPEED_DEFAULT             1.    /**< Game speed. */
 #define HEALTHBARS_DEFAULT             1     /**< Whether or not to show pilot health bars. */
 #define BG_BRIGHTNESS_DEFAULT          0.5   /**< How much to darken (or lighten) the backgrounds. */
 #define NEBU_NONUNIFORMITY_DEFAULT     1.    /**< How much to darken (or lighten) the nebula stuff. */
 #define GAMMA_CORRECTION_DEFAULT       1.    /**< How much gamma correction to do. */
-#define BACKGROUND_FANCY_DEFAULT       0     /**< Default fancy background. */
-#define JUMP_BRIGHTNESS_DEFAULT        1.    /**< Default jump brightness.*/
+#define JUMP_BRIGHTNESS_DEFAULT        0.8   /**< Default jump brightness.*/
 #define BIG_ICONS_DEFAULT              0     /**< Whether to display BIGGER icons. */
 #define FONT_SIZE_CONSOLE_DEFAULT      10    /**< Default console font size. */
 #define FONT_SIZE_INTRO_DEFAULT        18    /**< Default intro font size. */
 #define FONT_SIZE_DEF_DEFAULT          12    /**< Default font size. */
 #define FONT_SIZE_SMALL_DEFAULT        11    /**< Default small font size. */
+#define LOW_MEMORY_DEFAULT             0     /**< Default for low memory mode. */
+#define MAX_3D_TEX_SIZE                256   /**< Maximum 3D texture size. */
 /* Audio options */
 #define USE_EFX_DEFAULT                1     /**< Whether or not to use EFX (if using OpenAL). */
 #define MUTE_SOUND_DEFAULT             0     /**< Whether sound should be disabled. */
@@ -91,13 +97,17 @@ typedef struct PlayerConf_s {
    int notresizable; /**< Whether or not the window is resizable. */
    int borderless; /**< Whether to disable window decorations. */
    int minimize; /**< Whether to minimize on focus loss. */
-   int colorblind; /**< Whether to enable colourblindness simulation. */
+   double colourblind_sim; /**< Whether to enable colourblindness simulation. */
+   int colourblind_type; /**< Type of colourblindness. */
+   double colourblind_correct; /**< Whether to enable colourblindness simulation. */
+   double game_speed; /**< Speed of the game. */
    int healthbars; /**< Whether or not to show health bars next to pilots. */
    double bg_brightness; /**< How much to darken the background stuff. */
    double nebu_nonuniformity; /**< How much to darken the nebula stuff. */
    double jump_brightness; /**< Intensity to fade to/from when jumping. */
    double gamma_correction; /**< How much gamma correction to do. */
-   int background_fancy; /**< High quality moving, but slow background. */
+   int low_memory; /**< Low memory mode. */
+   int max_3d_tex_size; /**< How large to make the textures in low memory mode. */
 
    /* Sound. */
    int al_efx; /**< Should EFX extension be used? (only applicable for OpenAL) */
@@ -148,7 +158,7 @@ typedef struct PlayerConf_s {
    unsigned int doubletap_sens; /**< Double tap key sensibility (used for afterburn and cooldown). */
    double mouse_hide; /**< Time to hide mouse. */
    int mouse_fly; /**< Whether middle clicking enables mouse flying or not. */
-   int mouse_thrust; /**< Whether mouse flying controls thrust. */
+   int mouse_accel; /**< Whether mouse flying controls acceleration. */
    double mouse_doubleclick; /**< How long to consider double-clicks for. */
    double autonav_reset_dist; /**< Enemy distance condition for resetting autonav. */
    double autonav_reset_shield; /**< Shield condition for resetting autonav speed. */

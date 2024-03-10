@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Plasma Turret MK2">
  <general>
+  <shortname>Plasma T. MK2</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
-  <mass>30</mass>
+  <mass>24</mass>
   <price>80000</price>
   <description>The mark 2 plasma turret isn't especially impressive compared to other medium-size turrets, but it is sometimes favoured by corvettes for its unusually low weight compared to its range and damage output.</description>
   <gfx_store>plasma_turret2.webp</gfx_store>
@@ -16,18 +17,18 @@
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS2</spfx_armour>
-  <delay>1.0</delay>
+  <delay>1.4</delay>
   <speed>700</speed>
-  <range>1100</range>
-  <falloff>950</falloff>
-  <energy>30</energy>
+  <range>800</range>
+  <falloff>650</falloff>
+  <energy>42</energy>
   <heatup>50</heatup>
   <trackmin>1000</trackmin>
   <trackmax>4000</trackmax>
   <damage>
-   <type>impact</type>
-   <penetrate>36</penetrate>
-   <physical>24</physical>
+   <type>plasma</type>
+   <penetrate>32</penetrate>
+   <physical>35</physical>
   </damage>
  </specific>
 </outfit>

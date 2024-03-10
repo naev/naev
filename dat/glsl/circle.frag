@@ -1,11 +1,11 @@
 #include "lib/sdf.glsl"
 
-uniform vec4 color;
+uniform vec4 colour;
 uniform vec2 dimensions;
 uniform int parami;
 
 in vec2 pos;
-out vec4 color_out;
+out vec4 colour_out;
 
 void main(void) {
    float d = sdCircle( pos*dimensions, dimensions.x-1.0 );
@@ -14,9 +14,9 @@ void main(void) {
    /*
    float alpha = smoothstep(-m, 0.0, -d);
    float beta  = smoothstep(-2.0*m, -m, -d);
-   color_out   = color * vec4( vec3(alpha), beta );
+   colour_out   = colour * vec4( vec3(alpha), beta );
    */
    float alpha = smoothstep(-1.0, 0.0, -d);
-   color_out   = color;
-   color_out.a *= alpha;
+   colour_out   = colour;
+   colour_out.a *= alpha;
 }

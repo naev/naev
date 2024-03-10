@@ -15,7 +15,7 @@ local function equip_generic( p, opt_params, cores, outfits )
 
    -- Choose parameters and make Pirateish
    local params = eparams.choose( p )
-   params = tmerge( params, opt_params )
+   params = tmerge_r( params, opt_params )
 
    -- Get stuff
    local ocores = ecores.get( p, { all=cores } )

@@ -44,6 +44,15 @@
       lua_pop( naevL, 1 );                      \
    }
 
+#define conf_loadTime( env, n, i )              \
+   {                                            \
+      nlua_getenv( naevL, env, n );             \
+      if ( lua_isnumber( naevL, -1 ) ) {        \
+         i = (time_t)lua_tonumber( naevL, -1 ); \
+      }                                         \
+      lua_pop( naevL, 1 );                      \
+   }
+
 #define conf_loadBool( env, n, b )                \
    {                                              \
       nlua_getenv( naevL, env, n );               \
@@ -103,9 +112,7 @@ static void print_usage( void )
    LOG(_("   -s f, --svol f        sets the sound volume to f"));
    LOG(_("   -d, --datapath        adds a new datapath to be mounted (i.e., appends it to the search path for game assets)"));
    LOG(_("   -X, --scale           defines the scale factor"));
-#ifdef DEBUGGING
    LOG(_("   --devmode             enables dev mode perks like the editors"));
-#endif /* DEBUGGING */
    LOG(_("   -h, --help            display this message and exit"));
    LOG(_("   -v, --version         print the version and exit"));
 }
@@ -183,7 +190,7 @@ void conf_setGameplayDefaults (void)
    conf.doubletap_sens        = DOUBLETAP_SENSITIVITY_DEFAULT;
    conf.save_compress         = SAVE_COMPRESSION_DEFAULT;
    conf.mouse_hide            = MOUSE_HIDE_DEFAULT;
-   conf.mouse_thrust          = MOUSE_THRUST_DEFAULT;
+   conf.mouse_accel           = MOUSE_ACCEL_DEFAULT;
    conf.mouse_doubleclick     = MOUSE_DOUBLECLICK_TIME;
    conf.mouse_fly             = MOUSE_FLY_DEFAULT;
    conf.zoom_manual           = MANUAL_ZOOM_DEFAULT;
@@ -241,15 +248,18 @@ void conf_setVideoDefaults (void)
    conf.scalefactor  = SCALE_FACTOR_DEFAULT;
    conf.nebu_scale   = NEBULA_SCALE_FACTOR_DEFAULT;
    conf.minimize     = MINIMIZE_DEFAULT;
-   conf.colorblind   = COLORBLIND_DEFAULT;
+   conf.colourblind_sim = COLOURBLIND_SIM_DEFAULT;
+   conf.colourblind_correct = COLOURBLIND_CORRECT_DEFAULT;
+   conf.colourblind_type = COLOURBLIND_TYPE_DEFAULT;
+   conf.game_speed   = GAME_SPEED_DEFAULT;
    conf.healthbars   = HEALTHBARS_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;
    conf.jump_brightness = JUMP_BRIGHTNESS_DEFAULT;
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
-   conf.background_fancy = BACKGROUND_FANCY_DEFAULT;
+   conf.low_memory   = LOW_MEMORY_DEFAULT;
+   conf.max_3d_tex_size = MAX_3D_TEX_SIZE;
 
-   gl_colorblind( conf.colorblind );
    if (cur_system)
       background_load( cur_system->background );
 
@@ -291,7 +301,7 @@ void conf_loadConfigPath( void )
  */
 int conf_loadConfig ( const char* file )
 {
-   int i, t;
+   int i, t, cb;
    const char *str, *mod;
    SDL_Keycode key;
    int type;
@@ -337,17 +347,28 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "notresizable", conf.notresizable );
       conf_loadBool( lEnv, "borderless", conf.borderless );
       conf_loadBool( lEnv, "minimize", conf.minimize );
-      conf_loadBool( lEnv, "colorblind", conf.colorblind );
+      cb = 0;
+      conf_loadBool( lEnv, "colourblind", cb ); /* TODO remove in 0.13.0 or so. */
+      if (cb) {
+         /* Old colourblind used Rod Monochromancy, so we'll restore that in this case. TODO Remove in 0.13.0 or so. */
+         conf.colourblind_type = 3;
+         conf.colourblind_sim = 1.; /* Turn on at max. */
+      }
+      conf_loadFloat( lEnv, "colourblind_sim", conf.colourblind_sim );
+      conf_loadFloat( lEnv, "colourblind_correct", conf.colourblind_correct );
+      conf_loadInt( lEnv, "colourblind_type", conf.colourblind_type );
+      conf_loadFloat( lEnv, "game_speed", conf.game_speed );
       conf_loadBool( lEnv, "healthbars", conf.healthbars );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
       /* todo leave only nebu_nonuniformity sometime */
-      conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_nonuniformity ); /* Old conf name. */
+      conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_nonuniformity ); /* Old conf name. TODO Remove for 0.12.0  */
       conf_loadFloat( lEnv, "nebu_uniformity", conf.nebu_nonuniformity );
       conf_loadFloat( lEnv, "nebu_nonuniformity", conf.nebu_nonuniformity );
       /* end todo */
       conf_loadFloat( lEnv, "jump_brightness", conf.jump_brightness );
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
-      conf_loadBool( lEnv, "background_fancy", conf.background_fancy );
+      conf_loadBool( lEnv, "low_memory", conf.low_memory );
+      conf_loadInt( lEnv, "max_3d_tex_size", conf.max_3d_tex_size );
 
       /* FPS */
       conf_loadBool( lEnv, "showfps", conf.fps_show );
@@ -405,7 +426,7 @@ int conf_loadConfig ( const char* file )
       conf_loadInt( lEnv, "doubletap_sensitivity", conf.doubletap_sens );
       conf_loadFloat( lEnv, "mouse_hide", conf.mouse_hide );
       conf_loadBool( lEnv, "mouse_fly", conf.mouse_fly );
-      conf_loadInt( lEnv, "mouse_thrust", conf.mouse_thrust );
+      conf_loadInt( lEnv, "mouse_accel", conf.mouse_accel );
       conf_loadFloat( lEnv, "mouse_doubleclick", conf.mouse_doubleclick );
       conf_loadFloat( lEnv, "autonav_reset_dist", conf.autonav_reset_dist );
       conf_loadFloat( lEnv, "autonav_reset_shield", conf.autonav_reset_shield );
@@ -416,7 +437,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "conf_nosave", conf.nosave );
       conf_loadString( lEnv, "lastversion", conf.lastversion );
       conf_loadBool( lEnv, "translation_warning_seen", conf.translation_warning_seen );
-      conf_loadInt( lEnv, "last_played", conf.last_played );
+      conf_loadTime( lEnv, "last_played", conf.last_played );
 
       /* Debugging. */
       conf_loadBool( lEnv, "fpu_except", conf.fpu_except );
@@ -561,9 +582,7 @@ void conf_parseCLI( int argc, char** argv )
       { "mvol", required_argument, 0, 'm' },
       { "svol", required_argument, 0, 's' },
       { "scale", required_argument, 0, 'X' },
-#ifdef DEBUGGING
       { "devmode", no_argument, 0, 'D' },
-#endif /* DEBUGGING */
       { "help", no_argument, 0, 'h' },
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
@@ -624,12 +643,10 @@ void conf_parseCLI( int argc, char** argv )
          case 'X':
             conf.scalefactor = atof(optarg);
             break;
-#ifdef DEBUGGING
          case 'D':
             conf.devmode = 1;
             LOG(_("Enabling developer mode."));
             break;
-#endif /* DEBUGGING */
 
          case 'v':
             /* by now it has already displayed the version */
@@ -718,8 +735,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
       return count;
 
    /* zero-terminate, if possible */
-   if (count != size)
-      str[count] = '\0';   /* don't increase count, like snprintf */
+   str[count] = '\0';   /* don't increase count, like snprintf */
 
    /* return the amount of characters written */
    return count;
@@ -737,6 +753,9 @@ pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
 
 #define  conf_saveULong(n,i)    \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %lu\n", n, i);
+
+#define  conf_saveTime(n,i)    \
+pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %llu\n", n, (unsigned long long) i);
 
 #define  conf_saveFloat(n,f)    \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
@@ -888,8 +907,25 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("minimize",conf.minimize);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Enables colourblind mode. Good for simulating colourblindness."));
-   conf_saveBool("colorblind",conf.colorblind);
+   conf_saveComment(_("Enables colourblind simulation. A value of 0. disables."))
+   conf_saveFloat("colourblind_sim",conf.colourblind_sim);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Type of colourblindness to simulate or correct."))
+   conf_saveComment(_("0 is Protanopia"))
+   conf_saveComment(_("1 is Deuteranopia"))
+   conf_saveComment(_("2 is Tritanapia"))
+   conf_saveComment(_("3 is Rod Monochromacy"))
+   conf_saveComment(_("4 is Cone Monochromacy"))
+   conf_saveInt("colourblind_type",conf.colourblind_type);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Intensity of the colour blindness correction. A value of 0. disables."))
+   conf_saveFloat("colourblind_correct",conf.colourblind_correct);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Slows down the game to improve accessibility."))
+   conf_saveFloat("game_speed",conf.game_speed);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Enable health bars. These show hostility/friendliness and health of pilots on screen."));
@@ -912,8 +948,12 @@ int conf_saveConfig ( const char* file )
    conf_saveFloat("gamma_correction",conf.gamma_correction);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Expensive high quality shaders for the background. Defaults to false."))
-   conf_saveBool("background_fancy",conf.background_fancy);
+   conf_saveComment(_("Enables low memory mode which foregoes using normal textures and ambient occlusion. Useful when you want to run Naev or more limited hardware."))
+   conf_saveBool("low_memory", conf.low_memory);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Maximum texture size to use for 3D models when in low memory mode. A value of less than or equal to 0 disables texture resizing."))
+   conf_saveBool("max_3d_tex_size", conf.max_3d_tex_size);
    conf_saveEmptyLine();
 
    /* FPS */
@@ -1024,8 +1064,8 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("mouse_fly",conf.mouse_fly);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Mouse-flying thrust control"));
-   conf_saveInt("mouse_thrust",conf.mouse_thrust);
+   conf_saveComment(_("Mouse-flying accel control"));
+   conf_saveInt("mouse_accel",conf.mouse_accel);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Maximum interval to count as a double-click (0 disables)."));
@@ -1059,7 +1099,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment(_("Time Naev was last played. This gets refreshed each time you exit Naev."));
-   conf_saveULong("last_played",time(NULL));
+   conf_saveTime("last_played",time(NULL));
    conf_saveEmptyLine();
 
    /* Debugging. */
@@ -1073,13 +1113,6 @@ int conf_saveConfig ( const char* file )
    conf_saveString("dev_save_map",conf.dev_save_map);
    conf_saveString("dev_save_spob",conf.dev_save_spob);
    conf_saveEmptyLine();
-
-   /* TODO remove the following in 0.12.0 */
-   conf_saveComment(_("The following are for legacy purposes and will be removed in 0.12.0."))
-   conf_saveFloat("compression_velocity",conf.compression_velocity);
-   conf_saveFloat("compression_mult",conf.compression_mult);
-   conf_saveFloat("autonav_reset_dist",conf.autonav_reset_dist);
-   conf_saveFloat("autonav_reset_shield",conf.autonav_reset_shield);
 
    /*
     * Keybindings.

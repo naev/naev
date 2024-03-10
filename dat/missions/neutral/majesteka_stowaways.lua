@@ -44,7 +44,7 @@ end
 
 local function spob_goodness( s )
    if s == stowaway_spob then
-      return -1, "#r"..fmt.f(_("They are trying to away from {spb}"),{spb=stowaway_spob}).."#0"
+      return -1, "#r"..fmt.f(_("They are trying to get away from {spb}"),{spb=stowaway_spob}).."#0"
    end
 
    local f = s:faction()
@@ -90,6 +90,7 @@ function land ()
 
    vn.clear()
    vn.scene()
+   vn.transition()
    vn.na(fmt.f(_([[The orphans peer out your window in awe as you land on {spb}.]]),
       {spb=spb}))
    -- Special case
@@ -97,11 +98,11 @@ function land ()
       local verner = ant.vn_verner()
       vn.appear( verner )
       vn.na(_([[You wind up meeting Verner at the station and offer. You explain your plight to him and ask if he would be willing to take in the orphans and give them stuff to do around the station.]]))
-      vn.na(_([[Without giving given it a second thought he gladly agrees.]]))
+      vn.na(_([[Without giving it a second thought he gladly agrees.]]))
       verner(_([["I know what it is like to be without a home. It's a terrible feeling, sort of eats you out from the inside until there's nothing left. I'll gladly take the pair in and give them an education. Got to have bright kids for a bright future of Antlejos V!"]]))
       vn.disappear( verner )
       vn.sfxVictory()
-      vn.na(_([[With that settled, you bright the kids over to Verner who quickly enthralls with some sleight of hand. Seeing that they are in good hands, you now return to your ship with peace of mind.]]))
+      vn.na(_([[With that settled, you bring the kids over to Verner who quickly enthrals with some sleight of hand. Seeing that they are in good hands, you now return to your ship with peace of mind.]]))
       vn.func( function ()
          goodness = 1
          mem.verner = true
@@ -148,7 +149,7 @@ However, it may be better to try to locate a more fitting environment for them t
       {spb=spb}))
    vn.sfxVictory()
    if goodness > 0 then
-      vn.na(_([[The orphans look ecstatic at their new home and thank you for all you've done for them. Seeing that they are in good hands, you now return to your ship with peace of mind.]]))
+      vn.na(_([[The orphans look ecstatic at their new home, and thank you for all you've done for them. Seeing that they are in good hands, you now return to your ship with peace of mind.]]))
    else
       vn.na(fmt.f(_([[The orphans look excited at their new home, a significant improvement over {spb}. It's not the ideal place for kid, but you think they will be well off at their new location.]]),
          {spb=stowaway_spob}))
@@ -222,7 +223,7 @@ function reward_evt ()
       {shipai=tut.ainame()}))
    sai(_([["Ummm, I hate to be that ship AI again, but I'm detecting an anomaly in the cargo holds again…"]]))
    vn.na(_([[Hoping it's not a new pair of orphans, you head to the cargo holds to investigate.]]))
-   vn.na(_([[You reach the cargo holds but don't find nothing out of the ordinary. You carefully open the hatch and find a big thank you note written on the wall with some sort of crayon or chalk. It reads "thank you for everything". While taking the orphans to a safe home may have not meant too much trouble for you, it meant an entire life to them.]]))
+   vn.na(_([[You reach the cargo holds but don't find anything out of the ordinary. You carefully open the hatch and find a big thank-you note written on the wall with some sort of crayon or chalk. It reads "thank you for everything". While taking the orphans to a safe home may have not meant too much trouble for you, it meant an entire life to them.]]))
    if mem.verner or mem.goodness then
       vn.na(_([[Feeling happy about yourself, you are about to head back to the command console when you notice something that catches your eye. Is that a gift from the orphans?]]))
       vn.func( function ()

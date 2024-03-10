@@ -79,12 +79,12 @@ make_distance_mapd( double *data, unsigned int width, unsigned int height, doubl
    memset( gx, 0, sizeof(double)*width*height );
    memset( gy, 0, sizeof(double)*width*height );
    for (unsigned int i=0; i<wh; i++)
-      data[i] = 1 - data[i];
+      data[i] = 1. - data[i];
    computegradient( data, width, height, gx, gy );
    edtaa3( data, gx, gy, width, height, xdist, ydist, inside );
    for (unsigned int i=0; i<wh; i++)
-      if( inside[i] < 0 )
-         inside[i] = 0.0;
+      if (inside[i] < 0.)
+         inside[i] = 0.;
 
    // distmap = outside - inside; % Bipolar distance field
    *vmax = 0.;

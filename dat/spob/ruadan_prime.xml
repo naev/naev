@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ruadan Prime">
+ <feature>#pZa'lek Homeworld#0</feature>
  <lua>spob/lua/zalek_mil_ruadan.lua</lua>
  <pos x="5279.566099" y="4132.067302"/>
  <GFX>
@@ -25,7 +26,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Ruadan has recently become the nerve center of the Za'lek. Most of the Za'lek's strength is concentrated here, and they don't allow anyone but the highest level captains to land here. Even being allowed to be here is considered a great honor.</description>
+  <description>Ruadan has recently become the nerve center of the Za'lek. Most of the Za'lek's strength is concentrated here, and they don't allow anyone but the highest level captains to land here. Even being allowed to be here is considered a great honour.</description>
   <bar>Given the exclusive nature of Ruadan Prime, the atmosphere of the bar is very to-the-point and focused. Everyone here has a reason to be here, and not much time to spare.</bar>
  </general>
  <tech>
@@ -44,6 +45,7 @@
   <item>Star Maps</item>
   <item>High Tech Upgrades 1</item>
   <item>High Tech Upgrades 2</item>
+  <item>High Tech Upgrades 3</item>
   <item>Basic Outfits 1</item>
   <item>Basic Outfits 2</item>
   <item>Heavy Weapons 1</item>

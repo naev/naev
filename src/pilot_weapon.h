@@ -9,21 +9,27 @@
 
 #define WEAPSET_INRANGE_PLAYER_DEF  0 /**< Default weaponset inrange parameter for the player. */
 
+#define WEAPSET_ACTIVE_NONE         0
+#define WEAPSET_ACTIVE_PRIMARY      (1<<0)
+#define WEAPSET_ACTIVE_SECONDARY    (1<<1)
+#define WEAPSET_ACTIVE_ALL          (WEAPSET_ACTIVE_PRIMARY | WEAPSET_ACTIVE_SECONDARY)
+
 /* Freedom. */
 void pilot_weapSetFree( Pilot* p );
 
 /* Shooting. */
 Pilot *pilot_weaponTarget( Pilot *p, Target *wt );
-int pilot_shoot( Pilot* p, int level );
+int pilot_shoot( Pilot* p, int primary, int secondary );
 void pilot_shootStop( Pilot* p, int level );
 int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target, double time, int aim );
-void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w );
+void pilot_stopBeam( const Pilot *p, PilotOutfitSlot *w );
 void pilot_getRateMod( double *rate_mod, double* energy_mod,
       const Pilot* p, const Outfit* o );
 double pilot_weapFlyTime( const Outfit *o, const Pilot *parent,
       const vec2 *pos, const vec2 *vel);
 
 /* Updating. */
+void pilot_weapSetUpdateOutfitState( Pilot* p );
 void pilot_weapSetUpdateStats( Pilot *p );
 void pilot_weapSetAIClear( Pilot* p );
 void pilot_weapSetPress( Pilot* p, int id, int type );
@@ -32,9 +38,11 @@ void pilot_weapSetUpdate( Pilot* p );
 /* Weapon Set. */
 PilotWeaponSet* pilot_weapSet( Pilot* p, int id );
 const char *pilot_weapSetName( Pilot* p, int id );
-void pilot_weapSetRmSlot( Pilot *p, int id, OutfitSlotType type );
-void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level );
-void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o );
+const char *pilot_weapSetTypeName( WeaponSetType t );
+void pilot_weapSetAdd( Pilot* p, int id, const PilotOutfitSlot *o, int level );
+void pilot_weapSetRm( Pilot* p, int id, const PilotOutfitSlot *o );
+void pilot_weapSetClear( Pilot* p, int id );
+int pilot_weapSetInSet( Pilot* p, int id, const PilotOutfitSlot *o );
 int pilot_weapSetCheck( Pilot* p, int id, const PilotOutfitSlot *o );
 double pilot_weapSetRange( Pilot* p, int id, int level );
 double pilot_weapSetSpeed( Pilot* p, int id, int level );
