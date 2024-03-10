@@ -773,15 +773,15 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag( PLAYER_REVERSE );
       }
-   }
-   else if ( ( value == KEY_RELEASE ) && player_isFlag( PLAYER_REVERSE ) ) {
-         player_rmFlag( PLAYER_REVERSE );
+      else if ( ( value == KEY_RELEASE ) && player_isFlag( PLAYER_REVERSE ) ) {
+            player_rmFlag( PLAYER_REVERSE );
 
-         if ( !player_isFlag( PLAYER_ACCEL ) )
-            player_accelOver();
-         /* Double tap reverse = cooldown! */
-         if ( isdoubletap )
-            player_cooldownBrake();
+            if ( !player_isFlag( PLAYER_ACCEL ) )
+               player_accelOver();
+            /* Double tap reverse = cooldown! */
+            if ( isdoubletap )
+               player_cooldownBrake();
+      }
    }
    /* try to enter stealth mode. */
    else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
