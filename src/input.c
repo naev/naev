@@ -136,7 +136,7 @@ static Keybind *input_paste;
 /*
  * accel hacks
  */
-static int doubletap_key         = -1; /**< Last key double tapped. */
+static KeySemanticType doubletap_key         = KST_PASTE+1; /**< Last key double tapped. */
 static unsigned int doubletap_t  = 0; /**< Used to see if double tap accel. */
 
 /*
@@ -692,97 +692,99 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
     */
    /* accelerating */
    if (KEY(KST_ACCEL) && !repeat) {
-      if (kabs >= 0.) {
+      if ( kabs >= 0. ) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
-         player_accel(kabs);
+         player_accel( kabs );
       }
       else { /* prevent it from getting stuck */
-         if (isdoubletap) {
-            if (NODEAD()) {
+         if ( isdoubletap ) {
+            if ( NODEAD() ) {
                pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_ACCEL );
                pilot_afterburn( player.p );
                /* Allow keeping it on outside of weapon sets. */
-               if (player.p->afterburner != NULL)
+               if ( player.p->afterburner != NULL )
                   player.p->afterburner->flags |= PILOTOUTFIT_ISON_LUA;
             }
          }
-         else if (value==KEY_RELEASE) {
-            if (NODEAD()) {
+         else if ( value == KEY_RELEASE ) {
+            if ( NODEAD() ) {
                pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_ACCEL );
                /* Make sure to release the weapon set lock. */
-               if (player.p->afterburner != NULL)
+               if ( player.p->afterburner != NULL )
                   player.p->afterburner->flags &= ~PILOTOUTFIT_ISON_LUA;
             }
          }
 
-         if (value==KEY_PRESS) {
+         if ( value == KEY_PRESS ) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
-            player_setFlag(PLAYER_ACCEL);
-            player_accel(1.);
+            player_setFlag( PLAYER_ACCEL );
+            player_accel( 1. );
          }
-         else if (value==KEY_RELEASE) {
-            player_rmFlag(PLAYER_ACCEL);
-            if (!player_isFlag(PLAYER_REVERSE))
+         else if ( value == KEY_RELEASE ) {
+            player_rmFlag( PLAYER_ACCEL );
+            if ( !player_isFlag( PLAYER_REVERSE ) )
                player_accelOver();
          }
       }
-
+   }
    /* turning left */
-      if (kabs >= 0.) {
+   else if (KEY(KST_LEFT) && !repeat) {
+      if ( kabs >= 0. ) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
-         player_setFlag(PLAYER_TURN_LEFT);
+         player_setFlag( PLAYER_TURN_LEFT );
          player_left = kabs;
       }
       else {
          /* set flags for facing correction */
-         if (value==KEY_PRESS) {
+         if ( value == KEY_PRESS ) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
-            player_setFlag(PLAYER_TURN_LEFT);
+            player_setFlag( PLAYER_TURN_LEFT );
             player_left = 1.;
          }
-         else if (value==KEY_RELEASE) {
-            player_rmFlag(PLAYER_TURN_LEFT);
+         else if ( value == KEY_RELEASE ) {
+            player_rmFlag( PLAYER_TURN_LEFT );
             player_left = 0.;
          }
       }
-
+   }
    /* turning right */
-      if (kabs >= 0.) {
+   else if (KEY(KST_RIGHT) && !repeat) {
+      if ( kabs >= 0. ) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
-         player_setFlag(PLAYER_TURN_RIGHT);
+         player_setFlag( PLAYER_TURN_RIGHT );
          player_right = kabs;
       }
       else {
          /* set flags for facing correction */
-         if (value==KEY_PRESS) {
+         if ( value == KEY_PRESS ) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
-            player_setFlag(PLAYER_TURN_RIGHT);
+            player_setFlag( PLAYER_TURN_RIGHT );
             player_right = 1.;
          }
-         else if (value==KEY_RELEASE) {
-            player_rmFlag(PLAYER_TURN_RIGHT);
+         else if ( value == KEY_RELEASE ) {
+            player_rmFlag( PLAYER_TURN_RIGHT );
             player_right = 0.;
          }
       }
-
+   }
    /* turn around to face vel */
-      if (value==KEY_PRESS) {
+   else if (KEY(KST_FACE) && !repeat) {
+      if ( value == KEY_PRESS ) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
-         player_setFlag(PLAYER_REVERSE);
+         player_setFlag( PLAYER_REVERSE );
       }
-      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE)) {
-         player_rmFlag(PLAYER_REVERSE);
+   }
+   else if ( ( value == KEY_RELEASE ) && player_isFlag( PLAYER_REVERSE ) ) {
+         player_rmFlag( PLAYER_REVERSE );
 
-         if (!player_isFlag(PLAYER_ACCEL))
+         if ( !player_isFlag( PLAYER_ACCEL ) )
             player_accelOver();
-      }
-
       /* Double tap reverse = cooldown! */
-      if (isdoubletap)
+      if ( isdoubletap )
          player_cooldownBrake();
-
+   }
    /* try to enter stealth mode. */
-   } else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
+    else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
       if (value==KEY_PRESS)
          player_stealth();
 
