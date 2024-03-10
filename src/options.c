@@ -775,7 +775,8 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
 static void opt_keyDefaults( unsigned int wid, const char *str )
 {
    (void) str;
-   const char *title, *caption, *ret;
+   const char *title, *caption;
+   char *ret;
    int ind;
 
    const int n = 3;
@@ -804,6 +805,7 @@ static void opt_keyDefaults( unsigned int wid, const char *str )
          ind = i;
          break;
       }
+   free(ret);
 
    if (ind == 2)
       return;
