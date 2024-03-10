@@ -12,7 +12,6 @@
 
 #include "input.h"
 
-#include "array.h"
 #include "board.h"
 #include "camera.h"
 #include "conf.h"
@@ -31,7 +30,6 @@
 #include "pilot.h"
 #include "player.h"
 #include "toolkit.h"
-#include "weapon.h"
 #include "utf8.h"
 
 /* keybinding structure */
@@ -321,7 +319,7 @@ void input_init (void)
       temp->key         = SDLK_UNKNOWN;
       temp->mod         = NMOD_NONE;
 
-      if (strcmp(temp->brief,"Paste")==0)
+      if (i==KST_PASTE)
          input_paste = temp;
    }
 }
@@ -338,7 +336,7 @@ void input_exit (void)
  */
 void input_enableAll (void)
 {
-   for (int i=0; keybind_info[i][0] != NULL; i++)
+   for (int i=0; i<input_numbinds; i++)
       input_keybinds[i].disabled = 0;
 }
 
@@ -347,7 +345,7 @@ void input_enableAll (void)
  */
 void input_disableAll (void)
 {
-   for (int i=0; keybind_info[i][0] != NULL; i++)
+   for (int i=0; i<input_numbinds; i++)
       input_keybinds[i].disabled = 1;
 }
 
@@ -405,11 +403,12 @@ SDL_Keycode input_keyConv( const char *name )
  */
 void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod )
 {
-   if (keybind<=KST_PASTE){
+   if ((keybind >=0) && (keybind<=KST_PASTE)){
       input_keybinds[keybind].type = type;
       input_keybinds[keybind].key = key;
       /* Non-keyboards get mod NMOD_ANY to always match. */
       input_keybinds[keybind].mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ANY;
+      return;
    }
    WARN(_("Unable to set keybinding '%d', that command doesn't exist"), keybind);
 }
