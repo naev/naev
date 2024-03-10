@@ -27,7 +27,6 @@
 #include "nlua_asteroid.h"
 #include "nlua_canvas.h"
 #include "nlua_colour.h"
-#include "nlua_gfx.h"
 #include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"
@@ -44,7 +43,6 @@
 #include "player.h"
 #include "rng.h"
 #include "space.h"
-#include "start.h"
 #include "weapon.h"
 
 /*
@@ -177,6 +175,7 @@ static int pilotL_shippropGet( lua_State *L );
 static int pilotL_effectClear( lua_State *L );
 static int pilotL_effectAdd( lua_State *L );
 static int pilotL_effectRm( lua_State *L );
+static int pilotL_effectHas( lua_State *L );
 static int pilotL_effectGet( lua_State *L );
 static int pilotL_ai( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
@@ -394,6 +393,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "effectAdd", pilotL_effectAdd },
    { "effectRm", pilotL_effectRm },
    { "effects", pilotL_effectGet },
+   { "effectHas", pilotL_effectHas },
    /* Ship. */
    { "ship", pilotL_ship },
    { "radius", pilotL_radius },
@@ -1396,7 +1396,7 @@ static int pilotL_name( lua_State *L )
 }
 
 /**
- * @brief Gets the ID of the pilot.
+ * @brief Gets the ID of the pilot. Guaranteed to be unique per pilot and not repeating over time (with the exception of the player).
  *
  * @usage id = p:id()
  *
@@ -4239,6 +4239,28 @@ static int pilotL_effectRm( lua_State *L )
       }
    }
    return 0;
+}
+
+/**
+ * @brief Checks to see if a player has an instance of an effect active.
+ *    @luatparam Pilot p Pilot to check.
+ *    @luatparam string Name of the effect to check.
+ *    @luatreturn boolean Whether or not the pilot has the effect active.
+ * @luafunc effectHas
+ */
+static int pilotL_effectHas( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot(L,1);
+   const char *effectname = luaL_checkstring(L,2);
+   for (int i=0; i<array_size(p->effects); i++) {
+      const Effect *e = &p->effects[i];
+      if (strcmp(effectname,e->data->name)!=0)
+         continue;
+      lua_pushboolean(L,1);
+      return 1;
+   }
+   lua_pushboolean(L,0);
+   return 1;
 }
 
 /**
