@@ -85,7 +85,7 @@ const char *keybind_info[KST_PASTE+1][3] = {
    [KST_FIRE_SECONDARY]={ N_("Fire Secondary Weapon"), N_("Fires secondary weapons."), "secondary" },
    [KST_INIT_COOLDOWN]={ N_("Active Cooldown"), N_("Begins active cooldown."), "cooldown" },
 
-   /*Switching tabs*/
+   /* Switching tab s*/
    [KST_TAB_1]={ N_("Switch Tab 1"), N_("Switches to tab 1."), "switchtab1" },
    [KST_TAB_2]={ N_("Switch Tab 2"), N_("Switches to tab 2."), "switchtab2" },
    [KST_TAB_3]={ N_("Switch Tab 3"), N_("Switches to tab 3."), "switchtab3" },
@@ -263,16 +263,6 @@ void input_setDefault ( int wasd )
    input_setKeybind( KST_MENU_SMALL, KEYBIND_KEYBOARD, SDLK_ESCAPE, NMOD_ANY );
    input_setKeybind( KST_MENU_INFO, KEYBIND_KEYBOARD, SDLK_i, NMOD_NONE );
    input_setKeybind( KST_MENU_LUA, KEYBIND_KEYBOARD, SDLK_F2, NMOD_ANY );
-   input_setKeybind( KST_TAB_1, KEYBIND_KEYBOARD, SDLK_1, NMOD_ALT );
-   input_setKeybind( KST_TAB_2, KEYBIND_KEYBOARD, SDLK_2, NMOD_ALT );
-   input_setKeybind( KST_TAB_3, KEYBIND_KEYBOARD, SDLK_3, NMOD_ALT );
-   input_setKeybind( KST_TAB_4, KEYBIND_KEYBOARD, SDLK_4, NMOD_ALT );
-   input_setKeybind( KST_TAB_5, KEYBIND_KEYBOARD, SDLK_5, NMOD_ALT );
-   input_setKeybind( KST_TAB_6, KEYBIND_KEYBOARD, SDLK_6, NMOD_ALT );
-   input_setKeybind( KST_TAB_7, KEYBIND_KEYBOARD, SDLK_7, NMOD_ALT );
-   input_setKeybind( KST_TAB_8, KEYBIND_KEYBOARD, SDLK_8, NMOD_ALT );
-   input_setKeybind( KST_TAB_9, KEYBIND_KEYBOARD, SDLK_9, NMOD_ALT );
-   input_setKeybind( KST_TAB_0, KEYBIND_KEYBOARD, SDLK_0, NMOD_ALT );
    input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_v, NMOD_CTRL );
 }
 
@@ -641,12 +631,12 @@ void input_update( double dt )
    }
 }
 
-#define KEY(s)    (keynum==s) /**< Shortcut for ease. */
 #define INGAME()  (!toolkit_isOpen() && ((value==KEY_RELEASE) || !player_isFlag(PLAYER_CINEMATICS))) /**< Makes sure player is in game. */
 #define NOHYP()   \
    ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
    !pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
    !pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
+#define DEAD()    ((player.p==NULL) || pilot_isFlag(player.p,PILOT_DEAD)) /**< Player is dead. */
 #define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
 #define NOLAND()  ((player.p != NULL) && (!landed && !pilot_isFlag(player.p,PILOT_LANDING))) /**< Player isn't landed. */
 /**
@@ -691,317 +681,485 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
     * movement
     */
    /* accelerating */
-   if (KEY(KST_ACCEL) && !repeat) {
-      if ( kabs >= 0. ) {
-         player_restoreControl( PINPUT_MOVEMENT, NULL );
-         player_accel( kabs );
-      }
-      else { /* prevent it from getting stuck */
-         if ( isdoubletap ) {
-            if ( NODEAD() ) {
-               pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_ACCEL );
-               pilot_afterburn( player.p );
-               /* Allow keeping it on outside of weapon sets. */
-               if ( player.p->afterburner != NULL )
-                  player.p->afterburner->flags |= PILOTOUTFIT_ISON_LUA;
-            }
-         }
-         else if ( value == KEY_RELEASE ) {
-            if ( NODEAD() ) {
-               pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_ACCEL );
-               /* Make sure to release the weapon set lock. */
-               if ( player.p->afterburner != NULL )
-                  player.p->afterburner->flags &= ~PILOTOUTFIT_ISON_LUA;
-            }
-         }
+   switch (keynum) {
+      case KST_ACCEL:
+         if (repeat)
+            break;
 
-         if ( value == KEY_PRESS ) {
+         if (kabs >= 0.) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
-            player_setFlag( PLAYER_ACCEL );
-            player_accel( 1. );
+            player_accel( kabs );
          }
-         else if ( value == KEY_RELEASE ) {
-            player_rmFlag( PLAYER_ACCEL );
-            if ( !player_isFlag( PLAYER_REVERSE ) )
-               player_accelOver();
+         else { /* prevent it from getting stuck */
+            if (isdoubletap) {
+               if (NODEAD()) {
+                  pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_ACCEL );
+                  pilot_afterburn( player.p );
+                  /* Allow keeping it on outside of weapon sets. */
+                  if ( player.p->afterburner != NULL )
+                     player.p->afterburner->flags |= PILOTOUTFIT_ISON_LUA;
+               }
+            }
+            else if (value==KEY_RELEASE) {
+               if (NODEAD()) {
+                  pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_ACCEL );
+                  /* Make sure to release the weapon set lock. */
+                  if ( player.p->afterburner != NULL )
+                     player.p->afterburner->flags &= ~PILOTOUTFIT_ISON_LUA;
+               }
+            }
+
+            if (value==KEY_PRESS) {
+               player_restoreControl( PINPUT_MOVEMENT, NULL );
+               player_setFlag( PLAYER_ACCEL );
+               player_accel( 1. );
+            }
+            else if (value==KEY_RELEASE) {
+               player_rmFlag( PLAYER_ACCEL );
+               if (!player_isFlag(PLAYER_REVERSE))
+                  player_accelOver();
+            }
          }
-      }
-   }
-   /* turning left */
-   else if (KEY(KST_LEFT) && !repeat) {
-      if ( kabs >= 0. ) {
-         player_restoreControl( PINPUT_MOVEMENT, NULL );
-         player_setFlag( PLAYER_TURN_LEFT );
-         player_left = kabs;
-      }
-      else {
-         /* set flags for facing correction */
-         if ( value == KEY_PRESS ) {
+         break;
+      /* turning left */
+      case KST_LEFT:
+         if (repeat)
+            break;
+         if (kabs >= 0.) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag( PLAYER_TURN_LEFT );
-            player_left = 1.;
+            player_left = kabs;
          }
-         else if ( value == KEY_RELEASE ) {
-            player_rmFlag( PLAYER_TURN_LEFT );
-            player_left = 0.;
+         else {
+            /* set flags for facing correction */
+            if (value==KEY_PRESS) {
+               player_restoreControl( PINPUT_MOVEMENT, NULL );
+               player_setFlag( PLAYER_TURN_LEFT );
+               player_left = 1.;
+            }
+            else if (value==KEY_RELEASE) {
+               player_rmFlag( PLAYER_TURN_LEFT );
+               player_left = 0.;
+            }
          }
-      }
-   }
-   /* turning right */
-   else if (KEY(KST_RIGHT) && !repeat) {
-      if ( kabs >= 0. ) {
-         player_restoreControl( PINPUT_MOVEMENT, NULL );
-         player_setFlag( PLAYER_TURN_RIGHT );
-         player_right = kabs;
-      }
-      else {
-         /* set flags for facing correction */
-         if ( value == KEY_PRESS ) {
+         break;
+      /* turning right */
+      case KST_RIGHT:
+         if (repeat)
+            break;
+         if (kabs >= 0.) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag( PLAYER_TURN_RIGHT );
-            player_right = 1.;
+            player_right = kabs;
          }
-         else if ( value == KEY_RELEASE ) {
-            player_rmFlag( PLAYER_TURN_RIGHT );
-            player_right = 0.;
+         else {
+            /* set flags for facing correction */
+            if (value==KEY_PRESS) {
+               player_restoreControl( PINPUT_MOVEMENT, NULL );
+               player_setFlag( PLAYER_TURN_RIGHT );
+               player_right = 1.;
+            }
+            else if (value==KEY_RELEASE) {
+               player_rmFlag( PLAYER_TURN_RIGHT );
+               player_right = 0.;
+            }
          }
-      }
-   }
-   /* turn around to face vel */
-   else if (KEY(KST_REVERSE) && !repeat) {
-      if ( value == KEY_PRESS ) {
-         player_restoreControl( PINPUT_MOVEMENT, NULL );
-         player_setFlag( PLAYER_REVERSE );
-      }
-      else if ( ( value == KEY_RELEASE ) && player_isFlag( PLAYER_REVERSE ) ) {
-            player_rmFlag( PLAYER_REVERSE );
-
-            if ( !player_isFlag( PLAYER_ACCEL ) )
-               player_accelOver();
-            /* Double tap reverse = cooldown! */
-            if ( isdoubletap )
-               player_cooldownBrake();
-      }
-   }
-   /* try to enter stealth mode. */
-   else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
-      if (value==KEY_PRESS)
-         player_stealth();
-
-   /* face the target */
-   } else if (KEY(KST_FACE) && !repeat) {
-      if (value==KEY_PRESS) {
-         player_restoreControl( PINPUT_MOVEMENT, NULL );
-         player_setFlag(PLAYER_FACE);
-      }
-      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE))
-         player_rmFlag(PLAYER_FACE);
-
-   /*
-    * Combat
-    */
-   /* shooting primary weapon */
-   } else if (KEY(KST_FIRE_PRIMARY) && !repeat) {
-      if (value==KEY_PRESS) {
-         player_setFlag(PLAYER_PRIMARY);
-      }
-      else if (value==KEY_RELEASE)
-         player_rmFlag(PLAYER_PRIMARY);
-   /* targeting */
-   } else if ((INGAME() || map_isOpen()) && NODEAD() && KEY(KST_TARGET_NEXT)) {
-      if (value==KEY_PRESS) {
-         if (map_isOpen())
-            map_cycleMissions(1);
-         else
-            player_targetNext(0);
-      }
-   } else if ((INGAME() || map_isOpen()) && NODEAD() && KEY(KST_TARGET_PREV)) {
-      if (value==KEY_PRESS) {
-         if (map_isOpen())
-            map_cycleMissions(-1);
-         else
-            player_targetPrev(0);
-      }
-   } else if ((INGAME() || map_isOpen()) && NODEAD() && KEY(KST_TARGET_CLOSE)) {
-      if (value==KEY_PRESS) {
-         if (map_isOpen())
-            map_cycleMissions(1);
-         else
-            player_targetNearest();
-      }
-   } else if (INGAME() && NODEAD() && KEY(KST_HTARGET_NEXT)) {
-      if (value==KEY_PRESS) player_targetNext(1);
-   } else if (INGAME() && NODEAD() && KEY(KST_HTARGET_PREV)) {
-      if (value==KEY_PRESS) player_targetPrev(1);
-   } else if (INGAME() && NODEAD() && KEY(KST_HTARGET_CLOSE)) {
-      if (value==KEY_PRESS) player_targetHostile();
-   } else if (INGAME() && NODEAD() && KEY(KST_TARGET_CLEAR)) {
-      if (value==KEY_PRESS) player_targetClear();
-
-   /*
-    * Escorts.
-    */
-   } else if (INGAME() && NODEAD() && KEY(KST_ESCORT_NEXT) && !repeat) {
-      if (value==KEY_PRESS) player_targetEscort(0);
-   } else if (INGAME() && NODEAD() && KEY(KST_ESCORT_NEXT) && !repeat) {
-      if (value==KEY_PRESS) player_targetEscort(1);
-   } else if (INGAME() && NODEAD() && KEY(KST_ESCORT_ATTACK) && !repeat) {
-      if (value==KEY_PRESS) escorts_attack(player.p);
-   } else if (INGAME() && NODEAD() && KEY(KST_ESCORT_HALT) && !repeat) {
-      if (value==KEY_PRESS) escorts_hold(player.p);
-   } else if (INGAME() && NODEAD() && KEY(KST_ESCORT_RETURN) && !repeat) {
-      if (value==KEY_PRESS) escorts_return(player.p);
-   } else if (INGAME() && NODEAD() && KEY(KST_ESCORT_CLEAR) && !repeat) {
-      if (value==KEY_PRESS) escorts_clear(player.p);
-
-   /*
-    * secondary weapons
-    */
-   /* shooting secondary weapon */
-   } else if (KEY(KST_FIRE_SECONDARY) && !repeat) {
-      if (value==KEY_PRESS) {
-         player_setFlag(PLAYER_SECONDARY);
-      }
-      else if (value==KEY_RELEASE)
-         player_rmFlag(PLAYER_SECONDARY);
-
-   /* Weapon sets. */
-   } else if (NODEAD() && KEY(KST_TAB_1)) {
-      player_weapSetPress( 0, value, repeat );
-   } else if (NODEAD() && KEY(KST_TAB_2)) {
-      player_weapSetPress( 1, value, repeat );
-   } else if (NODEAD() && KEY(KST_TAB_3)) {
-      player_weapSetPress( 2, value, repeat );
-   } else if (NODEAD() && KEY(KST_TAB_4)) {
-      player_weapSetPress( 3, value, repeat );
-   } else if (NODEAD() && KEY(KST_TAB_5)) {
-      player_weapSetPress( 4, value, repeat );
-   } else if (NODEAD() && KEY(KST_TAB_6)) {
-      player_weapSetPress( 5, value, repeat );
-   } else if (NODEAD() && KEY(KST_TAB_7)) {
-      player_weapSetPress( 6, value, repeat );
-   } else if (NODEAD() && KEY(KST_TAB_8)) {
-      player_weapSetPress( 7, value, repeat );
-   } else if (NODEAD() && KEY(KST_TAB_9)) {
-      player_weapSetPress( 8, value, repeat );
-   } else if (NODEAD() && KEY(KST_TAB_0)) {
-      player_weapSetPress( 9, value, repeat );
-
-   /*
-    * Space
-    */
-   } else if (KEY(KST_AUTONAV) && NOHYP() && NODEAD()) {
-      if (value==KEY_PRESS) {
-         if (map_isOpen()) {
-            unsigned int wid = window_get( MAP_WDWNAME );
-            player_autonavStartWindow( wid, NULL );
+         break;
+      /* turn around to face vel */
+      case KST_REVERSE:
+         if (repeat)
+            break;
+         if (value==KEY_PRESS) {
+            player_restoreControl( PINPUT_MOVEMENT, NULL );
+            player_setFlag( PLAYER_REVERSE );
          }
-         else if INGAME() {
-            player_autonavStart();
+         else if ( ( value == KEY_RELEASE ) && player_isFlag( PLAYER_REVERSE ) ) {
+               player_rmFlag( PLAYER_REVERSE );
+
+               if ( !player_isFlag( PLAYER_ACCEL ) )
+                  player_accelOver();
+               /* Double tap reverse = cooldown! */
+               if ( isdoubletap )
+                  player_cooldownBrake();
          }
-      }
-   /* target spob (cycles like target) */
-   } else if (KEY(KST_TARGET_SPOB) && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
-      if (value==KEY_PRESS) player_targetSpob();
-   /* target nearest spob or attempt to land */
-   } else if (KEY(KST_APPROACH) && INGAME() && NOHYP() && NOLAND() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) {
-         player_restoreControl( 0, NULL );
-         player_approach();
-      }
-   } else if (KEY(KST_TARGET_JUMP) && NOHYP() && NOLAND() && NODEAD()) {
-      if (value==KEY_PRESS) player_targetHyperspace();
-   } else if (KEY(KST_GLOBAL_MAP) && NOHYP() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) map_open();
-   } else if (KEY(KST_JUMP) && INGAME() && !repeat) {
-      if (value==KEY_PRESS) {
-         player_restoreControl( 0, NULL );
-         player_jump();
-      }
-   } else if (KEY(KST_LOCAL_MAP) && NODEAD() && (INGAME() || map_isOpen()) && !repeat) {
-      if (map_isOpen())
-         map_toggleNotes();
-      else
-         ovr_key( value );
-   } else if (KEY(KST_MOUSE_FLYING) && NODEAD() && !repeat) {
-      if (value==KEY_PRESS)
-         player_toggleMouseFly();
-   } else if (KEY(KST_INIT_COOLDOWN) && NOHYP() && NOLAND() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) {
-         player_restoreControl( PINPUT_BRAKING, NULL );
-         player_cooldownBrake();
-      }
+         break;
+      /* try to enter stealth mode. */
+      case KST_STEALTH:
+         if (!(!repeat && NOHYP() && NODEAD() && INGAME()))
+            break;
+         if (value==KEY_PRESS)
+            player_stealth();
+         break;
 
-   /*
-    * Communication.
-    */
-   } else if (KEY(KST_COMM_UP) && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) {
-         gui_messageScrollUp(5);
-      }
-   } else if (KEY(KST_COMM_DOWN) && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) {
-         gui_messageScrollDown(5);
-      }
-   } else if (KEY(KST_COMM_HAIL) && INGAME() && NOHYP() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) {
-         player_hail();
-      }
-   } else if (KEY(KST_COMM_RECEIVE) && INGAME() && NOHYP() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) {
-         player_autohail();
-      }
+      /* face the target */
+      case KST_FACE:
+         if (repeat)
+            break;
+         if (value==KEY_PRESS) {
+            player_restoreControl( PINPUT_MOVEMENT, NULL );
+            player_setFlag(PLAYER_FACE);
+         }
+         else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE))
+            player_rmFlag(PLAYER_FACE);
+         break;
 
-   /*
-    * misc
-    */
-   /* zooming in */
-   } else if (KEY(KST_ZOOM_IN) && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) gui_setRadarRel(-1);
-   /* zooming out */
-   } else if (KEY(KST_ZOOM_OUT) && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) gui_setRadarRel(1);
-   /* take a screenshot */
-   } else if (KEY(KST_SCREENSHOT)) {
-      if (value==KEY_PRESS) player_screenshot();
-   /* toggle fullscreen */
-   } else if (KEY(KST_FULLSCREEN) && !repeat) {
-      if (value==KEY_PRESS) naev_toggleFullscreen();
-   /* pause the games */
-   } else if (KEY(KST_PAUSE) && !repeat) {
-      if (value==KEY_PRESS) {
-         if (!toolkit_isOpen()) {
-            if (paused)
-               unpause_game();
+      /*
+      * Combat
+      */
+      /* shooting primary weapon */
+      case KST_FIRE_PRIMARY:
+         if (repeat)
+            break;
+         if (value==KEY_PRESS)
+            player_setFlag(PLAYER_PRIMARY);
+         else if (value==KEY_RELEASE)
+            player_rmFlag(PLAYER_PRIMARY);
+         break;
+      /* targeting */
+      case KST_TARGET_NEXT:
+         if (!((INGAME() || map_isOpen()) && NODEAD()))
+            break;
+         if (value==KEY_PRESS) {
+            if (map_isOpen())
+               map_cycleMissions(1);
             else
-               pause_player();
+               player_targetNext(0);
          }
-      }
-   /* toggle speed mode */
-   } else if (KEY(KST_GAME_SPEED) && !repeat) {
-      if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
-         if (player.speed < 4.*conf.game_speed)
-            player.speed *= 2.;
+         break;
+      case KST_TARGET_PREV:
+         if (!((INGAME() || map_isOpen()) && NODEAD()))
+            break;
+         if (value==KEY_PRESS) {
+            if (map_isOpen())
+               map_cycleMissions(-1);
+            else
+               player_targetPrev(0);
+         }
+         break;
+      case KST_TARGET_CLOSE:
+         if (!((INGAME() || map_isOpen()) && NODEAD()))
+            break;
+         if (value==KEY_PRESS) {
+            if (map_isOpen())
+               map_cycleMissions(1);
+            else
+               player_targetNearest();
+         }
+         break;
+      case KST_HTARGET_NEXT:
+         if (!(INGAME() && NODEAD()))
+               break;
+         if (value==KEY_PRESS)
+            player_targetNext(1);
+         break;
+      case KST_HTARGET_PREV:
+         if (!(INGAME() && NODEAD()))
+               break;
+         if (value==KEY_PRESS)
+            player_targetPrev(1);
+         break;
+      case KST_HTARGET_CLOSE:
+         if (!(INGAME() && NODEAD()))
+               break;
+         if (value==KEY_PRESS)
+            player_targetHostile();
+         break;
+      case KST_TARGET_CLEAR:
+         if (!(INGAME() && NODEAD()))
+               break;
+         if (value==KEY_PRESS)
+            player_targetClear();
+         break;
+
+      /*
+      * Escorts.
+      */
+      case KST_ESCORT_NEXT:
+         if (!(INGAME() && NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS)
+            player_targetEscort(0);
+         break;
+      case KST_ESCORT_PREV:
+         if (!(INGAME() && NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS)
+            player_targetEscort(1);
+         break;
+      case KST_ESCORT_ATTACK:
+         if (!(INGAME() && NODEAD() && !repeat))
+               break;
+         if (value==KEY_PRESS)
+            escorts_attack(player.p);
+         break;
+      case KST_ESCORT_HALT:
+         if (!(INGAME() && NODEAD() && !repeat))
+               break;
+         if (value==KEY_PRESS)
+            escorts_hold(player.p);
+         break;
+      case KST_ESCORT_RETURN:
+         if (!(INGAME() && NODEAD() && !repeat))
+               break;
+         if (value==KEY_PRESS)
+            escorts_return(player.p);
+         break;
+      case KST_ESCORT_CLEAR:
+         if (!(INGAME() && NODEAD() && !repeat))
+               break;
+         if (value==KEY_PRESS)
+            escorts_clear(player.p);
+         break;
+
+      /*
+      * secondary weapons
+      */
+      /* shooting secondary weapon */
+      case KST_FIRE_SECONDARY:
+         if (repeat)
+            break;
+         if (value==KEY_PRESS)
+            player_setFlag(PLAYER_SECONDARY);
+         else if (value==KEY_RELEASE)
+            player_rmFlag(PLAYER_SECONDARY);
+         break;
+      /* Weapon sets. */
+      case KST_TAB_1:
+         if (DEAD())
+            break;
+         player_weapSetPress( 0, value, repeat );
+         break;
+      case KST_TAB_2:
+         if (DEAD())
+            break;
+         player_weapSetPress( 1, value, repeat );
+         break;
+      case KST_TAB_3:
+         if (DEAD())
+            break;
+         player_weapSetPress( 2, value, repeat );
+         break;
+      case KST_TAB_4:
+         if (DEAD())
+            break;
+         player_weapSetPress( 3, value, repeat );
+         break;
+      case KST_TAB_5:
+         if (DEAD())
+            break;
+         player_weapSetPress( 4, value, repeat );
+         break;
+      case KST_TAB_6:
+         if (DEAD())
+            break;
+         player_weapSetPress( 5, value, repeat );
+         break;
+      case KST_TAB_7:
+         if (DEAD())
+            break;
+         player_weapSetPress( 6, value, repeat );
+         break;
+      case KST_TAB_8:
+         if (DEAD())
+            break;
+         player_weapSetPress( 7, value, repeat );
+         break;
+      case KST_TAB_9:
+         if (DEAD())
+            break;
+         player_weapSetPress( 8, value, repeat );
+         break;
+      case KST_TAB_0:
+         if (DEAD())
+            break;
+         player_weapSetPress( 9, value, repeat );
+         break;
+
+      /*
+      * Space
+      */
+      case KST_AUTONAV:
+         if (!(NOHYP() && NODEAD()))
+            break;
+         if (value==KEY_PRESS) {
+            if (map_isOpen()) {
+               unsigned int wid = window_get( MAP_WDWNAME );
+               player_autonavStartWindow( wid, NULL );
+            }
+            else if INGAME()
+               player_autonavStart();
+         }
+         break;
+      /* target spob (cycles like target) */
+      case KST_TARGET_SPOB:
+         if (!(INGAME() && NOHYP() && NOLAND() && NODEAD()))
+            break;
+         if (value==KEY_PRESS)
+            player_targetSpob();
+         break;
+      /* target nearest spob or attempt to land */
+      case KST_APPROACH:
+         if (!(INGAME() && NOHYP() && NOLAND() && NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS) {
+            player_restoreControl( 0, NULL );
+            player_approach();
+         }
+         break;
+      case KST_TARGET_JUMP:
+         if (!(NOHYP() && NOLAND() && NODEAD()))
+            break;
+         if (value==KEY_PRESS)
+            player_targetHyperspace();
+         break;
+      case KST_GLOBAL_MAP:
+         if (!(NOHYP() && NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS)
+            map_open();
+         break;
+      case KST_JUMP:
+         if (!(INGAME() && !repeat))
+            break;
+         if (value==KEY_PRESS) {
+            player_restoreControl( 0, NULL );
+            player_jump();
+         }
+         break;
+      case KST_LOCAL_MAP:
+         if (!(NODEAD() && (INGAME() || map_isOpen()) && !repeat))
+            break;
+         if (map_isOpen())
+            map_toggleNotes();
          else
-            player.speed = conf.game_speed;
-         player_resetSpeed();
-      }
-   /* opens a small menu */
-   } else if (KEY(KST_MENU_SMALL) && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) menu_small( 1, 1, 1, 1 );
+            ovr_key( value );
+         break;
+      case KST_MOUSE_FLYING:
+         if (!(NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS)
+            player_toggleMouseFly();
+         break;
+      case KST_INIT_COOLDOWN:
+         if (!(NOHYP() && NOLAND() && NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS) {
+            player_restoreControl( PINPUT_BRAKING, NULL );
+            player_cooldownBrake();
+         }
+         break;
 
-   /* shows pilot information */
-   } else if (KEY(KST_MENU_INFO) && NOHYP() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) menu_info( INFO_DEFAULT );
+      /*
+      * Communication.
+      */
+      case KST_COMM_UP:
+         if (!(INGAME() && NODEAD()))
+            break;
+         if (value==KEY_PRESS)
+            gui_messageScrollUp(5);
+         break;
+      case KST_COMM_DOWN:
+         if (!(INGAME() && NODEAD()))
+            break;
+         if (value==KEY_PRESS)
+            gui_messageScrollDown(5);
+         break;
+      case KST_COMM_HAIL:
+         if (!(INGAME() && NOHYP() && NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS)
+            player_hail();
+         break;
+      case KST_COMM_RECEIVE:
+         if (!(INGAME() && NOHYP() && NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS)
+            player_autohail();
+         break;
 
-   /* Opens the Lua console. */
-   } else if (KEY(KST_MENU_LUA) && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) cli_open();
-   }
+      /*
+      * misc
+      */
+      /* zooming in */
+      case KST_ZOOM_IN:
+         if (!(INGAME() && NODEAD()))
+            break;
+         if (value==KEY_PRESS)
+            gui_setRadarRel(-1);
+         break;
+      /* zooming out */
+      case KST_ZOOM_OUT:
+         if (!(INGAME() && NODEAD()))
+            break;
+         if (value==KEY_PRESS)
+            gui_setRadarRel(1);
+         break;
+      /* take a screenshot */
+      case KST_SCREENSHOT:
+         if (repeat)
+            break;
+         if (value==KEY_PRESS)
+            player_screenshot();
+         break;
+      /* toggle fullscreen */
+      case KST_FULLSCREEN:
+         if (repeat)
+            break;
+         if (value==KEY_PRESS)
+            naev_toggleFullscreen();
+         break;
+      /* pause the games */
+      case KST_PAUSE:
+         if (repeat)
+            break;
+         if (value==KEY_PRESS) {
+            if (!toolkit_isOpen()) {
+               if (paused)
+                  unpause_game();
+               else
+                  pause_player();
+            }
+         }
+         break;
+      /* toggle speed mode */
+      case KST_GAME_SPEED:
+         if (repeat)
+            break;
+         if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
+            if (player.speed < 4.*conf.game_speed)
+               player.speed *= 2.;
+            else
+               player.speed = conf.game_speed;
+            player_resetSpeed();
+         }
+         break;
+      /* opens a small menu */
+      case KST_MENU_SMALL:
+         if (!(NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS)
+            menu_small( 1, 1, 1, 1 );
+         break;
 
-   /* Key press not used. */
-   else {
-      return;
+      /* shows pilot information */
+      case KST_MENU_INFO:
+         if (!(NOHYP() && NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS)
+            menu_info( INFO_DEFAULT );
+         break;
+
+      /* Opens the Lua console. */
+      case KST_MENU_LUA:
+         if (!(NODEAD() && !repeat))
+            break;
+         if (value==KEY_PRESS)
+            cli_open();
+         break;
+
+      /* Key not used. */
+      default:
+         return;
    }
 
    /* Run the hook. */
