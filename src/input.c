@@ -40,7 +40,7 @@
  */
 typedef struct Keybind_ {
    int disabled; /**< Whether or not it's disabled. */
-   const char *brief, *detailed; /**< Descriptions of the keybinds */
+   const char *name, *detailed; /**< Descriptions of the keybinds */
    KeybindType type; /**< type, defined in player.h */
    SDL_Keycode key; /**< key/axis/button event number */
    SDL_Keymod mod; /**< Key modifiers (where applicable). */

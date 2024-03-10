@@ -541,7 +541,7 @@ const char* toolkit_setListPos( unsigned int wid, const char* name, int pos )
  *    @param name Name of the list.
  *    @return The position in the list or -1 on error.
  */
-int toolkit_getListPos( unsigned int wid, const char* name ) //What is this?
+int toolkit_getListPos( unsigned int wid, const char* name )
 {
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
