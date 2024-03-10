@@ -38,7 +38,8 @@
  */
 typedef struct Keybind_ {
    int disabled; /**< Whether or not it's disabled. */
-   const char *brief, *name; /**< Descriptions of the keybinds */
+   const char *brief; /**< Brief description. TODO remove in 0.13.0 or so. */
+   const char *name; /**< Descriptions of the keybinds */
    KeybindType type; /**< type, defined in player.h */
    SDL_Keycode key; /**< key/axis/button event number */
    SDL_Keymod mod; /**< Key modifiers (where applicable). */
@@ -562,6 +563,14 @@ KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Ke
 
    /* Not found. */
    return -1;
+}
+
+const char *input_getBrief( KeySemanticType keybind )
+{
+   if ((keybind>=0) && (keybind<=KST_PASTE))
+      return input_keybinds[keybind].brief;
+   WARN(_("Unable to get keybinding brief '%d', that command doesn't exist"), keybind);
+   return NULL;
 }
 
 /**

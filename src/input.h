@@ -119,6 +119,7 @@ void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode ke
 const char *input_modToText( SDL_Keymod mod );
 SDL_Keycode input_getKeybind( KeySemanticType keybind, KeybindType *type, SDL_Keymod *mod );
 void input_getKeybindDisplay( KeySemanticType keybind, char *buf, int len );
+const char *input_getBrief( KeySemanticType keybind );
 const char *input_getKeybindDescription( KeySemanticType keybind );
 KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod mod );
 KeySemanticType find_key( const char *name );
