@@ -1121,7 +1121,8 @@ int conf_saveConfig ( const char* file )
    conf_saveComment(_("Keybindings"));
    conf_saveEmptyLine();
 
-   /* Iterate over the keybinding names */
+   /* Iterate over the keybinding. */
+   pos += scnprintf(&buf[pos], sizeof(buf)-pos, "keybinds = {}");
    for (int i=0; i<=KST_PASTE; i++) {
       SDL_Keycode key;
       KeybindType type;
@@ -1134,10 +1135,10 @@ int conf_saveConfig ( const char* file )
       keyname[sizeof(keyname)-1] = '\0';
 
       /* Save a comment line containing the description */
-      conf_saveComment(input_getKeybindDescription( find_key( (const char *)keybind_info ) ));
+      conf_saveComment( input_getKeybindDescription(i) );
 
       /* Get the keybind */
-      key = input_getKeybind( find_key( (const char *)keybind_info ), &type, &mod );
+      key = input_getKeybind( i, &type, &mod );
 
       /* Determine the textual name for the keybind type */
       switch (type) {
@@ -1153,7 +1154,7 @@ int conf_saveConfig ( const char* file )
       }
       /* Write a nil if an unknown type */
       if ((typename == NULL) || (key == SDLK_UNKNOWN && type == KEYBIND_KEYBOARD)) {
-         conf_saveString( keybind_info[i][0],"none");
+         pos += scnprintf(&buf[pos], sizeof(buf)-pos, "keybinds[\"%s\"] = nil\n", keybind_info[i][0]);
          continue;
       }
 
@@ -1175,7 +1176,7 @@ int conf_saveConfig ( const char* file )
          scnprintf(keyname, sizeof(keyname)-1, "%d", key);
 
       /* Write out a simple Lua table containing the keybind info */
-      pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
+      pos += scnprintf(&buf[pos], sizeof(buf)-pos, "keybinds[\"%s\"] = { type = \"%s\", mod = \"%s\", key = %s }\n",
             keybind_info[i][0], typename, modname, keyname);
    }
    conf_saveEmptyLine();

@@ -572,7 +572,8 @@ KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Ke
  */
 const char* input_getKeybindDescription( KeySemanticType keybind )
 {
-   if (keybind<=KST_PASTE) return _(keybind_info[keybind][1]);
+   if ((keybind>=0) && (keybind<=KST_PASTE))
+      return _(keybind_info[keybind][1]);
    WARN(_("Unable to get keybinding description '%d', that command doesn't exist"), keybind);
    return NULL;
 }
