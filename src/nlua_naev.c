@@ -22,11 +22,10 @@
 #include "log.h"
 #include "info.h"
 #include "menu.h"
-#include "nlua_evt.h"
+#include "event.h"
 #include "nlua_misn.h"
 #include "nlua_system.h"
 #include "nluadef.h"
-#include "nstring.h"
 #include "pause.h"
 #include "player.h"
 #include "plugin.h"
@@ -288,10 +287,8 @@ static int naevL_keyGet( lua_State *L )
 {
    char buf[128];
    const char *keyname = luaL_checkstring( L, 1 );
-
-   input_getKeybindDisplay( find_key(keyname), buf, sizeof(buf) );
+   input_getKeybindDisplay( input_keyFromBrief(keyname), buf, sizeof(buf) );
    lua_pushstring( L, buf );
-
    return 1;
 }
 
@@ -310,7 +307,7 @@ static int naevL_keyEnable( lua_State *L )
    const char *key = luaL_checkstring(L,1);
    int enable = lua_toboolean(L,2);
 
-   input_toggleEnable( find_key(key), enable );
+   input_toggleEnable( input_keyFromBrief(key), enable );
    return 0;
 }
 

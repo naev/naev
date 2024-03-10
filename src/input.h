@@ -122,7 +122,7 @@ void input_getKeybindDisplay( KeySemanticType keybind, char *buf, int len );
 const char *input_getBrief( KeySemanticType keybind );
 const char *input_getKeybindDescription( KeySemanticType keybind );
 KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod mod );
-KeySemanticType find_key( const char *name );
+KeySemanticType input_keyFromBrief( const char *name );
 /*
  * Misc.
  */
@@ -135,8 +135,8 @@ int input_clickedJump( int jump, int autonav );
 int input_clickedSpob( int spob, int autonav );
 int input_clickedAsteroid( int field, int asteroid );
 int input_clickedPilot( unsigned int pilot, int autonav );
-void input_clicked( void *clicked );
-int input_isDoubleClick( void *clicked );
+void input_clicked( const void *clicked );
+int input_isDoubleClick( const void *clicked );
 
 /*
  * handle input

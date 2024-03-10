@@ -60,9 +60,9 @@ const char *keybind_info[KST_PASTE+1][3] = {
    /*Movement modifiers*/
    [KST_AUTONAV]={ N_("Autonavigation On"), N_("Initializes the autonavigation system."), "autonav" },
    [KST_APPROACH]={ N_("Approach"), N_("Attempts to approach the targeted ship or space object, "
-                                                    "or targets the nearest landable space object. "
-                                                    "Requests landing permission if necessary. "
-                                                    "Prioritizes ships over space objects."), "approach" },
+         "or targets the nearest landable space object. "
+         "Requests landing permission if necessary. "
+         "Prioritizes ships over space objects."), "approach" },
    [KST_MOUSE_FLYING]={ N_("Mouse Flight"), N_("Toggles mouse flying."), "mousefly" },
    [KST_JUMP]={ N_("Initiate Jump"), N_("Attempts to jump via a jump point."), "jump" },
 
@@ -152,7 +152,7 @@ static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
 static double input_mouseTimer         = 1.; /**< Timer for hiding again. */
 static int input_mouseCounter          = 1; /**< Counter for mouse display/hiding. */
 static unsigned int input_mouseClickLast = 0; /**< Time of last click (in ms) */
-static void *input_lastClicked         = NULL; /**< Pointer to the last-clicked item. */
+static const void *input_lastClicked   = NULL; /**< Pointer to the last-clicked item. */
 
 /*
  * from player.c
@@ -463,9 +463,9 @@ void input_getKeybindDisplay( KeySemanticType keybind, char *buf, int len )
             p += scnprintf( &buf[p], len-p, "%s + ", input_modToText(mod) );
          /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
          if (key < 0x100 && isalpha(key))
-            p += scnprintf( &buf[p], len-p, "%c", toupper(key) );
+            /*p +=*/ scnprintf( &buf[p], len-p, "%c", toupper(key) );
          else
-            p += scnprintf( &buf[p], len-p, "%s", pgettext_var("keyname", SDL_GetKeyName(key)) );
+            /*p +=*/ scnprintf( &buf[p], len-p, "%s", pgettext_var("keyname", SDL_GetKeyName(key)) );
          break;
       }
 
@@ -1238,11 +1238,11 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    rp = MAX( 1.5 * PILOT_SIZE_APPROX * p->ship->size / 2 * zoom,  minpr);
 
    if (pntid >=0) { /* Spob is closer. */
-      Spob *pnt = cur_system->spobs[ pntid ];
+      const Spob *pnt = cur_system->spobs[ pntid ];
       r  = MAX( 1.5 * pnt->radius * zoom, minr );
    }
    else if (jpid >= 0) {
-      JumpPoint *jp = &cur_system->jumps[ jpid ];
+      const JumpPoint *jp = &cur_system->jumps[ jpid ];
       r  = MAX( 1.5 * jp->radius * zoom, minr );
    }
    else if (astid >= 0) {
@@ -1327,7 +1327,7 @@ int input_clickedJump( int jump, int autonav )
    else
       player_targetHyperspaceSet( jump, 0 );
 
-   input_clicked( (void*)jp );
+   input_clicked( jp );
    return 0;
 }
 
@@ -1370,7 +1370,7 @@ int input_clickedSpob( int spob, int autonav )
    else
       player_targetSpobSet( spob );
 
-   input_clicked( (void*)pnt );
+   input_clicked( pnt );
    return 1;
 }
 
@@ -1383,10 +1383,10 @@ int input_clickedSpob( int spob, int autonav )
  */
 int input_clickedAsteroid( int field, int asteroid )
 {
-   AsteroidAnchor *anchor = &cur_system->asteroids[ field ];
-   Asteroid *ast = &anchor->asteroids[ asteroid ];
+   const AsteroidAnchor *anchor = &cur_system->asteroids[ field ];
+   const Asteroid *ast = &anchor->asteroids[ asteroid ];
    player_targetAsteroidSet( field, asteroid );
-   input_clicked( (void*)ast );
+   input_clicked( ast );
    return 1;
 }
 
@@ -1399,7 +1399,7 @@ int input_clickedAsteroid( int field, int asteroid )
  */
 int input_clickedPilot( unsigned int pilot, int autonav )
 {
-   Pilot *p;
+   const Pilot *p;
 
    if (pilot == PLAYER_ID)
       return 0;
@@ -1411,7 +1411,7 @@ int input_clickedPilot( unsigned int pilot, int autonav )
    }
 
    p = pilot_get(pilot);
-   if (pilot == player.p->target && input_isDoubleClick( (void*)p )) {
+   if (pilot == player.p->target && input_isDoubleClick( p )) {
       if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE)) {
          if (player_tryBoard(0)==PLAYER_BOARD_RETRY)
             player_autonavBoard( player.p->target );
@@ -1430,7 +1430,7 @@ int input_clickedPilot( unsigned int pilot, int autonav )
  * @brief Sets the last-clicked item, for double-click detection.
  *    @param clicked Pointer to the clicked item.
  */
-void input_clicked( void *clicked )
+void input_clicked( const void *clicked )
 {
    if (conf.mouse_doubleclick <= 0.)
       return;
@@ -1443,7 +1443,7 @@ void input_clicked( void *clicked )
  * @brief Checks whether a clicked item is the same as the last-clicked.
  *    @param clicked Pointer to the clicked item.
  */
-int input_isDoubleClick( void *clicked )
+int input_isDoubleClick( const void *clicked )
 {
    unsigned int threshold;
 
@@ -1488,7 +1488,7 @@ void input_handle( SDL_Event* event )
       if ((input_paste->key == event->key.keysym.sym) &&
             (input_paste->mod & mod)) {
          SDL_Event evt;
-         char *txt = SDL_GetClipboardText();
+         const char *txt = SDL_GetClipboardText();
          evt.type = SDL_TEXTINPUT;
          size_t i = 0;
          uint32_t ch;
@@ -1517,7 +1517,6 @@ void input_handle( SDL_Event* event )
       return;
 
    switch (event->type) {
-
       /*
        * game itself
        */
@@ -1570,106 +1569,12 @@ void input_handle( SDL_Event* event )
    }
 }
 
-typedef struct {
-   const char* str;
-   int val;
-} Matching;
-
-const Matching keybind_name[KST_PASTE+1] = {
-   {"accel", KST_ACCEL},
-   {"approach", KST_APPROACH},
-   {"autohail",KST_COMM_RECEIVE},
-   {"autonav", KST_AUTONAV},
-
-   {"console", KST_MENU_LUA},
-   {"cooldown",KST_INIT_COOLDOWN},
-
-   { "e_attack",KST_ESCORT_ATTACK},
-   { "e_clear", KST_ESCORT_CLEAR},
-   { "e_hold",KST_ESCORT_HALT},
-   { "e_return",KST_ESCORT_RETURN},
-   { "e_targetNext",KST_ESCORT_NEXT},
-   { "e_targetPrev",KST_ESCORT_PREV},
-
-   {"face", KST_FACE },
-
-   { "hail",KST_COMM_HAIL},
-
-   {"info", KST_MENU_INFO},
-
-   {"jump", KST_JUMP},
-
-   {"left", KST_LEFT},
-   { "log_down",KST_COMM_DOWN},
-   { "log_up", KST_COMM_UP},
-
-   {"mapzoomin",KST_ZOOM_IN},
-   {"mapzoomout",KST_ZOOM_IN},
-   {"menu", KST_MENU_SMALL},
-   {"mousefly", KST_MOUSE_FLYING},
-
-   {"overlay", KST_LOCAL_MAP},
-
-   {"paste",KST_PASTE},
-   {"pause", KST_PAUSE },
-   {"primary", KST_FIRE_PRIMARY},
-
-   {"reverse", KST_REVERSE },
-   {"right", KST_RIGHT },
-
-   {"screenshot", KST_SCREENSHOT},
-   {"secondary", KST_FIRE_SECONDARY},
-   { "speed", KST_GAME_SPEED },
-   { "stealth", KST_STEALTH },
-   { "switchtab0", KST_TAB_0},
-   { "switchtab1", KST_TAB_1},
-   { "switchtab2", KST_TAB_2},
-   { "switchtab3", KST_TAB_3},
-   { "switchtab4", KST_TAB_4},
-   { "switchtab5", KST_TAB_5},
-   { "switchtab6", KST_TAB_6},
-   { "switchtab7", KST_TAB_7},
-   { "switchtab8", KST_TAB_8},
-   { "switchtab9", KST_TAB_9},
-   {"starmap", KST_GLOBAL_MAP},
-
-   { "target_clear", KST_TARGET_CLEAR },
-   { "target_hostile", KST_HTARGET_CLOSE },
-   { "target_nearest",KST_TARGET_CLOSE },
-   {"target_next", KST_TARGET_NEXT },
-   { "target_nextHostile", KST_HTARGET_NEXT },
-   { "target_prev", KST_TARGET_PREV },
-   { "target_prevHostile", KST_HTARGET_NEXT },
-   { "target_spob", KST_TARGET_SPOB },
-   {"thyperspace", KST_TARGET_JUMP},
-   {"togglefullscreen",KST_FULLSCREEN},
-
-
-
-
-};
-
-KeySemanticType find_key( const char *target )
+KeySemanticType input_keyFromBrief( const char *target )
 {
-   int low = 0;
-   int high = KST_PASTE;
-
-   while (low <= high) {
-      int mid = low + (high - low) / 2;
-      int cmp = strcmp(target, keybind_name[mid].str);
-
-      if (cmp == 0) {
-         // The target string matches the string in the current struct.
-         return keybind_name[mid].val;
-      } else if (cmp < 0) {
-         // Target string is lexicographically smaller than the mid struct's string.
-         high = mid - 1;
-      } else {
-         // Target string is lexicographically larger than the mid struct's string.
-         low = mid + 1;
-      }
+   for (int i=0; i<input_numbinds; i++) {
+      if (strcmp(input_getBrief(i),target)==0)
+         return i;
    }
-
-   // Return a special value indicating the target string was not found.
-   return KST_PASTE+1;
+   WARN(_("Key brief '%s' not found!"),target);
+   return -1;
 }
