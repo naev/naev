@@ -449,21 +449,11 @@ int conf_loadConfig ( const char* file )
       /*
        * Keybindings.
        */
-      nlua_getenv( naevL, lEnv, "keybinds" );
       for (int i=0; i<=KST_PASTE; i++) {
-         /* TODO remove this codepath to load old configs around 0.13.0. */
-         if (lua_isnil( naevL, -1 )) {
-            const char *brief = input_getBrief( i );
-            nlua_getenv( naevL, lEnv, brief );
-         }
-         else
-            lua_getfield( naevL, -1, keybind_info[ i ][ 0 ] );
+         nlua_getenv( naevL, lEnv, input_getBrief(i) );
 
-         if (lua_isnil(naevL,-1)) {
-            input_setKeybind( i, KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
-         }
-         /* Handle old format. TODO remove around 0.13.0 */
-         else if (lua_isstring(naevL,-1)) {
+         /* Use 'none' to differentiate between not instantiated and disabled bindings. */
+         if (lua_isstring(naevL,-1)) {
             const char *str = lua_tostring(naevL,-1);
             if (strcmp(str,"none")==0) {
                input_setKeybind( i, KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
@@ -1130,7 +1120,6 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Iterate over the keybinding. */
-   pos += scnprintf(&buf[pos], sizeof(buf)-pos, "keybinds = {}");
    for (int i=0; i<=KST_PASTE; i++) {
       SDL_Keycode key;
       KeybindType type;
@@ -1162,7 +1151,7 @@ int conf_saveConfig ( const char* file )
       }
       /* Write a nil if an unknown type */
       if ((typename == NULL) || (key == SDLK_UNKNOWN && type == KEYBIND_KEYBOARD)) {
-         pos += scnprintf(&buf[pos], sizeof(buf)-pos, "keybinds[\"%s\"] = nil\n", keybind_info[i][0]);
+         pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = \"none\"\n", input_getBrief(i) );
          continue;
       }
 
@@ -1184,8 +1173,8 @@ int conf_saveConfig ( const char* file )
          scnprintf(keyname, sizeof(keyname)-1, "%d", key);
 
       /* Write out a simple Lua table containing the keybind info */
-      pos += scnprintf(&buf[pos], sizeof(buf)-pos, "keybinds[\"%s\"] = { type = \"%s\", mod = \"%s\", key = %s }\n",
-            keybind_info[i][0], typename, modname, keyname);
+      pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
+            input_getBrief(i), typename, modname, keyname);
    }
    conf_saveEmptyLine();
 

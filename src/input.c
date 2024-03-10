@@ -571,10 +571,13 @@ KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Ke
    return -1;
 }
 
+/**
+ * @brief Gets the short name of the keybinding.
+ */
 const char *input_getBrief( KeySemanticType keybind )
 {
    if ((keybind>=0) && (keybind<=KST_PASTE))
-      return input_keybinds[keybind].brief;
+      return keybind_info[keybind][2];
    WARN(_("Unable to get keybinding brief '%d', that command doesn't exist"), keybind);
    return NULL;
 }
