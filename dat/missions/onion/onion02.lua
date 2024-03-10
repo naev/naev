@@ -16,7 +16,7 @@
 --]]
 local fmt = require "format"
 local vn = require "vn"
---local onion = require "common.onion"
+local onion = require "common.onion"
 
 local dstspb1, dstsys1 = spob.getS("Ulios")
 local dstspb2, dstsys2 = spob.getS("The Frontier Council")
@@ -84,6 +84,7 @@ function land ()
       mem.carg_id = misn.cargoAdd( c, 0 )
       misn.osdActive(2)
       mem.state = 1
+
    --elseif mem.state>=1 and spob.cur()==dstspb2 then
    end
 end
@@ -91,5 +92,44 @@ end
 function enter ()
    if mem.state==1 then
       hook.timer(3, "strange_things")
+   end
+end
+
+local hacked_plts = {}
+function strange_things ()
+   local fct_indep = faction.get("Independent")
+   for k,p in ipairs(pilot.getInrange(player.pos(), 3000)) do
+      local id = p:id()
+      if not hacked_plts[id] and p:faction()==fct_indep and p:memory().natural then
+         p:control( true )
+         p:follow( player.pilot() )
+         p:effectAdd("Onionized")
+         hook.timer( 5+rnd.rnd()*5, "undo_hack", p )
+         hook.pilot( p, "hail", "hail_hack" )
+      end
+   end
+
+   hook.timer(1, "strange_things")
+end
+
+function undo_hack( p )
+   if p and p:exists() then
+      p:control( false )
+      p:effectRm("Onionized")
+   end
+end
+
+function hail_hack( p )
+   if p:effectHas("Onionized") then
+      vn.clear()
+      vn.scene()
+      local o = vn.newCharacter( onion.vn_onion() )
+      vn.music( onion.loops.circus )
+      vn.transition("electric")
+      o(_([[]]))
+      vn.done("electric")
+      vn.run()
+
+      player.commClose()
    end
 end
