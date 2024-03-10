@@ -86,16 +86,16 @@ const char *keybind_info[KST_PASTE+1][3] = {
    [KST_INIT_COOLDOWN]={ N_("Active Cooldown"), N_("Begins active cooldown."), "cooldown" },
 
    /* Switching tab s*/
-   [KST_TAB_1]={ N_("Switch Tab 1"), N_("Switches to tab 1."), "switchtab1" },
-   [KST_TAB_2]={ N_("Switch Tab 2"), N_("Switches to tab 2."), "switchtab2" },
-   [KST_TAB_3]={ N_("Switch Tab 3"), N_("Switches to tab 3."), "switchtab3" },
-   [KST_TAB_4]={ N_("Switch Tab 4"), N_("Switches to tab 4."), "switchtab4" },
-   [KST_TAB_5]={ N_("Switch Tab 5"), N_("Switches to tab 5."), "switchtab5" },
-   [KST_TAB_6]={ N_("Switch Tab 6"), N_("Switches to tab 6."), "switchtab6" },
-   [KST_TAB_7]={ N_("Switch Tab 7"), N_("Switches to tab 7."), "switchtab7" },
-   [KST_TAB_8]={ N_("Switch Tab 8"), N_("Switches to tab 8."), "switchtab8" },
-   [KST_TAB_9]={ N_("Switch Tab 9"), N_("Switches to tab 9."), "switchtab9" },
-   [KST_TAB_0]={ N_("Switch Tab 0"), N_("Switches to tab 0."), "switchtab0" },
+   [KST_WEAPSET1]={ N_("Weapon Set 1"), N_("Activates weapon set 1."), "weapset1" },
+   [KST_WEAPSET2]={ N_("Weapon Set 2"), N_("Activates weapon set 2."), "weapset2" },
+   [KST_WEAPSET3]={ N_("Weapon Set 3"), N_("Activates weapon set 3."), "weapset3" },
+   [KST_WEAPSET4]={ N_("Weapon Set 4"), N_("Activates weapon set 4."), "weapset4" },
+   [KST_WEAPSET5]={ N_("Weapon Set 5"), N_("Activates weapon set 5."), "weapset5" },
+   [KST_WEAPSET6]={ N_("Weapon Set 6"), N_("Activates weapon set 6."), "weapset6" },
+   [KST_WEAPSET7]={ N_("Weapon Set 7"), N_("Activates weapon set 7."), "weapset7" },
+   [KST_WEAPSET8]={ N_("Weapon Set 8"), N_("Activates weapon set 8."), "weapset8" },
+   [KST_WEAPSET9]={ N_("Weapon Set 9"), N_("Activates weapon set 9."), "weapset9" },
+   [KST_WEAPSET0]={ N_("Weapon Set 0"), N_("Activates weapon set 0."), "weapset0" },
 
    /*Map manipulation*/
    [KST_LOCAL_MAP]={ N_("Overlay Map"), N_("Opens the in-system overlay map."), "overlay" },
@@ -104,7 +104,7 @@ const char *keybind_info[KST_PASTE+1][3] = {
    /*Menus*/
    [KST_MENU_SMALL]={ N_("Small Menu"), N_("Opens the small in-game menu."), "menu" },
    [KST_MENU_INFO]={ N_("Information Menu"), N_("Opens the information menu."), "info" },
-   [KST_MENU_LUA]={ N_("Lua Console"), N_("Opens the Lua console."), "console" },
+   [KST_CONSOLE]={ N_("Lua Console"), N_("Opens the Lua console."), "console" },
 
    /* Escorts */
    [KST_ESCORT_NEXT]={ N_("Target Next Escort"), N_("Cycles through your escorts."), "e_targetNext" },
@@ -220,16 +220,16 @@ void input_setDefault ( int wasd )
 
    /* Secondary Weapons */
    input_setKeybind( KST_FIRE_SECONDARY, KEYBIND_KEYBOARD, SDLK_LSHIFT, NMOD_ANY );
-   input_setKeybind( KST_TAB_1, KEYBIND_KEYBOARD, SDLK_1, NMOD_ANY );
-   input_setKeybind( KST_TAB_2, KEYBIND_KEYBOARD, SDLK_2, NMOD_ANY );
-   input_setKeybind( KST_TAB_3, KEYBIND_KEYBOARD, SDLK_3, NMOD_ANY );
-   input_setKeybind( KST_TAB_4, KEYBIND_KEYBOARD, SDLK_4, NMOD_ANY );
-   input_setKeybind( KST_TAB_5, KEYBIND_KEYBOARD, SDLK_5, NMOD_ANY );
-   input_setKeybind( KST_TAB_6, KEYBIND_KEYBOARD, SDLK_6, NMOD_ANY );
-   input_setKeybind( KST_TAB_7, KEYBIND_KEYBOARD, SDLK_7, NMOD_ANY );
-   input_setKeybind( KST_TAB_8, KEYBIND_KEYBOARD, SDLK_8, NMOD_ANY );
-   input_setKeybind( KST_TAB_9, KEYBIND_KEYBOARD, SDLK_9, NMOD_ANY );
-   input_setKeybind( KST_TAB_0, KEYBIND_KEYBOARD, SDLK_0, NMOD_ANY );
+   input_setKeybind( KST_WEAPSET1, KEYBIND_KEYBOARD, SDLK_1, NMOD_ANY );
+   input_setKeybind( KST_WEAPSET2, KEYBIND_KEYBOARD, SDLK_2, NMOD_ANY );
+   input_setKeybind( KST_WEAPSET3, KEYBIND_KEYBOARD, SDLK_3, NMOD_ANY );
+   input_setKeybind( KST_WEAPSET4, KEYBIND_KEYBOARD, SDLK_4, NMOD_ANY );
+   input_setKeybind( KST_WEAPSET5, KEYBIND_KEYBOARD, SDLK_5, NMOD_ANY );
+   input_setKeybind( KST_WEAPSET6, KEYBIND_KEYBOARD, SDLK_6, NMOD_ANY );
+   input_setKeybind( KST_WEAPSET7, KEYBIND_KEYBOARD, SDLK_7, NMOD_ANY );
+   input_setKeybind( KST_WEAPSET8, KEYBIND_KEYBOARD, SDLK_8, NMOD_ANY );
+   input_setKeybind( KST_WEAPSET9, KEYBIND_KEYBOARD, SDLK_9, NMOD_ANY );
+   input_setKeybind( KST_WEAPSET0, KEYBIND_KEYBOARD, SDLK_0, NMOD_ANY );
    /* Escorts */
    input_setKeybind( KST_ESCORT_NEXT, KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
    input_setKeybind( KST_ESCORT_PREV, KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
@@ -262,7 +262,7 @@ void input_setDefault ( int wasd )
    input_setKeybind( KST_GAME_SPEED, KEYBIND_KEYBOARD, SDLK_BACKQUOTE, NMOD_ANY );
    input_setKeybind( KST_MENU_SMALL, KEYBIND_KEYBOARD, SDLK_ESCAPE, NMOD_ANY );
    input_setKeybind( KST_MENU_INFO, KEYBIND_KEYBOARD, SDLK_i, NMOD_NONE );
-   input_setKeybind( KST_MENU_LUA, KEYBIND_KEYBOARD, SDLK_F2, NMOD_ANY );
+   input_setKeybind( KST_CONSOLE, KEYBIND_KEYBOARD, SDLK_F2, NMOD_ANY );
    input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_v, NMOD_CTRL );
 }
 
@@ -924,52 +924,52 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
             player_rmFlag(PLAYER_SECONDARY);
          break;
       /* Weapon sets. */
-      case KST_TAB_1:
+      case KST_WEAPSET1:
          if (DEAD())
             break;
          player_weapSetPress( 0, value, repeat );
          break;
-      case KST_TAB_2:
+      case KST_WEAPSET2:
          if (DEAD())
             break;
          player_weapSetPress( 1, value, repeat );
          break;
-      case KST_TAB_3:
+      case KST_WEAPSET3:
          if (DEAD())
             break;
          player_weapSetPress( 2, value, repeat );
          break;
-      case KST_TAB_4:
+      case KST_WEAPSET4:
          if (DEAD())
             break;
          player_weapSetPress( 3, value, repeat );
          break;
-      case KST_TAB_5:
+      case KST_WEAPSET5:
          if (DEAD())
             break;
          player_weapSetPress( 4, value, repeat );
          break;
-      case KST_TAB_6:
+      case KST_WEAPSET6:
          if (DEAD())
             break;
          player_weapSetPress( 5, value, repeat );
          break;
-      case KST_TAB_7:
+      case KST_WEAPSET7:
          if (DEAD())
             break;
          player_weapSetPress( 6, value, repeat );
          break;
-      case KST_TAB_8:
+      case KST_WEAPSET8:
          if (DEAD())
             break;
          player_weapSetPress( 7, value, repeat );
          break;
-      case KST_TAB_9:
+      case KST_WEAPSET9:
          if (DEAD())
             break;
          player_weapSetPress( 8, value, repeat );
          break;
-      case KST_TAB_0:
+      case KST_WEAPSET0:
          if (DEAD())
             break;
          player_weapSetPress( 9, value, repeat );
@@ -1150,7 +1150,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          break;
 
       /* Opens the Lua console. */
-      case KST_MENU_LUA:
+      case KST_CONSOLE:
          if (!(NODEAD() && !repeat))
             break;
          if (value==KEY_PRESS)
