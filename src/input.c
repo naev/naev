@@ -38,8 +38,6 @@
  */
 typedef struct Keybind_ {
    int disabled; /**< Whether or not it's disabled. */
-   const char *name; /**< Descriptions of the keybinds */
-   const char* detailed; /**< Longer description of the keybinds*/
    KeybindType type; /**< type, defined in player.h */
    SDL_Keycode key; /**< key/axis/button event number */
    SDL_Keymod mod; /**< Key modifiers (where applicable). */
@@ -165,7 +163,7 @@ extern double player_right; /**< player.c */
 /*
  * Prototypes.
  */
-static void input_key( int keynum, double value, double kabs, int repeat );
+static void input_key( KeySemanticType keynum, double value, double kabs, int repeat );
 static void input_clickZoom( double modifier );
 static void input_clickevent( SDL_Event* event );
 static void input_mouseMove( SDL_Event* event );
@@ -411,8 +409,6 @@ void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode ke
       input_keybinds[keybind].key = key;
       /* Non-keyboards get mod NMOD_ANY to always match. */
       input_keybinds[keybind].mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ANY;
-      input_keybinds[keybind].name=keybind_info[keybind][0];
-      input_keybinds[keybind].detailed=keybind_info[keybind][1];
       return;
    }
    WARN(_("Unable to set keybinding '%d', that command doesn't exist"), keybind);
@@ -661,7 +657,7 @@ void input_update( double dt )
  *    @param kabs The absolute value.
  *    @param repeat Whether the key is still held down, rather than newly pressed.
  */
-static void input_key( int keynum, double value, double kabs, int repeat )
+static void input_key( KeySemanticType keynum, double value, double kabs, int repeat )
 {
    HookParam hparam[3];
    int isdoubletap = 0;
@@ -695,6 +691,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * movement
     */
    /* accelerating */
+   if (KEY(KST_ACCEL) && !repeat) {
       if (kabs >= 0.) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_accel(kabs);
@@ -785,7 +782,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          player_cooldownBrake();
 
    /* try to enter stealth mode. */
-    else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
+   } else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
       if (value==KEY_PRESS)
          player_stealth();
 
@@ -1007,7 +1004,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* Run the hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = input_keybinds[keynum].detailed;
+   hparam[0].u.str   = input_getKeybindDescription(keynum);
    hparam[1].type    = HOOK_PARAM_BOOL;
    hparam[1].u.b     = (value > 0.);
    hparam[2].type    = HOOK_PARAM_SENTINEL;
@@ -1643,7 +1640,11 @@ const Matching keybind_name[KST_PASTE+1] = {
    { "target_prevHostile", KST_HTARGET_NEXT },
    { "target_spob", KST_TARGET_SPOB },
    {"thyperspace", KST_TARGET_JUMP},
-   {"togglefullscreen",KST_FULLSCREEN}
+   {"togglefullscreen",KST_FULLSCREEN},
+
+
+
+
 };
 
 KeySemanticType find_key( const char *target )
