@@ -40,7 +40,7 @@
  */
 typedef struct Keybind_ {
    int disabled; /**< Whether or not it's disabled. */
-   const char *brief, *name; /**< Descriptions of the keybinds */
+   const char *brief, *detailed; /**< Descriptions of the keybinds */
    KeybindType type; /**< type, defined in player.h */
    SDL_Keycode key; /**< key/axis/button event number */
    SDL_Keymod mod; /**< Key modifiers (where applicable). */
@@ -406,6 +406,9 @@ void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode ke
       input_keybinds[keybind].key = key;
       /* Non-keyboards get mod NMOD_ANY to always match. */
       input_keybinds[keybind].mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ANY;
+      input_keybinds[keybind].brief=keybind_info[keybind][0];
+      input_keybinds[keybind].detailed=keybind_info[keybind][1];
+      return;
    }
    WARN(_("Unable to set keybinding '%d', that command doesn't exist"), keybind);
 }
@@ -1002,7 +1005,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* Run the hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = input_keybinds[keynum].name; //What is hparam??
+   hparam[0].u.str   = input_keybinds[keynum].detailed; //What is hparam??
    hparam[1].type    = HOOK_PARAM_BOOL;
    hparam[1].u.b     = (value > 0.);
    hparam[2].type    = HOOK_PARAM_SENTINEL;
