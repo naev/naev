@@ -67,7 +67,7 @@ static PlayerConf_t local_conf;
 /*
  * External stuff.
  */
-static const char *opt_selectedKeybind; /**< Selected keybinding. */
+static KeySemanticType opt_selectedKeybind; /**< Selected keybinding. */
 static int opt_lastKeyPress = 0; /**< Last keypress. */
 
 /*
@@ -625,7 +625,7 @@ static void menuKeybinds_genList( unsigned int wid )
                 * (that plus brackets plus %c + null gets to 68.
                 * Just set to 128 as it's a power of two. */
       str[j] = malloc(l);
-      key = input_getKeybind( keybind_info[j][0], &type, &mod );
+      key = input_getKeybind( j, &type, &mod );
       switch (type) {
          case KEYBIND_KEYBOARD:
             /* Generate mod text. */
@@ -703,7 +703,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
 {
    (void) name;
    int selected;
-   const char *keybind;
+   KeySemanticType keybind;
    const char *desc;
    SDL_Keycode key;
    KeybindType type;
@@ -715,7 +715,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
    selected = toolkit_getListPos( wid, "lstKeybinds" );
 
    /* Remove the excess. */
-   keybind = keybind_info[selected][0];
+   keybind = selected;
    opt_selectedKeybind = keybind;
    window_modifyText( wid, "txtName", _(keybind_info[selected][1]) );
 
@@ -1022,7 +1022,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    KeybindType type;
    int key, test_key_event;
    SDL_Keymod mod;
-   const char *str;
+   KeySemanticType boundkey;
 
    /* See how to handle it. */
    switch (event->type) {
@@ -1107,11 +1107,11 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    }
 
    /* Warn if already bound. */
-   str = input_keyAlreadyBound( type, key, mod );
-   if ((str != NULL) && strcmp(str, opt_selectedKeybind))
+   boundkey = input_keyAlreadyBound( type, key, mod );
+   if ((boundkey>=0) && (boundkey==opt_selectedKeybind))
       dialogue_alert( _("Key '%s' overlaps with key '%s' that was just set. "
             "You may want to correct this."),
-            str, opt_selectedKeybind );
+            keybind_info[boundkey][0], keybind_info[opt_selectedKeybind][0] );
 
    /* Set keybinding. */
    input_setKeybind( opt_selectedKeybind, type, key, mod );

@@ -1939,7 +1939,7 @@ void player_hailStart (void)
    player_hailCounter = 5;
 
    input_getKeybindDisplay( KST_COMM_RECEIVE, buf, sizeof(buf) );
-   player_message( _("#rReceiving hail! Press #b%s#0 to respond."), buf );
+   player_message( _("#rReceiving hail! Press #b%s#r to respond.#0"), buf );
 
    /* Reset speed. */
    player_autonavReset( 10. );

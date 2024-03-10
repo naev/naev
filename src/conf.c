@@ -301,8 +301,7 @@ void conf_loadConfigPath( void )
  */
 int conf_loadConfig ( const char* file )
 {
-   int i, t, cb;
-   const char *str, *mod;
+   int t, cb;
    SDL_Keycode key;
    int type;
    int w,h;
@@ -450,20 +449,30 @@ int conf_loadConfig ( const char* file )
       /*
        * Keybindings.
        */
-      for (i=0; i<=KST_PASTE; i++) {
-         nlua_getenv( naevL, lEnv, keybind_info[ i ][ 0 ] );
-         /* Handle "none". */
-         if (lua_isstring(naevL,-1)) {
-            str = lua_tostring(naevL,-1);
+      nlua_getenv( naevL, lEnv, "keybinds" );
+      for (int i=0; i<=KST_PASTE; i++) {
+         /* TODO remove this codepath to load old configs around 0.13.0. */
+         if (lua_isnil( naevL, -1 )) {
+            const char *brief = input_getBrief( i );
+            nlua_getenv( naevL, lEnv, brief );
+         }
+         else
+            lua_getfield( naevL, -1, keybind_info[ i ][ 0 ] );
+
+         if (lua_isnil(naevL,-1)) {
+            input_setKeybind( i, KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+         }
+         /* Handle old format. TODO remove around 0.13.0 */
+         else if (lua_isstring(naevL,-1)) {
+            const char *str = lua_tostring(naevL,-1);
             if (strcmp(str,"none")==0) {
-               input_setKeybind( find_key( (const char *)keybind_info ),
-                     KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+               input_setKeybind( i, KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
             }
          }
          else if (lua_istable(naevL, -1)) { /* it's a table */
+            const char *str, *mod;
             /* gets the event type */
-            lua_pushstring(naevL, "type");
-            lua_gettable(naevL, -2);
+            lua_getfield(naevL, -1, "type");
             if (lua_isstring(naevL, -1))
                str = lua_tostring(naevL, -1);
             else if (lua_isnil(naevL, -1)) {
@@ -477,8 +486,7 @@ int conf_loadConfig ( const char* file )
             lua_pop(naevL,1);
 
             /* gets the key */
-            lua_pushstring(naevL, "key");
-            lua_gettable(naevL, -2);
+            lua_getfield(naevL, -1, "key");
             t = lua_type(naevL, -1);
             if (t == LUA_TNUMBER)
                key = (int)lua_tonumber(naevL, -1);
@@ -495,8 +503,7 @@ int conf_loadConfig ( const char* file )
             lua_pop(naevL,1);
 
             /* Get the modifier. */
-            lua_pushstring(naevL, "mod");
-            lua_gettable(naevL, -2);
+            lua_getfield(naevL, -1, "mod");
             if (lua_isstring(naevL, -1))
                mod = lua_tostring(naevL, -1);
             else
@@ -542,7 +549,7 @@ int conf_loadConfig ( const char* file )
                   m = NMOD_NONE;
 
                /* set the keybind */
-               input_setKeybind( find_key( (const char *)keybind_info ), type, key, m );
+               input_setKeybind( i, type, key, m );
             }
             else
                WARN(_("Malformed keybind for '%s' in '%s'."), keybind_info[i][0], file);
@@ -550,6 +557,7 @@ int conf_loadConfig ( const char* file )
          /* clean up after table stuff */
          lua_pop(naevL,1);
       }
+      lua_pop(naevL,1);
    }
    else { /* failed to load the config file */
       WARN(_("Config file '%s' has invalid syntax:"), file );
@@ -1121,7 +1129,8 @@ int conf_saveConfig ( const char* file )
    conf_saveComment(_("Keybindings"));
    conf_saveEmptyLine();
 
-   /* Iterate over the keybinding names */
+   /* Iterate over the keybinding. */
+   pos += scnprintf(&buf[pos], sizeof(buf)-pos, "keybinds = {}");
    for (int i=0; i<=KST_PASTE; i++) {
       SDL_Keycode key;
       KeybindType type;
@@ -1134,10 +1143,10 @@ int conf_saveConfig ( const char* file )
       keyname[sizeof(keyname)-1] = '\0';
 
       /* Save a comment line containing the description */
-      conf_saveComment(input_getKeybindDescription( find_key( (const char *)keybind_info ) ));
+      conf_saveComment( input_getKeybindDescription(i) );
 
       /* Get the keybind */
-      key = input_getKeybind( find_key( (const char *)keybind_info ), &type, &mod );
+      key = input_getKeybind( i, &type, &mod );
 
       /* Determine the textual name for the keybind type */
       switch (type) {
@@ -1153,7 +1162,7 @@ int conf_saveConfig ( const char* file )
       }
       /* Write a nil if an unknown type */
       if ((typename == NULL) || (key == SDLK_UNKNOWN && type == KEYBIND_KEYBOARD)) {
-         conf_saveString( keybind_info[i][0],"none");
+         pos += scnprintf(&buf[pos], sizeof(buf)-pos, "keybinds[\"%s\"] = nil\n", keybind_info[i][0]);
          continue;
       }
 
@@ -1175,7 +1184,7 @@ int conf_saveConfig ( const char* file )
          scnprintf(keyname, sizeof(keyname)-1, "%d", key);
 
       /* Write out a simple Lua table containing the keybind info */
-      pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
+      pos += scnprintf(&buf[pos], sizeof(buf)-pos, "keybinds[\"%s\"] = { type = \"%s\", mod = \"%s\", key = %s }\n",
             keybind_info[i][0], typename, modname, keyname);
    }
    conf_saveEmptyLine();
