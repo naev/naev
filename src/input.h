@@ -92,6 +92,7 @@ typedef enum KeySemanticType_ {
 
    KST_PASTE,
 
+   KST_END
 } KeySemanticType;
 
 /* input types */

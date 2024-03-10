@@ -37,16 +37,16 @@
  * @brief Naev Keybinding.
  */
 typedef struct Keybind_ {
-   int disabled; /**< Whether or not it's disabled. */
+   int disabled;     /**< Whether or not it's disabled. */
    KeybindType type; /**< type, defined in player.h */
-   SDL_Keycode key; /**< key/axis/button event number */
-   SDL_Keymod mod; /**< Key modifiers (where applicable). */
+   SDL_Keycode key;  /**< key/axis/button event number */
+   SDL_Keymod mod;   /**< Key modifiers (where applicable). */
 } Keybind;
 
 /* Description of each key semantic type */
-const char *keybind_info[KST_PASTE+1][3] = {
+const char *keybind_info[KST_END][3] = {
    /* Movement */
-   [KST_ACCEL]={ N_("Accelerate"), N_("Makes your ship accelerate forward."), "accel" }, //TODO remove field [2] (brief) around 13.0.0 or so
+   [KST_ACCEL]={ N_("Accelerate"), N_("Makes your ship accelerate forward."), "accel" },
    [KST_LEFT]={ N_("Turn Left"), N_("Makes your ship turn left."), "left" },
    [KST_RIGHT]={ N_("Turn Right"), N_("Makes your ship turn right.") , "right"},
    [KST_REVERSE]={ N_("Reverse"), N_("Makes your ship face the direction you're moving from. Useful for braking."), "reverse" },
@@ -129,14 +129,14 @@ const char *keybind_info[KST_PASTE+1][3] = {
    [KST_PASTE]={ N_("Paste"), N_("Paste from the operating system's clipboard."), "paste" },
 };
 
-static Keybind input_keybinds[KST_PASTE+1]; /**< contains the players keybindings */
-const int input_numbinds = KST_PASTE+1; /**< Number of keybindings. */
+static Keybind input_keybinds[KST_END]; /**< contains the players keybindings */
+const int input_numbinds = KST_END; /**< Number of keybindings. */
 static Keybind *input_paste;
 
 /*
  * accel hacks
  */
-static KeySemanticType doubletap_key         = KST_PASTE+1; /**< Last key double tapped. */
+static KeySemanticType doubletap_key = KST_END; /**< Last key double tapped. */
 static unsigned int doubletap_t  = 0; /**< Used to see if double tap accel. */
 
 /*
@@ -394,7 +394,7 @@ SDL_Keycode input_keyConv( const char *name )
  */
 void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod )
 {
-   if ((keybind >=0) && (keybind<=KST_PASTE)){
+   if ((keybind >=0) && (keybind<KST_END)){
       input_keybinds[keybind].type = type;
       input_keybinds[keybind].key = key;
       /* Non-keyboards get mod NMOD_ANY to always match. */
@@ -414,7 +414,7 @@ void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode ke
  */
 SDL_Keycode input_getKeybind( KeySemanticType keybind, KeybindType *type, SDL_Keymod *mod )
 {
-   if (keybind<=KST_PASTE){
+   if (keybind<KST_END){
       if (type != NULL)
          (*type) = input_keybinds[keybind].type;
       if (mod != NULL)
@@ -557,7 +557,7 @@ KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Ke
 
 const char *input_getBrief( KeySemanticType keybind )
 {
-   if ((keybind>=0) && (keybind<=KST_PASTE))
+   if ((keybind>=0) && (keybind<KST_END))
       return keybind_info[keybind][2];
    WARN(_("Unable to get keybinding brief '%d', that command doesn't exist"), keybind);
    return NULL;
@@ -571,7 +571,7 @@ const char *input_getBrief( KeySemanticType keybind )
  */
 const char* input_getKeybindDescription( KeySemanticType keybind )
 {
-   if ((keybind>=0) && (keybind<=KST_PASTE))
+   if ((keybind>=0) && (keybind<KST_END))
       return _(keybind_info[keybind][1]);
    WARN(_("Unable to get keybinding description '%d', that command doesn't exist"), keybind);
    return NULL;
