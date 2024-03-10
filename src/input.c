@@ -38,7 +38,6 @@
  */
 typedef struct Keybind_ {
    int disabled; /**< Whether or not it's disabled. */
-   const char *brief; /**< Brief description. TODO remove in 0.13.0 or so. */
    const char *name; /**< Descriptions of the keybinds */
    const char* detailed; /**< Longer description of the keybinds*/
    KeybindType type; /**< type, defined in player.h */
@@ -49,7 +48,7 @@ typedef struct Keybind_ {
 /* Description of each key semantic type */
 const char *keybind_info[KST_PASTE+1][3] = {
    /* Movement */
-   [KST_ACCEL]={ N_("Accelerate"), N_("Makes your ship accelerate forward."), "accel" }, //TODO remove field [2] (brief) whenever the previous todo is complete
+   [KST_ACCEL]={ N_("Accelerate"), N_("Makes your ship accelerate forward."), "accel" }, //TODO remove field [2] (brief) around 13.0.0 or so
    [KST_LEFT]={ N_("Turn Left"), N_("Makes your ship turn left."), "left" },
    [KST_RIGHT]={ N_("Turn Right"), N_("Makes your ship turn right.") , "right"},
    [KST_REVERSE]={ N_("Reverse"), N_("Makes your ship face the direction you're moving from. Useful for braking."), "reverse" },
@@ -412,7 +411,6 @@ void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode ke
       input_keybinds[keybind].key = key;
       /* Non-keyboards get mod NMOD_ANY to always match. */
       input_keybinds[keybind].mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ANY;
-      input_keybinds[keybind].brief=keybind_info[keybind][2];
       input_keybinds[keybind].name=keybind_info[keybind][0];
       input_keybinds[keybind].detailed=keybind_info[keybind][1];
       return;
@@ -574,7 +572,7 @@ KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Ke
 const char *input_getBrief( KeySemanticType keybind )
 {
    if ((keybind>=0) && (keybind<=KST_PASTE))
-      return input_keybinds[keybind].brief;
+      return keybind_info[keybind][2];
    WARN(_("Unable to get keybinding brief '%d', that command doesn't exist"), keybind);
    return NULL;
 }
@@ -697,7 +695,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * movement
     */
    /* accelerating */
-   if (KEY(KST_ACCEL) && !repeat) {
       if (kabs >= 0.) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_accel(kabs);
@@ -788,7 +785,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          player_cooldownBrake();
 
    /* try to enter stealth mode. */
-   } else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
+    else if (KEY(KST_STEALTH) && !repeat && NOHYP() && NODEAD() && INGAME()) {
       if (value==KEY_PRESS)
          player_stealth();
 
@@ -1646,11 +1643,7 @@ const Matching keybind_name[KST_PASTE+1] = {
    { "target_prevHostile", KST_HTARGET_NEXT },
    { "target_spob", KST_TARGET_SPOB },
    {"thyperspace", KST_TARGET_JUMP},
-   {"togglefullscreen",KST_FULLSCREEN},
-
-
-
-
+   {"togglefullscreen",KST_FULLSCREEN}
 };
 
 KeySemanticType find_key( const char *target )
