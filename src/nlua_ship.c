@@ -19,7 +19,6 @@
 #include "nlua_outfit.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
-#include "rng.h"
 #include "slots.h"
 
 /*

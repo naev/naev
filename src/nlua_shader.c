@@ -8,14 +8,11 @@
  */
 /** @cond */
 #include <lauxlib.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "nlua_shader.h"
 
 #include "log.h"
-#include "ndata.h"
 #include "nluadef.h"
 #include "array.h"
 #include "nlua_tex.h"
