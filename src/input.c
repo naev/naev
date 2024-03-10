@@ -406,6 +406,9 @@ void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode ke
       input_keybinds[keybind].key = key;
       /* Non-keyboards get mod NMOD_ANY to always match. */
       input_keybinds[keybind].mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ANY;
+      input_keybinds[keybind].brief=keybind_info[keybind][0];
+      input_keybinds[keybind].name=keybind_info[keybind][1];
+      return;
    }
    WARN(_("Unable to set keybinding '%d', that command doesn't exist"), keybind);
 }
