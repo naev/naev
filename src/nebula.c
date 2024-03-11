@@ -6,22 +6,17 @@
  *
  * @brief Handles rendering and generating the nebula.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
 
 #include "nebula.h"
 
 #include "camera.h"
 #include "conf.h"
 #include "gui.h"
-#include "log.h"
 #include "menu.h"
 #include "opengl.h"
 #include "player.h"
 #include "ntracing.h"
 #include "rng.h"
-#include "spfx.h"
 #include "vec2.h"
 
 #define NEBULA_PUFF_BUFFER   300 /**< Nebula buffer */
