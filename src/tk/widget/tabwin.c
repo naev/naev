@@ -272,11 +272,11 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
  */
 #define CHECK_CHANGE(n,v)  \
 bind_key = input_getKeybind(n, NULL, &bind_mod); \
-if ((key == bind_key) && (mod == bind_mod)) \
+if ((key==bind_key) && ((bind_mod==NMOD_ANY) || (mod==bind_mod))) \
    change = v
 static int tab_key( Widget* tab, SDL_Event *event )
 {
-   int old, change;
+   int change;
    SDL_Keycode key, bind_key;
    SDL_Keymod mod, bind_mod;
    Window *wdw;
@@ -333,7 +333,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
 
    /* Switch to the selected tab if it exists. */
    if (change >= 0 && change < tab->dat.tab.ntabs) {
-      old = tab->dat.tab.active;
+      int old = tab->dat.tab.active;
       tab->dat.tab.active = change;
       /* Create event. */
       if (tab->dat.tab.onChange != NULL)
