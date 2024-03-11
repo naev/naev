@@ -566,7 +566,7 @@ const char *input_getKeybindBrief( KeySemanticType keybind )
 {
    if ((keybind>=0) && (keybind<KST_END))
       return keybind_info[keybind][2];
-   WARN(_("Unable to get keybinding brief '%d', that command doesn't exist"), keybind);
+   WARN(_("Unable to get keybinding '%d', that command doesn't exist"), keybind);
    return NULL;
 }
 
@@ -576,8 +576,8 @@ const char *input_getKeybindBrief( KeySemanticType keybind )
 const char *input_getKeybindName( KeySemanticType keybind )
 {
    if ((keybind>=0) && (keybind<KST_END))
-      return keybind_info[keybind][0];
-   WARN(_("Unable to get keybinding name '%d', that command doesn't exist"), keybind);
+      return _(keybind_info[keybind][0]);
+   WARN(_("Unable to get keybinding '%d', that command doesn't exist"), keybind);
    return NULL;
 }
 
@@ -591,7 +591,7 @@ const char* input_getKeybindDescription( KeySemanticType keybind )
 {
    if ((keybind>=0) && (keybind<KST_END))
       return _(keybind_info[keybind][1]);
-   WARN(_("Unable to get keybinding description '%d', that command doesn't exist"), keybind);
+   WARN(_("Unable to get keybinding '%d', that command doesn't exist"), keybind);
    return NULL;
 }
 
@@ -1744,6 +1744,6 @@ KeySemanticType input_keyFromBrief( const char *target )
       if (strcmp(input_getKeybindBrief(i),target)==0)
          return i;
    }
-   WARN(_("Key brief '%s' not found!"),target);
+   WARN(_("Key '%s' not found!"),target);
    return -1;
 }
