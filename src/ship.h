@@ -6,21 +6,17 @@
 #include "collision.h"
 #include "commodity.h"
 #include "nxml.h"
-#include "object.h"
+#include "gltf.h"
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"
 #include "spfx.h"
 
-/* Target gfx dimensions */
-/* TODO remove this and handle it all in the GUIs */
-#define SHIP_TARGET_W   128 /**< Ship target graphic width. */
-#define SHIP_TARGET_H   128 /**< Ship target graphic height. */
-
 /* Ship Flags. */
 #define SHIP_NOPLAYER   (1<<0)   /**< Player is not allowed to fly the ship. */
 #define SHIP_NOESCORT   (1<<1)   /**< Player is not allowed to set the ship as an escort. */
 #define SHIP_UNIQUE     (1<<2)   /**< Ship is unique and player can only have one. */
+#define SHIP_NEEDSGFX   (1<<3)   /**< Ship needs to load graphics. */
 #define ship_isFlag(s,f)   ((s)->flags & (f)) /**< Checks ship flag. */
 #define ship_setFlag(s,f)  ((s)->flags |= (f)) /**< Sets ship flag. */
 #define ship_rmFlag(s,f)   ((s)->flags &= ~(f)) /**< Removes ship flag. */
@@ -73,6 +69,7 @@ typedef struct ShipOutfitSlot_ {
    int exclusive;    /**< Outfits must match property to fit. */
    int required;     /**< Outfit slot must be equipped for the ship to work. */
    int locked;       /**< Outfit slot is locked. */
+   int visible;      /**< Outfit slot is always visible, even if locked. */
    const Outfit *data;/**< Outfit by default if applicable. */
    ShipMount mount;  /**< Mountpoint, only used for weapon slots. */
 } ShipOutfitSlot;
@@ -94,6 +91,7 @@ typedef struct ShipTrailEmitter_ {
 typedef struct Ship_ {
    char *name;       /**< Ship name. */
    char *base_type;  /**< Ship's base type, basically used for figuring out what ships are related. */
+   char *base_path;  /**< Ship's base type path, used for finding graphics and such. */
    ShipClass class;  /**< Ship class. */
    char *class_display;/**< Custom ship class, overrides class when displaying. */
    int points;       /**< Number of points the ship costs (used for presence et al.) */
@@ -110,7 +108,7 @@ typedef struct Ship_ {
    char *desc_extra; /**< Extra description. */
 
    /* movement */
-   double thrust;    /**< Ship's thrust in "pixel/sec^2" (not multiplied by mass) */
+   double accel;     /**< Ship's acceleration in "pixel/sec^2" */
    double turn;      /**< Ship's turn in rad/s */
    double speed;     /**< Ship's max speed in "pixel/sec" */
 
@@ -133,18 +131,22 @@ typedef struct Ship_ {
    double dmg_absorb;   /**< Damage absorption in per one [0:1] with 1 being 100% absorption. */
 
    /* Graphics */
-   Object *gfx_3d;         /**< 3d model of the ship */
-   double gfx_3d_scale;    /**< scale for 3d model of the ship */
+   double size;            /**< Size of the ship. */
+   char *gfx_path;         /**< Path to load GFX from (lazy loading). */
+   char *polygon_path;     /**< Path to load polygon. */
+   int noengine;           /**< Don't try to load engine graphics. */
+   GltfObject *gfx_3d;     /**< 3d model of the ship */
    glTexture *gfx_space;   /**< Space sprite sheet. */
    glTexture *gfx_engine;  /**< Space engine glow sprite sheet. */
-   glTexture *gfx_target;  /**< Targeting window graphic. */
-   glTexture *gfx_store;   /**< Store graphic. */
+   glTexture *_gfx_store;  /**< Store graphic. */
    char* gfx_comm;         /**< Name of graphic for communication. */
    glTexture **gfx_overlays; /**< Array (array.h): Store overlay graphics. */
    ShipTrailEmitter *trail_emitters; /**< Trail emitters. */
+   int sx; /* TODO remove this and sy when possible. */
+   int sy;
 
    /* Collision polygon */
-   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
+   CollPoly polygon; /**< Array (array.h): Collision polygons. */
 
    /* Sound */
    int sound;        /**< Sound engine uses. */
@@ -154,6 +156,7 @@ typedef struct Ship_ {
    ShipOutfitSlot *outfit_structure;/**< Array (array.h): Outfit structure slots. */
    ShipOutfitSlot *outfit_utility;  /**< Array (array.h): Outfit utility slots. */
    ShipOutfitSlot *outfit_weapon;   /**< Array (array.h): Outfit weapons slots. */
+   Outfit const** outfit_intrinsic; /**< Array (array.h): Intrinsic outfits to start out with. */
 
    /* Mounts */
    double mangle;    /**< Mount angle to simplify mount calculations. */
@@ -197,9 +200,16 @@ ShipClass ship_classFromString( const char* str );
 credits_t ship_basePrice( const Ship* s );
 credits_t ship_buyPrice( const Ship* s );
 glTexture* ship_loadCommGFX( const Ship* s );
+glTexture* ship_gfxStore( const Ship* s );
 int ship_size( const Ship *s );
 
 /*
  * Misc.
  */
+void ships_resize (void);
+int ship_gfxLoaded( const Ship *s );
+int ship_gfxLoadNeeded (void);
+int ship_gfxLoad( Ship *temp );
 int ship_compareTech( const void *arg1, const void *arg2 );
+void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh, double dir, double engine_glow, double tilt, int sx, int sy, const glColour *c );
+double ship_maxSize (void);

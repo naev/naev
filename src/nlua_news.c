@@ -134,7 +134,7 @@ int lua_isnews( lua_State *L, int ind )
  */
 news_t* luaL_validnews( lua_State *L, int ind )
 {
-   LuaNews_t *ln = luaL_checknews( L, ind );
+   const LuaNews_t *ln = luaL_checknews( L, ind );
    news_t *n = news_get( *ln );
    if (n==NULL)
       NLUA_ERROR(L, _("Article is invalid."));
@@ -173,7 +173,6 @@ int newsL_add( lua_State *L )
    title    = NULL;
    body     = NULL;
    faction  = NULL;
-   priority = 5;
 
    date = ntime_get();
    date_to_rm = NEWS_FOREVER;
@@ -254,9 +253,9 @@ int newsL_add( lua_State *L )
       return 0;
    }
 
-   faction = luaL_checkstring(L, 1);
-   title   = luaL_checkstring(L, 2);
-   body = luaL_checkstring(L, 3);
+   faction  = luaL_checkstring(L, 1);
+   title    = luaL_checkstring(L, 2);
+   body     = luaL_checkstring(L, 3);
    priority = luaL_optinteger(L, 6, 5);
 
    /* Get date and date to remove, or leave at defaults. */
@@ -278,7 +277,7 @@ int newsL_add( lua_State *L )
       lua_pushnews( L, n_article );
    }
    else
-      NLUA_ERROR(L,_("Bad arguments"));
+      return NLUA_ERROR(L,_("Bad arguments"));
 
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {
@@ -300,13 +299,13 @@ int newsL_rm( lua_State *L )
    if (lua_istable(L, 1)) {
       lua_pushnil(L);
       while (lua_next(L, -2)) {
-         LuaNews_t *Larticle = luaL_checknews(L, -1);
+         const LuaNews_t *Larticle = luaL_checknews(L, -1);
          news_rm( *Larticle );
          lua_pop(L, 1);
       }
    }
    else {
-      LuaNews_t *Larticle = luaL_checknews(L, 1);
+      const LuaNews_t *Larticle = luaL_checknews(L, 1);
       news_rm( *Larticle );
    }
 
@@ -353,12 +352,12 @@ int newsL_get( lua_State *L )
    else if (lua_isstring(L, 1))
       characteristic = lua_tostring(L, 1);
    else
-      NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
+      NLUA_INVALID_PARAMETER(L,1); /* Bad Parameter */
 
    /* Now put all the matching articles in a table. */
    lua_newtable(L);
    for (int i=0; i<array_size(news_list); i++) {
-      news_t *n = &news_list[i];
+      const news_t *n = &news_list[i];
 
       if ((n->title == NULL) || (n->desc == NULL) || (n->faction == NULL))
          continue;

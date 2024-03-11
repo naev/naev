@@ -90,11 +90,13 @@ function pirate_check ()
    local spotted = false
    local spotter
    for i,b in ipairs(bosses) do
-      for k,p in ipairs(b:getVisible()) do
-         if p:withPlayer() then
-            spotted = true
-            spotter = b
-            break
+      if b and b:exists() then
+         for k,p in ipairs(b:getVisible()) do
+            if p:withPlayer() then
+               spotted = true
+               spotter = b
+               break
+            end
          end
       end
    end

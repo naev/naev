@@ -52,7 +52,7 @@ function accept ()
          {spob=mem.dest_spob, sys=mem.dest_sys}),
    } )
 
-   vntk.msg(_("Nebula Refugees"), fmt.f(_([[The procession of refugees slowly boards your ship, with more then one person looking back at the dying planet they used to call home. They make themselves as comfortable as they can in your cargo holds and seem to resigned to hoping what they will find at {spob} is better than what they are leaving behind at {home}.]]),
+   vntk.msg(_("Nebula Refugees"), fmt.f(_([[The procession of refugees slowly boards your ship, with more than one person looking back at the dying planet they used to call home. They make themselves as comfortable as they can in your cargo holds and seem to resigned to hoping what they will find at {spob} is better than what they are leaving behind at {home}.]]),
       {spob=mem.dest_spob, home=spob.cur()}))
 
    hook.land("land")
@@ -72,7 +72,7 @@ function land ()
    lmisn.sfxMoney()
    player.pay( payment )
    pir.reputationNormalMission(rnd.rnd(2,3))
-   vntk.msg(_("Nebula Refugees"), fmt.f(_([[You open your cargo holds and the Nebula refugees make their way off your ship and are promptly greeted by an immigration officer. It looks like hardships are not yer over for the refugees. On the positive side, it can only get better, right?]]),
+   vntk.msg(_("Nebula Refugees"), fmt.f(_([[You open your cargo holds, and the Nebula refugees make their way off your ship and are promptly greeted by an immigration officer. It looks like hardships are not yet over for the refugees. On the positive side, it can only get better, right?]]),
       {}).."\n"..fmt.reward(payment))
    misn.finish(true)
 end

@@ -4,6 +4,7 @@
   <template/>
  </general>
  <specific type="launcher">
+  <lua>outfits/flow/abilities/seeking_chakra.lua</lua>
   <delay>1</delay>
   <reload_time>1</reload_time>
   <amount>1</amount>
@@ -13,13 +14,13 @@
   <trackmax>1000</trackmax>
   <ammo_mass>1</ammo_mass>
   <gfx type="shader" size="25" col_size="20">particles/chakra.frag</gfx>
-  <sound>missile</sound>
-  <sound_hit>bansheeexp</sound_hit>
+  <sound>seeking_chakra</sound>
+  <sound_hit>chakra_explosion</sound_hit>
   <spfx_shield>ChakraM</spfx_shield>
   <spfx_armour>ChakraM</spfx_armour>
   <trail_generator x="-7">sirius_chakra</trail_generator>
   <duration blowup="armour">16</duration>
-  <thrust>1000</thrust>
+  <accel>1000</accel>
   <turn>50</turn>
   <speed_max>500</speed_max>
   <resist>200</resist>

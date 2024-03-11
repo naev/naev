@@ -97,7 +97,7 @@ function accept ()
    vn.func( function ()
       accepted = true
    end )
-   lucas(_([["My name is Lucas, I was a Nebula refugee. When I was very young, me and my family escaped the Incident, but I don't know what happened and I got separated."]]))
+   lucas(_([["My name is Lucas, I was a Nebula refugee. When I was very young, my family and I escaped the Incident, but I don't know what happened and I got separated."]]))
    lucas(_([["I guess I never really thought about it too much, just did what I was told and went with the flow, but then one day I couldn't. You understand?"]]))
    lucas(_([[The pause and tighten their fists.
 "I guess there was always something missing in me, like something fundamental was taken away by the Incident. However, I just didn't realize it, didn't understand."]]))
@@ -180,7 +180,7 @@ function land ()
             return
          end
       end )
-      vn.na(_([[You open the cell and find yourself with a very weakened old man. At first they are scared to death, believing you have come to take their meager possessions or their life, however, you are able to calm them down when you mention that Lucas sent you, and pass out.]]))
+      vn.na(_([[You open the cell and find yourself with a very weakened old man. At first, they are scared to death, believing you have come to take their meagre possessions or their life, however, you are able to calm them down when you mention that Lucas sent you, and pass out.]]))
       vn.na(_([[You quickly look around to see if there is anyone else there. Once you confirm that the man is the only person you pick them up and make your way back to the spaceport. Likely due to malnourishment, the old man is a much lighter load than you had expected. On the way back, surprisingly enough, people seem to take less notice of you than when you came in.]]))
       vn.na(_([[Eventually you reach the spaceport checkpoint. The guards raise an eyebrow at the old man you're carrying, but once you show them the receipt of your spaceship, they let you through.]]))
       vn.na(_([[The old man is in not very good shape and seems to fall into a deep slumber when you set them aboard the ship, would be best to try to head back to Lucas as soon as possible.]]))
@@ -199,12 +199,12 @@ function land ()
       vn.transition( lcs.lucas. transition )
 
       vn.na(_([[You land and quickly go find Lucas, who then follows you back to your ship.]]))
-      lucas(_([[When Lucas sees the old man, his eyes tear up and he kneels to take a closer look.
+      lucas(_([[When Lucas sees the old man, his eyes tear up, and he kneels to take a closer look.
 "Dear old man, what have they done to you?"]]))
       lucas(_([[Still kneeling, Lucas shuffles forward and emotively hugs the old man. Probably not the reunion they were looking for, but better than nothing nonetheless.]]))
       lucas(_([[After a solemn while, Lucas kisses the old man on the cheek and turns to you.
 "Thank you for what you've done. I think I can take care of it from now on. I have to see what happened to the others."]]))
-      vn.na(_([[You help Lucas take the old man off the ship, and also return the locket. Lucas thanks you fervently for all you've done and hands you a credit chip. He then heads off with his father towards the nearest medical center.]]))
+      vn.na(_([[You help Lucas take the old man off the ship, and also return the locket. Lucas thanks you fervently for all you've done and hands you a credit chip. He then heads off with his father towards the nearest medical centre.]]))
 
       vn.sfxVictory()
       vn.func( function ()

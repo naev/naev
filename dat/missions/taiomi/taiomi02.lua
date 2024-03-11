@@ -170,6 +170,7 @@ function board_convoy( p )
    vn.scene()
    vn.sfx( der.sfx.board )
    vn.music( der.sfx.ambient )
+   vn.transition()
    if mem.state == 0 then
       vn.na(_([[You board the ship and are able to obtain some hypergate information from the convoy systems.]]))
       vn.func( function ()

@@ -25,6 +25,7 @@
 #include "explosion.h"
 #include "gui.h"
 #include "log.h"
+#include "ntracing.h"
 #include "nstring.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
@@ -44,7 +45,10 @@ typedef struct WeaponCollision_ {
    const OutfitGFX *gfx;   /**< Graphics of the weapon if applicable. */
    int beam;               /**< Is the weapon a beam weapon? */
    double range;           /**< Range of the weapon (or size in the case of GFX). */
+   double beamrange;       /**< Range of the weapon if beam. */
    const CollPoly *polygon;/**< Collision polygon of the weapon if applicable. */
+   const CollPolyView *polyview;/**< Polygon view. */
+   int explosion;          /**< Collision is an explosion. */
 } WeaponCollision;
 
 /**
@@ -79,9 +83,11 @@ static IntList weapon_qtexp; /**< For querying collisions from explosions. */
  * Prototypes
  */
 /* Creation. */
+static void weapon_updateVBO (void);
+static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
+      const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time );
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
-      const Target *target, const vec2 *pos, const vec2 *vel, double dir,
-      double swivel, double time );
+      const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time );
 static double weapon_aimTurretStatic( const vec2 *target_pos, const vec2 *pos, double dir, double swivel );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time, int aim );
@@ -107,7 +113,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit );
 static void weapon_hitBeam( Weapon* w, const WeaponHit *hit, double dt );
 static void weapon_miss( Weapon *w );
 static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
-   int csx, int csy, const vec2 *cpos, const CollPoly *cpol, double cradius, vec2 crash[2] );
+   int csx, int csy, const Solid *csol, const CollPolyView *cpol, double cradius, vec2 crash[2] );
 /* think */
 static void think_seeker( Weapon* w, double dt );
 static void think_beam( Weapon* w, double dt );
@@ -115,7 +121,7 @@ static void think_beam( Weapon* w, double dt );
 void weapon_minimap( double res, double w,
       double h, const RadarShape shape, double alpha );
 /* movement. */
-static void weapon_setThrust( Weapon *w, double thrust );
+static void weapon_setAccel( Weapon *w, double accel );
 static void weapon_setTurn( Weapon *w, double turn );
 
 /**
@@ -134,6 +140,23 @@ void weapon_init (void)
 Weapon *weapon_getStack (void)
 {
    return weapon_stack;
+}
+
+/**
+ * @brief Checks to see if we have to update the VBO size.
+ */
+static void weapon_updateVBO (void)
+{
+   size_t bufsize = array_reserved(weapon_stack);
+   if (bufsize != weapon_vboSize) {
+      GLsizei size;
+      weapon_vboSize = bufsize;
+      size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
+      weapon_vboData = realloc( weapon_vboData, size );
+      if (weapon_vbo == NULL)
+         weapon_vbo = gl_vboCreateStream( size, NULL );
+      gl_vboData( weapon_vbo, size, weapon_vboData );
+   }
 }
 
 /**
@@ -165,10 +188,14 @@ Weapon *weapon_getID( unsigned int id )
 void weapon_newSystem (void)
 {
    double r = cur_system->radius * 1.1;
+   NTracingZone( _ctx, 1 );
+
    if (qt_init)
       qt_destroy( &weapon_quadtree );
    qt_create( &weapon_quadtree, -r, -r, r, r, 4, 6 ); /* TODO tune parameters. */
    qt_init = 1;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -186,6 +213,8 @@ void weapon_minimap( double res, double w,
    int rc, p;
    GLsizei offset;
 
+   NTracingZone( _ctx, 1 );
+
    /* Get offset. */
    p = 0;
    offset = weapon_vboSize;
@@ -196,7 +225,8 @@ void weapon_minimap( double res, double w,
       rc = 0;
 
    /* Draw the points for weapons on all layers. */
-   /* TODO quadtree look-up. */
+   /* TODO potentially do quadtree look-up. Not sure if worth it given that only
+    * weapons with health are currently added to the quadtree. */
    for (int i=0; i<array_size(weapon_stack); i++) {
       double x, y;
       const glColour *c;
@@ -236,6 +266,7 @@ void weapon_minimap( double res, double w,
       /* Set the colour. */
       weapon_vboData[ offset + 4*p + 0 ] = c->r;
       weapon_vboData[ offset + 4*p + 1 ] = c->g;
+
       weapon_vboData[ offset + 4*p + 2 ] = c->b;
       weapon_vboData[ offset + 4*p + 3 ] = alpha;
 
@@ -256,24 +287,26 @@ void weapon_minimap( double res, double w,
 
       glUseProgram(shaders.points.program);
       glEnableVertexAttribArray(shaders.points.vertex);
-      glEnableVertexAttribArray(shaders.points.vertex_color);
+      glEnableVertexAttribArray(shaders.points.vertex_colour);
       gl_uniformMat4(shaders.points.projection, &gl_view_matrix);
       gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex, 0, 2, GL_FLOAT, 0 );
-      gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex_color, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex_colour, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
       glDrawArrays( GL_POINTS, 0, p );
       glDisableVertexAttribArray(shaders.points.vertex);
-      glDisableVertexAttribArray(shaders.points.vertex_color);
+      glDisableVertexAttribArray(shaders.points.vertex_colour);
       glUseProgram(0);
       gl_checkErr();
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
- * @brief Sets the weapon's thrust.
+ * @brief Sets the weapon's accel.
  */
-static void weapon_setThrust( Weapon *w, double thrust )
+static void weapon_setAccel( Weapon *w, double accel )
 {
-   w->solid.thrust = thrust;
+   w->solid.accel = accel;
 }
 
 /**
@@ -292,17 +325,16 @@ static void weapon_setTurn( Weapon *w, double turn )
  */
 static void think_seeker( Weapon* w, double dt )
 {
-   double diff;
    const Pilot *p;
    vec2 v;
-   double turn_max, d, jc, speed_mod;
+   double turn_max, jc, speed_mod;
 
    if (w->target.type != TARGET_PILOT)
       return; /* Ignore no targets. */
 
    p = pilot_get(w->target.u.id); /* No null pilot */
    if (p==NULL) {
-      weapon_setThrust( w, 0. );
+      weapon_setAccel( w, 0. );
       weapon_setTurn( w, 0. );
       return;
    }
@@ -314,7 +346,7 @@ static void think_seeker( Weapon* w, double dt )
       case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
          w->timer2 -= dt;
          if (w->timer2 >= 0.)
-            weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->mass );
+            weapon_setAccel( w, w->outfit->u.lau.accel );
          else
             w->status = WEAPON_STATUS_OK; /* Weapon locked on. */
          /* Can't get jammed while locking on. */
@@ -324,7 +356,7 @@ static void think_seeker( Weapon* w, double dt )
          jc = p->stats.jam_chance - w->outfit->u.lau.resist;
          if (jc > 0.) {
             /* Roll based on distance. */
-            d = vec2_dist( &p->solid.pos, &w->solid.pos );
+            double d = vec2_dist( &p->solid.pos, &w->solid.pos );
             if (d < w->r * p->ew_signature) {
                if (RNGF() < jc) {
                   double r = RNGF();
@@ -339,7 +371,7 @@ static void think_seeker( Weapon* w, double dt )
                   else if (r < 0.8) {
                      w->status = WEAPON_STATUS_JAMMED;
                      weapon_setTurn( w, 0. );
-                     weapon_setThrust( w, w->outfit->u.lau.thrust * w->outfit->mass );
+                     weapon_setAccel( w, w->outfit->u.lau.accel );
                   }
                   else {
                      w->status = WEAPON_STATUS_JAMMED_SLOWED;
@@ -356,6 +388,8 @@ static void think_seeker( Weapon* w, double dt )
       case WEAPON_STATUS_JAMMED_SLOWED: /* Slowed down. */
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
          turn_max = w->outfit->u.lau.turn;// * ewtrack;
+         if (w->status==WEAPON_STATUS_JAMMED_SLOWED)
+            turn_max *= w->falloff;
 
          /* Smart seekers take into account ship velocity. */
          if (w->outfit->u.lau.ai == AMMO_AI_SMART) {
@@ -407,7 +441,7 @@ static void think_seeker( Weapon* w, double dt )
          }
          /* Other seekers are simplistic. */
          else {
-            diff = angle_diff(w->solid.dir, /* Get angle to target pos */
+            double diff = angle_diff(w->solid.dir, /* Get angle to target pos */
                   vec2_angle(&w->solid.pos, &p->solid.pos));
             weapon_setTurn( w, CLAMP( -turn_max, turn_max,
                   10 * diff * w->outfit->u.lau.turn ));
@@ -427,7 +461,7 @@ static void think_seeker( Weapon* w, double dt )
    speed_mod = (w->status==WEAPON_STATUS_JAMMED_SLOWED) ? w->falloff : 1.;
 
    /* Limit speed here */
-   w->real_vel = MIN( speed_mod * w->outfit->u.lau.speed_max, w->real_vel + w->outfit->u.lau.thrust*dt );
+   w->real_vel = MIN( speed_mod * w->outfit->u.lau.speed_max, w->real_vel + w->outfit->u.lau.accel*dt );
    vec2_pset( &w->solid.vel, /* ewtrack * */ w->real_vel, w->solid.dir );
 
    /* Modulate max speed. */
@@ -449,14 +483,14 @@ static void think_beam( Weapon* w, double dt )
    PilotOutfitSlot *slot;
    unsigned int turn_off;
 
-   slot = w->mount;
-
    /* Get pilot, if pilot is dead beam is destroyed. */
    p = pilot_get(w->parent);
    if (p == NULL) {
       w->timer = -1.; /* Hack to make it get destroyed next update. */
       return;
    }
+   slot = w->mount;
+   dt *= p->stats.time_speedup; /* Have to consider time speedup here. */
 
    /* Check if pilot has enough energy left to keep beam active. */
    mod = (w->outfit->type == OUTFIT_TYPE_BEAM) ? p->stats.fwd_energy : p->stats.tur_energy;
@@ -494,7 +528,7 @@ static void think_beam( Weapon* w, double dt )
             turn_off = 0;
       }
       if (ast != NULL) {
-         if (vec2_dist( &p->solid.pos, &ast->pos ) <= slot->outfit->u.bem.range)
+         if (vec2_dist( &p->solid.pos, &ast->sol.pos ) <= slot->outfit->u.bem.range)
             turn_off = 0;
       }
 
@@ -521,19 +555,25 @@ static void think_beam( Weapon* w, double dt )
    switch (w->outfit->type) {
       case OUTFIT_TYPE_BEAM:
          if (w->outfit->u.bem.swivel > 0.)
-            w->solid.dir = weapon_aimTurret( w->outfit, p, &w->target, &w->solid.pos, &p->solid.vel, p->solid.dir, w->outfit->u.bem.swivel, 0. );
+            w->solid.dir = weapon_aimTurret( w->outfit, p, &w->target, &w->solid.pos, &p->solid.vel, p->solid.dir, 0. );
          else
             w->solid.dir = p->solid.dir;
          break;
 
       case OUTFIT_TYPE_TURRET_BEAM:
+         if (!weapon_isFlag(w,WEAPON_FLAG_AIM) && pilot_isPlayer(p) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
+            vec2 tv;
+            gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
+            diff = angle_diff(w->solid.dir, /* Get angle to target pos */
+                  vec2_angle( &w->solid.pos, &tv ) );
+         }
          /* If target is dead beam stops moving. Targeting
           * self is invalid so in that case we ignore the target.
           */
-         if (t == NULL) {
+         else if (t == NULL) {
             if (ast != NULL) {
                diff = angle_diff(w->solid.dir, /* Get angle to target pos */
-                     vec2_angle(&w->solid.pos, &ast->pos));
+                     vec2_angle( &w->solid.pos, &ast->sol.pos ));
             }
             else
                diff = angle_diff(w->solid.dir, p->solid.dir);
@@ -542,8 +582,8 @@ static void think_beam( Weapon* w, double dt )
             diff = angle_diff(w->solid.dir, /* Get angle to target pos */
                   vec2_angle(&w->solid.pos, &t->solid.pos));
 
-         weapon_setTurn( w, CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
-                  10 * diff *  w->outfit->u.bem.turn ));
+         weapon_setTurn( w, p->stats.time_speedup*CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
+                  10. * diff *  w->outfit->u.bem.turn ));
          break;
 
       default:
@@ -556,6 +596,8 @@ static void think_beam( Weapon* w, double dt )
  */
 void weapons_updatePurge (void)
 {
+   NTracingZone( _ctx, 1 );
+
    /* Clear quadtree. */
    qt_clear( &weapon_quadtree );
 
@@ -571,7 +613,7 @@ void weapons_updatePurge (void)
    /* Do a second pass to add the quadtree elements. */
    for (int i=0; i<array_size(weapon_stack); i++) {
       const Weapon *w  = &weapon_stack[i];
-      int x, y, w2, h2;
+      int x,y, px,py, w2,h2;
       const OutfitGFX *gfx;
       double range;
 
@@ -585,13 +627,16 @@ void weapons_updatePurge (void)
          range = gfx->col_size;
 
       /* Determine quadtree location, and insert. */
-      x = round(w->solid.pos.x);
-      y = round(w->solid.pos.y);
+      x  = round(w->solid.pos.x);
+      y  = round(w->solid.pos.y);
+      px = round(w->solid.pre.x);
+      py = round(w->solid.pre.y);
       w2 = ceil(range * 0.5);
       h2 = ceil(range * 0.5);
-      /* This hack is pretty ugly, but it allows us to store both foreground and background using a single ID. */
-      qt_insert( &weapon_quadtree, i, x-w2, y-h2, x+w2, y+h2 );
+      qt_insert( &weapon_quadtree, i, MIN(x,px)-w2, MIN(y,py)-h2, MAX(x,px)+w2, MAX(y,py)+h2 );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -599,6 +644,9 @@ void weapons_updatePurge (void)
  */
 void weapons_updateCollide( double dt )
 {
+   NTracingZone( _ctx, 1 );
+   NTracingPlotI( "weapons", array_size(weapon_stack) );
+
    for (int i=0; i<array_size(weapon_stack); i++) {
       Weapon *w = &weapon_stack[i];
 
@@ -625,7 +673,7 @@ void weapons_updateCollide( double dt )
                break;
             }
             else if (w->timer < w->falloff)
-               w->strength = w->timer / w->falloff;
+               w->strength = w->timer / w->falloff * w->strength_base;
             break;
 
          /* Beam weapons handled a part. */
@@ -636,7 +684,7 @@ void weapons_updateCollide( double dt )
             w->timer -= dt / (1.-pilot_heatAccuracyMod(w->mount->heat_T));
             if (w->timer < 0. || (w->outfit->u.bem.min_duration > 0. &&
                   w->mount->stimer < 0.)) {
-               Pilot *p = pilot_get(w->parent);
+               const Pilot *p = pilot_get(w->parent);
                if (p != NULL)
                   pilot_stopBeam(p, w->mount);
                weapon_miss(w);
@@ -644,12 +692,8 @@ void weapons_updateCollide( double dt )
             }
             /* We use the explosion timer to tell when we have to create explosions. */
             w->timer2 -= dt;
-            if (w->timer2 < 0.) {
-               if (w->timer2 < -1.)
-                  w->timer2 = 0.100;
-               else
-                  w->timer2 = -1.;
-            }
+            if (w->timer2 < -1.)
+               w->timer2 = 0.100;
             break;
          default:
             WARN(_("Weapon of type '%s' has no update implemented yet!"),
@@ -661,6 +705,8 @@ void weapons_updateCollide( double dt )
       if (!weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
          weapon_updateCollide( w, dt );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -670,12 +716,16 @@ void weapons_updateCollide( double dt )
  */
 void weapons_update( double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(weapon_stack); i++) {
       Weapon *w = &weapon_stack[i];
       /* Only increment if weapon wasn't destroyed. */
       if (!weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
          weapon_update( w, dt );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -686,11 +736,15 @@ void weapons_update( double dt )
  */
 void weapons_render( const WeaponLayer layer, double dt )
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(weapon_stack); i++) {
       Weapon *w = &weapon_stack[i];
       if (w->layer==layer)
          weapon_render( w, dt );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 static void weapon_renderBeam( Weapon* w, double dt )
@@ -711,10 +765,10 @@ static void weapon_renderBeam( Weapon* w, double dt )
    gl_gameToScreenCoords( &x, &y, w->solid.pos.x, w->solid.pos.y );
 
    projection = gl_view_matrix;
-   mat4_translate( &projection, x, y, 0. );
+   mat4_translate_xy( &projection, x, y );
    mat4_rotate2d( &projection, w->solid.dir );
-   mat4_scale( &projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1. );
-   mat4_translate( &projection, 0., -0.5, 0. );
+   mat4_scale_xy( &projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z );
+   mat4_translate_xy( &projection, 0., -0.5 );
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.beam.vertex );
@@ -723,7 +777,7 @@ static void weapon_renderBeam( Weapon* w, double dt )
 
    /* Set shader uniforms. */
    gl_uniformMat4(shaders.beam.projection, &projection);
-   gl_uniformColor(shaders.beam.color, &w->outfit->u.bem.colour);
+   gl_uniformColour(shaders.beam.colour, &w->outfit->u.bem.colour);
    glUniform2f(shaders.beam.dimensions, w->outfit->u.bem.range, w->outfit->u.bem.width);
    glUniform1f(shaders.beam.dt, w->anim);
    glUniform1f(shaders.beam.r, w->r);
@@ -752,7 +806,7 @@ static void weapon_renderBeam( Weapon* w, double dt )
 static void weapon_render( Weapon* w, double dt )
 {
    const OutfitGFX *gfx;
-   double x, y, st;
+   double x, y;
    glColour col, c = { .r=1., .g=1., .b=1. };
 
    /* Don't render destroyed weapons. */
@@ -764,7 +818,7 @@ static void weapon_render( Weapon* w, double dt )
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
          if (w->status == WEAPON_STATUS_LOCKING) {
-            double r, z;
+            double st, r, z;
             z = cam_getZoom();
             gl_gameToScreenCoords( &x, &y, w->solid.pos.x, w->solid.pos.y );
             r = w->outfit->u.lau.gfx.size * z * 0.75; /* Assume square. */
@@ -783,7 +837,7 @@ static void weapon_render( Weapon* w, double dt )
          gfx = outfit_gfx(w->outfit);
 
          /* Alpha based on strength. */
-         c.a = w->strength;
+         c.a = MIN( 1., w->strength );
 
          /* Outfit spins around. */
          if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_SPIN)) {
@@ -841,15 +895,15 @@ static void weapon_render( Weapon* w, double dt )
                   return;
 
                mat4 projection = gl_view_matrix;
-               mat4_translate( &projection, x, y, 0. );
+               mat4_translate_xy( &projection, x, y );
                mat4_rotate2d( &projection, w->solid.dir );
-               mat4_scale( &projection, r, r, 1. );
+               mat4_scale_xy( &projection, r, r );
 
                glUseProgram( gfx->program );
                glUniform2f( gfx->dimensions, r, r );
                glUniform1f( gfx->u_r, w->r );
                glUniform1f( gfx->u_time, w->life-w->timer );
-               glUniform1f( gfx->u_fade, w->strength );
+               glUniform1f( gfx->u_fade, MIN( 1., w->strength ) );
                gl_uniformMat4( gfx->projection, &projection );
 
                glEnableVertexAttribArray( gfx->vertex );
@@ -951,72 +1005,169 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
  *    @param ctex Collision target texture.
  *    @param csx Collision target texture x sprite.
  *    @param csy Collision target texture y sprite.
- *    @param cpos Collision target pos.
+ *    @param csol Collision target solid.
  *    @param cpol Collision target collision polygon (NULL if none).
  *    @param cradius Collision radius fallback (if no texture and polygon are provided).
  *    @param[out] crash Crash location, which is only set if collision is detected.
  *    @return Number of collisions detected (0 to 2)
  */
 static int weapon_testCollision( const WeaponCollision *wc, const glTexture *ctex,
-   int csx, int csy, const vec2 *cpos, const CollPoly *cpol, double cradius, vec2 crash[2] )
+   int csx, int csy, const Solid *csol, const CollPolyView *cpol, double cradius, vec2 crash[2] )
 {
+   NTracingZone( _ctx, 1 );
+
    const Weapon *w = wc->w;
-   if (wc->beam) {
-      if (cpol!=NULL) {
-         int k = ctex->sx * csy + csx;
-         return CollideLinePolygon( &w->solid.pos, w->solid.dir,
-               wc->range, &cpol[k], cpos, crash);
-      }
-      else if (ctex!=NULL) {
-         return CollideLineSprite( &w->solid.pos, w->solid.dir,
-               wc->range, ctex, csx, csy, cpos, crash);
-      }
-      else {
-         vec2 endpoint;
-         endpoint.x = w->solid.pos.x + cos(w->solid.dir) * wc->range;
-         endpoint.y = w->solid.pos.y + sin(w->solid.dir) * wc->range;
-         return CollideLineCircle( &w->solid.pos, &endpoint, cpos, cradius, crash );
+   vec2 wipos, cipos; /* Interpolated positions. */
+   const vec2 *wpos, *cpos;
+   int ret;
+
+   /* Default to the real positions. */
+   wpos = &w->solid.pos;
+   cpos = &csol->pos;
+
+   /* Correct position if possible.
+    * This is basically looking at both line segments from pos+vel*t and then
+    * writing the distance. The resulting equation can be minimized to find the
+    * time of the closest intersection. */
+   if (!wc->explosion && !wc->beam) {
+      /* Don't consider the real velocity, just the linear interpolation of the
+       * previous positions. Thus time becomes a [0,1] value. */
+      double vx1 = w->solid.pre.x - w->solid.pos.x;
+      double vy1 = w->solid.pre.y - w->solid.pos.y;
+      double vx2 = csol->pre.x - csol->pos.x;
+      double vy2 = csol->pre.y - csol->pos.y;
+      double b = vx1 - vx2;
+      double d = vy1 - vy2;
+
+      /* Make sure we have to do a correction. */
+      if ((fabs(b)>DOUBLE_TOL) || (fabs(d)>DOUBLE_TOL)) {
+         double a = w->solid.pos.x - csol->pos.x;
+         double c = w->solid.pos.y - csol->pos.y;
+         double t = CLAMP( 0., 1., -(a*b+c*d) / (b*b+d*d) );
+         /* Now we can update the position to the minimum. */
+         wipos.x = w->solid.pos.x + t*vx1;
+         wipos.y = w->solid.pos.y + t*vy1;
+         cipos.x = csol->pos.x + t*vx2;
+         cipos.y = csol->pos.y + t*vy2;
+         wpos = &wipos;
+         cpos = &cipos;
       }
    }
-   /* Try to do polygon first. */
-   else if (cpol != NULL) {
-      int k = ctex->sx * csy + csx;
-      /* Case full polygon on polygon collision. */
-      if (wc->polygon!=NULL) {
-         return CollidePolygon( &cpol[k], cpos, wc->polygon, &w->solid.pos, crash );
+
+   if (wc->beam) {
+      int pll;
+      /* Set up variables so we can use the equations from CollideLineLine as is.
+       * Main idea is to just do a line-line collision*/
+      double s1x = csol->pos.x;
+      double s1y = csol->pos.y;
+      double e1x = csol->pre.x;
+      double e1y = csol->pre.y;
+      double s2x = w->solid.pos.x;
+      double s2y = w->solid.pos.y;
+      double e2x = w->solid.pos.x + cos(w->solid.dir) * wc->beamrange;
+      double e2y = w->solid.pos.y + sin(w->solid.dir) * wc->beamrange;
+
+      /* Find intersection position. */
+      double u_b = (e2y - s2y) * (e1x - s1x) - (e2x - s2x) * (e1y - s1y);
+
+      /* Only handle case not coincident or parallel. */
+      if (fabs(u_b) > DOUBLE_TOL) {
+         double ua_t = (e2x - s2x) * (s1y - s2y) - (e2y - s2y) * (s1x - s2x);
+
+         /* Interested in closest point only on the csol line. */
+         double ua = CLAMP( 0., 1., ua_t / u_b );
+
+         /* Nearest point on the line segment. */
+         cipos.x = s1x + ua * (e1x-s1x);
+         cipos.y = s1y + ua * (e1y-s1y);
+         cpos  = &cipos;
+         pll   = 0;
       }
+      else
+         pll   = 1;
+
+      /* Now we can look at the collision at the corrected point. */
+      if (cpol!=NULL) {
+         ret = CollideLinePolygon( &w->solid.pos, w->solid.dir,
+               wc->beamrange, cpol, cpos, crash);
+      }
+      else if (ctex!=NULL) {
+         ret = CollideLineSprite( &w->solid.pos, w->solid.dir,
+               wc->beamrange, ctex, csx, csy, cpos, crash);
+      }
+      else {
+         const vec2 endpoint = { .x=e2x, .y=e2y };
+         ret = CollideLineCircle( &w->solid.pos, &endpoint, cpos, cradius, crash );
+      }
+      if (ret > 0) {
+         NTracingZoneEnd( _ctx );
+         return ret;
+      }
+      /* Case non-parallel lines (or 0 length lines), we just compute the nearest point. */
+      else if (!pll) {
+         double ub_t = (e1x - s1x) * (s1y - s2y) - (e1y - s1y) * (s1x - s2x);
+         double ub = CLAMP( 0., 1., ub_t / u_b );
+         wipos.x = s2x + ub * (e2x-s2x);
+         wipos.y = s2y + ub * (e2y-s2y);
+         wpos = &wipos;
+      }
+      /* Case parallel or 0 length lines, computer nearest point on beam to position. */
+      else {
+         double vx1 = s1x-s2x;
+         double vy1 = s1y-s2y;
+         double vx2 = e2x-s2x;
+         double vy2 = e2y-s2y;
+         double t   = (vx1*vx2 + vy1*vy2) / (pow2(vx2)+pow2(vy2));
+         t = CLAMP( 0., 1., t );
+         wipos.x = s2x + t * vx2;
+         wipos.y = s2y + t * vy2;
+         wpos = &wipos;
+      }
+      /* Purpose fallthrough. If beam doesn't intersect with lines, we try a spherical collision.
+       * This works because wc.range should be set up for a spherical collision using the beam width
+       * and can use the code below. */
+   }
+
+   /* Try to do polygon first. */
+   if (cpol != NULL) {
+      /* Case full polygon on polygon collision. */
+      if (wc->polygon!=NULL)
+         ret = CollidePolygon( cpol, cpos, wc->polyview, wpos, crash );
       /* GFX on polygon. */
       else if ((wc->gfx!=NULL) && (wc->gfx->tex != NULL))
-         return CollideSpritePolygon( &cpol[k], cpos, wc->gfx->tex, w->sx, w->sy, &w->solid.pos, crash );
+         ret = CollideSpritePolygon( cpol, cpos, wc->gfx->tex, w->sx, w->sy, wpos, crash );
       /* Circle on polygon. */
       else
-         return CollideCirclePolygon( &w->solid.pos, wc->range, &cpol[k], cpos, crash );
+         ret = CollideCirclePolygon( wpos, wc->range, cpol, cpos, crash );
    }
    /* Try to do texture next. */
    else if (ctex != NULL) {
       /* GFX on polygon. */
       if (wc->polygon!=NULL)
-         return CollideSpritePolygon( wc->polygon, &w->solid.pos, ctex, csx, csy, cpos, crash );
+         ret = CollideSpritePolygon( wc->polyview, wpos, ctex, csx, csy, cpos, crash );
       /* Case texture on texture collision. */
       else if ((wc->gfx!=NULL) && (wc->gfx->tex!=NULL))
-         return CollideSprite( wc->gfx->tex, w->sx, w->sy, &w->solid.pos,
+         ret = CollideSprite( wc->gfx->tex, w->sx, w->sy, wpos,
                   ctex, csx, csy, cpos, crash );
-      /* TODO case no polygon and circle collision. */
+      /* Case no polygon and circle collision. */
       else
-         return CollideCircleSprite( &w->solid.pos, wc->range, ctex, csx, csy, cpos, crash );
+         ret = CollideCircleSprite( wpos, wc->range, ctex, csx, csy, cpos, crash );
    }
    /* Finally radius only. */
    else {
       /* GFX on polygon. */
       if (wc->polygon!=NULL)
-         return CollideSpritePolygon( wc->polygon, &w->solid.pos, ctex, csx, csy, cpos, crash );
+         ret = CollideSpritePolygon( wc->polyview, wpos, ctex, csx, csy, cpos, crash );
       /* Case texture on texture collision. */
       else if ((wc->gfx!=NULL) && (wc->gfx->tex!=NULL))
-         return CollideCircleSprite( cpos, cradius, wc->gfx->tex, w->sx, w->sy, &w->solid.pos, crash );
+         ret = CollideCircleSprite( cpos, cradius, wc->gfx->tex, w->sx, w->sy, wpos, crash );
       /* Trivial circle on circle case. */
       else
-         return CollideCircleCircle( &w->solid.pos, wc->range, cpos, cradius, crash );
+         ret = CollideCircleCircle( wpos, wc->range, cpos, cradius, crash );
    }
+
+   NTracingZoneEnd( _ctx );
+   return ret;
 }
 
 /**
@@ -1033,34 +1184,42 @@ static void weapon_updateCollide( Weapon* w, double dt )
    int x1, y1, x2, y2;
 
    /* Get the sprite direction to speed up calculations. */
-   wc.w = w;
-   wc.beam = outfit_isBeam(w->outfit);
+   wc.explosion   = 0;
+   wc.w           = w;
+   wc.beam        = outfit_isBeam(w->outfit);
    if (!wc.beam) {
-      int x, y, w2, h2;
+      int x, y, w2, h2, px, py;
       wc.gfx = outfit_gfx(w->outfit);
       if (wc.gfx->tex != NULL) {
-         const CollPoly *plg;
-         int n;
-         gl_getSpriteFromDir( &w->sx, &w->sy, wc.gfx->tex, w->solid.dir );
-         n = wc.gfx->tex->sx * w->sy + w->sx;
-         plg = outfit_plg(w->outfit);
-         wc.polygon = &plg[n];
+         const CollPoly *plg = outfit_plg(w->outfit);
+         if (plg!=NULL) {
+            wc.polygon = plg;
+            wc.polyview = poly_view( plg, w->solid.dir );
+         }
+         else {
+            wc.polygon = NULL;
+            wc.polyview = NULL;
+         }
          wc.range = wc.gfx->size; /* Range is set to size in this case. */
       }
       else {
          wc.polygon = NULL;
+         wc.polyview = NULL;
          wc.range = wc.gfx->col_size;
       }
+      wc.beamrange = 0.;
 
       /* Determine quadtree location. */
-      x = round(w->solid.pos.x);
-      y = round(w->solid.pos.y);
+      x  = round(w->solid.pos.x);
+      y  = round(w->solid.pos.y);
+      px = x+round(w->solid.pre.x);
+      py = y+round(w->solid.pre.y);
       w2 = ceil(wc.range * 0.5);
       h2 = ceil(wc.range * 0.5);
-      x1 = x-w2;
-      y1 = y-h2;
-      x2 = x+w2;
-      y2 = y+h2;
+      x1 = MIN(x,px)-w2;
+      y1 = MIN(y,py)-h2;
+      x2 = MAX(x,px)+w2;
+      y2 = MAX(y,py)+h2;
    }
    else {
       Pilot *p = pilot_get( w->parent );
@@ -1079,7 +1238,8 @@ static void weapon_updateCollide( Weapon* w, double dt )
       }
       wc.gfx = NULL;
       wc.polygon = NULL;
-      wc.range = w->outfit->u.bem.range; /* Set beam range. */
+      wc.range = w->outfit->u.bem.width*0.5; /* Set beam range. */
+      wc.beamrange = w->outfit->u.bem.range; /* Set beam range. */
 
       /* Determine quadtree location. */
       x1 = round(w->solid.pos.x);
@@ -1110,13 +1270,19 @@ static void weapon_updateCollide( Weapon* w, double dt )
             continue;
 
          /* Ignore if parent is self. */
-         if (w->parent == p->id)
+         if (w->parent==p->id)
             continue; /* pilot is self */
 
          /* Smart weapons only collide with their target */
-         if (weapon_isSmart(w)) {
+         if (outfit_isSeeker(w->outfit)) {
             int isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
             if (!isjammed && (w->target.type==TARGET_PILOT) && (p->id != w->target.u.id))
+               continue;
+         }
+
+         /* Check if only hit target. */
+         if (weapon_isFlag(w,WEAPON_FLAG_ONLYHITTARGET)) {
+            if ((w->target.type==TARGET_PILOT) && (p->id != w->target.u.id))
                continue;
          }
 
@@ -1126,7 +1292,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
 
          /* Test if hit. */
          if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
-               &p->solid.pos, p->ship->polygon, 0., crash ))
+               &p->solid, poly_view( &p->ship->polygon, p->solid.dir ), 0., crash ))
             continue;
 
          /* Handle the hit. */
@@ -1149,9 +1315,10 @@ static void weapon_updateCollide( Weapon* w, double dt )
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
-         /* Early in-range check with the asteroid field. */
+         /* Early in-range check with the asteroid field.
+          * Since range for beam weapons is set to width, we have to use the max. */
          if (vec2_dist2( &w->solid.pos, &ast->pos ) >
-               pow2( ast->radius + ast->margin + wc.range ))
+               pow2( ast->radius + ast->margin + MAX(wc.range, wc.beamrange) ))
             continue;
 
          /* Quadtree collisions. */
@@ -1164,20 +1331,15 @@ static void weapon_updateCollide( Weapon* w, double dt )
             if (a->state != ASTEROID_FG)
                continue;
 
-            /* In-range check with the actual asteroid. */
-            /* This is advantageous because we are going to rotate the polygon afterwards. */
-            if (vec2_dist2( &w->solid.pos, &a->pos ) > pow2( wc.range ))
-               continue;
-
-            if (a->polygon->npt!=0) {
-               CollPoly rpoly;
-               RotatePolygon( &rpoly, a->polygon, (float) a->ang );
-               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, 0., crash );
+            if (array_size(a->polygon->views) > 0) {
+               CollPolyView rpoly;
+               poly_rotate( &rpoly, &a->polygon->views[0], (float) a->ang );
+               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, &rpoly, 0., crash );
                free(rpoly.x);
                free(rpoly.y);
             }
             else
-               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, 0., crash );
+               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, NULL, 0., crash );
 
             /* Missed. */
             if (!coll)
@@ -1206,27 +1368,24 @@ static void weapon_updateCollide( Weapon* w, double dt )
          int coll;
          WeaponHit hit;
 
-         wchit.gfx = outfit_gfx(w->outfit);
+         /* We can only hit ammo weapons, so no beams. */
+         wchit.w        = whit;
+         wchit.explosion= 0;
+         wchit.beam     = 0;
+         wchit.gfx      = outfit_gfx(w->outfit);
          if (wchit.gfx->tex != NULL) {
-            const CollPoly *plg;
-            int n;
-            plg = outfit_plg(w->outfit);
-            if (plg == NULL) {
-               gl_getSpriteFromDir( &w->sx, &w->sy, wchit.gfx->tex, w->solid.dir );
-               n = wchit.gfx->tex->sx * w->sy + w->sx;
-               wchit.polygon = &plg[n];
-            }
-            else
-               wchit.polygon = NULL;
+            wchit.polygon = outfit_plg(w->outfit);
+            wchit.polyview = poly_view( wchit.polygon, w->solid.dir );
             wchit.range = wchit.gfx->size; /* Range is set to size in this case. */
          }
          else {
             wchit.polygon = NULL;
+            wchit.polyview = NULL;
             wchit.range = wchit.gfx->col_size;
          }
 
-         /* Actually test the collision. */
-         coll = weapon_testCollision( &wc, wchit.gfx->tex, whit->sx, whit->sy, &whit->solid.pos, wchit.polygon, wchit.range, crash );
+         /* Do the real collision test. */
+         coll = weapon_testCollision( &wc, wchit.gfx->tex, whit->sx, whit->sy, &whit->solid, wchit.polyview, wchit.range, crash );
          if (!coll)
             continue;
 
@@ -1253,7 +1412,7 @@ static void weapon_updateCollide( Weapon* w, double dt )
 static void weapon_update( Weapon* w, double dt )
 {
    /* Smart weapons also get to think their next move */
-   if (weapon_isSmart(w))
+   if (w->think!=NULL)
       (*w->think)( w, dt );
 
    /* Update the solid position. */
@@ -1359,6 +1518,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
    wc.beam  = 0;
    wc.range = radius;
    wc.polygon = NULL;
+   wc.explosion = 1;
 
    /* Set up coordinates. */
    x = round(w->solid.pos.x);
@@ -1394,7 +1554,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
 
          /* Test if hit. */
          if (!weapon_testCollision( &wc, p->ship->gfx_space, p->tsx, p->tsy,
-                  &p->solid.pos, p->ship->polygon, 0., crash ))
+                  &p->solid, poly_view( &p->ship->polygon, p->solid.dir ), 0., crash ))
             continue;
 
          /* Have pilot take damage and get real damage done. */
@@ -1425,15 +1585,15 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
             if (a->state != ASTEROID_FG)
                continue;
 
-            if (a->polygon->npt!=0) {
-               CollPoly rpoly;
-               RotatePolygon( &rpoly, a->polygon, (float) a->ang );
-               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, &rpoly, 0., crash );
+            if (a->polygon != NULL) {
+               CollPolyView rpoly;
+               poly_rotate( &rpoly, &a->polygon->views[0], (float) a->ang );
+               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, &rpoly, 0., crash );
                free(rpoly.x);
                free(rpoly.y);
             }
             else
-               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->pos, NULL, 0., crash );
+               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, NULL, 0., crash );
 
             /* Missed. */
             if (!coll)
@@ -1455,25 +1615,25 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
 
          wchit.gfx = outfit_gfx(w->outfit);
          if (wchit.gfx->tex != NULL) {
-            const CollPoly *plg;
-            int n;
-            plg = outfit_plg(w->outfit);
-            if (plg == NULL) {
-               gl_getSpriteFromDir( &w->sx, &w->sy, wchit.gfx->tex, w->solid.dir );
-               n = wchit.gfx->tex->sx * w->sy + w->sx;
-               wchit.polygon = &plg[n];
+            const CollPoly *plg = outfit_plg(w->outfit);
+            if (plg!=NULL) {
+               wchit.polygon = plg;
+               wchit.polyview = poly_view( plg, w->solid.dir );
             }
-            else
+            else {
                wchit.polygon = NULL;
+               wchit.polyview = NULL;
+            }
             wchit.range = wchit.gfx->size; /* Range is set to size in this case. */
          }
          else {
             wchit.polygon = NULL;
+            wchit.polyview = NULL;
             wchit.range = wchit.gfx->col_size;
          }
 
          /* Actually test the collision. */
-         coll = weapon_testCollision( &wc, wchit.gfx->tex, whit->sx, whit->sy, &whit->solid.pos, wchit.polygon, wchit.range, crash );
+         coll = weapon_testCollision( &wc, wchit.gfx->tex, whit->sx, whit->sy, &whit->solid, wchit.polyview, wchit.range, crash );
          if (!coll)
             continue;
 
@@ -1521,7 +1681,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
 
    if (hit->type==TARGET_PILOT) {
       Pilot *ptarget = hit->u.plt;
-      Pilot *parent = pilot_get( w->parent );
+      const Pilot *parent = pilot_get( w->parent );
       int spfx;
 
       /* Have pilot take damage and get real damage done. */
@@ -1537,7 +1697,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
       /* Add sprite, layer depends on whether player shot or not. */
       spfx_add( spfx, hit->pos->x, hit->pos->y,
             VX(ptarget->solid.vel), VY(ptarget->solid.vel),
-            (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK );
+            pilot_isPlayer(ptarget) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE );
    }
    else if (hit->type==TARGET_ASTEROID) {
       Asteroid *ast = hit->u.ast;
@@ -1545,7 +1705,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
       double mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
       int spfx = outfit_spfxArmour(w->outfit);
       spfx_add( spfx, hit->pos->x, hit->pos->y,
-            VX(ast->vel), VY(ast->vel), SPFX_LAYER_MIDDLE );
+            VX(ast->sol.vel), VY(ast->sol.vel), SPFX_LAYER_BACK );
       asteroid_hit( ast, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
    }
    else if (hit->type==TARGET_WEAPON) {
@@ -1553,7 +1713,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
       int spfx = outfit_spfxArmour(w->outfit);
       spfx_add( spfx, hit->pos->x, hit->pos->y,
             VX(wpn->solid.vel), VY(wpn->solid.vel),
-            (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK );
+            (wpn->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE );
       weapon_damage( wpn, &dmg );
    }
 
@@ -1595,7 +1755,7 @@ static void weapon_miss( Weapon *w )
 
    /* On hit weapon effects. */
    if (w->outfit->lua_onmiss != LUA_NOREF) {
-      Pilot *parent = pilot_get( w->parent );
+      const Pilot *parent = pilot_get( w->parent );
 
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->lua_mem); /* mem */
       nlua_setenv(naevL, w->outfit->lua_env, "mem"); /* */
@@ -1667,18 +1827,23 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
 static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
 {
    Pilot *parent;
-   double damage;
+   double damage, firerate, mod;
    Damage dmg;
    const Damage *odmg;
 
    /* Get general details. */
    odmg              = outfit_damage( w->outfit );
    parent            = pilot_get( w->parent );
-   damage            = w->dam_mod * w->strength * odmg->damage * dt ;
+   if (w->outfit->type == OUTFIT_TYPE_TURRET_BEAM)
+      firerate = parent->stats.tur_firerate;
+   else
+      firerate = parent->stats.fwd_firerate;
+   mod               = w->dam_mod * w->strength * firerate * parent->stats.time_speedup * dt;
+   damage            = odmg->damage * mod;
    dmg.damage        = MAX( 0., damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * dt + damage * w->dam_as_dis_mod );
+   dmg.disable       = MAX( 0., odmg->disable * mod + damage * w->dam_as_dis_mod );
 
    if (hit->type==TARGET_PILOT) {
       Pilot *p = hit->u.plt;
@@ -1687,7 +1852,7 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       double realdmg = pilot_hit( p, &w->solid, parent, &dmg, w->outfit, w->lua_mem, 1 );
 
       /* Add sprite, layer depends on whether player shot or not. */
-      if (w->timer2 == -1.) {
+      if (w->timer2 <= 0.) {
          int spfx;
          /* Get the layer. */
          WeaponLayer spfx_layer = (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
@@ -1715,14 +1880,14 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       asteroid_hit( a, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
 
       /* Add sprite. */
-      if (w->timer2 == -1.) {
+      if (w->timer2 <= 0.) {
          int spfx = outfit_spfxArmour(w->outfit);
 
          /* Add graphic. */
          spfx_add( spfx, hit->pos[0].x, hit->pos[0].y,
-               VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
+               VX(a->sol.vel), VY(a->sol.vel), SPFX_LAYER_MIDDLE );
          spfx_add( spfx, hit->pos[1].x, hit->pos[1].y,
-               VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
+               VX(a->sol.vel), VY(a->sol.vel), SPFX_LAYER_MIDDLE );
          w->timer2 = -2.;
       }
    }
@@ -1731,7 +1896,7 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       weapon_damage( wpn, &dmg );
 
       /* Add sprite. */
-      if (w->timer2 == -1.) {
+      if (w->timer2 <= 0.) {
          int spfx = outfit_spfxArmour(w->outfit);
          /* Get the layer. */
          WeaponLayer spfx_layer = (w->layer==WEAPON_LAYER_FG) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
@@ -1749,23 +1914,81 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
 /**
  * @brief Gets the aim position of a turret weapon.
  *
- *    @param outfit Weapon outfit.
+ *    @param o Weapon outfit.
  *    @param parent Parent of the weapon.
  *    @param target Target of the weapon.
  *    @param pos Position of the turret.
  *    @param vel Velocity of the turret.
  *    @param dir Direction facing parent ship and turret.
  *    @param time Expected flight time.
- *    @param swivel Maximum angle between weapon and straight ahead.
- *    @return The direction to aim.
+ *    @return 0 if not in arc, 1 if in arc.
  */
-static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
-      const Target *target, const vec2 *pos, const vec2 *vel, double dir,
-      double swivel, double time )
+int weapon_inArc( const Outfit *o, const Pilot *parent, const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time )
+{
+   if (outfit_isTurret(o))
+      return 1;
+   else if ((o->type==OUTFIT_TYPE_LAUNCHER) && (o->u.lau.ai > 0)) {
+      /* TODO reduce code duplication here. */
+      const vec2 *target_pos;
+      double x, y, ang, off;
+      switch (target->type) {
+         case TARGET_PILOT:
+            {
+               const Pilot *pilot_target = pilot_get( target->u.id );
+               if (pilot_target==NULL)
+                  return dir;
+               target_pos = &pilot_target->solid.pos;
+            }
+            break;
+
+         case TARGET_ASTEROID:
+            {
+               const AsteroidAnchor *field = &cur_system->asteroids[ target->u.ast.anchor ];
+               const Asteroid *ast = &field->asteroids[ target->u.ast.asteroid ];
+               target_pos = &ast->sol.pos;
+            }
+            break;
+
+         case TARGET_WEAPON:
+            {
+               const Weapon *wtarget = weapon_getID( target->u.id );
+               if (wtarget==NULL)
+                  return dir;
+               target_pos = &wtarget->solid.pos;
+            }
+            break;
+
+         //case TARGET_NONE:
+         default:
+            return dir;
+      }
+      x     = target_pos->x - pos->x;
+      y     = target_pos->y - pos->y;
+      ang   = ANGLE( x, y );
+      off   = angle_diff( ang, dir );
+      if (FABS(off) <= o->u.lau.arc)
+         return 1;
+      return 0;
+   }
+   else {
+      double swivel = outfit_swivel(o);
+      double rdir = weapon_aimTurretAngle( o, parent, target, pos, vel, dir, time );
+      double off = angle_diff( rdir, dir );
+      if (FABS(off) <= swivel)
+         return 1;
+      return 0;
+   }
+}
+
+/**
+ * @brief Gets the aim direction of a turret weapon.
+ */
+static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
+      const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time )
 {
    const Pilot *pilot_target = NULL;
    const vec2 *target_pos, *target_vel;
-   double rx, ry, x, y, t, lead, rdir, off;
+   double rx, ry, x, y, t, lead, rdir;
 
    switch (target->type) {
       case TARGET_PILOT:
@@ -1780,8 +2003,8 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
          {
             const AsteroidAnchor *field = &cur_system->asteroids[ target->u.ast.anchor ];
             const Asteroid *ast = &field->asteroids[ target->u.ast.asteroid ];
-            target_pos = &ast->pos;
-            target_vel = &ast->vel;
+            target_pos = &ast->sol.pos;
+            target_vel = &ast->sol.vel;
          }
          break;
 
@@ -1809,9 +2032,14 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    if (t == INFINITY)  /* Postprocess (t = INFINITY means target is not hittable) */
       t = 0.;
 
+   double t_parent = t;
+   /* Launch the missiles in the estimated direction of the target. */
+   if (outfit_isLauncher(outfit) && outfit->u.lau.ai != AMMO_AI_UNGUIDED)
+      t_parent = 0.;
+
    /* Position is calculated on where it should be */
-   x = (target_pos->x + target_vel->x*t) - (pos->x + vel->x*t);
-   y = (target_pos->y + target_vel->y*t) - (pos->y + vel->y*t);
+   x = (target_pos->x + target_vel->x*t) - (pos->x + vel->x*t_parent);
+   y = (target_pos->y + target_vel->y*t) - (pos->y + vel->y*t_parent);
 
    /* Compute both the angles we want. */
    if (pilot_target != NULL) {
@@ -1827,14 +2055,13 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    rdir     = ANGLE(x,y);
 
    /* For unguided rockets: use a FD quasi-Newton algorithm to aim better. */
-   if (outfit_isLauncher(outfit) && outfit->u.lau.thrust > 0.) {
+   if (outfit_isLauncher(outfit) && outfit->u.lau.accel > 0.) {
       double vmin  = outfit->u.lau.speed;
 
       if (vmin > 0.) {
          /* Get various details. */
-         double tt, ddir, dtdd, acc, pxv, ang, dvx, dvy;
-         int niter = 5;
-         acc = outfit->u.lau.thrust;
+         double tt, ddir, acc, pxv, ang, dvx, dvy;
+         acc = outfit->u.lau.accel;
 
          /* Get the relative velocity. */
          dvx = lead * (target_vel->x - vel->x);
@@ -1854,8 +2081,10 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
          /* We compute more precisely ta and tt. */
          /* (times for the ammo and the target to get to intersection point) */
          /* The aim is to nullify ta-tt. */
-         if (fabs(ang) > 1e-7) { /* No need to iterate if it's already nearly aligned. */
+         if (fabs(ang) > DOUBLE_TOL) { /* No need to iterate if it's already nearly aligned. */
+            int niter = 5;
             for (int i=0; i<niter; i++) {
+               double dtdd;
                double d  = weapon_computeTimes( rdir, rx, ry, dvx, dvy, pxv, vmin, acc, &tt );
                double dd = weapon_computeTimes( rdir+ddir, rx, ry, dvx, dvy, pxv, vmin, acc, &tt );
 
@@ -1871,6 +2100,33 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
          }
       }
    }
+   return rdir;
+}
+
+/**
+ * @brief Gets the aim position of a turret weapon.
+ *
+ *    @param outfit Weapon outfit.
+ *    @param parent Parent of the weapon.
+ *    @param target Target of the weapon.
+ *    @param pos Position of the turret.
+ *    @param vel Velocity of the turret.
+ *    @param dir Direction facing parent ship and turret.
+ *    @param time Expected flight time.
+ *    @return The direction to aim.
+ */
+static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
+      const Target *target, const vec2 *pos, const vec2 *vel, double dir, double time )
+{
+   double rdir, off;
+   double swivel = outfit_swivel(outfit);
+
+   /* No swivel is trivial case. */
+   if (swivel <= 0.)
+      return dir;
+
+   /* Get the angle. */
+   rdir = weapon_aimTurretAngle( outfit, parent, target, pos, vel, dir, time );
 
    /* Calculate bounds. */
    off = angle_diff( rdir, dir );
@@ -1966,14 +2222,12 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    const OutfitGFX *gfx;
 
    if (aim)
-      rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, outfit->u.blt.swivel, time );
+      rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, time );
    else {
       if (pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
-         double x, y;
-         vec2 target;
-         gl_screenToGameCoords( &x, &y, player.mousex, player.mousey );
-         vec2_csetmin( &target, x, y );
-         rdir = weapon_aimTurretStatic( &target, pos, dir, outfit->u.blt.swivel );
+         vec2 tv;
+         gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
+         rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.blt.swivel );
       }
       else
          rdir = dir;
@@ -2023,7 +2277,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );
    if (gfx->tex != NULL)
-      gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex, w->solid.dir );
+      gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex->sx, gfx->tex->sy, w->solid.dir );
 }
 
 /**
@@ -2047,21 +2301,13 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    double mass, rdir, m;
    const OutfitGFX *gfx;
 
-   if (aim) {
-      if (outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)
-         rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, M_PI, time );
-      else if (outfit->u.lau.swivel > 0.)
-         rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, outfit->u.lau.swivel, time );
-      else
-         rdir = dir;
-   }
+   if (aim)
+      rdir = weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, time );
    else {
-      if ((outfit->u.lau.swivel > 0.) && pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
-         double x, y;
-         vec2 target;
-         gl_screenToGameCoords( &x, &y, player.mousex, player.mousey );
-         vec2_csetmin( &target, x, y );
-         rdir = weapon_aimTurretStatic( &target, pos, dir, outfit->u.blt.swivel );
+      if (pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
+         vec2 tv;
+         gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
+         rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.blt.swivel );
       }
       else
          rdir = dir;
@@ -2080,7 +2326,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    /* Launcher damage. */
    w->dam_mod *= parent->stats.launch_damage;
 
-   /* If thrust is 0. we assume it starts out at speed. */
+   /* If accel is 0. we assume it starts out at speed. */
    v = *vel;
    m = outfit->u.lau.speed;
    if (outfit->u.lau.speed_dispersion > 0.)
@@ -2092,9 +2338,9 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    mass        = w->outfit->u.lau.ammo_mass;
    w->timer    = w->outfit->u.lau.duration * parent->stats.launch_range;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
-   if (w->outfit->u.lau.thrust > 0.) {
-      weapon_setThrust( w, w->outfit->u.lau.thrust * mass );
-      /* Limit speed, we only relativize in the case it has thrust + initial speed. */
+   if (w->outfit->u.lau.accel > 0.) {
+      weapon_setAccel( w, w->outfit->u.lau.accel );
+      /* Limit speed, we only relativize in the case it has accel + initial speed. */
       w->solid.speed_max = w->outfit->u.lau.speed_max;
       if (w->outfit->u.lau.speed > 0.)
          w->solid.speed_max = -1; /* No limit. */
@@ -2133,7 +2379,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );
    if (gfx->tex != NULL)
-      gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex, w->solid.dir );
+      gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex->sx, gfx->tex->sy, w->solid.dir );
 
    /* Set up trails. */
    if (w->outfit->u.lau.trail_spec != NULL)
@@ -2161,7 +2407,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
       const Pilot* parent, const Target *target, double time, int aim )
 {
    double mass, rdir;
-   const Outfit *outfit = (ref==NULL) ? po->outfit : ref;
+   const Outfit *outfit = ((ref==NULL) && (po!=NULL)) ? po->outfit : ref;
 
    /* Create basic features */
    memset( w, 0, sizeof(Weapon) );
@@ -2180,7 +2426,11 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
    }
    w->outfit   = outfit; /* non-changeable */
    w->strength = 1.;
+   w->strength_base = 1.;
    w->r        = RNGF(); /* Set unique value. */
+   /* Set flags. */
+   if (outfit_isProp(outfit,OUTFIT_PROP_WEAP_ONLYHITTARGET))
+      weapon_setFlag(w,WEAPON_FLAG_ONLYHITTARGET);
 
    /* Inform the target. */
    if (!(outfit_isBeam(w->outfit)) && (w->target.type==TARGET_PILOT)) {
@@ -2201,32 +2451,40 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
          rdir = dir;
-         if (aim && (outfit->type==OUTFIT_TYPE_TURRET_BEAM)) {
-            AsteroidAnchor *field;
-            Asteroid *ast;
-            Weapon *wtarget;
-            switch (w->target.type) {
-               case TARGET_NONE:
-                  break;
+         if (outfit->type==OUTFIT_TYPE_TURRET_BEAM) {
+            if (aim) {
+               AsteroidAnchor *field;
+               Asteroid *ast;
+               Weapon *wtarget;
+               weapon_setFlag(w, WEAPON_FLAG_AIM);
+               switch (w->target.type) {
+                  case TARGET_NONE:
+                     break;
 
-               case TARGET_PILOT:
-                  if (w->parent != w->target.u.id) {
-                     Pilot *pilot_target = pilot_get( w->target.u.id );
-                     rdir = vec2_angle(pos, &pilot_target->solid.pos);
-                  }
-                  break;
+                  case TARGET_PILOT:
+                     if (w->parent != w->target.u.id) {
+                        Pilot *pilot_target = pilot_get( w->target.u.id );
+                        rdir = vec2_angle(pos, &pilot_target->solid.pos);
+                     }
+                     break;
 
-               case TARGET_ASTEROID:
-                  field = &cur_system->asteroids[ w->target.u.ast.anchor ];
-                  ast = &field->asteroids[ w->target.u.ast.asteroid ];
-                  rdir = vec2_angle(pos, &ast->pos);
-                  break;
+                  case TARGET_ASTEROID:
+                     field = &cur_system->asteroids[ w->target.u.ast.anchor ];
+                     ast = &field->asteroids[ w->target.u.ast.asteroid ];
+                     rdir = vec2_angle(pos, &ast->sol.pos);
+                     break;
 
-               case TARGET_WEAPON:
-                  wtarget = weapon_getID( w->target.u.id );
-                  if (wtarget != NULL)
-                     rdir = vec2_angle( pos, &wtarget->solid.pos );
-                  break;
+                  case TARGET_WEAPON:
+                     wtarget = weapon_getID( w->target.u.id );
+                     if (wtarget != NULL)
+                        rdir = vec2_angle( pos, &wtarget->solid.pos );
+                     break;
+               }
+            }
+            else if (pilot_isPlayer(parent) && (SDL_ShowCursor(SDL_QUERY)==SDL_ENABLE)) {
+               vec2 tv;
+               gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
+               rdir = vec2_angle( pos, &tv );
             }
          }
 
@@ -2234,6 +2492,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
             rdir += 2.*M_PI;
          else if (rdir >= 2.*M_PI)
             rdir -= 2.*M_PI;
+
          mass = 1.; /**< Needs a mass. */
          solid_init( &w->solid, mass, rdir, pos, vel, SOLID_UPDATE_EULER );
          w->think = think_beam;
@@ -2287,37 +2546,28 @@ static int weapon_create( Weapon *w, PilotOutfitSlot* po, const Outfit *ref,
  *    @param time Expected flight time.
  *    @param aim Whether or not to aim.
  */
-void weapon_add( PilotOutfitSlot *po, const Outfit *ref,
+Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref,
       double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const Target *target, double time, int aim )
 {
    Weapon *w;
-   size_t bufsize;
    double T = po->heat_T;
-   const Outfit *o = (ref==NULL) ? po->outfit : ref;
 
 #if DEBUGGING
+   const Outfit *o = (ref==NULL) ? po->outfit : ref;
    if (!outfit_isBolt(o) &&
          !outfit_isLauncher(o)) {
       ERR(_("Trying to create a Weapon from a non-Weapon type Outfit"));
-      return;
+      return 0;
    }
 #endif /* DEBUGGING */
 
-   w  = &array_grow(&weapon_stack);
+   w = &array_grow(&weapon_stack);
    weapon_create( w, po, ref, T, dir, pos, vel, parent, target, time, aim );
 
    /* Grow the vertex stuff if needed. */
-   bufsize = array_reserved(weapon_stack);
-   if (bufsize != weapon_vboSize) {
-      GLsizei size;
-      weapon_vboSize = bufsize;
-      size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
-      weapon_vboData = realloc( weapon_vboData, size );
-      if (weapon_vbo == NULL)
-         weapon_vbo = gl_vboCreateStream( size, NULL );
-      gl_vboData( weapon_vbo, size, weapon_vboData );
-   }
+   weapon_updateVBO();
+   return w;
 }
 
 /**
@@ -2348,7 +2598,7 @@ double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const Target *t )
          {
             const AsteroidAnchor *field = &cur_system->asteroids[t->u.ast.anchor];
             const Asteroid *ast = &field->asteroids[t->u.ast.asteroid];
-            return pilot_weapFlyTime( o, p, &ast->pos, &ast->vel );
+            return pilot_weapFlyTime( o, p, &ast->sol.pos, &ast->sol.vel );
          }
          break;
    }
@@ -2374,28 +2624,17 @@ unsigned int beam_start( PilotOutfitSlot *po,
       const Pilot *parent, const Target *target, int aim )
 {
    Weapon *w;
-   GLsizei size;
-   size_t bufsize;
 
    if (!outfit_isBeam(po->outfit)) {
       ERR(_("Trying to create a Beam Weapon from a non-beam outfit."));
       return -1;
    }
 
-   w  = &array_grow(&weapon_stack);
+   w = &array_grow(&weapon_stack);
    weapon_create( w, po, NULL, 0., dir, pos, vel, parent, target, 0., aim );
 
    /* Grow the vertex stuff if needed. */
-   bufsize = array_reserved(weapon_stack);
-   if (bufsize != weapon_vboSize) {
-      weapon_vboSize = bufsize;
-      size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
-      weapon_vboData = realloc( weapon_vboData, size );
-      if (weapon_vbo == NULL)
-         weapon_vbo = gl_vboCreateStream( size, NULL );
-      gl_vboData( weapon_vbo, size, weapon_vboData );
-   }
-
+   weapon_updateVBO();
    return w->id;
 }
 
@@ -2478,6 +2717,8 @@ static void weapon_free( Weapon* w )
  */
 void weapon_clear (void)
 {
+   NTracingZone( _ctx, 1 );
+
    /* Don't forget to stop the sounds. */
    for (int i=0; i < array_size(weapon_stack); i++) {
       Weapon *w = &weapon_stack[i];
@@ -2487,6 +2728,8 @@ void weapon_clear (void)
    array_erase( &weapon_stack, array_begin(weapon_stack), array_end(weapon_stack) );
    /* We can restart the idgen. */
    weapon_idgen = 0; /* May mess up Lua stuff... */
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**

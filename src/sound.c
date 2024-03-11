@@ -33,9 +33,7 @@
 /** @cond */
 #include <sys/stat.h>
 #include "physfs.h"
-#include "SDL.h"
 #include "SDL_mutex.h"
-#include "SDL_thread.h"
 
 #include "naev.h"
 /** @endcond */
@@ -47,14 +45,11 @@
 #include "array.h"
 #include "camera.h"
 #include "conf.h"
-#include "env.h"
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
-#include "nstring.h"
-#include "physics.h"
-#include "player.h"
 #include "nopenal.h"
+#include "pilot.h"
 #include "nlua_spfx.h"
 
 #define SOUND_FADEOUT         100
@@ -313,9 +308,9 @@ static int sound_al_init (void)
 
    /* Set good default for sources. */
    attribs[0] = ALC_MONO_SOURCES;
-   attribs[1] = 256;
+   attribs[1] = 512;
    attribs[2] = ALC_STEREO_SOURCES;
-   attribs[3] = 16;
+   attribs[3] = 32;
    nattribs = 4;
 
    /* Query EFX extension. */
@@ -628,9 +623,7 @@ int sound_init (void)
       WARN(_("Unable to create voice mutex."));
 
    /* Load available sounds. */
-   ret = sound_makeList();
-   if (ret != 0)
-      return ret;
+   sound_makeList();
 
    /* Set volume. */
    if ((conf.sound > 1.) || (conf.sound < 0.)) {
@@ -829,7 +822,7 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    alVoice *v;
    alSound *s;
    Pilot *p;
-   double cx, cy, dist;
+   double cx, cy;
    int target;
 
    if (sound_disabled)
@@ -848,6 +841,7 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    }
    /* Set to a position. */
    else {
+      double dist;
       cam_getPos(&cx, &cy);
       dist = pow2(px - cx) + pow2(py - cy);
       if (dist > pilot_sensorRange())
@@ -1932,6 +1926,44 @@ static const char* vorbis_getErr( int err )
 }
 
 /**
+ * @brief This is the filter function for the decoded Ogg Vorbis stream.
+ *
+ * base on:
+ * vgfilter.c (c) 2007,2008 William Poetra Yoga Hadisoeseno
+ * based on:
+ * vgplay.c 1.0 (c) 2003 John Morton
+ */
+void rg_filter( float **pcm, long channels, long samples, void *filter_param )
+{
+   const rg_filter_param_t *param = filter_param;
+   float scale_factor= param->rg_scale_factor;
+   float max_scale   = param->rg_max_scale;
+
+   /* Apply the gain, and any limiting necessary */
+   if (scale_factor > max_scale) {
+      for (int i=0; i < channels; i++)
+         for (int j=0; j < samples; j++) {
+            float cur_sample = pcm[i][j] * scale_factor;
+            /*
+             * This is essentially the scaled hard-limiting algorithm
+             * It looks like the soft-knee to me
+             * I haven't found a better limiting algorithm yet...
+             */
+            if (cur_sample < -0.5)
+               cur_sample = tanh((cur_sample + 0.5) / (1-0.5)) * (1-0.5) - 0.5;
+            else if (cur_sample > 0.5)
+               cur_sample = tanh((cur_sample - 0.5) / (1-0.5)) * (1-0.5) + 0.5;
+            pcm[i][j] = cur_sample;
+         }
+   }
+   else if (scale_factor > 0.0)
+      for (int i=0; i < channels; i++)
+         for (int j=0; j < samples; j++)
+            pcm[i][j] *= scale_factor;
+}
+
+
+/**
  * @brief Loads an ogg file from a tested format if possible.
  *
  *    @param buf Buffer to load ogg into.
@@ -1947,6 +1979,10 @@ static int al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    ogg_int64_t len;
    char *data;
    long bytes_read;
+   vorbis_comment *vc;
+   ALfloat track_gain_db, track_peak;
+   char *tag;
+   rg_filter_param_t param;
 
    /* Finish opening the file. */
    ret = ov_test_open(vf);
@@ -1960,6 +1996,17 @@ static int al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    format = (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
    len    = ov_pcm_total( vf, -1 ) * info->channels * sizeof(short);
 
+   /* Replaygain information. */
+   vc             = ov_comment( vf, -1 );
+   track_gain_db  = 0.;
+   track_peak     = 1.;
+   if ((tag = vorbis_comment_query(vc, "replaygain_track_gain", 0)))
+      track_gain_db  = atof(tag);
+   if ((tag = vorbis_comment_query(vc, "replaygain_track_peak", 0)))
+      track_peak     = atof(tag);
+   param.rg_scale_factor = pow(10.0, (track_gain_db + RG_PREAMP_DB)/20.0);
+   param.rg_max_scale  = 1.0 / track_peak;
+
    /* Allocate memory. */
    data = malloc( len );
 
@@ -1968,7 +2015,11 @@ static int al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    bytes_read = 1;
    while (bytes_read > 0) {
       /* Fill buffer with data ibytes_read the 16 bit signed samples format. */
-      bytes_read = ov_read( vf, &data[i], 4096, (SDL_BYTEORDER == SDL_BIG_ENDIAN), 2, 1, &section );
+      bytes_read = ov_read_filter( vf, &data[i],
+            4096,
+            (SDL_BYTEORDER == SDL_BIG_ENDIAN),
+            2, 1, &section,
+            rg_filter, &param );
       if (bytes_read==OV_HOLE || bytes_read==OV_EBADLINK || bytes_read==OV_EINVAL) {
          WARN(_("Error reading from OGG file!"));
          continue;

@@ -4,7 +4,6 @@
 #pragma once
 
 /** @cond */
-#include <errno.h>
 #include <time.h>
 
 #ifdef __MINGW64_VERSION_MAJOR
@@ -24,7 +23,7 @@
 
 #include "attributes.h"
 #include "log.h"
-#include "opengl.h"
+#include "opengl_tex.h"
 
 #define XML_NODE_START  1
 #define XML_NODE_TEXT   3

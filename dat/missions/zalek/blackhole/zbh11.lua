@@ -302,7 +302,7 @@ function board_drone ()
 
    mem.state = 2
    player.unboard()
-   pexp:setNoboard() -- Don't allow boarding again
+   pexp:setNoBoard() -- Don't allow boarding again
 end
 
 function zach_say( msg )

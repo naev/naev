@@ -5,10 +5,10 @@
 
 #include "opengl.h"
 #include "shipstats.h"
-#include "rng.h"
 
 #define EFFECT_BUFF     (1<<0)   /**< Effect is a buff. */
 #define EFFECT_DEBUFF   (1<<1)   /**< Effect is a debuff. */
+#define EFFECT_VERTEX   (1<<2)   /**< Effect uses a custom vertex shader. */
 
 /**
  * @brief Pilot ship effect data.
@@ -33,6 +33,8 @@ typedef struct EffectData_ {
    GLuint u_timer;
    GLuint u_elapsed;
    GLuint u_dir;
+   GLuint u_img;
+   glTexture *img;      /**< Image that can be additionally provided. */
    /* Lua. */
    nlua_env lua_env;    /**< Lua environment. */
    int lua_add;         /**< Effect has been added to a pilot. */
@@ -48,7 +50,7 @@ typedef struct Effect_ {
    unsigned int parent; /**< Pilot it is being applied to. */
    double timer;        /**< Time left on the effect. */
    double duration;     /**< Duration of this effect. */
-   double strength;        /**< Scales the effect. */
+   double strength;     /**< Scales the effect. */
    double r;            /**< Random number. */
    double elapsed;      /**< Total elapsed time. */
 } Effect;

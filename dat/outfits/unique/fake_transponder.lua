@@ -88,8 +88,12 @@ function init( p, po )
    reset( p, po )
 end
 
-function onscanned( p, po, _scanner )
-   disable( p, po, true )
+function onscanned( p, po, scanner )
+   -- Only uncovered by people who care
+   local fct = scanner:faction()
+   if inlist( factions, fct ) then
+      disable( p, po, true )
+   end
 end
 
 function cooldown( p, po, done, opt )

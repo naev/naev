@@ -1,13 +1,13 @@
 #include "lib/math.glsl"
 #include "lib/sdf.glsl"
 
-uniform vec4 color;
+uniform vec4 colour;
 uniform vec2 dimensions;
 uniform float dt;
 uniform float paramf;
 
 in vec2 pos;
-out vec4 color_out;
+out vec4 colour_out;
 
 #define CS(A)  vec2(sin(A),cos(A))
 void main(void) {
@@ -58,6 +58,6 @@ void main(void) {
          d = min( d, sdArc( uv, CS( float(i)*M_PI*2.0/3.0), arclen, inner, w ) );
    }
 
-   color_out = color;
-   color_out.a *= 0.6*smoothstep( -m, 0.0, -d );
+   colour_out = colour;
+   colour_out.a *= 0.6*smoothstep( -m, 0.0, -d );
 }

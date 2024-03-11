@@ -36,3 +36,4 @@ int lua_iscanvas( lua_State *L, int ind );
  * Misc helpers.
  */
 int canvas_new( LuaCanvas_t *lc, int w, int h );
+void canvas_reset (void);

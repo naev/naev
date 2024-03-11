@@ -11,7 +11,7 @@
    if spob.cur():tags().station then
       return false
    end
-   if not misn_test.mercenary() then
+   if not misn_test.mercenary(true) then
       return false
    end
    return misn_test.reweight_active()

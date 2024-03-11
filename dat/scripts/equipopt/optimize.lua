@@ -83,7 +83,7 @@ local goodness_special = {
    ["Enygma Systems Huntsman Launcher"] = 0.5,
    ["Enygma Systems Spearhead Launcher"] = 0.4, -- high damage but shield only
    ["TeraCom Medusa Launcher"] = 0.5,           -- really high disable
-   ["Droid Repair Crew"] = 0.5, -- Only work until 50%
+   ["Droid Repair Crew"] = 0.4, -- Only work until 50%
    ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
    -- Plasma do a lot of damage over time
    ["Plasma Blaster MK1"] = 1 / 0.75,
@@ -92,6 +92,14 @@ local goodness_special = {
    ["Plasma Cluster Cannon"] = 1 / 0.75,
    ["Plasma Turret MK1"] = 1 / 0.75,
    ["Plasma Turret MK2"] = 1 / 0.75,
+   -- Razor/Disruptors do disable over time (and energy drain!)
+   ["Razor Artillery S1"] = 1 / 0.75,
+   ["Razor Artillery S2"] = 1 / 0.75,
+   ["Razor Artillery S3"] = 1 / 0.75,
+   ["Razor Battery S3"] = 1 / 0.75,
+   ["Disruptor Artillery S1"] = 1 / 0.75,
+   ["Disruptor Artillery S2"] = 1 / 0.75,
+   ["Disruptor Battery S3"] = 1 / 0.75,
 }
 
 
@@ -102,7 +110,7 @@ local special_ships = {}
 special_ships["Drone"] = function( p )
    for k,o in ipairs{
       "Milspec Orion 2301 Core System",
-      "Nexus Dart 150 Engine",
+      "Nexus Dart 160 Engine",
       "Nexus Light Stealth Plating",
       "Neutron Disruptor",
       "Neutron Disruptor",
@@ -114,7 +122,7 @@ end
 special_ships["Heavy Drone"] = function( p )
    for k,o in ipairs{
       "Milspec Thalos 3602 Core System",
-      "Unicorp Hawk 350 Engine",
+      "Unicorp Hawk 360 Engine",
       choose_one{"Nexus Light Stealth Plating", "S&K Light Combat Plating"},
       "Shatterer Launcher",
       "Shatterer Launcher",
@@ -134,7 +142,7 @@ function optimize.goodness_default( o, p )
    -- Base attributes
    local base = p.cargo*(0.5*math.pow(o.cargo,0.3) + 0.1*(1-os.cargo_inertia)) + p.fuel*0.003*os.fuel
    -- Movement attributes
-   local move = 0.1*o.thrust + 0.1*o.speed + 0.2*o.turn + 50*(os.time_speedup-1)
+   local move = 0.1*o.accel + 0.1*o.speed + 0.2*o.turn + 50*(os.time_speedup-1)
    -- Health attributes
    local health = 0.01*o.shield + 0.02*o.armour + 0.9*o.shield_regen + 2*o.armour_regen + os.absorb/10
    -- Energy attributes
@@ -242,7 +250,9 @@ function optimize.optimize( p, cores, outfit_list, params )
       ai_setup.setup(p)
       return
    end
-   p:outfitRm( "all" )
+   if not params.noremove then
+      p:outfitRm( "all" )
+   end
 
    -- Special ships used fixed outfits
    local specship = special_ships[ ps:nameRaw() ]
@@ -397,9 +407,9 @@ function optimize.optimize( p, cores, outfit_list, params )
 
       -- We correct ship stats here and convert them to "relative improvements"
       -- Movement
-      oo.thrust = os.thrust_mod * (os.thrust + st.thrust) - st.thrust
-      oo.speed  = os.speed_mod  * (os.speed  + st.speed)  - st.speed
-      oo.turn   = os.turn_mod   * (os.turn   + st.turn)   - st.turn
+      oo.accel  = os.accel_mod * (os.accel + st.accel) - st.accel
+      oo.speed  = os.speed_mod * (os.speed + st.speed) - st.speed
+      oo.turn   = os.turn_mod  * (os.turn  + st.turn)  - st.turn
       -- Health
       oo.armour = os.armour_mod * (os.armour + st.armour) - st.armour
       oo.shield = os.shield_mod * (os.shield + st.shield) - st.shield
@@ -424,8 +434,8 @@ function optimize.optimize( p, cores, outfit_list, params )
          oo.penetration = 0.5
       elseif oo.type == "Afterburner" then
          -- We add it as movement, but weaken the effect a bit
-         oo.thrust   = oo.thrust + 1.5*math.sqrt(oo.spec.thrust * st.thrust)
-         oo.speed    = oo.speed  + 1.5*math.sqrt(oo.spec.speed * st.speed)
+         oo.accel    = oo.accel + 1.5*math.sqrt(oo.spec.accel * st.accel)
+         oo.speed    = oo.speed + 1.5*math.sqrt(oo.spec.speed * st.speed)
       end
 
       -- Compute goodness
@@ -444,41 +454,49 @@ function optimize.optimize( p, cores, outfit_list, params )
    local slots = {}
    local slots_w, slots_u, slots_s = {}, {}, {}
    for k,v in ipairs(slots_base) do
-      local has_outfits = {}
-      local outfitpos = {}
-      for m,o in ipairs(outfit_list) do
-         if ps:fitsSlot( k, o ) then
-            table.insert( has_outfits, o )
-            -- Check to see if it is in the similar list
-            for spos,s in ipairs(same_list) do
-               if o==s then
-                  outfitpos[ #has_outfits ] = spos
-                  break
+      -- Must be empty
+      if p:outfitSlot(k)==nil then
+         local has_outfits = {}
+         local outfitpos = {}
+         for m,o in ipairs(outfit_list) do
+            if ps:fitsSlot( k, o ) then
+               table.insert( has_outfits, o )
+               -- Check to see if it is in the similar list
+               for spos,s in ipairs(same_list) do
+                  if o==s then
+                     outfitpos[ #has_outfits ] = spos
+                     break
+                  end
                end
             end
          end
-      end
 
-      if #has_outfits > 0 then
-         v.id = k
-         v.outfits = has_outfits
-         v.samepos = outfitpos
-         table.insert( slots, v )
+         if #has_outfits > 0 then
+            v.id = k
+            v.outfits = has_outfits
+            v.samepos = outfitpos
+            table.insert( slots, v )
 
-         -- Each slot adds a number of variables equivalent to the number of
-         -- potential outfits, but only one constraint
-         ncols = ncols + #v.outfits
-         nrows = nrows + 1
+            -- Each slot adds a number of variables equivalent to the number of
+            -- potential outfits, but only one constraint
+            ncols = ncols + #v.outfits
+            nrows = nrows + 1
 
-         -- Sort by type to apply limits
-         if v.type=="Weapon" then
-            table.insert( slots_w, v )
-         elseif v.type=="Utility" then
-            table.insert( slots_u, v )
-         elseif v.type=="Structure" then
-            table.insert( slots_s, v )
+            -- Sort by type to apply limits
+            if v.type=="Weapon" then
+               table.insert( slots_w, v )
+            elseif v.type=="Utility" then
+               table.insert( slots_u, v )
+            elseif v.type=="Structure" then
+               table.insert( slots_s, v )
+            end
          end
       end
+   end
+   if ncols==0 then
+      p:fillAmmo()
+      ai_setup.setup(p)
+      return -- Nothing to optimize
    end
 
    -- We have to add additional constraints (spaceworthy, limits)
@@ -741,7 +759,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       -- Due to the approximation, sometimes they end up with not enough
       -- energy, we'll try again with larger energy constraints
       local stn = p:stats()
-      if stn.energy_regen < energygoal then
+      if stn.energy_regen < energygoal and try < 5 then
          p:outfitRm( "all" )
          emod = emod * 1.5
          --print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))

@@ -18,7 +18,7 @@ local function render( sp, x, y, z )
    -- Get slightly bigger over time
    local s = z * (1+0.3*d.timer)
 
-   lg.setColor( 1, 1, 1 )
+   lg.setColour( 1, 1, 1 )
    local old_shader = lg.getShader()
    lg.setShader( blink_shader )
    -- We have to flip the y axis

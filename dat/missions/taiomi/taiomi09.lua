@@ -86,7 +86,7 @@ function land_smuggler ()
    vn.clear()
    vn.scene()
    local s = vn.Character.new( _("Smuggler"), { image=vni.generic() } )
-   local scav = vni.soundonly( 1, {pos="farleft", color=taiomi.scavenger.colour} )
+   local scav = vni.soundonly( 1, {pos="farleft", colour=taiomi.scavenger.colour} )
    vn.transition()
 
    if mem.smugden_known then
@@ -190,7 +190,7 @@ function land_escorts ()
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na(fmt.f(_([[You land and are quickly greeted by smugglers. They briefly introduce themselves, and say they'll be delivering the promised cargo to the specified location at {sys} before leaving on shuttles. After the formality head back to their ships to await your departure.]]),
+   vn.na(fmt.f(_([[You land and are quickly greeted by smugglers. They briefly introduce themselves, and say they'll be delivering the promised cargo to the specified location at {sys} before leaving on shuttles. After the formality, they head back to their ships to await your departure.]]),
       {sys=handoffsys}))
    vn.run()
 

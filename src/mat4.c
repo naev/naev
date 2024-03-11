@@ -45,6 +45,25 @@ void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 )
 }
 
 /**
+ * @brief Multiplies a matrix with a vector (out = m * v);
+ *
+ * Note that out should not be v.
+ *
+ *    @param[out] out Output vector.
+ *    @param m Matrix to mulitply.
+ *    @param v Vector to multiply.
+ */
+void mat4_mul_vec( vec3 *out, const mat4 *m, const vec3 *v )
+{
+   for (int i=0; i<3; i++) {
+      GLfloat a = m->m[3][i];
+      for (int j=0; j<3; j++)
+         a += m->m[j][i] * v->v[j];
+      out->v[i] = a;
+   }
+}
+
+/**
  * @brief Applies a transformation to another, storing the result in the left hand side.
  *
  *    @param[in, out] lhs Left hand side matrix.
@@ -87,6 +106,13 @@ void mat4_scale( mat4 *m, double x, double y, double z )
       m->m[2][i] *= z;
    }
 }
+void mat4_scale_xy( mat4 *m, double x, double y )
+{
+   for (int i=0; i<4; i++) {
+      m->m[0][i] *= x;
+      m->m[1][i] *= y;
+   }
+}
 
 /**
  * @brief Translates a homogenous transformation matrix.
@@ -100,6 +126,24 @@ void mat4_translate( mat4 *m, double x, double y, double z )
 {
    for (int i=0; i<4; i++)
       m->m[3][i] += m->m[0][i] * x + m->m[1][i] * y + m->m[2][i] * z;
+}
+void mat4_translate_x( mat4 *m, double x )
+{
+   for (int i=0; i<4; i++)
+      m->m[3][i] += m->m[0][i] * x;
+}
+void mat4_translate_xy( mat4 *m, double x, double y )
+{
+   for (int i=0; i<4; i++)
+      m->m[3][i] += m->m[0][i] * x + m->m[1][i] * y;
+}
+void mat4_translate_scale_xy( mat4 *m, double x, double y, double w, double h )
+{
+   for (int i=0; i<4; i++) {
+      m->m[3][i] += m->m[0][i] * x + m->m[1][i] * y;
+      m->m[0][i] *= w;
+      m->m[1][i] *= h;
+   }
 }
 
 /**
@@ -254,24 +298,26 @@ mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up )
 
    /* First column. */
    H.m[0][0] = side.v[0];
-   H.m[0][1] = side.v[1];
-   H.m[0][2] = side.v[2];
-   H.m[0][3] = 0.;
+   H.m[1][0] = side.v[1];
+   H.m[2][0] = side.v[2];
+   H.m[3][0] = 0.;
    /* Second column. */
-   H.m[1][0] = upc.v[0];
+   H.m[0][1] = upc.v[0];
    H.m[1][1] = upc.v[1];
-   H.m[1][2] = upc.v[2];
-   H.m[1][3] = 0.;
+   H.m[2][1] = upc.v[2];
+   H.m[3][1] = 0.;
    /* Third column. */
-   H.m[2][0] = -forward.v[0];
-   H.m[2][1] = -forward.v[1];
+   H.m[0][2] = -forward.v[0];
+   H.m[1][2] = -forward.v[1];
    H.m[2][2] = -forward.v[2];
-   H.m[2][3] = 0.;
+   H.m[3][2] = 0.;
    /* Fourth column. */
-   H.m[3][0] = -eye->v[0];
-   H.m[3][1] = -eye->v[1];
-   H.m[3][2] = -eye->v[2];
+   H.m[0][3] = 0.;//-eye->v[0];
+   H.m[1][3] = 0.;//-eye->v[1];
+   H.m[2][3] = 0.;//-eye->v[2];
    H.m[3][3] = 1.;
+
+   mat4_translate( &H, -eye->v[0], -eye->v[1], -eye->v[2] );
 
    return H;
 }

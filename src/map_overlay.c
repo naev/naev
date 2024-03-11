@@ -16,6 +16,7 @@
 #include "input.h"
 #include "log.h"
 #include "naev.h"
+#include "ntracing.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "pilot.h"
@@ -25,9 +26,6 @@
 
 static const double OVERLAY_FADEIN = 1.0/3.0; /**< How long it takes to fade in newly discovered things. */
 
-static int autonav_pos = 0;
-static double autonav_pos_x = 0.;
-static double autonav_pos_y = 0.;
 static IntList ovr_qtquery; /**< For querying collisions. */
 
 /**
@@ -52,11 +50,12 @@ typedef struct ovr_marker_s {
    char *text;       /**< Marker display text. */
    ovr_marker_type_t type; /**< Marker type. */
    int refcount;     /**< Refcount. */
-   double x;   /**< X center of the marker. */
-   double y;   /**< Y center of the marker. */
+   vec2 pos;         /**< Center of the marker. */
+   MapOverlayPos mo; /**< Map overlay display position. */
    union {
       struct {
          double r;
+         vec2 textpos;
       } circle;
    } u; /**< Type data. */
 } ovr_marker_t;
@@ -82,6 +81,15 @@ typedef struct OverlayBounds_s {
    double y;
 } OverlayBounds_t;
 static OverlayBounds_t ovr_bounds;
+
+/* For autonav. */
+static int autonav_pos = 0;
+static vec2 autonav_pos_v;
+static MapOverlayPos autonav_pos_mo;
+
+/* For optimizing overlay layout. */
+static MapOverlayPos **ovr_refresh_mo = NULL;
+static const vec2 **ovr_refresh_pos = NULL;
 
 /*
  * Prototypes
@@ -205,7 +213,7 @@ int ovr_input( SDL_Event *event )
 void ovr_refresh (void)
 {
    double max_x, max_y;
-   int items, jumpitems;
+   int n, items, jumpitems, spobitems;
    const vec2 **pos;
    MapOverlayPos **mo;
    char buf[STRMAX_SHORT];
@@ -214,15 +222,33 @@ void ovr_refresh (void)
    if (!ovr_isOpen())
       return;
 
+   NTracingZone( _ctx, 1 );
+
+   /* Clean up leftovers. */
+   if (ovr_refresh_mo)
+     free( ovr_refresh_mo );
+   if (ovr_refresh_pos)
+     free( ovr_refresh_pos );
+
    /* Update bounds if necessary. */
    ovr_boundsUpdate();
 
    /* Calculate max size. */
    items = 0;
-   pos = calloc(array_size(cur_system->jumps) + array_size(cur_system->spobs), sizeof(vec2*));
-   mo  = calloc(array_size(cur_system->jumps) + array_size(cur_system->spobs), sizeof(MapOverlayPos*));
+   n = array_size(cur_system->jumps) + array_size(cur_system->spobs) + array_size(ovr_markers) + autonav_pos;
+   pos = calloc( n, sizeof(vec2*) );
+   mo  = calloc( n, sizeof(MapOverlayPos*) );
    max_x = 0.;
    max_y = 0.;
+   if (autonav_pos) {
+      max_x = MAX( max_x, ABS(autonav_pos_v.x) );
+      max_y = MAX( max_y, ABS(autonav_pos_v.y) );
+      pos[items] = &autonav_pos_v;
+      mo[items]  = &autonav_pos_mo;
+      mo[items]->radius = 9.; /* Gets set properly below. */
+      mo[items]->text_width = gl_printWidthRaw( &gl_smallFont, _("TARGET") );
+      items++;
+   }
    for (int i=0; i<array_size(cur_system->jumps); i++) {
       JumpPoint *jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
@@ -253,19 +279,55 @@ void ovr_refresh (void)
       mo[items]->text_width = gl_printWidthRaw( &gl_smallFont, buf );
       items++;
    }
+   spobitems = items;
+   for (int i=0; i<array_size(ovr_markers); i++) {
+      double r;
+      ovr_marker_t *mrk = &ovr_markers[i];
+      max_x = MAX( max_x, ABS(mrk->pos.x) );
+      max_y = MAX( max_y, ABS(mrk->pos.y) );
+      if (mrk->text==NULL)
+         continue;
+      /* Initialize the map overlay stuff. */
+      mo[items] = &mrk->mo;
+      switch (mrk->type) {
+         case OVR_MARKER_POINT:
+            pos[items] = &mrk->pos;
+            r = 13.; /* Will get set approprietaly with the max. */
+            break;
+         case OVR_MARKER_CIRCLE:
+            pos[items] = &mrk->u.circle.textpos;
+            r = 13.; /* We're not using the full area. */
+            break;
+      }
+      mo[items]->radius = r;
+      mo[items]->text_width = gl_printWidthRaw( &gl_smallFont, mrk->text );
+      items++;
+   }
 
    /* We need to calculate the radius of the rendering from the maximum radius of the system. */
    ovr_res = 2. * 1.2 * MAX( max_x / ovr_bounds.w, max_y / ovr_bounds.h );
    ovr_res = MAX( ovr_res, 25. );
-   for (int i=0; i<items; i++)
-      mo[i]->radius = MAX( 2.+mo[i]->radius / ovr_res, i<jumpitems ? 5. : 7.5 );
+   for (int i=0; i<items; i++) {
+      double rm;
+      if (autonav_pos && (i==0))
+         rm = 9.;
+      else if (i<jumpitems)
+         rm = 5.;
+      else if (i<spobitems)
+         rm = 7.5;
+      else
+         rm = 13.;
+      mo[i]->radius = MAX( 2.+mo[i]->radius / ovr_res, rm );
+   }
 
    /* Compute text overlap and try to minimize it. */
    ovr_optimizeLayout( items, pos, mo );
 
-   /* Free the moos. */
-   free( mo );
-   free( pos );
+   /* Sove the moos. */
+   ovr_refresh_pos = pos;
+   ovr_refresh_mo = mo;
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -284,6 +346,7 @@ static void ovr_optimizeLayout( int items, const vec2** pos, MapOverlayPos** mo 
    const float ky      = 0.045; /**< y softness factor (moving along y is more likely to be the right solution). */
    const float eps_con = 1.3;   /**< Convergence criterion. */
 
+   /* Nothing to do. */
    if (items <= 0)
       return;
 
@@ -296,7 +359,7 @@ static void ovr_optimizeLayout( int items, const vec2** pos, MapOverlayPos** mo 
          if (cur.dist < mo[cur.i]->radius + mo[cur.j]->radius)
             array_push_back( &fits, cur );
       }
-   while (array_size( fits ) > 0) {
+   for (int iter=0; (iter<max_iters) && (array_size(fits) > 0); iter++) {
       float shrink_factor = 0.;
       memset( must_shrink, 0, items );
       for (int i=0; i < array_size( fits ); i++) {
@@ -311,6 +374,7 @@ static void ovr_optimizeLayout( int items, const vec2** pos, MapOverlayPos** mo 
       for (int i=0; i<items; i++)
          if (must_shrink[i])
             mo[i]->radius *= shrink_factor;
+
    }
    free( must_shrink );
    array_free( fits );
@@ -328,7 +392,6 @@ static void ovr_optimizeLayout( int items, const vec2** pos, MapOverlayPos** mo 
       /* Test to see what side is best to put the text on.
        * We actually compute the text overlap also so hopefully it will alternate
        * sides when stuff is clustered together. */
-
       x = pos[i]->x/ovr_res - ovr_text_pixbuf;
       y = pos[i]->y/ovr_res - ovr_text_pixbuf;
       w = mo[i]->text_width + 2.*ovr_text_pixbuf;
@@ -583,6 +646,10 @@ void ovr_setOpen( int open )
       input_mouseHide();
       array_free( ovr_render_safelanes );
       ovr_render_safelanes = NULL;
+      free( ovr_refresh_pos );
+      ovr_refresh_pos = NULL;
+      free( ovr_refresh_mo );
+      ovr_refresh_mo = NULL;
    }
 }
 
@@ -658,6 +725,8 @@ void ovr_render( double dt )
    if (player_isFlag( PLAYER_DESTROYED ) || (player.p == NULL))
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* Have to clear for text. */
    glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -719,10 +788,10 @@ void ovr_render( double dt )
    if (autonav_pos) {
       glColour col = cRadar_hilight;
       col.a = 0.6;
-      map_overlayToScreenPos( &x, &y, autonav_pos_x, autonav_pos_y );
+      map_overlayToScreenPos( &x, &y, autonav_pos_v.x, autonav_pos_v.y );
       glUseProgram( shaders.selectposition.program );
       gl_renderShader( x, y, 9., 9., 0., &shaders.selectposition, &col, 1 );
-      gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
+      gl_printMarkerRaw( &gl_smallFont, x+autonav_pos_mo.text_offx, y+autonav_pos_mo.text_offy, &cRadar_hilight, _("TARGET") );
    }
 
    /* Render spobs. */
@@ -853,7 +922,7 @@ void ovr_render( double dt )
             0, 2, GL_FLOAT, 0 );
 
       /* Set shader uniforms. */
-      gl_uniformColor(shaders.stealthoverlay.color, &cWhite);
+      gl_uniformColour(shaders.stealthoverlay.colour, &cWhite);
       const mat4 ortho = mat4_ortho( 0., 1., 0., 1., 1., -1. );
       const mat4 I     = mat4_identity();
       gl_uniformMat4(shaders.stealthoverlay.projection, &ortho );
@@ -875,6 +944,8 @@ void ovr_render( double dt )
 
    /* Render the player. */
    gui_renderPlayer( res, 1 );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -884,10 +955,12 @@ void ovr_render( double dt )
  */
 static void ovr_mrkRenderAll( double res, int fg )
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(ovr_markers); i++) {
       double x, y;
       ovr_marker_t *mrk = &ovr_markers[i];
-      map_overlayToScreenPos( &x, &y, mrk->x, mrk->y );
+      map_overlayToScreenPos( &x, &y, mrk->pos.x, mrk->pos.y );
 
       if (!fg) {
          double r;
@@ -910,19 +983,20 @@ static void ovr_mrkRenderAll( double res, int fg )
       }
 
       if (fg && mrk->text != NULL) {
-         double r;
          switch (mrk->type) {
             case OVR_MARKER_POINT:
-               gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
+               gl_printMarkerRaw( &gl_smallFont, x+mrk->mo.text_offx, y+mrk->mo.text_offy, &cRadar_hilight, mrk->text );
                break;
 
             case OVR_MARKER_CIRCLE:
-               r = MAX( mrk->u.circle.r / res, 13. ); /* Don't allow to be smaller than a "point" */
-               gl_printMarkerRaw( &gl_smallFont, x+r*M_SQRT1_2+7., y-r*M_SQRT1_2-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
+               map_overlayToScreenPos( &x, &y, mrk->u.circle.textpos.x, mrk->u.circle.textpos.y );
+               gl_printMarkerRaw( &gl_smallFont, x+mrk->mo.text_offx, y+mrk->mo.text_offy, &cRadar_hilight, mrk->text );
                break;
          }
       }
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -948,6 +1022,10 @@ void ovr_mrkClear (void)
    for (int i=0; i<array_size(ovr_markers); i++)
       ovr_mrkCleanup( &ovr_markers[i] );
    array_erase( &ovr_markers, array_begin(ovr_markers), array_end(ovr_markers) );
+
+   /* Refresh if necessary. */
+   if (ovr_open)
+      ovr_refresh();
 }
 
 /**
@@ -1003,7 +1081,7 @@ unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
             ((text!=NULL) && ((mrk->text==NULL) || strcmp(text,mrk->text)!=0)))
          continue;
 
-      if (hypotf( x-mrk->x, y-mrk->y ) > 1e-3)
+      if (hypotf( x-mrk->pos.x, y-mrk->pos.y ) > 1e-3)
          continue;
 
       /* Found same marker already! */
@@ -1016,8 +1094,11 @@ unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
    mrk->type = OVR_MARKER_POINT;
    if (text != NULL)
       mrk->text = strdup( text );
-   mrk->x = x;
-   mrk->y = y;
+   vec2_cset( &mrk->pos, x, y );
+
+   /* Refresh if necessary. */
+   if (ovr_open)
+      ovr_refresh();
 
    return mrk->id;
 }
@@ -1046,7 +1127,7 @@ unsigned int ovr_mrkAddCircle( const char *text, double x, double y, double r )
             ((text!=NULL) && ((mrk->text==NULL) || strcmp(text,mrk->text)!=0)))
          continue;
 
-      if ((mrk->u.circle.r-r) > 1e-3 || hypotf( x-mrk->x, y-mrk->y ) > 1e-3)
+      if ((mrk->u.circle.r-r) > 1e-3 || hypotf( x-mrk->pos.x, y-mrk->pos.y ) > 1e-3)
          continue;
 
       /* Found same marker already! */
@@ -1059,9 +1140,13 @@ unsigned int ovr_mrkAddCircle( const char *text, double x, double y, double r )
    mrk->type = OVR_MARKER_CIRCLE;
    if (text != NULL)
       mrk->text = strdup( text );
-   mrk->x = x;
-   mrk->y = y;
+   vec2_cset( &mrk->pos, x, y );
    mrk->u.circle.r = r;
+   vec2_cset( &mrk->u.circle.textpos, x+r*M_SQRT1_2, y-r*M_SQRT1_2 );
+
+   /* Refresh if necessary. */
+   if (ovr_open)
+      ovr_refresh();
 
    return mrk->id;
 }
@@ -1084,6 +1169,10 @@ void ovr_mrkRm( unsigned int id )
 
       ovr_mrkCleanup( m );
       array_erase( &ovr_markers, &m[0], &m[1] );
+
+      /* Refresh if necessary. */
+      if (ovr_open)
+         ovr_refresh();
       break;
    }
 }
@@ -1091,11 +1180,18 @@ void ovr_mrkRm( unsigned int id )
 void ovr_autonavPos( double x, double y )
 {
    autonav_pos = 1;
-   autonav_pos_x = x;
-   autonav_pos_y = y;
+   vec2_cset( &autonav_pos_v, x, y );
+
+   /* Refresh if necessary. */
+   if (ovr_open)
+      ovr_refresh();
 }
 
 void ovr_autonavClear (void)
 {
    autonav_pos = 0;
+
+   /* Refresh if necessary. */
+   if (ovr_open)
+      ovr_refresh();
 }

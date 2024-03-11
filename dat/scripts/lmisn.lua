@@ -111,6 +111,28 @@ function lmisn.getNextSystem( nowsys, finalsys, hidden )
    return path[1]:dest()
 end
 
+--[[--
+   Gets the route between nowsys and finalsys.
+
+   @treturn table A table of systems including the nowsys and finalsys.
+--]]
+function lmisn.getRoute( nowsys, finalsys, hidden )
+   local route = {nowsys}
+   if nowsys == finalsys or finalsys == nil then
+      return route
+   end
+
+   local path = nowsys:jumpPath( finalsys, hidden )
+   if not path then
+      return route
+   end
+
+   for k,v in ipairs(path) do
+      route[ k+1 ] = v:dest()
+   end
+   return route
+end
+
 lmisn.sysFilters = {}
 --[[--
    Provides the default system filter. Always true regardless of input.

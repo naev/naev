@@ -20,14 +20,10 @@ imgdict = {}
 for i in images:
     imgdict[i] = [0, []]
 
-for file in glob(prefix+"/dat/outfits/**/*.xml", recursive=True):
+def parse_outfit( file ):
     print( file )
     with open( file, 'r' ) as f:
         d = f.read()
-        m = re.search( "<specific type=\"(ammo|fighter)\">", d )
-        if m:
-            continue
-
         m = re.search( "<gfx_store>(.+?)</gfx_store>", d )
         if m:
             s = m.group(1)
@@ -37,6 +33,11 @@ for file in glob(prefix+"/dat/outfits/**/*.xml", recursive=True):
             v[0] += 1
             v[1] += [os.path.basename(file)]
             imgdict[s] = v
+
+for file in glob(prefix+"/dat/outfits/**/*.xml", recursive=True):
+    parse_outfit( file )
+for file in glob(prefix+"/build/dat/outfits/**/*.xml", recursive=True):
+    parse_outfit( file )
 
 overused = []
 underused = []
@@ -60,8 +61,11 @@ with open( "outfit_gfx.html", "w" ) as out:
         path = prefix+"/dat/gfx/outfit/store/"+k
         if not os.path.isfile( path ):
            path = prefix+"/artwork/gfx/outfit/store/"+k
+        if not os.path.isfile( path ):
+           path = prefix+"/artwork/"+k
         v = imgdict[k]
-        out.write(f"""
+        if v[0] != 1: # for simplicity hide stuff that appears once
+            out.write(f"""
   <div>
    <img width="128" height="128" src='{path}' />
    <span>{k}: {v[0]}</span><br/>

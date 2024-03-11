@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Repeating Banshee Launcher">
  <general>
+  <shortname>R. Banshee L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Heavy Weapon</license>
   <rarity>2</rarity>
-  <mass>40</mass>
+  <mass>30</mass>
   <price>70000</price>
   <gfx_store>bansheelauncher.webp</gfx_store>
   <description>Designed by House Dvaered to equip their Ancestors, this launcher features an advanced, but very heavy reloading system that allows for an unparalleled fire rate. The ammo storage is short, but it can be anticipated that either the bomber or its target will have been destroyed before it is empty.</description>
@@ -26,10 +27,10 @@
   <spfx_armour>EmpS</spfx_armour>
   <trail_generator x="-10">fire-missile</trail_generator>
   <duration blowup="shield">7</duration>
-  <thrust>150</thrust>
+  <accel>150</accel>
   <speed>200</speed>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>60</penetrate>
    <physical>100</physical>
   </damage>

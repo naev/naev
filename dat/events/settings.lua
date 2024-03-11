@@ -12,38 +12,46 @@
 local luatk = require "luatk"
 local fmt = require "format"
 
-local settings, uselanes_jump, uselanes_spob, pick_gui
-local reset_dist, reset_shield, compr_speed, compr_max
+local settings, uselanes_jump, uselanes_spob, uselanes_thr, pick_gui
+local reset_dist, reset_shield, compr_speed, compr_max, match_fleet, follow_jump, brake_pos
 
 local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
 local COMPR_SPEED_MIN   = 1e3 -- Old default was 5e3
 local COMPR_SPEED_MAX   = 10e3
-local COMPR_MIN         = 10 -- Old default was 200
-local COMPR_MAX         = 200
+local COMPR_MIN         = 1 -- Old default was 200
+local COMPR_MAX         = 100
 
 function create ()
-   -- Load variables
-   uselanes_jump = var.peek( "autonav_uselanes_jump" )
-   uselanes_spob = var.peek( "autonav_uselanes_spob" )
-   if uselanes_jump == nil then
-      -- Not set so default to true
-      uselanes_jump = true
-      var.push( "autonav_uselanes_jump", true )
+   local function var_peek_fix( varname, default )
+      local v = var.peek( varname )
+      if v==nil then
+         var.push( varname, default )
+         return default
+      end
+      return v
    end
-   reset_shield = var.peek("autonav_reset_shield") or 1
-   reset_dist = var.peek("autonav_reset_dist") or 3e3
-   compr_speed = var.peek("autonav_compr_speed") or 5e3
-   compr_max = var.peek("autonav_compr_max") or 50
+
+   -- Load variables
+   uselanes_jump=var_peek_fix( "autonav_uselanes_jump",false )
+   uselanes_spob=var_peek_fix( "autonav_uselanes_spob",false )
+   uselanes_thr= var_peek_fix( "autonav_uselanes_thr",2 )
+   reset_shield= var_peek_fix( "autonav_reset_shield",1 )
+   reset_dist  = var_peek_fix( "autonav_reset_dist",  3e3 )
+   compr_speed = var_peek_fix( "autonav_compr_speed", 5e3 )
+   compr_max   = var_peek_fix( "autonav_compr_max",   50 )
+   match_fleet = var_peek_fix( "autonav_match_fleet", true )
+   follow_jump = var_peek_fix( "autonav_follow_jump", false )
+   brake_pos   = var_peek_fix( "autonav_brake_pos",   false )
 
    -- Set an info button up
-   player.infoButtonRegister( _("Settings"), settings, 1, "A" )
+   player.infoButtonRegister( _("Settings"), settings, 1, "S" )
 end
 
 function settings ()
    local txt_autonav, fad_autonav, txt_compr
-   local chk_uselanes_jump, chk_uselanes_spob
+   local chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_jump, chk_brake_pos
 
-   local w, h = 600, 420
+   local w, h = 600, 540
    local wdw = luatk.newWindow( nil, nil, w, h )
    wdw:setCancel( luatk.close )
    luatk.newText( wdw, 0, 10, w, 20, _("Player Settings"), nil, "center" )
@@ -65,16 +73,19 @@ function settings ()
       else
          reset_dist = -1
          reset_shield = 0
-         msg = msg.._("Armour Damage")
+         msg = msg..p_("settings", "Armour Damage")
       end
       txt_autonav:set( msg )
    end
    local autonav_value
-   if reset_dist > 0 then
-      autonav_value = math.min( 1, 0.5 + 0.5 * reset_dist / AUTONAV_MAX_DIST )
-   else
-      autonav_value = math.max( 0, 0.5 * reset_shield )
+   local function update_autonav_value ()
+      if reset_dist > 0 then
+         autonav_value = math.min( 1, 0.5 + 0.5 * reset_dist / AUTONAV_MAX_DIST )
+      else
+         autonav_value = math.max( 0, 0.5 * reset_shield )
+      end
    end
+   update_autonav_value()
    local function update_ship_tc ()
       local pp = player.pilot()
       local tc_max = compr_speed / pp:speedMax()
@@ -91,16 +102,22 @@ function settings ()
    fad_autonav = luatk.newFader( wdw, 20, y, w-40, 20, 0, 1, nil, update_autonav )
    fad_autonav:set( autonav_value )
    y = y + 40
+   local txt_lanes_thr = luatk.newText( wdw, 20, y, w-40, 20, _("Lanes preference:") )
+   local tw = txt_lanes_thr:dimensions()
+   local fad_thr = luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, 1, 5, uselanes_thr, function ( _fdr, val )
+      uselanes_thr = val
+   end, {labels=true} )
+   y = y + 40
    local txt_compr_speed = luatk.newText( wdw, 20, y, w-40, 20, _("Compression velocity target:") )
-   local tw = txt_compr_speed:dimensions()
-   luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_SPEED_MIN, COMPR_SPEED_MAX, compr_speed, function ( _fdr, val )
+   tw = txt_compr_speed:dimensions()
+   local fad_compr_speed = luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_SPEED_MIN, COMPR_SPEED_MAX, compr_speed, function ( _fdr, val )
       compr_speed = val
       update_ship_tc()
    end, {labels=true} )
    y = y + 40
    local txt_compr_max = luatk.newText( wdw, 20, y, w-40, 20, _("Maximum compression:") )
    tw = txt_compr_max:dimensions()
-   luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_MIN, COMPR_MAX, compr_max, function ( _fdr, val )
+   local fad_compr_max = luatk.newFader( wdw, 40+tw, y, w-70-tw, 30, COMPR_MIN, COMPR_MAX, compr_max, function ( _fdr, val )
       compr_max = val
       update_ship_tc()
    end, {labels=true} )
@@ -111,24 +128,74 @@ function settings ()
    chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when jumping"), nil, uselanes_jump )
    y = y + 30
    chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when travelling to a space object"), nil, uselanes_spob )
+   y = y + 30
+   chk_match_fleet = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Match speed with slowest ship in fleet"), nil, match_fleet )
+   y = y + 30
+   chk_follow_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Jump to follow pilots"), nil, follow_jump )
+   y = y + 30
+   chk_brake_pos = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Brake when heading to a position"), nil, brake_pos )
    y = y + 40
 
    luatk.newText( wdw, 20, y, w-40, 20, "#n".._("GUI") )
    y = y + 20
    luatk.newButton( wdw, 20, y, 80, 40, _("Pick GUI"), pick_gui )
 
+   luatk.newButton( wdw, -20-80-20, -20, 80, 40, _("Defaults"), function ()
+      luatk.yesno(_("Reset Player Settings?"), _("Are you sure you want to reset the player settings?"), function ()
+         uselanes_jump = true
+         uselanes_spob = true
+         uselanes_thr = 2
+         reset_shield = 1
+         reset_dist = 3e3
+         compr_speed = 5e3
+         compr_max = 50
+         match_fleet = true
+         follow_jump = false
+         brake_pos = false
+         update_autonav_value()
+         chk_uselanes_jump:set( uselanes_jump )
+         chk_uselanes_spob:set( uselanes_spob )
+         chk_match_fleet:set( match_fleet )
+         chk_follow_jump:set( follow_jump )
+         chk_brake_pos:set( brake_pos )
+         fad_thr:set( uselanes_thr )
+         fad_autonav:set( autonav_value )
+         fad_compr_speed:set( compr_speed )
+         fad_compr_max:set( compr_max )
+         var.push( "autonav_uselanes_jump", uselanes_jump )
+         var.push( "autonav_uselanes_spob", uselanes_spob )
+         var.push( "autonav_uselanes_thr", uselanes_thr )
+         var.push( "autonav_reset_shield", reset_shield )
+         var.push( "autonav_reset_dist", reset_dist )
+         var.push( "autonav_compr_speed", compr_speed )
+         var.push( "autonav_compr_max", compr_max )
+         var.push( "autonav_match_fleet", match_fleet )
+         var.push( "autonav_follow_jump", follow_jump )
+         var.push( "autonav_brake_pos", brake_pos )
+
+         -- Also set GUI
+         player.guiSet( player.start().gui ) -- Default setting GUI
+      end )
+   end )
    luatk.newButton( wdw, -20, -20, 80, 40, _("Close"), luatk.close )
    luatk.run()
 
    -- Save as variables
    uselanes_jump = chk_uselanes_jump:get()
    uselanes_spob = chk_uselanes_spob:get()
+   match_fleet = chk_match_fleet:get()
+   follow_jump = chk_follow_jump:get()
+   brake_pos = chk_brake_pos:get()
    var.push( "autonav_uselanes_jump", uselanes_jump )
    var.push( "autonav_uselanes_spob", uselanes_spob )
+   var.push( "autonav_uselanes_thr", uselanes_thr )
    var.push( "autonav_reset_dist", reset_dist )
    var.push( "autonav_reset_shield", reset_shield )
    var.push( "autonav_compr_speed", compr_speed )
    var.push( "autonav_compr_max", compr_max )
+   var.push( "autonav_match_fleet", match_fleet )
+   var.push( "autonav_follow_jump", follow_jump )
+   var.push( "autonav_brake_pos", brake_pos)
 end
 
 function pick_gui ()

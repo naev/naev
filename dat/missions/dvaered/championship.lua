@@ -65,7 +65,7 @@ local function populate_bar() --add some random npcs
       misn.npcAdd("competitor2", _("Pilot"), mem.npc_portrait[3], _("This pilot seems to work as a private combat pilot"))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor3", _("Imperial pilot"), mem.npc_portrait[4], _([[This pilot is is clearly from the Empire.]]))
+      misn.npcAdd("competitor3", _("Imperial pilot"), mem.npc_portrait[4], _([[This pilot is clearly from the Empire.]]))
    end
    if rnd.rnd() < 0.5 then
       misn.npcAdd("competitor4", _("Dvaered pilot"), mem.npc_portrait[5], _([[This pilot surely works as a Vendetta pilot.]]))
@@ -107,7 +107,7 @@ function accept()
       misn.accept()
 
       misn.setTitle(_("The Dvaered Championship"))
-      misn.setReward(_("From 50k to 1.6m credits, depending on your rank"))
+      misn.setReward(fmt.f(_("From {low} to {high} credits, depending on your rank"),{low=fmt.credits(50e3), high=fmt.credits(1.6e6)}))
       misn.setDesc(_("You are taking part in a fight contest. Try to do your best!"))
       misn.osdCreate(_("The Dvaered Championship"), {
          _("Go to the starting point"),
@@ -165,10 +165,11 @@ function beginbattle()
 end
 
 function enter()
-   mem.playerclass = ship.class(pilot.ship(player.pilot()))
+   local pp = player.pilot()
+   mem.playerclass = pp:ship():class()
 
    --Launchers are forbidden
-   local listofoutfits = player.pilot():outfitsList()
+   local listofoutfits = pp:outfitsList()
    local haslauncher = false
    for i, j in ipairs(listofoutfits) do
       if j:type() == "Launcher" then
@@ -243,41 +244,25 @@ function enter()
 
       hooks = {}
 
-      for i, k in ipairs({sec11, sec12, sec21, sec22}) do
-         k:outfitRm("all")
-         k:outfitAdd("Gauss Gun", 3)
-         k:outfitAdd("Improved Stabilizer")
-      end
-
-      for i, k in ipairs({tv1,tv2}) do
-         k:outfitRm("all")
-         k:outfitAdd("Improved Stabilizer", 2)
-      end
-
+      -- TODO give outfits to make the security + holovision speedier?
       for i, k in ipairs({tv1, sec11, sec12, tv2, sec21, sec22}) do
          hooks[i] = hook.pilot(k, "attacked", "escort_attacked")
-         k:outfitRm("cores")
-         k:outfitAdd("Tricon Zephyr Engine")
-         k:outfitAdd("Milspec Orion 2301 Core System")
-         k:outfitAdd("S&K Ultralight Combat Plating")
-         k:setHealth(100,100)
-         k:setEnergy(100)
          k:control()
          k:memory().radius = 300 --Set the radius for the follow function
       end
 
       -- Set the angle for the follow function
-      tv1:memory().angle = math.rad(90)
+      tv1:memory().angle   = math.rad(90)
       sec11:memory().angle = math.rad(200)
       sec12:memory().angle = math.rad(240)
-      tv2:memory().angle = math.rad(90)
+      tv2:memory().angle   = math.rad(90)
       sec21:memory().angle = math.rad(200)
       sec22:memory().angle = math.rad(240)
 
       --The escort follows the competitors
-      tv1:follow(player.pilot(), true)
-      sec11:follow(player.pilot(), true)
-      sec12:follow(player.pilot(), true)
+      tv1:follow(pp, true)
+      sec11:follow(pp, true)
+      sec12:follow(pp, true)
       tv2:follow(opponent, true)
       sec21:follow(opponent, true)
       sec22:follow(opponent, true)
@@ -288,7 +273,7 @@ function enter()
 
       mem.opdehook = hook.pilot( opponent, "death", "oppo_dead" )
       mem.opjuhook = hook.pilot( opponent, "jump", "oppo_jump" )
-      mem.pldihook = hook.pilot( player.pilot(), "disable", "player_disabled" )
+      mem.pldihook = hook.pilot( pp, "disable", "player_disabled" )
       mem.opdihook = hook.pilot( opponent, "disable", "oppo_disabled" )
       mem.attackhook = hook.pilot( opponent, "attacked", "oppo_attacked" )
 

@@ -3,7 +3,7 @@
 minimum_pre_commit_version: '2.17.0'
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.4.0
+  rev: v4.5.0
   hooks:
     - id: trailing-whitespace
     - id: end-of-file-fixer
@@ -12,29 +12,45 @@ repos:
     - id: check-added-large-files
     - id: check-executables-have-shebangs
     - id: check-shebang-scripts-are-executable
+    - id: check-case-conflict
+    - id: check-symlinks
+    - id: destroyed-symlinks
+    - id: detect-private-key
     - id: mixed-line-ending
     - id: pretty-format-json
     - id: check-merge-conflict
       args: [--assume-in-merge]
 - repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: v0.9.0.5
+  rev: v0.9.0.6
   hooks:
     - id: shellcheck
 - repo: local
   hooks:
     - id: nluacheck
-      name: Wrapper for luacheck that understands Naev hooks
+      name: wrapper for luacheck that understands Naev hooks
       entry: utils/nluacheck.py
-      files: dat/.*\.lua
+      files: '^dat/'
+      types: [lua]
       language: python
     - id: check_fmt_f_usage
       name: Lua f-string validation
       entry: utils/check_fmt_f_usage.py
-      files: dat/.*\.lua
+      files: '^dat/'
+      types: [lua]
+      language: python
+    - id: glsl_validator
+      name: glsl validator
+      entry: utils/nglslValidator.py
+      files: dat/.*\.(frag|vert)$
       language: python
     - id: potfiles
-      name: Check for stale POTFILES.in
+      name: check for stale POTFILES.in
       entry: utils/update-po.sh . --pre-commit
       language: script
       always_run: true
       pass_filenames: false
+    - id: optipng
+      name: PNG Optimizer
+      entry: optipng
+      types: [png]
+      language: system

@@ -8,12 +8,11 @@ uniform float u_r       = 0.0; /**< Random seed. */
 uniform float u_speed   = 1.3; /**< How fast it playes. */
 
 /* Entry point. */
-vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 unused, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    float progress = u_time * u_speed;
    vec2 uv = texture_coords*2.0-1.0;
-
-   colour = vec4( 0.1, 0.7, 0.9, 1.0 );
+   vec4 colour = vec4( 0.1, 0.7, 0.9, 1.0 );
 
    float angle = 2.0*M_PI*random(u_r) + snoise( vec2(0.9*progress,u_r) );
    float c = cos(angle);
@@ -55,10 +54,10 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 
 #ifndef _LOVE
 in vec2 pos;
-out vec4 color_out;
+out vec4 colour_out;
 uniform sampler2D dummy;
 void main (void)
 {
-   color_out = effect( vec4(0.0), dummy, pos, vec2(0.0) );
+   colour_out = effect( vec4(0.0), dummy, pos, vec2(0.0) );
 }
-#endif
+#endif /* _LOVE */

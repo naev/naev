@@ -10,10 +10,11 @@
    if system.cur() ~= system.get("Arcturus") then
       return false
    end
-   if not misn_test.mercenary() then
+   local misn_test = require "misn_test"
+   if not misn_test.mercenary(true) then
       return false
    end
-   return require("misn_test").reweight_active()
+   return misn_test.reweight_active()
  </cond>
  <notes>
   <campaign>Kidnapping</campaign>
@@ -28,7 +29,7 @@ local ccomm = require "common.comm"
 local vn = require "vn"
 local fmt = require "format"
 
-local pnt1, sys3 = spob.getS("Praxis")
+local pnt1, sys3 = spob.getS("Waterhole's Moon")
 
 local panma, yohail -- Non-persistent state
 

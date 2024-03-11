@@ -33,6 +33,7 @@
  */
 typedef struct DTYPE_ {
    char* name;    /**< Name of the damage type */
+   char* display; /**< Display name of the damage type. */
    double sdam;   /**< Shield damage multiplier */
    double adam;   /**< Armour damage multiplier */
    double knock;  /**< Knockback */
@@ -48,6 +49,17 @@ static DTYPE* dtype_types  = NULL;  /**< Total damage types. */
 static int DTYPE_parse( DTYPE *temp, const char *file);
 static void DTYPE_free( DTYPE *damtype );
 static DTYPE* dtype_validType( int type );
+static int dtype_cmp( const void *p1, const void *p2 );
+
+/**
+ * @brief For sorting and bsearching.
+ */
+static int dtype_cmp( const void *p1, const void *p2 )
+{
+   const DTYPE *d1 = (const DTYPE*) p1;
+   const DTYPE *d2 = (const DTYPE*) p2;
+   return strcmp( d1->name, d2->name );
+}
 
 /**
  * @brief Parses an XML file containing a DTYPE.
@@ -78,6 +90,7 @@ static int DTYPE_parse( DTYPE *temp, const char *file )
    memset( temp, 0, sizeof(DTYPE) );
 
    xmlr_attr_strd( parent, "name", temp->name );
+   xmlr_attr_strd( parent, "display", temp->display );
 
    /* Extract the data. */
    node = parent->xmlChildrenNode;
@@ -133,6 +146,8 @@ static void DTYPE_free( DTYPE *damtype )
 {
    free(damtype->name);
    damtype->name = NULL;
+   free(damtype->display);
+   damtype->display = NULL;
 }
 
 /**
@@ -143,11 +158,13 @@ static void DTYPE_free( DTYPE *damtype )
  */
 int dtype_get( const char* name )
 {
-   for (int i=0; i<array_size(dtype_types); i++)
-      if (strcmp(dtype_types[i].name, name)==0)
-         return i;
-   WARN(_("Damage type '%s' not found in stack."), name);
-   return -1;
+   const DTYPE d= { .name = (char*)name };
+   const DTYPE *dout = bsearch( &d, dtype_types, array_size(dtype_types), sizeof(DTYPE), dtype_cmp );
+   if (dout==NULL) {
+      WARN(_("Damage type '%s' not found in stack."), name);
+      return -1;
+   }
+   return dout-dtype_types;
 }
 
 /**
@@ -170,7 +187,7 @@ const char* dtype_damageTypeToStr( int type )
    DTYPE *dmg = dtype_validType( type );
    if (dmg == NULL)
       return NULL;
-   return dmg->name;
+   return (dmg->display==NULL) ? dmg->name: dmg->display;
 }
 
 /**
@@ -180,8 +197,9 @@ const char* dtype_damageTypeToStr( int type )
  */
 int dtype_load (void)
 {
-   const DTYPE normal = {
-      .name = strdup(N_("normal")),
+   const DTYPE dtype_raw_type = {
+      .name = strdup(N_("raw")),
+      .display = NULL,
       .sdam = 1.,
       .adam = 1.,
       .knock = 0.,
@@ -192,7 +210,7 @@ int dtype_load (void)
 
    /* Load up the individual damage types. */
    dtype_types = array_create(DTYPE);
-   array_push_back( &dtype_types, normal );
+   array_push_back( &dtype_types, dtype_raw_type );
 
    for (int i=0; i<array_size(dtype_files); i++) {
       DTYPE dtype;
@@ -204,6 +222,7 @@ int dtype_load (void)
    array_free( dtype_files );
 
    /* Shrink back to minimum - shouldn't change ever. */
+   qsort( dtype_types, array_size(dtype_types), sizeof(DTYPE), dtype_cmp );
    array_shrink( &dtype_types );
 
    return 0;
@@ -232,7 +251,7 @@ void dtype_free (void)
  */
 int dtype_raw( int type, double *shield, double *armour, double *knockback )
 {
-   DTYPE *dtype = dtype_validType( type );
+   const DTYPE *dtype = dtype_validType( type );
    if (dtype == NULL)
       return -1;
    if (shield != NULL)
@@ -267,7 +286,7 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
 
    /* Set if non-nil. */
    if (dshield != NULL) {
-      if ((dtype->soffset <= 0) || (s == NULL))
+      if ((dtype->soffset == 0) || (s == NULL))
          *dshield    = dtype->sdam * dmg->damage * absorb;
       else {
          /*
@@ -284,7 +303,7 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
       }
    }
    if (darmour != NULL) {
-      if ((dtype->aoffset) <= 0 || (s == NULL))
+      if ((dtype->aoffset) == 0 || (s == NULL))
          *darmour    = dtype->adam * dmg->damage * absorb;
       else {
          ptr = (char*) s;

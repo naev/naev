@@ -13,20 +13,20 @@
  <absorb>70</absorb>
  <commodity>
   <name>Silicate</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Olivine</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Rhodium</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
   <rarity>1</rarity>
  </commodity>
  <commodity>
   <name>Yttrium</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
   <rarity>1</rarity>
  </commodity>
 </asteroid>

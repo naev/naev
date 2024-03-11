@@ -25,7 +25,7 @@ skills.set.bite = {
       requires = { "bite1" },
       desc = function( p )
          local dmg = 10*math.sqrt(p:mass())
-         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +800% thrust and +30% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
+         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +800% accel and +30% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
       end,
       icon = "fangs.webp",
    },
@@ -94,7 +94,7 @@ skills.set.move = {
       name = _("Wanderer"),
       tier = 3,
       requires = { "move2" },
-      desc = _("Gives a 50% thrust bonus."),
+      desc = _("Gives a 50% accel bonus."),
       outfit = "Wanderer",
       icon = "manta-ray.webp",
    },
@@ -218,7 +218,7 @@ skills.set.attack = {
       requires = { "attack2" },
       slot = "feral_rage",
       outfit = "Feral Rage II",
-      desc = _("The damage bonus is increased to 25% and the ship gains 25% speed and thrust bonuses, and a 15% turning bonus."),
+      desc = _("The damage bonus is increased to 25% and the ship gains 25% speed and accel bonuses, and a 15% turning bonus."),
       icon = "oni.webp",
    },
    ["attack4"] = {
@@ -256,7 +256,7 @@ skills.set.plasma = {
       tier = 2,
       outfit = "Paralyzing Plasma",
       requires = { "plasma1" },
-      desc = _("Plasma burn slows enemy speed, thrust, and turn by 25%."),
+      desc = _("Plasma burn slows enemy speed, accel, and turn by 25%."),
       icon = "chemical-bolt.webp",
    },
    ["plasma3"] = {
@@ -279,7 +279,7 @@ skills.set.plasma = {
       name = _("Plasma Burst"),
       tier = 5,
       requires = { "plasma4" },
-      desc = _("Creates an explosion of plasma affecting all ships around the pilot. Deals 100 damage with 50% penetration to all hostiles ships within 200 range. Deals an additional 200 damage over 10 seconds while lowering speed ,thrust, and turn by 25% and fire rate by 20%."),
+      desc = _("Creates an explosion of plasma affecting all ships around the pilot. Deals 100 damage with 50% penetration to all hostiles ships within 200 range. Deals an additional 200 damage over 10 seconds while lowering speed, accel, and turn by 25% and fire rate by 20%."),
       outfit = "Plasma Burst",
       icon = "goo-skull.webp",
       slot = "plasma_burst",

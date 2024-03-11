@@ -5,6 +5,7 @@
 
 /** @cond */
 #include <stdint.h>
+#include <stddef.h>
 /** @endcond */
 
 typedef struct msgcat {

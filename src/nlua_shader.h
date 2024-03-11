@@ -41,8 +41,8 @@ typedef struct LuaShader_s {
    /* Vertex Shader. */
    GLint VertexPosition;
    GLint VertexTexCoord;
-   GLint VertexColor;
-   GLint ConstantColor;
+   GLint VertexColour;
+   GLint ConstantColour;
    /* Other uniforms. */
    LuaUniform_t *uniforms;
    GLint nuniforms;

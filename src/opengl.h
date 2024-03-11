@@ -21,7 +21,11 @@
 #include "mat4.h"
 #include "shaders.gen.h"
 
-#define OPENGL_NUM_FBOS    3 /**< Number of FBOs to allocate and deal with. */
+#define OPENGL_NUM_FBOS    4 /**< Number of FBOs to allocate and deal with. */
+/** Currently used FBO IDs:
+ * 0/1: front/back buffer for rendering
+ * 2: temporary scratch buffer to use as necessary
+ * 3: Used by toolkit */
 
 /*
  * Contains info about the opengl screen
@@ -34,6 +38,9 @@
  * @brief Stores data about the current opengl environment.
  */
 typedef struct glInfo_ {
+   int major;  /**< OpenGL major version. */
+   int minor;  /**< OpenGL minor version. */
+   int glsl;   /**< GLSL version. */
    int x; /**< X offset of window viewport. */
    int y; /**< Y offset of window viewport. */
    /* Viewport considers x/y offset. */
@@ -66,6 +73,7 @@ typedef struct glInfo_ {
    GLuint current_fbo; /**< Current framebuffer. */
    GLuint fbo[OPENGL_NUM_FBOS]; /**< Framebuffers. */
    GLuint fbo_tex[OPENGL_NUM_FBOS]; /**< Texture for framebuffers. */
+   GLuint fbo_depth_tex[OPENGL_NUM_FBOS]; /**< Depth texture for framebuffers. */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 
@@ -79,8 +87,8 @@ extern mat4 gl_view_matrix;
 /*
  * used with colour.h
  */
-#define COLOUR(x)    glColor4d((x).r,(x).g,(x).b,(x).a) /**< Change colour. */
-#define ACOLOUR(x,a) glColor4d((x).r,(x).g,(x).b,a) /**< Change colour and override alpha. */
+#define COLOUR(x)    glColour4d((x).r,(x).g,(x).b,(x).a) /**< Change colour. */
+#define ACOLOUR(x,a) glColour4d((x).r,(x).g,(x).b,a) /**< Change colour and override alpha. */
 
 /*
  * initialization / cleanup
@@ -107,7 +115,7 @@ int gl_setupFullscreen (void);
 /*
  * misc
  */
-void gl_colorblind( int enable );
+void gl_colourblind (void);
 GLint gl_stringToFilter( const char *s );
 GLint gl_stringToClamp( const char *s );
 void gl_screenshot( const char *filename );

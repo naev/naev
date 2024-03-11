@@ -4,6 +4,7 @@
  <location>enter</location>
  <chance>100</chance>
  <system>Test of Enlightenment</system>
+ <priority>0</priority>
 </event>
 --]]
 local textoverlay = require "textoverlay"
@@ -46,7 +47,7 @@ function create ()
    pp:setDir( math.pi*0.5 )
    pp:setPos( vec2.new(0,-500) )
    pp:intrinsicSet( { -- Ship is too fast otherwise
-      thrust_mod     = -50,
+      accel_mod      = -50,
       speed_mod      = -50,
       turn_mod       = -50,
    }, true ) -- overwrite all
@@ -126,7 +127,7 @@ function puzzle02_start ()
    for i,m in ipairs(markers) do
       hook.rm( m.h )
       m.p:intrinsicSet( {
-         thrust     = 200,
+         accel      = 200,
          speed      = 100,
          turn       = 900,
       }, true ) -- overwrite all
@@ -153,7 +154,7 @@ function puzzle02_idle( p )
          break
       end
    end
-   assert( n~=0 )
+   if n==0 then return end
    local mm = markers[n]
    local mp = puzzle02_pos[n]
    mm.t = math.fmod( mm.t, #mp )+1

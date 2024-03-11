@@ -54,7 +54,7 @@ Converts an item object or number of credits to reward string ("You have receive
 
       @param reward Thing or number of credits the player is receiving.
                     Avoid passing strings (English or translated) for clarity's sake.
-      @return A string taking the form of "You have received X." -- translated and colorized.
+      @return A string taking the form of "You have received X." -- translated and colourized.
 --]]
 function format.reward( reward )
    local reward_text = (type(reward) == "number") and format.credits(reward) or reward

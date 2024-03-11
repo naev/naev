@@ -47,7 +47,7 @@ local malik_image = "major_malik.webp"
 local money_reward = minerva.rewards.kex3
 
 function create ()
-   if not misn.claim( {targetsys, lastsys} ) then
+   if not misn.claim( {targetsys, lastsys, gauntletsys} ) then
       misn.finish( false )
    end
    misn.setReward( _("A step closer to Kex's freedom") )
@@ -322,7 +322,7 @@ function approach_malik ()
 #rHUMAN LIFE SAFETY OVERRIDE.
 DUEL TO THE DEATH MODE ENABLED.#0]]))
    vn.sfxEerie()
-   vn.na(_([[You try to remove the gear, but it's too late. The virtual reality of the Crimson Gauntlet envelopes you…]]))
+   vn.na(_([[You try to remove the gear, but it's too late. The virtual reality of the Crimson Gauntlet envelops you…]]))
    vn.done()
 
    vn.label("decline")

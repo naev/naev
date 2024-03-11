@@ -105,7 +105,7 @@ function accept ()
 
       vn.label("cont02")
       lucas(_([["My family is dead. All of them. Kaput. Gone."]]))
-      lucas(_([["My sister and mother succumbed at Maanen's Moon, and my father, my poor father, was refused any damn treatments in this so called civilized society."]]))
+      lucas(_([["My sister and mother succumbed at Maanen's Moon, and my father, my poor father, was refused any damn treatments in this so-called civilized society."]]))
       lucas(_([["The bureaucrats refuse treating illegal nebula refugees. They even wanted to take him back to Maanen's bloody Moon! Heartless bastards."]]))
       lucas(_([["When he passed away in my arms, I lost all hope. I thought I had no option but to repent and follow my family. But then I realize, why are we at fault? Is it not the role of civilization to look for the betterment of mankind?"]]))
       lucas(_([["I decided to turn to anger, and want to take my revenge and carve my own path."]]))
@@ -207,17 +207,20 @@ function land ()
       vn.transition( lcs.lucas.transition )
 
       if not mem.spob_known then
-         vn.na(fmt.f(_([[You land on {spob}, which strikes you as a surprisingly normal-looking world. If you didn't know that it was the center of the operations of the Raven Pirate Clan, you would have thought it was just a regular trade world.]]),
+         vn.na(fmt.f(_([[You land on {spob}, which strikes you as a surprisingly normal-looking world. If you didn't know that it was the centre of the operations of the Raven Pirate Clan, you would have thought it was just a regular trade world.]]),
             {spob=last_spob}))
       end
       vn.na(_([[You get off your ship with Lucas, whose eyes are sparkling with hopes and dreams.]]))
       lucas(fmt.f(_([["{spob} at last! I can almost taste the freedom!"]]),
          {spob=last_spob}))
       lucas(_([["Thank you for all your help getting me here! Here, let me give you some credits for your troubles."]]))
+      vn.func( function ()
+         player.pay( reward )
+      end )
       vn.sfxVictory()
       vn.na(fmt.reward(reward))
       vn.na(_([[Lucas seems euphoric to get away from the troubles of his past and begin anew. The question that remains unanswered is whether pirate society is truly more free than other societies, or is the problem at core human nature itself.]]))
-      vn.na(_([[You wish him the best and he tells you to look for him next time you are near Raven space.]]))
+      vn.na(_([[You wish him the best, and he tells you to look for him next time you are near Raven space.]]))
       vn.done( lcs.lucas.transition )
 
       vn.run()
@@ -254,7 +257,7 @@ function approach_pirate ()
    misn.markerRm( mem.mrk )
    mem.mrk = nil
    mem.stage = 1
-   hook.board( "board_pirate" )
+   mem.hook_board = hook.board( "board_pirate" )
    hook.hail( "hail_pirate" )
 
    misn.npcRm( mem.npc_pir )
@@ -324,7 +327,7 @@ function hail_pirate( p )
       }
 
       lvn.label("lucas02_broke")
-      vnp(_([[#rYou do not enough enough credits.#0
+      vnp(_([[#rYou do not enough credits.#0
 "You think I'm going to accept less? Scram poor bum."]]))
       lvn.jump("menu")
 
@@ -367,10 +370,11 @@ function board_pirate( p )
    vn.transition()
 
    vn.sfxEerie()
-   vn.na(fmt.f(_([[You board the ship with Lucas and through methods you are not particularly proud of, are able to obtain information of a secret jmup likely leading to the Qorel tunnel. You are told that {spob} is somewhere there.]]),
+   vn.na(fmt.f(_([[You board the ship with Lucas and through methods you are not particularly proud of, are able to obtain information of a secret jump likely leading to the Qorel tunnel. You are told that {spob} is somewhere there.]]),
       {spob=last_spob}))
 
    vn.run()
 
    got_info()
+   hook.rm( mem.hook_board )
 end

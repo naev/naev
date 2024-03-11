@@ -85,7 +85,7 @@ typedef struct Trail_spfx_ {
 /*
  * stack manipulation
  */
-int spfx_get( char* name );
+int spfx_get( const char *name );
 const TrailSpec* trailSpec_get( const char* name );
 void spfx_add( int effect,
       const double px, const double py,

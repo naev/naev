@@ -5,7 +5,7 @@
   <slot prop="systems">utility</slot>
   <size>small</size>
   <priority>7</priority>
-  <mass>30</mass>
+  <mass>65</mass>
   <price>35000</price>
   <description>The PT-68 is an economical core system providing decent performance to small-to-medium vessels.</description>
   <gfx_store>core_system_basic_s2.webp</gfx_store>

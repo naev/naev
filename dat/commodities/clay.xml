@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commodity>
  <name>Clay</name>
- <description>Clay mined from asteroids tends to have different properties from those found on planetary bodies and have a wide diverse of usages such as shielding material or construction. Depending on the precedence of the clay it can have many different compositions and material properties.</description>
+ <description>Clay mined from asteroids tends to have different properties from that found on planetary bodies and has a wide variety of uses such as shielding and construction. Depending on the provenance of the clay it can have many different compositions and material properties.</description>
  <gfx_store>clay.webp</gfx_store>
  <price_mod>0.92</price_mod>
  <price_ref>Water</price_ref>

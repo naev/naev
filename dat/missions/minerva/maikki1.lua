@@ -47,7 +47,7 @@ local oldman_portrait = "old_man.png"
 local oldman_image = "old_man.png"
 
 local mainsys = system.get("Limbo")
-local searchsys = system.get("Doeston")
+local searchspob, searchsys = spob.getS("Cerberus Outpost")
 local cutscenesys = system.get("Arandon")
 local stealthsys = system.get("Zerantix")
 -- Mission states:
@@ -95,7 +95,7 @@ end
 
 
 function generate_npc ()
-   if spob.cur() == spob.get("Cerberus Outpost") then
+   if spob.cur() == searchspob then
       misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if mem.misn_state==3 or mem.misn_state==4 or mem.bribed_scavengers==true then
          misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
@@ -208,8 +208,8 @@ She starts eating the parfait, which seems to be larger than her head.]]))
       if mem.misn_state < 0 then
          mem.misn_state = 0
          misn.osdCreate( _("Finding Maikki's Father"),
-            { fmt.f(_("Look around the {sys} system"), {sys=searchsys}) } )
-         mem.misn_marker = misn.markerAdd( searchsys, "low" )
+            { fmt.f(_("Look around {spb} ({sys} system)"), {spb=searchspob, sys=searchsys}) } )
+         mem.misn_marker = misn.markerAdd( searchspob, "low" )
          minerva.log.maikki(_("You were told her father could be near Doeston.") )
       end
    end )
@@ -354,9 +354,9 @@ function approach_scavengers ()
    vn.clear()
    vn.scene()
    local scavA = vn.newCharacter( minerva.scavengera.name,
-         { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="left" } )
+         { image=minerva.scavengera.image, colour=minerva.scavengera.colour, pos="left" } )
    local scavB = vn.newCharacter( minerva.scavengerb.name,
-         { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )
+         { image=minerva.scavengerb.image, colour=minerva.scavengerb.colour, pos="right" } )
    vn.transition()
 
    if mem.bribed_scavengers==true then
@@ -503,7 +503,7 @@ function cutscene_hail ()
    vn.scene()
    local scavB = vn.newCharacter( _("Scavenger"),
          { image=minerva.scavengerb.image,
-         color=minerva.scavengerb.colour, shader=love_shaders.hologram{strength=2.0} } )
+         colour=minerva.scavengerb.colour, shader=love_shaders.hologram{strength=2.0} } )
    vn.transition("electric")
    vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
    scavB(_([["Thank you. I thought I was a goner. My sensors failed me at the worst time and it's impossible to see shit in this nebula."]]))
@@ -762,10 +762,10 @@ function scavengers_encounter ()
    vn.scene()
    local scavA = vn.newCharacter( minerva.scavengera.name,
          { image=minerva.scavengera.image,
-         color=minerva.scavengera.colour, shader=love_shaders.hologram{strength=2.0}, pos="left" } )
+         colour=minerva.scavengera.colour, shader=love_shaders.hologram{strength=2.0}, pos="left" } )
    local scavB = vn.newCharacter( minerva.scavengerb.name,
          { image=minerva.scavengerb.image,
-         color=minerva.scavengerb.colour, shader=love_shaders.hologram{strength=2.0}, pos="right" } )
+         colour=minerva.scavengerb.colour, shader=love_shaders.hologram{strength=2.0}, pos="right" } )
    vn.transition("electric")
 
    vn.na(_("Two angry scavengers appear on your screen."))

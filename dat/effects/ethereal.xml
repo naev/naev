@@ -5,4 +5,5 @@
  <overwrite>ethereal</overwrite>
  <icon>/gfx/misc/icons/star-cycle.webp</icon>
  <shader vertex="effect15x.vert">effects/ethereal.frag</shader>
+ <priority>-1</priority>
 </effect>

@@ -232,10 +232,6 @@ void qt_create( Quadtree* qt, int x1, int y1, int x2, int y2, int max_elements, 
 
 void qt_clear( Quadtree* qt )
 {
-   free(qt->temp);
-   qt->temp = NULL;
-   qt->temp_size = 0;
-
    il_clear( &qt->nodes );
    il_clear( &qt->elts );
    il_clear( &qt->enodes );

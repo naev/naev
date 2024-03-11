@@ -19,7 +19,6 @@
 #ifdef DEBUGGING
 #include "ndata.h"
 #endif /* DEBUGGING */
-#include "nstring.h"
 
 static char** gui_list = NULL; /**< List of GUIs the player has. */
 

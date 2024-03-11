@@ -75,7 +75,7 @@ function log.draw ()
    -- Drawn ontop of text so have to clear depth
    naev.gfx.clearDepth()
 
-   graphics.setColor( 0, 0, 0, 0.9*log.alpha )
+   graphics.setColour( 0, 0, 0, 0.9*log.alpha )
    local lw, lh = graphics.getDimensions()
    graphics.rectangle( "fill", 0, 0, lw, lh )
 
@@ -92,7 +92,7 @@ function log.draw ()
       else
          y = y+lineh
          if y > 0 and y < lh then
-            graphics.setColor( c[1], c[2], c[3], log.alpha )
+            graphics.setColour( c[1], c[2], c[3], log.alpha )
             graphics.print( _header[k], font, headerx, y )
             graphics.print( _body[k],   font, bodyx,   y )
          end
@@ -101,14 +101,14 @@ function log.draw ()
 
    x = log.border + log.headerw + log.bodyw + log.spacer
    if log.uparrow_alpha > 0 then
-      graphics.setColor( 0, 1, 1, log.uparrow_alpha )
+      graphics.setColour( 0, 1, 1, log.uparrow_alpha )
       graphics.setShader( log.shader.arrow )
       graphics.draw( sdf.img, x, 100, -math.pi/2, 60, 20 )
       graphics.setShader()
    end
 
    if log.downarrow_alpha > 0 then
-      graphics.setColor( 0, 1, 1, log.downarrow_alpha )
+      graphics.setColour( 0, 1, 1, log.downarrow_alpha )
       graphics.setShader( log.shader.arrow )
       graphics.draw( sdf.img, x, lh-100, math.pi/2, 60, 20 )
       graphics.setShader()

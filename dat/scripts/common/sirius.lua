@@ -34,6 +34,20 @@ function srs.sfxGong()
    luaspfx.sfx( false, nil, sfxGong )
 end
 
+function srs.weapsets( outfits )
+   local pp = player.pilot()
+   pp:weapsetCleanup()
+   pp:weapsetSetInrange(nil,false)
+   for k,o in ipairs(outfits) do
+      pp:weapsetType( k, "hold" )
+      pp:weapsetAdd( k, o )
+   end
+   local n = #outfits+1
+   pp:weapsetType( n, "switch" )
+   pp:weapsetAddType( n, "Bolt Weapon" )
+   pp:weapsetSetActive( n )
+end
+
 local ssys, sysr, obelisk, spos, sdir, hook_limits
 function srs.obeliskEnter( oblk )
    obelisk = oblk
@@ -42,6 +56,11 @@ function srs.obeliskEnter( oblk )
    local pp = player.pilot()
    spos = pp:pos()
    sdir = pp:dir()
+
+   -- Have to claim the system or other missions/events can affect it
+   if naev.evt then
+      naev.evt.claim( system.cur() )
+   end
 
    -- Hide rest of the universe
    for k,s in ipairs(system.getAll()) do
@@ -128,6 +147,7 @@ function _srs_return_obelisk ()
    pp:setDir( sdir )
    pp:setPos( spos )
    pp:setVel( vec2.new() )
+   pp:fillAmmo() -- They lose fighters because ship swapping, so at least give ammo back
    srs.sfxGong()
    music.stop()
 end

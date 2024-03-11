@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Plasma Blaster MK2">
  <general>
+  <shortname>Plasma Bl. MK2</shortname>
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>18</mass>
+  <mass>6</mass>
   <price>45000</price>
-  <description>The Plasma Blaster MK2 is a high-powered version of the Plasma Blaster, powerful enough to blow all but the heaviest pirate ships out of the sky. Its power is substantial enough that it even gets used by some militaries, typically in combination with anti-shield weaponry.</description>
+  <description>The Plasma Blaster MK2 is a high-powered version of the Plasma Blaster MK1, powerful enough to blow all but the heaviest pirate ships out of the sky. Its power is substantial enough that it even gets used by some militaries, typically in combination with anti-shield weaponry. Like the original MK1 model, the lingering plasma will significantly damage any ship that is unlucky enough to get hit.</description>
   <gfx_store>plasma2.webp</gfx_store>
   <cpu>-24</cpu>
  </general>
@@ -16,20 +17,20 @@
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS2</spfx_armour>
-  <delay>1.0</delay>
+  <delay>1.4</delay>
   <speed>700</speed>
-  <range>1000</range>
-  <falloff>850</falloff>
+  <range>800</range>
+  <falloff>650</falloff>
   <gfx_end>plasma2-end.png</gfx_end>
-  <energy>10</energy>
+  <energy>16.5</energy>
   <heatup>35</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>impact</type>
-   <penetrate>12</penetrate>
-   <physical>19</physical>
+   <type>plasma</type>
+   <penetrate>10</penetrate>
+   <physical>27</physical>
   </damage>
  </specific>
 </outfit>

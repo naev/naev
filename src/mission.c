@@ -7,7 +7,6 @@
  * @brief Handles missions.
  */
 /** @cond */
-#include <stdint.h>
 #include <stdlib.h>
 
 #include "naev.h"
@@ -24,11 +23,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
-#include "nlua_faction.h"
 #include "nlua_misn.h"
-#include "nlua_ship.h"
-#include "nlua_shiplog.h"
-#include "nluadef.h"
 #include "npc.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -37,6 +32,7 @@
 #include "player_fleet.h"
 #include "rng.h"
 #include "space.h"
+#include "ntracing.h"
 
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
 
@@ -61,7 +57,6 @@ static unsigned int mission_genID (void);
 static int mission_init( Mission* mission, const MissionData* misn, int genid, int create, unsigned int *id );
 static void mission_freeData( MissionData* mission );
 /* Matching. */
-static int mission_compare( const void* arg1, const void* arg2 );
 static int mission_meetConditionals( const MissionData *misn );
 static int mission_meetReq( const MissionData *misn, int faction,
       const Spob *pnt, const StarSystem *sys );
@@ -73,7 +68,7 @@ static int mission_parseFile( const char* file, MissionData *temp );
 static int mission_parseXML( MissionData *temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
 /* Misc. */
-static const char* mission_markerTarget( MissionMarker *m );
+static const char* mission_markerTarget( const MissionMarker *m );
 static int mission_markerLoad( Mission *misn, xmlNodePtr node );
 
 /**
@@ -369,8 +364,14 @@ int mission_start( const char *name, unsigned int *id )
    /* Try to run the mission. */
    ret = mission_init( &mission, mdat, 1, 1, id );
    /* Add to mission giver if necessary. */
-   if (landed && (ret==0) && (mdat->avail.loc==MIS_AVAIL_BAR))
-      npc_patchMission( &mission );
+   if (landed && (ret==0)) {
+      if (mdat->avail.loc==MIS_AVAIL_BAR)
+         npc_patchMission( &mission );
+      else if (mdat->avail.loc==MIS_AVAIL_COMPUTER)
+         misn_patchMission( &mission );
+      else
+         mission_cleanup( &mission );
+   }
    else
       mission_cleanup( &mission ); /* Clean up in case not accepted. */
 
@@ -417,7 +418,7 @@ const char *mission_availabilityStr( MissionAvailability loc )
 /**
  * @brief Gets the name of the mission marker target.
  */
-static const char* mission_markerTarget( MissionMarker *m )
+static const char* mission_markerTarget( const MissionMarker *m )
 {
    switch (m->type) {
       case SYSMARKER_COMPUTER:
@@ -585,7 +586,7 @@ void mission_sysMark (void)
          continue;
 
       for (int j=0; j<array_size(player_missions[i]->markers); j++) {
-         MissionMarker *m = &player_missions[i]->markers[j];
+         const MissionMarker *m = &player_missions[i]->markers[j];
 
          /* Add the individual markers. */
          space_addMarker( m->objid, m->type );
@@ -612,7 +613,7 @@ const StarSystem* mission_sysComputerMark( const Mission* misn )
       StarSystem *sys;
       Spob *pnt;
       const char *sysname;
-      MissionMarker *m = &misn->markers[i];
+      const MissionMarker *m = &misn->markers[i];
 
       switch (m->type) {
          case SYSMARKER_COMPUTER:
@@ -660,7 +661,7 @@ const StarSystem* mission_getSystemMarker( const Mission* misn )
       StarSystem *sys;
       Spob *pnt;
       const char *sysname;
-      MissionMarker *m = &misn->markers[i];;
+      const MissionMarker *m = &misn->markers[i];;
 
       switch (m->type) {
          case SYSMARKER_COMPUTER:
@@ -874,13 +875,10 @@ void missions_activateClaims (void)
 /**
  * @brief Compares to missions to see which has more priority.
  */
-static int mission_compare( const void* arg1, const void* arg2 )
+int mission_compare( const void* arg1, const void* arg2 )
 {
-   Mission *m1, *m2;
-
-   /* Get arguments. */
-   m1 = (Mission*) arg1;
-   m2 = (Mission*) arg2;
+   const Mission *m1 = (Mission*) arg1;
+   const Mission *m2 = (Mission*) arg2;
 
    /* Check priority - lower is more important. */
    if (m1->data->avail.priority < m2->data->avail.priority)
@@ -904,24 +902,21 @@ static int mission_compare( const void* arg1, const void* arg2 )
  * @brief Generates a mission list. This runs create() so won't work with all
  *        missions.
  *
- *    @param[out] n Missions created.
  *    @param faction Faction of the spob.
  *    @param pnt Spob to run on.
  *    @param sys System to run on.
  *    @param loc Location
  *    @return The stack of Missions created with n members.
  */
-Mission* missions_genList( int *n, int faction,
+Mission* missions_genList( int faction,
       const Spob *pnt, const StarSystem *sys, MissionAvailability loc )
 {
-   int m, alloced;
    int rep;
-   Mission* tmp;
+   Mission *tmp = array_create( Mission );
+
+   NTracingZone( _ctx, 1 );
 
    /* Find available missions. */
-   tmp      = NULL;
-   m        = 0;
-   alloced  = 0;
    for (int i=0; i<array_size(mission_stack); i++) {
       double chance;
       MissionData *misn = &mission_stack[i];
@@ -936,6 +931,8 @@ Mission* missions_genList( int *n, int faction,
 
       /* random chance of rep appearances */
       for (int j=0; j<rep; j++) {
+         Mission newm;
+
          if (RNGF() > chance)
             continue;
 
@@ -943,28 +940,18 @@ Mission* missions_genList( int *n, int faction,
          if (!mission_meetReq( misn, faction, pnt, sys ))
             continue;
 
-         m++;
-         /* Extra allocation. */
-         if (m > alloced) {
-            if (alloced == 0)
-               alloced = 32;
-            else
-               alloced *= 2;
-            tmp      = realloc( tmp, sizeof(Mission) * alloced );
-         }
          /* Initialize the mission. */
-         if (mission_init( &tmp[m-1], misn, 1, 1, NULL ))
-            m--;
+         if (mission_init( &newm, misn, 1, 1, NULL ))
+            continue;
+         array_push_back( &tmp, newm );
       }
    }
 
    /* Sort. */
-   if (tmp != NULL) {
-      qsort( tmp, m, sizeof(Mission), mission_compare );
-      (*n) = m;
-   }
-   else
-      (*n) = 0;
+   if (array_size(tmp) > 0)
+      qsort( tmp, array_size(tmp), sizeof(Mission), mission_compare );
+
+   NTracingZoneEnd( _ctx );
 
    return tmp;
 }
@@ -1008,6 +995,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 
    /* Defaults. */
    temp->chunk = LUA_NOREF;
+   temp->avail.chance = -1.;
    temp->avail.priority = 5;
    temp->avail.loc = MIS_AVAIL_UNSET;
    temp->avail.cond_chunk = LUA_NOREF;
@@ -1053,7 +1041,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &temp->tags, strdup(tmp) );
                continue;
@@ -1089,7 +1077,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
    if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT(temp->avail.loc==MIS_AVAIL_UNSET,"location");
-   MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
+   MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance<0.),"chance");
    MELEMENT( ((temp->avail.spob!=NULL) && spob_get(temp->avail.spob)==NULL), "spob" );
    MELEMENT( ((temp->avail.system!=NULL) && system_get(temp->avail.system)==NULL), "system" );
 #undef MELEMENT
@@ -1119,8 +1107,10 @@ static int missions_cmp( const void *a, const void *b )
  */
 int missions_load (void)
 {
-   char **mission_files;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   char **mission_files;
 
    /* Run over missions. */
    mission_files = ndata_listRecursive( MISSION_DATA_PATH );
@@ -1144,12 +1134,14 @@ int missions_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( mission_stack, array_size(mission_stack), sizeof(MissionData), missions_cmp );
 
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_("Loaded %d Mission in %.3f s", "Loaded %d Missions in %.3f s", array_size(mission_stack) ), array_size(mission_stack), time/1000. );
    }
    else
       DEBUG( n_("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -1311,6 +1303,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
       xmlw_elem(writer,"title","%s",misn->title);
       xmlw_elem(writer,"desc","%s",misn->desc);
       xmlw_elem(writer,"reward","%s",misn->reward);
+      xmlw_elem(writer,"reward_value","%"CREDITS_PRI,misn->reward_value);
 
       /* Markers. */
       xmlw_startElem( writer, "markers" );
@@ -1401,8 +1394,7 @@ int missions_loadCommodity( xmlNodePtr parent )
    do {
       xml_onlyNodes(node);
 
-      /* TODO remove support for "mission_cargo" in the future (maybe 0.12.0?). 0.10.0 onwards uses "temporary_cargo" */
-      if (xml_isNode(node,"temporary_cargo") || xml_isNode(node,"mission_cargo")) {
+      if (xml_isNode(node,"temporary_cargo")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
             xml_onlyNodes(cur);
@@ -1547,6 +1539,7 @@ static int missions_parseActive( xmlNodePtr parent )
             xmlr_strd(cur,"title",misn->title);
             xmlr_strd(cur,"desc",misn->desc);
             xmlr_strd(cur,"reward",misn->reward);
+            xmlr_ulong(cur,"reward_value",misn->reward_value);
 
             /* Get the markers. */
             if (xml_isNode(cur,"markers")) {

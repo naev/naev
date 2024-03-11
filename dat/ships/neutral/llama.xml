@@ -2,7 +2,7 @@
 <ship name="Llama">
  <points>20</points>
  <base_type>Llama</base_type>
- <GFX size="47">llama</GFX>
+ <gfx size="47">llama</gfx>
  <sound>engine</sound>
  <class>Yacht</class>
  <price>120000</price>
@@ -16,7 +16,7 @@
  <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many, many cycles ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
  <characteristics>
   <crew>2</crew>
-  <mass>80</mass>
+  <mass>60</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>15</cargo>
  </characteristics>
@@ -31,13 +31,16 @@
   <utility size="small" prop="accessory" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
   <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>
-  <speed_mod>-10</speed_mod>
+  <accel_mod>-10</accel_mod>
   <turn_mod>-10</turn_mod>
   <cargo_mod>20</cargo_mod>
   <armour_mod>10</armour_mod>

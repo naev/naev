@@ -62,7 +62,6 @@ function create ()
    misn.setNPC( emp.soldner.name, emp.soldner.portrait, _("Commander Soldner is waiting for you.") )
 end
 
-
 function accept ()
    local accepted = false
 
@@ -85,7 +84,7 @@ function accept ()
 
    -- Flavour text and mini-briefing
    vn.label("accept")
-   soldner(fmt.f(_([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while carrying a VIP. They managed to escape, but the engine ended up giving out in the {sys} system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.]]),
+   soldner(fmt.f(_([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while carrying a VIP. They managed to escape, but the engine ended up giving out in the {sys} system. The ship is now disabled, and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.]]),
       {sys=destsys}))
    soldner(fmt.f(_([["You're going to have to fly to the {sys} system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]]),
       {sys=destsys}))
@@ -121,7 +120,6 @@ function accept ()
    mem.prevsys = system.cur()
 end
 
-
 function land ()
    mem.landed = spob.cur()
    if mem.landed == mem.ret then
@@ -137,6 +135,8 @@ function land ()
          vn.na(_([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.]]))
          if getlicense then
             soldner(_([["It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. Oh, and I've cleared you for a Heavy Combat Vessel License; congratulations! We have nothing more for you now, but check in periodically in case something comes up for you."]]))
+            vn.sfxBingo()
+            vn.na(_([[You can now purchase the #bHeavy Combat Vessel License#0.]]))
 
             vn.func( function ()
                emp.addShippingLog( _([[You successfully rescued a VIP for the Empire and have been cleared for a Heavy Combat Vessel License; you can now buy one at the outfitter.]]) )
@@ -251,7 +251,7 @@ function board ()
    -- VIP boards
    local c = commodity.new( N_("VIP"), N_("A Very Important Person.") )
    mem.vip = misn.cargoAdd( c, 0 )
-   vntk.msg( _("Disabled Ship"), _([[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]) )
+   vntk.msg( _("Disabled Ship"), _([[The ship's hatch opens, and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]) )
 
    -- Update mission details
    mem.misn_stage = 2

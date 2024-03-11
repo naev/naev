@@ -36,7 +36,7 @@ local function setup( params )
       local d = math.max( 0, 2 * (a * (1+math.sqrt(p:fuel()+1)/28)))
       local prms = {
          penetration = 1,
-         dmgtype = params.dmgtype or "normal",
+         dmgtype = params.dmgtype,
          disable = params.disable or 0,
       }
       if params.exp_params then

@@ -103,6 +103,7 @@ function land()
 
    vn.clear()
    vn.scene()
+   vn.transition()
    vn.na(fmt.f(_([[As promised, there's someone at the spaceport who accepts the crate. In return, you receive a number of credit chips worth {credits}, as per the arrangement. You go back into your ship to put the chips away before heading off to check in with the local authorities. But did you just hear something squeak…?]]),{credits=fmt.credits(money_reward)}))
    vn.func( function ()
       player.pay(money_reward)

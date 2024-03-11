@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Enygma Systems Turreted Headhunter Launcher">
  <general>
+  <shortname>E. Headhunter T. L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
-  <mass>40</mass>
+  <mass>36</mass>
   <price>180000</price>
   <description>These turreted launchers are sometimes employed by cruiser captains whose ships aren't manoeuvrable enough to effectively combat enemy fighters and bombers. The punch of the Headhunter missile combined with Enygma Systems' swivel mounted launcher can effectively compensate for any blind spots.</description>
   <gfx_store>headhunterturret.webp</gfx_store>
@@ -26,12 +27,12 @@
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="-7">fire-missile</trail_generator>
   <duration blowup="armour">10.5</duration>
-  <thrust>200</thrust>
+  <accel>200</accel>
   <turn>30</turn>
   <speed_max>600</speed_max>
   <resist>20</resist>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>24</penetrate>
    <physical>160</physical>
   </damage>

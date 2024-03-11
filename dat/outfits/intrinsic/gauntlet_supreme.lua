@@ -1,3 +1,5 @@
+notactive = true
+
 function init( p, po )
    local hasunguided = false
    for k,o in ipairs(p:outfits()) do
@@ -13,5 +15,7 @@ function init( p, po )
    -- Doubles effect
    if hasunguided then
       po:set( "launch_damage", 5 )
+   else
+      po:clear()
    end
 end

@@ -40,10 +40,10 @@ return function ()
          vn.music( der.sfx.ambient )
          vn.transition()
          if poidata.sys:known() then
-            vn.na(fmt.f(_([[While the derelict itself has been picked clean. You manage to find some interesting data remaining in the navigation log. It looks like you may be able to follow the lead to something of interest in the {sys} system. Do you wish to download the data?]]),
+            vn.na(fmt.f(_([[While the derelict itself has been picked clean. You manage to find some interesting data regarding a sensor anomaly remaining in the navigation log. It looks like you may be able to follow the lead to something of interest in the {sys} system. Do you wish to download the data?]]),
                {sys="#b"..poidata.sys:name().."#0"}))
          else
-            vn.na(_([[While the derelict itself has been picked clean. You manage to find some interesting data remaining in the navigation log. It looks like you may be able to follow the lead to something of interest in what appears to be a nearby system. Do you wish to download the data?]]))
+            vn.na(_([[While the derelict itself has been picked clean. You manage to find some interesting data regarding a sensor anomaly remaining in the navigation log. It looks like you may be able to follow the lead to something of interest in what appears to be a nearby system. Do you wish to download the data?]]))
          end
 
          vn.menu{
@@ -67,9 +67,9 @@ return function ()
          if accept then
             poi.setup( poidata )
             naev.missionStart("Point of Interest")
-            der.addMiscLog(fmt.f(_([[You found information on a point of interest aboard a derelict in the {sys} system.]]),{sys=system.cur()}))
+            der.addMiscLog(fmt.f(_([[You found information on a sensor anomaly aboard a derelict in the {sys} system.]]),{sys=system.cur()}))
          else
-            der.addMiscLog(_([[You found information about a point of interest aboard a derelict, but decided not to download it.]]))
+            der.addMiscLog(_([[You found information about a sensor anomaly aboard a derelict, but decided not to download it.]]))
          end
 
          return true -- Success

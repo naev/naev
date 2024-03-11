@@ -4,7 +4,7 @@
   <radius>10000.000000</radius>
   <spacedust>400</spacedust>
   <interference>33.075000</interference>
-  <nebula volatility="0.000000">400.000000</nebula>
+  <nebula>400.000000</nebula>
   <nolanes/>
  </general>
  <pos x="755.944082" y="-353.811046"/>

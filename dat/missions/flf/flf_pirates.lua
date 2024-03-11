@@ -11,13 +11,12 @@
 </mission>
 --]]
 --[[
-
    FLF pirate elimination mission.
-
 --]]
 local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
+local vn = require "vn"
 
 -- luacheck: globals enter land_flf leave misn_title pay_text setDescription (shared with derived mission flf_dvk05)
 -- luacheck: globals pilot_death_pirate timer_lateFLF (Hook functions passed by name)
@@ -208,9 +207,17 @@ function land_flf ()
    leave()
    mem.last_system = spob.cur()
    if spob.cur():faction() == faction.get("FLF") then
-      tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
-      player.pay( mem.credits )
-      faction.get("FLF"):modPlayerSingle( mem.reputation )
+
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.na( pay_text[ rnd.rnd(1,#pay_text) ] )
+      vn.sfxMoney()
+      vn.func( function ()
+         player.pay( mem.credits )
+         faction.get("FLF"):modPlayerSingle( mem.reputation )
+      end )
+
       misn.finish( true )
    end
 end

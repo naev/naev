@@ -37,7 +37,7 @@ function zbh.vn_zach( params )
    return vn.Character.new( zbh.zach.name,
          tmerge( {
             image=zbh.zach.image,
-            color=zbh.zach.colour,
+            colour=zbh.zach.colour,
          }, params) )
 end
 
@@ -45,7 +45,7 @@ function zbh.vn_icarus( params )
    return vn.Character.new( zbh.icarus.name,
          tmerge( {
             image=zbh.icarus.image,
-            color=zbh.icarus.colour,
+            colour=zbh.icarus.colour,
          }, params) )
 end
 
@@ -53,7 +53,7 @@ function zbh.vn_pi( params )
    return vn.Character.new( zbh.pi.name,
          tmerge( {
             image=zbh.pi.image,
-            color=zbh.pi.colour,
+            colour=zbh.pi.colour,
          }, params) )
 end
 

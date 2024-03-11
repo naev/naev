@@ -32,10 +32,12 @@ static int outfitL_get( lua_State *L );
 static int outfitL_getAll( lua_State *L );
 static int outfitL_name( lua_State *L );
 static int outfitL_nameRaw( lua_State *L );
+static int outfitL_shortname( lua_State *L );
 static int outfitL_type( lua_State *L );
 static int outfitL_typeBroad( lua_State *L );
 static int outfitL_cpu( lua_State *L );
 static int outfitL_mass( lua_State *L );
+static int outfitL_heatFor( lua_State *L );
 static int outfitL_slot( lua_State *L );
 static int outfitL_limit( lua_State *L );
 static int outfitL_icon( lua_State *L );
@@ -47,6 +49,7 @@ static int outfitL_friendlyfire( lua_State *L );
 static int outfitL_pointdefense( lua_State *L );
 static int outfitL_miss_ships( lua_State *L );
 static int outfitL_miss_asteroids( lua_State *L );
+static int outfitL_toggleable( lua_State *L );
 static int outfitL_getShipStat( lua_State *L );
 static int outfitL_weapStats( lua_State *L );
 static int outfitL_specificStats( lua_State *L );
@@ -59,10 +62,12 @@ static const luaL_Reg outfitL_methods[] = {
    { "getAll", outfitL_getAll },
    { "name", outfitL_name },
    { "nameRaw", outfitL_nameRaw },
+   { "shortname", outfitL_shortname },
    { "type", outfitL_type },
    { "typeBroad", outfitL_typeBroad },
    { "cpu", outfitL_cpu },
    { "mass", outfitL_mass },
+   { "heatFor", outfitL_heatFor },
    { "slot", outfitL_slot },
    { "limit", outfitL_limit },
    { "icon", outfitL_icon },
@@ -74,6 +79,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "pointdefense", outfitL_pointdefense },
    { "missShips", outfitL_miss_ships },
    { "missAsteroids", outfitL_miss_asteroids },
+   { "toggleable", outfitL_toggleable },
    { "shipstat", outfitL_getShipStat },
    { "weapstats", outfitL_weapStats },
    { "specificstats", outfitL_specificStats },
@@ -258,7 +264,7 @@ static int outfitL_getAll( lua_State *L )
  * messages). It cannot be used as an identifier for the outfit; for
  * that, use outfit.nameRaw() instead.
  *
- * @usage outfitname = s:name() -- Equivalent to `_(s:nameRaw())`
+ * @usage outfitname = o:name() -- Equivalent to _(o:nameRaw())
  *
  *    @luatparam Outfit s Outfit to get the translated name of.
  *    @luatreturn string The translated name of the outfit.
@@ -278,7 +284,7 @@ static int outfitL_name( lua_State *L )
  * (e.g. can be passed to outfit.get()). It should not be used directly
  * for display purposes without manually translating it with _().
  *
- * @usage outfitrawname = s:nameRaw()
+ * @usage outfitrawname = o:nameRaw()
  *
  *    @luatparam Outfit s Outfit to get the raw name of.
  *    @luatreturn string The raw name of the outfit.
@@ -288,6 +294,24 @@ static int outfitL_nameRaw( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit(L,1);
    lua_pushstring(L, o->name);
+   return 1;
+}
+
+/**
+ * @brief Gets the translated short name of the outfit.
+ *
+ * This translated name should be used when you have abbreviate the outfit
+ * greatly, e.g., the GUI. In the case the outfit has no special shortname,
+ * it's equivalent to outfit.name().
+ *
+ *    @luatparam Outfit s Outfit to get the translated short name of.
+ *    @luatreturn string The translated short name of the outfit.
+ * @luafunc shortname
+ */
+static int outfitL_shortname( lua_State *L )
+{
+   const Outfit *o = luaL_validoutfit(L,1);
+   lua_pushstring(L, (o->shortname!=NULL) ? _(o->shortname) : _(o->name));
    return 1;
 }
 
@@ -358,6 +382,28 @@ static int outfitL_mass( lua_State *L )
 }
 
 /**
+ * @brief Calculates a heat value to be used with heat up.
+ *
+ * @note Outfits need mass to be able to heat up, with no mass they will fail to heat up.
+ *
+ *    @luatparam Number heatup How many "pulses" are needed to heat up to 800 kelvin. Each pulse can represent a discrete event or per second if multiplied by dt.
+ *    @luatreturn Number The heat value corresponding to the number of pulses.
+ * @luafunc heatFor
+ */
+static int outfitL_heatFor( lua_State *L )
+{
+   const Outfit *o = luaL_validoutfit( L, 1 );
+   double heatup = luaL_checknumber( L, 2 );
+   double C = pilot_heatCalcOutfitC( o );
+   double area = pilot_heatCalcOutfitArea( o );
+   double heat = ((800.-CONST_SPACE_STAR_TEMP)*C +
+            STEEL_HEAT_CONDUCTIVITY * ((800.-CONST_SPACE_STAR_TEMP) * area)) /
+         heatup;
+   lua_pushnumber( L, heat );
+   return 1;
+}
+
+/**
  * @brief Gets the slot name, size and property of an outfit.
  *
  * @usage slot_name, slot_size, slot_prop = o:slot() -- Gets an outfit's slot info
@@ -410,6 +456,7 @@ static int outfitL_limit( lua_State *L )
 static int outfitL_icon( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit(L,1);
+   outfit_gfxStoreLoad( (Outfit*) o );
    lua_pushtex( L, gl_dupTexture( o->gfx_store ) );
    return 1;
 }
@@ -419,7 +466,7 @@ static int outfitL_icon( lua_State *L )
  *
  * @usage price = o:price()
  *
- *    @luatparam String o Outfit to get the price of.
+ *    @luatparam outfit|String o Outfit to get the price of.
  *    @luatreturn number The price, in credits.
  * @luafunc price
  */
@@ -435,7 +482,7 @@ static int outfitL_price( lua_State *L )
  *
  * @usage description = o:description()
  *
- *    @luatparam String o Outfit to get the description of.
+ *    @luatparam outfit|String o Outfit to get the description of.
  *    @luatparam[opt=player.pilot()] Pilot p Pilot to set description to.
  *    @luatreturn string The description (with translating).
  * @luafunc description
@@ -455,7 +502,7 @@ static int outfitL_description( lua_State *L )
  *
  * @usage summary = o:summary()
  *
- *    @luatparam String o Outfit to get the summary of.
+ *    @luatparam outfit|String o Outfit to get the summary of.
  *    @luatparam[opt=player.pilot()] Pilot p Pilot to set summary to.
  *    @luatparam[opt=false] string noname Whether or not to hide the outfit name at the top.
  *    @luatreturn string The summary (with translating).
@@ -484,7 +531,7 @@ static int getprop( lua_State *L, int prop )
  *
  * @usage isunique = o:unique()
  *
- *    @luatparam String o Outfit to get the uniqueness of.
+ *    @luatparam outfit|String o Outfit to get the uniqueness of.
  *    @luatreturn boolean The uniqueness of the outfit.
  * @luafunc unique
  */
@@ -496,7 +543,7 @@ static int outfitL_unique( lua_State *L )
 /**
  * @brief Gets whether or not a weapon outfit can do friendly fire.
  *
- *    @luatparam String o Outfit to get the property of of.
+ *    @luatparam outfit|String o Outfit to get the property of of.
  *    @luatreturn boolean Whether or not the outfit can do friendly fire damage.
  * @luafunc friendlyfire
  */
@@ -508,7 +555,7 @@ static int outfitL_friendlyfire( lua_State *L )
 /**
  * @brief Gets whether or not a weapon outfit is point defense.
  *
- *    @luatparam String o Outfit to get the property of of.
+ *    @luatparam outfit|String o Outfit to get the property of of.
  *    @luatreturn boolean Whether or not the outfit is point defense.
  * @luafunc pointdefense
  */
@@ -520,7 +567,7 @@ static int outfitL_pointdefense( lua_State *L )
 /**
  * @brief Gets whether or not a weapon outfit misses ships.
  *
- *    @luatparam String o Outfit to get the property of of.
+ *    @luatparam outfit|String o Outfit to get the property of of.
  *    @luatreturn boolean Whether or not the outfit misses ships.
  * @luafunc missShips
  */
@@ -532,13 +579,27 @@ static int outfitL_miss_ships( lua_State *L )
 /**
  * @brief Gets whether or not a weapon outfit misses asteroids.
  *
- *    @luatparam String o Outfit to get the property of of.
+ *    @luatparam outfit|String o Outfit to get the property of of.
  *    @luatreturn boolean Whether or not the outfit misses asteroids.
  * @luafunc missAsteroids
  */
 static int outfitL_miss_asteroids( lua_State *L )
 {
    return getprop( L, OUTFIT_PROP_WEAP_MISS_ASTEROIDS );
+}
+
+/**
+ * @brief Gets whether or not an outfit is toggleable.
+ *
+ *    @luatparam outfit|String o Outfit to get the property of of.
+ *    @luatreturn boolean Whether or not the outfit is toggleable.
+ * @luafunc toggleable
+ */
+static int outfitL_toggleable( lua_State *L )
+{
+   const Outfit *o = luaL_validoutfit(L,1);
+   lua_pushboolean( L, outfit_isToggleable(o) );
+   return 1;
 }
 
 /**
@@ -614,7 +675,7 @@ static int outfitL_weapStats( lua_State *L )
       dmg = outfit_damage(o);
       /* Modulate the damage by average of damage types. */
       if (dtype_raw( dmg->type, &sdmg, &admg, NULL ) != 0)
-         NLUA_ERROR(L, _("Outfit has invalid damage type."));
+         return NLUA_ERROR(L, _("Outfit has invalid damage type."));
       mod_damage *= 0.5*(sdmg+admg);
       /* Calculate good damage estimates. */
       dps = mod_shots * mod_damage * dmg->damage;
@@ -706,18 +767,18 @@ static int outfitL_specificStats( lua_State *L )
    lua_newtable(L);
    switch (o->type) {
       case OUTFIT_TYPE_AFTERBURNER:
-         SETFIELD( "thrust",     o->u.afb.thrust );
+         SETFIELD( "accel",      o->u.afb.accel );
          SETFIELD( "speed",      o->u.afb.speed );
          SETFIELD( "energy",     o->u.afb.energy );
          SETFIELD( "mass_limit", o->u.afb.mass_limit );
          SETFIELD( "heatup",     o->u.afb.heatup );
          SETFIELD( "heat",       o->u.afb.heat );
-         SETFIELD( "heat_cap",   o->u.afb.heat_cap );
-         SETFIELD( "heat_base",  o->u.afb.heat_cap );
+         SETFIELD( "overheat_min",o->overheat_min );
+         SETFIELD( "overheat_max",o->overheat_max );
          break;
 
       case OUTFIT_TYPE_FIGHTER_BAY:
-         lua_pushship( L, ship_get( o->u.bay.ship ) );
+         lua_pushship( L, o->u.bay.ship );
          lua_setfield( L, -2, "ship" );
          SETFIELD( "delay",      o->u.bay.delay );
          SETFIELDI("amount",     o->u.bay.amount );
@@ -781,7 +842,7 @@ static int outfitL_specificStats( lua_State *L )
          SETFIELD( "speed",      o->u.lau.speed );
          SETFIELD( "speed_max",  o->u.lau.speed_max );
          SETFIELD( "turn",       o->u.lau.turn );
-         SETFIELD( "thrust",     o->u.lau.thrust );
+         SETFIELD( "accel",      o->u.lau.accel );
          SETFIELD( "energy",     o->u.lau.energy );
          SETFIELDB("seek",       o->u.lau.ai!=AMMO_AI_UNGUIDED );
          SETFIELDB("smart",      o->u.lau.ai==AMMO_AI_SMART );

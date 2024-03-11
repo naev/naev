@@ -7,7 +7,6 @@
  * @brief Handles the shipyard at land.
  */
 /** @cond */
-#include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,18 +20,27 @@
 #include "cond.h"
 #include "dialogue.h"
 #include "hook.h"
-#include "log.h"
 #include "map_find.h"
-#include "ndata.h"
 #include "nstring.h"
 #include "player.h"
-#include "player_fleet.h"
 #include "space.h"
+#include "slots.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
+#include "land.h"
 
 #define  SHIP_GFX_W     256
 #define  SHIP_GFX_H     256
+
+/**
+ * Custom ship slot widget.
+ */
+typedef struct CstShipSlotWidget_ {
+   int mouseover;
+   const ShipOutfitSlot *slot;
+   double altx;
+   double alty;
+} CstShipSlotWidget;
 
 /*
  * Vars.
@@ -50,6 +58,9 @@ static void shipyard_trade( unsigned int wid, const char* str );
 static void shipyard_rmouse( unsigned int wid, const char* widget_name );
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s );
+static int shipyard_mouseSlots( unsigned int wid, const SDL_Event* event,
+      double x, double y, double w, double h, double rx, double ry, void *data );
+static void shipyard_renderSlotsOver( double bx, double by, double bw, double bh, void *data );
 static void shipyard_find( unsigned int wid, const char* str );
 
 /**
@@ -63,6 +74,7 @@ void shipyard_open( unsigned int wid )
    int iw, ih;
    int bw, bh, padding, off;
    int iconsize;
+   CstShipSlotWidget *data;
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_SHIPYARD);
@@ -111,9 +123,13 @@ void shipyard_open( unsigned int wid )
    window_addImage( wid, -40, -40, sw, sh, "imgTarget", NULL, 0);
 
    /* slot types */
+   data = calloc( 1, sizeof(CstShipSlotWidget) );
    window_addCust( wid, -20, -sh-50, sw-10, 80, "cstSlots", 0.,
-         shipyard_renderSlots, NULL, NULL, NULL, NULL );
+         shipyard_renderSlots, shipyard_mouseSlots, NULL, NULL, data );
+   window_custSetOverlay( wid, "cstSlots", shipyard_renderSlotsOver );
+   window_custSetClipping( wid, "cstSlots", 0 );
    window_canFocusWidget( wid, "cstSlots", 0 );
+   window_custAutoFreeData( wid, "cstSlots" );
 
    /* stat text */
    window_addText( wid, -4, -sw-50-70-20, sw, -sh-60-70-20+h-bh, 0, "txtStats",
@@ -134,9 +150,22 @@ void shipyard_open( unsigned int wid )
       nships    = 1;
    }
    else {
+      /* Threaded loading of graphics for speed. */
+      int needsgfx = 0;
+      for (int i=0; i<nships; i++) {
+         Ship *s = (Ship*) shipyard_list[i];
+         if (!ship_gfxLoaded(s)) {
+            s->flags |= SHIP_NEEDSGFX;
+            needsgfx = 1;
+         }
+      }
+      if (needsgfx)
+         ship_gfxLoadNeeded();
+
+      /* Properly create the array. */
       for (int i=0; i<nships; i++) {
          cships[i].caption = strdup( _(shipyard_list[i]->name) );
-         cships[i].image = gl_dupTexture(shipyard_list[i]->gfx_store);
+         cships[i].image = gl_dupTexture( ship_gfxStore(shipyard_list[i]) );
          cships[i].layers = gl_copyTexArray( shipyard_list[i]->gfx_overlays );
          if (shipyard_list[i]->rarity > 0) {
             glTexture *t = rarity_texture( shipyard_list[i]->rarity );
@@ -235,7 +264,7 @@ void shipyard_update( unsigned int wid, const char* str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", "");
    if (ship->cpu > 0) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("CPU:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", ship->cpu, n_( "teraflop", "teraflops", ship->cpu ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", ship->cpu, UNIT_CPU );
    }
    if (ship->mass) {
       char buf_mass[ECON_MASS_STRLEN];
@@ -243,20 +272,20 @@ void shipyard_update( unsigned int wid, const char* str )
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Mass:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_mass );
    }
-   if (ship->thrust) {
-      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Thrust:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "");
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f kN/tonne"), ship->thrust );
+   if (ship->accel) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Accel:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n");
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), ship->accel, UNIT_ACCEL );
    }
    if (ship->speed) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Speed:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f m/s"), ship->speed );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), ship->speed, UNIT_SPEED );
    }
    if (ship->turn) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Turn:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f deg/s"), ship->turn*180/M_PI );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s"), ship->turn*180/M_PI, UNIT_ROTATION );
    }
    if (ship->dt_default != 1.) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Time Constant:") );
@@ -265,23 +294,23 @@ void shipyard_update( unsigned int wid, const char* str )
    /* Misc */
    if (ship->dmg_absorb) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Absorption:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f%% damage"), ship->dmg_absorb*100. );
    }
    if (ship->shield || ship->shield_regen) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Shield:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->shield, ship->shield_regen );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s (%.1f %s)"), ship->shield, UNIT_ENERGY, ship->shield_regen, UNIT_POWER );
    }
    if (ship->armour || ship->armour_regen) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Armour:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->armour, ship->armour_regen );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s (%.1f %s)"), ship->armour, UNIT_ENERGY, ship->armour_regen, UNIT_POWER );
    }
    if (ship->energy || ship->energy_regen) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Energy:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->energy, ship->energy_regen );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f %s (%.1f %s)"), ship->energy, UNIT_ENERGY, ship->energy_regen, UNIT_POWER );
    }
    if (ship->cap_cargo) {
       char buf_cargo[ECON_MASS_STRLEN];
@@ -291,11 +320,11 @@ void shipyard_update( unsigned int wid, const char* str )
    }
    if (ship->fuel) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Fuel:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel, n_( "unit", "units", ship->fuel ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel, UNIT_UNIT );
    }
    if (ship->fuel_consumption != 100.) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Fuel Use:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel_consumption, UNIT_UNIT );
    }
 
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n\n%s", _("Price:") );
@@ -345,12 +374,12 @@ void shipyard_update( unsigned int wid, const char* str )
    window_resizeWidget( wid, "txtDescription", w-(20+iw+20) - (sw+40), y-20+h-bh );
    window_moveWidget( wid, "txtDescription", 20+iw+20, y );
 
-   if (!shipyard_canBuy( ship->name, land_spob ))
+   if (!shipyard_canBuy( ship, land_spob ))
       window_disableButtonSoft( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
 
-   if (!shipyard_canTrade( ship->name, land_spob ))
+   if (!shipyard_canTrade( ship, land_spob ))
       window_disableButtonSoft( wid, "btnTradeShip");
    else
       window_enableButton( wid, "btnTradeShip");
@@ -410,8 +439,10 @@ static void shipyard_buy( unsigned int wid, const char* str )
 
    credits_t targetprice = ship_buyPrice(ship);
 
-   if (land_errDialogue( ship->name, "buyShip" ))
+   if (!shipyard_canBuy( ship, land_spob )) {
+      land_errDisplay();
       return;
+   }
 
    credits2str( buf, targetprice, 2 );
    if (dialogue_YesNo(_("Are you sure?"), /* confirm */
@@ -430,7 +461,7 @@ static void shipyard_buy( unsigned int wid, const char* str )
    shipyard_update(wid, NULL);
 
    /* Run hook. */
-   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].type    = HOOK_PARAM_SHIP;
    hparam[0].u.ship  = ship;
    hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "ship_buy", hparam );
@@ -441,6 +472,7 @@ static int shipyard_canAcquire( const Ship *ship, const Spob *spob, credits_t pr
 {
    int failure = 0;
    int blackmarket = ((spob != NULL) && spob_hasService(spob, SPOB_SERVICE_BLACKMARKET));
+   land_errClear();
 
    /* Must have the necessary license. */
    if (!blackmarket && !player_hasLicense(ship->license)) {
@@ -466,67 +498,29 @@ static int shipyard_canAcquire( const Ship *ship, const Spob *spob, credits_t pr
 
 /**
  * @brief Makes sure it's valid to buy a ship.
- *    @param shipname Ship being bought.
+ *    @param ship Ship being bought.
  *    @param spob Where the player is shopping.
  */
-int shipyard_canBuy( const char *shipname, const Spob *spob )
+int shipyard_canBuy( const Ship *ship, const Spob *spob )
 {
-   const Ship *ship = ship_get( shipname );
    credits_t price = ship_buyPrice(ship);
    return shipyard_canAcquire( ship, spob, price );
 }
 
 /**
- * @brief Makes sure it's valid to sell a ship.
- *    @param shipname Ship being sold.
- */
-int can_sell( const char *shipname )
-{
-   int failure = 0;
-   if (strcmp( shipname, player.p->name )==0) { /* Already on-board. */
-      land_errDialogueBuild( _("You can't sell the ship you're piloting!") );
-      failure = 1;
-   }
-
-   return !failure;
-}
-
-/**
- * @brief Makes sure it's valid to change ships.
- *    @param shipname Ship being changed to.
- */
-int can_swap( const char *shipname )
-{
-   int failure = 0;
-   const Ship* ship = ship_get( shipname );
-   int diff;
-
-   diff = pilot_cargoUsed(player.p) - (pfleet_cargoFree() - pilot_cargoFree(player.p) + ship->cap_cargo);
-   diff = MAX( diff, pilot_cargoUsedMission(player.p) - ship->cap_cargo ); /* Has to fit all mission cargo. */
-   if (diff > 0) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( n_(
-               "You have %d tonne more cargo than the new ship can hold.",
-               "You have %d tonnes more cargo than the new ship can hold.",
-               diff ),
-            diff );
-      failure = 1;
-   }
-   if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
-      land_errDialogueBuild( _("You can't strand your fighters in space.") );
-      failure = 1;
-   }
-   return !failure;
-}
-
-/**
  * @brief Makes sure it's valid to buy a ship, trading the old one in simultaneously.
- *    @param shipname Ship being bought.
+ *    @param ship Ship being bought.
  *    @param spob Where the player is shopping.
  */
-int shipyard_canTrade( const char *shipname, const Spob *spob )
+int shipyard_canTrade( const Ship *ship, const Spob *spob )
 {
-   const Ship *ship = ship_get( shipname );
    credits_t price = ship_buyPrice(ship) - player_shipPrice(player.p->name,0);
+   land_errClear();
+
+   if (pilot_cargoUsedMission(player.p)>0) {
+      land_errDialogueBuild( _("You can not trade in your ship when you have mission cargo!") );
+      return 0;
+   }
    return shipyard_canAcquire( ship, spob, price );
 }
 
@@ -552,8 +546,10 @@ static void shipyard_trade( unsigned int wid, const char* str )
    credits_t targetprice = ship_buyPrice(ship);
    credits_t playerprice = player_shipPrice(player.p->name,0);
 
-   if (land_errDialogue( ship->name, "tradeShip" ))
+   if (!shipyard_canTrade( ship, land_spob )) {
+      land_errDisplay();
       return;
+   }
 
    credits2str( buf, targetprice, 2 );
    credits2str( buf2, playerprice, 2 );
@@ -561,7 +557,7 @@ static void shipyard_trade( unsigned int wid, const char* str )
    credits2str( buf4, playerprice - targetprice, 2 );
 
    /* Display the correct dialogue depending on the new ship's price versus the player's. */
-   if ( targetprice == playerprice ) {
+   if (targetprice == playerprice) {
       if (dialogue_YesNo(_("Are you sure?"), /* confirm */
          _("Your %s is worth %s, exactly as much as the new ship, so no credits need be exchanged. Are you sure you want to trade your ship in?"),
                _(player.p->ship->name), buf2)==0)
@@ -603,7 +599,7 @@ static void shipyard_trade( unsigned int wid, const char* str )
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data )
 {
    (void) data;
-   double x, y, w;
+   double y, w;
    Ship *ship;
 
    /* Make sure a valid ship is selected. */
@@ -617,20 +613,19 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
    y -= 10+5;
    gl_print( &gl_smallFont, bx, y, &cFontWhite, _("Slots:") );
 
-   x = bx + 10.;
    w = bw - 10.;
 
    /* Weapon slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_WEAPON), ship->outfit_weapon );
+   shipyard_renderSlotsRow( bx, y, w, _(OUTFIT_LABEL_WEAPON), ship->outfit_weapon );
 
    /* Utility slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_UTILITY), ship->outfit_utility );
+   shipyard_renderSlotsRow( bx, y, w, _(OUTFIT_LABEL_UTILITY), ship->outfit_utility );
 
    /* Structure slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure );
+   shipyard_renderSlotsRow( bx, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure );
 }
 
 /**
@@ -641,28 +636,128 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
    (void) bw;
    double x;
 
-   x = bx;
-
    /* Print text. */
-   gl_printMidRaw( &gl_smallFont, 30, bx-15, by, &cFontWhite, -1, str );
+   gl_printMidRaw( &gl_smallFont, 40, bx, by, &cFontWhite, -1, str );
+   x = bx+30.;
 
    /* Draw squares. */
    for (int i=0; i<array_size(s); i++) {
-      const glColour *c = outfit_slotSizeColour( &s[i].slot );
+      const glColour *c;
+      const glTexture *icon;
+      const int size = 14;
+
+      /* Ignore locked slots. */
+      if (s[i].locked && !s[i].visible && (s[i].data==NULL))
+         continue;
+
+      /* Get the colour. */
+      c = outfit_slotSizeColour( &s[i].slot );
       if (c == NULL)
          c = &cBlack;
 
-      x += 15.;
-      toolkit_drawRect( x, by, 10, 10, c, NULL );
+      x += size+7.;
+      toolkit_drawRect( x, by, size, size, c, NULL );
 
       /* Add colour stripe depending on required/exclusiveness. */
       if (s[i].required)
-         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cBrightRed );
+         toolkit_drawTriangle( x, by, x+size, by+size, x, by+size, &cBrightRed );
       else if (s[i].exclusive)
-         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cWhite );
+         toolkit_drawTriangle( x, by, x+size, by+size, x, by+size, &cWhite );
       else if (s[i].slot.spid != 0)
-         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cBlack );
+         toolkit_drawTriangle( x, by, x+size, by+size, x, by+size, &cBlack );
 
-      gl_renderRectEmpty( x, by, 10, 10, &cBlack );
+      gl_renderRectEmpty( x, by, size, size, &cBlack );
+
+      /* Draw icon if applicable. */
+      icon = sp_icon( s[i].slot.spid );
+      if (icon != NULL) {
+         double sw = 12.;
+         double sh = 12.;
+         double sx = x+6;
+         double sy = by+6;
+         if (icon->flags & OPENGL_TEX_SDF)
+            gl_renderSDF( icon, sx, sy, sw, sh, &cWhite, 0., 1. );
+         else
+            gl_renderScaleAspect( icon, sx, sy, sw, sh, NULL );
+      }
    }
+}
+
+static int shipyard_mouseSlots( unsigned int wid, const SDL_Event *event,
+      double mx, double my, double bw, double bh,
+      double rx, double ry, void *data )
+{
+   (void) wid;
+   (void) bw;
+   (void) rx;
+   (void) ry;
+   int x = floor((mx-30.-21.) / 21.);
+   int y = floor((bh-my-15.) / 20.);
+   CstShipSlotWidget *wgt = (CstShipSlotWidget*) data;
+   ShipOutfitSlot *ps;
+   Ship *ship = shipyard_selected;
+
+   /* Need a selected ship. */
+   if (ship==NULL)
+      return 0;
+
+   /* Only care about motion. */
+   if (event->type != SDL_MOUSEMOTION)
+      return 0;
+
+   /* Find what row. */
+   switch (y) {
+      case 0:
+         ps = ship->outfit_weapon;
+         break;
+      case 1:
+         ps = ship->outfit_utility;
+         break;
+      case 2:
+         ps = ship->outfit_structure;
+         break;
+
+      default:
+         wgt->mouseover = 0;
+         return 1;
+   }
+   if ((x < 0) || (x >= array_size(ps))) {
+      wgt->mouseover = 0;
+      return 1;
+   }
+
+   /* Mark the slot. */
+   wgt->mouseover = 1;
+   wgt->slot = &ps[x];
+   wgt->alty = 30. + (2-y)*20.;
+   wgt->altx = 15. + (x+2)*21.;
+   return 1;
+}
+
+static void shipyard_renderSlotsOver( double bx, double by, double bw, double bh, void *data )
+{
+   (void) bw;
+   (void) bh;
+   char alt[STRMAX_SHORT];
+   int pos;
+   CstShipSlotWidget *wgt = (CstShipSlotWidget*) data;
+   const ShipOutfitSlot *slot;
+
+   if (wgt->mouseover <= 0)
+      return;
+
+   slot = wgt->slot;
+   pos = 0;
+   if (slot->slot.spid) {
+      pos = scnprintf( alt, sizeof(alt),
+            "#o%s\n", _( sp_display( slot->slot.spid ) ) );
+   }
+   else
+      pos = 0;
+   pos += scnprintf( &alt[pos], sizeof(alt)-pos, _( "#%c%s #%c%s #0slot" ),
+         outfit_slotSizeColourFont( &slot->slot ), _(slotSize( slot->slot.size )),
+         outfit_slotTypeColourFont( &slot->slot ), _(slotName( slot->slot.type )) );
+
+   /* Draw the alt stuff. */
+   toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
 }

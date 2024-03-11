@@ -17,7 +17,7 @@ typedef enum LuaDataType_e {
 typedef struct LuaData_s {
    size_t size; /**< Size of buffer (already multiplied by elem). */
    size_t elem; /**< Size of an element. */
-   char *data; /**< Actually allocated data. */
+   void *data; /**< Actually allocated data. */
    LuaDataType_t type; /**< Type of the data. */
 } LuaData_t;
 

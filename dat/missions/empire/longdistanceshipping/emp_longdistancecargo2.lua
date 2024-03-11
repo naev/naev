@@ -61,7 +61,7 @@ function accept ()
 
    -- Flavour text and mini-briefing
    vn.label("accept")
-   czesc(fmt.f( _([["Great!" says Lieutenant Czesc. "I'll send a message to the bureaucrat to meet you at the hanger. The Dvaered are, of course, allies of the Empire. Still, they offend easily, so try not to talk too much. Your mission is to drop the bureaucrat off on {pnt} in the {sys} system. He will take it from there and report back to me when the shipping contract has been established. Afterwards, keep an eye out for me in Empire space and we can continue the operation."]]),
+   czesc(fmt.f( _([["Great!" says Lieutenant Czesc. "I'll send a message to the bureaucrat to meet you at the hanger. The Dvaered are, of course, allies of the Empire. Still, they offend easily, so try not to talk too much. Your mission is to drop the bureaucrat off on {pnt} in the {sys} system. He will take it from there and report back to me when the shipping contract has been established. Afterwards, keep an eye out for me in Empire space, and we can continue the operation."]]),
       {pnt=targetworld, sys=targetworld_sys} ) )
    vn.func( function () accepted = true end )
 

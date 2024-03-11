@@ -39,7 +39,7 @@ local vn = require "vn"
 local vntk = require "vntk"
 local ccomm = require "common.comm"
 
-local trigger_ambush, spawn_advisor, space_clue, next_sys -- Forward-declared functions
+local trigger_ambush, spawn_advisor, space_clue, next_sys, clear_target_hook -- Forward-declared functions
 local adm_factions, advisor, ambush, hailed, target_ship -- Non-persistent state
 
 local quotes = {}
@@ -223,7 +223,7 @@ function accept ()
 
    vntk.msg( _("Find and Kill a pilot"), fmt.f( _("{plt} is a notorious {target_faction} pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize {plt} by any means necessary will be given {credits} as a reward. {paying_faction} authorities have lost track of this pilot in the {sys} system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation."),
       {plt=mem.name, target_faction=mem.target_faction, credits=fmt.credits(mem.credits), paying_faction=mem.paying_faction, sys=mem.mysys[1]} ) )
-   mem.jumphook = hook.enter( "enter" )
+   mem.jumphook = hook.jumpin( "enter" )
    mem.hailhook = hook.hail( "hail" )
    mem.landhook = hook.land( "land" )
 
@@ -262,7 +262,7 @@ function enter ()
 
          -- Get the position of the target
          local jp  = jump.get(system.cur(), mem.last_sys)
-	 local pos
+         local pos
          if jp ~= nil then
             local x = 6000 * rnd.rnd() - 3000
             local y = 6000 * rnd.rnd() - 3000
@@ -281,8 +281,9 @@ function enter ()
          target_ship:setHostile()
 
          mem.death_hook = hook.pilot( target_ship, "death", "target_death" )
+         mem.board_hook = hook.pilot( target_ship, "board", "target_board" )
          mem.pir_jump_hook = hook.pilot( target_ship, "jump", "target_flee" )
-         mem.pir_land_hook = hook.pilot( target_ship, "land", "target_land" )
+         mem.pir_land_hook = hook.pilot( target_ship, "land", "target_flee" )
          mem.jumpout = hook.jumpout( "player_flee" )
 
          -- If the target is weaker, runaway
@@ -299,7 +300,7 @@ end
 
 -- Enemies wait for the player
 function trigger_ambush()
-   local jp     = jump.get(system.cur(), mem.last_sys)
+   local jp = jump.get( system.cur(), mem.last_sys )
    local x, y
    ambush = {}
 
@@ -691,11 +692,7 @@ function player_flee ()
    vntk.msg( _("You're not going to kill anybody like that"), fmt.f( _("You had a chance to neutralize {plt}, and you wasted it! Now you have to start all over. Maybe some other pilots in {sys} know where your target is going."), {plt=mem.name, sys=system.cur()} ) )
    mem.stage = 0
    misn.osdActive( 1 )
-
-   hook.rm(mem.death_hook)
-   hook.rm(mem.pir_jump_hook)
-   hook.rm(mem.pir_land_hook)
-   hook.rm(mem.jumpout)
+   clear_target_hook()
 end
 
 function target_flee ()
@@ -705,21 +702,38 @@ function target_flee ()
    pilot.toggleSpawn(true)
    mem.stage = 0
    misn.osdActive( 1 )
-
-   hook.rm(mem.death_hook)
-   hook.rm(mem.pir_jump_hook)
-   hook.rm(mem.pir_land_hook)
-   hook.rm(mem.jumpout)
+   clear_target_hook()
 end
 
 function target_death ()
    mem.stage = 4
+   clear_target_hook()
+
+   misn.osdActive( 3 )
+   misn.markerRm(mem.marker)
+   pilot.toggleSpawn(true)
+end
+
+function target_board( p )
+   mem.stage = 4
+   clear_target_hook()
+
+   vntk.msg( _("Target captured"), _("You board the ship and, after a short but intense firefight, are able to take the wanted outlaw alive. Time to hand them in to the authorities.") )
+   p:disable() -- Permanently disable
+   local c = commodity.new( N_("Wanted Outlaw"), N_("A wanted outlaw you captured.") )
+   misn.cargoAdd( c, 0 )
+
+   misn.osdActive( 3 )
+   misn.markerRm(mem.marker)
+   pilot.toggleSpawn(true)
+
+   player.unboard()
+end
+
+function clear_target_hook ()
    hook.rm(mem.death_hook)
+   hook.rm(mem.board_hook)
    hook.rm(mem.pir_jump_hook)
    hook.rm(mem.pir_land_hook)
    hook.rm(mem.jumpout)
-
-   misn.osdActive( 3 )
-   misn.markerRm (mem.marker)
-   pilot.toggleSpawn(true)
 end

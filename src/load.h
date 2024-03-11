@@ -5,7 +5,7 @@
 
 /** @cond */
 #include <stdint.h>
-#include <time.h>
+#include "physfs.h"
 /** @endcond */
 
 #include "ntime.h"
@@ -23,7 +23,7 @@ typedef struct nsave_s {
    char *save_name; /** Snapshot name. */
    char *player_name; /**< Player name. */
    char *path; /**< File path relative to PhysicsFS write directory. */
-   PHYSFS_sint64 modtime;
+   PHYSFS_sint64 modtime; /**< Last modified time. */
 
    /* Naev info. */
    char *version; /**< Naev version. */
@@ -43,6 +43,8 @@ typedef struct nsave_s {
    /* Ship info. */
    char *shipname; /**< Name of the ship. */
    char *shipmodel; /**< Model of the ship. */
+
+   int ret; /**< Used for threaded loading. */
 } nsave_t;
 
 void load_loadGameMenu (void);

@@ -120,11 +120,14 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_elem( writer, "radius", "%f", sys->radius );
    xmlw_elem( writer, "spacedust", "%d", sys->spacedust );
    xmlw_elem( writer, "interference", "%f", sys->interference );
-   if (sys->nebu_density > 0.) {
+   if ((sys->nebu_density > 0.) || (sys_isFlag(sys, SYSTEM_NEBULATRAIL))) {
       xmlw_startElem( writer, "nebula" );
-      xmlw_attr( writer, "volatility", "%f", sys->nebu_volatility );
-      if (fabs(sys->nebu_hue*360.0 - NEBULA_DEFAULT_HUE) > 1e-5)
+      if (sys->nebu_volatility > 0.)
+         xmlw_attr( writer, "volatility", "%f", sys->nebu_volatility );
+      if (fabs(sys->nebu_hue*360.0 - NEBULA_DEFAULT_HUE) > DOUBLE_TOL)
          xmlw_attr( writer, "hue", "%f", sys->nebu_hue*360.0 );
+      if ((sys->nebu_density <= 0.) && sys_isFlag(sys, SYSTEM_NEBULATRAIL))
+         xmlw_attr( writer, "trails", "%d", 1 );
       xmlw_str( writer, "%f", sys->nebu_density );
       xmlw_endElem( writer ); /* "nebula" */
    }
@@ -218,8 +221,8 @@ int dsys_saveSystem( StarSystem *sys )
             xmlw_elem( writer, "density", "%f", ast->density );
          if (ast->maxspeed != ASTEROID_DEFAULT_MAXSPEED)
             xmlw_elem( writer, "maxspeed", "%f", ast->maxspeed );
-         if (ast->thrust != ASTEROID_DEFAULT_THRUST)
-            xmlw_elem( writer, "thrust", "%f", ast->thrust );
+         if (ast->accel != ASTEROID_DEFAULT_ACCEL)
+            xmlw_elem( writer, "accel", "%f", ast->accel );
          xmlw_endElem( writer ); /* "asteroid" */
       }
       for (int i=0; i<array_size(sys->astexclude); i++) {

@@ -4,9 +4,9 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>18</mass>
+  <mass>6</mass>
   <price>43000</price>
-  <description>A high-powered version of the Laser Cannon, the MK2 is usually found on Imperial law enforcement and military ships. Its superior firepower helps keep order among the civilian populace, and it is capable of dealing with larger Corvette vessels with some effort.</description>
+  <description>A high-powered version of the Laser Cannon MK1, the MK2 is usually found on Imperial law enforcement and military ships. Its superior firepower helps keep order among the civilian populace and pirates at bay. It is even capable of dealing with larger Corvette vessels with some effort.</description>
   <gfx_store>laser2.webp</gfx_store>
   <cpu>-24</cpu>
   </general>
@@ -24,9 +24,9 @@
   <heatup>35</heatup>
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>
-  <swivel>22</swivel>
+  <swivel>18</swivel>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>12</penetrate>
    <physical>26</physical>
   </damage>

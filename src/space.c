@@ -7,7 +7,6 @@
  * @brief Handles all the space stuff, namely systems and space objects (spobs).
  */
 /** @cond */
-#include <float.h>
 #include <math.h>
 #include <stdlib.h>
 #include "physfs.h"
@@ -17,6 +16,7 @@
 
 #include "space.h"
 
+#include "array.h"
 #include "background.h"
 #include "conf.h"
 #include "damagetype.h"
@@ -34,20 +34,17 @@
 #include "music.h"
 #include "ndata.h"
 #include "nebula.h"
-#include "nfile.h"
 #include "nlua.h"
 #include "nlua_pilot.h"
 #include "nlua_spob.h"
 #include "nlua_gfx.h"
 #include "nlua_camera.h"
 #include "nlua_tex.h"
-#include "nluadef.h"
 #include "nmath.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "ntime.h"
 #include "nxml.h"
-#include "opengl.h"
-#include "pause.h"
 #include "pilot.h"
 #include "player.h"
 #include "queue.h"
@@ -55,7 +52,6 @@
 #include "sound.h"
 #include "spfx.h"
 #include "start.h"
-#include "toolkit.h"
 #include "weapon.h"
 
 #define XML_SPOB_TAG   "spob" /**< Individual spob xml tag. */
@@ -92,9 +88,10 @@ static char** systemname_stack = NULL; /**< System name stack corresponding to s
 StarSystem *systems_stack = NULL; /**< Star system stack. */
 static Spob *spob_stack = NULL; /**< Spob stack. */
 static VirtualSpob *vspob_stack = NULL; /**< Virtual spob stack. */
-#ifdef DEBUGGING
+/* TODO get rid of the stack_changed stuff, and just redo all the id/pointer stuff.
+ * Main issue will be redoing the Lua system/spob modules to handle such a
+ * case, but can be done with  the weapon module as a referenc. */
 static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
-#endif /* DEBUGGING */
 static int spobstack_changed = 0; /**< Whether or not the spob_stack was changed after loading. */
 static MapShader **mapshaders = NULL; /**< Map shaders. */
 
@@ -275,7 +272,7 @@ const char* spob_getClassName( const char *class )
 credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
 {
    const char *sysname = spob_getSystem( p->name );
-   StarSystem *sys = system_get( sysname );
+   const StarSystem *sys = system_get( sysname );
    return economy_getPrice( c, sys, p );
 }
 
@@ -289,7 +286,7 @@ credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
 credits_t spob_commodityPriceAtTime( const Spob *p, const Commodity *c, ntime_t t )
 {
    const char *sysname = spob_getSystem( p->name );
-   StarSystem *sys = system_get( sysname );
+   const StarSystem *sys = system_get( sysname );
    return economy_getPriceAtTime( c, sys, p, t );
 }
 
@@ -586,7 +583,7 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
  *    @param landable Whether the search is limited to landable spobs.
  *    @return An array (array.h) of faction names.  Individual names are not allocated.
  */
-char** space_getFactionSpob( int *factions, int landable )
+char** space_getFactionSpob( const int *factions, int landable )
 {
    char **tmp = array_create( char* );
    for (int i=0; i<array_size(systems_stack); i++) {
@@ -709,7 +706,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    /* Asteroids. */
    for (int i=0; i<array_size(sys->asteroids); i++) {
       AsteroidAnchor *f = &sys->asteroids[i];
-      for (int k=0; k<f->nb; k++) {
+      for (int k=0; k<array_size(f->asteroids); k++) {
          double td;
          Asteroid *as = &f->asteroids[k];
 
@@ -721,7 +718,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
          if (!pilot_inRangeAsteroid( player.p, k, i ))
             continue;
 
-         td = pow2(x-as->pos.x) + pow2(y-as->pos.y);
+         td = pow2(x-as->sol.pos.x) + pow2(y-as->sol.pos.y);
          if (td < d) {
             *pnt  = -1; /* We must clear spob target as asteroid is closer. */
             *ast  = k;
@@ -784,7 +781,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
    /* Asteroids. */
    for (int i=0; i<array_size(sys->asteroids); i++) {
       AsteroidAnchor *f = &sys->asteroids[i];
-      for (int k=0; k<f->nb; k++) {
+      for (int k=0; k<array_size(f->asteroids); k++) {
          double ta;
          Asteroid *as = &f->asteroids[k];
 
@@ -792,7 +789,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
          if (as->state != ASTEROID_FG)
             continue;
 
-         ta = atan2( y - as->pos.y, x - as->pos.x);
+         ta = atan2( y - as->sol.pos.y, x - as->sol.pos.x);
          if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
             *pnt  = -1; /* We must clear spob target as asteroid is closer. */
             *ast  = k;
@@ -829,7 +826,7 @@ int space_sysReachable( const StarSystem *sys )
 
    /* check to see if it is adjacent to known */
    for (int i=0; i<array_size(sys->jumps); i++) {
-      JumpPoint *jp = sys->jumps[i].returnJump;
+      const JumpPoint *jp = sys->jumps[i].returnJump;
       if (jp && jp_isUsable( jp ))
          return 1;
    }
@@ -864,7 +861,7 @@ int space_sysReallyReachable( const char* sysname )
 int space_sysReachableFromSys( const StarSystem *target, const StarSystem *sys )
 {
    /* check to see if sys contains a known jump point to target */
-   JumpPoint *jp = jump_getTarget( target, sys );
+   const JumpPoint *jp = jump_getTarget( target, sys );
    if (jp == NULL)
       return 0;
    else if (jp_isUsable( jp ))
@@ -913,6 +910,20 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
          names[len] = sys->name;
          len++;
       }
+      else if ((sys->features!=NULL) && SDL_strcasestr( _(sys->features), sysname ) != NULL) {
+         names[len] = sys->name;
+         len++;
+      }
+      else {
+         for (int j=0; j<array_size(sys->spobs); j++) {
+            const Spob *spob = sys->spobs[j];
+            if ((spob->feature != NULL) && SDL_strcasestr( _(spob->feature), sysname ) != NULL) {
+               names[len] = sys->name;
+               len++;
+               break;
+            }
+         }
+      }
    }
 
    /* Free if empty. */
@@ -947,7 +958,7 @@ StarSystem* system_get( const char* sysname )
    if (sysname == NULL)
       return NULL;
 
-#ifdef DEBUGGING
+   /* Somethig was added, and since we store IDs too, everything can't be sorted anymore by name... */
    if (systemstack_changed) {
       for (int i=0; i<array_size(systems_stack); i++)
          if (strcmp(systems_stack[i].name, sysname)==0)
@@ -955,7 +966,6 @@ StarSystem* system_get( const char* sysname )
       WARN(_("System '%s' not found in stack"), sysname);
       return NULL;
    }
-#endif /* DEBUGGING */
 
    const StarSystem s = {.name = (char*)sysname};
    StarSystem *found = bsearch( &s, systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
@@ -1022,10 +1032,9 @@ const char* spob_getSystem( const char* spobname )
  */
 static int spob_cmp( const void *p1, const void *p2 )
 {
-   const Spob *pnt1, *pnt2;
-   pnt1 = (const Spob*) p1;
-   pnt2 = (const Spob*) p2;
-   return strcmp(pnt1->name,pnt2->name);
+   const Spob *spb1 = p1;
+   const Spob *spb2 = p2;
+   return strcmp(spb1->name,spb2->name);
 }
 
 /**
@@ -1041,7 +1050,7 @@ Spob* spob_get( const char* spobname )
       return NULL;
    }
 
-#ifdef DEBUGGING
+   /* Somethig was added, and since we store IDs too, everything can't be sorted anymore by name... */
    if (spobstack_changed) {
       for (int i=0; i<array_size(spob_stack); i++)
          if (strcmp(spob_stack[i].name, spobname)==0)
@@ -1049,7 +1058,6 @@ Spob* spob_get( const char* spobname )
       WARN(_("Spob '%s' not found in the universe"), spobname);
       return NULL;
    }
-#endif /* DEBUGGING */
 
    const Spob p = {.name = (char*)spobname};
    Spob *found = bsearch( &p, spob_stack, array_size(spob_stack), sizeof(Spob), spob_cmp );
@@ -1137,17 +1145,18 @@ const char* spob_existsCase( const char* spobname )
  */
 char **spob_searchFuzzyCase( const char* spobname, int *n )
 {
-   int len;
-   char **names;
-
    /* Overallocate to maximum. */
-   names = malloc( sizeof(char*) * array_size(spob_stack) );
+   char **names = malloc( sizeof(char*) * array_size(spob_stack) );
 
    /* Do fuzzy search. */
-   len = 0;
+   int len = 0;
    for (int i=0; i<array_size(spob_stack); i++) {
       Spob *spob = &spob_stack[i];
       if (SDL_strcasestr( spob_name(spob), spobname ) != NULL) {
+         names[len] = spob->name;
+         len++;
+      }
+      else if ((spob->feature != NULL) && SDL_strcasestr( _(spob->feature), spobname ) != NULL) {
          names[len] = spob->name;
          len++;
       }
@@ -1176,9 +1185,8 @@ VirtualSpob* virtualspob_getAll (void)
  */
 static int virtualspob_cmp( const void *p1, const void *p2 )
 {
-   const VirtualSpob *v1, *v2;
-   v1 = (const VirtualSpob*) p1;
-   v2 = (const VirtualSpob*) p2;
+   const VirtualSpob *v1 = p1;
+   const VirtualSpob *v2 = p2;
    return strcmp(v1->name,v2->name);
 }
 
@@ -1255,6 +1263,8 @@ const char *jump_getSymbol( const JumpPoint *jp )
  */
 static void system_scheduler( double dt, int init )
 {
+   NTracingZone( _ctx, 1 );
+
    /* Go through all the factions and reduce the timer. */
    for (int i=0; i < array_size(cur_system->presence); i++) {
       int n;
@@ -1367,6 +1377,8 @@ static void system_scheduler( double dt, int init )
       }
       lua_pop(naevL,2);
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1400,6 +1412,8 @@ void space_update( double dt, double real_dt )
    if (cur_system == NULL)
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* If spawning is enabled, call the scheduler. */
    if (space_spawn)
       system_scheduler( dt, 0 );
@@ -1409,7 +1423,7 @@ void space_update( double dt, double real_dt )
     */
    nebu_update( dt );
    if (cur_system->nebu_volatility > 0.) {
-      Pilot *const* pilot_stack;
+      Pilot *const* pilot_stack = pilot_getAll();
       Damage dmg;
       dmg.type          = dtype_get("nebula");
       dmg.damage        = cur_system->nebu_volatility * dt;
@@ -1417,7 +1431,6 @@ void space_update( double dt, double real_dt )
       dmg.disable       = 0.;
 
       /* Damage pilots in volatile systems. */
-      pilot_stack = pilot_getAll();
       for (int i=0; i<array_size(pilot_stack); i++)
          pilot_hit( pilot_stack[i], NULL, NULL, &dmg, NULL, LUA_NOREF, 0 );
    }
@@ -1505,6 +1518,8 @@ void space_update( double dt, double real_dt )
 
    /* Asteroids/Debris update */
    asteroids_update( dt );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1531,9 +1546,16 @@ int space_needsEffects (void)
  */
 void space_init( const char* sysname, int do_simulate )
 {
-   int n, s;
    const double fps_min_simulation = fps_min;
-   StarSystem *oldsys = cur_system;
+   const StarSystem *oldsys = cur_system;
+
+   NTracingFrameMarkStart( "space_init" );
+   NTracingZone( _ctx, 1 );
+#if HAVE_TRACY
+   char buf[STRMAX_SHORT];
+   size_t l = snprintf( buf, sizeof(buf), "Entering system '%s'", sysname );
+   NTracingMessage( buf, l );
+#endif /* TRACY */
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1568,24 +1590,8 @@ void space_init( const char* sysname, int do_simulate )
 
       player_message(_("#oEntering System %s on %s."), _(sysname), nt);
       if (cur_system->nebu_volatility > 0.)
-         player_message(_("#rWARNING - Volatile nebula detected in %s! Taking %.1f MW damage!"), _(sysname), cur_system->nebu_volatility);
+         player_message(_("#rWARNING - Volatile nebula detected in %s! Taking %.1f %s damage!"), _(sysname), cur_system->nebu_volatility, UNIT_POWER );
       free(nt);
-
-      /* Handle background */
-      if (cur_system->nebu_density > 0.) {
-         /* Background is Nebula */
-         nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility, cur_system->nebu_hue );
-
-         /* Set up sound. */
-         sound_env( SOUND_ENV_NEBULA, cur_system->nebu_density );
-      }
-      else {
-         /* Background is starry */
-         background_initDust( cur_system->spacedust );
-
-         /* Set up sound. */
-         sound_env( SOUND_ENV_NORMAL, 0. );
-      }
    }
 
    /* Update after setting cur_system. */
@@ -1630,6 +1636,7 @@ void space_init( const char* sysname, int do_simulate )
    /* we now know this system */
    sys_setFlag(cur_system,SYSTEM_KNOWN);
 
+   NTracingZoneName( _ctx_simulating, "space_init[simulation]", 1 );
    /* Simulate system. */
    space_simulating = 1;
    space_simulating_effects = 0;
@@ -1645,6 +1652,7 @@ void space_init( const char* sysname, int do_simulate )
    }
    player_messageToggle( 0 );
    if (do_simulate) {
+      int n, s;
       /* Uint32 time = SDL_GetTicks(); */
       s = sound_disabled;
       sound_disabled = 1;
@@ -1658,10 +1666,6 @@ void space_init( const char* sysname, int do_simulate )
          update_routine( fps_min_simulation, 0 );
       ntime_allowUpdate( 1 );
       sound_disabled = s;
-      /*
-      if (conf.devmode)
-         DEBUG(_("System simulated in %.3f s"), (SDL_GetTicks()-time)/1000.);
-      */
    }
    player_messageToggle( 1 );
    if (player.p != NULL) {
@@ -1675,6 +1679,7 @@ void space_init( const char* sysname, int do_simulate )
    }
    space_simulating_effects = 1;
    space_simulating = 0;
+   NTracingZoneEnd( _ctx_simulating );
 
    /* Refresh overlay if necessary (player kept it open). */
    ovr_refresh();
@@ -1682,8 +1687,26 @@ void space_init( const char* sysname, int do_simulate )
    /* Update gui. */
    gui_setSystem();
 
-   /* Start background. */
-   background_load( cur_system->background );
+   /* Handle background */
+   if ((cur_system->nebu_density > 0.) || sys_isFlag(cur_system, SYSTEM_NEBULATRAIL)) {
+      /* Background is Nebula */
+      nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility, cur_system->nebu_hue );
+   }
+   if (cur_system->nebu_density > 0.) {
+      /* Set up sound. */
+      sound_env( SOUND_ENV_NEBULA, cur_system->nebu_density );
+   }
+   else {
+      /* Background is starry */
+      background_initDust( cur_system->spacedust );
+      background_load( cur_system->background );
+
+      /* Set up sound. */
+      sound_env( SOUND_ENV_NORMAL, 0. );
+   }
+
+   NTracingZoneEnd( _ctx );
+   NTracingFrameMarkEnd( "space_init" );
 }
 
 /**
@@ -1694,13 +1717,8 @@ Spob *spob_new (void)
    Spob *p, *old_stack;
    int realloced;
 
-#if DEBUGGING
    if (!systems_loading)
       spobstack_changed = 1;
-#else /* DEBUGGING */
-   if (!systems_loading)
-      WARN(_("Creating new spob in non-debugging mode. Things are probably going to break horribly."));
-#endif /* DEBUGGING */
 
    /* Grow and initialize memory. */
    old_stack   = spob_stack;
@@ -1721,6 +1739,8 @@ Spob *spob_new (void)
    p->lua_render  = LUA_NOREF;
    p->lua_update  = LUA_NOREF;
    p->lua_comm    = LUA_NOREF;
+   p->lua_population = LUA_NOREF;
+   p->lua_barbg   = LUA_NOREF;
 
    /* Reconstruct the jumps. */
    if (!systems_loading && realloced)
@@ -1928,6 +1948,13 @@ const glColour* spob_getColour( const Spob *p )
  */
 void spob_updateLand( Spob *p )
 {
+   if (p->land_override && (p->land_msg!=NULL)) {
+      p->can_land = (p->land_override > 0);
+      return;
+   }
+
+   NTracingZone( _ctx, 1 );
+
    /* Clean up old stuff. */
    free( p->land_msg );
    p->can_land    = 0;
@@ -1940,6 +1967,7 @@ void spob_updateLand( Spob *p )
       if (nlua_pcall( p->lua_env, 0, 2 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), p->name, "can_land", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
+         NTracingZoneEnd( _ctx );
          return;
       }
 
@@ -1948,14 +1976,20 @@ void spob_updateLand( Spob *p )
          p->land_msg = strdup( lua_tostring(naevL,-1) );
       lua_pop(naevL,2);
 
+      NTracingZoneEnd( _ctx );
       return;
    }
 
    /* Some defaults. */
-   if (spob_hasService( p, SPOB_SERVICE_LAND )) {
+   if (p->land_override<0) {
+      p->land_msg = strdup(_("Landing permission denied."));
+   }
+   else if (spob_hasService( p, SPOB_SERVICE_LAND ) || (p->land_override>0)) {
       p->can_land = 1;
       p->land_msg = strdup(_("Landing permission granted."));
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1991,6 +2025,8 @@ int spob_luaInit( Spob *spob )
    UNREF( spob->lua_render );
    UNREF( spob->lua_update );
    UNREF( spob->lua_comm );
+   UNREF( spob->lua_population );
+   UNREF( spob->lua_barbg );
    UNREF( spob->lua_mem );
 #undef UNREF
 
@@ -2006,14 +2042,16 @@ int spob_luaInit( Spob *spob )
    spob->lua_env = env;
 
    /* Grab functions as applicable. */
-   spob->lua_init     = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
-   spob->lua_load     = nlua_refenvtype( env, "load",     LUA_TFUNCTION );
-   spob->lua_unload   = nlua_refenvtype( env, "unload",   LUA_TFUNCTION );
-   spob->lua_can_land = nlua_refenvtype( env, "can_land", LUA_TFUNCTION );
-   spob->lua_land     = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
-   spob->lua_render   = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
-   spob->lua_update   = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
-   spob->lua_comm     = nlua_refenvtype( env, "comm",     LUA_TFUNCTION );
+   spob->lua_init    = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
+   spob->lua_load    = nlua_refenvtype( env, "load",     LUA_TFUNCTION );
+   spob->lua_unload  = nlua_refenvtype( env, "unload",   LUA_TFUNCTION );
+   spob->lua_can_land= nlua_refenvtype( env, "can_land", LUA_TFUNCTION );
+   spob->lua_land    = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
+   spob->lua_render  = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
+   spob->lua_update  = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
+   spob->lua_comm    = nlua_refenvtype( env, "comm",     LUA_TFUNCTION );
+   spob->lua_population=nlua_refenvtype(env, "population",LUA_TFUNCTION );
+   spob->lua_barbg   = nlua_refenvtype( env, "barbg",    LUA_TFUNCTION );
 
    /* Set up local memory. */
    lua_newtable( naevL );        /* m */
@@ -2089,8 +2127,12 @@ void spob_gfxLoad( Spob *spob )
  */
 void space_gfxLoad( StarSystem *sys )
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(sys->spobs); i++)
       spob_gfxLoad( sys->spobs[i] );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -2185,6 +2227,8 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
    spob->lua_render  = LUA_NOREF;
    spob->lua_update  = LUA_NOREF;
    spob->lua_comm    = LUA_NOREF;
+   spob->lua_population = LUA_NOREF;
+   spob->lua_barbg   = LUA_NOREF;
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", spob->name );
@@ -2326,7 +2370,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &spob->tags, strdup(tmp) );
                continue;
@@ -2456,6 +2500,8 @@ int system_addSpob( StarSystem *sys, const char *spobname )
 /**
  * @brief Removes a spob from a star system.
  *
+ * Remember to call space_reconstructPresences() after using this function.
+ *
  *    @param sys Star System to remove spob from.
  *    @param spobname Name of the spob to remove.
  *    @return 0 on success.
@@ -2485,9 +2531,6 @@ int system_rmSpob( StarSystem *sys, const char *spobname )
    /* Remove spob from system. */
    array_erase( &sys->spobs, &sys->spobs[i], &sys->spobs[i+1] );
    array_erase( &sys->spobsid, &sys->spobsid[i], &sys->spobsid[i+1] );
-
-   /* Remove the presence. */
-   space_reconstructPresences(); /* TODO defer this if removing multiple spobs at once. */
 
    /* Remove from the name stack thingy. */
    found = 0;
@@ -2562,10 +2605,6 @@ int system_rmVirtualSpob( StarSystem *sys, const char *spobname )
    /* Remove virtual spob. */
    array_erase( &sys->spobs_virtual, &sys->spobs_virtual[i], &sys->spobs_virtual[i+1] );
 
-   /* Remove the presence. */
-   space_reconstructPresences(); /* TODO defer this if removing multiple spobs at once. */
-   system_setFaction(sys);
-
    economy_addQueuedUpdate();
 
    return 0;
@@ -2624,9 +2663,6 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
    /* Remove jump from system. */
    array_erase( &sys->jumps, &sys->jumps[i], &sys->jumps[i+1] );
 
-   /* Refresh presence */
-   system_setFaction(sys);
-
    economy_addQueuedUpdate();
 
    return 0;
@@ -2655,13 +2691,8 @@ StarSystem *system_new (void)
    StarSystem *sys;
    int id;
 
-#if DEBUGGING
    if (!systems_loading)
       systemstack_changed = 1;
-#else /* DEBUGGING */
-   if (!systems_loading)
-      WARN(_("Creating new system in non-debugging mode. Things are probably going to break horribly."));
-#endif /* DEBUGGING */
 
    /* Protect current system in case of realloc. */
    id = -1;
@@ -2689,7 +2720,7 @@ StarSystem *system_new (void)
 /**
  * @brief Reconstructs the jumps for a single system.
  */
-void system_reconstructJumps (StarSystem *sys)
+void system_reconstructJumps( StarSystem *sys )
 {
    for (int j=0; j<array_size(sys->jumps); j++) {
       double dx, dy, a;
@@ -2710,7 +2741,7 @@ void system_reconstructJumps (StarSystem *sys)
          vec2_pset( &jp->pos, sys->radius, a );
 
       /* Update jump specific data. */
-      gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx, a );
+      gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx->sx, jumppoint_gfx->sy, a );
       jp->angle = 2.*M_PI-a;
       jp->cosa  = cos(jp->angle);
       jp->sina  = sin(jp->angle);
@@ -2722,11 +2753,18 @@ void system_reconstructJumps (StarSystem *sys)
  */
 void systems_reconstructJumps (void)
 {
+   NTracingZone( _ctx, 1 );
+
    /* So we need to calculate the shortest jump. */
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
       system_reconstructJumps(sys);
+      /* Save jump indexes. */
+      for (int j=0; j<array_size(sys->jumps); j++)
+         sys->jumps[j].targetid = sys->jumps[j].target->id;
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -2734,11 +2772,15 @@ void systems_reconstructJumps (void)
  */
 void systems_reconstructSpobs (void)
 {
+   NTracingZone( _ctx, 1 );
+
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
       for (int j=0; j<array_size(sys->spobsid); j++)
          sys->spobs[j] = &spob_stack[ sys->spobsid[j] ];
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -2766,7 +2808,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->radius   = 0.;
    a->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
    a->maxspin  = ASTEROID_DEFAULT_MAXSPIN;
-   a->thrust   = ASTEROID_DEFAULT_THRUST;
+   a->accel    = ASTEROID_DEFAULT_ACCEL;
 
    /* Parse label if available. */
    xmlr_attr_strd( node, "label", a->label );
@@ -2779,7 +2821,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
       xmlr_float( cur, "density", a->density );
       xmlr_float( cur, "radius", a->radius );
       xmlr_float( cur, "maxspeed", a->maxspeed );
-      xmlr_float( cur, "thrust", a->thrust );
+      xmlr_float( cur, "accel", a->accel );
 
       /* Handle types of asteroids. */
       if (xml_isNode(cur,"group")) {
@@ -2934,9 +2976,13 @@ static int system_parse( StarSystem *sys, const char *filename )
                continue;
             }
             if (xml_isNode(cur,"nebula")) {
+               int trails = 0;
                xmlr_attr_float( cur, "volatility", sys->nebu_volatility );
                xmlr_attr_float_def( cur, "hue", sys->nebu_hue, NEBULA_DEFAULT_HUE );
+               xmlr_attr_int( cur, "trails", trails );
                sys->nebu_density = xml_getFloat(cur);
+               if (trails || (sys->nebu_density>0.))
+                  sys_setFlag(sys, SYSTEM_NEBULATRAIL);
                continue;
             }
             if (xml_isNode(cur,"nolanes")) {
@@ -2997,7 +3043,7 @@ static int system_parse( StarSystem *sys, const char *filename )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
+               const char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &sys->tags, strdup(tmp) );
                continue;
@@ -3294,8 +3340,6 @@ static int system_parseJumps( StarSystem *sys )
  */
 int space_load (void)
 {
-   int ret;
-
    /* Loading. */
    systems_loading = 1;
 
@@ -3307,50 +3351,19 @@ int space_load (void)
    jumppoint_gfx = gl_newSprite(  SPOB_GFX_SPACE_PATH"jumppoint.webp", 4, 4, OPENGL_TEX_MIPMAPS );
    jumpbuoy_gfx = gl_newImage(  SPOB_GFX_SPACE_PATH"jumpbuoy.webp", 0 );
 
-   /* Load spobs. */
-   ret = spobs_load();
-   if (ret < 0)
-      return ret;
-
-   /* Load virtual spobs. */
-   ret = virtualspobs_load();
-   if (ret < 0)
-      return ret;
-
-   /* Load asteroid stuff. */
-   ret = asteroids_load ();
-   if (ret < 0)
-      return ret;
-
-   /* Load systems. */
-   ret = systems_load();
-   if (ret < 0)
-      return ret;
+   /* Load data. */
+   spobs_load();
+   virtualspobs_load();
+   asteroids_load ();
+   systems_load();
 
    /* Done loading. */
    systems_loading = 0;
 
-   /* Apply all the presences. */
-   for (int i=0; i<array_size(systems_stack); i++)
-      system_addAllSpobsPresence(&systems_stack[i]);
-
-   /* Determine dominant faction. */
-   for (int i=0; i<array_size(systems_stack); i++)
-      system_setFaction( &systems_stack[i] );
-
    /* Reconstruction. */
    systems_reconstructJumps();
    systems_reconstructSpobs();
-
-   /* Fine tuning. */
-   for (int i=0; i<array_size(systems_stack); i++) {
-      StarSystem *sys = &systems_stack[i];
-
-      /* Save jump indexes. */
-      for (int j=0; j<array_size(sys->jumps); j++)
-         sys->jumps[j].targetid = sys->jumps[j].target->id;
-      sys->ownerpresence = system_getPresence( sys, sys->faction );
-   }
+   space_reconstructPresences();
 
    /* Calculate commodity prices (sinusoidal model). */
    economy_initialiseCommodityPrices();
@@ -3381,8 +3394,10 @@ int space_loadLua (void)
  */
 static int systems_load (void)
 {
-   char **system_files;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   char **system_files;
 
    /* Allocate if needed. */
    if (systems_stack == NULL)
@@ -3428,12 +3443,12 @@ static int systems_load (void)
    /* Clean up. */
    array_free( system_files );
 
+#if DEBUGGING
    if (conf.devmode) {
-      time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Star System",
                  "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
       DEBUG( n_( "       with %d Space Object in %.3f s",
-                 "       with %d Space Objects in %.3f s", array_size(spob_stack) ), array_size(spob_stack), time/1000. );
+                 "       with %d Space Objects in %.3f s", array_size(spob_stack) ), array_size(spob_stack), (SDL_GetTicks()-time)/1000. );
    }
    else {
       DEBUG( n_( "Loaded %d Star System",
@@ -3441,6 +3456,7 @@ static int systems_load (void)
       DEBUG( n_( "       with %d Space Object",
                  "       with %d Space Objects", array_size(spob_stack) ), array_size(spob_stack) );
    }
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -3455,10 +3471,14 @@ void space_render( const double dt )
    if (cur_system == NULL)
       return;
 
+   NTracingZone( _ctx, 1 );
+
    if (cur_system->nebu_density > 0.)
       nebu_render(dt);
    else
       background_render(dt);
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3471,6 +3491,8 @@ void space_renderOverlay( const double dt )
    if (cur_system == NULL)
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* Render the debris. */
    asteroids_renderOverlay();
 
@@ -3480,6 +3502,8 @@ void space_renderOverlay( const double dt )
    if ((cur_system->nebu_density > 0.) &&
          !menu_isOpen( MENU_MAIN ) && !menu_isOpen( MENU_EDITORS ))
       nebu_renderOverlay(dt);
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -3490,6 +3514,8 @@ void spobs_render (void)
    /* Must be a system. */
    if (cur_system==NULL)
       return;
+
+   NTracingZone( _ctx, 1 );
 
    /* Render the jumps. */
    for (int i=0; i < array_size(cur_system->jumps); i++)
@@ -3504,6 +3530,8 @@ void spobs_render (void)
 
    /* Render gatherable stuff. */
    gatherable_render();
+
+   NTracingZoneEnd( _ctx );
 
 }
 
@@ -4129,7 +4157,6 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
       q_destroy(q);
       q_destroy(qn);
       goto sys_cleanup;
-      return;
    }
 
    while (curSpill < range) {
@@ -4197,14 +4224,14 @@ double system_getPresence( const StarSystem *sys, int faction )
 #if DEBUGGING
    if (sys == NULL) {
       WARN("sys == NULL");
-      return 0;
+      return 0.;
    }
 #endif /* DEBUGGING */
 
    /* Go through the array, looking for the faction. */
    for (int i=0; i < array_size(sys->presence); i++) {
       if (sys->presence[i].faction == faction)
-         return MAX(sys->presence[i].value, 0);
+         return MAX(sys->presence[i].value, 0.);
    }
 
    /* If it's not in there, it's zero. */
@@ -4273,7 +4300,7 @@ void system_addAllSpobsPresence( StarSystem *sys )
 /**
  * @brief Reset the presence of all systems.
  */
-void space_reconstructPresences( void )
+void space_reconstructPresences (void)
 {
    /* Reset the presence in each system. */
    for (int i=0; i<array_size(systems_stack); i++) {
@@ -4382,26 +4409,40 @@ void space_queueLand( Spob *pnt )
 /**
  * @brief Gets the population in an approximated string. Note this function changes the string value each call, so be careful!
  *
- *    @param population Population to get string of.
+ *    @param spb Spob to get population string of.
  *    @return String corresponding to the population.
  */
-const char *space_populationStr( uint64_t population )
+const char *space_populationStr( const Spob *spb )
 {
    static char pop[STRMAX_SHORT];
-   double p = (double)population;
+   double p;
+
+   if (spb->lua_population != LUA_NOREF) {
+      spob_luaInitMem( spb );
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, spb->lua_population); /* f */
+      if (nlua_pcall( spb->lua_env, 0, 1 )) {
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), spb->name, "population", lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+         return "";
+      }
+
+      scnprintf( pop, sizeof(pop), "%s", luaL_checkstring(naevL,-1) );
+      lua_pop(naevL,1);
+      return pop;
+   }
 
    /* Out of respect for the first version of this, do something fancy and human-oriented.
     * However, specifying a thousand/million/billion system failed in a few ways: needing 2x as many cases as
     * intended to avoid silliness (1.0e10 -> 10000 million), and not being gettext-translatable to other number
     * systems like the Japanese one. */
-
+   p = (double)spb->population;
    if (p < 1.0e3)
       snprintf( pop, sizeof(pop), "%.0f", p );
    else {
       char scratch[STRMAX_SHORT];
       const char *digits[] = {"\xe2\x81\xb0", "\xc2\xb9", "\xc2\xb2", "\xc2\xb3", "\xe2\x81\xb4", "\xe2\x81\xb5", "\xe2\x81\xb6", "\xe2\x81\xb7", "\xe2\x81\xb8", "\xe2\x81\xb9"};
       int state = 0,  COEF = 0, E = 1, EXP = 4;
-      size_t l = 0;
+      size_t l = scnprintf( pop, sizeof(pop), _("roughly ") );
       snprintf( scratch, sizeof(scratch), "%.1e", p );
       for (const char *c = scratch; *c; c++) {
          if (state == COEF && *c != 'e')
@@ -4446,7 +4487,7 @@ static const MapShader *mapshader_get( const char *name )
    array_push_back( &mapshaders, ms );
 
    ms->name      = strdup( name );
-   ms->program   = gl_program_vert_frag( "system_map.vert", name, NULL );
+   ms->program   = gl_program_vert_frag( "system_map.vert", name );
    ms->vertex    = glGetAttribLocation(  ms->program,  "vertex" );
    ms->projection= glGetUniformLocation( ms->program, "projection" );
    ms->time      = glGetUniformLocation( ms->program, "time" );

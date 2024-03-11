@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Dvaered Poster">
  <location>land</location>
- <cond>spob.cur():faction() == faction.get("Dvaered")</cond>
+ <faction>Dvaered</faction>
  <chance>50</chance>
 </event>
 --]]

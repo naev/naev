@@ -8,7 +8,7 @@ function update( p, _po )
    end
 end
 
-function ontoggle( p, _po, on )
+function onshoot( p, _po, on )
    if on then
       p:effectAdd( "Ride of the Valkyries" )
    end

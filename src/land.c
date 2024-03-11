@@ -23,7 +23,6 @@
 #include "dialogue.h"
 #include "economy.h"
 #include "equipment.h"
-#include "escort.h"
 #include "event.h"
 #include "gui.h"
 #include "gui_omsg.h"
@@ -46,11 +45,13 @@
 #include "ntime.h"
 #include "player.h"
 #include "player_fleet.h"
+#include "player_autonav.h"
 #include "rng.h"
 #include "render.h"
 #include "save.h"
 #include "shiplog.h"
 #include "toolkit.h"
+#include "ntracing.h"
 
 /*
  * we use visited flags to not duplicate missions generated
@@ -74,8 +75,8 @@ unsigned int land_generated = 0;
  */
 int landed = 0; /**< Is player landed. */
 int land_loaded = 0; /**< Finished loading? */
-int land_takeoff = 0; /**< Takeoff. */
-int land_takeoff_nosave = 0; /**< Whether or not to disable saving when taking off. */
+static int land_takeoff = 0; /**< Takeoff. */
+static int land_takeoff_nosave = 0; /**< Whether or not to disable saving when taking off. */
 unsigned int land_wid = 0; /**< Land window ID, also used in gui.c */
 static int land_regen = 0; /**< Whether or not regenning. */
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
@@ -87,7 +88,6 @@ static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed spob.
  * mission computer stack
  */
 static Mission* mission_computer = NULL; /**< Missions at the computer. */
-static int mission_ncomputer = 0; /**< Number of missions at the computer. */
 
 /*
  * Bar stuff.
@@ -134,7 +134,7 @@ static int news_load (void);
 static void misn_open( unsigned int wid );
 static void misn_autonav( unsigned int wid, const char *str );
 static void misn_accept( unsigned int wid, const char *str );
-static void misn_genList( unsigned int wid, int first );
+static void misn_genList( unsigned int wid );
 static void misn_update( unsigned int wid, const char *str );
 
 /**
@@ -194,93 +194,11 @@ int land_doneLoading (void)
 }
 
 /**
- * @brief Makes sure it's valid to change ships in the equipment view.
- *    @param shipname Ship being changed to.
+ * @brief Clear error dialogues.
  */
-int can_swapEquipment( const char *shipname )
+void land_errClear (void)
 {
-   int diff;
-   Pilot *newship;
-   const PlayerShip_t *ps = player_getPlayerShip( shipname );
-
-   if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
-      land_errDialogueBuild( _("You're already onboard the %s."), shipname );
-      return 0;
-   }
-
-   /* Ship can't be piloted by player. */
-   if (ship_isFlag( ps->p->ship, SHIP_NOPLAYER )) {
-      land_errDialogueBuild( _("You can not pilot the %s! The ship can only be used as an escort."), shipname );
-      return 0;
-   }
-
-   /* Ship can't be set as an escort. */
-   if (ship_isFlag( player.p->ship, SHIP_NOESCORT )) {
-      land_errDialogueBuild( _("You can not swap ships and set %s as an escort!"), player.p->name );
-      return 0;
-   }
-
-   newship = ps->p;
-   if (ps->deployed)
-      diff = 0;
-   else
-      diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship) - (pfleet_cargoFree() - pilot_cargoFree(player.p)); /* Has to fit all the cargo. */
-   diff = MAX( diff, pilot_cargoUsedMission(player.p) - pilot_cargoFree(newship) ); /* Has to fit all mission cargo. */
-   if (diff > 0) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( n_(
-               "You have %d tonne more cargo than the new ship can hold.",
-               "You have %d tonnes more cargo than the new ship can hold.",
-               diff),
-            diff );
-      return 0;
-   }
-   if (pilot_hasDeployed( player.p )) {
-      if (!dialogue_YesNo(_("Recall Fighters"), _("This action will recall your deployed fighters. Is that OK?"))) {
-         land_errDialogueBuild( _("You have deployed fighters.") );
-         return 0;
-      }
-      /* Recall fighters. */
-      escort_clearDeployed( player.p );
-   }
-   return 1;
-}
-
-/**
- * @brief Generates error dialogues used by several landing tabs.
- *
- * @TODO don't use strings here and use some switch case with an enum.
- *
- *    @param name Name of the ship, outfit or commodity being acted upon.
- *    @param type Type of action.
- */
-int land_errDialogue( const char *name, const char *type )
-{
-   int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
-
-   errorlist_ptr = NULL;
-   if (strcmp(type,"tradeShip")==0)
-      shipyard_canTrade( name, land_spob );
-   else if (strcmp(type,"buyShip")==0)
-      shipyard_canBuy( name, land_spob );
-   else if (strcmp(type,"swapEquipment")==0)
-      can_swapEquipment( name );
-   else if (strcmp(type,"swap")==0)
-      can_swap( name );
-   else if (strcmp(type,"sellShip")==0)
-      can_sell( name );
-   else if (strcmp(type,"buyOutfit")==0)
-      outfit_canBuy( name, blackmarket );
-   else if (strcmp(type,"sellOutfit")==0)
-      outfit_canSell( name );
-   else if (strcmp(type,"buyCommodity")==0)
-      commodity_canBuy( commodity_get( name ) );
-   else if (strcmp(type,"sellCommodity")==0)
-      commodity_canSell( commodity_get( name ) );
-   if (errorlist_ptr != NULL) {
-      dialogue_alert( "%s", errorlist );
-      return 1;
-   }
-   return 0;
+   errorlist_ptr = NULL; /* Clear errors. */
 }
 
 /**
@@ -293,17 +211,27 @@ void land_errDialogueBuild( const char *fmt, ... )
 
    if (fmt == NULL)
       return;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(errorreason, sizeof(errorreason), fmt, ap);
-      va_end(ap);
-   }
+   va_start(ap, fmt);
+   vsnprintf(errorreason, sizeof(errorreason), fmt, ap);
+   va_end(ap);
 
    if (errorlist_ptr == NULL) /* Initialize on first run. */
       errorappend = scnprintf( errorlist, sizeof(errorlist), "%s", errorreason );
    else /* Append newest error to the existing list. */
       scnprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
    errorlist_ptr = errorlist;
+}
+
+/**
+ * @brief Displays an error if applicable.
+ */
+int land_errDisplay (void)
+{
+   if (errorlist_ptr != NULL) {
+      dialogue_alert( "%s", errorlist );
+      return 1;
+   }
+   return 0;
 }
 
 /**
@@ -335,7 +263,7 @@ static void bar_open( unsigned int wid )
    land_tabGenerate(LAND_WINDOW_BAR);
 
    /* Set window functions. */
-   window_onCleanup( wid, bar_close );
+   window_onClose( wid, bar_close );
 
    /* Get dimensions. */
    desc = (land_spob->bar_description!=NULL) ? _(land_spob->bar_description) : "(NULL)";
@@ -382,7 +310,7 @@ static int bar_genList( unsigned int wid )
 {
    ImageArrayCell *portraits;
    int w, h, iw, ih, bw, bh;
-   int n, pos;
+   int n, pos, marktab;
 
    /* Validity check. */
    if (wid == 0)
@@ -390,12 +318,12 @@ static int bar_genList( unsigned int wid )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
+   marktab = 0;
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" )) {
       /* Store position. */
       pos = toolkit_getImageArrayPos( wid, "iarMissions" );
-
       window_destroyWidget( wid, "iarMissions" );
    }
    else
@@ -421,7 +349,7 @@ static int bar_genList( unsigned int wid )
       portraits[0].caption = strdup(_("News"));
       for (int i=0; i<npc_getArraySize(); i++) {
          ImageArrayCell *p = &portraits[i+1];
-         glTexture *bg = npc_getBackground(i);
+         const glTexture *bg = npc_getBackground(i);
          p->caption = strdup( npc_getName(i) );
          if (bg!=NULL) {
             p->image = gl_dupTexture( bg );
@@ -429,8 +357,10 @@ static int bar_genList( unsigned int wid )
          }
          else
             p->image = gl_dupTexture( npc_getTexture(i) );
-         if (npc_isImportant(i))
+         if (npc_isImportant(i)) {
             p->layers = gl_addTexArray( p->layers, gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.webp", 0 ) );
+            marktab = 1;
+         }
       }
    }
    window_addImageArray( wid, 20, -40,
@@ -446,7 +376,32 @@ static int bar_genList( unsigned int wid )
    /* Set default keyboard focus. */
    window_setFocus( wid, "iarMissions" );
 
+   /* Determine if we want to mark the spaceport bar tab. */
+   if (marktab)
+      window_tabWinSetTabName( land_wid, "tabLand", land_windowsMap[LAND_WINDOW_BAR], _("Spaceport Bar #r!!#0") );
+   else
+      window_tabWinSetTabName( land_wid, "tabLand", land_windowsMap[LAND_WINDOW_BAR], _("Spaceport Bar") );
+
    return 0;
+}
+/**
+ * @brief Patches a mission into the mission computer.
+ */
+void misn_patchMission( Mission *misn )
+{
+   array_push_back( &mission_computer, *misn );
+   /* TODO sort. */
+}
+/**
+ * @brief Regenerates the mission list.
+ */
+void misn_regen (void)
+{
+   if (!landed)
+      return;
+   if (!land_loaded)
+      return;
+   misn_genList( land_getWid(LAND_WINDOW_MISSION) );
 }
 /**
  * @brief Regenerates the bar list.
@@ -457,7 +412,9 @@ void bar_regen (void)
       return;
    if (!land_loaded)
       return;
+   NTracingZone( _ctx, 1 );
    bar_genList( land_getWid(LAND_WINDOW_BAR) );
+   NTracingZoneEnd( _ctx );
 }
 /**
  * @brief Updates the missions in the spaceport bar.
@@ -644,7 +601,7 @@ static void misn_open( unsigned int wid )
    /* map */
    map_show( wid, 20, 20, w/2 - 30, h/2 - 35, 0.75, 0., 0. );
 
-   misn_genList(wid, 1);
+   misn_genList(wid);
    space_clearComputerMarkers(); /* Don't want markers at the beginning. */
 }
 /**
@@ -679,11 +636,7 @@ static void misn_autonav( unsigned int wid, const char *str )
 static void misn_accept( unsigned int wid, const char *str )
 {
    (void) str;
-   const char* misn_name;
-   Mission* misn;
-   int pos, ret;
-
-   misn_name = toolkit_getList( wid, "lstMission" );
+   const char *misn_name = toolkit_getList( wid, "lstMission" );
 
    /* Make sure you have missions. */
    if (strcmp(misn_name,_("No Missions"))==0)
@@ -692,9 +645,9 @@ static void misn_accept( unsigned int wid, const char *str )
    if (dialogue_YesNo( _("Accept Mission"),
          _("Are you sure you want to accept this mission?"))) {
       int changed = 0;
-      pos = toolkit_getListPos( wid, "lstMission" );
-      misn = &mission_computer[pos];
-      ret = mission_accept( misn );
+      int pos = toolkit_getListPos( wid, "lstMission" );
+      Mission *misn = &mission_computer[pos];
+      int ret = mission_accept( misn );
       if (ret==-1) { /* Errored out. */
          mission_cleanup( &mission_computer[pos] );
          changed = 1;
@@ -703,48 +656,54 @@ static void misn_accept( unsigned int wid, const char *str )
          changed = 1;
 
       if (changed) {
-         memmove( &mission_computer[pos], &mission_computer[pos+1],
-               sizeof(Mission) * (mission_ncomputer-pos-1) );
-         mission_ncomputer--;
+         array_erase( &mission_computer, &mission_computer[pos], &mission_computer[pos+1] );
 
          /* Regenerate list. */
-         misn_genList(wid, 0);
-         /* Add position persistancey after a mission has been accepted */
-         /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
-         toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
+         misn_genList(wid);
       }
 
       /* Reset markers. */
       mission_sysMark();
    }
 }
+
 /**
  * @brief Generates the mission list.
  *    @param wid Window to generate the mission list for.
- *    @param first Is it the first time generated?
  */
-static void misn_genList( unsigned int wid, int first )
+static void misn_genList( unsigned int wid )
 {
    char** misn_names;
-   int j, w,h;
+   int j, w,h, pos;
 
-   if (!first)
+   /* Validity check. */
+   if (wid == 0)
+      return;
+
+   if (widget_exists( wid, "lstMission" )) {
+      pos = toolkit_getListPos( wid, "lstMission" );
       window_destroyWidget( wid, "lstMission" );
+   }
+   else
+      pos = -1;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
 
+   /* Resort just in case. */
+   qsort( mission_computer, array_size(mission_computer), sizeof(Mission), mission_compare );
+
    /* list */
    j = 1; /* make sure we don't accidentally free the memory twice. */
    misn_names = NULL;
-   if (mission_ncomputer > 0) { /* there are missions */
-      misn_names = malloc(sizeof(char*) * mission_ncomputer);
+   if (array_size(mission_computer) > 0) { /* there are missions */
+      misn_names = malloc(sizeof(char*) * array_size(mission_computer));
       j = 0;
-      for (int i=0; i<mission_ncomputer; i++)
+      for (int i=0; i<array_size(mission_computer); i++)
          if (mission_computer[i].title != NULL)
             misn_names[j++] = strdup(mission_computer[i].title);
    }
-   if ((misn_names==NULL) || (mission_ncomputer==0) || (j==0)) { /* no missions. */
+   if ((misn_names==NULL) || (array_size(mission_computer)==0) || (j==0)) { /* no missions. */
       if (j==0)
          free(misn_names);
       misn_names = malloc(sizeof(char*));
@@ -757,6 +716,10 @@ static void misn_genList( unsigned int wid, int first )
 
    /* Set default keyboard focus. */
    window_setFocus( wid, "lstMission" );
+
+   /* Add position persistancey after a mission has been accepted */
+   /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
+   toolkit_setListPos( wid, "lstMission", pos);
 }
 /**
  * @brief Updates the mission list.
@@ -832,16 +795,17 @@ static void spaceport_buyMap( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
-   const Outfit *o;
+   const Outfit *o = outfit_get( LOCAL_MAP_NAME );
    unsigned int w;
 
-   /* Make sure the map isn't already known, etc. */
-   if (land_errDialogue( LOCAL_MAP_NAME, "buyOutfit" ))
-      return;
-
-   o = outfit_get( LOCAL_MAP_NAME );
    if (o == NULL) {
       WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
+      return;
+   }
+
+   /* Make sure the map isn't already known, etc. */
+   if (!outfit_canBuy( o, -1 )) {
+      land_errDisplay();
       return;
    }
 
@@ -868,25 +832,23 @@ void land_updateMainTab (void)
    char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
    size_t l = 0;
    const Outfit *o;
-   int blackmarket = (land_spob!=NULL) && spob_hasService(land_spob, SPOB_SERVICE_BLACKMARKET);
 
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s system)"), spob_name(land_spob), _(cur_system->name) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s-class)"), spob_getClassName(land_spob->class), _(land_spob->class) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s",
          land_spob->presence.faction >= 0 ? _(faction_name(land_spob->presence.faction)) : _("None") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("roughly %s"), space_populationStr( land_spob->population ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", space_populationStr( land_spob ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", tons );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", cred );
    /* Show tags. */
    if (conf.devmode) {
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       for (int i=0; i<array_size(land_spob->tags); i++)
-         l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? _(", ") : ""), _(land_spob->tags[i]) );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? ", " : ""), land_spob->tags[i] );
    }
 
    window_modifyText( land_windows[0], "txtDInfo", buf );
@@ -895,18 +857,22 @@ void land_updateMainTab (void)
    if (!land_hasLocalMap())
       return;
 
-   o = outfit_get( LOCAL_MAP_NAME );
-   if (o == NULL) {
-      WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
-      return;
+   if (LOCAL_MAP_NAME != NULL) {
+      o = outfit_get( LOCAL_MAP_NAME );
+      if (o == NULL) {
+         WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
+         return;
+      }
    }
+   else
+      return;
 
    /* Just enable button if it exists. */
    if (widget_exists( land_windows[0], "btnMap" ))
       window_enableButton( land_windows[0], "btnMap");
    /* Else create it. */
    else {
-      /* Refuel button. */
+      /* Buy local map button. */
       credits2str( cred, o->price, 0 );
       snprintf( buf, sizeof(buf), _("Buy Local Map (%s)"), cred );
       window_addButtonKey( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
@@ -915,7 +881,7 @@ void land_updateMainTab (void)
    }
 
    /* Make sure player can click it. */
-   if (!outfit_canBuy(LOCAL_MAP_NAME, blackmarket))
+   if (!outfit_canBuy( o, -1 ))
       window_disableButtonSoft( land_windows[0], "btnMap" );
 }
 
@@ -1038,6 +1004,8 @@ void land_genWindows( int load )
    int regen;
    unsigned int pntservices;
 
+   NTracingZone( _ctx, 1 );
+
    /* Destroy old window if exists. */
    if (land_wid > 0) {
       land_regen = 2; /* Mark we're regenning. */
@@ -1063,7 +1031,7 @@ void land_genWindows( int load )
       h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
    land_wid = window_create( "wdwLand", spob_name(p), -1, -1, w, h );
-   window_onCleanup( land_wid, land_cleanupWindow );
+   window_onClose( land_wid, land_cleanupWindow );
 
    /* Create tabbed window. */
    land_setupTabs();
@@ -1087,17 +1055,21 @@ void land_genWindows( int load )
       landed = 1;
       music_choose("land"); /* Must be before hooks in case hooks change music. */
 
+      NTracingZoneName( _ctx_landhooks, "hooks_run(\"land\")", 1 );
       /* We don't run the "land" hook when loading. If you want to have it do stuff when loading, use the "load" hook.
        * Note that you can use the same function for both hooks. */
       if (!load)
          hooks_run("land");
       else
          hooks_run("load"); /* Should be run before generating missions, so if the load hook cancels a mission, it can reappear. */
+      NTracingZoneEnd( _ctx_landhooks );
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* An event, hook or the likes made Naev quit. */
-      if (naev_isQuit())
+      if (naev_isQuit()) {
+         NTracingZoneEnd( _ctx );
          return;
+      }
 
       /* Make sure services didn't change or we have to do the tab window. */
       if (land_spob->services != pntservices) {
@@ -1111,8 +1083,7 @@ void land_genWindows( int load )
       if (spob_hasService(land_spob, SPOB_SERVICE_BAR))
          npc_generateMissions(); /* Generate bar npc. */
       if (spob_hasService(land_spob, SPOB_SERVICE_MISSIONS))
-         mission_computer = missions_genList( &mission_ncomputer,
-               land_spob->presence.faction, land_spob, cur_system,
+         mission_computer = missions_genList( land_spob->presence.faction, land_spob, cur_system,
                MIS_AVAIL_COMPUTER );
    }
 
@@ -1176,6 +1147,8 @@ void land_genWindows( int load )
    /* Necessary if player.land() was run in an abort() function. */
    if (!load)
       window_lower( land_wid );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1203,6 +1176,13 @@ void land( Spob* p, int load )
    /* Do not land twice. */
    if (landed)
       return;
+
+#if HAVE_TRACY
+   char buf[STRMAX_SHORT];
+   size_t l = snprintf( buf, sizeof(buf), "Player landed on '%s'", p->name );
+   NTracingMessage( buf, l );
+#endif /* HAVE_TRACY */
+   NTracingFrameMarkStart( "land" );
 
    /* Incrcement times player landed. */
    if (!load) {
@@ -1256,15 +1236,13 @@ void land( Spob* p, int load )
    /* Just in case? */
    bar_regen();
 
-   /* Don't do a fade in. */
-   if (load)
-      window_setFade( land_wid, NULL, 0. );
-
    /* Do a lua collection pass. Run in a hook since land can be called indirectly from Lua. */
    hook_addFunc( land_gc, NULL, "safe" );
 
    /* Mission forced take off. */
    land_needsTakeoff( 0 );
+
+   NTracingFrameMarkEnd( "land" );
 }
 
 /**
@@ -1284,9 +1262,8 @@ static int land_gc( void *unused )
  */
 static void land_createMainTab( unsigned int wid )
 {
-   const glTexture *logo;
    int offset;
-   int w, h, y, logow, logoh, th;
+   int w, h, y, th;
    char buf[STRMAX_SHORT];
    size_t l = 0;
 
@@ -1298,10 +1275,10 @@ static void land_createMainTab( unsigned int wid )
     */
    offset = 20;
    if (land_spob->presence.faction != -1) {
-      logo = faction_logo(land_spob->presence.faction);
+      const glTexture *logo = faction_logo(land_spob->presence.faction);
       if (logo != NULL) {
-         logow = logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
-         logoh = logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+         int logow = logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+         int logoh = logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
          window_addImage( wid, 440 + (w-460-logow)/2, -20,
                logow, logoh, "imgFaction", logo, 0 );
          offset += FACTION_LOGO_SM;
@@ -1448,7 +1425,8 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
 
       visited(to_visit);
 
-      land_needsTakeoff( 1 );
+      if (land_loaded)
+         land_needsTakeoff( 1 );
    }
 }
 
@@ -1460,9 +1438,12 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
  */
 void takeoff( int delay, int nosave )
 {
-   int h, stu;
+   int h;
    char *nt;
    double a, r;
+#if HAVE_TRACY
+   const Spob *spb = land_spob;
+#endif /* HAVE_TRACY */
 
    if (!landed)
       return;
@@ -1567,7 +1548,7 @@ void takeoff( int delay, int nosave )
    /* time goes by, triggers hook before takeoff */
    if (delay) {
       /* TODO should this depend on something else? */
-      stu = (int)(NT_PERIOD_SECONDS * player.p->stats.land_delay);
+      int stu = (int)(NT_PERIOD_SECONDS * player.p->stats.land_delay);
       ntime_inc( ntime_create( 0, 0, stu ) );
    }
    nt = ntime_pretty( 0, 2 );
@@ -1617,7 +1598,7 @@ void takeoff( int delay, int nosave )
       p->landing_delay = PILOT_TAKEOFF_DELAY * player_dt_default();
       p->ptimer = p->landing_delay;
       pilot_setFlag( p, PILOT_TAKEOFF );
-      pilot_setThrust( p, 0. );
+      pilot_setAccel( p, 0. );
       pilot_setTurn( p, 0. );
    }
 
@@ -1628,6 +1609,12 @@ void takeoff( int delay, int nosave )
     * all sorts of things. We have to refresh the GUI to reflect those changes.
     * This is particular important for Lua-side mechanics such as flow. */
    gui_setSystem();
+
+#if HAVE_TRACY
+   char buf[STRMAX_SHORT];
+   size_t l = snprintf( buf, sizeof(buf), "Player took off from '%s'", spb->name );
+   NTracingMessage( buf, l );
+#endif /* HAVE_TRACY */
 }
 
 /**
@@ -1697,11 +1684,10 @@ void land_cleanup (void)
    space_clearComputerMarkers();
 
    /* Clean up mission computer. */
-   for (int i=0; i<mission_ncomputer; i++)
+   for (int i=0; i<array_size(mission_computer); i++)
       mission_cleanup( &mission_computer[i] );
-   free(mission_computer);
+   array_free(mission_computer);
    mission_computer  = NULL;
-   mission_ncomputer = 0;
 
    /* Clean up bar missions. */
    npc_clear();

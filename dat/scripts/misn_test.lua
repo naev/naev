@@ -9,11 +9,7 @@ local misn_test = {}
 --[[--
    @brief Test for cargo missions.
 --]]
-function misn_test.cargo()
-   if not misn_test.computer() then
-      return false
-   end
-
+function misn_test.cargo( notcomputer )
    -- Has to support normal factions
    local f = spob.cur():faction()
    if f then
@@ -22,7 +18,7 @@ function misn_test.cargo()
          return true
       end
    end
-   return false
+   return notcomputer or misn_test.computer()
 end
 
 --[[--
@@ -46,15 +42,35 @@ end
 --[[--
    @brief Test for mercenary missions.
 --]]
-function misn_test.mercenary()
+function misn_test.mercenary( notcomputer )
    if player.outfitNum("Mercenary License") <= 0 then
       return false
    end
-   return misn_test.computer()
+   return notcomputer or misn_test.computer()
 end
 
 --[[--
-   @brief Reweights mission chance based on number of uinque active missions
+   @brief Test for mercenary missions.
+--]]
+function misn_test.heavy_weapons( notcomputer )
+   if player.outfitNum("Heavy Weapon License") <= 0 then
+      return false
+   end
+   return notcomputer or misn_test.computer()
+end
+
+--[[--
+   @brief Test for mercenary missions.
+--]]
+function misn_test.heavy_combat_vessel( notcomputer )
+   if player.outfitNum("Heavy Combat Vessel License") <= 0 then
+      return false
+   end
+   return notcomputer or misn_test.computer()
+end
+
+--[[--
+   @brief Reweights mission chance based on number of unique active missions
 --]]
 function misn_test.reweight_active()
    local n = 0

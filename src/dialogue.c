@@ -30,9 +30,7 @@
 #include "conf.h"
 #include "menu.h"
 #include "ndata.h"
-#include "nstring.h"
 #include "opengl.h"
-#include "pause.h"
 #include "toolkit.h"
 
 static int dialogue_open; /**< Number of dialogues open. */
@@ -134,12 +132,11 @@ void dialogue_alert( const char *fmt, ... )
    char msg[STRMAX_SHORT];
    va_list ap;
 
-   if (fmt == NULL) return;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    dialogue_alertRaw( msg );
 }
@@ -152,12 +149,10 @@ void dialogue_alert( const char *fmt, ... )
 void dialogue_alertRaw( const char *msg )
 {
    int w,h;
-   glFont* font;
    unsigned int msg_wid;
    int done;
    const char *caption = _("Warning");
-
-   font = dialogue_getSize( caption, msg, &w, &h );
+   glFont *font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create the window, can't reuse dialogue_msg since we need to have a
     * different window name. */
@@ -235,12 +230,11 @@ void dialogue_msg( const char* caption, const char *fmt, ... )
    char msg[STRMAX];
    va_list ap;
 
-   if (fmt == NULL) return;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    dialogue_msgRaw( caption, msg );
 }
@@ -257,12 +251,11 @@ void dialogue_msgImg( const char* caption, const char *img, const char *fmt, ...
    char msg[STRMAX];
    va_list ap;
 
-   if (fmt == NULL) return;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    dialogue_msgImgRaw( caption, msg, img, -1, -1 );
 }
@@ -276,11 +269,9 @@ void dialogue_msgImg( const char* caption, const char *img, const char *fmt, ...
 void dialogue_msgRaw( const char* caption, const char *msg )
 {
    int w,h;
-   glFont* font;
    unsigned int msg_wid;
    int done;
-
-   font = dialogue_getSize( caption, msg, &w, &h );
+   glFont *font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create the window */
    msg_wid = window_create( "dlgMsg", caption, -1, -1, w, 110 + h );
@@ -361,12 +352,11 @@ int dialogue_YesNo( const char* caption, const char *fmt, ... )
    char msg[STRMAX];
    va_list ap;
 
-   if (fmt == NULL) return -1;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return -1;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    return dialogue_YesNoRaw( caption, msg );
 }
@@ -382,11 +372,9 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
 {
    unsigned int wid;
    int w,h;
-   glFont* font;
    int done[2];
    char buf[STRMAX_SHORT];
-
-   font = dialogue_getSize( caption, msg, &w, &h );
+   glFont *font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create window */
    snprintf( buf, sizeof(buf), "dlgYesNo%d", ++dlgid );
@@ -456,12 +444,11 @@ char* dialogue_input( const char* title, int min, int max, const char *fmt, ... 
    if (input_dialogue.input_wid)
       return NULL;
 
-   if (fmt == NULL) return NULL;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return NULL;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    return dialogue_inputRaw( title, min, max, msg );
 }
@@ -595,12 +582,11 @@ int dialogue_list( const char* title, char **items, int nitems, const char *fmt,
 
    if (input_dialogue.input_wid) return -1;
 
-   if (fmt == NULL) return -1;
-   else { /* get the message */
-      va_start(ap, fmt);
-      vsnprintf(msg, sizeof(msg), fmt, ap);
-      va_end(ap);
-   }
+   if (fmt == NULL)
+      return -1;
+   va_start(ap, fmt);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
+   va_end(ap);
 
    return dialogue_listPanelRaw( title, items, nitems, 0, 0, NULL, NULL, msg );
 }
@@ -873,13 +859,14 @@ static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
  *    @param render Custom render callback.
  *    @param event Custom event callback.
  *    @param data Custom data.
+ *    @param dynamic Whether or not the custom is dynamic.
  *    @param autofree Should \p data be freed when the window is destroyed?
  */
 void dialogue_custom( const char* caption, int width, int height,
       int (*update) (double dt, void* data),
       void (*render) (double x, double y, double w, double h, void* data),
       int (*event) (unsigned int wid, SDL_Event* event, void* data),
-      void* data, int autofree )
+      void* data, int autofree, int dynamic )
 {
    struct dialogue_custom_data_s cd;
    dialogue_update_t du;
@@ -897,7 +884,6 @@ void dialogue_custom( const char* caption, int width, int height,
    else
       wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+60 );
    window_setData( wid, &done );
-   window_setFade( wid, NULL, 0. );
 
    /* custom widget for all! */
    if (fullscreen) {
@@ -909,6 +895,8 @@ void dialogue_custom( const char* caption, int width, int height,
       wgtx = wgty = 20;
    }
    window_addCust( wid, wgtx, wgty, width, height, "cstCustom", 0, render, NULL, NULL, NULL, data );
+   if (dynamic)
+      window_custSetDynamic( wid, "cstCustom", 1 );
    if (autofree)
       window_custAutoFreeData( wid, "cstCustom" );
    window_custSetClipping( wid, "cstCustom", 1 );
@@ -1005,7 +993,7 @@ int dialogue_customResize( int width, int height )
  */
 static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
-   unsigned int time_ms = SDL_GetTicks();
+   Uint64 last_t = SDL_GetPerformanceCounter();
    const double fps_max = (conf.fps_max > 0) ? 1./(double)conf.fps_max : fps_min;
    int quit_game = 0;
 
@@ -1021,7 +1009,7 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 
    while (!(*loop_done) && toolkit_isOpen() && !naev_isQuit()) {
       SDL_Event event;
-      unsigned int t;
+      Uint64 t;
       double dt;
 
       /* Loop first so exit condition is checked before next iteration. */
@@ -1049,10 +1037,9 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
       }
 
       /* FPS Control. */
-      /* Get elapsed. */
-      t  = SDL_GetTicks();
-      dt = (double)(t - time_ms) / 1000.;
-      time_ms = t;
+      t  = SDL_GetPerformanceCounter();
+      dt = (double)(t - last_t) / (double)SDL_GetPerformanceFrequency();
+      last_t = t;
       /* Sleep if necessary. */
       if (dt < fps_max) {
          double delay = fps_max - dt;

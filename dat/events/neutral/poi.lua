@@ -62,7 +62,7 @@ function create ()
 end
 
 function delay ()
-   player.msg(_("Your sensors detect a point of interest in the system!"),true)
+   player.msg(_("Your sensors detect a sensor anomaly in the system!"),true)
    player.autonavReset( 1 )
    poi.hook_enter()
 end
@@ -73,7 +73,7 @@ function found ()
 
    -- TODO something more interesting
    local shiptype = mem.reward.ship or "Mule"
-   local p = pilot.add( shiptype, "Derelict", mem.goal, _("Pristine Derelict"), {naked=true} )
+   local p = pilot.add( shiptype, "Derelict", mem.goal, _("Unusual Derelict"), {naked=true} )
    p:disable()
    p:setInvincible()
    p:setHilight()

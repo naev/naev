@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Disruptor Battery S2">
+ <general>
+  <shortname>Disruptor B. S2</shortname>
+  <slot>weapon</slot>
+  <size>large</size>
+  <license>Heavy Weapon</license>
+  <rarity>1</rarity>
+  <mass>72</mass>
+  <price>690000</price>
+  <description>House Sirius typically equips its heaviest vessels with Disruptor Battery S2s. Where the Razor Batteries are ineffective, the Disruptor Battery S2 provides the necessary firepower to batter down virtually any shielding while doing heavy damage to systems. Although the firepower is lower than other standard capital ship weapons, Disruptor connoisseurs claim the weapon more than makes up for it with overall utility. Given the fact that not many survive being the brunt of a barrage from Disruptor Battery S2s, it may be that they have a point.</description>
+  <gfx_store>razorturret3.webp</gfx_store>
+  <cpu>-350</cpu>
+ </general>
+ <specific type="turret bolt">
+  <gfx type="shader" size="8.4" col_size="8.4">particles/disruptor_s2.frag</gfx>
+  <lua>outfits/weapons/razor.lua</lua>
+  <sound>tesla</sound>
+  <sound_hit>bansheeexp</sound_hit>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>1.15</delay>
+  <speed>800</speed>
+  <range>2200</range>
+  <falloff>1750</falloff>
+  <energy>141</energy>
+  <heatup>110</heatup>
+  <trackmin>5000</trackmin>
+  <trackmax>20000</trackmax>
+  <damage>
+   <type>ion</type>
+   <penetrate>70</penetrate>
+   <physical>31.5</physical>
+   <disable>21</disable>
+  </damage>
+ </specific>
+ <tags>
+  <tag>sirius</tag>
+ </tags>
+</outfit>

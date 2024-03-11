@@ -5,4 +5,5 @@
  <overwrite>wormhole_enter</overwrite>
  <icon>/gfx/misc/icons/galaxy.webp</icon>
  <shader vertex="effect15x.vert">effects/hypergate_exit.frag</shader>
+ <priority>0</priority>
 </effect>

@@ -5,10 +5,13 @@
  <priority>2</priority>
  <chance>10</chance>
  <location>Bar</location>
- <cond>system.cur() == system.get("Alteris")</cond>
+ <system>Alteris</system>
  <notes>
   <tier>3</tier>
  </notes>
+ <tags>
+  <tag>pir_cap_ch01_med</tag>
+ </tags>
 </mission>
 --]]
 --[[
@@ -154,7 +157,6 @@ function landed()
    vn.func( function ()
       player.pay( reward )
       pir.modDecayFloor(2)
-      pir.modReputation(2)
       faction.modPlayerSingle("Pirate", 5)
    end )
    vn.sfxVictory()

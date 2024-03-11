@@ -20,6 +20,7 @@
 #include "nlua_vec2.h"
 #include "nlua_commodity.h"
 #include "nlua_pilot.h"
+#include "rng.h"
 
 /* Asteroid methods. */
 static int asteroidL_eq( lua_State *L );
@@ -110,15 +111,19 @@ Asteroid* luaL_validasteroid( lua_State *L, int ind )
 {
    Asteroid *a;
    if (lua_isasteroid(L, ind)) {
-      LuaAsteroid_t *la = luaL_checkasteroid(L, ind);
+      const LuaAsteroid_t *la = luaL_checkasteroid(L, ind);
 #if DEBUGGING
-      if ((la->parent < 0) || (la->parent >= array_size(cur_system->asteroids)))
+      if ((la->parent < 0) || (la->parent >= array_size(cur_system->asteroids))) {
          NLUA_ERROR(L,_("Asteroid field '%d' is out of range!"),la->parent);
+         return NULL;
+      }
 #endif /* DEBUGGING */
       AsteroidAnchor *field = &cur_system->asteroids[ la->parent ];
 #if DEBUGGING
-      if ((la->id < 0) || (la->id >= field->nb))
+      if ((la->id < 0) || (la->id >= array_size(field->asteroids))) {
          NLUA_ERROR(L,_("Asteroid '%d' in field '%d' is out of range!"),la->id,la->parent);
+         return NULL;
+      }
 #endif /* DEBUGGING */
       a = &field->asteroids[ la->id ];
    }
@@ -127,8 +132,10 @@ Asteroid* luaL_validasteroid( lua_State *L, int ind )
       return NULL;
    }
 
-   if (a == NULL)
+   if (a == NULL) {
       NLUA_ERROR(L, _("Asteroid is invalid"));
+      return NULL;
+   }
 
    return a;
 }
@@ -205,7 +212,7 @@ static int asteroidL_getAll( lua_State *L )
    lua_newtable(L);
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       const AsteroidAnchor *ast = &cur_system->asteroids[i];
-      for (int j=0; j<ast->nb; j++) {
+      for (int j=0; j<array_size(ast->asteroids); j++) {
          const Asteroid *a = &ast->asteroids[j];
          LuaAsteroid_t la = {
             .parent = a->parent,
@@ -250,23 +257,24 @@ static int asteroidL_get( lua_State *L )
    else if (lua_isnumber(L,1)) {
       field = luaL_checkinteger(L,1)-1;
       if ((field < 0) || (field >= array_size(cur_system->asteroids)))
-         NLUA_INVALID_PARAMETER(L);
+         NLUA_INVALID_PARAMETER(L,1);
    }
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,1);
 
    /* Get random asteroid. */
    if ((pos==NULL) && (field >= 0)) {
       /* Random asteroid. */
-      int ast   = RNG(0,cur_system->asteroids[field].nb-1);
+      int ast   = RNG(0,array_size(cur_system->asteroids[field].asteroids)-1);
       int bad_asteroid = 0;
       Asteroid *a = &cur_system->asteroids[field].asteroids[ast];
 
       if (a->state != ASTEROID_FG) {
+         int n = array_size( cur_system->asteroids[field].asteroids );
          /* Switch to next index until we find a valid one, or until we come full-circle. */
          bad_asteroid = 1;
-         for (int i=0; i<cur_system->asteroids[field].nb; i++) {
-            ast = (ast+1) % cur_system->asteroids[field].nb;
+         for (int i=0; i<n; i++) {
+            ast = (ast+1) % n;
             a = &cur_system->asteroids[field].asteroids[ast];
             if (a->state == ASTEROID_FG) {
                bad_asteroid = 0;
@@ -289,14 +297,14 @@ static int asteroidL_get( lua_State *L )
    double dist2 = HUGE_VAL;
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
-      for (int j=0; j<ast->nb; j++) {
+      for (int j=0; j<array_size(ast->asteroids); j++) {
          double d2;
          Asteroid *a = &ast->asteroids[j];
 
          if (a->state != ASTEROID_FG)
             continue;
 
-         d2 = vec2_dist2( pos, &a->pos );
+         d2 = vec2_dist2( pos, &a->sol.pos );
          if (d2 > dist2)
             continue;
 
@@ -328,19 +336,19 @@ static int asteroidL_exists( lua_State *L )
       return 1;
    }
 
-   LuaAsteroid_t *la = luaL_checkasteroid(L, 1);
+   const LuaAsteroid_t *la = luaL_checkasteroid(L, 1);
    if ((la->parent < 0) || (la->parent >= array_size(cur_system->asteroids))) {
       lua_pushboolean(L, 0);
       return 1;
    }
 
    AsteroidAnchor *field = &cur_system->asteroids[ la->parent ];
-   if ((la->id < 0) || (la->id >= field->nb)) {
+   if ((la->id < 0) || (la->id >= array_size(field->asteroids))) {
       lua_pushboolean(L, 0);
       return 1;
    }
 
-   Asteroid *a = &field->asteroids[ la->id ];
+   const Asteroid *a = &field->asteroids[ la->id ];
    lua_pushboolean(L, (a->state==ASTEROID_FG));
    return 1;
 }
@@ -414,7 +422,7 @@ static int asteroidL_setState( lua_State *L )
    else if (strcmp(state,"XX")==0)
       ast->state = ASTEROID_XX;
    else
-      NLUA_INVALID_PARAMETER(L);
+      NLUA_INVALID_PARAMETER(L,2);
    return 0;
 }
 
@@ -442,7 +450,7 @@ static int asteroidL_field( lua_State *L )
 static int asteroidL_pos( lua_State *L )
 {
    const Asteroid *a = luaL_validasteroid(L,1);
-   lua_pushvector(L,a->pos);
+   lua_pushvector(L,a->sol.pos);
    return 1;
 }
 
@@ -456,7 +464,7 @@ static int asteroidL_pos( lua_State *L )
 static int asteroidL_vel( lua_State *L )
 {
    const Asteroid *a = luaL_validasteroid(L,1);
-   lua_pushvector(L,a->vel);
+   lua_pushvector(L,a->sol.vel);
    return 1;
 }
 
@@ -470,8 +478,8 @@ static int asteroidL_vel( lua_State *L )
 static int asteroidL_setPos( lua_State *L )
 {
    Asteroid *a = luaL_validasteroid(L,1);
-   vec2 *v = luaL_checkvector(L,2);
-   a->pos = *v;
+   const vec2 *v = luaL_checkvector(L,2);
+   a->sol.pos = *v;
    return 0;
 }
 
@@ -485,8 +493,8 @@ static int asteroidL_setPos( lua_State *L )
 static int asteroidL_setVel( lua_State *L )
 {
    Asteroid *a = luaL_validasteroid(L,1);
-   vec2 *v = luaL_checkvector(L,2);
-   a->vel = *v;
+   const vec2 *v = luaL_checkvector(L,2);
+   a->sol.vel = *v;
    return 0;
 }
 

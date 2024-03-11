@@ -46,7 +46,7 @@ return function ()
          spawn = function ()
             local p = pilot.add("Starbridge", "Independent", nil, _("Bloodhound"), {naked=true, ai="pers_patrol"})
             p:intrinsicSet( "ew_detect", 50 )
-            equipopt.sirius( p )
+            equipopt.sirius( p, {flow_ability=outfit.get("Astral Projection")} )
             local m = p:memory()
             m.comm_greet = _([["Space seems much less vast when you can track like a bloodhound."]])
             m.taunt = _("And now for your death!")
@@ -55,7 +55,7 @@ return function ()
       }, {
          spawn = function ()
             local p = pilot.add("Sirius Dogma", "Independent", nil, _("White Shield"), {naked=true, ai="pers_patrol"})
-            equipopt.sirius( p )
+            equipopt.sirius( p, { flow_ability=outfit.get("Cleansing Flames") } )
             local m = p:memory()
             m.comm_greet = _([["The White Shield brings justice for all!"]])
             m.taunt = _("Prepare to face justice!")
@@ -92,7 +92,18 @@ return function ()
             m.taunt = _("Why are you doing this to me!?")
             return p
          end
-      },
+      }, {
+         spawn = function ()
+            local p = pilot.add("Rhino", "Independent", nil, _("Null Mind"), {naked=true, ai="pers"})
+            equipopt.sirius( p, { flow_ability=outfit.get("Reality Rip") } )
+            local m = p:memory()
+            m.comm_greet = _([["Once you realize the absurdity of existence, you are freed from its chains. We must all return to the void."]])
+            m.bribe_no = _("I have transcended the need for credits!")
+            m.taunt = _("Your flow is all clear, prepare for your death!")
+            m.norun = true
+            return p
+         end
+      }
    }
 
    if scur == system.get("Zied") then

@@ -2,7 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 /** @cond */
-#include <float.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,20 +17,15 @@
 #include "dialogue.h"
 #include "economy.h"
 #include "faction.h"
-#include "gui.h"
 #include "land_outfits.h"
 #include "log.h"
-#include "mapData.h"
-#include "map_find.h"
 #include "map_system.h"
-#include "mission.h"
-#include "ndata.h"
-#include "nmath.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "player.h"
 #include "space.h"
 #include "toolkit.h"
+#include "land.h"
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -45,8 +39,9 @@ static int pitch = 0; /**< pitch of spob images. */
 static int nameWidth = 0; /**< text width of spob name */
 static int nshow = 0; /**< number of spobs shown. */
 static char infobuf[STRMAX];
-static unsigned int starCnt = 1;
-glTexture **bgImages; /**< array (array.h) of nebula and star textures */
+static unsigned int focusedStar = 0;
+glTexture **starImages; /**< array (array.h) of star textures */
+glTexture *bgImage; /**< if not NULL, an overall background image (e.g., nebula) */
 
 #define MAP_SYSTEM_WDWNAME "wdwSystemMap"
 #define MAPSYS_OUTFITS "mapSysOutfits"
@@ -72,7 +67,7 @@ void map_system_updateSelected( unsigned int wid );
 /* Render. */
 static void map_system_render( double bx, double by, double w, double h, void *data );
 /* Mouse. */
-static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_system_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
@@ -111,10 +106,16 @@ int map_system_load( void )
  */
 void map_system_exit( void )
 {
-   for (int i=0; i<array_size(bgImages); i++)
-      gl_freeTexture( bgImages[i] );
-   array_free( bgImages );
-   bgImages=NULL;
+   for (int i=0; i<array_size(starImages); i++)
+      gl_freeTexture( starImages[i] );
+   array_free( starImages );
+   starImages = NULL;
+   gl_freeTexture( bgImage );
+   bgImage = NULL;
+   array_free( cur_spob_sel_outfits );
+   cur_spob_sel_outfits = NULL;
+   array_free( cur_spob_sel_ships );
+   cur_spob_sel_ships = NULL;
 }
 
 /**
@@ -128,14 +129,7 @@ void map_system_cleanup( unsigned int wid, const char *str )
    if (cur_sys_sel != cur_system)
      space_gfxUnload( cur_sys_sel );
 
-   for (int i=0; i<array_size(bgImages); i++)
-      gl_freeTexture( bgImages[i] );
-   array_free( bgImages );
-   bgImages = NULL;
-   array_free( cur_spob_sel_outfits );
-   cur_spob_sel_outfits = NULL;
-   array_free( cur_spob_sel_ships );
-   cur_spob_sel_ships = NULL;
+   map_system_exit();
 }
 
 /**
@@ -181,7 +175,7 @@ void map_system_open( int sys_selected )
    pitch = 0;
    nameWidth = 0;
    nshow = 0;
-   starCnt = 1;
+   focusedStar = 0;
 
    /* get the selected system. */
    cur_sys_sel = system_getIndex( sys_selected );
@@ -193,7 +187,7 @@ void map_system_open( int sys_selected )
    /* create the window. */
    wid = window_create( MAP_SYSTEM_WDWNAME, _("System Info"), -1, -1, w, h );
    window_setCancel( wid, window_close );
-   window_onCleanup( wid, map_system_cleanup );
+   window_onClose( wid, map_system_cleanup );
    window_handleKeys( wid, map_system_keyHandler );
    window_addText( wid, 40, h-30, 160, 20, 1, "txtSysname",
          &gl_defFont, &cFontGreen, _(cur_sys_sel->name) );
@@ -218,9 +212,9 @@ void map_system_open( int sys_selected )
    /* load background images */
    background_clear();
    background_load ( cur_system->background );
-   bgImages = background_getTextures();
-   if ( array_size( bgImages ) <= 1 )
-      starCnt = 0;
+   starImages = background_getStarTextures();
+   bgImage = background_getAmbientTexture();
+   focusedStar = 0;
    background_clear();
    /* and reload the images for the current system */
    cur_system = tmp_sys;
@@ -252,8 +246,10 @@ int map_system_isOpen( void)
  */
 void map_system_show( int wid, int x, int y, int w, int h)
 {
+   window_addRect( wid, x, y, w, h, "rctMapSys", &cBlack, 0 );
    window_addCust( wid, x, y, w, h,
          "cstMapSys", 1, map_system_render, map_system_mouse, NULL, NULL, NULL );
+   window_custSetDynamic( wid, "cstMapSys", 1 );
 }
 
 /**
@@ -282,24 +278,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    int hasPresence = 0;
    double unknownPresence = 0;
    char t;
-   int txtHeight;
    const glTexture *logo;
    int offset;
-
-   phase++;
-
-   if (phase > 150) {
-      phase = 0;
-      starCnt++;
-      if ( starCnt >= (unsigned int) array_size( bgImages ) ) {
-         if ( array_size( bgImages ) <= 1)
-            starCnt = 0;
-         else
-            starCnt = 1;
-      }
-   }
-   /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
+   int txtHeight;
 
    vis_index=0;
    offset = h - pitch*nshow;
@@ -325,35 +306,36 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    /* draw the star */
    ih = pitch;
    iw = ih;
-   if (array_size( bgImages ) > 0) {
-      if ( bgImages[starCnt]->w > bgImages[starCnt]->h )
-         ih = ih * bgImages[starCnt]->h / bgImages[starCnt]->w;
-      else if ( bgImages[starCnt]->w < bgImages[starCnt]->h )
-         iw = iw * bgImages[starCnt]->w / bgImages[starCnt]->h;
+   if (array_size( starImages ) > 0) {
+      phase++;
+      if (phase > 150) {
+         phase = 0;
+         focusedStar++;
+         focusedStar %= array_size( starImages );
+      }
+
+      if ( starImages[focusedStar]->w > starImages[focusedStar]->h )
+         ih = ih * starImages[focusedStar]->h / starImages[focusedStar]->w;
+      else if ( starImages[focusedStar]->w < starImages[focusedStar]->h )
+         iw = iw * starImages[focusedStar]->w / starImages[focusedStar]->h;
       ccol.r=ccol.g=ccol.b=ccol.a=1;
-      if ( phase > 120 && array_size( bgImages ) > 2 )
+      if (phase > 120 && array_size( starImages ) > 1)
          ccol.a = cos ( (phase-121)/30. *M_PI/2.);
-      gl_renderScale( bgImages[starCnt], bx+2 , by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw , ih, &ccol );
-      if ( phase > 120 && array_size( bgImages ) > 2) {
+      gl_renderScale( starImages[focusedStar], bx+2 , by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw , ih, &ccol );
+      if (phase > 120 && array_size( starImages ) > 1) {
          /* fade in the next star */
          ih=pitch;
          iw=ih;
-         i = starCnt + 1;
-         if ( i >= array_size( bgImages ) ) {
-            if ( array_size( bgImages ) <= 1 )
-               i=0;
-            else
-               i=1;
-         }
-         if ( bgImages[i]->w > bgImages[i]->h )
-            ih = ih * bgImages[i]->h / bgImages[i]->w;
-         else if ( bgImages[i]->w < bgImages[i]->h )
-            iw = iw * bgImages[i]->w / bgImages[i]->h;
+         i = (focusedStar + 1) % array_size( starImages );
+         if ( starImages[i]->w > starImages[i]->h )
+            ih = ih * starImages[i]->h / starImages[i]->w;
+         else if ( starImages[i]->w < starImages[i]->h )
+            iw = iw * starImages[i]->w / starImages[i]->h;
          ccol.a = 1 - ccol.a;
-         gl_renderScale( bgImages[i], bx+2, by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &ccol );
+         gl_renderScale( starImages[i], bx+2, by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &ccol );
       }
    }
-   else {
+   else if (sys->nebu_density > 0.) {
       /* no nebula or star images - probably due to nebula */
       txtHeight = gl_printHeightRaw( &gl_smallFont,pitch,_("Obscured by the nebula") );
       gl_printTextRaw( &gl_smallFont, pitch, txtHeight, (bx+2),
@@ -361,17 +343,16 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    }
    gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
          (cur_spob_sel == 0 ? &cFontGreen : &cFontWhite), -1., _(sys->name) );
-   if ((cur_spob_sel==0) && array_size( bgImages ) > 0) {
-      /* make use of space to draw a nice nebula */
+   if ((cur_spob_sel==0) && bgImage != NULL) {
       double imgw,imgh, s;
       iw = w - 50 - pitch - nameWidth;
       ih = h;
-      imgw = bgImages[0]->w;
-      imgh = bgImages[0]->h;
+      imgw = bgImage->w;
+      imgh = bgImage->h;
       s = MIN( iw / imgw, ih / imgh );
       imgw *= s;
       imgh *= s;
-      gl_renderScale( bgImages[0], bx+w-iw+(iw-imgw)*0.5, by+h-ih+(ih-imgh)*0.5, imgw, imgh, &cWhite );
+      gl_renderScale( bgImage, bx+w-iw+(iw-imgw)*0.5, by+h-ih+(ih-imgh)*0.5, imgw, imgh, &cWhite );
    }
    /* draw marker around currently selected spob */
    ccol.r=0; ccol.g=0.6+0.4*sin( phase/150.*2*M_PI ); ccol.b=0; ccol.a=1;
@@ -389,49 +370,76 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    buf[0]='\0';
    if (cur_spob_sel == 0) {
       int infopos = 0;
-      int stars   = MAX( array_size( bgImages )-1, 0 );
-      cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("System: %s\n"), _(sys->name) );
+      int stars   = MAX( array_size( starImages ), 0 );
+      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nSystem:#0 %s\n"), _(sys->name) );
       /* display sun information */
-      cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, n_("%d-star system\n", "%d-star system\n", stars), stars );
+      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, n_("%d-star system\n", "%d-star system\n", stars), stars );
 
       /* Nebula. */
       if (sys->nebu_density > 0. ) {
+         double dmg = sys->nebu_volatility;
+         const char *sdmg, *adj;
+         char col;
          /* Volatility */
-         if (sys->nebu_volatility > 700.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Volatile, ") );
-         else if (sys->nebu_volatility > 300.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Dangerous, ") );
-         else if (sys->nebu_volatility > 0.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Unstable, ") );
-         else
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Stable, ") );
+         if (dmg > 50.) {
+            col = 'r';
+            sdmg = p_("nebula", "Volatile");
+         }
+         else if (sys->nebu_volatility > 20.) {
+            col = 'o';
+            sdmg = p_("nebula", "Dangerous");
+         }
+         else if (sys->nebu_volatility > 0.) {
+            col = 'y';
+            sdmg = p_("nebula", "Unstable");
+         }
+         else {
+            col = '0';
+            sdmg = p_("nebula", "Stable");
+         }
 
          /* Density */
          if (sys->nebu_density > 700.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Dense\n") );
+            adj = p_("nebula", "Dense ");
          else if (sys->nebu_density < 300.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Light\n") );
+            adj = p_("nebula", "Light ");
          else
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Medium\n") );
-      } else
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: None\n") );
+            adj = "";
+
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nNebula: #%c%s%s (%.1f %s)#0\n"), col, adj, sdmg, dmg, UNIT_POWER );
+      }
 
       /* Interference. */
       if (sys->interference > 0. ) {
-         if (sys->interference > 700.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Interference: Dense\n") );
-         else if (sys->interference < 300.)
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Interference: Light\n") );
+         double itf = sys->interference;
+         const char *sint;
+         char col;
+         if (itf > 700.) {
+            col = 'r';
+            sint = p_("interference", "Dense");
+         }
+         else if (itf > 300.) {
+            col = 'o';
+            sint = p_("interference", "Medium");
+         }
+         else {
+            col = 'y';
+            sint = p_("interference", "Light");
+         }
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nInterference: #%c%s (%.0f%%)#0\n"), col, sint, itf );
       }
       /* Asteroids. */
       if (array_size(sys->asteroids) > 0 ) {
          ast_nb = ast_area = 0.;
-         for ( i=0; i<array_size(sys->asteroids); i++ ) {
-            ast_nb += sys->asteroids[i].nb;
+         for (i=0; i<array_size(sys->asteroids); i++) {
+            ast_nb += sys->asteroids[i].nmax;
             ast_area = MAX( ast_area, sys->asteroids[i].area );
          }
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Asteroid field density: %.2g\n"), ast_nb*ASTEROID_REF_AREA/ast_area );
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nAsteroid field density:#0 %.2g\n"), ast_nb*ASTEROID_REF_AREA/ast_area );
       }
+      /* Other features. */
+      if (sys->features != NULL)
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nOther:#0 %s\n"), _(sys->features) );
       /* Faction */
       f = -1;
       for (i=0; i<array_size(sys->spobs); i++) {
@@ -439,16 +447,16 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             if ((f==-1) && (sys->spobs[i]->presence.faction>=0) ) {
                f = sys->spobs[i]->presence.faction;
             } else if (f != sys->spobs[i]->presence.faction &&  (sys->spobs[i]->presence.faction>=0) ) {
-               cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: Multiple\n") );
+               cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nFaction:#0 Multiple\n") );
                break;
             }
          }
       }
       if (f == -1 ) {
-         cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: N/A\n") );
+         cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nFaction:#0 N/A\n") );
       }  else {
          if (i==array_size(sys->spobs)) /* saw them all and all the same */
-            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: %s\nStanding: %s\n"), faction_longname(f), faction_getStandingText( f ) );
+            cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nFaction:#0 %s\n#nStanding:#0 %s\n"), faction_longname(f), faction_getStandingText( f ) );
          /* display the logo */
          logo = faction_logo( f );
          if ( logo != NULL ) {
@@ -465,17 +473,17 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          hasPresence = 1;
          if ( faction_isKnown( sys->presence[i].faction ) ) {
             t = faction_getColourChar( sys->presence[i].faction );
-            cnt += scnprintf( &buf[cnt], sizeof( buf ) - cnt, "#0%s: #%c%.0f\n",
+            cnt += scnprintf( &buf[cnt], sizeof( buf ) - cnt, "#n%s: #%c%.0f\n",
                               faction_shortname( sys->presence[i].faction ),
                               t, sys->presence[i].value);
          } else
             unknownPresence += sys->presence[i].value;
       }
       if (unknownPresence != 0)
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#0%s: #%c%.0f\n",
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#n%s: #%c%.0f\n",
                            _("Unknown"), 'N', unknownPresence );
       if (hasPresence == 0)
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Presence: N/A\n"));
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nPresence:#0 N/A\n"));
       txtHeight=gl_printHeightRaw(&gl_smallFont,(w - nameWidth-pitch-60)/2,buf);
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
             bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
@@ -484,7 +492,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       for (i=0; i<array_size(sys->jumps); i++) {
          if (jp_isUsable ( &sys->jumps[i])) {
             if (infopos == 0) /* First jump */
-               infopos = scnprintf( infobuf, sizeof(infobuf), _("   Jump points to:\n") );
+               infopos = scnprintf( infobuf, sizeof(infobuf), _("   #nJump points to:#0\n") );
             if (sys_isKnown( sys->jumps[i].target ))
                infopos += scnprintf( &infobuf[infopos], sizeof(infobuf)-infopos, "     %s\n", _(sys->jumps[i].target->name) );
             else
@@ -492,7 +500,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          }
       }
    } else {
-      /* display spob info */
+      /* Display spob info */
       p = cur_spobObj_sel;
       if (p->presence.faction >= 0 ) {/* show the faction */
          char factionBuf[64];
@@ -505,7 +513,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
                bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
       }
 
-      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Spob: %s\nPlanetary class: %s    Population: roughly %s\n"), spob_name(p), _(p->class), space_populationStr( p->population ) );
+      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("#nSpace Object:#0 %s\n#nPlanetary class:#0 %s    #nPopulation:#0 %s\n"), spob_name(p), _(p->class), space_populationStr( p ) );
       if (!spob_hasService( p, SPOB_SERVICE_INHABITED ))
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
       else if (p->can_land)
@@ -514,6 +522,10 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#o%s#0", _("Not advisable to land here\n") );
       else
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#r%s#0", _("You cannot land here\n") );
+
+      /* Local features. */
+      if (p->feature != NULL)
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s\n", _(p->feature) );
 
       if (infobuf[0]=='\0') {
          int infocnt = 0;
@@ -525,14 +537,14 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "%s\n"
                "%s\n%s%s%s%s",
                /* Redundant information. */
-               //spob_hasService( p, SPOB_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
-               //spob_hasService( p, SPOB_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
+               //spob_hasService( p, SPOB_SERVICE_LAND) ? _("This object is landable") : _("This object is not landable"),
+               //spob_hasService( p, SPOB_SERVICE_INHABITED) ? _("This object is inhabited") : _("This object is not inhabited"),
                spob_hasService( p, SPOB_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
-               spob_hasService( p, SPOB_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
-               spob_hasService( p, SPOB_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
-               spob_hasService( p, SPOB_SERVICE_COMMODITY) ? "" : _("\nThis system does not have a trade outlet"),
-               spob_hasService( p, SPOB_SERVICE_OUTFITS) ? "" : _("\nThis system does not sell ship equipment"),
-               spob_hasService( p, SPOB_SERVICE_SHIPYARD) ? "" : _("\nThis system does not sell ships"));
+               spob_hasService( p, SPOB_SERVICE_BAR) ? _("Has a bar") : _("Does not have a bar"),
+               spob_hasService( p, SPOB_SERVICE_MISSIONS) ? _("Offers missions") : _("Does not offer missions"),
+               spob_hasService( p, SPOB_SERVICE_COMMODITY) ? "" : _("\nDoes not have a trade outlet"),
+               spob_hasService( p, SPOB_SERVICE_OUTFITS) ? "" : _("\nDoes not sell ship equipment"),
+               spob_hasService( p, SPOB_SERVICE_SHIPYARD) ? "" : _("\nDoes not sell ships"));
          //if (p->bar_description && spob_hasService( p, SPOB_SERVICE_BAR ))
          //   infocnt += scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
       }
@@ -561,7 +573,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
-static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_system_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
    (void) data;
@@ -659,28 +671,28 @@ static void map_system_array_update( unsigned int wid, const char* str )
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %s", _("Fabricator:"), _(ship->fabricator) );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %d", _("Crew:"), ship->crew );
       /* Weapons & Manoeuvrability */
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %.0f %s", _("CPU:"), ship->cpu, n_( "teraflop", "teraflops", ship->cpu ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %.0f %s", _("CPU:"), ship->cpu, UNIT_CPU );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %s", _("Mass:"), buf_mass );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Thrust:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f kN/tonne"), ship->thrust );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Accel:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s"), ship->accel, UNIT_ACCEL );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 ", _("Speed:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f m/s"), ship->speed );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s"), ship->speed, UNIT_SPEED );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Turn:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f deg/s"), ship->turn*180./M_PI );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s"), ship->turn*180./M_PI, UNIT_ROTATION );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %.0f%%", _("Time Constant:"), ship->dt_default*100. );
       /* Misc */
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Absorption:") );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f%% damage"), ship->dmg_absorb*100. );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Shield:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f MJ (%.1f MW)"), ship->shield, ship->shield_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s (%.1f %s)"), ship->shield, UNIT_ENERGY, ship->shield_regen, UNIT_POWER );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 ", _("Armour:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f MJ (%.1f MW)"), ship->armour, ship->armour_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f %s (%.1f %s)"), ship->armour, UNIT_ENERGY, ship->armour_regen, UNIT_POWER );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Energy:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f MJ (%.1f MW)"), ship->energy, ship->energy_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f M%s(%.1f %s)"), ship->energy, UNIT_ENERGY, ship->energy_regen, UNIT_POWER );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %s", _("Cargo Space:"), buf_cargo );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %d %s", _("Fuel:"), ship->fuel, n_( "unit", "units", ship->fuel ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %d %s", _("Fuel:"), ship->fuel, UNIT_UNIT );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "  #n%s#0 %d %s", _("Fuel Use:"),
-         ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ) );
+         ship->fuel_consumption, UNIT_UNIT );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %s", _("Price:"), buf_price );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "  #n%s#0 %s", _("License:"), buf_license );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n%s", ship->desc_stats );
@@ -873,7 +885,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
 
    if (noutfits <= 0)
       return;
-   coutfits = outfits_imageArrayCells( (const Outfit**)cur_spob_sel_outfits, &noutfits, player.p );
+   coutfits = outfits_imageArrayCells( (const Outfit**)cur_spob_sel_outfits, &noutfits, player.p, 1 );
 
    xw = ( w - nameWidth - pitch - 60 ) / 2;
    xpos = 35 + pitch + nameWidth + xw;
@@ -930,7 +942,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
 
    cships = calloc( nships, sizeof(ImageArrayCell) );
    for ( i=0; i<nships; i++ ) {
-      cships[i].image = gl_dupTexture( cur_spob_sel_ships[i]->gfx_store );
+      cships[i].image = gl_dupTexture( ship_gfxStore(cur_spob_sel_ships[i]) );
       cships[i].caption = strdup( _(cur_spob_sel_ships[i]->name) );
    }
    xw = (w - nameWidth - pitch - 60)/2;

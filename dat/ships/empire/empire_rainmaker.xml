@@ -2,7 +2,7 @@
 <ship name="Empire Rainmaker">
  <points>120</points>
  <base_type>Rainmaker</base_type>
- <GFX size="128" sx="12" sy="12">rainmaker_empire</GFX>
+ <gfx size="128" sx="12" sy="12">rainmaker_empire</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Bulk Freighter</class>
@@ -43,10 +43,10 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
-  <structure size="large" prop="engines">Nexus Bolt 3500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
-  <structure size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="large" prop="engines">Nexus Bolt 3000 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

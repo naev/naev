@@ -33,10 +33,10 @@ function Bezier:draw( bx, by )
    lg.push()
    lg.translate( x, y )
 
-   lg.setColor( {0, 0, 0} )
+   lg.setColour( {0, 0, 0} )
    lg.rectangle( "fill", 0, 0, w, h )
 
-   lg.setColor( {1, 1, 1} )
+   lg.setColour( {1, 1, 1} )
    if self.lines then
       lg.line( table.unpack(self.lines) )
    end

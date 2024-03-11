@@ -19,6 +19,7 @@
 #include "ndata.h"
 #include "gui.h"
 #include "nlua_pilot.h"
+#include "rng.h"
 
 static EffectData *effect_list = NULL; /* List of all available effects. */
 
@@ -33,12 +34,16 @@ static int effect_cmp( const void *p1, const void *p2 )
 }
 
 /**
- * @brief Compares effects based on timer.
+ * @brief Compares effects based on priority, then timer.
  */
 static int effect_cmpTimer( const void *p1, const void *p2 )
 {
    const Effect *e1 = p1;
    const Effect *e2 = p2;
+   if (e1->data->priority < e2->data->priority)
+      return -1;
+   else if (e1->data->priority > e2->data->priority)
+      return +1;
    return e1->timer - e2->timer;
 }
 
@@ -93,11 +98,18 @@ static int effect_parse( EffectData *efx, const char *file )
          continue;
       }
       if (xml_isNode(node,"shader")) {
-         char *vertex;
+         char *vertex, *img;
          xmlr_attr_strd(node,"vertex",vertex);
          if (vertex == NULL)
             vertex = strdup("effect.vert");
-         efx->program   = gl_program_vert_frag( vertex, xml_get(node), NULL );
+         else
+            efx->flags |= EFFECT_VERTEX;
+         xmlr_attr_strd(node,"img",img);
+         if (img != NULL) {
+            efx->img = gl_newImage( img, OPENGL_TEX_MIPMAPS | OPENGL_TEX_CLAMP_ALPHA );
+            free(img);
+         }
+         efx->program   = gl_program_vert_frag( vertex, xml_get(node) );
          free( vertex );
          efx->vertex    = glGetAttribLocation( efx->program, "vertex" );
          efx->projection= glGetUniformLocation( efx->program, "projection" );
@@ -108,6 +120,7 @@ static int effect_parse( EffectData *efx, const char *file )
          efx->u_timer   = glGetUniformLocation( efx->program, "u_timer" );
          efx->u_elapsed = glGetUniformLocation( efx->program, "u_elapsed" );
          efx->u_dir     = glGetUniformLocation( efx->program, "u_dir" );
+         efx->u_img     = glGetUniformLocation( efx->program, "u_img" );
          continue;
       }
       if (xml_isNode(node,"lua")) {
@@ -177,7 +190,9 @@ if (o) WARN( _("Effect '%s' missing/invalid '%s' element"), efx->name, s) /**< D
 int effect_load (void)
 {
    int ne;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
    char **effect_files = ndata_listRecursive( EFFECT_DATA_PATH );
    effect_list = array_create( EffectData );
 
@@ -200,7 +215,6 @@ int effect_load (void)
    for (int i=1; i<array_size(effect_list); i++)
       if (strcmp( effect_list[i-1].name, effect_list[i].name )==0)
          WARN(_("Duplicated effect name '%s' detected!"), effect_list[i].name);
-#endif /* DEBUGGING */
 
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
@@ -208,6 +222,7 @@ int effect_load (void)
    }
    else
       DEBUG( n_( "Loaded %d Effect", "Loaded %d Effects", ne ), ne );
+#endif /* DEBUGGING */
 
    return 0;
 }
@@ -224,6 +239,7 @@ void effect_exit (void)
       free( e->desc );
       free( e->overwrite );
       gl_freeTexture( e->icon );
+      gl_freeTexture( e->img );
       ss_free( e->stats );
    }
    array_free( effect_list );
@@ -312,7 +328,7 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
                if (el->strength > strength)
                   return 0;
                /* Case the base effect has a longer timer with same strength we ignore. */
-               if ((fabs(el->strength-strength)<1e-5) && (el->timer > duration))
+               if ((fabs(el->strength-strength)<DOUBLE_TOL) && (el->timer > duration))
                   return 0;
                /* Procede to overwrite. */
                overwrite = 1;

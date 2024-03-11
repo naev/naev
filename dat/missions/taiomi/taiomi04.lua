@@ -30,6 +30,7 @@ local scenesys = system.get("Bastion")
 -- Closer systems only have Vixilium
 local minesys = system.get("Haven")
 local resource = commodity.get("Therite")
+local resource_bonus = resource:price()*1.5
 local amount = 30
 
 --[[
@@ -243,8 +244,11 @@ function land ()
       luatk.run()
       return
    end
-   -- Player should have the full amount now
-   player.fleetCargoRm( resource, amount-mem.brought )
+
+   -- Player should have the full amount now, we remove all of it
+   local excess = have - (amount-mem.brought)
+   player.fleetCargoRm( resource, have )
+   reward = reward + excess * resource_bonus -- Give a nice bonus
 
    vn.clear()
    vn.scene()
@@ -252,14 +256,21 @@ function land ()
    vn.transition( taiomi.scavenger.transition )
    vn.na(fmt.f(_([[You bring the {resource} aboard the Goddard and find Scavenger waiting for you.]]),
       {resource=resource}))
-   s(_([["I see you managed to bring all the needed resources. This will be enough enough for us to start working on our project. I will be outside getting things set up. We may still need something else so make sure to check in after you get some rest."
+   if excess > 0 then
+      s(_([["I see you managed to bring more than all the needed resources. This will be plenty for us to start working on our project. I will be outside getting things set up. We may still need something else so make sure to check in after you get some rest."
 Scavenger backs out of the Goddard and returns to space.]]))
+   else
+      s(_([["I see you managed to bring all the needed resources. This will be enough for us to start working on our project. I will be outside getting things set up. We may still need something else so make sure to check in after you get some rest."
+Scavenger backs out of the Goddard and returns to space.]]))
+   end
    vn.sfxVictory()
+   vn.func( function ()
+      player.pay( reward )
+   end )
    vn.na( fmt.reward(reward) )
    vn.done( taiomi.scavenger.transition )
    vn.run()
 
-   player.pay( reward )
    taiomi.log.main(_("You collected important resources for the inhabitants of Taiomi."))
    misn.finish(true)
 end

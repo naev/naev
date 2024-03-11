@@ -1,8 +1,8 @@
-uniform vec4 color;
+uniform vec4 colour;
 uniform sampler2D sampler;
 
 in vec2 tex_coord;
-out vec4 color_out;
+out vec4 colour_out;
 
 const float ALPHA = 0.3;
 
@@ -15,5 +15,5 @@ void main(void) {
    float s = pilotaura + astaura;
    float a = mix( ALPHA, ALPHA + ALPHA*(1.0-ALPHA), s-1.0 );
 
-   color_out = color * vec4( 0.8*tex.rgb, tex.a*a );
+   colour_out = colour * vec4( 0.8*tex.rgb, tex.a*a );
 }

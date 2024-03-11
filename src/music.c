@@ -25,6 +25,7 @@
 #include "nlua_var.h"
 #include "nluadef.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "sound.h"
 
 #define MUSIC_SUFFIX       ".ogg" /**< Suffix of musics. */
@@ -72,6 +73,8 @@ void music_update( double dt )
    if (music_disabled)
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* Run the choose function in Lua. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_update );
    lua_pushnumber( naevL, dt );
@@ -79,6 +82,8 @@ void music_update( double dt )
       WARN(_("Error while running music function '%s': %s"), "update", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -118,8 +123,7 @@ int music_init (void)
       return 0;
 
    /* Load the music. */
-   if (music_find() < 0)
-      return -1;
+   music_find();
 
    /* Start up Lua. */
    if (music_luaInit() < 0)

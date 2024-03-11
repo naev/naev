@@ -17,7 +17,7 @@ function pilotai.hyperspace( p, target )
    if not target then
       local jmps = {}
       local usehidden = p:faction():usesHiddenJumps()
-      for k,v in ipairs(system.cur():jumps()) do
+      for k,v in ipairs(system.cur():jumps(true)) do
          if usehidden or not v:hidden() then
             table.insert( jmps, v )
          end
@@ -95,7 +95,7 @@ function pilotai.clear( allpilots )
                end
             end
          end
-         for i,j in ipairs(system.cur():jumps()) do
+         for i,j in ipairs(system.cur():jumps(true)) do
             local jfct = j:dest():faction()
             if jfct and not pfct:areEnemies(jfct) then
                local d = j:pos():dist2( pp )

@@ -3,7 +3,7 @@
  <lua>ships/lua/scavenger.lua</lua>
  <points>20</points>
  <base_type>Drone</base_type>
- <GFX size="70">drone_hyena</GFX>
+ <gfx size="70">drone_hyena</gfx>
  <flags>
   <unique/>
   <noplayer/>
@@ -35,14 +35,18 @@
   <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" />
   <utility size="small" />
-  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>
   <cpu_max>2</cpu_max>
   <turn_mod>20</turn_mod>
-  <thrust_mod>20</thrust_mod>
+  <accel_mod>20</accel_mod>
   <cargo_mod>-100</cargo_mod>
   <armour_mod>-20</armour_mod>
  </stats>

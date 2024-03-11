@@ -29,12 +29,15 @@ function background ()
 
    -- Default nebula background
    background_default()
+
+   -- Ambient light is coloured now
+   gfx.lightAmbient( 0.9, 0.475, 0.95, 0.2, 2 )
+   gfx.lightIntensity( 0.6 )
 end
 
 function renderfg( dt )
    -- Get camera properties
-   local x, y = camera.get():get()
-   local z = camera.getZoom()
+   local x, y, z = camera.get()
    local m = 0.5
    shader:send( "u_camera", x*m/sf, -y*m/sf, (1-m)+m*z )
 

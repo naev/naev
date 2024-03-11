@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>60</points>
  <base_type>Odium</base_type>
- <GFX>odium_feral</GFX>
+ <gfx size="76">odium_feral</gfx>
  <rarity>5</rarity>
  <flags>
   <noplayer/>

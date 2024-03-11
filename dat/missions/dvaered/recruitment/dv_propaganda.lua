@@ -72,7 +72,7 @@ function create ()
    -- Mission details
    misn.setTitle(fmt.f(dv.prefix.._("Warlords Propaganda spreading on {pnt} in {sys}"), {pnt=mem.pnt,sys=mem.sys}))
    misn.setReward( fmt.f(_("{credits} per ton"), {credits=fmt.credits( mem.credits )}) )
-   misn.setDesc( fmt.f(_("The Warlords Affairs Office requires a pilot to spread as much posters as possible in the atmosphere of {pnt} in {sys}"), {pnt=mem.pnt,sys=mem.sys}))
+   misn.setDesc( fmt.f(_("The Warlords Affairs Office requires a pilot to spread as many posters as possible in the atmosphere of {pnt} in {sys}"), {pnt=mem.pnt,sys=mem.sys}))
    mem.misn_marker = misn.markerAdd( mem.pnt )
 end
 
@@ -174,7 +174,7 @@ function land()
    if mem.misn_state == 1 then
 
       if spob.cur() == mem.pnt then -- Should not have landed here!
-         vntk.msg( _("What are you doing here?"), fmt.f(_([[As you step out of your ship, your eye is catched by a flying poster, carried away by the wind. And suddentry, you remember there was written on your mission pad: 'Land on any Dvaered planet or station (except {pnt})'. A group of angry-looking Dvaered soldiers comes at you: maybe you will discover soon why you were told not to land there...
+         vntk.msg( _("What are you doing here?"), fmt.f(_([[As you step out of your ship, your eye is caught by a flying poster, carried away by the wind. And suddenly, you remember there was written on your mission pad: 'Land on any Dvaered planet or station (except {pnt})'. A group of angry-looking Dvaered soldiers comes at you: maybe you will discover soon why you were told not to land there...
 Your mission is a FAILURE!]]),{pnt=mem.pnt}) ) -- That's not realistic the player doesn't get killed, but that's not realistic either anyone would land here anyways...
          finish( false )
       elseif spob.cur():faction() == faction.get("Dvaered") then -- Pay the player

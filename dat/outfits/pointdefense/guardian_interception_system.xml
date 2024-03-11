@@ -7,27 +7,26 @@
   <typename>Point Defense</typename>
   <mass>30</mass>
   <price>120000</price>
-  <description>Marketed as a unified system for intercepting missiles and interceptors, the Guardian Interception System is a favourite of merchants and mercenaries alike. Although it lacks the sufficient firepower to efficiently take down torpedoes and other heavy ordinances, it excels at tracking lighter missiles and can even be used to deter small assault craft.</description>
-  <desc_extra>Automatically fires at nearby missiles and interceptors.</desc_extra>
+  <description>Marketed as a unified system for intercepting missiles and interceptors, the Guardian Interception System is a favourite of merchants and mercenaries alike. Although it lacks the sufficient firepower to efficiently take down torpedoes and other heavy ordnance, it excels at tracking lighter missiles and can even be used to deter small assault craft.</description>
   <gfx_store>placeholder.webp</gfx_store>
   <cpu>-40</cpu>
  </general>
  <specific type="turret bolt">
-  <lua>outfits/pointdefense/pointdefense.lua</lua>
+  <lua>outfits/pointdefense/guardian_interception_system.lua</lua>
   <gfx>laser2M.png</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
   <delay>0.5</delay>
-  <speed>1500</speed>
+  <speed>900</speed>
   <range>800</range>
   <falloff>650</falloff>
   <energy>8</energy>
   <heatup>60</heatup>
-  <trackmin>3600</trackmin>
-  <trackmax>3600</trackmax>
+  <trackmin>0</trackmin>
+  <trackmax>1200</trackmax>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>10</penetrate>
    <physical>5</physical>
   </damage>

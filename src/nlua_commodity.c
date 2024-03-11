@@ -217,8 +217,7 @@ static int commodityL_get( lua_State *L )
    /* Get commodity. */
    Commodity *commodity = commodity_get( name );
    if (commodity == NULL) {
-      NLUA_ERROR(L,_("Commodity '%s' not found!"), name);
-      return 0;
+      return NLUA_ERROR(L,_("Commodity '%s' not found!"), name);
    }
 
    /* Push. */
@@ -346,15 +345,11 @@ static int commodityL_priceAt( lua_State *L )
    c = luaL_validcommodity(L,1);
    p = luaL_validspob(L,2);
    sysname = spob_getSystem( p->name );
-   if (sysname == NULL) {
-      NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), p->name );
-      return 0;
-   }
+   if (sysname == NULL)
+      return NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), p->name );
    sys = system_get( sysname );
-   if (sys == NULL) {
-      NLUA_ERROR( L, _("Spob '%s' can not find its system '%s'."), p->name, sysname );
-      return 0;
-   }
+   if (sys == NULL)
+      return NLUA_ERROR( L, _("Spob '%s' can not find its system '%s'."), p->name, sysname );
 
    lua_pushnumber( L, spob_commodityPrice( p, c ) );
    return 1;
@@ -382,15 +377,11 @@ static int commodityL_priceAtTime( lua_State *L )
    p = luaL_validspob(L,2);
    t = luaL_validtime(L, 3);
    sysname = spob_getSystem( p->name );
-   if (sysname == NULL) {
-      NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), p->name );
-      return 0;
-   }
+   if (sysname == NULL)
+      return NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), p->name );
    sys = system_get( sysname );
-   if (sys == NULL) {
-      NLUA_ERROR( L, _("Spob '%s' can not find its system '%s'."), p->name, sysname );
-      return 0;
-   }
+   if (sys == NULL)
+      return NLUA_ERROR( L, _("Spob '%s' can not find its system '%s'."), p->name, sysname );
 
    lua_pushnumber( L, spob_commodityPriceAtTime( p, c, t ) );
    return 1;
@@ -523,7 +514,7 @@ static int commodityL_description( lua_State *L )
  */
 static int commodityL_new( lua_State *L )
 {
-   const char *cname, *cdesc, *buf;
+   const char *cname, *cdesc;
    char str[STRMAX_SHORT];
    Commodity *cargo;
 
@@ -533,12 +524,13 @@ static int commodityL_new( lua_State *L )
 
    cargo    = commodity_getW(cname);
    if ((cargo != NULL) && !cargo->istemp)
-      NLUA_ERROR(L,_("Trying to create new cargo '%s' that would shadow existing non-temporary cargo!"), cname);
+      return NLUA_ERROR(L,_("Trying to create new cargo '%s' that would shadow existing non-temporary cargo!"), cname);
 
    if (cargo==NULL)
       cargo = commodity_newTemp( cname, cdesc );
 
    if (!lua_isnoneornil(L,3)) {
+      const char *buf;
       lua_getfield(L,3,"gfx_space");
       buf = luaL_optstring(L,-1,NULL);
       if (buf) {

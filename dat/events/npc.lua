@@ -20,7 +20,7 @@ local npcs, npc_list, npc_spawners
 function create()
    -- Try to load all the modular npc files
    npc_list = {}
-   for k,v in ipairs(lf.enumerate("events/npc")) do
+   for k,v in ipairs(lf.getDirectoryItems("events/npc")) do
       table.insert( npc_list, require( "events.npc."..string.gsub(v,".lua","") ) )
    end
 

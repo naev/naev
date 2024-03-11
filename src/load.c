@@ -40,22 +40,16 @@
 #include "shiplog.h"
 #include "start.h"
 #include "space.h"
+#include "threadpool.h"
 #include "toolkit.h"
 #include "unidiff.h"
+#include "ntracing.h"
 
 #define LOAD_WIDTH      600 /**< Load window width. */
 #define LOAD_HEIGHT     530 /**< Load window height. */
 
 #define BUTTON_WIDTH    120 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
-
-/**
- * @brief Struct containing a file's name and stat structure.
- */
-typedef struct filedata {
-   char *name;
-   PHYSFS_Stat stat;
-} filedata_t;
 
 typedef struct player_saves_s {
    char *name;
@@ -98,53 +92,51 @@ static void load_menu_delete( unsigned int wdw, const char *str );
 static void load_menu_snapshots( unsigned int wdw, const char *str );
 static void load_snapshot_menu_update( unsigned int wid, const char *str );
 static void load_snapshot_menu_close( unsigned int wdw, const char *str );
+static void load_snapshot_menu_onClose( unsigned int wid, const char *str );
 static void load_snapshot_menu_load( unsigned int wdw, const char *str );
 static void load_snapshot_menu_delete( unsigned int wdw, const char *str );
 static void load_snapshot_menu_save( unsigned int wdw, const char *str );
 static void display_save_info( unsigned int wid, const nsave_t *ns );
 static void move_old_save( const char *path, const char *fname, const char *ext, const char *new_name );
-static int load_load( nsave_t *save, const char *path );
-static int load_game( nsave_t *ns );
+static int load_load( nsave_t *save );
+static int load_game( const nsave_t *ns );
 static int load_gameInternal( const char* file, const char* version );
 static int load_gameInternalHook( void *data );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
 static int load_enumerateCallbackPlayer( void* data, const char* origdir, const char* fname );
 static int load_compatibilityTest( const nsave_t *ns );
 static const char* load_compatibilityString( const nsave_t *ns );
+static int has_plugin( const char *plugin );
 static SaveCompatibility load_compatibility( const nsave_t *ns );
+static int load_sortComparePlayersName( const void *p1, const void *p2 );
 static int load_sortComparePlayers( const void *p1, const void *p2 );
+static int load_sortCompareName( const void *p1, const void *p2 );
 static int load_sortCompare( const void *p1, const void *p2 );
 static xmlDocPtr load_xml_parsePhysFS( const char* filename );
+static void load_freeSave( nsave_t *ns );
 
 /**
  * @brief Loads an individual save.
  * @param[out] save Structure to populate.
- * @param path PhysicsFS path (i.e., relative path starting with "saves/").
  * @return 0 on success.
  */
-static int load_load( nsave_t *save, const char *path )
+static int load_load( nsave_t *save )
 {
    xmlDocPtr doc;
-   xmlNodePtr root, parent, node, cur;
-   int cycles, periods, seconds;
-
-   memset( save, 0, sizeof(nsave_t) );
+   xmlNodePtr root, parent;
 
    /* Load the XML. */
-   doc = load_xml_parsePhysFS( path );
+   doc = load_xml_parsePhysFS( save->path );
    if (doc == NULL) {
-      WARN( _("Unable to parse save path '%s'."), path);
+      WARN( _("Unable to parse save path '%s'."), save->path);
       return -1;
    }
    root = doc->xmlChildrenNode; /* base node */
    if (root == NULL) {
-      WARN( _("Unable to get child node of save '%s'."), path);
+      WARN( _("Unable to get child node of save '%s'."), save->path);
       xmlFreeDoc(doc);
       return -1;
    }
-
-   /* Save path. */
-   save->path = strdup(path);
 
    /* Iterate inside the naev_save. */
    parent = root->xmlChildrenNode;
@@ -153,7 +145,7 @@ static int load_load( nsave_t *save, const char *path )
 
       /* Info. */
       if (xml_isNode(parent, "version")) {
-         node = parent->xmlChildrenNode;
+         xmlNodePtr node = parent->xmlChildrenNode;
          do {
             xmlr_strd(node, "naev", save->version);
             xmlr_strd(node, "data", save->data);
@@ -165,7 +157,7 @@ static int load_load( nsave_t *save, const char *path )
          /* Get name. */
          xmlr_attr_strd(parent, "name", save->player_name);
          /* Parse rest. */
-         node = parent->xmlChildrenNode;
+         xmlNodePtr node = parent->xmlChildrenNode;
          do {
             xml_onlyNodes(node);
 
@@ -177,7 +169,8 @@ static int load_load( nsave_t *save, const char *path )
 
             /* Time. */
             if (xml_isNode(node, "time")) {
-               cur = node->xmlChildrenNode;
+               int cycles, periods, seconds;
+               xmlNodePtr cur = node->xmlChildrenNode;
                cycles = periods = seconds = 0;
                do {
                   xmlr_int(cur, "SCU", cycles);
@@ -200,7 +193,7 @@ static int load_load( nsave_t *save, const char *path )
       else if (xml_isNode(parent, "plugins")) {
          save->plugins = array_create( char* );
          /* Parse rest. */
-         node = parent->xmlChildrenNode;
+         xmlNodePtr node = parent->xmlChildrenNode;
          do {
             xml_onlyNodes(node);
 
@@ -209,7 +202,7 @@ static int load_load( nsave_t *save, const char *path )
                if (name != NULL)
                   array_push_back( &save->plugins, strdup(name) );
                else
-                  WARN(_("Save '%s' has unnamed plugin node!"), path);
+                  WARN(_("Save '%s' has unnamed plugin node!"), save->path);
             }
          } while (xml_nextNode(node));
          continue;
@@ -228,17 +221,99 @@ static int load_load( nsave_t *save, const char *path )
    return 0;
 }
 
+static int load_loadThread( void *ptr )
+{
+   nsave_t *ns = ptr;
+   ns->ret = load_load( ns );
+   return ns->ret;
+}
+
 /**
  * @brief Loads or refreshes saved games for the player.
  */
 int load_refresh (void)
 {
+   ThreadQueue *tq = vpool_create();
+
    if (load_saves != NULL)
       load_free();
 
-   /* load the saves */
+   /* Load the saves candidates. */
    load_saves = array_create( player_saves_t );
    PHYSFS_enumerate( "saves", load_enumerateCallback, NULL );
+
+   /* Set up threads and load. */
+   for (int i=0; i<array_size(load_saves); i++) {
+      player_saves_t *ps = &load_saves[i];
+      for (int j=0; j<array_size(ps->saves); j++) {
+         nsave_t *ns = &ps->saves[j];
+         vpool_enqueue( tq, load_loadThread, ns );
+      }
+   }
+   vpool_wait( tq );
+   vpool_cleanup( tq );
+
+   /* Load the saves. */
+   for (int i=array_size(load_saves)-1; i>=0; i--) {
+      player_saves_t *ps = &load_saves[i];
+      for (int j=array_size(ps->saves)-1; j>=0; j--) {
+         const nsave_t *ns = &ps->saves[j];
+         if (ns->ret!=0) {
+            free( ns->path );
+            free( ns->save_name );
+            array_erase( &ps->saves, &ps->saves[j], &ps->saves[j+1] );
+            continue;
+         }
+         if (ps->name == NULL)
+            ps->name = strdup( ns->player_name );
+      }
+      if (ps->name==NULL)
+         array_erase( &load_saves, &load_saves[i], &load_saves[i+1] );
+   }
+
+   /* Sort and done. */
+   for (int i=0; i<array_size(load_saves); i++) {
+      player_saves_t *ps = &load_saves[i];
+      qsort( ps->saves, array_size(ps->saves), sizeof(nsave_t), load_sortCompare );
+   }
+
+   /* Dedup as necessary, this can be caused by some OS secretly renaming files
+    * when creating. In particular, windows seems to dislike directory names
+    * ending with a '.' which can cause the player save directory to mismatch
+    * the player save name.. */
+   qsort( load_saves, array_size(load_saves), sizeof(player_saves_t), load_sortComparePlayersName );
+   for (int i=array_size(load_saves)-1; i>0; i--) {
+      player_saves_t *ps = &load_saves[i];
+      if (strcmp(ps->name, ps[-1].name)!=0)
+         continue;
+
+      /* Copy saves over. */
+      for (int j=0; j<array_size(ps->saves); j++) {
+         const nsave_t *ns = &ps->saves[j];
+         array_push_back( &ps[-1].saves, *ns );
+      }
+
+      /* Now have to dedup saves. */
+      qsort( ps[-1].saves, array_size(ps[-1].saves), sizeof(nsave_t), load_sortCompareName );
+      for (int j=array_size(ps[-1].saves)-1; j>0; j--) {
+         nsave_t *ns = &ps[-1].saves[j];
+         if (strcmp(ns->save_name, ns[-1].save_name)!=0)
+            continue;
+
+         load_freeSave( ns );
+         array_erase( &ps[-1].saves, ns, &ns[1] );
+      }
+
+      /* Properly resort saves. */
+      qsort( ps[-1].saves, array_size(ps[-1].saves), sizeof(nsave_t), load_sortCompare );
+
+      /* Erase current iterator. */
+      array_free( ps->saves );
+      free( ps->name );
+      array_erase( &load_saves, ps, &ps[1] );
+   }
+
+   /* Resort based on time. */
    qsort( load_saves, array_size(load_saves), sizeof(player_saves_t), load_sortComparePlayers );
 
    return 0;
@@ -255,25 +330,24 @@ static int load_enumerateCallbackPlayer( void* data, const char* origdir, const 
 
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
    SDL_asprintf( &path, fmt, origdir, fname );
-   if (!PHYSFS_stat( path, &stat ))
+   if (!PHYSFS_stat( path, &stat )) {
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
-   /* TODO remove this sometime in the future. Maybe 0.12.0 or 0.13.0? */
+      free( path );
+   }
    else if (stat.filetype == PHYSFS_FILETYPE_REGULAR) {
       player_saves_t *ps = (player_saves_t*) data;
       nsave_t ns;
-      int ret = load_load( &ns, path );
-      if (ret == 0) {
-         ns.save_name = strdup( fname );
-         ns.save_name[ strlen(ns.save_name)-3 ] = '\0';
-         ns.modtime = stat.modtime;
-         array_push_back( &ps->saves, ns );
-         if (ps->name == NULL)
-            ps->name = strdup( ns.player_name );
-      }
+      memset( &ns, 0, sizeof(ns) );
+      ns.path = path;
+      ns.save_name = strdup( fname );
+      ns.save_name[ strlen(ns.save_name)-3 ] = '\0';
+      ns.modtime = stat.modtime;
+      array_push_back( &ps->saves, ns );
    }
+   else
+      free( path );
 
-   free( path );
    return PHYSFS_ENUM_OK;
 }
 
@@ -316,12 +390,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
       psave.name = NULL;
       psave.saves = array_create( nsave_t );
       PHYSFS_enumerate( path, load_enumerateCallbackPlayer, &psave );
-      if (psave.name!=NULL) {
-         qsort( psave.saves, array_size(psave.saves), sizeof(nsave_t), load_sortCompare );
-         array_push_back( &load_saves, psave );
-      }
-      else
-         array_free( psave.saves );
+      array_push_back( &load_saves, psave );
    }
 
    free( path );
@@ -349,12 +418,12 @@ static int load_compatibilityTest( const nsave_t *ns )
          buf[0] = '\0';
          l = 0;
          for (int i=0; i<array_size(ns->plugins); i++)
-            l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?_(", "):"#r", ns->plugins[i] );
+            l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?p_("plugins", ", "):"#r", ns->plugins[i] );
          l += scnprintf( &buf[l], sizeof(buf)-l, "#0" );
          buf2[0] = '\0';
          l = 0;
          for (int i=0; i<array_size(plugins); i++)
-            l += scnprintf( &buf2[l], sizeof(buf2)-l, "%s%s", (l>0)?_(", "):"", plugin_name(&plugins[i]) );
+            l += scnprintf( &buf2[l], sizeof(buf2)-l, "%s%s", (l>0)?p_("plugins", ", "):"", plugin_name(&plugins[i]) );
          if (!dialogue_YesNo( _("Save game plugin mismatch"),
                _("Save game '%s' plugins do not match loaded plugins:\n"
                "   Save plugins: %s\n"
@@ -387,29 +456,44 @@ static const char* load_compatibilityString( const nsave_t *ns )
 }
 
 /**
+ * @brief Checks to see if has a plugin.
+ */
+static int has_plugin( const char *plugin )
+{
+   const plugin_t *plugins = plugin_list();
+   for (int j=0; j<array_size(plugins); j++)
+      if (strcmp( plugin, plugin_name(&plugins[j]) )==0)
+         return 1;
+   return 0;
+}
+
+/**
  * @brief Checks to see if a save is compatible with current Naev.
  */
 static SaveCompatibility load_compatibility( const nsave_t *ns )
 {
    int diff = naev_versionCompare( ns->version );
-   const plugin_t *plugins = plugin_list();
 
    if (ABS(diff) >= 2)
       return SAVE_COMPATIBILITY_NAEV_VERSION;
 
    for (int i=0; i<array_size(ns->plugins); i++) {
-      int found = 0;
-      for (int j=0; j<array_size(plugins); j++) {
-         if (strcmp( ns->plugins[i], plugin_name(&plugins[j]) )==0) {
-            found = 1;
-            break;
-         }
-      }
-      if (!found)
+      if (!has_plugin( ns->plugins[i] ))
          return SAVE_COMPATIBILITY_PLUGINS;
    }
 
    return SAVE_COMPATIBILITY_OK;
+}
+
+/**
+ * @brief qsort compare function for files.
+ */
+static int load_sortComparePlayersName( const void *p1, const void *p2 )
+{
+   const player_saves_t *ps1, *ps2;
+   ps1 = (const player_saves_t*) p1;
+   ps2 = (const player_saves_t*) p2;
+   return strcmp( ps1->name, ps2->name );
 }
 
 /**
@@ -421,6 +505,30 @@ static int load_sortComparePlayers( const void *p1, const void *p2 )
    ps1 = (const player_saves_t*) p1;
    ps2 = (const player_saves_t*) p2;
    return load_sortCompare( &ps1->saves[0], &ps2->saves[0] );
+}
+
+static int load_sortCompareName( const void *p1, const void *p2 )
+{
+   int ret;
+   const nsave_t *ns1 = (const nsave_t*) p1;
+   const nsave_t *ns2 = (const nsave_t*) p2;
+   ret = strcmp( ns1->save_name, ns2->save_name );
+   if (ret)
+      return ret;
+
+   /* Sort by compatibility first. */
+   if (!ns1->compatible && ns2->compatible)
+      return -1;
+   else if (ns1->compatible && !ns2->compatible)
+      return +1;
+
+   /* Search by file modification date. */
+   if (ns1->modtime > ns2->modtime)
+      return -1;
+   else if (ns1->modtime < ns2->modtime)
+      return +1;
+
+   return 0;
 }
 
 /**
@@ -448,6 +556,23 @@ static int load_sortCompare( const void *p1, const void *p2 )
    return strcmp( ns1->save_name, ns2->save_name );
 }
 
+static void load_freeSave( nsave_t *ns )
+{
+   for (int k=0; k<array_size(ns->plugins); k++)
+      free( ns->plugins[k] );
+   array_free( ns->plugins );
+   free(ns->save_name);
+   free(ns->player_name);
+   free(ns->path);
+   free(ns->version);
+   free(ns->data);
+   free(ns->spob);
+   free(ns->chapter);
+   free(ns->difficulty);
+   free(ns->shipname);
+   free(ns->shipmodel);
+}
+
 /**
  * @brief Frees loaded save stuff.
  */
@@ -457,20 +582,7 @@ void load_free (void)
       player_saves_t *ps = &load_saves[i];
       free( ps->name );
       for (int j=0; j<array_size(ps->saves); j++) {
-         nsave_t *ns = &ps->saves[j];
-         for (int k=0; k<array_size(ns->plugins); k++)
-            free( ns->plugins[k] );
-         array_free( ns->plugins );
-         free(ns->save_name);
-         free(ns->player_name);
-         free(ns->path);
-         free(ns->version);
-         free(ns->data);
-         free(ns->spob);
-         free(ns->chapter);
-         free(ns->difficulty);
-         free(ns->shipname);
-         free(ns->shipmodel);
+         load_freeSave( &ps->saves[j] );
       }
       array_free( ps->saves );
    }
@@ -517,8 +629,7 @@ void load_loadGameMenu (void)
          nsave_t *ns = &load_saves[i].saves[0];
          if (ns->compatible) {
             char buf[STRMAX_SHORT];
-            size_t l = 0;
-            l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (#r%s#0)"),
+            scnprintf( buf, sizeof(buf), _("%s (#r%s#0)"),
                ns->player_name, load_compatibilityString( ns ) );
             names[i] = strdup( buf );
          }
@@ -554,10 +665,17 @@ void load_loadGameMenu (void)
          "btnDelete", _("Delete"), load_menu_delete );
 
    if (old_saves_detected && !player_warned) {
-      /* TODO we should print the full OS path if possible here. */
-      dialogue_alert( _("Naev has detected saves in pre-0.10.0 format, and has automatically migrated them to the new format. Old saves have been backed up at '%s'."), "saves-pre-0.10.0");
+      char buf[STRMAX_SHORT];
+      snprintf( buf, sizeof(buf), "%s%s", PHYSFS_getRealDir("saves-pre-0.10.0"), "saves-pre-0.10.0" );
+      dialogue_alert( _("Naev has detected saves in pre-0.10.0 format, and has automatically migrated them to the new format. Old saves have been backed up at '%s'."), buf );
       player_warned = 1;
    }
+}
+
+static void load_snapshot_menu_onClose( unsigned int wid, const char *str )
+{
+   (void) str;
+   free( window_getData( wid ) );
 }
 
 /**
@@ -570,8 +688,9 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    unsigned int wid;
    char **names;
    player_saves_t *ps;
-   int n, can_save;
+   int n;
    char *t;
+   int *data;
 
    ps = NULL;
    for (int i=0; i<array_size(load_saves); i++) {
@@ -586,9 +705,6 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    }
    load_player = ps;
 
-   /* Since this function can be called from the small menu, we cannot rely on
-      the value of the selected_player variable at this point. With a recursive
-      call, name and selected_player can be the same. */
    t = strdup( name );
    free( selected_player );
    selected_player = t;
@@ -598,6 +714,11 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    window_setAccept( wid, load_snapshot_menu_load );
    window_setCancel( wid, load_snapshot_menu_close );
 
+   data = malloc( sizeof( int ) );
+   *data = disablesave;
+   window_setData( wid, data );
+   window_onClose( wid, load_snapshot_menu_onClose );
+
    /* load the saves */
    n = array_size( ps->saves );
    if (n > 0) {
@@ -606,8 +727,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
          nsave_t *ns = &ps->saves[i];
          if (ns->compatible) {
             char buf[STRMAX_SHORT];
-            size_t l = 0;
-            l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (#r%s#0)"),
+            scnprintf( buf, sizeof(buf), _("%s (#r%s#0)"),
                ns->save_name, load_compatibilityString( ns ) );
             names[i] = strdup( buf );
          }
@@ -643,7 +763,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    if (disablesave || window_exists( "wdwLoadGameMenu" ))
       window_disableButton( wid, "btnSave" );
    else {
-      can_save = landed && !player_isFlag(PLAYER_NOSAVE);
+      int can_save = landed && !player_isFlag(PLAYER_NOSAVE);
       if (!can_save)
          window_disableButton( wid, "btnSave" );
    }
@@ -657,9 +777,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
 static void load_menu_snapshots( unsigned int wdw, const char *str )
 {
    (void) str;
-   int pos;
-
-   pos = toolkit_getListPos( wdw, "lstNames" );
+   int pos = toolkit_getListPos( wdw, "lstNames" );
    if (array_size(load_saves) <= 0)
       return;
    load_loadSnapshotMenu( load_saves[pos].name, 1 );
@@ -690,8 +808,9 @@ static void load_snapshot_menu_save( unsigned int wdw, const char *str )
       dialogue_alert( _("Failed to save the game! You should exit and check the log to see what happened and then file a bug report!") );
    else {
       load_refresh();
+      int disablesave = * (int *) window_getData( wdw );
       load_snapshot_menu_close( wdw, str );
-      load_loadSnapshotMenu( player.name, 1 );
+      load_loadSnapshotMenu( player.name, disablesave );
    }
    free( save_name );
 }
@@ -750,7 +869,7 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", date );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->chapter );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Spob:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Space Object:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", _(ns->spob) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", credits );
@@ -758,6 +877,14 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->shipname );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Model:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", _(ns->shipmodel) );
+   if (array_size(ns->plugins)>0) {
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Plugins:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   #%c%s#0", has_plugin(ns->plugins[0]) ? '0' : 'r', ns->plugins[0] );
+      for (int i=1; i<array_size(ns->plugins); i++) {
+         l += scnprintf( &buf[l], sizeof(buf)-l, p_("plugins list",", #%c%s#0"),
+               has_plugin(ns->plugins[i]) ? '0' : 'r', ns->plugins[i] );
+      }
+   }
    window_modifyText( wid, "txtPilot", buf );
 }
 
@@ -773,9 +900,9 @@ static void move_old_save( const char *path, const char *fname, const char *ext,
    size_t name_len = strlen(fname);
    size_t ext_len = strlen(ext);
    if (name_len >= ext_len + 1 && !strcmp( &fname[name_len - ext_len], ext )) {
+      char *new_path;
       char *dirname = strdup( fname );
       dirname[name_len - ext_len] = '\0';
-      char *new_path;
       SDL_asprintf( &new_path, "saves/%s", dirname );
       if (!PHYSFS_exists( new_path ))
          PHYSFS_mkdir( new_path );
@@ -821,7 +948,6 @@ static void load_menu_update( unsigned int wid, const char *str )
 
    /* Get position. */
    pos = toolkit_getListPos( wid, "lstNames" );
-
    ns = &load_saves[pos].saves[0];
    if (selected_player != NULL)
       free( selected_player );
@@ -919,11 +1045,8 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
       load_menu_close( window_get( "wdwLoadGameMenu" ), NULL );
       menu_main_close();
    }
-   else {
-      if (landed)
-         land_cleanup();
+   else
       menu_small_close();
-   }
 
    /* Try to load the game. */
    if (load_game( &load_player->saves[pos] )) {
@@ -973,10 +1096,8 @@ static void load_menu_delete( unsigned int wdw, const char *str )
  */
 static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
 {
-   unsigned int wid;
    int pos, last_save;
-
-   wid = window_get( "wdwLoadSnapshotMenu" );
+   unsigned int wid = window_get( "wdwLoadSnapshotMenu" );
 
    if (array_size(load_player->saves) <= 0)
       return;
@@ -1003,6 +1124,7 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
    load_refresh();
 
    /* need to reload the menu */
+   int disablesave = * (int *) window_getData( wdw );
    load_snapshot_menu_close( wdw, str );
    if (window_exists( "wdwLoadGameMenu" )) {
       wid = window_get( "wdwLoadGameMenu" );
@@ -1010,7 +1132,7 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
       load_loadGameMenu();
    }
    if (!last_save)
-      load_loadSnapshotMenu( selected_player, 1 );
+      load_loadSnapshotMenu( selected_player, disablesave );
 }
 
 static void load_compatSlots (void)
@@ -1111,7 +1233,7 @@ int load_gameFile( const char *file )
  *    @param ns Save game to load.
  *    @return 0 on success.
  */
-static int load_game( nsave_t *ns )
+static int load_game( const nsave_t *ns )
 {
    return load_gameInternal( ns->path, ns->version );
 }
@@ -1133,9 +1255,15 @@ static int load_gameInternal( const char* file, const char* version )
       return -1;
    }
 
+#if HAVE_TRACY
+   char buf[STRMAX_SHORT];
+   size_t l = snprintf( buf, sizeof(buf), "Loading save '%s'", file );
+   NTracingMessage( buf, l );
+#endif /* TRACY */
+
    /* Some global cleaning has to be done here. */
    toolkit_closeAll();
-   hook_cleanup();
+   hook_clear();
 
    data = malloc( sizeof(const char*) * 2 );
    data[0] = file;
@@ -1250,7 +1378,7 @@ static int load_gameInternalHook( void *data )
          for (int i=0; i<array_size(misn_failed_str); i++)
             l += scnprintf( &buf[l], sizeof(buf)-l, _("\n   #r%s#0"), misn_failed_str[i]);
       }
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("\nNote that, in general, you should be able to find the missions/events again and start them without penalty."));
+      /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, _("\nNote that, in general, you should be able to find the missions/events again and start them without penalty."));
       dialogue_alertRaw( buf );
    }
 

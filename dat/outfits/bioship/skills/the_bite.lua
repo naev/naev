@@ -2,6 +2,7 @@ local fmt   = require "format"
 local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
+local helper = require "outfits.lib.helper"
 
 local cooldown = 15 -- cooldown time in seconds
 local oshader = osh.new([[
@@ -10,10 +11,10 @@ const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
 uniform float progress = 0;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
-   vec4 color     = texture( tex, texcoord );
+   vec4 colour     = texture( tex, texcoord );
    float opacity  = clamp( progress, 0.0, 1.0 );
-   color.rgb      = blendSoftLight( color.rgb, colmod, opacity );
-   return color;
+   colour.rgb      = blendSoftLight( colour.rgb, colmod, opacity );
+   return colour;
 }
 ]])
 
@@ -32,7 +33,7 @@ local function turnon( p, po )
       t = p:targetAsteroid()
       if t==nil then
          if mem.isp then
-            player.msg("#r".._("You need a target to bite!"))
+            helper.msgnospam("#r".._("You need a target to bite!"))
          end
          return false
       end
@@ -179,7 +180,7 @@ function update( p, po, dt )
             if mem.lust then
                p:effectAdd( "Blood Lust" )
             end
-            t:damage( dmg, 0, 100, "impact", p )
+            t:damage( dmg, 0, 100, "kinetic", p )
             t:knockback( p, 0.5 )
             -- Do the healing
             if mem.improved then
@@ -211,7 +212,9 @@ end
 function ontoggle( p, po, on )
    if on then
       return turnon( p, po )
-   --else
-   --   return turnoff( p, po )
+   else
+      mem.lastmsg = nil -- clear helper.msgnospam timer
+      -- Can't turn off the bite.
+      --return turnoff( p, po )
    end
 end

@@ -82,7 +82,7 @@ function accept()
     misn.setTitle(_("Shielding Prototype Funding"))
     misn.setReward(credits)
     misn.setDesc(_("Help Dr. Mensing to get funding to construct a shielding prototype."))
-    mem.misn_marker = misn.markerAdd(mem.dest_sys, "low")
+    mem.misn_marker = misn.markerAdd(mem.dest_planet, "low")
 
     misn.accept()
     misn.osdCreate(_("Shielding Prototype Funding"), {
@@ -151,7 +151,7 @@ function land()
             vn.na(_([[For a moment you wonder what she is doing as she drags you towards the bathroom; finally you remember what she said about her 'escape strategy'. She mentioned that you are supposed to leave the building through the window of the bathroom.]]))
             vn.done()
             vn.run()
-            misn.markerMove(mem.misn_marker, mem.dest_sys)
+            misn.markerMove(mem.misn_marker, mem.dest_planet)
             misn.osdActive(2)
         elseif mem.stage == 7 then
             mensing(_([["That took long enough! I'm glad Professor Voges promised to take care of the funding. The problem was that my recent research is related to a secret project and my funding was shut down - like some kind of conspiracy; can you believe it! Actually I'm not supposed to tell you anything as you could possibly get into a lot of trouble.. forget I said anything! I have much work to do!"]]))
@@ -159,7 +159,6 @@ function land()
             vn.done()
             vn.run()
             player.pay(credits)
-            misn.markerRm(mem.misn_marker)
             nebu_research.log(_([[You helped Dr. Mensing to acquire funding for a shielding prototype that will enable to explore the Sol nebula.]]))
             misn.finish(true)
         end
@@ -186,8 +185,8 @@ end
 function takeoff()
    if mem.stage == 5 then
       mem.stage = 6
-      hook.timer(2.0, "startAmbush")
-      hook.timer(12.0, "secondWarningMessage")
+      hook.timer(2, "startAmbush")
+      hook.timer(12, "secondWarningMessage")
    end
 end
 
@@ -204,9 +203,9 @@ end
 function startAmbush()
    local scom = {}
    local origins = {}
-   origins[1] = system.get("Vauban")
-   origins[2] = system.get("Woreck")
-   origins[3] = system.get("Damien")
+   for k,j in ipairs(system.cur():jumps()) do
+      table.insert( origins, j:dest() )
+   end
    for i=1,#origins do
       scom[2*i-1] = pilot.add("Za'lek Light Drone", "Mercenary", origins[i])
       scom[2*i] = pilot.add("Za'lek Heavy Drone", "Mercenary", origins[i])

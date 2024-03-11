@@ -3,12 +3,13 @@ return {
    cap_kill       = 25,
    delta_distress = {-0.5, 0},    -- Maximum change constraints
    delta_kill     = {-5, 1.5},    -- Maximum change constraints
-   cap_misn_def   = 40,
+   cap_misn_def   = 70-10, --40, -- TODO decrease as campaigns get added
    cap_misn_var   = "_fcap_dvaered",
    cap_tags       = {
-      ["dva_cap_ch01_sml"] = { val=1, max=50 },
-      ["dva_cap_ch01_med"] = { val=3, max=50 },
-      ["dva_cap_ch01_lrg"] = { val=5, max=50 },
+      -- TODO return cap_ch01 to 50 when possible
+      ["dva_cap_ch01_sml"] = { val=1, max=70 },
+      ["dva_cap_ch01_med"] = { val=3, max=70 },
+      ["dva_cap_ch01_lrg"] = { val=5, max=70 },
    },
    -- Based on feudal hierarchy
    text = {

@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="TeraCom Banshee Launcher">
  <general>
+  <shortname>T. Banshee L.</shortname>
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>20</mass>
+  <mass>22</mass>
   <price>45000</price>
   <gfx_store>bansheelauncher.webp</gfx_store>
   <description>TeraCom has equipped its Banshee launcher model with high grade reload and tube cooling systems, giving a significant boost to rate of fire. These unguided rockets, while slow, can do quite respectable damage even to fairly large ships.</description>
@@ -25,10 +26,10 @@
   <spfx_armour>EmpS</spfx_armour>
   <trail_generator x="-10">fire-missile</trail_generator>
   <duration blowup="shield">7</duration>
-  <thrust>150</thrust>
+  <accel>150</accel>
   <speed>200</speed>
   <damage>
-   <type>impact</type>
+   <type>kinetic</type>
    <penetrate>60</penetrate>
    <physical>100</physical>
   </damage>

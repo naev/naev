@@ -53,7 +53,7 @@ function accept ()
 
    -- See if accept mission
    soldner(_([[You approach Commander Soldner, who seems to be waiting for you.
-"Ready for your next mission? We need you to do a pick up and delivery, however, you are expected to encounter hostilities on the way. Interested?"]]) )
+"Ready for your next mission? We need you to do a pickup and delivery, however, you are expected to encounter hostilities on the way. Interested?"]]) )
    vn.menu{
       {_([[Accept]]), "accept"},
       {_([[Decline]]), "decline"},
@@ -66,7 +66,7 @@ function accept ()
    vn.label("accept")
    soldner(fmt.f(_([[Commander Soldner begins, "We have an important package that must get from {pickup_pnt} in the {pickup_sys} system to {dropoff_pnt} in the {dropoff_sys} system. We have reason to believe that it is also wanted by external forces.]]),
       {pickup_pnt=mem.pickup, pickup_sys=mem.pickupsys, dropoff_pnt=mem.dest, dropoff_sys=mem.destsys}))
-   soldner(fmt.f(_([["The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid {credits}."]]),
+   soldner(fmt.f(_([["The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery, and you'll be paid {credits}."]]),
       {credits=fmt.credits(emp.rewards.es01)} ) )
    soldner(_([["Avoid hostilities at all costs. The package must arrive at its destination. Since you are undercover, Empire ships won't assist you if you come under fire, so stay sharp. Good luck."]]))
    vn.func( function () accepted = true end )
@@ -95,7 +95,6 @@ function accept ()
    hook.enter("enter")
 end
 
-
 function land ()
    mem.landed = spob.cur()
 
@@ -104,7 +103,7 @@ function land ()
       -- Make sure player has room.
       if player.pilot():cargoFree() < 3 then
          local needed = 3 - player.pilot():cargoFree()
-         tk.msg( _("Need More Space"), string.format( n_(
+         vntk.msg( _("Need More Space"), string.format( n_(
             "You do not have enough space to load the packages. You need to make room for %d more tonne.",
             "You do not have enough space to load the packages. You need to make room for %d more tonnes.",
             needed), needed ) )
@@ -150,6 +149,8 @@ function land ()
       if getlicense then
          soldner(fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you were able to deliver the package. Great work there. I've managed to get you cleared for a Heavy Weapon License. You'll still have to pay the fee for getting it, though.]]),
             {pnt=mem.ret}))
+         vn.sfxBingo()
+         vn.na(_([[You can now purchase the #bHeavy Weapon License#0.]]))
       else
          soldner(fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package."]]),
             {pnt=mem.ret}))
@@ -178,7 +179,6 @@ function land ()
    end
 end
 
-
 function enter ()
    mem.sys = system.cur()
 
@@ -205,7 +205,6 @@ function enter ()
       end
    end
 end
-
 
 function enemies( enter_vect )
    -- Choose mercenaries

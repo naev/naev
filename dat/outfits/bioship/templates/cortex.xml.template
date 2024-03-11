@@ -7,7 +7,7 @@
   <mass>{mass}</mass>
   <price>{price}</price>
   <description>{desc}</description>
-  <gfx_store>organic_hull_x.webp</gfx_store>
+  <gfx_store>{gfx_store}</gfx_store>
  </general>
  <specific type="modification">
   <cargo>{cargo}</cargo>

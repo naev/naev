@@ -3,7 +3,7 @@
  <lua>ships/lua/soromid.lua</lua>
  <points>90</points>
  <base_type>Nyx</base_type>
- <GFX size="96" sx="10" sy="10">nyx</GFX>
+ <gfx size="96" sx="10" sy="10">nyx</gfx>
  <rarity>2</rarity>
  <sound pitch="0.75">engine_soromid</sound>
  <class display="Bio-Destroyer">Destroyer</class>
@@ -40,6 +40,7 @@
   <structure size="medium" prop="bio_engines" name="genedrive">Largus Gene Drive I</structure>
   <structure size="medium" prop="bio_hull" name="shell">Largus Cortex I</structure>
   <structure size="large" />
+  <structure size="medium" />
   <structure size="medium" />
  </slots>
  <stats>

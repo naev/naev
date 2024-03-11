@@ -48,6 +48,7 @@
 #include "nluadef.h"
 #include "nmath.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "ntime.h"
 #include "nxml.h"
 #include "opengl.h"
@@ -134,8 +135,10 @@ static const double mesg_timeout = 15.; /**< Timeout length. */
  * @brief On screen player message.
  */
 typedef struct Mesg_ {
-   char *str; /**< The message (allocated). */
-   double t; /**< Time to live for the message. */
+   int dup;    /**< Times duplicated. */
+   char *str;  /**< The message (allocated). */
+   char *dstr; /**< The display message. */
+   double t;   /**< Time to live for the message. */
    glFontRestore restore; /**< Hack for font restoration. */
 } Mesg;
 static Mesg* mesg_stack = NULL; /**< Stack of messages, will be of mesg_max size. */
@@ -305,23 +308,42 @@ void player_messageRaw( const char *str )
 
    gl_printLineIteratorInit( &iter, &gl_smallFont, str, gui_mesg_w - ((str[0] == '\t') ? 45 : 15) );
    while (gl_printLineIteratorNext( &iter )) {
+      Mesg *m = &mesg_stack[mesg_pointer];
+
+      /* See if same message. */
+      if ((m->t > 0.) && strcmp(mesg_stack[mesg_pointer].str,str)==0) {
+         free( m->dstr );
+         m->dup++;
+         SDL_asprintf( &m->dstr, p_("player_message","%s x%d"), str, m->dup );
+         if (gl_printWidthRaw( &gl_smallFont, m->dstr ) <= gui_mesg_w - ((str[0]=='\t') ? 45 : 15)) {
+            m->t = mesg_timeout; /* Reset time out. */
+            return;
+         }
+         free( m->dstr );
+         m->dstr = NULL;
+      }
+
       /* Move pointer. */
       mesg_pointer   = (mesg_pointer + 1) % mesg_max;
       if (mesg_viewpoint != -1)
          mesg_viewpoint++;
+      m = &mesg_stack[mesg_pointer];
 
       /* Add the new one */
-      free( mesg_stack[mesg_pointer].str );
+      free( m->str );
+      free( m->dstr );
+      m->dstr = NULL;
       if (iter.l_begin == 0) {
-         mesg_stack[mesg_pointer].str = strndup( &str[iter.l_begin], iter.l_end - iter.l_begin );
-         gl_printRestoreInit( &mesg_stack[mesg_pointer].restore );
+         m->str = strndup( &str[iter.l_begin], iter.l_end - iter.l_begin );
+         gl_printRestoreInit( &m->restore );
       }
       else {
-         mesg_stack[mesg_pointer].str = malloc( iter.l_end - iter.l_begin + 2 );
-         snprintf( mesg_stack[mesg_pointer].str, iter.l_end - iter.l_begin + 2, "\t%s", &str[iter.l_begin] );
-         gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, iter.l_begin );
+         m->str = malloc( iter.l_end - iter.l_begin + 2 );
+         snprintf( m->str, iter.l_end - iter.l_begin + 2, "\t%s", &str[iter.l_begin] );
+         gl_printStoreMax( &m->restore, str, iter.l_begin );
       }
-      mesg_stack[mesg_pointer].t = mesg_timeout;
+      m->t = mesg_timeout;
+      m->dup = 1;
 
       iter.width = gui_mesg_w - 45; /* Remaining lines are tabbed so it's shorter. */
    }
@@ -378,8 +400,7 @@ static void gui_renderSpobTarget (void)
 
    /* Draw spob and jump point target graphics. */
    if (player.p->nav_hyperspace >= 0) {
-      JumpPoint *jp = &cur_system->jumps[player.p->nav_hyperspace];
-
+      const JumpPoint *jp = &cur_system->jumps[player.p->nav_hyperspace];
       if (jp_isKnown(jp)) {
          c = &cGreen;
          x = jp->pos.x;
@@ -389,7 +410,7 @@ static void gui_renderSpobTarget (void)
       }
    }
    if (player.p->nav_spob >= 0) {
-      Spob *spob = cur_system->spobs[player.p->nav_spob];
+      const Spob *spob = cur_system->spobs[player.p->nav_spob];
       c = spob_getColour( spob );
       x = spob->pos.x;
       y = spob->pos.y;
@@ -397,12 +418,12 @@ static void gui_renderSpobTarget (void)
       gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
    }
    if (player.p->nav_asteroid >= 0) {
-      AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
-      Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
+      const AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
+      const Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
       c = &cWhite;
 
-      x = ast->pos.x;
-      y = ast->pos.y;
+      x = ast->sol.pos.x;
+      y = ast->sol.pos.y;
       r = ast->gfx->sw * 0.5;
       gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
    }
@@ -475,7 +496,7 @@ static void gui_renderPilotTarget (void)
    else
       c = &cNeutral;
 
-   gui_renderTargetReticles( &shaders.targetship, p->solid.pos.x, p->solid.pos.y, p->ship->gfx_space->sw * 0.5, p->solid.dir, c );
+   gui_renderTargetReticles( &shaders.targetship, p->solid.pos.x, p->solid.pos.y, p->ship->size * 0.5, p->solid.dir, c );
 }
 
 /**
@@ -541,6 +562,8 @@ static void gui_renderBorder( double dt )
    const glColour *col;
    Pilot *const* pilot_stack;
 
+   NTracingZone( _ctx, 1 );
+
    /* Get player position. */
    hw    = SCREEN_W/2;
    hh    = SCREEN_H/2;
@@ -553,7 +576,7 @@ static void gui_renderBorder( double dt )
 
    /* Draw spobs. */
    for (int i=0; i<array_size(cur_system->spobs); i++) {
-      Spob *pnt = cur_system->spobs[i];
+      const Spob *pnt = cur_system->spobs[i];
 
       /* Skip if unknown. */
       if (!spob_isKnown( pnt ))
@@ -572,7 +595,7 @@ static void gui_renderBorder( double dt )
 
    /* Draw jump routes. */
    for (int i=0; i<array_size(cur_system->jumps); i++) {
-      JumpPoint *jp = &cur_system->jumps[i];
+      const JumpPoint *jp = &cur_system->jumps[i];
 
       /* Skip if unknown or exit-only. */
       if (!jp_isUsable( jp ))
@@ -596,7 +619,7 @@ static void gui_renderBorder( double dt )
    /* Draw pilots. */
    pilot_stack = pilot_getAll();
    for (int i=1; i<array_size(pilot_stack); i++) { /* skip the player */
-      Pilot *plt = pilot_stack[i];
+      const Pilot *plt = pilot_stack[i];
 
       /* See if in sensor range. */
       if (!pilot_inRangePilot(player.p, plt, NULL))
@@ -612,6 +635,8 @@ static void gui_renderBorder( double dt )
          gl_renderRectEmpty(cx-5, cy-5, 10, 10, col);
       }
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -625,12 +650,9 @@ static void gui_renderBorder( double dt )
 int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
 {
    double z;
-   int cw, ch;
-   glTexture *tex;
+   int cw, ch, w, h;
 
    z = cam_getZoom();
-
-   tex = pilot->ship->gfx_space;
 
    /* Get relative positions. */
    *rx = (pilot->solid.pos.x - player.p->solid.pos.x)*z;
@@ -640,9 +662,13 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
    *rx -= gui_xoff;
    *ry -= gui_yoff;
 
+   /* Get size. */
+   w = pilot->ship->size;
+   h = pilot->ship->size;
+
    /* Compare dimensions. */
-   cw = SCREEN_W/2 + tex->sw/2;
-   ch = SCREEN_H/2 + tex->sh/2;
+   cw = SCREEN_W/2 + w/2;
+   ch = SCREEN_H/2 + h/2;
 
    if ((ABS(*rx) > cw) || (ABS(*ry) > ch))
       return  0;
@@ -731,9 +757,13 @@ void gui_render( double dt )
    if (!menu_isOpen(MENU_MAIN) &&
          (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
             ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD)))) {
+      NTracingZone( _ctx, 1 );
+
       gl_viewport( 0., 0., SCREEN_W, SCREEN_H );
       spfx_cinematic();
       gl_defViewport();
+
+      NTracingZoneEnd( _ctx );
       return;
    }
 
@@ -744,6 +774,8 @@ void gui_render( double dt )
    /* Cinematics mode. */
    if (player_isFlag( PLAYER_CINEMATICS_GUI ))
       return;
+
+   NTracingZone( _ctx, 1 );
 
    /*
     * Countdown timers.
@@ -849,6 +881,8 @@ void gui_render( double dt )
 
    /* Render messages. */
    omsg_render( dt );
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -891,22 +925,22 @@ void gui_radarRender( double x, double y )
    if (!conf.always_radar && ovr_isOpen())
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* The global radar. */
    radar = &gui_radar;
    gui_radar.x = x;
    gui_radar.y = y;
 
    /* TODO: modifying gl_view_matrix like this is a bit of a hack */
-   /* TODO: use stensil test for RADAR_CIRCLE */
+   /* TODO: use stencil test for RADAR_CIRCLE */
    view_matrix_prev = gl_view_matrix;
    if (radar->shape==RADAR_RECT) {
       gl_clipRect( x, y, radar->w, radar->h );
-      mat4_translate( &gl_view_matrix,
-            x + radar->w/2., y + radar->h/2., 0 );
+      mat4_translate_xy( &gl_view_matrix, x + radar->w/2., y + radar->h/2. );
    }
    else if (radar->shape==RADAR_CIRCLE)
-      mat4_translate( &gl_view_matrix,
-            x, y, 0 );
+      mat4_translate_xy( &gl_view_matrix, x, y );
 
    /*
     * spobs
@@ -921,7 +955,7 @@ void gui_radarRender( double x, double y )
     * Jump points.
     */
    for (int i=0; i<array_size(cur_system->jumps); i++) {
-      JumpPoint *jp = &cur_system->jumps[i];
+      const JumpPoint *jp = &cur_system->jumps[i];
       if (i != player.p->nav_hyperspace && jp_isUsable(jp))
          gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
    }
@@ -957,7 +991,7 @@ void gui_radarRender( double x, double y )
       r = ceil(range);
       asteroid_collideQueryIL( ast, &gui_qtquery, ax-r, ay-r, ax+r, ay+r );
       for (int j=0; j<il_size(&gui_qtquery); j++) {
-         Asteroid *a = &ast->asteroids[ il_get( &gui_qtquery, j, 0 ) ];
+         const Asteroid *a = &ast->asteroids[ il_get( &gui_qtquery, j, 0 ) ];
          gui_renderAsteroid( a, radar->w, radar->h, radar->res, 0 );
       }
    }
@@ -969,6 +1003,8 @@ void gui_radarRender( double x, double y )
    gl_view_matrix = view_matrix_prev;
    if (radar->shape==RADAR_RECT)
       gl_unclipRect();
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -986,8 +1022,10 @@ void gui_radarGetRes( double* res )
  */
 void gui_clearMessages (void)
 {
-   for (int i=0; i < mesg_max; i++)
+   for (int i=0; i < mesg_max; i++) {
       free( mesg_stack[i].str );
+      free( mesg_stack[i].dstr );
+   }
    memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
 }
 
@@ -1002,6 +1040,8 @@ static void gui_renderMessages( double dt )
    int v, o;
    glColour c = {.r=1., .g=1., .b=1.};
    const glColour msgc = {.r=0., .g=0., .b=0., .a=0.6};
+
+   NTracingZone( _ctx, 1 );
 
    /* Coordinate translation. */
    x = gui_mesg_x;
@@ -1045,15 +1085,17 @@ static void gui_renderMessages( double dt )
 
          /* Only handle non-NULL messages. */
          if (mesg_stack[m].str != NULL) {
-            if (mesg_stack[m].str[0] == '\t') {
+            const char *str = (mesg_stack[m].dstr!=NULL) ? mesg_stack[m].dstr : mesg_stack[m].str;
+            if (str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
-               dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, &str[1]) + 6;
                gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
-               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
-            } else {
-               dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, mesg_stack[m].str) + 6;
+               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &str[1] );
+            }
+            else {
+               dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, str) + 6;
                gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
-               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
+               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., str );
             }
             h += dy;
             y += dy;
@@ -1073,6 +1115,8 @@ static void gui_renderMessages( double dt )
       c.a = 0.5;
       gl_renderRect( vx + gui_mesg_w-10., vy + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)), 10, hs, &c );
    }
+
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1109,6 +1153,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 {
    double x, y, scale, ssize;
    const glColour *col;
+   int scanning;
 
    /* Make sure is in range. */
    if (!pilot_validTarget( player.p, p ))
@@ -1153,8 +1198,9 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       col = gui_getPilotColour(p);
 
    scale = MAX(scale+2.0, 3.5+ssize); /* Compensate for outline. */
+   scanning = (pilot_isFlag(p,PILOT_SCANNING) && (p->target==PLAYER_ID));
 
-   if (pilot_isFlag(p, PILOT_HILIGHT)) {
+   if (pilot_isFlag(p, PILOT_HILIGHT) || scanning) {
       glColour highlighted = cRadar_hilight;
       highlighted.a = 0.3;
       glUseProgram( shaders.hilight.program );
@@ -1170,8 +1216,21 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       gui_blink( x, y, MAX(scale*2.,10.0), &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
 
    /* Draw name. */
-   if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
+   if (overlay && pilot_isFlag(p, PILOT_HILIGHT)) {
+      /* TODO try to minimize overlap here. */
       gl_printMarkerRaw( &gl_smallFont, x+scale+5., y-gl_smallFont.h/2., col, p->name );
+      if (scanning) {
+         glUseProgram( shaders.pilotscanning.program );
+         gl_renderShader( x+scale+3., y+scale+gl_smallFont.h/2.+3., 5., 5., 1.5*animation_dt, &shaders.pilotscanning, col, 1 );
+      }
+   }
+   else {
+      /* Draw scanning icon. */
+      if (scanning) {
+         glUseProgram( shaders.pilotscanning.program );
+         gl_renderShader( x+scale+3., y+scale+3., 5., 5., 1.5*animation_dt, &shaders.pilotscanning, col, 1 );
+      }
+   }
 }
 
 /**
@@ -1204,12 +1263,12 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 
    /* Get position. */
    if (overlay) {
-      x = (a->pos.x / res);
-      y = (a->pos.y / res);
+      x = (a->sol.pos.x / res);
+      y = (a->sol.pos.y / res);
    }
    else {
-      x = ((a->pos.x - player.p->solid.pos.x) / res);
-      y = ((a->pos.y - player.p->solid.pos.y) / res);
+      x = ((a->sol.pos.x - player.p->solid.pos.x) / res);
+      y = ((a->sol.pos.y - player.p->solid.pos.y) / res);
    }
 
    /* Get size. */
@@ -1282,7 +1341,7 @@ void gui_renderPlayer( double res, int overlay )
 static const glColour *gui_getSpobColour( int i )
 {
    const glColour *col;
-   Spob *spob = cur_system->spobs[i];
+   const Spob *spob = cur_system->spobs[i];
 
    if (i == player.p->nav_spob)
       col = &cRadar_tSpob;
@@ -1357,11 +1416,10 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  */
 void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, double alpha, int overlay )
 {
-   GLfloat cx, cy, x, y, r, vr;
+   GLfloat cx, cy, r, vr;
    glColour col;
    Spob *spob;
    const SimpleShader *shd;
-   char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
    if (!spob_isKnown( cur_system->spobs[ind] ))
@@ -1383,8 +1441,8 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
 
    /* Check if in range. */
    if (shape == RADAR_CIRCLE) {
-      x = ABS(cx)-r;
-      y = ABS(cy)-r;
+      GLfloat x = ABS(cx)-r;
+      GLfloat y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > pow2(w-2*r)) {
          if ((player.p->nav_spob == ind) && !overlay)
@@ -1409,8 +1467,6 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
       /* Transform coordinates. */
       cx += ox;
       cy += oy;
-      w  *= 2.;
-      h  *= 2.;
    }
 
    /* Scale according to marker. */
@@ -1444,6 +1500,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    gl_renderShader( cx, cy, vr, vr, 0., shd, &col, 1 );
 
    if (overlay) {
+      char buf[STRMAX_SHORT];
       snprintf( buf, sizeof(buf), "%s%s", spob_getSymbol(spob), spob_name(spob) );
       gl_printMarkerRaw( &gl_smallFont, cx+spob->mo.text_offx, cy+spob->mo.text_offy, &col, buf );
    }
@@ -1464,7 +1521,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 {
    GLfloat cx, cy, x, y, r, vr;
    glColour col;
-   char buf[STRMAX_SHORT];
    StarSystem *s;
    JumpPoint *jp = &cur_system->jumps[ind];
 
@@ -1539,8 +1595,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Render name. */
    if (overlay) {
-      snprintf(
-            buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
+      char buf[STRMAX_SHORT];
+      snprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
             sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       gl_printMarkerRaw( &gl_smallFont, cx+jp->mo.text_offx, cy+jp->mo.text_offy, &col, buf );
    }
@@ -1608,8 +1664,6 @@ static void gui_calcBorders (void)
  */
 int gui_init (void)
 {
-   GLfloat vertex[16];
-
    /* radar */
    gui_setRadarResolution( player.radar_res );
 
@@ -1627,6 +1681,7 @@ int gui_init (void)
 
    /* VBO. */
    if (gui_radar_select_vbo == NULL) {
+      GLfloat vertex[16];
       vertex[0] = -1.5;
       vertex[1] = 1.5;
       vertex[2] = -3.3;
@@ -1831,7 +1886,6 @@ void gui_setGeneric( const Pilot* pilot )
 const char* gui_pick (void)
 {
    const char* gui;
-
    /* Don't do set a gui if player is dead. This can be triggered through
     * naev_resize and can cause an issue if player is dead. */
    if ((player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD))
@@ -1941,6 +1995,9 @@ int gui_load( const char *name )
  */
 void gui_cleanup (void)
 {
+   /* Clear messages. */
+   gui_clearMessages();
+
    /* Disable mouse voodoo. */
    gui_mouseClickEnable( 0 );
    gui_mouseMoveEnable( 0 );
@@ -1997,8 +2054,6 @@ void gui_free (void)
 {
    gui_cleanup();
 
-   for (int i = 0; i < mesg_max; i++)
-      free( mesg_stack[i].str );
    free(mesg_stack);
    mesg_stack = NULL;
 
@@ -2064,7 +2119,7 @@ glTexture* gui_hailIcon (void)
 /**
  * @brief Sets the spob target GFX.
  */
-void gui_targetSpobGFX( glTexture *gfx )
+void gui_targetSpobGFX( const glTexture *gfx )
 {
    gl_freeTexture( gui_target_spob );
    gui_target_spob = gl_dupTexture( gfx );
@@ -2073,7 +2128,7 @@ void gui_targetSpobGFX( glTexture *gfx )
 /**
  * @brief Sets the pilot target GFX.
  */
-void gui_targetPilotGFX( glTexture *gfx )
+void gui_targetPilotGFX( const glTexture *gfx )
 {
    gl_freeTexture( gui_target_pilot );
    gui_target_pilot = gl_dupTexture( gfx );

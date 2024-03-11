@@ -5,7 +5,7 @@ function onload( o )
    ss = o:specificstats()
 end
 
-function ontoggle( p, _po, on )
+function onshoot( p, _po, on )
    if not on then return end
 
    spacemine( p:pos(), p:vel(), p:faction(), {

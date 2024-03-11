@@ -91,7 +91,7 @@ local function merger( dest, src, key )
 end
 
 -- Try to load all the modular news files
-for k,v in ipairs(lf.enumerate("events/news")) do
+for k,v in ipairs(lf.getDirectoryItems("events/news")) do
    local key, head, greet, art = require( "events.news."..string.gsub(v,".lua","") )()
    merger( header_table, head, key )
    merger( greeting_table, greet, key )

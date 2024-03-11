@@ -138,7 +138,7 @@ function update_target ()
    target_gfxFact = nil
    if ptarget ~= nil then
       target_fact = ptarget:faction()
-      target_gfx = ptarget:ship():gfxTarget()
+      target_gfx = ptarget:render():getTex()
       target_gfx_w, target_gfx_h = target_gfx:dim()
       if target_fact ~= nil and target_fact:known() then
          target_gfxFact = target_fact:logo()

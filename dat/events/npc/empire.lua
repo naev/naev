@@ -61,7 +61,7 @@ local msg_lore = {
    _([["I'm still waiting for my pilot license application to get through. Oh well, it's only been half a cycle, I just have to be patient."]]),
    _([["Between you and me, the laws the Council passes can get really ridiculous! Most planets find creative ways of ignoring them…"]]),
    _([["Don't pay attention to the naysayers. The Empire is still strong. Have you ever seen a Peacemaker up close? I doubt any ship fielded by any other power could stand up to one."]]),
-   _([["I've been studying to become an Empire Combat Beaurocrat, but I keep on failing the paperwork exam. It's more fun to blow ships up than fill forms!"]]),
+   _([["I've been studying to become an Empire Combat Bureaucrat, but I keep on failing the paperwork exam. It's more fun to blow ships up than fill forms!"]]),
    _([["Have you ever seen an Executor up close? I heard they use special technology to create a shield aura around Imperial ships!"]]),
    _([["I really want to meet the Emperor's Iguana. It's supposed to be 3 times bigger than a human and breathe fire!"]]),
    _([["I'm fed up with all the paper work. I want to move to someplace more simple. Maybe a Dvaered planet would be good."]]),

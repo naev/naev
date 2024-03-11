@@ -10,11 +10,11 @@ uniform float u_r = 0.0;      /**< Random seed. */
 const float CAM_DIST = 2.0;         /**< Distance of the camera from the origin. Defaults to 2.0. */
 const float FOV = 0.5;              /**< Determines the pseudo-field of view computation. Defaults to 0.5. */
 const float RADIUS = 1.0;           /**< Radius of sphere enveloping explosion, used to determine what voxels to compute. Defaults to 1.0. */
-const float DENSITY = 1.35;         /**< Determines the contrast between dark and bright colors. Low values make it more blurry and transparent. Defaults to 1.35. */
+const float DENSITY = 1.35;         /**< Determines the contrast between dark and bright colours. Low values make it more blurry and transparent. Defaults to 1.35. */
 const float SPHERICALNESS = 1.0;    /**< Determines how spherical the explosion is. Higher values increase sphericalness. Defaults to 1.0. */
 const float SPHERE_GROWTH = 2.2;    /**< Determines how fast the explosion spheres grow. Lower values increase growth speed. Defaults to 2.2. */
 const float SMOOTHING = 0.4;        /**< Smooths the outter part of the spheres. Should be a value between 0.0 and 1.0 where 1.0 is no smoothing. Defaults to 0.4. */
-const float COLOR_EVENNESS = 0.25;  /**< Controls the evenness of the colors in the explosion. Higher values correspond to more even explosions. Defaults to 0.25. */
+const float COLOUR_EVENNESS = 0.25;  /**< Controls the evenness of the colours in the explosion. Higher values correspond to more even explosions. Defaults to 0.25. */
 const float BRIGHTNESS_OFFSET = 3.0;/**< Determines the brightness offset. Defaults to 3.0. */
 const float BRIGHTNESS_VELOCITY = 2.2;/**< Determines the speed at which the brightness changes. Defaults to 2.2. */
 const float BRIGHTNESS_RADIUS_OFFSET = 1.3;/**< Determines the radius-dependent brightness offset. Defaults to 1.3. */
@@ -24,8 +24,8 @@ const float CONTRAST = 1.0;         /**< Final colour contrast. Higher values co
 uniform float u_smokiness = 0.588;     /**< Lower value saturates the explosion, while higher values give it a smokey look. Default to 0.588. */
 uniform float u_grain = 0.5;           /**< Determines the details of the explosions. Increasing it likely requires increasing step size. Defaults to 0.5. */
 uniform float u_speed = 0.4;           /**< How fast the animation plays. Total play time is 1.0/u_speed. */
-uniform vec4 u_colorbase = vec4( 1.2, 0.9, 0.5, 0.7); /**< Base colour of the explosion. Defaults to {1.2, 0.9, 0.5, 0.7}. */
-uniform vec4 u_colorsmoke = vec4( 0.15, 0.15, 0.15, 0.1); /**< Colour to use for the smoke, most likely shouldn't be changed. Defaults to {0.15, 0.15, 0.15, 0.1}. */
+uniform vec4 u_colourbase = vec4( 1.2, 0.9, 0.5, 0.7); /**< Base colour of the explosion. Defaults to {1.2, 0.9, 0.5, 0.7}. */
+uniform vec4 u_coloursmoke = vec4( 0.15, 0.15, 0.15, 0.1); /**< Colour to use for the smoke, most likely shouldn't be changed. Defaults to {0.15, 0.15, 0.15, 0.1}. */
 uniform int u_steps = 16;              /**< How many steps to march. Defaults to 16. */
 uniform float u_roll_speed = 1.0;      /**< How fast the sphere cloud effects roll. Defaults to 1.0. */
 uniform float u_roll_dampening = 0.7;  /**< How fast the sphere cloud effects roll gets dampened. Defaults to 0.7. */
@@ -55,9 +55,9 @@ vec4 compute_colour( float density, float radius, float brightness )
 {
    /* Base colour is defined by density, and gives the impression of occlusions
    within the media. */
-   vec4 col = vec4( vec3(mix( 1.0, COLOR_EVENNESS, density )), density );
+   vec4 col = vec4( vec3(mix( 1.0, COLOUR_EVENNESS, density )), density );
    /* We then mix colour in for the explosion. */
-   col *= mix( u_colorbase, u_colorsmoke, min( (radius+0.5)*u_smokiness, 1.0 ) ) * brightness;
+   col *= mix( u_colourbase, u_coloursmoke, min( (radius+0.5)*u_smokiness, 1.0 ) ) * brightness;
    return col;
 }
 
@@ -105,7 +105,7 @@ vec3 sample_sphere( vec2 rand )
    return vec3( vmod * cos(theta), vmod * sin(theta), u );
 }
 
-vec4 effect( vec4 color, sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 unused, sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 {
    /* Normalized 0 centered coordinates. */
    vec2 uv = 2.0*texture_coords-1.0;
@@ -218,10 +218,10 @@ vec4 effect( vec4 color, sampler2D tex, vec2 texture_coords, vec2 screen_coords 
 
 #ifndef _LOVE
 in vec2 pos;
-out vec4 color_out;
+out vec4 colour_out;
 uniform sampler2D dummy;
 void main (void)
 {
-   color_out = effect( vec4(0.0), dummy, pos, vec2(0.0) );
+   colour_out = effect( vec4(0.0), dummy, pos, vec2(0.0) );
 }
-#endif
+#endif /* _LOVE */

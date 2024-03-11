@@ -8,71 +8,35 @@ local sdivinity   = ship.get("Sirius Divinity")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()
-   local pilots = { __doscans = true }
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, sfidelity )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, sfidelity )
-      scom.addPilot( pilots, sfidelity )
-   else
-      scom.addPilot( pilots, sshaman )
-      scom.addPilot( pilots, sfidelity )
-   end
-
-   return pilots
+   return scom.doTable( { __doscans=true }, {
+      { w=0.5, sfidelity },
+      { w=0.8, sfidelity, sfidelity },
+      { sshaman, sfidelity },
+   } )
 end
 
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
-   local pilots = {}
-   if rnd.rnd() < 0.5 then
-      pilots.__doscans = true
-   end
-   local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, spreacher )
-      scom.addPilot( pilots, sshaman )
-      scom.addPilot( pilots, sfidelity )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, spreacher )
-      scom.addPilot( pilots, spreacher )
-   else
-      scom.addPilot( pilots, spreacher )
-      scom.addPilot( pilots, sshaman )
-      scom.addPilot( pilots, sfidelity )
-      scom.addPilot( pilots, sfidelity )
-   end
-
-   return pilots
+   return scom.doTable( { __doscans=(rnd.rnd() < 0.5) }, {
+      { w=0.5, spreacher, sshaman, sfidelity },
+      { w=0.8, spreacher, spreacher },
+      { spreacher, sshaman, sfidelity, sfidelity },
+   } )
 end
 
 -- @brief Spawns a capship with escorts.
 local function spawn_capship ()
-   local pilots = {}
-   local r = rnd.rnd()
    -- Generate the capship
-   if r < 0.5 then
-      scom.addPilot( pilots, sdogma )
-   else
-      scom.addPilot( pilots, sdivinity )
-   end
+   local pilots = scom.doTable( {}, {
+      { w=0.5, sdogma },
+      { sdivinity },
+   } )
 
    -- Generate the escorts
-   r = rnd.rnd()
-   if r < 0.5 then
-      scom.addPilot( pilots, sshaman )
-      scom.addPilot( pilots, sfidelity )
-      scom.addPilot( pilots, sfidelity )
-   else
-      scom.addPilot( pilots, spreacher )
-      scom.addPilot( pilots, sshaman )
-      scom.addPilot( pilots, sfidelity )
-   end
-
-   return pilots
+   return scom.doTable( pilots, {
+      { w=0.5, sshaman, sfidelity, sfidelity },
+      { spreacher, sshaman, sfidelity },
+   } )
 end
 
 local fsirius = faction.get("Sirius")

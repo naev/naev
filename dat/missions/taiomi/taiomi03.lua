@@ -76,7 +76,7 @@ function enter ()
    end
 
    -- Allow the player to land always, Soromid spob is actually not landable usually
-   mem.lab:landOverride( true )
+   mem.lab:landAllow( true )
 end
 
 function talk_ai ()

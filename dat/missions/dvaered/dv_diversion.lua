@@ -79,6 +79,7 @@ function accept()
    vn.done()
 
    vn.label("accept")
+   vn.func( function () accepted = true end )
    dv(_([["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces seem insufficient to take on any existing planetary defence forces head on."]]))
    dv(fmt.f(_([["However, it looks like there may be an opportunity for us in {sys}. Warlord Khan of {pnt} has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself."]]),
       {sys=destsys, pnt=destplanet}))
@@ -139,7 +140,7 @@ function enter()
       hawk:outfitRm("all")
       hawk:outfitRm("cores")
       hawk:outfitAdd("Unicorp PT-2200 Core System")
-      hawk:outfitAdd("Unicorp Eagle 7000 Engine")
+      hawk:outfitAdd("Unicorp Eagle 6500 Engine")
       hawk:outfitAdd("TeraCom Mace Launcher", 3) -- Half finished installing weapons. :)
       ai_setup.setup(hawk)
       hawk:setHilight(true)
@@ -173,13 +174,13 @@ function land()
 end
 
 function hawk_jump () -- Got away
-   tk.msg(_("The Hawk got away!"), _("The Hawk jumped out of the system. You have failed your mission."))
+   vntk.msg(_("The Hawk got away!"), _("The Hawk jumped out of the system. You have failed your mission."))
    faction.get("Dvaered"):modPlayerSingle(-5)
    hook.timer(10, "abort")
 end
 
 function hawk_land(_plt, pnt) -- Got away
-   tk.msg(_("The Hawk got away!"), fmt.f(_("The Hawk landed back on {pnt}. You have failed your mission."), {pnt=pnt}))
+   vntk.msg(_("The Hawk got away!"), fmt.f(_("The Hawk landed back on {pnt}. You have failed your mission."), {pnt=pnt}))
    faction.get("Dvaered"):modPlayerSingle(-5)
    hook.timer(10, "abort")
 end
@@ -307,7 +308,7 @@ function spawn_fleet() -- spawn warlord killing fleet
    end
 
    -- Give the escorts a few seconds to get away from the player.
-   hook.timer(3.0, "undo_invuln")
+   hook.timer(3, "undo_invuln")
 end
 
 function undo_invuln()
@@ -323,7 +324,7 @@ function jump_fleet_cap_dead () -- mission failed
 
    hawk:broadcast(_("Pathetic, can't even take down an unarmed ship."))
    hawk:setNoDeath()
-   tk.msg(_("The Hawk is safe."), _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission."))
+   vntk.msg(_("The Hawk is safe."), _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission."))
    faction.get("Dvaered"):modPlayerSingle(-5)
    hawk:land(destplanet)
    for i, j in ipairs(fleetdv) do
@@ -340,7 +341,7 @@ function jump_fleet_cap_dead () -- mission failed
          j:setHilight(false)
       end
    end
-   hook.timer(10.0, "abort")
+   hook.timer(10, "abort")
 end
 
 function cleanup()

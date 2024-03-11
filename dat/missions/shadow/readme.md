@@ -1,4 +1,4 @@
-## Taiomi Campaign
+## Shadow Campaign
 
 Campaign where the player does odd shady tasks for Rebina.
 
@@ -11,6 +11,7 @@ TODO more missions and maybe some sort of closure or conclusion?
 * **Main Location:** Around Uhriabi
 * **Notable Characters:**
    * Rebina
+   * Jorek
 * **Notable Rewards:**
    * None
 

@@ -218,7 +218,7 @@ function mainship_board ()
    vn.clear()
    vn.scene()
    local pir = vn.newCharacter( minerva.vn_pirate() )
-   local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { color = minerva.maikkiP.colour } )
+   local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { colour = minerva.maikkiP.colour } )
    vn.transition()
    vn.na(_("You board the ship and are once again greeting by the sketchy figure you are getting used to."))
    pir(_([["I was worried. Glad you made it here in one piece!"
@@ -271,7 +271,7 @@ function mainship_attacked ()
 
    mainship:comm(_("We are under attack!"), true)
    mem.attacked_spam = true
-   hook.timer( 6e3, "attack_spam_over" )
+   hook.timer( 10, "attack_spam_over" )
 end
 function attack_spam_over ()
    mem.attacked_spam = false
@@ -410,7 +410,7 @@ function followup ()
    vn.clear()
    vn.scene()
    local pir = vn.newCharacter( minerva.vn_zuri{ shader=love_shaders.hologram()} )
-   local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { color = minerva.maikkiP.colour } )
+   local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { colour = minerva.maikkiP.colour } )
    vn.transition("electric")
    vn.na(_("As everything settles down you receive an incoming transmission from the interrogation ship, and the individual apparently known as 'Zuri' appears on screen."))
    pir(_([["Damn that was close. I never thought the Dvaered would be tricky enough to trail us over here. Pretty sure the damn mole had some sort of tracking device we must have missed."]]))

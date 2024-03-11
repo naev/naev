@@ -92,7 +92,7 @@ function taiomi.vn_scavenger( params )
    return vn.Character.new( taiomi.scavenger.name,
          tmerge( {
             image=taiomi.scavenger.image,
-            color=taiomi.scavenger.colour,
+            colour=taiomi.scavenger.colour,
          }, params) )
 end
 function taiomi.vn_elder( params )
@@ -103,28 +103,28 @@ function taiomi.vn_elder( params )
    return vn.Character.new( name,
          tmerge( {
             image=taiomi.elder.image,
-            color=taiomi.elder.colour,
+            colour=taiomi.elder.colour,
          }, params) )
 end
 function taiomi.vn_philosopher( params )
    return vn.Character.new( taiomi.philosopher.name,
          tmerge( {
             image=taiomi.philosopher.image,
-            color=taiomi.philosopher.colour,
+            colour=taiomi.philosopher.colour,
          }, params) )
 end
 function taiomi.vn_younga( params )
    return vn.Character.new( taiomi.younga.name,
          tmerge( {
             image=taiomi.younga.image,
-            color=taiomi.younga.colour,
+            colour=taiomi.younga.colour,
          }, params) )
 end
 function taiomi.vn_youngb( params )
    return vn.Character.new( taiomi.youngb.name,
          tmerge( {
             image=taiomi.youngb.image,
-            color=taiomi.youngb.colour,
+            colour=taiomi.youngb.colour,
          }, params) )
 end
 

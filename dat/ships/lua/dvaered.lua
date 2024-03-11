@@ -2,8 +2,8 @@ local explib = require "ships.lua.lib.explode"
 
 local function exp_params( size )
    return {
-      colorbase = {1.2, 0.9, 0.5, 0.5},
-      colorsmoke = {0.1, 0.1, 0.1, 0.1},
+      colourbase = {1.2, 0.9, 0.5, 0.5},
+      coloursmoke = {0.1, 0.1, 0.1, 0.1},
       smokiness = 0.6,
       smokefade = 1.6,
       rollspeed = 0.6,
@@ -17,5 +17,5 @@ explode_init, explode_update = explib{
    exp_size_mod = 1.2,
    boom_params = exp_params,
    exp_params = exp_params,
-   dmgtype = "impact",
+   dmgtype = "kinetic",
 }

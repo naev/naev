@@ -122,19 +122,19 @@ Sets the current drawing colour of the VN.
    @tparam tab col Colour table consisting of 3 or 4 number values.
    @tparam[opt=1] number alpha Additional alpha to multiply by.
 --]]
-function vn.setColor( col, alpha )
+function vn.setColour( col, alpha )
    local a = col[4] or 1
    alpha = alpha or 1
    a = a*alpha
-   graphics.setColor( col[1], col[2], col[3], a*vn._globalalpha )
+   graphics.setColour( col[1], col[2], col[3], a*vn._globalalpha )
 end
 
 local function _draw_bg( x, y, w, h, col, border_col, alpha )
    col = col or {0, 0, 0, 1}
    border_col = border_col or {0.5, 0.5, 0.5, 1}
-   vn.setColor( border_col, alpha )
+   vn.setColour( border_col, alpha )
    graphics.rectangle( "fill", x, y, w, h )
-   vn.setColor( col, alpha )
+   vn.setColour( col, alpha )
    graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
@@ -183,7 +183,7 @@ local function _draw_character( c )
    if c.shader and c.shader.prerender then
       c.shader:prerender( c.image )
    end
-   vn.setColor( col, c.alpha )
+   vn.setColour( col, c.alpha )
    graphics.setShader( c.shader )
    graphics.draw( c.image, x, y, r, flip*scale, scale )
    graphics.setShader()
@@ -228,7 +228,7 @@ local function _draw()
    local bh = 20
    _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_bg_alpha )
    -- Draw text
-   vn.setColor( vn._bufcol, vn.textbox_text_alpha )
+   vn.setColour( vn._bufcol, vn.textbox_text_alpha )
    -- We pad a bit here so that the top doesn't get cut off from certain
    -- characters that extend above the font height
    local padh = font:getLineHeight()-font:getHeight()
@@ -253,7 +253,7 @@ local function _draw()
       end
       _draw_bg( x, y, w, h, vn.namebox_bg, nil, vn.namebox_alpha )
       -- Draw text
-      vn.setColor( vn._bufcol, vn.namebox_alpha )
+      vn.setColour( vn._bufcol, vn.namebox_alpha )
       graphics.print( vn._title, font, x+bw, y+bh )
    end
 
@@ -276,7 +276,7 @@ local function _draw()
       end
       _draw_bg( x, y, w, h, colbg, nil, 1 )
       graphics.setShader( sdf.gear )
-      vn.setColor( {0.95,0.95,0.95} )
+      vn.setColour( {0.95,0.95,0.95} )
       sdf.img:draw( x+5, y+5, 0, w-10, h-10 )
       graphics.setShader()
    end
@@ -296,7 +296,7 @@ local function _draw()
       -- Draw canvas
       graphics.setCanvas( prevcanvas )
       graphics.setShader( vn._postshader )
-      vn.setColor( {1, 1, 1, 1} )
+      vn.setColour( {1, 1, 1, 1} )
       graphics.setBlendMode( "alpha", "premultiplied" )
       vn._canvas:draw( 0, 0 )
       graphics.setBlendMode( "alpha" )
@@ -614,6 +614,7 @@ function vn.State:textinput( key )
    return ret
 end
 function vn.State:isDone() return self.done end
+local __needs_transition
 --[[
 -- Scene
 --]]
@@ -625,6 +626,8 @@ function vn.StateScene.new()
    return s
 end
 function vn.StateScene:_init()
+   __needs_transition = true
+
    -- Render previous scene to an image
    local canvas = vn._prevcanvas
    _draw_to_canvas( canvas )
@@ -714,6 +717,10 @@ function vn.StateSay.new( who, what, noclear )
    return s
 end
 function vn.StateSay:_init()
+   if __needs_transition then
+      warn(_("vn: vn.say being used after vn.scene without a vn.transition!"))
+   end
+
    -- Get the main text
    if type(self._what)=="function" then
       self.what = self._what()
@@ -740,7 +747,7 @@ function vn.StateSay:_init()
    end
    self._len = utf8.len( self._textbuf )
    local c = vn._getCharacter( self.who )
-   vn._bufcol = c.color or vn._default._bufcol
+   vn._bufcol = c.colour or vn._default._bufcol
    if c.hidetitle then
       vn._title = nil
    else
@@ -794,7 +801,7 @@ function vn.StateSay:_finish()
    log.add{
       who   = c.displayname or c.who,
       what  = self.what, -- Avoids newlines
-      colour= c.color or vn._default._bufcol,
+      colour= c.colour or vn._default._bufcol,
    }
 
    _finish( self )
@@ -835,8 +842,8 @@ function vn.StateWait:_init()
    self._scrolled = _check_scroll( self._lines )
 end
 function vn.StateWait:_draw()
-   --vn.setColor( vn._bufcol )
-   vn.setColor( {0,1,1,1} )
+   --vn.setColour( vn._bufcol )
+   vn.setColour( {0,1,1,1} )
    if vn._buffer_y < 0 then
       graphics.setShader( sdf.arrow )
       graphics.draw( sdf.img, self._x-10, vn.textbox_y+30, -math.pi/2, 45, 15  )
@@ -1023,9 +1030,9 @@ function vn.StateMenu:_draw()
       else
          col = {0.2, 0.2, 0.2}
       end
-      vn.setColor( col )
+      vn.setColour( col )
       graphics.rectangle( "fill", gx+x, gy+y, w, h )
-      vn.setColor( {0.7, 0.7, 0.7} )
+      vn.setColour( {0.7, 0.7, 0.7} )
       graphics.printf( text, font, gx+x+tb, gy+y+tb, w-tb*2 )
    end
 end
@@ -1039,7 +1046,7 @@ function vn.StateMenu:_mousepressed( mx, my, button )
       local _text, x, y, w, h = table.unpack(v)
       if _inbox( mx, my, gx+x-b, gy+y-b, w+2*b, h+2*b ) then
          self:_choose(k)
-         return
+         return true
       end
    end
 end
@@ -1243,7 +1250,7 @@ function vn.Character.new( who, params )
    setmetatable( c, vn.Character_mt )
    params = params or {}
    c.who = who
-   c.color = params.color or vn._default.color
+   c.colour = params.colour or vn._default.colour
    local pimage = params.image
    if pimage ~= nil then
       local img
@@ -1315,27 +1322,31 @@ local function _appear_setup( c, shader )
    vn.func( function ()
       shader:send( "texprev", vn._emptycanvas )
       for k,v in ipairs(c) do
-         local d = graphics.Drawable.new()
-         d.image = v.image
-         d.getDimensions = function ( self, ... )
-            return self.image:getDimensions(...)
-         end
-         d.draw = function ( self, ... )
-            local oldcanvas = graphics.getCanvas()
-            graphics.setCanvas( vn._curcanvas )
-            graphics.clear( 0, 0, 0, 0 )
-            self.image:draw( ... )
-            graphics.setCanvas( oldcanvas )
+         if v.image then
+            local d = graphics.Drawable.new()
+            d.image = v.image
+            d.getDimensions = function ( self, ... )
+               return self.image:getDimensions(...)
+            end
+            d.draw = function ( self, ... )
+               local oldcanvas = graphics.getCanvas()
+               graphics.setCanvas( vn._curcanvas )
+               graphics.clear( 0, 0, 0, 0 )
+               self.image:draw( ... )
+               graphics.setCanvas( oldcanvas )
 
-            local oldshader = graphics.getShader()
-            graphics.setShader( shader )
-            vn.setColor( {1, 1, 1, 1} )
-            graphics.setBlendMode( "alpha", "premultiplied" )
-            vn._curcanvas:draw( 0, 0 )
-            graphics.setBlendMode( "alpha" )
-            graphics.setShader( oldshader )
+               local oldshader = graphics.getShader()
+               graphics.setShader( shader )
+               vn.setColour( {1, 1, 1, 1} )
+               graphics.setBlendMode( "alpha", "premultiplied" )
+               vn._curcanvas:draw( 0, 0 )
+               graphics.setBlendMode( "alpha" )
+               graphics.setShader( oldshader )
+            end
+            v.image = d
+         else
+            warn(fmt.f(_("vn: Appearing character '{c}' without an image!"),{c=(v.displayname or v.who)}))
          end
-         v.image = d
       end
    end )
 end
@@ -1343,7 +1354,9 @@ local function _appear_cleanup( c )
    -- Undo new drawables
    vn.func( function ()
       for k,v in ipairs(c) do
-         v.image = v.image.image
+         if v.image then
+            v.image = v.image.image
+         end
       end
    end )
 end
@@ -1352,7 +1365,7 @@ end
 Makes a character appear in the VN.
    @see vn.transition
    @see vn.appear
-   @tparam Character c Character to make appear.
+   @tparam Character|table c Character or table of Characters to make appear.
    @tparam[opt="fade"] string name Name of the transition effect to use (see vn.transition)
    @tparam number seconds Seconds to do the transition.
    @tparam[opt="linear"] string transition Name of the CSS transition to use.
@@ -1633,6 +1646,7 @@ function vn.transition( name, seconds, transition )
          end
       end, nil, -- no draw function
       transition, function () -- init
+         __needs_transition = false
          shader:send( "texprev", vn._prevscene )
          if shader:hasUniform( "u_r" ) then
             shader:send( "u_r", love_math.random() )
@@ -1872,7 +1886,7 @@ end
 --[[--
 Clears the fundamental running variables. Run before starting a new VN instance.
 
-<em>Note</em> Leaves customization to colors and positions untouched.
+<em>Note</em> Leaves customization to colours and positions untouched.
 --]]
 function vn.clear()
    local var = {
@@ -1909,8 +1923,8 @@ function vn.reset()
 end
 
 -- Default characters
-vn._me = vn.Character.new( "You", { color={1, 1, 1}, hidetitle=true } )
-vn._na = vn.Character.new( "Narrator", { color={0.5, 0.5, 0.5}, hidetitle=true } )
+vn._me = vn.Character.new( "You", { colour={1, 1, 1}, hidetitle=true } )
+vn._na = vn.Character.new( "Narrator", { colour={0.5, 0.5, 0.5}, hidetitle=true } )
 
 -- Set defaults
 _setdefaults()

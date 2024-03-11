@@ -5,7 +5,7 @@
   <size>large</size>
   <license>Heavy Weapon</license>
   <rarity>1</rarity>
-  <mass>40</mass>
+  <mass>36</mass>
   <price>390000</price>
   <description>The Grave Beam is a lighter, faster version of the Ragnarok Beam. It does not deal as much damage, but its lighter size and more forgiving CPU requirements makes it a competitive contender.</description>
   <gfx_store>grave_beam.webp</gfx_store>
@@ -19,7 +19,7 @@
   <energy>35</energy>
   <heatup>75</heatup>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>62</penetrate>
    <physical>112</physical>
   </damage>
@@ -27,6 +27,6 @@
   <spfx_armour>ExpS</spfx_armour>
   <sound>beam0</sound>
   <sound_off>beam_off0</sound_off>
-  <shader r="1.0" g="0.3" b="0.6" a="1." width="20.">beam_helix</shader>
+  <shader r="1.0" g="0.3" b="0.6" a="1." width="18.">beam_helix</shader>
  </specific>
 </outfit>

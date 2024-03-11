@@ -3,7 +3,7 @@
 <event name="Minerva Station Gambling">
  <location>land</location>
  <chance>100</chance>
- <cond>spob.cur()==spob.get("Minerva Station")</cond>
+ <spob>Minerva Station</spob>
  <notes>
   <campaign>Minerva</campaign>
   <provides name="Minerva Station" />
@@ -62,11 +62,23 @@ local patron_messages = {
    function ()
       local soldoutmsg = ""
       if player.outfitNum("Fuzzy Dice") > 0 then
-         soldoutmsg = _(" Wait, what? What do you mean they are sold out!?")
+         soldoutmsg = _(" Wait, what? What do you mean the Fuzzy Dice are sold out!?")
       end
       return fmt.f(_([["I really have my eyes on the Fuzzy Dice available at the terminal. I always wanted to own a piece of history!{msg}"]]), {msg=soldoutmsg} ) end,
-   _([["I played 20 hands of blackjack with that Cyborg Chicken. I may have lost them all, but that was worth every credit!"]]),
-   _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]]),
+   function ()
+      if player.misnDone( "Minerva Pirates 6" ) then
+         return _([["They say the station always wins, but that doesn't stop us from trying!"]])
+      else
+         return _([["I played 20 hands of blackjack with that Cyborg Chicken. I may have lost them all, but that was worth every credit!"]])
+      end
+   end,
+   function ()
+      if player.misnDone( "Minerva Pirates 6" ) then
+         return _([["I've seen folks come in with nothing and leave with a brand new Kestrel! Minerva station is a crazy place!"]])
+      else
+         return _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]])
+      end
+   end,
    function () return fmt.f(
       _([["I came all the way from {pnt} to be here! We don't have anything like this back at home."]]),
       {pnt=spob.get( {faction.get("Dvaered"), faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )}
@@ -88,6 +100,12 @@ local patron_messages = {
 
 function create()
    local trial_start = player.misnDone( "Minerva Pirates 6" )
+   --local minerva_end = (diff.isApplied("minerva_3") or diff.isApplied("minerva_3d") or diff.isApplied("minerva_3z"))
+
+   -- Station is not "usable"
+   if diff.isApplied("minerva_1") or diff.isApplied("minerva_2") then
+      return
+   end
 
    -- Create NPCs
    mem.npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
@@ -115,7 +133,15 @@ function create()
    local msglist = rnd.permutation( patron_messages ) -- avoids duplicates
    for i = 1,npatrons do
       local name = patron_names[ rnd.rnd(1, #patron_names) ]
-      local img = vni.generic()
+      local img
+      if diff.isApplied("minerva_3z") and rnd.rnd() < 0.5 then
+         img = vni.zalek()
+      elseif diff.isApplied("minerva_3d") and rnd.rnd() < 0.5 then
+         img = vni.dvaered()
+      end
+      if not img then
+         img = vni.generic()
+      end
       local desc = patron_descriptions[ rnd.rnd(1, #patron_descriptions) ]
       local msg = msglist[i]
       local id = evt.npcAdd( "approach_patron", name, img, desc, 10 )
@@ -145,6 +171,9 @@ end
 -- bar. This is triggered randomly upon finishing gambling activities.
 --]]
 local function random_event()
+   -- No events after the trial
+   local trial_start = player.misnDone( "Minerva Pirates 6" )
+   if trial_start then return end
    -- Conditional helpers
    local alter1 = has_event("Minerva Station Altercation 1")
    local alter_helped = (var.peek("minerva_altercation_helped")~=nil)
@@ -227,13 +256,19 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
    vn.label( "more_info" )
    t:say( _([["WHAT ELSE WOULD YOU LIKE TO KNOW?"]]) )
    vn.label( "info_menu" )
-   vn.menu( {
-      {_("Station"), "info_station"},
-      {_("Gambling"), "info_gambling"},
-      {_("Trade-in"), "info_trade"},
-      {_("Cyborg Chicken"), "info_chicken"},
-      {_("Back"), "start"},
-   } )
+   vn.menu( function ()
+      local opts = {
+         {_("Station"), "info_station"},
+         {_("Gambling"), "info_gambling"},
+         {_("Trade-in"), "info_trade"},
+         {_("Back"), "start"},
+      }
+      local trial_start = player.misnDone( "Minerva Pirates 6" )
+      if not trial_start then
+         table.insert( opts, 4, {_("Cyborg Chicken"), "info_chicken"} )
+      end
+      return opts
+   end )
    vn.label( "info_station" )
    t:say( _([["MINERVA STATION IS THE BEST PLACE TO SIT BACK AND ENJOY RELAXING GAMBLING ACTIVITIES. ALTHOUGH THE AREA IS HEAVILY DISPUTED BY THE ZA'LEK AND DVAERED, REST ASSURED THAT THERE IS LESS THAN A 2% OF CHANCE OF TOTAL DESTRUCTION OF THE STATION."]]) )
    vn.jump( "more_info" )
@@ -420,9 +455,9 @@ local function vn_blackjack( npc )
    bj._draw = function( _self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
       -- Horrible hack where we draw ontop of the textbox a background
-      lg.setColor( 0.5, 0.5, 0.5 )
+      lg.setColour( 0.5, 0.5, 0.5 )
       lg.rectangle( "fill", x, y, w, h )
-      lg.setColor( 0, 0, 0 )
+      lg.setColour( 0, 0, 0 )
       lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
 
       -- Draw blackjack game
@@ -457,7 +492,7 @@ function approach_blackjack()
       vn.transition()
       vn.na( _("You elbow your way to the front of the table and are once again greeted by the cold mechanical eyes of Cyborg Chicken.") )
    end
-   vn.na( "", true ) -- Clear buffer without waiting
+   vn.na( "", false, true ) -- Clear buffer without waiting
    vn.label("menu")
    vn.menu( {
       { _("Play"), "blackjack" },
@@ -481,10 +516,11 @@ end
 
 function approach_blackjack_nocc()
    -- Not adding to queue first
-   local dealer = vn.newCharacter( _("Dealer"), {image=blackjack_image} )
    vn.clear()
    vn.scene()
-   vn.na(_([[You approach the blackjack table that seesm to have a new dealer.]]))
+   local dealer = vn.newCharacter( _("Dealer"), {image=blackjack_image} )
+   vn.transition()
+   vn.na(_([[You approach the blackjack table that seems to have a new dealer.]]))
    vn.label("menu")
    vn.menu( {
       { _("Play"), "blackjack" },
@@ -518,7 +554,7 @@ function approach_chuckaluck ()
    local dealer = vn.newCharacter( _("Dealer"), {image=chuckaluck_image} )
    vn.transition()
    vn.na(_("You approach the chuck-a-luck table."))
-   vn.na( "", true ) -- Clear buffer without waiting
+   vn.na( "", false, true ) -- Clear buffer without waiting
    vn.label("menu")
    vn.menu( {
       { _("Play"), "chuckaluck" },
@@ -562,9 +598,9 @@ function approach_chuckaluck ()
    cl._draw = function( _self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
       -- Horrible hack where we draw ontop of the textbox a background
-      lg.setColor( 0.5, 0.5, 0.5 )
+      lg.setColour( 0.5, 0.5, 0.5 )
       lg.rectangle( "fill", x, y, w, h )
-      lg.setColor( 0, 0, 0 )
+      lg.setColour( 0, 0, 0 )
       lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
 
       -- Draw chuckaluck game
@@ -613,9 +649,9 @@ function approach_scavengers ()
    vn.clear()
    vn.scene()
    local scavA = vn.newCharacter( minerva.scavengera.name,
-         { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="left" } )
+         { image=minerva.scavengera.image, colour=minerva.scavengera.colour, pos="left" } )
    --[[local scavB =]] vn.newCharacter( minerva.scavengerb.name,
-         { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )
+         { image=minerva.scavengerb.image, colour=minerva.scavengerb.colour, pos="right" } )
    vn.transition()
    vn.na(_([[The scavengers fall silent as soon as they notice your presence.]]))
    scavA(_([["What are you looking at?"]]))

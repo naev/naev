@@ -2,8 +2,8 @@
 <ship name="Za'lek Scout Drone">
  <lua>ships/lua/zalek.lua</lua>
  <points>24</points>
- <base_type>Za'lek Scout Drone</base_type>
- <GFX size="38">zalek_drone_scout</GFX>
+ <base_type path="Zalek_Scout_Drone">Za'lek Scout Drone</base_type>
+ <gfx size="28">zalek_drone_scout</gfx>
  <sound>engine_zalek</sound>
  <class display="Robotic Scout">Scout</class>
  <price>180000</price>
@@ -13,7 +13,7 @@
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Scout Drone. Built for scouting, not for battle. Not to be flown by the player.</description>
  <movement>
-  <thrust>240</thrust>
+  <accel>240</accel>
   <speed>460</speed>
   <turn>210</turn>
  </movement>

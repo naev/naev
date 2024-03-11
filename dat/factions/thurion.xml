@@ -8,14 +8,7 @@
  <standing>thurion</standing>
  <equip>thurion</equip>
  <description>The Thurion are a mysterious faction located deep in the Nebula. They seem to be out of touch with the external world.</description>
- <enemies>
-  <enemy>Pirate</enemy>
-  <enemy>Marauder</enemy>
-  <enemy>Wild Ones</enemy>
-  <enemy>Dreamer Clan</enemy>
-  <enemy>Raven Clan</enemy>
-  <enemy>Black Lotus</enemy>
- </enemies>
+ <enemies />
  <tags>
   <tag>misn_cargo</tag>
  </tags>

@@ -2,7 +2,7 @@
 <ship name="Proteron Dalton">
  <points>30</points>
  <base_type>Dalton</base_type>
- <GFX size="40">dalton</GFX>
+ <gfx size="40">dalton</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Interceptor</class>
@@ -34,8 +34,11 @@
   <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" />
   <utility size="small" />
-  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
+  <structure size="small" />
   <structure size="small" />
   <structure size="small" />
  </slots>

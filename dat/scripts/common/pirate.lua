@@ -42,14 +42,6 @@ function pir.prefix( fct )
 end
 
 --[[
-   @brief Increases the reputation limit of the player.
---]]
-function pir.modReputation( increment )
-   local cur = var.peek("_fcap_pirate") or 30
-   var.push( "_fcap_pirate", math.min(cur+increment, 100) )
-end
-
---[[
    @brief Increases the decay floor (how low reputation can decay to).
 --]]
 function pir.modDecayFloor( n )
@@ -197,13 +189,34 @@ end
    @brief Updates the standing of the marauders and pirates based on maxval (computed as necessary)
 --]]
 function pir.updateStandings( maxval )
+   local pp = player.pilot()
+   if not pp:exists() then return end
    maxval = maxval or pir.maxClanStanding()
-   if pir.isPirateShip( player.pilot() ) then
+   if pir.isPirateShip( pp ) then
       fpir:setPlayerStanding( maxval )
       fmar:setPlayerStanding( maxval - 20 )
    else
       fpir:setPlayerStanding( maxval - 20 )
       fmar:setPlayerStanding( maxval - 40 )
+   end
+end
+
+--[[
+   @brief Clears pirate pilots and stops them from spawning.
+   @param onlynatural Whether or not to only clear natural pilots.
+--]]
+function pir.clearPirates( onlynatural )
+   if not onlynatural then
+      pilot.clearSelect( pir.factions )
+      pilot.toggleSpawn( pir.factions, false )
+   else
+      for k,p in ipairs(pilot.get{ pir.factions }, true) do
+         local m = p:memory()
+         if  m.natural then
+            p:rm()
+         end
+      end
+      pilot.toggleSpawn( pir.factions, false )
    end
 end
 

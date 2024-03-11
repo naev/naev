@@ -28,8 +28,8 @@
 #define HYPERSPACE_DUST_LENGTH   250 /**< Length the space dust blur to at max (pixels). */
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_FADEIN        1. /**< How long the fade is (seconds). */
-#define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
-#define HYPERSPACE_VEL           (2.*HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY) /**< Velocity at hyperspace. */
+#define HYPERSPACE_ACCEL         2000./**< How much pilots accelerate when jumping. */
+#define HYPERSPACE_VEL           (2.*HYPERSPACE_ACCEL*HYPERSPACE_FLY_DELAY) /**< Velocity at hyperspace. */
 #define HYPERSPACE_ENTER_MIN     (HYPERSPACE_VEL*0.3) /**< Minimum entering distance. */
 #define HYPERSPACE_ENTER_MAX     (HYPERSPACE_VEL*0.4) /**< Maximum entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
@@ -42,32 +42,32 @@
 #define PILOT_SIZE_APPROX        0.8   /**< approximation for pilot size */
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
 #define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
-#define PILOT_REVERSE_THRUST     0.4   /**< Ratio of normal thrust to apply when reversing. */
+#define PILOT_REVERSE_THRUST     0.4   /**< Ratio of normal accel to apply when reversing. */
 #define PILOT_PLAYER_NONTARGETABLE_TAKEOFF_DELAY 5. /**< Time the player is safe (from being targetted) after takeoff. */
 #define PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY 5. /**< Time the player is safe (from being targetted) after jumping in. */
 
 /* Pilot-related hooks. */
-enum {
+typedef enum PilotHookType_ {
    PILOT_HOOK_NONE,      /**< No hook. */
    PILOT_HOOK_CREATION,  /**< Pilot was created. */
    PILOT_HOOK_DEATH,     /**< Pilot died. */
    PILOT_HOOK_BOARDING,  /**< Player is boarding. */
    PILOT_HOOK_BOARD,     /**< Player got boarded. */
-   PILOT_HOOK_BOARD_ALL,  /**< Pilot got boarded. */
+   PILOT_HOOK_BOARD_ALL, /**< Pilot got boarded. */
    PILOT_HOOK_DISABLE,   /**< Pilot got disabled. */
    PILOT_HOOK_UNDISABLE, /**< Pilot recovered from being disabled. */
    PILOT_HOOK_JUMP,      /**< Pilot jumped. */
    PILOT_HOOK_HAIL,      /**< Pilot is hailed. */
    PILOT_HOOK_LAND,      /**< Pilot is landing. */
    PILOT_HOOK_ATTACKED,  /**< Pilot is in manual override and is being attacked. */
-   PILOT_HOOK_DISCOVERED,  /**< Pilot is in manual override and is discovered. */
+   PILOT_HOOK_DISCOVERED,/**< Pilot is in manual override and is discovered. */
    PILOT_HOOK_SCAN,      /**< Pilot has scanned another pilot. */
    PILOT_HOOK_SCANNED,   /**< Pilot has been scanned by another pilot. */
    PILOT_HOOK_IDLE,      /**< Pilot is in manual override and has just become idle. */
    PILOT_HOOK_EXPLODED,  /**< Pilot died and exploded (about to be removed). */
    PILOT_HOOK_LOCKON,    /**< Pilot had a launcher lockon. */
    PILOT_HOOK_STEALTH,   /**< Pilot either stealthed or destealthed. */
-};
+} PilotHookType;
 
 /* Damage */
 #define PILOT_HOSTILE_THRESHOLD  0.09 /**< Point at which pilot becomes hostile. */
@@ -102,6 +102,15 @@ typedef struct PilotOutfitAmmo_ {
    int in_arc;          /**< In arc. */
 } PilotOutfitAmmo;
 
+#define PILOTOUTFIT_ACTIVE       (1<<0)   /**< Pilot outfit is an active outfit. */
+#define PILOTOUTFIT_TOGGLEABLE   (1<<1)   /**< Pilot outfit is an active outfit. */
+#define PILOTOUTFIT_ISON         (1<<2)   /**< Pilot outfit should be turned on. */
+#define PILOTOUTFIT_VOLLEY       (1<<3)   /**< Pilot outfit is part of a volley weapon set (and ison). */
+#define PILOTOUTFIT_INRANGE      (1<<4)   /**< Pilot outfit is part of an inrange weapon set (and ison). */
+#define PILOTOUTFIT_MANUAL       (1<<5)   /**< Pilot outfit is part of a manual weapon set (and ison). */
+#define PILOTOUTFIT_ISON_LUA     (1<<6)   /**< Pilot outfit is triggered by Lua. */
+#define PILOTOUTFIT_DYNAMIC_FLAGS (PILOTOUTFIT_ISON | PILOTOUTFIT_VOLLEY | PILOTOUTFIT_INRANGE | PILOTOUTFIT_MANUAL)
+
 /**
  * @brief Stores an outfit the pilot has.
  */
@@ -110,7 +119,7 @@ typedef struct PilotOutfitSlot_ {
 
    /* Outfit slot properties. */
    const Outfit* outfit;  /**< Associated outfit. */
-   int active;            /**< Slot is an active slot. */
+   int flags;             /**< Slot flags. */
    ShipOutfitSlot *sslot; /**< Ship outfit slot. */
 
    /* Heat. */
@@ -150,9 +159,9 @@ typedef struct PilotWeaponSetOutfit_ {
 } PilotWeaponSetOutfit;
 
 typedef enum WeaponSetType_ {
-   WEAPSET_TYPE_CHANGE=0, /**< Changes weaponsets. */
-   WEAPSET_TYPE_WEAPON=1, /**< Activates weapons (while held down). */
-   WEAPSET_TYPE_ACTIVE=2, /**< Toggles outfits (if on it deactivates). */
+   WEAPSET_TYPE_SWITCH=0,  /**< Changes weaponsets. */
+   WEAPSET_TYPE_HOLD=1,    /**< Activates weapons (while held down). */
+   WEAPSET_TYPE_TOGGLE=2,  /**< Toggles outfits (if on it deactivates). */
 } WeaponSetType;
 
 /**
@@ -204,7 +213,7 @@ typedef enum EscortType_e {
  * @brief Stores an escort.
  */
 typedef struct Escort_s {
-   char *ship;          /**< Type of the ship escort is flying. */
+   const Ship *ship;    /**< Type of the ship escort is flying. */
    EscortType_t type;   /**< Type of escort. */
    unsigned int id;     /**< ID of in-game pilot. */
    /* TODO: something better than this */
@@ -239,13 +248,13 @@ typedef struct Pilot_ {
    double cap_cargo;/**< Pilot's cargo capacity. */
 
    /* Movement */
-   double thrust;    /**< Pilot's thrust in px/s^2. */
-   double thrust_base;/**< Pilot's base thrust in px/s^2 (not modulated by mass). */
+   double accel;     /**< Pilot's acceleration in px/s^2. */
+   double accel_base;/**< Pilot's base acceleration in px/s^2. */
    double speed;     /**< Pilot's speed in px/s. */
-   double speed_base;/**< Pilot's base speed in px/s (not modulated by mass). */
+   double speed_base;/**< Pilot's base speed in px/s. */
    double speed_limit;/**< Pilot's maximum speed in px/s if limited by lua call. */
    double turn;      /**< Pilot's turn in rad/s. */
-   double turn_base; /**< Pilot's base turn in rad/s (not modulated by mass). */
+   double turn_base; /**< Pilot's base turn in rad/s. */
 
    /* Current health */
    double armour;    /**< Current armour. */
@@ -264,7 +273,6 @@ typedef struct Pilot_ {
    double energy;    /**< Current energy. */
    double energy_max; /**< Maximum energy. */
    double energy_regen; /**< Energy regeneration rate (per second). */
-   double energy_tau; /**< Tau regeneration rate for energy. */
    double energy_loss; /**< Linear loss that bypasses the actual RC circuit stuff. */
 
    /* Defensive Electronic Warfare. */
@@ -381,6 +389,7 @@ typedef struct Pilot_ {
    double player_damage;/**< Accumulates damage done by player for hostileness.
                              In per one of max shield + armour. */
    double engine_glow;/**< Amount of engine glow to display. */
+   double tilt;      /**< Amount of ship tilting in a direction. */
    int messages;     /**< Queued messages (Lua ref). */
    lvar *shipvar;    /**< Per-ship version of lua mission variables. */
 } Pilot;
@@ -405,11 +414,13 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
 unsigned int pilot_getNearestHostile (void); /* only for the player */
 unsigned int pilot_getNearestPilot( const Pilot* p );
 unsigned int pilot_getBoss( const Pilot* p );
+double pilot_getNearestPosPilot( const Pilot *p, Pilot **tp, double x, double y, int disabled );
 double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y, int disabled );
 double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int disabled );
 int pilot_getJumps( const Pilot* p );
 const glColour* pilot_getColour( const Pilot* p );
 int pilot_validTarget( const Pilot* p, const Pilot* target );
+int pilot_validTargetRange( const Pilot* p, const Pilot* target, int *inrange );
 int pilot_canTarget( const Pilot* p );
 
 /* non-lua wrappers */
@@ -423,10 +434,10 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       const Damage *dmg, const Outfit *outfit, int lua_mem, int reset );
 void pilot_updateDisable( Pilot* p, unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
-double pilot_face( Pilot* p, const double dir );
+double pilot_face( Pilot* p, double dir, double dt );
 int pilot_brakeCheckReverseThrusters( const Pilot *p );
-double pilot_minbrakedist( const Pilot *p );
-int pilot_brake( Pilot* p );
+double pilot_minbrakedist( const Pilot *p, double dt, double *flytime );
+int pilot_brake( Pilot* p, double dt );
 void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 double pilot_aimAngle( Pilot *p, const vec2* pos, const vec2* vel );
@@ -442,7 +453,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount );
 
 /* Creation. */
 Pilot *pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const vec2* pos, const vec2* vel,
+      double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, PilotFlags flags );
@@ -465,7 +476,7 @@ void pilots_cleanAll (void);
 void pilot_free( Pilot* p );
 
 /* Movement. */
-void pilot_setThrust( Pilot *p, double thrust );
+void pilot_setAccel( Pilot *p, double accel );
 void pilot_setTurn( Pilot *p, double turn );
 
 /* Update. */
@@ -485,7 +496,6 @@ void pilot_setCommMsg( Pilot *p, const char *s );
 
 /* Faction stuff. */
 int pilot_validEnemy( const Pilot* p, const Pilot* target );
-int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist );
 int pilot_areAllies( const Pilot *p, const Pilot *target );
 int pilot_areEnemies( const Pilot *p, const Pilot *target );
 void pilot_setHostile( Pilot *p );
@@ -498,7 +508,7 @@ int pilot_isFriendly( const Pilot *p );
 char pilot_getFactionColourChar( const Pilot *p );
 
 /* Misc details. */
-void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int index );
+void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type, unsigned int index );
 void pilot_clearTrails( Pilot *p );
 void pilot_sample_trails( Pilot* p, int none );
 int pilot_hasIllegal( const Pilot *p, int faction );

@@ -3,7 +3,7 @@
  <lua>ships/lua/dvaered.lua</lua>
  <points>200</points>
  <base_type>Goddard</base_type>
- <GFX size="125" sx="12" sy="12">goddard_dvaered</GFX>
+ <gfx size="125" sx="12" sy="12">goddard_dvaered</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Battleship</class>
@@ -19,7 +19,7 @@
  <license>Heavy Combat Vessel</license>
  <cond>faction.playerStanding("Dvaered") &gt;= 70</cond>
  <condstr>You need at least 70 reputation with House Dvaered.</condstr>
- <description>Once upon a time, the Goddard Battlecruiser was commissioned by the Empire for military service. However, during the Dvaered Revolts most Goddard captains sided with the insurgents and, after the establishment of House Dvaered, the Empire ceded the license for the aging vessel to them. Today, House Dvaered is House Goddard's biggest client and this Dvaered military grade version has been adapted to the needs of the Dvaered Warlords, which means better armour and forwards weapon damage at the cost of increased mass.</description>
+ <description>Once upon a time, the Goddard Battlecruiser was commissioned by the Empire for military service. However, during the Dvaered Revolts most Goddard captains sided with the insurgents and, after the establishment of House Dvaered, the Empire ceded the license for the ageing vessel to them. Today, House Dvaered is House Goddard's biggest client and this Dvaered military grade version has been adapted to the needs of the Dvaered Warlords, which means better armour and forwards weapon damage at the cost of increased mass.</description>
  <health>
   <armour>2100</armour>
   <armour_regen>0</armour_regen>
@@ -35,7 +35,6 @@
   <weapon size="large" x="-10" y="13" h="2" />
   <weapon size="large" x="-15" y="-25" h="3" />
   <weapon size="large" x="-15" y="25" h="3" />
-  <weapon size="large" x="16" y="0" h="3" />
   <weapon size="large" prop="fighter_bay" x="0" y="0" h="5" />
   <weapon size="large" prop="fighter_bay" x="-20" y="0" h="5" />
   <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
@@ -45,9 +44,8 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines">Unicorp Eagle 7000 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
-  <structure size="large" />
+  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

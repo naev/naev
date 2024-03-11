@@ -14,7 +14,6 @@
 
 #include "array.h"
 #include "hook.h"
-#include "log.h"
 #include "pilot.h"
 #include "player.h"
 #include "player_autonav.h"
@@ -50,7 +49,7 @@ double pilot_ewScanTime( const Pilot *p )
  */
 void pilot_ewScanStart( Pilot *p )
 {
-   Pilot *target = pilot_getTarget( p );
+   const Pilot *target = pilot_getTarget( p );
    if (target==NULL)
       return;
 
@@ -256,7 +255,7 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
       return 1;
 
    /* Stealth detection. */
-   if (pilot_isFlag( target, PILOT_STEALTH ))
+   if (pilot_isFlag( target, PILOT_STEALTH ) && !pilot_areAllies( p, target ))
       return 0;
 
    /* No stealth so normal detection. */
@@ -325,7 +324,7 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
    sense = EW_ASTEROID_DIST;
 
    /* Get distance. */
-   d = vec2_dist2( &p->solid.pos, &as->pos );
+   d = vec2_dist2( &p->solid.pos, &as->sol.pos );
 
    /* By default, asteroid's hide score is 1. It could be made changeable via xml.*/
    if (d < pow2( MAX( 0., sense * p->stats.ew_detect ) ) )
@@ -388,8 +387,11 @@ int pilot_inRangeJump( const Pilot *p, int i )
  */
 double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, double trackmax )
 {
-   double mod = p->stats.ew_track * p->stats.ew_detect;
-   return CLAMP( 0., 1., (t->ew_signature * mod - trackmin) / (trackmax - trackmin) );
+   double mod;
+   if (t==NULL)
+      return 1.;
+   mod = p->stats.ew_track * p->stats.ew_detect;
+   return CLAMP( 0., 1., (t->ew_signature * mod - trackmin) / MAX(trackmax - trackmin, DOUBLE_TOL) ); /* Avoid divide by zero if trackmax==trackmin. */
 }
 
 /**
@@ -431,9 +433,7 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
          continue;
 
       /* Allies are ignored. */
-      if (areAllies( p->faction, t->faction ) ||
-            ((p->faction == FACTION_PLAYER) && pilot_isFriendly(t)) ||
-            ((t->faction == FACTION_PLAYER) && pilot_isFriendly(p)))
+      if (pilot_areAllies( p, t ))
          continue;
 
       /* Stealthed pilots don't reduce stealth. */
@@ -514,7 +514,7 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
  */
 int pilot_stealth( Pilot *p )
 {
-   int n;
+   int n, ret;
 
    if (pilot_isFlag( p, PILOT_STEALTH ))
       return 1;
@@ -531,11 +531,15 @@ int pilot_stealth( Pilot *p )
       return 0;
    }
 
+   /* Turn off all weapon sets. */
+   pilot_weapSetAIClear( p );
+   pilot_weapSetUpdateOutfitState( p );
+
    /* Turn off outfits. */
-   pilot_outfitOffAll( p );
+   ret = pilot_outfitOffAll( p );
 
    /* Got into stealth. */
-   if (!pilot_outfitLOnstealth( p ))
+   if (!pilot_outfitLOnstealth( p ) || ret)
       pilot_calcStats(p);
    p->ew_stealth_timer = 0.;
 

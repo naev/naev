@@ -7,7 +7,6 @@
  * @brief Handles saving/loading games.
  */
 /** @cond */
-#include <errno.h>
 #include "physfs.h"
 
 #include "naev.h"
@@ -17,24 +16,15 @@
 
 #include "array.h"
 #include "conf.h"
-#include "dialogue.h"
-#include "event.h"
-#include "gui.h"
-#include "hook.h"
-#include "land.h"
 #include "load.h"
 #include "log.h"
-#include "menu.h"
-#include "news.h"
 #include "ndata.h"
-#include "nlua_var.h"
-#include "nstring.h"
+#include "mission.h"
 #include "nxml.h"
 #include "player.h"
 #include "plugin.h"
 #include "shiplog.h"
 #include "start.h"
-#include "unidiff.h"
 
 int save_loaded   = 0; /**< Just loaded the saved game. */
 

@@ -116,15 +116,16 @@ end
 
 -- Mission is accepted
 function accept()
-   if player.pilot():cargoFree() < mem.amount then
+   local pp = player.pilot()
+   if pp:cargoFree() < mem.amount then
       vntk.msg( _("No room in ship"), fmt.f(
          _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short} more than you have)."),
          { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - player.pilot():cargoFree() ) } ) )
       return
    end
-   player.pilot():cargoAdd( mem.cargo, mem.amount )
+   pp:cargoAdd( mem.cargo, mem.amount )
    local playerbest = car.getTransit( mem.numjumps, mem.traveldist )
-   player.pilot():cargoRm( mem.cargo, mem.amount )
+   pp:cargoRm( mem.cargo, mem.amount )
    if mem.timelimit < playerbest then
       if not tk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),

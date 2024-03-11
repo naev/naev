@@ -7,14 +7,10 @@
 #include "naev.h"
 /** @endcond */
 
-#include "conf.h"
 #include "log.h"
 #include "ndata.h"
 #include "nstring.h"
 #include "opengl.h"
-
-#define GLSL_VERSION    "#version 150\n\n" /**< Version to use for all shaders. */
-#define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
 
 /*
  * Prototypes.
@@ -91,6 +87,23 @@ static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsi
    subs = buf;
    while ((substart = strnstr( subs, keyword, bufsize-(subs-buf) ))!=NULL) {
       subs = substart+strlen(keyword)+1;
+      /* Allow whitespace infront of #include, but not other characters. */
+      int whitespaceonly = 1;
+      int off = 0;
+      while (&substart[off]!=buf) {
+         off -= 1;
+         if ((substart[off]=='\n') || (substart[off]=='\r'))
+            break;
+         else if (isspace(substart[off]))
+            continue;
+         else {
+            whitespaceonly = 0;
+            break;
+         }
+      }
+      if (!whitespaceonly) {
+         continue;
+      }
       i = 0;
       /* Find the argument - we only support " atm. */
       subss = strnstr( subs, "\"", bufsize-(subs-buf));
@@ -191,8 +204,7 @@ static int gl_program_link( GLuint program )
    glGetProgramiv(program, GL_LINK_STATUS, &link_status);
    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
    if (log_length > 0) {
-      char *log;
-      log = malloc(log_length + 1);
+      char *log = malloc(log_length + 1);
       glGetProgramInfoLog(program, log_length, &log_length, log);
       if (gl_log_says_anything( log ))
          WARN("link_status==%d: [[\n%s\n]]", link_status, log);
@@ -204,6 +216,16 @@ static int gl_program_link( GLuint program )
    return 0;
 }
 
+GLuint gl_program_vert_frag_geom( const char *vert, const char *frag, const char *geom )
+{
+   return gl_program_backend( vert, frag, geom, NULL );
+}
+
+GLuint gl_program_vert_frag( const char *vert, const char *frag )
+{
+   return gl_program_backend( vert, frag, NULL, NULL );
+}
+
 /**
  * @brief Loads a vertex and fragment shader from files.
  *
@@ -212,15 +234,17 @@ static int gl_program_link( GLuint program )
  *    @param[in,opt] geomfile Optional geometry shader name.
  *    @return The shader compiled program or 0 on failure.
  */
-GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile, const char *geomfile )
+GLuint gl_program_backend( const char *vertfile, const char *fragfile, const char *geomfile, const char *prependtext )
 {
    char *vert_str, *frag_str, prepend[STRMAX];
    size_t vert_size, frag_size;
    GLuint vertex_shader, fragment_shader, geometry_shader, program;
 
-   strncpy( prepend, GLSL_VERSION, sizeof(prepend)-1 );
+   snprintf( prepend, sizeof(prepend)-1, "#version %d\n\n#define GLSL_VERSION %d\n", gl_screen.glsl, gl_screen.glsl );
    if (gl_has( OPENGL_SUBROUTINES ))
-      strncat( prepend, GLSL_SUBROUTINE, sizeof(prepend)-strlen(prepend)-1 );
+      strncat( prepend, "#define HAS_GL_ARB_shader_subroutine 1\n", sizeof(prepend)-strlen(prepend)-1 );
+   if (prependtext != NULL)
+      strncat( prepend, prependtext, sizeof(prepend)-strlen(prepend)-1 );
 
    vert_str = gl_shader_loadfile( vertfile, &vert_size, prepend );
    frag_str = gl_shader_loadfile( fragfile, &frag_size, prepend );
@@ -311,12 +335,12 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader, GLu
    return program;
 }
 
-void gl_uniformColor(GLint location, const glColour *c)
+void gl_uniformColour(GLint location, const glColour *c)
 {
    glUniform4f(location, c->r, c->g, c->b, c->a);
 }
 
-void gl_uniformAColor(GLint location, const glColour *c, GLfloat a)
+void gl_uniformAColour(GLint location, const glColour *c, GLfloat a)
 {
    glUniform4f(location, c->r, c->g, c->b, a);
 }

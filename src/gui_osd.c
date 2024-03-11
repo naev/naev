@@ -13,6 +13,7 @@
 #include "font.h"
 #include "log.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "opengl.h"
 
 /**
@@ -369,6 +370,8 @@ void osd_render (void)
    if (osd_list == NULL)
       return;
 
+   NTracingZone( _ctx, 1 );
+
    /* Background. */
    gl_renderRect( osd_x-5., osd_y-(osd_rh+5.), osd_w+10., osd_rh+10, &cBlackHilight );
 
@@ -391,8 +394,10 @@ void osd_render (void)
          p -= gl_smallFont.h + 5.;
          l++;
       }
-      if (l >= osd_lines)
+      if (l >= osd_lines) {
+         NTracingZoneEnd( _ctx );
          return;
+      }
 
       /* Print items. */
       for (int i=ll->active; i<array_size(ll->items); i++) {
@@ -404,11 +409,14 @@ void osd_render (void)
                x = osd_x + osd_hyphenLen;
             p -= gl_smallFont.h + 5.;
             l++;
-            if (l >= osd_lines)
+            if (l >= osd_lines) {
+               NTracingZoneEnd( _ctx );
                return;
+            }
          }
       }
    }
+   NTracingZoneEnd( _ctx );
 }
 
 /**

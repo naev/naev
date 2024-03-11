@@ -8,7 +8,7 @@
       return false
    end
    local misn_test = require "misn_test"
-   if not misn_test.mercenary() then
+   if not misn_test.mercenary(true) or not misn_test.heavy_weapons(true) then
       return false
    end
    return misn_test.reweight_active()
@@ -199,14 +199,14 @@ function beginbattle()
    player.takeoff()
 end
 
-function pirate_jump()  --he went away
+function pirate_jump() -- he went away
    lmisn.fail( _("The pirate ran away.") )
 end
 
-function pirate_dead()  --wou win
+function pirate_dead() -- you win
    mem.stage = 4
    misn.markerRm(mem.marker1)
    mem.marker2 = misn.markerAdd(mispla, "low")
    misn.osdActive(3)
-   pilot.toggleSpawn()
+   pilot.toggleSpawn(true)
 end

@@ -28,7 +28,7 @@
 
 static void* get_proc(const char *namez);
 
-#if defined(_WIN32) || defined(__CYGWIN__)
+#if defined(___WIN32__) || defined(__CYGWIN__)
 #ifndef _WINDOWS_
 #undef APIENTRY
 #endif
@@ -137,7 +137,7 @@ void* get_proc(const char *namez) {
     }
 #endif
     if(result == NULL) {
-#if defined(_WIN32) || defined(__CYGWIN__)
+#if defined(___WIN32__) || defined(__CYGWIN__)
         result = (void*)GetProcAddress((HMODULE) libGL, namez);
 #else
         result = dlsym(libGL, namez);

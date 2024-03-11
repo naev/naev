@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="TeraCom Medusa Launcher">
  <general>
+  <shortname>T. Medusa L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
-  <mass>17</mass>
+  <mass>21</mass>
   <price>100000</price>
   <description>The Medusa class EMP cruise missile is a nonlethal weapon designed to knock out a ship's internal systems, rendering it harmless and ready for boarding. The warhead does only limited damage, so even lightly armoured targets can effectively be disabled with this weapon. However, the Medusa is not the most agile missile on the market.</description>
   <gfx_store>seekerlauncher.webp</gfx_store>
@@ -27,7 +28,7 @@
   <spfx_armour>EmpM</spfx_armour>
   <trail_generator x="-7">missile</trail_generator>
   <duration blowup="armour">11</duration>
-  <thrust>200</thrust>
+  <accel>200</accel>
   <turn>25</turn>
   <speed_max>500</speed_max>
   <resist>20</resist>

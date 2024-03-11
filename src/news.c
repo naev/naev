@@ -63,7 +63,7 @@ static int largestID;
  */
 static void news_render( double bx, double by, double w, double h, void *data );
 static void news_focusLose( unsigned int wid, const char* wgtname );
-static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
+static int news_mouse( unsigned int wid, const SDL_Event *event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer ); /* externed in save.c */
@@ -217,7 +217,7 @@ int *generate_news( int faction )
 
    /* First pass to remove old articles. */
    for (int i=array_size(news_list)-1; i>=0; i--) {
-      news_t *n = &news_list[i];
+      const news_t *n = &news_list[i];
 
       /* if the article is due for removal */
       if (n->date_to_rm <= curtime)
@@ -242,7 +242,7 @@ int *generate_news( int faction )
 
       /* if article is okay */
       if (match_tag || ((fname != NULL) && (strcasecmp(n->faction, fname) == 0))) {
-         if (n->date && (n->date != 0)) {
+         if (n->date != 0) {
             char *article_time = ntime_pretty( n->date, 1 );
             p += scnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
@@ -276,10 +276,11 @@ int *generate_news( int faction )
  */
 void news_widget( unsigned int wid, int x, int y, int w, int h )
 {
+   unsigned int *widptr;
    glPrintLineIterator iter;
 
    /* Safe defaults. */
-   news_pos    = h/3;
+   news_pos    = h/3.;
    news_tick   = SDL_GetTicks();
 
    clear_newslines();
@@ -300,8 +301,12 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    }
 
    /* Create the custom widget. */
-   window_addCust( wid, x, y, w, h, "cstNews", 1, news_render, news_mouse, NULL, news_focusLose, NULL );
+   widptr = malloc(sizeof(unsigned int));
+   *widptr = wid;
+   window_addCust( wid, x, y, w, h, "cstNews", 1, news_render, news_mouse, NULL, news_focusLose, widptr );
+   window_custSetDynamic( wid, "cstNews", 1 );
    window_canFocusWidget( wid, "cstNews", 0 );
+   window_custAutoFreeData( wid, "cstNews" );
 }
 
 /* clears newslines for bar text, for when taking off */
@@ -337,7 +342,7 @@ static void news_focusLose( unsigned int wid, const char* wgtname )
  *    @param ry Relative Y movement (only valid for motion).
  *    @param data Unused.
  */
-static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
+static int news_mouse( unsigned int wid, const SDL_Event *event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
    (void) data;
@@ -388,16 +393,16 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
  */
 static void news_render( double bx, double by, double w, double h, void *data )
 {
-   (void) data;
    int s, m, p;
-   unsigned int t;
-   double y, dt;
+   unsigned int t, *wid;
+   double y;
 
+   wid = data;
    t = SDL_GetTicks();
 
    /* Calculate offset. */
-   if (!news_drag) {
-      dt = (double)(t-news_tick)/1000.;
+   if (!news_drag && window_isTop(*wid)) {
+      double dt = (double)(t-news_tick)/1000.;
       news_pos += dt * 25.;
    }
    news_tick = t;
@@ -495,8 +500,7 @@ int news_loadArticles( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node, "news"))
-         if (news_parseArticle( node ) < 0)
-            return -1;
+         news_parseArticle( node );
    } while (xml_nextNode(node));
 
    next_id = largestID;

@@ -7,8 +7,6 @@
  * @brief Handles the Trading Center at land.
  */
 /** @cond */
-#include <assert.h>
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,25 +17,41 @@
 
 #include "array.h"
 #include "commodity.h"
-#include "dialogue.h"
 #include "economy.h"
 #include "hook.h"
-#include "land_shipyard.h"
-#include "log.h"
-#include "map_find.h"
-#include "ndata.h"
 #include "nstring.h"
 #include "player.h"
 #include "player_fleet.h"
 #include "space.h"
-#include "tk/toolkit_priv.h"
 #include "toolkit.h"
+#include "land.h"
 
 /*
  * Quantity to buy on one click
 */
 static int commodity_mod = 10; /**< Amount you can buy or sell in a single click. */
 static Commodity **commodity_list = NULL;
+
+static void commodity_exchange_modifiers( unsigned int wid )
+{
+   int q = commodity_getMod();
+   if (q != commodity_mod) {
+      char buf[STRMAX_SHORT];
+      commodity_mod = q;
+      snprintf( buf, sizeof(buf), _("Buy (%d %s)"), q, UNIT_MASS );
+      window_buttonCaption( wid, "btnCommodityBuy", buf );
+      snprintf( buf, sizeof(buf), _("Sell (%d %s)"), q, UNIT_MASS );
+      window_buttonCaption( wid, "btnCommoditySell", buf );
+      toolkit_rerender();
+   }
+}
+
+static int commodity_exchange_events( unsigned int wid, SDL_Event *evt )
+{
+   if ((evt->type==SDL_KEYDOWN) || (evt->type==SDL_KEYUP))
+      commodity_exchange_modifiers( wid );
+   return 0;
+}
 
 /**
  * @brief Opens the local market window.
@@ -50,6 +64,7 @@ void commodity_exchange_open( unsigned int wid )
    char buf[STRMAX_SHORT];
    size_t l = 0;
    int iconsize;
+   int q = commodity_getMod();
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_COMMODITY);
@@ -65,17 +80,18 @@ void commodity_exchange_open( unsigned int wid )
 
    /* buttons */
    bw = (dw - 40) / 3;
+   snprintf( buf, sizeof(buf), _("Buy (%d %s)"), q, UNIT_MASS );
    window_addButtonKey( wid, 40 + iw, 20, bw, LAND_BUTTON_HEIGHT,
-         "btnCommodityBuy", _("Buy"), commodity_buy, SDLK_b );
+         "btnCommodityBuy", buf, commodity_buy, SDLK_b );
+   snprintf( buf, sizeof(buf), _("Sell (%d %s)"), q, UNIT_MASS );
    window_addButtonKey( wid, 60 + iw + bw, 20, bw, LAND_BUTTON_HEIGHT,
-         "btnCommoditySell", _("Sell"), commodity_sell, SDLK_s );
+         "btnCommoditySell", buf, commodity_sell, SDLK_s );
    window_addButtonKey( wid, 80 + iw + 2*bw, 20, bw, LAND_BUTTON_HEIGHT,
          "btnCommodityClose", _("Take Off"), land_buttonTakeoff, SDLK_t );
 
-      /* cust draws the modifier : # of tons one click buys or sells */
-   window_addCust( wid, 40 + iw, 40 + LAND_BUTTON_HEIGHT, 2*bw + 20,
-         gl_smallFont.h + 6, "cstMod", 0, commodity_renderMod, NULL, NULL, NULL, NULL );
-   window_canFocusWidget( wid, "cstMod", 0 );
+   /* handle multipliers. */
+   window_handleEvents( wid, commodity_exchange_events );
+   window_setOnFocus( wid, commodity_exchange_modifiers );
 
    /* store gfx */
    window_addRect( wid, -20, -40, 192, 192, "rctStore", &cBlack, 0 );
@@ -287,6 +303,7 @@ int commodity_canBuy( const Commodity* com )
    unsigned int q, price;
    char buf[ECON_CRED_STRLEN];
 
+   land_errClear();
    failure = 0;
    q = commodity_getMod();
    price = spob_commodityPrice( land_spob, com ) * q;
@@ -322,6 +339,7 @@ int commodity_canBuy( const Commodity* com )
 int commodity_canSell( const Commodity* com )
 {
    int failure = 0;
+   land_errClear();
    if (pfleet_cargoOwned( com ) ==0) {
       land_errDialogueBuild(_("You can't sell something you don't have!"));
       failure = 1;
@@ -350,8 +368,10 @@ void commodity_buy( unsigned int wid, const char *str )
    price = spob_commodityPrice( land_spob, com );
 
    /* Check stuff. */
-   if (land_errDialogue( com->name, "buyCommodity" ))
+   if (!commodity_canBuy( com )) {
+      land_errDisplay();
       return;
+   }
 
    /* Make the buy. */
    q = pfleet_cargoAdd( com, q );
@@ -361,8 +381,8 @@ void commodity_buy( unsigned int wid, const char *str )
    commodity_update(wid, NULL);
 
    /* Run hooks. */
-   hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = com->name;
+   hparam[0].type    = HOOK_PARAM_COMMODITY;
+   hparam[0].u.commodity = com;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
@@ -391,8 +411,10 @@ void commodity_sell( unsigned int wid, const char *str )
    price = spob_commodityPrice( land_spob, com );
 
    /* Check stuff. */
-   if (land_errDialogue( com->name, "sellCommodity" ))
+   if (!commodity_canSell( com )) {
+      land_errDisplay();
       return;
+   }
 
    /* Remove commodity. */
    q = pfleet_cargoRm( com, q, 0 );
@@ -403,8 +425,8 @@ void commodity_sell( unsigned int wid, const char *str )
    commodity_update(wid, NULL);
 
    /* Run hooks. */
-   hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = com->name;
+   hparam[0].type    = HOOK_PARAM_COMMODITY;
+   hparam[0].u.commodity = com;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
@@ -424,6 +446,8 @@ int commodity_getMod (void)
       q *= 5;
    if (mods & (KMOD_LSHIFT | KMOD_RSHIFT))
       q *= 10;
+   if (mods & (KMOD_LALT | KMOD_RALT))
+      q = 1;
 
    return q;
 }

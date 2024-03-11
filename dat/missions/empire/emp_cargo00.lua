@@ -74,7 +74,7 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () accepted = true end )
-   czesc(_([["Welcome aboard," says Czesc before giving you a firm handshake. "At first you'll just be tested with cargo missions while we gather data on your flying skills. Later on, you could get called upon for more important missions. Who knows? You could be the next Yao Pternov, greatest pilot we ever had in the armada."]]))
+   czesc(_([["Welcome aboard," says Czesc before giving you a firm handshake. "At first you'll just be tested with cargo missions while we gather data on your flying skills. Later on, you could get called upon for more important missions. Who knows? You could be the next Yao Pternov, the greatest pilot we ever had in the armada."]]))
    czesc(fmt.f(_([[He hits a couple buttons on his wrist computer, which springs into action. "It looks like we already have a simple task for you. Deliver these parcels to {pnt} in the {sys} system. The best pilots started by delivering papers and ended up flying into combat against gigantic warships with the Interception Division."]]),
       {pnt=mem.dest, sys=mem.sys}))
 
@@ -111,6 +111,7 @@ function land()
 
    vn.clear()
    vn.scene()
+   vn.transition()
 
    vn.na(fmt.f(_([[You deliver the parcels to the Empire Shipping station at the {pnt} spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled {label}, in the mission computer.
 You aren't too sure of what to make of your encounter with the Empire. Only time will tell…]]),

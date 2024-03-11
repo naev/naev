@@ -15,6 +15,7 @@ Notable Events:
 1. **Sorom Plague** (UST 328)
 1. **Creation of House Dvaered** (UST 331)
 1. **Quarantine of Sorom** (UST 333)
+1. **Formalization of Soromid Faction** (UST 387)
 1. **Hypergate Project** (UST 572)
 1. **Collective Goes Rogue** (UST 590)
 1. **The Incident** (UST 593:3726.4663)

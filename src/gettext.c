@@ -7,7 +7,7 @@
  * @brief PhysicsFS-aware gettext implementation.
  */
 /** @cond */
-#include <ctype.h>
+#include "SDL_locale.h"
 #include <locale.h>
 #include <stdlib.h>
 #include "physfs.h"
@@ -18,7 +18,6 @@
 #include "gettext.h"
 
 #include "array.h"
-#include "env.h"
 #include "log.h"
 #include "msgcat.h"
 #include "ndata.h"

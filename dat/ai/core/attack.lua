@@ -57,6 +57,11 @@ function atk.think( target, si, noretarget )
    if mem._o then
       local p = ai.pilot()
 
+      -- Turn off ionizer when going for a kill
+      if mem._o.ionizer and mem.atk_kill and target:flags("disabled") then
+         p:outfitToggle( mem._o.ionizer, false )
+      end
+
       -- Use shield booster if applicable
       if mem._o.shield_booster then
          local _a, s = p:health()
@@ -94,7 +99,7 @@ function atk.think( target, si, noretarget )
             if mem._o.bite_lust then
                dtime = dtime+2
             end
-            if ai.dist( target ) < (p:speed() + (p:thrust()+800)/3)*dtime then
+            if ai.dist( target ) < (p:speed() + (p:accel()+800)/3)*dtime then
                p:outfitToggle( mem._o.bite, true )
             end
          end
@@ -119,7 +124,8 @@ function atk.think( target, si, noretarget )
          local s = flow.size( p )
 
          if mem._o.seeking_chakra and f > fm * 0.25 and rnd.rnd() < 0.3 then
-            if ai.dist( target ) < 3000 then -- TODO more exact range
+            -- Range is 5600 for small to 8000 for large
+            if ai.dist( target ) < 5000 then -- TODO more exact range
                p:outfitToggle( mem._o.seeking_chakra, true )
             end
          end
@@ -142,7 +148,7 @@ function atk.think( target, si, noretarget )
             -- Want enemy to be in shooting range
             local range = ai.getweaprange(3, 0) -- all turrets
             if ai.dist( target ) < 0.8*range then
-               p:outfitToggle( mem._o.house_mirrors, true )
+               p:outfitToggle( mem._o.avatar_sirichana, true )
             end
          end
          if mem._o.house_mirrors and f > fm * 0.4 and rnd.rnd() < 0.5 then
@@ -157,7 +163,7 @@ function atk.think( target, si, noretarget )
             local range = ai.getweaprange(3, 0) -- all turrets
             local d = ai.dist( target )
             if d > 300 and d < 0.8*range  then
-               p:outfitToggle( mem._o.house_mirrors, true )
+               p:outfitToggle( mem._o.reality_rip, true )
             end
          end
       end

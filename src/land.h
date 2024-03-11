@@ -6,6 +6,8 @@
 #include "conf.h"
 #include "nstring.h"
 #include "space.h"
+#include "mission.h"
+#include "start.h"
 
 /*
  * The window interfaces.
@@ -34,9 +36,9 @@ enum {
 #define LAND_BUTTON_HEIGHT 40 /**< Default button height. */
 
 /*
- * Minor hack, for 'buy map' button.
+ * For the 'buy map' button
  */
-#define LOCAL_MAP_NAME "Local System Map"
+#define LOCAL_MAP_NAME     (start_local_map_default())
 
 /*
  * Landed at.
@@ -45,8 +47,8 @@ extern int landed;
 extern Spob* land_spob;
 
 /* Tracking for which tabs have been generated. */
-#define land_tabGenerate(w)       (land_generated |= (1 << w)) /**< Mark tab generated. */
-#define land_tabGenerated(w)     (land_generated & (1 << w)) /**< Check if tab has been generated. */
+#define land_tabGenerate(w)   (land_generated |= (1 << w)) /**< Mark tab generated. */
+#define land_tabGenerated(w)  (land_generated & (1 << w)) /**< Check if tab has been generated. */
 extern unsigned int land_generated;
 
 /*
@@ -71,12 +73,12 @@ void land_updateMainTab (void);
 void land_buttonTakeoff( unsigned int wid, const char *unused );
 unsigned int land_getWid( int window );
 void bar_regen (void);
+void misn_regen (void);
+void misn_patchMission( Mission *misn );
 
 /*
  * Error dialogue generation and associated checks.
  */
-int can_swap( const char *shipname );
-int can_swapEquipment( const char *shipname );
-int can_sell( const char *shipname );
-int land_errDialogue( const char *name, const char *type );
+void land_errClear (void);
 PRINTF_FORMAT( 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );
+int land_errDisplay (void);

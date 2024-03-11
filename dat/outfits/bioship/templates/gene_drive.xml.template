@@ -10,7 +10,7 @@
   <gfx_store>{gfx_store}</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>{thrust}</thrust>
+  <accel>{accel}</accel>
   <turn>{turn}</turn>
   <speed>{speed}</speed>
   <fuel>{fuel}</fuel>

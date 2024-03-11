@@ -6,10 +6,6 @@
  *
  * @brief Handles the saving and writing of a nlua state to XML.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
-
 #include "nxml_lua.h"
 
 #include "base64.h"
@@ -24,8 +20,6 @@
 #include "nlua_system.h"
 #include "nlua_time.h"
 #include "nlua_vec2.h"
-#include "nluadef.h"
-#include "nstring.h"
 #include "mission.h"
 #include "utf8.h"
 

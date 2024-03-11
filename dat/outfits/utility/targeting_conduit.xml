@@ -11,7 +11,9 @@
   <desc_extra>Only active when shield is above 70%.</desc_extra>
  </general>
  <specific type="modification">
-  <launch_lockon>-25</launch_lockon>
+  <launch_lockon>-50</launch_lockon>
+  <launch_calibration>-50</launch_calibration>
+  <launch_rate>10</launch_rate>
   <launch_range>-10</launch_range>
   <lua>outfits/utility/targeting_conduit.lua</lua>
  </specific>

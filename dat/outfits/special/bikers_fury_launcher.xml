@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Bikers Fury Launcher">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon</license>
+  <mass>30</mass>
+  <price>140000</price>
+  <description>TODO</description>
+  <gfx_store>turreted_fury_launcher.webp</gfx_store>
+  <cpu>-12</cpu>
+ </general>
+ <specific type="turret launcher" secondary="1">
+  <delay>6</delay>
+  <reload_time>100</reload_time>
+  <amount>25</amount>
+  <lockon>1.5</lockon>
+  <iflockon>1.0</iflockon>
+  <trackmin>0</trackmin>
+  <trackmax>4000</trackmax>
+  <ammo_mass>0.4</ammo_mass>
+  <gfx>fury.png</gfx>
+  <sound>seeker</sound>
+  <sound_hit>medexp1</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <trail_generator x="-7">fire-missile</trail_generator>
+  <duration blowup="armour">8</duration>
+  <accel>300</accel>
+  <turn>35</turn>
+  <speed_max>800</speed_max>
+  <resist>10</resist>
+  <damage>
+   <type>kinetic</type>
+   <penetrate>12</penetrate>
+   <physical>80</physical>
+  </damage>
+  <ai>seek</ai>
+  <armour>15</armour>
+  <absorb>0</absorb>
+ </specific>
+</outfit>

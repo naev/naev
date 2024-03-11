@@ -4,9 +4,9 @@
   <typename>Mining System</typename>
   <slot>utility</slot>
   <size>large</size>
-  <mass>90</mass>
+  <mass>60</mass>
   <price>970000</price>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>catalytic_energy_drill.webp</gfx_store>
   <description>Designed by the Mining Vrata Guildhouse, the Catalytic Energy Drill takes a radical new approach on asteroid mining, increasing efficiency and power at the expense of ease of use. Instead of basing itself on more stable plasma technology, it uses a multi-stage crystallite accelerator to focus an energy beam. Although this results in a really compact and efficient design, due to a tendency to overheat and self-destruct, the operating time is significantly reduced, making skill an important factor in its successful usage.</description>
   <desc_extra>#gAllows precise mining of asteroids to extract rare minerals.#0</desc_extra>
   <limit>mining_system</limit>

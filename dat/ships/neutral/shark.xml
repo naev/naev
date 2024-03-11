@@ -2,7 +2,7 @@
 <ship name="Shark">
  <points>30</points>
  <base_type>Shark</base_type>
- <GFX size="54">shark</GFX>
+ <gfx size="54">shark</gfx>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>250000</price>
@@ -33,8 +33,10 @@
   <utility size="small" prop="accessory" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
+  <structure size="small" />
   <structure size="small" />
   <structure size="small" />
  </slots>

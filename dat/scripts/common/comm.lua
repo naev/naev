@@ -7,9 +7,9 @@ local comm = {}
 local function _draw_bg( x, y, w, h, col, border_col, alpha )
    col = col or {0, 0, 0, 1}
    border_col = border_col or {0.5, 0.5, 0.5, 1}
-   vn.setColor( border_col, alpha )
+   vn.setColour( border_col, alpha )
    lg.rectangle( "fill", x, y, w, h )
-   vn.setColor( col, alpha )
+   vn.setColour( col, alpha )
    lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
@@ -69,11 +69,11 @@ local function nameboxUpdateInternal( obj, params )
       local w, h = namebox_w, namebox_h
 
       _draw_bg( x, y, w, h, vn.namebox_bg, nil, 1 )
-      vn.setColor( namebox_col, 1 )
+      vn.setColour( namebox_col, 1 )
       lg.print( namebox_text, namebox_font, x+bw, y+bh )
 
       if logo then
-         vn.setColor( {1, 1, 1}, 1 )
+         vn.setColour( {1, 1, 1}, 1 )
          logo:draw( x+namebox_text_w+10+bw + (logo_size-logo_w*logo_scale)*0.5, y+bh + (logo_size-logo_h*logo_scale)*0.5, 0, logo_scale )
       end
    end

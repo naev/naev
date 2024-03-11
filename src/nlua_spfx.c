@@ -25,6 +25,7 @@
 #include "sound.h"
 #include "opengl.h"
 #include "nopenal.h"
+#include "ntracing.h"
 #include "player.h"
 
 #define SPFX_GLOBAL     (1<<1) /**< Spfx sound ignores pitch changes. */
@@ -138,7 +139,7 @@ LuaSpfx_t* luaL_checkspfx( lua_State *L, int ind )
 }
 static LuaSpfxData_t* luaL_checkspfxdataNoWarn( lua_State *L, int ind )
 {
-   LuaSpfx_t *ls = luaL_checkspfx( L , ind );
+   const LuaSpfx_t *ls = luaL_checkspfx( L , ind );
    const LuaSpfxData_t key = { .id = *ls };
    LuaSpfxData_t *f = bsearch( &key, lua_spfx, array_size(lua_spfx), sizeof(LuaSpfxData_t), spfx_cmp );
    if (f == NULL) {
@@ -269,7 +270,7 @@ static int spfxL_getAll( lua_State *L )
    int n=1;
    lua_newtable(L);
    for (int i=0; i<array_size(lua_spfx); i++) {
-      LuaSpfxData_t *ls = &lua_spfx[i];
+      const LuaSpfxData_t *ls = &lua_spfx[i];
 
       if (ls->flags & (SPFX_GLOBAL | SPFX_CLEANUP))
          continue;
@@ -343,7 +344,7 @@ static int spfxL_new( lua_State *L )
 
    /* Special effect. */
    if (!lua_isnoneornil(L,8)) {
-      LuaAudio_t *la = luaL_checkaudio( L, 8 );
+      const LuaAudio_t *la = luaL_checkaudio( L, 8 );
 
       if (!sound_disabled) {
          ls.flags |= SPFX_AUDIO;
@@ -351,37 +352,39 @@ static int spfxL_new( lua_State *L )
          ls.sfx.nocleanup = 1;
 
          /* Set up parameters. */
-         soundLock();
-         alSourcei( ls.sfx.source, AL_LOOPING, AL_FALSE );
-         alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
-         alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
-         if (ls.flags & SPFX_RELATIVE) {
-            alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
-            if (ls.flags & SPFX_GLOBAL)
-               alSourcef( ls.sfx.source, AL_PITCH, 1. );
-            else
+         if (!ls.sfx.ok) {
+            soundLock();
+            alSourcei( ls.sfx.source, AL_LOOPING, AL_FALSE );
+            alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
+            alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
+            if (ls.flags & SPFX_RELATIVE) {
+               alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
+               if (ls.flags & SPFX_GLOBAL)
+                  alSourcef( ls.sfx.source, AL_PITCH, 1. );
+               else
+                  alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
+            }
+            else {
+               ALfloat alf[3];
+               alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_FALSE );
                alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
-         }
-         else {
-            ALfloat alf[3];
-            alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_FALSE );
-            alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
-            alf[0] = ls.pos.x;
-            alf[1] = ls.pos.y;
-            alf[2] = 0.;
-            alSourcefv( ls.sfx.source, AL_POSITION, alf );
-            alf[0] = ls.vel.x;
-            alf[1] = ls.vel.y;
-            alf[2] = 0.;
-            alSourcefv( ls.sfx.source, AL_VELOCITY, alf );
+               alf[0] = ls.pos.x;
+               alf[1] = ls.pos.y;
+               alf[2] = 0.;
+               alSourcefv( ls.sfx.source, AL_POSITION, alf );
+               alf[0] = ls.vel.x;
+               alf[1] = ls.vel.y;
+               alf[2] = 0.;
+               alSourcefv( ls.sfx.source, AL_VELOCITY, alf );
 
-            /* Set the global filter. */
-            if (al_info.efx == AL_TRUE)
-               alSource3i( ls.sfx.source, AL_AUXILIARY_SEND_FILTER, sound_efx_directSlot, 0, AL_FILTER_NULL );
+               /* Set the global filter. */
+               if (al_info.efx == AL_TRUE)
+                  alSource3i( ls.sfx.source, AL_AUXILIARY_SEND_FILTER, sound_efx_directSlot, 0, AL_FILTER_NULL );
+            }
+            alSourcePlay( ls.sfx.source );
+            al_checkErr();
+            soundUnlock();
          }
-         alSourcePlay( ls.sfx.source );
-         al_checkErr();
-         soundUnlock();
       }
    }
 
@@ -446,7 +449,7 @@ static int spfxL_rm( lua_State *L )
  */
 static int spfxL_pos( lua_State *L )
 {
-   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   const LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_pushvector( L, ls->pos );
    return 1;
 }
@@ -460,7 +463,7 @@ static int spfxL_pos( lua_State *L )
  */
 static int spfxL_vel( lua_State *L )
 {
-   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   const LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_pushvector( L, ls->vel );
    return 1;
 }
@@ -475,7 +478,7 @@ static int spfxL_vel( lua_State *L )
 static int spfxL_setPos( lua_State *L )
 {
    LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
-   vec2 *v = luaL_checkvector(L,2);
+   const vec2 *v = luaL_checkvector(L,2);
    ls->pos = *v;
    return 0;
 }
@@ -490,7 +493,7 @@ static int spfxL_setPos( lua_State *L )
 static int spfxL_setVel( lua_State *L )
 {
    LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
-   vec2 *v = luaL_checkvector(L,2);
+   const vec2 *v = luaL_checkvector(L,2);
    ls->vel = *v;
    return 0;
 }
@@ -504,7 +507,7 @@ static int spfxL_setVel( lua_State *L )
  */
 static int spfxL_sfx( lua_State *L )
 {
-   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   const LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_pushaudio( L, ls->sfx );
    return 1;
 }
@@ -543,6 +546,10 @@ void spfxL_setSpeed( double s )
       if (ls->flags & (SPFX_GLOBAL | SPFX_CLEANUP))
          continue;
 
+      /* Sound is not valid. */
+      if (ls->sfx.ok)
+         continue;
+
       alSourcef( ls->sfx.source, AL_PITCH, s );
    }
    al_checkErr();
@@ -567,6 +574,10 @@ void spfxL_setSpeedVolume( double v )
          continue;
 
       if (ls->flags & (SPFX_GLOBAL | SPFX_CLEANUP))
+         continue;
+
+      /* Sound is not valid. */
+      if (ls->sfx.ok)
          continue;
 
       alSourcef( ls->sfx.source, AL_GAIN, ls->sfx.volume * v );
@@ -621,6 +632,9 @@ void spfxL_exit (void)
  */
 void spfxL_update( double dt )
 {
+   NTracingZone( _ctx, 1 );
+   NTracingPlotI( "Lua spfx", array_size(lua_spfx) );
+
    spfx_lock();
    for (int i=array_size(lua_spfx)-1; i>=0; i--) {
       LuaSpfxData_t *ls = &lua_spfx[i];
@@ -639,7 +653,7 @@ void spfxL_update( double dt )
          ls->pos.y += ls->vel.y * dt;
 
          /* Check sound. */
-         if ((ls->flags & SPFX_AUDIO) && !(ls->flags & SPFX_RELATIVE)) {
+         if ((ls->flags & SPFX_AUDIO) && !(ls->flags & SPFX_RELATIVE) && !ls->sfx.ok) {
             soundLock();
             ALfloat alf[3];
             alf[0] = ls->pos.x;
@@ -665,6 +679,8 @@ void spfxL_update( double dt )
       }
    }
    spfx_unlock();
+
+   NTracingZoneEnd( _ctx );
 }
 
 static void spfxL_renderLayer( int func, const char *funcname, double dt )
@@ -727,7 +743,9 @@ static void spfxL_renderLayer( int func, const char *funcname, double dt )
  */
 void spfxL_renderbg( double dt )
 {
+   NTracingZone( _ctx, 1 );
    spfxL_renderLayer( 0, "renderbg", dt );
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -735,7 +753,9 @@ void spfxL_renderbg( double dt )
  */
 void spfxL_rendermg( double dt )
 {
+   NTracingZone( _ctx, 1 );
    spfxL_renderLayer( 1, "rendermg", dt );
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -743,7 +763,9 @@ void spfxL_rendermg( double dt )
  */
 void spfxL_renderfg( double dt )
 {
+   NTracingZone( _ctx, 1 );
    spfxL_renderLayer( 2, "rendermg", dt );
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -759,8 +781,8 @@ static int spfxL_debris( lua_State *L )
 {
    double mass = luaL_checknumber( L, 1 );
    double radius = luaL_checknumber( L, 2 );
-   vec2 *p = luaL_checkvector( L, 3 );
-   vec2 *v = luaL_checkvector( L, 4 );
+   const vec2 *p = luaL_checkvector( L, 3 );
+   const vec2 *v = luaL_checkvector( L, 4 );
    debris_add( mass, radius, p->x, p->y, v->x, v->y );
    return 0;
 }

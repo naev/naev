@@ -13,10 +13,10 @@
  <armour_max>90</armour_max>
  <commodity>
   <name>Ore</name>
-  <quantity>4</quantity>
+  <quantity>20</quantity>
  </commodity>
  <commodity>
   <name>Water</name>
-  <quantity>4</quantity>
+  <quantity>20</quantity>
  </commodity>
 </asteroid>

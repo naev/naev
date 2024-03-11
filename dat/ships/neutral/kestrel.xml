@@ -2,7 +2,7 @@
 <ship name="Kestrel">
  <points>130</points>
  <base_type>Kestrel</base_type>
- <GFX size="125" sx="10" sy="10">kestrel</GFX>
+ <gfx size="125" sx="10" sy="10">kestrel</gfx>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>3700000</price>
@@ -36,10 +36,9 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
   <utility size="medium" />
   <structure size="large" prop="engines">Krain Remige Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
+  <structure size="large" prop="hull">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

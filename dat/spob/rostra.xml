@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
@@ -46,5 +46,6 @@
   <item>Za'lek Outfits Low</item>
   <item>Za'lek Outfits Medium</item>
   <item>Za'lek Ships Medium</item>
+  <item>High Tech Upgrades 3</item>
  </tech>
 </spob>

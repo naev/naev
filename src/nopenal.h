@@ -8,8 +8,6 @@
 #include "AL/al.h"
 /** @endcond */
 
-#include "log.h"
-
 /*
  * EFX stuff.
  */

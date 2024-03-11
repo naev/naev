@@ -76,7 +76,5 @@ end
 function ontoggle( p, po, on )
    if on then
       return turnon( p, po )
-   else
-      return turnoff( p, po )
    end
 end

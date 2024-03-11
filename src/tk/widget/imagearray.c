@@ -31,6 +31,7 @@ static void iar_focus( Widget* iar, double bx, double by );
 static void iar_scroll( Widget* iar, int direction );
 static void iar_centerSelected( Widget *iar );
 /* Misc. */
+static void iar_updateSpacing( Widget *iar );
 static double iar_maxPos( Widget *iar );
 static void iar_setAltTextPos( Widget *iar, double bx, double by );
 static Widget *iar_getWidget( unsigned int wid, const char *name );
@@ -99,19 +100,30 @@ void window_addImageArray( unsigned int wid,
    wgt->dat.iar.alt        = -1;
    wgt->dat.iar.altx       = -1;
    wgt->dat.iar.alty       = -1;
-   wgt->dat.iar.iw         = iw;
-   wgt->dat.iar.ih         = ih;
+   wgt->dat.iar.iwref     = iw;
+   wgt->dat.iar.ihref     = ih;
+   wgt->dat.iar.zoom       = 1.0;
    wgt->dat.iar.mx         = 0;
    wgt->dat.iar.my         = 0;
    wgt->dat.iar.fptr       = call;
    wgt->dat.iar.rmptr      = rmcall;
    wgt->dat.iar.dblptr     = dblcall;
-   wgt->dat.iar.xelem      = floor((w - 10.) / (double)(wgt->dat.iar.iw+10));
-   wgt->dat.iar.yelem      = (wgt->dat.iar.xelem == 0) ? 0 :
-         (nelem-1) / wgt->dat.iar.xelem + 1;
+   iar_updateSpacing( wgt );
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus( wdw );
+}
+
+static void iar_updateSpacing( Widget *iar )
+{
+   double w = iar->w;
+   int nelem = iar->dat.iar.nelements;
+   double zoom = iar->dat.iar.zoom;
+   iar->dat.iar.iw    = round(iar->dat.iar.iwref * zoom);
+   iar->dat.iar.ih    = round(iar->dat.iar.ihref * zoom);
+   iar->dat.iar.xelem = floor((w - 10.) / (double)(iar->dat.iar.iw+10));
+   iar->dat.iar.yelem = (iar->dat.iar.xelem == 0) ? 0 :
+         (nelem-1) / iar->dat.iar.xelem + 1;
 }
 
 /**
@@ -188,7 +200,7 @@ static void iar_render( Widget* iar, double bx, double by )
       for (int i=0; i<xelem; i++) {
          ImageArrayCell *cell;
 
-         xcurs = floor(x + i * w + (i+.5) * xspace);
+         xcurs = floor(x + i * w + (i+0.5) * xspace);
 
          /* Get position. */
          pos = j*xelem + i;
@@ -214,10 +226,20 @@ static void iar_render( Widget* iar, double bx, double by )
          toolkit_drawRect( xcurs, ycurs, w, h, bgcolour, NULL );
 
          /* image */
-         if (cell->image != NULL)
-            gl_renderScaleAspect( cell->image,
-                  xcurs + 5., ycurs + gl_smallFont.h + 7.,
-                  iar->dat.iar.iw, iar->dat.iar.ih, NULL );
+         if (cell->image != NULL) {
+            if ((cell->image->sw < iar->dat.iar.iw) && (cell->image->sh < iar->dat.iar.ih)) {
+               double offx, offy;
+               offx = (iar->dat.iar.iw - cell->image->sw) * 0.5;
+               offy = (iar->dat.iar.iw - cell->image->sh) * 0.5;
+               gl_renderStatic( cell->image,
+                     xcurs + 5. + offx, ycurs + gl_smallFont.h + 7. + offy,
+                     NULL );
+            }
+            else
+               gl_renderScaleAspect( cell->image,
+                     xcurs + 5., ycurs + gl_smallFont.h + 7.,
+                     iar->dat.iar.iw, iar->dat.iar.ih, NULL );
+         }
 
          /* layers */
          for (int k=0; k<array_size(cell->layers); k++) {
@@ -243,8 +265,8 @@ static void iar_render( Widget* iar, double bx, double by )
 
          /* Slot type. */
          if (cell->sloticon != NULL) {
-            double sw = 15.;
-            double sh = 15.;
+            double sw = 18.;
+            double sh = 18.;
             double sx = xcurs + iar->dat.iar.iw - 10.;
             double sy = ycurs + iar->dat.iar.ih + 2.;
 
@@ -320,9 +342,25 @@ static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
    (void) isrepeat;
 
    switch (key) {
+      case SDLK_KP_PLUS:
+      case SDLK_PLUS:
+         iar->dat.iar.zoom *= 1.1;
+         iar->dat.iar.pos *= 1.1;
+         iar_updateSpacing( iar );
+         iar_scroll( iar, 0 ); /* Does boundary checks. */
+         break;
+      case SDLK_KP_MINUS:
+      case SDLK_MINUS:
+         iar->dat.iar.zoom *= 1.0/1.1;
+         iar->dat.iar.pos *= 1.0/1.1;
+         iar_updateSpacing( iar );
+         iar_scroll( iar, 0 ); /* Does boundary checks. */
+         break;
+      case SDLK_PAGEUP:
       case SDLK_UP:
          iar->dat.iar.selected -= iar->dat.iar.xelem;
          break;
+      case SDLK_PAGEDOWN:
       case SDLK_DOWN:
          iar->dat.iar.selected += iar->dat.iar.xelem;
          break;
@@ -456,10 +494,23 @@ static int iar_mdoubleclick( Widget* iar, int button, int x, int y )
  */
 static int iar_mwheel( Widget* iar, SDL_MouseWheelEvent event )
 {
-   if (event.y > 0)
-      iar_scroll( iar, +1 );
-   else if (event.y < 0)
-      iar_scroll( iar, -1 );
+   if (SDL_GetModState() & (KMOD_LCTRL | KMOD_RCTRL)) {
+      double zoom;
+      if (event.y > 0)
+         zoom = 1.1;
+      else
+         zoom = 1.0 / 1.1;
+      iar->dat.iar.zoom *= zoom;
+      iar->dat.iar.pos *= zoom;
+      iar_updateSpacing( iar );
+      iar_scroll( iar, 0 ); /* Does boundary checks. */
+   }
+   else {
+      if (event.y > 0)
+         iar_scroll( iar, +1 );
+      else if (event.y < 0)
+         iar_scroll( iar, -1 );
+   }
 
    return 1;
 }
@@ -750,6 +801,41 @@ int toolkit_setImageArray( unsigned int wid, const char* name, const char* elem 
 }
 
 /**
+ * @brief Gets the zoom level of an image array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @return The zoom of selected object.
+ */
+double toolkit_getImageArrayZoom( unsigned int wid, const char *name )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1.;
+
+   return wgt->dat.iar.zoom;
+}
+
+/**
+ * @brief Sets the zoom level of an image array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @param zoom Zoom to set.
+ *    @return 0 on success
+ */
+int toolkit_setImageArrayZoom( unsigned int wid, const char *name, double zoom )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.iar.zoom = zoom;
+   iar_updateSpacing( wgt );
+   return 0;
+}
+
+/**
  * @brief Gets what is selected currently in an Image Array.
  *
  *    @param wid Window where image array is.
@@ -799,9 +885,7 @@ int toolkit_setImageArrayOffset( unsigned int wid, const char* name, double off 
 
    /* Move if needed. */
    wgt->dat.iar.pos = CLAMP( 0., hmax, off );
-
    iar_setAltTextPos( wgt, wgt->dat.iar.altx, wgt->dat.iar.alty );
-
    return 0;
 }
 
@@ -836,7 +920,7 @@ int toolkit_setImageArrayPos( unsigned int wid, const char* name, int pos )
  *
  *    @param wid Window containing the image array.
  *    @param name Name of the image array widget.
- *    @param iar_data Pointer to an iar_data_t struct.
+ *    @param iar_data Pointer to an iar_data_t struct to save to.
  *    @return 0 on success.
  */
 int toolkit_saveImageArrayData( unsigned int wid, const char *name,
@@ -846,10 +930,44 @@ int toolkit_saveImageArrayData( unsigned int wid, const char *name,
    if (wgt == NULL)
       return -1;
 
-   iar_data->pos    = wgt->dat.iar.selected;
-   iar_data->offset = wgt->dat.iar.pos;
+   iar_data->pos     = wgt->dat.iar.selected;
+   iar_data->offset  = wgt->dat.iar.pos;
+   iar_data->zoom    = wgt->dat.iar.zoom;
 
    return 0;
+}
+
+/**
+ * @brief Loads several image array attributes.
+ *
+ *    @param wid Window containing the image array.
+ *    @param name Name of the image array widget.
+ *    @param iar_data Pointer to an iar_data_t struct to load.
+ *    @return 0 on success.
+ */
+int toolkit_loadImageArrayData( unsigned int wid, const char *name,
+      const iar_data_t *iar_data )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.iar.selected   = iar_data->pos;
+   wgt->dat.iar.pos        = iar_data->offset;
+   wgt->dat.iar.zoom       = iar_data->zoom;
+   iar_updateSpacing( wgt ); /* Potentially can be necessary if zoom changes. */
+
+   return 0;
+}
+
+/**
+ * @brief Initializes the image array data.
+ */
+void toolkit_initImageArrayData( iar_data_t *iar_data )
+{
+   iar_data->pos     = 0;
+   iar_data->offset  = 0;
+   iar_data->zoom    = 1.0;
 }
 
 /**

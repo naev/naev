@@ -1,21 +1,263 @@
-* 0.11.0 (unreleased)
+* 0.12.0 (unreleased)
+   * Gameplay
+      * Excess energy to battery recharge efficiency is now a flat 50% instead of varying based on charge level
+      * Gave the Za'lek sting a slight detection buff
+      * Can only have a single patrol mission active at a given time
+   * Quality of Life
+      * Added colourblind correction mode
+      * Exposed more colourblind options to the user
+      * Can modify game speed directly instead of using a slow mode difficulty for accessibility
+      * Messages get folded instead of repeating
+      * Asteroids no longer fade out if close to the player
+      * Display fuel consumption for ships in the equipment overlay
+      * Added option to match speed with slowest ship in the fleet (on by default)
+      * Made it so ships in the equipment screen do not change order based on value
+      * Mark spaceport bar tab when there is an important NPC
+      * Weapon set keybindings change window tabs
+   * Content
+      * 1 new mission
+         * Hack the Gibson!
+      * New portraits
+   * Engine
+      * Stats (except inverted stats) are now additive instead of multiplicative
+      * Try to merge saves if multiple directories correspond to the same player
+      * More robust weapon set support that can handle multiple overlapping weapon sets
+      * Faster handling of asteroids with large exclusion areas
+      * Added fuel_usage_mod ship stat
+      * Fixed player losing navigation targets when unidiff is applied
+      * Fixed ai.idir giving wrong answer by M_PI_2 in some cases
+      * Threaded more loading components
+      * Lua require now caches chunks
+      * Dropped SDL_image fallback
+      * Use higher internal timer for all platforms
+      * Support for Tracy
+      * Warn the player if they try to use a name with all space characters
+      * Decoupled the collision system from the rendering system
+      * Support for 3D models with fancy new effects
+      * Added a low memory mode to use fewer and smaller textures with 3D
+      * Lazy load ship and outfit graphics to reduce memory usage and decrease load time
+   * Fixes
+      * PSO and Mizar nebulas have trails again
+      * Removed fancy background mode
+      * Can remove fighter bays with deployed fighters
+
+* 0.11.4
+   * More guards against divides by zero in autonav
+   * Fixed warnings on certain OpenGL drivers
+   * Fixed toolkit not rerendering when right-clicking on tabbed windows
+   * Fixed Marius enclave description
+   * Tweaked Za'lek Diablo and Mephisto stats so that they are better suited to their respective roles
+   * Updated flicker drive, blink drive, and hyperbolic blink engine descriptions to be more complete and correct
+   * Initialize outfit Lua scripts when added in the equipment view so that flicker drive signature gets properly computed
+   * Flicker drive no longer displays -10% signature range bonus twice when equipped
+   * Fixed crash when selling deployed ship
+   * Gave the Dvaered warlord event better criteria so they don't attack the hypergate
+   * `shark/sh01_corvette`: have the pilot jump in from the same system as the player
+   * `minerva/kex03`: have mission claim the crimson gauntlet to prevent unwanted spawns
+   * `dvaered/gauntlet`: have mission claim the system if it can, but not fail if it can't
+   * `trader/trader_escort`: player can only escort one group of traders at a time
+   * `neburesearch/neburesearch_01`: use the correct faction when complaining
+   * Fixed some typos and revised writing
+   * Translation updates
+
+* 0.11.3
+   * Don't run discovery event when in cinematic mode
+   * Do a better job of updating old save autonav settings
+   * Added more checks so tutorial messages don't appear in claimed systems
+   * Fixed blinking not breaking stealth
+   * Fixed auto-hail message colouring
+   * Only do updates with positive delta ticks
+   * Fixed cargo disappearing when buying a ship when over the cargo limit
+   * Don't let the player trade ships when they have mission cargo
+   * Fixed not being able to turn off point defense weapons
+   * Fixed Za'lek drone bay being cheaper than the mini-bay
+   * Flicker drives can not be stacked and are mutually exclusive with other blink drives
+   * Decreased Nexus Drill Lance mining malus from -80% to -15%
+   * Increased all mining yields by roughly 5 times
+   * `sciencegonewrong/02_sciwrong`: make the drones not hostile to other factions
+   * `neutral/baron_comm`: fixed trivial warning when trying to clean up baron comm event
+   * `neutral/wastedump`: fixed getting rid of cargo while landed
+   * Translation updates
+
+* 0.11.2
+   * Stopped autonav from preventing wobble and overshooting by crashing the entire game
+
+* 0.11.1
+   * Give all ammo back to player after doing obelisk
+   * Fixed player being invincible after completing an obelisk
+   * Fixed a crash when loading games while a landing hook was running
+   * Fixed race condition in threadpool
+   * Fixed asteroids spawning in not proper shapes
+   * Fixed autonav wobble and overshooting
+   * Point defense won't shoot at disabled pilots anymore
+   * Fixed battery descriptions
+   * Discovering a hidden jump will make both directions known
+   * Fixed AI trying to scan hostile targets they lost track of
+   * Properly save and load reward_value to and from saves
+   * Fixed events and missions being able to trigger in obelisk tests
+   * Fixed beam weapons not hitting asteroids
+   * Properly compute weapon range with launch_range modifiers
+   * Fixed some range checks with inrange weapon sets
+   * Fixed Empire Pacifier mass being too low
+   * Fixed warning when looking at internal flow amplifier descriptions
+   * Removed Soromid Ira turret and forward weapon stats
+   * Fixed reality rip and avatar of sirichana abilities giving errors when the AI tries to use them
+   * Fixed issue on some systems with indexed images
+   * Fixed pirates and pilots that don't care being able to disable the fake transponder
+   * Can now see and target allies that are stealthed
+   * Pheromone emitter won't do anything in exclusively claimed systems
+   * Fixed some weapons such as beams not hitting targets other than selected one
+   * Fixed rendering order making it so most effects were below the player
+   * Fixed fallback switch weapon sets not being found properly
+   * Fixed bioship "Wanderer" perk giving absolute accel bonus instead of relative
+   * Increased Neural Accelerator Interface energy regen malus to -100%
+   * `zalek/blackhole/zbh09`: don't error out when a bioship ceases to exist
+   * `kidnapped/traffic_00`: fixed formatting string telling the player what system to go to
+   * `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
+   * `tutorial/nelly01`: fixed derelict message not appearing
+   * `minerva/pirate4`: fixed save me spam only being print once
+   * `neutral/seek_n_destroy`: fixed warnings when taking off in the same system
+   * `sirius/achack/achack01`: fixed not being able to accept mission
+   * `dvaered/dv_diversion`: fixed not being able to accept mission
+   * `dvaered/dv_bikers`: don't allow the player to use escorts and properly update mission TODO
+   * `sirius/achack03`: fixed not being able to complete the mission
+   * `neutral/kidnapped`: fixed inconsistency in the name of the system to go to
+   * `shadow/shadowrun`: fixed VN issues not allowing mission completion
+   * `shadow/shadowrun`: changed locations to make it possible to do in the allotted time-frame
+   * `shadow/shadowvigil`: fixed Seiryuu not appearing
+   * `shiplover`: don't ask the player about ships they can't obtain
+   * Fixed many typos
+   * Translation updates
+
+* 0.11.0
+   * Fixed beams only showing hit explosions on one target being hit instead of all
+   * Consider beam width when computing collisions
+   * Made beam effects a bit thinner
+   * Point defense weapons should track fighters much better now
+   * Fixed point defense weapons not firing properly
+   * Approach no longer instantly starts autonav unless a space object or derelict is already targeted
+   * Tweaked the approach logic to prefer planets over pilots when only planet is selected
+   * Approach should no longer play extraneous target sounds
+   * Stores now show amount for unique outfits, while equipment windows shall not
+   * Fixed POI missions having markers say 'Point of Interest' instead of 'Sensor Anomaly'
+   * Most consistent texture interpolation when using mipmaps
+   * Pilots will do their first distress somewhat sooner
+   * Can only start to afterburn with enough energy for 0.5 seconds of afterburning
+   * Updated meson.build to require SDL 2.0.26 which seems to be minimum supported version now
+   * Fixed a certain faction being enemies with wild ones when they shouldn't necessarily be
+   * Soromid Arx now has one non-exclusive heavy non-bio slot
+   * Buffed Scanning Combat AI to have an additional +15% tracking
+   * Pirates should no longer have presence in Sol under certain conditions
+   * Buffed weapon ionizer to only -50% damage from -70% damage
+   * Made weapon sets more robust to changes
+   * Fixed some pirate checks in dominated systems
+   * Clear weapon sets when doing active cooldown
+   * Run ship / outfit code Lua code when disabled or cooling down
+   * Increased maximum standing cap with pirates
+   * Allow marauders to become friendly
+   * Fixed gamma correction / colourblind shaders not being run on top of everything
+   * Fixed damage sometimes causing pilots to instantly become undisabled
+   * Fixed Sirius ships acquired before 0.11.0 not being able to use flow
+   * Fixed Cleansing Flames shader
+   * Gave some flow abilities custom sound effects
+   * `srs_ferry`: fixed marker not updating for alternative delivery locations
+   * `nelly01`: fixed giving the player twice as much money as needed for an ion cannon
+   * `nelly03`: guard against the player changing systems in the middle of mining
+   * `zbh06`: made mission easier for the player
+   * `seek_n_destroy`: fixed mission being failable after the player takes out the target
+   * `preach`: don't try to claim the system twice
+   * Fixed many typos
+   * Translation updates
+
+* 0.11.0-beta.3
+   * Differentiated more significantly the energy / kinetic / plasma weapon types
+   * Fixed hard crash when loading when approaching certain NPCs
+   * Fixed crash when change tab triggers a takeoff
+   * Fixed Naev not starting on Mac OS
+   * Fixed beam collisions (again)
+   * Fixed rare hard crash when beams are being fired
+   * 'in range' option for weapon sets now takes into account weapon arcs
+   * Buffed Targeting Conduit
+   * Renamed 'Point of Interest' to 'Sensor Anomaly'
+   * Double-tap activating outfits breaks stealth
+   * Nerfed Sirius Fidelity so it can no longer get ludicrous levels of action speed
+   * Map's discovery mode shows system features
+   * Removed enemies from a certain hidden faction so the player won't have standing issues with them
+   * Non-weapon outfits no longer show switch groups they are in as hot keys
+   * Turn off weapon sets when changing type
+   * Fixed toggle weapon sets not triggering outfits over and over as expected
+   * Turn off all weapon sets when entering stealth
+   * Fixed resizing not working on the background and toolkit in some cases
+   * Added pilot.weapsetAddType and pilot.weapsetSetActive
+   * Gave unicorp storm launchers a rarity of 2 and made it more available
+   * Have ships be a little less spammy distressing
+   * Centered tracking icon in slim GUI
+   * Show tracking icons for non-turret bolt weapons too
+   * More short names for weapon outfits
+   * Fixed pilot.setSpeedLimit not working
+   * Added tutorial message when player acquires first point defense weapon
+   * `test_of_renewal`: fixed weapon set defaults being incorrect and increased enemy damage
+   * `seek_n_destroy`: missions should work properly when boarding the target
+   * `flf_diversion`, `flf_rogue`: Missions should no longer be able to have ridiculously low credit rewards
+   * `ec00`: changed it so you can't hail the collective drone
+   * `escort`: fixed pilots not flying in formation
+   * Fixed many typos
+   * Translation updates
+
+* 0.11.0-beta.2
+   * Slim GUI now shows activated outfits and all weapons all the time
+   * Collision system reworked (again) to take into account fast moving particles
+   * Fixed collision polygons not properly being used
+   * Added short names to some outfits such that they are easier to distinguish in the GUI
+   * Allied factions won't help out the player against neutral targets
+   * Added missing graphics for meditation chambers
+   * Don't allow giving the player names that can't be saved
+   * Updated love.filesystem to 0.11 spec renaming mkdir to createDirectory, enumerate to getDirectoryItems, and adding remove
+   * Fixed toggle weapon sets not turning off with only bolt weapons
+   * Hardened physics engine a bit to overflow that happens in 49 days of straight game time
+   * Fixed trivial memory leak in vpool
+   * Allow buying local maps where they are not sold
+   * Buffed Hunting Combat AI to 15% bonus
+   * Made Weakness Harmonizer AI not appear as an active outfit
+   * Outfit Lua function onshoot has been renamed onshootany
+   * Can toggle point defense weapons on and off
+   * AI will turn off weapons ionizer when going for a kill
+   * Player's new ships should start will all the default outfits, which fixes the some Sirius psychic tests
+   * pilot.weapsetAdd follows the same logic as the normal equipping functions
+   * slim GUI uses primary/secondary colours like the info menu
+   * AI should be less prone to jump before their leader
+   * Fixed cargo being lost when swapping ships in missions and events
+   * `chapter1`: event claims all the systems just in case
+   * `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
+   * `poi_intro`: fixed typo
+   * `achack03`: fixed mission not being acceptable and harja spawning forever
+   * `achack04`: fixed missing formatting string
+   * `dv_bikers`: made missiles significantly more dodgeable and changed location
+   * Translation updates
+
+* 0.11.0 (beta)
    * Gameplay Changes
       * Universe significantly overworked to be more consistent with lore
          * More landable uninhabited spobs, unique locations, and things to discover
          * Reviewed and corrected many descriptions and placement of spobs and systems
          * More in-depth and fleshed out tag system for locations
+      * Ship slots and mass limits reworked such that smaller ships get more utility/structural slots to work with
       * Point defense systems that can shoot down missiles and torpedoes
-      * Planet properties affect quantity of missions available
-      * Moved many missions to the vn system
+      * Space object (planets, stations, etc.) properties affect quantity of missions available
+      * Moved many missions and events to the vn system
       * Can sometimes find POI events with a pulse scanner equipped when entering systems
       * Changed the visuals for some of the nebulas (PSO, Mizar)
       * Pirate bribes cost more depending on your fleet and are based on points not mass
       * Missions are introduced less all at once to the player
+      * Blink drives are more flexible but use energy and generate heat
+      * Razor class weapons have been completely reworked
+      * Can steal more than one outfit from a ship with high boarding bonus
       * diy-nerds: improved reward
    * Quality of Life
       * Significantly improved autonav
          * Configurable and can use lanes
          * More efficient at reaching target locations
+         * New option like follow pilots through jumps or brake when going to positions
       * Make it explicit when all the escorts have jumped or landed
       * Escorts will keep their same loadout until the game restarts
       * Player ship is no longer translucent when in stealth as it is redundant with the stealth icon
@@ -37,11 +279,25 @@
       * Selected slots in the equipment window will only show outfits that fit
       * Autonav routes consider distance travelled in-system
       * Made stress more visible in the slim GUI
+      * Reworked how stats are displayed to be more visible and intuitive
+      * Can show all known outfits or ships in with the map find functionality
+      * Weapon sets much more flexible, verbose, and easy to use
+      * Weapon sets remember slots, not outfits
+      * Route is visible on all map modes now
+      * Blink and flicker drives can use double tap arrow keys to move around
+      * Toolkit is cached in a framebuffer for much faster rendering
+      * Intrinsic outfit details now visible from the equipment menu
+      * Visually indicate which pilots are scanning the player on the overlay and radars
+      * Can sell all outfits on any spob with an outfitter
+      * Enemies in patrol missions should not run away
+      * Changed the faction standing caps to allow the player to get all ships when maxed out. Will be decreased in the future as missions are added
+      * Slot icons to make it more clear what special slots a ship has
+      * System markers and autonav TARGET marker will try to not overlap with jumps and spob names
    * New Content
       * New mechanic for House Sirius called flow to unlock psychic powers
          * Gives passive bonuses to Sirius ships
          * Outfits allow use on non-Sirius ships
-      * 6 new missions
+      * 8 new missions
          * Finish the Minerva campaign
          * Nebula refugees
       * Many new events
@@ -55,9 +311,12 @@
          * New graphics for space objects
       * Tons of new outfits
          * Sirius flow outfits
+         * Completely reworked Sirius weapons too
          * Point defense systems
          * New accessories
+         * Intrinsic outfits
          * and more!
+      * Many new outfit graphics
       * New NPC graphics
       * More NPC and news messages
       * Added the Space Trader Society faction
@@ -65,6 +324,7 @@
       * More ways to increase fleet capacity
       * The pirate clans are now more differentiated in terms of AI behaviour and taunts
       * More factional landing messages
+      * Rehabilitation missions have been made more factional and a new rehabilitation mission for the FLF is now available
    * Engine
       * Map system viewer is more compact
       * Added hook.hail_spob
@@ -90,6 +350,13 @@
       * Spobs can use communication graphics
       * Require OpenGL 3.2 for geometry shaders now
       * Support for advanced collisions such as weapon on weapon, allowing for point defense weapons
+      * Renamed thrust to accel for more consistency and simplifications
+      * Support for buying intrinsic outfits
+      * Ship distress moved to the message framework
+      * Outfits have support for double tapping accel/left/right triggers
+      * Removed toolkit fading effects
+      * Support for rendering images as SDFs
+      * Significant loading time speed-up with multithreading
    * Fixes
       * Main menu more responsive when changing windows
       * Typo and wording fixes
@@ -100,6 +367,20 @@
       * Fixed crash when events trigger other events on creation
       * Fixed autonav sometimes having trouble landing with reverse thrusters
       * Qex races should be much less laggy now
+      * Fixed some outfits using the wrong store images
+      * Fixed system viewer not being consistent with map
+      * Player's escort damage is counted towards players damage
+      * Avoid having missions duplicates for cases where they can significantly stack such as patrol missions
+      * Fire rate and action speed should affect damage and disable of beam weapons
+      * Fixed some outfits not having "Activated Outfit" in their description
+      * Fixed ships offering 100 fuel refuels twice
+      * Fixed some ships having trouble equipping because of stacking engine reroutes and such
+      * Improved AI's scanning behaviour to be more robust to stealth pulsing
+      * Fixed POI generating in extremely volatile systems
+      * Fixed tutorial running during cinematics
+      * Fixed active outfits not showing "activated outfit" in their summary sometimes
+      * FLF no longer become true allies of the Dreamer Clan to not limit the players actions
+      * Made audio system more robust to running out of source errors
 
 * 0.10.6
    * Fixed potential segfault with invalid semver strings

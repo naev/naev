@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dtype name="armourbreaker">
+<dtype name="armourbreaker" display="#nArmourbreaker#0">
  <shield>0.3</shield>
  <armour>1.5</armour>
  <knockback>0.5</knockback>

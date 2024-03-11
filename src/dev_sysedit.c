@@ -110,7 +110,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_focusLose( unsigned int wid, const char* wgtname );
 static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, double t, double mx, double my, SDL_Keymod mod, void (*func)(void) );
-static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int sysedit_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data );
 /* Button functions. */
 static void sysedit_close( unsigned int wid, const char *wgt );
@@ -196,6 +196,7 @@ void sysedit_open( StarSystem *sys )
    /* Create the window. */
    snprintf( buf, sizeof(buf), _("%s - Star System Editor"), sys->name );
    wid = window_create( "wdwSysEdit", buf, -1, -1, -1, -1 );
+   window_setDynamic( wid, 1 );
    window_handleKeys( wid, sysedit_keys );
    window_setBorder( wid, 0 );
    sysedit_wid = wid;
@@ -393,7 +394,7 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
 
    /* Check for collision. */
    if (spob_exists( name )) {
-      dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
+      dialogue_alert( _("Space object by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
             name, spob_getSystem( name ) );
       free(name);
       sysedit_btnNewSpob( 0, NULL );
@@ -426,7 +427,8 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    /* Add new spob. */
    system_addSpob( sysedit_sys, name );
 
-   /* Update economy due to galaxy modification. */
+   /* Run galaxy modifications. */
+   space_reconstructPresences();
    economy_execQueued();
 
    if (conf.devautosave) {
@@ -471,7 +473,7 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused
       ast->groupsw  = array_create( double );
       ast->radius   = 2500.;
       ast->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
-      ast->thrust   = ASTEROID_DEFAULT_THRUST;
+      ast->accel    = ASTEROID_DEFAULT_ACCEL;
       ast->pos.x    = sysedit_xpos / sysedit_zoom;
       ast->pos.y    = sysedit_ypos / sysedit_zoom;
       asteroids_computeInternals( ast );
@@ -511,7 +513,7 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
       /* Check for collision. */
       if (spob_exists( name )) {
-         dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
+         dialogue_alert( _("Space object by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
                name, spob_getSystem( name ) );
          free(name);
          continue;
@@ -580,7 +582,8 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
          }
       }
 
-      /* Update economy due to galaxy modification. */
+      /* Run galaxy modifications. */
+      space_reconstructPresences();
       economy_execQueued();
    }
 }
@@ -1011,7 +1014,7 @@ static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, doub
 /**
  * @brief System editor custom widget mouse handling.
  */
-static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int sysedit_mouse( unsigned int wid, const SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data )
 {
    (void) data;
@@ -1051,7 +1054,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             };
 
             /* Threshold. */
-            double t = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
+            double t = pow2(p->radius); /* Radius^2 */
             t *= pow2(2.*sysedit_zoom);
 
             /* Try to select. */
@@ -1388,7 +1391,7 @@ static void sysedit_editPnt (void)
    p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    /* Create the window. */
-   snprintf(title, sizeof(title), _("Spob Property Editor - %s"), p->name);
+   snprintf(title, sizeof(title), _("Space Object Property Editor - %s"), p->name);
    wid = window_create( "wdwSysEditPnt", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
@@ -1459,7 +1462,7 @@ static void sysedit_editPnt (void)
    window_setInputFilter( wid, "inpPresenceBonus", INPUT_FILTER_NUMBER );
    x += 50 + 10;
 
-   s = _("Range");
+   s = p_("sysedit", "Range");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresenceRange",
          NULL, NULL, s );
@@ -1696,11 +1699,11 @@ static void sysedit_editAsteroids (void)
    window_addInput( wid, x + l + 8, y, 80, 20, "inpMaxspeed", 10, 1, NULL );
    window_setInputFilter( wid, "inpMaxspeed", INPUT_FILTER_NUMBER );
    y -= 30;
-   s = _("Thrust: ");
+   s = _("Accel: ");
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, x, y, l, 20, 1, "txtThrust", NULL, NULL, s );
-   window_addInput( wid, x + l + 8, y, 80, 20, "inpThrust", 10, 1, NULL );
-   window_setInputFilter( wid, "inpThrust", INPUT_FILTER_NUMBER );
+   window_addText( wid, x, y, l, 20, 1, "txtAccel", NULL, NULL, s );
+   window_addInput( wid, x + l + 8, y, 80, 20, "inpAccel", 10, 1, NULL );
+   window_setInputFilter( wid, "inpAccel", INPUT_FILTER_NUMBER );
 
    /* List to choose the different asteroids that appear. */
    sysedit_genAsteroidsList( wid );
@@ -1731,8 +1734,8 @@ static void sysedit_editAsteroids (void)
    window_setInput( wid, "inpRadius", buf );
    snprintf( buf, sizeof(buf), "%g", ast->maxspeed );
    window_setInput( wid, "inpMaxspeed", buf );
-   snprintf( buf, sizeof(buf), "%g", ast->thrust );
-   window_setInput( wid, "inpThrust", buf );
+   snprintf( buf, sizeof(buf), "%g", ast->accel );
+   window_setInput( wid, "inpAccel", buf );
 }
 
 static void sysedit_genAsteroidsList( unsigned int wid )
@@ -1837,7 +1840,7 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
    ast->density = atof(window_getInput( sysedit_widEdit, "inpDensity" ));
    ast->radius = atof(window_getInput( sysedit_widEdit, "inpRadius" ));
    ast->maxspeed = atof(window_getInput( sysedit_widEdit, "inpMaxspeed" ));
-   ast->thrust = atof(window_getInput( sysedit_widEdit, "inpThrust" ));
+   ast->accel = atof(window_getInput( sysedit_widEdit, "inpAccel" ));
 
    /* Need to update some internals based on new values. */
    asteroids_computeInternals( ast );
@@ -1924,7 +1927,7 @@ static void sysedit_spobDesc( unsigned int wid, const char *unused )
    p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    /* Create the window. */
-   snprintf(title, sizeof(title), _("Spob Information - %s"), p->name);
+   snprintf(title, sizeof(title), _("Space Object Information - %s"), p->name);
    wid = window_create( "wdwSpobDesc", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
@@ -2124,7 +2127,7 @@ static void sysedit_btnTechEdit( unsigned int wid, const char *unused )
    int y, w, bw;
 
    /* Create the window. */
-   wid = window_create( "wdwSpobTechEditor", _("Spob Tech Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwSpobTechEditor", _("Space Object Tech Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
@@ -2282,7 +2285,7 @@ static void sysedit_btnTagsEdit( unsigned int wid, const char *unused )
    int y, w, bw;
 
    /* Create the window. */
-   wid = window_create( "wdwSpobTagsEditor", _("Spob Tags Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwSpobTagsEditor", _("Space Object Tags Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, sysedit_btnTagsClose );
 
    w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
@@ -2614,7 +2617,7 @@ static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt )
 
    p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
    /* Create the window. */
-   snprintf( buf, sizeof(buf), _("%s - Spob Properties"), p->name );
+   snprintf( buf, sizeof(buf), _("%s - Space Object Properties"), p->name );
    wid = window_create( "wdwSpobGFX", buf, -1, -1, -1, -1 );
    window_dimWindow( wid, &w, &h );
 

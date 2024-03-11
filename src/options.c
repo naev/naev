@@ -9,7 +9,6 @@
 /** @cond */
 #include <ctype.h>
 #include "physfs.h"
-#include "SDL.h"
 
 #include "naev.h"
 /** @endcond */
@@ -32,17 +31,19 @@
 #include "plugin.h"
 #include "render.h"
 #include "sound.h"
+#include "pause.h"
 #include "toolkit.h"
 
 #define BUTTON_WIDTH    200 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
 #define OPT_WIN_GAMEPLAY   0
-#define OPT_WIN_VIDEO      1
-#define OPT_WIN_AUDIO      2
-#define OPT_WIN_INPUT      3
-#define OPT_WIN_PLUGINS    4
-#define OPT_WINDOWS        5
+#define OPT_WIN_ACCESSIBILITY 1
+#define OPT_WIN_VIDEO      2
+#define OPT_WIN_AUDIO      3
+#define OPT_WIN_INPUT      4
+#define OPT_WIN_PLUGINS    5
+#define OPT_WINDOWS        6
 
 #define AUTONAV_RESET_DIST_MAX  10e3
 #define LANG_CODE_START 7 /**< Length of a language-list item's prefix, like the "[ 81%] " in "[ 81%] de". */
@@ -51,11 +52,13 @@ static unsigned int opt_wid = 0;
 static unsigned int *opt_windows;
 static const char *opt_names[] = {
    N_("Gameplay"),
+   N_("Accessibility"),
    N_("Video"),
    N_("Audio"),
    N_("Input"),
    N_("Plugins"),
 };
+static_assert( (sizeof(opt_names)/sizeof(opt_names[0]))==OPT_WINDOWS, "Options windows mismatch!" );
 static const glColour *cHeader = &cFontGrey;
 
 static int opt_restart = 0;
@@ -64,7 +67,7 @@ static PlayerConf_t local_conf;
 /*
  * External stuff.
  */
-static const char *opt_selectedKeybind; /**< Selected keybinding. */
+static KeySemanticType opt_selectedKeybind; /**< Selected keybinding. */
 static int opt_lastKeyPress = 0; /**< Last keypress. */
 
 /*
@@ -81,6 +84,17 @@ static void opt_OK( unsigned int wid, const char *str );
 static int opt_gameplaySave( unsigned int wid, const char *str );
 static void opt_gameplayDefaults( unsigned int wid, const char *str );
 static void opt_gameplayUpdate( unsigned int wid, const char *str );
+/* Accessibility. */
+static void opt_accessibility( unsigned int wid );
+static int opt_accessibilitySave( unsigned int wid, const char *str );
+static void opt_accessibilityDefaults( unsigned int wid, const char *str );
+static void opt_setBGBrightness( unsigned int wid, const char *str );
+static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
+static void opt_setJumpBrightness( unsigned int wid, const char *str );
+static void opt_setColourblindCorrect( unsigned int wid, const char *str );
+static void opt_setColourblindSimulate( unsigned int wid, const char *str );
+static void opt_listColourblind( unsigned int wid, const char *str );
+static void opt_setGameSpeed( unsigned int wid, const char *str );
 /* Video. */
 static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, const char *str );
@@ -91,11 +105,8 @@ static void opt_setGammaCorrection( unsigned int wid, const char *str );
 static void opt_setScalefactor( unsigned int wid, const char *str );
 static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
-static void opt_setBGBrightness( unsigned int wid, const char *str );
-static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
-static void opt_setJumpBrightness( unsigned int wid, const char *str );
-static void opt_checkColorblind( unsigned int wid, const char *str );
 static void opt_checkHealth( unsigned int wid, const char *str );
+static void opt_checkRestart( unsigned int wid, const char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
 static int opt_audioSave( unsigned int wid, const char *str );
@@ -140,15 +151,26 @@ void opt_menu (void)
    window_setCancel( opt_wid, opt_close );
 
    /* Create tabbed window. */
-   names = calloc( sizeof(char*), sizeof(opt_names)/sizeof(char*) );
-   for (size_t i=0; i<sizeof(opt_names)/sizeof(char*); i++)
+   names = calloc( 1, sizeof(opt_names) );
+   for (size_t i=0; i<sizeof(opt_names)/sizeof(opt_names[0]); i++)
       names[i] = _(opt_names[i]);
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
          OPT_WINDOWS, (const char**)names, 0 );
    free(names);
 
+   /* Common stuff. */
+   for (int i=0; i<OPT_WINDOWS; i++) {
+      unsigned int wid = opt_windows[i];
+      window_addButton( wid, -20, 20,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnClose", _("OK"), opt_OK );
+      window_addText( opt_windows[i], 20, 20 + BUTTON_HEIGHT,
+            w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
+   }
+
    /* Load tabs. */
    opt_gameplay(  opt_windows[ OPT_WIN_GAMEPLAY ] );
+   opt_accessibility( opt_windows[ OPT_WIN_ACCESSIBILITY ] );
    opt_video(     opt_windows[ OPT_WIN_VIDEO ] );
    opt_audio(     opt_windows[ OPT_WIN_AUDIO ] );
    opt_keybinds(  opt_windows[ OPT_WIN_INPUT ] );
@@ -169,6 +191,7 @@ static void opt_OK( unsigned int wid, const char *str )
    prompted_restart = opt_restart;
    ret = 0;
    ret |= opt_gameplaySave( opt_windows[ OPT_WIN_GAMEPLAY ], str);
+   ret |= opt_accessibilitySave( opt_windows[ OPT_WIN_ACCESSIBILITY ], str);
    ret |= opt_audioSave(    opt_windows[ OPT_WIN_AUDIO ], str);
    ret |= opt_videoSave(    opt_windows[ OPT_WIN_VIDEO ], str);
 
@@ -271,12 +294,6 @@ static void opt_gameplay( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Close button */
-   window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("OK"), opt_OK );
-   window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnCancel", _("Cancel"), opt_close );
    window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDefaults", _("Defaults"), opt_gameplayDefaults );
@@ -287,6 +304,10 @@ static void opt_gameplay( unsigned int wid )
    y = -35;
    window_addText( wid, x, y, cw, 20, 1, "txtVersion",
          NULL, NULL, naev_version(1) );
+   y -= 20;
+
+   snprintf( buf, sizeof(buf), "#n%s#0%s (%s)", _("Platform Info: "), SDL_GetPlatform(), HOST );
+   window_addText( wid, x, y, cw, 20, 1, "txtPlatInfo", NULL, NULL, buf );
    y -= 20;
 
    snprintf( buf, sizeof(buf), "#n%s#0%s"CONF_FILE, _("Config Path: "), nfile_configPath() );
@@ -354,23 +375,12 @@ static void opt_gameplay( unsigned int wid )
          "Debug\n"
 #endif /* DEBUG_PARANOID */
 #endif /* DEBUGGING */
-#if LINUX
-         "Linux\n"
-#elif FREEBSD
-         "FreeBSD\n"
-#elif MACOS
-         "macOS\n"
-#elif WIN32
-         "Windows\n"
-#else /* LINUX */
-         "Unknown OS\n"
-#endif /* LINUX */
 #if HAVE_LUAJIT
          "Using LuaJIT\n"
 #endif /* HAVE_LUAJIT */
          );
 
-   y -= window_getTextHeight(wid, "txtFlags") + 10;
+   /*y -= window_getTextHeight(wid, "txtFlags") + 10; */
 
    /* Options. */
    x = 20 + cw + 20;
@@ -391,7 +401,7 @@ static void opt_gameplay( unsigned int wid )
          "chkMouseFly", _("Enable mouse-flying (toggle with middle click)"), NULL, conf.mouse_fly );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkMouseThrust", _("Enable mouse-flying thrust control"), NULL, conf.mouse_thrust );
+         "chkMouseAccel", _("Enable mouse-flying accel control"), NULL, conf.mouse_accel );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkCompress", _("Enable saved game compression"), NULL, conf.save_compress );
@@ -407,10 +417,6 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, l, 20, 1, "txtTMax",
          NULL, NULL, s );
    window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
-
-   /* Restart text. */
-   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
-         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
 
    /* Update. */
    opt_gameplayUpdate( wid, NULL );
@@ -480,11 +486,11 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkDoubletap" );
-   if (!!conf.doubletap_sens != f)
-      conf.doubletap_sens = (!!f)*250;
+   if ( conf.doubletap_sens != 0 != f)
+      conf.doubletap_sens = ( f != 0 ) *250;
 
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
-   conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
+   conf.mouse_accel = window_checkboxState(wid, "chkMouseAccel" );
    conf.mouse_fly = window_checkboxState( wid, "chkMouseFly" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
 
@@ -514,7 +520,7 @@ static void opt_gameplayDefaults( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkZoomManual", MANUAL_ZOOM_DEFAULT );
    window_checkboxSet( wid, "chkDoubletap", DOUBLETAP_SENSITIVITY_DEFAULT );
    window_checkboxSet( wid, "chkMouseFly", MOUSE_FLY_DEFAULT );
-   window_checkboxSet( wid, "chkMouseThrust", MOUSE_THRUST_DEFAULT );
+   window_checkboxSet( wid, "chkMouseAccel", MOUSE_ACCEL_DEFAULT );
    window_checkboxSet( wid, "chkCompress", SAVE_COMPRESSION_DEFAULT );
 
    /* Input boxes. */
@@ -534,7 +540,7 @@ static void opt_gameplayUpdate( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkZoomManual", conf.zoom_manual );
    window_checkboxSet( wid, "chkDoubletap", conf.doubletap_sens );
    window_checkboxSet( wid, "chkMouseFly", conf.mouse_fly );
-   window_checkboxSet( wid, "chkMouseThrust", conf.mouse_thrust );
+   window_checkboxSet( wid, "chkMouseAccel", conf.mouse_accel );
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
    /* Input boxes. */
@@ -574,9 +580,6 @@ static void opt_keybinds( unsigned int wid )
    /* Get dimensions. */
    menuKeybinds_getDim( wid, &w, &h, &lw, NULL, &bw, &bh );
 
-   /* Close button. */
-   window_addButton( wid, -20, 20, bw, bh,
-         "btnClose", _("OK"), opt_OK );
    /* Restore defaults button. */
    window_addButton( wid, -20, 40 + bh, bw, bh,
          "btnDefaults", _("Defaults"), opt_keyDefaults );
@@ -601,9 +604,8 @@ static void opt_keybinds( unsigned int wid )
  */
 static void menuKeybinds_genList( unsigned int wid )
 {
-   int l, p;
+   int p;
    char **str, mod_text[64];
-   SDL_Keycode key;
    KeybindType type;
    SDL_Keymod mod;
    int w, h;
@@ -614,15 +616,16 @@ static void menuKeybinds_genList( unsigned int wid )
    menuKeybinds_getDim( wid, &w, &h, &lw, &lh, NULL, NULL );
 
    /* Create the list. */
-   str = malloc( sizeof( char * ) * input_numbinds );
-   for (int j = 0; j < input_numbinds; j++) {
-      const char *short_desc = _(keybind_info[j][1]);
-      l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
+   str = malloc( sizeof(char*) * KST_END );
+   for (int j=0; j<KST_END; j++) {
+      SDL_Keycode key;
+      const char *short_desc = input_getKeybindName(j);
+      int l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
                 * where "char mod_text[64]" is one of the "%s" args.
                 * (that plus brackets plus %c + null gets to 68.
                 * Just set to 128 as it's a power of two. */
       str[j] = malloc(l);
-      key = input_getKeybind( keybind_info[j][0], &type, &mod );
+      key = input_getKeybind( j, &type, &mod );
       switch (type) {
          case KEYBIND_KEYBOARD:
             /* Generate mod text. */
@@ -682,7 +685,7 @@ static void menuKeybinds_genList( unsigned int wid )
       window_destroyWidget( wid, "lstKeybinds" );
    }
 
-   window_addList( wid, 20, -40, lw, lh, "lstKeybinds", str, input_numbinds, 0, menuKeybinds_update, opt_setKey );
+   window_addList( wid, 20, -40, lw, lh, "lstKeybinds", str, KST_END, 0, menuKeybinds_update, opt_setKey );
 
    if (regen) {
       toolkit_setListPos( wid, "lstKeybinds", pos );
@@ -700,7 +703,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
 {
    (void) name;
    int selected;
-   const char *keybind;
+   KeySemanticType keybind;
    const char *desc;
    SDL_Keycode key;
    KeybindType type;
@@ -712,9 +715,9 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
    selected = toolkit_getListPos( wid, "lstKeybinds" );
 
    /* Remove the excess. */
-   keybind = keybind_info[selected][0];
+   keybind = selected;
    opt_selectedKeybind = keybind;
-   window_modifyText( wid, "txtName", _(keybind_info[selected][1]) );
+   window_modifyText( wid, "txtName", input_getKeybindName(keybind) );
 
    /* Get information. */
    desc = input_getKeybindDescription( keybind );
@@ -772,7 +775,8 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
 static void opt_keyDefaults( unsigned int wid, const char *str )
 {
    (void) str;
-   const char *title, *caption, *ret;
+   const char *title, *caption;
+   char *ret;
    int ind;
 
    const int n = 3;
@@ -801,6 +805,7 @@ static void opt_keyDefaults( unsigned int wid, const char *str )
          ind = i;
          break;
       }
+   free(ret);
 
    if (ind == 2)
       return;
@@ -888,9 +893,6 @@ static void opt_audio( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Close button */
-   window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("OK"), opt_OK );
    window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnCancel", _("Cancel"), opt_close );
@@ -939,10 +941,6 @@ static void opt_audio( unsigned int wid )
    window_addFader( wid, x, y, cw, 20, "fadEngine", 0., 1.,
          conf.engine_vol, opt_setEngineLevel );
    opt_setEngineLevel( wid, "fadEngine" );
-
-   /* Restart text. */
-   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
-         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
 
    opt_audioUpdate(wid);
 }
@@ -1023,8 +1021,8 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    unsigned int parent;
    KeybindType type;
    int key, test_key_event;
-   SDL_Keymod mod, ev_mod;
-   const char *str;
+   SDL_Keymod mod;
+   KeySemanticType boundkey;
 
    /* See how to handle it. */
    switch (event->type) {
@@ -1050,7 +1048,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          if (window_checkboxState( wid, "chkAny" ))
             mod = NMOD_ANY;
          else {
-            ev_mod = event->key.keysym.mod;
+            SDL_Keymod ev_mod = event->key.keysym.mod;
             mod    = 0;
             if (ev_mod & (KMOD_LSHIFT | KMOD_RSHIFT))
                mod |= NMOD_SHIFT;
@@ -1109,11 +1107,11 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    }
 
    /* Warn if already bound. */
-   str = input_keyAlreadyBound( type, key, mod );
-   if ((str != NULL) && strcmp(str, opt_selectedKeybind))
+   boundkey = input_keyAlreadyBound( type, key, mod );
+   if ((boundkey>=0) && (boundkey==opt_selectedKeybind))
       dialogue_alert( _("Key '%s' overlaps with key '%s' that was just set. "
             "You may want to correct this."),
-            str, opt_selectedKeybind );
+            input_getKeybindName(boundkey), input_getKeybindName(opt_selectedKeybind) );
 
    /* Set keybinding. */
    input_setKeybind( opt_selectedKeybind, type, key, mod );
@@ -1187,11 +1185,132 @@ static void opt_unsetKey( unsigned int wid, const char *str )
 }
 
 /**
+ * @brief Initializes the accessibility window.
+ */
+static void opt_accessibility( unsigned int wid )
+{
+   int cw, w, h, y, x;
+   const char *colourblind_types[] = {
+      _("Protanopia"),
+      _("Deuteranopia"),
+      _("Tritanopia"),
+      _("Rod Monochromacy"),
+      _("Cone Monochromacy"),
+   };
+   int ntypes = sizeof(colourblind_types)/sizeof(colourblind_types[0]);
+   char **types = malloc( ntypes * sizeof(char*) );
+   for (int i=0; i<ntypes; i++)
+      types[i] = strdup( colourblind_types[i] );
+
+   /* Get size. */
+   window_dimWindow( wid, &w, &h );
+
+   /* Close button */
+   window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnCancel", _("Cancel"), opt_close );
+   window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnDefaults", _("Defaults"), opt_accessibilityDefaults );
+
+   /* Resolution bits. */
+   cw = (w-60)/2;
+   x = 20;
+   y = -40;
+
+   /* Video. */
+   window_addText( wid, x, y, 100, 20, 0, "txtSVideo",
+         NULL, cHeader, _("Video:") );
+   y -= 20;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtNebuNonuniformity",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadNebuNonuniformity", 0., 1.,
+         conf.nebu_nonuniformity, opt_setNebuNonuniformity );
+   opt_setNebuNonuniformity( wid, "fadNebuNonuniformity" );
+   y -= 30;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtBGBrightness",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadBGBrightness", 0., 1.,
+         conf.bg_brightness, opt_setBGBrightness );
+   opt_setBGBrightness( wid, "fadBGBrightness" );
+   y -= 30;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtJumpBrightness",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadJumpBrightness", 0., 1.,
+         conf.jump_brightness, opt_setJumpBrightness );
+   opt_setJumpBrightness( wid, "fadJumpBrightness" );
+   y -= 30;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtColourblind",
+         NULL, NULL, _("Colourblind type:") );
+   y -= 25;
+   window_addList( wid, x, y, cw, 100, "lstColourblind",
+         (char**)types, ntypes, conf.colourblind_type, opt_listColourblind, NULL );
+   y -= 115;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtColourblindCorrect",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadColourblindCorrect", 0., 1.,
+         conf.colourblind_correct, opt_setColourblindCorrect );
+   opt_setColourblindCorrect( wid, "fadColourblindCorrect" );
+   y -= 30;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtColourblindSimulate",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadColourblindSimulate", 0., 1.,
+         conf.colourblind_sim, opt_setColourblindSimulate );
+   opt_setColourblindSimulate( wid, "fadColourblindSimulate" );
+
+   /* Second column. */
+   x = 20 + cw + 20;
+   y = -40;
+
+   /* Video. */
+   window_addText( wid, x, y, 100, 20, 0, "txtSGameplay",
+         NULL, cHeader, _("Gamplay:") );
+   y -= 20;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtGameSpeed",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadGameSpeed", 0.1, 1.,
+         conf.game_speed, opt_setGameSpeed );
+   opt_setGameSpeed( wid, "fadGameSpeed" );
+}
+
+static int opt_accessibilitySave( unsigned int wid, const char *str )
+{
+   (void) wid;
+   (void) str;
+   /* Colourblind and faders are handled in their respective functions. */
+   return 0;
+}
+
+/**
+ * @brief Sets video defaults.
+ */
+static void opt_accessibilityDefaults( unsigned int wid, const char *str )
+{
+   (void) str;
+
+   /* Faders. */
+   window_faderSetBoundedValue( wid, "fadNebuNonuniformity", NEBU_NONUNIFORMITY_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadJumpBrightness", JUMP_BRIGHTNESS_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadColourblindCorrect", COLOURBLIND_CORRECT_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadColourblindSimulate", COLOURBLIND_CORRECT_DEFAULT );
+
+   /* Reset colorblind if needed. */
+   gl_colourblind();
+}
+
+/**
  * @brief Initializes the video window.
  */
 static void opt_video( unsigned int wid )
 {
-   (void) wid;
    int i, j, nres, res_def;
    char buf[16];
    int cw, w, h, y, x, l;
@@ -1202,9 +1321,6 @@ static void opt_video( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Close button */
-   window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("OK"), opt_OK );
    window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnCancel", _("Cancel"), opt_close );
@@ -1269,13 +1385,13 @@ static void opt_video( unsigned int wid )
    y -= 30;
    window_addText( wid, x, y-3, 130, 20, 0, "txtZoomFar",
          NULL, NULL, NULL );
-   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomFar", log(0.1+1.), log(2.0+1.),
-         log(conf.zoom_far+1.), opt_setZoomFar );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomFar", log1p(0.1), log1p(2.0),
+         log1p(conf.zoom_far), opt_setZoomFar );
    y -= 30;
    window_addText( wid, x, y-3, 130, 20, 0, "txtZoomNear",
          NULL, NULL, NULL );
-   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomNear", log(0.1+1.), log(2.0+1.),
-         log(conf.zoom_near+1.), opt_setZoomNear );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomNear", log1p(0.1), log1p(2.0),
+         log1p(conf.zoom_near), opt_setZoomNear );
    opt_setZoomFar( wid, "fadZoomFar" );
    opt_setZoomNear( wid, "fadZoomNear" );
    y -= 30;
@@ -1312,7 +1428,10 @@ static void opt_video( unsigned int wid )
          NULL, cHeader, _("OpenGL:") );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkVSync", _("Vertical Sync"), NULL, conf.vsync );
+         "chkLowMemory", _("Optimize for low memory systems"), opt_checkRestart, conf.low_memory );
+   y -= 25;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkVSync", _("Vertical Sync"), opt_checkRestart, conf.vsync );
    y -= 40;
 
    /* Features. */
@@ -1323,34 +1442,9 @@ static void opt_video( unsigned int wid )
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkColorblind", _("Colorblind mode"), opt_checkColorblind,
-         conf.colorblind );
-   y -= 25;
-   window_addCheckbox( wid, x, y, cw, 20,
          "chkHealth", _("Health bars for pilots"), opt_checkHealth,
          conf.healthbars );
    y -= 30;
-   window_addText( wid, x, y-3, cw-20, 20, 0, "txtBGBrightness",
-         NULL, NULL, NULL );
-   y -= 20;
-   window_addFader( wid, x+20, y, cw-60, 20, "fadBGBrightness", 0., 1.,
-         conf.bg_brightness, opt_setBGBrightness );
-   opt_setBGBrightness( wid, "fadBGBrightness" );
-   y -= 20;
-   window_addText( wid, x, y-3, cw-20, 20, 0, "txtNebuNonuniformity",
-         NULL, NULL, NULL );
-   y -= 20;
-   window_addFader( wid, x+20, y, cw-60, 20, "fadNebuNonuniformity", 0., 1.,
-         conf.nebu_nonuniformity, opt_setNebuNonuniformity );
-   opt_setNebuNonuniformity( wid, "fadNebuNonuniformity" );
-   y -= 20;
-   window_addText( wid, x, y-3, cw-20, 20, 0, "txtJumpBrightness",
-         NULL, NULL, NULL );
-   y -= 20;
-   window_addFader( wid, x+20, y, cw-60, 20, "fadJumpBrightness", 0., 1.,
-         conf.jump_brightness, opt_setJumpBrightness );
-   opt_setJumpBrightness( wid, "fadJumpBrightness" );
-   y -= 20;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtMOpacity",
          NULL, NULL, NULL );
    y -= 20;
@@ -1365,10 +1459,6 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkBigIcons", _("Bigger icons"), NULL, conf.big_icons );
-
-   /* Restart text. */
-   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
-         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
 }
 
 /**
@@ -1376,16 +1466,12 @@ static void opt_video( unsigned int wid )
  */
 static void opt_needRestart (void)
 {
-   const char *s;
-
-   /* Values. */
+   const char *s = _("#rRestart Naev for changes to take effect.#0");
    opt_restart = 1;
-   s           = _("#rRestart Naev for changes to take effect.#0");
 
    /* Modify widgets. */
-   window_modifyText( opt_windows[ OPT_WIN_GAMEPLAY ], "txtRestart", s );
-   window_modifyText( opt_windows[ OPT_WIN_VIDEO ], "txtRestart", s );
-   window_modifyText( opt_windows[ OPT_WIN_AUDIO ], "txtRestart", s );
+   for (int i=0; i<OPT_WINDOWS; i++)
+      window_modifyText( opt_windows[i], "txtRestart", s );
 }
 
 /**
@@ -1431,6 +1517,11 @@ static int opt_videoSave( unsigned int wid, const char *str )
    conf.fps_max = atoi(inp);
 
    /* OpenGL. */
+   f = window_checkboxState( wid, "chkLowMemory" );
+   if (conf.low_memory != f) {
+      conf.low_memory = f;
+      opt_needRestart();
+   }
    f = window_checkboxState( wid, "chkVSync" );
    if (conf.vsync != f) {
       conf.vsync = f;
@@ -1455,22 +1546,61 @@ static int opt_videoSave( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Handles the colorblind checkbox being checked.
+ * @brief Handles the colourblind correction.
  */
-static void opt_checkColorblind( unsigned int wid, const char *str )
+static void opt_setColourblindCorrect( unsigned int wid, const char *str )
 {
-   int f = window_checkboxState( wid, str );
-   conf.colorblind = f;
-   gl_colorblind( f );
+   char buf[STRMAX_SHORT];
+   conf.colourblind_correct = window_getFaderValue(wid, str);
+   if (conf.colourblind_correct > 0.)
+      snprintf( buf, sizeof(buf), _("Colourblind correction: %.2f"), conf.colourblind_correct );
+   else
+      snprintf( buf, sizeof(buf), _("Colourblind correction: off") );
+   window_modifyText( wid, "txtColourblindCorrect", buf );
+   gl_colourblind();
 }
 
 /**
- * @brief Handles the fancy background checkbox.
+ * @brief Handles the colourblind correction.
+ */
+static void opt_setColourblindSimulate( unsigned int wid, const char *str )
+{
+   char buf[STRMAX_SHORT];
+   conf.colourblind_sim = window_getFaderValue(wid, str);
+   if (conf.colourblind_sim > 0.)
+      snprintf( buf, sizeof(buf), _("Colourblind simulation: %.2f"), conf.colourblind_sim );
+   else
+      snprintf( buf, sizeof(buf), _("Colourblind simulation: off") );
+   window_modifyText( wid, "txtColourblindSimulate", buf );
+   gl_colourblind();
+}
+
+/**
+ * @brief Handles the colourblind mode change.
+ */
+static void opt_listColourblind( unsigned int wid, const char *str )
+{
+   conf.colourblind_type = toolkit_getListPos( wid, str );
+   gl_colourblind();
+}
+
+/**
+ * @brief Handles the health bar checkbox.
  */
 static void opt_checkHealth( unsigned int wid, const char *str )
 {
    int f = window_checkboxState( wid, str );
    conf.healthbars = f;
+}
+
+/**
+ * @brief Basically flags for needing a restart.
+ */
+static void opt_checkRestart( unsigned int wid, const char *str )
+{
+   (void) wid;
+   (void) str;
+   opt_needRestart();
 }
 
 /**
@@ -1577,12 +1707,9 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
 
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadScale", log(SCALE_FACTOR_DEFAULT) );
-   window_faderSetBoundedValue( wid, "fadZoomFar", log(ZOOM_FAR_DEFAULT+1.) );
-   window_faderSetBoundedValue( wid, "fadZoomNear", log(ZOOM_NEAR_DEFAULT+1.) );
+   window_faderSetBoundedValue( wid, "fadZoomFar", log1p(ZOOM_FAR_DEFAULT) );
+   window_faderSetBoundedValue( wid, "fadZoomNear", log1p(ZOOM_NEAR_DEFAULT) );
    window_faderSetBoundedValue( wid, "fadGammaCorrection", log(GAMMA_CORRECTION_DEFAULT) /* a.k.a. 0. */ );
-   window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
-   window_faderSetBoundedValue( wid, "fadNebuNonuniformity", NEBU_NONUNIFORMITY_DEFAULT );
-   window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 }
 
 /**
@@ -1614,11 +1741,11 @@ static void opt_setZoomFar( unsigned int wid, const char *str )
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
    //scale = round(scale * 10.) / 10.;
-   conf.zoom_far = exp(scale)-1.;
+   conf.zoom_far = expm1(scale);
    snprintf( buf, sizeof(buf), _("Far Zoom: %.1fx"), conf.zoom_far );
    window_modifyText( wid, "txtZoomFar", buf );
    if (conf.zoom_far > conf.zoom_near) {
-      window_faderSetBoundedValue( wid, "fadZoomNear", log(conf.zoom_far+1.) );
+      window_faderSetBoundedValue( wid, "fadZoomNear", log1p(conf.zoom_far) );
       opt_setZoomNear( wid, "fadZoomNear" );
    }
    if (FABS(conf.zoom_far-local_conf.zoom_far) > 1e-4)
@@ -1636,11 +1763,11 @@ static void opt_setZoomNear( unsigned int wid, const char *str )
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
    //scale = round(scale * 10.) / 10.;
-   conf.zoom_near = exp(scale)-1.;
+   conf.zoom_near = expm1(scale);
    snprintf( buf, sizeof(buf), _("Near Zoom: %.1fx"), conf.zoom_near );
    window_modifyText( wid, "txtZoomNear", buf );
    if (conf.zoom_near < conf.zoom_far) {
-      window_faderSetBoundedValue( wid, "fadZoomFar", log(conf.zoom_near+1.) );
+      window_faderSetBoundedValue( wid, "fadZoomFar", log1p(conf.zoom_near) );
       opt_setZoomFar( wid, "fadZoomFar" );
    }
    if (FABS(conf.zoom_near-local_conf.zoom_near) > 1e-4)
@@ -1704,8 +1831,19 @@ static void opt_setJumpBrightness( unsigned int wid, const char *str )
    char buf[STRMAX_SHORT];
    double fad = window_getFaderValue(wid, str);
    conf.jump_brightness = fad;
-   snprintf( buf, sizeof(buf), _("Jump Brightness: %.0f%%"), 100.*fad );
+   snprintf( buf, sizeof(buf), _("Jump brightness: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtJumpBrightness", buf );
+}
+
+static void opt_setGameSpeed( unsigned int wid, const char *str )
+{
+   char buf[STRMAX_SHORT];
+   double prevspeed = conf.game_speed;
+   conf.game_speed = window_getFaderValue(wid, str);
+   player.speed *= conf.game_speed / prevspeed;
+   pause_setSpeed( player.speed );
+   snprintf( buf, sizeof(buf), _("Game speed: %.0f%%"), 100.*conf.game_speed );
+   window_modifyText( wid, "txtGameSpeed", buf );
 }
 
 /**
@@ -1728,20 +1866,15 @@ static void opt_setMapOverlayOpacity( unsigned int wid, const char *str )
  */
 static void opt_plugins( unsigned int wid )
 {
-   int w, h, lw, lh, bw, bh, n;
+   int w, h, lw, lh, bw, n;
    char **str, buf[STRMAX_SHORT];
    const plugin_t *plgs = plugin_list();
 
    /* Get dimensions. */
    bw = BUTTON_WIDTH;
-   bh = BUTTON_HEIGHT;
    window_dimWindow( wid, &w, &h );
    lw = w - bw - 100;
    lh = h - 90;
-
-   /* Close button. */
-   window_addButton( wid, -20, 20, bw, bh,
-         "btnClose", _("OK"), opt_OK );
 
    /* Text stuff. */
    snprintf( buf, sizeof(buf), "#n%s#0%s%s", _("Plugins Directory: "), PHYSFS_getRealDir("plugins"), "plugins" );
@@ -1785,7 +1918,7 @@ static void opt_plugins_update( unsigned int wid, const char *name )
    l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", p_("plugins", "Description:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "   %s\n", _(plg->description) );
    if (plg->total_conversion)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "#g%s#0", _("Total Conversion") );
+      /*l +=*/ scnprintf( &buf[l], sizeof(buf)-l, "#g%s#0", _("Total Conversion") );
 
    window_modifyText( wid, "txtDesc", buf );
 }

@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Plasma Turret MK1">
  <general>
+  <shortname>Plasma T. MK1</shortname>
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>18</mass>
+  <mass>9</mass>
   <price>43000</price>
   <description>The plasma turret essentially takes a plasma blaster and mounts it on a turret. Its short range makes it ill-suited for defence, so it is not especially popular with traders and merchants, but it has found a niche among inexperienced mercenaries who are not as well-practiced at aiming as the pros.</description>
   <gfx_store>plasma_turret.webp</gfx_store>
@@ -16,18 +17,18 @@
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS</spfx_armour>
-  <delay>0.8</delay>
+  <delay>1.2</delay>
   <speed>700</speed>
-  <range>900</range>
-  <falloff>750</falloff>
-  <energy>8</energy>
+  <range>700</range>
+  <falloff>600</falloff>
+  <energy>12</energy>
   <heatup>35</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <damage>
-   <type>impact</type>
-   <penetrate>6</penetrate>
-   <physical>13</physical>
+   <type>plasma</type>
+   <penetrate>8</penetrate>
+   <physical>23</physical>
   </damage>
  </specific>
 </outfit>

@@ -2,13 +2,9 @@
  * See Licensing and Copyright notice in naev.h
  */
 /**
- * @file economy.c
+ * @file commodity.c
  *
- * @brief Handles economy stuff.
- *
- * Economy is handled with Nodal Analysis.  Systems are modelled as nodes,
- *  jump routes are resistances and production is modelled as node intensity.
- *  This is then solved with linear algebra after each time increment.
+ * @brief Handles commidities.
  */
 /** @cond */
 #include <stdio.h>
@@ -35,6 +31,7 @@
 #include "rng.h"
 #include "space.h"
 #include "spfx.h"
+#include "threadpool.h"
 
 #define XML_COMMODITY_ID      "commodity" /**< XML document identifier */
 #define CRED_TEXT_MAX         (ECON_CRED_STRLEN-4) /* Maximum length of just credits2str text, no markup */
@@ -46,12 +43,30 @@ static Commodity** commodity_temp = NULL; /**< Contains all the temporary commod
 /* @TODO remove externs. */
 extern int *econ_comm;
 
+/**
+ * @brief For threaded loading of commodities.
+ */
+typedef struct CommodityThreadData_ {
+   char *filename;
+   Commodity com;
+   int ret;
+} CommodityThreadData;
+
 /*
  * Prototypes.
  */
 /* Commodity. */
+static int commodity_parseThread( void *ptr );
 static void commodity_freeOne( Commodity* com );
 static int commodity_parse( Commodity *temp, const char *filename );
+static int commodity_cmp( const void *p1, const void *p2 );
+
+static int commodity_cmp( const void *p1, const void *p2 )
+{
+   const Commodity *c1 = p1;
+   const Commodity *c2 = p2;
+   return strcmp( c1->name, c2->name );
+}
 
 /**
  * @brief Converts credits to a usable string for displaying.
@@ -145,9 +160,10 @@ Commodity* commodity_get( const char* name )
  */
 Commodity* commodity_getW( const char* name )
 {
-   for (int i=0; i<array_size(commodity_stack); i++)
-      if (strcmp(commodity_stack[i].name, name) == 0)
-         return &commodity_stack[i];
+   const Commodity q = { .name=(char*)name };
+   Commodity *r = bsearch( &q, commodity_stack, array_size(commodity_stack), sizeof(Commodity), commodity_cmp );
+   if (r!=NULL)
+      return r;
    for (int i=0; i<array_size(commodity_temp); i++)
       if (strcmp(commodity_temp[i]->name, name) == 0)
          return commodity_temp[i];
@@ -241,7 +257,7 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
 /**
  * @brief Return an array (array.h) of standard commodities. Free with array_free. (Don't free contents.)
  */
-Commodity ** standard_commodities (void)
+Commodity **standard_commodities (void)
 {
    int n = array_size(commodity_stack);
    Commodity **com = array_create_size( Commodity*, n );
@@ -344,7 +360,7 @@ static int commodity_parse( Commodity *temp, const char *filename )
          continue;
       }
 
-      WARN(_("Commodity '%s' has unknown node '%s'"),temp->name, node->name);
+      WARN(_("Commodity '%s' has unknown node '%s'"), temp->name, node->name);
    } while (xml_nextNode(node));
 
    if (temp->name == NULL)
@@ -439,8 +455,6 @@ Commodity* commodity_newTemp( const char* name, const char* desc )
  */
 int commodity_tempIllegalto( Commodity *com, int faction )
 {
-   int *f;
-
    if (!com->istemp) {
       WARN(_("Trying to modify temporary commodity '%s'!"), com->name);
       return -1;
@@ -455,10 +469,22 @@ int commodity_tempIllegalto( Commodity *com, int faction )
          return 0;
    }
 
-   f = &array_grow(&com->illegalto);
-   *f = faction;
+   array_push_back( &com->illegalto, faction );
 
    return 0;
+}
+
+static int commodity_parseThread( void *ptr )
+{
+   CommodityThreadData *data = ptr;
+   data->ret = commodity_parse( &data->com, data->filename );
+   /* Render if necessary. */
+   if (naev_shouldRenderLoadscreen()) {
+      gl_contextSet();
+      naev_renderLoadscreen();
+      gl_contextUnset();
+   }
+   return data->ret;
 }
 
 /**
@@ -468,39 +494,66 @@ int commodity_tempIllegalto( Commodity *com, int faction )
  */
 int commodity_load (void)
 {
-   char **commodities = ndata_listRecursive( COMMODITY_DATA_PATH );
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
+#endif /* DEBUGGING */
+   ThreadQueue *tq = vpool_create();
+   CommodityThreadData *cdata = array_create( CommodityThreadData );
+   char **commodities = ndata_listRecursive( COMMODITY_DATA_PATH );
 
    commodity_stack = array_create( Commodity );
    econ_comm = array_create( int );
 
    gatherable_load();
 
+   /* Prepare files to run. */
    for (int i=0; i<array_size(commodities); i++) {
-      Commodity c;
-      int ret = commodity_parse( &c, commodities[i] );
-      if (ret == 0) {
-         array_push_back( &commodity_stack, c );
-
-         /* See if should get added to commodity list. */
-         if (c.price > 0.) {
-            int *e = &array_grow( &econ_comm );
-            *e = array_size(commodity_stack)-1;
-         }
-
-         /* Render if necessary. */
-         naev_renderLoadscreen();
+      if (ndata_matchExt( commodities[i], "xml" )) {
+         CommodityThreadData *cd = &array_grow( &cdata );
+         cd->filename = commodities[i];
       }
-      free( commodities[i] );
+      else
+         free( commodities[i] );
    }
    array_free( commodities );
 
+   /* Enqueue the jobs after the data array is done. */
+   SDL_GL_MakeCurrent( gl_screen.window, NULL );
+   for (int i=0; i<array_size(cdata); i++)
+      vpool_enqueue( tq, commodity_parseThread, &cdata[i] );
+   /* Wait until done processing. */
+   vpool_wait( tq );
+   vpool_cleanup( tq );
+   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+
+   /* Finally load. */
+   for (int i=0; i<array_size(cdata); i++) {
+      CommodityThreadData *cd = &cdata[i];
+      if (!cd->ret)
+         array_push_back( &commodity_stack, cd->com );
+      free( cd->filename );
+   }
+   array_free(cdata);
+
+   /* Sort. */
+   qsort( commodity_stack, array_size(commodity_stack), sizeof(Commodity), commodity_cmp );
+
+   /* Load into commodity stack. */
+   for (int i=0; i<array_size(commodity_stack); i++) {
+      const Commodity *com = &commodity_stack[i];
+      /* See if should get added to commodity list. */
+      if (com->price > 0.)
+         array_push_back( &econ_comm, i );
+   }
+
+#if DEBUGGING
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Commodity in %.3f s", "Loaded %d Commodities in %.3f s", array_size(commodity_stack) ), array_size(commodity_stack), time/1000. );
    }
    else
       DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", array_size(commodity_stack) ), array_size(commodity_stack) );
+#endif /* DEBUGGING */
 
    return 0;
 }

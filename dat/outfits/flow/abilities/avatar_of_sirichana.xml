@@ -10,11 +10,13 @@
   <price>650000</price>
   <gfx_store>/gfx/misc/icons/angel-outfit.webp</gfx_store>
   <description>By turning flow inwards to oneself, one can embody all the virtues of the Sirichana significantly increasing all aspects of the ship being flown.</description>
+  <limit>avatar_of_sirichana</limit>
  </general>
  <specific type="modification">
   <lua>outfits/flow/abilities/avatar_of_sirichana.lua</lua>
  </specific>
  <tags>
   <tag>flow_ability</tag>
+  <tag>nosteal</tag>
  </tags>
 </outfit>

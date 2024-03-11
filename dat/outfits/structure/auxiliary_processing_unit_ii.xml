@@ -10,7 +10,7 @@
   <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>20</cpu_max>
+  <cpu_max>40</cpu_max>
   <energy_regen_malus>8</energy_regen_malus>
  </specific>
 </outfit>
