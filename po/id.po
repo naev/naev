@@ -8,141 +8,146 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-19 13:04+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-03-11 14:02+0000\n"
+"Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
+"\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: physfs.c:1
 msgid "no error"
-msgstr ""
+msgstr "tidak ada kesalahan"
 
 #: physfs.c:2 src/background.c:466 src/gui.c:1787 src/nlua_evt.c:146
 #: src/nlua_misn.c:237 src/nopenal.c:68
 msgid "unknown error"
-msgstr ""
+msgstr "kesalahan tidak diketahui"
 
 #: physfs.c:3
 msgid "out of memory"
-msgstr ""
+msgstr "kehabisan memori"
 
 #: physfs.c:4
 msgid "not initialized"
-msgstr ""
+msgstr "tidak terinisialisasi"
 
 #: physfs.c:5
 msgid "already initialized"
-msgstr ""
+msgstr "sudah terinisialisasi"
 
 #: physfs.c:6
 msgid "argv[0] is NULL"
-msgstr ""
+msgstr "argv[0] bernilai NULL"
 
 #: physfs.c:7
 msgid "unsupported"
-msgstr ""
+msgstr "tidak didukung"
 
 #: physfs.c:8
 msgid "past end of file"
-msgstr ""
+msgstr "melewati akhir dari berkas"
 
 #: physfs.c:9
 msgid "files still open"
-msgstr ""
+msgstr "berkas masih terbuka"
 
 #: physfs.c:10
 msgid "invalid argument"
-msgstr ""
+msgstr "argumen tidak sah"
 
 #: physfs.c:11
 msgid "not mounted"
-msgstr ""
+msgstr "tidak terpasang"
 
 #: physfs.c:12
 msgid "not found"
-msgstr ""
+msgstr "tidak ditemukan"
 
 #: physfs.c:13
 msgid "symlinks are forbidden"
-msgstr ""
+msgstr "tautan simbolis tidak diperbolehkan"
 
 #: physfs.c:14
 msgid "write directory is not set"
-msgstr ""
+msgstr "direktori tulis tidak diatur"
 
 #: physfs.c:15
 msgid "file open for reading"
-msgstr ""
+msgstr "berkas terbuka untuk pembacaan"
 
 #: physfs.c:16
 msgid "file open for writing"
-msgstr ""
+msgstr "berkas terbuka untuk penulisan"
 
 #: physfs.c:17
 msgid "not a file"
-msgstr ""
+msgstr "bukan sebuah berkas"
 
 #: physfs.c:18
 msgid "read-only filesystem"
-msgstr ""
+msgstr "sistem pemberkasan hanya untuk pembacaan"
 
 #: physfs.c:19
 msgid "corrupted"
-msgstr ""
+msgstr "rusak"
 
 #: physfs.c:20
 msgid "infinite symbolic link loop"
-msgstr ""
+msgstr "tautan simbolis melingkar tak terhingga"
 
 #: physfs.c:21
 msgid "i/o error"
-msgstr ""
+msgstr "kesalahan i/o"
 
 #: physfs.c:22
 msgid "permission denied"
-msgstr ""
+msgstr "izin ditolak"
 
 #: physfs.c:23
 msgid "no space available for writing"
-msgstr ""
+msgstr "tidak cukup ruang untuk penulisan"
 
 #: physfs.c:24
 msgid "filename is illegal or insecure"
-msgstr ""
+msgstr "nama berkas ilegal atau tidak aman"
 
 #: physfs.c:25
 msgid "tried to modify a file the OS needs"
-msgstr ""
+msgstr "mencoba untuk memodifikasi sebuah berkas yang dibutuhkan OS"
 
 #: physfs.c:26
 msgid "directory isn't empty"
-msgstr ""
+msgstr "direktori tidak kosong"
 
 #: physfs.c:27
 msgid "OS reported an error"
-msgstr ""
+msgstr "OS melaporkan kesalahan"
 
 #: physfs.c:28
 msgid "duplicate resource"
-msgstr ""
+msgstr "sumber daya duplikat"
 
 #: physfs.c:29
 msgid "bad password"
-msgstr ""
+msgstr "password salah"
 
 #: physfs.c:30
 msgid "app callback reported error"
-msgstr ""
+msgstr "panggilan balik dari aplikasi melaporkan kesalahan"
 
 #: dat/intro:2
 msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
+"Langit malam kerap menarik perhatian kita. Orang-orang menengadah "
+"memperhatikan cakrawala dengan pertanyaan, penuh rasa takjub, dan terkadang "
+"dengan sebuah mimpi: untuk bisa menjelajah maju menaklukkan bintang."
 
 #: dat/intro:4
 msgid ""
@@ -150,6 +155,9 @@ msgid ""
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
+"Dari bumi, para penakluk mula-mula ini mengamati permata-permata kecil yang "
+"tersinari cahaya bintang, jauh namun terlihat amat jelas. Untuk meraihnya "
+"hanya perlu seumur hidup. Murah untuk sesuatu yang begitu berharga."
 
 #: dat/intro:7
 msgid ""
@@ -157,6 +165,9 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
+"Maka orang-orang pun mengunci diri, tertidur lelap di dalam kotak-kotak besi "
+"raksasa. Dan memulai perjalanan mereka ke dalam kehampaan. Saat tiba, mereka "
+"terbangun dihadapan matahari baru, dibawah cakrawala yang asing."
 
 #: dat/intro:10
 msgid ""
@@ -165,6 +176,11 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"Pada gelombang pertama, penjelajah-penjelajah ini merayap dari satu bintang "
+"ke bintang lainnya pada kecepatan di bawah cahaya. Kemudian diciptakanlah "
+"mesin hiperspasial yang membawa gelombang penjelajahan kedua. Maka peradaban "
+"pun tersebar secara exponensial, seperti yang selalu terjadi, bagaikan riak "
+"di dalam lautan gelap angkasa."
 
 #: dat/intro:12
 msgid ""
@@ -173,12 +189,18 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
+"Namun, masa penjelajahan yang herois ini bertahan sesaat saja, karena pada "
+"akhirnya keserakahan melebihi rasa penasaran. Sekejap mata, konflik pun "
+"muncul kiri-kanan di koloni-koloni ini. Lahan, bahan bakar, pangan, dan rasa "
+"ketidakpercayaan menabur bibit kekacauan. Setelah mulai, perang pun menyebar "
+"dari satu tempat ke tempat yang lainnya dan menjadi bencana."
 
 #: dat/intro:15
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
+"Setelah ratusan tahun berkonflik, muncullah sebuah orde baru dari reruntuhan."
 
 #: dat/intro:17
 msgid ""
@@ -187,6 +209,11 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
+"Seorang yang bernama Daedris menegaskan kekuasaan atas planet-planet yang "
+"kelelahan. Ia membangun sebuah Kekaisaran Galaksi dan menjadikan dirinya "
+"sendiri pemimpinnya. Dibawah tangan kekuasaan militernya, hubungan antar "
+"planet kembali berlanjut seperti semula; jalur dagang yang terlupakan pun "
+"kembali digunakan untuk pertama kalinya sejak entah kapan."
 
 #: dat/intro:19
 msgid ""
