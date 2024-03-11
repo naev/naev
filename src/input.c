@@ -648,6 +648,7 @@ void input_update( double dt )
 #define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
 #define LAND()  ((player.p==NULL) || landed || pilot_isFlag(player.p,PILOT_LANDING)) /**< Player isn't landed. */
 #define NOLAND()  ((player.p != NULL) && (!landed && !pilot_isFlag(player.p,PILOT_LANDING))) /**< Player isn't landed. */
+#define MAP()     (map_isOpen())
 /**
  * @brief Runs the input command.
  *
@@ -826,30 +827,30 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          break;
       /* targeting */
       case KST_TARGET_NEXT:
-         if (!(INGAME() || map_isOpen()))
+         if (!INGAME() && !MAP())
             break;
          if (value==KEY_PRESS) {
-            if (map_isOpen())
+            if (MAP())
                map_cycleMissions(1);
             else
                player_targetNext(0);
          }
          break;
       case KST_TARGET_PREV:
-         if (!(INGAME() || map_isOpen()))
+         if (!INGAME() && !MAP())
             break;
          if (value==KEY_PRESS) {
-            if (map_isOpen())
+            if (MAP())
                map_cycleMissions(-1);
             else
                player_targetPrev(0);
          }
          break;
       case KST_TARGET_CLOSE:
-         if (!(INGAME() || map_isOpen()))
+         if (!INGAME() && !MAP())
             break;
          if (value==KEY_PRESS) {
-            if (map_isOpen())
+            if (MAP())
                map_cycleMissions(1);
             else
                player_targetNearest();
@@ -991,7 +992,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          if (HYP() || DEAD())
             break;
          if (value==KEY_PRESS) {
-            if (map_isOpen()) {
+            if (MAP()) {
                unsigned int wid = window_get( MAP_WDWNAME );
                player_autonavStartWindow( wid, NULL );
             }
@@ -1036,9 +1037,9 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          }
          break;
       case KST_OVERLAY_MAP:
-         if (!((INGAME() || map_isOpen()) && !repeat))
+         if ((repeat || !INGAME()) && !MAP())
             break;
-         if (map_isOpen())
+         if (MAP())
             map_toggleNotes();
          else
             ovr_key( value );
