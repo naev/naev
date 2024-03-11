@@ -108,9 +108,6 @@ typedef enum {
    KEYBIND_JHAT_RIGHT /**< Joystick hat right direction keybinding. */
 } KeybindType; /**< Keybind types. */
 
-extern const char *keybind_info[KST_PASTE+1][3];
-extern const int   input_numbinds;
-
 /*
  * set input
  */

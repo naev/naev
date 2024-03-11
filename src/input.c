@@ -44,7 +44,7 @@ typedef struct Keybind_ {
 } Keybind;
 
 /* Description of each key semantic type */
-const char *keybind_info[KST_END][3] = {
+static const char *keybind_info[KST_END][3] = {
    /* Movement */
    [KST_ACCEL]={ N_("Accelerate"), N_("Makes your ship accelerate forward."), "accel" },
    [KST_LEFT]={ N_("Turn Left"), N_("Makes your ship turn left."), "left" },
@@ -131,7 +131,6 @@ const char *keybind_info[KST_END][3] = {
 };
 
 static Keybind input_keybinds[KST_END]; /**< contains the players keybindings */
-const int input_numbinds = KST_END; /**< Number of keybindings. */
 static Keybind *input_paste;
 
 /*
@@ -306,7 +305,7 @@ void input_init (void)
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
 
    /* Create safe null keybinding for each. */
-   for (int i=0; i<input_numbinds; i++) {
+   for (int i=0; i<KST_END; i++) {
       Keybind *k  = &input_keybinds[i];
       memset( k, 0, sizeof(Keybind) );
       k->type     = KEYBIND_NULL;
@@ -330,7 +329,7 @@ void input_exit (void)
  */
 void input_enableAll (void)
 {
-   for (int i=0; i<input_numbinds; i++)
+   for (int i=0; i<KST_END; i++)
       input_keybinds[i].disabled = 0;
 }
 
@@ -339,7 +338,7 @@ void input_enableAll (void)
  */
 void input_disableAll (void)
 {
-   for (int i=0; i<input_numbinds; i++)
+   for (int i=0; i<KST_END; i++)
       input_keybinds[i].disabled = 1;
 }
 
@@ -522,7 +521,7 @@ const char* input_modToText( SDL_Keymod mod )
  */
 KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod mod )
 {
-   for (int i=0; i<input_numbinds; i++) {
+   for (int i=0; i<KST_END; i++) {
       const Keybind *k = &input_keybinds[i];
 
       /* Type must match. */
@@ -1205,7 +1204,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
  */
 static void input_joyaxis( const SDL_Keycode axis, const int value )
 {
-   for (int i=0; i<input_numbinds; i++) {
+   for (int i=0; i<KST_END; i++) {
       const Keybind *k = &input_keybinds[i];
       if (k->key!=axis)
          continue;
@@ -1235,7 +1234,7 @@ static void input_joyaxis( const SDL_Keycode axis, const int value )
  */
 static void input_joyevent( const int event, const SDL_Keycode button )
 {
-   for (int i=0; i<input_numbinds; i++) {
+   for (int i=0; i<KST_END; i++) {
       const Keybind *k = &input_keybinds[i];
       if ((event==KEY_PRESS) && k->disabled)
          continue;
@@ -1251,7 +1250,7 @@ static void input_joyevent( const int event, const SDL_Keycode button )
  */
 static void input_joyhatevent( const Uint8 value, const Uint8 hat )
 {
-   for (int i=0; i<input_numbinds; i++) {
+   for (int i=0; i<KST_END; i++) {
       const Keybind *k = &input_keybinds[i];
       if (k->key != hat)
          continue;
@@ -1290,7 +1289,7 @@ static void input_keyevent( const int event, SDL_Keycode key, const SDL_Keymod m
 {
    /* Filter to "Naev" modifiers. */
    SDL_Keymod mod_filtered = input_translateMod(mod);
-   for (int i=0; i<input_numbinds; i++) {
+   for (int i=0; i<KST_END; i++) {
       const Keybind *k = &input_keybinds[i];
       if ((event==KEY_PRESS) && k->disabled)
          continue;
@@ -1740,7 +1739,7 @@ void input_handle( SDL_Event* event )
  */
 KeySemanticType input_keyFromBrief( const char *target )
 {
-   for (int i=0; i<input_numbinds; i++) {
+   for (int i=0; i<KST_END; i++) {
       if (strcmp(input_getKeybindBrief(i),target)==0)
          return i;
    }

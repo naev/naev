@@ -616,8 +616,8 @@ static void menuKeybinds_genList( unsigned int wid )
    menuKeybinds_getDim( wid, &w, &h, &lw, &lh, NULL, NULL );
 
    /* Create the list. */
-   str = malloc( sizeof( char * ) * input_numbinds );
-   for (int j = 0; j < input_numbinds; j++) {
+   str = malloc( sizeof(char*) * KST_END );
+   for (int j=0; j<KST_END; j++) {
       SDL_Keycode key;
       const char *short_desc = input_getKeybindName(j);
       int l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
@@ -685,7 +685,7 @@ static void menuKeybinds_genList( unsigned int wid )
       window_destroyWidget( wid, "lstKeybinds" );
    }
 
-   window_addList( wid, 20, -40, lw, lh, "lstKeybinds", str, input_numbinds, 0, menuKeybinds_update, opt_setKey );
+   window_addList( wid, 20, -40, lw, lh, "lstKeybinds", str, KST_END, 0, menuKeybinds_update, opt_setKey );
 
    if (regen) {
       toolkit_setListPos( wid, "lstKeybinds", pos );
@@ -1111,7 +1111,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    if ((boundkey>=0) && (boundkey==opt_selectedKeybind))
       dialogue_alert( _("Key '%s' overlaps with key '%s' that was just set. "
             "You may want to correct this."),
-            keybind_info[boundkey][0], keybind_info[opt_selectedKeybind][0] );
+            input_getKeybindName(boundkey), input_getKeybindName(opt_selectedKeybind) );
 
    /* Set keybinding. */
    input_setKeybind( opt_selectedKeybind, type, key, mod );

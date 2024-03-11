@@ -518,7 +518,7 @@ int conf_loadConfig ( const char* file )
 
                /* Check to see if it is valid. */
                if ((key == SDLK_UNKNOWN) && (type == KEYBIND_KEYBOARD)) {
-                  WARN(_("Keybind for '%s' is invalid"), keybind_info[i][0]);
+                  WARN(_("Keybind for '%s' is invalid"), input_getKeybindName(i));
                   continue;
                }
 
@@ -542,7 +542,7 @@ int conf_loadConfig ( const char* file )
                input_setKeybind( i, type, key, m );
             }
             else
-               WARN(_("Malformed keybind for '%s' in '%s'."), keybind_info[i][0], file);
+               WARN(_("Malformed keybind for '%s' in '%s'."), input_getKeybindName(i), file);
          }
          /* clean up after table stuff */
          lua_pop(naevL,1);
