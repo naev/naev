@@ -1174,7 +1174,6 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "input", hparam );
 }
-#undef KEY
 
 /*
  * joystick
