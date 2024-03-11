@@ -41,6 +41,7 @@
 #include "pilot.h"
 #include "pilot_heat.h"
 #include "player.h"
+#include "player_autonav.h"
 #include "rng.h"
 #include "space.h"
 #include "weapon.h"

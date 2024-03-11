@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include "pilot.h"
+
 /* Autonav states. */
 enum {
    AUTONAV_JUMP,  /**< Player is going to jump. */

@@ -45,6 +45,7 @@
 #include "ntime.h"
 #include "player.h"
 #include "player_fleet.h"
+#include "player_autonav.h"
 #include "rng.h"
 #include "render.h"
 #include "save.h"

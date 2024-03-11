@@ -59,6 +59,7 @@
 #include "player_gui.h"
 #include "player_fleet.h"
 #include "player_inventory.h"
+#include "player_autonav.h"
 #include "rng.h"
 #include "shiplog.h"
 #include "sound.h"

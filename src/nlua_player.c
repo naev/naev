@@ -50,6 +50,7 @@
 #include "player_fleet.h"
 #include "player_inventory.h"
 #include "player_gui.h"
+#include "player_autonav.h"
 #include "save.h"
 #include "start.h"
 #include "rng.h"

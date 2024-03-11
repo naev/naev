@@ -2,7 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 /** @cond */
-#include <float.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,13 +23,13 @@
 #include "map_system.h"
 #include "map_overlay.h"
 #include "mission.h"
-#include "nebula.h"
 #include "ndata.h"
 #include "nmath.h"
 #include "nstring.h"
 #include "nxml.h"
 #include "opengl.h"
 #include "player.h"
+#include "player_autonav.h"
 #include "space.h"
 #include "toolkit.h"
 #include "utf8.h"

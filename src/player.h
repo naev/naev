@@ -55,8 +55,6 @@ enum {
    PINPUT_BRAKING   /**< Player engaged auto-braking. */
 };
 
-#include "player_autonav.h"
-
 /**
  * @brief Wrapper for outfits.
  */

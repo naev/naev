@@ -75,6 +75,7 @@
 #include "pause.h"
 #include "pilot.h"
 #include "player.h"
+#include "player_autonav.h"
 #include "plugin.h"
 #include "render.h"
 #include "rng.h"

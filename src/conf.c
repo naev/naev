@@ -18,12 +18,10 @@
 #include "input.h"
 #include "log.h"
 #include "music.h"
-#include "ndata.h"
 #include "nfile.h"
+#include "space.h"
 #include "nlua.h"
 #include "nstring.h"
-#include "opengl.h"
-#include "player.h"
 #include "utf8.h"
 
 #define conf_loadInt( env, n, i )            \

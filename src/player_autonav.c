@@ -12,7 +12,7 @@
 #include "naev.h"
 /** @endcond */
 
-#include "player.h"
+#include "player_autonav.h"
 
 #include "ai.h"
 #include "pause.h"

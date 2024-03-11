@@ -29,6 +29,7 @@
 #include "pause.h"
 #include "pilot.h"
 #include "player.h"
+#include "player_autonav.h"
 #include "toolkit.h"
 #include "utf8.h"
 

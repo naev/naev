@@ -17,7 +17,6 @@
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
 #define KEY_RELEASE  (-1.) /**< Key is released. */
 
-
 /**
  * @brief Naev internal key types
  */
