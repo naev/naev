@@ -168,6 +168,9 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
 static void input_clickZoom( double modifier );
 static void input_clickevent( SDL_Event* event );
 static void input_mouseMove( SDL_Event* event );
+static void input_joyaxis( const SDL_Keycode axis, const int value );
+static void input_joyevent( const int event, const SDL_Keycode button );
+static void input_keyevent( const int event, const SDL_Keycode key, const SDL_Keymod mod, const int repeat );
 
 /**
  * @brief Sets the default input keys.
@@ -304,14 +307,14 @@ void input_init (void)
 
    /* Create safe null keybinding for each. */
    for (int i=0; i<input_numbinds; i++) {
-      Keybind *temp  = &input_keybinds[i];
-      memset( temp, 0, sizeof(Keybind) );
-      temp->type     = KEYBIND_NULL;
-      temp->key      = SDLK_UNKNOWN;
-      temp->mod      = NMOD_NONE;
+      Keybind *k  = &input_keybinds[i];
+      memset( k, 0, sizeof(Keybind) );
+      k->type     = KEYBIND_NULL;
+      k->key      = SDLK_UNKNOWN;
+      k->mod      = NMOD_NONE;
 
       if (i==KST_PASTE)
-         input_paste = temp;
+         input_paste = k;
    }
 }
 
@@ -395,10 +398,11 @@ SDL_Keycode input_keyConv( const char *name )
 void input_setKeybind( KeySemanticType keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod )
 {
    if ((keybind >=0) && (keybind<KST_END)){
-      input_keybinds[keybind].type = type;
-      input_keybinds[keybind].key = key;
+      Keybind *k  = &input_keybinds[keybind];
+      k->type     = type;
+      k->key      = key;
       /* Non-keyboards get mod NMOD_ANY to always match. */
-      input_keybinds[keybind].mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ANY;
+      k->mod      = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ANY;
       return;
    }
    WARN(_("Unable to set keybinding '%d', that command doesn't exist"), keybind);
@@ -526,7 +530,7 @@ KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Ke
          continue;
 
       /* Must match key. */
-      if (key !=  k->key)
+      if (key != k->key)
          continue;
 
       /* Handle per case. */
@@ -1173,14 +1177,6 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
 #undef KEY
 
 /*
- * events
- */
-/* prototypes */
-static void input_joyaxis( const SDL_Keycode axis, const int value );
-static void input_joyevent( const int event, const SDL_Keycode button );
-static void input_keyevent( const int event, const SDL_Keycode key, const SDL_Keymod mod, const int repeat );
-
-/*
  * joystick
  */
 /**
@@ -1191,24 +1187,25 @@ static void input_keyevent( const int event, const SDL_Keycode key, const SDL_Ke
 static void input_joyaxis( const SDL_Keycode axis, const int value )
 {
    for (int i=0; i<input_numbinds; i++) {
-      if (input_keybinds[i].key == axis) {
-         /* Positive axis keybinding. */
-         if ((input_keybinds[i].type == KEYBIND_JAXISPOS)
-               && (value >= 0)) {
-            int k = (value > 0) ? KEY_PRESS : KEY_RELEASE;
-            if ((k == KEY_PRESS) && input_keybinds[i].disabled)
-               continue;
-            input_key( i, k, FABS(((double)value)/32767.), 0 );
-         }
+      const Keybind *k = &input_keybinds[i];
+      if (k->key!=axis)
+         continue;
+      /* Positive axis keybinding. */
+      if ((k->type == KEYBIND_JAXISPOS)
+            && (value >= 0)) {
+         int press = (value > 0) ? KEY_PRESS : KEY_RELEASE;
+         if ((press==KEY_PRESS) && k->disabled)
+            continue;
+         input_key( i, press, FABS(((double)value)/32767.), 0 );
+      }
 
-         /* Negative axis keybinding. */
-         if ((input_keybinds[i].type == KEYBIND_JAXISNEG)
-               && (value <= 0)) {
-            int k = (value < 0) ? KEY_PRESS : KEY_RELEASE;
-            if ((k == KEY_PRESS) && input_keybinds[i].disabled)
-               continue;
-            input_key( i, k, FABS(((double)value)/32767.), 0 );
-         }
+      /* Negative axis keybinding. */
+      if ((k->type == KEYBIND_JAXISNEG)
+            && (value <= 0)) {
+         int press = (value < 0) ? KEY_PRESS : KEY_RELEASE;
+         if ((press==KEY_PRESS) && k->disabled)
+            continue;
+         input_key( i, press, FABS(((double)value)/32767.), 0 );
       }
    }
 }
@@ -1220,10 +1217,10 @@ static void input_joyaxis( const SDL_Keycode axis, const int value )
 static void input_joyevent( const int event, const SDL_Keycode button )
 {
    for (int i=0; i<input_numbinds; i++) {
-      if ((event == KEY_PRESS) && input_keybinds[i].disabled)
+      const Keybind *k = &input_keybinds[i];
+      if ((event==KEY_PRESS) && k->disabled)
          continue;
-      if ((input_keybinds[i].type == KEYBIND_JBUTTON) &&
-            (input_keybinds[i].key == button))
+      if ((k->type==KEYBIND_JBUTTON) && (k->key==button))
          input_key(i, event, -1., 0);
    }
 }
@@ -1236,24 +1233,25 @@ static void input_joyevent( const int event, const SDL_Keycode button )
 static void input_joyhatevent( const Uint8 value, const Uint8 hat )
 {
    for (int i=0; i<input_numbinds; i++) {
-      if (input_keybinds[i].key != hat)
+      const Keybind *k = &input_keybinds[i];
+      if (k->key != hat)
          continue;
 
-      if (input_keybinds[i].type == KEYBIND_JHAT_UP) {
+      if (k->type == KEYBIND_JHAT_UP) {
          int event = (value & SDL_HAT_UP) ? KEY_PRESS : KEY_RELEASE;
-         if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
+         if (!((event == KEY_PRESS) && k->disabled))
             input_key(i, event, -1., 0);
-      } else if (input_keybinds[i].type == KEYBIND_JHAT_DOWN) {
+      } else if (k->type == KEYBIND_JHAT_DOWN) {
          int event = (value & SDL_HAT_DOWN) ? KEY_PRESS : KEY_RELEASE;
-         if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
+         if (!((event == KEY_PRESS) && k->disabled))
             input_key(i, event, -1., 0);
-      } else if (input_keybinds[i].type == KEYBIND_JHAT_LEFT) {
+      } else if (k->type == KEYBIND_JHAT_LEFT) {
          int event = (value & SDL_HAT_LEFT) ? KEY_PRESS : KEY_RELEASE;
-         if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
+         if (!((event == KEY_PRESS) && k->disabled))
             input_key(i, event, -1., 0);
-      } else if (input_keybinds[i].type == KEYBIND_JHAT_RIGHT) {
+      } else if (k->type == KEYBIND_JHAT_RIGHT) {
          int event = (value & SDL_HAT_RIGHT) ? KEY_PRESS : KEY_RELEASE;
-         if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
+         if (!((event == KEY_PRESS) && k->disabled))
             input_key(i, event, -1., 0);
       }
    }
@@ -1274,16 +1272,17 @@ static void input_keyevent( const int event, SDL_Keycode key, const SDL_Keymod m
    /* Filter to "Naev" modifiers. */
    SDL_Keymod mod_filtered = input_translateMod(mod);
    for (int i=0; i<input_numbinds; i++) {
-      if ((event == KEY_PRESS) && input_keybinds[i].disabled)
+      const Keybind *k = &input_keybinds[i];
+      if ((event==KEY_PRESS) && k->disabled)
          continue;
-      if ((input_keybinds[i].type == KEYBIND_KEYBOARD) &&
-            (input_keybinds[i].key == key)) {
-         if ((input_keybinds[i].mod == mod_filtered) ||
-               (input_keybinds[i].mod == NMOD_ANY) ||
-               (event == KEY_RELEASE)) /**< Release always gets through. */
-            input_key(i, event, -1., repeat);
-            /* No break so all keys get pressed if needed. */
-      }
+      if (k->type!=KEYBIND_KEYBOARD)
+         continue;
+      if (k->key != key)
+         continue;
+      /* Release always gets through. */
+      if ((k->mod==mod_filtered) || (k->mod==NMOD_ANY) || (event == KEY_RELEASE))
+         input_key(i, event, -1., repeat);
+         /* No break since multiple keys can be bound to one symbol. */
    }
 }
 
@@ -1376,7 +1375,7 @@ static void input_clickevent( SDL_Event* event )
 int input_clickPos( SDL_Event *event, double x, double y, double zoom, double minpr, double minr )
 {
    unsigned int pid;
-   Pilot *p;
+   const Pilot *p;
    double r, rp;
    double d, dp;
    int pntid, jpid, astid, fieid;
@@ -1463,7 +1462,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
  */
 int input_clickedJump( int jump, int autonav )
 {
-   JumpPoint *jp = &cur_system->jumps[ jump ];
+   const JumpPoint *jp = &cur_system->jumps[ jump ];
 
    if (!jp_isUsable(jp))
       return 0;
@@ -1474,7 +1473,7 @@ int input_clickedJump( int jump, int autonav )
    if (player.p->nav_hyperspace != jump)
       map_select( jp->target, 0 );
 
-   if ((jump == player.p->nav_hyperspace) && input_isDoubleClick( (void*)jp )) {
+   if ((jump==player.p->nav_hyperspace) && input_isDoubleClick( jp )) {
       player_targetHyperspaceSet( jump, 0 );
       if (space_canHyperspace(player.p))
          player_jump();
@@ -1675,21 +1674,15 @@ void input_handle( SDL_Event* event )
       return;
 
    switch (event->type) {
-      /*
-       * game itself
-       */
       case SDL_JOYAXISMOTION:
          input_joyaxis(event->jaxis.axis, event->jaxis.value);
          break;
-
       case SDL_JOYBUTTONDOWN:
          input_joyevent(KEY_PRESS, event->jbutton.button);
          break;
-
       case SDL_JOYBUTTONUP:
          input_joyevent(KEY_RELEASE, event->jbutton.button);
          break;
-
       case SDL_JOYHATMOTION:
          input_joyhatevent(event->jhat.value, event->jhat.hat);
          break;
@@ -1699,25 +1692,21 @@ void input_handle( SDL_Event* event )
             return;
          input_keyevent(KEY_PRESS, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
-
       case SDL_KEYUP:
          if (event->key.repeat != 0)
             return;
          input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
 
-      /* Mouse stuff. */
       case SDL_MOUSEBUTTONDOWN:
          input_clickevent( event );
          break;
-
       case SDL_MOUSEWHEEL:
          if (event->wheel.y > 0)
             input_clickZoom( 1.1 );
          else if (event->wheel.y < 0)
             input_clickZoom( 0.9 );
          break;
-
       case SDL_MOUSEMOTION:
          input_mouseMove( event );
          break;
@@ -1727,6 +1716,9 @@ void input_handle( SDL_Event* event )
    }
 }
 
+/**
+ * Gets the semantic key binding from a brief description name.
+ */
 KeySemanticType input_keyFromBrief( const char *target )
 {
    for (int i=0; i<input_numbinds; i++) {
