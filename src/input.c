@@ -635,7 +635,7 @@ void input_update( double dt )
    }
 }
 
-#define INGAME()  (!toolkit_isOpen() && ((value==KEY_RELEASE) || !player_isFlag(PLAYER_CINEMATICS))) /**< Makes sure player is in game. */
+#define INGAME()  (!toolkit_isOpen() && ((value==KEY_RELEASE) || !player_isFlag(PLAYER_CINEMATICS)) && (player.p!=NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Makes sure player is in game. */
 #define NOHYP()   \
    ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
    !pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
@@ -777,19 +777,19 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
             player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag( PLAYER_REVERSE );
          }
-         else if ( ( value == KEY_RELEASE ) && player_isFlag( PLAYER_REVERSE ) ) {
+         else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE)) {
                player_rmFlag( PLAYER_REVERSE );
 
-               if ( !player_isFlag( PLAYER_ACCEL ) )
+               if (!player_isFlag(PLAYER_ACCEL))
                   player_accelOver();
                /* Double tap reverse = cooldown! */
-               if ( isdoubletap )
+               if (isdoubletap)
                   player_cooldownBrake();
          }
          break;
       /* try to enter stealth mode. */
       case KST_STEALTH:
-         if (!(!repeat && NOHYP() && NODEAD() && INGAME()))
+         if (!(!repeat && NOHYP() && INGAME()))
             break;
          if (value==KEY_PRESS)
             player_stealth();
@@ -821,7 +821,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          break;
       /* targeting */
       case KST_TARGET_NEXT:
-         if (!((INGAME() || map_isOpen()) && NODEAD()))
+         if (!(INGAME() || map_isOpen()))
             break;
          if (value==KEY_PRESS) {
             if (map_isOpen())
@@ -831,7 +831,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          }
          break;
       case KST_TARGET_PREV:
-         if (!((INGAME() || map_isOpen()) && NODEAD()))
+         if (!(INGAME() || map_isOpen()))
             break;
          if (value==KEY_PRESS) {
             if (map_isOpen())
@@ -841,7 +841,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          }
          break;
       case KST_TARGET_CLOSE:
-         if (!((INGAME() || map_isOpen()) && NODEAD()))
+         if (!(INGAME() || map_isOpen()))
             break;
          if (value==KEY_PRESS) {
             if (map_isOpen())
@@ -851,26 +851,26 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          }
          break;
       case KST_HTARGET_NEXT:
-         if (!(INGAME() && NODEAD()))
-               break;
+         if (!INGAME())
+            break;
          if (value==KEY_PRESS)
             player_targetNext(1);
          break;
       case KST_HTARGET_PREV:
-         if (!(INGAME() && NODEAD()))
-               break;
+         if (!INGAME())
+            break;
          if (value==KEY_PRESS)
             player_targetPrev(1);
          break;
       case KST_HTARGET_CLOSE:
-         if (!(INGAME() && NODEAD()))
-               break;
+         if (!INGAME())
+            break;
          if (value==KEY_PRESS)
             player_targetHostile();
          break;
       case KST_TARGET_CLEAR:
-         if (!(INGAME() && NODEAD()))
-               break;
+         if (!INGAME())
+            break;
          if (value==KEY_PRESS)
             player_targetClear();
          break;
@@ -879,38 +879,38 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
       * Escorts.
       */
       case KST_ESCORT_NEXT:
-         if (!(INGAME() && NODEAD() && !repeat))
+         if (!(INGAME() && !repeat))
             break;
          if (value==KEY_PRESS)
             player_targetEscort(0);
          break;
       case KST_ESCORT_PREV:
-         if (!(INGAME() && NODEAD() && !repeat))
+         if (!(INGAME() && !repeat))
             break;
          if (value==KEY_PRESS)
             player_targetEscort(1);
          break;
       case KST_ESCORT_ATTACK:
-         if (!(INGAME() && NODEAD() && !repeat))
-               break;
+         if (!(INGAME() && !repeat))
+            break;
          if (value==KEY_PRESS)
             escorts_attack(player.p);
          break;
       case KST_ESCORT_HALT:
-         if (!(INGAME() && NODEAD() && !repeat))
-               break;
+         if (!(INGAME() && !repeat))
+            break;
          if (value==KEY_PRESS)
             escorts_hold(player.p);
          break;
       case KST_ESCORT_RETURN:
-         if (!(INGAME() && NODEAD() && !repeat))
-               break;
+         if (!(INGAME() && !repeat))
+            break;
          if (value==KEY_PRESS)
             escorts_return(player.p);
          break;
       case KST_ESCORT_CLEAR:
-         if (!(INGAME() && NODEAD() && !repeat))
-               break;
+         if (!(INGAME() && !repeat))
+            break;
          if (value==KEY_PRESS)
             escorts_clear(player.p);
          break;
@@ -996,14 +996,14 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          break;
       /* target spob (cycles like target) */
       case KST_TARGET_SPOB:
-         if (!(INGAME() && NOHYP() && NOLAND() && NODEAD()))
+         if (!(INGAME() && NOHYP() && NOLAND()))
             break;
          if (value==KEY_PRESS)
             player_targetSpob();
          break;
       /* target nearest spob or attempt to land */
       case KST_APPROACH:
-         if (!(INGAME() && NOHYP() && NOLAND() && NODEAD() && !repeat))
+         if (!(INGAME() && NOHYP() && NOLAND() && !repeat))
             break;
          if (value==KEY_PRESS) {
             player_restoreControl( 0, NULL );
@@ -1031,7 +1031,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          }
          break;
       case KST_OVERLAY_MAP:
-         if (!(NODEAD() && (INGAME() || map_isOpen()) && !repeat))
+         if (!((INGAME() || map_isOpen()) && !repeat))
             break;
          if (map_isOpen())
             map_toggleNotes();
@@ -1057,25 +1057,25 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
       * Communication.
       */
       case KST_LOG_UP:
-         if (!(INGAME() && NODEAD()))
+         if (!INGAME())
             break;
          if (value==KEY_PRESS)
             gui_messageScrollUp(5);
          break;
       case KST_LOG_DOWN:
-         if (!(INGAME() && NODEAD()))
+         if (!INGAME())
             break;
          if (value==KEY_PRESS)
             gui_messageScrollDown(5);
          break;
       case KST_HAIL:
-         if (!(INGAME() && NOHYP() && NODEAD() && !repeat))
+         if (!(INGAME() && NOHYP() && !repeat))
             break;
          if (value==KEY_PRESS)
             player_hail();
          break;
       case KST_AUTOHAIL:
-         if (!(INGAME() && NOHYP() && NODEAD() && !repeat))
+         if (!(INGAME() && NOHYP() && !repeat))
             break;
          if (value==KEY_PRESS)
             player_autohail();
@@ -1086,14 +1086,14 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
       */
       /* zooming in */
       case KST_ZOOM_IN:
-         if (!(INGAME() && NODEAD()))
+         if (!INGAME())
             break;
          if (value==KEY_PRESS)
             gui_setRadarRel(-1);
          break;
       /* zooming out */
       case KST_ZOOM_OUT:
-         if (!(INGAME() && NODEAD()))
+         if (!INGAME())
             break;
          if (value==KEY_PRESS)
             gui_setRadarRel(1);
