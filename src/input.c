@@ -636,12 +636,17 @@ void input_update( double dt )
 }
 
 #define INGAME()  (!toolkit_isOpen() && ((value==KEY_RELEASE) || !player_isFlag(PLAYER_CINEMATICS)) && (player.p!=NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Makes sure player is in game. */
+#define HYP()  \
+   ((player.p==NULL) || pilot_isFlag(player.p,PILOT_HYP_PREP) ||\
+   pilot_isFlag(player.p,PILOT_HYP_BEGIN) ||\
+   pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
 #define NOHYP()   \
    ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
    !pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
    !pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
 #define DEAD()    ((player.p==NULL) || pilot_isFlag(player.p,PILOT_DEAD)) /**< Player is dead. */
 #define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
+#define LAND()  ((player.p==NULL) || landed || pilot_isFlag(player.p,PILOT_LANDING)) /**< Player isn't landed. */
 #define NOLAND()  ((player.p != NULL) && (!landed && !pilot_isFlag(player.p,PILOT_LANDING))) /**< Player isn't landed. */
 /**
  * @brief Runs the input command.
@@ -789,7 +794,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          break;
       /* try to enter stealth mode. */
       case KST_STEALTH:
-         if (!(!repeat && NOHYP() && INGAME()))
+         if (repeat || HYP() || !INGAME())
             break;
          if (value==KEY_PRESS)
             player_stealth();
@@ -983,7 +988,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
       * Space
       */
       case KST_AUTONAV:
-         if (!(NOHYP() && NODEAD()))
+         if (HYP() || DEAD())
             break;
          if (value==KEY_PRESS) {
             if (map_isOpen()) {
@@ -996,14 +1001,14 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          break;
       /* target spob (cycles like target) */
       case KST_TARGET_SPOB:
-         if (!(INGAME() && NOHYP() && NOLAND()))
+         if (HYP() || LAND() || !INGAME())
             break;
          if (value==KEY_PRESS)
             player_targetSpob();
          break;
       /* target nearest spob or attempt to land */
       case KST_APPROACH:
-         if (!(INGAME() && NOHYP() && NOLAND() && !repeat))
+         if (repeat || LAND() || HYP() || !INGAME())
             break;
          if (value==KEY_PRESS) {
             player_restoreControl( 0, NULL );
@@ -1011,13 +1016,13 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          }
          break;
       case KST_TARGET_JUMP:
-         if (!(NOHYP() && NOLAND() && NODEAD()))
+         if (DEAD() || HYP() || LAND())
             break;
          if (value==KEY_PRESS)
             player_targetHyperspace();
          break;
       case KST_STAR_MAP:
-         if (!(NOHYP() && NODEAD() && !repeat))
+         if (repeat || HYP() || DEAD())
             break;
          if (value==KEY_PRESS)
             map_open();
@@ -1039,13 +1044,13 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
             ovr_key( value );
          break;
       case KST_MOUSE_FLYING:
-         if (!(NODEAD() && !repeat))
+         if (DEAD() || repeat)
             break;
          if (value==KEY_PRESS)
             player_toggleMouseFly();
          break;
       case KST_COOLDOWN:
-         if (!(NOHYP() && NOLAND() && NODEAD() && !repeat))
+         if (repeat || DEAD() || LAND() || HYP())
             break;
          if (value==KEY_PRESS) {
             player_restoreControl( PINPUT_BRAKING, NULL );
@@ -1069,13 +1074,13 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
             gui_messageScrollDown(5);
          break;
       case KST_HAIL:
-         if (!(INGAME() && NOHYP() && !repeat))
+         if (repeat || !INGAME() || HYP())
             break;
          if (value==KEY_PRESS)
             player_hail();
          break;
       case KST_AUTOHAIL:
-         if (!(INGAME() && NOHYP() && !repeat))
+         if (repeat || !INGAME() || HYP())
             break;
          if (value==KEY_PRESS)
             player_autohail();
@@ -1139,7 +1144,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          break;
       /* opens a small menu */
       case KST_MENU_SMALL:
-         if (!(NODEAD() && !repeat))
+         if (DEAD() || repeat)
             break;
          if (value==KEY_PRESS)
             menu_small( 1, 1, 1, 1 );
@@ -1147,7 +1152,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
 
       /* shows pilot information */
       case KST_MENU_INFO:
-         if (!(NOHYP() && NODEAD() && !repeat))
+         if (repeat || DEAD() || HYP())
             break;
          if (value==KEY_PRESS)
             menu_info( INFO_DEFAULT );
@@ -1155,7 +1160,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
 
       /* Opens the Lua console. */
       case KST_CONSOLE:
-         if (!(NODEAD() && !repeat))
+         if (DEAD() || repeat)
             break;
          if (value==KEY_PRESS)
             cli_open();
