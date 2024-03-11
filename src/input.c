@@ -559,11 +559,25 @@ KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Ke
    return -1;
 }
 
-const char *input_getBrief( KeySemanticType keybind )
+/**
+ * @brief Gets the brief descirption of the keybinding.
+ */
+const char *input_getKeybindBrief( KeySemanticType keybind )
 {
    if ((keybind>=0) && (keybind<KST_END))
       return keybind_info[keybind][2];
    WARN(_("Unable to get keybinding brief '%d', that command doesn't exist"), keybind);
+   return NULL;
+}
+
+/**
+ * @brief Gets the name of the keybinding.
+ */
+const char *input_getKeybindName( KeySemanticType keybind )
+{
+   if ((keybind>=0) && (keybind<KST_END))
+      return keybind_info[keybind][0];
+   WARN(_("Unable to get keybinding name '%d', that command doesn't exist"), keybind);
    return NULL;
 }
 
@@ -1174,7 +1188,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
 
    /* Run the hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = input_getBrief(keynum);
+   hparam[0].u.str   = input_getKeybindBrief(keynum);
    hparam[1].type    = HOOK_PARAM_BOOL;
    hparam[1].u.b     = (value > 0.);
    hparam[2].type    = HOOK_PARAM_SENTINEL;
@@ -1727,7 +1741,7 @@ void input_handle( SDL_Event* event )
 KeySemanticType input_keyFromBrief( const char *target )
 {
    for (int i=0; i<input_numbinds; i++) {
-      if (strcmp(input_getBrief(i),target)==0)
+      if (strcmp(input_getKeybindBrief(i),target)==0)
          return i;
    }
    WARN(_("Key brief '%s' not found!"),target);

@@ -450,7 +450,7 @@ int conf_loadConfig ( const char* file )
        * Keybindings.
        */
       for (int i=0; i<=KST_PASTE; i++) {
-         nlua_getenv( naevL, lEnv, input_getBrief(i) );
+         nlua_getenv( naevL, lEnv, input_getKeybindBrief(i) );
 
          /* Use 'none' to differentiate between not instantiated and disabled bindings. */
          if (lua_isstring(naevL,-1)) {
@@ -1151,7 +1151,7 @@ int conf_saveConfig ( const char* file )
       }
       /* Write a nil if an unknown type */
       if ((typename == NULL) || (key == SDLK_UNKNOWN && type == KEYBIND_KEYBOARD)) {
-         pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = \"none\"\n", input_getBrief(i) );
+         pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = \"none\"\n", input_getKeybindBrief(i) );
          continue;
       }
 
@@ -1174,7 +1174,7 @@ int conf_saveConfig ( const char* file )
 
       /* Write out a simple Lua table containing the keybind info */
       pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
-            input_getBrief(i), typename, modname, keyname);
+            input_getKeybindBrief(i), typename, modname, keyname);
    }
    conf_saveEmptyLine();
 

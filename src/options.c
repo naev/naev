@@ -619,7 +619,7 @@ static void menuKeybinds_genList( unsigned int wid )
    str = malloc( sizeof( char * ) * input_numbinds );
    for (int j = 0; j < input_numbinds; j++) {
       SDL_Keycode key;
-      const char *short_desc = _(keybind_info[j][1]);
+      const char *short_desc = input_getKeybindName(j);
       int l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
                 * where "char mod_text[64]" is one of the "%s" args.
                 * (that plus brackets plus %c + null gets to 68.
@@ -717,7 +717,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
    /* Remove the excess. */
    keybind = selected;
    opt_selectedKeybind = keybind;
-   window_modifyText( wid, "txtName", _(keybind_info[selected][1]) );
+   window_modifyText( wid, "txtName", input_getKeybindName(keybind) );
 
    /* Get information. */
    desc = input_getKeybindDescription( keybind );
