@@ -51,7 +51,7 @@ typedef enum KeySemanticType_ {
 
    KST_FIRE_PRIMARY,
    KST_FIRE_SECONDARY,
-   KST_INIT_COOLDOWN,
+   KST_COOLDOWN,
 
    KST_WEAPSET1,
    KST_WEAPSET2,
@@ -64,8 +64,8 @@ typedef enum KeySemanticType_ {
    KST_WEAPSET9,
    KST_WEAPSET0,
 
-   KST_LOCAL_MAP,
-   KST_GLOBAL_MAP,
+   KST_OVERLAY_MAP,
+   KST_STAR_MAP,
 
    KST_MENU_SMALL,
    KST_MENU_INFO,
@@ -78,10 +78,10 @@ typedef enum KeySemanticType_ {
    KST_ESCORT_RETURN,
    KST_ESCORT_CLEAR,
 
-   KST_COMM_HAIL,
-   KST_COMM_RECEIVE,
-   KST_COMM_UP,
-   KST_COMM_DOWN,
+   KST_HAIL,
+   KST_AUTOHAIL,
+   KST_LOG_UP,
+   KST_LOG_DOWN,
 
    KST_ZOOM_IN,
    KST_ZOOM_OUT,

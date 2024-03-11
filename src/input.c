@@ -50,14 +50,14 @@ const char *keybind_info[KST_END][3] = {
    [KST_LEFT]={ N_("Turn Left"), N_("Makes your ship turn left."), "left" },
    [KST_RIGHT]={ N_("Turn Right"), N_("Makes your ship turn right.") , "right"},
    [KST_REVERSE]={ N_("Reverse"), N_("Makes your ship face the direction you're moving from. Useful for braking."), "reverse" },
-   [KST_FACE]={ N_("Face Target"), N_("Faces the targeted ship if one is targeted, otherwise faces targeted spob or jump point."), "face" },
+   [KST_FACE]={ N_("Face Target"), N_("Faces the targeted ship if one is targeted, otherwise faces targeted spob, or jump point."), "face" },
 
-   /*Gameplay modifiers*/
+   /* Gameplay modifiers */
    [KST_STEALTH]={ N_("Stealth"), N_("Tries to enter stealth mode."), "stealth" },
    [KST_GAME_SPEED]={ N_("Toggle Speed"), N_("Toggles speed modifier."), "speed" },
    [KST_PAUSE]={ N_("Pause"), N_("Pauses the game."), "pause" },
 
-   /*Movement modifiers*/
+   /* Movement modifiers */
    [KST_AUTONAV]={ N_("Autonavigation On"), N_("Initializes the autonavigation system."), "autonav" },
    [KST_APPROACH]={ N_("Approach"), N_("Attempts to approach the targeted ship or space object, "
          "or targets the nearest landable space object. "
@@ -73,7 +73,7 @@ const char *keybind_info[KST_END][3] = {
    [KST_TARGET_SPOB]={ N_("Target Spob"), N_("Cycles through space object targets."), "target_spob" },
    [KST_TARGET_JUMP]={ N_("Target Jumpgate"), N_("Cycles through jump points."), "thyperspace" },
 
-   /**Hostile targets**/
+   /* Hostile targets */
    [KST_HTARGET_NEXT]={ N_("Target Next Hostile"), N_("Cycles through hostile ship targets."), "target_nextHostile" },
    [KST_HTARGET_PREV]={ N_("Target Previous Hostile"), N_("Cycles backwards through hostile ship targets."), "target_prevHostile" },
    [KST_HTARGET_CLOSE]={ N_("Target Nearest Hostile"), N_("Targets the nearest hostile ship."), "target_hostile" },
@@ -83,7 +83,7 @@ const char *keybind_info[KST_END][3] = {
    /* Fighting */
    [KST_FIRE_PRIMARY]={ N_("Fire Primary Weapon"), N_("Fires primary weapons."), "primary" },
    [KST_FIRE_SECONDARY]={ N_("Fire Secondary Weapon"), N_("Fires secondary weapons."), "secondary" },
-   [KST_INIT_COOLDOWN]={ N_("Active Cooldown"), N_("Begins active cooldown."), "cooldown" },
+   [KST_COOLDOWN]={ N_("Active Cooldown"), N_("Begins active cooldown."), "cooldown" },
 
    /* Switching tab s*/
    [KST_WEAPSET1]={ N_("Weapon Set 1"), N_("Activates weapon set 1."), "weapset1" },
@@ -97,11 +97,11 @@ const char *keybind_info[KST_END][3] = {
    [KST_WEAPSET9]={ N_("Weapon Set 9"), N_("Activates weapon set 9."), "weapset9" },
    [KST_WEAPSET0]={ N_("Weapon Set 0"), N_("Activates weapon set 0."), "weapset0" },
 
-   /*Map manipulation*/
-   [KST_LOCAL_MAP]={ N_("Overlay Map"), N_("Opens the in-system overlay map."), "overlay" },
-   [KST_GLOBAL_MAP]={ N_("Star Map"), N_("Opens the star map."), "starmap" },
+   /* Map manipulation */
+   [KST_OVERLAY_MAP]={ N_("Overlay Map"), N_("Opens the in-system overlay map."), "overlay" },
+   [KST_STAR_MAP]={ N_("Star Map"), N_("Opens the star map."), "starmap" },
 
-   /*Menus*/
+   /* Menus */
    [KST_MENU_SMALL]={ N_("Small Menu"), N_("Opens the small in-game menu."), "menu" },
    [KST_MENU_INFO]={ N_("Information Menu"), N_("Opens the information menu."), "info" },
    [KST_CONSOLE]={ N_("Lua Console"), N_("Opens the Lua console."), "console" },
@@ -113,11 +113,12 @@ const char *keybind_info[KST_END][3] = {
    [KST_ESCORT_HALT]={ N_("Escort Hold Command"), N_("Orders escorts to hold their formation."), "e_hold" },
    [KST_ESCORT_RETURN]={ N_("Escort Return Command"), N_("Orders escorts to return to your ship hangars."), "e_return" },
    [KST_ESCORT_CLEAR]={ N_("Escort Clear Commands"), N_("Clears your escorts of commands."), "e_clear" },
+
    /* Communication */
-   [KST_COMM_HAIL]={ N_("Hail Target"), N_("Attempts to initialize communication with the targeted ship."), "hail" },
-   [KST_COMM_RECEIVE]={ N_("Autohail"), N_("Automatically initialize communication with a ship that is hailing you."), "autohail" },
-   [KST_COMM_UP]={ N_("Log Scroll Up"), N_("Scrolls the log upwards."), "log_up" },
-   [KST_COMM_DOWN]={ N_("Log Scroll Down"), N_("Scrolls the log downwards."), "log_down" },
+   [KST_HAIL]={ N_("Hail Target"), N_("Attempts to initialize communication with the targeted ship."), "hail" },
+   [KST_AUTOHAIL]={ N_("Autohail"), N_("Automatically initialize communication with a ship that is hailing you."), "autohail" },
+   [KST_LOG_UP]={ N_("Log Scroll Up"), N_("Scrolls the log upwards."), "log_up" },
+   [KST_LOG_DOWN]={ N_("Log Scroll Down"), N_("Scrolls the log downwards."), "log_down" },
 
    /* Display options */
    [KST_ZOOM_IN]={ N_("Radar Zoom In"), N_("Zooms in on the radar."), "mapzoomin" },
@@ -242,16 +243,16 @@ void input_setDefault ( int wasd )
    input_setKeybind( KST_TARGET_SPOB, KEYBIND_KEYBOARD, SDLK_p, NMOD_NONE );
    input_setKeybind( KST_APPROACH, KEYBIND_KEYBOARD, SDLK_l, NMOD_NONE );
    input_setKeybind( KST_TARGET_JUMP, KEYBIND_KEYBOARD, SDLK_h, NMOD_NONE );
-   input_setKeybind( KST_GLOBAL_MAP, KEYBIND_KEYBOARD, SDLK_m, NMOD_NONE );
+   input_setKeybind( KST_STAR_MAP, KEYBIND_KEYBOARD, SDLK_m, NMOD_NONE );
    input_setKeybind( KST_JUMP, KEYBIND_KEYBOARD, SDLK_j, NMOD_NONE );
-   input_setKeybind( KST_LOCAL_MAP, KEYBIND_KEYBOARD, SDLK_TAB, NMOD_ANY );
+   input_setKeybind( KST_OVERLAY_MAP, KEYBIND_KEYBOARD, SDLK_TAB, NMOD_ANY );
    input_setKeybind( KST_MOUSE_FLYING, KEYBIND_KEYBOARD, SDLK_x, NMOD_CTRL );
-   input_setKeybind( KST_INIT_COOLDOWN, KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
+   input_setKeybind( KST_COOLDOWN, KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
    /* Communication */
-   input_setKeybind(  KST_COMM_UP, KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ANY );
-   input_setKeybind( KST_COMM_DOWN, KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ANY );
-   input_setKeybind( KST_COMM_HAIL, KEYBIND_KEYBOARD, SDLK_y, NMOD_NONE );
-   input_setKeybind( KST_COMM_RECEIVE, KEYBIND_KEYBOARD, SDLK_y, NMOD_CTRL );
+   input_setKeybind(  KST_LOG_UP, KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ANY );
+   input_setKeybind( KST_LOG_DOWN, KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ANY );
+   input_setKeybind( KST_HAIL, KEYBIND_KEYBOARD, SDLK_y, NMOD_NONE );
+   input_setKeybind( KST_AUTOHAIL, KEYBIND_KEYBOARD, SDLK_y, NMOD_CTRL );
    /* Misc. */
    input_setKeybind( KST_ZOOM_IN, KEYBIND_KEYBOARD, SDLK_KP_PLUS, NMOD_ANY );
    input_setKeybind( KST_ZOOM_OUT, KEYBIND_KEYBOARD, SDLK_KP_MINUS, NMOD_ANY );
@@ -301,14 +302,13 @@ void input_init (void)
    /* Mouse. */
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
 
-
    /* Create safe null keybinding for each. */
    for (int i=0; i<input_numbinds; i++) {
-      Keybind *temp     = &input_keybinds[i];
+      Keybind *temp  = &input_keybinds[i];
       memset( temp, 0, sizeof(Keybind) );
-      temp->type        = KEYBIND_NULL;
-      temp->key         = SDLK_UNKNOWN;
-      temp->mod         = NMOD_NONE;
+      temp->type     = KEYBIND_NULL;
+      temp->key      = SDLK_UNKNOWN;
+      temp->mod      = NMOD_NONE;
 
       if (i==KST_PASTE)
          input_paste = temp;
@@ -1012,7 +1012,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          if (value==KEY_PRESS)
             player_targetHyperspace();
          break;
-      case KST_GLOBAL_MAP:
+      case KST_STAR_MAP:
          if (!(NOHYP() && NODEAD() && !repeat))
             break;
          if (value==KEY_PRESS)
@@ -1026,7 +1026,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
             player_jump();
          }
          break;
-      case KST_LOCAL_MAP:
+      case KST_OVERLAY_MAP:
          if (!(NODEAD() && (INGAME() || map_isOpen()) && !repeat))
             break;
          if (map_isOpen())
@@ -1040,7 +1040,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
          if (value==KEY_PRESS)
             player_toggleMouseFly();
          break;
-      case KST_INIT_COOLDOWN:
+      case KST_COOLDOWN:
          if (!(NOHYP() && NOLAND() && NODEAD() && !repeat))
             break;
          if (value==KEY_PRESS) {
@@ -1052,25 +1052,25 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
       /*
       * Communication.
       */
-      case KST_COMM_UP:
+      case KST_LOG_UP:
          if (!(INGAME() && NODEAD()))
             break;
          if (value==KEY_PRESS)
             gui_messageScrollUp(5);
          break;
-      case KST_COMM_DOWN:
+      case KST_LOG_DOWN:
          if (!(INGAME() && NODEAD()))
             break;
          if (value==KEY_PRESS)
             gui_messageScrollDown(5);
          break;
-      case KST_COMM_HAIL:
+      case KST_HAIL:
          if (!(INGAME() && NOHYP() && NODEAD() && !repeat))
             break;
          if (value==KEY_PRESS)
             player_hail();
          break;
-      case KST_COMM_RECEIVE:
+      case KST_AUTOHAIL:
          if (!(INGAME() && NOHYP() && NODEAD() && !repeat))
             break;
          if (value==KEY_PRESS)
@@ -1164,7 +1164,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs, int re
 
    /* Run the hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = input_getKeybindDescription(keynum);
+   hparam[0].u.str   = input_getBrief(keynum);
    hparam[1].type    = HOOK_PARAM_BOOL;
    hparam[1].u.b     = (value > 0.);
    hparam[2].type    = HOOK_PARAM_SENTINEL;
