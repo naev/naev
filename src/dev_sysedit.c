@@ -1438,7 +1438,7 @@ static void sysedit_editPnt (void)
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtLua",
          NULL, NULL, s );
-   window_addInput( wid, x += l + 5, y, 150, 20, "inpLua", 20, 1, NULL );
+   window_addInput( wid, x += l + 5, y, 180, 20, "inpLua", 50, 1, NULL );
    y -= gl_defFont.h + 15;
 
    /* Second row. */
