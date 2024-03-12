@@ -73,7 +73,6 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 static int toolkit_textEvent( Window *wdw, SDL_Event* event );
 /* Focus */
 static int toolkit_isFocusable( const Widget *wgt );
-static Widget* toolkit_getFocus( Window *wdw );
 static void toolkit_expose( Window *wdw, int expose );
 /* render */
 static void window_renderBorder( const Window* w );
@@ -2422,7 +2421,7 @@ Window* toolkit_getActiveWindow (void)
  *    @param wdw The window to get the focused widget from.
  *    @return The focused widget.
  */
-static Widget* toolkit_getFocus( Window *wdw )
+Widget* toolkit_getFocus( Window *wdw )
 {
    /* No focus. */
    if (wdw->focus == -1)

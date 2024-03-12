@@ -11,7 +11,6 @@
 #include <assert.h>
 /** @endcond */
 
-#include "nstring.h"
 #include "tk/toolkit_priv.h"
 #include "utf8.h"
 #include "font.h"

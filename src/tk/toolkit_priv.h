@@ -203,6 +203,7 @@ void toolkit_focusSanitize( Window *wdw );
 void toolkit_focusClear( Window *wdw );
 void toolkit_nextFocus( Window *wdw );
 void toolkit_prevFocus( Window *wdw );
+Widget* toolkit_getFocus( Window *wdw );
 void toolkit_focusWidget( Window *wdw, Widget *wgt );
 void toolkit_defocusWidget( Window *wdw, Widget *wgt );
 

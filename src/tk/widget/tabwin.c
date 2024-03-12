@@ -280,7 +280,14 @@ static int tab_key( Widget* tab, SDL_Event *event )
    SDL_Keycode key, bind_key;
    SDL_Keymod mod, bind_mod;
    Window *wdw;
+   Widget *wgt;
    int ret;
+
+   /* Get window and focused widget. */
+   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
+   wgt = toolkit_getFocus( wdw );
+   if (wgt->textevent != NULL)
+      return 0;
 
    /* Event info. */
    key = event->key.keysym.sym;
@@ -301,7 +308,6 @@ static int tab_key( Widget* tab, SDL_Event *event )
 
    /* Window. */
    ret = 0;
-   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
 
    /* Handle keypresses. */
    switch (key) {
@@ -389,7 +395,7 @@ static void tab_render( Widget* tab, double bx, double by )
 
       /* Draw text. */
       gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
-            y + (TAB_HEIGHT-tab->dat.tab.font->h)/2, &cFontWhite, -1.,
+            y + (TAB_HEIGHT-tab->dat.tab.font->h)/2., &cFontWhite, -1.,
             tab->dat.tab.tabnames[i] );
 
       /* Go to next line. */
