@@ -22,16 +22,13 @@
 #include "dev_uniedit.h"
 #include "dialogue.h"
 #include "economy.h"
-#include "map.h"
 #include "ndata.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "opengl_render.h"
 #include "safelanes.h"
 #include "space.h"
-#include "tk/toolkit_priv.h"
 #include "toolkit.h"
-#include "unidiff.h"
 
 #define BUTTON_WIDTH   100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
