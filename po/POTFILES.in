@@ -738,6 +738,7 @@ dat/spob/atalanta.xml
 dat/spob/atlantis_i.xml
 dat/spob/atryssa.xml
 dat/spob/august.xml
+dat/spob/aurora.xml
 dat/spob/avoss.xml
 dat/spob/awowa_iv.xml
 dat/spob/awowa_v.xml
@@ -810,6 +811,7 @@ dat/spob/charred.xml
 dat/spob/churchill_i.xml
 dat/spob/churchill_ii.xml
 dat/spob/churchill_iia.xml
+dat/spob/circle_dq003.xml
 dat/spob/claudius_mehan.xml
 dat/spob/cole_outpost.xml
 dat/spob/colley.xml
@@ -2087,6 +2089,7 @@ dat/ssys/ekta.xml
 dat/ssys/elixir.xml
 dat/ssys/elza.xml
 dat/ssys/eneguoz.xml
+dat/ssys/enhai.xml
 dat/ssys/eridani.xml
 dat/ssys/esker.xml
 dat/ssys/euler.xml

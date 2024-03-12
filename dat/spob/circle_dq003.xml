@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Circle DQ-003">
+ <pos x="-5763.521422" y="-2716.142279"/>
+ <GFX>
+  <space>003.webp</space>
+  <exterior>station_scene.webp</exterior>
+ </GFX>
+ <general>
+  <class>M</class>
+  <population>10000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <description>The curious name is an artifact of the pre-Incident era, when this was merely one of many district quarters. Post the Incident, the Proteron decided not to rename it until the fall of the Empire despite it now being the headquarters of the Circle.</description>
+  <bar>The bar here is practically nondescript, given both the Proteron value on utlilty and the fact that very few people use this place at any given time.</bar>
+ </general>
+</spob>

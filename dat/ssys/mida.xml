@@ -5,7 +5,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1270.694355" y="399.157713"/>
+ <pos x="1289.694355" y="420.157713"/>
  <spobs/>
  <jumps>
   <jump target="Akra">
@@ -17,6 +17,10 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Ekta">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Enhai">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
