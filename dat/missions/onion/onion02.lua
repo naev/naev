@@ -21,11 +21,11 @@ local strmess = require "strmess"
 
 local dstspb1, dstsys1 = spob.getS("Ulios")
 local dstspb2, dstsys2 = spob.getS("The Frontier Council")
---local dstspb3, dstsys3 = spob.getS("DVNN Central")
+local dstspb3, dstsys3 = spob.getS("DVNN Central")
 --local money_reward = onion.rewards.misn02
 
 local title01 = _("Onion Delivery")
---local title02 = _("Onion's Revenge")
+local title02 = _("Onion's Revenge")
 
 --[[
    Mission States
@@ -46,12 +46,13 @@ function create()
    misn.setReward(_("Unknown"))
 
    misn.osdCreate( title01, {
-      fmt.f(_([[Pick up the cargo at {spb1} ({sys1})]]), {
-         spb1=dstspb1, sys1=dstsys1 }),
-      fmt.f(_([[Deliver the cargo to {spb2} ({sys2})]]), {
-         spb2=dstspb2, sys2=dstsys2 }),
+      fmt.f(_([[Pick up the cargo at {spb} ({sys})]]), {
+         spb=dstspb1, sys=dstsys1 }),
+      fmt.f(_([[Deliver the cargo to {spb} ({sys})]]), {
+         spb=dstspb2, sys=dstsys2 }),
    } )
 
+   misn.markerAdd( dstspb1 )
    hook.land("land")
    hook.enter("enter")
 end
@@ -84,9 +85,11 @@ function land ()
       local c = commodity.new( N_("Another Small Box"), N_("Another suspicious box sealed tight. You think you can hear a faint beeping sound occasionally.") )
       mem.carg_id = misn.cargoAdd( c, 0 )
       misn.osdActive(2)
+      misn.markerRm()
+      misn.markerAdd( dstspb2 )
       mem.state = 1
 
-   elseif mem.state>=1 and spob.cur()==dstspb2 then
+   elseif mem.state==1 and spob.cur()==dstspb2 then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -123,7 +126,7 @@ They pause for emphasis.]]))
       l337(_([["Wow, quite noisy today. Might as well get this over with before I get another headache."]]))
       l337(_([["Graeme Tildor of Haldr, consider yourself peeled!"]]))
       l337(_([["Ah bollocks, they've run out of their room. Not a good idea. notasockpuppet is going to have them for lunch. Oh well. Might as well close their connection."]]))
-      vn.disappear( ogre )
+      vn.disappear( ogre, "electric" )
       vn.move( l337, "center" )
       vn.menu{
          {_([["What was that?"]]), "02_cont"},
@@ -136,12 +139,24 @@ They pause for emphasis.]]))
       l337:rename(_("l337 b01"))
       l337(_([["Anyway, tl;dr, Ogre was a Dvaered stump, trying to mess with the Frontier and posing as part of the Onion Society. That's a big no-no."]]))
       l337(_([["They've been peeled, err, have had their personal information dumped on the darkwebs. Quite dangerous for them. Pretty sure notasockpuppet has dealt with them already. They have no tolerance for people messing with the Onion Society."]]))
-
-      vn.disappear( ogre, "electric" )
-      vn.music()
-
+      l337(_([["Now all that's left is to do the opposite of what Ogre wanted to do. Jam and mess with the frontier? Sounds like it's time to say hello te our friends at the Dvaered mass media."]]))
+      l337(fmt.f(_([[The transmitter you're carrying should be enough for me to work with. On to {spb}!"]]),
+         {spb=dstspb3}))
+      vn.disappear( l337, "electric" )
+      vn.na(_([[You have to idea what you're getting into, but it seems like you have no choice now but to play along.]]))
       vn.done()
 
+      misn.markerRm()
+      misn.markerAdd( dstspb3 )
+      misn.osdCreate( title02, {
+         fmt.f(_([[Deliver the cargo to {spb} ({sys})]]), {
+            spb=dstspb3, sys=dstsys3 }),
+      } )
+      mem.state = 2
+
+   elseif mem.state==1 and spob.cur()==dstspb3 then
+      -- TODO
+      misn.finish(true)
    end
 end
 
