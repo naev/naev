@@ -17,6 +17,7 @@ end
 
 onion.loops = {
    circus = "snd/sounds/loops/onion_circus.ogg",
+   hacker = "snd/sounds/loops/onion_hacker.ogg",
 }
 
 function onion.vn_onion( params )
