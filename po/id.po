@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-19 13:04+0900\n"
-"PO-Revision-Date: 2024-03-11 14:02+0000\n"
+"PO-Revision-Date: 2024-03-12 15:02+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -221,6 +221,9 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
+"Para ahli menyebutnya zenit: teknologi melompat jauh, budaya berkembang, dan "
+"planet mati dihidupkan kembali. Kedamaian terlaksana di dalam sebuah masa "
+"keemasan imperial."
 
 #: dat/intro:21
 msgid ""
@@ -229,18 +232,25 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
+"Setelah Daedris, di bawah kepemimpinan penerusnya, kejayaan kekaisarannya "
+"menyusut. Konflik sipil dan perpecahan agama memperlemah ikatan persatuan. "
+"Proyek-proyek besar dari imperium berjalan tidak sesuai rencana. Di beberapa "
+"daerah, administrasi jatuh ke tangan lain. Para Wangsa Besar lah yang "
+"sekarang mengatur lajur-lajur ruang angkasa."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history."
-msgstr ""
+msgstr "Jatuh dan bangun, ritme dari sejarah."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
 msgstr ""
+"Tetapi pergerakan sejarah tersandung pada hal tak tentu, yaitu sebuah momen "
+"yang disebut Insiden."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr ""
+msgstr "Insiden itu mengoyakkan keluar jantung dari Kekaisaran."
 
 #: dat/intro:29
 msgid ""
@@ -249,10 +259,15 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"Dari bumi, sebuah ledakan dahsyat bagaikan merobek melalui ruang angkasa, "
+"menghancurkan bintang-bintang, membuat planet-planet sirna. Miliaran orang "
+"meninggal. Lusinan sistem bintang menghilang ke dalam nebula misterius yang "
+"ditinggalkannya. Peradaban yang dulunya merentang satu galaksi sekarang "
+"hanya tersisa sedikit kejayaannya."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr ""
+msgstr "Apa yang tersisa? Pertanyaan, banyak sekali pertanyaan."
 
 #: dat/intro:34
 msgid ""
@@ -260,187 +275,191 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
+"Sepuluh siklus standar telah terlalui di dalam sebuah semesta yang dikuasai "
+"pecahan kekaisaran yang telah melewati puncak kejayaannya. Setelah Insiden, "
+"korupsi dan perompakan menjadi lumrah, tetapi dimana ada kekacauan, di situ "
+"juga ada kesempatan."
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr ""
+msgstr "Selamat datang di Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "Tim Pengembangan Inti yang Sekarang"
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:184
 #: dat/AUTHORS:197 dat/AUTHORS:218
 msgid "---------------------------------------"
-msgstr ""
+msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr ""
+msgstr "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * Pengembang Utama"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
-msgstr ""
+msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * Penulis Cerita dan Pengembangan Lainnya"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
-msgstr ""
+msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
 msgid "   * Misc. Development and Lua unifier"
-msgstr ""
+msgstr "   * Pengembangan Lainnya dan Pemersatu Lua"
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
-msgstr ""
+msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:14
 msgid "   * Code Carnage and Bug Beating"
-msgstr ""
+msgstr "   * Pembantai dan Awakutu Kode"
 
 #: dat/AUTHORS:16
 msgid "nenau"
-msgstr ""
+msgstr "nenau"
 
 #: dat/AUTHORS:17
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr ""
+msgstr "   * Pengembangan Lainnya dan Pemerhati Dvared"
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
-msgstr ""
+msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
-msgstr ""
+msgstr "   * Masbro CI and Pembawa Rilis Otomatis"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
-msgstr ""
+msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
 msgid "   * 3D modelling"
-msgstr ""
+msgstr "   * Pemodelan 3D"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
-msgstr ""
+msgstr "Tim Pengembangan yang Dahulu"
 
 #: dat/AUTHORS:28
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
-msgstr ""
+msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
 #: dat/AUTHORS:29
 msgid "   * Bringer of Sound"
-msgstr ""
+msgstr "   * Akang Dugem"
 
 #: dat/AUTHORS:31
 msgid "Deiz"
-msgstr ""
+msgstr "Deiz"
 
 #: dat/AUTHORS:32 dat/AUTHORS:35
 msgid "   * Misc. Development"
-msgstr ""
+msgstr "   * Pengembangan Lainnya"
 
 #: dat/AUTHORS:34
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
-msgstr ""
+msgstr "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:37
 msgid "Major Contributors"
-msgstr ""
+msgstr "Kontributor Besar"
 
 #: dat/AUTHORS:40
 msgid "Josiah Schwartfeger"
-msgstr ""
+msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:41
 msgid "   * Graphic Designer and Modeller"
-msgstr ""
+msgstr "   * Desainer Grafis dan Pemodel"
 
 #: dat/AUTHORS:43
 msgid "Elderman"
-msgstr ""
+msgstr "Elderman"
 
 #: dat/AUTHORS:44
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * Pengembangan Misi"
 
 #: dat/AUTHORS:45
 msgid "   The first non-bobbens mission developer!"
-msgstr ""
+msgstr "   Developer misi pertama yang bukan bobbens!"
 
 #: dat/AUTHORS:47
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
-msgstr ""
+msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
 #: dat/AUTHORS:48
 msgid "   * NPC Portrait Artist"
-msgstr ""
+msgstr "   * Seniman Portret NPC"
 
 #: dat/AUTHORS:50
 msgid "Enigmatic"
-msgstr ""
+msgstr "Enigmatic"
 
 #: dat/AUTHORS:51
 msgid "   * Ships for the Sirius, many other models and faction logos"
-msgstr ""
+msgstr "   * Kapal untuk Sirius, dan banyak model dan logo faksi lainnya"
 
 #: dat/AUTHORS:53
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
-msgstr ""
+msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:54
 msgid "   * Naev logo, Lua GUI development"
-msgstr ""
+msgstr "   * Logo Naev, pengembangan GUI Lua"
 
 #: dat/AUTHORS:56
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
-msgstr ""
+msgstr "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:57
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr ""
+msgstr "   * Kapal untuk para Soromid dan Za'lek"
 
 #: dat/AUTHORS:59
 msgid "Askyel"
-msgstr ""
+msgstr "Askyel"
 
 #: dat/AUTHORS:60
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
-msgstr ""
+msgstr "   * Komposer dari sekitar satu jam musik eksklusif Naev."
 
 #: dat/AUTHORS:62
 msgid "Contributions"
-msgstr ""
+msgstr "Kontribusi"
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
-msgstr ""
+msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * Model Kapal"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * Musik"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * Suara"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * Gambar planet"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -448,86 +467,99 @@ msgid ""
 "didn't actively participate, by allowing me to use their data they did me a "
 "great favour and let me concentrate on the coding."
 msgstr ""
+"   Tidaklah mungkin kalau tanpa tim Vega Strike, walaupun mereka tidak "
+"berpartisipasi secara aktif, karena dengan mengizinkan aku untuk menggunakan "
+"data mereka, mereka sangatlah membantu diriku dan membuatku bisa fokus ke "
+"koding."
 
 #: dat/AUTHORS:72
 msgid "Joel Hans <wolorf@gmail.com>"
-msgstr ""
+msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr ""
+msgstr "   * Grafik Planet"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
-msgstr ""
+msgstr "   * Skrip Render"
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
 msgstr ""
+"   Membantuku ketika proyeknya baru mulai. Seorang penambah semangat yang "
+"hebat."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
-msgstr ""
+msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
 msgid "Rob Loach <http://robloach.net>"
-msgstr ""
+msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
-msgstr ""
+msgstr "   * SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
+"   Walaupun tidak memakai SDL_collide, pustaka ini menjadi sebuah inspirasi "
+"untuk rutin mekanika tabrak dari Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
-msgstr ""
+msgstr "Pete Shinners <pete@shinners.org>"
 
 #: dat/AUTHORS:83
 msgid "   * SavePNG"
-msgstr ""
+msgstr "   * SavePNG"
 
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
 msgstr ""
+"   Fungsi keren yang diambil langsung dari pygame. Bekerja dengan mantap!"
 
 #: dat/AUTHORS:86
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
-msgstr ""
+msgstr "Aurore D. \"Rore\" <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
-msgstr ""
+msgstr "   * Skrip gimp planet"
 
 #: dat/AUTHORS:88
 msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
+"   Mengurangi kesulitan karena memampukan kami untuk dengan cepat membuat "
+"grafik planet."
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
-msgstr ""
+msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
-msgstr ""
+msgstr "   * Skrip sprite gimp"
 
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
+"   Walaupun tidak digunakan secara langsung, skrip ini membantu kami dalam "
+"menciptakan skrip sprite kami sendiri."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
-msgstr ""
+msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * Bising turbulensi"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -535,10 +567,14 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
+"   Setelah kegagalan parah dengan percobaan fraktal plasma kami sendiri, "
+"bising turbulensi dari TCOD nampaknya berhasil melakukan dengan sempurna "
+"semua bagian di mana kami sebelumnya gagal. Setelah pengoptimalan berat, "
+"kodenya ditambahkan ke Naev."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
-msgstr ""
+msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
@@ -1816,12 +1852,12 @@ msgstr ""
 #: dat/factions/goddard.xml:2 dat/ships/neutral/goddard.xml:2
 #: dat/ssys/goddard.xml:2 dat/events/dvaered/fwB_repay.lua:89
 msgid "Goddard"
-msgstr ""
+msgstr "Goddard"
 
 #: dat/factions/goddard.xml:7 dat/ships/dvaered/dvaered_goddard.xml:18
 #: dat/ships/neutral/goddard.xml:16 dat/events/dvaered/fwB_repay.lua:74
 msgid "House Goddard"
-msgstr ""
+msgstr "Wangsa Goddard"
 
 #: dat/factions/goddard.xml:12
 msgid ""
@@ -6589,7 +6625,7 @@ msgstr ""
 
 #: dat/outfits/weapons/ion_cannon.xml:2
 msgid "Ion Cannon"
-msgstr ""
+msgstr "Meriam Ion"
 
 #: dat/outfits/weapons/ion_cannon.xml:8
 msgid ""
@@ -7611,7 +7647,7 @@ msgstr ""
 
 #: dat/ships/neutral/hawking.xml:2
 msgid "Hawking"
-msgstr ""
+msgstr "Hawking"
 
 #: dat/ships/neutral/hawking.xml:19
 msgid ""
@@ -7660,7 +7696,7 @@ msgstr ""
 
 #: dat/ships/neutral/koala.xml:2
 msgid "Koala"
-msgstr ""
+msgstr "Koala"
 
 #: dat/ships/neutral/koala.xml:13 dat/ships/neutral/llama.xml:15
 #: dat/ships/neutral/mule.xml:14 dat/ships/neutral/quicksilver.xml:14
@@ -13903,7 +13939,7 @@ msgstr ""
 
 #: dat/spob/haven.xml:2 dat/ssys/haven.xml:2
 msgid "Haven"
-msgstr ""
+msgstr "Suaka"
 
 #: dat/spob/heii.xml:2
 msgid "Heii"
@@ -29728,7 +29764,7 @@ msgstr ""
 
 #: dat/board.lua:421 src/info.c:894
 msgid "Jettison"
-msgstr ""
+msgstr "Buang"
 
 #: dat/board.lua:462
 msgid "Loot"
@@ -122104,7 +122140,7 @@ msgstr ""
 
 #: src/ship.c:218
 msgid "Interceptor"
-msgstr ""
+msgstr "Pencegat"
 
 #: src/ship.c:220
 msgid "Fighter"
