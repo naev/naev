@@ -286,7 +286,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
    /* Get window and focused widget. */
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    wgt = toolkit_getFocus( wdw );
-   if (wgt->textevent != NULL)
+   if ((wgt!=NULL) && (wgt->textevent != NULL))
       return 0;
 
    /* Event info. */
