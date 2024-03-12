@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Aurora">
+ <pos x="0.000000" y="0.000000"/>
+ <GFX>
+  <space>M08.webp</space>
+  <exterior>city2.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <base>1000.000000</base>
+  <bonus>1000.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1e+11</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>After the Incident, Protera was gone. The Proteron, needing a new central world, supposedly repurposed the resources of their remaining systems to build up this planet in a day. Named as the counterpoint to the Empire's former capital, Earth, Aurora is meant to be the anvil on which the Proteron will forge the new galactic order, remaking all other worlds in the twin fires of industry and war.</description>
+  <bar>You can't help but wonder at the sheer size of the Proteron capital. The whole planet has been transformed into a huge ecumenopolis of which the bar is but the smallest part.
+The drinks on display are quite similar to those served on Emperor's Fist, but you're pretty sure saying that is not a bright idea.</bar>
+ </general>
+ <tech>
+  <item>Proteron Maps</item>
+  <item>Proteron Military Outfits</item>
+  <item>Proteron Military Ships</item>
+  <item>Systems Elite</item>
+  <item>Systems High</item>
+  <item>Systems Medium</item>
+  <item>Hulls Elite</item>
+  <item>Hulls High</item>
+  <item>Hulls Medium</item>
+ </tech>
+</spob>

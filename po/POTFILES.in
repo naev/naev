@@ -738,6 +738,7 @@ dat/spob/atalanta.xml
 dat/spob/atlantis_i.xml
 dat/spob/atryssa.xml
 dat/spob/august.xml
+dat/spob/aurora.xml
 dat/spob/avoss.xml
 dat/spob/awowa_iv.xml
 dat/spob/awowa_v.xml
@@ -810,6 +811,7 @@ dat/spob/charred.xml
 dat/spob/churchill_i.xml
 dat/spob/churchill_ii.xml
 dat/spob/churchill_iia.xml
+dat/spob/circle_dq003.xml
 dat/spob/claudius_mehan.xml
 dat/spob/cole_outpost.xml
 dat/spob/colley.xml
@@ -1314,6 +1316,7 @@ dat/spob/moor_iii.xml
 dat/spob/moordra_i.xml
 dat/spob/moordra_ii.xml
 dat/spob/moorline_cloister.xml
+dat/spob/mord.xml
 dat/spob/morgan_citadel.xml
 dat/spob/mouddar.xml
 dat/spob/mugen.xml
@@ -1378,6 +1381,7 @@ dat/spob/ns144.xml
 dat/spob/ns27.xml
 dat/spob/ns42.xml
 dat/spob/ns63.xml
+dat/spob/numin.xml
 dat/spob/obelisk_monastery.xml
 dat/spob/oberon.xml
 dat/spob/oberon_i.xml
@@ -1608,6 +1612,7 @@ dat/spob/scorpion_nest.xml
 dat/spob/seanich.xml
 dat/spob/secundus_alpha.xml
 dat/spob/secundus_beta.xml
+dat/spob/seeker.xml
 dat/spob/seiben_iv.xml
 dat/spob/seiben_xi.xml
 dat/spob/selphod.xml
@@ -1974,6 +1979,7 @@ dat/spob_virtual/zalek_medium.xml
 dat/spob_virtual/zalek_small.xml
 dat/spob_virtual/zalek_unpresence.xml
 dat/spob_virtual/zalek_unpresence_range1.xml
+dat/ssys/abender.xml
 dat/ssys/acheron.xml
 dat/ssys/adraia.xml
 dat/ssys/adran.xml
@@ -2087,10 +2093,13 @@ dat/ssys/ekta.xml
 dat/ssys/elixir.xml
 dat/ssys/elza.xml
 dat/ssys/eneguoz.xml
+dat/ssys/enhai.xml
+dat/ssys/erfasn.xml
 dat/ssys/eridani.xml
 dat/ssys/esker.xml
 dat/ssys/euler.xml
 dat/ssys/eye_of_night.xml
+dat/ssys/fang.xml
 dat/ssys/farizel.xml
 dat/ssys/fathers_pride.xml
 dat/ssys/faust.xml
@@ -2146,6 +2155,7 @@ dat/ssys/herakin.xml
 dat/ssys/herculis.xml
 dat/ssys/hideyoshis_star.xml
 dat/ssys/holly.xml
+dat/ssys/horn.xml
 dat/ssys/hubfar.xml
 dat/ssys/humdrum.xml
 dat/ssys/hystera.xml
@@ -2160,6 +2170,7 @@ dat/ssys/jervis.xml
 dat/ssys/jommel.xml
 dat/ssys/kansas.xml
 dat/ssys/karman.xml
+dat/ssys/kartelle.xml
 dat/ssys/katami.xml
 dat/ssys/kelvos.xml
 dat/ssys/kenvis.xml

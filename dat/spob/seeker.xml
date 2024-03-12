@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Seeker">
+ <lua>spob/lua/proteron_mil_restricted.lua</lua>
+ <pos x="0.000000" y="0.000000"/>
+ <GFX>
+  <space>station-pointy1.webp</space>
+  <exterior>silo.webp</exterior>
+ </GFX>
+ <general>
+  <class>M</class>
+  <population>1000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <description>This top-secret station was built at a great deal of expense before the Incident to coordinate the activities of Proteron agents throughout the galaxy. After the Incident, it was thought lost until the expeditionary forces stumbled upon it. The Circle spared no expense in restoring the station as soon as possible.</description>
+  <bar>This bar looks as if right out of a spy thriller - agents in suits and military officials talking in quiet, measured tones that don't carry about things you can't decipher.</bar>
+ </general>
+ <tags>
+  <tag>restricted</tag>
+  <tag>military</tag>
+  <tag>nosightseeing</tag>
+ </tags>
+</spob>

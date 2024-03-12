@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Numin">
+ <lua>spob/lua/proteron_mil_restricted.lua</lua>
+ <pos x="-550.565123" y="-4484.602685"/>
+ <GFX>
+  <space>station-powerplant.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <base>40.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>10000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Numin is a testing ground for the ships produced on Mord, the Proteron's largest shipbuilding and research planet. Ships can be seen flying to and from here, and this is the closest that a civilian can get to Mord.</description>
+  <bar>While most of the bar is people going about their tasks, there are most certainly a few gawpers staring at the vivid dogfights and stress-testing rounds going on above.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Proteron Maps</item>
+  <item>Proteron Military Outfits</item>
+ </tech>
+</spob>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Mord">
+ <lua>spob/lua/protero.lua</lua>
+ <pos x="3242.477650" y="4168.187199"/>
+ <GFX>
+  <space>A06.webp</space>
+  <exterior>citadel.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <base>90.000000</base>
+  <bonus>60.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>(null)</description>
+ </general>
+</spob>
