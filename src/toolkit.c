@@ -688,6 +688,12 @@ unsigned int window_get( const char *wdwname )
 unsigned int window_create( const char *name, const char *displayname,
                             const int x, const int y, const int w, const int h )
 {
+   /* For windows with upper tabs, let tabedWindow handle the border to hide the
+    * unactive tabs */
+   if ( !strcmp( name, "wdwLand" ) || !strcmp( name, "wdwOptions" ) ||
+        !strcmp( name, "wdwInfo" ) )
+      return window_createFlags( name, displayname, x, y, w, h,
+                                 WINDOW_NOBORDER );
    return window_createFlags( name, displayname, x, y, w, h, 0 );
 }
 
@@ -1283,6 +1289,99 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b, int thick,
 }
 
 /**
+ * @brief Draws an outline with rounded corners.
+ *
+ * If lc is NULL, colour will be flat.
+ *
+ *    @param x X position to draw at.
+ *    @param y Y position to draw at.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param r Radius of the corners.
+ *    @param thick Thickness of the outline.
+ *    @param c Colour.
+ *    @param lc Light colour.
+ */
+void toolkit_drawRoundOutlineThick( int x0, int y0, int w, int h, int r,
+                                    int thick, const glColour *c,
+                                    const glColour *lc )
+{
+   static const float sina[46] = {
+      0,          -0.1736478, -0.3420197, -0.5, -0.6427872, -0.7660443,
+      -0.8660252, -0.9396925, -0.9848077, -1,   -0.9848078, -0.9396928,
+      -0.8660257, -0.7660449, -0.6427881, -0.5, -0.3420208, -0.1736489,
+      0,          0.1736482,  0.3420201,  0.5,  0.6427876,  0.7660444,
+      0.8660254,  0.9396926,  0.9848077,  1,    0.9848078,  0.9396927,
+      0.8660255,  0.7660446,  0.6427878,  0.5,  0.3420205,  0.1736485,
+      0,          -0.1736478, -0.3420197, -0.5, -0.6427872, -0.7660443,
+      -0.8660252, -0.9396925, -0.9848077, -1 };
+
+   int i, j, ry[46];
+   for ( i = 0; i < 46; i++ )
+      ry[i] = round( r * sina[i] );
+   int *rx = ry + 9;
+
+   GLshort         vertex[82][4];
+   glColour        colours[82];
+   const glColour *color = c;
+
+   lc = lc ? lc : c;
+
+   x0 += r;
+   y0 += r;
+   w -= 2 * r;
+   h -= 2 * r;
+
+   int xm = x0 + thick;
+   int ym = y0 + thick;
+   int wm = w - 2 * thick;
+   int hm = h - 2 * thick;
+   int x_jump, y_jump;
+
+   for ( i = j = 0; i <= 40; i++, j++ ) {
+      /* Take care of keeping same rx/ry index when changing corner */
+      if ( i && i % 10 == 0 ) {
+         j--;
+         /* Corner changes:
+          * top-left: 0 -> 9
+          * top-right: 10 -> 19
+          * bottom->right: 20 -> 29
+          * bottom->left: 30 -> 39
+          */
+         x_jump = ( i == 10 ? 1 : ( i == 30 ? -1 : 0 ) );
+         x0 += x_jump * w;
+         xm += x_jump * wm;
+         y_jump = ( i == 20 ? 1 : ( i == 40 ? -1 : 0 ) );
+         y0 += y_jump * h;
+         ym += y_jump * hm;
+         color = ( y_jump == 0 ) ? color : ( y_jump == 1 ) ? lc : c;
+      }
+
+      /* Inner */
+      vertex[i][0] = xm + rx[j];
+      vertex[i][1] = ym + ry[j];
+      /* Outter */
+      vertex[i][2] = x0 + rx[j];
+      vertex[i][3] = y0 + ry[j];
+
+      colours[i * 2]     = *color;
+      colours[i * 2 + 1] = *color;
+   }
+   /* Upload to the VBO. */
+   gl_vboSubData( toolkit_vbo, 0, sizeof( vertex ), vertex );
+   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof( colours ),
+                  colours );
+
+   gl_beginSmoothProgram( gl_view_matrix );
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2,
+                               GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
+                               toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 82 );
+   gl_endSmoothProgram();
+}
+
+/**
  * @brief Draws an outline.
  *
  * If lc is NULL, colour will be flat.
@@ -1335,6 +1434,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b, const glColour *c,
    glDrawArrays( GL_LINE_LOOP, 0, 4 );
    gl_endSmoothProgram();
 }
+
 /**
  * @brief Draws a rectangle.
  *
@@ -1353,7 +1453,7 @@ void toolkit_drawRect( int x, int y, int w, int h, const glColour *c,
    GLshort  vertex[4][2];
    glColour colours[4];
 
-   lc = lc == NULL ? c : lc;
+   lc = lc ? lc : c;
 
    /* Set up vertices and colours. */
    vertex[0][0] = x; /* left-up */
@@ -1383,6 +1483,83 @@ void toolkit_drawRect( int x, int y, int w, int h, const glColour *c,
    gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
                                toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   gl_endSmoothProgram();
+}
+
+/**
+ * @brief Draws a rounded rectangle.
+ *
+ * If lc is NULL, colour will be flat.
+ *
+ *    @param x0 X position to draw at.
+ *    @param y0 Y position to draw at.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param r Radius of corners.
+ *    @param c Colour.
+ *    @param lc Light colour.
+ */
+void toolkit_drawRoundRect( int x0, int y0, int w, int h, int r,
+                            const glColour *c, const glColour *lc )
+{
+   static const float sina[46] = {
+      0,          -0.1736478, -0.3420197, -0.5, -0.6427872, -0.7660443,
+      -0.8660252, -0.9396925, -0.9848077, -1,   -0.9848078, -0.9396928,
+      -0.8660257, -0.7660449, -0.6427881, -0.5, -0.3420208, -0.1736489,
+      0,          0.1736482,  0.3420201,  0.5,  0.6427876,  0.7660444,
+      0.8660254,  0.9396926,  0.9848077,  1,    0.9848078,  0.9396927,
+      0.8660255,  0.7660446,  0.6427878,  0.5,  0.3420205,  0.1736485,
+      0,          -0.1736478, -0.3420197, -0.5, -0.6427872, -0.7660443,
+      -0.8660252, -0.9396925, -0.9848077, -1 };
+
+   int i, j, ry[46];
+   for ( i = 0; i < 46; i++ )
+      ry[i] = round( r * sina[i] );
+   int *rx = ry + 9;
+
+   GLshort         vertex[41][2];
+   glColour        colours[41];
+   const glColour *color = c;
+
+   lc = lc ? lc : c;
+
+   w -= 2 * r;
+   h -= 2 * r;
+   x0 += r;
+   y0 += r;
+   int y_jump;
+   for ( i = j = 0; i <= 40; i++, j++ ) {
+      /* Corners change */
+      if ( i && i % 10 == 0 ) {
+         /* Take care of keeping same rx/ry index when changing corner */
+         j--;
+         /* Corner changes:
+          * top-left: 0 -> 9
+          * top-right: 10 -> 19
+          * bottom->right: 20 -> 29
+          * bottom->left: 30 -> 39
+          */
+         x0 += ( i == 10 ? 1 : ( i == 30 ? -1 : 0 ) ) * w;
+         y_jump = ( i == 20 ? 1 : ( i == 40 ? -1 : 0 ) );
+         y0 += y_jump * h;
+         color = ( y_jump == 0 ) ? color : ( y_jump == 1 ) ? lc : c;
+      }
+
+      vertex[i][0] = x0 + rx[j];
+      vertex[i][1] = y0 + ry[j];
+      colours[i]   = *color;
+   }
+   /* Upload to the VBO. */
+   gl_vboSubData( toolkit_vbo, 0, sizeof( vertex ), vertex );
+   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof( colours ),
+                  colours );
+
+   gl_beginSmoothProgram( gl_view_matrix );
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2,
+                               GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
+                               toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 41 );
    gl_endSmoothProgram();
 }
 
@@ -1468,8 +1645,9 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.g = cGrey10.g;
    c2.b = cGrey10.b;
    c2.a = 0.7;
-   toolkit_drawRect( x + 1, y + 1, w + 18, h + 18, &c2, NULL );
-   toolkit_drawRect( x, y, w + 18, h + 18, &c, NULL );
+   toolkit_drawRoundRect( x + 1, y + 1, w + 18, h + 18, ( h + 18 ) / 10, &c2,
+                          NULL );
+   toolkit_drawRoundRect( x, y, w + 18, h + 18, ( h + 18 ) / 10, &c, NULL );
    gl_printTextRaw( &gl_smallFont, w, h, x + 9, y + 9, 0, &cFontWhite, -1.,
                     alt );
 }
@@ -1484,29 +1662,42 @@ static void window_renderBorder( const Window *w )
    /* Position */
    double x = w->x;
    double y = w->y;
+   toolkit_drawRoundRect( x, y, w->w, w->h, w->h / 20, toolkit_col,
+                          toolkit_col );
+   toolkit_drawRoundOutlineThick( x + 2, y + 2, w->w - 2, w->h - 2, w->h / 20,
+                                  4, toolkit_colLight, NULL );
 
+   /* Isn't just well without fullscreen case ? */
    /*
     * Case fullscreen.
     */
-   if ( window_isFlag( w, WINDOW_FULLSCREEN ) ) {
-      /* Background. */
+   /*
+   if (window_isFlag( w, WINDOW_FULLSCREEN )) {
       toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
-      /* Name. */
-      gl_printMidRaw( &gl_defFont, w->w, x, y + w->h - 20., &cFontWhite, -1.,
-                      w->displayname );
+      gl_printMidRaw( &gl_defFont, w->w,
+            x,
+            y + w->h - 20.,
+            &cFontWhite, -1., w->displayname );
       return;
    }
+   */
 
+   /*
    toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
    toolkit_drawOutlineThick( x, y, w->w, w->h, 1, 2, toolkit_colDark, NULL );
    toolkit_drawOutline( x + 3, y + 2, w->w - 5, w->h - 5, 1, toolkit_colLight,
-                        NULL );
+   NULL );
+   */
 
    /*
     * render window name
     */
-   gl_printMidRaw( &gl_defFont, w->w, x, y + w->h - 20., &cFontWhite, -1.,
-                   w->displayname );
+   /*
+   gl_printMidRaw( &gl_defFont, w->w,
+         x,
+         y + w->h - 20.,
+         &cFontWhite, -1., w->displayname );
+   */
 }
 
 /**
@@ -1534,12 +1725,11 @@ void window_render( Window *w, int top )
       /* Only render non-dynamics. */
       if ( !wgt_isFlag( wgt, WGT_FLAG_DYNAMIC ) || !top )
          wgt->render( wgt, w->x, w->y );
-
       if ( wgt->id == w->focus ) {
-         double wx = w->x + wgt->x - 2;
-         double wy = w->y + wgt->y - 2;
-         toolkit_drawOutlineThick(
-            wx, wy, wgt->w + 4, wgt->h + 4, 0, 2,
+         double wx = w->x + wgt->x;
+         double wy = w->y + wgt->y;
+         toolkit_drawRoundOutlineThick(
+            wx, wy, wgt->w, wgt->h, 10, 4,
             ( wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30 ), NULL );
       }
    }
@@ -2648,8 +2838,8 @@ int toolkit_init( void )
    GLsizei size;
 
    /* Create the VBO. */
-   toolkit_vboColourOffset = sizeof( GLshort ) * 2 * 31;
-   size        = ( sizeof( GLshort ) * 2 + sizeof( GLfloat ) * 4 ) * 31;
+   toolkit_vboColourOffset = sizeof( GLshort ) * 2 * 82;
+   size        = ( sizeof( GLshort ) * 2 + sizeof( GLfloat ) * 4 ) * 82;
    toolkit_vbo = gl_vboCreateStream( size, NULL );
 
    /* Disable the cursor. */
