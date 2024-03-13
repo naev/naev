@@ -1045,21 +1045,13 @@ void land_genWindows( int load )
    pntservices = p->services;
 
    /* Create window. */
-   /* Fullscreen
-   if (SCREEN_W < LAND_WIDTH || SCREEN_H < LAND_HEIGHT) {
+   if ( SCREEN_W < LAND_WIDTH || SCREEN_H < LAND_HEIGHT ) {
       w = -1;
       h = -1;
    } else {
-      w = LAND_WIDTH + 0.5 * ( SCREEN_W - LAND_WIDTH );
-      h = LAND_HEIGHT + 0.5 * ( SCREEN_H - LAND_HEIGHT );
+      w = LAND_WIDTH / 2 + SCREEN_W / 2;
+      h = LAND_HEIGHT / 2 + SCREEN_H / 2;
    }
-   else {
-      w = LAND_WIDTH + 0.5 * (SCREEN_W - LAND_WIDTH);
-      h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
-   }
-   */
-   w        = LAND_WIDTH;
-   h        = LAND_HEIGHT;
    land_wid = window_create( "wdwLand", spob_name( p ), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 

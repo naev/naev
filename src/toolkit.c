@@ -732,7 +732,8 @@ unsigned int window_createFlags( const char *name, const char *displayname,
 
    /* Dimensions. */
    wdw->w = ( w == -1 ) ? gl_screen.nw : (double)w;
-   wdw->h = ( h == -1 ) ? gl_screen.nh : (double)h;
+   wdw->h = ( h == -1 ) ? gl_screen.nh - 30 : (double)h;
+
    if ( ( w == -1 ) && ( h == -1 ) ) {
       window_setFlag( wdw, WINDOW_FULLSCREEN );
       wdw->x = 0.;
