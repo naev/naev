@@ -54,7 +54,7 @@ ALWAYS_INLINE static inline void *nrealloc( void *ptr, size_t size )
 #define NTracingPlot( name, val ) TracyCPlot( name, val )
 #define NTracingPlotF( name, val ) TracyCPlotF( name, val )
 #define NTracingPlotI( name, val ) TracyCPlotI( name, val )
-#else
+#else /* HAVE_TRACY */
 #define NTracingFrameMark
 #define NTracingFrameMarkStart( name )
 #define NTracingFrameMarkEnd( name )
