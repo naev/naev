@@ -7,7 +7,6 @@
  * @brief Handles news generation.
  */
 /** @cond */
-#include <stdint.h>
 #include <stdlib.h>
 
 #include "naev.h"
@@ -18,17 +17,9 @@
 #include "array.h"
 #include "faction.h"
 #include "log.h"
-#include "nlua.h"
-#include "nlua_diff.h"
-#include "nlua_faction.h"
-#include "nlua_misn.h"
-#include "nlua_var.h"
-#include "nluadef.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "nxml.h"
-#include "nxml_lua.h"
-#include "space.h"
 #include "toolkit.h"
 
 #define NEWS_MAX_LENGTH 8192 /**< Maximum length to print. */
