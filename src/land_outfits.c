@@ -820,7 +820,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits,
          const Outfit   *o = outfits[i];
 
          coutfits[i].image   = gl_dupTexture( o->gfx_store );
-         coutfits[i].caption = strdup( _( o->name ) );
+         coutfits[i].caption = strdup( outfit_shortname( o ) );
          if ( !store && outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
             coutfits[i].quantity = -1; /* Don't display. */
          else
