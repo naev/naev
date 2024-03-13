@@ -143,7 +143,7 @@ They pause for emphasis.]]))
       l337(fmt.f(_([[The transmitter you're carrying should be enough for me to work with. On to {spb}!"]]),
          {spb=dstspb3}))
       vn.disappear( l337, "electric" )
-      vn.na(_([[You have to idea what you're getting into, but it seems like you have no choice now but to play along.]]))
+      vn.na(_([[You have no idea what you're getting into, but it seems like you have no choice now but to play along.]]))
       vn.done()
 
       misn.markerRm()
@@ -155,7 +155,12 @@ They pause for emphasis.]]))
       mem.state = 2
 
    elseif mem.state==1 and spob.cur()==dstspb3 then
-      -- TODO
+
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.run()
+
       misn.finish(true)
    end
 end
