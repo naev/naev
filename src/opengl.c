@@ -39,6 +39,7 @@
 #include "opengl.h"
 
 #include "conf.h"
+#include "debug.h"
 #include "log.h"
 #include "render.h"
 #include "gltf.h"

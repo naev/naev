@@ -20,7 +20,6 @@
  * Therefore we must tread carefully. Hooks are serious business.
  */
 /** @cond */
-#include <assert.h>
 #include <stdlib.h>
 
 #include "naev.h"

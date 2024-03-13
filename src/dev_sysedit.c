@@ -22,16 +22,13 @@
 #include "dev_uniedit.h"
 #include "dialogue.h"
 #include "economy.h"
-#include "map.h"
 #include "ndata.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "opengl_render.h"
 #include "safelanes.h"
 #include "space.h"
-#include "tk/toolkit_priv.h"
 #include "toolkit.h"
-#include "unidiff.h"
 
 #define BUTTON_WIDTH   100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -1441,7 +1438,7 @@ static void sysedit_editPnt (void)
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtLua",
          NULL, NULL, s );
-   window_addInput( wid, x += l + 5, y, 150, 20, "inpLua", 20, 1, NULL );
+   window_addInput( wid, x += l + 5, y, 180, 20, "inpLua", 50, 1, NULL );
    y -= gl_defFont.h + 15;
 
    /* Second row. */

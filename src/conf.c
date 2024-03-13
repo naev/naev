@@ -903,24 +903,24 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("minimize",conf.minimize);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Enables colourblind simulation. A value of 0. disables."))
+   conf_saveComment(_("Enables colourblind simulation. A value of 0. disables."));
    conf_saveFloat("colourblind_sim",conf.colourblind_sim);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Type of colourblindness to simulate or correct."))
-   conf_saveComment(_("0 is Protanopia"))
-   conf_saveComment(_("1 is Deuteranopia"))
-   conf_saveComment(_("2 is Tritanapia"))
-   conf_saveComment(_("3 is Rod Monochromacy"))
-   conf_saveComment(_("4 is Cone Monochromacy"))
+   conf_saveComment(_("Type of colourblindness to simulate or correct."));
+   conf_saveComment(_("0 is Protanopia"));
+   conf_saveComment(_("1 is Deuteranopia"));
+   conf_saveComment(_("2 is Tritanapia"));
+   conf_saveComment(_("3 is Rod Monochromacy"));
+   conf_saveComment(_("4 is Cone Monochromacy"));
    conf_saveInt("colourblind_type",conf.colourblind_type);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Intensity of the colour blindness correction. A value of 0. disables."))
+   conf_saveComment(_("Intensity of the colour blindness correction. A value of 0. disables."));
    conf_saveFloat("colourblind_correct",conf.colourblind_correct);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Slows down the game to improve accessibility."))
+   conf_saveComment(_("Slows down the game to improve accessibility."));
    conf_saveFloat("game_speed",conf.game_speed);
    conf_saveEmptyLine();
 
@@ -940,15 +940,15 @@ int conf_saveConfig ( const char* file )
    conf_saveFloat("jump_brightness",conf.jump_brightness);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Gamma correction parameter. A value of 1 disables it (no curve)."))
+   conf_saveComment(_("Gamma correction parameter. A value of 1 disables it (no curve)."));
    conf_saveFloat("gamma_correction",conf.gamma_correction);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Enables low memory mode which foregoes using normal textures and ambient occlusion. Useful when you want to run Naev or more limited hardware."))
+   conf_saveComment(_("Enables low memory mode which foregoes using normal textures and ambient occlusion. Useful when you want to run Naev or more limited hardware."));
    conf_saveBool("low_memory", conf.low_memory);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Maximum texture size to use for 3D models when in low memory mode. A value of less than or equal to 0 disables texture resizing."))
+   conf_saveComment(_("Maximum texture size to use for 3D models when in low memory mode. A value of less than or equal to 0 disables texture resizing."));
    conf_saveBool("max_3d_tex_size", conf.max_3d_tex_size);
    conf_saveEmptyLine();
 
