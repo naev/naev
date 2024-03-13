@@ -11,7 +11,7 @@ def parse_api( filename ):
 
     result = re.findall(r"static const luaL_Reg.*?\[\] = {(.+?)};", data, re.S)
     assert( len(result)==1 )
-    result = re.findall( "\".*\"", result[0] )
+    result = re.findall( "\"(.+?)\"", result[0] )
     funclist = []
     for r in result:
         funclist += [r.replace("\"","")]
