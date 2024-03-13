@@ -1673,8 +1673,8 @@ static void window_renderBorder( const Window *w )
    double y = w->y;
    toolkit_drawRoundRect( x, y, w->w, w->h, w->h / 20, toolkit_col,
                           toolkit_col );
-   toolkit_drawRoundOutlineThick( x + 2, y + 2, w->w - 2, w->h - 2, w->h / 20,
-                                  4, toolkit_colLight, NULL );
+   toolkit_drawRoundOutlineThick( x, y, w->w, w->h, w->h / 20, 4, &cGrey70,
+                                  NULL );
 
    /* Isn't just well without fullscreen case ? */
    /*
@@ -1737,9 +1737,12 @@ void window_render( Window *w, int top )
       if ( wgt->id == w->focus ) {
          double wx = w->x + wgt->x;
          double wy = w->y + wgt->y;
-         toolkit_drawRoundOutlineThick(
-            wx, wy, wgt->w, wgt->h, 10, 4,
-            ( wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30 ), NULL );
+         if ( wgt->type == WIDGET_BUTTON )
+            toolkit_drawRoundOutlineThick( wx, wy, wgt->w, wgt->h, 10, 4,
+                                           &cGrey70, NULL );
+         else
+            toolkit_drawOutlineThick( wx, wy, wgt->w, wgt->h, 0, 4, &cGrey30,
+                                      NULL );
       }
    }
 }

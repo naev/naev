@@ -408,8 +408,7 @@ static void tab_render( Widget *tab, double bx, double by )
       /* Draw contents rect */
       len = tab->dat.tab.namelen[i] + ( TAB_HPADDING * 2 );
       if ( i != tab->dat.tab.active ) {
-         toolkit_drawRoundRect( x, y, len, TAB_HEIGHT + 2, 10, tab_inactive,
-                                NULL );
+         toolkit_drawRoundRect( x, y, len, TAB_HEIGHT, 10, tab_inactive, NULL );
 
          /* Draw text. */
          gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
@@ -419,7 +418,7 @@ static void tab_render( Widget *tab, double bx, double by )
                                         toolkit_colLight, NULL );
       } else {
          toolkit_drawRoundOutlineThick( x - 4, y - 9, len + 8, TAB_HEIGHT + 8,
-                                        10, 4, toolkit_colLight, NULL );
+                                        10, 4, &cGrey70, NULL );
          x_active   = x;
          len_active = len;
       }
