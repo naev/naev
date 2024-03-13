@@ -22,14 +22,13 @@
 #include "array.h"
 #include "camera.h"
 #include "collision.h"
-#include "explosion.h"
 #include "gui.h"
+#include "input.h"
 #include "intlist.h"
 #include "log.h"
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
-#include "nstring.h"
 #include "ntracing.h"
 #include "opengl.h"
 #include "pilot.h"
@@ -581,7 +580,7 @@ static void think_beam( Weapon *w, double dt )
 
    case OUTFIT_TYPE_TURRET_BEAM:
       if ( !weapon_isFlag( w, WEAPON_FLAG_AIM ) && pilot_isPlayer( p ) &&
-           ( SDL_ShowCursor( SDL_QUERY ) == SDL_ENABLE ) ) {
+           input_mouseIsShown() ) {
          vec2 tv;
          gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
          diff = angle_diff( w->solid.dir, /* Get angle to target pos */
@@ -2292,8 +2291,7 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
       rdir =
          weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, time );
    else {
-      if ( pilot_isPlayer( parent ) &&
-           ( SDL_ShowCursor( SDL_QUERY ) == SDL_ENABLE ) ) {
+      if ( pilot_isPlayer( parent ) && input_mouseIsShown() ) {
          vec2 tv;
          gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
          rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.blt.swivel );
@@ -2375,8 +2373,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
       rdir =
          weapon_aimTurret( outfit, parent, &w->target, pos, vel, dir, time );
    else {
-      if ( pilot_isPlayer( parent ) &&
-           ( SDL_ShowCursor( SDL_QUERY ) == SDL_ENABLE ) ) {
+      if ( pilot_isPlayer( parent ) && input_mouseIsShown() ) {
          vec2 tv;
          gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
          rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.blt.swivel );
@@ -2555,8 +2552,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
                   rdir = vec2_angle( pos, &wtarget->solid.pos );
                break;
             }
-         } else if ( pilot_isPlayer( parent ) &&
-                     ( SDL_ShowCursor( SDL_QUERY ) == SDL_ENABLE ) ) {
+         } else if ( pilot_isPlayer( parent ) && input_mouseIsShown() ) {
             vec2 tv;
             gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
             rdir = vec2_angle( pos, &tv );

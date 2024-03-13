@@ -463,6 +463,14 @@ void input_mouseHide( void )
 }
 
 /**
+ * @brief Gets whether or not the mouse is currently shown.
+ */
+int input_mouseIsShown( void )
+{
+   return SDL_ShowCursor( SDL_QUERY ) == SDL_ENABLE;
+}
+
+/**
  * @brief Gets the key id from its name.
  *
  *    @param name Name of the key to get id from.

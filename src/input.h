@@ -161,3 +161,4 @@ void input_update( double dt );
  */
 void input_mouseShow( void );
 void input_mouseHide( void );
+int  input_mouseIsShown( void );
