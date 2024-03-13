@@ -54,3 +54,9 @@ repos:
       entry: optipng
       types: [png]
       language: system
+    - id: clang-format
+      name: Clang formatter
+      entry: clang-format -i
+      types: [c]
+      files: '^src/'
+      language: system
