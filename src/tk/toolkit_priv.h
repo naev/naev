@@ -168,7 +168,8 @@ typedef struct Widget_ {
 #define WINDOW_CENTERX ( 1 << 5 )    /**< Window is X-centered. */
 #define WINDOW_CENTERY ( 1 << 6 )    /**< Window is Y-centered. */
 #define WINDOW_DYNAMIC                                                         \
-   ( 1 << 7 )                  /**< Window should be rerendered every frame. */
+   ( 1 << 7 ) /**< Window should be rerendered every frame. */
+#define WINDOW_HASTABS ( 1 << 8 )
 #define WINDOW_KILL ( 1 << 9 ) /**< Window should die. */
 #define window_isFlag( w, f )                                                  \
    ( ( w )->flags & ( f ) ) /**< Checks a window flag. */
