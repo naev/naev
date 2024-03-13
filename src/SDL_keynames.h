@@ -1,3 +1,4 @@
+// clang-format off
 /*
   Simple DirectMedia Layer
   Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
