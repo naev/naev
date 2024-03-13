@@ -58,7 +58,6 @@
  *         subsystems and is pretty lacking in quite a few aspects.
  */
 /** @cond */
-#include <ctype.h>
 #include <lauxlib.h>
 #include <lualib.h>
 #include <math.h>
@@ -74,7 +73,6 @@
 #include "conf.h"
 #include "array.h"
 #include "board.h"
-#include "escort.h"
 #include "faction.h"
 #include "hook.h"
 #include "gatherable.h"
@@ -82,17 +80,13 @@
 #include "ndata.h"
 #include "nlua.h"
 #include "nlua_asteroid.h"
-#include "nlua_faction.h"
 #include "nlua_pilot.h"
 #include "nlua_spob.h"
-#include "nlua_rnd.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "ntracing.h"
-#include "nstring.h"
 #include "physics.h"
 #include "pilot.h"
-#include "player.h"
 #include "rng.h"
 #include "space.h"
 
