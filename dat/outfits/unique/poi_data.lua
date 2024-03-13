@@ -6,9 +6,13 @@ local poi = require "common.poi"
 local COST = 2
 
 function price( _q )
-   local canbuy = (COST <= poi.data_get())
+   local playerhas = poi.data_get()
+   local canbuy = (COST <= playerhas)
    return fmt.f(n_("{num} Encrypted Data Matrix",
-                   "{num} Encrypted Data Matrices", COST),{num=COST}), canbuy, false
+                   "{num} Encrypted Data Matrices", COST),{num=COST}),
+            canbuy, false,
+            fmt.f(n_("{num} Encrypted Data Matrix",
+                   "{num} Encrypted Data Matrices", playerhas),{num=playerhas})
 end
 
 function buy( _q )

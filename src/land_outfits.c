@@ -71,7 +71,8 @@ static int  outfits_getMod( void );
 static void outfits_rmouse( unsigned int wid, const char *widget_name );
 static void outfits_find( unsigned int wid, const char *str );
 static const char *outfit_getPrice( const Outfit *outfit, credits_t *price,
-                                    int *canbuy, int *cansell );
+                                    int *canbuy, int *cansell,
+                                    char **player_has );
 static void        outfit_Popdown( unsigned int wid, const char *str );
 static void        outfits_genList( unsigned int wid );
 static void outfits_changeTab( unsigned int wid, const char *wgt, int old,
@@ -487,12 +488,12 @@ void outfits_update( unsigned int wid, const char *str )
    Outfit *outfit;
    char    buf[STRMAX], lbl[STRMAX], buf_credits[ECON_CRED_STRLEN],
       buf_mass[ECON_MASS_STRLEN];
-   const char *buf_price;
+   const char *buf_price, *summary;
    credits_t   price;
    size_t      l = 0, k = 0;
    int         iw, ih, w, h, blackmarket, canbuy, cansell, sw, th;
    double      mass;
-   const char *summary;
+   char       *youhave;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -505,7 +506,7 @@ void outfits_update( unsigned int wid, const char *str )
    k += scnprintf( &lbl[k], sizeof( lbl ) - k, "%s", _( "Owned:" ) );
    k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Mass:" ) );
    k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Price:" ) );
-   k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Money:" ) );
+   k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "You have:" ) );
 
    /* Get and set parameters. */
    active = window_tabWinGetActive( wid, OUTFITS_TAB );
@@ -546,7 +547,7 @@ void outfits_update( unsigned int wid, const char *str )
       window_modifyText( wid, "txtDescription", buf );
    } else
       window_modifyText( wid, "txtDescription", _( outfit->desc_raw ) );
-   buf_price = outfit_getPrice( outfit, &price, &canbuy, &cansell );
+   buf_price = outfit_getPrice( outfit, &price, &canbuy, &cansell, &youhave );
    credits2str( buf_credits, player.p->credits, 2 );
 
    /* gray out sell button */
@@ -555,9 +556,9 @@ void outfits_update( unsigned int wid, const char *str )
    else
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
-   if ( ( outfit_canBuy( outfit, wid ) > 0 ) && canbuy ) {
+   if ( ( outfit_canBuy( outfit, wid ) > 0 ) && canbuy )
       window_enableButton( wid, "btnBuyOutfit" );
-   } else
+   else
       window_disableButtonSoft( wid, "btnBuyOutfit" );
 
    mass = outfit->mass;
@@ -576,7 +577,8 @@ void outfits_update( unsigned int wid, const char *str )
                    player_outfitOwned( outfit ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", buf_mass );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", buf_price );
-   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", buf_credits );
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
+                   ( ( youhave ) != NULL ) ? youhave : buf_credits );
    if ( outfit->license ) {
       int meets_reqs = player_hasLicense( outfit->license );
       k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "License:" ) );
@@ -716,9 +718,11 @@ static void outfits_find( unsigned int wid, const char *str )
  * @brief Returns the price of an outfit (subject to quantity modifier)
  */
 static const char *outfit_getPrice( const Outfit *outfit, credits_t *price,
-                                    int *canbuy, int *cansell )
+                                    int *canbuy, int *cansell,
+                                    char **player_has )
 {
    static char  pricestr[STRMAX_SHORT];
+   static char  youhave[STRMAX_SHORT];
    unsigned int q = outfits_getMod();
    if ( outfit->lua_price == LUA_NOREF ) {
       price2str( pricestr, outfit->price * q, player.p->credits, 2 );
@@ -731,22 +735,33 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price,
 
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit->lua_price );
    lua_pushinteger( naevL, q );
-   if ( nlua_pcall( outfit->lua_env, 1, 3 ) ) { /* */
+   if ( nlua_pcall( outfit->lua_env, 1, 4 ) ) { /* */
       WARN( _( "Outfit '%s' failed to run '%s':\n%s" ), outfit->name, "price",
             lua_tostring( naevL, -1 ) );
       *price   = 0;
       *canbuy  = 0;
       *cansell = 0;
+      if ( player_has != NULL )
+         *player_has = NULL;
       lua_pop( naevL, 1 );
       return pricestr;
    }
 
-   str = luaL_checkstring( naevL, -3 );
+   str = luaL_checkstring( naevL, -4 );
    strncpy( pricestr, str, sizeof( pricestr ) - 1 );
    *price   = 0;
-   *canbuy  = lua_toboolean( naevL, -2 );
-   *cansell = lua_toboolean( naevL, -1 );
-   lua_pop( naevL, 3 );
+   *canbuy  = lua_toboolean( naevL, -3 );
+   *cansell = lua_toboolean( naevL, -2 );
+   if ( player_has != NULL ) {
+      str = luaL_optstring( naevL, -1, NULL );
+      if ( str == NULL )
+         *player_has = NULL;
+      else {
+         strncpy( youhave, str, sizeof( youhave ) - 1 );
+         *player_has = youhave;
+      }
+   }
+   lua_pop( naevL, 4 );
 
    return pricestr;
 }
@@ -943,7 +958,7 @@ int outfit_canBuy( const Outfit *outfit, int wid )
 
    land_errClear();
    failure = 0;
-   outfit_getPrice( outfit, &price, &canbuy, &cansell );
+   outfit_getPrice( outfit, &price, &canbuy, &cansell, NULL );
 
    /* Special exception for local map. */
    if ( outfit != omap ) {
@@ -1141,7 +1156,7 @@ int outfit_canSell( const Outfit *outfit )
    credits_t price;
 
    land_errClear();
-   outfit_getPrice( outfit, &price, &canbuy, &cansell );
+   outfit_getPrice( outfit, &price, &canbuy, &cansell, NULL );
 
    /* Unique item. */
    if ( outfit_isProp( outfit, OUTFIT_PROP_UNIQUE ) ) {
