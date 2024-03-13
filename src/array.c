@@ -15,101 +15,104 @@
 #include "nstring.h"
 #include "ntracing.h"
 
-void *_array_create_helper(size_t e_size, size_t capacity)
+void *_array_create_helper( size_t e_size, size_t capacity )
 {
    if ( capacity <= 0 )
       capacity = 1;
 
-   _private_container *c = nmalloc( sizeof(_private_container) + e_size * capacity );
+   _private_container *c =
+      nmalloc( sizeof( _private_container ) + e_size * capacity );
 
 #if DEBUG_ARRAYS
    c->_sentinel = ARRAY_SENTINEL;
 #endif
    c->_reserved = capacity;
-   c->_size = 0;
+   c->_size     = 0;
    return c->_array;
 }
 
-static void _array_resize_container(_private_container **c_, size_t e_size, size_t new_size)
+static void _array_resize_container( _private_container **c_, size_t e_size,
+                                     size_t new_size )
 {
    assert( new_size <= (size_t)INT_MAX );
    _private_container *c = *c_;
 
-   if (new_size > c->_reserved) {
+   if ( new_size > c->_reserved ) {
       /* increases the reserved space */
       do
          c->_reserved *= 2;
-      while (new_size > c->_reserved);
+      while ( new_size > c->_reserved );
 
-      c = nrealloc( c, sizeof(_private_container) + e_size * c->_reserved );
+      c = nrealloc( c, sizeof( _private_container ) + e_size * c->_reserved );
    }
 
    c->_size = new_size;
-   *c_ = c;
+   *c_      = c;
 }
 
-void _array_resize_helper(void **a, size_t e_size, size_t new_size)
+void _array_resize_helper( void **a, size_t e_size, size_t new_size )
 {
-   _private_container *c = _array_private_container(*a);
-   _array_resize_container(&c, e_size, new_size);
+   _private_container *c = _array_private_container( *a );
+   _array_resize_container( &c, e_size, new_size );
    *a = c->_array;
 }
 
-void *_array_grow_helper(void **a, size_t e_size)
+void *_array_grow_helper( void **a, size_t e_size )
 {
-   _private_container *c = _array_private_container(*a);
-   if (c->_size == c->_reserved) {
+   _private_container *c = _array_private_container( *a );
+   if ( c->_size == c->_reserved ) {
       /* Array full, doubles the reserved memory */
       c->_reserved *= 2;
-      c = nrealloc( c, sizeof(_private_container) + e_size * c->_reserved );
+      c  = nrealloc( c, sizeof( _private_container ) + e_size * c->_reserved );
       *a = c->_array;
    }
 
-   return c->_array + (c->_size++) * e_size;
+   return c->_array + ( c->_size++ ) * e_size;
 }
 
-void _array_erase_helper(void **a, size_t e_size, void *first, void *last)
+void _array_erase_helper( void **a, size_t e_size, void *first, void *last )
 {
    intptr_t diff = (char *)last - (char *)first;
 
-   if (!diff)
+   if ( !diff )
       return;
    /* copies the memory */
-   _private_container *c = _array_private_container(*a);
-   char *end = c->_array + c->_size * e_size;
-   memmove(first, last, end - (char *)last);
+   _private_container *c   = _array_private_container( *a );
+   char               *end = c->_array + c->_size * e_size;
+   memmove( first, last, end - (char *)last );
 
    /* resizes the array */
-   assert("Invalid iterators passed to array erase" && (diff % e_size == 0));
+   assert( "Invalid iterators passed to array erase" &&
+           ( diff % e_size == 0 ) );
    c->_size -= diff / e_size;
 }
 
-void _array_shrink_helper(void **a, size_t e_size)
+void _array_shrink_helper( void **a, size_t e_size )
 {
-   _private_container *c = _array_private_container(*a);
-   if (c->_size != 0) {
-      c = nrealloc( c, sizeof(_private_container) + e_size * c->_size );
+   _private_container *c = _array_private_container( *a );
+   if ( c->_size != 0 ) {
+      c = nrealloc( c, sizeof( _private_container ) + e_size * c->_size );
       c->_reserved = c->_size;
    } else {
-      c = nrealloc( c, sizeof(_private_container) + e_size );
+      c            = nrealloc( c, sizeof( _private_container ) + e_size );
       c->_reserved = 1;
    }
    *a = c->_array;
 }
 
-void _array_free_helper(void *a)
+void _array_free_helper( void *a )
 {
-   if (a==NULL)
+   if ( a == NULL )
       return;
-   nfree( _array_private_container(a) );
+   nfree( _array_private_container( a ) );
 }
 
-void *_array_copy_helper(size_t e_size, void *a)
+void *_array_copy_helper( size_t e_size, void *a )
 {
-   if (a==NULL)
+   if ( a == NULL )
       return NULL;
-   _private_container *c = _array_private_container(a);
-   void *copy = _array_create_helper( e_size, c->_size );
+   _private_container *c    = _array_private_container( a );
+   void               *copy = _array_create_helper( e_size, c->_size );
    _array_resize_helper( &copy, e_size, c->_size );
    return memcpy( copy, a, e_size * c->_size );
 }

@@ -40,11 +40,18 @@
 #include "economy.h"
 #include "hook.h"
 
-#define NT_SECONDS_DIV   (1000)      /* Divider for extracting seconds. */
-#define NT_SECONDS_DT    (30)        /* Update rate, how many seconds are in a real second. */
-#define NT_CYCLE_SECONDS   ((ntime_t)NT_CYCLE_PERIODS*(ntime_t)NT_PERIOD_SECONDS) /* Seconds in a cycle */
-#define NT_PERIODS_DIV   ((ntime_t)NT_PERIOD_SECONDS*(ntime_t)NT_SECONDS_DIV) /* Divider for extracting periods. */
-#define NT_CYCLES_DIV   ((ntime_t)NT_CYCLE_SECONDS*(ntime_t)NT_SECONDS_DIV) /* Divider for extracting cycles. */
+#define NT_SECONDS_DIV ( 1000 ) /* Divider for extracting seconds. */
+#define NT_SECONDS_DT                                                          \
+   ( 30 ) /* Update rate, how many seconds are in a real second. */
+#define NT_CYCLE_SECONDS                                                       \
+   ( (ntime_t)NT_CYCLE_PERIODS *                                               \
+     (ntime_t)NT_PERIOD_SECONDS ) /* Seconds in a cycle */
+#define NT_PERIODS_DIV                                                         \
+   ( (ntime_t)NT_PERIOD_SECONDS *                                              \
+     (ntime_t)NT_SECONDS_DIV ) /* Divider for extracting periods. */
+#define NT_CYCLES_DIV                                                          \
+   ( (ntime_t)NT_CYCLE_SECONDS *                                               \
+     (ntime_t)NT_SECONDS_DIV ) /* Divider for extracting cycles. */
 
 /**
  * @brief Used for storing time increments to not trigger hooks during Lua
@@ -52,12 +59,13 @@
  */
 typedef struct NTimeUpdate_s {
    struct NTimeUpdate_s *next; /**< Next in the linked list. */
-   ntime_t inc; /**< Time increment associated. */
+   ntime_t               inc;  /**< Time increment associated. */
 } NTimeUpdate_t;
 static NTimeUpdate_t *ntime_inclist = NULL; /**< Time increment list. */
 
 static ntime_t naev_time = 0; /**< Contains the current time in milliseconds. */
-static double naev_remainder = 0.; /**< Remainder when updating, to try to keep in perfect sync. */
+static double  naev_remainder =
+   0.; /**< Remainder when updating, to try to keep in perfect sync. */
 static int ntime_enable = 1; /** Allow updates? */
 
 /**
@@ -65,23 +73,23 @@ static int ntime_enable = 1; /** Allow updates? */
  */
 void ntime_update( double dt )
 {
-   double dtt, tu;
+   double  dtt, tu;
    ntime_t inc;
 
    /* Only if we need to update. */
-   if (!ntime_enable)
+   if ( !ntime_enable )
       return;
 
    /* Calculate the effective time. */
-   dtt = naev_remainder + dt*NT_SECONDS_DT*NT_SECONDS_DIV;
+   dtt = naev_remainder + dt * NT_SECONDS_DT * NT_SECONDS_DIV;
 
    /* Time to update. */
    tu             = floor( dtt );
-   inc            = (ntime_t) tu;
+   inc            = (ntime_t)tu;
    naev_remainder = dtt - tu; /* Leave remainder. */
 
    /* Increment. */
-   naev_time     += inc;
+   naev_time += inc;
    hooks_updateDate( inc );
 }
 
@@ -94,7 +102,7 @@ ntime_t ntime_create( int scu, int stp, int stu )
    tscu = scu;
    tstp = stp;
    tstu = stu;
-   return tscu*NT_CYCLES_DIV + tstp*NT_PERIODS_DIV + tstu*NT_SECONDS_DIV;
+   return tscu * NT_CYCLES_DIV + tstp * NT_PERIODS_DIV + tstu * NT_SECONDS_DIV;
 }
 
 /**
@@ -102,7 +110,7 @@ ntime_t ntime_create( int scu, int stp, int stu )
  *
  *    @return The current time in milliseconds.
  */
-ntime_t ntime_get (void)
+ntime_t ntime_get( void )
 {
    return naev_time;
 }
@@ -112,10 +120,10 @@ ntime_t ntime_get (void)
  */
 void ntime_getR( int *cycles, int *periods, int *seconds, double *rem )
 {
-   *cycles = ntime_getCycles( naev_time );
+   *cycles  = ntime_getCycles( naev_time );
    *periods = ntime_getPeriods( naev_time );
    *seconds = ntime_getSeconds( naev_time );
-   *rem = ntime_getRemainder( naev_time ) + naev_remainder;
+   *rem     = ntime_getRemainder( naev_time ) + naev_remainder;
 }
 
 /**
@@ -123,7 +131,7 @@ void ntime_getR( int *cycles, int *periods, int *seconds, double *rem )
  */
 int ntime_getCycles( ntime_t t )
 {
-   return (t / NT_CYCLES_DIV);
+   return ( t / NT_CYCLES_DIV );
 }
 
 /**
@@ -131,7 +139,7 @@ int ntime_getCycles( ntime_t t )
  */
 int ntime_getPeriods( ntime_t t )
 {
-   return (t / NT_PERIODS_DIV) % NT_CYCLE_PERIODS;
+   return ( t / NT_PERIODS_DIV ) % NT_CYCLE_PERIODS;
 }
 
 /**
@@ -139,7 +147,7 @@ int ntime_getPeriods( ntime_t t )
  */
 int ntime_getSeconds( ntime_t t )
 {
-   return (t / NT_SECONDS_DIV) % NT_PERIOD_SECONDS;
+   return ( t / NT_SECONDS_DIV ) % NT_PERIOD_SECONDS;
 }
 
 /**
@@ -149,7 +157,7 @@ int ntime_getSeconds( ntime_t t )
  */
 double ntime_convertSeconds( ntime_t t )
 {
-   return ((double)t / (double)NT_SECONDS_DIV);
+   return ( (double)t / (double)NT_SECONDS_DIV );
 }
 
 /**
@@ -157,7 +165,7 @@ double ntime_convertSeconds( ntime_t t )
  */
 double ntime_getRemainder( ntime_t t )
 {
-   return (double)(t % NT_SECONDS_DIV);
+   return (double)( t % NT_SECONDS_DIV );
 }
 
 /**
@@ -167,15 +175,16 @@ double ntime_getRemainder( ntime_t t )
  *    @param d Number of digits to use.
  *    @return The time in a human readable format (must free).
  */
-char* ntime_pretty( ntime_t t, int d )
+char *ntime_pretty( ntime_t t, int d )
 {
    char str[64];
-   ntime_prettyBuf( str, sizeof(str), t, d );
-   return strdup(str);
+   ntime_prettyBuf( str, sizeof( str ), t, d );
+   return strdup( str );
 }
 
 /**
- * @brief Gets the time in a pretty human readable format filling a preset buffer.
+ * @brief Gets the time in a pretty human readable format filling a preset
+ * buffer.
  *
  *    @param[out] str Buffer to use.
  *    @param max Maximum length of the buffer (recommended 64).
@@ -185,23 +194,24 @@ char* ntime_pretty( ntime_t t, int d )
 void ntime_prettyBuf( char *str, int max, ntime_t t, int d )
 {
    ntime_t nt;
-   int cycles, periods, seconds;
+   int     cycles, periods, seconds;
 
-   if (t==0)
+   if ( t == 0 )
       nt = naev_time;
    else
       nt = t;
 
    /* UST (Universal Synchronized Time) - unit is seconds */
-   cycles = ntime_getCycles( nt );
+   cycles  = ntime_getCycles( nt );
    periods = ntime_getPeriods( nt );
    seconds = ntime_getSeconds( nt );
-   if ((cycles == 0) && (periods == 0)) /* only seconds */
-      snprintf( str, max, _("%04d s"), seconds );
-   else if ((cycles == 0) || (d==0))
-      snprintf( str, max, _("%.*f p"), d, periods + 0.0001 * seconds );
+   if ( ( cycles == 0 ) && ( periods == 0 ) ) /* only seconds */
+      snprintf( str, max, _( "%04d s" ), seconds );
+   else if ( ( cycles == 0 ) || ( d == 0 ) )
+      snprintf( str, max, _( "%.*f p" ), d, periods + 0.0001 * seconds );
    else /* UST format */
-      snprintf( str, max, _("UST %d:%.*f"), cycles, d, periods + 0.0001 * seconds );
+      snprintf( str, max, _( "UST %d:%.*f" ), cycles, d,
+                periods + 0.0001 * seconds );
 }
 
 /**
@@ -220,8 +230,8 @@ void ntime_set( ntime_t t )
  */
 void ntime_setR( int cycles, int periods, int seconds, double rem )
 {
-   naev_time   = ntime_create( cycles, periods, seconds );
-   naev_time  += floor(rem);
+   naev_time = ntime_create( cycles, periods, seconds );
+   naev_time += floor( rem );
    naev_remainder = fmod( rem, 1. );
 }
 
@@ -236,7 +246,7 @@ void ntime_inc( ntime_t t )
    economy_update( t );
 
    /* Run hooks. */
-   if (t > 0)
+   if ( t > 0 )
       hooks_updateDate( t );
 }
 
@@ -263,17 +273,18 @@ void ntime_incLagged( ntime_t t )
    NTimeUpdate_t *ntu, *iter;
 
    /* Create the time increment. */
-   ntu = malloc(sizeof(NTimeUpdate_t));
+   ntu       = malloc( sizeof( NTimeUpdate_t ) );
    ntu->next = NULL;
-   ntu->inc = t;
+   ntu->inc  = t;
 
    /* Only member. */
-   if (ntime_inclist == NULL)
+   if ( ntime_inclist == NULL )
       ntime_inclist = ntu;
 
    else {
       /* Find end of list. */
-      for (iter = ntime_inclist; iter->next != NULL; iter = iter->next);
+      for ( iter = ntime_inclist; iter->next != NULL; iter = iter->next )
+         ;
       /* Append to end. */
       iter->next = ntu;
    }
@@ -282,13 +293,13 @@ void ntime_incLagged( ntime_t t )
 /**
  * @brief Checks to see if ntime has any hooks pending to run.
  */
-void ntime_refresh (void)
+void ntime_refresh( void )
 {
    NTimeUpdate_t *ntu;
 
    /* We have to run all the increments one by one to ensure all hooks get
     * run and that no collisions occur. */
-   while (ntime_inclist != NULL) {
+   while ( ntime_inclist != NULL ) {
       ntu = ntime_inclist;
 
       /* Run hook stuff and actually update time. */
@@ -299,6 +310,6 @@ void ntime_refresh (void)
       ntime_inclist = ntu->next;
 
       /* Free the increment. */
-      free(ntu);
+      free( ntu );
    }
 }

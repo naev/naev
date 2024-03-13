@@ -11,32 +11,33 @@
 #include <stdlib.h>
 /** @endcond */
 
-#include "font.h"
 #include "../../input.h" /* Hack for now. */
+#include "font.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 
-#define TAB_HEIGHT   30
-#define TAB_HMARGIN  3
+#define TAB_HEIGHT 30
+#define TAB_HMARGIN 3
 #define TAB_HPADDING 15
 
 /*
  * Prototypes.
  */
-static void tab_expose( Widget *tab, int exposed );
-static int tab_mouse( Widget* tab, SDL_Event *event );
-static int tab_key( Widget* tab, SDL_Event *event );
-static int tab_raw( Widget* tab, SDL_Event *event );
-static int tab_scroll( Widget *tab, int dir );
-static void tab_render( Widget* tab, double bx, double by );
-static void tab_renderDynamic( Widget* tab, double bx, double by );
-static void tab_renderOverlay( Widget* tab, double bx, double by );
-static void tab_cleanup( Widget* tab );
-static int tab_getBarWidth( const Widget* wgt );
+static void    tab_expose( Widget *tab, int exposed );
+static int     tab_mouse( Widget *tab, SDL_Event *event );
+static int     tab_key( Widget *tab, SDL_Event *event );
+static int     tab_raw( Widget *tab, SDL_Event *event );
+static int     tab_scroll( Widget *tab, int dir );
+static void    tab_render( Widget *tab, double bx, double by );
+static void    tab_renderDynamic( Widget *tab, double bx, double by );
+static void    tab_renderOverlay( Widget *tab, double bx, double by );
+static void    tab_cleanup( Widget *tab );
+static int     tab_getBarWidth( const Widget *wgt );
 static Widget *tab_getWgt( unsigned int wid, const char *tab );
 
 /**
- * @brief Creates a widget that hijacks a window and creates many children window.
+ * @brief Creates a widget that hijacks a window and creates many children
+ * window.
  *
  * Position origin is 0,0 at bottom left.  If you use negative X or Y
  *  positions.  They actually count from the opposite side in.
@@ -52,19 +53,20 @@ static Widget *tab_getWgt( unsigned int wid, const char *tab );
  *    @param tabpos Position to set up the tabs at.
  *    @return List of created windows.
  */
-unsigned int* window_addTabbedWindow( unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      const char* name, int ntabs, const char **tabnames, int tabpos )
+unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
+                                      const int y,              /* position */
+                                      const int w, const int h, /* size */
+                                      const char *name, int ntabs,
+                                      const char **tabnames, int tabpos )
 {
-   int wx,wy, ww,wh;
+   int     wx, wy, ww, wh;
    Window *wdw;
    Widget *wgt;
 
    /* Create the Widget. */
-   wdw = window_wget(wid);
-   wgt = window_newWidget(wdw, name);
-   if (wgt == NULL)
+   wdw = window_wget( wid );
+   wgt = window_newWidget( wdw, name );
+   if ( wgt == NULL )
       return NULL;
 
    /* generic */
@@ -72,51 +74,50 @@ unsigned int* window_addTabbedWindow( unsigned int wid,
 
    /* specific */
    wgt_setFlag( wgt, WGT_FLAG_RAWINPUT );
-   wgt->exposeevent        = tab_expose;
-   wgt->rawevent           = tab_raw;
-   wgt->render             = tab_render;
-   wgt->renderDynamic      = tab_renderDynamic;
-   wgt->renderOverlay      = tab_renderOverlay;
-   wgt->cleanup            = tab_cleanup;
-   wgt->dat.tab.ntabs      = ntabs;
-   wgt->dat.tab.tabpos     = tabpos;
-   wgt->dat.tab.font       = &gl_smallFont;
+   wgt->exposeevent    = tab_expose;
+   wgt->rawevent       = tab_raw;
+   wgt->render         = tab_render;
+   wgt->renderDynamic  = tab_renderDynamic;
+   wgt->renderOverlay  = tab_renderOverlay;
+   wgt->cleanup        = tab_cleanup;
+   wgt->dat.tab.ntabs  = ntabs;
+   wgt->dat.tab.tabpos = tabpos;
+   wgt->dat.tab.font   = &gl_smallFont;
 
    /* position/size */
-   wgt->x = (double) (x<0) ? 0. : x;
-   wgt->y = (double) (y<0) ? 0. : y;
-   wgt->w = (double) (w<0) ? wdw->w : w;
-   wgt->h = (double) (h<0) ? wdw->h : h;
+   wgt->x = (double)( x < 0 ) ? 0. : x;
+   wgt->y = (double)( y < 0 ) ? 0. : y;
+   wgt->w = (double)( w < 0 ) ? wdw->w : w;
+   wgt->h = (double)( h < 0 ) ? wdw->h : h;
 
    /* Calculate window position and size. */
    wx = wdw->x + wgt->x;
    wy = wdw->y + wgt->y;
    ww = wgt->w;
    wh = wgt->h;
-   if (tabpos == 0) {
+   if ( tabpos == 0 ) {
       wy += TAB_HEIGHT;
       wh -= TAB_HEIGHT;
-   }
-   else if (tabpos == 1) {
+   } else if ( tabpos == 1 ) {
       wh -= TAB_HEIGHT;
-   }
-   else
-      WARN( _("Tab position '%d' parameter does not make sense"), tabpos );
+   } else
+      WARN( _( "Tab position '%d' parameter does not make sense" ), tabpos );
 
    /* Copy tab information. */
-   wgt->dat.tab.tabnames   = malloc( sizeof(char*) * ntabs );
-   wgt->dat.tab.windows    = malloc( sizeof(unsigned int) * ntabs );
-   wgt->dat.tab.namelen    = malloc( sizeof(int) * ntabs );
-   for (int i=0; i<ntabs; i++) {
+   wgt->dat.tab.tabnames = malloc( sizeof( char * ) * ntabs );
+   wgt->dat.tab.windows  = malloc( sizeof( unsigned int ) * ntabs );
+   wgt->dat.tab.namelen  = malloc( sizeof( int ) * ntabs );
+   for ( int i = 0; i < ntabs; i++ ) {
       /* Get name and length. */
       wgt->dat.tab.tabnames[i] = strdup( tabnames[i] );
-      wgt->dat.tab.namelen[i]  = gl_printWidthRaw( wgt->dat.tab.font,
-            wgt->dat.tab.tabnames[i] );
+      wgt->dat.tab.namelen[i] =
+         gl_printWidthRaw( wgt->dat.tab.font, wgt->dat.tab.tabnames[i] );
       /* Create windows with flags.
        * Parent window handles events for the children.
        */
-      wgt->dat.tab.windows[i] = window_createFlags( tabnames[i], tabnames[i], wx, wy, ww, wh,
-            WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT | WINDOW_NOBORDER );
+      wgt->dat.tab.windows[i] = window_createFlags(
+         tabnames[i], tabnames[i], wx, wy, ww, wh,
+         WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT | WINDOW_NOBORDER );
    }
 
    /* Return list of windows. */
@@ -134,14 +135,14 @@ static int tab_scroll( Widget *tab, int dir )
 {
    int new;
 
-   if (dir > 0)
-      new = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
+   if ( dir > 0 )
+      new = ( tab->dat.tab.active + 1 ) % tab->dat.tab.ntabs;
    else {
       /* Wrap manually to avoid undefined behaviour. */
-      if (tab->dat.tab.active == 0)
+      if ( tab->dat.tab.active == 0 )
          new = tab->dat.tab.ntabs - 1;
       else
-         new = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+         new = ( tab->dat.tab.active - 1 ) % tab->dat.tab.ntabs;
    }
 
    return new;
@@ -154,12 +155,12 @@ static int tab_scroll( Widget *tab, int dir )
  */
 static void tab_expose( Widget *tab, int exposed )
 {
-   Window *wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
-   if (wdw == NULL)
+   Window *wdw = window_wget( tab->dat.tab.windows[tab->dat.tab.active] );
+   if ( wdw == NULL )
       return;
 
    /* Re-focus widgets if visible. */
-   if (exposed)
+   if ( exposed )
       toolkit_focusSanitize( wdw );
    /* Clear focus (disables text input, etc.) */
    else
@@ -174,26 +175,27 @@ static void tab_expose( Widget *tab, int exposed )
  *    @param mod Mods when key is being pressed.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int tab_raw( Widget* tab, SDL_Event *event )
+static int tab_raw( Widget *tab, SDL_Event *event )
 {
    Window *wdw;
-   int ret;
+   int     ret;
 
    /* First handle event internally. */
    ret = 0;
-   if (event->type == SDL_MOUSEBUTTONDOWN)
+   if ( event->type == SDL_MOUSEBUTTONDOWN )
       ret = tab_mouse( tab, event );
-   else if (event->type == SDL_KEYDOWN)
+   else if ( event->type == SDL_KEYDOWN )
       ret = tab_key( tab, event );
 
    /* Took the event. */
-   if (ret)
+   if ( ret )
       return ret;
 
    /* Give event to window. */
-   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
-   if (wdw == NULL) {
-      WARN( _("Active window in window '%s' not found in stack."), tab->name);
+   wdw = window_wget( tab->dat.tab.windows[tab->dat.tab.active] );
+   if ( wdw == NULL ) {
+      WARN( _( "Active window in window '%s' not found in stack." ),
+            tab->name );
       return 0;
    }
 
@@ -204,15 +206,15 @@ static int tab_raw( Widget* tab, SDL_Event *event )
 /**
  * @brief Handles mouse events.
  */
-static int tab_mouse( Widget* tab, SDL_Event *event )
+static int tab_mouse( Widget *tab, SDL_Event *event )
 {
-   int i, p, old, change;
+   int     i, p, old, change;
    Window *parent;
-   int x, y, rx, ry;
+   int     x, y, rx, ry;
 
    /* Get parent window. */
    parent = window_wget( tab->wdw );
-   if (parent == NULL)
+   if ( parent == NULL )
       return 0;
 
    /* Convert to window space. */
@@ -223,42 +225,42 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
    y -= tab->y;
 
    /* Since it's at the top we have to translate down. */
-   if (tab->dat.tab.tabpos == 1)
-      y -= (tab->h-TAB_HEIGHT);
+   if ( tab->dat.tab.tabpos == 1 )
+      y -= ( tab->h - TAB_HEIGHT );
 
    /* Make sure event is in the TAB HEIGHT area. */
-   if ((y>=TAB_HEIGHT) || (y<0))
+   if ( ( y >= TAB_HEIGHT ) || ( y < 0 ) )
       return 0;
 
    /* Handle event. */
    p = TAB_HMARGIN;
-   for (i=0; i<tab->dat.tab.ntabs; i++) {
+   for ( i = 0; i < tab->dat.tab.ntabs; i++ ) {
       /* Too far left, won't match any tabs. */
-      if (x < p)
+      if ( x < p )
          break;
 
-      p += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
+      p += ( TAB_HPADDING * 2 ) + TAB_HMARGIN + tab->dat.tab.namelen[i];
 
       /* Too far right, try next tab. */
-      if (x >= p)
+      if ( x >= p )
          continue;
 
       old = tab->dat.tab.active;
 
       /* Mark as active. */
       change = -1;
-      if (event->button.button == SDL_BUTTON_X1)
-         change = tab_scroll(tab, -1);
-      else if (event->button.button == SDL_BUTTON_X2)
-         change = tab_scroll(tab, 1);
+      if ( event->button.button == SDL_BUTTON_X1 )
+         change = tab_scroll( tab, -1 );
+      else if ( event->button.button == SDL_BUTTON_X2 )
+         change = tab_scroll( tab, 1 );
       else
          tab->dat.tab.active = i;
 
-      if (change != -1)
+      if ( change != -1 )
          tab->dat.tab.active = change;
 
       /* Create event. */
-      if (tab->dat.tab.onChange != NULL)
+      if ( tab->dat.tab.onChange != NULL )
          tab->dat.tab.onChange( tab->wdw, tab->name, old, tab->dat.tab.active );
       toolkit_rerender();
       break;
@@ -270,23 +272,24 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
 /**
  * @brief Handles key events.
  */
-#define CHECK_CHANGE(n,v)  \
-bind_key = input_getKeybind(n, NULL, &bind_mod); \
-if ((key==bind_key) && ((bind_mod==NMOD_ANY) || (mod==bind_mod))) \
+#define CHECK_CHANGE( n, v )                                                   \
+   bind_key = input_getKeybind( n, NULL, &bind_mod );                          \
+   if ( ( key == bind_key ) &&                                                 \
+        ( ( bind_mod == NMOD_ANY ) || ( mod == bind_mod ) ) )                  \
    change = v
-static int tab_key( Widget* tab, SDL_Event *event )
+static int tab_key( Widget *tab, SDL_Event *event )
 {
-   int change;
+   int         change;
    SDL_Keycode key, bind_key;
-   SDL_Keymod mod, bind_mod;
-   Window *wdw;
-   Widget *wgt;
-   int ret;
+   SDL_Keymod  mod, bind_mod;
+   Window     *wdw;
+   Widget     *wgt;
+   int         ret;
 
    /* Get window and focused widget. */
-   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
+   wdw = window_wget( tab->dat.tab.windows[tab->dat.tab.active] );
    wgt = toolkit_getFocus( wdw );
-   if ((wgt!=NULL) && (wgt->textevent != NULL))
+   if ( ( wgt != NULL ) && ( wgt->textevent != NULL ) )
       return 0;
 
    /* Event info. */
@@ -310,43 +313,42 @@ static int tab_key( Widget* tab, SDL_Event *event )
    ret = 0;
 
    /* Handle keypresses. */
-   switch (key) {
-      case SDLK_TAB:
-         if (mod & NMOD_CTRL) {
-            if (mod & NMOD_SHIFT) {
-               /* Wrap manually to avoid undefined behaviour. */
-               if (tab->dat.tab.active == 0)
-                  change = tab->dat.tab.ntabs - 1;
-               else
-                  change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
-            }
+   switch ( key ) {
+   case SDLK_TAB:
+      if ( mod & NMOD_CTRL ) {
+         if ( mod & NMOD_SHIFT ) {
+            /* Wrap manually to avoid undefined behaviour. */
+            if ( tab->dat.tab.active == 0 )
+               change = tab->dat.tab.ntabs - 1;
             else
-               change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
-         }
-         else {
-            /* This is entirely backwards, but it's working around existing widget placement. */
-            if (mod & NMOD_SHIFT)
-               toolkit_nextFocus( wdw );
-            else
-               toolkit_prevFocus( wdw );
-         }
-         ret = 1;
-         break;
+               change = ( tab->dat.tab.active - 1 ) % tab->dat.tab.ntabs;
+         } else
+            change = ( tab->dat.tab.active + 1 ) % tab->dat.tab.ntabs;
+      } else {
+         /* This is entirely backwards, but it's working around existing widget
+          * placement. */
+         if ( mod & NMOD_SHIFT )
+            toolkit_nextFocus( wdw );
+         else
+            toolkit_prevFocus( wdw );
+      }
+      ret = 1;
+      break;
 
-      default:
-         break;
+   default:
+      break;
    }
 
    /* Switch to the selected tab if it exists. */
-   if (change >= 0 && change < tab->dat.tab.ntabs) {
-      int old = tab->dat.tab.active;
+   if ( change >= 0 && change < tab->dat.tab.ntabs ) {
+      int old             = tab->dat.tab.active;
       tab->dat.tab.active = change;
       /* Create event. */
-      if (tab->dat.tab.onChange != NULL)
-          tab->dat.tab.onChange( tab->wdw, tab->name, old, tab->dat.tab.active );
+      if ( tab->dat.tab.onChange != NULL )
+         tab->dat.tab.onChange( tab->wdw, tab->name, old, tab->dat.tab.active );
       ret = 1;
    }
-   if (ret)
+   if ( ret )
       toolkit_rerender();
 
    return ret;
@@ -360,46 +362,47 @@ static int tab_key( Widget* tab, SDL_Event *event )
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
-static void tab_render( Widget* tab, double bx, double by )
+static void tab_render( Widget *tab, double bx, double by )
 {
    int x, y;
    /* Get window. */
-   Window *wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
-   if (wdw == NULL) {
-      WARN( _("Active window in widget '%s' not found in stack."), tab->name);
+   Window *wdw = window_wget( tab->dat.tab.windows[tab->dat.tab.active] );
+   if ( wdw == NULL ) {
+      WARN( _( "Active window in widget '%s' not found in stack." ),
+            tab->name );
       return;
    }
 
    /* Render the active window. */
-   window_render( wdw, wgt_isFlag(tab, WGT_FLAG_FOCUSED) );
+   window_render( wdw, wgt_isFlag( tab, WGT_FLAG_FOCUSED ) );
 
    /* Render tabs ontop. */
-   x = bx+tab->x+3.;
-   y = by+tab->y+3.;
-   if (tab->dat.tab.tabpos == 1)
-      y += tab->h-TAB_HEIGHT;
+   x = bx + tab->x + 3.;
+   y = by + tab->y + 3.;
+   if ( tab->dat.tab.tabpos == 1 )
+      y += tab->h - TAB_HEIGHT;
 
    /* Draw tab bar background */
-   toolkit_drawRect( x, y, wdw->w-6., TAB_HEIGHT+2, &cGrey10, NULL);
-   toolkit_drawRect( x, y, tab_getBarWidth( tab ), TAB_HEIGHT+2, &cBlack, NULL);
+   toolkit_drawRect( x, y, wdw->w - 6., TAB_HEIGHT + 2, &cGrey10, NULL );
+   toolkit_drawRect( x, y, tab_getBarWidth( tab ), TAB_HEIGHT + 2, &cBlack,
+                     NULL );
 
    /* Iterate through tabs */
    x += TAB_HMARGIN;
-   for (int i=0; i<tab->dat.tab.ntabs; i++) {
+   for ( int i = 0; i < tab->dat.tab.ntabs; i++ ) {
       /* Draw contents rect */
       toolkit_drawRect(
-          x, y, tab->dat.tab.namelen[i] + (TAB_HPADDING * 2),
-          (i == tab->dat.tab.active ? TAB_HEIGHT + 2: TAB_HEIGHT),
-          (i == tab->dat.tab.active ? tab_active : tab_inactive),
-          NULL );
+         x, y, tab->dat.tab.namelen[i] + ( TAB_HPADDING * 2 ),
+         ( i == tab->dat.tab.active ? TAB_HEIGHT + 2 : TAB_HEIGHT ),
+         ( i == tab->dat.tab.active ? tab_active : tab_inactive ), NULL );
 
       /* Draw text. */
       gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
-            y + (TAB_HEIGHT-tab->dat.tab.font->h)/2., &cFontWhite, -1.,
-            tab->dat.tab.tabnames[i] );
+                   y + ( TAB_HEIGHT - tab->dat.tab.font->h ) / 2., &cFontWhite,
+                   -1., tab->dat.tab.tabnames[i] );
 
       /* Go to next line. */
-      x += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
+      x += ( TAB_HPADDING * 2 ) + TAB_HMARGIN + tab->dat.tab.namelen[i];
    }
 }
 
@@ -410,14 +413,15 @@ static void tab_render( Widget* tab, double bx, double by )
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
-static void tab_renderDynamic( Widget* tab, double bx, double by )
+static void tab_renderDynamic( Widget *tab, double bx, double by )
 {
-   (void) bx;
-   (void) by;
+   (void)bx;
+   (void)by;
    /* Get window. */
-   Window *wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
-   if (wdw == NULL) {
-      WARN( _("Active window in widget '%s' not found in stack."), tab->name);
+   Window *wdw = window_wget( tab->dat.tab.windows[tab->dat.tab.active] );
+   if ( wdw == NULL ) {
+      WARN( _( "Active window in widget '%s' not found in stack." ),
+            tab->name );
       return;
    }
 
@@ -432,13 +436,14 @@ static void tab_renderDynamic( Widget* tab, double bx, double by )
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
-static void tab_renderOverlay( Widget* tab, double bx, double by )
+static void tab_renderOverlay( Widget *tab, double bx, double by )
 {
-   (void) bx;
-   (void) by;
-   Window *wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
-   if (wdw == NULL) {
-      WARN( _("Active window in widget '%s' not found in stack."), tab->name);
+   (void)bx;
+   (void)by;
+   Window *wdw = window_wget( tab->dat.tab.windows[tab->dat.tab.active] );
+   if ( wdw == NULL ) {
+      WARN( _( "Active window in widget '%s' not found in stack." ),
+            tab->name );
       return;
    }
 
@@ -453,9 +458,9 @@ static void tab_renderOverlay( Widget* tab, double bx, double by )
  */
 static void tab_cleanup( Widget *tab )
 {
-   for (int i=0; i<tab->dat.tab.ntabs; i++) {
+   for ( int i = 0; i < tab->dat.tab.ntabs; i++ ) {
       Window *w = window_wget( tab->dat.tab.windows[i] );
-      if (w)
+      if ( w )
          window_kill( w );
       free( tab->dat.tab.tabnames[i] );
    }
@@ -472,14 +477,15 @@ static Widget *tab_getWgt( unsigned int wid, const char *tab )
    Widget *wgt = window_getwgt( wid, tab );
 
    /* Must be found in stack. */
-   if (wgt == NULL) {
-      WARN( _("Widget '%s' not found"), tab);
-      return NULL;;
+   if ( wgt == NULL ) {
+      WARN( _( "Widget '%s' not found" ), tab );
+      return NULL;
+      ;
    }
 
    /* Must be an image array. */
-   if (wgt->type != WIDGET_TABBEDWINDOW) {
-      WARN( _("Widget '%s' is not an image array."), tab);
+   if ( wgt->type != WIDGET_TABBEDWINDOW ) {
+      WARN( _( "Widget '%s' is not an image array." ), tab );
       return NULL;
    }
 
@@ -498,7 +504,7 @@ int window_tabWinSetActive( unsigned int wid, const char *tab, int active )
    int old;
 
    Widget *wgt = tab_getWgt( wid, tab );
-   if (wgt == NULL)
+   if ( wgt == NULL )
       return -1;
 
    old = wgt->dat.tab.active;
@@ -507,7 +513,7 @@ int window_tabWinSetActive( unsigned int wid, const char *tab, int active )
    wgt->dat.tab.active = active;
 
    /* Create event. */
-   if (wgt->dat.tab.onChange != NULL)
+   if ( wgt->dat.tab.onChange != NULL )
       wgt->dat.tab.onChange( wid, wgt->name, old, wgt->dat.tab.active );
    toolkit_rerender();
 
@@ -524,7 +530,7 @@ int window_tabWinSetActive( unsigned int wid, const char *tab, int active )
 int window_tabWinGetActive( unsigned int wid, const char *tab )
 {
    Widget *wgt = tab_getWgt( wid, tab );
-   if (wgt == NULL)
+   if ( wgt == NULL )
       return -1;
 
    /* Get active window. */
@@ -539,10 +545,11 @@ int window_tabWinGetActive( unsigned int wid, const char *tab )
  *    @param onChange Callback to use (NULL disables).
  */
 int window_tabWinOnChange( unsigned int wid, const char *tab,
-      void(*onChange)(unsigned int,const char*,int,int) )
+                           void ( *onChange )( unsigned int, const char *, int,
+                                               int ) )
 {
    Widget *wgt = tab_getWgt( wid, tab );
-   if (wgt == NULL)
+   if ( wgt == NULL )
       return -1;
 
    /* Set on change function. */
@@ -562,13 +569,13 @@ int window_tabWinOnChange( unsigned int wid, const char *tab,
 int window_tabSetFont( unsigned int wid, const char *tab, const glFont *font )
 {
    Widget *wgt = tab_getWgt( wid, tab );
-   if (wgt == NULL)
+   if ( wgt == NULL )
       return -1;
 
    wgt->dat.tab.font = font;
-   for (int i=0; i<wgt->dat.tab.ntabs; i++)
-      wgt->dat.tab.namelen[i]  = gl_printWidthRaw( wgt->dat.tab.font,
-            wgt->dat.tab.tabnames[i] );
+   for ( int i = 0; i < wgt->dat.tab.ntabs; i++ )
+      wgt->dat.tab.namelen[i] =
+         gl_printWidthRaw( wgt->dat.tab.font, wgt->dat.tab.tabnames[i] );
 
    return 0;
 }
@@ -580,10 +587,10 @@ int window_tabSetFont( unsigned int wid, const char *tab, const glFont *font )
  *    @param tab Name of the tabbed window.
  *    @return The children windows.
  */
-unsigned int* window_tabWinGet( unsigned int wid, const char *tab )
+unsigned int *window_tabWinGet( unsigned int wid, const char *tab )
 {
    Widget *wgt = tab_getWgt( wid, tab );
-   if (wgt == NULL)
+   if ( wgt == NULL )
       return NULL;
    return wgt->dat.tab.windows;
 }
@@ -595,7 +602,7 @@ unsigned int* window_tabWinGet( unsigned int wid, const char *tab )
  *    @param tab Name of the tabbed window.
  *    @return Bar width in pixels
  */
-int window_tabWinGetBarWidth( unsigned int wid, const char* tab )
+int window_tabWinGetBarWidth( unsigned int wid, const char *tab )
 {
    const Widget *wgt = tab_getWgt( wid, tab );
    return tab_getBarWidth( wgt );
@@ -604,16 +611,17 @@ int window_tabWinGetBarWidth( unsigned int wid, const char* tab )
 /**
  * @brief \see window_tabWinGetBarWidth
  */
-int tab_getBarWidth( const Widget* wgt )
+int tab_getBarWidth( const Widget *wgt )
 {
    int w;
 
-   if (wgt == NULL)
+   if ( wgt == NULL )
       return 0;
 
    w = TAB_HMARGIN;
-   for (int i=0; i<wgt->dat.tab.ntabs; i++)
-      w += (TAB_HMARGIN + TAB_HPADDING) + wgt->dat.tab.namelen[i] + (TAB_HPADDING);
+   for ( int i = 0; i < wgt->dat.tab.ntabs; i++ )
+      w += ( TAB_HMARGIN + TAB_HPADDING ) + wgt->dat.tab.namelen[i] +
+           ( TAB_HPADDING );
 
    return w;
 }
@@ -621,10 +629,11 @@ int tab_getBarWidth( const Widget* wgt )
 /**
  * @brief Sets the tab window name.
  */
-int window_tabWinSetTabName( unsigned int wid, const char *tab, int id, const char *name )
+int window_tabWinSetTabName( unsigned int wid, const char *tab, int id,
+                             const char *name )
 {
    const Widget *wgt = tab_getWgt( wid, tab );
    free( wgt->dat.tab.tabnames[id] );
-   wgt->dat.tab.tabnames[id] = strdup(name);
+   wgt->dat.tab.tabnames[id] = strdup( name );
    return 0;
 }

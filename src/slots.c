@@ -14,23 +14,23 @@
 
 #include "array.h"
 #include "log.h"
-#include "nxml.h"
 #include "ndata.h"
+#include "nxml.h"
 
-#define SP_XML_ID    "slot" /**< SP XML node tag. */
+#define SP_XML_ID "slot" /**< SP XML node tag. */
 
 /**
  * @brief Representation of a slot property.
  */
 typedef struct SlotProperty_s {
-   char *name;       /**< Internal name of the property. */
-   char *display;    /**< Display name of the property. */
-   char *description;/**< Description of the property. */
-   int required;     /**< Required slot property. */
-   int exclusive;    /**< Exclusive slot property. */
-   int locked;       /**< Locked and not modifyable by the player. */
-   int visible;      /**< Visible slot property. */
-   glTexture *icon;  /**< Texture to use for the slot. */
+   char      *name;        /**< Internal name of the property. */
+   char      *display;     /**< Display name of the property. */
+   char      *description; /**< Description of the property. */
+   int        required;    /**< Required slot property. */
+   int        exclusive;   /**< Exclusive slot property. */
+   int        locked;      /**< Locked and not modifyable by the player. */
+   int        visible;     /**< Visible slot property. */
+   glTexture *icon;        /**< Texture to use for the slot. */
 } SlotProperty_t;
 
 static SlotProperty_t *sp_array = NULL; /**< Slot property array. */
@@ -43,71 +43,72 @@ static int sp_check( unsigned int spid );
 /**
  * @brief Initializes the slot properties.
  */
-int sp_load (void)
+int sp_load( void )
 {
    char **sp_files = ndata_listRecursive( SP_DATA_PATH );
 
    /* First pass, loads up ammunition. */
    sp_array = array_create( SlotProperty_t );
-   for (int i=0; i<array_size(sp_files); i++) {
+   for ( int i = 0; i < array_size( sp_files ); i++ ) {
       SlotProperty_t *sp;
-      xmlNodePtr node, cur;
-      xmlDocPtr doc;
+      xmlNodePtr      node, cur;
+      xmlDocPtr       doc;
 
       /* Load and read the data. */
       doc = xml_parsePhysFS( sp_files[i] );
-      if (doc == NULL)
+      if ( doc == NULL )
          continue;
 
       /* Check to see if document exists. */
       node = doc->xmlChildrenNode;
-      if (!xml_isNode(node,SP_XML_ID)) {
-         WARN(_("Malformed '%s' file: missing root element '%s'"), sp_files[i], SP_XML_ID );
+      if ( !xml_isNode( node, SP_XML_ID ) ) {
+         WARN( _( "Malformed '%s' file: missing root element '%s'" ),
+               sp_files[i], SP_XML_ID );
          continue;
       }
 
-      sp    = &array_grow( &sp_array );
-      memset( sp, 0, sizeof(SlotProperty_t) );
+      sp = &array_grow( &sp_array );
+      memset( sp, 0, sizeof( SlotProperty_t ) );
       xmlr_attr_strd( node, "name", sp->name );
-      cur   = node->xmlChildrenNode;
+      cur = node->xmlChildrenNode;
       do {
-         xml_onlyNodes(cur);
+         xml_onlyNodes( cur );
 
          /* Load data. */
          xmlr_strd( cur, "display", sp->display );
          xmlr_strd( cur, "description", sp->description );
-         if (xml_isNode( cur, "required" )) {
+         if ( xml_isNode( cur, "required" ) ) {
             sp->required = 1;
             continue;
          }
-         if (xml_isNode( cur, "exclusive" )) {
+         if ( xml_isNode( cur, "exclusive" ) ) {
             sp->exclusive = 1;
             continue;
          }
-         if (xml_isNode( cur, "locked" )) {
+         if ( xml_isNode( cur, "locked" ) ) {
             sp->locked = 1;
             continue;
          }
-         if (xml_isNode( cur, "visible" )) {
+         if ( xml_isNode( cur, "visible" ) ) {
             sp->visible = 1;
             continue;
          }
-         if (xml_isNode( cur, "icon" )) {
+         if ( xml_isNode( cur, "icon" ) ) {
             char path[STRMAX_SHORT];
-            snprintf( path, sizeof(path), "gfx/slots/%s", xml_get(cur) );
+            snprintf( path, sizeof( path ), "gfx/slots/%s", xml_get( cur ) );
             sp->icon = xml_parseTexture( cur, path, 1, 1, OPENGL_TEX_SDF );
             continue;
          }
 
-
-         WARN(_("Slot Property '%s' has unknown node '%s'."), node->name, cur->name);
-      } while (xml_nextNode(cur));
+         WARN( _( "Slot Property '%s' has unknown node '%s'." ), node->name,
+               cur->name );
+      } while ( xml_nextNode( cur ) );
 
       /* Clean up. */
-      xmlFreeDoc(doc);
+      xmlFreeDoc( doc );
    }
 
-   for (int i=0; i<array_size(sp_files); i++)
+   for ( int i = 0; i < array_size( sp_files ); i++ )
       free( sp_files[i] );
    array_free( sp_files );
    return 0;
@@ -116,9 +117,9 @@ int sp_load (void)
 /**
  * @brief Cleans up after the slot properties.
  */
-void sp_cleanup (void)
+void sp_cleanup( void )
 {
-   for (int i=0; i<array_size(sp_array); i++) {
+   for ( int i = 0; i < array_size( sp_array ); i++ ) {
       SlotProperty_t *sp = &sp_array[i];
       free( sp->name );
       free( sp->display );
@@ -137,14 +138,14 @@ void sp_cleanup (void)
  */
 unsigned int sp_get( const char *name )
 {
-   if (name==NULL)
+   if ( name == NULL )
       return 0;
-   for (int i=0; i<array_size(sp_array); i++) {
+   for ( int i = 0; i < array_size( sp_array ); i++ ) {
       SlotProperty_t *sp = &sp_array[i];
-      if (strcmp( sp->name, name ) == 0)
-         return i+1;
+      if ( strcmp( sp->name, name ) == 0 )
+         return i + 1;
    }
-   WARN(_("Slot property '%s' not found in array."), name);
+   WARN( _( "Slot property '%s' not found in array." ), name );
    return 0;
 }
 
@@ -153,7 +154,7 @@ unsigned int sp_get( const char *name )
  */
 static int sp_check( unsigned int spid )
 {
-   if ((spid==0) || (spid > (unsigned int)array_size(sp_array)))
+   if ( ( spid == 0 ) || ( spid > (unsigned int)array_size( sp_array ) ) )
       return 1;
    return 0;
 }
@@ -163,9 +164,9 @@ static int sp_check( unsigned int spid )
  */
 const char *sp_display( unsigned int spid )
 {
-   if (sp_check(spid))
+   if ( sp_check( spid ) )
       return NULL;
-   return sp_array[ spid-1 ].display;
+   return sp_array[spid - 1].display;
 }
 
 /**
@@ -173,9 +174,9 @@ const char *sp_display( unsigned int spid )
  */
 const char *sp_description( unsigned int spid )
 {
-   if (sp_check(spid))
+   if ( sp_check( spid ) )
       return NULL;
-   return sp_array[ spid-1 ].description;
+   return sp_array[spid - 1].description;
 }
 
 /**
@@ -183,9 +184,9 @@ const char *sp_description( unsigned int spid )
  */
 int sp_required( unsigned int spid )
 {
-   if (sp_check(spid))
+   if ( sp_check( spid ) )
       return 0;
-   return sp_array[ spid-1 ].required;
+   return sp_array[spid - 1].required;
 }
 
 /**
@@ -193,9 +194,9 @@ int sp_required( unsigned int spid )
  */
 int sp_exclusive( unsigned int spid )
 {
-   if (sp_check(spid))
+   if ( sp_check( spid ) )
       return 0;
-   return sp_array[ spid-1 ].exclusive;
+   return sp_array[spid - 1].exclusive;
 }
 
 /**
@@ -203,9 +204,9 @@ int sp_exclusive( unsigned int spid )
  */
 int sp_locked( unsigned int spid )
 {
-   if (sp_check(spid))
+   if ( sp_check( spid ) )
       return 0;
-   return sp_array[ spid-1 ].locked;
+   return sp_array[spid - 1].locked;
 }
 
 /**
@@ -213,17 +214,17 @@ int sp_locked( unsigned int spid )
  */
 int sp_visible( unsigned int spid )
 {
-   if (sp_check(spid))
+   if ( sp_check( spid ) )
       return 0;
-   return sp_array[ spid-1 ].visible;
+   return sp_array[spid - 1].visible;
 }
 
 /**
  * @brief Gets the icon associated with the slot.
  */
-const glTexture * sp_icon( unsigned int spid )
+const glTexture *sp_icon( unsigned int spid )
 {
-   if (sp_check(spid))
+   if ( sp_check( spid ) )
       return 0;
-   return sp_array[ spid-1 ].icon;
+   return sp_array[spid - 1].icon;
 }

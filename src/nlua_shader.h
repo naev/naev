@@ -6,26 +6,28 @@
 #include "nlua.h"
 #include "opengl.h"
 
-#define SHADER_METATABLE      "shader" /**< Shader metatable identifier. */
+#define SHADER_METATABLE "shader" /**< Shader metatable identifier. */
 
-#define SHADER_NAME_MAXLEN    32 /**< Maximum length of the name of a uniform variable. */
+#define SHADER_NAME_MAXLEN                                                     \
+   32 /**< Maximum length of the name of a uniform variable. */
 
 /* Helper. */
-#define luaL_optshader(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checkshader)
+#define luaL_optshader( L, ind, def )                                          \
+   nluaL_optarg( L, ind, def, luaL_checkshader )
 
 typedef struct LuaUniform_s {
    GLuint id;
-   GLint size;
+   GLint  size;
    GLenum type;
-   char name[SHADER_NAME_MAXLEN];
-   GLint tex;
+   char   name[SHADER_NAME_MAXLEN];
+   GLint  tex;
 } LuaUniform_t;
 
 typedef struct LuaTexture_s {
    GLenum active;
    GLuint texid;
-   GLint uniform;
-   GLint value;
+   GLint  uniform;
+   GLint  value;
 } LuaTexture_t;
 
 typedef struct LuaShader_s {
@@ -45,10 +47,10 @@ typedef struct LuaShader_s {
    GLint ConstantColour;
    /* Other uniforms. */
    LuaUniform_t *uniforms;
-   GLint nuniforms;
+   GLint         nuniforms;
    /* Other stuff. */
    LuaTexture_t *tex;
-   unsigned int pp_id; /**< Post-processing ID if set. */
+   unsigned int  pp_id; /**< Post-processing ID if set. */
 } LuaShader_t;
 
 /*
@@ -59,7 +61,7 @@ int nlua_loadShader( nlua_env env );
 /*
  * Shader operations
  */
-LuaShader_t* lua_toshader( lua_State *L, int ind );
-LuaShader_t* luaL_checkshader( lua_State *L, int ind );
-LuaShader_t* lua_pushshader( lua_State *L, LuaShader_t shader );
-int lua_isshader( lua_State *L, int ind );
+LuaShader_t *lua_toshader( lua_State *L, int ind );
+LuaShader_t *luaL_checkshader( lua_State *L, int ind );
+LuaShader_t *lua_pushshader( lua_State *L, LuaShader_t shader );
+int          lua_isshader( lua_State *L, int ind );

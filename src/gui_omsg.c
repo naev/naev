@@ -20,8 +20,8 @@
  * @brief Fonts.
  */
 typedef struct omsg_font_s {
-   int size;      /**< Font size. */
-   glFont font;   /**< Font itself. */
+   int    size; /**< Font size. */
+   glFont font; /**< Font itself. */
 } omsg_font_t;
 static omsg_font_t *omsg_font_array = NULL; /**< Array of fonts. */
 
@@ -29,35 +29,35 @@ static omsg_font_t *omsg_font_array = NULL; /**< Array of fonts. */
  * @brief Message struct.
  */
 typedef struct omsg_s {
-   unsigned int id;  /**< Unique ID. */
-   char **msg;       /**< Array: Message to display. */
-   double duration;  /**< Time left. */
-   int font;         /**< Font to use. */
-   glColour col;     /**< Colour to use. */
+   unsigned int id;       /**< Unique ID. */
+   char       **msg;      /**< Array: Message to display. */
+   double       duration; /**< Time left. */
+   int          font;     /**< Font to use. */
+   glColour     col;      /**< Colour to use. */
 } omsg_t;
-static omsg_t *omsg_array           = NULL;  /**< Array of messages. */
-static unsigned int omsg_idgen      = 0;     /**< Unique ID generator. */
+static omsg_t      *omsg_array = NULL; /**< Array of messages. */
+static unsigned int omsg_idgen = 0;    /**< Unique ID generator. */
 
-static double omsg_center_x         = 0.;    /**< X center of the overlay messages. */
-static double omsg_center_y         = 0.;    /**< Y center of the overlay messages. */
-static double omsg_center_w         = 100.;    /**< Width of the overlay messages. */
+static double omsg_center_x = 0.;   /**< X center of the overlay messages. */
+static double omsg_center_y = 0.;   /**< Y center of the overlay messages. */
+static double omsg_center_w = 100.; /**< Width of the overlay messages. */
 
 /*
  * Prototypes.
  */
-static omsg_t* omsg_get( unsigned int id );
-static void omsg_free( omsg_t *omsg );
-static void omsg_setMsg( omsg_t *omsg, const char *msg );
-static int omsg_getFontID( int size );
-static glFont* omsg_getFont( int font );
+static omsg_t *omsg_get( unsigned int id );
+static void    omsg_free( omsg_t *omsg );
+static void    omsg_setMsg( omsg_t *omsg, const char *msg );
+static int     omsg_getFontID( int size );
+static glFont *omsg_getFont( int font );
 
 /**
  * @brief Gets an overlay message from id.
  */
-static omsg_t* omsg_get( unsigned int id )
+static omsg_t *omsg_get( unsigned int id )
 {
-   for (int i=0; i<array_size(omsg_array); i++)
-      if (omsg_array[i].id == id)
+   for ( int i = 0; i < array_size( omsg_array ); i++ )
+      if ( omsg_array[i].id == id )
          return &omsg_array[i];
    return NULL;
 }
@@ -67,7 +67,7 @@ static omsg_t* omsg_get( unsigned int id )
  */
 static void omsg_free( omsg_t *omsg )
 {
-   for (int i=0; i<array_size(omsg->msg); i++)
+   for ( int i = 0; i < array_size( omsg->msg ); i++ )
       free( omsg->msg[i] );
    array_free( omsg->msg );
    omsg->msg = NULL;
@@ -78,7 +78,7 @@ static void omsg_free( omsg_t *omsg )
  */
 static void omsg_setMsg( omsg_t *omsg, const char *msg )
 {
-   glFont *font;
+   glFont             *font;
    glPrintLineIterator iter;
 
    /* Clean up after old stuff. */
@@ -87,10 +87,11 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
    /* Create data. */
    font = omsg_getFont( omsg->font );
 
-   omsg->msg = array_create( char* );
+   omsg->msg = array_create( char * );
    gl_printLineIteratorInit( &iter, font, msg, omsg_center_w );
-   while (gl_printLineIteratorNext( &iter ))
-      array_push_back( &omsg->msg, strndup( &iter.text[iter.l_begin], iter.l_end - iter.l_begin ) );
+   while ( gl_printLineIteratorNext( &iter ) )
+      array_push_back( &omsg->msg, strndup( &iter.text[iter.l_begin],
+                                            iter.l_end - iter.l_begin ) );
 }
 
 /**
@@ -101,27 +102,28 @@ static int omsg_getFontID( int size )
    omsg_font_t *font;
 
    /* Create array if not done so yet. */
-   if (omsg_font_array == NULL)
+   if ( omsg_font_array == NULL )
       omsg_font_array = array_create( omsg_font_t );
 
    /* Try to match. */
-   for (int i=0; i<array_size( omsg_font_array ); i++)
-      if (size == omsg_font_array[i].size)
+   for ( int i = 0; i < array_size( omsg_font_array ); i++ )
+      if ( size == omsg_font_array[i].size )
          return i;
 
    /* Create font. */
    font = &array_grow( &omsg_font_array );
-   gl_fontInit( &font->font, _(FONT_MONOSPACE_PATH), size, FONT_PATH_PREFIX, 0 );
+   gl_fontInit( &font->font, _( FONT_MONOSPACE_PATH ), size, FONT_PATH_PREFIX,
+                0 );
    font->size = size;
-   return array_size(omsg_font_array) - 1;
+   return array_size( omsg_font_array ) - 1;
 }
 
 /**
  * @brief Gets a font by id.
  */
-static glFont* omsg_getFont( int font )
+static glFont *omsg_getFont( int font )
 {
-   return &omsg_font_array[ font ].font;
+   return &omsg_font_array[font].font;
 }
 
 /**
@@ -141,16 +143,16 @@ void omsg_position( double center_x, double center_y, double width )
 /**
  * @brief Cleans up after the overlay.
  */
-void omsg_cleanup (void)
+void omsg_cleanup( void )
 {
    /* Free fonts. */
-   for (int i=0; i<array_size( omsg_font_array ); i++)
+   for ( int i = 0; i < array_size( omsg_font_array ); i++ )
       gl_freeFont( &omsg_font_array[i].font );
    array_free( omsg_font_array );
    omsg_font_array = NULL;
 
    /* Destroy messages. */
-   for (int i=0; i<array_size(omsg_array); i++)
+   for ( int i = 0; i < array_size( omsg_array ); i++ )
       omsg_free( &omsg_array[i] );
    array_free( omsg_array );
    omsg_array = NULL;
@@ -164,24 +166,24 @@ void omsg_render( double dt )
    double x, y;
 
    /* Case nothing to do. */
-   if (omsg_array == NULL)
+   if ( omsg_array == NULL )
       return;
 
    /* Center. */
-   x  = omsg_center_x - omsg_center_w/2.;
-   y  = omsg_center_y;
+   x = omsg_center_x - omsg_center_w / 2.;
+   y = omsg_center_y;
 
    /* Render. */
-   for (int i=0; i<array_size(omsg_array); i++) {
+   for ( int i = 0; i < array_size( omsg_array ); i++ ) {
       omsg_t *omsg = &omsg_array[i];
 
       /* Render. */
-      glFont *font = omsg_getFont( omsg->font );
-      glColour col = omsg->col;
-      if (omsg->duration < 1.)
+      glFont  *font = omsg_getFont( omsg->font );
+      glColour col  = omsg->col;
+      if ( omsg->duration < 1. )
          col.a = omsg->duration;
       gl_printRestoreClear();
-      for (int j=0; j<array_size(omsg->msg); j++) {
+      for ( int j = 0; j < array_size( omsg->msg ); j++ ) {
          y -= font->h * 1.5;
          gl_printRestoreLast();
          gl_printMidRaw( font, omsg_center_w, x, y, &col, -1., omsg->msg[j] );
@@ -189,7 +191,7 @@ void omsg_render( double dt )
 
       /* Check if time to erase. */
       omsg->duration -= dt;
-      if (omsg->duration < 0.) {
+      if ( omsg->duration < 0. ) {
          omsg_free( omsg );
          array_erase( &omsg_array, &omsg[0], &omsg[1] );
          i--;
@@ -207,21 +209,22 @@ void omsg_render( double dt )
  *    @param col Colour to use.
  *    @return Unique ID to the message.
  */
-unsigned int omsg_add( const char *msg, double duration, int fontsize, const glColour *col )
+unsigned int omsg_add( const char *msg, double duration, int fontsize,
+                       const glColour *col )
 {
    omsg_t *omsg;
-   int font;
+   int     font;
 
    /* Create if necessary. */
-   if (omsg_array == NULL)
+   if ( omsg_array == NULL )
       omsg_array = array_create( omsg_t );
 
    /* Get font size. */
    font = omsg_getFontID( fontsize );
 
    /* Create the message. */
-   omsg           = &array_grow( &omsg_array );
-   memset( omsg, 0, sizeof(omsg_t) );
+   omsg = &array_grow( &omsg_array );
+   memset( omsg, 0, sizeof( omsg_t ) );
    omsg->id       = ++omsg_idgen;
    omsg->duration = duration;
    omsg->font     = font;
@@ -241,8 +244,8 @@ unsigned int omsg_add( const char *msg, double duration, int fontsize, const glC
  */
 int omsg_change( unsigned int id, const char *msg, double duration )
 {
-   omsg_t *omsg = omsg_get(id);
-   if (omsg == NULL)
+   omsg_t *omsg = omsg_get( id );
+   if ( omsg == NULL )
       return -1;
 
    omsg_setMsg( omsg, msg );
@@ -258,7 +261,7 @@ int omsg_change( unsigned int id, const char *msg, double duration )
  */
 int omsg_exists( unsigned int id )
 {
-   return (omsg_get(id) != NULL);
+   return ( omsg_get( id ) != NULL );
 }
 
 /**
@@ -268,8 +271,8 @@ int omsg_exists( unsigned int id )
  */
 void omsg_rm( unsigned int id )
 {
-   omsg_t *omsg = omsg_get(id);
-   if (omsg == NULL)
+   omsg_t *omsg = omsg_get( id );
+   if ( omsg == NULL )
       return;
 
    /* Destroy. */

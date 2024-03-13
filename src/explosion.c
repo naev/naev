@@ -18,9 +18,9 @@
 #include "spfx.h"
 #include "weapon.h"
 
-static int exp_s = -1; /**< Small explosion spfx. */
-static int exp_m = -1; /**< Medium explosion spfx. */
-static int exp_l = -1; /**< Large explosion spfx. */
+static int exp_s   = -1; /**< Small explosion spfx. */
+static int exp_m   = -1; /**< Medium explosion spfx. */
+static int exp_l   = -1; /**< Large explosion spfx. */
 static int exp_200 = -1; /**< 200 radius explsion spfx. */
 static int exp_300 = -1; /**< 300 radius explosion spfx. */
 static int exp_400 = -1; /**< 400 radius explosion spfx. */
@@ -39,43 +39,42 @@ static int exp_600 = -1; /**< 600 radius explosion spfx. */
  *    @param parent Parent of the explosion, NULL is none.
  *    @param mode Defines the explosion behaviour.
  */
-void expl_explode( double x, double y, double vx, double vy,
-      double radius, const Damage *dmg,
-      const Pilot *parent, int mode )
+void expl_explode( double x, double y, double vx, double vy, double radius,
+                   const Damage *dmg, const Pilot *parent, int mode )
 {
    int layer;
    int efx;
 
    /* Standard stuff - lazy allocation. */
-   if (exp_s == -1) {
+   if ( exp_s == -1 ) {
       /* TODO This is all horrible and I wish we could either parametrize it or
        * get rid of the hardcoding. */
-      exp_s = spfx_get("ExpS");
-      exp_m = spfx_get("ExpM");
-      exp_l = spfx_get("ExpL");
-      exp_200 = spfx_get("Exp200");
-      exp_300 = spfx_get("Exp300");
-      exp_400 = spfx_get("Exp400");
-      exp_500 = spfx_get("Exp500");
-      exp_600 = spfx_get("Exp600");
+      exp_s   = spfx_get( "ExpS" );
+      exp_m   = spfx_get( "ExpM" );
+      exp_l   = spfx_get( "ExpL" );
+      exp_200 = spfx_get( "Exp200" );
+      exp_300 = spfx_get( "Exp300" );
+      exp_400 = spfx_get( "Exp400" );
+      exp_500 = spfx_get( "Exp500" );
+      exp_600 = spfx_get( "Exp600" );
    }
    layer = SPFX_LAYER_FRONT;
 
-   if (radius < 40./2.)
+   if ( radius < 40. / 2. )
       efx = exp_s;
-   else if (radius < 70./2.)
+   else if ( radius < 70. / 2. )
       efx = exp_m;
-   else if (radius < 100./2.)
+   else if ( radius < 100. / 2. )
       efx = exp_l;
-   else if (radius < 200./2.)
+   else if ( radius < 200. / 2. )
       efx = exp_200;
-   else if (radius < 300./2.)
+   else if ( radius < 300. / 2. )
       efx = exp_300;
-   else if (radius < 400./2.)
+   else if ( radius < 400. / 2. )
       efx = exp_400;
-   else if (radius < 500./2.)
+   else if ( radius < 500. / 2. )
       efx = exp_500;
-   //else if (radius < 600./2.)
+   // else if (radius < 600./2.)
    else
       efx = exp_600;
 
@@ -83,7 +82,7 @@ void expl_explode( double x, double y, double vx, double vy,
    spfx_add( efx, x, y, vx, vy, layer );
 
    /* Run the damage. */
-   if (dmg != NULL)
+   if ( dmg != NULL )
       expl_explodeDamage( x, y, radius, dmg, parent, mode );
 }
 
@@ -97,11 +96,11 @@ void expl_explode( double x, double y, double vx, double vy,
  *    @param parent Parent of the explosion, 0 is none.
  *    @param mode Defines the explosion behaviour.
  */
-void expl_explodeDamage( double x, double y, double radius,
-      const Damage *dmg, const Pilot *parent, int mode )
+void expl_explodeDamage( double x, double y, double radius, const Damage *dmg,
+                         const Pilot *parent, int mode )
 {
    /* Explosion affects ships. */
-   if (mode & EXPL_MODE_SHIP)
+   if ( mode & EXPL_MODE_SHIP )
       pilot_explode( x, y, radius, dmg, parent );
 
 #if 0

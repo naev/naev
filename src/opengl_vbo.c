@@ -8,39 +8,41 @@
  */
 #include "opengl.h"
 
-#define BUFFER_OFFSET(i) ((char *)(sizeof(char) * (i))) /**< Taken from OpengL spec. */
+#define BUFFER_OFFSET( i )                                                     \
+   ( (char *)( sizeof( char ) * ( i ) ) ) /**< Taken from OpengL spec. */
 
 /**
  * @brief VBO types.
  */
 typedef enum gl_vboType_e {
-   NGL_VBO_NULL,     /**< No VBO type. */
-   NGL_VBO_STREAM,   /**< VBO streaming type. */
-   NGL_VBO_DYNAMIC,  /**< VBO dynamic type. */
-   NGL_VBO_STATIC    /**< VBO static type. */
+   NGL_VBO_NULL,    /**< No VBO type. */
+   NGL_VBO_STREAM,  /**< VBO streaming type. */
+   NGL_VBO_DYNAMIC, /**< VBO dynamic type. */
+   NGL_VBO_STATIC   /**< VBO static type. */
 } gl_vboType;
 
 /**
  * @brief Contains the VBO.
  */
 struct gl_vbo_s {
-   GLuint id;        /**< VBO ID. */
-   gl_vboType type;  /**< VBO type. */
-   GLsizei size;     /**< VBO size. */
-   char* data;       /**< VBO data. */
+   GLuint     id;   /**< VBO ID. */
+   gl_vboType type; /**< VBO type. */
+   GLsizei    size; /**< VBO size. */
+   char      *data; /**< VBO data. */
 };
 
 /**
  * Prototypes.
  */
-static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, const void* data, GLenum usage );
+static gl_vbo *gl_vboCreate( GLenum target, GLsizei size, const void *data,
+                             GLenum usage );
 
 /**
  * @brief Initializes the OpenGL VBO subsystem.
  *
  *    @return 0 on success.
  */
-int gl_initVBO (void)
+int gl_initVBO( void )
 {
    return 0;
 }
@@ -48,7 +50,7 @@ int gl_initVBO (void)
 /**
  * @brief Exits the OpenGL VBO subsystem.
  */
-void gl_exitVBO (void)
+void gl_exitVBO( void )
 {
 }
 
@@ -61,10 +63,11 @@ void gl_exitVBO (void)
  *    @param usage Usage to use.
  *    @return ID of the vbo.
  */
-static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, const void* data, GLenum usage )
+static gl_vbo *gl_vboCreate( GLenum target, GLsizei size, const void *data,
+                             GLenum usage )
 {
    /* Allocate. */
-   gl_vbo *vbo = calloc( 1, sizeof(gl_vbo) );
+   gl_vbo *vbo = calloc( 1, sizeof( gl_vbo ) );
 
    /* General stuff. */
    vbo->size = size;
@@ -90,18 +93,18 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, const void* data, GLen
  *    @param size Size of new data.
  *    @param data New data.
  */
-void gl_vboData( gl_vbo *vbo, GLsizei size, const void* data )
+void gl_vboData( gl_vbo *vbo, GLsizei size, const void *data )
 {
    GLenum usage;
 
    vbo->size = size;
 
    /* Get usage. */
-   if (vbo->type == NGL_VBO_STREAM)
+   if ( vbo->type == NGL_VBO_STREAM )
       usage = GL_STREAM_DRAW;
-   else if (vbo->type == NGL_VBO_DYNAMIC)
+   else if ( vbo->type == NGL_VBO_DYNAMIC )
       usage = GL_DYNAMIC_DRAW;
-   else if (vbo->type == NGL_VBO_STATIC)
+   else if ( vbo->type == NGL_VBO_STATIC )
       usage = GL_STATIC_DRAW;
    else
       usage = GL_STREAM_DRAW;
@@ -122,7 +125,7 @@ void gl_vboData( gl_vbo *vbo, GLsizei size, const void* data )
  *    @param size Size of the data (in bytes).
  *    @param data Pointer to the data.
  */
-void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, const void* data )
+void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, const void *data )
 {
    glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
    glBufferSubData( GL_ARRAY_BUFFER, offset, size, data );
@@ -137,10 +140,10 @@ void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, const void* data )
  *    @param size Size of the stream vbo (multiply by sizeof(type)).
  *    @param data Data for the VBO.
  */
-gl_vbo* gl_vboCreateStream( GLsizei size, const void* data )
+gl_vbo *gl_vboCreateStream( GLsizei size, const void *data )
 {
    gl_vbo *vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STREAM_DRAW );
-   vbo->type = NGL_VBO_STREAM;
+   vbo->type   = NGL_VBO_STREAM;
 
    /* Check for errors. */
    gl_checkErr();
@@ -154,10 +157,10 @@ gl_vbo* gl_vboCreateStream( GLsizei size, const void* data )
  *    @param size Size of the dynamic vbo (multiply by sizeof(type)).
  *    @param data Data for the VBO.
  */
-gl_vbo* gl_vboCreateDynamic( GLsizei size, const void* data )
+gl_vbo *gl_vboCreateDynamic( GLsizei size, const void *data )
 {
    gl_vbo *vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW );
-   vbo->type = NGL_VBO_DYNAMIC;
+   vbo->type   = NGL_VBO_DYNAMIC;
 
    /* Check for errors. */
    gl_checkErr();
@@ -171,10 +174,10 @@ gl_vbo* gl_vboCreateDynamic( GLsizei size, const void* data )
  *    @param size Size of the stream vbo (multiply by sizeof(type)).
  *    @param data Data for the VBO.
  */
-gl_vbo* gl_vboCreateStatic( GLsizei size, const void* data )
+gl_vbo *gl_vboCreateStatic( GLsizei size, const void *data )
 {
    gl_vbo *vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW );
-   vbo->type = NGL_VBO_STATIC;
+   vbo->type   = NGL_VBO_STATIC;
 
    /* Check for errors. */
    gl_checkErr();
@@ -188,7 +191,7 @@ gl_vbo* gl_vboCreateStatic( GLsizei size, const void* data )
  *    @param vbo VBO to map.
  *    @return The data contained in the vbo.
  */
-void* gl_vboMap( gl_vbo *vbo )
+void *gl_vboMap( gl_vbo *vbo )
 {
    glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
    return glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
@@ -201,7 +204,7 @@ void* gl_vboMap( gl_vbo *vbo )
  */
 void gl_vboUnmap( gl_vbo *vbo )
 {
-   (void) vbo;
+   (void)vbo;
    glUnmapBuffer( GL_ARRAY_BUFFER );
 
    /* Check for errors. */
@@ -219,13 +222,13 @@ void gl_vboUnmap( gl_vbo *vbo )
  *    @param stride Offset between consecutive points.
  */
 void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
-      GLint size, GLenum type, GLsizei stride )
+                                 GLint size, GLenum type, GLsizei stride )
 {
    const GLvoid *pointer;
 
    /* Set up. */
    glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-   pointer = BUFFER_OFFSET(offset);
+   pointer = BUFFER_OFFSET( offset );
 
    glVertexAttribPointer( index, size, type, GL_FALSE, stride, pointer );
 
@@ -240,10 +243,10 @@ void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
  */
 void gl_vboDestroy( gl_vbo *vbo )
 {
-   if (vbo == NULL)
+   if ( vbo == NULL )
       return;
 
    glDeleteBuffers( 1, &vbo->id );
    gl_checkErr();
-   free(vbo);
+   free( vbo );
 }

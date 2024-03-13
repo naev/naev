@@ -4,4 +4,4 @@
 #pragma once
 
 void mapedit_open( unsigned int wid_unused, const char *unused );
-void mapedit_selectText (void);
+void mapedit_selectText( void );

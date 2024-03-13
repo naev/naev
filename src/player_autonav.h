@@ -14,19 +14,19 @@ enum {
 };
 
 /* Initialization of the internal autonav stuff. */
-int player_autonavInit (void);
+int player_autonavInit( void );
 
 /* Updating routines. */
 void player_thinkAutonav( Pilot *pplayer, double dt );
 void player_updateAutonav( double dt );
 
 /* Control routines. */
-void player_autonavResetSpeed (void);
-void player_autonavStart (void);
-void player_autonavEnd (void);
+void player_autonavResetSpeed( void );
+void player_autonavStart( void );
+void player_autonavEnd( void );
 void player_autonavAbort( const char *reason );
 void player_autonavReset( double s );
-void player_autonavEnter (void);
+void player_autonavEnter( void );
 
 /* Starting routines, for initializing autonav. */
 void player_autonavStartWindow( unsigned int wid, const char *str );
