@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp D-58 Heavy Plating">
  <general>
+  <shortname>U. D-58 Heavy Plating</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
