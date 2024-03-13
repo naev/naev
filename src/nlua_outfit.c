@@ -309,8 +309,7 @@ static int outfitL_nameRaw( lua_State *L )
 static int outfitL_shortname( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit( L, 1 );
-   lua_pushstring( L, ( o->shortname != NULL ) ? _( o->shortname )
-                                               : _( o->name ) );
+   lua_pushstring( L, outfit_shortname( o ) );
    return 1;
 }
 

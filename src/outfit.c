@@ -1184,6 +1184,17 @@ const char *outfit_summary( const Outfit *o, int withname )
 }
 
 /**
+ * @brief Gets the short name (translated) of an outfit.
+ *
+ *    @param o Outfit to get short name of.
+ *    @return Outfit's short name.
+ */
+const char *outfit_shortname( const Outfit *o )
+{
+   return ( o->shortname != NULL ) ? _( o->shortname ) : _( o->name );
+}
+
+/**
  * @brief Checks to see if an outfit fits a slot.
  *
  *    @param o Outfit to see if fits in a slot.

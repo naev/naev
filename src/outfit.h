@@ -6,9 +6,8 @@
 #include "collision.h"
 #include "commodity.h"
 #include "nlua.h"
-#include "opengl.h"
+#include "opengl_tex.h"
 #include "shipstats.h"
-#include "sound.h"
 #include "spfx.h"
 
 /*
@@ -495,6 +494,7 @@ const char *outfit_getTypeBroad( const Outfit *o );
 const char *outfit_getAmmoAI( const Outfit *o );
 const char *outfit_description( const Outfit *o );
 const char *outfit_summary( const Outfit *o, int withname );
+const char *outfit_shortname( const Outfit *o );
 
 /*
  * Search.
