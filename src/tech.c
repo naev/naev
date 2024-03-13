@@ -7,10 +7,6 @@
  * @brief Handles tech groups and metagroups for populating the spob outfitter,
  *        shipyard and commodity exchange.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
-
 #include "tech.h"
 
 #include "conf.h"

@@ -12,8 +12,6 @@
  */
 /** @cond */
 #include <stdlib.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "unidiff.h"
