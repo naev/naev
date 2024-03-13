@@ -729,6 +729,8 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price,
       *price   = outfit->price * q;
       *canbuy  = 1;
       *cansell = 1;
+      if ( player_has != NULL )
+         *player_has = NULL;
       return pricestr;
    }
    const char *str;
