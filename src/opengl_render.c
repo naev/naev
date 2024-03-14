@@ -37,7 +37,7 @@
 
 static gl_vbo *gl_renderVBO          = 0; /**< VBO for rendering stuff. */
 gl_vbo        *gl_squareVBO          = 0;
-static gl_vbo *gl_squareEmptyVBO     = 0;
+gl_vbo        *gl_roundSquareVBO     = 0;
 gl_vbo        *gl_circleVBO          = 0;
 static gl_vbo *gl_lineVBO            = 0;
 static gl_vbo *gl_triangleVBO        = 0;
@@ -90,7 +90,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
-   gl_renderRectH( &projection, c, 1 );
+   gl_renderRectH( &projection, c, 1, 0 );
 }
 
 /**
@@ -108,7 +108,7 @@ void gl_renderRectEmpty( double x, double y, double w, double h,
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
-   gl_renderRectH( &projection, c, 0 );
+   gl_renderRectH( &projection, c, 0, 0 );
 }
 
 /**
@@ -118,18 +118,13 @@ void gl_renderRectEmpty( double x, double y, double w, double h,
  *    @param filled Whether or not to fill.
  *    @param c Rectangle colour.
  */
-void gl_renderRectH( const mat4 *H, const glColour *c, int filled )
+void gl_renderRectH( const mat4 *H, const glColour *c, int filled, int rounded )
 {
    gl_beginSolidProgram( *H, c );
-   if ( filled ) {
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2,
-                                  GL_FLOAT, 0 );
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-   } else {
-      gl_vboActivateAttribOffset( gl_squareEmptyVBO, shaders.solid.vertex, 0, 2,
-                                  GL_FLOAT, 0 );
-      glDrawArrays( GL_LINE_STRIP, 0, 5 );
-   }
+   gl_vboActivateAttribOffset( rounded ? gl_roundSquareVBO : gl_squareVBO,
+                               shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+   glDrawArrays( filled ? GL_TRIANGLE_FAN : GL_LINE_STRIP, 0,
+                 rounded ? 41 : 5 );
    gl_endSolidProgram();
 }
 
@@ -1115,6 +1110,38 @@ void gl_unclipRect( void )
    glScissor( 0, 0, gl_screen.rw, gl_screen.rh );
 }
 
+void gl_getRoundRectVertex( GLfloat *vertex )
+{
+
+   static const float ry[46] = {
+      0,          -.01736478, -.03420197, -.05, -.06427872, -.07660443,
+      -.08660252, -.09396925, -.09848077, -.1,  -.09848078, -.09396928,
+      -.08660257, -.07660449, -.06427881, -.05, -.03420208, -.01736489,
+      0,          .01736482,  .03420201,  .05,  .06427876,  .07660444,
+      .08660254,  .09396926,  .09848077,  .1,   .09848078,  .09396927,
+      .08660255,  .07660446,  .06427878,  .05,  .03420205,  .01736485,
+      0,          -.01736478, -.03420197, -.05, -.06427872, -.07660443,
+      -.08660252, -.09396925, -.09848077, -.1 };
+   static const float *rx = ry + 9;
+
+   int   i, j;
+   float w  = 0.8;
+   float h  = 0.8;
+   float x0 = 0.1;
+   float y0 = 0.1;
+
+   for ( i = j = 0; i <= 40; i++, j++ ) {
+      /* Corners change */
+      if ( i && i % 10 == 0 ) {
+         j--;
+         x0 += ( i == 10 ? 1 : ( i == 30 ? -1 : 0 ) ) * w;
+         y0 += ( i == 20 ? 1 : ( i == 40 ? -1 : 0 ) ) * h;
+      }
+      vertex[i * 2]     = x0 + rx[j];
+      vertex[i * 2 + 1] = y0 + ry[j];
+   }
+}
+
 /**
  * @brief Initializes the OpenGL rendering routines.
  *
@@ -1122,7 +1149,7 @@ void gl_unclipRect( void )
  */
 int gl_initRender( void )
 {
-   GLfloat vertex[10];
+   GLfloat vertex[82];
 
    /* Initialize the VBO. */
    gl_renderVBO = gl_vboCreateStream(
@@ -1139,7 +1166,12 @@ int gl_initRender( void )
    vertex[5]    = 1.;
    vertex[6]    = 1.;
    vertex[7]    = 1.;
-   gl_squareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
+   vertex[8]    = 0.;
+   vertex[9]    = 0.;
+   gl_squareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 10, vertex );
+
+   gl_getRoundRectVertex( vertex );
+   gl_roundSquareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 82, vertex );
 
    vertex[0]    = -1.;
    vertex[1]    = -1.;
@@ -1150,18 +1182,6 @@ int gl_initRender( void )
    vertex[6]    = 1.;
    vertex[7]    = 1.;
    gl_circleVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
-
-   vertex[0]         = 0.;
-   vertex[1]         = 0.;
-   vertex[2]         = 1.;
-   vertex[3]         = 0.;
-   vertex[4]         = 1.;
-   vertex[5]         = 1.;
-   vertex[6]         = 0.;
-   vertex[7]         = 1.;
-   vertex[8]         = 0.;
-   vertex[9]         = 0.;
-   gl_squareEmptyVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
 
    vertex[0]  = 0.;
    vertex[1]  = 0.;
@@ -1193,7 +1213,6 @@ void gl_exitRender( void )
    gl_vboDestroy( gl_renderVBO );
    gl_vboDestroy( gl_squareVBO );
    gl_vboDestroy( gl_circleVBO );
-   gl_vboDestroy( gl_squareEmptyVBO );
    gl_vboDestroy( gl_lineVBO );
    gl_vboDestroy( gl_triangleVBO );
    gl_renderVBO = NULL;

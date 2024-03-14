@@ -504,12 +504,13 @@ static int gfxL_renderRect( lua_State *L )
 static int gfxL_renderRectH( lua_State *L )
 {
    /* Parse parameters. */
-   const mat4     *H     = luaL_checktransform( L, 1 );
-   const glColour *col   = luaL_optcolour( L, 2, &cWhite );
-   int             empty = lua_toboolean( L, 3 );
+   const mat4     *H       = luaL_checktransform( L, 1 );
+   const glColour *col     = luaL_optcolour( L, 2, &cWhite );
+   int             empty   = lua_toboolean( L, 3 );
+   int             rounded = lua_toboolean( L, 4 );
 
    /* Render. */
-   gl_renderRectH( H, col, !empty );
+   gl_renderRectH( H, col, !empty, rounded );
 
    return 0;
 }
