@@ -380,10 +380,10 @@ int dialogue_YesNoRaw( const char *caption, const char *msg )
 
    /* create window */
    snprintf( buf, sizeof( buf ), "dlgYesNo%d", ++dlgid );
-   wid = window_create( buf, caption, -1, -1, w, h + 110 );
+   wid = window_create( buf, caption, -1, -1, w, h + 90 );
    window_setData( wid, &done );
    /* text */
-   window_addText( wid, 20, -40, w - 40, h, 0, "txtYesNo", font, NULL, msg );
+   window_addText( wid, 20, -20, w - 40, h, 0, "txtYesNo", font, NULL, msg );
    /* buttons */
    window_addButtonKey( wid, w / 2 - 100 - 10, 20, 100, 30, "btnYes",
                         _( "Yes" ), dialogue_YesNoClose, SDLK_y );
