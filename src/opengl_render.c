@@ -117,6 +117,7 @@ void gl_renderRectEmpty( double x, double y, double w, double h,
  *    @param H Transformation matrix to apply.
  *    @param filled Whether or not to fill.
  *    @param c Rectangle colour.
+ *    @param rounded Whether or not to round corners.
  */
 void gl_renderRectH( const mat4 *H, const glColour *c, int filled, int rounded )
 {

@@ -1302,8 +1302,8 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b, int thick,
  *
  * If lc is NULL, colour will be flat.
  *
- *    @param x X position to draw at.
- *    @param y Y position to draw at.
+ *    @param x0 X position to draw at.
+ *    @param y0 Y position to draw at.
  *    @param w Width.
  *    @param h Height.
  *    @param r Radius of the corners.
@@ -1330,7 +1330,7 @@ void toolkit_drawRoundOutlineThick( int x0, int y0, int w, int h, int r,
       ry[i] = round( r * sina[i] );
    int *rx = ry + 9;
 
-   GLshort         vertex[82][4];
+   GLshort         vertex[41][4];
    glColour        colours[82];
    const glColour *color = c;
 

@@ -379,18 +379,14 @@ static void tab_render( Widget *tab, double bx, double by )
             tab->name );
       return;
    }
-   if ( wdw->h < 400 ) {
-      h = 30;
-   } else {
-      h = wdw->h / 20;
-   }
+   h = wdw->h < 800 ? 40 : wdw->h / 20;
    w = tab_getBarWidth( tab );
 
    /* Render tabs ontop. */
    if ( !strcmp( tab->name, "tabLand" ) || !strcmp( tab->name, "tabInfo" ) ||
         !strcmp( tab->name, "tabOpt" ) ) {
       tab->x = wdw->w / 2 - w / 2;
-      tab->y = wdw->h + TAB_HEIGHT / 2;
+      tab->y = wdw->h + 2 * TAB_HEIGHT / 3;
       y      = by + tab->y;
       x      = bx + tab->x;
    } else {
@@ -417,8 +413,8 @@ static void tab_render( Widget *tab, double bx, double by )
          toolkit_drawRoundOutlineThick( x, y, len, TAB_HEIGHT, 10, 2,
                                         toolkit_colLight, NULL );
       } else {
-         toolkit_drawRoundOutlineThick( x - 4, y - 9, len + 8, TAB_HEIGHT + 8,
-                                        10, 4, &cGrey70, NULL );
+         toolkit_drawRoundOutlineThick( x - 3, y - 8, len + 6, TAB_HEIGHT + 6,
+                                        10, 3, &cGrey70, NULL );
          x_active   = x;
          len_active = len;
       }
