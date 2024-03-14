@@ -29,6 +29,15 @@ function onion.vn_onion( params )
          }, params) )
 end
 
+function onion.vn_l337b01( params )
+   return vn.Character.new( _("l337 b01"),
+         tmerge( {
+            image=onion.img_onion(), -- TODO
+            colour=nil,
+            shader=love_shaders.hologram{strength=0.2},
+         }, params) )
+end
+
 function onion.log( text )
    shiplog.create( "onion", _("Onion Society"), _("Onion Society") )
    shiplog.append( "onion", text )

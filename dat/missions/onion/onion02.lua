@@ -18,11 +18,12 @@ local fmt = require "format"
 local vn = require "vn"
 local onion = require "common.onion"
 local strmess = require "strmess"
+local dv = require "dvaered"
 
 local dstspb1, dstsys1 = spob.getS("Ulios")
 local dstspb2, dstsys2 = spob.getS("The Frontier Council")
 local dstspb3, dstsys3 = spob.getS("DVNN Central")
---local money_reward = onion.rewards.misn02
+local money_reward = onion.rewards.misn02
 
 local title01 = _("Onion Delivery")
 local title02 = _("Onion's Revenge")
@@ -111,7 +112,7 @@ function land ()
       ogre(_([["Err, is this plugged in? Wait..."]]))
 
       vn.move( ogre, "right" )
-      local l337 = onion.vn_onion{pos="left"}
+      local l337 = onion.vn_l337b01{pos="left"}
       vn.music( onion.loops.hacker )
       vn.appear( l337, "electric" )
       l337:rlename(_("New Onion?"))
@@ -154,11 +155,50 @@ They pause for emphasis.]]))
       } )
       mem.state = 2
 
-   elseif mem.state==1 and spob.cur()==dstspb3 then
+   elseif mem.state==2 and spob.cur()==dstspb3 then
 
       vn.clear()
       vn.scene()
       vn.transition()
+      vn.na(fmt.f(_([[You land on {spb} and get off your ship with the box in hand to deliver it as told.]]),
+         {spb=dstspb3}))
+      vn.na(_([[Before you reach the drop-off point, as you are crossing the spacedocks, the lights start to flicker a bit. That was fast.]]))
+
+      local l337 = onion.vn_l337b01()
+      local warlords = rnd.permutation( dv.warlords() )
+      vn.music( "snd/sounds/songs/news.ogg" ) -- TODO 8-bit news?
+      vn.appear( l337, "electric" )
+      l337(_([["We interrupt you to bring you a recent news flash!"]]))
+      l337(fmt.f(_([["House Dvaered economy hit a new low as {warlord1} and {warlord2} have been found to be hoarding gauss guns and railguns, which will likely cause a shortage across House Dvaered."]]),
+         {warlord1=warlords[1], warlord2=warlords[2]}))
+      l337(_([["Supplies are forecasted to only last 10 periods as Warlords scramble to supply their endless feuds. Dvaered High Command has denied the situation, claiming that the free market will regulate itself."]]))
+      l337(fmt.f(_([["{warlord} has called the statement by Dvaered High Command, 'bollocks', and threatened to fly over there himself and shell the station until it becomes a ball of molten steel."]]),
+         {warlord=warlords[3]}))
+      l337(_([["Until the situation clears up, we can only recommend you to acquire as many weapons as possible, and remember, don't panic. That was all."]]))
+      vn.music() -- TODO sound of people yelling / chaos
+      vn.disappear( l337, "electric" )
+
+      vn.na(_([[As expected, chaos erupts around you as everyone tries to get in their ship to fly to the nearest outfitter to acquire more weapons, lest they be relegated to a life of pacifism.]]))
+      vn.na(_([[You return to your ship to try to wait for things to settle down, as you hear a large explosion in the distance and the station seems to tilt slightly. It seems like l337 b01 really knows how to rile up the Dvaered.]]))
+      vn.na(_([[You are sitting at your console, overviewing the frenzy outside, when your holodeck starts up.]]))
+
+      vn.music( onion.loops.hacker )
+      vn.appear( l337, "electric" )
+      l337(_([["Hahaha! Man, what a rush! Can't believe they made it so easy to communicate with all the boar space. I would have kept going, but they apparently blew up the entire DVNN mainframe to stop the transmission. What barbarism! Quite effective though."]]))
+      l337(_([["Hope the boar intelligence will get the message to not mess with the Onion Society. Although I worry they're too thick-headed for it to get across."]]))
+      l337(_([["You should also learn to trust people less, that Ogre was playing you as a tool. Nobody is what they seem on the grid."]]))
+      l337(_([["I've been looking for a hand to help me out off grid. You look like you feel the job."]]))
+      l337(_([["Until we meet again. Toodaloo〜♪."]]))
+      vn.music()
+      vn.disappear( l337, "electric" )
+
+      vn.na(_([[The holodeck goes still, and you receive a notification of a credit transfer.]]))
+      vn.sfxVictory()
+      vn.func( function ()
+         player.pay( money_reward )
+      end )
+      vn.na( fmt.reward(money_reward) )
+
       vn.run()
 
       misn.finish(true)
