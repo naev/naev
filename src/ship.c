@@ -362,7 +362,7 @@ int ship_size( const Ship *s )
  *    @param sx Number of X sprites in image.
  *    @param sy Number of Y sprites in image.
  */
-static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
+static int ship_loadSpaceImage( Ship *temp, const char *str, int sx, int sy )
 {
    unsigned int flags = OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP;
    /* If no collision polygon, we use transparency mapping. */
@@ -1045,12 +1045,13 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       double            scale = ship_aa_scale * s->size;
       const GltfObject *obj   = s->gfx_3d;
       mat4              projection, tex_mat;
+      GLint             sbuffer = ceil( scale );
 
       glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
 
       /* Only clear the necessary area. */
       glEnable( GL_SCISSOR_TEST );
-      glScissor( 0, 0, scale + 1, scale + 1 );
+      glScissor( 0, 0, sbuffer, sbuffer );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
       glDisable( GL_SCISSOR_TEST );
 
@@ -1107,7 +1108,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
        */
       glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
       glEnable( GL_SCISSOR_TEST );
-      glScissor( 0, 0, scale + 1, scale + 1 );
+      glScissor( 0, 0, sbuffer + ship_aa_scale_base,
+                 sbuffer + ship_aa_scale_base );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
       glDisable( GL_SCISSOR_TEST );
 
@@ -1136,9 +1138,10 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
        * Now downsample pass.
        */
       /* Tests show that for 2x AA, linear is visually indifferent from bicubic.
+       * The padding is to ensure that there is a one pixel buffer of alpha 0.
        */
-      GLint sin  = ceil( scale );
-      GLint sout = ceil( s->size / gl_screen.scale );
+      GLint sin  = sbuffer + (GLint)ship_aa_scale_base;
+      GLint sout = ceil( s->size / gl_screen.scale ) + 1;
       glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[1] );
       glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
       glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_COLOR_BUFFER_BIT,
