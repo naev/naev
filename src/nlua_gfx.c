@@ -504,13 +504,15 @@ static int gfxL_renderRect( lua_State *L )
 static int gfxL_renderRectH( lua_State *L )
 {
    /* Parse parameters. */
-   const mat4     *H       = luaL_checktransform( L, 1 );
-   const glColour *col     = luaL_optcolour( L, 2, &cWhite );
-   int             empty   = lua_toboolean( L, 3 );
-   int             rounded = lua_toboolean( L, 4 );
+   const mat4     *H     = luaL_checktransform( L, 1 );
+   const glColour *col   = luaL_optcolour( L, 2, &cWhite );
+   int             empty = lua_toboolean( L, 3 );
+   int pw       = lua_tointeger( L, 4 ); // width percentage for round corner
+   int ph       = lua_tointeger( L, 5 ); // height percentage for round corner
+   int segments = lua_tointeger( L, 6 );
 
    /* Render. */
-   gl_renderRectH( H, col, !empty, rounded );
+   gl_renderRectH( H, col, !empty, pw, ph, segments );
 
    return 0;
 }

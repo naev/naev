@@ -339,10 +339,9 @@ end
 function graphics.draw( drawable, ... )
    drawable:draw( ... )
 end
-function graphics.rectangle( mode, x, y, width, height, rounded )
-   rounded = rounded or false;
+function graphics.rectangle( mode, x, y, width, height, pw, ph, segments )
    local H = _H( x, y, 0, width, height )
-   naev.gfx.renderRectH( H, graphics._fgcol, _mode(mode), rounded )
+   naev.gfx.renderRectH( H, graphics._fgcol, _mode(mode), pw or 0, ph or 0, segments or 0 )
 end
 
 function graphics.circle( mode, x, y, radius )
