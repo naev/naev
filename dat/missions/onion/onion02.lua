@@ -18,7 +18,7 @@ local fmt = require "format"
 local vn = require "vn"
 local onion = require "common.onion"
 local strmess = require "strmess"
-local dv = require "dvaered"
+local dv = require "common.dvaered"
 
 local dstspb1, dstsys1 = spob.getS("Ulios")
 local dstspb2, dstsys2 = spob.getS("The Frontier Council")
@@ -115,11 +115,13 @@ function land ()
       local l337 = onion.vn_l337b01{pos="left"}
       vn.music( onion.loops.hacker )
       vn.appear( l337, "electric" )
-      l337:rlename(_("New Onion?"))
+      l337:rename(_("New Onion?"))
       l337(_([["And we're live!"
 They pause for emphasis.]]))
       l337(_([["How are you doing Ogre? Enjoying your free trial of l337 b01's script kiddy's deck?"]]))
-      ogre(_([["Wait, what!?! How did you! Shit, it's not disconnecting. What have you done?"]]))
+      ogre(_([["Wait, what!?! How did you!"
+You hear the sound of mashing keys on a console.
+"Shit, it's not disconnecting. What have you done?"]]))
       l337(_([["Ah, to be naïve once again like our dear Ogre. It's elemental, did you not care to check for back doors? Quite brave, as expected from House Dvaered"]]))
       ogre(_([["Shit shit shit!"]]))
       l337(_([["So much profanity. A bit flustered are we not? But of course, we were caught impersonating the Onion Society, were we not?"]]))
@@ -145,7 +147,7 @@ They pause for emphasis.]]))
          {spb=dstspb3}))
       vn.disappear( l337, "electric" )
       vn.na(_([[You have no idea what you're getting into, but it seems like you have no choice now but to play along.]]))
-      vn.done()
+      vn.run()
 
       misn.markerRm()
       misn.markerAdd( dstspb3 )
@@ -172,7 +174,7 @@ They pause for emphasis.]]))
       l337(fmt.f(_([["House Dvaered economy hit a new low as {warlord1} and {warlord2} have been found to be hoarding gauss guns and railguns, which will likely cause a shortage across House Dvaered."]]),
          {warlord1=warlords[1], warlord2=warlords[2]}))
       l337(_([["Supplies are forecasted to only last 10 periods as Warlords scramble to supply their endless feuds. Dvaered High Command has denied the situation, claiming that the free market will regulate itself."]]))
-      l337(fmt.f(_([["{warlord} has called the statement by Dvaered High Command, 'bollocks', and threatened to fly over there himself and shell the station until it becomes a ball of molten steel."]]),
+      l337(fmt.f(_([["{warlord} has called the statement by Dvaered High Command, 'bollocks', and threatened to fly over there themselves and shell the station until it becomes a ball of molten steel."]]),
          {warlord=warlords[3]}))
       l337(_([["Until the situation clears up, we can only recommend you to acquire as many weapons as possible, and remember, don't panic. That was all."]]))
       vn.music() -- TODO sound of people yelling / chaos
@@ -225,7 +227,7 @@ function strange_things ()
          p:control( true )
          p:follow( player.pilot() )
          p:effectAdd("Onionized")
-         hook.timer( 5+rnd.rnd()*5, "undo_hack", p )
+         hook.timer( 15+rnd.rnd()*15, "undo_hack", p )
          hook.pilot( p, "hail", "hail_hack" )
          hook.pilot( p, "attacked", "undo_hack" )
       end
