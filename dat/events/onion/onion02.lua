@@ -103,14 +103,14 @@ function hail()
    local o = vn.newCharacter( onion.vn_onion() )
    vn.music( onion.loops.circus )
    vn.transition("electric")
-   if vn.peek("onion02_hailed") then
+   if var.peek("onion02_hailed") then
       vn.na(_([[You communicate with the strange ship, however, instead of the channel opening with the bridge a familiar hologram appears.]]))
       o(fmt.f(_([["Hey, if it isn't {player}! Had a fun time on {spb}? You should have seen the look on everyone's faces!"]]),
          {player=player.name(), spb=spob.get("Gordon's Exchange")}))
       o(_([["Hacking the mission computer was less effective than I thought at getting someone to help in my endeavours, so I've decided to cut the middleman."]]))
       o(fmt.f(_([["It's an easy no frills job. I need a package from {spb1} in the {sys1} system delivered to {spb2} in the {sys2} system. Capiche? Easy job for some easy credits. You in for the ride?"]]),
          {spb1=dstspb1, sys1=dstsys1, spb2=dstspb2, sys2=dstsys2}))
-      vn.func( function () vn.push("onion02_hailed",true) end )
+      vn.func( function () var.push("onion02_hailed",true) end )
    else
       vn.na(_([[You hail the hacked ship, and the familiar onion character hologram appears on-screen.]]))
       o(fmt.f(_([["Hey {player}, I still need that package delivered from {spb1} in the {sys1} system to {spb2} in the {sys2} system. Easy job for some easy credits. You ready to mambo?"]]),
