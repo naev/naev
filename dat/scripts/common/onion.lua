@@ -17,12 +17,22 @@ end
 
 onion.loops = {
    circus = "snd/sounds/loops/onion_circus.ogg",
+   hacker = "snd/sounds/loops/onion_hacker.ogg",
 }
 
 function onion.vn_onion( params )
    return vn.Character.new( _("Hologram"),
          tmerge( {
             image=onion.img_onion(),
+            colour=nil,
+            shader=love_shaders.hologram{strength=0.2},
+         }, params) )
+end
+
+function onion.vn_l337b01( params )
+   return vn.Character.new( _("l337 b01"),
+         tmerge( {
+            image=onion.img_onion(), -- TODO
             colour=nil,
             shader=love_shaders.hologram{strength=0.2},
          }, params) )

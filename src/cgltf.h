@@ -1,3 +1,4 @@
+// clang-format off
 /**
  * cgltf - a single-file glTF 2.0 parser written in C99.
  *

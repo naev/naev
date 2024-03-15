@@ -14,11 +14,11 @@
 
 #include "array.h"
 #include "conf.h"
-#include "log.h"
-#include "nxml.h"
-#include "ndata.h"
 #include "gui.h"
+#include "log.h"
+#include "ndata.h"
 #include "nlua_pilot.h"
+#include "nxml.h"
 #include "rng.h"
 
 static EffectData *effect_list = NULL; /* List of all available effects. */
@@ -40,9 +40,9 @@ static int effect_cmpTimer( const void *p1, const void *p2 )
 {
    const Effect *e1 = p1;
    const Effect *e2 = p2;
-   if (e1->data->priority < e2->data->priority)
+   if ( e1->data->priority < e2->data->priority )
       return -1;
-   else if (e1->data->priority > e2->data->priority)
+   else if ( e1->data->priority > e2->data->priority )
       return +1;
    return e1->timer - e2->timer;
 }
@@ -53,131 +53,137 @@ static int effect_cmpTimer( const void *p1, const void *p2 )
 static int effect_parse( EffectData *efx, const char *file )
 {
    xmlNodePtr node, parent;
-   xmlDocPtr doc = xml_parsePhysFS( file );
-   if (doc == NULL)
+   xmlDocPtr  doc = xml_parsePhysFS( file );
+   if ( doc == NULL )
       return -1;
 
    parent = doc->xmlChildrenNode; /* first system node */
-   if (parent == NULL) {
-      ERR( _("Malformed '%s' file: does not contain elements"), file );
+   if ( parent == NULL ) {
+      ERR( _( "Malformed '%s' file: does not contain elements" ), file );
       return -1;
    }
 
    /* Clear data. */
-   memset( efx, 0, sizeof(EffectData) );
-   efx->duration  = -1.;
-   efx->priority  = 5;
-   efx->lua_env   = LUA_NOREF;
-   efx->lua_add   = LUA_NOREF;
-   efx->lua_extend= LUA_NOREF;
-   efx->lua_remove= LUA_NOREF;
+   memset( efx, 0, sizeof( EffectData ) );
+   efx->duration   = -1.;
+   efx->priority   = 5;
+   efx->lua_env    = LUA_NOREF;
+   efx->lua_add    = LUA_NOREF;
+   efx->lua_extend = LUA_NOREF;
+   efx->lua_remove = LUA_NOREF;
 
-   xmlr_attr_strd(parent,"name",efx->name);
-   if (efx->name == NULL)
-      WARN(_("Effect '%s' has invalid or no name"), file);
+   xmlr_attr_strd( parent, "name", efx->name );
+   if ( efx->name == NULL )
+      WARN( _( "Effect '%s' has invalid or no name" ), file );
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
       /* Only handle nodes. */
-      xml_onlyNodes(node);
+      xml_onlyNodes( node );
 
-      xmlr_strd(node, "description", efx->desc);
-      xmlr_strd(node, "overwrite", efx->overwrite);
-      xmlr_int(node, "priority", efx->priority);
-      xmlr_float(node, "duration", efx->duration);
-      if (xml_isNode(node,"buff")) {
+      xmlr_strd( node, "description", efx->desc );
+      xmlr_strd( node, "overwrite", efx->overwrite );
+      xmlr_int( node, "priority", efx->priority );
+      xmlr_float( node, "duration", efx->duration );
+      if ( xml_isNode( node, "buff" ) ) {
          efx->flags |= EFFECT_BUFF;
          continue;
       }
-      if (xml_isNode(node,"debuff")) {
+      if ( xml_isNode( node, "debuff" ) ) {
          efx->flags |= EFFECT_DEBUFF;
          continue;
       }
-      if (xml_isNode(node,"icon")) {
+      if ( xml_isNode( node, "icon" ) ) {
          efx->icon = xml_parseTexture( node, "%s", 1, 1, OPENGL_TEX_MIPMAPS );
          continue;
       }
-      if (xml_isNode(node,"shader")) {
+      if ( xml_isNode( node, "shader" ) ) {
          char *vertex, *img;
-         xmlr_attr_strd(node,"vertex",vertex);
-         if (vertex == NULL)
-            vertex = strdup("effect.vert");
+         xmlr_attr_strd( node, "vertex", vertex );
+         if ( vertex == NULL )
+            vertex = strdup( "effect.vert" );
          else
             efx->flags |= EFFECT_VERTEX;
-         xmlr_attr_strd(node,"img",img);
-         if (img != NULL) {
-            efx->img = gl_newImage( img, OPENGL_TEX_MIPMAPS | OPENGL_TEX_CLAMP_ALPHA );
-            free(img);
+         xmlr_attr_strd( node, "img", img );
+         if ( img != NULL ) {
+            efx->img =
+               gl_newImage( img, OPENGL_TEX_MIPMAPS | OPENGL_TEX_CLAMP_ALPHA );
+            free( img );
          }
-         efx->program   = gl_program_vert_frag( vertex, xml_get(node) );
+         efx->program = gl_program_vert_frag( vertex, xml_get( node ) );
          free( vertex );
-         efx->vertex    = glGetAttribLocation( efx->program, "vertex" );
-         efx->projection= glGetUniformLocation( efx->program, "projection" );
-         efx->tex_mat   = glGetUniformLocation( efx->program, "tex_mat" );
-         efx->dimensions= glGetUniformLocation( efx->program, "dimensions" );
-         efx->u_r       = glGetUniformLocation( efx->program, "u_r" );
-         efx->u_tex     = glGetUniformLocation( efx->program, "u_tex" );
-         efx->u_timer   = glGetUniformLocation( efx->program, "u_timer" );
-         efx->u_elapsed = glGetUniformLocation( efx->program, "u_elapsed" );
-         efx->u_dir     = glGetUniformLocation( efx->program, "u_dir" );
-         efx->u_img     = glGetUniformLocation( efx->program, "u_img" );
+         efx->vertex     = glGetAttribLocation( efx->program, "vertex" );
+         efx->projection = glGetUniformLocation( efx->program, "projection" );
+         efx->tex_mat    = glGetUniformLocation( efx->program, "tex_mat" );
+         efx->dimensions = glGetUniformLocation( efx->program, "dimensions" );
+         efx->u_r        = glGetUniformLocation( efx->program, "u_r" );
+         efx->u_tex      = glGetUniformLocation( efx->program, "u_tex" );
+         efx->u_timer    = glGetUniformLocation( efx->program, "u_timer" );
+         efx->u_elapsed  = glGetUniformLocation( efx->program, "u_elapsed" );
+         efx->u_dir      = glGetUniformLocation( efx->program, "u_dir" );
+         efx->u_img      = glGetUniformLocation( efx->program, "u_img" );
          continue;
       }
-      if (xml_isNode(node,"lua")) {
-         nlua_env env;
-         size_t sz;
-         const char *filename = xml_get(node);
-         char *dat = ndata_read( filename, &sz );
-         if (dat==NULL) {
-            WARN(_("Effect '%s' failed to read Lua '%s'!"), efx->name, filename );
+      if ( xml_isNode( node, "lua" ) ) {
+         nlua_env    env;
+         size_t      sz;
+         const char *filename = xml_get( node );
+         char       *dat      = ndata_read( filename, &sz );
+         if ( dat == NULL ) {
+            WARN( _( "Effect '%s' failed to read Lua '%s'!" ), efx->name,
+                  filename );
             continue;
          }
 
          env = nlua_newEnv();
          nlua_loadStandard( env );
-         if (nlua_dobufenv( env, dat, sz, filename ) != 0) {
-            WARN(_("Effect '%s' Lua error:\n%s"), efx->name, lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
+         if ( nlua_dobufenv( env, dat, sz, filename ) != 0 ) {
+            WARN( _( "Effect '%s' Lua error:\n%s" ), efx->name,
+                  lua_tostring( naevL, -1 ) );
+            lua_pop( naevL, 1 );
             nlua_freeEnv( env );
             free( dat );
             continue;
          }
-         efx->lua_env   = env;
-         efx->lua_add   = nlua_refenvtype( env, "add",   LUA_TFUNCTION );
-         efx->lua_extend= nlua_refenvtype( env, "extend",LUA_TFUNCTION );
-         efx->lua_remove= nlua_refenvtype( env, "remove",LUA_TFUNCTION );
+         efx->lua_env    = env;
+         efx->lua_add    = nlua_refenvtype( env, "add", LUA_TFUNCTION );
+         efx->lua_extend = nlua_refenvtype( env, "extend", LUA_TFUNCTION );
+         efx->lua_remove = nlua_refenvtype( env, "remove", LUA_TFUNCTION );
          free( dat );
          continue;
       }
 
-      if (xml_isNode(node,"stats")) {
+      if ( xml_isNode( node, "stats" ) ) {
          xmlNodePtr cur = node->children;
          do {
             ShipStatList *ll;
-            xml_onlyNodes(cur);
+            xml_onlyNodes( cur );
             /* Stats. */
             ll = ss_listFromXML( cur );
-            if (ll != NULL) {
-               ll->next    = efx->stats;
+            if ( ll != NULL ) {
+               ll->next   = efx->stats;
                efx->stats = ll;
                continue;
             }
-            WARN(_("Effect '%s' has unknown node '%s'"), efx->name, cur->name);
-         } while (xml_nextNode(cur));
+            WARN( _( "Effect '%s' has unknown node '%s'" ), efx->name,
+                  cur->name );
+         } while ( xml_nextNode( cur ) );
          continue;
       }
-      WARN(_("Effect '%s' has unknown node '%s'"),efx->name, node->name);
-   } while (xml_nextNode(node));
+      WARN( _( "Effect '%s' has unknown node '%s'" ), efx->name, node->name );
+   } while ( xml_nextNode( node ) );
 
-#define MELEMENT(o,s) \
-if (o) WARN( _("Effect '%s' missing/invalid '%s' element"), efx->name, s) /**< Define to help check for data errors. */
-   MELEMENT(efx->name==NULL,"name");
-   MELEMENT(efx->desc==NULL,"description");
-   MELEMENT(efx->duration<0.,"duration");
-   MELEMENT(efx->icon==NULL,"icon");
+#define MELEMENT( o, s )                                                       \
+   if ( o )                                                                    \
+   WARN( _( "Effect '%s' missing/invalid '%s' element" ), efx->name,           \
+         s ) /**< Define to help check for data errors. */
+   MELEMENT( efx->name == NULL, "name" );
+   MELEMENT( efx->desc == NULL, "description" );
+   MELEMENT( efx->duration < 0., "duration" );
+   MELEMENT( efx->icon == NULL, "icon" );
 #undef MELEMENT
 
-   xmlFreeDoc(doc);
+   xmlFreeDoc( doc );
 
    return 0;
 }
@@ -187,40 +193,42 @@ if (o) WARN( _("Effect '%s' missing/invalid '%s' element"), efx->name, s) /**< D
  *
  *    @return 0 on success
  */
-int effect_load (void)
+int effect_load( void )
 {
    int ne;
 #if DEBUGGING
    Uint32 time = SDL_GetTicks();
 #endif /* DEBUGGING */
    char **effect_files = ndata_listRecursive( EFFECT_DATA_PATH );
-   effect_list = array_create( EffectData );
+   effect_list         = array_create( EffectData );
 
-   for (int i=0; i<array_size(effect_files); i++) {
-      if (ndata_matchExt( effect_files[i], "xml" )) {
+   for ( int i = 0; i < array_size( effect_files ); i++ ) {
+      if ( ndata_matchExt( effect_files[i], "xml" ) ) {
          EffectData ed;
-         int ret = effect_parse( &ed, effect_files[i] );
-         if (ret == 0)
+         int        ret = effect_parse( &ed, effect_files[i] );
+         if ( ret == 0 )
             array_push_back( &effect_list, ed );
       }
       free( effect_files[i] );
    }
    array_free( effect_files );
 
-   ne = array_size(effect_list);
-   qsort( effect_list, ne, sizeof(EffectData), effect_cmp );
+   ne = array_size( effect_list );
+   qsort( effect_list, ne, sizeof( EffectData ), effect_cmp );
 
 #if DEBUGGING
    /* Check to see if there are name collisions. */
-   for (int i=1; i<array_size(effect_list); i++)
-      if (strcmp( effect_list[i-1].name, effect_list[i].name )==0)
-         WARN(_("Duplicated effect name '%s' detected!"), effect_list[i].name);
+   for ( int i = 1; i < array_size( effect_list ); i++ )
+      if ( strcmp( effect_list[i - 1].name, effect_list[i].name ) == 0 )
+         WARN( _( "Duplicated effect name '%s' detected!" ),
+               effect_list[i].name );
 
-   if (conf.devmode) {
+   if ( conf.devmode ) {
       time = SDL_GetTicks() - time;
-      DEBUG( n_( "Loaded %d Effect in %.3f s", "Loaded %d Effects in %.3f s", ne ), ne, time/1000. );
-   }
-   else
+      DEBUG(
+         n_( "Loaded %d Effect in %.3f s", "Loaded %d Effects in %.3f s", ne ),
+         ne, time / 1000. );
+   } else
       DEBUG( n_( "Loaded %d Effect", "Loaded %d Effects", ne ), ne );
 #endif /* DEBUGGING */
 
@@ -230,9 +238,9 @@ int effect_load (void)
 /**
  * @brief Gets rid of all the effects.
  */
-void effect_exit (void)
+void effect_exit( void )
 {
-   for (int i=0; i<array_size(effect_list); i++) {
+   for ( int i = 0; i < array_size( effect_list ); i++ ) {
       EffectData *e = &effect_list[i];
       nlua_freeEnv( e->lua_env );
       free( e->name );
@@ -253,10 +261,11 @@ void effect_exit (void)
  */
 const EffectData *effect_get( const char *name )
 {
-   const EffectData k = { .name = (char*)name };
-   EffectData *e = bsearch( &k, effect_list, array_size(effect_list), sizeof(EffectData), effect_cmp );
-   if (e==NULL)
-      WARN(_("Trying to get unknown effect data '%s'!"), name);
+   const EffectData k = { .name = (char *)name };
+   EffectData      *e = bsearch( &k, effect_list, array_size( effect_list ),
+                                 sizeof( EffectData ), effect_cmp );
+   if ( e == NULL )
+      WARN( _( "Trying to get unknown effect data '%s'!" ), name );
    return e;
 }
 
@@ -270,28 +279,29 @@ const EffectData *effect_get( const char *name )
 int effect_update( Effect **efxlist, double dt )
 {
    int n = 0;
-   for (int i=array_size(*efxlist)-1; i>=0; i--) {
-      Effect *e = &(*efxlist)[i];
+   for ( int i = array_size( *efxlist ) - 1; i >= 0; i-- ) {
+      Effect *e = &( *efxlist )[i];
       e->timer -= dt;
       e->elapsed += dt;
-      if (e->timer > 0.)
+      if ( e->timer > 0. )
          continue;
 
       /* Run Lua if necessary. */
-      if (e->data->lua_remove != LUA_NOREF) {
-         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
-         lua_pushpilot(naevL, e->parent);
-         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
-            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "remove", lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
+      if ( e->data->lua_remove != LUA_NOREF ) {
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, e->data->lua_remove ); /* f */
+         lua_pushpilot( naevL, e->parent );
+         if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
+            WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
+                  "remove", lua_tostring( naevL, -1 ) );
+            lua_pop( naevL, 1 );
          }
       }
 
       /* Get rid of it. */
-      array_erase( efxlist, e, e+1 );
+      array_erase( efxlist, e, e + 1 );
       n++;
    }
-   if (n>0)
+   if ( n > 0 )
       gui_updateEffects();
    return n;
 }
@@ -306,42 +316,48 @@ int effect_update( Effect **efxlist, double dt )
  *    @param parent Pilot the effect is being added to.
  *    @return 0 on success.
  */
-int effect_add( Effect **efxlist, const EffectData *efx, double duration, double strength, unsigned int parent )
+int effect_add( Effect **efxlist, const EffectData *efx, double duration,
+                double strength, unsigned int parent )
 {
-   Effect *e = NULL;
-   int overwrite = 0;
-   duration = (duration > 0.) ? duration : efx->duration;
+   Effect *e         = NULL;
+   int     overwrite = 0;
+   duration          = ( duration > 0. ) ? duration : efx->duration;
 
-   if (*efxlist == NULL)
+   if ( *efxlist == NULL )
       *efxlist = array_create( Effect );
 
    /* See if we should overwrite. */
-   if (efx->overwrite != NULL) {
-      for (int i=0; i<array_size(*efxlist); i++) {
-         Effect *el = &(*efxlist)[i];
-         if ((el->data->overwrite!=NULL) &&
-               (efx->priority <= el->data->priority) &&
-               (strcmp(efx->overwrite, el->data->overwrite)==0)) {
+   if ( efx->overwrite != NULL ) {
+      for ( int i = 0; i < array_size( *efxlist ); i++ ) {
+         Effect *el = &( *efxlist )[i];
+         if ( ( el->data->overwrite != NULL ) &&
+              ( efx->priority <= el->data->priority ) &&
+              ( strcmp( efx->overwrite, el->data->overwrite ) == 0 ) ) {
             e = el;
-            if (e->data == efx) {
-               /* Case the effect is weaker when both are the same, we just ignore. */
-               if (el->strength > strength)
+            if ( e->data == efx ) {
+               /* Case the effect is weaker when both are the same, we just
+                * ignore. */
+               if ( el->strength > strength )
                   return 0;
-               /* Case the base effect has a longer timer with same strength we ignore. */
-               if ((fabs(el->strength-strength)<DOUBLE_TOL) && (el->timer > duration))
+               /* Case the base effect has a longer timer with same strength we
+                * ignore. */
+               if ( ( fabs( el->strength - strength ) < DOUBLE_TOL ) &&
+                    ( el->timer > duration ) )
                   return 0;
                /* Procede to overwrite. */
                overwrite = 1;
-            }
-            else {
-               /* Here we remove the effect and replace it as they overlap while not being exactly the same.
-                * Can't do a strength check because they may not be comparable. */
-               if (e->data->lua_remove != LUA_NOREF) {
-                  lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
-                  lua_pushpilot(naevL, e->parent);
-                  if (nlua_pcall( e->data->lua_env, 1, 0 )) {
-                     WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "remove", lua_tostring(naevL,-1));
-                     lua_pop(naevL,1);
+            } else {
+               /* Here we remove the effect and replace it as they overlap while
+                * not being exactly the same. Can't do a strength check because
+                * they may not be comparable. */
+               if ( e->data->lua_remove != LUA_NOREF ) {
+                  lua_rawgeti( naevL, LUA_REGISTRYINDEX,
+                               e->data->lua_remove ); /* f */
+                  lua_pushpilot( naevL, e->parent );
+                  if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
+                     WARN( _( "Effect '%s' failed to run '%s':\n%s" ),
+                           e->data->name, "remove", lua_tostring( naevL, -1 ) );
+                     lua_pop( naevL, 1 );
                   }
                }
             }
@@ -351,41 +367,42 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
    }
 
    /* Add new effect if necessary. */
-   if (e==NULL) {
-      e = &array_grow( efxlist );
+   if ( e == NULL ) {
+      e          = &array_grow( efxlist );
       e->elapsed = 0.; /* Don't 0. when overwriting. */
       e->r       = RNGF();
    }
-   e->data  = efx;
+   e->data     = efx;
    e->duration = duration;
-   e->timer = e->duration;
+   e->timer    = e->duration;
    e->strength = strength;
-   e->parent = parent;
+   e->parent   = parent;
 
    /* Run Lua if necessary. */
-   if (overwrite) {
-      if (efx->lua_extend != LUA_NOREF) {
-         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_extend); /* f */
-         lua_pushpilot(naevL, e->parent);
-         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
-            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "extend", lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
+   if ( overwrite ) {
+      if ( efx->lua_extend != LUA_NOREF ) {
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, e->data->lua_extend ); /* f */
+         lua_pushpilot( naevL, e->parent );
+         if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
+            WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
+                  "extend", lua_tostring( naevL, -1 ) );
+            lua_pop( naevL, 1 );
          }
       }
-   }
-   else {
-      if (efx->lua_add != LUA_NOREF) {
-         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_add); /* f */
-         lua_pushpilot(naevL, e->parent);
-         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
-            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "add", lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
+   } else {
+      if ( efx->lua_add != LUA_NOREF ) {
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, e->data->lua_add ); /* f */
+         lua_pushpilot( naevL, e->parent );
+         if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
+            WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
+                  "add", lua_tostring( naevL, -1 ) );
+            lua_pop( naevL, 1 );
          }
       }
    }
 
    /* Sort and update. */
-   qsort( *efxlist, array_size(*efxlist), sizeof(Effect), effect_cmpTimer );
+   qsort( *efxlist, array_size( *efxlist ), sizeof( Effect ), effect_cmpTimer );
    gui_updateEffects();
    return 0;
 }
@@ -401,19 +418,20 @@ int effect_rm( Effect **efxlist, int idx )
 {
    const Effect *e;
 
-   if ((idx < 0) || (idx > array_size(efxlist))) {
-      WARN(_("Trying to remove invalid effect ID!"));
+   if ( ( idx < 0 ) || ( idx > array_size( efxlist ) ) ) {
+      WARN( _( "Trying to remove invalid effect ID!" ) );
       return -1;
    }
-   e = &(*efxlist)[idx];
+   e = &( *efxlist )[idx];
 
    /* Run Lua if necessary. */
-   if (e->data->lua_remove != LUA_NOREF) {
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
-      lua_pushpilot(naevL, e->parent);
-      if (nlua_pcall( e->data->lua_env, 1, 0 )) {
-         WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "remove", lua_tostring(naevL,-1));
-         lua_pop(naevL,1);
+   if ( e->data->lua_remove != LUA_NOREF ) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, e->data->lua_remove ); /* f */
+      lua_pushpilot( naevL, e->parent );
+      if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
+         WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
+               "remove", lua_tostring( naevL, -1 ) );
+         lua_pop( naevL, 1 );
       }
    }
    array_erase( efxlist, &e[0], &e[1] );
@@ -431,21 +449,22 @@ int effect_rm( Effect **efxlist, int idx )
 int effect_rmType( Effect **efxlist, const EffectData *efx, int all )
 {
    int ret = 0;
-   for (int i=array_size(*efxlist)-1; i>=0; i++) {
-      const Effect *e = &(*efxlist)[i];
-      if (e->data != efx)
+   for ( int i = array_size( *efxlist ) - 1; i >= 0; i++ ) {
+      const Effect *e = &( *efxlist )[i];
+      if ( e->data != efx )
          continue;
       /* Run Lua if necessary. */
-      if (e->data->lua_remove != LUA_NOREF) {
-         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
-         lua_pushpilot(naevL, e->parent);
-         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
-            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "remove", lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
+      if ( e->data->lua_remove != LUA_NOREF ) {
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, e->data->lua_remove ); /* f */
+         lua_pushpilot( naevL, e->parent );
+         if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
+            WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
+                  "remove", lua_tostring( naevL, -1 ) );
+            lua_pop( naevL, 1 );
          }
       }
       array_erase( efxlist, &e[0], &e[1] );
-      if (!all)
+      if ( !all )
          return 1;
       ret++;
    }
@@ -460,32 +479,32 @@ int effect_rmType( Effect **efxlist, const EffectData *efx, int all )
  *    @param buffs Whether or not to clear buffs.
  *    @param others Whether or not to clear other effects.
  */
-void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs, int others )
+void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs,
+                           int others )
 {
-   for (int i=array_size(*efxlist)-1; i>=0; i++) {
-      const Effect *e = &(*efxlist)[i];
+   for ( int i = array_size( *efxlist ) - 1; i >= 0; i++ ) {
+      const Effect *e = &( *efxlist )[i];
 
       /* See if should be eliminated. */
-      if (e->data->flags & EFFECT_BUFF) {
-         if (!buffs)
+      if ( e->data->flags & EFFECT_BUFF ) {
+         if ( !buffs )
             continue;
-      }
-      else if (e->data->flags & EFFECT_DEBUFF) {
-         if (!debuffs)
+      } else if ( e->data->flags & EFFECT_DEBUFF ) {
+         if ( !debuffs )
             continue;
-      }
-      else {
-         if (!others)
+      } else {
+         if ( !others )
             continue;
       }
 
       /* Run Lua if necessary. */
-      if (e->data->lua_remove != LUA_NOREF) {
-         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
-         lua_pushpilot(naevL, e->parent);
-         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
-            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "remove", lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
+      if ( e->data->lua_remove != LUA_NOREF ) {
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, e->data->lua_remove ); /* f */
+         lua_pushpilot( naevL, e->parent );
+         if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
+            WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
+                  "remove", lua_tostring( naevL, -1 ) );
+            lua_pop( naevL, 1 );
          }
       }
 
@@ -501,19 +520,20 @@ void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs, int others 
  */
 void effect_clear( Effect **efxlist )
 {
-   for (int i=0; i<array_size(*efxlist); i++) {
-      const Effect *e = &(*efxlist)[i];
+   for ( int i = 0; i < array_size( *efxlist ); i++ ) {
+      const Effect *e = &( *efxlist )[i];
       /* Run Lua if necessary. */
-      if (e->data->lua_remove != LUA_NOREF) {
-         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
-         lua_pushpilot(naevL, e->parent);
-         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
-            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "remove", lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
+      if ( e->data->lua_remove != LUA_NOREF ) {
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, e->data->lua_remove ); /* f */
+         lua_pushpilot( naevL, e->parent );
+         if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
+            WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
+                  "remove", lua_tostring( naevL, -1 ) );
+            lua_pop( naevL, 1 );
          }
       }
    }
-   array_erase( efxlist, array_begin(*efxlist), array_end(*efxlist) );
+   array_erase( efxlist, array_begin( *efxlist ), array_end( *efxlist ) );
 }
 
 /**
@@ -524,7 +544,7 @@ void effect_clear( Effect **efxlist )
  */
 void effect_compute( ShipStats *s, const Effect *efxlist )
 {
-   for (int i=0; i<array_size(efxlist); i++) {
+   for ( int i = 0; i < array_size( efxlist ); i++ ) {
       const Effect *e = &efxlist[i];
       ss_statsMergeFromListScale( s, e->data->stats, e->strength );
    }

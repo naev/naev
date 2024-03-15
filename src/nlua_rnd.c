@@ -8,15 +8,11 @@
  */
 /** @cond */
 #include <lauxlib.h>
-
-#include "naev.h"
+#include <math.h>
 /** @endcond */
 
 #include "nlua_rnd.h"
 
-#include "log.h"
-#include "map.h"
-#include "ndata.h"
 #include "nluadef.h"
 #include "rng.h"
 
@@ -28,16 +24,15 @@ static int rndL_threesigma( lua_State *L );
 static int rndL_uniform( lua_State *L );
 static int rndL_angle( lua_State *L );
 static int rndL_permutation( lua_State *L );
-static const luaL_Reg rnd_methods[] = {
-   { "rnd", rndL_int },
-   { "sigma", rndL_sigma },
-   { "twosigma", rndL_twosigma },
-   { "threesigma", rndL_threesigma },
-   { "uniform", rndL_uniform },
-   { "angle", rndL_angle },
-   { "permutation", rndL_permutation },
-   {0,0}
-}; /**< Random Lua methods. */
+
+static const luaL_Reg rnd_methods[] = { { "rnd", rndL_int },
+                                        { "sigma", rndL_sigma },
+                                        { "twosigma", rndL_twosigma },
+                                        { "threesigma", rndL_threesigma },
+                                        { "uniform", rndL_uniform },
+                                        { "angle", rndL_angle },
+                                        { "permutation", rndL_permutation },
+                                        { 0, 0 } }; /**< Random Lua methods. */
 
 /**
  * @brief Loads the Random Number Lua library.
@@ -47,7 +42,7 @@ static const luaL_Reg rnd_methods[] = {
  */
 int nlua_loadRnd( nlua_env env )
 {
-   nlua_register(env, "rnd", rnd_methods, 0);
+   nlua_register( env, "rnd", rnd_methods, 0 );
    return 0;
 }
 
@@ -69,8 +64,8 @@ int nlua_loadRnd( nlua_env env )
  * @luamod rnd
  */
 /**
- * @brief Gets a random number.  With no parameters it returns a random float between
- *  0 and 1.
+ * @brief Gets a random number.  With no parameters it returns a random float
+ * between 0 and 1.
  *
  * With one parameter it returns a whole number between 0 and that number
  *  (both included).  With two parameters it returns a whole number between
@@ -82,81 +77,85 @@ int nlua_loadRnd( nlua_env env )
  *
  *    @luatparam number x First parameter, read description for details.
  *    @luatparam number y Second parameter, read description for details.
- *    @luatreturn number A randomly generated number, read description for details.
+ *    @luatreturn number A randomly generated number, read description for
+ * details.
  * @luafunc rnd
  */
 static int rndL_int( lua_State *L )
 {
-   int l,h;
-   int o = lua_gettop(L);
+   int l, h;
+   int o = lua_gettop( L );
 
-   if (o==0)
-      lua_pushnumber(L, RNGF() ); /* random double 0 <= x <= 1 */
-   else if (o==1) { /* random int 0 <= x <= parameter */
-      l = luaL_checkint(L,1);
-      lua_pushnumber(L, RNG(0, l));
-   }
-   else if (o>=2) { /* random int parameter 1 <= x <= parameter 2 */
-      l = luaL_checkint(L,1);
-      h = luaL_checkint(L,2);
-      lua_pushnumber(L, RNG(l,h));
-   }
-   else
-      NLUA_INVALID_PARAMETER(L,1);
+   if ( o == 0 )
+      lua_pushnumber( L, RNGF() ); /* random double 0 <= x <= 1 */
+   else if ( o == 1 ) {            /* random int 0 <= x <= parameter */
+      l = luaL_checkint( L, 1 );
+      lua_pushnumber( L, RNG( 0, l ) );
+   } else if ( o >= 2 ) { /* random int parameter 1 <= x <= parameter 2 */
+      l = luaL_checkint( L, 1 );
+      h = luaL_checkint( L, 2 );
+      lua_pushnumber( L, RNG( l, h ) );
+   } else
+      NLUA_INVALID_PARAMETER( L, 1 );
 
-   return 1; /* unless it's returned 0 already it'll always return a parameter */
+   return 1; /* unless it's returned 0 already it'll always return a parameter
+              */
 }
 /**
  * @brief Creates a number in the one-sigma range [-1:1].
  *
- * A one sigma range means that it creates a number following the normal distribution
- *  but limited to the 63% quadrant.  This means that the number is biased towards 0,
- *  but can become either 1 or -1.  It's a fancier way of generating random numbers.
+ * A one sigma range means that it creates a number following the normal
+ * distribution but limited to the 63% quadrant.  This means that the number is
+ * biased towards 0, but can become either 1 or -1.  It's a fancier way of
+ * generating random numbers.
  *
- * @usage n = 5.5 + rnd.sigma()/2. -- Creates a number from 5 to 6 slightly biased to 5.5.
+ * @usage n = 5.5 + rnd.sigma()/2. -- Creates a number from 5 to 6 slightly
+ * biased to 5.5.
  *    @luatreturn number A number from [-1:1] biased slightly towards 0.
  * @luafunc sigma
  */
 static int rndL_sigma( lua_State *L )
 {
-   lua_pushnumber(L, RNG_1SIGMA());
+   lua_pushnumber( L, RNG_1SIGMA() );
    return 1;
 }
 /**
  * @brief Creates a number in the two-sigma range [-2:2].
  *
- * This function behaves much like the rnd.sigma function but uses the two-sigma range,
- *  meaning that numbers are in the 95% quadrant and thus are much more random.  They are
- *  biased towards 0 and approximately 63% will be within [-1:1].  The rest will be in
- *  either the [-2:-1] range or the [1:2] range.
+ * This function behaves much like the rnd.sigma function but uses the two-sigma
+ * range, meaning that numbers are in the 95% quadrant and thus are much more
+ * random.  They are biased towards 0 and approximately 63% will be within
+ * [-1:1].  The rest will be in either the [-2:-1] range or the [1:2] range.
  *
- * @usage n = 5.5 + rnd.twosigma()/4. -- Creates a number from 5 to 6 heavily biased to 5.5.
+ * @usage n = 5.5 + rnd.twosigma()/4. -- Creates a number from 5 to 6 heavily
+ * biased to 5.5.
  *
  *    @luatreturn number A number from [-2:2] biased heavily towards 0.
  * @luafunc twosigma
  */
 static int rndL_twosigma( lua_State *L )
 {
-   lua_pushnumber(L, RNG_2SIGMA());
+   lua_pushnumber( L, RNG_2SIGMA() );
    return 1;
 }
 /**
  * @brief Creates a number in the three-sigma range [-3:3].
  *
- * This function behaves much like its brothers rnd.sigma and rnd.twosigma.  The main
- *  difference is that it uses the three-sigma range which is the 99% quadrant.  It
- *  will rarely generate numbers outside the [-2:2] range (about 5% of the time) and
- *  create numbers outside of the [-1:1] range about 37% of the time.  This can be used
- *  when you want extremes to appear rarely.
+ * This function behaves much like its brothers rnd.sigma and rnd.twosigma.  The
+ * main difference is that it uses the three-sigma range which is the 99%
+ * quadrant.  It will rarely generate numbers outside the [-2:2] range (about 5%
+ * of the time) and create numbers outside of the [-1:1] range about 37% of the
+ * time.  This can be used when you want extremes to appear rarely.
  *
- * @usage n = 5.5 + rnd.threesigma()/6. -- Creates a number from 5 to 6 totally biased to 5.5.
+ * @usage n = 5.5 + rnd.threesigma()/6. -- Creates a number from 5 to 6 totally
+ * biased to 5.5.
  *
  *    @luatreturn number A number from [-3:3] biased totally towards 0.
  * @luafunc threesigma
  */
 static int rndL_threesigma( lua_State *L )
 {
-   lua_pushnumber(L, RNG_3SIGMA());
+   lua_pushnumber( L, RNG_3SIGMA() );
    return 1;
 }
 
@@ -169,28 +168,28 @@ static int rndL_threesigma( lua_State *L )
  *
  *    @luatparam number x First parameter, read description for details.
  *    @luatparam number y Second parameter, read description for details.
- *    @luatreturn number A randomly generated number, read description for details.
+ *    @luatreturn number A randomly generated number, read description for
+ * details.
  * @luafunc uniform
  */
 static int rndL_uniform( lua_State *L )
 {
    int o = lua_gettop( L );
 
-   if (o==0)
+   if ( o == 0 )
       lua_pushnumber( L, RNGF() ); /* random double 0 <= x <= 1 */
-   else if (o==1) { /* random int 0 <= x <= parameter */
+   else if ( o == 1 ) {            /* random int 0 <= x <= parameter */
       int l = luaL_checknumber( L, 1 );
       lua_pushnumber( L, RNGF() * l );
-   }
-   else if (o>=2) { /* random int parameter 1 <= x <= parameter 2 */
+   } else if ( o >= 2 ) { /* random int parameter 1 <= x <= parameter 2 */
       int l = luaL_checknumber( L, 1 );
       int h = luaL_checknumber( L, 2 );
-      lua_pushnumber( L, l + (h-l) * RNGF() );
-   }
-   else
-      NLUA_INVALID_PARAMETER(L,1);
+      lua_pushnumber( L, l + ( h - l ) * RNGF() );
+   } else
+      NLUA_INVALID_PARAMETER( L, 1 );
 
-   return 1; /* unless it's returned 0 already it'll always return a parameter */
+   return 1; /* unless it's returned 0 already it'll always return a parameter
+              */
 }
 
 /**
@@ -223,29 +222,27 @@ static int rndL_angle( lua_State *L )
 static int rndL_permutation( lua_State *L )
 {
    int *values;
-   int max;
-   int new_table;
+   int  max;
+   int  new_table;
 
-   if (lua_isnumber(L,1)) {
-      max = lua_tointeger(L,1);
+   if ( lua_isnumber( L, 1 ) ) {
+      max       = lua_tointeger( L, 1 );
       new_table = 1;
-   }
-   else if (lua_istable(L,1)) {
-      max = (int) lua_objlen(L,1);
+   } else if ( lua_istable( L, 1 ) ) {
+      max       = (int)lua_objlen( L, 1 );
       new_table = 0;
-   }
-   else
-      NLUA_INVALID_PARAMETER(L,1);
+   } else
+      NLUA_INVALID_PARAMETER( L, 1 );
 
    /* Create the list. */
-   values = malloc( sizeof(int)*max );
-   for (int i=0; i<max; i++)
-      values[i]=i;
+   values = malloc( sizeof( int ) * max );
+   for ( int i = 0; i < max; i++ )
+      values[i] = i;
 
    /* Fisher-Yates shuffling algorithm */
-   for (int i = max-1; i >= 0; --i){
+   for ( int i = max - 1; i >= 0; --i ) {
       /* Generate a random number in the range [0, max-1] */
-      int j = randint() % (i+1);
+      int j = randint() % ( i + 1 );
 
       /* Swap the last element with an element at a random index. */
       int temp  = values[i];
@@ -254,12 +251,12 @@ static int rndL_permutation( lua_State *L )
    }
 
    /* Now either return a new table or permute the given table. */
-   lua_newtable(L);
-   for (int i=0; i<max; i++) {
-      lua_pushnumber( L, values[i]+1 );
-      if (!new_table)
-         lua_gettable(   L, 1 );
-      lua_rawseti(   L, -2, i+1 );
+   lua_newtable( L );
+   for ( int i = 0; i < max; i++ ) {
+      lua_pushnumber( L, values[i] + 1 );
+      if ( !new_table )
+         lua_gettable( L, 1 );
+      lua_rawseti( L, -2, i + 1 );
    }
 
    free( values );

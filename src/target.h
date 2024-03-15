@@ -19,7 +19,7 @@ typedef enum TargetType_ {
 typedef struct Target_ {
    TargetType type; /* Target type. */
    union {
-      unsigned int id;   /* For pilot/weapons. */
+      unsigned int id; /* For pilot/weapons. */
       struct {
          int anchor;
          int asteroid;

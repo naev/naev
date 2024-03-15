@@ -14,6 +14,8 @@
       * Made it so ships in the equipment screen do not change order based on value
       * Mark spaceport bar tab when there is an important NPC
       * Weapon set keybindings change window tabs
+      * Use short outfit names when displaying groups of outfits
+      * Shown more useful things you have when buying outfits with things other than credits
    * Content
       * 1 new mission
          * Hack the Gibson!
@@ -36,6 +38,9 @@
       * Support for 3D models with fancy new effects
       * Added a low memory mode to use fewer and smaller textures with 3D
       * Lazy load ship and outfit graphics to reduce memory usage and decrease load time
+      * Use clang-format to format all the C code
+      * Use enums internally to represent keybindinsg instead of strings
+      * Always use replaygain information when available when loading vorbis files
    * Fixes
       * PSO and Mizar nebulas have trails again
       * Removed fancy background mode

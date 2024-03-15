@@ -5,9 +5,9 @@
 /**
  * @file debug_fpu.c
  *
- * @brief Implements the debug_enableFPUExcept function where supported (GNU systems).
- * This is separated into its own file because defining _GNU_SOURCE -- the only way
- * to get access to feenableexcept() -- does frightening things.
+ * @brief Implements the debug_enableFPUExcept function where supported (GNU
+ * systems). This is separated into its own file because defining _GNU_SOURCE --
+ * the only way to get access to feenableexcept() -- does frightening things.
  */
 
 /** @cond */
@@ -21,9 +21,10 @@
 #include "debug.h"
 
 /**
- * @brief Enables FPU exceptions. Artificially limited to Linux until link issues are figured out.
+ * @brief Enables FPU exceptions. Artificially limited to Linux until link
+ * issues are figured out.
  */
-void debug_enableFPUExcept (void)
+void debug_enableFPUExcept( void )
 {
 #if HAVE_FEENABLEEXCEPT && DEBUGGING
    feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
@@ -33,7 +34,7 @@ void debug_enableFPUExcept (void)
 /**
  * @brief Disables FPU exceptions.
  */
-void debug_disableFPUExcept (void)
+void debug_disableFPUExcept( void )
 {
 #if HAVE_FEENABLEEXCEPT && DEBUGGING
    fedisableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );

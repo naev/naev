@@ -27,60 +27,60 @@
 #include "SDL_stdinc.h"
 /** @endcond */
 
-#define APPNAME            "Naev" /**< Application name. */
+#define APPNAME "Naev" /**< Application name. */
 
-#define ABS(x)             (((x)<0)?-(x):(x)) /**< Returns absolute value. */
-#define FABS(x)            (((x)<0.)?-(x):(x)) /**< Returns float absolute value. */
+#define ABS( x )                                                               \
+   ( ( ( x ) < 0 ) ? -( x ) : ( x ) ) /**< Returns absolute value. */
+#define FABS( x )                                                              \
+   ( ( ( x ) < 0. ) ? -( x ) : ( x ) ) /**< Returns float absolute value. */
 
-#define MAX(x,y)           (((x)>(y))?(x):(y)) /**< Returns maximum. */
-#define MIN(x,y)           (((x)>(y))?(y):(x)) /**< Returns minimum. */
-#define CLAMP(a, b, x)     ((x)<(a)?(a):((x)>(b)?(b):(x))) /**< Clamps x between a and b: a <= x <= b. */
+#define MAX( x, y )                                                            \
+   ( ( ( x ) > ( y ) ) ? ( x ) : ( y ) ) /**< Returns maximum. */
+#define MIN( x, y )                                                            \
+   ( ( ( x ) > ( y ) ) ? ( y ) : ( x ) ) /**< Returns minimum. */
+#define CLAMP( a, b, x )                                                       \
+   ( ( x ) < ( a )                                                             \
+        ? ( a )                                                                \
+        : ( ( x ) > ( b )                                                      \
+               ? ( b )                                                         \
+               : ( x ) ) ) /**< Clamps x between a and b: a <= x <= b. */
 
-#define SIGN(x)            (((x)>0)?1:-1) /**< Returns the sign of a value. */
-#define FSIGN(x)           (((x)>0.)?1.:-1.) /**< Returns the sign of a value. */
+#define SIGN( x )                                                              \
+   ( ( ( x ) > 0 ) ? 1 : -1 ) /**< Returns the sign of a value. */
+#define FSIGN( x )                                                             \
+   ( ( ( x ) > 0. ) ? 1. : -1. ) /**< Returns the sign of a value. */
 
-#define pow2(x)            ((x)*(x)) /**< ^2 */
+#define pow2( x ) ( ( x ) * ( x ) ) /**< ^2 */
 
 /* maximum filename path */
 #ifndef PATH_MAX
-#  define PATH_MAX         256 /**< If not already defined. */
-#endif /* PATH_MAX */
+#define PATH_MAX 256 /**< If not already defined. */
+#endif               /* PATH_MAX */
 
 /* Default maximum string length */
-#define STRMAX             4096
-#define STRMAX_SHORT       1024
+#define STRMAX 4096
+#define STRMAX_SHORT 1024
 
-/* For inferior OS. */
-#ifndef M_PI
-#  define M_PI          3.14159265358979323846
-#endif /* M_PI */
-#ifndef M_SQRT1_2
-#  define M_SQRT1_2     0.70710678118654752440
-#endif
-#ifndef M_SQRT2
-#  define M_SQRT2       1.41421356237309504880
-#endif
-
-#define DOUBLE_TOL       1e-6
+#define DOUBLE_TOL 1e-6
 
 /*
  * Misc stuff.
  */
-extern Uint32 SDL_LOOPDONE;
+extern Uint32       SDL_LOOPDONE;
 extern const double fps_min;
-extern double elapsed_time_mod;
-void fps_setPos( double x, double y );
-void fps_display( double dt );
-double fps_current (void);
-void naev_resize (void);
-void naev_toggleFullscreen (void);
-void update_routine( double dt, int dohooks );
-const char *naev_version( int long_version );
-int naev_versionCompare( const char *version );
-void naev_quit (void);
-int naev_isQuit (void);
-double naev_getrealdt (void);
+extern double       elapsed_time_mod;
+void                fps_setPos( double x, double y );
+void                fps_display( double dt );
+double              fps_current( void );
+void                naev_resize( void );
+void                naev_toggleFullscreen( void );
+void                update_routine( double dt, int dohooks );
+const char         *naev_version( int long_version );
+int                 naev_versionCompare( const char *version );
+void                naev_quit( void );
+int                 naev_isQuit( void );
+double              naev_getrealdt( void );
 
-int naev_shouldRenderLoadscreen (void);
-void naev_doRenderLoadscreen (void);
-void naev_renderLoadscreen (void);
+int  naev_shouldRenderLoadscreen( void );
+void naev_doRenderLoadscreen( void );
+void naev_renderLoadscreen( void );
