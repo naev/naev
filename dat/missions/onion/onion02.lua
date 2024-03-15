@@ -177,7 +177,7 @@ You hear the sound of mashing keys on a console.
       l337(fmt.f(_([["{warlord} has called the statement by Dvaered High Command, 'bollocks', and threatened to fly over there themselves and shell the station until it becomes a ball of molten steel."]]),
          {warlord=warlords[3]}))
       l337(_([["Until the situation clears up, we can only recommend you to acquire as many weapons as possible, and remember, don't panic. That was all."]]))
-      vn.music() -- TODO sound of people yelling / chaos
+      vn.music( "snd/sounds/crowdpanic03.ogg" )
       vn.disappear( l337, "electric" )
 
       vn.na(_([[As expected, chaos erupts around you as everyone tries to get in their ship to fly to the nearest outfitter to acquire more weapons, lest they be relegated to a life of pacifism.]]))
