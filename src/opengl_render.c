@@ -1124,6 +1124,7 @@ void gl_unclipRect( void )
 
 void gl_calcRoundSquareVbo( int pw, int ph, int segments )
 {
+   gl_vboDestroy( gl_roundSquareVBO );
    int      i, j;
    int      i_max  = 4 * segments + 1;
    int      j_max  = 5 * ( segments - 1 ) + 1;

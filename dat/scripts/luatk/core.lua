@@ -325,14 +325,14 @@ end
 local scrollbar_h = 30 -- bar height
 local function drawScrollbar( x, y, w, h, pos )
    lg.setColour( luatk.scrollbar.colour.bg )
-   lg.rectangle( "fill", x, y, w, h )
+   lg.rectangle( "fill", x, y, w, h, 50, 2, 10 )
 
    -- Scrollbar
    local sy = y + (h-scrollbar_h) * pos
    lg.setColour( luatk.scrollbar.colour.outline )
-   lg.rectangle( "fill", x, sy, w, scrollbar_h )
+   lg.rectangle( "fill", x, sy, w, scrollbar_h, 50, 2, 10 )
    lg.setColour( luatk.scrollbar.colour.fg )
-   lg.rectangle( "fill", x+1, sy, w-2, scrollbar_h-2 )
+   lg.rectangle( "fill", x+1, sy, w-2, scrollbar_h-2, 50, 2, 10 )
 end
 
 --[[
@@ -363,12 +363,12 @@ function luatk.Window:draw()
 
    -- Draw background
    lg.setColour( luatk.colour.bg )
-   lg.rectangle( "fill", x, y, w, h )
+   lg.rectangle( "fill", x, y, w, h, 10 , 20, 10 )
    lg.setColour( luatk.colour.dark )
-   lg.rectangle( "line", x+1, y+1, w-2, h-2 )
-   lg.rectangle( "line", x-1, y-1, w+2, h+2 )
+   lg.rectangle( "line", x+1, y+1, w-2, h-2, 10, 20, 10)
+   lg.rectangle( "line", x-1, y-1, w+2, h+2, 10, 20, 10)
    lg.setColour( luatk.colour.outline )
-   lg.rectangle( "line", x, y, w, h )
+   lg.rectangle( "line", x, y, w, h, 10, 20, 10)
 
    -- Set scissors
    local scs = lg.getScissor()
@@ -549,9 +549,9 @@ function luatk.Button:draw( bx, by )
    y = by + y
    local font = luatk._deffont or lg.getFont()
    lg.setColour( outline )
-   lg.rectangle( "fill", x-2, y-2, w+4, h+4 )
+   lg.rectangle( "fill", x-2, y-2, w+4, h+4, 10, 30, 10)
    lg.setColour( c )
-   lg.rectangle( "fill", x, y, w, h )
+   lg.rectangle( "fill", x, y, w, h, 10, 30, 10)
    lg.setColour( fc )
    if self.text then
       lg.printf( self.text, font, x, y+(h-self.th)/2, w, 'center' )
@@ -737,14 +737,14 @@ function luatk.Checkbox:draw( bx, by )
 
    lg.setColour( luatk.colour.dark )
    local s = 12
-   lg.rectangle( "fill", bx, by+(h-s)*0.5, s, s )
+   lg.rectangle( "fill", bx, by+(h-s)*0.5, s, s, 33, 33, 5)
    lg.setColour( luatk.colour.outline )
    s = 10
-   lg.rectangle( "fill", bx+1, by+(h-s)*0.5, s, s )
+   lg.rectangle( "fill", bx+1, by+(h-s)*0.5, s, s, 33, 33, 5)
    if self.state then
       lg.setColour( luatk.colour.dark )
       s = 6
-      lg.rectangle( "fill", bx+3, by+(h-s)*0.5, s, s )
+      lg.rectangle( "fill", bx+3, by+(h-s)*0.5, s, s, 30, 30, 3)
    end
    lg.setColour( luatk.colour.text )
    lg.printf( self.text, self.font, bx+15, by+(h-self.fonth)*0.5, w-15 )
@@ -789,13 +789,13 @@ function luatk.Fader:draw( bx, by )
 
    -- Track
    lg.setColour( luatk.colour.outline )
-   lg.rectangle( "fill", x, cy-2, w, 5 )
+   lg.rectangle( "fill", x, cy-2, w, 5, 5, 20, 5 )
 
    -- Knob
    lg.setColour( luatk.colour.dark )
-   lg.rectangle( "fill", cx-8, y-1, 17, h+2 )
+   lg.rectangle( "fill", cx-8, y-1, 17, h+2, 34, 34, 5)
    lg.setColour( luatk.colour.outline )
-   lg.rectangle( "fill", cx-7, y, 15, h )
+   lg.rectangle( "fill", cx-7, y, 15, h, 34, 34, 5)
 
    -- Labels
    if self.params.labels then
@@ -985,9 +985,9 @@ function luatk.Input:draw( bx, by )
 
    -- Background
    lg.setColour( luatk.colour.selected )
-   lg.rectangle( "fill", x-2, y-2, w+4, h+4 )
+   lg.rectangle( "fill", x-2, y-2, w+4, h+4, 5, 20, 10 )
    lg.setColour( luatk.colour.dark )
-   lg.rectangle( "fill", x, y, w, h )
+   lg.rectangle( "fill", x, y, w, h, 5, 20, 10)
 
    lg.setColour( luatk.input.colour.text )
    local stry
