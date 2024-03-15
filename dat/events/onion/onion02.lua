@@ -67,7 +67,7 @@ function trigger ()
    end
    local pos = player.pos()
    table.sort( plt, function (a, b)
-      return pos:dist2(a:pos())-pos:dist2(b:pos())
+      return pos:dist2(a:pos())<pos:dist2(b:pos())
    end )
    possessed = plt[1]
 
