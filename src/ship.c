@@ -362,7 +362,7 @@ int ship_size( const Ship *s )
  *    @param sx Number of X sprites in image.
  *    @param sy Number of Y sprites in image.
  */
-static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
+static int ship_loadSpaceImage( Ship *temp, const char *str, int sx, int sy )
 {
    unsigned int flags = OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP;
    /* If no collision polygon, we use transparency mapping. */
