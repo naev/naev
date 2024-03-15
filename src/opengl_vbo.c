@@ -59,7 +59,7 @@ void gl_exitVBO( void )
  *
  *    @param target Target to create to (usually GL_ARRAY_BUFFER).
  *    @param size Size of the buffer (in bytes).
- *    @param data The actual datat to use.
+ *    @param data The actual data to use.
  *    @param usage Usage to use.
  *    @return ID of the vbo.
  */
