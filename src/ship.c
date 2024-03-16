@@ -795,7 +795,18 @@ static int ship_parse( Ship *temp, const char *filename )
       xmlr_strd( node, "desc_extra", temp->desc_extra );
       xmlr_int( node, "points", temp->points );
       xmlr_int( node, "rarity", temp->rarity );
-      xmlr_strd( node, "lua", temp->lua_file );
+      if ( xml_isNode( node, "lua" ) ) {
+         const char *nstr = xml_get( node );
+         if ( nstr == NULL ) {
+            WARN( _( "Ship '%s' has invalid '%s' node." ), temp->name, "lua" );
+            continue;
+         }
+         if ( nstr[0] == '/' )
+            temp->lua_file = strdup( nstr );
+         else
+            SDL_asprintf( &temp->lua_file, SHIP_DATA_LUA_PATH "%s", nstr );
+         continue;
+      }
 
       if ( xml_isNode( node, "flags" ) ) {
          xmlNodePtr cur = node->children;

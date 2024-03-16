@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Certitude">
- <lua>ships/lua/thurion.lua</lua>
+ <lua>thurion.lua</lua>
  <points>200</points>
  <base_type>Certitude</base_type>
  <gfx size="120" sx="12" sy="12">certitude</gfx>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Demon">
- <lua>ships/lua/zalek.lua</lua>
+ <lua>zalek.lua</lua>
  <points>100</points>
  <base_type>Demon</base_type>
  <gfx size="83" sx="12" sy="12">demon</gfx>

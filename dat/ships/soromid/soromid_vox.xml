@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Vox">
- <lua>ships/lua/soromid.lua</lua>
+ <lua>soromid.lua</lua>
  <points>240</points>
  <base_type>Vox</base_type>
  <gfx size="171" sx="12" sy="12">vox</gfx>
