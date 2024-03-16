@@ -13,11 +13,12 @@
 #include "pilot_hook.h"
 
 #include "array.h"
+#include "claim.h"
 #include "hook.h"
 #include "log.h"
-#include "claim.h"
 
-static PilotHook *pilot_globalHooks = NULL; /**< Global hooks that affect all pilots. */
+static PilotHook *pilot_globalHooks =
+   NULL;                          /**< Global hooks that affect all pilots. */
 static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
 
 /**
@@ -29,55 +30,57 @@ static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
  *    @param nparam Number of parameters to pass.
  *    @return The number of hooks run.
  */
-int pilot_runHookParam( Pilot* p, int hook_type, const HookParam* param, int nparam )
+int pilot_runHookParam( Pilot *p, int hook_type, const HookParam *param,
+                        int nparam )
 {
-   int run;
+   int       run;
    HookParam hstaparam[5], *hdynparam, *hparam;
 
    /* Set up hook parameters. */
-   if (nparam <= 3) {
-      int n  = 1;
+   if ( nparam <= 3 ) {
+      int n             = 1;
       hstaparam[0].type = HOOK_PARAM_PILOT;
       hstaparam[0].u.lp = p->id;
-      if (nparam != 0)
-         memcpy( &hstaparam[n], param, sizeof(HookParam)*nparam );
+      if ( nparam != 0 )
+         memcpy( &hstaparam[n], param, sizeof( HookParam ) * nparam );
       n += nparam;
       hstaparam[n].type = HOOK_PARAM_SENTINEL;
       hdynparam         = NULL;
       hparam            = hstaparam;
-   }
-   else {
-      hdynparam   = malloc( sizeof(HookParam) * (nparam+2) );
-      hdynparam[0].type       = HOOK_PARAM_PILOT;
-      hdynparam[0].u.lp       = p->id;
-      memcpy( &hdynparam[1], param, sizeof(HookParam)*nparam );
-      hdynparam[nparam+1].type = HOOK_PARAM_SENTINEL;
-      hparam                  = hdynparam;
+   } else {
+      hdynparam         = malloc( sizeof( HookParam ) * ( nparam + 2 ) );
+      hdynparam[0].type = HOOK_PARAM_PILOT;
+      hdynparam[0].u.lp = p->id;
+      memcpy( &hdynparam[1], param, sizeof( HookParam ) * nparam );
+      hdynparam[nparam + 1].type = HOOK_PARAM_SENTINEL;
+      hparam                     = hdynparam;
    }
 
    /* Run pilot specific hooks. */
    run = 0;
-   for (int i=0; i<array_size(p->hooks); i++) {
+   for ( int i = 0; i < array_size( p->hooks ); i++ ) {
       int ret;
-      if (p->hooks[i].type != hook_type)
+      if ( p->hooks[i].type != hook_type )
          continue;
 
       ret = hook_runIDparam( p->hooks[i].id, hparam );
-      if (ret)
-         WARN(_("Pilot '%s' failed to run hook type %d"), p->name, hook_type);
+      if ( ret )
+         WARN( _( "Pilot '%s' failed to run hook type %d" ), p->name,
+               hook_type );
       else
          run++;
    }
 
    /* Run global hooks. */
-   for (int i=0; i<array_size(pilot_globalHooks); i++) {
+   for ( int i = 0; i < array_size( pilot_globalHooks ); i++ ) {
       int ret;
-      if (pilot_globalHooks[i].type != hook_type)
+      if ( pilot_globalHooks[i].type != hook_type )
          continue;
 
       ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
-      if (ret)
-         WARN(_("Pilot '%s' failed to run hook type %d"), p->name, hook_type);
+      if ( ret )
+         WARN( _( "Pilot '%s' failed to run hook type %d" ), p->name,
+               hook_type );
       else
          run++;
    }
@@ -85,7 +88,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, const HookParam* param, int npa
    /* Clean up. */
    free( hdynparam );
 
-   if (run > 0)
+   if ( run > 0 )
       claim_activateAll(); /* Reset claims. */
 
    return run;
@@ -98,7 +101,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, const HookParam* param, int npa
  *    @param hook_type Type of hook to run.
  *    @return The number of hooks run.
  */
-int pilot_runHook( Pilot* p, int hook_type )
+int pilot_runHook( Pilot *p, int hook_type )
 {
    return pilot_runHookParam( p, hook_type, NULL, 0 );
 }
@@ -115,13 +118,13 @@ void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
    PilotHook *phook;
 
    /* Allocate memory. */
-   if (pilot->hooks == NULL)
+   if ( pilot->hooks == NULL )
       pilot->hooks = array_create( PilotHook );
 
    /* Create the new hook. */
-   phook        = &array_grow( &pilot->hooks );
-   phook->type  = type;
-   phook->id    = hook;
+   phook       = &array_grow( &pilot->hooks );
+   phook->type = type;
+   phook->id   = hook;
 }
 
 /**
@@ -132,7 +135,7 @@ void pilots_addGlobalHook( int type, unsigned int hook )
    PilotHook phook;
 
    /* Allocate memory. */
-   if (pilot_globalHooks == NULL)
+   if ( pilot_globalHooks == NULL )
       pilot_globalHooks = array_create( PilotHook );
 
    /* Create the new hook. */
@@ -146,10 +149,11 @@ void pilots_addGlobalHook( int type, unsigned int hook )
  */
 void pilots_rmGlobalHook( unsigned int hook )
 {
-   for (int i=0; i<array_size(pilot_globalHooks); i++) {
-      if (pilot_globalHooks[i].id != hook)
+   for ( int i = 0; i < array_size( pilot_globalHooks ); i++ ) {
+      if ( pilot_globalHooks[i].id != hook )
          continue;
-      array_erase( &pilot_globalHooks, &pilot_globalHooks[i], &pilot_globalHooks[i+1] );
+      array_erase( &pilot_globalHooks, &pilot_globalHooks[i],
+                   &pilot_globalHooks[i + 1] );
       return;
    }
 }
@@ -157,9 +161,10 @@ void pilots_rmGlobalHook( unsigned int hook )
 /**
  * @brief Removes all the pilot global hooks.
  */
-void pilots_clearGlobalHooks (void)
+void pilots_clearGlobalHooks( void )
 {
-   array_erase( &pilot_globalHooks, array_begin(pilot_globalHooks), array_end(pilot_globalHooks) );
+   array_erase( &pilot_globalHooks, array_begin( pilot_globalHooks ),
+                array_end( pilot_globalHooks ) );
 }
 
 /**
@@ -169,25 +174,25 @@ void pilots_clearGlobalHooks (void)
  */
 void pilots_rmHook( unsigned int hook )
 {
-   Pilot *const*plist;
+   Pilot *const *plist;
 
    /* Cleaning up a pilot's hooks. */
-   if (pilot_hookCleanup)
+   if ( pilot_hookCleanup )
       return;
 
    /* Remove global hook first. */
    pilots_rmGlobalHook( hook );
 
    plist = pilot_getAll();
-   for (int i=0; i<array_size(plist); i++) {
+   for ( int i = 0; i < array_size( plist ); i++ ) {
       Pilot *p = plist[i];
 
-      for (int j=0; j<array_size(p->hooks); j++) {
+      for ( int j = 0; j < array_size( p->hooks ); j++ ) {
          /* Hook not found. */
-         if (p->hooks[j].id != hook)
+         if ( p->hooks[j].id != hook )
             continue;
 
-         array_erase( &p->hooks, &p->hooks[j], &p->hooks[j+1] );
+         array_erase( &p->hooks, &p->hooks[j], &p->hooks[j + 1] );
          j--; /* Dun like it but we have to keep iterator safe. */
       }
    }
@@ -202,21 +207,21 @@ void pilot_clearHooks( Pilot *p )
 {
    /* Remove the hooks. */
    pilot_hookCleanup = 1;
-   for (int i=0; i<array_size(p->hooks); i++)
+   for ( int i = 0; i < array_size( p->hooks ); i++ )
       hook_rm( p->hooks[i].id );
    pilot_hookCleanup = 0;
 
-   array_free(p->hooks);
-   p->hooks  = NULL;
+   array_free( p->hooks );
+   p->hooks = NULL;
 }
 
 /**
  * @brief Clears global pilot hooks.
  */
-void pilot_freeGlobalHooks (void)
+void pilot_freeGlobalHooks( void )
 {
    /* Clear global hooks. */
-   if (pilot_globalHooks != NULL) {
+   if ( pilot_globalHooks != NULL ) {
       pilots_clearGlobalHooks();
       array_free( pilot_globalHooks );
       pilot_globalHooks = NULL;

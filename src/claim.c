@@ -22,13 +22,13 @@
  * @brief The claim structure.
  */
 struct Claim_s {
-   int active;    /**< Have we, in fact, claimed these contents?. */
-   int *ids;      /**< System ids. */
+   int    active; /**< Have we, in fact, claimed these contents?. */
+   int   *ids;    /**< System ids. */
    char **strs;   /**< Strings. */
    int exclusive; /**< Whether or not this claim is exclusive. Exclusive claims
-      do not allow other claims to work, but non-exclusive do not have this issue,
-      so multiple non-exclusive claims can share the same system and block any
-      exclusive claims. */
+      do not allow other claims to work, but non-exclusive do not have this
+      issue, so multiple non-exclusive claims can share the same system and
+      block any exclusive claims. */
 };
 
 static char **claimed_strs = NULL; /**< Global claimed strings. */
@@ -41,10 +41,10 @@ static char **claimed_strs = NULL; /**< Global claimed strings. */
  */
 Claim_t *claim_create( int exclusive )
 {
-   Claim_t *claim= malloc( sizeof(Claim_t) );
-   claim->active = 0;
-   claim->ids    = NULL;
-   claim->strs   = NULL;
+   Claim_t *claim   = malloc( sizeof( Claim_t ) );
+   claim->active    = 0;
+   claim->ids       = NULL;
+   claim->strs      = NULL;
    claim->exclusive = exclusive;
 
    return claim;
@@ -60,8 +60,8 @@ int claim_addStr( Claim_t *claim, const char *str )
 {
    assert( !claim->active );
    /* Allocate if necessary. */
-   if (claim->strs == NULL)
-      claim->strs = array_create( char* );
+   if ( claim->strs == NULL )
+      claim->strs = array_create( char * );
 
    /* New ID. */
    array_push_back( &claim->strs, strdup( str ) );
@@ -78,7 +78,7 @@ int claim_addSys( Claim_t *claim, int ss_id )
 {
    assert( !claim->active );
    /* Allocate if necessary. */
-   if (claim->ids == NULL)
+   if ( claim->ids == NULL )
       claim->ids = array_create( int );
 
    /* New ID. */
@@ -94,10 +94,10 @@ int claim_addSys( Claim_t *claim, int ss_id )
  */
 int claim_isNull( const Claim_t *claim )
 {
-   if (claim == NULL)
+   if ( claim == NULL )
       return 1;
 
-   if (array_size(claim->ids) == 0)
+   if ( array_size( claim->ids ) == 0 )
       return 1;
 
    return 0;
@@ -114,23 +114,23 @@ int claim_test( const Claim_t *claim )
    int exc;
 
    /* Must actually have a claim. */
-   if (claim == NULL)
+   if ( claim == NULL )
       return 0;
 
    exc = claim->exclusive;
 
    /* See if the system is claimed. */
-   for (int i=0; i<array_size(claim->ids); i++) {
-      const StarSystem *sys = system_getIndex( claim->ids[i] );
-      int claimed = sys_isFlag( sys, SYSTEM_CLAIMED );
-      if (claimed || (exc && (sys->claims_soft>0)))
+   for ( int i = 0; i < array_size( claim->ids ); i++ ) {
+      const StarSystem *sys     = system_getIndex( claim->ids[i] );
+      int               claimed = sys_isFlag( sys, SYSTEM_CLAIMED );
+      if ( claimed || ( exc && ( sys->claims_soft > 0 ) ) )
          return 1;
    }
 
    /* Check strings. */
-   for (int i=0; i<array_size(claim->strs); i++) {
-      for (int j=0; j<array_size(claimed_strs); j++) {
-         if (strcmp( claim->strs[i], claimed_strs[j] )==0)
+   for ( int i = 0; i < array_size( claim->strs ); i++ ) {
+      for ( int j = 0; j < array_size( claimed_strs ); j++ ) {
+         if ( strcmp( claim->strs[i], claimed_strs[j] ) == 0 )
             return 1;
       }
    }
@@ -148,12 +148,12 @@ int claim_test( const Claim_t *claim )
 int claim_testStr( const Claim_t *claim, const char *str )
 {
    /* Must actually have a claim. */
-   if (claim == NULL)
+   if ( claim == NULL )
       return 0;
 
    /* Check strings. */
-   for (int i=0; i<array_size(claim->strs); i++) {
-      if (strcmp( claim->strs[i], str )==0)
+   for ( int i = 0; i < array_size( claim->strs ); i++ ) {
+      if ( strcmp( claim->strs[i], str ) == 0 )
          return 1;
    }
 
@@ -170,12 +170,12 @@ int claim_testStr( const Claim_t *claim, const char *str )
 int claim_testSys( const Claim_t *claim, int sys )
 {
    /* Must actually have a claim. */
-   if (claim == NULL)
+   if ( claim == NULL )
       return 0;
 
    /* See if the system is claimed. */
-   for (int i=0; i<array_size(claim->ids); i++)
-      if (claim->ids[i] == sys)
+   for ( int i = 0; i < array_size( claim->ids ); i++ )
+      if ( claim->ids[i] == sys )
          return 1;
 
    return 0;
@@ -188,10 +188,10 @@ int claim_testSys( const Claim_t *claim, int sys )
  */
 void claim_destroy( Claim_t *claim )
 {
-   if (claim->active) {
-      for (int i=0; i<array_size(claim->ids); i++) {
-         StarSystem *sys = system_getIndex(claim->ids[i]);
-         if (claim->exclusive)
+   if ( claim->active ) {
+      for ( int i = 0; i < array_size( claim->ids ); i++ ) {
+         StarSystem *sys = system_getIndex( claim->ids[i] );
+         if ( claim->exclusive )
             sys_rmFlag( sys, SYSTEM_CLAIMED );
          else
             sys->claims_soft--;
@@ -199,12 +199,13 @@ void claim_destroy( Claim_t *claim )
    }
    array_free( claim->ids );
 
-   for (int i=0; i<array_size(claim->strs); i++) {
-      if (claim->active) {
-         for (int j=0; j<array_size(claimed_strs); j++) {
-            if (strcmp(claim->strs[i], claimed_strs[j])==0) {
+   for ( int i = 0; i < array_size( claim->strs ); i++ ) {
+      if ( claim->active ) {
+         for ( int j = 0; j < array_size( claimed_strs ); j++ ) {
+            if ( strcmp( claim->strs[i], claimed_strs[j] ) == 0 ) {
                free( claimed_strs[j] );
-               array_erase( &claimed_strs, &claimed_strs[j], &claimed_strs[j+1] );
+               array_erase( &claimed_strs, &claimed_strs[j],
+                            &claimed_strs[j + 1] );
                break;
             }
          }
@@ -212,31 +213,31 @@ void claim_destroy( Claim_t *claim )
       free( claim->strs[i] );
    }
    array_free( claim->strs );
-   free(claim);
+   free( claim );
 }
 
 /**
  * @brief Clears the claims on all systems.
  */
-void claim_clear (void)
+void claim_clear( void )
 {
    /* Clears all the flags. */
    StarSystem *sys = system_getAll();
-   for (int i=0; i<array_size(sys); i++) {
+   for ( int i = 0; i < array_size( sys ); i++ ) {
       sys_rmFlag( &sys[i], SYSTEM_CLAIMED );
       sys[i].claims_soft = 0;
    }
 
-   for (int i=0; i<array_size(claimed_strs); i++)
-      free(claimed_strs[i]);
-   array_free(claimed_strs);
+   for ( int i = 0; i < array_size( claimed_strs ); i++ )
+      free( claimed_strs[i] );
+   array_free( claimed_strs );
    claimed_strs = NULL;
 }
 
 /**
  * @brief Activates all the claims.
  */
-void claim_activateAll (void)
+void claim_activateAll( void )
 {
    claim_clear();
    event_activateClaims();
@@ -251,18 +252,18 @@ void claim_activateAll (void)
 void claim_activate( Claim_t *claim )
 {
    /* Add flags. */
-   for (int i=0; i<array_size(claim->ids); i++) {
+   for ( int i = 0; i < array_size( claim->ids ); i++ ) {
       StarSystem *sys = system_getIndex( claim->ids[i] );
-      if (claim->exclusive)
+      if ( claim->exclusive )
          sys_setFlag( sys, SYSTEM_CLAIMED );
       else
          sys->claims_soft++;
    }
 
    /* Add strings. */
-   if ((claimed_strs == NULL) && (array_size(claim->strs) > 0))
-      claimed_strs = array_create( char* );
-   for (int i=0; i<array_size(claim->strs); i++)
+   if ( ( claimed_strs == NULL ) && ( array_size( claim->strs ) > 0 ) )
+      claimed_strs = array_create( char * );
+   for ( int i = 0; i < array_size( claim->strs ); i++ )
       array_push_back( &claimed_strs, strdup( claim->strs[i] ) );
    claim->active = 1;
 }
@@ -277,20 +278,20 @@ void claim_activate( Claim_t *claim )
  */
 int claim_xmlSave( xmlTextWriterPtr writer, const Claim_t *claim )
 {
-   if (claim == NULL)
+   if ( claim == NULL )
       return 0;
 
    xmlw_attr( writer, "exclusive", "%d", claim->exclusive );
 
-   for (int i=0; i<array_size(claim->ids); i++) {
+   for ( int i = 0; i < array_size( claim->ids ); i++ ) {
       StarSystem *sys = system_getIndex( claim->ids[i] );
-      if (sys != NULL)
+      if ( sys != NULL )
          xmlw_elem( writer, "sys", "%s", sys->name );
       else
-         WARN(_("System Claim has inexistent system"));
+         WARN( _( "System Claim has inexistent system" ) );
    }
 
-   for (int i=0; i<array_size(claim->strs); i++)
+   for ( int i = 0; i < array_size( claim->strs ); i++ )
       xmlw_elem( writer, "str", "%s", claim->strs[i] );
 
    return 0;
@@ -304,9 +305,9 @@ int claim_xmlSave( xmlTextWriterPtr writer, const Claim_t *claim )
  */
 Claim_t *claim_xmlLoad( xmlNodePtr parent )
 {
-   Claim_t *claim;
+   Claim_t   *claim;
    xmlNodePtr node;
-   int exclusive;
+   int        exclusive;
 
    /* Exclusiveness defaults to true due to older versions. */
    xmlr_attr_int_def( parent, "exclusive", exclusive, 1 );
@@ -317,18 +318,19 @@ Claim_t *claim_xmlLoad( xmlNodePtr parent )
    /* Load the nodes. */
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"sys")) {
-         const StarSystem *sys = system_get( xml_get(node) );
-         if (sys != NULL)
-            claim_addSys( claim, system_index(sys) );
+      if ( xml_isNode( node, "sys" ) ) {
+         const StarSystem *sys = system_get( xml_get( node ) );
+         if ( sys != NULL )
+            claim_addSys( claim, system_index( sys ) );
          else
-            WARN(_("System Claim trying to load system '%s' which doesn't exist"), xml_get(node));
-      }
-      else if (xml_isNode(node,"str")) {
-         const char *str = xml_get(node);
+            WARN( _( "System Claim trying to load system '%s' which doesn't "
+                     "exist" ),
+                  xml_get( node ) );
+      } else if ( xml_isNode( node, "str" ) ) {
+         const char *str = xml_get( node );
          claim_addStr( claim, str );
       }
-   } while (xml_nextNode(node));
+   } while ( xml_nextNode( node ) );
 
    /* Activate the claim. */
    claim_activate( claim );

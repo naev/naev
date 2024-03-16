@@ -6,4 +6,4 @@
 #include "space.h"
 
 int dsys_saveSystem( StarSystem *sys );
-int dsys_saveAll (void);
+int dsys_saveAll( void );

@@ -24,9 +24,9 @@ static void item_free( PlayerItem *pi )
 /**
  * @brief Clears the inventory and frees memory.
  */
-void player_inventoryClear (void)
+void player_inventoryClear( void )
 {
-   for (int i=0; i<array_size(inventory); i++)
+   for ( int i = 0; i < array_size( inventory ); i++ )
       item_free( &inventory[i] );
    array_free( inventory );
    inventory = NULL;
@@ -35,7 +35,7 @@ void player_inventoryClear (void)
 /**
  * @brief Gets the whole player inventory.
  */
-const PlayerItem* player_inventory (void)
+const PlayerItem *player_inventory( void )
 {
    return inventory;
 }
@@ -48,9 +48,9 @@ const PlayerItem* player_inventory (void)
  */
 int player_inventoryAmount( const char *name )
 {
-   for (int i=0; i<array_size(inventory); i++) {
+   for ( int i = 0; i < array_size( inventory ); i++ ) {
       const PlayerItem *pi = &inventory[i];
-      if (strcmp( pi->name, name )==0)
+      if ( strcmp( pi->name, name ) == 0 )
          return pi->quantity;
    }
    return 0;
@@ -65,18 +65,18 @@ int player_inventoryAmount( const char *name )
 int player_inventoryAdd( const char *name, int amount )
 {
    PlayerItem npi;
-   if (inventory==NULL)
+   if ( inventory == NULL )
       inventory = array_create( PlayerItem );
 
-   for (int i=0; i<array_size(inventory); i++) {
+   for ( int i = 0; i < array_size( inventory ); i++ ) {
       PlayerItem *pi = &inventory[i];
-      if (strcmp( pi->name, name )==0) {
+      if ( strcmp( pi->name, name ) == 0 ) {
          pi->quantity += amount;
          return amount;
       }
    }
 
-   npi.name = strdup( name );
+   npi.name     = strdup( name );
    npi.quantity = amount;
    array_push_back( &inventory, npi );
 
@@ -91,13 +91,13 @@ int player_inventoryAdd( const char *name, int amount )
  */
 int player_inventoryRemove( const char *name, int amount )
 {
-   for (int i=0; i<array_size(inventory); i++) {
+   for ( int i = 0; i < array_size( inventory ); i++ ) {
       PlayerItem *pi = &inventory[i];
-      if (strcmp( pi->name, name )==0) {
-         int q = pi->quantity;
-         pi->quantity = MAX( 0, pi->quantity-amount );
+      if ( strcmp( pi->name, name ) == 0 ) {
+         int q        = pi->quantity;
+         pi->quantity = MAX( 0, pi->quantity - amount );
          q -= pi->quantity;
-         if (pi->quantity == 0) {
+         if ( pi->quantity == 0 ) {
             item_free( pi );
             array_erase( &inventory, &pi[0], &pi[1] );
          }

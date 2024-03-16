@@ -9,10 +9,11 @@
 
 #include "pilot.h"
 
-#define PILOT_METATABLE   "pilot" /**< Pilot metatable identifier. */
+#define PILOT_METATABLE "pilot" /**< Pilot metatable identifier. */
 
 /* Helper. */
-#define luaL_optpilot(L,ind,def)   nluaL_optarg(L,ind,def,luaL_validpilot)
+#define luaL_optpilot( L, ind, def )                                           \
+   nluaL_optarg( L, ind, def, luaL_validpilot )
 
 /**
  * @brief Lua Pilot wrapper.
@@ -30,8 +31,8 @@ int nlua_loadPilot( nlua_env env );
 /*
  * Pilot operations
  */
-LuaPilot lua_topilot( lua_State *L, int ind );
-LuaPilot luaL_checkpilot( lua_State *L, int ind );
-LuaPilot* lua_pushpilot( lua_State *L, LuaPilot pilot );
-Pilot* luaL_validpilot( lua_State *L, int ind );
-int lua_ispilot( lua_State *L, int ind );
+LuaPilot  lua_topilot( lua_State *L, int ind );
+LuaPilot  luaL_checkpilot( lua_State *L, int ind );
+LuaPilot *lua_pushpilot( lua_State *L, LuaPilot pilot );
+Pilot    *luaL_validpilot( lua_State *L, int ind );
+int       lua_ispilot( lua_State *L, int ind );

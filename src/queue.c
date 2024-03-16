@@ -21,7 +21,7 @@
 typedef struct Node_ *Node;
 typedef struct Node_ {
    void *data; /**< Assosciated data. */
-   Node next; /**< Next node. */
+   Node  next; /**< Next node. */
 } Node_;
 
 /**
@@ -29,7 +29,7 @@ typedef struct Node_ {
  */
 typedef struct Queue_ {
    Node first; /**< First node in the queue. */
-   Node last; /**< Last node in the queue. */
+   Node last;  /**< Last node in the queue. */
 } Queue_;
 
 /**
@@ -37,15 +37,15 @@ typedef struct Queue_ {
  *
  *    @return A pointer to a queue.
  */
-Queue q_create (void)
+Queue q_create( void )
 {
    /* Create the queue. */
-   Queue q = malloc(sizeof(Queue_));
+   Queue q = malloc( sizeof( Queue_ ) );
 
    /* Check that we didn't get a NULL. */
 #ifdef DEBUGGING
-   if (q == NULL) {
-      WARN("q == NULL");
+   if ( q == NULL ) {
+      WARN( "q == NULL" );
       return NULL;
    }
 #endif /* DEBUGGING */
@@ -67,17 +67,17 @@ void q_destroy( Queue q )
 {
 #ifdef DEBUGGING
    /* Check that we didn't get a NULL. */
-   if (q == NULL) {
-      WARN("q == NULL");
+   if ( q == NULL ) {
+      WARN( "q == NULL" );
       return;
    }
 #endif /* DEBUGGING */
 
    /* Free all the data. */
-   while (q->first != NULL)
-      q_dequeue(q);
+   while ( q->first != NULL )
+      q_dequeue( q );
 
-   free(q);
+   free( q );
 
    return;
 }
@@ -94,17 +94,17 @@ void q_enqueue( Queue q, void *data )
 
 #ifdef DEBUGGING
    /* Check that we didn't get a NULL. */
-   if (q == NULL) {
-      WARN("q == NULL");
+   if ( q == NULL ) {
+      WARN( "q == NULL" );
       return;
    }
 #endif /* DEBUGGING */
 
    /* Create a new node. */
-   n = malloc(sizeof(Node_));
+   n       = malloc( sizeof( Node_ ) );
    n->data = data;
    n->next = NULL;
-   if (q->first == NULL)
+   if ( q->first == NULL )
       q->first = n;
    else
       q->last->next = n;
@@ -119,29 +119,29 @@ void q_enqueue( Queue q, void *data )
  *    @param q Queue to use.
  *    @return The data.
  */
-void* q_dequeue( Queue q )
+void *q_dequeue( Queue q )
 {
    void *d;
-   Node temp;
+   Node  temp;
 
 #ifdef DEBUGGING
    /* Check that we didn't get a NULL. */
-   if (q == NULL) {
-      WARN("q == NULL");
+   if ( q == NULL ) {
+      WARN( "q == NULL" );
       return NULL;
    }
 #endif /* DEBUGGING */
 
    /* Check that it's not empty. */
-   if (q->first == NULL)
+   if ( q->first == NULL )
       return NULL;
 
    d        = q->first->data;
    temp     = q->first;
    q->first = q->first->next;
-   if (q->first == NULL)
+   if ( q->first == NULL )
       q->last = NULL;
-   free(temp);
+   free( temp );
 
    return d;
 }
@@ -156,13 +156,13 @@ int q_isEmpty( Queue q )
 {
 #ifdef DEBUGGING
    /* Check that we didn't get a NULL. */
-   if (q == NULL) {
-      WARN("q == NULL");
+   if ( q == NULL ) {
+      WARN( "q == NULL" );
       return -1;
    }
 #endif /* DEBUGGING */
 
-   if (q->first == NULL)
+   if ( q->first == NULL )
       return 1;
    else
       return 0;

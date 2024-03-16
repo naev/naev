@@ -11,10 +11,11 @@
 #define KNOB_DEF_THICKNESS 15.
 #define TRACK_DEF_THICKNESS 5.
 
-static void fad_render( Widget* fad, double bx, double by );
-static int fad_mclick( Widget* fad, int button, int x, int y );
-static int fad_mmove( Widget* fad, int x, int y, int rx, int ry );
-static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod, int isrepeat );
+static void fad_render( Widget *fad, double bx, double by );
+static int  fad_mclick( Widget *fad, int button, int x, int y );
+static int  fad_mmove( Widget *fad, int x, int y, int rx, int ry );
+static int  fad_key( Widget *fad, SDL_Keycode key, SDL_Keymod mod,
+                     int isrepeat );
 static void fad_setValue( Widget *fad, double value );
 static void fad_scrolldone( Widget *wgt );
 
@@ -37,40 +38,39 @@ static void fad_scrolldone( Widget *wgt );
  *    @param def Default value.
  *    @param call Callback when fader is modified.
  */
-void window_addFader( unsigned int wid,
-                      const int x, const int y, /* position */
-                      const int w, const int h, /* size */
-                      const char* name, const double min, const double max,
+void window_addFader( unsigned int wid, const int x, const int y, /* position */
+                      const int w, const int h,                   /* size */
+                      const char *name, const double min, const double max,
                       const double def,
-                      void (*call) (unsigned int,const char*) )
+                      void ( *call )( unsigned int, const char * ) )
 {
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw, name);
-   if (wgt == NULL)
+   Window *wdw = window_wget( wid );
+   Widget *wgt = window_newWidget( wdw, name );
+   if ( wgt == NULL )
       return;
 
    /* generic */
-   wgt->type   = WIDGET_FADER;
+   wgt->type = WIDGET_FADER;
 
    /* specific */
-   wgt->render          = fad_render;
+   wgt->render = fad_render;
    /*wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);*/ /**< @todo Let faders focus. */
-   wgt->mclickevent     = fad_mclick;
-   wgt->mmoveevent      = fad_mmove;
-   wgt->keyevent        = fad_key;
-   wgt->scrolldone      = fad_scrolldone;
-   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
-   wgt->dat.fad.min     = min;
-   wgt->dat.fad.max     = max;
-   wgt->dat.fad.value   = CLAMP(min, max, def);
-   wgt->dat.fad.fptr    = call;
+   wgt->mclickevent = fad_mclick;
+   wgt->mmoveevent  = fad_mmove;
+   wgt->keyevent    = fad_key;
+   wgt->scrolldone  = fad_scrolldone;
+   wgt_setFlag( wgt, WGT_FLAG_CANFOCUS );
+   wgt->dat.fad.min   = min;
+   wgt->dat.fad.max   = max;
+   wgt->dat.fad.value = CLAMP( min, max, def );
+   wgt->dat.fad.fptr  = call;
 
    /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
+   wgt->w = (double)w;
+   wgt->h = (double)h;
    toolkit_setPos( wdw, wgt, x, y );
 
-   if (wdw->focus == -1) /* initialize the focus */
+   if ( wdw->focus == -1 ) /* initialize the focus */
       toolkit_nextFocus( wdw );
 }
 
@@ -81,41 +81,43 @@ void window_addFader( unsigned int wid,
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
-static void fad_render( Widget* fad, double bx, double by )
+static void fad_render( Widget *fad, double bx, double by )
 {
    double pos;
-   double w,h;
-   double tx,ty, tw,th;
-   double kx,ky, kw,kh;
-   int horizontal;
+   double w, h;
+   double tx, ty, tw, th;
+   double kx, ky, kw, kh;
+   int    horizontal;
 
    /* Some values. */
-   pos = (fad->dat.fad.value - fad->dat.fad.min) / (fad->dat.fad.max - fad->dat.fad.min);
-   w = fad->w;
-   h = fad->h;
+   pos = ( fad->dat.fad.value - fad->dat.fad.min ) /
+         ( fad->dat.fad.max - fad->dat.fad.min );
+   w          = fad->w;
+   h          = fad->h;
    horizontal = w > h;
 
    /* Knob wh. */
-   kw = (horizontal ? KNOB_DEF_THICKNESS : w);
-   kh = (!horizontal ? KNOB_DEF_THICKNESS : h);
+   kw = ( horizontal ? KNOB_DEF_THICKNESS : w );
+   kh = ( !horizontal ? KNOB_DEF_THICKNESS : h );
 
    /* Track wh. */
-   tw = (horizontal ? w - kw : TRACK_DEF_THICKNESS);
-   th = (!horizontal ? h - kh : TRACK_DEF_THICKNESS);
+   tw = ( horizontal ? w - kw : TRACK_DEF_THICKNESS );
+   th = ( !horizontal ? h - kh : TRACK_DEF_THICKNESS );
 
    /* Track xy. */
-   tx = bx + fad->x + (!horizontal ? (w - TRACK_DEF_THICKNESS) / 2 : kw / 2);
-   ty = by + fad->y + (horizontal ? (h - TRACK_DEF_THICKNESS) / 2 : kh / 2);
+   tx =
+      bx + fad->x + ( !horizontal ? ( w - TRACK_DEF_THICKNESS ) / 2 : kw / 2 );
+   ty = by + fad->y + ( horizontal ? ( h - TRACK_DEF_THICKNESS ) / 2 : kh / 2 );
 
    /* Knob xy. */
-   kx = tx + (horizontal ? tw * pos - kw / 2 : (-kw + tw) / 2);
-   ky = ty + (!horizontal ? th * pos - kh / 2 : (-kh + th) / 2);
+   kx = tx + ( horizontal ? tw * pos - kw / 2 : ( -kw + tw ) / 2 );
+   ky = ty + ( !horizontal ? th * pos - kh / 2 : ( -kh + th ) / 2 );
 
-   toolkit_drawRect(tx, ty, tw, th, toolkit_colLight, NULL);
+   toolkit_drawRect( tx, ty, tw, th, toolkit_colLight, NULL );
 
    /* Draw. */
-   toolkit_drawRect(kx, ky, kw, kh, toolkit_colLight, NULL);
-   toolkit_drawOutline(kx + 1, ky, kw - 1, kh - 1, 1., toolkit_colDark, NULL);
+   toolkit_drawRect( kx, ky, kw, kh, toolkit_colLight, NULL );
+   toolkit_drawOutline( kx + 1, ky, kw - 1, kh - 1, 1., toolkit_colDark, NULL );
 }
 
 /**
@@ -124,21 +126,23 @@ static void fad_render( Widget* fad, double bx, double by )
  *    @param fad The fader widget handling the mouse movements.
  *    @param mmove The event being generated.
  */
-static int fad_mmove( Widget* fad, int x, int y, int rx, int ry )
+static int fad_mmove( Widget *fad, int x, int y, int rx, int ry )
 {
    double d; /* from 0. to 1. */
-   (void) rx;
-   (void) ry;
+   (void)rx;
+   (void)ry;
 
    /* Must be scrolling. */
-   if (fad->status != WIDGET_STATUS_SCROLLING)
+   if ( fad->status != WIDGET_STATUS_SCROLLING )
       return 0;
 
    /* Map x,y onto track coordinate d. */
-   if (fad->w > fad->h) {
-      d = ((double)x - KNOB_DEF_THICKNESS / 2) / (fad->w - KNOB_DEF_THICKNESS);
+   if ( fad->w > fad->h ) {
+      d = ( (double)x - KNOB_DEF_THICKNESS / 2 ) /
+          ( fad->w - KNOB_DEF_THICKNESS );
    } else {
-      d = ((double)y - KNOB_DEF_THICKNESS / 2) / (fad->h - KNOB_DEF_THICKNESS);
+      d = ( (double)y - KNOB_DEF_THICKNESS / 2 ) /
+          ( fad->h - KNOB_DEF_THICKNESS );
    }
 
    /* Clamp d to not get off track. */
@@ -146,7 +150,7 @@ static int fad_mmove( Widget* fad, int x, int y, int rx, int ry )
    d = d < 0. ? 0. : d;
 
    /* Set the value. */
-   fad_setValue(fad, d);
+   fad_setValue( fad, d );
 
    return 1;
 }
@@ -154,17 +158,17 @@ static int fad_mmove( Widget* fad, int x, int y, int rx, int ry )
 /**
  * @brief Handles fader mouse clicks.
  */
-static int fad_mclick( Widget* fad, int button, int x, int y )
+static int fad_mclick( Widget *fad, int button, int x, int y )
 {
    /* Only handle left mouse button. */
-   if (button != SDL_BUTTON_LEFT)
+   if ( button != SDL_BUTTON_LEFT )
       return 0;
 
    /* Always scroll. */
    fad->status = WIDGET_STATUS_SCROLLING;
 
    /* Make initial move. */
-   fad_mmove(fad, x, y, 0, 0);
+   fad_mmove( fad, x, y, 0, 0 );
 
    return 0;
 }
@@ -178,33 +182,34 @@ static int fad_mclick( Widget* fad, int button, int x, int y )
  *    @param isrepeat Whether or not the key is repeating.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
+static int fad_key( Widget *fad, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 {
-   (void) mod;
-   (void) isrepeat;
-   int ret;
+   (void)mod;
+   (void)isrepeat;
+   int    ret;
    double cur;
 
    /* Current value. */
-   cur = (fad->dat.fad.value - fad->dat.fad.min) / (fad->dat.fad.max - fad->dat.fad.min);
+   cur = ( fad->dat.fad.value - fad->dat.fad.min ) /
+         ( fad->dat.fad.max - fad->dat.fad.min );
 
    /* Handle keypresses. */
    ret = 0;
-   switch (key) {
-      case SDLK_RIGHT:
-      case SDLK_UP:
-         fad_setValue( fad, cur+0.05 );
-         ret = 1;
-         break;
+   switch ( key ) {
+   case SDLK_RIGHT:
+   case SDLK_UP:
+      fad_setValue( fad, cur + 0.05 );
+      ret = 1;
+      break;
 
-      case SDLK_LEFT:
-      case SDLK_DOWN:
-         fad_setValue( fad, cur-0.05 );
-         ret = 1;
-         break;
+   case SDLK_LEFT:
+   case SDLK_DOWN:
+      fad_setValue( fad, cur - 0.05 );
+      ret = 1;
+      break;
 
-      default:
-         break;
+   default:
+      break;
    }
 
    return ret;
@@ -216,21 +221,21 @@ static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
  */
-double window_getFaderValue( unsigned int wid, const char* name )
+double window_getFaderValue( unsigned int wid, const char *name )
 {
    /* Get the widget. */
-   Widget *wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
+   Widget *wgt = window_getwgt( wid, name );
+   if ( wgt == NULL )
       return 0.;
 
    /* Check the type. */
-   if (wgt->type != WIDGET_FADER) {
-      WARN("Trying to get fader value from non-fader widget '%s'.", name);
+   if ( wgt->type != WIDGET_FADER ) {
+      WARN( "Trying to get fader value from non-fader widget '%s'.", name );
       return 0.;
    }
 
    /* Return the value. */
-   return (wgt) ? wgt->dat.fad.value : 0.;
+   return ( wgt ) ? wgt->dat.fad.value : 0.;
 }
 
 /**
@@ -242,16 +247,16 @@ double window_getFaderValue( unsigned int wid, const char* name )
 static void fad_setValue( Widget *fad, double value )
 {
    /* Set value. */
-   fad->dat.fad.value  = value * (fad->dat.fad.max - fad->dat.fad.min);
+   fad->dat.fad.value = value * ( fad->dat.fad.max - fad->dat.fad.min );
    fad->dat.fad.value += fad->dat.fad.min;
 
    /* Safety check. */
-   fad->dat.fad.value = CLAMP( fad->dat.fad.min, fad->dat.fad.max,
-         fad->dat.fad.value );
+   fad->dat.fad.value =
+      CLAMP( fad->dat.fad.min, fad->dat.fad.max, fad->dat.fad.value );
 
    /* Run function if needed. */
-   if (fad->dat.fad.fptr != NULL)
-      (*fad->dat.fad.fptr)(fad->wdw, fad->name);
+   if ( fad->dat.fad.fptr != NULL )
+      ( *fad->dat.fad.fptr )( fad->wdw, fad->name );
 }
 
 /**
@@ -261,22 +266,21 @@ static void fad_setValue( Widget *fad, double value )
  *    @param name Name of the widget.
  *    @param value Value to set fader to (between 0 and 1).
  */
-void window_faderValue( unsigned int wid,
-      const char* name, double value )
+void window_faderValue( unsigned int wid, const char *name, double value )
 {
    /* Get the widget. */
-   Widget *wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
+   Widget *wgt = window_getwgt( wid, name );
+   if ( wgt == NULL )
       return;
 
    /* Check the type. */
-   if (wgt->type != WIDGET_FADER) {
-      WARN("Not setting fader value on non-fader widget '%s'.", name);
+   if ( wgt->type != WIDGET_FADER ) {
+      WARN( "Not setting fader value on non-fader widget '%s'.", name );
       return;
    }
 
    /* Set fader value. */
-   fad_setValue(wgt, value);
+   fad_setValue( wgt, value );
 }
 
 /**
@@ -294,29 +298,30 @@ void window_faderValue( unsigned int wid,
  *    @param name Name of the widget.
  *    @param value Value to set fader to (between Min and Max)
  */
-void window_faderSetBoundedValue( unsigned int wid,
-      const char* name, double value )
+void window_faderSetBoundedValue( unsigned int wid, const char *name,
+                                  double value )
 {
    const double INTRINSIC_MIN = 0.;
    const double INTRINSIC_MAX = 1.;
-   Widget *wgt = window_getwgt(wid, name);
-   if (wgt == NULL)
+   Widget      *wgt           = window_getwgt( wid, name );
+   if ( wgt == NULL )
       return;
 
    /* Verify the type. */
-   if (wgt->type != WIDGET_FADER) {
-      WARN("Not setting fader value on non-fader widget '%s'.", name);
+   if ( wgt->type != WIDGET_FADER ) {
+      WARN( "Not setting fader value on non-fader widget '%s'.", name );
       return;
    }
 
    /* Convert value from bounded range to 'intrinsic' range. */
-   value = (value - wgt->dat.fad.min) / (wgt->dat.fad.max - wgt->dat.fad.min);
+   value =
+      ( value - wgt->dat.fad.min ) / ( wgt->dat.fad.max - wgt->dat.fad.min );
 
    /* Ensure the value is within the acceptable range of values. */
-   value = CLAMP(INTRINSIC_MIN, INTRINSIC_MAX, value);
+   value = CLAMP( INTRINSIC_MIN, INTRINSIC_MAX, value );
 
    /* Set fader value. */
-   fad_setValue(wgt, value);
+   fad_setValue( wgt, value );
 }
 
 /**
@@ -327,17 +332,17 @@ void window_faderSetBoundedValue( unsigned int wid,
  *    @param min Minimum fader value.
  *    @param max Maximum fader value.
  */
-void window_faderBounds( unsigned int wid,
-      const char* name, double min, double max )
+void window_faderBounds( unsigned int wid, const char *name, double min,
+                         double max )
 {
    /* Get the widget. */
-   Widget *wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
+   Widget *wgt = window_getwgt( wid, name );
+   if ( wgt == NULL )
       return;
 
    /* Check the type. */
-   if (wgt->type != WIDGET_FADER) {
-      WARN("Not setting fader value on non-fader widget '%s'.", name);
+   if ( wgt->type != WIDGET_FADER ) {
+      WARN( "Not setting fader value on non-fader widget '%s'.", name );
       return;
    }
 
@@ -346,7 +351,7 @@ void window_faderBounds( unsigned int wid,
    wgt->dat.fad.max = max;
 
    /* Set the value. */
-   fad_setValue(wgt, wgt->dat.fad.value );
+   fad_setValue( wgt, wgt->dat.fad.value );
 }
 
 /**
@@ -354,7 +359,7 @@ void window_faderBounds( unsigned int wid,
  */
 static void fad_scrolldone( Widget *wgt )
 {
-   if (wgt->dat.fad.scrolldone != NULL)
+   if ( wgt->dat.fad.scrolldone != NULL )
       wgt->dat.fad.scrolldone( wgt->wdw, wgt->name );
 }
 
@@ -365,17 +370,19 @@ static void fad_scrolldone( Widget *wgt )
  *    @param name Name of the fader.
  *    @param func Function to call when scrolling is done.
  */
-void window_faderScrollDone( unsigned int wid,
-      const char *name, void (*func)(unsigned int,const char*) )
+void window_faderScrollDone( unsigned int wid, const char *name,
+                             void ( *func )( unsigned int, const char * ) )
 {
    /* Get the widget. */
-   Widget *wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
+   Widget *wgt = window_getwgt( wid, name );
+   if ( wgt == NULL )
       return;
 
    /* Check the type. */
-   if (wgt->type != WIDGET_FADER) {
-      WARN("Not setting scroll done function callback for non-fader widget '%s'.", name);
+   if ( wgt->type != WIDGET_FADER ) {
+      WARN(
+         "Not setting scroll done function callback for non-fader widget '%s'.",
+         name );
       return;
    }
 
