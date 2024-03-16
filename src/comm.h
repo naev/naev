@@ -5,7 +5,7 @@
 
 #include "space.h"
 
-int comm_isOpen (void);
-void comm_queueClose (void);
-int comm_openPilot( unsigned int pilot );
-int comm_openSpob( Spob *spob );
+int  comm_isOpen( void );
+void comm_queueClose( void );
+int  comm_openPilot( unsigned int pilot );
+int  comm_openSpob( Spob *spob );

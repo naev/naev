@@ -14,8 +14,8 @@
 #include "nstring.h"
 #include "tk/toolkit_priv.h"
 
-static void txt_render( Widget* txt, double bx, double by );
-static void txt_cleanup( Widget* txt );
+static void txt_render( Widget *txt, double bx, double by );
+static void txt_cleanup( Widget *txt );
 
 /**
  * @brief Adds a text widget to the window.
@@ -34,31 +34,30 @@ static void txt_cleanup( Widget* txt );
  *    @param colour Colour to use (NULL is default).
  *    @param string Text to display.
  */
-void window_addText( const unsigned int wid,
-                     const int x, const int y,
-                     const int w, const int h,
-                     const int centered, const char* name,
-                     glFont* font, const glColour* colour, const char* string )
+void window_addText( const unsigned int wid, const int x, const int y,
+                     const int w, const int h, const int centered,
+                     const char *name, glFont *font, const glColour *colour,
+                     const char *string )
 {
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw, name);
-   if (wgt == NULL)
+   Window *wdw = window_wget( wid );
+   Widget *wgt = window_newWidget( wdw, name );
+   if ( wgt == NULL )
       return;
 
    /* generic */
    wgt->type = WIDGET_TEXT;
 
    /* specific */
-   wgt->render             = txt_render;
-   wgt->cleanup            = txt_cleanup;
-   wgt->dat.txt.font       = (font==NULL) ? &gl_defFont : font;
-   wgt->dat.txt.colour     = (colour==NULL) ? cFontWhite : *colour;
-   wgt->dat.txt.centered   = centered;
-   wgt->dat.txt.text       = (string==NULL) ? NULL : strdup(string);
+   wgt->render           = txt_render;
+   wgt->cleanup          = txt_cleanup;
+   wgt->dat.txt.font     = ( font == NULL ) ? &gl_defFont : font;
+   wgt->dat.txt.colour   = ( colour == NULL ) ? cFontWhite : *colour;
+   wgt->dat.txt.centered = centered;
+   wgt->dat.txt.text     = ( string == NULL ) ? NULL : strdup( string );
 
    /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
+   wgt->w = (double)w;
+   wgt->h = (double)h;
    toolkit_setPos( wdw, wgt, x, y );
 }
 
@@ -69,21 +68,20 @@ void window_addText( const unsigned int wid,
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
-static void txt_render( Widget* txt, double bx, double by )
+static void txt_render( Widget *txt, double bx, double by )
 {
    /* Must have text to display. */
-   if (txt->dat.txt.text==NULL)
+   if ( txt->dat.txt.text == NULL )
       return;
 
-   if (txt->dat.txt.centered)
-      gl_printMidRaw( txt->dat.txt.font, txt->w,
-            bx + txt->x,
-            by + txt->y + (txt->h - txt->dat.txt.font->h)/2.,
-            &txt->dat.txt.colour, -1., txt->dat.txt.text );
+   if ( txt->dat.txt.centered )
+      gl_printMidRaw( txt->dat.txt.font, txt->w, bx + txt->x,
+                      by + txt->y + ( txt->h - txt->dat.txt.font->h ) / 2.,
+                      &txt->dat.txt.colour, -1., txt->dat.txt.text );
    else
-      gl_printTextRaw( txt->dat.txt.font, txt->w, txt->h,
-            bx + txt->x, by + txt->y, 0,
-            &txt->dat.txt.colour, -1., txt->dat.txt.text );
+      gl_printTextRaw( txt->dat.txt.font, txt->w, txt->h, bx + txt->x,
+                       by + txt->y, 0, &txt->dat.txt.colour, -1.,
+                       txt->dat.txt.text );
 }
 
 /**
@@ -91,9 +89,9 @@ static void txt_render( Widget* txt, double bx, double by )
  *
  *    @param txt Text widget to clean up.
  */
-static void txt_cleanup( Widget* txt )
+static void txt_cleanup( Widget *txt )
 {
-   free(txt->dat.txt.text);
+   free( txt->dat.txt.text );
 }
 
 /**
@@ -103,26 +101,26 @@ static void txt_cleanup( Widget* txt )
  *    @param name Name of the text widget.
  *    @param newstring String to set for the text widget.
  */
-void window_modifyText( const unsigned int wid,
-      const char* name, const char* newstring )
+void window_modifyText( const unsigned int wid, const char *name,
+                        const char *newstring )
 {
    Widget *wgt;
 
    /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
+   wgt = window_getwgt( wid, name );
+   if ( wgt == NULL )
       return;
 
    /* Check type. */
-   if (wgt->type != WIDGET_TEXT) {
-      WARN("Not modifying text on non-text widget '%s'.", name);
+   if ( wgt->type != WIDGET_TEXT ) {
+      WARN( "Not modifying text on non-text widget '%s'.", name );
       return;
    }
 
    /* Set text. */
-   if (wgt->dat.txt.text)
-      free(wgt->dat.txt.text);
-   wgt->dat.txt.text = (newstring) ?  strdup(newstring) : NULL;
+   if ( wgt->dat.txt.text )
+      free( wgt->dat.txt.text );
+   wgt->dat.txt.text = ( newstring ) ? strdup( newstring ) : NULL;
 }
 
 /**
@@ -137,7 +135,7 @@ int window_getTextHeight( const unsigned int wid, const char *name )
 
    /* Get the widget. */
    wgt = window_getwgt( wid, name );
-   if (wgt == NULL || wgt->type != WIDGET_TEXT)
+   if ( wgt == NULL || wgt->type != WIDGET_TEXT )
       return 0;
 
    return gl_printHeightRaw( wgt->dat.txt.font, wgt->w, wgt->dat.txt.text );

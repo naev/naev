@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wagenni">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="-5791.124494" y="-1722.738390"/>
  <GFX>
   <space>moon-G00.webp</space>

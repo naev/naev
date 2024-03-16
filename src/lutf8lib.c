@@ -1,3 +1,4 @@
+// clang-format off
 /*
  * From: https://github.com/starwing/luautf8/releases/tag/0.1.5
 

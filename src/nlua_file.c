@@ -8,15 +8,12 @@
  */
 /** @cond */
 #include <lauxlib.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "physfsrwops.h"
 
 #include "nlua_file.h"
 
-#include "log.h"
 #include "nluadef.h"
 #include "physfs.h"
 
@@ -37,6 +34,7 @@ static int fileL_filetype( lua_State *L );
 static int fileL_mkdir( lua_State *L );
 static int fileL_enumerate( lua_State *L );
 static int fileL_remove( lua_State *L );
+
 static const luaL_Reg fileL_methods[] = {
    { "__gc", fileL_gc },
    { "__eq", fileL_eq },
@@ -54,8 +52,7 @@ static const luaL_Reg fileL_methods[] = {
    { "mkdir", fileL_mkdir },
    { "enumerate", fileL_enumerate },
    { "remove", fileL_remove },
-   {0,0}
-}; /**< File metatable methods. */
+   { 0, 0 } }; /**< File metatable methods. */
 
 /**
  * @brief Loads the file library.
@@ -65,7 +62,7 @@ static const luaL_Reg fileL_methods[] = {
  */
 int nlua_loadFile( nlua_env env )
 {
-   nlua_register(env, FILE_METATABLE, fileL_methods, 1);
+   nlua_register( env, FILE_METATABLE, fileL_methods, 1 );
    return 0;
 }
 
@@ -83,9 +80,9 @@ int nlua_loadFile( nlua_env env )
  *    @param ind Index position to find the file.
  *    @return File found at the index in the state.
  */
-LuaFile_t* lua_tofile( lua_State *L, int ind )
+LuaFile_t *lua_tofile( lua_State *L, int ind )
 {
-   return (LuaFile_t*) lua_touserdata(L,ind);
+   return (LuaFile_t *)lua_touserdata( L, ind );
 }
 /**
  * @brief Gets file at index or raises error if there is no file at index.
@@ -94,11 +91,11 @@ LuaFile_t* lua_tofile( lua_State *L, int ind )
  *    @param ind Index position to find file.
  *    @return File found at the index in the state.
  */
-LuaFile_t* luaL_checkfile( lua_State *L, int ind )
+LuaFile_t *luaL_checkfile( lua_State *L, int ind )
 {
-   if (lua_isfile(L,ind))
-      return lua_tofile(L,ind);
-   luaL_typerror(L, ind, FILE_METATABLE);
+   if ( lua_isfile( L, ind ) )
+      return lua_tofile( L, ind );
+   luaL_typerror( L, ind, FILE_METATABLE );
    return NULL;
 }
 /**
@@ -108,12 +105,12 @@ LuaFile_t* luaL_checkfile( lua_State *L, int ind )
  *    @param file File to push.
  *    @return Newly pushed file.
  */
-LuaFile_t* lua_pushfile( lua_State *L, LuaFile_t file )
+LuaFile_t *lua_pushfile( lua_State *L, LuaFile_t file )
 {
-   LuaFile_t *c = (LuaFile_t*) lua_newuserdata(L, sizeof(LuaFile_t));
-   *c = file;
-   luaL_getmetatable(L, FILE_METATABLE);
-   lua_setmetatable(L, -2);
+   LuaFile_t *c = (LuaFile_t *)lua_newuserdata( L, sizeof( LuaFile_t ) );
+   *c           = file;
+   luaL_getmetatable( L, FILE_METATABLE );
+   lua_setmetatable( L, -2 );
    return c;
 }
 /**
@@ -127,15 +124,15 @@ int lua_isfile( lua_State *L, int ind )
 {
    int ret;
 
-   if (lua_getmetatable(L,ind)==0)
+   if ( lua_getmetatable( L, ind ) == 0 )
       return 0;
-   lua_getfield(L, LUA_REGISTRYINDEX, FILE_METATABLE);
+   lua_getfield( L, LUA_REGISTRYINDEX, FILE_METATABLE );
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
+   if ( lua_rawequal( L, -1, -2 ) ) /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */
+   lua_pop( L, 2 ); /* remove both metatables */
    return ret;
 }
 
@@ -147,9 +144,9 @@ int lua_isfile( lua_State *L, int ind )
  */
 static int fileL_gc( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
-   if (lf->rw != NULL) {
-      SDL_RWclose(lf->rw);
+   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   if ( lf->rw != NULL ) {
+      SDL_RWclose( lf->rw );
       lf->rw = NULL;
    }
    return 0;
@@ -166,9 +163,9 @@ static int fileL_gc( lua_State *L )
 static int fileL_eq( lua_State *L )
 {
    LuaFile_t *f1, *f2;
-   f1 = luaL_checkfile(L,1);
-   f2 = luaL_checkfile(L,2);
-   lua_pushboolean( L, (memcmp( f1, f2, sizeof(LuaFile_t) )==0) );
+   f1 = luaL_checkfile( L, 1 );
+   f2 = luaL_checkfile( L, 2 );
+   lua_pushboolean( L, ( memcmp( f1, f2, sizeof( LuaFile_t ) ) == 0 ) );
    return 1;
 }
 
@@ -181,12 +178,12 @@ static int fileL_eq( lua_State *L )
  */
 static int fileL_new( lua_State *L )
 {
-   LuaFile_t lf;
-   const char *str = luaL_checkstring(L,1);
-   memset( &lf, 0, sizeof(lf) );
-   strncpy( lf.path, str, sizeof(lf.path)-1 );
+   LuaFile_t   lf;
+   const char *str = luaL_checkstring( L, 1 );
+   memset( &lf, 0, sizeof( lf ) );
+   strncpy( lf.path, str, sizeof( lf.path ) - 1 );
    lf.mode = 'c';
-   lf.rw = NULL;
+   lf.rw   = NULL;
    lua_pushfile( L, lf );
    return 1;
 }
@@ -195,31 +192,32 @@ static int fileL_new( lua_State *L )
  * @brief Opens a File object.
  *
  *    @luatparam File File object to open.
- *    @luatparam[opt="r"] mode Mode to open the file in (should be 'r', 'w', or 'a').
+ *    @luatparam[opt="r"] mode Mode to open the file in (should be 'r', 'w', or
+ * 'a').
  *    @luatreturn boolean true on success, false and an error string on failure.
  * @luafunc open
  */
 static int fileL_open( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
-   const char *mode = luaL_optstring(L,2,"r");
+   LuaFile_t  *lf   = luaL_checkfile( L, 1 );
+   const char *mode = luaL_optstring( L, 2, "r" );
 
    /* TODO handle mode. */
-   if (strcmp(mode,"w")==0)
+   if ( strcmp( mode, "w" ) == 0 )
       lf->rw = PHYSFSRWOPS_openWrite( lf->path );
-   else if (strcmp(mode,"a")==0)
+   else if ( strcmp( mode, "a" ) == 0 )
       lf->rw = PHYSFSRWOPS_openAppend( lf->path );
    else
       lf->rw = PHYSFSRWOPS_openRead( lf->path );
-   if (lf->rw == NULL) {
-      lua_pushboolean(L,0);
-      lua_pushstring(L, SDL_GetError());
+   if ( lf->rw == NULL ) {
+      lua_pushboolean( L, 0 );
+      lua_pushstring( L, SDL_GetError() );
       return 2;
    }
    lf->mode = mode[0];
-   lf->size = (size_t)SDL_RWsize(lf->rw);
+   lf->size = (size_t)SDL_RWsize( lf->rw );
 
-   lua_pushboolean(L,1);
+   lua_pushboolean( L, 1 );
    return 1;
 }
 
@@ -232,13 +230,13 @@ static int fileL_open( lua_State *L )
  */
 static int fileL_close( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
-   if (lf->rw != NULL) {
-      SDL_RWclose(lf->rw);
+   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   if ( lf->rw != NULL ) {
+      SDL_RWclose( lf->rw );
       lf->rw = NULL;
    }
    lf->mode = 'c';
-   lua_pushboolean(L,1);
+   lua_pushboolean( L, 1 );
    return 1;
 }
 
@@ -253,22 +251,22 @@ static int fileL_close( lua_State *L )
  */
 static int fileL_read( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
-   size_t readlen, len;
-   char *buf;
+   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   size_t     readlen, len;
+   char      *buf;
 
-   if (lf->rw == NULL)
-      return NLUA_ERROR(L, _("file not open!"));
+   if ( lf->rw == NULL )
+      return NLUA_ERROR( L, _( "file not open!" ) );
 
    /* Figure out how much to read. */
-   readlen = luaL_optinteger(L,2,SDL_RWsize(lf->rw));
+   readlen = luaL_optinteger( L, 2, SDL_RWsize( lf->rw ) );
 
    /* Create buffer and read into it. */
    buf = malloc( readlen );
    len = SDL_RWread( lf->rw, buf, 1, readlen );
 
-   lua_pushlstring(L, buf, len);
-   lua_pushinteger(L,len);
+   lua_pushlstring( L, buf, len );
+   lua_pushinteger( L, len );
    free( buf );
    return 2;
 }
@@ -283,25 +281,24 @@ static int fileL_read( lua_State *L )
  */
 static int fileL_write( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
-   size_t write, wrote, len;
+   LuaFile_t  *lf = luaL_checkfile( L, 1 );
+   size_t      write, wrote, len;
    const char *buf;
 
+   if ( lf->rw == NULL )
+      return NLUA_ERROR( L, _( "file not open!" ) );
 
-   if (lf->rw == NULL)
-      return NLUA_ERROR(L, _("file not open!"));
-
-   buf   = luaL_checklstring(L,2,&len);
-   write = luaL_optlong(L,3,len);
+   buf   = luaL_checklstring( L, 2, &len );
+   write = luaL_optlong( L, 3, len );
 
    wrote = SDL_RWwrite( lf->rw, buf, 1, write );
-   if (wrote != write) {
-      lua_pushboolean(L,0);
-      lua_pushstring(L, SDL_GetError());
+   if ( wrote != write ) {
+      lua_pushboolean( L, 0 );
+      lua_pushstring( L, SDL_GetError() );
       return 2;
    }
 
-   lua_pushboolean(L,1);
+   lua_pushboolean( L, 1 );
    return 1;
 }
 
@@ -315,18 +312,18 @@ static int fileL_write( lua_State *L )
  */
 static int fileL_seek( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
-   size_t pos = luaL_checkinteger(L,2);
-   Sint64 ret;
+   LuaFile_t *lf  = luaL_checkfile( L, 1 );
+   size_t     pos = luaL_checkinteger( L, 2 );
+   Sint64     ret;
 
-   if (lf->rw == NULL) {
-      lua_pushboolean(L,1);
+   if ( lf->rw == NULL ) {
+      lua_pushboolean( L, 1 );
       return 1;
    }
 
    ret = SDL_RWseek( lf->rw, pos, RW_SEEK_SET );
 
-   lua_pushboolean(L, ret>=0);
+   lua_pushboolean( L, ret >= 0 );
    return 1;
 }
 
@@ -339,8 +336,8 @@ static int fileL_seek( lua_State *L )
  */
 static int fileL_name( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
-   lua_pushstring(L, lf->path);
+   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   lua_pushstring( L, lf->path );
    return 1;
 }
 
@@ -353,8 +350,8 @@ static int fileL_name( lua_State *L )
  */
 static int fileL_mode( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
-   lua_pushlstring(L, &lf->mode, 1);
+   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   lua_pushlstring( L, &lf->mode, 1 );
    return 1;
 }
 
@@ -367,8 +364,8 @@ static int fileL_mode( lua_State *L )
  */
 static int fileL_size( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile(L,1);
-   lua_pushinteger(L, lf->size);
+   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   lua_pushinteger( L, lf->size );
    return 1;
 }
 
@@ -381,8 +378,8 @@ static int fileL_size( lua_State *L )
  */
 static int fileL_isopen( lua_State *L )
 {
-   const LuaFile_t *lf = luaL_checkfile(L,1);
-   lua_pushboolean(L, lf->rw!=NULL);
+   const LuaFile_t *lf = luaL_checkfile( L, 1 );
+   lua_pushboolean( L, lf->rw != NULL );
    return 1;
 }
 
@@ -395,20 +392,20 @@ static int fileL_isopen( lua_State *L )
  */
 static int fileL_filetype( lua_State *L )
 {
-   const char *path = luaL_checkstring(L,1);
+   const char *path = luaL_checkstring( L, 1 );
    PHYSFS_Stat path_stat;
 
-   if (!PHYSFS_stat( path, &path_stat )) {
+   if ( !PHYSFS_stat( path, &path_stat ) ) {
       /* No need for warning, might not exist. */
-      lua_pushnil(L);
+      lua_pushnil( L );
       return 1;
    }
-   if (path_stat.filetype == PHYSFS_FILETYPE_REGULAR)
-      lua_pushstring(L, "file");
-   else if (path_stat.filetype == PHYSFS_FILETYPE_DIRECTORY)
-      lua_pushstring(L, "directory");
+   if ( path_stat.filetype == PHYSFS_FILETYPE_REGULAR )
+      lua_pushstring( L, "file" );
+   else if ( path_stat.filetype == PHYSFS_FILETYPE_DIRECTORY )
+      lua_pushstring( L, "directory" );
    else
-      lua_pushnil(L);
+      lua_pushnil( L );
    return 1;
 }
 
@@ -421,11 +418,11 @@ static int fileL_filetype( lua_State *L )
  */
 static int fileL_mkdir( lua_State *L )
 {
-   const char *path = luaL_checkstring(L,1);
-   int ret = PHYSFS_mkdir( path );
-   lua_pushboolean(L,ret);
-   if (ret==0) {
-      lua_pushstring(L, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) );
+   const char *path = luaL_checkstring( L, 1 );
+   int         ret  = PHYSFS_mkdir( path );
+   lua_pushboolean( L, ret );
+   if ( ret == 0 ) {
+      lua_pushstring( L, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       return 2;
    }
    return 1;
@@ -435,22 +432,24 @@ static int fileL_mkdir( lua_State *L )
  * @brief Returns a list of files and subdirectories of a directory.
  *
  *    @luatparam string dir Name of the directory to check.
- *    @luatreturn table Table containing all the names (strings) of the subdirectories and files in the directory.
+ *    @luatreturn table Table containing all the names (strings) of the
+ * subdirectories and files in the directory.
  * @luafunc enumerate
  */
 static int fileL_enumerate( lua_State *L )
 {
-   char **items;
-   const char *path = luaL_checkstring(L,1);
+   char      **items;
+   const char *path = luaL_checkstring( L, 1 );
 
-   lua_newtable(L);
+   lua_newtable( L );
    items = PHYSFS_enumerateFiles( path );
-   if (items==NULL)
-      return NLUA_ERROR(L,_("Directory '%s' enumerate error: %s"), path,
-            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
-   for (int i=0; items[i]!=NULL; i++) {
-      lua_pushstring(L,items[i]);
-      lua_rawseti(L,-2,i+1);
+   if ( items == NULL )
+      return NLUA_ERROR(
+         L, _( "Directory '%s' enumerate error: %s" ), path,
+         _( PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+   for ( int i = 0; items[i] != NULL; i++ ) {
+      lua_pushstring( L, items[i] );
+      lua_rawseti( L, -2, i + 1 );
    }
    PHYSFS_freeList( items );
    return 1;
@@ -465,11 +464,11 @@ static int fileL_enumerate( lua_State *L )
  */
 static int fileL_remove( lua_State *L )
 {
-   const char *path = luaL_checkstring(L,1);
-   int ret = PHYSFS_delete( path );
-   lua_pushboolean(L,ret);
-   if (ret==0) {
-      lua_pushstring(L, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) );
+   const char *path = luaL_checkstring( L, 1 );
+   int         ret  = PHYSFS_delete( path );
+   lua_pushboolean( L, ret );
+   if ( ret == 0 ) {
+      lua_pushstring( L, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       return 2;
    }
    return 1;

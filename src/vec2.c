@@ -10,22 +10,23 @@
  *    @param x X value for vector.
  *    @param y Y value for vector.
  */
-void vec2_cset( vec2* v, double x, double y )
+void vec2_cset( vec2 *v, double x, double y )
 {
    v->x     = x;
    v->y     = y;
-   v->mod   = MOD(x,y);
-   v->angle = ANGLE(x,y);
+   v->mod   = MOD( x, y );
+   v->angle = ANGLE( x, y );
 }
 
 /**
- * @brief Creates a minimal vector only valid for blitting and not other operations.
+ * @brief Creates a minimal vector only valid for blitting and not other
+ * operations.
  *
  *    @param v Vector to set.
  *    @param x X value for vector.
  *    @param y Y value for vector.
  */
-void vec2_csetmin( vec2* v, double x, double y )
+void vec2_csetmin( vec2 *v, double x, double y )
 {
    v->x = x;
    v->y = y;
@@ -38,12 +39,12 @@ void vec2_csetmin( vec2* v, double x, double y )
  *    @param mod Modulus of the vector.
  *    @param angle Angle of the vector.
  */
-void vec2_pset( vec2* v, double mod, double angle )
+void vec2_pset( vec2 *v, double mod, double angle )
 {
    v->mod   = mod;
    v->angle = angle;
-   v->x     = v->mod*cos(v->angle);
-   v->y     = v->mod*sin(v->angle);
+   v->x     = v->mod * cos( v->angle );
+   v->y     = v->mod * sin( v->angle );
 }
 
 /**
@@ -51,7 +52,7 @@ void vec2_pset( vec2* v, double mod, double angle )
  *
  *    @param v Vector to set to NULL.
  */
-void vectnull( vec2* v )
+void vectnull( vec2 *v )
 {
    v->x     = 0.;
    v->y     = 0.;
@@ -66,7 +67,7 @@ void vectnull( vec2* v )
  *    @param v Vector to get angle from reference vector.
  *    @return Angle between ref and v.
  */
-double vec2_angle( const vec2* ref, const vec2* v )
+double vec2_angle( const vec2 *ref, const vec2 *v )
 {
    double x = v->x - ref->x;
    double y = v->y - ref->y;
@@ -80,12 +81,12 @@ double vec2_angle( const vec2* ref, const vec2* v )
  *    @param x X value to add to vector.
  *    @param y Y value to add to vector.
  */
-void vec2_cadd( vec2* v, double x, double y )
+void vec2_cadd( vec2 *v, double x, double y )
 {
-   v->x    += x;
-   v->y    += y;
-   v->mod   = MOD(v->x,v->y);
-   v->angle = ANGLE(v->x,v->y);
+   v->x += x;
+   v->y += y;
+   v->mod   = MOD( v->x, v->y );
+   v->angle = ANGLE( v->x, v->y );
 }
 
 /**
@@ -95,12 +96,12 @@ void vec2_cadd( vec2* v, double x, double y )
  *    @param m Module of vector to add.
  *    @param a Angle of vector to add.
  */
-void vec2_padd( vec2* v, double m, double a )
+void vec2_padd( vec2 *v, double m, double a )
 {
-   v->x    += m*cos(a);
-   v->y    += m*sin(a);
-   v->mod   = MOD(v->x,v->y);
-   v->angle = ANGLE(v->x,v->y);
+   v->x += m * cos( a );
+   v->y += m * sin( a );
+   v->mod   = MOD( v->x, v->y );
+   v->angle = ANGLE( v->x, v->y );
 }
 
 /**
@@ -110,13 +111,13 @@ void vec2_padd( vec2* v, double m, double a )
  *    @param v Vector to reflect.
  *    @param n Normal to reflect off of.
  */
-void vec2_reflect( vec2* r, const vec2* v, const vec2* n )
+void vec2_reflect( vec2 *r, const vec2 *v, const vec2 *n )
 {
    double dot = vec2_dot( v, n );
-   r->x     = v->x - ((2. * dot) * n->x);
-   r->y     = v->y - ((2. * dot) * n->y);
-   r->mod   = MOD(r->x,r->y);
-   r->angle = ANGLE(r->x,r->y);
+   r->x       = v->x - ( ( 2. * dot ) * n->x );
+   r->y       = v->y - ( ( 2. * dot ) * n->y );
+   r->mod     = MOD( r->x, r->y );
+   r->angle   = ANGLE( r->x, r->y );
 }
 
 /**
@@ -126,7 +127,7 @@ void vec2_reflect( vec2* r, const vec2* v, const vec2* n )
  *    @param b Vector 2 for dot product.
  *    @return Dot product of vectors.
  */
-double vec2_dot( const vec2* a, const vec2* b )
+double vec2_dot( const vec2 *a, const vec2 *b )
 {
    return a->x * b->x + a->y * b->y;
 }
@@ -139,14 +140,15 @@ double vec2_dot( const vec2* a, const vec2* b )
  *    @param source Source vector.
  *    @param reference_vector Reference vector.
  */
-void vec2_uv( double* u, double* v, const vec2* source, const vec2* reference_vector )
+void vec2_uv( double *u, double *v, const vec2 *source,
+              const vec2 *reference_vector )
 {
    vec2 unit_parallel, unit_perpendicular;
 
    vec2_uv_decomp( &unit_parallel, &unit_perpendicular, reference_vector );
 
-   *u = vec2_dot(source, &unit_parallel);
-   *v = vec2_dot(source, &unit_perpendicular);
+   *u = vec2_dot( source, &unit_parallel );
+   *v = vec2_dot( source, &unit_perpendicular );
 }
 
 /**
@@ -156,8 +158,8 @@ void vec2_uv( double* u, double* v, const vec2* source, const vec2* reference_ve
  *    @param[out] v Perpendicular component of the reference vector.
  *    @param reference_vector The reference vector to decompose.
  */
-void vec2_uv_decomp( vec2* u, vec2* v, const vec2* reference_vector )
+void vec2_uv_decomp( vec2 *u, vec2 *v, const vec2 *reference_vector )
 {
-   vec2_pset(u, 1, VANGLE(*reference_vector));
-   vec2_pset(v, 1, VANGLE(*reference_vector)+M_PI_2);
+   vec2_pset( u, 1, VANGLE( *reference_vector ) );
+   vec2_pset( v, 1, VANGLE( *reference_vector ) + M_PI_2 );
 }

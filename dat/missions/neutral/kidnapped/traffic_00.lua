@@ -151,6 +151,7 @@ function enter()
       kidnappers:setVisible(true)
       kidnappers:memory().aggressive = true
       kidnappers:control()
+      kidnappers:intrinsicSet( "stress_dissipation", -80 ) -- easier to disable
       mem.idlehook = hook.pilot(kidnappers, "idle", "idle")
       mem.attackhook = hook.pilot(kidnappers, "attacked", "attackedkidnappers")
       hook.pilot(kidnappers, "exploded", "explodedkidnappers")

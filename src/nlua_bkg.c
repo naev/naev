@@ -8,26 +8,21 @@
  */
 /** @cond */
 #include <lauxlib.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "nlua_bkg.h"
 
 #include "background.h"
-#include "log.h"
 #include "nlua_colour.h"
 #include "nlua_tex.h"
-#include "nluadef.h"
 
 /* Background methods. */
 static int bkgL_clear( lua_State *L );
 static int bkgL_image( lua_State *L );
-static const luaL_Reg bkgL_methods[] = {
-   { "clear", bkgL_clear },
-   { "image", bkgL_image },
-   {0,0}
-}; /**< Background methods. */
+
+static const luaL_Reg bkgL_methods[] = { { "clear", bkgL_clear },
+                                         { "image", bkgL_image },
+                                         { 0, 0 } }; /**< Background methods. */
 
 /**
  * @brief Loads the graphics library.
@@ -37,7 +32,7 @@ static const luaL_Reg bkgL_methods[] = {
  */
 int nlua_loadBackground( nlua_env env )
 {
-   nlua_register(env, "bkg", bkgL_methods, 0);
+   nlua_register( env, "bkg", bkgL_methods, 0 );
    return 0;
 }
 
@@ -57,7 +52,7 @@ int nlua_loadBackground( nlua_env env )
  */
 static int bkgL_clear( lua_State *L )
 {
-   (void) L;
+   (void)L;
    background_clear();
    return 0;
 }
@@ -65,45 +60,49 @@ static int bkgL_clear( lua_State *L )
 /**
  * @brief Adds a background image.
  *
- * If the colour parameter is a boolean it's treated as the foreground parameter instead.
+ * If the colour parameter is a boolean it's treated as the foreground parameter
+ * instead.
  *
- * @usage bkg.image( img, 0, 0, 0.1, 1. ) -- Adds the image without scaling that moves at 0.1 the player speed
+ * @usage bkg.image( img, 0, 0, 0.1, 1. ) -- Adds the image without scaling that
+ * moves at 0.1 the player speed
  * @usage bkg.image( img, 0, 0, 0.1, 1., true ) -- Now on the foreground
  * @usage bkg.image( img, 0, 0, 0.1, 1., col.new(1,0,0) ) -- Now with colour
- * @usage bkg.image( img, 0, 0, 0.1, 1., col.new(1,0,0), true ) -- Now with colour and on the foreground
+ * @usage bkg.image( img, 0, 0, 0.1, 1., col.new(1,0,0), true ) -- Now with
+ * colour and on the foreground
  *
  *    @luatparam Tex image Image to use.
  *    @luatparam number x X position.
  *    @luatparam number y Y position.
- *    @luatparam[opt=0] number move Fraction of a pixel to move when the player moves one pixel. A value of 0 indicates static and centered.
+ *    @luatparam[opt=0] number move Fraction of a pixel to move when the player
+ * moves one pixel. A value of 0 indicates static and centered.
  *    @luatparam[opt=1] number scale How much to scale the image.
  *    @luatparam[opt=0] Rotation angle, in radians.
  *    @luatparam[opt=nil] Colour col Colour to tint image.
- *    @luatparam[opt=false] boolean foreground Whether or not it should be rendered above the space dust.
+ *    @luatparam[opt=false] boolean foreground Whether or not it should be
+ * rendered above the space dust.
  *    @luatreturn number ID of the background.
  * @luafunc image
  */
 static int bkgL_image( lua_State *L )
 {
-   glTexture *tex;
-   double x,y, move, scale, angle;
+   glTexture      *tex;
+   double          x, y, move, scale, angle;
    const glColour *col;
-   unsigned int id;
-   int foreground;
-
+   unsigned int    id;
+   int             foreground;
 
    /* Parse parameters. */
-   tex   = luaL_checktex(L,1);
-   x     = luaL_checknumber(L,2);
-   y     = luaL_checknumber(L,3);
-   move  = luaL_optnumber(L,4,0.);
-   scale = luaL_optnumber(L,5,1.);
-   angle = luaL_optnumber(L,6,0.);
-   col   = luaL_optcolour(L,7,&cWhite);
-   foreground = lua_toboolean(L,8);
+   tex        = luaL_checktex( L, 1 );
+   x          = luaL_checknumber( L, 2 );
+   y          = luaL_checknumber( L, 3 );
+   move       = luaL_optnumber( L, 4, 0. );
+   scale      = luaL_optnumber( L, 5, 1. );
+   angle      = luaL_optnumber( L, 6, 0. );
+   col        = luaL_optcolour( L, 7, &cWhite );
+   foreground = lua_toboolean( L, 8 );
 
    /* Create image. */
    id = background_addImage( tex, x, y, move, scale, angle, col, foreground );
-   lua_pushnumber(L,id);
+   lua_pushnumber( L, id );
    return 1;
 }

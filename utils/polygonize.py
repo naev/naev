@@ -746,7 +746,7 @@ def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
         generateXML(polygon,polyAddress)
 
 
-def polygonify_ship( filename, outpath, use2d=True, use3d=True ):
+def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
     root = ET.parse( filename ).getroot()
     name = root.get('name')
     cls = root.find( "class" ).text
@@ -762,8 +762,7 @@ def polygonify_ship( filename, outpath, use2d=True, use3d=True ):
         pntNplg = None
         if use3d:
             # Try 3D first
-            gltfpath = f"artwork/gfx/ship3d/{basetype}/{tag.text}.gltf"
-            gltfpath = os.getenv("HOME")+f"/.local/share/naev/plugins/3dtest/gfx/ship3d/{basetype}/{tag.text}.gltf"
+            gltfpath = f"{gfxpath}/ship3d/{basetype}/{tag.text}.gltf"
             if os.path.isfile(gltfpath):
                 pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
             else:
@@ -771,9 +770,9 @@ def polygonify_ship( filename, outpath, use2d=True, use3d=True ):
         # Fall back to image
         if use2d and pntNplg==None:
             print("Failed to find 3D model, falling back to 2D")
-            imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
+            imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
             if not os.path.isfile(imgpath):
-                imgpath = f"artwork/gfx/ship/{tag.text.split('_')[0]}/{tag.text}.png"
+                imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.png"
             sx = int(tag.get("sx")) if tag.get("sx")!=None else 8
             sy = int(tag.get("sy")) if tag.get("sy")!=None else 8
             alpha_threshold = 50
@@ -813,6 +812,7 @@ if __name__ == "__main__":
     parser.add_argument("--use2d", default=True, action=argparse.BooleanOptionalAction )
     parser.add_argument("--use3d", default=True, action=argparse.BooleanOptionalAction )
     parser.add_argument("--compare", action=argparse.BooleanOptionalAction )
+    parser.add_argument("--gfxpath", type=str, default="artwork/gfx/" )
     args, unknown = parser.parse_known_args()
 
     # Comparison mode shows difference between 3D and 2D
@@ -846,4 +846,4 @@ if __name__ == "__main__":
     # Normal mode we just try to process the files
     for a in args.path:
         print(f"Processing {a}...")
-        polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d )
+        polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d, gfx_path=args.gfxpath )

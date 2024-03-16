@@ -9,7 +9,7 @@
 
 #include "tk/toolkit_priv.h"
 
-static void rct_render( Widget* rct, double bx, double by );
+static void rct_render( Widget *rct, double bx, double by );
 
 /**
  * @brief Adds a rectangle widget to a window.
@@ -26,32 +26,30 @@ static void rct_render( Widget* rct, double bx, double by );
  *    @param colour Colour of the rectangle.
  *    @param border Whether or not it should have a border.
  */
-void window_addRect( unsigned int wid,
-                     const int x, const int y, /* position */
-                     const int w, const int h, /* size */
-                     char* name, const glColour* colour, int border )
+void window_addRect( unsigned int wid, const int x, const int y, /* position */
+                     const int w, const int h,                   /* size */
+                     char *name, const glColour *colour, int border )
 {
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw, name);
-   if (wgt == NULL)
+   Window *wdw = window_wget( wid );
+   Widget *wgt = window_newWidget( wdw, name );
+   if ( wgt == NULL )
       return;
 
    /* generic */
-   wgt->type   = WIDGET_RECT;
+   wgt->type = WIDGET_RECT;
 
    /* specific */
-   wgt->render          = rct_render;
-   if (colour != NULL) {
-      wgt->dat.rct.colour  = *colour;
-      wgt->dat.rct.fill    = 1;
-   }
-   else
-      wgt->dat.rct.fill    = 0;
-   wgt->dat.rct.border  = border;
+   wgt->render = rct_render;
+   if ( colour != NULL ) {
+      wgt->dat.rct.colour = *colour;
+      wgt->dat.rct.fill   = 1;
+   } else
+      wgt->dat.rct.fill = 0;
+   wgt->dat.rct.border = border;
 
    /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
+   wgt->w = (double)w;
+   wgt->h = (double)h;
    toolkit_setPos( wdw, wgt, x, y );
 }
 
@@ -62,22 +60,20 @@ void window_addRect( unsigned int wid,
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
-static void rct_render( Widget* rct, double bx, double by )
+static void rct_render( Widget *rct, double bx, double by )
 {
    double x, y;
 
    x = bx + rct->x;
    y = by + rct->y;
 
-   if (rct->dat.rct.fill) /* draw rect only if it exists */
+   if ( rct->dat.rct.fill ) /* draw rect only if it exists */
       toolkit_drawRect( x, y, rct->w, rct->h, &rct->dat.rct.colour, NULL );
 
-   if (rct->dat.rct.border) {
+   if ( rct->dat.rct.border ) {
       /* inner outline */
-      toolkit_drawOutline( x, y, rct->w, rct->h, 0.,
-            toolkit_colLight, NULL );
+      toolkit_drawOutline( x, y, rct->w, rct->h, 0., toolkit_colLight, NULL );
       /* outer outline */
-      toolkit_drawOutline( x, y, rct->w, rct->h, 1.,
-            toolkit_colDark, NULL );
+      toolkit_drawOutline( x, y, rct->w, rct->h, 1., toolkit_colDark, NULL );
    }
 }

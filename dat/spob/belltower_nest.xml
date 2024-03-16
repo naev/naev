@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Belltower Nest">
- <lua>spob/lua/soromid_mil_restricted.lua</lua>
+ <lua>soromid_mil_restricted.lua</lua>
  <pos x="-5392.086751" y="-5040.697911"/>
  <GFX>
   <space>station-fleetbase2.webp</space>

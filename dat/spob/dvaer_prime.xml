@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dvaer Prime">
- <lua>spob/lua/highclass.lua</lua>
+ <lua>highclass.lua</lua>
  <pos x="-16120.928515" y="-12212.790161"/>
  <GFX>
   <space>L00.webp</space>

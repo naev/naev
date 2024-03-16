@@ -8,13 +8,10 @@
  */
 /** @cond */
 #include <lauxlib.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "nlua_data.h"
 
-#include "log.h"
 #include "nluadef.h"
 
 /* Helper functions. */
@@ -31,6 +28,7 @@ static int dataL_getString( lua_State *L );
 static int dataL_paste( lua_State *L );
 static int dataL_addWeighted( lua_State *L );
 static int dataL_convolve2d( lua_State *L );
+
 static const luaL_Reg dataL_methods[] = {
    { "__gc", dataL_gc },
    { "__eq", dataL_eq },
@@ -42,8 +40,7 @@ static const luaL_Reg dataL_methods[] = {
    { "paste", dataL_paste },
    { "addWeighted", dataL_addWeighted },
    { "convolve2d", dataL_convolve2d },
-   {0,0}
-}; /**< Data metatable methods. */
+   { 0, 0 } }; /**< Data metatable methods. */
 
 /**
  * @brief Loads the data library.
@@ -53,7 +50,7 @@ static const luaL_Reg dataL_methods[] = {
  */
 int nlua_loadData( nlua_env env )
 {
-   nlua_register(env, DATA_METATABLE, dataL_methods, 1);
+   nlua_register( env, DATA_METATABLE, dataL_methods, 1 );
    return 0;
 }
 
@@ -69,9 +66,9 @@ int nlua_loadData( nlua_env env )
  *    @param ind Index position to find the data.
  *    @return Data found at the index in the state.
  */
-LuaData_t* lua_todata( lua_State *L, int ind )
+LuaData_t *lua_todata( lua_State *L, int ind )
 {
-   return (LuaData_t*) lua_touserdata(L,ind);
+   return (LuaData_t *)lua_touserdata( L, ind );
 }
 /**
  * @brief Gets data at index or raises error if there is no data at index.
@@ -80,11 +77,11 @@ LuaData_t* lua_todata( lua_State *L, int ind )
  *    @param ind Index position to find data.
  *    @return Data found at the index in the state.
  */
-LuaData_t* luaL_checkdata( lua_State *L, int ind )
+LuaData_t *luaL_checkdata( lua_State *L, int ind )
 {
-   if (lua_isdata(L,ind))
-      return lua_todata(L,ind);
-   luaL_typerror(L, ind, DATA_METATABLE);
+   if ( lua_isdata( L, ind ) )
+      return lua_todata( L, ind );
+   luaL_typerror( L, ind, DATA_METATABLE );
    return NULL;
 }
 /**
@@ -94,13 +91,13 @@ LuaData_t* luaL_checkdata( lua_State *L, int ind )
  *    @param data Data to push.
  *    @return Newly pushed data.
  */
-LuaData_t* lua_pushdata( lua_State *L, LuaData_t data )
+LuaData_t *lua_pushdata( lua_State *L, LuaData_t data )
 {
    LuaData_t *c;
-   c = (LuaData_t*) lua_newuserdata(L, sizeof(LuaData_t));
+   c  = (LuaData_t *)lua_newuserdata( L, sizeof( LuaData_t ) );
    *c = data;
-   luaL_getmetatable(L, DATA_METATABLE);
-   lua_setmetatable(L, -2);
+   luaL_getmetatable( L, DATA_METATABLE );
+   lua_setmetatable( L, -2 );
    return c;
 }
 /**
@@ -114,15 +111,15 @@ int lua_isdata( lua_State *L, int ind )
 {
    int ret;
 
-   if (lua_getmetatable(L,ind)==0)
+   if ( lua_getmetatable( L, ind ) == 0 )
       return 0;
-   lua_getfield(L, LUA_REGISTRYINDEX, DATA_METATABLE);
+   lua_getfield( L, LUA_REGISTRYINDEX, DATA_METATABLE );
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
+   if ( lua_rawequal( L, -1, -2 ) ) /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */
+   lua_pop( L, 2 ); /* remove both metatables */
    return ret;
 }
 
@@ -134,8 +131,8 @@ int lua_isdata( lua_State *L, int ind )
  */
 static int dataL_gc( lua_State *L )
 {
-   LuaData_t *ld = luaL_checkdata(L,1);
-   free(ld->data);
+   LuaData_t *ld = luaL_checkdata( L, 1 );
+   free( ld->data );
    return 0;
 }
 
@@ -150,13 +147,13 @@ static int dataL_gc( lua_State *L )
 static int dataL_eq( lua_State *L )
 {
    LuaData_t *d1, *d2;
-   d1 = luaL_checkdata(L,1);
-   d2 = luaL_checkdata(L,2);
-   if (d1->size != d2->size) {
+   d1 = luaL_checkdata( L, 1 );
+   d2 = luaL_checkdata( L, 2 );
+   if ( d1->size != d2->size ) {
       lua_pushboolean( L, 0 );
       return 1;
    }
-   lua_pushboolean( L, (memcmp( d1->data, d2->data, d1->size)==0) );
+   lua_pushboolean( L, ( memcmp( d1->data, d2->data, d1->size ) == 0 ) );
    return 1;
 }
 
@@ -170,16 +167,15 @@ static int dataL_eq( lua_State *L )
  */
 static int dataL_new( lua_State *L )
 {
-   LuaData_t ld;
-   size_t size = luaL_checklong(L,1);
-   const char *type = luaL_checkstring(L,2);
-   if (strcmp(type,"number")==0) {
+   LuaData_t   ld;
+   size_t      size = luaL_checklong( L, 1 );
+   const char *type = luaL_checkstring( L, 2 );
+   if ( strcmp( type, "number" ) == 0 ) {
       ld.type = LUADATA_NUMBER;
-      ld.elem = sizeof(float);
-   }
-   else
-      return NLUA_ERROR(L, _("unknown data type '%s'"), type);
-   ld.size = size*ld.elem;
+      ld.elem = sizeof( float );
+   } else
+      return NLUA_ERROR( L, _( "unknown data type '%s'" ), type );
+   ld.size = size * ld.elem;
    ld.data = calloc( ld.elem, size );
    lua_pushdata( L, ld );
    return 1;
@@ -188,11 +184,13 @@ static int dataL_new( lua_State *L )
 static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos )
 {
    size_t mpos;
-   if (pos < 0)
-      return NLUA_ERROR(L, _("position argument must be positive!"));
+   if ( pos < 0 )
+      return NLUA_ERROR( L, _( "position argument must be positive!" ) );
    mpos = pos * ld->elem;
-   if (mpos >= ld->size)
-      return NLUA_ERROR(L, _("position argument out of bounds: %d of %d elements"), pos, ld->size/ld->elem);
+   if ( mpos >= ld->size )
+      return NLUA_ERROR(
+         L, _( "position argument out of bounds: %d of %d elements" ), pos,
+         ld->size / ld->elem );
    return mpos;
 }
 
@@ -206,14 +204,14 @@ static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos )
  */
 static int dataL_get( lua_State *L )
 {
-   LuaData_t *ld = luaL_checkdata(L,1);
-   long pos = luaL_checklong(L,2);
-   size_t mpos = dataL_checkpos( L, ld, pos );
-   char *data = ld->data;
-   switch (ld->type) {
-      case LUADATA_NUMBER:
-         lua_pushnumber(L, *((float*)((void*)&data[mpos])));
-         break;
+   LuaData_t *ld   = luaL_checkdata( L, 1 );
+   long       pos  = luaL_checklong( L, 2 );
+   size_t     mpos = dataL_checkpos( L, ld, pos );
+   char      *data = ld->data;
+   switch ( ld->type ) {
+   case LUADATA_NUMBER:
+      lua_pushnumber( L, *( (float *)( (void *)&data[mpos] ) ) );
+      break;
    }
    return 1;
 }
@@ -228,16 +226,16 @@ static int dataL_get( lua_State *L )
  */
 static int dataL_set( lua_State *L )
 {
-   LuaData_t *ld = luaL_checkdata(L,1);
-   long pos = luaL_checklong(L,2);
-   size_t mpos = dataL_checkpos( L, ld, pos );
-   char *data = ld->data;
-   double value;
-   switch (ld->type) {
-      case LUADATA_NUMBER:
-         value = luaL_checknumber(L,3);
-         *((float*)((void*)&data[mpos])) = value;
-         break;
+   LuaData_t *ld   = luaL_checkdata( L, 1 );
+   long       pos  = luaL_checklong( L, 2 );
+   size_t     mpos = dataL_checkpos( L, ld, pos );
+   char      *data = ld->data;
+   double     value;
+   switch ( ld->type ) {
+   case LUADATA_NUMBER:
+      value                                 = luaL_checknumber( L, 3 );
+      *( (float *)( (void *)&data[mpos] ) ) = value;
+      break;
    }
    return 0;
 }
@@ -251,8 +249,8 @@ static int dataL_set( lua_State *L )
  */
 static int dataL_getSize( lua_State *L )
 {
-   LuaData_t *ld = luaL_checkdata(L,1);
-   lua_pushnumber(L, ld->size);
+   LuaData_t *ld = luaL_checkdata( L, 1 );
+   lua_pushnumber( L, ld->size );
    return 1;
 }
 
@@ -265,8 +263,8 @@ static int dataL_getSize( lua_State *L )
  */
 static int dataL_getString( lua_State *L )
 {
-   LuaData_t *ld = luaL_checkdata(L,1);
-   lua_pushlstring(L, ld->data, ld->size);
+   LuaData_t *ld = luaL_checkdata( L, 1 );
+   lua_pushlstring( L, ld->data, ld->size );
    return 1;
 }
 
@@ -282,25 +280,30 @@ static int dataL_getString( lua_State *L )
  */
 static int dataL_paste( lua_State *L )
 {
-   LuaData_t *dest = luaL_checkdata(L,1);
-   LuaData_t *source = luaL_checkdata(L,2);
-   long dx = luaL_checklong(L,3) * dest->elem;
-   long sx = luaL_checklong(L,4) * source->elem;
-   long sw = luaL_checklong(L,5) * source->elem;
-   char *ddata = dest->data;
-   const char *sdata = source->data;
+   LuaData_t  *dest   = luaL_checkdata( L, 1 );
+   LuaData_t  *source = luaL_checkdata( L, 2 );
+   long        dx     = luaL_checklong( L, 3 ) * dest->elem;
+   long        sx     = luaL_checklong( L, 4 ) * source->elem;
+   long        sw     = luaL_checklong( L, 5 ) * source->elem;
+   char       *ddata  = dest->data;
+   const char *sdata  = source->data;
 
    /* Check fits. */
-   if (dx+sw > (long)dest->size)
-      return NLUA_ERROR(L, _("size mismatch: out of bound access dest: %d of %d elements"), dx+sw, dest->size);
-   else if (sx+sw > (long)source->size)
-      return NLUA_ERROR(L, _("size mismatch: out of bound access of source: %d of %d elements"), sx+sw, source->size);
+   if ( dx + sw > (long)dest->size )
+      return NLUA_ERROR(
+         L, _( "size mismatch: out of bound access dest: %d of %d elements" ),
+         dx + sw, dest->size );
+   else if ( sx + sw > (long)source->size )
+      return NLUA_ERROR(
+         L,
+         _( "size mismatch: out of bound access of source: %d of %d elements" ),
+         sx + sw, source->size );
 
    /* Copy memory over. */
    memcpy( &ddata[dx], &sdata[sx], sw );
 
    /* Return destination. */
-   lua_pushvalue(L,1);
+   lua_pushvalue( L, 1 );
    return 1;
 }
 
@@ -317,20 +320,23 @@ static int dataL_paste( lua_State *L )
  */
 static int dataL_addWeighted( lua_State *L )
 {
-   LuaData_t *A = luaL_checkdata(L,1);
-   LuaData_t *B = luaL_checkdata(L,2);
-   LuaData_t out;
-   double alpha = luaL_checknumber(L,3);
-   double beta = luaL_optnumber(L,4,1.-alpha);
-   double bias = luaL_optnumber(L,5,0.);
-   int i, n;
-   float *o, *a, *b;
+   LuaData_t *A = luaL_checkdata( L, 1 );
+   LuaData_t *B = luaL_checkdata( L, 2 );
+   LuaData_t  out;
+   double     alpha = luaL_checknumber( L, 3 );
+   double     beta  = luaL_optnumber( L, 4, 1. - alpha );
+   double     bias  = luaL_optnumber( L, 5, 0. );
+   int        i, n;
+   float     *o, *a, *b;
 
    /* Checks. */
-   if (A->size != B->size)
-      return NLUA_ERROR(L, _("size mismatch: A has %d elements but B has %d elements"), A->size, B->size );
-   if (A->type != LUADATA_NUMBER || B->type != LUADATA_NUMBER)
-      return NLUA_ERROR(L, _("%s is only implemented for number types"), __func__);
+   if ( A->size != B->size )
+      return NLUA_ERROR(
+         L, _( "size mismatch: A has %d elements but B has %d elements" ),
+         A->size, B->size );
+   if ( A->type != LUADATA_NUMBER || B->type != LUADATA_NUMBER )
+      return NLUA_ERROR( L, _( "%s is only implemented for number types" ),
+                         __func__ );
 
    /* Create new data. */
    out.size = A->size;
@@ -340,14 +346,14 @@ static int dataL_addWeighted( lua_State *L )
 
    /* Interpolate. */
    n = out.size / out.elem;
-   a = (float*)A->data;
-   b = (float*)B->data;
-   o = (float*)out.data;
-   for (i=0; i<n; i++)
-      o[i] = a[i]*alpha + b[i]*beta + bias;
+   a = (float *)A->data;
+   b = (float *)B->data;
+   o = (float *)out.data;
+   for ( i = 0; i < n; i++ )
+      o[i] = a[i] * alpha + b[i] * beta + bias;
 
    /* Return new data. */
-   lua_pushdata(L,out);
+   lua_pushdata( L, out );
    return 1;
 }
 
@@ -365,60 +371,63 @@ static int dataL_addWeighted( lua_State *L )
  */
 static int dataL_convolve2d( lua_State *L )
 {
-   LuaData_t *lI = luaL_checkdata(L,1);
-   long iw = luaL_checklong(L,2);
-   long ih = luaL_checklong(L,3);
-   LuaData_t *lK = luaL_checkdata(L,4);
-   long kw = luaL_checklong(L,5);
-   long kh = luaL_checklong(L,6);
-   LuaData_t out;
-   int kw2,kh2, bw,bh, ow,oh;
-   const float *I = (const float*)lI->data;
-   const float *K = (const float*)lK->data;
-   float *B, *O;
+   LuaData_t   *lI = luaL_checkdata( L, 1 );
+   long         iw = luaL_checklong( L, 2 );
+   long         ih = luaL_checklong( L, 3 );
+   LuaData_t   *lK = luaL_checkdata( L, 4 );
+   long         kw = luaL_checklong( L, 5 );
+   long         kh = luaL_checklong( L, 6 );
+   LuaData_t    out;
+   int          kw2, kh2, bw, bh, ow, oh;
+   const float *I = (const float *)lI->data;
+   const float *K = (const float *)lK->data;
+   float       *B, *O;
 
    /* Checks. */
-   if (iw*ih*4*lI->elem != lI->size)
-      return NLUA_ERROR(L,_("size mismatch for data: got %dx%dx4x%d, expected %d"), iw, ih, lI->elem, lI->size);
-   if (kw*kh*4*lK->elem != lK->size)
-      return NLUA_ERROR(L,_("size mismatch for data: got %dx%dx4x%d, expected %d"), kw, kh, lK->elem, lK->size);
-   if (lI->type != LUADATA_NUMBER || lK->type != LUADATA_NUMBER)
-      return NLUA_ERROR(L, _("%s is only implemented for number types"), __func__);
+   if ( iw * ih * 4 * lI->elem != lI->size )
+      return NLUA_ERROR(
+         L, _( "size mismatch for data: got %dx%dx4x%d, expected %d" ), iw, ih,
+         lI->elem, lI->size );
+   if ( kw * kh * 4 * lK->elem != lK->size )
+      return NLUA_ERROR(
+         L, _( "size mismatch for data: got %dx%dx4x%d, expected %d" ), kw, kh,
+         lK->elem, lK->size );
+   if ( lI->type != LUADATA_NUMBER || lK->type != LUADATA_NUMBER )
+      return NLUA_ERROR( L, _( "%s is only implemented for number types" ),
+                         __func__ );
 
    /* Set up. */
-   kw2 = (kw-1)/2;
-   kh2 = (kh-1)/2;
+   kw2 = ( kw - 1 ) / 2;
+   kh2 = ( kh - 1 ) / 2;
 
    /* Create new data. */
-   ow = iw+kw2;
-   oh = ih+kw2;
+   ow       = iw + kw2;
+   oh       = ih + kw2;
    out.elem = lI->elem;
    out.type = lI->type;
-   out.size = ow*oh*4*out.elem;
+   out.size = ow * oh * 4 * out.elem;
    out.data = calloc( out.size, 1 );
-   O = (float*)out.data;
+   O        = (float *)out.data;
 
-#define POS(U,V,W)   (4*((V)*(W)+(U)))
+#define POS( U, V, W ) ( 4 * ( ( V ) * ( W ) + ( U ) ) )
    /* Create buffer. */
-   bw = ow+2*kw2;
-   bh = oh+2*kh2;
-   B = calloc( bw*bh*4, sizeof(float) );
-   for (int v=0; v<ih; v++)
-      memcpy( &B[ POS(kw2, v+kh2, bw) ],
-              &I[ POS(  0,     v, iw) ],
-              4*sizeof(float)*iw );
+   bw = ow + 2 * kw2;
+   bh = oh + 2 * kh2;
+   B  = calloc( bw * bh * 4, sizeof( float ) );
+   for ( int v = 0; v < ih; v++ )
+      memcpy( &B[POS( kw2, v + kh2, bw )], &I[POS( 0, v, iw )],
+              4 * sizeof( float ) * iw );
 
    /* Convolve. */
-   for (int v=0; v<oh; v++) {
-      for (int u=0; u<ow; u++) {
-         for (int kv=0; kv<kh; kv++) {
-            for (int ku=0; ku<kw; ku++) {
+   for ( int v = 0; v < oh; v++ ) {
+      for ( int u = 0; u < ow; u++ ) {
+         for ( int kv = 0; kv < kh; kv++ ) {
+            for ( int ku = 0; ku < kw; ku++ ) {
                int bu = u + ku;
                int bv = v + kv;
-               for (int p=0; p<4; p++)
-                  O[ POS( u, v, ow )+p ] +=
-                        B[ POS( bu, bv, bw )+p ]
-                        * K[ POS( ku, kv, kw )+p ];
+               for ( int p = 0; p < 4; p++ )
+                  O[POS( u, v, ow ) + p] +=
+                     B[POS( bu, bv, bw ) + p] * K[POS( ku, kv, kw ) + p];
             }
          }
       }
@@ -426,11 +435,11 @@ static int dataL_convolve2d( lua_State *L )
 #undef POS
 
    /* Cleanup. */
-   free(B);
+   free( B );
 
    /* Return new data. */
-   lua_pushdata(L,out);
-   lua_pushinteger(L,ow);
-   lua_pushinteger(L,oh);
+   lua_pushdata( L, out );
+   lua_pushinteger( L, ow );
+   lua_pushinteger( L, oh );
    return 3;
 }

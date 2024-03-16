@@ -9,13 +9,10 @@
 /** @cond */
 #include <lauxlib.h>
 #include <stdlib.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "nlua_time.h"
 
-#include "log.h"
 #include "nluadef.h"
 #include "ntime.h"
 
@@ -33,23 +30,22 @@ static int timeL_str( lua_State *L );
 static int timeL_inc( lua_State *L );
 static int timeL_tonumber( lua_State *L );
 static int timeL_fromnumber( lua_State *L );
-static const luaL_Reg time_methods[] = {
-   { "new", timeL_new },
-   { "add", timeL_add__ },
-   { "__add", timeL_add },
-   { "sub", timeL_sub__ },
-   { "__sub", timeL_sub },
-   { "__eq", timeL_eq },
-   { "__lt", timeL_lt },
-   { "__le", timeL_le },
-   { "get", timeL_get },
-   { "str", timeL_str },
-   { "__tostring", timeL_str },
-   { "inc", timeL_inc },
-   { "tonumber", timeL_tonumber },
-   { "fromnumber", timeL_fromnumber },
-   {0,0}
-}; /**< Time Lua methods. */
+
+static const luaL_Reg time_methods[] = { { "new", timeL_new },
+                                         { "add", timeL_add__ },
+                                         { "__add", timeL_add },
+                                         { "sub", timeL_sub__ },
+                                         { "__sub", timeL_sub },
+                                         { "__eq", timeL_eq },
+                                         { "__lt", timeL_lt },
+                                         { "__le", timeL_le },
+                                         { "get", timeL_get },
+                                         { "str", timeL_str },
+                                         { "__tostring", timeL_str },
+                                         { "inc", timeL_inc },
+                                         { "tonumber", timeL_tonumber },
+                                         { "fromnumber", timeL_fromnumber },
+                                         { 0, 0 } }; /**< Time Lua methods. */
 
 /**
  * @brief Loads the Time Lua library.
@@ -59,7 +55,7 @@ static const luaL_Reg time_methods[] = {
  */
 int nlua_loadTime( nlua_env env )
 {
-   nlua_register(env, TIME_METATABLE, time_methods, 1);
+   nlua_register( env, TIME_METATABLE, time_methods, 1 );
    return 0; /* No error */
 }
 
@@ -69,7 +65,8 @@ int nlua_loadTime( nlua_env env )
  * Usage is generally something as follows:
  * @code
  * time_limit = time.get() + time.new( 0, 5, 0 )
- * player.msg( string.format("You only have %s left!", time.str(time.get() - time_limit)) )
+ * player.msg( string.format("You only have %s left!", time.str(time.get() -
+ * time_limit)) )
  *
  * -- Do stuff here
  *
@@ -87,9 +84,9 @@ int nlua_loadTime( nlua_env env )
  *    @param ind Index position to find the time.
  *    @return Time found at the index in the state.
  */
-ntime_t* lua_totime( lua_State *L, int ind )
+ntime_t *lua_totime( lua_State *L, int ind )
 {
-   return (ntime_t*) lua_touserdata(L,ind);
+   return (ntime_t *)lua_touserdata( L, ind );
 }
 /**
  * @brief Gets time at index raising an error if isn't a time.
@@ -98,11 +95,11 @@ ntime_t* lua_totime( lua_State *L, int ind )
  *    @param ind Index position to find the time.
  *    @return Time found at the index in the state.
  */
-ntime_t* luaL_checktime( lua_State *L, int ind )
+ntime_t *luaL_checktime( lua_State *L, int ind )
 {
-   if (lua_istime(L,ind))
-      return lua_totime(L,ind);
-   luaL_typerror(L, ind, TIME_METATABLE);
+   if ( lua_istime( L, ind ) )
+      return lua_totime( L, ind );
+   luaL_typerror( L, ind, TIME_METATABLE );
    return NULL;
 }
 /**
@@ -123,12 +120,12 @@ ntime_t luaL_validtime( lua_State *L, int ind )
  *    @param time Time to push.
  *    @return Newly pushed time.
  */
-ntime_t* lua_pushtime( lua_State *L, ntime_t time )
+ntime_t *lua_pushtime( lua_State *L, ntime_t time )
 {
-   ntime_t *p = (ntime_t*) lua_newuserdata(L, sizeof(ntime_t));
-   *p = time;
-   luaL_getmetatable(L, TIME_METATABLE);
-   lua_setmetatable(L, -2);
+   ntime_t *p = (ntime_t *)lua_newuserdata( L, sizeof( ntime_t ) );
+   *p         = time;
+   luaL_getmetatable( L, TIME_METATABLE );
+   lua_setmetatable( L, -2 );
    return p;
 }
 /**
@@ -142,22 +139,23 @@ int lua_istime( lua_State *L, int ind )
 {
    int ret;
 
-   if (lua_getmetatable(L,ind)==0)
+   if ( lua_getmetatable( L, ind ) == 0 )
       return 0;
-   lua_getfield(L, LUA_REGISTRYINDEX, TIME_METATABLE);
+   lua_getfield( L, LUA_REGISTRYINDEX, TIME_METATABLE );
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
+   if ( lua_rawequal( L, -1, -2 ) ) /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */
+   lua_pop( L, 2 ); /* remove both metatables */
    return ret;
 }
 
 /**
  * @brief Creates a time. This can be absolute or relative.
  *
- * @usage t = time.new( 591, 3271, 12801 ) -- Gets a time near when the incident happened.
+ * @usage t = time.new( 591, 3271, 12801 ) -- Gets a time near when the incident
+ * happened.
  *
  *    @luatparam number cycles Cycles for the new time.
  *    @luatparam number periods Periods for the new time.
@@ -170,9 +168,9 @@ static int timeL_new( lua_State *L )
    int cycles, periods, seconds;
 
    /* Parameters. */
-   cycles = luaL_checkint(L,1);
-   periods = luaL_checkint(L,2);
-   seconds = luaL_checkint(L,3);
+   cycles  = luaL_checkint( L, 1 );
+   periods = luaL_checkint( L, 2 );
+   seconds = luaL_checkint( L, 3 );
 
    /* Create the time. */
    lua_pushtime( L, ntime_create( cycles, periods, seconds ) );
@@ -183,7 +181,8 @@ static int timeL_new( lua_State *L )
  *
  * Overrides the addition operator.
  *
- * @usage new_time = time.get() + time.new( 0, 5, 0 ) -- Adds 5 periods to the current date
+ * @usage new_time = time.get() + time.new( 0, 5, 0 ) -- Adds 5 periods to the
+ * current date
  *
  *    @luatparam Time t1 Time metatable to add to.
  *    @luatparam Time t2 Time metatable added.
@@ -224,7 +223,8 @@ static int timeL_add__( lua_State *L )
  *
  * Overrides the subtraction operator.
  *
- * @usage new_time = time.get() - time.new( 0, 3, 0 ) -- Subtracts 3 periods from the current date
+ * @usage new_time = time.get() - time.new( 0, 3, 0 ) -- Subtracts 3 periods
+ * from the current date
  *
  *    @luatparam Time t1 Time metatable to subtract from.
  *    @luatparam Time t2 Time metatable subtracted.
@@ -265,7 +265,8 @@ static int timeL_sub__( lua_State *L )
  *
  * It is recommended to check with < and <= instead of ==.
  *
- * @usage if time.new( 630, 5, 78) == time.get() then -- do something if they match
+ * @usage if time.new( 630, 5, 78) == time.get() then -- do something if they
+ * match
  *
  *    @luatparam Time t1 Time to compare for equality.
  *    @luatparam Time t2 Time to compare for equality.
@@ -277,13 +278,14 @@ static int timeL_eq( lua_State *L )
    ntime_t t1, t2;
    t1 = luaL_validtime( L, 1 );
    t2 = luaL_validtime( L, 2 );
-   lua_pushboolean( L, t1==t2 );
+   lua_pushboolean( L, t1 == t2 );
    return 1;
 }
 /**
  * @brief Checks to see if a time is strictly larger than another.
  *
- * @usage if time.new( 630, 5, 78) < time.get() then -- do something if time is past UST 630:0005.78
+ * @usage if time.new( 630, 5, 78) < time.get() then -- do something if time is
+ * past UST 630:0005.78
  *
  *    @luatparam Time t1 Time to see if is is smaller than t2.
  *    @luatparam Time t2 Time see if is larger than t1.
@@ -295,13 +297,14 @@ static int timeL_lt( lua_State *L )
    ntime_t t1, t2;
    t1 = luaL_validtime( L, 1 );
    t2 = luaL_validtime( L, 2 );
-   lua_pushboolean( L, t1<t2 );
+   lua_pushboolean( L, t1 < t2 );
    return 1;
 }
 /**
  * @brief Checks to see if a time is larger or equal to another.
  *
- * @usage if time.new( 630, 5, 78) <= time.get() then -- do something if time is past UST 630:0005.78
+ * @usage if time.new( 630, 5, 78) <= time.get() then -- do something if time is
+ * past UST 630:0005.78
  *
  *    @luatparam Time t1 Time to see if is is smaller or equal to than t2.
  *    @luatparam Time t2 Time see if is larger or equal to than t1.
@@ -313,7 +316,7 @@ static int timeL_le( lua_State *L )
    ntime_t t1, t2;
    t1 = luaL_validtime( L, 1 );
    t2 = luaL_validtime( L, 2 );
-   lua_pushboolean( L, t1<=t2 );
+   lua_pushboolean( L, t1 <= t2 );
    return 1;
 }
 /**
@@ -334,30 +337,33 @@ static int timeL_get( lua_State *L )
  *
  * @usage strt = time.str() -- Gets current time
  * @usage strt = time.str( nil, 5 ) -- Gets current time with full decimals
- * @usage strt = time.str( time.get() + time.new(0,5,0) ) -- Gets time in 5 periods
+ * @usage strt = time.str( time.get() + time.new(0,5,0) ) -- Gets time in 5
+ * periods
  * @usage strt = t:str() -- Gets the string of t
  *
- *    @luatparam Time t Time to convert to pretty format.  If omitted, current time is used.
- *    @luatparam[opt=2] number d Decimals to use for displaying seconds (should be between 0 and 5).
+ *    @luatparam Time t Time to convert to pretty format.  If omitted, current
+ * time is used.
+ *    @luatparam[opt=2] number d Decimals to use for displaying seconds (should
+ * be between 0 and 5).
  *    @luatreturn string The time in human readable format.
  * @luafunc str
  */
 static int timeL_str( lua_State *L )
 {
    ntime_t t;
-   char nt[64];
-   int d;
+   char    nt[64];
+   int     d;
 
    /* Parse parameters. */
-   if (!lua_isnoneornil(L,1))
-      t = luaL_validtime(L,1);
+   if ( !lua_isnoneornil( L, 1 ) )
+      t = luaL_validtime( L, 1 );
    else
       t = ntime_get();
-   d = luaL_optinteger(L,2,2); /* Defaults to 2 decimals. */
+   d = luaL_optinteger( L, 2, 2 ); /* Defaults to 2 decimals. */
 
    /* Push string. */
-   ntime_prettyBuf( nt, sizeof(nt), t, d );
-   lua_pushstring(L, nt);
+   ntime_prettyBuf( nt, sizeof( nt ), t, d );
+   lua_pushstring( L, nt );
    return 1;
 }
 
@@ -373,7 +379,7 @@ static int timeL_str( lua_State *L )
  */
 static int timeL_inc( lua_State *L )
 {
-   ntime_inc( luaL_validtime(L,1) );
+   ntime_inc( luaL_validtime( L, 1 ) );
    return 0;
 }
 
@@ -390,7 +396,7 @@ static int timeL_inc( lua_State *L )
  */
 static int timeL_tonumber( lua_State *L )
 {
-   ntime_t t = luaL_validtime(L,1);
+   ntime_t t = luaL_validtime( L, 1 );
    lua_pushnumber( L, t );
    return 1;
 }
@@ -408,7 +414,7 @@ static int timeL_tonumber( lua_State *L )
  */
 static int timeL_fromnumber( lua_State *L )
 {
-   ntime_t t = (ntime_t) luaL_checknumber(L,1);
+   ntime_t t = (ntime_t)luaL_checknumber( L, 1 );
    lua_pushtime( L, t );
    return 1;
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zalebus">
- <lua>spob/lua/highclass.lua</lua>
+ <lua>highclass.lua</lua>
  <pos x="20717.445102" y="-2844.812770"/>
  <GFX>
   <space>O03.webp</space>

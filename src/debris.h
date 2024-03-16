@@ -3,6 +3,6 @@
  */
 #pragma once
 
-void debris_cleanup (void);
-void debris_add( double mass, double rad, double px, double py,
-      double vx, double vy );
+void debris_cleanup( void );
+void debris_add( double mass, double rad, double px, double py, double vx,
+                 double vy );

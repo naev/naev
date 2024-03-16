@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Stutee">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="-11970.000000" y="-8400.000000"/>
  <GFX>
   <space>moon-M06.webp</space>

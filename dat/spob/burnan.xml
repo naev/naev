@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Burnan">
- <lua>spob/lua/highclass.lua</lua>
+ <lua>highclass.lua</lua>
  <pos x="-6250.670883" y="4135.478736"/>
  <GFX>
   <space>M07.webp</space>

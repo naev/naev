@@ -15,33 +15,34 @@
  * Lists of names for some internal units we use. These just translate them
  * game values to human readable form.
  */
-const char _UNIT_TIME[]       = N_("sec");
-const char _UNIT_PER_TIME[]   = N_("/sec");
-const char _UNIT_DISTANCE[]   = N_("km");
-const char _UNIT_SPEED[]      = N_("km/s");
-const char _UNIT_ACCEL[]      = N_("km/s²");
-const char _UNIT_ENERGY[]     = N_("GJ");
-const char _UNIT_POWER[]      = N_("GW");
-const char _UNIT_ANGLE[]      = N_("°");
-const char _UNIT_ROTATION[]   = N_("°/s");
-const char _UNIT_MASS[]       = N_("t");
-const char _UNIT_CPU[]        = N_("PFLOP");
-const char _UNIT_UNIT[]       = N_("u");
-const char _UNIT_PERCENT[]    = N_("%");
+const char _UNIT_TIME[]     = N_( "sec" );
+const char _UNIT_PER_TIME[] = N_( "/sec" );
+const char _UNIT_DISTANCE[] = N_( "km" );
+const char _UNIT_SPEED[]    = N_( "km/s" );
+const char _UNIT_ACCEL[]    = N_( "km/s²" );
+const char _UNIT_ENERGY[]   = N_( "GJ" );
+const char _UNIT_POWER[]    = N_( "GW" );
+const char _UNIT_ANGLE[]    = N_( "°" );
+const char _UNIT_ROTATION[] = N_( "°/s" );
+const char _UNIT_MASS[]     = N_( "t" );
+const char _UNIT_CPU[]      = N_( "PFLOP" );
+const char _UNIT_UNIT[]     = N_( "u" );
+const char _UNIT_PERCENT[]  = N_( "%" );
 
 /**
  * @brief Converts an angle to the [0, 2*M_PI] range.
  */
-static double angle_cleanup( double a )
+double angle_clean( double a )
 {
-   if (FABS(a) >= 2.*M_PI) {
-      a = fmod(a, 2.*M_PI);
+   if ( FABS( a ) >= 2. * M_PI ) {
+      a = fmod( a, 2. * M_PI );
    }
-   if (a < 0.) {
-       a += 2.*M_PI;
+   if ( a < 0. ) {
+      a += 2. * M_PI;
    }
    return a;
 }
+
 /**
  * @brief Gets the difference between two angles.
  *
@@ -51,13 +52,13 @@ static double angle_cleanup( double a )
 double angle_diff( double ref, double a )
 {
    /* Get angles. */
-   double a1 = angle_cleanup(ref);
-   double a2 = angle_cleanup(a);
+   double a1 = angle_clean( ref );
+   double a2 = angle_clean( a );
    double d  = a2 - a1;
 
    /* Filter offsets. */
-   d  = (d < M_PI)  ? d : d - 2.*M_PI;
-   d  = (d > -M_PI) ? d : d + 2.*M_PI;
+   d = ( d < M_PI ) ? d : d - 2. * M_PI;
+   d = ( d > -M_PI ) ? d : d + 2. * M_PI;
    return d;
 }
 
@@ -77,18 +78,18 @@ double angle_diff( double ref, double a )
  */
 static void solid_update_euler( Solid *obj, double dt )
 {
-   double px,py, vx,vy, ax,ay, th;
+   double px, py, vx, vy, ax, ay, th;
    double cdir, sdir;
 
    /* Save previous position. */
    obj->pre = obj->pos;
 
    /* Make sure angle doesn't flip */
-   obj->dir += obj->dir_vel*dt;
-   if (obj->dir >= 2*M_PI)
-      obj->dir -= 2*M_PI;
-   if (obj->dir < 0.)
-      obj->dir += 2*M_PI;
+   obj->dir += obj->dir_vel * dt;
+   if ( obj->dir >= 2 * M_PI )
+      obj->dir -= 2 * M_PI;
+   if ( obj->dir < 0. )
+      obj->dir += 2 * M_PI;
 
    /* Initial positions. */
    px = obj->pos.x;
@@ -98,18 +99,18 @@ static void solid_update_euler( Solid *obj, double dt )
    th = obj->accel;
 
    /* Save direction. */
-   sdir = sin(obj->dir);
-   cdir = cos(obj->dir);
+   sdir = sin( obj->dir );
+   cdir = cos( obj->dir );
 
    /* Get acceleration. */
-   ax = th*cdir;
-   ay = th*sdir;
+   ax = th * cdir;
+   ay = th * sdir;
 
    /* Symplectic Euler should reduce a bit the approximation error. */
-   vx += ax*dt;
-   vy += ay*dt;
-   px += vx*dt;
-   py += vy*dt;
+   vx += ax * dt;
+   vy += ay * dt;
+   px += vx * dt;
+   py += vy * dt;
 
    /* Update position and velocity. */
    vec2_cset( &obj->vel, vx, vy );
@@ -142,87 +143,87 @@ static void solid_update_euler( Solid *obj, double dt )
 #define RK4_MIN_H 0.01 /**< Minimal pass we want. */
 static void solid_update_rk4( Solid *obj, double dt )
 {
-   int N; /* for iteration, and pass calculation */
-   double h, px,py, vx,vy; /* pass, and position/velocity values */
+   int    N;                 /* for iteration, and pass calculation */
+   double h, px, py, vx, vy; /* pass, and position/velocity values */
    double vmod, vang, th;
-   int vint;
-   int limit; /* limit speed? */
+   int    vint;
+   int    limit; /* limit speed? */
 
    /* Save previous position. */
    obj->pre = obj->pos;
 
    /* Initial positions and velocity. */
-   px = obj->pos.x;
-   py = obj->pos.y;
-   vx = obj->vel.x;
-   vy = obj->vel.y;
-   limit = (obj->speed_max >= 0.);
+   px    = obj->pos.x;
+   py    = obj->pos.y;
+   vx    = obj->vel.x;
+   vy    = obj->vel.y;
+   limit = ( obj->speed_max >= 0. );
 
    /* Initial RK parameters. */
-   if (dt > RK4_MIN_H)
-      N = (int)(dt / RK4_MIN_H);
+   if ( dt > RK4_MIN_H )
+      N = (int)( dt / RK4_MIN_H );
    else
       N = 1;
    vmod = MOD( vx, vy );
-   vint = (int) vmod/100.;
-   if (N < vint)
+   vint = (int)vmod / 100.;
+   if ( N < vint )
       N = vint;
    h = dt / (double)N; /* step */
 
    /* Movement Quantity Theorem:  m*a = \sum f */
    th = obj->accel;
 
-   for (int i=0; i < N; i++) { /* iterations */
+   for ( int i = 0; i < N; i++ ) { /* iterations */
       double ix, iy, tx, ty;
       /* Calculate acceleration for the frame. */
-      double ax = th*cos(obj->dir);
-      double ay = th*sin(obj->dir);
+      double ax = th * cos( obj->dir );
+      double ay = th * sin( obj->dir );
 
       /* Limit the speed. */
-      if (limit) {
+      if ( limit ) {
          vmod = MOD( vx, vy );
-         if (vmod > obj->speed_max) {
+         if ( vmod > obj->speed_max ) {
             /* We limit by applying a force against it. */
-            vang  = ANGLE( vx, vy ) + M_PI;
-            vmod  = 3. * (vmod - obj->speed_max);
+            vang = ANGLE( vx, vy ) + M_PI;
+            vmod = 3. * ( vmod - obj->speed_max );
 
             /* Update accel. */
-            ax += vmod * cos(vang);
-            ay += vmod * sin(vang);
+            ax += vmod * cos( vang );
+            ay += vmod * sin( vang );
          }
       }
 
       /* x component */
       tx = ix = ax;
-      tx += 2.*ix + h*tx;
-      tx += 2.*ix + h*tx;
-      tx += ix + h*tx;
-      tx *= h/6.;
+      tx += 2. * ix + h * tx;
+      tx += 2. * ix + h * tx;
+      tx += ix + h * tx;
+      tx *= h / 6.;
 
       vx += tx;
       px += vx * h;
 
       /* y component */
       ty = iy = ay;
-      ty += 2.*iy + h*ty;
-      ty += 2.*iy + h*ty;
-      ty += iy + h*ty;
-      ty *= h/6.;
+      ty += 2. * iy + h * ty;
+      ty += 2. * iy + h * ty;
+      ty += iy + h * ty;
+      ty *= h / 6.;
 
       vy += ty;
       py += vy * h;
 
       /* rotation. */
-      obj->dir += obj->dir_vel*h;
+      obj->dir += obj->dir_vel * h;
    }
    vec2_cset( &obj->vel, vx, vy );
    vec2_cset( &obj->pos, px, py );
 
    /* Validity check. */
-   if (obj->dir >= 2.*M_PI)
-      obj->dir -= 2.*M_PI;
-   else if (obj->dir < 0.)
-      obj->dir += 2.*M_PI;
+   if ( obj->dir >= 2. * M_PI )
+      obj->dir -= 2. * M_PI;
+   else if ( obj->dir < 0. )
+      obj->dir += 2. * M_PI;
 }
 
 /**
@@ -230,7 +231,7 @@ static void solid_update_rk4( Solid *obj, double dt )
  */
 double solid_maxspeed( const Solid *s, double speed, double accel )
 {
-   (void) s;
+   (void)s;
    return speed + accel / 3.;
 }
 
@@ -243,10 +244,10 @@ double solid_maxspeed( const Solid *s, double speed, double accel )
  *    @param pos Initial solid position.
  *    @param vel Initial solid velocity.
  */
-void solid_init( Solid* dest, double mass, double dir,
-      const vec2* pos, const vec2* vel, int update )
+void solid_init( Solid *dest, double mass, double dir, const vec2 *pos,
+                 const vec2 *vel, int update )
 {
-   memset(dest, 0, sizeof(Solid));
+   memset( dest, 0, sizeof( Solid ) );
 
    dest->mass = mass;
 
@@ -257,18 +258,16 @@ void solid_init( Solid* dest, double mass, double dir,
    dest->accel = 0.;
 
    /* Set direction. */
-   dest->dir = dir;
-   if ((dest->dir > 2.*M_PI) || (dest->dir < 0.))
-      dest->dir = fmod(dest->dir, 2.*M_PI);
+   dest->dir = angle_clean( dir );
 
    /* Set velocity. */
-   if (vel == NULL)
+   if ( vel == NULL )
       vectnull( &dest->vel );
    else
       dest->vel = *vel;
 
    /* Set position. */
-   if (pos == NULL)
+   if ( pos == NULL )
       vectnull( &dest->pos );
    else
       dest->pos = *pos;
@@ -278,18 +277,19 @@ void solid_init( Solid* dest, double mass, double dir,
    dest->speed_max = -1.; /* Negative is invalid. */
 
    /* Handle update. */
-   switch (update) {
-      case SOLID_UPDATE_RK4:
-         dest->update = solid_update_rk4;
-         break;
+   switch ( update ) {
+   case SOLID_UPDATE_RK4:
+      dest->update = solid_update_rk4;
+      break;
 
-      case SOLID_UPDATE_EULER:
-         dest->update = solid_update_euler;
-         break;
+   case SOLID_UPDATE_EULER:
+      dest->update = solid_update_euler;
+      break;
 
-      default:
-         WARN(_("Solid initialization did not specify correct update function!"));
-         dest->update = solid_update_rk4;
-         break;
+   default:
+      WARN(
+         _( "Solid initialization did not specify correct update function!" ) );
+      dest->update = solid_update_rk4;
+      break;
    }
 }

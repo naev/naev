@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Taxumi IIIa">
- <lua>spob/lua/soromid_mil_restricted.lua</lua>
+ <lua>soromid_mil_restricted.lua</lua>
  <pos x="-4290.427536" y="1615.597401"/>
  <GFX>
   <space>moon-M06.webp</space>

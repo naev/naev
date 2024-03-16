@@ -5,5 +5,5 @@
 
 #include "space.h"
 
-int dpl_saveAll (void);
+int dpl_saveAll( void );
 int dpl_saveSpob( const Spob *p );

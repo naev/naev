@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fyruse Monastery">
- <lua>spob/lua/sirius_mil_restricted.lua</lua>
+ <lua>sirius_mil_restricted.lua</lua>
  <pos x="3795.124991" y="8868.896979"/>
  <GFX>
   <space>station-fleetbase.webp</space>

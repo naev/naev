@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sirou Enclave">
- <lua>spob/lua/empire_mil_restricted.lua</lua>
+ <lua>empire_mil_restricted.lua</lua>
  <pos x="12600.753010" y="-199.793412"/>
  <GFX>
   <space>station-shipyard2.webp</space>

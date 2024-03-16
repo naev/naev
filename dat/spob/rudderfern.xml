@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Rudderfern">
- <lua>spob/lua/highclass.lua</lua>
+ <lua>highclass.lua</lua>
  <pos x="-17255.078803" y="-5266.400375"/>
  <GFX>
   <space>moon-L00.webp</space>

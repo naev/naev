@@ -4,7 +4,8 @@
 /**
  * @file naev_version.c
  *
- * @brief Implements naev_version() in a separate compilation unit, so that a "git pull" only forces a recompile of this tiny piece plus a relink.
+ * @brief Implements naev_version() in a separate compilation unit, so that a
+ * "git pull" only forces a recompile of this tiny piece plus a relink.
  */
 /** @cond */
 #include "naev.h"
@@ -25,16 +26,16 @@ static char version_human[STRMAX_SHORT]; /**< Human readable version. */
 const char *naev_version( int long_version )
 {
    /* Set up the long version. */
-   if (long_version) {
-      if (version_human[0] == '\0')
-         snprintf( version_human, sizeof(version_human),
-               " "APPNAME" v%s%s - %s", VERSION,
+   if ( long_version ) {
+      if ( version_human[0] == '\0' )
+         snprintf( version_human, sizeof( version_human ),
+                   " " APPNAME " v%s%s - %s", VERSION,
 #ifdef DEBUGGING
-               _(" debug"),
-#else /* DEBUGGING */
-               "",
+                   _( " debug" ),
+#else  /* DEBUGGING */
+                   "",
 #endif /* DEBUGGING */
-               start_name() );
+                   start_name() );
       return version_human;
    }
 

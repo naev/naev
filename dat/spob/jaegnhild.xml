@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jaegnhild">
- <lua>spob/lua/highclass.lua</lua>
+ <lua>highclass.lua</lua>
  <pos x="19330.000000" y="-3515.000000"/>
  <GFX>
   <space>moon-O00.webp</space>

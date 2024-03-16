@@ -202,6 +202,9 @@ function atk.flyby( target, dist )
       -- Also try to shoot missiles
       atk.dogfight_seekers( dist, dir )
    end
+
+   -- Always launch fighters for now
+   ai.weapset( 5 )
 end
 
 --[[
@@ -266,6 +269,9 @@ function atk.space_sup( target, dist )
       end
       ai.shoot(true)
    end
+
+   -- Always launch fighters for now
+   ai.weapset( 5 )
 end
 
 local function ___atk_g_ranged_dogfight( target, dist )
@@ -358,7 +364,7 @@ local function ___atk_g_ranged_strafe( target, dist )
    end
 
    -- We didn't shoot with all seekers: see if it's appropriate to use turreted ones
-   if (not shoot4) then
+   if not shoot4 then
       range = ai.getweaprange( 9 )
       range = math.min ( range - dist * radial_vel / ( ai.getweapspeed( 9 ) - radial_vel ), range )
       if dist < range*0.95 then

@@ -5,4 +5,4 @@
 
 #include "nlua.h"
 
-int luaopen_enet(lua_State *l);
+int luaopen_enet( lua_State *l );

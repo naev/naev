@@ -6,32 +6,31 @@
 #include "log.h"
 
 /* Auxiliary Effect Slot. */
-ALvoid (AL_APIENTRY *nalGenAuxiliaryEffectSlots)(ALsizei,ALuint*);
-ALvoid (AL_APIENTRY *nalDeleteAuxiliaryEffectSlots)(ALsizei,ALuint*);
-ALboolean (AL_APIENTRY *nalIsAuxiliaryEffectSlot)(ALuint);
-ALvoid (AL_APIENTRY *nalAuxiliaryEffectSloti)(ALuint,ALenum,ALint);
-ALvoid (AL_APIENTRY *nalAuxiliaryEffectSlotiv)(ALuint,ALenum,ALint*);
-ALvoid (AL_APIENTRY *nalAuxiliaryEffectSlotf)(ALuint,ALenum,ALfloat);
-ALvoid (AL_APIENTRY *nalAuxiliaryEffectSlotfv)(ALuint,ALenum,ALfloat*);
-ALvoid (AL_APIENTRY *nalGetAuxiliaryEffectSloti)(ALuint,ALenum,ALint*);
-ALvoid (AL_APIENTRY *nalGetAuxiliaryEffectSlotiv)(ALuint,ALenum,ALint*);
-ALvoid (AL_APIENTRY *nalGetAuxiliaryEffectSlotf)(ALuint,ALenum,ALfloat*);
-ALvoid (AL_APIENTRY *nalGetAuxiliaryEffectSlotfv)(ALuint,ALenum,ALfloat*);
+ALvoid( AL_APIENTRY *nalGenAuxiliaryEffectSlots )( ALsizei, ALuint * );
+ALvoid( AL_APIENTRY *nalDeleteAuxiliaryEffectSlots )( ALsizei, ALuint * );
+ALboolean( AL_APIENTRY *nalIsAuxiliaryEffectSlot )( ALuint );
+ALvoid( AL_APIENTRY *nalAuxiliaryEffectSloti )( ALuint, ALenum, ALint );
+ALvoid( AL_APIENTRY *nalAuxiliaryEffectSlotiv )( ALuint, ALenum, ALint * );
+ALvoid( AL_APIENTRY *nalAuxiliaryEffectSlotf )( ALuint, ALenum, ALfloat );
+ALvoid( AL_APIENTRY *nalAuxiliaryEffectSlotfv )( ALuint, ALenum, ALfloat * );
+ALvoid( AL_APIENTRY *nalGetAuxiliaryEffectSloti )( ALuint, ALenum, ALint * );
+ALvoid( AL_APIENTRY *nalGetAuxiliaryEffectSlotiv )( ALuint, ALenum, ALint * );
+ALvoid( AL_APIENTRY *nalGetAuxiliaryEffectSlotf )( ALuint, ALenum, ALfloat * );
+ALvoid( AL_APIENTRY *nalGetAuxiliaryEffectSlotfv )( ALuint, ALenum, ALfloat * );
 /* Filter. */
-ALvoid (AL_APIENTRY *nalGenFilters)(ALsizei,ALuint*);
-ALvoid (AL_APIENTRY *nalDeleteFilters)(ALsizei,ALuint*);
-ALvoid (AL_APIENTRY *nalFilteri)(ALuint,ALenum,ALint);
-ALvoid (AL_APIENTRY *nalFilteriv)(ALuint,ALenum,ALint*);
-ALvoid (AL_APIENTRY *nalFilterf)(ALuint,ALenum,ALfloat);
-ALvoid (AL_APIENTRY *nalFilterfv)(ALuint,ALenum,ALfloat*);
+ALvoid( AL_APIENTRY *nalGenFilters )( ALsizei, ALuint * );
+ALvoid( AL_APIENTRY *nalDeleteFilters )( ALsizei, ALuint * );
+ALvoid( AL_APIENTRY *nalFilteri )( ALuint, ALenum, ALint );
+ALvoid( AL_APIENTRY *nalFilteriv )( ALuint, ALenum, ALint * );
+ALvoid( AL_APIENTRY *nalFilterf )( ALuint, ALenum, ALfloat );
+ALvoid( AL_APIENTRY *nalFilterfv )( ALuint, ALenum, ALfloat * );
 /* Effect. */
-ALvoid (AL_APIENTRY *nalGenEffects)(ALsizei,ALuint*);
-ALvoid (AL_APIENTRY *nalDeleteEffects)(ALsizei,ALuint*);
-ALvoid (AL_APIENTRY *nalEffecti)(ALuint,ALenum,ALint);
-ALvoid (AL_APIENTRY *nalEffectiv)(ALuint,ALenum,ALint*);
-ALvoid (AL_APIENTRY *nalEffectf)(ALuint,ALenum,ALfloat);
-ALvoid (AL_APIENTRY *nalEffectfv)(ALuint,ALenum,ALfloat*);
-
+ALvoid( AL_APIENTRY *nalGenEffects )( ALsizei, ALuint * );
+ALvoid( AL_APIENTRY *nalDeleteEffects )( ALsizei, ALuint * );
+ALvoid( AL_APIENTRY *nalEffecti )( ALuint, ALenum, ALint );
+ALvoid( AL_APIENTRY *nalEffectiv )( ALuint, ALenum, ALint * );
+ALvoid( AL_APIENTRY *nalEffectf )( ALuint, ALenum, ALfloat );
+ALvoid( AL_APIENTRY *nalEffectfv )( ALuint, ALenum, ALfloat * );
 
 #ifdef DEBUGGING
 /**
@@ -45,31 +44,32 @@ void al_checkHandleError( ALenum err, const char *func, int line )
    const char *errstr;
 
    /* No error. */
-   if (err == AL_NO_ERROR)
+   if ( err == AL_NO_ERROR )
       return;
 
    /* Get the message. */
-   switch (err) {
-      case AL_INVALID_NAME:
-         errstr = _("a bad name (ID) was passed to an OpenAL function");
-         break;
-      case AL_INVALID_ENUM:
-         errstr = _("an invalid enum value was passed to an OpenAL function");
-         break;
-      case AL_INVALID_VALUE:
-         errstr = _("an invalid value was passed to an OpenAL function");
-         break;
-      case AL_INVALID_OPERATION:
-         errstr = _("the requested operation is not valid");
-         break;
-      case AL_OUT_OF_MEMORY:
-         errstr = _("the requested operation resulted in OpenAL running out of memory");
-         break;
+   switch ( err ) {
+   case AL_INVALID_NAME:
+      errstr = _( "a bad name (ID) was passed to an OpenAL function" );
+      break;
+   case AL_INVALID_ENUM:
+      errstr = _( "an invalid enum value was passed to an OpenAL function" );
+      break;
+   case AL_INVALID_VALUE:
+      errstr = _( "an invalid value was passed to an OpenAL function" );
+      break;
+   case AL_INVALID_OPERATION:
+      errstr = _( "the requested operation is not valid" );
+      break;
+   case AL_OUT_OF_MEMORY:
+      errstr = _(
+         "the requested operation resulted in OpenAL running out of memory" );
+      break;
 
-      default:
-         errstr = _("unknown error");
-         break;
+   default:
+      errstr = _( "unknown error" );
+      break;
    }
-   WARN(_("OpenAL error [%s:%d]: %s"), func, line, errstr);
+   WARN( _( "OpenAL error [%s:%d]: %s" ), func, line, errstr );
 }
 #endif /* DEBUGGING */

@@ -10,8 +10,8 @@
  * Window stuff.
  */
 void shipyard_open( unsigned int wid );
-void shipyard_update( unsigned int wid, const char* str );
-void shipyard_cleanup (void);
+void shipyard_update( unsigned int wid, const char *str );
+void shipyard_cleanup( void );
 
 /*
  * Helper functions.

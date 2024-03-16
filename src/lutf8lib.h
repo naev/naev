@@ -6,4 +6,4 @@
 #include <lualib.h>
 /** @endcond */
 
-int luaopen_utf8 (lua_State *L);
+int luaopen_utf8( lua_State *L );
