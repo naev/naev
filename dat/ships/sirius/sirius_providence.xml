@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Providence">
- <lua>ships/lua/sirius_providence.lua</lua>
+ <lua>sirius_providence.lua</lua>
  <points>120</points>
  <base_type>Providence</base_type>
  <gfx size="126" sx="12" sy="12">providence</gfx>
