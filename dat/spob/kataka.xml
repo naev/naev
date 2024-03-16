@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kataka">
  <feature>#pSoromid Homeworld#0</feature>
- <lua>spob/lua/soromid_mil_kataka.lua</lua>
+ <lua>soromid_mil_kataka.lua</lua>
  <pos x="-5945.866695" y="8183.563291"/>
  <GFX>
   <space>K03.webp</space>

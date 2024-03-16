@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ruadan Host">
- <lua>spob/lua/zalek_mil_ruadan.lua</lua>
+ <lua>zalek_mil_ruadan.lua</lua>
  <pos x="11792.645737" y="7261.141426"/>
  <GFX>
   <space>station-battlestation.webp</space>

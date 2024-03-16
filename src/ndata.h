@@ -65,6 +65,7 @@
 #define EFFECT_DATA_PATH "effects/"           /**< Path to effects. */
 #define MAP_DATA_PATH "outfits/maps/"         /**< Path to maps. */
 #define SPOB_DATA_PATH "spob/"                /**< Path to spobs. */
+#define SPOB_DATA_LUA_PATH "spob/lua/"        /**< Path to spob Lua data. */
 #define VIRTUALSPOB_DATA_PATH "spob_virtual/" /**< Path to spobs. */
 #define SYSTEM_DATA_PATH "ssys/"              /**< Path to systems. */
 #define SHIP_DATA_PATH "ships/"               /**< Path to ships. */

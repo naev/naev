@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Maanen's Moon">
- <lua>spob/lua/maanens_moon.lua</lua>
+ <lua>maanens_moon.lua</lua>
  <pos x="-9325.528927" y="5175.040881"/>
  <GFX>
   <space>moon-K00.webp</space>
