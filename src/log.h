@@ -10,6 +10,7 @@
 #include "gettext.h"
 /** @endcond */
 
+#include "debug.h"
 #include "nstring.h"
 
 #define LOG( str, ... ) ( logprintf( stdout, 1, str, ##__VA_ARGS__ ) )
@@ -21,7 +22,8 @@
      logprintf( stderr, 1, str, ##__VA_ARGS__ ), raise( SIGINT ) )
 #else /* DEBUG_PARANOID */
 #define WARN( str, ... )                                                       \
-   ( logprintf( stderr, 0, _( "Warning: [%s] " ), __func__ ),                  \
+   ( debug_logBacktrace(),                                                     \
+     logprintf( stderr, 0, _( "Warning: [%s] " ), __func__ ),                  \
      logprintf( stderr, 1, str, ##__VA_ARGS__ ) )
 #endif /* DEBUG_PARANOID */
 #define ERR( str, ... )                                                        \
