@@ -22,6 +22,7 @@
 #include "nlua_pilotoutfit.h"
 #include "pilot.h"
 #include "player.h"
+#include "player_autonav.h"
 #include "spfx.h"
 #include "weapon.h"
 
@@ -250,7 +251,7 @@ void pilot_weapSetUpdate( Pilot *p )
       if ( !volley ) {
          int s = 0;
          for ( int j = 0; j < i; j++ ) {
-            PilotOutfitSlot *posj = p->outfits[j];
+            const PilotOutfitSlot *posj = p->outfits[j];
             if ( posj->state != PILOT_OUTFIT_ON )
                continue;
             /* Found a match. */
@@ -1267,6 +1268,10 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
 
    /* Reset timer. */
    w->timer += rate_mod * outfit_delay( w->outfit );
+
+   /* Reset autonav if is player. */
+   if ( pilot_isPlayer( p ) )
+      player_autonavReset( 1. );
 
    return 1;
 }

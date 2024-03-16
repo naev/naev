@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mutris">
  <feature>#pSirius Homeworld#0</feature>
- <lua>spob/lua/sirius_mil_mutris.lua</lua>
+ <lua>sirius_mil_mutris.lua</lua>
  <pos x="26196.025870" y="16073.556994"/>
  <GFX>
   <space>L00.webp</space>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Ira">
- <lua>ships/lua/soromid.lua</lua>
+ <lua>soromid.lua</lua>
  <points>200</points>
  <base_type>Ira</base_type>
  <gfx size="112" sx="12" sy="12">ira</gfx>

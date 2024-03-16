@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wellen">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="326.106374" y="-3415.535179"/>
  <GFX>
   <space>moon-J00.webp</space>

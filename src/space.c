@@ -2310,8 +2310,19 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
 
       xmlr_strd( node, "display", spob->display );
       xmlr_strd( node, "feature", spob->feature );
-      xmlr_strd( node, "lua", spob->lua_file );
       xmlr_float( node, "radius", spob->radius );
+      if ( xml_isNode( node, "lua" ) ) {
+         const char *nstr = xml_get( node );
+         if ( nstr == NULL ) {
+            WARN( _( "Spob '%s' has invalid '%s' node." ), spob->name, "lua" );
+            continue;
+         }
+         if ( nstr[0] == '/' )
+            spob->lua_file = strdup( nstr );
+         else
+            SDL_asprintf( &spob->lua_file, SPOB_DATA_LUA_PATH "%s", nstr );
+         continue;
+      }
       if ( xml_isNode( node, "marker" ) ) {
          const char *s = xml_get( node );
          spob->marker  = shaders_getSimple( s );

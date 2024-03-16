@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fort Dumas">
- <lua>spob/lua/dvaered_mil_restricted.lua</lua>
+ <lua>dvaered_mil_restricted.lua</lua>
  <pos x="12037.296422" y="2365.926884"/>
  <GFX>
   <space>000.webp</space>

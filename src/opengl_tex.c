@@ -359,7 +359,6 @@ glTexture *gl_loadImageData( float *data, int w, int h, int sx, int sy,
    texture->sy = (double)sy;
 
    /* Set up texture. */
-   SDL_mutexP( gl_lock );
    tex_ctxSet();
    texture->texture = gl_texParameters( 0 );
 
@@ -371,7 +370,6 @@ glTexture *gl_loadImageData( float *data, int w, int h, int sx, int sy,
    /* Check errors. */
    gl_checkErr();
    tex_ctxUnset();
-   SDL_mutexV( gl_lock );
 
    /* Set up values. */
    texture->sw  = texture->w / texture->sx;

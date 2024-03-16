@@ -4,6 +4,7 @@
 #pragma once
 
 /** @cond */
+#include <stddef.h>
 #include <stdint.h>
 /** @endcond */
 

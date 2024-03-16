@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Marauder">
- <lua>ships/lua/soromid.lua</lua>
+ <lua>soromid.lua</lua>
  <points>40</points>
  <base_type>Marauder</base_type>
  <gfx size="66">marauder</gfx>

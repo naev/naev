@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hartwell Nidus">
- <lua>spob/lua/soromid_mil_restricted.lua</lua>
+ <lua>soromid_mil_restricted.lua</lua>
  <pos x="10165.228472" y="-10541.797739"/>
  <GFX>
   <space>station-fleetbase2.webp</space>

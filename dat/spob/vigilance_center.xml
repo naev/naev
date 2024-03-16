@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vigilance Center">
- <lua>spob/lua/zalek_mil_restricted.lua</lua>
+ <lua>zalek_mil_restricted.lua</lua>
  <pos x="2944.327674" y="3312.368633"/>
  <GFX>
   <space>zalek_station2.webp</space>

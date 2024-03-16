@@ -1247,7 +1247,7 @@ static void player_renderAimHelper( double dt )
 void player_think( Pilot *pplayer, const double dt )
 {
    Pilot *target;
-   int    facing, fired;
+   int    facing;
 
    /* last i heard, the dead don't think */
    if ( pilot_isFlag( pplayer, PILOT_DEAD ) ) {
@@ -1352,12 +1352,8 @@ void player_think( Pilot *pplayer, const double dt )
    /*
     * Weapon shooting stuff
     */
-   fired = 0;
    pilot_shoot( pplayer, player_isFlag( PLAYER_PRIMARY ),
                 player_isFlag( PLAYER_SECONDARY ) );
-
-   if ( fired )
-      player_autonavReset( 1. );
 
    if ( !player_isFlag( PLAYER_AUTONAV ) ) {
       double acc = player_acc;
@@ -4088,7 +4084,7 @@ static Spob *player_parse( xmlNodePtr parent )
    a = RNGF() * 2. * M_PI;
    r = RNGF() * pnt->radius * 0.8;
    player_warp( pnt->pos.x + r * cos( a ), pnt->pos.y + r * sin( a ) );
-   player.p->solid.dir = RNG( 0, 359 ) * M_PI / 180.;
+   player.p->solid.dir = 2. * M_PI * RNGF();
 
    /* Initialize outfits. */
    pilot_outfitLInitAll( player.p );

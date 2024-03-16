@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Apprehension">
- <lua>ships/lua/thurion.lua</lua>
+ <lua>thurion.lua</lua>
  <points>90</points>
  <base_type>Apprehension</base_type>
  <gfx size="90" sx="12" sy="12">apprehension</gfx>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gayathi">
- <lua>spob/lua/highclass.lua</lua>
+ <lua>highclass.lua</lua>
  <pos x="24007.736460" y="-17270.936137"/>
  <GFX>
   <space>O02.webp</space>

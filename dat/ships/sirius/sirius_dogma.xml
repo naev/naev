@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Dogma">
- <lua>ships/lua/sirius_dogma.lua</lua>
+ <lua>sirius_dogma.lua</lua>
  <points>200</points>
  <base_type>Dogma</base_type>
  <gfx size="128" sx="12" sy="12">dogma</gfx>

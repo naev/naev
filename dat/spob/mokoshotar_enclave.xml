@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mokoshotar Enclave">
- <lua>spob/lua/empire_mil_restricted.lua</lua>
+ <lua>empire_mil_restricted.lua</lua>
  <pos x="-3860.547659" y="3407.931727"/>
  <GFX>
   <space>station-cylinder.webp</space>

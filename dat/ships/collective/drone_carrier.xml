@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Drone Carrier">
- <lua>ships/lua/thurion.lua</lua>
+ <lua>thurion.lua</lua>
  <points>160</points>
  <base_type path="Drone_Carrier">Drone Carrier</base_type>
  <gfx size="96" sx="12" sy="12">drone_carrier</gfx>

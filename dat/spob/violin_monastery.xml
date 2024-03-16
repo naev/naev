@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Violin Monastery">
- <lua>spob/lua/sirius_mil_restricted.lua</lua>
+ <lua>sirius_mil_restricted.lua</lua>
  <pos x="8471.615119" y="17666.192451"/>
  <GFX>
   <space>station-battlestation.webp</space>

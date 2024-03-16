@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Vigilance">
- <lua>ships/lua/dvaered.lua</lua>
+ <lua>dvaered.lua</lua>
  <points>90</points>
  <base_type>Vigilance</base_type>
  <gfx size="95" sx="10" sy="10">vigilance_dvaered</gfx>
