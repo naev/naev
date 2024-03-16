@@ -17,6 +17,7 @@
 
 #include "array.h"
 #include "log.h"
+#include "physics.h"
 
 /*
  * Prototypes
@@ -393,7 +394,7 @@ const CollPolyView *poly_view( const CollPoly *poly, double dir )
 #ifdef DEBUGGING
    if ( ( dir > 2. * M_PI ) || ( dir < 0. ) ) {
       WARN( _( "Angle not between 0 and 2.*M_PI [%f]." ), dir );
-      return &poly->views[0];
+      dir = angle_clean( dir );
    }
 #endif /* DEBUGGING */
 
