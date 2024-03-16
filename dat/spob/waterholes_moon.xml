@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Waterhole's Moon">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="-5089.422980" y="-1733.131108"/>
  <GFX>
   <space>moon-G00.webp</space>

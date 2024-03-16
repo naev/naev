@@ -10,7 +10,6 @@
 
 #include "attributes.h"
 #include "colour.h"
-#include "physics.h"
 
 /* Recommended for compatibility and such */
 #define RMASK SDL_SwapLE32( 0x000000ff ) /**< Red bit mask. */

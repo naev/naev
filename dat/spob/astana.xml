@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Astana">
- <lua>spob/lua/empire_mil_restricted.lua</lua>
+ <lua>empire_mil_restricted.lua</lua>
  <pos x="4651.529604" y="5344.310609"/>
  <GFX>
   <space>K03.webp</space>

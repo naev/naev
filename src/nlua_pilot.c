@@ -789,9 +789,7 @@ static int pilotL_add( lua_State *L )
    }
 
    /* Make sure angle is valid. */
-   a = fmod( a, 2. * M_PI );
-   if ( a < 0. )
-      a += 2. * M_PI;
+   a = angle_clean( a );
 
    /* Create the pilot. */
    p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0 );
@@ -3133,9 +3131,7 @@ static int pilotL_setDir( lua_State *L )
    double d = luaL_checknumber( L, 2 );
 
    /* Set direction. */
-   p->solid.dir = fmodf( d, 2 * M_PI );
-   if ( p->solid.dir < 0. )
-      p->solid.dir += 2 * M_PI;
+   p->solid.dir = angle_clean( d );
 
    return 0;
 }

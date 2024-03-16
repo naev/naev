@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Brandt Cloister">
- <lua>spob/lua/sirius_mil_restricted.lua</lua>
+ <lua>sirius_mil_restricted.lua</lua>
  <pos x="18091.909156" y="10347.224500"/>
  <GFX>
   <space>station-battlestation.webp</space>

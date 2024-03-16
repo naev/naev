@@ -32,7 +32,7 @@ const char _UNIT_PERCENT[]  = N_( "%" );
 /**
  * @brief Converts an angle to the [0, 2*M_PI] range.
  */
-static double angle_cleanup( double a )
+double angle_clean( double a )
 {
    if ( FABS( a ) >= 2. * M_PI ) {
       a = fmod( a, 2. * M_PI );
@@ -42,6 +42,7 @@ static double angle_cleanup( double a )
    }
    return a;
 }
+
 /**
  * @brief Gets the difference between two angles.
  *
@@ -51,8 +52,8 @@ static double angle_cleanup( double a )
 double angle_diff( double ref, double a )
 {
    /* Get angles. */
-   double a1 = angle_cleanup( ref );
-   double a2 = angle_cleanup( a );
+   double a1 = angle_clean( ref );
+   double a2 = angle_clean( a );
    double d  = a2 - a1;
 
    /* Filter offsets. */
@@ -257,9 +258,7 @@ void solid_init( Solid *dest, double mass, double dir, const vec2 *pos,
    dest->accel = 0.;
 
    /* Set direction. */
-   dest->dir = dir;
-   if ( ( dest->dir > 2. * M_PI ) || ( dest->dir < 0. ) )
-      dest->dir = fmod( dest->dir, 2. * M_PI );
+   dest->dir = angle_clean( dir );
 
    /* Set velocity. */
    if ( vel == NULL )

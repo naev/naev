@@ -277,6 +277,12 @@ static int munitionL_getAll( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Sees if a weapon is hostile to a pilot or not.
+ *
+ *    @param w Weapon to check.
+ *    @param p Pilot to see if weapon is hostile to them.
+ */
 static int weapon_isHostile( const Weapon *w, const Pilot *p )
 {
    if ( p->id == w->parent )

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fort Sarrii">
- <lua>spob/lua/dvaered_mil_restricted.lua</lua>
+ <lua>dvaered_mil_restricted.lua</lua>
  <pos x="-2675.964475" y="-6088.010868"/>
  <GFX>
   <space>station-fleetbase2.webp</space>

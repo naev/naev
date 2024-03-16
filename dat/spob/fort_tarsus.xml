@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fort Tarsus">
- <lua>spob/lua/dvaered_mil_restricted.lua</lua>
+ <lua>dvaered_mil_restricted.lua</lua>
  <pos x="-8814.746224" y="-7876.111106"/>
  <GFX>
   <space>000.webp</space>

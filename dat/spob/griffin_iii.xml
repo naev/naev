@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Griffin III">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="7197.470245" y="10978.871016"/>
  <GFX>
   <space>M07.webp</space>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vigil Station">
- <lua>spob/lua/soromid_mil_restricted.lua</lua>
+ <lua>soromid_mil_restricted.lua</lua>
  <pos x="6285.850816" y="-3013.641952"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
