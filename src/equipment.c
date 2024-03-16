@@ -28,8 +28,6 @@
 #include "land.h"
 #include "land_outfits.h"
 #include "log.h"
-#include "map.h"
-#include "mission.h"
 #include "ndata.h"
 #include "nlua.h"
 #include "nlua_tk.h"
@@ -949,13 +947,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
 static void equipment_renderShip( double bx, double by, double bw, double bh,
                                   void *data )
 {
-   Pilot             *p;
-   int                s;
-   double             px, py, pw, ph, lr, lg, lb, li;
-   vec2               v;
-   GLint              fbo;
-   ShipWidgetData    *swd = data;
-   const unsigned int wid = swd->wid;
+   Pilot                *p;
+   int                   s;
+   double                px, py, pw, ph, lr, lg, lb, li;
+   vec2                  v;
+   GLint                 fbo;
+   const ShipWidgetData *swd = data;
+   const unsigned int    wid = swd->wid;
 
    /* Must have selected ship. */
    if ( eq_wgt.selected == NULL )
@@ -1833,10 +1831,7 @@ static void equipment_genOutfitList( unsigned int wid )
    if ( widget_exists( wid, EQUIPMENT_OUTFITS ) )
       return;
 
-   /* Allocate space. */
-   noutfits =
-      MAX( 1, player_numOutfits() ); /* This is the most we'll need, probably
-                                        less due to filtering. */
+   /* Set up arrays. */
    array_free( iar_outfits[active] );
    iar_outfits[active] = array_create( Outfit * );
 
