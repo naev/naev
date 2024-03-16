@@ -48,6 +48,9 @@ static int      func_enter  = LUA_NOREF;
  */
 static int player_autonavSetup( void );
 
+/**
+ * @brief Initialize the autonav code.
+ */
 int player_autonavInit( void )
 {
    nlua_env env = nlua_newEnv();
@@ -307,6 +310,11 @@ void player_autonavAbort( const char *reason )
    }
 }
 
+/**
+ * @brief Resets the game speed without disabling autonav.
+ *
+ *    @param s How many seconds to wait before starting autonav again.
+ */
 void player_autonavReset( double s )
 {
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_reset );
@@ -410,6 +418,9 @@ void player_updateAutonav( double dt )
    NTracingZoneEnd( _ctx );
 }
 
+/**
+ * @brief Signal to the autonav that a new system was entered.
+ */
 void player_autonavEnter( void )
 {
    /* Must be autonaving. */
