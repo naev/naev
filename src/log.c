@@ -19,7 +19,6 @@
 
 #include "conf.h"
 #include "ndata.h"
-#include "nstring.h"
 
 /**< Temporary storage buffers. */
 static char *outcopy = NULL;
@@ -46,7 +45,7 @@ static PHYSFS_File *logerr_file = NULL;
  * Prototypes
  */
 static void log_copy( int enable );
-static void log_append( FILE *stream, char *str );
+static void log_append( const FILE *stream, const char *str );
 static void log_cleanStream( PHYSFS_File **file, const char *fname,
                              const char *filedouble );
 static void log_purge( void );
@@ -239,7 +238,7 @@ static void log_cleanStream( PHYSFS_File **file, const char *fname,
  *    @param stream Destination stream (stdout or stderr)
  *    @param str String to append.
  */
-static void log_append( FILE *stream, char *str )
+static void log_append( const FILE *stream, const char *str )
 {
    int len = strlen( str );
    if ( stream == stdout ) {
