@@ -41,6 +41,7 @@
       * Use clang-format to format all the C code
       * Use enums internally to represent keybindinsg instead of strings
       * Always use replaygain information when available when loading vorbis files
+      * Stop repeating the same warning after a fixed amount of times
    * Fixes
       * PSO and Mizar nebulas have trails again
       * Removed fancy background mode
