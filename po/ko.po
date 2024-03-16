@@ -41402,7 +41402,7 @@ msgstr ""
 
 #: dat/events/npc/empire.lua:79
 msgid ""
-"\"If you get in a pickle wih a pirate and no Empire ship is around to save "
+"\"If you get in a pickle with a pirate and no Empire ship is around to save "
 "you, you can always bribe them to go away. No paperwork needed!\""
 msgstr ""
 

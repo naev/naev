@@ -76,7 +76,7 @@ local msg_lore = {
 local msg_tip = {
    _([["Lasers are very fast and have long range. Other Houses wish they had such good weapon technology!"]]),
    _([["Doing shipping for the Empire pays much better than other cargo missions. It is also a good way to curry favour with the Empire!"]]),
-   _([["If you get in a pickle wih a pirate and no Empire ship is around to save you, you can always bribe them to go away. No paperwork needed!"]]),
+   _([["If you get in a pickle with a pirate and no Empire ship is around to save you, you can always bribe them to go away. No paperwork needed!"]]),
 }
 
 local msg_cond = {
