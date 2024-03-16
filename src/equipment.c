@@ -38,7 +38,6 @@
 #include "player_fleet.h"
 #include "shipstats.h"
 #include "slots.h"
-#include "threadpool.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 #include "toolkit.h"
 
