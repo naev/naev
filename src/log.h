@@ -10,22 +10,12 @@
 #include "gettext.h"
 /** @endcond */
 
-#include "debug.h"
 #include "nstring.h"
 
-#define LOG( str, ... ) ( logprintf( stdout, 1, str, ##__VA_ARGS__ ) )
-#define LOGERR( str, ... ) ( logprintf( stderr, 1, str, ##__VA_ARGS__ ) )
-#ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
+#define LOG( str, ... ) logprintf( stdout, 1, str, ##__VA_ARGS__ )
+#define LOGERR( str, ... ) logprintf( stderr, 1, str, ##__VA_ARGS__ )
 #define WARN( str, ... )                                                       \
-   ( logprintf( stderr, 0, _( "WARNING %s:%d [%s]: " ), __FILE__, __LINE__,    \
-                __func__ ),                                                    \
-     logprintf( stderr, 1, str, ##__VA_ARGS__ ), raise( SIGINT ) )
-#else /* DEBUG_PARANOID */
-#define WARN( str, ... )                                                       \
-   ( debug_logBacktrace(),                                                     \
-     logprintf( stderr, 0, _( "Warning: [%s] " ), __func__ ),                  \
-     logprintf( stderr, 1, str, ##__VA_ARGS__ ) )
-#endif /* DEBUG_PARANOID */
+   log_warn( __FILE__, __LINE__, __func__, str, ##__VA_ARGS__ )
 #define ERR( str, ... )                                                        \
    ( logprintf( stderr, 0, _( "ERROR %s:%d [%s]: " ), __FILE__, __LINE__,      \
                 __func__ ),                                                    \
@@ -49,3 +39,5 @@ NONNULL( 3 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
 void log_init( void );
 void log_redirect( void );
 void log_clean( void );
+int  log_warn( const char *file, size_t line, const char *func, const char *fmt,
+               ... );

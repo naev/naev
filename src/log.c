@@ -19,6 +19,9 @@
 
 #include "conf.h"
 #include "ndata.h"
+#ifndef DEBUG_PARANOID
+#include "debug.h"
+#endif /* DEBUG_PARANOID */
 
 /**< Temporary storage buffers. */
 static char *outcopy = NULL;
@@ -44,12 +47,41 @@ static PHYSFS_File *logerr_file = NULL;
 /*
  * Prototypes
  */
+static int slogprintf( FILE *stream, int newline, const char *str, size_t n );
 static int vlogprintf( FILE *stream, int newline, const char *fmt, va_list ap );
 static void log_copy( int enable );
 static void log_append( const FILE *stream, const char *str );
 static void log_cleanStream( PHYSFS_File **file, const char *fname,
                              const char *filedouble );
 static void log_purge( void );
+
+/**
+ * @brief va_list version of logprintf and backend.
+ */
+static int slogprintf( FILE *stream, int newline, const char *str, size_t n )
+{
+   /* Append to strfer. */
+   if ( copying )
+      log_append( stream, str );
+
+   if ( stream == stdout && logout_file != NULL ) {
+      PHYSFS_writeBytes( logout_file, str, newline ? n + 1 : n );
+      if ( newline )
+         PHYSFS_flush( logout_file );
+   }
+
+   if ( stream == stderr && logerr_file != NULL ) {
+      PHYSFS_writeBytes( logerr_file, str, newline ? n + 1 : n );
+      if ( newline )
+         PHYSFS_flush( logerr_file );
+   }
+
+   /* Also print to the stream. */
+   n = fprintf( stream, "%s", str );
+   if ( newline )
+      fflush( stream );
+   return n;
+}
 
 /**
  * @brief va_list version of logprintf and backend.
@@ -74,27 +106,7 @@ static int vlogprintf( FILE *stream, int newline, const char *fmt, va_list ap )
    } else
       buf[n] = '\0';
 
-   /* Append to buffer. */
-   if ( copying )
-      log_append( stream, buf );
-
-   if ( stream == stdout && logout_file != NULL ) {
-      PHYSFS_writeBytes( logout_file, buf, newline ? n + 1 : n );
-      if ( newline )
-         PHYSFS_flush( logout_file );
-   }
-
-   if ( stream == stderr && logerr_file != NULL ) {
-      PHYSFS_writeBytes( logerr_file, buf, newline ? n + 1 : n );
-      if ( newline )
-         PHYSFS_flush( logerr_file );
-   }
-
-   /* Also print to the stream. */
-   n = fprintf( stream, "%s", buf );
-   if ( newline )
-      fflush( stream );
-
+   slogprintf( stream, newline, buf, n );
    free( buf );
    return n;
 }
@@ -281,4 +293,57 @@ copy_err:
    log_purge();
    WARN( _( "An error occurred while buffering %s!" ),
          stream == stdout ? "stdout" : "stderr" );
+}
+
+/**
+ * @brief Prints warnings, but skips if they are repeated too much.
+ */
+int log_warn( const char *file, size_t line, const char *func, const char *fmt,
+              ... )
+{
+   static char *warn_last_msg = NULL;
+   static int   warn_last_num;
+#ifndef DEBUG_PARANOID
+   debug_logBacktrace();
+#endif /* DEBUG_PARANOID */
+   va_list ap;
+   char   *buf;
+   size_t  n;
+
+   /* Create the new message. */
+   va_start( ap, fmt );
+   n = vsnprintf( NULL, 0, fmt, ap );
+   va_end( ap );
+   buf = malloc( n + 2 );
+   va_start( ap, fmt );
+   n = vsnprintf( buf, n + 1, fmt, ap );
+   va_end( ap );
+   buf[n]     = '\n';
+   buf[n + 1] = '\0';
+
+   /* See if we are repeating ourselves. */
+   if ( ( warn_last_msg != NULL ) && strcmp( warn_last_msg, buf ) == 0 ) {
+      warn_last_num++;
+      if ( warn_last_num == 10 )
+         logprintf( stderr, 1,
+                    _( "LAST WARNING PRINTED %d TIMES, SKIPPING FROM NOW ON" ),
+                    10 );
+      if ( warn_last_num >= 10 ) {
+         free( buf );
+         return 0;
+      }
+   }
+
+   /* Display messages. */
+   logprintf( stderr, 0, _( "WARNING %s:%lu [%s]: " ), file, line, func );
+   slogprintf( stderr, 1, buf, n );
+
+   /* Reset last message. */
+   free( warn_last_msg );
+   warn_last_msg = buf;
+
+#ifdef DEBUG_PARANOID
+   raise( SIGINT );
+#endif /* DEBUG_PARANOID */
+   return n;
 }
