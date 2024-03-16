@@ -81101,7 +81101,7 @@ msgstr ""
 #: dat/missions/neutral/majesteka_stowaways.lua:154
 msgid ""
 "The orphans look excited at their new home, a significant improvement over "
-"{spb}. It's not the ideal place for kid, but you think they will be well off "
+"{spb}. It's not the ideal place for kids, but you think they will be well off "
 "at their new location."
 msgstr ""
 
