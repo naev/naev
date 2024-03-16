@@ -19,6 +19,7 @@
 #include "nlua_data.h"
 #include "nlua_file.h"
 #include "nluadef.h"
+#include "physics.h"
 
 static int nlua_tex_counter = 0;
 
@@ -475,12 +476,7 @@ static int texL_spriteFromDir( lua_State *L )
    double           a   = luaL_checknumber( L, 2 );
 
    /* Calculate with parameter validity.. */
-   if ( ( a >= 2. * M_PI ) || ( a < 0. ) ) {
-      a = fmod( a, 2. * M_PI );
-      if ( a < 0. )
-         a += 2. * M_PI;
-   }
-   gl_getSpriteFromDir( &sx, &sy, tex->sx, tex->sy, a );
+   gl_getSpriteFromDir( &sx, &sy, tex->sx, tex->sy, angle_clean( a ) );
 
    /* Return. */
    lua_pushinteger( L, sx + 1 );
