@@ -6,6 +6,9 @@
  <location>enter</location>
  <chance>6</chance>
  <cond>
+   if not player.misnDone("Onion Society 01") then
+      return false
+   end
    local m = "Onion Society 02"
    if player.misnDone(m) or
       player.misnActive(m) then

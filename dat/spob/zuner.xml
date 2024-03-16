@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zuner">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="12745.111262" y="6444.312909"/>
  <GFX>
   <space>M02.webp</space>

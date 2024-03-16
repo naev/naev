@@ -64,4 +64,5 @@ void   solid_init( Solid *dest, double mass, double dir, const vec2 *pos,
 /*
  * misc
  */
+double angle_clean( double angle );
 double angle_diff( double ref, double a );

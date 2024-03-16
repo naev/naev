@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Heronus Nidus">
- <lua>spob/lua/soromid_mil_restricted.lua</lua>
+ <lua>soromid_mil_restricted.lua</lua>
  <pos x="-12991.493773" y="17143.680277"/>
  <GFX>
   <space>station-battlestation.webp</space>

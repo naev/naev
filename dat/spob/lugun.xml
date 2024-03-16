@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Lugun">
- <lua>spob/lua/zalek_mil_restricted.lua</lua>
+ <lua>zalek_mil_restricted.lua</lua>
  <pos x="-1930.617815" y="958.859182"/>
  <GFX>
   <space>station-commerce2.webp</space>

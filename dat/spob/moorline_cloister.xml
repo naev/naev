@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Moorline Cloister">
- <lua>spob/lua/soromid_mil_restricted.lua</lua>
+ <lua>soromid_mil_restricted.lua</lua>
  <pos x="-2730.715876" y="-9072.781321"/>
  <GFX>
   <space>000.webp</space>

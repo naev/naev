@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Foundation Station">
- <lua>spob/lua/pirate_clanworld.lua</lua>
+ <lua>pirate_clanworld.lua</lua>
  <pos x="1941.876493" y="767.371325"/>
  <GFX>
   <space>000.webp</space>

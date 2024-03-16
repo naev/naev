@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Heronus">
- <lua>spob/lua/soromid_mil_restricted.lua</lua>
+ <lua>soromid_mil_restricted.lua</lua>
  <pos x="-13175.246585" y="17327.640126"/>
  <GFX>
   <space>moon-M04.webp</space>

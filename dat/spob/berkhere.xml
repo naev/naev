@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Berkhere">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="-9197.292455" y="14843.960873"/>
  <GFX>
   <space>H00.webp</space>

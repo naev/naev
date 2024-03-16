@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Majesteka II">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="-5823.896952" y="1664.414834"/>
  <GFX>
   <space>K05.webp</space>
