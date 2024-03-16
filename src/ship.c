@@ -637,7 +637,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot,
    xmlr_attr_int_def( node, "exclusive", slot->exclusive, slot->exclusive );
    /* TODO: decide if exclusive should even belong in ShipOutfitSlot,
     * remove this hack, and fix slot->exclusive to slot->slot.exclusive
-    * in it's two previous occurrences, meaning three lines above and 12
+    * in its two previous occurrences, meaning three lines above and 12
     * lines above */
    /* hack */
    slot->slot.exclusive = slot->exclusive;

@@ -164,7 +164,7 @@ static int SDL_IsTrans( SDL_Surface *s, int x, int y )
  * Basically generates a map of what pixels are transparent.  Good for pixel
  *  perfect collision routines.
  *
- *    @param s Surface to map it's transparency.
+ *    @param s Surface to map its transparency.
  *    @param tight Whether or not to store transparency per bit or
  *    @return 0 on success.
  */

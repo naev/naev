@@ -1006,7 +1006,7 @@ static int hookL_custom( lua_State *L )
  * is in stealth and discovered by another pilot (not necessarily the
  * player).</li> <li> "idle" : triggered when the pilot becomes idle in manual
  * control.</li> <li> "lockon" : triggered when the pilot locked on a missile on
- * it's target.</li> <li> "stealth" : triggered when the pilot either enters or
+ * its target.</li> <li> "stealth" : triggered when the pilot either enters or
  * leaves stealth.</li> <li> "scanned" : triggered when the pilot is scanned by
  * another pilot.</li> <li> "scan" : triggered when the pilot scans another
  * pilot.</li>

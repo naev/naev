@@ -296,7 +296,7 @@ typedef struct OutfitModificationData_ {
    /* Active information (if applicable). */
    int    active;   /**< Outfit is active. */
    double duration; /**< Time the active outfit stays on (in seconds). */
-   double cooldown; /**< Time the active outfit stays off after it's duration
+   double cooldown; /**< Time the active outfit stays off after its duration
                        (in seconds). */
 
    /* All the modifiers are based on the outfit's ship stats, nothing here but

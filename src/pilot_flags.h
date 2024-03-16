@@ -45,14 +45,14 @@ enum {
    PILOT_BOARDABLE, /**< Pilot can be boarded even while active. */
    PILOT_BOARDED,   /**< Pilot has been boarded already. */
    PILOT_NOBOARD,   /**< Pilot can't be boarded. */
-   PILOT_BOARDING,  /**< Pilot is currently boarding it's target. */
+   PILOT_BOARDING,  /**< Pilot is currently boarding its target. */
    /* Disabling. */
    PILOT_NODISABLE,     /**< Pilot can't be disabled. */
    PILOT_DISABLED,      /**< Pilot is disabled. */
    PILOT_DISABLED_PERM, /**< Pilot is permanently disabled. */
    /* Death. */
    PILOT_NODEATH,     /**< Pilot can not die, will stay at 1 armour. */
-   PILOT_DEAD,        /**< Pilot is in it's dying throes */
+   PILOT_DEAD,        /**< Pilot is in its dying throes */
    PILOT_DEATH_SOUND, /**< Pilot just did death explosion. */
    PILOT_EXPLODED,    /**< Pilot did final death explosion. */
    PILOT_DELETE,      /**< Pilot will get deleted asap. */

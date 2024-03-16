@@ -416,7 +416,7 @@ static int gl_getGLInfo( void )
 }
 
 /**
- * @brief Sets the opengl state to it's default parameters.
+ * @brief Sets the opengl state to its default parameters.
  *
  *    @return 0 on success.
  */

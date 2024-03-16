@@ -3015,7 +3015,7 @@ msgstr ""
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:10
 msgid ""
 "The Patagium is a destroyer engine developed by Krain Industries to be used "
-"in the Starbridge. While it's performance exceeds other destroyer engines in "
+"in the Starbridge. While its performance exceeds other destroyer engines in "
 "terms of maximum speed and manouverability, the engine is not adequate for "
 "most other destroyers due to their higher mass."
 msgstr ""
@@ -6851,7 +6851,7 @@ msgstr "플라즈마 터렛 MK1"
 #: dat/outfits/weapons/heavy_ripper_turret.xml:10
 msgid ""
 "Built off the heavy ripper cannon, the ripper turret is the heaviest turret "
-"conventionally available to civilians. It's bulk, high energy requirements, "
+"conventionally available to civilians. Its bulk, high energy requirements, "
 "and high damage make it unsuitable for non-capital ships."
 msgstr ""
 
@@ -8403,7 +8403,7 @@ msgstr ""
 msgid ""
 "The Starbridge is the latest ship designed by Krain Industries. It is a "
 "lightweight destroyer reaching the same manoeuvrability as a corvette and "
-"comparable maximum speed. It's low mass comes at the cost of reduced "
+"comparable maximum speed. Its low mass comes at the cost of reduced "
 "structural space."
 msgstr ""
 
@@ -12126,7 +12126,7 @@ msgstr ""
 msgid ""
 "Being a small moon in an already growing system fewer colonists have paid "
 "attention to Corvus VI-b - the name itself is a bit of a giveaway. However "
-"the colonists of this moon appreciate it's larger neighbours which, "
+"the colonists of this moon appreciate its larger neighbours which, "
 "inadvertently, provide protection by being more important, juicier and more "
 "obvious targets."
 msgstr ""
@@ -13806,7 +13806,7 @@ msgstr ""
 msgid ""
 "Hastily constructed by forced labour in the wake of the Incident, Fort "
 "Raelid serves as a control point and listening post for Dvaered forces in "
-"the area. However, after it's construction, Warlords quickly lost interest "
+"the area. However, after its construction, Warlords quickly lost interest "
 "in the Nebula which was left to the Empire. Other than routine patrols, "
 "nothing often happens in this outpost."
 msgstr ""
@@ -15466,7 +15466,7 @@ msgstr ""
 msgid ""
 "This lonely outpost was once an active space-based research and development "
 "centre. Since the congregation of scientists to Ruadan, it has been all but "
-"abandoned. It's sole purpose now is as a refueling stop for the sparsely-"
+"abandoned. Its sole purpose now is as a refueling stop for the sparsely-"
 "populated south of Za'lek space."
 msgstr ""
 
@@ -21322,7 +21322,7 @@ msgstr ""
 
 #: dat/spob/stormgard.xml:28
 msgid ""
-"Stormgard is, despite it's harsh, icy environment, a heavily populated "
+"Stormgard is, despite its harsh, icy environment, a heavily populated "
 "world. This is because several elements of the emperor's family has made "
 "this world their home, and inevitably that means that imperial bureaucrats, "
 "courtiers, and general hangers-on are going to move here too. Industry is a "
@@ -21800,9 +21800,9 @@ msgstr ""
 msgid ""
 "Originally a small outpost, Tepdania Customs was refurnished into a customs "
 "station to control the flux of refugees fleeing from the Incident. However, "
-"it's main purpose has been to dissuade refugees from coming into Dvaered "
+"its main purpose has been to dissuade refugees from coming into Dvaered "
 "territories and push them towards specially designed worlds such as "
-"Majestika II. Since it's existance as a customs control, it has built up a "
+"Majestika II. Since its existance as a customs control, it has built up a "
 "reputation as a aggressive and unsympathetic to refugees. Although once "
 "sporting nearly a full Dvaered fleet, as the number of refugees have "
 "dwindled, so have the resources and the station has vast areas that are more "
@@ -27982,7 +27982,7 @@ msgstr "응답이 없습니다."
 #. Need to start braking
 #. Need to get closer
 #.
-#. -- Follows it's target.
+#. -- Follows its target.
 #. --
 #. Will just float without a target to escort.
 #. Stealth like whoever is being followed
@@ -101009,7 +101009,7 @@ msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh09.lua:273
 #: dat/missions/zalek/blackhole/zbh09.lua:282
-msgid "I guess we might as well try it. Experimental physics at it's finest."
+msgid "I guess we might as well try it. Experimental physics at its finest."
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh09.lua:274
@@ -104953,7 +104953,7 @@ msgstr ""
 #. Non-persistent state
 #. system with the drone and the return to start
 #. Mission details
-#. amount of mem.jumps the drone did to escape. Each jump reduces it's speed
+#. amount of mem.jumps the drone did to escape. Each jump reduces its speed
 #. mem.t_pla[2], mem.t_sys[2] = spob.getS("Gastan")
 #. Have to be at center of operations.
 #. Spaceport bar stuff

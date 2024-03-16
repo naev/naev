@@ -239,9 +239,9 @@ typedef struct PilotHook_ {
  */
 typedef enum EscortType_e {
    ESCORT_TYPE_NULL, /**< Invalid escort type. */
-   ESCORT_TYPE_BAY,  /**< Escort is from a fighter bay, controllable by it's
+   ESCORT_TYPE_BAY,  /**< Escort is from a fighter bay, controllable by its
                         parent and can dock. */
-   ESCORT_TYPE_MERCENARY, /**< Escort is a mercenary, controllable by it's
+   ESCORT_TYPE_MERCENARY, /**< Escort is a mercenary, controllable by its
                              parent. */
    ESCORT_TYPE_FLEET,     /**< Escort is part of the player's fleet. */
 } EscortType_t;

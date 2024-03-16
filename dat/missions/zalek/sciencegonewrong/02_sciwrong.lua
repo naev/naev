@@ -33,7 +33,7 @@ mem.t_pla = {}
 -- Mission details
 local reward = 2e6
 local reward_outfit = outfit.get("Toy Drone")
--- amount of mem.jumps the drone did to escape. Each jump reduces it's speed
+-- amount of mem.jumps the drone did to escape. Each jump reduces its speed
 mem.fled = false
 mem.jumps = 0
 mem.t_sys[1] = system.get("Xavier")
