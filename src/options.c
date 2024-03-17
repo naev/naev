@@ -87,7 +87,6 @@ static void   opt_gameplayUpdate( unsigned int wid, const char *str );
 static void opt_accessibility( unsigned int wid );
 static int  opt_accessibilitySave( unsigned int wid, const char *str );
 static void opt_accessibilityDefaults( unsigned int wid, const char *str );
-static void opt_setRoundedGUI( unsigned int wid, const char *str );
 static void opt_setBGBrightness( unsigned int wid, const char *str );
 static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
 static void opt_setJumpBrightness( unsigned int wid, const char *str );
