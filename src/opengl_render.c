@@ -31,6 +31,7 @@
 
 #include "array.h"
 #include "camera.h"
+#include "conf.h"
 #include "gui.h"
 #include "nmath.h"
 #include "opengl.h"
@@ -134,8 +135,7 @@ void gl_renderRoundedRectEmpty( double x, double y, double w, double h,
 void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
                      int ry )
 {
-
-   if ( rx && ry ) {
+   if ( conf.round_gui && rx && ry ) {
       GLfloat width  = H->m[0][0] / gl_view_matrix.m[0][0];
       GLfloat height = H->m[1][1] / gl_view_matrix.m[1][1];
       glUseProgram( shaders.rounded_rect.program );

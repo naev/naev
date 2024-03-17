@@ -127,6 +127,7 @@ void conf_setDefaults( void )
    conf.mesg_visible        = 5;
    conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
    conf.big_icons           = BIG_ICONS_DEFAULT;
+   conf.round_gui           = ROUND_GUI_DEFAULT;
    conf.always_radar        = 0;
 
    /* Repeat. */
@@ -1071,6 +1072,9 @@ int conf_saveConfig( const char *file )
    conf_saveComment(
       _( "Use bigger icons in the outfit, shipyard, and other lists." ) );
    conf_saveBool( "big_icons", conf.big_icons );
+   conf_saveComment( _( "Disable rounded GUI." ) );
+   conf_saveBool( "round_gui", conf.round_gui );
+   conf_saveEmptyLine();
    conf_saveComment( _(
       "Always show the radar and don't hide it when the overlay is active." ) );
    conf_saveBool( "always_radar", conf.always_radar );
