@@ -1233,9 +1233,9 @@ static void player_renderAimHelper( double dt )
    /* TODO this should be converted into a single SDF call. */
    glColour c3 = cBlack;
    c3.a        = c2.a;
-   gl_renderCircle( x2, y2, 8., &c3, 0 );
-   gl_renderCircle( x2, y2, 10., &c3, 0 );
-   gl_renderCircle( x2, y2, 9., &c2, 0 );
+   gl_renderCircle( x2, y2, 8., &c3, 1 );
+   gl_renderCircle( x2, y2, 10., &c3, 1 );
+   gl_renderCircle( x2, y2, 9., &c2, 1 );
 }
 
 /**

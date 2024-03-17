@@ -500,14 +500,16 @@ static int gfxL_renderRect( lua_State *L )
 static int gfxL_renderRectH( lua_State *L )
 {
    /* Parse parameters. */
-   const mat4     *H     = luaL_checktransform( L, 1 );
-   const glColour *col   = luaL_optcolour( L, 2, &cWhite );
-   int             thick = lua_tointeger( L, 3 );
-   int             rx    = lua_tointeger( L, 4 );
-   int             ry    = lua_tointeger( L, 5 );
+   const mat4     *H          = luaL_checktransform( L, 1 );
+   const glColour *col        = luaL_optcolour( L, 2, &cWhite );
+   int             empty      = lua_toboolean( L, 3 );
+   int             line_width = lua_tointeger( L, 4 );
+   int             rx         = lua_tointeger( L, 5 );
+   int             ry         = lua_tointeger( L, 6 );
 
    /* Render. */
-   gl_renderRectH( H, col, thick, rx, ry );
+   line_width = empty ? line_width : 0;
+   gl_renderRectH( H, col, line_width, rx, ry );
 
    return 0;
 }
@@ -526,17 +528,19 @@ static int gfxL_renderCircle( lua_State *L )
 {
    glColour *col;
    double    x, y, r;
-   int       empty;
+   int       empty, line_width;
 
    /* Parse parameters. */
-   x     = luaL_checknumber( L, 1 );
-   y     = luaL_checknumber( L, 2 );
-   r     = luaL_checknumber( L, 3 );
-   col   = luaL_checkcolour( L, 4 );
-   empty = lua_toboolean( L, 5 );
+   x          = luaL_checknumber( L, 1 );
+   y          = luaL_checknumber( L, 2 );
+   r          = luaL_checknumber( L, 3 );
+   col        = luaL_checkcolour( L, 4 );
+   empty      = lua_toboolean( L, 5 );
+   line_width = lua_tointeger( L, 6 );
 
+   line_width = empty ? line_width : 0;
    /* Render. */
-   gl_renderCircle( x, y, r, col, !empty );
+   gl_renderCircle( x, y, r, col, line_width );
 
    return 0;
 }
@@ -553,12 +557,14 @@ static int gfxL_renderCircleH( lua_State *L )
 {
 
    /* Parse parameters. */
-   const mat4     *H     = luaL_checktransform( L, 1 );
-   const glColour *col   = luaL_optcolour( L, 2, &cWhite );
-   int             empty = lua_toboolean( L, 3 );
+   const mat4     *H          = luaL_checktransform( L, 1 );
+   const glColour *col        = luaL_optcolour( L, 2, &cWhite );
+   int             empty      = lua_toboolean( L, 3 );
+   int             line_width = lua_tointeger( L, 4 );
 
    /* Render. */
-   gl_renderCircleH( H, col, !empty );
+   line_width = empty ? line_width : 0;
+   gl_renderCircleH( H, col, line_width );
 
    return 0;
 }

@@ -108,6 +108,7 @@ function Map:draw( bx, by )
       local px, py = p:get()
       if not (px < -r or px > w+r or py < -r or py > h+r) then
          lg.setColour( sys.c )
+         lg.setLineWidth(1);
          lg.circle( "line", px, py, r )
       end
    end

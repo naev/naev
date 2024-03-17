@@ -9,14 +9,16 @@ out vec4 colour_out;
 
 void main(void) {
    float d = sdCircle( pos*dimensions, dimensions.x-1.0 );
-   if (parami==0)
+   if (parami > 0)
       d = abs(d);
+   int line_width = parami > 0 ? parami : 1;
+
    /*
    float alpha = smoothstep(-m, 0.0, -d);
    float beta  = smoothstep(-2.0*m, -m, -d);
    colour_out   = colour * vec4( vec3(alpha), beta );
    */
-   float alpha = smoothstep(-1.0, 0.0, -d);
+   float alpha = smoothstep(-line_width, 0.0, -d);
    colour_out   = colour;
    colour_out.a *= alpha;
 }

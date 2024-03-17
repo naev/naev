@@ -113,24 +113,25 @@ void gl_renderRoundedRect( double x, double y, double w, double h, double rx,
  *    @param c Rectangle colour.
  */
 void gl_renderRoundedRectEmpty( double x, double y, double w, double h,
-                                double thick, double rx, double ry,
+                                double line_width, double rx, double ry,
                                 const glColour *c )
 {
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
-   gl_renderRectH( &projection, c, thick, rx, ry );
+   gl_renderRectH( &projection, c, line_width, rx, ry );
 }
 
 /**
  * @brief Renders a rectangle.
  *
  *    @param H Transformation matrix to apply.
- *    @param Thickness of the outline or 0 to fullfill it.
  *    @param c Rectangle colour.
- *    @param rounded Whether or not to round corners.
+ *    @param line_width Thickness of the outline or 0 to fullfill it.
+ *    @param rx Corner curve lenght along X axis.
+ *    @param ry Corner curve lenght along Y axis.
  */
-void gl_renderRectH( const mat4 *H, const glColour *c, int thick, int rx,
+void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
                      int ry )
 {
 
@@ -139,14 +140,14 @@ void gl_renderRectH( const mat4 *H, const glColour *c, int thick, int rx,
       GLfloat height = H->m[1][1] / gl_view_matrix.m[1][1];
       glUseProgram( shaders.rounded_rect.program );
       glUniform4f( shaders.rounded_rect.dimensions, width, height, rx, ry );
-      glUniform1i( shaders.rounded_rect.parami, thick );
+      glUniform1i( shaders.rounded_rect.parami, line_width );
       gl_renderShaderH( &shaders.rounded_rect, H, c, 1 );
    } else {
       gl_beginSolidProgram( *H, c );
-      gl_vboActivateAttribOffset( thick ? gl_squareEmptyVBO : gl_squareVBO,
+      gl_vboActivateAttribOffset( line_width ? gl_squareEmptyVBO : gl_squareVBO,
                                   shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-      glDrawArrays( thick ? GL_LINE_STRIP : GL_TRIANGLE_STRIP, 0,
-                    thick ? 5 : 4 );
+      glDrawArrays( line_width ? GL_LINE_STRIP : GL_TRIANGLE_STRIP, 0,
+                    line_width ? 5 : 4 );
       gl_endSolidProgram();
    }
 }
@@ -1056,14 +1057,14 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H,
  *    @param filled Whether or not it should be filled.
  */
 void gl_renderCircle( double cx, double cy, double r, const glColour *c,
-                      int filled )
+                      double line_width )
 {
    /* Set the vertex. */
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, cx, cy, r, r );
 
    /* Draw! */
-   gl_renderCircleH( &projection, c, filled );
+   gl_renderCircleH( &projection, c, line_width );
 }
 
 /**
@@ -1072,15 +1073,16 @@ void gl_renderCircle( double cx, double cy, double r, const glColour *c,
  *    @param H Transformation matrix to draw the circle.
  *    @param c Colour to use.
  *    @param filled Whether or not it should be filled.
+ *    @param line_width Thickness of the outline or 0 to fullfill it.
  */
-void gl_renderCircleH( const mat4 *H, const glColour *c, int filled )
+void gl_renderCircleH( const mat4 *H, const glColour *c, double line_width )
 {
    // TODO handle shearing and different x/y scaling
    GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
 
    glUseProgram( shaders.circle.program );
    glUniform2f( shaders.circle.dimensions, r, r );
-   glUniform1i( shaders.circle.parami, filled );
+   glUniform1i( shaders.circle.parami, line_width );
    gl_renderShaderH( &shaders.circle, H, c, 1 );
 }
 

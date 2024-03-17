@@ -605,7 +605,7 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getSpobColour( i );
-         gl_renderCircle( cx, cy, 5, col, 0 );
+         gl_renderCircle( cx, cy, 5, col, 1 );
       }
    }
 

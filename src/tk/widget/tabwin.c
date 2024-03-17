@@ -94,7 +94,7 @@ unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
    wx = wdw->x + wgt->x;
    wy = wdw->y + wgt->y;
    ww = wgt->w;
-   wh = wgt->h;
+   wh = wgt->h - 30;
    if ( tabpos == 0 ) {
       wy += TAB_HEIGHT;
       wh -= TAB_HEIGHT;
@@ -413,7 +413,7 @@ static void tab_render( Widget *tab, double bx, double by )
          gl_renderRoundedRectEmpty( x, y, len, TAB_HEIGHT, 2, 10, 10,
                                     toolkit_colLight );
       } else {
-         gl_renderRoundedRectEmpty( x - 3, y - 8, len + 6, TAB_HEIGHT + 6, 3,
+         gl_renderRoundedRectEmpty( x - 3, y - 8, len + 6, TAB_HEIGHT + 6, 6,
                                     10, 10, &cGrey70 );
          x_active   = x;
          len_active = len;

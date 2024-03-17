@@ -198,10 +198,7 @@ void window_resize( unsigned int wid, int w, int h )
       return;
 
    wdw->w = ( w == -1 ) ? gl_screen.nw : (double)w;
-   if ( window_isFlag( wdw, WINDOW_HASTABS ) )
-      wdw->h = ( h == -1 ) ? gl_screen.nh - 30 : (double)h;
-   else
-      wdw->h = ( h == -1 ) ? gl_screen.nh : (double)h;
+   wdw->h = ( h == -1 ) ? gl_screen.nh : (double)h;
 
    if ( ( w == -1 ) && ( h == -1 ) ) {
       window_setFlag( wdw, WINDOW_FULLSCREEN );
@@ -696,9 +693,8 @@ unsigned int window_create( const char *name, const char *displayname,
     * unactive tabs */
    if ( !strcmp( name, "wdwLand" ) || !strcmp( name, "wdwOptions" ) ||
         !strcmp( name, "wdwInfo" ) )
-      return window_createFlags(
-         name, displayname, x, y, w, h,
-         WINDOW_HASTABS | WINDOW_NOBORDER ); // tabedwin handle borders
+      return window_createFlags( name, displayname, x, y, w, h,
+                                 WINDOW_NOBORDER );
    return window_createFlags( name, displayname, x, y, w, h, 0 );
 }
 
@@ -737,10 +733,7 @@ unsigned int window_createFlags( const char *name, const char *displayname,
 
    /* Dimensions. */
    wdw->w = ( w == -1 ) ? gl_screen.nw : (double)w;
-   if ( window_isFlag( wdw, WINDOW_HASTABS ) )
-      wdw->h = ( h == -1 ) ? gl_screen.nh - 30 : (double)h;
-   else
-      wdw->h = ( h == -1 ) ? gl_screen.nh : (double)h;
+   wdw->h = ( h == -1 ) ? gl_screen.nh : (double)h;
 
    if ( ( w == -1 ) && ( h == -1 ) ) {
       window_setFlag( wdw, WINDOW_FULLSCREEN );
@@ -2632,10 +2625,7 @@ void toolkit_resize( void )
        * don't auto-scale. */
       if ( window_isFlag( w, WINDOW_FULLSCREEN ) ) {
          w->w = gl_screen.nw;
-         if ( window_isFlag( w, WINDOW_HASTABS ) )
-            w->h = gl_screen.nh - 30;
-         else
-            w->h = gl_screen.nh;
+         w->h = gl_screen.nh;
          continue;
       }
 

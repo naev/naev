@@ -104,9 +104,11 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H,
                        const glColour *c, int center );
 
 /* Circles. */
+#define gl_renderDisk( x, y, r, c )                                            \
+   gl_renderCircle( ( x ), ( y ), ( r ), ( c ), 0 )
 void gl_renderCircle( double x, double y, double r, const glColour *c,
-                      int filled );
-void gl_renderCircleH( const mat4 *H, const glColour *c, int filled );
+                      double line_width );
+void gl_renderCircleH( const mat4 *H, const glColour *c, double line_width );
 
 /* Lines. */
 void gl_renderLine( double x1, double y1, double x2, double y2,

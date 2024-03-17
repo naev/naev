@@ -585,7 +585,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
       // glUniform1f(shaders.factiondisk.paramf, r / sr );
       // gl_renderShader( tx, ty, sr, sr, 0., &shaders.factiondisk, &c, 1 );
       (void)r;
-      gl_renderCircle( tx, ty, sr, &c, 1 );
+      gl_renderDisk( tx, ty, sr, &c );
    }
 }
 
@@ -605,7 +605,7 @@ static void uniedit_renderVirtualSpobs( double x, double y, double r )
            uniedit_zoom;
 
       (void)r;
-      gl_renderCircle( tx, ty, sr, &c, 1 );
+      gl_renderDisk( tx, ty, sr, &c );
    }
 }
 
@@ -624,7 +624,7 @@ static void uniedit_renderRadius( double x, double y, double r )
       sr = 5. * M_PI * sqrt( sys->radius / 10e3 ) * uniedit_zoom;
 
       (void)r;
-      gl_renderCircle( tx, ty, sr, &c, 1 );
+      gl_renderDisk( tx, ty, sr, &c );
    }
 }
 
@@ -646,7 +646,7 @@ static void uniedit_renderNolanes( double x, double y, double r )
       sr = 5. * M_PI * uniedit_zoom;
 
       (void)r;
-      gl_renderCircle( tx, ty, sr, &c, 1 );
+      gl_renderDisk( tx, ty, sr, &c );
    }
 }
 
@@ -668,7 +668,7 @@ static void uniedit_renderBackground( double x, double y, double r )
       sr = 7. * M_PI * uniedit_zoom;
 
       (void)r;
-      gl_renderCircle( tx, ty, sr, &c, 1 );
+      gl_renderDisk( tx, ty, sr, &c );
    }
 }
 
@@ -690,7 +690,7 @@ static void uniedit_renderAsteroids( double x, double y, double r )
       /* Draw disk. */
       sr = 0.3 * M_PI * sqrt( density ) * uniedit_zoom;
       (void)r;
-      gl_renderCircle( tx, ty, sr, &c, 1 );
+      gl_renderDisk( tx, ty, sr, &c );
    }
 }
 
@@ -709,7 +709,7 @@ static void uniedit_renderInterference( double x, double y, double r )
       sr = 5. * M_PI * sqrt( sys->interference / 20. ) * uniedit_zoom;
 
       (void)r;
-      gl_renderCircle( tx, ty, sr, &c, 1 );
+      gl_renderDisk( tx, ty, sr, &c );
    }
 }
 
@@ -737,7 +737,7 @@ static void uniedit_renderTech( double x, double y, double r )
       /* Draw disk. */
       sr = 7. * M_PI * uniedit_zoom;
       (void)r;
-      gl_renderCircle( tx, ty, sr, &c, 1 );
+      gl_renderDisk( tx, ty, sr, &c );
    }
 }
 
@@ -760,7 +760,7 @@ static void uniedit_renderPresenceSum( double x, double y, double r )
       sr = 0.2 * M_PI * sqrt( total ) * uniedit_zoom;
 
       (void)r;
-      gl_renderCircle( tx, ty, sr, &c, 1 );
+      gl_renderDisk( tx, ty, sr, &c );
    }
 }
 
