@@ -52,12 +52,12 @@ function accept ()
    vn.na(_([[You clear your throat to catch his attention, and after your third try, he finally seems to recognize your presence.]]))
    z(_([["Hey, how's it going? Wait… didn't I have something for you? One second."
 He fumbles with his cyberdeck looking for something.
-"I've been looking over the scan analysis of the area and haven't really found anything, however, the signal is weak towards the Anubis Black Hole. It's a bit of a shot in the dark, but I think we should try to…]]))
+"I've been looking over the scan analysis of the area and haven't really found anything, however, the signal is weak towards the Anubis Black Hole. It's a bit of a shot in the dark, but I think we should try to…"]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    vn.na(fmt.f(_([[He gets suddenly cut off by the blaring siren.
 "ALERT: Large hostile ships detected inbound from {sys}."]]),{sys=jumpsys}))
    z(fmt.f(_([["Shit! Not again. At least they didn't catch us with our pants down. I've prepared some defence drones, but I don't think they'll be much help. We must not let {pnt} fall! Try to defend the station and I'll see what I can do over here!"]]),{pnt=mainpnt}))
-   vn.na(_([[Zach heads to the command center, and you make your way to your ship while mentally preparing you for the challenge to come..]]))
+   vn.na(_([[Zach heads to the command centre, and you make your way to your ship while mentally preparing you for the challenge to come..]]))
    vn.done( zbh.zach.transition )
    vn.run()
 
@@ -101,7 +101,7 @@ He laughs nervously.
    vn.na(_([[You follow Zach inside so he calms down a bit.]]))
    z(_([[With the bioships out of sight he seems to relax a bit.
 "That was some great flying out there! It all worked out much better than expected. Sure beats ending up as part of a hunk of molten metal which all my simulations predicted…"]]))
-   z(_([["While I was preparing to evacuate with the notes left, I found something that might shine the light a bit on who they were. I believe that was Dr. Slorn and their laboratory, who have been working on ethereal material theory. Me and my colleagues have always been pretty skeptical of their findings, and no other group has been able to replicate any experiments from what I know. In general, just pretty bad science if you ask me."]]))
+   z(_([["While I was preparing to evacuate with the notes left, I found something that might shine the light a bit on who they were. I believe that was Dr. Slorn and their laboratory, who have been working on ethereal material theory. My colleagues and I have always been pretty sceptical of their findings, and no other group has been able to replicate any experiments from what I know. In general, just pretty bad science if you ask me."]]))
    z(_([["However, Dr. Slorn's group has always been very good at getting funding. Suspiciously good to a point that some of us have doubted about their authenticity of the work. Even with all the ethics counsels and obligatory ethics courses, lots of shit gets through if you know what I mean."]]))
    z(_([["So, this is just my working hypothesis, but they must have found something when doing research that casts doubts on Dr. Slorn's research, and probably submitted it to the Journal on Advanced Physics, and I wouldn't be surprised if someone in Dr. Slorn's group caught a whiff of it and tracked them down. This all happens more than you would wish it did."]]))
    z(_([["What still is weird is how they went through all the effort to destroy the research station, instead of a more indirect approach."
@@ -214,7 +214,7 @@ function heartbeat ()
       vn.disappear(pi, "electric")
       vn.na(_([[After the individual disappears, the transmission switches to read-write mode.]]))
       z(_([[Zach turns to you.
-"Shit, we're pretty outgunned. He's flying a Mephisto… That's going to wreck you pretty bad if you get close to it.I have no idea how we're going to pull this off. At least try to buy me some time while I try to save what I can from the station!"]]))
+"Shit, we're pretty outgunned. He's flying a Mephisto… That's going to wreck you pretty bad if you get close to it. I have no idea how we're going to pull this off. At least try to buy me some time while I try to save what I can from the station!"]]))
       vn.done("electric")
       vn.run()
 
