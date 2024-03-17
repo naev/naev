@@ -109,7 +109,7 @@ void gl_renderRoundedRect( double x, double y, double w, double h, double rx,
  *    @param h Rectangle height.
  *    @param rx Corner curve lenght along X axis.
  *    @param ry Corner curve lenght along Y axis.
- *    @param thick Outline thickness.
+ *    @param line_width Outline thickness or 0 for a filled rectangle.
  *    @param c Rectangle colour.
  */
 void gl_renderRoundedRectEmpty( double x, double y, double w, double h,
@@ -1054,7 +1054,7 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H,
  *    @param cy Y position of the center in screen coordinates.
  *    @param r Radius of the circle.
  *    @param c Colour to use.
- *    @param filled Whether or not it should be filled.
+ *    @param line_width The width of the outline or 0 for a filled circle.
  */
 void gl_renderCircle( double cx, double cy, double r, const glColour *c,
                       double line_width )
@@ -1072,7 +1072,6 @@ void gl_renderCircle( double cx, double cy, double r, const glColour *c,
  *
  *    @param H Transformation matrix to draw the circle.
  *    @param c Colour to use.
- *    @param filled Whether or not it should be filled.
  *    @param line_width Thickness of the outline or 0 to fullfill it.
  */
 void gl_renderCircleH( const mat4 *H, const glColour *c, double line_width )

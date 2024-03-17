@@ -117,15 +117,14 @@ void gl_renderLine( double x1, double y1, double x2, double y2,
 /* Rectangles. */
 #define gl_renderRect( x, y, w, h, c )                                         \
    gl_renderRoundedRect( ( x ), ( y ), ( w ), ( h ), 0, 0, ( c ) )
-#define gl_renderRectEmpty( x, y, w, h, thick, c )                             \
-   gl_renderRoundedRectEmpty( ( x ), ( y ), ( w ), ( h ), ( thick ), 0, 0,     \
-                              ( c ) )
+#define gl_renderRectEmpty( x, y, w, h, lw, c )                                \
+   gl_renderRoundedRectEmpty( ( x ), ( y ), ( w ), ( h ), ( lw ), 0, 0, ( c ) )
 void gl_renderRoundedRect( double x, double y, double w, double h, double rx,
                            double ry, const glColour *c );
 void gl_renderRoundedRectEmpty( double x, double y, double w, double h,
-                                double thick, double rx, double ry,
+                                double line_width, double rx, double ry,
                                 const glColour *c );
-void gl_renderRectH( const mat4 *H, const glColour *c, int thick, int rx,
+void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
                      int ry );
 
 /* Cross. */
