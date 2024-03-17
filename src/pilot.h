@@ -15,7 +15,6 @@
 #include "outfit.h"
 #include "physics.h"
 #include "ship.h"
-#include "sound.h"
 #include "space.h"
 #include "spfx.h"
 
@@ -238,9 +237,9 @@ typedef struct PilotHook_ {
  * @brief Different types of escorts.
  */
 typedef enum EscortType_e {
-   ESCORT_TYPE_NULL, /**< Invalid escort type. */
-   ESCORT_TYPE_BAY,  /**< Escort is from a fighter bay, controllable by its
-                        parent and can dock. */
+   ESCORT_TYPE_NULL,      /**< Invalid escort type. */
+   ESCORT_TYPE_BAY,       /**< Escort is from a fighter bay, controllable by its
+                             parent and can dock. */
    ESCORT_TYPE_MERCENARY, /**< Escort is a mercenary, controllable by its
                              parent. */
    ESCORT_TYPE_FLEET,     /**< Escort is part of the player's fleet. */
