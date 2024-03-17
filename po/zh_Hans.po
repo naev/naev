@@ -12859,9 +12859,9 @@ msgstr ""
 msgid ""
 "Hastily constructed by forced labour in the wake of the Incident, Fort "
 "Raelid serves as a control point and listening post for Dvaered forces in "
-"the area. However, after its construction, Warlords quickly lost interest "
-"in the Nebula which was left to the Empire. Other than routine patrols, "
-"nothing often happens in this outpost."
+"the area. However, after its construction, Warlords quickly lost interest in "
+"the Nebula which was left to the Empire. Other than routine patrols, nothing "
+"often happens in this outpost."
 msgstr ""
 
 #: dat/spob/fort_raelid.xml:27
@@ -20322,12 +20322,11 @@ msgstr ""
 
 #: dat/spob/stormgard.xml:28
 msgid ""
-"Stormgard is, despite its harsh, icy environment, a heavily populated "
-"world. This is because several elements of the emperor's family has made "
-"this world their home, and inevitably that means that imperial bureaucrats, "
-"courtiers, and general hangers-on are going to move here too. Industry is a "
-"popular pastime here, with the valuable minerals hiding beneath the ice "
-"sheets."
+"Stormgard is, despite its harsh, icy environment, a heavily populated world. "
+"This is because several elements of the emperor's family has made this world "
+"their home, and inevitably that means that imperial bureaucrats, courtiers, "
+"and general hangers-on are going to move here too. Industry is a popular "
+"pastime here, with the valuable minerals hiding beneath the ice sheets."
 msgstr ""
 
 #: dat/spob/stormgard.xml:29
@@ -77631,8 +77630,8 @@ msgstr ""
 #: dat/missions/neutral/majesteka_stowaways.lua:154
 msgid ""
 "The orphans look excited at their new home, a significant improvement over "
-"{spb}. It's not the ideal place for kids, but you think they will be well off "
-"at their new location."
+"{spb}. It's not the ideal place for kids, but you think they will be well "
+"off at their new location."
 msgstr ""
 
 #: dat/missions/neutral/majesteka_stowaways.lua:160

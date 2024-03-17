@@ -10,8 +10,8 @@ msgstr ""
 "POT-Creation-Date: 2024-02-19 13:04+0900\n"
 "PO-Revision-Date: 2024-03-12 15:02+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
-"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
-"\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/"
+">\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -12922,9 +12922,9 @@ msgstr ""
 msgid ""
 "Hastily constructed by forced labour in the wake of the Incident, Fort "
 "Raelid serves as a control point and listening post for Dvaered forces in "
-"the area. However, after its construction, Warlords quickly lost interest "
-"in the Nebula which was left to the Empire. Other than routine patrols, "
-"nothing often happens in this outpost."
+"the area. However, after its construction, Warlords quickly lost interest in "
+"the Nebula which was left to the Empire. Other than routine patrols, nothing "
+"often happens in this outpost."
 msgstr ""
 
 #: dat/spob/fort_raelid.xml:27
@@ -20385,12 +20385,11 @@ msgstr ""
 
 #: dat/spob/stormgard.xml:28
 msgid ""
-"Stormgard is, despite its harsh, icy environment, a heavily populated "
-"world. This is because several elements of the emperor's family has made "
-"this world their home, and inevitably that means that imperial bureaucrats, "
-"courtiers, and general hangers-on are going to move here too. Industry is a "
-"popular pastime here, with the valuable minerals hiding beneath the ice "
-"sheets."
+"Stormgard is, despite its harsh, icy environment, a heavily populated world. "
+"This is because several elements of the emperor's family has made this world "
+"their home, and inevitably that means that imperial bureaucrats, courtiers, "
+"and general hangers-on are going to move here too. Industry is a popular "
+"pastime here, with the valuable minerals hiding beneath the ice sheets."
 msgstr ""
 
 #: dat/spob/stormgard.xml:29
@@ -28083,8 +28082,7 @@ msgstr ""
 #. Carried ships depend on the visibility of their parent
 #. Pilot still sees the target: continue attack
 #. Pilots on manual control (in missions or events) never loose target
-#. /!\ This is not necessary desirable all the time /!\
-#. TODO: there should probably be a flag settable to allow to outwit pilots under manual control
+#. /!\ This is not necessary desirable all the time /!#. TODO: there should probably be a flag settable to allow to outwit pilots under manual control
 #.
 #. -- Aborts current task and tries to see what happened to the target.
 #. --
@@ -29315,9 +29313,7 @@ msgstr ""
 #. tc_mod
 #. ^
 #. |
-#. |\
-#. | \
-#. |  \___
+#. |#. | #. |  \___
 #. |
 #. +------> time
 #. 0   3
@@ -51944,10 +51940,8 @@ msgstr ""
 #. TODO switch to equipopt
 #. strafer:outfitAdd("Solar Panel")
 #. Behaviour
-#. /!\ We did not claim this system /!\
-#. Empire Blocus:
-#. /!\ We did not claim this system /!\
-#. Special case: jump from dealsys to dealjump
+#. /!\ We did not claim this system /!#. Empire Blocus:
+#. /!\ We did not claim this system /!#. Special case: jump from dealsys to dealjump
 #. Functions for the escort
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:408
 msgid "Mission Failed: escort destroyed"
@@ -54106,8 +54100,7 @@ msgid "Target "
 msgstr ""
 
 #. Just in case
-#. Remember which joy cries have been used  /!\ this should have the same length as joy /!\
-#. Timer and messages
+#. Remember which joy cries have been used  /!\ this should have the same length as joy /!#. Timer and messages
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:392
 msgid "The stars look very different today"
 msgstr ""
@@ -77700,8 +77693,8 @@ msgstr ""
 #: dat/missions/neutral/majesteka_stowaways.lua:154
 msgid ""
 "The orphans look excited at their new home, a significant improvement over "
-"{spb}. It's not the ideal place for kids, but you think they will be well off "
-"at their new location."
+"{spb}. It's not the ideal place for kids, but you think they will be well "
+"off at their new location."
 msgstr ""
 
 #: dat/missions/neutral/majesteka_stowaways.lua:160
