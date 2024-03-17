@@ -404,17 +404,17 @@ static void tab_render( Widget *tab, double bx, double by )
       /* Draw contents rect */
       len = tab->dat.tab.namelen[i] + ( TAB_HPADDING * 2 );
       if ( i != tab->dat.tab.active ) {
-         toolkit_drawRoundRect( x, y, len, TAB_HEIGHT, 10, tab_inactive, NULL );
+         gl_renderRoundedRect( x, y, len, TAB_HEIGHT, 10, 10, tab_inactive );
 
          /* Draw text. */
          gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
                       y + 2 * ( TAB_HEIGHT - tab->dat.tab.font->h ) / 3,
                       &cFontWhite, -1., tab->dat.tab.tabnames[i] );
-         toolkit_drawRoundOutlineThick( x, y, len, TAB_HEIGHT, 10, 2,
-                                        toolkit_colLight, NULL );
+         gl_renderRoundedRectEmpty( x, y, len, TAB_HEIGHT, 2, 10, 10,
+                                    toolkit_colLight );
       } else {
-         toolkit_drawRoundOutlineThick( x - 3, y - 8, len + 6, TAB_HEIGHT + 6,
-                                        10, 3, &cGrey70, NULL );
+         gl_renderRoundedRectEmpty( x - 3, y - 8, len + 6, TAB_HEIGHT + 6, 3,
+                                    10, 10, &cGrey70 );
          x_active   = x;
          len_active = len;
       }
@@ -425,8 +425,8 @@ static void tab_render( Widget *tab, double bx, double by )
    window_render( wdw, wgt_isFlag( tab, WGT_FLAG_FOCUSED ) );
 
    i = tab->dat.tab.active;
-   toolkit_drawRoundRect( x_active, y - 5, len_active, TAB_HEIGHT, 10,
-                          tab_active, NULL );
+   gl_renderRoundedRect( x_active, y - 5, len_active, TAB_HEIGHT, 10, 10,
+                         tab_active );
 
    /* Draw text. */
    gl_printRaw( tab->dat.tab.font, x_active + TAB_HPADDING,

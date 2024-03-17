@@ -1296,100 +1296,6 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b, int thick,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 10 );
    gl_endSmoothProgram();
 }
-
-/**
- * @brief Draws an outline with rounded corners.
- *
- * If lc is NULL, colour will be flat.
- *
- *    @param x0 X position to draw at.
- *    @param y0 Y position to draw at.
- *    @param w Width.
- *    @param h Height.
- *    @param r Radius of the corners.
- *    @param thick Thickness of the outline.
- *    @param c Colour.
- *    @param lc Light colour.
- */
-void toolkit_drawRoundOutlineThick( int x0, int y0, int w, int h, int r,
-                                    int thick, const glColour *c,
-                                    const glColour *lc )
-{
-   static const float sina[46] = {
-      0,          -0.1736478, -0.3420197, -0.5, -0.6427872, -0.7660443,
-      -0.8660252, -0.9396925, -0.9848077, -1,   -0.9848078, -0.9396928,
-      -0.8660257, -0.7660449, -0.6427881, -0.5, -0.3420208, -0.1736489,
-      0,          0.1736482,  0.3420201,  0.5,  0.6427876,  0.7660444,
-      0.8660254,  0.9396926,  0.9848077,  1,    0.9848078,  0.9396927,
-      0.8660255,  0.7660446,  0.6427878,  0.5,  0.3420205,  0.1736485,
-      0,          -0.1736478, -0.3420197, -0.5, -0.6427872, -0.7660443,
-      -0.8660252, -0.9396925, -0.9848077, -1 };
-
-   int i, j, ry[46];
-   for ( i = 0; i < 46; i++ )
-      ry[i] = round( r * sina[i] );
-   int *rx = ry + 9;
-
-   GLshort         vertex[41][4];
-   glColour        colours[82];
-   const glColour *color = c;
-
-   lc = lc ? lc : c;
-
-   x0 += r;
-   y0 += r;
-   w -= 2 * r;
-   h -= 2 * r;
-
-   int xm = x0 + thick;
-   int ym = y0 + thick;
-   int wm = w - 2 * thick;
-   int hm = h - 2 * thick;
-   int x_jump, y_jump;
-
-   for ( i = j = 0; i <= 40; i++, j++ ) {
-      /* Take care of keeping same rx/ry index when changing corner */
-      if ( i && i % 10 == 0 ) {
-         j--;
-         /* Corner changes:
-          * top-left: 0 -> 9
-          * top-right: 10 -> 19
-          * bottom->right: 20 -> 29
-          * bottom->left: 30 -> 39
-          */
-         x_jump = ( i == 10 ? 1 : ( i == 30 ? -1 : 0 ) );
-         x0 += x_jump * w;
-         xm += x_jump * wm;
-         y_jump = ( i == 20 ? 1 : ( i == 40 ? -1 : 0 ) );
-         y0 += y_jump * h;
-         ym += y_jump * hm;
-         color = ( y_jump == 0 ) ? color : ( y_jump == 1 ) ? lc : c;
-      }
-
-      /* Inner */
-      vertex[i][0] = xm + rx[j];
-      vertex[i][1] = ym + ry[j];
-      /* Outter */
-      vertex[i][2] = x0 + rx[j];
-      vertex[i][3] = y0 + ry[j];
-
-      colours[i * 2]     = *color;
-      colours[i * 2 + 1] = *color;
-   }
-   /* Upload to the VBO. */
-   gl_vboSubData( toolkit_vbo, 0, sizeof( vertex ), vertex );
-   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof( colours ),
-                  colours );
-
-   gl_beginSmoothProgram( gl_view_matrix );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2,
-                               GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
-                               toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 82 );
-   gl_endSmoothProgram();
-}
-
 /**
  * @brief Draws an outline.
  *
@@ -1496,83 +1402,6 @@ void toolkit_drawRect( int x, int y, int w, int h, const glColour *c,
 }
 
 /**
- * @brief Draws a rounded rectangle.
- *
- * If lc is NULL, colour will be flat.
- *
- *    @param x0 X position to draw at.
- *    @param y0 Y position to draw at.
- *    @param w Width.
- *    @param h Height.
- *    @param r Radius of corners.
- *    @param c Colour.
- *    @param lc Light colour.
- */
-void toolkit_drawRoundRect( int x0, int y0, int w, int h, int r,
-                            const glColour *c, const glColour *lc )
-{
-   static const float sina[46] = {
-      0,          -0.1736478, -0.3420197, -0.5, -0.6427872, -0.7660443,
-      -0.8660252, -0.9396925, -0.9848077, -1,   -0.9848078, -0.9396928,
-      -0.8660257, -0.7660449, -0.6427881, -0.5, -0.3420208, -0.1736489,
-      0,          0.1736482,  0.3420201,  0.5,  0.6427876,  0.7660444,
-      0.8660254,  0.9396926,  0.9848077,  1,    0.9848078,  0.9396927,
-      0.8660255,  0.7660446,  0.6427878,  0.5,  0.3420205,  0.1736485,
-      0,          -0.1736478, -0.3420197, -0.5, -0.6427872, -0.7660443,
-      -0.8660252, -0.9396925, -0.9848077, -1 };
-
-   int i, j, ry[46];
-   for ( i = 0; i < 46; i++ )
-      ry[i] = round( r * sina[i] );
-   int *rx = ry + 9;
-
-   GLshort         vertex[41][2];
-   glColour        colours[41];
-   const glColour *color = c;
-
-   lc = lc ? lc : c;
-
-   w -= 2 * r;
-   h -= 2 * r;
-   x0 += r;
-   y0 += r;
-   int y_jump;
-   for ( i = j = 0; i <= 40; i++, j++ ) {
-      /* Corners change */
-      if ( i && i % 10 == 0 ) {
-         /* Take care of keeping same rx/ry index when changing corner */
-         j--;
-         /* Corner changes:
-          * top-left: 0 -> 9
-          * top-right: 10 -> 19
-          * bottom->right: 20 -> 29
-          * bottom->left: 30 -> 39
-          */
-         x0 += ( i == 10 ? 1 : ( i == 30 ? -1 : 0 ) ) * w;
-         y_jump = ( i == 20 ? 1 : ( i == 40 ? -1 : 0 ) );
-         y0 += y_jump * h;
-         color = ( y_jump == 0 ) ? color : ( y_jump == 1 ) ? lc : c;
-      }
-
-      vertex[i][0] = x0 + rx[j];
-      vertex[i][1] = y0 + ry[j];
-      colours[i]   = *color;
-   }
-   /* Upload to the VBO. */
-   gl_vboSubData( toolkit_vbo, 0, sizeof( vertex ), vertex );
-   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof( colours ),
-                  colours );
-
-   gl_beginSmoothProgram( gl_view_matrix );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2,
-                               GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
-                               toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_FAN, 0, 41 );
-   gl_endSmoothProgram();
-}
-
-/**
  * @brief Draws a rectangle.
  *
  *    @param x1 X position of corner 1.
@@ -1654,9 +1483,11 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.g = cGrey10.g;
    c2.b = cGrey10.b;
    c2.a = 0.7;
-   toolkit_drawRoundRect( x + 1, y + 1, w + 18, h + 18, ( h + 18 ) / 10, &c2,
-                          NULL );
-   toolkit_drawRoundRect( x, y, w + 18, h + 18, ( h + 18 ) / 10, &c, NULL );
+   // note do we still need two ?
+   gl_renderRoundedRect( x + 1, y + 1, w + 18, h + 18, ( h + 18 ) / 10,
+                         ( h + 18 ) / 10, &c2 );
+   gl_renderRoundedRect( x, y, w + 18, h + 18, ( h + 18 ) / 10, ( h + 18 ) / 10,
+                         &c );
    gl_printTextRaw( &gl_smallFont, w, h, x + 9, y + 9, 0, &cFontWhite, -1.,
                     alt );
 }
