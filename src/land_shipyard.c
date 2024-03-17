@@ -730,7 +730,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw,
          toolkit_drawTriangle( x, by, x + size, by + size, x, by + size,
                                &cBlack );
 
-      gl_renderRectEmpty( x, by, size, size, &cBlack );
+      gl_renderRectEmpty( x, by, size, size, 5, &cBlack );
 
       /* Draw icon if applicable. */
       icon = sp_icon( s[i].slot.spid );

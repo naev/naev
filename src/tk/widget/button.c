@@ -315,7 +315,7 @@ static void btn_render( Widget *btn, double bx, double by )
    // toolkit_drawOutline( x, y, btn->w, btn->h, 0, outline, NULL );
 
    /* outer outline */
-   gl_renderRoundedRectEmpty( x, y, btn->w, btn->h, 10, 10, outline );
+   gl_renderRoundedRectEmpty( x, y, btn->w, btn->h, 5, 10, 10, outline );
 
    /* Render inner stuff. */
    if ( btn->dat.btn.cst_render )

@@ -1,8 +1,7 @@
 #include "lib/sdf.glsl"
 uniform vec4 colour;
-uniform vec4 dimensions; // used for borders size.
-uniform int parami; //filled?
-//uniform vec2 size;  // I need a size variable?
+uniform vec4 dimensions;
+uniform int parami; // thickness of the outline or 0 to fullfill.
 
 in vec2 pos;
 out vec4 colour_out;
@@ -18,10 +17,7 @@ void main(void) {
    vec2 uv = pos * 2.0 - 1.0;
    float d = sdBoxRound(uv * dimensions.xy, dimensions.xy, dimensions.zw * 2.0);
    colour_out = colour;
-   if (parami == 0) {
-      d = abs(d+5);
-      colour_out.a = smoothstep(-5, 0.0, -d);
-   } else {
-      colour_out.a = smoothstep(-0.5, 0.5, -d);
-   }
+   if (parami > 0)
+      d = abs(d + parami);
+   colour_out.a = smoothstep(-parami - 0.5, 0.5, -d);
 }

@@ -86,42 +86,8 @@ void gl_endSmoothProgram()
  *    @param y Y position to render rectangle at.
  *    @param w Rectangle width.
  *    @param h Rectangle height.
- *    @param c Rectangle colour.
- */
-void gl_renderRect( double x, double y, double w, double h, const glColour *c )
-{
-   /* Set the vertex. */
-   mat4 projection = gl_view_matrix;
-   mat4_translate_scale_xy( &projection, x, y, w, h );
-
-   gl_renderRectH( &projection, c, 1, 0, 0 );
-}
-
-/**
- * @brief Renders a rectangle.
- *
- *    @param x X position to render rectangle at.
- *    @param y Y position to render rectangle at.
- *    @param w Rectangle width.
- *    @param h Rectangle height.
- *    @param c Rectangle colour.
- */
-void gl_renderRectEmpty( double x, double y, double w, double h,
-                         const glColour *c )
-{
-   mat4 projection = gl_view_matrix;
-   mat4_translate_scale_xy( &projection, x, y, w, h );
-
-   gl_renderRectH( &projection, c, 0, 0, 0 );
-}
-
-/**
- * @brief Renders a rectangle.
- *
- *    @param x X position to render rectangle at.
- *    @param y Y position to render rectangle at.
- *    @param w Rectangle width.
- *    @param h Rectangle height.
+ *    @param rx Corner curve lenght along X axis.
+ *    @param ry Corner curve lenght along Y axis.
  *    @param c Rectangle colour.
  */
 void gl_renderRoundedRect( double x, double y, double w, double h, double rx,
@@ -131,7 +97,7 @@ void gl_renderRoundedRect( double x, double y, double w, double h, double rx,
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
-   gl_renderRectH( &projection, c, 1, rx, ry );
+   gl_renderRectH( &projection, c, 0, rx, ry );
 }
 
 /**
@@ -141,41 +107,46 @@ void gl_renderRoundedRect( double x, double y, double w, double h, double rx,
  *    @param y Y position to render rectangle at.
  *    @param w Rectangle width.
  *    @param h Rectangle height.
+ *    @param rx Corner curve lenght along X axis.
+ *    @param ry Corner curve lenght along Y axis.
+ *    @param thick Outline thickness.
  *    @param c Rectangle colour.
  */
 void gl_renderRoundedRectEmpty( double x, double y, double w, double h,
-                                double rx, double ry, const glColour *c )
+                                double thick, double rx, double ry,
+                                const glColour *c )
 {
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
-   gl_renderRectH( &projection, c, 0, rx, ry );
+   gl_renderRectH( &projection, c, thick, rx, ry );
 }
 
 /**
  * @brief Renders a rectangle.
  *
  *    @param H Transformation matrix to apply.
- *    @param filled Whether or not to fill.
+ *    @param Thickness of the outline or 0 to fullfill it.
  *    @param c Rectangle colour.
  *    @param rounded Whether or not to round corners.
  */
-void gl_renderRectH( const mat4 *H, const glColour *c, int filled, int rx,
+void gl_renderRectH( const mat4 *H, const glColour *c, int thick, int rx,
                      int ry )
 {
+
    if ( rx && ry ) {
       GLfloat width  = H->m[0][0] / gl_view_matrix.m[0][0];
       GLfloat height = H->m[1][1] / gl_view_matrix.m[1][1];
       glUseProgram( shaders.rounded_rect.program );
       glUniform4f( shaders.rounded_rect.dimensions, width, height, rx, ry );
-      glUniform1i( shaders.rounded_rect.parami, filled );
+      glUniform1i( shaders.rounded_rect.parami, thick );
       gl_renderShaderH( &shaders.rounded_rect, H, c, 1 );
    } else {
       gl_beginSolidProgram( *H, c );
-      gl_vboActivateAttribOffset( filled ? gl_squareVBO : gl_squareEmptyVBO,
+      gl_vboActivateAttribOffset( thick ? gl_squareEmptyVBO : gl_squareVBO,
                                   shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-      glDrawArrays( filled ? GL_TRIANGLE_STRIP : GL_LINE_STRIP, 0,
-                    filled ? 4 : 5 );
+      glDrawArrays( thick ? GL_LINE_STRIP : GL_TRIANGLE_STRIP, 0,
+                    thick ? 5 : 4 );
       gl_endSolidProgram();
    }
 }
@@ -1160,44 +1131,6 @@ void gl_unclipRect( void )
 {
    glDisable( GL_SCISSOR_TEST );
    glScissor( 0, 0, gl_screen.rw, gl_screen.rh );
-}
-
-void gl_calcRoundSquareVbo( int pw, int ph, int segments )
-{
-   gl_vboDestroy( gl_roundSquareVBO );
-   int      i, j;
-   int      i_max  = 4 * segments + 1;
-   int      j_max  = 5 * ( segments - 1 ) + 1;
-   GLfloat *vertex = array_create_size( GLfloat, i_max * 2 );
-   float   *dy     = array_create_size( float, j_max );
-
-   float w  = 1. - 2. * pw / 100.;
-   float h  = 1. - 2. * ph / 100.;
-   float x0 = pw / 100.;
-   float y0 = ph / 100.;
-   float x  = x0;
-   float y  = y0;
-   for ( j = 0; j < j_max; j++ )
-      dy[j] = sin( M_PI + j * ( M_PI / 2. ) / ( segments - 1 ) );
-   float *dx = dy + ( segments - 1 );
-
-   for ( i = j = 0; i < i_max; i++, j++ ) {
-      /* Corners change */
-      if ( i && i % segments == 0 ) {
-         j--;
-         x += ( i == segments ? 1 : ( i == ( 3 * segments ) ? -1 : 0 ) ) * w;
-         y +=
-            ( i == ( 2 * segments ) ? 1 : ( i == ( 4 * segments ) ? -1 : 0 ) ) *
-            h;
-      }
-      vertex[i * 2]     = x + x0 * dx[j];
-      vertex[i * 2 + 1] = y + y0 * dy[j];
-   }
-   gl_roundSquareVBO =
-      gl_vboCreateStatic( sizeof( GLfloat ) * i_max * 2, vertex );
-   gl_checkErr();
-   array_free( dy );
-   array_free( vertex );
 }
 
 /**

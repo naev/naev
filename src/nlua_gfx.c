@@ -474,7 +474,7 @@ static int gfxL_renderRect( lua_State *L )
 {
    glColour *col;
    double    x, y, w, h;
-   int       empty;
+   int       thick;
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -482,14 +482,10 @@ static int gfxL_renderRect( lua_State *L )
    w     = luaL_checknumber( L, 3 );
    h     = luaL_checknumber( L, 4 );
    col   = luaL_checkcolour( L, 5 );
-   empty = lua_toboolean( L, 6 );
+   thick = lua_tointeger( L, 6 );
 
    /* Render. */
-   if ( empty )
-      gl_renderRectEmpty( x, y, w, h, col );
-   else
-      gl_renderRect( x, y, w, h, col );
-
+   gl_renderRectEmpty( x, y, w, h, thick, col );
    return 0;
 }
 
@@ -506,12 +502,12 @@ static int gfxL_renderRectH( lua_State *L )
    /* Parse parameters. */
    const mat4     *H     = luaL_checktransform( L, 1 );
    const glColour *col   = luaL_optcolour( L, 2, &cWhite );
-   int             empty = lua_toboolean( L, 3 );
+   int             thick = lua_tointeger( L, 3 );
    int             rx    = lua_tointeger( L, 4 );
    int             ry    = lua_tointeger( L, 5 );
 
    /* Render. */
-   gl_renderRectH( H, col, !empty, rx, ry );
+   gl_renderRectH( H, col, thick, rx, ry );
 
    return 0;
 }

@@ -340,9 +340,10 @@ function graphics.draw( drawable, ... )
    drawable:draw( ... )
 end
 
-function graphics.rectangle( mode, x, y, width, height, rx, ry)
+function graphics.rectangle( mode, x, y, width, height, thick, rx, ry)
       local H = _H( x, y, 0, width, height )
-      naev.gfx.renderRectH( H, graphics._fgcol, _mode(mode), rx, ry)
+      thick = (mode == "fill" and 0) or thick or 1
+      naev.gfx.renderRectH( H, graphics._fgcol, thick, rx, ry)
 end
 
 function graphics.circle( mode, x, y, radius )

@@ -648,7 +648,7 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getPilotColour( plt );
-         gl_renderRectEmpty( cx - 5, cy - 5, 10, 10, col );
+         gl_renderRectEmpty( cx - 5, cy - 5, 10, 10, 5, col );
       }
    }
 

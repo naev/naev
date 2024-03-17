@@ -904,7 +904,7 @@ static void sysedit_renderAsteroidExclusion( double bx, double by,
 
    gl_renderCircle( tx, ty, r, col, 0 );
    gl_renderCross( tx, ty, r, col );
-   gl_renderRectEmpty( tx - rr, ty - rr, rr * 2, rr * 2, col );
+   gl_renderRectEmpty( tx - rr, ty - rr, rr * 2, rr * 2, 5, col );
 }
 
 /**
