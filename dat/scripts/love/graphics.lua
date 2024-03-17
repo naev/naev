@@ -3,7 +3,6 @@
 --]]
 local class = require 'class'
 local love = require 'love'
-local love_image = require 'love.image'
 local object = require 'love.object'
 local filesystem = require 'love.filesystem'
 local love_math = require 'love.math'
@@ -341,44 +340,9 @@ function graphics.draw( drawable, ... )
    drawable:draw( ... )
 end
 
-local shd_str = [[
-      uniform vec4 dims;
-      float sdBoxRound( vec2 p, vec2 b, vec2 r )
-      {
-         float diff = b.x - r.x;
-         float coef = min(1.0, max(0.0, (abs(p.x) - diff) / (b.x - diff)));
-         float rf = coef * r.y + (1.0 - coef) * r.x;
-         vec2 d = abs(p)-b+rf;
-         return length(max(d,0.0)) + min(max(d.x,d.y),0.0) - rf;
-      }
-      vec4 effect( vec4 vcolour, Image tex, vec2 texcoord, vec2 pixcoord )
-      {
-         vec2 uv = texcoord*2.0-1.0;
-         float d = sdBoxRound(uv * dims.st, dims.st, dims.pq * 2.0 );
-         return vcolour * vec4( 1.0, 1.0, 1.0, smoothstep( -0.5, 0.5, -d ));
-      }
-      ]]
-
-local _rect_shader;
 function graphics.rectangle( mode, x, y, width, height, rx, ry)
-      -- If segments is set, we hadle it C-side
-      -- For the C-side, rx and ry as percentage of width and height.
-      -- Else, we handle it directly with an SDF transformation shader.
-   if (mode == "line") then
       local H = _H( x, y, 0, width, height )
       naev.gfx.renderRectH( H, graphics._fgcol, _mode(mode), rx, ry)
-   else
-      if not _rect_shader then
-         _rect_shader = graphics.newShader(shd_str)
-      end
-      graphics.setShader(_rect_shader)
-      _rect_shader:send( "dims", { width, height, rx or 0, ry or 0 } )
-      local idata = love_image.newImageData( 1, 1)
-      local roundRect = graphics.newImage( idata )
-      roundRect:draw( x, y, 0, width, height )
-      graphics.setShader()
-   end
-
 end
 
 function graphics.circle( mode, x, y, radius )
