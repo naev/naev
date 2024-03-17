@@ -1671,10 +1671,9 @@ static void window_renderBorder( const Window *w )
    /* Position */
    double x = w->x;
    double y = w->y;
-   toolkit_drawRoundRect( x, y, w->w, w->h, w->h / 20, toolkit_col,
-                          toolkit_col );
-   toolkit_drawRoundOutlineThick( x, y, w->w, w->h, w->h / 20, 4, &cGrey70,
-                                  NULL );
+   gl_renderRoundedRect( x, y, w->w, w->h, w->h / 20, w->h / 20, toolkit_col );
+   gl_renderRoundedRectEmpty( x, y, w->w, w->h, w->h / 20, w->h / 20,
+                              &cGrey70 );
 
    /* Isn't just well without fullscreen case ? */
    /*
@@ -1738,11 +1737,11 @@ void window_render( Window *w, int top )
          double wx = w->x + wgt->x;
          double wy = w->y + wgt->y;
          if ( wgt->type == WIDGET_BUTTON )
-            toolkit_drawRoundOutlineThick( wx, wy, wgt->w, wgt->h, 10, 4,
-                                           &cGrey70, NULL );
+            gl_renderRoundedRectEmpty( wx, wy, wgt->w, wgt->h, 10, 10,
+                                       &cGrey70 );
          else
-            toolkit_drawOutlineThick( wx, wy, wgt->w, wgt->h, 0, 4, &cGrey30,
-                                      NULL );
+            gl_renderRoundedRectEmpty( wx, wy, wgt->w, wgt->h, 10, 10,
+                                       &cGrey30 );
       }
    }
 }

@@ -309,13 +309,13 @@ static void btn_render( Widget *btn, double bx, double by )
    }
 
    /* The face of the button, with c being the colour */
-   toolkit_drawRoundRect( x, y, btn->w, btn->h, 10, c, NULL );
+   gl_renderRoundedRect( x, y, btn->w, btn->h, 10, 10, c );
 
    /* inner outline */
    // toolkit_drawOutline( x, y, btn->w, btn->h, 0, outline, NULL );
 
    /* outer outline */
-   toolkit_drawRoundOutlineThick( x, y, btn->w, btn->h, 10, 4, outline, NULL );
+   gl_renderRoundedRectEmpty( x, y, btn->w, btn->h, 10, 10, outline );
 
    /* Render inner stuff. */
    if ( btn->dat.btn.cst_render )

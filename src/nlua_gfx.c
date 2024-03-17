@@ -387,7 +387,7 @@ static int gfxL_renderTexRaw( lua_State *L )
  * @brief Renders a texture using a transformation matrix.
  *
  *    @luatparam Tex tex Texture to render.
- *    @luatparam Shader shader Shader to use when rendering.
+ *    @luatparam Shader ehader Shader to use when rendering.
  *    @luatparam Transformation H Transformation matrix to use.
  *    @luatparam[opt=white] Colour colour Colour to use or white if not set.
  * @luafunc renderTexH
@@ -507,12 +507,11 @@ static int gfxL_renderRectH( lua_State *L )
    const mat4     *H     = luaL_checktransform( L, 1 );
    const glColour *col   = luaL_optcolour( L, 2, &cWhite );
    int             empty = lua_toboolean( L, 3 );
-   int pw       = lua_tointeger( L, 4 ); // width percentage for round corner
-   int ph       = lua_tointeger( L, 5 ); // height percentage for round corner
-   int segments = lua_tointeger( L, 6 );
+   int             rx    = lua_tointeger( L, 4 );
+   int             ry    = lua_tointeger( L, 5 );
 
    /* Render. */
-   gl_renderRectH( H, col, !empty, pw, ph, segments );
+   gl_renderRectH( H, col, !empty, rx, ry );
 
    return 0;
 }

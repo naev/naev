@@ -133,9 +133,9 @@ local function _draw_bg( x, y, w, h, col, border_col, alpha )
    col = col or {0, 0, 0, 1}
    border_col = border_col or {0.5, 0.5, 0.5, 1}
    vn.setColour( border_col, alpha )
-   graphics.rectangle("fill", x, y, w, h, 30 * 100 / w, 30 * 100 / h, 10)
+   graphics.rectangle("fill", x, y, w, h, 30, 30)
    vn.setColour(col, alpha)
-   graphics.rectangle("fill", x + 2, y + 2, w - 4, h - 4, 30 * 100 / (w - 4), 30 * 100 / (h - 4), 10)
+   graphics.rectangle("fill", x + 2, y + 2, w - 4, h - 4, 30, 30)
 end
 
 local function _draw_character( c )

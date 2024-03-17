@@ -90,6 +90,8 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
                    double h, const glColour *c, double angle, double outline );
 
 extern gl_vbo *gl_squareVBO;
+extern gl_vbo *gl_squareEmptyVBO;
+extern gl_vbo *gl_hiResSquareVBO;
 extern gl_vbo *gl_circleVBO;
 void           gl_beginSolidProgram( mat4 projection, const glColour *c );
 void           gl_endSolidProgram( void );
@@ -115,8 +117,12 @@ void gl_renderLine( double x1, double y1, double x2, double y2,
 void gl_renderRect( double x, double y, double w, double h, const glColour *c );
 void gl_renderRectEmpty( double x, double y, double w, double h,
                          const glColour *c );
+void gl_renderRoundedRect( double x, double y, double w, double h, double rx,
+                           double ry, const glColour *c );
+void gl_renderRoundedRectEmpty( double x, double y, double w, double h,
+                                double rx, double ry, const glColour *c );
 void gl_renderRectH( const mat4 *H, const glColour *c, int filled, int rx,
-                     int ry, int segments );
+                     int ry );
 void gl_calcRoundSquareVbo( int pw, int ph, int segments );
 
 /* Cross. */

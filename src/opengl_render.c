@@ -39,6 +39,8 @@
 
 static gl_vbo *gl_renderVBO          = 0; /**< VBO for rendering stuff. */
 gl_vbo        *gl_squareVBO          = 0;
+gl_vbo        *gl_squareEmptyVBO     = 0;
+gl_vbo        *gl_hiResSquareVBO     = 0;
 gl_vbo        *gl_roundSquareVBO     = 0;
 gl_vbo        *gl_circleVBO          = 0;
 static gl_vbo *gl_lineVBO            = 0;
@@ -92,7 +94,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
-   gl_renderRectH( &projection, c, 1, 0, 0, 0 );
+   gl_renderRectH( &projection, c, 1, 0, 0 );
 }
 
 /**
@@ -110,7 +112,44 @@ void gl_renderRectEmpty( double x, double y, double w, double h,
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
-   gl_renderRectH( &projection, c, 0, 0, 0, 0 );
+   gl_renderRectH( &projection, c, 0, 0, 0 );
+}
+
+/**
+ * @brief Renders a rectangle.
+ *
+ *    @param x X position to render rectangle at.
+ *    @param y Y position to render rectangle at.
+ *    @param w Rectangle width.
+ *    @param h Rectangle height.
+ *    @param c Rectangle colour.
+ */
+void gl_renderRoundedRect( double x, double y, double w, double h, double rx,
+                           double ry, const glColour *c )
+{
+   /* Set the vertex. */
+   mat4 projection = gl_view_matrix;
+   mat4_translate_scale_xy( &projection, x, y, w, h );
+
+   gl_renderRectH( &projection, c, 1, rx, ry );
+}
+
+/**
+ * @brief Renders a rectangle.
+ *
+ *    @param x X position to render rectangle at.
+ *    @param y Y position to render rectangle at.
+ *    @param w Rectangle width.
+ *    @param h Rectangle height.
+ *    @param c Rectangle colour.
+ */
+void gl_renderRoundedRectEmpty( double x, double y, double w, double h,
+                                double rx, double ry, const glColour *c )
+{
+   mat4 projection = gl_view_matrix;
+   mat4_translate_scale_xy( &projection, x, y, w, h );
+
+   gl_renderRectH( &projection, c, 0, rx, ry );
 }
 
 /**
@@ -121,23 +160,24 @@ void gl_renderRectEmpty( double x, double y, double w, double h,
  *    @param c Rectangle colour.
  *    @param rounded Whether or not to round corners.
  */
-void gl_renderRectH( const mat4 *H, const glColour *c, int filled, int pw,
-                     int ph, int segments )
+void gl_renderRectH( const mat4 *H, const glColour *c, int filled, int rx,
+                     int ry )
 {
-   segments = segments ? segments : 1;
-   gl_beginSolidProgram( *H, c );
-   if ( pw > 0 && ph > 0 && segments != 1 ) {
-      gl_calcRoundSquareVbo( pw, ph, segments );
-      gl_vboActivateAttribOffset( gl_roundSquareVBO, shaders.solid.vertex, 0, 2,
-                                  GL_FLOAT, 0 );
-      glDrawArrays( filled ? GL_TRIANGLE_FAN : GL_LINE_STRIP, 0,
-                    4 * segments + 1 );
+   if ( rx && ry ) {
+      GLfloat width  = H->m[0][0] / gl_view_matrix.m[0][0];
+      GLfloat height = H->m[1][1] / gl_view_matrix.m[1][1];
+      glUseProgram( shaders.rounded_rect.program );
+      glUniform4f( shaders.rounded_rect.dimensions, width, height, rx, ry );
+      glUniform1i( shaders.rounded_rect.parami, filled );
+      gl_renderShaderH( &shaders.rounded_rect, H, c, 1 );
    } else {
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2,
-                                  GL_FLOAT, 0 );
-      glDrawArrays( filled ? GL_TRIANGLE_STRIP : GL_LINE_STRIP, 0, 5 );
+      gl_beginSolidProgram( *H, c );
+      gl_vboActivateAttribOffset( filled ? gl_squareVBO : gl_squareEmptyVBO,
+                                  shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( filled ? GL_TRIANGLE_STRIP : GL_LINE_STRIP, 0,
+                    filled ? 4 : 5 );
+      gl_endSolidProgram();
    }
-   gl_endSolidProgram();
 }
 
 /**
@@ -1167,7 +1207,7 @@ void gl_calcRoundSquareVbo( int pw, int ph, int segments )
  */
 int gl_initRender( void )
 {
-   GLfloat vertex[10];
+   GLfloat vertex[42];
 
    /* Initialize the VBO. */
    gl_renderVBO = gl_vboCreateStream(
@@ -1184,9 +1224,19 @@ int gl_initRender( void )
    vertex[5]    = 1.;
    vertex[6]    = 1.;
    vertex[7]    = 1.;
-   vertex[8]    = 0.;
-   vertex[9]    = 0.;
-   gl_squareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 10, vertex );
+   gl_squareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
+
+   vertex[0]         = 0.;
+   vertex[1]         = 0.;
+   vertex[2]         = 1.;
+   vertex[3]         = 0.;
+   vertex[4]         = 1.;
+   vertex[5]         = 1.;
+   vertex[6]         = 0.;
+   vertex[7]         = 1.;
+   vertex[8]         = 0.;
+   vertex[9]         = 0.;
+   gl_squareEmptyVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 10, vertex );
 
    vertex[0]    = -1.;
    vertex[1]    = -1.;
