@@ -68,10 +68,12 @@ if buildExec.disabled() == false
    config_data.set_quoted('PKGDATADIR', get_option('prefix') / ndata_path)
    config_data.set_quoted('HOST', host_machine.system() + '-' + host_machine.cpu_family())
    # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
+   app_metadata.set('VERSION', meson.project_version())
    app_metadata.set('VMAJOR', meson.project_version().split('.')[0])
    app_metadata.set('VMINOR', meson.project_version().split('.')[1])
    app_metadata.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
    app_metadata.set('YEAR', copyright_year)
+   app_metadata.set('COPYRIGHT', copyright_holder)
    config_data.set('DEBUG', debug ? 1 : false)
    config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
    config_data.set10('DEBUG_GL', debug_gl)
