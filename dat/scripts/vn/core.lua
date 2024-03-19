@@ -385,6 +385,15 @@ function vn.update( dt )
 end
 
 --[[--
+Handles resizing of the windows.
+   @tparam number w New width.
+   @tparam number h New height.
+--]]
+function vn.resize( _w, _h )
+   -- TODO fix scissoring breaking for the characters
+end
+
+--[[--
 Key press handler.
    @tparam string key Name of the key pressed.
    @tparam boolean isrepeat Whether or not the string is repeating.
