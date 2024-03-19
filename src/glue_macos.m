@@ -9,7 +9,8 @@
  * The functions here deal with the macOS parts that call into Objective-C land.
  */
 #include "glue_macos.h"
-#include <Foundation/Foundation.h>
+#import <AppKit/NSApplication.h>
+#import <Foundation/Foundation.h>
 
 /**
  * @brief Write an NSString to a C buffer
