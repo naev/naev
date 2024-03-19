@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file glue_macos.m
  *
@@ -9,11 +8,8 @@
  *
  * The functions here deal with the macOS parts that call into Objective-C land.
  */
-
-
 #include "glue_macos.h"
 #include <Foundation/Foundation.h>
-
 
 /**
  * @brief Write an NSString to a C buffer
@@ -25,7 +21,6 @@ static int macos_writeString ( NSString *str, char *res, size_t n )
                     encoding:NSUTF8StringEncoding];
    return ok ? 0 : -1;
 }
-
 
 /**
  * @brief Determine if we're running from inside an app bundle
@@ -45,7 +40,6 @@ int macos_resourcesPath ( char *res, size_t n )
    return macos_writeString( path, res, n );
 }
 
-
 /**
  * @brief Get the path to the specified user directory
  */
@@ -60,7 +54,6 @@ static int macos_userLibraryDir ( NSString *kind, char *res, size_t n )
    return macos_writeString( path, res, n );
 }
 
-
 /**
  * @brief Get the config directory path
  */
@@ -69,11 +62,19 @@ int macos_configPath ( char *res, size_t n )
    return macos_userLibraryDir( @"Preferences", res, n );
 }
 
-
 /**
  * @brief Get the cache directory path
  */
 int macos_cachePath ( char *res, size_t n )
 {
    return macos_userLibraryDir( @"Caches", res, n );
+}
+
+/* This only has an effect on macOS 12+, and requests any state restoration
+ * archive to be created with secure encoding. See the article at
+ * https://sector7.computest.nl/post/2022-08-process-injection-breaking-all-macos-security-layers-with-a-single-vulnerability/
+ * for more details. */
+- (BOOL)applicationSupportsSecureRestorableState:(NSApplication*)app
+{
+   return YES;
 }
