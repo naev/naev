@@ -323,9 +323,14 @@ static int gl_createWindow( unsigned int flags )
    /* Create the window. */
    gl_screen.window =
       SDL_CreateWindow( APPNAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                        conf.width, conf.height, flags );
+                        MAX( RESOLUTION_W_MIN, conf.width ),
+                        MAX( RESOLUTION_H_MIN, conf.height ), flags );
    if ( gl_screen.window == NULL )
       ERR( _( "Unable to create window! %s" ), SDL_GetError() );
+
+   /* We want to enforce minimum window size or a ton of things break. */
+   SDL_SetWindowMinimumSize( gl_screen.window, RESOLUTION_W_MIN,
+                             RESOLUTION_H_MIN );
 
    /* Set focus loss behaviour. */
    SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
@@ -470,7 +475,7 @@ static int gl_setupScaling( void )
         ( gl_screen.nh < RESOLUTION_H_MIN ) ) {
       double scalew, scaleh;
       if ( gl_screen.scale != 1. )
-         DEBUG( _( "Screen size too small, upscaling..." ) );
+         WARN( _( "Screen size too small, upscaling..." ) );
       scalew = RESOLUTION_W_MIN / (double)gl_screen.nw;
       scaleh = RESOLUTION_H_MIN / (double)gl_screen.nh;
       gl_screen.scale *= MAX( scalew, scaleh );
