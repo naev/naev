@@ -174,11 +174,9 @@ end
 local function _resize( w, h )
    if w ~= 0 and h ~= 0 and (w ~= love.w or h ~= love.h) then
       naev.tk.customFullscreen( love.fullscreen )
+      love.origin()
       return love.resize( w, h )
    end
-end
-function __resize( _w, _h )
-   love.origin()
 end
 local function _textinput( str )
    return love.textinput( str )
