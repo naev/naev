@@ -1071,7 +1071,7 @@ void gl_renderCircle( double cx, double cy, double r, const glColour *c,
  *    @param c Colour to use.
  *    @param line_width Thickness of the outline or 0 to fullfill it.
  */
-void gl_renderCircleH( const mat4 *H, const glColour *c, double line_width )
+void gl_renderCircleH( const mat4 *H, const glColour *c, int line_width )
 {
    // TODO handle shearing and different x/y scaling
    GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
@@ -1138,7 +1138,7 @@ void gl_unclipRect( void )
  */
 int gl_initRender( void )
 {
-   GLfloat vertex[42];
+   GLfloat vertex[10];
 
    /* Initialize the VBO. */
    gl_renderVBO = gl_vboCreateStream(
@@ -1208,6 +1208,7 @@ void gl_exitRender( void )
    /* Destroy the VBO. */
    gl_vboDestroy( gl_renderVBO );
    gl_vboDestroy( gl_squareVBO );
+   gl_vboDestroy( gl_paneVBO );
    gl_vboDestroy( gl_circleVBO );
    gl_vboDestroy( gl_lineVBO );
    gl_vboDestroy( gl_triangleVBO );

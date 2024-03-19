@@ -70,7 +70,7 @@
 #define GAMMA_CORRECTION_DEFAULT 1.  /**< How much gamma correction to do. */
 #define JUMP_BRIGHTNESS_DEFAULT 0.8  /**< Default jump brightness.*/
 #define BIG_ICONS_DEFAULT 0          /**< Whether to display BIGGER icons. */
-#define ROUND_GUI_DEFAULT 1          /**< Whether to display BIGGER icons. */
+#define ROUND_GUI_DEFAULT 1          /**< Whether to use rounded corners GUI. */
 #define FONT_SIZE_CONSOLE_DEFAULT 10 /**< Default console font size. */
 #define FONT_SIZE_INTRO_DEFAULT 18   /**< Default intro font size. */
 #define FONT_SIZE_DEF_DEFAULT 12     /**< Default font size. */
@@ -158,8 +158,7 @@ typedef struct PlayerConf_s {
    double map_overlay_opacity; /**< Map overlay opacity. */
    int    big_icons;           /**< Use big icons or not. */
    int    round_gui;           /**< Use round gui or not. */
-
-   int always_radar; /**< Radar is always visible. */
+   int    always_radar;        /**< Radar is always visible. */
 
    /* Keyrepeat. */
    unsigned int repeat_delay; /**< Time in ms before start repeating. */

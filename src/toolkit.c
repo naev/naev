@@ -1497,38 +1497,6 @@ static void window_renderBorder( const Window *w )
    double y = w->y;
    gl_renderRoundPane( x, y, w->w, w->h, w->h / 20, w->h / 20, toolkit_col );
    gl_renderRoundRect( x, y, w->w, w->h, 5, w->h / 20, w->h / 20, &cGrey70 );
-
-   /* Isn't just well without fullscreen case ? */
-   /*
-    * Case fullscreen.
-    */
-   /*
-   if (window_isFlag( w, WINDOW_FULLSCREEN )) {
-      toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
-      gl_printMidRaw( &gl_defFont, w->w,
-            x,
-            y + w->h - 20.,
-            &cFontWhite, -1., w->displayname );
-      return;
-   }
-   */
-
-   /*
-   toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
-   toolkit_drawOutlineThick( x, y, w->w, w->h, 1, 2, toolkit_colDark, NULL );
-   toolkit_drawOutline( x + 3, y + 2, w->w - 5, w->h - 5, 1, toolkit_colLight,
-   NULL );
-   */
-
-   /*
-    * render window name
-    */
-   /*
-   gl_printMidRaw( &gl_defFont, w->w,
-         x,
-         y + w->h - 20.,
-         &cFontWhite, -1., w->displayname );
-   */
 }
 
 /**
@@ -2670,8 +2638,8 @@ int toolkit_init( void )
    GLsizei size;
 
    /* Create the VBO. */
-   toolkit_vboColourOffset = sizeof( GLshort ) * 2 * 82;
-   size        = ( sizeof( GLshort ) * 2 + sizeof( GLfloat ) * 4 ) * 82;
+   toolkit_vboColourOffset = sizeof( GLshort ) * 2 * 31;
+   size        = ( sizeof( GLshort ) * 2 + sizeof( GLfloat ) * 4 ) * 31;
    toolkit_vbo = gl_vboCreateStream( size, NULL );
 
    /* Disable the cursor. */

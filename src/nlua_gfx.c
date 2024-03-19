@@ -539,8 +539,8 @@ static int gfxL_renderCircle( lua_State *L )
    x   = luaL_checknumber( L, 1 );
    y   = luaL_checknumber( L, 2 );
    r   = luaL_checknumber( L, 3 );
-   col = luaL_checkcolour( L, 5 );
-   lw  = lua_tointeger( L, 6 );
+   col = luaL_checkcolour( L, 4 );
+   lw  = lua_tointeger( L, 5 );
 
    /* Render. */
    gl_renderCircle( x, y, r, col, lw );
