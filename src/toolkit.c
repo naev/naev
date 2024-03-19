@@ -1477,10 +1477,10 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.b = cGrey10.b;
    c2.a = 0.7;
    // note do we still need two ?
-   gl_renderRoundedRect( x + 1, y + 1, w + 18, h + 18, ( h + 18 ) / 10,
-                         ( h + 18 ) / 10, &c2 );
-   gl_renderRoundedRect( x, y, w + 18, h + 18, ( h + 18 ) / 10, ( h + 18 ) / 10,
-                         &c );
+   gl_renderRoundPane( x + 1, y + 1, w + 18, h + 18, ( h + 18 ) / 10,
+                       ( h + 18 ) / 10, &c2 );
+   gl_renderRoundPane( x, y, w + 18, h + 18, ( h + 18 ) / 10, ( h + 18 ) / 10,
+                       &c );
    gl_printTextRaw( &gl_smallFont, w, h, x + 9, y + 9, 0, &cFontWhite, -1.,
                     alt );
 }
@@ -1495,9 +1495,8 @@ static void window_renderBorder( const Window *w )
    /* Position */
    double x = w->x;
    double y = w->y;
-   gl_renderRoundedRect( x, y, w->w, w->h, w->h / 20, w->h / 20, toolkit_col );
-   gl_renderRoundedRectEmpty( x, y, w->w, w->h, 5, w->h / 20, w->h / 20,
-                              &cGrey70 );
+   gl_renderRoundPane( x, y, w->w, w->h, w->h / 20, w->h / 20, toolkit_col );
+   gl_renderRoundRect( x, y, w->w, w->h, 5, w->h / 20, w->h / 20, &cGrey70 );
 
    /* Isn't just well without fullscreen case ? */
    /*
@@ -1561,11 +1560,9 @@ void window_render( Window *w, int top )
          double wx = w->x + wgt->x;
          double wy = w->y + wgt->y;
          if ( wgt->type == WIDGET_BUTTON )
-            gl_renderRoundedRectEmpty( wx, wy, wgt->w, wgt->h, 5, 10, 10,
-                                       &cGrey70 );
+            gl_renderRoundRect( wx, wy, wgt->w, wgt->h, 5, 10, 10, &cGrey70 );
          else
-            gl_renderRoundedRectEmpty( wx, wy, wgt->w, wgt->h, 5, 10, 10,
-                                       &cGrey30 );
+            gl_renderRoundRect( wx, wy, wgt->w, wgt->h, 5, 10, 10, &cGrey30 );
       }
    }
 }

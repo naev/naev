@@ -337,7 +337,7 @@ function graphics.clear( ... )
    else
       -- Minor optimization: just render when there is non-transparent colour
       if col:alpha()>0 then
-         naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
+         naev.gfx.renderRect( love.x, love.y, love.w, love.h, col)
       end
    end
 end

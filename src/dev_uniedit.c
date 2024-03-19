@@ -770,7 +770,7 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x,
                         double y, double zoom, double r )
 {
    /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
+   gl_renderPane( bx, by, w, h, &cBlack );
 
    if ( UNIEDIT_VIEW_DEFAULT )
       map_renderDecorators( x, y, zoom, 1, 1. );
@@ -927,7 +927,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
       rx = ( l * uniedit_zoom ) + bw / 2. - uniedit_xpos;
       ry = ( b * uniedit_zoom ) + bh / 2. - uniedit_ypos;
 
-      gl_renderRect( rx, ry, ( r - l ) * uniedit_zoom, ( t - b ) * uniedit_zoom,
+      gl_renderPane( rx, ry, ( r - l ) * uniedit_zoom, ( t - b ) * uniedit_zoom,
                      &col );
    }
 

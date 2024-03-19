@@ -29,7 +29,6 @@
 
 #include "opengl_render.h"
 
-#include "array.h"
 #include "camera.h"
 #include "conf.h"
 #include "gui.h"
@@ -40,9 +39,7 @@
 
 static gl_vbo *gl_renderVBO          = 0; /**< VBO for rendering stuff. */
 gl_vbo        *gl_squareVBO          = 0;
-gl_vbo        *gl_squareEmptyVBO     = 0;
-gl_vbo        *gl_hiResSquareVBO     = 0;
-gl_vbo        *gl_roundSquareVBO     = 0;
+gl_vbo        *gl_paneVBO            = 0;
 gl_vbo        *gl_circleVBO          = 0;
 static gl_vbo *gl_lineVBO            = 0;
 static gl_vbo *gl_triangleVBO        = 0;
@@ -81,7 +78,7 @@ void gl_endSmoothProgram()
 }
 
 /**
- * @brief Renders a rectangle.
+ * @brief Renders a filled rectangle.
  *
  *    @param x X position to render rectangle at.
  *    @param y Y position to render rectangle at.
@@ -91,8 +88,8 @@ void gl_endSmoothProgram()
  *    @param ry Corner curve lenght along Y axis.
  *    @param c Rectangle colour.
  */
-void gl_renderRoundedRect( double x, double y, double w, double h, double rx,
-                           double ry, const glColour *c )
+void gl_renderRoundPane( double x, double y, double w, double h, double rx,
+                         double ry, const glColour *c )
 {
    /* Set the vertex. */
    mat4 projection = gl_view_matrix;
@@ -108,14 +105,14 @@ void gl_renderRoundedRect( double x, double y, double w, double h, double rx,
  *    @param y Y position to render rectangle at.
  *    @param w Rectangle width.
  *    @param h Rectangle height.
+ *    @param line_width Outline thickness or 0 for a filled rectangle.
  *    @param rx Corner curve lenght along X axis.
  *    @param ry Corner curve lenght along Y axis.
- *    @param line_width Outline thickness or 0 for a filled rectangle.
  *    @param c Rectangle colour.
  */
-void gl_renderRoundedRectEmpty( double x, double y, double w, double h,
-                                double line_width, double rx, double ry,
-                                const glColour *c )
+void gl_renderRoundRect( double x, double y, double w, double h,
+                         double line_width, double rx, double ry,
+                         const glColour *c )
 {
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
@@ -144,7 +141,7 @@ void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
       gl_renderShaderH( &shaders.rounded_rect, H, c, 1 );
    } else {
       gl_beginSolidProgram( *H, c );
-      gl_vboActivateAttribOffset( line_width ? gl_squareEmptyVBO : gl_squareVBO,
+      gl_vboActivateAttribOffset( line_width ? gl_paneVBO : gl_squareVBO,
                                   shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
       glDrawArrays( line_width ? GL_LINE_STRIP : GL_TRIANGLE_STRIP, 0,
                     line_width ? 5 : 4 );
@@ -1160,17 +1157,17 @@ int gl_initRender( void )
    vertex[7]    = 1.;
    gl_squareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
 
-   vertex[0]         = 0.;
-   vertex[1]         = 0.;
-   vertex[2]         = 1.;
-   vertex[3]         = 0.;
-   vertex[4]         = 1.;
-   vertex[5]         = 1.;
-   vertex[6]         = 0.;
-   vertex[7]         = 1.;
-   vertex[8]         = 0.;
-   vertex[9]         = 0.;
-   gl_squareEmptyVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 10, vertex );
+   vertex[0]  = 0.;
+   vertex[1]  = 0.;
+   vertex[2]  = 1.;
+   vertex[3]  = 0.;
+   vertex[4]  = 1.;
+   vertex[5]  = 1.;
+   vertex[6]  = 0.;
+   vertex[7]  = 1.;
+   vertex[8]  = 0.;
+   vertex[9]  = 0.;
+   gl_paneVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 10, vertex );
 
    vertex[0]    = -1.;
    vertex[1]    = -1.;

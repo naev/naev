@@ -1060,8 +1060,8 @@ static void spfx_hapticRumble( double mod )
  */
 void spfx_cinematic( void )
 {
-   gl_renderRect( 0., 0., SCREEN_W, SCREEN_H * 0.2, &cBlack );
-   gl_renderRect( 0., SCREEN_H * 0.8, SCREEN_W, SCREEN_H, &cBlack );
+   gl_renderPane( 0., 0., SCREEN_W, SCREEN_H * 0.2, &cBlack );
+   gl_renderPane( 0., SCREEN_H * 0.8, SCREEN_W, SCREEN_H, &cBlack );
 }
 
 static void spfx_renderStack( SPFX *spfx_stack )

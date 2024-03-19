@@ -766,7 +766,7 @@ void ovr_render( double dt )
 
    /* First render the background overlay. */
    glColour c = { .r = 0., .g = 0., .b = 0., .a = conf.map_overlay_opacity };
-   gl_renderRect( ovr_bounds.l, ovr_bounds.b, w, h, &c );
+   gl_renderPane( ovr_bounds.l, ovr_bounds.b, w, h, &c );
 
    /* Render the safe lanes */
    safelanes = safelanes_get( -1, 0, cur_system );

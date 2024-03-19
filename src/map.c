@@ -1064,7 +1064,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    z = cst->zoom;
 
    /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
+   gl_renderPane( bx, by, w, h, &cBlack );
 
    if ( cst->alpha_decorators > 0. )
       map_renderDecorators( x, y, z, 0, EASE_ALPHA( cst->alpha_decorators ) );
@@ -1567,7 +1567,7 @@ void map_renderNotes( double bx, double by, double x, double y, double zoom,
       /* Background. */
       col   = cBlack;
       col.a = alpha * 0.8;
-      gl_renderRect( tx - 4., ty - 4., tw, th, &col );
+      gl_renderPane( tx - 4., ty - 4., tw, th, &col );
 
       /* Render note */
       col   = cFontOrange;

@@ -2202,7 +2202,7 @@ void pilot_renderOverlay( Pilot *p )
       dy = y + PILOT_SIZE_APPROX * sh / 2.;
 
       /* Background. */
-      gl_renderRect( dx - 2., dy - 2., p->comm_msgWidth + 4., gl_defFont.h + 4.,
+      gl_renderPane( dx - 2., dy - 2., p->comm_msgWidth + 4., gl_defFont.h + 4.,
                      &cBlackHilight );
 
       /* Display text. */

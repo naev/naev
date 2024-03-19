@@ -904,7 +904,7 @@ static void sysedit_renderAsteroidExclusion( double bx, double by,
 
    gl_renderCircle( tx, ty, r, col, 1 );
    gl_renderCross( tx, ty, r, col );
-   gl_renderRectEmpty( tx - rr, ty - rr, rr * 2, rr * 2, 5, col );
+   gl_renderRect( tx - rr, ty - rr, rr * 2, rr * 2, 5, col );
 }
 
 /**
@@ -922,15 +922,15 @@ static void sysedit_renderBG( double bx, double by, double w, double h,
    int    nx, ny;
 
    /* Render blackness. */
-   gl_renderRect( bx, by, w, h, &cBlack );
+   gl_renderPane( bx, by, w, h, &cBlack );
 
    /* Must have grid activated. */
    if ( !sysedit_grid )
       return;
 
    /* Draw lines that go through 0,0 */
-   gl_renderRect( x - 1., by, 3., h, &cLightBlue );
-   gl_renderRect( bx, y - 1., w, 3., &cLightBlue );
+   gl_renderPane( x - 1., by, 3., h, &cLightBlue );
+   gl_renderPane( bx, y - 1., w, 3., &cLightBlue );
 
    /* Render lines. */
    spacing = s * z;
