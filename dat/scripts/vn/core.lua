@@ -386,8 +386,8 @@ end
 
 --[[--
 Handles resizing of the windows.
-   @tparam number w New width.
-   @tparam number h New height.
+   @tparam number _w New width.
+   @tparam number _h New height.
 --]]
 function vn.resize( _w, _h )
    -- TODO fix scissoring breaking for the characters
