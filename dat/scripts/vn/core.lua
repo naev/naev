@@ -133,9 +133,9 @@ local function _draw_bg( x, y, w, h, col, border_col, alpha )
    col = col or {0, 0, 0, 1}
    border_col = border_col or {0.5, 0.5, 0.5, 1}
    vn.setColour( border_col, alpha )
-   graphics.rectangle( "fill", x, y, w, h )
-   vn.setColour( col, alpha )
-   graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
+   graphics.rectangle("fill", x, y, w, h, 30, 30)
+   vn.setColour(col, alpha)
+   graphics.rectangle("fill", x + 2, y + 2, w - 4, h - 4, 30, 30)
 end
 
 local function _draw_character( c )
@@ -1040,7 +1040,7 @@ function vn.StateMenu:_draw()
          col = {0.2, 0.2, 0.2}
       end
       vn.setColour( col )
-      graphics.rectangle( "fill", gx+x, gy+y, w, h )
+      graphics.rectangle( "fill", gx+x, gy+y, w, h, h/5, h/5 )
       vn.setColour( {0.7, 0.7, 0.7} )
       graphics.printf( text, font, gx+x+tb, gy+y+tb, w-tb*2 )
    end

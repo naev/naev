@@ -143,7 +143,7 @@ void opt_menu( void )
 
    /* Dimensions. */
    w = 680;
-   h = 525;
+   h = 550;
 
    /* Create window and tabs. */
    opt_wid = window_create( "wdwOptions", _( "Options" ), -1, -1, w, h );
@@ -1468,6 +1468,9 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20, "chkBigIcons", _( "Bigger icons" ),
                        NULL, conf.big_icons );
+   y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20, "chkRoundGui", _( "Rounded GUI." ),
+                       NULL, conf.round_gui );
 }
 
 /**
@@ -1549,6 +1552,7 @@ static int opt_videoSave( unsigned int wid, const char *str )
 
    /* GUI. */
    conf.big_icons = window_checkboxState( wid, "chkBigIcons" );
+   conf.round_gui = window_checkboxState( wid, "chkRoundGui" );
 
    /* Reload background. */
    background_load( cur_system->background );
@@ -1729,6 +1733,7 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
    window_checkboxSet( wid, "chkBigIcons", BIG_ICONS_DEFAULT );
+   window_checkboxSet( wid, "chkRoundGui", ROUND_GUI_DEFAULT );
 
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadScale", log( SCALE_FACTOR_DEFAULT ) );

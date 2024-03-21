@@ -199,6 +199,7 @@ void window_resize( unsigned int wid, int w, int h )
 
    wdw->w = ( w == -1 ) ? gl_screen.nw : (double)w;
    wdw->h = ( h == -1 ) ? gl_screen.nh : (double)h;
+
    if ( ( w == -1 ) && ( h == -1 ) ) {
       window_setFlag( wdw, WINDOW_FULLSCREEN );
       wdw->x = 0.;
@@ -688,6 +689,12 @@ unsigned int window_get( const char *wdwname )
 unsigned int window_create( const char *name, const char *displayname,
                             const int x, const int y, const int w, const int h )
 {
+   /* For windows with upper tabs, let tabedWindow handle the border to hide the
+    * unactive tabs */
+   if ( !strcmp( name, "wdwLand" ) || !strcmp( name, "wdwOptions" ) ||
+        !strcmp( name, "wdwInfo" ) )
+      return window_createFlags( name, displayname, x, y, w, h,
+                                 WINDOW_NOBORDER );
    return window_createFlags( name, displayname, x, y, w, h, 0 );
 }
 
@@ -727,6 +734,7 @@ unsigned int window_createFlags( const char *name, const char *displayname,
    /* Dimensions. */
    wdw->w = ( w == -1 ) ? gl_screen.nw : (double)w;
    wdw->h = ( h == -1 ) ? gl_screen.nh : (double)h;
+
    if ( ( w == -1 ) && ( h == -1 ) ) {
       window_setFlag( wdw, WINDOW_FULLSCREEN );
       wdw->x = 0.;
@@ -1281,7 +1289,6 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b, int thick,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 10 );
    gl_endSmoothProgram();
 }
-
 /**
  * @brief Draws an outline.
  *
@@ -1335,6 +1342,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b, const glColour *c,
    glDrawArrays( GL_LINE_LOOP, 0, 4 );
    gl_endSmoothProgram();
 }
+
 /**
  * @brief Draws a rectangle.
  *
@@ -1353,7 +1361,7 @@ void toolkit_drawRect( int x, int y, int w, int h, const glColour *c,
    GLshort  vertex[4][2];
    glColour colours[4];
 
-   lc = lc == NULL ? c : lc;
+   lc = lc ? lc : c;
 
    /* Set up vertices and colours. */
    vertex[0][0] = x; /* left-up */
@@ -1468,8 +1476,11 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.g = cGrey10.g;
    c2.b = cGrey10.b;
    c2.a = 0.7;
-   toolkit_drawRect( x + 1, y + 1, w + 18, h + 18, &c2, NULL );
-   toolkit_drawRect( x, y, w + 18, h + 18, &c, NULL );
+   // note do we still need two ?
+   gl_renderRoundPane( x + 1, y + 1, w + 18, h + 18, ( h + 18 ) / 10,
+                       ( h + 18 ) / 10, &c2 );
+   gl_renderRoundPane( x, y, w + 18, h + 18, ( h + 18 ) / 10, ( h + 18 ) / 10,
+                       &c );
    gl_printTextRaw( &gl_smallFont, w, h, x + 9, y + 9, 0, &cFontWhite, -1.,
                     alt );
 }
@@ -1484,29 +1495,8 @@ static void window_renderBorder( const Window *w )
    /* Position */
    double x = w->x;
    double y = w->y;
-
-   /*
-    * Case fullscreen.
-    */
-   if ( window_isFlag( w, WINDOW_FULLSCREEN ) ) {
-      /* Background. */
-      toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
-      /* Name. */
-      gl_printMidRaw( &gl_defFont, w->w, x, y + w->h - 20., &cFontWhite, -1.,
-                      w->displayname );
-      return;
-   }
-
-   toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
-   toolkit_drawOutlineThick( x, y, w->w, w->h, 1, 2, toolkit_colDark, NULL );
-   toolkit_drawOutline( x + 3, y + 2, w->w - 5, w->h - 5, 1, toolkit_colLight,
-                        NULL );
-
-   /*
-    * render window name
-    */
-   gl_printMidRaw( &gl_defFont, w->w, x, y + w->h - 20., &cFontWhite, -1.,
-                   w->displayname );
+   gl_renderRoundPane( x, y, w->w, w->h, w->h / 20, w->h / 20, toolkit_col );
+   gl_renderRoundRect( x, y, w->w, w->h, 5, w->h / 20, w->h / 20, &cGrey70 );
 }
 
 /**
@@ -1534,13 +1524,13 @@ void window_render( Window *w, int top )
       /* Only render non-dynamics. */
       if ( !wgt_isFlag( wgt, WGT_FLAG_DYNAMIC ) || !top )
          wgt->render( wgt, w->x, w->y );
-
       if ( wgt->id == w->focus ) {
-         double wx = w->x + wgt->x - 2;
-         double wy = w->y + wgt->y - 2;
-         toolkit_drawOutlineThick(
-            wx, wy, wgt->w + 4, wgt->h + 4, 0, 2,
-            ( wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30 ), NULL );
+         double wx = w->x + wgt->x;
+         double wy = w->y + wgt->y;
+         if ( wgt->type == WIDGET_BUTTON )
+            gl_renderRoundRect( wx, wy, wgt->w, wgt->h, 5, 10, 10, &cGrey70 );
+         else
+            gl_renderRoundRect( wx, wy, wgt->w, wgt->h, 5, 10, 10, &cGrey30 );
       }
    }
 }

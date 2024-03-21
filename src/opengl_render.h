@@ -90,11 +90,13 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
                    double h, const glColour *c, double angle, double outline );
 
 extern gl_vbo *gl_squareVBO;
+extern gl_vbo *gl_paneVBO;
 extern gl_vbo *gl_circleVBO;
-void           gl_beginSolidProgram( mat4 projection, const glColour *c );
-void           gl_endSolidProgram( void );
-void           gl_beginSmoothProgram( mat4 projection );
-void           gl_endSmoothProgram( void );
+
+void gl_beginSolidProgram( mat4 projection, const glColour *c );
+void gl_endSolidProgram( void );
+void gl_beginSmoothProgram( mat4 projection );
+void gl_endSmoothProgram( void );
 
 /* Simple Shaders. */
 void gl_renderShader( double x, double y, double w, double h, double r,
@@ -103,19 +105,28 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H,
                        const glColour *c, int center );
 
 /* Circles. */
+#define gl_renderDisk( x, y, r, c )                                            \
+   gl_renderCircle( ( x ), ( y ), ( r ), ( c ), 0 )
 void gl_renderCircle( double x, double y, double r, const glColour *c,
-                      int filled );
-void gl_renderCircleH( const mat4 *H, const glColour *c, int filled );
+                      double line_width );
+void gl_renderCircleH( const mat4 *H, const glColour *c, int line_width );
 
 /* Lines. */
 void gl_renderLine( double x1, double y1, double x2, double y2,
                     const glColour *c );
 
 /* Rectangles. */
-void gl_renderRect( double x, double y, double w, double h, const glColour *c );
-void gl_renderRectEmpty( double x, double y, double w, double h,
+#define gl_renderPane( x, y, w, h, c )                                         \
+   gl_renderRoundPane( ( x ), ( y ), ( w ), ( h ), 0, 0, ( c ) )
+#define gl_renderRect( x, y, w, h, lw, c )                                     \
+   gl_renderRoundRect( ( x ), ( y ), ( w ), ( h ), ( lw ), 0, 0, ( c ) )
+void gl_renderRoundPane( double x, double y, double w, double h, double rx,
+                         double ry, const glColour *c );
+void gl_renderRoundRect( double x, double y, double w, double h,
+                         double line_width, double rx, double ry,
                          const glColour *c );
-void gl_renderRectH( const mat4 *H, const glColour *c, int filled );
+void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
+                     int ry );
 
 /* Cross. */
 void gl_renderCross( double x, double y, double r, const glColour *c );

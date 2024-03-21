@@ -287,7 +287,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
    int            start;
    const glColour col = COL_ALPHA( cBlack, 0.5 );
 
-   gl_renderRect( bx, by, w, h, &col );
+   gl_renderPane( bx, by, w, h, &col );
 
    if ( cli_scroll_pos == -1 )
       start = MAX( 0, array_size( cli_buffer ) - CLI_MAX_LINES );

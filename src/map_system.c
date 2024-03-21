@@ -385,24 +385,24 @@ static void map_system_render( double bx, double by, double w, double h,
    ccol.a = 1;
    ih     = 15;
    iw     = 3;
-   gl_renderRect( bx + 1, by + ( nshow - cur_spob_sel - 1 ) * pitch + offset,
+   gl_renderPane( bx + 1, by + ( nshow - cur_spob_sel - 1 ) * pitch + offset,
                   iw, ih, &ccol );
-   gl_renderRect( bx + 1, by + ( nshow - cur_spob_sel ) * pitch - ih + offset,
+   gl_renderPane( bx + 1, by + ( nshow - cur_spob_sel ) * pitch - ih + offset,
                   iw, ih, &ccol );
-   gl_renderRect( bx + pitch + 3 - iw,
+   gl_renderPane( bx + pitch + 3 - iw,
                   by + ( nshow - cur_spob_sel - 1 ) * pitch + offset, iw, ih,
                   &ccol );
-   gl_renderRect( bx + pitch + 3 - iw,
+   gl_renderPane( bx + pitch + 3 - iw,
                   by + ( nshow - cur_spob_sel ) * pitch - ih + offset, iw, ih,
                   &ccol );
-   gl_renderRect( bx + 1, by + ( nshow - cur_spob_sel - 1 ) * pitch + offset,
+   gl_renderPane( bx + 1, by + ( nshow - cur_spob_sel - 1 ) * pitch + offset,
                   ih, iw, &ccol );
-   gl_renderRect( bx + 1, by + ( nshow - cur_spob_sel ) * pitch - iw + offset,
+   gl_renderPane( bx + 1, by + ( nshow - cur_spob_sel ) * pitch - iw + offset,
                   ih, iw, &ccol );
-   gl_renderRect( bx + pitch + 3 - ih,
+   gl_renderPane( bx + pitch + 3 - ih,
                   by + ( nshow - cur_spob_sel - 1 ) * pitch + offset, ih, iw,
                   &ccol );
-   gl_renderRect( bx + pitch + 3 - ih,
+   gl_renderPane( bx + pitch + 3 - ih,
                   by + ( nshow - cur_spob_sel ) * pitch - iw + offset, ih, iw,
                   &ccol );
    cnt    = 0;

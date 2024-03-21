@@ -30,14 +30,16 @@
 #include "opengl_render.h"
 
 #include "camera.h"
+#include "conf.h"
 #include "gui.h"
+#include "nmath.h"
 #include "opengl.h"
 
 #define OPENGL_RENDER_VBO_SIZE 256 /**< Size of VBO. */
 
 static gl_vbo *gl_renderVBO          = 0; /**< VBO for rendering stuff. */
 gl_vbo        *gl_squareVBO          = 0;
-static gl_vbo *gl_squareEmptyVBO     = 0;
+gl_vbo        *gl_paneVBO            = 0;
 gl_vbo        *gl_circleVBO          = 0;
 static gl_vbo *gl_lineVBO            = 0;
 static gl_vbo *gl_triangleVBO        = 0;
@@ -76,21 +78,24 @@ void gl_endSmoothProgram()
 }
 
 /**
- * @brief Renders a rectangle.
+ * @brief Renders a filled rectangle.
  *
  *    @param x X position to render rectangle at.
  *    @param y Y position to render rectangle at.
  *    @param w Rectangle width.
  *    @param h Rectangle height.
+ *    @param rx Corner curve lenght along X axis.
+ *    @param ry Corner curve lenght along Y axis.
  *    @param c Rectangle colour.
  */
-void gl_renderRect( double x, double y, double w, double h, const glColour *c )
+void gl_renderRoundPane( double x, double y, double w, double h, double rx,
+                         double ry, const glColour *c )
 {
    /* Set the vertex. */
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
-   gl_renderRectH( &projection, c, 1 );
+   gl_renderRectH( &projection, c, 0, rx, ry );
 }
 
 /**
@@ -100,37 +105,48 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
  *    @param y Y position to render rectangle at.
  *    @param w Rectangle width.
  *    @param h Rectangle height.
+ *    @param line_width Outline thickness or 0 for a filled rectangle.
+ *    @param rx Corner curve lenght along X axis.
+ *    @param ry Corner curve lenght along Y axis.
  *    @param c Rectangle colour.
  */
-void gl_renderRectEmpty( double x, double y, double w, double h,
+void gl_renderRoundRect( double x, double y, double w, double h,
+                         double line_width, double rx, double ry,
                          const glColour *c )
 {
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
-   gl_renderRectH( &projection, c, 0 );
+   gl_renderRectH( &projection, c, line_width, rx, ry );
 }
 
 /**
  * @brief Renders a rectangle.
  *
  *    @param H Transformation matrix to apply.
- *    @param filled Whether or not to fill.
  *    @param c Rectangle colour.
+ *    @param line_width Thickness of the outline or 0 to fullfill it.
+ *    @param rx Corner curve lenght along X axis.
+ *    @param ry Corner curve lenght along Y axis.
  */
-void gl_renderRectH( const mat4 *H, const glColour *c, int filled )
+void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
+                     int ry )
 {
-   gl_beginSolidProgram( *H, c );
-   if ( filled ) {
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2,
-                                  GL_FLOAT, 0 );
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   if ( conf.round_gui && rx && ry ) {
+      GLfloat width  = H->m[0][0] / gl_view_matrix.m[0][0];
+      GLfloat height = H->m[1][1] / gl_view_matrix.m[1][1];
+      glUseProgram( shaders.rounded_rect.program );
+      glUniform4f( shaders.rounded_rect.dimensions, width, height, rx, ry );
+      glUniform1i( shaders.rounded_rect.parami, line_width );
+      gl_renderShaderH( &shaders.rounded_rect, H, c, 1 );
    } else {
-      gl_vboActivateAttribOffset( gl_squareEmptyVBO, shaders.solid.vertex, 0, 2,
-                                  GL_FLOAT, 0 );
-      glDrawArrays( GL_LINE_STRIP, 0, 5 );
+      gl_beginSolidProgram( *H, c );
+      gl_vboActivateAttribOffset( line_width ? gl_paneVBO : gl_squareVBO,
+                                  shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( line_width ? GL_LINE_STRIP : GL_TRIANGLE_STRIP, 0,
+                    line_width ? 5 : 4 );
+      gl_endSolidProgram();
    }
-   gl_endSolidProgram();
 }
 
 /**
@@ -1035,17 +1051,17 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H,
  *    @param cy Y position of the center in screen coordinates.
  *    @param r Radius of the circle.
  *    @param c Colour to use.
- *    @param filled Whether or not it should be filled.
+ *    @param line_width The width of the outline or 0 for a filled circle.
  */
 void gl_renderCircle( double cx, double cy, double r, const glColour *c,
-                      int filled )
+                      double line_width )
 {
    /* Set the vertex. */
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, cx, cy, r, r );
 
    /* Draw! */
-   gl_renderCircleH( &projection, c, filled );
+   gl_renderCircleH( &projection, c, line_width );
 }
 
 /**
@@ -1053,16 +1069,16 @@ void gl_renderCircle( double cx, double cy, double r, const glColour *c,
  *
  *    @param H Transformation matrix to draw the circle.
  *    @param c Colour to use.
- *    @param filled Whether or not it should be filled.
+ *    @param line_width Thickness of the outline or 0 to fullfill it.
  */
-void gl_renderCircleH( const mat4 *H, const glColour *c, int filled )
+void gl_renderCircleH( const mat4 *H, const glColour *c, int line_width )
 {
    // TODO handle shearing and different x/y scaling
    GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
 
    glUseProgram( shaders.circle.program );
    glUniform2f( shaders.circle.dimensions, r, r );
-   glUniform1i( shaders.circle.parami, filled );
+   glUniform1i( shaders.circle.parami, line_width );
    gl_renderShaderH( &shaders.circle, H, c, 1 );
 }
 
@@ -1141,6 +1157,18 @@ int gl_initRender( void )
    vertex[7]    = 1.;
    gl_squareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
 
+   vertex[0]  = 0.;
+   vertex[1]  = 0.;
+   vertex[2]  = 1.;
+   vertex[3]  = 0.;
+   vertex[4]  = 1.;
+   vertex[5]  = 1.;
+   vertex[6]  = 0.;
+   vertex[7]  = 1.;
+   vertex[8]  = 0.;
+   vertex[9]  = 0.;
+   gl_paneVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 10, vertex );
+
    vertex[0]    = -1.;
    vertex[1]    = -1.;
    vertex[2]    = 1.;
@@ -1150,18 +1178,6 @@ int gl_initRender( void )
    vertex[6]    = 1.;
    vertex[7]    = 1.;
    gl_circleVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
-
-   vertex[0]         = 0.;
-   vertex[1]         = 0.;
-   vertex[2]         = 1.;
-   vertex[3]         = 0.;
-   vertex[4]         = 1.;
-   vertex[5]         = 1.;
-   vertex[6]         = 0.;
-   vertex[7]         = 1.;
-   vertex[8]         = 0.;
-   vertex[9]         = 0.;
-   gl_squareEmptyVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
 
    vertex[0]  = 0.;
    vertex[1]  = 0.;
@@ -1192,8 +1208,8 @@ void gl_exitRender( void )
    /* Destroy the VBO. */
    gl_vboDestroy( gl_renderVBO );
    gl_vboDestroy( gl_squareVBO );
+   gl_vboDestroy( gl_paneVBO );
    gl_vboDestroy( gl_circleVBO );
-   gl_vboDestroy( gl_squareEmptyVBO );
    gl_vboDestroy( gl_lineVBO );
    gl_vboDestroy( gl_triangleVBO );
    gl_renderVBO = NULL;

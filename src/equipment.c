@@ -986,7 +986,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    py = by + ( bh - ph ) / 2;
 
    /* Render background. */
-   gl_renderRect( px, py, pw, ph, &cBlack );
+   gl_renderPane( px, py, pw, ph, &cBlack );
 
    /* Use framebuffer to draw, have to use an additional one. */
    s = ceil(

@@ -585,10 +585,10 @@ static void gui_renderBorder( double dt )
    hh = SCREEN_H / 2;
 
    /* Render borders to enhance contrast. */
-   gl_renderRect( 0., 0., 15., SCREEN_H, &cBlackHilight );
-   gl_renderRect( SCREEN_W - 15., 0., 15., SCREEN_H, &cBlackHilight );
-   gl_renderRect( 15., 0., SCREEN_W - 30., 15., &cBlackHilight );
-   gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &cBlackHilight );
+   gl_renderPane( 0., 0., 15., SCREEN_H, &cBlackHilight );
+   gl_renderPane( SCREEN_W - 15., 0., 15., SCREEN_H, &cBlackHilight );
+   gl_renderPane( 15., 0., SCREEN_W - 30., 15., &cBlackHilight );
+   gl_renderPane( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &cBlackHilight );
 
    /* Draw spobs. */
    for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
@@ -605,7 +605,7 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getSpobColour( i );
-         gl_renderCircle( cx, cy, 5, col, 0 );
+         gl_renderCircle( cx, cy, 5, col, 1 );
       }
    }
 
@@ -648,7 +648,7 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getPilotColour( plt );
-         gl_renderRectEmpty( cx - 5, cy - 5, 10, 10, col );
+         gl_renderRect( cx - 5, cy - 5, 10, 10, 5, col );
       }
    }
 
@@ -1121,12 +1121,12 @@ static void gui_renderMessages( double dt )
             if ( str[0] == '\t' ) {
                gl_printRestore( &mesg_stack[m].restore );
                dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, &str[1] ) + 6;
-               gl_renderRect( x - 4., y - 1., gui_mesg_w - 13., dy, &msgc );
+               gl_renderPane( x - 4., y - 1., gui_mesg_w - 13., dy, &msgc );
                gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3,
                                &cFontWhite, -1., &str[1] );
             } else {
                dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, str ) + 6;
-               gl_renderRect( x - 4., y - 1., gui_mesg_w - 13., dy, &msgc );
+               gl_renderPane( x - 4., y - 1., gui_mesg_w - 13., dy, &msgc );
                gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3,
                                &cFontWhite, -1., str );
             }
@@ -1142,11 +1142,11 @@ static void gui_renderMessages( double dt )
    if ( mesg_viewpoint != -1 ) {
       /* Border. */
       c.a = 0.2;
-      gl_renderRect( vx + gui_mesg_w - 10., vy, 10, h, &c );
+      gl_renderPane( vx + gui_mesg_w - 10., vy, 10, h, &c );
 
       /* Inside. */
       c.a = 0.5;
-      gl_renderRect(
+      gl_renderPane(
          vx + gui_mesg_w - 10.,
          vy + hs / 2. +
             ( h - hs ) *
@@ -1343,7 +1343,7 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
    else
       col = &cGrey70;
 
-   // gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), col );
+   // gl_renderPane( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), col );
    r = ( sx + sy ) / 2.0 + 1.5;
    glUseProgram( shaders.asteroidmarker.program );
    gl_renderShader( px, py, r, r, 0., &shaders.asteroidmarker, col, 1 );

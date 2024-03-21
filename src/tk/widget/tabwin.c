@@ -94,7 +94,7 @@ unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
    wx = wdw->x + wgt->x;
    wy = wdw->y + wgt->y;
    ww = wgt->w;
-   wh = wgt->h;
+   wh = wgt->h - 30;
    if ( tabpos == 0 ) {
       wy += TAB_HEIGHT;
       wh -= TAB_HEIGHT;
@@ -115,9 +115,16 @@ unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
       /* Create windows with flags.
        * Parent window handles events for the children.
        */
-      wgt->dat.tab.windows[i] = window_createFlags(
-         tabnames[i], tabnames[i], wx, wy, ww, wh,
-         WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT | WINDOW_NOBORDER );
+      int flags = WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT;
+      /* For windows with upper tabs, keep borders to let them overwrite hiden
+       * tabs */
+      if ( strcmp( name, "tabLand" ) && strcmp( name, "tabInfo" ) &&
+           strcmp( name, "tabOpt" ) )
+         flags |= WINDOW_NOBORDER; // todo: disable it for inactives tabs and
+                                   // try to does it display well for any
+                                   // kind of tabed window.
+      wgt->dat.tab.windows[i] =
+         window_createFlags( tabnames[i], tabnames[i], wx, wy, ww, wh, flags );
    }
 
    /* Return list of windows. */
@@ -364,7 +371,7 @@ static int tab_key( Widget *tab, SDL_Event *event )
  */
 static void tab_render( Widget *tab, double bx, double by )
 {
-   int x, y;
+   int x, y, w, h;
    /* Get window. */
    Window *wdw = window_wget( tab->dat.tab.windows[tab->dat.tab.active] );
    if ( wdw == NULL ) {
@@ -372,38 +379,59 @@ static void tab_render( Widget *tab, double bx, double by )
             tab->name );
       return;
    }
-
-   /* Render the active window. */
-   window_render( wdw, wgt_isFlag( tab, WGT_FLAG_FOCUSED ) );
+   h = wdw->h < 800 ? 40 : wdw->h / 20;
+   w = tab_getBarWidth( tab );
 
    /* Render tabs ontop. */
-   x = bx + tab->x + 3.;
+   if ( !strcmp( tab->name, "tabLand" ) || !strcmp( tab->name, "tabInfo" ) ||
+        !strcmp( tab->name, "tabOpt" ) ) {
+      tab->x = wdw->w / 2 - w / 2;
+      tab->y = wdw->h + 2 * TAB_HEIGHT / 3;
+      y      = by + tab->y;
+      x      = bx + tab->x;
+   } else {
+      x = bx + tab->x + 3.;
+   }
    y = by + tab->y + 3.;
    if ( tab->dat.tab.tabpos == 1 )
-      y += tab->h - TAB_HEIGHT;
-
-   /* Draw tab bar background */
-   toolkit_drawRect( x, y, wdw->w - 6., TAB_HEIGHT + 2, &cGrey10, NULL );
-   toolkit_drawRect( x, y, tab_getBarWidth( tab ), TAB_HEIGHT + 2, &cBlack,
-                     NULL );
+      y += tab->h - h;
 
    /* Iterate through tabs */
    x += TAB_HMARGIN;
-   for ( int i = 0; i < tab->dat.tab.ntabs; i++ ) {
+   int len, x_active = 0, len_active = 0;
+   int i;
+   for ( i = 0; i < tab->dat.tab.ntabs; i++ ) {
       /* Draw contents rect */
-      toolkit_drawRect(
-         x, y, tab->dat.tab.namelen[i] + ( TAB_HPADDING * 2 ),
-         ( i == tab->dat.tab.active ? TAB_HEIGHT + 2 : TAB_HEIGHT ),
-         ( i == tab->dat.tab.active ? tab_active : tab_inactive ), NULL );
+      len = tab->dat.tab.namelen[i] + ( TAB_HPADDING * 2 );
+      if ( i != tab->dat.tab.active ) {
+         gl_renderRoundPane( x, y, len, TAB_HEIGHT, 10, 10, tab_inactive );
 
-      /* Draw text. */
-      gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
-                   y + ( TAB_HEIGHT - tab->dat.tab.font->h ) / 2., &cFontWhite,
-                   -1., tab->dat.tab.tabnames[i] );
-
+         /* Draw text. */
+         gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
+                      y + 2 * ( TAB_HEIGHT - tab->dat.tab.font->h ) / 3,
+                      &cFontWhite, -1., tab->dat.tab.tabnames[i] );
+         gl_renderRoundRect( x, y, len, TAB_HEIGHT, 2, 10, 10,
+                             toolkit_colLight );
+      } else {
+         gl_renderRoundRect( x - 3, y - 8, len + 6, TAB_HEIGHT + 6, 6, 10, 10,
+                             &cGrey70 );
+         x_active   = x;
+         len_active = len;
+      }
       /* Go to next line. */
-      x += ( TAB_HPADDING * 2 ) + TAB_HMARGIN + tab->dat.tab.namelen[i];
+      x += len + TAB_HMARGIN;
    }
+   /* Render the active window. */
+   window_render( wdw, wgt_isFlag( tab, WGT_FLAG_FOCUSED ) );
+
+   i = tab->dat.tab.active;
+   gl_renderRoundPane( x_active, y - 5, len_active, TAB_HEIGHT, 10, 10,
+                       tab_active );
+
+   /* Draw text. */
+   gl_printRaw( tab->dat.tab.font, x_active + TAB_HPADDING,
+                y + 2 * ( TAB_HEIGHT - tab->dat.tab.font->h ) / 3 - 5,
+                &cFontWhite, -1., tab->dat.tab.tabnames[i] );
 }
 
 /**
