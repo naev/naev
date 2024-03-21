@@ -21,7 +21,7 @@
  <jumps>
   <jump target="Behar">
    <autopos/>
-   <exitonly/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Gliese Minor">
