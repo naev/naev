@@ -32,7 +32,6 @@
 #include "camera.h"
 #include "conf.h"
 #include "gui.h"
-#include "nmath.h"
 #include "opengl.h"
 
 #define OPENGL_RENDER_VBO_SIZE 256 /**< Size of VBO. */
@@ -1078,7 +1077,7 @@ void gl_renderCircleH( const mat4 *H, const glColour *c, int line_width )
 
    glUseProgram( shaders.circle.program );
    glUniform2f( shaders.circle.dimensions, r, r );
-   glUniform1i( shaders.circle.parami, line_width );
+   glUniform1f( shaders.circle.paramf, line_width );
    gl_renderShaderH( &shaders.circle, H, c, 1 );
 }
 

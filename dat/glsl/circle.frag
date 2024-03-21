@@ -2,16 +2,16 @@
 
 uniform vec4 colour;
 uniform vec2 dimensions;
-uniform int parami;
+uniform float paramf;
 
 in vec2 pos;
 out vec4 colour_out;
 
 void main(void) {
    float d = sdCircle( pos*dimensions, dimensions.x-1.0 );
-   if (parami > 0)
+   if (paramf > 0)
       d = abs(d);
-   int line_width = parami > 0 ? parami : 1;
+   float line_width = paramf > 0.0 ? paramf : 1.0;
 
    /*
    float alpha = smoothstep(-m, 0.0, -d);
