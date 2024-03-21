@@ -104,6 +104,7 @@ static void opt_setGammaCorrection( unsigned int wid, const char *str );
 static void opt_setScalefactor( unsigned int wid, const char *str );
 static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
+static void opt_checkRound( unsigned int wid, const char *str );
 static void opt_checkHealth( unsigned int wid, const char *str );
 static void opt_checkRestart( unsigned int wid, const char *str );
 /* Audio. */
@@ -1470,7 +1471,7 @@ static void opt_video( unsigned int wid )
                        NULL, conf.big_icons );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20, "chkRoundGui", _( "Rounded GUI." ),
-                       NULL, conf.round_gui );
+                       opt_checkRound, conf.round_gui );
 }
 
 /**
@@ -1599,6 +1600,15 @@ static void opt_listColourblind( unsigned int wid, const char *str )
 {
    conf.colourblind_type = toolkit_getListPos( wid, str );
    gl_colourblind();
+}
+
+/**
+ * @brief Handles the roundness.
+ */
+static void opt_checkRound( unsigned int wid, const char *str )
+{
+   int f          = window_checkboxState( wid, str );
+   conf.round_gui = f;
 }
 
 /**
