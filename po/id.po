@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-03-12 15:02+0000\n"
+"PO-Revision-Date: 2024-03-21 16:01+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
-"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/"
-">\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
+"\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -578,360 +578,404 @@ msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr ""
+msgstr "   * Model Roket Gada"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
-msgstr ""
+msgstr "Brian J. Cameron"
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
-msgstr ""
+msgstr "   * Banyak karya seni"
 
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
+"   Seniman bertalenta, salah satu yang pertama dalam pembuatan konten Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
-msgstr ""
+msgstr "Camilo Polymeris <cpolymeris@gmx.net>"
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
-msgstr ""
+msgstr "   * Kode dan seni"
 
 #: dat/AUTHORS:107
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
+"   Sangatlah membahagiakan melihat orang lain mengerjakan kode Naev dan "
+"dokumentasi Lua."
 
 #: dat/AUTHORS:109
 msgid "Dimitry Marakasov"
-msgstr ""
+msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
-msgstr ""
+msgstr "   * Portase ke FreeBSD dan CMake"
 
 #: dat/AUTHORS:111
 msgid "   Talented coder who did the first official port of Naev."
-msgstr ""
+msgstr "   Koder bertalenta yang melakukan portase resmi pertama dari Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
-msgstr ""
+msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
-msgstr ""
+msgstr "   * Mengkode fitur keren"
 
 #: dat/AUTHORS:115
 msgid ""
 "   First non-bobbens coder to make serious commits! Like the reason the maps "
 "are all over or the faction in the maps."
 msgstr ""
+"   Koder bukan bobbens pertama yang melakukan commit serius! Menjadi alasan "
+"mengapa denah petanya tersebar seperti itu dan adanya faksi di peta."
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
-msgstr ""
+msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
-msgstr ""
+msgstr "   * Mempercepat jauh generasi nebula"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
-msgstr ""
+msgstr "Unavowed <unavowed@vexillium.org>"
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
-msgstr ""
+msgstr "   * Memportase sistem bangun Naev ke autotools."
 
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
 msgstr ""
+"   Kemungkinan besar implementasi autotools terbersih yang pernah kulihat."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr ""
+msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr ""
+msgstr "   * Membuat misi kargo generik menjadi menarik."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr ""
+msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr ""
+msgstr "   * Misi"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
-msgstr ""
+msgstr "   * Bantuan koding lainnya"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
-msgstr ""
+msgstr "Fisherman"
 
 #: dat/AUTHORS:132
 msgid ""
 "   * Threading code to speed up nebula generation (and in the future who "
 "knows?)"
 msgstr ""
+"   * Threading kode untuk mempercepat generasi nebula (dan di masa datang, "
+"siapa yang tahu? mungkin lebih)"
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
-msgstr ""
+msgstr "   * Misi hot dog"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
-msgstr ""
+msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
-msgstr ""
+msgstr "   * Programmer Python yang luar biasa "
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
-msgstr ""
+msgstr "Hal yang ia buat mencegah penuaan dini semua orang."
 
 #: dat/AUTHORS:139
 msgid "Josh Combs"
-msgstr ""
+msgstr "Josh Combs"
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr ""
+msgstr "   * Seniman untuk mayoritas nebula."
 
 #: dat/AUTHORS:142
+#, fuzzy
 msgid "Galileus"
-msgstr ""
+msgstr "Galileus"
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
-msgstr ""
+msgstr "   * Pemodel dari Shark dan Rhino"
 
 #: dat/AUTHORS:145
+#, fuzzy
 msgid "Devin Khan"
-msgstr ""
+msgstr "Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
-msgstr ""
+msgstr "   * Pemodel dari Phalanx"
 
 #: dat/AUTHORS:148
+#, fuzzy
 msgid "Areze"
-msgstr ""
+msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
-msgstr ""
+msgstr "   * Asisten junior pembuat galaksi"
 
 #: dat/AUTHORS:151
+#, fuzzy
 msgid "Old Man <oldtopman@gmail.com>"
-msgstr ""
+msgstr "Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
-msgstr ""
+msgstr "   * Pengelola Desura"
 
 #: dat/AUTHORS:154
+#, fuzzy
 msgid "NeD"
-msgstr ""
+msgstr "NeD"
 
 #: dat/AUTHORS:155
 msgid "   * Mission contributor"
-msgstr ""
+msgstr "   * Kontributor misi"
 
 #: dat/AUTHORS:157
+#, fuzzy
 msgid "Sudarshan S"
-msgstr ""
+msgstr "Sudarshan S"
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
-msgstr ""
+msgstr "   * Kontributor acara"
 
 #: dat/AUTHORS:160
+#, fuzzy
 msgid "Arvind S"
-msgstr ""
+msgstr "Arvind S"
 
 #: dat/AUTHORS:161
 msgid "   * PoI contributor"
-msgstr ""
+msgstr "   * Kontributor Pol"
 
 #: dat/AUTHORS:162
 msgid "   * Proteron lore"
-msgstr ""
+msgstr "   * Cerita Proteron"
 
 #: dat/AUTHORS:164 dat/AUTHORS:202
+#, fuzzy
 msgid "PhoenixRiver"
-msgstr ""
+msgstr "PhoenixRiver"
 
 #: dat/AUTHORS:165
 msgid "   * Content contributor"
-msgstr ""
+msgstr "   * Kontributor konten"
 
 #: dat/AUTHORS:166
 msgid "   * Misc fixes and typos"
-msgstr ""
+msgstr "   * Perbaikan salah ketik dan lainnya"
 
 #: dat/AUTHORS:168
+#, fuzzy
 msgid "Alastair Basden"
-msgstr ""
+msgstr "Alastair Basden"
 
 #: dat/AUTHORS:169
 msgid "   * Economy development"
-msgstr ""
+msgstr "   * Pengembang ekonomi"
 
 #: dat/AUTHORS:170
 msgid "   * Ship log"
-msgstr ""
+msgstr "   * Catatan kapal"
 
 #: dat/AUTHORS:171
 msgid "   * Solar system information screen"
-msgstr ""
+msgstr "   * Layar informasi tata surya"
 
 #: dat/AUTHORS:173
+#, fuzzy
 msgid "oo13"
-msgstr ""
+msgstr "oo13"
 
 #: dat/AUTHORS:174
 msgid "   * Japanese translation"
-msgstr ""
+msgstr "   * Translasi Bahasa Jepang"
 
 #: dat/AUTHORS:175
 msgid "   * Many bug fixes"
-msgstr ""
+msgstr "   * Banyak awakutu"
 
 #: dat/AUTHORS:177
 msgid "theElerd"
-msgstr ""
+msgstr "theElerd"
 
 #: dat/AUTHORS:178
 msgid "   * New character images"
-msgstr ""
+msgstr "   * Gambar karakter baru"
 
 #: dat/AUTHORS:180
 msgid "Music by Matthew Pablo"
-msgstr ""
+msgstr "Musik oleh Matthew Pablo"
 
 #: dat/AUTHORS:181
+#, fuzzy
 msgid "http://www.matthewpablo.com"
-msgstr ""
+msgstr "http://www.matthewpablo.com"
 
 #: dat/AUTHORS:183
 msgid "Translations"
-msgstr ""
+msgstr "Translasi"
 
 #: dat/AUTHORS:186
+#, fuzzy
 msgid "(ja) Masato Oota (oo13)"
-msgstr ""
+msgstr "(ja) Masato Oota (oo13)"
 
 #: dat/AUTHORS:187
+#, fuzzy
 msgid "(de) Wuzzy, Solid Tscheik, murks"
-msgstr ""
+msgstr "(de) Wuzzy, Solid Tscheik, murks"
 
 #: dat/AUTHORS:188
+#, fuzzy
 msgid "(fr) Nicolas, Jérémie Guegain, Étienne Girard, Nathan"
-msgstr ""
+msgstr "(fr) Nicolas, Jérémie Guegain, Étienne Girard, Nathan"
 
 #: dat/AUTHORS:189
+#, fuzzy
 msgid "(es) paco, gallegonovato"
-msgstr ""
+msgstr "(es) paco, gallegonovato"
 
 #: dat/AUTHORS:190
+#, fuzzy
 msgid "(cs) David Doubek, Hahaha Nope"
-msgstr ""
+msgstr "(cs) David Doubek, Hahaha Nope"
 
 #: dat/AUTHORS:191
+#, fuzzy
 msgid "(pt_PT) SC, ssantos"
-msgstr ""
+msgstr "(pt_PT) SC, ssantos"
 
 #: dat/AUTHORS:192
+#, fuzzy
 msgid "(pt_BR) Bloody Kenshiro, SC, Anthony Gregory Souza dos Santos"
-msgstr ""
+msgstr "(pt_BR) Bloody Kenshiro, SC, Anthony Gregory Souza dos Santos"
 
 #: dat/AUTHORS:193
+#, fuzzy
 msgid "(ko) 이정희"
-msgstr ""
+msgstr "(ko) 이정희"
 
 #: dat/AUTHORS:194
+#, fuzzy
 msgid "(it) Davide Prina"
-msgstr ""
+msgstr "(it) Davide Prina"
 
 #: dat/AUTHORS:196
 msgid "Testers"
-msgstr ""
+msgstr "Penguji"
 
 #: dat/AUTHORS:199
+#, fuzzy
 msgid "John Schwartfeger"
-msgstr ""
+msgstr "John Schwartfeger"
 
 #: dat/AUTHORS:200
+#, fuzzy
 msgid "Leonardo Valeri Manera"
-msgstr ""
+msgstr "Leonardo Valeri Manera"
 
 #: dat/AUTHORS:201
+#, fuzzy
 msgid "EvanR"
-msgstr ""
+msgstr "EvanR"
 
 #: dat/AUTHORS:203
+#, fuzzy
 msgid "Markus Büchele (BM-W1)"
-msgstr ""
+msgstr "Markus Büchele (BM-W1)"
 
 #: dat/AUTHORS:204
+#, fuzzy
 msgid "Alaisdair West (awest03)"
-msgstr ""
+msgstr "Alaisdair West (awest03)"
 
 #: dat/AUTHORS:205
+#, fuzzy
 msgid "VividViolet"
-msgstr ""
+msgstr "VividViolet"
 
 #: dat/AUTHORS:206
+#, fuzzy
 msgid "exoterws"
-msgstr ""
+msgstr "exoterws"
 
 #: dat/AUTHORS:207
+#, fuzzy
 msgid "LJ_Dude"
-msgstr ""
+msgstr "LJ_Dude"
 
 #: dat/AUTHORS:208
+#, fuzzy
 msgid "sigus"
-msgstr ""
+msgstr "sigus"
 
 #: dat/AUTHORS:209
+#, fuzzy
 msgid "Timsticles"
-msgstr ""
+msgstr "Timsticles"
 
 #: dat/AUTHORS:210
+#, fuzzy
 msgid "Mister T"
-msgstr ""
+msgstr "Mister T"
 
 #: dat/AUTHORS:211
+#, fuzzy
 msgid "Lemuria"
-msgstr ""
+msgstr "Lemuria"
 
 #: dat/AUTHORS:212
+#, fuzzy
 msgid "Powerpeon"
-msgstr ""
+msgstr "Powerpeon"
 
 #: dat/AUTHORS:213
+#, fuzzy
 msgid "xrogaan"
-msgstr ""
+msgstr "xrogaan"
 
 #: dat/AUTHORS:214
+#, fuzzy
 msgid "nloewen"
-msgstr ""
+msgstr "nloewen"
 
 #: dat/AUTHORS:215
+#, fuzzy
 msgid "Elven_Moustache"
-msgstr ""
+msgstr "Elven_Moustache"
 
 #: dat/AUTHORS:217
 msgid "Artwork Contributors"
-msgstr ""
+msgstr "Kontributor Seni"
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
@@ -1066,26 +1110,26 @@ msgstr ""
 #: dat/asteroids/types/massive.xml:3 dat/asteroids/types/silicate_olivine.xml:3
 #: dat/asteroids/types/water_clay.xml:3
 msgid "common"
-msgstr ""
+msgstr "umum"
 
 #: dat/asteroids/types/gold_platinum.xml:3
 #: dat/asteroids/types/gold_rhodium.xml:3 dat/asteroids/types/golden.xml:3
 #: dat/asteroids/types/mossy.xml:3 dat/asteroids/types/rhodium_yttrium.xml:3
 msgid "uncommon"
-msgstr ""
+msgstr "jarang"
 
 #: dat/asteroids/types/kermite.xml:3 dat/asteroids/types/nebula_crystal.xml:3
 #: dat/asteroids/types/therite.xml:3 dat/asteroids/types/vixilium.xml:3
 msgid "rare"
-msgstr ""
+msgstr "langka"
 
 #: dat/asteroids/types/nodrop.xml:3
 msgid "empty"
-msgstr ""
+msgstr "kosong"
 
 #: dat/commodities/clay.xml:3
 msgid "Clay"
-msgstr ""
+msgstr "Tanah liat"
 
 #: dat/commodities/clay.xml:4
 msgid ""
@@ -1094,11 +1138,16 @@ msgid ""
 "construction. Depending on the provenance of the clay it can have many "
 "different compositions and material properties."
 msgstr ""
+"Tanah liat yang ditambang dari asteroid cenderung memiliki sifat yang "
+"berbeda dari yang ditemukan di permukaan planet dan memiliki kegunaan yang "
+"beragam seperti untuk perlindungan dan konstruksi. Tergantung dari asal-"
+"muasalnya, tanah liat bisa memiliki berbagai komposisi dan sifat material "
+"yang berbeda-beda."
 
 #: dat/commodities/diamond.xml:3 dat/events/pers/pirate.lua:236
 #: dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
-msgstr ""
+msgstr "Berlian"
 
 #: dat/commodities/diamond.xml:4
 msgid ""
@@ -1108,10 +1157,15 @@ msgid ""
 "is commonly used in decorative applications, but diamond is now easy enough "
 "to produce synthetically that it is not as sought after as it once was."
 msgstr ""
+"Berlian adalah sebuah bentuk dari karbon yang telah dikristalisasi karena "
+"tekanan dan panas tinggi di bawah permukaan planet-planet tertentu. "
+"Materialnya berguna di beberapa aplikasi pemotongan karena kekerasannya, dan "
+"juga umumnya digunakan di aplikasi dekoratif, tetapi karena berlian sudah "
+"mudah diproduksi secara sintetis maka benda ini tidak seberharga dahulu."
 
 #: dat/commodities/food.xml:3
 msgid "Food"
-msgstr ""
+msgstr "Makanan"
 
 #: dat/commodities/food.xml:4
 msgid ""
@@ -1122,7 +1176,7 @@ msgstr ""
 
 #: dat/commodities/gold.xml:3 dat/ssys/gold.xml:2
 msgid "Gold"
-msgstr ""
+msgstr "Emas"
 
 #: dat/commodities/gold.xml:4
 msgid ""
@@ -1134,7 +1188,7 @@ msgstr ""
 
 #: dat/commodities/industrial_goods.xml:3
 msgid "Industrial Goods"
-msgstr ""
+msgstr "Barang Industri"
 
 #: dat/commodities/industrial_goods.xml:4
 msgid ""
@@ -1144,7 +1198,7 @@ msgstr ""
 
 #: dat/commodities/iron.xml:3
 msgid "Iron"
-msgstr ""
+msgstr "Besi"
 
 #: dat/commodities/iron.xml:4
 msgid ""
@@ -1155,7 +1209,7 @@ msgstr ""
 
 #: dat/commodities/kermite.xml:3
 msgid "Kermite"
-msgstr ""
+msgstr "Kermit"
 
 #: dat/commodities/kermite.xml:4
 msgid ""
@@ -1169,7 +1223,7 @@ msgstr ""
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
-msgstr ""
+msgstr "Barang Mewah"
 
 #: dat/commodities/luxury_goods.xml:4
 msgid "All sorts of high quality luxury goods."
@@ -1177,7 +1231,7 @@ msgstr ""
 
 #: dat/commodities/medicine.xml:3
 msgid "Medicine"
-msgstr ""
+msgstr "Obat-obatan"
 
 #: dat/commodities/medicine.xml:4
 msgid "An assortment of medicines suitable for curing all kinds of ailments."
@@ -1185,7 +1239,7 @@ msgstr ""
 
 #: dat/commodities/nebula_crystals.xml:3
 msgid "Nebula Crystals"
-msgstr ""
+msgstr "Kristal Nebula"
 
 #: dat/commodities/nebula_crystals.xml:4
 msgid ""
@@ -1197,7 +1251,7 @@ msgstr ""
 
 #: dat/commodities/neodymium.xml:3
 msgid "Neodymium"
-msgstr ""
+msgstr "Neodymium"
 
 #: dat/commodities/neodymium.xml:4
 msgid ""
@@ -1210,7 +1264,7 @@ msgstr ""
 
 #: dat/commodities/nickel.xml:3
 msgid "Nickel"
-msgstr ""
+msgstr "Nikel"
 
 #: dat/commodities/nickel.xml:4
 msgid ""
@@ -1221,7 +1275,7 @@ msgstr ""
 
 #: dat/commodities/olivine.xml:3
 msgid "Olivine"
-msgstr ""
+msgstr "Olivin"
 
 #: dat/commodities/olivine.xml:4
 msgid ""
@@ -1232,7 +1286,7 @@ msgstr ""
 
 #: dat/commodities/ore.xml:3
 msgid "Ore"
-msgstr ""
+msgstr "Bijih"
 
 #: dat/commodities/ore.xml:4
 msgid ""
@@ -1243,7 +1297,7 @@ msgstr ""
 
 #: dat/commodities/platinum.xml:3
 msgid "Platinum"
-msgstr ""
+msgstr "Platina"
 
 #: dat/commodities/platinum.xml:4
 msgid ""
@@ -1254,7 +1308,7 @@ msgstr ""
 
 #: dat/commodities/rhodium.xml:3
 msgid "Rhodium"
-msgstr ""
+msgstr "Rodium"
 
 #: dat/commodities/rhodium.xml:4
 msgid ""
@@ -1267,7 +1321,7 @@ msgstr ""
 
 #: dat/commodities/silicate.xml:3
 msgid "Silicate"
-msgstr ""
+msgstr "Silikat"
 
 #: dat/commodities/silicate.xml:4
 msgid ""
@@ -1278,7 +1332,7 @@ msgstr ""
 
 #: dat/commodities/space_moss.xml:3
 msgid "Space Moss"
-msgstr ""
+msgstr "Lumut Angkasa"
 
 #. Some useful variable names
 #. Add the head guy
@@ -1320,11 +1374,11 @@ msgstr ""
 #: dat/outfits/special/bikers_fury_launcher.xml:9
 #: dat/events/hypergate_construction.lua:121 dat/scripts/common/minerva.lua:39
 msgid "TODO"
-msgstr ""
+msgstr "TODO"
 
 #: dat/commodities/therite.xml:3
 msgid "Therite"
-msgstr ""
+msgstr "Terit"
 
 #: dat/commodities/therite.xml:4
 msgid ""
@@ -1338,7 +1392,7 @@ msgstr ""
 
 #: dat/commodities/vixilium.xml:3
 msgid "Vixilium"
-msgstr ""
+msgstr "Vixilium"
 
 #: dat/commodities/vixilium.xml:4
 msgid ""
@@ -1352,7 +1406,7 @@ msgstr ""
 
 #: dat/commodities/water.xml:3
 msgid "Water"
-msgstr ""
+msgstr "Air"
 
 #: dat/commodities/water.xml:4
 msgid ""
@@ -1365,7 +1419,7 @@ msgstr ""
 
 #: dat/commodities/yttrium.xml:3
 msgid "Yttrium"
-msgstr ""
+msgstr "Yttrium"
 
 #: dat/commodities/yttrium.xml:4
 msgid ""
@@ -1384,94 +1438,96 @@ msgstr ""
 
 #: dat/damagetype/emp.xml:2
 msgid "emp"
-msgstr ""
+msgstr "emp"
 
 #: dat/damagetype/emp.xml:2
 msgid "#bEMP#0"
-msgstr ""
+msgstr "#bEMP#0"
 
 #: dat/damagetype/energy.xml:2
 msgid "energy"
-msgstr ""
+msgstr "energi"
 
 #: dat/damagetype/energy.xml:2 dat/damagetype/energy_noknockback.xml:2
 msgid "#gEnergy#0"
-msgstr ""
+msgstr "#gEnergi#0"
 
 #: dat/damagetype/energy_noknockback.xml:2
 msgid "energy_noknockback"
-msgstr ""
+msgstr "energy_noknockback"
 
 #: dat/damagetype/explosion_splash.xml:2
 msgid "explosion_splash"
-msgstr ""
+msgstr "explosion_splash"
 
 #: dat/damagetype/ion.xml:2
 msgid "ion"
-msgstr ""
+msgstr "ion"
 
 #: dat/damagetype/ion.xml:2
 msgid "#yIon#0"
-msgstr ""
+msgstr "#yIon#0"
 
 #: dat/damagetype/kinetic.xml:2
 msgid "kinetic"
-msgstr ""
+msgstr "kinetik"
 
 #: dat/damagetype/kinetic.xml:2
 msgid "#oKinetic#0"
-msgstr ""
+msgstr "#oKinetik#0"
 
 #: dat/damagetype/nebula.xml:2
 msgid "nebula"
-msgstr ""
+msgstr "nebula"
 
 #: dat/damagetype/nebula.xml:2
 msgid "#pNebula#0"
-msgstr ""
+msgstr "#pNebula#0"
 
 #: dat/damagetype/plasma.xml:2
 msgid "plasma"
-msgstr ""
+msgstr "plasma"
 
 #: dat/damagetype/plasma.xml:2
 msgid "#rPlasma#0"
-msgstr ""
+msgstr "#rPlasma#0"
 
 #: dat/difficulty/default.xml:2 dat/events/escort_settings.lua:83
 #: src/dev_uniedit.c:458
 msgid "Default"
-msgstr ""
+msgstr "Bawaan"
 
 #: dat/difficulty/default.xml:3
 msgid "Standard difficulty mode."
-msgstr ""
+msgstr "Mode kesulitan standar."
 
 #: dat/difficulty/easy_mode.xml:2
 msgid "Easy Mode"
-msgstr ""
+msgstr "Mode Mudah"
 
 #: dat/difficulty/easy_mode.xml:3
 msgid "Makes the game easier for the player, without trivializing most things."
-msgstr ""
+msgstr "Membuat permainannya lebih mudah, tanpa membuat mayoritas hal sepele."
 
 #: dat/difficulty/masochist_mode.xml:2
 msgid "Masochist Mode"
-msgstr ""
+msgstr "Mode Masokis"
 
 #: dat/difficulty/masochist_mode.xml:3
 msgid "Makes the game significantly harder for the player."
-msgstr ""
+msgstr "Membuat permainannya lebih sulit secara signifikan."
 
 #: dat/difficulty/story_mode.xml:2
 msgid "Story Mode"
-msgstr ""
+msgstr "Mode Cerita"
 
 #: dat/difficulty/story_mode.xml:3
 msgid ""
 "Significantly reduces the difficulty of the game, allowing to concentrate on "
 "the story."
 msgstr ""
+"Mengurangi kesulitan permainan secara signifikan, sehingga lebih berfokus "
+"kepada elemen ceritanya."
 
 #: dat/effects/ambush_hunter.xml:2
 #: dat/outfits/bioship/skills/ambush_hunter.xml:2
@@ -1506,7 +1562,7 @@ msgstr ""
 #: dat/effects/avatar_of_sirichana.xml:2
 #: dat/outfits/flow/abilities/avatar_of_sirichana.xml:2
 msgid "Avatar of Sirichana"
-msgstr ""
+msgstr "Avatar Sirichana"
 
 #: dat/effects/avatar_of_sirichana.xml:3
 msgid "You are an avatar of Sirichana!"
@@ -117974,10 +118030,9 @@ msgid "unknown"
 msgstr ""
 
 #: src/input.c:1867
-#, fuzzy, c-format
-#| msgid "not found"
+#, c-format
 msgid "Key '%s' not found!"
-msgstr "tidak ditemukan"
+msgstr "Kunci '%s' tidak ditemukan!"
 
 #. Scrolling is happening faster than fading...
 #: src/intro.c:196
