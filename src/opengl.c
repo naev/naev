@@ -541,7 +541,8 @@ int gl_init( void )
    gl_resize();
 
    /* Finishing touches. */
-   glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
+   glClear( GL_COLOR_BUFFER_BIT |
+            GL_DEPTH_BUFFER_BIT ); /* must clear the buffer first */
    gl_checkErr();
 
    /* Initialize subsystems.*/
