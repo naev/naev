@@ -1,6 +1,6 @@
 #include "lib/sdf.glsl"
 uniform vec4 colour;
-uniform vec4 dimensions;
+uniform vec2 dimensions;
 uniform int parami;
 
 in vec2 pos;
@@ -8,7 +8,7 @@ out vec4 colour_out;
 
 void main(void) {
     vec2 uv = pos * 2.0 - 1.0;
-    float d = sdBoxRound(uv * dimensions.xy, dimensions.xy, dimensions.zw * 2.0);
+    float d = sdBox(uv * dimensions.xy, dimensions.xy);
     colour_out = colour;
     if (parami > 0.0)
         d = abs(d + parami);
