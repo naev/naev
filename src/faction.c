@@ -1942,13 +1942,12 @@ const FactionGenerator *faction_generators( int f )
  */
 void factions_clearDynamic( void )
 {
-   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
+   for ( int i = array_size( faction_stack ) - 1; i >= 0; i-- ) {
       Faction *f = &faction_stack[i];
-      if ( faction_isFlag( f, FACTION_DYNAMIC ) ) {
-         faction_freeOne( f );
-         array_erase( &faction_stack, f, f + 1 );
-         i--;
-      }
+      if ( !faction_isFlag( f, FACTION_DYNAMIC ) )
+         continue;
+      faction_freeOne( f );
+      array_erase( &faction_stack, f, f + 1 );
    }
    faction_computeGrid();
 }
