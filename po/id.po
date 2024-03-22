@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-03-21 16:01+0000\n"
+"PO-Revision-Date: 2024-03-22 06:01+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -714,7 +714,6 @@ msgid "   * Artist of most of the nebulae."
 msgstr "   * Seniman untuk mayoritas nebula."
 
 #: dat/AUTHORS:142
-#, fuzzy
 msgid "Galileus"
 msgstr "Galileus"
 
@@ -723,7 +722,6 @@ msgid "   * Modeller of the Shark and Rhino"
 msgstr "   * Pemodel dari Shark dan Rhino"
 
 #: dat/AUTHORS:145
-#, fuzzy
 msgid "Devin Khan"
 msgstr "Devin Khan"
 
@@ -732,7 +730,6 @@ msgid "   * Modeller of the Phalanx"
 msgstr "   * Pemodel dari Phalanx"
 
 #: dat/AUTHORS:148
-#, fuzzy
 msgid "Areze"
 msgstr "Areze"
 
@@ -741,7 +738,6 @@ msgid "   * Junior assistant galaxy creator"
 msgstr "   * Asisten junior pembuat galaksi"
 
 #: dat/AUTHORS:151
-#, fuzzy
 msgid "Old Man <oldtopman@gmail.com>"
 msgstr "Old Man <oldtopman@gmail.com>"
 
@@ -750,7 +746,6 @@ msgid "   * Desura Maintainer"
 msgstr "   * Pengelola Desura"
 
 #: dat/AUTHORS:154
-#, fuzzy
 msgid "NeD"
 msgstr "NeD"
 
@@ -759,7 +754,6 @@ msgid "   * Mission contributor"
 msgstr "   * Kontributor misi"
 
 #: dat/AUTHORS:157
-#, fuzzy
 msgid "Sudarshan S"
 msgstr "Sudarshan S"
 
@@ -768,7 +762,6 @@ msgid "   * Event contributor"
 msgstr "   * Kontributor acara"
 
 #: dat/AUTHORS:160
-#, fuzzy
 msgid "Arvind S"
 msgstr "Arvind S"
 
@@ -781,7 +774,6 @@ msgid "   * Proteron lore"
 msgstr "   * Cerita Proteron"
 
 #: dat/AUTHORS:164 dat/AUTHORS:202
-#, fuzzy
 msgid "PhoenixRiver"
 msgstr "PhoenixRiver"
 
@@ -794,7 +786,6 @@ msgid "   * Misc fixes and typos"
 msgstr "   * Perbaikan salah ketik dan lainnya"
 
 #: dat/AUTHORS:168
-#, fuzzy
 msgid "Alastair Basden"
 msgstr "Alastair Basden"
 
@@ -811,7 +802,6 @@ msgid "   * Solar system information screen"
 msgstr "   * Layar informasi tata surya"
 
 #: dat/AUTHORS:173
-#, fuzzy
 msgid "oo13"
 msgstr "oo13"
 
@@ -836,7 +826,6 @@ msgid "Music by Matthew Pablo"
 msgstr "Musik oleh Matthew Pablo"
 
 #: dat/AUTHORS:181
-#, fuzzy
 msgid "http://www.matthewpablo.com"
 msgstr "http://www.matthewpablo.com"
 
@@ -845,47 +834,38 @@ msgid "Translations"
 msgstr "Translasi"
 
 #: dat/AUTHORS:186
-#, fuzzy
 msgid "(ja) Masato Oota (oo13)"
 msgstr "(ja) Masato Oota (oo13)"
 
 #: dat/AUTHORS:187
-#, fuzzy
 msgid "(de) Wuzzy, Solid Tscheik, murks"
 msgstr "(de) Wuzzy, Solid Tscheik, murks"
 
 #: dat/AUTHORS:188
-#, fuzzy
 msgid "(fr) Nicolas, Jérémie Guegain, Étienne Girard, Nathan"
 msgstr "(fr) Nicolas, Jérémie Guegain, Étienne Girard, Nathan"
 
 #: dat/AUTHORS:189
-#, fuzzy
 msgid "(es) paco, gallegonovato"
 msgstr "(es) paco, gallegonovato"
 
 #: dat/AUTHORS:190
-#, fuzzy
 msgid "(cs) David Doubek, Hahaha Nope"
 msgstr "(cs) David Doubek, Hahaha Nope"
 
 #: dat/AUTHORS:191
-#, fuzzy
 msgid "(pt_PT) SC, ssantos"
 msgstr "(pt_PT) SC, ssantos"
 
 #: dat/AUTHORS:192
-#, fuzzy
 msgid "(pt_BR) Bloody Kenshiro, SC, Anthony Gregory Souza dos Santos"
 msgstr "(pt_BR) Bloody Kenshiro, SC, Anthony Gregory Souza dos Santos"
 
 #: dat/AUTHORS:193
-#, fuzzy
 msgid "(ko) 이정희"
 msgstr "(ko) 이정희"
 
 #: dat/AUTHORS:194
-#, fuzzy
 msgid "(it) Davide Prina"
 msgstr "(it) Davide Prina"
 
@@ -894,82 +874,66 @@ msgid "Testers"
 msgstr "Penguji"
 
 #: dat/AUTHORS:199
-#, fuzzy
 msgid "John Schwartfeger"
 msgstr "John Schwartfeger"
 
 #: dat/AUTHORS:200
-#, fuzzy
 msgid "Leonardo Valeri Manera"
 msgstr "Leonardo Valeri Manera"
 
 #: dat/AUTHORS:201
-#, fuzzy
 msgid "EvanR"
 msgstr "EvanR"
 
 #: dat/AUTHORS:203
-#, fuzzy
 msgid "Markus Büchele (BM-W1)"
 msgstr "Markus Büchele (BM-W1)"
 
 #: dat/AUTHORS:204
-#, fuzzy
 msgid "Alaisdair West (awest03)"
 msgstr "Alaisdair West (awest03)"
 
 #: dat/AUTHORS:205
-#, fuzzy
 msgid "VividViolet"
 msgstr "VividViolet"
 
 #: dat/AUTHORS:206
-#, fuzzy
 msgid "exoterws"
 msgstr "exoterws"
 
 #: dat/AUTHORS:207
-#, fuzzy
 msgid "LJ_Dude"
 msgstr "LJ_Dude"
 
 #: dat/AUTHORS:208
-#, fuzzy
 msgid "sigus"
 msgstr "sigus"
 
 #: dat/AUTHORS:209
-#, fuzzy
 msgid "Timsticles"
 msgstr "Timsticles"
 
 #: dat/AUTHORS:210
-#, fuzzy
 msgid "Mister T"
 msgstr "Mister T"
 
 #: dat/AUTHORS:211
-#, fuzzy
 msgid "Lemuria"
 msgstr "Lemuria"
 
 #: dat/AUTHORS:212
-#, fuzzy
 msgid "Powerpeon"
 msgstr "Powerpeon"
 
 #: dat/AUTHORS:213
-#, fuzzy
 msgid "xrogaan"
 msgstr "xrogaan"
 
 #: dat/AUTHORS:214
-#, fuzzy
 msgid "nloewen"
 msgstr "nloewen"
 
 #: dat/AUTHORS:215
-#, fuzzy
 msgid "Elven_Moustache"
 msgstr "Elven_Moustache"
 
@@ -979,131 +943,131 @@ msgstr "Kontributor Seni"
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
-msgstr ""
+msgstr "ADMONISER"
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
-msgstr ""
+msgstr "ADMONISER PEROMPAK"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
-msgstr ""
+msgstr "ANSESTOR"
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 msgid "PIRATE ANCESTOR"
-msgstr ""
+msgstr "ANSESTOR PEROMPAK"
 
 #: artwork/gfx/loading/dalton.webp.txt:1
 msgid "DALTON"
-msgstr ""
+msgstr "DALTON"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
-msgstr ""
+msgstr "DIABLO ZA'LEK"
 
 #: artwork/gfx/loading/drone.webp.txt:1
 msgid "DRONE"
-msgstr ""
+msgstr "DRONE"
 
 #: artwork/gfx/loading/euler.webp.txt:1
 msgid "EULER"
-msgstr ""
+msgstr "EULER"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
-msgstr ""
+msgstr "KEPATUHAN SIRIUS"
 
 #: artwork/gfx/loading/gauss.webp.txt:1
 msgid "GAUSS"
-msgstr ""
+msgstr "GAUSS"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
-msgstr ""
+msgstr "GAWAIN"
 
 #: artwork/gfx/loading/goddard.webp.txt:1
 msgid "GODDARD"
-msgstr ""
+msgstr "GODDARD"
 
 #: artwork/gfx/loading/hawking.webp.txt:1
 msgid "HAWKING"
-msgstr ""
+msgstr "HAWKING"
 
 #: artwork/gfx/loading/koala.webp.txt:1
 msgid "KOALA"
-msgstr ""
+msgstr "KOALA"
 
 #: artwork/gfx/loading/lancelot.webp.txt:1
 msgid "LANCELOT"
-msgstr ""
+msgstr "LANCELOT"
 
 #: artwork/gfx/loading/llama.webp.txt:1
 msgid "LLAMA"
-msgstr ""
+msgstr "LLAMA"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
-msgstr ""
+msgstr "MULE"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr ""
+msgstr "PENGAMAN"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr ""
+msgstr "PENDAMAI KEKAISARAN"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
-msgstr ""
+msgstr "KHATIB SIRIUS"
 
 #: artwork/gfx/loading/quicksilver.webp.txt:1
 msgid "QUICKSILVER"
-msgstr ""
+msgstr "RAKSA"
 
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
-msgstr ""
+msgstr "BADAK"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
-msgstr ""
+msgstr "BADAK PEROMPAK"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
-msgstr ""
+msgstr "SCHROEDINGER"
 
 #: artwork/gfx/loading/shaman.webp.txt:1
 msgid "SIRIUS SHAMAN"
-msgstr ""
+msgstr "BALIAN SIRIUS"
 
 #: artwork/gfx/loading/shark.webp.txt:1
 msgid "SHARK"
-msgstr ""
+msgstr "HIU"
 
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
-msgstr ""
+msgstr "HIU KEKAISARAN"
 
 #: artwork/gfx/loading/shark_pirate.webp.txt:1
 msgid "PIRATE SHARK"
-msgstr ""
+msgstr "HIU PEROMPAK"
 
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
-msgstr ""
+msgstr "SENGAT ZA'LEK"
 
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
-msgstr ""
+msgstr "VENDETTA"
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
-msgstr ""
+msgstr "VENDETTA PEROMPAK"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
-msgstr ""
+msgstr "VIGILANS"
 
 #: dat/asteroids/types/default.xml:3 dat/asteroids/types/diamond.xml:3
 #: dat/asteroids/types/iron_nickel.xml:3 dat/asteroids/types/liquid.xml:3
@@ -1173,6 +1137,9 @@ msgid ""
 "meals are rich in nutrients and able to last many cycles in their vacuum-"
 "sealed packaging."
 msgstr ""
+"Sebuah evolusi dari catuan militer zaman dahulu kala, makanan kemasan modern "
+"kaya akan nutrisi dan mampu bertahan bersiklus-siklus dalam kemasannya yang "
+"disegel vakum."
 
 #: dat/commodities/gold.xml:3 dat/ssys/gold.xml:2
 msgid "Gold"
@@ -1185,6 +1152,10 @@ msgid ""
 "demanding application is as a component in decorative articles such as "
 "jewelry."
 msgstr ""
+"Emas berguna karena ketahanannya akan korosi dan konduktifitasnya, yang "
+"digunakan untuk memperpanjang masa umur dari peralatan elektronik. Emas "
+"paling sering digunakan sebagai komponen dalam perihal dekoratif, terutama "
+"pada perhiasan."
 
 #: dat/commodities/industrial_goods.xml:3
 msgid "Industrial Goods"
@@ -1195,6 +1166,8 @@ msgid ""
 "An assortment of industrial goods, ranging from cutting lasers to processed "
 "metals."
 msgstr ""
+"Bermacam-macam barang industri, mulai dari logam terproses hingga laser "
+"pemotong."
 
 #: dat/commodities/iron.xml:3
 msgid "Iron"
@@ -1841,7 +1814,7 @@ msgstr ""
 #: dat/missions/minerva/pirate6.lua:308 dat/scripts/common/dvaered.lua:6
 #: dat/scripts/common/dvaered.lua:11
 msgid "Dvaered"
-msgstr ""
+msgstr "Dvaered"
 
 #: dat/factions/dvaered.xml:7 dat/ships/dvaered/dvaered_ancestor.xml:15
 #: dat/ships/dvaered/dvaered_arsenal.xml:18
@@ -1863,7 +1836,7 @@ msgstr ""
 #: dat/factions/empire.xml:2 dat/scripts/common/empire.lua:15
 #: dat/scripts/common/empire.lua:20
 msgid "Empire"
-msgstr ""
+msgstr "Kekaisaran"
 
 #: dat/factions/empire.xml:11
 msgid ""
@@ -1968,7 +1941,7 @@ msgstr ""
 #: dat/missions/tutorial/nelly02.lua:259 dat/scripts/common/pirate.lua:57
 #: dat/scripts/common/shadow.lua:28
 msgid "Pirate"
-msgstr ""
+msgstr "Perompak"
 
 #: dat/factions/marauder.xml:4
 msgid "Pirate Marauders"
@@ -2065,7 +2038,7 @@ msgstr ""
 
 #: dat/factions/nasin.xml:2
 msgid "Nasin"
-msgstr ""
+msgstr "Nasin"
 
 #: dat/factions/pirate.xml:6
 msgid "Galactic Space Pirates"
@@ -2086,7 +2059,7 @@ msgstr ""
 #: dat/ships/proteron/proteron_pythagoras.xml:16
 #: dat/ships/proteron/proteron_watson.xml:17
 msgid "Proteron"
-msgstr ""
+msgstr "Proteron"
 
 #: dat/factions/proteron.xml:5
 msgid "Sovereign Proteron Autarchy"
@@ -2139,7 +2112,7 @@ msgstr ""
 #: dat/scripts/common/achack.lua:7 dat/scripts/common/sirius.lua:20
 #: dat/scripts/common/sirius.lua:25
 msgid "Sirius"
-msgstr ""
+msgstr "Sirius"
 
 #: dat/factions/sirius.xml:7 dat/events/dvaered/fwB_repay.lua:72
 msgid "House Sirius"
@@ -2161,7 +2134,7 @@ msgstr ""
 #: dat/ships/soromid/soromid_nyx.xml:14 dat/ships/soromid/soromid_odium.xml:15
 #: dat/ships/soromid/soromid_reaver.xml:13 dat/ships/soromid/soromid_vox.xml:17
 msgid "Soromid"
-msgstr ""
+msgstr "Soromid"
 
 #: dat/factions/soromid.xml:7
 msgid "Soromid Tribes"
@@ -2180,7 +2153,7 @@ msgstr ""
 
 #: dat/factions/thurion.xml:2
 msgid "Thurion"
-msgstr ""
+msgstr "Thurion"
 
 #: dat/factions/thurion.xml:10
 msgid ""
@@ -2283,7 +2256,7 @@ msgstr ""
 #: dat/scripts/common/zalek_blackhole.lua:89
 #: dat/scripts/common/zalek_physics.lua:32
 msgid "Za'lek"
-msgstr ""
+msgstr "Za'lek"
 
 #: dat/factions/zalek.xml:7
 msgid "House Za'lek"
@@ -2324,7 +2297,7 @@ msgstr ""
 #: dat/outfits/accessory/ugly_statue.xml:5
 #: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots/accessory.xml:3
 msgid "Accessory"
-msgstr ""
+msgstr "Aksesori"
 
 #: dat/outfits/accessory/air_freshener.xml:11
 msgid ""
@@ -2836,7 +2809,7 @@ msgstr ""
 
 #: dat/outfits/bioship/skills/silence.xml:2 dat/scripts/bioship/skills.lua:141
 msgid "Silence"
-msgstr ""
+msgstr "Hening"
 
 #: dat/outfits/bioship/skills/the_bite.xml:2 dat/scripts/bioship/skills.lua:21
 msgid "The Bite"
@@ -5758,7 +5731,7 @@ msgstr ""
 
 #: dat/outfits/unique/executor_shield_aura.xml:6
 msgid "Aura"
-msgstr ""
+msgstr "Aura"
 
 #: dat/outfits/unique/executor_shield_aura.xml:11
 msgid ""
@@ -6481,7 +6454,7 @@ msgstr ""
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
-msgstr ""
+msgstr "Modulator Sensor Radiasi Lemah"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:10
 msgid ""
@@ -7112,7 +7085,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
-msgstr ""
+msgstr "Meriam Plasma"
 
 #: dat/outfits/weapons/plasma_cannon.xml:9
 msgid ""
@@ -7124,7 +7097,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:2
 msgid "Plasma Cluster Cannon"
-msgstr ""
+msgstr "Meriam Plasma Gugusan"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:4
 msgid "Plasma C. Cannon"
@@ -7367,7 +7340,7 @@ msgstr ""
 
 #: dat/ships/collective/drone.xml:2 dat/missions/minerva/pirate1.lua:170
 msgid "Drone"
-msgstr ""
+msgstr "Drone"
 
 #: dat/ships/collective/drone.xml:9 dat/ships/collective/drone_hyena.xml:13
 #: dat/ships/zalek/zalek_drone_light.xml:8
@@ -7378,7 +7351,7 @@ msgstr ""
 #: dat/ships/collective/drone_heavy.xml:13
 #: dat/ships/collective/drone_hyena.xml:19
 msgid "Robosys"
-msgstr ""
+msgstr "Robosys"
 
 #: dat/ships/collective/drone.xml:14
 msgid ""
@@ -7656,7 +7629,7 @@ msgstr ""
 
 #: dat/ships/feral_bioship/kauweke.xml:2
 msgid "Kauweke"
-msgstr ""
+msgstr "Kauweke"
 
 #: dat/ships/feral_bioship/kauweke.xml:12
 msgid "Elder Feral Bioship"
@@ -7669,7 +7642,7 @@ msgstr ""
 
 #: dat/ships/feral_bioship/nohinohi.xml:2
 msgid "Nohinohi"
-msgstr ""
+msgstr "Nohinohi"
 
 #: dat/ships/feral_bioship/nohinohi.xml:12
 #: dat/ships/soromid/soromid_reaver.xml:9
@@ -7688,7 +7661,7 @@ msgstr ""
 
 #: dat/ships/feral_bioship/taitamariki.xml:2
 msgid "Taitamariki"
-msgstr ""
+msgstr "Taitamariki"
 
 #: dat/ships/feral_bioship/taitamariki.xml:12
 #: dat/ships/pirate/pirate_revenant.xml:9 dat/ships/soromid/soromid_odium.xml:9
@@ -7703,7 +7676,7 @@ msgstr ""
 #: dat/ships/misc/onewing_goddard.xml:7 dat/ships/misc/sindbad.xml:7
 #: dat/events/minerva/station.lua:261
 msgid "Station"
-msgstr ""
+msgstr "Stasiun"
 
 #. l +=
 #: dat/ships/misc/fort_raelid.xml:10 dat/ships/misc/fort_raglan.xml:10
@@ -7719,7 +7692,7 @@ msgstr ""
 #: src/land_trade.c:239 src/land_trade.c:240 src/map.c:703 src/map.c:704
 #: src/outfit.c:410 src/outfit.c:431
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: dat/ships/misc/fort_raelid.xml:11 dat/ships/misc/fort_raglan.xml:11
 #: dat/ships/misc/onewing_goddard.xml:11 dat/ships/misc/sindbad.xml:11
@@ -7857,11 +7830,11 @@ msgstr ""
 
 #: dat/ships/misc/sindbad.xml:2 dat/spob/sindbad.xml:2
 msgid "Sindbad"
-msgstr ""
+msgstr "Sindbad"
 
 #: dat/ships/neutral/admonisher.xml:2
 msgid "Admonisher"
-msgstr ""
+msgstr "Admoniser"
 
 #: dat/ships/neutral/admonisher.xml:18
 msgid ""
@@ -7872,7 +7845,7 @@ msgstr ""
 
 #: dat/ships/neutral/ancestor.xml:2
 msgid "Ancestor"
-msgstr ""
+msgstr "Ansestor"
 
 #: dat/ships/neutral/ancestor.xml:15
 msgid ""
@@ -7885,7 +7858,7 @@ msgstr ""
 #: dat/ships/neutral/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
 msgid "Gawain"
-msgstr ""
+msgstr "Gawain"
 
 #: dat/ships/neutral/gawain.xml:7
 msgid "Luxury Yacht"
@@ -7924,11 +7897,11 @@ msgstr ""
 
 #: dat/ships/neutral/hyena.xml:2
 msgid "Hyena"
-msgstr ""
+msgstr "Hiena"
 
 #: dat/ships/neutral/hyena.xml:14
 msgid "Aerosys"
-msgstr ""
+msgstr "Aerosys"
 
 #: dat/ships/neutral/hyena.xml:15
 msgid ""
@@ -7977,7 +7950,7 @@ msgstr ""
 
 #: dat/ships/neutral/lancelot.xml:2
 msgid "Lancelot"
-msgstr ""
+msgstr "Lancelot"
 
 #: dat/ships/neutral/lancelot.xml:16
 msgid ""
@@ -7991,8 +7964,9 @@ msgstr ""
 
 #: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
+#, fuzzy
 msgid "Llama"
-msgstr ""
+msgstr "Llama"
 
 #: dat/ships/neutral/llama.xml:16
 msgid ""
@@ -8004,7 +7978,7 @@ msgstr ""
 
 #: dat/ships/neutral/mule.xml:2
 msgid "Mule"
-msgstr ""
+msgstr "Mule"
 
 #: dat/ships/neutral/mule.xml:16
 msgid ""
@@ -8016,7 +7990,7 @@ msgstr ""
 
 #: dat/ships/neutral/pacifier.xml:2
 msgid "Pacifier"
-msgstr ""
+msgstr "Pengaman"
 
 #: dat/ships/neutral/pacifier.xml:16
 msgid ""
@@ -8028,7 +8002,7 @@ msgstr ""
 
 #: dat/ships/neutral/phalanx.xml:2
 msgid "Phalanx"
-msgstr ""
+msgstr "Phalanx"
 
 #: dat/ships/neutral/phalanx.xml:16
 msgid ""
@@ -8040,7 +8014,7 @@ msgstr ""
 
 #: dat/ships/neutral/quicksilver.xml:2
 msgid "Quicksilver"
-msgstr ""
+msgstr "Raksa"
 
 #: dat/ships/neutral/quicksilver.xml:15
 msgid ""
@@ -8051,7 +8025,7 @@ msgstr ""
 
 #: dat/ships/neutral/rhino.xml:2
 msgid "Rhino"
-msgstr ""
+msgstr "Badak"
 
 #: dat/ships/neutral/rhino.xml:17
 msgid ""
@@ -8064,7 +8038,7 @@ msgstr ""
 
 #: dat/ships/neutral/schroedinger.xml:2
 msgid "Schroedinger"
-msgstr ""
+msgstr "Schroedinger"
 
 #: dat/ships/neutral/schroedinger.xml:14
 #: dat/ships/sirius/sirius_divinity.xml:14 dat/ships/sirius/sirius_dogma.xml:14
@@ -8087,7 +8061,7 @@ msgstr ""
 
 #: dat/ships/neutral/shark.xml:2 dat/scripts/pilotname/generic.lua:77
 msgid "Shark"
-msgstr ""
+msgstr "Hiu"
 
 #: dat/ships/neutral/shark.xml:17
 msgid ""
@@ -8111,7 +8085,7 @@ msgstr ""
 #: dat/ships/neutral/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:217
 msgid "Vendetta"
-msgstr ""
+msgstr "Vendetta"
 
 #: dat/ships/neutral/vendetta.xml:16
 msgid ""
@@ -8126,7 +8100,7 @@ msgstr ""
 
 #: dat/ships/neutral/vigilance.xml:2
 msgid "Vigilance"
-msgstr ""
+msgstr "Vigilans"
 
 #: dat/ships/neutral/vigilance.xml:15
 msgid ""
@@ -8138,7 +8112,7 @@ msgstr ""
 
 #: dat/ships/neutral/zebra.xml:2
 msgid "Zebra"
-msgstr ""
+msgstr "Zebra"
 
 #: dat/ships/neutral/zebra.xml:20
 msgid ""
@@ -8721,7 +8695,7 @@ msgstr ""
 #: dat/missions/sirius/sirius_awakening.lua:89
 #: dat/missions/sirius/sirius_awakening.lua:105
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: dat/ships/thurion/thurion_certitude.xml:2
 msgid "Thurion Certitude"
@@ -9184,7 +9158,7 @@ msgstr ""
 #: dat/spob/wolf_i.xml:9 dat/spob/wunomi.xml:9 dat/spob/zeroeleven.xml:9
 #: dat/spob/zesta.xml:15
 msgid "A"
-msgstr ""
+msgstr "A"
 
 #: dat/spob/abacus.xml:25
 msgid ""
@@ -9197,7 +9171,7 @@ msgstr ""
 
 #: dat/spob/adham.xml:2
 msgid "Adham"
-msgstr ""
+msgstr "Adham"
 
 #: dat/spob/adham.xml:15 dat/spob/adrian.xml:15 dat/spob/alteris_v.xml:9
 #: dat/spob/amatiri_ia.xml:9 dat/spob/andee_iiia.xml:9 dat/spob/andors.xml:15
@@ -9220,7 +9194,7 @@ msgstr ""
 #: dat/spob/wsthvn_p1.xml:9 dat/spob/wyrmwood.xml:15 dat/spob/yrina.xml:15
 #: dat/spob/zaals.xml:16 dat/spob/zerofive.xml:9
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: dat/spob/adham.xml:23
 msgid ""
@@ -9233,11 +9207,11 @@ msgstr ""
 
 #: dat/spob/adius.xml:2
 msgid "Adius"
-msgstr ""
+msgstr "Adius"
 
 #: dat/spob/adrian.xml:2
 msgid "Adrian"
-msgstr ""
+msgstr "Adrian"
 
 #: dat/spob/adrian.xml:25
 msgid ""
@@ -9257,7 +9231,7 @@ msgstr ""
 
 #: dat/spob/aera.xml:2
 msgid "Aera"
-msgstr ""
+msgstr "Aera"
 
 #: dat/spob/aera.xml:15 dat/spob/allous_gg3.xml:9 dat/spob/alpha_aquilea.xml:9
 #: dat/spob/alsafi_i.xml:9 dat/spob/amatiri_i.xml:9 dat/spob/antlejos_iv.xml:9
@@ -9285,7 +9259,7 @@ msgstr ""
 #: dat/spob/ux_vii.xml:9 dat/spob/vanir_ii.xml:9 dat/spob/vauban_i1.xml:9
 #: dat/spob/virginis_beta.xml:9 dat/spob/zethus.xml:9 dat/spob/zintar_v.xml:9
 msgid "I"
-msgstr ""
+msgstr "I"
 
 #: dat/spob/aera.xml:24
 msgid ""
@@ -9301,7 +9275,7 @@ msgstr ""
 
 #: dat/spob/agino.xml:2
 msgid "Agino"
-msgstr ""
+msgstr "Agino"
 
 #: dat/spob/agino.xml:15 dat/spob/aillis.xml:15 dat/spob/ambre.xml:15
 #: dat/spob/arashu.xml:15 dat/spob/arck.xml:15 dat/spob/benteen.xml:15
@@ -9347,7 +9321,7 @@ msgstr ""
 #: dat/spob/zembla_shakar.xml:16 dat/spob/zeo.xml:15 dat/spob/zhiru.xml:15
 #: dat/spob/zuner.xml:16
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: dat/spob/agino.xml:27
 msgid ""
@@ -9369,7 +9343,7 @@ msgstr ""
 
 #: dat/spob/ahmed.xml:2
 msgid "Ahmed"
-msgstr ""
+msgstr "Ahmed"
 
 #: dat/spob/ahmed.xml:15 dat/spob/akra_iii.xml:9 dat/spob/andee_iia.xml:9
 #: dat/spob/arrakis.xml:15 dat/spob/astana_iiv.xml:9 dat/spob/awowa_iv.xml:9
@@ -9385,7 +9359,7 @@ msgstr ""
 #: dat/spob/tartarus.xml:15 dat/spob/verex_iii.xml:9 dat/spob/vlexon_i.xml:9
 #: dat/spob/zemur_iii.xml:9
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: dat/spob/ahmed.xml:26
 msgid ""
@@ -9405,7 +9379,7 @@ msgstr ""
 
 #: dat/spob/aillis.xml:2
 msgid "Aillis"
-msgstr ""
+msgstr "Aillis"
 
 #: dat/spob/aillis.xml:25
 msgid ""
@@ -9462,7 +9436,7 @@ msgstr ""
 #: dat/spob/vigilance_center.xml:16 dat/spob/violin_monastery.xml:16
 #: dat/spob/wildwood_nest.xml:15 dat/spob/yak_nest.xml:16
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: dat/spob/akios_terminal.xml:26
 msgid ""
@@ -9487,11 +9461,11 @@ msgstr ""
 #: dat/spob/petaat.xml:15 dat/spob/qoral.xml:15 dat/spob/vanir_i.xml:9
 #: dat/spob/xo4.xml:9
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: dat/spob/akrikos.xml:2
 msgid "Akrikos"
-msgstr ""
+msgstr "Akrikos"
 
 #: dat/spob/akrikos.xml:9 dat/spob/allous_ii.xml:9 dat/spob/aluben.xml:9
 #: dat/spob/apez_ii.xml:9 dat/spob/arai.xml:9 dat/spob/babylon_iia.xml:9
@@ -9530,11 +9504,11 @@ msgstr ""
 #: dat/spob/wahri_iv.xml:9 dat/spob/warnecke.xml:15 dat/spob/warnecke_ii.xml:9
 #: dat/spob/wolf_vii.xml:9 dat/spob/wunomi_i.xml:9
 msgid "J"
-msgstr ""
+msgstr "J"
 
 #: dat/spob/aldarus.xml:2
 msgid "Aldarus"
-msgstr ""
+msgstr "Aldarus"
 
 #: dat/spob/aldarus.xml:16 dat/spob/allous_i.xml:9 dat/spob/alsafi_ia.xml:9
 #: dat/spob/alteris_i.xml:9 dat/spob/anarbalis_ii.xml:9 dat/spob/andee_ii.xml:9
@@ -9556,7 +9530,7 @@ msgstr ""
 #: dat/spob/valt.xml:15 dat/spob/valur_gem_i.xml:9 dat/spob/vanir_ia.xml:9
 #: dat/spob/vean_ii.xml:9 dat/spob/voproid_prime.xml:9 dat/spob/wakan.xml:15
 msgid "K"
-msgstr ""
+msgstr "K"
 
 #: dat/spob/aldarus.xml:28
 msgid ""
@@ -9579,7 +9553,7 @@ msgstr ""
 
 #: dat/spob/aldernael.xml:2
 msgid "Aldernael"
-msgstr ""
+msgstr "Aldernael"
 
 #: dat/spob/aldernael.xml:15 dat/spob/aleph.xml:15 dat/spob/amaroq_i.xml:9
 #: dat/spob/anifta.xml:9 dat/spob/anku_i.xml:9 dat/spob/apik_i.xml:9
@@ -9601,7 +9575,7 @@ msgstr ""
 #: dat/spob/waterholes_moon.xml:16 dat/spob/zazarin.xml:16
 #: dat/spob/zeroone.xml:9
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: dat/spob/aldernael.xml:26
 msgid ""
@@ -9625,7 +9599,7 @@ msgstr ""
 
 #: dat/spob/aldous.xml:2
 msgid "Aldous"
-msgstr ""
+msgstr "Aldous"
 
 #: dat/spob/aldous.xml:26
 msgid ""
@@ -9653,7 +9627,7 @@ msgstr ""
 
 #: dat/spob/aleph.xml:2
 msgid "Aleph"
-msgstr ""
+msgstr "Aleph"
 
 #: dat/spob/aleph.xml:25
 msgid ""
@@ -9673,7 +9647,7 @@ msgstr ""
 
 #: dat/spob/alleyway.xml:2
 msgid "Alleyway"
-msgstr ""
+msgstr "Alleyway"
 
 #: dat/spob/alleyway.xml:15 dat/spob/allous_citadel.xml:15
 #: dat/spob/andors_refining.xml:15 dat/spob/apik_shipyard.xml:15
@@ -9722,7 +9696,7 @@ msgstr ""
 #: dat/spob/urbanus_crops.xml:15 dat/spob/westeros_nest.xml:15
 #: dat/spob/yaroslav_farming_station.xml:15 dat/spob/zabween_outpost.xml:15
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: dat/spob/alleyway.xml:25
 msgid ""
@@ -9829,7 +9803,7 @@ msgstr ""
 #: dat/spob/warnecke_i.xml:9 dat/spob/werlen.xml:16 dat/spob/worgen.xml:9
 #: dat/spob/wsthvn_d1.xml:9 dat/spob/wunomi_ia.xml:9 dat/spob/zintar_iv.xml:9
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: dat/spob/alsafi_ii.xml:15
 msgid ""
@@ -9851,7 +9825,7 @@ msgstr ""
 
 #: dat/spob/aluben.xml:2
 msgid "Aluben"
-msgstr ""
+msgstr "Aluben"
 
 #: dat/spob/amaroq_i.xml:2
 msgid "Amaroq I"
@@ -9881,7 +9855,7 @@ msgstr ""
 #: dat/spob/waterhole.xml:9 dat/spob/wigheta.xml:16 dat/spob/zepei.xml:15
 #: dat/spob/ziz.xml:9
 msgid "O"
-msgstr ""
+msgstr "O"
 
 #: dat/spob/amatiri_i.xml:2
 msgid "Amatiri I"
@@ -9907,11 +9881,11 @@ msgstr ""
 #: dat/spob/wayline_m2.xml:9 dat/spob/wunomis_moon.xml:9
 #: dat/spob/zalek_iv.xml:9
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: dat/spob/ambre.xml:2
 msgid "Ambre"
-msgstr ""
+msgstr "Ambre"
 
 #: dat/spob/ambre.xml:27
 msgid ""
@@ -9937,7 +9911,7 @@ msgstr ""
 
 #: dat/spob/amhurst.xml:2
 msgid "Amhurst"
-msgstr ""
+msgstr "Amhurst"
 
 #: dat/spob/amhurst.xml:28
 msgid ""
@@ -9956,7 +9930,7 @@ msgstr ""
 
 #: dat/spob/amianta.xml:2
 msgid "Amianta"
-msgstr ""
+msgstr "Amianta"
 
 #: dat/spob/amianta.xml:25
 msgid ""
@@ -9967,7 +9941,7 @@ msgstr ""
 
 #: dat/spob/ammu.xml:2
 msgid "Ammu"
-msgstr ""
+msgstr "Ammu"
 
 #: dat/spob/ammu.xml:27
 msgid ""
@@ -9991,7 +9965,7 @@ msgstr ""
 
 #: dat/spob/amphion.xml:2
 msgid "Amphion"
-msgstr ""
+msgstr "Amphion"
 
 #: dat/spob/amphion.xml:26
 msgid ""
@@ -10041,7 +10015,7 @@ msgstr ""
 #: dat/spob/tomas_x1.xml:9 dat/spob/vennis.xml:15 dat/spob/vercingetorix.xml:15
 #: dat/spob/xavier.xml:9
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: dat/spob/andee_iiia.xml:2
 msgid "Andee IIIa"
@@ -10049,7 +10023,7 @@ msgstr ""
 
 #: dat/spob/andors.xml:2
 msgid "Andors"
-msgstr ""
+msgstr "Andors"
 
 #: dat/spob/andors.xml:28
 msgid ""
@@ -10082,7 +10056,7 @@ msgstr ""
 
 #: dat/spob/anecu.xml:2
 msgid "Anecu"
-msgstr ""
+msgstr "Anecu"
 
 #: dat/spob/anecu.xml:28
 msgid ""
@@ -10118,15 +10092,15 @@ msgstr ""
 #: dat/spob/silverstone.xml:15 dat/spob/sternguard.xml:15
 #: dat/spob/tanulwa.xml:16 dat/spob/thar.xml:16
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: dat/spob/anifta.xml:2
 msgid "Anifta"
-msgstr ""
+msgstr "Anifta"
 
 #: dat/spob/anker.xml:2
 msgid "Anker"
-msgstr ""
+msgstr "Anker"
 
 #: dat/spob/anku_i.xml:2
 msgid "An'ku I"
@@ -10142,7 +10116,7 @@ msgstr ""
 
 #: dat/spob/antica.xml:2
 msgid "Antica"
-msgstr ""
+msgstr "Antica"
 
 #: dat/spob/antica.xml:28
 msgid ""
@@ -10166,7 +10140,7 @@ msgstr ""
 
 #: dat/spob/antlejos_iii.xml:9
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: dat/spob/antlejos_iv.xml:2
 msgid "Antlejos IV"
@@ -10188,7 +10162,7 @@ msgstr ""
 
 #: dat/spob/anubis.xml:2
 msgid "Anubis"
-msgstr ""
+msgstr "Anubis"
 
 #: dat/spob/anubis.xml:15 dat/spob/arrentil.xml:15 dat/spob/flach.xml:15
 #: dat/spob/fried_i.xml:9 dat/spob/karvua.xml:15 dat/spob/kataka.xml:17
@@ -10199,7 +10173,7 @@ msgstr ""
 #: dat/spob/ullnorn.xml:15 dat/spob/vert.xml:9 dat/spob/vorca.xml:16
 #: dat/spob/zalek_ii.xml:9 dat/spob/zaren.xml:15 dat/spob/zhang_lu.xml:15
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: dat/spob/anubis.xml:28
 msgid ""
@@ -10225,11 +10199,11 @@ msgstr ""
 
 #: dat/spob/anya.xml:2
 msgid "Anya"
-msgstr ""
+msgstr "Anya"
 
 #: dat/spob/anya.xml:15 dat/spob/sevlow.xml:15 dat/spob/wellen.xml:16
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: dat/spob/anya.xml:26
 msgid ""
@@ -10278,11 +10252,11 @@ msgstr ""
 
 #: dat/spob/aquilia.xml:2
 msgid "Aquilia"
-msgstr ""
+msgstr "Aquilia"
 
 #: dat/spob/arai.xml:2
 msgid "Arai"
-msgstr ""
+msgstr "Arai"
 
 #: dat/spob/arandon_station.xml:2
 msgid "Arandon Station"
@@ -10302,7 +10276,7 @@ msgstr ""
 
 #: dat/spob/arashu.xml:2
 msgid "Arashu"
-msgstr ""
+msgstr "Arashu"
 
 #: dat/spob/arashu.xml:28
 msgid ""
@@ -10326,7 +10300,7 @@ msgstr ""
 
 #: dat/spob/arcadia.xml:2
 msgid "Arcadia"
-msgstr ""
+msgstr "Arcadia"
 
 #: dat/spob/arcadia.xml:26
 msgid ""
@@ -10347,7 +10321,7 @@ msgstr ""
 
 #: dat/spob/arcania.xml:2
 msgid "Arcania"
-msgstr ""
+msgstr "Arcania"
 
 #: dat/spob/arcania.xml:15
 msgid ""
@@ -10385,7 +10359,7 @@ msgstr ""
 
 #: dat/spob/arck.xml:2
 msgid "Arck"
-msgstr ""
+msgstr "Arck"
 
 #: dat/spob/arck.xml:26
 msgid ""
@@ -10455,7 +10429,7 @@ msgstr ""
 
 #: dat/spob/ariak.xml:2
 msgid "Ariak"
-msgstr ""
+msgstr "Ariak"
 
 #: dat/spob/armorhead_i1.xml:2
 msgid "Armorhead I-1"
@@ -10467,7 +10441,7 @@ msgstr ""
 
 #: dat/spob/arrakis.xml:2
 msgid "Arrakis"
-msgstr ""
+msgstr "Arrakis"
 
 #: dat/spob/arrakis.xml:26
 msgid ""
@@ -10488,7 +10462,7 @@ msgstr ""
 
 #: dat/spob/arrentil.xml:2
 msgid "Arrentil"
-msgstr ""
+msgstr "Arrentil"
 
 #: dat/spob/arrentil.xml:26
 msgid ""
@@ -10512,7 +10486,7 @@ msgstr ""
 
 #: dat/spob/astana.xml:2 dat/ssys/astana.xml:2
 msgid "Astana"
-msgstr ""
+msgstr "Astana"
 
 #: dat/spob/astana.xml:26
 msgid ""
@@ -10537,7 +10511,7 @@ msgstr ""
 
 #: dat/spob/atalanta.xml:2
 msgid "Atalanta"
-msgstr ""
+msgstr "Atalanta"
 
 #: dat/spob/atalanta.xml:27
 msgid ""
@@ -10562,7 +10536,7 @@ msgstr ""
 
 #: dat/spob/atryssa.xml:2
 msgid "Atryssa"
-msgstr ""
+msgstr "Atryssa"
 
 #: dat/spob/atryssa.xml:28
 msgid ""
@@ -10603,8 +10577,9 @@ msgstr ""
 #. --
 #: dat/spob/august.xml:2 dat/events/neutral/shipwreck.lua:24
 #: dat/missions/neutral/spacefamily.lua:63
+#, fuzzy
 msgid "August"
-msgstr ""
+msgstr "Agus"
 
 #: dat/spob/august.xml:26
 msgid ""
@@ -10622,7 +10597,7 @@ msgstr ""
 
 #: dat/spob/avoss.xml:2
 msgid "Avoss"
-msgstr ""
+msgstr "Avoss"
 
 #: dat/spob/avoss.xml:25
 msgid ""
@@ -10678,7 +10653,7 @@ msgstr ""
 
 #: dat/spob/barnards_star_ruined_ringworld.xml:16
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: dat/spob/barnards_star_ruined_ringworld.xml:23
 msgid ""
@@ -10731,7 +10706,7 @@ msgstr ""
 
 #: dat/spob/beene.xml:2
 msgid "Beene"
-msgstr ""
+msgstr "Beene"
 
 #: dat/spob/beene.xml:29
 msgid ""
@@ -10774,7 +10749,7 @@ msgstr ""
 
 #: dat/spob/behemoth.xml:2
 msgid "Behemoth"
-msgstr ""
+msgstr "Behemoth"
 
 #: dat/spob/belltower_nest.xml:2
 msgid "Belltower Nest"
@@ -10800,7 +10775,7 @@ msgstr ""
 
 #: dat/spob/benedict.xml:2
 msgid "Benedict"
-msgstr ""
+msgstr "Benedict"
 
 #: dat/spob/benedict.xml:28
 msgid ""
@@ -10823,7 +10798,7 @@ msgstr ""
 
 #: dat/spob/benteen.xml:2
 msgid "Benteen"
-msgstr ""
+msgstr "Benteen"
 
 #: dat/spob/benteen.xml:26
 msgid ""
@@ -10843,7 +10818,7 @@ msgstr ""
 
 #: dat/spob/berkhere.xml:2
 msgid "Berkhere"
-msgstr ""
+msgstr "Berkhere"
 
 #: dat/spob/berkhere.xml:27
 msgid ""
@@ -10865,11 +10840,11 @@ msgstr ""
 
 #: dat/spob/beth.xml:2
 msgid "Beth"
-msgstr ""
+msgstr "Beth"
 
 #: dat/spob/bgg1356.xml:2
 msgid "BGG-1356"
-msgstr ""
+msgstr "BGG-1356"
 
 #: dat/spob/blackwell_i.xml:2
 msgid "Blackwell I"
@@ -10889,7 +10864,7 @@ msgstr ""
 
 #: dat/spob/bolero.xml:2
 msgid "Bolero"
-msgstr ""
+msgstr "Bolero"
 
 #: dat/spob/bolero.xml:29
 msgid ""
@@ -10945,7 +10920,7 @@ msgstr ""
 
 #: dat/spob/boowoy.xml:2
 msgid "Boowoy"
-msgstr ""
+msgstr "Boowoy"
 
 #: dat/spob/boowoy.xml:26
 msgid ""
@@ -11014,7 +10989,7 @@ msgstr ""
 
 #: dat/spob/brock.xml:2
 msgid "Brock"
-msgstr ""
+msgstr "Brock"
 
 #: dat/spob/brock.xml:27
 msgid ""
@@ -11034,7 +11009,7 @@ msgstr ""
 
 #: dat/spob/brooks.xml:2
 msgid "Brooks"
-msgstr ""
+msgstr "Brooks"
 
 #: dat/spob/brooks.xml:26
 msgid ""
@@ -11057,7 +11032,7 @@ msgstr ""
 
 #: dat/spob/buritt.xml:2
 msgid "Buritt"
-msgstr ""
+msgstr "Buritt"
 
 #: dat/spob/buritt.xml:27
 msgid ""
@@ -11077,7 +11052,7 @@ msgstr ""
 
 #: dat/spob/burnan.xml:2
 msgid "Burnan"
-msgstr ""
+msgstr "Burnan"
 
 #: dat/spob/burnan.xml:29
 msgid ""
@@ -11106,7 +11081,7 @@ msgstr ""
 
 #: dat/spob/caladan.xml:2
 msgid "Caladan"
-msgstr ""
+msgstr "Caladan"
 
 #: dat/spob/caladan.xml:28
 msgid ""
@@ -11131,7 +11106,7 @@ msgstr ""
 
 #: dat/spob/calvin.xml:2
 msgid "Calvin"
-msgstr ""
+msgstr "Calvin"
 
 #: dat/spob/cantina_center.xml:2
 msgid "Cantina Center"
@@ -11333,7 +11308,7 @@ msgstr ""
 
 #: dat/spob/cetrat.xml:2
 msgid "Cetrat"
-msgstr ""
+msgstr "Cetrat"
 
 #: dat/spob/cetrat.xml:27
 msgid ""
@@ -11355,12 +11330,14 @@ msgid ""
 msgstr ""
 
 #: dat/spob/charcoal.xml:2
+#, fuzzy
 msgid "Charcoal"
-msgstr ""
+msgstr "Batubara"
 
 #: dat/spob/charred.xml:2
+#, fuzzy
 msgid "Charred"
-msgstr ""
+msgstr "Gosong"
 
 #: dat/spob/churchill_i.xml:2
 msgid "Churchill I"
@@ -11395,7 +11372,7 @@ msgstr ""
 
 #: dat/spob/colley.xml:2
 msgid "Colley"
-msgstr ""
+msgstr "Colley"
 
 #: dat/spob/colley.xml:27
 msgid ""
@@ -11427,11 +11404,11 @@ msgstr ""
 
 #: dat/spob/coran.xml:2
 msgid "Coran"
-msgstr ""
+msgstr "Coran"
 
 #: dat/spob/corax.xml:2
 msgid "Corax"
-msgstr ""
+msgstr "Corax"
 
 #: dat/spob/corax.xml:27
 msgid ""
@@ -11531,7 +11508,7 @@ msgstr ""
 
 #: dat/spob/cristen.xml:2
 msgid "Cristen"
-msgstr ""
+msgstr "Cristen"
 
 #: dat/spob/cristen.xml:25
 msgid ""
@@ -11553,8 +11530,9 @@ msgstr ""
 
 #: dat/spob/crow.xml:2 dat/scripts/pilotname/generic.lua:24
 #: dat/scripts/pilotname/pirate.lua:277
+#, fuzzy
 msgid "Crow"
-msgstr ""
+msgstr "Gagak"
 
 #: dat/spob/crow.xml:28
 msgid ""
@@ -11575,7 +11553,7 @@ msgstr ""
 
 #: dat/spob/crylo.xml:2
 msgid "Crylo"
-msgstr ""
+msgstr "Crylo"
 
 #: dat/spob/crylo.xml:27
 msgid ""
@@ -11597,7 +11575,7 @@ msgstr ""
 
 #: dat/spob/culex.xml:2
 msgid "Culex"
-msgstr ""
+msgstr "Culex"
 
 #: dat/spob/culex.xml:26
 msgid ""
@@ -11620,7 +11598,7 @@ msgstr ""
 
 #: dat/spob/curie.xml:2
 msgid "Curie"
-msgstr ""
+msgstr "Curie"
 
 #: dat/spob/curie.xml:28
 msgid ""
@@ -11641,7 +11619,7 @@ msgstr ""
 
 #: dat/spob/cutha.xml:2
 msgid "Cutha"
-msgstr ""
+msgstr "Cutha"
 
 #: dat/spob/cutha.xml:27
 msgid ""
@@ -11671,11 +11649,11 @@ msgstr ""
 
 #: dat/spob/cyrene.xml:2
 msgid "Cyrene"
-msgstr ""
+msgstr "Cyrene"
 
 #: dat/spob/daahrax.xml:2
 msgid "Daahrax"
-msgstr ""
+msgstr "Daahrax"
 
 #: dat/spob/daahrax.xml:25
 msgid ""
@@ -11697,7 +11675,7 @@ msgstr ""
 
 #: dat/spob/daal.xml:2
 msgid "Daal"
-msgstr ""
+msgstr "Daal"
 
 #: dat/spob/daal.xml:27
 msgid ""
@@ -11732,7 +11710,7 @@ msgstr ""
 
 #: dat/spob/damphyr.xml:2
 msgid "Damphyr"
-msgstr ""
+msgstr "Damphyr"
 
 #: dat/spob/daravon_i.xml:2
 msgid "Daravon I"
@@ -11851,7 +11829,7 @@ msgstr ""
 
 #: dat/spob/deneb_iiia.xml:9 dat/spob/toros_iv.xml:9
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: dat/spob/deneb_iiia.xml:15
 msgid ""
@@ -11894,7 +11872,7 @@ msgstr ""
 
 #: dat/spob/dolmen.xml:2
 msgid "Dolmen"
-msgstr ""
+msgstr "Dolmen"
 
 #: dat/spob/dolmen.xml:28
 msgid ""
@@ -11915,7 +11893,7 @@ msgstr ""
 
 #: dat/spob/donnar.xml:2
 msgid "Donnar"
-msgstr ""
+msgstr "Donnar"
 
 #: dat/spob/donnar.xml:27
 msgid ""
@@ -11939,7 +11917,7 @@ msgstr ""
 
 #: dat/spob/dono.xml:2
 msgid "Dono"
-msgstr ""
+msgstr "Dono"
 
 #: dat/spob/dono.xml:26
 msgid ""
@@ -11998,11 +11976,11 @@ msgstr ""
 
 #: dat/spob/doro.xml:2
 msgid "Doro"
-msgstr ""
+msgstr "Doro"
 
 #: dat/spob/dowue.xml:2
 msgid "Dowue"
-msgstr ""
+msgstr "Dowue"
 
 #: dat/spob/dowue.xml:27
 msgid ""
@@ -12093,7 +12071,7 @@ msgstr ""
 
 #: dat/spob/drognain.xml:2
 msgid "Drognain"
-msgstr ""
+msgstr "Drognain"
 
 #: dat/spob/drognain.xml:24
 msgid ""
@@ -12159,7 +12137,7 @@ msgstr ""
 
 #: dat/spob/dunmer.xml:2
 msgid "Dunmer"
-msgstr ""
+msgstr "Dunmer"
 
 #: dat/spob/dunmer.xml:25
 msgid ""
@@ -12201,7 +12179,7 @@ msgstr ""
 
 #: dat/spob/durea.xml:2
 msgid "Durea"
-msgstr ""
+msgstr "Durea"
 
 #: dat/spob/durea.xml:25
 msgid ""
@@ -12234,7 +12212,7 @@ msgstr ""
 
 #: dat/spob/durumdra.xml:2
 msgid "Durumdra"
-msgstr ""
+msgstr "Durumdra"
 
 #: dat/spob/durumdra.xml:27
 msgid ""
@@ -12260,7 +12238,7 @@ msgstr ""
 
 #: dat/spob/dust.xml:2 dat/ssys/dust.xml:2 src/dev_uniedit.c:2023
 msgid "Dust"
-msgstr ""
+msgstr "Debu"
 
 #: dat/spob/dvaer_ii.xml:2
 msgid "Dvaer II"
@@ -12351,7 +12329,7 @@ msgstr ""
 
 #: dat/spob/ebenezer.xml:2
 msgid "Ebenezer"
-msgstr ""
+msgstr "Ebenezer"
 
 #: dat/spob/ebenezer.xml:25
 msgid ""
@@ -12393,11 +12371,11 @@ msgstr ""
 
 #: dat/spob/edergast.xml:2
 msgid "Edergast"
-msgstr ""
+msgstr "Edergast"
 
 #: dat/spob/edorn.xml:2
 msgid "Edorn"
-msgstr ""
+msgstr "Edorn"
 
 #: dat/spob/edorn.xml:27
 msgid ""
@@ -12417,7 +12395,7 @@ msgstr ""
 
 #: dat/spob/eenerim.xml:2
 msgid "Eenerim"
-msgstr ""
+msgstr "Eenerim"
 
 #: dat/spob/eenerim.xml:27
 msgid ""
@@ -12437,13 +12415,13 @@ msgstr ""
 
 #: dat/spob/efferey.xml:2
 msgid "Efferey"
-msgstr ""
+msgstr "Efferey"
 
 #: dat/spob/efferey.xml:16 dat/spob/foundation_station.xml:16
 #: dat/spob/fury_station.xml:15 dat/spob/the_crucible.xml:15
 #: dat/spob/voproid_monastery.xml:16 dat/spob/wardens_end.xml:16
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: dat/spob/efferey.xml:28
 msgid ""
@@ -12464,7 +12442,7 @@ msgstr ""
 
 #: dat/spob/eiger.xml:2 dat/ssys/eiger.xml:2
 msgid "Eiger"
-msgstr ""
+msgstr "Eiger"
 
 #: dat/spob/eiger.xml:25
 msgid ""
@@ -12484,11 +12462,11 @@ msgstr ""
 
 #: dat/spob/eiroik.xml:2 dat/missions/empire/collective/ec05.lua:103
 msgid "Eiroik"
-msgstr ""
+msgstr "Eiroik"
 
 #: dat/spob/eiroik.xml:9 dat/spob/haven.xml:9 dat/spob/uhriabi9.xml:9
 msgid "Z"
-msgstr ""
+msgstr "Z"
 
 #: dat/spob/eiroik.xml:15
 msgid ""
@@ -12587,7 +12565,7 @@ msgstr ""
 
 #: dat/spob/elpa.xml:2
 msgid "Elpa"
-msgstr ""
+msgstr "Elpa"
 
 #: dat/spob/elpa.xml:26
 msgid ""
@@ -12766,7 +12744,7 @@ msgstr ""
 
 #: dat/spob/eryla.xml:2
 msgid "Eryla"
-msgstr ""
+msgstr "Eryla"
 
 #: dat/spob/esker_i.xml:2
 msgid "Esker I"
@@ -12838,7 +12816,7 @@ msgstr ""
 
 #: dat/spob/europea.xml:2
 msgid "Europea"
-msgstr ""
+msgstr "Europea"
 
 #: dat/spob/europea.xml:28
 msgid ""
@@ -12862,7 +12840,7 @@ msgstr ""
 
 #: dat/spob/excelcior.xml:2
 msgid "Excelcior"
-msgstr ""
+msgstr "Excelcior"
 
 #: dat/spob/excelcior.xml:27
 msgid ""
@@ -12928,7 +12906,7 @@ msgstr ""
 
 #: dat/spob/fae.xml:2
 msgid "Fae"
-msgstr ""
+msgstr "Fae"
 
 #: dat/spob/fairfax_nest.xml:2
 msgid "Fairfax Nest"
@@ -12944,7 +12922,7 @@ msgstr ""
 
 #: dat/spob/falas.xml:2
 msgid "Falas"
-msgstr ""
+msgstr "Falas"
 
 #: dat/spob/falas.xml:24
 msgid ""
@@ -12984,7 +12962,7 @@ msgstr ""
 
 #: dat/spob/fd24.xml:2
 msgid "FD-24"
-msgstr ""
+msgstr "FD-24"
 
 #: dat/spob/fd24.xml:23
 msgid ""
@@ -12995,7 +12973,7 @@ msgstr ""
 
 #: dat/spob/ferrungir.xml:2
 msgid "Ferrungir"
-msgstr ""
+msgstr "Ferrungir"
 
 #: dat/spob/ferrungir.xml:28
 msgid ""
@@ -13031,7 +13009,7 @@ msgstr ""
 
 #: dat/spob/finn.xml:2
 msgid "Finn"
-msgstr ""
+msgstr "Finn"
 
 #: dat/spob/finn.xml:24
 msgid ""
@@ -13051,7 +13029,7 @@ msgstr ""
 
 #: dat/spob/flach.xml:2
 msgid "Flach"
-msgstr ""
+msgstr "Flach"
 
 #: dat/spob/flach.xml:28
 msgid ""
@@ -13070,7 +13048,7 @@ msgstr ""
 
 #: dat/spob/folevo.xml:2
 msgid "Folevo"
-msgstr ""
+msgstr "Folevo"
 
 #: dat/spob/forbes_monastery.xml:2
 msgid "Forbes Monastery"
@@ -13351,7 +13329,7 @@ msgstr ""
 
 #: dat/spob/fuzka.xml:2
 msgid "Fuzka"
-msgstr ""
+msgstr "Fuzka"
 
 #: dat/spob/fuzka.xml:28
 msgid ""
@@ -13416,7 +13394,7 @@ msgstr ""
 
 #: dat/spob/gamma.xml:2
 msgid "Gamma"
-msgstr ""
+msgstr "Gamma"
 
 #: dat/spob/gamma_enclave.xml:2
 msgid "Gamma Enclave"
@@ -13474,7 +13452,7 @@ msgstr ""
 
 #: dat/spob/gastan.xml:2
 msgid "Gastan"
-msgstr ""
+msgstr "Gastan"
 
 #: dat/spob/gastan.xml:26
 msgid ""
@@ -13506,7 +13484,7 @@ msgstr ""
 
 #: dat/spob/gaula.xml:2
 msgid "Gaula"
-msgstr ""
+msgstr "Gaula"
 
 #: dat/spob/gaula.xml:26
 msgid ""
@@ -13546,7 +13524,7 @@ msgstr ""
 
 #: dat/spob/gayathi.xml:2
 msgid "Gayathi"
-msgstr ""
+msgstr "Gayathi"
 
 #: dat/spob/gayathi.xml:25
 msgid ""
@@ -13565,7 +13543,7 @@ msgstr ""
 
 #: dat/spob/gennus.xml:2
 msgid "Gennus"
-msgstr ""
+msgstr "Gennus"
 
 #: dat/spob/gennus.xml:26
 msgid ""
@@ -13608,7 +13586,7 @@ msgstr ""
 
 #: dat/spob/geron.xml:2
 msgid "Geron"
-msgstr ""
+msgstr "Geron"
 
 #: dat/spob/geron.xml:26
 msgid ""
@@ -13676,7 +13654,7 @@ msgstr ""
 
 #: dat/spob/ginni.xml:2
 msgid "Ginni"
-msgstr ""
+msgstr "Ginni"
 
 #: dat/spob/ginni.xml:27
 msgid ""
@@ -13731,7 +13709,7 @@ msgstr ""
 
 #: dat/spob/godtra.xml:2
 msgid "Godtra"
-msgstr ""
+msgstr "Godtra"
 
 #: dat/spob/godtra.xml:27
 msgid ""
@@ -13752,7 +13730,7 @@ msgstr ""
 
 #: dat/spob/golem.xml:2
 msgid "Golem"
-msgstr ""
+msgstr "Golem"
 
 #: dat/spob/golem.xml:27
 msgid ""
@@ -13809,7 +13787,7 @@ msgstr ""
 
 #: dat/spob/gorgate.xml:2
 msgid "Gorgate"
-msgstr ""
+msgstr "Gorgate"
 
 #: dat/spob/gorgate.xml:27
 msgid ""
@@ -13833,7 +13811,7 @@ msgstr ""
 
 #: dat/spob/grandard.xml:2
 msgid "Grandard"
-msgstr ""
+msgstr "Grandard"
 
 #: dat/spob/grandard.xml:28
 msgid ""
@@ -13876,7 +13854,7 @@ msgstr ""
 
 #: dat/spob/greis.xml:2
 msgid "Greis"
-msgstr ""
+msgstr "Greis"
 
 #: dat/spob/greis.xml:27
 msgid ""
@@ -14015,7 +13993,7 @@ msgstr ""
 
 #: dat/spob/haldr.xml:2
 msgid "Haldr"
-msgstr ""
+msgstr "Haldr"
 
 #: dat/spob/haldr.xml:26
 msgid ""
@@ -14043,7 +14021,7 @@ msgstr ""
 
 #: dat/spob/halir.xml:2
 msgid "Halir"
-msgstr ""
+msgstr "Halir"
 
 #: dat/spob/halir.xml:29
 msgid ""
@@ -14069,7 +14047,7 @@ msgstr ""
 
 #: dat/spob/handalier.xml:2
 msgid "Handalier"
-msgstr ""
+msgstr "Handalier"
 
 #: dat/spob/handalier.xml:26
 msgid ""
@@ -14086,7 +14064,7 @@ msgstr ""
 
 #: dat/spob/hankies.xml:2
 msgid "Hankies"
-msgstr ""
+msgstr "Hankies"
 
 #: dat/spob/hankies.xml:26
 msgid ""
@@ -14106,7 +14084,7 @@ msgstr ""
 
 #: dat/spob/harnaar.xml:2
 msgid "Harnaar"
-msgstr ""
+msgstr "Harnaar"
 
 #: dat/spob/harnaar.xml:28
 msgid ""
@@ -14146,7 +14124,7 @@ msgstr ""
 
 #: dat/spob/hassak.xml:2
 msgid "Hassak"
-msgstr ""
+msgstr "Hassak"
 
 #: dat/spob/hassak.xml:25
 msgid ""
@@ -14184,7 +14162,7 @@ msgstr ""
 
 #: dat/spob/haurn.xml:2
 msgid "Haurn"
-msgstr ""
+msgstr "Haurn"
 
 #: dat/spob/haurn.xml:26
 msgid ""
@@ -14207,7 +14185,7 @@ msgstr "Suaka"
 
 #: dat/spob/heii.xml:2
 msgid "Heii"
-msgstr ""
+msgstr "Heii"
 
 #: dat/spob/heii.xml:27
 msgid ""
@@ -14240,7 +14218,7 @@ msgstr ""
 
 #: dat/spob/heronus.xml:2
 msgid "Heronus"
-msgstr ""
+msgstr "Heronus"
 
 #: dat/spob/heronus.xml:26
 msgid ""
@@ -14275,7 +14253,7 @@ msgstr ""
 
 #: dat/spob/hikatalat.xml:2
 msgid "Hikatalat"
-msgstr ""
+msgstr "Hikatalat"
 
 #: dat/spob/hikatalat.xml:26
 msgid ""
@@ -14292,7 +14270,7 @@ msgstr ""
 
 #: dat/spob/holly_i.xml:15 dat/spob/holly_ii.xml:15 dat/spob/holly_iii.xml:15
 msgid "F"
-msgstr ""
+msgstr "F"
 
 #: dat/spob/holly_i.xml:25
 msgid ""
@@ -14418,11 +14396,11 @@ msgstr ""
 
 #: dat/spob/hrimfaxi.xml:2
 msgid "Hrimfaxi"
-msgstr ""
+msgstr "Hrimfaxi"
 
 #: dat/spob/hs224.xml:2
 msgid "HS-224"
-msgstr ""
+msgstr "HS-224"
 
 #: dat/spob/hs224.xml:26 dat/spob/hs232.xml:26 dat/spob/hs24.xml:26
 #: dat/spob/hs37.xml:26 dat/spob/hs54.xml:26
@@ -14442,23 +14420,23 @@ msgstr ""
 
 #: dat/spob/hs232.xml:2
 msgid "HS-232"
-msgstr ""
+msgstr "HS-232"
 
 #: dat/spob/hs24.xml:2
 msgid "HS-24"
-msgstr ""
+msgstr "HS-24"
 
 #: dat/spob/hs37.xml:2
 msgid "HS-37"
-msgstr ""
+msgstr "HS-37"
 
 #: dat/spob/hs5.xml:2
 msgid "HS-5"
-msgstr ""
+msgstr "HS-5"
 
 #: dat/spob/hs51.xml:2
 msgid "HS-51"
-msgstr ""
+msgstr "HS-51"
 
 #: dat/spob/hs51.xml:28
 msgid ""
@@ -14478,11 +14456,11 @@ msgstr ""
 
 #: dat/spob/hs54.xml:2
 msgid "HS-54"
-msgstr ""
+msgstr "HS-54"
 
 #: dat/spob/huanxi.xml:2
 msgid "Huan'xi"
-msgstr ""
+msgstr "Huan'xi"
 
 #: dat/spob/huanxi.xml:28
 msgid ""
@@ -14543,7 +14521,7 @@ msgstr ""
 
 #: dat/spob/hurada.xml:2
 msgid "Hurada"
-msgstr ""
+msgstr "Hurada"
 
 #: dat/spob/hurada.xml:26
 msgid ""
@@ -14651,7 +14629,7 @@ msgstr ""
 
 #: dat/spob/hzmm01.xml:2
 msgid "HZMM-01"
-msgstr ""
+msgstr "HZMM-01"
 
 #: dat/spob/hzmm01.xml:25
 msgid ""
@@ -14705,7 +14683,7 @@ msgstr ""
 
 #: dat/spob/ian.xml:2
 msgid "Ian"
-msgstr ""
+msgstr "Ian"
 
 #: dat/spob/ian.xml:28
 msgid ""
@@ -14788,7 +14766,7 @@ msgstr ""
 #: dat/scripts/common/zalek_blackhole.lua:23
 #: dat/scripts/common/zalek_blackhole.lua:103
 msgid "Icarus"
-msgstr ""
+msgstr "Icarus"
 
 #: dat/spob/icarus.xml:23
 msgid ""
@@ -14802,7 +14780,7 @@ msgstr ""
 
 #: dat/spob/idio.xml:2
 msgid "Idio"
-msgstr ""
+msgstr "Idio"
 
 #: dat/spob/idio.xml:27
 msgid ""
@@ -14819,11 +14797,11 @@ msgstr ""
 
 #: dat/spob/imk.xml:2
 msgid "Imk"
-msgstr ""
+msgstr "Imk"
 
 #: dat/spob/impala.xml:2
 msgid "Impala"
-msgstr ""
+msgstr "Impala"
 
 #: dat/spob/impala.xml:23
 msgid ""
@@ -14835,7 +14813,7 @@ msgstr ""
 
 #: dat/spob/inca.xml:2
 msgid "Inca"
-msgstr ""
+msgstr "Inca"
 
 #: dat/spob/infinity_iii.xml:2
 msgid "Infinity III"
@@ -14937,11 +14915,11 @@ msgstr ""
 
 #: dat/spob/isador.xml:2
 msgid "Isador"
-msgstr ""
+msgstr "Isador"
 
 #: dat/spob/jaan.xml:2
 msgid "Jaan"
-msgstr ""
+msgstr "Jaan"
 
 #: dat/spob/jaan.xml:26
 msgid ""
@@ -14971,7 +14949,7 @@ msgstr ""
 
 #: dat/spob/jacqueline.xml:2
 msgid "Jacqueline"
-msgstr ""
+msgstr "Jacqueline"
 
 #: dat/spob/jacqueline.xml:26
 msgid ""
@@ -15034,7 +15012,7 @@ msgstr ""
 
 #: dat/spob/jaegnhild.xml:2
 msgid "Jaegnhild"
-msgstr ""
+msgstr "Jaegnhild"
 
 #: dat/spob/jaegnhild.xml:28
 msgid ""
@@ -15057,7 +15035,7 @@ msgstr ""
 
 #: dat/spob/jankelo.xml:2
 msgid "Jankelo"
-msgstr ""
+msgstr "Jankelo"
 
 #: dat/spob/jankelo.xml:25
 msgid ""
@@ -15077,7 +15055,7 @@ msgstr ""
 
 #: dat/spob/janko.xml:2
 msgid "Janko"
-msgstr ""
+msgstr "Janko"
 
 #: dat/spob/janko.xml:27
 msgid ""
@@ -15128,8 +15106,9 @@ msgid ""
 msgstr ""
 
 #: dat/spob/jasmine.xml:2
+#, fuzzy
 msgid "Jasmine"
-msgstr ""
+msgstr "Melati"
 
 #: dat/spob/jasmine.xml:24
 msgid ""
@@ -15155,7 +15134,7 @@ msgstr ""
 
 #: dat/spob/jaxheen.xml:2
 msgid "Jaxheen"
-msgstr ""
+msgstr "Jaxheen"
 
 #: dat/spob/jaxheen.xml:29
 msgid ""
@@ -15179,7 +15158,7 @@ msgstr ""
 
 #: dat/spob/jemard.xml:2
 msgid "Jemard"
-msgstr ""
+msgstr "Jemard"
 
 #: dat/spob/jemard.xml:27
 msgid ""
@@ -15199,7 +15178,7 @@ msgstr ""
 
 #: dat/spob/jermose.xml:2
 msgid "Jermose"
-msgstr ""
+msgstr "Jermose"
 
 #: dat/spob/jermose.xml:27
 msgid ""
@@ -15223,7 +15202,7 @@ msgstr ""
 
 #: dat/spob/jeronon.xml:2
 msgid "Jeronon"
-msgstr ""
+msgstr "Jeronon"
 
 #: dat/spob/jeronon.xml:27
 msgid ""
@@ -15253,11 +15232,11 @@ msgstr ""
 
 #: dat/spob/jezza.xml:2
 msgid "Jezza"
-msgstr ""
+msgstr "Jezza"
 
 #: dat/spob/jomos.xml:2
 msgid "Jomos"
-msgstr ""
+msgstr "Jomos"
 
 #: dat/spob/jomos.xml:25
 msgid ""
@@ -15281,7 +15260,7 @@ msgstr ""
 
 #: dat/spob/jorcan.xml:2
 msgid "Jorcan"
-msgstr ""
+msgstr "Jorcan"
 
 #: dat/spob/jorcan.xml:26
 msgid ""
@@ -15301,7 +15280,7 @@ msgstr ""
 
 #: dat/spob/jorla.xml:2
 msgid "Jorla"
-msgstr ""
+msgstr "Jorla"
 
 #: dat/spob/jorla.xml:28
 msgid ""
@@ -15321,7 +15300,7 @@ msgstr ""
 
 #: dat/spob/jorlan.xml:2
 msgid "Jorlan"
-msgstr ""
+msgstr "Jorlan"
 
 #: dat/spob/jorlan.xml:28
 msgid ""
@@ -15346,11 +15325,11 @@ msgstr ""
 
 #: dat/spob/jugreny.xml:2
 msgid "Jugreny"
-msgstr ""
+msgstr "Jugreny"
 
 #: dat/spob/jurai.xml:2
 msgid "Jurai"
-msgstr ""
+msgstr "Jurai"
 
 #: dat/spob/jurai.xml:27
 msgid ""
@@ -15369,11 +15348,11 @@ msgstr ""
 
 #: dat/spob/juran.xml:2
 msgid "Juran"
-msgstr ""
+msgstr "Juran"
 
 #: dat/spob/kaira.xml:2
 msgid "Kaira"
-msgstr ""
+msgstr "Kaira"
 
 #: dat/spob/kal_atok_obelisk.xml:2
 msgid "Kal Atok Obelisk"
@@ -15403,7 +15382,7 @@ msgstr ""
 
 #: dat/spob/kanar.xml:2
 msgid "Kan'ar"
-msgstr ""
+msgstr "Kan'ar"
 
 #: dat/spob/kanar.xml:28
 msgid ""
@@ -15423,7 +15402,7 @@ msgstr ""
 
 #: dat/spob/kanel.xml:2
 msgid "Kanel"
-msgstr ""
+msgstr "Kanel"
 
 #: dat/spob/kansas_i.xml:2
 msgid "Kansas I"
@@ -15455,7 +15434,7 @@ msgstr ""
 
 #: dat/spob/karvua.xml:2
 msgid "Karvua"
-msgstr ""
+msgstr "Karvua"
 
 #: dat/spob/karvua.xml:25
 msgid ""
@@ -15466,11 +15445,11 @@ msgstr ""
 
 #: dat/spob/kaso.xml:2
 msgid "Kaso"
-msgstr ""
+msgstr "Kaso"
 
 #: dat/spob/kataka.xml:2
 msgid "Kataka"
-msgstr ""
+msgstr "Kataka"
 
 #: dat/spob/kataka.xml:3
 msgid "#pSoromid Homeworld#0"
@@ -15501,7 +15480,7 @@ msgstr ""
 
 #: dat/spob/katar.xml:2
 msgid "Katar"
-msgstr ""
+msgstr "Katar"
 
 #: dat/spob/katar_i.xml:2
 msgid "Katar I"
@@ -15533,7 +15512,7 @@ msgstr ""
 
 #: dat/spob/kaulas.xml:2
 msgid "Kaulas"
-msgstr ""
+msgstr "Kaulas"
 
 #: dat/spob/kaulas.xml:26
 msgid ""
@@ -15557,7 +15536,7 @@ msgstr ""
 
 #: dat/spob/kayel.xml:2
 msgid "Kayel"
-msgstr ""
+msgstr "Kayel"
 
 #: dat/spob/kayel.xml:27
 msgid ""
@@ -15579,7 +15558,7 @@ msgstr ""
 
 #: dat/spob/khelim.xml:2
 msgid "Khelim"
-msgstr ""
+msgstr "Khelim"
 
 #: dat/spob/khelim.xml:27
 msgid ""
@@ -15600,11 +15579,11 @@ msgstr ""
 
 #: dat/spob/khorin.xml:2
 msgid "Khorin"
-msgstr ""
+msgstr "Khorin"
 
 #: dat/spob/killerog.xml:2
 msgid "Killerog"
-msgstr ""
+msgstr "Killerog"
 
 #: dat/spob/klantar_i.xml:2
 msgid "Klantar I"
@@ -15628,7 +15607,7 @@ msgstr ""
 
 #: dat/spob/koga.xml:2
 msgid "Koga"
-msgstr ""
+msgstr "Koga"
 
 #: dat/spob/koga.xml:26
 msgid ""
@@ -15673,7 +15652,7 @@ msgstr ""
 
 #: dat/spob/kotori.xml:2
 msgid "Kotori"
-msgstr ""
+msgstr "Kotori"
 
 #: dat/spob/kraft_i.xml:2
 msgid "Kraft I"
@@ -15697,7 +15676,7 @@ msgstr ""
 
 #: dat/spob/kramer.xml:2
 msgid "Kramer"
-msgstr ""
+msgstr "Kramer"
 
 #: dat/spob/kramer.xml:28
 msgid ""
@@ -15744,7 +15723,7 @@ msgstr ""
 
 #: dat/spob/laarss.xml:2
 msgid "Laarss"
-msgstr ""
+msgstr "Laarss"
 
 #: dat/spob/laarss.xml:28
 msgid ""
@@ -15766,7 +15745,7 @@ msgstr ""
 
 #: dat/spob/lanze.xml:2 dat/scripts/pilotname/pirate.lua:365
 msgid "Lanze"
-msgstr ""
+msgstr "Lanze"
 
 #: dat/spob/lanze.xml:28
 msgid ""
@@ -15796,7 +15775,7 @@ msgstr ""
 
 #: dat/spob/lapra.xml:2
 msgid "Lapra"
-msgstr ""
+msgstr "Lapra"
 
 #: dat/spob/lapra.xml:28
 msgid ""
@@ -15821,7 +15800,7 @@ msgstr ""
 
 #: dat/spob/larling.xml:2
 msgid "Larling"
-msgstr ""
+msgstr "Larling"
 
 #: dat/spob/larling.xml:27
 msgid ""
@@ -15867,11 +15846,11 @@ msgstr ""
 
 #: dat/spob/leo.xml:2
 msgid "Leo"
-msgstr ""
+msgstr "Leo"
 
 #: dat/spob/leszec.xml:2
 msgid "Leszec"
-msgstr ""
+msgstr "Leszec"
 
 #: dat/spob/leszec.xml:25
 msgid ""
@@ -15892,12 +15871,13 @@ msgid ""
 msgstr ""
 
 #: dat/spob/leviathan.xml:2
+#, fuzzy
 msgid "Leviathan"
-msgstr ""
+msgstr "Leviatan"
 
 #: dat/spob/levo.xml:2 dat/ssys/levo.xml:2
 msgid "Levo"
-msgstr ""
+msgstr "Levo"
 
 #: dat/spob/levo.xml:27
 msgid ""
@@ -15922,7 +15902,7 @@ msgstr ""
 
 #: dat/spob/lirith.xml:2
 msgid "Lirith"
-msgstr ""
+msgstr "Lirith"
 
 #: dat/spob/little_rock.xml:2
 msgid "Little Rock"
@@ -15962,7 +15942,7 @@ msgstr ""
 
 #: dat/spob/loramor.xml:2
 msgid "Lora-Mor"
-msgstr ""
+msgstr "Lora-Mor"
 
 #: dat/spob/loramor.xml:28
 msgid ""
@@ -15985,7 +15965,7 @@ msgstr ""
 
 #: dat/spob/lorelei.xml:2
 msgid "Lorelei"
-msgstr ""
+msgstr "Lorelei"
 
 #: dat/spob/lorelei.xml:28
 msgid ""
@@ -16008,7 +15988,7 @@ msgstr ""
 
 #: dat/spob/lugun.xml:2
 msgid "Lugun"
-msgstr ""
+msgstr "Lugun"
 
 #: dat/spob/lugun.xml:27
 msgid ""
@@ -16031,7 +16011,7 @@ msgstr ""
 
 #: dat/spob/luxsor.xml:2
 msgid "Luxsor"
-msgstr ""
+msgstr "Luxsor"
 
 #: dat/spob/lyncis_i.xml:2
 msgid "Lyncis I"
@@ -16070,7 +16050,7 @@ msgstr ""
 
 #: dat/spob/maanen.xml:2
 msgid "Maanen"
-msgstr ""
+msgstr "Maanen"
 
 #: dat/spob/maanens_moon.xml:2
 msgid "Maanen's Moon"
@@ -16105,7 +16085,7 @@ msgstr ""
 
 #: dat/spob/maatsu.xml:2
 msgid "Maatsu"
-msgstr ""
+msgstr "Maatsu"
 
 #: dat/spob/maatsu.xml:27
 msgid ""
@@ -16145,7 +16125,7 @@ msgstr ""
 
 #: dat/spob/madria.xml:2
 msgid "Madria"
-msgstr ""
+msgstr "Madria"
 
 #: dat/spob/madria.xml:29
 msgid ""
@@ -16166,7 +16146,7 @@ msgstr ""
 
 #: dat/spob/magellan.xml:2
 msgid "Magellan"
-msgstr ""
+msgstr "Magellan"
 
 #: dat/spob/magellan.xml:27
 msgid ""
@@ -16245,7 +16225,7 @@ msgstr ""
 
 #: dat/spob/malebolge.xml:2 dat/ssys/malebolge.xml:2
 msgid "Malebolge"
-msgstr ""
+msgstr "Malebolge"
 
 #: dat/spob/malebolge_iii.xml:2
 msgid "Malebolge III"
@@ -16261,7 +16241,7 @@ msgstr ""
 
 #: dat/spob/manis.xml:2
 msgid "Manis"
-msgstr ""
+msgstr "Manis"
 
 #: dat/spob/manis.xml:27
 msgid ""
@@ -16283,7 +16263,7 @@ msgstr ""
 
 #: dat/spob/mannannan.xml:2
 msgid "Mannannan"
-msgstr ""
+msgstr "Mannannan"
 
 #: dat/spob/mannannan.xml:28
 msgid ""
@@ -16354,7 +16334,7 @@ msgstr ""
 
 #: dat/spob/margot.xml:2
 msgid "Margot"
-msgstr ""
+msgstr "Margot"
 
 #: dat/spob/margot.xml:27
 msgid ""
@@ -16453,7 +16433,7 @@ msgstr ""
 
 #: dat/spob/maya.xml:2
 msgid "Maya"
-msgstr ""
+msgstr "Maya"
 
 #: dat/spob/medenus_observatory.xml:2
 msgid "Medenus Observatory"
@@ -16478,7 +16458,7 @@ msgstr ""
 
 #: dat/spob/megala.xml:2
 msgid "Megala"
-msgstr ""
+msgstr "Megala"
 
 #: dat/spob/megan_station.xml:2
 msgid "Megan Station"
@@ -16502,7 +16482,7 @@ msgstr ""
 
 #: dat/spob/megas.xml:2
 msgid "Megas"
-msgstr ""
+msgstr "Megas"
 
 #: dat/spob/megas.xml:26
 msgid ""
@@ -16572,7 +16552,7 @@ msgstr ""
 
 #: dat/spob/mendez.xml:2
 msgid "Mendez"
-msgstr ""
+msgstr "Mendez"
 
 #: dat/spob/mendez.xml:26
 msgid ""
@@ -16609,19 +16589,19 @@ msgstr ""
 
 #: dat/spob/meya.xml:2
 msgid "Meya"
-msgstr ""
+msgstr "Meya"
 
 #: dat/spob/mgg003.xml:2
 msgid "MGG-003"
-msgstr ""
+msgstr "MGG-003"
 
 #: dat/spob/mgg007.xml:2
 msgid "MGG-007"
-msgstr ""
+msgstr "MGG-007"
 
 #: dat/spob/mgg1294.xml:2
 msgid "MGG-1294"
-msgstr ""
+msgstr "MGG-1294"
 
 #. Discover will not work if the planet is found through maps
 #. type = "discover",
@@ -16712,7 +16692,7 @@ msgstr ""
 
 #: dat/spob/mk.xml:2
 msgid "M.K."
-msgstr ""
+msgstr "M.K."
 
 #: dat/spob/mk.xml:27
 msgid ""
@@ -16736,7 +16716,7 @@ msgstr ""
 
 #: dat/spob/modus.xml:2
 msgid "Modus"
-msgstr ""
+msgstr "Modus"
 
 #: dat/spob/modus.xml:27
 msgid ""
@@ -16866,7 +16846,7 @@ msgstr ""
 
 #: dat/spob/mouddar.xml:2
 msgid "Mouddar"
-msgstr ""
+msgstr "Mouddar"
 
 #: dat/spob/mouddar.xml:26
 msgid ""
@@ -16886,7 +16866,7 @@ msgstr ""
 
 #: dat/spob/mugen.xml:2
 msgid "Mugen"
-msgstr ""
+msgstr "Mugen"
 
 #: dat/spob/mugen.xml:25
 msgid ""
@@ -16906,7 +16886,7 @@ msgstr ""
 
 #: dat/spob/mutris.xml:2
 msgid "Mutris"
-msgstr ""
+msgstr "Mutris"
 
 #: dat/spob/mutris.xml:3
 msgid "#pSirius Homeworld#0"
@@ -16933,7 +16913,7 @@ msgstr ""
 
 #: dat/spob/myonei.xml:2
 msgid "Myonei"
-msgstr ""
+msgstr "Myonei"
 
 #: dat/spob/myonei.xml:28
 msgid ""
@@ -16954,7 +16934,7 @@ msgstr ""
 
 #: dat/spob/naga.xml:2
 msgid "Naga"
-msgstr ""
+msgstr "Naga"
 
 #: dat/spob/naga.xml:28
 msgid ""
@@ -16975,7 +16955,7 @@ msgstr ""
 
 #: dat/spob/nanek.xml:2
 msgid "Nanek"
-msgstr ""
+msgstr "Nanek"
 
 #: dat/spob/nanek.xml:27
 msgid ""
@@ -16996,7 +16976,7 @@ msgstr ""
 
 #: dat/spob/nappi.xml:2
 msgid "Nappi"
-msgstr ""
+msgstr "Nappi"
 
 #: dat/spob/nappi.xml:25
 msgid ""
@@ -17057,7 +17037,7 @@ msgstr ""
 
 #: dat/spob/nasano.xml:2
 msgid "Nasano"
-msgstr ""
+msgstr "Nasano"
 
 #: dat/spob/nava_i.xml:2
 msgid "Nava I"
@@ -17103,7 +17083,7 @@ msgstr ""
 
 #: dat/spob/nera.xml:2
 msgid "Nera"
-msgstr ""
+msgstr "Nera"
 
 #: dat/spob/nera.xml:25
 msgid ""
@@ -17115,7 +17095,7 @@ msgstr ""
 
 #: dat/spob/neurri.xml:2
 msgid "Neurri"
-msgstr ""
+msgstr "Neurri"
 
 #: dat/spob/neurri.xml:27
 msgid ""
@@ -17389,7 +17369,7 @@ msgstr ""
 
 #: dat/spob/nixa.xml:2
 msgid "Nixa"
-msgstr ""
+msgstr "Nixa"
 
 #: dat/spob/nixa.xml:25
 msgid ""
@@ -17429,7 +17409,7 @@ msgstr ""
 
 #: dat/spob/nocalin.xml:2
 msgid "Nocalin"
-msgstr ""
+msgstr "Nocalin"
 
 #: dat/spob/nocalin.xml:27
 msgid ""
@@ -17453,7 +17433,7 @@ msgstr ""
 
 #: dat/spob/nolan.xml:2
 msgid "Nolan"
-msgstr ""
+msgstr "Nolan"
 
 #: dat/spob/nolan.xml:24
 msgid ""
@@ -17464,7 +17444,7 @@ msgstr ""
 
 #: dat/spob/nonuri.xml:2
 msgid "Nonuri"
-msgstr ""
+msgstr "Nonuri"
 
 #: dat/spob/nonuri.xml:26
 msgid ""
@@ -17489,7 +17469,7 @@ msgstr ""
 
 #: dat/spob/nor.xml:2
 msgid "Nor"
-msgstr ""
+msgstr "Nor"
 
 #: dat/spob/nor.xml:26
 msgid ""
@@ -17609,7 +17589,7 @@ msgstr ""
 
 #: dat/spob/oberon.xml:2 dat/ssys/oberon.xml:2
 msgid "Oberon"
-msgstr ""
+msgstr "Oberon"
 
 #: dat/spob/oberon.xml:25
 msgid ""
@@ -17641,7 +17621,7 @@ msgstr ""
 
 #: dat/spob/ocata.xml:2
 msgid "Ocata"
-msgstr ""
+msgstr "Ocata"
 
 #: dat/spob/octantis_i.xml:2
 msgid "Octantis I"
@@ -17656,7 +17636,7 @@ msgstr ""
 
 #: dat/spob/odonga.xml:2
 msgid "Odonga"
-msgstr ""
+msgstr "Odonga"
 
 #: dat/spob/odonga_m1.xml:2
 msgid "Odonga m1"
@@ -17679,7 +17659,7 @@ msgstr ""
 
 #: dat/spob/ohon.xml:2
 msgid "Ohon"
-msgstr ""
+msgstr "Ohon"
 
 #: dat/spob/ohon.xml:27
 msgid ""
@@ -17703,7 +17683,7 @@ msgstr ""
 
 #: dat/spob/olario.xml:2
 msgid "Olario"
-msgstr ""
+msgstr "Olario"
 
 #: dat/spob/olario.xml:24
 msgid ""
@@ -17722,7 +17702,7 @@ msgstr ""
 
 #: dat/spob/olljan.xml:2
 msgid "Olljan"
-msgstr ""
+msgstr "Olljan"
 
 #: dat/spob/olljan.xml:26
 msgid ""
@@ -17745,7 +17725,7 @@ msgstr ""
 
 #: dat/spob/oma.xml:2
 msgid "Oma"
-msgstr ""
+msgstr "Oma"
 
 #: dat/spob/oma.xml:26
 msgid ""
@@ -17766,7 +17746,7 @@ msgstr ""
 
 #: dat/spob/omar.xml:2
 msgid "Omar"
-msgstr ""
+msgstr "Omar"
 
 #: dat/spob/omar.xml:26
 msgid ""
@@ -17808,7 +17788,7 @@ msgstr ""
 
 #: dat/spob/onar.xml:2
 msgid "Onar"
-msgstr ""
+msgstr "Onar"
 
 #: dat/spob/onar.xml:27
 msgid ""
@@ -17829,7 +17809,7 @@ msgstr ""
 
 #: dat/spob/onasan.xml:2
 msgid "Onasan"
-msgstr ""
+msgstr "Onasan"
 
 #: dat/spob/onewing_goddard.xml:26
 msgid ""
@@ -17842,7 +17822,7 @@ msgstr ""
 
 #: dat/spob/oni.xml:2
 msgid "Oni"
-msgstr ""
+msgstr "Oni"
 
 #: dat/spob/oni.xml:23
 msgid ""
@@ -17890,7 +17870,7 @@ msgstr ""
 
 #: dat/spob/opa.xml:2
 msgid "Opa"
-msgstr ""
+msgstr "Opa"
 
 #: dat/spob/opal_i.xml:2
 msgid "Opal I"
@@ -17920,7 +17900,7 @@ msgstr ""
 
 #: dat/spob/oring.xml:2
 msgid "Oring"
-msgstr ""
+msgstr "Oring"
 
 #: dat/spob/oring.xml:26
 msgid ""
@@ -18013,15 +17993,15 @@ msgstr ""
 
 #: dat/spob/p0125.xml:2
 msgid "P0125"
-msgstr ""
+msgstr "P0125"
 
 #: dat/spob/p13571.xml:2
 msgid "P-13571"
-msgstr ""
+msgstr "P-13571"
 
 #: dat/spob/p1587.xml:2
 msgid "P-1587"
-msgstr ""
+msgstr "P-1587"
 
 #: dat/spob/p1587.xml:15
 msgid ""
@@ -18034,23 +18014,23 @@ msgstr ""
 
 #: dat/spob/p15919.xml:2
 msgid "P-15919"
-msgstr ""
+msgstr "P-15919"
 
 #: dat/spob/p2020.xml:2
 msgid "P2020"
-msgstr ""
+msgstr "P2020"
 
 #: dat/spob/p2021.xml:2
 msgid "P2021"
-msgstr ""
+msgstr "P2021"
 
 #: dat/spob/p2022.xml:2
 msgid "P2022"
-msgstr ""
+msgstr "P2022"
 
 #: dat/spob/p2317.xml:2
 msgid "P-2317"
-msgstr ""
+msgstr "P-2317"
 
 #: dat/spob/p2317.xml:15
 msgid ""
@@ -18063,7 +18043,7 @@ msgstr ""
 
 #: dat/spob/p3030.xml:2
 msgid "P-3030"
-msgstr ""
+msgstr "P-3030"
 
 #: dat/spob/p3030.xml:15
 msgid ""
@@ -18076,55 +18056,55 @@ msgstr ""
 
 #: dat/spob/p4705.xml:2
 msgid "P-4705"
-msgstr ""
+msgstr "P-4705"
 
 #: dat/spob/p5003.xml:2
 msgid "P-5003"
-msgstr ""
+msgstr "P-5003"
 
 #: dat/spob/p5717.xml:2
 msgid "P-5717"
-msgstr ""
+msgstr "P-5717"
 
 #: dat/spob/p6608.xml:2
 msgid "P-6608"
-msgstr ""
+msgstr "P-6608"
 
 #: dat/spob/p8318.xml:2
 msgid "P-8318"
-msgstr ""
+msgstr "P-8318"
 
 #: dat/spob/p8493.xml:2
 msgid "P-8493"
-msgstr ""
+msgstr "P-8493"
 
 #: dat/spob/p880.xml:2
 msgid "P-880"
-msgstr ""
+msgstr "P-880"
 
 #: dat/spob/p9122.xml:2
 msgid "P9122"
-msgstr ""
+msgstr "P9122"
 
 #: dat/spob/p9172.xml:2
 msgid "P-9172"
-msgstr ""
+msgstr "P-9172"
 
 #: dat/spob/p9199.xml:2
 msgid "P-9199"
-msgstr ""
+msgstr "P-9199"
 
 #: dat/spob/p9234.xml:2
 msgid "P9234"
-msgstr ""
+msgstr "P9234"
 
 #: dat/spob/p9832.xml:2
 msgid "P-9832"
-msgstr ""
+msgstr "P-9832"
 
 #: dat/spob/p9922.xml:2
 msgid "P-9922"
-msgstr ""
+msgstr "P-9922"
 
 #: dat/spob/p9922.xml:15
 msgid ""
@@ -18177,7 +18157,7 @@ msgstr ""
 
 #: dat/spob/passir.xml:2
 msgid "Passir"
-msgstr ""
+msgstr "Passir"
 
 #: dat/spob/passir.xml:28
 msgid ""
@@ -18212,7 +18192,7 @@ msgstr ""
 
 #: dat/spob/pauldur.xml:2
 msgid "Pauldur"
-msgstr ""
+msgstr "Pauldur"
 
 #: dat/spob/pauldur.xml:24
 msgid ""
@@ -18227,7 +18207,7 @@ msgstr ""
 
 #: dat/spob/paxadon.xml:2
 msgid "Paxadon"
-msgstr ""
+msgstr "Paxadon"
 
 #: dat/spob/paxadon.xml:28
 msgid ""
@@ -18250,7 +18230,7 @@ msgstr ""
 
 #: dat/spob/paxsor.xml:2
 msgid "Paxsor"
-msgstr ""
+msgstr "Paxsor"
 
 #: dat/spob/paxsor.xml:26
 msgid ""
@@ -18287,7 +18267,7 @@ msgstr ""
 
 #: dat/spob/percola.xml:2
 msgid "Percola"
-msgstr ""
+msgstr "Percola"
 
 #: dat/spob/percola.xml:27
 msgid ""
@@ -18320,7 +18300,7 @@ msgstr ""
 
 #: dat/spob/petaat.xml:2
 msgid "Petaat"
-msgstr ""
+msgstr "Petaat"
 
 #: dat/spob/petaat.xml:26
 msgid ""
@@ -18342,7 +18322,7 @@ msgstr ""
 
 #: dat/spob/petra.xml:2
 msgid "Petra"
-msgstr ""
+msgstr "Petra"
 
 #: dat/spob/petra.xml:25
 msgid ""
@@ -18352,7 +18332,7 @@ msgstr ""
 
 #: dat/spob/phee.xml:2
 msgid "Phee"
-msgstr ""
+msgstr "Phee"
 
 #: dat/spob/phee.xml:28
 msgid ""
@@ -18373,7 +18353,7 @@ msgstr ""
 
 #: dat/spob/phosarrus.xml:2
 msgid "Phosarrus"
-msgstr ""
+msgstr "Phosarrus"
 
 #: dat/spob/phosarrus.xml:29
 msgid ""
@@ -18573,7 +18553,7 @@ msgstr ""
 
 #: dat/spob/praxis.xml:2
 msgid "Praxis"
-msgstr ""
+msgstr "Praxis"
 
 #: dat/spob/praxis.xml:28
 msgid ""
@@ -18592,7 +18572,7 @@ msgstr ""
 
 #: dat/spob/priscus.xml:2
 msgid "Priscus"
-msgstr ""
+msgstr "Priscus"
 
 #: dat/spob/priscus.xml:26
 msgid ""
@@ -18683,7 +18663,7 @@ msgstr ""
 
 #: dat/spob/prp1.xml:2
 msgid "PRP-1"
-msgstr ""
+msgstr "PRP-1"
 
 #: dat/spob/prp1.xml:26 dat/spob/prp2.xml:26 dat/spob/prp3.xml:25
 #: dat/spob/prp4.xml:26
@@ -18706,15 +18686,15 @@ msgstr ""
 
 #: dat/spob/prp2.xml:2
 msgid "PRP-2"
-msgstr ""
+msgstr "PRP-2"
 
 #: dat/spob/prp3.xml:2
 msgid "PRP-3"
-msgstr ""
+msgstr "PRP-3"
 
 #: dat/spob/prp4.xml:2
 msgid "PRP-4"
-msgstr ""
+msgstr "PRP-4"
 
 #: dat/spob/pso_1234.xml:2
 msgid "PSO 1234"
@@ -18758,7 +18738,7 @@ msgstr ""
 
 #: dat/spob/ptolemy.xml:2
 msgid "Ptolemy"
-msgstr ""
+msgstr "Ptolemy"
 
 #: dat/spob/pudas_i.xml:2
 msgid "Pudas I"
@@ -18782,7 +18762,7 @@ msgstr ""
 
 #: dat/spob/pund.xml:2
 msgid "Pund"
-msgstr ""
+msgstr "Pund"
 
 #: dat/spob/qex_ii.xml:2
 msgid "Qex II"
@@ -18798,7 +18778,7 @@ msgstr ""
 
 #: dat/spob/qoman.xml:2
 msgid "Qoman"
-msgstr ""
+msgstr "Qoman"
 
 #: dat/spob/qoman.xml:25
 msgid ""
@@ -18819,7 +18799,7 @@ msgstr ""
 
 #: dat/spob/qoral.xml:2
 msgid "Qoral"
-msgstr ""
+msgstr "Qoral"
 
 #: dat/spob/qoral.xml:27
 msgid ""
@@ -18839,7 +18819,7 @@ msgstr ""
 
 #: dat/spob/qorellia.xml:2
 msgid "Qorellia"
-msgstr ""
+msgstr "Qorellia"
 
 #: dat/spob/qorellia.xml:29
 msgid ""
@@ -18878,7 +18858,7 @@ msgstr ""
 
 #: dat/spob/racheka.xml:2
 msgid "Racheka"
-msgstr ""
+msgstr "Racheka"
 
 #: dat/spob/racheka.xml:26
 msgid ""
@@ -18925,12 +18905,13 @@ msgid "Raelid Prime"
 msgstr ""
 
 #: dat/spob/rage.xml:2
+#, fuzzy
 msgid "Rage"
-msgstr ""
+msgstr "Amarah"
 
 #: dat/spob/ramen.xml:2 dat/scripts/pilotname/pirate.lua:418
 msgid "Ramen"
-msgstr ""
+msgstr "Ramen"
 
 #: dat/spob/ramen.xml:25
 msgid ""
@@ -18971,7 +18952,7 @@ msgstr ""
 
 #: dat/spob/regensburg.xml:2
 msgid "Regensburg"
-msgstr ""
+msgstr "Regensburg"
 
 #: dat/spob/regensburg.xml:24
 msgid ""
@@ -18998,7 +18979,7 @@ msgstr ""
 
 #: dat/spob/reidd.xml:2
 msgid "Reidd"
-msgstr ""
+msgstr "Reidd"
 
 #: dat/spob/reidd.xml:27
 msgid ""
@@ -19037,7 +19018,7 @@ msgstr ""
 
 #: dat/spob/rhaana.xml:2
 msgid "Rhaana"
-msgstr ""
+msgstr "Rhaana"
 
 #: dat/spob/rhaana.xml:25
 msgid ""
@@ -19067,11 +19048,11 @@ msgstr ""
 
 #: dat/spob/ridrack.xml:2
 msgid "Ridrack"
-msgstr ""
+msgstr "Ridrack"
 
 #: dat/spob/rikaina.xml:2
 msgid "Rikaina"
-msgstr ""
+msgstr "Rikaina"
 
 #: dat/spob/rikaina.xml:28
 msgid ""
@@ -19090,7 +19071,7 @@ msgstr ""
 
 #: dat/spob/rionna.xml:2
 msgid "Rionna"
-msgstr ""
+msgstr "Rionna"
 
 #: dat/spob/rionna.xml:27
 msgid ""
@@ -19112,11 +19093,11 @@ msgstr ""
 
 #: dat/spob/riun.xml:2
 msgid "Riun"
-msgstr ""
+msgstr "Riun"
 
 #: dat/spob/rockhardt.xml:2
 msgid "Rockhardt"
-msgstr ""
+msgstr "Rockhardt"
 
 #: dat/spob/rockhardt.xml:28
 msgid ""
@@ -19138,7 +19119,7 @@ msgstr ""
 
 #: dat/spob/rodney.xml:2
 msgid "Rodney"
-msgstr ""
+msgstr "Rodney"
 
 #: dat/spob/rodney.xml:26
 msgid ""
@@ -19157,7 +19138,7 @@ msgstr ""
 
 #: dat/spob/rogan.xml:2
 msgid "Rogan"
-msgstr ""
+msgstr "Rogan"
 
 #: dat/spob/rogan.xml:28
 msgid ""
@@ -19180,7 +19161,7 @@ msgstr ""
 
 #: dat/spob/rostra.xml:2
 msgid "Rostra"
-msgstr ""
+msgstr "Rostra"
 
 #: dat/spob/rostra.xml:28
 msgid ""
@@ -19274,7 +19255,7 @@ msgstr ""
 
 #: dat/spob/rudderfern.xml:2
 msgid "Rudderfern"
-msgstr ""
+msgstr "Rudderfern"
 
 #: dat/spob/rudderfern.xml:27
 msgid ""
@@ -19295,7 +19276,7 @@ msgstr ""
 
 #: dat/spob/ruid.xml:2
 msgid "Ruid"
-msgstr ""
+msgstr "Ruid"
 
 #: dat/spob/ruin.xml:2
 msgid "Ruin"
@@ -19322,7 +19303,7 @@ msgstr ""
 
 #: dat/spob/rulkar.xml:2
 msgid "Rulk'ar"
-msgstr ""
+msgstr "Rulk'ar"
 
 #: dat/spob/rulkar.xml:26
 msgid ""
@@ -19351,7 +19332,7 @@ msgstr ""
 
 #: dat/spob/ryder.xml:2 dat/ssys/ryder.xml:2
 msgid "Ryder"
-msgstr ""
+msgstr "Ryder"
 
 #: dat/spob/ryder.xml:15
 msgid ""
@@ -19368,7 +19349,7 @@ msgstr ""
 
 #: dat/spob/s00000.xml:2
 msgid "S00000"
-msgstr ""
+msgstr "S00000"
 
 #: dat/spob/s00000.xml:15 dat/spob/s00018.xml:15 dat/spob/s00522.xml:15
 #: dat/spob/s00653.xml:15 dat/spob/s13024.xml:15 dat/spob/s23001.xml:15
@@ -19376,67 +19357,67 @@ msgstr ""
 #: dat/spob/s49335.xml:15 dat/spob/s49588.xml:15 dat/spob/s58309.xml:15
 #: dat/spob/s72288.xml:15 dat/spob/s72839.xml:15 dat/spob/s91456.xml:15
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: dat/spob/s00018.xml:2
 msgid "S00018"
-msgstr ""
+msgstr "S00018"
 
 #: dat/spob/s00522.xml:2
 msgid "S00522"
-msgstr ""
+msgstr "S00522"
 
 #: dat/spob/s00653.xml:2
 msgid "S00653"
-msgstr ""
+msgstr "S00653"
 
 #: dat/spob/s13024.xml:2
 msgid "S13024"
-msgstr ""
+msgstr "S13024"
 
 #: dat/spob/s23001.xml:2
 msgid "S23001"
-msgstr ""
+msgstr "S23001"
 
 #: dat/spob/s23491.xml:2
 msgid "S23491"
-msgstr ""
+msgstr "S23491"
 
 #: dat/spob/s38729.xml:2
 msgid "S38729"
-msgstr ""
+msgstr "S38729"
 
 #: dat/spob/s49281.xml:2
 msgid "S49281"
-msgstr ""
+msgstr "S49281"
 
 #: dat/spob/s49335.xml:2
 msgid "S49335"
-msgstr ""
+msgstr "S49335"
 
 #: dat/spob/s49588.xml:2
 msgid "S49588"
-msgstr ""
+msgstr "S49588"
 
 #: dat/spob/s58309.xml:2
 msgid "S58309"
-msgstr ""
+msgstr "S58309"
 
 #: dat/spob/s72288.xml:2
 msgid "S72288"
-msgstr ""
+msgstr "S72288"
 
 #: dat/spob/s72839.xml:2
 msgid "S72839"
-msgstr ""
+msgstr "S72839"
 
 #: dat/spob/s91456.xml:2
 msgid "S91456"
-msgstr ""
+msgstr "S91456"
 
 #: dat/spob/sabe.xml:2
 msgid "Sabe"
-msgstr ""
+msgstr "Sabe"
 
 #: dat/spob/sabe.xml:28
 msgid ""
@@ -19478,7 +19459,7 @@ msgstr ""
 
 #: dat/spob/samell.xml:2
 msgid "Samell"
-msgstr ""
+msgstr "Samell"
 
 #: dat/spob/samell.xml:28
 msgid ""
@@ -19500,7 +19481,7 @@ msgstr ""
 
 #: dat/spob/sanchez.xml:2
 msgid "Sanchez"
-msgstr ""
+msgstr "Sanchez"
 
 #: dat/spob/sanchez.xml:29
 msgid ""
@@ -19535,7 +19516,7 @@ msgstr ""
 
 #: dat/spob/sander.xml:2
 msgid "Sander"
-msgstr ""
+msgstr "Sander"
 
 #: dat/spob/sander.xml:27
 msgid ""
@@ -19578,7 +19559,7 @@ msgstr ""
 
 #: dat/spob/saraab.xml:2
 msgid "Saraab"
-msgstr ""
+msgstr "Saraab"
 
 #: dat/spob/saraab.xml:27
 msgid ""
@@ -19637,11 +19618,11 @@ msgstr ""
 
 #: dat/spob/scinfaxi.xml:2
 msgid "Scinfaxi"
-msgstr ""
+msgstr "Scinfaxi"
 
 #: dat/spob/scipio.xml:2
 msgid "Scipio"
-msgstr ""
+msgstr "Scipio"
 
 #: dat/spob/scorch.xml:2
 msgid "Scorch"
@@ -19716,7 +19697,7 @@ msgstr ""
 
 #: dat/spob/seanich.xml:2
 msgid "Seanich"
-msgstr ""
+msgstr "Seanich"
 
 #: dat/spob/seanich.xml:27
 msgid ""
@@ -19754,7 +19735,7 @@ msgstr ""
 
 #: dat/spob/selphod.xml:2
 msgid "Selphod"
-msgstr ""
+msgstr "Selphod"
 
 #: dat/spob/selphod.xml:26
 msgid ""
@@ -19774,7 +19755,7 @@ msgstr ""
 
 #: dat/spob/semper.xml:2
 msgid "Semper"
-msgstr ""
+msgstr "Semper"
 
 #: dat/spob/semper.xml:28
 msgid ""
@@ -19806,15 +19787,15 @@ msgstr ""
 
 #: dat/spob/serria.xml:2
 msgid "Serria"
-msgstr ""
+msgstr "Serria"
 
 #: dat/spob/servax.xml:2
 msgid "Servax"
-msgstr ""
+msgstr "Servax"
 
 #: dat/spob/sevlow.xml:2
 msgid "Sevlow"
-msgstr ""
+msgstr "Sevlow"
 
 #: dat/spob/sevlow.xml:26
 msgid ""
@@ -19889,7 +19870,7 @@ msgstr ""
 
 #: dat/spob/sharak.xml:2
 msgid "Sharak"
-msgstr ""
+msgstr "Sharak"
 
 #: dat/spob/sharak.xml:28
 msgid ""
@@ -19930,7 +19911,7 @@ msgstr ""
 
 #: dat/spob/shiarta.xml:2
 msgid "Shiarta"
-msgstr ""
+msgstr "Shiarta"
 
 #: dat/spob/shiarta.xml:26
 msgid ""
@@ -19966,11 +19947,11 @@ msgstr ""
 
 #: dat/spob/shion.xml:2
 msgid "Shion"
-msgstr ""
+msgstr "Shion"
 
 #: dat/spob/sidhe.xml:2
 msgid "Sidhe"
-msgstr ""
+msgstr "Sidhe"
 
 #: dat/spob/silverstone.xml:2
 msgid "Silverstone"
@@ -19992,7 +19973,7 @@ msgstr ""
 
 #: dat/spob/simoen.xml:2
 msgid "Simoen"
-msgstr ""
+msgstr "Simoen"
 
 #: dat/spob/simoen.xml:28
 msgid ""
@@ -20013,7 +19994,7 @@ msgstr ""
 
 #: dat/spob/sinass.xml:2
 msgid "Sinass"
-msgstr ""
+msgstr "Sinass"
 
 #: dat/spob/sinass.xml:28
 msgid ""
@@ -20036,7 +20017,7 @@ msgstr ""
 
 #: dat/spob/sinclair.xml:2
 msgid "Sinclair"
-msgstr ""
+msgstr "Sinclair"
 
 #: dat/spob/sinclair.xml:28
 msgid ""
@@ -20175,7 +20156,7 @@ msgstr ""
 
 #: dat/spob/skater.xml:2
 msgid "Skater"
-msgstr ""
+msgstr "Skater"
 
 #: dat/spob/skater.xml:26
 msgid ""
@@ -20198,7 +20179,7 @@ msgstr ""
 
 #: dat/spob/skona.xml:2
 msgid "Skona"
-msgstr ""
+msgstr "Skona"
 
 #: dat/spob/skona.xml:28
 msgid ""
@@ -20238,7 +20219,7 @@ msgstr ""
 
 #: dat/spob/smaal.xml:2
 msgid "Smaal"
-msgstr ""
+msgstr "Smaal"
 
 #: dat/spob/smaal.xml:27
 msgid ""
@@ -20282,7 +20263,7 @@ msgstr ""
 
 #: dat/spob/sola.xml:2
 msgid "Sola"
-msgstr ""
+msgstr "Sola"
 
 #: dat/spob/sola.xml:24
 msgid ""
@@ -20312,7 +20293,7 @@ msgstr ""
 
 #: dat/spob/sollebor.xml:2
 msgid "Sollebor"
-msgstr ""
+msgstr "Sollebor"
 
 #: dat/spob/sollebor.xml:27
 msgid ""
@@ -20332,7 +20313,7 @@ msgstr ""
 
 #: dat/spob/solpere.xml:2
 msgid "Solpere"
-msgstr ""
+msgstr "Solpere"
 
 #: dat/spob/solpere.xml:26
 msgid ""
@@ -20373,7 +20354,7 @@ msgstr ""
 
 #: dat/spob/sorom.xml:2
 msgid "Sorom"
-msgstr ""
+msgstr "Sorom"
 
 #: dat/spob/soromid_customs_central.xml:2
 msgid "Soromid Customs Central"
@@ -20489,7 +20470,7 @@ msgstr ""
 
 #: dat/spob/spica.xml:2
 msgid "Spica"
-msgstr ""
+msgstr "Spica"
 
 #: dat/spob/spica.xml:27
 msgid ""
@@ -20517,7 +20498,7 @@ msgstr ""
 
 #: dat/spob/sroolu.xml:2
 msgid "Sroolu"
-msgstr ""
+msgstr "Sroolu"
 
 #: dat/spob/sroolu.xml:25
 msgid ""
@@ -20564,7 +20545,7 @@ msgstr ""
 
 #: dat/spob/stein.xml:2
 msgid "Stein"
-msgstr ""
+msgstr "Stein"
 
 #: dat/spob/stein.xml:28
 msgid ""
@@ -20598,7 +20579,7 @@ msgstr ""
 
 #: dat/spob/stella.xml:2
 msgid "Stella"
-msgstr ""
+msgstr "Stella"
 
 #: dat/spob/stella.xml:26
 msgid ""
@@ -20622,7 +20603,7 @@ msgstr ""
 
 #: dat/spob/sternguard.xml:2
 msgid "Sternguard"
-msgstr ""
+msgstr "Sternguard"
 
 #: dat/spob/sternguard.xml:25
 msgid ""
@@ -20645,7 +20626,7 @@ msgstr ""
 
 #: dat/spob/stormgard.xml:2
 msgid "Stormgard"
-msgstr ""
+msgstr "Stormgard"
 
 #: dat/spob/stormgard.xml:28
 msgid ""
@@ -20711,7 +20692,7 @@ msgstr ""
 
 #: dat/spob/stutee.xml:2
 msgid "Stutee"
-msgstr ""
+msgstr "Stutee"
 
 #: dat/spob/stutee.xml:28
 msgid ""
@@ -20735,7 +20716,7 @@ msgstr ""
 
 #: dat/spob/sudra.xml:2
 msgid "Sudra"
-msgstr ""
+msgstr "Sudra"
 
 #: dat/spob/sudra.xml:28
 msgid ""
@@ -20781,7 +20762,7 @@ msgstr ""
 
 #: dat/spob/suoer.xml:2
 msgid "Suoer"
-msgstr ""
+msgstr "Suoer"
 
 #: dat/spob/suoer.xml:25
 msgid ""
@@ -20795,7 +20776,7 @@ msgstr ""
 
 #: dat/spob/sy1025.xml:2
 msgid "SY-1025"
-msgstr ""
+msgstr "SY-1025"
 
 #: dat/spob/sy1025.xml:25 dat/spob/sy1206.xml:25 dat/spob/sy159.xml:25
 #: dat/spob/sy19.xml:25 dat/spob/sy237.xml:25 dat/spob/sy256.xml:25
@@ -20809,43 +20790,43 @@ msgstr ""
 
 #: dat/spob/sy1206.xml:2
 msgid "SY-1206"
-msgstr ""
+msgstr "SY-1206"
 
 #: dat/spob/sy159.xml:2
 msgid "SY-159"
-msgstr ""
+msgstr "SY-159"
 
 #: dat/spob/sy19.xml:2
 msgid "SY-19"
-msgstr ""
+msgstr "SY-19"
 
 #: dat/spob/sy237.xml:2
 msgid "SY-237"
-msgstr ""
+msgstr "SY-237"
 
 #: dat/spob/sy256.xml:2
 msgid "SY-256"
-msgstr ""
+msgstr "SY-256"
 
 #: dat/spob/sy314.xml:2
 msgid "SY-314"
-msgstr ""
+msgstr "SY-314"
 
 #: dat/spob/sy413.xml:2
 msgid "SY-413"
-msgstr ""
+msgstr "SY-413"
 
 #: dat/spob/sy612.xml:2
 msgid "SY-612"
-msgstr ""
+msgstr "SY-612"
 
 #: dat/spob/sy894.xml:2
 msgid "SY-894"
-msgstr ""
+msgstr "SY-894"
 
 #: dat/spob/sy920.xml:2
 msgid "SY-920"
-msgstr ""
+msgstr "SY-920"
 
 #: dat/spob/sylph_ii.xml:2
 msgid "Sylph II"
@@ -20877,7 +20858,7 @@ msgstr ""
 
 #: dat/spob/takeru.xml:2
 msgid "Takeru"
-msgstr ""
+msgstr "Takeru"
 
 #: dat/spob/takeru.xml:25
 msgid ""
@@ -20930,7 +20911,7 @@ msgstr ""
 
 #: dat/spob/tanulwa.xml:2
 msgid "Tanulwa"
-msgstr ""
+msgstr "Tanulwa"
 
 #: dat/spob/tanulwa.xml:25
 msgid ""
@@ -20953,7 +20934,7 @@ msgstr ""
 
 #: dat/spob/tarrum.xml:2
 msgid "Tarrum"
-msgstr ""
+msgstr "Tarrum"
 
 #: dat/spob/tarsus_ii.xml:2
 msgid "Tarsus II"
@@ -20961,7 +20942,7 @@ msgstr ""
 
 #: dat/spob/tartarus.xml:2
 msgid "Tartarus"
-msgstr ""
+msgstr "Tartarus"
 
 #: dat/spob/tartarus.xml:26
 msgid ""
@@ -21106,7 +21087,7 @@ msgstr ""
 
 #: dat/spob/tenalp.xml:2
 msgid "Tenal-P"
-msgstr ""
+msgstr "Tenal-P"
 
 #: dat/spob/tenalp.xml:24
 msgid ""
@@ -21202,7 +21183,7 @@ msgstr ""
 
 #: dat/spob/terminus.xml:2 dat/ssys/terminus.xml:2
 msgid "Terminus"
-msgstr ""
+msgstr "Terminus"
 
 #: dat/spob/terminus.xml:26
 msgid ""
@@ -21266,7 +21247,7 @@ msgstr ""
 
 #: dat/spob/thar.xml:2
 msgid "Thar"
-msgstr ""
+msgstr "Thar"
 
 #: dat/spob/thar.xml:27
 msgid ""
@@ -21287,7 +21268,7 @@ msgstr ""
 
 #: dat/spob/thavma.xml:2
 msgid "Thavma"
-msgstr ""
+msgstr "Thavma"
 
 #: dat/spob/thavma.xml:26
 msgid ""
@@ -21407,7 +21388,7 @@ msgstr ""
 
 #: dat/spob/thosson.xml:2
 msgid "Thosson"
-msgstr ""
+msgstr "Thosson"
 
 #: dat/spob/thosson.xml:26
 msgid ""
@@ -21451,7 +21432,7 @@ msgstr ""
 
 #: dat/spob/thymo.xml:2
 msgid "Thymo"
-msgstr ""
+msgstr "Thymo"
 
 #: dat/spob/thymo.xml:26
 msgid ""
@@ -21472,7 +21453,7 @@ msgstr ""
 
 #: dat/spob/timu.xml:2
 msgid "Timu"
-msgstr ""
+msgstr "Timu"
 
 #: dat/spob/timu.xml:26
 msgid ""
@@ -21514,7 +21495,7 @@ msgstr ""
 
 #: dat/spob/tora.xml:2
 msgid "Tora"
-msgstr ""
+msgstr "Tora"
 
 #: dat/spob/tora.xml:25
 msgid ""
@@ -21559,7 +21540,7 @@ msgstr ""
 
 #: dat/spob/tori.xml:2
 msgid "Tori"
-msgstr ""
+msgstr "Tori"
 
 #: dat/spob/tori.xml:29
 msgid ""
@@ -21583,7 +21564,7 @@ msgstr ""
 
 #: dat/spob/torloth.xml:2
 msgid "Torloth"
-msgstr ""
+msgstr "Torloth"
 
 #: dat/spob/torloth.xml:26
 msgid ""
@@ -21620,7 +21601,7 @@ msgstr ""
 
 #: dat/spob/totoran.xml:2 dat/events/discovery.lua:96
 msgid "Totoran"
-msgstr ""
+msgstr "Totoran"
 
 #: dat/spob/totoran.xml:27
 msgid ""
@@ -21646,7 +21627,7 @@ msgstr ""
 
 #: dat/spob/traal.xml:2
 msgid "Traal"
-msgstr ""
+msgstr "Traal"
 
 #: dat/spob/traal.xml:27
 msgid ""
@@ -21699,7 +21680,7 @@ msgstr ""
 
 #: dat/spob/trichu.xml:2
 msgid "Trichu"
-msgstr ""
+msgstr "Trichu"
 
 #: dat/spob/trichu.xml:27
 msgid ""
@@ -21719,7 +21700,7 @@ msgstr ""
 
 #: dat/spob/trincea.xml:2
 msgid "Trincea"
-msgstr ""
+msgstr "Trincea"
 
 #: dat/spob/trincea.xml:28
 msgid ""
@@ -21740,7 +21721,7 @@ msgstr ""
 
 #: dat/spob/trinel.xml:2
 msgid "Trinel"
-msgstr ""
+msgstr "Trinel"
 
 #: dat/spob/trinel.xml:24
 msgid ""
@@ -21771,11 +21752,11 @@ msgstr ""
 
 #: dat/spob/tuhalar.xml:2
 msgid "Tu'halar"
-msgstr ""
+msgstr "Tu'halar"
 
 #: dat/spob/tulla.xml:2
 msgid "Tulla"
-msgstr ""
+msgstr "Tulla"
 
 #: dat/spob/tulla.xml:27
 msgid ""
@@ -21792,7 +21773,7 @@ msgstr ""
 
 #: dat/spob/tummalin.xml:2
 msgid "Tummalin"
-msgstr ""
+msgstr "Tummalin"
 
 #: dat/spob/tummalin.xml:26
 msgid ""
@@ -21815,7 +21796,7 @@ msgstr ""
 
 #: dat/spob/tumut.xml:2
 msgid "Tumut"
-msgstr ""
+msgstr "Tumut"
 
 #: dat/spob/tumut.xml:24
 msgid ""
@@ -21840,7 +21821,7 @@ msgstr ""
 
 #: dat/spob/turawee.xml:2
 msgid "Turawee"
-msgstr ""
+msgstr "Turawee"
 
 #: dat/spob/turawee.xml:29
 msgid ""
@@ -21883,27 +21864,27 @@ msgstr ""
 
 #: dat/spob/tuur.xml:2
 msgid "Tuur"
-msgstr ""
+msgstr "Tuur"
 
 #: dat/spob/uhp1001.xml:2
 msgid "UHP-1001"
-msgstr ""
+msgstr "UHP-1001"
 
 #: dat/spob/uhp1002.xml:2
 msgid "UHP-1002"
-msgstr ""
+msgstr "UHP-1002"
 
 #: dat/spob/uhriabi17.xml:2
 msgid "Uhriabi-17"
-msgstr ""
+msgstr "Uhriabi-17"
 
 #: dat/spob/uhriabi9.xml:2
 msgid "Uhriabi-9"
-msgstr ""
+msgstr "Uhriabi-9"
 
 #: dat/spob/ulios.xml:2
 msgid "Ulios"
-msgstr ""
+msgstr "Ulios"
 
 #: dat/spob/ulios.xml:26
 msgid ""
@@ -21926,7 +21907,7 @@ msgstr ""
 
 #: dat/spob/ullnorn.xml:2
 msgid "Ullnorn"
-msgstr ""
+msgstr "Ullnorn"
 
 #: dat/spob/ullnorn.xml:26
 msgid ""
@@ -21984,7 +21965,7 @@ msgstr ""
 
 #: dat/spob/ummula.xml:2
 msgid "Ummula"
-msgstr ""
+msgstr "Ummula"
 
 #: dat/spob/ummula.xml:28
 msgid ""
@@ -22006,11 +21987,11 @@ msgstr ""
 
 #: dat/spob/umw1231d.xml:2
 msgid "UMW-1231d"
-msgstr ""
+msgstr "UMW-1231d"
 
 #: dat/spob/umw1345a.xml:2
 msgid "UMW-1345a"
-msgstr ""
+msgstr "UMW-1345a"
 
 #: dat/spob/undergate_ii.xml:2
 msgid "Undergate II"
@@ -22058,11 +22039,11 @@ msgstr ""
 
 #: dat/spob/unseelie.xml:2
 msgid "Unseelie"
-msgstr ""
+msgstr "Unseelie"
 
 #: dat/spob/urail.xml:2
 msgid "Urail"
-msgstr ""
+msgstr "Urail"
 
 #: dat/spob/urail.xml:27
 msgid ""
@@ -22125,7 +22106,7 @@ msgstr ""
 
 #: dat/spob/ururis.xml:2
 msgid "Ururis"
-msgstr ""
+msgstr "Ururis"
 
 #: dat/spob/ururis.xml:25
 msgid ""
@@ -22137,7 +22118,7 @@ msgstr ""
 
 #: dat/spob/utsuwa.xml:2
 msgid "Utsuwa"
-msgstr ""
+msgstr "Utsuwa"
 
 #: dat/spob/utsuwa.xml:28
 msgid ""
@@ -22163,7 +22144,7 @@ msgstr ""
 
 #: dat/spob/uuries.xml:2
 msgid "Uuries"
-msgstr ""
+msgstr "Uuries"
 
 #: dat/spob/ux_i.xml:2
 msgid "UX I"
@@ -22179,7 +22160,7 @@ msgstr ""
 
 #: dat/spob/vaal.xml:2
 msgid "Vaal"
-msgstr ""
+msgstr "Vaal"
 
 #: dat/spob/vaal.xml:15
 msgid ""
@@ -22204,7 +22185,7 @@ msgstr ""
 
 #: dat/spob/valt.xml:2
 msgid "Valt"
-msgstr ""
+msgstr "Valt"
 
 #: dat/spob/valt.xml:26
 msgid ""
@@ -22266,7 +22247,7 @@ msgstr ""
 
 #: dat/spob/varaati.xml:2
 msgid "Varaati"
-msgstr ""
+msgstr "Varaati"
 
 #: dat/spob/varaati.xml:28
 msgid ""
@@ -22317,7 +22298,7 @@ msgstr ""
 
 #: dat/spob/varia.xml:2
 msgid "Varia"
-msgstr ""
+msgstr "Varia"
 
 #: dat/spob/varia.xml:28
 msgid ""
@@ -22345,15 +22326,16 @@ msgstr ""
 
 #: dat/spob/varona.xml:2
 msgid "Varona"
-msgstr ""
+msgstr "Varona"
 
 #: dat/spob/vauban_i1.xml:2
 msgid "Vauban I-1"
 msgstr ""
 
 #: dat/spob/vault.xml:2
+#, fuzzy
 msgid "Vault"
-msgstr ""
+msgstr "Vault"
 
 #: dat/spob/vault.xml:26
 msgid ""
@@ -22380,7 +22362,7 @@ msgstr ""
 
 #: dat/spob/vennis.xml:2
 msgid "Vennis"
-msgstr ""
+msgstr "Vennis"
 
 #: dat/spob/vennis.xml:28
 msgid ""
@@ -22404,7 +22386,7 @@ msgstr ""
 
 #: dat/spob/vercingetorix.xml:2
 msgid "Vercingetorix"
-msgstr ""
+msgstr "Vercingetorix"
 
 #: dat/spob/vercingetorix.xml:26
 msgid ""
@@ -22437,11 +22419,11 @@ msgstr ""
 
 #: dat/spob/vert.xml:2
 msgid "Vert"
-msgstr ""
+msgstr "Vert"
 
 #: dat/spob/vertigo.xml:2
 msgid "Vertigo"
-msgstr ""
+msgstr "Vertigo"
 
 #: dat/spob/vertigo.xml:27
 msgid ""
@@ -22514,7 +22496,7 @@ msgstr ""
 
 #: dat/spob/vino.xml:2
 msgid "Vino"
-msgstr ""
+msgstr "Vino"
 
 #: dat/spob/vino.xml:28
 msgid ""
@@ -22538,7 +22520,7 @@ msgstr ""
 
 #: dat/spob/vinooso.xml:2
 msgid "Vinooso"
-msgstr ""
+msgstr "Vinooso"
 
 #: dat/spob/vinooso.xml:26
 msgid ""
@@ -22605,7 +22587,7 @@ msgstr ""
 
 #: dat/spob/vlexair.xml:2
 msgid "Vlexair"
-msgstr ""
+msgstr "Vlexair"
 
 #: dat/spob/vlexair.xml:26
 msgid ""
@@ -22659,7 +22641,7 @@ msgstr ""
 
 #: dat/spob/vorca.xml:2
 msgid "Vorca"
-msgstr ""
+msgstr "Vorca"
 
 #: dat/spob/vorca.xml:30
 msgid ""
@@ -22685,7 +22667,7 @@ msgstr ""
 
 #: dat/spob/vracha.xml:2
 msgid "Vracha"
-msgstr ""
+msgstr "Vracha"
 
 #: dat/spob/vracha.xml:24
 msgid ""
@@ -22703,7 +22685,7 @@ msgstr ""
 
 #: dat/spob/vuere.xml:2
 msgid "Vuere"
-msgstr ""
+msgstr "Vuere"
 
 #: dat/spob/vuere.xml:27
 msgid ""
@@ -22727,7 +22709,7 @@ msgstr ""
 
 #: dat/spob/wagenni.xml:2
 msgid "Wagenni"
-msgstr ""
+msgstr "Wagenni"
 
 #: dat/spob/wagenni.xml:27
 msgid ""
@@ -22749,7 +22731,7 @@ msgstr ""
 
 #: dat/spob/wahri.xml:2 dat/ssys/wahri.xml:2
 msgid "Wahri"
-msgstr ""
+msgstr "Wahri"
 
 #: dat/spob/wahri.xml:28
 msgid ""
@@ -22775,7 +22757,7 @@ msgstr ""
 
 #: dat/spob/wakan.xml:2
 msgid "Wa'kan"
-msgstr ""
+msgstr "Wa'kan"
 
 #: dat/spob/wakan.xml:24
 msgid ""
@@ -22786,7 +22768,7 @@ msgstr ""
 
 #: dat/spob/waldar.xml:2
 msgid "Waldar"
-msgstr ""
+msgstr "Waldar"
 
 #: dat/spob/waldar.xml:28
 msgid ""
@@ -22827,7 +22809,7 @@ msgstr ""
 
 #: dat/spob/warei.xml:2
 msgid "Warei"
-msgstr ""
+msgstr "Warei"
 
 #: dat/spob/warei.xml:27
 msgid ""
@@ -22848,7 +22830,7 @@ msgstr ""
 
 #: dat/spob/warnecke.xml:2
 msgid "Warnecke"
-msgstr ""
+msgstr "Warnecke"
 
 #: dat/spob/warnecke.xml:28
 msgid ""
@@ -22906,7 +22888,7 @@ msgstr ""
 
 #: dat/spob/wayline.xml:2
 msgid "Wayline"
-msgstr ""
+msgstr "Wayline"
 
 #: dat/spob/wayline.xml:23
 msgid ""
@@ -22926,7 +22908,7 @@ msgstr ""
 
 #: dat/spob/wellen.xml:2
 msgid "Wellen"
-msgstr ""
+msgstr "Wellen"
 
 #: dat/spob/wellen.xml:28
 msgid ""
@@ -22949,7 +22931,7 @@ msgstr ""
 
 #: dat/spob/werlen.xml:2
 msgid "Werlen"
-msgstr ""
+msgstr "Werlen"
 
 #: dat/spob/werlen.xml:27
 msgid ""
@@ -22985,7 +22967,7 @@ msgstr ""
 
 #: dat/spob/wigheta.xml:2
 msgid "Wigheta"
-msgstr ""
+msgstr "Wigheta"
 
 #: dat/spob/wigheta.xml:26
 msgid ""
@@ -23008,7 +22990,7 @@ msgstr ""
 
 #: dat/spob/wikon.xml:2
 msgid "Wikon"
-msgstr ""
+msgstr "Wikon"
 
 #: dat/spob/wikon.xml:29
 msgid ""
@@ -23062,7 +23044,7 @@ msgstr ""
 
 #: dat/spob/wonclock.xml:2
 msgid "Wonclock"
-msgstr ""
+msgstr "Wonclock"
 
 #: dat/spob/wonclock.xml:28
 msgid ""
@@ -23084,7 +23066,7 @@ msgstr ""
 
 #: dat/spob/worgen.xml:2
 msgid "Worgen"
-msgstr ""
+msgstr "Worgen"
 
 #: dat/spob/wormhole_carrza.xml:2
 msgid "Wormhole Carrza"
@@ -24315,7 +24297,7 @@ msgstr ""
 
 #: dat/ssys/euler.xml:2
 msgid "Euler"
-msgstr ""
+msgstr "Euler"
 
 #: dat/ssys/euler.xml:6 dat/ssys/mirror.xml:6 dat/ssys/narousse.xml:6
 #: dat/ssys/ngc10081.xml:6 dat/ssys/ngc10653.xml:6 dat/ssys/ngc11050.xml:6
@@ -25213,7 +25195,7 @@ msgstr ""
 
 #: dat/ssys/orion.xml:2
 msgid "Orion"
-msgstr ""
+msgstr "Orion"
 
 #: dat/ssys/overture.xml:2
 msgid "Overture"
@@ -31614,7 +31596,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:71
 msgid "Crater City"
-msgstr ""
+msgstr "Kota Kawah"
 
 #: dat/events/discovery.lua:72
 msgid "Touching the Universe"
@@ -42551,7 +42533,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:304 dat/missions/minerva/kex3.lua:373
 #: dat/missions/minerva/kex3.lua:451
 msgid "Major Malik"
-msgstr ""
+msgstr "Mayor Malik"
 
 #: dat/events/pers/minerva.lua:34
 msgid ""
@@ -59661,7 +59643,7 @@ msgstr ""
 #. In case no suitable planets are in range.
 #: dat/missions/empire/emp_cargo00.lua:53
 msgid "Lieutenant"
-msgstr ""
+msgstr "Letnan"
 
 #: dat/missions/empire/emp_cargo00.lua:53
 msgid "You see an Empire Lieutenant who seems to be looking at you."
@@ -82612,10 +82594,8 @@ msgid "∞ t"
 msgstr ""
 
 #: dat/missions/onion/onion01.lua:53
-#, fuzzy
-#| msgid "read-only filesystem"
 msgid "Sol system"
-msgstr "sistem pemberkasan hanya untuk pembacaan"
+msgstr "Sistem Sol"
 
 #: dat/missions/onion/onion01.lua:53
 msgid "INVALID RECORD"
@@ -110637,7 +110617,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:303
 msgid "Emperor"
-msgstr ""
+msgstr "Kaisar"
 
 #: dat/scripts/pilotname/pirate.lua:304
 msgid "Energy-Volt"
@@ -123126,7 +123106,7 @@ msgstr ""
 
 #: src/ship.c:203
 msgid "Courier"
-msgstr ""
+msgstr "Kurir"
 
 #: src/ship.c:205
 msgid "Freighter"
@@ -123526,7 +123506,7 @@ msgstr ""
 
 #: src/shipstats.c:167 src/shipstats.c:221
 msgid "Crew"
-msgstr ""
+msgstr "Kru"
 
 #: src/shipstats.c:168
 msgid "Ship Mass"
