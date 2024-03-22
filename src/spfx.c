@@ -18,6 +18,7 @@
 #include "conf.h"
 #include "debris.h"
 #include "log.h"
+#include "naev.h"
 #include "ndata.h"
 #include "nlua_shader.h"
 #include "nlua_spfx.h"
