@@ -5,6 +5,8 @@
 
 /** @cond */
 #include "SDL.h"
+#include "SDL_endian.h"
+#include "SDL_rwops.h"
 #include <stdint.h>
 /** @endcond */
 
