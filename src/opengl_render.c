@@ -143,7 +143,7 @@ void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
    else
       glUniform2f( shd->dimensions, width, height );
    glUniform1i( shd->parami, line_width );
-   gl_renderShaderH( &shd, H, c, 1 );
+   gl_renderShaderH( shd, H, c, 1 );
 }
 
 /**
