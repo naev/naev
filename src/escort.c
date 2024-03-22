@@ -6,19 +6,15 @@
  *
  * @brief Handles the player's escorts.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
 
 #include "escort.h"
 
 #include "array.h"
 #include "dialogue.h"
-#include "hook.h"
 #include "log.h"
 #include "nlua.h"
-#include "nluadef.h"
-#include "nstring.h"
+#include "nlua_jump.h"
+#include "nlua_pilot.h"
 #include "player.h"
 
 /*

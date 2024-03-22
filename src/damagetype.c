@@ -7,9 +7,6 @@
  * @brief Handles damage types.
  */
 /** @cond */
-#include "SDL.h"
-#include <inttypes.h>
-
 #include "naev.h"
 /** @endcond */
 
@@ -19,9 +16,6 @@
 #include "log.h"
 #include "ndata.h"
 #include "nxml.h"
-#include "pause.h"
-#include "pilot.h"
-#include "rng.h"
 #include "shipstats.h"
 
 #define DTYPE_XML_ID "dtype" /**< XML Document tag. */

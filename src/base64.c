@@ -7,11 +7,10 @@
 /** @cond */
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 /** @endcond */
 
 #include "base64.h"
-
-#include "nstring.h"
 
 /* encode table - base 64 alphabet as defined by the rfc */
 static const char cb64[64] =

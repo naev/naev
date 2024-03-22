@@ -8,18 +8,14 @@
  */
 /** @cond */
 #include <stdlib.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "dev_spob.h"
 
+#include "array.h"
 #include "conf.h"
 #include "dev_uniedit.h"
-#include "nfile.h"
-#include "nstring.h"
 #include "nxml.h"
-#include "physics.h"
 #include "start.h"
 
 /**

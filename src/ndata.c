@@ -10,14 +10,12 @@
  * based on command-line arguments.
  */
 /** @cond */
-#include <limits.h>
-#include <stdarg.h>
 #include <stdlib.h>
 #if __WIN32__
 #include <windows.h>
 #endif /* __WIN32__ */
 
-#include "SDL.h"
+#include "SDL_stdinc.h"
 #include "physfs.h"
 
 #include "naev.h"
