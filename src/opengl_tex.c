@@ -1006,6 +1006,9 @@ int gl_initTextures( void )
  */
 void gl_exitTextures( void )
 {
+   SDL_DestroyMutex( tex_lock );
+   SDL_DestroyMutex( gl_lock );
+
    if ( array_size( texture_list ) <= 0 ) {
       array_free( texture_list );
       return;
@@ -1023,9 +1026,6 @@ void gl_exitTextures( void )
 #endif /* DEBUGGING */
 
    array_free( texture_list );
-
-   SDL_DestroyMutex( tex_lock );
-   SDL_DestroyMutex( gl_lock );
 }
 
 /**
