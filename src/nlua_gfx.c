@@ -387,7 +387,7 @@ static int gfxL_renderTexRaw( lua_State *L )
  * @brief Renders a texture using a transformation matrix.
  *
  *    @luatparam Tex tex Texture to render.
- *    @luatparam Shader ehader Shader to use when rendering.
+ *    @luatparam Shader shader Shader to use when rendering.
  *    @luatparam Transformation H Transformation matrix to use.
  *    @luatparam[opt=white] Colour colour Colour to use or white if not set.
  * @luafunc renderTexH
@@ -483,9 +483,9 @@ static int gfxL_renderRect( lua_State *L )
    w   = luaL_checknumber( L, 3 );
    h   = luaL_checknumber( L, 4 );
    col = luaL_checkcolour( L, 5 );
-   lw  = lua_tonumber( L, 6 );
-   rx  = lua_tonumber( L, 7 );
-   ry  = lua_tonumber( L, 8 );
+   lw  = luaL_optnumber( L, 6, 0. );
+   rx  = luaL_optnumber( L, 7, 0. );
+   ry  = luaL_optnumber( L, 8, 0. );
 
    /* Render. */
    gl_renderRoundRect( x, y, w, h, lw, rx, ry, col );
@@ -509,9 +509,9 @@ static int gfxL_renderRectH( lua_State *L )
    const mat4     *H     = luaL_checktransform( L, 1 );
    const glColour *col   = luaL_optcolour( L, 2, &cWhite );
    int             empty = lua_toboolean( L, 3 );
-   int             lw    = lua_tointeger( L, 4 );
-   int             rx    = lua_tointeger( L, 5 );
-   int             ry    = lua_tointeger( L, 6 );
+   int             lw    = luaL_optinteger( L, 4, 0 );
+   int             rx    = luaL_optinteger( L, 5, 0 );
+   int             ry    = luaL_optinteger( L, 6, 0 );
 
    /* Render. */
    lw = empty ? lw : 0;
@@ -540,7 +540,7 @@ static int gfxL_renderCircle( lua_State *L )
    y   = luaL_checknumber( L, 2 );
    r   = luaL_checknumber( L, 3 );
    col = luaL_checkcolour( L, 4 );
-   lw  = lua_tointeger( L, 5 );
+   lw  = luaL_optinteger( L, 5, 0 );
 
    /* Render. */
    gl_renderCircle( x, y, r, col, lw );
@@ -564,7 +564,7 @@ static int gfxL_renderCircleH( lua_State *L )
    const mat4     *H     = luaL_checktransform( L, 1 );
    const glColour *col   = luaL_optcolour( L, 2, &cWhite );
    int             empty = lua_toboolean( L, 3 );
-   int             lw    = lua_tointeger( L, 4 );
+   int             lw    = luaL_optinteger( L, 4, 0 );
 
    /* Render. */
    lw = empty ? lw : 0;
