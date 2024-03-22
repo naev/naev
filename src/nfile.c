@@ -27,6 +27,7 @@
 #endif /* __WIN32__ */
 /** @endcond */
 
+#include "naev.h"
 #include "nfile.h"
 
 #include "conf.h"
