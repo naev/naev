@@ -1538,6 +1538,8 @@ static int faction_parseSocial( const char *file )
    /* Parse social stuff. */
    node = parent->xmlChildrenNode;
    do {
+      xml_onlyNodes( node );
+
       if ( xml_isNode( node, "generator" ) ) {
          FactionGenerator *fg;
          if ( base->generators == NULL )
