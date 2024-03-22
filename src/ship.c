@@ -1115,8 +1115,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       glBindTexture( GL_TEXTURE_2D, ship_tex[0] );
 
       glEnableVertexAttribArray( shaders.texture_sharpen.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_sharpen.vertex,
-                                  0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( gl_paneVBO, shaders.texture_sharpen.vertex, 0,
+                                  2, GL_FLOAT, 0 );
 
       /* Set shader uniforms. */
       gl_uniformColour( shaders.texture.colour, c );

@@ -37,8 +37,8 @@
 #define OPENGL_RENDER_VBO_SIZE 256 /**< Size of VBO. */
 
 static gl_vbo *gl_renderVBO          = 0; /**< VBO for rendering stuff. */
-gl_vbo        *gl_squareVBO          = 0;
 gl_vbo        *gl_paneVBO            = 0;
+gl_vbo        *gl_squareVBO          = 0;
 gl_vbo        *gl_circleVBO          = 0;
 static gl_vbo *gl_lineVBO            = 0;
 static gl_vbo *gl_triangleVBO        = 0;
@@ -131,21 +131,19 @@ void gl_renderRoundRect( double x, double y, double w, double h,
 void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
                      int ry )
 {
-   if ( conf.round_gui && rx && ry ) {
-      GLfloat width  = H->m[0][0] / gl_view_matrix.m[0][0];
-      GLfloat height = H->m[1][1] / gl_view_matrix.m[1][1];
-      glUseProgram( shaders.rounded_rect.program );
-      glUniform4f( shaders.rounded_rect.dimensions, width, height, rx, ry );
-      glUniform1i( shaders.rounded_rect.parami, line_width );
-      gl_renderShaderH( &shaders.rounded_rect, H, c, 1 );
-   } else {
-      gl_beginSolidProgram( *H, c );
-      gl_vboActivateAttribOffset( line_width ? gl_paneVBO : gl_squareVBO,
-                                  shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-      glDrawArrays( line_width ? GL_LINE_STRIP : GL_TRIANGLE_STRIP, 0,
-                    line_width ? 5 : 4 );
-      gl_endSolidProgram();
-   }
+
+   GLfloat width  = H->m[0][0] / gl_view_matrix.m[0][0];
+   GLfloat height = H->m[1][1] / gl_view_matrix.m[1][1];
+
+   SimpleShader *shd = conf.round_gui ? &shaders.rounded_rect : &shaders.rect;
+
+   glUseProgram( shd->program );
+   if ( conf.round_gui )
+      glUniform4f( shd->dimensions, width, height, rx, ry );
+   else
+      glUniform2f( shd->dimensions, width, height );
+   glUniform1i( shd->parami, line_width );
+   gl_renderShaderH( &shd, H, c, 1 );
 }
 
 /**
@@ -212,7 +210,7 @@ void gl_renderTextureRawH( GLuint texture, const mat4 *projection,
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.texture.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex, 0, 2,
+   gl_vboActivateAttribOffset( gl_paneVBO, shaders.texture.vertex, 0, 2,
                                GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
@@ -409,7 +407,7 @@ void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, double inter,
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex,
+   gl_vboActivateAttribOffset( gl_paneVBO, shaders.texture_interpolate.vertex,
                                0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
@@ -1028,8 +1026,8 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H,
                        const glColour *c, int center )
 {
    glEnableVertexAttribArray( shd->vertex );
-   gl_vboActivateAttribOffset( center ? gl_circleVBO : gl_squareVBO,
-                               shd->vertex, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( center ? gl_circleVBO : gl_paneVBO, shd->vertex,
+                               0, 2, GL_FLOAT, 0 );
 
    if ( c != NULL )
       gl_uniformColour( shd->colour, c );
@@ -1146,27 +1144,27 @@ int gl_initRender( void )
    gl_renderVBOcolOffset =
       sizeof( GLfloat ) * OPENGL_RENDER_VBO_SIZE * ( 2 + 2 );
 
-   vertex[0]    = 0.;
-   vertex[1]    = 0.;
-   vertex[2]    = 1.;
-   vertex[3]    = 0.;
-   vertex[4]    = 0.;
-   vertex[5]    = 1.;
-   vertex[6]    = 1.;
-   vertex[7]    = 1.;
-   gl_squareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
-
    vertex[0]  = 0.;
    vertex[1]  = 0.;
    vertex[2]  = 1.;
    vertex[3]  = 0.;
-   vertex[4]  = 1.;
+   vertex[4]  = 0.;
    vertex[5]  = 1.;
-   vertex[6]  = 0.;
+   vertex[6]  = 1.;
    vertex[7]  = 1.;
-   vertex[8]  = 0.;
-   vertex[9]  = 0.;
-   gl_paneVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 10, vertex );
+   gl_paneVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
+
+   vertex[0]    = 0.;
+   vertex[1]    = 0.;
+   vertex[2]    = 1.;
+   vertex[3]    = 0.;
+   vertex[4]    = 1.;
+   vertex[5]    = 1.;
+   vertex[6]    = 0.;
+   vertex[7]    = 1.;
+   vertex[8]    = 0.;
+   vertex[9]    = 0.;
+   gl_squareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 10, vertex );
 
    vertex[0]    = -1.;
    vertex[1]    = -1.;
@@ -1206,8 +1204,8 @@ void gl_exitRender( void )
 {
    /* Destroy the VBO. */
    gl_vboDestroy( gl_renderVBO );
-   gl_vboDestroy( gl_squareVBO );
    gl_vboDestroy( gl_paneVBO );
+   gl_vboDestroy( gl_squareVBO );
    gl_vboDestroy( gl_circleVBO );
    gl_vboDestroy( gl_lineVBO );
    gl_vboDestroy( gl_triangleVBO );

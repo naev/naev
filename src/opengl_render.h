@@ -88,8 +88,8 @@ void gl_renderStatic( const glTexture *texture, double bx, double by,
 void gl_renderSDF( const glTexture *texture, double x, double y, double w,
                    double h, const glColour *c, double angle, double outline );
 
-extern gl_vbo *gl_squareVBO;
 extern gl_vbo *gl_paneVBO;
+extern gl_vbo *gl_squareVBO;
 extern gl_vbo *gl_circleVBO;
 
 void gl_beginSolidProgram( mat4 projection, const glColour *c );

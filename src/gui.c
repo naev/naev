@@ -865,7 +865,7 @@ void gui_render( double dt )
       /* Set up the program. */
       glUseProgram( shaders.jump.program );
       glEnableVertexAttribArray( shaders.jump.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.jump.vertex, 0, 2,
+      gl_vboActivateAttribOffset( gl_paneVBO, shaders.jump.vertex, 0, 2,
                                   GL_FLOAT, 0 );
 
       /* Set up the projection. */

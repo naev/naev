@@ -873,8 +873,8 @@ void spfx_trail_draw( const Trail_spfx *trail )
    if ( gl_has( OPENGL_SUBROUTINES ) )
       glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &trail->spec->type );
    glEnableVertexAttribArray( shaders.trail.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2,
-                               GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( gl_paneVBO, shaders.trail.vertex, 0, 2, GL_FLOAT,
+                               0 );
    glUniform1f( shaders.trail.dt, trail->dt );
    glUniform1f( shaders.trail.r, trail->r );
 
@@ -1094,8 +1094,8 @@ static void spfx_renderStack( SPFX *spfx_stack )
          projection = gl_view_matrix;
          mat4_translate_scale_xy( &projection, x, y, w, h );
          glEnableVertexAttribArray( effect->vertex );
-         gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex, 0, 2,
-                                     GL_FLOAT, 0 );
+         gl_vboActivateAttribOffset( gl_paneVBO, effect->vertex, 0, 2, GL_FLOAT,
+                                     0 );
 
          /* Set shader uniforms. */
          gl_uniformMat4( effect->projection, &projection );

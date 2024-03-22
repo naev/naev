@@ -412,14 +412,14 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shader->VertexPosition );
-   gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexPosition, 0, 2,
+   gl_vboActivateAttribOffset( gl_paneVBO, shader->VertexPosition, 0, 2,
                                GL_FLOAT, 0 );
 
    /* Set up texture vertices if necessary. */
    if ( shader->VertexTexCoord >= 0 ) {
       gl_uniformMat4( shader->ViewSpaceFromLocal, TH );
       glEnableVertexAttribArray( shader->VertexTexCoord );
-      gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord, 0, 2,
+      gl_vboActivateAttribOffset( gl_paneVBO, shader->VertexTexCoord, 0, 2,
                                   GL_FLOAT, 0 );
    }
 

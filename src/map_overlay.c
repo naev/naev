@@ -959,8 +959,8 @@ void ovr_render( double dt )
       glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
 
       glEnableVertexAttribArray( shaders.stealthoverlay.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.stealthoverlay.vertex,
-                                  0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( gl_paneVBO, shaders.stealthoverlay.vertex, 0,
+                                  2, GL_FLOAT, 0 );
 
       /* Set shader uniforms. */
       gl_uniformColour( shaders.stealthoverlay.colour, &cWhite );

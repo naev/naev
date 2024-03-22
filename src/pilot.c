@@ -1883,7 +1883,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
       glUniform1i( ed->u_tex, 0 );
 
       glEnableVertexAttribArray( ed->vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( gl_paneVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
 
       projection = mat4_ortho( 0., fw, 0, fh, -1., 1. );
       mat4_scale( &projection, w, h, 1. );
@@ -2033,7 +2033,7 @@ void pilot_render( Pilot *p )
          glUniform1i( ed->u_tex, 0 );
 
          glEnableVertexAttribArray( ed->vertex );
-         gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT,
+         gl_vboActivateAttribOffset( gl_paneVBO, ed->vertex, 0, 2, GL_FLOAT,
                                      0 );
 
          projection = gl_view_matrix;

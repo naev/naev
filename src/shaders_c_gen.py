@@ -407,6 +407,10 @@ SHADERS = [
       fs_path = "rounded_rect.frag",
    ),
    SimpleShader(
+      name = "rect",
+      fs_path = "rect.frag",
+   ),
+   SimpleShader(
       name = "crosshairs",
       fs_path = "crosshairs.frag",
    ),

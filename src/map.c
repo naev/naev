@@ -1276,7 +1276,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor,
 
          /* Draw. */
          glEnableVertexAttribArray( shaders.nebula_map.vertex );
-         gl_vboActivateAttribOffset( gl_squareVBO, shaders.nebula_map.vertex, 0,
+         gl_vboActivateAttribOffset( gl_paneVBO, shaders.nebula_map.vertex, 0,
                                      2, GL_FLOAT, 0 );
          glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
@@ -1306,7 +1306,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor,
 
          /* Draw. */
          glEnableVertexAttribArray( sys->ms->vertex );
-         gl_vboActivateAttribOffset( gl_squareVBO, sys->ms->vertex, 0, 2,
+         gl_vboActivateAttribOffset( gl_paneVBO, sys->ms->vertex, 0, 2,
                                      GL_FLOAT, 0 );
          glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 

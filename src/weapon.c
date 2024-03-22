@@ -793,8 +793,8 @@ static void weapon_renderBeam( Weapon *w, double dt )
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.beam.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.beam.vertex, 0, 2,
-                               GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( gl_paneVBO, shaders.beam.vertex, 0, 2, GL_FLOAT,
+                               0 );
 
    /* Set shader uniforms. */
    gl_uniformMat4( shaders.beam.projection, &projection );

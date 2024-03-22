@@ -413,6 +413,8 @@ static void tab_render( Widget *tab, double bx, double by )
          gl_renderRoundRect( x, y, len, TAB_HEIGHT, 2, 10, 10,
                              toolkit_colLight );
       } else {
+         gl_renderRoundRect( x - 3, y - 8, len + 6, TAB_HEIGHT + 6, 0, 10, 10,
+                             tab_inactive );
          gl_renderRoundRect( x - 3, y - 8, len + 6, TAB_HEIGHT + 6, 6, 10, 10,
                              &cGrey70 );
          x_active   = x;
