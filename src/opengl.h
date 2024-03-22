@@ -10,13 +10,11 @@
 /** @endcond */
 
 /* We put all the other opengl stuff here to only have to include one header. */
-#include "colour.h"
 #include "mat4.h"
 #include "opengl_render.h"
 #include "opengl_shader.h"
 #include "opengl_tex.h"
 #include "opengl_vbo.h"
-#include "shaders.gen.h"
 
 #define OPENGL_NUM_FBOS 4 /**< Number of FBOs to allocate and deal with. */
 /** Currently used FBO IDs:
@@ -85,15 +83,6 @@ extern mat4 gl_view_matrix;
 #define SCREEN_Y gl_screen.y /**< Screen Y offset. */
 #define SCREEN_W gl_screen.w /**< Screen width. */
 #define SCREEN_H gl_screen.h /**< Screen height. */
-
-/*
- * used with colour.h
- */
-#define COLOUR( x )                                                            \
-   glColour4d( ( x ).r, ( x ).g, ( x ).b, ( x ).a ) /**< Change colour. */
-#define ACOLOUR( x, a )                                                        \
-   glColour4d( ( x ).r, ( x ).g, ( x ).b,                                      \
-               a ) /**< Change colour and override alpha. */
 
 /*
  * initialization / cleanup
