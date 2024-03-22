@@ -40,10 +40,10 @@ float sdBox( vec2 p, vec2 b )
 /* Rounded box at position b with border b and rounded as r size.*/
 float sdBoxRound(vec2 p, vec2 b, vec2 r)
 {
-    float diff = b.x - r.x;
+    float diff = b.x - 2. * r.x;
     float coef = min(1.0, max(0.0, (abs(p.x) - diff) / (b.x - diff)));
     float rf = coef * r.y + (1.0 - coef) * r.x;
-    vec2 d = abs(p) - b + rf;
+    vec2 d = abs(p) - b + 2 * rf;
     return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0) - rf;
 }
 
