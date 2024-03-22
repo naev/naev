@@ -22,12 +22,9 @@
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
-#include "nluadef.h"
-#include "nstring.h"
 #include "nxml.h"
-#include "opengl.h"
+#include "opengl_tex.h"
 #include "player.h"
-#include "rng.h"
 #include "space.h"
 
 #define XML_FACTION_ID "Factions" /**< XML section identifier */
