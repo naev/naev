@@ -7,9 +7,9 @@
  * @brief Handles commidities.
  */
 /** @cond */
-#include "physfs.h"
-#include <stdint.h>
 #include <stdio.h>
+
+#include "SDL_timer.h"
 
 #include "naev.h"
 /** @endcond */
@@ -18,19 +18,10 @@
 
 #include "array.h"
 #include "conf.h"
-#include "economy.h"
 #include "gatherable.h"
-#include "hook.h"
 #include "log.h"
 #include "ndata.h"
-#include "nstring.h"
-#include "ntime.h"
 #include "nxml.h"
-#include "pilot.h"
-#include "player.h"
-#include "rng.h"
-#include "space.h"
-#include "spfx.h"
 #include "threadpool.h"
 
 #define XML_COMMODITY_ID "commodity" /**< XML document identifier */

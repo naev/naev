@@ -7,6 +7,10 @@
  * @brief Handles tech groups and metagroups for populating the spob outfitter,
  *        shipyard and commodity exchange.
  */
+/** @cond */
+#include "SDL_timer.h"
+/** @endcond */
+
 #include "tech.h"
 
 #include "array.h"

@@ -58,12 +58,14 @@
  *         subsystems and is pretty lacking in quite a few aspects.
  */
 /** @cond */
-#include "physfs.h"
 #include <lauxlib.h>
 #include <lualib.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "SDL_timer.h"
+#include "physfs.h"
 
 #include "naev.h"
 /** @endcond */

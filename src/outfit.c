@@ -14,6 +14,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include "SDL_timer.h"
+
 #include "naev.h"
 /** @endcond */
 
