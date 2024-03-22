@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-03-22 06:01+0000\n"
+"PO-Revision-Date: 2024-03-22 11:01+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -14569,7 +14569,7 @@ msgstr ""
 #: dat/spob/hypergate_kiwi.xml:3 dat/spob/hypergate_ngc14549.xml:3
 #: dat/spob/hypergate_ruadan.xml:3
 msgid "Construction"
-msgstr ""
+msgstr "Konstruksi"
 
 #: dat/spob/hypergate_dvaer.xml:16 dat/spob/hypergate_feye.xml:16
 #: dat/spob/hypergate_gamma_polaris.xml:16 dat/spob/hypergate_haven.xml:16
@@ -15361,12 +15361,12 @@ msgstr ""
 #: dat/spob/kal_atok_obelisk.xml:3 dat/spob/kal_maro_obelisk.xml:3
 #: dat/spob/kal_niut_obelisk.xml:3 dat/spob/kal_sitra_obelisk.xml:3
 msgid "#yObelisk#0"
-msgstr ""
+msgstr "#yTugu#0"
 
 #: dat/spob/kal_atok_obelisk.xml:18 dat/spob/kal_niut_obelisk.xml:18
 #: dat/spob/kal_sitra_obelisk.xml:18
 msgid "Obelisk"
-msgstr ""
+msgstr "Tugu"
 
 #: dat/spob/kal_maro_obelisk.xml:2
 msgid "Kal Maro Obelisk"
@@ -23082,7 +23082,7 @@ msgstr ""
 #: dat/spob/wormhole_surano.xml:3 dat/spob/wormhole_surano.xml:4
 #: dat/spob/wormhole_zied.xml:3 dat/spob/wormhole_zied.xml:4
 msgid "#bWormhole#0"
-msgstr ""
+msgstr "#bLubang cacing#0"
 
 #: dat/spob/wormhole_carrza.xml:10 dat/spob/wormhole_ivella.xml:10
 #: dat/spob/wormhole_ngc13674.xml:10 dat/spob/wormhole_ngc15670.xml:10
@@ -23090,7 +23090,7 @@ msgstr ""
 #: dat/spob/wormhole_rei.xml:10 dat/spob/wormhole_surano.xml:10
 #: dat/spob/wormhole_zied.xml:10 dat/missions/zalek/blackhole/zbh09.lua:209
 msgid "Wormhole"
-msgstr ""
+msgstr "Lubang cacing"
 
 #: dat/spob/wormhole_ivella.xml:2
 msgid "Wormhole Ivella"
@@ -23126,7 +23126,7 @@ msgstr ""
 
 #: dat/spob/worscha.xml:2
 msgid "Worscha"
-msgstr ""
+msgstr "Worscha"
 
 #: dat/spob/worscha.xml:29
 msgid ""
@@ -23154,7 +23154,7 @@ msgstr ""
 
 #: dat/spob/wunomi.xml:2 dat/ssys/wunomi.xml:2
 msgid "Wunomi"
-msgstr ""
+msgstr "Wunomi"
 
 #: dat/spob/wunomi_i.xml:2
 msgid "Wunomi I"
@@ -23221,8 +23221,9 @@ msgid ""
 msgstr ""
 
 #: dat/spob/wyrmwood.xml:2
+#, fuzzy
 msgid "Wyrmwood"
-msgstr ""
+msgstr "Wyrmwood"
 
 #: dat/spob/wyrmwood.xml:28
 msgid ""
@@ -23249,11 +23250,11 @@ msgstr ""
 
 #: dat/spob/xavier.xml:2 dat/ssys/xavier.xml:2
 msgid "Xavier"
-msgstr ""
+msgstr "Xavier"
 
 #: dat/spob/xo4.xml:2
 msgid "XO-4"
-msgstr ""
+msgstr "XO-4"
 
 #: dat/spob/yak_nest.xml:2
 msgid "Yak Nest"
@@ -23298,7 +23299,7 @@ msgstr ""
 
 #: dat/spob/yrina.xml:2
 msgid "Yrina"
-msgstr ""
+msgstr "Yrina"
 
 #: dat/spob/yrina.xml:26
 msgid ""
@@ -23321,7 +23322,7 @@ msgstr ""
 
 #: dat/spob/zaals.xml:2
 msgid "Zaals"
-msgstr ""
+msgstr "Zaals"
 
 #: dat/spob/zaals.xml:28
 msgid ""
@@ -23367,7 +23368,7 @@ msgstr ""
 
 #: dat/spob/zalebus.xml:2
 msgid "Zalebus"
-msgstr ""
+msgstr "Zalebus"
 
 #: dat/spob/zalebus.xml:29
 msgid ""
@@ -23394,7 +23395,7 @@ msgstr ""
 
 #: dat/spob/zaren.xml:2
 msgid "Zaren"
-msgstr ""
+msgstr "Zaren"
 
 #: dat/spob/zaren.xml:25
 msgid ""
@@ -23405,7 +23406,7 @@ msgstr ""
 
 #: dat/spob/zazarin.xml:2
 msgid "Zazarin"
-msgstr ""
+msgstr "Zazarin"
 
 #: dat/spob/zazarin.xml:27
 msgid ""
@@ -23452,7 +23453,7 @@ msgstr ""
 
 #: dat/spob/zeo.xml:2
 msgid "Zeo"
-msgstr ""
+msgstr "Zeo"
 
 #: dat/spob/zeo.xml:26
 msgid ""
@@ -23473,7 +23474,7 @@ msgstr ""
 
 #: dat/spob/zepei.xml:2
 msgid "Zepei"
-msgstr ""
+msgstr "Zepei"
 
 #: dat/spob/zepei.xml:27
 msgid ""
@@ -23506,7 +23507,7 @@ msgstr ""
 
 #: dat/spob/zesta.xml:2
 msgid "Zesta"
-msgstr ""
+msgstr "Zesta"
 
 #: dat/spob/zesta.xml:24
 msgid ""
@@ -23518,7 +23519,7 @@ msgstr ""
 
 #: dat/spob/zethus.xml:2
 msgid "Zethus"
-msgstr ""
+msgstr "Zethus"
 
 #: dat/spob/zhang_lu.xml:2
 msgid "Zhang Lu"
@@ -23545,7 +23546,7 @@ msgstr ""
 
 #: dat/spob/zhiru.xml:2
 msgid "Zhiru"
-msgstr ""
+msgstr "Zhiru"
 
 #: dat/spob/zhiru.xml:28
 msgid ""
@@ -23576,11 +23577,11 @@ msgstr ""
 
 #: dat/spob/ziz.xml:2
 msgid "Ziz"
-msgstr ""
+msgstr "Ziz"
 
 #: dat/spob/zuner.xml:2
 msgid "Zuner"
-msgstr ""
+msgstr "Zuner"
 
 #: dat/spob/zuner.xml:27
 msgid ""
@@ -23786,39 +23787,39 @@ msgstr ""
 
 #: dat/ssys/acheron.xml:2
 msgid "Acheron"
-msgstr ""
+msgstr "Acheron"
 
 #: dat/ssys/adraia.xml:2
 msgid "Adraia"
-msgstr ""
+msgstr "Adraia"
 
 #: dat/ssys/adran.xml:2
 msgid "Adran"
-msgstr ""
+msgstr "Adran"
 
 #: dat/ssys/aesir.xml:2
 msgid "Aesir"
-msgstr ""
+msgstr "Aesir"
 
 #: dat/ssys/aesria.xml:2
 msgid "Aesria"
-msgstr ""
+msgstr "Aesria"
 
 #: dat/ssys/aet.xml:2
 msgid "Aet"
-msgstr ""
+msgstr "Aet"
 
 #: dat/ssys/akodu.xml:2
 msgid "Akodu"
-msgstr ""
+msgstr "Akodu"
 
 #: dat/ssys/akra.xml:2
 msgid "Akra"
-msgstr ""
+msgstr "Akra"
 
 #: dat/ssys/allous.xml:2
 msgid "Allous"
-msgstr ""
+msgstr "Allous"
 
 #: dat/ssys/alpha_centauri.xml:2
 msgid "Alpha Centauri"
@@ -23826,23 +23827,23 @@ msgstr ""
 
 #: dat/ssys/alsafi.xml:2
 msgid "Alsafi"
-msgstr ""
+msgstr "Alsafi"
 
 #: dat/ssys/altair.xml:2
 msgid "Altair"
-msgstr ""
+msgstr "Altair"
 
 #: dat/ssys/alteris.xml:2
 msgid "Alteris"
-msgstr ""
+msgstr "Alteris"
 
 #: dat/ssys/amaroq.xml:2
 msgid "Amaroq"
-msgstr ""
+msgstr "Amaroq"
 
 #: dat/ssys/amatiri.xml:2
 msgid "Amatiri"
-msgstr ""
+msgstr "Amatiri"
 
 #: dat/ssys/amatiri.xml:6 dat/ssys/ariadus.xml:6 dat/ssys/bonanza.xml:6
 #: dat/ssys/corvus.xml:6 dat/ssys/fertile_crescent.xml:6 dat/ssys/hadosh.xml:6
@@ -23860,39 +23861,40 @@ msgstr ""
 
 #: dat/ssys/anarbalis.xml:2
 msgid "Anarbalis"
-msgstr ""
+msgstr "Anarbalis"
 
 #: dat/ssys/andee.xml:2
 msgid "Andee"
-msgstr ""
+msgstr "Andee"
 
 #: dat/ssys/andres.xml:2
 msgid "Andres"
-msgstr ""
+msgstr "Andres"
 
 #: dat/ssys/aneel_azi.xml:2
 msgid "Aneel Azi"
 msgstr ""
 
 #: dat/ssys/anger.xml:2
+#, fuzzy
 msgid "Anger"
-msgstr ""
+msgstr "Amarah"
 
 #: dat/ssys/anku.xml:2
 msgid "An'ku"
-msgstr ""
+msgstr "An'ku"
 
 #: dat/ssys/anrique.xml:2
 msgid "Anrique"
-msgstr ""
+msgstr "Anrique"
 
 #: dat/ssys/antares.xml:2
 msgid "Antares"
-msgstr ""
+msgstr "Antares"
 
 #: dat/ssys/antlejos.xml:2
 msgid "Antlejos"
-msgstr ""
+msgstr "Antlejos"
 
 #. subtitle = _("None"),
 #. PlasmaStorm = {
@@ -23934,27 +23936,27 @@ msgstr ""
 
 #: dat/ssys/apez.xml:2
 msgid "Apez"
-msgstr ""
+msgstr "Apez"
 
 #: dat/ssys/apik.xml:2
 msgid "Apik"
-msgstr ""
+msgstr "Apik"
 
 #: dat/ssys/arandon.xml:2
 msgid "Arandon"
-msgstr ""
+msgstr "Arandon"
 
 #: dat/ssys/arcanis.xml:2
 msgid "Arcanis"
-msgstr ""
+msgstr "Arcanis"
 
 #: dat/ssys/arcturus.xml:2
 msgid "Arcturus"
-msgstr ""
+msgstr "Arcturus"
 
 #: dat/ssys/ariadus.xml:2
 msgid "Ariadus"
-msgstr ""
+msgstr "Ariadus"
 
 #: dat/ssys/armorhead.xml:2
 msgid "Armorhead"
@@ -23962,11 +23964,11 @@ msgstr ""
 
 #: dat/ssys/atlantis.xml:2
 msgid "Atlantis"
-msgstr ""
+msgstr "Atlantis"
 
 #: dat/ssys/attaria.xml:2
 msgid "Attaria"
-msgstr ""
+msgstr "Attaria"
 
 #: dat/ssys/auger.xml:2
 msgid "Auger"
@@ -23974,15 +23976,15 @@ msgstr ""
 
 #: dat/ssys/awowa.xml:2
 msgid "Awowa"
-msgstr ""
+msgstr "Awowa"
 
 #: dat/ssys/babylon.xml:2
 msgid "Babylon"
-msgstr ""
+msgstr "Babilonia"
 
 #: dat/ssys/baf.xml:2
 msgid "Baf"
-msgstr ""
+msgstr "Baf"
 
 #: dat/ssys/baf.xml:4 dat/ssys/ngc11718.xml:4 dat/ssys/taxumi.xml:4
 #: dat/ssys/xeric.xml:4
@@ -23991,7 +23993,7 @@ msgstr ""
 
 #: dat/ssys/baitas.xml:2
 msgid "Baitas"
-msgstr ""
+msgstr "Baitas"
 
 #: dat/ssys/barnards_star.xml:2
 msgid "Barnard's Star"
@@ -23999,7 +24001,7 @@ msgstr ""
 
 #: dat/ssys/basel.xml:2
 msgid "Basel"
-msgstr ""
+msgstr "Basel"
 
 #: dat/ssys/bastion.xml:2
 msgid "Bastion"
@@ -24007,31 +24009,32 @@ msgstr ""
 
 #: dat/ssys/bedimann.xml:2
 msgid "Bedimann"
-msgstr ""
+msgstr "Bedimann"
 
 #: dat/ssys/beeklo.xml:2
 msgid "Beeklo"
-msgstr ""
+msgstr "Beeklo"
 
 #: dat/ssys/behar.xml:2
 msgid "Behar"
-msgstr ""
+msgstr "Behar"
 
 #: dat/ssys/blacin.xml:2
 msgid "Blacin"
-msgstr ""
+msgstr "Blacin"
 
 #: dat/ssys/blackwell.xml:2
 msgid "Blackwell"
 msgstr ""
 
 #: dat/ssys/blunderbuss.xml:2
+#, fuzzy
 msgid "Blunderbuss"
-msgstr ""
+msgstr "Pemuras"
 
 #: dat/ssys/bonanza.xml:2
 msgid "Bonanza"
-msgstr ""
+msgstr "Bonanza"
 
 #: dat/ssys/booster.xml:2
 msgid "Booster"
@@ -24039,15 +24042,15 @@ msgstr ""
 
 #: dat/ssys/borla.xml:2
 msgid "Borla"
-msgstr ""
+msgstr "Borla"
 
 #: dat/ssys/botarn.xml:2
 msgid "Botarn"
-msgstr ""
+msgstr "Botarn"
 
 #: dat/ssys/brendon.xml:2
 msgid "Brendon"
-msgstr ""
+msgstr "Brendon"
 
 #: dat/ssys/brimstone.xml:2
 msgid "Brimstone"
@@ -24055,35 +24058,36 @@ msgstr ""
 
 #: dat/ssys/brumerebus.xml:2
 msgid "Brumerebus"
-msgstr ""
+msgstr "Brumerebus"
 
 #: dat/ssys/brumeria.xml:2
 msgid "Brumeria"
-msgstr ""
+msgstr "Brumeria"
 
 #: dat/ssys/c00.xml:2
 msgid "C-00"
-msgstr ""
+msgstr "C-00"
 
 #: dat/ssys/c14.xml:2
 msgid "C-14"
-msgstr ""
+msgstr "C-14"
 
 #: dat/ssys/c28.xml:2
 msgid "C-28"
-msgstr ""
+msgstr "C-28"
 
 #: dat/ssys/c43.xml:2
 msgid "C-43"
-msgstr ""
+msgstr "C-43"
 
 #: dat/ssys/c59.xml:2
 msgid "C-59"
-msgstr ""
+msgstr "C-59"
 
 #: dat/ssys/capricorn.xml:2
+#, fuzzy
 msgid "Capricorn"
-msgstr ""
+msgstr "Kaprikornus"
 
 #: dat/ssys/carnis_major.xml:2
 msgid "Carnis Major"
@@ -24095,7 +24099,7 @@ msgstr ""
 
 #: dat/ssys/carrza.xml:2
 msgid "Carrza"
-msgstr ""
+msgstr "Carrza"
 
 #: dat/ssys/castellan.xml:2
 msgid "Castellan"
@@ -24103,43 +24107,46 @@ msgstr ""
 
 #: dat/ssys/cebus.xml:2
 msgid "Cebus"
-msgstr ""
+msgstr "Cebus"
 
 #: dat/ssys/cerberus.xml:2
+#, fuzzy
 msgid "Cerberus"
-msgstr ""
+msgstr "Kerberos"
 
 #: dat/ssys/chloe.xml:2
 msgid "Chloe"
-msgstr ""
+msgstr "Chloe"
 
 #: dat/ssys/chraan.xml:2
 msgid "Chraan"
-msgstr ""
+msgstr "Chraan"
 
 #: dat/ssys/churchill.xml:2
 msgid "Churchill"
-msgstr ""
+msgstr "Churchill"
 
 #: dat/ssys/cleai.xml:2
 msgid "Cleai"
-msgstr ""
+msgstr "Cleai"
 
 #: dat/ssys/copernicus.xml:2
+#, fuzzy
 msgid "Copernicus"
-msgstr ""
+msgstr "Kopernikus"
 
 #: dat/ssys/corinth.xml:2
+#, fuzzy
 msgid "Corinth"
-msgstr ""
+msgstr "Korintus"
 
 #: dat/ssys/coriolis.xml:2
 msgid "Coriolis"
-msgstr ""
+msgstr "Coriolis"
 
 #: dat/ssys/corvus.xml:2
 msgid "Corvus"
-msgstr ""
+msgstr "Corvus"
 
 #. Create the OSD
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:140
@@ -24149,23 +24156,23 @@ msgstr ""
 
 #: dat/ssys/cygni.xml:2
 msgid "Cygni"
-msgstr ""
+msgstr "Cygni"
 
 #: dat/ssys/cygnus.xml:2
 msgid "Cygnus"
-msgstr ""
+msgstr "Cygnus"
 
 #: dat/ssys/daan.xml:2
 msgid "Daan"
-msgstr ""
+msgstr "Daan"
 
 #: dat/ssys/dakron.xml:2
 msgid "Dakron"
-msgstr ""
+msgstr "Dakron"
 
 #: dat/ssys/daled.xml:2
 msgid "Daled"
-msgstr ""
+msgstr "Daled"
 
 #: dat/ssys/daled.xml:6 dat/ssys/defa.xml:6 dat/ssys/fried.xml:5
 #: dat/ssys/gold.xml:6 dat/ssys/kretogg.xml:6 dat/ssys/mason.xml:6
@@ -24177,11 +24184,11 @@ msgstr ""
 
 #: dat/ssys/damien.xml:2
 msgid "Damien"
-msgstr ""
+msgstr "Damien"
 
 #: dat/ssys/daravon.xml:2
 msgid "Daravon"
-msgstr ""
+msgstr "Daravon"
 
 #: dat/ssys/darkstone.xml:2
 msgid "Darkstone"
@@ -24189,7 +24196,7 @@ msgstr ""
 
 #: dat/ssys/defa.xml:2
 msgid "Defa"
-msgstr ""
+msgstr "Defa"
 
 #: dat/ssys/delta_pavonis.xml:2
 msgid "Delta Pavonis"
@@ -24201,11 +24208,11 @@ msgstr ""
 
 #: dat/ssys/dendria.xml:2
 msgid "Dendria"
-msgstr ""
+msgstr "Dendria"
 
 #: dat/ssys/deneb.xml:2
 msgid "Deneb"
-msgstr ""
+msgstr "Deneb"
 
 #: dat/ssys/diadem.xml:2
 msgid "Diadem"
@@ -24213,35 +24220,35 @@ msgstr ""
 
 #: dat/ssys/doeston.xml:2
 msgid "Doeston"
-msgstr ""
+msgstr "Doeston"
 
 #: dat/ssys/dohriabi.xml:2
 msgid "Dohriabi"
-msgstr ""
+msgstr "Dohriabi"
 
 #: dat/ssys/doowa.xml:2
 msgid "Doowa"
-msgstr ""
+msgstr "Doowa"
 
 #: dat/ssys/doranthex.xml:2
 msgid "Doranthex"
-msgstr ""
+msgstr "Doranthex"
 
 #: dat/ssys/draconis.xml:2
 msgid "Draconis"
-msgstr ""
+msgstr "Draconis"
 
 #: dat/ssys/draygar.xml:2
 msgid "Draygar"
-msgstr ""
+msgstr "Draygar"
 
 #: dat/ssys/druid.xml:2
 msgid "Druid"
-msgstr ""
+msgstr "Druid"
 
 #: dat/ssys/druss.xml:2
 msgid "Druss"
-msgstr ""
+msgstr "Druss"
 
 #: dat/ssys/dune.xml:2
 msgid "Dune"
@@ -24249,51 +24256,52 @@ msgstr ""
 
 #: dat/ssys/duros.xml:2
 msgid "Duros"
-msgstr ""
+msgstr "Duros"
 
 #: dat/ssys/dvaer.xml:2
 msgid "Dvaer"
-msgstr ""
+msgstr "Dvaer"
 
 #: dat/ssys/effetey.xml:2
 msgid "Effetey"
-msgstr ""
+msgstr "Effetey"
 
 #: dat/ssys/eiderdown.xml:2
 msgid "Eiderdown"
-msgstr ""
+msgstr "Eiderdown"
 
 #: dat/ssys/eisenhorn.xml:2
 msgid "Eisenhorn"
-msgstr ""
+msgstr "Eisenhorn"
 
 #: dat/ssys/ekkodu.xml:2
 msgid "Ekkodu"
-msgstr ""
+msgstr "Ekkodu"
 
 #: dat/ssys/ekta.xml:2
 msgid "Ekta"
-msgstr ""
+msgstr "Ekta"
 
 #: dat/ssys/elixir.xml:2
+#, fuzzy
 msgid "Elixir"
-msgstr ""
+msgstr "Elixir"
 
 #: dat/ssys/elza.xml:2
 msgid "Elza"
-msgstr ""
+msgstr "Elza"
 
 #: dat/ssys/eneguoz.xml:2
 msgid "Eneguoz"
-msgstr ""
+msgstr "Eneguoz"
 
 #: dat/ssys/eridani.xml:2
 msgid "Eridani"
-msgstr ""
+msgstr "Eridani"
 
 #: dat/ssys/esker.xml:2
 msgid "Esker"
-msgstr ""
+msgstr "Esker"
 
 #: dat/ssys/euler.xml:2
 msgid "Euler"
@@ -24315,19 +24323,20 @@ msgstr ""
 
 #: dat/ssys/farizel.xml:2
 msgid "Farizel"
-msgstr ""
+msgstr "Farizel"
 
 #: dat/ssys/fathers_pride.xml:2
 msgid "Father's Pride"
 msgstr ""
 
 #: dat/ssys/faust.xml:2
+#, fuzzy
 msgid "Faust"
-msgstr ""
+msgstr "Faustus"
 
 #: dat/ssys/felzen.xml:2
 msgid "Felzen"
-msgstr ""
+msgstr "Felzen"
 
 #: dat/ssys/fern.xml:2
 msgid "Fern"
@@ -24339,19 +24348,19 @@ msgstr ""
 
 #: dat/ssys/feye.xml:2 dat/events/discovery.lua:63
 msgid "Feye"
-msgstr ""
+msgstr "Feye"
 
 #: dat/ssys/fidelis.xml:2
 msgid "Fidelis"
-msgstr ""
+msgstr "Fidelis"
 
 #: dat/ssys/firk.xml:2
 msgid "Firk"
-msgstr ""
+msgstr "Firk"
 
 #: dat/ssys/flok.xml:2
 msgid "Flok"
-msgstr ""
+msgstr "Flok"
 
 #: dat/ssys/flow.xml:2
 msgid "Flow"
@@ -24359,7 +24368,7 @@ msgstr ""
 
 #: dat/ssys/forlat.xml:2
 msgid "Forlat"
-msgstr ""
+msgstr "Forlat"
 
 #: dat/ssys/fortitude.xml:2
 msgid "Fortitude"
@@ -24371,11 +24380,11 @@ msgstr ""
 
 #: dat/ssys/frolina.xml:2
 msgid "Frolina"
-msgstr ""
+msgstr "Frolina"
 
 #: dat/ssys/fulcrum.xml:2
 msgid "Fulcrum"
-msgstr ""
+msgstr "Fulcrum"
 
 #: dat/ssys/fury.xml:2
 msgid "Fury"
@@ -24383,7 +24392,7 @@ msgstr ""
 
 #: dat/ssys/gamel.xml:2
 msgid "Gamel"
-msgstr ""
+msgstr "Gamel"
 
 #: dat/ssys/gamma_polaris.xml:2
 msgid "Gamma Polaris"
@@ -24391,19 +24400,19 @@ msgstr ""
 
 #: dat/ssys/gammacron.xml:2
 msgid "Gammacron"
-msgstr ""
+msgstr "Gammacron"
 
 #: dat/ssys/ganth.xml:2
 msgid "Ganth"
-msgstr ""
+msgstr "Ganth"
 
 #: dat/ssys/garten.xml:2
 msgid "Garten"
-msgstr ""
+msgstr "Garten"
 
 #: dat/ssys/gewirn.xml:2
 msgid "Gewirn"
-msgstr ""
+msgstr "Gewirn"
 
 #: dat/ssys/gilligans_light.xml:2
 msgid "Gilligan's Light"
@@ -24415,7 +24424,7 @@ msgstr ""
 
 #: dat/ssys/gliese.xml:2
 msgid "Gliese"
-msgstr ""
+msgstr "Gliese"
 
 #: dat/ssys/gliese_minor.xml:2
 msgid "Gliese Minor"
@@ -24423,11 +24432,11 @@ msgstr ""
 
 #: dat/ssys/gorman.xml:2
 msgid "Gorman"
-msgstr ""
+msgstr "Gorman"
 
 #: dat/ssys/gremlin.xml:2
 msgid "Gremlin"
-msgstr ""
+msgstr "Gremlin"
 
 #: dat/ssys/griffin.xml:2
 msgid "Griffin"
@@ -24435,75 +24444,77 @@ msgstr ""
 
 #: dat/ssys/groombridge.xml:2
 msgid "Groombridge"
-msgstr ""
+msgstr "Groombridge"
 
 #: dat/ssys/gruz.xml:2
 msgid "Gruz"
-msgstr ""
+msgstr "Gruz"
 
 #: dat/ssys/guntesh.xml:2
 msgid "Guntesh"
-msgstr ""
+msgstr "Guntesh"
 
 #: dat/ssys/gutter.xml:2
+#, fuzzy
 msgid "Gutter"
-msgstr ""
+msgstr "Gutter"
 
 #: dat/ssys/gyrios.xml:2
 msgid "Gyrios"
-msgstr ""
+msgstr "Gyrios"
 
 #: dat/ssys/hades.xml:2
 msgid "Hades"
-msgstr ""
+msgstr "Hades"
 
 #: dat/ssys/hadosh.xml:2
 msgid "Hadosh"
-msgstr ""
+msgstr "Hadosh"
 
 #: dat/ssys/haered.xml:2
 msgid "Haered"
-msgstr ""
+msgstr "Haered"
 
 #: dat/ssys/hakoi.xml:2
 msgid "Hakoi"
-msgstr ""
+msgstr "Hakoi"
 
 #: dat/ssys/haleb.xml:2
 msgid "Haleb"
-msgstr ""
+msgstr "Haleb"
 
 #: dat/ssys/halo.xml:2
+#, fuzzy
 msgid "Halo"
-msgstr ""
+msgstr "Halo"
 
 #: dat/ssys/hargen.xml:2
 msgid "Hargen"
-msgstr ""
+msgstr "Hargen"
 
 #: dat/ssys/hasselt.xml:2
 msgid "Hasselt"
-msgstr ""
+msgstr "Hasselt"
 
 #: dat/ssys/hatter.xml:2
 msgid "Hatter"
-msgstr ""
+msgstr "Hatter"
 
 #: dat/ssys/hekaras.xml:2
 msgid "Hekaras"
-msgstr ""
+msgstr "Hekaras"
 
 #: dat/ssys/hephaestus.xml:2
 msgid "Hephaestus"
-msgstr ""
+msgstr "Hefaistos"
 
 #: dat/ssys/herakin.xml:2
 msgid "Herakin"
-msgstr ""
+msgstr "Herakin"
 
 #: dat/ssys/herculis.xml:2
 msgid "Herculis"
-msgstr ""
+msgstr "Herculis"
 
 #: dat/ssys/hideyoshis_star.xml:2
 msgid "Hideyoshi's Star"
@@ -24515,19 +24526,19 @@ msgstr ""
 
 #: dat/ssys/hubfar.xml:2
 msgid "Hubfar"
-msgstr ""
+msgstr "Hubfar"
 
 #: dat/ssys/humdrum.xml:2
 msgid "Humdrum"
-msgstr ""
+msgstr "Humdrum"
 
 #: dat/ssys/hystera.xml:2
 msgid "Hystera"
-msgstr ""
+msgstr "Hystera"
 
 #: dat/ssys/ianella.xml:2
 msgid "Ianella"
-msgstr ""
+msgstr "Ianella"
 
 #: dat/ssys/infinity.xml:2
 msgid "Infinity"
@@ -24539,67 +24550,68 @@ msgstr ""
 
 #: dat/ssys/iris.xml:2
 msgid "Iris"
-msgstr ""
+msgstr "Iris"
 
 #: dat/ssys/ivella.xml:2
 msgid "Ivella"
-msgstr ""
+msgstr "Ivella"
 
 #: dat/ssys/jackson.xml:2
 msgid "Jackson"
-msgstr ""
+msgstr "Jackson"
 
 #: dat/ssys/jade.xml:2
+#, fuzzy
 msgid "Jade"
-msgstr ""
+msgstr "Giok"
 
 #: dat/ssys/jervis.xml:2
 msgid "Jervis"
-msgstr ""
+msgstr "Jervis"
 
 #: dat/ssys/jommel.xml:2
 msgid "Jommel"
-msgstr ""
+msgstr "Jommel"
 
 #: dat/ssys/kansas.xml:2
 msgid "Kansas"
-msgstr ""
+msgstr "Kansas"
 
 #: dat/ssys/karman.xml:2
 msgid "Karman"
-msgstr ""
+msgstr "Karman"
 
 #: dat/ssys/katami.xml:2
 msgid "Katami"
-msgstr ""
+msgstr "Katami"
 
 #: dat/ssys/kelvos.xml:2
 msgid "Kelvos"
-msgstr ""
+msgstr "Kelvos"
 
 #: dat/ssys/kenvis.xml:2
 msgid "Kenvis"
-msgstr ""
+msgstr "Kenvis"
 
 #: dat/ssys/khaas.xml:2
 msgid "Khaas"
-msgstr ""
+msgstr "Khaas"
 
 #: dat/ssys/kiwi.xml:2
 msgid "Kiwi"
-msgstr ""
+msgstr "Kiwi"
 
 #: dat/ssys/klantar.xml:2
 msgid "Klantar"
-msgstr ""
+msgstr "Klantar"
 
 #: dat/ssys/klintus.xml:2
 msgid "Klintus"
-msgstr ""
+msgstr "Klintus"
 
 #: dat/ssys/klunzar.xml:2
 msgid "Klunzar"
-msgstr ""
+msgstr "Klunzar"
 
 #: dat/ssys/knave.xml:2 dat/scripts/pilotname/pirate.lua:359
 msgid "Knave"
@@ -24607,39 +24619,39 @@ msgstr ""
 
 #: dat/ssys/kobopos.xml:2
 msgid "Kobopos"
-msgstr ""
+msgstr "Kobopos"
 
 #: dat/ssys/kohler.xml:2
 msgid "Kohler"
-msgstr ""
+msgstr "Kohler"
 
 #: dat/ssys/koit.xml:2
 msgid "Koit"
-msgstr ""
+msgstr "Koit"
 
 #: dat/ssys/koralis.xml:2
 msgid "Koralis"
-msgstr ""
+msgstr "Koralis"
 
 #: dat/ssys/korifa.xml:2
 msgid "Korifa"
-msgstr ""
+msgstr "Korifa"
 
 #: dat/ssys/korma.xml:2
 msgid "Korma"
-msgstr ""
+msgstr "Korma"
 
 #: dat/ssys/kraft.xml:2
 msgid "Kraft"
-msgstr ""
+msgstr "Kraft"
 
 #: dat/ssys/kretogg.xml:2 dat/events/discovery.lua:119
 msgid "Kretogg"
-msgstr ""
+msgstr "Kretogg"
 
 #: dat/ssys/kruger.xml:2
 msgid "Kruger"
-msgstr ""
+msgstr "Kruger"
 
 #: dat/ssys/krugers_pocket.xml:2
 msgid "Kruger's Pocket"
@@ -24647,35 +24659,35 @@ msgstr ""
 
 #: dat/ssys/ksher.xml:2
 msgid "Ksher"
-msgstr ""
+msgstr "Ksher"
 
 #: dat/ssys/kyo.xml:2
 msgid "Kyo"
-msgstr ""
+msgstr "Kyo"
 
 #: dat/ssys/lalande.xml:2
 msgid "Lalande"
-msgstr ""
+msgstr "Lalande"
 
 #: dat/ssys/lapis.xml:2
 msgid "Lapis"
-msgstr ""
+msgstr "Lapis"
 
 #: dat/ssys/lazuli.xml:2
 msgid "Lazuli"
-msgstr ""
+msgstr "Lazuli"
 
 #: dat/ssys/leporis.xml:2
 msgid "Leporis"
-msgstr ""
+msgstr "Leporis"
 
 #: dat/ssys/limbo.xml:2
 msgid "Limbo"
-msgstr ""
+msgstr "Limbo"
 
 #: dat/ssys/logania.xml:2
 msgid "Logania"
-msgstr ""
+msgstr "Logania"
 
 #: dat/ssys/longbow.xml:2
 msgid "Longbow"
@@ -24683,59 +24695,60 @@ msgstr ""
 
 #: dat/ssys/lynx.xml:2
 msgid "Lynx"
-msgstr ""
+msgstr "Lynx"
 
 #: dat/ssys/machea.xml:2
 msgid "Machea"
-msgstr ""
+msgstr "Machea"
 
 #: dat/ssys/majesteka.xml:2
 msgid "Majesteka"
-msgstr ""
+msgstr "Majesteka"
 
 #: dat/ssys/marat.xml:2
 msgid "Marat"
-msgstr ""
+msgstr "Marat"
 
 #: dat/ssys/margarita.xml:2
 msgid "Margarita"
-msgstr ""
+msgstr "Margarita"
 
 #: dat/ssys/maron.xml:2
 msgid "Maron"
-msgstr ""
+msgstr "Maron"
 
 #: dat/ssys/mason.xml:2
 msgid "Mason"
-msgstr ""
+msgstr "Mason"
 
 #: dat/ssys/massia.xml:2
 msgid "Massia"
-msgstr ""
+msgstr "Massia"
 
 #: dat/ssys/maus.xml:2
 msgid "Maus"
-msgstr ""
+msgstr "Maus"
 
 #: dat/ssys/merisi.xml:2
 msgid "Merisi"
-msgstr ""
+msgstr "Merisi"
 
 #: dat/ssys/metsys.xml:2
 msgid "Metsys"
-msgstr ""
+msgstr "Metsys"
 
 #: dat/ssys/mida.xml:2
 msgid "Mida"
-msgstr ""
+msgstr "Mida"
 
 #: dat/ssys/midoros.xml:2
 msgid "Midoros"
-msgstr ""
+msgstr "Midoros"
 
 #: dat/ssys/millstone.xml:2
+#, fuzzy
 msgid "Millstone"
-msgstr ""
+msgstr "Millstone"
 
 #: dat/ssys/mirror.xml:2
 msgid "Mirror"
@@ -24743,7 +24756,7 @@ msgstr ""
 
 #: dat/ssys/mizar.xml:2
 msgid "Mizar"
-msgstr ""
+msgstr "Mizar"
 
 #: dat/ssys/modus_manis.xml:2
 msgid "Modus Manis"
@@ -24751,7 +24764,7 @@ msgstr ""
 
 #: dat/ssys/monogram.xml:2
 msgid "Monogram"
-msgstr ""
+msgstr "Monogram"
 
 #: dat/ssys/moor.xml:2
 msgid "Moor"
@@ -24759,439 +24772,439 @@ msgstr ""
 
 #: dat/ssys/moordra.xml:2
 msgid "Moordra"
-msgstr ""
+msgstr "Moordra"
 
 #: dat/ssys/muirat.xml:2
 msgid "Muirat"
-msgstr ""
+msgstr "Muirat"
 
 #: dat/ssys/mural.xml:2
 msgid "Mural"
-msgstr ""
+msgstr "Mural"
 
 #: dat/ssys/muran.xml:2
 msgid "Muran"
-msgstr ""
+msgstr "Muran"
 
 #: dat/ssys/myad.xml:2
 msgid "Myad"
-msgstr ""
+msgstr "Myad"
 
 #: dat/ssys/narousse.xml:2
 msgid "Narousse"
-msgstr ""
+msgstr "Narousse"
 
 #: dat/ssys/nartur.xml:2
 msgid "Nartur"
-msgstr ""
+msgstr "Nartur"
 
 #: dat/ssys/nasona.xml:2
 msgid "Nasona"
-msgstr ""
+msgstr "Nasona"
 
 #: dat/ssys/nava.xml:2
 msgid "Nava"
-msgstr ""
+msgstr "Nava"
 
 #: dat/ssys/neexi.xml:2
 msgid "Neexi"
-msgstr ""
+msgstr "Neexi"
 
 #: dat/ssys/neon.xml:2
 msgid "Neon"
-msgstr ""
+msgstr "Neon"
 
 #: dat/ssys/newmarch.xml:2
 msgid "Newmarch"
-msgstr ""
+msgstr "Newmarch"
 
 #: dat/ssys/ngc1001.xml:2
 msgid "NGC-1001"
-msgstr ""
+msgstr "NGC-1001"
 
 #: dat/ssys/ngc10081.xml:2
 msgid "NGC-10081"
-msgstr ""
+msgstr "NGC-10081"
 
 #: dat/ssys/ngc10180.xml:2
 msgid "NGC-10180"
-msgstr ""
+msgstr "NGC-10180"
 
 #: dat/ssys/ngc10284.xml:2
 msgid "NGC-10284"
-msgstr ""
+msgstr "NGC-10284"
 
 #: dat/ssys/ngc10452.xml:2
 msgid "NGC-10452"
-msgstr ""
+msgstr "NGC-10452"
 
 #: dat/ssys/ngc10653.xml:2
 msgid "NGC-10653"
-msgstr ""
+msgstr "NGC-10653"
 
 #: dat/ssys/ngc10789.xml:2
 msgid "NGC-10789"
-msgstr ""
+msgstr "NGC-10789"
 
 #: dat/ssys/ngc10907.xml:2
 msgid "NGC-10907"
-msgstr ""
+msgstr "NGC-10907"
 
 #: dat/ssys/ngc1098.xml:2
 msgid "NGC-1098"
-msgstr ""
+msgstr "NGC-1098"
 
 #: dat/ssys/ngc11050.xml:2
 msgid "NGC-11050"
-msgstr ""
+msgstr "NGC-11050"
 
 #: dat/ssys/ngc11231.xml:2
 msgid "NGC-11231"
-msgstr ""
+msgstr "NGC-11231"
 
 #: dat/ssys/ngc11444.xml:2
 msgid "NGC-11444"
-msgstr ""
+msgstr "NGC-11444"
 
 #: dat/ssys/ngc11718.xml:2
 msgid "NGC-11718"
-msgstr ""
+msgstr "NGC-11718"
 
 #: dat/ssys/ngc11935.xml:2
 msgid "NGC-11935"
-msgstr ""
+msgstr "NGC-11935"
 
 #: dat/ssys/ngc12056.xml:2
 msgid "NGC-12056"
-msgstr ""
+msgstr "NGC-12056"
 
 #: dat/ssys/ngc12108.xml:2
 msgid "NGC-12108"
-msgstr ""
+msgstr "NGC-12108"
 
 #: dat/ssys/ngc12261.xml:2
 msgid "NGC-12261"
-msgstr ""
+msgstr "NGC-12261"
 
 #: dat/ssys/ngc12654.xml:2
 msgid "NGC-12654"
-msgstr ""
+msgstr "NGC-12654"
 
 #: dat/ssys/ngc127.xml:2
 msgid "NGC-127"
-msgstr ""
+msgstr "NGC-127"
 
 #: dat/ssys/ngc12882.xml:2
 msgid "NGC-12882"
-msgstr ""
+msgstr "NGC-12882"
 
 #: dat/ssys/ngc1292.xml:2
 msgid "NGC-1292"
-msgstr ""
+msgstr "NGC-1292"
 
 #: dat/ssys/ngc1317.xml:2
 msgid "NGC-1317"
-msgstr ""
+msgstr "NGC-1317"
 
 #: dat/ssys/ngc13322.xml:2
 msgid "NGC-13322"
-msgstr ""
+msgstr "NGC-13322"
 
 #: dat/ssys/ngc13522.xml:2
 msgid "NGC-13522"
-msgstr ""
+msgstr "NGC-13522"
 
 #: dat/ssys/ngc13564.xml:2
 msgid "NGC-13564"
-msgstr ""
+msgstr "NGC-13564"
 
 #: dat/ssys/ngc13674.xml:2
 msgid "NGC-13674"
-msgstr ""
+msgstr "NGC-13674"
 
 #: dat/ssys/ngc13747.xml:2
 msgid "NGC-13747"
-msgstr ""
+msgstr "NGC-13747"
 
 #: dat/ssys/ngc13798.xml:2
 msgid "NGC-13798"
-msgstr ""
+msgstr "NGC-13798"
 
 #: dat/ssys/ngc14337.xml:2
 msgid "NGC-14337"
-msgstr ""
+msgstr "NGC-14337"
 
 #: dat/ssys/ngc14430.xml:2
 msgid "NGC-14430"
-msgstr ""
+msgstr "NGC-14430"
 
 #: dat/ssys/ngc14479.xml:2
 msgid "NGC-14479"
-msgstr ""
+msgstr "NGC-14479"
 
 #: dat/ssys/ngc14549.xml:2
 msgid "NGC-14549"
-msgstr ""
+msgstr "NGC-14549"
 
 #: dat/ssys/ngc14676.xml:2
 msgid "NGC-14676"
-msgstr ""
+msgstr "NGC-14676"
 
 #: dat/ssys/ngc1562.xml:2
 msgid "NGC-1562"
-msgstr ""
+msgstr "NGC-1562"
 
 #: dat/ssys/ngc15670.xml:2
 msgid "NGC-15670"
-msgstr ""
+msgstr "NGC-15670"
 
 #: dat/ssys/ngc18269.xml:2
 msgid "NGC-18269"
-msgstr ""
+msgstr "NGC-18269"
 
 #: dat/ssys/ngc18451.xml:2
 msgid "NGC-18451"
-msgstr ""
+msgstr "NGC-18451"
 
 #: dat/ssys/ngc1872.xml:2
 msgid "NGC-1872"
-msgstr ""
+msgstr "NGC-1872"
 
 #: dat/ssys/ngc1931.xml:2
 msgid "NGC-1931"
-msgstr ""
+msgstr "NGC-1931"
 
 #: dat/ssys/ngc20489.xml:2
 msgid "NGC-20489"
-msgstr ""
+msgstr "NGC-20489"
 
 #: dat/ssys/ngc2175.xml:2
 msgid "NGC-2175"
-msgstr ""
+msgstr "NGC-2175"
 
 #: dat/ssys/ngc2232.xml:2
 msgid "NGC-2232"
-msgstr ""
+msgstr "NGC-2232"
 
 #: dat/ssys/ngc22375.xml:2
 msgid "NGC-22375"
-msgstr ""
+msgstr "NGC-22375"
 
 #: dat/ssys/ngc23.xml:2
 msgid "NGC-23"
-msgstr ""
+msgstr "NGC-23"
 
 #: dat/ssys/ngc2601.xml:2
 msgid "NGC-2601"
-msgstr ""
+msgstr "NGC-2601"
 
 #: dat/ssys/ngc2836.xml:2
 msgid "NGC-2836"
-msgstr ""
+msgstr "NGC-2836"
 
 #: dat/ssys/ngc2948.xml:2
 msgid "NGC-2948"
-msgstr ""
+msgstr "NGC-2948"
 
 #: dat/ssys/ngc2954.xml:2
 msgid "NGC-2954"
-msgstr ""
+msgstr "NGC-2954"
 
 #: dat/ssys/ngc3219.xml:2
 msgid "NGC-3219"
-msgstr ""
+msgstr "NGC-3219"
 
 #: dat/ssys/ngc3371.xml:2
 msgid "NGC-3371"
-msgstr ""
+msgstr "NGC-3371"
 
 #: dat/ssys/ngc344.xml:2
 msgid "NGC-344"
-msgstr ""
+msgstr "NGC-344"
 
 #: dat/ssys/ngc3858.xml:2
 msgid "NGC-3858"
-msgstr ""
+msgstr "NGC-3858"
 
 #: dat/ssys/ngc4087.xml:2
 msgid "NGC-4087"
-msgstr ""
+msgstr "NGC-4087"
 
 #: dat/ssys/ngc4131.xml:2
 msgid "NGC-4131"
-msgstr ""
+msgstr "NGC-4131"
 
 #: dat/ssys/ngc4363.xml:2
 msgid "NGC-4363"
-msgstr ""
+msgstr "NGC-4363"
 
 #: dat/ssys/ngc4746.xml:2
 msgid "NGC-4746"
-msgstr ""
+msgstr "NGC-4746"
 
 #: dat/ssys/ngc4766.xml:2
 msgid "NGC-4766"
-msgstr ""
+msgstr "NGC-4766"
 
 #: dat/ssys/ngc4771.xml:2
 msgid "NGC-4771"
-msgstr ""
+msgstr "NGC-4771"
 
 #: dat/ssys/ngc5240.xml:2
 msgid "NGC-5240"
-msgstr ""
+msgstr "NGC-5240"
 
 #: dat/ssys/ngc5362.xml:2
 msgid "NGC-5362"
-msgstr ""
+msgstr "NGC-5362"
 
 #: dat/ssys/ngc5483.xml:2
 msgid "NGC-5483"
-msgstr ""
+msgstr "NGC-5483"
 
 #: dat/ssys/ngc5838.xml:2
 msgid "NGC-5838"
-msgstr ""
+msgstr "NGC-5838"
 
 #: dat/ssys/ngc6057.xml:2
 msgid "NGC-6057"
-msgstr ""
+msgstr "NGC-6057"
 
 #: dat/ssys/ngc6610.xml:2
 msgid "NGC-6610"
-msgstr ""
+msgstr "NGC-6610"
 
 #: dat/ssys/ngc6901.xml:2
 msgid "NGC-6901"
-msgstr ""
+msgstr "NGC-6901"
 
 #: dat/ssys/ngc7061.xml:2
 msgid "NGC-7061"
-msgstr ""
+msgstr "NGC-7061"
 
 #: dat/ssys/ngc7078.xml:2
 msgid "NGC-7078"
-msgstr ""
+msgstr "NGC-7078"
 
 #: dat/ssys/ngc728.xml:2
 msgid "NGC-728"
-msgstr ""
+msgstr "NGC-728"
 
 #: dat/ssys/ngc7319.xml:2
 msgid "NGC-7319"
-msgstr ""
+msgstr "NGC-7319"
 
 #: dat/ssys/ngc7402.xml:2
 msgid "NGC-7402"
-msgstr ""
+msgstr "NGC-7402"
 
 #: dat/ssys/ngc7533.xml:2
 msgid "NGC-7533"
-msgstr ""
+msgstr "NGC-7533"
 
 #: dat/ssys/ngc7784.xml:2
 msgid "NGC-7784"
-msgstr ""
+msgstr "NGC-7784"
 
 #: dat/ssys/ngc7786.xml:2
 msgid "NGC-7786"
-msgstr ""
+msgstr "NGC-7786"
 
 #: dat/ssys/ngc8040.xml:2
 msgid "NGC-8040"
-msgstr ""
+msgstr "NGC-8040"
 
 #: dat/ssys/ngc8338.xml:2
 msgid "NGC-8338"
-msgstr ""
+msgstr "NGC-8338"
 
 #: dat/ssys/ngc8468.xml:2
 msgid "NGC-8468"
-msgstr ""
+msgstr "NGC-8468"
 
 #: dat/ssys/ngc9017.xml:2
 msgid "NGC-9017"
-msgstr ""
+msgstr "NGC-9017"
 
 #: dat/ssys/ngc902.xml:2
 msgid "NGC-902"
-msgstr ""
+msgstr "NGC-902"
 
 #: dat/ssys/ngc9415.xml:2
 msgid "NGC-9415"
-msgstr ""
+msgstr "NGC-9415"
 
 #: dat/ssys/ngc9607.xml:2
 msgid "NGC-9607"
-msgstr ""
+msgstr "NGC-9607"
 
 #: dat/ssys/ngc9654.xml:2
 msgid "NGC-9654"
-msgstr ""
+msgstr "NGC-9654"
 
 #: dat/ssys/ngc9897.xml:2
 msgid "NGC-9897"
-msgstr ""
+msgstr "NGC-9897"
 
 #: dat/ssys/ngcg5882.xml:2
 msgid "NGCG-5882"
-msgstr ""
+msgstr "NGCG-5882"
 
 #: dat/ssys/niger.xml:2
 msgid "Niger"
-msgstr ""
+msgstr "Niger"
 
 #: dat/ssys/nirtos.xml:2
 msgid "Nirtos"
-msgstr ""
+msgstr "Nirtos"
 
 #: dat/ssys/nixon.xml:2
 msgid "Nixon"
-msgstr ""
+msgstr "Nixon"
 
 #: dat/ssys/norn.xml:2
 msgid "Norn"
-msgstr ""
+msgstr "Norn"
 
 #: dat/ssys/norpin.xml:2
 msgid "Norpin"
-msgstr ""
+msgstr "Norpin"
 
 #: dat/ssys/nougat.xml:2
 msgid "Nougat"
-msgstr ""
+msgstr "Nougat"
 
 #: dat/ssys/nunavut.xml:2
 msgid "Nunavut"
-msgstr ""
+msgstr "Nunavut"
 
 #: dat/ssys/octantis.xml:2
 msgid "Octantis"
-msgstr ""
+msgstr "Octantis"
 
 #: dat/ssys/octavian.xml:2
 msgid "Octavian"
-msgstr ""
+msgstr "Octavian"
 
 #: dat/ssys/ogat.xml:2
 msgid "Ogat"
-msgstr ""
+msgstr "Ogat"
 
 #: dat/ssys/olympus.xml:2
 msgid "Olympus"
-msgstr ""
+msgstr "Olympus"
 
 #: dat/ssys/opal.xml:2 dat/events/pers/pirate.lua:192
 msgid "Opal"
-msgstr ""
+msgstr "Opal"
 
 #: dat/ssys/ophiuchi.xml:2
 msgid "Ophiuchi"
-msgstr ""
+msgstr "Ophiuchi"
 
 #: dat/ssys/oriantis.xml:2
 msgid "Oriantis"
-msgstr ""
+msgstr "Oriantis"
 
 #: dat/ssys/orion.xml:2
 msgid "Orion"
@@ -25203,55 +25216,56 @@ msgstr ""
 
 #: dat/ssys/oxuram.xml:2
 msgid "Oxuram"
-msgstr ""
+msgstr "Oxuram"
 
 #: dat/ssys/palejos.xml:2
 msgid "Palejos"
-msgstr ""
+msgstr "Palejos"
 
 #: dat/ssys/palin.xml:2
 msgid "Palin"
-msgstr ""
+msgstr "Palin"
 
 #: dat/ssys/palovi.xml:2
 msgid "Palovi"
-msgstr ""
+msgstr "Palovi"
 
 #: dat/ssys/paradox.xml:2
+#, fuzzy
 msgid "Paradox"
-msgstr ""
+msgstr "Paradoks"
 
 #: dat/ssys/pas.xml:2
 msgid "Pas"
-msgstr ""
+msgstr "Pas"
 
 #: dat/ssys/pastor.xml:2
 msgid "Pastor"
-msgstr ""
+msgstr "Pastor"
 
 #: dat/ssys/pellmell.xml:2
 msgid "Pellmell"
-msgstr ""
+msgstr "Pellmell"
 
 #: dat/ssys/penn.xml:2
 msgid "Penn"
-msgstr ""
+msgstr "Penn"
 
 #: dat/ssys/peogas.xml:2
 msgid "Peogas"
-msgstr ""
+msgstr "Peogas"
 
 #: dat/ssys/percival.xml:2
 msgid "Percival"
-msgstr ""
+msgstr "Percival"
 
 #: dat/ssys/perhelion.xml:2
 msgid "Perhelion"
-msgstr ""
+msgstr "Perhelion"
 
 #: dat/ssys/peter.xml:2
 msgid "Peter"
-msgstr ""
+msgstr "Peter"
 
 #: dat/ssys/pike.xml:2
 msgid "Pike"
@@ -25259,7 +25273,7 @@ msgstr ""
 
 #: dat/ssys/pilatis.xml:2
 msgid "Pilatis"
-msgstr ""
+msgstr "Pilatis"
 
 #: dat/ssys/pisces_prime.xml:2
 msgid "Pisces Prime"
@@ -25271,39 +25285,40 @@ msgstr ""
 
 #: dat/ssys/polack.xml:2
 msgid "Polack"
-msgstr ""
+msgstr "Polack"
 
 #: dat/ssys/polaris.xml:2
 msgid "Polaris"
-msgstr ""
+msgstr "Polaris"
 
 #: dat/ssys/poller.xml:2
 msgid "Poller"
-msgstr ""
+msgstr "Poller"
 
 #: dat/ssys/poltergeist.xml:2
 msgid "Poltergeist"
-msgstr ""
+msgstr "Poltergeist"
 
 #: dat/ssys/pontus.xml:2
 msgid "Pontus"
-msgstr ""
+msgstr "Pontus"
 
 #: dat/ssys/porro.xml:2
 msgid "Porro"
-msgstr ""
+msgstr "Porro"
 
 #: dat/ssys/possum.xml:2
+#, fuzzy
 msgid "Possum"
-msgstr ""
+msgstr "Posum"
 
 #: dat/ssys/procyon.xml:2
 msgid "Procyon"
-msgstr ""
+msgstr "Procyon"
 
 #: dat/ssys/protera.xml:2
 msgid "Protera"
-msgstr ""
+msgstr "Protera"
 
 #: dat/ssys/provectus_nova.xml:2
 msgid "Provectus Nova"
@@ -25315,71 +25330,73 @@ msgstr ""
 
 #: dat/ssys/pso.xml:2
 msgid "PSO"
-msgstr ""
+msgstr "PSO"
 
 #: dat/ssys/pudas.xml:2
 msgid "Pudas"
-msgstr ""
+msgstr "Pudas"
 
 #: dat/ssys/pultatis.xml:2
 msgid "Pultatis"
-msgstr ""
+msgstr "Pultatis"
 
 #: dat/ssys/qellan.xml:2
 msgid "Qellan"
-msgstr ""
+msgstr "Qellan"
 
 #: dat/ssys/qex.xml:2
 msgid "Qex"
-msgstr ""
+msgstr "Qex"
 
 #: dat/ssys/qorel.xml:2
 msgid "Qorel"
-msgstr ""
+msgstr "Qorel"
 
 #: dat/ssys/quai.xml:2
 msgid "Quai"
-msgstr ""
+msgstr "Quai"
 
 #: dat/ssys/qulam.xml:2
 msgid "Qulam"
-msgstr ""
+msgstr "Qulam"
 
 #: dat/ssys/radix.xml:2
+#, fuzzy
 msgid "Radix"
-msgstr ""
+msgstr "Radix"
 
 #: dat/ssys/raelid.xml:2
 msgid "Raelid"
-msgstr ""
+msgstr "Raelid"
 
 #: dat/ssys/ram.xml:2
 msgid "Ram"
-msgstr ""
+msgstr "Ram"
 
 #: dat/ssys/rauthia.xml:2
 msgid "Rauthia"
-msgstr ""
+msgstr "Rauthia"
 
 #: dat/ssys/regas.xml:2
 msgid "Regas"
-msgstr ""
+msgstr "Regas"
 
 #: dat/ssys/regulus.xml:2
 msgid "Regulus"
-msgstr ""
+msgstr "Regulus"
 
 #: dat/ssys/rei.xml:2
 msgid "Rei"
-msgstr ""
+msgstr "Rei"
 
 #: dat/ssys/reptile.xml:2
+#, fuzzy
 msgid "Reptile"
-msgstr ""
+msgstr "Reptil"
 
 #: dat/ssys/rhu.xml:2
 msgid "Rhu"
-msgstr ""
+msgstr "Rhu"
 
 #: dat/ssys/rockbed.xml:2
 msgid "Rockbed"
@@ -25391,19 +25408,20 @@ msgstr ""
 
 #: dat/ssys/rotide.xml:2
 msgid "Rotide"
-msgstr ""
+msgstr "Rotide"
 
 #: dat/ssys/ruadan.xml:2
 msgid "Ruadan"
-msgstr ""
+msgstr "Ruadan"
 
 #: dat/ssys/ruttwi.xml:2
 msgid "Ruttwi"
-msgstr ""
+msgstr "Ruttwi"
 
 #: dat/ssys/sagittarius.xml:2
+#, fuzzy
 msgid "Sagittarius"
-msgstr ""
+msgstr "Sagitarius"
 
 #: dat/ssys/sagittarius_prime.xml:2
 msgid "Sagittarius Prime"
@@ -25411,19 +25429,20 @@ msgstr ""
 
 #: dat/ssys/salvador.xml:2
 msgid "Salvador"
-msgstr ""
+msgstr "Salvador"
 
 #: dat/ssys/santoros.xml:2
 msgid "Santoros"
-msgstr ""
+msgstr "Santoros"
 
 #: dat/ssys/sarcophagus.xml:2
+#, fuzzy
 msgid "Sarcophagus"
-msgstr ""
+msgstr "Sarkofagus"
 
 #: dat/ssys/sarrii.xml:2
 msgid "Sarrii"
-msgstr ""
+msgstr "Sarrii"
 
 #: dat/ssys/scarlet.xml:2
 msgid "Scarlet"
@@ -25439,27 +25458,27 @@ msgstr ""
 
 #: dat/ssys/seelie.xml:2
 msgid "Seelie"
-msgstr ""
+msgstr "Seelie"
 
 #: dat/ssys/seiben.xml:2
 msgid "Seiben"
-msgstr ""
+msgstr "Seiben"
 
 #: dat/ssys/seifer.xml:2
 msgid "Seifer"
-msgstr ""
+msgstr "Seifer"
 
 #: dat/ssys/senara.xml:2
 msgid "Senara"
-msgstr ""
+msgstr "Senara"
 
 #: dat/ssys/seport.xml:2
 msgid "Seport"
-msgstr ""
+msgstr "Seport"
 
 #: dat/ssys/seran.xml:2
 msgid "Seran"
-msgstr ""
+msgstr "Seran"
 
 #: dat/ssys/sergio_vix.xml:2
 msgid "Sergio Vix"
@@ -25467,43 +25486,43 @@ msgstr ""
 
 #: dat/ssys/severus.xml:2
 msgid "Severus"
-msgstr ""
+msgstr "Severus"
 
 #: dat/ssys/shakar.xml:2
 msgid "Shakar"
-msgstr ""
+msgstr "Shakar"
 
 #: dat/ssys/sheffield.xml:2
 msgid "Sheffield"
-msgstr ""
+msgstr "Sheffield"
 
 #: dat/ssys/shickhaw.xml:2
 msgid "Shickhaw"
-msgstr ""
+msgstr "Shickhaw"
 
 #: dat/ssys/shikima.xml:2
 msgid "Shikima"
-msgstr ""
+msgstr "Shikima"
 
 #: dat/ssys/shinnok.xml:2
 msgid "Shinnok"
-msgstr ""
+msgstr "Shinnok"
 
 #: dat/ssys/sigur.xml:2
 msgid "Sigur"
-msgstr ""
+msgstr "Sigur"
 
 #: dat/ssys/sikh.xml:2
 msgid "Sikh"
-msgstr ""
+msgstr "Sikh"
 
 #: dat/ssys/sirou.xml:2
 msgid "Sirou"
-msgstr ""
+msgstr "Sirou"
 
 #: dat/ssys/slaccid.xml:2
 msgid "Slaccid"
-msgstr ""
+msgstr "Slaccid"
 
 #: dat/ssys/sleuth.xml:2
 msgid "Sleuth"
@@ -25595,23 +25614,23 @@ msgstr ""
 #. --
 #: dat/ssys/sol.xml:2 dat/events/discovery.lua:25
 msgid "Sol"
-msgstr ""
+msgstr "Sol"
 
 #: dat/ssys/solene.xml:2
 msgid "Solene"
-msgstr ""
+msgstr "Solene"
 
 #: dat/ssys/sollav.xml:2
 msgid "Sollav"
-msgstr ""
+msgstr "Sollav"
 
 #: dat/ssys/somard.xml:2
 msgid "Somard"
-msgstr ""
+msgstr "Somard"
 
 #: dat/ssys/sonas.xml:2
 msgid "Sonas"
-msgstr ""
+msgstr "Sonas"
 
 #: dat/ssys/sorrow.xml:2
 msgid "Sorrow"
@@ -25631,15 +25650,15 @@ msgstr ""
 
 #: dat/ssys/stelman.xml:2
 msgid "Stelman"
-msgstr ""
+msgstr "Stelman"
 
 #: dat/ssys/sten.xml:2
 msgid "Sten"
-msgstr ""
+msgstr "Sten"
 
 #: dat/ssys/stint.xml:2
 msgid "Stint"
-msgstr ""
+msgstr "Stint"
 
 #: dat/ssys/stone_table.xml:2
 msgid "Stone Table"
@@ -25651,23 +25670,23 @@ msgstr ""
 
 #: dat/ssys/struve.xml:2
 msgid "Struve"
-msgstr ""
+msgstr "Struve"
 
 #: dat/ssys/suk.xml:2
 msgid "Suk"
-msgstr ""
+msgstr "Suk"
 
 #: dat/ssys/sultan.xml:2
 msgid "Sultan"
-msgstr ""
+msgstr "Sultan"
 
 #: dat/ssys/suna.xml:2
 msgid "Suna"
-msgstr ""
+msgstr "Suna"
 
 #: dat/ssys/surano.xml:2
 msgid "Surano"
-msgstr ""
+msgstr "Surano"
 
 #: dat/ssys/sylph.xml:2
 msgid "Sylph"
@@ -25675,17 +25694,17 @@ msgstr ""
 
 #: dat/ssys/symm.xml:2
 msgid "Symm"
-msgstr ""
+msgstr "Symm"
 
 #: dat/ssys/syndania.xml:2
 msgid "Syndania"
-msgstr ""
+msgstr "Syndania"
 
 #. Odin's raven
 #: dat/ssys/taiomi.xml:2 dat/events/discovery.lua:77
 #: dat/scripts/common/taiomi.lua:39
 msgid "Taiomi"
-msgstr ""
+msgstr "Taiomi"
 
 #: dat/ssys/taiomi.xml:5
 msgid "#pShip Graveyard#0"
@@ -25693,23 +25712,23 @@ msgstr ""
 
 #: dat/ssys/tandar.xml:2
 msgid "Tandar"
-msgstr ""
+msgstr "Tandar"
 
 #: dat/ssys/tarmak.xml:2
 msgid "Tarmak"
-msgstr ""
+msgstr "Tarmak"
 
 #: dat/ssys/tarsus.xml:2
 msgid "Tarsus"
-msgstr ""
+msgstr "Tarsus"
 
 #: dat/ssys/tartan.xml:2
 msgid "Tartan"
-msgstr ""
+msgstr "Tartan"
 
 #: dat/ssys/tasopa.xml:2
 msgid "Tasopa"
-msgstr ""
+msgstr "Tasopa"
 
 #: dat/ssys/tau_ceti.xml:2
 msgid "Tau Ceti"
@@ -25717,7 +25736,7 @@ msgstr ""
 
 #: dat/ssys/taxumi.xml:2
 msgid "Taxumi"
-msgstr ""
+msgstr "Taxumi"
 
 #: dat/ssys/teegarden.xml:2
 msgid "Teegarden"
@@ -25725,23 +25744,23 @@ msgstr ""
 
 #: dat/ssys/telika.xml:2
 msgid "Telika"
-msgstr ""
+msgstr "Telika"
 
 #: dat/ssys/teller.xml:2
 msgid "Teller"
-msgstr ""
+msgstr "Teller"
 
 #: dat/ssys/tempus.xml:2
 msgid "Tempus"
-msgstr ""
+msgstr "Tempus"
 
 #: dat/ssys/tepdania.xml:2
 msgid "Tepdania"
-msgstr ""
+msgstr "Tepdania"
 
 #: dat/ssys/tepvin.xml:2
 msgid "Tepvin"
-msgstr ""
+msgstr "Tepvin"
 
 #. Ship to go back to
 #. Set up position
@@ -25785,7 +25804,7 @@ msgstr ""
 
 #: dat/ssys/theras.xml:2
 msgid "Theras"
-msgstr ""
+msgstr "Theras"
 
 #: dat/ssys/thirty_stars.xml:2
 msgid "Thirty Stars"
@@ -25793,7 +25812,7 @@ msgstr ""
 
 #: dat/ssys/thorndyke.xml:2
 msgid "Thorndyke"
-msgstr ""
+msgstr "Thorndyke"
 
 #: dat/ssys/tide.xml:2
 msgid "Tide"
@@ -25801,31 +25820,31 @@ msgstr ""
 
 #: dat/ssys/titus.xml:2
 msgid "Titus"
-msgstr ""
+msgstr "Titus"
 
 #: dat/ssys/toaxis.xml:2
 msgid "Toaxis"
-msgstr ""
+msgstr "Toaxis"
 
 #: dat/ssys/tobanna.xml:2
 msgid "Tobanna"
-msgstr ""
+msgstr "Tobanna"
 
 #: dat/ssys/tomas.xml:2
 msgid "Tomas"
-msgstr ""
+msgstr "Tomas"
 
 #: dat/ssys/torg.xml:2
 msgid "Torg"
-msgstr ""
+msgstr "Torg"
 
 #: dat/ssys/tormulex.xml:2
 msgid "Tormulex"
-msgstr ""
+msgstr "Tormulex"
 
 #: dat/ssys/toros.xml:2
 msgid "Toros"
-msgstr ""
+msgstr "Toros"
 
 #: dat/ssys/toxin.xml:2
 msgid "Toxin"
@@ -25833,63 +25852,65 @@ msgstr ""
 
 #: dat/ssys/trask.xml:2
 msgid "Trask"
-msgstr ""
+msgstr "Trask"
 
 #: dat/ssys/triap.xml:2
 msgid "Triap"
-msgstr ""
+msgstr "Triap"
 
 #: dat/ssys/trohem.xml:2
 msgid "Trohem"
-msgstr ""
+msgstr "Trohem"
 
 #: dat/ssys/tuoladis.xml:2
 msgid "Tuoladis"
-msgstr ""
+msgstr "Tuoladis"
 
 #: dat/ssys/uhriabi.xml:2
 msgid "Uhriabi"
-msgstr ""
+msgstr "Uhriabi"
 
 #: dat/ssys/ulysses.xml:2
+#, fuzzy
 msgid "Ulysses"
-msgstr ""
+msgstr "Ulisses"
 
 #: dat/ssys/undergate.xml:2
 msgid "Undergate"
 msgstr ""
 
 #: dat/ssys/unicorn.xml:2
+#, fuzzy
 msgid "Unicorn"
-msgstr ""
+msgstr "Unikorn"
 
 #: dat/ssys/urbanus.xml:2
 msgid "Urbanus"
-msgstr ""
+msgstr "Urbanus"
 
 #: dat/ssys/urdads.xml:2
 msgid "Urdads"
-msgstr ""
+msgstr "Urdads"
 
 #: dat/ssys/uridhrion.xml:2
 msgid "Uridhrion"
-msgstr ""
+msgstr "Uridhrion"
 
 #: dat/ssys/urillian.xml:2
 msgid "Urillian"
-msgstr ""
+msgstr "Urillian"
 
 #: dat/ssys/ux.xml:2
 msgid "Ux"
-msgstr ""
+msgstr "Ux"
 
 #: dat/ssys/vadornla.xml:2
 msgid "Vadornla"
-msgstr ""
+msgstr "Vadornla"
 
 #: dat/ssys/valerie.xml:2
 msgid "Valerie"
-msgstr ""
+msgstr "Valerie"
 
 #: dat/ssys/valur_gem.xml:2
 msgid "Valur Gem"
@@ -25901,51 +25922,51 @@ msgstr ""
 
 #: dat/ssys/vandal.xml:2
 msgid "Vandal"
-msgstr ""
+msgstr "Vandal"
 
 #: dat/ssys/vanir.xml:2
 msgid "Vanir"
-msgstr ""
+msgstr "Vanir"
 
 #: dat/ssys/vauban.xml:2
 msgid "Vauban"
-msgstr ""
+msgstr "Vauban"
 
 #: dat/ssys/vean.xml:2
 msgid "Vean"
-msgstr ""
+msgstr "Vean"
 
 #: dat/ssys/vedalus.xml:2
 msgid "Vedalus"
-msgstr ""
+msgstr "Vedalus"
 
 #: dat/ssys/vega.xml:2
 msgid "Vega"
-msgstr ""
+msgstr "Vega"
 
 #: dat/ssys/verex.xml:2
 msgid "Verex"
-msgstr ""
+msgstr "Verex"
 
 #: dat/ssys/veses.xml:2
 msgid "Veses"
-msgstr ""
+msgstr "Veses"
 
 #: dat/ssys/virgo.xml:2
 msgid "Virgo"
-msgstr ""
+msgstr "Virgo"
 
 #: dat/ssys/vlexon.xml:2
 msgid "Vlexon"
-msgstr ""
+msgstr "Vlexon"
 
 #: dat/ssys/volus.xml:2
 msgid "Volus"
-msgstr ""
+msgstr "Volus"
 
 #: dat/ssys/voproid.xml:2
 msgid "Voproid"
-msgstr ""
+msgstr "Voproid"
 
 #: dat/ssys/voproid.xml:6
 msgid ""
@@ -25954,7 +25975,7 @@ msgstr ""
 
 #: dat/ssys/vost.xml:2
 msgid "Vost"
-msgstr ""
+msgstr "Vost"
 
 #: dat/ssys/westhaven.xml:2
 msgid "Westhaven"
@@ -25966,7 +25987,7 @@ msgstr ""
 
 #: dat/ssys/wochii.xml:2
 msgid "Wochii"
-msgstr ""
+msgstr "Wochii"
 
 #: dat/ssys/wolf.xml:2 dat/scripts/pilotname/generic.lua:94
 #: dat/scripts/pilotname/pirate.lua:497
@@ -25975,11 +25996,11 @@ msgstr ""
 
 #: dat/ssys/woreck.xml:2
 msgid "Woreck"
-msgstr ""
+msgstr "Woreck"
 
 #: dat/ssys/xeric.xml:2
 msgid "Xeric"
-msgstr ""
+msgstr "Xeric"
 
 #: dat/ssys/yarn.xml:2
 msgid "Yarn"
@@ -25987,27 +26008,27 @@ msgstr ""
 
 #: dat/ssys/zacron.xml:2
 msgid "Zacron"
-msgstr ""
+msgstr "Zacron"
 
 #: dat/ssys/zemur.xml:2
 msgid "Zemur"
-msgstr ""
+msgstr "Zemur"
 
 #: dat/ssys/zerantix.xml:2
 msgid "Zerantix"
-msgstr ""
+msgstr "Zerantix"
 
 #: dat/ssys/zied.xml:2
 msgid "Zied"
-msgstr ""
+msgstr "Zied"
 
 #: dat/ssys/zintar.xml:2
 msgid "Zintar"
-msgstr ""
+msgstr "Zintar"
 
 #: dat/ssys/zylex.xml:2
 msgid "Zylex"
-msgstr ""
+msgstr "Zylex"
 
 #: dat/start.xml:3
 msgid "Sea of Darkness"
@@ -28075,11 +28096,11 @@ msgstr ""
 
 #: dat/ai/core/misc/pirate.lua:54
 msgid "Yohoho!"
-msgstr ""
+msgstr "Yohoho!"
 
 #: dat/ai/core/misc/pirate.lua:55
 msgid "Arr!"
-msgstr ""
+msgstr "Arr!"
 
 #: dat/ai/core/misc/pirate.lua:56
 msgid "What's a ship like you doing in a place like this?"
@@ -29272,11 +29293,11 @@ msgstr ""
 
 #: dat/ai/wild_ones.lua:7
 msgid "Rawwwr!"
-msgstr ""
+msgstr "Rawwwr!"
 
 #: dat/ai/wild_ones.lua:8
 msgid "Awoooooo!"
-msgstr ""
+msgstr "Awoooooo!"
 
 #: dat/ai/wild_ones.lua:9
 msgid "You stand no chance!"
