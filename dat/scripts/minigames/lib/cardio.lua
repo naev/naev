@@ -31,6 +31,7 @@ end
 function cardio.Card.draw( _self, x, y )
    lg.setLineWidth(5)
    lg.rectangle( "line", x, y, 75, 105)
+   lg.setLineWidth(1)
 end
 
 
@@ -112,6 +113,7 @@ function cardio.CardWestern.drawBack( _self, x, y )
    lg.setColour( 0, 0, 0 )
    lg.setLineWidth(5)
    lg.rectangle( "line", x, y, 75, 105)
+   lg.setLineWidth(1)
    lg.setColour( 0.5, 0.5, 1 )
    lg.rectangle( "fill", x+6, y+5, 63, 95 )
 end
@@ -122,6 +124,7 @@ function cardio.CardWestern:draw( x, y )
    lg.setColour( 0, 0, 0 )
    lg.setLineWidth(5)
    lg.rectangle( "line", x, y, 75, 105)
+   lg.setLineWidth(1)
    lg.setColour( 1, 1, 1 )
    lg.rectangle( "fill", x+6, y+5, 63, 95 )
 

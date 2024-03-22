@@ -36,6 +36,7 @@ function diceio.Die:draw( x, y )
    lg.setColour( 0, 0, 0 )
    lg.setLineWidth(5);
    lg.rectangle( "line", x, y, 50, 50)
+   lg.setLineWidth(1);
 
    if self.value==1 then
       lg.circle("fill",x+25,y+25, 10 )

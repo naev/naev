@@ -370,6 +370,7 @@ function luatk.Window:draw()
    lg.rectangle( "line", x-1, y-1, w+2, h+2, 30, 30)
    lg.setColour( luatk.colour.outline )
    lg.rectangle( "line", x, y, w, h, 30, 30)
+   lg.setLineWidth(1);
 
    -- Set scissors
    local scs = lg.getScissor()
@@ -1227,6 +1228,7 @@ function luatk.drawAltText( bx, by, alt, w )
    lg.setColour( {0.5, 0.5, 0.5, 0.9} )
    lg.setLineWidth(5);
    lg.rectangle( "line", x, y, w, h , h/5, h/5)
+   lg.setLineWidth(1);
 
    lg.setColour( luatk.colour.text )
    lg.printf( alt, font, x+10, y+10, w-20 )

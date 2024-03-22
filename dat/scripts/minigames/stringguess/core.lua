@@ -277,6 +277,7 @@ local function drawbox( x, y, w, h )
    setcol( colours.text )
    lg.setLineWidth(5)
    lg.rectangle( "line", x, y, w, h)
+   lg.setLineWidth(1)
 end
 
 local function drawresult( exact, fuzzy, x, y, h )
