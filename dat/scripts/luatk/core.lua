@@ -360,16 +360,17 @@ function luatk.newWindow( x, y, w, h )
 end
 function luatk.Window:draw()
    local x, y, w, h = self.x, self.y, self.w, self.h
+   local r = 30 -- Round corners size
 
    -- Draw background
    lg.setColour( luatk.colour.bg )
-   lg.rectangle( "fill", x, y, w, h, 30, 30)
+   lg.rectangle( "fill", x, y, w, h, r, r)
    lg.setColour( luatk.colour.dark )
    lg.setLineWidth(5);
-   lg.rectangle( "line", x+1, y+1, w-2, h-2, 30, 30)
-   lg.rectangle( "line", x-1, y-1, w+2, h+2, 30, 30)
+   lg.rectangle( "line", x+1, y+1, w-2, h-2, r, r)
+   lg.rectangle( "line", x-1, y-1, w+2, h+2, r, r)
    lg.setColour( luatk.colour.outline )
-   lg.rectangle( "line", x, y, w, h, 30, 30)
+   lg.rectangle( "line", x, y, w, h, r, r)
    lg.setLineWidth(1);
 
    -- Set scissors
