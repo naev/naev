@@ -3,9 +3,7 @@
  */
 #pragma once
 
-#include "ntime.h"
 #include "opengl.h"
-#include "physics.h"
 
 #define SPFX_LAYER_FRONT 0  /**< Front spfx layer. */
 #define SPFX_LAYER_MIDDLE 1 /**< Middle spfx layer. */
