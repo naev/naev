@@ -312,10 +312,10 @@ static void btn_render( Widget *btn, double bx, double by )
    gl_renderRoundPane( x, y, btn->w, btn->h, 10, 10, c );
 
    /* inner outline */
-   // toolkit_drawOutline( x, y, btn->w, btn->h, 0, outline, NULL );
+   // gl_renderRect( x, y, btn->w, btn->h, 1., outline);
 
    /* outer outline */
-   gl_renderRoundRect( x, y, btn->w, btn->h, 2.1, 10, 10, outline );
+   gl_renderRoundRect( x, y, btn->w, btn->h, 3, 10, 10, outline );
 
    /* Render inner stuff. */
    if ( btn->dat.btn.cst_render )

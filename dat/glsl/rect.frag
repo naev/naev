@@ -15,13 +15,12 @@ void main(void) {
                 uv * dimensions.xy / 2.,
                 dimensions.xy / 2.);
     colour_out = colour;
-    if (thick > 0.0)
-        d = abs(d) - thick / 2.0;
-    if (smoothy != 0.0)
+    if (thick > 0.0) {
+        d = abs(d);
         colour_out.a = smoothstep(
-                -(1.0 - smoothy) * thick / 2.0,
-                smoothy * thick / 2.0,
+               - thick,
+               - thick / 2.0,
                 -d);
-    else
-        colour_out.a = smoothstep(-0.5, 0.5, -d);
+    } else
+        colour_out.a = smoothstep(0., 0.5, -d);
 }

@@ -717,7 +717,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw,
          c = &cBlack;
 
       x += size + 7.;
-      toolkit_drawRect( x, by, size, size, c, NULL );
+      gl_renderPane( x, by, size, size, c );
 
       /* Add colour stripe depending on required/exclusiveness. */
       if ( s[i].required )

@@ -83,3 +83,5 @@ docs/manual/naev_dev_manual.toc
 .kdev4
 *.kdev4
 .cache
+
+**/Session.vim

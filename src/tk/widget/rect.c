@@ -68,12 +68,13 @@ static void rct_render( Widget *rct, double bx, double by )
    y = by + rct->y;
 
    if ( rct->dat.rct.fill ) /* draw rect only if it exists */
-      toolkit_drawRect( x, y, rct->w, rct->h, &rct->dat.rct.colour, NULL );
+      gl_renderPane( x, y, rct->w, rct->h, &rct->dat.rct.colour );
 
    if ( rct->dat.rct.border ) {
       /* inner outline */
-      toolkit_drawOutline( x, y, rct->w, rct->h, 0., toolkit_colLight, NULL );
+      gl_renderRect( x, y, rct->w, rct->h, 1., toolkit_colLight );
       /* outer outline */
-      toolkit_drawOutline( x, y, rct->w, rct->h, 1., toolkit_colDark, NULL );
+      gl_renderRect( x - 1, y - 1, rct->w + 2, rct->h + 2, 1.,
+                     toolkit_colDark );
    }
 }

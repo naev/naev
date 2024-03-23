@@ -902,17 +902,17 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh,
    gl_print( &gl_defFont, bx, y, &cFontWhite, p_( "info", "Legend" ) );
 
    y -= 20.;
-   toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );
+   gl_renderPane( bx, y, 10, 10, &cFontBlue );
    gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
              _( "Outfit that can be activated" ) );
 
    y -= 20.;
-   toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
+   gl_renderPane( bx, y, 10, 10, &cFontYellow );
    gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
              _( "Secondary Weapon (Right click toggles)" ) );
 
    y -= 20.;
-   toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
+   gl_renderPane( bx, y, 10, 10, &cFontRed );
    gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
              _( "Primary Weapon (Left click toggles)" ) );
 }
