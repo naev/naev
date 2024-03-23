@@ -3123,6 +3123,7 @@ dat/missions/neutral/teenager.lua
 dat/missions/neutral/wastedump.lua
 dat/missions/onion/onion01.lua
 dat/missions/onion/onion02.lua
+dat/missions/onion/onion03.lua
 dat/missions/pirate/blackcat.lua
 dat/missions/pirate/contraband.lua
 dat/missions/pirate/contraband_cake.lua
