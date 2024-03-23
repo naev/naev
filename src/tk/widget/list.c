@@ -140,7 +140,8 @@ static void lst_render( Widget *lst, double bx, double by )
 
       scroll_pos = (double)( lst->dat.lst.pos * CELLHEIGHT ) /
                    ( lst->dat.lst.height - lst->h + 2 );
-      toolkit_drawScrollbar( x + lst->w - 12. + 1, y, 12., lst->h, scroll_pos );
+      toolkit_drawScrollbar( x + lst->w - 12., y + 2., 10., lst->h - 4,
+                             scroll_pos );
    }
 
    /* draw selected item background */

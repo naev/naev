@@ -144,7 +144,7 @@ void opt_menu( void )
 
    /* Dimensions. */
    w = 680;
-   h = 550;
+   h = 570;
 
    /* Create window and tabs. */
    opt_wid = window_create( "wdwOptions", _( "Options" ), -1, -1, w, h );

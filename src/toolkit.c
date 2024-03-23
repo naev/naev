@@ -1530,7 +1530,8 @@ void window_render( Window *w, int top )
          if ( wgt->type == WIDGET_BUTTON )
             gl_renderRoundRect( wx, wy, wgt->w, wgt->h, 2, 10, 10, &cGrey70 );
          else
-            gl_renderRect( wx, wy, wgt->w, wgt->h, 2, &cGrey30 );
+            gl_renderRect( wx - 2, wy - 2, wgt->w + 4, wgt->h + 4, 2,
+                           &cGrey30 );
       }
    }
 }
@@ -1581,7 +1582,7 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
    double sy;
 
    /* scrollbar background */
-   gl_renderRoundPane( x, y, w, h, w / 3., h / 20., &cGrey10 );
+   gl_renderPane( x, y, w, h, &cGrey10 );
 
    /* Bar itself. */
    sy = y + ( h - 30. ) * ( 1. - pos );

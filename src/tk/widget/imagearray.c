@@ -190,7 +190,8 @@ static void iar_render( Widget *iar, double bx, double by )
       scroll_pos = 0.;
    else
       scroll_pos = iar->dat.iar.pos / hmax;
-   toolkit_drawScrollbar( x + iar->w - 10., y, 10., iar->h, scroll_pos );
+   toolkit_drawScrollbar( x + iar->w - 12., y + 2, 10., iar->h - 4,
+                          scroll_pos );
 
    /*
     * Main drawing loop.
