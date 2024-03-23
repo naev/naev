@@ -1495,8 +1495,9 @@ static void window_renderBorder( const Window *w )
    /* Position */
    double x = w->x;
    double y = w->y;
-   gl_renderRoundPane( x, y, w->w, w->h, w->h / 20, w->h / 20, toolkit_col );
-   gl_renderRoundRect( x, y, w->w, w->h, 5, w->h / 20, w->h / 20, &cGrey70 );
+   gl_renderRoundPane( x, y, w->w, w->h, w->h / 20., w->h / 20., toolkit_col );
+   gl_renderRoundRect( x, y, w->w, w->h, 1.5, w->h / 20., w->h / 20.,
+                       &cGrey70 );
 }
 
 /**
@@ -1528,9 +1529,9 @@ void window_render( Window *w, int top )
          double wx = w->x + wgt->x;
          double wy = w->y + wgt->y;
          if ( wgt->type == WIDGET_BUTTON )
-            gl_renderRoundRect( wx, wy, wgt->w, wgt->h, 5, 10, 10, &cGrey70 );
+            gl_renderRoundRect( wx, wy, wgt->w, wgt->h, 3, 10, 10, &cGrey70 );
          else
-            gl_renderRoundRect( wx, wy, wgt->w, wgt->h, 5, 10, 10, &cGrey30 );
+            gl_renderRect( wx, wy, wgt->w, wgt->h, 2, &cGrey30 );
       }
    }
 }

@@ -30,21 +30,20 @@ float sdCircle( vec2 p, float r )
    return length(p)-r;
 }
 
-/* Box at position b with border b. */
+/* Box at position p with border 2 * b. */
 float sdBox( vec2 p, vec2 b )
 {
    vec2 d = abs(p)-b;
    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
 }
 
-/* Rounded box at position b with border b and rounded as r size.*/
+/* Rounded box at position p with border 2 * b and rounded as r size.*/
 float sdBoxRound(vec2 p, vec2 b, vec2 r)
 {
-    float diff = b.x - 2. * r.x;
-    float coef = min(1.0, max(0.0, (abs(p.x) - diff) / (b.x - diff)));
-    float rf = coef * r.y + (1.0 - coef) * r.x;
-    vec2 d = abs(p) - b + 2 * rf;
-    return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0) - rf;
+    float coef = clamp((abs(p.x) - b.x + r.x) / r.x, 0.0, 1.0);
+    float rf = (1.0 - coef) * r.x + coef * r.y;
+    p = abs(p) - b + rf;
+    return length(max(p, 0.0)) + min(max(p.x, p.y), 0.0) - rf;
 }
 
 /* Segment going from point a to point b with 0 width. */

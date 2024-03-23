@@ -128,8 +128,8 @@ void gl_renderRoundRect( double x, double y, double w, double h,
  *    @param rx Corner curve lenght along X axis.
  *    @param ry Corner curve lenght along Y axis.
  */
-void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
-                     int ry )
+void gl_renderRectH( const mat4 *H, const glColour *c, double line_width,
+                     int rx, int ry )
 {
 
    GLfloat width  = H->m[0][0] / gl_view_matrix.m[0][0];
@@ -142,7 +142,7 @@ void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
       glUniform4f( shd->dimensions, width, height, rx, ry );
    else
       glUniform2f( shd->dimensions, width, height );
-   glUniform1i( shd->parami, line_width );
+   glUniform1f( shd->paramf, line_width );
    gl_renderShaderH( shd, H, c, 1 );
 }
 

@@ -124,8 +124,8 @@ void gl_renderRoundPane( double x, double y, double w, double h, double rx,
 void gl_renderRoundRect( double x, double y, double w, double h,
                          double line_width, double rx, double ry,
                          const glColour *c );
-void gl_renderRectH( const mat4 *H, const glColour *c, int line_width, int rx,
-                     int ry );
+void gl_renderRectH( const mat4 *H, const glColour *c, double line_width,
+                     int rx, int ry );
 
 /* Cross. */
 void gl_renderCross( double x, double y, double r, const glColour *c );
