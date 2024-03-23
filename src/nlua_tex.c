@@ -165,9 +165,7 @@ int lua_istex( lua_State *L, int ind )
  */
 static int texL_close( lua_State *L )
 {
-   /* Free texture. */
    gl_freeTexture( luaL_checktex( L, 1 ) );
-
    return 0;
 }
 

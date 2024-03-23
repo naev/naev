@@ -1390,8 +1390,10 @@ static int faction_parse( Faction *temp, const char *file )
 
       if ( xml_isNode( node, "logo" ) ) {
          char buf[PATH_MAX];
-         if ( temp->logo != NULL )
+         if ( temp->logo != NULL ) {
             WARN( _( "Faction '%s' has duplicate 'logo' tag." ), temp->name );
+            continue;
+         }
          snprintf( buf, sizeof( buf ), FACTION_LOGO_PATH "%s.webp",
                    xml_get( node ) );
          temp->logo = gl_newImage( buf, 0 );
