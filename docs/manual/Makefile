@@ -28,3 +28,6 @@ images/llamaengine.png: ../../artwork/gfx/ship/llama/llama_engine.webp
 images/llamacomm.png: ../../artwork/gfx/ship/llama/llama_comm.webp
 	test -d images || mkdir images
 	gm convert "$<" "$@"
+
+clean:
+	$(RM) naev_dev_manual.aux naev_dev_manual.fdb_latexmk naev_dev_manual.fls naev_dev_manual.log naev_dev_manual.lol naev_dev_manual.markdown.lua naev_dev_manual.markdown.out naev_dev_manual.out naev_dev_manual.toc
