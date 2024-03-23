@@ -164,7 +164,7 @@ function accept ()
 
       vn.label("novice_yes")
       nel(fmt.f(_([["I knew it! You seem to have a nice fresh aura around you. Reminds me of back in the day when I was starting out. Starting out can be a bit tricky, so I hope you don't mind if I give you some advice on the road."
-   "For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfiting window. Anyway, Let's get going!"]]), {sys=mem.destsys}))
+   "For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfitting window. Anyway, Let's get going!"]]), {sys=mem.destsys}))
       vn.done( tutnel.nelly.transition )
 
       vn.label("novice_no")
@@ -526,7 +526,7 @@ function equip ()
       return
    end
 
-   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically handle weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
+   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically handle weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set, so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
 
    hook.rm( mem.hk_equip )
    mem.hk_equip = nil
