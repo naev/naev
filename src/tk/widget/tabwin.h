@@ -9,13 +9,14 @@
  * @brief The button widget.
  */
 typedef struct WidgetTabbedWindowData_ {
-   int           ntabs;    /**< Number of tabs. */
-   char        **tabnames; /**< Names of the tabs. */
-   unsigned int *windows;  /**< Window IDs. */
-   int           active;   /**< Currently active window. */
-   int           tabpos;   /**< Where are the tabs placed?
-                                0=bottom, 1=top */
-   const glFont *font;     /**< Font to use. */
+   int           ntabs;         /**< Number of tabs. */
+   char        **tabnames;      /**< Names of the tabs. */
+   unsigned int *windows;       /**< Window IDs. */
+   unsigned int  parent_window; /**< Parent window Id. */
+   int           active;        /**< Currently active window. */
+   int           tabpos;        /**< Where are the tabs placed?
+                                     0=bottom, 1=top */
+   const glFont *font;          /**< Font to use. */
 
    /* Internal usage. */
    int *namelen;

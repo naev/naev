@@ -691,10 +691,6 @@ unsigned int window_create( const char *name, const char *displayname,
 {
    /* For windows with upper tabs, let tabedWindow handle the border to hide the
     * unactive tabs */
-   if ( !strcmp( name, "wdwLand" ) || !strcmp( name, "wdwOptions" ) ||
-        !strcmp( name, "wdwInfo" ) )
-      return window_createFlags( name, displayname, x, y, w, h,
-                                 WINDOW_NOBORDER );
    return window_createFlags( name, displayname, x, y, w, h, 0 );
 }
 
@@ -1495,8 +1491,14 @@ static void window_renderBorder( const Window *w )
    /* Position */
    double x = w->x;
    double y = w->y;
-   gl_renderRoundPane( x, y, w->w, w->h, w->h / 20., w->h / 20., toolkit_col );
-   gl_renderRoundRect( x, y, w->w, w->h, 1, w->h / 20., w->h / 20., &cGrey70 );
+   if ( window_isFlag( w, WINDOW_FULLSCREEN ) ) {
+      gl_renderPane( x, y, w->w, w->h, toolkit_col );
+   } else {
+      gl_renderRoundPane( x, y, w->w, w->h, w->h / 20., w->h / 20.,
+                          toolkit_col );
+      gl_renderRoundRect( x, y, w->w, w->h, 1, w->h / 20., w->h / 20.,
+                          &cGrey70 );
+   }
 }
 
 /**
@@ -1511,7 +1513,9 @@ void window_render( Window *w, int top )
    glClear( GL_DEPTH_BUFFER_BIT );
 
    /* See if needs border. */
-   if ( !window_isFlag( w, WINDOW_NOBORDER ) )
+   if ( !window_isFlag( w, WINDOW_NOBORDER ) ||
+        ( window_isFlag( w, WINDOW_TABED ) &&
+          window_isFlag( w, WINDOW_FULLSCREEN ) ) )
       window_renderBorder( w );
 
    /* Iterate over widgets. */

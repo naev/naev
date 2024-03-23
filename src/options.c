@@ -33,6 +33,7 @@
 #include "render.h"
 #include "sound.h"
 #include "toolkit.h"
+#include "toolkit_priv.h"
 
 #define BUTTON_WIDTH 200 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT 30 /**< Button height, standard across menus. */
@@ -147,7 +148,8 @@ void opt_menu( void )
    h = 570;
 
    /* Create window and tabs. */
-   opt_wid = window_create( "wdwOptions", _( "Options" ), -1, -1, w, h );
+   opt_wid = window_createFlags( "wdwOptions", _( "Options" ), -1, -1, w, h,
+                                 WINDOW_TABED | WINDOW_NOBORDER );
    window_setCancel( opt_wid, opt_close );
 
    /* Create tabbed window. */

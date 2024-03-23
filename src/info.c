@@ -298,7 +298,8 @@ void menu_info( int window )
    h = 700;
 
    /* Create the window. */
-   info_wid = window_create( "wdwInfo", _( "Info" ), -1, -1, w, h );
+   info_wid = window_createFlags( "wdwInfo", _( "Info" ), -1, -1, w, h,
+                                  WINDOW_TABED | WINDOW_NOBORDER );
    window_setCancel( info_wid, info_close );
 
    /* Create tabbed window. */

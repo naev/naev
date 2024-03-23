@@ -52,6 +52,7 @@
 #include "save.h"
 #include "shiplog.h"
 #include "toolkit.h"
+#include "toolkit_priv.h"
 
 /*
  * we use visited flags to not duplicate missions generated
@@ -1052,7 +1053,8 @@ void land_genWindows( int load )
       w = LAND_WIDTH / 2 + SCREEN_W / 2;
       h = LAND_HEIGHT / 2 + SCREEN_H / 2;
    }
-   land_wid = window_create( "wdwLand", spob_name( p ), -1, -1, w, h );
+   land_wid = window_createFlags( "wdwLand", spob_name( p ), -1, -1, w, h,
+                                  WINDOW_TABED | WINDOW_NOBORDER );
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Create tabbed window. */
