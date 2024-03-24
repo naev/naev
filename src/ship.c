@@ -1133,7 +1133,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
                                   0, 2, GL_FLOAT, 0 );
 
       /* Set shader uniforms. */
-      gl_uniformColour( shaders.texture.colour, c );
+      gl_uniformColour( shaders.texture_sharpen.colour, c );
       gl_uniformMat4( shaders.texture_sharpen.projection, &projection );
       gl_uniformMat4( shaders.texture_sharpen.tex_mat, &tex_mat );
 
