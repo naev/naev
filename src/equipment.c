@@ -1797,7 +1797,7 @@ static void equipment_genOutfitList( unsigned int wid )
    /* Create tabbed window. */
    if ( !widget_exists( wid, EQUIPMENT_OUTFIT_TAB ) ) {
       window_addTabbedWindow( wid, x, y + oh - 30, ow, 30, EQUIPMENT_OUTFIT_TAB,
-                              OUTFIT_TABS, tabnames, 1 );
+                              OUTFIT_TABS, tabnames, 0 );
 
       barw = window_tabWinGetBarWidth( wid, EQUIPMENT_OUTFIT_TAB );
 

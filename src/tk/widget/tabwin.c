@@ -50,7 +50,8 @@ static Widget *tab_getWgt( unsigned int wid, const char *tab );
  *    @param name Name of the widget to use internally.
  *    @param ntabs Number of tabs in the widget.
  *    @param tabnames Name of the tabs in the widget.
- *    @param tabpos Position to set up the tabs at.
+ *    @param tabpos Position to set up the tabs at. 0: ; 1: Bottom Centered; 2:
+ * Top centered
  *    @return List of created windows.
  */
 unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
@@ -93,13 +94,18 @@ unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
 
    /* Calculate window position and size. */
    wx = wdw->x + wgt->x;
-   wy = wdw->y + wgt->y - 10;
+   wy = wdw->y + wgt->y;
    ww = wgt->w;
-   wh = wgt->h + 30;
-   if ( tabpos == 0 ) {
-      wy += TAB_HEIGHT;
+   wh = wgt->h;
+   if ( tabpos == 1 ) {
+      // wy -= TAB_HEIGHT / 3;
+      wy += 2 * TAB_HEIGHT / 3;
+      // wh -= TAB_HEIGHT;
+   } else if ( tabpos == 2 ) {
+      // wy -= TAB_HEIGHT / 3;
       wh -= TAB_HEIGHT;
-   } else if ( tabpos == 1 ) {
+
+   } else if ( tabpos == 0 ) {
       wh -= TAB_HEIGHT;
    } else
       WARN( _( "Tab position '%d' parameter does not make sense" ), tabpos );
@@ -116,10 +122,11 @@ unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
       /* Create windows with flags.
        * Parent window handles events for the children.
        */
-      int flags = WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT;
+      int flags =
+         WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT | WINDOW_NOTITLE;
       /* For windows with upper tabs, keep borders to let them overwrite hiden
        * tabs */
-      if ( !window_isFlag( wdw, WINDOW_TABED ) )
+      if ( !window_isFlag( wdw, WINDOW_TABBED ) )
          flags |= WINDOW_NOBORDER;
 
       wgt->dat.tab.windows[i] =
@@ -231,7 +238,7 @@ static int tab_mouse( Widget *tab, SDL_Event *event )
    y -= tab->y;
 
    /* Since it's at the top we have to translate down. */
-   if ( tab->dat.tab.tabpos == 1 )
+   if ( tab->dat.tab.tabpos == 0 )
       y -= ( tab->h - TAB_HEIGHT );
 
    /* Make sure event is in the TAB HEIGHT area. */
@@ -370,7 +377,7 @@ static int tab_key( Widget *tab, SDL_Event *event )
  */
 static void tab_render( Widget *tab, double bx, double by )
 {
-   int x, y, w, h;
+   int x, y, w, h, dy = 0;
    /* Get window. */
    Window *wdw = window_wget( tab->dat.tab.windows[tab->dat.tab.active] );
    if ( wdw == NULL ) {
@@ -382,26 +389,27 @@ static void tab_render( Widget *tab, double bx, double by )
    w                     = tab_getBarWidth( tab );
    Window *parent_window = window_wget( tab->dat.tab.parent_window );
    int     isFullscreen  = window_isFlag( parent_window, WINDOW_FULLSCREEN );
-   int     isTabed       = window_isFlag( parent_window, WINDOW_TABED );
 
    /* Render tabs ontop. */
-   if ( isTabed ) {
+   if ( tab->dat.tab.tabpos == 1 ) {
       /* Center tabs */
       tab->x = wdw->w / 2 - w / 2;
-      // tab->y = wdw->h;
-      y = by + tab->y;
-      x = bx + tab->x;
-   } else {
-      x = bx + tab->x + 3.;
+      dy     = 1;
+   } else if ( tab->dat.tab.tabpos == 2 ) {
+      tab->x = wdw->w / 2 - w / 2;
+      tab->y = wdw->h - TAB_HEIGHT / 3.;
+      dy     = -1;
    }
    y = by + tab->y;
-   if ( tab->dat.tab.tabpos == 1 )
+   x = bx + tab->x;
+   if ( tab->dat.tab.tabpos == 0 ) {
       y += tab->h - h;
-
+   }
    /* Iterate through tabs */
    x += TAB_HMARGIN;
-   int len, x_active = 0, len_active = 0;
+   int len, x_active = 0, len_active = 0, y_active = y + dy * 5;
    int i;
+   int y_text = TAB_HEIGHT - tab->dat.tab.font->h;
    for ( i = 0; i < tab->dat.tab.ntabs; i++ ) {
       /* Draw contents rect */
       len = tab->dat.tab.namelen[i] + ( TAB_HPADDING * 2 );
@@ -410,22 +418,22 @@ static void tab_render( Widget *tab, double bx, double by )
 
          /* Draw text. */
          gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
-                      y + ( isFullscreen ? 3. : 2. ) *
-                             ( TAB_HEIGHT - tab->dat.tab.font->h ) / 6.,
+                      y - ( isFullscreen ? 0 : dy ) * y_text / 6. + y_text / 2.,
                       &cFontWhite, -1., tab->dat.tab.tabnames[i] );
          gl_renderRoundRect( x, y, len, TAB_HEIGHT, 2, 10, 10,
                              toolkit_colLight );
       } else {
 
          if ( isFullscreen ) {
-            gl_renderRoundPane( x, y + 5, len, TAB_HEIGHT, 10, 10, tab_active );
+            gl_renderRoundPane( x, y_active, len, TAB_HEIGHT, 10, 10,
+                                tab_active );
             gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
-                         y + ( TAB_HEIGHT - tab->dat.tab.font->h ) / 2. + 5,
-                         &cFontWhite, -1., tab->dat.tab.tabnames[i] );
-            gl_renderRoundRect( x, y + 5, len, TAB_HEIGHT, 2, 10, 10,
+                         y_active + y_text / 2., &cFontWhite, -1.,
+                         tab->dat.tab.tabnames[i] );
+            gl_renderRoundRect( x, y_active, len, TAB_HEIGHT, 2, 10, 10,
                                 &cGrey70 );
          } else {
-            gl_renderRoundRect( x, y + 5, len, TAB_HEIGHT, 3, 10, 10,
+            gl_renderRoundRect( x, y_active, len, TAB_HEIGHT, 3, 10, 10,
                                 &cGrey70 );
          }
          x_active   = x;
@@ -445,11 +453,11 @@ static void tab_render( Widget *tab, double bx, double by )
 
    if ( !isFullscreen ) {
       i = tab->dat.tab.active;
-      gl_renderRoundPane( x_active + 3, y + 3 + 5, len_active - 6,
+      gl_renderRoundPane( x_active + 3, y_active + 3, len_active - 6,
                           TAB_HEIGHT - 6, 5, 5, tab_active );
       gl_printRaw( tab->dat.tab.font, x_active + TAB_HPADDING,
-                   y + ( TAB_HEIGHT - tab->dat.tab.font->h ) / 2. + 5,
-                   &cFontWhite, -1., tab->dat.tab.tabnames[i] );
+                   y_active + y_text / 2., &cFontWhite, -1.,
+                   tab->dat.tab.tabnames[i] );
    } else {
       window_rmFlag( wdw, WINDOW_NOBORDER );
       window_rmFlag( wdw, WINDOW_FULLSCREEN );

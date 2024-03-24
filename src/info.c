@@ -299,14 +299,14 @@ void menu_info( int window )
 
    /* Create the window. */
    info_wid = window_createFlags( "wdwInfo", _( "Info" ), -1, -1, w, h,
-                                  WINDOW_TABED | WINDOW_NOBORDER );
+                                  WINDOW_TABBED | WINDOW_NOBORDER );
    window_setCancel( info_wid, info_close );
 
    /* Create tabbed window. */
    for ( size_t i = 0; i < INFO_WINDOWS; i++ )
       names[i] = _( info_names[i] );
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
-                                          INFO_WINDOWS, names, 0 );
+                                          INFO_WINDOWS, names, 2 );
 
    /* Open the subwindows. */
    info_openMain( info_windows[INFO_WIN_MAIN] );

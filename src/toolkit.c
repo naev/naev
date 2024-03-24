@@ -1499,6 +1499,12 @@ static void window_renderBorder( const Window *w )
       gl_renderRoundRect( x, y, w->w, w->h, 1, w->h / 20., w->h / 20.,
                           &cGrey70 );
    }
+   /**
+    * render window name
+    */
+   if ( !window_isFlag( w, WINDOW_NOTITLE ) )
+      gl_printMidRaw( &gl_defFont, w->w, x, y + w->h - 20., &cFontWhite, -1.,
+                      w->displayname );
 }
 
 /**
@@ -1514,7 +1520,7 @@ void window_render( Window *w, int top )
 
    /* See if needs border. */
    if ( !window_isFlag( w, WINDOW_NOBORDER ) ||
-        ( window_isFlag( w, WINDOW_TABED ) &&
+        ( window_isFlag( w, WINDOW_TABBED ) &&
           window_isFlag( w, WINDOW_FULLSCREEN ) ) )
       window_renderBorder( w );
 

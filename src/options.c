@@ -149,7 +149,7 @@ void opt_menu( void )
 
    /* Create window and tabs. */
    opt_wid = window_createFlags( "wdwOptions", _( "Options" ), -1, -1, w, h,
-                                 WINDOW_TABED | WINDOW_NOBORDER );
+                                 WINDOW_TABBED | WINDOW_NOBORDER );
    window_setCancel( opt_wid, opt_close );
 
    /* Create tabbed window. */
@@ -157,7 +157,7 @@ void opt_menu( void )
    for ( size_t i = 0; i < sizeof( opt_names ) / sizeof( opt_names[0] ); i++ )
       names[i] = _( opt_names[i] );
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
-                                         OPT_WINDOWS, (const char **)names, 0 );
+                                         OPT_WINDOWS, (const char **)names, 2 );
    free( names );
 
    /* Common stuff. */

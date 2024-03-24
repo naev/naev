@@ -1017,7 +1017,7 @@ static void land_setupTabs( void )
    }
 
    land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand",
-                                          j, names, 0 );
+                                          j, names, 1 );
 }
 
 /**
@@ -1057,8 +1057,9 @@ void land_genWindows( int load )
       w = LAND_WIDTH / 2 + SCREEN_W / 2;
       h = LAND_HEIGHT / 2 + SCREEN_H / 2;
    }
-   land_wid = window_createFlags( "wdwLand", spob_name( p ), -1, -1, w, h,
-                                  WINDOW_TABED | WINDOW_NOBORDER );
+   land_wid =
+      window_createFlags( "wdwLand", spob_name( p ), -1, -1, w, h,
+                          WINDOW_TABBED | WINDOW_NOBORDER | WINDOW_NOTITLE );
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Create tabbed window. */

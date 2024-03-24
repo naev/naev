@@ -169,8 +169,9 @@ typedef struct Widget_ {
 #define WINDOW_CENTERY ( 1 << 6 )    /**< Window is Y-centered. */
 #define WINDOW_DYNAMIC                                                         \
    ( 1 << 7 ) /**< Window should be rerendered every frame. */
-#define WINDOW_TABED ( 1 << 8 )
-#define WINDOW_KILL ( 1 << 9 ) /**< Window should die. */
+#define WINDOW_TABBED ( 1 << 8 )   /**< Window is made of tabed windows */
+#define WINDOW_KILL ( 1 << 9 )     /**< Window should die. */
+#define WINDOW_NOTITLE ( 1 << 10 ) /**< Window does not display it's name. */
 #define window_isFlag( w, f )                                                  \
    ( ( w )->flags & ( f ) ) /**< Checks a window flag. */
 #define window_setFlag( w, f )                                                 \
