@@ -475,6 +475,8 @@ static int cli_initLua( void )
       status    = nlua_dobufenv( cli_env, buf, blen, "@rep.lua" );
       free( buf );
       if ( status ) {
+         WARN( _( "Lua console '%s' Lua error:\n%s" ), "rep.lua",
+               lua_tostring( naevL, -1 ) );
          lua_settop( naevL, 0 );
          return status;
       }
@@ -516,7 +518,9 @@ int cli_init( void )
    /* Allocate the buffer. */
    cli_buffer = array_create( char * );
 
-   cli_initLua();
+   /* Initialize the Lua stuff. */
+   if ( cli_initLua() )
+      WARN( _( "Failed to initialize console Lua!" ) );
 
    return 0;
 }
