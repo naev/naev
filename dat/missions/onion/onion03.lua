@@ -45,6 +45,7 @@ mem.state = 0
 
 -- Create the mission
 function create()
+   misn.finish(false) -- disabled for now
    local prt = love_shaders.shaderimage2canvas( love_shaders.hologram(), onion.img_onion() )
 
    misn.setNPC( _("l337_b01"), prt.t.tex, _([[You seem to have an incoming connection from the Onion Society.]]) )
