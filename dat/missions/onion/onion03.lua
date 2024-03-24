@@ -7,7 +7,7 @@
  <location>Bar</location>
  <done>Onion Society 02</done>
  <cond>
-   if spob.cur() == spob.get("Tepadania Prime") then
+   if spob.cur() == spob.get("Tepdania Prime") then
       return false
    end
    return true
