@@ -28,7 +28,8 @@ local love_shaders = require "love_shaderS"
 -- Action happens in the jump from Tepadania (Empire) to Ianella (Dvaered)
 -- l337_b01 lives in Anubis (Scorpius)?
 local spb1, sys1 = spob.getS("Tepdania Prime")
---local jp = jump.get( sys1, "Ianella" )
+local sys2 = system.get("Ianella")
+local jp = jump.get( sys1, sys2 )
 
 --local money_reward = onion.rewards.misn03
 
@@ -75,7 +76,7 @@ function accept ()
    vn.jump("01_cont")
 
    vn.label("01_flimflam")
-   l337(_([["Flim-flam the wurglebump? Wait... I see. It all flew over your head, didn't it? Cute, but you could have just said you understood jack shit."]]))
+   l337(_([["Flim-flam the wurglebump? Wait... I see. It all flew over your head, didn't it? Cute, but you could have just said you understood nothing."]]))
    vn.label("01_meaning")
    l337(_([["Let me see if I can explain this for you to understand. It's quite simple, actually."]]))
    vn.label("01_cont")
@@ -114,6 +115,10 @@ function accept ()
    mem.state = 0
    hook.land("land")
    hook.enter("enter")
+   misn.osdCreate( title, {
+      fmt.f(_([[Land on {spb} ({sys} system)]]),
+         {spb=spb1, sys=sys1}),
+   } )
 end
 
 function land ()
@@ -122,14 +127,32 @@ function land ()
       vn.scene()
       local l337 = vn.newCharacter( onion.vn_l337b01() )
       vn.transition("electric")
-      vn.na()
-      l337()
+      vn.na(_([[You land and immediately l337_b01's hologram appears on your ship console.]]))
+      l337(_([["Time to get to work. Let's see, let's see."
+You hear some clacking noises, but you have no idea what's going on as you only see l337_b01's avatar.]]))
+      l337(_([["Mmmm, I see. Seems like the relay has been replaced. Most of the relays in Empire space are controlled by Nexus Shipyards. Going to have to check their databases. One second."]]))
+      l337(_([["Humph. Looks like there's some mistake in the logs. Shoddy job as always. Can't say I blame them, Empire seems to just add more and more paperwork that nobody knows how to fill."]]))
+      l337(_([["Looks like we are going to have to do some field work. If you can get near the jump to the {sys2} system, I can try to override the relay. Might be trouble though. They don't take kindly to sabotage."]]))
       vn.done("electric")
       vn.run()
 
       mem.state = 1
+      misn.osdCreate( title, {
+         fmt.f(_([[Land on {spb} ({sys} system)]]),
+            {spb=spb1, sys=sys1}),
+      } )
+      misn.markerRm()
+      misn.markerAdd( sys1 )
    end
 end
 
 function enter ()
+   if system.cur()==sys1 and mem.state==1 then
+      hook.timer( 7, "prepare" )
+   end
+end
+
+function prepare ()
+   player.msg(_("l337_b01: head over to the jump, there should be a relay buoy there."), true)
+   system.markerAdd( jp:pos() )
 end
