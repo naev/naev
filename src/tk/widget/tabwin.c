@@ -16,7 +16,7 @@
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 
-#define TAB_HEIGHT 30
+#define TAB_HEIGHT 35
 #define TAB_HMARGIN 3
 #define TAB_HPADDING 15
 
@@ -93,9 +93,9 @@ unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
 
    /* Calculate window position and size. */
    wx = wdw->x + wgt->x;
-   wy = wdw->y + wgt->y - 15;
+   wy = wdw->y + wgt->y - 10;
    ww = wgt->w;
-   wh = wgt->h;
+   wh = wgt->h + 30;
    if ( tabpos == 0 ) {
       wy += TAB_HEIGHT;
       wh -= TAB_HEIGHT;
@@ -388,13 +388,13 @@ static void tab_render( Widget *tab, double bx, double by )
    if ( isTabed ) {
       /* Center tabs */
       tab->x = wdw->w / 2 - w / 2;
-      tab->y = wdw->h;
-      y      = by + tab->y;
-      x      = bx + tab->x;
+      // tab->y = wdw->h;
+      y = by + tab->y;
+      x = bx + tab->x;
    } else {
       x = bx + tab->x + 3.;
    }
-   y = by + tab->y + 3.;
+   y = by + tab->y;
    if ( tab->dat.tab.tabpos == 1 )
       y += tab->h - h;
 
@@ -410,20 +410,24 @@ static void tab_render( Widget *tab, double bx, double by )
 
          /* Draw text. */
          gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
-                      y + 2. * ( TAB_HEIGHT - tab->dat.tab.font->h ) / 3,
+                      y + ( isFullscreen ? 3. : 2. ) *
+                             ( TAB_HEIGHT - tab->dat.tab.font->h ) / 6.,
                       &cFontWhite, -1., tab->dat.tab.tabnames[i] );
          gl_renderRoundRect( x, y, len, TAB_HEIGHT, 2, 10, 10,
                              toolkit_colLight );
       } else {
 
          if ( isFullscreen ) {
-            gl_renderRoundPane( x, y - 5, len, TAB_HEIGHT, 10, 10, tab_active );
+            gl_renderRoundPane( x, y + 5, len, TAB_HEIGHT, 10, 10, tab_active );
             gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
-                         y + ( TAB_HEIGHT - tab->dat.tab.font->h ) / 2. - 5,
+                         y + ( TAB_HEIGHT - tab->dat.tab.font->h ) / 2. + 5,
                          &cFontWhite, -1., tab->dat.tab.tabnames[i] );
+            gl_renderRoundRect( x, y + 5, len, TAB_HEIGHT, 2, 10, 10,
+                                &cGrey70 );
+         } else {
+            gl_renderRoundRect( x, y + 5, len, TAB_HEIGHT, 3, 10, 10,
+                                &cGrey70 );
          }
-         gl_renderRoundRect( x - 2, y - 3, len + 4, TAB_HEIGHT, 2.1, 10, 10,
-                             &cGrey70 );
          x_active   = x;
          len_active = len;
       }
@@ -441,10 +445,10 @@ static void tab_render( Widget *tab, double bx, double by )
 
    if ( !isFullscreen ) {
       i = tab->dat.tab.active;
-      gl_renderRoundPane( x_active, y - 5, len_active, TAB_HEIGHT, 10, 10,
-                          tab_active );
+      gl_renderRoundPane( x_active + 3, y + 3 + 5, len_active - 6,
+                          TAB_HEIGHT - 6, 5, 5, tab_active );
       gl_printRaw( tab->dat.tab.font, x_active + TAB_HPADDING,
-                   y + 2. * ( TAB_HEIGHT - tab->dat.tab.font->h ) / 3 - 5,
+                   y + ( TAB_HEIGHT - tab->dat.tab.font->h ) / 2. + 5,
                    &cFontWhite, -1., tab->dat.tab.tabnames[i] );
    } else {
       window_rmFlag( wdw, WINDOW_NOBORDER );
