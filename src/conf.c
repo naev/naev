@@ -1072,7 +1072,7 @@ int conf_saveConfig( const char *file )
    conf_saveComment(
       _( "Use bigger icons in the outfit, shipyard, and other lists." ) );
    conf_saveBool( "big_icons", conf.big_icons );
-   conf_saveComment( _( "Disable rounded GUI." ) );
+   conf_saveComment( _( "Enable rounded GUI." ) );
    conf_saveBool( "round_gui", conf.round_gui );
    conf_saveEmptyLine();
    conf_saveComment( _(
