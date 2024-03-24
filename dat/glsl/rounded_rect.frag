@@ -21,5 +21,5 @@ void main(void) {
                 -paramf / 2.,
                 -d);
     } else
-        colour_out.a = smoothstep(0, 0.5, -d);
+        colour_out.a = smoothstep(0., 0.5, -d);
 }
