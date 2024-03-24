@@ -979,7 +979,11 @@ static void land_setupTabs( void )
    j = 0;
    /* Main. */
    land_windowsMap[LAND_WINDOW_MAIN] = j;
-   names[j++]                        = _( "Landing Main" );
+   char *spob_name                   = window_wget( land_wid )->displayname;
+   char  main_tab[40]                = { 0 };
+   scnprintf( main_tab, sizeof( main_tab ), _( "%s Terminal" ),
+              _( spob_name ) );
+   names[j++] = main_tab;
    /* Bar. */
    if ( spob_hasService( land_spob, SPOB_SERVICE_BAR ) ) {
       land_windowsMap[LAND_WINDOW_BAR] = j;
