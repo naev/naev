@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-03-23 20:01+0000\n"
-"Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
+"PO-Revision-Date: 2024-03-26 01:02+0000\n"
+"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
 "Language: id\n"
@@ -29921,7 +29921,7 @@ msgstr ""
 #: dat/board.lua:130 dat/missions/dvaered/frontier_war/fw02_escape.lua:643
 #: src/shipstats.c:219
 msgid "Fuel"
-msgstr ""
+msgstr "Bahan bakar"
 
 #: dat/board.lua:134
 msgid ""
@@ -30036,7 +30036,7 @@ msgstr "Buang"
 
 #: dat/board.lua:462
 msgid "Loot"
-msgstr ""
+msgstr "Jarah"
 
 #: dat/board.lua:463
 msgid "Loot All"
@@ -32984,7 +32984,7 @@ msgstr ""
 #: dat/events/dvaered/warlords_battle.lua:73
 #: dat/scripts/common/frontier_war.lua:81
 msgid "Warlords"
-msgstr ""
+msgstr "Panglima perang"
 
 #. Spawns a merchant ship that explains what happens
 #: dat/events/dvaered/warlords_battle.lua:89
@@ -43221,7 +43221,7 @@ msgstr ""
 #. Set an info button up
 #: dat/events/settings.lua:47
 msgid "Settings"
-msgstr ""
+msgstr "Pengaturan"
 
 #: dat/events/settings.lua:57
 msgid "Player Settings"
@@ -123126,7 +123126,7 @@ msgstr ""
 
 #: src/ship.c:201
 msgid "Yacht"
-msgstr ""
+msgstr "Kapal pesiar"
 
 #: src/ship.c:203
 msgid "Courier"
