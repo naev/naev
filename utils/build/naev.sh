@@ -6,27 +6,27 @@
 # Set WITHDEBUGGER=false to avoid using debuggers where it is a hinderance.
 
 get_debugger() {
-    local preferred_debugger="gdb"
+   local preferred_debugger="gdb"
 
-    if [ "$WITHDEBUGGER" = "false" ]; then
-        echo "Debugging disabled."
-        return
-    fi
+   if [ "$WITHDEBUGGER" = "false" ]; then
+      echo "Debugging disabled."
+      return
+   fi
 
-    if [ "$PREFERLLDB" = "true" ]; then
-        preferred_debugger="lldb"
-    fi
+   if [ "$PREFERLLDB" = "true" ]; then
+      preferred_debugger="lldb"
+   fi
 
-    if [ -n "$preferred_debugger" ] && command -v "$preferred_debugger" &> /dev/null; then
-        echo "$preferred_debugger"
-    elif command -v lldb &> /dev/null; then
-        echo "lldb"
-    elif command -v gdb &> /dev/null; then
-        echo "gdb"
-    else
-        echo "Error: Neither lldb nor gdb is installed. Debugging disabled."
-        return
-    fi
+   if [ -n "$preferred_debugger" ] && command -v "$preferred_debugger" &> /dev/null; then
+      echo "$preferred_debugger"
+   elif command -v lldb &> /dev/null; then
+      echo "lldb"
+   elif command -v gdb &> /dev/null; then
+      echo "gdb"
+   else
+      echo "Error: Neither lldb nor gdb is installed. Debugging disabled."
+      return
+   fi
 }
 
 "@source_root@/meson.sh" compile -C "@build_root@" naev-gmo
