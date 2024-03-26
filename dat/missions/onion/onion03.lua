@@ -23,7 +23,7 @@
 local fmt = require "format"
 local vn = require "vn"
 local onion = require "common.onion"
-local love_shaders = require "love_shaderS"
+local love_shaders = require "love_shaders"
 
 -- Action happens in the jump from Tepadania (Empire) to Ianella (Dvaered)
 -- l337_b01 lives in Anubis (Scorpius)?
