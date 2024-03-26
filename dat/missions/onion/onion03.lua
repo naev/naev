@@ -24,6 +24,7 @@ local fmt = require "format"
 local vn = require "vn"
 local onion = require "common.onion"
 local love_shaders = require "love_shaders"
+local lmisn = require "lmisn"
 
 -- Action happens in the jump from Tepadania (Empire) to Ianella (Dvaered)
 -- l337_b01 lives in Anubis (Scorpius)?
@@ -156,4 +157,38 @@ end
 function prepare ()
    player.msg(_("l337_b01: head over to the jump, there should be a relay buoy there."), true)
    system.markerAdd( jp:pos() )
+   hook.timer( 1, "wait" )
+end
+
+local distlim = 5e3
+local dunit = naev.unit("distance")
+function wait ()
+   if player.pos():dist2( jp:pos() ) < 1e3^2 then
+      vn.clear()
+      vn.scene()
+      local l337 = vn.newCharacter( onion.vn_l337b01() )
+      vn.transition("electric")
+      vn.na(_([[l337_b01 pops up on your system console.]]))
+      l337(_([["OK, time to do a scan. Yup, there's the scanner. Let's see if it's configured like the late models... root root."]]))
+      l337(_([["Mmmm, admin 1234. Humph, time to pull a dictionary attack. Whelp, looks like they tried to introduce some shorting countermeausers. It's going to take me some time to crack the relay."]]))
+      l337(fmt.f(_([["Hate to bubble your boat, but, looks like some incoming Nexus tech support crew. Looks like it's your time to shine. Stay within {dist} {dstunit} of the jump!"]]),
+         {dist=fmt.number(distlim), dstunit=dunit}))
+      vn.na(fmt.f(_([[Looks like it's time to show what {shipname} is capable of!]]),
+         {shipname=player.pilot():name()}))
+      vn.done("electric")
+      vn.run()
+      return
+   end
+   hook.timer( 1, "wait" )
+end
+
+function heartbeat ()
+   local d = player.pos():dist( jp:pos() )
+   if d > distlim then
+      lmisn.fail(_("You strayed too far from the jump!"))
+   end
+   misn.osdCreate( title, {
+      fmt.f(_("Distance: {d} {dunit}"), {d=d, dunit=dunit}),
+   } )
+   hook.timer( 0.1, "heartbeat" )
 end
