@@ -1,6 +1,33 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# export WITHGDB=NO to avoid using GDB where it is a hinderance.
+# Prefers GDB over LLDB if both are installed, you can choose your preference
+# by exporting PREFERLLDB=true
+
+# Set WITHDEBUGGER=false to avoid using debuggers where it is a hinderance.
+
+get_debugger() {
+    local preferred_debugger="gdb"
+
+    if [ "$WITHDEBUGGER" = "false" ]; then
+        echo "Debugging disabled."
+        return
+    fi
+
+    if [ "$PREFERLLDB" = "true" ]; then
+        preferred_debugger="lldb"
+    fi
+
+    if [ -n "$preferred_debugger" ] && command -v "$preferred_debugger" &> /dev/null; then
+        echo "$preferred_debugger"
+    elif command -v lldb &> /dev/null; then
+        echo "lldb"
+    elif command -v gdb &> /dev/null; then
+        echo "gdb"
+    else
+        echo "Error: Neither lldb nor gdb is installed. Debugging disabled."
+        return
+    fi
+}
 
 "@source_root@/meson.sh" compile -C "@build_root@" naev-gmo
 mkdir -p "@build_root@"/dat/gettext
@@ -28,9 +55,13 @@ wrapper() {
    elif [[ "@debug@" = "True" ]]; then
       export ALSOFT_LOGLEVEL=2
    fi
-   if [[ ! "$WITHGDB" =~ "NO" ]] && type "gdb" > /dev/null 2>&1; then
-      export ASAN_OPTIONS=abort_on_error=1
-      exec gdb -x "@build_root@/.gdbinit" --args "$@"
+   export ASAN_OPTIONS=halt_on_error=1
+   DEBUGGER=$(get_debugger)
+   if [[ $DEBUGGER =~ "gdb" ]]; then
+      exec $DEBUGGER -x "@build_root@/.gdbinit" --args "$@"
+   elif [[ $DEBUGGER =~ "lldb" ]]; then
+      # TODO: make something similar to the gdbinit setup with lldbinit
+      exec $DEBUGGER -o run -- "$@"
    else
       exec "$@"
    fi
