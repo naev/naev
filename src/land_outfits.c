@@ -382,7 +382,7 @@ static void outfits_genList( unsigned int wid )
       };
 
       window_addTabbedWindow( wid, 20, 20 + ih - 30, iw, 30, OUTFITS_TAB,
-                              OUTFITS_NTABS, tabnames, 1 );
+                              OUTFITS_NTABS, tabnames, 0 );
 
       barw = window_tabWinGetBarWidth( wid, OUTFITS_TAB );
       fw   = CLAMP( 0, 150, iw - barw - 30 );

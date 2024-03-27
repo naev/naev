@@ -415,20 +415,20 @@ static void mapedit_render( double bx, double by, double w, double h,
    for ( int i = 0; i < mapedit_nsys; i++ ) {
       StarSystem *sys = mapedit_sys[i];
       gl_renderCircle( x + sys->pos.x * mapedit_zoom,
-                       y + sys->pos.y * mapedit_zoom, 1.8 * r, &cRed, 0 );
+                       y + sys->pos.y * mapedit_zoom, 1.8 * r, &cRed, 1 );
       gl_renderCircle( x + sys->pos.x * mapedit_zoom,
-                       y + sys->pos.y * mapedit_zoom, 2.0 * r, &cRed, 0 );
+                       y + sys->pos.y * mapedit_zoom, 2.0 * r, &cRed, 1 );
    }
 
    /* Render last clicked system */
    if ( mapedit_iLastClickedSystem != 0 ) {
       StarSystem *sys = system_getIndex( mapedit_iLastClickedSystem );
       gl_renderCircle( x + sys->pos.x * mapedit_zoom,
-                       y + sys->pos.y * mapedit_zoom, 2.4 * r, &cBlue, 0 );
+                       y + sys->pos.y * mapedit_zoom, 2.4 * r, &cBlue, 1 );
       gl_renderCircle( x + sys->pos.x * mapedit_zoom,
-                       y + sys->pos.y * mapedit_zoom, 2.6 * r, &cBlue, 0 );
+                       y + sys->pos.y * mapedit_zoom, 2.6 * r, &cBlue, 1 );
       gl_renderCircle( x + sys->pos.x * mapedit_zoom,
-                       y + sys->pos.y * mapedit_zoom, 2.8 * r, &cBlue, 0 );
+                       y + sys->pos.y * mapedit_zoom, 2.8 * r, &cBlue, 1 );
    }
 }
 

@@ -13,6 +13,7 @@ local graphics = {
    _wraph = "clamp",
    _wrapv = "clamp",
    _wrapd = "clamp",
+   _line_width = 1,
 }
 
 -- Helper functions
@@ -305,6 +306,10 @@ function graphics.setLineStyle( _style )
    love._unimplemented()
 end
 
+function graphics.setLineWidth( width )
+   graphics._line_width = width;
+end
+
 
 --[[
 -- Rendering primitives and drawing
@@ -332,20 +337,22 @@ function graphics.clear( ... )
    else
       -- Minor optimization: just render when there is non-transparent colour
       if col:alpha()>0 then
-         naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
+         naev.gfx.renderRect( love.x, love.y, love.w, love.h, col)
       end
    end
 end
 function graphics.draw( drawable, ... )
    drawable:draw( ... )
 end
-function graphics.rectangle( mode, x, y, width, height )
-   local H = _H( x, y, 0, width, height )
-   naev.gfx.renderRectH( H, graphics._fgcol, _mode(mode) )
+
+function graphics.rectangle( mode, x, y, width, height, rx, ry)
+      local H = _H( x, y, 0, width, height )
+      naev.gfx.renderRectH( H, graphics._fgcol, _mode(mode),graphics._line_width, rx, ry)
 end
+
 function graphics.circle( mode, x, y, radius )
    local H = _H( x, y-radius, 0, radius, radius )
-   naev.gfx.renderCircleH( H, graphics._fgcol, _mode(mode) )
+   naev.gfx.renderCircleH( H, graphics._fgcol, graphics._line_width, _mode(mode) )
 end
 function graphics.print( text, ... )
    local arg = {...}

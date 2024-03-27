@@ -867,10 +867,10 @@ static void sysedit_renderAsteroidsField( double bx, double by,
 
    if ( selected ) {
       const glColour csel = COL_ALPHA( cFontBlue, 0.5 );
-      gl_renderCircle( tx, ty, ast->radius * sysedit_zoom, &csel, 1 );
+      gl_renderDisk( tx, ty, ast->radius * sysedit_zoom, &csel );
    }
 
-   gl_renderCircle( tx, ty, ast->radius * sysedit_zoom, &cOrange, 0 );
+   gl_renderCircle( tx, ty, ast->radius * sysedit_zoom, &cOrange, 1 );
    gl_printMidRaw( &gl_smallFont, 200, tx - 100, ty - gl_smallFont.h / 2.,
                    ( selected ) ? &cRed : NULL, -1., _( "Asteroid Field" ) );
 }
@@ -897,14 +897,14 @@ static void sysedit_renderAsteroidExclusion( double bx, double by,
 
    if ( selected ) {
       const glColour csel = COL_ALPHA( cFontBlue, 0.5 );
-      gl_renderCircle( tx, ty, aexcl->radius * sysedit_zoom, &csel, 1 );
+      gl_renderDisk( tx, ty, aexcl->radius * sysedit_zoom, &csel );
    }
 
    col = ( selected ) ? &cWhite : &cRed;
 
-   gl_renderCircle( tx, ty, r, col, 0 );
+   gl_renderCircle( tx, ty, r, col, 1 );
    gl_renderCross( tx, ty, r, col );
-   gl_renderRectEmpty( tx - rr, ty - rr, rr * 2, rr * 2, col );
+   gl_renderRect( tx - rr, ty - rr, rr * 2, rr * 2, 5, col );
 }
 
 /**
@@ -922,15 +922,15 @@ static void sysedit_renderBG( double bx, double by, double w, double h,
    int    nx, ny;
 
    /* Render blackness. */
-   gl_renderRect( bx, by, w, h, &cBlack );
+   gl_renderPane( bx, by, w, h, &cBlack );
 
    /* Must have grid activated. */
    if ( !sysedit_grid )
       return;
 
    /* Draw lines that go through 0,0 */
-   gl_renderRect( x - 1., by, 3., h, &cLightBlue );
-   gl_renderRect( bx, y - 1., w, 3., &cLightBlue );
+   gl_renderPane( x - 1., by, 3., h, &cLightBlue );
+   gl_renderPane( bx, y - 1., w, 3., &cLightBlue );
 
    /* Render lines. */
    spacing = s * z;
@@ -951,7 +951,7 @@ static void sysedit_renderBG( double bx, double by, double w, double h,
       gl_renderLine( bx, d, bx + w, d, &cBlue );
    }
 
-   gl_renderCircle( x, y, sysedit_sys->radius * z, &cLightBlue, 0 );
+   gl_renderCircle( x, y, sysedit_sys->radius * z, &cLightBlue, 1 );
 }
 
 /**
@@ -971,7 +971,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by,
    /* Selection graphic. */
    if ( selected ) {
       const glColour csel = COL_ALPHA( cFontBlue, 0.5 );
-      gl_renderCircle( bx + x * z, by + y * z, gfx->sw * z * 1.1, &csel, 1 );
+      gl_renderDisk( bx + x * z, by + y * z, gfx->sw * z * 1.1, &csel );
    }
 
    /* Translate coords. */

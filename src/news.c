@@ -410,7 +410,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
       news_pos = 0.;
 
    /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
+   gl_renderPane( bx, by, w, h, &cBlack );
 
    /* Render the text. */
    p = (int)ceil( news_pos / ( news_font->h + 5. ) );

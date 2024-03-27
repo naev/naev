@@ -102,7 +102,7 @@ static void inp_render( Widget *inp, double bx, double by )
    y = by + inp->y;
 
    /* main background */
-   toolkit_drawRect( x - 4, y - 4, inp->w + 8, inp->h + 8, &cBlack, NULL );
+   gl_renderPane( x - 4, y - 4, inp->w + 8, inp->h + 8, &cBlack );
 
    /** Decide what text to draw. */
    if ( ( inp->dat.inp.input[0] == '\0' ) &&
@@ -133,9 +133,9 @@ static void inp_render( Widget *inp, double bx, double by )
    if ( wgt_isFlag( inp, WGT_FLAG_FOCUSED ) ) {
       if ( inp->dat.inp.oneline ) {
          w = inp_rangeToWidth( inp, inp->dat.inp.view, inp->dat.inp.pos );
-         toolkit_drawRect( x + 5. + w,
-                           y + ( inp->h - inp->dat.inp.font->h - 4. ) / 2., 1.,
-                           inp->dat.inp.font->h + 4., &cGreen, &cGreen );
+         gl_renderPane( x + 5. + w,
+                        y + ( inp->h - inp->dat.inp.font->h - 4. ) / 2., 1.,
+                        inp->dat.inp.font->h + 4., &cGreen );
       } else {
          /* Wrap the cursor around if the text is longer than the width of the
           * widget. */
@@ -159,18 +159,17 @@ static void inp_render( Widget *inp, double bx, double by )
          w = inp_rangeToWidth( inp, p, inp->dat.inp.pos );
 
          /* Get the actual width now. */
-         toolkit_drawRect(
-            x + 5. + w, y + inp->h - lines * ( inp->dat.inp.font->h + 5 ) - 3.,
-            1., inp->dat.inp.font->h + 4., &cGreen, &cGreen );
+         gl_renderPane( x + 5. + w,
+                        y + inp->h - lines * ( inp->dat.inp.font->h + 5 ) - 3.,
+                        1., inp->dat.inp.font->h + 4., &cGreen );
       }
    }
 
    /* inner outline */
-   /* toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
-         toolkit_colLight, NULL ); */
+   /* gl_renderRect( x, y, inp->w, inp->h, 0.,
+         toolkit_colLight ); */
    /* outer outline */
-   toolkit_drawOutline( x - 2, y - 2, inp->w + 4, inp->h + 4, 1., &cGrey20,
-                        NULL );
+   gl_renderRect( x - 2, y - 2, inp->w + 4, inp->h + 4, 1., &cGrey20 );
 }
 
 /**

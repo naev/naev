@@ -210,7 +210,7 @@ void menu_main( void )
 
    /* Set dimensions */
    y = 20 + ( BUTTON_HEIGHT + 20 ) * 4;
-   h = y + 80;
+   h = y + 60;
    if ( conf.devmode ) {
       h += BUTTON_HEIGHT + 20;
       y += BUTTON_HEIGHT + 20;
@@ -443,10 +443,10 @@ void menu_small( int docheck, int info, int options, int allowsave )
    can_save = allowsave && landed && !player_isFlag( PLAYER_NOSAVE );
    menu_small_allowsave = allowsave;
 
-   h   = MENU_HEIGHT - ( BUTTON_HEIGHT + 20 ) * ( !info + !options );
-   y   = 20 + ( BUTTON_HEIGHT + 20 ) * ( 2 + !!info + !!options );
-   wid = window_create( "wdwMenuSmall", _( "Menu" ), -1, -1, MENU_WIDTH,
-                        h + BUTTON_HEIGHT + 20 );
+   h = MENU_HEIGHT - ( BUTTON_HEIGHT + 20 ) * ( !info + !options );
+   y = 20 + ( BUTTON_HEIGHT + 20 ) * ( 2 + !!info + !!options );
+   wid =
+      window_create( "wdwMenuSmall", _( "Menu" ), -1, -1, MENU_WIDTH, h + 20 );
 
    window_setCancel( wid, menu_small_resume );
 

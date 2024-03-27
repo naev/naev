@@ -207,12 +207,12 @@ static void chk_render( Widget *chk, double bx, double by )
    }
 
    /* Draw rect. */
-   toolkit_drawRect( x - 1, y - 1 + ( chk->h - 10. ) / 2., 12., 12.,
-                     toolkit_colDark, NULL );
-   toolkit_drawRect( x, y + ( chk->h - 10. ) / 2., 10., 10., cbkg, NULL );
+   gl_renderPane( x - 1, y - 1 + ( chk->h - 10. ) / 2., 12., 12.,
+                  toolkit_colDark );
+   gl_renderPane( x, y + ( chk->h - 10. ) / 2., 10., 10., cbkg );
    if ( chk->dat.chk.state )
-      toolkit_drawRect( x + 2., y + 2. + ( chk->h - 10. ) / 2., 6., 6.,
-                        toolkit_colDark, NULL );
+      gl_renderPane( x + 2., y + 2. + ( chk->h - 10. ) / 2., 6., 6.,
+                     toolkit_colDark );
 
    /* Draw the txt. */
    gl_printMaxRaw( NULL, chk->w - 20, bx + chk->x + 15,
