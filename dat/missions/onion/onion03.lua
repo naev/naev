@@ -25,6 +25,7 @@ local vn = require "vn"
 local onion = require "common.onion"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
+local fleet = require "fleet"
 
 -- Action happens in the jump from Tepadania (Empire) to Ianella (Dvaered)
 -- l337_b01 lives in Anubis (Scorpius)?
@@ -162,6 +163,30 @@ end
 
 local distlim = 5e3
 local dunit = naev.unit("distance")
+local timeend
+local enemies
+
+-- Nexus ships
+-- hawking, pacifier, admonisher, lancelot, shark
+local function spawn_baddie( ships )
+   local fct = faction.dynAdd( "Dummy", "_onion_nexus", _("Nexus IT"), { ai="baddie" } )
+
+   local loc = jp
+   local names = {}
+   for k,s in ipairs(ships) do
+      names[k] = fmt.f(_("Nexus {ship}"), {ship=s:name()})
+   end
+   local plts = fleet.add( 1, ships, fct, loc, names )
+   for k,p in ipairs(plts) do
+      table.insert( enemies, p )
+   end
+
+   -- Give a message if new enemies coming in
+   player.msg(_("l337_b01: jump signal detected!"), true)
+end
+
+local spawned = 1
+local spawntable
 function wait ()
    if player.pos():dist2( jp:pos() ) < 1e3^2 then
       vn.clear()
@@ -177,6 +202,19 @@ function wait ()
          {shipname=player.pilot():name()}))
       vn.done("electric")
       vn.run()
+
+      -- Set up variables
+      local now = naev.ticksGame()
+      timeend = now + 150 -- 2.5 minutes
+      spawned = 1
+      spawntable = {
+         { t=now+10, s={"Lancelot", "Lancelot"} },
+         { t=now+30, s={"Admonisher", "Admonisher"} },
+      }
+      enemies = {}
+
+      spawn_baddie{ "Pacifier", "Lancelot", "Lancelot" }
+      heartbeat()
       return
    end
    hook.timer( 1, "wait" )
@@ -187,8 +225,36 @@ function heartbeat ()
    if d > distlim then
       lmisn.fail(_("You strayed too far from the jump!"))
    end
+   local now = naev.ticksGame()
+   if spawned < #spawntable and now >= spawntable[spawned].t then
+      spawn_baddie( spawntable.s )
+      spawned = spawned+1
+   end
+   local left = timeend-now
+   if left <= 0 then
+      hook.timer( 5, "theend" )
+      return
+   end
    misn.osdCreate( title, {
-      fmt.f(_("Distance: {d} {dunit}"), {d=d, dunit=dunit}),
+      fmt.f(_([[Defend the Jump
+Distance: {d} {dunit}
+Time left: {left:.1f}]]), {d=d, dunit=dunit, left=left}),
    } )
    hook.timer( 0.1, "heartbeat" )
+
+   local capship = false
+   for k,p in ipairs(enemies) do
+      if p:exists() and p:size() >= 3 then
+         capship = true
+         break
+      end
+   end
+   if not capship then
+      spawn_baddie{ "Pacifier" }
+   end
+end
+
+function theend ()
+   local plts = spawn_baddie{ "Hawking", "Admonisher", "Admonisher" }
+   plts[1]:rename(_("Nexus RTFM"))
 end
