@@ -26,14 +26,15 @@ local onion = require "common.onion"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
 local fleet = require "fleet"
+local pltai = require "pilotai"
 
 -- Action happens in the jump from Tepadania (Empire) to Ianella (Dvaered)
 -- l337_b01 lives in Anubis (Scorpius)?
 local spb1, sys1 = spob.getS("Tepdania Prime")
 local sys2 = system.get("Ianella")
-local jp = jump.get( sys1, sys2 )
+local jmp = jump.get( sys1, sys2 )
 
---local money_reward = onion.rewards.misn03
+local money_reward = onion.rewards.misn03
 
 local title = _("Enter the Nexus")
 
@@ -146,6 +147,9 @@ You hear some clacking noises, but you have no idea what's going on as you only 
       } )
       misn.markerRm()
       misn.markerAdd( sys1 )
+   elseif mem.state==2 then
+      local prt = love_shaders.shaderimage2canvas( love_shaders.hologram(), onion.img_onion() )
+      misn.npcAdd( "meeting", _("l337_b01"), prt.t.tex, _("Establish communication with l337_b01?"), 2 )
    end
 end
 
@@ -157,7 +161,7 @@ end
 
 function prepare ()
    player.msg(_("l337_b01: head over to the jump, there should be a relay buoy there."), true)
-   system.markerAdd( jp:pos() )
+   system.markerAdd( jmp:pos() )
    hook.timer( 1, "wait" )
 end
 
@@ -171,13 +175,16 @@ local enemies
 local function spawn_baddie( ships )
    local fct = faction.dynAdd( "Dummy", "_onion_nexus", _("Nexus IT"), { ai="baddie" } )
 
-   local loc = jp
+   local loc = jmp
    local names = {}
    for k,s in ipairs(ships) do
       names[k] = fmt.f(_("Nexus {ship}"), {ship=s:name()})
    end
    local plts = fleet.add( 1, ships, fct, loc, names )
    for k,p in ipairs(plts) do
+      p:changeAI( "guard" )
+      local m = p:memory()
+      m.guardpos = jmp:pos() + vec2.newP( 1e3 * rnd.rnd(), rnd.angle() )
       table.insert( enemies, p )
    end
 
@@ -188,7 +195,10 @@ end
 local spawned = 1
 local spawntable
 function wait ()
-   if player.pos():dist2( jp:pos() ) < 1e3^2 then
+   if player.pos():dist2( jmp:pos() ) < 1e3^2 then
+      pilot.toggleSpawn(false) -- no more spawning
+      pltai.clear() -- get rid of pilots
+
       vn.clear()
       vn.scene()
       local l337 = vn.newCharacter( onion.vn_l337b01() )
@@ -208,8 +218,11 @@ function wait ()
       timeend = now + 150 -- 2.5 minutes
       spawned = 1
       spawntable = {
-         { t=now+10, s={"Lancelot", "Lancelot"} },
+         { t=now+10, s={"Lancelot", "Lancelot", "Shark", "Shark"} },
          { t=now+30, s={"Admonisher", "Admonisher"} },
+         { t=now+60, s={"Pacifier", "Lancelot", "Lancelot"} },
+         { t=now+90, s={"Admonisher", "Shark", "Shark", "Shark" } },
+         { t=now+120, s={"Pacifier"} },
       }
       enemies = {}
 
@@ -221,7 +234,7 @@ function wait ()
 end
 
 function heartbeat ()
-   local d = player.pos():dist( jp:pos() )
+   local d = player.pos():dist( jmp:pos() )
    if d > distlim then
       lmisn.fail(_("You strayed too far from the jump!"))
    end
@@ -232,13 +245,21 @@ function heartbeat ()
    end
    local left = timeend-now
    if left <= 0 then
+      misn.osdCreate( title, {
+         _("You won?"),
+      } )
+      player.msg(_("l337_b01: Done! Wait, why isn't it working."), true)
       hook.timer( 5, "theend" )
       return
+   end
+   local dstr = fmt.number(d)
+   if d > 4e3 then
+      dstr = "#o"..dstr
    end
    misn.osdCreate( title, {
       fmt.f(_([[Defend the Jump
 Distance: {d} {dunit}
-Time left: {left:.1f}]]), {d=d, dunit=dunit, left=left}),
+Time left: {left:.1f}]]), {d=dstr, dunit=dunit, left=left}),
    } )
    hook.timer( 0.1, "heartbeat" )
 
@@ -250,11 +271,98 @@ Time left: {left:.1f}]]), {d=d, dunit=dunit, left=left}),
       end
    end
    if not capship then
-      spawn_baddie{ "Pacifier" }
+      spawn_baddie{ "Pacifier", "Lancelot", "Lancelot" }
    end
 end
 
+local bossname = _("Nexus RTFM")
 function theend ()
    local plts = spawn_baddie{ "Hawking", "Admonisher", "Admonisher" }
-   plts[1]:rename(_("Nexus RTFM"))
+   plts[1]:rename(bossname)
+   hook.pilot( plts[1], "death", "rtfm_death" )
+   hook.pilot( plts[1], "board", "rtfm_board" )
+   player.msg(_("l337_b01: Another? Incoming jump signal. It's large!"), true)
+   hook.timer( 5, "lastmsg" )
+end
+
+function lastmsg ()
+   player.msg(fmt.f(_("l337_b01: That's the cause! Take down the {shipname}!"), {shipname=bossname}), true)
+      misn.osdCreate( title, {
+         fmt.f(_("Defeat the {shipname}"),{shipname=bossname}),
+      } )
+end
+
+-- Make all the enemies go away
+local function runaway ()
+   for k,p in ipairs(enemies) do
+      if p:exists() then
+         p:control()
+         p:hyperspace( jmp )
+      end
+   end
+end
+
+function rtfm_death ()
+   hook.timer( 5, "won" )
+   runaway()
+end
+
+function won ()
+   vn.clear()
+   vn.scene()
+   local l337 = vn.newCharacter( onion.vn_l337b01() )
+   vn.transition("electric")
+   vn.na(_([[An easily recognizable hologram pops up.]]))
+   l337(_([["Man, you make it look so easy. Sorry I wasn't able to lend a hand, bandwidth is still at a premium."]]))
+   l337(fmt.f(_([["With the destruction of {shipname}, I've created enough issues and bugs on their internal trackers that they'll probably never notice the relay got shorted."]]),
+      {shipname=bossname}))
+   l337(_([["The relay connection looks stable, however, it's best to not use bandwidth out in open space. Too easy to track. Try landing somewhere, so I can mask the communication bandwidth."]]))
+   vn.done("electric")
+   vn.run()
+
+   misn.osdCreate( title, {
+      _("Land and talk communicate with l337_b01"),
+   } )
+   mem.state = 2
+end
+
+function rtfm_board( p )
+   vn.clear()
+   vn.scene()
+   local l337 = vn.newCharacter( onion.vn_l337b01() )
+   vn.transition("electric")
+   vn.na(fmt.f(_([[Before you board {shipname}, l337_b01's hologram pops up.]]),
+      {shipname=bossname}))
+   l337(fmt.f(_([["Got to say that was some incredible flying. Not that often you see a {shipclass}-class ship's systems fried like that. So exciting I kept a video recording."]]),
+      {shipclass=p:ship():name()}))
+   l337(fmt.f(_([["Anyway, no need to worry more about {shipname} and the relay! With their ship disabled and the firewall down, I was able to pick clean their main data."]]),
+      {shipname=bossname}))
+   l337(_([["I've sent some anonymous tips to Nexus Shipyards HQ about the captain and some irregularities, and they'll be fired and maybe even tried for treason. The commotion will make it, so nobody will realize the relay was shorted."]]))
+   l337(_([["The relay connection looks stable, however, it's best to not use bandwidth out in open space. Too easy to track. Try landing somewhere, so I can mask the communication bandwidth."]]))
+   vn.done("electric")
+   vn.run()
+
+   misn.osdCreate( title, {
+      _("Land and talk communicate with l337_b01"),
+   } )
+   mem.state = 2
+   runaway() -- Others run away
+   p:disable() -- Disable pilot permanently
+end
+
+-- Misison end cutscene
+function meeting ()
+   vn.clear()
+   vn.scene()
+   local l337 = vn.newCharacter( onion.vn_l337b01() )
+   vn.transition("electric")
+   vn.na(_([[]]))
+   l337(_([[""]]))
+   vn.done("electric")
+   vn.run()
+
+   player.pay( money_reward )
+
+   onion.log(_([[TODO]]))
+   misn.finish(true)
 end
