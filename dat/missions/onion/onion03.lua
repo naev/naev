@@ -356,9 +356,69 @@ function meeting ()
    vn.scene()
    local l337 = vn.newCharacter( onion.vn_l337b01() )
    vn.transition("electric")
-   vn.na(_([[]]))
-   l337(_([[""]]))
+   vn.na(_([[You open up a channel with l337_b01.]]))
+   if not mem.talked_l337 then
+      vn.func( function () mem.talked_l337 = true end )
+      l337(_([["Hey, I was benchmarking the relay connection, and it seems to be running quite smoothly. Not even hitting a packet loss of 20%! Seems like Nexus Shipyards has finally stepped up their hardware game."]]))
+      l337(_([["With this, the Onion Society colloquial should go without a hitch."
+There is a slight pause.
+"Say, you want in?"]]))
+      vn.na(_([[You're not sure what happens, but before you can give a proper answer, l337_b01 manages to drag you into participating.]]))
+      l337(_([["Just remember, don't give any personal or identifying information, don't encourage lonewolf4's antics, don't talk to notasockpuppet, wait, in fact, it's probably better for you not to talk at all."]]))
+      l337(_([["Yeah, I'll just hook you up to a read-only feed with a default avatar. That should probably work. Weirder things have gone on in the past."]]))
+      l337(_([["You ready?"]]))
+   else
+      l337(_([["So about the Onion Society colloquial, you ready?"]]))
+   end
+   vn.menu{
+      {_([["Hell yes!"]]), "01_yes"},
+      {_([["Yes."]]), "01_yes"},
+      {_([["Not yet."]]), "01_no"},
+   }
+
+   vn.label("01_no")
+   vn.na(_([[You say you need to prepare. l337_b01 seems to understand and tells you to come back when you're ready for the Onion Society colloquial.]]))
    vn.done("electric")
+
+   vn.label("01_yes")
+   l337(fmt.f(_([["{playername}, get strapped in, we're headed to the Nexus!"]]),
+      {playername=player.name()}))
+   vn.na(_([[Quite a fancy way of referring to connecting into a full sensorial holodeck.]]))
+   vn.scene()
+   local l337er = vn.newCharacter( onion.vn_nexus_l337b01() )
+   vn.transition( "nexus" )
+   -- TODO transition to the nexus.
+   vn.na(_([[The world lurches around you, and you are plunged into the Nexus. Ugh, that's not a pleasant feeling.]]))
+   l337er(_([["How are you feeling? Isn't it great? Nothing like home sweet home."]]))
+   vn.menu{
+      {_([["I feel sick."]]), "02_sick"},
+      {_([["Home?"]]), "02_home"},
+      {_([["Isn't this very empty?"]]), "02_empty"},
+   }
+
+   vn.label("02_sick")
+   l337er(_([["Ah, the good old Nexus syndrome. You'll get used to it, and after a while, you'll look forward to it. It's not that bad."]]))
+   vn.jump("02_cont")
+
+   vn.label("02_home")
+   l337er(_([["Well I, erhm, spend way more time here than not. You can do anything you want here, unburdened from physical shackles. The body is the tomb of the mind, but you're free of your tomb in here!"]]))
+   vn.jump("02_cont")
+
+   vn.label("02_empty")
+   l337er(_([["Ah, yeah, it only seems empty to you because you don't have developer mode on, I wouldn't recommend it at first. It's usually too much information and can cause your last meal to find its way out your mouth."]]))
+   vn.label("02_cont")
+   l337er(_([["The Nexus world was originally designed by pure speculative greed. With normal goods and services, you have to do something right? However, if it's all digital, then there are no limits, and the gears of capitalism can go full speed. That's why it's so big and spacious."]]))
+   l337er(_([["Of course, you can guess it didn't turn out as they expected. Ended up as abandonware, only recently was it rediscovered, and after a few decaperiod hacking sessions, we got some prototype running and onboard came the Onion Society."]]))
+   l337er(_([["The codebase is humongous too, you can even find mix of paradigms, it's a true software archaeologists dream come true!"]]))
+   l337er(_([["Did I tell you about the time... wait, we don't have time for this right now. Before we head off to the colloquial, I wanted to meet up with Trixie first. They should be here anytime soon."]]))
+   vn.move( l337er, "left" )
+   local trixie = vn.newCharacter( onion.vn_nexus_trixie{pos="right"} )
+   vn.appear( trixie, "nexus" )
+   trixie(_([["Trixie always appears on time, never late, nor early!"]]))
+   l337er(_([["Hey! Impeccable timing, as usual. Did you get the cat video I sent you?"]]))
+   trixie(_([["It was entertaining as always. Cats never cease to amuse with their antics."]]))
+   l337er(_([["This is..."]]))
+
    vn.run()
 
    player.pay( money_reward )
