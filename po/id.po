@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-03-26 01:02+0000\n"
-"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
+"PO-Revision-Date: 2024-03-28 09:01+0000\n"
+"Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
 "Language: id\n"
@@ -12240,6 +12240,7 @@ msgid "Dusk"
 msgstr ""
 
 #: dat/spob/dust.xml:2 dat/ssys/dust.xml:2 src/dev_uniedit.c:2023
+#, fuzzy
 msgid "Dust"
 msgstr "Debu"
 
