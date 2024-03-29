@@ -366,7 +366,7 @@ There is a slight pause.
       vn.na(_([[You're not sure what happens, but before you can give a proper answer, l337_b01 manages to drag you into participating.]]))
       l337(_([["Just remember, don't give any personal or identifying information, don't encourage lonewolf4's antics, don't talk to notasockpuppet, wait, in fact, it's probably better for you not to talk at all."]]))
       l337(_([["Yeah, I'll just hook you up to a read-only feed with a default avatar. That should probably work. Weirder things have gone on in the past."]]))
-      l337(_([["You ready?"]]))
+      l337(_([["Are you ready?"]]))
    else
       l337(_([["So about the Onion Society colloquial, you ready?"]]))
    end
@@ -417,7 +417,18 @@ There is a slight pause.
    trixie(_([["Trixie always appears on time, never late, nor early!"]]))
    l337er(_([["Hey! Impeccable timing, as usual. Did you get the cat video I sent you?"]]))
    trixie(_([["It was entertaining as always. Cats never cease to amuse with their antics."]]))
-   l337er(_([["This is..."]]))
+   l337er(_([["Oh, this is... mmmmm... darkkazoo."
+They gesture towards you.]]))
+   vn.menu{
+      {_([[...!]]), "03_cont"},
+      {_([[... .. ...]]), "03_cont"},
+      {_([[...]]), "03_cont"},
+   }
+
+   vn.label("03_cont")
+   l337er(_([["Ah, yes. Forgot the read-only mode. Oh well, it shouldn't be long."]]))
+   trixie(_([["darkkazoo, that's a curious name. Quite ominous."]]))
+   l337er(_([[""]]))
 
    vn.run()
 
