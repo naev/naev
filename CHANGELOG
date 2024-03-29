@@ -1,3 +1,6 @@
+* 0.11.5 (unreleased)
+   * Fixed FLF-Pirate map not providing jump information
+
 * 0.11.4
    * More guards against divides by zero in autonav
    * Fixed warnings on certain OpenGL drivers
