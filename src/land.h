@@ -7,7 +7,7 @@
 #include "mission.h"
 #include "nstring.h"
 #include "space.h"
-#include "start.h"
+#include "start.h" // IWYU pragma: keep
 
 /*
  * The window interfaces.
@@ -76,7 +76,7 @@ void         land_buttonTakeoff( unsigned int wid, const char *unused );
 unsigned int land_getWid( int window );
 void         bar_regen( void );
 void         misn_regen( void );
-void         misn_patchMission( Mission *misn );
+void         misn_patchMission( const Mission *misn );
 
 /*
  * Error dialogue generation and associated checks.

@@ -39,7 +39,6 @@
 #include "news.h"
 #include "nlua.h"
 #include "nlua_tk.h"
-#include "nluadef.h"
 #include "npc.h"
 #include "nstring.h"
 #include "ntime.h"
@@ -47,10 +46,8 @@
 #include "player.h"
 #include "player_autonav.h"
 #include "player_fleet.h"
-#include "render.h"
 #include "rng.h"
 #include "save.h"
-#include "shiplog.h"
 #include "toolkit.h"
 
 /*
@@ -400,7 +397,7 @@ static int bar_genList( unsigned int wid )
 /**
  * @brief Patches a mission into the mission computer.
  */
-void misn_patchMission( Mission *misn )
+void misn_patchMission( const Mission *misn )
 {
    array_push_back( &mission_computer, *misn );
    /* TODO sort. */
