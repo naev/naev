@@ -47,6 +47,9 @@
       * Removed fancy background mode
       * Can remove fighter bays with deployed fighters
 
+* 0.11.5 (unreleased)
+   * Fixed FLF-Pirate map not providing jump information
+
 * 0.11.4
    * More guards against divides by zero in autonav
    * Fixed warnings on certain OpenGL drivers
