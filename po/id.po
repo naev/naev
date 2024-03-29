@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-03-28 09:01+0000\n"
+"PO-Revision-Date: 2024-03-29 15:02+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -1653,7 +1653,7 @@ msgstr ""
 
 #: dat/effects/ionization.xml:2
 msgid "Ionization"
-msgstr ""
+msgstr "Ionisasi"
 
 #: dat/effects/ionization.xml:3
 msgid "The ship is being ionized!"
@@ -1765,7 +1765,7 @@ msgstr ""
 
 #: dat/factions/collective.xml:2
 msgid "Collective"
-msgstr ""
+msgstr "Kolektif"
 
 #: dat/factions/collective.xml:9
 msgid ""
@@ -1775,7 +1775,7 @@ msgstr ""
 
 #: dat/factions/derelict.xml:2
 msgid "Derelict"
-msgstr ""
+msgstr "Derelik"
 
 #: dat/factions/dreamer_clan.xml:2
 msgid "Dreamer Clan"
@@ -1922,11 +1922,11 @@ msgstr ""
 #: dat/missions/neutral/adblocker.lua:99 dat/missions/neutral/teenager.lua:95
 #: dat/missions/taiomi/taiomi10.lua:137
 msgid "Independent"
-msgstr ""
+msgstr "Independen"
 
 #: dat/factions/marauder.xml:2
 msgid "Marauder"
-msgstr ""
+msgstr "Penjarah"
 
 #. Returns a lore message for the given faction.
 #. Need presence
@@ -2033,11 +2033,11 @@ msgstr ""
 #: dat/missions/shark/sh02_tapping.lua:286
 #: dat/missions/shark/sh02_tapping.lua:291
 msgid "Mercenary"
-msgstr ""
+msgstr "Prajurit Upah"
 
 #: dat/factions/miner.xml:2
 msgid "Miner"
-msgstr ""
+msgstr "Penambang"
 
 #: dat/factions/nasin.xml:2
 msgid "Nasin"
@@ -2156,7 +2156,7 @@ msgstr ""
 
 #: dat/factions/thurion.xml:2
 msgid "Thurion"
-msgstr "Thurion"
+msgstr "Turion"
 
 #: dat/factions/thurion.xml:10
 msgid ""
@@ -2202,7 +2202,7 @@ msgstr ""
 #: dat/factions/trader.xml:2 dat/events/npc/trader.lua:60
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:48
 msgid "Trader"
-msgstr ""
+msgstr "Pedagang"
 
 #: dat/factions/traders_society.xml:2
 msgid "Traders Society"
@@ -7919,7 +7919,7 @@ msgstr ""
 
 #: dat/ships/neutral/kestrel.xml:2
 msgid "Kestrel"
-msgstr ""
+msgstr "Kestrel"
 
 #: dat/ships/neutral/kestrel.xml:14 dat/ships/neutral/starbridge.xml:14
 msgid "Krain Industries"
@@ -7967,7 +7967,6 @@ msgstr ""
 
 #: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
-#, fuzzy
 msgid "Llama"
 msgstr "Llama"
 
@@ -10303,7 +10302,7 @@ msgstr ""
 
 #: dat/spob/arcadia.xml:2
 msgid "Arcadia"
-msgstr "Arcadia"
+msgstr "Arkadia"
 
 #: dat/spob/arcadia.xml:26
 msgid ""
@@ -10324,7 +10323,7 @@ msgstr ""
 
 #: dat/spob/arcania.xml:2
 msgid "Arcania"
-msgstr "Arcania"
+msgstr "Arkania"
 
 #: dat/spob/arcania.xml:15
 msgid ""
@@ -10539,7 +10538,7 @@ msgstr ""
 
 #: dat/spob/atryssa.xml:2
 msgid "Atryssa"
-msgstr "Atryssa"
+msgstr "Atrisa"
 
 #: dat/spob/atryssa.xml:28
 msgid ""
@@ -10580,7 +10579,6 @@ msgstr ""
 #. --
 #: dat/spob/august.xml:2 dat/events/neutral/shipwreck.lua:24
 #: dat/missions/neutral/spacefamily.lua:63
-#, fuzzy
 msgid "August"
 msgstr "Agus"
 
@@ -10600,7 +10598,7 @@ msgstr ""
 
 #: dat/spob/avoss.xml:2
 msgid "Avoss"
-msgstr "Avoss"
+msgstr "Avos"
 
 #: dat/spob/avoss.xml:25
 msgid ""
@@ -10752,7 +10750,7 @@ msgstr ""
 
 #: dat/spob/behemoth.xml:2
 msgid "Behemoth"
-msgstr "Behemoth"
+msgstr "Behemot"
 
 #: dat/spob/belltower_nest.xml:2
 msgid "Belltower Nest"
@@ -10821,7 +10819,7 @@ msgstr ""
 
 #: dat/spob/berkhere.xml:2
 msgid "Berkhere"
-msgstr "Berkhere"
+msgstr "Berkher"
 
 #: dat/spob/berkhere.xml:27
 msgid ""
@@ -11333,12 +11331,10 @@ msgid ""
 msgstr ""
 
 #: dat/spob/charcoal.xml:2
-#, fuzzy
 msgid "Charcoal"
 msgstr "Batubara"
 
 #: dat/spob/charred.xml:2
-#, fuzzy
 msgid "Charred"
 msgstr "Gosong"
 
@@ -11533,9 +11529,8 @@ msgstr ""
 
 #: dat/spob/crow.xml:2 dat/scripts/pilotname/generic.lua:24
 #: dat/scripts/pilotname/pirate.lua:277
-#, fuzzy
 msgid "Crow"
-msgstr "Gagak"
+msgstr "Kuervo"
 
 #: dat/spob/crow.xml:28
 msgid ""
@@ -11556,7 +11551,7 @@ msgstr ""
 
 #: dat/spob/crylo.xml:2
 msgid "Crylo"
-msgstr "Crylo"
+msgstr "Krilo"
 
 #: dat/spob/crylo.xml:27
 msgid ""
@@ -11652,11 +11647,11 @@ msgstr ""
 
 #: dat/spob/cyrene.xml:2
 msgid "Cyrene"
-msgstr "Cyrene"
+msgstr "Kairen"
 
 #: dat/spob/daahrax.xml:2
 msgid "Daahrax"
-msgstr "Daahrax"
+msgstr "Daahraks"
 
 #: dat/spob/daahrax.xml:25
 msgid ""
@@ -11713,7 +11708,7 @@ msgstr ""
 
 #: dat/spob/damphyr.xml:2
 msgid "Damphyr"
-msgstr "Damphyr"
+msgstr "Damfir"
 
 #: dat/spob/daravon_i.xml:2
 msgid "Daravon I"
@@ -11725,7 +11720,7 @@ msgstr ""
 
 #: dat/spob/darkshed.xml:2
 msgid "Darkshed"
-msgstr ""
+msgstr "Anggarkelam"
 
 #: dat/spob/darkshed.xml:28
 msgid ""
@@ -11754,7 +11749,7 @@ msgstr ""
 
 #: dat/spob/dawn.xml:2
 msgid "Dawn"
-msgstr ""
+msgstr "Amaneser"
 
 #: dat/spob/dawn.xml:27
 msgid ""
@@ -11939,7 +11934,7 @@ msgstr ""
 
 #: dat/spob/doormat.xml:2
 msgid "Doormat"
-msgstr ""
+msgstr "Alfombrilla"
 
 #: dat/spob/doormat.xml:23
 msgid ""
@@ -12237,10 +12232,9 @@ msgstr ""
 
 #: dat/spob/dusk.xml:2
 msgid "Dusk"
-msgstr ""
+msgstr "Atardeser"
 
 #: dat/spob/dust.xml:2 dat/ssys/dust.xml:2 src/dev_uniedit.c:2023
-#, fuzzy
 msgid "Dust"
 msgstr "Debu"
 
@@ -12645,7 +12639,7 @@ msgstr ""
 
 #: dat/spob/ember.xml:2
 msgid "Ember"
-msgstr ""
+msgstr "Baraapi"
 
 #: dat/spob/ember.xml:27
 msgid ""
@@ -12844,7 +12838,7 @@ msgstr ""
 
 #: dat/spob/excelcior.xml:2
 msgid "Excelcior"
-msgstr "Excelcior"
+msgstr "Ekselsior"
 
 #: dat/spob/excelcior.xml:27
 msgid ""
@@ -13076,7 +13070,7 @@ msgstr ""
 
 #: dat/spob/forge.xml:2
 msgid "Forge"
-msgstr ""
+msgstr "Tungku"
 
 #: dat/spob/fort_allan.xml:2
 msgid "Fort Allan"
@@ -13543,7 +13537,7 @@ msgstr ""
 
 #: dat/spob/gem.xml:2
 msgid "Gem"
-msgstr ""
+msgstr "Permata"
 
 #: dat/spob/gennus.xml:2
 msgid "Gennus"
@@ -13839,7 +13833,7 @@ msgstr ""
 
 #: dat/spob/greenberg.xml:2
 msgid "Greenberg"
-msgstr ""
+msgstr "Monteverde"
 
 #: dat/spob/greenberg.xml:26
 msgid ""
@@ -13997,7 +13991,7 @@ msgstr ""
 
 #: dat/spob/haldr.xml:2
 msgid "Haldr"
-msgstr "Haldr"
+msgstr "Halder"
 
 #: dat/spob/haldr.xml:26
 msgid ""
@@ -14068,7 +14062,7 @@ msgstr ""
 
 #: dat/spob/hankies.xml:2
 msgid "Hankies"
-msgstr "Hankies"
+msgstr "Hankis"
 
 #: dat/spob/hankies.xml:26
 msgid ""
@@ -15110,9 +15104,8 @@ msgid ""
 msgstr ""
 
 #: dat/spob/jasmine.xml:2
-#, fuzzy
 msgid "Jasmine"
-msgstr "Melati"
+msgstr "Jasmin"
 
 #: dat/spob/jasmine.xml:24
 msgid ""
@@ -15875,7 +15868,6 @@ msgid ""
 msgstr ""
 
 #: dat/spob/leviathan.xml:2
-#, fuzzy
 msgid "Leviathan"
 msgstr "Leviatan"
 
@@ -18909,9 +18901,8 @@ msgid "Raelid Prime"
 msgstr ""
 
 #: dat/spob/rage.xml:2
-#, fuzzy
 msgid "Rage"
-msgstr "Amarah"
+msgstr "Rabia"
 
 #: dat/spob/ramen.xml:2 dat/scripts/pilotname/pirate.lua:418
 msgid "Ramen"
@@ -22337,7 +22328,6 @@ msgid "Vauban I-1"
 msgstr ""
 
 #: dat/spob/vault.xml:2
-#, fuzzy
 msgid "Vault"
 msgstr "Vault"
 
@@ -23225,9 +23215,8 @@ msgid ""
 msgstr ""
 
 #: dat/spob/wyrmwood.xml:2
-#, fuzzy
 msgid "Wyrmwood"
-msgstr "Wyrmwood"
+msgstr "Kayunaga"
 
 #: dat/spob/wyrmwood.xml:28
 msgid ""
@@ -23880,7 +23869,6 @@ msgid "Aneel Azi"
 msgstr ""
 
 #: dat/ssys/anger.xml:2
-#, fuzzy
 msgid "Anger"
 msgstr "Amarah"
 
@@ -24032,7 +24020,6 @@ msgid "Blackwell"
 msgstr ""
 
 #: dat/ssys/blunderbuss.xml:2
-#, fuzzy
 msgid "Blunderbuss"
 msgstr "Pemuras"
 
@@ -24089,7 +24076,6 @@ msgid "C-59"
 msgstr "C-59"
 
 #: dat/ssys/capricorn.xml:2
-#, fuzzy
 msgid "Capricorn"
 msgstr "Kaprikornus"
 
@@ -24114,7 +24100,6 @@ msgid "Cebus"
 msgstr "Cebus"
 
 #: dat/ssys/cerberus.xml:2
-#, fuzzy
 msgid "Cerberus"
 msgstr "Kerberos"
 
@@ -24135,12 +24120,10 @@ msgid "Cleai"
 msgstr "Cleai"
 
 #: dat/ssys/copernicus.xml:2
-#, fuzzy
 msgid "Copernicus"
 msgstr "Kopernikus"
 
 #: dat/ssys/corinth.xml:2
-#, fuzzy
 msgid "Corinth"
 msgstr "Korintus"
 
@@ -24287,7 +24270,6 @@ msgid "Ekta"
 msgstr "Ekta"
 
 #: dat/ssys/elixir.xml:2
-#, fuzzy
 msgid "Elixir"
 msgstr "Elixir"
 
@@ -24334,7 +24316,6 @@ msgid "Father's Pride"
 msgstr ""
 
 #: dat/ssys/faust.xml:2
-#, fuzzy
 msgid "Faust"
 msgstr "Faustus"
 
@@ -24488,7 +24469,6 @@ msgid "Haleb"
 msgstr "Haleb"
 
 #: dat/ssys/halo.xml:2
-#, fuzzy
 msgid "Halo"
 msgstr "Halo"
 
@@ -24565,7 +24545,6 @@ msgid "Jackson"
 msgstr "Jackson"
 
 #: dat/ssys/jade.xml:2
-#, fuzzy
 msgid "Jade"
 msgstr "Giok"
 
@@ -24750,9 +24729,8 @@ msgid "Midoros"
 msgstr "Midoros"
 
 #: dat/ssys/millstone.xml:2
-#, fuzzy
 msgid "Millstone"
-msgstr "Millstone"
+msgstr "Milston"
 
 #: dat/ssys/mirror.xml:2
 msgid "Mirror"
@@ -25235,7 +25213,6 @@ msgid "Palovi"
 msgstr "Palovi"
 
 #: dat/ssys/paradox.xml:2
-#, fuzzy
 msgid "Paradox"
 msgstr "Paradoks"
 
@@ -25312,7 +25289,6 @@ msgid "Porro"
 msgstr "Porro"
 
 #: dat/ssys/possum.xml:2
-#, fuzzy
 msgid "Possum"
 msgstr "Posum"
 
@@ -25365,9 +25341,8 @@ msgid "Qulam"
 msgstr "Qulam"
 
 #: dat/ssys/radix.xml:2
-#, fuzzy
 msgid "Radix"
-msgstr "Radix"
+msgstr "Radiks"
 
 #: dat/ssys/raelid.xml:2
 msgid "Raelid"
@@ -25394,7 +25369,6 @@ msgid "Rei"
 msgstr "Rei"
 
 #: dat/ssys/reptile.xml:2
-#, fuzzy
 msgid "Reptile"
 msgstr "Reptil"
 
@@ -25423,7 +25397,6 @@ msgid "Ruttwi"
 msgstr "Ruttwi"
 
 #: dat/ssys/sagittarius.xml:2
-#, fuzzy
 msgid "Sagittarius"
 msgstr "Sagitarius"
 
@@ -25440,7 +25413,6 @@ msgid "Santoros"
 msgstr "Santoros"
 
 #: dat/ssys/sarcophagus.xml:2
-#, fuzzy
 msgid "Sarcophagus"
 msgstr "Sarkofagus"
 
@@ -25875,7 +25847,6 @@ msgid "Uhriabi"
 msgstr "Uhriabi"
 
 #: dat/ssys/ulysses.xml:2
-#, fuzzy
 msgid "Ulysses"
 msgstr "Ulisses"
 
@@ -25884,7 +25855,6 @@ msgid "Undergate"
 msgstr ""
 
 #: dat/ssys/unicorn.xml:2
-#, fuzzy
 msgid "Unicorn"
 msgstr "Unikorn"
 
@@ -52092,6 +52062,31 @@ msgid ""
 "Imperial secret services. Meet the fake transponder dealer at the bar if "
 "interested."
 msgstr ""
+"Seketikanya kamu mendarat, seseorang menunggumu di bandar angkasa. \"Halo "
+"masbro! Kayaknya kamu punya masalah deh ama otoritas di luar sana. "
+"Keliatannya sih si Za'lek udah minta bantuan dari para Imperial. Nyatanya "
+"ada blokade di setiap perbatasan daerah Imperial. Bahkan titik-titik lompat "
+"rahasia juga gak bisa dilewatin. Kemungkinan sih Kerajaan mau nangkep kamu "
+"gimanapun caranya, tapi untungnya aku punya solusi. Kutebak kamu pasti udah "
+"punya transponder palsu, tapi mereka udah berhasil ngeidentifikasi si "
+"transpoder itu, dan kayaknya kamu perlu penggantinya. Gini, aku bisa ngejual "
+"transponder palsu ke kamu, baru dari pabrik Skulls and Bones, gimana?\"\n"
+"   Terlihat jelas bahwa perompak ini sebetulnya sedang mencoba mencari cuan "
+"dari situasimu yang parah itu. Tapi, ide dia sebetulnya gak butut-butut "
+"amat. Kapal-kapal Imperial gak bakal nyari kapal angkasa yang punya "
+"transponder palsu merek Skulls and Bones. Jadi kamu nanya dia berapa duit "
+"yang dia mau. \"{number}\" jawabnya. \"Kek banyak kan? Tapi kalau ditimbang-"
+"timbang mungkin lebih murah kalau dibandingkan dengan nyawamu dan kesuksesan "
+"misi absurd yang lagi kamu jalanin. Mungkin kamu gak punya duit sebanyak "
+"itu. Gapapa, aku percaya bahwa kamu bakal ngebayar suatu hari nanti. "
+"Tentunya dengan sampel DNA kamu sebagai jaminan. Jadi gak ada yang namanya "
+"kabur-kabur dari pembayaran.\"\n"
+"   Kamu tahu kalau kamu setuju, kamu bakal harus bayar apapun yang terjadi. "
+"Kalau tidak, kamu akan dikejar oleh pembunuh bayaran sampai akhir hidupmu, "
+"yang kemungkinan akanlah singkat. Namun, membayar {credits} kemungkinan akan "
+"memperbolehkanmu untuk menghidari kompromi sulit yang harus kau buat dengan "
+"dinas rahasia Imperial kalau tertangkap. Cari si dealer transponder palsu di "
+"bar jika tertarik."
 
 #. Land to end the mission
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:191
