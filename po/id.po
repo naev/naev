@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-03-29 15:02+0000\n"
+"PO-Revision-Date: 2024-03-30 19:02+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -30011,7 +30011,7 @@ msgstr "Jarah"
 
 #: dat/board.lua:463
 msgid "Loot All"
-msgstr ""
+msgstr "Jarah Semua"
 
 #: dat/board.lua:465
 msgid "Cannibalize"
@@ -30025,7 +30025,7 @@ msgstr ""
 #. Will go negative with loot_mod
 #: dat/board.lua:511
 msgid "You looted {creds} from {plt}."
-msgstr ""
+msgstr "Kamu menjarah {creds} dari {plt}."
 
 #. Unable to loot anything
 #: dat/board.lua:520
@@ -30038,7 +30038,7 @@ msgstr ""
 
 #: dat/board.lua:526
 msgid "You looted {amount} fuel from {plt}."
-msgstr ""
+msgstr "Kamu menjarah {amount} bahan bakar dari {plt}."
 
 #. Looted all the fuel
 #: dat/board.lua:537
@@ -52064,16 +52064,16 @@ msgid ""
 msgstr ""
 "Seketikanya kamu mendarat, seseorang menunggumu di bandar angkasa. \"Halo "
 "masbro! Kayaknya kamu punya masalah deh ama otoritas di luar sana. "
-"Keliatannya sih si Za'lek udah minta bantuan dari para Imperial. Nyatanya "
-"ada blokade di setiap perbatasan daerah Imperial. Bahkan titik-titik lompat "
-"rahasia juga gak bisa dilewatin. Kemungkinan sih Kerajaan mau nangkep kamu "
+"Keliatannya sih si Za'lek udah minta bantuan dari Kekaisaran. Nyatanya ada "
+"blokade di setiap perbatasan daerah Kekaisaran. Bahkan titik-titik lompat "
+"rahasia juga gak bisa dilewatin. Kemungkinan sih Kekaisaran mau nangkep kamu "
 "gimanapun caranya, tapi untungnya aku punya solusi. Kutebak kamu pasti udah "
 "punya transponder palsu, tapi mereka udah berhasil ngeidentifikasi si "
 "transpoder itu, dan kayaknya kamu perlu penggantinya. Gini, aku bisa ngejual "
 "transponder palsu ke kamu, baru dari pabrik Skulls and Bones, gimana?\"\n"
 "   Terlihat jelas bahwa perompak ini sebetulnya sedang mencoba mencari cuan "
 "dari situasimu yang parah itu. Tapi, ide dia sebetulnya gak butut-butut "
-"amat. Kapal-kapal Imperial gak bakal nyari kapal angkasa yang punya "
+"amat. Kapal-kapal Kekaisaran gak bakal nyari kapal angkasa yang punya "
 "transponder palsu merek Skulls and Bones. Jadi kamu nanya dia berapa duit "
 "yang dia mau. \"{number}\" jawabnya. \"Kek banyak kan? Tapi kalau ditimbang-"
 "timbang mungkin lebih murah kalau dibandingkan dengan nyawamu dan kesuksesan "
@@ -52085,8 +52085,8 @@ msgstr ""
 "Kalau tidak, kamu akan dikejar oleh pembunuh bayaran sampai akhir hidupmu, "
 "yang kemungkinan akanlah singkat. Namun, membayar {credits} kemungkinan akan "
 "memperbolehkanmu untuk menghidari kompromi sulit yang harus kau buat dengan "
-"dinas rahasia Imperial kalau tertangkap. Cari si dealer transponder palsu di "
-"bar jika tertarik."
+"dinas rahasia Kekaisaran kalau tertangkap. Cari si dealer transponder palsu "
+"di bar jika tertarik."
 
 #. Land to end the mission
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:191
@@ -52392,6 +52392,35 @@ msgid ""
 "\"Damn! He's the fifth kid to die under my command and it still hurts as "
 "much. I just can't get used to that.\""
 msgstr ""
+"Setelah melampaui dan kabur dari musuh-musuhmu, kamu mulai bertanya-tanya "
+"bagaimana jalan operasinya di rumah sakit. Sekilas pandangan ke ruang "
+"tinggalmu memberimu jawaban jelas. Kamu melihat si VIP, masih tak sadarkan "
+"diri, dengan banyak elektroda yang terhubung dengan alat-alat menutupi "
+"tubuhnya. Bedanya, sekarang ia sudah tidak terlihat biru. Disebelahnya, para "
+"komando tidak terlihat baik-baik saja. Hamfresser, mukanya sepucat orang "
+"mati, duduk di lantai, bersandar pada sebuah pilar, sibuk mengganti perban "
+"yang berdarah-darah. Sersan Nikolov menatap bolong besar di kakinya dengan "
+"tatapan kosong dan si dokter, Therus, dengan pincang menolong prajurit yang "
+"satu ke yang lainnya sembari meninggalkan jejak telapak tangan berdarah di "
+"dinding.\n"
+"   Berbaring di tengah ruangan, tertutup perban adalah tamtama Tronk. Zirah "
+"perangnya, dengan beberapa bolong, telah dilempar beberapa meter di dalam "
+"genangan darah. Dengan senyuman pedih, sang prajurit memandangi sisa dua "
+"jari pada tangannya yang ia buat berjalan di lantai. \"Leopold, ingatkah kau "
+"pas masih bocil? Rame kan bikin tangan jalan kek orang?\" Hamfresser "
+"menjawab, \"Boi, janganlah kau pakai nama depanku, cuma orang yang mendekati "
+"ajalnya yang pernah pake nama depanku...\" \"Jangan khawatir, hal itu gak "
+"akan berubah, Leopold.\"\n"
+"   Tiba-tiba, sang prajurit melek matanya dan memanggil si dokter: \"Therus! "
+"Aku tahu kenapa Mayor Tam bisa nangkep kura-kuranya! Tiap kali pas dia "
+"nyampe ke titik di mana si kura-kuranya sebelumnya ada, waktu yang ia "
+"perluin lebih sedikit. Di suatu titik, waktunya jadi kecil banget sampe-"
+"sampe kalaupun tahapannya tak terhingga, total waktunya tetep bisa diitung.\""
+" Sang dokter menatap kepada yang sekarat: \"Tronky, kok bisa? Tronky?\" Ia "
+"kemudian mengecek denyutnya dan berkata, \"Sudah berakhir, kapten.\" "
+"Hamfresser berkata, \"Sial! Dia bocah kelima yang mati di bawah komandanku "
+"dan tetaplah sakit melihatnya. Gak akan pernah mungkin aku bisa terbiasa ke "
+"hal begini.\""
 
 #. give him top equipment
 #. TODO switch to equipopt
