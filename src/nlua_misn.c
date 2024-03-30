@@ -312,8 +312,9 @@ static int misn_setReward( lua_State *L )
       credits2str( buf, cur_mission->reward_value, 2 );
       cur_mission->reward = strdup( buf );
    } else {
-      const char *str     = luaL_checkstring( L, 1 );
-      cur_mission->reward = strdup( str );
+      const char *str           = luaL_checkstring( L, 1 );
+      cur_mission->reward       = strdup( str );
+      cur_mission->reward_value = 0;
    }
    return 0;
 }
