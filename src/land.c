@@ -139,6 +139,12 @@ static void bar_close( unsigned int wid, const char *str );
 static void bar_approach( unsigned int wid, const char *str );
 static int  news_load( void );
 /* mission computer */
+static void misn_popdown( unsigned int wid, const char *str );
+static void misn_popdownActivate( unsigned int wid, const char *str );
+static void misn_popdownSelect( unsigned int wid, const char *str );
+static void misn_computerOptions( unsigned int wid, const char *str );
+static void misn_computerOptionsRegen( unsigned int wid, const char *str );
+static void misn_computerOptionsClose( unsigned int wid, const char *name );
 static void misn_open( unsigned int wid );
 static void misn_autonav( unsigned int wid, const char *str );
 static void misn_accept( unsigned int wid, const char *str );
@@ -695,6 +701,9 @@ static int *misn_filter( const Mission *misn )
    return filtered;
 }
 
+/**
+ * @brief Used to sort available mission computer missions.
+ */
 static int misn_cmp( const void *p1, const void *p2 )
 {
    int            r1 = *(const int *)p1;
@@ -706,12 +715,10 @@ static int misn_cmp( const void *p1, const void *p2 )
    switch ( mission_sort ) {
    case 0:
    default:
-      if ( m1->data->avail.priority < m2->data->avail.priority )
-         return -1;
-      else if ( m1->data->avail.priority > m2->data->avail.priority )
-         return +1;
+      /* Just fall through to default. */
       break;
 
+   /* Case sorting by reward. */
    case 1:
       c = m2->reward_value - m1->reward_value;
       if ( c )
@@ -719,13 +726,69 @@ static int misn_cmp( const void *p1, const void *p2 )
       break;
    }
 
+   /* Default search priority. */
+   if ( m1->data->avail.priority < m2->data->avail.priority )
+      return -1;
+   else if ( m1->data->avail.priority > m2->data->avail.priority )
+      return +1;
+
    return strcmp( m1->data->name, m2->data->name );
 }
 
-static void misn_popdownRegen( unsigned int wid, const char *name )
+static void misn_popdown( unsigned int wid, const char *str )
 {
-   (void)wid;
-   (void)name;
+   const char *name   = "lstMissionPopdown";
+   const char *sort[] = {
+      [MISNCOMPUTER_SORT_PRIORITY] = _( "Sort by Priority" ),
+      [MISNCOMPUTER_SORT_REWARD]   = _( "Sort by Reward" ),
+      [MISNCOMPUTER_SORT_SETTINGS] = _( "Settings" ),
+   };
+   size_t n = sizeof( sort ) / sizeof( sort[0] );
+   char **sortlist;
+   int    x, y, w, h;
+
+   if ( widget_exists( wid, name ) ) {
+      window_destroyWidget( wid, name );
+      return;
+   }
+
+   sortlist = malloc( sizeof( sort ) );
+   for ( size_t i = 0; i < n; i++ )
+      sortlist[i] = strdup( _( sort[i] ) );
+
+   window_dimWidget( wid, str, &w, &h );
+   window_posWidget( wid, str, &x, &y );
+   window_addList( wid, x + w, y - 120 + h, 350, 120, name, sortlist, n,
+                   mission_sort, misn_popdownSelect, misn_popdownActivate );
+   window_setFocus( wid, name );
+}
+
+static void misn_popdownSelect( unsigned int wid, const char *str )
+{
+   int p = toolkit_getListPos( wid, str );
+   if ( p == MISNCOMPUTER_SORT_SETTINGS ) {
+      misn_computerOptions( wid, str );
+      window_destroyWidget( wid, str );
+      return;
+   }
+
+   /* Change sort setting. */
+   if ( mission_sort != p ) {
+      mission_sort = p;
+      misn_genList( land_getWid( LAND_WINDOW_MISSION ) );
+   }
+}
+
+static void misn_popdownActivate( unsigned int wid, const char *str )
+{
+   misn_popdownSelect( wid, str );
+   window_destroyWidget( wid, str );
+}
+
+static void misn_computerOptionsRegen( unsigned int wid, const char *str )
+{
+   (void)str;
+   mission_sort = toolkit_getListPos( wid, "lstSort" );
    misn_genList( land_getWid( LAND_WINDOW_MISSION ) );
 }
 
@@ -734,35 +797,34 @@ static void misn_popdownRegen( unsigned int wid, const char *name )
  *    @param wid Window to close.
  *    @param name Unused.
  */
-static void misn_popdownClose( unsigned int wid, const char *name )
+static void misn_computerOptionsClose( unsigned int wid, const char *name )
 {
-   mission_sort = toolkit_getListPos( wid, "lstSort" );
-   misn_popdownRegen( wid, name );
+   misn_computerOptionsRegen( wid, name );
    window_close( wid, name );
 }
 
 /**
  * @brief Do the popdown options.
  */
-static void misn_popdown( unsigned int wid, const char *str )
+static void misn_computerOptions( unsigned int wid, const char *str )
 {
    (void)wid;
    (void)str;
    int         w      = 400;
    int         h      = 300;
    const char *sort[] = {
-      _( "Priority (Default)" ),
-      _( "Reward" ),
+      [MISNCOMPUTER_SORT_PRIORITY] = _( "Priority (Default)" ),
+      [MISNCOMPUTER_SORT_REWARD]   = _( "Reward" ),
    };
-   char **sortD;
    size_t l = sizeof( sort ) / sizeof( sort[0] );
+   char **sortD;
    int    mwid;
 
    /* Create the window. */
    mwid =
       window_create( "wdwMisnPopdown", _( "Mission Computer" ), -1, -1, w, h );
-   window_setAccept( mwid, misn_popdownClose );
-   window_setCancel( mwid, misn_popdownClose );
+   window_setAccept( mwid, misn_computerOptionsClose );
+   window_setCancel( mwid, misn_computerOptionsClose );
 
    /* Sorting. */
    window_addText( mwid, 20, -20, 100, h - LAND_BUTTON_HEIGHT, 0, "txtSSort",
@@ -771,11 +833,11 @@ static void misn_popdown( unsigned int wid, const char *str )
    for ( size_t i = 0; i < l; i++ )
       sortD[i] = strdup( sort[i] );
    window_addList( mwid, 20, -40, 200, 100, "lstSort", sortD, l, 0,
-                   misn_popdownRegen, NULL );
+                   misn_computerOptionsRegen, NULL );
 
    /* Close button. */
    window_addButton( mwid, -20, 20, LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT,
-                     "btnClose", _( "Close" ), misn_popdownClose );
+                     "btnClose", _( "Close" ), misn_computerOptionsClose );
 }
 
 /**

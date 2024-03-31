@@ -23,6 +23,15 @@ enum {
    LAND_NUMWINDOWS        /**< Number of land windows. */
 };
 
+typedef enum {
+   MISNCOMPUTER_SORT_PRIORITY,
+   MISNCOMPUTER_SORT_REWARD,
+   MISNCOMPUTER_SORT_SETTINGS,
+} MissionComputerSort;
+typedef struct MissionComputerOptions_ {
+   MissionComputerSort sortby;
+} MissionComputerOptions;
+
 /* global/main window */
 #define LAND_WIDTH RESOLUTION_W_MIN  /**< Land window width. */
 #define LAND_HEIGHT RESOLUTION_H_MIN /**< Land window height. */

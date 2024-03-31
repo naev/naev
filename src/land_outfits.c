@@ -878,7 +878,6 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits,
 /**
  * Functions for the popdown menu (filter outfits by size)
  */
-
 static void outfit_PopdownSelect( unsigned int wid, const char *str )
 {
    int m = toolkit_getListPos( wid, str );
