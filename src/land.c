@@ -91,6 +91,9 @@ static glTexture    *gfx_exterior =
  * mission computer stack
  */
 static Mission *mission_computer = NULL; /**< Missions at the computer. */
+static int     *mission_computer_filter =
+   NULL; /**< IDs of the filtered missions. */
+static int mission_sort = 0;
 
 /*
  * Bar stuff.
@@ -141,6 +144,7 @@ static void misn_autonav( unsigned int wid, const char *str );
 static void misn_accept( unsigned int wid, const char *str );
 static void misn_genList( unsigned int wid );
 static void misn_update( unsigned int wid, const char *str );
+static void misn_popdown( unsigned int wid, const char *str );
 
 /**
  * @brief Queue a takeoff.
@@ -400,7 +404,7 @@ static int bar_genList( unsigned int wid )
 void misn_patchMission( const Mission *misn )
 {
    array_push_back( &mission_computer, *misn );
-   /* TODO sort. */
+   misn_regen();
 }
 /**
  * @brief Regenerates the mission list.
@@ -622,11 +626,13 @@ static void misn_autonav( unsigned int wid, const char *str )
 {
    Mission          *misn;
    const StarSystem *sys;
+   int               misn_ref;
    (void)str;
 
    /* Makes sure current mission has system */
-   misn = &mission_computer[toolkit_getListPos( wid, "lstMission" )];
-   sys  = mission_sysComputerMark( misn );
+   misn_ref = mission_computer_filter[toolkit_getListPos( wid, "lstMission" )];
+   misn     = &mission_computer[misn_ref];
+   sys      = mission_sysComputerMark( misn );
    if ( sys == NULL )
       return;
 
@@ -654,20 +660,21 @@ static void misn_accept( unsigned int wid, const char *str )
    if ( dialogue_YesNo(
            _( "Accept Mission" ),
            _( "Are you sure you want to accept this mission?" ) ) ) {
-      int      changed = 0;
-      int      pos     = toolkit_getListPos( wid, "lstMission" );
-      Mission *misn    = &mission_computer[pos];
-      int      ret     = mission_accept( misn );
+      int      changed  = 0;
+      int      pos      = toolkit_getListPos( wid, "lstMission" );
+      int      misn_ref = mission_computer_filter[pos];
+      Mission *misn     = &mission_computer[misn_ref];
+      int      ret      = mission_accept( misn );
       if ( ret == -1 ) { /* Errored out. */
-         mission_cleanup( &mission_computer[pos] );
+         mission_cleanup( &mission_computer[misn_ref] );
          changed = 1;
       }
       if ( ( ret == 2 ) || ( ret == 3 ) ) /* Deleted or accepted. */
          changed = 1;
 
       if ( changed ) {
-         array_erase( &mission_computer, &mission_computer[pos],
-                      &mission_computer[pos + 1] );
+         array_erase( &mission_computer, &mission_computer[misn_ref],
+                      &mission_computer[misn_ref + 1] );
 
          /* Regenerate list. */
          misn_genList( wid );
@@ -676,6 +683,99 @@ static void misn_accept( unsigned int wid, const char *str )
       /* Reset markers. */
       mission_sysMark();
    }
+}
+
+static int *misn_filter( const Mission *misn )
+{
+   int *filtered = array_create_size( int, array_size( misn ) );
+   for ( int i = 0; i < array_size( misn ); i++ ) {
+      if ( 1 ) /* TODO actually filter. */
+         array_push_back( &filtered, i );
+   }
+   return filtered;
+}
+
+static int misn_cmp( const void *p1, const void *p2 )
+{
+   int            r1 = *(const int *)p1;
+   int            r2 = *(const int *)p2;
+   const Mission *m1 = &mission_computer[r1];
+   const Mission *m2 = &mission_computer[r2];
+   credits_t      c;
+
+   switch ( mission_sort ) {
+   case 0:
+   default:
+      if ( m1->data->avail.priority < m2->data->avail.priority )
+         return -1;
+      else if ( m1->data->avail.priority > m2->data->avail.priority )
+         return +1;
+      break;
+
+   case 1:
+      c = m2->reward_value - m1->reward_value;
+      if ( c )
+         return c;
+      break;
+   }
+
+   return strcmp( m1->data->name, m2->data->name );
+}
+
+static void misn_popdownRegen( unsigned int wid, const char *name )
+{
+   (void)wid;
+   (void)name;
+   misn_genList( land_getWid( LAND_WINDOW_MISSION ) );
+}
+
+/**
+ * @brief Closes the mission computer window.
+ *    @param wid Window to close.
+ *    @param name Unused.
+ */
+static void misn_popdownClose( unsigned int wid, const char *name )
+{
+   mission_sort = toolkit_getListPos( wid, "lstSort" );
+   misn_popdownRegen( wid, name );
+   window_close( wid, name );
+}
+
+/**
+ * @brief Do the popdown options.
+ */
+static void misn_popdown( unsigned int wid, const char *str )
+{
+   (void)wid;
+   (void)str;
+   int         w      = 400;
+   int         h      = 300;
+   const char *sort[] = {
+      _( "Priority (Default)" ),
+      _( "Reward" ),
+   };
+   char **sortD;
+   size_t l = sizeof( sort ) / sizeof( sort[0] );
+   int    mwid;
+
+   /* Create the window. */
+   mwid =
+      window_create( "wdwMisnPopdown", _( "Mission Computer" ), -1, -1, w, h );
+   window_setAccept( mwid, misn_popdownClose );
+   window_setCancel( mwid, misn_popdownClose );
+
+   /* Sorting. */
+   window_addText( mwid, 20, -20, 100, h - LAND_BUTTON_HEIGHT, 0, "txtSSort",
+                   &gl_defFont, NULL, _( "Sort by:" ) );
+   sortD = malloc( sizeof( char * ) * l );
+   for ( size_t i = 0; i < l; i++ )
+      sortD[i] = strdup( sort[i] );
+   window_addList( mwid, 20, -40, 200, 100, "lstSort", sortD, l, 0,
+                   misn_popdownRegen, NULL );
+
+   /* Close button. */
+   window_addButton( mwid, -20, 20, LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT,
+                     "btnClose", _( "Close" ), misn_popdownClose );
 }
 
 /**
@@ -694,6 +794,7 @@ static void misn_genList( unsigned int wid )
    if ( widget_exists( wid, "lstMission" ) ) {
       pos = toolkit_getListPos( wid, "lstMission" );
       window_destroyWidget( wid, "lstMission" );
+      window_destroyWidget( wid, "btnMissionFilter" );
    } else
       pos = -1;
 
@@ -701,20 +802,27 @@ static void misn_genList( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Resort just in case. */
-   qsort( mission_computer, array_size( mission_computer ), sizeof( Mission ),
-          mission_compare );
+   array_free( mission_computer_filter );
+   mission_computer_filter = misn_filter( mission_computer );
+   qsort( mission_computer_filter, array_size( mission_computer_filter ),
+          sizeof( int ), misn_cmp );
 
    /* list */
    j          = 1; /* make sure we don't accidentally free the memory twice. */
    misn_names = NULL;
-   if ( array_size( mission_computer ) > 0 ) { /* there are missions */
-      misn_names = malloc( sizeof( char * ) * array_size( mission_computer ) );
-      j          = 0;
-      for ( int i = 0; i < array_size( mission_computer ); i++ )
-         if ( mission_computer[i].title != NULL )
-            misn_names[j++] = strdup( mission_computer[i].title );
+   if ( array_size( mission_computer_filter ) > 0 ) { /* there are missions */
+      misn_names =
+         malloc( sizeof( char * ) * array_size( mission_computer_filter ) );
+      j = 0;
+      for ( int i = 0; i < array_size( mission_computer_filter ); i++ ) {
+         int            misn_ref = mission_computer_filter[i];
+         const Mission *misn     = &mission_computer[misn_ref];
+         if ( misn->title != NULL )
+            misn_names[j++] = strdup( misn->title );
+      }
    }
-   if ( ( misn_names == NULL ) || ( array_size( mission_computer ) == 0 ) ||
+   if ( ( misn_names == NULL ) ||
+        ( array_size( mission_computer_filter ) == 0 ) ||
         ( j == 0 ) ) { /* no missions. */
       if ( j == 0 )
          free( misn_names );
@@ -731,6 +839,12 @@ static void misn_genList( unsigned int wid )
    /* Add position persistancey after a mission has been accepted */
    /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
    toolkit_setListPos( wid, "lstMission", pos );
+
+   /* Add popdown menu stuff. */
+   window_addButton( wid, 20 + w / 2 - 30 - 25, -35, 30, 30, "btnMissionFilter",
+                     NULL, misn_popdown );
+   window_buttonCustomRender( wid, "btnMissionFilter",
+                              window_buttonCustomRenderGear );
 }
 /**
  * @brief Updates the mission list.
@@ -742,6 +856,7 @@ static void misn_update( unsigned int wid, const char *str )
    (void)str;
    const char       *active_misn;
    Mission          *misn;
+   int               misn_ref;
    const StarSystem *sys;
    char              txt[STRMAX_SHORT], *buf;
 
@@ -766,8 +881,9 @@ static void misn_update( unsigned int wid, const char *str )
       return;
    }
 
-   misn = &mission_computer[toolkit_getListPos( wid, "lstMission" )];
-   sys  = mission_sysComputerMark( misn );
+   misn_ref = mission_computer_filter[toolkit_getListPos( wid, "lstMission" )];
+   misn     = &mission_computer[misn_ref];
+   sys      = mission_sysComputerMark( misn );
    if ( sys != NULL )
       map_center( wid, sys->name );
    snprintf( txt, sizeof( txt ), _( "%s\n#nReward:#0 %s" ), misn->title,
@@ -1736,6 +1852,8 @@ void land_cleanup( void )
       mission_cleanup( &mission_computer[i] );
    array_free( mission_computer );
    mission_computer = NULL;
+   array_free( mission_computer_filter );
+   mission_computer_filter = NULL;
 
    /* Clean up bar missions. */
    npc_clear();
