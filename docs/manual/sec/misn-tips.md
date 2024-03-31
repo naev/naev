@@ -30,7 +30,7 @@ local function get_calculation ()
 end
 ```
 
-The above code tries to access data in the cache. However, if it does not exist (by default all fields in Lua are nil), it will do the expensive calculation and store it in the cache. Thus, the first call of `get_calculation()` will be slow, however, all subsequent calls will be very fast as no do_expensive_calculation()` gets called.
+The above code tries to access data in the cache. However, if it does not exist (by default all fields in Lua are nil), it will do the expensive calculation and store it in the cache. Thus, the first call of `get_calculation()` will be slow, however, all subsequent calls will be very fast as no `do_expensive_calculation()` gets called.
 
 ### Finding Natural Pilots \naev
 

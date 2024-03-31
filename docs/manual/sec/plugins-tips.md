@@ -36,6 +36,6 @@ function create ()
 end
 ```
 
-The above file should be saved somewhere in `events/`, such as `events/my_plugin_start.lua`, and will simply apply the unidiff "my_plugin_unidiff" if it is not active, thus adding "My Outfit" to "Base Tech Group" without overwriting the file.
+The above file should be saved somewhere in `events/`, such as `events/my_plugin_start.lua`, and will simply apply the unidiff `"my_plugin_unidiff"` if it is not active, thus adding "My Outfit" to "Base Tech Group" without overwriting the file.
 
 The same technique can be done to add new systems or any other feature supported by the unidiff system (see section TODO). For example, you can add new systems normally, but then add the jumps to existing systems in a unidiff so you do not have to overwrite the original files.
