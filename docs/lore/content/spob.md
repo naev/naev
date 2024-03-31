@@ -5,7 +5,7 @@ title: Naev Space Objects
 <% @items.find_all('/spob/*.md').each do |s| %> <!--*-->
 <%
     if not s[:spob][:GFX].nil? and not s[:spob][:GFX][:space].nil?
-        gfx = "/gfx/spob/space/"+s[:spob][:GFX][:space]
+        gfx = relative_path_to(@items["/gfx/spob/space/"+s[:spob][:GFX][:space]])
     end
     cls = ""
     if not s[:spob][:presence].nil? and not s[:spob][:presence][:faction].nil?
