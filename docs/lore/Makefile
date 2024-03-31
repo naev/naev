@@ -20,9 +20,13 @@ content/gfx/%.webp: ../../artwork/gfx/%.webp
 	@mkdir -p $(dir $@)
 	cp $< $@
 
-logo: content/imgs/naev.png
+logo: content/imgs/naev.png content/favicon.png
 
 content/imgs/naev.png: ../../extras/logos/naev.png
+	@mkdir -p $(dir $@)
+	cp $< $@
+
+content/favicon.png: ../../extras/logos/naev.png
 	@mkdir -p $(dir $@)
 	cp $< $@
 
