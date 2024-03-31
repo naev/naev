@@ -93,7 +93,7 @@ static glTexture    *gfx_exterior =
 static Mission *mission_computer = NULL; /**< Missions at the computer. */
 static int     *mission_computer_filter =
    NULL; /**< IDs of the filtered missions. */
-static int mission_sort = 0;
+MissionComputerOptions misn_opts;
 
 /*
  * Bar stuff.
@@ -691,12 +691,16 @@ static void misn_accept( unsigned int wid, const char *str )
    }
 }
 
+/**
+ * @brief Hides missions we don't want to look at.
+ */
 static int *misn_filter( const Mission *misn )
 {
    int *filtered = array_create_size( int, array_size( misn ) );
    for ( int i = 0; i < array_size( misn ); i++ ) {
-      if ( 1 ) /* TODO actually filter. */
-         array_push_back( &filtered, i );
+      if ( misn_opts.hideillegal && misn[i].illegal )
+         continue;
+      array_push_back( &filtered, i );
    }
    return filtered;
 }
@@ -712,7 +716,7 @@ static int misn_cmp( const void *p1, const void *p2 )
    const Mission *m2 = &mission_computer[r2];
    credits_t      c;
 
-   switch ( mission_sort ) {
+   switch ( misn_opts.sortby ) {
    case MISNCOMPUTER_SORT_PRIORITY:
    default:
       /* Just fall through to default. */
@@ -741,6 +745,9 @@ static int misn_cmp( const void *p1, const void *p2 )
    return strcmp( m1->data->name, m2->data->name );
 }
 
+/**
+ * @brief Opens the small pop-down menu.
+ */
 static void misn_popdown( unsigned int wid, const char *str )
 {
    const char *name   = "lstMissionPopdown";
@@ -766,13 +773,13 @@ static void misn_popdown( unsigned int wid, const char *str )
    window_dimWidget( wid, str, &w, &h );
    window_posWidget( wid, str, &x, &y );
    window_addList( wid, x + w, y - 120 + h, 350, 120, name, sortlist, n,
-                   mission_sort, misn_popdownSelect, misn_popdownActivate );
+                   misn_opts.sortby, misn_popdownSelect, misn_popdownActivate );
    window_setFocus( wid, name );
 }
 
 static void misn_popdownSelect( unsigned int wid, const char *str )
 {
-   int p = toolkit_getListPos( wid, str );
+   MissionComputerSort p = toolkit_getListPos( wid, str );
    if ( p == MISNCOMPUTER_SORT_SETTINGS ) {
       misn_computerOptions( wid, str );
       window_destroyWidget( wid, str );
@@ -780,8 +787,8 @@ static void misn_popdownSelect( unsigned int wid, const char *str )
    }
 
    /* Change sort setting. */
-   if ( mission_sort != p ) {
-      mission_sort = p;
+   if ( misn_opts.sortby != p ) {
+      misn_opts.sortby = p;
       misn_genList( land_getWid( LAND_WINDOW_MISSION ) );
    }
 }
@@ -795,8 +802,13 @@ static void misn_popdownActivate( unsigned int wid, const char *str )
 static void misn_computerOptionsRegen( unsigned int wid, const char *str )
 {
    (void)str;
-   mission_sort = toolkit_getListPos( wid, "lstSort" );
-   misn_genList( land_getWid( LAND_WINDOW_MISSION ) );
+   MissionComputerOptions opts = misn_opts;
+   misn_opts.sortby            = toolkit_getListPos( wid, "lstSort" );
+   if ( widget_exists( wid, "chkHideIllegal" ) )
+      misn_opts.hideillegal = window_checkboxState( wid, "chkHideIllegal" );
+   /* Only regenerate if changed. */
+   if ( memcmp( &misn_opts, &opts, sizeof( MissionComputerOptions ) ) )
+      misn_genList( land_getWid( LAND_WINDOW_MISSION ) );
 }
 
 /**
@@ -817,7 +829,7 @@ static void misn_computerOptions( unsigned int wid, const char *str )
 {
    (void)wid;
    (void)str;
-   int         w      = 400;
+   int         w      = 240;
    int         h      = 300;
    const char *sort[] = {
       [MISNCOMPUTER_SORT_PRIORITY] = _( "Priority (Default)" ),
@@ -827,21 +839,30 @@ static void misn_computerOptions( unsigned int wid, const char *str )
    size_t l = sizeof( sort ) / sizeof( sort[0] );
    char **sortD;
    int    mwid;
+   int    y;
 
    /* Create the window. */
-   mwid =
-      window_create( "wdwMisnPopdown", _( "Mission Computer" ), -1, -1, w, h );
+   mwid = window_create( "wdwMisnPopdown", _( "Mission Computer Settings" ), -1,
+                         -1, w, h );
    window_setAccept( mwid, misn_computerOptionsClose );
    window_setCancel( mwid, misn_computerOptionsClose );
 
    /* Sorting. */
-   window_addText( mwid, 20, -20, 100, h - LAND_BUTTON_HEIGHT, 0, "txtSSort",
+   y = -40;
+   window_addText( mwid, 20, y, 100, h - LAND_BUTTON_HEIGHT, 0, "txtSSort",
                    &gl_defFont, NULL, _( "Sort by:" ) );
+   y -= 20;
    sortD = malloc( sizeof( char * ) * l );
    for ( size_t i = 0; i < l; i++ )
       sortD[i] = strdup( sort[i] );
-   window_addList( mwid, 20, -40, 200, 100, "lstSort", sortD, l, 0,
+   window_addList( mwid, 20, y, 200, 100, "lstSort", sortD, l, 0,
                    misn_computerOptionsRegen, NULL );
+   y -= 100 + 10;
+
+   /* Filtering. */
+   window_addCheckbox( mwid, 20, y, w - 40, 30, "chkHideIllegal",
+                       _( "Hide Illegal Missions" ), misn_computerOptionsRegen,
+                       misn_opts.hideillegal );
 
    /* Close button. */
    window_addButton( mwid, -20, 20, LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT,

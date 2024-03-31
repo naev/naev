@@ -58,6 +58,7 @@ static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
 static int misn_setDistance( lua_State *L );
 static int misn_setIllegal( lua_State *L );
+static int misn_setFaction( lua_State *L );
 static int misn_setNPC( lua_State *L );
 static int misn_factions( lua_State *L );
 static int misn_accept( lua_State *L );
@@ -84,6 +85,7 @@ static const luaL_Reg misn_methods[] = {
    { "setReward", misn_setReward },
    { "setDistance", misn_setDistance },
    { "setIllegal", misn_setIllegal },
+   { "setFaction", misn_setFaction },
    { "setNPC", misn_setNPC },
    { "factions", misn_factions },
    { "accept", misn_accept },
@@ -350,6 +352,23 @@ static int misn_setIllegal( lua_State *L )
 {
    Mission *cur_mission = misn_getFromLua( L );
    cur_mission->illegal = lua_toboolean( L, 1 );
+   return 0;
+}
+
+/**
+ * @brief Sets the faction giver of the mission. Used mainly as metadata for
+ * sorting and organizing missions in the mission computer.
+ *
+ *    @luatparam faction Faction to set the mission to or nil to disable.
+ * @luafunc setFaction
+ */
+static int misn_setFaction( lua_State *L )
+{
+   Mission *cur_mission = misn_getFromLua( L );
+   if ( lua_isnoneornil( L, 1 ) )
+      cur_mission->faction = -1;
+   else
+      cur_mission->faction = luaL_validfaction( L, 1 );
    return 0;
 }
 

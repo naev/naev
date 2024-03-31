@@ -24,14 +24,16 @@ enum {
 };
 
 typedef enum {
-   MISNCOMPUTER_SORT_PRIORITY,
-   MISNCOMPUTER_SORT_REWARD,
-   MISNCOMPUTER_SORT_DISTANCE,
-   MISNCOMPUTER_SORT_SETTINGS,
+   MISNCOMPUTER_SORT_PRIORITY, /**< Sort by priority (default. */
+   MISNCOMPUTER_SORT_REWARD,   /**< Sort by reward. */
+   MISNCOMPUTER_SORT_DISTANCE, /**< Sort by distance. */
+   MISNCOMPUTER_SORT_SETTINGS, /**< Open settings menu. */
 } MissionComputerSort;
 typedef struct MissionComputerOptions_ {
-   MissionComputerSort sortby;
+   MissionComputerSort sortby;      /**< How to sort missions. */
+   int                 hideillegal; /**< Hide illegal missions. */
 } MissionComputerOptions;
+extern MissionComputerOptions misn_opts;
 
 /* global/main window */
 #define LAND_WIDTH RESOLUTION_W_MIN  /**< Land window width. */

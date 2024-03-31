@@ -100,6 +100,7 @@ typedef struct Mission_ {
    credits_t    reward_value; /**< Value of the reward (for monetary cases). */
    unsigned int distance;     /**< Distance to the target. */
    int          illegal;      /**< Mission is considered illegal. */
+   int          faction; /**< Faction owning this mission, or -1 for none. */
 
    /* mission cargo given to the player - need to cleanup */
    unsigned int *cargo; /**< Array (array.h): Cargos given to player. */
