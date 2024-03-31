@@ -1,0 +1,8 @@
+Gemfile.lock
+content/gfx/
+content/spob/
+content/favicon.png
+content/imgs/naev.png
+vendor/
+tmp/
+output/
