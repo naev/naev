@@ -23,9 +23,12 @@
     <title>Naev - <%= @item[:title] %></title>
   </head>
   <body class="bg-light">
-   <div id="naev-header" class="container-fluid nebula-bg">
+   <div id="naev-header" class="container-fluid nebula-bg text-white">
     <div class='container'>
     <a href="<%= @items['/index.md'].path %>"><img src="<%= @items['/imgs/naev.png'].path %>" alt="Naev" /></a>
+    <% if not @item[:hidetitle] %>
+    <span class="ms-3 fs-2"><%= @item[:title] %></span>
+    <% end %>
     </div>
    </div>
 
@@ -46,15 +49,13 @@
       %>
       <ul class="navbar-nav">
        <%= nav( 'Home',       @items['/index.md'].path ) %>
+       <%= nav( 'Spob',       @items['/spob.md'].path ) %>
       </ul>
      </div>
     </div>
    </nav>
 
    <main role='main' class='container'>
-    <% if not @item[:hidetitle] %>
-    <h2><%= @item[:title] %></h2>
-    <% end %>
     <% if not @item[:created_at].nil? %>
     <p class="text-muted">
     <%= ("by %s," % @item[:author]).upcase %>
