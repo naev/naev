@@ -86,13 +86,20 @@ typedef struct Mission_ {
        id; /**< Unique mission identifier, used for keeping track of hooks. */
    int accepted; /**< Mission is a player mission. */
 
-   char      *title;        /**< Not to be confused with name */
-   char      *desc;         /**< Description of the mission */
-   char      *reward;       /**< Rewards in text */
-   credits_t  reward_value; /**< Value of the reward (for monetary cases). */
-   glTexture *portrait;     /**< Portrait of the mission giver if applicable. */
-   char      *npc;          /**< Name of the NPC giving the mission. */
-   char      *npc_desc;     /**< Description of the giver NPC. */
+   /* Information displayed to the user. */
+   char      *title;    /**< Not to be confused with name */
+   char      *desc;     /**< Description of the mission */
+   char      *reward;   /**< Rewards in text */
+   glTexture *portrait; /**< Portrait of the mission giver if applicable. */
+
+   /* Npc stuff. */
+   char *npc;      /**< Name of the NPC giving the mission. */
+   char *npc_desc; /**< Description of the giver NPC. */
+
+   /* Meta-data, used for sorting and the likes. */
+   credits_t    reward_value; /**< Value of the reward (for monetary cases). */
+   unsigned int distance;     /**< Distance to the target. */
+   int          illegal;      /**< Mission is considered illegal. */
 
    /* mission cargo given to the player - need to cleanup */
    unsigned int *cargo; /**< Array (array.h): Cargos given to player. */
