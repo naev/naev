@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--Old html 4.0.1 way <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+    <!--<meta charset="UTF-8">--><!-- New HTML5 way -->
+
+    <!-- Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favourite icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= @items['/favicon.png'].reps[:s180].path %>">
+    <link rel="icon" type="image/png" sizes="196x196" href="<%= @items['/favicon.png'].reps[:s196].path %>">
+    <link rel="icon" type="image/png" sizes="128x128" href="<%= @items['/favicon.png'].reps[:s128].path %>">
+    <link rel="icon" type="image/png" sizes="64x64" href="<%= @items['/favicon.png'].reps[:s64].path %>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= @items['/favicon.png'].reps[:s32].path %>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= @items['/favicon.png'].reps[:s16].path %>">
+    <link rel="shortcut icon" type="image/x-icon" href="<%= @items['/favicon.png'].reps[:ico].path %>" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="<%= @items['/style.scss'].path %>">
+
+    <!-- Website information -->
+    <title>Naev - <%= @item[:title] %></title>
+  </head>
+  <body class="bg-light">
+   <div id="naev-header" class="container-fluid nebula-bg">
+    <div class='container'>
+    <a href="<%= @items['/index.md'].path %>"><img src="<%= @items['/imgs/naev.png'].path %>" alt="Naev" /></a>
+    </div>
+   </div>
+
+   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+     <a class="p-0 navbar-brand" href="#">
+      <img id="logo" class="img-fluid" src="<%= @items['/favicon.png'].path %>" alt="Naev" />
+     </a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+      <%
+        def nav( txt, target )
+           active = (@item==target) ? ' active' : ''
+           "<li class='nav-item'><a class='nav-link#{active}' href='#{target}'>#{txt}</a></li>"
+        end
+      %>
+      <ul class="navbar-nav">
+       <%= nav( 'Home',       @items['/index.md'].path ) %>
+      </ul>
+     </div>
+    </div>
+   </nav>
+
+   <main role='main' class='container'>
+    <% if not @item[:hidetitle] %>
+    <h2><%= @item[:title] %></h2>
+    <% end %>
+    <% if not @item[:created_at].nil? %>
+    <p class="text-muted">
+    <%= ("by %s," % @item[:author]).upcase %>
+    <%= @item[:created_at].strftime("on %B #{@item[:created_at].day.ordinalize}, %Y").upcase %>
+    </p>
+    <% end %>
+    <%= yield %>
+   </main>
+
+   <div class='container-fluid nebula-bg mt-5'>
+   <div class='container'>
+   <footer class='row text-muted'>
+    <p class='col-xs-12 col-sm-6 text-left'>&copy; <%= ("%s" % (Time.new).year ) %> Naev Development Blarg</p>
+    <p class='col-xs-12 col-sm-6 text-right'>Original content licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-by-sa 4.0</a></p>
+   </footer>
+   </div>
+   </div>
+
+   <!-- Javascript -->
+   <script src="<%= @items['/site.js'].path %>"></script>
+  </body>
+</html>

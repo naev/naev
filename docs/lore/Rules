@@ -1,0 +1,81 @@
+# A few helpful tips about the Rules file:
+#
+# * The string given to #compile and #route are matching patterns for
+#   identifiers--not for paths. Therefore, you can’t match on extension.
+#
+# * The order of rules is important: for each item, only the first matching
+#   rule is applied.
+#
+# * Item identifiers start and end with a slash (e.g. “/about/” for the file
+#   “content/about.html”). To select all children, grandchildren, … of an
+#   item, use the pattern “/about/*/”; “/about/*” will also select the parent,
+#   because “*” matches zero or more characters.
+
+# ignore everything starting with underscore
+ignore '/**/_*'
+
+# some special files
+compile '/sitemap.rb' do
+   filter :erb
+   write '/sitemap.xml'
+end
+compile '/robots.txt' do
+   filter :erb
+   write '/robots.txt'
+end
+
+compile '/spob/*.xml' do
+   filter :x
+end
+
+# favoicon
+[16, 32, 64, 128, 180, 196].each do |s|
+   compile '/favicon.png', rep: "s#{s.to_s}" do
+      filter :thumbnailize, :width => s, :height => s
+      write "/favicon-#{s.to_s}.png"
+   end
+end
+compile '/favicon.png', rep: :ico do
+   filter :thumbnailize, :width => 48, :height => 48, :filetype => 'ico'
+   write '/favicon.ico'
+end
+
+compile '/**/*.md' do
+  if item['hidden'].nil?
+    filter :erb
+
+    # Markdown
+    filter :kramdown
+
+    # Standard procesing
+    layout '/default.html'
+    filter :relativize_paths, :type => :css
+    filter :relativize_paths, :type => :html
+    filter :external, exec: 'tidy', options: %w(--quiet yes --indent auto --indent-spaces 2 --wrap 100 --tidy-mark no --char-encoding utf8 --add-meta-charset yes --drop-empty-elements no --warn-proprietary-attributes no)
+
+    basename = (item.identifier=='/index.md') ? '' : item.identifier.without_ext
+    write basename+'/index.html'
+  end
+end
+
+# Javascript and friends
+compile '/**/*.js' do
+   filter :concat_js
+   filter :uglify_js, :comments => :none
+   write ext: 'js'
+end
+
+# CSS and friends
+compile '**/*.{css,scss}' do
+   filter :erb
+   filter :sass, syntax: :scss if item[:extension] == 'scss'
+   filter :rainpress
+   write ext: 'css'
+end
+
+# Other objects
+compile '/**/*' do
+   write item.identifier.to_s
+end
+
+layout '/**/*', :erb
