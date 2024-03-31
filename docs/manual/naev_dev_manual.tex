@@ -1,20 +1,21 @@
 \documentclass{naev}
-\usepackage[hybrid,pipeTables,tableCaptions,smartEllipses,fencedCode,footnotes]{markdown}
+\usepackage[hybrid,pipeTables,tableCaptions,smartEllipses,fencedCode]{markdown}
 
 \usepackage{amssymb}   % for checkmarks
 \usepackage{graphicx}  % for including images
 \usepackage{microtype} % for typographical enhancements
 \usepackage{minted}    % for code listings
 \usepackage{amsmath}   % for equations and mathematics
+\usepackage{enumitem}  % needed for deeply nested lists
 \usepackage{polyglossia}
 \usepackage{newunicodechar}
 \setminted{style=friendly,fontsize=\small}
 \renewcommand{\listoflistingscaption}{List of Code Listings}
 \usepackage{hyperref}  % for hyperlinks
 \usepackage[a4paper,top=4.2cm,bottom=4.2cm,left=3.5cm,right=3.5cm]{geometry} % for setting page size and margins
-\usepackage{listings}
-\usepackage[svgnames]{xcolor}
-\usepackage{booktabs}
+\usepackage{listings}  % for displaying code
+\usepackage[svgnames]{xcolor} % Allow using nice svg colour names
+\usepackage{booktabs}  % better tables
 
 \makeatletter
 \markdownSetup{
