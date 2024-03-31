@@ -26,6 +26,7 @@ enum {
 typedef enum {
    MISNCOMPUTER_SORT_PRIORITY,
    MISNCOMPUTER_SORT_REWARD,
+   MISNCOMPUTER_SORT_DISTANCE,
    MISNCOMPUTER_SORT_SETTINGS,
 } MissionComputerSort;
 typedef struct MissionComputerOptions_ {

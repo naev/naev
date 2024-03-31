@@ -238,6 +238,7 @@ function car.setDesc( misn_desc, cargo, amount, target, deadline, notes, use_hid
    end
 
    misn.setDesc( table.concat(t, "\n" ) )
+   misn.setDistance( dist )
 end
 
 return car

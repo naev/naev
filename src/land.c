@@ -713,14 +713,20 @@ static int misn_cmp( const void *p1, const void *p2 )
    credits_t      c;
 
    switch ( mission_sort ) {
-   case 0:
+   case MISNCOMPUTER_SORT_PRIORITY:
    default:
       /* Just fall through to default. */
       break;
 
    /* Case sorting by reward. */
-   case 1:
+   case MISNCOMPUTER_SORT_REWARD:
       c = m2->reward_value - m1->reward_value;
+      if ( c )
+         return c;
+      break;
+
+   case MISNCOMPUTER_SORT_DISTANCE:
+      c = m1->distance - m2->distance;
       if ( c )
          return c;
       break;
@@ -741,6 +747,7 @@ static void misn_popdown( unsigned int wid, const char *str )
    const char *sort[] = {
       [MISNCOMPUTER_SORT_PRIORITY] = _( "Sort by Priority" ),
       [MISNCOMPUTER_SORT_REWARD]   = _( "Sort by Reward" ),
+      [MISNCOMPUTER_SORT_DISTANCE] = _( "Sort by Distance" ),
       [MISNCOMPUTER_SORT_SETTINGS] = _( "Settings" ),
    };
    size_t n = sizeof( sort ) / sizeof( sort[0] );
@@ -815,6 +822,7 @@ static void misn_computerOptions( unsigned int wid, const char *str )
    const char *sort[] = {
       [MISNCOMPUTER_SORT_PRIORITY] = _( "Priority (Default)" ),
       [MISNCOMPUTER_SORT_REWARD]   = _( "Reward" ),
+      [MISNCOMPUTER_SORT_DISTANCE] = _( "Distance" ),
    };
    size_t l = sizeof( sort ) / sizeof( sort[0] );
    char **sortD;
