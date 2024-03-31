@@ -1,0 +1,32 @@
+# A list of file extensions that Nanoc will consider to be textual rather than
+# binary. If an item with an extension not in this list is found,  the file
+# will be considered as binary.
+text_extensions: [ 'adoc', 'asciidoc', 'atom', 'coffee', 'css', 'erb', 'haml', 'handlebars', 'hb', 'htm', 'html', 'js', 'less', 'markdown', 'md', 'ms', 'mustache', 'php', 'rb', 'rdoc', 'sass', 'scss', 'slim', 'tex', 'txt', 'xhtml', 'xml' ]
+
+# Global
+base_url: "https://naev.org/lore"
+
+# Stuff for RSS Feed
+title: "Naev Lore"
+author_name: "Naev DevTeam"
+author_uri: "https://naev.org/"
+
+# Pagination
+page_size: 5
+
+prune:
+  auto_prune: true
+  exclude: [ '.git' ]
+
+data_sources:
+  - type: filesystem
+    encoding: utf-8
+
+checking:
+  enabled_checks:
+    - internal_links
+    - external_links
+    - stale
+    - mixed_content
+#    - html
+#    - css
