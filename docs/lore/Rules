@@ -14,6 +14,40 @@
 # ignore everything starting with underscore
 ignore '/**/_*'
 
+preprocess do
+   @items.find_all('/spob/*.md').each do |s|
+      s[:name] = s[:spob][:"+@name"]
+      s[:id] =  Base64.encode64( s[:spob][:"+@name"] )
+      if not s[:spob][:general][:description].nil? then
+         s[:description] = s[:spob][:general][:description]
+      end
+      if not s[:spob][:general][:bar].nil? then
+         s[:bar] = s[:spob][:general][:bar]
+      end
+      if not s[:spob][:general][:population].nil? then
+         s[:population] = s[:spob][:general][:population].to_f.to_i.to_s
+      else
+         s[:population] = 0
+      end
+      if not s[:spob][:presence].nil? and not s[:spob][:presence][:faction].nil?
+         s[:faction] = s[:spob][:presence][:faction]
+      else
+         s[:faction] = "Factionless"
+      end
+      s[:spobclass] = s[:spob][:general][:class]
+      if not s[:spob][:general][:services].nil?
+         s[:services] = s[:spob][:general][:services].keys
+      else
+         s[:services] = []
+      end
+      if not s[:spob][:tags].nil?
+         s[:tags] = Array(s[:spob][:tags][:tag])
+      else
+         s[:tags] = []
+      end
+   end
+end
+
 # some special files
 compile '/sitemap.rb' do
    filter :erb
