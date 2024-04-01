@@ -2,15 +2,24 @@
 SPOB := $(wildcard ../../dat/spob/*.xml)
 SPOB := $(patsubst ../../dat/spob/%.xml, content/spob/%.md, $(SPOB) )
 
+SSYS := $(wildcard ../../dat/ssys/*.xml)
+SSYS := $(patsubst ../../dat/ssys/%.xml, content/ssys/%.md, $(SSYS) )
+
 GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp)
 GFX := $(patsubst ../../artwork/%, content/%, $(GFX))
 
-.PHONY: all gfx spob view install check logo
+.PHONY: all gfx spob ssys view install check logo
 
-all: logo gfx spob
+all: logo gfx spob ssys
 	bundle exec nanoc
 
 content/spob/%.md: ../../dat/spob/%.xml
+	@mkdir -p $(dir $@)
+	@echo "---" > $@
+	yq -oy  '.' $< >> $@
+	@echo "---" >> $@
+
+content/ssys/%.md: ../../dat/ssys/%.xml
 	@mkdir -p $(dir $@)
 	@echo "---" > $@
 	yq -oy  '.' $< >> $@
@@ -33,6 +42,8 @@ content/favicon.png: ../../extras/logos/naev.png
 gfx: $(GFX)
 
 spob: $(SPOB)
+
+ssys: $(SSYS)
 
 view: all
 	bundle exec nanoc view
