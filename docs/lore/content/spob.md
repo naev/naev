@@ -1,6 +1,35 @@
 ---
 title: Space Objects
 ---
+
+<% content_for :javascript do %>
+<script>
+function sortbydata( d ) {
+    var $spobs = $('#spobs');
+    var $spoblist = $spobs.children(".col").detach();
+    $spoblist.sort( function( a, b ) {
+        var ad = a.getAttribute(d);
+        var bd = b.getAttribute(d);
+        var c =  (''+ad).localeCompare(bd);
+        if (c)
+            return c;
+        var an = a.getAttribute("data-Name");
+        var bn = b.getAttribute("data-Name");
+        return (''+an).localeCompare(bn);
+    } );
+    $spoblist.appendTo($spobs);
+}
+function randomize() {
+    var $spobs = $('#spobs');
+    var $spoblist = $spobs.children(".col").detach();
+    $spoblist.sort( function( a, b ) {
+        return Math.random() < 0.5;
+    } );
+    $spoblist.appendTo($spobs);
+}
+</script>
+
+<% end %>
 <!-- First get some global stuff. -->
 <%
 factionlist = Set[ "Factionless" ]
@@ -17,8 +46,21 @@ classlist = Set[]
 end
 %>
 
+<div class="dropdown">
+ <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+ Sort by:
+ </button>
+ <ul class="dropdown-menu">
+  <li><a class="dropdown-item" href="#" onclick="sortbydata('data-Name');">Name</a></li>
+  <li><a class="dropdown-item" href="#" onclick="sortbydata('data-Faction');">Faction</a></li>
+  <li><a class="dropdown-item" href="#" onclick="sortbydata('data-Class');">Class</a></li>
+  <li><a class="dropdown-item" href="#" onclick="sortbydata('data-Population');">Population</a></li>
+  <li><a class="dropdown-item" href="#" onclick="randomize();">Random</a></li>
+ </ul>
+</div>
+
 <!-- Now display all the spobs. -->
-<div class="row row-cols-1 row-cols-md-5 g-4">
+<div class="row row-cols-1 row-cols-md-5 g-4" id="spobs">
 <% @items.find_all('/spob/*.md').each do |s| %> <!--*-->
 <%
     # Useful spob Variables
@@ -36,6 +78,11 @@ end
     end
     if not s[:spob][:general][:bar].nil? then
         bar = s[:spob][:general][:bar]
+    end
+    if not s[:spob][:general][:population].nil? then
+        population = s[:spob][:general][:population].to_f.to_i.to_s
+    else
+        population = 0
     end
 
     cls = ""
@@ -65,8 +112,8 @@ end
     end
 %>
  <!-- Card -->
- <div class="col">
-  <div class="card bg-black <%= cls %>" data-bs-toggle="modal" data-bs-target="#modal-<%= id %>" >
+ <div class="col <%= cls %>" data-Name="<%= name %>" data-Faction="<%= faction %>" data-Class="<%= spobclass %>" data-Population="<%= population %>" >
+  <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-<%= id %>" >
    <% if not gfx.nil? %>
    <img src="<%= gfx %>" class="card-img-top" alt="<%= s[:spob][:GFX][:space] %>">
    <% end %>

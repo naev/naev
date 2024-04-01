@@ -76,5 +76,6 @@
 
    <!-- Javascript -->
    <script src="<%= @items['/site.js'].path %>"></script>
+   <%= content_for(@item, :javascript) %>
   </body>
 </html>
