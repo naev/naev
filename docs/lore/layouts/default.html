@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
   <head>
     <!--Old html 4.0.1 way <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
     <!--<meta charset="UTF-8">--><!-- New HTML5 way -->
@@ -22,8 +22,8 @@
     <!-- Website information -->
     <title>Naev - <%= @item[:title] %></title>
   </head>
-  <body class="bg-light">
-   <div id="naev-header" class="container-fluid nebula-bg text-white">
+  <body>
+   <div id="naev-header" class="container-fluid nebula-bg text-light">
     <div class='container'>
     <a href="<%= @items['/index.md'].path %>"><img src="<%= @items['/imgs/naev.png'].path %>" alt="Naev" /></a>
     <% if not @item[:hidetitle] %>
@@ -32,7 +32,7 @@
     </div>
    </div>
 
-   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+   <nav class="navbar navbar-expand-sm navbar-dark bg-black">
     <div class="container">
      <a class="p-0 navbar-brand" href="#">
       <img id="logo" class="img-fluid" src="<%= @items['/favicon.png'].path %>" alt="Naev" />
