@@ -4,22 +4,69 @@ title: Space Objects
 
 <% content_for :javascript do %>
 <script>
+var sort = "Name";
+var reverse = false;
 function sortbydata( d ) {
     var dsort = "data-"+d;
     var $spobs = $('#spobs');
     var $spoblist = $spobs.children(".col").detach();
+    if (sort==d) {
+        reverse = !reverse;
+    }
+    sort = d;
     $spoblist.sort( function( a, b ) {
         var ad = a.getAttribute(dsort);
         var bd = b.getAttribute(dsort);
         var c =  (''+ad).localeCompare(bd);
+        if (reverse)
+            c = -c;
         if (c)
             return c;
         var an = a.getAttribute("data-Name");
         var bn = b.getAttribute("data-Name");
-        return (''+an).localeCompare(bn);
+        if (reverse)
+            return (''+bn).localeCompare(an);
+        else
+            return (''+an).localeCompare(bn);
     } );
     $spoblist.appendTo($spobs);
-    $('button#btn-sort').text("Sort by: "+d);
+    var dir;
+    if (reverse)
+        dir = "↓";
+    else
+        dir = "↑";
+    $('button#btn-sort').text("Sort by: "+d+dir);
+}
+function sortbydatanumber( d ) {
+    var dsort = "data-"+d;
+    var $spobs = $('#spobs');
+    var $spoblist = $spobs.children(".col").detach();
+    if (sort==d) {
+        reverse = !reverse;
+    }
+    sort = d;
+    $spoblist.sort( function( a, b ) {
+        var ad = a.getAttribute(dsort);
+        var bd = b.getAttribute(dsort);
+        var c =  ad-bd;
+        if (reverse)
+            c = -c;
+        if (c)
+            return c;
+        var an = a.getAttribute("data-Name");
+        var bn = b.getAttribute("data-Name");
+        if (reverse)
+            return (''+bn).localeCompare(an);
+        else
+            return (''+an).localeCompare(bn);
+    } );
+    $spoblist.appendTo($spobs);
+    var dir;
+    if (reverse)
+        dir = "↓";
+    else
+        dir = "↑";
+    $('button#btn-sort').text("Sort by: "+d+dir);
 }
 function randomize() {
     var $spobs = $('#spobs');
@@ -28,6 +75,8 @@ function randomize() {
         return Math.random() < 0.5;
     } );
     $spoblist.appendTo($spobs);
+    sort = "Random";
+    reverse = false;
     $('button#btn-sort').text("Sort by: Random");
 }
 </script>
@@ -52,13 +101,13 @@ end
 <div id="selection" class="m-3">
  <div class="dropdown">
   <button id="btn-sort" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-  Sort by: Name
+  Sort by: Name↑
   </button>
   <ul class="dropdown-menu">
    <li><a class="dropdown-item" href="#" onclick="sortbydata('Name');">Name</a></li>
    <li><a class="dropdown-item" href="#" onclick="sortbydata('Faction');">Faction</a></li>
    <li><a class="dropdown-item" href="#" onclick="sortbydata('Class');">Class</a></li>
-   <li><a class="dropdown-item" href="#" onclick="sortbydata('Population');">Population</a></li>
+   <li><a class="dropdown-item" href="#" onclick="sortbydatanumber('Population');">Population</a></li>
    <li><a class="dropdown-item" href="#" onclick="randomize();">Random</a></li>
   </ul>
  </div>
