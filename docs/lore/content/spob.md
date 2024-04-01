@@ -84,6 +84,8 @@ function randomize() {
 <% end %>
 <!-- First get some global stuff. -->
 <%
+spobdata = {}
+
 factionlist = Set[ "Factionless" ]
 taglist = Set[]
 classlist = Set[]
@@ -95,6 +97,47 @@ classlist = Set[]
         taglist.add( Array(s[:spob][:tags][:tag]) )
     end
     classlist.add( s[:spob][:general][:class] )
+
+    # Store useful data here
+    spobdata[s.identifier] = {
+        name: s[:spob][:"+@name"],
+        id: Base64.encode64( s[:spob][:"+@name"] ),
+    }
+    sd = spobdata[s.identifier]
+
+    if not s[:spob][:GFX].nil? and not s[:spob][:GFX][:space].nil?
+        sd[:gfx] = relative_path_to(@items["/gfx/spob/space/"+s[:spob][:GFX][:space]])
+    end
+    if not s[:spob][:GFX].nil? and not s[:spob][:GFX][:exterior].nil?
+        sd[:exterior] = relative_path_to(@items["/gfx/spob/exterior/"+s[:spob][:GFX][:exterior]])
+    end
+    if not s[:spob][:general][:description].nil? then
+        sd[:description] = s[:spob][:general][:description]
+    end
+    if not s[:spob][:general][:bar].nil? then
+        sd[:bar] = s[:spob][:general][:bar]
+    end
+    if not s[:spob][:general][:population].nil? then
+        sd[:population] = s[:spob][:general][:population].to_f.to_i.to_s
+    else
+        sd[:population] = 0
+    end
+    if not s[:spob][:presence].nil? and not s[:spob][:presence][:faction].nil?
+        sd[:faction] = s[:spob][:presence][:faction]
+    else
+        sd[:faction] = "Factionless"
+    end
+    sd[:spobclass] = s[:spob][:general][:class]
+    if not s[:spob][:general][:services].nil?
+        sd[:services] = s[:spob][:general][:services].keys
+    else
+        sd[:services] = []
+    end
+    if not s[:spob][:tags].nil?
+        sd[:tags] = Array(s[:spob][:tags][:tag])
+    else
+        sd[:tags] = []
+    end
 end
 %>
 
@@ -118,73 +161,38 @@ end
 <% @items.find_all('/spob/*.md').sort{ |a,b| a[:spob][:"+@name"]<=>b[:spob][:"+@name"] }.each do |s| %> <!--*-->
 <%
     # Useful spob Variables
-
-    name = s[:spob][:"+@name"]
-    id = Base64.encode64( name )
-    if not s[:spob][:GFX].nil? and not s[:spob][:GFX][:space].nil?
-        gfx = relative_path_to(@items["/gfx/spob/space/"+s[:spob][:GFX][:space]])
-    end
-    if not s[:spob][:GFX].nil? and not s[:spob][:GFX][:exterior].nil?
-        exterior = relative_path_to(@items["/gfx/spob/exterior/"+s[:spob][:GFX][:exterior]])
-    end
-    if not s[:spob][:general][:description].nil? then
-        description = s[:spob][:general][:description]
-    end
-    if not s[:spob][:general][:bar].nil? then
-        bar = s[:spob][:general][:bar]
-    end
-    if not s[:spob][:general][:population].nil? then
-        population = s[:spob][:general][:population].to_f.to_i.to_s
-    else
-        population = 0
-    end
+    sd = spobdata[s.identifier]
 
     cls = ""
-    if not s[:spob][:presence].nil? and not s[:spob][:presence][:faction].nil?
-        faction = s[:spob][:presence][:faction]
-    else
-        faction = "Factionless"
-    end
-    cls += " fct-"+faction
-    spobclass = s[:spob][:general][:class]
-    cls += " cls-"+spobclass
-    if not s[:spob][:general][:services].nil?
-        services = s[:spob][:general][:services].keys
-    else
-        services = []
-    end
-    services.each do |s|
+    cls += " fct-"+sd[:faction]
+    cls += " cls-"+sd[:spobclass]
+    sd[:services].each do |s|
         cls += " srv-"+s.to_s
     end
-    if not s[:spob][:tags].nil?
-        tags = Array(s[:spob][:tags][:tag])
-    else
-        tags = []
-    end
-    tags.each do |t|
+    sd[:tags].each do |t|
         cls += " tag-"+t
     end
 %>
  <!-- Card -->
- <div class="col <%= cls %>" data-Name="<%= name %>" data-Faction="<%= faction %>" data-Class="<%= spobclass %>" data-Population="<%= population %>" >
-  <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-<%= id %>" >
-   <% if not gfx.nil? %>
-   <img src="<%= gfx %>" class="card-img-top" alt="<%= s[:spob][:GFX][:space] %>">
+ <div class="col <%= cls %>" data-Name="<%= sd[:name] %>" data-Faction="<%= sd[:faction] %>" data-Class="<%= sd[:spobclass] %>" data-Population="<%= sd[:population] %>" >
+  <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-<%= sd[:id] %>" >
+   <% if not sd[:gfx].nil? %>
+   <img src="<%= sd[:gfx] %>" class="card-img-top" alt="<%= s[:spob][:GFX][:space] %>">
    <% end %>
    <div class="card-body">
-    <h5 class="card-title"><%= name %></h5>
+    <h5 class="card-title"><%= sd[:name] %></h5>
     <div class="card-text">
      <div>
-      <span class="badge rounded-pill text-bg-primary"><%= faction %></span>
-      <span class="badge rounded-pill text-bg-primary">Class <%= spobclass %></span>
+      <span class="badge rounded-pill text-bg-primary"><%= sd[:faction] %></span>
+      <span class="badge rounded-pill text-bg-primary">Class <%= sd[:spobclass] %></span>
      </div>
      <div>
-     <% services.each do |s| %>
+     <% sd[:services].each do |s| %>
       <span class="badge rounded-pill text-bg-secondary"><%= s %></span>
      <% end %>
      </div>
      <div>
-     <% tags.each do |t| %>
+     <% sd[:tags].each do |t| %>
       <span class="badge rounded-pill text-bg-info"><%= t %></span>
      <% end %>
      </div>
@@ -193,43 +201,43 @@ end
   </div>
  </div>
  <!-- Modal -->
- <div class="modal fade" id="modal-<%= id %>" tabindex="-1" aria-labelledby="modal-label-<%= id %>" aria-hidden="true">
+ <div class="modal fade" id="modal-<%= sd[:id] %>" tabindex="-1" aria-labelledby="modal-label-<%= sd[:id] %>" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
    <div class="modal-content">
     <div class="modal-header">
-     <h1 class="modal-title fs-5" id="modal-label-<%= id %>"><%= name %></h1>
+     <h1 class="modal-title fs-5" id="modal-label-<%= sd[:id] %>"><%= sd[:name] %></h1>
      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body clearfix">
-     <% if not exterior.nil? %>
-     <img src="<%= exterior %>" class="rounded col-md-6 float-md-end mb-3 ms-md-3" alt="<%= s[:spob][:GFX][:exterior] %>">
-     <% elsif not gfx.nil? %>
-     <img src="<%= gfx %>" class="col-md-6 float-md-end mb-3 ms-md-3" alt="<%= s[:spob][:GFX][:gfx] %>">
+     <% if not sd[:exterior].nil? %>
+     <img src="<%= sd[:exterior] %>" class="rounded col-md-6 float-md-end mb-3 ms-md-3" alt="<%= s[:spob][:GFX][:exterior] %>">
+     <% elsif not sd[:gfx].nil? %>
+     <img src="<%= sd[:gfx] %>" class="col-md-6 float-md-end mb-3 ms-md-3" alt="<%= s[:spob][:GFX][:gfx] %>">
      <% end %>
      <div>
-      <span class="badge rounded-pill text-bg-primary"><%= faction %></span>
-      <span class="badge rounded-pill text-bg-primary">Class <%= spobclass %></span>
+      <span class="badge rounded-pill text-bg-primary"><%= sd[:faction] %></span>
+      <span class="badge rounded-pill text-bg-primary">Class <%= sd[:spobclass] %></span>
      </div>
      <div>
-     <% services.each do |s| %>
+     <% sd[:services].each do |s| %>
       <span class="badge rounded-pill text-bg-secondary"><%= s %></span>
      <% end %>
      </div>
      <div>
-     <% tags.each do |t| %>
+     <% sd[:tags].each do |t| %>
       <span class="badge rounded-pill text-bg-info"><%= t %></span>
      <% end %>
      </div>
-     <% if not description.nil? %>
+     <% if not sd[:description].nil? %>
      <div>
      <h5>Description:</h5>
-     <p><%= description %></p>
+     <p><%= sd[:description] %></p>
      </div>
      <% end %>
-     <% if not bar.nil? %>
+     <% if not sd[:bar].nil? %>
      <div>
      <h5>Spaceport Bar:</h5>
-     <p><%= bar %></p>
+     <p><%= sd[:bar] %></p>
      </div>
      <% end %>
     </div>
