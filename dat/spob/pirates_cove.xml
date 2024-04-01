@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Pirate's Cove">
- <lua>pirate_clanworld.lua</lua>
+ <lua>spob/lua/spob/lua/pirate_clanworld.lua</lua>
  <pos x="-123.975989" y="-3195.776183"/>
  <GFX>
   <space>moon-M06.webp</space>

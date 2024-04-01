@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kal Niut Obelisk">
  <feature>#yObelisk#0</feature>
- <lua>kal_niut_obelisk.lua</lua>
+ <lua>spob/lua/spob/lua/kal_niut_obelisk.lua</lua>
  <marker>spobmarker_obelisk</marker>
  <pos x="14780.209704" y="5933.808522"/>
  <GFX>

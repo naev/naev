@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Polaris Prime">
- <lua>highclass.lua</lua>
+ <lua>spob/lua/spob/lua/highclass.lua</lua>
  <pos x="14060.037687" y="4973.423281"/>
  <GFX>
   <space>station-fleetbase4.webp</space>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Trevis Cloister">
- <lua>sirius_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="3123.114204" y="2440.546171"/>
  <GFX>
   <space>station-fleetbase2.webp</space>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sander">
- <lua>lowclass.lua</lua>
+ <lua>spob/lua/spob/lua/lowclass.lua</lua>
  <pos x="-3259.936744" y="-2660.712975"/>
  <GFX>
   <space>O01.webp</space>

@@ -6,6 +6,12 @@
   <space>station-pointy1.webp</space>
   <exterior>silo.webp</exterior>
  </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <base>70.000000</base>
+  <bonus>30.000000</bonus>
+  <range>0</range>
+ </presence>
  <general>
   <class>M</class>
   <population>1000</population>
@@ -18,6 +24,7 @@
    <outfits/>
    <shipyard/>
   </services>
+  <commodities/>
   <description>This top-secret station was built at a great deal of expense before the Incident to coordinate the activities of Proteron agents throughout the galaxy. After the Incident, it was thought lost until the expeditionary forces stumbled upon it. The Circle spared no expense in restoring the station as soon as possible.</description>
   <bar>This bar looks as if right out of a spy thriller - agents in suits and military officials talking in quiet, measured tones that don't carry about things you can't decipher.</bar>
  </general>

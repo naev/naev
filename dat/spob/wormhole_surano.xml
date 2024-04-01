@@ -2,7 +2,7 @@
 <spob name="Wormhole Surano">
  <display>#bWormhole#0</display>
  <feature>#bWormhole#0</feature>
- <lua>wormhole_surano.lua</lua>
+ <lua>spob/lua/spob/lua/wormhole_surano.lua</lua>
  <marker>spobmarker_wormhole</marker>
  <pos x="-9633.472109" y="-8269.880355"/>
  <GFX/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mord">
- <lua>spob/lua/protero.lua</lua>
+ <lua>spob/lua/proteron_mil_restricted.lua</lua>
  <pos x="3242.477650" y="4168.187199"/>
  <GFX>
   <space>A06.webp</space>
@@ -24,6 +24,20 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>(null)</description>
+  <description>Mord is the Proteron manufactory and testing centre for spaceships. You can see ships landing and taking off every few minutes from the many spaceports dotting this world.</description>
  </general>
+ <tech>
+  <item>Engines High</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Hulls Elite</item>
+  <item>Proteron Military Outfits</item>
+  <item>Proteron Military Ships</item>
+  <item>Systems Elite</item>
+ </tech>
+ <tags>
+  <tag>restricted</tag>
+  <tag>shipbuilding</tag>
+  <tag>military</tag>
+ </tags>
 </spob>

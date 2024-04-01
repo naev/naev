@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vorca">
- <lua>pirate_clanworld.lua</lua>
+ <lua>spob/lua/spob/lua/pirate_clanworld.lua</lua>
  <pos x="-12000.000000" y="-22000.000000"/>
  <GFX>
   <space>Y00.webp</space>

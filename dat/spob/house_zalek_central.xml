@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="House Za'lek Central">
- <lua>zalek_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/zalek_mil_restricted.lua</lua>
  <pos x="10464.449053" y="5380.131934"/>
  <GFX>
   <space>zalek_hq.webp</space>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fort Fernando">
- <lua>dvaered_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="12376.160912" y="625.892062"/>
  <GFX>
   <space>station-dvaered1.webp</space>

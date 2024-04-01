@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Velyn">
+ <lua>default.lua</lua>
+ <pos x="6766.763876" y="-1198.049998"/>
+ <GFX>
+  <space>003.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <base>40.000000</base>
+  <bonus>20.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>10000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>The comptroller for the Proteron economy, Velyn is primarily a supercomputer with the prediction models for various aspects of the centralised Proteron economy. The place seems very busy, as you would expect for so vital a station, but it's rather small as a whole.</description>
+ </general>
+</spob>

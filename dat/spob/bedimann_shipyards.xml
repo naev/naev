@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Bedimann Shipyards">
- <lua>zalek_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/zalek_mil_restricted.lua</lua>
  <pos x="4304.105547" y="1996.749996"/>
  <GFX>
   <space>station-shipyard2.webp</space>

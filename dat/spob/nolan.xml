@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Nolan">
- <lua>dvaered_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="-14082.017719" y="10784.915102"/>
  <GFX>
   <space>J04.webp</space>

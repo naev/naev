@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Obelisk Monastery">
- <lua>sirius_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="11385.347075" y="-4070.533010"/>
  <GFX>
   <space>001.webp</space>

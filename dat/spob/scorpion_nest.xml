@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Scorpion Nest">
- <lua>soromid_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="-11302.327703" y="7269.819086"/>
  <GFX>
   <space>station-fleetbase2.webp</space>

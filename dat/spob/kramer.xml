@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kramer">
- <lua>pirate_clanworld.lua</lua>
+ <lua>spob/lua/spob/lua/pirate_clanworld.lua</lua>
  <pos x="2972.033483" y="4592.204513"/>
  <GFX>
   <space>C01.webp</space>

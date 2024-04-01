@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Akios Terminal">
- <lua>zalek_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/zalek_mil_restricted.lua</lua>
  <pos x="-7481.403716" y="12773.423776"/>
  <GFX>
   <space>zalek_station2.webp</space>

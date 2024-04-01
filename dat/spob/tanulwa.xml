@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tanulwa">
- <lua>soromid_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="-3444.863379" y="-1987.421180"/>
  <GFX>
   <space>moon-L00.webp</space>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sirius Ordnance">
- <lua>sirius_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="5966.666667" y="19366.197274"/>
  <GFX>
   <space>station-fleetbase3.webp</space>

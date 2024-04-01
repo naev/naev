@@ -846,6 +846,7 @@ dat/spob/darkshed.xml
 dat/spob/darkstone_iv.xml
 dat/spob/darkstone_v.xml
 dat/spob/dawn.xml
+dat/spob/delgon.xml
 dat/spob/delta_pavonis_i.xml
 dat/spob/delta_pavonis_ii.xml
 dat/spob/delta_pavonis_iia.xml
@@ -1835,6 +1836,7 @@ dat/spob/vauban_i1.xml
 dat/spob/vault.xml
 dat/spob/vean_i.xml
 dat/spob/vean_ii.xml
+dat/spob/velyn.xml
 dat/spob/vennis.xml
 dat/spob/vercingetorix.xml
 dat/spob/verex_i.xml
@@ -2047,6 +2049,7 @@ dat/ssys/carnis_major.xml
 dat/ssys/carnis_minor.xml
 dat/ssys/carrza.xml
 dat/ssys/castellan.xml
+dat/ssys/catlat.xml
 dat/ssys/cebus.xml
 dat/ssys/cerberus.xml
 dat/ssys/chloe.xml
