@@ -1,9 +1,28 @@
 ---
 title: Space Objects
 ---
+<!-- First get some global stuff. -->
+<%
+factionlist = Set[ "Factionless" ]
+taglist = Set[]
+classlist = Set[]
+@items.find_all('/spob/*.md').each do |s| # **
+    if not s[:spob][:presence].nil? and not s[:spob][:presence][:faction].nil?
+        factionlist.add( s[:spob][:presence][:faction] )
+    end
+    if not s[:spob][:tags].nil?
+        taglist.add( Array(s[:spob][:tags][:tag]) )
+    end
+    classlist.add( s[:spob][:general][:class] )
+end
+%>
+
+<!-- Now display all the spobs. -->
 <div class="row row-cols-1 row-cols-md-5 g-4">
 <% @items.find_all('/spob/*.md').each do |s| %> <!--*-->
 <%
+    # Useful spob Variables
+
     name = s[:spob][:"+@name"]
     id = Base64.encode64( name )
     if not s[:spob][:GFX].nil? and not s[:spob][:GFX][:space].nil?
