@@ -2,7 +2,7 @@
 SPOB := $(wildcard ../../dat/spob/*.xml)
 SPOB := $(patsubst ../../dat/spob/%.xml, content/spob/%.md, $(SPOB) )
 
-GFX := $(wildcard ../../artwork/gfx/spob/space/*.webp ../../artwork/gfx/spob/space/**/*.webp)
+GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp)
 GFX := $(patsubst ../../artwork/%, content/%, $(GFX))
 
 .PHONY: all gfx spob view install check logo
