@@ -15,9 +15,48 @@
 ignore '/**/_*'
 
 preprocess do
+   # create name -> item mappings
+   nametospob = {}
    @items.find_all('/spob/*.md').each do |s|
       s[:name] = s[:spob][:"+@name"]
-      s[:id] =  Base64.encode64( s[:spob][:"+@name"] )
+      nametospob[s[:name]] = s
+   end
+   nametossys = {}
+   @items.find_all("/ssys/*.md").each do |s|
+      s[:name] = s[:ssys][:"+@name"]
+      nametossys[s[:name]] = s
+   end
+
+   # Mappings from spob to system and system to array of spobs.
+   spobssys = {}
+   ssysspob = {}
+
+   # Process systems
+   @items.find_all('/ssys/*.md').each do |s|
+      # Core attributes
+      s[:id] =  Base64.encode64( s[:name] )
+
+      # Map spobs to systems
+      spb = s[:ssys][:spobs]
+      if not spb.nil? and not spb[:spob].nil?
+         if ssysspob[ s[:name] ].nil?
+            ssysspob[ s[:name] ] = []
+         end
+         Array(spb[:spob]).each do |p|
+            spobssys[p] = s[:name]
+            ssysspob[ s[:name] ].push( nametospob[spobssys[p]] )
+         end
+         s[:spobs] = ssysspob[ s[:name] ]
+      else
+         s[:spobs] = []
+      end
+   end
+
+   @items.find_all('/spob/*.md').each do |s|
+      # Core attributes
+      s[:id] =  Base64.encode64( s[:name] )
+
+      # Set some other atrtibutes
       if not s[:spob][:general][:description].nil? then
          s[:description] = s[:spob][:general][:description]
       end
@@ -44,6 +83,21 @@ preprocess do
          s[:tags] = Array(s[:spob][:tags][:tag])
       else
          s[:tags] = []
+      end
+
+      # See if in system
+      if not spobssys[ s[:name] ].nil? then
+         s[:ssys] = nametossys[ spobssys[ s[:name] ] ]
+
+         # Get neighbours
+         s[:neighbours] = []
+         s[:ssys][:spobs].each do |n|
+            if n!=s[:name]
+               s[:neighbours].push(n)
+            end
+         end
+      else
+         s[:tags].push( "nosystem" )
       end
    end
 end
