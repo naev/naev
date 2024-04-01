@@ -163,7 +163,11 @@ end
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
    <div class="modal-content">
     <div class="modal-header">
+     <% if s[:ssys].nil? %>
      <h1 class="modal-title fs-5" id="modal-label-<%= s[:id] %>"><%= s[:name] %></h1>
+     <% else %>
+     <h1 class="modal-title fs-5" id="modal-label-<%= s[:id] %>"><%= s[:name]+" ("+s[:ssys]+" system)" %></h1>
+     <% end %>
      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body clearfix">
@@ -172,16 +176,16 @@ end
      <% elsif not gfx.nil? %>
      <img src="<%= gfx %>" class="col-md-6 float-md-end mb-3 ms-md-3" alt="<%= s[:spob][:GFX][:gfx] %>">
      <% end %>
-     <div>
+     <div class='m-1'>
       <span class="badge rounded-pill text-bg-primary"><%= s[:faction] %></span>
       <span class="badge rounded-pill text-bg-primary">Class <%= s[:spobclass] %></span>
      </div>
-     <div>
+     <div class='m-1'>
      <% s[:services].each do |s| %>
       <span class="badge rounded-pill text-bg-secondary"><%= s %></span>
      <% end %>
      </div>
-     <div>
+     <div class='m-1'>
      <% s[:tags].each do |t| %>
       <span class="badge rounded-pill text-bg-info"><%= t %></span>
      <% end %>
