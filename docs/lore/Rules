@@ -102,7 +102,7 @@ end
 # CSS and friends
 compile '**/*.{css,scss}' do
    filter :erb
-   filter :sass, syntax: :scss if item[:extension] == 'scss'
+   filter :dart_sass, syntax: :scss if item[:extension] == 'scss'
    filter :rainpress
    write ext: 'css'
 end
