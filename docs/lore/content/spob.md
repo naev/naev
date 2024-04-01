@@ -84,9 +84,7 @@ function randomize() {
 <% end %>
 <!-- First get some global stuff. -->
 <%
-spobdata = {}
-
-factionlist = Set[ "Factionless" ]
+factionlist = Set[]
 taglist = Set[]
 classlist = Set[]
 @items.find_all('/spob/*.md').each do |s| # **
