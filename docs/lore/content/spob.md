@@ -5,11 +5,12 @@ title: Space Objects
 <% content_for :javascript do %>
 <script>
 function sortbydata( d ) {
+    var dsort = "data-"+d;
     var $spobs = $('#spobs');
     var $spoblist = $spobs.children(".col").detach();
     $spoblist.sort( function( a, b ) {
-        var ad = a.getAttribute(d);
-        var bd = b.getAttribute(d);
+        var ad = a.getAttribute(dsort);
+        var bd = b.getAttribute(dsort);
         var c =  (''+ad).localeCompare(bd);
         if (c)
             return c;
@@ -18,6 +19,7 @@ function sortbydata( d ) {
         return (''+an).localeCompare(bn);
     } );
     $spoblist.appendTo($spobs);
+    $('button#btn-sort').text("Sort by: "+d);
 }
 function randomize() {
     var $spobs = $('#spobs');
@@ -26,6 +28,7 @@ function randomize() {
         return Math.random() < 0.5;
     } );
     $spoblist.appendTo($spobs);
+    $('button#btn-sort').text("Sort by: Random");
 }
 </script>
 
@@ -46,17 +49,19 @@ classlist = Set[]
 end
 %>
 
-<div class="dropdown">
- <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
- Sort by:
- </button>
- <ul class="dropdown-menu">
-  <li><a class="dropdown-item" href="#" onclick="sortbydata('data-Name');">Name</a></li>
-  <li><a class="dropdown-item" href="#" onclick="sortbydata('data-Faction');">Faction</a></li>
-  <li><a class="dropdown-item" href="#" onclick="sortbydata('data-Class');">Class</a></li>
-  <li><a class="dropdown-item" href="#" onclick="sortbydata('data-Population');">Population</a></li>
-  <li><a class="dropdown-item" href="#" onclick="randomize();">Random</a></li>
- </ul>
+<div id="selection" class="m-3">
+ <div class="dropdown">
+  <button id="btn-sort" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  Sort by: Name
+  </button>
+  <ul class="dropdown-menu">
+   <li><a class="dropdown-item" href="#" onclick="sortbydata('Name');">Name</a></li>
+   <li><a class="dropdown-item" href="#" onclick="sortbydata('Faction');">Faction</a></li>
+   <li><a class="dropdown-item" href="#" onclick="sortbydata('Class');">Class</a></li>
+   <li><a class="dropdown-item" href="#" onclick="sortbydata('Population');">Population</a></li>
+   <li><a class="dropdown-item" href="#" onclick="randomize();">Random</a></li>
+  </ul>
+ </div>
 </div>
 
 <!-- Now display all the spobs. -->
