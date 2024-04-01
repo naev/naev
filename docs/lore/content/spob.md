@@ -112,18 +112,7 @@ end
 <!-- Now display all the spobs. -->
 <div class="row row-cols-1 row-cols-md-5 g-4" id="spobs">
 <% @items.find_all('/spob/*.md').sort{ |a,b| a[:spob][:"+@name"]<=>b[:spob][:"+@name"] }.each do |s| %> <!--*-->
-<%
-    # Useful spob Variables
-    if not s[:spob][:GFX].nil? and not s[:spob][:GFX][:space].nil?
-        gfx = relative_path_to(@items["/gfx/spob/space/"+s[:spob][:GFX][:space]])
-    end
-    if not s[:spob][:GFX].nil? and not s[:spob][:GFX][:exterior].nil?
-        exterior = relative_path_to(@items["/gfx/spob/exterior/"+s[:spob][:GFX][:exterior]])
-    end
-%>
- <!-- Card -->
  <%= card_spob( s ) %>
- <!-- Modal -->
  <%= modal_spob( s ) %>
 <% end %>
 </div>
