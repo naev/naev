@@ -185,11 +185,23 @@ static int debug_backtrace_full_callback( void *data, uintptr_t pc,
 }
 
 /**
+ * @brief Callback for handling ignoring an error in libbacktrace. :-)
+ */
+static void debug_backtrace_full_error_callback( void *data, const char *msg,
+                                                 int errnum )
+{
+   (void)data;
+   (void)msg;
+   (void)errnum;
+}
+
+/**
  * @brief Logs a backtrace to stderr.
  */
 void debug_logBacktrace( void )
 {
-   backtrace_full( debug_bs, 1, debug_backtrace_full_callback, NULL, NULL );
+   backtrace_full( debug_bs, 1, debug_backtrace_full_callback,
+                   debug_backtrace_full_error_callback, NULL );
 }
 
 #if HAVE_SIGACTION

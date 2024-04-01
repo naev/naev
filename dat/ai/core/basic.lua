@@ -224,7 +224,7 @@ end
 
 
 --[[
--- Follows it's target.
+-- Follows its target.
 --]]
 function follow( target )
    -- Will just float without a target to escort.

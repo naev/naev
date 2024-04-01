@@ -481,6 +481,7 @@ def generate_c_file():
 
     yield """
 #include <string.h>
+#include "SDL_timer.h"
 #include "shaders.gen.h"
 #include "opengl_shader.h"
 

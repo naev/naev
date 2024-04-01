@@ -188,6 +188,7 @@ static GLuint gl_shader_compile( GLuint type, const char *buf, GLint length,
       char *log = malloc( log_length + 1 );
       glGetShaderInfoLog( shader, log_length, &log_length, log );
       if ( gl_log_says_anything( log ) ) {
+         logprintf( stderr, 0, _( "File: %s" ), filename );
          print_with_line_numbers( buf );
          WARN( "compile_status==%d: %s: [[\n%s\n]]", compile_status, filename,
                log );

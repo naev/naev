@@ -10,6 +10,8 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include "SDL_timer.h"
+
 #include "naev.h"
 /** @endcond */
 
@@ -22,12 +24,9 @@
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
-#include "nluadef.h"
-#include "nstring.h"
 #include "nxml.h"
-#include "opengl.h"
+#include "opengl_tex.h"
 #include "player.h"
-#include "rng.h"
 #include "space.h"
 
 #define XML_FACTION_ID "Factions" /**< XML section identifier */
@@ -1391,8 +1390,10 @@ static int faction_parse( Faction *temp, const char *file )
 
       if ( xml_isNode( node, "logo" ) ) {
          char buf[PATH_MAX];
-         if ( temp->logo != NULL )
+         if ( temp->logo != NULL ) {
             WARN( _( "Faction '%s' has duplicate 'logo' tag." ), temp->name );
+            continue;
+         }
          snprintf( buf, sizeof( buf ), FACTION_LOGO_PATH "%s.webp",
                    xml_get( node ) );
          temp->logo = gl_newImage( buf, 0 );
@@ -1539,6 +1540,8 @@ static int faction_parseSocial( const char *file )
    /* Parse social stuff. */
    node = parent->xmlChildrenNode;
    do {
+      xml_onlyNodes( node );
+
       if ( xml_isNode( node, "generator" ) ) {
          FactionGenerator *fg;
          if ( base->generators == NULL )
@@ -1945,13 +1948,12 @@ const FactionGenerator *faction_generators( int f )
  */
 void factions_clearDynamic( void )
 {
-   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
+   for ( int i = array_size( faction_stack ) - 1; i >= 0; i-- ) {
       Faction *f = &faction_stack[i];
-      if ( faction_isFlag( f, FACTION_DYNAMIC ) ) {
-         faction_freeOne( f );
-         array_erase( &faction_stack, f, f + 1 );
-         i--;
-      }
+      if ( !faction_isFlag( f, FACTION_DYNAMIC ) )
+         continue;
+      faction_freeOne( f );
+      array_erase( &faction_stack, f, f + 1 );
    }
    faction_computeGrid();
 }

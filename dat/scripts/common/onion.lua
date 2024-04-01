@@ -34,7 +34,22 @@ function onion.vn_l337b01( params )
          tmerge( {
             image=onion.img_onion(), -- TODO
             colour=nil,
-            shader=love_shaders.hologram{strength=0.2},
+         }, params) )
+end
+
+function onion.vn_nexus_l337b01( params )
+   return vn.Character.new( _("l337 b01"),
+         tmerge( {
+            image=onion.img_onion(), -- TODO
+            colour=nil,
+         }, params) )
+end
+
+function onion.vn_nexus_trixie( params )
+   return vn.Character.new( _("Trixie"),
+         tmerge( {
+            image=onion.img_onion(), -- TODO
+            colour=nil,
          }, params) )
 end
 
@@ -46,6 +61,7 @@ end
 onion.rewards = {
    misn01 = 200e3,
    misn02 = 500e3,
+   misn03 = 700e3,
 }
 
 return onion

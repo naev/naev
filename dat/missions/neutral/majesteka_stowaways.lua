@@ -151,7 +151,7 @@ However, it may be better to try to locate a more fitting environment for them t
    if goodness > 0 then
       vn.na(_([[The orphans look ecstatic at their new home, and thank you for all you've done for them. Seeing that they are in good hands, you now return to your ship with peace of mind.]]))
    else
-      vn.na(fmt.f(_([[The orphans look excited at their new home, a significant improvement over {spb}. It's not the ideal place for kid, but you think they will be well off at their new location.]]),
+      vn.na(fmt.f(_([[The orphans look excited at their new home, a significant improvement over {spb}. It's not the ideal place for kids, but you think they will be well off at their new location.]]),
          {spb=stowaway_spob}))
    end
    vn.jump("byebye")

@@ -1,20 +1,20 @@
 -- Partial reimplementation of https://github.com/hoelzro/lua-term (license: MIT) using Naev markup.
 
-local term = { colours = {} }
+local term = { colors = {} }
 
-function term.colours.bright(s)
-   return s  -- Must be composable with a colour, so don't even escape the string.
+function term.colors.bright(s)
+   return s  -- Must be composable with a color, so don't even escape the string.
 end
 
-local function makecolour(value)
+local function makecolor(value)
    local fmt = "#" .. value .. "%s#0"
-   local function colourize(s)
+   local function colorize(s)
       return fmt:format(string.gsub(s, "#", "##"))
    end
-   return colourize
+   return colorize
 end
 
-local colourvalues = {
+local colorvalues = {
    red     = "r",
    green   = "g",
    yellow  = "y",
@@ -24,8 +24,8 @@ local colourvalues = {
    white   = "w",
 }
 
-for c, v in pairs(colourvalues) do
-   term.colours[c] = makecolour(v)
+for c, v in pairs(colorvalues) do
+   term.colors[c] = makecolor(v)
 end
 
 return term

@@ -1439,6 +1439,8 @@ int gltf_init( void )
       sl->Hshadow = glGetUniformLocation( shd->program, buf );
    }
    shd->nlights = glGetUniformLocation( shd->program, "u_nlights" );
+
+   glUseProgram( 0 );
    /* Light default values set on init. */
    gl_checkErr();
 

@@ -142,7 +142,7 @@ You hear the sound of mashing keys on a console.
       l337:rename(_("l337 b01"))
       l337(_([["Anyway, tl;dr, Ogre was a Dvaered stump, trying to mess with the Frontier and posing as part of the Onion Society. That's a big no-no."]]))
       l337(_([["They've been peeled, err, have had their personal information dumped on the darkwebs. Quite dangerous for them. Pretty sure notasockpuppet has dealt with them already. They have no tolerance for people messing with the Onion Society."]]))
-      l337(_([["Now all that's left is to do the opposite of what Ogre wanted to do. Jam and mess with the frontier? Sounds like it's time to say hello te our friends at the Dvaered mass media."]]))
+      l337(_([["Now all that's left is to do the opposite of what Ogre wanted to do. Jam and mess with the frontier? Sounds like it's time to say hello to our friends at the Dvaered mass media."]]))
       l337(fmt.f(_([[The transmitter you're carrying should be enough for me to work with. On to {spb}!"]]),
          {spb=dstspb3}))
       vn.disappear( l337, "electric" )
@@ -202,6 +202,8 @@ You hear the sound of mashing keys on a console.
       vn.na( fmt.reward(money_reward) )
 
       vn.run()
+
+      onion.log(_([[You were entrusted by a hacker named Ogre to once again do a simple delivery, however, it turned out that they were an imposter posing to be a member of the Onion Society. After delivering your package, Ogre was ousted to be a Dvaered spy by a member of the Onion Society called l337_b01 and "peeled", that is, made their details publicly available, so that they got promptly eliminated by other hackers. You were then sent out by l337_b01 to disrupt the Dvaered Mass Media which ended in mass chaos in Dvaered space.]]))
 
       misn.finish(true)
    end

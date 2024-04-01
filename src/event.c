@@ -12,8 +12,9 @@
  */
 /** @cond */
 #include "nstring.h"
-#include <stdint.h>
 #include <stdlib.h>
+
+#include "SDL_timer.h"
 
 #include "naev.h"
 /** @endcond */
@@ -28,7 +29,6 @@
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
-#include "nlua_audio.h"
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
 #include "nlua_evt.h"
@@ -36,7 +36,6 @@
 #include "nlua_music.h"
 #include "nlua_tex.h"
 #include "nlua_tk.h"
-#include "nluadef.h"
 #include "npc.h"
 #include "nxml.h"
 #include "nxml_lua.h"

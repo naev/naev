@@ -197,10 +197,12 @@ int main( int argc, char **argv )
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version( 0 ), HOST );
 
+#if __LINUX__
    if ( env.isAppImage )
       LOG( "AppImage detected. Running from: %s", env.appdir );
    else
       DEBUG( "AppImage not detected." );
+#endif /*__LINUX__ */
 
    /* Initializes SDL for possible warnings. */
    if ( SDL_Init( 0 ) ) {

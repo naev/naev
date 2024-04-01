@@ -4,12 +4,10 @@
 #pragma once
 
 /** @cond */
-#include "SDL.h"
+#include "SDL_events.h"
 /** @endcond */
 
-#include "font.h"
-#include "opengl.h"
-#include "tk/widget.h"
+#include "tk/widget.h" // IWYU pragma: export
 
 int toolkit_isOpen( void );
 

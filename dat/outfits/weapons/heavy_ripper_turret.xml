@@ -7,7 +7,7 @@
   <rarity>1</rarity>
   <mass>72</mass>
   <price>725000</price>
-  <description>Built off the heavy ripper cannon, the ripper turret is the heaviest turret conventionally available to civilians. It's bulk, high energy requirements, and high damage make it unsuitable for non-capital ships.</description>
+  <description>Built off the heavy ripper cannon, the ripper turret is the heaviest turret conventionally available to civilians. Its bulk, high energy requirements, and high damage make it unsuitable for non-capital ships.</description>
   <gfx_store>ripperturret.webp</gfx_store>
   <cpu>-350</cpu>
  </general>

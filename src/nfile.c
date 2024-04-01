@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#include "naev.h"
+#include "SDL_stdinc.h"
 
 #include <errno.h>
 #if HAS_POSIX
@@ -27,6 +27,7 @@
 #endif /* __WIN32__ */
 /** @endcond */
 
+#include "naev.h"
 #include "nfile.h"
 
 #include "conf.h"

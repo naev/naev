@@ -361,7 +361,9 @@ function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, pa
    end
 
    -- We ARE in the destination system now, so route from the entry point to the destination planet.
-   traveldist = traveldist + vec2.dist( pos, dest_pos )
+   if dest_pos then
+      traveldist = traveldist + vec2.dist( pos, dest_pos )
+   end
    return traveldist, jumps
 end
 

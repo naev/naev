@@ -16,7 +16,6 @@
 #include "background.h"
 #include "conf.h"
 #include "gui.h"
-#include "log.h"
 #include "nebula.h"
 #include "ntracing.h"
 #include "pause.h"

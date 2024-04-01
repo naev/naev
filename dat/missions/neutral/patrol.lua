@@ -175,6 +175,7 @@ function create ()
    end
    misn.setDesc(desc)
    misn.setReward( mem.credits )
+   misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), mem.missys ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 
    -- Mark the system as having a patrol mission

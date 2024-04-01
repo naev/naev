@@ -3,14 +3,10 @@
  */
 /** @cond */
 #include <assert.h>
-#include <limits.h>
 #include <stdlib.h>
 /** @endcond */
 
 #include "env.h"
-
-#include "log.h"
-#include "nstring.h"
 
 env_t env;
 

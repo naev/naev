@@ -97,7 +97,7 @@ function accept ()
 "Hey {playername}."]]),
          {playername=player.name()}))
       lucas(_([["Aw, screw it. I messed up. I put my faith in the system and got rammed over. They teach us like trash, useless garbage."]]))
-      lucas(_([["I thought we was at fault, as if we had done something wrong and had to be punished. However, it was not we who did the wronging."]]))
+      lucas(_([["I thought we were at fault, as if we had done something wrong and had to be punished. However, it was not we who did the wronging."]]))
       vn.menu{
          {p_("lucas02", [["What happened?"]]), "cont02"},
          {_([[…]]), "cont02"},

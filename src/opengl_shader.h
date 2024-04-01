@@ -5,7 +5,9 @@
 
 #include "opengl.h"
 
+#include "colour.h"
 #include "mat4.h"
+#include "shaders.gen.h"
 
 GLuint gl_program_backend( const char *vert, const char *frag, const char *geom,
                            const char *prependtext );

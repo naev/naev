@@ -996,6 +996,10 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    gltf_light( 2., 2., 2., 0.8 );
    pilot_renderFramebuffer( p, swd->fbo, gl_screen.nw, gl_screen.nh );
    gltf_light( lr, lg, lb, li );
+   /* TODO probably something more robust than restoring the blend mode here...
+    */
+   glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
+                        GL_ONE_MINUS_SRC_ALPHA );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    gl_renderTextureRaw( swd->tex, 0, px, py, pw, ph, 0., 0., s / swd->s,
                         s / swd->s, NULL, 0. );
@@ -1296,7 +1300,12 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p,
          pilot_addOutfitRaw( eq_wgt.selected->p, o, slot );
 
          /* Recalculate stats. */
-         pilot_outfitLInitAll( eq_wgt.selected->p );
+         if ( eq_wgt.selected->p->id > 0 )
+            /* TODO there are cases, like outfits that conditionally add stats,
+             * that we would want to actually initialize the Lua. However, the
+             * Lua API requires a pilot to have an ID, so we would need to make
+             * that requirement lax. Maybe add temporary ID or something? */
+            pilot_outfitLInitAll( eq_wgt.selected->p );
          pilot_calcStats( eq_wgt.selected->p ); /* TODO avoid running twice. */
       }
 

@@ -164,7 +164,7 @@ static int SDL_IsTrans( SDL_Surface *s, int x, int y )
  * Basically generates a map of what pixels are transparent.  Good for pixel
  *  perfect collision routines.
  *
- *    @param s Surface to map it's transparency.
+ *    @param s Surface to map its transparency.
  *    @param tight Whether or not to store transparency per bit or
  *    @return 0 on success.
  */
@@ -500,27 +500,34 @@ static glTexture *gl_texCreate( const char *path, int sx, int sy,
 static glTexture *gl_texExistsOrCreate( const char *path, unsigned int flags,
                                         int sx, int sy, int *created )
 {
+   char        buf[STRMAX];
+   const char *realdir;
+
    /* Null does never exist. */
    if ( ( path == NULL ) || ( flags & OPENGL_TEX_SKIPCACHE ) ) {
       *created = 1;
       return gl_texCreate( path, sx, sy, flags );
    }
+
+   /* Get the real path name. */
+   realdir = PHYSFS_getRealDir( path );
+   snprintf( buf, sizeof( buf ), "%s/%s", realdir ? realdir : "[NULL]", path );
    SDL_mutexP( tex_lock );
 
    /* Check to see if it already exists */
    if ( texture_list == NULL ) {
-      glTexture *tex = gl_texCreate( path, sx, sy, flags );
+      glTexture *tex = gl_texCreate( buf, sx, sy, flags );
       *created       = 1;
       SDL_mutexV( tex_lock );
       return tex;
    }
 
    /* Do some fancy binary search. */
-   const glTexList q = { .path = path, .sx = sx, .sy = sy, .flags = flags };
+   const glTexList q = { .path = buf, .sx = sx, .sy = sy, .flags = flags };
    glTexList      *t = bsearch( &q, texture_list, array_size( texture_list ),
                                 sizeof( glTexList ), tex_cmp );
    if ( t == NULL ) {
-      glTexture *tex = gl_texCreate( path, sx, sy, flags );
+      glTexture *tex = gl_texCreate( buf, sx, sy, flags );
       *created       = 1;
       SDL_mutexV( tex_lock );
       return tex;
@@ -1006,6 +1013,9 @@ int gl_initTextures( void )
  */
 void gl_exitTextures( void )
 {
+   SDL_DestroyMutex( tex_lock );
+   SDL_DestroyMutex( gl_lock );
+
    if ( array_size( texture_list ) <= 0 ) {
       array_free( texture_list );
       return;
@@ -1023,9 +1033,6 @@ void gl_exitTextures( void )
 #endif /* DEBUGGING */
 
    array_free( texture_list );
-
-   SDL_DestroyMutex( tex_lock );
-   SDL_DestroyMutex( gl_lock );
 }
 
 /**

@@ -158,10 +158,12 @@ function create ()
       -- We're not on a pirate stronghold, so include a clear warning that the
       -- mission is in fact illegal.
       mdesc = mdesc .. "\n\n" .. _("#rWARNING:#0 This mission is illegal and will get you in trouble with the authorities!")
+      misn.setIllegal(true)
    end
    misn.setDesc( mdesc )
 
    misn.setReward( mem.credits )
+   misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), mem.missys ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 

@@ -3,6 +3,10 @@
  */
 #pragma once
 
+/** @cond */
+#include "SDL_events.h"
+/** @endcond */
+
 #include "opengl_tex.h"
 #include "pilot.h"
 #include "space.h"

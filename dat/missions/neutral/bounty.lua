@@ -248,6 +248,7 @@ function create ()
    end
    misn.setDesc( mdesc )
    misn.setReward( reward )
+   misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), missys) )
 
    bounty.init( missys, pname, pship, nil, reward, {
       payingfaction     = payingfaction,

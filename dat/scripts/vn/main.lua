@@ -34,6 +34,10 @@ function love.update(dt)
    vn.update(dt)
 end
 
+function love.resize( w, h )
+   vn.resize( w, h )
+end
+
 function love.load()
    -- Transparent background in Naev
    love.graphics.setColour( 1, 1, 1, 1 )

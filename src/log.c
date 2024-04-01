@@ -18,10 +18,8 @@
 #include "log.h"
 
 #include "conf.h"
-#include "ndata.h"
-#ifndef DEBUG_PARANOID
 #include "debug.h"
-#endif /* DEBUG_PARANOID */
+#include "ndata.h"
 
 /**< Temporary storage buffers. */
 static char *outcopy = NULL;
@@ -303,12 +301,12 @@ int log_warn( const char *file, size_t line, const char *func, const char *fmt,
 {
    static char *warn_last_msg = NULL;
    static int   warn_last_num;
-#ifndef DEBUG_PARANOID
+   va_list      ap;
+   char        *buf;
+   size_t       n;
+
+   /* First do a backtrace. */
    debug_logBacktrace();
-#endif /* DEBUG_PARANOID */
-   va_list ap;
-   char   *buf;
-   size_t  n;
 
    /* Create the new message. */
    va_start( ap, fmt );
