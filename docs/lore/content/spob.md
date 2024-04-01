@@ -34,7 +34,7 @@ title: Space Objects
     end
 %>
  <div class="col">
-  <div class="card <%= cls %>">
+  <div class="card bg-black <%= cls %>">
    <% if not gfx.nil? %>
    <img src="<%= gfx %>" class="card-img-top" alt="<%= s[:spob][:GFX][:space] %>">
    <% end %>
