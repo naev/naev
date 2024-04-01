@@ -4,33 +4,33 @@ title: Space Objects
 
 <% content_for :javascript do %>
 <script>
-var sort = "Name";
-var reverse = false;
+let sort = "Name";
+let reverse = false;
 function sortbydata( d ) {
-    var dsort = "data-"+d;
-    var $spobs = $('#spobs');
-    var $spoblist = $spobs.children(".col").detach();
+    let dsort = "data-"+d;
+    let $spobs = $('#spobs');
+    let $spoblist = $spobs.children(".col").detach();
     if (sort==d) {
         reverse = !reverse;
     }
     sort = d;
     $spoblist.sort( function( a, b ) {
-        var ad = a.getAttribute(dsort);
-        var bd = b.getAttribute(dsort);
-        var c =  (''+ad).localeCompare(bd);
+        let ad = a.getAttribute(dsort);
+        let bd = b.getAttribute(dsort);
+        let c =  (''+ad).localeCompare(bd);
         if (reverse)
             c = -c;
         if (c)
             return c;
-        var an = a.getAttribute("data-Name");
-        var bn = b.getAttribute("data-Name");
+        let an = a.getAttribute("data-Name");
+        let bn = b.getAttribute("data-Name");
         if (reverse)
             return (''+bn).localeCompare(an);
         else
             return (''+an).localeCompare(bn);
     } );
     $spoblist.appendTo($spobs);
-    var dir;
+    let dir;
     if (reverse)
         dir = "↓";
     else
@@ -38,30 +38,30 @@ function sortbydata( d ) {
     $('button#btn-sort').text("Sort by: "+d+dir);
 }
 function sortbydatanumber( d ) {
-    var dsort = "data-"+d;
-    var $spobs = $('#spobs');
-    var $spoblist = $spobs.children(".col").detach();
+    let dsort = "data-"+d;
+    let $spobs = $('#spobs');
+    let $spoblist = $spobs.children(".col").detach();
     if (sort==d) {
         reverse = !reverse;
     }
     sort = d;
     $spoblist.sort( function( a, b ) {
-        var ad = a.getAttribute(dsort);
-        var bd = b.getAttribute(dsort);
-        var c =  ad-bd;
+        let ad = a.getAttribute(dsort);
+        let bd = b.getAttribute(dsort);
+        let c =  ad-bd;
         if (reverse)
             c = -c;
         if (c)
             return c;
-        var an = a.getAttribute("data-Name");
-        var bn = b.getAttribute("data-Name");
+        let an = a.getAttribute("data-Name");
+        let bn = b.getAttribute("data-Name");
         if (reverse)
             return (''+bn).localeCompare(an);
         else
             return (''+an).localeCompare(bn);
     } );
     $spoblist.appendTo($spobs);
-    var dir;
+    let dir;
     if (reverse)
         dir = "↓";
     else
@@ -69,8 +69,8 @@ function sortbydatanumber( d ) {
     $('button#btn-sort').text("Sort by: "+d+dir);
 }
 function randomize() {
-    var $spobs = $('#spobs');
-    var $spoblist = $spobs.children(".col").detach();
+    let $spobs = $('#spobs');
+    let $spoblist = $spobs.children(".col").detach();
     $spoblist.sort( function( a, b ) {
         return Math.random() < 0.5;
     } );
@@ -79,6 +79,16 @@ function randomize() {
     reverse = false;
     $('button#btn-sort').text("Sort by: Random");
 }
+
+$(window).load(function() {
+    let params = new URLSearchParams( window.location.search );
+    if (params.has('spob')) {
+        let spobname = params.get('spob')
+        console.log($('div[data-Name="'+spobname+'"]'));
+        // Not working, not sure why
+        $('div[data-Name="'+spobname+'"]')[0].show();
+    }
+});
 </script>
 
 <% end %>
