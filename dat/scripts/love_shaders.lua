@@ -77,13 +77,15 @@ Renders a shader to a canvas.
 @tparam Shader shader Shader to render.
 @tparam[opt=love.w] number width Width of the canvas to create (or nil for fullscreen).
 @tparam[opt=love.h] number height Height of the canvas to create (or nil for fullscreen).
+@tparam[param=love_shaders.img] Image img Image to use in the shader.
 @treturn Canvas Generated canvas.
 --]]
-function love_shaders.shader2canvas( shader, width, height )
+function love_shaders.shader2canvas( shader, width, height, img )
+   img = img or love_shaders.img
    local lw, lh = naev.gfx.dim()
    width = width or lw
    height = height or lh
-   return _shader2canvas( shader, love_shaders.img, width, height, width, height )
+   return _shader2canvas( shader, img, width, height, width, height )
 end
 
 

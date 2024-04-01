@@ -270,7 +270,7 @@ end
 local zach_msg_known = {
    _("It's… mesmerizing!"),
    _("It's safe right? Maybe we should send a drone first."),
-   _("I guess we might as well try it. Experimental physics at it's finest."),
+   _("I guess we might as well try it. Experimental physics at its finest."),
    _("Try to go through it carefully!"),
 }
 local zach_msg_unknown = {
@@ -279,7 +279,7 @@ local zach_msg_unknown = {
    _("I can't make much sense out of this, but…"),
    _("It seems like some sort of space-time discontinuity…"),
    _("It doesn't seem dangerous, at least the readings seem strangely fine."),
-   _("I guess we might as well try it. Experimental physics at it's finest."),
+   _("I guess we might as well try it. Experimental physics at its finest."),
    _("Try to go through it carefully!"),
 }
 

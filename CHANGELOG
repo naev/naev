@@ -16,6 +16,7 @@
       * Weapon set keybindings change window tabs
       * Use short outfit names when displaying groups of outfits
       * Shown more useful things you have when buying outfits with things other than credits
+      * Can sort and filter the mission computer
    * Content
       * 2 new missions
          * Hack the Gibson!
@@ -46,6 +47,9 @@
       * PSO and Mizar nebulas have trails again
       * Removed fancy background mode
       * Can remove fighter bays with deployed fighters
+
+* 0.11.5 (unreleased)
+   * Fixed FLF-Pirate map not providing jump information
 
 * 0.11.4
    * More guards against divides by zero in autonav

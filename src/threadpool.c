@@ -25,8 +25,10 @@
  */
 
 /** @cond */
-#include "SDL.h"
 #include <stdlib.h>
+
+#include "SDL_cpuinfo.h"
+#include "SDL_thread.h"
 /** @endcond */
 
 #include "threadpool.h"

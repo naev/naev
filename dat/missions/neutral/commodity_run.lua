@@ -39,7 +39,7 @@ mem.misn_desc = _("{pnt} has an insufficient supply of {cargo} to satisfy the cu
 
 cargo_land = {
    _("The containers of {cargo} are carried out of your ship and tallied. After several different workers double-check the register to confirm the amount, you are paid {credits} and summarily dismissed."),
-   _("The containers of {cargo} are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth {credits}."),
+   _("The containers of {cargo} are quickly and efficiently unloaded, labelled, and readied for distribution. The delivery manager thanks you with a credit chip worth {credits}."),
    _("The containers of {cargo} are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering {credits} after the number of tonnes is determined."),
    _("The containers of {cargo} are unloaded by robotic drones that scan and tally the contents. The human overseer hands you {credits} when they finish."),
 }

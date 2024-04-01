@@ -7,10 +7,8 @@
  * @brief Handles the special effects.
  */
 /** @cond */
-#include "SDL.h"
 #include "SDL_haptic.h"
-
-#include "naev.h"
+#include "SDL_timer.h"
 /** @endcond */
 
 #include "spfx.h"
@@ -20,6 +18,7 @@
 #include "conf.h"
 #include "debris.h"
 #include "log.h"
+#include "naev.h"
 #include "ndata.h"
 #include "nlua_shader.h"
 #include "nlua_spfx.h"

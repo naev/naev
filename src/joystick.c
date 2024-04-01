@@ -10,14 +10,11 @@
 #include "SDL.h"
 #include "SDL_haptic.h"
 #include "SDL_joystick.h"
-
-#include "naev.h"
 /** @endcond */
 
 #include "joystick.h"
 
 #include "log.h"
-#include "nstring.h"
 
 static SDL_Joystick *joystick   = NULL; /**< Current joystick in use. */
 static int           has_haptic = 0;    /**< Does the player have haptic? */

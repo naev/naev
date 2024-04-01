@@ -148,7 +148,8 @@ function create()
    if pir.factionIsPirate( spob.cur():faction() ) then
       car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
    else
-      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
+      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems, and you will face consequences if caught by patrols."), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
+      misn.setIllegal( true ) -- Considered illegal
    end
 
    misn.setReward(mem.reward)

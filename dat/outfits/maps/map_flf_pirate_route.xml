@@ -8,11 +8,11 @@
   <gfx_store>map_sector_01.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Tormulex"/>
+  <sys name="Tormulex">
+   <jump>Anger</jump>
+  </sys>
   <sys name="Anger">
-   <spob>Anger I</spob>
-   <spob>Anger II</spob>
-   <spob>Rage</spob>
+   <jump>Tormulex</jump>
   </sys>
  </specific>
 </outfit>

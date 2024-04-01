@@ -2171,6 +2171,11 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    sys->nebu_volatility = atof( window_getInput( wid, "inpVolatility" ) );
    sys->nebu_hue        = atof( window_getInput( wid, "inpHue" ) ) / 360.;
 
+   /* Reset trails if necessary. */
+   Pilot *const *plt_stack = pilot_getAll();
+   for ( int i = 0; i < array_size( plt_stack ); i++ )
+      pilot_clearTrails( plt_stack[i] );
+
    /* Reconstruct universe presences. */
    space_reconstructPresences();
    safelanes_recalculate();

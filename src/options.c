@@ -1306,8 +1306,6 @@ static void opt_accessibilityDefaults( unsigned int wid, const char *str )
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadJumpBrightness",
                                 JUMP_BRIGHTNESS_DEFAULT );
-   window_faderSetBoundedValue( wid, "fadMapOverlayOpacity",
-                                MAP_OVERLAY_OPACITY_DEFAULT );
    window_faderSetBoundedValue( wid, "fadColourblindCorrect",
                                 COLOURBLIND_CORRECT_DEFAULT );
    window_faderSetBoundedValue( wid, "fadColourblindSimulate",
@@ -1738,6 +1736,8 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
    window_faderSetBoundedValue(
       wid, "fadGammaCorrection",
       log( GAMMA_CORRECTION_DEFAULT ) /* a.k.a. 0. */ );
+   window_faderSetBoundedValue( wid, "fadMapOverlayOpacity",
+                                MAP_OVERLAY_OPACITY_DEFAULT );
 }
 
 /**

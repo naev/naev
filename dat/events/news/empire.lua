@@ -14,10 +14,11 @@ end
 
 local function emp_spob( filter )
    filter = filter or flt_standard
-   local lst = spob.get( faction.get("Empire") )
+   local lst = spob.getAll()
+   local fct = faction.get("Empire")
    local newlst = {}
    for k,p in ipairs(lst) do
-      if filter( p ) then
+      if p:faction()==fct and filter( p ) then
          newlst[ #newlst+1 ] = p
       end
    end

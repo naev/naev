@@ -2582,8 +2582,8 @@ void pilot_update( Pilot *pilot, double dt )
       /*
        * Recharge rate used to be proportional to the current state of the
        * battery: i.e. if the battery was 0% charged, the recharge rate would be
-       * at it's maximum, but if it was 70% charge, the battery would only
-       * recharge at 30% of it's normal rate.
+       * at its maximum, but if it was 70% charge, the battery would only
+       * recharge at 30% of its normal rate.
        *
        * So instead now we just recharge at a 50% rate. This does look weird,
        * as what's happening in reality doesn't match what's on the stats

@@ -4,7 +4,7 @@
 #pragma once
 
 /** @cond */
-#include "SDL.h"
+#include "SDL_events.h"
 /** @endcond */
 
 #define NMOD_NONE 0

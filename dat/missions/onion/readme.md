@@ -25,7 +25,7 @@ Meddle with the Onion Society, an eclectic group of the Nexus denizens and hacke
 
 1. **onion01:** weird mission computer that gives errors. On accept, gives an error and spawns another mission computer mission. Have to deliver a package to Gordon's Exchange. Causes havoc on the station.
 2. **onion02:** hacked ship contacts player, gives mission to pick up package at Ulios (Ingot) and deliver to Frontier Council. When about to get activated, l337_b01 stops it and ousts the mission giver. Player then is told instead deliver package to DVNN Central. Havoc is wreaked across the Dvaered News Network.
-3. **onion03:** player invited to a meeting in the Nexus and sees the power dynamics of the Onion Society.
+3. **onion03:** l337_b01 asks the player for help setting up short through a relay and then the player invited to a meeting in the Nexus and sees the power dynamics of the Onion Society.
 4. **onion04:** l337_b01 invites the player to do a bank heist with them. Player has to steal some one-time pads and interface with the bank network.
 5. **onion05:** player is sent get some Empire network plans for something big. Halfway through this is interrupted by a news event where signal is captured, where Trixie is peeled (doxxed). Have to rush to save Trixie, but ends up in failure and their death
 6. **onion06:** emergency meeting in the Nexus regarding Trixie where more tensions flare
@@ -40,7 +40,7 @@ Meddle with the Onion Society, an eclectic group of the Nexus denizens and hacke
 
 ### Notes
 
-* Peeling is the equivalent to "doxxing" in the Onion Society.
-* The Onion Society motto is "Going to make you cry!"
-* Message capsules are small autonomous drones that jump back and forth through jump lanes to transmit information at speeds faster than light, with also quantum entangling at a system level. Having priority access through them is really expensive, and most information and data is transmitted at much slower speeds.
-* The Nexus is the equivalent to cyberspace, although it is much more heterogeneous and inconsistent as it is mainly patched through sneaking packets into messages and hacked message capsules.
+* **Peeling** is the equivalent to "doxxing" in the Onion Society.
+* The Onion Society motto is *"Going to make you cry!"*
+* Message capsules are small autonomous drones called "**Nexus Relays**" or just "**Relays**" that jump back and forth through jump lanes to transmit information at speeds faster than light, with also quantum entangling at a system level. Having priority access through them is really expensive, and most information and data is transmitted at much slower speeds. Bypassing the mechanism is known as **shorting**.
+* **The Nexus** is the equivalent to cyberspace, although it is much more heterogeneous and inconsistent as it is mainly patched through sneaking packets into messages and hacked message capsules.

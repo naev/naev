@@ -10,14 +10,12 @@
  * based on command-line arguments.
  */
 /** @cond */
-#include <limits.h>
-#include <stdarg.h>
 #include <stdlib.h>
 #if __WIN32__
 #include <windows.h>
 #endif /* __WIN32__ */
 
-#include "SDL.h"
+#include "SDL_stdinc.h"
 #include "physfs.h"
 
 #include "naev.h"
@@ -129,12 +127,14 @@ void ndata_setupReadDirs( void )
    }
 #endif /* __MACOSX__ */
 
+#if __LINUX__
    if ( !ndata_found() && env.isAppImage &&
         nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >=
            0 ) {
       LOG( _( "Trying default datapath: %s" ), buf );
       PHYSFS_mount( buf, NULL, 1 );
    }
+#endif /*__LINUX__ */
 
    if ( !ndata_found() &&
         nfile_concatPaths( buf, PATH_MAX, PKGDATADIR, "dat" ) >= 0 ) {

@@ -29,6 +29,7 @@ function create ()
       {spob=mem.dest_spob, sys=mem.dest_sys,
          jumps=fmt.f( n_( "#nJumps:#0 {jumps}", "#nJumps:#0 {jumps}", numjumps ), {jumps=numjumps} )}))
    misn.setReward( fmt.f(_("{credits} per tonne of refugees"), {credits=fmt.credits(mem.reward)}) )
+   misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), mem.dest_sys, mem.dest_spob:pos() ) )
    misn.markerAdd( mem.dest_spob, "computer" )
 end
 

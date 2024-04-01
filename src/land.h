@@ -7,7 +7,7 @@
 #include "mission.h"
 #include "nstring.h"
 #include "space.h"
-#include "start.h"
+#include "start.h" // IWYU pragma: keep
 
 /*
  * The window interfaces.
@@ -22,6 +22,18 @@ enum {
    LAND_WINDOW_COMMODITY, /**< Commodity window. */
    LAND_NUMWINDOWS        /**< Number of land windows. */
 };
+
+typedef enum {
+   MISNCOMPUTER_SORT_PRIORITY, /**< Sort by priority (default. */
+   MISNCOMPUTER_SORT_REWARD,   /**< Sort by reward. */
+   MISNCOMPUTER_SORT_DISTANCE, /**< Sort by distance. */
+   MISNCOMPUTER_SORT_SETTINGS, /**< Open settings menu. */
+} MissionComputerSort;
+typedef struct MissionComputerOptions_ {
+   MissionComputerSort sortby;      /**< How to sort missions. */
+   int                 hideillegal; /**< Hide illegal missions. */
+} MissionComputerOptions;
+extern MissionComputerOptions misn_opts;
 
 /* global/main window */
 #define LAND_WIDTH RESOLUTION_W_MIN  /**< Land window width. */
@@ -76,7 +88,7 @@ void         land_buttonTakeoff( unsigned int wid, const char *unused );
 unsigned int land_getWid( int window );
 void         bar_regen( void );
 void         misn_regen( void );
-void         misn_patchMission( Mission *misn );
+void         misn_patchMission( const Mission *misn );
 
 /*
  * Error dialogue generation and associated checks.

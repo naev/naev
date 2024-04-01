@@ -280,7 +280,7 @@ jobs:
             config: macos_cross_osxcross.ini
           - image: naev-macos
             arch: aarch64
-            deploymenttarget: "11.0"
+            deploymenttarget: "12.0"
             config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest

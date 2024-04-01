@@ -7,7 +7,6 @@
 #include <stdint.h>
 /** @endcond */
 
-#include "array.h"
 #include "attributes.h"
 
 SENTINEL( 0 )

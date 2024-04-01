@@ -3,8 +3,8 @@
  */
 #pragma once
 
+#include "colour.h"
 #include "mat4.h"
-#include "opengl.h"
 #include "opengl_tex.h"
 #include "opengl_vbo.h"
 #include "shaders.gen.h"

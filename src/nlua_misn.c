@@ -56,6 +56,9 @@
 static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
+static int misn_setDistance( lua_State *L );
+static int misn_setIllegal( lua_State *L );
+static int misn_setFaction( lua_State *L );
 static int misn_setNPC( lua_State *L );
 static int misn_factions( lua_State *L );
 static int misn_accept( lua_State *L );
@@ -80,6 +83,9 @@ static const luaL_Reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
    { "setReward", misn_setReward },
+   { "setDistance", misn_setDistance },
+   { "setIllegal", misn_setIllegal },
+   { "setFaction", misn_setFaction },
    { "setNPC", misn_setNPC },
    { "factions", misn_factions },
    { "accept", misn_accept },
@@ -312,9 +318,57 @@ static int misn_setReward( lua_State *L )
       credits2str( buf, cur_mission->reward_value, 2 );
       cur_mission->reward = strdup( buf );
    } else {
-      const char *str     = luaL_checkstring( L, 1 );
-      cur_mission->reward = strdup( str );
+      const char *str           = luaL_checkstring( L, 1 );
+      cur_mission->reward       = strdup( str );
+      cur_mission->reward_value = 0;
    }
+   return 0;
+}
+
+/**
+ * @brief Sets the distance to the mission's goal. Used for sorting missions in
+ * the mission comuter. Unused otherwise.
+ *
+ *    @luatparam number Distance from the current player position.
+ * @luafunc setDistance
+ */
+static int misn_setDistance( lua_State *L )
+{
+   Mission *cur_mission  = misn_getFromLua( L );
+   cur_mission->distance = luaL_checklong( L, 1 );
+   return 0;
+}
+
+/**
+ * @brief Marks whether or not a mission should be considered illegal in the
+ * current system. Used for filtering missions at the mission computer, unused
+ * otherwise.
+ *
+ *    @luatparam boolean Whether or not the mission should be considered
+ * illegal.
+ * @luafunc setIllegal
+ */
+static int misn_setIllegal( lua_State *L )
+{
+   Mission *cur_mission = misn_getFromLua( L );
+   cur_mission->illegal = lua_toboolean( L, 1 );
+   return 0;
+}
+
+/**
+ * @brief Sets the faction giver of the mission. Used mainly as metadata for
+ * sorting and organizing missions in the mission computer.
+ *
+ *    @luatparam faction Faction to set the mission to or nil to disable.
+ * @luafunc setFaction
+ */
+static int misn_setFaction( lua_State *L )
+{
+   Mission *cur_mission = misn_getFromLua( L );
+   if ( lua_isnoneornil( L, 1 ) )
+      cur_mission->faction = -1;
+   else
+      cur_mission->faction = luaL_validfaction( L, 1 );
    return 0;
 }
 
