@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Astral Projection Normal">
- <lua>ships/lua/sirius_projection.lua</lua>
+ <lua>sirius_projection.lua</lua>
  <points>30</points>
  <base_type>Astral Projection Normal</base_type>
  <gfx size="128" sx="10" sy="10" noengine="1" comm="outfit/store/placeholder.webp">apparition_corvette</gfx>

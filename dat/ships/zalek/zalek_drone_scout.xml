@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Scout Drone">
- <lua>ships/lua/zalek.lua</lua>
+ <lua>zalek.lua</lua>
  <points>24</points>
  <base_type path="Zalek_Scout_Drone">Za'lek Scout Drone</base_type>
  <gfx size="28">zalek_drone_scout</gfx>

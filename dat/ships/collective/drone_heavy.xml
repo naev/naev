@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Heavy Drone">
- <lua>ships/lua/thurion.lua</lua>
+ <lua>thurion.lua</lua>
  <points>50</points>
  <base_type>Drone</base_type>
  <gfx sx="10" sy="10" size="100">drone_heavy</gfx>
