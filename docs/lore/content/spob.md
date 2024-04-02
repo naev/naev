@@ -80,15 +80,23 @@ function randomize() {
     $('button#btn-sort').text("Sort by: Random");
 }
 
-$(window).load(function() {
+// Open modal on new window
+window.onload = function(e){
     let params = new URLSearchParams( window.location.search );
     if (params.has('spob')) {
         let spobname = params.get('spob')
-        console.log($('div[data-Name="'+spobname+'"]'));
-        // Not working, not sure why
-        $('div[data-Name="'+spobname+'"]')[0].show();
+        let modal = new bootstrap.Modal( $('div[data-spob-modal="'+spobname+'"]')[0] );
+        modal.show();
     }
-});
+};
+$('div.modal.spob').on('shown.bs.modal', function (e) {
+    let name = $(this).data("spob-modal");
+    history.pushState({ spob: name }, "Naev - "+name, "?spob="+name);
+})
+$('div.modal.spob').on('hidden.bs.modal', function (e) {
+    //history.pushState({ spob: "" }, "Naev - Space Objects", "");
+    history.back()
+})
 </script>
 
 <% end %>
