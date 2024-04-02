@@ -116,7 +116,7 @@ def modal_spob( s )
   end
 
 <<-EOF
- <div class="modal fade" id="modal-#{s[:id]}" tabindex="-1" aria-labelledby="modal-label-#{s[:id]}" aria-hidden="true">
+ <div class="modal fade spob" id="modal-#{s[:id]}" tabindex="-1" aria-labelledby="modal-label-#{s[:id]}" data-spob-modal="#{s[:name]}" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
    <div class="modal-content">
     <div class="modal-header">
