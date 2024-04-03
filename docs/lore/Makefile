@@ -5,7 +5,7 @@ SPOB := $(patsubst ../../dat/spob/%.xml, content/spob/%.md, $(SPOB) )
 SSYS := $(wildcard ../../dat/ssys/*.xml)
 SSYS := $(patsubst ../../dat/ssys/%.xml, content/ssys/%.md, $(SSYS) )
 
-GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp)
+GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp ../../artwork/gfx/spob/space/**/*.webp)
 GFX := $(patsubst ../../artwork/%, content/%, $(GFX))
 
 .PHONY: all gfx spob ssys view install check logo
