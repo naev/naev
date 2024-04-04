@@ -21,12 +21,12 @@ preprocess do
    config[:spob] = {}
    @items.find_all('/spob/*.md').each do |s|
       s[:name] = s[:spob][:"+@name"]
-      config[:spob][s[:name]] = { item: s, name: s[:name] }
+      config[:spob][s[:name]] = s
    end
    config[:ssys] = {}
    @items.find_all("/ssys/*.md").each do |s|
       s[:name] = s[:ssys][:"+@name"]
-      config[:ssys][s[:name]] = { item: s, name: s[:name] }
+      config[:ssys][s[:name]] = s
    end
 
    # Mappings from spob to system and system to array of spobs.
@@ -34,29 +34,27 @@ preprocess do
    ssysspob = {}
 
    # Process systems
-   @items.find_all('/ssys/*.md').each do |si|
-      s = ssys_get( si[:name] )
-
+   @items.find_all('/ssys/*.md').each do |s|
       # Core attributes
       s[:id] =  Base64.encode64( s[:name] )
 
       # Set some other attributes
-      s[:radius] = si[:ssys][:general][:radius]
-      s[:spacedust] = si[:ssys][:general][:spacedust]
-      s[:interference] = si[:ssys][:general][:interference]
-      s[:x] = si[:ssys][:pos][:"+@x"]
-      s[:y] = si[:ssys][:pos][:"+@y"]
+      s[:radius] = s[:ssys][:general][:radius]
+      s[:spacedust] = s[:ssys][:general][:spacedust]
+      s[:interference] = s[:ssys][:general][:interference]
+      s[:x] = s[:ssys][:pos][:"+@x"]
+      s[:y] = s[:ssys][:pos][:"+@y"]
 
       # Add jumps
-      if not si[:ssys][:jumps].nil? then
-         if si[:ssys][:jumps][:jump].kind_of?(Array) then
-            jumps = si[:ssys][:jumps][:jump]
+      if not s[:ssys][:jumps].nil? then
+         if s[:ssys][:jumps][:jump].kind_of?(Array) then
+            jumps = s[:ssys][:jumps][:jump]
          else
-            jumps = [si[:ssys][:jumps][:jump]]
+            jumps = [s[:ssys][:jumps][:jump]]
          end
          s[:jumps] = []
          jumps.each do |jmp|
-            s[:jumps].push( ssys_get( jmp[:"+@target"] ) )
+            s[:jumps].push( jmp[:"+@target"] )
          end
       else
          s[:jumps] = []
@@ -66,69 +64,68 @@ preprocess do
 
 
       # Map spobs to systems
-      spb = si[:ssys][:spobs]
+      spb = s[:ssys][:spobs]
       if not spb.nil? and not spb[:spob].nil?
          s[:spobs] = []
          ssysspob[ s[:name] ] = []
          Array(spb[:spob]).each do |p|
             spobssys[p] = s[:name]
-            ssysspob[ s[:name] ].push( s[:name] )
-            s[:spobs].push( spob_get(p) )
+            ssysspob[ s[:name] ].push( p )
+            s[:spobs].push( p )
          end
       else
          s[:spobs] = []
       end
 
       # Add tags
-      if not si[:ssys][:tags].nil?
-         s[:tags] = Array(si[:ssys][:tags][:tag])
+      if not s[:ssys][:tags].nil?
+         s[:tags] = Array(s[:ssys][:tags][:tag])
       else
          s[:tags] = []
       end
    end
 
-   @items.find_all('/spob/*.md').each do |si|
-      s = spob_get( si[:name] )
-
+   @items.find_all('/spob/*.md').each do |s|
       # Core attributes
       s[:id] =  Base64.encode64( s[:name] )
 
       # Set some other atrtibutes
-      if not si[:spob][:general][:description].nil? then
-         s[:description] = si[:spob][:general][:description]
+      if not s[:spob][:general][:description].nil? then
+         s[:description] = s[:spob][:general][:description]
       end
-      if not si[:spob][:general][:bar].nil? then
-         s[:bar] = si[:spob][:general][:bar]
+      if not s[:spob][:general][:bar].nil? then
+         s[:bar] = s[:spob][:general][:bar]
       end
-      if not si[:spob][:general][:population].nil? then
-         s[:population] = si[:spob][:general][:population].to_f.to_i.to_s
+      if not s[:spob][:general][:population].nil? then
+         s[:population] = s[:spob][:general][:population].to_f.to_i.to_s
       else
          s[:population] = 0
       end
-      if not si[:spob][:presence].nil? and not si[:spob][:presence][:faction].nil?
-         s[:faction] = si[:spob][:presence][:faction]
+      if not s[:spob][:presence].nil? and not s[:spob][:presence][:faction].nil?
+         s[:faction] = s[:spob][:presence][:faction]
       else
          s[:faction] = NOFACTION
       end
-      s[:spobclass] = si[:spob][:general][:class]
-      if not si[:spob][:general][:services].nil?
-         s[:services] = si[:spob][:general][:services].keys
+      s[:spobclass] = s[:spob][:general][:class]
+      if not s[:spob][:general][:services].nil?
+         s[:services] = s[:spob][:general][:services].keys
       else
          s[:services] = []
       end
-      if not si[:spob][:tags].nil?
-         s[:tags] = Array(si[:spob][:tags][:tag])
+      if not s[:spob][:tags].nil?
+         s[:tags] = Array(s[:spob][:tags][:tag])
       else
          s[:tags] = []
       end
 
       # See if in system
       if not spobssys[ s[:name] ].nil? then
-         s[:ssys] = ssys_get( spobssys[ s[:name] ] )
+         s[:ssys] = spobssys[ s[:name] ]
+         sys = ssys_get( s[:ssys] )
 
          # Get neighbours
          s[:neighbours] = []
-         s[:ssys][:spobs].each do |n|
+         sys[:spobs].each do |n|
             if n!=s[:name] then
                s[:neighbours].push(n)
             end
@@ -139,11 +136,10 @@ preprocess do
    end
 
    # Second pass to set up system details that need spob details
-   @items.find_all('/ssys/*.md').each do |si|
-      s = ssys_get( si[:name] )
-
+   @items.find_all('/ssys/*.md').each do |s|
       s[:factions] = []
-      s[:spobs].each do |spb|
+      s[:spobs].each do |si|
+         spb = spob_get( si )
          if spb[:faction] != NOFACTION then
             s[:factions].push( spb[:faction] )
          end
