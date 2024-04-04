@@ -1,6 +1,7 @@
 ---
-title: Space Objects
+title: Space Objects (Spobs)
 ---
+<% print("SPACE OBJECTS START") %>
 
 <% content_for :javascript do %>
 <script>
@@ -129,7 +130,7 @@ end
 
 <!-- Now display all the spobs. -->
 <div class="row row-cols-1 row-cols-md-5 g-4" id="spobs">
-<% @items.find_all('/spob/*.md').sort{ |a,b| a[:spob][:"+@name"]<=>b[:spob][:"+@name"] }.each do |s| %> <!--*-->
+<% @items.find_all('/spob/*.md').sort{ |a,b| a[:name]<=>b[:name] }.each do |s| %> <!--*-->
  <%= card_spob( s ) %>
  <%= modal_spob( s ) %>
 <% end %>
