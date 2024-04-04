@@ -1,8 +1,6 @@
 ---
 title: Space Objects (Spobs)
 ---
-<% print("SPACE OBJECTS START") %>
-
 <% content_for :javascript do %>
 <script>
 let sort = "Name";

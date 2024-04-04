@@ -44,7 +44,6 @@ def card_spob( s )
   end
 
   if not s[:spob][:GFX].nil? and not s[:spob][:GFX][:space].nil?
-      print("/gfx/spob/space/"+s[:spob][:GFX][:space])
       gfxpath = relative_path_to(@items["/gfx/spob/space/"+s[:spob][:GFX][:space]])
   end
   gfx = ""
@@ -53,7 +52,7 @@ def card_spob( s )
   end
 <<-EOF
  <div class="col #{cls}" data-Name="#{s[:name]}" data-Faction="#{s[:faction]}" data-Class="#{s[:spobclass]}" data-Population="#{s[:population]}" >
-  <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-#{s[:id]}" >
+  <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-spob-#{s[:id]}" >
    #{gfx}
    <div class="card-body">
     <h5 class="card-title">#{s[:name]}</h5>
@@ -74,7 +73,7 @@ end
 def modal_spob( s )
   header = s[:name]
   if not s[:ssys].nil?
-    header += " (#{s[:ssys][:name]} system)"
+    header += " (#{ssys_get(s[:ssys])[:name]} system)"
   end
 
   gfx = ""
@@ -125,11 +124,11 @@ def modal_spob( s )
   end
 
 <<-EOF
- <div class="modal fade spob" id="modal-#{s[:id]}" tabindex="-1" aria-labelledby="modal-label-#{s[:id]}" data-spob-modal="#{s[:name]}" aria-hidden="true">
+ <div class="modal fade spob" id="modal-spob-#{s[:id]}" tabindex="-1" aria-labelledby="modal-spob-label-#{s[:id]}" data-spob-modal="#{s[:name]}" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
    <div class="modal-content">
     <div class="modal-header">
-     <h1 class="modal-title fs-5" id="modal-label-#{s[:id]}">#{header}</h1>
+     <h1 class="modal-title fs-5" id="modal-spob-label-#{s[:id]}">#{header}</h1>
      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body clearfix">
@@ -154,9 +153,8 @@ end
 
 def card_ssys( s )
   cls = ""
-  cls += " fct-"+s[:faction]
-  s[:services].each do |s|
-      cls += " srv-"+s.to_s
+  s[:factions].each do |f|
+    cls += " fct-"+f
   end
   s[:tags].each do |t|
       cls += " tag-"+t
@@ -182,8 +180,7 @@ def card_ssys( s )
 
 <<-EOF
  <div class="col #{cls}" data-Name="#{s[:name]}" data-Faction="#{s[:faction]}" >
-  <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-#{s[:id]}" >
-   #{gfx}
+  <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-ssys-#{s[:id]}" >
    <div class="card-body">
     <h5 class="card-title">#{s[:name]}</h5>
     <div class="card-text">
@@ -220,7 +217,7 @@ def modal_ssys( s )
   if s[:spobs].length() > 0
     spobs = "<div>"
     s[:spobs].each do |spb|
-      spobs += card_spob( spb )
+      spobs += card_spob( spob_get(spb) )
     end
     spobs += "</div>"
   else
@@ -228,11 +225,11 @@ def modal_ssys( s )
   end
 
 <<-EOF
- <div class="modal fade" id="modal-#{s[:id]}" tabindex="-1" aria-labelledby="modal-label-#{s[:id]}" aria-hidden="true">
+ <div class="modal fade" id="modal-ssys-#{s[:id]}" tabindex="-1" aria-labelledby="modal-ssys-label-#{s[:id]}" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
    <div class="modal-content">
     <div class="modal-header">
-     <h1 class="modal-title fs-5" id="modal-label-#{s[:id]}">#{s[:name]}</h1>
+     <h1 class="modal-title fs-5" id="modal-ssys-label-#{s[:id]}">#{s[:name]}</h1>
      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body clearfix">
