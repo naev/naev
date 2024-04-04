@@ -56,6 +56,7 @@ preprocess do
          jumps.each do |jmp|
             s[:jumps].push( jmp[:"+@target"] )
          end
+         s[:jumps].sort()
       else
          s[:jumps] = []
       end
@@ -73,6 +74,7 @@ preprocess do
             ssysspob[ s[:name] ].push( p )
             s[:spobs].push( p )
          end
+         s[:spobs].sort()
       else
          s[:spobs] = []
       end
@@ -130,6 +132,7 @@ preprocess do
                s[:neighbours].push(n)
             end
          end
+         s[:neighbours].sort()
       else
          s[:neighbours] = []
       end
@@ -137,13 +140,14 @@ preprocess do
 
    # Second pass to set up system details that need spob details
    @items.find_all('/ssys/*.md').each do |s|
-      s[:factions] = []
+      s[:factions] = Set[]
       s[:spobs].each do |si|
          spb = spob_get( si )
          if spb[:faction] != NOFACTION then
-            s[:factions].push( spb[:faction] )
+            s[:factions].add( spb[:faction] )
          end
       end
+      s[:factions] = Array(s[:factions]).sort()
    end
 end
 
