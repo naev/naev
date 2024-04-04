@@ -2,10 +2,9 @@
 # before nanoc starts compiling.
 
 include Nanoc::Helpers::LinkTo
-include Nanoc::Helpers::Tagging
 include Nanoc::Helpers::XMLSitemap
 include Nanoc::Helpers::ChildParent
-include Nanoc::Helpers::Blogging
+include Nanoc::Helpers::Capturing
 
 def spob_get( name )
   return config[:spob][name]
@@ -15,7 +14,7 @@ def ssys_get( name )
   return config[:ssys][name]
 end
 
-def card_spob( s )
+def spob_card( s )
   cls = ""
   cls += " fct-"+s[:faction]
   cls += " cls-"+s[:spobclass]
@@ -70,7 +69,7 @@ def card_spob( s )
 EOF
 end
 
-def modal_spob( s )
+def spob_modal( s )
   header = s[:name]
   if not s[:ssys].nil?
     header += " (#{ssys_get(s[:ssys])[:name]} system)"
@@ -151,7 +150,7 @@ def modal_spob( s )
 EOF
 end
 
-def card_ssys( s )
+def ssys_card( s )
   cls = ""
   s[:factions].each do |f|
     cls += " fct-"+f
@@ -194,7 +193,7 @@ def card_ssys( s )
 EOF
 end
 
-def modal_ssys( s )
+def ssys_modal( s )
 
   factions = ""
   if s[:factions].length() > 0
@@ -217,7 +216,7 @@ def modal_ssys( s )
   if s[:spobs].length() > 0
     spobs = "<div>"
     s[:spobs].each do |spb|
-      spobs += card_spob( spob_get(spb) )
+      spobs += spob_card( spob_get(spb) )
     end
     spobs += "</div>"
   else
@@ -244,4 +243,15 @@ def modal_ssys( s )
   </div>
  </div>
 EOF
+end
+
+def modal_addAll
+  out = ""
+  @items.find_all('/spob/*.md').sort{ |a,b| a[:name]<=>b[:name] }.each do |s|
+    out += spob_modal( s )
+  end
+  @items.find_all('/ssys/*.md').sort{ |a,b| a[:name]<=>b[:name] }.each do |s|
+    out += ssys_modal( s )
+  end
+  out
 end

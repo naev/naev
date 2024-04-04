@@ -129,7 +129,8 @@ end
 <!-- Now display all the spobs. -->
 <div class="row row-cols-1 row-cols-md-5 g-4" id="spobs">
 <% @items.find_all('/spob/*.md').sort{ |a,b| a[:name]<=>b[:name] }.each do |s| %> <!--*-->
- <%= card_spob( s ) %>
- <%= modal_spob( s ) %>
+ <%= spob_card( s ) %>
 <% end %>
 </div>
+
+<% modal_addAll() %>
