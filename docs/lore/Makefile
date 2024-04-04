@@ -5,12 +5,15 @@ SPOB := $(patsubst ../../dat/spob/%.xml, content/spob/%.md, $(SPOB) )
 SSYS := $(wildcard ../../dat/ssys/*.xml)
 SSYS := $(patsubst ../../dat/ssys/%.xml, content/ssys/%.md, $(SSYS) )
 
-GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp ../../artwork/gfx/spob/space/**/*.webp)
+FCTS := $(wildcard ../../dat/factions/*.xml)
+FCTS := $(patsubst ../../dat/factions/%.xml, content/fcts/%.md, $(FCTS) )
+
+GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp ../../artwork/gfx/spob/space/**/*.webp ../../artwork/gfx/logo/*.webp)
 GFX := $(patsubst ../../artwork/%, content/%, $(GFX))
 
-.PHONY: all gfx spob ssys view install check logo
+.PHONY: all gfx spob ssys fcts view install check logo
 
-all: logo gfx spob ssys
+all: logo gfx spob ssys fcts
 	bundle exec nanoc
 
 content/spob/%.md: ../../dat/spob/%.xml
@@ -20,6 +23,12 @@ content/spob/%.md: ../../dat/spob/%.xml
 	@echo "---" >> $@
 
 content/ssys/%.md: ../../dat/ssys/%.xml
+	@mkdir -p $(dir $@)
+	@echo "---" > $@
+	yq -oy  '.' $< >> $@
+	@echo "---" >> $@
+
+content/fcts/%.md: ../../dat/factions/%.xml
 	@mkdir -p $(dir $@)
 	@echo "---" > $@
 	yq -oy  '.' $< >> $@
@@ -44,6 +53,8 @@ gfx: $(GFX)
 spob: $(SPOB)
 
 ssys: $(SSYS)
+
+fcts: $(FCTS)
 
 view: all
 	bundle exec nanoc view
