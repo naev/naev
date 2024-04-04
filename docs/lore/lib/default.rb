@@ -7,6 +7,14 @@ include Nanoc::Helpers::XMLSitemap
 include Nanoc::Helpers::ChildParent
 include Nanoc::Helpers::Blogging
 
+def spob_get( name )
+  return config[:spob][name]
+end
+
+def ssys_get( name )
+  return config[:ssys][name]
+end
+
 def card_spob( s )
   cls = ""
   cls += " fct-"+s[:faction]
@@ -36,6 +44,7 @@ def card_spob( s )
   end
 
   if not s[:spob][:GFX].nil? and not s[:spob][:GFX][:space].nil?
+      print("/gfx/spob/space/"+s[:spob][:GFX][:space])
       gfxpath = relative_path_to(@items["/gfx/spob/space/"+s[:spob][:GFX][:space]])
   end
   gfx = ""
@@ -133,6 +142,103 @@ def modal_spob( s )
      #{tags}
      #{description}
      #{bar}
+    </div>
+    <div class="modal-footer">
+     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+   </div>
+  </div>
+ </div>
+EOF
+end
+
+def card_ssys( s )
+  cls = ""
+  cls += " fct-"+s[:faction]
+  s[:services].each do |s|
+      cls += " srv-"+s.to_s
+  end
+  s[:tags].each do |t|
+      cls += " tag-"+t
+  end
+
+  factions = ""
+  if s[:factions].length() > 0
+    factions = "<div>"
+    s[:factions].each do |f|
+      factions += "<span class='badge rounded-pill text-bg-primary'>#{f}</span>"
+    end
+    factions += "</div>"
+  end
+
+  tags = ""
+  if s[:tags].length() > 0
+    tags = "<div>"
+    s[:tags].each do |t|
+        tags += "<span class='badge rounded-pill text-bg-info'>#{t}</span>"
+    end
+    tags += "</div>"
+  end
+
+<<-EOF
+ <div class="col #{cls}" data-Name="#{s[:name]}" data-Faction="#{s[:faction]}" >
+  <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-#{s[:id]}" >
+   #{gfx}
+   <div class="card-body">
+    <h5 class="card-title">#{s[:name]}</h5>
+    <div class="card-text">
+     #{factions}
+     #{tags}
+     <span class='badge rounded-pill text-bg-warning'>#{s[:spobs].length} Space Objects</span>
+    </div>
+   </div>
+  </div>
+ </div>
+EOF
+end
+
+def modal_ssys( s )
+
+  factions = ""
+  if s[:factions].length() > 0
+    factions = "<div class='m-1'>"
+    s[:factions].each do |f|
+      factions += "<span class='badge rounded-pill text-bg-primary'>#{f}</span>"
+    end
+    factions += "</div>"
+  end
+
+  tags = ""
+  if s[:tags].length() > 0
+    tags = "<div class='m-1'>"
+    s[:tags].each do |t|
+        tags += "<span class='badge rounded-pill text-bg-info'>#{t}</span>"
+    end
+    tags += "</div>"
+  end
+
+  if s[:spobs].length() > 0
+    spobs = "<div>"
+    s[:spobs].each do |spb|
+      spobs += card_spob( spb )
+    end
+    spobs += "</div>"
+  else
+    spobs = "<div>This system has no space objects.</div>"
+  end
+
+<<-EOF
+ <div class="modal fade" id="modal-#{s[:id]}" tabindex="-1" aria-labelledby="modal-label-#{s[:id]}" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h1 class="modal-title fs-5" id="modal-label-#{s[:id]}">#{s[:name]}</h1>
+     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body clearfix">
+     #{factions}
+     #{tags}
+     #{spobs}
     </div>
     <div class="modal-footer">
      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
