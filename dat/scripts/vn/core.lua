@@ -791,7 +791,7 @@ function vn.StateSay:_update( dt )
    while self._timer < 0 do
       -- No more characters left -> done!
       if utf8.len(self._text) == self._len then
-         _finish( self )
+         vn.StateSay._finish( self )
          return
       end
       self._pos = utf8.next( self._textbuf, self._pos )
@@ -825,6 +825,7 @@ function vn.StateSay:_finish()
    vn._buffer = self._text
 
    local c = vn._getCharacter( self.who )
+   c.offy = nil
    log.add{
       who   = c.displayname or c.who,
       what  = self.what, -- Avoids newlines
