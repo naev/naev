@@ -8,4 +8,4 @@ title: Space Objects (Spobs)
 <% end %>
 </div>
 
-<% modal_addAll() %>
+<%= modal_addAll() %>

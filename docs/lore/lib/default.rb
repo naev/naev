@@ -214,7 +214,7 @@ def ssys_modal( s )
   end
 
   if s[:spobs].length() > 0
-    spobs = "<div>"
+    spobs = "<div class='row row-cols-1 row-cols-md-5 g-4'>"
     s[:spobs].each do |spb|
       spobs += spob_card( spob_get(spb) )
     end
