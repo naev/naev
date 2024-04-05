@@ -1770,7 +1770,13 @@ Sets the shader to be used for post-processing the VN.
    @tparam Shader shader Shader to use for post-processing or nil to disable.
 --]]
 function vn.setShader( shader )
-   vn._postshader = shader
+   if vn._started then
+      vn._postshader = shader
+      return
+   end
+   vn.func( function ()
+      vn._postshader = shader
+   end )
 end
 
 --[[--
@@ -1779,7 +1785,13 @@ Sets the background drawing function. Drawn behind the VN stuff.
    @tparam func drawfunc Function to call to draw the background or nil to disable.
 --]]
 function vn.setBackground( drawfunc )
-   vn._draw_bg = drawfunc
+   if vn._started then
+      vn._draw_bg = drawfunc
+      return
+   end
+   vn.func( function ()
+      vn._draw_bg = drawfunc
+   end )
 end
 
 --[[--
@@ -1788,7 +1800,13 @@ Sets the foreground drawing function. Drawn in front the VN stuff.
    @tparam func drawfunc Function to call to draw the foreground or nil to disable.
 --]]
 function vn.setForeground( drawfunc )
-   vn._draw_fg = drawfunc
+   if vn._started then
+      vn._draw_fg = drawfunc
+      return
+   end
+   vn.func( function ()
+      vn._draw_fg = drawfunc
+   end )
 end
 
 --[[--
@@ -1797,7 +1815,13 @@ Sets the middle drawing function. Drawn in right in front of the normal "namebox
    @tparam func drawfunc Function to call to draw the middle or nil to disable.
 --]]
 function vn.setMiddle( drawfunc )
-   vn._draw_mg = drawfunc
+   if vn._started then
+      vn._draw_mg = drawfunc
+      return
+   end
+   vn.func( function ()
+      vn._draw_mg = drawfunc
+   end )
 end
 
 --[[--
@@ -1806,7 +1830,13 @@ Sets a custom update function. This gets run every frame.
    @tparam func updatefunc Update function to run every frame.
 --]]
 function vn.setUpdateFunc( updatefunc )
-   vn._updatefunc = updatefunc
+   if vn._started then
+      vn._updatefunc = updatefunc
+      return
+   end
+   vn.func( function ()
+      vn._updatefunc = updatefunc
+   end )
 end
 
 function vn._jump( label )
