@@ -36,14 +36,22 @@ function opt.open( vn )
    -- Translator note VN stands for Visual Novel
    luatk.newText( wdw, 0, 10, w, h, _("VN Options"), luatk.colour.text, "center" )
 
+   local y = 40
    local autoscrollval = (var.peek("vn_autoscroll")==true)
-   local autoscrollchk = luatk.newCheckbox( wdw, 20, 40, w-40, 20, _("Enable autoscroll to end of text."), function ( wgt )
+   local autoscrollchk = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Enable autoscroll to end of text"), function ( wgt )
       var.push( "vn_autoscroll", wgt:get() )
    end, autoscrollval )
+   y = y + 30
+
+   local nobounceval = (var.peek("vn_nobounce")==true)
+   local nobouncechk = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Disable bounce when NPC speaks"), function ( wgt )
+      var.push( "vn_nobounce", wgt:get() )
+   end, nobounceval )
+   y = y + 40
 
    local txtspeed = var.peek("vn_textspeed") or 0.025
-   local txtspeedtxt = luatk.newText( wdw, 20, 80, w-40, 20, nil, luatk.colour.text )
-   local txtspeedfad = luatk.newFader( wdw, 20, 110, w-80, 20, 0, 0.1, txtspeed, function ( _wgt, val )
+   local txtspeedtxt = luatk.newText( wdw, 20, y, w-40, 20, nil, luatk.colour.text )
+   local txtspeedfad = luatk.newFader( wdw, 20, y+30, w-80, 20, 0, 0.1, txtspeed, function ( _wgt, val )
       txtspeedtxt:set(fmt.f(_("#nText Speed#0: {val:.3f} seconds per character"),{val=val}))
       var.push( "vn_textspeed", txtspeed )
    end )
@@ -52,8 +60,10 @@ function opt.open( vn )
    luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Done"), function ()
       vn.speed = txtspeedfad:get()
       vn.autoscroll = autoscrollchk:get()
+      vn.nobounce = nobouncechk:get()
       var.push( "vn_textspeed", vn.speed )
       var.push( "vn_autoscroll", vn.autoscroll )
+      var.push( "vn_nobounce", vn.nobounce )
       luatk.close()
       opt.running = false
       return true

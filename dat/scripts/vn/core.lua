@@ -23,6 +23,7 @@ local fmt         = require "format"
 local vn = {
    speed = var.peek("vn_textspeed") or 0.025,
    autoscroll = (var.peek("vn_autoscroll")==true),
+   nobounce = (var.peek("vn_nobounce")==true),
 
    -- Internal usage
    _default = {
@@ -769,7 +770,7 @@ function vn.StateSay:_init()
       v.talking = false
    end
    c.talking = true
-   if c.talking and not wastalking then
+   if not vn.nobounce and c.talking and not wastalking then
       self.bounce = 0
       c.offy = 0
    else
