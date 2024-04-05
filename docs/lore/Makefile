@@ -8,12 +8,15 @@ SSYS := $(patsubst ../../dat/ssys/%.xml, content/ssys/%.md, $(SSYS) )
 FCTS := $(wildcard ../../dat/factions/*.xml)
 FCTS := $(patsubst ../../dat/factions/%.xml, content/fcts/%.md, $(FCTS) )
 
+MISN := $(shell find ../../dat/missions -type f -name "*.lua")
+MISN := $(patsubst ../../dat/missions/%.lua, content/misn/%.lua, $(MISN) )
+
 GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp ../../artwork/gfx/spob/space/**/*.webp ../../artwork/gfx/logo/*.webp)
 GFX := $(patsubst ../../artwork/%, content/%, $(GFX))
 
-.PHONY: all gfx spob ssys fcts view install check logo
+.PHONY: all gfx spob ssys fcts misn view install check logo
 
-all: logo gfx spob ssys fcts
+all: logo gfx spob ssys fcts misn
 	bundle exec nanoc
 
 content/spob/%.md: ../../dat/spob/%.xml
@@ -33,6 +36,13 @@ content/fcts/%.md: ../../dat/factions/%.xml
 	@echo "---" > $@
 	yq -oy  '.' $< >> $@
 	@echo "---" >> $@
+
+content/misn/%.lua: ../../dat/missions/%.lua
+	@mkdir -p $(dir $@)
+	@echo "---" > $@
+	sed -n '/--\[\[/{:a;n;/--\]\]/q;p;ba}' $< | yq -oy '.' -p xml >> $@
+	@echo "---" >> $@
+	cat $< >> $@
 
 content/gfx/%.webp: ../../artwork/gfx/%.webp
 	@mkdir -p $(dir $@)
@@ -55,6 +65,8 @@ spob: $(SPOB)
 ssys: $(SSYS)
 
 fcts: $(FCTS)
+
+misn: $(MISN)
 
 view: all
 	bundle exec nanoc view
