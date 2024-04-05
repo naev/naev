@@ -20,7 +20,7 @@
 --]]
 
 local fleet = require "fleet"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 local fmt = require "format"
 local dv = require "common.dvaered"
 

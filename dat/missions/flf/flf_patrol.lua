@@ -17,7 +17,7 @@
 --]]
 local fmt = require "format"
 local fleet = require "fleet"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 local vn = require "vn"
 
 -- luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (shared with derived missions flf_empatrol, flf_pre02)

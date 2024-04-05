@@ -15,7 +15,7 @@
 --]]
 local fmt = require "format"
 local fleet = require "fleet"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 local vn = require "vn"
 
 -- luacheck: globals enter land_flf leave misn_title pay_text setDescription (shared with derived mission flf_dvk05)

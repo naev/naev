@@ -3038,7 +3038,6 @@ dat/missions/flf/dvk/flf_dvk05.lua
 dat/missions/flf/dvk/flf_dvk06.lua
 dat/missions/flf/dvk/flf_dvk07.lua
 dat/missions/flf/flf_commodity_run.lua
-dat/missions/flf/flf_common.lua
 dat/missions/flf/flf_diversion.lua
 dat/missions/flf/flf_empatrol.lua
 dat/missions/flf/flf_patrol.lua
@@ -3295,6 +3294,7 @@ dat/scripts/common/derelict.lua
 dat/scripts/common/dvaered.lua
 dat/scripts/common/empire.lua
 dat/scripts/common/ferals.lua
+dat/scripts/common/flf.lua
 dat/scripts/common/foodbiz.lua
 dat/scripts/common/frontier.lua
 dat/scripts/common/frontier_war.lua

@@ -18,7 +18,7 @@
 
 local fmt = require "format"
 local fleet = require "fleet"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 local vn = require "vn"
 
 local fleetFLF -- Non-persistent state (not reused by flf_dvk07, which "require"s this script)

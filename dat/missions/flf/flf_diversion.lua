@@ -17,7 +17,7 @@
 --]]
 local fleet = require "fleet"
 local fmt = require "format"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 
 -- luacheck: globals success_text pay_text (inherited by missions that require this one, TODO get rid of this hack)
 
