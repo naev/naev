@@ -133,4 +133,4 @@ end
 <% end %>
 </div>
 
-<% modal_addAll() %>
+<%= modal_addAll() %>
