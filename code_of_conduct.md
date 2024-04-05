@@ -62,7 +62,7 @@ representative at an online or offline event.
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
 
-* [bobbens](https://github.com/bobbens) (project head): via email at <bobbens@gmail.com>, or via Discord at `bobbens#0291`
+* [bobbens](https://github.com/bobbens) (project head): via email at <bobbens@gmail.com>, or via Discord at `@bobbens`
 
 All complaints will be reviewed and investigated promptly and fairly.
 
