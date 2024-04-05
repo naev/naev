@@ -27,6 +27,7 @@ local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
 local fleet = require "fleet"
 local pltai = require "pilotai"
+local lg = require "love.graphics"
 
 -- Action happens in the jump from Tepadania (Empire) to Ianella (Dvaered)
 -- l337_b01 lives in Anubis (Scorpius)?
@@ -381,13 +382,20 @@ There is a slight pause.
    vn.done("electric")
 
    vn.label("01_yes")
-   l337(fmt.f(_([["{playername}, get strapped in, we're headed to the Nexus!"]]),
+   l337(fmt.f(_([["{playername}, get strapped in, we're headed to the Nexus!"
+
+Quite a fancy way of referring to connecting into a full sensorial holodeck.]]),
       {playername=player.name()}))
-   vn.na(_([[Quite a fancy way of referring to connecting into a full sensorial holodeck.]]))
+   vn.scene()
+   local bg_cyberspace = love_shaders.shader2canvas( love_shaders.cyberspace() )
+   vn.setBackground( function ()
+      lg.setColour( 1, 1, 1, 1 )
+      bg_cyberspace:draw( 0, 0 )
+   end )
+   vn.transition("fadeup")
    vn.scene()
    local l337er = vn.newCharacter( onion.vn_nexus_l337b01() )
-   vn.transition( "nexus" )
-   -- TODO transition to the nexus.
+   vn.transition()
    vn.na(_([[The world lurches around you, and you are plunged into the Nexus. Ugh, that's not a pleasant feeling.]]))
    l337er(_([["How are you feeling? Isn't it great? Nothing like home sweet home."]]))
    vn.menu{
@@ -413,7 +421,7 @@ There is a slight pause.
    l337er(_([["Did I tell you about the time... wait, we don't have time for this right now. Before we head off to the conclave, I wanted to meet up with Trixie first. They should be here anytime soon."]]))
    vn.move( l337er, "left" )
    local trixie = vn.newCharacter( onion.vn_nexus_trixie{pos="right"} )
-   vn.appear( trixie, "nexus" )
+   vn.appear( trixie )
    trixie(_([["Trixie always appears on time, never late, nor early!"]]))
    l337er(_([["Hey! Impeccable timing, as usual. Did you get the cat video I sent you?"]]))
    trixie(_([["It was entertaining as always. Cats never cease to amuse with their antics."]]))
@@ -447,9 +455,10 @@ They gesture towards you.]]))
    trixie = vn.newCharacter( onion.vn_nexus_trixie{pos=4*offset, flip=false} )
    local dog = vn.newCharacter( onion.vn_nexus_dog{pos=5*offset, flip=false} )
    local lonewolf4 = vn.newCharacter( onion.vn_nexus_lonewolf4{pos=6*offset, flip=false} )
-   vn.transition( "nexus" )
-   vn.na(_([[The world lurches once again, although this time it feels slightly duller than before.]]))
-   vn.na(_([[You find yourself in a seemingly infinite field full of odd looking avatars. Is that a sock?]]))
+   vn.transition()
+   vn.na(_([[The world lurches once again, although this time it feels slightly duller than before.
+
+You find yourself in a seemingly infinite field full of odd looking avatars. Is that a sock?]]))
 
    l337er()
    underworlder()
@@ -457,6 +466,13 @@ They gesture towards you.]]))
    trixie()
    dog()
    lonewolf4()
+
+   -- Leave the Nexus
+   vn.scene()
+   vn.transition()
+   vn.scene()
+   vn.setBackground()
+   vn.transition("fadedown")
 
    vn.run()
 
