@@ -11,6 +11,7 @@ def parse_includes( linesin ):
     while i < len(lines):
         lines[i] = lines[i].replace("%d","0");
         lines[i] = lines[i].replace("%f","0.0");
+        lines[i] = lines[i].replace("%s","A");
         m = re.match('#include\s+"([^"]+)"', lines[i].strip())
         if m:
             with open("dat/glsl/" + m.group(1)) as f:
@@ -137,6 +138,9 @@ def glslvalidate( filename ):
 
     with open(filename) as f:
         data = preprocess( f.read(), s )
+
+    if "// novalidation" in data:
+        return 0, "", ""
 
     args = ["glslangValidator", "--stdin", "-S", s, "--enhanced-msgs"]
     ret = subprocess.run( args, capture_output=True, input=bytes(data,'utf-8') )
