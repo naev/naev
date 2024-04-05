@@ -495,6 +495,61 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 }
 ]]
 
+transitions._t.centerout = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec2 nuv = abs(uv*2.0-1.0);
+   if (max(nuv.x,nuv.y) < progress)
+      return Texel(tex, uv);
+   return Texel(texprev, uv);
+}
+]]
+
+transitions._t.centerin = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec2 nuv = abs(uv*2.0-1.0);
+   if (max(nuv.x,nuv.y) < 1.0-progress)
+      return Texel(texprev, uv);
+   return Texel(tex, uv);
+}
+]]
+
+transitions._t.fadeup = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   if (uv.y < 1.0-progress)
+      return Texel(texprev, uv);
+   return Texel(tex, uv);
+}
+]]
+
+transitions._t.fadedown = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   if (uv.y < progress)
+      return Texel(tex, uv);
+   return Texel(texprev, uv);
+}
+]]
+
+transitions._t.faderight = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   if (uv.x < progress)
+      return Texel(tex, uv);
+   return Texel(texprev, uv);
+}
+]]
+
+transitions._t.fadeleft = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   if (uv.x < 1.0-progress)
+      return Texel(texprev, uv);
+   return Texel(tex, uv);
+}
+]]
 
 function transitions.get( name, seconds, transition )
    -- Sane defaults
