@@ -28,6 +28,15 @@ preprocess do
       s[:name] = s[:ssys][:"+@name"]
       config[:ssys][s[:name]] = s
    end
+   config[:misn] = {}
+   @items.find_all("/misn/**/*.lua").each do |m|
+      m[:name] = m[:mission][:"+@name"]
+      config[:misn][m[:name]] = m
+   end
+   @items.find_all("/evts/**/*.lua").each do |e|
+      e[:name] = e[:event][:"+@name"]
+      config[:misn][e[:name]] = e
+   end
 
    # Mappings from spob to system and system to array of spobs.
    spobssys = {}
@@ -85,6 +94,24 @@ preprocess do
       else
          s[:tags] = []
       end
+
+      # Try to find missions it's in
+      s[:missions] = []
+      @items.find_all('/misn/**/*.lua').each do |m|
+         if File.read(m.raw_filename).include? s[:name]
+            s[:missions].push( m[:name] )
+            s[:tags].push("inmission")
+         end
+      end
+      s[:events] = []
+      @items.find_all('/evts/**/*.lua').each do |e|
+         if File.read(e.raw_filename).include? s[:name]
+            s[:events].push( e[:name] )
+            s[:tags].push("inevent")
+         end
+      end
+
+      s[:tags] = s[:tags].uniq.sort
    end
 
    @items.find_all('/spob/*.md').each do |s|
@@ -136,6 +163,24 @@ preprocess do
       else
          s[:neighbours] = []
       end
+
+      # Try to find missions it's in
+      s[:missions] = []
+      @items.find_all('/misn/**/*.lua').each do |m|
+         if File.read(m.raw_filename).include? s[:name]
+            s[:missions].push( m[:name] )
+            s[:tags].push("inmission")
+         end
+      end
+      s[:events] = []
+      @items.find_all('/evts/**/*.lua').each do |e|
+         if File.read(e.raw_filename).include? s[:name]
+            s[:events].push( e[:name] )
+            s[:tags].push("inevent")
+         end
+      end
+
+      s[:tags] = s[:tags].uniq.sort
    end
 
    # Second pass to set up system details that need spob details
@@ -151,7 +196,7 @@ preprocess do
    end
 end
 
-# some special files
+# Some special files
 compile '/sitemap.rb' do
    filter :erb
    write '/sitemap.xml'

@@ -122,6 +122,32 @@ def spob_modal( s )
     EOF
   end
 
+  if s[:missions].length() > 0
+    missions = "<div>"
+    missions += "<h5>Appears in the following missions:</h5>"
+    missions += "<ul>"
+    s[:missions].each do |m|
+      missions  += "<li>#{m}</li>"
+    end
+    missions += "</ul>"
+    missions += "</div>"
+  else
+    missions = ""
+  end
+
+  if s[:events].length() > 0
+    events = "<div>"
+    events += "<h5>Appears in the following events:</h5>"
+    events += "<ul>"
+    s[:events].each do |m|
+      events  += "<li>#{m}</li>"
+    end
+    events += "</ul>"
+    events += "</div>"
+  else
+    events = ""
+  end
+
 <<-EOF
  <div class="modal fade spob" id="modal-spob-#{s[:id]}" tabindex="-1" aria-labelledby="modal-spob-label-#{s[:id]}" data-spob-modal="#{s[:name]}" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
@@ -140,6 +166,8 @@ def spob_modal( s )
      #{tags}
      #{description}
      #{bar}
+     #{missions}>
+     #{events}
     </div>
     <div class="modal-footer">
      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -223,6 +251,32 @@ def ssys_modal( s )
     spobs = "<div>This system has no space objects.</div>"
   end
 
+  if s[:missions].length() > 0
+    missions = "<div>"
+    missions += "<h5>Appears in the following missions:</h5>"
+    missions += "<ul>"
+    s[:missions].each do |m|
+      missions  += "<li>#{m}</li>"
+    end
+    missions += "</ul>"
+    missions += "</div>"
+  else
+    missions = ""
+  end
+
+  if s[:events].length() > 0
+    events = "<div>"
+    events += "<h5>Appears in the following events:</h5>"
+    events += "<ul>"
+    s[:events].each do |m|
+      events  += "<li>#{m}</li>"
+    end
+    events += "</ul>"
+    events += "</div>"
+  else
+    events = ""
+  end
+
 <<-EOF
  <div class="modal fade" id="modal-ssys-#{s[:id]}" tabindex="-1" aria-labelledby="modal-ssys-label-#{s[:id]}" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
@@ -235,6 +289,8 @@ def ssys_modal( s )
      #{factions}
      #{tags}
      #{spobs}
+     #{missions}
+     #{events}
     </div>
     <div class="modal-footer">
      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
