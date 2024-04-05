@@ -114,7 +114,7 @@ Generates a paper-like image.
 --]]
 function love_shaders.paper( width, height, sharpness )
    sharpness = sharpness or 1
-   local pixelcode = string.format(love_file.read( "scripts/loev_shaders/paper.frag" ),
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/paper.frag" ),
          love_math.random(), sharpness )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    return love_shaders.shader2canvas( shader, width, height )
@@ -134,7 +134,7 @@ function love_shaders.blur( image, kernel_size, blurtype )
    kernel_size = kernel_size or 5
    blurtype = blurtype or "gaussian"
    local w, h = image:getDimensions()
-   local pixelcode = string.format(love_file.read( "scripts/loev_shaders/blur.frag" ),
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/blur.frag" ),
          w, h, kernel_size, blurtype )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    -- Since the kernel is separable we need two passes, one for x and one for y
@@ -157,7 +157,7 @@ Creates an oldify effect, meant for full screen effects.
 function love_shaders.oldify( params )
    params = params or {}
    local strength = params.strength or 1.0
-   local pixelcode = string.format(love_file.read( "scripts/loev_shaders/oldify.frag" ),
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/oldify.frag" ),
          strength )
 
    local shader = graphics.newShader( pixelcode, _vertexcode )
@@ -179,7 +179,7 @@ A hologram effect, mainly meant for VN characters.
 function love_shaders.hologram( params )
    params = params or {}
    local strength = params.strength or 1.0
-   local pixelcode = string.format(love_file.read( "scripts/loev_shaders/hologram.frag" ),
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/hologram.frag" ),
          strength )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader._dt = 1000 * love_math.random()
@@ -200,7 +200,7 @@ A corruption effect applies a noisy pixelated effect.
 function love_shaders.corruption( params )
    params = params or {}
    local strength = params.strength or 1.0
-   local pixelcode = string.format(love_file.read( "scripts/loev_shaders/corruption.frag" ),
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/corruption.frag" ),
          strength )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader._dt = 1000 * love_math.random()
@@ -222,7 +222,7 @@ function love_shaders.steam( params )
    params = params or {}
    local strength = params.strength or 1.0
    local speed = params.speed or 1.0
-   local pixelcode = string.format(love_file.read( "scripts/loev_shaders/steam.frag" ),
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/steam.frag" ),
          strength, speed, love_math.random() )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader._dt = 1000 * love_math.random()
@@ -244,7 +244,7 @@ function love_shaders.circuit( params )
    params = params or {}
    local strength = params.strength or 1.0
    local speed = params.speed or 1.0
-   local pixelcode = string.format(love_file.read( "scripts/loev_shaders/circuit.frag" ),
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/circuit.frag" ),
          strength, speed, love_math.random() )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader._dt = 1000 * love_math.random()
@@ -267,7 +267,7 @@ function love_shaders.windy( params )
    local strength = params.strength or 1.0
    local speed = params.speed or 1.0
    local density = params.density or 1.0
-   local pixelcode = string.format(love_file.read( "scripts/loev_shaders/windy.frag" ),
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/windy.frag" ),
       strength, speed, density, love_math.random() )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader._dt = 1000 * love_math.random()
@@ -293,7 +293,7 @@ function love_shaders.aura( params )
    local strength = params.strength or 1
    local speed = params.speed or 1
    local size = params.size or 40 -- Gaussian blur sigma
-   local pixelcode = string.format(love_file.read( "scripts/loev_shaders/windy.frag" ),
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/windy.frag" ),
          colour[1], colour[2], colour[3], strength, speed, love_math.random() )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader.prerender = function( self, image )
@@ -327,8 +327,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    return basecolour * colour * texcolour;
 }
 ]], colour[1], colour[2], colour[3], colour[4] )
-   local shader = graphics.newShader( pixelcode, _vertexcode )
-   return shader
+   return graphics.newShader( pixelcode, _vertexcode )
 end
 
 
@@ -357,5 +356,20 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    return shader
 end
 
+
+--[[--
+A cyberspace effect, mainly for backgrounds.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "colour", and "size" fields are used.
+--]]
+function love_shaders.cyberspace( params )
+   params = params or {}
+   local colour = params.colour or {0.8, 0, 0.7}
+   local size = params.size or 1
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/cyberspace.frag" ),
+         colour[1], colour[2], colour[3], size )
+   return graphics.newShader( pixelcode, _vertexcode )
+end
 
 return love_shaders
