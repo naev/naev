@@ -53,6 +53,38 @@ function onion.vn_nexus_trixie( params )
          }, params) )
 end
 
+function onion.vn_nexus_underworlder( params )
+   return vn.Character.new( _("underworlder"),
+         tmerge( {
+            image=onion.img_onion(), -- TODO
+            colour=nil,
+         }, params) )
+end
+
+function onion.vn_nexus_notasockpuppet( params )
+   return vn.Character.new( _("notasockpuppet"),
+         tmerge( {
+            image=onion.img_onion(), -- TODO
+            colour=nil,
+         }, params) )
+end
+
+function onion.vn_nexus_dog( params )
+   return vn.Character.new( _("DOG"),
+         tmerge( {
+            image=onion.img_onion(), -- TODO
+            colour=nil,
+         }, params) )
+end
+
+function onion.vn_nexus_lonewolf4( params )
+   return vn.Character.new( _("lonewolf4"),
+         tmerge( {
+            image=onion.img_onion(), -- TODO
+            colour=nil,
+         }, params) )
+end
+
 function onion.log( text )
    shiplog.create( "onion", _("Onion Society"), _("Onion Society") )
    shiplog.append( "onion", text )

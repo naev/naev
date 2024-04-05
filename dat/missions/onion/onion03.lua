@@ -360,7 +360,7 @@ function meeting ()
    if not mem.talked_l337 then
       vn.func( function () mem.talked_l337 = true end )
       l337(_([["Hey, I was benchmarking the relay connection, and it seems to be running quite smoothly. Not even hitting a packet loss of 20%! Seems like Nexus Shipyards has finally stepped up their hardware game."]]))
-      l337(_([["With this, the Onion Society colloquial should go without a hitch."
+      l337(_([["With this, the Onion Society conclave should go without a hitch."
 There is a slight pause.
 "Say, you want in?"]]))
       vn.na(_([[You're not sure what happens, but before you can give a proper answer, l337_b01 manages to drag you into participating.]]))
@@ -368,7 +368,7 @@ There is a slight pause.
       l337(_([["Yeah, I'll just hook you up to a read-only feed with a default avatar. That should probably work. Weirder things have gone on in the past."]]))
       l337(_([["Are you ready?"]]))
    else
-      l337(_([["So about the Onion Society colloquial, you ready?"]]))
+      l337(_([["So about the Onion Society conclave, you ready?"]]))
    end
    vn.menu{
       {_([["Hell yes!"]]), "01_yes"},
@@ -377,7 +377,7 @@ There is a slight pause.
    }
 
    vn.label("01_no")
-   vn.na(_([[You say you need to prepare. l337_b01 seems to understand and tells you to come back when you're ready for the Onion Society colloquial.]]))
+   vn.na(_([[You say you need to prepare. l337_b01 seems to understand and tells you to come back when you're ready for the Onion Society conclave.]]))
    vn.done("electric")
 
    vn.label("01_yes")
@@ -407,10 +407,10 @@ There is a slight pause.
    vn.label("02_empty")
    l337er(_([["Ah, yeah, it only seems empty to you because you don't have developer mode on, I wouldn't recommend it at first. It's usually too much information and can cause your last meal to find its way out your mouth."]]))
    vn.label("02_cont")
-   l337er(_([["The Nexus world was originally designed by pure speculative greed. With normal goods and services, you have to do something right? However, if it's all digital, then there are no limits, and the gears of capitalism can go full speed. That's why it's so big and spacious."]]))
+   l337er(_([["The Nexus habitat was originally designed by pure speculative greed. With normal goods and services, you have to do something right? However, if it's all digital, then there are no limits, and the gears of capitalism can go full speed. That's why it's so big and spacious."]]))
    l337er(_([["Of course, you can guess it didn't turn out as they expected. Ended up as abandonware, only recently was it rediscovered, and after a few decaperiod hacking sessions, we got some prototype running and onboard came the Onion Society."]]))
    l337er(_([["The codebase is humongous too, you can even find mix of paradigms, it's a true software archaeologists dream come true!"]]))
-   l337er(_([["Did I tell you about the time... wait, we don't have time for this right now. Before we head off to the colloquial, I wanted to meet up with Trixie first. They should be here anytime soon."]]))
+   l337er(_([["Did I tell you about the time... wait, we don't have time for this right now. Before we head off to the conclave, I wanted to meet up with Trixie first. They should be here anytime soon."]]))
    vn.move( l337er, "left" )
    local trixie = vn.newCharacter( onion.vn_nexus_trixie{pos="right"} )
    vn.appear( trixie, "nexus" )
@@ -428,7 +428,35 @@ They gesture towards you.]]))
    vn.label("03_cont")
    l337er(_([["Ah, yes. Forgot the read-only mode. Oh well, it shouldn't be long."]]))
    trixie(_([["darkkazoo, that's a curious name. Quite ominous."]]))
-   l337er(_([[""]]))
+   l337er(_([["Thanks! Before I forget, let me wire you the files I promised. Opening secure channel."]]))
+   trixie(_([["One sec... ... ...there, got it, thanks!"]]))
+   trixie(_([["I see, so Ogre wasn't the one we were looking for. Just another fraud. Seems to be many these days."]]))
+   l337er(_([["Yeah, taught them a lesson though. Could be someone closer, maybe in the inner circle."]]))
+   trixie(_([["Not something we can rule out yet. Wait... How much does darkkazoo know? Are they to be trusted."]]))
+   l337er(_([["They've proven their worth, but I haven't explained it yet. Just wanted to drag them along a bit for now, see if we could get a better 3rd party opinion. Us Nexus dwellers tend to be a bit of an echo chamber."]]))
+   trixie(_([["You and your wild ideas. You should be more careful, for all we know, darkkazoo could be one of them."]]))
+   l337er(_([["Come on, life is too short to be stuck in an ivory tower all day! Anyway, we've got to hurry, the colloquium is going to start soon, and we should get there to set up some protection before it starts."]]))
+   l337er(_([["Um, darkkazoo, remember what I told you? Just watch, and try not to stick your neck out, or it'll get chopped away. I'll be lifting you in my seal, so unless someone pries too hard, you should be mainly out of sight."]]))
+   trixie(_([["Let's go!"]]))
+
+   vn.scene()
+   local offset = 1/7
+   l337er = vn.newCharacter( onion.vn_nexus_l337b01{pos=1*offset, flip=true} )
+   local underworlder = vn.newCharacter( onion.vn_nexus_underworlder{pos=2*offset, flip=true} )
+   local puppet = vn.newCharacter( onion.vn_nexus_notasockpuppet{pos=3*offset, flip=true} )
+   trixie = vn.newCharacter( onion.vn_nexus_trixie{pos=4*offset, flip=false} )
+   local dog = vn.newCharacter( onion.vn_nexus_dog{pos=5*offset, flip=false} )
+   local lonewolf4 = vn.newCharacter( onion.vn_nexus_lonewolf4{pos=6*offset, flip=false} )
+   vn.transition( "nexus" )
+   vn.na(_([[The world lurches once again, although this time it feels slightly duller than before.]]))
+   vn.na(_([[You find yourself in a seemingly infinite field full of odd looking avatars. Is that a sock?]]))
+
+   l337er()
+   underworlder()
+   puppet()
+   trixie()
+   dog()
+   lonewolf4()
 
    vn.run()
 
