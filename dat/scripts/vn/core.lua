@@ -156,6 +156,7 @@ local function _draw_character( c )
       x = (lw-vn.display_w)/2 + c.offset*vn.display_w - w*scale/2
       y = (lh-vn.display_h)/2
    end
+   y = y + (c.offy or 0)
    local col
    if c.talking then
       col = { 1, 1, 1 }
@@ -762,13 +763,29 @@ function vn.StateSay:_init()
    else
       vn._title = c.displayname or c.who
    end
+   local wastalking = c.talking
    -- Reset talking
    for k,v in ipairs( vn._characters ) do
       v.talking = false
    end
    c.talking = true
+   if c.talking and not wastalking then
+      self.bounce = 0
+      c.offy = 0
+   else
+      self.bounce = nil
+   end
 end
 function vn.StateSay:_update( dt )
+   if self.bounce ~= nil then
+      local c = vn._getCharacter( self.who )
+      self.bounce = self.bounce + dt
+      c.offy = math.sin( self.bounce * 5 * math.pi ) * math.max(0, (1-self.bounce)^2) * 10
+      if self.bounce > 1 then
+         self.bounce = nil
+         c.offy = 0
+      end
+   end
    self._timer = self._timer - dt
    while self._timer < 0 do
       -- No more characters left -> done!
