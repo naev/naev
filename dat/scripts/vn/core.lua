@@ -698,7 +698,7 @@ function vn.StateCharacter:_init()
          end
       end
       if not found then
-         error(_("character not found to remove!"))
+         error(_("vn: character not found to remove!"))
       end
    else
       local c = self.character
