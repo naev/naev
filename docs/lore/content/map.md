@@ -40,3 +40,5 @@ title: Missions
 <% end %>
 
 <div id="starmap" style="width: 100%; height: 600px; background: black"></div>
+
+<%= modal_addAll() %>
