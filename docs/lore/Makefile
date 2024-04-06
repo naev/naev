@@ -11,7 +11,7 @@ FCTS := $(patsubst ../../dat/factions/%.xml, content/fcts/%.md, $(FCTS) )
 GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp ../../artwork/gfx/spob/space/**/*.webp ../../artwork/gfx/logo/*.webp)
 GFX := $(patsubst ../../artwork/%, content/%, $(GFX))
 
-.PHONY: all gfx spob ssys fcts view install check logo
+.PHONY: all gfx spob ssys fcts view install clean check logo
 
 all: logo gfx spob ssys fcts
 	bundle exec nanoc
@@ -66,3 +66,6 @@ install: all
 
 check: all
 	bundle exec nanoc check
+
+clean:
+	rm -rf  content/gfx/ content/spob/ content/ssys/ content/fcts/ content/favicon.png content/imgs/naev.png
