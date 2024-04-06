@@ -1,5 +1,5 @@
 ---
-title: Space Objects (Spobs)
+title: Star Systems
 ---
 <!-- Now display all the spobs. -->
 <div class="row row-cols-1 row-cols-md-5 g-4" id="systems">
