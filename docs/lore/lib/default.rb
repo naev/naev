@@ -5,6 +5,7 @@ include Nanoc::Helpers::LinkTo
 include Nanoc::Helpers::XMLSitemap
 include Nanoc::Helpers::ChildParent
 include Nanoc::Helpers::Capturing
+require 'securerandom'
 
 def spob_get( name )
   return config[:spob][name]
@@ -12,6 +13,32 @@ end
 
 def ssys_get( name )
   return config[:ssys][name]
+end
+
+def listmisnevt( header, lst )
+  if lst.length() > 0
+    out = "<div>"
+    out += "<h5>#{header}</h5>"
+    out += "<ul>"
+    lst.each_with_index do |m,i|
+      id = SecureRandom.uuid
+      out += "<li><a data-toggle='collapse' href='##{id}' aria-expanded='false' aria-control='#{id}'>#{m[:name]}</a></li>"
+      out += "<div class='collapse' id='#{id}'>"
+      out +=  "<div class='card card-body'>"
+      out +=   "<ul>"
+      m[:lines].each do |l|
+        out += "<li>#{html_escape(l)}</li>"
+      end
+      out +=   "</ul>"
+      out +=  "</div>"
+      out += "</div>"
+    end
+    out += "</ul>"
+    out += "</div>"
+  else
+    out = ""
+  end
+  return out
 end
 
 def spob_card( s )
@@ -122,31 +149,9 @@ def spob_modal( s )
     EOF
   end
 
-  if s[:missions].length() > 0
-    missions = "<div>"
-    missions += "<h5>Appears in the following missions:</h5>"
-    missions += "<ul>"
-    s[:missions].each do |m|
-      missions  += "<li>#{m}</li>"
-    end
-    missions += "</ul>"
-    missions += "</div>"
-  else
-    missions = ""
-  end
-
-  if s[:events].length() > 0
-    events = "<div>"
-    events += "<h5>Appears in the following events:</h5>"
-    events += "<ul>"
-    s[:events].each do |m|
-      events  += "<li>#{m}</li>"
-    end
-    events += "</ul>"
-    events += "</div>"
-  else
-    events = ""
-  end
+  # Add mission / event stuff
+  missions = listmisnevt( "Appears in the following missions:", s[:missions] )
+  events = listmisnevt( "Appears in the following events:", s[:events] )
 
 <<-EOF
  <div class="modal fade spob" id="modal-spob-#{s[:id]}" tabindex="-1" aria-labelledby="modal-spob-label-#{s[:id]}" data-spob-modal="#{s[:name]}" aria-hidden="true">
@@ -251,31 +256,9 @@ def ssys_modal( s )
     spobs = "<div>This system has no space objects.</div>"
   end
 
-  if s[:missions].length() > 0
-    missions = "<div>"
-    missions += "<h5>Appears in the following missions:</h5>"
-    missions += "<ul>"
-    s[:missions].each do |m|
-      missions  += "<li>#{m}</li>"
-    end
-    missions += "</ul>"
-    missions += "</div>"
-  else
-    missions = ""
-  end
-
-  if s[:events].length() > 0
-    events = "<div>"
-    events += "<h5>Appears in the following events:</h5>"
-    events += "<ul>"
-    s[:events].each do |m|
-      events  += "<li>#{m}</li>"
-    end
-    events += "</ul>"
-    events += "</div>"
-  else
-    events = ""
-  end
+  # Add mission / event stuff
+  missions = listmisnevt( "Appears in the following missions:", s[:missions] )
+  events = listmisnevt( "Appears in the following events:", s[:events] )
 
 <<-EOF
  <div class="modal fade" id="modal-ssys-#{s[:id]}" tabindex="-1" aria-labelledby="modal-ssys-label-#{s[:id]}" aria-hidden="true">

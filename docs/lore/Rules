@@ -38,6 +38,23 @@ preprocess do
       config[:misn][e[:name]] = e
    end
 
+   # Helper functions
+   def find_lines( matchitems, matchstr )
+      lst = []
+      @items.find_all( matchitems ).each do |m|
+         lines = []
+         IO.read(m.raw_filename).each_line do |l|
+            if l.include? matchstr
+               lines.push(l)
+            end
+         end
+         if lines.length() > 0
+            lst.push( {name: m[:name], lines: lines } )
+         end
+      end
+      return lst
+   end
+
    # Mappings from spob to system and system to array of spobs.
    spobssys = {}
    ssysspob = {}
@@ -45,7 +62,7 @@ preprocess do
    # Process systems
    @items.find_all('/ssys/*.md').each do |s|
       # Core attributes
-      s[:id] =  Base64.encode64( s[:name] )
+      s[:id] =  Base64.encode64( s[:name] ).strip
 
       # Set some other attributes
       s[:radius] = s[:ssys][:general][:radius]
@@ -96,19 +113,13 @@ preprocess do
       end
 
       # Try to find missions it's in
-      s[:missions] = []
-      @items.find_all('/misn/**/*.lua').each do |m|
-         if File.read(m.raw_filename).include? s[:name]
-            s[:missions].push( m[:name] )
-            s[:tags].push("inmission")
-         end
+      s[:missions] = find_lines('/misn/**/*.lua', s[:name])
+      if s[:missions].length() > 0
+         s[:tags].push("inmission")
       end
-      s[:events] = []
-      @items.find_all('/evts/**/*.lua').each do |e|
-         if File.read(e.raw_filename).include? s[:name]
-            s[:events].push( e[:name] )
-            s[:tags].push("inevent")
-         end
+      s[:events] = find_lines('/evts/**/*.lua', s[:name])
+      if s[:events].length() > 0
+         s[:tags].push("inevent")
       end
 
       s[:tags] = s[:tags].uniq.sort
@@ -116,7 +127,7 @@ preprocess do
 
    @items.find_all('/spob/*.md').each do |s|
       # Core attributes
-      s[:id] =  Base64.encode64( s[:name] )
+      s[:id] =  Base64.encode64( s[:name] ).strip
 
       # Set some other atrtibutes
       if not s[:spob][:general][:description].nil? then
@@ -165,19 +176,13 @@ preprocess do
       end
 
       # Try to find missions it's in
-      s[:missions] = []
-      @items.find_all('/misn/**/*.lua').each do |m|
-         if File.read(m.raw_filename).include? s[:name]
-            s[:missions].push( m[:name] )
-            s[:tags].push("inmission")
-         end
+      s[:missions] = find_lines('/misn/**/*.lua', s[:name])
+      if s[:missions].length() > 0
+         s[:tags].push("inmission")
       end
-      s[:events] = []
-      @items.find_all('/evts/**/*.lua').each do |e|
-         if File.read(e.raw_filename).include? s[:name]
-            s[:events].push( e[:name] )
-            s[:tags].push("inevent")
-         end
+      s[:events] = find_lines('/evts/**/*.lua', s[:name])
+      if s[:events].length() > 0
+         s[:tags].push("inevent")
       end
 
       s[:tags] = s[:tags].uniq.sort
