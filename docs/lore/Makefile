@@ -85,3 +85,6 @@ view: all
 
 check: all
 	bundle exec nanoc check
+
+clean:
+	rm -rf content/imgs/naev.png content/favicon.png content/gfx content/evts content/misn content/fcts content/ssys content/spob tmp output
