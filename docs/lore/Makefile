@@ -11,7 +11,7 @@ FCTS := $(patsubst ../../dat/factions/%.xml, content/fcts/%.md, $(FCTS) )
 GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp ../../artwork/gfx/spob/space/**/*.webp ../../artwork/gfx/logo/*.webp)
 GFX := $(patsubst ../../artwork/%, content/%, $(GFX))
 
-.PHONY: all gfx spob ssys fcts view install clean check logo
+.PHONY: all gfx spob ssys fcts view clean check logo
 
 all: logo gfx spob ssys fcts
 	bundle exec nanoc
@@ -59,10 +59,6 @@ fcts: $(FCTS)
 view: all
 	bundle exec nanoc view
 
-install: all
-	test -d naev.github.io || git clone git@github.com:naev/naev.github.io.git
-	rsync -avzh --delete --exclude=".*" --exclude="CNAME" output/ naev.github.io
-	(cd naev.github.io && git add . && git commit -a -m "updates" && git push)
 
 check: all
 	bundle exec nanoc check
