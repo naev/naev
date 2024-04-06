@@ -43,9 +43,11 @@ preprocess do
       lst = []
       @items.find_all( matchitems ).each do |m|
          lines = []
-         IO.read(m.raw_filename).each_line do |l|
+         File.foreach(m.raw_filename).with_index do |l,i|
             if l.include? matchstr
-               lines.push(l)
+               s = "<span class='text-secondary'>#{i.to_s.rjust(3,'0')}:</span> #{html_escape(l)}"
+               s.gsub! matchstr, "<span class='text-primary'>#{matchstr}</span>"
+               lines.push(s)
             end
          end
          if lines.length() > 0

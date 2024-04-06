@@ -22,12 +22,12 @@ def listmisnevt( header, lst )
     out += "<ul>"
     lst.each_with_index do |m,i|
       id = SecureRandom.uuid
-      out += "<li><a data-toggle='collapse' href='##{id}' aria-expanded='false' aria-control='#{id}'>#{m[:name]}</a></li>"
+      out += "<li data-bs-toggle='collapse' data-bs-target='##{id}' role='button' aria-expanded='false' aria-control='#{id}'>#{m[:name]}</li>"
       out += "<div class='collapse' id='#{id}'>"
       out +=  "<div class='card card-body'>"
       out +=   "<ul>"
       m[:lines].each do |l|
-        out += "<li>#{html_escape(l)}</li>"
+        out += "<li>#{l}</li>"
       end
       out +=   "</ul>"
       out +=  "</div>"
@@ -171,7 +171,7 @@ def spob_modal( s )
      #{tags}
      #{description}
      #{bar}
-     #{missions}>
+     #{missions}
      #{events}
     </div>
     <div class="modal-footer">
