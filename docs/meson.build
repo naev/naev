@@ -81,8 +81,8 @@ if genLore.disabled() == false
     tidy = find_program('tidy', required: genLore)
     yq = find_program('yq', required: genLore)
     graphicsmagick = find_program('gm', required: genLore)
-    ruby_header = cc.find_library('ruby', required: genLore, has_headers: ['ruby.h'])
-    yaml_header = cc.find_library('yaml', required: genLore, has_headers: ['yaml.h'])
+    #ruby_header = cc.find_library('ruby', required: genLore, has_headers: ['ruby.h'])
+    #yaml_header = cc.find_library('yaml', required: genLore, has_headers: ['yaml.h'])
 
     loremasterpy = find_program(join_paths('lore','loremaster.py'))
 
