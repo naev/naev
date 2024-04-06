@@ -8,6 +8,7 @@ option('release'     , type: 'boolean', value: false    , description: 'Set to t
 option('executable'  , type: 'feature', value: 'enabled', description: 'Enable compilation of Naev\'s executable.')
 option('docs_c'      , type: 'feature', value: 'auto'   , description: 'Enable compilation of Naev\'s C documentation.')
 option('docs_lua'    , type: 'feature', value: 'auto'   , description: 'Enable compilation of Naev\'s Lua documentation.')
+option('docs_lore'   , type: 'feature', value: 'disabled'   , description: 'Enable compilation of Naev\'s Lore website.')
 option('luajit'      , type: 'feature', value: 'auto'   , description: 'Enable LuaJIT rather than standard Lua.')
 option('ndata_path'  , type: 'string' , value: ''       , description: 'Set the path ndata will be installed to (relative to the install prefix).')
 option('tracy'       , type: 'boolean', value: false    , description: 'Enable tracy profiler.')

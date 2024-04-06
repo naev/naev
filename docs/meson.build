@@ -73,3 +73,28 @@ if genLDoc.disabled() == false
     endif
 endif
 summary('Lua', is_variable('ldoc'), section: 'Documentation', bool_yn: true)
+
+genLore = get_option('docs_lore')
+if genLore.disabled() == false
+    # Lore website build deps
+    bundler = find_program('bundle', required: genLore)
+    tidy = find_program('tidy', required: genLore)
+    yq = find_program('yq', required: genLore)
+    graphicsmagick = find_program('gm', required: genLore)
+    ruby_header = cc.find_library('ruby', required: genLore, has_headers: ['ruby.h'])
+    yaml_header = cc.find_library('yaml', required: genLore, has_headers: ['yaml.h'])
+
+    loremasterpy = find_program(join_paths('lore','loremaster.py'))
+
+
+    lore = custom_target(
+        'lore',
+        output: 'lore',  # Specify 'lore' as the output directory
+        command: [
+            loremasterpy,
+            '--source-dir', meson.source_root(),
+            '--build-dir', meson.build_root()
+        ],
+    )
+endif
+summary('Lore', is_variable('lore'), section: 'Documentation', bool_yn: true)
