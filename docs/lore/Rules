@@ -42,13 +42,22 @@ preprocess do
    def find_lines( matchitems, matchstr )
       lst = []
       @items.find_all( matchitems ).each do |m|
-         lines = []
-         File.foreach(m.raw_filename).with_index do |l,i|
+         linenum = []
+         flines = File.readlines(m.raw_filename)
+         flines.each_with_index do |l,i|
             if l.include? matchstr
-               s = "<span class='text-secondary'>#{i.to_s.rjust(3,'0')}:</span> #{html_escape(l)}"
-               s.gsub! matchstr, "<span class='text-primary'>#{matchstr}</span>"
-               lines.push(s)
+               li = [0,i-2].max
+               ui = [flines.length()-1,i+2].min
+               (li..ui).each do |j|
+                  linenum.push(j)
+               end
             end
+         end
+         lines = []
+         linenum.uniq.sort.each do |i|
+            s = "<span class='text-secondary'>#{i.to_s.rjust(3,'0')}:</span> #{html_escape(flines[i])}"
+            s.gsub! matchstr, "<span class='text-primary'>#{matchstr}</span>"
+            lines.push(s)
          end
          if lines.length() > 0
             lst.push( {name: m[:name], lines: lines } )
