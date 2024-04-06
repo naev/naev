@@ -15,4 +15,5 @@ The goal is to not only have complete data, but also have the data ready in a fo
 * libyaml development headers (`libyaml-devel` on Fedora)
 * bundler (should pull in the rest of ruby dependencies)
 * yq (on Arch linux it is the `go-yq` package)
+* GraphicsMagick
 * tidy
