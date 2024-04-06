@@ -27,7 +27,7 @@ def listmisnevt( header, lst )
       out +=  "<div class='card card-body'>"
       out +=   "<ul>"
       m[:lines].each do |l|
-        out += "<li>#{l}</li>"
+        out += "<li><code>#{l}</code></li>"
       end
       out +=   "</ul>"
       out +=  "</div>"
