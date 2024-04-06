@@ -17,14 +17,13 @@ def copy_file(input_path, output_path):
     shutil.copy(input_path, output_path)
 
 def clean_directories(build_dir, output_dir):
-    if os.path.exists(build_dir):
-        shutil.rmtree(build_dir)
-    if os.path.exists(output_dir):
-        shutil.rmtree(output_dir)
+    for directory in [build_dir, output_dir]:
+        if os.path.exists(directory):
+            shutil.rmtree(directory)
 
 def copy_directories_and_files(source_dir, build_dir):
     dirs_to_copy = ['content', 'layouts', 'lib']
-    os.makedirs(os.path.dirname(build_dir), exist_ok=True)
+    os.makedirs(build_dir, exist_ok=True)
     for directory in dirs_to_copy:
         shutil.copytree(os.path.join(source_dir, directory), os.path.join(build_dir, directory))
 
@@ -83,15 +82,13 @@ def convert_all_files(source_dir, build_dir):
         convert_gfx(gfx_file, output_path)
 
 def install_deps(build_dir):
-    os.chdir(build_dir)  # Change to the output directory
-    subprocess.run(['bundle', 'install'])
+    subprocess.run(['bundle', 'install'], cwd=build_dir)
 
 def build_site(build_dir):
-    os.chdir(build_dir)  # Change to the output directory
-    subprocess.run(['bundle', 'exec', 'nanoc'])
+    subprocess.run(['bundle', 'exec', 'nanoc'], cwd=build_dir)
 
 def copy_output(build_dir, output_dir):
-    shutil.copytree(build_dir, output_dir)
+    shutil.copytree(os.path.join(build_dir, "output"), output_dir)
 
 def main():
     args = parse_arguments()
@@ -104,7 +101,7 @@ def main():
     install_deps(build_dir)
     convert_all_files(source_dir, build_dir)
     build_site(build_dir)
-    copy_output(os.path.join(build_dir, "output"), output_dir)
+    copy_output(build_dir, output_dir)
 
 if __name__ == "__main__":
     main()
