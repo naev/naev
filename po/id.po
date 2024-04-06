@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-03-30 19:02+0000\n"
+"PO-Revision-Date: 2024-04-06 08:01+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -1196,6 +1196,11 @@ msgid ""
 "generators, which practically ensures its widespread demand throughout the "
 "galaxy."
 msgstr ""
+"Walaupun Kermit adalah salah satu material paling langka yang bisa ditemukan "
+"di asteroid, Kermit memiliki kegunaan fundamental pada berbagai aplikasi "
+"teknologi karena efek uniknya terhadap ruang-waktu jika diberi tekanan dan "
+"radiasi tertentu. Kermit umumnya digunakan di beberapa tipe generator "
+"perisai, yang menjaminkan permintaan di seluruh galaksi."
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
@@ -1203,7 +1208,7 @@ msgstr "Barang Mewah"
 
 #: dat/commodities/luxury_goods.xml:4
 msgid "All sorts of high quality luxury goods."
-msgstr ""
+msgstr "Segala jenis barang mewah berkualitas tinggi."
 
 #: dat/commodities/medicine.xml:3
 msgid "Medicine"
@@ -1211,7 +1216,7 @@ msgstr "Obat-obatan"
 
 #: dat/commodities/medicine.xml:4
 msgid "An assortment of medicines suitable for curing all kinds of ailments."
-msgstr ""
+msgstr "Berbagai jenis obat-obatan untuk menyembuhkan segala jenis penyakit."
 
 #: dat/commodities/nebula_crystals.xml:3
 msgid "Nebula Crystals"
@@ -1224,6 +1229,11 @@ msgid ""
 "you think you can hear noises coming from them. Your scanners, however, "
 "don't show anything out of the ordinary."
 msgstr ""
+"Tidak jelas bagaimana kristal ini terbentuk, tapi kristal-kristal ini dapat "
+"ditemukan jauh di dalam nebula. Anehnya, mereka terasa hangat saat disentuh "
+"dan bahkan terkadang kamu merasa bahwa kamu bisa mendengar suara dari "
+"dalamnya. Namun, lebih aneh lagi adalah bahwa pemindaimu tidak menunjukkan "
+"apapun yang di luar biasanya."
 
 #: dat/commodities/neodymium.xml:3
 msgid "Neodymium"
@@ -1237,6 +1247,11 @@ msgid ""
 "new technologies, the demand for neodymium remains relatively high and "
 "constant throughout the galaxy."
 msgstr ""
+"Neodymium sangatlah berguna untuk sifat magnetik dan kapasitas termalnya, "
+"sehingga memainkan peran penting dalam aplikasi pendinginan kriogenik "
+"seperti untuk ruang stasis. Karena keningkatan populasi pasca Insiden dan "
+"penggunaan teknologi baru yang merajalela, maka permintaan untuk neodymium "
+"tetap tinggi dan konstan di seluruh galaksi."
 
 #: dat/commodities/nickel.xml:3
 msgid "Nickel"
