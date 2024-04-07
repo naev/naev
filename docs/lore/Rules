@@ -91,9 +91,9 @@ preprocess do
          end
          s[:jumps] = []
          jumps.each do |jmp|
-            s[:jumps].push( jmp[:"+@target"] )
+            s[:jumps].push( {target: jmp[:"+@target"], hidden: jmp.key?(:hidden) } )
          end
-         s[:jumps].sort()
+         s[:jumps].sort_by{ |j| j[:target] }
       else
          s[:jumps] = []
       end

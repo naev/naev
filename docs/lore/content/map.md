@@ -21,8 +21,8 @@ title: Missions
     var jumps = [<%= out = ""
     @items.find_all('/ssys/*.md').each do |s|
         s[:jumps].each do |j|
-            if s[:name] < j
-                out += "{ a:\"#{s[:name]}\", b:\"#{j}\" },\n"
+            if s[:name] < j[:target]
+                out += "{ a:\"#{s[:name]}\", b:\"#{j[:target]}\", h:#{j[:hidden]} },\n"
             end
         end
     end
@@ -30,7 +30,7 @@ title: Missions
     var nj = jumps.length;
     for (var i=0; i<nj; i++) {
         var j = jumps[i];
-        graph.addEdge( j.a, j.b, { size: 1, color: 'blue' } );
+        graph.addEdge( j.a, j.b, { size: 2, color: (j.h) ? 'red' :'blue' } );
     }
 
     //graph.addNode("1", { label: "Node 1", x: 0, y: 0, size: 10, color: "blue" });
