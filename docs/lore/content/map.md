@@ -8,19 +8,27 @@ title: Missions
     // Create a graphology graph
     const graph = new graphology.Graph();
 
-    var ssys = [<% @items.find_all('/ssys/*.md').each do |s| %>
-    <%= "{ name:\"#{s[:name]}\", x:#{s[:x]}, y:#{s[:y]} }," %>
-    <% end %>];
+    var ssys = [<%= out = ""
+    @items.find_all('/ssys/*.md').each do |s|
+        out += "{ name:\"#{s[:name]}\", x:#{s[:x]}, y:#{s[:y]} },\n"
+    end
+    out %>];
     var n = ssys.length;
     for (var i=0; i<n; i++) {
         var s = ssys[i];
         graph.addNode( s.name, { label: s.name, x: s.x, y: s.y, size: 5, color: "white", borderColor: "white" } );
     }
-    var jumps = [<% @items.find_all('/ssys/*.md').each do |s| s[:jumps].each do |j| %>
-    <%= "{ a:\"#{s[:name]}\", b:\"#{j}\" }," %>
-    <% end end %>];
+    var jumps = [<%= out = ""
+    @items.find_all('/ssys/*.md').each do |s|
+        s[:jumps].each do |j|
+            if s[:name] < j
+                out += "{ a:\"#{s[:name]}\", b:\"#{j}\" },\n"
+            end
+        end
+    end
+    out %>];
     var nj = jumps.length;
-    for (var i=0; i<n; i++) {
+    for (var i=0; i<nj; i++) {
         var j = jumps[i];
         graph.addEdge( j.a, j.b, { size: 1, color: 'blue' } );
     }
@@ -31,6 +39,8 @@ title: Missions
 
     // Instantiate sigma.js and render the graph
     const sigmaInstance = new Sigma( graph, document.getElementById("starmap"), {
+        labelColor: { color: "white" },
+
         //defaultNodeType: "bordered",
         //nodeProgramClasses: {
         //    bordered: NodeBorderProgram,
