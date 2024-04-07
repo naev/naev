@@ -1,3 +1,6 @@
+---
+name: "Onion Society"
+---
 ## Onion Society Campaign
 
 Meddle with the Onion Society, an eclectic group of the Nexus denizens and hackers.

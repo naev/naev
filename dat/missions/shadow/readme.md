@@ -1,3 +1,6 @@
+---
+name: "Shadow"
+---
 ## Shadow Campaign
 
 Campaign where the player does odd shady tasks for Rebina.

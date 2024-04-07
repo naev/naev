@@ -1,3 +1,6 @@
+---
+name: "Taiomi"
+---
 ## Taiomi Campaign
 
 Chapter 1+ campaign where the player helps some escaped collective drones leave

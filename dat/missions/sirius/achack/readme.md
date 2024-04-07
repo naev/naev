@@ -1,3 +1,6 @@
+---
+name: "Academy Hack"
+---
 ## Academy Hack Campaign
 
 Campaign to figure out something that happened in the past.

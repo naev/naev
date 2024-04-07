@@ -1,3 +1,6 @@
+---
+name: "Minerva"
+---
 ## Minerva Campaign
 
 Campaign where you help a girl called Maikki find her father while unraveling

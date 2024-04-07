@@ -1,3 +1,6 @@
+---
+name: "Baron Sauterfeldt"
+---
 ## Baron Campaign
 
 The player has to obtain artworks for an eccentric baron.
