@@ -2,8 +2,8 @@
 title: Star Map
 ---
 <% content_for :javascript do %>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+<script src="<%= relative_path_to(@items['/js/sigma.js']) %>"></script>
+<script src="<%= relative_path_to(@items['/js/graphology.umd.js']) %>"></script>
 <script>
     // Create a graphology graph
     const graph = new graphology.Graph();
