@@ -231,18 +231,21 @@ preprocess do
 
    # Find missions / events in the campaign
    @items.find_all('/cmpn/**/*.md').each do |c|
+      c[:id] =  Base64.encode64( c[:name] ).strip
       tag = c[:name]
       c[:missions] = []
       @items.find_all('/misn/**/*.lua').each do |m|
          if not m[:campaign].nil? and m[:campaign]==tag then
             c[:missions].push( m )
          end
+         c[:missions].sort()
       end
       c[:events] = []
       @items.find_all('/evts/**/*.lua').each do |e|
          if not e[:campaign].nil? and e[:campaign]==tag then
             c[:events].push( e )
          end
+         c[:events].sort()
       end
    end
 end
