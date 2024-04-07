@@ -300,12 +300,12 @@ preprocess do
       @items.find_all('/misn/**/*.lua').each do |m|
          if not m[:campaign].nil? and m[:campaign]==tag then
             c[:missions].push( m )
-         end
-         m[:ssys].each do |s|
-            c[:ssys].push( s )
-         end
-         m[:spob].each do |s|
-            c[:spob].push( s )
+            m[:ssys].each do |s|
+               c[:ssys].push( s )
+            end
+            m[:spob].each do |s|
+               c[:spob].push( s )
+            end
          end
       end
       c[:missions].sort_by{ |m| m[:name] }
@@ -313,12 +313,12 @@ preprocess do
       @items.find_all('/evts/**/*.lua').each do |e|
          if not e[:campaign].nil? and e[:campaign]==tag then
             c[:events].push( e )
-         end
-         e[:ssys].each do |s|
-            c[:ssys].push( s )
-         end
-         e[:spob].each do |s|
-            c[:spob].push( s )
+            e[:ssys].each do |s|
+               c[:ssys].push( s )
+            end
+            e[:spob].each do |s|
+               c[:spob].push( s )
+            end
          end
       end
       c[:events].sort_by{ |e| e[:name] }
