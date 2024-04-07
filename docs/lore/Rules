@@ -210,6 +210,41 @@ preprocess do
       end
       s[:factions] = Array(s[:factions]).sort()
    end
+
+   # Set up missions and events
+   @items.find_all('/misn/**/*.lua').each do |m|
+      if m[:tags].nil?
+         m[:tags] = []
+      end
+      if not m[:mission][:notes].nil? and not m[:mission][:notes][:campaign].nil? then
+         m[:campaign] = m[:mission][:notes][:campaign]
+      end
+   end
+   @items.find_all('/evts/**/*.lua').each do |e|
+      if e[:tags].nil?
+         e[:tags] = []
+      end
+      if not e[:event][:notes].nil? and not e[:event][:notes][:campaign].nil? then
+         e[:campaign] = e[:event][:notes][:campaign]
+      end
+   end
+
+   # Find missions / events in the campaign
+   @items.find_all('/cmpn/**/*.md').each do |c|
+      tag = c[:name]
+      c[:missions] = []
+      @items.find_all('/misn/**/*.lua').each do |m|
+         if not m[:campaign].nil? and m[:campaign]==tag then
+            c[:missions].push( m )
+         end
+      end
+      c[:events] = []
+      @items.find_all('/evts/**/*.lua').each do |e|
+         if not e[:campaign].nil? and e[:campaign]==tag then
+            c[:events].push( e )
+         end
+      end
+   end
 end
 
 # Some special files
