@@ -33,9 +33,15 @@ preprocess do
       m[:name] = m[:mission][:"+@name"]
       config[:misn][m[:name]] = m
    end
+   config[:evts] = {}
    @items.find_all("/evts/**/*.lua").each do |e|
       e[:name] = e[:event][:"+@name"]
-      config[:misn][e[:name]] = e
+      config[:evts][e[:name]] = e
+   end
+   config[:fcts] = {}
+   @items.find_all("/fcts/*.md").each do |f|
+      f[:name] = f[:faction][:"+@name"]
+      config[:fcts][f[:name]] = f
    end
 
    # Helper functions
@@ -64,6 +70,44 @@ preprocess do
          end
       end
       return lst
+   end
+
+   def colnaev2html( c )
+      return c.downcase
+   end
+
+   # Set up factions
+   @items.find_all("/fcts/*.md").each do |f|
+      f[:id] =  Base64.encode64( f[:name] ).strip
+
+      # Optional base stuff
+      if f[:faction][:colour].nil?
+         f[:colour] = "none"
+      else
+         f[:colour] = colnaev2html( f[:faction][:colour] )
+      end
+      if f[:faction][:longname].nil?
+         f[:longname] = f[:name]
+      else
+         f[:longname] = f[:faction][:longname]
+      end
+      if f[:faction][:description].nil?
+         f[:description] = "This faction has no description."
+      else
+         f[:description] = f[:faction][:description]
+      end
+
+      # Get logo
+      if not f[:faction][:logo].nil?
+         f[:logo] = "/gfx/logo/#{f[:faction][:logo]}.webp"
+      end
+
+      # Add tags
+      if not f[:faction][:tags].nil?
+         f[:tags] = Array(f[:faction][:tags][:tag])
+      else
+         f[:tags] = []
+      end
    end
 
    # Mappings from spob to system and system to array of spobs.
@@ -238,15 +282,15 @@ preprocess do
          if not m[:campaign].nil? and m[:campaign]==tag then
             c[:missions].push( m )
          end
-         c[:missions].sort()
       end
+      c[:missions].sort_by{ |m| m[:name] }
       c[:events] = []
       @items.find_all('/evts/**/*.lua').each do |e|
          if not e[:campaign].nil? and e[:campaign]==tag then
             c[:events].push( e )
          end
-         c[:events].sort()
       end
+      c[:events].sort_by{ |e| e[:name] }
    end
 end
 
@@ -307,6 +351,11 @@ compile '**/*.{css,scss}' do
    filter :dart_sass, syntax: :scss if item[:extension] == 'scss'
    filter :rainpress
    write ext: 'css'
+end
+
+compile "gfx/logo/*.webp", rep: :thumbnail do
+   filter :thumbnailize, :width => 64, :height => 64, :opt => true
+   write item.identifier.without_ext + '_tn.png' # all png for transparency if cropped
 end
 
 # Other objects
