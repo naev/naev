@@ -261,7 +261,7 @@ def ssys_modal( s )
   events = listmisnevt( "Appears in the following events:", s[:events] )
 
 <<-EOF
- <div class="modal fade" id="modal-ssys-#{s[:id]}" tabindex="-1" aria-labelledby="modal-ssys-label-#{s[:id]}" aria-hidden="true">
+ <div class="modal fade" id="modal-ssys-#{s[:id]}" tabindex="-1" aria-labelledby="modal-ssys-label-#{s[:id]}" data-Name="#{s[:name]}" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
    <div class="modal-content">
     <div class="modal-header">

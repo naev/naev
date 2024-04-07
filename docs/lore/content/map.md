@@ -40,12 +40,21 @@ title: Missions
     // Instantiate sigma.js and render the graph
     const sigmaInstance = new Sigma( graph, document.getElementById("starmap"), {
         labelColor: { color: "white" },
-
+        //doubleClickEnabled: false,
         //defaultNodeType: "bordered",
         //nodeProgramClasses: {
         //    bordered: NodeBorderProgram,
         //},
     } );
+    sigmaInstance.on('doubleClickNode', function(event) {
+        //var node = data.node;
+        //var x = data.event.x;
+        //var y = data.event.y;
+        //console.log( node, x, y );
+        const ssysModal = new bootstrap.Modal('div.modal[data-Name="'+event.node+'"]');
+        ssysModal.show();
+        event.preventSigmaDefault();
+    });
 </script>
 <% end %>
 
