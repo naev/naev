@@ -1,5 +1,5 @@
 ---
-title: Missions
+title: Star Map
 ---
 <% content_for :javascript do %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
@@ -33,10 +33,6 @@ title: Missions
         graph.addEdge( j.a, j.b, { size: 2, color: (j.h) ? 'red' :'blue' } );
     }
 
-    //graph.addNode("1", { label: "Node 1", x: 0, y: 0, size: 10, color: "blue" });
-    //graph.addNode("2", { label: "Node 2", x: 1, y: 1, size: 20, color: "red" });
-    //graph.addEdge("1", "2", { size: 5, color: "purple" });
-
     // Instantiate sigma.js and render the graph
     const sigmaInstance = new Sigma( graph, document.getElementById("starmap"), {
         labelColor: { color: "white" },
@@ -47,10 +43,6 @@ title: Missions
         //},
     } );
     sigmaInstance.on('doubleClickNode', function(event) {
-        //var node = data.node;
-        //var x = data.event.x;
-        //var y = data.event.y;
-        //console.log( node, x, y );
         const ssysModal = new bootstrap.Modal('div.modal[data-Name="'+event.node+'"]');
         ssysModal.show();
         event.preventSigmaDefault();
