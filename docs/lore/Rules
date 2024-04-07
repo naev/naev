@@ -46,12 +46,13 @@ preprocess do
 
    # Helper functions
    def find_lines( matchitems, matchstr, tag )
+      re = /\b#{matchstr}\b/
       lst = []
       @items.find_all( matchitems ).each do |m|
          linenum = []
          flines = File.readlines(m.raw_filename)
          flines.each_with_index do |l,i|
-            if l.include? matchstr
+            if l =~ re
                li = [0,i-2].max
                ui = [flines.length()-1,i+2].min
                (li..ui).each do |j|
