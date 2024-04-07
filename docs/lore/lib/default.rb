@@ -54,7 +54,11 @@ def fcts_card( f )
   gfx = ""
   if not f[:logo].nil?
       gfxpath = relative_path_to(@items[f[:logo]])
-      gfx = "<img src='#{gfxpath}' class='card-img-top' alt=\"#{f[:longname]} Logo\">"
+      gfx += "<div class='ratio ratio-1x1'>"
+      gfx += "<div class='container d-flex align-items-center'>"
+      gfx += "<img src='#{gfxpath}' class='card-img-top object-fit-scale mh-100' alt=\"#{f[:longname]} Logo\">"
+      gfx += "</div>"
+      gfx += "</div>"
   end
 <<-EOF
  <div class="col" data-Name="#{f[:name]}">
@@ -75,7 +79,7 @@ def fcts_modal( f )
   gfx = ""
   if not f[:logo].nil?
       gfxpath = relative_path_to(f[:logo])
-      gfx = "<img src='#{gfxpath}' class='col-md-6 float-md-end mb-3 ms-md-3' alt=\"#{f[:longname]} Logo\">"
+      gfx += "<img src='#{gfxpath}' class='col-md-6 float-md-end mb-3 ms-md-3' alt=\"#{f[:longname]} Logo\">"
   end
 
   tags = ""
@@ -141,7 +145,11 @@ def spob_card( s )
   end
   gfx = ""
   if not gfxpath.nil?
-    gfx += "<img src='#{gfxpath}' class='card-img-top' alt='#{s[:spob][:GFX][:space]}'>"
+    gfx += "<div class='ratio ratio-1x1'>"
+    gfx += "<div class='container d-flex align-items-center'>"
+    gfx += "<img src='#{gfxpath}' class='card-img-top object-fit-scale mh-100' alt='#{s[:spob][:GFX][:space]}'>"
+    gfx += "</div>"
+    gfx += "</div>"
   end
 <<-EOF
  <div class="col #{cls}" data-Name="#{s[:name]}" data-Faction="#{s[:faction]}" data-Class="#{s[:spobclass]}" data-Population="#{s[:population]}" >
