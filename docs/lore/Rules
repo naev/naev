@@ -45,7 +45,7 @@ preprocess do
    end
 
    # Helper functions
-   def find_lines( matchitems, matchstr )
+   def find_lines( matchitems, matchstr, tag )
       lst = []
       @items.find_all( matchitems ).each do |m|
          linenum = []
@@ -57,6 +57,11 @@ preprocess do
                (li..ui).each do |j|
                   linenum.push(j)
                end
+
+               if m[tag].nil?
+                  m[tag] = []
+               end
+               m[tag].push( matchstr )
             end
          end
          lines = []
@@ -168,11 +173,11 @@ preprocess do
       end
 
       # Try to find missions it's in
-      s[:missions] = find_lines('/misn/**/*.lua', s[:name])
+      s[:missions] = find_lines('/misn/**/*.lua', s[:name], :ssys)
       if s[:missions].length() > 0
          s[:tags].push("inmission")
       end
-      s[:events] = find_lines('/evts/**/*.lua', s[:name])
+      s[:events] = find_lines('/evts/**/*.lua', s[:name], :ssys)
       if s[:events].length() > 0
          s[:tags].push("inevent")
       end
@@ -231,11 +236,11 @@ preprocess do
       end
 
       # Try to find missions it's in
-      s[:missions] = find_lines('/misn/**/*.lua', s[:name])
+      s[:missions] = find_lines('/misn/**/*.lua', s[:name], :spob)
       if s[:missions].length() > 0
          s[:tags].push("inmission")
       end
-      s[:events] = find_lines('/evts/**/*.lua', s[:name])
+      s[:events] = find_lines('/evts/**/*.lua', s[:name], :spob)
       if s[:events].length() > 0
          s[:tags].push("inevent")
       end
@@ -263,6 +268,12 @@ preprocess do
       if not m[:mission][:notes].nil? and not m[:mission][:notes][:campaign].nil? then
          m[:campaign] = m[:mission][:notes][:campaign]
       end
+      if m[:spob].nil?
+         m[:spob] = []
+      end
+      if m[:ssys].nil?
+         m[:ssys] = []
+      end
    end
    @items.find_all('/evts/**/*.lua').each do |e|
       if e[:tags].nil?
@@ -271,16 +282,30 @@ preprocess do
       if not e[:event][:notes].nil? and not e[:event][:notes][:campaign].nil? then
          e[:campaign] = e[:event][:notes][:campaign]
       end
+      if e[:spob].nil?
+         e[:spob] = []
+      end
+      if e[:ssys].nil?
+         e[:ssys] = []
+      end
    end
 
    # Find missions / events in the campaign
    @items.find_all('/cmpn/**/*.md').each do |c|
       c[:id] =  Base64.encode64( c[:name] ).strip
       tag = c[:name]
+      c[:ssys] = []
+      c[:spob] = []
       c[:missions] = []
       @items.find_all('/misn/**/*.lua').each do |m|
          if not m[:campaign].nil? and m[:campaign]==tag then
             c[:missions].push( m )
+         end
+         m[:ssys].each do |s|
+            c[:ssys].push( s )
+         end
+         m[:spob].each do |s|
+            c[:spob].push( s )
          end
       end
       c[:missions].sort_by{ |m| m[:name] }
@@ -289,8 +314,17 @@ preprocess do
          if not e[:campaign].nil? and e[:campaign]==tag then
             c[:events].push( e )
          end
+         e[:ssys].each do |s|
+            c[:ssys].push( s )
+         end
+         e[:spob].each do |s|
+            c[:spob].push( s )
+         end
       end
       c[:events].sort_by{ |e| e[:name] }
+
+      c[:spob] = c[:spob].uniq.sort
+      c[:ssys] = c[:ssys].uniq.sort
    end
 end
 

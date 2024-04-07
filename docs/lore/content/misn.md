@@ -6,13 +6,40 @@ title: Missions
 <div class="row row-cols-1 row-cols-md-5 g-4" id="spobs">
 <%= out = ""
 @items.find_all('/cmpn/**/*.md').each do |c| #***
-    missions = ""
-    c[:missions].each do |m|
-        missions += "<li>#{m[:name]}</li>"
+    if c[:missions].length() > 0
+        missions = "<div><h5>Missions:</h5>"
+        missions += "<ul>"
+        c[:missions].each do |m|
+            missions += "<li>#{m[:name]}</li>"
+        end
+        missions += "</ul>"
+        missions += "</div>"
+    else
+        missions = ""
     end
-    events = ""
-    c[:events].each do |e|
-        events += "<li>#{e[:name]}</li>"
+    if c[:events].length() > 0
+        events = "<div><h5>Events:</h5>"
+        events += "<ul>"
+        c[:events].each do |e|
+            events += "<li>#{e[:name]}</li>"
+        end
+        events += "</ul>"
+        events += "</div>"
+    else
+        events = ""
+    end
+
+    if c[:spob].length()+c[:ssys].length() > 0
+        spob = "<div class='row row-cols-1 row-cols-md-5 g-4'>"
+        c[:ssys].each do |sys|
+            spob += ssys_card( ssys_get(sys) )
+        end
+        c[:spob].each do |spb|
+            spob += spob_card( spob_get(spb) )
+        end
+        spob += "</div>"
+    else
+        spob = ""
     end
 
     out += <<-EOF
@@ -43,16 +70,9 @@ title: Missions
       <span class="badge rounded-pill text-bg-primary">#{c[:events].length()} Events</span>
      </div>
      <div markdown="1">#{c.compiled_content(snapshot: :raw)}</div>
-     <div><h5>Missions:</h5>
-      <ul>
-       #{missions}
-      </ul>
-     </div>
-     <div><h5>Events:</h5>
-      <ul>
-       #{events}
-      </ul>
-     </div>
+     #{missions}
+     #{events}
+     #{spob}
     </div>
     <div class="modal-footer">
      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
