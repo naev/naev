@@ -5,7 +5,7 @@ SPOB := $(patsubst ../../dat/spob/%.xml, content/spob/%.md, $(SPOB) )
 SSYS := $(wildcard ../../dat/ssys/*.xml)
 SSYS := $(patsubst ../../dat/ssys/%.xml, content/ssys/%.md, $(SSYS) )
 
-FCTS := $(wildcard ../../dat/factions/*.xml)
+FCTS := $(shell find ../../dat/factions -type f -name "*.xml" -exec grep -vqz "<invisible />" {} \; -print)
 FCTS := $(patsubst ../../dat/factions/%.xml, content/fcts/%.md, $(FCTS) )
 
 MISN := $(shell find ../../dat/missions -type f -name "*.lua" -exec grep -q "<?xml version=['\"]1.0['\"] encoding=['\"]utf8['\"]?>" {} \; -print)
