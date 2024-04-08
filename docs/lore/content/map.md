@@ -74,4 +74,8 @@ $(document).ready( function() {
 
 <div id="starmap" style="width: 100%; height: 600px; background: black"></div>
 
+<div class="alert alert-info d-flex align-items-center" role="alert">
+Double-click on a star system to open up an information window.
+</div>
+
 <%= modal_addAll() %>
