@@ -1,8 +1,8 @@
 ---
 title: Missions
 ---
-<div class="nospoiler alert alert-warning d-flex align-items-center" role="alert">
-This page contains HEAVY SPOILERS! Read at your own risk. You can hide this warning and enable spoilers by checking the spoilers checkbox in the top-right corner.
+<div class="nospoiler alert alert-warning d-flex align-items-center" role="alert" markdown="1">
+This page contains **HEAVY SPOILERS**! Read at your own risk. You can hide this warning and enable spoilers by checking the spoilers checkbox in the top-right corner.
 </div>
 
 <h3>Campaigns</h3>

@@ -5,19 +5,15 @@ title: Star Map
 <script src="<%= relative_path_to(@items['/js/sigma.js']) %>"></script>
 <script src="<%= relative_path_to(@items['/js/graphology.umd.js']) %>"></script>
 <script>
+$(document).ready( function() {
     // Create a graphology graph
     const graph = new graphology.Graph();
 
     var ssys = [<%= out = ""
     @items.find_all('/ssys/*.md').each do |s|
-        out += "{ name:\"#{s[:name]}\", x:#{s[:x]}, y:#{s[:y]} },\n"
+        out += "{ name:\"#{s[:name]}\", x:#{s[:x]}, y:#{s[:y]}, s:#{s[:tags].include? "spoiler"} },\n"
     end
     out %>];
-    var n = ssys.length;
-    for (var i=0; i<n; i++) {
-        var s = ssys[i];
-        graph.addNode( s.name, { label: s.name, x: s.x, y: s.y, size: 5, color: "white", borderColor: "white" } );
-    }
     var jumps = [<%= out = ""
     @items.find_all('/ssys/*.md').each do |s|
         s[:jumps].each do |j|
@@ -27,11 +23,26 @@ title: Star Map
         end
     end
     out %>];
-    var nj = jumps.length;
-    for (var i=0; i<nj; i++) {
-        var j = jumps[i];
-        graph.addEdge( j.a, j.b, { size: 2, color: (j.h) ? 'red' :'blue' } );
+
+    function make_graph () {
+        var spoiled = spoilers();
+        var n = ssys.length;
+        for (var i=0; i<n; i++) {
+            var s = ssys[i];
+            if (!s.s || spoiled) {
+                graph.addNode( s.name, { label: s.name, x: s.x, y: s.y, size: 5, color: "white", borderColor: "white" } );
+            }
+        }
+        var nj = jumps.length;
+        for (var i=0; i<nj; i++) {
+            var j = jumps[i];
+            if (!j.h || spoiled) {
+                graph.addEdge( j.a, j.b, { size: 2, color: (j.h) ? 'red' :'blue' } );
+            }
+        }
     }
+
+    make_graph();
 
     // Instantiate sigma.js and render the graph
     const sigmaInstance = new Sigma( graph, document.getElementById("starmap"), {
@@ -47,6 +58,13 @@ title: Star Map
         ssysModal.show();
         event.preventSigmaDefault();
     });
+
+    $('input#spoilers').change( function () {
+        graph.clear();
+        make_graph();
+        sigmaInstance.refresh();
+    } );
+});
 </script>
 <% end %>
 
