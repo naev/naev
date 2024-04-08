@@ -1,6 +1,12 @@
 ---
 title: Missions
 ---
+<div class="nospoilers alert alert-warning d-flex align-items-center" role="alert">
+ <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+ <div>
+This page contains HEAVY SPOILERS! Read at your own risk. You can hide this warning and enable spoilers by checking the spoilers checkbox in the top-right corner.
+ </div>
+</div>
 
 <h3>Campaigns</h3>
 <div class="row row-cols-1 row-cols-md-5 g-4" id="spobs">
