@@ -42,6 +42,11 @@ def listmisnevt( header, lst )
 end
 
 def fcts_card( f )
+  cls = ""
+  if f[:tags].include? 'spoiler'
+    cls += " spoiler"
+  end
+
   tags = ""
   if f[:tags].length() > 0
     tags = "<div class='m-1'>"
@@ -61,7 +66,7 @@ def fcts_card( f )
       gfx += "</div>"
   end
 <<-EOF
- <div class="col" data-Name="#{f[:name]}">
+ <div class="col#{cls}" data-Name="#{f[:name]}">
   <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-fcts-#{f[:id]}" >
    #{gfx}
    <div class="card-body">
@@ -114,6 +119,9 @@ end
 
 def spob_card( s )
   cls = ""
+  if s[:tags].include? 'spoiler'
+    cls += " spoiler"
+  end
   cls += " fct-"+s[:faction]
   cls += " cls-"+s[:spobclass]
   s[:services].each do |s|
@@ -152,7 +160,7 @@ def spob_card( s )
     gfx += "</div>"
   end
 <<-EOF
- <div class="col #{cls}" data-Name="#{s[:name]}" data-Faction="#{s[:faction]}" data-Class="#{s[:spobclass]}" data-Population="#{s[:population]}" >
+ <div class="col#{cls}" data-Name="#{s[:name]}" data-Faction="#{s[:faction]}" data-Class="#{s[:spobclass]}" data-Population="#{s[:population]}" >
   <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-spob-#{s[:id]}" >
    #{gfx}
    <div class="card-body">
@@ -260,6 +268,9 @@ end
 
 def ssys_card( s )
   cls = ""
+  if s[:tags].include? 'spoiler'
+    cls += " spoiler"
+  end
   s[:factions].each do |f|
     cls += " fct-"+f
   end
@@ -286,7 +297,7 @@ def ssys_card( s )
   end
 
 <<-EOF
- <div class="col #{cls}" data-Name="#{s[:name]}" data-Faction="#{s[:faction]}" >
+ <div class="col#{cls}" data-Name="#{s[:name]}" data-Faction="#{s[:faction]}" >
   <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-ssys-#{s[:id]}" >
    <div class="card-body">
     <h5 class="card-title">#{s[:name]}</h5>

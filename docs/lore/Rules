@@ -22,11 +22,13 @@ preprocess do
    @items.find_all('/spob/*.md').each do |s|
       s[:name] = s[:spob][:"+@name"]
       config[:spob][s[:name]] = s
+      s[:tags] = []
    end
    config[:ssys] = {}
    @items.find_all("/ssys/*.md").each do |s|
       s[:name] = s[:ssys][:"+@name"]
       config[:ssys][s[:name]] = s
+      s[:tags] = []
    end
    config[:misn] = {}
    @items.find_all("/misn/**/*.lua").each do |m|
@@ -132,6 +134,11 @@ preprocess do
       s[:x] = s[:ssys][:pos][:"+@x"]
       s[:y] = s[:ssys][:pos][:"+@y"]
 
+      # Add tags
+      if not s[:ssys][:tags].nil?
+         s[:tags] += Array(s[:ssys][:tags][:tag])
+      end
+
       # Add jumps
       if not s[:ssys][:jumps].nil? then
          if s[:ssys][:jumps][:jump].kind_of?(Array) then
@@ -164,13 +171,6 @@ preprocess do
          s[:spobs].sort()
       else
          s[:spobs] = []
-      end
-
-      # Add tags
-      if not s[:ssys][:tags].nil?
-         s[:tags] = Array(s[:ssys][:tags][:tag])
-      else
-         s[:tags] = []
       end
 
       # Try to find missions it's in
@@ -214,9 +214,7 @@ preprocess do
          s[:services] = []
       end
       if not s[:spob][:tags].nil?
-         s[:tags] = Array(s[:spob][:tags][:tag])
-      else
-         s[:tags] = []
+         s[:tags] += Array(s[:spob][:tags][:tag])
       end
 
       # See if in system
@@ -256,6 +254,9 @@ preprocess do
          spb = spob_get( si )
          if spb[:faction] != NOFACTION then
             s[:factions].add( spb[:faction] )
+         end
+         if s[:tags].include? "spoiler"
+            spb[:tags].push("spoiler")
          end
       end
       s[:factions] = Array(s[:factions]).sort()
