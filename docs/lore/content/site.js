@@ -9,12 +9,12 @@ function spoilers () {
 
 function spoilers_update () {
    if (spoilers()) {
-      $('.spoiler').removeClass('invisible').addClass('visible');
-      $('.nospoiler').removeClass('visible').addClass('invisible');
+      $('.spoiler').removeClass('d-none');
+      $('.nospoiler').addClass('d-none');
    }
    else {
-      $('.spoiler').removeClass('visible').addClass('invisible');
-      $('.nospoiler').removeClass('invisible').addClass('visible');
+      $('.spoiler').addClass('d-none');
+      $('.nospoiler').removeClass('d-none');
    }
 }
 

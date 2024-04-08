@@ -1,7 +1,7 @@
 ---
 title: Missions
 ---
-<div class="nospoilers alert alert-warning d-flex align-items-center" role="alert">
+<div class="nospoiler alert alert-warning d-flex align-items-center" role="alert">
 This page contains HEAVY SPOILERS! Read at your own risk. You can hide this warning and enable spoilers by checking the spoilers checkbox in the top-right corner.
 </div>
 
