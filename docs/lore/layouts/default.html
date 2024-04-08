@@ -24,11 +24,17 @@
   </head>
   <body>
    <div id="naev-header" class="container-fluid nebula-bg text-light">
-    <div class='container'>
+    <div class='container d-flex align-items-center'>
     <a href="<%= @items['/index.md'].path %>"><img src="<%= @items['/imgs/naev.png'].path %>" alt="Naev" /></a>
+    <span class="ms-3 fs-2 flex-grow-1">
     <% if not @item[:hidetitle] %>
-    <span class="ms-3 fs-2"><%= @item[:title] %></span>
+     <%= @item[:title] %>
     <% end %>
+    </span>
+     <span class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="spoilers">
+      <label class="form-check-label" for="spoilers">Spoilers</label>
+     </span>
     </div>
    </div>
 
