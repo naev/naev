@@ -44,7 +44,7 @@ end
 def fcts_card( f )
   cls = ""
   if f[:tags].include? 'spoiler'
-    cls += " spoiler"
+    cls += " spoiler d-none"
   end
 
   tags = ""
@@ -120,7 +120,7 @@ end
 def spob_card( s )
   cls = ""
   if s[:tags].include? 'spoiler'
-    cls += " spoiler"
+    cls += " spoiler d-none"
   end
   cls += " fct-"+s[:faction]
   cls += " cls-"+s[:spobclass]
@@ -269,7 +269,7 @@ end
 def ssys_card( s )
   cls = ""
   if s[:tags].include? 'spoiler'
-    cls += " spoiler"
+    cls += " spoiler d-none"
   end
   s[:factions].each do |f|
     cls += " fct-"+f

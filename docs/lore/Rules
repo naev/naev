@@ -87,6 +87,7 @@ preprocess do
    # Set up factions
    @items.find_all("/fcts/*.md").each do |f|
       f[:id] =  Base64.encode64( f[:name] ).strip
+      f[:tags] = []
 
       # Optional base stuff
       if f[:faction][:colour].nil?
@@ -112,9 +113,12 @@ preprocess do
 
       # Add tags
       if not f[:faction][:tags].nil?
-         f[:tags] = Array(f[:faction][:tags][:tag])
-      else
-         f[:tags] = []
+         f[:tags] += Array(f[:faction][:tags][:tag])
+      end
+
+      # Mark as spoiler if not known
+      if not f[:faction].key?(:known) or f[:faction].key?(:invisible)
+         f[:tags].push("spoiler")
       end
    end
 
