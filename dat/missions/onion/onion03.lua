@@ -541,17 +541,49 @@ They seem much lower resolution than before.]]))
    vn.label("04_who")
    l337er(_([["All the core members were there today: DOG, notasockpuppet, lonewolf4, underworlder, Trixie, and me. Technomancers are always an odd bunch, have to be careful to not ruffle them the wrong way."]]))
    trixie(_([["DOG is one of the oldest members, I'm pretty sure they were a founding member, but it's hard to tell. They are usually quite reserved, but have some wild programs I've never seen before up their sleeves. Can't really tell what they're thinking of."]]))
-   trixie(_([["notasockpuppet is also quite an old member, however, it's not really clear who they are. They have a giant puppet net, and usually come connect via multiple random puppets. Hard to tell if they are even the avatar most of the time. You do not want to mess with them though. They're quite frivolous and dangerous."]]))
-   l337er(_([[""]]))
+   trixie(_([["notasockpuppet is also quite an old member, however, it's not really clear who they are. They have a giant puppet net, and usually come connect via multiple random puppets. Hard to tell if they are even the avatar most of the time. You do not want to mess with them though. They're quite frivolous, unpredictable, and dangerous."]]))
+   l337er(_([["Other than that, there's lonewolf4, who is, as you probably guessed, a bit dramatic and over the top. Still top-notch, but it's a bit hard to tell what they're saying. Last, underworlder is a bit brash, but quite skilled. Can't really well what they're thinking either. Although, that's quite common among technomancers."]]))
+   l337er(_([["And you already know Trixie and I. Trixie has been around much longer than I have, and has shown me a bit of the ropes here."]]))
+   trixie(_([["Not that I really had to teach much, l337_b01 has got some skills!"]]))
    vn.jump("04_menu")
 
    vn.label("04_always")
+   l337er(_([["No, I haven't seen anything like that, although it has been progressively worse for a while now."]]))
+   trixie(_([["There have been some cases of direct confrontations in the past, some that make today's events pale in comparison, but it's been ages since I've seen shit like that, and it almost ended the Onion Society itself!"]]))
+   l337er(_([["Wow, must have been wild."]]))
+   trixie(_([["Oh it was. Things may be getting worse, but there's still a ways to go before it falls apart."]]))
    vn.jump("04_menu")
 
    vn.label("04_techo")
+   l337er(_([["Technomancer, code wizards, sourcerers, hackzerkers, it's all the same. Terms for those who do the impossible with technology. You've got to get a knack for bending the code to your will and interfacing kernel functions here."]]))
+   l337er(_([["The Nexus and most systems are a horrible mess of barely working archaic systems that barely understands. We exploit the vulnerabilities to do as we please."]]))
+   trixie(_([["It's not all fun and games, it has lots of implications everywhere. It is fun though. :)"]]))
    vn.jump("04_menu")
 
    vn.label("04_cont")
+   l337er(_([["That's a good question. What should we do?"]]))
+   trixie(_([["Well, they always say follow the money, so how does a bank heist sound?"]]))
+   l337er(_([["Excellent!"]]))
+   vn.menu{
+      {_([["I'm in!"]]), "05_in"},
+      {_([["Isn't that illegal?"]]), "05_illegal"},
+   }
+
+   vn.label("05_in")
+   trixie(_([["Great! It's always nice to have a skilled pilot. We can handle the data, but there's only so much you can do through a constrained bandwidth connection outside of the Nexus."]]))
+   vn.jump("05_cont")
+
+   vn.label("05_illegal")
+   trixie(_([["Illegal? It's an imperative correction to a broken system. These banks, trust me I've been in their financial data, exist only to exploit the regular people while funneling money to the pockets of the elite, bribing officials, and doing mass media manipulation."]]))
+   trixie(_([["So when we do a bank heist, it's not theft, it's justice. It's a redistribution of wealth away from the system that perpetuates injustices. It's daring to challenge the status quo and reshape the world for the better!"]]))
+   l337er(_([["And making a pretty credit while we're add it."]]))
+   trixie(_([["Damn right we're making a pretty credit!"]]))
+   vn.jump("05_cont")
+
+   vn.label("05_cont")
+   l337er(fmt.f(_([["OK, here's what we'll do figure out the logistics a bit and get back to you, {player}. Then it's time to do justice!"]]),
+      {player=player.name()}))
+   trixie(_([["We're going to make them cry!"]]))
 
    -- Leave the Nexus
    vn.scene()
@@ -559,11 +591,17 @@ They seem much lower resolution than before.]]))
    vn.scene()
    vn.setBackground()
    vn.transition("fadedown")
+   vn.na(fmt.f(_([[Your connection to the Nexus closes, and you find yourself back on {spob}. You sit for a moment trying to process all that happened, when you suddenly notice you are receiving a credit transfer from an anonymous account. You can guess who it is from.]]),
+      {spob=spob.cur()}))
+   vn.sfxVictory()
+   vn.func( function ()
+      player.pay( money_reward )
+   end )
+   vn.na( fmt.reward(money_reward) )
 
    vn.run()
 
-   player.pay( money_reward )
-
-   onion.log(_([[TODO]]))
+   onion.log(fmt.f(_([[You helped l337_b01 short a Nexus relay in the {sys} system to give them a better connection to the Nexus. Afterwards you were invited to a hectic Onion Society Conclave that ended poorly. Trixie and l337_b01 mentioned they will get in touch with you again to do a bank heist in the near future.]]),
+      {sys=sys1}))
    misn.finish(true)
 end
