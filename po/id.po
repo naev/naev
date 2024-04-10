@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-04-09 14:01+0000\n"
+"PO-Revision-Date: 2024-04-10 09:18+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -1276,7 +1276,11 @@ msgid ""
 "Although used mainly for decorations in ancient history, demand for olivine "
 "is steadily increasing because of its usefulness in enhanced weathering and "
 "terraforming, for which immense amounts are needed."
-msgstr "Walaupun "
+msgstr ""
+"Walaupun umumnya digunakan untuk dekorasi di masa kuno, permintaan untuk "
+"olivin meningkat secara terus-menerus akibat kegunaannya dalam teraformasi "
+"dan pelapukan terakselerasi, di mana jumlah olivin yang sangat besar "
+"diperlukan."
 
 #: dat/commodities/ore.xml:3
 msgid "Ore"
@@ -1288,6 +1292,10 @@ msgid ""
 "metals crucial for many industries. Without ore, the ship-building industry "
 "and many others would grind to a halt."
 msgstr ""
+"Bijih adalah batuan yang mengandung mineral berharga. Bijih biasanya "
+"dileburkan menjadi logam untuk keperluan industri. Tanpa adanya bijih, "
+"kelangsungan industri pembangunan kapal angkasa dan masih banyak lainnya "
+"tidak dapat berlanjut."
 
 #: dat/commodities/platinum.xml:3
 msgid "Platinum"
@@ -1299,6 +1307,10 @@ msgid ""
 "equipment. Although there is great demand for it, it is rather uncommon "
 "throughout space."
 msgstr ""
+"Platina adalah logam mulia non-reaktif, umumnya digunakan di peralatan "
+"profesional kelas tinggi. Walaupun terdapat permintaan yang besar untuk "
+"logam berwarna perak ini, persebarannya di seluruh angkasa dapat dikatakan "
+"cukup jarang."
 
 #: dat/commodities/rhodium.xml:3
 msgid "Rhodium"
@@ -1383,6 +1395,13 @@ msgid ""
 "a wide range of high-end materials applications for it, from sub-space "
 "sensors to reinforced armours, leading to a constant high demand for it."
 msgstr ""
+"Terit adalah sebuah senyawa amat langka yang secara umum terbentuk karena "
+"radiasi ekstrem. Walaupun terdapat berbagai pemikiran mengenai Terit, teori "
+"terkemuka menspekulasi bahwa Terit adalah materi semu hasil proyeksi dari "
+"radiasi yang menginterferensi dirinya sendiri. Tapi, meskipun tidak "
+"mengetahui fisikanya secara eksak, para ahli telah menemukan banyak aplikasi "
+"untuk zat ini, mulai dari sensor sub-angkasa hingga lapis baja yang "
+"diperkuat. Akibatnya, selalu ada permintaan yang tinggi untuk Terit."
 
 #: dat/commodities/vixilium.xml:3
 msgid "Vixilium"
@@ -1423,12 +1442,14 @@ msgid ""
 msgstr ""
 
 #: dat/damagetype/armourbreaker.xml:2
+#, fuzzy
 msgid "armourbreaker"
-msgstr ""
+msgstr "penghancurzirah"
 
 #: dat/damagetype/armourbreaker.xml:2
+#, fuzzy
 msgid "#nArmourbreaker#0"
-msgstr ""
+msgstr " #Penghancurzirah#0"
 
 #: dat/damagetype/emp.xml:2
 msgid "emp"
@@ -1535,11 +1556,11 @@ msgstr ""
 
 #: dat/effects/antimatter_taint.xml:2
 msgid "Antimatter Taint"
-msgstr ""
+msgstr "Cemaran Antimateri"
 
 #: dat/effects/antimatter_taint.xml:3
 msgid "Antimatter is tainting your ship!"
-msgstr ""
+msgstr "Antimateri mencemari kapalmu!"
 
 #. Set outfit state
 #. Astral proection
@@ -1547,11 +1568,11 @@ msgstr ""
 #: dat/outfits/flow/abilities/astral_projection.xml:2
 #: dat/outfits/flow/abilities/astral_projection.lua:57
 msgid "Astral Projection"
-msgstr ""
+msgstr "Proyeksi Astral"
 
 #: dat/effects/astral_projection.xml:3
 msgid "Ship is being projected."
-msgstr ""
+msgstr "Kapal sedang diproyeksikan."
 
 #: dat/effects/avatar_of_sirichana.xml:2
 #: dat/outfits/flow/abilities/avatar_of_sirichana.xml:2
@@ -1560,11 +1581,11 @@ msgstr "Avatar Sirichana"
 
 #: dat/effects/avatar_of_sirichana.xml:3
 msgid "You are an avatar of Sirichana!"
-msgstr ""
+msgstr "Kamu adalah avatar dari Sirichana!"
 
 #: dat/effects/blink.xml:2
 msgid "Blink"
-msgstr ""
+msgstr "Berkedip"
 
 #: dat/effects/blink.xml:3
 msgid "Your ship just blinked!"
@@ -1631,11 +1652,11 @@ msgstr ""
 #: dat/effects/feather_drive.xml:2
 #: dat/outfits/flow/abilities/feather_drive.xml:2
 msgid "Feather Drive"
-msgstr ""
+msgstr "Mesin Pluma"
 
 #: dat/effects/feather_drive.xml:3
 msgid "Your ship just used Feather Drive!"
-msgstr ""
+msgstr "Kapalmu menggunakan Mesin Pluma!"
 
 #. Attack tree
 #. For everyone!
@@ -1643,31 +1664,32 @@ msgstr ""
 #: dat/effects/feral_rage_i.xml:2 dat/outfits/bioship/skills/feral_rage_i.xml:2
 #: dat/scripts/bioship/skills.lua:200
 msgid "Feral Rage I"
-msgstr ""
+msgstr "Amarah Feral I"
 
 #: dat/effects/fractured_reality.xml:2
 msgid "Fractured Reality"
-msgstr ""
+msgstr "Realita Terpecah"
 
 #: dat/effects/fractured_reality.xml:3
 msgid "Reality is not really what it seems! Or is this the true reality?"
 msgstr ""
+"Realita tidak seperti yang terlihat! Atau inikah realita yang sebenarnya?"
 
 #: dat/effects/hypergate_enter.xml:2
 msgid "Hypergate Enter"
-msgstr ""
+msgstr "Gerbang Masuk Hiper"
 
 #: dat/effects/hypergate_enter.xml:3
 msgid "Entering a hypergate!"
-msgstr ""
+msgstr "Memasuki gerbang hiper!"
 
 #: dat/effects/hypergate_exit.xml:2
 msgid "Hypergate Exit"
-msgstr ""
+msgstr "Gerbang Keluar Hiper"
 
 #: dat/effects/hypergate_exit.xml:3
 msgid "Exitting a hypergate!"
-msgstr ""
+msgstr "Sedang keluar dari gerbang hiper!"
 
 #: dat/effects/ionization.xml:2
 msgid "Ionization"
@@ -1675,41 +1697,41 @@ msgstr "Ionisasi"
 
 #: dat/effects/ionization.xml:3
 msgid "The ship is being ionized!"
-msgstr ""
+msgstr "Kapal sedang terionisasi!"
 
 #: dat/effects/onionized.xml:2
 msgid "Onionized"
-msgstr ""
+msgstr "Terbawangisasi"
 
 #: dat/effects/onionized.xml:3
 msgid "Hacked!"
-msgstr ""
+msgstr "Teretas!"
 
 #: dat/effects/paralyzing_plasma.xml:2
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:255
 msgid "Paralyzing Plasma"
-msgstr ""
+msgstr "Plasma Pelumpuh"
 
 #: dat/effects/paralyzing_plasma.xml:3
 msgid "Plasma is slowing the ship down!"
-msgstr ""
+msgstr "Plasma memperlambat kapal!"
 
 #: dat/effects/plasma_burn.xml:2
 msgid "Plasma Burn"
-msgstr ""
+msgstr "Pembakaran Plasma"
 
 #: dat/effects/plasma_burn.xml:3 dat/effects/plasma_burn_ii.xml:3
 msgid "Plasma is burning the ship!"
-msgstr ""
+msgstr "Plasma membakar kapal!"
 
 #: dat/effects/plasma_burn_ii.xml:2
 msgid "Plasma Burn II"
-msgstr ""
+msgstr "Pembakaran Plasma II"
 
 #: dat/effects/psychic_divinity.xml:2
 msgid "Psychic Divinity"
-msgstr ""
+msgstr "Keilahian Cenayang"
 
 #: dat/effects/psychic_orb_off.xml:2
 msgid "Psychic Orb Off"
@@ -1733,11 +1755,11 @@ msgstr ""
 
 #: dat/effects/ride_of_the_valkyries.xml:3
 msgid "The Valkyrie beam is draining your shields!"
-msgstr ""
+msgstr "Sinar Valkyrie menguras perisaimu!"
 
 #: dat/effects/shieldaura.xml:2
 msgid "Shield Aura"
-msgstr ""
+msgstr "Aura Perisai"
 
 #: dat/effects/shieldaura.xml:3
 msgid "Under the effects of a shield aura."
@@ -1745,11 +1767,11 @@ msgstr ""
 
 #: dat/effects/shieldboost.xml:2
 msgid "Shield Boost"
-msgstr ""
+msgstr "Dorongan Perisai"
 
 #: dat/effects/shieldboost.xml:3
 msgid "Shields are being boosted."
-msgstr ""
+msgstr "Kekuatan perisai sedang didongkrak."
 
 #: dat/effects/wormhole_enter.xml:2
 msgid "Wormhole Enter"
@@ -1769,17 +1791,20 @@ msgstr ""
 
 #: dat/factions/black_lotus.xml:2
 msgid "Black Lotus"
-msgstr ""
+msgstr "Seroja Lotong"
 
 #: dat/factions/black_lotus.xml:5
 msgid "Black Lotus Pirate Clan"
-msgstr ""
+msgstr "Klan Perompak Seroja Lotong"
 
 #: dat/factions/black_lotus.xml:12
 msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
 "between the Za'lek and Sirius space. Organized crime at its finest."
 msgstr ""
+"Klan Perompak Seroja Lotong adalah sebuah organisasi perompak bengis yang "
+"terlokasi di antara daerah Za'lek dan Sirius. Kriminal terorganisir pada "
+"puncaknya."
 
 #: dat/factions/collective.xml:2
 msgid "Collective"
@@ -1797,17 +1822,20 @@ msgstr "Derelik"
 
 #: dat/factions/dreamer_clan.xml:2
 msgid "Dreamer Clan"
-msgstr ""
+msgstr "Klan Pemimpi"
 
 #: dat/factions/dreamer_clan.xml:5
 msgid "Dreamer Pirate Clan"
-msgstr ""
+msgstr "Klan Perompak Pemimpi"
 
 #: dat/factions/dreamer_clan.xml:12
 msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
+"Klan Perompak Pemimpi secara mayoritas terdiri dari perompak yang tidak puas "
+"akan Frontir, muak dengan terorisme FLF dan Dvaered, dan akan tirani "
+"Kekasiaran."
 
 #: dat/factions/dummy.xml:2
 msgid "Dummy"
@@ -1846,13 +1874,15 @@ msgstr "Dvaered"
 #: dat/ships/neutral/phalanx.xml:14 dat/ships/neutral/vendetta.xml:14
 #: dat/ships/neutral/vigilance.xml:13
 msgid "House Dvaered"
-msgstr ""
+msgstr "Wangsa Dvaered"
 
 #: dat/factions/dvaered.xml:12
 msgid ""
 "House Dvaered is one of the oldest Great Houses in the Empire. They are "
 "proud and formed by a coalition of many powerful warlords."
 msgstr ""
+"Wangsa Dvaered adalah salah satu Wangsa Besar tertua di Kekaisaran. Mereka "
+"bangga dan dibentuk oleh koalisi berbagai panglima perang yang berkuasa."
 
 #: dat/factions/empire.xml:2 dat/scripts/common/empire.lua:15
 #: dat/scripts/common/empire.lua:20
@@ -1864,6 +1894,8 @@ msgid ""
 "The Empire is the bureaucratic heart of the universe that provides stability "
 "and cohesion, when possible."
 msgstr ""
+"Kekaisaran adalah jantung birokrasi semesta yang membawa stabilitas dan "
+"persatuan, ketika memungkinkan."
 
 #. FLF are not a natural enemy of the Empire, we have to enforce that
 #.
@@ -1881,31 +1913,35 @@ msgstr ""
 #: dat/factions/flf.xml:2 dat/events/flf/flf_catastrophe.lua:94
 #: dat/missions/flf/flf_common.lua:71
 msgid "FLF"
-msgstr ""
+msgstr "FLF"
 
 #: dat/factions/flf.xml:5
 msgid "Frontier Liberation Front"
-msgstr ""
+msgstr "Front Liberasi Frontir"
 
 #: dat/factions/flf.xml:11
 msgid ""
 "The Frontier Liberation Front is a group of terrorists advocating for the "
 "independence of the Frontier from Imperial tyranny."
 msgstr ""
+"Front Liberasi Frontir adalah kelompok teroris yang mengadvokasi kemerdekaan "
+"Frontir dari tirani Kekaisaran."
 
 #: dat/factions/frontier.xml:2 dat/missions/flf/flf_common.lua:71
 msgid "Frontier"
-msgstr ""
+msgstr "Frontir"
 
 #: dat/factions/frontier.xml:6
 msgid "Frontier Alliance"
-msgstr ""
+msgstr "Aliansi Frontir"
 
 #: dat/factions/frontier.xml:11
 msgid ""
 "The Frontier Alliance is formed by the survivors of the initial attempts of "
 "Human expansion into space."
 msgstr ""
+"Aliansi Frontir dibentuk oleh mereka yang selamat dari percobaan ekspansi "
+"awal manusia ke luar angkasa."
 
 #: dat/factions/goddard.xml:2 dat/ships/neutral/goddard.xml:2
 #: dat/ssys/goddard.xml:2 dat/events/dvaered/fwB_repay.lua:89
@@ -1922,6 +1958,8 @@ msgid ""
 "House Goddard is a minor house wedged between the Empire and Dvaered. They "
 "are one of the main fabricators of ships for the Dvaered."
 msgstr ""
+"Wangsa Goddard adalah wangsa kecil yang terhempit antara Kekaisaran dan "
+"Dvaered. Mereka adalah perakit kapal angkasa utama untuk Dvaered."
 
 #. Too many, so just wait a bit
 #. Spawn an enemy
@@ -1966,7 +2004,7 @@ msgstr "Perompak"
 
 #: dat/factions/marauder.xml:4
 msgid "Pirate Marauders"
-msgstr ""
+msgstr "Perompak Perampok"
 
 #: dat/factions/marauder.xml:14
 msgid ""
@@ -1974,6 +2012,10 @@ msgid ""
 "aggressive and will attack most vessels unprovoked. Even the pirate clans "
 "have difficulty in dealing with them."
 msgstr ""
+"Perompak Perampok adalah yang paling rendah dan yang paling keji di antara "
+"semua perompak. Mereka sangat agresif dan akan menyerang sebagian besar "
+"kapal tanpa provokasi. Bahkan klan-klan perompak pun kesulitan dalam "
+"mengatur mereka."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -2137,13 +2179,15 @@ msgstr "Sirius"
 
 #: dat/factions/sirius.xml:7 dat/events/dvaered/fwB_repay.lua:72
 msgid "House Sirius"
-msgstr ""
+msgstr "Wangsa Sirius"
 
 #: dat/factions/sirius.xml:12
 msgid ""
 "House Sirius is defined by its state religion more than anything else, with "
 "Sirichana as the focus of worship."
 msgstr ""
+"Wangsa Sirius memiliki kekhasan yaitu agamanya, dengan Sirichana sebagai "
+"fokus penyembahan."
 
 #: dat/factions/soromid.xml:2 dat/ships/feral_bioship/kauweke.xml:23
 #: dat/ships/feral_bioship/nohinohi.xml:16
@@ -2159,7 +2203,7 @@ msgstr "Soromid"
 
 #: dat/factions/soromid.xml:7
 msgid "Soromid Tribes"
-msgstr ""
+msgstr "Persukuan Soromid"
 
 #: dat/factions/soromid.xml:12
 msgid ""
@@ -2167,6 +2211,9 @@ msgid ""
 "themselves in order to survive a pandemic. They now openly embrace their "
 "human transcendence as a sign of strength."
 msgstr ""
+"Para Soromid terdiri dari individu-individu yang terpaksa memodifikasi "
+"genetiknya sendiri demi bertahan hidup dari ancaman pandemi. Sekarang mereka "
+"membanggakan secara terbuka transendensi mereka sebagai suatu kelebihan."
 
 #: dat/factions/strangelove.xml:2
 msgid "Strangelove"
@@ -10598,7 +10645,7 @@ msgstr ""
 #: dat/spob/august.xml:2 dat/events/neutral/shipwreck.lua:24
 #: dat/missions/neutral/spacefamily.lua:63
 msgid "August"
-msgstr "Agus"
+msgstr "Agustus"
 
 #: dat/spob/august.xml:26
 msgid ""
@@ -61439,7 +61486,7 @@ msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:137
 msgid "Bring {tonnes} of Ore to the Pirate Kestrel in the {sys} system"
-msgstr ""
+msgstr "Bawa {tonnes} Bijih ke Kestrel Perompak di sistem {sys}"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:147
 msgid "Who are you calling a weakling?"
@@ -85976,7 +86023,7 @@ msgstr ""
 
 #: dat/missions/pirate/raid.lua:109
 msgid "Rare Ores"
-msgstr ""
+msgstr "Bijih Langka"
 
 #: dat/missions/pirate/raid.lua:109
 msgid "Rare ores that are usually only located in isolated asteroid fields."
