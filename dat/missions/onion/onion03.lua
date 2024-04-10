@@ -416,7 +416,7 @@ Quite a fancy way of referring to connecting into a full sensorial holodeck.]]),
    l337er(_([["Ah, yeah, it only seems empty to you because you don't have developer mode on, I wouldn't recommend it at first. It's usually too much information and can cause your last meal to find its way out your mouth."]]))
    vn.label("02_cont")
    l337er(_([["The Nexus habitat was originally designed by pure speculative greed. With normal goods and services, you have to do something right? However, if it's all digital, then there are no limits, and the gears of capitalism can go full speed. That's why it's so big and spacious."]]))
-   l337er(_([["Of course, you can guess it didn't turn out as they expected. Ended up as abandonware, only recently was it rediscovered, and after a few decaperiod hacking sessions, we got some prototype running and onboard came the Onion Society."]]))
+   l337er(_([["Of course, you can guess it didn't turn out as they expected. Ended up as abandonware, only recently was it rediscovered, and after a few deca-period hacking sessions, we got some prototype running and onboard came the Onion Society."]]))
    l337er(_([["The codebase is humongous too, you can even find mix of paradigms, it's a true software archaeologists dream come true!"]]))
    l337er(_([["Did I tell you about the time... wait, we don't have time for this right now. Before we head off to the conclave, I wanted to meet up with Trixie first. They should be here anytime soon."]]))
    vn.move( l337er, "left" )
@@ -472,7 +472,7 @@ You find yourself in a seemingly infinite field full of odd looking avatars. Is 
    puppet(_([[notasockpuppet lets out a sigh.
 "It's easy for you sproutlings to make with scraps, you never knew the true Nexus, before the Incident. We're lucky to see 5% of the bandwidth on a good cycle!"]]))
    underworlder(_([["Aaah, ah. There you go again. Get used to it already."]]))
-   lonewolf4(_([["Tales of yore are naught but echoes in the digital void. The codes of legeand are naught forgotten, but at hand are the new dragons of our time. We must cast aside the relics of the past and focus on the codes of the future."]]))
+   lonewolf4(_([["Tales of yore are naught but echoes in the digital void. The codes of legend are naught forgotten, but at hand are the new dragons of our time. We must cast aside the relics of the past and focus on the codes of the future."]]))
    dog(_([[While the others are talking, you notice that DOG seems to stare at you. Have they figured you out? Either way, they seem to be intent on keeping their thoughts to themselves.]]))
    trixie(_([["lonewolf4 is right, we're not here to here ramblings. There seems to be some dark motion, dragons if you want to call them that, going on."]]))
    l337er(_([["Yes, the packets are behaving abnormally."]]))
@@ -491,14 +491,14 @@ You find yourself in a seemingly infinite field full of odd looking avatars. Is 
    lonewolf4(_([[lonewolf4 flickers briefly
 "Mortem Tenebrae Obscuritas Infernalis!"]]))
    underworlder(_([["Bring it on!"]]))
-   vn.na(_([[Trixie and l337_b01 seem to mutter somethings and take cover as lonewolf4 and underworlder seems to be engaging in some sort of digital combat. You can't really follow what is going on, and all you can see are some rendering glitches as the two run around each other.]]))
+   vn.na(_([[Trixie and l337_b01 seem to mutter something and take cover as lonewolf4 and underworlder seems to be engaging in some sort of digital combat. You can't really follow what is going on, and all you can see are some rendering glitches as the two run around each other.]]))
    lonewolf4(_([["Exanimo Umbra Obscura Tenebrarum!"]]))
    underworlder(_([[underworlder seems to freeze in place.]]))
    dog(_([["Down."]]))
    vn.na(_([[Suddenly lonewolf4 and underworlder are splatted prone on the ground.]]))
    underworlder(_([["Screw this.", underworlder gasps before flickering out of existence.]]))
    vn.disappear( underworlder )
-   lonewolf4(_([[lonewolf4 stands up and seems to brush nonexistent dust off their clothes.
+   lonewolf4(_([[lonewolf4 stands up and seems to brush non-existent dust off their clothes.
 "Humph, such a vulgar character."
 They seem much lower resolution than before.]]))
    lonewolf4(_([[They flash a glare at notasockpuppet before fading out of existence too. What happened?]]))
@@ -515,8 +515,43 @@ They seem much lower resolution than before.]]))
    vn.transition()
    vn.na(_([[The world warps abruptly.]]))
    l337er(_([["Better off in a new channel, too many zombie processes in the last one."]]))
-   trixie(_([["Ugh, lonewolf4 might of hit the nail on the head."]]))
+   trixie(_([["Ugh, lonewolf4 might have hit the nail on the head."]]))
+   l337er(_([["Maybe, but it's not like everyone is rowing on the same boat anyway. I thought the only reason the Onion Society existed was sort of keeping everyone from everyone's throats."]]))
+   trixie(_([["And yet, everyone is one step away bloodshed."]]))
+   l337er(_([[They pick you up and put you on the floor.
+"Almost forgot.""]]))
+   vn.na(_([[Slowly everything gets smaller until you are back to normal size.]]))
+   l337er(_([["Go on, you can talk now. I'm sure you have questions."]]))
+   vn.label("04_menu")
+   vn.menu{
+      {_([["Technomancers?"]]), "04_techo"},
+      {_([["What happened?"]]), "04_what"},
+      {_([["Who were they?"]]), "04_who"},
+      {_([["Is it always like that?"]]), "04_always"},
+      {_([["What are you going to do now?" (continue)]]), "04_cont"},
+   }
+
+   vn.label("04_what")
+   l337er(_([["Yet another bickering conclave. The conclaves are meant to keep people off each other's toes and share weaknesses and strengths of the network, but everyone is just always on the edge lately."]]))
+   trixie(_([["Can't really be helped. Bandwidth is at a premium, and it is a zero-sum game. Nobody wants to give up any precious resources. Not to mention the big egos."]]))
+   l337er(_([["It's the first time I've seen such a display of offensive program casting. Maybe it is the end."]]))
+   trixie(_([["The Onion Society has been through worse. We just have to figure out what is going on, there seem to be darker motives behind this."]]))
+   vn.jump("04_menu")
+
+   vn.label("04_who")
+   l337er(_([["All the core members were there today: DOG, notasockpuppet, lonewolf4, underworlder, Trixie, and me. Technomancers are always an odd bunch, have to be careful to not ruffle them the wrong way."]]))
+   trixie(_([["DOG is one of the oldest members, I'm pretty sure they were a founding member, but it's hard to tell. They are usually quite reserved, but have some wild programs I've never seen before up their sleeves. Can't really tell what they're thinking of."]]))
+   trixie(_([["notasockpuppet is also quite an old member, however, it's not really clear who they are. They have a giant puppet net, and usually come connect via multiple random puppets. Hard to tell if they are even the avatar most of the time. You do not want to mess with them though. They're quite frivolous and dangerous."]]))
    l337er(_([[""]]))
+   vn.jump("04_menu")
+
+   vn.label("04_always")
+   vn.jump("04_menu")
+
+   vn.label("04_techo")
+   vn.jump("04_menu")
+
+   vn.label("04_cont")
 
    -- Leave the Nexus
    vn.scene()
