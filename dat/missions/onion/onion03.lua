@@ -159,6 +159,7 @@ You hear some clacking noises, but you have no idea what's going on as you only 
 end
 
 function enter ()
+   hook.timerClear()
    if system.cur()==sys1 and mem.state==1 then
       hook.timer( 7, "prepare" )
    end

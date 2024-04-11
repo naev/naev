@@ -210,14 +210,11 @@ You hear the sound of mashing keys on a console.
 end
 
 local hacked_plts = {}
-local timer
 function enter ()
+   hook.timerClear()
    if mem.state==1 then
-      if timer then
-         hook.rm(timer)
-      end
       hacked_plts = {}
-      timer = hook.timer(3, "strange_things")
+      hook.timer(3, "strange_things")
    end
 end
 
@@ -234,7 +231,7 @@ function strange_things ()
          hook.pilot( p, "attacked", "undo_hack" )
       end
    end
-   timer = hook.timer(1, "strange_things")
+   hook.timer(1, "strange_things")
 end
 
 function undo_hack( p )

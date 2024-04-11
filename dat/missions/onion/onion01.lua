@@ -112,6 +112,7 @@ end
 
 local glitched = false -- local variable so it happens again after loading
 function enter ()
+   hook.timerClear()
    osd_update()
 
    if not glitched then
