@@ -197,6 +197,7 @@ local function spawn_baddie( ships )
 
    -- Give a message if new enemies coming in
    player.msg(_("l337_b01: jump signal detected!"), true)
+   return plts
 end
 
 local spawned = 1
@@ -225,21 +226,22 @@ function wait ()
       timeend = now + 150 -- 2.5 minutes
       spawned = 1
       spawntable = {
-         { t=now+10, s={"Lancelot", "Lancelot", "Shark", "Shark"} },
-         { t=now+30, s={"Admonisher", "Admonisher"} },
-         { t=now+60, s={"Pacifier", "Lancelot", "Lancelot"} },
-         { t=now+90, s={"Admonisher", "Shark", "Shark", "Shark" } },
-         { t=now+120, s={"Pacifier"} },
+         { t=now+15, s={"Lancelot", "Shark"} },
+         { t=now+40, s={"Admonisher", "Lancelot", "Lancelot"} },
+         { t=now+80, s={"Pacifier", "Shark", "Shark"} },
+         { t=now+110, s={"Lancelot", "Shark", "Shark" } },
+         { t=now+125, s={"Admonisher"} },
       }
       enemies = {}
 
-      spawn_baddie{ "Pacifier", "Lancelot", "Lancelot" }
+      spawn_baddie{ "Pacifier" }
       heartbeat()
       return
    end
    hook.timer( 1, "wait" )
 end
 
+local do_extra_baddie
 function heartbeat ()
    local d = player.pos():dist( jmp:pos() )
    if d > distlim then
@@ -270,21 +272,28 @@ Time left: {left:.1f}]]), {d=dstr, dunit=dunit, left=left}),
    } )
    hook.timer( 0.1, "heartbeat" )
 
-   local capship = false
-   for k,p in ipairs(enemies) do
-      if p:exists() and p:ship():size() >= 3 then
-         capship = true
-         break
+   if not do_extra_baddie then
+      local capship = false
+      for k,p in ipairs(enemies) do
+         if p:exists() and p:ship():size() >= 3 then
+            capship = true
+            break
+         end
+      end
+      if not capship then
+         do_extra_baddie = hook.timer( 9, "extra_baddie" )
       end
    end
-   if not capship then
-      spawn_baddie{ "Pacifier", "Lancelot", "Lancelot" }
-   end
+end
+
+function extra_baddie ()
+   spawn_baddie{ "Admonisher" }
+   do_extra_baddie = nil
 end
 
 local bossname = _("Nexus RTFM")
 function theend ()
-   local plts = spawn_baddie{ "Hawking", "Admonisher", "Admonisher" }
+   local plts = spawn_baddie{ "Hawking" }
    plts[1]:rename(bossname)
    hook.pilot( plts[1], "death", "rtfm_death" )
    hook.pilot( plts[1], "board", "rtfm_board" )
