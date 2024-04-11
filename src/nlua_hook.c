@@ -41,6 +41,7 @@ static int hookL_hail( lua_State *L );
 static int hookL_hail_spob( lua_State *L );
 static int hookL_board( lua_State *L );
 static int hookL_timer( lua_State *L );
+static int hookL_timerClear( lua_State *L );
 static int hookL_date( lua_State *L );
 static int hookL_commbuy( lua_State *L );
 static int hookL_commsell( lua_State *L );
@@ -81,6 +82,7 @@ static const luaL_Reg hookL_methods[] = {
    { "hail_spob", hookL_hail_spob },
    { "board", hookL_board },
    { "timer", hookL_timer },
+   { "timerClear", hookL_timerClear },
    { "date", hookL_date },
    { "gather", hookL_gather },
    { "comm_buy", hookL_commbuy },
@@ -530,6 +532,32 @@ static int hookL_timer( lua_State *L )
    unsigned int h = hookL_generic( L, NULL, s, 2, 0, 3 );
    lua_pushinteger( L, h );
    return 1;
+}
+
+/**
+ * @brief Clear all timers added by hook.timer. This only affects timers created
+ * by the mission or event calling this function.
+ *
+ * @luafunc timerClear
+ */
+static int hookL_timerClear( lua_State *L )
+{
+   const Event_t *running_event;
+   const Mission *running_mission;
+
+   /* Get stuff. */
+   running_event   = event_getFromLua( L );
+   running_mission = misn_getFromLua( L );
+
+   if ( running_mission != NULL )
+      hook_clearMissionTimers( running_mission->id );
+   else if ( running_event != NULL )
+      hook_clearEventTimers( running_event->id );
+   else
+      return NLUA_ERROR(
+         L, _( "Attempting to set a hook outside of a mission or event." ) );
+
+   return 0;
 }
 
 /**

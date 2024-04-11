@@ -1166,6 +1166,32 @@ void hook_clear( void )
 }
 
 /**
+ * @brief Clears the timer hooks for a mission.
+ */
+void hook_clearMissionTimers( unsigned int parent )
+{
+   for ( Hook *h = hook_list; h != NULL; h = h->next ) {
+      if ( !h->is_timer )
+         continue;
+      if ( ( h->type == HOOK_TYPE_MISN ) && ( parent == h->u.misn.parent ) )
+         h->delete = 1;
+   }
+}
+
+/**
+ * @brief Clears the timer hooks for an event.
+ */
+void hook_clearEventTimers( unsigned int parent )
+{
+   for ( Hook *h = hook_list; h != NULL; h = h->next ) {
+      if ( !h->is_timer )
+         continue;
+      if ( ( h->type == HOOK_TYPE_EVENT ) && ( parent == h->u.event.parent ) )
+         h->delete = 1;
+   }
+}
+
+/**
  * @brief Checks if a hook needs to be saved.
  *
  *    @param h Hook to check if it should be saved.

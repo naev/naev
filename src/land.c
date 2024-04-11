@@ -1417,7 +1417,7 @@ void land( Spob *p, int load )
 #endif /* HAVE_TRACY */
    NTracingFrameMarkStart( "land" );
 
-   /* Incrcement times player landed. */
+   /* Increment times player landed. */
    if ( !load ) {
       player.landed_times++;
       player.ps.landed_times++;

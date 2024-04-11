@@ -1611,16 +1611,16 @@ void space_init( const char *sysname, int do_simulate )
    NTracingMessage( buf, l );
 #endif /* TRACY */
 
-   /* cleanup some stuff */
-   player_clear();          /* clears targets */
+   /* Clean up some stuff and reset some global states. */
+   player_clear();          /* Clears targets the player has selected. */
    ovr_mrkClear();          /* Clear markers when jumping. */
-   pilots_clean( 1 );       /* destroy non-persistent pilots */
+   pilots_clean( 1 );       /* Destroy non-persistent pilots */
    weapon_clear();          /* get rid of all the weapons */
    spfx_clear();            /* get rid of the explosions */
    gatherable_free();       /* get rid of gatherable stuff. */
    background_clear();      /* Get rid of the background. */
    factions_clearDynamic(); /* get rid of dynamic factions. */
-   space_spawn = 1;         /* spawn is enabled by default. */
+   space_spawn = 1;         /* Spawn is enabled by default. */
 
    /* Clear persistent pilot stuff. */
    if ( player.p != NULL ) {

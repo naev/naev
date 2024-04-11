@@ -114,6 +114,8 @@ int hook_runID( unsigned int id ); /* runs hook of specific id */
 /* Destroys hooks */
 void hook_cleanup( void ); /* Frees memory. */
 void hook_clear( void );
+void hook_clearMissionTimers( unsigned int parent );
+void hook_clearEventTimers( unsigned int parent );
 
 /* Timer hooks. */
 void         hooks_update( double dt );
