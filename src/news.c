@@ -200,10 +200,10 @@ void news_rm( int id )
  */
 int *generate_news( int faction )
 {
-   const char  *fname;
-   ntime_t      curtime = ntime_get();
-   int          p       = 0;
-   const char **tags;
+   const char        *fname;
+   ntime_t            curtime = ntime_get();
+   int                p       = 0;
+   const char *const *tags;
 
    fname = ( faction >= 0 ) ? faction_name( faction ) : NULL;
 

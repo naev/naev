@@ -51,6 +51,9 @@ void nlua_unref( lua_State *L, int idx );
 /* Hack to handle resizes. */
 void nlua_resize( void );
 
+/* Useful stuff that we want to reuse. */
+int nlua_helperTags( lua_State *L, int idx, char *const *tags );
+
 #if DEBUGGING
 void nlua_pushEnvTable( lua_State *L );
 #endif /* DEBUGGING */

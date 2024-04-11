@@ -418,7 +418,7 @@ const char *faction_default_ai( int f )
  *    @param f Faction ID.
  *    @return The tagss the faction has (array.h).
  */
-const char **faction_tags( int f )
+const char *const *faction_tags( int f )
 {
    if ( !faction_isFaction( f ) ) {
       WARN( _( "Faction id '%d' is invalid." ), f );

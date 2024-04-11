@@ -1056,3 +1056,29 @@ void nlua_resize( void )
    }                          /* t */
    lua_pop( naevL, 1 );       /* */
 }
+
+/**
+ * @brief Helper function to deal with tags.
+ */
+int nlua_helperTags( lua_State *L, int idx, char *const *tags )
+{
+   if ( lua_isnoneornil( L, idx ) ) {
+      lua_newtable( L );
+      for ( int i = 0; i < array_size( tags ); i++ ) {
+         lua_pushstring( L, tags[i] );
+         lua_pushboolean( L, 1 );
+         lua_rawset( L, -3 );
+      }
+      return 1;
+   } else {
+      const char *s = luaL_checkstring( L, idx );
+      for ( int i = 0; i < array_size( tags ); i++ ) {
+         if ( strcmp( s, tags[i] ) == 0 ) {
+            lua_pushboolean( L, 1 );
+            return 1;
+         }
+      }
+      lua_pushboolean( L, 0 );
+      return 1;
+   }
+}

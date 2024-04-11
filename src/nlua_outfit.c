@@ -892,18 +892,14 @@ static int outfitL_illegality( lua_State *L )
  * @usage if o:tags["fancy"] then -- Has "fancy" tag
  *
  *    @luatparam Outfit o Outfit to get tags of.
- *    @luatreturn table Table of tags where the name is the key and true is the
- * value.
+ *    @luatparam[opt=nil] string tag Tag to check if exists.
+ *    @luatreturn table|boolean Table of tags where the name is the key and true
+ * is the value or a boolean value if a string is passed as the second parameter
+ * indicating whether or not the specified tag exists.
  * @luafunc tags
  */
 static int outfitL_tags( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit( L, 1 );
-   lua_newtable( L );
-   for ( int i = 0; i < array_size( o->tags ); i++ ) {
-      lua_pushstring( L, o->tags[i] );
-      lua_pushboolean( L, 1 );
-      lua_rawset( L, -3 );
-   }
-   return 1;
+   return nlua_helperTags( L, 2, o->tags );
 }

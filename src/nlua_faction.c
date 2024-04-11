@@ -661,21 +661,18 @@ static int factionL_isStatic( lua_State *L )
  *
  * @usage for k,v in ipairs(f:tags()) do ... end
  * @usage if f:tags().likes_cheese then ... end
- *    @luatparam Faction f Faction to get tags of.
- *    @luatreturn table A table containing all the tags of the faction.
+ * @usage if f:tags("generic") then ... end
+ *
+ *    @luatparam[opt=nil] string tag Tag to check if exists.
+ *    @luatreturn table|boolean Table of tags where the name is the key and true
+ * is the value or a boolean value if a string is passed as the second parameter
+ * indicating whether or not the specified tag exists.
  * @luafunc tags
  */
 static int factionL_tags( lua_State *L )
 {
-   int          fac  = luaL_validfaction( L, 1 );
-   const char **tags = faction_tags( fac );
-   lua_newtable( L );
-   for ( int i = 0; i < array_size( tags ); i++ ) {
-      lua_pushstring( L, tags[i] );
-      lua_pushboolean( L, 1 );
-      lua_rawset( L, -3 );
-   }
-   return 1;
+   int fac = luaL_validfaction( L, 1 );
+   return nlua_helperTags( L, 2, (char *const *)faction_tags( fac ) );
 }
 
 /**

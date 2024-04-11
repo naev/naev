@@ -723,21 +723,18 @@ static int shipL_getShipStatDesc( lua_State *L )
 /**
  * @brief Gets the ship tags.
  *
- * @usage if s:tags()["fancy"] then -- Has "fancy" tag
+ * @usage if s:tags()["fancy"] then -- Has the "fancy" tag
+ * @usage if s:tags("fancy") then -- Has the "fancy" tag
  *
  *    @luatparam Ship s Ship to get tags of.
- *    @luatreturn table Table of tags where the name is the key and true is the
- * value.
+ *    @luatparam[opt=nil] string tag Tag to check if exists.
+ *    @luatreturn table|boolean Table of tags where the name is the key and true
+ * is the value or a boolean value if a string is passed as the second parameter
+ * indicating whether or not the specified tag exists.
  * @luafunc tags
  */
 static int shipL_tags( lua_State *L )
 {
    const Ship *s = luaL_validship( L, 1 );
-   lua_newtable( L );
-   for ( int i = 0; i < array_size( s->tags ); i++ ) {
-      lua_pushstring( L, s->tags[i] );
-      lua_pushboolean( L, 1 );
-      lua_rawset( L, -3 );
-   }
-   return 1;
+   return nlua_helperTags( L, 2, s->tags );
 }
