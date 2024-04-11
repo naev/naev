@@ -7,7 +7,11 @@
  <location>Bar</location>
  <done>Onion Society 02</done>
  <cond>
-   if spob.cur() == spob.get("Tepdania Prime") then
+   local c = spob.cur()
+   if c == spob.get("Tepdania Prime") then
+      return false
+   end
+   if not c:tags("generic") then
       return false
    end
    return true
@@ -49,7 +53,6 @@ mem.state = 0
 
 -- Create the mission
 function create()
-   misn.finish(false) -- disabled for now
    local prt = love_shaders.shaderimage2canvas( love_shaders.hologram(), onion.img_onion() )
 
    misn.setNPC( _("l337_b01"), prt.t.tex, _([[You seem to have an incoming connection from the Onion Society.]]) )
@@ -102,7 +105,7 @@ function accept ()
       {_([[Decline for now.]]), "decline"},
    }
 
-   vn.labelb("decline")
+   vn.label("decline")
    vn.na(_([[You decline the work for now, and the hologram fades away.]]))
    vn.done("electric")
 
@@ -137,14 +140,15 @@ function land ()
 You hear some clacking noises, but you have no idea what's going on as you only see l337_b01's avatar.]]))
       l337(_([["Mmmm, I see. Seems like the relay has been replaced. Most of the relays in Empire space are controlled by Nexus Shipyards. Going to have to check their databases. One second."]]))
       l337(_([["Humph. Looks like there's some mistake in the logs. Shoddy job as always. Can't say I blame them, Empire seems to just add more and more paperwork that nobody knows how to fill."]]))
-      l337(_([["Looks like we are going to have to do some field work. If you can get near the jump to the {sys2} system, I can try to override the relay. Might be trouble though. They don't take kindly to sabotage."]]))
+      l337(fmt.f(_([["Looks like we are going to have to do some field work. If you can get near the jump to the {sys} system, I can try to override the relay. Might be trouble though. They don't take kindly to sabotage."]]),
+         {sys=sys2}))
       vn.done("electric")
       vn.run()
 
       mem.state = 1
       misn.osdCreate( title, {
-         fmt.f(_([[Land on {spb} ({sys} system)]]),
-            {spb=spb1, sys=sys1}),
+         fmt.f(_([[Head to the jump to {sys2} in the {sys1} system]]),
+            {sys2=sys2, sys1=sys1}),
       } )
       misn.markerRm()
       misn.markerAdd( sys1 )
@@ -179,7 +183,7 @@ local function spawn_baddie( ships )
    local loc = jmp
    local names = {}
    for k,s in ipairs(ships) do
-      names[k] = fmt.f(_("Nexus {ship}"), {ship=s:name()})
+      names[k] = fmt.f(_("Nexus {ship}"), {ship=ship.name(s)})
    end
    local plts = fleet.add( 1, ships, fct, loc, names )
    for k,p in ipairs(plts) do
@@ -206,11 +210,11 @@ function wait ()
       vn.transition("electric")
       vn.na(_([[l337_b01 pops up on your system console.]]))
       l337(_([["OK, time to do a scan. Yup, there's the scanner. Let's see if it's configured like the late models... root root."]]))
-      l337(_([["Mmmm, admin 1234. Humph, time to pull a dictionary attack. Whelp, looks like they tried to introduce some shorting countermeausers. It's going to take me some time to crack the relay."]]))
+      l337(_([["Nope? Mmmm, let's see admin 1234. Also nope. High-tech security we have here. Humph, time to pull a dictionary attack. Whelp, looks like they tried to introduce some shorting countermeasures. It's going to take me some time to crack the relay."]]))
       l337(fmt.f(_([["Hate to bubble your boat, but, looks like some incoming Nexus tech support crew. Looks like it's your time to shine. Stay within {dist} {dstunit} of the jump!"]]),
-         {dist=fmt.number(distlim), dstunit=dunit}))
+      {dist=fmt.number(distlim), dstunit=dunit}))
       vn.na(fmt.f(_([[Looks like it's time to show what {shipname} is capable of!]]),
-         {shipname=player.pilot():name()}))
+      {shipname=player.pilot():name()}))
       vn.done("electric")
       vn.run()
 
@@ -259,8 +263,8 @@ function heartbeat ()
    end
    misn.osdCreate( title, {
       fmt.f(_([[Defend the Jump
-Distance: {d} {dunit}
-Time left: {left:.1f}]]), {d=dstr, dunit=dunit, left=left}),
+      Distance: {d} {dunit}
+      Time left: {left:.1f}]]), {d=dstr, dunit=dunit, left=left}),
    } )
    hook.timer( 0.1, "heartbeat" )
 
@@ -288,9 +292,9 @@ end
 
 function lastmsg ()
    player.msg(fmt.f(_("l337_b01: That's the cause! Take down the {shipname}!"), {shipname=bossname}), true)
-      misn.osdCreate( title, {
-         fmt.f(_("Defeat the {shipname}"),{shipname=bossname}),
-      } )
+   misn.osdCreate( title, {
+      fmt.f(_("Defeat the {shipname}"),{shipname=bossname}),
+   } )
 end
 
 -- Make all the enemies go away

@@ -34,6 +34,7 @@ function onion.vn_l337b01( params )
          tmerge( {
             image=onion.img_onion(), -- TODO
             colour=nil,
+            shader=love_shaders.hologram{strength=0.2},
          }, params) )
 end
 
