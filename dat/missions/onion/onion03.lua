@@ -187,6 +187,7 @@ local function spawn_baddie( ships )
    end
    local plts = fleet.add( 1, ships, fct, loc, names )
    for k,p in ipairs(plts) do
+      p:setHostile(true)
       p:changeAI( "guard" )
       local m = p:memory()
       m.guardpos = jmp:pos() + vec2.newP( 1e3 * rnd.rnd(), rnd.angle() )
@@ -245,7 +246,7 @@ function heartbeat ()
    end
    local now = naev.ticksGame()
    if spawned < #spawntable and now >= spawntable[spawned].t then
-      spawn_baddie( spawntable.s )
+      spawn_baddie( spawntable[spawned].s )
       spawned = spawned+1
    end
    local left = timeend-now
@@ -263,14 +264,14 @@ function heartbeat ()
    end
    misn.osdCreate( title, {
       fmt.f(_([[Defend the Jump
-      Distance: {d} {dunit}
-      Time left: {left:.1f}]]), {d=dstr, dunit=dunit, left=left}),
+Distance: {d} {dunit}
+Time left: {left:.1f}]]), {d=dstr, dunit=dunit, left=left}),
    } )
    hook.timer( 0.1, "heartbeat" )
 
    local capship = false
    for k,p in ipairs(enemies) do
-      if p:exists() and p:size() >= 3 then
+      if p:exists() and p:ship():size() >= 3 then
          capship = true
          break
       end
