@@ -258,7 +258,7 @@ function heartbeat ()
          _("You won?"),
       } )
       player.msg(_("l337_b01: Done! Wait, why isn't it working."), true)
-      hook.timer( 5, "theend" )
+      hook.timer( 10, "theend" )
       return
    end
    local dstr = fmt.number(d)
@@ -293,12 +293,16 @@ end
 
 local bossname = _("Nexus RTFM")
 function theend ()
+   player.msg(_("l337_b01: Another? Incoming jump signal. It's large!"), true)
+   hook.timer( 8, "moremsg" )
+end
+
+function moremsg ()
    local plts = spawn_baddie{ "Hawking" }
    plts[1]:rename(bossname)
    hook.pilot( plts[1], "death", "rtfm_death" )
    hook.pilot( plts[1], "board", "rtfm_board" )
-   player.msg(_("l337_b01: Another? Incoming jump signal. It's large!"), true)
-   hook.timer( 5, "lastmsg" )
+   hook.timer( 3, "lastmsg" )
 end
 
 function lastmsg ()
@@ -319,6 +323,7 @@ local function runaway ()
 end
 
 function rtfm_death ()
+   hook.timerClear()
    hook.timer( 5, "won" )
    runaway()
 end
