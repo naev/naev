@@ -267,6 +267,8 @@ end
 
 In this example, an `enter` hook is created and triggered when the player enters a system by taking off or jumping. Then, in the `enter` function, a 5 second timer hook is started that runs the `dostuff` function when the time is up. The `dostuff` function then checks a condition to do something and end, otherwise it repeats the 5 second hook. This system can be used to, for example, detect when the player is near a pilot or position, or display periodic messages.
 
+Timer hooks persist even when the player lands and takes off. If you wish to clear them, please use `hook.timerClear()`, which will remove all the timers created by the mission or event calling the function. This can be useful in combination with `hook.enter`.
+
 #### Pilot Hooks
 
 When it comes to pilots, hooks can also be used. However, given that pilots are not saved, the hooks are not saved either. The hooks can be made to be specific to a particular pilot, or apply to any pilot. In either case, the pilot triggering the hook is passed as a parameter. An illustrative example is shown below:
