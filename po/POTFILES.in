@@ -2911,6 +2911,7 @@ dat/events/sirius/test_of_alacrity.lua
 dat/events/sirius/test_of_devotion.lua
 dat/events/sirius/test_of_enlightenment.lua
 dat/events/sirius/test_of_renewal.lua
+dat/events/sol.lua
 dat/events/soromid/ferals.lua
 dat/events/standing.lua
 dat/events/start.lua
