@@ -15,6 +15,10 @@ function onion.img_onion ()
    return img_onion
 end
 
+function onion.img_l337b01 ()
+   return lg.newImage( "gfx/vn/characters/l337_b01.webp" )
+end
+
 onion.loops = {
    circus = "snd/sounds/loops/onion_circus.ogg",
    hacker = "snd/sounds/loops/onion_hacker.ogg",
@@ -32,17 +36,19 @@ end
 function onion.vn_l337b01( params )
    return vn.Character.new( _("l337 b01"),
          tmerge( {
-            image=onion.img_onion(), -- TODO
+            image="l337_b01.webp",
             colour=nil,
             shader=love_shaders.hologram{strength=0.2},
+            flip=false,
          }, params) )
 end
 
 function onion.vn_nexus_l337b01( params )
    return vn.Character.new( _("l337 b01"),
          tmerge( {
-            image=onion.img_onion(), -- TODO
+            image="l337_b01.webp",
             colour=nil,
+            flip=false,
          }, params) )
 end
 

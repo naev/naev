@@ -53,7 +53,7 @@ mem.state = 0
 
 -- Create the mission
 function create()
-   local prt = love_shaders.shaderimage2canvas( love_shaders.hologram(), onion.img_onion() )
+   local prt = love_shaders.shaderimage2canvas( love_shaders.hologram(), onion.img_l337b01() )
 
    misn.setNPC( _("l337_b01"), prt.t.tex, _([[You seem to have an incoming connection from the Onion Society.]]) )
    misn.setReward(_("???") )
@@ -153,7 +153,7 @@ You hear some clacking noises, but you have no idea what's going on as you only 
       misn.markerRm()
       misn.markerAdd( sys1 )
    elseif mem.state==2 then
-      local prt = love_shaders.shaderimage2canvas( love_shaders.hologram(), onion.img_onion() )
+      local prt = love_shaders.shaderimage2canvas( love_shaders.hologram(), onion.img_l337b01() )
       misn.npcAdd( "conclave", _("l337_b01"), prt.t.tex, _("Establish communication with l337_b01?"), 2 )
    end
 end
@@ -471,7 +471,7 @@ They gesture towards you.]]))
 
    vn.scene()
    local offset = 1/7
-   l337er = vn.newCharacter( onion.vn_nexus_l337b01{pos=1*offset, flip=true} )
+   l337er = vn.newCharacter( onion.vn_nexus_l337b01{pos=1*offset} )
    local underworlder = vn.newCharacter( onion.vn_nexus_underworlder{pos=2*offset, flip=true} )
    local puppet = vn.newCharacter( onion.vn_nexus_notasockpuppet{pos=3*offset, flip=true} )
    trixie = vn.newCharacter( onion.vn_nexus_trixie{pos=4*offset, flip=false} )
