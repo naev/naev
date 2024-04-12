@@ -1636,6 +1636,8 @@ void space_init( const char *sysname, int do_simulate )
       ERR(
          _( "Cannot reinit system if there is no system previously loaded" ) );
    else if ( sysname != NULL ) {
+      char dmgstr[32];
+
       cur_system = system_get( sysname );
       if ( cur_system == NULL ) {
          WARN( _( "System '%s' not found, trying random system!" ), sysname );
@@ -1643,12 +1645,18 @@ void space_init( const char *sysname, int do_simulate )
       }
       char *nt = ntime_pretty( 0, 2 );
 
+      if ( sys_isFlag( cur_system, SYSTEM_HIDENEBULADAMAGE ) )
+         snprintf( dmgstr, sizeof( dmgstr ),
+                   p_( "nebula_volatility", "??? %s" ), UNIT_POWER );
+      else
+         snprintf( dmgstr, sizeof( dmgstr ),
+                   p_( "nebula_volatility", "%.1f %s" ),
+                   cur_system->nebu_volatility, UNIT_POWER );
       player_message( _( "#oEntering System %s on %s." ), _( sysname ), nt );
       if ( cur_system->nebu_volatility > 0. )
          player_message( _( "#rWARNING - Volatile nebula detected in %s! "
-                            "Taking %.1f %s damage!" ),
-                         _( sysname ), cur_system->nebu_volatility,
-                         UNIT_POWER );
+                            "Taking %s damage!" ),
+                         _( sysname ), dmgstr );
       free( nt );
    }
 
@@ -3100,14 +3108,18 @@ static int system_parse( StarSystem *sys, const char *filename )
                continue;
             }
             if ( xml_isNode( cur, "nebula" ) ) {
-               int trails = 0;
+               int trails  = 0;
+               int hidedmg = 0;
                xmlr_attr_float( cur, "volatility", sys->nebu_volatility );
                xmlr_attr_float_def( cur, "hue", sys->nebu_hue,
                                     NEBULA_DEFAULT_HUE );
                xmlr_attr_int( cur, "trails", trails );
+               xmlr_attr_int( cur, "hidenebuladamage", hidedmg );
                sys->nebu_density = xml_getFloat( cur );
                if ( trails || ( sys->nebu_density > 0. ) )
                   sys_setFlag( sys, SYSTEM_NEBULATRAIL );
+               if ( hidedmg )
+                  sys_setFlag( sys, SYSTEM_HIDENEBULADAMAGE );
                continue;
             }
             if ( xml_isNode( cur, "nolanes" ) ) {

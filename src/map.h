@@ -9,6 +9,9 @@
 
 #define MAP_WDWNAME "wdwStarMap" /**< Map window name. */
 
+#define SYS_VOLATILITY_VOLATILE 50.
+#define SYS_VOLATILITY_DANGEROUS 50.
+
 /**
  * @brief Images to be shown on the map.
  */

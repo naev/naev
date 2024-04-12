@@ -883,7 +883,7 @@ static void map_update( unsigned int wid )
       /* Nebula. */
       if ( sys->nebu_density > 0. ) {
          const char *adj;
-         double      dmg;
+         char        dmgstr[32];
          if ( buf[0] != '\0' )
             p += scnprintf( &buf[p], sizeof( buf ) - p,
                             p_( "system features", ", " ) );
@@ -896,23 +896,28 @@ static void map_update( unsigned int wid )
          else
             adj = "";
 
+         /* Damage string. */
+         if ( sys_isFlag( sys, SYSTEM_HIDENEBULADAMAGE ) )
+            snprintf( dmgstr, sizeof( dmgstr ),
+                      p_( "nebula_volatility", "??? %s" ), UNIT_POWER );
+         else
+            snprintf( dmgstr, sizeof( dmgstr ),
+                      p_( "nebula_volatility", "%.1f %s" ),
+                      sys->nebu_volatility, UNIT_POWER );
+
          /* Volatility */
-         dmg = sys->nebu_volatility;
-         if ( sys->nebu_volatility > 50. ) {
+         if ( sys->nebu_volatility > SYS_VOLATILITY_VOLATILE ) {
             p += scnprintf( &buf[p], sizeof( buf ) - p, "#r" );
             p += scnprintf( &buf[p], sizeof( buf ) - p,
-                            _( "Volatile %sNebula (%.1f %s)" ), adj, dmg,
-                            UNIT_POWER );
-         } else if ( sys->nebu_volatility > 20. ) {
+                            _( "Volatile %sNebula (%s)" ), adj, dmgstr );
+         } else if ( sys->nebu_volatility > SYS_VOLATILITY_DANGEROUS ) {
             p += scnprintf( &buf[p], sizeof( buf ) - p, "#o" );
             p += scnprintf( &buf[p], sizeof( buf ) - p,
-                            _( "Dangerous %sNebula (%.1f %s)" ), adj, dmg,
-                            UNIT_POWER );
+                            _( "Dangerous %sNebula (%s)" ), adj, dmgstr );
          } else if ( sys->nebu_volatility > 0. ) {
             p += scnprintf( &buf[p], sizeof( buf ) - p, "#y" );
             p += scnprintf( &buf[p], sizeof( buf ) - p,
-                            _( "Unstable %sNebula (%.1f %s)" ), adj, dmg,
-                            UNIT_POWER );
+                            _( "Unstable %sNebula (%s)" ), adj, dmgstr );
          } else
             p += scnprintf( &buf[p], sizeof( buf ) - p, _( "%sNebula" ), adj );
          p += scnprintf( &buf[p], sizeof( buf ) - p, "#0" );

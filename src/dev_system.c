@@ -18,9 +18,7 @@
 #include "conf.h"
 #include "dev_uniedit.h"
 #include "nebula.h"
-#include "nstring.h"
 #include "nxml.h"
-#include "physics.h"
 #include "space.h"
 
 /*
@@ -130,6 +128,8 @@ int dsys_saveSystem( StarSystem *sys )
       if ( ( sys->nebu_density <= 0. ) &&
            sys_isFlag( sys, SYSTEM_NEBULATRAIL ) )
          xmlw_attr( writer, "trails", "%d", 1 );
+      if ( sys_isFlag( sys, SYSTEM_HIDENEBULADAMAGE ) )
+         xmlw_attr( writer, "hidenebuladamage", "%d", 1 );
       xmlw_str( writer, "%f", sys->nebu_density );
       xmlw_endElem( writer ); /* "nebula" */
    }

@@ -194,6 +194,8 @@ typedef struct Spob_ {
    ( 1 << 10 ) /**< System is temporary marked as "of interest". Used when     \
                   rendering map. */
 #define SYSTEM_NEBULATRAIL ( 1 << 11 ) /**< System uses nebula trails. */
+#define SYSTEM_HIDENEBULADAMAGE                                                \
+   ( 1 << 12 ) /**< HIdes amount of nebula damage. */
 #define sys_isFlag( s, f )                                                     \
    ( ( s )->flags & ( f ) ) /**< Checks system flag.                           \
                              */

@@ -423,10 +423,10 @@ static void map_system_render( double bx, double by, double w, double h,
          const char *sdmg, *adj;
          char        col;
          /* Volatility */
-         if ( dmg > 50. ) {
+         if ( dmg > SYS_VOLATILITY_VOLATILE ) {
             col  = 'r';
             sdmg = p_( "nebula", "Volatile" );
-         } else if ( sys->nebu_volatility > 20. ) {
+         } else if ( sys->nebu_volatility > SYS_VOLATILITY_DANGEROUS ) {
             col  = 'o';
             sdmg = p_( "nebula", "Dangerous" );
          } else if ( sys->nebu_volatility > 0. ) {
