@@ -94,7 +94,7 @@ end
 onion.rewards = {
    misn01 = 200e3,
    misn02 = 400e3,
-   misn03 = 500e3,
+   misn03 = 600e3,
 }
 
 return onion
