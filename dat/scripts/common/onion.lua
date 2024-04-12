@@ -65,7 +65,7 @@ end
 function onion.vn_nexus_notasockpuppet( params )
    return vn.Character.new( _("notasockpuppet"),
          tmerge( {
-            image=onion.img_onion(), -- TODO
+            image="notasockpuppet.webp",
             colour=nil,
          }, params) )
 end
