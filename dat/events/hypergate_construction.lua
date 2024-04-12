@@ -46,7 +46,7 @@ local boss_name_list = {
 }
 
 local boss_message_list = {
-   ["Za'lek"]  = _("Mineral acquiration skills required. Inquire within."),
+   ["Za'lek"]  = _("Mineral acquisition skills required. Inquire within."),
    ["Dvaered"] = _("Interested in blowing asteroids up? Looking for miners!"),
    ["Soromid"] = _("Seeking mineral gatherers."),
    ["Sirius"]  = _("Requiring miners for Sirichana."),
