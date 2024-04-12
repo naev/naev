@@ -19,6 +19,12 @@ function onion.img_l337b01 ()
    return lg.newImage( "gfx/vn/characters/l337_b01.webp" )
 end
 
+function onion.img_trixie ()
+   local img = lg.newImage( "gfx/vn/characters/trixie.webp" )
+   img:setFilter( "nearest", "nearest" )
+   return img
+end
+
 onion.loops = {
    circus = "snd/sounds/loops/onion_circus.ogg",
    hacker = "snd/sounds/loops/onion_hacker.ogg",
@@ -55,7 +61,7 @@ end
 function onion.vn_nexus_trixie( params )
    return vn.Character.new( _("Trixie"),
          tmerge( {
-            image=onion.img_onion(), -- TODO
+            image=onion.img_trixie(),
             colour=nil,
          }, params) )
 end
@@ -79,7 +85,7 @@ end
 function onion.vn_nexus_dog( params )
    return vn.Character.new( _("DOG"),
          tmerge( {
-            image=onion.img_onion(), -- TODO
+            image="DOG.webp",
             colour=nil,
          }, params) )
 end
