@@ -213,7 +213,7 @@ function wait ()
       vn.transition("electric")
       vn.na(_([[l337_b01 pops up on your system console.]]))
       l337(_([["OK, time to do a scan. Yup, there's the scanner. Let's see if it's configured like the late models... root root."]]))
-      l337(_([["Nope? Mmmm, let's see admin 1234. Also nope. High-tech security we have here. Humph, time to pull a dictionary attack. Whelp, looks like they tried to introduce some shorting countermeasures. It's going to take me some time to crack the relay."]]))
+      l337(_([["Nope? Mmmm, let's see admin 1234. Also, nope. High-tech security we have here. Humph, time to pull a dictionary attack. Whelp, looks like they tried to introduce some shorting countermeasures. It's going to take me some time to crack the relay."]]))
       l337(fmt.f(_([["Hate to bubble your boat, but, looks like some incoming Nexus tech support crew. Looks like it's your time to shine. Stay within {dist} {dstunit} of the jump!"]]),
       {dist=fmt.number(distlim), dstunit=dunit}))
       vn.na(fmt.f(_([[Looks like it's time to show what {shipname} is capable of!]]),
@@ -590,13 +590,13 @@ They seem much lower resolution than before.]]))
    }
 
    vn.label("05_in")
-   trixie(_([["Great! It's always nice to have a skilled pilot. We can handle the data, but there's only so much you can do through a constrained bandwidth connection outside of the Nexus."]]))
+   trixie(_([["Great! It's always nice to have a skilled pilot. We can handle the data, but there's only so much you can do through a constrained bandwidth connection outside the Nexus."]]))
    vn.jump("05_cont")
 
    vn.label("05_illegal")
    trixie(_([["Illegal? It's an imperative correction to a broken system. These banks, trust me I've been in their financial data, exist only to exploit the regular people while funneling money to the pockets of the elite, bribing officials, and doing mass media manipulation."]]))
    trixie(_([["So when we do a bank heist, it's not theft, it's justice. It's a redistribution of wealth away from the system that perpetuates injustices. It's daring to challenge the status quo and reshape the world for the better!"]]))
-   l337er(_([["And making a pretty credit while we're add it."]]))
+   l337er(_([["And making a pretty credit while we're at it."]]))
    trixie(_([["Damn right we're making a pretty credit!"]]))
    vn.jump("05_cont")
 
