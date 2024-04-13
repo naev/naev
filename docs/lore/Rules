@@ -186,6 +186,9 @@ preprocess do
       if s[:events].length() > 0
          s[:tags].push("inevent")
       end
+      if s[:tags].length()<=0
+         s[:tags].push("none")
+      end
 
       s[:tags] = s[:tags].uniq.sort
    end
@@ -246,6 +249,9 @@ preprocess do
       s[:events] = find_lines('/evts/**/*.lua', s[:name], :spob)
       if s[:events].length() > 0
          s[:tags].push("inevent")
+      end
+      if s[:tags].length()<=0
+         s[:tags].push("none")
       end
 
       s[:tags] = s[:tags].uniq.sort
