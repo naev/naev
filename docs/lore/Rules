@@ -160,7 +160,9 @@ preprocess do
       end
 
       # Add asteroids
-
+      if not s[:ssys][:asteroids].nil? then
+         s[:tags].push( "asteroids" )
+      end
 
       # Map spobs to systems
       spb = s[:ssys][:spobs]
@@ -270,6 +272,13 @@ preprocess do
          end
       end
       s[:factions] = Array(s[:factions]).sort()
+   end
+
+   # Set up NPCs
+   @items.find_all('/npcs/*.md').each do |n|
+      n[:id] = Base64.encode64( n[:name] ).strip
+      n[:missions] = find_lines('/misn/**/*.lua', n[:func], :npcs)
+      n[:events] = find_lines('/evts/**/*.lua', n[:func], :npcs)
    end
 
    # Set up missions and events

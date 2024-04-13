@@ -17,7 +17,7 @@ CMPN := $(patsubst ../../dat/missions/%/readme.md, content/cmpn/%.md, $(CMPN))
 EVTS:= $(shell find ../../dat/events -type f -name "*.lua" -exec grep -q "<?xml version=['\"]1.0['\"] encoding=['\"]utf8['\"]?>" {} \; -print)
 EVTS := $(patsubst ../../dat/events/%.lua, content/evts/%.lua, $(EVTS) )
 
-GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp ../../artwork/gfx/spob/space/**/*.webp ../../artwork/gfx/logo/*.webp)
+GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp ../../artwork/gfx/spob/space/**/*.webp ../../artwork/gfx/logo/*.webp ../../artwork/gfx/vn/characters/*.webp ../../artwork/gfx/portraits/*.webp)
 GFX := $(patsubst ../../artwork/%, content/%, $(GFX))
 
 .PHONY: all gfx spob ssys fcts misn cmpn evts view install check logo

@@ -370,6 +370,43 @@ def ssys_modal( s )
 EOF
 end
 
+def npc_card( n )
+  cls = ""
+  if n[:tags].include? 'spoiler'
+    cls += " spoiler d-none"
+  end
+
+  tags = ""
+  if n[:tags].length() > 0
+    tags = "<div class='m-1'>"
+    n[:tags].each do |t|
+        tags += "<span class='badge rounded-pill text-bg-info'>#{t}</span>"
+    end
+    tags += "</div>"
+  end
+
+  gfx = ""
+  if not n[:gfx].nil?
+      gfxpath = relative_path_to(@items["/gfx/portraits/"+n[:gfx]])
+      gfx += "<div class='container d-flex align-items-center'>"
+      gfx += "<img src='#{gfxpath}' class='card-img-top object-fit-scale mh-100' alt=\"#{n[:name]} Image\">"
+      gfx += "</div>"
+  end
+<<-EOF
+ <div class="col#{cls}" data-Name="#{n[:name]}">
+  <div class="card bg-black" data-bs-toggle="modal" data-bs-target="#modal-npcs-#{n[:id]}" >
+   #{gfx}
+   <div class="card-body">
+    <h5 class="card-title">#{n[:name]}</h5>
+    <div class="card-text">
+     #{tags}
+    </div>
+   </div>
+  </div>
+ </div>
+EOF
+end
+
 def modal_addAll
   out = ""
   @items.find_all('/spob/*.md').each do |s|
