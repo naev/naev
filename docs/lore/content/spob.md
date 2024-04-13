@@ -97,15 +97,20 @@ $('div.modal.spob').on('hidden.bs.modal', function (e) {
     history.back()
 })
 
-function update_spob_fcts () {
+function update_spobs () {
+    $("#spobs").children(".col").removeClass("d-none");
     $('input.filter-faction').each( function () {
         var fct = $(this).data('faction');
         var checked = $(this).is(":checked");
-        if (checked) {
-            $("#spobs").children(".col[data-Faction=\""+fct+"\"]").removeClass("d-none");
-        }
-        else {
+        if (!checked) {
             $("#spobs").children(".col[data-Faction=\""+fct+"\"]").addClass("d-none");
+        }
+    } );
+    $('input.filter-tag').each( function () {
+        var tag = $(this).data('tag');
+        var checked = $(this).is(":checked");
+        if (!checked) {
+            $("#spobs").children(".col.tag-"+tag).addClass("d-none");
         }
     } );
 }
@@ -118,7 +123,7 @@ $('input#fct-all').change( function () {
             $("input.filter-faction").prop("checked",true);
         }
     } );
-    update_spob_fcts();
+    update_spobs();
 } );
 $('input#fct-none').change( function () {
     var checked = $(this).is(":checked");
@@ -126,14 +131,40 @@ $('input#fct-none').change( function () {
         $("input#fct-all").prop("checked",false);
         $("input.filter-faction").prop("checked",false);
     }
-    update_spob_fcts();
+    update_spobs();
 } );
 $('input.filter-faction').change( function () {
     var checked = $(this).is(":checked");
     if (checked) {
         $("input#fct-none").prop("checked",false);
     }
-    update_spob_fcts();
+    update_spobs();
+} );
+
+$('input#tag-all').change( function () {
+    var checked = $(this).is(":checked");
+    $('input.filter-tag').each( function () {
+        if (checked) {
+            $("input#tag-none").prop("checked",false);
+            $("input.filter-tag").prop("checked",true);
+        }
+    } );
+    update_spobs();
+} );
+$('input#tag-none').change( function () {
+    var checked = $(this).is(":checked");
+    if (checked) {
+        $("input#tag-all").prop("checked",false);
+        $("input.filter-tag").prop("checked",false);
+    }
+    update_spobs();
+} );
+$('input.filter-tag').change( function () {
+    var checked = $(this).is(":checked");
+    if (checked) {
+        $("input#tag-none").prop("checked",false);
+    }
+    update_spobs();
 } );
 </script>
 
@@ -145,7 +176,9 @@ taglist = Set[]
 classlist = Set[]
 @items.find_all('/spob/*.md').each do |s| # **
     factionlist.add( s[:faction] )
-    taglist.add( s[:tags] )
+    s[:tags].each do |t|
+        taglist.add( t )
+    end
     classlist.add( s[:spobclass] )
 end
 %>
@@ -184,6 +217,34 @@ end
    <li><span class="dropdown-item form-check form-switch">
     <input class="form-check-input filter-faction" type="checkbox" role="switch" data-faction="#{f}" id="#{id}" checked>
     <label class="form-check-label" for="#{id}">#{f}</label>
+   </span></li>
+EOF
+     end
+     out
+   %>
+  </ul>
+ </div>
+
+ <div id="selection-tags" class="dropdown col-md-auto">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  Filter Tags
+  </button>
+  <ul class="dropdown-menu">
+   <li><span class="dropdown-item form-check form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="tag-all" checked>
+    <label class="form-check-label" for="tag-all">Enable All</label>
+   </span></li>
+   <li><span class="dropdown-item form-check form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="tag-none">
+    <label class="form-check-label" for="tag-none">Disable All</label>
+   </span></li>
+   <%= out = ""
+    taglist.each do |t|
+        id = Base64.encode64(t)
+        out += <<-EOF
+   <li><span class="dropdown-item form-check form-switch">
+    <input class="form-check-input filter-tag" type="checkbox" role="switch" data-tag="#{t}" id="#{id}" checked>
+    <label class="form-check-label" for="#{id}">#{t}</label>
    </span></li>
 EOF
      end
