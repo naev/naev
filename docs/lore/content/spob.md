@@ -150,23 +150,21 @@ classlist = Set[]
 end
 %>
 
-<div class="container">
- <div id="selection-sort" class="m-3">
-  <div class="dropdown">
-   <button id="btn-sort" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-   Sort by: Name↑
-   </button>
-   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#" onclick="sortbydata('Name');">Name</a></li>
-    <li><a class="dropdown-item" href="#" onclick="sortbydata('Faction');">Faction</a></li>
-    <li><a class="dropdown-item" href="#" onclick="sortbydata('Class');">Class</a></li>
-    <li><a class="dropdown-item" href="#" onclick="sortbydatanumber('Population');">Population</a></li>
-    <li><a class="dropdown-item" href="#" onclick="randomize();">Random</a></li>
-   </ul>
-  </div>
+<div class="container m-3"><div class="row">
+ <div id="selection-sort" class="dropdown col-md-auto">
+  <button id="btn-sort" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  Sort by: Name↑
+  </button>
+  <ul class="dropdown-menu">
+   <li><a class="dropdown-item" href="#" onclick="sortbydata('Name');">Name</a></li>
+   <li><a class="dropdown-item" href="#" onclick="sortbydata('Faction');">Faction</a></li>
+   <li><a class="dropdown-item" href="#" onclick="sortbydata('Class');">Class</a></li>
+   <li><a class="dropdown-item" href="#" onclick="sortbydatanumber('Population');">Population</a></li>
+   <li><a class="dropdown-item" href="#" onclick="randomize();">Random</a></li>
+  </ul>
  </div>
 
- <div id="selection-factions" class="dropdown">
+ <div id="selection-factions" class="dropdown col-md-auto">
   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
   Filter Factions
   </button>
@@ -193,7 +191,7 @@ EOF
    %>
   </ul>
  </div>
-</div>
+</div></div>
 
 <!-- Now display all the spobs. -->
 <div class="row row-cols-1 row-cols-md-5 g-4" id="spobs">
