@@ -198,7 +198,7 @@ end
  </div>
 
  <div id="selection-factions" class="dropdown col-md-auto">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
   Filter Factions
   </button>
   <ul class="dropdown-menu">
@@ -226,7 +226,7 @@ EOF
  </div>
 
  <div id="selection-tags" class="dropdown col-md-auto">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
   Filter Tags
   </button>
   <ul class="dropdown-menu">
