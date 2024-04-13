@@ -295,6 +295,9 @@ preprocess do
       if m[:ssys].nil?
          m[:ssys] = []
       end
+      if m[:npcs].nil?
+         m[:npcs] = []
+      end
    end
    @items.find_all('/evts/**/*.lua').each do |e|
       if e[:tags].nil?
@@ -309,6 +312,9 @@ preprocess do
       if e[:ssys].nil?
          e[:ssys] = []
       end
+      if e[:npcs].nil?
+         e[:npcs] = []
+      end
    end
 
    # Find missions / events in the campaign
@@ -317,6 +323,7 @@ preprocess do
       tag = c[:name]
       c[:ssys] = []
       c[:spob] = []
+      c[:npcs] = []
       c[:missions] = []
       @items.find_all('/misn/**/*.lua').each do |m|
          if not m[:campaign].nil? and m[:campaign]==tag then
@@ -326,6 +333,9 @@ preprocess do
             end
             m[:spob].each do |s|
                c[:spob].push( s )
+            end
+            m[:npcs].each do |n|
+               c[:npcs].push( n )
             end
          end
       end
@@ -340,12 +350,16 @@ preprocess do
             e[:spob].each do |s|
                c[:spob].push( s )
             end
+            e[:npcs].each do |n|
+               c[:npcs].push( n )
+            end
          end
       end
       c[:events].sort_by{ |e| e[:name] }
 
       c[:spob] = c[:spob].uniq.sort
       c[:ssys] = c[:ssys].uniq.sort
+      c[:npcs] = c[:npcs].uniq.sort
    end
 end
 
