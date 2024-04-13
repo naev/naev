@@ -15,6 +15,10 @@ def ssys_get( name )
   return config[:ssys][name]
 end
 
+def npc_get( name )
+  return config[:npcs][name]
+end
+
 def listmisnevt( header, lst )
   if lst.length() > 0
     out = "<div>"

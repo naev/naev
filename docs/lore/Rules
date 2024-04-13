@@ -45,9 +45,16 @@ preprocess do
       f[:name] = f[:faction][:"+@name"]
       config[:fcts][f[:name]] = f
    end
+   config[:npcs] = {}
+   @items.find_all("/npcs/*.md").each do |n|
+      config[:npcs][n[:name]] = n
+   end
 
    # Helper functions
-   def find_lines( matchitems, matchstr, tag )
+   def find_lines( matchitems, matchstr, tag, storeval=nil )
+      if storeval.nil?
+         storeval = matchstr
+      end
       re = /\b#{matchstr}\b/
       lst = []
       @items.find_all( matchitems ).each do |m|
@@ -64,7 +71,7 @@ preprocess do
                if m[tag].nil?
                   m[tag] = []
                end
-               m[tag].push( matchstr )
+               m[tag].push( storeval )
             end
          end
          lines = []
@@ -277,8 +284,8 @@ preprocess do
    # Set up NPCs
    @items.find_all('/npcs/*.md').each do |n|
       n[:id] = Base64.encode64( n[:name] ).strip
-      n[:missions] = find_lines('/misn/**/*.lua', n[:func], :npcs)
-      n[:events] = find_lines('/evts/**/*.lua', n[:func], :npcs)
+      n[:missions] = find_lines('/misn/**/*.lua', n[:func], :npcs, n[:name])
+      n[:events] = find_lines('/evts/**/*.lua', n[:func], :npcs, n[:name])
    end
 
    # Set up missions and events

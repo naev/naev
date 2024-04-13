@@ -31,20 +31,12 @@ This page contains **HEAVY SPOILERS**! Read at your own risk. You can hide this 
     else
         events = ""
     end
-    if c[:npcs].length() > 0
-        npcs = "<div><h5>Events:</h5>"
-        npcs += "<ul>"
-        c[:npcs].each do |e|
-            npcs += "<li>#{e[:name]}</li>"
-        end
-        npcs += "</ul>"
-        npcs += "</div>"
-    else
-        npcs = ""
-    end
 
     if c[:npcs].length()+c[:spob].length()+c[:ssys].length() > 0
         spob = "<div class='row row-cols-1 row-cols-md-5 g-4'>"
+        c[:npcs].each do |n|
+            spob += npc_card( npc_get(n) )
+        end
         c[:ssys].each do |sys|
             spob += ssys_card( ssys_get(sys) )
         end
@@ -85,7 +77,6 @@ This page contains **HEAVY SPOILERS**! Read at your own risk. You can hide this 
      </div>
      <div markdown="1">#{c.compiled_content(snapshot: :raw)}</div>
      <h3>Related Items</h3>
-     #{npcs}
      #{missions}
      #{events}
      #{spob}
