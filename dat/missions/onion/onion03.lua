@@ -169,12 +169,12 @@ function enter ()
 end
 
 function prepare ()
-   player.msg(_("l337_b01: head over to the jump, there should be a relay buoy there."), true)
+   player.msg(_([[l337_b01: "head over to the jump, there should be a relay buoy there."]]), true)
    system.markerAdd( jmp:pos() )
    hook.timer( 1, "wait" )
 end
 
-local distlim = 5e3
+local distlim = 2500
 local dunit = naev.unit("distance")
 local timeend
 local enemies
@@ -199,7 +199,7 @@ local function spawn_baddie( ships )
    end
 
    -- Give a message if new enemies coming in
-   player.msg(_("l337_b01: jump signal detected!"), true)
+   player.msg(_([[l337_b01: "jump signal detected!"]]), true)
    return plts
 end
 
@@ -260,12 +260,12 @@ function heartbeat ()
       misn.osdCreate( title, {
          _("You won?"),
       } )
-      player.msg(_("l337_b01: Done! Wait, why isn't it working."), true)
+      player.msg(_([[l337_b01: "Done! Wait, why isn't it working."]]), true)
       hook.timer( 10, "theend" )
       return
    end
    local dstr = fmt.number(d)
-   if d > 4e3 then
+   if d > distlim*2/3 then
       dstr = "#o"..dstr
    end
    misn.osdCreate( title, {
@@ -296,7 +296,7 @@ end
 
 local bossname = _("Nexus RTFM")
 function theend ()
-   player.msg(_("l337_b01: Another? Incoming jump signal. It's large!"), true)
+   player.msg(_([[l337_b01: "Another? Incoming jump signal. It's large!"]]), true)
    hook.timer( 8, "moremsg" )
 end
 
@@ -309,7 +309,7 @@ function moremsg ()
 end
 
 function lastmsg ()
-   player.msg(fmt.f(_("l337_b01: That's the cause! Take down the {shipname}!"), {shipname=bossname}), true)
+   player.msg(fmt.f(_([[l337_b01: "That's the cause! Take down the {shipname}!"]]), {shipname=bossname}), true)
    misn.osdCreate( title, {
       fmt.f(_("Defeat the {shipname}"),{shipname=bossname}),
    } )
