@@ -79,7 +79,7 @@
 /* Audio options */
 #define USE_EFX_DEFAULT 1 /**< Whether or not to use EFX (if using OpenAL). */
 #define MUTE_SOUND_DEFAULT 0      /**< Whether sound should be disabled. */
-#define SOUND_VOLUME_DEFAULT 0.6  /**< Default sound volume. */
+#define SOUND_VOLUME_DEFAULT 0.7  /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT 0.8  /**< Default music volume. */
 #define ENGINE_VOLUME_DEFAULT 0.8 /**< Default engine volume. */
 /* Editor Options */
