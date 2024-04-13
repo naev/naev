@@ -415,6 +415,10 @@ def npc_modal( n )
     tags += "</div>"
   end
 
+  # Add mission / event stuff
+  missions = listmisnevt( "Appears in the following missions:", n[:missions] )
+  events = listmisnevt( "Appears in the following events:", n[:events] )
+
 <<-EOF
  <div class="modal fade npcs" id="modal-npcs-#{n[:id]}" tabindex="-1" aria-labelledby="modal-npcs-label-#{n[:id]}" data-npcs-modal="#{n[:name]}" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
@@ -427,6 +431,8 @@ def npc_modal( n )
      #{gfx}
      #{tags}
      <div class="container" markdown="1">#{n.compiled_content(snapshot: :raw)}</div>
+     #{missions}
+     #{events}
     </div>
    </div>
   </div>
