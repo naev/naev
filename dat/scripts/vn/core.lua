@@ -757,7 +757,7 @@ function vn.StateSay:_init()
       vn._buffer_y = 0
    end
    self._len = utf8.len( self._textbuf )
-   local c = vn._getCharacter( self.who )
+   local c, ck = vn._getCharacter( self.who )
    vn._bufcol = c.colour or vn._default._bufcol
    if c.hidetitle then
       vn._title = nil
@@ -776,6 +776,9 @@ function vn.StateSay:_init()
    else
       self.bounce = nil
    end
+   -- Resort the characters
+   table.remove( vn._characters, ck )
+   table.insert( vn._characters, c  )
 end
 function vn.StateSay:_update( dt )
    if self.bounce ~= nil then
@@ -1856,7 +1859,7 @@ end
 function vn._getCharacter( who )
    for k,v in ipairs(vn._characters) do
       if v.who == who then
-         return v
+         return v, k
       end
    end
    error( string.format(_("vn: character '%s' not found!"), who) )
