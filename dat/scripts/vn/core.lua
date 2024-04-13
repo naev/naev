@@ -157,7 +157,7 @@ local function _draw_character( c )
       x = (lw-vn.display_w)/2 + c.offset*vn.display_w - w*scale/2
       y = (lh-vn.display_h)/2
    end
-   y = y + (c.offy or 0)
+   y = y + (c.offy or 0) + (c.bouncey or 0)
    local col
    if c.talking then
       col = { 1, 1, 1 }
@@ -772,7 +772,7 @@ function vn.StateSay:_init()
    c.talking = true
    if not vn.nobounce and c.talking and not wastalking then
       self.bounce = 0
-      c.offy = 0
+      c.bouncey = 0
    else
       self.bounce = nil
    end
@@ -784,10 +784,10 @@ function vn.StateSay:_update( dt )
    if self.bounce ~= nil then
       local c = vn._getCharacter( self.who )
       self.bounce = self.bounce + dt
-      c.offy = math.sin( self.bounce * 5 * math.pi ) * math.max(0, (1-self.bounce)^2) * 10
+      c.bouncey = math.sin( self.bounce * 5 * math.pi ) * math.max(0, (1-self.bounce)^2) * 10
       if self.bounce > 1 then
          self.bounce = nil
-         c.offy = 0
+         c.bouncey = 0
       end
    end
    self._timer = self._timer - dt
@@ -828,7 +828,7 @@ function vn.StateSay:_finish()
    vn._buffer = self._text
 
    local c = vn._getCharacter( self.who )
-   c.offy = nil
+   c.bouncey = nil
    log.add{
       who   = c.displayname or c.who,
       what  = self.what, -- Avoids newlines
@@ -1318,6 +1318,7 @@ function vn.Character.new( who, params )
    c.shader = params.shader
    c.hidetitle = params.hidetitle
    c.pos = params.pos
+   c.offy = params.offy
    c.rotation = params.rotation
    c.params = params
    return c
@@ -1648,7 +1649,7 @@ Allows doing arbitrary animations.
    @tparam number seconds Seconds to perform the animation
    @tparam func func Function to call when progress is being done.
    @tparam func drawfunc Function to call when drawing.
-   @tparam string|tab transition A CSS transition to use. Can be one of "ease", "ease-in", "ease-out", "ease-in-out", "linear", or a table defining the bezier curve parameters.
+   @tparam string|table transition A CSS transition to use. Can be one of "ease", "ease-in", "ease-out", "ease-in-out", "linear", or a table defining the bezier curve parameters.
    @tparam func initfunc Function run once at the beginning.
    @tparam func drawoverride Function that overrides the drawing function for the VN.
 --]]
