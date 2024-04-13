@@ -96,6 +96,45 @@ $('div.modal.spob').on('hidden.bs.modal', function (e) {
     //history.pushState({ spob: "" }, "Naev - Space Objects", "");
     history.back()
 })
+
+function update_spob_fcts () {
+    $('input.filter-faction').each( function () {
+        var fct = $(this).data('faction');
+        var checked = $(this).is(":checked");
+        if (checked) {
+            $("#spobs").children(".col[data-Faction=\""+fct+"\"]").removeClass("d-none");
+        }
+        else {
+            $("#spobs").children(".col[data-Faction=\""+fct+"\"]").addClass("d-none");
+        }
+    } );
+}
+
+$('input#fct-all').change( function () {
+    var checked = $(this).is(":checked");
+    $('input.filter-faction').each( function () {
+        if (checked) {
+            $("input#fct-none").prop("checked",false);
+            $("input.filter-faction").prop("checked",true);
+        }
+    } );
+    update_spob_fcts();
+} );
+$('input#fct-none').change( function () {
+    var checked = $(this).is(":checked");
+    if (checked) {
+        $("input#fct-all").prop("checked",false);
+        $("input.filter-faction").prop("checked",false);
+    }
+    update_spob_fcts();
+} );
+$('input.filter-faction').change( function () {
+    var checked = $(this).is(":checked");
+    if (checked) {
+        $("input#fct-none").prop("checked",false);
+    }
+    update_spob_fcts();
+} );
 </script>
 
 <% end %>
@@ -105,23 +144,53 @@ factionlist = Set[]
 taglist = Set[]
 classlist = Set[]
 @items.find_all('/spob/*.md').each do |s| # **
-    taglist.add( s[:faction] )
+    factionlist.add( s[:faction] )
     taglist.add( s[:tags] )
     classlist.add( s[:spobclass] )
 end
 %>
 
-<div id="selection" class="m-3">
- <div class="dropdown">
-  <button id="btn-sort" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-  Sort by: Name↑
+<div class="container">
+ <div id="selection-sort" class="m-3">
+  <div class="dropdown">
+   <button id="btn-sort" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+   Sort by: Name↑
+   </button>
+   <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#" onclick="sortbydata('Name');">Name</a></li>
+    <li><a class="dropdown-item" href="#" onclick="sortbydata('Faction');">Faction</a></li>
+    <li><a class="dropdown-item" href="#" onclick="sortbydata('Class');">Class</a></li>
+    <li><a class="dropdown-item" href="#" onclick="sortbydatanumber('Population');">Population</a></li>
+    <li><a class="dropdown-item" href="#" onclick="randomize();">Random</a></li>
+   </ul>
+  </div>
+ </div>
+
+ <div id="selection-factions" class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  Filter Factions
   </button>
   <ul class="dropdown-menu">
-   <li><a class="dropdown-item" href="#" onclick="sortbydata('Name');">Name</a></li>
-   <li><a class="dropdown-item" href="#" onclick="sortbydata('Faction');">Faction</a></li>
-   <li><a class="dropdown-item" href="#" onclick="sortbydata('Class');">Class</a></li>
-   <li><a class="dropdown-item" href="#" onclick="sortbydatanumber('Population');">Population</a></li>
-   <li><a class="dropdown-item" href="#" onclick="randomize();">Random</a></li>
+   <li><span class="dropdown-item form-check form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="fct-all" checked>
+    <label class="form-check-label" for="fct-all">Enable All</label>
+   </span></li>
+   <li><span class="dropdown-item form-check form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="fct-none">
+    <label class="form-check-label" for="fct-none">Disable All</label>
+   </span></li>
+   <%= out = ""
+    factionlist.each do |f|
+        id = Base64.encode64(f)
+        out += <<-EOF
+   <li><span class="dropdown-item form-check form-switch">
+    <input class="form-check-input filter-faction" type="checkbox" role="switch" data-faction="#{f}" id="#{id}" checked>
+    <label class="form-check-label" for="#{id}">#{f}</label>
+   </span></li>
+EOF
+     end
+     out
+   %>
   </ul>
  </div>
 </div>
