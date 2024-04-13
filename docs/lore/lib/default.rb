@@ -106,10 +106,8 @@ def fcts_modal( f )
     </div>
     <div class="modal-body clearfix">
      #{gfx}
+     #{tags}
      <p>#{f[:description]}</p>
-    </div>
-    <div class="modal-footer">
-     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     </div>
    </div>
   </div>
@@ -257,9 +255,6 @@ def spob_modal( s )
      #{missions}
      #{events}
     </div>
-    <div class="modal-footer">
-     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    </div>
    </div>
   </div>
  </div>
@@ -361,9 +356,6 @@ def ssys_modal( s )
      #{missions}
      #{events}
     </div>
-    <div class="modal-footer">
-     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    </div>
    </div>
   </div>
  </div>
@@ -389,7 +381,7 @@ def npc_card( n )
   if not n[:gfx].nil?
       gfxpath = relative_path_to(@items["/gfx/portraits/"+n[:gfx]])
       gfx += "<div class='container d-flex align-items-center'>"
-      gfx += "<img src='#{gfxpath}' class='card-img-top object-fit-scale mh-100' alt=\"#{n[:name]} Image\">"
+      gfx += "<img src='#{gfxpath}' class='card-img-top object-fit-scale mh-100' alt=\"#{n[:name]} Portrait\">"
       gfx += "</div>"
   end
 <<-EOF
@@ -407,6 +399,41 @@ def npc_card( n )
 EOF
 end
 
+def npc_modal( n )
+  gfx = ""
+  if not n[:gfx].nil?
+      gfxpath = relative_path_to(@items["/gfx/vn/characters/"+n[:gfx]])
+      gfx += "<img src='#{gfxpath}' class='col-md-6 float-md-end mb-3 ms-md-3' alt=\"#{n[:name]} Image\">"
+  end
+
+  tags = ""
+  if n[:tags].length() > 0
+    tags = "<div class='m-1'>"
+    n[:tags].each do |t|
+        tags += "<span class='badge rounded-pill text-bg-info'>#{t}</span>"
+    end
+    tags += "</div>"
+  end
+
+<<-EOF
+ <div class="modal fade npcs" id="modal-npcs-#{n[:id]}" tabindex="-1" aria-labelledby="modal-npcs-label-#{n[:id]}" data-npcs-modal="#{n[:name]}" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h1 class="modal-title fs-5" id="modal-npcs-label-#{n[:id]}">#{n[:name]}</h1>
+     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body clearfix">
+     #{gfx}
+     #{tags}
+     <div class="container" markdown="1">#{n.compiled_content(snapshot: :raw)}</div>
+    </div>
+   </div>
+  </div>
+ </div>
+EOF
+end
+
 def modal_addAll
   out = ""
   @items.find_all('/spob/*.md').each do |s|
@@ -417,6 +444,9 @@ def modal_addAll
   end
   @items.find_all('/fcts/*.md').each do |f|
     out += fcts_modal( f )
+  end
+  @items.find_all('/npcs/*.md').each do |n|
+    out += npc_modal( n )
   end
   out
 end
