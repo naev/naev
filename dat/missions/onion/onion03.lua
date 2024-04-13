@@ -515,6 +515,12 @@ You find yourself in a seemingly infinite field full of odd looking avatars. Is 
    lonewolf4(_([["Exanimo Umbra Obscura Tenebrarum!"]]))
    underworlder(_([[underworlder seems to freeze in place.]]))
    dog(_([["Down."]]))
+   vn.animation( 0.5, function ( x )
+      -- easeOutElastic
+      local progress = math.pow(2, -10 * x) * math.sin((x * 10 - 0.75) * 2*math.pi/3) + 1
+      lonewolf4.offy = progress * 200
+      underworlder.offy = progress * 200
+   end, nil, "linear" )
    vn.na(_([[Suddenly lonewolf4 and underworlder are splatted prone on the ground.]]))
    underworlder(_([["Screw this.", underworlder gasps before flickering out of existence.]]))
    vn.disappear( underworlder )
@@ -524,9 +530,9 @@ They seem much lower resolution than before.]]))
    lonewolf4(_([[They flash a glare at notasockpuppet before fading out of existence too. What happened?]]))
    vn.disappear( lonewolf4 )
    puppet(_([["Seems like today's conclave is at an end. Amusing as always, but short."]]))
+   vn.disappear( puppet )
    dog(_([[DOG abruptly flashes out of existence.]]))
    vn.disappear( dog )
-   vn.disappear( puppet )
    trixie(_([[Trixie lets out a sigh.]]))
 
    vn.scene()
