@@ -69,7 +69,7 @@ end
 function onion.vn_nexus_underworlder( params )
    return vn.Character.new( _("underworlder"),
          tmerge( {
-            image=onion.img_onion(), -- TODO
+            image="underworlder.webp",
             colour=nil,
          }, params) )
 end
@@ -93,7 +93,7 @@ end
 function onion.vn_nexus_lonewolf4( params )
    return vn.Character.new( _("lonewolf4"),
          tmerge( {
-            image=onion.img_onion(), -- TODO
+            image="lonewolf4.webp",
             colour=nil,
          }, params) )
 end
