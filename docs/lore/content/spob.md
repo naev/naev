@@ -79,15 +79,6 @@ function randomize() {
     $('button#btn-sort').text("Sort by: Random");
 }
 
-// Open modal on new window
-window.onload = function(e){
-    let params = new URLSearchParams( window.location.search );
-    if (params.has('spob')) {
-        let spobname = params.get('spob')
-        let modal = new bootstrap.Modal( $('div[data-spob-modal="'+spobname+'"]')[0] );
-        modal.show();
-    }
-};
 $('div.modal.spob').on('shown.bs.modal', function (e) {
     let name = $(this).data("spob-modal");
     history.pushState({ spob: name }, "Naev - "+name, "?spob="+name);
@@ -99,6 +90,9 @@ $('div.modal.spob').on('hidden.bs.modal', function (e) {
 
 function update_spobs () {
     $("#spobs").children(".col").removeClass("d-none");
+    $("#spobs").children(".col").each( function () {
+        $(this).data("show-tag",0);
+    } );
     $('input.filter-faction').each( function () {
         var fct = $(this).data('faction');
         var checked = $(this).is(":checked");
@@ -109,8 +103,13 @@ function update_spobs () {
     $('input.filter-tag').each( function () {
         var tag = $(this).data('tag');
         var checked = $(this).is(":checked");
-        if (!checked) {
-            $("#spobs").children(".col.tag-"+tag).addClass("d-none");
+        if (checked) {
+            $("#spobs").children(".col.tag-"+tag).data("show-tag",1);
+        }
+    } );
+    $("#spobs").children(".col").each( function () {
+        if ($(this).data("show-tag") <= 0) {
+            $(this).addClass("d-none");
         }
     } );
 }
@@ -166,6 +165,17 @@ $('input.filter-tag').change( function () {
     }
     update_spobs();
 } );
+
+// Open modal on new window
+window.onload = function(e){
+    let params = new URLSearchParams( window.location.search );
+    if (params.has('spob')) {
+        let spobname = params.get('spob')
+        let modal = new bootstrap.Modal( $('div[data-spob-modal="'+spobname+'"]')[0] );
+        modal.show();
+    }
+    update_spobs();
+};
 </script>
 
 <% end %>
