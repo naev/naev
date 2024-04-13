@@ -32,6 +32,7 @@ local lmisn = require "lmisn"
 local fleet = require "fleet"
 local pltai = require "pilotai"
 local lg = require "love.graphics"
+local audio = require 'love.audio'
 
 -- Action happens in the jump from Tepadania (Empire) to Ianella (Dvaered)
 -- l337_b01 lives in Anubis (Scorpius)?
@@ -68,6 +69,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local l337 = vn.newCharacter( onion.vn_l337b01() )
+   vn.music( onion.loops.hacker )
    vn.transition("electric")
    vn.na(_([[You answer the incoming connection and a familiar hologram appears on-screen.]]))
    l337(fmt.f(_([["Hey {player}, how's it going? Anyway, enough small chat. One of my relay backdoors seems to be down, and I need you to short the Empire-Dvaered connection for me in {sys}. You up for the task, right?"]]),
@@ -134,6 +136,7 @@ function land ()
       vn.clear()
       vn.scene()
       local l337 = vn.newCharacter( onion.vn_l337b01() )
+      vn.music( onion.loops.hacker )
       vn.transition("electric")
       vn.na(_([[You land and immediately l337_b01's hologram appears on your ship console.]]))
       l337(_([["Time to get to work. Let's see, let's see."
@@ -375,6 +378,7 @@ end
 function conclave ()
    vn.clear()
    vn.scene()
+   vn.music( onion.loops.hacker )
    local l337 = vn.newCharacter( onion.vn_l337b01() )
    vn.transition("electric")
    vn.na(_([[You open up a channel with l337_b01.]]))
@@ -477,6 +481,7 @@ They gesture towards you.]]))
    trixie = vn.newCharacter( onion.vn_nexus_trixie{pos=4*offset, flip=false} )
    local dog = vn.newCharacter( onion.vn_nexus_dog{pos=5*offset, flip=false} )
    local lonewolf4 = vn.newCharacter( onion.vn_nexus_lonewolf4{pos=6*offset, flip=false} )
+   vn.music( onion.loops.circus )
    vn.transition()
    vn.na(_([[The world lurches once again, although this time it feels slightly duller than before.
 
@@ -508,13 +513,18 @@ You find yourself in a seemingly infinite field full of odd looking avatars. Is 
    underworlder(_([["lonewolf4 is just playing his usual mind games. Always has to imagine we're in some sort of great fantasy novel."]]))
    lonewolf4(_([["The signs are all there, yet the cobwebs of your own ineptitude cloud your vision."]]))
    underworlder(_([["U wot m4"]]))
+   vn.sfx( audio.newSource('snd/sounds/activate5.ogg') )
    lonewolf4(_([[lonewolf4 flickers briefly
 "Mortem Tenebrae Obscuritas Infernalis!"]]))
    underworlder(_([["Bring it on!"]]))
+   vn.sfx( audio.newSource("snd/sounds/avatar_of_sirichana.ogg") )
    vn.na(_([[Trixie and l337_b01 seem to mutter something and take cover as lonewolf4 and underworlder seems to be engaging in some sort of digital combat. You can't really follow what is going on, and all you can see are some rendering glitches as the two run around each other.]]))
+   vn.sfx( audio.newSource('snd/sounds/detonation_alarm.ogg') )
    lonewolf4(_([["Exanimo Umbra Obscura Tenebrarum!"]]))
+   vn.sfx( audio.newSource('snd/sounds/activate4.ogg') )
    underworlder(_([[underworlder seems to freeze in place.]]))
    dog(_([["Down."]]))
+   vn.sfx( audio.newSource('snd/sounds/crash1.ogg') )
    vn.animation( 0.5, function ( x )
       -- easeOutElastic
       local progress = math.pow(2, -10 * x) * math.sin((x * 10 - 0.75) * 2*math.pi/3) + 1
@@ -538,6 +548,7 @@ They seem much lower resolution than before.]]))
    vn.scene()
    l337er = vn.newCharacter( onion.vn_nexus_l337b01{pos="left", flip=true} )
    trixie = vn.newCharacter( onion.vn_nexus_trixie{pos="right", flip=false} )
+   vn.music( onion.loops.hacker )
    vn.transition()
    vn.na(_([[The world warps abruptly.]]))
    l337er(_([["Better off in a new channel, too many zombie processes in the last one."]]))
@@ -613,6 +624,7 @@ They seem much lower resolution than before.]]))
 
    -- Leave the Nexus
    vn.scene()
+   vn.music()
    vn.transition()
    vn.scene()
    vn.setBackground()
