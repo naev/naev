@@ -4,6 +4,7 @@
  <location>enter</location>
  <chance>100</chance>
  <chapter>1</chapter>
+ <priority>99</priority>
 </event>
 --]]
 --[[

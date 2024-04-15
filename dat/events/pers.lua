@@ -3,7 +3,7 @@
 <event name="Pers">
  <location>load</location>
  <chance>100</chance>
- <priority>11</priority>
+ <priority>99</priority>
 </event>
 --]]
 local lf = require "love.filesystem"

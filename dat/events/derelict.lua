@@ -4,6 +4,7 @@
  <location>enter</location>
  <chance>45</chance>
  <cond>system.cur():faction() ~= nil</cond>
+ <priority>99</priority>
  <notes>
   <tier>1</tier>
  </notes>
