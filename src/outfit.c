@@ -199,7 +199,7 @@ int outfit_gfxStoreLoad( Outfit *o )
 {
    char filename[PATH_MAX];
 
-   if ( outfit_gfxStoreLoaded( o ) )
+   if ( outfit_gfxStoreLoaded( o ) || ( o->gfx_store_path == NULL ) )
       return 0;
 
    /* Check for absolute pathe. */
