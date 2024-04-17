@@ -10,6 +10,7 @@ local function turnon( p, po )
    -- Make sure pilot has a target
    local t = p:target()
    if t == nil then return false end
+   if t:leader()==p then return false end -- Can't use on fighters
 
    -- Set outfit state
    mem.timer = active
