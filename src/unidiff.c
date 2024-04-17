@@ -133,6 +133,7 @@ typedef struct UniHunk_ {
    union {
       const char *name; /* We just save the pointer, so keep as const. */
       int         data;
+      double      fdata;
    } o; /** Old data to possibly replace. */
 } UniHunk_t;
 
@@ -146,6 +147,21 @@ typedef struct UniDiff_ {
    UniHunk_t *applied; /**< Applied hunks. */
    UniHunk_t *failed;  /**< Failed hunks. */
 } UniDiff_t;
+
+#define HUNK_CUST( STR, TYPE, FUNC )                                           \
+   if ( xml_isNode( cur, STR ) ) {                                             \
+      hunk.target.type   = base.target.type;                                   \
+      hunk.target.u.name = strdup( base.target.u.name );                       \
+      hunk.type          = TYPE;                                               \
+      FUNC if ( diff_patchHunk( &hunk ) < 0 ) diff_hunkFailed( diff, &hunk );  \
+      else diff_hunkSuccess( diff, &hunk );                                    \
+      continue;                                                                \
+   }
+#define HUNK_NONE( STR, TYPE ) HUNK_CUST( STR, TYPE, hunk.u.name = NULL; );
+#define HUNK_STRD( STR, TYPE )                                                 \
+   HUNK_CUST( STR, TYPE, hunk.u.name = xml_getStrd( cur ); );
+#define HUNK_UINT( STR, TYPE )                                                 \
+   HUNK_CUST( STR, TYPE, hunk.u.data = xml_getUInt( cur ); );
 
 /*
  * Diff stack.
@@ -472,31 +488,11 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          else
             diff_hunkSuccess( diff, &hunk );
          continue;
-      } else if ( xml_isNode( cur, "background" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SSYS_BACKGROUND;
-         hunk.u.name        = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "features" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SSYS_FEATURES;
-         hunk.u.name        = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
       }
+
+      HUNK_STRD( "background", HUNK_TYPE_SSYS_BACKGROUND );
+      HUNK_STRD( "features", HUNK_TYPE_SSYS_FEATURES );
+
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
    } while ( xml_nextNode( cur ) );
@@ -534,39 +530,10 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
    cur = node->xmlChildrenNode;
    do {
       xml_onlyNodes( cur );
-      if ( xml_isNode( cur, "add" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
 
-         /* Outfit type is constant. */
-         hunk.type = HUNK_TYPE_TECH_ADD;
+      HUNK_STRD( "add", HUNK_TYPE_TECH_ADD );
+      HUNK_STRD( "remove", HUNK_TYPE_TECH_REMOVE );
 
-         /* Get the data. */
-         hunk.u.name = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "remove" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-
-         /* Outfit type is constant. */
-         hunk.type = HUNK_TYPE_TECH_REMOVE;
-
-         /* Get the data. */
-         hunk.u.name = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      }
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
    } while ( xml_nextNode( cur ) );
@@ -604,208 +571,32 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
    cur = node->xmlChildrenNode;
    do {
       xml_onlyNodes( cur );
-      if ( xml_isNode( cur, "faction" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_FACTION;
-         hunk.u.name        = xml_getStrd( cur );
 
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "population" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_POPULATION;
-         hunk.u.data        = xml_getUInt( cur );
+      HUNK_STRD( "faction", HUNK_TYPE_SPOB_FACTION );
+      HUNK_UINT( "population", HUNK_TYPE_SPOB_POPULATION );
+      HUNK_STRD( "displayname", HUNK_TYPE_SPOB_DISPLAYNAME );
+      HUNK_STRD( "description", HUNK_TYPE_SPOB_DESCRIPTION );
+      HUNK_STRD( "bar", HUNK_TYPE_SPOB_BAR );
+      HUNK_CUST( "service_add", HUNK_TYPE_SPOB_SERVICE_ADD,
+                 hunk.u.data = spob_getService( xml_get( cur ) ); );
+      HUNK_CUST( "service_remove", HUNK_TYPE_SPOB_SERVICE_REMOVE,
+                 hunk.u.data = spob_getService( xml_get( cur ) ); );
+      HUNK_NONE( "nomissionspawn_add", HUNK_TYPE_SPOB_NOMISNSPAWN_ADD );
+      HUNK_NONE( "nomissionspawn_remove", HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE );
+      HUNK_STRD( "tech_add", HUNK_TYPE_SPOB_TECH_ADD );
+      HUNK_STRD( "tech_remove", HUNK_TYPE_SPOB_TECH_REMOVE );
+      HUNK_STRD( "tag_add", HUNK_TYPE_SPOB_TAG_ADD );
+      HUNK_STRD( "tag_remove", HUNK_TYPE_SPOB_TAG_REMOVE );
+      HUNK_CUST( "gfx_space", HUNK_TYPE_SPOB_SPACE, char str[PATH_MAX];
+                 snprintf( str, sizeof( str ), SPOB_GFX_SPACE_PATH "%s",
+                           xml_get( cur ) );
+                 hunk.u.name = strdup( str ); );
+      HUNK_CUST( "gfx_exterior", HUNK_TYPE_SPOB_EXTERIOR, char str[PATH_MAX];
+                 snprintf( str, sizeof( str ), SPOB_GFX_EXTERIOR_PATH "%s",
+                           xml_get( cur ) );
+                 hunk.u.name = strdup( str ); );
+      HUNK_STRD( "lua", HUNK_TYPE_SPOB_LUA );
 
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "displayname" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_DISPLAYNAME;
-         hunk.u.name        = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "description" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_DESCRIPTION;
-         hunk.u.name        = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "bar" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_BAR;
-         hunk.u.name        = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "service_add" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_SERVICE_ADD;
-         hunk.u.data        = spob_getService( xml_get( cur ) );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "service_remove" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_SERVICE_REMOVE;
-         hunk.u.data        = spob_getService( xml_get( cur ) );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "nomissionspawn_add" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_NOMISNSPAWN_ADD;
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "nomissionspawn_remove" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE;
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "tech_add" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_TECH_ADD;
-         hunk.u.name        = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "tech_remove" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_TECH_REMOVE;
-         hunk.u.name        = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "tag_add" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_TAG_ADD;
-         hunk.u.name        = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "tag_remove" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_TAG_REMOVE;
-         hunk.u.name        = xml_getStrd( cur );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "gfx_space" ) ) {
-         char str[PATH_MAX];
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_SPACE;
-         snprintf( str, sizeof( str ), SPOB_GFX_SPACE_PATH "%s",
-                   xml_get( cur ) );
-         hunk.u.name = strdup( str );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "gfx_exterior" ) ) {
-         char str[PATH_MAX];
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_EXTERIOR;
-         snprintf( str, sizeof( str ), SPOB_GFX_EXTERIOR_PATH "%s",
-                   xml_get( cur ) );
-         hunk.u.name = strdup( str );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "lua" ) ) {
-         char *str;
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-         hunk.type          = HUNK_TYPE_SPOB_LUA;
-         str                = xml_get( cur );
-         if ( str != NULL )
-            hunk.u.name = strdup( str );
-         else
-            hunk.u.name = NULL;
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      }
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name, cur->name );
    } while ( xml_nextNode( cur ) );
 
@@ -843,39 +634,11 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
    cur = node->xmlChildrenNode;
    do {
       xml_onlyNodes( cur );
-      if ( xml_isNode( cur, "visible" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
 
-         /* Faction type is constant. */
-         hunk.type = HUNK_TYPE_FACTION_VISIBLE;
+      HUNK_NONE( "visible", HUNK_TYPE_FACTION_VISIBLE );
+      HUNK_NONE( "invisible", HUNK_TYPE_FACTION_INVISIBLE );
 
-         /* There is no name. */
-         hunk.u.name = NULL;
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "invisible" ) ) {
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-
-         /* Faction type is constant. */
-         hunk.type = HUNK_TYPE_FACTION_INVISIBLE;
-
-         /* There is no name. */
-         hunk.u.name = NULL;
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "faction" ) ) {
+      if ( xml_isNode( cur, "faction" ) ) {
          buf = xml_get( cur );
          if ( buf == NULL ) {
             WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
@@ -906,6 +669,7 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
    } while ( xml_nextNode( cur ) );
