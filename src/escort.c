@@ -154,7 +154,6 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
       }
       /* Health. */
       if ( p->stats.fbay_health != 1. ) {
-         ;
          pe->intrinsic_stats =
             ss_statsSetList( pe->intrinsic_stats, SS_TYPE_D_ARMOUR_MOD,
                              p->stats.fbay_health, 0, 1 );
@@ -164,7 +163,6 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
       }
       /* Movement. */
       if ( p->stats.fbay_movement != 1. ) {
-         ;
          pe->intrinsic_stats =
             ss_statsSetList( pe->intrinsic_stats, SS_TYPE_D_SPEED_MOD,
                              p->stats.fbay_movement, 0, 1 );
