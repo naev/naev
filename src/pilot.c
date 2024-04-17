@@ -3266,9 +3266,6 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    ShipOutfitSlot *ship_list[] = { ship->outfit_structure, ship->outfit_utility,
                                    ship->outfit_weapon };
 
-   /* Clear memory. */
-   memset( pilot, 0, sizeof( Pilot ) );
-
    /* Defaults. */
    pilot->lua_mem      = LUA_NOREF;
    pilot->lua_ship_mem = LUA_NOREF;
@@ -3487,15 +3484,13 @@ Pilot *pilot_create( const Ship *ship, const char *name, int faction,
 
    /* Set the pilot in the stack -- must be there before initializing */
    array_push_back( &pilot_stack, p );
+   memset( p, 0, sizeof( Pilot ) );
 
    /* Load ship graphics. */
    ship_gfxLoad( (Ship *)ship ); /* TODO no casting. */
 
-   /* Initialize the pilot. */
-   pilot_init( p, ship, name, faction, dir, pos, vel, flags, dockpilot,
-               dockslot );
-
-   /* Set the ID. */
+   /* Set the ID, has to be set before pilot_init as escort stuff may do
+    * pilot_get in pilot_init. */
    if ( pilot_isFlagRaw(
            flags, PILOT_PLAYER ) ) { /* Set player ID. TODO should probably be
                                         fixed to something better someday. */
@@ -3505,6 +3500,10 @@ Pilot *pilot_create( const Ship *ship, const char *name, int faction,
    } else
       p->id =
          ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
+
+   /* Initialize the pilot. */
+   pilot_init( p, ship, name, faction, dir, pos, vel, flags, dockpilot,
+               dockslot );
 
    /* Initialize AI if applicable. */
    if ( ai == NULL )
@@ -3544,6 +3543,7 @@ Pilot *pilot_createEmpty( const Ship *ship, const char *name, int faction,
       WARN( _( "Unable to allocate memory" ) );
       return 0;
    }
+   memset( dyn, 0, sizeof( Pilot ) );
    pilot_init( dyn, ship, name, faction, 0., NULL, NULL, flags, 0, 0 );
    return dyn;
 }
@@ -3572,6 +3572,8 @@ unsigned int pilot_clone( const Pilot *ref )
    /* Set the pilot in the stack -- must be there before initializing */
    p  = &array_grow( &pilot_stack );
    *p = dyn;
+   memset( dyn, 0, sizeof( Pilot ) );
+   dyn->id = ++pilot_id; /* new unique pilot id. */
 
    /* Initialize the pilot. */
    pilot_init( dyn, ref->ship, ref->name, ref->faction, ref->solid.dir,
