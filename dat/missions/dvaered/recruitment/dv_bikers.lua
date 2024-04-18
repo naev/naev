@@ -8,7 +8,7 @@
  <faction>Dvaered</faction>
  <done>Dvaered Negotiation 1</done>
  <cond>
-   if faction.playerStanding("Dvaered") &lt; 20 then
+   if faction.playerStanding("Dvaered") &lt; 0 then
       return false
    end
    return require("misn_test").reweight_active()
@@ -75,13 +75,20 @@ function create()
 end
 
 function accept()
-   misn.accept()
-
    -- Discussion
    vn.clear()
    vn.scene()
    local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
    local doaccept = false
+
+   local std = faction.playerStanding("Dvaered")
+   if std < 20 then
+      sol(fmt.f(_([["Hello, citizen. You lack reputation with House Dvareed for us to entrust you with work."
+
+You need at least {needed} standing with House Dvaered to do this mission (you have {amount} standing).]]),
+         {needed=20, amount=std}))
+      vn.done()
+   end
 
    vn.transition()
    sol(_([["Good day, citizen. I have a new task for you, in relation to our efforts to get a second battlecruiser for Lord Fatgun. Are you interested?"]]))
@@ -117,6 +124,7 @@ So, as the negotiations with Goddard shareholders is making progress, we identif
 
    -- Test acceptance
    if not doaccept then misn.finish(false) end
+   misn.accept()
 
    -- Mission details
    misn.setTitle(_("Dvaered Negotiation 2"))

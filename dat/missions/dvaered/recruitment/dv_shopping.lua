@@ -8,7 +8,7 @@
  <faction>Dvaered</faction>
  <done>Dvaered Negotiation 2</done>
  <cond>
-   if faction.playerStanding("Dvaered") &lt; 20 then
+   if faction.playerStanding("Dvaered") &lt;= 0 then
       return false
    end
    if system.get("Goddard"):jumpDist() &gt;= 10 then
@@ -68,7 +68,6 @@ function create()
 end
 
 function accept()
-   misn.accept()
    local pay = 100e3
 
    -- Discussion
@@ -76,6 +75,15 @@ function accept()
    vn.scene()
    local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
    local doaccept = false
+
+   local std = faction.playerStanding("Dvaered")
+   if std < 20 then
+      sol(fmt.f(_([["Hello, citizen. You lack reputation with House Dvareed for us to entrust you with work."
+
+You need at least {needed} standing with House Dvaered to do this mission (you have {amount} standing).]]),
+         {needed=20, amount=std}))
+      vn.done()
+   end
 
    vn.transition()
    sol(fmt.f(_([["Hello, citizen. We finally got the formal agreement of The Goddard Company for the obtention of our second battlecruiser. We would like you to escort our convoy to and from Zhiru. I can pay you {credits} Are you interested in that mission?"]]), {credits=fmt.credits(pay)}))
@@ -98,6 +106,7 @@ I would like you to specially take the anti-bomber role. For that, I recommend y
 
    -- Test acceptance
    if not doaccept then misn.finish(false) end
+   misn.accept()
 
    -- Mission details
    local nextsys = lmisn.getNextSystem(system.cur(), mem.godsys)

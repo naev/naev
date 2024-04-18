@@ -8,7 +8,7 @@
  <faction>Dvaered</faction>
  <done>Dvaered Census 0</done>
  <cond>
-   if faction.playerStanding("Dvaered") &lt;= 20 then
+   if faction.playerStanding("Dvaered") &lt;= 0 then
       return false
    end
    if diff.isApplied("flf_dead") then
@@ -76,8 +76,6 @@ function create()
 end
 
 function accept()
-   misn.accept()
-
    local sys
    mem.spob1, sys      = spob.getS("Zhiru")
    mem.spob2, mem.sys2 = spob.getS("Caladan")
@@ -89,6 +87,15 @@ function accept()
    vn.scene()
    local sol = vn.newCharacter( _("Dvaered Soldier"), { image=portrait.getFullPath(port) } )
    local doaccept = false
+
+   local std = faction.playerStanding("Dvaered")
+   if std < 20 then
+      sol(fmt.f(_([["Hello, citizen. You lack reputation with House Dvareed for us to entrust you with work."
+
+You need at least {needed} standing with House Dvaered to do this mission (you have {amount} standing).]]),
+         {needed=20, amount=std}))
+      vn.done()
+   end
 
    vn.transition( )
    sol(fmt.f(_([[I am glad to meet you, citizen {player}. Please let me introduce myself: I am...]]), {player=player.name()}))
@@ -117,6 +124,7 @@ Oh, I almost forgot! There is one thing you are authorized to know: this cargo i
 
    -- Test acceptance
    if not doaccept then misn.finish(false) end
+   misn.accept()
 
    -- Mission details
    mem.credits = 50e3

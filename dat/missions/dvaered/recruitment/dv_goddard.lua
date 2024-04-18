@@ -8,7 +8,7 @@
  <faction>Dvaered</faction>
  <done>Dvaered Delivery</done>
  <cond>
-   if faction.playerStanding("Dvaered") &lt; 20 then
+   if faction.playerStanding("Dvaered") &lt; 0 then
       return false
    end
    --return require("misn_test").reweight_active() -- don't reweight for licenses
@@ -88,8 +88,6 @@ function create()
 end
 
 function accept()
-
-   misn.accept()
    mem.mass = 1
 
    -- Discussion
@@ -98,8 +96,17 @@ function accept()
    local cyb = vn.newCharacter( _("Cyborg"), { image=portrait.getFullPath(cyborPort) } )
    local sol = vn.newCharacter( _("Dvaered Soldier"), { image=portrait.getFullPath(agentPort) } )
    local doaccept = false
-
    vn.transition()
+
+   local std = faction.playerStanding("Dvaered")
+   if std < 20 then
+      sol(fmt.f(_([["Hello, citizen. You lack reputation with House Dvareed for us to entrust you with work."
+
+You need at least {needed} standing with House Dvaered to do this mission (you have {amount} standing).]]),
+         {needed=20, amount=std}))
+      vn.done()
+   end
+
    sol(_("Good day, citizen. I am Colonel Okran, second in command under Lord Fatgun. Do you know Lord Fatgun?"))
    vn.menu{
       {_("Of course! I am his greatest fan!"), "fan"},
@@ -174,6 +181,7 @@ function accept()
 
    -- Test acceptance
    if not doaccept then misn.finish(false) end
+   misn.accept()
 
    -- Mission details
    mem.credits = 100e3
