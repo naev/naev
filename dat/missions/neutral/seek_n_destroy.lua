@@ -417,16 +417,18 @@ function hail( target )
    m._seekndestroy_rnd2 = rnd.rnd()
 
    -- Custom option
+   local lbl = "seekndestroy_check"
+   local mmem = mem -- have to use auxiliary variable here
    ccomm.customComm( target, function ()
-      if mem.stage ~= 0 or system.cur() ~= mem.mysys[mem.cursys] or inlist( hailed, target )then
+      if mmem.stage ~= 0 or system.cur() ~= mmem.mysys[mmem.cursys] or inlist( hailed, target )then
          return nil -- Past first stage
       end
       return fmt.f(_("Ask about {plt} (#bSeek And Destroy#0)"),
-         {plt=mem.name,})
+         {plt=mmem.name,})
    end, function ( lvn, vnp )
       lvn.func( function ()
          table.insert( hailed, target )
-         if mem.cursys+1 >= mem.nbsys then -- No more claimed system : need to finish the mission
+         if mmem.cursys+1 >= mem.nbsys then -- No more claimed system : need to finish the mission
             return lvn.jump( "seekndestroy_cold")
          end
          return lvn.jump("seekndestroy_std")
@@ -434,9 +436,9 @@ function hail( target )
 
       -- Message has gone cold
       lvn.label("seekndestroy_cold")
-      vnp(fmt.f( quotes.cold[m._seekndestroy_cold], {plt=mem.name}))
+      vnp(fmt.f( quotes.cold[m._seekndestroy_cold], {plt=mmem.name}))
       lvn.func( function ()
-         m.comm_custom = nil -- TODO Not good to overwrite others, but oh well
+         ccomm.customCommRemove( lbl )
          misn.finish(false)
       end )
       lvn.jump("menu")
@@ -444,13 +446,13 @@ function hail( target )
       lvn.label("seekndestroy_std")
       lvn.func( function ()
          -- If hailed pilot is enemy to the target, there is less chance he knows
-         if mem.target_faction:areEnemies( target:faction() ) then
+         if mmem.target_faction:areEnemies( target:faction() ) then
             m._seekndestroy_know = (m._seekndestroy_rnd1 > 0.9)
          else
             m._seekndestroy_know = (m._seekndestroy_rnd1 > 0.3)
          end
 
-         -- If hailed pilot is enemy to the player, there is less chance he mem.tells
+         -- If hailed pilot is enemy to the player, there is less chance they mmem.tells
          if target:hostile() then
             m._seekndestroy_tells = (m._seekndestroy_rnd2 > 0.95)
          else
@@ -468,7 +470,7 @@ function hail( target )
 
       lvn.label("seekndestroy_notknow")
       vnp(fmt.f( quotes.dono[m._seekndestroy_dono],
-            {plt=mem.name}))
+            {plt=mmem.name}))
       lvn.jump("menu")
 
       lvn.label("seekndestroy_tells")
@@ -477,7 +479,7 @@ function hail( target )
          target:setHostile( false )
       end )
       vnp(fmt.f( quotes.clue[m._seekndestroy_clue],
-            {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
+            {plt=mmem.name, sys=mmem.mysys[mmem.cursys+1]}))
       lvn.jump("menu")
 
       lvn.label("seekndestroy_clue")
@@ -511,7 +513,7 @@ function hail( target )
          player.pay(-m._seekndestroy_price)
       end )
       vnp(_([["I know the pilot you're looking for."]]))
-      vnp(fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
+      vnp(fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mmem.name, sys=mmem.mysys[mmem.cursys+1]}))
       lvn.func( function ()
          var.push("seekndestroy_nextsys",true)
          target:setHostile( false )
@@ -542,7 +544,7 @@ function hail( target )
       end )
 
       lvn.label("seekndestroy_scared")
-      vnp(fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
+      vnp(fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=mmem.mysys[mmem.cursys+1]}))
       lvn.func( function ()
          var.push("seekndestroy_nextsys",true)
          target:control()
@@ -552,14 +554,14 @@ function hail( target )
       lvn.done()
 
       lvn.label("seekndestroy_notimpressed")
-      vnp(fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
+      vnp(fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mmem.name, sys=mmem.mysys[mmem.cursys+1]}))
       lvn.func( function ()
          target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
          -- Clean the previous hook if it exists
-         if mem.attack then
-            hook.rm(mem.attack)
+         if mmem.attack then
+            hook.rm(mmem.attack)
          end
-         mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
+         mmem.attack = hook.pilot( target, "attacked", "clue_attacked" )
          player.commClose()
       end )
       lvn.done()
@@ -573,14 +575,14 @@ function hail( target )
       }
 
       lvn.label( "seekndestroy_intimidating" )
-      vnp( fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
+      vnp( fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=mmem.mysys[mmem.cursys+1]} ) )
       lvn.func( function ()
          var.push("seekndestroy_nextsys",true)
          target:control()
          target:runaway(player.pilot())
       end )
       vn.jump("menu")
-   end )
+   end, lbl )
 
    hook.timer(-1, "board_done")
 end

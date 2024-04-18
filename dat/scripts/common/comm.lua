@@ -1,5 +1,6 @@
 local vn
 local lg = require 'love.graphics'
+local fmt = require "format"
 
 local comm = {}
 
@@ -139,14 +140,36 @@ end
       @tparam Pilot plt Pilot to set up for.
       @tparam string|function menu Menu message or function returning message or nil.
       @tparam function setup Function to call to set up the vn nodes when the selected menu option is pressed. Will be passed a local version of the vn library as the first parameter, and the pilot vn character as the second parameter.
+      @tparam string label Label to use with comm.customCommRemove
 --]]
-function comm.customComm( plt, menu, setup )
+function comm.customComm( plt, menu, setup, label )
    local m = plt:memory()
    m.comm_custom = m.comm_custom or {}
    table.insert( m.comm_custom, {
       menu = menu,
       setup = setup,
+      label = label,
    } )
+end
+
+--[[--
+   Removes a custom messag eand handler from a pilot.
+
+      @tparam Pilot plt Pilot te remove from.
+      @tparam string label Label matching label assigned to comm.customComm
+--]]
+function comm.customCommRemove( plt, label )
+   local m = plt:memory()
+   if m.comm_custom then
+      for k,v in ipairs(m.comm_custom) do
+         if v.label==label then
+            table.remove( m.comm_custom, k )
+            return
+         end
+      end
+   end
+   warn(fmt.f(_([[Trying to remove custom comm from pilot {plt} with non-existent label '{label}'!]]),
+      {plt=plt, label=label}))
 end
 
 return comm
