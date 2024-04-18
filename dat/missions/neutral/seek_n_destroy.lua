@@ -473,7 +473,7 @@ function hail( target )
 
       lvn.label("seekndestroy_tells")
       lvn.func( function ()
-         next_sys()
+         var.push("seekndestroy_nextsys",true)
          target:setHostile( false )
       end )
       vnp(fmt.f( quotes.clue[m._seekndestroy_clue],
@@ -489,7 +489,7 @@ function hail( target )
       lvn.func( function ()
          m._seekndestroy_price = (5 + 5*rnd.rnd()) * 1e3
       end )
-      vnp(_("How much money do you have?"))
+      vnp(_([["How much money do you have?"]]))
       lvn.menu( function ()
          return {
             {fmt.f(_([[Pay {amount}]]), {amount=fmt.credits(m._seekndestroy_price)}), "seekndestroy_pay"},
@@ -510,9 +510,10 @@ function hail( target )
          end
          player.pay(-m._seekndestroy_price)
       end )
-      vnp(_("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
+      vnp(_([["I know the pilot you're looking for."]]))
+      vnp(fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
       lvn.func( function ()
-         next_sys()
+         var.push("seekndestroy_nextsys",true)
          target:setHostile( false )
          target:comm(comms.thank[rnd.rnd(1,#comms.thank)])
       end )
@@ -520,22 +521,30 @@ function hail( target )
 
       lvn.label("seekndestroy_threaten")
       lvn.func( function ()
-         -- Everybody except the pirates takes offence if you threaten them
-         if not pir.factionIsPirate( target:faction() ) then
-            faction.modPlayerSingle( target:faction(), -1 )
-         end
+         if not target:hostile() then
+            -- Everybody except the pirates takes offence if you threaten them
+            if not pir.factionIsPirate( target:faction() ) then
+               faction.modPlayerSingle( target:faction(), -1 )
+            end
 
-         if isScared(target) then
-            lvn.jump("seekndestroy_scared")
+            if isScared(target) then
+               return lvn.jump("seekndestroy_scared")
+            else
+               return lvn.jump("seekndestroy_notimpressed")
+            end
          else
-            lvn.jump("seekndestroy_notimpressed")
+            if isScared( target ) and rnd.rnd() < 0.5 then
+               return lvn.jump( "seekndestroy_intimidating" )
+            else
+               return lvn.jump( "seekndestroy_notimpressed" )
+            end
          end
       end )
 
       lvn.label("seekndestroy_scared")
       vnp(fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
       lvn.func( function ()
-         next_sys()
+         var.push("seekndestroy_nextsys",true)
          target:control()
          target:runaway(player.pilot())
          player.commClose()
@@ -562,38 +571,23 @@ function hail( target )
          -- TODO maybe: add the possibility to pay
       }
 
-      lvn.label( "seekndestroy_threaten" )
-      lvn.func( function ()
-         if isScared( target ) and rnd.rnd() < 0.5 then
-            lvn.jump( "seekndestroy_intimidating" )
-         else
-            lvn.jump( "seekndestroy_notimpressed" )
-         end
-      end )
-
       lvn.label( "seekndestroy_intimidating" )
       vnp( fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
       lvn.func( function ()
-         next_sys()
+         var.push("seekndestroy_nextsys",true)
          target:control()
          target:runaway(player.pilot())
       end )
       vn.jump("menu")
-
-      lvn.label( "seekndestroy_notimpressed" )
-      vnp( fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-      lvn.func( function ()
-         target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
-
-         -- Clean the previous hook if it exists
-         if mem.attack then
-            hook.rm(mem.attack)
-         end
-         mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
-      end )
-
-      lvn.jump("menu")
    end )
+
+   hook.timer(-1, "board_done")
+end
+
+function board_done ()
+   if var.peek("seekndestroy_nextsys") then
+      next_sys()
+   end
 end
 
 -- Player attacks an informant who has refused to give info

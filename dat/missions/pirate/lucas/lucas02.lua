@@ -338,7 +338,6 @@ function hail_pirate( p )
             return
          end
          player.pay(-payamount)
-         mem.stage = 2
          var.push("lucas02_gotinfo",true)
       end )
       vnp(_([["Pleasure doing business with ya."]]))
