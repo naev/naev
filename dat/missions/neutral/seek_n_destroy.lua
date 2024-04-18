@@ -554,14 +554,15 @@ function hail( target )
       lvn.label("seekndestroy_notimpressed")
       vnp(fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
       lvn.func( function ()
-            target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
-            -- Clean the previous hook if it exists
-            if mem.attack then
-               hook.rm(mem.attack)
-            end
-            mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
+         target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
+         -- Clean the previous hook if it exists
+         if mem.attack then
+            hook.rm(mem.attack)
+         end
+         mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
+         player.commClose()
       end )
-      lvn.jump("menu")
+      lvn.done()
 
       lvn.label("seekndestroy_hostile")
       vnp(quotes.noinfo[rnd.rnd(1,#quotes.noinfo)])
