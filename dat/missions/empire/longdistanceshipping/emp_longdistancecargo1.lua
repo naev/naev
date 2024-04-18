@@ -7,8 +7,7 @@
    if faction.playerStanding("Empire") &lt; 0 then
       return false
    end
-   local es_misn = var.peek("es_misn") or 0
-   if var.peek("es_cargo") ~= true or es_misn &lt; 2 then
+   if var.peek("es_cargo") ~= true then
       return false
    end
    return require("misn_test").reweight_active()
@@ -51,6 +50,13 @@ function accept ()
    vn.scene()
    local czesc = vn.newCharacter( emp.vn_czesc() )
    vn.transition( emp.czesc.transition )
+
+   -- Case requirement not met, inform the player to do missions
+   if (var.peek("es_misn") or 0) < 2 then
+      czesc(fmt.f(_([[You approach Lieutenant Czesc, he seems a bit busy. "Hey, {player}. I've got some potential work for you. However, the Empire requires a minimum of experience with shipping missions before I can entrust you with it. Try to do a few Empire Shipping (#gES#0) missions and get back to me."]]),
+         {player=player.name()}))
+      vn.done( emp.czesc.transition )
+   end
 
    -- Intro Text
    czesc(_([[You approach Lieutenant Czesc. His demeanor brightens as he sees you. "Hello! I've been looking for you. You've done a great job with those Empire Shipping missions, and we have a new exciting opportunity. You see, the head office is looking to expand business with other factions, which has enormous untapped potential. They need someone competent and trustworthy to help them out. That's where you come in. Interested?"]]))
