@@ -120,7 +120,7 @@ function pirate_hail ()
    vn.transition()
    vn.na(fmt.f(_([[You open a communication channel with {pirate}.]]),{pirate=piratename}))
    p(_([["You look far away from home, kitten."]]))
-   vn.na(_([[You're not sure what they mean by kitten, but you notice something weird on their face. What is up with tha goatee?]]))
+   vn.na(_([[You're not sure what they mean by kitten, but you notice something weird on their face. What is up with that goatee?]]))
    p(fmt.f(_([["You see, you're in {pirate} territory now. Pay {creds} or we'll turn you to scrap metal and sell your parts!"]]),
       {creds=fmt.credits(cost), pirate=piratename}))
 
