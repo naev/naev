@@ -482,7 +482,7 @@ static int tkL_custom( lua_State *L )
 static int tkL_customRename( lua_State *L )
 {
    const char  *s   = luaL_checkstring( L, 1 );
-   unsigned int wid = window_get( "dlgMsg" );
+   unsigned int wid = window_get( "dlgCust" );
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
    window_setDisplayname( wid, s );
@@ -498,7 +498,7 @@ static int tkL_customRename( lua_State *L )
 static int tkL_customFullscreen( lua_State *L )
 {
    int          enable = lua_toboolean( L, 1 );
-   unsigned int wid    = window_get( "dlgMsg" );
+   unsigned int wid    = window_get( "dlgCust" );
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
    dialogue_customFullscreen( enable );
@@ -515,7 +515,7 @@ static int tkL_customFullscreen( lua_State *L )
 static int tkL_customResize( lua_State *L )
 {
    int          w, h;
-   unsigned int wid = window_get( "dlgMsg" );
+   unsigned int wid = window_get( "dlgCust" );
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
    w = luaL_checkinteger( L, 1 );
@@ -534,7 +534,7 @@ static int tkL_customResize( lua_State *L )
 static int tkL_customSize( lua_State *L )
 {
    int          w, h;
-   unsigned int wid = window_get( "dlgMsg" );
+   unsigned int wid = window_get( "dlgCust" );
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
    window_dimWindow( wid, &w, &h );
@@ -549,7 +549,7 @@ static int tkL_customSize( lua_State *L )
  */
 static int tkL_customDone( lua_State *L )
 {
-   unsigned int wid = window_get( "dlgMsg" );
+   unsigned int wid = window_get( "dlgCust" );
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
    lua_pushboolean( L, 1 );

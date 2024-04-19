@@ -904,10 +904,11 @@ void dialogue_custom( const char *caption, int width, int height,
 
    /* create the window */
    if ( fullscreen ) {
-      wid = window_create( "dlgMsg", caption, -1, -1, -1, -1 );
+      wid = window_create( "dlgCust", caption, -1, -1, -1, -1 );
       window_setBorder( wid, 0 );
    } else
-      wid = window_create( "dlgMsg", caption, -1, -1, width + 40, height + 60 );
+      wid =
+         window_create( "dlgCust", caption, -1, -1, width + 40, height + 60 );
    window_setData( wid, &done );
 
    /* custom widget for all! */
@@ -955,7 +956,7 @@ void dialogue_custom( const char *caption, int width, int height,
 int dialogue_customFullscreen( int enable )
 {
    struct dialogue_custom_data_s *cd;
-   unsigned int                   wid = window_get( "dlgMsg" );
+   unsigned int                   wid = window_get( "dlgCust" );
    int                            w, h;
    if ( wid == 0 )
       return -1;
@@ -991,7 +992,7 @@ int dialogue_customFullscreen( int enable )
 int dialogue_customResize( int width, int height )
 {
    struct dialogue_custom_data_s *cd;
-   unsigned int                   wid = window_get( "dlgMsg" );
+   unsigned int                   wid = window_get( "dlgCust" );
    if ( wid == 0 )
       return -1;
    cd         = (struct dialogue_custom_data_s *)window_getData( wid );
