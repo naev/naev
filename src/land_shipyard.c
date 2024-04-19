@@ -134,7 +134,7 @@ void shipyard_open( unsigned int wid )
    window_custSetOverlay( wid, "cstSlots", shipyard_renderSlotsOver );
    window_custSetClipping( wid, "cstSlots", 0 );
    window_canFocusWidget( wid, "cstSlots", 0 );
-   window_custAutoFreeData( wid, "cstSlots" );
+   window_custFreeDataFunc( wid, "cstSlots", free );
 
    /* stat text */
    window_addText( wid, -4, -sw - 50 - 70 - 20, sw, -sh - 60 - 70 - 20 + h - bh,

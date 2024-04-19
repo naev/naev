@@ -38,6 +38,7 @@ typedef struct custom_functions_s {
    int resize;
    int textinput;
 } custom_functions_t;
+static void cust_cleanup( void *data );
 static int  cust_update( double dt, void *data );
 static void cust_render( double x, double y, double w, double h, void *data );
 static int  cust_event( unsigned int wid, SDL_Event *event, void *data );
@@ -408,6 +409,22 @@ static int tkL_merchantOutfit( lua_State *L )
 }
 
 /**
+ * @brief Cleans up after the window.
+ */
+static void cust_cleanup( void *data )
+{
+   custom_functions_t *cf = data;
+   lua_State          *L  = cf->L;
+   luaL_unref( L, LUA_REGISTRYINDEX, cf->update );
+   luaL_unref( L, LUA_REGISTRYINDEX, cf->draw );
+   luaL_unref( L, LUA_REGISTRYINDEX, cf->keyboard );
+   luaL_unref( L, LUA_REGISTRYINDEX, cf->mouse );
+   luaL_unref( L, LUA_REGISTRYINDEX, cf->resize );
+   luaL_unref( L, LUA_REGISTRYINDEX, cf->textinput );
+   free( cf );
+}
+
+/**
  * @brief Creates a custom widget window.
  *
  *    @luatparam String title Title of the window.
@@ -458,17 +475,9 @@ static int tkL_custom( lua_State *L )
    lua_setglobal( L, TK_CUSTOMDONE );
 
    /* Create the dialogue. */
-   dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, cf, 1,
-                    !nodynamic );
-
-   /* Clean up. */
+   dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, cf,
+                    !nodynamic, cust_cleanup );
    cf->done = 1;
-   luaL_unref( L, LUA_REGISTRYINDEX, cf->update );
-   luaL_unref( L, LUA_REGISTRYINDEX, cf->draw );
-   luaL_unref( L, LUA_REGISTRYINDEX, cf->keyboard );
-   luaL_unref( L, LUA_REGISTRYINDEX, cf->mouse );
-   luaL_unref( L, LUA_REGISTRYINDEX, cf->resize );
-   luaL_unref( L, LUA_REGISTRYINDEX, cf->textinput );
 
    return 0;
 }

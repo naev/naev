@@ -27,8 +27,7 @@ typedef struct WidgetCustData_ {
                         const char  *wgtname ); /**< Lose focus. */
    int clip; /**< 1 if should clip with glScissors or the like, 0 otherwise. */
    void *userdata;
-   int   autofree; /**< 1 if widget should free userdata upon cleanup, 0 if it
-                      shouldn't. */
+   void ( *free )( void *data );
 } WidgetCustData;
 
 /* Required functions. */
@@ -48,5 +47,6 @@ void  window_custSetOverlay( unsigned int wid, const char *name,
                                                      double bw, double bh,
                                                      void *data ) );
 void *window_custGetData( unsigned int wid, const char *name );
-void  window_custAutoFreeData( unsigned int wid, const char *name );
+void  window_custFreeDataFunc( unsigned int wid, const char *name,
+                               void ( *func )( void *ptr ) );
 void  window_custSetDynamic( unsigned int wid, const char *name, int dynamic );

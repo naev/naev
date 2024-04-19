@@ -303,7 +303,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
                    news_focusLose, widptr );
    window_custSetDynamic( wid, "cstNews", 1 );
    window_canFocusWidget( wid, "cstNews", 0 );
-   window_custAutoFreeData( wid, "cstNews" );
+   window_custFreeDataFunc( wid, "cstNews", free );
 }
 
 /* clears newslines for bar text, for when taking off */

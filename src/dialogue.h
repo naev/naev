@@ -68,15 +68,14 @@ int dialogue_listPanelRaw(
 /*
  * Custom.
  */
-void dialogue_custom( const char *caption, int width, int height,
-                      int ( *update )( double dt, void *data ),
-                      void ( *render )( double x, double y, double w, double h,
-                                        void *data ),
-                      int ( *event )( unsigned int wid, SDL_Event *event,
-                                      void *data ),
-                      void *data, int autofree, int dynamic );
-int  dialogue_customFullscreen( int enable );
-int  dialogue_customResize( int width, int height );
+void dialogue_custom(
+   const char *caption, int width, int height,
+   int ( *update )( double dt, void *data ),
+   void ( *render )( double x, double y, double w, double h, void *data ),
+   int ( *event )( unsigned int wid, SDL_Event *event, void *data ), void *data,
+   int dynamic, void ( *freefunc )( void *data ) );
+int dialogue_customFullscreen( int enable );
+int dialogue_customResize( int width, int height );
 
 /*
  * misc

@@ -71,7 +71,7 @@ void window_addCust(
    wgt->dat.cst.focusGain = focusGain;
    wgt->dat.cst.focusLose = focusLose;
    wgt->dat.cst.userdata  = data;
-   wgt->dat.cst.autofree  = 0;
+   wgt->dat.cst.free      = NULL;
 
    /* position/size */
    wgt->w = (double)w;
@@ -154,8 +154,8 @@ static void cst_renderOverlay( Widget *cst, double bx, double by )
  */
 static void cst_cleanup( Widget *cst )
 {
-   if ( cst->dat.cst.autofree )
-      free( cst->dat.cst.userdata );
+   if ( cst->dat.cst.free != NULL )
+      cst->dat.cst.free( cst->dat.cst.userdata );
 }
 
 /**
@@ -237,12 +237,14 @@ void *window_custGetData( unsigned int wid, const char *name )
  *
  *    @param wid Window to which widget belongs.
  *    @param name Name of the widget.
+ *    @param func Function to use when freeing the data.
  */
-void window_custAutoFreeData( unsigned int wid, const char *name )
+void window_custFreeDataFunc( unsigned int wid, const char *name,
+                              void ( *func )( void *ptr ) )
 {
    Widget *wgt = cst_getWidget( wid, name );
    if ( wgt != NULL )
-      wgt->dat.cst.autofree = 1;
+      wgt->dat.cst.free = func;
 }
 
 /**
