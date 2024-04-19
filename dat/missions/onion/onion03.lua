@@ -11,7 +11,8 @@
    if c == spob.get("Tepdania Prime") then
       return false
    end
-   if not c:tags("generic") then
+   local f = c:faction()
+   if not f or not f:tags("generic") then
       return false
    end
    return true
