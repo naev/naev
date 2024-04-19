@@ -4,9 +4,7 @@ gem 'nanoc', '>=4.0'
 group :nanoc do
   gem 'nanoc-javascript-concatenator'
   gem 'nanoc-external'
-  gem "nanoc-dart-sass",
-    git: "https://github.com/bobbens/nanoc",
-    ref: "6b34ee0d2a1b76be69501ea2291181facaa47664"
+  gem 'nanoc-dart-sass', '>=1.0.3'
 end
 
 gem 'webrick'
