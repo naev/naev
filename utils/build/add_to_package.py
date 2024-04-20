@@ -2,6 +2,7 @@
 
 import os
 import sys
+import shutil
 
 if len(sys.argv) != 2:
     print("Usage: python3 add_to_package.py <filename>")
