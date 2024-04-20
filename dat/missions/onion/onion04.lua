@@ -159,15 +159,26 @@ function land ()
       } )
       mem.state = 3
    elseif mem.state==1 then
-      -- Small extra cutscene
+      -- Small extra optional cutscene
       vn.clear()
       vn.scene()
       local l337 = vn.newCharacter( onion.vn_l337b01{pos="left"} )
       local trixie = vn.newCharacter( onion.vn_trixie{pos="right"} )
       vn.music( onion.loops.hacker )
       vn.transition("electric")
-      l337()
-      trixie()
+      vn.na(_([[You land and go inspect the cargo you pulled off of the Nexus Convoy. It seems like the two hackers hitch-hiking on your ship's systems take notice and their holograms appear before you.]]))
+      l337(fmt.f(_([["Nice flying out there! See, Trixie, I told you it would be a piece of cake for {player}!"]]),
+         {player=player.name()}))
+      trixie(_([["Stop making me hungry!"
+They pause for a second.
+"I'm just worried that it seems like their security was weaker than before."]]))
+      l337(_([["Really? Aren't you just being overly paranoid?"]]))
+      trixie(_([["I hope so. It'll still take a while for them to notice that the convoy is missing, given all the noise we added on the Nexus."]]))
+      l337(fmt.f(_([["I've got a simulation running pretending to be the convoy, so we should have some time to finish pulling off the plan. {player}, you ready to do the swap at {spb}?"]]),
+         {player=player.name(), spb=swapspb}))
+      vn.menu{
+      }
+
       vn.done("electric")
       vn.run()
       -- Advance internal state
