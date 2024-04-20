@@ -30,7 +30,10 @@ source_dir = os.getenv('MESON_INSTALL_DESTDIR_PREFIX')
 output_tarball = os.path.join(os.getenv('MESON_BUILD_ROOT'), 'dist', 'naev-windows.tar.xz')
 
 with tarfile.open(output_tarball, 'w:xz') as tar:
-    tar.add(source_dir, arcname=os.path.basename(source_dir))
+    for root, dirs, files in os.walk(source_dir):
+        for file in files:
+            if file.endswith(('.dll', '.exe')):
+                tar.add(os.path.join(root, file), arcname=os.path.relpath(os.path.join(root, file), source_dir))
 
 if verbose:
     print(f"Created tarball: {output_tarball}")
