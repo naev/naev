@@ -20,6 +20,7 @@ local vn = require "vn"
 local fmt = require "format"
 local vni = require "vnimage"
 local flow = require "ships.lua.lib.flow"
+local tut = require "common.tutorial"
 
 -- TODO better portrait? Maybe reusable character?
 local talker_image, talker_portrait = vni.sirius.fyrra()
@@ -34,7 +35,8 @@ end
 
 local function update_osd ()
    local osd = {
-      fmt.f(_("Activate the {obelisk} ({sys} system)"),{ obelisk=obelisk, sys=obelisksys })
+      fmt.f(_("Activate (hail with {key}) the {obelisk} ({sys} system)"),
+         { obelisk=obelisk, sys=obelisksys, key=tut.getKey("hail") })
    }
    if flow.has( player.pilot() ) then
       table.insert( osd, 1, _("Equip a Flow amplifier or Sirius ship") )
@@ -154,7 +156,7 @@ They help you up.
 
    misn.setTitle(title)
    misn.setReward(fmt.f(_("The {outfit} flow ability."),{outfit=target}))
-   misn.setDesc( fmt.f(_("Go to the {sys} system and activate the {obelisk} and complete the trial."),
+   misn.setDesc( fmt.f(_("Go to the {sys} system and activate (hail) the {obelisk} and complete the trial."),
       {obelisk=obelisk, sys=obelisksys}) )
    update_osd()
 
