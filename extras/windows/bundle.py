@@ -9,11 +9,11 @@ import sys
 os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = '/mingw64/bin:/usr/x86_64-w64-mingw32/bin:/usr/x86_64-w64-mingw32/sys-root/mingw/bin:/usr/lib/mxe/usr/x86_64-w64-mingw32.shared/bin'
 
 def usage():
-    print(f"usage: {os.path.basename(sys.argv[0])} [-v] (Verbose output)")
+    print(f"usage: {os.path.basename(sys.argv[0])} [-d] (Verbose output)")
     print("DLL Bundler for Windows")
     print("This script is called by 'meson install' if building for Windows.")
     print("The intention is for this wrapper to behave in a similar manner to the bundle.py script in extras/macos.")
-    print(f"usage: {os.path.basename(sys.argv[0])} [-v] (Verbose output)")
+    print(f"usage: {os.path.basename(sys.argv[0])} [-d] (Verbose output)")
     sys.exit(1)
 
 verbose = False
@@ -22,7 +22,7 @@ verbose = False
 args = sys.argv[1:]
 while args:
     arg = args.pop(0)
-    if arg == '-v':
+    if arg == '-d':
         verbose = True
     else:
         usage()

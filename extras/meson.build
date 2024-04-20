@@ -1,5 +1,5 @@
 if host_machine.system() == 'windows'
-   meson.add_install_script(join_paths('windows','bundle.py'))
+   meson.add_install_script(join_paths('windows','bundle.py'), debug ? '-d' : [])
 endif
 
 if host_machine.system() == 'darwin'
