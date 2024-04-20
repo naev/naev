@@ -35,11 +35,15 @@ WORKPATH = os.path.join(os.getenv('MESON_BUILD_ROOT'), 'installer_staging')
 BIN_DIR = os.path.join(WORKPATH, 'bin')
 DIST_DIR = os.path.join(os.getenv('MESON_BUILD_ROOT'), 'dist')
 
+# Check if WORKPATH already exists, if not create it
+if not os.path.exists(WORKPATH):
+    os.makedirs(WORKPATH)
+
 # Make temp directory
 os.makedirs(BIN_DIR, exist_ok=True)
 
 # Copy installer assets to staging area
-shutil.copytree(os.path.join(os.getenv('MESON_SOURCE_ROOT'), 'extras/windows/installer_assets'), WORKPATH)
+shutil.copytree(os.path.join(os.getenv('MESON_SOURCE_ROOT'), 'extras/windows/installer_assets'), WORKPATH, dirs_exist_ok=True)
 shutil.copy(os.path.join(os.getenv('MESON_SOURCE_ROOT'), 'LICENSE'), os.path.join(WORKPATH, 'legal/naev-license.txt'))
 shutil.copy(os.path.join(os.getenv('MESON_INSTALL_DESTDIR_PREFIX'), 'dat/VERSION'), os.path.join(WORKPATH, 'VERSION'))
 
