@@ -376,8 +376,8 @@ int main (void) { return 0; }''')
    )
 
    naev_sh = configure_file(
-      input: join_paths('utils','build','naev.sh'),
-      output: 'naev.sh',
+      input: join_paths('utils','build','naev.py'),
+      output: 'naev.py',
       configuration: {
          'build_root': meson.current_build_dir(),
          'source_root': meson.source_root(),
