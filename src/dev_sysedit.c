@@ -256,12 +256,6 @@ void sysedit_open( StarSystem *sys )
                      sysedit_btnRemove );
    i += 1;
 
-   /* Rename. */
-   window_addButton( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * i, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnRename", _( "Rename" ),
-                     sysedit_btnRename );
-   i += 1;
-
    /* New spob. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * i, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnNewSpob", _( "New Spob" ),
@@ -1352,10 +1346,6 @@ static void sysedit_checkButtons( void )
       window_enableButton( sysedit_wid, "btnRemove" );
    else
       window_disableButton( sysedit_wid, "btnRemove" );
-   if ( sel_spob && ( sysedit_nselect == 1 ) )
-      window_enableButton( sysedit_wid, "btnRename" );
-   else
-      window_disableButton( sysedit_wid, "btnRename" );
 
    /* Jump dependent. */
    if ( sel_jump )

@@ -168,7 +168,6 @@ static void uniedit_close( unsigned int wid, const char *wgt );
 static void uniedit_save( unsigned int wid_unused, const char *unused );
 static void uniedit_btnView( unsigned int wid_unused, const char *unused );
 static void uniedit_btnJump( unsigned int wid_unused, const char *unused );
-static void uniedit_btnRename( unsigned int wid_unused, const char *unused );
 static void uniedit_btnEdit( unsigned int wid_unused, const char *unused );
 static void uniedit_btnNew( unsigned int wid_unused, const char *unused );
 static void uniedit_btnOpen( unsigned int wid_unused, const char *unused );
@@ -253,12 +252,6 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnJump", _( "Jump" ),
                         uniedit_btnJump, SDLK_j );
-   buttonPos++;
-
-   /* Rename system. */
-   window_addButton( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
-                     BUTTON_WIDTH, BUTTON_HEIGHT, "btnRename", _( "Rename" ),
-                     uniedit_btnRename );
    buttonPos++;
 
    /* Edit system. */
@@ -498,17 +491,6 @@ static void uniedit_btnJump( unsigned int wid_unused, const char *unused )
    (void)unused;
 
    uniedit_mode = UNIEDIT_JUMP;
-}
-
-/**
- * @brief Renames selected systems.
- */
-static void uniedit_btnRename( unsigned int wid_unused, const char *unused )
-{
-   (void)wid_unused;
-   (void)unused;
-
-   uniedit_renameSys();
 }
 
 /**
@@ -1640,7 +1622,6 @@ static void uniedit_deselect( void )
 
    /* Change window stuff. */
    window_disableButton( uniedit_wid, "btnJump" );
-   window_disableButton( uniedit_wid, "btnRename" );
    window_disableButton( uniedit_wid, "btnEdit" );
    window_disableButton( uniedit_wid, "btnOpen" );
    window_modifyText( uniedit_wid, "txtSelected", _( "No selection" ) );
@@ -1663,7 +1644,6 @@ static void uniedit_selectAdd( StarSystem *sys )
 
    /* Enable buttons again. */
    window_enableButton( uniedit_wid, "btnJump" );
-   window_enableButton( uniedit_wid, "btnRename" );
    window_enableButton( uniedit_wid, "btnEdit" );
    if ( array_size( uniedit_sys ) == 1 )
       window_enableButton( uniedit_wid, "btnOpen" );
