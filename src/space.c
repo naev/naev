@@ -2728,12 +2728,12 @@ int system_rmVirtualSpob( StarSystem *sys, const char *spobname )
 }
 
 /**
- * @brief Adds a jump point to a star system from a diff.
+ * @brief Adds a jump point between two star systems.
  *
  * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to add jump point to.
- *    @param node Parent node containing jump point information.
+ *    @param jumpname Target system to add a jump to.
  *    @return 0 on success.
  */
 int system_addJump( StarSystem *sys, const char *jumpname )
