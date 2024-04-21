@@ -87,7 +87,7 @@ Run:
 meson setup builddir .
 cd builddir
 meson compile
-./naev.sh
+./naev.py
 ```
 
 If you need special settings you can run `meson configure` in your build
@@ -106,7 +106,7 @@ directory to see a list of all available options.
 
 ### RUNNING NAEV
 
-You can run Naev directly from the git repository using the `naev.sh` script
+You can run Naev directly from the git repository using the `naev.py` script
 which will be generated in the build directory. This script will automatically
 set up all the data paths for running Naev. Make sure the art assets are
 checked out and up to date as mentioned in the Updating Art Assets section
