@@ -227,7 +227,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    window_addRect( wid, 0, 0, SCREEN_W, 60, "rctBBar", &cBG, 0 );
 
    /* Close button. */
-   window_addButtonKey( wid, -20, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
+   window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose", _( "Exit" ),
                         uniedit_close, SDLK_x );
    buttonPos++;
@@ -238,49 +238,49 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
                        conf.devautosave );
 
    /* Save button. */
-   window_addButton( wid, -20, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
+   window_addButton( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                      BUTTON_WIDTH, BUTTON_HEIGHT, "btnSave", _( "Save All" ),
                      uniedit_save );
    buttonPos++;
 
    /* View button. */
-   window_addButton( wid, -20, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
+   window_addButton( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                      BUTTON_WIDTH, BUTTON_HEIGHT, "btnView", _( "View Mode" ),
                      uniedit_btnView );
    buttonPos++;
 
    /* Jump toggle. */
-   window_addButtonKey( wid, -20, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
+   window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnJump", _( "Jump" ),
                         uniedit_btnJump, SDLK_j );
    buttonPos++;
 
    /* Rename system. */
-   window_addButton( wid, -20, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
+   window_addButton( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                      BUTTON_WIDTH, BUTTON_HEIGHT, "btnRename", _( "Rename" ),
                      uniedit_btnRename );
    buttonPos++;
 
    /* Edit system. */
-   window_addButtonKey( wid, -20, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
+   window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnEdit", _( "Edit" ),
                         uniedit_btnEdit, SDLK_e );
    buttonPos++;
 
    /* New system. */
-   window_addButtonKey( wid, -20, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
+   window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnNew", _( "New Sys" ),
                         uniedit_btnNew, SDLK_n );
    buttonPos++;
 
    /* Open a system. */
-   window_addButtonKey( wid, -20, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
+   window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnOpen", _( "Open" ),
                         uniedit_btnOpen, SDLK_o );
    buttonPos++;
 
    /* Find a system or spob. */
-   window_addButtonKey( wid, -20, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
+   window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnFind", _( "Find" ),
                         uniedit_btnFind, SDLK_f );
    // buttonPos++;
