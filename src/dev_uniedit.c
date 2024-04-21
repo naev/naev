@@ -125,6 +125,8 @@ static void uniedit_findShowResults( unsigned int wid, map_find_t *found,
                                      int n );
 static void uniedit_centerSystem( unsigned int wid, const char *unused );
 static int  uniedit_sortCompare( const void *p1, const void *p2 );
+/* Options. */;
+static void uniedit_options_close( unsigned int wid, const char *unused );
 /* System editing. */
 static void uniedit_editSys( void );
 static void uniedit_editSysClose( unsigned int wid, const char *name );
@@ -231,11 +233,6 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
                         uniedit_close, SDLK_x );
    buttonPos++;
 
-   /* Autosave toggle. */
-   window_addCheckbox( wid, -150, 25, SCREEN_W / 2 - 150, 20, "chkEditAutoSave",
-                       _( "Automatically save changes" ), uniedit_autosave,
-                       conf.devautosave );
-
    /* Save button. */
    window_addButton( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                      BUTTON_WIDTH, BUTTON_HEIGHT, "btnSave", _( "Save All" ),
@@ -277,6 +274,12 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnFind", _( "Find" ),
                         uniedit_btnFind, SDLK_f );
    // buttonPos++;
+
+   /* Options button. */
+   window_addButton( wid, -15 - BUTTON_WIDTH - 20, 20, BUTTON_HEIGHT,
+                     BUTTON_HEIGHT, "btnOptions", NULL, uniedit_options );
+   window_buttonCustomRender( wid, "btnOptions",
+                              window_buttonCustomRenderGear );
 
    /* Zoom buttons */
    window_addButton( wid, 20, 20, 30, 30, "btnZoomIn", p_( "zoomin", "+" ),
@@ -378,20 +381,28 @@ static void uniedit_save( unsigned int wid_unused, const char *unused )
 /*
  * @brief Toggles autosave.
  */
-void uniedit_autosave( unsigned int wid_unused, const char *unused )
+void uniedit_options( unsigned int wid_unused, const char *unused )
 {
    (void)wid_unused;
    (void)unused;
+   unsigned int wid = window_create( "wdwEditorOptions", _( "Editor Options" ),
+                                     -1, -1, 300, 300 );
+   window_onClose( wid, uniedit_options_close );
 
-   conf.devautosave = window_checkboxState( wid_unused, "chkEditAutoSave" );
+   /* Close button. */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
+                     _( "Close" ), window_close );
+
+   /* Autosave toggle. */
+   window_addCheckbox( wid, 20, -30, 300 - 40, 20, "chkEditAutoSave",
+                       _( "Automatically save changes" ), NULL,
+                       conf.devautosave );
 }
 
-/*
- * @brief Updates autosave check box.
- */
-void uniedit_updateAutosave( void )
+static void uniedit_options_close( unsigned int wid, const char *unused )
 {
-   window_checkboxSet( uniedit_wid, "chkEditAutoSave", conf.devautosave );
+   (void)unused;
+   conf.devautosave = window_checkboxState( wid, "chkEditAutoSave" );
 }
 
 static int factionGenerates( int f, int tocheck, double *w )

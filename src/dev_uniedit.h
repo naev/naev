@@ -12,8 +12,7 @@
 void  uniedit_open( unsigned int wid_unused, const char *unused );
 void  uniedit_selectText( void );
 char *uniedit_nameFilter( const char *name );
-void  uniedit_autosave( unsigned int wid_unused, const char *unused );
-void  uniedit_updateAutosave( void );
+void  uniedit_options( unsigned int wid_unused, const char *unused );
 
 void uniedit_renderMap( double bx, double by, double w, double h, double x,
                         double y, double zoom, double r );

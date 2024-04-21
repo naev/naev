@@ -227,11 +227,6 @@ void sysedit_open( StarSystem *sys )
                         _( "Exit" ), sysedit_close, SDLK_x );
    i = 1;
 
-   /* Autosave toggle. */
-   window_addCheckbox( wid, -150, 25, SCREEN_W / 2 - 150, 20, "chkEditAutoSave",
-                       _( "Automatically save changes" ), uniedit_autosave,
-                       conf.devautosave );
-
    /* Scale. */
    window_addButton( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * i, BUTTON_WIDTH,
                      BUTTON_HEIGHT, "btnScale", _( "Scale" ),
@@ -272,6 +267,12 @@ void sysedit_open( StarSystem *sys )
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * i, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnGrid", _( "Grid" ), sysedit_btnGrid,
                         SDLK_g );
+
+   /* Options button. */
+   window_addButton( wid, -15 - BUTTON_WIDTH - 20, 20, BUTTON_HEIGHT,
+                     BUTTON_HEIGHT, "btnOptions", NULL, uniedit_options );
+   window_buttonCustomRender( wid, "btnOptions",
+                              window_buttonCustomRenderGear );
 
    /* Zoom buttons */
    window_addButton( wid, 20, 20, 30, 30, "btnZoomIn", p_( "zoomin", "+" ),
@@ -335,9 +336,6 @@ static void sysedit_close( unsigned int wid, const char *wgt )
 
    /* Update the universe editor's sidebar text. */
    uniedit_selectText();
-
-   /* Propagate autosave checkbox state */
-   uniedit_updateAutosave();
 
    /* Unset. */
    sysedit_wid = 0;
