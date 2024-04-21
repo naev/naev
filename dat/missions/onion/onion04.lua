@@ -29,6 +29,7 @@
 --]]
 local fmt = require "format"
 local vn = require "vn"
+local vni = require "vnimage"
 local onion = require "common.onion"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
@@ -145,11 +146,42 @@ function land ()
       vn.scene()
       local l337 = vn.newCharacter( onion.vn_l337b01{pos="left"} )
       local trixie = vn.newCharacter( onion.vn_trixie{pos="right"} )
+      local staffimg = vni.faction( cspb:faction() )
+      local staff = vn.newCharacter( _("Spacedock Staff"), { image=staffimg, shader=love_shaders.hologram() } )
       vn.music( onion.loops.hacker )
       vn.transition("electric")
       vn.na(_([[Your ship enters the docks, and the two Onion Society hackers make their timely holographic appearance.]]))
-      l337()
-      trixie()
+      trixie(_([["Quick, l337_b01, to action!"]]))
+      if mem.state==2 then
+         l337(_([["Aye aye captain!"]]))
+         trixie(_([[You think you see what amounts to a grimace from Trixie's avatar.]]))
+      else
+         l337(_([["I'm on it!"]]))
+      end
+      trixie(_([["Damn, it seems denser than expected. We need a distraction. Quick, {player}, do something!"]]))
+      vn.menu{
+         {_([[Power up weapon systems.]]), "01_weapons"},
+         {_([[Bump the ship into the station structure.]]), "01_bump"},
+         {_([["What should I do!?"]]), "01_stumped"},
+      }
+
+      vn.label("01_stumped")
+      trixie(_([["I don't know! Run over a maintenance robot or something!"]]))
+      vn.menu{
+         {_([[Run over a maintenance robot.]]), "01_robot"},
+         {_([[Power up weapon systems.]]), "01_weapons"},
+         {_([[Bump the ship into the station structure.]]), "01_bump"},
+      }
+
+      vn.label("01_bump")
+      vn.jump("01_cont")
+
+      vn.label("01_robot")
+      vn.jump("01_cont")
+
+      vn.label("01_cont")
+      vn.appear( staff, "electric" )
+
       vn.done("electric")
       vn.run()
 
@@ -171,17 +203,41 @@ function land ()
          {player=player.name()}))
       trixie(_([["Stop making me hungry!"
 They pause for a second.
-"I'm just worried that it seems like their security was weaker than before."]]))
+"I'm just worried that it seems like their security was really week... Too weak."]]))
       l337(_([["Really? Aren't you just being overly paranoid?"]]))
-      trixie(_([["I hope so. It'll still take a while for them to notice that the convoy is missing, given all the noise we added on the Nexus."]]))
-      l337(fmt.f(_([["I've got a simulation running pretending to be the convoy, so we should have some time to finish pulling off the plan. {player}, you ready to do the swap at {spb}?"]]),
+      trixie(_([["The devil's in the details! At least it should be a while until they notice that the convoy went missing while your script keeps running."]]))
+      l337(fmt.f(_([["Yeah, the simulation is emulating the convoy, so we should have some time to finish pulling off the plan. {player}, you ready to do the swap at {spb}?"]]),
          {player=player.name(), spb=swapspb}))
       vn.menu{
-         {_([["Piece of cake."]]), "01_cont"},
-         {_([[""]]), "01_cont"},
+         {_([["Piece of cake."]]), "01_cake"},
+         {_([["Security felt tough though..."]]), "01_cont"},
       }
 
-      vn.done("electric")
+      vn.label("01_cake")
+      trixie(_([["That does it! I'm ordering cake!"
+You hear Trixie muttering to themselves.]]))
+      l337(_([["You already ate the last one you got?"]]))
+      trixie(_([["Not my fault I have a sweet tooth!"]]))
+      vn.jump("01_cont")
+
+      vn.label("01_cont")
+      l337(_([["Today, with our fairly limited bandwidth, we were able to break into and override quite a few of their ships. Usually, it's hard enough to access a spaceship's operating system, let alone override it."]]))
+      trixie(_([["This has to be related to the weird patterns we're seeing on the Nexus!"]]))
+      l337(_([["Correlation doesn't imply causation!"]]))
+      trixie(_([["Indeed it does not, but coincidences are not very good omens."]]))
+      l337(_([["Superstitions! However, you tend to have good hunches, so let me see if I can scrap some bandwidth to launch some monitoring spells."]]))
+      trixie(_([["Never can be too careful. There is too much at stake here to mess up.
+You hear a beep.
+"Ah, diagnostics finished, let's see..."]]))
+      trixie(fmt.f(_([["Cargo looks OK! Seems to be lots of encrypted documents, but there also is a nice one-time pad. Exactly what we need. l337_b01, if you can spare the resources, try to de-encrypt some of the documents. {player}, head to {swapspb} in the {swapsys}. We procede with the plan!"]]),
+         {player=player.name(), swapspb=swapspb, swapsys=swapsys}))
+      l337(_([["Aye aye captain!"]]))
+      trixie(fmt.f(_([["Stop mocking me, the captain here is {player}!"]]),
+         {player=player.name()}))
+
+      vn.scene()
+      vn.transition("electric")
+      vn.na(_([[The holograms fade out, probably to conserve bandwidth, and you are left with the task at hand.]]))
       vn.run()
       -- Advance internal state
       mem.state = 2
