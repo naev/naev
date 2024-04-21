@@ -349,6 +349,7 @@ function won ()
       _("Land and talk communicate with l337_b01"),
    } )
    mem.state = 2
+   pilot.toggleSpawn(true) -- spawn again
 end
 
 function rtfm_board( p )
@@ -373,6 +374,7 @@ function rtfm_board( p )
    mem.state = 2
    runaway() -- Others run away
    p:disable() -- Disable pilot permanently
+   pilot.toggleSpawn(true) -- spawn again
 end
 
 -- Misison end cutscene
