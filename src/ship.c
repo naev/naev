@@ -825,6 +825,7 @@ static int ship_parse( Ship *temp, const char *filename )
                ship_setFlag( temp, SHIP_UNIQUE );
                continue;
             }
+            // cppcheck-suppress nullPointerRedundantCheck
             WARN( _( "Ship '%s' has unknown flags node '%s'." ), temp->name,
                   cur->name );
          } while ( xml_nextNode( cur ) );
@@ -857,6 +858,7 @@ static int ship_parse( Ship *temp, const char *filename )
             xmlr_float( cur, "turn", temp->turn );
             xmlr_float( cur, "speed", temp->speed );
             /* All the xmlr_ stuff have continue cases. */
+            // cppcheck-suppress nullPointerRedundantCheck
             WARN( _( "Ship '%s' has unknown movement node '%s'." ), temp->name,
                   cur->name );
          } while ( xml_nextNode( cur ) );
@@ -874,6 +876,7 @@ static int ship_parse( Ship *temp, const char *filename )
             xmlr_float( cur, "energy", temp->energy );
             xmlr_float( cur, "energy_regen", temp->energy_regen );
             /* All the xmlr_ stuff have continue cases. */
+            // cppcheck-suppress nullPointerRedundantCheck
             WARN( _( "Ship '%s' has unknown health node '%s'." ), temp->name,
                   cur->name );
          } while ( xml_nextNode( cur ) );
@@ -890,6 +893,7 @@ static int ship_parse( Ship *temp, const char *filename )
             xmlr_int( cur, "fuel_consumption", temp->fuel_consumption );
             xmlr_float( cur, "cargo", temp->cap_cargo );
             /* All the xmlr_ stuff have continue cases. */
+            // cppcheck-suppress nullPointerRedundantCheck
             WARN( _( "Ship '%s' has unknown characteristic node '%s'." ),
                   temp->name, cur->name );
          } while ( xml_nextNode( cur ) );
