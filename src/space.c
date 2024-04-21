@@ -2476,6 +2476,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
          } while ( xml_nextNode( cur ) );
          continue;
       }
+      // cppcheck-suppress nullPointerRedundantCheck
       WARN( _( "Unknown node '%s' in spob '%s'" ), node->name, spob->name );
    } while ( xml_nextNode( node ) );
 
@@ -2735,10 +2736,42 @@ int system_rmVirtualSpob( StarSystem *sys, const char *spobname )
  *    @param node Parent node containing jump point information.
  *    @return 0 on success.
  */
-int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
+int system_addJump( StarSystem *sys, const char *jumpname )
 {
-   if ( system_parseJumpPointDiff( node, sys ) <= -1 )
-      return 0;
+   JumpPoint  *j;
+   StarSystem *target;
+
+   /* Get target. */
+   target = system_get( jumpname );
+   if ( target == NULL ) {
+      WARN( _( "JumpPoint node for system '%s' has invalid target '%s'." ),
+            sys->name, jumpname );
+      return -1;
+   }
+
+#ifdef DEBUGGING
+   for ( int i = 0; i < array_size( sys->jumps ); i++ ) {
+      JumpPoint *jp = &sys->jumps[i];
+      if ( jp->targetid != target->id )
+         continue;
+
+      WARN( _( "Star System '%s' has duplicate jump point to '%s'." ),
+            sys->name, target->name );
+      return -1;
+   }
+#endif /* DEBUGGING */
+
+   /* Allocate more space. */
+   j = &array_grow( &sys->jumps );
+   memset( j, 0, sizeof( JumpPoint ) );
+
+   /* Set some stuff. */
+   j->target   = target;
+   j->targetid = j->target->id;
+   j->radius   = 200.;
+   j->hide     = HIDE_DEFAULT_JUMP;
+   jp_setFlag( j, JP_AUTOPOS );
+
    systems_reconstructJumps();
    economy_addQueuedUpdate();
 

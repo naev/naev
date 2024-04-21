@@ -123,9 +123,7 @@ typedef enum UniHunkType_ {
  */
 typedef struct UniHunk_ {
    UniHunkTarget_t target; /**< Hunk's target. */
-
-   UniHunkType_t type; /**< Type of hunk it is. */
-   xmlNodePtr    node; /**< Parent node. */
+   UniHunkType_t   type;   /**< Type of hunk it is. */
    union {
       char *name;
       int   data;
@@ -479,8 +477,6 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          else
             WARN( _( "Unidiff '%s': Unknown hunk type '%s' for jump '%s'." ),
                   diff->name, buf, hunk.u.name );
-
-         hunk.node = cur;
 
          /* Apply diff. */
          if ( diff_patchHunk( &hunk ) < 0 )
@@ -904,8 +900,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
    /* Adding a Jump. */
    case HUNK_TYPE_JUMP_ADD:
       diff_universe_changed = 1;
-      return system_addJumpDiff( system_get( hunk->target.u.name ),
-                                 hunk->node );
+      return system_addJump( system_get( hunk->target.u.name ), hunk->u.name );
    /* Removing a jump. */
    case HUNK_TYPE_JUMP_REMOVE:
       diff_universe_changed = 1;
