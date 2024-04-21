@@ -5,18 +5,37 @@
 local lanes = require "ai.core.misc.lanes"
 local pilotai = {}
 
---[[
+--[[--
+   Applies a function to one or more pilots.
+
+      @tparam Pilot|table plts Pilots to apply command to.
+      @tparam function func Function to apply to each pilot. Should take a single parameter.
+--]]
+function pilotai.apply( plts, func )
+   if type(plts)~="table" then
+      plts = {plts}
+   end
+   for k,p in ipairs(plts) do
+      func(p)
+   end
+end
+
+--[[--
    Makes a pilot try to hyperspace to target while not disabling most functionality.
 
    Clears current task.
 
-      @tparam Pilot p Pilot to command.
+      @tparam Pilot|table plts Pilot or pilots to command.
       @tparam Jump|nil target Target jump point. If nil, tries to find a random hyperspace.
 --]]
-function pilotai.hyperspace( p, target )
+function pilotai.hyperspace( plts, target )
+   if type(plts)~="table" then
+      plts = {plts}
+   end
    if not target then
       local jmps = {}
-      local usehidden = p:faction():usesHiddenJumps()
+      -- We assume that they all have the same faction as the first...
+      local usehidden = plts[1]:faction():usesHiddenJumps()
       for k,v in ipairs(system.cur():jumps(true)) do
          if usehidden or not v:hidden() then
             table.insert( jmps, v )
@@ -28,42 +47,47 @@ function pilotai.hyperspace( p, target )
       end
       target = jmps[ rnd.rnd(1,#jmps) ]
    end
-
-   local m = p:memory()
-   m.loiter = 0
-   m.goal = "hyperspace"
-   m.goal_hyperspace = target
-   m.goal_pos = target:pos()
-   m.route = lanes.getRouteP( p, m.goal_pos )
-   p:taskClear() -- Should run idle and the stuff above
+   for k,p in ipairs(plts) do
+      local m = p:memory()
+      m.loiter = 0
+      m.goal = "hyperspace"
+      m.goal_hyperspace = target
+      m.goal_pos = target:pos()
+      m.route = lanes.getRouteP( p, m.goal_pos )
+      p:taskClear() -- Should run idle and the stuff above
+   end
 end
 
---[[
+--[[--
    Makes a pilot patrol a set of waypoints indefinately
 
-      @tparam Pilot p Pilot to make patrol.
+      @tparam Pilot|table plts Pilot or pilots to make patrol.
       @tparam Table waypoints Ordered table with the waypoints as Vec2.
 --]]
-function pilotai.patrol( p, waypoints )
-   local m = p:memory()
-   m.waypoints = waypoints
-   m.loiter = math.huge
+function pilotai.patrol( plts, waypoints )
+   pilotai.apply( plts, function( p )
+      local m = p:memory()
+      m.waypoints = waypoints
+      m.loiter = math.huge
+   end )
 end
 
---[[
+--[[--
    Makes the pilot go to a certain position and guard it. Note that this changes the AI of the pilot.
 
-      @tparam Pilot p Pilot to make guard.
+      @tparam Pilot|table plts Pilot or pilots to make guard.
       @tparam Vec2 pos Position to guard.
 --]]
-function pilotai.guard( p, pos )
-   -- TODO try to figure out how to do this without having to change the AI. Probably a special task could handle it
-   p:changeAI( "guard" )
-   local m = p:memory()
-   m.guardpos = pos
+function pilotai.guard( plts, pos )
+   pilotai.apply( plts, function( p )
+      -- TODO try to figure out how to do this without having to change the AI. Probably a special task could handle it
+      p:changeAI( "guard" )
+      local m = p:memory()
+      m.guardpos = pos
+   end )
 end
 
---[[
+--[[--
    Tries to clear the system by making all the AI pilots go away. Soft alternative to pilot.clear()
 
       @tparam[opt=false] boolean allpilots Wether or not to affect all non-player pilots, or just natural pilots.
