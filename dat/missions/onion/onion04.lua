@@ -33,7 +33,7 @@ local onion = require "common.onion"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
 local fleet = require "fleet"
-local pltai = require "pilotai"
+local pilotai = require "pilotai"
 local der = require 'common.derelict'
 --local lg = require "love.graphics"
 
@@ -140,7 +140,6 @@ end
 function land ()
    local cspb = spob.cur()
    if mem.state==1 or mem.state==2 and cspb==swapspb then
-      -- TODO use an NPC
       -- Cargo swap cutscene
       vn.clear()
       vn.scene()
@@ -148,6 +147,7 @@ function land ()
       local trixie = vn.newCharacter( onion.vn_trixie{pos="right"} )
       vn.music( onion.loops.hacker )
       vn.transition("electric")
+      vn.na(_([[Your ship enters the docks, and the two Onion Society hackers make their timely holographic appearance.]]))
       l337()
       trixie()
       vn.done("electric")
@@ -177,6 +177,8 @@ They pause for a second.
       l337(fmt.f(_([["I've got a simulation running pretending to be the convoy, so we should have some time to finish pulling off the plan. {player}, you ready to do the swap at {spb}?"]]),
          {player=player.name(), spb=swapspb}))
       vn.menu{
+         {_([["Piece of cake."]]), "01_cont"},
+         {_([[""]]), "01_cont"},
       }
 
       vn.done("electric")
@@ -185,15 +187,78 @@ They pause for a second.
       mem.state = 2
 
    elseif mem.state==3 and cspb==targetspb then
-      -- TODO probably use an NPC
-      mem.state = 4
+      misn.npcAdd( "breakin", _("Onion Society"), onion.img_onion().tex, _([[Break into the Nexus Shipyards systems.]]) )
+   elseif mem.state==5 and cspb~=targetspb then
+      -- last cutscene
+      vn.clear()
+      vn.scene()
+      local l337 = vn.newCharacter( onion.vn_l337b01{pos="left"} )
+      local trixie = vn.newCharacter( onion.vn_trixie{pos="right"} )
+      vn.music( onion.loops.hacker )
+      vn.transition("electric")
+      vn.na(_([[Your ship enters the docks, and the two Onion Society hackers make their timely holographic appearance.]]))
+      l337()
+      trixie()
+      vn.done("electric")
+      vn.run()
    end
+end
+
+function breakin ()
+   vn.clear()
+   vn.scene()
+   local l337 = vn.newCharacter( onion.vn_l337b01{pos="left"} )
+   local trixie = vn.newCharacter( onion.vn_trixie{pos="right"} )
+   vn.music( onion.loops.hacker )
+   vn.transition("electric")
+   vn.na(_([[Your ship enters the docks, and the two Onion Society hackers make their timely holographic appearance.]]))
+   l337()
+   trixie()
+   vn.done("electric")
+   vn.run()
+
+   misn.osdCreate( title, {
+      fmt.f(_([[Break into {spb} ({sys} system)]]),
+      {spb=targetspb, sys=targetsys}),
+   } )
+   mem.state = 4
+   player.takeoff() -- off we go
+end
+
+local function fct_baddie ()
+   return faction.dynAdd( "Dummy", "_onion_nexus", _("Nexus IT"), { ai="mercenary" } )
 end
 
 function enter ()
    hook.timerClear()
    if system.cur()==ambushsys and mem.state==0 then
       hook.timer( 7, "prepare" )
+   elseif system.cur()==targetsys and mem.state==4 then
+      -- Small patrol fleet to annoy the player
+      local ships = {
+         "Hawking",
+         "Admonisher",
+         "Admonisher",
+         "Shark",
+         "Shark",
+         "Shark",
+         "Shark",
+      }
+      local baddies1 = fleet.add( 1, ships, fct_baddie(), spob.get("Wellen"):pos() )
+      pilotai.apply( baddies1, function (p)
+         p:rename( fmt.f(_("Nexus {ship}"), {ship=p:ship():name()}))
+         p:setHostile(true)
+      end )
+      pilotai.patrol( baddies1, {
+         vec2.new( 20e3, 9500 ),
+         vec2.new( 300, -3500 ),
+         vec2.new( -12e3, -5e3 ),
+      } )
+
+      -- Player has to run away
+      hook.timer( 5, "baddiechase1" )
+   elseif mem.state==4 then
+      mem.state = 5 -- done with last part
    end
 end
 
@@ -225,10 +290,11 @@ function convoyspawn ()
       system.markerRm( mrk )
       mrk = nil
    end
-   player.msg(_("trixie: Oh boy, that's a lot of ships. Get close and we'll hack!"), true )
+   player.msg(_("Trixie: Oh boy, that's a lot of ships. Get close and we'll hack!"), true )
 
    -- Clear up
-   pltai.clear()
+   pilotai.clear()
+   pilot.toggleSpawn(false)
 
    local ships = {
       "Gawain", -- has the cargo
@@ -247,7 +313,7 @@ function convoyspawn ()
       "Shark",
       "Shark",
    }
-   local fct = faction.dynAdd( "Dummy", "_onion_nexus", _("Nexus IT"), { ai="baddie" } )
+   local fct = fct_baddie()
    local names = {}
    for k,s in ipairs(ships) do
       names[k] = fmt.f(_("Nexus {ship}"), {ship=ship.name(s)})
@@ -305,7 +371,7 @@ function heartbeat ()
    end
    spam = spam-1
    if spam < 0 then
-      player.msg(fmt.f(_("trixie: See the {p}? Get closer!"),{p=l}), true )
+      player.msg(fmt.f(_("Trixie: See the {p}? Get closer!"),{p=l}), true )
    end
    hook.timer( 1, "heartbeat" )
 end
@@ -330,6 +396,7 @@ function board( p )
    misn.markerAdd( swapspb )
 
    hook.timer( 5, "postboard" )
+   pilot.toggleSpawn(true) -- spawn again
 end
 
 function postboard ()
@@ -337,5 +404,47 @@ function postboard ()
 end
 
 function death ()
+   pilot.toggleSpawn(true) -- spawn again
    lmisn.fail(_([[You were supposed to capture the cargo, not destroy the ship!]]))
+end
+
+function baddiechase1 ()
+   player.msg(fmt.f(_("Trixie: {player}, you have to scram! I'll try to cover."), {player=player.name()}), true )
+   hook.timer( 6, "baddiechase2" )
+end
+
+function baddiechase2 ()
+   player.msg(_("l337_b01: Shit, here they come!"), true )
+   hook.timer( 3, "baddiechase3" )
+end
+
+function baddiechase3 ()
+   local ships = {
+      "Pacifier",
+      "Admonisher",
+      "Shark",
+      "Shark",
+   }
+   local baddies = fleet.add( 1, ships, fct_baddie(), targetspb )
+   pilotai.apply( baddies, function (p)
+      p:setHostile(true)
+      p:rename( fmt.f(_("Nexus {ship}"), {ship=p:ship():name()}))
+   end )
+   hook.timer( 7, "baddiechase4" )
+end
+
+function baddiechase4 ()
+   local ships = {
+      "Hawking",
+      "Hawking",
+      "Shark",
+      "Shark",
+      "Shark",
+      "Shark",
+   }
+   local baddies = fleet.add( 1, ships, fct_baddie(), targetspb )
+   pilotai.apply( baddies, function (p)
+      p:setHostile(true)
+      p:rename( fmt.f(_("Nexus {ship}"), {ship=p:ship():name()}))
+   end )
 end
