@@ -280,14 +280,14 @@ void sysedit_open( StarSystem *sys )
                         SDLK_g );
 
    /* Zoom buttons */
-   window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+",
+   window_addButton( wid, 20, 20, 30, 30, "btnZoomIn", p_( "zoomin", "+" ),
                      sysedit_buttonZoom );
-   window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-",
+   window_addButton( wid, 60, 20, 30, 30, "btnZoomOut", p_( "zoomout", "-" ),
                      sysedit_buttonZoom );
 
    /* Selected text. */
    snprintf( buf, sizeof( buf ), _( "Radius: %.0f" ), sys->radius );
-   window_addText( wid, 140, 10, SCREEN_W / 2 - 140, 30, 0, "txtSelected",
+   window_addText( wid, 100, 10, SCREEN_W / 2 - 140, 30, 0, "txtSelected",
                    &gl_smallFont, NULL, buf );
 
    /* Deselect everything. */

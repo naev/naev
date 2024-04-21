@@ -286,9 +286,9 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    // buttonPos++;
 
    /* Zoom buttons */
-   window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+",
+   window_addButton( wid, 20, 20, 30, 30, "btnZoomIn", p_( "zoomin", "+" ),
                      uniedit_buttonZoom );
-   window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-",
+   window_addButton( wid, 60, 20, 30, 30, "btnZoomOut", p_( "zoomout", "-" ),
                      uniedit_buttonZoom );
 
    /* Nebula. */
@@ -300,7 +300,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
                    "txtPresence", &gl_smallFont, NULL, _( "N/A" ) );
 
    /* Selected text. */
-   window_addText( wid, 140, 10, SCREEN_W / 2 - 140, 30, 0, "txtSelected",
+   window_addText( wid, 100, 10, SCREEN_W / 2 - 140, 30, 0, "txtSelected",
                    &gl_smallFont, NULL, NULL );
 
    /* Deselect everything. */
