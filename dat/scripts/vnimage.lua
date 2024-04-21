@@ -8,6 +8,7 @@ local portrait = require "portrait"
 local vn = require "vn"
 local lg = require "love.graphics"
 local fmt = require "format"
+local pir = require "common.pirate"
 
 local vni = {}
 
@@ -273,6 +274,32 @@ vni.sirius.serra = get_list( sirius_serra_m, sirius_serra_f )
 vni.sirius.anyMale = get_list( sirius_shaira_m, sirius_fyrra_m, sirius_serra_m )
 vni.sirius.anyFemale = get_list( sirius_shaira_f, sirius_fyrra_f, sirius_serra_f )
 vni.sirius.any = get_list( sirius_shaira_m, sirius_fyrra_m, sirius_serra_m, sirius_shaira_f, sirius_fyrra_f, sirius_serra_f )
+
+--[[--
+Gets a random portrait fitting for a specific faction.
+   @tparam fct Faction fct Faction to get images for.
+   @treturn string Path of the VN image.
+   @treturn string Path of the portrait image.
+--]]
+function vni.faction( fct )
+   if fct == faction.get("Empire") then
+      return vni.empire()
+   elseif fct == faction.get("Dvaered") then
+      return vni.dvaered()
+   elseif fct == faction.get("Za'lek") then
+      return vni.zalek()
+   elseif fct == faction.get("Soromid") then
+      return vni.soromid()
+   elseif fct == faction.get("Sirius") then
+      return vni.sirius.any()
+   elseif pir.factionIsPirate( fct ) then
+      return vni.pirate()
+   elseif fct == faction.get("Traders Society") then
+      return vni.trader()
+   else
+      return vni.generic()
+   end
+end
 
 --[[--
 Creates a "SOUND ONLY" character for the VN.
