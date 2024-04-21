@@ -1373,6 +1373,7 @@ static int hook_parse( xmlNodePtr base )
                continue;
             }
 
+            // cppcheck-suppress nullPointerRedundantCheck
             WARN( _( "Save has unknown hook node '%s'." ), cur->name );
          } while ( xml_nextNode( cur ) );
 
