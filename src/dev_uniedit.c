@@ -7,7 +7,7 @@
  * @brief Handles the star system editor.
  */
 /** @cond */
-#include "SDL.h"
+#include "SDL_events.h"
 
 #include "naev.h"
 /** @endcond */
@@ -283,7 +283,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    window_addButtonKey( wid, -20, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnFind", _( "Find" ),
                         uniedit_btnFind, SDLK_f );
-   buttonPos++;
+   // buttonPos++;
 
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+",
@@ -562,7 +562,6 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
 {
    const glColour *col;
    glColour        c;
-   double          tx, ty, sr, presence;
 
    col = faction_colour( uniedit_view_faction );
    c.r = col->r;
@@ -571,6 +570,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
    c.a = 0.5;
 
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+      double      tx, ty, sr, presence;
       StarSystem *sys = system_getIndex( i );
 
       tx = x + sys->pos.x * uniedit_zoom;
@@ -869,7 +869,7 @@ static char getValCol( double val )
       return 'r';
    return '0';
 }
-static int getPresenceVal( int f, SpobPresence *ap, double *base,
+static int getPresenceVal( int f, const SpobPresence *ap, double *base,
                            double *bonus )
 {
    int    gf = 0;
@@ -1039,9 +1039,9 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
       /* Count spobs. */
       l = 0;
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
-         Spob  *spob = sys->spobs[j];
-         int    n;
-         char **techs;
+         const Spob *spob = sys->spobs[j];
+         int         n;
+         char      **techs;
          if ( spob->tech == NULL )
             continue;
          techs = tech_getItemNames( spob->tech, &n );
@@ -1722,9 +1722,9 @@ void uniedit_selectText( void )
                             sys->nebu_density, sys->nebu_volatility,
                             sys->nebu_hue * 360. );
          if ( sys->interference > 0. )
-            l += scnprintf( &buf[l], sizeof( buf ) - l,
-                            _( "%s%.1f Interference" ), ( l > 0 ) ? "\n" : "",
-                            sys->interference );
+            /*l +=*/scnprintf( &buf[l], sizeof( buf ) - l,
+                               _( "%s%.1f Interference" ),
+                               ( l > 0 ) ? "\n" : "", sys->interference );
 
          window_modifyText( uniedit_wid, "txtNebula", buf );
 
@@ -2059,7 +2059,7 @@ static void uniedit_editSys( void )
    x += 50 + 12;
 
    /* Next row. */
-   x = 20;
+   // x = 20;
    y -= gl_defFont.h + 15;
 
    s = _( "No lanes" );
@@ -2099,11 +2099,10 @@ static void uniedit_editSys( void )
  */
 static void uniedit_editGenList( unsigned int wid )
 {
-   int                j, n;
-   StarSystem        *sys;
-   const VirtualSpob *va;
-   char             **str;
-   int                y, h, has_spobs;
+   int         j, n;
+   StarSystem *sys;
+   char      **str;
+   int         y, h, has_spobs;
 
    /* Destroy if exists. */
    if ( widget_exists( wid, "lstSpobs" ) )
@@ -2122,8 +2121,8 @@ static void uniedit_editGenList( unsigned int wid )
    if ( has_spobs ) {
       /* Virtual spob button. */
       for ( int i = 0; i < n; i++ ) {
-         va       = sys->spobs_virtual[i];
-         str[j++] = strdup( va->name );
+         const VirtualSpob *va = sys->spobs_virtual[i];
+         str[j++]              = strdup( va->name );
       }
    } else
       str[j++] = strdup( _( "None" ) );
@@ -2338,8 +2337,8 @@ static void uniedit_btnEditTags( unsigned int wid, const char *unused )
       for ( int i = 0; i < array_size( systems_all ); i++ ) {
          StarSystem *s = &systems_all[i];
          for ( int j = 0; j < array_size( s->tags ); j++ ) {
-            char *t     = s->tags[j];
-            int   found = 0;
+            const char *t     = s->tags[j];
+            int         found = 0;
             for ( int k = 0; k < array_size( uniedit_tagslist ); k++ )
                if ( strcmp( uniedit_tagslist[k], t ) == 0 ) {
                   found = 1;
@@ -2420,7 +2419,7 @@ static void uniedit_genTagsList( unsigned int wid )
    n    = 0;
    lack = malloc( array_size( uniedit_tagslist ) * sizeof( char * ) );
    for ( int i = 0; i < array_size( uniedit_tagslist ); i++ ) {
-      char *t = uniedit_tagslist[i];
+      const char *t = uniedit_tagslist[i];
       if ( empty )
          lack[n++] = strdup( t );
       else {
