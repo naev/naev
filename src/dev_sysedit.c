@@ -7,7 +7,7 @@
  * @brief Handles the star system editor.
  */
 /** @cond */
-#include "SDL.h"
+#include "SDL_events.h"
 #include "physfs.h"
 
 #include "naev.h"
@@ -109,7 +109,7 @@ static void sysedit_renderAsteroidExclusion( double bx, double by,
                                              int selected );
 static void sysedit_renderBG( double bx, double bw, double w, double h,
                               double x, double y );
-static void sysedit_renderSprite( glTexture *gfx, double bx, double by,
+static void sysedit_renderSprite( const glTexture *gfx, double bx, double by,
                                   double x, double y, int sx, int sy,
                                   const glColour *c, int selected,
                                   const char *caption );
@@ -178,7 +178,7 @@ static int  sysedit_isSelected( const Select_t *s );
 static void sysedit_checkButtons( void );
 static void sysedit_deselect( void );
 static void sysedit_selectAdd( const Select_t *sel );
-static void sysedit_selectRm( Select_t *sel );
+static void sysedit_selectRm( const Select_t *sel );
 
 /**
  * @brief Opens the system editor interface.
@@ -584,15 +584,15 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
 {
    (void)wid_unused;
    (void)unused;
-   char *file, *filtered;
+   char *file;
 
    if ( dialogue_YesNo( _( "Remove selected objects (excluding jumps)?" ),
                         _( "This can not be undone." ) ) ) {
       for ( int i = 0; i < sysedit_nselect; i++ ) {
          Select_t *sel = &sysedit_select[i];
          if ( sel->type == SELECT_SPOB ) {
-            Spob *sp = sysedit_sys->spobs[sel->u.spob];
-            filtered = uniedit_nameFilter( sp->name );
+            const Spob *sp       = sysedit_sys->spobs[sel->u.spob];
+            char       *filtered = uniedit_nameFilter( sp->name );
             SDL_asprintf( &file, "%s/%s.xml", conf.dev_save_spob, filtered );
             remove( file );
 
@@ -777,10 +777,10 @@ static void sysedit_render( double bx, double by, double w, double h,
 
    /* Render asteroids */
    for ( int i = 0; i < array_size( sys->asteroids ); i++ ) {
-      AsteroidAnchor *ast = &sys->asteroids[i];
-      const Select_t  sel = {
-          .type       = SELECT_ASTEROID,
-          .u.asteroid = i,
+      const AsteroidAnchor *ast = &sys->asteroids[i];
+      const Select_t        sel = {
+                .type       = SELECT_ASTEROID,
+                .u.asteroid = i,
       };
       int selected = sysedit_isSelected( &sel );
       sysedit_renderAsteroidsField( x, y, ast, selected );
@@ -788,10 +788,10 @@ static void sysedit_render( double bx, double by, double w, double h,
 
    /* Render asteroid exclusions */
    for ( int i = 0; i < array_size( sys->astexclude ); i++ ) {
-      AsteroidExclusion *aexcl = &sys->astexclude[i];
-      const Select_t     sel   = {
-               .type         = SELECT_ASTEXCLUDE,
-               .u.astexclude = i,
+      const AsteroidExclusion *aexcl = &sys->astexclude[i];
+      const Select_t           sel   = {
+                     .type         = SELECT_ASTEXCLUDE,
+                     .u.astexclude = i,
       };
       int selected = sysedit_isSelected( &sel );
       sysedit_renderAsteroidExclusion( x, y, aexcl, selected );
@@ -800,11 +800,11 @@ static void sysedit_render( double bx, double by, double w, double h,
    /* Render safe lanes. */
    SafeLane *safelanes = safelanes_get( -1, 0, sys );
    for ( int i = 0; i < array_size( safelanes ); i++ ) {
-      vec2      *posns[2];
-      Spob      *pnt;
-      JumpPoint *njp;
-      glColour   col;
-      SafeLane  *sf = &safelanes[i];
+      vec2           *posns[2];
+      Spob           *pnt;
+      JumpPoint      *njp;
+      glColour        col;
+      const SafeLane *sf = &safelanes[i];
 
       for ( int j = 0; j < 2; j++ ) {
          switch ( sf->point_type[j] ) {
@@ -957,13 +957,12 @@ static void sysedit_renderBG( double bx, double by, double w, double h,
 /**
  * @brief Renders a sprite for the custom widget.
  */
-static void sysedit_renderSprite( glTexture *gfx, double bx, double by,
+static void sysedit_renderSprite( const glTexture *gfx, double bx, double by,
                                   double x, double y, int sx, int sy,
                                   const glColour *c, int selected,
                                   const char *caption )
 {
-   double          tx, ty, z;
-   const glColour *col;
+   double tx, ty, z;
 
    /* Comfort. */
    z = sysedit_zoom;
@@ -982,6 +981,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by,
 
    /* Display caption. */
    if ( caption != NULL ) {
+      const glColour *col;
       if ( selected )
          col = &cRed;
       else
@@ -1330,7 +1330,7 @@ static void sysedit_checkButtons( void )
    sel_asteroid  = 0;
    sel_exclusion = 0;
    for ( int i = 0; i < sysedit_nselect; i++ ) {
-      Select_t *sel = &sysedit_select[i];
+      const Select_t *sel = &sysedit_select[i];
       switch ( sel->type ) {
       case SELECT_SPOB:
          sel_spob++;
@@ -1395,7 +1395,7 @@ static void sysedit_selectAdd( const Select_t *sel )
 /**
  * @brief Removes a system from the selection.
  */
-static void sysedit_selectRm( Select_t *sel )
+static void sysedit_selectRm( const Select_t *sel )
 {
    for ( int i = 0; i < sysedit_nselect; i++ ) {
       if ( sysedit_selectCmp( &sysedit_select[i], sel ) ) {
@@ -1537,7 +1537,7 @@ static void sysedit_editPnt( void )
    window_addText( wid, x, y, l, 20, 1, "txtHide", NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 50, 20, "inpHide", 4, 1, NULL );
    window_setInputFilter( wid, "inpHide", INPUT_FILTER_NUMBER );
-   x += 50 + 10;
+   // x += 50 + 10;
 
    /* Tags. */
    x = 250;
@@ -1687,7 +1687,7 @@ static void sysedit_editJump( void )
    window_addText( wid, x, y, l, 20, 1, "txtHide", NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 50, 20, "inpHide", 4, 1, NULL );
    window_setInputFilter( wid, "inpHide", INPUT_FILTER_NUMBER );
-   x += 50 + 10;
+   // x += 50 + 10;
 
    /* Bottom buttons. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT, "btnClose", _( "Close" ),
@@ -1725,11 +1725,12 @@ static void sysedit_editJumpClose( unsigned int wid, const char *unused )
  */
 static void sysedit_editAsteroids( void )
 {
-   unsigned int    wid;
-   int             x, y, l, bw;
-   char            buf[STRMAX_SHORT];
-   const char     *s;
-   AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
+   unsigned int          wid;
+   int                   x, y, l, bw;
+   char                  buf[STRMAX_SHORT];
+   const char           *s;
+   const AsteroidAnchor *ast =
+      &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
    /* Create the window. */
    wid = window_create( "wdwAsteroidsEditor", _( "Asteroid Field Editor" ), -1,
@@ -1804,9 +1805,10 @@ static void sysedit_editAsteroids( void )
 
 static void sysedit_genAsteroidsList( unsigned int wid )
 {
-   int             hpos, apos, nhave, navail;
-   int             x, y, w, h;
-   AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
+   int                   hpos, apos, nhave, navail;
+   int                   x, y, w, h;
+   const AsteroidAnchor *ast =
+      &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
    const AsteroidTypeGroup *astgroups;
    char                   **have, **available;
 
@@ -1919,11 +1921,11 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
 
 static void sysedit_editExclusion( void )
 {
-   unsigned int       wid;
-   int                x, y, l, bw;
-   char               buf[STRMAX_SHORT];
-   const char        *s;
-   AsteroidExclusion *exc =
+   unsigned int             wid;
+   int                      x, y, l, bw;
+   char                     buf[STRMAX_SHORT];
+   const char              *s;
+   const AsteroidExclusion *exc =
       &sysedit_sys->astexclude[sysedit_select[0].u.astexclude];
 
    /* Create the window. */
@@ -2395,8 +2397,8 @@ static void sysedit_btnTagsEdit( unsigned int wid, const char *unused )
       for ( int i = 0; i < array_size( spob_all ); i++ ) {
          Spob *s = &spob_all[i];
          for ( int j = 0; j < array_size( s->tags ); j++ ) {
-            char *t     = s->tags[j];
-            int   found = 0;
+            const char *t     = s->tags[j];
+            int         found = 0;
             for ( int k = 0; k < array_size( sysedit_tagslist ); k++ )
                if ( strcmp( sysedit_tagslist[k], t ) == 0 ) {
                   found = 1;
@@ -2477,7 +2479,7 @@ static void sysedit_genTagsList( unsigned int wid )
    n    = 0;
    lack = malloc( array_size( sysedit_tagslist ) * sizeof( char * ) );
    for ( int i = 0; i < array_size( sysedit_tagslist ); i++ ) {
-      char *t = sysedit_tagslist[i];
+      const char *t = sysedit_tagslist[i];
       if ( empty )
          lack[n++] = strdup( t );
       else {
@@ -2589,7 +2591,6 @@ static void sysedit_btnFaction( unsigned int wid_unused, const char *unused )
    unsigned int wid;
    int          pos, j, y, h, bw, *factions;
    char       **str;
-   const char  *s;
    Spob        *p;
 
    p = sysedit_sys->spobs[sysedit_select[0].u.spob];
@@ -2611,8 +2612,8 @@ static void sysedit_btnFaction( unsigned int wid_unused, const char *unused )
 
    /* Get current faction. */
    if ( p->presence.faction >= 0 ) {
-      pos = 0;
-      s   = faction_name( p->presence.faction );
+      const char *s = faction_name( p->presence.faction );
+      pos           = 0;
       for ( int i = 0; i < j; i++ )
          if ( strcmp( s, str[i] ) == 0 )
             pos = i;
@@ -2674,7 +2675,7 @@ static void sysedit_btnEdit( unsigned int wid_unused, const char *unused )
 {
    (void)wid_unused;
    (void)unused;
-   Select_t *sel = &sysedit_select[0];
+   const Select_t *sel = &sysedit_select[0];
    if ( sel->type == SELECT_SPOB )
       sysedit_editPnt();
    else if ( sel->type == SELECT_JUMPPOINT )
