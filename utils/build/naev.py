@@ -77,7 +77,8 @@ for mo_path in os.listdir(os.path.join(build_root, "po")):
 for mo_path in os.listdir(os.path.join(build_root, "po")):
     mo_path = os.path.join(build_root, "po", mo_path)
     if os.path.isdir(mo_path):
-        dest_dir = os.path.join(build_root, "dat/gettext")
+        mo_name = os.path.basename(mo_path)
+        dest_dir = os.path.join(build_root, "dat/gettext", mo_name)
         shutil.copytree(mo_path, dest_dir, dirs_exist_ok=True)
         logger.info(f"Copied directory {mo_path} to {dest_dir}")
 
