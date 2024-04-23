@@ -1033,7 +1033,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
          faction_rmAlly( a, b );
          faction_rmAlly( b, a );
          faction_addEnemy( a, b );
-         faction_addAlly( b, a );
+         faction_addEnemy( b, a );
       } else {
          faction_rmAlly( a, b );
          faction_rmAlly( b, a );
