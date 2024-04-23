@@ -76,6 +76,52 @@ static const char *diff_nav_spob =
 static const char *diff_nav_hyperspace =
    NULL; /**< Stores the player's hyperspace target if necessary. */
 
+static const char *hunk_error[HUNK_TYPE_SENTINAL] = {
+   [HUNK_TYPE_SPOB_ADD]            = N_( "   [%s] spob add: '%s'" ),
+   [HUNK_TYPE_SPOB_REMOVE]         = N_( "   [%s] spob remove: '%s'" ),
+   [HUNK_TYPE_VSPOB_ADD]           = N_( "   [%s] virtual spob add: '%s'" ),
+   [HUNK_TYPE_VSPOB_REMOVE]        = N_( "   [%s] virtual spob remove: '%s'" ),
+   [HUNK_TYPE_JUMP_ADD]            = N_( "   [%s] jump add: '%s'" ),
+   [HUNK_TYPE_JUMP_REMOVE]         = N_( "   [%s] jump remove: '%s'" ),
+   [HUNK_TYPE_TECH_ADD]            = N_( "   [%s] tech add: '%s'" ),
+   [HUNK_TYPE_TECH_REMOVE]         = N_( "   [%s] tech remove: '%s'" ),
+   [HUNK_TYPE_SPOB_FACTION]        = N_( "   [%s] spob faction: '%s'" ),
+   [HUNK_TYPE_SPOB_FACTION_REMOVE] = N_( "   [%s] spob faction removal: '%s'" ),
+   [HUNK_TYPE_SPOB_POPULATION]     = N_( "   [%s] spob population: '%s'" ),
+   [HUNK_TYPE_SPOB_POPULATION_REMOVE] =
+      N_( "   [%s] spob population removal: '%s'" ),
+   [HUNK_TYPE_SPOB_DISPLAYNAME] = N_( "   [%s] spob displayname: '%s'" ),
+   [HUNK_TYPE_SPOB_DISPLAYNAME_REVERT] =
+      N_( "   [%s] spob displayname revert: '%s'" ),
+   [HUNK_TYPE_SPOB_DESCRIPTION] = N_( "   [%s] spob description: '%s'" ),
+   [HUNK_TYPE_SPOB_DESCRIPTION_REVERT] =
+      N_( "   [%s] spob description revert: '%s'" ),
+   [HUNK_TYPE_SPOB_BAR]          = N_( "   [%s] spob bar: '%s'" ),
+   [HUNK_TYPE_SPOB_BAR_REVERT]   = N_( "   [%s] spob bar revert: '%s'" ),
+   [HUNK_TYPE_SPOB_SPACE]        = N_( "   [%s] spob space: '%s'" ),
+   [HUNK_TYPE_SPOB_SPACE_REVERT] = N_( "   [%s] spob space revert: '%s'" ),
+   [HUNK_TYPE_SPOB_EXTERIOR]     = N_( "   [%s] spob exterior: '%s'" ),
+   [HUNK_TYPE_SPOB_EXTERIOR_REVERT] =
+      N_( "   [%s] spob exterior revert: '%s'" ),
+   [HUNK_TYPE_SPOB_LUA]             = N_( "   [%s] spob lua: '%s'" ),
+   [HUNK_TYPE_SPOB_LUA_REVERT]      = N_( "   [%s] spob lua revert: '%s'" ),
+   [HUNK_TYPE_SPOB_SERVICE_ADD]     = N_( "   [%s] spob service add: '%s'" ),
+   [HUNK_TYPE_SPOB_SERVICE_REMOVE]  = N_( "   [%s] spob service remove: '%s'" ),
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD] = N_( "   [%s] spob nomissionspawn add" ),
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] =
+      N_( "   [%s] spob nomissionspawn remove" ),
+   [HUNK_TYPE_SPOB_TECH_ADD]     = N_( "   [%s] spob tech add: '%s'" ),
+   [HUNK_TYPE_SPOB_TECH_REMOVE]  = N_( "   [%s] spob tech remove: '%s'" ),
+   [HUNK_TYPE_SPOB_TAG_ADD]      = N_( "   [%s] spob tech add: '%s'" ),
+   [HUNK_TYPE_SPOB_TAG_REMOVE]   = N_( "   [%s] spob tech remove: '%s'" ),
+   [HUNK_TYPE_FACTION_VISIBLE]   = N_( "   [%s] faction visible: '%s'" ),
+   [HUNK_TYPE_FACTION_INVISIBLE] = N_( "   [%s] faction invisible: '%s'" ),
+   [HUNK_TYPE_FACTION_ALLY]      = N_( "   [%s] faction set ally: '%s'" ),
+   [HUNK_TYPE_FACTION_ENEMY]     = N_( "   [%s] faction set enemy: '%s'" ),
+   [HUNK_TYPE_FACTION_NEUTRAL]   = N_( "   [%s] faction set neutral: '%s'" ),
+   [HUNK_TYPE_FACTION_REALIGN] = N_( "   [%s] faction alignment reset: '%s'" ),
+};
+
 /*
  * Prototypes.
  */
@@ -474,10 +520,8 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
       HUNK_STRD( "displayname", HUNK_TYPE_SPOB_DISPLAYNAME );
       HUNK_STRD( "description", HUNK_TYPE_SPOB_DESCRIPTION );
       HUNK_STRD( "bar", HUNK_TYPE_SPOB_BAR );
-      HUNK_CUST( "service_add", HUNK_TYPE_SPOB_SERVICE_ADD,
-                 hunk.u.data = spob_getService( xml_get( cur ) ); );
-      HUNK_CUST( "service_remove", HUNK_TYPE_SPOB_SERVICE_REMOVE,
-                 hunk.u.data = spob_getService( xml_get( cur ) ); );
+      HUNK_STRD( "service_add", HUNK_TYPE_SPOB_SERVICE_ADD );
+      HUNK_STRD( "service_remove", HUNK_TYPE_SPOB_SERVICE_REMOVE );
       HUNK_NONE( "nomissionspawn_add", HUNK_TYPE_SPOB_NOMISNSPAWN_ADD );
       HUNK_NONE( "nomissionspawn_remove", HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE );
       HUNK_STRD( "tech_add", HUNK_TYPE_SPOB_TECH_ADD );
@@ -494,6 +538,7 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
                  hunk.u.name = strdup( str ); );
       HUNK_STRD( "lua", HUNK_TYPE_SPOB_LUA );
 
+      // cppcheck-suppress nullPointerRedundantCheck
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name, cur->name );
    } while ( xml_nextNode( cur ) );
 
@@ -622,139 +667,11 @@ static int diff_patch( xmlNodePtr parent )
       for ( int i = 0; i < nfailed; i++ ) {
          UniHunk_t *fail   = &diff->failed[i];
          char      *target = fail->target.u.name;
-         switch ( fail->type ) {
-         case HUNK_TYPE_SPOB_ADD:
-            WARN( _( "   [%s] spob add: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_REMOVE:
-            WARN( _( "   [%s] spob remove: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_VSPOB_ADD:
-            WARN( _( "   [%s] virtual spob add: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_VSPOB_REMOVE:
-            WARN( _( "   [%s] virtual spob remove: '%s'" ), target,
-                  fail->u.name );
-            break;
-         case HUNK_TYPE_JUMP_ADD:
-            WARN( _( "   [%s] jump add: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_JUMP_REMOVE:
-            WARN( _( "   [%s] jump remove: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_TECH_ADD:
-            WARN( _( "   [%s] tech add: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_TECH_REMOVE:
-            WARN( _( "   [%s] tech remove: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_FACTION:
-            WARN( _( "   [%s] spob faction: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_FACTION_REMOVE:
-            WARN( _( "   [%s] spob faction removal: '%s'" ), target,
-                  fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_POPULATION:
-            WARN( _( "   [%s] spob population: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_POPULATION_REMOVE:
-            WARN( _( "   [%s] spob population removal: '%s'" ), target,
-                  fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_DISPLAYNAME:
-            WARN( _( "   [%s] spob displayname: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_DISPLAYNAME_REVERT:
-            WARN( _( "   [%s] spob displayname revert: '%s'" ), target,
-                  fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_DESCRIPTION:
-            WARN( _( "   [%s] spob description: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_DESCRIPTION_REVERT:
-            WARN( _( "   [%s] spob description revert: '%s'" ), target,
-                  fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_BAR:
-            WARN( _( "   [%s] spob bar: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_BAR_REVERT:
-            WARN( _( "   [%s] spob bar revert: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_SPACE:
-            WARN( _( "   [%s] spob space: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_SPACE_REVERT:
-            WARN( _( "   [%s] spob space revert: '%s'" ), target,
-                  fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_EXTERIOR:
-            WARN( _( "   [%s] spob exterior: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
-            WARN( _( "   [%s] spob exterior revert: '%s'" ), target,
-                  fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_LUA:
-            WARN( _( "   [%s] spob lua: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_LUA_REVERT:
-            WARN( _( "   [%s] spob lua revert: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_SERVICE_ADD:
-            WARN( _( "   [%s] spob service add: '%s'" ), target,
-                  spob_getServiceName( fail->u.data ) );
-            break;
-         case HUNK_TYPE_SPOB_SERVICE_REMOVE:
-            WARN( _( "   [%s] spob service remove: '%s'" ), target,
-                  spob_getServiceName( fail->u.data ) );
-            break;
-         case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
-            WARN( _( "   [%s] spob nomissionspawn add" ), target );
-            break;
-         case HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE:
-            WARN( _( "   [%s] spob nomissionspawn remove" ), target );
-            break;
-         case HUNK_TYPE_SPOB_TECH_ADD:
-            WARN( _( "   [%s] spob tech add: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_TECH_REMOVE:
-            WARN( _( "   [%s] spob tech remove: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_TAG_ADD:
-            WARN( _( "   [%s] spob tech add: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_SPOB_TAG_REMOVE:
-            WARN( _( "   [%s] spob tech remove: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_FACTION_VISIBLE:
-            WARN( _( "   [%s] faction visible: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_FACTION_INVISIBLE:
-            WARN( _( "   [%s] faction invisible: '%s'" ), target,
-                  fail->u.name );
-            break;
-         case HUNK_TYPE_FACTION_ALLY:
-            WARN( _( "   [%s] faction set ally: '%s'" ), target, fail->u.name );
-            break;
-         case HUNK_TYPE_FACTION_ENEMY:
-            WARN( _( "   [%s] faction set enemy: '%s'" ), target,
-                  fail->u.name );
-            break;
-         case HUNK_TYPE_FACTION_NEUTRAL:
-            WARN( _( "   [%s] faction set neutral: '%s'" ), target,
-                  fail->u.name );
-            break;
-         case HUNK_TYPE_FACTION_REALIGN:
-            WARN( _( "   [%s] faction alignment reset: '%s'" ), target,
-                  fail->u.name );
-            break;
-
-         default:
+         if ( ( fail->type < 0 ) || ( fail->type >= HUNK_TYPE_SENTINAL ) ||
+              ( hunk_error[fail->type] == NULL ) )
             WARN( _( "   unknown hunk '%d'" ), fail->type );
-            break;
-         }
+         else
+            WARN( _( hunk_error[fail->type] ), target, fail->u.name );
       }
    }
 
@@ -922,18 +839,24 @@ static int diff_patchHunk( UniHunk_t *hunk )
       p = spob_get( hunk->target.u.name );
       if ( p == NULL )
          return -1;
-      if ( spob_hasService( p, hunk->u.data ) )
+      a = spob_getService( hunk->u.name );
+      if ( a < 0 )
          return -1;
-      spob_addService( p, hunk->u.data );
+      if ( spob_hasService( p, a ) )
+         return -1;
+      spob_addService( p, a );
       diff_universe_changed = 1;
       return 0;
    case HUNK_TYPE_SPOB_SERVICE_REMOVE:
       p = spob_get( hunk->target.u.name );
       if ( p == NULL )
          return -1;
-      if ( !spob_hasService( p, hunk->u.data ) )
+      a = spob_getService( hunk->u.name );
+      if ( a < 0 )
          return -1;
-      spob_rmService( p, hunk->u.data );
+      if ( !spob_hasService( p, a ) )
+         return -1;
+      spob_rmService( p, a );
       diff_universe_changed = 1;
       return 0;
 
@@ -1409,6 +1332,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
    case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
    case HUNK_TYPE_SPOB_LUA:
    case HUNK_TYPE_SPOB_LUA_REVERT:
+   case HUNK_TYPE_SPOB_SERVICE_ADD:
+   case HUNK_TYPE_SPOB_SERVICE_REMOVE:
    case HUNK_TYPE_FACTION_VISIBLE:
    case HUNK_TYPE_FACTION_INVISIBLE:
    case HUNK_TYPE_FACTION_ALLY:

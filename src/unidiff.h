@@ -37,7 +37,7 @@ typedef struct UniHunkTarget_ {
  */
 typedef enum UniHunkType_ {
    HUNK_TYPE_NONE,
-   /* Target should be system. */
+   /* Target should be HUNK_TARGET_SYSTEM. */
    HUNK_TYPE_SPOB_ADD,
    HUNK_TYPE_SPOB_REMOVE,
    HUNK_TYPE_VSPOB_ADD,
@@ -48,10 +48,10 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SSYS_BACKGROUND_REVERT, /* For internal usage. */
    HUNK_TYPE_SSYS_FEATURES,
    HUNK_TYPE_SSYS_FEATURES_REVERT, /* For internal usage. */
-   /* Target should be tech. */
+   /* Target should be HUNK_TARGET_TECH. */
    HUNK_TYPE_TECH_ADD,
    HUNK_TYPE_TECH_REMOVE,
-   /* Target should be spob. */
+   /* Target should be HUNK_TARGET_SPOB. */
    HUNK_TYPE_SPOB_FACTION,
    HUNK_TYPE_SPOB_FACTION_REMOVE, /* For internal usage. */
    HUNK_TYPE_SPOB_POPULATION,
@@ -76,13 +76,15 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SPOB_EXTERIOR_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_LUA,
    HUNK_TYPE_SPOB_LUA_REVERT, /* For internal usage. */
-   /* Target should be faction. */
+   /* Target should be HUNK_TARGET_FACTION. */
    HUNK_TYPE_FACTION_VISIBLE,
    HUNK_TYPE_FACTION_INVISIBLE,
    HUNK_TYPE_FACTION_ALLY,
    HUNK_TYPE_FACTION_ENEMY,
    HUNK_TYPE_FACTION_NEUTRAL,
    HUNK_TYPE_FACTION_REALIGN, /* For internal usage. */
+   /* End marker */
+   HUNK_TYPE_SENTINAL
 } UniHunkType_t;
 
 /**
