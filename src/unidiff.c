@@ -61,6 +61,8 @@ typedef struct UniDiff_ {
    HUNK_CUST( STR, TYPE, hunk.u.name = xml_getStrd( cur ); );
 #define HUNK_UINT( STR, TYPE )                                                 \
    HUNK_CUST( STR, TYPE, hunk.u.data = xml_getUInt( cur ); );
+#define HUNK_FLOAT( STR, TYPE )                                                \
+   HUNK_CUST( STR, TYPE, hunk.u.fdata = xml_getFloat( cur ); );
 
 /*
  * Diff stack.
@@ -1361,8 +1363,7 @@ int diff_save( xmlTextWriterPtr writer )
    xmlw_startElem( writer, "diffs" );
    if ( diff_stack != NULL ) {
       for ( int i = 0; i < array_size( diff_stack ); i++ ) {
-         UniDiff_t *diff = &diff_stack[i];
-
+         const UniDiff_t *diff = &diff_stack[i];
          xmlw_elem( writer, "diff", "%s", diff->name );
       }
    }
@@ -1402,6 +1403,7 @@ int diff_load( xmlNodePtr parent )
                   continue;
                }
                diff_applyInternal( diffName, 0 );
+               continue;
             }
          } while ( xml_nextNode( cur ) );
       }
