@@ -132,6 +132,40 @@ static const char *hunk_error[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_FACTION_NEUTRAL]   = N_( "   [%s] faction set neutral: '%s'" ),
    [HUNK_TYPE_FACTION_REALIGN] = N_( "   [%s] faction alignment reset: '%s'" ),
 };
+static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
+   [HUNK_TYPE_NONE]                    = HUNK_TYPE_SENTINAL,
+   [HUNK_TYPE_SPOB_ADD]                = HUNK_TYPE_SPOB_REMOVE,
+   [HUNK_TYPE_SPOB_REMOVE]             = HUNK_TYPE_SPOB_ADD,
+   [HUNK_TYPE_VSPOB_ADD]               = HUNK_TYPE_VSPOB_REMOVE,
+   [HUNK_TYPE_VSPOB_REMOVE]            = HUNK_TYPE_VSPOB_ADD,
+   [HUNK_TYPE_JUMP_ADD]                = HUNK_TYPE_JUMP_REMOVE,
+   [HUNK_TYPE_JUMP_REMOVE]             = HUNK_TYPE_JUMP_ADD,
+   [HUNK_TYPE_SSYS_BACKGROUND]         = HUNK_TYPE_SSYS_BACKGROUND_REVERT,
+   [HUNK_TYPE_SSYS_FEATURES]           = HUNK_TYPE_SSYS_FEATURES_REVERT,
+   [HUNK_TYPE_TECH_ADD]                = HUNK_TYPE_TECH_REMOVE,
+   [HUNK_TYPE_TECH_REMOVE]             = HUNK_TYPE_TECH_ADD,
+   [HUNK_TYPE_SPOB_FACTION]            = HUNK_TYPE_SPOB_FACTION_REMOVE,
+   [HUNK_TYPE_SPOB_POPULATION]         = HUNK_TYPE_SPOB_POPULATION_REMOVE,
+   [HUNK_TYPE_SPOB_DISPLAYNAME]        = HUNK_TYPE_SPOB_DISPLAYNAME_REVERT,
+   [HUNK_TYPE_SPOB_DESCRIPTION]        = HUNK_TYPE_SPOB_DESCRIPTION_REVERT,
+   [HUNK_TYPE_SPOB_BAR]                = HUNK_TYPE_SPOB_BAR_REVERT,
+   [HUNK_TYPE_SPOB_SERVICE_ADD]        = HUNK_TYPE_SPOB_SERVICE_REMOVE,
+   [HUNK_TYPE_SPOB_SERVICE_REMOVE]     = HUNK_TYPE_SPOB_SERVICE_ADD,
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD]    = HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE,
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] = HUNK_TYPE_SPOB_NOMISNSPAWN_ADD,
+   [HUNK_TYPE_SPOB_TECH_ADD]           = HUNK_TYPE_SPOB_TECH_REMOVE,
+   [HUNK_TYPE_SPOB_TECH_REMOVE]        = HUNK_TYPE_SPOB_TECH_ADD,
+   [HUNK_TYPE_SPOB_TAG_ADD]            = HUNK_TYPE_SPOB_TAG_REMOVE,
+   [HUNK_TYPE_SPOB_TAG_REMOVE]         = HUNK_TYPE_SPOB_TAG_ADD,
+   [HUNK_TYPE_SPOB_SPACE]              = HUNK_TYPE_SPOB_SPACE_REVERT,
+   [HUNK_TYPE_SPOB_EXTERIOR]           = HUNK_TYPE_SPOB_EXTERIOR_REVERT,
+   [HUNK_TYPE_SPOB_LUA]                = HUNK_TYPE_SPOB_LUA_REVERT,
+   [HUNK_TYPE_FACTION_VISIBLE]         = HUNK_TYPE_FACTION_INVISIBLE,
+   [HUNK_TYPE_FACTION_INVISIBLE]       = HUNK_TYPE_FACTION_VISIBLE,
+   [HUNK_TYPE_FACTION_ALLY]            = HUNK_TYPE_FACTION_REALIGN,
+   [HUNK_TYPE_FACTION_ENEMY]           = HUNK_TYPE_FACTION_REALIGN,
+   [HUNK_TYPE_FACTION_NEUTRAL]         = HUNK_TYPE_FACTION_REALIGN,
+};
 
 /*
  * Prototypes.
@@ -177,6 +211,21 @@ int diff_init( void )
    for ( int i = 0; i < HUNK_TYPE_SENTINAL; i++ ) {
       if ( hunk_error[i] == NULL )
          WARN( "HUNK_TYPE '%d' missing error message!", i );
+      if ( hunk_reverse[i] == HUNK_TYPE_NONE ) {
+         /* It's possible that this is an internal usage only reverse one, so we
+          * have to see if something points to it instead. */
+         int found = 0;
+         for ( int j = 0; j < HUNK_TYPE_SENTINAL; j++ ) {
+            if ( hunk_reverse[j] == (UniHunkType_t)i ) {
+               found = 1;
+               break;
+            }
+         }
+         /* If not found, that means that the type is not referred to by anyone.
+          */
+         if ( !found )
+            WARN( "HUNK_TYPE '%d' missing reverse!", i );
+      }
    }
 #endif /* DEBUGGING */
 
@@ -1174,124 +1223,8 @@ static int diff_removeDiff( UniDiff_t *diff )
    for ( int i = 0; i < array_size( diff->applied ); i++ ) {
       UniHunk_t hunk = diff->applied[i];
       /* Invert the type for reverting. */
-      switch ( hunk.type ) {
-      case HUNK_TYPE_SPOB_ADD:
-         hunk.type = HUNK_TYPE_SPOB_REMOVE;
-         break;
-      case HUNK_TYPE_SPOB_REMOVE:
-         hunk.type = HUNK_TYPE_SPOB_ADD;
-         break;
-
-      case HUNK_TYPE_VSPOB_ADD:
-         hunk.type = HUNK_TYPE_VSPOB_REMOVE;
-         break;
-      case HUNK_TYPE_VSPOB_REMOVE:
-         hunk.type = HUNK_TYPE_VSPOB_ADD;
-         break;
-
-      case HUNK_TYPE_JUMP_ADD:
-         hunk.type = HUNK_TYPE_JUMP_REMOVE;
-         break;
-      case HUNK_TYPE_JUMP_REMOVE:
-         hunk.type = HUNK_TYPE_JUMP_ADD;
-         break;
-
-      case HUNK_TYPE_SSYS_BACKGROUND:
-         hunk.type = HUNK_TYPE_SSYS_BACKGROUND_REVERT;
-         break;
-      case HUNK_TYPE_SSYS_FEATURES:
-         hunk.type = HUNK_TYPE_SSYS_FEATURES_REVERT;
-         break;
-
-      case HUNK_TYPE_TECH_ADD:
-         hunk.type = HUNK_TYPE_TECH_REMOVE;
-         break;
-      case HUNK_TYPE_TECH_REMOVE:
-         hunk.type = HUNK_TYPE_TECH_ADD;
-         break;
-
-      case HUNK_TYPE_SPOB_FACTION:
-         hunk.type = HUNK_TYPE_SPOB_FACTION_REMOVE;
-         break;
-
-      case HUNK_TYPE_SPOB_POPULATION:
-         hunk.type = HUNK_TYPE_SPOB_POPULATION_REMOVE;
-         break;
-
-      case HUNK_TYPE_SPOB_DISPLAYNAME:
-         hunk.type = HUNK_TYPE_SPOB_DISPLAYNAME_REVERT;
-         break;
-
-      case HUNK_TYPE_SPOB_DESCRIPTION:
-         hunk.type = HUNK_TYPE_SPOB_DESCRIPTION_REVERT;
-         break;
-
-      case HUNK_TYPE_SPOB_BAR:
-         hunk.type = HUNK_TYPE_SPOB_BAR_REVERT;
-         break;
-
-      case HUNK_TYPE_SPOB_SERVICE_ADD:
-         hunk.type = HUNK_TYPE_SPOB_SERVICE_REMOVE;
-         break;
-      case HUNK_TYPE_SPOB_SERVICE_REMOVE:
-         hunk.type = HUNK_TYPE_SPOB_SERVICE_ADD;
-         break;
-
-      case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
-         hunk.type = HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE;
-         break;
-      case HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE:
-         hunk.type = HUNK_TYPE_SPOB_NOMISNSPAWN_ADD;
-         break;
-
-      case HUNK_TYPE_SPOB_TECH_ADD:
-         hunk.type = HUNK_TYPE_SPOB_TECH_REMOVE;
-         break;
-      case HUNK_TYPE_SPOB_TECH_REMOVE:
-         hunk.type = HUNK_TYPE_SPOB_TECH_ADD;
-         break;
-
-      case HUNK_TYPE_SPOB_TAG_ADD:
-         hunk.type = HUNK_TYPE_SPOB_TAG_REMOVE;
-         break;
-      case HUNK_TYPE_SPOB_TAG_REMOVE:
-         hunk.type = HUNK_TYPE_SPOB_TAG_ADD;
-         break;
-
-      case HUNK_TYPE_SPOB_SPACE:
-         hunk.type = HUNK_TYPE_SPOB_SPACE_REVERT;
-         break;
-
-      case HUNK_TYPE_SPOB_EXTERIOR:
-         hunk.type = HUNK_TYPE_SPOB_EXTERIOR_REVERT;
-         break;
-
-      case HUNK_TYPE_SPOB_LUA:
-         hunk.type = HUNK_TYPE_SPOB_LUA_REVERT;
-         break;
-
-      case HUNK_TYPE_FACTION_VISIBLE:
-         hunk.type = HUNK_TYPE_FACTION_INVISIBLE;
-         break;
-      case HUNK_TYPE_FACTION_INVISIBLE:
-         hunk.type = HUNK_TYPE_FACTION_VISIBLE;
-         break;
-
-      case HUNK_TYPE_FACTION_ALLY:
-         hunk.type = HUNK_TYPE_FACTION_REALIGN;
-         break;
-      case HUNK_TYPE_FACTION_ENEMY:
-         hunk.type = HUNK_TYPE_FACTION_REALIGN;
-         break;
-      case HUNK_TYPE_FACTION_NEUTRAL:
-         hunk.type = HUNK_TYPE_FACTION_REALIGN;
-         break;
-
-      default:
-         WARN( _( "Unknown Hunk type '%d'." ), hunk.type );
-         continue;
-      }
-
+      hunk.type = hunk_reverse[hunk.type];
+      /* Patch. */
       if ( diff_patchHunk( &hunk ) )
          WARN( _( "Failed to remove hunk type '%d'." ), hunk.type );
    }
