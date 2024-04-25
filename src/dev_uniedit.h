@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include "unidiff.h"
+
 #define HIDE_DEFAULT_JUMP 1.0 /**< Default hide value for new jumps. */
 #define RADIUS_DEFAULT 15e3   /**< Default radius for new systems. */
 #define DUST_DENSITY_DEFAULT                                                   \
@@ -16,3 +18,7 @@ void  uniedit_options( unsigned int wid_unused, const char *unused );
 
 void uniedit_renderMap( double bx, double by, double w, double h, double x,
                         double y, double zoom, double r );
+
+/* For when working in diff mode. */
+extern int uniedit_diffMode;
+void       uniedit_diffAdd( const UniHunk_t *hunk );

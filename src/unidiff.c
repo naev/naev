@@ -138,7 +138,6 @@ static int        diff_patchHunk( UniHunk_t *hunk );
 static void       diff_hunkFailed( UniDiff_t *diff, const UniHunk_t *hunk );
 static void       diff_hunkSuccess( UniDiff_t *diff, const UniHunk_t *hunk );
 static void       diff_cleanup( UniDiff_t *diff );
-static void       diff_cleanupHunk( UniHunk_t *hunk );
 /* Misc. */
 static int diff_checkUpdateUniverse( void );
 /* Externed. */
@@ -1300,7 +1299,7 @@ static void diff_cleanup( UniDiff_t *diff )
  *
  *    @param hunk Hunk to clean up.
  */
-static void diff_cleanupHunk( UniHunk_t *hunk )
+void diff_cleanupHunk( UniHunk_t *hunk )
 {
    free( hunk->target.u.name );
    hunk->target.u.name = NULL;

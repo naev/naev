@@ -77,7 +77,9 @@ typedef enum UniEditViewMode_ {
 
 extern StarSystem *systems_stack;
 
-static UniEditMode     uniedit_mode = UNIEDIT_DEFAULT; /**< Editor mode. */
+int                    uniedit_diffMode = 0;
+static UniHunk_t      *uniedit_diff     = NULL;
+static UniEditMode     uniedit_mode     = UNIEDIT_DEFAULT; /**< Editor mode. */
 static UniEditViewMode uniedit_viewmode =
    UNIEDIT_VIEW_DEFAULT;              /**< Editor view mode. */
 static int uniedit_view_faction = -1; /**< Faction currently being viewed. */
@@ -177,6 +179,8 @@ static void uniedit_btnFind( unsigned int wid_unused, const char *unused );
 /* Keybindings handling. */
 static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
                          int isrepeat );
+/* Diffs. */
+static void uniedit_diffClear( void );
 
 /**
  * @brief Opens the system editor interface.
@@ -194,6 +198,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 
    /* Must have no diffs applied. */
    diff_clear();
+   uniedit_diff = array_create( UniHunk_t );
 
    /* Reset some variables. */
    uniedit_mode         = UNIEDIT_DEFAULT;
@@ -353,6 +358,8 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
  */
 static void uniedit_close( unsigned int wid, const char *wgt )
 {
+   uniedit_diffClear();
+
    /* Frees some memory. */
    uniedit_deselect();
 
@@ -2598,4 +2605,17 @@ static void uniedit_chkNolanes( unsigned int wid, const char *wgtname )
       sys_setFlag( sys, SYSTEM_NOLANES );
    else
       sys_rmFlag( sys, SYSTEM_NOLANES );
+}
+
+static void uniedit_diffClear( void )
+{
+   for ( int i = 0; i < array_size( uniedit_diff ); i++ )
+      diff_cleanupHunk( &uniedit_diff[i] );
+   array_free( uniedit_diff );
+   uniedit_diff = 0;
+}
+
+void uniedit_diffAdd( const UniHunk_t *hunk )
+{
+   array_push_back( &uniedit_diff, *hunk );
 }

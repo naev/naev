@@ -106,10 +106,14 @@ typedef struct UniHunk_ {
    } o; /** Old data to possibly replace. */
 } UniHunk_t;
 
+/* Global functions, manily for player stuff. */
 int diff_loadAvailable( void );
+NONNULL( 1 ) int diff_isApplied( const char *name );
 NONNULL( 1 ) int diff_apply( const char *name );
 NONNULL( 1 ) void diff_remove( const char *name );
 void diff_clear( void );
 void diff_free( void );
-NONNULL( 1 ) int diff_isApplied( const char *name );
 void unidiff_universeDefer( int enable );
+
+/* Local functions for hunk management. */
+void diff_cleanupHunk( UniHunk_t *hunk );
