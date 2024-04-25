@@ -48,6 +48,10 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SSYS_BACKGROUND_REVERT, /* For internal usage. */
    HUNK_TYPE_SSYS_FEATURES,
    HUNK_TYPE_SSYS_FEATURES_REVERT, /* For internal usage. */
+   HUNK_TYPE_SSYS_POS_X,
+   HUNK_TYPE_SSYS_POS_X_REVERT, /* For internal usage. */
+   HUNK_TYPE_SSYS_POS_Y,
+   HUNK_TYPE_SSYS_POS_Y_REVERT, /* For internal usage. */
    /* Target should be HUNK_TARGET_TECH. */
    HUNK_TYPE_TECH_ADD,
    HUNK_TYPE_TECH_REMOVE,

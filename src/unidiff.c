@@ -94,6 +94,10 @@ static const char *hunk_name[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_BACKGROUND_REVERT]  = N_( "ssys background revert" ),
    [HUNK_TYPE_SSYS_FEATURES]           = N_( "ssys features" ),
    [HUNK_TYPE_SSYS_FEATURES_REVERT]    = N_( "ssys features revert" ),
+   [HUNK_TYPE_SSYS_POS_X]              = N_( "ssys pos x" ),
+   [HUNK_TYPE_SSYS_POS_X_REVERT]       = N_( "ssys pos x revert" ),
+   [HUNK_TYPE_SSYS_POS_Y]              = N_( "ssys pos y" ),
+   [HUNK_TYPE_SSYS_POS_Y_REVERT]       = N_( "ssys pos x revert" ),
    [HUNK_TYPE_SPOB_FACTION]            = N_( "spob faction" ),
    [HUNK_TYPE_SPOB_FACTION_REMOVE]     = N_( "spob faction removal" ),
    [HUNK_TYPE_SPOB_POPULATION]         = N_( "spob population" ),
@@ -135,6 +139,8 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_JUMP_REMOVE]             = HUNK_TYPE_JUMP_ADD,
    [HUNK_TYPE_SSYS_BACKGROUND]         = HUNK_TYPE_SSYS_BACKGROUND_REVERT,
    [HUNK_TYPE_SSYS_FEATURES]           = HUNK_TYPE_SSYS_FEATURES_REVERT,
+   [HUNK_TYPE_SSYS_POS_X]              = HUNK_TYPE_SSYS_POS_X_REVERT,
+   [HUNK_TYPE_SSYS_POS_Y]              = HUNK_TYPE_SSYS_POS_Y_REVERT,
    [HUNK_TYPE_TECH_ADD]                = HUNK_TYPE_TECH_REMOVE,
    [HUNK_TYPE_TECH_REMOVE]             = HUNK_TYPE_TECH_ADD,
    [HUNK_TYPE_SPOB_FACTION]            = HUNK_TYPE_SPOB_FACTION_REMOVE,
@@ -500,6 +506,8 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
 
       HUNK_STRD( "background", HUNK_TYPE_SSYS_BACKGROUND );
       HUNK_STRD( "features", HUNK_TYPE_SSYS_FEATURES );
+      HUNK_FLOAT( "pos_x", HUNK_TYPE_SSYS_POS_X );
+      HUNK_FLOAT( "pos_y", HUNK_TYPE_SSYS_POS_Y );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
@@ -836,6 +844,26 @@ static int diff_patchHunk( UniHunk_t *hunk )
    case HUNK_TYPE_SSYS_FEATURES_REVERT:
       ssys           = system_get( hunk->target.u.name );
       ssys->features = (char *)hunk->o.name;
+      return 0;
+
+   /* Position changes. */
+   case HUNK_TYPE_SSYS_POS_X:
+      ssys          = system_get( hunk->target.u.name );
+      hunk->o.fdata = ssys->pos.x;
+      ssys->pos.x   = hunk->u.fdata;
+      return 0;
+   case HUNK_TYPE_SSYS_POS_X_REVERT:
+      ssys        = system_get( hunk->target.u.name );
+      ssys->pos.x = hunk->o.fdata;
+      return 0;
+   case HUNK_TYPE_SSYS_POS_Y:
+      ssys          = system_get( hunk->target.u.name );
+      hunk->o.fdata = ssys->pos.y;
+      ssys->pos.y   = hunk->u.fdata;
+      return 0;
+   case HUNK_TYPE_SSYS_POS_Y_REVERT:
+      ssys        = system_get( hunk->target.u.name );
+      ssys->pos.y = hunk->o.fdata;
       return 0;
 
    /* Adding a tech. */
