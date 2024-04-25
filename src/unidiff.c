@@ -47,22 +47,24 @@ typedef struct UniDiff_ {
    UniHunk_t *failed;  /**< Failed hunks. */
 } UniDiff_t;
 
-#define HUNK_CUST( STR, TYPE, FUNC )                                           \
+#define HUNK_CUST( STR, TYPE, DTYPE, FUNC )                                    \
    if ( xml_isNode( cur, STR ) ) {                                             \
       hunk.target.type   = base.target.type;                                   \
       hunk.target.u.name = strdup( base.target.u.name );                       \
       hunk.type          = TYPE;                                               \
+      hunk.dtype         = DTYPE;                                              \
       FUNC if ( diff_patchHunk( &hunk ) < 0 ) diff_hunkFailed( diff, &hunk );  \
       else diff_hunkSuccess( diff, &hunk );                                    \
       continue;                                                                \
    }
-#define HUNK_NONE( STR, TYPE ) HUNK_CUST( STR, TYPE, hunk.u.name = NULL; );
+#define HUNK_NONE( STR, TYPE )                                                 \
+   HUNK_CUST( STR, TYPE, HUNK_DATA_NONE, hunk.u.name = NULL; );
 #define HUNK_STRD( STR, TYPE )                                                 \
-   HUNK_CUST( STR, TYPE, hunk.u.name = xml_getStrd( cur ); );
+   HUNK_CUST( STR, TYPE, HUNK_DATA_STRING, hunk.u.name = xml_getStrd( cur ); );
 #define HUNK_UINT( STR, TYPE )                                                 \
-   HUNK_CUST( STR, TYPE, hunk.u.data = xml_getUInt( cur ); );
+   HUNK_CUST( STR, TYPE, HUNK_DATA_INT, hunk.u.data = xml_getUInt( cur ); );
 #define HUNK_FLOAT( STR, TYPE )                                                \
-   HUNK_CUST( STR, TYPE, hunk.u.fdata = xml_getFloat( cur ); );
+   HUNK_CUST( STR, TYPE, HUNK_DATA_FLOAT, hunk.u.fdata = xml_getFloat( cur ); );
 
 /*
  * Diff stack.
@@ -358,6 +360,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.u.name = strdup( base.target.u.name );
 
          /* Get the spob to modify. */
+         hunk.dtype = HUNK_DATA_STRING;
          xmlr_attr_strd( cur, "name", hunk.u.name );
 
          /* Get the type. */
@@ -386,6 +389,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.u.name = strdup( base.target.u.name );
 
          /* Get the spob to modify. */
+         hunk.dtype = HUNK_DATA_STRING;
          xmlr_attr_strd( cur, "name", hunk.u.name );
 
          /* Get the type. */
@@ -415,6 +419,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.u.name = strdup( base.target.u.name );
 
          /* Get the jump point to modify. */
+         hunk.dtype = HUNK_DATA_STRING;
          xmlr_attr_strd( cur, "target", hunk.u.name );
 
          /* Get the type. */
@@ -529,11 +534,13 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
       HUNK_STRD( "tech_remove", HUNK_TYPE_SPOB_TECH_REMOVE );
       HUNK_STRD( "tag_add", HUNK_TYPE_SPOB_TAG_ADD );
       HUNK_STRD( "tag_remove", HUNK_TYPE_SPOB_TAG_REMOVE );
-      HUNK_CUST( "gfx_space", HUNK_TYPE_SPOB_SPACE, char str[PATH_MAX];
+      HUNK_CUST( "gfx_space", HUNK_TYPE_SPOB_SPACE, HUNK_DATA_STRING,
+                 char str[PATH_MAX];
                  snprintf( str, sizeof( str ), SPOB_GFX_SPACE_PATH "%s",
                            xml_get( cur ) );
                  hunk.u.name = strdup( str ); );
-      HUNK_CUST( "gfx_exterior", HUNK_TYPE_SPOB_EXTERIOR, char str[PATH_MAX];
+      HUNK_CUST( "gfx_exterior", HUNK_TYPE_SPOB_EXTERIOR, HUNK_DATA_STRING,
+                 char str[PATH_MAX];
                  snprintf( str, sizeof( str ), SPOB_GFX_EXTERIOR_PATH "%s",
                            xml_get( cur ) );
                  hunk.u.name = strdup( str ); );
@@ -1304,50 +1311,11 @@ void diff_cleanupHunk( UniHunk_t *hunk )
    free( hunk->target.u.name );
    hunk->target.u.name = NULL;
 
-   switch ( hunk->type ) { /* TODO: Does it really matter? */
-   case HUNK_TYPE_SPOB_ADD:
-   case HUNK_TYPE_SPOB_REMOVE:
-   case HUNK_TYPE_VSPOB_ADD:
-   case HUNK_TYPE_VSPOB_REMOVE:
-   case HUNK_TYPE_JUMP_ADD:
-   case HUNK_TYPE_JUMP_REMOVE:
-   case HUNK_TYPE_SSYS_BACKGROUND:
-   case HUNK_TYPE_SSYS_FEATURES:
-   case HUNK_TYPE_TECH_ADD:
-   case HUNK_TYPE_TECH_REMOVE:
-   case HUNK_TYPE_SPOB_FACTION:
-   case HUNK_TYPE_SPOB_FACTION_REMOVE:
-   case HUNK_TYPE_SPOB_DISPLAYNAME:
-   case HUNK_TYPE_SPOB_DISPLAYNAME_REVERT:
-   case HUNK_TYPE_SPOB_DESCRIPTION:
-   case HUNK_TYPE_SPOB_DESCRIPTION_REVERT:
-   case HUNK_TYPE_SPOB_TECH_ADD:
-   case HUNK_TYPE_SPOB_TECH_REMOVE:
-   case HUNK_TYPE_SPOB_TAG_ADD:
-   case HUNK_TYPE_SPOB_TAG_REMOVE:
-   case HUNK_TYPE_SPOB_BAR:
-   case HUNK_TYPE_SPOB_BAR_REVERT:
-   case HUNK_TYPE_SPOB_SPACE:
-   case HUNK_TYPE_SPOB_SPACE_REVERT:
-   case HUNK_TYPE_SPOB_EXTERIOR:
-   case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
-   case HUNK_TYPE_SPOB_LUA:
-   case HUNK_TYPE_SPOB_LUA_REVERT:
-   case HUNK_TYPE_SPOB_SERVICE_ADD:
-   case HUNK_TYPE_SPOB_SERVICE_REMOVE:
-   case HUNK_TYPE_FACTION_VISIBLE:
-   case HUNK_TYPE_FACTION_INVISIBLE:
-   case HUNK_TYPE_FACTION_ALLY:
-   case HUNK_TYPE_FACTION_ENEMY:
-   case HUNK_TYPE_FACTION_NEUTRAL:
-   case HUNK_TYPE_FACTION_REALIGN:
+   if ( hunk->dtype == HUNK_DATA_STRING ) {
       free( hunk->u.name );
       hunk->u.name = NULL;
-      break;
-
-   default:
-      break;
    }
+
    memset( hunk, 0, sizeof( UniHunk_t ) );
 }
 

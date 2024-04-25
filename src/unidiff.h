@@ -87,17 +87,26 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SENTINAL
 } UniHunkType_t;
 
+typedef enum UniHunkDataType_s {
+   HUNK_DATA_NONE,
+   HUNK_DATA_STRING,
+   HUNK_DATA_INT,
+   HUNK_DATA_FLOAT,
+} UniHunkDataType_t;
+
 /**
  * @struct UniHunk_t
  *
  * @brief Represents a single hunk in the diff.
  */
 typedef struct UniHunk_ {
-   UniHunkTarget_t target; /**< Hunk's target. */
-   UniHunkType_t   type;   /**< Type of hunk it is. */
+   UniHunkTarget_t   target; /**< Hunk's target. */
+   UniHunkType_t     type;   /**< Type of hunk it is. */
+   UniHunkDataType_t dtype;  /**< Type of data to use. */
    union {
-      char *name;
-      int   data;
+      char  *name;
+      int    data;
+      double fdata;
    } u; /**< Actual data to patch. */
    union {
       const char *name; /* We just save the pointer, so keep as const. */
