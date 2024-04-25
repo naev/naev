@@ -81,14 +81,21 @@ static const char *diff_nav_hyperspace =
    NULL; /**< Stores the player's hyperspace target if necessary. */
 
 static const char *hunk_error[HUNK_TYPE_SENTINAL] = {
-   [HUNK_TYPE_SPOB_ADD]            = N_( "   [%s] spob add: '%s'" ),
-   [HUNK_TYPE_SPOB_REMOVE]         = N_( "   [%s] spob remove: '%s'" ),
-   [HUNK_TYPE_VSPOB_ADD]           = N_( "   [%s] virtual spob add: '%s'" ),
-   [HUNK_TYPE_VSPOB_REMOVE]        = N_( "   [%s] virtual spob remove: '%s'" ),
-   [HUNK_TYPE_JUMP_ADD]            = N_( "   [%s] jump add: '%s'" ),
-   [HUNK_TYPE_JUMP_REMOVE]         = N_( "   [%s] jump remove: '%s'" ),
-   [HUNK_TYPE_TECH_ADD]            = N_( "   [%s] tech add: '%s'" ),
-   [HUNK_TYPE_TECH_REMOVE]         = N_( "   [%s] tech remove: '%s'" ),
+   [HUNK_TYPE_NONE]            = N_( "   [%s] none: %s" ),
+   [HUNK_TYPE_SPOB_ADD]        = N_( "   [%s] spob add: '%s'" ),
+   [HUNK_TYPE_SPOB_REMOVE]     = N_( "   [%s] spob remove: '%s'" ),
+   [HUNK_TYPE_VSPOB_ADD]       = N_( "   [%s] virtual spob add: '%s'" ),
+   [HUNK_TYPE_VSPOB_REMOVE]    = N_( "   [%s] virtual spob remove: '%s'" ),
+   [HUNK_TYPE_JUMP_ADD]        = N_( "   [%s] jump add: '%s'" ),
+   [HUNK_TYPE_JUMP_REMOVE]     = N_( "   [%s] jump remove: '%s'" ),
+   [HUNK_TYPE_TECH_ADD]        = N_( "   [%s] tech add: '%s'" ),
+   [HUNK_TYPE_TECH_REMOVE]     = N_( "   [%s] tech remove: '%s'" ),
+   [HUNK_TYPE_SSYS_BACKGROUND] = N_( "   [%s] ssys background: '%s'" ),
+   [HUNK_TYPE_SSYS_BACKGROUND_REVERT] =
+      N_( "   [%s] ssys background revert: '%s'" ),
+   [HUNK_TYPE_SSYS_FEATURES] = N_( "   [%s] ssys features: '%s'" ),
+   [HUNK_TYPE_SSYS_FEATURES_REVERT] =
+      N_( "   [%s] ssys features revert: '%s'" ),
    [HUNK_TYPE_SPOB_FACTION]        = N_( "   [%s] spob faction: '%s'" ),
    [HUNK_TYPE_SPOB_FACTION_REMOVE] = N_( "   [%s] spob faction removal: '%s'" ),
    [HUNK_TYPE_SPOB_POPULATION]     = N_( "   [%s] spob population: '%s'" ),
@@ -162,11 +169,17 @@ static int diff_cmp( const void *p1, const void *p2 )
  *
  *    @return 0 on success.
  */
-int diff_loadAvailable( void )
+int diff_init( void )
 {
 #if DEBUGGING
    Uint32 time = SDL_GetTicks();
+
+   for ( int i = 0; i < HUNK_TYPE_SENTINAL; i++ ) {
+      if ( hunk_error[i] == NULL )
+         WARN( "HUNK_TYPE '%d' missing error message!", i );
+   }
 #endif /* DEBUGGING */
+
    char **diff_files = ndata_listRecursive( UNIDIFF_DATA_PATH );
    diff_available =
       array_create_size( UniDiffData_t, array_size( diff_files ) );
@@ -222,6 +235,10 @@ int diff_loadAvailable( void )
 #endif /* DEBUGGING */
 
    return 0;
+}
+
+void diff_exit( void )
+{
 }
 
 /**

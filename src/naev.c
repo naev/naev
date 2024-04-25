@@ -700,7 +700,7 @@ void load_all( void )
    missions_load();
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading the UniDiffs…" ) );
-   diff_loadAvailable();
+   diff_init();
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Populating Maps…" ) );
    outfit_mapParse();
@@ -740,6 +740,7 @@ void unload_all( void )
    npc_clear();       /* In case exiting while landed. */
    background_free(); /* Destroy backgrounds. */
    load_free();       /* Clean up loading game stuff stuff. */
+   diff_exit();
    safelanes_destroy();
    diff_free();
    economy_destroy(); /* must be called before space_exit */

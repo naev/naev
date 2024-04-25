@@ -116,7 +116,8 @@ typedef struct UniHunk_ {
 } UniHunk_t;
 
 /* Global functions, manily for player stuff. */
-int diff_loadAvailable( void );
+int  diff_init( void );
+void diff_exit( void );
 NONNULL( 1 ) int diff_isApplied( const char *name );
 NONNULL( 1 ) int diff_apply( const char *name );
 NONNULL( 1 ) void diff_remove( const char *name );
