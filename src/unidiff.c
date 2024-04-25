@@ -80,57 +80,50 @@ static const char *diff_nav_spob =
 static const char *diff_nav_hyperspace =
    NULL; /**< Stores the player's hyperspace target if necessary. */
 
-static const char *hunk_error[HUNK_TYPE_SENTINAL] = {
-   [HUNK_TYPE_NONE]            = N_( "   [%s] none: %s" ),
-   [HUNK_TYPE_SPOB_ADD]        = N_( "   [%s] spob add: '%s'" ),
-   [HUNK_TYPE_SPOB_REMOVE]     = N_( "   [%s] spob remove: '%s'" ),
-   [HUNK_TYPE_VSPOB_ADD]       = N_( "   [%s] virtual spob add: '%s'" ),
-   [HUNK_TYPE_VSPOB_REMOVE]    = N_( "   [%s] virtual spob remove: '%s'" ),
-   [HUNK_TYPE_JUMP_ADD]        = N_( "   [%s] jump add: '%s'" ),
-   [HUNK_TYPE_JUMP_REMOVE]     = N_( "   [%s] jump remove: '%s'" ),
-   [HUNK_TYPE_TECH_ADD]        = N_( "   [%s] tech add: '%s'" ),
-   [HUNK_TYPE_TECH_REMOVE]     = N_( "   [%s] tech remove: '%s'" ),
-   [HUNK_TYPE_SSYS_BACKGROUND] = N_( "   [%s] ssys background: '%s'" ),
-   [HUNK_TYPE_SSYS_BACKGROUND_REVERT] =
-      N_( "   [%s] ssys background revert: '%s'" ),
-   [HUNK_TYPE_SSYS_FEATURES] = N_( "   [%s] ssys features: '%s'" ),
-   [HUNK_TYPE_SSYS_FEATURES_REVERT] =
-      N_( "   [%s] ssys features revert: '%s'" ),
-   [HUNK_TYPE_SPOB_FACTION]        = N_( "   [%s] spob faction: '%s'" ),
-   [HUNK_TYPE_SPOB_FACTION_REMOVE] = N_( "   [%s] spob faction removal: '%s'" ),
-   [HUNK_TYPE_SPOB_POPULATION]     = N_( "   [%s] spob population: '%s'" ),
-   [HUNK_TYPE_SPOB_POPULATION_REMOVE] =
-      N_( "   [%s] spob population removal: '%s'" ),
-   [HUNK_TYPE_SPOB_DISPLAYNAME] = N_( "   [%s] spob displayname: '%s'" ),
-   [HUNK_TYPE_SPOB_DISPLAYNAME_REVERT] =
-      N_( "   [%s] spob displayname revert: '%s'" ),
-   [HUNK_TYPE_SPOB_DESCRIPTION] = N_( "   [%s] spob description: '%s'" ),
-   [HUNK_TYPE_SPOB_DESCRIPTION_REVERT] =
-      N_( "   [%s] spob description revert: '%s'" ),
-   [HUNK_TYPE_SPOB_BAR]          = N_( "   [%s] spob bar: '%s'" ),
-   [HUNK_TYPE_SPOB_BAR_REVERT]   = N_( "   [%s] spob bar revert: '%s'" ),
-   [HUNK_TYPE_SPOB_SPACE]        = N_( "   [%s] spob space: '%s'" ),
-   [HUNK_TYPE_SPOB_SPACE_REVERT] = N_( "   [%s] spob space revert: '%s'" ),
-   [HUNK_TYPE_SPOB_EXTERIOR]     = N_( "   [%s] spob exterior: '%s'" ),
-   [HUNK_TYPE_SPOB_EXTERIOR_REVERT] =
-      N_( "   [%s] spob exterior revert: '%s'" ),
-   [HUNK_TYPE_SPOB_LUA]             = N_( "   [%s] spob lua: '%s'" ),
-   [HUNK_TYPE_SPOB_LUA_REVERT]      = N_( "   [%s] spob lua revert: '%s'" ),
-   [HUNK_TYPE_SPOB_SERVICE_ADD]     = N_( "   [%s] spob service add: '%s'" ),
-   [HUNK_TYPE_SPOB_SERVICE_REMOVE]  = N_( "   [%s] spob service remove: '%s'" ),
-   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD] = N_( "   [%s] spob nomissionspawn add" ),
-   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] =
-      N_( "   [%s] spob nomissionspawn remove" ),
-   [HUNK_TYPE_SPOB_TECH_ADD]     = N_( "   [%s] spob tech add: '%s'" ),
-   [HUNK_TYPE_SPOB_TECH_REMOVE]  = N_( "   [%s] spob tech remove: '%s'" ),
-   [HUNK_TYPE_SPOB_TAG_ADD]      = N_( "   [%s] spob tech add: '%s'" ),
-   [HUNK_TYPE_SPOB_TAG_REMOVE]   = N_( "   [%s] spob tech remove: '%s'" ),
-   [HUNK_TYPE_FACTION_VISIBLE]   = N_( "   [%s] faction visible: '%s'" ),
-   [HUNK_TYPE_FACTION_INVISIBLE] = N_( "   [%s] faction invisible: '%s'" ),
-   [HUNK_TYPE_FACTION_ALLY]      = N_( "   [%s] faction set ally: '%s'" ),
-   [HUNK_TYPE_FACTION_ENEMY]     = N_( "   [%s] faction set enemy: '%s'" ),
-   [HUNK_TYPE_FACTION_NEUTRAL]   = N_( "   [%s] faction set neutral: '%s'" ),
-   [HUNK_TYPE_FACTION_REALIGN] = N_( "   [%s] faction alignment reset: '%s'" ),
+static const char *hunk_name[HUNK_TYPE_SENTINAL] = {
+   [HUNK_TYPE_NONE]                    = N_( "none" ),
+   [HUNK_TYPE_SPOB_ADD]                = N_( "spob add" ),
+   [HUNK_TYPE_SPOB_REMOVE]             = N_( "spob remove" ),
+   [HUNK_TYPE_VSPOB_ADD]               = N_( "virtual spob add" ),
+   [HUNK_TYPE_VSPOB_REMOVE]            = N_( "virtual spob remove" ),
+   [HUNK_TYPE_JUMP_ADD]                = N_( "jump add" ),
+   [HUNK_TYPE_JUMP_REMOVE]             = N_( "jump remove" ),
+   [HUNK_TYPE_TECH_ADD]                = N_( "tech add" ),
+   [HUNK_TYPE_TECH_REMOVE]             = N_( "tech remove" ),
+   [HUNK_TYPE_SSYS_BACKGROUND]         = N_( "ssys background" ),
+   [HUNK_TYPE_SSYS_BACKGROUND_REVERT]  = N_( "ssys background revert" ),
+   [HUNK_TYPE_SSYS_FEATURES]           = N_( "ssys features" ),
+   [HUNK_TYPE_SSYS_FEATURES_REVERT]    = N_( "ssys features revert" ),
+   [HUNK_TYPE_SPOB_FACTION]            = N_( "spob faction" ),
+   [HUNK_TYPE_SPOB_FACTION_REMOVE]     = N_( "spob faction removal" ),
+   [HUNK_TYPE_SPOB_POPULATION]         = N_( "spob population" ),
+   [HUNK_TYPE_SPOB_POPULATION_REMOVE]  = N_( "spob population removal" ),
+   [HUNK_TYPE_SPOB_DISPLAYNAME]        = N_( "spob displayname" ),
+   [HUNK_TYPE_SPOB_DISPLAYNAME_REVERT] = N_( "spob displayname revert" ),
+   [HUNK_TYPE_SPOB_DESCRIPTION]        = N_( "spob description" ),
+   [HUNK_TYPE_SPOB_DESCRIPTION_REVERT] = N_( "spob description revert" ),
+   [HUNK_TYPE_SPOB_BAR]                = N_( "spob bar" ),
+   [HUNK_TYPE_SPOB_BAR_REVERT]         = N_( "spob bar revert" ),
+   [HUNK_TYPE_SPOB_SPACE]              = N_( "spob space" ),
+   [HUNK_TYPE_SPOB_SPACE_REVERT]       = N_( "spob space revert" ),
+   [HUNK_TYPE_SPOB_EXTERIOR]           = N_( "spob exterior" ),
+   [HUNK_TYPE_SPOB_EXTERIOR_REVERT]    = N_( "spob exterior revert" ),
+   [HUNK_TYPE_SPOB_LUA]                = N_( "spob lua" ),
+   [HUNK_TYPE_SPOB_LUA_REVERT]         = N_( "spob lua revert" ),
+   [HUNK_TYPE_SPOB_SERVICE_ADD]        = N_( "spob service add" ),
+   [HUNK_TYPE_SPOB_SERVICE_REMOVE]     = N_( "spob service remove" ),
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD]    = N_( "spob nomissionspawn add" ),
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] = N_( "spob nomissionspawn remove" ),
+   [HUNK_TYPE_SPOB_TECH_ADD]           = N_( "spob tech add" ),
+   [HUNK_TYPE_SPOB_TECH_REMOVE]        = N_( "spob tech remove" ),
+   [HUNK_TYPE_SPOB_TAG_ADD]            = N_( "spob tech add" ),
+   [HUNK_TYPE_SPOB_TAG_REMOVE]         = N_( "spob tech remove" ),
+   [HUNK_TYPE_FACTION_VISIBLE]         = N_( "faction visible" ),
+   [HUNK_TYPE_FACTION_INVISIBLE]       = N_( "faction invisible" ),
+   [HUNK_TYPE_FACTION_ALLY]            = N_( "faction set ally" ),
+   [HUNK_TYPE_FACTION_ENEMY]           = N_( "faction set enemy" ),
+   [HUNK_TYPE_FACTION_NEUTRAL]         = N_( "faction set neutral" ),
+   [HUNK_TYPE_FACTION_REALIGN]         = N_( "faction alignment reset" ),
 };
 static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_NONE]                    = HUNK_TYPE_SENTINAL,
@@ -209,7 +202,7 @@ int diff_init( void )
    Uint32 time = SDL_GetTicks();
 
    for ( int i = 0; i < HUNK_TYPE_SENTINAL; i++ ) {
-      if ( hunk_error[i] == NULL )
+      if ( hunk_name[i] == NULL )
          WARN( "HUNK_TYPE '%d' missing error message!", i );
       if ( hunk_reverse[i] == HUNK_TYPE_NONE ) {
          /* It's possible that this is an internal usage only reverse one, so we
@@ -739,13 +732,38 @@ static int diff_patch( xmlNodePtr parent )
                 "Unidiff '%s' failed to apply %d hunks.", nfailed ),
             diff->name, nfailed );
       for ( int i = 0; i < nfailed; i++ ) {
-         UniHunk_t *fail   = &diff->failed[i];
-         char      *target = fail->target.u.name;
+         UniHunk_t  *fail   = &diff->failed[i];
+         char       *target = fail->target.u.name;
+         const char *name;
          if ( ( fail->type < 0 ) || ( fail->type >= HUNK_TYPE_SENTINAL ) ||
-              ( hunk_error[fail->type] == NULL ) )
-            WARN( _( "   unknown hunk '%d'" ), fail->type );
-         else
-            WARN( _( hunk_error[fail->type] ), target, fail->u.name );
+              ( hunk_name[fail->type] == NULL ) ) {
+            WARN( _( "Unknown unidiff hunk '%d'!" ), fail->type );
+            name = N_( "unknown hunk" );
+         } else
+            name = hunk_name[fail->type];
+
+         /* Have to handle all possible data cases. */
+         switch ( fail->dtype ) {
+         case HUNK_DATA_NONE:
+            WARN( p_( "unidiff", "   [%s] %s" ), target, _( name ) );
+            break;
+         case HUNK_DATA_STRING:
+            WARN( p_( "unidiff", "   [%s] %s: %s" ), target, _( name ),
+                  fail->u.name );
+            break;
+         case HUNK_DATA_INT:
+            WARN( p_( "unidiff", "   [%s] %s: %d" ), target, _( name ),
+                  fail->u.data );
+            break;
+         case HUNK_DATA_FLOAT:
+            WARN( p_( "unidiff", "   [%s] %s: %f" ), target, _( name ),
+                  fail->u.fdata );
+            break;
+
+         default:
+            WARN( p_( "unidiff", "   [%s] %s: UNKNOWN DATA" ), target,
+                  _( name ) );
+         }
       }
    }
 
