@@ -54,6 +54,16 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SSYS_POS_Y_REVERT, /* For internal usage. */
    HUNK_TYPE_SSYS_DISPLAYNAME,
    HUNK_TYPE_SSYS_DISPLAYNAME_REVERT, /* For internal usage. */
+   HUNK_TYPE_SSYS_DUST,
+   HUNK_TYPE_SSYS_DUST_REVERT, /* For internal usage. */
+   HUNK_TYPE_SSYS_INTERFERENCE,
+   HUNK_TYPE_SSYS_INTERFERENCE_REVERT, /* For internal usage. */
+   HUNK_TYPE_SSYS_NEBU_DENSITY,
+   HUNK_TYPE_SSYS_NEBU_DENSITY_REVERT, /* For internal usage. */
+   HUNK_TYPE_SSYS_NEBU_VOLATILITY,
+   HUNK_TYPE_SSYS_NEBU_VOLATILITY_REVERT, /* For internal usage. */
+   HUNK_TYPE_SSYS_NEBU_HUE,
+   HUNK_TYPE_SSYS_NEBU_HUE_REVERT, /* For internal usage. */
    /* Target should be HUNK_TARGET_TECH. */
    HUNK_TYPE_TECH_ADD,
    HUNK_TYPE_TECH_REMOVE,

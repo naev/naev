@@ -62,25 +62,36 @@ static const char *diff_nav_hyperspace =
    NULL; /**< Stores the player's hyperspace target if necessary. */
 
 static const char *const hunk_name[HUNK_TYPE_SENTINAL + 1] = {
-   [HUNK_TYPE_NONE]                    = N_( "none" ),
-   [HUNK_TYPE_SPOB_ADD]                = N_( "spob add" ),
-   [HUNK_TYPE_SPOB_REMOVE]             = N_( "spob remove" ),
-   [HUNK_TYPE_VSPOB_ADD]               = N_( "virtual spob add" ),
-   [HUNK_TYPE_VSPOB_REMOVE]            = N_( "virtual spob remove" ),
-   [HUNK_TYPE_JUMP_ADD]                = N_( "jump add" ),
-   [HUNK_TYPE_JUMP_REMOVE]             = N_( "jump remove" ),
-   [HUNK_TYPE_TECH_ADD]                = N_( "tech add" ),
-   [HUNK_TYPE_TECH_REMOVE]             = N_( "tech remove" ),
-   [HUNK_TYPE_SSYS_BACKGROUND]         = N_( "ssys background" ),
-   [HUNK_TYPE_SSYS_BACKGROUND_REVERT]  = N_( "ssys background revert" ),
-   [HUNK_TYPE_SSYS_FEATURES]           = N_( "ssys features" ),
-   [HUNK_TYPE_SSYS_FEATURES_REVERT]    = N_( "ssys features revert" ),
-   [HUNK_TYPE_SSYS_POS_X]              = N_( "ssys pos x" ),
-   [HUNK_TYPE_SSYS_POS_X_REVERT]       = N_( "ssys pos x revert" ),
-   [HUNK_TYPE_SSYS_POS_Y]              = N_( "ssys pos y" ),
-   [HUNK_TYPE_SSYS_POS_Y_REVERT]       = N_( "ssys pos x revert" ),
-   [HUNK_TYPE_SSYS_DISPLAYNAME]        = N_( "ssys displayname" ),
-   [HUNK_TYPE_SSYS_DISPLAYNAME_REVERT] = N_( "ssys displayname revert" ),
+   [HUNK_TYPE_NONE]                     = N_( "none" ),
+   [HUNK_TYPE_SPOB_ADD]                 = N_( "spob add" ),
+   [HUNK_TYPE_SPOB_REMOVE]              = N_( "spob remove" ),
+   [HUNK_TYPE_VSPOB_ADD]                = N_( "virtual spob add" ),
+   [HUNK_TYPE_VSPOB_REMOVE]             = N_( "virtual spob remove" ),
+   [HUNK_TYPE_JUMP_ADD]                 = N_( "jump add" ),
+   [HUNK_TYPE_JUMP_REMOVE]              = N_( "jump remove" ),
+   [HUNK_TYPE_TECH_ADD]                 = N_( "tech add" ),
+   [HUNK_TYPE_TECH_REMOVE]              = N_( "tech remove" ),
+   [HUNK_TYPE_SSYS_BACKGROUND]          = N_( "ssys background" ),
+   [HUNK_TYPE_SSYS_BACKGROUND_REVERT]   = N_( "ssys background revert" ),
+   [HUNK_TYPE_SSYS_FEATURES]            = N_( "ssys features" ),
+   [HUNK_TYPE_SSYS_FEATURES_REVERT]     = N_( "ssys features revert" ),
+   [HUNK_TYPE_SSYS_POS_X]               = N_( "ssys pos x" ),
+   [HUNK_TYPE_SSYS_POS_X_REVERT]        = N_( "ssys pos x revert" ),
+   [HUNK_TYPE_SSYS_POS_Y]               = N_( "ssys pos y" ),
+   [HUNK_TYPE_SSYS_POS_Y_REVERT]        = N_( "ssys pos x revert" ),
+   [HUNK_TYPE_SSYS_DISPLAYNAME]         = N_( "ssys displayname" ),
+   [HUNK_TYPE_SSYS_DISPLAYNAME_REVERT]  = N_( "ssys displayname revert" ),
+   [HUNK_TYPE_SSYS_DUST]                = N_( "ssys dust" ),
+   [HUNK_TYPE_SSYS_DUST_REVERT]         = N_( "ssys dust revert" ),
+   [HUNK_TYPE_SSYS_INTERFERENCE]        = N_( "ssys interference" ),
+   [HUNK_TYPE_SSYS_INTERFERENCE_REVERT] = N_( "ssys interference revert" ),
+   [HUNK_TYPE_SSYS_NEBU_DENSITY]        = N_( "ssys nebula density" ),
+   [HUNK_TYPE_SSYS_NEBU_DENSITY_REVERT] = N_( "ssys nebula density revert" ),
+   [HUNK_TYPE_SSYS_NEBU_VOLATILITY]     = N_( "ssys nebula volatility" ),
+   [HUNK_TYPE_SSYS_NEBU_VOLATILITY_REVERT] =
+      N_( "ssys nebula volatility revert" ),
+   [HUNK_TYPE_SSYS_NEBU_HUE]           = N_( "ssys nebula hue" ),
+   [HUNK_TYPE_SSYS_NEBU_HUE_REVERT]    = N_( "ssys nebula hue revert" ),
    [HUNK_TYPE_SPOB_FACTION]            = N_( "spob faction" ),
    [HUNK_TYPE_SPOB_FACTION_REMOVE]     = N_( "spob faction removal" ),
    [HUNK_TYPE_SPOB_POPULATION]         = N_( "spob population" ),
@@ -126,6 +137,11 @@ static const char *const hunk_tag[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_POS_X]              = "pos_x",
    [HUNK_TYPE_SSYS_POS_Y]              = "pos_y",
    [HUNK_TYPE_SSYS_DISPLAYNAME]        = "displayname",
+   [HUNK_TYPE_SSYS_DUST]               = "dust",
+   [HUNK_TYPE_SSYS_INTERFERENCE]       = "interference",
+   [HUNK_TYPE_SSYS_NEBU_DENSITY]       = "nebu_density",
+   [HUNK_TYPE_SSYS_NEBU_VOLATILITY]    = "nebu_volatility",
+   [HUNK_TYPE_SSYS_NEBU_HUE]           = "nebu_hue",
    [HUNK_TYPE_TECH_ADD]                = "item_add",
    [HUNK_TYPE_TECH_REMOVE]             = "item_remove",
    [HUNK_TYPE_SPOB_FACTION]            = "faction",
@@ -163,6 +179,11 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_POS_X]              = HUNK_TYPE_SSYS_POS_X_REVERT,
    [HUNK_TYPE_SSYS_POS_Y]              = HUNK_TYPE_SSYS_POS_Y_REVERT,
    [HUNK_TYPE_SSYS_DISPLAYNAME]        = HUNK_TYPE_SSYS_DISPLAYNAME_REVERT,
+   [HUNK_TYPE_SSYS_DUST]               = HUNK_TYPE_SSYS_DUST_REVERT,
+   [HUNK_TYPE_SSYS_INTERFERENCE]       = HUNK_TYPE_SSYS_INTERFERENCE_REVERT,
+   [HUNK_TYPE_SSYS_NEBU_DENSITY]       = HUNK_TYPE_SSYS_NEBU_DENSITY_REVERT,
+   [HUNK_TYPE_SSYS_NEBU_VOLATILITY]    = HUNK_TYPE_SSYS_NEBU_VOLATILITY_REVERT,
+   [HUNK_TYPE_SSYS_NEBU_HUE]           = HUNK_TYPE_SSYS_NEBU_HUE_REVERT,
    [HUNK_TYPE_TECH_ADD]                = HUNK_TYPE_TECH_REMOVE,
    [HUNK_TYPE_TECH_REMOVE]             = HUNK_TYPE_TECH_ADD,
    [HUNK_TYPE_SPOB_FACTION]            = HUNK_TYPE_SPOB_FACTION_REMOVE,
@@ -480,6 +501,11 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
       HUNK_FLOAT( HUNK_TYPE_SSYS_POS_X );
       HUNK_FLOAT( HUNK_TYPE_SSYS_POS_Y );
       HUNK_STRD( HUNK_TYPE_SSYS_DISPLAYNAME );
+      HUNK_UINT( HUNK_TYPE_SSYS_DUST );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_INTERFERENCE );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_NEBU_DENSITY );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_NEBU_VOLATILITY );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_NEBU_HUE );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
@@ -841,6 +867,51 @@ int diff_patchHunk( UniHunk_t *hunk )
       return 0;
    case HUNK_TYPE_SSYS_DISPLAYNAME_REVERT:
       ssys->display = (char *)hunk->o.name;
+      return 0;
+
+   /* Dust. */
+   case HUNK_TYPE_SSYS_DUST:
+      hunk->o.data    = ssys->spacedust;
+      ssys->spacedust = hunk->u.data;
+      return 0;
+   case HUNK_TYPE_SSYS_DUST_REVERT:
+      ssys->spacedust = hunk->o.data;
+      return 0;
+
+   /* Interefrence. */
+   case HUNK_TYPE_SSYS_INTERFERENCE:
+      hunk->o.data       = ssys->interference;
+      ssys->interference = hunk->u.fdata;
+      return 0;
+   case HUNK_TYPE_SSYS_INTERFERENCE_REVERT:
+      ssys->interference = hunk->o.fdata;
+      return 0;
+
+   /* Nebula density. */
+   case HUNK_TYPE_SSYS_NEBU_DENSITY:
+      hunk->o.data       = ssys->nebu_density;
+      ssys->nebu_density = hunk->u.fdata;
+      return 0;
+   case HUNK_TYPE_SSYS_NEBU_DENSITY_REVERT:
+      ssys->nebu_density = hunk->o.fdata;
+      return 0;
+
+   /* Nebula volatility. */
+   case HUNK_TYPE_SSYS_NEBU_VOLATILITY:
+      hunk->o.data          = ssys->nebu_volatility;
+      ssys->nebu_volatility = hunk->u.fdata;
+      return 0;
+   case HUNK_TYPE_SSYS_NEBU_VOLATILITY_REVERT:
+      ssys->nebu_volatility = hunk->o.fdata;
+      return 0;
+
+   /* Nebula hue. */
+   case HUNK_TYPE_SSYS_NEBU_HUE:
+      hunk->o.data   = ssys->nebu_hue;
+      ssys->nebu_hue = hunk->u.fdata;
+      return 0;
+   case HUNK_TYPE_SSYS_NEBU_HUE_REVERT:
+      ssys->nebu_hue = hunk->o.fdata;
       return 0;
 
    /* Adding a tech. */
