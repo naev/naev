@@ -92,6 +92,8 @@ static const char *const hunk_name[HUNK_TYPE_SENTINAL + 1] = {
       N_( "ssys nebula volatility revert" ),
    [HUNK_TYPE_SSYS_NEBU_HUE]           = N_( "ssys nebula hue" ),
    [HUNK_TYPE_SSYS_NEBU_HUE_REVERT]    = N_( "ssys nebula hue revert" ),
+   [HUNK_TYPE_SSYS_NOLANES_ADD]        = N_( "ssys nolanes add" ),
+   [HUNK_TYPE_SSYS_NOLANES_REMOVE]     = N_( "ssys nolanes remove" ),
    [HUNK_TYPE_SSYS_TAG_ADD]            = N_( "ssys tag add" ),
    [HUNK_TYPE_SSYS_TAG_REMOVE]         = N_( "ssys tag remove" ),
    [HUNK_TYPE_SPOB_FACTION]            = N_( "spob faction" ),
@@ -144,6 +146,8 @@ static const char *const hunk_tag[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_NEBU_DENSITY]       = "nebu_density",
    [HUNK_TYPE_SSYS_NEBU_VOLATILITY]    = "nebu_volatility",
    [HUNK_TYPE_SSYS_NEBU_HUE]           = "nebu_hue",
+   [HUNK_TYPE_SSYS_NOLANES_ADD]        = N_( "nolanes_add" ),
+   [HUNK_TYPE_SSYS_NOLANES_REMOVE]     = N_( "nolanes_remove" ),
    [HUNK_TYPE_SSYS_TAG_ADD]            = N_( "tag_add" ),
    [HUNK_TYPE_SSYS_TAG_REMOVE]         = N_( "tag_remove" ),
    [HUNK_TYPE_TECH_ADD]                = "item_add",
@@ -188,6 +192,8 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_NEBU_DENSITY]       = HUNK_TYPE_SSYS_NEBU_DENSITY_REVERT,
    [HUNK_TYPE_SSYS_NEBU_VOLATILITY]    = HUNK_TYPE_SSYS_NEBU_VOLATILITY_REVERT,
    [HUNK_TYPE_SSYS_NEBU_HUE]           = HUNK_TYPE_SSYS_NEBU_HUE_REVERT,
+   [HUNK_TYPE_SSYS_NOLANES_ADD]        = HUNK_TYPE_SSYS_NOLANES_REMOVE,
+   [HUNK_TYPE_SSYS_NOLANES_REMOVE]     = HUNK_TYPE_SSYS_NOLANES_ADD,
    [HUNK_TYPE_SSYS_TAG_ADD]            = HUNK_TYPE_SSYS_TAG_REMOVE,
    [HUNK_TYPE_SSYS_TAG_REMOVE]         = HUNK_TYPE_SSYS_TAG_ADD,
    [HUNK_TYPE_TECH_ADD]                = HUNK_TYPE_TECH_REMOVE,
@@ -512,6 +518,10 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
       HUNK_FLOAT( HUNK_TYPE_SSYS_NEBU_DENSITY );
       HUNK_FLOAT( HUNK_TYPE_SSYS_NEBU_VOLATILITY );
       HUNK_FLOAT( HUNK_TYPE_SSYS_NEBU_HUE );
+      HUNK_NONE( HUNK_TYPE_SSYS_NOLANES_ADD );
+      HUNK_NONE( HUNK_TYPE_SSYS_NOLANES_REMOVE );
+      HUNK_STRD( HUNK_TYPE_SSYS_TAG_ADD );
+      HUNK_STRD( HUNK_TYPE_SSYS_TAG_REMOVE );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
@@ -935,6 +945,18 @@ int diff_patchHunk( UniHunk_t *hunk )
       ssys->nebu_hue = hunk->o.fdata;
       return 0;
 
+   /* Toggle nolanes flag. */
+   case HUNK_TYPE_SSYS_NOLANES_ADD:
+      if ( sys_isFlag( ssys, SYSTEM_NOLANES ) )
+         return -1;
+      sys_setFlag( ssys, SYSTEM_NOLANES );
+      return 0;
+   case HUNK_TYPE_SSYS_NOLANES_REMOVE:
+      if ( !sys_isFlag( ssys, SYSTEM_NOLANES ) )
+         return -1;
+      sys_rmFlag( ssys, SYSTEM_NOLANES );
+      return 0;
+
       /* Modifying tag stuff. */
    case HUNK_TYPE_SSYS_TAG_ADD:
       if ( ssys->tags == NULL )
@@ -1183,11 +1205,11 @@ int diff_patchHunk( UniHunk_t *hunk )
       }
       return 0;
 
-   default:
-      WARN( _( "Unknown hunk type '%d'." ), hunk->type );
+   case HUNK_TYPE_NONE:
+   case HUNK_TYPE_SENTINAL:
       break;
    }
-
+   WARN( _( "Unknown hunk type '%d'." ), hunk->type );
    return -1;
 }
 
