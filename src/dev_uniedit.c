@@ -1487,15 +1487,17 @@ static void uniedit_renameSys( void )
    int cancelall_prompt = 0;
    for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
       char       *name, *oldName, *newName, *filtered;
+      const char *prompt;
       StarSystem *sys = uniedit_sys[i];
 
-      if ( uniedit_diffMode ) {
-         /* TODO warning. */
-      }
-
       /* Get name. */
-      name = dialogue_input( _( "Rename Star System" ), 1, 32,
-                             _( "What do you want to rename #r%s#0?" ),
+      if ( uniedit_diffMode )
+         prompt = _( "What do you want to rename #r%s#0?\n\n#rNote:#0 this "
+                     "will only change the display name of the system." );
+      else
+         prompt = _( "What do you want to rename #r%s#0?\n\n#rNote:#0 this "
+                     "will rename and copy the system data file." );
+      name = dialogue_input( _( "Rename Star System" ), 1, 32, prompt,
                              system_name( sys ) );
 
       /* Keep current name. */
@@ -1517,28 +1519,38 @@ static void uniedit_renameSys( void )
          continue;
       }
 
-      /* Change the name. */
-      filtered = uniedit_nameFilter( sys->name );
-      SDL_asprintf( &oldName, "%s/%s.xml", conf.dev_save_sys, filtered );
-      free( filtered );
+      if ( uniedit_diffMode ) {
+         UniHunk_t hunk;
+         hunk.target.type   = HUNK_TARGET_SYSTEM;
+         hunk.target.u.name = strdup( sys->name );
+         hunk.type          = HUNK_TYPE_SSYS_DISPLAYNAME;
+         hunk.dtype         = HUNK_DATA_STRING;
+         hunk.u.name        = name; /* No need to free. */
+         uniedit_diffAdd( &hunk );
+      } else {
+         /* Change the name. */
+         filtered = uniedit_nameFilter( sys->name );
+         SDL_asprintf( &oldName, "%s/%s.xml", conf.dev_save_sys, filtered );
+         free( filtered );
 
-      filtered = uniedit_nameFilter( name );
-      SDL_asprintf( &newName, "%s/%s.xml", conf.dev_save_sys, filtered );
-      free( filtered );
+         filtered = uniedit_nameFilter( name );
+         SDL_asprintf( &newName, "%s/%s.xml", conf.dev_save_sys, filtered );
+         free( filtered );
 
-      if ( rename( oldName, newName ) )
-         WARN( _( "Failed to rename '%s' to '%s'!" ), oldName, newName );
+         if ( rename( oldName, newName ) )
+            WARN( _( "Failed to rename '%s' to '%s'!" ), oldName, newName );
 
-      free( oldName );
-      free( newName );
-      free( sys->name );
+         free( oldName );
+         free( newName );
+         free( sys->name );
 
-      sys->name = name;
-      dsys_saveSystem( sys );
+         sys->name = name;
+         dsys_saveSystem( sys );
 
-      /* Re-save adjacent systems. */
-      for ( int j = 0; j < array_size( sys->jumps ); j++ )
-         dsys_saveSystem( sys->jumps[j].target );
+         /* Re-save adjacent systems. */
+         for ( int j = 0; j < array_size( sys->jumps ); j++ )
+            dsys_saveSystem( sys->jumps[j].target );
+      }
    }
 }
 
@@ -1551,7 +1563,8 @@ static void uniedit_newSys( double x, double y )
    StarSystem *sys;
 
    if ( uniedit_diffMode ) {
-      /* TODO warning. */
+      dialogue_alert( ( "Adding new systems is not supported in diff mode!" ) );
+      return;
    }
 
    /* Get name. */
@@ -2016,12 +2029,9 @@ static void uniedit_centerSystem( unsigned int wid, const char *unused )
  */
 static int uniedit_sortCompare( const void *p1, const void *p2 )
 {
-   map_find_t *f1, *f2;
-
    /* Convert pointer. */
-   f1 = (map_find_t *)p1;
-   f2 = (map_find_t *)p2;
-
+   const map_find_t *f1 = (map_find_t *)p1;
+   const map_find_t *f2 = (map_find_t *)p2;
    /* Sort by name, nothing more. */
    return strcasecmp( f1->sys->name, f2->sys->name );
 }
