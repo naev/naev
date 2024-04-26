@@ -72,6 +72,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_TECH_ADD,
    HUNK_TYPE_TECH_REMOVE,
    /* Target should be HUNK_TARGET_SPOB. */
+   HUNK_TYPE_SPOB_CLASS,
+   HUNK_TYPE_SPOB_CLASS_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_FACTION,
    HUNK_TYPE_SPOB_FACTION_REMOVE, /* For internal usage. */
    HUNK_TYPE_SPOB_POPULATION,

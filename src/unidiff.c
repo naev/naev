@@ -96,6 +96,8 @@ static const char *const hunk_name[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_SSYS_NOLANES_REMOVE]     = N_( "ssys nolanes remove" ),
    [HUNK_TYPE_SSYS_TAG_ADD]            = N_( "ssys tag add" ),
    [HUNK_TYPE_SSYS_TAG_REMOVE]         = N_( "ssys tag remove" ),
+   [HUNK_TYPE_SPOB_CLASS]              = N_( "spob class" ),
+   [HUNK_TYPE_SPOB_CLASS_REVERT]       = N_( "spob class removal" ),
    [HUNK_TYPE_SPOB_FACTION]            = N_( "spob faction" ),
    [HUNK_TYPE_SPOB_FACTION_REMOVE]     = N_( "spob faction removal" ),
    [HUNK_TYPE_SPOB_POPULATION]         = N_( "spob population" ),
@@ -146,12 +148,13 @@ static const char *const hunk_tag[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_NEBU_DENSITY]       = "nebu_density",
    [HUNK_TYPE_SSYS_NEBU_VOLATILITY]    = "nebu_volatility",
    [HUNK_TYPE_SSYS_NEBU_HUE]           = "nebu_hue",
-   [HUNK_TYPE_SSYS_NOLANES_ADD]        = N_( "nolanes_add" ),
-   [HUNK_TYPE_SSYS_NOLANES_REMOVE]     = N_( "nolanes_remove" ),
-   [HUNK_TYPE_SSYS_TAG_ADD]            = N_( "tag_add" ),
-   [HUNK_TYPE_SSYS_TAG_REMOVE]         = N_( "tag_remove" ),
+   [HUNK_TYPE_SSYS_NOLANES_ADD]        = "nolanes_add",
+   [HUNK_TYPE_SSYS_NOLANES_REMOVE]     = "nolanes_remove",
+   [HUNK_TYPE_SSYS_TAG_ADD]            = "tag_add",
+   [HUNK_TYPE_SSYS_TAG_REMOVE]         = "tag_remove",
    [HUNK_TYPE_TECH_ADD]                = "item_add",
    [HUNK_TYPE_TECH_REMOVE]             = "item_remove",
+   [HUNK_TYPE_SPOB_CLASS]              = "class",
    [HUNK_TYPE_SPOB_FACTION]            = "faction",
    [HUNK_TYPE_SPOB_POPULATION]         = "population",
    [HUNK_TYPE_SPOB_DISPLAYNAME]        = "displayname",
@@ -198,6 +201,7 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_TAG_REMOVE]         = HUNK_TYPE_SSYS_TAG_ADD,
    [HUNK_TYPE_TECH_ADD]                = HUNK_TYPE_TECH_REMOVE,
    [HUNK_TYPE_TECH_REMOVE]             = HUNK_TYPE_TECH_ADD,
+   [HUNK_TYPE_SPOB_CLASS]              = HUNK_TYPE_SPOB_CLASS_REVERT,
    [HUNK_TYPE_SPOB_FACTION]            = HUNK_TYPE_SPOB_FACTION_REMOVE,
    [HUNK_TYPE_SPOB_POPULATION]         = HUNK_TYPE_SPOB_POPULATION_REMOVE,
    [HUNK_TYPE_SPOB_DISPLAYNAME]        = HUNK_TYPE_SPOB_DISPLAYNAME_REVERT,
@@ -602,6 +606,7 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
    do {
       xml_onlyNodes( cur );
 
+      HUNK_STRD( HUNK_TYPE_SPOB_CLASS );
       HUNK_STRD( HUNK_TYPE_SPOB_FACTION );
       HUNK_UINT( HUNK_TYPE_SPOB_POPULATION );
       HUNK_STRD( HUNK_TYPE_SPOB_DISPLAYNAME );
@@ -983,6 +988,15 @@ int diff_patchHunk( UniHunk_t *hunk )
    /* Removing a tech. */
    case HUNK_TYPE_TECH_REMOVE:
       return tech_rmItem( hunk->target.u.name, hunk->u.name );
+
+   /* Changing spob faction. */
+   case HUNK_TYPE_SPOB_CLASS:
+      hunk->o.name = p->class;
+      p->class     = hunk->u.name;
+      return 0;
+   case HUNK_TYPE_SPOB_CLASS_REVERT:
+      p->class = (char *)hunk->o.name;
+      return 0;
 
    /* Changing spob faction. */
    case HUNK_TYPE_SPOB_FACTION:
