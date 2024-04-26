@@ -180,6 +180,8 @@ static void uniedit_btnFind( unsigned int wid_unused, const char *unused );
 static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
                          int isrepeat );
 /* Diffs. */
+static void uniedit_diffCreateSysNone( const StarSystem *sys,
+                                       UniHunkType_t     type );
 static void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
                                       char *str );
 static void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
@@ -2682,10 +2684,17 @@ static void uniedit_chkNolanes( unsigned int wid, const char *wgtname )
 {
    int         s   = window_checkboxState( wid, wgtname );
    StarSystem *sys = uniedit_sys[0];
-   if ( s )
-      sys_setFlag( sys, SYSTEM_NOLANES );
-   else
-      sys_rmFlag( sys, SYSTEM_NOLANES );
+   if ( uniedit_diffMode ) {
+      if ( s )
+         uniedit_diffCreateSysNone( sys, HUNK_TYPE_SSYS_NOLANES_ADD );
+      else
+         uniedit_diffCreateSysNone( sys, HUNK_TYPE_SSYS_NOLANES_REMOVE );
+   } else {
+      if ( s )
+         sys_setFlag( sys, SYSTEM_NOLANES );
+      else
+         sys_rmFlag( sys, SYSTEM_NOLANES );
+   }
 }
 
 static void uniedit_diffClear( void )
@@ -2717,16 +2726,28 @@ static int uniedit_diff_cmp( const void *p1, const void *p2 )
           h2->type; /* Should not overlap with same target and type. */
 }
 
+static void uniedit_diffCreateSysNone( const StarSystem *sys,
+                                       UniHunkType_t     type )
+{
+   UniHunk_t hunk;
+   memset( &hunk, 0, sizeof( hunk ) );
+   hunk.target.type   = HUNK_TARGET_SYSTEM;
+   hunk.target.u.name = strdup( sys->name );
+   hunk.type          = type;
+   hunk.dtype         = HUNK_DATA_NONE;
+   uniedit_diffAdd( &hunk );
+}
+
 static void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
                                       char *str )
 {
    UniHunk_t hunk;
+   memset( &hunk, 0, sizeof( hunk ) );
    hunk.target.type   = HUNK_TARGET_SYSTEM;
    hunk.target.u.name = strdup( sys->name );
    hunk.type          = type;
    hunk.dtype         = HUNK_DATA_STRING;
    hunk.u.name        = str;
-   hunk.o.name        = NULL;
    uniedit_diffAdd( &hunk );
 }
 
@@ -2734,12 +2755,12 @@ static void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
                                       int data )
 {
    UniHunk_t hunk;
+   memset( &hunk, 0, sizeof( hunk ) );
    hunk.target.type   = HUNK_TARGET_SYSTEM;
    hunk.target.u.name = strdup( sys->name );
    hunk.type          = type;
    hunk.dtype         = HUNK_DATA_INT;
    hunk.u.data        = data;
-   hunk.o.name        = NULL;
    uniedit_diffAdd( &hunk );
 }
 
@@ -2747,12 +2768,12 @@ static void uniedit_diffCreateSysFloat( const StarSystem *sys,
                                         UniHunkType_t type, double fdata )
 {
    UniHunk_t hunk;
+   memset( &hunk, 0, sizeof( hunk ) );
    hunk.target.type   = HUNK_TARGET_SYSTEM;
    hunk.target.u.name = strdup( sys->name );
    hunk.type          = type;
    hunk.dtype         = HUNK_DATA_FLOAT;
    hunk.u.fdata       = fdata;
-   hunk.o.name        = NULL;
    uniedit_diffAdd( &hunk );
 }
 
