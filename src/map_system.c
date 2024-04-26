@@ -198,7 +198,7 @@ void map_system_open( int sys_selected )
    window_onClose( wid, map_system_cleanup );
    window_handleKeys( wid, map_system_keyHandler );
    window_addText( wid, 40, h - 30, 160, 20, 1, "txtSysname", &gl_defFont,
-                   &cFontGreen, _( cur_sys_sel->name ) );
+                   &cFontGreen, system_name( cur_sys_sel ) );
    window_addImage( wid, -90 + 32, h - 30, 0, 0, "imgFaction", NULL, 0 );
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
@@ -363,9 +363,10 @@ static void map_system_render( double bx, double by, double w, double h,
                        ( by + ( nshow - 0.5 ) * pitch + offset ), 0, &cFontRed,
                        -1., _( "Obscured by the nebula" ) );
    }
-   gl_printRaw(
-      &gl_smallFont, bx + 5 + pitch, by + ( nshow - 0.5 ) * pitch + offset,
-      ( cur_spob_sel == 0 ? &cFontGreen : &cFontWhite ), -1., _( sys->name ) );
+   gl_printRaw( &gl_smallFont, bx + 5 + pitch,
+                by + ( nshow - 0.5 ) * pitch + offset,
+                ( cur_spob_sel == 0 ? &cFontGreen : &cFontWhite ), -1.,
+                system_name( sys ) );
    if ( ( cur_spob_sel == 0 ) && bgImage != NULL ) {
       double imgw, imgh, s;
       iw   = w - 50 - pitch - nameWidth;
@@ -411,7 +412,7 @@ static void map_system_render( double bx, double by, double w, double h,
       int infopos = 0;
       int stars   = MAX( array_size( starImages ), 0 );
       cnt += scnprintf( &buf[cnt], sizeof( buf ) - cnt, _( "#nSystem:#0 %s\n" ),
-                        _( sys->name ) );
+                        system_name( sys ) );
       /* display sun information */
       cnt += scnprintf( &buf[cnt], sizeof( buf ) - cnt,
                         n_( "%d-star system\n", "%d-star system\n", stars ),
@@ -551,7 +552,7 @@ static void map_system_render( double bx, double by, double w, double h,
             if ( sys_isKnown( sys->jumps[i].target ) )
                infopos +=
                   scnprintf( &infobuf[infopos], sizeof( infobuf ) - infopos,
-                             "     %s\n", _( sys->jumps[i].target->name ) );
+                             "     %s\n", system_name( sys->jumps[i].target ) );
             else
                infopos +=
                   scnprintf( &infobuf[infopos], sizeof( infobuf ) - infopos,
@@ -917,7 +918,7 @@ void map_system_updateSelected( unsigned int wid )
       }
    }
    /* get width of star name text */
-   textw = gl_printWidthRaw( &gl_smallFont, _( sys->name ) );
+   textw = gl_printWidthRaw( &gl_smallFont, system_name( sys ) );
    if ( textw > nameWidth )
       nameWidth = textw;
 

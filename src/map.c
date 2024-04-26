@@ -350,7 +350,7 @@ void map_open( void )
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname", &gl_defFont,
-                   NULL, _( cur->name ) );
+                   NULL, system_name( cur ) );
    y -= 10;
 
    /* Faction image */
@@ -608,7 +608,7 @@ static void map_update( unsigned int wid )
             _( "Showing %s prices relative to %s:\n"
                "Positive/blue indicate profit while negative/orange values "
                "indicate loss when sold at the corresponding system." ),
-            _( c->name ), _( sys->name ) );
+            _( c->name ), system_name( sys ) );
          map_update_status( wid, buf );
       } else {
          snprintf( buf, sizeof( buf ),
@@ -632,7 +632,7 @@ static void map_update( unsigned int wid )
        * Right Text
        */
       if ( sys_isFlag( sys, SYSTEM_MARKED | SYSTEM_CMARKED ) )
-         window_modifyText( wid, "txtSysname", _( sys->name ) );
+         window_modifyText( wid, "txtSysname", system_name( sys ) );
       else
          window_modifyText( wid, "txtSysname", _( "Unknown" ) );
 
@@ -677,7 +677,7 @@ static void map_update( unsigned int wid )
    }
 
    /* System is known */
-   window_modifyText( wid, "txtSysname", _( sys->name ) );
+   window_modifyText( wid, "txtSysname", system_name( sys ) );
 
    f        = -1;
    multiple = 0;
@@ -1608,7 +1608,7 @@ void map_renderNames( double bx, double by, double x, double y, double zoom,
 
       font = ( zoom >= 1.5 ) ? &gl_defFont : &gl_smallFont;
 
-      textw = gl_printWidthRaw( font, _( sys->name ) );
+      textw = gl_printWidthRaw( font, system_name( sys ) );
       tx    = x + ( sys->pos.x + 12. ) * zoom;
       ty    = y + ( sys->pos.y ) * zoom - font->h * 0.5;
 
@@ -1618,7 +1618,7 @@ void map_renderNames( double bx, double by, double x, double y, double zoom,
 
       col   = cWhite;
       col.a = alpha;
-      gl_printRaw( font, tx, ty, &col, -1, _( sys->name ) );
+      gl_printRaw( font, tx, ty, &col, -1, system_name( sys ) );
    }
 
    /* Raw hidden values if we're in the editor. */
@@ -2337,7 +2337,7 @@ static void map_buttonMarkSystem( unsigned int wid, const char *str )
          sys->note = dialogue_input(
             _( "Add System Note" ), 0, 60,
             _( "Write a note about the #o%s#0 system:" ),
-            sys_isKnown( sys ) ? _( sys->name ) : _( "Unknown" ) );
+            sys_isKnown( sys ) ? system_name( sys ) : _( "Unknown" ) );
          if ( sys->note != NULL )
             sys_setFlag( sys, SYSTEM_PMARKED );
       }

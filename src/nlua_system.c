@@ -319,7 +319,7 @@ static int systemL_eq( lua_State *L )
 static int systemL_name( lua_State *L )
 {
    const StarSystem *sys = luaL_validsystem( L, 1 );
-   lua_pushstring( L, _( sys->name ) );
+   lua_pushstring( L, system_name( sys ) );
    return 1;
 }
 

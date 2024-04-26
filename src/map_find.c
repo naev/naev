@@ -352,12 +352,12 @@ static void map_findAccumulateResult( map_find_t *found, int n, StarSystem *sys,
    /* Set fancy name. */
    if ( spob == NULL )
       snprintf( found[n].display, sizeof( found[n].display ), _( "%s (%s)" ),
-                _( sys->name ), route_info );
+                system_name( sys ), route_info );
    else
       snprintf( found[n].display, sizeof( found[n].display ),
                 _( "#%c%s%s (%s, %s)" ), map_getSpobColourChar( spob ),
-                map_getSpobSymbol( spob ), spob_name( spob ), _( sys->name ),
-                route_info );
+                map_getSpobSymbol( spob ), spob_name( spob ),
+                system_name( sys ), route_info );
 }
 
 /**

@@ -1131,7 +1131,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
       l     = scnprintf(
          buf, sizeof( buf ), "#%c%.0f#0 = #%c%.0f#0 + #%c%.0f#0 [%s - %s]",
          getValCol( value ), value, getValCol( base ), base, getValCol( bonus ),
-         bonus, _( sys->name ), faction_name( f ) );
+         bonus, system_name( sys ), faction_name( f ) );
 
       /* Local presence sources. */
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
@@ -1494,9 +1494,9 @@ static void uniedit_renameSys( void )
       }
 
       /* Get name. */
-      name =
-         dialogue_input( _( "Rename Star System" ), 1, 32,
-                         _( "What do you want to rename #r%s#0?" ), sys->name );
+      name = dialogue_input( _( "Rename Star System" ), 1, 32,
+                             _( "What do you want to rename #r%s#0?" ),
+                             system_name( sys ) );
 
       /* Keep current name. */
       if ( name == NULL ) {
@@ -1915,7 +1915,7 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
 
       /* Set fancy name. */
       snprintf( found[n].display, sizeof( found[n].display ),
-                _( "%s (%s system)" ), spobs[i], sys->name );
+                _( "%s (%s system)" ), spobs[i], system_name( sys ) );
       n++;
    }
    free( spobs );

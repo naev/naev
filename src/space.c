@@ -947,7 +947,7 @@ char **system_searchFuzzyCase( const char *sysname, int *n )
    len = 0;
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
       StarSystem *sys = &systems_stack[i];
-      if ( SDL_strcasestr( _( sys->name ), sysname ) != NULL ) {
+      if ( SDL_strcasestr( system_name( sys ), sysname ) != NULL ) {
          names[len] = sys->name;
          len++;
       } else if ( ( sys->features != NULL ) &&
@@ -2868,6 +2868,13 @@ StarSystem *system_new( void )
    return sys;
 }
 
+const char *system_name( const StarSystem *sys )
+{
+   if ( sys->display != NULL )
+      return _( sys->display );
+   return _( sys->name );
+}
+
 /**
  * @brief Reconstructs the jumps for a single system.
  */
@@ -3113,6 +3120,7 @@ static int system_parse( StarSystem *sys, const char *filename )
       /* Only handle nodes. */
       xml_onlyNodes( node );
 
+      xmlr_strd( node, "display", sys->display );
       if ( xml_isNode( node, "pos" ) ) {
          flags |= FLAG_POSSET;
          xmlr_attr_float( node, "x", sys->pos.x );
@@ -3866,6 +3874,7 @@ void space_exit( void )
 
       free( sys->filename );
       free( sys->name );
+      free( sys->display );
       free( sys->background );
       free( sys->map_shader );
       free( sys->features );

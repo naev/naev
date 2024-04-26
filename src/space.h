@@ -286,7 +286,8 @@ struct StarSystem_ {
    char *filename; /** Name of the file loaded from. */
 
    /* General. */
-   char *name;      /**< star system name */
+   char *name;      /**< Star system name */
+   char *display;   /**< Star system display name. */
    vec2  pos;       /**< Position */
    int   spacedust; /**< Amount of "space dust" it has. */
    double
@@ -420,6 +421,7 @@ void        system_reconstructJumps( StarSystem *sys );
 void        systems_reconstructJumps( void );
 void        systems_reconstructSpobs( void );
 StarSystem *system_new( void );
+const char *system_name( const StarSystem *sys );
 int         system_addSpob( StarSystem *sys, const char *spobname );
 int         system_rmSpob( StarSystem *sys, const char *spobname );
 int         system_addVirtualSpob( StarSystem *sys, const char *spobname );
