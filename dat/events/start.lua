@@ -63,6 +63,9 @@ function create()
    player.outfitAdd( "GUI - Slimv2" )
    player.outfitAdd( "GUI - Legacy" )
 
+   -- Apply starting unidiff
+   diff.apply( "Chapter 0" )
+
    hook.timer(3, "timer_tutorial")
 end
 

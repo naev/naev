@@ -15,6 +15,14 @@ local fmt = require 'format'
 local luatk = require "luatk"
 
 -- Runs on saves older than 0.11.0
+local function updater0120( _did0110, _did0100, _did090 )
+   print( player.chapter()=="0", not diff.isApplied( "Chapter 0" ) )
+   if player.chapter()=="0" and not diff.isApplied( "Chapter 0" ) then
+      diff.apply( "Chapter 0" )
+   end
+end
+
+-- Runs on saves older than 0.11.0
 local function updater0110( did0100, did090 )
    local metai = (var.peek("shipai_name") ~= nil)
    local hasbioship = player.pilot():ship():tags().bioship
@@ -194,8 +202,8 @@ function create ()
       faction.get("Black Lotus"):setKnown(true)
    end
 
+   local did090, did0100, did0110
    -- Run on saves older than 0.9.0
-   local did090, did0100
    if not save_version or naev.versionTest( save_version, "0.9.0" ) < 0 then
       updater090()
       didupdate = true
@@ -210,6 +218,12 @@ function create ()
    -- Run on saves older than 0.11.0
    if not save_version or naev.versionTest( save_version, "0.11.0") < 0 then
       updater0110( did0100, did090 )
+      didupdate = true
+      did0110 = true
+   end
+   -- Run on saves older than 0.12.0
+   if not save_version or naev.versionTest( save_version, "0.12.0") < 0 then
+      updater0120( did0110, did0100, did090 )
       didupdate = true
    end
 

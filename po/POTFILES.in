@@ -1950,6 +1950,7 @@ dat/spob_virtual/pirate_all_unpresence_range1.xml
 dat/spob_virtual/pirate_all_unpresence_range2.xml
 dat/spob_virtual/pirate_medium.xml
 dat/spob_virtual/pirate_small.xml
+dat/spob_virtual/pirate_tiny.xml
 dat/spob_virtual/pirate_unpresence.xml
 dat/spob_virtual/proteron_small.xml
 dat/spob_virtual/proteron_unpresence.xml
@@ -2652,6 +2653,7 @@ dat/unidiff/antlejosv_6.xml
 dat/unidiff/antlejosv_7.xml
 dat/unidiff/antlejosv_8.xml
 dat/unidiff/antlejosv_9.xml
+dat/unidiff/chapter0.xml
 dat/unidiff/collective_dead.xml
 dat/unidiff/durea_safe.xml
 dat/unidiff/energy_harpoon.xml
