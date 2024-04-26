@@ -130,4 +130,9 @@ void diff_free( void );
 void unidiff_universeDefer( int enable );
 
 /* Local functions for hunk management. */
-void diff_cleanupHunk( UniHunk_t *hunk );
+void        diff_start( void );
+int         diff_patchHunk( UniHunk_t *hunk );
+int         diff_revertHunk( UniHunk_t *hunk );
+void        diff_end( void );
+const char *diff_hunkName( UniHunkType_t t );
+void        diff_cleanupHunk( UniHunk_t *hunk );

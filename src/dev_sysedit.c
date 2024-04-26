@@ -669,6 +669,10 @@ void sysedit_sysScale( StarSystem *sys, double factor )
 {
    char buf[STRMAX];
 
+   /* Ignore trivial scaling. */
+   if ( fabs( factor - 1.0 ) < 1e-5 )
+      return;
+
    /* Scale radius. */
    sys->radius *= factor;
    snprintf( buf, sizeof( buf ), _( "Radius: %.0f" ), sys->radius );
@@ -698,6 +702,8 @@ void sysedit_sysScale( StarSystem *sys, double factor )
       vec2_cset( &exc->pos, exc->pos.x * factor, exc->pos.y * factor );
       exc->radius *= factor;
    }
+
+   /* TODO diff. */
 
    /* Must reconstruct jumps. */
    systems_reconstructJumps();

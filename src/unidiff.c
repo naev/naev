@@ -80,7 +80,7 @@ static const char *diff_nav_spob =
 static const char *diff_nav_hyperspace =
    NULL; /**< Stores the player's hyperspace target if necessary. */
 
-static const char *hunk_name[HUNK_TYPE_SENTINAL] = {
+static const char *hunk_name[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_NONE]                    = N_( "none" ),
    [HUNK_TYPE_SPOB_ADD]                = N_( "spob add" ),
    [HUNK_TYPE_SPOB_REMOVE]             = N_( "spob remove" ),
@@ -128,6 +128,7 @@ static const char *hunk_name[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_FACTION_ENEMY]           = N_( "faction set enemy" ),
    [HUNK_TYPE_FACTION_NEUTRAL]         = N_( "faction set neutral" ),
    [HUNK_TYPE_FACTION_REALIGN]         = N_( "faction alignment reset" ),
+   [HUNK_TYPE_SENTINAL]                = N_( "sentinal" ),
 };
 static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_NONE]                    = HUNK_TYPE_SENTINAL,
@@ -176,7 +177,6 @@ static int        diff_removeDiff( UniDiff_t *diff );
 static int        diff_patchSystem( UniDiff_t *diff, xmlNodePtr node );
 static int        diff_patchTech( UniDiff_t *diff, xmlNodePtr node );
 static int        diff_patch( xmlNodePtr parent );
-static int        diff_patchHunk( UniHunk_t *hunk );
 static void       diff_hunkFailed( UniDiff_t *diff, const UniHunk_t *hunk );
 static void       diff_hunkSuccess( UniDiff_t *diff, const UniHunk_t *hunk );
 static void       diff_cleanup( UniDiff_t *diff );
@@ -209,7 +209,7 @@ int diff_init( void )
 
    for ( int i = 0; i < HUNK_TYPE_SENTINAL; i++ ) {
       if ( hunk_name[i] == NULL )
-         WARN( "HUNK_TYPE '%d' missing error message!", i );
+         WARN( "HUNK_TYPE '%d' missing name!", i );
       if ( hunk_reverse[i] == HUNK_TYPE_NONE ) {
          /* It's possible that this is an internal usage only reverse one, so we
           * have to see if something points to it instead. */
@@ -222,8 +222,12 @@ int diff_init( void )
          }
          /* If not found, that means that the type is not referred to by anyone.
           */
-         if ( !found )
-            WARN( "HUNK_TYPE '%d' missing reverse!", i );
+         if ( !found ) {
+            if ( hunk_name[i] == NULL )
+               WARN( "HUNK_TYPE '%d' missing reverse!", i );
+            else
+               WARN( "HUNK_TYPE '%s' missing reverse!", hunk_name[i] );
+         }
       }
    }
 #endif /* DEBUGGING */
@@ -384,6 +388,16 @@ static int diff_applyInternal( const char *name, int oneshot )
       diff_checkUpdateUniverse();
 
    return 0;
+}
+
+void diff_start( void )
+{
+   diff_universe_changed = 0;
+}
+
+void diff_end( void )
+{
+   diff_checkUpdateUniverse();
 }
 
 /**
@@ -781,12 +795,25 @@ static int diff_patch( xmlNodePtr parent )
 }
 
 /**
- * @brief Applies a hunk and adds it to the diff.
+ * @brief Reverts a hunk.
+ *
+ *    @param hunk Hunk to revert.
+ *    @return 0 on success.
+ */
+int diff_revertHunk( UniHunk_t *hunk )
+{
+   UniHunk_t rhunk = *hunk;
+   rhunk.type      = hunk_reverse[hunk->type];
+   return diff_patchHunk( &rhunk );
+}
+
+/**
+ * @brief Applies a hunk.
  *
  *    @param hunk Hunk to apply.
  *    @return 0 on success.
  */
-static int diff_patchHunk( UniHunk_t *hunk )
+int diff_patchHunk( UniHunk_t *hunk )
 {
    Spob       *p;
    StarSystem *ssys;
@@ -1268,11 +1295,8 @@ static int diff_removeDiff( UniDiff_t *diff )
 {
    for ( int i = 0; i < array_size( diff->applied ); i++ ) {
       UniHunk_t hunk = diff->applied[i];
-      /* Invert the type for reverting. */
-      hunk.type = hunk_reverse[hunk.type];
-      /* Patch. */
-      if ( diff_patchHunk( &hunk ) )
-         WARN( _( "Failed to remove hunk type '%d'." ), hunk.type );
+      if ( diff_revertHunk( &hunk ) )
+         WARN( _( "Failed to remove hunk type '%s'." ), hunk_name[hunk.type] );
    }
 
    diff_cleanup( diff );
@@ -1295,6 +1319,14 @@ static void diff_cleanup( UniDiff_t *diff )
       diff_cleanupHunk( &diff->failed[i] );
    array_free( diff->failed );
    memset( diff, 0, sizeof( UniDiff_t ) );
+}
+
+/**
+ * @brief Gets the human readable name of a hunk.
+ */
+const char *diff_hunkName( UniHunkType_t t )
+{
+   return hunk_name[t];
 }
 
 /**

@@ -21,4 +21,4 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x,
 
 /* For when working in diff mode. */
 extern int uniedit_diffMode;
-void       uniedit_diffAdd( const UniHunk_t *hunk );
+void       uniedit_diffAdd( UniHunk_t *hunk );

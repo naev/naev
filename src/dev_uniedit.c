@@ -180,6 +180,9 @@ static void uniedit_btnFind( unsigned int wid_unused, const char *unused );
 static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
                          int isrepeat );
 /* Diffs. */
+static void uniedit_diffEditor( unsigned int wid_unused, const char *unused );
+static void uniedit_diff_close( unsigned int wid, const char *unused );
+static void uniedit_diffSsysPos( StarSystem *s, double x, double y );
 static void uniedit_diffClear( void );
 
 /**
@@ -240,8 +243,15 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 
    /* Save button. */
    window_addButton( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
-                     BUTTON_WIDTH, BUTTON_HEIGHT, "btnSave", _( "Save All" ),
+                     BUTTON_WIDTH, BUTTON_HEIGHT, "btnSave",
+                     uniedit_diffMode ? _( "Save Diff" ) : _( "Save All" ),
                      uniedit_save );
+   buttonPos++;
+
+   /* Diff button. */
+   window_addButton( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
+                     BUTTON_WIDTH, BUTTON_HEIGHT, "btnDiff", _( "Diffs" ),
+                     uniedit_diffEditor );
    buttonPos++;
 
    /* View button. */
@@ -392,8 +402,10 @@ void uniedit_options( unsigned int wid_unused, const char *unused )
 {
    (void)wid_unused;
    (void)unused;
-   unsigned int wid = window_create( "wdwEditorOptions", _( "Editor Options" ),
-                                     -1, -1, 300, 300 );
+   const int    w = 300;
+   const int    h = 300;
+   unsigned int wid =
+      window_create( "wdwEditorOptions", _( "Editor Options" ), -1, -1, w, h );
    window_onClose( wid, uniedit_options_close );
 
    /* Close button. */
@@ -401,7 +413,7 @@ void uniedit_options( unsigned int wid_unused, const char *unused )
                      _( "Close" ), window_close );
 
    /* Autosave toggle. */
-   window_addCheckbox( wid, 20, -30, 300 - 40, 20, "chkEditAutoSave",
+   window_addCheckbox( wid, 20, -30, w - 40, 20, "chkEditAutoSave",
                        _( "Automatically save changes" ), NULL,
                        conf.devautosave );
 }
@@ -1381,8 +1393,8 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
             double      sy = s->pos.y - uniedit_rotate_cy;
             double      a  = atan2( sy, sx );
             double      m  = hypot( sx, sy );
-            s->pos.x       = uniedit_rotate_cx + m * cos( a + amod );
-            s->pos.y       = uniedit_rotate_cy + m * sin( a + amod );
+            uniedit_diffSsysPos( s, uniedit_rotate_cx + m * cos( a + amod ),
+                                 uniedit_rotate_cy + m * sin( a + amod ) );
          }
       }
 
@@ -1399,8 +1411,9 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
               ( SDL_GetTicks() - uniedit_lastClick >
                 UNIEDIT_DRAG_THRESHOLD ) ) {
             for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
-               uniedit_sys[i]->pos.x += rx / uniedit_zoom;
-               uniedit_sys[i]->pos.y -= ry / uniedit_zoom;
+               StarSystem *s = uniedit_sys[i];
+               uniedit_diffSsysPos( s, s->pos.x + rx / uniedit_zoom,
+                                    s->pos.y - ry / uniedit_zoom );
             }
          }
 
@@ -1456,6 +1469,10 @@ static void uniedit_renameSys( void )
    for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
       char       *name, *oldName, *newName, *filtered;
       StarSystem *sys = uniedit_sys[i];
+
+      if ( uniedit_diffMode ) {
+         /* TODO warning. */
+      }
 
       /* Get name. */
       name =
@@ -1514,6 +1531,10 @@ static void uniedit_newSys( double x, double y )
    char       *name;
    StarSystem *sys;
 
+   if ( uniedit_diffMode ) {
+      /* TODO warning. */
+   }
+
    /* Get name. */
    name = dialogue_inputRaw( _( "New Star System Creation" ), 1, 32,
                              _( "What do you want to name the new system?" ) );
@@ -1560,16 +1581,40 @@ static void uniedit_toggleJump( StarSystem *sys )
          StarSystem *target = isys->jumps[j].target;
          /* Target already exists, remove. */
          if ( target == sys ) {
-            uniedit_jumpRm( isys, sys );
-            uniedit_jumpRm( sys, isys );
             rm = 1;
+
+            if ( uniedit_diffMode ) {
+               UniHunk_t hunk;
+               hunk.target.type   = HUNK_TARGET_SYSTEM;
+               hunk.target.u.name = strdup( isys->name );
+               hunk.type          = HUNK_TYPE_JUMP_REMOVE;
+               hunk.dtype         = HUNK_DATA_STRING;
+               hunk.u.name        = strdup( sys->name );
+               hunk.o.name        = NULL;
+               uniedit_diffAdd( &hunk );
+            } else {
+               uniedit_jumpRm( isys, sys );
+               uniedit_jumpRm( sys, isys );
+            }
+
             break;
          }
       }
       /* Target doesn't exist, add. */
       if ( !rm ) {
-         uniedit_jumpAdd( isys, sys );
-         uniedit_jumpAdd( sys, isys );
+         if ( uniedit_diffMode ) {
+            UniHunk_t hunk;
+            hunk.target.type   = HUNK_TARGET_SYSTEM;
+            hunk.target.u.name = strdup( isys->name );
+            hunk.type          = HUNK_TYPE_JUMP_ADD;
+            hunk.dtype         = HUNK_DATA_STRING;
+            hunk.u.name        = strdup( sys->name );
+            hunk.o.name        = NULL;
+            uniedit_diffAdd( &hunk );
+         } else {
+            uniedit_jumpAdd( isys, sys );
+            uniedit_jumpAdd( sys, isys );
+         }
       }
    }
 
@@ -2153,6 +2198,8 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
 {
    StarSystem *sys;
    double      scale;
+   int         data;
+   double      fdata;
 
    /* We already know the system exists because we checked when opening the
     * dialog. */
@@ -2162,11 +2209,31 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    scale = atof( window_getInput( wid, "inpRadius" ) ) / sys->radius;
    sysedit_sysScale( sys, scale );
 
-   sys->spacedust       = atoi( window_getInput( wid, "inpDust" ) );
-   sys->interference    = atof( window_getInput( wid, "inpInterference" ) );
-   sys->nebu_density    = atof( window_getInput( wid, "inpNebula" ) );
-   sys->nebu_volatility = atof( window_getInput( wid, "inpVolatility" ) );
-   sys->nebu_hue        = atof( window_getInput( wid, "inpHue" ) ) / 360.;
+   data = atoi( window_getInput( wid, "inpDust" ) );
+   if ( data != sys->spacedust ) {
+      sys->spacedust = data;
+      /* TODO unidiff. */
+   }
+   fdata = atof( window_getInput( wid, "inpInterference" ) );
+   if ( fabs( sys->interference - fdata ) > 1e-5 ) {
+      sys->interference = fdata;
+      /* TODO unidiff. */
+   }
+   fdata = atof( window_getInput( wid, "inpNebula" ) );
+   if ( fabs( sys->nebu_density - fdata ) > 1e-5 ) {
+      sys->nebu_density = fdata;
+      /* TODO unidiff. */
+   }
+   fdata = atof( window_getInput( wid, "inpVolatility" ) );
+   if ( fabs( sys->nebu_volatility - fdata ) > 1e-5 ) {
+      sys->nebu_volatility = fdata;
+      /* TODO unidiff. */
+   }
+   fdata = atof( window_getInput( wid, "inpHue" ) ) / 360.;
+   if ( fabs( sys->nebu_hue - fdata ) > 1e-5 ) {
+      sys->nebu_hue = fdata;
+      /* TODO unidiff. */
+   }
 
    /* Reset trails if necessary. */
    Pilot *const *plt_stack = pilot_getAll();
@@ -2615,7 +2682,87 @@ static void uniedit_diffClear( void )
    uniedit_diff = 0;
 }
 
-void uniedit_diffAdd( const UniHunk_t *hunk )
+void uniedit_diffAdd( UniHunk_t *hunk )
 {
+   diff_start();
+
+   /* Replace if already same type exists. */
+   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
+      UniHunk_t *hi = &uniedit_diff[i];
+      if ( ( hi->target.type == hunk->target.type ) &&
+           ( strcmp( hi->target.u.name, hunk->target.u.name ) == 0 ) &&
+           ( hi->type == hunk->type ) ) {
+         /* Have to revert the old one and then patch. */
+         diff_revertHunk( hi );
+         diff_cleanupHunk( hi );
+         if ( diff_patchHunk( hunk ) )
+            WARN( _( "uniedit: failed to patch '%s'" ),
+                  diff_hunkName( hunk->type ) );
+         diff_end();
+         memcpy( hi, hunk, sizeof( UniHunk_t ) );
+         return;
+      }
+   }
+
+   /* Patch the hunk. */
+   if ( diff_patchHunk( hunk ) )
+      WARN( _( "uniedit: failed to patch '%s'" ), diff_hunkName( hunk->type ) );
+   diff_end();
+
    array_push_back( &uniedit_diff, *hunk );
+}
+
+static void uniedit_diffSsysPos( StarSystem *s, double x, double y )
+{
+   UniHunk_t hunk;
+
+   if ( !uniedit_diffMode ) {
+      s->pos.x = x;
+      s->pos.y = y;
+      return;
+   }
+
+   hunk.target.type   = HUNK_TARGET_SYSTEM;
+   hunk.target.u.name = strdup( s->name );
+   hunk.type          = HUNK_TYPE_SSYS_POS_X;
+   hunk.dtype         = HUNK_DATA_FLOAT;
+   hunk.u.fdata       = x;
+   hunk.o.fdata       = s->pos.x;
+   uniedit_diffAdd( &hunk );
+
+   hunk.target.u.name = strdup( s->name );
+   hunk.type          = HUNK_TYPE_SSYS_POS_X;
+   hunk.u.fdata       = y;
+   hunk.o.fdata       = s->pos.y;
+   uniedit_diffAdd( &hunk );
+}
+
+static void uniedit_diffEditor( unsigned int wid_unused, const char *unused )
+{
+   (void)wid_unused;
+   (void)unused;
+   const int    w = 600;
+   const int    h = 400;
+   unsigned int wid =
+      window_create( "wdwEditorDiffs", _( "Diff Options" ), -1, -1, w, h );
+   window_onClose( wid, uniedit_diff_close );
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
+                     _( "Close" ), window_close );
+
+   /* Autosave toggle. */
+   window_addCheckbox(
+      wid, 20, -30, w - 40, 20, "chkDiffMode",
+      _( "Diff Mode (creates a diff instead of direct modification)" ), NULL,
+      uniedit_diffMode );
+}
+
+static void uniedit_diff_close( unsigned int wid, const char *unused )
+{
+   (void)unused;
+   uniedit_diffMode = window_checkboxState( wid, "chkDiffMode" );
+   window_buttonCaption( uniedit_wid, "btnSave",
+                         uniedit_diffMode ? _( "Save Diff" )
+                                          : _( "Save All" ) );
 }
