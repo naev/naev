@@ -182,6 +182,12 @@ static void uniedit_btnFind( unsigned int wid_unused, const char *unused );
 static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
                          int isrepeat );
 /* Diffs. */
+static void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
+                                      char *str );
+static void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
+                                      int data );
+static void uniedit_diffCreateSysFloat( const StarSystem *sys,
+                                        UniHunkType_t type, double fdata );
 static void uniedit_diffEditor( unsigned int wid_unused, const char *unused );
 static void uniedit_diff_toggle( unsigned int wid, const char *wgt );
 static void uniedit_diff_remove( unsigned int wid, const char *wgt );
@@ -1520,13 +1526,7 @@ static void uniedit_renameSys( void )
       }
 
       if ( uniedit_diffMode ) {
-         UniHunk_t hunk;
-         hunk.target.type   = HUNK_TARGET_SYSTEM;
-         hunk.target.u.name = strdup( sys->name );
-         hunk.type          = HUNK_TYPE_SSYS_DISPLAYNAME;
-         hunk.dtype         = HUNK_DATA_STRING;
-         hunk.u.name        = name; /* No need to free. */
-         uniedit_diffAdd( &hunk );
+         uniedit_diffCreateSysStr( sys, HUNK_TYPE_SSYS_DISPLAYNAME, name );
       } else {
          /* Change the name. */
          filtered = uniedit_nameFilter( sys->name );
@@ -1616,14 +1616,8 @@ static void uniedit_toggleJump( StarSystem *sys )
             rm = 1;
 
             if ( uniedit_diffMode ) {
-               UniHunk_t hunk;
-               hunk.target.type   = HUNK_TARGET_SYSTEM;
-               hunk.target.u.name = strdup( isys->name );
-               hunk.type          = HUNK_TYPE_JUMP_REMOVE;
-               hunk.dtype         = HUNK_DATA_STRING;
-               hunk.u.name        = strdup( sys->name );
-               hunk.o.name        = NULL;
-               uniedit_diffAdd( &hunk );
+               uniedit_diffCreateSysStr( isys, HUNK_TYPE_JUMP_REMOVE,
+                                         strdup( sys->name ) );
             } else {
                uniedit_jumpRm( isys, sys );
                uniedit_jumpRm( sys, isys );
@@ -1635,14 +1629,8 @@ static void uniedit_toggleJump( StarSystem *sys )
       /* Target doesn't exist, add. */
       if ( !rm ) {
          if ( uniedit_diffMode ) {
-            UniHunk_t hunk;
-            hunk.target.type   = HUNK_TARGET_SYSTEM;
-            hunk.target.u.name = strdup( isys->name );
-            hunk.type          = HUNK_TYPE_JUMP_ADD;
-            hunk.dtype         = HUNK_DATA_STRING;
-            hunk.u.name        = strdup( sys->name );
-            hunk.o.name        = NULL;
-            uniedit_diffAdd( &hunk );
+            uniedit_diffCreateSysStr( isys, HUNK_TYPE_JUMP_ADD,
+                                      strdup( sys->name ) );
          } else {
             uniedit_jumpAdd( isys, sys );
             uniedit_jumpAdd( sys, isys );
@@ -2240,28 +2228,39 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
 
    data = atoi( window_getInput( wid, "inpDust" ) );
    if ( data != sys->spacedust ) {
-      sys->spacedust = data;
-      /* TODO unidiff. */
+      if ( uniedit_diffMode )
+         uniedit_diffCreateSysInt( sys, HUNK_TYPE_SSYS_DUST, data );
+      else
+         sys->spacedust = data;
    }
    fdata = atof( window_getInput( wid, "inpInterference" ) );
    if ( fabs( sys->interference - fdata ) > 1e-5 ) {
-      sys->interference = fdata;
-      /* TODO unidiff. */
+      if ( uniedit_diffMode )
+         uniedit_diffCreateSysFloat( sys, HUNK_TYPE_SSYS_INTERFERENCE, fdata );
+      else
+         sys->interference = fdata;
    }
    fdata = atof( window_getInput( wid, "inpNebula" ) );
    if ( fabs( sys->nebu_density - fdata ) > 1e-5 ) {
-      sys->nebu_density = fdata;
-      /* TODO unidiff. */
+      if ( uniedit_diffMode )
+         uniedit_diffCreateSysFloat( sys, HUNK_TYPE_SSYS_NEBU_DENSITY, fdata );
+      else
+         sys->nebu_density = fdata;
    }
    fdata = atof( window_getInput( wid, "inpVolatility" ) );
    if ( fabs( sys->nebu_volatility - fdata ) > 1e-5 ) {
-      sys->nebu_volatility = fdata;
-      /* TODO unidiff. */
+      if ( uniedit_diffMode )
+         uniedit_diffCreateSysFloat( sys, HUNK_TYPE_SSYS_NEBU_VOLATILITY,
+                                     fdata );
+      else
+         sys->nebu_volatility = fdata;
    }
    fdata = atof( window_getInput( wid, "inpHue" ) ) / 360.;
    if ( fabs( sys->nebu_hue - fdata ) > 1e-5 ) {
-      sys->nebu_hue = fdata;
-      /* TODO unidiff. */
+      if ( uniedit_diffMode )
+         uniedit_diffCreateSysFloat( sys, HUNK_TYPE_SSYS_NEBU_HUE, fdata );
+      else
+         sys->nebu_hue = fdata;
    }
 
    /* Reset trails if necessary. */
@@ -2708,7 +2707,6 @@ static void uniedit_diffClear( void )
    diff_start();
    for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
       UniHunk_t *h = &uniedit_diff[i];
-      ;
       diff_revertHunk( h );
       diff_cleanupHunk( h );
    }
@@ -2731,6 +2729,45 @@ static int uniedit_diff_cmp( const void *p1, const void *p2 )
       return ret;
    return h1->type -
           h2->type; /* Should not overlap with same target and type. */
+}
+
+static void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
+                                      char *str )
+{
+   UniHunk_t hunk;
+   hunk.target.type   = HUNK_TARGET_SYSTEM;
+   hunk.target.u.name = strdup( sys->name );
+   hunk.type          = type;
+   hunk.dtype         = HUNK_DATA_STRING;
+   hunk.u.name        = str;
+   hunk.o.name        = NULL;
+   uniedit_diffAdd( &hunk );
+}
+
+static void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
+                                      int data )
+{
+   UniHunk_t hunk;
+   hunk.target.type   = HUNK_TARGET_SYSTEM;
+   hunk.target.u.name = strdup( sys->name );
+   hunk.type          = type;
+   hunk.dtype         = HUNK_DATA_INT;
+   hunk.u.data        = data;
+   hunk.o.name        = NULL;
+   uniedit_diffAdd( &hunk );
+}
+
+static void uniedit_diffCreateSysFloat( const StarSystem *sys,
+                                        UniHunkType_t type, double fdata )
+{
+   UniHunk_t hunk;
+   hunk.target.type   = HUNK_TARGET_SYSTEM;
+   hunk.target.u.name = strdup( sys->name );
+   hunk.type          = type;
+   hunk.dtype         = HUNK_DATA_FLOAT;
+   hunk.u.fdata       = fdata;
+   hunk.o.name        = NULL;
+   uniedit_diffAdd( &hunk );
 }
 
 void uniedit_diffAdd( UniHunk_t *hunk )
