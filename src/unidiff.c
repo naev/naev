@@ -96,6 +96,10 @@ static const char *const hunk_name[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_SSYS_NOLANES_REMOVE]        = N_( "ssys nolanes remove" ),
    [HUNK_TYPE_SSYS_TAG_ADD]               = N_( "ssys tag add" ),
    [HUNK_TYPE_SSYS_TAG_REMOVE]            = N_( "ssys tag remove" ),
+   [HUNK_TYPE_SPOB_POS_X]                 = N_( "spob pos x" ),
+   [HUNK_TYPE_SPOB_POS_X_REVERT]          = N_( "spob pos x revert" ),
+   [HUNK_TYPE_SPOB_POS_Y]                 = N_( "spob pos y" ),
+   [HUNK_TYPE_SPOB_POS_Y_REVERT]          = N_( "spob pos y revert" ),
    [HUNK_TYPE_SPOB_CLASS]                 = N_( "spob class" ),
    [HUNK_TYPE_SPOB_CLASS_REVERT]          = N_( "spob class revert" ),
    [HUNK_TYPE_SPOB_FACTION]               = N_( "spob faction" ),
@@ -162,6 +166,8 @@ static const char *const hunk_tag[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_TAG_REMOVE]         = "tag_remove",
    [HUNK_TYPE_TECH_ADD]                = "item_add",
    [HUNK_TYPE_TECH_REMOVE]             = "item_remove",
+   [HUNK_TYPE_SPOB_POS_X]              = "pos_x",
+   [HUNK_TYPE_SPOB_POS_Y]              = "pos_y",
    [HUNK_TYPE_SPOB_CLASS]              = "class",
    [HUNK_TYPE_SPOB_FACTION]            = "faction",
    [HUNK_TYPE_SPOB_PRESENCE_BASE]      = "presence_base",
@@ -213,6 +219,8 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_TAG_REMOVE]         = HUNK_TYPE_SSYS_TAG_ADD,
    [HUNK_TYPE_TECH_ADD]                = HUNK_TYPE_TECH_REMOVE,
    [HUNK_TYPE_TECH_REMOVE]             = HUNK_TYPE_TECH_ADD,
+   [HUNK_TYPE_SPOB_POS_X]              = HUNK_TYPE_SPOB_POS_X_REVERT,
+   [HUNK_TYPE_SPOB_POS_Y]              = HUNK_TYPE_SPOB_POS_Y_REVERT,
    [HUNK_TYPE_SPOB_CLASS]              = HUNK_TYPE_SPOB_CLASS_REVERT,
    [HUNK_TYPE_SPOB_FACTION]            = HUNK_TYPE_SPOB_FACTION_REVERT,
    [HUNK_TYPE_SPOB_PRESENCE_BASE]      = HUNK_TYPE_SPOB_PRESENCE_BASE_REVERT,
@@ -622,6 +630,8 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
    do {
       xml_onlyNodes( cur );
 
+      HUNK_FLOAT( HUNK_TYPE_SPOB_POS_X );
+      HUNK_FLOAT( HUNK_TYPE_SPOB_POS_Y );
       HUNK_STRD( HUNK_TYPE_SPOB_CLASS );
       HUNK_STRD( HUNK_TYPE_SPOB_FACTION );
       HUNK_FLOAT( HUNK_TYPE_SPOB_PRESENCE_BASE );
@@ -1008,6 +1018,22 @@ int diff_patchHunk( UniHunk_t *hunk )
    /* Removing a tech. */
    case HUNK_TYPE_TECH_REMOVE:
       return tech_rmItem( hunk->target.u.name, hunk->u.name );
+
+   /* Position changes. */
+   case HUNK_TYPE_SPOB_POS_X:
+      hunk->o.fdata = p->pos.x;
+      p->pos.x      = hunk->u.fdata;
+      return 0;
+   case HUNK_TYPE_SPOB_POS_X_REVERT:
+      p->pos.x = hunk->o.fdata;
+      return 0;
+   case HUNK_TYPE_SPOB_POS_Y:
+      hunk->o.fdata = p->pos.y;
+      p->pos.y      = hunk->u.fdata;
+      return 0;
+   case HUNK_TYPE_SPOB_POS_Y_REVERT:
+      p->pos.y = hunk->o.fdata;
+      return 0;
 
    /* Changing spob faction. */
    case HUNK_TYPE_SPOB_CLASS:

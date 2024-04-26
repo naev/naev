@@ -3,6 +3,7 @@
  */
 #pragma once
 
+#include "space.h"
 #include "unidiff.h"
 
 #define HIDE_DEFAULT_JUMP 1.0 /**< Default hide value for new jumps. */
@@ -22,3 +23,10 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x,
 /* For when working in diff mode. */
 extern int uniedit_diffMode;
 void       uniedit_diffAdd( UniHunk_t *hunk );
+void uniedit_diffCreateSysNone( const StarSystem *sys, UniHunkType_t type );
+void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
+                               char *str );
+void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
+                               int data );
+void uniedit_diffCreateSysFloat( const StarSystem *sys, UniHunkType_t type,
+                                 double fdata );

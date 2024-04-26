@@ -180,14 +180,6 @@ static void uniedit_btnFind( unsigned int wid_unused, const char *unused );
 static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
                          int isrepeat );
 /* Diffs. */
-static void uniedit_diffCreateSysNone( const StarSystem *sys,
-                                       UniHunkType_t     type );
-static void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
-                                      char *str );
-static void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
-                                      int data );
-static void uniedit_diffCreateSysFloat( const StarSystem *sys,
-                                        UniHunkType_t type, double fdata );
 static void uniedit_diffEditor( unsigned int wid_unused, const char *unused );
 static void uniedit_diff_toggle( unsigned int wid, const char *wgt );
 static void uniedit_diff_remove( unsigned int wid, const char *wgt );
@@ -2726,8 +2718,7 @@ static int uniedit_diff_cmp( const void *p1, const void *p2 )
           h2->type; /* Should not overlap with same target and type. */
 }
 
-static void uniedit_diffCreateSysNone( const StarSystem *sys,
-                                       UniHunkType_t     type )
+void uniedit_diffCreateSysNone( const StarSystem *sys, UniHunkType_t type )
 {
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );
@@ -2738,8 +2729,8 @@ static void uniedit_diffCreateSysNone( const StarSystem *sys,
    uniedit_diffAdd( &hunk );
 }
 
-static void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
-                                      char *str )
+void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
+                               char *str )
 {
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );
@@ -2751,8 +2742,8 @@ static void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
    uniedit_diffAdd( &hunk );
 }
 
-static void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
-                                      int data )
+void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
+                               int data )
 {
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );
@@ -2764,8 +2755,8 @@ static void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
    uniedit_diffAdd( &hunk );
 }
 
-static void uniedit_diffCreateSysFloat( const StarSystem *sys,
-                                        UniHunkType_t type, double fdata )
+void uniedit_diffCreateSysFloat( const StarSystem *sys, UniHunkType_t type,
+                                 double fdata )
 {
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );

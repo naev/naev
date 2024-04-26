@@ -652,35 +652,61 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
    (void)unused;
    char *file;
 
-   if ( dialogue_YesNo( _( "Remove selected objects (excluding jumps)?" ),
-                        _( "This can not be undone." ) ) ) {
-      for ( int i = 0; i < sysedit_nselect; i++ ) {
-         Select_t *sel = &sysedit_select[i];
-         if ( sel->type == SELECT_SPOB ) {
-            const Spob *sp       = sysedit_sys->spobs[sel->u.spob];
-            char       *filtered = uniedit_nameFilter( sp->name );
-            SDL_asprintf( &file, "%s/%s.xml", conf.dev_save_spob, filtered );
-            remove( file );
+   if ( uniedit_diffMode ) {
+      if ( dialogue_YesNo(
+              _( "Remove selected objects (excluding jumps)?" ),
+              _( "Objects will be removed through the current diff." ) ) ) {
+         for ( int i = 0; i < sysedit_nselect; i++ ) {
+            Select_t *sel = &sysedit_select[i];
+            if ( sel->type == SELECT_SPOB ) {
+               const Spob *sp = sysedit_sys->spobs[sel->u.spob];
+               uniedit_diffCreateSysStr( sysedit_sys, HUNK_TYPE_SPOB_REMOVE,
+                                         strdup( sp->name ) );
+               /* TODO asteroids too
+               } else if ( sel->type == SELECT_ASTEROID ) {
+                  AsteroidAnchor *ast =
+               &sysedit_sys->asteroids[sel->u.asteroid]; asteroid_free( ast );
+                  array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
+               } else if ( sel->type == SELECT_ASTEXCLUDE ) {
+                  AsteroidExclusion *exc =
+                     &sysedit_sys->astexclude[sel->u.astexclude];
 
-            free( filtered );
-            free( file );
-
-            system_rmSpob( sysedit_sys, sp->name );
-         } else if ( sel->type == SELECT_ASTEROID ) {
-            AsteroidAnchor *ast = &sysedit_sys->asteroids[sel->u.asteroid];
-            asteroid_free( ast );
-            array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
-         } else if ( sel->type == SELECT_ASTEXCLUDE ) {
-            AsteroidExclusion *exc =
-               &sysedit_sys->astexclude[sel->u.astexclude];
-
-            array_erase( &sysedit_sys->astexclude, exc, exc + 1 );
+                  array_erase( &sysedit_sys->astexclude, exc, exc + 1 );
+               */
+            }
          }
       }
+   } else {
+      if ( dialogue_YesNo( _( "Remove selected objects (excluding jumps)?" ),
+                           _( "This can not be undone." ) ) ) {
+         for ( int i = 0; i < sysedit_nselect; i++ ) {
+            Select_t *sel = &sysedit_select[i];
+            if ( sel->type == SELECT_SPOB ) {
+               const Spob *sp       = sysedit_sys->spobs[sel->u.spob];
+               char       *filtered = uniedit_nameFilter( sp->name );
+               SDL_asprintf( &file, "%s/%s.xml", conf.dev_save_spob, filtered );
+               remove( file );
 
-      /* Run galaxy modifications. */
-      space_reconstructPresences();
-      economy_execQueued();
+               free( filtered );
+               free( file );
+
+               system_rmSpob( sysedit_sys, sp->name );
+            } else if ( sel->type == SELECT_ASTEROID ) {
+               AsteroidAnchor *ast = &sysedit_sys->asteroids[sel->u.asteroid];
+               asteroid_free( ast );
+               array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
+            } else if ( sel->type == SELECT_ASTEXCLUDE ) {
+               AsteroidExclusion *exc =
+                  &sysedit_sys->astexclude[sel->u.astexclude];
+
+               array_erase( &sysedit_sys->astexclude, exc, exc + 1 );
+            }
+         }
+
+         /* Run galaxy modifications. */
+         space_reconstructPresences();
+         economy_execQueued();
+      }
    }
 }
 
@@ -787,8 +813,6 @@ void sysedit_sysScale( StarSystem *sys, double factor )
       vec2_cset( &exc->pos, exc->pos.x * factor, exc->pos.y * factor );
       exc->radius *= factor;
    }
-
-   /* TODO diff. */
 
    /* Must reconstruct jumps. */
    systems_reconstructJumps();
@@ -1317,31 +1341,49 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
                AsteroidExclusion *exc;
                Select_t          *sel = &sysedit_select[i];
 
-               /* TODO add diff support to the following. */
                switch ( sel->type ) {
                case SELECT_SPOB:
                   p = sys->spobs[sel->u.spob];
-                  p->pos.x += xmove;
-                  p->pos.y += ymove;
+                  if ( uniedit_diffMode ) {
+                     sysedit_diffCreateSpobFloat( p, HUNK_TYPE_SPOB_POS_X,
+                                                  p->pos.x + xmove );
+                     sysedit_diffCreateSpobFloat( p, HUNK_TYPE_SPOB_POS_Y,
+                                                  p->pos.y + ymove );
+                  } else {
+                     p->pos.x += xmove;
+                     p->pos.y += ymove;
+                  }
                   break;
 
                case SELECT_JUMPPOINT:
                   jp = &sys->jumps[sel->u.jump];
-                  jp->flags &= ~( JP_AUTOPOS );
-                  jp->pos.x += xmove;
-                  jp->pos.y += ymove;
+                  if ( uniedit_diffMode ) {
+                     /* TODO diff. */
+                  } else {
+                     jp->flags &= ~( JP_AUTOPOS );
+                     jp->pos.x += xmove;
+                     jp->pos.y += ymove;
+                  }
                   break;
 
                case SELECT_ASTEROID:
                   ast = &sys->asteroids[sel->u.asteroid];
-                  ast->pos.x += xmove;
-                  ast->pos.y += ymove;
+                  if ( uniedit_diffMode ) {
+                     /* TODO diff. */
+                  } else {
+                     ast->pos.x += xmove;
+                     ast->pos.y += ymove;
+                  }
                   break;
 
                case SELECT_ASTEXCLUDE:
                   exc = &sys->astexclude[sel->u.astexclude];
-                  exc->pos.x += xmove;
-                  exc->pos.y += ymove;
+                  if ( uniedit_diffMode ) {
+                     /* TODO diff. */
+                  } else {
+                     exc->pos.x += xmove;
+                     exc->pos.y += ymove;
+                  }
                   break;
                }
             }
