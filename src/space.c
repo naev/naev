@@ -4631,7 +4631,7 @@ const char *space_populationStr( const Spob *spb )
     * failed in a few ways: needing 2x as many cases as intended to avoid
     * silliness (1.0e10 -> 10000 million), and not being gettext-translatable to
     * other number systems like the Japanese one. */
-   p = (double)spb->population;
+   p = spb->population;
    if ( p < 1.0e3 )
       snprintf( pop, sizeof( pop ), "%.0f", p );
    else {

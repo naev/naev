@@ -179,6 +179,14 @@ static void sysedit_checkButtons( void );
 static void sysedit_deselect( void );
 static void sysedit_selectAdd( const Select_t *sel );
 static void sysedit_selectRm( const Select_t *sel );
+/* Diffs. */
+static void sysedit_diffCreateSpobNone( const Spob *spb, UniHunkType_t type );
+static void sysedit_diffCreateSpobStr( const Spob *spb, UniHunkType_t type,
+                                       char *str );
+static void sysedit_diffCreateSpobInt( const Spob *spb, UniHunkType_t type,
+                                       int data );
+static void sysedit_diffCreateSpobFloat( const Spob *spb, UniHunkType_t type,
+                                         double fdata );
 
 /**
  * @brief Opens the system editor interface.
@@ -349,25 +357,41 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    (void)unused;
    const char *inp;
    Spob       *p = sysedit_sys->spobs[sysedit_select[0].u.spob];
+   double      fdata;
 
-   p->population =
-      (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10 );
+   fdata = atof( window_getInput( sysedit_widEdit, "inpPop" ) );
+   if ( fabs( fdata - p->population ) > 0. ) {
+      if ( uniedit_diffMode )
+         sysedit_diffCreateSpobFloat( p, HUNK_TYPE_SPOB_POPULATION, fdata );
+      else
+         p->population = fdata;
+   }
 
    inp = window_getInput( sysedit_widEdit, "inpClass" );
-   free( p->class );
-
-   if ( inp[0] == '\0' )
-      p->class = NULL;
-   else
-      p->class = strdup( inp );
+   if ( strcmp( p->class, inp ) != 0 ) {
+      if ( uniedit_diffMode ) {
+         sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_CLASS, strdup( inp ) );
+      } else {
+         free( p->class );
+         if ( inp[0] == '\0' )
+            p->class = NULL;
+         else
+            p->class = strdup( inp );
+      }
+   }
 
    inp = window_getInput( sysedit_widEdit, "inpLua" );
-   free( p->lua_file );
-
-   if ( ( inp == NULL ) || ( strlen( inp ) == 0 ) )
-      p->lua_file = NULL;
-   else
-      p->lua_file = strdup( inp );
+   if ( strcmp( p->lua_file, inp ) != 0 ) {
+      if ( uniedit_diffMode ) {
+         sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_LUA, strdup( inp ) );
+      } else {
+         free( p->lua_file );
+         if ( ( inp == NULL ) || ( strlen( inp ) == 0 ) )
+            p->lua_file = NULL;
+         else
+            p->lua_file = strdup( inp );
+      }
+   }
 
    p->presence.base =
       atof( window_getInput( sysedit_widEdit, "inpPresenceBase" ) );
@@ -385,12 +409,14 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    /* Have to recompute presences if stuff changed. */
    space_reconstructPresences();
 
-   if ( conf.devautosave )
-      dpl_saveSpob( p );
+   if ( !uniedit_diffMode ) {
+      if ( conf.devautosave )
+         dpl_saveSpob( p );
 
-   /* Clean up presences. */
-   space_reconstructPresences();
-   safelanes_recalculate();
+      /* Clean up presences. */
+      space_reconstructPresences();
+      safelanes_recalculate();
+   }
 
    window_close( wid, unused );
 }
@@ -1563,7 +1589,7 @@ static void sysedit_editPnt( void )
                      sysedit_editPntClose );
 
    /* Load current values. */
-   snprintf( buf, sizeof( buf ), "%" PRIu64, p->population );
+   snprintf( buf, sizeof( buf ), "%lf", p->population );
    window_setInput( wid, "inpPop", buf );
    snprintf( buf, sizeof( buf ), "%s", p->class );
    window_setInput( wid, "inpClass", buf );
@@ -2805,4 +2831,52 @@ static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
 
    /* For now we close. */
    sysedit_btnGFXClose( wid, wgt );
+}
+
+static void sysedit_diffCreateSpobNone( const Spob *spb, UniHunkType_t type )
+{
+   UniHunk_t hunk;
+   memset( &hunk, 0, sizeof( hunk ) );
+   hunk.target.type   = HUNK_TARGET_SPOB;
+   hunk.target.u.name = strdup( spb->name );
+   hunk.type          = type;
+   hunk.dtype         = HUNK_DATA_NONE;
+   uniedit_diffAdd( &hunk );
+}
+
+static void sysedit_diffCreateSpobStr( const Spob *spb, UniHunkType_t type,
+                                       char *str )
+{
+   UniHunk_t hunk;
+   memset( &hunk, 0, sizeof( hunk ) );
+   hunk.target.type   = HUNK_TARGET_SPOB;
+   hunk.target.u.name = strdup( spb->name );
+   hunk.type          = type;
+   hunk.dtype         = HUNK_DATA_STRING;
+   hunk.u.name        = str;
+   uniedit_diffAdd( &hunk );
+}
+static void sysedit_diffCreateSpobInt( const Spob *spb, UniHunkType_t type,
+                                       int data )
+{
+   UniHunk_t hunk;
+   memset( &hunk, 0, sizeof( hunk ) );
+   hunk.target.type   = HUNK_TARGET_SPOB;
+   hunk.target.u.name = strdup( spb->name );
+   hunk.type          = type;
+   hunk.dtype         = HUNK_DATA_STRING;
+   hunk.u.data        = data;
+   uniedit_diffAdd( &hunk );
+}
+static void sysedit_diffCreateSpobFloat( const Spob *spb, UniHunkType_t type,
+                                         double fdata )
+{
+   UniHunk_t hunk;
+   memset( &hunk, 0, sizeof( hunk ) );
+   hunk.target.type   = HUNK_TARGET_SPOB;
+   hunk.target.u.name = strdup( spb->name );
+   hunk.type          = type;
+   hunk.dtype         = HUNK_DATA_FLOAT;
+   hunk.u.fdata       = fdata;
+   uniedit_diffAdd( &hunk );
 }

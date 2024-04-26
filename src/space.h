@@ -112,7 +112,7 @@ typedef struct Spob_ {
    /* Spob details. */
    char *class; /**< Spob type. Uses Star Trek classification system for planets
                    (https://stexpanded.fandom.com/wiki/Spob_classifications) */
-   uint64_t population; /**< Population of the spob. */
+   double population; /**< Population of the spob. */
 
    /* Spob details. */
    SpobPresence presence; /**< Presence details (faction, etc.) */
