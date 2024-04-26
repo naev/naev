@@ -2779,6 +2779,8 @@ static void uniedit_diffEditor( unsigned int wid_unused, const char *unused )
    (void)unused;
    const int    w = 600;
    const int    h = 400;
+   int          y;
+   char       **items;
    unsigned int wid =
       window_create( "wdwEditorDiffs", _( "Diff Options" ), -1, -1, w, h );
    window_onClose( wid, uniedit_diff_close );
@@ -2788,10 +2790,25 @@ static void uniedit_diffEditor( unsigned int wid_unused, const char *unused )
                      _( "Close" ), window_close );
 
    /* Autosave toggle. */
+   y = -30;
    window_addCheckbox(
-      wid, 20, -30, w - 40, 20, "chkDiffMode",
+      wid, 20, y, w - 40, 20, "chkDiffMode",
       _( "Diff Mode (creates a diff instead of direct modification)" ),
       uniedit_diff_toggle, uniedit_diffMode );
+   y -= 30;
+
+   /* List current changes. */
+   window_addText( wid, 20, y, w - 40, 20, 0, "txtSDiff", NULL, NULL,
+                   _( "#nCurrent Diff Contents:" ) );
+   y -= 20;
+   items = malloc( sizeof( char * ) * array_size( uniedit_diff ) );
+   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
+      const UniHunk_t *hi = &uniedit_diff[i];
+      SDL_asprintf( &items[i], "%s: %s", hi->target.u.name,
+                    diff_hunkName( hi->type ) );
+   }
+   window_addList( wid, 20, y, w - 40, h + y - BUTTON_HEIGHT - 40, "lstDiffs",
+                   items, array_size( uniedit_diff ), 0, NULL, NULL );
 }
 
 static void uniedit_diff_toggle( unsigned int wid, const char *wgt )
@@ -2810,6 +2827,9 @@ static void uniedit_diff_toggle( unsigned int wid, const char *wgt )
    if ( !uniedit_diffMode ) {
       uniedit_diffClear();
       diff_clear();
+      /* Reopen to remake the list. */
+      window_close( wid, wgt );
+      uniedit_diffEditor( wid, wgt );
    }
 }
 
