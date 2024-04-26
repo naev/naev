@@ -3,6 +3,7 @@
       * Excess energy to battery recharge efficiency is now a flat 50% instead of varying based on charge level
       * Gave the Za'lek sting a slight detection buff
       * Can only have a single patrol mission active at a given time
+      * Pirates are less numerous during Chapter 0
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
@@ -18,6 +19,7 @@
       * Shown more useful things you have when buying outfits with things other than credits
       * Can sort and filter the mission computer
       * Added small optional bounce to NPCs when they start talking
+      * Inform the player when they don't meet mission requirements for some important missions
    * Content
       * 3 new missions
          * Hack the Gibson!
@@ -44,11 +46,14 @@
       * Use enums internally to represent keybindinsg instead of strings
       * Always use replaygain information when available when loading vorbis files
       * Stop repeating the same warning after a fixed amount of times
+      * Editor has partial support for universe diffs now
    * Fixes
       * PSO and Mizar nebulas have trails again
       * Removed fancy background mode
       * Can remove fighter bays with deployed fighters
       * Sol is less friendly
+      * Fixed rare cases where fighters would not be able to dock
+      * Fixed hypergate and wormhole effects getting stuck
 
 * 0.11.5 (unreleased)
    * Fixed FLF-Pirate map not providing jump information
