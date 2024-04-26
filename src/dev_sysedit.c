@@ -357,6 +357,7 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    (void)unused;
    const char *inp;
    Spob       *p = sysedit_sys->spobs[sysedit_select[0].u.spob];
+   int         data;
    double      fdata;
 
    fdata = atof( window_getInput( sysedit_widEdit, "inpPop" ) );
@@ -393,13 +394,34 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
       }
    }
 
-   p->presence.base =
-      atof( window_getInput( sysedit_widEdit, "inpPresenceBase" ) );
-   p->presence.bonus =
-      atof( window_getInput( sysedit_widEdit, "inpPresenceBonus" ) );
-   p->presence.range =
-      atoi( window_getInput( sysedit_widEdit, "inpPresenceRange" ) );
-   p->hide = atof( window_getInput( sysedit_widEdit, "inpHide" ) );
+   fdata = atof( window_getInput( sysedit_widEdit, "inpPresenceBase" ) );
+   if ( fabs( p->presence.base - fdata ) > 1e-5 ) {
+      if ( uniedit_diffMode )
+         sysedit_diffCreateSpobFloat( p, HUNK_TYPE_SPOB_PRESENCE_BASE, fdata );
+      else
+         p->presence.base = fdata;
+   }
+   fdata = atof( window_getInput( sysedit_widEdit, "inpPresenceBonus" ) );
+   if ( fabs( p->presence.bonus - fdata ) > 1e-5 ) {
+      if ( uniedit_diffMode )
+         sysedit_diffCreateSpobFloat( p, HUNK_TYPE_SPOB_PRESENCE_BONUS, fdata );
+      else
+         p->presence.bonus = fdata;
+   }
+   data = atoi( window_getInput( sysedit_widEdit, "inpPresenceRange" ) );
+   if ( data != p->presence.range ) {
+      if ( uniedit_diffMode )
+         sysedit_diffCreateSpobInt( p, HUNK_TYPE_SPOB_PRESENCE_RANGE, data );
+      else
+         p->presence.range = data;
+   }
+   fdata = atof( window_getInput( sysedit_widEdit, "inpHide" ) );
+   if ( fabs( p->hide - fdata ) > 1e-5 ) {
+      // if ( uniedit_diffMode )
+      //    sysedit_diffCreateSpobFloat( p, HUNK_TYPE_SPOB_HIDE, fdata );
+      // else
+      p->hide = fdata;
+   }
 
    for ( int i = 0; i < array_size( sysedit_tagslist ); i++ )
       free( sysedit_tagslist[i] );
