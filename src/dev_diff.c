@@ -16,7 +16,10 @@ int ddiff_save( UniHunk_t *diffs, const char *filename )
 {
    xmlDocPtr        doc;
    xmlTextWriterPtr writer;
-   int              ret = 0;
+   int              ret    = 0;
+   UniHunkTarget_t  target = {
+       .type = HUNK_TARGET_NONE,
+   };
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc( &doc, 0 );
@@ -32,9 +35,57 @@ int ddiff_save( UniHunk_t *diffs, const char *filename )
    xmlw_start( writer );
    xmlw_startElem( writer, "unidiff" );
 
-   /* Write the bulk of the diff. */
+   /* Write the bulk of the diff, we assume they are sorted by target. */
    for ( int i = 0; i < array_size( diffs ); i++ ) {
+      const UniHunk_t *h   = &diffs[i];
+      const char      *tag = diff_hunkTag( h->type );
+
+      /* Assuming sorted, so we try to group all diffs with same target. */
+      if ( ( target.type != h->target.type ) ||
+           strcmp( target.u.name, h->target.u.name ) != 0 ) {
+         if ( target.type != HUNK_TARGET_NONE )
+            xmlw_endElem( writer ); /* current target */
+         target = h->target;
+         switch ( target.type ) {
+         case HUNK_TARGET_SYSTEM:
+            xmlw_startElem( writer, "system" );
+            break;
+         case HUNK_TARGET_SPOB:
+            xmlw_startElem( writer, "spob" );
+            break;
+         case HUNK_TARGET_TECH:
+            xmlw_startElem( writer, "tech" );
+            break;
+         case HUNK_TARGET_FACTION:
+            xmlw_startElem( writer, "faction" );
+            break;
+
+         default:
+            WARN( _( "Trying to save unknown target type '%d'!" ),
+                  target.type );
+            xmlw_startElem( writer, "unknown" );
+            break;
+         }
+      }
+
+      /* Write the diff contents. */
+      switch ( h->dtype ) {
+      case HUNK_DATA_NONE:
+         xmlw_elemEmpty( writer, tag );
+         break;
+      case HUNK_DATA_STRING:
+         xmlw_elem( writer, tag, "%s", h->u.name );
+         break;
+      case HUNK_DATA_INT:
+         xmlw_elem( writer, tag, "%d", h->u.data );
+         break;
+      case HUNK_DATA_FLOAT:
+         xmlw_elem( writer, tag, "%f", h->u.fdata );
+         break;
+      }
    }
+   if ( target.type != HUNK_TARGET_NONE )
+      xmlw_endElem( writer ); /* current target */
 
    xmlw_endElem( writer ); /* "unidiff" */
    xmlw_done( writer );
