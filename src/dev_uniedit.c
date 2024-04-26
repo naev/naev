@@ -148,8 +148,6 @@ static void uniedit_renameSys( void );
 static void uniedit_newSys( double x, double y );
 /* Jump handling. */
 static void uniedit_toggleJump( StarSystem *sys );
-static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ );
-static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ );
 /* Tags. */
 static void uniedit_btnEditTags( unsigned int wid, const char *unused );
 static void uniedit_genTagsList( unsigned int wid );
@@ -1552,6 +1550,9 @@ static void uniedit_renameSys( void )
             dsys_saveSystem( sys->jumps[j].target );
       }
    }
+
+   /* Update text if necessary. */
+   uniedit_selectText();
 }
 
 /**
@@ -1619,8 +1620,8 @@ static void uniedit_toggleJump( StarSystem *sys )
                uniedit_diffCreateSysStr( isys, HUNK_TYPE_JUMP_REMOVE,
                                          strdup( sys->name ) );
             } else {
-               uniedit_jumpRm( isys, sys );
-               uniedit_jumpRm( sys, isys );
+               system_rmJump( isys, sys );
+               system_rmJump( sys, isys );
             }
 
             break;
@@ -1632,67 +1633,28 @@ static void uniedit_toggleJump( StarSystem *sys )
             uniedit_diffCreateSysStr( isys, HUNK_TYPE_JUMP_ADD,
                                       strdup( sys->name ) );
          } else {
-            uniedit_jumpAdd( isys, sys );
-            uniedit_jumpAdd( sys, isys );
+            system_addJump( isys, sys );
+            system_addJump( sys, isys );
          }
       }
    }
 
-   /* Reconstruct jumps just in case. */
-   systems_reconstructJumps();
+   if ( !uniedit_diffMode ) {
+      /* Reconstruct jumps just in case. */
+      systems_reconstructJumps();
+      /* Reconstruct universe presences. */
+      space_reconstructPresences();
+      safelanes_recalculate();
 
-   /* Reconstruct universe presences. */
-   space_reconstructPresences();
-   safelanes_recalculate();
-
-   if ( conf.devautosave ) {
-      dsys_saveSystem( sys );
-      if ( isys != NULL )
-         dsys_saveSystem( isys );
+      if ( conf.devautosave ) {
+         dsys_saveSystem( sys );
+         if ( isys != NULL )
+            dsys_saveSystem( isys );
+      }
    }
 
    /* Update sidebar text. */
    uniedit_selectText();
-}
-
-/**
- * @brief Adds a new Star System jump.
- */
-static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
-{
-   /* Add the jump. */
-   JumpPoint *jp = &array_grow( &sys->jumps );
-   memset( jp, 0, sizeof( JumpPoint ) );
-
-   /* Fill it out with basics. */
-   jp->target   = targ;
-   jp->targetid = targ->id;
-   jp->radius   = 200.;
-   jp->flags    = JP_AUTOPOS; /* Will automatically create position. */
-   jp->hide     = HIDE_DEFAULT_JUMP;
-}
-
-/**
- * @brief Removes a Star System jump.
- */
-static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ )
-{
-   int i;
-
-   /* Find associated jump. */
-   for ( i = 0; i < array_size( sys->jumps ); i++ )
-      if ( sys->jumps[i].target == targ )
-         break;
-
-   /* Not found. */
-   if ( i >= array_size( sys->jumps ) ) {
-      WARN( _( "Jump for system '%s' not found in system '%s' for removal." ),
-            targ->name, sys->name );
-      return;
-   }
-
-   /* Remove the jump. */
-   array_erase( &sys->jumps, &sys->jumps[i], &sys->jumps[i + 1] );
 }
 
 /**

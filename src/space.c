@@ -2733,21 +2733,12 @@ int system_rmVirtualSpob( StarSystem *sys, const char *spobname )
  * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to add jump point to.
- *    @param jumpname Target system to add a jump to.
+ *    @param target Target system to add a jump to.
  *    @return 0 on success.
  */
-int system_addJump( StarSystem *sys, const char *jumpname )
+int system_addJump( StarSystem *sys, StarSystem *target )
 {
-   JumpPoint  *j;
-   StarSystem *target;
-
-   /* Get target. */
-   target = system_get( jumpname );
-   if ( target == NULL ) {
-      WARN( _( "JumpPoint node for system '%s' has invalid target '%s'." ),
-            sys->name, jumpname );
-      return -1;
-   }
+   JumpPoint *j;
 
 #ifdef DEBUGGING
    for ( int i = 0; i < array_size( sys->jumps ); i++ ) {
@@ -2772,10 +2763,7 @@ int system_addJump( StarSystem *sys, const char *jumpname )
    j->hide     = HIDE_DEFAULT_JUMP;
    jp_setFlag( j, JP_AUTOPOS );
 
-   systems_reconstructJumps();
-   economy_addQueuedUpdate();
-
-   return 1;
+   return 0;
 }
 
 /**
@@ -2784,38 +2772,27 @@ int system_addJump( StarSystem *sys, const char *jumpname )
  * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to remove jump point from.
- *    @param jumpname Name of the jump point to remove.
+ *    @param target Name of the jump target to remove.
  *    @return 0 on success.
  */
-int system_rmJump( StarSystem *sys, const char *jumpname )
+int system_rmJump( StarSystem *sys, StarSystem *target )
 {
-   int        i;
-   JumpPoint *jump;
+   int i;
 
-   if ( sys == NULL ) {
-      WARN( _( "Unable to remove jump point '%s' from NULL system." ),
-            jumpname );
-      return -1;
-   }
-
-   /* Try to find spob. */
-   jump = jump_get( jumpname, sys );
+   /* Find associated jump. */
    for ( i = 0; i < array_size( sys->jumps ); i++ )
-      if ( &sys->jumps[i] == jump )
+      if ( sys->jumps[i].target == target )
          break;
 
-   /* Spob not found. */
+   /* Not found. */
    if ( i >= array_size( sys->jumps ) ) {
-      WARN( _( "Jump point '%s' not found in system '%s' for removal." ),
-            jumpname, sys->name );
+      WARN( _( "Jump for system '%s' not found in system '%s' for removal." ),
+            target->name, sys->name );
       return -1;
    }
 
-   /* Remove jump from system. */
+   /* Remove the jump. */
    array_erase( &sys->jumps, &sys->jumps[i], &sys->jumps[i + 1] );
-
-   economy_addQueuedUpdate();
-
    return 0;
 }
 

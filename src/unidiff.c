@@ -767,8 +767,9 @@ int diff_revertHunk( UniHunk_t *hunk )
  */
 int diff_patchHunk( UniHunk_t *hunk )
 {
-   Spob       *p    = NULL;
-   StarSystem *ssys = NULL;
+   Spob       *p     = NULL;
+   StarSystem *ssys  = NULL;
+   StarSystem *ssys2 = NULL;
    int         a, b;
    int         f = -1;
 
@@ -819,12 +820,26 @@ int diff_patchHunk( UniHunk_t *hunk )
 
    /* Adding a jump. */
    case HUNK_TYPE_JUMP_ADD:
+      ssys2 = system_get( hunk->u.name );
+      if ( ssys2 == NULL )
+         return -1;
       diff_universe_changed = 1;
-      return system_addJump( ssys, hunk->u.name );
+      if ( system_addJump( ssys, ssys2 ) )
+         return -1;
+      if ( system_addJump( ssys2, ssys ) )
+         return -1;
+      return 0;
    /* Removing a jump. */
    case HUNK_TYPE_JUMP_REMOVE:
+      ssys2 = system_get( hunk->u.name );
+      if ( ssys2 == NULL )
+         return -1;
       diff_universe_changed = 1;
-      return system_rmJump( ssys, hunk->u.name );
+      if ( system_rmJump( ssys, ssys2 ) )
+         return -1;
+      if ( system_rmJump( ssys2, ssys ) )
+         return -1;
+      return 0;
 
    /* Changing system background. */
    case HUNK_TYPE_SSYS_BACKGROUND:
@@ -1383,6 +1398,8 @@ static int diff_checkUpdateUniverse( void )
    if ( !diff_universe_changed || diff_universe_defer )
       return 0;
 
+   /* Reconstruct jumps just in case. */
+   systems_reconstructJumps();
    /* Update presences, then safelanes. */
    space_reconstructPresences();
    safelanes_recalculate();

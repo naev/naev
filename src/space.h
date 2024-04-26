@@ -426,8 +426,8 @@ int         system_addSpob( StarSystem *sys, const char *spobname );
 int         system_rmSpob( StarSystem *sys, const char *spobname );
 int         system_addVirtualSpob( StarSystem *sys, const char *spobname );
 int         system_rmVirtualSpob( StarSystem *sys, const char *spobname );
-int         system_addJump( StarSystem *sys, const char *jumpname );
-int         system_rmJump( StarSystem *sys, const char *jumpname );
+int         system_addJump( StarSystem *sys, StarSystem *target );
+int         system_rmJump( StarSystem *sys, StarSystem *target );
 
 /*
  * render
