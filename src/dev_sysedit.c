@@ -417,10 +417,10 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    }
    fdata = atof( window_getInput( sysedit_widEdit, "inpHide" ) );
    if ( fabs( p->hide - fdata ) > 1e-5 ) {
-      // if ( uniedit_diffMode )
-      //    sysedit_diffCreateSpobFloat( p, HUNK_TYPE_SPOB_HIDE, fdata );
-      // else
-      p->hide = fdata;
+      if ( uniedit_diffMode )
+         sysedit_diffCreateSpobFloat( p, HUNK_TYPE_SPOB_HIDE, fdata );
+      else
+         p->hide = fdata;
    }
 
    for ( int i = 0; i < array_size( sysedit_tagslist ); i++ )

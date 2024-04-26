@@ -106,6 +106,8 @@ static const char *const hunk_name[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_SPOB_PRESENCE_BONUS_REVERT] = N_( "spob presence bonus revert" ),
    [HUNK_TYPE_SPOB_PRESENCE_RANGE]        = N_( "spob presence range" ),
    [HUNK_TYPE_SPOB_PRESENCE_RANGE_REVERT] = N_( "spob presence range revert" ),
+   [HUNK_TYPE_SPOB_HIDE]                  = N_( "spob hide" ),
+   [HUNK_TYPE_SPOB_HIDE_REVERT]           = N_( "spob hide revert" ),
    [HUNK_TYPE_SPOB_POPULATION]            = N_( "spob population" ),
    [HUNK_TYPE_SPOB_POPULATION_REVERT]     = N_( "spob population revert" ),
    [HUNK_TYPE_SPOB_DISPLAYNAME]           = N_( "spob displayname" ),
@@ -165,6 +167,7 @@ static const char *const hunk_tag[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SPOB_PRESENCE_BASE]      = "presence_base",
    [HUNK_TYPE_SPOB_PRESENCE_BONUS]     = "presence_bonus",
    [HUNK_TYPE_SPOB_PRESENCE_RANGE]     = "presence_range",
+   [HUNK_TYPE_SPOB_HIDE]               = "hide",
    [HUNK_TYPE_SPOB_POPULATION]         = "population",
    [HUNK_TYPE_SPOB_DISPLAYNAME]        = "displayname",
    [HUNK_TYPE_SPOB_DESCRIPTION]        = "description",
@@ -215,6 +218,7 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SPOB_PRESENCE_BASE]      = HUNK_TYPE_SPOB_PRESENCE_BASE_REVERT,
    [HUNK_TYPE_SPOB_PRESENCE_BONUS]     = HUNK_TYPE_SPOB_PRESENCE_BONUS_REVERT,
    [HUNK_TYPE_SPOB_PRESENCE_RANGE]     = HUNK_TYPE_SPOB_PRESENCE_RANGE_REVERT,
+   [HUNK_TYPE_SPOB_HIDE]               = HUNK_TYPE_SPOB_HIDE_REVERT,
    [HUNK_TYPE_SPOB_POPULATION]         = HUNK_TYPE_SPOB_POPULATION_REVERT,
    [HUNK_TYPE_SPOB_DISPLAYNAME]        = HUNK_TYPE_SPOB_DISPLAYNAME_REVERT,
    [HUNK_TYPE_SPOB_DESCRIPTION]        = HUNK_TYPE_SPOB_DESCRIPTION_REVERT,
@@ -623,6 +627,7 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
       HUNK_FLOAT( HUNK_TYPE_SPOB_PRESENCE_BASE );
       HUNK_FLOAT( HUNK_TYPE_SPOB_PRESENCE_BONUS );
       HUNK_INT( HUNK_TYPE_SPOB_PRESENCE_RANGE );
+      HUNK_FLOAT( HUNK_TYPE_SPOB_HIDE );
       HUNK_FLOAT( HUNK_TYPE_SPOB_POPULATION );
       HUNK_STRD( HUNK_TYPE_SPOB_DISPLAYNAME );
       HUNK_STRD( HUNK_TYPE_SPOB_DESCRIPTION );
@@ -1055,6 +1060,15 @@ int diff_patchHunk( UniHunk_t *hunk )
    case HUNK_TYPE_SPOB_PRESENCE_RANGE_REVERT:
       diff_universe_changed = 1;
       p->presence.range     = hunk->o.data;
+      return 0;
+
+   /* Changing spob hide. */
+   case HUNK_TYPE_SPOB_HIDE:
+      hunk->o.fdata = p->hide;
+      p->hide       = hunk->u.data;
+      return 0;
+   case HUNK_TYPE_SPOB_HIDE_REVERT:
+      p->hide = hunk->o.fdata;
       return 0;
 
    /* Changing spob population. */

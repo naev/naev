@@ -82,6 +82,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SPOB_PRESENCE_BONUS_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_PRESENCE_RANGE,
    HUNK_TYPE_SPOB_PRESENCE_RANGE_REVERT, /* For internal usage. */
+   HUNK_TYPE_SPOB_HIDE,
+   HUNK_TYPE_SPOB_HIDE_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_POPULATION,
    HUNK_TYPE_SPOB_POPULATION_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_DISPLAYNAME,
