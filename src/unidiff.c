@@ -97,11 +97,11 @@ static const char *const hunk_name[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_SSYS_TAG_ADD]            = N_( "ssys tag add" ),
    [HUNK_TYPE_SSYS_TAG_REMOVE]         = N_( "ssys tag remove" ),
    [HUNK_TYPE_SPOB_CLASS]              = N_( "spob class" ),
-   [HUNK_TYPE_SPOB_CLASS_REVERT]       = N_( "spob class removal" ),
+   [HUNK_TYPE_SPOB_CLASS_REVERT]       = N_( "spob class revert" ),
    [HUNK_TYPE_SPOB_FACTION]            = N_( "spob faction" ),
-   [HUNK_TYPE_SPOB_FACTION_REMOVE]     = N_( "spob faction removal" ),
+   [HUNK_TYPE_SPOB_FACTION_REVERT]     = N_( "spob faction revert" ),
    [HUNK_TYPE_SPOB_POPULATION]         = N_( "spob population" ),
-   [HUNK_TYPE_SPOB_POPULATION_REMOVE]  = N_( "spob population removal" ),
+   [HUNK_TYPE_SPOB_POPULATION_REVERT]  = N_( "spob population revert" ),
    [HUNK_TYPE_SPOB_DISPLAYNAME]        = N_( "spob displayname" ),
    [HUNK_TYPE_SPOB_DISPLAYNAME_REVERT] = N_( "spob displayname revert" ),
    [HUNK_TYPE_SPOB_DESCRIPTION]        = N_( "spob description" ),
@@ -202,8 +202,8 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_TECH_ADD]                = HUNK_TYPE_TECH_REMOVE,
    [HUNK_TYPE_TECH_REMOVE]             = HUNK_TYPE_TECH_ADD,
    [HUNK_TYPE_SPOB_CLASS]              = HUNK_TYPE_SPOB_CLASS_REVERT,
-   [HUNK_TYPE_SPOB_FACTION]            = HUNK_TYPE_SPOB_FACTION_REMOVE,
-   [HUNK_TYPE_SPOB_POPULATION]         = HUNK_TYPE_SPOB_POPULATION_REMOVE,
+   [HUNK_TYPE_SPOB_FACTION]            = HUNK_TYPE_SPOB_FACTION_REVERT,
+   [HUNK_TYPE_SPOB_POPULATION]         = HUNK_TYPE_SPOB_POPULATION_REVERT,
    [HUNK_TYPE_SPOB_DISPLAYNAME]        = HUNK_TYPE_SPOB_DISPLAYNAME_REVERT,
    [HUNK_TYPE_SPOB_DESCRIPTION]        = HUNK_TYPE_SPOB_DESCRIPTION_REVERT,
    [HUNK_TYPE_SPOB_BAR]                = HUNK_TYPE_SPOB_BAR_REVERT,
@@ -1006,7 +1006,7 @@ int diff_patchHunk( UniHunk_t *hunk )
          hunk->o.name = faction_name( p->presence.faction );
       diff_universe_changed = 1;
       return spob_setFaction( p, faction_get( hunk->u.name ) );
-   case HUNK_TYPE_SPOB_FACTION_REMOVE:
+   case HUNK_TYPE_SPOB_FACTION_REVERT:
       diff_universe_changed = 1;
       if ( hunk->o.name == NULL )
          return spob_setFaction( p, -1 );
@@ -1018,7 +1018,7 @@ int diff_patchHunk( UniHunk_t *hunk )
       hunk->o.data  = p->population;
       p->population = hunk->u.data;
       return 0;
-   case HUNK_TYPE_SPOB_POPULATION_REMOVE:
+   case HUNK_TYPE_SPOB_POPULATION_REVERT:
       p->population = hunk->o.data;
       return 0;
 

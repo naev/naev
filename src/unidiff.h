@@ -75,9 +75,9 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SPOB_CLASS,
    HUNK_TYPE_SPOB_CLASS_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_FACTION,
-   HUNK_TYPE_SPOB_FACTION_REMOVE, /* For internal usage. */
+   HUNK_TYPE_SPOB_FACTION_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_POPULATION,
-   HUNK_TYPE_SPOB_POPULATION_REMOVE, /* For internal usage. */
+   HUNK_TYPE_SPOB_POPULATION_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_DISPLAYNAME,
    HUNK_TYPE_SPOB_DISPLAYNAME_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_DESCRIPTION,
