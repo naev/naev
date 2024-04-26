@@ -635,9 +635,9 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
 
       HUNK_NONE( "visible", HUNK_TYPE_FACTION_VISIBLE );
       HUNK_NONE( "invisible", HUNK_TYPE_FACTION_INVISIBLE );
-      HUNK_STRD( "faction_ally", HUNK_TYPE_FACTION_ALLY );
-      HUNK_STRD( "faction_enemy", HUNK_TYPE_FACTION_ENEMY );
-      HUNK_STRD( "faction_neutral", HUNK_TYPE_FACTION_NEUTRAL );
+      HUNK_STRD( "ally", HUNK_TYPE_FACTION_ALLY );
+      HUNK_STRD( "enemy", HUNK_TYPE_FACTION_ENEMY );
+      HUNK_STRD( "neutral", HUNK_TYPE_FACTION_NEUTRAL );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );

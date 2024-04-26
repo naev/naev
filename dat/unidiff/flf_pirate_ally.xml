@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="flf_pirate_ally">
  <faction name="FLF">
-  <faction_neutral>Dreamer Clan</faction_neutral>
-  <faction_neutral>Pirate</faction_neutral>
-  <faction_neutral>Marauder</faction_neutral>
+  <neutral>Dreamer Clan</neutral>
+  <neutral>Pirate</neutral>
+  <neutral>Marauder</neutral>
  </faction>
 </unidiff>
