@@ -183,6 +183,7 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
                          int isrepeat );
 /* Diffs. */
 static void uniedit_diffEditor( unsigned int wid_unused, const char *unused );
+static void uniedit_diff_toggle( unsigned int wid, const char *wgt );
 static void uniedit_diff_close( unsigned int wid, const char *unused );
 static void uniedit_diffSsysPos( StarSystem *s, double x, double y );
 static void uniedit_diffClear( void );
@@ -2696,7 +2697,7 @@ static void uniedit_diffClear( void )
    for ( int i = 0; i < array_size( uniedit_diff ); i++ )
       diff_cleanupHunk( &uniedit_diff[i] );
    array_free( uniedit_diff );
-   uniedit_diff = 0;
+   uniedit_diff = NULL;
 }
 
 static int uniedit_diff_cmp( const void *p1, const void *p2 )
@@ -2789,8 +2790,27 @@ static void uniedit_diffEditor( unsigned int wid_unused, const char *unused )
    /* Autosave toggle. */
    window_addCheckbox(
       wid, 20, -30, w - 40, 20, "chkDiffMode",
-      _( "Diff Mode (creates a diff instead of direct modification)" ), NULL,
-      uniedit_diffMode );
+      _( "Diff Mode (creates a diff instead of direct modification)" ),
+      uniedit_diff_toggle, uniedit_diffMode );
+}
+
+static void uniedit_diff_toggle( unsigned int wid, const char *wgt )
+{
+   if ( uniedit_diffMode && !uniedit_diffSaved ) {
+      if ( !dialogue_YesNoRaw(
+              _( "#rUnsaved Progress" ),
+              _( "You have #runsaved changes#0 to the universe diff. Are you "
+                 "sure you wish to disable diff mode and #rlose all your "
+                 "changes#0?" ) ) ) {
+         window_checkboxSet( wid, wgt, 1 );
+         return;
+      }
+   }
+   uniedit_diffMode = window_checkboxState( wid, wgt );
+   if ( !uniedit_diffMode ) {
+      uniedit_diffClear();
+      diff_clear();
+   }
 }
 
 static void uniedit_diff_close( unsigned int wid, const char *unused )
