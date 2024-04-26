@@ -92,6 +92,8 @@ static const char *const hunk_name[HUNK_TYPE_SENTINAL + 1] = {
       N_( "ssys nebula volatility revert" ),
    [HUNK_TYPE_SSYS_NEBU_HUE]           = N_( "ssys nebula hue" ),
    [HUNK_TYPE_SSYS_NEBU_HUE_REVERT]    = N_( "ssys nebula hue revert" ),
+   [HUNK_TYPE_SSYS_TAG_ADD]            = N_( "ssys tag add" ),
+   [HUNK_TYPE_SSYS_TAG_REMOVE]         = N_( "ssys tag remove" ),
    [HUNK_TYPE_SPOB_FACTION]            = N_( "spob faction" ),
    [HUNK_TYPE_SPOB_FACTION_REMOVE]     = N_( "spob faction removal" ),
    [HUNK_TYPE_SPOB_POPULATION]         = N_( "spob population" ),
@@ -142,6 +144,8 @@ static const char *const hunk_tag[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_NEBU_DENSITY]       = "nebu_density",
    [HUNK_TYPE_SSYS_NEBU_VOLATILITY]    = "nebu_volatility",
    [HUNK_TYPE_SSYS_NEBU_HUE]           = "nebu_hue",
+   [HUNK_TYPE_SSYS_TAG_ADD]            = N_( "tag_add" ),
+   [HUNK_TYPE_SSYS_TAG_REMOVE]         = N_( "tag_remove" ),
    [HUNK_TYPE_TECH_ADD]                = "item_add",
    [HUNK_TYPE_TECH_REMOVE]             = "item_remove",
    [HUNK_TYPE_SPOB_FACTION]            = "faction",
@@ -184,6 +188,8 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_NEBU_DENSITY]       = HUNK_TYPE_SSYS_NEBU_DENSITY_REVERT,
    [HUNK_TYPE_SSYS_NEBU_VOLATILITY]    = HUNK_TYPE_SSYS_NEBU_VOLATILITY_REVERT,
    [HUNK_TYPE_SSYS_NEBU_HUE]           = HUNK_TYPE_SSYS_NEBU_HUE_REVERT,
+   [HUNK_TYPE_SSYS_TAG_ADD]            = HUNK_TYPE_SSYS_TAG_REMOVE,
+   [HUNK_TYPE_SSYS_TAG_REMOVE]         = HUNK_TYPE_SSYS_TAG_ADD,
    [HUNK_TYPE_TECH_ADD]                = HUNK_TYPE_TECH_REMOVE,
    [HUNK_TYPE_TECH_REMOVE]             = HUNK_TYPE_TECH_ADD,
    [HUNK_TYPE_SPOB_FACTION]            = HUNK_TYPE_SPOB_FACTION_REMOVE,
@@ -929,6 +935,26 @@ int diff_patchHunk( UniHunk_t *hunk )
       ssys->nebu_hue = hunk->o.fdata;
       return 0;
 
+      /* Modifying tag stuff. */
+   case HUNK_TYPE_SSYS_TAG_ADD:
+      if ( ssys->tags == NULL )
+         ssys->tags = array_create( char * );
+      array_push_back( &ssys->tags, strdup( hunk->u.name ) );
+      return 0;
+   case HUNK_TYPE_SSYS_TAG_REMOVE:
+      a = -1;
+      for ( int i = 0; i < array_size( ssys->tags ); i++ ) {
+         if ( strcmp( ssys->tags[i], hunk->u.name ) == 0 ) {
+            a = i;
+            break;
+         }
+      }
+      if ( a < 0 )
+         return -1; /* Didn't find tag! */
+      free( ssys->tags[a] );
+      array_erase( &ssys->tags, &ssys->tags[a], &ssys->tags[a + 1] );
+      return 0;
+
    /* Adding a tech. */
    case HUNK_TYPE_TECH_ADD:
       return tech_addItem( hunk->target.u.name, hunk->u.name );
@@ -1031,8 +1057,6 @@ int diff_patchHunk( UniHunk_t *hunk )
 
    /* Modifying tag stuff. */
    case HUNK_TYPE_SPOB_TAG_ADD:
-      if ( p->tech == NULL )
-         p->tech = tech_groupCreate();
       if ( p->tags == NULL )
          p->tags = array_create( char * );
       array_push_back( &p->tags, strdup( hunk->u.name ) );

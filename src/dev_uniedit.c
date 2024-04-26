@@ -1524,7 +1524,8 @@ static void uniedit_renameSys( void )
       }
 
       if ( uniedit_diffMode ) {
-         uniedit_diffCreateSysStr( sys, HUNK_TYPE_SSYS_DISPLAYNAME, name );
+         uniedit_diffCreateSysStr( sys, HUNK_TYPE_SSYS_DISPLAYNAME,
+                                   name ); /* Name is already allocated. */
       } else {
          /* Change the name. */
          filtered = uniedit_nameFilter( sys->name );
@@ -2186,7 +2187,13 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
 
    /* Changes in radius need to scale the system spob positions. */
    scale = atof( window_getInput( wid, "inpRadius" ) ) / sys->radius;
-   sysedit_sysScale( sys, scale );
+   if ( fabs( scale - 1. ) > 1e-5 ) {
+      if ( uniedit_diffMode )
+         dialogue_alert(
+            _( "Changing system radius not supported in diff mode!" ) );
+      else
+         sysedit_sysScale( sys, scale );
+   }
 
    data = atoi( window_getInput( wid, "inpDust" ) );
    if ( data != sys->spacedust ) {
@@ -2230,9 +2237,12 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    for ( int i = 0; i < array_size( plt_stack ); i++ )
       pilot_clearTrails( plt_stack[i] );
 
-   /* Reconstruct universe presences. */
-   space_reconstructPresences();
-   safelanes_recalculate();
+   /* Only update when not doing diffs. */
+   if ( !uniedit_diffMode ) {
+      /* Reconstruct universe presences. */
+      space_reconstructPresences();
+      safelanes_recalculate();
+   }
 
    /* Text might need changing. */
    uniedit_selectText();
@@ -2250,26 +2260,28 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
 static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused )
 {
    (void)unused;
-   const char *selected;
-   int         ret;
-
    /* Get selection. */
-   selected = toolkit_getList( wid, "lstSpobs" );
+   const char *selected = toolkit_getList( wid, "lstSpobs" );
 
    /* Make sure it's valid. */
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
 
-   /* Remove the spob. */
-   ret = system_rmVirtualSpob( uniedit_sys[0], selected );
-   if ( ret != 0 ) {
-      dialogue_alert( _( "Failed to remove virtual spob '%s'!" ), selected );
-      return;
-   }
+   if ( uniedit_diffMode ) {
+      uniedit_diffCreateSysStr( uniedit_sys[0], HUNK_TYPE_VSPOB_REMOVE,
+                                strdup( selected ) );
+   } else {
+      /* Remove the spob. */
+      int ret = system_rmVirtualSpob( uniedit_sys[0], selected );
+      if ( ret != 0 ) {
+         dialogue_alert( _( "Failed to remove virtual spob '%s'!" ), selected );
+         return;
+      }
 
-   /* Run galaxy modifications. */
-   space_reconstructPresences();
-   economy_execQueued();
+      /* Run galaxy modifications. */
+      space_reconstructPresences();
+      economy_execQueued();
+   }
 
    uniedit_editGenList( wid );
 }
@@ -2331,22 +2343,27 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
    if ( selected == NULL )
       return;
 
-   /* Add virtual presence. */
-   ret = system_addVirtualSpob( uniedit_sys[0], selected );
-   if ( ret != 0 ) {
-      dialogue_alert( _( "Failed to add virtual spob '%s'!" ), selected );
-      return;
-   }
+   if ( uniedit_diffMode ) {
+      uniedit_diffCreateSysStr( uniedit_sys[0], HUNK_TYPE_VSPOB_ADD,
+                                strdup( selected ) );
+   } else {
+      /* Add virtual presence. */
+      ret = system_addVirtualSpob( uniedit_sys[0], selected );
+      if ( ret != 0 ) {
+         dialogue_alert( _( "Failed to add virtual spob '%s'!" ), selected );
+         return;
+      }
 
-   /* Run galaxy modifications. */
-   space_reconstructPresences();
-   economy_execQueued();
+      /* Run galaxy modifications. */
+      space_reconstructPresences();
+      economy_execQueued();
+
+      if ( conf.devautosave )
+         dsys_saveSystem( uniedit_sys[0] );
+   }
 
    /* Regenerate the list. */
    uniedit_editGenList( uniedit_widEdit );
-
-   if ( conf.devautosave )
-      dsys_saveSystem( uniedit_sys[0] );
 
    /* Close the window. */
    window_close( wid, unused );
@@ -2506,17 +2523,19 @@ static void uniedit_genTagsList( unsigned int wid )
 static void uniedit_btnAddTag( unsigned int wid, const char *unused )
 {
    (void)unused;
-   const char *selected;
-   StarSystem *s;
-
-   selected = toolkit_getList( wid, "lstTagsLacked" );
+   const char *selected = toolkit_getList( wid, "lstTagsLacked" );
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
 
-   s = uniedit_sys[0];
-   if ( s->tags == NULL )
-      s->tags = array_create( char * );
-   array_push_back( &s->tags, strdup( selected ) );
+   if ( uniedit_diffMode ) {
+      uniedit_diffCreateSysStr( uniedit_sys[0], HUNK_TYPE_SSYS_TAG_ADD,
+                                strdup( selected ) );
+   } else {
+      StarSystem *s = uniedit_sys[0];
+      if ( s->tags == NULL )
+         s->tags = array_create( char * );
+      array_push_back( &s->tags, strdup( selected ) );
+   }
 
    /* Regenerate the list. */
    uniedit_genTagsList( wid );
@@ -2528,22 +2547,24 @@ static void uniedit_btnAddTag( unsigned int wid, const char *unused )
 static void uniedit_btnRmTag( unsigned int wid, const char *unused )
 {
    (void)unused;
-   const char *selected;
-   StarSystem *s;
-   int         i;
-
-   selected = toolkit_getList( wid, "lstTagsHave" );
+   const char *selected = toolkit_getList( wid, "lstTagsHave" );
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
 
-   s = uniedit_sys[0];
-   for ( i = 0; i < array_size( s->tags ); i++ )
-      if ( strcmp( selected, s->tags[i] ) == 0 )
-         break;
-   if ( i >= array_size( s->tags ) )
-      return;
-   free( s->tags[i] );
-   array_erase( &s->tags, &s->tags[i], &s->tags[i + 1] );
+   if ( uniedit_diffMode ) {
+      uniedit_diffCreateSysStr( uniedit_sys[0], HUNK_TYPE_SSYS_TAG_REMOVE,
+                                strdup( selected ) );
+   } else {
+      int         i;
+      StarSystem *s = uniedit_sys[0];
+      for ( i = 0; i < array_size( s->tags ); i++ )
+         if ( strcmp( selected, s->tags[i] ) == 0 )
+            break;
+      if ( i >= array_size( s->tags ) )
+         return;
+      free( s->tags[i] );
+      array_erase( &s->tags, &s->tags[i], &s->tags[i + 1] );
+   }
 
    /* Regenerate the list. */
    uniedit_genTagsList( wid );
@@ -2555,18 +2576,21 @@ static void uniedit_btnRmTag( unsigned int wid, const char *unused )
 static void uniedit_btnNewTag( unsigned int wid, const char *unused )
 {
    (void)unused;
-   StarSystem *s;
-
    char *tag =
       dialogue_input( _( "Add New System Tag" ), 1, 128,
                       _( "Please write the new tag to add to the system." ) );
    if ( tag == NULL )
       return;
 
-   s = uniedit_sys[0];
-   if ( s->tags == NULL )
-      s->tags = array_create( char * );
-   array_push_back( &s->tags, tag ); /* gets freed later */
+   if ( uniedit_diffMode ) {
+      uniedit_diffCreateSysStr( uniedit_sys[0], HUNK_TYPE_SSYS_TAG_ADD,
+                                strdup( tag ) );
+   } else {
+      StarSystem *s = uniedit_sys[0];
+      if ( s->tags == NULL )
+         s->tags = array_create( char * );
+      array_push_back( &s->tags, tag ); /* tag gets freed later. */
+   }
 
    /* Also add to list of all tags. */
    array_push_back( &uniedit_tagslist, strdup( tag ) );

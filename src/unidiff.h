@@ -64,6 +64,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SSYS_NEBU_VOLATILITY_REVERT, /* For internal usage. */
    HUNK_TYPE_SSYS_NEBU_HUE,
    HUNK_TYPE_SSYS_NEBU_HUE_REVERT, /* For internal usage. */
+   HUNK_TYPE_SSYS_TAG_ADD,
+   HUNK_TYPE_SSYS_TAG_REMOVE,
    /* Target should be HUNK_TARGET_TECH. */
    HUNK_TYPE_TECH_ADD,
    HUNK_TYPE_TECH_REMOVE,
