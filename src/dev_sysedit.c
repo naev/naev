@@ -2974,7 +2974,7 @@ static void sysedit_diffCreateSpobInt( const Spob *spb, UniHunkType_t type,
    hunk.target.type   = HUNK_TARGET_SPOB;
    hunk.target.u.name = strdup( spb->name );
    hunk.type          = type;
-   hunk.dtype         = HUNK_DATA_STRING;
+   hunk.dtype         = HUNK_DATA_INT;
    hunk.u.data        = data;
    uniedit_diffAdd( &hunk );
 }
