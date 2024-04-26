@@ -184,6 +184,7 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
 /* Diffs. */
 static void uniedit_diffEditor( unsigned int wid_unused, const char *unused );
 static void uniedit_diff_toggle( unsigned int wid, const char *wgt );
+static void uniedit_diff_remove( unsigned int wid, const char *wgt );
 static void uniedit_diff_close( unsigned int wid, const char *unused );
 static void uniedit_diffSsysPos( StarSystem *s, double x, double y );
 static void uniedit_diffClear( void );
@@ -2694,8 +2695,15 @@ static void uniedit_chkNolanes( unsigned int wid, const char *wgtname )
 
 static void uniedit_diffClear( void )
 {
-   for ( int i = 0; i < array_size( uniedit_diff ); i++ )
-      diff_cleanupHunk( &uniedit_diff[i] );
+   diff_start();
+   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
+      UniHunk_t *h = &uniedit_diff[i];
+      ;
+      diff_revertHunk( h );
+      diff_cleanupHunk( h );
+   }
+   diff_end();
+
    array_free( uniedit_diff );
    uniedit_diff = NULL;
 }
@@ -2773,6 +2781,29 @@ static void uniedit_diffSsysPos( StarSystem *s, double x, double y )
    uniedit_diffAdd( &hunk );
 }
 
+static void uniedit_diff_regenList( unsigned int wid )
+{
+   char **items;
+   int    w, h;
+   int    p = 0;
+
+   window_dimWindow( wid, &w, &h );
+   if ( widget_exists( wid, "lstDiffs" ) ) {
+      p = toolkit_getListPos( wid, "lstDiffs" );
+      window_destroyWidget( wid, "lstDiffs" );
+   }
+
+   items = malloc( sizeof( char * ) * array_size( uniedit_diff ) );
+   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
+      const UniHunk_t *hi = &uniedit_diff[i];
+      SDL_asprintf( &items[i], "%s: %s", hi->target.u.name,
+                    diff_hunkName( hi->type ) );
+   }
+   int y = -30 - 30 - 20;
+   window_addList( wid, 20, y, w - 40, h + y - BUTTON_HEIGHT - 40, "lstDiffs",
+                   items, array_size( uniedit_diff ), p, NULL, NULL );
+}
+
 static void uniedit_diffEditor( unsigned int wid_unused, const char *unused )
 {
    (void)wid_unused;
@@ -2780,7 +2811,6 @@ static void uniedit_diffEditor( unsigned int wid_unused, const char *unused )
    const int    w = 600;
    const int    h = 400;
    int          y;
-   char       **items;
    unsigned int wid =
       window_create( "wdwEditorDiffs", _( "Diff Options" ), -1, -1, w, h );
    window_onClose( wid, uniedit_diff_close );
@@ -2801,14 +2831,12 @@ static void uniedit_diffEditor( unsigned int wid_unused, const char *unused )
    window_addText( wid, 20, y, w - 40, 20, 0, "txtSDiff", NULL, NULL,
                    _( "#nCurrent Diff Contents:" ) );
    y -= 20;
-   items = malloc( sizeof( char * ) * array_size( uniedit_diff ) );
-   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
-      const UniHunk_t *hi = &uniedit_diff[i];
-      SDL_asprintf( &items[i], "%s: %s", hi->target.u.name,
-                    diff_hunkName( hi->type ) );
-   }
-   window_addList( wid, 20, y, w - 40, h + y - BUTTON_HEIGHT - 40, "lstDiffs",
-                   items, array_size( uniedit_diff ), 0, NULL, NULL );
+   uniedit_diff_regenList( wid );
+
+   /* More buttons. */
+   window_addButton( wid, -20 - ( BUTTON_WIDTH + 20 ) * 1, 20, BUTTON_WIDTH,
+                     BUTTON_HEIGHT, "btnRemove", _( "Remove" ),
+                     uniedit_diff_remove );
 }
 
 static void uniedit_diff_toggle( unsigned int wid, const char *wgt )
@@ -2827,10 +2855,27 @@ static void uniedit_diff_toggle( unsigned int wid, const char *wgt )
    if ( !uniedit_diffMode ) {
       uniedit_diffClear();
       diff_clear();
-      /* Reopen to remake the list. */
-      window_close( wid, wgt );
-      uniedit_diffEditor( wid, wgt );
+      /* Regen list. */
+      uniedit_diff_regenList( wid );
    }
+}
+
+static void uniedit_diff_remove( unsigned int wid, const char *unused )
+{
+   (void)unused;
+   int p = toolkit_getListPos( wid, "lstDiffs" );
+
+   /* Undo hunk. */
+   diff_start();
+   diff_revertHunk( &uniedit_diff[p] );
+   diff_end();
+
+   /* Free memory. */
+   diff_cleanupHunk( &uniedit_diff[p] );
+   array_erase( &uniedit_diff, &uniedit_diff[p], &uniedit_diff[p + 1] );
+
+   /* Regen list. */
+   uniedit_diff_regenList( wid );
 }
 
 static void uniedit_diff_close( unsigned int wid, const char *unused )
