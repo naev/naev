@@ -35,6 +35,6 @@
   <spob_add>Hypergate Haven</spob_add>
  </system>
  <tech name="Pirate Maps">
-  <add>Map: Kretogg's Hypergate</add>
+  <item_add>Map: Kretogg's Hypergate</item_add>
  </tech>
 </unidiff>

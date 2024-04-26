@@ -47,25 +47,6 @@ typedef struct UniDiff_ {
    UniHunk_t *failed;  /**< Failed hunks. */
 } UniDiff_t;
 
-#define HUNK_CUST( STR, TYPE, DTYPE, FUNC )                                    \
-   if ( xml_isNode( cur, STR ) ) {                                             \
-      hunk.target.type   = base.target.type;                                   \
-      hunk.target.u.name = strdup( base.target.u.name );                       \
-      hunk.type          = TYPE;                                               \
-      hunk.dtype         = DTYPE;                                              \
-      FUNC if ( diff_patchHunk( &hunk ) < 0 ) diff_hunkFailed( diff, &hunk );  \
-      else diff_hunkSuccess( diff, &hunk );                                    \
-      continue;                                                                \
-   }
-#define HUNK_NONE( STR, TYPE )                                                 \
-   HUNK_CUST( STR, TYPE, HUNK_DATA_NONE, hunk.u.name = NULL; );
-#define HUNK_STRD( STR, TYPE )                                                 \
-   HUNK_CUST( STR, TYPE, HUNK_DATA_STRING, hunk.u.name = xml_getStrd( cur ); );
-#define HUNK_UINT( STR, TYPE )                                                 \
-   HUNK_CUST( STR, TYPE, HUNK_DATA_INT, hunk.u.data = xml_getUInt( cur ); );
-#define HUNK_FLOAT( STR, TYPE )                                                \
-   HUNK_CUST( STR, TYPE, HUNK_DATA_FLOAT, hunk.u.fdata = xml_getFloat( cur ); );
-
 /*
  * Diff stack.
  */
@@ -80,7 +61,7 @@ static const char *diff_nav_spob =
 static const char *diff_nav_hyperspace =
    NULL; /**< Stores the player's hyperspace target if necessary. */
 
-static const char *hunk_name[HUNK_TYPE_SENTINAL + 1] = {
+static const char *const hunk_name[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_NONE]                    = N_( "none" ),
    [HUNK_TYPE_SPOB_ADD]                = N_( "spob add" ),
    [HUNK_TYPE_SPOB_REMOVE]             = N_( "spob remove" ),
@@ -120,8 +101,8 @@ static const char *hunk_name[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] = N_( "spob nomissionspawn remove" ),
    [HUNK_TYPE_SPOB_TECH_ADD]           = N_( "spob tech add" ),
    [HUNK_TYPE_SPOB_TECH_REMOVE]        = N_( "spob tech remove" ),
-   [HUNK_TYPE_SPOB_TAG_ADD]            = N_( "spob tech add" ),
-   [HUNK_TYPE_SPOB_TAG_REMOVE]         = N_( "spob tech remove" ),
+   [HUNK_TYPE_SPOB_TAG_ADD]            = N_( "spob tag add" ),
+   [HUNK_TYPE_SPOB_TAG_REMOVE]         = N_( "spob tag remove" ),
    [HUNK_TYPE_FACTION_VISIBLE]         = N_( "faction visible" ),
    [HUNK_TYPE_FACTION_INVISIBLE]       = N_( "faction invisible" ),
    [HUNK_TYPE_FACTION_ALLY]            = N_( "faction set ally" ),
@@ -130,58 +111,42 @@ static const char *hunk_name[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_FACTION_REALIGN]         = N_( "faction alignment reset" ),
    [HUNK_TYPE_SENTINAL]                = N_( "sentinal" ),
 };
-/*
-static const char *hunk_tag[HUNK_TYPE_SENTINAL] = {
+static const char *const hunk_tag[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_NONE]                    = "none",
-   [HUNK_TYPE_SPOB_ADD]                = "spob add",
-   [HUNK_TYPE_SPOB_REMOVE]             = "spob remove",
-   [HUNK_TYPE_VSPOB_ADD]               = "virtual spob add",
-   [HUNK_TYPE_VSPOB_REMOVE]            = "virtual spob remove",
-   [HUNK_TYPE_JUMP_ADD]                = "jump add",
-   [HUNK_TYPE_JUMP_REMOVE]             = "jump remove",
-   [HUNK_TYPE_TECH_ADD]                = "tech add",
-   [HUNK_TYPE_TECH_REMOVE]             = "tech remove",
-   [HUNK_TYPE_SSYS_BACKGROUND]         = "ssys background",
-   [HUNK_TYPE_SSYS_BACKGROUND_REVERT]  = "ssys background revert",
-   [HUNK_TYPE_SSYS_FEATURES]           = "ssys features",
-   [HUNK_TYPE_SSYS_FEATURES_REVERT]    = "ssys features revert",
-   [HUNK_TYPE_SSYS_POS_X]              = "ssys pos x",
-   [HUNK_TYPE_SSYS_POS_X_REVERT]       = "ssys pos x revert",
-   [HUNK_TYPE_SSYS_POS_Y]              = "ssys pos y",
-   [HUNK_TYPE_SSYS_POS_Y_REVERT]       = "ssys pos x revert",
-   [HUNK_TYPE_SPOB_FACTION]            = "spob faction",
-   [HUNK_TYPE_SPOB_FACTION_REMOVE]     = "spob faction removal",
-   [HUNK_TYPE_SPOB_POPULATION]         = "spob population",
-   [HUNK_TYPE_SPOB_POPULATION_REMOVE]  = "spob population removal",
-   [HUNK_TYPE_SPOB_DISPLAYNAME]        = "spob displayname",
-   [HUNK_TYPE_SPOB_DISPLAYNAME_REVERT] = "spob displayname revert",
-   [HUNK_TYPE_SPOB_DESCRIPTION]        = "spob description",
-   [HUNK_TYPE_SPOB_DESCRIPTION_REVERT] = "spob description revert",
-   [HUNK_TYPE_SPOB_BAR]                = "spob bar",
-   [HUNK_TYPE_SPOB_BAR_REVERT]         = "spob bar revert",
-   [HUNK_TYPE_SPOB_SPACE]              = "spob space",
-   [HUNK_TYPE_SPOB_SPACE_REVERT]       = "spob space revert",
-   [HUNK_TYPE_SPOB_EXTERIOR]           = "spob exterior",
-   [HUNK_TYPE_SPOB_EXTERIOR_REVERT]    = "spob exterior revert",
-   [HUNK_TYPE_SPOB_LUA]                = "spob lua",
-   [HUNK_TYPE_SPOB_LUA_REVERT]         = "spob lua revert",
-   [HUNK_TYPE_SPOB_SERVICE_ADD]        = "spob service add",
-   [HUNK_TYPE_SPOB_SERVICE_REMOVE]     = "spob service remove",
-   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD]    = "spob nomissionspawn add",
-   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] = "spob nomissionspawn remove",
-   [HUNK_TYPE_SPOB_TECH_ADD]           = "spob tech add",
-   [HUNK_TYPE_SPOB_TECH_REMOVE]        = "spob tech remove",
-   [HUNK_TYPE_SPOB_TAG_ADD]            = "spob tech add",
-   [HUNK_TYPE_SPOB_TAG_REMOVE]         = "spob tech remove",
-   [HUNK_TYPE_FACTION_VISIBLE]         = "faction visible",
-   [HUNK_TYPE_FACTION_INVISIBLE]       = "faction invisible",
-   [HUNK_TYPE_FACTION_ALLY]            = "faction set ally",
-   [HUNK_TYPE_FACTION_ENEMY]           = "faction set enemy",
-   [HUNK_TYPE_FACTION_NEUTRAL]         = "faction set neutral",
-   [HUNK_TYPE_FACTION_REALIGN]         = "faction alignment reset",
-   [HUNK_TYPE_SENTINAL]                = "sentinal",
+   [HUNK_TYPE_SPOB_ADD]                = "spob_add",
+   [HUNK_TYPE_SPOB_REMOVE]             = "spob_remove",
+   [HUNK_TYPE_VSPOB_ADD]               = "spob_virtual_add",
+   [HUNK_TYPE_VSPOB_REMOVE]            = "spob_virtual_remove",
+   [HUNK_TYPE_JUMP_ADD]                = "jump_add",
+   [HUNK_TYPE_JUMP_REMOVE]             = "jump_remove",
+   [HUNK_TYPE_SSYS_BACKGROUND]         = "background",
+   [HUNK_TYPE_SSYS_FEATURES]           = "features",
+   [HUNK_TYPE_SSYS_POS_X]              = "pos_x",
+   [HUNK_TYPE_SSYS_POS_Y]              = "pos_y",
+   [HUNK_TYPE_TECH_ADD]                = "item_add",
+   [HUNK_TYPE_TECH_REMOVE]             = "item_remove",
+   [HUNK_TYPE_SPOB_FACTION]            = "faction",
+   [HUNK_TYPE_SPOB_POPULATION]         = "population",
+   [HUNK_TYPE_SPOB_DISPLAYNAME]        = "displayname",
+   [HUNK_TYPE_SPOB_DESCRIPTION]        = "description",
+   [HUNK_TYPE_SPOB_BAR]                = "bar",
+   [HUNK_TYPE_SPOB_SPACE]              = "gfx_space",
+   [HUNK_TYPE_SPOB_EXTERIOR]           = "gfx_exterior",
+   [HUNK_TYPE_SPOB_LUA]                = "lua",
+   [HUNK_TYPE_SPOB_SERVICE_ADD]        = "service_add",
+   [HUNK_TYPE_SPOB_SERVICE_REMOVE]     = "service_remove",
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD]    = "nomissionspawn_add",
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] = "nomissionspawn_remove",
+   [HUNK_TYPE_SPOB_TECH_ADD]           = "tech_add",
+   [HUNK_TYPE_SPOB_TECH_REMOVE]        = "tech_remove",
+   [HUNK_TYPE_SPOB_TAG_ADD]            = "tag_add",
+   [HUNK_TYPE_SPOB_TAG_REMOVE]         = "tag_remove",
+   [HUNK_TYPE_FACTION_VISIBLE]         = "visible",
+   [HUNK_TYPE_FACTION_INVISIBLE]       = "invisible",
+   [HUNK_TYPE_FACTION_ALLY]            = "ally",
+   [HUNK_TYPE_FACTION_ENEMY]           = "enemy",
+   [HUNK_TYPE_FACTION_NEUTRAL]         = "neutral",
 };
-*/
 static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_NONE]                    = HUNK_TYPE_SENTINAL,
    [HUNK_TYPE_SPOB_ADD]                = HUNK_TYPE_SPOB_REMOVE,
@@ -218,6 +183,26 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_FACTION_ENEMY]           = HUNK_TYPE_FACTION_REALIGN,
    [HUNK_TYPE_FACTION_NEUTRAL]         = HUNK_TYPE_FACTION_REALIGN,
 };
+
+#define HUNK_CUST( TYPE, DTYPE, FUNC )                                         \
+   /* static_assert( hunk_tag[TYPE] != NULL, "" ); */                          \
+   if ( xml_isNode( cur, hunk_tag[TYPE] ) ) {                                  \
+      hunk.target.type   = base.target.type;                                   \
+      hunk.target.u.name = strdup( base.target.u.name );                       \
+      hunk.type          = TYPE;                                               \
+      hunk.dtype         = DTYPE;                                              \
+      FUNC if ( diff_patchHunk( &hunk ) < 0 ) diff_hunkFailed( diff, &hunk );  \
+      else diff_hunkSuccess( diff, &hunk );                                    \
+      continue;                                                                \
+   }
+#define HUNK_NONE( TYPE )                                                      \
+   HUNK_CUST( TYPE, HUNK_DATA_NONE, hunk.u.name = NULL; );
+#define HUNK_STRD( TYPE )                                                      \
+   HUNK_CUST( TYPE, HUNK_DATA_STRING, hunk.u.name = xml_getStrd( cur ); );
+#define HUNK_UINT( TYPE )                                                      \
+   HUNK_CUST( TYPE, HUNK_DATA_INT, hunk.u.data = xml_getUInt( cur ); );
+#define HUNK_FLOAT( TYPE )                                                     \
+   HUNK_CUST( TYPE, HUNK_DATA_FLOAT, hunk.u.fdata = xml_getFloat( cur ); );
 
 /*
  * Prototypes.
@@ -480,16 +465,16 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    do {
       xml_onlyNodes( cur );
 
-      HUNK_STRD( "spob_add", HUNK_TYPE_SPOB_ADD );
-      HUNK_STRD( "spob_remove", HUNK_TYPE_SPOB_REMOVE );
-      HUNK_STRD( "spob_virtual_add", HUNK_TYPE_VSPOB_ADD );
-      HUNK_STRD( "spob_virtual_remove", HUNK_TYPE_VSPOB_REMOVE );
-      HUNK_STRD( "jump_add", HUNK_TYPE_JUMP_ADD );
-      HUNK_STRD( "jump_remove", HUNK_TYPE_JUMP_REMOVE );
-      HUNK_STRD( "background", HUNK_TYPE_SSYS_BACKGROUND );
-      HUNK_STRD( "features", HUNK_TYPE_SSYS_FEATURES );
-      HUNK_FLOAT( "pos_x", HUNK_TYPE_SSYS_POS_X );
-      HUNK_FLOAT( "pos_y", HUNK_TYPE_SSYS_POS_Y );
+      HUNK_STRD( HUNK_TYPE_SPOB_ADD );
+      HUNK_STRD( HUNK_TYPE_SPOB_REMOVE );
+      HUNK_STRD( HUNK_TYPE_VSPOB_ADD );
+      HUNK_STRD( HUNK_TYPE_VSPOB_REMOVE );
+      HUNK_STRD( HUNK_TYPE_JUMP_ADD );
+      HUNK_STRD( HUNK_TYPE_JUMP_REMOVE );
+      HUNK_STRD( HUNK_TYPE_SSYS_BACKGROUND );
+      HUNK_STRD( HUNK_TYPE_SSYS_FEATURES );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_POS_X );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_POS_Y );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
@@ -529,8 +514,8 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
    do {
       xml_onlyNodes( cur );
 
-      HUNK_STRD( "add", HUNK_TYPE_TECH_ADD );
-      HUNK_STRD( "remove", HUNK_TYPE_TECH_REMOVE );
+      HUNK_STRD( HUNK_TYPE_TECH_ADD );
+      HUNK_STRD( HUNK_TYPE_TECH_REMOVE );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
@@ -570,30 +555,28 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
    do {
       xml_onlyNodes( cur );
 
-      HUNK_STRD( "faction", HUNK_TYPE_SPOB_FACTION );
-      HUNK_UINT( "population", HUNK_TYPE_SPOB_POPULATION );
-      HUNK_STRD( "displayname", HUNK_TYPE_SPOB_DISPLAYNAME );
-      HUNK_STRD( "description", HUNK_TYPE_SPOB_DESCRIPTION );
-      HUNK_STRD( "bar", HUNK_TYPE_SPOB_BAR );
-      HUNK_STRD( "service_add", HUNK_TYPE_SPOB_SERVICE_ADD );
-      HUNK_STRD( "service_remove", HUNK_TYPE_SPOB_SERVICE_REMOVE );
-      HUNK_NONE( "nomissionspawn_add", HUNK_TYPE_SPOB_NOMISNSPAWN_ADD );
-      HUNK_NONE( "nomissionspawn_remove", HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE );
-      HUNK_STRD( "tech_add", HUNK_TYPE_SPOB_TECH_ADD );
-      HUNK_STRD( "tech_remove", HUNK_TYPE_SPOB_TECH_REMOVE );
-      HUNK_STRD( "tag_add", HUNK_TYPE_SPOB_TAG_ADD );
-      HUNK_STRD( "tag_remove", HUNK_TYPE_SPOB_TAG_REMOVE );
-      HUNK_CUST( "gfx_space", HUNK_TYPE_SPOB_SPACE, HUNK_DATA_STRING,
-                 char str[PATH_MAX];
+      HUNK_STRD( HUNK_TYPE_SPOB_FACTION );
+      HUNK_UINT( HUNK_TYPE_SPOB_POPULATION );
+      HUNK_STRD( HUNK_TYPE_SPOB_DISPLAYNAME );
+      HUNK_STRD( HUNK_TYPE_SPOB_DESCRIPTION );
+      HUNK_STRD( HUNK_TYPE_SPOB_BAR );
+      HUNK_STRD( HUNK_TYPE_SPOB_SERVICE_ADD );
+      HUNK_STRD( HUNK_TYPE_SPOB_SERVICE_REMOVE );
+      HUNK_NONE( HUNK_TYPE_SPOB_NOMISNSPAWN_ADD );
+      HUNK_NONE( HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE );
+      HUNK_STRD( HUNK_TYPE_SPOB_TECH_ADD );
+      HUNK_STRD( HUNK_TYPE_SPOB_TECH_REMOVE );
+      HUNK_STRD( HUNK_TYPE_SPOB_TAG_ADD );
+      HUNK_STRD( HUNK_TYPE_SPOB_TAG_REMOVE );
+      HUNK_CUST( HUNK_TYPE_SPOB_SPACE, HUNK_DATA_STRING, char str[PATH_MAX];
                  snprintf( str, sizeof( str ), SPOB_GFX_SPACE_PATH "%s",
                            xml_get( cur ) );
                  hunk.u.name = strdup( str ); );
-      HUNK_CUST( "gfx_exterior", HUNK_TYPE_SPOB_EXTERIOR, HUNK_DATA_STRING,
-                 char str[PATH_MAX];
+      HUNK_CUST( HUNK_TYPE_SPOB_EXTERIOR, HUNK_DATA_STRING, char str[PATH_MAX];
                  snprintf( str, sizeof( str ), SPOB_GFX_EXTERIOR_PATH "%s",
                            xml_get( cur ) );
                  hunk.u.name = strdup( str ); );
-      HUNK_STRD( "lua", HUNK_TYPE_SPOB_LUA );
+      HUNK_STRD( HUNK_TYPE_SPOB_LUA );
 
       // cppcheck-suppress nullPointerRedundantCheck
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name, cur->name );
@@ -633,11 +616,11 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
    do {
       xml_onlyNodes( cur );
 
-      HUNK_NONE( "visible", HUNK_TYPE_FACTION_VISIBLE );
-      HUNK_NONE( "invisible", HUNK_TYPE_FACTION_INVISIBLE );
-      HUNK_STRD( "ally", HUNK_TYPE_FACTION_ALLY );
-      HUNK_STRD( "enemy", HUNK_TYPE_FACTION_ENEMY );
-      HUNK_STRD( "neutral", HUNK_TYPE_FACTION_NEUTRAL );
+      HUNK_NONE( HUNK_TYPE_FACTION_VISIBLE );
+      HUNK_NONE( HUNK_TYPE_FACTION_INVISIBLE );
+      HUNK_STRD( HUNK_TYPE_FACTION_ALLY );
+      HUNK_STRD( HUNK_TYPE_FACTION_ENEMY );
+      HUNK_STRD( HUNK_TYPE_FACTION_NEUTRAL );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
@@ -1265,6 +1248,14 @@ static void diff_cleanup( UniDiff_t *diff )
 const char *diff_hunkName( UniHunkType_t t )
 {
    return hunk_name[t];
+}
+
+/**
+ * @brief Gets the XML tag of a hunk.
+ */
+const char *diff_hunkTag( UniHunkType_t t )
+{
+   return hunk_tag[t];
 }
 
 /**

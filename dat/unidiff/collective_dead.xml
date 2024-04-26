@@ -26,13 +26,13 @@
   <spob_remove>S91456</spob_remove>
  </system>
  <tech name="Heavy Weapons 1">
-  <add>__Collective Outfits</add>
+  <item_add>__Collective Outfits</item_add>
  </tech>
  <tech name="Heavy Weapons 2">
-  <add>__Collective Outfits</add>
+  <item_add>__Collective Outfits</item_add>
  </tech>
  <tech name="Heavy Civilian Combat Ships">
-  <add>__Collective Ships</add>
+  <item_add>__Collective Ships</item_add>
  </tech>
  <faction name="Collective">
   <invisible />
