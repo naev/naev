@@ -31,8 +31,9 @@
  * @brief Universe diff filepath list.
  */
 typedef struct UniDiffData_ {
-   char *name;     /**< Name of the diff (read from XML). */
-   char *filename; /**< Filename of the diff. */
+   char      *name;     /**< Name of the diff (read from XML). */
+   char      *filename; /**< Filename of the diff. */
+   UniHunk_t *hunks;    /**< Hunks available. */
 } UniDiffData_t;
 static UniDiffData_t *diff_available = NULL; /**< Available diffs. */
 
@@ -42,9 +43,9 @@ static UniDiffData_t *diff_available = NULL; /**< Available diffs. */
  * @brief Represents each Universe Diff.
  */
 typedef struct UniDiff_ {
-   char      *name;    /**< Name of the diff. */
-   UniHunk_t *applied; /**< Applied hunks. */
-   UniHunk_t *failed;  /**< Failed hunks. */
+   UniDiffData_t *data;    /**< Bas e data from which diff is being applied. */
+   UniHunk_t     *applied; /**< Applied hunks. */
+   UniHunk_t     *failed;  /**< Failed hunks. */
 } UniDiff_t;
 
 /*
@@ -256,8 +257,7 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
       hunk.target.u.name = strdup( base.target.u.name );                       \
       hunk.type          = TYPE;                                               \
       hunk.dtype         = DTYPE;                                              \
-      FUNC if ( diff_patchHunk( &hunk ) < 0 ) diff_hunkFailed( diff, &hunk );  \
-      else diff_hunkSuccess( diff, &hunk );                                    \
+      FUNC array_push_back( &diff->hunks, hunk );                              \
       continue;                                                                \
    }
 #define HUNK_NONE( TYPE )                                                      \
@@ -276,12 +276,14 @@ static int diff_applyInternal( const char *name, int oneshot );
 NONNULL( 1 ) static UniDiff_t *diff_get( const char *name );
 static UniDiff_t *diff_newDiff( void );
 static int        diff_removeDiff( UniDiff_t *diff );
-static int        diff_patchSystem( UniDiff_t *diff, xmlNodePtr node );
-static int        diff_patchTech( UniDiff_t *diff, xmlNodePtr node );
-static int        diff_patch( xmlNodePtr parent );
+static int        diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node );
+static int        diff_parseTech( UniDiffData_t *diff, xmlNodePtr node );
+static int        diff_parseSpob( UniDiffData_t *diff, xmlNodePtr node );
+static int        diff_parseFaction( UniDiffData_t *diff, xmlNodePtr node );
 static void       diff_hunkFailed( UniDiff_t *diff, const UniHunk_t *hunk );
 static void       diff_hunkSuccess( UniDiff_t *diff, const UniHunk_t *hunk );
 static void       diff_cleanup( UniDiff_t *diff );
+static int        diff_parse( UniDiffData_t *diff, char *filename );
 /* Misc. */
 static int diff_checkUpdateUniverse( void );
 /* Externed. */
@@ -338,31 +340,12 @@ int diff_init( void )
    diff_available =
       array_create_size( UniDiffData_t, array_size( diff_files ) );
    for ( int i = 0; i < array_size( diff_files ); i++ ) {
-      xmlDocPtr      doc;
-      xmlNodePtr     node;
-      UniDiffData_t *diff;
+      UniDiffData_t diff;
 
-      /* Parse the header. */
-      doc = xml_parsePhysFS( diff_files[i] );
-      if ( doc == NULL ) {
-         free( diff_files[i] );
-         continue;
-      }
-
-      node = doc->xmlChildrenNode;
-      if ( !xml_isNode( node, "unidiff" ) ) {
-         WARN( _( "Malformed XML header for '%s' UniDiff: missing root element "
-                  "'%s'" ),
-               diff_files[i], "unidiff" );
-         xmlFreeDoc( doc );
-         free( diff_files[i] );
-         continue;
-      }
-
-      diff           = &array_grow( &diff_available );
-      diff->filename = diff_files[i];
-      xmlr_attr_strd( node, "name", diff->name );
-      xmlFreeDoc( doc );
+      memset( &diff, 0, sizeof( diff ) );
+      if ( diff_parse( &diff, diff_files[i] ) == 0 )
+         array_push_back( &diff_available, diff );
+      // xmlr_attr_strd( node, "name", diff.name );
    }
    array_free( diff_files );
    array_shrink( &diff_available );
@@ -391,8 +374,59 @@ int diff_init( void )
    return 0;
 }
 
+/**
+ * @brief Clean up after diffs.
+ */
 void diff_exit( void )
 {
+   diff_clear();
+   for ( int i = 0; i < array_size( diff_available ); i++ ) {
+      UniDiffData_t *d = &diff_available[i];
+      for ( int j = 0; j < array_size( d->hunks ); j++ )
+         diff_cleanupHunk( &d->hunks[j] );
+      array_free( d->hunks );
+      free( d->name );
+      free( d->filename );
+   }
+   array_free( diff_available );
+   diff_available = NULL;
+}
+
+static int diff_parse( UniDiffData_t *diff, char *filename )
+{
+   xmlDocPtr  doc    = xml_parsePhysFS( filename );
+   xmlNodePtr parent = doc->xmlChildrenNode;
+   xmlNodePtr node;
+   if ( strcmp( (char *)parent->name, "unidiff" ) ) {
+      ERR( _( "Malformed unidiff file: missing root element 'unidiff'" ) );
+      return -1;
+   }
+
+   memset( diff, 0, sizeof( UniDiffData_t ) );
+   xmlr_attr_strd( parent, "name", diff->name );
+   diff->filename = filename;
+   diff->hunks    = array_create( UniHunk_t );
+
+   /* Start parsing. */
+   node = parent->xmlChildrenNode;
+   do {
+      xml_onlyNodes( node );
+
+      if ( xml_isNode( node, "system" ) )
+         diff_parseSystem( diff, node );
+      else if ( xml_isNode( node, "tech" ) )
+         diff_parseTech( diff, node );
+      else if ( xml_isNode( node, "spob" ) )
+         diff_parseSpob( diff, node );
+      else if ( xml_isNode( node, "faction" ) )
+         diff_parseFaction( diff, node );
+      else
+         WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
+               node->name );
+   } while ( xml_nextNode( node ) );
+
+   xmlFreeDoc( doc );
+   return 0;
 }
 
 /**
@@ -417,7 +451,7 @@ int diff_isApplied( const char *name )
 static UniDiff_t *diff_get( const char *name )
 {
    for ( int i = 0; i < array_size( diff_stack ); i++ )
-      if ( strcmp( diff_stack[i].name, name ) == 0 )
+      if ( strcmp( diff_stack[i].data->name, name ) == 0 )
          return &diff_stack[i];
    return NULL;
 }
@@ -452,9 +486,9 @@ int diff_apply( const char *name )
  */
 static int diff_applyInternal( const char *name, int oneshot )
 {
-   xmlNodePtr     node;
-   xmlDocPtr      doc;
    UniDiffData_t *d;
+   UniDiff_t     *diff;
+   int            nfailed;
 
    /* Check if already applied. */
    if ( diff_isApplied( name ) )
@@ -472,18 +506,72 @@ static int diff_applyInternal( const char *name, int oneshot )
       return -1;
    }
 
-   doc = xml_parsePhysFS( d->filename );
+   /* Prepare it. */
+   diff = diff_newDiff();
+   memset( diff, 0, sizeof( UniDiff_t ) );
+   diff->data = d;
 
-   node = doc->xmlChildrenNode;
-   if ( strcmp( (char *)node->name, "unidiff" ) ) {
-      ERR( _( "Malformed unidiff file: missing root element 'unidiff'" ) );
-      return 0;
+   /* Time to apply. */
+   for ( int i = 0; i < array_size( d->hunks ); i++ ) {
+      UniHunk_t *hi = &d->hunks[i];
+      UniHunk_t  h  = *hi;
+
+      /* Create a copy of the hunk. */
+      h.target.u.name = strdup( hi->target.u.name );
+      if ( hi->dtype == HUNK_DATA_STRING )
+         h.u.name = strdup( hi->u.name );
+
+      /* Patch. */
+      if ( diff_patchHunk( &h ) < 0 )
+         diff_hunkFailed( diff, &h );
+      else
+         diff_hunkSuccess( diff, &h );
    }
 
-   /* Apply it. */
-   diff_patch( node );
+   /* Warn about failures. */
+   nfailed = array_size( diff->failed );
+   if ( nfailed > 0 ) {
+      WARN( n_( "Unidiff '%s' failed to apply %d hunk.",
+                "Unidiff '%s' failed to apply %d hunks.", nfailed ),
+            d->name, nfailed );
+      for ( int i = 0; i < nfailed; i++ ) {
+         UniHunk_t  *fail   = &diff->failed[i];
+         char       *target = fail->target.u.name;
+         const char *hname;
+         if ( ( fail->type < 0 ) || ( fail->type >= HUNK_TYPE_SENTINAL ) ||
+              ( hunk_name[fail->type] == NULL ) ) {
+            WARN( _( "Unknown unidiff hunk '%d'!" ), fail->type );
+            hname = N_( "unknown hunk" );
+         } else
+            hname = hunk_name[fail->type];
 
-   xmlFreeDoc( doc );
+         /* Have to handle all possible data cases. */
+         switch ( fail->dtype ) {
+         case HUNK_DATA_NONE:
+            WARN( p_( "unidiff", "   [%s] %s" ), target, _( hname ) );
+            break;
+         case HUNK_DATA_STRING:
+            WARN( p_( "unidiff", "   [%s] %s: %s" ), target, _( hname ),
+                  fail->u.name );
+            break;
+         case HUNK_DATA_INT:
+            WARN( p_( "unidiff", "   [%s] %s: %d" ), target, _( hname ),
+                  fail->u.data );
+            break;
+         case HUNK_DATA_FLOAT:
+            WARN( p_( "unidiff", "   [%s] %s: %f" ), target, _( hname ),
+                  fail->u.fdata );
+            break;
+
+         default:
+            WARN( p_( "unidiff", "   [%s] %s: UNKNOWN DATA" ), target,
+                  _( hname ) );
+         }
+      }
+   }
+
+   /* Update overlay map just in case. */
+   ovr_refresh();
 
    /* Update universe. */
    if ( oneshot )
@@ -509,7 +597,7 @@ void diff_end( void )
  *    @param node Node containing the system.
  *    @return 0 on success.
  */
-static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
+static int diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node )
 {
    UniHunk_t  base, hunk;
    xmlNodePtr cur;
@@ -569,7 +657,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
  *    @param node Node containing the tech.
  *    @return 0 on success.
  */
-static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
+static int diff_parseTech( UniDiffData_t *diff, xmlNodePtr node )
 {
    UniHunk_t  base, hunk;
    xmlNodePtr cur;
@@ -610,7 +698,7 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
  *    @param node Node containing the spob.
  *    @return 0 on success.
  */
-static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
+static int diff_parseSpob( UniDiffData_t *diff, xmlNodePtr node )
 {
    UniHunk_t  base, hunk;
    xmlNodePtr cur;
@@ -678,7 +766,7 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
  *    @param node Node containing the spob.
  *    @return 0 on success.
  */
-static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
+static int diff_parseFaction( UniDiffData_t *diff, xmlNodePtr node )
 {
    UniHunk_t  base, hunk;
    xmlNodePtr cur;
@@ -712,88 +800,6 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
    free( base.target.u.name );
    base.target.u.name = NULL;
 
-   return 0;
-}
-
-/**
- * @brief Actually applies a diff in XML node form.
- *
- *    @param parent Node containing the diff information.
- *    @return 0 on success.
- */
-static int diff_patch( xmlNodePtr parent )
-{
-   UniDiff_t *diff;
-   xmlNodePtr node;
-   int        nfailed;
-
-   /* Prepare it. */
-   diff = diff_newDiff();
-   memset( diff, 0, sizeof( UniDiff_t ) );
-   xmlr_attr_strd( parent, "name", diff->name );
-
-   node = parent->xmlChildrenNode;
-   do {
-      xml_onlyNodes( node );
-      if ( xml_isNode( node, "system" ) ) {
-         diff_universe_changed = 1;
-         diff_patchSystem( diff, node );
-      } else if ( xml_isNode( node, "tech" ) )
-         diff_patchTech( diff, node );
-      else if ( xml_isNode( node, "spob" ) ) {
-         diff_universe_changed = 1;
-         diff_patchSpob( diff, node );
-      } else if ( xml_isNode( node, "faction" ) ) {
-         diff_universe_changed = 1;
-         diff_patchFaction( diff, node );
-      } else
-         WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
-               node->name );
-   } while ( xml_nextNode( node ) );
-
-   nfailed = array_size( diff->failed );
-   if ( nfailed > 0 ) {
-      WARN( n_( "Unidiff '%s' failed to apply %d hunk.",
-                "Unidiff '%s' failed to apply %d hunks.", nfailed ),
-            diff->name, nfailed );
-      for ( int i = 0; i < nfailed; i++ ) {
-         UniHunk_t  *fail   = &diff->failed[i];
-         char       *target = fail->target.u.name;
-         const char *name;
-         if ( ( fail->type < 0 ) || ( fail->type >= HUNK_TYPE_SENTINAL ) ||
-              ( hunk_name[fail->type] == NULL ) ) {
-            WARN( _( "Unknown unidiff hunk '%d'!" ), fail->type );
-            name = N_( "unknown hunk" );
-         } else
-            name = hunk_name[fail->type];
-
-         /* Have to handle all possible data cases. */
-         switch ( fail->dtype ) {
-         case HUNK_DATA_NONE:
-            WARN( p_( "unidiff", "   [%s] %s" ), target, _( name ) );
-            break;
-         case HUNK_DATA_STRING:
-            WARN( p_( "unidiff", "   [%s] %s: %s" ), target, _( name ),
-                  fail->u.name );
-            break;
-         case HUNK_DATA_INT:
-            WARN( p_( "unidiff", "   [%s] %s: %d" ), target, _( name ),
-                  fail->u.data );
-            break;
-         case HUNK_DATA_FLOAT:
-            WARN( p_( "unidiff", "   [%s] %s: %f" ), target, _( name ),
-                  fail->u.fdata );
-            break;
-
-         default:
-            WARN( p_( "unidiff", "   [%s] %s: UNKNOWN DATA" ), target,
-                  _( name ) );
-         }
-      }
-   }
-
-   /* Update overlay map just in case. */
-   ovr_refresh();
    return 0;
 }
 
@@ -1376,21 +1382,6 @@ void diff_clear( void )
 }
 
 /**
- * @brief Clean up after diff_loadAvailable().
- */
-void diff_free( void )
-{
-   diff_clear();
-   for ( int i = 0; i < array_size( diff_available ); i++ ) {
-      UniDiffData_t *d = &diff_available[i];
-      free( d->name );
-      free( d->filename );
-   }
-   array_free( diff_available );
-   diff_available = NULL;
-}
-
-/**
  * @brief Creates a new UniDiff_t for usage.
  *
  *    @return A newly created UniDiff_t.
@@ -1429,7 +1420,6 @@ static int diff_removeDiff( UniDiff_t *diff )
  */
 static void diff_cleanup( UniDiff_t *diff )
 {
-   free( diff->name );
    for ( int i = 0; i < array_size( diff->applied ); i++ )
       diff_cleanupHunk( &diff->applied[i] );
    array_free( diff->applied );
@@ -1464,12 +1454,10 @@ void diff_cleanupHunk( UniHunk_t *hunk )
 {
    free( hunk->target.u.name );
    hunk->target.u.name = NULL;
-
    if ( hunk->dtype == HUNK_DATA_STRING ) {
       free( hunk->u.name );
       hunk->u.name = NULL;
    }
-
    memset( hunk, 0, sizeof( UniHunk_t ) );
 }
 
@@ -1485,7 +1473,7 @@ int diff_save( xmlTextWriterPtr writer )
    if ( diff_stack != NULL ) {
       for ( int i = 0; i < array_size( diff_stack ); i++ ) {
          const UniDiff_t *diff = &diff_stack[i];
-         xmlw_elem( writer, "diff", "%s", diff->name );
+         xmlw_elem( writer, "diff", "%s", diff->data->name );
       }
    }
    xmlw_endElem( writer ); /* "diffs" */

@@ -742,7 +742,6 @@ void unload_all( void )
    load_free();       /* Clean up loading game stuff stuff. */
    diff_exit();
    safelanes_destroy();
-   diff_free();
    economy_destroy(); /* must be called before space_exit */
    space_exit();      /* cleans up the universe itself */
    tech_free();       /* Frees tech stuff. */
