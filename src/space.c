@@ -129,7 +129,6 @@ static void system_init( StarSystem *sys );
 static int  systems_load( void );
 static int  system_parse( StarSystem *system, const char *filename );
 static int  system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
-static int  system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys );
 static int  system_parseJumps( StarSystem *sys );
 static int  system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
 static int  system_parseAsteroidExclusion( const xmlNodePtr node,
@@ -3299,82 +3298,6 @@ void system_setFaction( StarSystem *sys )
          return;
       }
    }
-}
-
-/**
- * @brief Parses a single jump point for a system, from unidiff.
- *
- *    @param node Parent node containing jump point information.
- *    @param sys System to which the jump point belongs.
- *    @return 0 on success.
- */
-static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
-{
-   JumpPoint  *j;
-   char       *buf;
-   double      x, y;
-   StarSystem *target;
-
-   /* Get target. */
-   xmlr_attr_strd( node, "target", buf );
-   if ( buf == NULL ) {
-      WARN( _( "JumpPoint node for system '%s' has no target attribute." ),
-            sys->name );
-      return -1;
-   }
-   target = system_get( buf );
-   if ( target == NULL ) {
-      WARN( _( "JumpPoint node for system '%s' has invalid target '%s'." ),
-            sys->name, buf );
-      free( buf );
-      return -1;
-   }
-   free( buf );
-
-#ifdef DEBUGGING
-   for ( int i = 0; i < array_size( sys->jumps ); i++ ) {
-      JumpPoint *jp = &sys->jumps[i];
-      if ( jp->targetid != target->id )
-         continue;
-
-      WARN( _( "Star System '%s' has duplicate jump point to '%s'." ),
-            sys->name, target->name );
-      break;
-   }
-#endif /* DEBUGGING */
-
-   /* Allocate more space. */
-   j = &array_grow( &sys->jumps );
-   memset( j, 0, sizeof( JumpPoint ) );
-
-   /* Handle jump point position. We want both x and y, or we autoposition the
-    * jump point. */
-   xmlr_attr_float_def( node, "x", x, HUGE_VAL );
-   xmlr_attr_float_def( node, "y", y, HUGE_VAL );
-
-   /* Handle jump point type. */
-   xmlr_attr_strd( node, "type", buf );
-   if ( buf == NULL )
-      ;
-   else if ( strcmp( buf, "hidden" ) == 0 )
-      jp_setFlag( j, JP_HIDDEN );
-   else if ( strcmp( buf, "exitonly" ) == 0 )
-      jp_setFlag( j, JP_EXITONLY );
-   free( buf );
-
-   xmlr_attr_float_def( node, "hide", j->hide, HIDE_DEFAULT_JUMP );
-
-   /* Set some stuff. */
-   j->target   = target;
-   j->targetid = j->target->id;
-   j->radius   = 200.;
-
-   if ( x < HUGE_VAL && y < HUGE_VAL )
-      vec2_cset( &j->pos, x, y );
-   else
-      jp_setFlag( j, JP_AUTOPOS );
-
-   return 0;
 }
 
 /**
