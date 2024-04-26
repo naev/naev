@@ -1518,17 +1518,17 @@ static void uniedit_renameSys( void )
          continue;
       }
 
-      /* Try again. */
-      if ( uniedit_checkName( name ) ) {
-         free( name );
-         i--;
-         continue;
-      }
-
       if ( uniedit_diffMode ) {
          uniedit_diffCreateSysStr( sys, HUNK_TYPE_SSYS_DISPLAYNAME,
                                    name ); /* Name is already allocated. */
       } else {
+         /* Try again. */
+         if ( uniedit_checkName( name ) ) {
+            free( name );
+            i--;
+            continue;
+         }
+
          /* Change the name. */
          filtered = uniedit_nameFilter( sys->name );
          SDL_asprintf( &oldName, "%s/%s.xml", conf.dev_save_sys, filtered );

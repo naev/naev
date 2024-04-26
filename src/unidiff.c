@@ -1025,7 +1025,11 @@ int diff_patchHunk( UniHunk_t *hunk )
       else
          hunk->o.name = faction_name( p->presence.faction );
       diff_universe_changed = 1;
-      return spob_setFaction( p, faction_get( hunk->u.name ) );
+      /* Special case to clear the faction. */
+      if ( strcasecmp( hunk->u.name, "None" ) == 0 )
+         return spob_setFaction( p, -1 );
+      else
+         return spob_setFaction( p, faction_get( hunk->u.name ) );
    case HUNK_TYPE_SPOB_FACTION_REVERT:
       diff_universe_changed = 1;
       if ( hunk->o.name == NULL )

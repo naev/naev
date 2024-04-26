@@ -180,7 +180,6 @@ static void sysedit_deselect( void );
 static void sysedit_selectAdd( const Select_t *sel );
 static void sysedit_selectRm( const Select_t *sel );
 /* Diffs. */
-static void sysedit_diffCreateSpobNone( const Spob *spb, UniHunkType_t type );
 static void sysedit_diffCreateSpobStr( const Spob *spb, UniHunkType_t type,
                                        char *str );
 static void sysedit_diffCreateSpobInt( const Spob *spb, UniHunkType_t type,
@@ -454,6 +453,12 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    char *name;
    int   good;
 
+   if ( uniedit_diffMode ) {
+      /* TODO let select the spob from a list. */
+      dialogue_alert( ( "Adding new spobs is not supported in diff mode!" ) );
+      return;
+   }
+
    /* Get new name. */
    name = dialogue_inputRaw( _( "New Spob Creation" ), 1, 32,
                              _( "What do you want to name the new spob?" ) );
@@ -523,6 +528,13 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused,
       _( "Exclusion Zone" ),
    };
 
+   if ( uniedit_diffMode ) {
+      /* TODO let select the spob from a list. */
+      dialogue_alert(
+         ( "Adding new asteroids is not supported in diff mode!" ) );
+      return;
+   }
+
    /* See if we want to make a field or exclusion zone. */
    title   = _( "Add asteriod field or exclusion zone?" );
    caption = _( "Do you wish to add an asteroid field or an asteroid exclusion "
@@ -566,7 +578,9 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
    (void)wid_unused;
    (void)unused;
    for ( int i = 0; i < sysedit_nselect; i++ ) {
-      Select_t *sel = &sysedit_select[i];
+      Select_t   *sel = &sysedit_select[i];
+      const char *prompt;
+
       if ( sel->type != SELECT_SPOB )
          continue;
 
@@ -574,42 +588,54 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
       Spob *p = sysedit_sys[i].spobs[sel->u.spob];
 
       /* Get new name. */
-      name = dialogue_input( _( "Rename Spob" ), 1, 32,
-                             _( "What do you want to rename the spob #r%s#0?" ),
-                             p->name );
+      if ( uniedit_diffMode )
+         prompt =
+            _( "What do you want to rename the spob #r%s#0?\n\n#rNote:#0 this "
+               "will only change the display name of the space object." );
+      else
+         prompt =
+            _( "What do you want to rename the spob #r%s#0?\n\n#rNote:#0 this "
+               "will rename and copy the space object data file." );
+      name = dialogue_input( _( "Rename Spob" ), 1, 32, prompt, p->name );
       if ( name == NULL )
          continue;
 
-      /* Check for collision. */
-      if ( spob_exists( name ) ) {
-         dialogue_alert( _( "Space object by the name of #r'%s'#0 already "
-                            "exists in the #r'%s'#0 system" ),
-                         name, spob_getSystem( name ) );
-         free( name );
-         continue;
+      if ( uniedit_diffMode ) {
+         sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_DISPLAYNAME,
+                                    name ); /* Name is already allocated. */
+      } else {
+         /* Check for collision. */
+         if ( spob_exists( name ) ) {
+            dialogue_alert( _( "Space object by the name of #r'%s'#0 already "
+                               "exists in the #r'%s'#0 system" ),
+                            name, spob_getSystem( name ) );
+            free( name );
+            i--;
+            continue;
+         }
+
+         /* Rename. */
+         filtered = uniedit_nameFilter( p->name );
+         SDL_asprintf( &oldName, "%s/%s.xml", conf.dev_save_spob, filtered );
+         free( filtered );
+
+         filtered = uniedit_nameFilter( name );
+         SDL_asprintf( &newName, "%s/%s.xml", conf.dev_save_spob, filtered );
+         free( filtered );
+
+         if ( rename( oldName, newName ) )
+            WARN( _( "Failed to rename '%s' to '%s'!" ), oldName, newName );
+
+         /* Clean up. */
+         free( oldName );
+         free( newName );
+
+         /* Replace name in stack. */
+         spob_rename( p, name );
+
+         dsys_saveSystem( sysedit_sys );
+         dpl_saveSpob( p );
       }
-
-      /* Rename. */
-      filtered = uniedit_nameFilter( p->name );
-      SDL_asprintf( &oldName, "%s/%s.xml", conf.dev_save_spob, filtered );
-      free( filtered );
-
-      filtered = uniedit_nameFilter( name );
-      SDL_asprintf( &newName, "%s/%s.xml", conf.dev_save_spob, filtered );
-      free( filtered );
-
-      if ( rename( oldName, newName ) )
-         WARN( _( "Failed to rename '%s' to '%s'!" ), oldName, newName );
-
-      /* Clean up. */
-      free( oldName );
-      free( newName );
-
-      /* Replace name in stack. */
-      spob_rename( p, name );
-
-      dsys_saveSystem( sysedit_sys );
-      dpl_saveSpob( p );
 
       /* Rename input if called from edit window. */
       if ( window_existsID( sysedit_widEdit ) )
@@ -665,6 +691,12 @@ static void sysedit_btnReset( unsigned int wid_unused, const char *unused )
 {
    (void)wid_unused;
    (void)unused;
+
+   if ( uniedit_diffMode ) {
+      dialogue_alert( _( "Reseting systems is not supported in diff mode!" ) );
+      return;
+   }
+
    for ( int i = 0; i < sysedit_nselect; i++ ) {
       Select_t *sel = &sysedit_select[i];
       if ( sel->type == SELECT_JUMPPOINT )
@@ -685,6 +717,11 @@ static void sysedit_btnScale( unsigned int wid_unused, const char *unused )
    char       *str;
    double      s;
    StarSystem *sys;
+
+   if ( uniedit_diffMode ) {
+      dialogue_alert( _( "Scaling systems is not supported in diff mode!" ) );
+      return;
+   }
 
    /* Prompt scale amount. */
    str = dialogue_inputRaw(
@@ -1280,6 +1317,7 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
                AsteroidExclusion *exc;
                Select_t          *sel = &sysedit_select[i];
 
+               /* TODO add diff support to the following. */
                switch ( sel->type ) {
                case SELECT_SPOB:
                   p = sys->spobs[sel->u.spob];
@@ -1747,6 +1785,8 @@ static void sysedit_editJumpClose( unsigned int wid, const char *unused )
 {
    (void)unused;
    JumpPoint *j = &sysedit_sys->jumps[sysedit_select[0].u.jump];
+
+   /* TODO add diff support. */
    if ( jp_hidden == 1 ) {
       jp_setFlag( j, JP_HIDDEN );
       jp_rmFlag( j, JP_EXITONLY );
@@ -1907,6 +1947,7 @@ static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused )
    int             pos = toolkit_getListPos( wid, "lstAsteroidsHave" );
    AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
+   /* TODO add diff support. */
    if ( array_size( ast->groups ) > 0 )
       array_erase( &ast->groups, &ast->groups[pos], &ast->groups[pos + 1] );
 
@@ -1919,6 +1960,7 @@ static void sysedit_btnAddAsteroid( unsigned int wid, const char *unused )
    const char     *selected = toolkit_getList( wid, "lstAsteroidsAvailable" );
    AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
+   /* TODO add diff support. */
    array_push_back( &ast->groups, astgroup_getName( selected ) );
 
    sysedit_genAsteroidsList( wid );
@@ -1947,6 +1989,7 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
 {
    AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
+   /* TODO add diff support. */
    ast->density  = atof( window_getInput( sysedit_widEdit, "inpDensity" ) );
    ast->radius   = atof( window_getInput( sysedit_widEdit, "inpRadius" ) );
    ast->maxspeed = atof( window_getInput( sysedit_widEdit, "inpMaxspeed" ) );
@@ -2209,6 +2252,7 @@ static void sysedit_btnAddService( unsigned int wid, const char *unused )
       return;
 
    /* Enable the service. All services imply landability. */
+   /* TODO add diff support. */
    p = sysedit_sys->spobs[sysedit_select[0].u.spob];
    p->services |=
       spob_getService( selected ) | SPOB_SERVICE_INHABITED | SPOB_SERVICE_LAND;
@@ -2231,6 +2275,7 @@ static void sysedit_btnRmService( unsigned int wid, const char *unused )
       return;
 
    /* Flip the bit. Safe enough, as it's always 1 to start with. */
+   /* TODO add diff support. */
    p = sysedit_sys->spobs[sysedit_select[0].u.spob];
    p->services ^= spob_getService( selected );
 
@@ -2364,6 +2409,7 @@ static void sysedit_btnAddTech( unsigned int wid, const char *unused )
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
 
+   /* TODO add diff support. */
    p = sysedit_sys->spobs[sysedit_select[0].u.spob];
    if ( p->tech == NULL )
       p->tech = tech_groupCreate();
@@ -2387,6 +2433,7 @@ static void sysedit_btnRmTech( unsigned int wid, const char *unused )
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
 
+   /* TODO add diff support. */
    p = sysedit_sys->spobs[sysedit_select[0].u.spob];
    if ( tech_hasItem( p->tech, selected ) )
       tech_rmItemTech( p->tech, selected );
@@ -2553,17 +2600,19 @@ static void sysedit_genTagsList( unsigned int wid )
 static void sysedit_btnAddTag( unsigned int wid, const char *unused )
 {
    (void)unused;
-   const char *selected;
-   Spob       *p;
-
-   selected = toolkit_getList( wid, "lstTagsLacked" );
+   const char *selected = toolkit_getList( wid, "lstTagsLacked" );
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
+   Spob *p = sysedit_sys->spobs[sysedit_select[0].u.spob];
 
-   p = sysedit_sys->spobs[sysedit_select[0].u.spob];
-   if ( p->tags == NULL )
-      p->tags = array_create( char * );
-   array_push_back( &p->tags, strdup( selected ) );
+   if ( uniedit_diffMode ) {
+      sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_TAG_ADD,
+                                 strdup( selected ) );
+   } else {
+      if ( p->tags == NULL )
+         p->tags = array_create( char * );
+      array_push_back( &p->tags, strdup( selected ) );
+   }
 
    /* Regenerate the list. */
    sysedit_genTagsList( wid );
@@ -2576,22 +2625,26 @@ static void sysedit_btnRmTag( unsigned int wid, const char *unused )
 {
    (void)unused;
    const char *selected;
-   Spob       *p;
-   int         i;
 
    selected = toolkit_getList( wid, "lstTagsHave" );
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
 
-   p = sysedit_sys->spobs[sysedit_select[0].u.spob];
+   Spob *p = sysedit_sys->spobs[sysedit_select[0].u.spob];
 
-   for ( i = 0; i < array_size( p->tags ); i++ )
-      if ( strcmp( selected, p->tags[i] ) == 0 )
-         break;
-   if ( i >= array_size( p->tags ) )
-      return;
-   free( p->tags[i] );
-   array_erase( &p->tags, &p->tags[i], &p->tags[i + 1] );
+   if ( uniedit_diffMode ) {
+      sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_TAG_REMOVE,
+                                 strdup( selected ) );
+   } else {
+      int i;
+      for ( i = 0; i < array_size( p->tags ); i++ )
+         if ( strcmp( selected, p->tags[i] ) == 0 )
+            break;
+      if ( i >= array_size( p->tags ) )
+         return;
+      free( p->tags[i] );
+      array_erase( &p->tags, &p->tags[i], &p->tags[i + 1] );
+   }
 
    /* Regenerate the list. */
    sysedit_genTagsList( wid );
@@ -2603,21 +2656,23 @@ static void sysedit_btnRmTag( unsigned int wid, const char *unused )
 static void sysedit_btnNewTag( unsigned int wid, const char *unused )
 {
    (void)unused;
-   Spob *s;
-
    char *tag =
       dialogue_input( _( "Add New Spob Tag" ), 1, 128,
                       _( "Please write the new tag to add to the spob." ) );
    if ( tag == NULL )
       return;
 
-   s = sysedit_sys->spobs[sysedit_select[0].u.spob];
-   if ( s->tags == NULL )
-      s->tags = array_create( char * );
-   array_push_back( &s->tags, tag ); /* gets freed later */
+   Spob *s = sysedit_sys->spobs[sysedit_select[0].u.spob];
+   if ( uniedit_diffMode ) {
+      sysedit_diffCreateSpobStr( s, HUNK_TYPE_SPOB_TAG_ADD, tag );
+   } else {
+      if ( s->tags == NULL )
+         s->tags = array_create( char * );
+      array_push_back( &s->tags, tag ); /* gets freed later */
 
-   /* Also add to list of all tags. */
-   array_push_back( &sysedit_tagslist, strdup( tag ) );
+      /* Also add to list of all tags. */
+      array_push_back( &sysedit_tagslist, strdup( tag ) );
+   }
 
    /* Regenerate the list. */
    sysedit_genTagsList( wid );
@@ -2685,20 +2740,22 @@ static void sysedit_btnFaction( unsigned int wid_unused, const char *unused )
 static void sysedit_btnFactionSet( unsigned int wid, const char *unused )
 {
    (void)unused;
-   const char *selected;
-   Spob       *p;
-
-   selected = toolkit_getList( wid, "lstFactions" );
+   const char *selected = toolkit_getList( wid, "lstFactions" );
    if ( selected == NULL )
       return;
-   p = sysedit_sys->spobs[sysedit_select[0].u.spob];
+   Spob *p = sysedit_sys->spobs[sysedit_select[0].u.spob];
 
-   /* "None" case. */
-   if ( toolkit_getListPos( wid, "lstFactions" ) == 0 ) {
-      p->presence.faction = -1;
+   if ( uniedit_diffMode ) {
+      sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_FACTION,
+                                 strdup( selected ) );
    } else {
-      /* Set the faction. */
-      p->presence.faction = faction_get( selected );
+      /* "None" case. */
+      if ( toolkit_getListPos( wid, "lstFactions" ) == 0 ) {
+         p->presence.faction = -1;
+      } else {
+         /* Set the faction. */
+         p->presence.faction = faction_get( selected );
+      }
    }
 
    /* Update the editor window. */
@@ -2853,17 +2910,6 @@ static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
 
    /* For now we close. */
    sysedit_btnGFXClose( wid, wgt );
-}
-
-static void sysedit_diffCreateSpobNone( const Spob *spb, UniHunkType_t type )
-{
-   UniHunk_t hunk;
-   memset( &hunk, 0, sizeof( hunk ) );
-   hunk.target.type   = HUNK_TARGET_SPOB;
-   hunk.target.u.name = strdup( spb->name );
-   hunk.type          = type;
-   hunk.dtype         = HUNK_DATA_NONE;
-   uniedit_diffAdd( &hunk );
 }
 
 static void sysedit_diffCreateSpobStr( const Spob *spb, UniHunkType_t type,
