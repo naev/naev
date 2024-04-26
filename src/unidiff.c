@@ -617,7 +617,6 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
 {
    UniHunk_t  base, hunk;
    xmlNodePtr cur;
-   char      *buf;
 
    /* Set the target. */
    memset( &base, 0, sizeof( UniHunk_t ) );
@@ -636,38 +635,9 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
 
       HUNK_NONE( "visible", HUNK_TYPE_FACTION_VISIBLE );
       HUNK_NONE( "invisible", HUNK_TYPE_FACTION_INVISIBLE );
-
-      if ( xml_isNode( cur, "faction" ) ) {
-         buf = xml_get( cur );
-         if ( buf == NULL ) {
-            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
-            continue;
-         }
-
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-
-         /* Get the faction to set the association of. */
-         xmlr_attr_strd( cur, "name", hunk.u.name );
-
-         /* Get the type. */
-         if ( strcmp( buf, "ally" ) == 0 )
-            hunk.type = HUNK_TYPE_FACTION_ALLY;
-         else if ( strcmp( buf, "enemy" ) == 0 )
-            hunk.type = HUNK_TYPE_FACTION_ENEMY;
-         else if ( strcmp( buf, "neutral" ) == 0 )
-            hunk.type = HUNK_TYPE_FACTION_NEUTRAL;
-         else
-            WARN( _( "Unidiff '%s': Unknown hunk type '%s' for faction '%s'." ),
-                  diff->name, buf, hunk.u.name );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      }
+      HUNK_STRD( "faction_ally", HUNK_TYPE_FACTION_ALLY );
+      HUNK_STRD( "faction_enemy", HUNK_TYPE_FACTION_ENEMY );
+      HUNK_STRD( "faction_neutral", HUNK_TYPE_FACTION_NEUTRAL );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
