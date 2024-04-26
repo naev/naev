@@ -16,6 +16,7 @@
 
 #include "array.h"
 #include "conf.h"
+#include "dev_diff.h"
 #include "dev_spob.h"
 #include "dev_sysedit.h"
 #include "dev_system.h"
@@ -77,9 +78,10 @@ typedef enum UniEditViewMode_ {
 
 extern StarSystem *systems_stack;
 
-int                    uniedit_diffMode = 0;
-static UniHunk_t      *uniedit_diff     = NULL;
-static UniEditMode     uniedit_mode     = UNIEDIT_DEFAULT; /**< Editor mode. */
+int                    uniedit_diffMode  = 0;
+int                    uniedit_diffSaved = 0;
+static UniHunk_t      *uniedit_diff      = NULL;
+static UniEditMode     uniedit_mode      = UNIEDIT_DEFAULT; /**< Editor mode. */
 static UniEditViewMode uniedit_viewmode =
    UNIEDIT_VIEW_DEFAULT;              /**< Editor view mode. */
 static int uniedit_view_faction = -1; /**< Faction currently being viewed. */
@@ -201,7 +203,8 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 
    /* Must have no diffs applied. */
    diff_clear();
-   uniedit_diff = array_create( UniHunk_t );
+   uniedit_diff      = array_create( UniHunk_t );
+   uniedit_diffSaved = 1; /* Start OK with empty diffs. */
 
    /* Reset some variables. */
    uniedit_mode         = UNIEDIT_DEFAULT;
@@ -368,6 +371,15 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
  */
 static void uniedit_close( unsigned int wid, const char *wgt )
 {
+   if ( uniedit_diffMode && !uniedit_diffSaved ) {
+      if ( !dialogue_YesNoRaw(
+              _( "#rUnsaved Progress" ),
+              _( "You have #runsaved changes#0 to the universe diff. Are you "
+                 "sure you wish to close the editor and #rlose all your "
+                 "changes#0?" ) ) )
+         return;
+   }
+
    uniedit_diffClear();
 
    /* Frees some memory. */
@@ -391,8 +403,13 @@ static void uniedit_save( unsigned int wid_unused, const char *unused )
    (void)wid_unused;
    (void)unused;
 
-   dsys_saveAll();
-   dpl_saveAll();
+   if ( uniedit_diffMode ) {
+      ddiff_save( uniedit_diff, "test.xml" );
+      uniedit_diffSaved = 1;
+   } else {
+      dsys_saveAll();
+      dpl_saveAll();
+   }
 }
 
 /*
@@ -2684,6 +2701,7 @@ static void uniedit_diffClear( void )
 
 void uniedit_diffAdd( UniHunk_t *hunk )
 {
+   uniedit_diffSaved = 0; /* Unsaved progress. */
    diff_start();
 
    /* Replace if already same type exists. */
