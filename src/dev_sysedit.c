@@ -2179,23 +2179,29 @@ static void sysedit_spobDesc( unsigned int wid, const char *unused )
  */
 static void sysedit_spobDescReturn( unsigned int wid, const char *unused )
 {
-   Spob       *p;
-   const char *mydesc, *mybardesc;
+   Spob       *p         = sysedit_sys->spobs[sysedit_select[0].u.spob];
+   const char *mydesc    = window_getInput( wid, "txtDescription" );
+   const char *mybardesc = window_getInput( wid, "txtBarDescription" );
 
-   p = sysedit_sys->spobs[sysedit_select[0].u.spob];
-
-   mydesc    = window_getInput( wid, "txtDescription" );
-   mybardesc = window_getInput( wid, "txtBarDescription" );
-
-   free( p->description );
-   free( p->bar_description );
-   p->description     = NULL;
-   p->bar_description = NULL;
-
-   if ( mydesc != NULL )
-      p->description = strdup( mydesc );
-   if ( mybardesc != NULL )
-      p->bar_description = strdup( mybardesc );
+   if ( ( mydesc != NULL ) && strcmp( mydesc, p->description ) != 0 ) {
+      if ( uniedit_diffMode ) {
+         sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_DESCRIPTION,
+                                    strdup( mydesc ) );
+      } else {
+         free( p->description );
+         p->description = strdup( mydesc );
+      }
+   }
+   if ( ( mybardesc != NULL ) &&
+        strcmp( mybardesc, p->bar_description ) != 0 ) {
+      if ( uniedit_diffMode ) {
+         sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_BAR,
+                                    strdup( mybardesc ) );
+      } else {
+         free( p->bar_description );
+         p->bar_description = strdup( mybardesc );
+      }
+   }
 
    window_close( wid, unused );
 }
@@ -2286,18 +2292,27 @@ static void sysedit_genServicesList( unsigned int wid )
 static void sysedit_btnAddService( unsigned int wid, const char *unused )
 {
    (void)unused;
-   const char *selected;
-   Spob       *p;
-
-   selected = toolkit_getList( wid, "lstServicesLacked" );
+   const char *selected = toolkit_getList( wid, "lstServicesLacked" );
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
+   Spob *p = sysedit_sys->spobs[sysedit_select[0].u.spob];
 
    /* Enable the service. All services imply landability. */
-   /* TODO add diff support. */
-   p = sysedit_sys->spobs[sysedit_select[0].u.spob];
-   p->services |=
-      spob_getService( selected ) | SPOB_SERVICE_INHABITED | SPOB_SERVICE_LAND;
+   if ( uniedit_diffMode ) {
+      if ( !spob_hasService( p, SPOB_SERVICE_LAND ) )
+         sysedit_diffCreateSpobStr(
+            p, HUNK_TYPE_SPOB_SERVICE_ADD,
+            strdup( spob_getServiceName( SPOB_SERVICE_LAND ) ) );
+      if ( !spob_hasService( p, SPOB_SERVICE_INHABITED ) )
+         sysedit_diffCreateSpobStr(
+            p, HUNK_TYPE_SPOB_SERVICE_ADD,
+            strdup( spob_getServiceName( SPOB_SERVICE_INHABITED ) ) );
+      sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_SERVICE_ADD,
+                                 strdup( selected ) );
+   } else {
+      p->services |= spob_getService( selected ) | SPOB_SERVICE_INHABITED |
+                     SPOB_SERVICE_LAND;
+   }
 
    /* Regenerate the list. */
    sysedit_genServicesList( wid );
@@ -2309,21 +2324,30 @@ static void sysedit_btnAddService( unsigned int wid, const char *unused )
 static void sysedit_btnRmService( unsigned int wid, const char *unused )
 {
    (void)unused;
-   const char *selected;
-   Spob       *p;
-
-   selected = toolkit_getList( wid, "lstServicesHave" );
+   const char *selected = toolkit_getList( wid, "lstServicesHave" );
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
+   Spob *p = sysedit_sys->spobs[sysedit_select[0].u.spob];
 
    /* Flip the bit. Safe enough, as it's always 1 to start with. */
-   /* TODO add diff support. */
-   p = sysedit_sys->spobs[sysedit_select[0].u.spob];
-   p->services ^= spob_getService( selected );
-
-   /* If landability was removed, the rest must go, too. */
-   if ( strcmp( selected, "Land" ) == 0 )
-      p->services = 0;
+   if ( uniedit_diffMode ) {
+      if ( strcmp( selected, "Land" ) == 0 ) {
+         /* Remove them all. */
+         for ( int i = 1; i < SPOB_SERVICES_MAX; i <<= 1 ) {
+            if ( !spob_hasService( p, i ) )
+               sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_SERVICE_ADD,
+                                          strdup( spob_getServiceName( i ) ) );
+         }
+      } else
+         sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_SERVICE_REMOVE,
+                                    strdup( selected ) );
+   } else {
+      /* If landability was removed, the rest must go, too. */
+      if ( strcmp( selected, "Land" ) == 0 )
+         p->services = 0;
+      else
+         p->services ^= spob_getService( selected );
+   }
 
    sysedit_genServicesList( wid );
 }
