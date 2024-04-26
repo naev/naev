@@ -2468,18 +2468,19 @@ static void sysedit_genTechList( unsigned int wid )
 static void sysedit_btnAddTech( unsigned int wid, const char *unused )
 {
    (void)unused;
-   const char *selected;
-   Spob       *p;
-
-   selected = toolkit_getList( wid, "lstTechsLacked" );
+   const char *selected = toolkit_getList( wid, "lstTechsLacked" );
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
+   Spob *p = sysedit_sys->spobs[sysedit_select[0].u.spob];
 
-   /* TODO add diff support. */
-   p = sysedit_sys->spobs[sysedit_select[0].u.spob];
-   if ( p->tech == NULL )
-      p->tech = tech_groupCreate();
-   tech_addItemTech( p->tech, selected );
+   if ( uniedit_diffMode ) {
+      sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_TECH_ADD,
+                                 strdup( selected ) );
+   } else {
+      if ( p->tech == NULL )
+         p->tech = tech_groupCreate();
+      tech_addItemTech( p->tech, selected );
+   }
 
    /* Regenerate the list. */
    sysedit_genTechList( wid );
@@ -2491,22 +2492,23 @@ static void sysedit_btnAddTech( unsigned int wid, const char *unused )
 static void sysedit_btnRmTech( unsigned int wid, const char *unused )
 {
    (void)unused;
-   const char *selected;
-   Spob       *p;
-   int         n;
-
-   selected = toolkit_getList( wid, "lstTechsHave" );
+   const char *selected = toolkit_getList( wid, "lstTechsHave" );
    if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
       return;
+   Spob *p = sysedit_sys->spobs[sysedit_select[0].u.spob];
 
-   /* TODO add diff support. */
-   p = sysedit_sys->spobs[sysedit_select[0].u.spob];
-   if ( tech_hasItem( p->tech, selected ) )
-      tech_rmItemTech( p->tech, selected );
-
-   n = tech_getItemCount( p->tech );
-   if ( !n )
-      p->tech = NULL;
+   if ( uniedit_diffMode ) {
+      if ( tech_hasItem( p->tech, selected ) )
+         sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_TECH_REMOVE,
+                                    strdup( selected ) );
+   } else {
+      int n;
+      if ( tech_hasItem( p->tech, selected ) )
+         tech_rmItemTech( p->tech, selected );
+      n = tech_getItemCount( p->tech );
+      if ( !n )
+         p->tech = NULL;
+   }
 
    /* Regenerate the list. */
    sysedit_genTechList( wid );
