@@ -2699,6 +2699,21 @@ static void uniedit_diffClear( void )
    uniedit_diff = 0;
 }
 
+static int uniedit_diff_cmp( const void *p1, const void *p2 )
+{
+   const UniHunk_t *h1  = p1;
+   const UniHunk_t *h2  = p2;
+   int              ret = h1->target.type - h2->target.type;
+   if ( ret )
+      return ret;
+   /* Should be same type. */
+   ret = strcmp( h1->target.u.name, h2->target.u.name );
+   if ( ret )
+      return ret;
+   return h1->type -
+          h2->type; /* Should not overlap with same target and type. */
+}
+
 void uniedit_diffAdd( UniHunk_t *hunk )
 {
    uniedit_diffSaved = 0; /* Unsaved progress. */
@@ -2728,6 +2743,10 @@ void uniedit_diffAdd( UniHunk_t *hunk )
    diff_end();
 
    array_push_back( &uniedit_diff, *hunk );
+
+   /* Sort, order shouldn't matter, but it will help save in a coherent way. */
+   qsort( uniedit_diff, array_size( uniedit_diff ), sizeof( UniHunk_t ),
+          uniedit_diff_cmp );
 }
 
 static void uniedit_diffSsysPos( StarSystem *s, double x, double y )
