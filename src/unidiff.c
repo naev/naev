@@ -130,6 +130,58 @@ static const char *hunk_name[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_FACTION_REALIGN]         = N_( "faction alignment reset" ),
    [HUNK_TYPE_SENTINAL]                = N_( "sentinal" ),
 };
+/*
+static const char *hunk_tag[HUNK_TYPE_SENTINAL] = {
+   [HUNK_TYPE_NONE]                    = "none",
+   [HUNK_TYPE_SPOB_ADD]                = "spob add",
+   [HUNK_TYPE_SPOB_REMOVE]             = "spob remove",
+   [HUNK_TYPE_VSPOB_ADD]               = "virtual spob add",
+   [HUNK_TYPE_VSPOB_REMOVE]            = "virtual spob remove",
+   [HUNK_TYPE_JUMP_ADD]                = "jump add",
+   [HUNK_TYPE_JUMP_REMOVE]             = "jump remove",
+   [HUNK_TYPE_TECH_ADD]                = "tech add",
+   [HUNK_TYPE_TECH_REMOVE]             = "tech remove",
+   [HUNK_TYPE_SSYS_BACKGROUND]         = "ssys background",
+   [HUNK_TYPE_SSYS_BACKGROUND_REVERT]  = "ssys background revert",
+   [HUNK_TYPE_SSYS_FEATURES]           = "ssys features",
+   [HUNK_TYPE_SSYS_FEATURES_REVERT]    = "ssys features revert",
+   [HUNK_TYPE_SSYS_POS_X]              = "ssys pos x",
+   [HUNK_TYPE_SSYS_POS_X_REVERT]       = "ssys pos x revert",
+   [HUNK_TYPE_SSYS_POS_Y]              = "ssys pos y",
+   [HUNK_TYPE_SSYS_POS_Y_REVERT]       = "ssys pos x revert",
+   [HUNK_TYPE_SPOB_FACTION]            = "spob faction",
+   [HUNK_TYPE_SPOB_FACTION_REMOVE]     = "spob faction removal",
+   [HUNK_TYPE_SPOB_POPULATION]         = "spob population",
+   [HUNK_TYPE_SPOB_POPULATION_REMOVE]  = "spob population removal",
+   [HUNK_TYPE_SPOB_DISPLAYNAME]        = "spob displayname",
+   [HUNK_TYPE_SPOB_DISPLAYNAME_REVERT] = "spob displayname revert",
+   [HUNK_TYPE_SPOB_DESCRIPTION]        = "spob description",
+   [HUNK_TYPE_SPOB_DESCRIPTION_REVERT] = "spob description revert",
+   [HUNK_TYPE_SPOB_BAR]                = "spob bar",
+   [HUNK_TYPE_SPOB_BAR_REVERT]         = "spob bar revert",
+   [HUNK_TYPE_SPOB_SPACE]              = "spob space",
+   [HUNK_TYPE_SPOB_SPACE_REVERT]       = "spob space revert",
+   [HUNK_TYPE_SPOB_EXTERIOR]           = "spob exterior",
+   [HUNK_TYPE_SPOB_EXTERIOR_REVERT]    = "spob exterior revert",
+   [HUNK_TYPE_SPOB_LUA]                = "spob lua",
+   [HUNK_TYPE_SPOB_LUA_REVERT]         = "spob lua revert",
+   [HUNK_TYPE_SPOB_SERVICE_ADD]        = "spob service add",
+   [HUNK_TYPE_SPOB_SERVICE_REMOVE]     = "spob service remove",
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD]    = "spob nomissionspawn add",
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] = "spob nomissionspawn remove",
+   [HUNK_TYPE_SPOB_TECH_ADD]           = "spob tech add",
+   [HUNK_TYPE_SPOB_TECH_REMOVE]        = "spob tech remove",
+   [HUNK_TYPE_SPOB_TAG_ADD]            = "spob tech add",
+   [HUNK_TYPE_SPOB_TAG_REMOVE]         = "spob tech remove",
+   [HUNK_TYPE_FACTION_VISIBLE]         = "faction visible",
+   [HUNK_TYPE_FACTION_INVISIBLE]       = "faction invisible",
+   [HUNK_TYPE_FACTION_ALLY]            = "faction set ally",
+   [HUNK_TYPE_FACTION_ENEMY]           = "faction set enemy",
+   [HUNK_TYPE_FACTION_NEUTRAL]         = "faction set neutral",
+   [HUNK_TYPE_FACTION_REALIGN]         = "faction alignment reset",
+   [HUNK_TYPE_SENTINAL]                = "sentinal",
+};
+*/
 static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_NONE]                    = HUNK_TYPE_SENTINAL,
    [HUNK_TYPE_SPOB_ADD]                = HUNK_TYPE_SPOB_REMOVE,
@@ -411,7 +463,6 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
 {
    UniHunk_t  base, hunk;
    xmlNodePtr cur;
-   char      *buf;
 
    /* Set the target. */
    memset( &base, 0, sizeof( UniHunk_t ) );
@@ -428,96 +479,13 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    cur = node->xmlChildrenNode;
    do {
       xml_onlyNodes( cur );
-      if ( xml_isNode( cur, "spob" ) ) {
-         buf = xml_get( cur );
-         if ( buf == NULL ) {
-            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
-            continue;
-         }
 
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-
-         /* Get the spob to modify. */
-         hunk.dtype = HUNK_DATA_STRING;
-         xmlr_attr_strd( cur, "name", hunk.u.name );
-
-         /* Get the type. */
-         if ( strcmp( buf, "add" ) == 0 )
-            hunk.type = HUNK_TYPE_SPOB_ADD;
-         else if ( strcmp( buf, "remove" ) == 0 )
-            hunk.type = HUNK_TYPE_SPOB_REMOVE;
-         else
-            WARN( _( "Unidiff '%s': Unknown hunk type '%s' for spob '%s'." ),
-                  diff->name, buf, hunk.u.name );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "spob_virtual" ) ) {
-         buf = xml_get( cur );
-         if ( buf == NULL ) {
-            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
-            continue;
-         }
-
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-
-         /* Get the spob to modify. */
-         hunk.dtype = HUNK_DATA_STRING;
-         xmlr_attr_strd( cur, "name", hunk.u.name );
-
-         /* Get the type. */
-         if ( strcmp( buf, "add" ) == 0 )
-            hunk.type = HUNK_TYPE_VSPOB_ADD;
-         else if ( strcmp( buf, "remove" ) == 0 )
-            hunk.type = HUNK_TYPE_VSPOB_REMOVE;
-         else
-            WARN( _( "Unidiff '%s': Unknown hunk type '%s' for virtual spob "
-                     "'%s'." ),
-                  diff->name, buf, hunk.u.name );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      } else if ( xml_isNode( cur, "jump" ) ) {
-         buf = xml_get( cur );
-         if ( buf == NULL ) {
-            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
-            continue;
-         }
-
-         hunk.target.type   = base.target.type;
-         hunk.target.u.name = strdup( base.target.u.name );
-
-         /* Get the jump point to modify. */
-         hunk.dtype = HUNK_DATA_STRING;
-         xmlr_attr_strd( cur, "target", hunk.u.name );
-
-         /* Get the type. */
-         if ( strcmp( buf, "add" ) == 0 )
-            hunk.type = HUNK_TYPE_JUMP_ADD;
-         else if ( strcmp( buf, "remove" ) == 0 )
-            hunk.type = HUNK_TYPE_JUMP_REMOVE;
-         else
-            WARN( _( "Unidiff '%s': Unknown hunk type '%s' for jump '%s'." ),
-                  diff->name, buf, hunk.u.name );
-
-         /* Apply diff. */
-         if ( diff_patchHunk( &hunk ) < 0 )
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      }
-
+      HUNK_STRD( "spob_add", HUNK_TYPE_SPOB_ADD );
+      HUNK_STRD( "spob_remove", HUNK_TYPE_SPOB_REMOVE );
+      HUNK_STRD( "spob_virtual_add", HUNK_TYPE_VSPOB_ADD );
+      HUNK_STRD( "spob_virtual_remove", HUNK_TYPE_VSPOB_REMOVE );
+      HUNK_STRD( "jump_add", HUNK_TYPE_JUMP_ADD );
+      HUNK_STRD( "jump_remove", HUNK_TYPE_JUMP_REMOVE );
       HUNK_STRD( "background", HUNK_TYPE_SSYS_BACKGROUND );
       HUNK_STRD( "features", HUNK_TYPE_SSYS_FEATURES );
       HUNK_FLOAT( "pos_x", HUNK_TYPE_SSYS_POS_X );
@@ -831,18 +799,18 @@ int diff_patchHunk( UniHunk_t *hunk )
       diff_universe_changed = 1;
       return system_rmSpob( system_get( hunk->target.u.name ), hunk->u.name );
 
-   /* Adding an spob. */
+   /* Adding a virtual spob. */
    case HUNK_TYPE_VSPOB_ADD:
       diff_universe_changed = 1;
       return system_addVirtualSpob( system_get( hunk->target.u.name ),
                                     hunk->u.name );
-   /* Removing an spob. */
+   /* Removing a virtual spob. */
    case HUNK_TYPE_VSPOB_REMOVE:
       diff_universe_changed = 1;
       return system_rmVirtualSpob( system_get( hunk->target.u.name ),
                                    hunk->u.name );
 
-   /* Adding a Jump. */
+   /* Adding a jump. */
    case HUNK_TYPE_JUMP_ADD:
       diff_universe_changed = 1;
       return system_addJump( system_get( hunk->target.u.name ), hunk->u.name );

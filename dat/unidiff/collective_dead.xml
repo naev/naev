@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="collective_dead">
  <system name="C-00">
-  <spob name="S00000">remove</spob>
-  <spob name="S23001">remove</spob>
-  <spob name="S49588">remove</spob>
+  <spob_remove>S00000</spob_remove>
+  <spob_remove>S23001</spob_remove>
+  <spob_remove>S49588</spob_remove>
  </system>
  <system name="C-14">
-  <spob name="S49281">remove</spob>
-  <spob name="S49335">remove</spob>
+  <spob_remove>S49281</spob_remove>
+  <spob_remove>S49335</spob_remove>
  </system>
  <system name="C-28">
-  <spob name="S00018">remove</spob>
-  <spob name="S00522">remove</spob>
-  <spob name="S00653">remove</spob>
-  <spob name="S38729">remove</spob>
+  <spob_remove>S00018</spob_remove>
+  <spob_remove>S00522</spob_remove>
+  <spob_remove>S00653</spob_remove>
+  <spob_remove>S38729</spob_remove>
  </system>
  <system name="C-59">
-  <spob name="S13024">remove</spob>
-  <spob name="S72288">remove</spob>
-  <spob name="S72839">remove</spob>
+  <spob_remove>S13024</spob_remove>
+  <spob_remove>S72288</spob_remove>
+  <spob_remove>S72839</spob_remove>
  </system>
  <system name="C-43">
-  <spob name="S23491">remove</spob>
-  <spob name="S58309">remove</spob>
-  <spob name="S91456">remove</spob>
+  <spob_remove>S23491</spob_remove>
+  <spob_remove>S58309</spob_remove>
+  <spob_remove>S91456</spob_remove>
  </system>
  <tech name="Heavy Weapons 1">
   <add>__Collective Outfits</add>

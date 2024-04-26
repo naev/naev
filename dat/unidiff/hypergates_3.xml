@@ -32,7 +32,7 @@
   <tag_add>active</tag_add>
  </spob>
  <system name="Haven">
-  <spob name="Hypergate Haven">add</spob>
+  <spob_add>Hypergate Haven</spob_add>
  </system>
  <tech name="Pirate Maps">
   <add>Map: Kretogg's Hypergate</add>
