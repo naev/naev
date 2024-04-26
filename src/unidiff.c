@@ -79,6 +79,8 @@ static const char *const hunk_name[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_SSYS_POS_X_REVERT]       = N_( "ssys pos x revert" ),
    [HUNK_TYPE_SSYS_POS_Y]              = N_( "ssys pos y" ),
    [HUNK_TYPE_SSYS_POS_Y_REVERT]       = N_( "ssys pos x revert" ),
+   [HUNK_TYPE_SSYS_DISPLAYNAME]        = N_( "ssys displayname" ),
+   [HUNK_TYPE_SSYS_DISPLAYNAME_REVERT] = N_( "ssys displayname revert" ),
    [HUNK_TYPE_SPOB_FACTION]            = N_( "spob faction" ),
    [HUNK_TYPE_SPOB_FACTION_REMOVE]     = N_( "spob faction removal" ),
    [HUNK_TYPE_SPOB_POPULATION]         = N_( "spob population" ),
@@ -123,6 +125,7 @@ static const char *const hunk_tag[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_FEATURES]           = "features",
    [HUNK_TYPE_SSYS_POS_X]              = "pos_x",
    [HUNK_TYPE_SSYS_POS_Y]              = "pos_y",
+   [HUNK_TYPE_SSYS_DISPLAYNAME]        = "displayname",
    [HUNK_TYPE_TECH_ADD]                = "item_add",
    [HUNK_TYPE_TECH_REMOVE]             = "item_remove",
    [HUNK_TYPE_SPOB_FACTION]            = "faction",
@@ -159,6 +162,7 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
    [HUNK_TYPE_SSYS_FEATURES]           = HUNK_TYPE_SSYS_FEATURES_REVERT,
    [HUNK_TYPE_SSYS_POS_X]              = HUNK_TYPE_SSYS_POS_X_REVERT,
    [HUNK_TYPE_SSYS_POS_Y]              = HUNK_TYPE_SSYS_POS_Y_REVERT,
+   [HUNK_TYPE_SSYS_DISPLAYNAME]        = HUNK_TYPE_SSYS_DISPLAYNAME_REVERT,
    [HUNK_TYPE_TECH_ADD]                = HUNK_TYPE_TECH_REMOVE,
    [HUNK_TYPE_TECH_REMOVE]             = HUNK_TYPE_TECH_ADD,
    [HUNK_TYPE_SPOB_FACTION]            = HUNK_TYPE_SPOB_FACTION_REMOVE,
@@ -475,6 +479,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
       HUNK_STRD( HUNK_TYPE_SSYS_FEATURES );
       HUNK_FLOAT( HUNK_TYPE_SSYS_POS_X );
       HUNK_FLOAT( HUNK_TYPE_SSYS_POS_Y );
+      HUNK_STRD( HUNK_TYPE_SSYS_DISPLAYNAME );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
             node->name );
@@ -736,82 +741,106 @@ int diff_revertHunk( UniHunk_t *hunk )
  */
 int diff_patchHunk( UniHunk_t *hunk )
 {
-   Spob       *p;
-   StarSystem *ssys;
+   Spob       *p    = NULL;
+   StarSystem *ssys = NULL;
    int         a, b;
+   int         f = -1;
+
+   /* Common loading target bit to simplify code below. */
+   switch ( hunk->target.type ) {
+   case HUNK_TARGET_SYSTEM:
+      ssys = system_get( hunk->target.u.name );
+      if ( ssys == NULL )
+         return -1;
+      break;
+   case HUNK_TARGET_SPOB:
+      p = spob_get( hunk->target.u.name );
+      if ( p == NULL )
+         return -1;
+      break;
+   case HUNK_TARGET_FACTION:
+      f = faction_get( hunk->target.u.name );
+      if ( f < 0 )
+         return -1;
+      break;
+   case HUNK_TARGET_NONE:
+   case HUNK_TARGET_TECH:
+      break;
+   }
 
    switch ( hunk->type ) {
-
    /* Adding an spob. */
    case HUNK_TYPE_SPOB_ADD:
-      spob_luaInit( spob_get( hunk->u.name ) );
+      p = spob_get( hunk->u.name );
+      if ( p == NULL )
+         return -1;
+      spob_luaInit( p );
       diff_universe_changed = 1;
-      return system_addSpob( system_get( hunk->target.u.name ), hunk->u.name );
+      return system_addSpob( ssys, hunk->u.name );
    /* Removing an spob. */
    case HUNK_TYPE_SPOB_REMOVE:
       diff_universe_changed = 1;
-      return system_rmSpob( system_get( hunk->target.u.name ), hunk->u.name );
+      return system_rmSpob( ssys, hunk->u.name );
 
    /* Adding a virtual spob. */
    case HUNK_TYPE_VSPOB_ADD:
       diff_universe_changed = 1;
-      return system_addVirtualSpob( system_get( hunk->target.u.name ),
-                                    hunk->u.name );
+      return system_addVirtualSpob( ssys, hunk->u.name );
    /* Removing a virtual spob. */
    case HUNK_TYPE_VSPOB_REMOVE:
       diff_universe_changed = 1;
-      return system_rmVirtualSpob( system_get( hunk->target.u.name ),
-                                   hunk->u.name );
+      return system_rmVirtualSpob( ssys, hunk->u.name );
 
    /* Adding a jump. */
    case HUNK_TYPE_JUMP_ADD:
       diff_universe_changed = 1;
-      return system_addJump( system_get( hunk->target.u.name ), hunk->u.name );
+      return system_addJump( ssys, hunk->u.name );
    /* Removing a jump. */
    case HUNK_TYPE_JUMP_REMOVE:
       diff_universe_changed = 1;
-      return system_rmJump( system_get( hunk->target.u.name ), hunk->u.name );
+      return system_rmJump( ssys, hunk->u.name );
 
    /* Changing system background. */
    case HUNK_TYPE_SSYS_BACKGROUND:
-      ssys             = system_get( hunk->target.u.name );
       hunk->o.name     = ssys->background;
       ssys->background = hunk->u.name;
       return 0;
    case HUNK_TYPE_SSYS_BACKGROUND_REVERT:
-      ssys             = system_get( hunk->target.u.name );
       ssys->background = (char *)hunk->o.name;
       return 0;
 
    /* Changing system features designation. */
    case HUNK_TYPE_SSYS_FEATURES:
-      ssys           = system_get( hunk->target.u.name );
       hunk->o.name   = ssys->features;
       ssys->features = hunk->u.name;
       return 0;
    case HUNK_TYPE_SSYS_FEATURES_REVERT:
-      ssys           = system_get( hunk->target.u.name );
       ssys->features = (char *)hunk->o.name;
       return 0;
 
    /* Position changes. */
    case HUNK_TYPE_SSYS_POS_X:
-      ssys          = system_get( hunk->target.u.name );
       hunk->o.fdata = ssys->pos.x;
       ssys->pos.x   = hunk->u.fdata;
       return 0;
    case HUNK_TYPE_SSYS_POS_X_REVERT:
-      ssys        = system_get( hunk->target.u.name );
       ssys->pos.x = hunk->o.fdata;
       return 0;
    case HUNK_TYPE_SSYS_POS_Y:
-      ssys          = system_get( hunk->target.u.name );
       hunk->o.fdata = ssys->pos.y;
       ssys->pos.y   = hunk->u.fdata;
       return 0;
    case HUNK_TYPE_SSYS_POS_Y_REVERT:
-      ssys        = system_get( hunk->target.u.name );
       ssys->pos.y = hunk->o.fdata;
+      return 0;
+
+   /* Displayname. */
+   case HUNK_TYPE_SSYS_DISPLAYNAME:
+      hunk->o.name  = ssys->display;
+      ssys->display = hunk->u.name;
+      return 0;
+   case HUNK_TYPE_SSYS_DISPLAYNAME_REVERT:
+      ssys->display = (char *)hunk->o.name;
       return 0;
 
    /* Adding a tech. */
@@ -823,9 +852,6 @@ int diff_patchHunk( UniHunk_t *hunk )
 
    /* Changing spob faction. */
    case HUNK_TYPE_SPOB_FACTION:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       if ( p->presence.faction < 0 )
          hunk->o.name = NULL;
       else
@@ -833,9 +859,6 @@ int diff_patchHunk( UniHunk_t *hunk )
       diff_universe_changed = 1;
       return spob_setFaction( p, faction_get( hunk->u.name ) );
    case HUNK_TYPE_SPOB_FACTION_REMOVE:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       diff_universe_changed = 1;
       if ( hunk->o.name == NULL )
          return spob_setFaction( p, -1 );
@@ -844,69 +867,42 @@ int diff_patchHunk( UniHunk_t *hunk )
 
    /* Changing spob population. */
    case HUNK_TYPE_SPOB_POPULATION:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       hunk->o.data  = p->population;
       p->population = hunk->u.data;
       return 0;
    case HUNK_TYPE_SPOB_POPULATION_REMOVE:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       p->population = hunk->o.data;
       return 0;
 
    /* Changing spob displayname. */
    case HUNK_TYPE_SPOB_DISPLAYNAME:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       hunk->o.name = p->display;
       p->display   = hunk->u.name;
       return 0;
    case HUNK_TYPE_SPOB_DISPLAYNAME_REVERT:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       p->display = (char *)hunk->o.name;
       return 0;
 
    /* Changing spob description. */
    case HUNK_TYPE_SPOB_DESCRIPTION:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       hunk->o.name   = p->description;
       p->description = hunk->u.name;
       return 0;
    case HUNK_TYPE_SPOB_DESCRIPTION_REVERT:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       p->description = (char *)hunk->o.name;
       return 0;
 
    /* Changing spob bar description. */
    case HUNK_TYPE_SPOB_BAR:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       hunk->o.name       = p->bar_description;
       p->bar_description = hunk->u.name;
       return 0;
    case HUNK_TYPE_SPOB_BAR_REVERT:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       p->bar_description = (char *)hunk->o.name;
       return 0;
 
    /* Modifying spob services. */
    case HUNK_TYPE_SPOB_SERVICE_ADD:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       a = spob_getService( hunk->u.name );
       if ( a < 0 )
          return -1;
@@ -916,9 +912,6 @@ int diff_patchHunk( UniHunk_t *hunk )
       diff_universe_changed = 1;
       return 0;
    case HUNK_TYPE_SPOB_SERVICE_REMOVE:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       a = spob_getService( hunk->u.name );
       if ( a < 0 )
          return -1;
@@ -930,17 +923,11 @@ int diff_patchHunk( UniHunk_t *hunk )
 
    /* Modifying mission spawn. */
    case HUNK_TYPE_SPOB_NOMISNSPAWN_ADD:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       if ( spob_isFlag( p, SPOB_NOMISNSPAWN ) )
          return -1;
       spob_setFlag( p, SPOB_NOMISNSPAWN );
       return 0;
    case HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       if ( !spob_isFlag( p, SPOB_NOMISNSPAWN ) )
          return -1;
       spob_rmFlag( p, SPOB_NOMISNSPAWN );
@@ -948,25 +935,16 @@ int diff_patchHunk( UniHunk_t *hunk )
 
    /* Modifying tech stuff. */
    case HUNK_TYPE_SPOB_TECH_ADD:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       if ( p->tech == NULL )
          p->tech = tech_groupCreate();
       tech_addItemTech( p->tech, hunk->u.name );
       return 0;
    case HUNK_TYPE_SPOB_TECH_REMOVE:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       tech_rmItemTech( p->tech, hunk->u.name );
       return 0;
 
    /* Modifying tag stuff. */
    case HUNK_TYPE_SPOB_TAG_ADD:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       if ( p->tech == NULL )
          p->tech = tech_groupCreate();
       if ( p->tags == NULL )
@@ -974,9 +952,6 @@ int diff_patchHunk( UniHunk_t *hunk )
       array_push_back( &p->tags, strdup( hunk->u.name ) );
       return 0;
    case HUNK_TYPE_SPOB_TAG_REMOVE:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       a = -1;
       for ( int i = 0; i < array_size( p->tags ); i++ ) {
          if ( strcmp( p->tags[i], hunk->u.name ) == 0 ) {
@@ -992,50 +967,32 @@ int diff_patchHunk( UniHunk_t *hunk )
 
    /* Changing spob space graphics. */
    case HUNK_TYPE_SPOB_SPACE:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       hunk->o.name          = p->gfx_spaceName;
       p->gfx_spaceName      = hunk->u.name;
       diff_universe_changed = 1;
       return 0;
    case HUNK_TYPE_SPOB_SPACE_REVERT:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       p->gfx_spaceName      = (char *)hunk->o.name;
       diff_universe_changed = 1;
       return 0;
 
    /* Changing spob exterior graphics. */
    case HUNK_TYPE_SPOB_EXTERIOR:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       hunk->o.name    = p->gfx_exterior;
       p->gfx_exterior = hunk->u.name;
       return 0;
    case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       p->gfx_exterior = (char *)hunk->o.name;
       return 0;
 
    /* Change Lua stuff. */
    case HUNK_TYPE_SPOB_LUA:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       hunk->o.name = p->lua_file;
       p->lua_file  = hunk->u.name;
       spob_luaInit( p );
       diff_universe_changed = 1;
       return 0;
    case HUNK_TYPE_SPOB_LUA_REVERT:
-      p = spob_get( hunk->target.u.name );
-      if ( p == NULL )
-         return -1;
       p->lua_file = (char *)hunk->o.name;
       spob_luaInit( p );
       diff_universe_changed = 1;
@@ -1043,13 +1000,13 @@ int diff_patchHunk( UniHunk_t *hunk )
 
    /* Making a faction visible. */
    case HUNK_TYPE_FACTION_VISIBLE:
-      return faction_setInvisible( faction_get( hunk->target.u.name ), 0 );
+      return faction_setInvisible( f, 0 );
    /* Making a faction invisible. */
    case HUNK_TYPE_FACTION_INVISIBLE:
-      return faction_setInvisible( faction_get( hunk->target.u.name ), 1 );
+      return faction_setInvisible( f, 1 );
    /* Making two factions allies. */
    case HUNK_TYPE_FACTION_ALLY:
-      a = faction_get( hunk->target.u.name );
+      a = f;
       b = faction_get( hunk->u.name );
       if ( areAllies( a, b ) )
          hunk->o.data = 'A';
@@ -1062,8 +1019,10 @@ int diff_patchHunk( UniHunk_t *hunk )
       return 0;
    /* Making two factions enemies. */
    case HUNK_TYPE_FACTION_ENEMY:
-      a = faction_get( hunk->target.u.name );
+      a = f;
       b = faction_get( hunk->u.name );
+      if ( b < 0 )
+         return -1;
       if ( areAllies( a, b ) )
          hunk->o.data = 'A';
       else if ( areEnemies( a, b ) )
@@ -1075,8 +1034,10 @@ int diff_patchHunk( UniHunk_t *hunk )
       return 0;
    /* Making two factions neutral (removing enemy/ally statuses). */
    case HUNK_TYPE_FACTION_NEUTRAL:
-      a = faction_get( hunk->target.u.name );
+      a = f;
       b = faction_get( hunk->u.name );
+      if ( b < 0 )
+         return -1;
       if ( areAllies( a, b ) )
          hunk->o.data = 'A';
       else if ( areEnemies( a, b ) )
@@ -1090,8 +1051,10 @@ int diff_patchHunk( UniHunk_t *hunk )
       return 0;
    /* Resetting the alignment state of two factions. */
    case HUNK_TYPE_FACTION_REALIGN:
-      a = faction_get( hunk->target.u.name );
+      a = f;
       b = faction_get( hunk->u.name );
+      if ( b < 0 )
+         return -1;
       if ( hunk->o.data == 'A' ) {
          faction_rmEnemy( a, b );
          faction_rmEnemy( b, a );
