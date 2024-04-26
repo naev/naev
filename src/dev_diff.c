@@ -35,6 +35,9 @@ int ddiff_save( UniHunk_t *diffs, const char *filename )
    xmlw_start( writer );
    xmlw_startElem( writer, "unidiff" );
 
+   /* Attributes. */
+   xmlw_attr( writer, "name", "test diff" );
+
    /* Write the bulk of the diff, we assume they are sorted by target. */
    for ( int i = 0; i < array_size( diffs ); i++ ) {
       const UniHunk_t *h   = &diffs[i];
@@ -66,6 +69,7 @@ int ddiff_save( UniHunk_t *diffs, const char *filename )
             xmlw_startElem( writer, "unknown" );
             break;
          }
+         xmlw_attr( writer, "name", "%s", h->target.u.name );
       }
 
       /* Write the diff contents. */

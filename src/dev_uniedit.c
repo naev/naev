@@ -2764,13 +2764,11 @@ static void uniedit_diffSsysPos( StarSystem *s, double x, double y )
    hunk.type          = HUNK_TYPE_SSYS_POS_X;
    hunk.dtype         = HUNK_DATA_FLOAT;
    hunk.u.fdata       = x;
-   hunk.o.fdata       = s->pos.x;
    uniedit_diffAdd( &hunk );
 
    hunk.target.u.name = strdup( s->name );
-   hunk.type          = HUNK_TYPE_SSYS_POS_X;
+   hunk.type          = HUNK_TYPE_SSYS_POS_Y;
    hunk.u.fdata       = y;
-   hunk.o.fdata       = s->pos.y;
    uniedit_diffAdd( &hunk );
 }
 
