@@ -27,7 +27,6 @@
 #endif /* __WIN32__ */
 /** @endcond */
 
-#include "naev.h"
 #include "nfile.h"
 
 #include "conf.h"
@@ -140,6 +139,10 @@ const char *nfile_configPath( void )
          path = ".";
       }
       snprintf( naev_configPath, sizeof( naev_configPath ), "%s/naev/", path );
+#elif SDL_VERSION_ATLEAST( 3, 0, 0 )
+      char *prefpath = SDL_GetPrefPath( "Naev DevTeam", "Naev" );
+      strncpy( naev_configPath, sizeof( naev_configPath ), prefpath );
+      SDL_free( prefpath );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -184,6 +187,10 @@ const char *nfile_cachePath( void )
          path = ".";
       }
       snprintf( naev_cachePath, sizeof( naev_cachePath ), "%s/naev/", path );
+#elif SDL_VERSION_ATLEAST( 3, 0, 0 )
+      char *prefpath = SDL_GetPrefPath( "Naev DevTeam", "Naev" );
+      strncpy( naev_cachePath, sizeof( naev_cachePath ), prefpath );
+      SDL_free( prefpath );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -198,6 +205,8 @@ static int mkpath( const char *path )
 #elif HAS_POSIX
 #define MKDIR mkdir( opath, mode )
 static int mkpath( const char *path, mode_t mode )
+#elif SDL_VERSION_ATLEAST( 3, 0, 0 )
+#define MKDIR SDL_CreateDirectory( opath )
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -276,6 +285,8 @@ int nfile_dirMakeExist( const char *path )
    if ( mkpath( path, S_IRWXU | S_IRWXG | S_IRWXO ) < 0 ) {
 #elif __WIN32__
    if ( mkpath( path ) < 0 ) {
+#elif SDL_VERSION_ATLEAST( 3, 0, 0 )
+   if ( SDL_CreateDirectory( path ) < 0 ) {
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
