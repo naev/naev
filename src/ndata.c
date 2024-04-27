@@ -34,8 +34,6 @@
 #include "nstring.h"
 #include "plugin.h"
 
-static char ndata_primarypath[STRMAX];
-
 /*
  * Prototypes.
  */
@@ -43,6 +41,28 @@ static void ndata_testVersion( void );
 static int  ndata_found( void );
 static int  ndata_enumerateCallback( void *data, const char *origdir,
                                      const char *fname );
+
+/**
+ * @brief Gets the primary path for where the data is.
+ */
+const char *ndata_primaryPath( void )
+{
+   static char *primarypath = NULL;
+   if ( primarypath == NULL ) {
+      char **search_path = PHYSFS_getSearchPath();
+      int    n           = 0;
+      for ( char **p = search_path; *p != NULL; p++ )
+         n++;
+      for ( int i = n - 1; i >= 0; i-- ) {
+         if ( nfile_dirExists( search_path[i] ) ) {
+            primarypath = strdup( search_path[i] );
+            break;
+         }
+      }
+      PHYSFS_freeList( search_path );
+   }
+   return primarypath;
+}
 
 /**
  * @brief Checks to see if the physfs search path is enough to find game data.
@@ -117,11 +137,8 @@ void ndata_setupReadDirs( void )
 {
    char buf[PATH_MAX];
 
-   if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) ) {
+   if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
       LOG( _( "Added datapath from conf.lua file: %s" ), conf.ndata );
-      if ( ndata_found() )
-         snprintf( buf, sizeof( buf ), "%s", conf.ndata );
-   }
 
 #if __MACOSX__
    if ( !ndata_found() && macos_isBundle() &&
@@ -129,8 +146,6 @@ void ndata_setupReadDirs( void )
         strncat( buf, "/dat", 4 ) ) {
       LOG( _( "Trying default datapath: %s" ), buf );
       PHYSFS_mount( buf, NULL, 1 );
-      if ( ndata_found() )
-         snprintf( ndata_primarypath, sizeof( ndata_primarypath ), "%s", buf );
    }
 #endif /* __MACOSX__ */
 
@@ -154,10 +169,6 @@ void ndata_setupReadDirs( void )
       LOG( _( "Trying default datapath: %s" ), buf );
       PHYSFS_mount( buf, NULL, 1 );
    }
-
-   /* Copy and save the primary path over. */
-   if ( ndata_found() )
-      snprintf( ndata_primarypath, sizeof( ndata_primarypath ), "%s", buf );
 
    PHYSFS_mount( PHYSFS_getWriteDir(), NULL, 0 );
 

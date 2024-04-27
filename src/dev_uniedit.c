@@ -2952,15 +2952,13 @@ static void uniedit_diff_load_callback( void              *userdata,
 static void uniedit_diff_load( unsigned int wid, const char *wgt )
 {
    (void)wgt;
-
    const SDL_DialogFileFilter filter[] = {
       { .name = _( "Diff XML file" ), .pattern = "xml" },
       { NULL, NULL },
    };
-
    /* Open dialogue to load the diff. */
    SDL_ShowOpenFileDialog( uniedit_diff_load_callback, &wid, gl_screen.window,
-                           filter, NULL, 0 );
+                           filter, ndata_primaryPath(), 0 );
 }
 
 static void uniedit_diff_remove( unsigned int wid, const char *unused )
