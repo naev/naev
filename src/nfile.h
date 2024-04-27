@@ -5,6 +5,7 @@
 
 /** @cond */
 #include <stdint.h>
+#include <stdlib.h>
 /** @endcond */
 
 #include "attributes.h"
