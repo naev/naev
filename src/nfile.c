@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 
 #include "SDL_stdinc.h"
+#include "nfd.h"
 
 #include <errno.h>
 #if HAS_POSIX
@@ -664,3 +665,80 @@ int _nfile_concatPaths( char buf[static 1], int maxLength,
 
    return bufPos - buf;
 }
+
+#if !SDL_VERSION_ATLEAST( 3, 0, 0 )
+void SDL_ShowOpenFileDialog( SDL_DialogFileCallback callback, void *userdata,
+                             SDL_Window                 *window,
+                             const SDL_DialogFileFilter *filters,
+                             const char *default_location, SDL_bool allow_many )
+{
+   (void)allow_many;
+   (void)window;
+   char *filelist[2] = { NULL, NULL };
+
+   int n;
+   for ( n = 0; filters[n].name != NULL; n++ )
+      ;
+
+   nfdfilteritem_t *fitem = calloc( n, sizeof( nfdfilteritem_t ) );
+   for ( int i = 0; i < n; i++ ) {
+      fitem[i].name = filters[i].name;
+      fitem[i].spec = filters[i].pattern;
+   }
+
+   NFD_Init();
+
+   nfdchar_t  *outPath;
+   nfdresult_t result = NFD_OpenDialog( &outPath, fitem, n, default_location );
+   switch ( result ) {
+   case NFD_OKAY:
+      filelist[0] = outPath;
+      callback( userdata, (const char **)filelist, 0 );
+      NFD_FreePath( outPath );
+      break;
+
+   case NFD_CANCEL:
+      callback( userdata, (const char **)filelist, 0 );
+      break;
+
+   default:
+      SDL_SetError( "%s", NFD_GetError() );
+      callback( userdata, NULL, -1 );
+      break;
+   }
+
+   NFD_Quit();
+}
+
+void SDL_ShowOpenFolderDialog( SDL_DialogFileCallback callback, void *userdata,
+                               SDL_Window *window, const char *default_location,
+                               SDL_bool allow_many )
+{
+   (void)allow_many;
+   (void)window;
+   char *filelist[2] = { NULL, NULL };
+
+   NFD_Init();
+
+   nfdchar_t  *outPath;
+   nfdresult_t result = NFD_PickFolder( &outPath, default_location );
+   switch ( result ) {
+   case NFD_OKAY:
+      filelist[0] = outPath;
+      callback( userdata, (const char **)filelist, 0 );
+      NFD_FreePath( outPath );
+      break;
+
+   case NFD_CANCEL:
+      callback( userdata, (const char **)filelist, 0 );
+      break;
+
+   default:
+      SDL_SetError( "%s", NFD_GetError() );
+      callback( userdata, NULL, -1 );
+      break;
+   }
+
+   NFD_Quit();
+}
+#endif /* ! SDL_VERSION_ATLEAST(3,0,0) */

@@ -104,6 +104,8 @@ int main (void) { return 0; }''')
    sdl = dependency('sdl2', version: '>=2.0.26', required: true)
    sdl_image = dependency('SDL2_image', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'], static: get_option('steamruntime'))
+   # TODO replace nfd with SDL3 native functions when possible
+   nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'] )
 
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
@@ -128,6 +130,7 @@ int main (void) { return 0; }''')
       pcre2,
       sdl,
       sdl_image,
+      nfd,
       dependency('libpng', required: true),
       dependency('libwebp', required: true, static: get_option('steamruntime')),
    ]
