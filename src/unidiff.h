@@ -149,6 +149,15 @@ typedef struct UniHunk_ {
    } o; /** Old data to possibly replace. */
 } UniHunk_t;
 
+/**
+ * @brief Universe diff filepath list.
+ */
+typedef struct UniDiffData_ {
+   char      *name;     /**< Name of the diff (read from XML). */
+   char      *filename; /**< Filename of the diff. */
+   UniHunk_t *hunks;    /**< Hunks available. */
+} UniDiffData_t;
+
 /* Global functions, manily for player stuff. */
 int  diff_init( void );
 void diff_exit( void );
@@ -157,11 +166,14 @@ NONNULL( 1 ) int diff_apply( const char *name );
 NONNULL( 1 ) void diff_remove( const char *name );
 void diff_clear( void );
 void unidiff_universeDefer( int enable );
+int  diff_parsePhysFS( UniDiffData_t *diff, char *filename );
+int  diff_parse( UniDiffData_t *diff, char *filename );
+void diff_freeData( UniDiffData_t *diff );
 
 /* Local functions for hunk management. */
 void        diff_start( void );
 int         diff_patchHunk( UniHunk_t *hunk );
-int         diff_revertHunk( UniHunk_t *hunk );
+int         diff_revertHunk( const UniHunk_t *hunk );
 void        diff_end( void );
 const char *diff_hunkName( UniHunkType_t t );
 const char *diff_hunkTag( UniHunkType_t t );

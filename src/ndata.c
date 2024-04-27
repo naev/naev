@@ -34,6 +34,8 @@
 #include "nstring.h"
 #include "plugin.h"
 
+static char ndata_primarypath[STRMAX];
+
 /*
  * Prototypes.
  */
@@ -115,8 +117,11 @@ void ndata_setupReadDirs( void )
 {
    char buf[PATH_MAX];
 
-   if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
+   if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) ) {
       LOG( _( "Added datapath from conf.lua file: %s" ), conf.ndata );
+      if ( ndata_found() )
+         snprintf( buf, sizeof( buf ), "%s", conf.ndata );
+   }
 
 #if __MACOSX__
    if ( !ndata_found() && macos_isBundle() &&
@@ -124,6 +129,8 @@ void ndata_setupReadDirs( void )
         strncat( buf, "/dat", 4 ) ) {
       LOG( _( "Trying default datapath: %s" ), buf );
       PHYSFS_mount( buf, NULL, 1 );
+      if ( ndata_found() )
+         snprintf( ndata_primarypath, sizeof( ndata_primarypath ), "%s", buf );
    }
 #endif /* __MACOSX__ */
 
@@ -147,6 +154,10 @@ void ndata_setupReadDirs( void )
       LOG( _( "Trying default datapath: %s" ), buf );
       PHYSFS_mount( buf, NULL, 1 );
    }
+
+   /* Copy and save the primary path over. */
+   if ( ndata_found() )
+      snprintf( ndata_primarypath, sizeof( ndata_primarypath ), "%s", buf );
 
    PHYSFS_mount( PHYSFS_getWriteDir(), NULL, 0 );
 

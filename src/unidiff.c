@@ -27,14 +27,6 @@
 #include "safelanes.h"
 #include "space.h"
 
-/**
- * @brief Universe diff filepath list.
- */
-typedef struct UniDiffData_ {
-   char      *name;     /**< Name of the diff (read from XML). */
-   char      *filename; /**< Filename of the diff. */
-   UniHunk_t *hunks;    /**< Hunks available. */
-} UniDiffData_t;
 static UniDiffData_t *diff_available = NULL; /**< Available diffs. */
 
 /**
@@ -276,6 +268,7 @@ static int diff_applyInternal( const char *name, int oneshot );
 NONNULL( 1 ) static UniDiff_t *diff_get( const char *name );
 static UniDiff_t *diff_newDiff( void );
 static int        diff_removeDiff( UniDiff_t *diff );
+static int        diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc );
 static int        diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node );
 static int        diff_parseTech( UniDiffData_t *diff, xmlNodePtr node );
 static int        diff_parseSpob( UniDiffData_t *diff, xmlNodePtr node );
@@ -283,7 +276,6 @@ static int        diff_parseFaction( UniDiffData_t *diff, xmlNodePtr node );
 static void       diff_hunkFailed( UniDiff_t *diff, const UniHunk_t *hunk );
 static void       diff_hunkSuccess( UniDiff_t *diff, const UniHunk_t *hunk );
 static void       diff_cleanup( UniDiff_t *diff );
-static int        diff_parse( UniDiffData_t *diff, char *filename );
 /* Misc. */
 static int diff_checkUpdateUniverse( void );
 /* Externed. */
@@ -343,7 +335,7 @@ int diff_init( void )
       UniDiffData_t diff;
 
       memset( &diff, 0, sizeof( diff ) );
-      if ( diff_parse( &diff, diff_files[i] ) == 0 )
+      if ( diff_parsePhysFS( &diff, diff_files[i] ) == 0 )
          array_push_back( &diff_available, diff );
       // xmlr_attr_strd( node, "name", diff.name );
    }
@@ -374,6 +366,15 @@ int diff_init( void )
    return 0;
 }
 
+void diff_freeData( UniDiffData_t *diff )
+{
+   for ( int j = 0; j < array_size( diff->hunks ); j++ )
+      diff_cleanupHunk( &diff->hunks[j] );
+   array_free( diff->hunks );
+   free( diff->name );
+   free( diff->filename );
+}
+
 /**
  * @brief Clean up after diffs.
  */
@@ -382,19 +383,34 @@ void diff_exit( void )
    diff_clear();
    for ( int i = 0; i < array_size( diff_available ); i++ ) {
       UniDiffData_t *d = &diff_available[i];
-      for ( int j = 0; j < array_size( d->hunks ); j++ )
-         diff_cleanupHunk( &d->hunks[j] );
-      array_free( d->hunks );
-      free( d->name );
-      free( d->filename );
+      diff_freeData( d );
    }
    array_free( diff_available );
    diff_available = NULL;
 }
 
-static int diff_parse( UniDiffData_t *diff, char *filename )
+int diff_parse( UniDiffData_t *diff, char *filename )
 {
-   xmlDocPtr  doc    = xml_parsePhysFS( filename );
+   xmlDocPtr doc = xmlParseFile( filename );
+   memset( diff, 0, sizeof( UniDiffData_t ) );
+   diff->filename = filename;
+   if ( doc == NULL )
+      return -1;
+   return diff_parseDoc( diff, doc );
+}
+
+int diff_parsePhysFS( UniDiffData_t *diff, char *filename )
+{
+   xmlDocPtr doc = xml_parsePhysFS( filename );
+   memset( diff, 0, sizeof( UniDiffData_t ) );
+   diff->filename = filename;
+   if ( doc == NULL )
+      return -1;
+   return diff_parseDoc( diff, doc );
+}
+
+static int diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc )
+{
    xmlNodePtr parent = doc->xmlChildrenNode;
    xmlNodePtr node;
    if ( strcmp( (char *)parent->name, "unidiff" ) ) {
@@ -402,10 +418,8 @@ static int diff_parse( UniDiffData_t *diff, char *filename )
       return -1;
    }
 
-   memset( diff, 0, sizeof( UniDiffData_t ) );
    xmlr_attr_strd( parent, "name", diff->name );
-   diff->filename = filename;
-   diff->hunks    = array_create( UniHunk_t );
+   diff->hunks = array_create( UniHunk_t );
 
    /* Start parsing. */
    node = parent->xmlChildrenNode;
@@ -809,7 +823,7 @@ static int diff_parseFaction( UniDiffData_t *diff, xmlNodePtr node )
  *    @param hunk Hunk to revert.
  *    @return 0 on success.
  */
-int diff_revertHunk( UniHunk_t *hunk )
+int diff_revertHunk( const UniHunk_t *hunk )
 {
    UniHunk_t rhunk = *hunk;
    rhunk.type      = hunk_reverse[hunk->type];

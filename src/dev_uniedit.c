@@ -25,6 +25,7 @@
 #include "map.h"
 #include "map_find.h"
 #include "ndata.h"
+#include "nfile.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "pause.h"
@@ -182,6 +183,7 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
 /* Diffs. */
 static void uniedit_diffEditor( unsigned int wid_unused, const char *unused );
 static void uniedit_diff_toggle( unsigned int wid, const char *wgt );
+static void uniedit_diff_load( unsigned int wid, const char *wgt );
 static void uniedit_diff_remove( unsigned int wid, const char *wgt );
 static void uniedit_diff_close( unsigned int wid, const char *unused );
 static void uniedit_diffSsysPos( StarSystem *s, double x, double y );
@@ -2875,11 +2877,13 @@ static void uniedit_diffEditor( unsigned int wid_unused, const char *unused )
    /* List current changes. */
    window_addText( wid, 20, y, w - 40, 20, 0, "txtSDiff", NULL, NULL,
                    _( "#nCurrent Diff Contents:" ) );
-   y -= 20;
+   /* y -= 20; */
    uniedit_diff_regenList( wid );
 
    /* More buttons. */
    window_addButton( wid, -20 - ( BUTTON_WIDTH + 20 ) * 1, 20, BUTTON_WIDTH,
+                     BUTTON_HEIGHT, "btnLoad", _( "Load" ), uniedit_diff_load );
+   window_addButton( wid, -20 - ( BUTTON_WIDTH + 20 ) * 2, 20, BUTTON_WIDTH,
                      BUTTON_HEIGHT, "btnRemove", _( "Remove" ),
                      uniedit_diff_remove );
 }
@@ -2903,6 +2907,60 @@ static void uniedit_diff_toggle( unsigned int wid, const char *wgt )
       /* Regen list. */
       uniedit_diff_regenList( wid );
    }
+}
+
+static void uniedit_diff_load_callback( void              *userdata,
+                                        const char *const *filelist,
+                                        int                filter )
+{
+   (void)filter;
+   int           wid = *(int *)userdata;
+   UniDiffData_t data;
+
+   if ( filelist == NULL ) {
+      WARN( _( "Error callind SDL_ShowOpenFileDialog: %s" ), SDL_GetError() );
+      return;
+   } else if ( filelist[0] == NULL ) {
+      /* Cancelled by user.  */
+      return;
+   }
+
+   /* TODO with SDL3 this can be called from another thread, so we have to make
+    * this more robust... */
+   uniedit_diffClear();
+   diff_parse( &data, strdup( filelist[0] ) );
+   uniedit_diff = data.hunks;
+   data.hunks   = NULL;
+   diff_freeData( &data );
+
+   /* We're now in diff mode! */
+   uniedit_diffMode = 1;
+   window_checkboxSet( wid, "chkDiffMode", 1 );
+
+   /* Apply the patches. */
+   diff_start();
+   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
+      UniHunk_t *hunk = &uniedit_diff[i];
+      diff_patchHunk( hunk );
+   }
+   diff_end();
+
+   /* Regen list .*/
+   uniedit_diff_regenList( wid );
+}
+
+static void uniedit_diff_load( unsigned int wid, const char *wgt )
+{
+   (void)wgt;
+
+   const SDL_DialogFileFilter filter[] = {
+      { .name = _( "Diff XML file" ), .pattern = "xml" },
+      { NULL, NULL },
+   };
+
+   /* Open dialogue to load the diff. */
+   SDL_ShowOpenFileDialog( uniedit_diff_load_callback, &wid, gl_screen.window,
+                           filter, NULL, 0 );
 }
 
 static void uniedit_diff_remove( unsigned int wid, const char *unused )
