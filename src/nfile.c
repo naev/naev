@@ -15,7 +15,6 @@
 #include <sys/stat.h>
 
 #include "SDL_stdinc.h"
-#include "nfd.h"
 
 #include <errno.h>
 #if HAS_POSIX
@@ -667,6 +666,7 @@ int _nfile_concatPaths( char buf[static 1], int maxLength,
 }
 
 #if !SDL_VERSION_ATLEAST( 3, 0, 0 )
+#include "nfd.h"
 void SDL_ShowOpenFileDialog( SDL_DialogFileCallback callback, void *userdata,
                              SDL_Window                 *window,
                              const SDL_DialogFileFilter *filters,
