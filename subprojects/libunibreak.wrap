@@ -1,6 +1,13 @@
-[wrap-git]
-url = https://github.com/adah1972/libunibreak.git
-revision = libunibreak_6_0
-depth = 1
+[wrap-file]
+directory = libunibreak-6.1
+source_url = https://github.com/adah1972/libunibreak/releases/download/libunibreak_6_1/libunibreak-6.1.tar.gz
+source_filename = libunibreak-6.1.tar.gz
+source_hash = cc4de0099cf7ff05005ceabff4afed4c582a736abc38033e70fdac86335ce93f
+patch_filename = libunibreak_6.1-1_patch.zip
+patch_url = https://wrapdb.mesonbuild.com/v2/libunibreak_6.1-1/get_patch
+patch_hash = 830688953398bcb5ca8d88e619b0babbb31de95b31f47234adb0245bce95cf14
+source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/libunibreak_6.1-1/libunibreak-6.1.tar.gz
+wrapdb_version = 6.1-1
 
-patch_directory = libunibreak
+[provide]
+dependency_names = libunibreak

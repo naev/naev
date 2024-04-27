@@ -1,6 +1,16 @@
-[wrap-git]
-url = https://github.com/PhilipHazel/pcre2.git
-revision = pcre2-10.42
-depth = 1
+[wrap-file]
+directory = pcre2-10.43
+source_url = https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.43/pcre2-10.43.tar.bz2
+source_filename = pcre2-10.43.tar.bz2
+source_hash = e2a53984ff0b07dfdb5ae4486bbb9b21cca8e7df2434096cc9bf1b728c350bcb
+patch_filename = pcre2_10.43-1_patch.zip
+patch_url = https://wrapdb.mesonbuild.com/v2/pcre2_10.43-1/get_patch
+patch_hash = bb6dbb9495e6694e9dead5e5ae062479d78b1741b61acb0eccd21278de39fb4e
+source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/pcre2_10.43-1/pcre2-10.43.tar.bz2
+wrapdb_version = 10.43-1
 
-patch_directory = pcre2
+[provide]
+libpcre2-8 = libpcre2_8
+libpcre2-16 = libpcre2_16
+libpcre2-32 = libpcre2_32
+libpcre2-posix = libpcre2_posix
