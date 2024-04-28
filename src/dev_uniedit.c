@@ -1709,7 +1709,7 @@ static void uniedit_deselect( void )
    window_disableButton( uniedit_wid, "btnJump" );
    window_disableButton( uniedit_wid, "btnEdit" );
    window_disableButton( uniedit_wid, "btnOpen" );
-   window_modifyText( uniedit_wid, "txtSelected", _( "No selection" ) );
+   window_modifyText( uniedit_wid, "txtSelected", _( "#nNo selection" ) );
    window_modifyText( uniedit_wid, "txtNebula", _( "N/A" ) );
    window_modifyText( uniedit_wid, "txtPresence", _( "N/A" ) );
 }
