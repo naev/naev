@@ -1358,8 +1358,10 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
             dmg->type = 0;
             WARN( _( "Unknown damage type '%s'" ), buf );
          }
-      } else
-         WARN( _( "Damage has unknown node '%s'" ), cur->name );
+         continue;
+      }
+      // cppcheck-suppress nullPointerRedundantCheck
+      WARN( _( "Damage has unknown node '%s'" ), cur->name );
 
    } while ( xml_nextNode( cur ) );
 
@@ -2439,7 +2441,8 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
                   &mass_opts );
    SDESC_ADD( l, temp, _( "\n  Holds %d ships" ), temp->u.bay.amount );
    l = os_printD( temp->summary_raw, l, temp->u.bay.delay, &shots_delay_opts );
-   l = os_printD( temp->summary_raw, l, temp->u.bay.reload_time, &reload_opts );
+   /*l =*/os_printD( temp->summary_raw, l, temp->u.bay.reload_time,
+                     &reload_opts );
 
 #define MELEMENT( o, s )                                                       \
    if ( o )                                                                    \
@@ -2574,6 +2577,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
       xml_onlyNodes( node );
       xmlr_float( node, "spob_detect", temp->u.lmap.spob_detect );
       xmlr_float( node, "jump_detect", temp->u.lmap.jump_detect );
+      // cppcheck-suppress nullPointerRedundantCheck
       WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
 
@@ -2833,6 +2837,7 @@ static int outfit_parse( Outfit *temp, const char *file )
                         temp->name );
                continue;
             }
+            // cppcheck-suppress nullPointerRedundantCheck
             WARN( _( "Outfit '%s' has unknown general node '%s'" ), temp->name,
                   cur->name );
          } while ( xml_nextNode( cur ) );
@@ -2941,6 +2946,7 @@ static int outfit_parse( Outfit *temp, const char *file )
 
          continue;
       }
+      // cppcheck-suppress nullPointerRedundantCheck
       WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
 
@@ -3145,7 +3151,7 @@ int outfit_load( void )
             l = os_printD( o->summary_raw, l, o->u.mod.cooldown,
                            &cooldown_opts );
          l = os_printD( o->summary_raw, l, o->cpu, &cpu_opts );
-         l = os_printD( o->summary_raw, l, o->mass, &mass_opts );
+         /*l =*/os_printD( o->summary_raw, l, o->mass, &mass_opts );
       }
    }
 
@@ -3162,17 +3168,13 @@ int outfit_load( void )
             l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown,
                            &cooldown_opts );
          l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
-         l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+         /*l =*/os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
       }
       /* We add the ship stats to the description here. */
       if ( o->summary_raw != NULL ) {
          int l = strlen( o->summary_raw );
-         l += ss_statsListDesc( o->stats, &o->summary_raw[l],
-                                OUTFIT_SHORTDESC_MAX - l, 1 );
-         /* Add extra description task if available. */
-         // if (o->desc_extra != NULL)
-         //    snprintf( &o->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, "\n%s",
-         //    _(o->desc_extra) );
+         /*l +=*/ss_statsListDesc( o->stats, &o->summary_raw[l],
+                                   OUTFIT_SHORTDESC_MAX - l, 1 );
       }
    }
 
