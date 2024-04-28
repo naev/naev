@@ -17,6 +17,7 @@
 #include "SDL_stdinc.h"
 
 #include <errno.h>
+#include <libgen.h> /* dirname / basename */
 #if HAS_POSIX
 #include <libgen.h>
 #include <sys/types.h>
