@@ -131,6 +131,7 @@ static void uniedit_findShowResults( unsigned int wid, map_find_t *found,
 static void uniedit_centerSystem( unsigned int wid, const char *unused );
 static int  uniedit_sortCompare( const void *p1, const void *p2 );
 /* Options. */;
+static void uniedit_options_setpath( unsigned int wid, const char *unused );
 static void uniedit_options_close( unsigned int wid, const char *unused );
 /* System editing. */
 static void uniedit_editSys( void );
@@ -423,6 +424,8 @@ void uniedit_options( unsigned int wid_unused, const char *unused )
    (void)unused;
    const int    w = 300;
    const int    h = 300;
+   int          y;
+   char         buf[STRMAX_SHORT];
    unsigned int wid =
       window_create( "wdwEditorOptions", _( "Editor Options" ), -1, -1, w, h );
    window_onClose( wid, uniedit_options_close );
@@ -431,10 +434,48 @@ void uniedit_options( unsigned int wid_unused, const char *unused )
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
                      _( "Close" ), window_close );
 
+   y = -40;
+   snprintf( buf, sizeof( buf ), "#nData Path:#0 %s", conf.dev_data_dir );
+   window_addText( wid, 20, y, w - 40, 20, 0, "txtDataPath", NULL, NULL, buf );
+   y -= 20;
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnSetPath",
+                     _( "Set Path" ), uniedit_options_setpath );
+
    /* Autosave toggle. */
-   window_addCheckbox( wid, 20, -30, w - 40, 20, "chkEditAutoSave",
+   y -= 40;
+   window_addCheckbox( wid, 20, y, w - 40, 20, "chkEditAutoSave",
                        _( "Automatically save changes" ), NULL,
                        conf.devautosave );
+}
+
+static void uniedit_options_setpath_callback( void              *userdata,
+                                              const char *const *filelist,
+                                              int                filter )
+{
+   (void)filter;
+   unsigned int wid = *(unsigned int *)userdata;
+   char         buf[STRMAX_SHORT];
+
+   if ( filelist == NULL ) {
+      WARN( _( "Error callind SDL_ShowOpenFileDialog: %s" ), SDL_GetError() );
+      return;
+   } else if ( filelist[0] == NULL ) {
+      /* Cancelled by user.  */
+      return;
+   }
+
+   /* Update. */
+   free( conf.dev_data_dir );
+   conf.dev_data_dir = strdup( filelist[0] );
+
+   snprintf( buf, sizeof( buf ), "#nData Path:#0 %s", conf.dev_data_dir );
+   window_modifyText( wid, "txtDataPath", buf );
+}
+static void uniedit_options_setpath( unsigned int wid, const char *unused )
+{
+   (void)unused;
+   SDL_ShowOpenFolderDialog( uniedit_options_setpath_callback, &wid,
+                             gl_screen.window, conf.dev_data_dir, 0 );
 }
 
 static void uniedit_options_close( unsigned int wid, const char *unused )
@@ -2916,7 +2957,7 @@ static void uniedit_diff_load_callback( void              *userdata,
                                         int                filter )
 {
    (void)filter;
-   int           wid = *(int *)userdata;
+   unsigned int  wid = *(unsigned int *)userdata;
    UniDiffData_t data;
 
    if ( filelist == NULL ) {
@@ -2960,7 +3001,7 @@ static void uniedit_diff_load( unsigned int wid, const char *wgt )
    };
    /* Open dialogue to load the diff. */
    SDL_ShowOpenFileDialog( uniedit_diff_load_callback, &wid, gl_screen.window,
-                           filter, ndata_primaryPath(), 0 );
+                           filter, conf.dev_data_dir, 0 );
 }
 
 static void uniedit_diff_remove( unsigned int wid, const char *unused )
