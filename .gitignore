@@ -3,6 +3,7 @@
 *.a
 *.pyc
 .hgignore
+appImageBuild/
 build/*
 bintray.json
 stderr.txt
