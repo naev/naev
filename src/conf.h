@@ -83,9 +83,8 @@
 #define MUSIC_VOLUME_DEFAULT 0.8  /**< Default music volume. */
 #define ENGINE_VOLUME_DEFAULT 0.8 /**< Default engine volume. */
 /* Editor Options */
-#define DEV_SAVE_SYSTEM_DEFAULT "../dat/ssys/"
-#define DEV_SAVE_SPOB_DEFAULT "../dat/spob/"
-#define DEV_SAVE_MAP_DEFAULT "../dat/outfits/maps/"
+#define DEV_DATA_DIR_DEFAULT                                                   \
+   "../dat/" /* Default data directory, will try to save things there. */
 
 /**
  * @brief Struct containing player options.
@@ -206,9 +205,7 @@ typedef struct PlayerConf_s {
    int fpu_except; /**< Enable FPU exceptions? */
 
    /* Editor. */
-   char *dev_save_sys;  /**< Path to save systems to. */
-   char *dev_save_map;  /**< Path to save maps to. */
-   char *dev_save_spob; /**< Path to save spobs to. */
+   char *dev_data_dir; /**< Path where most data should be. */
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */
 

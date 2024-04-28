@@ -616,11 +616,13 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
          /* Rename. */
          filtered = uniedit_nameFilter( p->name );
-         SDL_asprintf( &oldName, "%s/%s.xml", conf.dev_save_spob, filtered );
+         SDL_asprintf( &oldName, "%s/spob/%s.xml", conf.dev_data_dir,
+                       filtered );
          free( filtered );
 
          filtered = uniedit_nameFilter( name );
-         SDL_asprintf( &newName, "%s/%s.xml", conf.dev_save_spob, filtered );
+         SDL_asprintf( &newName, "%s/spob/%s.xml", conf.dev_data_dir,
+                       filtered );
          free( filtered );
 
          if ( rename( oldName, newName ) )
@@ -680,11 +682,12 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
       if ( dialogue_YesNo( _( "Remove selected objects (excluding jumps)?" ),
                            _( "This can not be undone." ) ) ) {
          for ( int i = 0; i < sysedit_nselect; i++ ) {
-            Select_t *sel = &sysedit_select[i];
+            const Select_t *sel = &sysedit_select[i];
             if ( sel->type == SELECT_SPOB ) {
                const Spob *sp       = sysedit_sys->spobs[sel->u.spob];
                char       *filtered = uniedit_nameFilter( sp->name );
-               SDL_asprintf( &file, "%s/%s.xml", conf.dev_save_spob, filtered );
+               SDL_asprintf( &file, "%s/spob/%s.xml", conf.dev_data_dir,
+                             filtered );
                remove( file );
 
                free( filtered );

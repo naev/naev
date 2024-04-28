@@ -172,9 +172,7 @@ void conf_setDefaults( void )
    conf.fpu_except = 0; /* Causes many issues. */
 
    /* Editor. */
-   conf.dev_save_sys  = strdup( DEV_SAVE_SYSTEM_DEFAULT );
-   conf.dev_save_map  = strdup( DEV_SAVE_MAP_DEFAULT );
-   conf.dev_save_spob = strdup( DEV_SAVE_SPOB_DEFAULT );
+   conf.dev_data_dir = strdup( DEV_DATA_DIR_DEFAULT );
 }
 
 /**
@@ -443,9 +441,7 @@ int conf_loadConfig( const char *file )
       conf_loadBool( lEnv, "fpu_except", conf.fpu_except );
 
       /* Editor. */
-      conf_loadString( lEnv, "dev_save_sys", conf.dev_save_sys );
-      conf_loadString( lEnv, "dev_save_map", conf.dev_save_map );
-      conf_loadString( lEnv, "dev_save_spob", conf.dev_save_spob );
+      conf_loadString( lEnv, "dev_data_dir", conf.dev_data_dir );
 
       /*
        * Keybindings.
@@ -1194,10 +1190,8 @@ int conf_saveConfig( const char *file )
    conf_saveEmptyLine();
 
    /* Editor. */
-   conf_saveComment( _( "Paths for saving different files from the editor" ) );
-   conf_saveString( "dev_save_sys", conf.dev_save_sys );
-   conf_saveString( "dev_save_map", conf.dev_save_map );
-   conf_saveString( "dev_save_spob", conf.dev_save_spob );
+   conf_saveComment( _( "Path where the main data is stored at" ) );
+   conf_saveString( "dev_data_dir", conf.dev_data_dir );
    conf_saveEmptyLine();
 
    /*
@@ -1340,9 +1334,7 @@ void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src )
    STRDUP( language );
    STRDUP( joystick_nam );
    STRDUP( lastversion );
-   STRDUP( dev_save_sys );
-   STRDUP( dev_save_map );
-   STRDUP( dev_save_spob );
+   STRDUP( dev_data_dir );
    if ( src->difficulty != NULL )
       STRDUP( difficulty );
 #undef STRDUP
@@ -1358,9 +1350,7 @@ void conf_free( PlayerConf_t *config )
    free( config->language );
    free( config->joystick_nam );
    free( config->lastversion );
-   free( config->dev_save_sys );
-   free( config->dev_save_map );
-   free( config->dev_save_spob );
+   free( config->dev_data_dir );
    free( config->difficulty );
 
    /* Clear memory. */

@@ -574,9 +574,7 @@ static int naevL_conf( lua_State *L )
    PUSH_STRING( L, "last_version", conf.lastversion );
    PUSH_BOOL( L, "translation_warning_seen", conf.translation_warning_seen );
    PUSH_BOOL( L, "fpu_except", conf.fpu_except );
-   PUSH_STRING( L, "dev_save_sys", conf.dev_save_sys );
-   PUSH_STRING( L, "dev_save_map", conf.dev_save_map );
-   PUSH_STRING( L, "dev_save_spob", conf.dev_save_spob );
+   PUSH_STRING( L, "dev_data_dir", conf.dev_data_dir );
    return 1;
 }
 #undef PUSH_STRING

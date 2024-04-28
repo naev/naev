@@ -153,7 +153,7 @@ int dpl_saveSpob( const Spob *p )
 
    /* Write data. */
    cleanName = uniedit_nameFilter( p->name );
-   SDL_asprintf( &file, "%s/%s.xml", conf.dev_save_spob, cleanName );
+   SDL_asprintf( &file, "%s/spob/%s.xml", conf.dev_data_dir, cleanName );
    if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 ) {
       WARN( "Failed to write '%s'!", file );
       ret = -1;

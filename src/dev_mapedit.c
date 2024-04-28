@@ -1168,7 +1168,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t *ns )
    xmlFreeTextWriter( writer );
 
    /* Actually write data */
-   SDL_asprintf( &file, "%s/%s", conf.dev_save_map, ns->fileName );
+   SDL_asprintf( &file, "%s/outfits/maps/%s", conf.dev_data_dir, ns->fileName );
    if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 )
       WARN( _( "Failed writing '%s'!" ), file );
    free( file );

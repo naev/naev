@@ -1525,11 +1525,13 @@ static void uniedit_renameSys( void )
 
          /* Change the name. */
          filtered = uniedit_nameFilter( sys->name );
-         SDL_asprintf( &oldName, "%s/%s.xml", conf.dev_save_sys, filtered );
+         SDL_asprintf( &oldName, "%s/ssys/%s.xml", conf.dev_data_dir,
+                       filtered );
          free( filtered );
 
          filtered = uniedit_nameFilter( name );
-         SDL_asprintf( &newName, "%s/%s.xml", conf.dev_save_sys, filtered );
+         SDL_asprintf( &newName, "%s/ssys/%s.xml", conf.dev_data_dir,
+                       filtered );
          free( filtered );
 
          if ( rename( oldName, newName ) )
