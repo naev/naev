@@ -425,7 +425,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/naev/naev-linux-latest:latest"
+      image: "ghcr.io/naev/naev-steamruntime:latest"
 
     steps:
       - name: Get Source
