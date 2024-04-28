@@ -325,8 +325,16 @@ static int gl_createWindow( unsigned int flags )
       SDL_CreateWindow( APPNAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                         MAX( RESOLUTION_W_MIN, conf.width ),
                         MAX( RESOLUTION_H_MIN, conf.height ), flags );
-   if ( gl_screen.window == NULL )
-      ERR( _( "Unable to create window! %s" ), SDL_GetError() );
+   if ( gl_screen.window == NULL ) {
+      char buf[STRMAX];
+      snprintf( buf, sizeof( buf ), _( "Unable to create window! %s" ),
+                SDL_GetError() );
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
+                                _( "Naev Critical Error" ), buf, NULL );
+#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
+      ERR( "%s", buf );
+   }
 
    /* We want to enforce minimum window size or a ton of things break. */
    SDL_SetWindowMinimumSize( gl_screen.window, RESOLUTION_W_MIN,
@@ -343,8 +351,16 @@ static int gl_createWindow( unsigned int flags )
       if ( gl_screen.context != NULL )
          break;
    }
-   if ( !gl_screen.context )
-      ERR( _( "Unable to create OpenGL context! %s" ), SDL_GetError() );
+   if ( !gl_screen.context ) {
+      char buf[STRMAX];
+      snprintf( buf, sizeof( buf ), _( "Unable to create OpenGL context! %s" ),
+                SDL_GetError() );
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
+                                _( "Naev Critical Error" ), buf, NULL );
+#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
+      ERR( "%s", buf );
+   }
 
    /* Save and store version. */
    SDL_GL_GetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, &gl_screen.major );
@@ -522,8 +538,15 @@ int gl_init( void )
    gl_setupFullscreen();
 
    /* Load extensions. */
-   if ( !gladLoadGLLoader( SDL_GL_GetProcAddress ) )
-      ERR( "Unable to load OpenGL using GLAD" );
+   if ( !gladLoadGLLoader( SDL_GL_GetProcAddress ) ) {
+      char buf[STRMAX];
+      snprintf( buf, sizeof( buf ), _( "Unable to load OpenGL using GLAD!" ) );
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
+                                _( "Naev Critical Error" ), buf, NULL );
+#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
+      ERR( "%s", buf );
+   }
 
    /* We are interested in 3.1 because it drops all the deprecated stuff. */
    if ( !GLAD_GL_VERSION_3_2 )
