@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="Chapter 0">
+ <system name="Alteris">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Amatiri">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Chraan">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Euler">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Halo">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Jommel">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Limbo">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Massia">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Pellmell">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Tarmak">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Zacron">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
  <spob name="Efferey">
   <presence_base>100.000000</presence_base>
   <presence_bonus>25.000000</presence_bonus>
