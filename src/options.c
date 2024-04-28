@@ -1910,7 +1910,7 @@ static void opt_plugins( unsigned int wid )
    /* Get dimensions. */
    bw = BUTTON_WIDTH;
    window_dimWindow( wid, &w, &h );
-   lw = w - bw - 100;
+   lw = w - 40 - 2 * ( bw + 20 );
 
    /* Text stuff. */
    snprintf( buf, sizeof( buf ), "#n%s#0%s%s", _( "Plugins Directory: " ),
@@ -1930,7 +1930,9 @@ static void opt_plugins( unsigned int wid )
       (BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT, "btnDisable", _( "Disable
       Plugin" ), opt_setKey );
       */
-   window_addButton( wid, -20, 20 + 1 * ( BUTTON_HEIGHT + 20 ), BUTTON_WIDTH,
+   // window_addButton( wid, -20 - 1 * ( BUTTON_WIDTH + 20 ), 20 + 1 * (
+   // BUTTON_HEIGHT + 20 ), BUTTON_WIDTH,
+   window_addButton( wid, -20 - 1 * ( BUTTON_WIDTH + 20 ), 20, BUTTON_WIDTH,
                      BUTTON_HEIGHT, "btnPluginAdd", _( "Add Plugin" ),
                      opt_plugins_add );
 }
@@ -1944,7 +1946,7 @@ static void opt_plugins_regenList( unsigned int wid )
    /* Get dimensions. */
    bw = BUTTON_WIDTH;
    window_dimWindow( wid, &w, &h );
-   lw = w - bw - 100;
+   lw = w - 40 - 2 * ( bw + 20 );
    lh = h - 90;
 
    p = 0;
