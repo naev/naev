@@ -398,6 +398,25 @@ static void uniedit_close( unsigned int wid, const char *wgt )
    window_close( wid, wgt );
 }
 
+static void uniedit_save_callback( void *userdata, const char *const *filelist,
+                                   int filter )
+{
+   (void)userdata;
+   (void)filter;
+
+   if ( filelist == NULL ) {
+      WARN( _( "Error calling %s: %s" ), "SDL_ShowSaveFileDialog",
+            SDL_GetError() );
+      return;
+   } else if ( filelist[0] == NULL ) {
+      /* Cancelled by user.  */
+      return;
+   }
+
+   /* Actually save it. */
+   ddiff_save( uniedit_diff, filelist[0] );
+   uniedit_diffSaved = 1;
+}
 /*
  * @brief Saves the systems.
  */
@@ -407,8 +426,15 @@ static void uniedit_save( unsigned int wid_unused, const char *unused )
    (void)unused;
 
    if ( uniedit_diffMode ) {
-      ddiff_save( uniedit_diff, "test.xml" );
-      uniedit_diffSaved = 1;
+      const SDL_DialogFileFilter filter[] = {
+         { .name = _( "Diff XML file" ), .pattern = "xml" },
+         { NULL, NULL },
+      };
+      char buf[PATH_MAX];
+      snprintf( buf, sizeof( buf ), "%s/unidiff/newunidiff.xml",
+                conf.dev_data_dir );
+      SDL_ShowSaveFileDialog( uniedit_save_callback, NULL, gl_screen.window,
+                              filter, buf );
    } else {
       dsys_saveAll();
       dpl_saveAll();
@@ -457,7 +483,8 @@ static void uniedit_options_setpath_callback( void              *userdata,
    char         buf[STRMAX_SHORT];
 
    if ( filelist == NULL ) {
-      WARN( _( "Error callind SDL_ShowOpenFileDialog: %s" ), SDL_GetError() );
+      WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFolderDialog",
+            SDL_GetError() );
       return;
    } else if ( filelist[0] == NULL ) {
       /* Cancelled by user.  */
@@ -2961,7 +2988,8 @@ static void uniedit_diff_load_callback( void              *userdata,
    UniDiffData_t data;
 
    if ( filelist == NULL ) {
-      WARN( _( "Error callind SDL_ShowOpenFileDialog: %s" ), SDL_GetError() );
+      WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFileDialog",
+            SDL_GetError() );
       return;
    } else if ( filelist[0] == NULL ) {
       /* Cancelled by user.  */
