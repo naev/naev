@@ -22,6 +22,7 @@
 #include "array.h"
 #include "camera.h"
 #include "collision.h"
+#include "damagetype.h"
 #include "gui.h"
 #include "input.h"
 #include "intlist.h"
