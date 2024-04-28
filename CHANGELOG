@@ -20,6 +20,7 @@
       * Can sort and filter the mission computer
       * Added small optional bounce to NPCs when they start talking
       * Inform the player when they don't meet mission requirements for some important missions
+      * Can add new plugins directly from the options menu
    * Content
       * 3 new missions
          * Hack the Gibson!
@@ -46,7 +47,8 @@
       * Use enums internally to represent keybindinsg instead of strings
       * Always use replaygain information when available when loading vorbis files
       * Stop repeating the same warning after a fixed amount of times
-      * Editor has partial support for universe diffs now
+      * Editor has partial support for universe diffs
+      * Editor has separate separate configuration and file dialogues
    * Fixes
       * PSO and Mizar nebulas have trails again
       * Removed fancy background mode
