@@ -380,10 +380,10 @@ static int music_luaInit( void )
    /* load the actual Lua music code */
    buf = ndata_read( MUSIC_LUA_PATH, &bufsize );
    if ( nlua_dobufenv( music_env, buf, bufsize, MUSIC_LUA_PATH ) != 0 ) {
-      ERR( _( "Error loading music file: %s\n"
-              "%s\n"
-              "Most likely Lua file has improper syntax, please check" ),
-           MUSIC_LUA_PATH, lua_tostring( naevL, -1 ) );
+      WARN( _( "Error loading music file: %s\n"
+               "%s\n"
+               "Most likely Lua file has improper syntax, please check" ),
+            MUSIC_LUA_PATH, lua_tostring( naevL, -1 ) );
       return -1;
    }
    free( buf );

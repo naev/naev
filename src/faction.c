@@ -1328,7 +1328,7 @@ static int faction_parse( Faction *temp, const char *file )
 
    parent = doc->xmlChildrenNode; /* first faction node */
    if ( parent == NULL ) {
-      ERR( _( "Malformed '%s' file: does not contain elements" ), file );
+      WARN( _( "Malformed '%s' file: does not contain elements" ), file );
       return -1;
    }
 
@@ -1519,7 +1519,7 @@ static int faction_parseSocial( const char *file )
 
    parent = doc->xmlChildrenNode; /* first faction node */
    if ( parent == NULL ) {
-      ERR( _( "Malformed '%s' file: does not contain elements" ), file );
+      WARN( _( "Malformed '%s' file: does not contain elements" ), file );
       return -1;
    }
 

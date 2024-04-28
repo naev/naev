@@ -264,7 +264,7 @@ static int tech_parseFile( tech_group_t *tech, const char *file )
 
    parent = doc->xmlChildrenNode; /* first faction node */
    if ( parent == NULL ) {
-      ERR( _( "Malformed '%s' file: does not contain elements" ), file );
+      WARN( _( "Malformed '%s' file: does not contain elements" ), file );
       return -1;
    }
 
@@ -358,7 +358,7 @@ static int tech_parseFileData( tech_group_t *tech )
 
    parent = doc->xmlChildrenNode; /* first faction node */
    if ( parent == NULL ) {
-      ERR( _( "Malformed '%s' file: does not contain elements" ), file );
+      WARN( _( "Malformed '%s' file: does not contain elements" ), file );
       return -1;
    }
 

@@ -3340,7 +3340,7 @@ static int map_decorator_parse( MapDecorator *temp, const char *file )
 
    parent = doc->xmlChildrenNode; /* map node */
    if ( strcmp( (char *)parent->name, "decorator" ) ) {
-      ERR( _( "Malformed %s file: missing root element 'decorator'" ), file );
+      WARN( _( "Malformed %s file: missing root element 'decorator'" ), file );
       return -1;
    }
 

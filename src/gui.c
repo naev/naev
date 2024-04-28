@@ -1711,13 +1711,8 @@ int gui_init( void )
    gui_mesg_x = 20;
    gui_mesg_y = 30;
    gui_mesg_w = SCREEN_W - 400;
-   if ( mesg_stack == NULL ) {
+   if ( mesg_stack == NULL )
       mesg_stack = calloc( mesg_max, sizeof( Mesg ) );
-      if ( mesg_stack == NULL ) {
-         ERR( _( "Out of Memory" ) );
-         return -1;
-      }
-   }
 
    /* VBO. */
    if ( gui_radar_select_vbo == NULL ) {

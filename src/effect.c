@@ -61,7 +61,7 @@ static int effect_parse( EffectData *efx, const char *file )
 
    parent = doc->xmlChildrenNode; /* first system node */
    if ( parent == NULL ) {
-      ERR( _( "Malformed '%s' file: does not contain elements" ), file );
+      WARN( _( "Malformed '%s' file: does not contain elements" ), file );
       return -1;
    }
 
@@ -172,6 +172,7 @@ static int effect_parse( EffectData *efx, const char *file )
          } while ( xml_nextNode( cur ) );
          continue;
       }
+      // cppcheck-suppress nullPointerRedundantCheck
       WARN( _( "Effect '%s' has unknown node '%s'" ), efx->name, node->name );
    } while ( xml_nextNode( node ) );
 

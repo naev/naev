@@ -186,8 +186,8 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
    if ( !xml_isNode( node, SPFX_XML_ID ) ) {
-      ERR( _( "Malformed '%s' file: missing root element '%s'" ), filename,
-           SPFX_XML_ID );
+      WARN( _( "Malformed '%s' file: missing root element '%s'" ), filename,
+            SPFX_XML_ID );
       return -1;
    }
 
@@ -225,6 +225,8 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
          } while ( xml_nextNode( cur ) );
          continue;
       }
+
+      // cppcheck-suppress nullPointerRedundantCheck
       WARN( _( "SPFX '%s' has unknown node '%s'." ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
 

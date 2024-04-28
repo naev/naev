@@ -63,15 +63,15 @@ int start_load( void )
 
    node = doc->xmlChildrenNode;
    if ( !xml_isNode( node, XML_START_ID ) ) {
-      ERR( _( "Malformed '%s' file: missing root element '%s'" ),
-           START_DATA_PATH, XML_START_ID );
+      WARN( _( "Malformed '%s' file: missing root element '%s'" ),
+            START_DATA_PATH, XML_START_ID );
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first system node */
    if ( node == NULL ) {
-      ERR( _( "Malformed '%s' file: does not contain elements" ),
-           START_DATA_PATH );
+      WARN( _( "Malformed '%s' file: does not contain elements" ),
+            START_DATA_PATH );
       return -1;
    }
    do {

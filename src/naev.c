@@ -180,8 +180,15 @@ int main( int argc, char **argv )
 
    /* Set up PhysicsFS. */
    if ( PHYSFS_init( env.argv0 ) == 0 ) {
-      ERR( "PhysicsFS initialization failed: %s",
-           _( PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+      char buf[STRMAX];
+      snprintf( buf, sizeof( buf ), "PhysicsFS initialization failed: %s",
+                PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
+                                _( "Naev Critical Error" ), buf,
+                                gl_screen.window );
+#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
+      ERR( "%s", buf );
       return -1;
    }
    PHYSFS_permitSymbolicLinks( 1 );
@@ -206,7 +213,15 @@ int main( int argc, char **argv )
 
    /* Initializes SDL for possible warnings. */
    if ( SDL_Init( 0 ) ) {
-      ERR( _( "Unable to initialize SDL: %s" ), SDL_GetError() );
+      char buf[STRMAX];
+      snprintf( buf, sizeof( buf ), _( "Unable to initialize SDL: %s" ),
+                SDL_GetError() );
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
+                                _( "Naev Critical Error" ), buf,
+                                gl_screen.window );
+#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
+      ERR( "%s", buf );
       return -1;
    }
    starttime    = SDL_GetTicks();
@@ -278,8 +293,16 @@ int main( int argc, char **argv )
       debug_enableFPUExcept();
 
    /* Load the start info. */
-   if ( start_load() )
-      ERR( _( "Failed to load module start data." ) );
+   if ( start_load() ) {
+      char buf[STRMAX];
+      snprintf( buf, sizeof( buf ), _( "Failed to load module start data." ) );
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
+                                _( "Naev Critical Error" ), buf,
+                                gl_screen.window );
+#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
+      ERR( "%s", buf );
+   }
    LOG( " %s", start_name() );
    DEBUG_BLANK();
 
@@ -294,8 +317,16 @@ int main( int argc, char **argv )
     * OpenGL
     */
    if ( gl_init() ) { /* initializes video output */
-      ERR( _( "Initializing video output failed, exiting…" ) );
-      SDL_Quit();
+      char buf[STRMAX];
+      snprintf( buf, sizeof( buf ),
+                _( "Initializing video output failed, exiting…" ) );
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
+                                _( "Naev Critical Error" ), buf,
+                                gl_screen.window );
+#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
+      ERR( "%s", buf );
+      // SDL_Quit();
       exit( EXIT_FAILURE );
    }
    window_caption();
@@ -357,11 +388,7 @@ int main( int argc, char **argv )
 
    /* Misc graphics init */
    render_init();
-   if ( nebu_init() != 0 ) { /* Initializes the nebula */
-      /* An error has happened */
-      ERR( _( "Unable to initialize the Nebula subsystem!" ) );
-      /* Weirdness will occur... */
-   }
+   nebu_init();       /* Initializes the nebula */
    gui_init();        /* initializes the GUI graphics */
    toolkit_init();    /* initializes the toolkit */
    map_init();        /* initializes the map. */

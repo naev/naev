@@ -44,7 +44,10 @@
 #include "log.h"
 #include "render.h"
 
-glInfo     gl_screen;        /**< Gives data of current opengl settings. */
+glInfo gl_screen = {
+   .window = NULL, /* Should be initialized to NULL as is used for cases of
+                      SDL_ShowSimpleMessageBox. */
+};                 /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
 
 static unsigned int cb_correct_pp =
@@ -331,7 +334,8 @@ static int gl_createWindow( unsigned int flags )
                 SDL_GetError() );
 #if SDL_VERSION_ATLEAST( 3, 0, 0 )
       SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                _( "Naev Critical Error" ), buf, NULL );
+                                _( "Naev Critical Error" ), buf,
+                                gl_screen.window );
 #endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
       ERR( "%s", buf );
    }
@@ -357,7 +361,8 @@ static int gl_createWindow( unsigned int flags )
                 SDL_GetError() );
 #if SDL_VERSION_ATLEAST( 3, 0, 0 )
       SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                _( "Naev Critical Error" ), buf, NULL );
+                                _( "Naev Critical Error" ), buf,
+                                gl_screen.window );
 #endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
       ERR( "%s", buf );
    }
@@ -543,7 +548,8 @@ int gl_init( void )
       snprintf( buf, sizeof( buf ), _( "Unable to load OpenGL using GLAD!" ) );
 #if SDL_VERSION_ATLEAST( 3, 0, 0 )
       SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                _( "Naev Critical Error" ), buf, NULL );
+                                _( "Naev Critical Error" ), buf,
+                                gl_screen.window );
 #endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
       ERR( "%s", buf );
    }

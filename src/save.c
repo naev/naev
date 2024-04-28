@@ -121,7 +121,7 @@ int save_all_with_name( const char *name )
    /* Create the writer. */
    writer = xmlNewTextWriterDoc( &doc, conf.save_compress );
    if ( writer == NULL ) {
-      ERR( _( "testXmlwriterDoc: Error creating the xml writer" ) );
+      WARN( _( "testXmlwriterDoc: Error creating the xml writer" ) );
       return -1;
    }
 
@@ -149,7 +149,7 @@ int save_all_with_name( const char *name )
 
    /* Save the data. */
    if ( save_data( writer ) < 0 ) {
-      ERR( _( "Trying to save game data" ) );
+      WARN( _( "Trying to save game data" ) );
       goto err_writer;
    }
 

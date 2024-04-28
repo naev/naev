@@ -93,7 +93,7 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path,
    if ( parent == NULL ) {
       char buf[PATH_MAX];
       nfile_concatPaths( buf, sizeof( buf ), plg->mountpoint, file );
-      ERR( _( "Malformed '%s' file: does not contain elements" ), buf );
+      WARN( _( "Malformed '%s' file: does not contain elements" ), buf );
       return -1;
    }
 

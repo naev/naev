@@ -2628,7 +2628,7 @@ Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref, double dir,
 #if DEBUGGING
    const Outfit *o = ( ref == NULL ) ? po->outfit : ref;
    if ( !outfit_isBolt( o ) && !outfit_isLauncher( o ) ) {
-      ERR( _( "Trying to create a Weapon from a non-Weapon type Outfit" ) );
+      WARN( _( "Trying to create a Weapon from a non-Weapon type Outfit" ) );
       return 0;
    }
 #endif /* DEBUGGING */
@@ -2691,7 +2691,7 @@ unsigned int beam_start( PilotOutfitSlot *po, double dir, const vec2 *pos,
    Weapon *w;
 
    if ( !outfit_isBeam( po->outfit ) ) {
-      ERR( _( "Trying to create a Beam Weapon from a non-beam outfit." ) );
+      WARN( _( "Trying to create a Beam Weapon from a non-beam outfit." ) );
       return -1;
    }
 

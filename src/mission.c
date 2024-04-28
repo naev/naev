@@ -1074,6 +1074,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
       } else if ( xml_isNode( node, "notes" ) )
          continue; /* Notes for the python mission mapping script */
 
+      // cppcheck-suppress nullPointerRedundantCheck
       WARN( _( "Unknown node '%s' in mission '%s'" ), node->name, temp->name );
    } while ( xml_nextNode( node ) );
 
@@ -1240,9 +1241,9 @@ static int mission_parseFile( const char *file, MissionData *temp )
 
    node = doc->xmlChildrenNode;
    if ( !xml_isNode( node, XML_MISSION_TAG ) ) {
-      ERR( _( "Malformed XML header for '%s' mission: missing root element "
-              "'%s'" ),
-           file, XML_MISSION_TAG );
+      WARN( _( "Malformed XML header for '%s' mission: missing root element "
+               "'%s'" ),
+            file, XML_MISSION_TAG );
       return -1;
    }
 

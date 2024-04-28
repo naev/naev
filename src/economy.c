@@ -11,7 +11,6 @@
  *  This is then solved with linear algebra after each time increment.
  */
 /** @cond */
-#include <stdint.h>
 #include <stdio.h>
 
 #if HAVE_SUITESPARSE_CS_H
@@ -28,14 +27,9 @@
 #include "array.h"
 #include "log.h"
 #include "ndata.h"
-#include "nstring.h"
 #include "ntime.h"
 #include "nxml.h"
-#include "pilot.h"
-#include "player.h"
-#include "rng.h"
 #include "space.h"
-#include "spfx.h"
 
 /*
  * Economy Nodal Analysis parameters.
@@ -402,23 +396,21 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
 static int econ_createGMatrix (void)
 {
    int ret;
-   int i, j;
    double R, Rsum;
    cs *M;
-   StarSystem *sys;
 
    /* Create the matrix. */
    M = cs_spalloc( array_size(systems_stack), array_size(systems_stack), 1, 1, 1 );
    if (M == NULL)
-      ERR(_("Unable to create CSparse Matrix."));
+      WARN(_("Unable to create CSparse Matrix."));
 
    /* Fill the matrix. */
-   for (i=0; i < array_size(systems_stack); i++) {
-      sys   = &systems_stack[i];
+   for (int i=0; i < array_size(systems_stack); i++) {
+      StarSystem *sys   = &systems_stack[i];
       Rsum = 0.;
 
       /* Set some values. */
-      for (j=0; j < array_size(sys->jumps); j++) {
+      for (int j=0; j < array_size(sys->jumps); j++) {
 
          /* Get the resistances. */
          R     = econ_calcJumpR( sys, sys->jumps[j].target );
@@ -443,7 +435,7 @@ static int econ_createGMatrix (void)
    cs_spfree( econ_G );
    econ_G = cs_compress( M );
    if (econ_G == NULL)
-      ERR(_("Unable to create economy G Matrix."));
+      WARN(_("Unable to create economy G Matrix."));
 
    /* Clean up. */
    cs_spfree(M);
@@ -821,19 +813,17 @@ static void economy_smoothCommodityPrice( StarSystem *sys )
 {
    StarSystem     *neighbour;
    CommodityPrice *avprice = sys->averagePrice;
-   double          price;
-   int             n, i, j, k;
    /*Now modify based on neighbouring systems */
    /*First, calculate mean price of neighbouring systems */
 
-   for ( j = 0; j < array_size( avprice );
+   for ( int j = 0; j < array_size( avprice );
          j++ ) { /* for each commodity in this system */
-      price = 0.;
-      n     = 0;
-      for ( i = 0; i < array_size( sys->jumps );
+      double price = 0.;
+      int    n     = 0;
+      for ( int i = 0; i < array_size( sys->jumps );
             i++ ) { /* for each neighbouring system */
          neighbour = sys->jumps[i].target;
-         for ( k = 0; k < array_size( neighbour->averagePrice ); k++ ) {
+         for ( int k = 0; k < array_size( neighbour->averagePrice ); k++ ) {
             if ( ( strcmp( neighbour->averagePrice[k].name, avprice[j].name ) ==
                    0 ) ) {
                price += neighbour->averagePrice[k].price;
@@ -857,17 +847,15 @@ static void economy_smoothCommodityPrice( StarSystem *sys )
 static void economy_calcUpdatedCommodityPrice( StarSystem *sys )
 {
    CommodityPrice *avprice = sys->averagePrice;
-   Spob           *spob;
-   int             i, j, k;
-   for ( j = 0; j < array_size( avprice ); j++ ) {
+   for ( int j = 0; j < array_size( avprice ); j++ ) {
       /*Use mean price to adjust current price */
       avprice[j].price = 0.5 * ( avprice[j].price + avprice[j].sum );
    }
    /*and finally modify spobs based on the means */
-   for ( i = 0; i < array_size( sys->spobs ); i++ ) {
-      spob = sys->spobs[i];
-      for ( j = 0; j < array_size( spob->commodities ); j++ ) {
-         for ( k = 0; k < array_size( avprice ); k++ ) {
+   for ( int i = 0; i < array_size( sys->spobs ); i++ ) {
+      Spob *spob = sys->spobs[i];
+      for ( int j = 0; j < array_size( spob->commodities ); j++ ) {
+         for ( int k = 0; k < array_size( avprice ); k++ ) {
             if ( ( strcmp( avprice[k].name, spob->commodities[j]->name ) ==
                    0 ) ) {
                spob->commodityPrice[j].price =

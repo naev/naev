@@ -414,7 +414,7 @@ static int diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc )
    xmlNodePtr parent = doc->xmlChildrenNode;
    xmlNodePtr node;
    if ( strcmp( (char *)parent->name, "unidiff" ) ) {
-      ERR( _( "Malformed unidiff file: missing root element 'unidiff'" ) );
+      WARN( _( "Malformed unidiff file: missing root element 'unidiff'" ) );
       return -1;
    }
 

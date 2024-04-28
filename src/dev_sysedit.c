@@ -927,7 +927,8 @@ static void sysedit_render( double bx, double by, double w, double h,
             posns[j] = &njp->pos;
             break;
          default:
-            ERR( _( "Invalid vertex type." ) );
+            WARN( _( "Invalid vertex type." ) );
+            continue;
          }
       }
 

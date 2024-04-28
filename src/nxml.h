@@ -195,14 +195,14 @@ static inline char *nxml_trace_strdup( void *ptr )
 #define xmlw_startElem( w, str )                                               \
    do {                                                                        \
       if ( xmlTextWriterStartElement( w, (xmlChar *)str ) < 0 ) {              \
-         ERR( "xmlw: unable to create start element" );                        \
+         WARN( "xmlw: unable to create start element" );                       \
          return -1;                                                            \
       }                                                                        \
    } while ( 0 )
 #define xmlw_endElem( w )                                                      \
    do {                                                                        \
       if ( xmlTextWriterEndElement( w ) < 0 ) {                                \
-         ERR( "xmlw: unable to create end element" );                          \
+         WARN( "xmlw: unable to create end element" );                         \
          return -1;                                                            \
       }                                                                        \
    } while ( 0 )
@@ -216,14 +216,14 @@ static inline char *nxml_trace_strdup( void *ptr )
    do {                                                                        \
       if ( xmlTextWriterWriteFormatElement( w, (xmlChar *)n, str,              \
                                             ##__VA_ARGS__ ) < 0 ) {            \
-         ERR( "xmlw: unable to write format element" );                        \
+         WARN( "xmlw: unable to write format element" );                       \
          return -1;                                                            \
       }                                                                        \
    } while ( 0 )
 #define xmlw_raw( w, b, l )                                                    \
    do {                                                                        \
       if ( xmlTextWriterWriteRawLen( w, (xmlChar *)b, l ) < 0 ) {              \
-         ERR( "xmlw: unable to write raw element" );                           \
+         WARN( "xmlw: unable to write raw element" );                          \
          return -1;                                                            \
       }                                                                        \
    } while ( 0 )
@@ -231,14 +231,14 @@ static inline char *nxml_trace_strdup( void *ptr )
    do {                                                                        \
       if ( xmlTextWriterWriteFormatAttribute( w, (xmlChar *)str,               \
                                               ##__VA_ARGS__ ) < 0 ) {          \
-         ERR( "xmlw: unable to write element attribute" );                     \
+         WARN( "xmlw: unable to write element attribute" );                    \
          return -1;                                                            \
       }                                                                        \
    } while ( 0 )
 #define xmlw_str( w, str, ... )                                                \
    do {                                                                        \
       if ( xmlTextWriterWriteFormatString( w, str, ##__VA_ARGS__ ) < 0 ) {     \
-         ERR( "xmlw: unable to write element data" );                          \
+         WARN( "xmlw: unable to write element data" );                         \
          return -1;                                                            \
       }                                                                        \
    } while ( 0 )
@@ -246,14 +246,14 @@ static inline char *nxml_trace_strdup( void *ptr )
 #define xmlw_start( w )                                                        \
    do {                                                                        \
       if ( xmlTextWriterStartDocument( writer, NULL, "UTF-8", NULL ) < 0 ) {   \
-         ERR( "xmlw: unable to start document" );                              \
+         WARN( "xmlw: unable to start document" );                             \
          return -1;                                                            \
       }                                                                        \
    } while ( 0 )
 #define xmlw_done( w )                                                         \
    do {                                                                        \
       if ( xmlTextWriterEndDocument( w ) < 0 ) {                               \
-         ERR( "xmlw: unable to end document" );                                \
+         WARN( "xmlw: unable to end document" );                               \
          return -1;                                                            \
       }                                                                        \
    } while ( 0 )

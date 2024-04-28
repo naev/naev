@@ -292,8 +292,8 @@ static int commodity_parse( Commodity *temp, const char *filename )
 
    parent = doc->xmlChildrenNode; /* Commodities node */
    if ( strcmp( (char *)parent->name, XML_COMMODITY_ID ) ) {
-      ERR( _( "Malformed %s file: missing root element '%s'" ), filename,
-           XML_COMMODITY_ID );
+      WARN( _( "Malformed %s file: missing root element '%s'" ), filename,
+            XML_COMMODITY_ID );
       return -1;
    }
 

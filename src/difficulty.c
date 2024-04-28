@@ -7,7 +7,6 @@
  * @brief Contains all the player related stuff.
  */
 /** @cond */
-#include "physfs.h"
 #include <stdlib.h>
 
 #include "naev.h"
@@ -48,8 +47,8 @@ int difficulty_load( void )
       /* Check to see if document exists. */
       node = doc->xmlChildrenNode;
       if ( !xml_isNode( node, DIFFICULTY_XML_ID ) ) {
-         ERR( _( "Malformed '%s' file: missing root element '%s'" ),
-              difficulty_files[i], DIFFICULTY_XML_ID );
+         WARN( _( "Malformed '%s' file: missing root element '%s'" ),
+               difficulty_files[i], DIFFICULTY_XML_ID );
          xmlFreeDoc( doc );
          continue;
       }

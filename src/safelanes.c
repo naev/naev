@@ -282,7 +282,7 @@ SafeLane *safelanes_get( int faction, int standing, const StarSystem *system )
             l->point_id[j]   = system->jumps[v[j]->index].targetid;
             break;
          default:
-            ERR( _( "Safe-lane vertex type is invalid." ) );
+            WARN( _( "Safe-lane vertex type is invalid." ) );
          }
       }
    }
@@ -1014,7 +1014,8 @@ static int vertex_faction( int vi )
    case VERTEX_JUMP:
       return -1;
    default:
-      ERR( _( "Safe-lane vertex type is invalid." ) );
+      WARN( _( "Safe-lane vertex type is invalid." ) );
+      return -1;
    }
 }
 
@@ -1031,7 +1032,8 @@ static const vec2 *vertex_pos( int vi )
    case VERTEX_JUMP:
       return &sys->jumps[vertex_stack[vi].index].pos;
    default:
-      ERR( _( "Safe-lane vertex type is invalid." ) );
+      WARN( _( "Safe-lane vertex type is invalid." ) );
+      return NULL;
    }
 }
 

@@ -1794,7 +1794,8 @@ static void info_changeTab( unsigned int wid, const char *str, int old,
       hookname = "info_shiplog";
       break;
    default:
-      ERR( _( "Invalid info tab ID: %d" ), new );
+      WARN( _( "Invalid info tab ID: %d" ), new );
+      return;
    }
    hooks_run( hookname );
 }

@@ -727,7 +727,8 @@ static int ovr_safelaneKnown( SafeLane *sf, vec2 *posns[2] )
             known = 0;
          break;
       default:
-         ERR( _( "Invalid vertex type." ) );
+         WARN( _( "Invalid vertex type." ) );
+         continue;
       }
    }
    return known;

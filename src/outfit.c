@@ -2684,7 +2684,7 @@ static int outfit_parse( Outfit *temp, const char *file )
 
    parent = doc->xmlChildrenNode; /* first outfit node */
    if ( parent == NULL ) {
-      ERR( _( "Malformed '%s' file: does not contain elements" ), file );
+      WARN( _( "Malformed '%s' file: does not contain elements" ), file );
       return -1;
    }
 
@@ -2880,9 +2880,10 @@ static int outfit_parse( Outfit *temp, const char *file )
          /* get the type */
          xmlr_attr_strd( node, "type", prop );
          if ( prop == NULL )
-            ERR( _( "Outfit '%s' element 'specific' missing property 'type'" ),
-                 temp->name );
-         temp->type = outfit_strToOutfitType( prop );
+            WARN( _( "Outfit '%s' element 'specific' missing property 'type'" ),
+                  temp->name );
+         else
+            temp->type = outfit_strToOutfitType( prop );
          free( prop );
 
          /* is secondary weapon? */
