@@ -333,7 +333,8 @@ int log_warn( const char *file, size_t line, const char *func, const char *fmt,
    }
 
    /* Display messages. */
-   logprintf( stderr, 0, _( "WARNING %s:%lu [%s]: " ), file, line, func );
+   logprintf( stderr, 0, _( "WARNING %s:%lu [%s]: " ), file,
+              (unsigned long)line, func );
    slogprintf( stderr, 1, buf, n );
 
    /* Reset last message. */
