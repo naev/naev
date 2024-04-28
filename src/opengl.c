@@ -39,7 +39,7 @@
 #include "opengl.h"
 
 #include "conf.h"
-#include "debug.h"
+#include "debug.h" // IWYU pragma: keep
 #include "gltf.h"
 #include "log.h"
 #include "render.h"
