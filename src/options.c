@@ -34,7 +34,7 @@
 #include "sound.h"
 #include "toolkit.h"
 
-#define BUTTON_WIDTH 200 /**< Button width, standard across menus. */
+#define BUTTON_WIDTH 120 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT 30 /**< Button height, standard across menus. */
 
 #define OPT_WIN_GAMEPLAY 0
@@ -295,6 +295,8 @@ static void opt_gameplay( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Close button */
+   window_addButton( wid, -20 - 1 * ( BUTTON_WIDTH + 20 ), 20, BUTTON_WIDTH,
+                     BUTTON_HEIGHT, "btnCancel", _( "Cancel" ), opt_close );
    window_addButton( wid, -20 - 2 * ( BUTTON_WIDTH + 20 ), 20, BUTTON_WIDTH,
                      BUTTON_HEIGHT, "btnDefaults", _( "Defaults" ),
                      opt_gameplayDefaults );
@@ -588,11 +590,12 @@ static void opt_keybinds( unsigned int wid )
    menuKeybinds_getDim( wid, &w, &h, &lw, NULL, &bw, &bh );
 
    /* Restore defaults button. */
-   window_addButton( wid, -20, 40 + bh, bw, bh, "btnDefaults", _( "Defaults" ),
+   window_addButton( wid, -20 - 1 * ( BUTTON_WIDTH + 20 ), 20, BUTTON_WIDTH,
+                     BUTTON_HEIGHT, "btnDefaults", _( "Defaults" ),
                      opt_keyDefaults );
    /* Set button. */
-   window_addButton( wid, -20, 60 + 2 * bh, bw, bh, "btnSet", _( "Set Key" ),
-                     opt_setKey );
+   window_addButton( wid, -20, 20 + 1 * ( BUTTON_HEIGHT + 20 ), bw, bh,
+                     "btnSet", _( "Set Key" ), opt_setKey );
 
    /* Text stuff. */
    window_addText( wid, -20, -40, w - ( 20 + lw + 20 + 20 ), 30, 1, "txtName",
@@ -1929,6 +1932,10 @@ static void opt_plugins( unsigned int wid )
 
    window_addList( wid, 20, -70, lw, lh, "lstPlugins", str, n, 0,
                    opt_plugins_update, NULL );
+
+   /* Add buttons. */
+   // window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
+   //                      _( "OK" ), opt_OK );
 }
 
 static void opt_plugins_update( unsigned int wid, const char *name )
