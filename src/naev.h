@@ -22,7 +22,7 @@
 #pragma once
 
 /** @cond */
-#include <math.h>
+#include <math.h> // IWYU pragma: export
 
 #include "SDL_stdinc.h"
 /** @endcond */

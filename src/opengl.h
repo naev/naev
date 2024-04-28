@@ -11,10 +11,10 @@
 
 /* We put all the other opengl stuff here to only have to include one header. */
 #include "mat4.h"
-#include "opengl_render.h"
-#include "opengl_shader.h"
-#include "opengl_tex.h"
-#include "opengl_vbo.h"
+#include "opengl_render.h" // IWYU pragma: export
+#include "opengl_shader.h" // IWYU pragma: export
+#include "opengl_tex.h"    // IWYU pragma: export
+#include "opengl_vbo.h"    // IWYU pragma: export
 
 #define OPENGL_NUM_FBOS 4 /**< Number of FBOs to allocate and deal with. */
 /** Currently used FBO IDs:

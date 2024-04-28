@@ -4,8 +4,8 @@
 #pragma once
 
 /** @cond */
-#include "SDL.h"
-#include "naev.h"
+#include "SDL.h"  // IWYU pragma: keep
+#include "naev.h" // IWYU pragma: keep
 #include <stdint.h>
 #include <stdlib.h>
 /** @endcond */

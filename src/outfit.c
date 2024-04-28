@@ -25,7 +25,7 @@
 #include "conf.h"
 #include "damagetype.h"
 #include "log.h"
-#include "mapData.h"
+#include "mapData.h" // IWYU pragma: keep
 #include "ndata.h"
 #include "nlua.h"
 #include "nlua_camera.h"
