@@ -5,6 +5,7 @@
 
 /** @cond */
 #include "SDL.h"
+#include "naev.h"
 #include <stdint.h>
 #include <stdlib.h>
 /** @endcond */
