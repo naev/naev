@@ -764,7 +764,10 @@ void SDL_ShowSaveFileDialog( SDL_DialogFileCallback callback, void *userdata,
    /* Get paths. */
    tmp   = strdup( default_location );
    dname = strdup( dirname( tmp ) );
+   free( tmp );
+   tmp   = strdup( default_location );
    bname = strdup( basename( tmp ) );
+   free( tmp );
 
    NFD_Init();
 
@@ -789,7 +792,6 @@ void SDL_ShowSaveFileDialog( SDL_DialogFileCallback callback, void *userdata,
 
    NFD_Quit();
 
-   free( tmp );
    free( dname );
    free( bname );
 }
