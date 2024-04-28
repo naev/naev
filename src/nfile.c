@@ -709,6 +709,8 @@ void SDL_ShowOpenFileDialog( SDL_DialogFileCallback callback, void *userdata,
    }
 
    NFD_Quit();
+
+   free( fitem );
 }
 
 void SDL_ShowOpenFolderDialog( SDL_DialogFileCallback callback, void *userdata,
@@ -795,5 +797,6 @@ void SDL_ShowSaveFileDialog( SDL_DialogFileCallback callback, void *userdata,
 
    free( dname );
    free( bname );
+   free( fitem );
 }
 #endif /* ! SDL_VERSION_ATLEAST(3,0,0) */
