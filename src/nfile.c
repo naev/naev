@@ -741,4 +741,56 @@ void SDL_ShowOpenFolderDialog( SDL_DialogFileCallback callback, void *userdata,
 
    NFD_Quit();
 }
+
+void SDL_ShowSaveFileDialog( SDL_DialogFileCallback callback, void *userdata,
+                             SDL_Window                 *window,
+                             const SDL_DialogFileFilter *filters,
+                             const char                 *default_location )
+{
+   (void)window;
+   char *filelist[2] = { NULL, NULL };
+   char *tmp, *bname, *dname;
+
+   int n;
+   for ( n = 0; filters[n].name != NULL; n++ )
+      ;
+
+   nfdfilteritem_t *fitem = calloc( n, sizeof( nfdfilteritem_t ) );
+   for ( int i = 0; i < n; i++ ) {
+      fitem[i].name = filters[i].name;
+      fitem[i].spec = filters[i].pattern;
+   }
+
+   /* Get paths. */
+   tmp   = strdup( default_location );
+   dname = strdup( dirname( tmp ) );
+   bname = strdup( basename( tmp ) );
+
+   NFD_Init();
+
+   nfdchar_t  *outPath;
+   nfdresult_t result = NFD_SaveDialog( &outPath, fitem, n, dname, bname );
+   switch ( result ) {
+   case NFD_OKAY:
+      filelist[0] = outPath;
+      callback( userdata, (const char **)filelist, 0 );
+      NFD_FreePath( outPath );
+      break;
+
+   case NFD_CANCEL:
+      callback( userdata, (const char **)filelist, 0 );
+      break;
+
+   default:
+      SDL_SetError( "%s", NFD_GetError() );
+      callback( userdata, NULL, -1 );
+      break;
+   }
+
+   NFD_Quit();
+
+   free( tmp );
+   free( dname );
+   free( bname );
+}
 #endif /* ! SDL_VERSION_ATLEAST(3,0,0) */
