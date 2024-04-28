@@ -16,6 +16,7 @@
 
 #include "array.h"
 #include "conf.h"
+#include "dialogue.h"
 #include "load.h"
 #include "log.h"
 #include "mission.h"
@@ -113,6 +114,7 @@ int save_all_with_name( const char *name )
    const plugin_t  *plugins = plugin_list();
    xmlDocPtr        doc;
    xmlTextWriterPtr writer;
+   const char      *err;
 
    /* Do not save if saving is off. */
    if ( player_isFlag( PLAYER_NOSAVE ) )
@@ -120,10 +122,8 @@ int save_all_with_name( const char *name )
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc( &doc, conf.save_compress );
-   if ( writer == NULL ) {
-      WARN( _( "testXmlwriterDoc: Error creating the xml writer" ) );
-      return -1;
-   }
+   if ( writer == NULL )
+      goto err_ret;
 
    /* Set the writer parameters. */
    xmlw_setParams( writer );
@@ -194,9 +194,6 @@ int save_all_with_name( const char *name )
    snprintf( file, sizeof( file ), "%s/saves/%s/%s.ns", PHYSFS_getWriteDir(),
              player.name, name ); /* TODO: write via physfs */
    if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 ) {
-      WARN( _(
-         "Failed to write saved game!  You'll most likely have to restore it "
-         "by copying your backup saved game over your current saved game." ) );
       goto err;
    }
    xmlFreeDoc( doc );
@@ -207,6 +204,12 @@ err_writer:
    xmlFreeTextWriter( writer );
 err:
    xmlFreeDoc( doc );
+err_ret:
+   err =
+      _( "Failed to write saved game!  You'll most likely have to restore it "
+         "by copying your backup saved game over your current saved game." );
+   WARN( err );
+   dialogue_alert( "%s", err );
    return -1;
 }
 

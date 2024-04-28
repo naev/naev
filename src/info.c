@@ -782,7 +782,7 @@ static void weapons_toggleList( unsigned int wid, const char *str )
 
    /* Not able to set them all to fire groups. */
    if ( i >= PILOT_WEAPON_SETS ) {
-      dialogue_alert( _( "You need at least one switch group!" ) );
+      dialogue_alertRaw( _( "You need at least one switch group!" ) );
       pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_SWITCH );
    }
 

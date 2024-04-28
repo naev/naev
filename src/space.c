@@ -1631,10 +1631,12 @@ void space_init( const char *sysname, int do_simulate )
       }
    }
 
-   if ( ( sysname == NULL ) && ( cur_system == NULL ) )
-      ERR(
+   if ( ( sysname == NULL ) && ( cur_system == NULL ) ) {
+      WARN(
          _( "Cannot reinit system if there is no system previously loaded" ) );
-   else if ( sysname != NULL ) {
+      /* Who knows what'll happen... */
+      return;
+   } else if ( sysname != NULL ) {
       char dmgstr[32];
 
       cur_system = system_get( sysname );

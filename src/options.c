@@ -1509,7 +1509,7 @@ static int opt_videoSave( unsigned int wid, const char *str )
    inp = window_getInput( wid, "inpRes" );
    ret = sscanf( inp, " %d %*[^0-9] %d", &w, &h );
    if ( ret != 2 || w <= 0 || h <= 0 ) {
-      dialogue_alert(
+      dialogue_alertRaw(
          _( "Height/Width invalid. Should be formatted like 1024x768." ) );
       return 1;
    }
@@ -1659,7 +1659,7 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
                            SDL_WINDOW_MAXIMIZED );
 
    if ( confirm && !changed_size && maximized )
-      dialogue_alert( _( "Resolution can't be changed while maximized." ) );
+      dialogue_alertRaw( _( "Resolution can't be changed while maximized." ) );
    if ( confirm && ( status != 0 || new_f != fullscreen ) )
       opt_needRestart();
 

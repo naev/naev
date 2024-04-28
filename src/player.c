@@ -3993,8 +3993,11 @@ static Spob *player_parse( xmlNodePtr parent )
 
    /* Check. */
    if ( player.p == NULL ) {
-      ERR( _( "Something went horribly wrong, player does not exist after "
-              "load..." ) );
+      const char *err =
+         _( "Something went horribly wrong, player does not exist after "
+            "load..." );
+      WARN( err );
+      dialogue_alertRaw( err );
       return NULL;
    }
 

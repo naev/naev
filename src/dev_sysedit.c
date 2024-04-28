@@ -455,7 +455,8 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
 
    if ( uniedit_diffMode ) {
       /* TODO let select the spob from a list. */
-      dialogue_alert( ( "Adding new spobs is not supported in diff mode!" ) );
+      dialogue_alertRaw(
+         ( "Adding new spobs is not supported in diff mode!" ) );
       return;
    }
 
@@ -530,7 +531,7 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused,
 
    if ( uniedit_diffMode ) {
       /* TODO let select the spob from a list. */
-      dialogue_alert(
+      dialogue_alertRaw(
          ( "Adding new asteroids is not supported in diff mode!" ) );
       return;
    }
@@ -722,7 +723,8 @@ static void sysedit_btnReset( unsigned int wid_unused, const char *unused )
    (void)unused;
 
    if ( uniedit_diffMode ) {
-      dialogue_alert( _( "Reseting systems is not supported in diff mode!" ) );
+      dialogue_alertRaw(
+         _( "Reseting systems is not supported in diff mode!" ) );
       return;
    }
 
@@ -748,7 +750,8 @@ static void sysedit_btnScale( unsigned int wid_unused, const char *unused )
    StarSystem *sys;
 
    if ( uniedit_diffMode ) {
-      dialogue_alert( _( "Scaling systems is not supported in diff mode!" ) );
+      dialogue_alertRaw(
+         _( "Scaling systems is not supported in diff mode!" ) );
       return;
    }
 

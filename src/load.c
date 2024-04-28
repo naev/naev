@@ -834,7 +834,7 @@ static void load_snapshot_menu_save( unsigned int wdw, const char *str )
       }
    }
    if ( save_all_with_name( save_name ) < 0 )
-      dialogue_alert(
+      dialogue_alertRaw(
          _( "Failed to save the game! You should exit and check the log to see "
             "what happened and then file a bug report!" ) );
    else {
@@ -1236,7 +1236,7 @@ int load_gameDiff( const char *file )
 
    /* Make sure it exists. */
    if ( !PHYSFS_exists( file ) ) {
-      dialogue_alert( _( "Saved game file seems to have been deleted." ) );
+      dialogue_alertRaw( _( "Saved game file seems to have been deleted." ) );
       return -1;
    }
 
@@ -1298,7 +1298,7 @@ static int load_gameInternal( const char *file, const char *version )
 
    /* Make sure it exists. */
    if ( !PHYSFS_exists( file ) ) {
-      dialogue_alert( _( "Saved game file seems to have been deleted." ) );
+      dialogue_alertRaw( _( "Saved game file seems to have been deleted." ) );
       return -1;
    }
 

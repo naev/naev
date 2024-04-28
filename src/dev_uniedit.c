@@ -1631,7 +1631,8 @@ static void uniedit_newSys( double x, double y )
    StarSystem *sys;
 
    if ( uniedit_diffMode ) {
-      dialogue_alert( ( "Adding new systems is not supported in diff mode!" ) );
+      dialogue_alertRaw(
+         ( "Adding new systems is not supported in diff mode!" ) );
       return;
    }
 
@@ -1641,7 +1642,7 @@ static void uniedit_newSys( double x, double y )
 
    /* Abort. */
    if ( name == NULL ) {
-      dialogue_alert( _( "Star System creation aborted!" ) );
+      dialogue_alertRaw( _( "Star System creation aborted!" ) );
       return;
    }
 
@@ -2255,7 +2256,7 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    scale = atof( window_getInput( wid, "inpRadius" ) ) / sys->radius;
    if ( fabs( scale - 1. ) > 1e-5 ) {
       if ( uniedit_diffMode )
-         dialogue_alert(
+         dialogue_alertRaw(
             _( "Changing system radius not supported in diff mode!" ) );
       else
          sysedit_sysScale( sys, scale );
