@@ -7,8 +7,7 @@
  * @brief Handles the important game menus.
  */
 /** @cond */
-#include "SDL.h"
-#include "physfs.h"
+#include "SDL_events.h"
 
 #include "naev.h"
 /** @endcond */
@@ -16,9 +15,7 @@
 #include "menu.h"
 
 #include "array.h"
-#include "board.h"
 #include "camera.h"
-#include "comm.h"
 #include "conf.h"
 #include "dev_mapedit.h"
 #include "dev_uniedit.h"
@@ -30,19 +27,14 @@
 #include "land.h"
 #include "load.h"
 #include "log.h"
-#include "map.h"
-#include "mission.h"
 #include "music.h"
 #include "ndata.h"
-#include "nstring.h"
-#include "ntime.h"
 #include "ntracing.h"
 #include "options.h"
 #include "pause.h"
 #include "pilot.h"
 #include "player.h"
 #include "render.h"
-#include "rng.h"
 #include "safelanes.h"
 #include "save.h"
 #include "space.h"
@@ -755,7 +747,7 @@ static void menu_editors_open( unsigned int wid, const char *unused )
 
    /* Set buttons for the editors */
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH,
-                        BUTTON_HEIGHT, "btnUniverse", _( "Universe Map" ),
+                        BUTTON_HEIGHT, "btnUniverse", _( "Universe Editor" ),
                         uniedit_open, SDLK_u );
    y -= BUTTON_HEIGHT + 20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH,
