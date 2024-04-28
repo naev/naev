@@ -5,7 +5,6 @@
 
 #include <stdint.h>
 
-#include "nlua.h"
 #include "ntime.h"
 
 #define NEWS_FOREVER INT64_MAX /* For news that should never get removed. */

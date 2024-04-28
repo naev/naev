@@ -33,6 +33,7 @@
 #include "opengl.h"
 #include "pilot.h"
 #include "player.h"
+#include "quadtree.h"
 #include "rng.h"
 #include "spfx.h"
 

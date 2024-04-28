@@ -3,13 +3,12 @@
  */
 #pragma once
 
-#include "space_fdecl.h"
+#include "space_fdecl.h" // IWYU pragma: keep
 
 #include "collision.h"
 #include "commodity.h"
-#include "damagetype.h"
-#include "nxml.h"
 #include "opengl.h"
+#include "outfit.h"
 #include "physics.h"
 #include "quadtree.h"
 

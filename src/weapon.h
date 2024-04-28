@@ -6,7 +6,6 @@
 #include "outfit.h"
 #include "physics.h"
 #include "pilot.h"
-#include "quadtree.h"
 #include "target.h"
 
 /**
