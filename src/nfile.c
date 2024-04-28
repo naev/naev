@@ -629,7 +629,7 @@ int _nfile_concatPaths( char buf[static 1], int maxLength,
    if ( section == NULL )
       WARN( _( "First argument to nfile_concatPaths was NULL. This is probably "
                "an error." ) );
-#endif
+#endif /* DEBUGGING */
 
    do {
       // End of arg list?
