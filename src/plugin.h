@@ -18,8 +18,15 @@ typedef struct plugin_s {
    int total_conversion; /**< Whether or not it is a total conversion. */
 } plugin_t;
 
+/* Plugin subsystem. */
 int             plugin_init( void );
 void            plugin_exit( void );
+const char     *plugin_dir( void );
 int             plugin_check( void );
 const plugin_t *plugin_list( void );
 const char     *plugin_name( const plugin_t *plg );
+
+/* For standalone use. */
+plugin_t *plugin_test( const char *file );
+void      plugin_free( plugin_t *plg );
+void      plugin_insert( plugin_t *plg );

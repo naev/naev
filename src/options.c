@@ -9,6 +9,7 @@
 /** @cond */
 #include "physfs.h"
 #include <ctype.h>
+#include <libgen.h>
 
 #include "naev.h"
 /** @endcond */
@@ -128,6 +129,8 @@ static void opt_setKey( unsigned int wid, const char *str );
 static void opt_unsetKey( unsigned int wid, const char *str );
 /* Plugins menu. */
 static void opt_plugins( unsigned int wid );
+static void opt_plugins_regenList( unsigned int wid );
+static void opt_plugins_add( unsigned int wid, const char *name );
 static void opt_plugins_update( unsigned int wid, const char *name );
 
 /**
@@ -1112,7 +1115,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       mod = NMOD_ANY;
       break;
 
-   /* Not handled. */
+      /* Not handled. */
    default:
       return 0;
    }
@@ -1901,15 +1904,13 @@ static void opt_setMapOverlayOpacity( unsigned int wid, const char *str )
  */
 static void opt_plugins( unsigned int wid )
 {
-   int             w, h, lw, lh, bw, n;
-   char          **str, buf[STRMAX_SHORT];
-   const plugin_t *plgs = plugin_list();
+   int  w, h, lw, bw;
+   char buf[STRMAX_SHORT];
 
    /* Get dimensions. */
    bw = BUTTON_WIDTH;
    window_dimWindow( wid, &w, &h );
    lw = w - bw - 100;
-   lh = h - 90;
 
    /* Text stuff. */
    snprintf( buf, sizeof( buf ), "#n%s#0%s%s", _( "Plugins Directory: " ),
@@ -1918,7 +1919,40 @@ static void opt_plugins( unsigned int wid )
    window_addText( wid, -20, -70, w - ( 20 + lw + 20 + 20 ), h - 100, 0,
                    "txtDesc", NULL, NULL, NULL );
 
-   /* Create the list. */
+   opt_plugins_regenList( wid );
+
+   /* Add buttons. */
+   /*
+      window_addButton( wid, -20 - 1 * ( BUTTON_WIDTH + 20 ), 20, BUTTON_WIDTH,
+      BUTTON_HEIGHT, "btnManager", _( "Manager" ),
+      opt_keyDefaults );
+      window_addButton( wid, -20 - 1 * ( BUTTON_WIDTH + 20 ), 20 + 1 *
+      (BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT, "btnDisable", _( "Disable
+      Plugin" ), opt_setKey );
+      */
+   window_addButton( wid, -20, 20 + 1 * ( BUTTON_HEIGHT + 20 ), BUTTON_WIDTH,
+                     BUTTON_HEIGHT, "btnPluginAdd", _( "Add Plugin" ),
+                     opt_plugins_add );
+}
+
+static void opt_plugins_regenList( unsigned int wid )
+{
+   int             w, h, lw, lh, bw, n, p;
+   char          **str;
+   const plugin_t *plgs = plugin_list();
+
+   /* Get dimensions. */
+   bw = BUTTON_WIDTH;
+   window_dimWindow( wid, &w, &h );
+   lw = w - bw - 100;
+   lh = h - 90;
+
+   p = 0;
+   if ( widget_exists( wid, "lstPlugins" ) ) {
+      p = toolkit_getListPos( wid, "lstPlugins" );
+      window_destroyWidget( wid, "lstPlugins" );
+   }
+
    n = array_size( plgs );
    if ( n <= 0 ) {
       str    = malloc( sizeof( char    *) * 1 );
@@ -1929,13 +1963,104 @@ static void opt_plugins( unsigned int wid )
       for ( int i = 0; i < n; i++ )
          str[i] = strdup( plugin_name( &plgs[i] ) );
    }
-
-   window_addList( wid, 20, -70, lw, lh, "lstPlugins", str, n, 0,
+   window_addList( wid, 20, -70, lw, lh, "lstPlugins", str, n, p,
                    opt_plugins_update, NULL );
+}
 
-   /* Add buttons. */
-   // window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
-   //                      _( "OK" ), opt_OK );
+static void opt_plugins_add_callback( void              *userdata,
+                                      const char *const *filelist, int filter )
+{
+   (void)filter;
+   unsigned int    wid = *(unsigned int *)userdata;
+   const plugin_t *plgs;
+   char            buf[STRMAX], path[PATH_MAX], *fname;
+   int             suspicious = 0;
+
+   if ( filelist == NULL ) {
+      WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFileDialog",
+            SDL_GetError() );
+      return;
+   } else if ( filelist[0] == NULL ) {
+      /* Cancelled by user.  */
+      return;
+   }
+
+   /* Check to see if valid. */
+   plugin_t *plg = plugin_test( filelist[0] );
+   if ( plg == NULL ) {
+      dialogue_alert( _( "'%s' is not a valid plugin!" ), filelist[0] );
+      return;
+   }
+   /* See if overlaps. */
+   plgs = plugin_list();
+   for ( int i = 0; i < array_size( plgs ); i++ ) {
+      if ( strcmp( plugin_name( &plgs[i] ), plugin_name( plg ) ) == 0 ) {
+         suspicious = 1;
+         break;
+      }
+   }
+
+   /* Get plugin details. */
+   snprintf( buf, sizeof( buf ),
+             _( "#nName:#0 %s\n"
+                "#nAuthor:#0 %s\n"
+                "#nVersion:#0 %s\n"
+                "#nDescription:#0 %s" ),
+             plugin_name( plg ), plg->author, plg->version, plg->description );
+
+   /* Check to see if definately add. */
+   if ( !suspicious ) {
+      if ( !dialogue_YesNo(
+              _( "Add plugin?" ),
+              _( "Are you sure you want to add '%s' to your list of active "
+                 "plugins? This will require a restart to take full "
+                 "effect.\n\n#nPlugin Details#0\n%s" ),
+              plugin_name( plg ), buf ) ) {
+         plugin_free( plg );
+         free( plg );
+         return;
+      }
+   } else {
+      if ( !dialogue_YesNo(
+              _( "Add plugin?" ),
+              _( "Are you sure you want to add '%s' to your list of active "
+                 "plugins? #rThis plugin has the same name as one of your "
+                 "existing plugins and make cause issues#0. This will require "
+                 "a restart to take full effect.\n\n#nPlugin Details#0\n%s" ),
+              plugin_name( plg ), buf ) ) {
+         plugin_free( plg );
+         free( plg );
+         return;
+      }
+   }
+
+   /* Copy file over. */
+   fname = strdup( filelist[0] );
+   nfile_concatPaths( path, sizeof( path ), plugin_dir(), basename( fname ) );
+   free( fname );
+   if ( nfile_copyIfExists( filelist[0], path ) ) {
+      dialogue_alert( _( "Failed to copy '%s' to '%s'!" ), filelist[0], path );
+      plugin_free( plg );
+      free( plg );
+      return;
+   }
+
+   /* Insert plugin. */
+   plugin_insert( plg );
+   free( plg );
+   opt_needRestart();
+   opt_plugins_regenList( wid );
+}
+static void opt_plugins_add( unsigned int wid, const char *name )
+{
+   (void)name;
+   const SDL_DialogFileFilter filter[] = {
+      { .name = _( "Naev Plugin File" ), .pattern = "zip" },
+      { NULL, NULL },
+   };
+   /* Open dialogue to load the diff. */
+   SDL_ShowOpenFileDialog( opt_plugins_add_callback, &wid, gl_screen.window,
+                           filter, conf.dev_data_dir, 0 );
 }
 
 static void opt_plugins_update( unsigned int wid, const char *name )

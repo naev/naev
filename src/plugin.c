@@ -23,12 +23,66 @@
 #include "nxml.h"
 #include "physfs_archiver_blacklist.h"
 
-static plugin_t *plugins;
+static plugin_t *plugins; /**< The list of active plugins. */
+
+/*
+ * Prototypes.
+ */
+static int plugin_parse( plugin_t *plg, const char *file, const char *path,
+                         int apply );
+
+/**
+ * @brief Tests to see if a file is a plugin and loads information.
+ */
+plugin_t *plugin_test( const char *filename )
+{
+   int         ret;
+   PHYSFS_Stat stat;
+   const char *realdir;
+
+   /* File must exist. */
+   if ( !nfile_fileExists( filename ) )
+      return NULL;
+
+   /* Try to mount. */
+   if ( PHYSFS_mount( filename, NULL, 0 ) == 0 ) {
+      WARN( _( "Failed to mount plugin '%s': %s" ), filename,
+            _( PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+      return NULL;
+   }
+
+   /* Check to see if plugin file exists. */
+   PHYSFS_stat( "plugin.xml", &stat );
+   realdir = PHYSFS_getRealDir( "plugin.xml" );
+   if ( ( stat.filetype != PHYSFS_FILETYPE_REGULAR ) || ( realdir == NULL ) ||
+        strcmp( realdir, filename ) != 0 )
+      return NULL;
+
+   /* Load data and send over. */
+   plugin_t *plg = calloc( 1, sizeof( plugin_t ) );
+   ret           = plugin_parse( plg, "plugin.xml", filename, 0 );
+
+   /* Set some defaults. */
+   if ( plg->author == NULL )
+      plg->author = strdup( _( "Unknown" ) );
+   if ( plg->version == NULL )
+      plg->version = strdup( _( "Unknown" ) );
+   if ( plg->description == NULL )
+      plg->description = strdup( _( "Unknown" ) );
+
+   /* Clean up. */
+   PHYSFS_unmount( filename );
+
+   if ( ret )
+      return NULL;
+   return plg;
+}
 
 /**
  * @brief Parses a plugin description file.
  */
-static int plugin_parse( plugin_t *plg, const char *file, const char *path )
+static int plugin_parse( plugin_t *plg, const char *file, const char *path,
+                         int apply )
 {
    xmlNodePtr node, parent;
    xmlDocPtr  doc = xml_parsePhysFS( file );
@@ -58,44 +112,49 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
       xmlr_int( node, "priority", plg->priority );
       xmlr_strd( node, "source", plg->source );
       if ( xml_isNode( node, "blacklist" ) ) {
-         blacklist_append( xml_get( node ) );
+         if ( apply )
+            blacklist_append( xml_get( node ) );
          continue;
       }
       if ( xml_isNode( node, "whitelist" ) ) {
-         whitelist_append( xml_get( node ) );
+         if ( apply )
+            whitelist_append( xml_get( node ) );
          continue;
       }
       if ( xml_isNode( node, "total_conversion" ) ) {
-         const char *blk[] = {
-            "^ssys/.*\\.xml",
-            "^spob/.*\\.xml",
-            "^spob_virtual/.*\\.xml",
-            "^factions/.*\\.xml",
-            "^commodities/.*\\.xml",
-            "^ships/.*\\.xml",
-            "^outfits/.*\\.xml",
-            "^missions/.*\\.lua",
-            "^events/.*\\.lua",
-            "^tech/.*\\.xml",
-            "^asteroids/.*\\.xml",
-            "^unidiff/.*\\.xml",
-            "^map_decorator/.*\\.xml",
-            "^intro",
-            NULL,
-         };
-         const char *wht[] = {
-            "^events/settings.lua",
-            NULL,
-         };
-         for ( int i = 0; blk[i] != NULL; i++ )
-            blacklist_append( blk[i] );
-         for ( int i = 0; wht[i] != NULL; i++ )
-            whitelist_append( wht[i] );
+         if ( apply ) {
+            const char *blk[] = {
+               "^ssys/.*\\.xml",
+               "^spob/.*\\.xml",
+               "^spob_virtual/.*\\.xml",
+               "^factions/.*\\.xml",
+               "^commodities/.*\\.xml",
+               "^ships/.*\\.xml",
+               "^outfits/.*\\.xml",
+               "^missions/.*\\.lua",
+               "^events/.*\\.lua",
+               "^tech/.*\\.xml",
+               "^asteroids/.*\\.xml",
+               "^unidiff/.*\\.xml",
+               "^map_decorator/.*\\.xml",
+               "^intro",
+               NULL,
+            };
+            const char *wht[] = {
+               "^events/settings.lua",
+               NULL,
+            };
+            for ( int i = 0; blk[i] != NULL; i++ )
+               blacklist_append( blk[i] );
+            for ( int i = 0; wht[i] != NULL; i++ )
+               whitelist_append( wht[i] );
+         }
          plg->total_conversion = 1;
          continue;
       }
-      WARN( _( "Plugin '%s' has unknown metadata node '%s'!" ), path,
-            xml_get( node ) );
+
+      WARN( _( "Plugin '%s' has unknown metadata node '%s'!" ),
+            plugin_name( plg ), xml_get( node ) );
    } while ( xml_nextNode( node ) );
 
    xmlFreeDoc( doc );
@@ -131,6 +190,16 @@ static int plugin_cmp( const void *a, const void *b )
 }
 
 /**
+ * @brief Gets the plugin directory.
+ */
+const char *plugin_dir( void )
+{
+   static char dir[PATH_MAX];
+   nfile_concatPaths( dir, sizeof( dir ), PHYSFS_getWriteDir(), "plugins" );
+   return dir;
+}
+
+/**
  * @brief Initialize and loads all the available plugins.
  *
  *    @return 0 on success.
@@ -157,6 +226,7 @@ int plugin_init( void )
          if ( PHYSFS_mount( buf, NULL, 0 ) == 0 ) {
             WARN( _( "Failed to mount plugin '%s': %s" ), buf,
                   _( PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+            continue;
          }
 
          /* Initialize new plugin. */
@@ -169,7 +239,7 @@ int plugin_init( void )
          realdir = PHYSFS_getRealDir( "plugin.xml" );
          if ( ( stat.filetype == PHYSFS_FILETYPE_REGULAR ) && realdir &&
               strcmp( realdir, buf ) == 0 )
-            plugin_parse( plg, "plugin.xml", *f );
+            plugin_parse( plg, "plugin.xml", *f, 1 );
          else
             WARN( _( "Plugin '%s' does not have a valid '%s'!" ), buf,
                   "plugin.xml" );
@@ -214,20 +284,21 @@ int plugin_init( void )
 }
 
 /**
+ * @brief Inserts a plugin to the list, but does not properly enable it
+ * (requires restart).
+ */
+void plugin_insert( plugin_t *plg )
+{
+   array_push_back( &plugins, *plg );
+}
+
+/**
  * @brief Exits the plugin stuff.
  */
 void plugin_exit( void )
 {
-   for ( int i = 0; i < array_size( plugins ); i++ ) {
-      plugin_t *p = &plugins[i];
-      free( p->name );
-      free( p->author );
-      free( p->version );
-      free( p->description );
-      free( p->compatibility );
-      free( p->source );
-      free( p->mountpoint );
-   }
+   for ( int i = 0; i < array_size( plugins ); i++ )
+      plugin_free( &plugins[i] );
    array_free( plugins );
    plugins = NULL;
 
@@ -245,6 +316,20 @@ const char *plugin_name( const plugin_t *plg )
    if ( plg->name != NULL )
       return plg->name;
    return plg->mountpoint;
+}
+
+/**
+ * @brief Frees a previously allocated plugin.
+ */
+void plugin_free( plugin_t *plg )
+{
+   free( plg->name );
+   free( plg->author );
+   free( plg->version );
+   free( plg->description );
+   free( plg->compatibility );
+   free( plg->source );
+   free( plg->mountpoint );
 }
 
 /**
