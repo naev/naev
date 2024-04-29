@@ -226,10 +226,10 @@ You hear Trixie muttering to themselves.]]))
       l337(_([["Correlation doesn't imply causation!"]]))
       trixie(_([["Indeed it does not, but coincidences are not very good omens."]]))
       l337(_([["Superstitions! However, you tend to have good hunches, so let me see if I can scrap some bandwidth to launch some monitoring spells."]]))
-      trixie(_([["Never can be too careful. There is too much at stake here to mess up.
+      trixie(_([["Never can be too careful. There is too much at stake here to mess up."
 You hear a beep.
 "Ah, diagnostics finished, let's see..."]]))
-      trixie(fmt.f(_([["Cargo looks OK! Seems to be lots of encrypted documents, but there also is a nice one-time pad. Exactly what we need. l337_b01, if you can spare the resources, try to de-encrypt some of the documents. {player}, head to {swapspb} in the {swapsys}. We procede with the plan!"]]),
+      trixie(fmt.f(_([["Cargo looks OK! Seems to be lots of encrypted documents, but there also is a nice one-time pad. Exactly what we need. l337_b01, if you can spare the resources, try to decrypt some of the documents. {player}, head to {swapspb} in the {swapsys}. We proceed with the plan!"]]),
          {player=player.name(), swapspb=swapspb, swapsys=swapsys}))
       l337(_([["Aye aye captain!"]]))
       trixie(fmt.f(_([["Stop mocking me, the captain here is {player}!"]]),

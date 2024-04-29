@@ -403,7 +403,7 @@ function poi.board( _p )
             {sys=mem.poi.sys}))
       end )
    elseif mem.reward.type == "data" then
-      local msg = _([[You access the main computer and are able to extract some Encrypted Data Matrices. It does not seem like you can de-encrypt them without damaging them, but they may have some other use.]])
+      local msg = _([[You access the main computer and are able to extract some Encrypted Data Matrices. It does not seem like you can decrypt them without damaging them, but they may have some other use.]])
       msg = msg .. "\n\n" .. fmt.reward(_("Encrypted Data Matrix"))
       vn.na( msg )
       vn.func( function ()

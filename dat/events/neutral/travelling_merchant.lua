@@ -346,7 +346,7 @@ They get uncomfortably close
 
          vn.label("matrices_cont01")
          mm(_([[They sniff the air as to confirm their findings.
-"You haven't been able to de-encrypt them have you? Old technology is a bugger, and most of the cipher codes have been lost, not making it an easy task. I don't think the Encrypted Data Matrices will be of any use to you. However, if you're willing to trade, I have some better offerings that may pique your interest."]]))
+"You haven't been able to decrypt them have you? Old technology is a bugger, and most of the cipher codes have been lost, not making it an easy task. I don't think the Encrypted Data Matrices will be of any use to you. However, if you're willing to trade, I have some better offerings that may pique your interest."]]))
          mm(_([["If you aren't interested in material goods, I also have some special services up my sleeves that should suit any of your ships. Just ask me about them."]]))
          vn.func( function ()
             var.push("travelling_trader_data",true)

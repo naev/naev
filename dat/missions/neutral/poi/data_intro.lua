@@ -39,7 +39,7 @@ It sounds like the atmosphere is being vented. You hear some struggling before t
          vn.disappear( v01 )
 
          vn.appear( sai, tut.shipai.transition )
-         sai(_([["That was… interesting. Looking over the systems I've found something. My memory files indicate that it is a Data Matrix. It has some sort of archaic lock I am unable to de-encrypt. For some reason, I quite well remember them being useful, however, it seems that my files on them have been somewhat damaged… This is fairly odd."]]))
+         sai(_([["That was… interesting. Looking over the systems I've found something. My memory files indicate that it is a Data Matrix. It has some sort of archaic lock I am unable to decrypt. For some reason, I quite well remember them being useful, however, it seems that my files on them have been somewhat damaged… This is fairly odd."]]))
          vn.menu{
             {_("Take the Data Matrix."), "cont01"},
             {_("…"), "cont01"},
