@@ -287,6 +287,7 @@ function cutscene_main0 ()
    player.canDiscover( false )
    setHide( true )
 
+   diff.remove( "Chapter 0" )
    if diff.isApplied( diff_progress3 ) then
       diff.remove( diff_progress3 )
    end

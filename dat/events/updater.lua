@@ -16,8 +16,12 @@ local luatk = require "luatk"
 
 -- Runs on saves older than 0.11.0
 local function updater0120( _did0110, _did0100, _did090 )
-   if player.chapter()=="0" and not diff.isApplied( "Chapter 0" ) then
-      diff.apply( "Chapter 0" )
+   if player.chapter()=="0" then
+      if not diff.isApplied( "Chapter 0" ) then
+         diff.apply( "Chapter 0" )
+      end
+   else
+      diff.remove( "Chapter 0" )
    end
 end
 
