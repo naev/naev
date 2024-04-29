@@ -1554,7 +1554,7 @@ static void uniedit_renameSys( void )
 {
    int cancelall_prompt = 0;
    for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
-      char       *name, *oldName, *newName, *filtered;
+      char       *name, *oldName, *newName;
       const char *prompt;
       StarSystem *sys = uniedit_sys[i];
 
@@ -1584,6 +1584,8 @@ static void uniedit_renameSys( void )
          uniedit_diffCreateSysStr( sys, HUNK_TYPE_SSYS_DISPLAYNAME,
                                    name ); /* Name is already allocated. */
       } else {
+         char *filtered;
+
          /* Try again. */
          if ( uniedit_checkName( name ) ) {
             free( name );
@@ -2403,7 +2405,6 @@ static void uniedit_btnEditAddSpob( unsigned int parent, const char *unused )
 static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
 {
    const char *selected;
-   int         ret;
 
    /* Get selection. */
    selected = toolkit_getList( wid, "lstSpobs" );
@@ -2415,7 +2416,7 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
                                 strdup( selected ) );
    } else {
       /* Add virtual presence. */
-      ret = system_addVirtualSpob( uniedit_sys[0], selected );
+      int ret = system_addVirtualSpob( uniedit_sys[0], selected );
       if ( ret != 0 ) {
          dialogue_alert( _( "Failed to add virtual spob '%s'!" ), selected );
          return;
