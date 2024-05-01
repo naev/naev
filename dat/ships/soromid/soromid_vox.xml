@@ -17,7 +17,7 @@
  <fabricator>Soromid</fabricator>
  <license>Heavy Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Soromid")+0.5) &gt;= 70</cond>
- <condstr>You need at least 70 reputation with the Soromid.</condstr>
+ <condstr>You need at least 70% reputation with the Soromid.</condstr>
  <description>The Vox is the biggest vessel the Soromid field, hands down. This battleship serves as the core of any given Soromid war fleet and is only called upon in notable engagements.</description>
  <health>
   <armour>2000</armour>

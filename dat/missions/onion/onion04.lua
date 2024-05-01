@@ -48,7 +48,7 @@ local runjmp = jump.get( ambushsys, system.get("Nartur") )
 
 --local money_reward = onion.rewards.misn04
 
-local title = _("Onion Bank Heist")
+local title = _("Onion Heist")
 
 --[[
    Mission States
@@ -169,14 +169,19 @@ function land ()
       trixie(_([["I don't know! Run over a maintenance robot or something!"]]))
       vn.menu{
          {_([[Run over a maintenance robot.]]), "01_robot"},
-         {_([[Power up weapon systems.]]), "01_weapons"},
+         {_([[Activate your ship's security alarm.]]), "01_alarm"},
          {_([[Bump the ship into the station structure.]]), "01_bump"},
       }
 
       vn.label("01_bump")
+      vn.na(_([[You fumble the controls of the ship a bit ]]))
       vn.jump("01_cont")
 
       vn.label("01_robot")
+      vn.na(_([[You begrudgingly take the controls of the ship, and wait until a cleaner robot strays near your landing gear. Wasting no time on the opportunity, you do a precise manoeuvre to crush it with a resounding *CRUNCH*. Given the amount of heads turned, it looks like you got the attention of the entire spacedock.]]))
+      vn.jump("01_cont")
+
+      vn.label("01_alarm")
       vn.jump("01_cont")
 
       vn.label("01_cont")

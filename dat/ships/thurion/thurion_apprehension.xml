@@ -17,7 +17,7 @@
  <fabricator>Thurion shipyards</fabricator>
  <license>Medium Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Thurion")+0.5) &gt;= 50</cond>
- <condstr>You need at least 50 reputation with the Thurion.</condstr>
+ <condstr>You need at least 50% reputation with the Thurion.</condstr>
  <description>...</description>
  <health>
   <armour>550</armour>

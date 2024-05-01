@@ -15,7 +15,7 @@
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Dvaered")+0.5) &gt;= 50</cond>
- <condstr>You need at least 50 reputation with House Dvaered.</condstr>
+ <condstr>You need at least 50% reputation with House Dvaered.</condstr>
  <description>This military grade version of the Vigilance has an optimized weight distribution allowing it to carry more payload.</description>
  <health>
   <armour>550</armour>

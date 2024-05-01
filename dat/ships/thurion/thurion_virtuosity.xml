@@ -18,7 +18,7 @@
  <fabricator>Thurion shipyards</fabricator>
  <license>Medium Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Thurion")+0.5) &gt;= 40</cond>
- <condstr>You need at least 40 reputation with the Thurion.</condstr>
+ <condstr>You need at least 40% reputation with the Thurion.</condstr>
  <description>The Thurion Virtuosity is a medium-sized ship used by the Thurion for frontal assaults. While weapon space is less than stellar, the vessel's superior electronics and resistance to the harsh nebula more than make up for it.</description>
  <health>
   <armour>300</armour>
