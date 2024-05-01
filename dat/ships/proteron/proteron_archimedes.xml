@@ -16,7 +16,7 @@
  <trail_generator x="-7" y="20" h="0" always_under="1">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
  <license>Heavy Combat Vessel</license>
- <cond>faction.playerStanding("Proteron") &gt;= 70</cond>
+ <cond>math.ceil(faction.playerStanding("Proteron")+0.5) &gt;= 70</cond>
  <condstr>You need at least 70 reputation with the Proteron.</condstr>
  <description>The Archimedes is the backbone of the Proteron fleet. Offering heavy firepower and high durability, it can always be found in the heat of battle.</description>
  <health>
