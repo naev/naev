@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-05-01 10:06+0000\n"
+"PO-Revision-Date: 2024-05-01 10:45+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -1323,7 +1323,12 @@ msgid ""
 "hardened materials has led to a decrease in demand. However, lower-end and "
 "older technologies still require rhodium and are the main source of market "
 "demand."
-msgstr "Walaupun sifat r"
+msgstr ""
+"Walaupun sifat tahan karat yang dimiliki rodium sangat penting dalam "
+"pembuatan berbagai logam campuran, ketersediaan dari keramik baru dan "
+"material yang diperkuat radiasi menyebabkan penurunan permintaan terhadap "
+"rodium. Namun, teknologi yang lebih murah dan tua tetap memerlukan rodium, "
+"menjadikannya sumber permintaan utama untuk rodium."
 
 #: dat/commodities/silicate.xml:3
 msgid "Silicate"
@@ -30412,7 +30417,7 @@ msgstr "Bioship"
 
 #: dat/events/bioship.lua:41
 msgid " !!"
-msgstr ""
+msgstr " !!"
 
 #. Try to clean up outfits
 #: dat/events/bioship.lua:60
@@ -37487,7 +37492,7 @@ msgstr ""
 #: dat/missions/minerva/finale1.lua:390 dat/missions/minerva/maikki2.lua:459
 #: dat/missions/zalek/blackhole/zbh03.lua:54
 msgid "\"…\""
-msgstr ""
+msgstr "\"…\""
 
 #: dat/events/neutral/travelling_merchant.lua:336
 msgid "\"I knew it! I would never forget that smell in a lifetime.\""
@@ -64377,7 +64382,7 @@ msgstr ""
 #: dat/missions/minerva/finale2.lua:586 dat/missions/minerva/finale2.lua:587
 #: dat/missions/minerva/finale2.lua:861 dat/missions/minerva/finale2.lua:862
 msgid " ."
-msgstr ""
+msgstr " ."
 
 #. Time to bring back Kex!!!
 #: dat/missions/minerva/finale2.lua:584
@@ -64942,7 +64947,7 @@ msgstr ""
 #: dat/missions/minerva/finale2.lua:806
 #: dat/missions/neutral/poi/proteron_press.lua:79
 msgid "\"...\""
-msgstr ""
+msgstr "\"...\""
 
 #: dat/missions/minerva/finale2.lua:810
 msgid ""
@@ -71457,6 +71462,8 @@ msgid ""
 "\n"
 "* "
 msgstr ""
+"\n"
+"* "
 
 #: dat/missions/minerva/pirate2.lua:64
 msgid ""
@@ -94308,7 +94315,7 @@ msgstr ""
 
 #: dat/missions/taiomi/taiomi10.lua:555 dat/missions/taiomi/taiomi10.lua:556
 msgid " …"
-msgstr ""
+msgstr " …"
 
 #. clear shaders
 #. clear shaders
@@ -113326,7 +113333,7 @@ msgstr ""
 #: src/SDL_keynames.h:75
 msgctxt "keyname"
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: src/SDL_keynames.h:76
 msgctxt "keyname"
@@ -113336,7 +113343,7 @@ msgstr ""
 #: src/SDL_keynames.h:77
 msgctxt "keyname"
 msgid "'"
-msgstr ""
+msgstr "'"
 
 #: src/SDL_keynames.h:78
 msgctxt "keyname"
@@ -122333,7 +122340,7 @@ msgstr ""
 #: src/physics.c:30 src/shipstats.c:60 src/shipstats.c:62 src/shipstats.c:70
 #: src/shipstats.c:72
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/physics.c:291
 msgid "Solid initialization did not specify correct update function!"
