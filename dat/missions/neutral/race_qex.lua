@@ -84,7 +84,7 @@ end
 
 local function display_time( time )
    return fmt.f(_("{1:02.0f}:{2:02.0f}.{3:.0f}"),{
-      math.floor( time / 60 ),
+      math.floor(math.abs( time / 60 )),
       math.floor(math.fmod( time, 60 ) ),
       math.floor(math.fmod( time, 1 )*10),
    })
@@ -353,14 +353,14 @@ They hand you one of those fake oversized cheques for the audience, and then a c
          player.pay(reward)
       end )
    elseif best_improved then
-      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} of the goal time. This is your new best time! Keep trying!"), {
+      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. This is your new best time! Keep trying!"), {
          elapsed="#g"..display_time( elapsed_time ).."#0",
-         short="#r"..display_time( mem.track.goaltime - elapsed_time ).."#0",
+         short="#r"..display_time( -mem.track.goaltime + elapsed_time ).."#0",
       }))
    else
-      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} of the goal time. Keep trying!"), {
+      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. Keep trying!"), {
          elapsed="#g"..display_time( elapsed_time ).."#0",
-         short="#r"..display_time( mem.track.goaltime - elapsed_time ).."#0",
+         short="#r"..display_time( -mem.track.goaltime + elapsed_time ).."#0",
       }))
    end
 
