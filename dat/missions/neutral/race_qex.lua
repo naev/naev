@@ -84,9 +84,9 @@ end
 
 local function display_time( time )
    return fmt.f(_("{1:02.0f}:{2:02.0f}.{3:.0f}"),{
-      math.floor(math.abs( time / 60 )),
-      math.floor(math.fmod( time, 60 ) ),
-      math.floor(math.fmod( time, 1 )*10),
+      (time > 0 and 1 or -1)*math.floor(math.abs( time / 60 )),
+      math.floor(math.fmod( math.abs(time), 60 ) ),
+      math.floor(math.fmod( math.abs(time), 1 )*10),
    })
 end
 
