@@ -83,10 +83,11 @@ function create ()
 end
 
 local function display_time( time )
+   local abs_time = math.abs(time)
    return fmt.f(_("{1:02.0f}:{2:02.0f}.{3:.0f}"),{
-      (time > 0 and 1 or -1)*math.floor(math.abs( time / 60 )),
-      math.floor(math.fmod( math.abs(time), 60 ) ),
-      math.floor(math.fmod( math.abs(time), 1 )*10),
+      (time > 0 and 1 or -1)*math.floor( abs_time / 60 ),
+      math.floor(math.fmod( abs_time, 60 ) ),
+      math.floor(math.fmod( abs_time, 1 )*10),
    })
 end
 
@@ -355,12 +356,12 @@ They hand you one of those fake oversized cheques for the audience, and then a c
    elseif best_improved then
       vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. This is your new best time! Keep trying!"), {
          elapsed="#g"..display_time( elapsed_time ).."#0",
-         short="#r"..display_time( -mem.track.goaltime + elapsed_time ).."#0",
+         short="#r"..display_time( elapsed_time - mem.track.goaltime ).."#0",
       }))
    else
       vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. Keep trying!"), {
          elapsed="#g"..display_time( elapsed_time ).."#0",
-         short="#r"..display_time( -mem.track.goaltime + elapsed_time ).."#0",
+         short="#r"..display_time( elapsed_time - mem.track.goaltime ).."#0",
       }))
    end
 
