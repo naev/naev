@@ -113,7 +113,7 @@ function approach_terminal ()
       lbp(_([["Racing is quite simple, you have to go through all the gates in order until you reach the final goal. There are no limitations on what ship and outfits you can use, but you're best sticking to Yacht or Interceptor-class ships if you want to make good times."]]))
       lbp(_([["Each track has a goal time to beat. If you beat the time, you will get a nice credit reward. Furthermore, if you beat all the tracks here, a Melendez Corporation representative will give you a nice trophy to commemorate!"]]))
       lbp(_([["You can try as many times as you want with no penalty. Your best time will also be saved so you can try to beat it again."]]))
-      lbp(_([["It's really fun, just be careful not to get addicted. He he.]]))
+      lbp(_([["It's really fun, just be careful not to get addicted. He he."]]))
 
       vn.label("cont01_no")
       lbp(_([["OK, look forward to seeing your racing skills!"]]))
