@@ -1975,8 +1975,9 @@ static void opt_plugins_add_callback( void              *userdata,
    (void)filter;
    unsigned int    wid = *(unsigned int *)userdata;
    const plugin_t *plgs;
-   char            buf[STRMAX], path[PATH_MAX], *fname;
+   char            buf[STRMAX], buf_susp[STRMAX], path[PATH_MAX], *fname;
    int             suspicious = 0;
+   const plugin_t *plg_susp   = NULL;
 
    if ( filelist == NULL ) {
       WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFileDialog",
@@ -1998,9 +1999,22 @@ static void opt_plugins_add_callback( void              *userdata,
    for ( int i = 0; i < array_size( plgs ); i++ ) {
       if ( strcmp( plugin_name( &plgs[i] ), plugin_name( plg ) ) == 0 ) {
          suspicious = 1;
+         plg_susp   = &plgs[i];
+         snprintf( buf_susp, sizeof( buf_susp ),
+                   _( "#nName:#0 %s\n"
+                      "#nAuthor:#0 %s\n"
+                      "#nVersion:#0 %s\n"
+                      "#nDescription:#0 %s" ),
+                   plugin_name( plg_susp ), plg_susp->author, plg_susp->version,
+                   plg_susp->description );
          break;
       }
    }
+
+   /* New plugin path. */
+   fname = strdup( filelist[0] );
+   nfile_concatPaths( path, sizeof( path ), plugin_dir(), basename( fname ) );
+   free( fname );
 
    /* Get plugin details. */
    snprintf( buf, sizeof( buf ),
@@ -2011,12 +2025,42 @@ static void opt_plugins_add_callback( void              *userdata,
              plugin_name( plg ), plg->author, plg->version, plg->description );
 
    /* Check to see if definately add. */
-   if ( !suspicious ) {
+   if ( nfile_fileExists( path ) ) {
+      if ( suspicious ) {
+         if ( !dialogue_YesNo(
+                 _( "Update plugin?" ),
+                 _( "Are you sure you want to update the plugin '%s'? This "
+                    "will require a restart to take full "
+                    "effect.\n\n#nNew Plugin Details#0\n%s\n\n#nOld Plugin "
+                    "Details#0\n%s" ),
+                 plugin_name( plg ), buf, buf_susp ) ) {
+            plugin_free( plg );
+            free( plg );
+            return;
+         }
+      } else {
+         fname = strdup( filelist[0] );
+         if ( !dialogue_YesNo(
+                 _( "Overwrite plugin?" ),
+                 _( "Are you sure you want to add '%s' to your list of active "
+                    "plugins? This will overwrite a plugin with the same file "
+                    "name (%s), but not same plug in name. This will require a "
+                    "restart to take full "
+                    "effect.\n\n#nNew Plugin Details#0\n%s" ),
+                 plugin_name( plg ), basename( fname ), buf ) ) {
+            plugin_free( plg );
+            free( plg );
+            free( fname );
+            return;
+         }
+         free( fname );
+      }
+   } else if ( !suspicious ) {
       if ( !dialogue_YesNo(
               _( "Add plugin?" ),
               _( "Are you sure you want to add '%s' to your list of active "
                  "plugins? This will require a restart to take full "
-                 "effect.\n\n#nPlugin Details#0\n%s" ),
+                 "effect.\n\n#nNew Plugin Details#0\n%s" ),
               plugin_name( plg ), buf ) ) {
          plugin_free( plg );
          free( plg );
@@ -2028,8 +2072,9 @@ static void opt_plugins_add_callback( void              *userdata,
               _( "Are you sure you want to add '%s' to your list of active "
                  "plugins? #rThis plugin has the same name as one of your "
                  "existing plugins and make cause issues#0. This will require "
-                 "a restart to take full effect.\n\n#nPlugin Details#0\n%s" ),
-              plugin_name( plg ), buf ) ) {
+                 "a restart to take full effect.\n\n#nNew Plugin "
+                 "Details#0\n%s\n\n#nSame name Plugin Details#0\n%s" ),
+              plugin_name( plg ), buf, buf_susp ) ) {
          plugin_free( plg );
          free( plg );
          return;
@@ -2037,9 +2082,6 @@ static void opt_plugins_add_callback( void              *userdata,
    }
 
    /* Copy file over. */
-   fname = strdup( filelist[0] );
-   nfile_concatPaths( path, sizeof( path ), plugin_dir(), basename( fname ) );
-   free( fname );
    if ( nfile_copyIfExists( filelist[0], path ) ) {
       dialogue_alert( _( "Failed to copy '%s' to '%s'!" ), filelist[0], path );
       plugin_free( plg );
