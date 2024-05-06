@@ -41,16 +41,16 @@ function create ()
    local traded_total = var.peek("hypconst_traded_total") or 0
 
    -- Compute some sort of progress value
-   local progress = traded_total * 100 / 2000 -- Would need 2000 to trigger the change by this itself
-   for k,m in ipairs(player.misnDoneList()) do
-      progress = progress + 100 / 40 -- Needs 40 missions to complete by itself
-   end
+   local progress = traded_total / 2000 -- Would need 2000 ore delivered to trigger the change by this itself
+         + #player.misnDoneList() / 40 -- Needs 40 missions to complete by itself
+         + player.wealth() / 50e6 -- Needs 50 million by themselves to trigger event
+   -- Finally getting the heavy weapon or vessel license permission gives a large
    if has_license then
-      progress = progress + 40
+      progress = progress + 0.4
    end
 
    -- Determine what to do
-   if progress >= 100 then
+   if progress >= 1 then
       -- Make event happen when player is not in any system with a hypergate
       for k,v in ipairs(system.cur():spobs()) do
          if v:tags().hypergate then
@@ -80,7 +80,7 @@ function create ()
       hook.safe( "cutscene_start" )
       return -- Don't finish
 
-   elseif progress >= 50 then
+   elseif progress >= 0.5 then
       if not diff.isApplied( diff_progress1 ) then
          diff.apply( diff_progress1 )
       end
