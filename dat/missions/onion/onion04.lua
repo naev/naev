@@ -167,25 +167,60 @@ function land ()
 
       vn.label("01_stumped")
       trixie(_([["I don't know! Run over a maintenance robot or something!"]]))
+      l337(_([["TIme to get busy!"]]))
+      vn.disappear( {l337, trixie}, "electric" )
       vn.menu{
          {_([[Run over a maintenance robot.]]), "01_robot"},
          {_([[Activate your ship's security alarm.]]), "01_alarm"},
          {_([[Bump the ship into the station structure.]]), "01_bump"},
       }
+      local badthing
 
       vn.label("01_bump")
-      vn.na(_([[You fumble the controls of the ship a bit ]]))
+      vn.na(_([[You fumble the controls of the ship a bit, just enough to make it barely scratch the inner hull of the space dock. Although you expected it to make some noise, you didn't foresee the ear-splitting screech caused by the metal on metal interaction. With all the heads of everyone at the spacedocks turned your way, it seems like you managed to get the attention of the inter spacedock.]]))
+      vn.func( function () badthing = "bump" end )
       vn.jump("01_cont")
 
       vn.label("01_robot")
       vn.na(_([[You begrudgingly take the controls of the ship, and wait until a cleaner robot strays near your landing gear. Wasting no time on the opportunity, you do a precise manoeuvre to crush it with a resounding *CRUNCH*. Given the amount of heads turned, it looks like you got the attention of the entire spacedock.]]))
+      vn.func( function () badthing = "robot" end )
       vn.jump("01_cont")
 
       vn.label("01_alarm")
+      vn.na(_([[You open the command console and trigger the ship's emergency alarm system. The alarm system, designed for long-range planetary signalling, seems to be amplified and echoed by the spacedock structure, resulting in an onslaught of audible chaos. Everyone in the spacedock turns towards your ship: it looks like you got the attention of the entire floor.]]))
+      vn.func( function () badthing = "alarm" end )
       vn.jump("01_cont")
 
       vn.label("01_cont")
       vn.appear( staff, "electric" )
+      vn.na(_([[Almost immediately, a high priority communication channel with the spacedock command opens.]]))
+      staff(_([["What the hell are you thinking! I've dealt with a ton of pilots in my time, but none as reckless as you!"]]))
+      vn.menu{
+         {_([["Sorry! It's my first time landing."]]), "02_landing"},
+         {_([["What do you mean?"]]), "02_mean"},
+      }
+
+      vn.label("02_landing")
+      staff( function ()
+         local msg1 = _([[You call that landing? Who the hell taught you to fly?]])
+         local msg2
+         if badthing=="bump" then
+            msg2 = _([[It's a bloody spacedock, not a percussive instrument you have to bash your ship against!]])
+         elseif badthing=="robot" then
+            msg2 = _([[The robot you crushed only had one cycle left until retirement!]])
+         else
+            msg2 = _([[You can't just blast your alarm at the spacedocks! You know how much tympanic reconstruction costs!]])
+         end
+         local msg = fmt.f([["{msg1} {msg2}"]],{
+            msg1=msg1, msg2=msg2 } )
+         return msg
+      end )
+      vn.jump("02_cont")
+
+      vn.label("02_mean")
+      vn.jump("02_cont")
+
+      vn.label("02_cont")
 
       vn.done("electric")
       vn.run()
