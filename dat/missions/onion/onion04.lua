@@ -36,7 +36,7 @@ local lmisn = require "lmisn"
 local fleet = require "fleet"
 local pilotai = require "pilotai"
 local der = require 'common.derelict'
---local lg = require "love.graphics"
+local lg = require "love.graphics"
 
 -- Action happens on the jump from Action happens Overture to Dohriabi on the Overture side
 local ambushsys = system.get("Overture")
@@ -82,8 +82,10 @@ function accept ()
 
    vn.clear()
    vn.scene()
-   local l337 = vn.newCharacter( onion.vn_l337b01{pos="left"} )
-   local trixie = vn.newCharacter( onion.vn_trixie{pos="right"} )
+   local l337 = onion.vn_l337b01{pos="left"}
+   local trixie = onion.vn_trixie{pos="right"}
+   vn.newCharacter( l337 )
+   vn.newCharacter( trixie )
    vn.music( onion.loops.hacker )
    vn.transition("electric")
    vn.na(_([[You answer the incoming connection and some familiar holograms appear on-screen.]]))
@@ -242,11 +244,103 @@ function land ()
       vn.label("03_cont")
       staff(_([["Show me your credentials. I'm filing a report to the Empire. You do know what happens if you don't comply, do you?"]]))
       vn.menu{
-         {_([[""]]), "04_cont"},
+         {_([["Wait, I can explain!"]]), "04_explain"},
          {_([["Credentials? I don't even know who I am!"]]), "04_cont"},
-         {_([["No, I'm filing a complaint to the Empire!"]]), "04_cont"},
+         {_([["No, *I'm* filing a complaint to the Empire!"]]), "04_counter"},
       }
 
+      vn.label("04_explain")
+      staff(_([["Too late now! The spacedock recordings are all the explanation anyone will need!"]]))
+      vn.jump("04_cont")
+
+      vn.label("04_counter")
+      staff(_([["File a complaint for what? Upholding the law? Taking care of the spacedocks? Dealing with horrible pilots?"]]))
+      vn.jump("04_cont")
+
+      vn.label("04_cont")
+      staff(fmt.f(_([["Your flying days will be over. The Empire does not take kindly to this kind of infraction. If you get lucky, you'll only be given a life sentence on the lovely prison planet {spb}!"]]),
+         {spb=spob.get("Finn")})) -- Finn is an Empire prison world
+      staff(_([["Not going to be so cocky when you are..."]]))
+
+      l337(_([[Suddenly l337_b01 shouts through the other channel.
+"Got them!"]]))
+      vn.scene()
+      vn.newCharacter( l337 )
+      vn.setBackground( function ()
+         local nw, nh = lg.getDimensions()
+         lg.setColour( 0, 0, 0, 1 )
+         lg.rectangle( "fill", 0, 0, nw, nh )
+      end )
+      vn.transition()
+      vn.na(_([[Suddenly the stations power goes out and the connection with spacedock command is cut.]]))
+      vn.appear( trixie, "electric" )
+      trixie(_([["Yo."]]))
+      vn.menu{
+         {_([["What happened?"]]), "05_cont"},
+         {_([["Yo."]]), "05_cont"},
+      }
+
+      vn.label("05_cont")
+      l337(_([["Trixie, that was top-notch! I didn't even think of reversing the polarization protocol to create a bandwidth backflow and overflow the router!"]]))
+      trixie(_([["There are a lot more tricks where that came from!"]]))
+      l337(_([["Totally yoinking that one."]]))
+      trixie(fmt.f(_([["{player}, to fill you out, we managed to swap the one-time pad onto the local convoy. We've rebooted the station systems to cover our track, but the job here is done!"]]),
+         {player=player.name()}))
+      vn.menu{
+         {_([["What about the spacedock command?"]]), "06_cont"},
+         {_([["Will I be alright?"]]), "06_cont"},
+         {_([["Great job!"]]), "06_cont"},
+      }
+
+      vn.label("06_cont")
+      trixie(_([["No need to worry about anything."]]))
+      l337(_([["Just watch and see."]]))
+
+      vn.scene()
+      vn.newCharacter( l337 )
+      vn.newCharacter( trixie )
+      vn.setBackground()
+      vn.transition()
+      vn.appear( staff, "electric" )
+      vn.na(_([[The station lights flicker on and an angrier than ever spacedock command appears promptly on your holoscreen.]]))
+      staff(_([["You! You have something to do with this. When I add this to your list of crimes, you'll be lucky to even breath oxygen again!"]]))
+      staff(fmt.f(_([["Security! Seize the {shipname}!"]]),
+         {shipname=player.pilot():name()}))
+      staff(_([["Wait, what are you doing? Criminal fraud? I haven't done anything."]]))
+      vn.disappear( staff, "electric" )
+      vn.na(_([[The connection with spacedock command abruptly cuts out.]]))
+
+      trixie(_([["And that was that."]]))
+      l337(_([["Nice clean job. I could get used to this."]]))
+      trixie(fmt.f(_([["OK, now comes for the final part. {player}, we need you to go to {spb} in the {sys} system, and we'll break into the system using the new security code they'll be using."]]),
+         {player=player.name(), spb=targetspb, sys=targetsys}))
+      l337(_([["If we've gotten this far, it should be a piece of cake. "]]))
+      vn.func( function ()
+         if mem.didoptscene then
+            return vn.jump("07_didscene")
+         end
+         return vn.jump("07_noscene")
+      end )
+
+      vn.label("07_didscene" )
+      trixie(_([["Again? I told you to stop making me hungry!"]]))
+      l337(_([["Didn't you just have cake?"]]))
+      trixie(_([["First cake yes, but what about second cake?"]]))
+      l337(_([["You should watch out for your blood sugar."]]))
+      trixie(_([[You hear a muffled eating sound.]]))
+      l337(fmt.f(_([["Ah well. I should get some cake too."
+The pause a second.
+"Before I forget, {player}, on to {spb}!"]]),
+         {player=player.name(), spb=targetspb}))
+      vn.na(_([[Maybe you should get some cake too.]]))
+      vn.done("electric")
+
+      vn.label("07_noscene" )
+      trixie(_([["Stop making me hungry!"]]))
+      l337(_([["Sorry, forgot you had such a sweet tooth."]]))
+      trixie(_([[You hear Trixie muttering something about cake.]]))
+      l337(fmt.f(_([["{player}, on to {spb}!"]]),
+         {player=player.name(), spb=targetspb}))
       vn.done("electric")
       vn.run()
 
@@ -305,6 +399,7 @@ You hear a beep.
       vn.na(_([[The holograms fade out, probably to conserve bandwidth, and you are left with the task at hand.]]))
       vn.run()
       -- Advance internal state
+      mem.didoptscene = true
       mem.state = 2
 
    elseif mem.state==3 and cspb==targetspb then
