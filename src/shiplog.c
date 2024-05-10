@@ -229,7 +229,7 @@ int shiplog_appendByID( int logid, const char *msg )
       }
       e = e->next;
    }
-   if ( ( e = calloc( sizeof( ShipLogEntry ), 1 ) ) == NULL ) {
+   if ( ( e = calloc( 1, sizeof( ShipLogEntry ) ) ) == NULL ) {
       WARN( _( "Error creating new log entry - crash imminent!\n" ) );
       return -1;
    }
@@ -479,7 +479,7 @@ int shiplog_load( xmlNodePtr parent )
                      strdup( xml_raw( cur ) );
                }
             } else if ( xml_isNode( cur, "log" ) ) {
-               e = calloc( sizeof( ShipLogEntry ), 1 );
+               e = calloc( 1, sizeof( ShipLogEntry ) );
                /* put this one at the end */
                e->prev = shipLog.tail;
                if ( shipLog.tail == NULL )

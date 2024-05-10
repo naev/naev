@@ -190,7 +190,7 @@ tech_group_t *tech_groupCreateXML( xmlNodePtr node )
  */
 tech_group_t *tech_groupCreate( void )
 {
-   tech_group_t *tech = calloc( sizeof( tech_group_t ), 1 );
+   tech_group_t *tech = calloc( 1, sizeof( tech_group_t ) );
    return tech;
 }
 

@@ -1095,7 +1095,7 @@ GltfObject *gltf_loadFromFile( const char *filename )
    opts.file.read = gltf_read;
 
    /* Initialize object. */
-   obj = calloc( sizeof( GltfObject ), 1 );
+   obj = calloc( 1, sizeof( GltfObject ) );
 
    /* Start loading the file. */
    res = cgltf_parse_file( &opts, filename, &data );

@@ -476,7 +476,7 @@ static GLuint gl_loadSurface( SDL_Surface *surface, unsigned int flags,
 static glTexture *gl_texCreate( const char *path, int sx, int sy,
                                 unsigned int flags )
 {
-   glTexture *tex = calloc( sizeof( glTexture ), 1 );
+   glTexture *tex = calloc( 1, sizeof( glTexture ) );
    tex->name      = strdup( path );
    tex->sx        = (double)sx;
    tex->sy        = (double)sy;

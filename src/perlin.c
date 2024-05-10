@@ -75,7 +75,7 @@ perlin_data_t *noise_new( void )
    unsigned char  tmp;
 
    /* Create the data. */
-   pdata = calloc( sizeof( perlin_data_t ), 1 );
+   pdata = calloc( 1, sizeof( perlin_data_t ) );
 
    /* Create the buffer and map. */
    for ( i = 0; i < 256; i++ )
