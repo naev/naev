@@ -160,14 +160,14 @@ function land ()
       end
       trixie(_([["Damn, it seems denser than expected. We need a distraction. Quick, {player}, do something!"]]))
       vn.menu{
-         {_([[Power up weapon systems.]]), "01_weapons"},
+         {_([[Activate your ship's security alarm.]]), "01_alarm"},
          {_([[Bump the ship into the station structure.]]), "01_bump"},
          {_([["What should I do!?"]]), "01_stumped"},
       }
 
       vn.label("01_stumped")
       trixie(_([["I don't know! Run over a maintenance robot or something!"]]))
-      l337(_([["TIme to get busy!"]]))
+      l337(_([["Time to get busy!"]]))
       vn.disappear( {l337, trixie}, "electric" )
       vn.menu{
          {_([[Run over a maintenance robot.]]), "01_robot"},
@@ -196,11 +196,11 @@ function land ()
       vn.na(_([[Almost immediately, a high priority communication channel with the spacedock command opens.]]))
       staff(_([["What the hell are you thinking! I've dealt with a ton of pilots in my time, but none as reckless as you!"]]))
       vn.menu{
-         {_([["Sorry! It's my first time landing."]]), "02_landing"},
-         {_([["What do you mean?"]]), "02_mean"},
+         {_([["Sorry! It's my first time landing."]]), "02_cont"},
+         {_([["What do you mean?"]]), "02_cont"},
       }
 
-      vn.label("02_landing")
+      vn.label("02_cont")
       staff( function ()
          local msg1 = _([[You call that landing? Who the hell taught you to fly?]])
          local msg2
@@ -215,12 +215,37 @@ function land ()
             msg1=msg1, msg2=msg2 } )
          return msg
       end )
-      vn.jump("02_cont")
+      vn.appear( l337, "electric" )
+      l337(_([[l337_b01 appears on a separate channel.
+"We're almost there, keep them distracted a bit longer."]]))
+      vn.menu( function ()
+         local opts = {
+            {_([["I have no idea of what you are talking about."]]),"03_cont"},
+            {_([["What you say?"]]),"03_cont"},
+         }
+         if badthing=="bump" then
+            table.insert( opts, 1, {_([["It was only a scratch!"]]),"03_bump"} )
+         elseif badthing=="robot" then
+            table.insert( opts, 1, {_([["It was only a scratch!"]]),"03_robot"} )
+         end
+         return opts
+      end )
 
-      vn.label("02_mean")
-      vn.jump("02_cont")
+      vn.label("03_bump")
+      staff(_([["The spacedock hull integrity may not be compromised, but I assure you the traumatic auditive memories of the resulting caterwaul is not going to be easy to recover from!"]]))
+      vn.jump("03_cont")
 
-      vn.label("02_cont")
+      vn.label("03_robot")
+      staff(_([["Only a scratch? Scrubby is flat as a pancake! You've turned a great cleaning robot into a stain on the spacedock floor!"]]))
+      vn.jump("03_cont")
+
+      vn.label("03_cont")
+      staff(_([["Show me your credentials. I'm filing a report to the Empire. You do know what happens if you don't comply, do you?"]]))
+      vn.menu{
+         {_([[""]]), "04_cont"},
+         {_([["Credentials? I don't even know who I am!"]]), "04_cont"},
+         {_([["No, I'm filing a complaint to the Empire!"]]), "04_cont"},
+      }
 
       vn.done("electric")
       vn.run()
