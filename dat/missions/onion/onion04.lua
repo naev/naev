@@ -37,6 +37,8 @@ local fleet = require "fleet"
 local pilotai = require "pilotai"
 local der = require 'common.derelict'
 local lg = require "love.graphics"
+local mg = require "minigames.flip"
+local audio = require "love.audio"
 
 -- Action happens on the jump from Action happens Overture to Dohriabi on the Overture side
 local ambushsys = system.get("Overture")
@@ -56,8 +58,8 @@ local title = _("Onion Heist")
    1: took one-time pad
    2: (optional) landed once before swapspb
    3: ship cargo swapped at swapspb
-   4: mini-game done
-   5: escaped
+   4: heist done and took off
+   5: left system
 --]]
 mem.state = 0
 
@@ -143,13 +145,17 @@ end
 function land ()
    local cspb = spob.cur()
    if mem.state==1 or mem.state==2 and cspb==swapspb then
+      -- Characters
+      local l337 = onion.vn_l337b01{pos="left"}
+      local trixie = onion.vn_trixie{pos="right"}
+      local staffimg = vni.faction( cspb:faction() )
+
       -- Cargo swap cutscene
       vn.clear()
       vn.scene()
-      local l337 = vn.newCharacter( onion.vn_l337b01{pos="left"} )
-      local trixie = vn.newCharacter( onion.vn_trixie{pos="right"} )
-      local staffimg = vni.faction( cspb:faction() )
-      local staff = vn.newCharacter( _("Spacedock Staff"), { image=staffimg, shader=love_shaders.hologram() } )
+      vn.newCharacter( l337 )
+      vn.newCharacter( trixie )
+      local staff = vn.Character.new( _("Spacedock Staff"), { image=staffimg, shader=love_shaders.hologram() } )
       vn.music( onion.loops.hacker )
       vn.transition("electric")
       vn.na(_([[Your ship enters the docks, and the two Onion Society hackers make their timely holographic appearance.]]))
@@ -189,6 +195,7 @@ function land ()
       vn.jump("01_cont")
 
       vn.label("01_alarm")
+      vn.sfx( audio.newSource( 'snd/sounds/loops/alarm.ogg' ) ) -- Just one loop
       vn.na(_([[You open the command console and trigger the ship's emergency alarm system. The alarm system, designed for long-range planetary signalling, seems to be amplified and echoed by the spacedock structure, resulting in an onslaught of audible chaos. Everyone in the spacedock turns towards your ship: it looks like you got the attention of the entire floor.]]))
       vn.func( function () badthing = "alarm" end )
       vn.jump("01_cont")
@@ -404,7 +411,8 @@ You hear a beep.
 
    elseif mem.state==3 and cspb==targetspb then
       misn.npcAdd( "breakin", _("Onion Society"), onion.img_onion().tex, _([[Break into the Nexus Shipyards systems.]]) )
-   elseif mem.state==5 and cspb~=targetspb then
+
+   elseif mem.state==6 and cspb~=targetspb then
       -- last cutscene
       vn.clear()
       vn.scene()
@@ -421,24 +429,79 @@ You hear a beep.
 end
 
 function breakin ()
+   player.save() -- Save the game
+
    vn.clear()
    vn.scene()
    local l337 = vn.newCharacter( onion.vn_l337b01{pos="left"} )
    local trixie = vn.newCharacter( onion.vn_trixie{pos="right"} )
    vn.music( onion.loops.hacker )
    vn.transition("electric")
-   vn.na(_([[Your ship enters the docks, and the two Onion Society hackers make their timely holographic appearance.]]))
-   l337()
-   trixie()
-   vn.done("electric")
+   vn.na(_([[You signal to the two Onion Society hackers that it is time for them to make their timely holographic appearance.]]))
+   trixie(fmt.f(_([["Oh boy, {spb}, it's been a while since I've been here. Not in person though. Reminds me of old times."]]),
+      {spb=targetspb}))
+   l337(fmt.f(_([["No time to get all old-timey on us now. It's time to get to business. {player}, see if you can jack us in to a local console. Let me send you a map of the nearest one."]]),
+      {player=player.name()}))
+   vn.na(_([[You head off to the terminal l337_b01 pointed you to. The installation is a bit of a mess, but eventually you find it and jack in, giving the hackers more direct access.]]))
+   l337(_([["Let's see what we have here... seems like the one-time pad passed the verification test."]]))
+   trixie(_([["Wait, that's a bit weird, I'm seeing some inconsistencies is the object system."]]))
+   l337(_([["You sure? My scripts haven't picked up anything strange yet."]]))
+   trixie(_([["Something feels a bit off. Wait, let me double-check running processes."]]))
+   l337(_([["Mmm, what was that?"]]))
+   trixie(_([["Shit, it seems like there's someone else hijacking the system, pattern blue!"]]))
+   l337(_([["I see them now! They're running a reverse packet analysis, I don't think I can keep up the connection much longer."]]))
+   trixie(_([["I'll try to draw them off!"]]))
+   trixie(_([["l337_b01? Shit, not responding to ping, they're down."]]))
+   vn.disappear( l337, "electric" )
+   trixie(fmt.f(_([["Scripts are down. {player}, I'm going to need you to manually override the last security protocol! I'll be running diversions!"]]),
+      {player=player.name()}))
+
+   vn.label("mg_hack")
+   mg.vn()
+   vn.func( function ()
+      if mg.completed() then
+         vn.jump("mg_success")
+      else
+         vn.jump("mg_fail")
+      end
+   end )
+
+   vn.label("mg_fail")
+   vn.na(_([[You fail to gain access of the terminal. Try again?]]))
+   vn.menu{
+      {_([[Try again.]]), "mg_hack"},
+      {_([[Abort.]]), "mg_abort"},
+   }
+
+   vn.label("mg_abort")
+   vn.func( function ()
+      mem.failedhack = true
+   end )
+   vn.music( 'snd/sounds/loops/alarm.ogg' )
+   trixie(_([["Shit, get out of there now!"]]))
+   vn.jump("end")
+
+   vn.label("mg_success")
+   trixie(_([["Got it? Great! Let me access try to access the data."]]))
+   vn.music( 'snd/sounds/loops/alarm.ogg' )
+   trixie(_([["Shit, I'll try to get what I can, but you have to get out of there now!"]]))
+   vn.jump("end")
+
+   vn.label("end")
+   vn.disappear( trixie, "electric" )
+   vn.na(_([[You unplug from the terminal and make a wild dash for your ship. On the way there, an armed Nexus guard appears before you, but you just plow through them before they can arm their weapon, sending them sprawling on the ground.]]))
+   vn.na(fmt.f(_([[You finally make it to the spacedocks and manage to slide in before taking control. You quickly activate full thrusters and smash your way out of the spacedocks as Nexus security pummels your ship with weapon fire. You barely make it out in one piece. Looks like you're going to have a bumpy ride out of {sys}!]]),
+      {sys=targetsys}))
    vn.run()
 
    misn.osdCreate( title, {
-      fmt.f(_([[Break into {spb} ({sys} system)]]),
-      {spb=targetspb, sys=targetsys}),
+      fmt.f(_([[Get away from {sys} and land on a planet or station]]),
+         {sys=targetsys}),
    } )
    mem.state = 4
+   player.allowSave(false) -- Don't save, as we saved before this event started
    player.takeoff() -- off we go
+   player.allowSave(true) -- restore save flag
 end
 
 local function fct_baddie ()
@@ -447,9 +510,18 @@ end
 
 function enter ()
    hook.timerClear()
+   -- Ambush set up
    if system.cur()==ambushsys and mem.state==0 then
       hook.timer( 7, "prepare" )
+
    elseif system.cur()==targetsys and mem.state==4 then
+      -- Took weapon fire when taking off, be kinder if they hacked
+      if mem.failedhack then
+         player.pilot():setHealth( 50, 10 )
+      else
+         player.pilot():setHealth( 90, 30 )
+      end
+
       -- Small patrol fleet to annoy the player
       local ships = {
          "Hawking",
@@ -473,6 +545,8 @@ function enter ()
 
       -- Player has to run away
       hook.timer( 5, "baddiechase1" )
+
+   -- Player got away
    elseif mem.state==4 then
       mem.state = 5 -- done with last part
    end
