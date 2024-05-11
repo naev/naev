@@ -48,7 +48,7 @@ local jmpsys = system.get("Dohriabi")
 local jmp = jump.get( ambushsys, jmpsys )
 local runjmp = jump.get( ambushsys, system.get("Nartur") )
 
---local money_reward = onion.rewards.misn04
+local money_reward = onion.rewards.misn04
 
 local title = _("Onion Heist")
 
@@ -421,8 +421,42 @@ You hear a beep.
       vn.music( onion.loops.hacker )
       vn.transition("electric")
       vn.na(_([[Your ship enters the docks, and the two Onion Society hackers make their timely holographic appearance.]]))
-      l337()
-      trixie()
+      trixie(fmt.f(_([["Glad to see you made it out alive {player}. That did not go as expected."]]),
+         {player=player.name()}))
+      l337(_([["Sorry about that, I panicked when they started upstreaming to me and cut the connection. I should have listened to you Trixie, I guess I got cocky."]]))
+      trixie(_([["No sweat. There's always a next time."]]))
+      if mem.failedhack then
+         l337(_([["Shame we weren't able to break into the system, we were so close."]]))
+         trixie(_([["At least we all made it out alive. There's always more opportunities as long as we're still alive and kicking."]]))
+         l337(_([["Can't win them all."]]))
+      else
+         l337(_([["What were you able to get?"]]))
+         trixie(_([["I didn't have much time to choose, so I just randomly downloaded as much as bandwidth allowed, still going through it. From the little I've seen, there's some interesting account credentials, and some encrypted stuff that we have to unlock. All in all, a pretty good haul."]]))
+         l337(_([["Cool. Def share the tidbits. I've got some spare computational power to crack codes."]]))
+      end
+      l337(_([["What are our next steps?"]]))
+      trixie(_([["I've been thinking about what we talked about almost a cycle ago. We might be able to pull off something big, like really big."]]))
+      l337(_([["Oh, is this about the Nexus backbone hack?"]]))
+      trixie(_([["Yes, I think we have a good opportunity to pull it off."]]))
+      l337(_([["Awesome!"]]))
+      trixie(fmt.f(_([["{player}, if you're interested in becoming part of history, send us a message in a bit. I'll give the details."]]),
+         {player=player.name()}))
+      if mem.failedhack then
+         trixie(_([["Oh, and to encourage you to participate, here's some credits courtesy of Nexus Shipyards. Not much, but next time we should be able to get more!"]]))
+         vn.func( function ()
+            player.pay( 0.4*money_reward )
+         end )
+         vn.sfxVictory()
+         vn.na( fmt.reward(0.4*money_reward) )
+      else
+         trixie(_([["Oh, and to encourage you to participate, here's some credits courtesy of Nexus Shipyards."]]))
+         vn.func( function ()
+            player.pay( money_reward )
+         end )
+         vn.sfxVictory()
+         vn.na( fmt.reward(money_reward) )
+      end
+
       vn.done("electric")
       vn.run()
    end
@@ -521,6 +555,7 @@ function enter ()
       else
          player.pilot():setHealth( 90, 30 )
       end
+      player.landAllow( false ) -- Don't let the player land until they jump out
 
       -- Small patrol fleet to annoy the player
       local ships = {
