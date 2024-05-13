@@ -30,6 +30,38 @@ onion.loops = {
    hacker = "snd/sounds/loops/onion_hacker.ogg",
 }
 
+onion.npc = {
+   l337b01 = {
+      name = _("l337 b01"),
+      image = "l337_b01.webp",
+      colour = {0.05, 1.0, 0.6}, -- Teal-ish
+   },
+   trixie = {
+      name = _("Trixie"),
+      colour = {0.7,0.1,0.9}, -- Dark Purple
+   },
+   dog = {
+      name = _("DOG"),
+      image = "DOG.webp",
+      colour = {0.6,0.33,0.0}, -- Dark Brown
+   },
+   notasockpuppet = {
+      name = _("notasockpuppet"),
+      image = "notasockpuppet.webp",
+      colour = {1.0, 0.2, 0.9}, -- Light Purple
+   },
+   underworlder = {
+      name = _("underworlder"),
+      image = "underworlder.webp",
+      colour = {0.9, 0.7, 0.25},
+   },
+   lonewolf4 = {
+      name = _("lonewolf4"),
+      image = "lonewolf4.webp",
+      colour = {0.7, 0.7, 0.7},
+   }
+}
+
 function onion.vn_onion( params )
    return vn.Character.new( _("Hologram"),
          tmerge( {
@@ -40,71 +72,63 @@ function onion.vn_onion( params )
 end
 
 function onion.vn_l337b01( params )
-   return vn.Character.new( _("l337 b01"),
-         tmerge( {
-            image="l337_b01.webp",
-            colour=nil,
-            shader=love_shaders.hologram{strength=0.2},
-            flip=false,
-         }, params) )
+   params = params or {}
+   params.shader = love_shaders.hologram{strength=0.2}
+   return onion.vn_nexus_l337b01( params )
 end
 
 function onion.vn_trixie( params )
-   return vn.Character.new( _("l337 b01"),
-         tmerge( {
-            image=onion.img_trixie(),
-            colour=nil,
-            shader=love_shaders.hologram{strength=0.2},
-            flip=false,
-         }, params) )
+   params = params or {}
+   params.shader = love_shaders.hologram{strength=0.2}
+   return onion.vn_nexus_trixie( params )
 end
 
 function onion.vn_nexus_l337b01( params )
-   return vn.Character.new( _("l337 b01"),
+   return vn.Character.new( onion.npc.l337b01.name,
          tmerge( {
-            image="l337_b01.webp",
-            colour=nil,
+            image=onion.npc.l337b01.image,
+            colour=onion.npc.l337b01.colour,
             flip=false,
          }, params) )
 end
 
 function onion.vn_nexus_trixie( params )
-   return vn.Character.new( _("Trixie"),
+   return vn.Character.new( onion.npc.trixie.name,
          tmerge( {
             image=onion.img_trixie(),
-            colour=nil,
+            colour=onion.npc.trixie.colour,
          }, params) )
 end
 
 function onion.vn_nexus_underworlder( params )
-   return vn.Character.new( _("underworlder"),
+   return vn.Character.new( onion.npc.underworlder.name,
          tmerge( {
-            image="underworlder.webp",
-            colour=nil,
+            image=onion.npc.underworlder.image,
+            colour=onion.npc.underworlder.colour,
          }, params) )
 end
 
 function onion.vn_nexus_notasockpuppet( params )
-   return vn.Character.new( _("notasockpuppet"),
+   return vn.Character.new( onion.npc.notasockpuppet.name,
          tmerge( {
-            image="notasockpuppet.webp",
-            colour=nil,
+            image=onion.npc.notasockpuppet.image,
+            colour=onion.npc.notasockpuppet.colour,
          }, params) )
 end
 
 function onion.vn_nexus_dog( params )
-   return vn.Character.new( _("DOG"),
+   return vn.Character.new( onion.npc.dog.name,
          tmerge( {
-            image="DOG.webp",
-            colour=nil,
+            image=onion.npc.dog.image,
+            colour=onion.npc.dog.colour,
          }, params) )
 end
 
 function onion.vn_nexus_lonewolf4( params )
-   return vn.Character.new( _("lonewolf4"),
+   return vn.Character.new( onion.npc.lonewolf4.name,
          tmerge( {
-            image="lonewolf4.webp",
-            colour=nil,
+            image=onion.npc.lonewolf4.image,
+            colour=onion.npc.lonewolf4.colour,
          }, params) )
 end
 
