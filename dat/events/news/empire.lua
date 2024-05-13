@@ -2,7 +2,7 @@ local fmt = require "format"
 
 local function flt_standard( p )
    local s = p:services()
-   if not s.land or not s.inhabitable then
+   if not s.land or not s.inhabited then
       return false
    end
    local t = p:tags()
