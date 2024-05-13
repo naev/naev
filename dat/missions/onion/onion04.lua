@@ -65,7 +65,6 @@ mem.state = 0
 
 -- Create the mission
 function create()
-   misn.finish(false)
    -- Claim the ambush and escape stuff
    if not misn.claim{ ambushsys, targetsys } then
       return misn.finish(false)
@@ -113,7 +112,7 @@ function accept ()
       {_([[Maybe later.]]), "02_later"},
    }
 
-   vn.label("92_later")
+   vn.label("02_later")
    vn.na(_([[You decline the work for now, and the holograms fade away.]]))
    vn.done("electric")
 

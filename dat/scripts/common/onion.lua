@@ -49,6 +49,16 @@ function onion.vn_l337b01( params )
          }, params) )
 end
 
+function onion.vn_trixie( params )
+   return vn.Character.new( _("l337 b01"),
+         tmerge( {
+            image=onion.img_trixie(),
+            colour=nil,
+            shader=love_shaders.hologram{strength=0.2},
+            flip=false,
+         }, params) )
+end
+
 function onion.vn_nexus_l337b01( params )
    return vn.Character.new( _("l337 b01"),
          tmerge( {
