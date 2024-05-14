@@ -359,6 +359,8 @@ The pause a second.
          fmt.f(_([[Break into {spb} ({sys} system)]]),
             {spb=targetspb, sys=targetsys}),
       } )
+      misn.markerRm()
+      misn.markerAdd( targetspb )
       mem.state = 3
    elseif mem.state==1 then
       -- Small extra optional cutscene
@@ -536,6 +538,7 @@ function breakin ()
       fmt.f(_([[Get away from {sys} and land on a planet or station]]),
          {sys=targetsys}),
    } )
+   misn.markerRm()
    mem.state = 4
    player.allowSave(false) -- Don't save, as we saved before this event started
    player.takeoff() -- off we go
