@@ -596,6 +596,7 @@ function prepare ()
       return
    end
    player.msg(_("l337_b01: Head towards the jump. They should be here soon!"), true)
+   player.autonavReset( 5 )
    mrk = system.markerAdd( jmp:pos() )
    hook.timer( 1, "wait" )
 end
@@ -615,6 +616,7 @@ function convoyspawn ()
       mrk = nil
    end
    player.msg(_("Trixie: Oh boy, that's a lot of ships. Get close and we'll hack!"), true )
+   player.autonavReset( 5 )
 
    -- Clear up
    pilotai.clear()
@@ -657,7 +659,7 @@ function convoyspawn ()
    l:setHilight(true)
    l:setVisplayer(true)
    l:control(true)
-   l:jump(runjmp)
+   l:hyperspace(runjmp)
    l:setSpeedLimit( minspeed )
    hook.timer( 8, "heartbeat" )
    spam = 0
@@ -674,7 +676,7 @@ function heartbeat ()
       -- Player already disabled, nothing to do
       return
    end
-   if l:dist( player.pos() ) < 1500 then
+   if l:pos():dist( player.pos() ) < 1500 then
       local fct = faction.dynAdd( "Dummy", "_onion_nexus_hacked", _("Nexus IT (Hacked)"), { ai="baddie" } )
       l:disable()
       local dohack = { 3, 6, 8, 11, 14 } -- IDs of ships to hack
@@ -691,11 +693,13 @@ function heartbeat ()
          end
       end
       player.msg(_("l337_b01: Script deployed! Time to cry!"), true )
+      player.autonavReset( 5 )
       return
    end
    spam = spam-1
    if spam < 0 then
       player.msg(fmt.f(_("Trixie: See the {p}? Get closer!"),{p=l}), true )
+      player.autonavReset( 5 )
    end
    hook.timer( 1, "heartbeat" )
 end
@@ -725,6 +729,7 @@ end
 
 function postboard ()
    player.msg(fmt.f(_("l337_b01: Got the goods, on to {spb}!"),{spb=swapspb}), true )
+   player.autonavReset( 5 )
 end
 
 function death ()
@@ -734,11 +739,13 @@ end
 
 function baddiechase1 ()
    player.msg(fmt.f(_("Trixie: {player}, you have to scram! I'll try to cover."), {player=player.name()}), true )
+   player.autonavReset( 5 )
    hook.timer( 6, "baddiechase2" )
 end
 
 function baddiechase2 ()
    player.msg(_("l337_b01: Shit, here they come!"), true )
+   player.autonavReset( 5 )
    hook.timer( 3, "baddiechase3" )
 end
 
