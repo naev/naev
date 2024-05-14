@@ -143,7 +143,7 @@ end
 
 function land ()
    local cspb = spob.cur()
-   if mem.state==1 or mem.state==2 and cspb==swapspb then
+   if (mem.state==1 or mem.state==2) and cspb==swapspb then
       -- Characters
       local l337 = onion.vn_l337b01{pos="left"}
       local trixie = onion.vn_trixie{pos="right"}
@@ -165,10 +165,11 @@ function land ()
       else
          l337(_([["I'm on it!"]]))
       end
-      trixie(_([["Damn, it seems denser than expected. We need a distraction. Quick, {player}, do something!"]]))
+      trixie(fmt.f(_([["Damn, it seems denser than expected. We need a distraction. Quick, {player}, do something!"]]),
+         {player=player.name()}))
       vn.menu{
-         {_([[Activate your ship's security alarm.]]), "01_alarm"},
-         {_([[Bump the ship into the station structure.]]), "01_bump"},
+         {_([[Activate your ship's security alarm.]]), "01_alarm_early"},
+         {_([[Bump the ship into the station structure.]]), "01_bump_early"},
          {_([["What should I do!?"]]), "01_stumped"},
       }
 
@@ -183,11 +184,15 @@ function land ()
       }
       local badthing
 
+      vn.label("01_bump_early")
+      vn.disappear( {l337, trixie}, "electric" )
       vn.label("01_bump")
       vn.na(_([[You fumble the controls of the ship a bit, just enough to make it barely scratch the inner hull of the space dock. Although you expected it to make some noise, you didn't foresee the ear-splitting screech caused by the metal on metal interaction. With all the heads of everyone at the spacedocks turned your way, it seems like you managed to get the attention of the inter spacedock.]]))
       vn.func( function () badthing = "bump" end )
       vn.jump("01_cont")
 
+      vn.label("01_robot_early")
+      vn.disappear( {l337, trixie}, "electric" )
       vn.label("01_robot")
       vn.na(_([[You begrudgingly take the controls of the ship, and wait until a cleaner robot strays near your landing gear. Wasting no time on the opportunity, you do a precise manoeuvre to crush it with a resounding *CRUNCH*. Given the amount of heads turned, it looks like you got the attention of the entire spacedock.]]))
       vn.func( function () badthing = "robot" end )
