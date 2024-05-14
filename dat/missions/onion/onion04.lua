@@ -418,7 +418,7 @@ You hear a beep.
    elseif mem.state==3 and cspb==targetspb then
       misn.npcAdd( "breakin", _("Onion Society"), onion.img_onion().tex, _([[Break into the Nexus Shipyards systems.]]) )
 
-   elseif mem.state==6 and cspb~=targetspb then
+   elseif mem.state==5 and cspb~=targetspb then
       -- last cutscene
       vn.clear()
       vn.scene()
