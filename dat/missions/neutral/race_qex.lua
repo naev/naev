@@ -376,13 +376,12 @@ function countdown( msg )
 end
 
 function update_timer ()
-   elapsed_time = elapsed_time+0.1
-   misn.osdCreate(_("Qex Racing"), {
-      _("Beat the Race!"),
-      display_time( elapsed_time ),
-   } )
-
    if not race_done then
+      elapsed_time = elapsed_time+0.1
+      misn.osdCreate(_("Qex Racing"), {
+         _("Beat the Race!"),
+         display_time( elapsed_time ),
+      } )
       hook.timer( 0.1, "update_timer" )
    else
       hook.timer( 5, "race_complete" )
