@@ -387,7 +387,12 @@ def npc_card( n )
 
   gfx = ""
   if not n[:gfx].nil?
-      gfxpath = relative_path_to(@items["/gfx/portraits/"+n[:gfx]])
+      portrait = @items["/gfx/portraits/"+n[:gfx]]
+      if portrait.nil?
+        gfxpath = relative_path_to(@items["/gfx/vn/characters/"+n[:gfx]])
+      else
+        gfxpath = relative_path_to(portrait)
+      end
       gfx += "<div class='container d-flex align-items-center'>"
       gfx += "<img src='#{gfxpath}' class='card-img-top object-fit-scale mh-100' alt=\"#{n[:name]} Portrait\">"
       gfx += "</div>"
