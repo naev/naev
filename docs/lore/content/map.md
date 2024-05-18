@@ -17,8 +17,10 @@ $(document).ready( function() {
     var jumps = [<%= out = ""
     @items.find_all('/ssys/*.md').each do |s|
         s[:jumps].each do |j|
+            t = ssys_get( j[:target] )
+            spoiler = (s[:tags].include? "spoiler") || (t[:tags].include? "spoiler")
             if s[:name] < j[:target]
-                out += "{ a:\"#{s[:name]}\", b:\"#{j[:target]}\", h:#{j[:hidden]} },\n"
+                out += "{ a:\"#{s[:name]}\", b:\"#{j[:target]}\", h:#{j[:hidden]}, s:#{spoiler} },\n"
             end
         end
     end
@@ -37,7 +39,7 @@ $(document).ready( function() {
         var nj = jumps.length;
         for (var i=0; i<nj; i++) {
             var j = jumps[i];
-            if (!j.h || spoiled) {
+            if ((!j.s && !j.h) || spoiled) {
                 graph.addEdge( j.a, j.b, { size: 2, color: (j.h) ? 'red' :'blue' } );
             }
         }

@@ -15,6 +15,10 @@ def ssys_get( name )
   return config[:ssys][name]
 end
 
+def faction_get( name )
+  return config[:fcts][name]
+end
+
 def npc_get( name )
   return config[:npcs][name]
 end

@@ -198,8 +198,6 @@ preprocess do
       if s[:tags].length()<=0
          s[:tags].push("none")
       end
-
-      s[:tags] = s[:tags].uniq.sort
    end
 
    @items.find_all('/spob/*.md').each do |s|
@@ -220,6 +218,11 @@ preprocess do
       end
       if not s[:spob][:presence].nil? and not s[:spob][:presence][:faction].nil?
          s[:faction] = s[:spob][:presence][:faction]
+         # Propagate faction spoiler status
+         fct = faction_get( s[:faction] )
+         if not fct.nil? and fct[:tags].include? "spoiler"
+            s[:tags].push("spoiler")
+         end
       else
          s[:faction] = NOFACTION
       end
@@ -262,18 +265,24 @@ preprocess do
       if s[:tags].length()<=0
          s[:tags].push("none")
       end
-
-      s[:tags] = s[:tags].uniq.sort
    end
 
    # Second pass to set up system details that need spob details
    @items.find_all('/ssys/*.md').each do |s|
       s[:factions] = Set[]
+      # Systems with spoiler spobs are spoilers
+      s[:spobs].each do |si|
+         spb = spob_get( si )
+         if spb[:tags].include? "spoiler" then
+            s[:tags].push("spoiler")
+         end
+      end
       s[:spobs].each do |si|
          spb = spob_get( si )
          if spb[:faction] != NOFACTION then
             s[:factions].add( spb[:faction] )
          end
+         # Propagate system spoiler status to spobs
          if s[:tags].include? "spoiler"
             spb[:tags].push("spoiler")
          end
@@ -367,6 +376,14 @@ preprocess do
       c[:spob] = c[:spob].uniq.sort
       c[:ssys] = c[:ssys].uniq.sort
       c[:npcs] = c[:npcs].uniq.sort
+   end
+
+   # Dedup tags
+   @items.find_all('/spob/*.md').each do |s|
+      s[:tags] = s[:tags].uniq.sort
+   end
+   @items.find_all('/ssys/*.md').each do |s|
+      s[:tags] = s[:tags].uniq.sort
    end
 end
 
