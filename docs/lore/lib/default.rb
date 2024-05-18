@@ -410,7 +410,12 @@ end
 def npc_modal( n )
   gfx = ""
   if not n[:gfx].nil?
-      gfxpath = relative_path_to(@items["/gfx/vn/characters/"+n[:gfx]])
+      vn = @items["/gfx/vn/characters/"+n[:gfx]]
+      if vn.nil?
+        gfxpath = relative_path_to(@items["/gfx/portraits/"+n[:gfx]])
+      else
+        gfxpath = relative_path_to(vn)
+      end
       gfx += "<img src='#{gfxpath}' class='col-md-6 float-md-end mb-3 ms-md-3' alt=\"#{n[:name]} Image\">"
   end
 
