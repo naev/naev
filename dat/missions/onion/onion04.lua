@@ -465,6 +465,15 @@ You hear a beep.
 
       vn.done("electric")
       vn.run()
+
+      if mem.failedhack then
+         onion.log(fmt.f(_([[You helped l337_b01 and Trixie perform a heist at {spb}, although it was not a complete success,"]]),
+            {spb=targetspb}))
+      else
+         onion.log(fmt.f(_([[You helped l337_b01 and Trixie perform a heist at {spb}."]]),
+            {spb=targetspb}))
+      end
+      misn.finish(true)
    end
 end
 
