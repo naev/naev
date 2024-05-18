@@ -2330,6 +2330,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
             spob->lua_file = strdup( nstr );
          else
             SDL_asprintf( &spob->lua_file, SPOB_DATA_LUA_PATH "%s", nstr );
+         spob->lua_file_raw = strdup( nstr );
          continue;
       }
       if ( xml_isNode( node, "marker" ) ) {
@@ -3727,6 +3728,7 @@ void space_exit( void )
       free( spb->display );
       free( spb->feature );
       free( spb->lua_file );
+      free( spb->lua_file_raw );
       free( spb->class );
       free( spb->description );
       free( spb->bar_description );

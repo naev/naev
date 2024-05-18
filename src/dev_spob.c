@@ -56,7 +56,7 @@ int dpl_saveSpob( const Spob *p )
       xmlw_elem( writer, "feature", "%s", p->feature );
    if ( ( p->lua_file != NULL ) &&
         ( ( lua_default == NULL ) || strcmp( lua_default, p->lua_file ) != 0 ) )
-      xmlw_elem( writer, "lua", "%s", p->lua_file );
+      xmlw_elem( writer, "lua", "%s", p->lua_file_raw );
    if ( spob_isFlag( p, SPOB_RADIUS ) )
       xmlw_elem( writer, "radius", "%f", p->radius );
    if ( p->marker != NULL )
