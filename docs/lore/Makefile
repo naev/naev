@@ -17,7 +17,11 @@ CMPN := $(patsubst ../../dat/missions/%/readme.md, content/cmpn/%.md, $(CMPN))
 EVTS:= $(shell find ../../dat/events -type f -name "*.lua" -exec grep -q "<?xml version=['\"]1.0['\"] encoding=['\"]utf8['\"]?>" {} \; -print)
 EVTS := $(patsubst ../../dat/events/%.lua, content/evts/%.lua, $(EVTS) )
 
-GFX := $(wildcard ../../artwork/gfx/spob/**/*.webp ../../artwork/gfx/spob/space/**/*.webp ../../artwork/gfx/logo/*.webp ../../artwork/gfx/vn/characters/*.webp ../../artwork/gfx/portraits/*.webp ../../artwork/gfx/vn/characters/*.png ../../artwork/gfx/portraits/*.png)
+GFX_SPOB := $(shell find ../../artwork/gfx/spob/ -type f -name "*.webp")
+GFX_LOGO := $(shell find ../../artwork/gfx/logo/ -type f -name "*.webp")
+GFX_VN := $(shell find ../../artwork/gfx/vn/characters/ -type f \( -name "*.webp" -o -name "*.png" \))
+GFX_PORTRAIT := $(shell find ../../artwork/gfx/portraits/ -type f \( -name "*.webp" -o -name "*.png" \))
+GFX := $(GFX_SPOB) $(GFX_LOGO) $(GFX_VN) $(GFX_PORTRAIT)
 GFX := $(patsubst ../../artwork/%, content/%, $(GFX))
 
 .PHONY: all gfx spob ssys fcts misn cmpn evts view install check logo
@@ -52,7 +56,7 @@ content/misn/%.lua: ../../dat/missions/%.lua
 
 content/cmpn/%.md: ../../dat/missions/%/readme.md
 	@mkdir -p $(dir $@)
-	cp $< $@
+	cp "$<" "$@"
 
 content/evts/%.lua: ../../dat/events/%.lua
 	@mkdir -p $(dir $@)
@@ -63,17 +67,17 @@ content/evts/%.lua: ../../dat/events/%.lua
 
 content/gfx/%: ../../artwork/gfx/%
 	@mkdir -p $(dir $@)
-	cp $< $@
+	cp "$<" "$@"
 
 logo: content/imgs/naev.png content/favicon.png
 
 content/imgs/naev.png: ../../artwork/gfx/Naev.webp
 	@mkdir -p $(dir $@)
-	cp $< $@
+	cp "$<" "$@"
 
 content/favicon.png: ../../extras/logos/naev.png
 	@mkdir -p $(dir $@)
-	cp $< $@
+	cp "$<" "$@"
 
 gfx: $(GFX)
 
