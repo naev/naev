@@ -18,4 +18,7 @@
    <density>1.300000</density>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>spoiler</tag>
+ </tags>
 </ssys>
