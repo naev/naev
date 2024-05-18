@@ -13,8 +13,13 @@ desc_list["generic"] = {
 }
 desc_list["heavy"] = {
    _("A new-human individual, genetically modified for high gravity environments."),
-   _("A Soromid civilian, biologically engineered to thrive in high gravity."),
+   _("A Soromid individual, biologically engineered to thrive in high gravity."),
    _("A post-human with heavy gravity traits, enjoying their drink."),
+}
+desc_list["aquatic"] = {
+   _("A new human individual with gills and slimy skin."),
+   _("A Soromid individual that seems suited for aquatic life."),
+   _("The lights highlight the post-humans slimy skin, who is enjoying their drink."),
 }
 
 local gfx_list = {
@@ -22,6 +27,9 @@ local gfx_list = {
    {"soromid/soromid_heavy_civilian_2.webp", "heavy"},
    {"soromid/soromid_heavy_civilian_3.webp", "heavy"},
    {"soromid/soromid_heavy_military_3.webp", "heavy"}, -- TODO probably not mix in with the civilians...
+   {"soromid/soromid_aquatic_01.webp", "aquatic"},
+   {"soromid/soromid_aquatic_01_v2.webp", "aquatic"},
+   {"soromid/soromid_aquatic_01_v3.webp", "aquatic"},
 }
 
 local msg_lore = {
@@ -30,7 +38,7 @@ local msg_lore = {
    _([["Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival."]]),
    _([["Our cosmetic gene treatments are even safer now for non-Soromids, with a rate of survival of 99.4%!"]]),
    _([["We have been rebuilding and enhancing our bodies for so long, I say we've become a new species, one above human."]]),
-   _([["The Soromid have been shunned and ridiculed by the Great Houses since inception. Over time they have had no choice but to learn to respect us, however, treatment as equals seems still far away."]]),
+   _([["The Soromid have been shunned and ridiculed by the Great Houses since inception. Over time, they have had no choice but to learn to respect us, however, treatment as equals seems still far away."]]),
    _([["It feels good to be free of Empire interference. If we, the Soromid, were a Great House like the Dvaered or Za'lek, we would have much less freedom than what we enjoy today!"]]),
    _([["I once went to Empire territory and got stared at and ridiculed for my looks. The Empire is such a backwards society. Probably all the paperwork and bureaucracy is rotting their brains."]]),
    _([["We sometimes get Za'lek researchers trying to find out the science behind our bioships. No matter how much they analyze them, they can never reproduce anything. They can't seem to understand that bioships are more of an art than a science!"]]),
