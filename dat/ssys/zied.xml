@@ -22,4 +22,7 @@
    <pos x="3000.000000" y="1500.000000"/>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>spoiler</tag>
+ </tags>
 </ssys>
