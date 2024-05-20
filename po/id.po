@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-05-01 10:45+0000\n"
+"PO-Revision-Date: 2024-05-20 20:01+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.3-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -699,7 +699,7 @@ msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
-msgstr "   * Programmer Python yang luar biasa "
+msgstr "   * Programmer Python yang luar biasa"
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
@@ -2110,7 +2110,7 @@ msgstr "Nasin"
 
 #: dat/factions/pirate.xml:6
 msgid "Galactic Space Pirates"
-msgstr ""
+msgstr "Perompak Angkasa Galaktik"
 
 #: dat/factions/pirate.xml:13
 msgid ""
@@ -2118,6 +2118,9 @@ msgid ""
 "affiliated with any particular clan. Due to their disorganized nature, they "
 "tend to respect the clans they operate near."
 msgstr ""
+"Perompak Angkasa Galaktik terdiri dari perompak yang tidak memiliki kaitan "
+"langsung dengan klan manapun. Karena sifatnya yang tidak terorganisir, "
+"mereka cenderung menghormati klan daerah mereka."
 
 #: dat/factions/proteron.xml:2 dat/ships/proteron/proteron_archimedes.xml:17
 #: dat/ships/proteron/proteron_dalton.xml:15
@@ -2142,11 +2145,11 @@ msgstr ""
 
 #: dat/factions/raven_clan.xml:2
 msgid "Raven Clan"
-msgstr ""
+msgstr "Klan Gagak"
 
 #: dat/factions/raven_clan.xml:5
 msgid "Raven Pirate Clan"
-msgstr ""
+msgstr "Klan Perompak Gagak"
 
 #: dat/factions/raven_clan.xml:12
 msgid ""
@@ -2333,17 +2336,20 @@ msgstr "Za'lek"
 
 #: dat/factions/zalek.xml:7
 msgid "House Za'lek"
-msgstr ""
+msgstr "Wangsa Za'lek"
 
 #: dat/factions/zalek.xml:12
 msgid ""
 "House Za'lek is the scientific heart of the Empire. Until recently they were "
 "a secretive Great House, but they have recently become much more open."
 msgstr ""
+"Wangsa Za'lek adalah jantung ilmu pengetahuan dari Kekaisaran. Dulunya "
+"Wangsa Besar yang menyimpan banyak rahasia, akhir-akhir ini mereka menjadi "
+"jauh lebih terbuka."
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
-msgstr ""
+msgstr "Pengharum Udara"
 
 #: dat/outfits/accessory/air_freshener.xml:5
 #: dat/outfits/accessory/black_cat_doll.xml:5
@@ -2393,7 +2399,7 @@ msgstr ""
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
 msgid "#pOnly active when in stealth.#0"
-msgstr ""
+msgstr "#pHanya aktif ketika dalam mode sembunyi.#0"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:2
 msgid "Broken Nebular Shielding Prototype"
@@ -2424,7 +2430,7 @@ msgstr ""
 
 #: dat/outfits/accessory/cyborg_feather.xml:2
 msgid "Cyborg Feather"
-msgstr ""
+msgstr "Bulu Cyborg"
 
 #: dat/outfits/accessory/cyborg_feather.xml:11
 msgid ""
@@ -2498,11 +2504,11 @@ msgstr ""
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#pSmells funky.#0"
-msgstr ""
+msgstr "#pBaunya aneh.#0"
 
 #: dat/outfits/accessory/love_letter.xml:2
 msgid "Love Letter"
-msgstr ""
+msgstr "Surat Cinta"
 
 #: dat/outfits/accessory/love_letter.xml:11
 msgid ""
@@ -8862,7 +8868,7 @@ msgstr ""
 
 #: dat/ships/zalek/zalek_diablo.xml:2
 msgid "Za'lek Diablo"
-msgstr ""
+msgstr "Diablo Za'lek"
 
 #: dat/ships/zalek/zalek_diablo.xml:19 dat/ships/zalek/zalek_mephisto.xml:17
 msgid "You need at least 70 reputation with House Za'lek."
@@ -9052,7 +9058,7 @@ msgstr ""
 
 #: dat/slots/engines.xml:3
 msgid "Engines"
-msgstr ""
+msgstr "Mesin"
 
 #: dat/slots/engines.xml:4
 msgid ""
@@ -9343,7 +9349,7 @@ msgstr ""
 
 #: dat/spob/aesir_iv.xml:2
 msgid "Aesir IV"
-msgstr ""
+msgstr "Aesir IV"
 
 #: dat/spob/agino.xml:2
 msgid "Agino"
@@ -9521,11 +9527,11 @@ msgstr ""
 
 #: dat/spob/akra_iii.xml:2
 msgid "Akra III"
-msgstr ""
+msgstr "Akra III"
 
 #: dat/spob/akra_v.xml:2
 msgid "Akra V"
-msgstr ""
+msgstr "Akra V"
 
 #: dat/spob/akra_v.xml:9 dat/spob/aldous.xml:16 dat/spob/brock.xml:15
 #: dat/spob/dohriabi_prime.xml:9 dat/spob/fried_ii.xml:9
@@ -9809,15 +9815,15 @@ msgstr ""
 
 #: dat/spob/allous_gg3.xml:2
 msgid "Allous GG-3"
-msgstr ""
+msgstr "Allous GG-3"
 
 #: dat/spob/allous_i.xml:2
 msgid "Allous I"
-msgstr ""
+msgstr "Allous I"
 
 #: dat/spob/allous_ii.xml:2
 msgid "Allous II"
-msgstr ""
+msgstr "Allous II"
 
 #: dat/spob/alpha_aquilea.xml:2
 msgid "Alpha Aquilea"
@@ -9825,11 +9831,11 @@ msgstr ""
 
 #: dat/spob/alsafi_i.xml:2
 msgid "Alsafi I"
-msgstr ""
+msgstr "Alsafi I"
 
 #: dat/spob/alsafi_ia.xml:2
 msgid "Alsafi Ia"
-msgstr ""
+msgstr "Alsafi Ia"
 
 #: dat/spob/alsafi_ia.xml:15
 msgid ""
@@ -9844,11 +9850,11 @@ msgstr ""
 
 #: dat/spob/alsafi_ib.xml:2
 msgid "Alsafi Ib"
-msgstr ""
+msgstr "Alsafi Ib"
 
 #: dat/spob/alsafi_ii.xml:2
 msgid "Alsafi II"
-msgstr ""
+msgstr "Alsafi II"
 
 #: dat/spob/alsafi_ii.xml:9 dat/spob/amhurst.xml:15 dat/spob/antlejos_v.xml:9
 #: dat/spob/arcadia.xml:15 dat/spob/arcturus_ii.xml:9
@@ -9885,15 +9891,15 @@ msgstr ""
 
 #: dat/spob/alteris_i.xml:2
 msgid "Alteris I"
-msgstr ""
+msgstr "Alteris I"
 
 #: dat/spob/alteris_iv.xml:2
 msgid "Alteris IV"
-msgstr ""
+msgstr "Alteris IV"
 
 #: dat/spob/alteris_v.xml:2
 msgid "Alteris V"
-msgstr ""
+msgstr "Alteris V"
 
 #: dat/spob/aluben.xml:2
 msgid "Aluben"
@@ -9901,11 +9907,11 @@ msgstr "Aluben"
 
 #: dat/spob/amaroq_i.xml:2
 msgid "Amaroq I"
-msgstr ""
+msgstr "Amaroq I"
 
 #: dat/spob/amaroq_iii.xml:2
 msgid "Amaroq III"
-msgstr ""
+msgstr "Amaroq III"
 
 #: dat/spob/amaroq_iii.xml:9 dat/spob/amphion.xml:16
 #: dat/spob/anarbalis_iii.xml:9 dat/spob/anecu.xml:15 dat/spob/antica.xml:15
@@ -9931,15 +9937,15 @@ msgstr "O"
 
 #: dat/spob/amatiri_i.xml:2
 msgid "Amatiri I"
-msgstr ""
+msgstr "Amatiri I"
 
 #: dat/spob/amatiri_ia.xml:2
 msgid "Amatiri Ia"
-msgstr ""
+msgstr "Amatiri Ia"
 
 #: dat/spob/amatiri_ii.xml:2
 msgid "Amatiri II"
-msgstr ""
+msgstr "Amatiri II"
 
 #: dat/spob/amatiri_ii.xml:9 dat/spob/amianta.xml:15 dat/spob/anker.xml:9
 #: dat/spob/anku_iii.xml:9 dat/spob/antlejos_prime.xml:9 dat/spob/apik_ii.xml:9
@@ -10058,23 +10064,23 @@ msgstr ""
 
 #: dat/spob/anarbalis_ii.xml:2
 msgid "Anarbalis II"
-msgstr ""
+msgstr "Anarbalis II"
 
 #: dat/spob/anarbalis_iii.xml:2
 msgid "Anarbalis III"
-msgstr ""
+msgstr "Anarbalis III"
 
 #: dat/spob/andee_ii.xml:2
 msgid "Andee II"
-msgstr ""
+msgstr "Andee II"
 
 #: dat/spob/andee_iia.xml:2
 msgid "Andee IIa"
-msgstr ""
+msgstr "Andee IIa"
 
 #: dat/spob/andee_iii.xml:2
 msgid "Andee III"
-msgstr ""
+msgstr "Andee III"
 
 #: dat/spob/andee_iii.xml:9 dat/spob/blackwell_i.xml:9 dat/spob/botarn_i.xml:9
 #: dat/spob/coran.xml:9 dat/spob/delta_polaris_i.xml:9 dat/spob/haldr.xml:15
@@ -10091,7 +10097,7 @@ msgstr "X"
 
 #: dat/spob/andee_iiia.xml:2
 msgid "Andee IIIa"
-msgstr ""
+msgstr "Andee IIIa"
 
 #: dat/spob/andors.xml:2
 msgid "Andors"
@@ -10176,15 +10182,15 @@ msgstr "Anker"
 
 #: dat/spob/anku_i.xml:2
 msgid "An'ku I"
-msgstr ""
+msgstr "An'ku I"
 
 #: dat/spob/anku_ii.xml:2
 msgid "An'ku II"
-msgstr ""
+msgstr "An'ku II"
 
 #: dat/spob/anku_iii.xml:2
 msgid "An'ku III"
-msgstr ""
+msgstr "An'ku III"
 
 #: dat/spob/antica.xml:2
 msgid "Antica"
@@ -10216,7 +10222,7 @@ msgstr "B"
 
 #: dat/spob/antlejos_iv.xml:2
 msgid "Antlejos IV"
-msgstr ""
+msgstr "Antlejos IV"
 
 #: dat/spob/antlejos_prime.xml:2
 msgid "Antlejos Prime"
@@ -10226,7 +10232,7 @@ msgstr ""
 #. Function for adding log entries for miscellaneous one-off missions.
 #: dat/spob/antlejos_v.xml:2 dat/scripts/common/antlejos.lua:29
 msgid "Antlejos V"
-msgstr ""
+msgstr "Antlejos V"
 
 #: dat/spob/antlejos_v.xml:15
 msgid "A cold and barren inhospitable moon devoid of all life."
@@ -10297,19 +10303,19 @@ msgstr ""
 
 #: dat/spob/apez_ii.xml:2
 msgid "Apez II"
-msgstr ""
+msgstr "Apez II"
 
 #: dat/spob/apez_v.xml:2
 msgid "Apez V"
-msgstr ""
+msgstr "Apez V"
 
 #: dat/spob/apik_i.xml:2
 msgid "Apik I"
-msgstr ""
+msgstr "Apik I"
 
 #: dat/spob/apik_ii.xml:2
 msgid "Apik II"
-msgstr ""
+msgstr "Apik II"
 
 #: dat/spob/apik_shipyard.xml:2
 msgid "Apik Shipyard"
@@ -10473,31 +10479,31 @@ msgstr ""
 
 #: dat/spob/arcturus_i.xml:2
 msgid "Arcturus I"
-msgstr ""
+msgstr "Arcturus I"
 
 #: dat/spob/arcturus_ii.xml:2
 msgid "Arcturus II"
-msgstr ""
+msgstr "Arcturus II"
 
 #: dat/spob/ariadus_ii.xml:2
 msgid "Ariadus II"
-msgstr ""
+msgstr "Ariadus II"
 
 #: dat/spob/ariadus_iv.xml:2
 msgid "Ariadus IV"
-msgstr ""
+msgstr "Ariadus IV"
 
 #: dat/spob/ariadus_vi.xml:2
 msgid "Ariadus VI"
-msgstr ""
+msgstr "Ariadus VI"
 
 #: dat/spob/ariadus_via.xml:2
 msgid "Ariadus VIa"
-msgstr ""
+msgstr "Ariadus VIa"
 
 #: dat/spob/ariadus_vib.xml:2
 msgid "Ariadus VIb"
-msgstr ""
+msgstr "Ariadus VIb"
 
 #: dat/spob/ariak.xml:2
 msgid "Ariak"
@@ -10773,7 +10779,7 @@ msgstr ""
 
 #: dat/spob/beeklo_ii.xml:2
 msgid "Beeklo II"
-msgstr ""
+msgstr "Beeklo II"
 
 #: dat/spob/beene.xml:2
 msgid "Beene"
@@ -10919,15 +10925,15 @@ msgstr "BGG-1356"
 
 #: dat/spob/blackwell_i.xml:2
 msgid "Blackwell I"
-msgstr ""
+msgstr "Blackwell I"
 
 #: dat/spob/blackwell_iix.xml:2
 msgid "Blackwell IIX"
-msgstr ""
+msgstr "Blackwell IIX"
 
 #: dat/spob/blackwell_vii.xml:2
 msgid "Blackwell VII"
-msgstr ""
+msgstr "Blackwell VII"
 
 #: dat/spob/blunderbuss_ii.xml:2
 msgid "Blunderbuss II"
@@ -10963,7 +10969,7 @@ msgstr ""
 
 #: dat/spob/bon_sebb.xml:2
 msgid "Bon Sebb"
-msgstr ""
+msgstr "Bon Sebb"
 
 #: dat/spob/bon_sebb.xml:29
 msgid ""
@@ -10983,11 +10989,11 @@ msgstr ""
 
 #: dat/spob/bonanza_i.xml:2
 msgid "Bonanza I"
-msgstr ""
+msgstr "Bonanza I"
 
 #: dat/spob/bonanza_ii.xml:2
 msgid "Bonanza II"
-msgstr ""
+msgstr "Bonanza II"
 
 #: dat/spob/boowoy.xml:2
 msgid "Boowoy"
@@ -11202,27 +11208,27 @@ msgstr ""
 
 #: dat/spob/capricorn_ii.xml:2
 msgid "Capricorn II"
-msgstr ""
+msgstr "Capricorn II"
 
 #: dat/spob/capricorn_iii.xml:2
 msgid "Capricorn III"
-msgstr ""
+msgstr "Capricorn III"
 
 #: dat/spob/capricorn_iiia.xml:2
 msgid "Capricorn IIIa"
-msgstr ""
+msgstr "Capricorn IIIa"
 
 #: dat/spob/castellan_epsilon.xml:2
 msgid "Castellan Epsilon"
-msgstr ""
+msgstr "Castellan Epsilon"
 
 #: dat/spob/castellan_i.xml:2
 msgid "Castellan I"
-msgstr ""
+msgstr "Castellan I"
 
 #: dat/spob/castellan_iii.xml:2
 msgid "Castellan III"
-msgstr ""
+msgstr "Castellan III"
 
 #: dat/spob/castellan_iii.xml:25
 msgid ""
@@ -11244,11 +11250,11 @@ msgstr ""
 
 #: dat/spob/castellan_vi.xml:2
 msgid "Castellan VI"
-msgstr ""
+msgstr "Castellan VI"
 
 #: dat/spob/castellum_hystera.xml:2
 msgid "Castellum Hystera"
-msgstr ""
+msgstr "Castellum Hystera"
 
 #: dat/spob/castellum_hystera.xml:26
 msgid ""
@@ -11270,7 +11276,7 @@ msgstr ""
 
 #: dat/spob/castellum_telika.xml:2
 msgid "Castellum Telika"
-msgstr ""
+msgstr "Castellum Telika"
 
 #: dat/spob/castellum_telika.xml:25
 msgid ""
@@ -11338,19 +11344,19 @@ msgstr ""
 
 #: dat/spob/cerberus_i.xml:2
 msgid "Cerberus I"
-msgstr ""
+msgstr "Cerberus I"
 
 #: dat/spob/cerberus_ii.xml:2
 msgid "Cerberus II"
-msgstr ""
+msgstr "Cerberus II"
 
 #: dat/spob/cerberus_iia.xml:2
 msgid "Cerberus IIa"
-msgstr ""
+msgstr "Cerberus IIa"
 
 #: dat/spob/cerberus_iv.xml:2
 msgid "Cerberus IV"
-msgstr ""
+msgstr "Cerberus IV"
 
 #: dat/spob/cerberus_outpost.xml:2
 msgid "Cerberus Outpost"
@@ -11410,15 +11416,15 @@ msgstr "Gosong"
 
 #: dat/spob/churchill_i.xml:2
 msgid "Churchill I"
-msgstr ""
+msgstr "Churchill I"
 
 #: dat/spob/churchill_ii.xml:2
 msgid "Churchill II"
-msgstr ""
+msgstr "Churchill II"
 
 #: dat/spob/churchill_iia.xml:2
 msgid "Churchill IIa"
-msgstr ""
+msgstr "Churchill IIa"
 
 #: dat/spob/claudius_mehan.xml:2
 msgid "Claudius Mehan"
@@ -11544,19 +11550,19 @@ msgstr ""
 
 #: dat/spob/corvus_i.xml:2
 msgid "Corvus I"
-msgstr ""
+msgstr "Corvus I"
 
 #: dat/spob/corvus_vi.xml:2
 msgid "Corvus VI"
-msgstr ""
+msgstr "Corvus VI"
 
 #: dat/spob/corvus_via.xml:2
 msgid "Corvus VI-a"
-msgstr ""
+msgstr "Corvus VI-a"
 
 #: dat/spob/corvus_vib.xml:2
 msgid "Corvus VI-b"
-msgstr ""
+msgstr "Corvus VI-b"
 
 #: dat/spob/corvus_vib.xml:24
 msgid ""
@@ -11713,7 +11719,7 @@ msgstr ""
 
 #: dat/spob/cygnus_iv.xml:2
 msgid "Cygnus IV"
-msgstr ""
+msgstr "Cygnus IV"
 
 #: dat/spob/cyrene.xml:2
 msgid "Cyrene"
@@ -11766,15 +11772,15 @@ msgstr ""
 
 #: dat/spob/dakron_iii.xml:2
 msgid "Dakron III"
-msgstr ""
+msgstr "Dakron III"
 
 #: dat/spob/dakron_v.xml:2
 msgid "Dakron V"
-msgstr ""
+msgstr "Dakron V"
 
 #: dat/spob/damien_vii.xml:2
 msgid "Damien VII"
-msgstr ""
+msgstr "Damien VII"
 
 #: dat/spob/damphyr.xml:2
 msgid "Damphyr"
@@ -11782,11 +11788,11 @@ msgstr "Damfir"
 
 #: dat/spob/daravon_i.xml:2
 msgid "Daravon I"
-msgstr ""
+msgstr "Daravon I"
 
 #: dat/spob/daravon_iii.xml:2
 msgid "Daravon III"
-msgstr ""
+msgstr "Daravon III"
 
 #: dat/spob/darkshed.xml:2
 msgid "Darkshed"
@@ -12077,15 +12083,15 @@ msgstr ""
 
 #: dat/spob/draconis_beta.xml:2
 msgid "Draconis Beta"
-msgstr ""
+msgstr "Draconis Beta"
 
 #: dat/spob/draconis_delta.xml:2
 msgid "Draconis Delta"
-msgstr ""
+msgstr "Draconis Delta"
 
 #: dat/spob/draconis_epsilon.xml:2
 msgid "Draconis Epsilon"
-msgstr ""
+msgstr "Draconis Epsilon"
 
 #: dat/spob/draconis_epsilon.xml:27
 msgid ""
@@ -12111,7 +12117,7 @@ msgstr ""
 
 #: dat/spob/draconis_omega.xml:2
 msgid "Draconis Omega"
-msgstr ""
+msgstr "Draconis Omega"
 
 #: dat/spob/draconis_omega.xml:28
 msgid ""
@@ -12135,7 +12141,7 @@ msgstr ""
 
 #: dat/spob/draygar_iii.xml:2
 msgid "Draygar III"
-msgstr ""
+msgstr "Draygar III"
 
 #: dat/spob/drognain.xml:2
 msgid "Drognain"
@@ -12152,15 +12158,15 @@ msgstr ""
 
 #: dat/spob/druss_ii.xml:2
 msgid "Druss II"
-msgstr ""
+msgstr "Druss II"
 
 #: dat/spob/druss_iia.xml:2
 msgid "Druss IIa"
-msgstr ""
+msgstr "Druss IIa"
 
 #: dat/spob/druss_iii.xml:2
 msgid "Druss III"
-msgstr ""
+msgstr "Druss III"
 
 #: dat/spob/dun_hill.xml:2
 msgid "Dun Hill"
@@ -12310,19 +12316,19 @@ msgstr "Debu"
 
 #: dat/spob/dvaer_ii.xml:2
 msgid "Dvaer II"
-msgstr ""
+msgstr "Dvaer II"
 
 #: dat/spob/dvaer_iii.xml:2
 msgid "Dvaer III"
-msgstr ""
+msgstr "Dvaer III"
 
 #: dat/spob/dvaer_iiia.xml:2
 msgid "Dvaer IIIa"
-msgstr ""
+msgstr "Dvaer IIIa"
 
 #: dat/spob/dvaer_iv.xml:2
 msgid "Dvaer IV"
-msgstr ""
+msgstr "Dvaer IV"
 
 #: dat/spob/dvaer_prime.xml:2
 msgid "Dvaer Prime"
@@ -12593,19 +12599,19 @@ msgstr ""
 
 #: dat/spob/ekta_i.xml:2
 msgid "Ekta I"
-msgstr ""
+msgstr "Ekta I"
 
 #: dat/spob/ekta_ii.xml:2
 msgid "Ekta II"
-msgstr ""
+msgstr "Ekta II"
 
 #: dat/spob/ekta_iia.xml:2
 msgid "Ekta IIa"
-msgstr ""
+msgstr "Ekta IIa"
 
 #: dat/spob/ekta_iib.xml:2
 msgid "Ekta IIb"
-msgstr ""
+msgstr "Ekta IIb"
 
 #: dat/spob/ekta_station.xml:2
 msgid "Ekta Station"
@@ -12650,19 +12656,19 @@ msgstr ""
 
 #: dat/spob/elza_i.xml:2
 msgid "Elza I"
-msgstr ""
+msgstr "Elza I"
 
 #: dat/spob/elza_ia.xml:2
 msgid "Elza Ia"
-msgstr ""
+msgstr "Elza Ia"
 
 #: dat/spob/elza_iii.xml:2
 msgid "Elza III"
-msgstr ""
+msgstr "Elza III"
 
 #: dat/spob/em_1.xml:2
 msgid "Em 1"
-msgstr ""
+msgstr "Em 1"
 
 #: dat/spob/em_1.xml:28
 msgid ""
@@ -12682,15 +12688,15 @@ msgstr ""
 
 #: dat/spob/em_2.xml:2
 msgid "Em 2"
-msgstr ""
+msgstr "Em 2"
 
 #: dat/spob/em_4.xml:2
 msgid "Em 4"
-msgstr ""
+msgstr "Em 4"
 
 #: dat/spob/em_5.xml:2
 msgid "Em 5"
-msgstr ""
+msgstr "Em 5"
 
 #: dat/spob/em_5.xml:28
 msgid ""
@@ -12758,7 +12764,7 @@ msgstr ""
 
 #: dat/spob/emperors_wrath.xml:3
 msgid "#pEmpire Homeworld#0"
-msgstr ""
+msgstr "#pDunia-Rumah Kekaisaran#0"
 
 #: dat/spob/emperors_wrath.xml:25
 msgid ""
@@ -12776,7 +12782,7 @@ msgstr ""
 
 #: dat/spob/eneguoz_ii.xml:2
 msgid "Eneguoz II"
-msgstr ""
+msgstr "Eneguoz II"
 
 #: dat/spob/erebus_enclave.xml:2
 msgid "Erebus Enclave"
@@ -12804,11 +12810,11 @@ msgstr ""
 
 #: dat/spob/eridani_ii.xml:2
 msgid "Eridani II"
-msgstr ""
+msgstr "Eridani II"
 
 #: dat/spob/eridani_iii.xml:2
 msgid "Eridani III"
-msgstr ""
+msgstr "Eridani III"
 
 #: dat/spob/eryla.xml:2
 msgid "Eryla"
@@ -12816,15 +12822,15 @@ msgstr "Eryla"
 
 #: dat/spob/esker_i.xml:2
 msgid "Esker I"
-msgstr ""
+msgstr "Esker I"
 
 #: dat/spob/esker_ii.xml:2
 msgid "Esker II"
-msgstr ""
+msgstr "Esker II"
 
 #: dat/spob/esker_iv.xml:2
 msgid "Esker IV"
-msgstr ""
+msgstr "Esker IV"
 
 #: dat/spob/eta_vadornia.xml:2
 msgid "Eta Vadornia"
@@ -12860,27 +12866,27 @@ msgstr ""
 
 #: dat/spob/euler_i.xml:2
 msgid "Euler I"
-msgstr ""
+msgstr "Euler I"
 
 #: dat/spob/euler_ia.xml:2
 msgid "Euler Ia"
-msgstr ""
+msgstr "Euler Ia"
 
 #: dat/spob/euler_ii.xml:2
 msgid "Euler II"
-msgstr ""
+msgstr "Euler II"
 
 #: dat/spob/euler_iii.xml:2
 msgid "Euler III"
-msgstr ""
+msgstr "Euler III"
 
 #: dat/spob/euler_iiia.xml:2
 msgid "Euler IIIa"
-msgstr ""
+msgstr "Euler IIIa"
 
 #: dat/spob/euler_iv.xml:2
 msgid "Euler IV"
-msgstr ""
+msgstr "Euler IV"
 
 #: dat/spob/europea.xml:2
 msgid "Europea"
@@ -13022,11 +13028,11 @@ msgstr ""
 
 #: dat/spob/faust_iii.xml:2
 msgid "Faust III"
-msgstr ""
+msgstr "Faust III"
 
 #: dat/spob/faust_vi.xml:2
 msgid "Faust VI"
-msgstr ""
+msgstr "Faust VI"
 
 #: dat/spob/fd24.xml:2
 msgid "FD-24"
@@ -13061,19 +13067,19 @@ msgstr ""
 
 #: dat/spob/feye_i.xml:2
 msgid "Feye I"
-msgstr ""
+msgstr "Feye I"
 
 #: dat/spob/feye_iv.xml:2
 msgid "Feye IV"
-msgstr ""
+msgstr "Feye IV"
 
 #: dat/spob/fidelis_iii.xml:2
 msgid "Fidelis III"
-msgstr ""
+msgstr "Fidelis III"
 
 #: dat/spob/fidelis_iv.xml:2
 msgid "Fidelis IV"
-msgstr ""
+msgstr "Fidelis IV"
 
 #: dat/spob/finn.xml:2
 msgid "Finn"
@@ -13492,31 +13498,31 @@ msgstr ""
 
 #: dat/spob/gammacron_iv.xml:2
 msgid "Gammacron IV"
-msgstr ""
+msgstr "Gammacron IV"
 
 #: dat/spob/gammacron_v.xml:2
 msgid "Gammacron V"
-msgstr ""
+msgstr "Gammacron V"
 
 #: dat/spob/gammacron_va.xml:2
 msgid "Gammacron Va"
-msgstr ""
+msgstr "Gammacron Va"
 
 #: dat/spob/gammacron_vb.xml:2
 msgid "Gammacron Vb"
-msgstr ""
+msgstr "Gammacron Vb"
 
 #: dat/spob/ganth_i.xml:2
 msgid "Ganth I"
-msgstr ""
+msgstr "Ganth I"
 
 #: dat/spob/garten_iv.xml:2
 msgid "Garten IV"
-msgstr ""
+msgstr "Garten IV"
 
 #: dat/spob/garten_x.xml:2
 msgid "Garten X"
-msgstr ""
+msgstr "Garten X"
 
 #: dat/spob/gastan.xml:2
 msgid "Gastan"
@@ -13745,35 +13751,35 @@ msgstr ""
 
 #: dat/spob/gliese_i.xml:2
 msgid "Gliese I"
-msgstr ""
+msgstr "Gliese I"
 
 #: dat/spob/gliese_ii.xml:2
 msgid "Gliese II"
-msgstr ""
+msgstr "Gliese II"
 
 #: dat/spob/gliese_iia.xml:2
 msgid "Gliese II-a"
-msgstr ""
+msgstr "Gliese II-a"
 
 #: dat/spob/gliese_iii.xml:2
 msgid "Gliese III"
-msgstr ""
+msgstr "Gliese III"
 
 #: dat/spob/gliese_iv.xml:2
 msgid "Gliese IV"
-msgstr ""
+msgstr "Gliese IV"
 
 #: dat/spob/gliese_vi.xml:2
 msgid "Gliese VI"
-msgstr ""
+msgstr "Gliese VI"
 
 #: dat/spob/goddard_iii.xml:2
 msgid "Goddard III"
-msgstr ""
+msgstr "Goddard III"
 
 #: dat/spob/goddard_iv.xml:2
 msgid "Goddard IV"
-msgstr ""
+msgstr "Goddard IV"
 
 #: dat/spob/godtra.xml:2
 msgid "Godtra"
@@ -13944,15 +13950,15 @@ msgstr ""
 
 #: dat/spob/griffin_i.xml:2
 msgid "Griffin I"
-msgstr ""
+msgstr "Griffin I"
 
 #: dat/spob/griffin_ii.xml:2
 msgid "Griffin II"
-msgstr ""
+msgstr "Griffin II"
 
 #: dat/spob/griffin_iii.xml:2
 msgid "Griffin III"
-msgstr ""
+msgstr "Griffin III"
 
 #: dat/spob/griffin_iii.xml:29
 msgid ""
@@ -14000,15 +14006,15 @@ msgstr ""
 
 #: dat/spob/gruz_i.xml:2
 msgid "Gruz I"
-msgstr ""
+msgstr "Gruz I"
 
 #: dat/spob/gruz_ii.xml:2
 msgid "Gruz II"
-msgstr ""
+msgstr "Gruz II"
 
 #: dat/spob/gruz_iii.xml:2
 msgid "Gruz III"
-msgstr ""
+msgstr "Gruz III"
 
 #: dat/spob/gunteshs_rock.xml:2
 msgid "Guntesh's Rock"
@@ -14025,39 +14031,39 @@ msgstr ""
 
 #: dat/spob/gutter_i.xml:2
 msgid "Gutter I"
-msgstr ""
+msgstr "Gutter I"
 
 #: dat/spob/gutter_iii.xml:2
 msgid "Gutter III"
-msgstr ""
+msgstr "Gutter III"
 
 #: dat/spob/gyrios_ii.xml:2
 msgid "Gyrios II"
-msgstr ""
+msgstr "Gyrios II"
 
 #: dat/spob/gyrios_iv.xml:2
 msgid "Gyrios IV"
-msgstr ""
+msgstr "Gyrios IV"
 
 #: dat/spob/gyrios_v.xml:2
 msgid "Gyrios V"
-msgstr ""
+msgstr "Gyrios V"
 
 #: dat/spob/hadosh_ia.xml:2
 msgid "Hadosh Ia"
-msgstr ""
+msgstr "Hadosh Ia"
 
 #: dat/spob/hadosh_ii.xml:2
 msgid "Hadosh II"
-msgstr ""
+msgstr "Hadosh II"
 
 #: dat/spob/hadosh_iii.xml:2
 msgid "Hadosh III"
-msgstr ""
+msgstr "Hadosh III"
 
 #: dat/spob/hadosh_iv.xml:2
 msgid "Hadosh IV"
-msgstr ""
+msgstr "Hadosh IV"
 
 #: dat/spob/haldr.xml:2
 msgid "Haldr"
@@ -14214,19 +14220,19 @@ msgstr ""
 
 #: dat/spob/hasselt_ii.xml:2
 msgid "Hasselt II"
-msgstr ""
+msgstr "Hasselt II"
 
 #: dat/spob/hasselt_iv.xml:2
 msgid "Hasselt IV"
-msgstr ""
+msgstr "Hasselt IV"
 
 #: dat/spob/hatter_i.xml:2
 msgid "Hatter I"
-msgstr ""
+msgstr "Hatter I"
 
 #: dat/spob/hatter_ii.xml:2
 msgid "Hatter II"
-msgstr ""
+msgstr "Hatter II"
 
 #: dat/spob/haurn.xml:2
 msgid "Haurn"
@@ -14278,11 +14284,11 @@ msgstr ""
 
 #: dat/spob/hekaras_iii.xml:2
 msgid "Hekaras III"
-msgstr ""
+msgstr "Hekaras III"
 
 #: dat/spob/hekaras_iv.xml:2
 msgid "Hekaras IV"
-msgstr ""
+msgstr "Hekaras IV"
 
 #: dat/spob/heronus.xml:2
 msgid "Heronus"
@@ -14334,7 +14340,7 @@ msgstr ""
 
 #: dat/spob/holly_i.xml:2
 msgid "Holly I"
-msgstr ""
+msgstr "Holly I"
 
 #: dat/spob/holly_i.xml:15 dat/spob/holly_ii.xml:15 dat/spob/holly_iii.xml:15
 msgid "F"
@@ -14374,7 +14380,7 @@ msgstr ""
 
 #: dat/spob/holly_ii.xml:2
 msgid "Holly II"
-msgstr ""
+msgstr "Holly II"
 
 #: dat/spob/holly_ii.xml:25
 msgid ""
@@ -14409,7 +14415,7 @@ msgstr ""
 
 #: dat/spob/holly_iii.xml:2
 msgid "Holly III"
-msgstr ""
+msgstr "Holly III"
 
 #: dat/spob/holly_iii.xml:25
 msgid ""
@@ -14577,15 +14583,15 @@ msgstr ""
 
 #: dat/spob/humdrum_i.xml:2
 msgid "Humdrum I"
-msgstr ""
+msgstr "Humdrum I"
 
 #: dat/spob/humdrum_ii.xml:2
 msgid "Humdrum II"
-msgstr ""
+msgstr "Humdrum II"
 
 #: dat/spob/humdrum_iii.xml:2
 msgid "Humdrum III"
-msgstr ""
+msgstr "Humdrum III"
 
 #: dat/spob/hurada.xml:2
 msgid "Hurada"
@@ -14772,11 +14778,11 @@ msgstr ""
 
 #: dat/spob/ianella_i.xml:2
 msgid "Ianella I"
-msgstr ""
+msgstr "Ianella I"
 
 #: dat/spob/ianella_ia.xml:2
 msgid "Ianella I-a"
-msgstr ""
+msgstr "Ianella I-a"
 
 #: dat/spob/ianella_ia.xml:15
 msgid ""
@@ -14792,19 +14798,19 @@ msgstr ""
 
 #: dat/spob/ianella_ib.xml:2
 msgid "Ianella I-b"
-msgstr ""
+msgstr "Ianella I-b"
 
 #: dat/spob/ianella_ic.xml:2
 msgid "Ianella I-c"
-msgstr ""
+msgstr "Ianella I-c"
 
 #: dat/spob/ianella_iii.xml:2
 msgid "Ianella III"
-msgstr ""
+msgstr "Ianella III"
 
 #: dat/spob/ianella_iv.xml:2
 msgid "Ianella IV"
-msgstr ""
+msgstr "Ianella IV"
 
 #: dat/spob/ianella_iv.xml:26
 msgid ""
@@ -15009,11 +15015,11 @@ msgstr ""
 
 #: dat/spob/jackson_ii.xml:2
 msgid "Jackson II"
-msgstr ""
+msgstr "Jackson II"
 
 #: dat/spob/jackson_v.xml:2
 msgid "Jackson V"
-msgstr ""
+msgstr "Jackson V"
 
 #: dat/spob/jacqueline.xml:2
 msgid "Jacqueline"
@@ -15064,19 +15070,19 @@ msgstr ""
 
 #: dat/spob/jade_i.xml:2
 msgid "Jade I"
-msgstr ""
+msgstr "Jade I"
 
 #: dat/spob/jade_ii.xml:2
 msgid "Jade II"
-msgstr ""
+msgstr "Jade II"
 
 #: dat/spob/jade_iii.xml:2
 msgid "Jade III"
-msgstr ""
+msgstr "Jade III"
 
 #: dat/spob/jade_vi.xml:2
 msgid "Jade VI"
-msgstr ""
+msgstr "Jade VI"
 
 #: dat/spob/jaegnhild.xml:2
 msgid "Jaegnhild"
@@ -15291,11 +15297,11 @@ msgstr ""
 
 #: dat/spob/jervis_v.xml:2
 msgid "Jervis V"
-msgstr ""
+msgstr "Jervis V"
 
 #: dat/spob/jervis_vii.xml:2
 msgid "Jervis VII"
-msgstr ""
+msgstr "Jervis VII"
 
 #: dat/spob/jezza.xml:2
 msgid "Jezza"
@@ -15423,7 +15429,7 @@ msgstr "Kaira"
 
 #: dat/spob/kal_atok_obelisk.xml:2
 msgid "Kal Atok Obelisk"
-msgstr ""
+msgstr "Tugu Kal Atok"
 
 #: dat/spob/kal_atok_obelisk.xml:3 dat/spob/kal_maro_obelisk.xml:3
 #: dat/spob/kal_niut_obelisk.xml:3 dat/spob/kal_sitra_obelisk.xml:3
@@ -15437,15 +15443,15 @@ msgstr "Tugu"
 
 #: dat/spob/kal_maro_obelisk.xml:2
 msgid "Kal Maro Obelisk"
-msgstr ""
+msgstr "Tugu Kal Maro"
 
 #: dat/spob/kal_niut_obelisk.xml:2
 msgid "Kal Niut Obelisk"
-msgstr ""
+msgstr "Tugu Kal Niut"
 
 #: dat/spob/kal_sitra_obelisk.xml:2
 msgid "Kal Sitra Obelisk"
-msgstr ""
+msgstr "Tugu Kal Sitra"
 
 #: dat/spob/kanar.xml:2
 msgid "Kan'ar"
@@ -15473,31 +15479,31 @@ msgstr "Kanel"
 
 #: dat/spob/kansas_i.xml:2
 msgid "Kansas I"
-msgstr ""
+msgstr "Kansas I"
 
 #: dat/spob/kansas_iii.xml:2
 msgid "Kansas III"
-msgstr ""
+msgstr "Kansas III"
 
 #: dat/spob/kansas_iv.xml:2
 msgid "Kansas IV"
-msgstr ""
+msgstr "Kansas IV"
 
 #: dat/spob/kansas_vi.xml:2
 msgid "Kansas VI"
-msgstr ""
+msgstr "Kansas VI"
 
 #: dat/spob/kappa_vadornia.xml:2
 msgid "Kappa Vadornia"
-msgstr ""
+msgstr "Kappa Vadornia"
 
 #: dat/spob/karman_i.xml:2
 msgid "Karman I"
-msgstr ""
+msgstr "Karman I"
 
 #: dat/spob/karman_ii.xml:2
 msgid "Karman II"
-msgstr ""
+msgstr "Karman II"
 
 #: dat/spob/karvua.xml:2
 msgid "Karvua"
@@ -15520,7 +15526,7 @@ msgstr "Kataka"
 
 #: dat/spob/kataka.xml:3
 msgid "#pSoromid Homeworld#0"
-msgstr ""
+msgstr "#pDunia-Rumah Soromid#0"
 
 #: dat/spob/kataka.xml:28
 msgid ""
@@ -15543,7 +15549,7 @@ msgstr ""
 
 #: dat/spob/katami_i.xml:2
 msgid "Katami I"
-msgstr ""
+msgstr "Katami I"
 
 #: dat/spob/katar.xml:2
 msgid "Katar"
@@ -15551,7 +15557,7 @@ msgstr "Katar"
 
 #: dat/spob/katar_i.xml:2
 msgid "Katar I"
-msgstr ""
+msgstr "Katar I"
 
 #: dat/spob/katar_i.xml:24
 msgid ""
@@ -15621,7 +15627,7 @@ msgstr ""
 
 #: dat/spob/khaas_i.xml:2
 msgid "Khaas I"
-msgstr ""
+msgstr "Khaas I"
 
 #: dat/spob/khelim.xml:2
 msgid "Khelim"
@@ -15654,23 +15660,23 @@ msgstr "Killerog"
 
 #: dat/spob/klantar_i.xml:2
 msgid "Klantar I"
-msgstr ""
+msgstr "Klantar I"
 
 #: dat/spob/klantar_iii.xml:2
 msgid "Klantar III"
-msgstr ""
+msgstr "Klantar III"
 
 #: dat/spob/kobopos_i.xml:2
 msgid "Kobopos I"
-msgstr ""
+msgstr "Kobopos I"
 
 #: dat/spob/kobopos_ii.xml:2
 msgid "Kobopos II"
-msgstr ""
+msgstr "Kobopos II"
 
 #: dat/spob/kobopos_iv.xml:2
 msgid "Kobopos IV"
-msgstr ""
+msgstr "Kobopos IV"
 
 #: dat/spob/koga.xml:2
 msgid "Koga"
@@ -15695,27 +15701,27 @@ msgstr ""
 
 #: dat/spob/koralis_iv.xml:2
 msgid "Koralis IV"
-msgstr ""
+msgstr "Koralis IV"
 
 #: dat/spob/koralis_vi.xml:2
 msgid "Koralis VI"
-msgstr ""
+msgstr "Koralis VI"
 
 #: dat/spob/korifa_i.xml:2
 msgid "Korifa I"
-msgstr ""
+msgstr "Korifa I"
 
 #: dat/spob/korifa_ia.xml:2
 msgid "Korifa Ia"
-msgstr ""
+msgstr "Korifa Ia"
 
 #: dat/spob/korifa_ii.xml:2
 msgid "Korifa II"
-msgstr ""
+msgstr "Korifa II"
 
 #: dat/spob/korifa_iii.xml:2
 msgid "Korifa III"
-msgstr ""
+msgstr "Korifa III"
 
 #: dat/spob/kotori.xml:2
 msgid "Kotori"
@@ -15723,23 +15729,23 @@ msgstr "Kotori"
 
 #: dat/spob/kraft_i.xml:2
 msgid "Kraft I"
-msgstr ""
+msgstr "Kraft I"
 
 #: dat/spob/kraft_ii.xml:2
 msgid "Kraft II"
-msgstr ""
+msgstr "Kraft II"
 
 #: dat/spob/kraft_iv.xml:2
 msgid "Kraft IV"
-msgstr ""
+msgstr "Kraft IV"
 
 #: dat/spob/kraft_v.xml:2
 msgid "Kraft V"
-msgstr ""
+msgstr "Kraft V"
 
 #: dat/spob/kraft_vi.xml:2
 msgid "Kraft VI"
-msgstr ""
+msgstr "Kraft VI"
 
 #: dat/spob/kramer.xml:2
 msgid "Kramer"
@@ -15762,31 +15768,31 @@ msgstr ""
 
 #: dat/spob/kretogg_i.xml:2
 msgid "Kretogg I"
-msgstr ""
+msgstr "Kretogg I"
 
 #: dat/spob/kretogg_ii.xml:2
 msgid "Kretogg II"
-msgstr ""
+msgstr "Kretogg II"
 
 #: dat/spob/kretogg_iii.xml:2
 msgid "Kretogg III"
-msgstr ""
+msgstr "Kretogg III"
 
 #: dat/spob/ksher_i.xml:2
 msgid "Ksher I"
-msgstr ""
+msgstr "Ksher I"
 
 #: dat/spob/ksher_ii.xml:2
 msgid "Ksher II"
-msgstr ""
+msgstr "Ksher II"
 
 #: dat/spob/ksher_iii.xml:2
 msgid "Ksher III"
-msgstr ""
+msgstr "Ksher III"
 
 #: dat/spob/kyo_iii.xml:2
 msgid "Kyo III"
-msgstr ""
+msgstr "Kyo III"
 
 #: dat/spob/laarss.xml:2
 msgid "Laarss"
@@ -15834,11 +15840,11 @@ msgstr ""
 
 #: dat/spob/lapis_i.xml:2
 msgid "Lapis I"
-msgstr ""
+msgstr "Lapis I"
 
 #: dat/spob/lapis_ii.xml:2
 msgid "Lapis II"
-msgstr ""
+msgstr "Lapis II"
 
 #: dat/spob/lapra.xml:2
 msgid "Lapra"
@@ -15886,7 +15892,7 @@ msgstr ""
 
 #: dat/spob/las_vegas.xml:2
 msgid "Las Vegas"
-msgstr ""
+msgstr "Las Vegas"
 
 #: dat/spob/las_vegas.xml:15
 msgid ""
@@ -15901,15 +15907,15 @@ msgstr ""
 
 #: dat/spob/lazuli_i.xml:2
 msgid "Lazuli I"
-msgstr ""
+msgstr "Lazuli I"
 
 #: dat/spob/lazuli_ia.xml:2
 msgid "Lazuli Ia"
-msgstr ""
+msgstr "Lazuli Ia"
 
 #: dat/spob/lazuli_iii.xml:2
 msgid "Lazuli III"
-msgstr ""
+msgstr "Lazuli III"
 
 #: dat/spob/leo.xml:2
 msgid "Leo"
@@ -15917,7 +15923,7 @@ msgstr "Leo"
 
 #: dat/spob/leszec.xml:2
 msgid "Leszec"
-msgstr "Leszec"
+msgstr "Leszek"
 
 #: dat/spob/leszec.xml:25
 msgid ""
@@ -15960,11 +15966,11 @@ msgstr ""
 
 #: dat/spob/limbo_i.xml:2
 msgid "Limbo I"
-msgstr ""
+msgstr "Limbo I"
 
 #: dat/spob/limbo_ii.xml:2
 msgid "Limbo II"
-msgstr ""
+msgstr "Limbo II"
 
 #: dat/spob/lirith.xml:2
 msgid "Lirith"
@@ -15996,15 +16002,15 @@ msgstr ""
 
 #: dat/spob/longbow_i.xml:2
 msgid "Longbow I"
-msgstr ""
+msgstr "Longbow I"
 
 #: dat/spob/longbow_iii.xml:2
 msgid "Longbow III"
-msgstr ""
+msgstr "Longbow III"
 
 #: dat/spob/longbow_iv.xml:2
 msgid "Longbow IV"
-msgstr ""
+msgstr "Longbow IV"
 
 #: dat/spob/loramor.xml:2
 msgid "Lora-Mor"
@@ -16073,7 +16079,7 @@ msgstr ""
 
 #: dat/spob/luna_skona.xml:2
 msgid "Luna Skona"
-msgstr ""
+msgstr "Luna Skona"
 
 #: dat/spob/luxsor.xml:2
 msgid "Luxsor"
@@ -16081,19 +16087,19 @@ msgstr "Luxsor"
 
 #: dat/spob/lyncis_i.xml:2
 msgid "Lyncis I"
-msgstr ""
+msgstr "Lyncis I"
 
 #: dat/spob/lyncis_ii.xml:2
 msgid "Lyncis II"
-msgstr ""
+msgstr "Lyncis II"
 
 #: dat/spob/lyncis_iia.xml:2
 msgid "Lyncis IIa"
-msgstr ""
+msgstr "Lyncis IIa"
 
 #: dat/spob/lyncis_iib.xml:2
 msgid "Lyncis IIb"
-msgstr ""
+msgstr "Lyncis IIb"
 
 #: dat/spob/lyncis_iib.xml:15
 msgid ""
@@ -16112,7 +16118,7 @@ msgstr ""
 
 #: dat/spob/lyncis_iii.xml:2
 msgid "Lyncis III"
-msgstr ""
+msgstr "Lyncis III"
 
 #: dat/spob/maanen.xml:2
 msgid "Maanen"
@@ -16120,7 +16126,7 @@ msgstr "Maanen"
 
 #: dat/spob/maanens_moon.xml:2
 msgid "Maanen's Moon"
-msgstr ""
+msgstr "Bulan Maanen"
 
 #: dat/spob/maanens_moon.xml:25
 msgid ""
@@ -16233,7 +16239,7 @@ msgstr ""
 
 #: dat/spob/majesteka_ii.xml:2
 msgid "Majesteka II"
-msgstr ""
+msgstr "Majesteka II"
 
 #: dat/spob/majesteka_ii.xml:26
 msgid ""
@@ -16260,11 +16266,11 @@ msgstr ""
 
 #: dat/spob/majesteka_iv.xml:2
 msgid "Majesteka IV"
-msgstr ""
+msgstr "Majesteka IV"
 
 #: dat/spob/majesteka_prime.xml:2
 msgid "Majesteka Prime"
-msgstr ""
+msgstr "Majesteka Utama"
 
 #: dat/spob/majesteka_prime.xml:27
 msgid ""
@@ -16295,15 +16301,15 @@ msgstr "Malebolge"
 
 #: dat/spob/malebolge_iii.xml:2
 msgid "Malebolge III"
-msgstr ""
+msgstr "Malebolge III"
 
 #: dat/spob/malebolge_iv.xml:2
 msgid "Malebolge IV"
-msgstr ""
+msgstr "Malebolge IV"
 
 #: dat/spob/malebolge_v.xml:2
 msgid "Malebolge V"
-msgstr ""
+msgstr "Malebolge V"
 
 #: dat/spob/manis.xml:2
 msgid "Manis"
@@ -16352,7 +16358,7 @@ msgstr ""
 
 #: dat/spob/manuel_station.xml:2
 msgid "Manuel Station"
-msgstr ""
+msgstr "Stasiun Manuel"
 
 #: dat/spob/manuel_station.xml:27
 msgid ""
@@ -16388,15 +16394,15 @@ msgstr ""
 
 #: dat/spob/margarita_i.xml:2
 msgid "Margarita I"
-msgstr ""
+msgstr "Margarita I"
 
 #: dat/spob/margarita_ii.xml:2
 msgid "Margarita II"
-msgstr ""
+msgstr "Margarita II"
 
 #: dat/spob/margarita_iv.xml:2
 msgid "Margarita IV"
-msgstr ""
+msgstr "Margarita IV"
 
 #: dat/spob/margot.xml:2
 msgid "Margot"
@@ -16445,27 +16451,27 @@ msgstr ""
 
 #: dat/spob/mason_i.xml:2
 msgid "Mason I"
-msgstr ""
+msgstr "Mason I"
 
 #: dat/spob/mason_ii.xml:2
 msgid "Mason II"
-msgstr ""
+msgstr "Mason II"
 
 #: dat/spob/mason_iv.xml:2
 msgid "Mason IV"
-msgstr ""
+msgstr "Mason IV"
 
 #: dat/spob/massia_i.xml:2
 msgid "Massia I"
-msgstr ""
+msgstr "Massia I"
 
 #: dat/spob/massia_iv.xml:2
 msgid "Massia IV"
-msgstr ""
+msgstr "Massia IV"
 
 #: dat/spob/massia_iva.xml:2
 msgid "Massia IVa"
-msgstr ""
+msgstr "Massia IVa"
 
 #: dat/spob/mastodon_station.xml:2
 msgid "Mastodon Station"
@@ -16487,15 +16493,15 @@ msgstr ""
 
 #: dat/spob/maus_i.xml:2
 msgid "Maus I"
-msgstr ""
+msgstr "Maus I"
 
 #: dat/spob/maus_ii.xml:2
 msgid "Maus II"
-msgstr ""
+msgstr "Maus II"
 
 #: dat/spob/maus_iii.xml:2
 msgid "Maus III"
-msgstr ""
+msgstr "Maus III"
 
 #: dat/spob/maya.xml:2
 msgid "Maya"
@@ -16528,7 +16534,7 @@ msgstr "Megala"
 
 #: dat/spob/megan_station.xml:2
 msgid "Megan Station"
-msgstr ""
+msgstr "Stasiun Megan"
 
 #: dat/spob/megan_station.xml:25
 msgid ""
@@ -16597,7 +16603,7 @@ msgstr ""
 
 #: dat/spob/memory_of_sorom.xml:2
 msgid "Memory of Sorom"
-msgstr ""
+msgstr "Memori Sorom"
 
 #: dat/spob/memory_of_sorom.xml:27
 msgid ""
@@ -16639,19 +16645,19 @@ msgstr ""
 
 #: dat/spob/merisi_i.xml:2
 msgid "Merisi I"
-msgstr ""
+msgstr "Merisi I"
 
 #: dat/spob/merisi_ii.xml:2
 msgid "Merisi II"
-msgstr ""
+msgstr "Merisi II"
 
 #: dat/spob/merisi_iii.xml:2
 msgid "Merisi III"
-msgstr ""
+msgstr "Merisi III"
 
 #: dat/spob/merisi_iv.xml:2
 msgid "Merisi IV"
-msgstr ""
+msgstr "Merisi IV"
 
 #: dat/spob/meya.xml:2
 msgid "Meya"
@@ -16676,7 +16682,7 @@ msgstr "MGG-1294"
 #: dat/scripts/common/minerva.lua:113 dat/scripts/common/minerva.lua:117
 #: dat/scripts/common/minerva.lua:121 dat/scripts/common/minerva.lua:125
 msgid "Minerva Station"
-msgstr ""
+msgstr "Stasiun Minerva"
 
 #: dat/spob/minerva_station.xml:28
 msgid ""
@@ -16686,6 +16692,11 @@ msgid ""
 "environment. When docking to the station there is a big neon says that "
 "displays \"What happens in Limbo, stays in Limbo\"."
 msgstr ""
+"Stasiun ini terdiri dari satu kompleks perjudian yang amat besar. Ke mana "
+"pun engkau pergi, nampaknya selalu ada perjudian yang sedang berlangsung. "
+"Hal ini, digabungkan dengan hilir-mudik keluar-masuk, menciptakan sebuah "
+"lingkungan gila-gilaan. Ketika sedang docking ke stasiun ini, terdapat papan "
+"neon besar dengan tulisan \"Apa yang terjadi di Limbo, tetap di Limbo\"."
 
 #: dat/spob/minerva_station.xml:29
 msgid ""
@@ -16726,35 +16737,35 @@ msgstr ""
 
 #: dat/spob/mirror_i.xml:2
 msgid "Mirror I"
-msgstr ""
+msgstr "Cermin I"
 
 #: dat/spob/mirror_iv.xml:2
 msgid "Mirror IV"
-msgstr ""
+msgstr "Cermin IV"
 
 #: dat/spob/mirror_vi.xml:2
 msgid "Mirror VI"
-msgstr ""
+msgstr "Cermin VI"
 
 #: dat/spob/mirror_via.xml:2
 msgid "Mirror VIa"
-msgstr ""
+msgstr "Cermin VIa"
 
 #: dat/spob/mirror_vib.xml:2
 msgid "Mirror VIb"
-msgstr ""
+msgstr "Cermin VIb"
 
 #: dat/spob/mizar_iii.xml:2
 msgid "Mizar III"
-msgstr ""
+msgstr "Mizar III"
 
 #: dat/spob/mizar_iv.xml:2
 msgid "Mizar IV"
-msgstr ""
+msgstr "Mizar IV"
 
 #: dat/spob/mizar_vi.xml:2
 msgid "Mizar VI"
-msgstr ""
+msgstr "Mizar VI"
 
 #: dat/spob/mk.xml:2
 msgid "M.K."
@@ -16821,15 +16832,15 @@ msgstr ""
 
 #: dat/spob/monogram_iii.xml:2
 msgid "Monogram III"
-msgstr ""
+msgstr "Monogram III"
 
 #: dat/spob/monogram_iv.xml:2
 msgid "Monogram IV"
-msgstr ""
+msgstr "Monogram IV"
 
 #: dat/spob/monogram_v.xml:2
 msgid "Monogram V"
-msgstr ""
+msgstr "Monogram V"
 
 #: dat/spob/monsoon_cloister.xml:2
 msgid "Monsoon Cloister"
@@ -16851,23 +16862,23 @@ msgstr ""
 
 #: dat/spob/moor_i.xml:2
 msgid "Moor I"
-msgstr ""
+msgstr "Moor I"
 
 #: dat/spob/moor_ii.xml:2
 msgid "Moor II"
-msgstr ""
+msgstr "Moor II"
 
 #: dat/spob/moor_iii.xml:2
 msgid "Moor III"
-msgstr ""
+msgstr "Moor III"
 
 #: dat/spob/moordra_i.xml:2
 msgid "Moordra I"
-msgstr ""
+msgstr "Moordra I"
 
 #: dat/spob/moordra_ii.xml:2
 msgid "Moordra II"
-msgstr ""
+msgstr "Moordra II"
 
 #: dat/spob/moorline_cloister.xml:2
 msgid "Moorline Cloister"
@@ -16891,7 +16902,7 @@ msgstr ""
 
 #: dat/spob/morgan_citadel.xml:2
 msgid "Morgan Citadel"
-msgstr ""
+msgstr "Sitadel Morgan"
 
 #: dat/spob/morgan_citadel.xml:27
 msgid ""
@@ -16956,7 +16967,7 @@ msgstr "Mutris"
 
 #: dat/spob/mutris.xml:3
 msgid "#pSirius Homeworld#0"
-msgstr ""
+msgstr "#pDunia-Rumah Sirius#0"
 
 #: dat/spob/mutris.xml:30
 msgid ""
@@ -17063,43 +17074,43 @@ msgstr ""
 
 #: dat/spob/narousse_i.xml:2
 msgid "Narousse I"
-msgstr ""
+msgstr "Narousse I"
 
 #: dat/spob/narousse_ii.xml:2
 msgid "Narousse II"
-msgstr ""
+msgstr "Narousse II"
 
 #: dat/spob/narousse_iii.xml:2
 msgid "Narousse III"
-msgstr ""
+msgstr "Narousse III"
 
 #: dat/spob/narousse_iiia.xml:2
 msgid "Narousse IIIa"
-msgstr ""
+msgstr "Narousse IIIa"
 
 #: dat/spob/narousse_iv.xml:2
 msgid "Narousse IV"
-msgstr ""
+msgstr "Narousse IV"
 
 #: dat/spob/nartur_i.xml:2
 msgid "Nartur I"
-msgstr ""
+msgstr "Nartur I"
 
 #: dat/spob/nartur_ii.xml:2
 msgid "Nartur II"
-msgstr ""
+msgstr "Nartur II"
 
 #: dat/spob/nartur_iii.xml:2
 msgid "Nartur III"
-msgstr ""
+msgstr "Nartur III"
 
 #: dat/spob/nartur_iv.xml:2
 msgid "Nartur IV"
-msgstr ""
+msgstr "Nartur IV"
 
 #: dat/spob/nartur_iva.xml:2
 msgid "Nartur IVa"
-msgstr ""
+msgstr "Nartur IVa"
 
 #: dat/spob/nasano.xml:2
 msgid "Nasano"
@@ -17107,15 +17118,15 @@ msgstr "Nasano"
 
 #: dat/spob/nava_i.xml:2
 msgid "Nava I"
-msgstr ""
+msgstr "Nava I"
 
 #: dat/spob/neexi_i.xml:2
 msgid "Neexi I"
-msgstr ""
+msgstr "Neexi I"
 
 #: dat/spob/neexi_ii.xml:2
 msgid "Neexi II"
-msgstr ""
+msgstr "Neexi II"
 
 #: dat/spob/neo_pomerania.xml:2
 msgid "Neo Pomerania"
@@ -17141,11 +17152,11 @@ msgstr ""
 
 #: dat/spob/neon_i.xml:2
 msgid "Neon I"
-msgstr ""
+msgstr "Neon I"
 
 #: dat/spob/neon_iii.xml:2
 msgid "Neon III"
-msgstr ""
+msgstr "Neon III"
 
 #: dat/spob/nera.xml:2
 msgid "Nera"
@@ -17184,11 +17195,11 @@ msgstr ""
 
 #: dat/spob/new_deimos.xml:2
 msgid "New Deimos"
-msgstr ""
+msgstr "Deimos Baru"
 
 #: dat/spob/new_dortmund.xml:2
 msgid "New Dortmund"
-msgstr ""
+msgstr "Dortmund Baru"
 
 #: dat/spob/new_dortmund.xml:28
 msgid ""
@@ -17214,7 +17225,7 @@ msgstr ""
 
 #: dat/spob/new_europe.xml:2
 msgid "New Europe"
-msgstr ""
+msgstr "Eropa Baru"
 
 #: dat/spob/new_europe.xml:26
 msgid ""
@@ -17274,11 +17285,11 @@ msgstr ""
 
 #: dat/spob/new_konnor.xml:2
 msgid "New Konnor"
-msgstr ""
+msgstr "Konnor Baru"
 
 #: dat/spob/new_mars.xml:2
 msgid "New Mars"
-msgstr ""
+msgstr "Mars Baru"
 
 #: dat/spob/new_mars.xml:24
 msgid ""
@@ -17301,7 +17312,7 @@ msgstr ""
 
 #: dat/spob/new_pluto.xml:2
 msgid "New Pluto"
-msgstr ""
+msgstr "Pluto Baru"
 
 #: dat/spob/new_space_trade_hub.xml:2
 msgid "New Space Trade Hub"
@@ -17337,11 +17348,11 @@ msgstr ""
 
 #: dat/spob/new_thomas.xml:2
 msgid "New Thomas"
-msgstr ""
+msgstr "Thomas Baru"
 
 #: dat/spob/new_xantusia.xml:2
 msgid "New Xantusia"
-msgstr ""
+msgstr "Xantusia Baru"
 
 #: dat/spob/new_xantusia.xml:28
 msgid ""
@@ -17427,11 +17438,11 @@ msgstr ""
 
 #: dat/spob/niger_i.xml:2
 msgid "Niger I"
-msgstr ""
+msgstr "Niger I"
 
 #: dat/spob/niger_ii.xml:2
 msgid "Niger II"
-msgstr ""
+msgstr "Niger II"
 
 #: dat/spob/nixa.xml:2
 msgid "Nixa"
@@ -17455,23 +17466,23 @@ msgstr ""
 
 #: dat/spob/nixon_i.xml:2
 msgid "Nixon I"
-msgstr ""
+msgstr "Nixon I"
 
 #: dat/spob/nixon_ii.xml:2
 msgid "Nixon II"
-msgstr ""
+msgstr "Nixon II"
 
 #: dat/spob/nixon_iii.xml:2
 msgid "Nixon III"
-msgstr ""
+msgstr "Nixon III"
 
 #: dat/spob/nixon_iv.xml:2
 msgid "Nixon IV"
-msgstr ""
+msgstr "Nixon IV"
 
 #: dat/spob/nixon_v.xml:2
 msgid "Nixon V"
-msgstr ""
+msgstr "Nixon V"
 
 #: dat/spob/nocalin.xml:2
 msgid "Nocalin"
@@ -17554,7 +17565,7 @@ msgstr ""
 
 #: dat/spob/norpin_ii.xml:2
 msgid "Norpin II"
-msgstr ""
+msgstr "Norpin II"
 
 #: dat/spob/norpin_ii.xml:28
 msgid ""
@@ -17573,19 +17584,19 @@ msgstr ""
 
 #: dat/spob/norpin_iv.xml:2
 msgid "Norpin IV"
-msgstr ""
+msgstr "Norpin IV"
 
 #: dat/spob/nougat_i.xml:2
 msgid "Nougat I"
-msgstr ""
+msgstr "Nougat I"
 
 #: dat/spob/nougat_ii.xml:2
 msgid "Nougat II"
-msgstr ""
+msgstr "Nougat II"
 
 #: dat/spob/nova_shakar.xml:2
 msgid "Nova Shakar"
-msgstr ""
+msgstr "Nova Shakar"
 
 #: dat/spob/nova_shakar.xml:28
 msgid ""
@@ -17605,7 +17616,7 @@ msgstr ""
 
 #: dat/spob/ns1.xml:2
 msgid "NS-1"
-msgstr ""
+msgstr "SN-1"
 
 #: dat/spob/ns1.xml:24 dat/spob/ns144.xml:24 dat/spob/ns27.xml:24
 #: dat/spob/ns42.xml:24 dat/spob/ns63.xml:24
@@ -17613,22 +17624,24 @@ msgid ""
 "This hulking Node Station is one of the places of habitation for the "
 "uploaded Thurion."
 msgstr ""
+"Stasiun Noda raksasa ini adalah salah satu tempat tinggal bagi para Turion "
+"yang telah diunggah."
 
 #: dat/spob/ns144.xml:2
 msgid "NS-144"
-msgstr ""
+msgstr "SN-144"
 
 #: dat/spob/ns27.xml:2
 msgid "NS-27"
-msgstr ""
+msgstr "SN-27"
 
 #: dat/spob/ns42.xml:2
 msgid "NS-42"
-msgstr ""
+msgstr "SN-42"
 
 #: dat/spob/ns63.xml:2
 msgid "NS-63"
-msgstr ""
+msgstr "SN-63"
 
 #: dat/spob/obelisk_monastery.xml:2
 msgid "Obelisk Monastery"
@@ -17675,15 +17688,15 @@ msgstr ""
 
 #: dat/spob/oberon_i.xml:2
 msgid "Oberon I"
-msgstr ""
+msgstr "Oberon I"
 
 #: dat/spob/oberon_iii.xml:2
 msgid "Oberon III"
-msgstr ""
+msgstr "Oberon III"
 
 #: dat/spob/oberon_iv.xml:2
 msgid "Oberon IV"
-msgstr ""
+msgstr "Oberon IV"
 
 #: dat/spob/ocata.xml:2
 msgid "Ocata"
@@ -17940,11 +17953,11 @@ msgstr "Opa"
 
 #: dat/spob/opal_i.xml:2
 msgid "Opal I"
-msgstr ""
+msgstr "Opal I"
 
 #: dat/spob/opal_station.xml:2
 msgid "Opal Station"
-msgstr ""
+msgstr "Stasiun Opal"
 
 #: dat/spob/opal_station.xml:27
 msgid ""
@@ -18043,19 +18056,19 @@ msgstr ""
 
 #: dat/spob/overture_i.xml:2
 msgid "Overture I"
-msgstr ""
+msgstr "Overture I"
 
 #: dat/spob/overture_ii.xml:2
 msgid "Overture II"
-msgstr ""
+msgstr "Overture II"
 
 #: dat/spob/overture_iii.xml:2
 msgid "Overture III"
-msgstr ""
+msgstr "Overture III"
 
 #: dat/spob/ozogo_x.xml:2
 msgid "Ozogo X"
-msgstr ""
+msgstr "Ozogo X"
 
 #: dat/spob/p0125.xml:2
 msgid "P0125"
@@ -18183,43 +18196,43 @@ msgstr ""
 
 #: dat/spob/palin_i.xml:2
 msgid "Palin I"
-msgstr ""
+msgstr "Palin I"
 
 #: dat/spob/palin_ii.xml:2
 msgid "Palin II"
-msgstr ""
+msgstr "Palin II"
 
 #: dat/spob/palin_iii.xml:2
 msgid "Palin III"
-msgstr ""
+msgstr "Palin III"
 
 #: dat/spob/palovi_ii.xml:2
 msgid "Palovi II"
-msgstr ""
+msgstr "Palovi II"
 
 #: dat/spob/palovi_iv.xml:2
 msgid "Palovi IV"
-msgstr ""
+msgstr "Palovi IV"
 
 #: dat/spob/palovi_v.xml:2
 msgid "Palovi V"
-msgstr ""
+msgstr "Palovi V"
 
 #: dat/spob/paradox_ii.xml:2
 msgid "Paradox II"
-msgstr ""
+msgstr "Paradoks II"
 
 #: dat/spob/paradox_iii.xml:2
 msgid "Paradox III"
-msgstr ""
+msgstr "Paradoks III"
 
 #: dat/spob/paradox_iiia.xml:2
 msgid "Paradox III-a"
-msgstr ""
+msgstr "Paradoks III-a"
 
 #: dat/spob/paradox_v.xml:2
 msgid "Paradox V"
-msgstr ""
+msgstr "Paradoks V"
 
 #: dat/spob/passir.xml:2
 msgid "Passir"
@@ -18246,15 +18259,15 @@ msgstr ""
 
 #: dat/spob/pastor_ii.xml:2
 msgid "Pastor II"
-msgstr ""
+msgstr "Pastor II"
 
 #: dat/spob/pastor_iix.xml:2
 msgid "Pastor IIX"
-msgstr ""
+msgstr "Pastor IIX"
 
 #: dat/spob/pastor_vi.xml:2
 msgid "Pastor VI"
-msgstr ""
+msgstr "Pastor VI"
 
 #: dat/spob/pauldur.xml:2
 msgid "Pauldur"
@@ -18317,19 +18330,19 @@ msgstr ""
 
 #: dat/spob/peogas_ii.xml:2
 msgid "Peogas II"
-msgstr ""
+msgstr "Peogas II"
 
 #: dat/spob/peogas_iii.xml:2
 msgid "Peogas III"
-msgstr ""
+msgstr "Peogas III"
 
 #: dat/spob/peogas_iv.xml:2
 msgid "Peogas IV"
-msgstr ""
+msgstr "Peogas IV"
 
 #: dat/spob/peogas_v.xml:2
 msgid "Peogas V"
-msgstr ""
+msgstr "Peogas V"
 
 #: dat/spob/percola.xml:2
 msgid "Percola"
@@ -18354,15 +18367,15 @@ msgstr ""
 
 #: dat/spob/perhelion_alpha.xml:2
 msgid "Perhelion Alpha"
-msgstr ""
+msgstr "Perhelion Alfa"
 
 #: dat/spob/perhelion_beta.xml:2
 msgid "Perhelion Beta"
-msgstr ""
+msgstr "Perhelion Beta"
 
 #: dat/spob/perhelion_gamma.xml:2
 msgid "Perhelion Gamma"
-msgstr ""
+msgstr "Perhelion Gamma"
 
 #: dat/spob/petaat.xml:2
 msgid "Petaat"
@@ -18443,19 +18456,19 @@ msgstr ""
 
 #: dat/spob/pike_i.xml:2
 msgid "Pike I"
-msgstr ""
+msgstr "Pike I"
 
 #: dat/spob/pilatis_i.xml:2
 msgid "Pilatis I"
-msgstr ""
+msgstr "Pilatis I"
 
 #: dat/spob/pilatis_ii.xml:2
 msgid "Pilatis II"
-msgstr ""
+msgstr "Pilatis II"
 
 #: dat/spob/pilatis_iii.xml:2
 msgid "Pilatis III"
-msgstr ""
+msgstr "Pilatis III"
 
 #: dat/spob/pirates_cove.xml:2
 msgid "Pirate's Cove"
@@ -18557,11 +18570,11 @@ msgstr ""
 
 #: dat/spob/poller_d2.xml:2
 msgid "Poller D-2"
-msgstr ""
+msgstr "Poller D-2"
 
 #: dat/spob/poller_i1.xml:2
 msgid "Poller I-1"
-msgstr ""
+msgstr "Poller I-1"
 
 #: dat/spob/poller_mass.xml:2
 msgid "Poller Mass"
@@ -18607,15 +18620,15 @@ msgstr ""
 
 #: dat/spob/porro_ii.xml:2
 msgid "Porro II"
-msgstr ""
+msgstr "Porro II"
 
 #: dat/spob/porro_iii.xml:2
 msgid "Porro III"
-msgstr ""
+msgstr "Porro III"
 
 #: dat/spob/possum_ii.xml:2
 msgid "Possum II"
-msgstr ""
+msgstr "Possum II"
 
 #: dat/spob/praxis.xml:2
 msgid "Praxis"
@@ -18678,7 +18691,7 @@ msgstr ""
 
 #: dat/spob/protera_nova.xml:2
 msgid "Protera Nova"
-msgstr ""
+msgstr "Protera Nova"
 
 #: dat/spob/protera_nova.xml:26
 msgid ""
@@ -18697,7 +18710,7 @@ msgstr ""
 
 #: dat/spob/protera_sigma.xml:2
 msgid "Protera Sigma"
-msgstr ""
+msgstr "Protera Sigma"
 
 #: dat/spob/protera_sigma.xml:27
 msgid ""
@@ -18717,11 +18730,11 @@ msgstr ""
 
 #: dat/spob/provectus_nova_i.xml:2
 msgid "Provectus Nova I"
-msgstr ""
+msgstr "Provectus Nova I"
 
 #: dat/spob/provectus_nova_ia.xml:2
 msgid "Provectus Nova Ia"
-msgstr ""
+msgstr "Provectus Nova Ia"
 
 #: dat/spob/proxima_centauri_c.xml:2
 msgid "Proxima Centauri c"
@@ -18764,35 +18777,35 @@ msgstr "PRP-4"
 
 #: dat/spob/pso_1234.xml:2
 msgid "PSO 1234"
-msgstr ""
+msgstr "PSO 1234"
 
 #: dat/spob/pso_1251.xml:2
 msgid "PSO 1251"
-msgstr ""
+msgstr "PSO 1251"
 
 #: dat/spob/pso_1324.xml:2
 msgid "PSO 1324"
-msgstr ""
+msgstr "PSO 1324"
 
 #: dat/spob/pso_2212.xml:2
 msgid "PSO 2212"
-msgstr ""
+msgstr "PSO 2212"
 
 #: dat/spob/pso_2345.xml:2
 msgid "PSO 2345"
-msgstr ""
+msgstr "PSO 2345"
 
 #: dat/spob/pso_2356.xml:2
 msgid "PSO 2356"
-msgstr ""
+msgstr "PSO 2356"
 
 #: dat/spob/pso_2434.xml:2
 msgid "PSO 2434"
-msgstr ""
+msgstr "PSO 2434"
 
 #: dat/spob/pso_monitor.xml:2
 msgid "PSO Monitor"
-msgstr ""
+msgstr "Monitor PSO"
 
 #: dat/spob/pso_monitor.xml:23
 msgid ""
@@ -18801,6 +18814,12 @@ msgid ""
 "the station, it only has what it absolutely needs to run. It also has a "
 "refueling depot for travelling ships in an effort to raise funding."
 msgstr ""
+"PSO Monitor adalah sebuah stasiun ilmiah kecil yang dijalankan oleh "
+"universitas independen. Tujuannya adalah untuk memantau nebula PSO yang "
+"memiliki interferensi tinggi. Karena tidak ada pemerintah yang sesungguhnya "
+"mendanai stasiun tersebut, stasiun tersebut hanya mempunyai apa yang benar-"
+"benar diperlukan untuk berjalan. Depo pengisian bahan bakar untuk kapal-"
+"kapal yang melakukan perjalanan adalah suatu upaya untuk mengumpulkan dana."
 
 #: dat/spob/ptolemy.xml:2
 msgid "Ptolemy"
@@ -18808,23 +18827,23 @@ msgstr "Ptolemy"
 
 #: dat/spob/pudas_i.xml:2
 msgid "Pudas I"
-msgstr ""
+msgstr "Pudas I"
 
 #: dat/spob/pudas_ii.xml:2
 msgid "Pudas II"
-msgstr ""
+msgstr "Pudas II"
 
 #: dat/spob/pultatis_i.xml:2
 msgid "Pultatis I"
-msgstr ""
+msgstr "Pultatis I"
 
 #: dat/spob/pultatis_ii.xml:2
 msgid "Pultatis II"
-msgstr ""
+msgstr "Pultatis II"
 
 #: dat/spob/pultatis_iii.xml:2
 msgid "Pultatis III"
-msgstr ""
+msgstr "Pultatis III"
 
 #: dat/spob/pund.xml:2
 msgid "Pund"
@@ -18832,15 +18851,15 @@ msgstr "Pund"
 
 #: dat/spob/qex_ii.xml:2
 msgid "Qex II"
-msgstr ""
+msgstr "Qex II"
 
 #: dat/spob/qex_iv.xml:2
 msgid "Qex IV"
-msgstr ""
+msgstr "Qex IV"
 
 #: dat/spob/qex_v.xml:2
 msgid "Qex V"
-msgstr ""
+msgstr "Qex V"
 
 #: dat/spob/qoman.xml:2
 msgid "Qoman"
@@ -18908,15 +18927,15 @@ msgstr ""
 
 #: dat/spob/quai_i.xml:2
 msgid "Quai I"
-msgstr ""
+msgstr "Quai I"
 
 #: dat/spob/quai_ii.xml:2
 msgid "Quai II"
-msgstr ""
+msgstr "Quai II"
 
 #: dat/spob/quai_iia.xml:2
 msgid "Quai IIa"
-msgstr ""
+msgstr "Quai IIa"
 
 #: dat/spob/qulam_primus.xml:2
 msgid "Qulam Primus"
@@ -18952,23 +18971,23 @@ msgstr ""
 
 #: dat/spob/radix_i.xml:2
 msgid "Radix I"
-msgstr ""
+msgstr "Radix I"
 
 #: dat/spob/radix_ii.xml:2
 msgid "Radix II"
-msgstr ""
+msgstr "Radix II"
 
 #: dat/spob/radix_iii.xml:2
 msgid "Radix III"
-msgstr ""
+msgstr "Radix III"
 
 #: dat/spob/raelid_ii.xml:2
 msgid "Raelid II"
-msgstr ""
+msgstr "Raelid II"
 
 #: dat/spob/raelid_prime.xml:2
 msgid "Raelid Prime"
-msgstr ""
+msgstr "Raelid Utama"
 
 #: dat/spob/rage.xml:2
 msgid "Rage"
@@ -19036,11 +19055,11 @@ msgstr ""
 
 #: dat/spob/rei_ii.xml:2
 msgid "Rei II"
-msgstr ""
+msgstr "Rei II"
 
 #: dat/spob/rei_iii.xml:2
 msgid "Rei III"
-msgstr ""
+msgstr "Rei III"
 
 #: dat/spob/reidd.xml:2
 msgid "Reidd"
@@ -19101,15 +19120,15 @@ msgstr ""
 
 #: dat/spob/rhu_ii.xml:2
 msgid "Rhu II"
-msgstr ""
+msgstr "Rhu II"
 
 #: dat/spob/rhu_iii.xml:2
 msgid "Rhu III"
-msgstr ""
+msgstr "Rhu III"
 
 #: dat/spob/rhu_iv.xml:2
 msgid "Rhu IV"
-msgstr ""
+msgstr "Rhu IV"
 
 #: dat/spob/ridrack.xml:2
 msgid "Ridrack"
@@ -19222,7 +19241,7 @@ msgstr ""
 
 #: dat/spob/ross_prime.xml:2
 msgid "Ross Prime"
-msgstr ""
+msgstr "Ross Utama"
 
 #: dat/spob/rostra.xml:2
 msgid "Rostra"
@@ -19247,11 +19266,11 @@ msgstr ""
 
 #: dat/spob/rotide_i.xml:2
 msgid "Rotide I"
-msgstr ""
+msgstr "Rotide I"
 
 #: dat/spob/rotide_ii.xml:2
 msgid "Rotide II"
-msgstr ""
+msgstr "Rotide II"
 
 #: dat/spob/ruadan_gamma.xml:2
 msgid "Ruadan Gamma"
@@ -19270,23 +19289,23 @@ msgstr ""
 
 #: dat/spob/ruadan_ii.xml:2
 msgid "Ruadan II"
-msgstr ""
+msgstr "Ruadan II"
 
 #: dat/spob/ruadan_j1.xml:2
 msgid "Ruadan J-1"
-msgstr ""
+msgstr "Ruadan J-1"
 
 #: dat/spob/ruadan_j2.xml:2
 msgid "Ruadan J-2"
-msgstr ""
+msgstr "Ruadan J-2"
 
 #: dat/spob/ruadan_prime.xml:2 dat/events/discovery.lua:49
 msgid "Ruadan Prime"
-msgstr ""
+msgstr "Ruadan Utama"
 
 #: dat/spob/ruadan_prime.xml:3
 msgid "#pZa'lek Homeworld#0"
-msgstr ""
+msgstr "#pDunia-Rumah Za'lek#0"
 
 #: dat/spob/ruadan_prime.xml:29
 msgid ""
@@ -19600,19 +19619,19 @@ msgstr ""
 
 #: dat/spob/santoros_i.xml:2
 msgid "Santoros I"
-msgstr ""
+msgstr "Santoros I"
 
 #: dat/spob/santoros_ia.xml:2
 msgid "Santoros I-a"
-msgstr ""
+msgstr "Santoros I-a"
 
 #: dat/spob/santoros_ib.xml:2
 msgid "Santoros I-b"
-msgstr ""
+msgstr "Santoros I-b"
 
 #: dat/spob/santoros_ii.xml:2
 msgid "Santoros II"
-msgstr ""
+msgstr "Santoros II"
 
 #: dat/spob/santoros_ii.xml:15
 msgid ""
@@ -19647,19 +19666,19 @@ msgstr ""
 
 #: dat/spob/sarcophagus_i.xml:2
 msgid "Sarcophagus I"
-msgstr ""
+msgstr "Sarkofagus I"
 
 #: dat/spob/sarcophagus_ii.xml:2
 msgid "Sarcophagus II"
-msgstr ""
+msgstr "Sarkofagus II"
 
 #: dat/spob/sarcophagus_iib.xml:2
 msgid "Sarcophagus IIb"
-msgstr ""
+msgstr "Sarkofagus IIb"
 
 #: dat/spob/sarcophagus_v.xml:2
 msgid "Sarcophagus V"
-msgstr ""
+msgstr "Sarkofagus V"
 
 #: dat/spob/savoy_terminal.xml:2
 msgid "Savoy Terminal"
@@ -19738,11 +19757,11 @@ msgstr ""
 
 #: dat/spob/scorpii_omega1.xml:2
 msgid "Scorpii Omega-1"
-msgstr ""
+msgstr "Scorpii Omega-1"
 
 #: dat/spob/scorpii_omega2.xml:2
 msgid "Scorpii Omega-2"
-msgstr ""
+msgstr "Scorpii Omega-2"
 
 #: dat/spob/scorpion_nest.xml:2
 msgid "Scorpion Nest"
@@ -19784,19 +19803,19 @@ msgstr ""
 
 #: dat/spob/secundus_alpha.xml:2
 msgid "Secundus Alpha"
-msgstr ""
+msgstr "Secundus Alfa"
 
 #: dat/spob/secundus_beta.xml:2
 msgid "Secundus Beta"
-msgstr ""
+msgstr "Secundus Beta"
 
 #: dat/spob/seiben_iv.xml:2
 msgid "Seiben IV"
-msgstr ""
+msgstr "Seiben IV"
 
 #: dat/spob/seiben_xi.xml:2
 msgid "Seiben XI"
-msgstr ""
+msgstr "Seiben XI"
 
 #: dat/spob/selphod.xml:2
 msgid "Selphod"
@@ -19840,15 +19859,15 @@ msgstr ""
 
 #: dat/spob/senara_i.xml:2
 msgid "Senara I"
-msgstr ""
+msgstr "Senara I"
 
 #: dat/spob/sergio_vix_i.xml:2
 msgid "Sergio Vix I"
-msgstr ""
+msgstr "Sergio Vix I"
 
 #: dat/spob/sergio_vix_iii.xml:2
 msgid "Sergio Vix III"
-msgstr ""
+msgstr "Sergio Vix III"
 
 #: dat/spob/serria.xml:2
 msgid "Serria"
@@ -19898,11 +19917,11 @@ msgstr ""
 
 #: dat/spob/shakar_i.xml:2
 msgid "Shakar I"
-msgstr ""
+msgstr "Shakar I"
 
 #: dat/spob/shakar_iii.xml:2
 msgid "Shakar III"
-msgstr ""
+msgstr "Shakar III"
 
 #: dat/spob/shangris_station.xml:2
 msgid "Shangris Station"
@@ -20189,15 +20208,15 @@ msgstr ""
 
 #: dat/spob/sirou_i.xml:2
 msgid "Sirou I"
-msgstr ""
+msgstr "Sirou I"
 
 #: dat/spob/sirou_ii.xml:2
 msgid "Sirou II"
-msgstr ""
+msgstr "Sirou II"
 
 #: dat/spob/sirou_vi.xml:2
 msgid "Sirou VI"
-msgstr ""
+msgstr "Sirou VI"
 
 #: dat/spob/sixbat_station.xml:2
 msgid "Sixbat Station"
@@ -20803,27 +20822,27 @@ msgstr ""
 
 #: dat/spob/suk_ii.xml:2
 msgid "Suk II"
-msgstr ""
+msgstr "Suk II"
 
 #: dat/spob/suk_iv.xml:2
 msgid "Suk IV"
-msgstr ""
+msgstr "Suk IV"
 
 #: dat/spob/sultan_iii.xml:2
 msgid "Sultan III"
-msgstr ""
+msgstr "Sultan III"
 
 #: dat/spob/sultan_vi.xml:2
 msgid "Sultan VI"
-msgstr ""
+msgstr "Sultan VI"
 
 #: dat/spob/suna_i.xml:2
 msgid "Suna I"
-msgstr ""
+msgstr "Suna I"
 
 #: dat/spob/suna_ii.xml:2
 msgid "Suna II"
-msgstr ""
+msgstr "Suna II"
 
 #: dat/spob/suoer.xml:2
 msgid "Suoer"
@@ -20895,31 +20914,31 @@ msgstr "SY-920"
 
 #: dat/spob/sylph_ii.xml:2
 msgid "Sylph II"
-msgstr ""
+msgstr "Silf II"
 
 #: dat/spob/sylph_iv.xml:2
 msgid "Sylph IV"
-msgstr ""
+msgstr "Silf IV"
 
 #: dat/spob/sylph_iva.xml:2
 msgid "Sylph IVa"
-msgstr ""
+msgstr "Silf IVa"
 
 #: dat/spob/symm_ii.xml:2
 msgid "Symm II"
-msgstr ""
+msgstr "Symm II"
 
 #: dat/spob/symm_iii.xml:2
 msgid "Symm III"
-msgstr ""
+msgstr "Symm III"
 
 #: dat/spob/symm_iiia.xml:2
 msgid "Symm IIIa"
-msgstr ""
+msgstr "Symm IIIa"
 
 #: dat/spob/symm_iiib.xml:2
 msgid "Symm IIIb"
-msgstr ""
+msgstr "Symm IIIb"
 
 #: dat/spob/takeru.xml:2
 msgid "Takeru"
@@ -20943,15 +20962,15 @@ msgstr ""
 
 #: dat/spob/tandar_i.xml:2
 msgid "Tandar I"
-msgstr ""
+msgstr "Tandar I"
 
 #: dat/spob/tandar_ia.xml:2
 msgid "Tandar Ia"
-msgstr ""
+msgstr "Tandar Ia"
 
 #: dat/spob/tandar_iix.xml:2
 msgid "Tandar IIX"
-msgstr ""
+msgstr "Tandar IIX"
 
 #: dat/spob/tankard_cloister.xml:2
 msgid "Tankard Cloister"
@@ -21026,7 +21045,7 @@ msgstr ""
 
 #: dat/spob/tau_ceti_e.xml:2
 msgid "Tau Ceti e"
-msgstr ""
+msgstr "Tau Ceti e"
 
 #: dat/spob/tau_ceti_e.xml:15
 msgid ""
@@ -21045,15 +21064,15 @@ msgstr ""
 
 #: dat/spob/tau_ceti_f.xml:2
 msgid "Tau Ceti f"
-msgstr ""
+msgstr "Tau Ceti f"
 
 #: dat/spob/tau_ceti_g.xml:2
 msgid "Tau Ceti g"
-msgstr ""
+msgstr "Tau Ceti g"
 
 #: dat/spob/tau_ceti_h.xml:2
 msgid "Tau Ceti h"
-msgstr ""
+msgstr "Tau Ceti h"
 
 #: dat/spob/tau_ceti_station.xml:2
 msgid "Tau Ceti Station"
@@ -21106,19 +21125,19 @@ msgstr ""
 
 #: dat/spob/taxumi_i.xml:2
 msgid "Taxumi I"
-msgstr ""
+msgstr "Taxumi I"
 
 #: dat/spob/taxumi_ii.xml:2
 msgid "Taxumi II"
-msgstr ""
+msgstr "Taxumi II"
 
 #: dat/spob/taxumi_iii.xml:2
 msgid "Taxumi III"
-msgstr ""
+msgstr "Taxumi III"
 
 #: dat/spob/taxumi_iiia.xml:2
 msgid "Taxumi IIIa"
-msgstr ""
+msgstr "Taxumi IIIa"
 
 #: dat/spob/taxumi_iiia.xml:29
 msgid ""
@@ -21144,11 +21163,11 @@ msgstr ""
 
 #: dat/spob/telika_ii.xml:2
 msgid "Telika II"
-msgstr ""
+msgstr "Telika II"
 
 #: dat/spob/telika_iii.xml:2
 msgid "Telika III"
-msgstr ""
+msgstr "Telika III"
 
 #: dat/spob/tenalp.xml:2
 msgid "Tenal-P"
@@ -21181,7 +21200,7 @@ msgstr ""
 
 #: dat/spob/tepdania_prime.xml:2
 msgid "Tepdania Prime"
-msgstr ""
+msgstr "Tepdania Utama"
 
 #: dat/spob/tepdania_prime.xml:28
 msgid ""
@@ -21432,15 +21451,15 @@ msgstr ""
 
 #: dat/spob/theras_ii.xml:2
 msgid "Theras II"
-msgstr ""
+msgstr "Theras II"
 
 #: dat/spob/theras_iii.xml:2
 msgid "Theras III"
-msgstr ""
+msgstr "Theras III"
 
 #: dat/spob/theras_iv.xml:2
 msgid "Theras IV"
-msgstr ""
+msgstr "Theras IV"
 
 #: dat/spob/theras_iv.xml:15
 msgid ""
@@ -21537,15 +21556,15 @@ msgstr ""
 
 #: dat/spob/tomas_i1.xml:2
 msgid "Tomas I-1"
-msgstr ""
+msgstr "Tomas I-1"
 
 #: dat/spob/tomas_j1.xml:2
 msgid "Tomas J-1"
-msgstr ""
+msgstr "Tomas J-1"
 
 #: dat/spob/tomas_x1.xml:2
 msgid "Tomas X-1"
-msgstr ""
+msgstr "Tomas X-1"
 
 #: dat/spob/topkapi_station.xml:2
 msgid "Topkapi Station"
@@ -21597,11 +21616,11 @@ msgstr ""
 
 #: dat/spob/torg_i.xml:2
 msgid "Torg I"
-msgstr ""
+msgstr "Torg I"
 
 #: dat/spob/torg_iv.xml:2
 msgid "Torg IV"
-msgstr ""
+msgstr "Torg IV"
 
 #: dat/spob/tori.xml:2
 msgid "Tori"
@@ -21650,7 +21669,7 @@ msgstr ""
 
 #: dat/spob/toros_iv.xml:2
 msgid "Toros IV"
-msgstr ""
+msgstr "Toros IV"
 
 #: dat/spob/toros_iv.xml:15
 msgid ""
@@ -21715,7 +21734,7 @@ msgstr ""
 
 #: dat/spob/treacle.xml:2 dat/ssys/treacle.xml:2
 msgid "Treacle"
-msgstr ""
+msgstr "Treakel"
 
 #: dat/spob/trevis_cloister.xml:2
 msgid "Trevis Cloister"
@@ -21741,7 +21760,7 @@ msgstr ""
 
 #: dat/spob/triap_i.xml:2
 msgid "Triap I"
-msgstr ""
+msgstr "Triap I"
 
 #: dat/spob/trichu.xml:2
 msgid "Trichu"
@@ -21999,11 +22018,11 @@ msgstr ""
 
 #: dat/spob/ulysses_iii.xml:2
 msgid "Ulysses III"
-msgstr ""
+msgstr "Ulysses III"
 
 #: dat/spob/ulysses_iv.xml:2
 msgid "Ulysses IV"
-msgstr ""
+msgstr "Ulysses IV"
 
 #: dat/spob/umbrella_clinic.xml:2
 msgid "Umbrella Clinic"
@@ -22072,15 +22091,15 @@ msgstr ""
 
 #: dat/spob/unicorn_i.xml:2
 msgid "Unicorn I"
-msgstr ""
+msgstr "Unicorn I"
 
 #: dat/spob/unicorn_ii.xml:2
 msgid "Unicorn II"
-msgstr ""
+msgstr "Unicorn II"
 
 #: dat/spob/unicorp_orbital.xml:2
 msgid "Unicorp Orbital"
-msgstr ""
+msgstr "Unicorp Orbital"
 
 #: dat/spob/unicorp_orbital.xml:26
 msgid ""
@@ -22151,23 +22170,23 @@ msgstr ""
 
 #: dat/spob/urbanus_ii.xml:2
 msgid "Urbanus II"
-msgstr ""
+msgstr "Urbanus II"
 
 #: dat/spob/urbanus_iii.xml:2
 msgid "Urbanus III"
-msgstr ""
+msgstr "Urbanus III"
 
 #: dat/spob/uridhrion_i.xml:2
 msgid "Uridhrion I"
-msgstr ""
+msgstr "Uridrion I"
 
 #: dat/spob/uridhrion_ii.xml:2
 msgid "Uridhrion II"
-msgstr ""
+msgstr "Uridrion II"
 
 #: dat/spob/uridhrion_iii.xml:2
 msgid "Uridhrion III"
-msgstr ""
+msgstr "Uridrion III"
 
 #: dat/spob/ururis.xml:2
 msgid "Ururis"
@@ -22213,15 +22232,15 @@ msgstr "Uuries"
 
 #: dat/spob/ux_i.xml:2
 msgid "UX I"
-msgstr ""
+msgstr "UX I"
 
 #: dat/spob/ux_iix.xml:2
 msgid "UX IIX"
-msgstr ""
+msgstr "UX IIX"
 
 #: dat/spob/ux_vii.xml:2
 msgid "UX VII"
-msgstr ""
+msgstr "UX VII"
 
 #: dat/spob/vaal.xml:2
 msgid "Vaal"
@@ -22238,15 +22257,15 @@ msgstr ""
 
 #: dat/spob/valerie_ii.xml:2
 msgid "Valerie II"
-msgstr ""
+msgstr "Valerie II"
 
 #: dat/spob/valerie_iix.xml:2
 msgid "Valerie IIX"
-msgstr ""
+msgstr "Valerie IIX"
 
 #: dat/spob/valerie_iv.xml:2
 msgid "Valerie IV"
-msgstr ""
+msgstr "Valerie IV"
 
 #: dat/spob/valt.xml:2
 msgid "Valt"
@@ -22274,19 +22293,19 @@ msgstr ""
 
 #: dat/spob/vanir_i.xml:2
 msgid "Vanir I"
-msgstr ""
+msgstr "Vanir I"
 
 #: dat/spob/vanir_ia.xml:2
 msgid "Vanir Ia"
-msgstr ""
+msgstr "Vanir Ia"
 
 #: dat/spob/vanir_ii.xml:2
 msgid "Vanir II"
-msgstr ""
+msgstr "Vanir II"
 
 #: dat/spob/vao_vos.xml:2
 msgid "Vao Vos"
-msgstr ""
+msgstr "Vao Vos"
 
 #: dat/spob/vao_vos.xml:26
 msgid ""
@@ -22395,7 +22414,7 @@ msgstr "Varona"
 
 #: dat/spob/vauban_i1.xml:2
 msgid "Vauban I-1"
-msgstr ""
+msgstr "Vauban I-1"
 
 #: dat/spob/vault.xml:2
 msgid "Vault"
@@ -22418,11 +22437,11 @@ msgstr ""
 
 #: dat/spob/vean_i.xml:2
 msgid "Vean I"
-msgstr ""
+msgstr "Vean I"
 
 #: dat/spob/vean_ii.xml:2
 msgid "Vean II"
-msgstr ""
+msgstr "Vean II"
 
 #: dat/spob/vennis.xml:2
 msgid "Vennis"
@@ -22471,15 +22490,15 @@ msgstr ""
 
 #: dat/spob/verex_i.xml:2
 msgid "Verex I"
-msgstr ""
+msgstr "Verex I"
 
 #: dat/spob/verex_ii.xml:2
 msgid "Verex II"
-msgstr ""
+msgstr "Verex II"
 
 #: dat/spob/verex_iii.xml:2
 msgid "Verex III"
-msgstr ""
+msgstr "Verex III"
 
 #: dat/spob/vert.xml:2
 msgid "Vert"
@@ -22535,7 +22554,7 @@ msgstr ""
 
 #: dat/spob/vilati_vilata.xml:2
 msgid "Vilati Vilata"
-msgstr ""
+msgstr "Vilati Vilata"
 
 #: dat/spob/vilati_vilata.xml:27
 msgid ""
@@ -22606,7 +22625,7 @@ msgstr ""
 
 #: dat/spob/violin_monastery.xml:2
 msgid "Violin Monastery"
-msgstr ""
+msgstr "Biara Violin"
 
 #: dat/spob/violin_monastery.xml:24
 msgid ""
@@ -22618,7 +22637,7 @@ msgstr ""
 
 #: dat/spob/virginis_alpha.xml:2
 msgid "Virginis Alpha"
-msgstr ""
+msgstr "Virginis Alfa"
 
 #: dat/spob/virginis_alpha.xml:23
 msgid ""
@@ -22635,7 +22654,7 @@ msgstr ""
 
 #: dat/spob/virginis_beta.xml:2
 msgid "Virginis Beta"
-msgstr ""
+msgstr "Virginis Beta"
 
 #: dat/spob/virginis_chi.xml:2
 msgid "Virginis Chi"
@@ -22670,15 +22689,15 @@ msgstr ""
 
 #: dat/spob/vlexon_i.xml:2
 msgid "Vlexon I"
-msgstr ""
+msgstr "Vlexon I"
 
 #: dat/spob/vlexon_ii.xml:2
 msgid "Vlexon II"
-msgstr ""
+msgstr "Vlexon II"
 
 #: dat/spob/voproid_monastery.xml:2
 msgid "Voproid Monastery"
-msgstr ""
+msgstr "Biara Voproid"
 
 #: dat/spob/voproid_monastery.xml:29
 msgid ""
@@ -22701,7 +22720,7 @@ msgstr ""
 
 #: dat/spob/voproid_prime.xml:2
 msgid "Voproid Prime"
-msgstr ""
+msgstr "Voproid Utama"
 
 #: dat/spob/vorca.xml:2
 msgid "Vorca"
@@ -22813,11 +22832,11 @@ msgstr ""
 
 #: dat/spob/wahri_iii.xml:2
 msgid "Wahri III"
-msgstr ""
+msgstr "Wahri III"
 
 #: dat/spob/wahri_iv.xml:2
 msgid "Wahri IV"
-msgstr ""
+msgstr "Wahri IV"
 
 #: dat/spob/wakan.xml:2
 msgid "Wa'kan"
@@ -22914,11 +22933,11 @@ msgstr ""
 
 #: dat/spob/warnecke_i.xml:2
 msgid "Warnecke I"
-msgstr ""
+msgstr "Warnecke I"
 
 #: dat/spob/warnecke_ii.xml:2
 msgid "Warnecke II"
-msgstr ""
+msgstr "Warnecke II"
 
 #: dat/spob/waterhole.xml:2 dat/ssys/waterhole.xml:2
 msgid "Waterhole"
@@ -22964,11 +22983,11 @@ msgstr ""
 
 #: dat/spob/wayline_m1.xml:2
 msgid "Wayline m1"
-msgstr ""
+msgstr "Wayline m1"
 
 #: dat/spob/wayline_m2.xml:2
 msgid "Wayline m2"
-msgstr ""
+msgstr "Wayline m2"
 
 #: dat/spob/wellen.xml:2
 msgid "Wellen"
@@ -23134,7 +23153,7 @@ msgstr "Worgen"
 
 #: dat/spob/wormhole_carrza.xml:2
 msgid "Wormhole Carrza"
-msgstr ""
+msgstr "Lubang Cacing Carrza"
 
 #: dat/spob/wormhole_carrza.xml:3 dat/spob/wormhole_carrza.xml:4
 #: dat/spob/wormhole_ivella.xml:3 dat/spob/wormhole_ivella.xml:4
@@ -23158,35 +23177,35 @@ msgstr "Lubang cacing"
 
 #: dat/spob/wormhole_ivella.xml:2
 msgid "Wormhole Ivella"
-msgstr ""
+msgstr "Lubang Cacing Ivella"
 
 #: dat/spob/wormhole_ngc13674.xml:2
 msgid "Wormhole NGC-13674"
-msgstr ""
+msgstr "Lubang Cacing NGC-13674"
 
 #: dat/spob/wormhole_ngc15670.xml:2
 msgid "Wormhole NGC-15670"
-msgstr ""
+msgstr "Lubang Cacing NGC-15670"
 
 #: dat/spob/wormhole_ngc1931.xml:2
 msgid "Wormhole NGC-1931"
-msgstr ""
+msgstr "Lubang Cacing NGC-1931"
 
 #: dat/spob/wormhole_ngc4087.xml:2
 msgid "Wormhole NGC-4087"
-msgstr ""
+msgstr "Lubang Cacing NGC-4087"
 
 #: dat/spob/wormhole_rei.xml:2
 msgid "Wormhole Rei"
-msgstr ""
+msgstr "Lubang Cacing Rei"
 
 #: dat/spob/wormhole_surano.xml:2
 msgid "Wormhole Surano"
-msgstr ""
+msgstr "Lubang Cacing Surano"
 
 #: dat/spob/wormhole_zied.xml:2
 msgid "Wormhole Zied"
-msgstr ""
+msgstr "Lubang Cacing Zied"
 
 #: dat/spob/worscha.xml:2
 msgid "Worscha"
@@ -23210,11 +23229,11 @@ msgstr ""
 
 #: dat/spob/wsthvn_d1.xml:2
 msgid "WSTHVN D-1"
-msgstr ""
+msgstr "WSTHVN D-1"
 
 #: dat/spob/wsthvn_p1.xml:2
 msgid "WSTHVN P-1"
-msgstr ""
+msgstr "WSTHVN P-1"
 
 #: dat/spob/wunomi.xml:2 dat/ssys/wunomi.xml:2
 msgid "Wunomi"
@@ -23222,11 +23241,11 @@ msgstr "Wunomi"
 
 #: dat/spob/wunomi_i.xml:2
 msgid "Wunomi I"
-msgstr ""
+msgstr "Wunomi I"
 
 #: dat/spob/wunomi_ia.xml:2
 msgid "Wunomi I-a"
-msgstr ""
+msgstr "Wunomi I-a"
 
 #: dat/spob/wunomi_ia.xml:15
 msgid ""
@@ -23238,7 +23257,7 @@ msgstr ""
 
 #: dat/spob/wunomis_moon.xml:2
 msgid "Wunomi's Moon"
-msgstr ""
+msgstr "Bulan Wunomi"
 
 #: dat/spob/wunomis_moon.xml:15
 msgid ""
@@ -23450,11 +23469,11 @@ msgstr ""
 
 #: dat/spob/zalek_ii.xml:2
 msgid "Za'lek II"
-msgstr ""
+msgstr "Za'lek II"
 
 #: dat/spob/zalek_iv.xml:2
 msgid "Za'lek IV"
-msgstr ""
+msgstr "Za'lek IV"
 
 #: dat/spob/zaren.xml:2
 msgid "Zaren"
@@ -23492,7 +23511,7 @@ msgstr ""
 
 #: dat/spob/zembla_shakar.xml:2
 msgid "Zembla Shakar"
-msgstr ""
+msgstr "Zembla Shakar"
 
 #: dat/spob/zembla_shakar.xml:28
 msgid ""
@@ -23512,7 +23531,7 @@ msgstr ""
 
 #: dat/spob/zemur_iii.xml:2
 msgid "Zemur III"
-msgstr ""
+msgstr "Zemur III"
 
 #: dat/spob/zeo.xml:2
 msgid "Zeo"
@@ -23586,7 +23605,7 @@ msgstr "Zethus"
 
 #: dat/spob/zhang_lu.xml:2
 msgid "Zhang Lu"
-msgstr ""
+msgstr "Zhang Lu"
 
 #: dat/spob/zhang_lu.xml:27
 msgid ""
@@ -23632,11 +23651,11 @@ msgstr ""
 
 #: dat/spob/zintar_iv.xml:2
 msgid "Zintar IV"
-msgstr ""
+msgstr "Zintar IV"
 
 #: dat/spob/zintar_v.xml:2
 msgid "Zintar V"
-msgstr ""
+msgstr "Zintar V"
 
 #: dat/spob/ziz.xml:2
 msgid "Ziz"
@@ -23790,27 +23809,27 @@ msgstr ""
 
 #: dat/spob_virtual/tradelane.xml:2 src/map.c:880
 msgid "Trade Lane"
-msgstr ""
+msgstr "Jalur Dagang"
 
 #: dat/spob_virtual/tradelane_dvaered.xml:2
 msgid "Trade Lane (Dvaered)"
-msgstr ""
+msgstr "Jalur Dagang (Dvaered)"
 
 #: dat/spob_virtual/tradelane_empire.xml:2
 msgid "Trade Lane (Empire)"
-msgstr ""
+msgstr "Jalur Dagang (Empire)"
 
 #: dat/spob_virtual/tradelane_sirius.xml:2
 msgid "Trade Lane (Sirius)"
-msgstr ""
+msgstr "Jalur Dagang (Sirius)"
 
 #: dat/spob_virtual/tradelane_soromid.xml:2
 msgid "Trade Lane (Soromid)"
-msgstr ""
+msgstr "Jalur Dagang (Soromid)"
 
 #: dat/spob_virtual/tradelane_zalek.xml:2
 msgid "Trade Lane (Za'lek)"
-msgstr ""
+msgstr "Jalur Dagang (Za'lek)"
 
 #: dat/spob_virtual/traders_society_area.xml:2
 msgid "Traders Society Area"
@@ -28000,7 +28019,7 @@ msgstr ""
 #: dat/ai/core/misc/pirate.lua:14
 msgid ""
 "\"You're either really desperate or really rich. {credits} or shut up.\""
-msgstr ""
+msgstr "\"Kau antara putus asa atau amat kaya. Bayar {credits} atau diam.\""
 
 #: dat/ai/core/misc/pirate.lua:15
 msgid "\"This is a toll road, pay up {credits} or die.\""
@@ -29996,7 +30015,7 @@ msgstr ""
 #. forward declaration
 #: dat/board.lua:376
 msgid "Jettison {cargo}"
-msgstr ""
+msgstr "Buang {cargo}"
 
 #: dat/board.lua:377
 msgid "How many tonnes of {cargo} do you wish to jettison?"
@@ -30004,7 +30023,7 @@ msgstr ""
 
 #: dat/board.lua:382
 msgid "Jettison {cargo}?"
-msgstr ""
+msgstr "Buang {cargo}?"
 
 #: dat/board.lua:383
 msgid "Are you sure you want to get rid of {tonnes} of {cargo}?"
@@ -30047,7 +30066,7 @@ msgstr ""
 
 #: dat/board.lua:415
 msgid "Select cargo to jettison:"
-msgstr ""
+msgstr "Pilih kargo untuk dibuang:"
 
 #. Destroy if exists
 #. Also set GUI
@@ -30069,7 +30088,7 @@ msgstr ""
 #: src/info.c:1331 src/info.c:1737 src/land_outfits.c:208 src/map.c:397
 #: src/map_find.c:1024 src/map_system.c:205
 msgid "Close"
-msgstr ""
+msgstr "Tutup"
 
 #: dat/board.lua:421 src/info.c:936
 msgid "Jettison"
@@ -30100,11 +30119,11 @@ msgstr "Kamu menjarah {creds} dari {plt}."
 #. Unable to loot anything
 #: dat/board.lua:520
 msgid "Fuel Tank Full"
-msgstr ""
+msgstr "Tangki Bahan Bakar Penuh"
 
 #: dat/board.lua:520
 msgid "Your fuel tanks are already full!"
-msgstr ""
+msgstr "Tangki bahan bakarmu sudah penuh!"
 
 #: dat/board.lua:526
 msgid "You looted {amount} fuel from {plt}."
@@ -44995,7 +45014,7 @@ msgstr ""
 #: dat/events/start.lua:35
 msgctxt "ship name"
 msgid "Vagabond"
-msgstr ""
+msgstr "Vagabond"
 
 #: dat/events/start.lua:36
 msgid "Vindicator"
@@ -99606,7 +99625,7 @@ msgstr ""
 #. Didn't hack through
 #: dat/missions/zalek/blackhole/zbh11.lua:299
 msgid "Jump Point"
-msgstr ""
+msgstr "Titik Lompat"
 
 #: dat/missions/zalek/blackhole/zbh11.lua:318
 msgid "The AI will take it from here."
@@ -99959,11 +99978,11 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:101
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:106
 msgid "Land on {pnt} in the {sys} system"
-msgstr ""
+msgstr "Mendaratlah di {pnt} di sistem {sys}"
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:48
 msgid "Fly back to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Kembali ke {pnt} di sistem {sys}"
 
 #. 1
 #. 2
@@ -113103,182 +113122,182 @@ msgstr ""
 #: src/SDL_keynames.h:29
 msgctxt "keyname"
 msgid "A"
-msgstr ""
+msgstr "A"
 
 #: src/SDL_keynames.h:30
 msgctxt "keyname"
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: src/SDL_keynames.h:31
 msgctxt "keyname"
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: src/SDL_keynames.h:32
 msgctxt "keyname"
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: src/SDL_keynames.h:33
 msgctxt "keyname"
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #: src/SDL_keynames.h:34
 msgctxt "keyname"
 msgid "F"
-msgstr ""
+msgstr "F"
 
 #: src/SDL_keynames.h:35
 msgctxt "keyname"
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: src/SDL_keynames.h:36
 msgctxt "keyname"
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: src/SDL_keynames.h:37
 msgctxt "keyname"
 msgid "I"
-msgstr ""
+msgstr "I"
 
 #: src/SDL_keynames.h:38
 msgctxt "keyname"
 msgid "J"
-msgstr ""
+msgstr "J"
 
 #: src/SDL_keynames.h:39
 msgctxt "keyname"
 msgid "K"
-msgstr ""
+msgstr "K"
 
 #: src/SDL_keynames.h:40
 msgctxt "keyname"
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: src/SDL_keynames.h:41
 msgctxt "keyname"
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: src/SDL_keynames.h:42
 msgctxt "keyname"
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: src/SDL_keynames.h:43
 msgctxt "keyname"
 msgid "O"
-msgstr ""
+msgstr "O"
 
 #: src/SDL_keynames.h:44
 msgctxt "keyname"
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: src/SDL_keynames.h:45
 msgctxt "keyname"
 msgid "Q"
-msgstr ""
+msgstr "Q"
 
 #: src/SDL_keynames.h:46
 msgctxt "keyname"
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: src/SDL_keynames.h:47
 msgctxt "keyname"
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: src/SDL_keynames.h:48
 msgctxt "keyname"
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #: src/SDL_keynames.h:49
 msgctxt "keyname"
 msgid "U"
-msgstr ""
+msgstr "U"
 
 #: src/SDL_keynames.h:50
 msgctxt "keyname"
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: src/SDL_keynames.h:51
 msgctxt "keyname"
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: src/SDL_keynames.h:52
 msgctxt "keyname"
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: src/SDL_keynames.h:53
 msgctxt "keyname"
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: src/SDL_keynames.h:54
 msgctxt "keyname"
 msgid "Z"
-msgstr ""
+msgstr "Z"
 
 #: src/SDL_keynames.h:55
 msgctxt "keyname"
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: src/SDL_keynames.h:56
 msgctxt "keyname"
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: src/SDL_keynames.h:57
 msgctxt "keyname"
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: src/SDL_keynames.h:58
 msgctxt "keyname"
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: src/SDL_keynames.h:59
 msgctxt "keyname"
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: src/SDL_keynames.h:60
 msgctxt "keyname"
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: src/SDL_keynames.h:61
 msgctxt "keyname"
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: src/SDL_keynames.h:62
 msgctxt "keyname"
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: src/SDL_keynames.h:63
 msgctxt "keyname"
 msgid "9"
-msgstr ""
+msgstr "9"
 
 #: src/SDL_keynames.h:64
 msgctxt "keyname"
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: src/SDL_keynames.h:65 src/SDL_keynames.h:166
 msgctxt "keyname"
@@ -113298,7 +113317,7 @@ msgstr ""
 #: src/SDL_keynames.h:68
 msgctxt "keyname"
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: src/SDL_keynames.h:69
 msgctxt "keyname"
@@ -113308,27 +113327,27 @@ msgstr ""
 #: src/SDL_keynames.h:70
 msgctxt "keyname"
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: src/SDL_keynames.h:71
 msgctxt "keyname"
 msgid "="
-msgstr ""
+msgstr "="
 
 #: src/SDL_keynames.h:72
 msgctxt "keyname"
 msgid "["
-msgstr ""
+msgstr "["
 
 #: src/SDL_keynames.h:73
 msgctxt "keyname"
 msgid "]"
-msgstr ""
+msgstr "]"
 
 #: src/SDL_keynames.h:74
 msgctxt "keyname"
 msgid "\\"
-msgstr ""
+msgstr "\\"
 
 #: src/SDL_keynames.h:75
 msgctxt "keyname"
@@ -113338,7 +113357,7 @@ msgstr "#"
 #: src/SDL_keynames.h:76
 msgctxt "keyname"
 msgid ";"
-msgstr ""
+msgstr ";"
 
 #: src/SDL_keynames.h:77
 msgctxt "keyname"
@@ -113348,102 +113367,102 @@ msgstr "'"
 #: src/SDL_keynames.h:78
 msgctxt "keyname"
 msgid "`"
-msgstr ""
+msgstr "`"
 
 #: src/SDL_keynames.h:79
 msgctxt "keyname"
 msgid "("
-msgstr ""
+msgstr "("
 
 #: src/SDL_keynames.h:80
 msgctxt "keyname"
 msgid ")"
-msgstr ""
+msgstr ")"
 
 #: src/SDL_keynames.h:81
 msgctxt "keyname"
 msgid "."
-msgstr ""
+msgstr "."
 
 #: src/SDL_keynames.h:82
 msgctxt "keyname"
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: src/SDL_keynames.h:83
 msgctxt "keyname"
 msgid "CapsLock"
-msgstr ""
+msgstr "CapsLock"
 
 #: src/SDL_keynames.h:84
 msgctxt "keyname"
 msgid "F1"
-msgstr ""
+msgstr "F1"
 
 #: src/SDL_keynames.h:85
 msgctxt "keyname"
 msgid "F2"
-msgstr ""
+msgstr "F2"
 
 #: src/SDL_keynames.h:86
 msgctxt "keyname"
 msgid "F3"
-msgstr ""
+msgstr "F3"
 
 #: src/SDL_keynames.h:87
 msgctxt "keyname"
 msgid "F4"
-msgstr ""
+msgstr "F4"
 
 #: src/SDL_keynames.h:88
 msgctxt "keyname"
 msgid "F5"
-msgstr ""
+msgstr "F5"
 
 #: src/SDL_keynames.h:89
 msgctxt "keyname"
 msgid "F6"
-msgstr ""
+msgstr "F6"
 
 #: src/SDL_keynames.h:90
 msgctxt "keyname"
 msgid "F7"
-msgstr ""
+msgstr "F7"
 
 #: src/SDL_keynames.h:91
 msgctxt "keyname"
 msgid "F8"
-msgstr ""
+msgstr "F8"
 
 #: src/SDL_keynames.h:92
 msgctxt "keyname"
 msgid "F9"
-msgstr ""
+msgstr "F9"
 
 #: src/SDL_keynames.h:93
 msgctxt "keyname"
 msgid "F10"
-msgstr ""
+msgstr "F10"
 
 #: src/SDL_keynames.h:94
 msgctxt "keyname"
 msgid "F11"
-msgstr ""
+msgstr "F11"
 
 #: src/SDL_keynames.h:95
 msgctxt "keyname"
 msgid "F12"
-msgstr ""
+msgstr "F12"
 
 #: src/SDL_keynames.h:96
 msgctxt "keyname"
 msgid "PrintScreen"
-msgstr ""
+msgstr "PrintScreen"
 
 #: src/SDL_keynames.h:97
 msgctxt "keyname"
 msgid "ScrollLock"
-msgstr ""
+msgstr "ScrollLock"
 
 #: src/SDL_keynames.h:98
 msgctxt "keyname"
@@ -113503,87 +113522,87 @@ msgstr ""
 #: src/SDL_keynames.h:109
 msgctxt "keyname"
 msgid "Numlock"
-msgstr ""
+msgstr "Numlock"
 
 #: src/SDL_keynames.h:110
 msgctxt "keyname"
 msgid "Keypad /"
-msgstr ""
+msgstr "Keypad /"
 
 #: src/SDL_keynames.h:111
 msgctxt "keyname"
 msgid "Keypad *"
-msgstr ""
+msgstr "Keypad *"
 
 #: src/SDL_keynames.h:112
 msgctxt "keyname"
 msgid "Keypad -"
-msgstr ""
+msgstr "Keypad -"
 
 #: src/SDL_keynames.h:113
 msgctxt "keyname"
 msgid "Keypad +"
-msgstr ""
+msgstr "Keypad +"
 
 #: src/SDL_keynames.h:114
 msgctxt "keyname"
 msgid "Keypad Enter"
-msgstr ""
+msgstr "Keypad Enter"
 
 #: src/SDL_keynames.h:115
 msgctxt "keyname"
 msgid "Keypad 1"
-msgstr ""
+msgstr "Keypad 1"
 
 #: src/SDL_keynames.h:116
 msgctxt "keyname"
 msgid "Keypad 2"
-msgstr ""
+msgstr "Keypad 2"
 
 #: src/SDL_keynames.h:117
 msgctxt "keyname"
 msgid "Keypad 3"
-msgstr ""
+msgstr "Keypad 3"
 
 #: src/SDL_keynames.h:118
 msgctxt "keyname"
 msgid "Keypad 4"
-msgstr ""
+msgstr "Keypad 4"
 
 #: src/SDL_keynames.h:119
 msgctxt "keyname"
 msgid "Keypad 5"
-msgstr ""
+msgstr "Keypad 5"
 
 #: src/SDL_keynames.h:120
 msgctxt "keyname"
 msgid "Keypad 6"
-msgstr ""
+msgstr "Keypad 6"
 
 #: src/SDL_keynames.h:121
 msgctxt "keyname"
 msgid "Keypad 7"
-msgstr ""
+msgstr "Keypad 7"
 
 #: src/SDL_keynames.h:122
 msgctxt "keyname"
 msgid "Keypad 8"
-msgstr ""
+msgstr "Keypad 8"
 
 #: src/SDL_keynames.h:123
 msgctxt "keyname"
 msgid "Keypad 9"
-msgstr ""
+msgstr "Keypad 9"
 
 #: src/SDL_keynames.h:124
 msgctxt "keyname"
 msgid "Keypad 0"
-msgstr ""
+msgstr "Keypad 0"
 
 #: src/SDL_keynames.h:125
 msgctxt "keyname"
 msgid "Keypad ."
-msgstr ""
+msgstr "Keypad ."
 
 #: src/SDL_keynames.h:127
 msgctxt "keyname"
@@ -113598,67 +113617,67 @@ msgstr ""
 #: src/SDL_keynames.h:129
 msgctxt "keyname"
 msgid "Keypad ="
-msgstr ""
+msgstr "Keypad ="
 
 #: src/SDL_keynames.h:130
 msgctxt "keyname"
 msgid "F13"
-msgstr ""
+msgstr "F13"
 
 #: src/SDL_keynames.h:131
 msgctxt "keyname"
 msgid "F14"
-msgstr ""
+msgstr "F14"
 
 #: src/SDL_keynames.h:132
 msgctxt "keyname"
 msgid "F15"
-msgstr ""
+msgstr "F15"
 
 #: src/SDL_keynames.h:133
 msgctxt "keyname"
 msgid "F16"
-msgstr ""
+msgstr "F16"
 
 #: src/SDL_keynames.h:134
 msgctxt "keyname"
 msgid "F17"
-msgstr ""
+msgstr "F17"
 
 #: src/SDL_keynames.h:135
 msgctxt "keyname"
 msgid "F18"
-msgstr ""
+msgstr "F18"
 
 #: src/SDL_keynames.h:136
 msgctxt "keyname"
 msgid "F19"
-msgstr ""
+msgstr "F19"
 
 #: src/SDL_keynames.h:137
 msgctxt "keyname"
 msgid "F20"
-msgstr ""
+msgstr "F20"
 
 #: src/SDL_keynames.h:138
 msgctxt "keyname"
 msgid "F21"
-msgstr ""
+msgstr "F21"
 
 #: src/SDL_keynames.h:139
 msgctxt "keyname"
 msgid "F22"
-msgstr ""
+msgstr "F22"
 
 #: src/SDL_keynames.h:140
 msgctxt "keyname"
 msgid "F23"
-msgstr ""
+msgstr "F23"
 
 #: src/SDL_keynames.h:141
 msgctxt "keyname"
 msgid "F24"
-msgstr ""
+msgstr "F24"
 
 #: src/SDL_keynames.h:142
 msgctxt "keyname"
@@ -113828,132 +113847,132 @@ msgstr ""
 #: src/SDL_keynames.h:180
 msgctxt "keyname"
 msgid "Keypad ("
-msgstr ""
+msgstr "Keypad ("
 
 #: src/SDL_keynames.h:181
 msgctxt "keyname"
 msgid "Keypad )"
-msgstr ""
+msgstr "Keypad )"
 
 #: src/SDL_keynames.h:182
 msgctxt "keyname"
 msgid "Keypad {"
-msgstr ""
+msgstr "Keypad {"
 
 #: src/SDL_keynames.h:183
 msgctxt "keyname"
 msgid "Keypad }"
-msgstr ""
+msgstr "Keypad }"
 
 #: src/SDL_keynames.h:184
 msgctxt "keyname"
 msgid "Keypad Tab"
-msgstr ""
+msgstr "Keypad Tab"
 
 #: src/SDL_keynames.h:185
 msgctxt "keyname"
 msgid "Keypad Backspace"
-msgstr ""
+msgstr "Keypad Backspace"
 
 #: src/SDL_keynames.h:186
 msgctxt "keyname"
 msgid "Keypad A"
-msgstr ""
+msgstr "Keypad A"
 
 #: src/SDL_keynames.h:187
 msgctxt "keyname"
 msgid "Keypad B"
-msgstr ""
+msgstr "Keypad B"
 
 #: src/SDL_keynames.h:188
 msgctxt "keyname"
 msgid "Keypad C"
-msgstr ""
+msgstr "Keypad C"
 
 #: src/SDL_keynames.h:189
 msgctxt "keyname"
 msgid "Keypad D"
-msgstr ""
+msgstr "Keypad D"
 
 #: src/SDL_keynames.h:190
 msgctxt "keyname"
 msgid "Keypad E"
-msgstr ""
+msgstr "Keypad E"
 
 #: src/SDL_keynames.h:191
 msgctxt "keyname"
 msgid "Keypad F"
-msgstr ""
+msgstr "Keypad F"
 
 #: src/SDL_keynames.h:192
 msgctxt "keyname"
 msgid "Keypad XOR"
-msgstr ""
+msgstr "Keypad XOR"
 
 #: src/SDL_keynames.h:193
 msgctxt "keyname"
 msgid "Keypad ^"
-msgstr ""
+msgstr "Keypad ^"
 
 #: src/SDL_keynames.h:194
 msgctxt "keyname"
 msgid "Keypad %"
-msgstr ""
+msgstr "Keypad %"
 
 #: src/SDL_keynames.h:195
 msgctxt "keyname"
 msgid "Keypad <"
-msgstr ""
+msgstr "Keypad <"
 
 #: src/SDL_keynames.h:196
 msgctxt "keyname"
 msgid "Keypad >"
-msgstr ""
+msgstr "Keypad >"
 
 #: src/SDL_keynames.h:197
 msgctxt "keyname"
 msgid "Keypad &"
-msgstr ""
+msgstr "Keypad &"
 
 #: src/SDL_keynames.h:198
 msgctxt "keyname"
 msgid "Keypad &&"
-msgstr ""
+msgstr "Keypad &&"
 
 #: src/SDL_keynames.h:199
 msgctxt "keyname"
 msgid "Keypad |"
-msgstr ""
+msgstr "Keypad |"
 
 #: src/SDL_keynames.h:200
 msgctxt "keyname"
 msgid "Keypad ||"
-msgstr ""
+msgstr "Keypad ||"
 
 #: src/SDL_keynames.h:201
 msgctxt "keyname"
 msgid "Keypad :"
-msgstr ""
+msgstr "Keypad :"
 
 #: src/SDL_keynames.h:202
 msgctxt "keyname"
 msgid "Keypad #"
-msgstr ""
+msgstr "Keypad #"
 
 #: src/SDL_keynames.h:203
 msgctxt "keyname"
 msgid "Keypad Space"
-msgstr ""
+msgstr "Keypad Space"
 
 #: src/SDL_keynames.h:204
 msgctxt "keyname"
 msgid "Keypad @"
-msgstr ""
+msgstr "Keypad @"
 
 #: src/SDL_keynames.h:205
 msgctxt "keyname"
 msgid "Keypad !"
-msgstr ""
+msgstr "Keypad !"
 
 #: src/SDL_keynames.h:206
 msgctxt "keyname"
@@ -113993,7 +114012,7 @@ msgstr ""
 #: src/SDL_keynames.h:213
 msgctxt "keyname"
 msgid "Keypad +/-"
-msgstr ""
+msgstr "Keypad +/-"
 
 #: src/SDL_keynames.h:214
 msgctxt "keyname"
@@ -114103,7 +114122,7 @@ msgstr ""
 #: src/SDL_keynames.h:239
 msgctxt "keyname"
 msgid "WWW"
-msgstr ""
+msgstr "WWW"
 
 #: src/SDL_keynames.h:240
 msgctxt "keyname"
@@ -117134,7 +117153,7 @@ msgstr ""
 #, c-format
 msgctxt "player_message"
 msgid "%s x%d"
-msgstr ""
+msgstr "%s x%d"
 
 #: src/gui.c:1810
 #, c-format
@@ -117502,7 +117521,7 @@ msgstr ""
 #, c-format
 msgctxt "standings"
 msgid "#%c%+d%%#0   [ %s ]"
-msgstr ""
+msgstr "#%c%+d%%#0   [ %s ]"
 
 #: src/info.c:1272
 #, c-format
@@ -118806,7 +118825,7 @@ msgstr ""
 #, c-format
 msgctxt "plugins list"
 msgid ", #%c%s#0"
-msgstr ""
+msgstr ", #%c%s#0"
 
 #: src/load.c:967 src/load.c:1121 src/load.c:1158
 #, c-format
@@ -121979,7 +121998,7 @@ msgstr ""
 #, c-format
 msgctxt "outfitstats"
 msgid "%s [%s]"
-msgstr ""
+msgstr "%s [%s]"
 
 #: src/outfit.c:1702 src/outfit.c:2168
 #, c-format
@@ -122207,13 +122226,13 @@ msgstr ""
 #, c-format
 msgctxt "outfitstats"
 msgid "%s: %s %s"
-msgstr ""
+msgstr "%s: %s %s"
 
 #: src/outfit.c:3491
 #, c-format
 msgctxt "outfitstats"
 msgid "%s: %s %s - %s %s"
-msgstr ""
+msgstr "%s: %s %s - %s %s"
 
 #: src/outfit.c:3531
 #, c-format
@@ -122225,7 +122244,7 @@ msgstr ""
 #, c-format
 msgctxt "outfitstats"
 msgid "%s: %s%s %s [%s %s]"
-msgstr ""
+msgstr "%s: %s%s %s [%s %s]"
 
 #.
 #. * properties
@@ -122655,13 +122674,13 @@ msgstr ""
 #, c-format
 msgctxt "weapset"
 msgid "#o%s - %s#0 [#r%s#0]"
-msgstr ""
+msgstr "#o%s - %s#0 [#r%s#0]"
 
 #: src/pilot_weapon.c:548
 #, c-format
 msgctxt "weapset"
 msgid "%s - %s"
-msgstr ""
+msgstr "%s - %s"
 
 #: src/pilot_weapon.c:1267
 #, c-format
@@ -123735,25 +123754,25 @@ msgstr ""
 #, c-format
 msgctxt "shipstats_double"
 msgid "%s#%s%s: %+g %s#0"
-msgstr ""
+msgstr "%s#%s%s: %+g %s#0"
 
 #: src/shipstats.c:762
 #, c-format
 msgctxt "shipstats_absolute"
 msgid "%s#%s%s: %+g %s#0"
-msgstr ""
+msgstr "%s#%s%s: %+g %s#0"
 
 #: src/shipstats.c:776
 #, c-format
 msgctxt "shipstats_integer"
 msgid "%s#%s%s: %+d %s#0"
-msgstr ""
+msgstr "%s#%s%s: %+d %s#0"
 
 #: src/shipstats.c:789
 #, c-format
 msgctxt "shipstats_boolean"
 msgid "%s#%s%s#0"
-msgstr ""
+msgstr "%s#%s%s#0"
 
 #: src/shipstats.c:938 src/shipstats.c:1072 src/shipstats.c:1092
 #, c-format
