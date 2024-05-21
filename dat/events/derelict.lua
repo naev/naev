@@ -270,7 +270,7 @@ function neutralevent()
       {
          _("Empty Derelict"),
          _([[Your airlock doors slide open starting, what turns out to be, the most uneventful, dull, mundane, entirely-boring and mind-numbingly unhelpful waste of time that any boarding of a derelict ship has ever been, it even tempts you not to do this again on the off chance you run across another such distressingly worthless derelict.]]),
-         fmt.f(_([[You became disenchanted with boarding derelicts on a ship in {sys}… next time better to watch paint dry.]]), {sys=system.cur})
+         fmt.f(_([[You became disenchanted with boarding derelicts on a ship in {sys}… next time better to watch paint dry.]]), {sys=system.cur()})
       },
    }
 
