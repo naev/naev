@@ -1930,7 +1930,7 @@ function vn.run()
       end
       for k,v in ipairs(menu_jumps) do
          if not inlist( labels, v ) then
-            warn(fmt.f(_("vn: Manu has jump to non-existent label '{lbl}'!"),{lbl=v}))
+            warn(fmt.f(_("vn: Menu has jump to non-existent label '{lbl}'!"),{lbl=v}))
          end
       end
    end
