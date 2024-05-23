@@ -63,7 +63,7 @@ build a polygon that contains all the parts of the object. For that purpose,
 increase the last 2 arguments up to (4,8), or even (5,10).
 Remark: for these cases, a convex polygon algorithm could be preferable...
 
-/!\ Very important : once you've found the right parameters to generate the
+!! Very important : once you've found the right parameters to generate the
 polygon from your png, add them in the dictionnary maxNmin
 (except if the default values are right)
 
@@ -846,4 +846,4 @@ if __name__ == "__main__":
     # Normal mode we just try to process the files
     for a in args.path:
         print(f"Processing {a}...")
-        polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d, gfx_path=args.gfxpath )
+        polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d, gfxpath=args.gfxpath )
