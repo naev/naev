@@ -7,6 +7,7 @@ local greeting = {
    _("Laughing at the Emperor."),
    _("On top of the world."),
    _("Piracy has never been better."),
+   _("Yo ho, a pirate's news for you!"),
 }
 local articles = {
    --[[
@@ -37,6 +38,10 @@ local articles = {
    {
       head = N_([[Pretender or Contender?]]),
       body = _([[Our sources report there's a child some consider to be the heir to the Emperor's throne. Daughter of an alleged concubine, she was said to be captured by captain Addom Rojo, who learned of her special status and suggests using her as leverage against the Empire.]])
+   },
+   {
+      head = N_([[Parley and Rejoice]]),
+      body = _([[A long-standing enmity between two captains, Vasserdrach and Mallard, has come to an end, after a long negotiation arbitrated by retired captain Nusbaum. The two had reached an agreement following a three-year feud over the spoils of a relatively large imperial ship.]])
    },
    --[[
       Human interest.
