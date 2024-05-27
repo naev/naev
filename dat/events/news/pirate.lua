@@ -52,7 +52,7 @@ local articles = {
    },
    {
       head = N_([[Rumours and Whispers]]),
-      body = _([[A large Za'lek derelict ship is rumored to have been found. Several maps have been circulated among the most prominent treasure seekers, but none has yet to be verified.]])
+      body = _([[A large Za'lek derelict ship is rumoured to have been found. Several maps have been circulated among the most prominent treasure seekers, but none has yet to be verified.]])
    },
 }
 

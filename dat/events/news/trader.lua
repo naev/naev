@@ -5,7 +5,7 @@ local greeting = {
    _("Traders of the galaxy, Unite!"),
 }
 local articles = {
-	--[[
+   --[[
       Business
    --]]
    {
