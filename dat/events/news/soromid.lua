@@ -4,6 +4,7 @@ local head = {
 local greeting = {
    _("Genetically tailoured for you."),
    _("Naturally selected news."),
+   _("In memory of ancient Sorom"),
 }
 local articles = {
 
@@ -22,12 +23,20 @@ local articles = {
       head = N_([[Colourful Outlook on Life]]),
       body = _([[New eye colour serum released for general consumption. The new colour changes, and can appear to be either blue, green, purple or yellow, depending on the direction it is viewed from. Renowned socialite Sharmante Givotake has already signed a 6-month deal to promote the new colour.]]),
    },
+   {
+      head = N_([[Rampant Disinformation]]),
+      body = _([[A Za'lek disinformation campaign, targeting the rural section of Soromid space, as well as the more backwater planets in the emperial space, accuses Soromid scientists of creating elaborate genetic experiments on a hidden planet's ecosystem. Our sources reiterate that no such experiment exists, and that there's no Sagan system, or a 4th planet of such system is used to induce abiogenesis events.]]),
+   },
    --[[
       Business
    --]]
    {
       head = N_([[Fishy Business]]),
       body = _([[Fishing mogul arrested on account of genetically modifying her corporation's fish and selling them to Empire museums as evidence of alien life. The scheme allegedly netted her a considerable sum, sources say.]]),
+   },
+   {
+      head = N_([[Two-headed Cow Extinct]]),
+      body = _([[Lack of management and overall neglect sees the last of the two-headed cows dead, rendering the species extinct. These cows, revered for their milk and meat, were originally cultivated and bred on ancient Sorom, and are the last of the species rescued from the destruction of our old home.]]),
    },
    --[[
       Politics
@@ -44,6 +53,10 @@ local articles = {
       head = N_([[Shameful display]]),
       body = _([[Sorom Remembrance Day ceremony marred by incident of public drunkenness and overall inconsiderate displays. Several delinquents arrested.]]),
    },
+   {
+      head = N_([[Star-crossed and Love-stricken]]),
+      body = _([[Two teens, children of their respective tribes' chiefs, missing. Friends report the two eloped for fear of their tribes' enmity and their parents' lack of approval for their relationship. Several bioships sent in search of the missing love-stricken lunatics.]]),
+   },
    --[[
       Human interest.
    --]]
@@ -54,6 +67,10 @@ local articles = {
    {
       head = N_([[Beauty in the Third Eye of the Beholder]]),
       body = _([[The latest pan-Soromid beauty pageant seen controversy, as judges elected professional tentacle model, Virsia Darami, as the winner. Her amateur opponents requested a recount, stating unearned advantages and last minute genemodding as causes to reject her application.]]),
+   },
+   {
+      head = N_([[Not a Specimen]]),
+      body = _([[A seemingly lost imperial anthropologist found a previously unknown Soromid tribe. Envoys from several of the major tribes in the area are in the process of re-introducing them into Soromid society.]]),
    },
 }
 
