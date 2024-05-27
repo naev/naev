@@ -1056,10 +1056,14 @@ static int cmp_node( const void *p1, const void *p2 )
    int         b1 = 0;
    int         b2 = 0;
    int         b;
-   for ( size_t i = 0; i < n1->nmesh; i++ )
-      b1 |= cmp_obj->materials[n1->mesh->material].blend;
-   for ( size_t i = 0; i < n2->nmesh; i++ )
-      b2 |= cmp_obj->materials[n2->mesh->material].blend;
+   for ( size_t i = 0; i < n1->nmesh; i++ ) {
+      if ( n1->mesh->material >= 0 )
+         b1 |= cmp_obj->materials[n1->mesh->material].blend;
+   }
+   for ( size_t i = 0; i < n2->nmesh; i++ ) {
+      if ( n2->mesh->material >= 0 )
+         b2 |= cmp_obj->materials[n2->mesh->material].blend;
+   }
    b = b1 - b2;
    if ( b )
       return b;
@@ -1069,9 +1073,9 @@ static int cmp_mesh( const void *p1, const void *p2 )
 {
    const Mesh *m1 = p1;
    const Mesh *m2 = p2;
-   int         b1 = cmp_obj->materials[m1->material].blend;
-   int         b2 = cmp_obj->materials[m2->material].blend;
-   int         b  = b1 - b2;
+   int b1 = ( m1->material >= 0 ) ? cmp_obj->materials[m1->material].blend : -1;
+   int b2 = ( m2->material >= 0 ) ? cmp_obj->materials[m2->material].blend : -1;
+   int b  = b1 - b2;
    if ( b )
       return b;
    return m1->aabb_max.v[1] - m2->aabb_max.v[1];
