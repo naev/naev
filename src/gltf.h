@@ -106,6 +106,7 @@ typedef struct Scene_ {
  * @brief Defines a complete object.
  */
 typedef struct GltfObject_ {
+   char     *path; /**< Path containing the gltf, used for finding elements. */
    Scene    *scenes;     /**< Number of scenes. */
    size_t    nscenes;    /**< Number of scenes. */
    Material *materials;  /**< Available materials. */

@@ -181,8 +181,9 @@ static int max_tex_size          = 0;
  *    @param notsrgb Whether or not the texture should use SRGB.
  *    @return OpenGL ID of the new texture.
  */
-static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex,
-                             const Texture *def, int notsrgb )
+static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
+                             const cgltf_texture_view *ctex, const Texture *def,
+                             int notsrgb )
 {
    const SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
    GLuint                    tex;
@@ -200,7 +201,16 @@ static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex,
 
    /* Load from path. */
    if ( ctex->texture->image->uri != NULL ) {
-      SDL_RWops *rw = PHYSFSRWOPS_openRead( ctex->texture->image->uri );
+      SDL_RWops *rw;
+#ifdef HAVE_NAEV
+      char path[PATH_MAX];
+      snprintf( path, sizeof( path ), "%s/%s", obj->path,
+                ctex->texture->image->uri );
+      rw = PHYSFSRWOPS_openRead( path );
+#else  /* HAVE_NAEV */
+      (void)obj;
+      rw = PHYSFSRWOPS_openRead( ctex->texture->image->uri );
+#endif /* HAVE_NAEV */
       if ( rw == NULL ) {
          WARN( _( "Unable to open '%s': %s" ), ctex->texture->image->uri,
                SDL_GetError() );
@@ -360,15 +370,16 @@ static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex,
 /**
  * @brief Loads a material for the object.
  */
-static int gltf_loadMaterial( Material *mat, const cgltf_material *cmat,
-                              const cgltf_data *data )
+static int gltf_loadMaterial( const GltfObject *obj, Material *mat,
+                              const cgltf_material *cmat,
+                              const cgltf_data     *data )
 {
    const GLfloat white[4] = { 1., 1., 1., 1. };
    /* TODO complete this. */
    if ( cmat && cmat->has_pbr_metallic_roughness ) {
       mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
       mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
-      gltf_loadTexture( &mat->baseColour_tex,
+      gltf_loadTexture( obj, &mat->baseColour_tex,
                         &cmat->pbr_metallic_roughness.base_color_texture,
                         &tex_ones, 0 );
       if ( mat->baseColour_tex.tex == tex_ones.tex )
@@ -378,7 +389,7 @@ static int gltf_loadMaterial( Material *mat, const cgltf_material *cmat,
       else
          memcpy( mat->baseColour, white, sizeof( mat->baseColour ) );
       gltf_loadTexture(
-         &mat->metallic_tex,
+         obj, &mat->metallic_tex,
          &cmat->pbr_metallic_roughness.metallic_roughness_texture, &tex_ones,
          1 );
    } else {
@@ -413,16 +424,16 @@ static int gltf_loadMaterial( Material *mat, const cgltf_material *cmat,
    if ( cmat ) {
       memcpy( mat->emissiveFactor, cmat->emissive_factor,
               sizeof( GLfloat ) * 3 );
-      gltf_loadTexture( &mat->emissive_tex, &cmat->emissive_texture, &tex_ones,
-                        0 );
+      gltf_loadTexture( obj, &mat->emissive_tex, &cmat->emissive_texture,
+                        &tex_ones, 0 );
       if ( use_ambient_occlusion )
-         gltf_loadTexture( &mat->occlusion_tex, &cmat->occlusion_texture,
+         gltf_loadTexture( obj, &mat->occlusion_tex, &cmat->occlusion_texture,
                            &tex_ones, 1 );
       else
          mat->occlusion_tex = tex_ones;
       if ( use_normal_mapping )
-         gltf_loadTexture( &mat->normal_tex, &cmat->normal_texture, &tex_zero,
-                           1 );
+         gltf_loadTexture( obj, &mat->normal_tex, &cmat->normal_texture,
+                           &tex_zero, 1 );
       else
          mat->normal_tex = tex_ones;
       mat->blend        = ( cmat->alpha_mode == cgltf_alpha_mode_blend );
@@ -1097,15 +1108,26 @@ GltfObject *gltf_loadFromFile( const char *filename )
    cgltf_data   *data;
    cgltf_options opts;
    char         *dirpath;
-   char          mountpath[PATH_MAX];
    memset( &opts, 0, sizeof( opts ) );
-   opts.file.read = gltf_read;
 
    /* Initialize object. */
    obj = calloc( 1, sizeof( GltfObject ) );
 
+   /* Set up the gltf path. */
+   dirpath = strdup( filename );
+#ifdef HAVE_NAEV
+   SDL_asprintf( &obj->path, "%s", dirname( dirpath ) );
+#else  /* HAVE_NAEV */
+   char mountpath[PATH_MAX];
+   snprintf( mountpath, sizeof( mountpath ), "%s/%s",
+             PHYSFS_getRealDir( filename ), dirname( dirpath ) );
+   PHYSFS_mount( mountpath, "/", 0 ); /* Prefix so more priority. */
+#endif /* HAVE_NAEV */
+   free( dirpath );
+
    /* Start loading the file. */
-   res = cgltf_parse_file( &opts, filename, &data );
+   opts.file.read = gltf_read;
+   res            = cgltf_parse_file( &opts, filename, &data );
    assert( res == cgltf_result_success );
 
 #if DEBUGGING
@@ -1118,18 +1140,11 @@ GltfObject *gltf_loadFromFile( const char *filename )
    res = cgltf_load_buffers( &opts, data, filename );
    assert( res == cgltf_result_success );
 
-   /* Now mount the directory and try to do things. */
-   dirpath = strdup( filename );
-   snprintf( mountpath, sizeof( mountpath ), "%s/%s",
-             PHYSFS_getRealDir( filename ), dirname( dirpath ) );
-   PHYSFS_mount( mountpath, "/", 0 ); /* Prefix so more priority. */
-   free( dirpath );
-
    /* Load materials. */
    obj->materials  = calloc( data->materials_count, sizeof( Material ) );
    obj->nmaterials = data->materials_count;
    for ( size_t i = 0; i < data->materials_count; i++ )
-      gltf_loadMaterial( &obj->materials[i], &data->materials[i], data );
+      gltf_loadMaterial( obj, &obj->materials[i], &data->materials[i], data );
 
    /* Load scenes. */
    obj->scenes       = calloc( data->scenes_count, sizeof( Scene ) );
@@ -1173,8 +1188,9 @@ GltfObject *gltf_loadFromFile( const char *filename )
    }
    cmp_obj = NULL; /* No more comparisons. */
 
-   /* Unmount directory. */
-   PHYSFS_unmount( mountpath );
+#ifndef HAVE_NAEV
+   PHYSFS_unmount( obj->path );
+#endif /* HAVE_NAEV */
 
    cgltf_free( data );
 
@@ -1219,6 +1235,8 @@ void gltf_free( GltfObject *obj )
 {
    if ( obj == NULL )
       return;
+
+   free( obj->path );
 
    for ( size_t s = 0; s < obj->nscenes; s++ ) {
       Scene *scene = &obj->scenes[s];
@@ -1281,7 +1299,7 @@ int gltf_init( void )
    gl_checkErr();
 
    /* Set up default material. */
-   gltf_loadMaterial( &material_default, NULL, NULL );
+   gltf_loadMaterial( NULL, &material_default, NULL, NULL );
 
    /* We'll have to set up some rendering stuff for blurring purposes. */
    const GLfloat vbo_data[8] = { 0., 0., 1., 0., 0., 1., 1., 1. };
