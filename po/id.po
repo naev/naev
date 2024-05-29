@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-03-17 13:16+0900\n"
-"PO-Revision-Date: 2024-05-20 20:01+0000\n"
+"PO-Revision-Date: 2024-05-29 19:09+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -1089,7 +1089,7 @@ msgstr "langka"
 
 #: dat/asteroids/types/nodrop.xml:3
 msgid "empty"
-msgstr "kosong"
+msgstr "kopong"
 
 #: dat/commodities/clay.xml:3
 msgid "Clay"
@@ -1546,7 +1546,7 @@ msgid ""
 "Significantly reduces the difficulty of the game, allowing to concentrate on "
 "the story."
 msgstr ""
-"Mengurangi kesulitan permainan secara signifikan, sehingga lebih berfokus "
+"Mengurangi kesulitan permainan secara signifikan, sehingga lebih terfokus "
 "kepada elemen ceritanya."
 
 #: dat/effects/ambush_hunter.xml:2
@@ -2279,11 +2279,11 @@ msgstr "Pedagang"
 
 #: dat/factions/traders_society.xml:2
 msgid "Traders Society"
-msgstr ""
+msgstr "Perhimpunan Pedagang"
 
 #: dat/factions/traders_society.xml:5
 msgid "Space Traders Society"
-msgstr ""
+msgstr "Perhimpunan Pedagang Luar Angkasa"
 
 #: dat/factions/traders_society.xml:12
 msgid ""
@@ -2292,20 +2292,28 @@ msgid ""
 "Great Houses, and Soromid. Some of the prominent members include Astra "
 "Vigilis, Mining Vrata, and the Imperial Red Star."
 msgstr ""
+"Perhimpunan Pedagang Luar Angkasa adalah organisasi yang membentangi "
+"berbagai serikat dagang, dan bertujuan untuk melindungi kepentingan mereka "
+"dari intervensi Kekaisaran, Wangsa-Wangsa Besar, dan Soromid. Beberapa "
+"anggota paling terkemuka yaitu Astra Vigilis, Vrata Tambang, dan Bintang "
+"Merah Imperial."
 
 #: dat/factions/wild_ones.xml:2 dat/scripts/common/minerva.lua:307
 msgid "Wild Ones"
-msgstr ""
+msgstr "Para Liar"
 
 #: dat/factions/wild_ones.xml:5
 msgid "Wild Ones Pirate Clan"
-msgstr ""
+msgstr "Klan Perompak Para Liar"
 
 #: dat/factions/wild_ones.xml:12
 msgid ""
 "The Wild Ones Pirate Clan is a violent and loosely organized band of pirates "
 "that control the Haven sector between Empire and Soromid territories."
 msgstr ""
+"Klan Perompak Para Liar adalah segerombalan perompak yang ganas dan "
+"terorganisir secara buruk. Mereka memegang kendali atas sektor Haven yang "
+"terletak di antara teritori Kekaisaran dan Soromid."
 
 #. Gets reset on enter system
 #. Must be goal system
@@ -2385,16 +2393,22 @@ msgid ""
 "modern ships' powerful filtration systems, these days they are entirely "
 "cosmetic."
 msgstr ""
+"Rupanya pengharum udara memiliki kegunaan tradisional sebagai ornament untuk "
+"kendaraan manusia. Dulunya barang ini harum, namun karena kapal modern "
+"memiliki sistem penyaringan udara yang kuat, sekarang kegunaannya hanya "
+"bersifat estetika saja."
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
 msgid "Black Cat Doll"
-msgstr ""
+msgstr "Boneka Kucing Hitam"
 
 #: dat/outfits/accessory/black_cat_doll.xml:11
 msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
 "that was all over your ship. It's quite cute."
 msgstr ""
+"Boneka kucing hitam sederhana yang kau dari bulu \"Felis catus\" autentik "
+"yang sebelumnya tersebar di semua sudut kapalmu. Imut juga sih."
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
@@ -2469,7 +2483,7 @@ msgstr ""
 #: dat/outfits/accessory/fuzzy_dice.xml:12
 #: dat/outfits/intrinsic/machiavellian_fortune.xml:10
 msgid "#pImproves luck!#0"
-msgstr ""
+msgstr "#pMeningkatkan keberuntungan!#0"
 
 #: dat/outfits/accessory/goatee_marker.xml:2
 msgid "Goatee Marker"
@@ -2493,7 +2507,7 @@ msgstr ""
 
 #: dat/outfits/accessory/left_boot.xml:2
 msgid "Left Boot"
-msgstr ""
+msgstr "Sepatu Bot Kiri"
 
 #: dat/outfits/accessory/left_boot.xml:11
 msgid ""
@@ -2501,6 +2515,9 @@ msgid ""
 "and is full of confetti. You're not sure what to do with it, but it might "
 "liven up the ship."
 msgstr ""
+"Bagian kiri dari yang tadinya sepasang sepatu bot milik seorang pejabat "
+"tinggi Kekaisaran. Kamu pun kebingungan untuk apa sepatu bot hanya sebelah, "
+"tapi benda ini mungkin menghidupkan suasana kapal."
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#pSmells funky.#0"
@@ -2532,7 +2549,7 @@ msgstr ""
 
 #: dat/outfits/accessory/pilot_doll.xml:2
 msgid "Pilot Doll"
-msgstr ""
+msgstr "Boneka Pilot"
 
 #: dat/outfits/accessory/pilot_doll.xml:11
 msgid ""
@@ -2540,16 +2557,22 @@ msgid ""
 "to be you, but it looks nothing like you at all. However, what is important "
 "here is the intention and not the result."
 msgstr ""
+"Boneka yang dibuat para anak piatu dari baju usang mereka. Sepertinya mereka "
+"membuatnya dengan tujuan supaya mirip sepertimu, tapi hasilnya sama sekali "
+"tidak mirip. Namun, perlu dicatat bahwa yang penting adalah tujuan dan bukan "
+"hasilnya."
 
 #: dat/outfits/accessory/racing_trophy.xml:2
 msgid "Racing Trophy"
-msgstr ""
+msgstr "Piala Balap"
 
 #: dat/outfits/accessory/racing_trophy.xml:11
 msgid ""
 "Racing trophy you won with your excellent piloting skills. Looks great on "
 "the wall!"
 msgstr ""
+"Piala balap yang kamu menangi dengan kemampuan mengemudimu yang luar biasa. "
+"Terlihat keren di dinding!"
 
 #: dat/outfits/accessory/rackham_razor.xml:2
 msgid "Rackham's Razor"
@@ -2610,7 +2633,7 @@ msgstr ""
 
 #: dat/outfits/accessory/toy_drone.xml:2
 msgid "Toy Drone"
-msgstr ""
+msgstr "Drone Mainan"
 
 #: dat/outfits/accessory/toy_drone.xml:11
 msgid ""
@@ -2781,12 +2804,12 @@ msgstr ""
 #: dat/outfits/bioship/skills/corrosion_i.xml:2
 #: dat/scripts/bioship/skills.lua:248
 msgid "Corrosion I"
-msgstr ""
+msgstr "Korosi I"
 
 #: dat/outfits/bioship/skills/corrosion_ii.xml:2
 #: dat/scripts/bioship/skills.lua:271
 msgid "Corrosion II"
-msgstr ""
+msgstr "Korosi II"
 
 #: dat/outfits/bioship/skills/enhanced_smell.xml:2
 #: dat/scripts/bioship/skills.lua:317
@@ -4951,11 +4974,11 @@ msgstr ""
 
 #: dat/outfits/maps/localmap.xml:2
 msgid "Local System Map"
-msgstr ""
+msgstr "Peta Sistem Lokal"
 
 #: dat/outfits/maps/localmap.xml:6
 msgid "This map contains information about the local system."
-msgstr ""
+msgstr "Peta ini berisi informasi tentang sistem lokal."
 
 #: dat/outfits/maps/map_collective_space.xml:2
 msgid "Map: Collective Space"
@@ -4970,7 +4993,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_dvaered_core.xml:2
 msgid "Map: Dvaered Core"
-msgstr ""
+msgstr "Peta Inti Dvaered"
 
 #: dat/outfits/maps/map_dvaered_core.xml:7
 msgid ""
@@ -5758,11 +5781,11 @@ msgstr ""
 
 #: dat/outfits/structure/small_cargo_pod.xml:2
 msgid "Small Cargo Pod"
-msgstr ""
+msgstr "Pod Kargo Kecil"
 
 #: dat/outfits/structure/small_fuel_pod.xml:2
 msgid "Small Fuel Pod"
-msgstr ""
+msgstr "Pod Bahan Bakar Kecil"
 
 #: dat/outfits/structure/small_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:240
@@ -5832,13 +5855,15 @@ msgstr ""
 #: dat/outfits/unique/fake_transponder.xml:2
 #: dat/outfits/unique/fake_transponder.xml:6
 msgid "Fake Transponder"
-msgstr ""
+msgstr "Transponder Palsu"
 
 #: dat/outfits/unique/fake_transponder.xml:11
 msgid ""
 "A fake transponder to make ships appear to be a non-descript and harmless "
 "independent ship."
 msgstr ""
+"Transponder palsu untuk membuat kapal tampak umum, tak berbahaya, dan "
+"independen (netral)."
 
 #: dat/outfits/unique/fake_transponder.xml:12
 msgid ""
@@ -5849,7 +5874,7 @@ msgstr ""
 #: dat/outfits/unique/fuel_recycler.xml:2
 #: dat/outfits/unique/fuel_recycler.lua:68
 msgid "Fuel Recycler"
-msgstr ""
+msgstr "Pendaur Ulang Bahan Bakar"
 
 #: dat/outfits/unique/fuel_recycler.xml:10
 msgid ""
@@ -7749,7 +7774,7 @@ msgstr ""
 
 #: dat/ships/misc/fort_raelid.xml:2 dat/spob/fort_raelid.xml:2
 msgid "Fort Raelid"
-msgstr ""
+msgstr "Benteng Raelid"
 
 #: dat/ships/misc/fort_raelid.xml:7 dat/ships/misc/fort_raglan.xml:7
 #: dat/ships/misc/onewing_goddard.xml:7 dat/ships/misc/sindbad.xml:7
@@ -7780,7 +7805,7 @@ msgstr ""
 
 #: dat/ships/misc/fort_raglan.xml:2 dat/spob/fort_raglan.xml:2
 msgid "Fort Raglan"
-msgstr ""
+msgstr "Benteng Raglan"
 
 #: dat/ships/misc/onewing_goddard.xml:2 dat/spob/onewing_goddard.xml:2
 msgid "One-Wing Goddard"
@@ -7901,11 +7926,11 @@ msgstr ""
 #: src/ship.c:231
 #, c-format
 msgid "Unknown"
-msgstr ""
+msgstr "Tidak Diketahui"
 
 #: dat/ships/misc/psychic_orb.xml:11
 msgid "Not meant for the player."
-msgstr ""
+msgstr "Tidak untuk sang pemain."
 
 #: dat/ships/misc/sindbad.xml:2 dat/spob/sindbad.xml:2
 msgid "Sindbad"
@@ -8213,7 +8238,7 @@ msgstr ""
 #: dat/ships/pirate/pirate_starbridge.xml:15
 #: dat/ships/pirate/pirate_vendetta.xml:15 dat/ships/pirate/pirate_zebra.xml:19
 msgid "Skull and Bones"
-msgstr ""
+msgstr "Skull and Bones"
 
 #: dat/ships/pirate/pirate_admonisher.xml:18
 msgid ""
@@ -8340,7 +8365,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_zebra.xml:2
 msgid "Pirate Zebra"
-msgstr ""
+msgstr "Zebra Perompak"
 
 #: dat/ships/pirate/pirate_zebra.xml:20
 msgid ""
@@ -8353,7 +8378,7 @@ msgstr ""
 
 #: dat/ships/proteron/proteron_archimedes.xml:2
 msgid "Proteron Archimedes"
-msgstr ""
+msgstr "Archimedes Proteron"
 
 #: dat/ships/proteron/proteron_archimedes.xml:20
 #: dat/ships/proteron/proteron_watson.xml:20
@@ -8368,7 +8393,7 @@ msgstr ""
 
 #: dat/ships/proteron/proteron_dalton.xml:2
 msgid "Proteron Dalton"
-msgstr ""
+msgstr "Dalton Proteron"
 
 #: dat/ships/proteron/proteron_dalton.xml:18
 msgid "You need at least 20 reputation with the Proteron."
@@ -8387,7 +8412,7 @@ msgstr ""
 
 #: dat/ships/proteron/proteron_euler.xml:2
 msgid "Proteron Euler"
-msgstr ""
+msgstr "Euler Proteron"
 
 #: dat/ships/proteron/proteron_euler.xml:15
 msgid ""
@@ -8400,7 +8425,7 @@ msgstr ""
 
 #: dat/ships/proteron/proteron_gauss.xml:2
 msgid "Proteron Gauss"
-msgstr ""
+msgstr "Gauss Proteron"
 
 #: dat/ships/proteron/proteron_gauss.xml:17
 msgid ""
@@ -8412,7 +8437,7 @@ msgstr ""
 
 #: dat/ships/proteron/proteron_hippocrates.xml:2
 msgid "Proteron Hippocrates"
-msgstr ""
+msgstr "Hippocrates Proteron"
 
 #: dat/ships/proteron/proteron_hippocrates.xml:20
 msgid "You need at least 50 reputation with the Proteron."
@@ -8850,7 +8875,7 @@ msgstr ""
 
 #: dat/ships/zalek/zalek_demon.xml:2
 msgid "Za'lek Demon"
-msgstr ""
+msgstr "Setan Za'lek"
 
 #: dat/ships/zalek/zalek_demon.xml:16 dat/ships/zalek/zalek_diablo.xml:16
 #: dat/ships/zalek/zalek_hephaestus.xml:16 dat/ships/zalek/zalek_mammon.xml:20
@@ -8883,7 +8908,7 @@ msgstr ""
 
 #: dat/ships/zalek/zalek_drone_bomber.xml:2
 msgid "Za'lek Bomber Drone"
-msgstr ""
+msgstr "Drone Pengebom Za'lek"
 
 #: dat/ships/zalek/zalek_drone_bomber.xml:8
 msgid "Robotic Bomber"
@@ -8904,7 +8929,7 @@ msgstr ""
 
 #: dat/ships/zalek/zalek_drone_heavy.xml:2
 msgid "Za'lek Heavy Drone"
-msgstr ""
+msgstr "Drone Berat Za'lek"
 
 #: dat/ships/zalek/zalek_drone_heavy.xml:8
 msgid "Robotic Fighter"
@@ -8918,7 +8943,7 @@ msgstr ""
 
 #: dat/ships/zalek/zalek_drone_light.xml:2
 msgid "Za'lek Light Drone"
-msgstr ""
+msgstr "Drone Ringan Za'lek"
 
 #: dat/ships/zalek/zalek_drone_light.xml:14
 msgid ""
@@ -8942,7 +8967,7 @@ msgstr ""
 
 #: dat/ships/zalek/zalek_hephaestus.xml:2
 msgid "Za'lek Hephaestus"
-msgstr ""
+msgstr "Hefaistos Za'lek"
 
 #: dat/ships/zalek/zalek_hephaestus.xml:18
 msgid ""
@@ -8954,7 +8979,7 @@ msgstr ""
 
 #: dat/ships/zalek/zalek_mammon.xml:2
 msgid "Za'lek Mammon"
-msgstr ""
+msgstr "Mamon Za'lek"
 
 #: dat/ships/zalek/zalek_mammon.xml:24
 msgid ""
@@ -9470,7 +9495,7 @@ msgstr ""
 
 #: dat/spob/akios_terminal.xml:2
 msgid "Akios Terminal"
-msgstr ""
+msgstr "Terminal Akios"
 
 #: dat/spob/akios_terminal.xml:16 dat/spob/arcturus_enclave.xml:16
 #: dat/spob/bastion_center.xml:15 dat/spob/belltower_nest.xml:16
@@ -9701,7 +9726,7 @@ msgstr ""
 
 #: dat/spob/aldous_moon.xml:2
 msgid "Aldous' moon"
-msgstr ""
+msgstr "Bulan Aldous"
 
 #: dat/spob/aleph.xml:2
 msgid "Aleph"
@@ -9827,7 +9852,7 @@ msgstr "Allous II"
 
 #: dat/spob/alpha_aquilea.xml:2
 msgid "Alpha Aquilea"
-msgstr ""
+msgstr "Alpha Aquilea"
 
 #: dat/spob/alsafi_i.xml:2
 msgid "Alsafi I"
@@ -10214,7 +10239,7 @@ msgstr ""
 
 #: dat/spob/antlejos_iii.xml:2
 msgid "Antlejos III"
-msgstr ""
+msgstr "Antlejos III"
 
 #: dat/spob/antlejos_iii.xml:9
 msgid "B"
@@ -10226,7 +10251,7 @@ msgstr "Antlejos IV"
 
 #: dat/spob/antlejos_prime.xml:2
 msgid "Antlejos Prime"
-msgstr ""
+msgstr "Antlejos Utama"
 
 #. Use default
 #. Function for adding log entries for miscellaneous one-off missions.
@@ -10236,7 +10261,7 @@ msgstr "Antlejos V"
 
 #: dat/spob/antlejos_v.xml:15
 msgid "A cold and barren inhospitable moon devoid of all life."
-msgstr ""
+msgstr "Bulan yang dingin, kosong melompong, dan tidak mengandung kehidupan."
 
 #: dat/spob/anubis.xml:2
 msgid "Anubis"
@@ -10319,7 +10344,7 @@ msgstr "Apik II"
 
 #: dat/spob/apik_shipyard.xml:2
 msgid "Apik Shipyard"
-msgstr ""
+msgstr "Galangan Apik"
 
 #: dat/spob/apik_shipyard.xml:25
 msgid ""
@@ -10338,11 +10363,11 @@ msgstr "Arai"
 
 #: dat/spob/arandon_station.xml:2
 msgid "Arandon Station"
-msgstr ""
+msgstr "Stasiun Arandon"
 
 #: dat/spob/arandon_station.xml:3 dat/spob/eye_of_night_station.xml:3
 msgid "Ruined Station"
-msgstr ""
+msgstr "Stasiun Hancur"
 
 #: dat/spob/arandon_station.xml:23
 msgid ""
@@ -10415,7 +10440,7 @@ msgstr ""
 
 #: dat/spob/arch_arai.xml:2
 msgid "Arch Arai"
-msgstr ""
+msgstr "Arca Arai"
 
 #: dat/spob/arch_arai.xml:28
 msgid ""
@@ -10529,6 +10554,11 @@ msgid ""
 "buildings are almost completely hermetic. The locals are continuously "
 "discussing sandworms, though you're not sure what to make of it."
 msgstr ""
+"Arrakis adalah planet gurun tanpa presipitasi natural dan badai pasir yang "
+"dapat berlangsung selama beberapa perioda sekaligus. Akibat besarnya "
+"pengeluaran untuk mengimpor air, evaporasi air diminimalisir dengan serius "
+"dan hampir semua bangunan kedap udara. Penduduk lokal terus-menerus "
+"membicarakan cacing pasir, tapi kamu tak yakin maksud mereka apa."
 
 #: dat/spob/arrakis.xml:27
 msgid ""
@@ -16603,7 +16633,7 @@ msgstr ""
 
 #: dat/spob/memory_of_sorom.xml:2
 msgid "Memory of Sorom"
-msgstr "Memori Sorom"
+msgstr "Kenangan Sorom"
 
 #: dat/spob/memory_of_sorom.xml:27
 msgid ""
@@ -23271,7 +23301,7 @@ msgstr ""
 
 #: dat/spob/wunomis_world.xml:2
 msgid "Wunomi's World"
-msgstr ""
+msgstr "Dunia Wunomi"
 
 #: dat/spob/wunomis_world.xml:28
 msgid ""
@@ -23577,15 +23607,15 @@ msgstr ""
 
 #: dat/spob/zeroeleven.xml:2
 msgid "Zero-Eleven"
-msgstr ""
+msgstr "Nol-Sebelas"
 
 #: dat/spob/zerofive.xml:2
 msgid "Zero-Five"
-msgstr ""
+msgstr "Nol-Lima"
 
 #: dat/spob/zeroone.xml:2
 msgid "Zero-One"
-msgstr ""
+msgstr "Nol-Satu"
 
 #: dat/spob/zesta.xml:2
 msgid "Zesta"
@@ -23857,15 +23887,15 @@ msgstr ""
 
 #: dat/spob_virtual/zalek_small.xml:2
 msgid "Za'lek Small"
-msgstr ""
+msgstr "Za'lek Sedikit"
 
 #: dat/spob_virtual/zalek_unpresence.xml:2
 msgid "Za'lek Unpresence"
-msgstr ""
+msgstr "Za'lek Tidak Ada"
 
 #: dat/spob_virtual/zalek_unpresence_range1.xml:2
 msgid "Za'lek Unpresence (Range 1)"
-msgstr ""
+msgstr "Za'lek Tidak Ada (Jarak 1)"
 
 #: dat/ssys/acheron.xml:2
 msgid "Acheron"
@@ -23905,7 +23935,7 @@ msgstr "Allous"
 
 #: dat/ssys/alpha_centauri.xml:2
 msgid "Alpha Centauri"
-msgstr ""
+msgstr "Alpha Centauri"
 
 #: dat/ssys/alsafi.xml:2
 msgid "Alsafi"
@@ -24013,7 +24043,7 @@ msgstr "Antlejos"
 #: dat/ssys/anubis_black_hole.xml:2 dat/events/discovery.lua:263
 #: dat/missions/zalek/blackhole/zbh11.lua:33
 msgid "Anubis Black Hole"
-msgstr ""
+msgstr "Lubang Hitam Anubis"
 
 #: dat/ssys/apez.xml:2
 msgid "Apez"
@@ -24256,7 +24286,7 @@ msgstr "Daled"
 #: dat/ssys/titus.xml:6 dat/ssys/unicorn.xml:6 dat/ssys/vedalus.xml:6
 #: dat/ssys/volus.xml:6
 msgid "#bStellar Wind (1 fuel regen)#0"
-msgstr ""
+msgstr "#bAngin Bintang (1 regen bahan bakar)#0"
 
 #: dat/ssys/damien.xml:2
 msgid "Damien"
@@ -24276,11 +24306,11 @@ msgstr "Defa"
 
 #: dat/ssys/delta_pavonis.xml:2
 msgid "Delta Pavonis"
-msgstr ""
+msgstr "Delta Pavonis"
 
 #: dat/ssys/delta_polaris.xml:2
 msgid "Delta Polaris"
-msgstr ""
+msgstr "Delta Polaris"
 
 #: dat/ssys/dendria.xml:2
 msgid "Dendria"
@@ -24328,7 +24358,7 @@ msgstr "Druss"
 
 #: dat/ssys/dune.xml:2
 msgid "Dune"
-msgstr ""
+msgstr "Dune"
 
 #: dat/ssys/duros.xml:2
 msgid "Duros"
@@ -24390,7 +24420,7 @@ msgstr "Euler"
 #: dat/ssys/ngc9607.xml:6 dat/ssys/peogas.xml:6 dat/ssys/toxin.xml:6
 #: dat/ssys/ulysses.xml:6 dat/ssys/undergate.xml:6
 msgid "#pPlasma Storm (-50% energy and -50% stress dissipation)#0"
-msgstr ""
+msgstr "#pBadai Plasma (-50% energi dan -50% disipasi ketegangan)#0"
 
 #: dat/ssys/eye_of_night.xml:2
 msgid "Eye of Night"
@@ -24470,7 +24500,7 @@ msgstr "Gamel"
 
 #: dat/ssys/gamma_polaris.xml:2
 msgid "Gamma Polaris"
-msgstr ""
+msgstr "Gamma Polaris"
 
 #: dat/ssys/gammacron.xml:2
 msgid "Gammacron"
@@ -24490,7 +24520,7 @@ msgstr "Gewirn"
 
 #: dat/ssys/gilligans_light.xml:2
 msgid "Gilligan's Light"
-msgstr ""
+msgstr "Cahaya Gilligan"
 
 #: dat/ssys/ginger.xml:2
 msgid "Ginger"
@@ -24514,7 +24544,7 @@ msgstr "Gremlin"
 
 #: dat/ssys/griffin.xml:2
 msgid "Griffin"
-msgstr ""
+msgstr "Griffin"
 
 #: dat/ssys/groombridge.xml:2
 msgid "Groombridge"
@@ -24591,11 +24621,11 @@ msgstr "Herculis"
 
 #: dat/ssys/hideyoshis_star.xml:2
 msgid "Hideyoshi's Star"
-msgstr ""
+msgstr "Bintang Hideyoshi"
 
 #: dat/ssys/holly.xml:2
 msgid "Holly"
-msgstr ""
+msgstr "Holly"
 
 #: dat/ssys/hubfar.xml:2
 msgid "Hubfar"
@@ -24635,7 +24665,7 @@ msgstr "Jackson"
 
 #: dat/ssys/jade.xml:2
 msgid "Jade"
-msgstr "Giok"
+msgstr "Jade"
 
 #: dat/ssys/jervis.xml:2
 msgid "Jervis"
@@ -24687,7 +24717,7 @@ msgstr "Klunzar"
 
 #: dat/ssys/knave.xml:2 dat/scripts/pilotname/pirate.lua:359
 msgid "Knave"
-msgstr ""
+msgstr "Knave"
 
 #: dat/ssys/kobopos.xml:2
 msgid "Kobopos"
@@ -24727,7 +24757,7 @@ msgstr "Kruger"
 
 #: dat/ssys/krugers_pocket.xml:2
 msgid "Kruger's Pocket"
-msgstr ""
+msgstr "Kantung Kruger"
 
 #: dat/ssys/ksher.xml:2
 msgid "Ksher"
@@ -26095,11 +26125,11 @@ msgstr "Zylex"
 
 #: dat/start.xml:3
 msgid "Sea of Darkness"
-msgstr ""
+msgstr "Lautan Kegelapan"
 
 #: dat/start.xml:6
 msgid "El Ego de Deiz"
-msgstr ""
+msgstr "El Ego de Deiz"
 
 #: dat/start.xml:6
 msgid "Your first space-worthy ship!"
@@ -29637,7 +29667,7 @@ msgstr ""
 
 #: dat/autonav.lua:296
 msgid "Autonav: aborted!"
-msgstr ""
+msgstr "Autonav: dibatalkan!"
 
 #.
 #. tint is the integral of the time in per time units.
@@ -30062,7 +30092,7 @@ msgstr ""
 #. Add manage cargo button if applicable
 #: dat/board.lua:413 dat/board.lua:469
 msgid "Manage Cargo"
-msgstr ""
+msgstr "Kelola Kargo"
 
 #: dat/board.lua:415
 msgid "Select cargo to jettison:"
@@ -30104,7 +30134,7 @@ msgstr "Jarah Semua"
 
 #: dat/board.lua:465
 msgid "Cannibalize"
-msgstr ""
+msgstr "Kanibalisasi"
 
 #: dat/board.lua:474
 msgid "Boarding {plt}"
@@ -30132,13 +30162,15 @@ msgstr "Kamu menjarah {amount} bahan bakar dari {plt}."
 #. Looted all the fuel
 #: dat/board.lua:537
 msgid "Extract {outfit}?"
-msgstr ""
+msgstr "Ambil {outfit}?"
 
 #: dat/board.lua:538
 msgid ""
 "It will cost #r{credits}#0 in repairs to successfully extract the {outfit}. "
 "You have {playercreds}. Extract the {outfit}?"
 msgstr ""
+"Butuh ongkos #r{credits}#0 dalam perbaikan untuk bisa mengambil {outfit}. "
+"Kamu punya {playercreds}. Ambil {outfit}?"
 
 #: dat/board.lua:542 dat/spob/lua/lib/hypergate.lua:303 src/map_system.c:1210
 msgid "Insufficient Credits"
@@ -30160,17 +30192,17 @@ msgstr ""
 #. Unable to loot anything
 #: dat/board.lua:572
 msgid "No Space"
-msgstr ""
+msgstr "Tidak Cukup Ruang"
 
 #: dat/board.lua:572
 msgid "You have no free cargo space!"
-msgstr ""
+msgstr "Kamu tidak punya ruang kargo kosong!"
 
 #. Might be a misaligned here with loot_mod, but we sort of ignore it :/
 #. We just use the original bonus computed with loot_mod
 #: dat/board.lua:578
 msgid "You looted {amount} of {cargo} from {plt}."
-msgstr ""
+msgstr "Kamu menjarah {amount} {cargo} dari {plt}."
 
 #. Looted all the cargo
 #. Clean up
@@ -30228,7 +30260,7 @@ msgstr ""
 
 #: dat/comm.lua:175 dat/comm.lua:177 dat/spob/lua/lib/spob.lua:273
 msgid "Bribe"
-msgstr ""
+msgstr "Sogok"
 
 #. global
 #. global
@@ -30246,11 +30278,11 @@ msgstr[1] ""
 
 #: dat/comm.lua:210
 msgid "Bribe this pilot"
-msgstr ""
+msgstr "Sogok pilot ini"
 
 #: dat/comm.lua:215
 msgid "Request Fuel"
-msgstr ""
+msgstr "Minta Bahan Bakar"
 
 #.
 #. Custom stuff
@@ -30269,7 +30301,7 @@ msgstr ""
 #: dat/events/neutral/travelling_merchant.lua:480
 #: dat/missions/pirate/lucas/lucas02.lua:325
 msgid "Pay"
-msgstr ""
+msgstr "Bayar"
 
 #: dat/comm.lua:260 dat/comm.lua:323 dat/comm.lua:369 dat/comm.lua:482
 #: dat/missions/dvaered/dv_diversion.lua:74
@@ -30285,7 +30317,7 @@ msgstr ""
 #: dat/missions/pirate/lucas/lucas02.lua:135
 #: dat/missions/pirate/lucas/lucas02.lua:326 dat/spob/lua/lib/spob.lua:298
 msgid "Refuse"
-msgstr ""
+msgstr "Tolak"
 
 #: dat/comm.lua:264 dat/comm.lua:435
 msgid "You decide not to pay."
@@ -30312,15 +30344,15 @@ msgstr ""
 
 #: dat/comm.lua:419
 msgid "\"Sorry, I don't have enough fuel to spare at the moment.\""
-msgstr ""
+msgstr "\"Sorry, Aku ga punya cukup bahan bakar buat dikasihin.\""
 
 #: dat/comm.lua:423
 msgid "\"Sorry, I'm busy now.\""
-msgstr ""
+msgstr "\"Maaf, lagi sibuk.\""
 
 #: dat/comm.lua:427
 msgid "\"What part of 'on my way' don't you understand?\""
-msgstr ""
+msgstr "\"Bagian mana dari 'tunggu sebentar' yang kamu gak ngerti?\""
 
 #: dat/comm.lua:431
 msgid "Pilot is already refueling you."
@@ -30338,6 +30370,9 @@ msgid ""
 "\n"
 "You have {credits}. Pay for refueling??"
 msgstr ""
+"{msg}\n"
+"\n"
+"Kamu punya {credits}. Bayar buat isi ulang??"
 
 #: dat/comm.lua:481
 msgid "Pay #r{cost}#0 (100 fuel, {jumps:.1f} jumps)"
@@ -30357,7 +30392,7 @@ msgstr ""
 #. Provides 100 fuel
 #: dat/comm.lua:522
 msgid "\"On my way.\""
-msgstr ""
+msgstr "\"Tunggu sebentar.\""
 
 #. Provides fuel for one jump
 #. PRovides as much fuel as possible
@@ -30501,35 +30536,35 @@ msgstr ""
 #. Fades in from black
 #: dat/events/chapter1.lua:185
 msgid "For the Empire!"
-msgstr ""
+msgstr "Untuk Kekaisaran!"
 
 #: dat/events/chapter1.lua:186
 msgid "Beginning activation countdown!"
-msgstr ""
+msgstr "Memulai hitung mundur aktivasi!"
 
 #: dat/events/chapter1.lua:202
 msgid "For glory!"
-msgstr ""
+msgstr "Untuk kejayaan!"
 
 #: dat/events/chapter1.lua:203
 msgid "Counting down!"
-msgstr ""
+msgstr "Mulai menghitung mundur!"
 
 #: dat/events/chapter1.lua:219
 msgid "For science!"
-msgstr ""
+msgstr "Untuk pengetahuan!"
 
 #: dat/events/chapter1.lua:220
 msgid "Commencing procedure!"
-msgstr ""
+msgstr "Menjalankan prosedur!"
 
 #: dat/events/chapter1.lua:234
 msgid "For Sirichana!"
-msgstr ""
+msgstr "Untuk Sirichana!"
 
 #: dat/events/chapter1.lua:235
 msgid "Starting ritual!"
-msgstr ""
+msgstr "Memulai ritual!"
 
 #: dat/events/chapter1.lua:251
 msgid "Enter the maw!"
@@ -30552,13 +30587,13 @@ msgstr ""
 #. Make sure boss is last so renders on top
 #: dat/events/chapter1.lua:332
 msgid "And they built bridges across the stars…"
-msgstr ""
+msgstr "Dan mereka membuat jembatan antara bintang…"
 
 #. Show system
 #. Countdown
 #: dat/events/chapter1.lua:358
 msgid "{countdown}…"
-msgstr ""
+msgstr "{countdown}…"
 
 #. Activate hypergate with big flash
 #. Diffs should be set up so this should always go through
@@ -30571,6 +30606,8 @@ msgstr ""
 #: dat/events/chapter1.lua:523
 msgid "…unwittingly closing the distance to that which could destroy them…"
 msgstr ""
+"…tanpa menyadari bahwa mereka memperdekat diri ke yang dapat membawa "
+"kehancuran…"
 
 #. Increase visibility
 #. TODO something more omnious
@@ -30586,7 +30623,7 @@ msgstr ""
 #. Chapter 1 message
 #: dat/events/chapter1.lua:609
 msgid "CHAPTER 1"
-msgstr ""
+msgstr "BAB 1"
 
 #: dat/events/chapter1.lua:609
 msgid "The Hypergates Awaken"
@@ -30624,7 +30661,7 @@ msgstr ""
 
 #: dat/events/chapter1.lua:661
 msgid "\"A great achievement!\""
-msgstr ""
+msgstr "\"Sebuah pencapaian hebat!\""
 
 #: dat/events/chapter1.lua:662
 msgid "\"What does this mean?\""
@@ -30705,15 +30742,15 @@ msgstr ""
 
 #: dat/events/chapter1.lua:679
 msgid "\"Incident?!\""
-msgstr ""
+msgstr "\"Insiden?!\""
 
 #: dat/events/chapter1.lua:680
 msgid "\"Investigation!?\""
-msgstr ""
+msgstr "\"Investigasi!?\""
 
 #: dat/events/chapter1.lua:681
 msgid "\"Wait, what?\""
-msgstr ""
+msgstr "\"Hah?\""
 
 #: dat/events/chapter1.lua:685
 msgid ""
@@ -30721,6 +30758,9 @@ msgid ""
 "\"Long story short. I've been able to override the disable routine and "
 "reactivate the functionality!\""
 msgstr ""
+"{shipai} terlihat mengacuhkanmu sambil lanjut berbicara.\n"
+"\"Singkat cerita, aku berhasil menghentikan penonaktifnya dan merestorasi "
+"fungsinya!\""
 
 #: dat/events/chapter1.lua:690
 msgid "\"I have to keep myself busy or the voices start talking again.\""
@@ -30728,7 +30768,7 @@ msgstr ""
 
 #: dat/events/chapter1.lua:692
 msgid "\"Voices?\""
-msgstr ""
+msgstr "\"Suara?\""
 
 #: dat/events/chapter1.lua:693
 msgid "\"What did you do?\""
@@ -31330,39 +31370,39 @@ msgstr ""
 #. See if we should add maps
 #: dat/events/derelict.lua:360
 msgid "local system"
-msgstr ""
+msgstr "sistem lokal"
 
 #: dat/events/derelict.lua:361
 msgid "Empire core systems"
-msgstr ""
+msgstr "Sistem inti Kekaisaran"
 
 #: dat/events/derelict.lua:362
 msgid "Za'lek core systems"
-msgstr ""
+msgstr "Sistem inti Za'lek"
 
 #: dat/events/derelict.lua:363
 msgid "Dvaered core systems"
-msgstr ""
+msgstr "Sistem inti Dvaered"
 
 #: dat/events/derelict.lua:364
 msgid "Dvaered-Soromid trade route"
-msgstr ""
+msgstr "Jalur dagang Soromid-Dvaered"
 
 #: dat/events/derelict.lua:365
 msgid "Sirius core systems"
-msgstr ""
+msgstr "Sistem inti Sirius"
 
 #: dat/events/derelict.lua:366
 msgid "Sirian border systems"
-msgstr ""
+msgstr "Sistem perbatasan Sirius"
 
 #: dat/events/derelict.lua:367
 msgid "Frontier systems"
-msgstr ""
+msgstr "Sistem Frontir"
 
 #: dat/events/derelict.lua:368
 msgid "Imperial Nebula edge"
-msgstr ""
+msgstr "Ujung Nebula Kekaisaran"
 
 #. Make sure map names are valid
 #. There are unknown maps
@@ -31413,7 +31453,7 @@ msgstr ""
 #. Run random good event
 #: dat/events/derelict.lua:416
 msgid "Oh no!"
-msgstr ""
+msgstr "Oh tidak!"
 
 #. So the pilot doesn't end the event by dying.
 #: dat/events/derelict.lua:420
@@ -31491,7 +31531,7 @@ msgstr ""
 #: dat/events/derelict/poi.lua:50 dat/events/poi.lua:134
 #: dat/missions/neutral/poi_intro.lua:93
 msgid "Download the data"
-msgstr ""
+msgstr "Unduh datanya"
 
 #. Set up main options
 #: dat/events/derelict/poi.lua:51 dat/events/hypergate_construction.lua:197
@@ -31499,7 +31539,7 @@ msgstr ""
 #: dat/events/taiomi/system.lua:592 dat/missions/minerva/finale2.lua:251
 #: dat/missions/neutral/poi_intro.lua:94
 msgid "Leave."
-msgstr ""
+msgstr "Pergi."
 
 #: dat/events/derelict/poi.lua:56 dat/events/poi.lua:140
 msgid ""
@@ -31558,15 +31598,15 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:168
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:173
 msgid "Return to your ship"
-msgstr ""
+msgstr "Kembali ke kapalmu"
 
 #: dat/events/derelict/sirius_awakening.lua:51
 msgid "Eject the bodies to space"
-msgstr ""
+msgstr "Buang mayat-mayatnya ke luar angkasa"
 
 #: dat/events/derelict/sirius_awakening.lua:54
 msgid "Notify local Sirius authorities"
-msgstr ""
+msgstr "Laporkan ke otoritas lokal Sirius"
 
 #: dat/events/derelict/sirius_awakening.lua:61
 msgid ""
@@ -31597,7 +31637,7 @@ msgstr ""
 
 #: dat/events/derelict/sirius_awakening.lua:90
 msgid "Memory"
-msgstr ""
+msgstr "Kenangan"
 
 #: dat/events/derelict/sirius_awakening.lua:92
 msgid "You feel a light breeze caressing you."
@@ -31633,14 +31673,16 @@ msgid ""
 "\"Are you alright, {pilotname}? You usually wake up after a single electric "
 "shock, but this time you did not respond and had me worried.\""
 msgstr ""
+"\"Tidak apa-apakah kau, {pilotname}? Biasanya kamu bangun di kejutan listrik "
+"pertama, tapi kali ini kamu tak merespon yang membuatku agak khawatir.\""
 
 #: dat/events/derelict/sirius_awakening.lua:115
 msgid "\"Electric shock?\""
-msgstr ""
+msgstr "\"Kejutan listrik?\""
 
 #: dat/events/derelict/sirius_awakening.lua:116
 msgid "\"My head is killing me.\""
-msgstr ""
+msgstr "\"Kepalaku sakit banget.\""
 
 #: dat/events/derelict/sirius_awakening.lua:120
 msgid ""
@@ -31656,27 +31698,27 @@ msgstr ""
 
 #: dat/events/discovery.lua:26
 msgid "Home"
-msgstr ""
+msgstr "Rumah"
 
 #: dat/events/discovery.lua:34
 msgid "Human Made Divine"
-msgstr ""
+msgstr "Manusia Titisan Dewa"
 
 #: dat/events/discovery.lua:42
 msgid "Bastion of Knowledge"
-msgstr ""
+msgstr "Kota Benteng Pengetahuan"
 
 #: dat/events/discovery.lua:50
 msgid "New Heart of the Za'lek"
-msgstr ""
+msgstr "Jantung Baru Za'lek"
 
 #: dat/events/discovery.lua:58
 msgid "Convening of the Warlords"
-msgstr ""
+msgstr "Pertemuan Para Panglima Perang"
 
 #: dat/events/discovery.lua:64
 msgid "Remembering Sorom"
-msgstr ""
+msgstr "Mengenang Sorom"
 
 #: dat/events/discovery.lua:71
 msgid "Crater City"
@@ -31684,15 +31726,15 @@ msgstr "Kota Kawah"
 
 #: dat/events/discovery.lua:72
 msgid "Touching the Universe"
-msgstr ""
+msgstr "Menyentuh Semesta"
 
 #: dat/events/discovery.lua:78
 msgid "Ship Graveyard"
-msgstr ""
+msgstr "Kuburan Kapal"
 
 #: dat/events/discovery.lua:89
 msgid "Gambler's Paradise"
-msgstr ""
+msgstr "Surga Judi"
 
 #: dat/events/discovery.lua:97
 msgid "Brave your Fate in the #rCrimson Gauntlet#0"
@@ -31704,7 +31746,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:103
 msgid "The Old Wound That Never Heals"
-msgstr ""
+msgstr "Luka Lama yang Tak Pernah Sembuh"
 
 #: dat/events/discovery.lua:114
 msgid "They Will Never Destroy Us"
@@ -31717,11 +31759,11 @@ msgstr ""
 #. These trigger for specific factions controlled systems
 #: dat/events/discovery.lua:128
 msgid "The Za'lek Territories"
-msgstr ""
+msgstr "Teritori Za'lek"
 
 #: dat/events/discovery.lua:129
 msgid "Knowledge at All Costs"
-msgstr ""
+msgstr "Pengetahuan Apapun Resikonya"
 
 #: dat/events/discovery.lua:134
 msgid "The Dvaered Territories"
@@ -31737,7 +31779,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:141
 msgid "Human is Just an Ephemeral Condition"
-msgstr ""
+msgstr "Manusia Hanyalah Kondisi Fana"
 
 #: dat/events/discovery.lua:146
 msgid "The Sirius Territories"
@@ -31745,7 +31787,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:147
 msgid "Sirichana Will Lead the Way"
-msgstr ""
+msgstr "Sirichana Senantiasa Membimbing"
 
 #: dat/events/discovery.lua:152
 msgid "The Proteron Territories"
@@ -31753,7 +31795,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:153
 msgid "United through Sacrifice"
-msgstr ""
+msgstr "Bersatu Melalui Pengorbanan"
 
 #: dat/events/discovery.lua:159
 msgid "The Thurion Space"
@@ -31797,20 +31839,20 @@ msgstr ""
 
 #: dat/events/discovery.lua:218
 msgid "The Nebula"
-msgstr ""
+msgstr "Nebula"
 
 #: dat/events/discovery.lua:219
 msgid "Grim Reminder of Our Fragility"
-msgstr ""
+msgstr "Pengingat dari Kerapuhan Umat Manusia"
 
 #: dat/events/discovery.lua:227
 msgid "Northern Stellar Winds"
-msgstr ""
+msgstr "Angin Bintang Utara"
 
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:236
 msgid "Southern Stellar Winds"
-msgstr ""
+msgstr "Angin Bintang Selatan"
 
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:245
@@ -32840,7 +32882,7 @@ msgstr ""
 #: dat/missions/empire/collective/ec03.lua:51 src/info.c:468 src/map_find.c:354
 #, c-format, lua-format
 msgid "%s (%s)"
-msgstr ""
+msgstr "%s (%s)"
 
 #: dat/events/dvaered/totoran.lua:231 dat/events/minerva/station.lua:264
 #: dat/events/minerva/station.lua:370
@@ -37871,11 +37913,11 @@ msgstr ""
 #. Ignore non-generic factions
 #: dat/events/news.lua:281
 msgid "{pnt} in {sys}"
-msgstr ""
+msgstr "{pnt} di {sys}"
 
 #: dat/events/news.lua:283
 msgid "{cargo}: {price}"
-msgstr ""
+msgstr "{cargo}: {price}"
 
 #. Create news, expires immediately when time advances (i.e.
 #. when you take off from the planet).
@@ -43285,77 +43327,79 @@ msgstr "Pengaturan"
 
 #: dat/events/settings.lua:57
 msgid "Player Settings"
-msgstr ""
+msgstr "Pengaturan Pemain"
 
 #: dat/events/settings.lua:60
 msgid "Stop Speedup At: "
-msgstr ""
+msgstr "Hentikan Percepatan di Saat: "
 
 #: dat/events/settings.lua:64
 msgid "Enemy Presence"
-msgstr ""
+msgstr "Ada Musuh"
 
 #: dat/events/settings.lua:68
 msgid "Enemy within {dist} distance"
-msgstr ""
+msgstr "Musuh berada pada jarak {dist}"
 
 #: dat/events/settings.lua:72
 msgid "{shield:.0f}% Shield"
-msgstr ""
+msgstr "Perisai pada {shield:.0f}%"
 
 #: dat/events/settings.lua:76
 msgctxt "settings"
 msgid "Armour Damage"
-msgstr ""
+msgstr "Ada Kerusakan pada Zirah"
 
 #: dat/events/settings.lua:93
 msgid ""
 "Your current ship will have a time compression factor of #o{tc_max:.1f}x#0."
 msgstr ""
+"Kapalmu yang kau pakai saat ini akan memiliki faktor kompresi waktu sebesar "
+"#o{tc_max:.1f}x#0."
 
 #: dat/events/settings.lua:98 src/land.c:594 src/map.c:408
 msgid "Autonav"
-msgstr ""
+msgstr "Autonav"
 
 #: dat/events/settings.lua:105
 msgid "Lanes preference:"
-msgstr ""
+msgstr "Preferensi lajur:"
 
 #: dat/events/settings.lua:111
 msgid "Compression velocity target:"
-msgstr ""
+msgstr "Target kecepatan hasil kompresi:"
 
 #: dat/events/settings.lua:118
 msgid "Maximum compression:"
-msgstr ""
+msgstr "Kompresi maksimum:"
 
 #: dat/events/settings.lua:128
 msgid "Use patrol lanes when jumping"
-msgstr ""
+msgstr "Gunakan lajur patroli ketika lompat"
 
 #: dat/events/settings.lua:130
 msgid "Use patrol lanes when travelling to a space object"
-msgstr ""
+msgstr "Gunakan lajur patroli ketika menuju objek angkasa"
 
 #: dat/events/settings.lua:132
 msgid "Match speed with slowest ship in fleet"
-msgstr ""
+msgstr "Samakan kecepatan dengan kapal terpelan di armada"
 
 #: dat/events/settings.lua:134
 msgid "Jump to follow pilots"
-msgstr ""
+msgstr "Lompat untuk terus mengikuti pilot lain"
 
 #: dat/events/settings.lua:136
 msgid "Brake when heading to a position"
-msgstr ""
+msgstr "Rem ketika menuju suatu posisi"
 
 #: dat/events/settings.lua:139 src/outfit.c:1099 src/outfit.c:1135
 msgid "GUI"
-msgstr ""
+msgstr "GUI"
 
 #: dat/events/settings.lua:141
 msgid "Pick GUI"
-msgstr ""
+msgstr "Pilih GUI"
 
 #. Restore defaults button.
 #: dat/events/settings.lua:143 src/options.c:299 src/options.c:591
@@ -43374,12 +43418,12 @@ msgstr ""
 #. Save as variables
 #: dat/events/settings.lua:204
 msgid "Select GUI"
-msgstr ""
+msgstr "Pilih GUI"
 
 #: dat/events/settings.lua:219 src/dev_mapedit.c:727 src/load.c:682
 #: src/load.c:785 src/menu.c:462
 msgid "Load"
-msgstr ""
+msgstr "Muat"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -77392,11 +77436,11 @@ msgstr ""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:33
 msgid "Paddy"
-msgstr ""
+msgstr "Paddy"
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:37
 msgid "Michal"
-msgstr ""
+msgstr "Michal"
 
 #. No system shall be claimed by mission
 #: dat/missions/neutral/foodbiz/delivercake.lua:42
@@ -77538,7 +77582,7 @@ msgstr ""
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:47
 msgid "Young Woman"
-msgstr ""
+msgstr "Wanita Muda"
 
 #. No system shall be claimed by mission
 #: dat/missions/neutral/foodbiz/deliverlove.lua:53
@@ -77672,7 +77716,7 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_00.lua:134
 #: dat/missions/neutral/kidnapped/traffic_00.lua:202
 msgid "Kidnapped"
-msgstr ""
+msgstr "Diculik"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:51
 msgid "A Reunited Family"
@@ -78078,7 +78122,7 @@ msgstr ""
 #. Add the cargo
 #: dat/missions/neutral/majesteka_stowaways.lua:39
 msgid "Orphans"
-msgstr ""
+msgstr "Anak Piatu"
 
 #: dat/missions/neutral/majesteka_stowaways.lua:39
 msgid "A pair of orphans looking for a better life."
@@ -78370,7 +78414,7 @@ msgstr ""
 #. Add cargo
 #: dat/missions/neutral/nebu_satellite.lua:106
 msgid "Satellite"
-msgstr ""
+msgstr "Satelit"
 
 #: dat/missions/neutral/nebu_satellite.lua:106
 msgid ""
@@ -78384,7 +78428,7 @@ msgstr ""
 #: dat/missions/neutral/nebu_satellite.lua:118
 #: dat/missions/neutral/nebu_satellite.lua:185
 msgid "Nebula Satellite"
-msgstr ""
+msgstr "Satelit Nebula"
 
 #: dat/missions/neutral/nebu_satellite.lua:112
 #: dat/missions/neutral/nebu_satellite.lua:118
@@ -78768,7 +78812,7 @@ msgstr ""
 #. Set mission details
 #: dat/missions/neutral/patrol.lua:165 dat/missions/pirate/patrol.lua:63
 msgid "Patrol of the {sys} System"
-msgstr ""
+msgstr "Patroli Sistem {sys}"
 
 #: dat/missions/neutral/patrol.lua:167
 msgid ""
@@ -78797,7 +78841,7 @@ msgstr[1] ""
 
 #: dat/missions/neutral/patrol.lua:199 dat/missions/neutral/patrol.lua:332
 msgid "Patrol"
-msgstr ""
+msgstr "Patroli"
 
 #. Matching faction is always OK
 #. Special case static factions we look for non-hostiles
@@ -79005,7 +79049,7 @@ msgstr ""
 #: dat/missions/neutral/poi/data_intro.lua:27
 #: dat/missions/neutral/poi/proteron_agent.lua:36
 msgid "01"
-msgstr ""
+msgstr "01"
 
 #: dat/missions/neutral/poi/data_intro.lua:30
 msgid "BEGIN PLAYBACK OF AUDIO DATA"
@@ -79272,7 +79316,7 @@ msgstr ""
 
 #: dat/missions/neutral/poi/proteron_agent.lua:37
 msgid "02"
-msgstr ""
+msgstr "02"
 
 #: dat/missions/neutral/poi/proteron_agent.lua:44
 msgid "BEGIN PLAYBACK OF AUDIO DATA ##1892"
@@ -79547,15 +79591,15 @@ msgstr ""
 
 #: dat/missions/neutral/poi/proteron_press.lua:76
 msgid "\"3...\""
-msgstr ""
+msgstr "\"3...\""
 
 #: dat/missions/neutral/poi/proteron_press.lua:77
 msgid "\"2...\""
-msgstr ""
+msgstr "\"2...\""
 
 #: dat/missions/neutral/poi/proteron_press.lua:78
 msgid "\"1...\""
-msgstr ""
+msgstr "\"1...\""
 
 #: dat/missions/neutral/poi/proteron_press.lua:80
 msgid "\"Haha, just my little joke!\""
@@ -80146,7 +80190,7 @@ msgstr ""
 #: dat/missions/neutral/poi_intro.lua:515 dat/scripts/common/poi.lua:129
 #: dat/scripts/common/poi.lua:286
 msgid "Sensor Anomaly"
-msgstr ""
+msgstr "Anomali Sensor"
 
 #: dat/missions/neutral/poi_intro.lua:135
 msgid "Improve your ship's systems"
@@ -80301,20 +80345,20 @@ msgstr ""
 #: dat/missions/neutral/poi_intro.lua:268 dat/scripts/common/tut_nelly.lua:13
 #: dat/scripts/common/tut_nelly.lua:27
 msgid "Nelly"
-msgstr ""
+msgstr "Nelly"
 
 #: dat/missions/neutral/poi_intro.lua:269
 #: dat/missions/neutral/poi_intro.lua:320
 msgid "Nemesis"
-msgstr ""
+msgstr "Nemesis"
 
 #: dat/missions/neutral/poi_intro.lua:274
 msgid "Llaminator MK3"
-msgstr ""
+msgstr "Llaminator MK3"
 
 #: dat/missions/neutral/poi_intro.lua:276 dat/missions/tutorial/nelly02.lua:239
 msgid "Llaminator MK2"
-msgstr ""
+msgstr "Llaminator MK2"
 
 #. Spawn ship
 #. Get closest jump to player, should be robust to player.teleport
@@ -80771,7 +80815,7 @@ msgstr ""
 #: dat/missions/neutral/race1.lua:227 dat/missions/neutral/race2.lua:249
 #: dat/missions/neutral/race2.lua:252
 msgid "You Won!"
-msgstr ""
+msgstr "Kamu Menang!"
 
 #: dat/missions/neutral/race1.lua:227
 msgid ""
@@ -80827,15 +80871,15 @@ msgstr ""
 
 #: dat/missions/neutral/race2.lua:59
 msgid "Easy"
-msgstr ""
+msgstr "Mudah"
 
 #: dat/missions/neutral/race2.lua:59
 msgid "Hard"
-msgstr ""
+msgstr "Sulit"
 
 #: dat/missions/neutral/race2.lua:62
 msgid "Easy Mode "
-msgstr ""
+msgstr "Mode Mudah "
 
 #: dat/missions/neutral/race2.lua:62
 msgid "\"Let's go have some fun then!\""
@@ -80843,7 +80887,7 @@ msgstr ""
 
 #: dat/missions/neutral/race2.lua:65
 msgid "Hard Mode"
-msgstr ""
+msgstr "Mode Sulit"
 
 #: dat/missions/neutral/race2.lua:65
 msgid ""
@@ -80912,7 +80956,7 @@ msgstr ""
 #. TODO something better
 #: dat/missions/neutral/race_qex.lua:82
 msgid "Racing Terminal"
-msgstr ""
+msgstr "Terminal Balap"
 
 #: dat/missions/neutral/race_qex.lua:86
 msgid "{1:02.0f}:{2:02.0f}.{3:.0f}"
@@ -80987,7 +81031,7 @@ msgstr ""
 #. txt = txt.."#n".._("Name: ").."#0"     ..track.name.."\n"
 #: dat/missions/neutral/race_qex.lua:152
 msgid "Length: "
-msgstr ""
+msgstr "Jarak: "
 
 #: dat/missions/neutral/race_qex.lua:153
 msgid "Goal Time: "
@@ -80995,11 +81039,11 @@ msgstr ""
 
 #: dat/missions/neutral/race_qex.lua:154
 msgid "Reward: "
-msgstr ""
+msgstr "Hadiah: "
 
 #: dat/missions/neutral/race_qex.lua:156 dat/missions/neutral/race_qex.lua:162
 msgid "Best Time: "
-msgstr ""
+msgstr "Waktu Terbaik: "
 
 #: dat/missions/neutral/race_qex.lua:175
 msgid "Endless Riches!"
@@ -81096,7 +81140,7 @@ msgstr ""
 #. --
 #: dat/missions/neutral/reynir.lua:50 dat/missions/neutral/reynir.lua:109
 msgid "Reynir"
-msgstr ""
+msgstr "Reynir"
 
 #. Note: this mission does not make any system claims.
 #: dat/missions/neutral/reynir.lua:56
@@ -93667,11 +93711,11 @@ msgstr ""
 
 #: dat/missions/taiomi/taiomi09.lua:101
 msgid "Knock."
-msgstr ""
+msgstr "Ketuk."
 
 #: dat/missions/taiomi/taiomi09.lua:102
 msgid "Barge in."
-msgstr ""
+msgstr "Dobrak masuk."
 
 #: dat/missions/taiomi/taiomi09.lua:107
 msgid ""
@@ -93869,7 +93913,7 @@ msgstr ""
 
 #: dat/missions/taiomi/taiomi09.lua:280
 msgid "Return to {spob} ({sys})"
-msgstr ""
+msgstr "Kembali ke {spob} ({sys})"
 
 #. dynamic faction gives no faction hits, good I guess?
 #. positions chosen so that hopefully the player doesn't fight them all at once
@@ -115025,7 +115069,7 @@ msgstr ""
 
 #: src/conf.c:1039
 msgid "Disable all sound"
-msgstr ""
+msgstr "Matikan semua suara"
 
 #: src/conf.c:1044
 msgid "Volume of sound effects and music, between 0.0 and 1.0"
@@ -115235,7 +115279,7 @@ msgstr ""
 #. Create the window.
 #: src/console.c:692 src/input.c:161
 msgid "Lua Console"
-msgstr ""
+msgstr "Konsol Lua"
 
 #: src/damagetype.c:85 src/difficulty.c:51 src/event.c:667 src/slots.c:65
 #: src/spfx.c:190 src/start.c:66
@@ -115309,7 +115353,7 @@ msgstr ""
 
 #: src/debug.c:81
 msgid "SIGFPE"
-msgstr ""
+msgstr "SIGFPE"
 
 #: src/debug.c:87
 msgid "SIGSEGV (raised by program)"
@@ -115325,7 +115369,7 @@ msgstr ""
 
 #: src/debug.c:98
 msgid "SIGSEGV"
-msgstr ""
+msgstr "SIGSEGV"
 
 #: src/debug.c:104
 msgid "SIGABRT (raised by program)"
@@ -115333,7 +115377,7 @@ msgstr ""
 
 #: src/debug.c:107
 msgid "SIGABRT"
-msgstr ""
+msgstr "SIGABRT"
 
 #: src/debug.c:116
 #, c-format
@@ -115621,7 +115665,7 @@ msgstr ""
 
 #: src/dev_sysedit.c:1502
 msgid "Lua"
-msgstr ""
+msgstr "Lua"
 
 #: src/dev_sysedit.c:1510
 msgid "Base Presence"
@@ -115850,7 +115894,7 @@ msgstr ""
 
 #: src/dev_uniedit.c:242
 msgid "Save All"
-msgstr ""
+msgstr "Simpan Semua"
 
 #: src/dev_uniedit.c:248
 msgid "View Mode"
@@ -116005,7 +116049,7 @@ msgstr ""
 #: src/dev_uniedit.c:1856 src/land.c:854
 #, c-format
 msgid "%s (%s system)"
-msgstr ""
+msgstr "%s (sistem %s)"
 
 #: src/dev_uniedit.c:1985
 msgid "Star System Property Editor"
@@ -116018,7 +116062,7 @@ msgstr ""
 #. Add general stats
 #: src/dev_uniedit.c:2009
 msgid "Radius"
-msgstr ""
+msgstr "Radius"
 
 #: src/dev_uniedit.c:2015
 msgid "(Scales spob positions)"
@@ -116026,11 +116070,11 @@ msgstr ""
 
 #: src/dev_uniedit.c:2040
 msgid "Nebula"
-msgstr ""
+msgstr "Nebula"
 
 #: src/dev_uniedit.c:2047
 msgid "Volatility"
-msgstr ""
+msgstr "Volatilitas"
 
 #: src/dev_uniedit.c:2054
 msgid "Hue"
@@ -116119,7 +116163,7 @@ msgstr ""
 #: src/difficulty.c:204
 #, c-format
 msgid "Difficulty %s"
-msgstr ""
+msgstr "Kesulitan %s"
 
 #: src/difficulty.c:209
 msgid "This difficulty applies the following effect to the player ships:"
@@ -123134,15 +123178,15 @@ msgstr ""
 
 #: src/player.c:4798
 msgid "Unable to stealth: missiles locked on!"
-msgstr ""
+msgstr "Tidak dapat bersembunyi: misil terkunci kepada kapalmu!"
 
 #: src/player.c:4801
 msgid "Unable to stealth: other pilots nearby!"
-msgstr ""
+msgstr "Tidak dapat bersembunyi: pilot lain terlalu dekat!"
 
 #: src/player_autonav.c:114
 msgid "Not enough fuel to jump for autonav."
-msgstr ""
+msgstr "Tak cukup bahan bakar untuk lompatan autonav."
 
 #: src/player_autonav.c:309
 msgid "Autonav: aborting hyperspace sequence."
@@ -123150,7 +123194,7 @@ msgstr ""
 
 #: src/player_fleet.c:57
 msgid "Not Enough Cargo Space"
-msgstr ""
+msgstr "Tidak Cukup Ruang Kargo"
 
 #: src/player_fleet.c:58
 #, c-format
@@ -123177,7 +123221,7 @@ msgstr ""
 #: src/plugin.c:48
 #, c-format
 msgid "Plugin '%s' has no name!"
-msgstr ""
+msgstr "Plugin '%s' tidak memiliki nama!"
 
 #: src/plugin.c:97
 #, c-format
@@ -123458,15 +123502,15 @@ msgstr ""
 
 #: src/shipstats.c:97
 msgid "Cargo Space"
-msgstr ""
+msgstr "Ruang Kargo"
 
 #: src/shipstats.c:98
 msgid "Fuel Cpacity"
-msgstr ""
+msgstr "Kapasitas Bahan Bakar"
 
 #: src/shipstats.c:99
 msgid "Fuel Usage"
-msgstr ""
+msgstr "Penggunaan Bahan Bakar"
 
 #: src/shipstats.c:100
 msgid "Armour Strength"
@@ -123486,15 +123530,15 @@ msgstr ""
 
 #: src/shipstats.c:106 src/shipstats.c:183
 msgid "Energy Capacity"
-msgstr ""
+msgstr "Kapasitas Energi"
 
 #: src/shipstats.c:108 src/shipstats.c:184
 msgid "Energy Regeneration"
-msgstr ""
+msgstr "Regenerasi Energi"
 
 #: src/shipstats.c:109 src/shipstats.c:203
 msgid "CPU Capacity"
-msgstr ""
+msgstr "Kapasitas CPU"
 
 #: src/shipstats.c:110
 msgid "Ability Cooldown"
@@ -123502,43 +123546,43 @@ msgstr ""
 
 #: src/shipstats.c:112
 msgid "Jump Time"
-msgstr ""
+msgstr "Waktu Melompat"
 
 #: src/shipstats.c:113
 msgid "Landing Time"
-msgstr ""
+msgstr "Waktu Mendarat"
 
 #: src/shipstats.c:114
 msgid "Cargo Inertia"
-msgstr ""
+msgstr "Inersia Kargo"
 
 #: src/shipstats.c:116
 msgid "Detected Range"
-msgstr ""
+msgstr "Jarak Terdeteksi"
 
 #: src/shipstats.c:117
 msgid "Signature Range"
-msgstr ""
+msgstr "Jarak Tertanda"
 
 #: src/shipstats.c:118
 msgid "Stealth Range"
-msgstr ""
+msgstr "Jarak Sembunyi"
 
 #: src/shipstats.c:119
 msgid "Detection"
-msgstr ""
+msgstr "Deteksi"
 
 #: src/shipstats.c:121
 msgid "Jump Detection"
-msgstr ""
+msgstr "Deteksi Lompat"
 
 #: src/shipstats.c:123
 msgid "Stealth Discovered Speed"
-msgstr ""
+msgstr "Kecepatan Penemuan Sembunyi"
 
 #: src/shipstats.c:124
 msgid "Scanned Speed"
-msgstr ""
+msgstr "Kecepatan Terpindai"
 
 #: src/shipstats.c:126
 msgid "Fire Rate (Launcher)"
@@ -123554,7 +123598,7 @@ msgstr ""
 
 #: src/shipstats.c:129
 msgid "Ammo Capacity"
-msgstr ""
+msgstr "Kapasitas Amunisi"
 
 #: src/shipstats.c:130
 msgid "Launch Lock-on"
@@ -123638,11 +123682,11 @@ msgstr ""
 
 #: src/shipstats.c:164
 msgid "Heat Dissipation"
-msgstr ""
+msgstr "Disipasi Panas"
 
 #: src/shipstats.c:166
 msgid "Stress Dissipation"
-msgstr ""
+msgstr "Disipasi Ketegangan"
 
 #: src/shipstats.c:167 src/shipstats.c:221
 msgid "Crew"
@@ -123650,11 +123694,11 @@ msgstr "Kru"
 
 #: src/shipstats.c:168
 msgid "Ship Mass"
-msgstr ""
+msgstr "Massa Kapal"
 
 #: src/shipstats.c:170 src/shipstats.c:204
 msgid "Engine Mass Limit"
-msgstr ""
+msgstr "Batas Massa Mesin"
 
 #: src/shipstats.c:171
 msgid "Boarding Bonus"
@@ -123662,11 +123706,11 @@ msgstr ""
 
 #: src/shipstats.c:172
 msgid "Time Constant"
-msgstr ""
+msgstr "Konstanta Waktu"
 
 #: src/shipstats.c:173
 msgid "Action Speed"
-msgstr ""
+msgstr "Kecepatan Aksi"
 
 #: src/shipstats.c:175
 msgid "Ship Cooldown Time"
@@ -123674,7 +123718,7 @@ msgstr ""
 
 #: src/shipstats.c:176
 msgid "Jump Distance"
-msgstr ""
+msgstr "Jarak Lompatan"
 
 #: src/shipstats.c:177
 msgid "Jump Warmup"
@@ -123682,7 +123726,7 @@ msgstr ""
 
 #: src/shipstats.c:178
 msgid "Mining Bonus"
-msgstr ""
+msgstr "Bonus Tambang"
 
 #: src/shipstats.c:181
 msgid "Turn Rate"
@@ -123690,11 +123734,11 @@ msgstr ""
 
 #: src/shipstats.c:182
 msgid "Maximum Speed"
-msgstr ""
+msgstr "Kecepatan Maksimum"
 
 #: src/shipstats.c:187 src/shipstats.c:188
 msgid "Energy Usage"
-msgstr ""
+msgstr "Penggunaan Energi"
 
 #: src/shipstats.c:190
 msgid "Shield Capacity"
@@ -123706,23 +123750,23 @@ msgstr ""
 
 #: src/shipstats.c:206
 msgid "Fuel Regeneration"
-msgstr ""
+msgstr "Regenerasi Bahan Bakar"
 
 #: src/shipstats.c:209
 msgid "Asteroid Scanner Range"
-msgstr ""
+msgstr "Jangkauan Pemindai Asteroid"
 
 #: src/shipstats.c:211
 msgid "Nebula Visibility"
-msgstr ""
+msgstr "Visibilitas Nebula"
 
 #: src/shipstats.c:213
 msgid "Damage Absorption"
-msgstr ""
+msgstr "Absorpsi Kerusakan"
 
 #: src/shipstats.c:215
 msgid "Nebula Resistance"
-msgstr ""
+msgstr "Resistensi Nebula"
 
 #: src/shipstats.c:217
 msgid "Missile jamming chance"
@@ -123730,15 +123774,15 @@ msgstr ""
 
 #: src/shipstats.c:224
 msgid "Hidden Jump Detection"
-msgstr ""
+msgstr "Deteksi Titik Lompat Tersembunyi"
 
 #: src/shipstats.c:225
 msgid "Instant Jump"
-msgstr ""
+msgstr "Lompatan Instan"
 
 #: src/shipstats.c:227
 msgid "Reverse Thrusters"
-msgstr ""
+msgstr "Pendorong Balik"
 
 #: src/shipstats.c:461
 #, c-format
@@ -123843,7 +123887,7 @@ msgstr ""
 
 #: src/sound.c:628
 msgid "Sound disabled."
-msgstr ""
+msgstr "Suara dimatikan."
 
 #: src/sound.c:635
 msgid "Unable to create voice mutex."
@@ -123855,7 +123899,7 @@ msgstr ""
 
 #: src/sound.c:654
 msgid "Music disabled."
-msgstr ""
+msgstr "Musik dimatikan."
 
 #: src/sound.c:770
 #, c-format
@@ -123969,11 +124013,11 @@ msgstr ""
 
 #: src/space.c:175
 msgid "Inhabited"
-msgstr ""
+msgstr "Dihuni"
 
 #: src/space.c:177
 msgid "Refuel"
-msgstr ""
+msgstr "Pengisian Bahan Bakar"
 
 #: src/space.c:189
 msgid "Blackmarket"
@@ -123981,27 +124025,27 @@ msgstr ""
 
 #: src/space.c:229
 msgid "Civilian Station"
-msgstr ""
+msgstr "Stasiun Sipil"
 
 #: src/space.c:231
 msgid "Military Station"
-msgstr ""
+msgstr "Stasiun Militer"
 
 #: src/space.c:233
 msgid "Pirate Station"
-msgstr ""
+msgstr "Stasiun Perompak"
 
 #: src/space.c:235
 msgid "Robotic Station"
-msgstr ""
+msgstr "Stasiun Robotik"
 
 #: src/space.c:237
 msgid "Artificial Ecosystem"
-msgstr ""
+msgstr "Ekosistem Buatan"
 
 #: src/space.c:239
 msgid "Geothermal"
-msgstr ""
+msgstr "Geotermal"
 
 #: src/space.c:241
 msgid "Geomorteus"
@@ -124013,7 +124057,7 @@ msgstr ""
 
 #: src/space.c:245
 msgid "Asteroid/Moon"
-msgstr ""
+msgstr "Asteroid/Bulan"
 
 #: src/space.c:247
 msgid "Geoplastic"
@@ -124021,15 +124065,15 @@ msgstr ""
 
 #: src/space.c:249
 msgid "Geometallic"
-msgstr ""
+msgstr "Geometalik"
 
 #: src/space.c:251
 msgid "Geocrystaline"
-msgstr ""
+msgstr "Geokristalin"
 
 #: src/space.c:253
 msgid "Desert"
-msgstr ""
+msgstr "Gurun"
 
 #: src/space.c:255
 msgid "Gas Supergiant"
@@ -124177,11 +124221,11 @@ msgstr ""
 #: src/space.c:1525
 #, c-format
 msgid "You discovered #%c%s#0."
-msgstr ""
+msgstr "Kamu menemukan #%c%s#0."
 
 #: src/space.c:1554
 msgid "You discovered a Jump Point."
-msgstr ""
+msgstr "Kamu menemukan sebuah Titik Lompat."
 
 #: src/space.c:1637
 msgid "Cannot reinit system if there is no system previously loaded"
@@ -124195,7 +124239,7 @@ msgstr ""
 #: src/space.c:1646
 #, c-format
 msgid "#oEntering System %s on %s."
-msgstr ""
+msgstr "#oMemasuki Sistem %s pada %s."
 
 #: src/space.c:1648
 #, c-format
