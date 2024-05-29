@@ -186,8 +186,11 @@ static int gltf_loadTexture( Texture *otex, const cgltf_texture_view *ctex,
 {
    const SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
    GLuint                    tex;
-   SDL_Surface              *surface   = NULL;
-   int                       has_alpha = 0;
+   SDL_Surface              *surface = NULL;
+   int                       has_alpha;
+#ifdef HAVE_NAEV
+   has_alpha = 0;
+#endif /* HAVE_NAEV */
 
    /* Must haev texture to load it. */
    if ( ( ctex == NULL ) || ( ctex->texture == NULL ) ) {
@@ -1135,9 +1138,10 @@ GltfObject *gltf_loadFromFile( const char *filename )
    obj->scene_engine = -1;
    for ( size_t s = 0; s < obj->nscenes; s++ ) {
       /* Load nodes. */
-      cgltf_scene *cscene = &data->scenes[s]; /* data->scene may be NULL */
-      Scene       *scene  = &obj->scenes[s];
-      scene->name         = strdup( cscene->name );
+      const cgltf_scene *cscene =
+         &data->scenes[s]; /* data->scene may be NULL */
+      Scene *scene = &obj->scenes[s];
+      scene->name  = strdup( cscene->name );
       if ( strcmp( scene->name, "body" ) == 0 )
          obj->scene_body = s;
       else if ( strcmp( scene->name, "engine" ) == 0 )
@@ -1203,11 +1207,11 @@ static void gltf_freeNode( Node *node )
 static void gltf_freeTex( Texture *tex )
 {
    /* Don't have to free default textures. */
-   if ( tex->tex == tex_zero.tex || tex->tex == tex_ones.tex )
+   if ( ( tex == NULL ) || ( tex->tex == tex_zero.tex ) ||
+        ( tex->tex == tex_ones.tex ) )
       return;
 
-   if ( tex )
-      glDeleteTextures( 1, &tex->tex );
+   glDeleteTextures( 1, &tex->tex );
    gl_checkErr();
 }
 
