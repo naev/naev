@@ -32,11 +32,11 @@
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
-local portrait = require "portrait"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 local vn = require "vn"
 local vntk = require "vntk"
+local vni = require "vnimage"
 local ccomm = require "common.comm"
 local pilotai = require "pilotai"
 
@@ -622,7 +622,7 @@ function land()
          mem.know = 2
       end
       mem.mynpc_name = _("Shifty Person")
-      mem.mynpc_portrait = portrait.get("Pirate")
+      mem.mynpc_image, mem.mynpc_portrait = vni.pirate()
       mem.mynpc = misn.npcAdd("clue_bar", mem.mynpc_name, mem.mynpc_portrait, _("This person might be an outlaw, a pirate, or even worse, a bounty hunter. You normally wouldn't want to get close to this kind of person, but they may be a useful source of information."))
 
    -- Player wants to be paid
@@ -640,7 +640,7 @@ end
 function clue_bar()
    vn.clear()
    vn.scene()
-   local p = vn.newCharacter( mem.mynpc_name, {image=portrait.getFullPath(mem.mynpc_portrait)} )
+   local p = vn.newCharacter( mem.mynpc_name, {image=mem.mynpc_image} )
    vn.transition()
 
    if mem.cursys+1 >= mem.nbsys then -- No more claimed system : need to finish the mission
