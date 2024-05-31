@@ -31,14 +31,13 @@
 local fleet = require "fleet"
 local fmt = require "format"
 --local pir = require "common.pirate"
-local portrait = require "portrait"
 local vn = require "vn"
 local lmisn = require "lmisn"
 local vntk = require "vntk"
+local vni = require "vnimage"
 
 local npc_name = _("Pirate Lord")
-local npc_portrait = portrait.getMil("Pirate")
-local npc_image = portrait.getFullPath( npc_portrait )
+local npc_image, npc_portrait = vni.pirate()
 
 function create ()
    -- Note: this mission does not make any system claims.
