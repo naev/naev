@@ -37,22 +37,23 @@
 
 local tut      = require 'common.tutorial'
 local fmt      = require "format"
-local portrait = require "portrait"
 local vn       = require 'vn'
 local vntk     = require 'vntk'
+local vni      = require "vnimage"
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
 local ai_setup = require "ai.core.setup"
 local baron    = require "common.baron"
 local love_shaders = require "love_shaders"
+local portrait = require "portrait"
 
 local agentPort = "dvaered/dv_military_m2.webp"
 local BBB1Port = "pirate/pirate4.webp"
 local BBB2Port = "pirate/pirate6.webp"
-local npc1 = portrait.get()
-local npc2 = portrait.get()
-local npc3 = portrait.get()
-local npc4 = portrait.get()
+local npc1img, npc1por = vni.get()
+local npc2img, npc2por = vni.get()
+local npc3img, npc3por = vni.get()
+local npc4img, npc4por = vni.get()
 
 local gangs = { _("Big Bang Band"), -- gang of Blue Belly Billy
                 _("Cringe Crew"),
@@ -367,11 +368,11 @@ end
 
 -- NPCs at bar
 function land_state1()
-   misn.npcAdd("biker1", _("Hyena Biker"), npc1, _("A Hyena pilot."))
-   misn.npcAdd("biker2", _("Hyena Biker"), npc2, _("A Hyena pilot."))
-   misn.npcAdd("biker3", _("Hyena Biker"), npc3, _("A Hyena pilot."))
+   misn.npcAdd("biker1", _("Hyena Biker"), npc1por, _("A Hyena pilot."))
+   misn.npcAdd("biker2", _("Hyena Biker"), npc2por, _("A Hyena pilot."))
+   misn.npcAdd("biker3", _("Hyena Biker"), npc3por, _("A Hyena pilot."))
    misn.npcAdd("bbb1", _("Hyena Biker"), BBB1Port, _("A Hyena pilot.")) -- bbb1 unlocks the challenge "Hallway to Hell"
-   misn.npcAdd("biker4", _("Hyena Biker"), npc4, _("A Hyena pilot."))
+   misn.npcAdd("biker4", _("Hyena Biker"), npc4por, _("A Hyena pilot."))
 end
 function land_state3()
    misn.npcAdd("bbb1bis", _("Big Bunny Benny"), BBB1Port, _("A member of the Big Bang Band"))
@@ -400,7 +401,7 @@ end
 function biker1()
    vn.clear()
    vn.scene()
-   local biker = vn.newCharacter( _("Hyena Biker"), { image=portrait.getFullPath(npc1) } )
+   local biker = vn.newCharacter( _("Hyena Biker"), { image=npc1img } )
    vn.transition()
    biker(_([["The Hyena is much more than just an interceptor. It's a way of life: speed, adrenalin, and leather jackets. That ship is awesome and unforgiving: any error can be fatal when you fly it out there."]]))
    vn.done()
@@ -409,7 +410,7 @@ end
 function biker2()
    vn.clear()
    vn.scene()
-   local biker = vn.newCharacter( _("Hyena Biker"), { image=portrait.getFullPath(npc2) } )
+   local biker = vn.newCharacter( _("Hyena Biker"), { npc2img } )
    vn.transition()
    biker(_([["You came for the festival? What gang do you belong to? You don't wear any gang jacket."]]))
    vn.done()
@@ -418,7 +419,7 @@ end
 function biker3()
    vn.clear()
    vn.scene()
-   local biker = vn.newCharacter( _("Hyena Biker"), { image=portrait.getFullPath(npc3) } )
+   local biker = vn.newCharacter( _("Hyena Biker"), { npc3img } )
    vn.transition()
    biker(_([["Of course, we are gangs! We make tons of totally criminal stuff! One day, I even parked my Hyena at a spot reserved for delivery ships!"]]))
    vn.done()
@@ -427,7 +428,7 @@ end
 function biker4()
    vn.clear()
    vn.scene()
-   local biker = vn.newCharacter( _("Hyena Biker"), { image=portrait.getFullPath(npc4) } )
+   local biker = vn.newCharacter( _("Hyena Biker"), { npc4img } )
    vn.transition()
    biker(_([["Me and my buddies will show an incredible Hyena trick at this cycle's festival: two Hyenas fly side by side at full speed, then both pilots eject from their ship and enter the other one. I'm with the Stabbers Gang."]]))
    vn.done()
