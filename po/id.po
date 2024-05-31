@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-05-30 12:51+0900\n"
-"PO-Revision-Date: 2024-05-29 19:09+0000\n"
+"PO-Revision-Date: 2024-05-31 15:09+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
-"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/"
-">\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
+"\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1011,7 +1011,7 @@ msgstr "MULE"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr "PENGAMAN"
+msgstr "PASIFIR"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
@@ -6075,12 +6075,12 @@ msgstr ""
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
-msgstr ""
+msgstr "Android Perebut Kapal MK1"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:4
 #: dat/outfits/utility/boarding_androids_mk2.xml:4
 msgid "Boarding Androids"
-msgstr ""
+msgstr "Android Perebut Kapal"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:9
 msgid ""
@@ -6092,7 +6092,7 @@ msgstr ""
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:2
 msgid "Boarding Androids MK2"
-msgstr ""
+msgstr "Android Perebut Kapal MK2"
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:9
 msgid ""
@@ -6103,7 +6103,7 @@ msgstr ""
 
 #: dat/outfits/utility/camouflage_burster.xml:2
 msgid "Camouflage Burster"
-msgstr ""
+msgstr "Pemecah Kamuflase"
 
 #: dat/outfits/utility/camouflage_burster.xml:4
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:4
@@ -7495,7 +7495,7 @@ msgstr ""
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:2
 msgid "Dvaered Ancestor"
-msgstr ""
+msgstr "Ansestor Dvaered"
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:18
 #: dat/ships/dvaered/dvaered_vendetta.xml:19
@@ -7605,7 +7605,7 @@ msgstr ""
 
 #: dat/ships/empire/empire_admonisher.xml:2
 msgid "Empire Admonisher"
-msgstr ""
+msgstr "Admoniser Kekaisaran"
 
 #: dat/ships/empire/empire_admonisher.xml:17
 #: dat/ships/empire/empire_hawking.xml:18
@@ -7664,7 +7664,7 @@ msgstr ""
 
 #: dat/ships/empire/empire_pacifier.xml:2
 msgid "Empire Pacifier"
-msgstr ""
+msgstr "Pasifir Kekaisaran"
 
 #: dat/ships/empire/empire_pacifier.xml:18
 msgid "You need at least 50% reputation with the Empire."
@@ -8088,7 +8088,7 @@ msgstr ""
 
 #: dat/ships/neutral/pacifier.xml:2
 msgid "Pacifier"
-msgstr "Pengaman"
+msgstr "Pasifir"
 
 #: dat/ships/neutral/pacifier.xml:16
 msgid ""
@@ -8222,7 +8222,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_admonisher.xml:2
 msgid "Pirate Admonisher"
-msgstr ""
+msgstr "Admoniser Perompak"
 
 #: dat/ships/pirate/pirate_admonisher.xml:17
 #: dat/ships/pirate/pirate_ancestor.xml:14 dat/ships/pirate/pirate_hyena.xml:15
@@ -8245,7 +8245,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_ancestor.xml:2
 msgid "Pirate Ancestor"
-msgstr ""
+msgstr "Ansestor Perompak"
 
 #: dat/ships/pirate/pirate_ancestor.xml:15
 msgid ""
@@ -9840,7 +9840,7 @@ msgstr ""
 
 #: dat/spob/allous_citadel.xml:2
 msgid "Allous Citadel"
-msgstr ""
+msgstr "Sitadel Alous"
 
 #: dat/spob/allous_citadel.xml:24
 msgid ""
@@ -9862,15 +9862,15 @@ msgstr ""
 
 #: dat/spob/allous_gg3.xml:2
 msgid "Allous GG-3"
-msgstr "Allous GG-3"
+msgstr "Alous GG-3"
 
 #: dat/spob/allous_i.xml:2
 msgid "Allous I"
-msgstr "Allous I"
+msgstr "Alous I"
 
 #: dat/spob/allous_ii.xml:2
 msgid "Allous II"
-msgstr "Allous II"
+msgstr "Alous II"
 
 #: dat/spob/alpha_aquilea.xml:2
 msgid "Alpha Aquilea"
@@ -10204,11 +10204,11 @@ msgstr ""
 
 #: dat/spob/anger_i.xml:2
 msgid "Anger I"
-msgstr ""
+msgstr "Amarah I"
 
 #: dat/spob/anger_ii.xml:2
 msgid "Anger II"
-msgstr ""
+msgstr "Amarah II"
 
 #: dat/spob/anger_ii.xml:9 dat/spob/anku_ii.xml:9 dat/spob/apez_v.xml:9
 #: dat/spob/baf_iv.xml:9 dat/spob/doormat.xml:15 dat/spob/draygar_iii.xml:9
@@ -10508,7 +10508,7 @@ msgstr ""
 
 #: dat/spob/arcturus_enclave.xml:2
 msgid "Arcturus Enclave"
-msgstr ""
+msgstr "Enklave Arcturus"
 
 #: dat/spob/arcturus_enclave.xml:29
 msgid ""
@@ -10804,7 +10804,7 @@ msgstr ""
 
 #: dat/spob/basel_i.xml:2
 msgid "Basel I"
-msgstr ""
+msgstr "Basel I"
 
 #: dat/spob/bastion_center.xml:2
 msgid "Bastion Center"
@@ -10858,11 +10858,11 @@ msgstr ""
 
 #: dat/spob/behar_prime.xml:2
 msgid "Behar Prime"
-msgstr ""
+msgstr "Behar Utama"
 
 #: dat/spob/behar_station.xml:2
 msgid "Behar Station"
-msgstr ""
+msgstr "Stasiun Behar"
 
 #: dat/spob/behar_station.xml:3
 msgid "Ruined Shipyard"
@@ -11095,7 +11095,7 @@ msgstr ""
 
 #: dat/spob/brendon_i.xml:2
 msgid "Brendon I"
-msgstr ""
+msgstr "Brendon I"
 
 #: dat/spob/brimstone_i.xml:2
 msgid "Brimstone I"
@@ -11207,7 +11207,7 @@ msgstr ""
 
 #: dat/spob/burnans_moon.xml:2
 msgid "Burnan's moon"
-msgstr ""
+msgstr "Bulan Burnan"
 
 #: dat/spob/caladan.xml:2
 msgid "Caladan"
@@ -11261,15 +11261,15 @@ msgstr ""
 
 #: dat/spob/capricorn_ii.xml:2
 msgid "Capricorn II"
-msgstr "Capricorn II"
+msgstr "Kaprikornus II"
 
 #: dat/spob/capricorn_iii.xml:2
 msgid "Capricorn III"
-msgstr "Capricorn III"
+msgstr "Kaprikornus III"
 
 #: dat/spob/capricorn_iiia.xml:2
 msgid "Capricorn IIIa"
-msgstr "Capricorn IIIa"
+msgstr "Kaprikornus IIIa"
 
 #: dat/spob/castellan_epsilon.xml:2
 msgid "Castellan Epsilon"
@@ -11382,7 +11382,7 @@ msgstr ""
 
 #: dat/spob/cebus_prime.xml:2
 msgid "Cebus Prime"
-msgstr ""
+msgstr "Cebus Utama"
 
 #: dat/spob/cebus_prime.xml:23
 msgid ""
@@ -11413,7 +11413,7 @@ msgstr "Cerberus IV"
 
 #: dat/spob/cerberus_outpost.xml:2
 msgid "Cerberus Outpost"
-msgstr ""
+msgstr "Pos Depan Kerberos"
 
 #: dat/spob/cerberus_outpost.xml:26
 msgid ""
@@ -11870,11 +11870,11 @@ msgstr ""
 
 #: dat/spob/darkstone_iv.xml:2
 msgid "Darkstone IV"
-msgstr ""
+msgstr "Batukelam IV"
 
 #: dat/spob/darkstone_v.xml:2
 msgid "Darkstone V"
-msgstr ""
+msgstr "Batukelam V"
 
 #: dat/spob/dawn.xml:2
 msgid "Dawn"
@@ -11917,15 +11917,15 @@ msgstr ""
 
 #: dat/spob/delta_polaris_i.xml:2
 msgid "Delta Polaris I"
-msgstr ""
+msgstr "Delta Polaris I"
 
 #: dat/spob/delta_polaris_ii.xml:2
 msgid "Delta Polaris II"
-msgstr ""
+msgstr "Delta Polaris II"
 
 #: dat/spob/delta_polaris_vi.xml:2
 msgid "Delta Polaris VI"
-msgstr ""
+msgstr "Delta Polaris VI"
 
 #: dat/spob/dendria_alpha.xml:2
 msgid "Dendria Alpha"
@@ -12385,7 +12385,7 @@ msgstr "Dvaer IV"
 
 #: dat/spob/dvaer_prime.xml:2
 msgid "Dvaer Prime"
-msgstr ""
+msgstr "Dvaer Utama"
 
 #: dat/spob/dvaer_prime.xml:29
 msgid ""
@@ -12399,6 +12399,15 @@ msgid ""
 "the decisions are all made in Dvaered High Command, which floats in high "
 "orbit over Dvaer Prime."
 msgstr ""
+"Dvaer Utama adalah planet ibukota dari seluruh teritori Dvaered, tempat di "
+"mana Kekaisaran Lama memberikan Wangsa Dvaered gelar Wangsa Besar, dan "
+"menjadi nama yang dipilih para perintisnya sebagai nama bangsa mereka.\n"
+"Namun, meskipun planet ini sangatlah ikonik, sesungguhnya tempat ini tidak "
+"begitu penting. Memang, planet ini diperebutkan dengan penuh semangat oleh "
+"para Panglima Perang Dvaered, yang menganggap kepemilikannya sebagai perihal "
+"wibawa yang penting, namun, selain dari pada itu tidak ada yang membuat "
+"Dvaer Utama istimewa. Nyatanya, semua keputusan pemerintahan dibuat di "
+"Komando Tinggi Dvaered, jauh melayang tinggi di orbit atas Dvaer Utama."
 
 #: dat/spob/dvaer_prime.xml:31
 msgid ""
@@ -12414,11 +12423,11 @@ msgstr ""
 #: dat/spob/dvaered_high_command.xml:2 dat/events/discovery.lua:57
 #: dat/scripts/common/frontier_war.lua:88
 msgid "Dvaered High Command"
-msgstr ""
+msgstr "Komando Tinggi Dvaered"
 
 #: dat/spob/dvaered_high_command.xml:3
 msgid "#pDvaered Homeworld#0"
-msgstr ""
+msgstr "#pDunia Asal Dvaered#0"
 
 #: dat/spob/dvaered_high_command.xml:27
 msgid ""
@@ -12817,7 +12826,7 @@ msgstr ""
 
 #: dat/spob/emperors_wrath.xml:3
 msgid "#pEmpire Homeworld#0"
-msgstr "#pDunia-Rumah Kekaisaran#0"
+msgstr "#pDunia Asal Kekaisaran#0"
 
 #: dat/spob/emperors_wrath.xml:25
 msgid ""
@@ -14756,7 +14765,7 @@ msgstr ""
 
 #: dat/spob/hzmm01.xml:2
 msgid "HZMM-01"
-msgstr "HZMM-01"
+msgstr "BTWZ-01"
 
 #: dat/spob/hzmm01.xml:25
 msgid ""
@@ -14767,7 +14776,7 @@ msgstr ""
 
 #: dat/spob/hznss1.xml:2
 msgid "HZNSS-1"
-msgstr ""
+msgstr "SNWZ-1"
 
 #: dat/spob/hznss1.xml:26
 msgid ""
@@ -14790,17 +14799,20 @@ msgstr ""
 
 #: dat/spob/hznss2.xml:2
 msgid "HZNSS-2"
-msgstr ""
+msgstr "SNWZ-2"
 
 #: dat/spob/hznss2.xml:25
 msgid ""
 "Another entry in the House Za'lek Nutrition Space Station program. Nothing "
 "of note really exists here; it is solely an extension of the House's economy."
 msgstr ""
+"Bagian kedua dari program Stasiun Nutrisi Wangsa Za'lek. Tidak ada hal yang "
+"menarik di sini; stasiun ini benar-benar hanya berperan sebagai perpanjangan "
+"tangan dari ekonomi Wangsa Za'lek."
 
 #: dat/spob/hznss3.xml:2
 msgid "HZNSS-3"
-msgstr ""
+msgstr "SNWZ-3"
 
 #: dat/spob/hznss3.xml:25
 msgid ""
@@ -14893,7 +14905,7 @@ msgstr ""
 #: dat/scripts/common/zalek_blackhole.lua:23
 #: dat/scripts/common/zalek_blackhole.lua:103
 msgid "Icarus"
-msgstr "Icarus"
+msgstr "Ikaros"
 
 #: dat/spob/icarus.xml:23
 msgid ""
@@ -14956,11 +14968,11 @@ msgstr ""
 
 #: dat/spob/ingot_i.xml:2
 msgid "Ingot I"
-msgstr ""
+msgstr "Ingot I"
 
 #: dat/spob/inios_monastery.xml:2
 msgid "Inios Monastery"
-msgstr ""
+msgstr "Biara Inios"
 
 #: dat/spob/inios_monastery.xml:29
 msgid ""
@@ -14982,7 +14994,7 @@ msgstr ""
 
 #: dat/spob/inss1.xml:2
 msgid "INSS-1"
-msgstr ""
+msgstr "SPNI-1"
 
 #: dat/spob/inss1.xml:25
 msgid ""
@@ -14991,6 +15003,10 @@ msgid ""
 "station is to grow food for nearby colonies and stations at extreme "
 "efficiency."
 msgstr ""
+"SPNI-1, atau Stasiun Penyedia Nutrisi Imperial, adalah yang pertama dari "
+"beberapa stasiun agrikultur yang didanai Kekaisaran. Tujuan utama dari "
+"stasiun ini dan yang lainnya adalah untuk menanam dan menyediakan pangan "
+"bagi koloni dan stasiun sekitar dengan efisiensi yang tinggi."
 
 #: dat/spob/inss1.xml:26
 msgid ""
@@ -15001,7 +15017,7 @@ msgstr ""
 
 #: dat/spob/inss2.xml:2
 msgid "INSS-2"
-msgstr ""
+msgstr "SPNI-2"
 
 #: dat/spob/inss2.xml:25
 msgid ""
@@ -15021,7 +15037,7 @@ msgstr ""
 
 #: dat/spob/inss3.xml:2
 msgid "INSS-3"
-msgstr ""
+msgstr "SPNI-3"
 
 #: dat/spob/inss3.xml:25
 msgid ""
@@ -15099,7 +15115,7 @@ msgstr ""
 
 #: dat/spob/jade_court.xml:2
 msgid "Jade Court"
-msgstr ""
+msgstr "Mahkamah Jade"
 
 #: dat/spob/jade_court.xml:27
 msgid ""
@@ -15579,7 +15595,7 @@ msgstr "Kataka"
 
 #: dat/spob/kataka.xml:3
 msgid "#pSoromid Homeworld#0"
-msgstr "#pDunia-Rumah Soromid#0"
+msgstr "#pDunia Asal Soromid#0"
 
 #: dat/spob/kataka.xml:28
 msgid ""
@@ -15942,6 +15958,8 @@ msgid ""
 "You won't find Larling's spaceport bar in any top 100 list, but that doesn't "
 "mean it's bad. There's just nothing particularly exceptional about it."
 msgstr ""
+"Bar labuh Larling tidaklah buruk, namun karena sama sekali tak berkesan, "
+"kamu tidak akan menemukannya di daftar 100 bar terbaik manapun."
 
 #: dat/spob/las_vegas.xml:2
 msgid "Las Vegas"
@@ -16231,7 +16249,7 @@ msgstr ""
 
 #: dat/spob/madeleine_enclave.xml:2
 msgid "Madeleine Enclave"
-msgstr ""
+msgstr "Enklave Madelin"
 
 #: dat/spob/madeleine_enclave.xml:28
 msgid ""
@@ -16432,7 +16450,7 @@ msgstr ""
 
 #: dat/spob/marauder_citadel.xml:2
 msgid "Marauder Citadel"
-msgstr ""
+msgstr "Sitadel Perampok"
 
 #: dat/spob/marauder_citadel.xml:28
 msgid ""
@@ -16444,6 +16462,8 @@ msgstr ""
 #: dat/spob/marauder_citadel.xml:29
 msgid "The bar is completely unnoteworthy, besides the vile stench."
 msgstr ""
+"Bar sitadel ini sama sekali tidak berkesan, kecuali baunya, yang amat tidak "
+"sedap."
 
 #: dat/spob/margarita_i.xml:2
 msgid "Margarita I"
@@ -16481,7 +16501,7 @@ msgstr ""
 
 #: dat/spob/marius_enclave.xml:2
 msgid "Marius Enclave"
-msgstr ""
+msgstr "Enklave Marius"
 
 #: dat/spob/marius_enclave.xml:27
 msgid ""
@@ -16528,7 +16548,7 @@ msgstr "Massia IVa"
 
 #: dat/spob/mastodon_station.xml:2
 msgid "Mastodon Station"
-msgstr ""
+msgstr "Stasiun Mastodon"
 
 #: dat/spob/mastodon_station.xml:25
 msgid ""
@@ -16562,7 +16582,7 @@ msgstr "Maya"
 
 #: dat/spob/medenus_observatory.xml:2
 msgid "Medenus Observatory"
-msgstr ""
+msgstr "Observatorium Madenus"
 
 #: dat/spob/medenus_observatory.xml:24
 msgid ""
@@ -16625,7 +16645,7 @@ msgstr ""
 
 #: dat/spob/melendez_dome.xml:2
 msgid "Melendez Dome"
-msgstr ""
+msgstr "Kubah Melendez"
 
 #: dat/spob/melendez_dome.xml:26
 msgid ""
@@ -16866,7 +16886,7 @@ msgstr ""
 
 #: dat/spob/mokoshotar_enclave.xml:2
 msgid "Mokoshotar Enclave"
-msgstr ""
+msgstr "Enklave Mokosotar"
 
 #: dat/spob/mokoshotar_enclave.xml:26
 msgid ""
@@ -17020,7 +17040,7 @@ msgstr "Mutris"
 
 #: dat/spob/mutris.xml:3
 msgid "#pSirius Homeworld#0"
-msgstr "#pDunia-Rumah Sirius#0"
+msgstr "#pDunia Asal Sirius#0"
 
 #: dat/spob/mutris.xml:30
 msgid ""
@@ -17312,7 +17332,7 @@ msgstr ""
 #: dat/spob/new_haven.xml:2 dat/ssys/new_haven.xml:2
 #: dat/events/discovery.lua:113
 msgid "New Haven"
-msgstr ""
+msgstr "Haven Baru"
 
 #: dat/spob/new_haven.xml:30
 msgid ""
@@ -17361,7 +17381,7 @@ msgstr ""
 
 #: dat/spob/new_phobos.xml:2
 msgid "New Phobos"
-msgstr ""
+msgstr "Fobos Baru"
 
 #: dat/spob/new_pluto.xml:2
 msgid "New Pluto"
@@ -17433,11 +17453,11 @@ msgstr ""
 
 #: dat/spob/newmarch_a1.xml:2
 msgid "Newmarch A-1"
-msgstr ""
+msgstr "Newmarch A-1"
 
 #: dat/spob/newmarch_d3.xml:2
 msgid "Newmarch D-3"
-msgstr ""
+msgstr "Newmarch D-3"
 
 #: dat/spob/nexus_shipyards_hq.xml:2
 msgid "Nexus Shipyards HQ"
@@ -17698,7 +17718,7 @@ msgstr "SN-63"
 
 #: dat/spob/obelisk_monastery.xml:2
 msgid "Obelisk Monastery"
-msgstr ""
+msgstr "Biara Obelisk"
 
 #: dat/spob/obelisk_monastery.xml:26
 msgid ""
@@ -17757,7 +17777,7 @@ msgstr "Ocata"
 
 #: dat/spob/octantis_i.xml:2
 msgid "Octantis I"
-msgstr ""
+msgstr "Octantis I"
 
 #: dat/spob/octantis_i.xml:15
 msgid ""
@@ -17772,7 +17792,7 @@ msgstr "Odonga"
 
 #: dat/spob/odonga_m1.xml:2
 msgid "Odonga m1"
-msgstr ""
+msgstr "Odonga m1"
 
 #: dat/spob/odonga_m1.xml:27
 msgid ""
@@ -17898,7 +17918,7 @@ msgstr ""
 
 #: dat/spob/omega_enclave.xml:2
 msgid "Omega Enclave"
-msgstr ""
+msgstr "Enklave Omega"
 
 #: dat/spob/omega_enclave.xml:29
 msgid ""
@@ -19358,7 +19378,7 @@ msgstr "Ruadan Utama"
 
 #: dat/spob/ruadan_prime.xml:3
 msgid "#pZa'lek Homeworld#0"
-msgstr "#pDunia-Rumah Za'lek#0"
+msgstr "#pDunia Asal Za'lek#0"
 
 #: dat/spob/ruadan_prime.xml:29
 msgid ""
@@ -23619,6 +23639,11 @@ msgid ""
 "Soromid. Non-modified humans would find the recreational activities too "
 "rough for comfort."
 msgstr ""
+"Zepei memiliki jumlah penduduk tetap yang sedikit, karena mayoritas "
+"populasinya sifatnya non-permanen. Permukaan planet ini dipenuhi resor "
+"liburan, taman hutan, dan area olahraga luar ruangan. Kebanyakan wisatawan "
+"adalah Soromid. Manusia yang tidak termodifikasi akan merasa bahwa aktivitas "
+"rekreasi di sini tidak nyaman dan terlalu sulit untuk dilakukan."
 
 #: dat/spob/zepei.xml:28
 msgid ""
@@ -23651,6 +23676,10 @@ msgid ""
 "routinely used as part of the extraction process, and to prevent severe "
 "burns to the miners."
 msgstr ""
+"Kaya akan mineral, tapi amat panas, Zesta telah ditetapkan sebagai koloni "
+"pertambangan intensitas tinggi oleh Proteron. Air dan es yang diambil dari "
+"Amianta digunakan sebagai bagian dari proses ekstraksi, dan untuk mencegah "
+"luka bakar pada para penambang."
 
 #: dat/spob/zethus.xml:2
 msgid "Zethus"
@@ -23738,133 +23767,131 @@ msgstr ""
 
 #: dat/spob_virtual/dvaered_small.xml:2
 msgid "Dvaered Small"
-msgstr ""
+msgstr "Dvaered Sedikit"
 
 #: dat/spob_virtual/dvaered_unpresence.xml:2
 msgid "Dvaered Unpresence"
-msgstr ""
+msgstr "Dvaered Tidak Ada"
 
 #: dat/spob_virtual/dvaered_unpresence_range1.xml:2
 msgid "Dvaered Unpresence (Range 1)"
-msgstr ""
+msgstr "Dvaered Tidak Ada (Jarak 1)"
 
 #: dat/spob_virtual/empire_small.xml:2
 msgid "Empire Small"
-msgstr ""
+msgstr "Kekaisaran Sedikit"
 
 #: dat/spob_virtual/empire_unpresence.xml:2
 msgid "Empire Unpresence"
-msgstr ""
+msgstr "Kekaisaran Tidak Ada"
 
 #: dat/spob_virtual/empire_unpresence_range1.xml:2
 msgid "Empire Unpresence (Range 1)"
-msgstr ""
+msgstr "Kekaisaran Tidak Ada (Jarak 1)"
 
 #: dat/spob_virtual/flf_small.xml:2
 msgid "FLF Small"
-msgstr ""
+msgstr "FLF Sedikit"
 
 #: dat/spob_virtual/flf_unpresence.xml:2
 msgid "FLF Unpresence"
-msgstr ""
+msgstr "FLF Tidak Ada"
 
 #: dat/spob_virtual/frontier_small.xml:2
 msgid "Frontier Small"
-msgstr ""
+msgstr "Frontir Sedikit"
 
 #: dat/spob_virtual/frontier_unpresence.xml:2
 msgid "Frontier Unpresence"
-msgstr ""
+msgstr "Frontir Tidak Ada"
 
 #: dat/spob_virtual/independent_all_unpresence.xml:2
 msgid "Independent All Unpresence"
-msgstr ""
+msgstr "Independen Semua Tidak Ada"
 
 #: dat/spob_virtual/independent_all_unpresence_range1.xml:2
 msgid "Independent All Unpresence (Range 1)"
-msgstr ""
+msgstr "Independen Semua Tidak Ada (Jarak 1)"
 
 #: dat/spob_virtual/independent_trader_area.xml:2
 msgid "Independent Trader Area"
-msgstr ""
+msgstr "Daerah Pedagang Independen"
 
 #: dat/spob_virtual/independent_trader_local.xml:2
 msgid "Independent Trader Local"
-msgstr ""
+msgstr "Pedagang Independen Lokal"
 
 #: dat/spob_virtual/independent_unpresence.xml:2
 msgid "Independent Unpresence"
-msgstr ""
+msgstr "Independen Tidak Ada"
 
 #: dat/spob_virtual/miner_local.xml:2
 msgid "Miner Local"
-msgstr ""
+msgstr "Penambang Lokal"
 
 #: dat/spob_virtual/miner_small.xml:2
 msgid "Miner Small"
-msgstr ""
+msgstr "Penambang Sedikit"
 
 #: dat/spob_virtual/pirate_all_unpresence.xml:2
 msgid "Pirate All Unpresence"
-msgstr ""
+msgstr "Perompak Semua Tidak Ada"
 
 #: dat/spob_virtual/pirate_all_unpresence_range1.xml:2
 msgid "Pirate All Unpresence (Range 1)"
-msgstr ""
+msgstr "Perompak Semua Tidak Ada (Jarak 1)"
 
 #: dat/spob_virtual/pirate_all_unpresence_range2.xml:2
 msgid "Pirate All Unpresence (Range 2)"
-msgstr ""
+msgstr "Perompak Semua Tidak Ada (Jarak 2)"
 
 #: dat/spob_virtual/pirate_medium.xml:2
 msgid "Pirate Medium"
-msgstr ""
+msgstr "Perompak Lumayan"
 
 #: dat/spob_virtual/pirate_small.xml:2
 msgid "Pirate Small"
-msgstr ""
+msgstr "Perompak Sedikit"
 
 #: dat/spob_virtual/pirate_tiny.xml:2
-#, fuzzy
-#| msgid "Pirate Station"
 msgid "Pirate Tiny"
-msgstr "Stasiun Perompak"
+msgstr "Perompak Amat Sedikit"
 
 #: dat/spob_virtual/pirate_unpresence.xml:2
 msgid "Pirate Unpresence"
-msgstr ""
+msgstr "Perompak Tidak Ada"
 
 #: dat/spob_virtual/proteron_small.xml:2
 msgid "Proteron Small"
-msgstr ""
+msgstr "Proteron Sedikit"
 
 #: dat/spob_virtual/proteron_unpresence.xml:2
 msgid "Proteron Unpresence"
-msgstr ""
+msgstr "Proteron Tidak Ada"
 
 #: dat/spob_virtual/proteron_unpresence_range1.xml:2
 msgid "Proteron Unpresence (Range 1)"
-msgstr ""
+msgstr "Proteron Tidak Ada (Jarak 1)"
 
 #: dat/spob_virtual/sirius_small.xml:2
 msgid "Sirius Small"
-msgstr ""
+msgstr "Sirius Sedikit"
 
 #: dat/spob_virtual/sirius_unpresence.xml:2
 msgid "Sirius Unpresence"
-msgstr ""
+msgstr "Sirius Tidak Ada"
 
 #: dat/spob_virtual/soromid_unpresence.xml:2
 msgid "Soromid Unpresence"
-msgstr ""
+msgstr "Soromid Tidak Ada"
 
 #: dat/spob_virtual/soromid_unpresence_range1.xml:2
 msgid "Soromid Unpresence (Range 1)"
-msgstr ""
+msgstr "Soromid Tidak Ada (Jarak 1)"
 
 #: dat/spob_virtual/thurion_local.xml:2
 msgid "Thurion Local"
-msgstr ""
+msgstr "Turion Lokal"
 
 #: dat/spob_virtual/tradelane.xml:2 src/map.c:880
 msgid "Trade Lane"
@@ -23892,19 +23919,19 @@ msgstr "Jalur Dagang (Za'lek)"
 
 #: dat/spob_virtual/traders_society_area.xml:2
 msgid "Traders Society Area"
-msgstr ""
+msgstr "Daerah Perhimpunan Dagang"
 
 #: dat/spob_virtual/traders_society_local.xml:2
 msgid "Traders Society Local"
-msgstr ""
+msgstr "Perhimpunan Dagang Lokal"
 
 #: dat/spob_virtual/traders_society_unpresence.xml:2
 msgid "Traders Society Unpresence"
-msgstr ""
+msgstr "Perhimpunan Dagang Tidak Ada"
 
 #: dat/spob_virtual/traders_society_unpresence_range1.xml:2
 msgid "Traders Society Unpresence (Range 1)"
-msgstr ""
+msgstr "Perhimpunan Dagang Tidak Ada (Jarak 1)"
 
 #: dat/spob_virtual/virtual_sindbad.xml:2
 msgid "Virtual Sindbad"
@@ -23912,7 +23939,7 @@ msgstr ""
 
 #: dat/spob_virtual/zalek_medium.xml:2
 msgid "Za'lek Medium"
-msgstr ""
+msgstr "Za'lek Lumayan"
 
 #: dat/spob_virtual/zalek_small.xml:2
 msgid "Za'lek Small"
@@ -23960,7 +23987,7 @@ msgstr "Akra"
 
 #: dat/ssys/allous.xml:2
 msgid "Allous"
-msgstr "Allous"
+msgstr "Alous"
 
 #: dat/ssys/alpha_centauri.xml:2
 msgid "Alpha Centauri"
@@ -24014,7 +24041,7 @@ msgstr "Andres"
 
 #: dat/ssys/aneel_azi.xml:2
 msgid "Aneel Azi"
-msgstr ""
+msgstr "Aneel Azi"
 
 #: dat/ssys/anger.xml:2
 msgid "Anger"
@@ -24129,7 +24156,7 @@ msgstr "Baf"
 #: dat/ssys/baf.xml:4 dat/ssys/ngc11718.xml:4 dat/ssys/taxumi.xml:4
 #: dat/ssys/xeric.xml:4
 msgid "#oRestricted#0"
-msgstr ""
+msgstr "#oDibatasi#0"
 
 #: dat/ssys/baitas.xml:2
 msgid "Baitas"
@@ -24137,7 +24164,7 @@ msgstr "Baitas"
 
 #: dat/ssys/barnards_star.xml:2
 msgid "Barnard's Star"
-msgstr ""
+msgstr "Bintang Barnard"
 
 #: dat/ssys/basel.xml:2
 msgid "Basel"
@@ -24229,11 +24256,11 @@ msgstr "Kaprikornus"
 
 #: dat/ssys/carnis_major.xml:2
 msgid "Carnis Major"
-msgstr ""
+msgstr "Carnis Major"
 
 #: dat/ssys/carnis_minor.xml:2
 msgid "Carnis Minor"
-msgstr ""
+msgstr "Carnis Minor"
 
 #: dat/ssys/carrza.xml:2
 msgid "Carrza"
@@ -24327,7 +24354,7 @@ msgstr "Daravon"
 
 #: dat/ssys/darkstone.xml:2
 msgid "Darkstone"
-msgstr ""
+msgstr "Batukelam"
 
 #: dat/ssys/defa.xml:2
 msgid "Defa"
@@ -24561,7 +24588,7 @@ msgstr "Gliese"
 
 #: dat/ssys/gliese_minor.xml:2
 msgid "Gliese Minor"
-msgstr ""
+msgstr "Gliese Minor"
 
 #: dat/ssys/gorman.xml:2
 msgid "Gorman"
@@ -24678,7 +24705,7 @@ msgstr ""
 
 #: dat/ssys/ingot.xml:2
 msgid "Ingot"
-msgstr ""
+msgstr "Ingot"
 
 #: dat/ssys/iris.xml:2
 msgid "Iris"
@@ -62563,7 +62590,7 @@ msgstr[1] ""
 
 #: dat/missions/flf/flf_empatrol.lua:52
 msgid " There is a Pacifier among them, so you must proceed with caution."
-msgstr ""
+msgstr " Terdapat Pasifir di antara mereka, karena itu berhati-hatilah."
 
 #: dat/missions/flf/flf_empatrol.lua:55
 msgid " There is a Hawking among them, so you must be very careful."
@@ -75651,6 +75678,14 @@ msgid ""
 "#nWanted:#0 Alive\n"
 "#nLast Seen:#0 {sys} system"
 msgstr ""
+"Seorang perompak yang dikenal dengan nama {pirname} baru-baru ini dijumpai "
+"di sistem {sys}. Otoritas {fct} menginginkan perompak ini ditangkap hidup-"
+"hidup karena telah{reason}. Diketahui bahwa {pirname} menahkodai kapal "
+"berjenis {shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai "
+"sistem {sys}.\n"
+"\n"
+"#nTarget:#0 {pirname} (kapal jenis {shipclass})\n"
+"#nDiinginkan:#0 Hidup-hidup"
 
 #: dat/missions/neutral/bounty.lua:67
 msgid " for attempting to undermine the integry of {spb}"
@@ -75662,19 +75697,19 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:69
 msgid " for trafficking of weapons"
-msgstr ""
+msgstr " melakukan penyeludupan senjata"
 
 #: dat/missions/neutral/bounty.lua:70
 msgid " for arms dealing"
-msgstr ""
+msgstr " memperjual-belikan senjata"
 
 #: dat/missions/neutral/bounty.lua:71
 msgid " for armed robbery"
-msgstr ""
+msgstr " melakukan pencurian bersenjata"
 
 #: dat/missions/neutral/bounty.lua:72
 msgid " for hijacking"
-msgstr ""
+msgstr " melakukan pembajakan kapal"
 
 #: dat/missions/neutral/bounty.lua:73
 msgid " for illegal waste disposal"
@@ -75682,7 +75717,7 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:74
 msgid " for attempted sabotage"
-msgstr ""
+msgstr " melakukan pencobaan sabotase"
 
 #: dat/missions/neutral/bounty.lua:77
 msgid " for bureaucratic infringements"
@@ -75690,7 +75725,7 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:78
 msgid " for submitting erroneous paperwork"
-msgstr ""
+msgstr " mengirimkan dokumen yang tidak sah"
 
 #: dat/missions/neutral/bounty.lua:79
 msgid " for failing to file taxes in a duly manner"
@@ -75706,7 +75741,7 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:82
 msgid " for spreading lies about the Emperor"
-msgstr ""
+msgstr " menyebarkan fitnah tentang sang Kaisar"
 
 #: dat/missions/neutral/bounty.lua:83
 msgid " for filing bureaucratic documents in the incorrect order"
@@ -75727,7 +75762,7 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:89
 msgid " for creating a large scale botnet"
-msgstr ""
+msgstr " membuat botnet berskala besar"
 
 #: dat/missions/neutral/bounty.lua:90
 msgid " for forging the signature of a principal investigator"
@@ -75735,7 +75770,7 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:91
 msgid " for fraudulent use of research funds"
-msgstr ""
+msgstr " menggunakan dana penelitian secara tidak jujur"
 
 #: dat/missions/neutral/bounty.lua:92
 msgid " for failing to comply with research ethics course"
@@ -75749,7 +75784,7 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:94
 msgid " for sending spam e-mails"
-msgstr ""
+msgstr " mengirimkan e-mail spam"
 
 #: dat/missions/neutral/bounty.lua:95
 msgid " for repeatedly crashing a supercomputer cluster with spaghetti code"
@@ -75761,7 +75796,7 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:97
 msgid " for fake NP=P proofs"
-msgstr ""
+msgstr " membuat bukti NP=P palsu"
 
 #: dat/missions/neutral/bounty.lua:98
 msgid " for disbelief of science"
@@ -75781,7 +75816,7 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:104
 msgid " for disrespecting their local Warlord"
-msgstr ""
+msgstr " meremehkan Panglima Perang lokal"
 
 #: dat/missions/neutral/bounty.lua:105
 msgid " for insufficient violence"
@@ -75789,7 +75824,7 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:106
 msgid " for cowardly behaviour"
-msgstr ""
+msgstr " bersikap seperti pengecut"
 
 #: dat/missions/neutral/bounty.lua:107
 msgid " for slapping a commanding officer with a sausage"
@@ -76300,23 +76335,23 @@ msgstr ""
 #. Only spawn if system can handle inclusive claims
 #: dat/missions/neutral/crimelord.lua:119
 msgid "Associate Lancelot"
-msgstr ""
+msgstr "Lancelot Rekan"
 
 #: dat/missions/neutral/crimelord.lua:121
 msgid "Associate Admonisher"
-msgstr ""
+msgstr "Admoniser Rekan"
 
 #: dat/missions/neutral/crimelord.lua:123
 msgid "Associate Pacifier"
-msgstr ""
+msgstr "Pasifir Rekan"
 
 #: dat/missions/neutral/crimelord.lua:125
 msgid "Associate Hawking"
-msgstr ""
+msgstr "Hawking Rekan"
 
 #: dat/missions/neutral/crimelord.lua:127
 msgid "Associate Kestrel"
-msgstr ""
+msgstr "Kestrel Rekan"
 
 #: dat/missions/neutral/crimelord.lua:138
 msgid "We've got your back. Engaging hostiles."
@@ -76336,7 +76371,7 @@ msgstr ""
 
 #: dat/missions/neutral/crimelord.lua:178
 msgid "Get back here!"
-msgstr ""
+msgstr "Balik ke sini!"
 
 #: dat/missions/neutral/crimelord.lua:196
 msgid ""
@@ -91269,6 +91304,8 @@ msgstr ""
 msgid ""
 "The Pacifier commander answers you and stops his ship, waiting to be boarded."
 msgstr ""
+"Komandan dari Pasifir itu menjawabmu dan menghentikan kapalnya, menunggumu "
+"untuk naik."
 
 #: dat/missions/shark/sh06_arandon.lua:161
 msgid ""
@@ -93070,7 +93107,7 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic4.lua:94
 #: dat/missions/sirius/heretic/heretic4.lua:123
 msgid "Nasin Admonisher"
-msgstr ""
+msgstr "Admoniser Nasin"
 
 #: dat/missions/sirius/heretic/heretic2.lua:77
 #: dat/missions/sirius/heretic/heretic3.lua:85
