@@ -80,6 +80,10 @@ local neutral_f = {
    "neutral/thief4.webp",
    -- New images
    {"neutral/female1n.webp"},
+   {"neutral/female1n_v2.webp"},
+   {"neutral/female1n_v3.webp"},
+   {"neutral/female1n_v4.webp"},
+   {"neutral/female1n_v5.webp"},
    {"neutral/female2n.webp"},
    {"neutral/female2n_nogog.webp"},
    {"neutral/female3n.webp"},
