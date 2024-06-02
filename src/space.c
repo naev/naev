@@ -69,6 +69,8 @@
 
 #define DEBRIS_BUFFER 1000 /**< Buffer to smooth appearance of debris */
 
+static const double spob_aa_scale = 2.;
+
 typedef struct spob_lua_file_s {
    const char *filename; /**< Name of the spob Lua file. */
    nlua_env    env;      /**< Lua environment. */
@@ -2190,9 +2192,17 @@ void spob_gfxLoad( Spob *spob )
    }
 
    if ( ( spob->gfx_space3d == NULL ) && ( spob->gfx_space == NULL ) ) {
-      if ( spob->gfx_space3dName != NULL )
+      if ( spob->gfx_space3dName != NULL ) {
+         GLuint tex;
+         double s          = spob->gfx_space3d_size;
          spob->gfx_space3d = gltf_loadFromFile( spob->gfx_space3dName );
-      else if ( spob->gfx_spaceName != NULL )
+         /* Create framebuffer texture. */
+         gl_fboCreate( &spob->gfx_fbo, &tex, s * spob_aa_scale,
+                       s * spob_aa_scale );
+         gl_fboAddDepth( spob->gfx_fbo, &spob->gfx_dtex, s * spob_aa_scale,
+                         s * spob_aa_scale );
+         spob->gfx_space = gl_rawTexture( spob->gfx_space3dName, tex, s, s );
+      } else if ( spob->gfx_spaceName != NULL )
          spob->gfx_space =
             gl_newImage( spob->gfx_spaceName, OPENGL_TEX_MIPMAPS );
    }
@@ -2238,6 +2248,10 @@ void space_gfxUnload( StarSystem *sys )
          }
       }
 
+      if ( spob->gfx_space3d != NULL ) {
+         glDeleteFramebuffers( 1, &spob->gfx_fbo );
+         glDeleteTextures( 1, &spob->gfx_dtex );
+      }
       gltf_free( spob->gfx_space3d );
       spob->gfx_space3d = NULL;
       gl_freeTexture( spob->gfx_space );
@@ -3709,24 +3723,17 @@ static void space_renderSpob( const Spob *p )
            ( y > SCREEN_H + sz ) )
          return;
 
-      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
-      glEnable( GL_SCISSOR_TEST );
-      glClearColor( 0., 1., 0., 1. );
-      glScissor( 0, 0, s * 2, s * 2 );
+      glBindFramebuffer( GL_FRAMEBUFFER, p->gfx_fbo );
+      glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-      glDisable( GL_SCISSOR_TEST );
 
-      gltf_renderScene( gl_screen.fbo[2], p->gfx_space3d, 0, NULL, 0., s * 2,
-                        NULL );
+      gltf_renderScene( p->gfx_fbo, p->gfx_space3d, 0, NULL, 0.,
+                        s * spob_aa_scale, NULL );
 
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
       glClearColor( 0., 0., 0., 1. );
 
-      gl_renderTextureRaw( gl_screen.fbo_tex[2], 0, x, y,
-                           // x + sz * 0.5, y + sz * 0.5,
-                           sz, sz, 0, 0, 2. * s / (double)gl_screen.nw,
-                           2. * s / (double)gl_screen.nh, NULL,
-                           0. ); /* Colour should already be applied. */
+      gl_renderSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
    } else if ( p->gfx_space )
       gl_renderSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }

@@ -138,6 +138,8 @@ typedef struct Spob_ {
    GltfObject *gfx_space3d;
    char       *gfx_space3dName;
    char       *gfx_space3dPath;
+   GLuint      gfx_fbo;
+   GLuint      gfx_dtex;
    glTexture  *gfx_space;     /**< Graphic in space */
    char       *gfx_spaceName; /**< Name to load texture quickly with. */
    char       *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
