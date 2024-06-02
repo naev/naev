@@ -18,6 +18,7 @@
 
 #include "array.h"
 #include "background.h"
+#include "camera.h"
 #include "conf.h"
 #include "damagetype.h"
 #include "dev_uniedit.h"
@@ -2188,12 +2189,16 @@ void spob_gfxLoad( Spob *spob )
       lua_pop( naevL, 2 );
    }
 
-   if ( spob->gfx_space == NULL ) {
-      if ( spob->gfx_spaceName != NULL )
+   if ( ( spob->gfx_space3d == NULL ) && ( spob->gfx_space == NULL ) ) {
+      if ( spob->gfx_space3dName != NULL )
+         spob->gfx_space3d = gltf_loadFromFile( spob->gfx_space3dName );
+      else if ( spob->gfx_spaceName != NULL )
          spob->gfx_space =
             gl_newImage( spob->gfx_spaceName, OPENGL_TEX_MIPMAPS );
    }
    /* Set default size if applicable. */
+   if ( ( spob->gfx_space3d != NULL ) && ( spob->radius < 0. ) )
+      spob->radius = spob->gfx_space3d_size * 0.5;
    if ( ( spob->gfx_space != NULL ) && ( spob->radius < 0. ) )
       spob->radius = ( spob->gfx_space->w + spob->gfx_space->h ) / 4.;
 }
@@ -2233,6 +2238,8 @@ void space_gfxUnload( StarSystem *sys )
          }
       }
 
+      gltf_free( spob->gfx_space3d );
+      spob->gfx_space3d = NULL;
       gl_freeTexture( spob->gfx_space );
       spob->gfx_space = NULL;
    }
@@ -2347,6 +2354,15 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
          xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes( cur );
+            if ( xml_isNode( cur, "space3d" ) ) { /* load 3D space gfx */
+               char str[PATH_MAX];
+               snprintf( str, sizeof( str ), SPOB_GFX_SPACE3D_PATH "%s",
+                         xml_get( cur ) );
+               spob->gfx_space3dName = strdup( str );
+               spob->gfx_space3dPath = xml_getStrd( cur );
+               xmlr_attr_float( cur, "size", spob->gfx_space3d_size );
+               continue;
+            }
             if ( xml_isNode( cur, "space" ) ) { /* load space gfx */
                char str[PATH_MAX];
                snprintf( str, sizeof( str ), SPOB_GFX_SPACE_PATH "%s",
@@ -3682,6 +3698,35 @@ static void space_renderSpob( const Spob *p )
                lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
       }
+   } else if ( p->gfx_space3d ) {
+      double s  = p->gfx_space3d_size;
+      double z  = cam_getZoom();
+      double sz = s * z;
+      double x, y;
+
+      gl_gameToScreenCoords( &x, &y, p->pos.x, p->pos.y );
+      if ( ( x < -sz ) || ( x > SCREEN_W + sz ) || ( y < -sz ) ||
+           ( y > SCREEN_H + sz ) )
+         return;
+
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+      glEnable( GL_SCISSOR_TEST );
+      glClearColor( 0., 1., 0., 1. );
+      glScissor( 0, 0, s * 2, s * 2 );
+      glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+      glDisable( GL_SCISSOR_TEST );
+
+      gltf_renderScene( gl_screen.fbo[2], p->gfx_space3d, 0, NULL, 0., s * 2,
+                        NULL );
+
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+      glClearColor( 0., 0., 0., 1. );
+
+      gl_renderTextureRaw( gl_screen.fbo_tex[2], 0, x, y,
+                           // x + sz * 0.5, y + sz * 0.5,
+                           sz, sz, 0, 0, 2. * s / (double)gl_screen.nw,
+                           2. * s / (double)gl_screen.nh, NULL,
+                           0. ); /* Colour should already be applied. */
    } else if ( p->gfx_space )
       gl_renderSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }
@@ -3737,6 +3782,9 @@ void space_exit( void )
       array_free( spb->tags );
 
       /* graphics */
+      gltf_free( spb->gfx_space3d );
+      free( spb->gfx_space3dName );
+      free( spb->gfx_space3dPath );
       gl_freeTexture( spb->gfx_space );
       free( spb->gfx_spaceName );
       free( spb->gfx_spacePath );

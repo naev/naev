@@ -8,6 +8,8 @@
 /*
  * Define various paths
  */
+#define SPOB_GFX_SPACE3D_PATH                                                  \
+   "gfx/spob/space3d/" /**< Location of spob space graphics. */
 #define SPOB_GFX_SPACE_PATH                                                    \
    "gfx/spob/space/" /**< Location of spob space graphics. */
 #define SPOB_GFX_EXTERIOR_PATH                                                 \

@@ -70,6 +70,12 @@ int dpl_saveSpob( const Spob *p )
 
    /* GFX. */
    xmlw_startElem( writer, "GFX" );
+   if ( p->gfx_space3dPath != NULL ) {
+      xmlw_startElem( writer, "space3d" );
+      xmlw_attr( writer, "size", "%f", p->gfx_space3d_size );
+      xmlw_str( writer, "%s", p->gfx_space3dPath );
+      xmlw_endElem( writer ); /* space3d */
+   }
    if ( p->gfx_spacePath != NULL )
       xmlw_elem( writer, "space", "%s", p->gfx_spacePath );
    if ( p->gfx_exteriorPath != NULL )

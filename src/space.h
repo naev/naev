@@ -134,10 +134,14 @@ typedef struct Spob_ {
    tech_group_t *tech; /**< Spob tech. */
 
    /* Graphics. */
-   glTexture *gfx_space;     /**< Graphic in space */
-   char      *gfx_spaceName; /**< Name to load texture quickly with. */
-   char      *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
-   char      *gfx_exterior;  /**< Don't actually load the texture */
+   double      gfx_space3d_size;
+   GltfObject *gfx_space3d;
+   char       *gfx_space3dName;
+   char       *gfx_space3dPath;
+   glTexture  *gfx_space;     /**< Graphic in space */
+   char       *gfx_spaceName; /**< Name to load texture quickly with. */
+   char       *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
+   char       *gfx_exterior;  /**< Don't actually load the texture */
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
    char *gfx_comm;         /**< Name of the texture. */
    char *gfx_commPath;     /**< Communication image path. */
