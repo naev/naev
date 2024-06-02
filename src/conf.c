@@ -21,6 +21,7 @@
 #include "nfile.h"
 #include "nlua.h"
 #include "nstring.h"
+#include "sound.h"
 #include "space.h"
 #include "utf8.h"
 

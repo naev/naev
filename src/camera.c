@@ -20,6 +20,7 @@
 #include "ntracing.h"
 #include "pause.h"
 #include "player.h"
+#include "sound.h"
 #include "space.h"
 
 #define CAMERA_DIR ( M_PI / 2. )

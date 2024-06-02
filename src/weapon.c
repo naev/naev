@@ -36,6 +36,7 @@
 #include "player.h"
 #include "quadtree.h"
 #include "rng.h"
+#include "sound.h"
 #include "spfx.h"
 
 /**

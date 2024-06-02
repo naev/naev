@@ -40,6 +40,7 @@
 #include "pilot_outfit.h"
 #include "ship.h"
 #include "slots.h"
+#include "sound.h"
 #include "space.h"
 #include "spfx.h"
 #include "start.h"

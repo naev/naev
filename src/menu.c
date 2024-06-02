@@ -37,6 +37,7 @@
 #include "render.h"
 #include "safelanes.h"
 #include "save.h"
+#include "sound.h"
 #include "space.h"
 #include "start.h"
 #include "tk/toolkit_priv.h" /* Needed for menu_main_resize */

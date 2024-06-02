@@ -48,6 +48,7 @@
 #include "player_fleet.h"
 #include "rng.h"
 #include "save.h"
+#include "sound.h"
 #include "toolkit.h"
 
 /*

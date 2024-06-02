@@ -53,6 +53,7 @@
 #include "player_inventory.h"
 #include "rng.h"
 #include "save.h"
+#include "sound.h"
 #include "start.h"
 
 #define PLAYER_CHECK()                                                         \

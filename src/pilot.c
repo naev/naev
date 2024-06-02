@@ -38,6 +38,7 @@
 #include "player_autonav.h"
 #include "quadtree.h"
 #include "rng.h"
+#include "sound.h"
 
 #define PILOT_SIZE_MIN 128 /**< Minimum chunks to increment pilot_stack by */
 

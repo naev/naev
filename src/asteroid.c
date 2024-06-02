@@ -28,6 +28,7 @@
 #include "opengl.h"
 #include "player.h"
 #include "rng.h"
+#include "sound.h"
 #include "space.h"
 
 /**

@@ -23,6 +23,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "player_autonav.h"
+#include "sound.h"
 #include "spfx.h"
 #include "weapon.h"
 

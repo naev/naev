@@ -28,6 +28,7 @@
 #include "opengl_tex.h"
 #include "shipstats.h"
 #include "slots.h"
+#include "sound.h"
 #include "threadpool.h"
 
 #define XML_SHIP "ship" /**< XML individual ship identifier. */

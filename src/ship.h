@@ -6,10 +6,8 @@
 #include "collision.h"
 #include "commodity.h"
 #include "gltf.h"
-#include "nxml.h"
 #include "opengl.h"
 #include "outfit.h"
-#include "sound.h"
 #include "spfx.h"
 
 /* Ship Flags. */
