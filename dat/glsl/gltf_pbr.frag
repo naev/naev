@@ -303,7 +303,9 @@ float shadow_map( sampler2D tex, vec3 pos )
 {
    /* Variance Shadow Mapping. */
    /* Compute Moments (gpu gems 3 chapter 8). */
+   /* First moment is depth itself. */
    float m1 = texture( tex, pos.xy ).r;
+   /* Second moment is computed over partial derivatives. */
    float m1dx = dFdx(m1);
    float m1dy = dFdy(m1);
    float m2 = m1*m1 + 0.25*(m1dx*m1dx + m1dy*m1dy);
