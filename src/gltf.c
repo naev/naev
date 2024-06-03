@@ -46,6 +46,12 @@ typedef struct ShaderLight_ {
    GLuint shadowmap_tex; /* sampler2D */
 } ShaderLight;
 
+/*
+ * EV:Nova
+ * -> key light is top left, slight elevation, pointed at ship. directional
+ * light
+ * -> 1 to 3 fill lights. Depends on ship. Point lights.
+ */
 const Lighting L_default_const = {
    .ambient_r = 0.,
    .ambient_g = 0.,
@@ -54,17 +60,37 @@ const Lighting L_default_const = {
    .lights =
       {
          {
-            .sun       = 1,
-            .pos       = { .v = { 1., 0.5, 1.0 } },
-            .colour    = { .v = { 1., 1., 1. } },
-            .intensity = 1.5,
+            /* Key Light. */
+            .colour = { .v = { 1., 1., 1. } },
+            // Endless Sky (point) power: 150, pos: -12.339, 10.559, -11.787
+            /*
+             */
+            .sun       = 0,
+            .pos       = { .v = { -3., 2.75, -3. } },
+            .intensity = 100.,
+            // Sharky (directional) power: 5, direction: 10.75, -12.272, 7.463
+            /*
+            .sun = 1,
+            .pos = { .v = { 12., 10.5, -12. } },
+            .intensity = 5.,
+            */
          },
          {
-            .sun = 0,
-            .pos = { .v = { -3., 2.75, -3.5 } },
-            //.colour = { .v = {0.7, 0.85, 1.} },
-            .colour    = { .v = { 1., 1., 1. } },
-            .intensity = 200.,
+            /* Fill light. */
+            .colour = { .v = { 1., 1., 1. } },
+            // Endless Sky (directional) power: 1.5,
+            // direction: 9.772, 11.602, 6.988
+            /*
+             */
+            .sun       = 1,
+            .pos       = { .v = { 10., 11.5, 7. } },
+            .intensity = 1.5,
+            // Sharky (point) power: 2000., position: -12.339, 10.559, 11.787
+            /*
+            .sun       = 0,
+            .pos       = { .v = { -12.5, 10.5, 12. } },
+            .intensity = 2000.,
+            */
          },
       },
 };
@@ -656,14 +682,23 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node,
 
 static void shadow_matrix( mat4 *m, const Light *light )
 {
-   const vec3  up        = { .v = { 0., 1., 0. } };
-   const vec3  center    = { .v = { 0., 0., 0. } };
-   const vec3  light_pos = light->pos;
-   const mat4  L         = mat4_lookat( &light_pos, &center, &up );
-   const float norm      = vec3_length( &light_pos );
-   const float r         = 1.0;
-   const mat4  O         = mat4_ortho( -r, r, -r, r, norm - 1.0, norm + 1.0 );
-   mat4_mul( m, &L, &O );
+   const vec3  up     = { .v = { 0., 1., 0. } };
+   const vec3  center = { .v = { 0., 0., 0. } };
+   const float r      = 1.0;
+   if ( light->sun ) {
+      vec3 light_pos = light->pos;
+      vec3_normalize( &light_pos );
+      const mat4 L = mat4_lookat( &light_pos, &center, &up );
+      const mat4 O = mat4_ortho( -r, r, -r, r, 0.0, 2.0 );
+      mat4_mul( m, &L, &O );
+   } else {
+      /* TODO fix this. Point lights should use perspective matrix... */
+      const vec3  light_pos = light->pos;
+      const mat4  L         = mat4_lookat( &light_pos, &center, &up );
+      const float norm      = vec3_length( &light_pos );
+      const mat4  O = mat4_ortho( -r, r, -r, r, norm - 1.0, norm + 1.0 );
+      mat4_mul( m, &L, &O );
+   }
 }
 
 /**
@@ -912,6 +947,7 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H,
       const ShaderLight *sl = &shd->lights[i];
 
       /* Other parameters. */
+      glUniform1i( sl->sun, l->sun );
       glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
       glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
       glUniform1f( sl->intensity, l->intensity );
