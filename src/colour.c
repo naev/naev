@@ -9,15 +9,11 @@
 
 /** @cond */
 #include <math.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "colour.h"
 
-#include "log.h"
 #include "nmath.h"
-#include "nstring.h"
 
 /*
  * http://en.wikipedia.org/wiki/SRGB#The_forward_transformation_.28CIE_xyY_or_CIE_XYZ_to_sRGB.29
