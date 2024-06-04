@@ -1203,11 +1203,13 @@ GltfObject *gltf_loadFromFile( const char *filename )
       const cgltf_scene *cscene =
          &data->scenes[s]; /* data->scene may be NULL */
       Scene *scene = &obj->scenes[s];
-      scene->name  = strdup( cscene->name );
-      if ( strcmp( scene->name, "body" ) == 0 )
-         obj->scene_body = s;
-      else if ( strcmp( scene->name, "engine" ) == 0 )
-         obj->scene_engine = s;
+      if ( cscene->name != NULL ) {
+         scene->name = strdup( cscene->name );
+         if ( strcmp( scene->name, "body" ) == 0 )
+            obj->scene_body = s;
+         else if ( strcmp( scene->name, "engine" ) == 0 )
+            obj->scene_engine = s;
+      }
 
       /* Set up and allocate scene. */
       scene->nodes  = calloc( cscene->nodes_count, sizeof( Node ) );
