@@ -584,8 +584,8 @@ static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius,
 /**
  * @brief Loads a mesh for the object.
  */
-static int gltf_loadNodeRecursive( cgltf_data *data, Node *node,
-                                   const cgltf_node *cnode )
+static int gltf_loadNode( cgltf_data *data, Node *node,
+                          const cgltf_node *cnode )
 {
    cgltf_mesh *cmesh = cnode->mesh;
    /* Get transform for node. */
@@ -668,14 +668,9 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node,
    /* Iterate over children. */
    node->nchildren = cnode->children_count;
    if ( node->nchildren > 0 ) {
-      node->children = calloc( cnode->children_count, sizeof( Node ) );
-      for ( size_t i = 0; i < cnode->children_count; i++ ) {
-         Node *child = &node->children[i];
-         gltf_loadNodeRecursive( data, child, cnode->children[i] );
-         node->radius = MAX( node->radius, child->radius );
-         vec3_max( &node->aabb_max, &node->aabb_max, &child->aabb_max );
-         vec3_min( &node->aabb_min, &node->aabb_min, &child->aabb_min );
-      }
+      node->children = calloc( cnode->children_count, sizeof( int ) );
+      for ( size_t i = 0; i < cnode->children_count; i++ )
+         node->children[i] = cgltf_node_index( data, cnode->children[i] );
    }
    return 0;
 }
@@ -849,7 +844,7 @@ static void gltf_renderNodeShadow( const GltfObject *obj, const Node *node,
 
    /* Draw children. */
    for ( size_t i = 0; i < node->nchildren; i++ )
-      gltf_renderNodeShadow( obj, &node->children[i], &HH );
+      gltf_renderNodeShadow( obj, &obj->nodes[node->children[i]], &HH );
 
    gl_checkErr();
 }
@@ -876,7 +871,7 @@ static void gltf_renderNodeMesh( const GltfObject *obj, const Node *node,
 
    /* Draw children. */
    for ( size_t i = 0; i < node->nchildren; i++ )
-      gltf_renderNodeMesh( obj, &node->children[i], &HH );
+      gltf_renderNodeMesh( obj, &obj->nodes[node->children[i]], &HH );
 
    gl_checkErr();
 }
@@ -898,7 +893,7 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H,
    glUniform1f( shd->u_time, time );
 
    for ( size_t j = 0; j < obj->scenes[scene].nnodes; j++ )
-      gltf_renderNodeShadow( obj, &obj->scenes[scene].nodes[j], H );
+      gltf_renderNodeShadow( obj, &obj->nodes[obj->scenes[scene].nodes[j]], H );
 
    glDisable( GL_CULL_FACE );
    gl_checkErr();
@@ -976,7 +971,7 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H,
    /* Cull faces. */
    glEnable( GL_CULL_FACE );
    for ( size_t i = 0; i < obj->scenes[scene].nnodes; i++ )
-      gltf_renderNodeMesh( obj, &obj->scenes[scene].nodes[i], H );
+      gltf_renderNodeMesh( obj, &obj->nodes[obj->scenes[scene].nodes[i]], H );
 
    glBindTexture( GL_TEXTURE_2D, 0 );
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
@@ -1112,8 +1107,8 @@ gltf_read( const struct cgltf_memory_options *memory_options,
 static _Thread_local const GltfObject *cmp_obj;
 static int cmp_node( const void *p1, const void *p2 )
 {
-   const Node *n1 = p1;
-   const Node *n2 = p2;
+   const Node *n1 = &cmp_obj->nodes[*(size_t *)p1];
+   const Node *n2 = &cmp_obj->nodes[*(size_t *)p2];
    int         b1 = 0;
    int         b2 = 0;
    int         b;
@@ -1193,6 +1188,15 @@ GltfObject *gltf_loadFromFile( const char *filename )
    for ( size_t i = 0; i < data->materials_count; i++ )
       gltf_loadMaterial( obj, &obj->materials[i], &data->materials[i], data );
 
+   /* Load nodes. */
+   obj->nodes  = calloc( data->nodes_count, sizeof( Node ) );
+   obj->nnodes = data->nodes_count;
+   for ( size_t n = 0; n < obj->nnodes; n++ ) {
+      const cgltf_node *cnode = &data->nodes[n];
+      Node             *node  = &obj->nodes[n];
+      gltf_loadNode( data, node, cnode );
+   }
+
    /* Load scenes. */
    obj->scenes       = calloc( data->scenes_count, sizeof( Scene ) );
    obj->nscenes      = data->scenes_count;
@@ -1212,11 +1216,13 @@ GltfObject *gltf_loadFromFile( const char *filename )
       }
 
       /* Set up and allocate scene. */
-      scene->nodes  = calloc( cscene->nodes_count, sizeof( Node ) );
+      scene->nodes  = calloc( cscene->nodes_count, sizeof( size_t ) );
       scene->nnodes = cscene->nodes_count;
-      for ( size_t i = 0; i < cscene->nodes_count; i++ ) {
-         Node *n = &scene->nodes[i];
-         gltf_loadNodeRecursive( data, n, cscene->nodes[i] );
+      for ( size_t i = 0; i < scene->nnodes; i++ ) {
+         const Node *n;
+         scene->nodes[i] = cgltf_node_index( data, cscene->nodes[i] );
+         n               = &obj->nodes[scene->nodes[i]];
+
          obj->radius = MAX( obj->radius, n->radius );
          vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
          vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
@@ -1225,15 +1231,13 @@ GltfObject *gltf_loadFromFile( const char *filename )
 
    /* Sort stuff afterwards so we can lock it. */
    cmp_obj = obj; /* For comparisons. */
+   for ( size_t i = 0; i < obj->nnodes; i++ ) {
+      Node *n = &obj->nodes[i];
+      qsort( n->mesh, n->nmesh, sizeof( Mesh ), cmp_mesh );
+   }
    for ( size_t s = 0; s < obj->nscenes; s++ ) {
-      Scene             *scene = &obj->scenes[s];
-      const cgltf_scene *cscene =
-         &data->scenes[s]; /* data->scene may be NULL */
-      for ( size_t i = 0; i < cscene->nodes_count; i++ ) {
-         Node *n = &scene->nodes[i];
-         qsort( n->mesh, n->nmesh, sizeof( Mesh ), cmp_mesh );
-      }
-      qsort( scene->nodes, scene->nnodes, sizeof( Node ), cmp_node );
+      Scene *scene = &obj->scenes[s];
+      qsort( scene->nodes, scene->nnodes, sizeof( size_t ), cmp_node );
    }
    cmp_obj = NULL; /* No more comparisons. */
 
@@ -1264,8 +1268,6 @@ static void gltf_freeNode( Node *node )
    free( node->mesh );
    gl_checkErr();
 
-   for ( size_t i = 0; i < node->nchildren; i++ )
-      gltf_freeNode( &node->children[i] );
    free( node->children );
 }
 
@@ -1287,10 +1289,13 @@ void gltf_free( GltfObject *obj )
 
    free( obj->path );
 
+   for ( size_t i = 0; i < obj->nnodes; i++ ) {
+      Node *node = &obj->nodes[i];
+      gltf_freeNode( node );
+   }
+
    for ( size_t s = 0; s < obj->nscenes; s++ ) {
       Scene *scene = &obj->scenes[s];
-      for ( size_t i = 0; i < scene->nnodes; i++ )
-         gltf_freeNode( &scene->nodes[i] );
       free( scene->name );
       free( scene->nodes );
    }

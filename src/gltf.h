@@ -83,12 +83,12 @@ typedef struct Mesh_ {
  */
 struct Node_;
 typedef struct Node_ {
-   char         *name;      /**< Name information. */
-   mat4          H;         /**< Homogeneous transform. */
-   Mesh         *mesh;      /**< Meshes. */
-   size_t        nmesh;     /**< Number of meshes. */
-   struct Node_ *children;  /**< Children mesh. */
-   size_t        nchildren; /**< Number of children mesh. */
+   char   *name;      /**< Name information. */
+   mat4    H;         /**< Homogeneous transform. */
+   Mesh   *mesh;      /**< Meshes. */
+   size_t  nmesh;     /**< Number of meshes. */
+   size_t *children;  /**< Children nodes. */
+   size_t  nchildren; /**< Number of children mesh. */
 
    GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
    vec3    aabb_min; /**< Minimum value of AABB wrapping around it. */
@@ -96,17 +96,19 @@ typedef struct Node_ {
 } Node;
 
 typedef struct Scene_ {
-   char  *name;   /**< Name of the scene. */
-   Node  *nodes;  /**< Nodes the object has. */
-   size_t nnodes; /**< Number of nodes. */
+   char   *name;   /**< Name of the scene. */
+   size_t *nodes;  /**< Nodes the scene has. */
+   size_t  nnodes; /**< Number of nodes. */
 } Scene;
 
 /**
  * @brief Defines a complete object.
  */
 typedef struct GltfObject_ {
-   char     *path; /**< Path containing the gltf, used for finding elements. */
-   Scene    *scenes;     /**< Number of scenes. */
+   char     *path;  /**< Path containing the gltf, used for finding elements. */
+   Node     *nodes; /**< The nodes. */
+   size_t    nnodes;     /**< Number of nodes. */
+   Scene    *scenes;     /**< The scenes. */
    size_t    nscenes;    /**< Number of scenes. */
    Material *materials;  /**< Available materials. */
    size_t    nmaterials; /**< Number of materials. */
