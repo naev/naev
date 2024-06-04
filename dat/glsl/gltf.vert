@@ -13,7 +13,9 @@ const mat4 view = mat4(
       0.0,            0.0,              0.0, 1.0 );
 uniform mat4 u_shadow[MAX_LIGHTS];
 uniform mat4 u_model;
+uniform mat3 u_normal;
 uniform float u_time;
+uniform int u_nlights;
 
 in vec3 vertex;
 in vec3 vertex_normal;
@@ -34,13 +36,13 @@ void main (void)
    tex_coord1  = vertex_tex1;
 
    /* Compute normal vector. */
-   normal      = transpose(inverse(mat3(u_model))) * vertex_normal;
+   normal      = -normalize(u_normal * vertex_normal); /* TODO why is it inverted?? */
 
    /* Position for fragment shader. */
    gl_Position = view * pos;
 
    /* Shadows. */
-   for (int i=0; i<MAX_LIGHTS; i++) {
+   for (int i=0; i<u_nlights; i++) {
       vec4 shadow_pos = u_shadow[i] * pos;
       shadow[i] = shadow_pos.rgb / shadow_pos.w;
       shadow[i] = shadow[i] * 0.5 + 0.5;

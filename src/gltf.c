@@ -26,6 +26,7 @@
 #define gl_contextSet()
 #define gl_contextUnset()
 #endif /* HAVE_NAEV */
+#include "mat3.h"
 #include "vec3.h"
 
 /* Horrible hack that turns a variable name into a string. */
@@ -148,6 +149,7 @@ typedef struct Shader_ {
    GLuint vertex_tex1;
    /* Vertex Uniforms. */
    GLuint Hmodel;
+   GLuint Hnormal;
    GLuint Hshadow;
    GLuint u_time;
    /* Fragment uniforms. */
@@ -588,8 +590,6 @@ static int gltf_loadNodeRecursive( cgltf_data *data, Node *node,
    cgltf_mesh *cmesh = cnode->mesh;
    /* Get transform for node. */
    cgltf_node_transform_local( cnode, node->H.ptr );
-   // cgltf_node_transform_world( cnode, node->H.ptr );
-   node->invert = ( cnode->scale[0] * cnode->scale[1] * cnode->scale[2] < 0. );
 
    if ( cmesh == NULL ) {
       node->nmesh = 0;
@@ -768,7 +768,15 @@ static void renderMesh( const GltfObject *obj, const Mesh *mesh, const mat4 *H )
    /* Set up shader. */
    glUseProgram( shd->program );
 
+   /* Compute normal matrix. */
+   mat3 Hnormal;
+   mat3_from_mat4( &Hnormal, H );
+   mat3_invert( &Hnormal );
+   mat3_transpose( &Hnormal );
+
+   /* Pass the uniforms. */
    glUniformMatrix4fv( shd->Hmodel, 1, GL_FALSE, H->ptr );
+   glUniformMatrix3fv( shd->Hnormal, 1, GL_FALSE, Hnormal.ptr );
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
    glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1],
@@ -834,7 +842,6 @@ static void gltf_renderNodeShadow( const GltfObject *obj, const Node *node,
    /* TODO cache when not animated. */
    mat4 HH = node->H;
    mat4_apply( &HH, H );
-   glCullFace( node->invert ? GL_BACK : GL_FRONT );
 
    /* Draw meshes. */
    for ( size_t i = 0; i < node->nmesh; i++ )
@@ -857,7 +864,11 @@ static void gltf_renderNodeMesh( const GltfObject *obj, const Node *node,
    /* TODO cache when not animated. */
    mat4 HH = node->H;
    mat4_apply( &HH, H );
-   glCullFace( node->invert ? GL_FRONT : GL_BACK );
+
+   /* If determinant is negative, we have to invert winding. */
+   mat3 m;
+   mat3_from_mat4( &m, &HH );
+   glFrontFace( ( mat3_det( &m ) < 0. ) ? GL_CW : GL_CCW );
 
    /* Draw meshes. */
    for ( size_t i = 0; i < node->nmesh; i++ )
@@ -1444,8 +1455,9 @@ int gltf_init( void )
    shd->vertex_tex0   = glGetAttribLocation( shd->program, "vertex_tex0" );
    shd->vertex_tex1   = glGetAttribLocation( shd->program, "vertex_tex1" );
    /* Vertex uniforms. */
-   shd->Hmodel = glGetUniformLocation( shd->program, "u_model" );
-   shd->u_time = glGetUniformLocation( shd->program, "u_time" );
+   shd->Hmodel  = glGetUniformLocation( shd->program, "u_model" );
+   shd->Hnormal = glGetUniformLocation( shd->program, "u_normal" );
+   shd->u_time  = glGetUniformLocation( shd->program, "u_time" );
    /* Fragment uniforms. */
    shd->blend          = glGetUniformLocation( shd->program, "u_blend" );
    shd->u_ambient      = glGetUniformLocation( shd->program, "u_ambient" );

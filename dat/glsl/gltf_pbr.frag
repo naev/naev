@@ -49,7 +49,7 @@ struct Light {
    vec3 colour;      /**< Colour to use. */
    float intensity;  /**< Strength of the light. */
 };
-uniform int u_nlights = 1;
+uniform int u_nlights;
 uniform Light u_lights[ MAX_LIGHTS ];
 uniform sampler2D shadowmap_tex[ MAX_LIGHTS ];
 
@@ -264,19 +264,20 @@ vec3 get_normal (void)
       else
          return -normalize(normal);
    }
-
    vec2 coords = (normal_texcoord ? tex_coord1 : tex_coord0);
 
    vec2 uv    = coords;
    vec2 uv_dx = dFdx(uv);
    vec2 uv_dy = dFdy(uv);
+   if (length(uv_dx) <= 1e-2)
+      uv_dx = vec2(1.0, 0.0);
+   if (length(uv_dy) <= 1e-2)
+      uv_dy = vec2(0.0, 1.0);
 
    vec3 t_ = (uv_dy.t * dFdx(position) - uv_dx.t * dFdy(position)) /
              (uv_dx.s * uv_dy.t - uv_dy.s * uv_dx.t);
 
    vec3 ng = normalize(normal);
-   if (!gl_FrontFacing)
-      ng *= -1.;
    vec3 t = normalize(t_ - ng * dot(ng, t_));
    vec3 b = cross(ng, t);
 
@@ -287,10 +288,14 @@ vec3 get_normal (void)
       ng *= -1.0;
    }
 
-   vec3 n = texture(normal_tex, coords).rgb * vec3(normal_scale, normal_scale, 1.0) * 2.0 - vec3(1.0);
+   vec3 n = texture(normal_tex, coords).rgb * 2.0 - vec3(1.0);
+   n *= vec3(normal_scale, normal_scale, 1.0);
    return normalize( mat3(t, b, ng) * n);
 #else /* HAS_NORMAL */
-   return normalize(normal);
+   if (gl_FrontFacing)
+      return normalize(normal);
+   else
+      return -normalize(normal);
 #endif /* HAS_NORMAL */
 }
 
