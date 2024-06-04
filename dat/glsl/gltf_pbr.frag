@@ -71,6 +71,16 @@ vec3 pow5( vec3 x ) {
    return x2 * x2 * x;
 }
 
+float clampedDot( vec3 x, vec3 y )
+{
+   return clamp(dot(x, y), 0.0, 1.0);
+}
+
+float linstep( float minval, float maxval, float val )
+{
+   return clamp( (val-minval) / (maxval-minval), 0., 1. );
+}
+
 float rgb2lum( vec3 color ) {
    return dot( color, vec3( 0.2989, 0.5870, 0.1140 ) );
 }
@@ -249,11 +259,6 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
 }
 #endif
 
-float clampedDot( vec3 x, vec3 y )
-{
-   return clamp(dot(x, y), 0.0, 1.0);
-}
-
 /* Taken from https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/source/Renderer/shaders */
 vec3 get_normal (void)
 {
@@ -299,11 +304,6 @@ vec3 get_normal (void)
 #endif /* HAS_NORMAL */
 }
 
-float linstep( float minval, float maxval, float val )
-{
-   return clamp( (val-minval) / (maxval-minval), 0., 1. );
-}
-
 float shadow_map( sampler2D tex, vec3 pos )
 {
    /* Variance Shadow Mapping. */
@@ -329,6 +329,34 @@ float shadow_map( sampler2D tex, vec3 pos )
    /* Regular Shadow Mapping. */
    //float f_shadow = (l_depth_m1 + 0.05 > shadow.z) ? 1.0 : 0.0;
    //return f_shadow;
+}
+
+vec3 aces_tonemap( vec3 x )
+{
+#if 0
+   const mat3 m1 = mat3(
+         0.59719, 0.07600, 0.02840,
+         0.35458, 0.90834, 0.13383,
+         0.04823, 0.01566, 0.83777
+         );
+   const mat3 m2 = mat3(
+         1.60475, -0.10208, -0.00327,
+        -0.53108,  1.10813, -0.07276,
+        -0.07367, -0.00605,  1.07602
+         );
+   vec3 v = m1 * x;
+   vec3 a = v * (v + 0.0245786) - 0.000090537;
+   vec3 b = v * (0.983729 * v + 0.4329510) + 0.238081;
+   return m2 * (a / b);
+#else
+   /* Approximation from https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/ */
+   const float a = 2.51;
+   const float b = 0.03;
+   const float c = 2.43;
+   const float d = 0.59;
+   const float e = 0.14;
+   return (x * (a * x + b)) / (x * (c * x + d ) + e);
+#endif
 }
 
 void main (void)
@@ -453,6 +481,9 @@ void main (void)
    vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, NoV );
    f_clearcoat *= M.clearcoat;
    colour_out.rgb = colour_out.rgb * (1.0 - M.clearcoat * clearcoatFresnel) + f_clearcoat;
+
+   /* Some fancy tone mapping. */
+   colour_out.rgb = aces_tonemap( colour_out.rgb );
 
    //colour_out = vec4( M.albedo.rgb, 1.0 );
    //colour_out = vec4( vec3(M.metallic), 1.0 );
