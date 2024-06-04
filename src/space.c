@@ -2202,6 +2202,16 @@ void spob_gfxLoad( Spob *spob )
          gl_fboAddDepth( spob->gfx_fbo, &spob->gfx_dtex, s * spob_aa_scale,
                          s * spob_aa_scale );
          spob->gfx_space = gl_rawTexture( spob->gfx_space3dName, tex, s, s );
+         /* Do a single render pass to populate the framebuffer. */
+         glBindFramebuffer( GL_FRAMEBUFFER, spob->gfx_fbo );
+         glClearColor( 0., 0., 0., 0. );
+         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+         gltf_renderScene( spob->gfx_fbo, spob->gfx_space3d, 0, NULL, 0.,
+                           s * spob_aa_scale, NULL );
+
+         glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+         glClearColor( 0., 0., 0., 1. );
       } else if ( spob->gfx_spaceName != NULL )
          spob->gfx_space =
             gl_newImage( spob->gfx_spaceName, OPENGL_TEX_MIPMAPS );
