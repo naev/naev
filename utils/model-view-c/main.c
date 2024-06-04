@@ -19,6 +19,74 @@ PlayerConf_t conf = {
    .max_3d_tex_size = 0,
 };
 
+typedef struct glColour_ {
+   GLfloat r; /**< Red value of the colour (0 to 1). */
+   GLfloat g; /**< Green value of the colour (0 to 1). */
+   GLfloat b; /**< Blue value of the colour (0 to 1). */
+   GLfloat a; /**< Alpha value of the colour (0 to 1). */
+} __attribute__( ( packed ) ) glColour;
+__attribute__( ( const ) ) double gammaToLinear( double x )
+{
+   if ( x <= 0.04045 )
+      return x / 12.92;
+   return pow( ( x + 0.055 ) / 1.055, 2.4 );
+}
+void col_gammaToLinear( glColour *c )
+{
+   c->r = gammaToLinear( c->r );
+   c->g = gammaToLinear( c->g );
+   c->b = gammaToLinear( c->b );
+}
+void col_hsv2rgb( glColour *c, float h, float s, float v )
+{
+   float var_h, var_i, var_1, var_2, var_3;
+
+   if ( v > 1 )
+      v = 1;
+
+   if ( s == 0 ) {
+      c->r = v;
+      c->g = v;
+      c->b = v;
+   } else {
+      var_h = h * 6 / 360.;
+      var_i = floor( var_h );
+      var_1 = v * ( 1 - s );
+      var_2 = v * ( 1 - s * ( var_h - var_i ) );
+      var_3 = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
+
+      if ( var_i == 0 ) {
+         c->r = v;
+         c->g = var_3;
+         c->b = var_1;
+      } else if ( var_i == 1 ) {
+         c->r = var_2;
+         c->g = v;
+         c->b = var_1;
+      } else if ( var_i == 2 ) {
+         c->r = var_1;
+         c->g = v;
+         c->b = var_3;
+      } else if ( var_i == 3 ) {
+         c->r = var_1;
+         c->g = var_2;
+         c->b = v;
+      } else if ( var_i == 4 ) {
+         c->r = var_3;
+         c->g = var_1;
+         c->b = v;
+      } else {
+         c->r = v;
+         c->g = var_1;
+         c->b = var_2;
+      }
+   }
+
+   c->r = gammaToLinear( c->r );
+   c->g = gammaToLinear( c->g );
+   c->b = gammaToLinear( c->b );
+}
+
 int main( int argc, char *argv[] )
 {
    (void) argc;
@@ -56,7 +124,7 @@ int main( int argc, char *argv[] )
    glBindVertexArray(VaoId);
 
    glEnable( GL_FRAMEBUFFER_SRGB );
-   glClearColor( 0.2, 0.2, 0.2, 1.0 );
+   glClearColor( 0.1, 0.1, 0.1, 1.0 );
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
    if (gltf_init())
@@ -68,7 +136,7 @@ int main( int argc, char *argv[] )
    free( path );
 
    /* Set some lighting parameters. */
-   double al = 0.5;
+   double al = 0.0;
    gltf_lightAmbient( al, al, al );
    //gltf_lightAmbient( 3., 0.0, 0.0 );
 
@@ -92,6 +160,7 @@ int main( int argc, char *argv[] )
 
    int rendermode = 1;
    int engine = 0;
+   int nebula = 0;
    int quit = 0;
    float rotx = 0.;
    float roty = -M_PI_2;
@@ -112,6 +181,18 @@ int main( int argc, char *argv[] )
 
                case SDLK_m:
                   rendermode = !rendermode;
+                  break;
+
+               case SDLK_n:
+                  nebula = !nebula;
+                  if (nebula) {
+                     glColour col;
+                     const double str = 0.5;
+                     col_hsv2rgb( &col, 1.0 * 360., 1., 1. );
+                     gltf_light( str * col.r, str * col.g, str * col.b, 0.7 );
+                  }
+                  else
+                     gltf_light( 0., 0., 0., 1.0 );
                   break;
 
                case SDLK_e:
