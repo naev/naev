@@ -36,8 +36,8 @@ double mat3_det( const mat3 *m )
 
 void mat3_invert( mat3 *m )
 {
-   double     invdet = mat3_det( m );
-   const mat3 o      = *m;
+   const double invdet = 1. / mat3_det( m );
+   const mat3   o      = *m;
    m->m[0][0] = ( o.m[1][1] * o.m[2][2] - o.m[2][1] * o.m[1][2] ) * invdet;
    m->m[0][1] = ( o.m[0][2] * o.m[2][1] - o.m[0][1] * o.m[2][2] ) * invdet;
    m->m[0][2] = ( o.m[0][1] * o.m[1][2] - o.m[0][2] * o.m[1][1] ) * invdet;
