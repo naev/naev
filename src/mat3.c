@@ -7,10 +7,6 @@
  *
  * @brief Handles OpenGL matrix stuff for 3 dimension matrices.
  */
-/** @cond */
-#include "naev.h"
-/** @endcond */
-
 #include <stdio.h>
 
 #include "mat3.h"
@@ -19,7 +15,7 @@ void mat3_print( const mat3 *m )
 {
    for ( int i = 0; i < 3; i++ ) {
       for ( int j = 0; j < 3; j++ )
-         printf( "%6.1f ", m->m[j][i] );
+         printf( "%7.g ", m->m[j][i] );
       printf( "\n" );
    }
 }

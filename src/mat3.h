@@ -20,6 +20,7 @@ typedef struct mat3_ {
 void mat3_print( const mat3 *m );
 void mat3_from_mat4( mat3 *out, const mat4 *in );
 
-/* Affine transformations. */
-void mat3_invert( mat3 *m );
-void mat3_transpose( mat3 *m );
+/* Useful functions. */
+double mat3_det( const mat3 *m );
+void   mat3_invert( mat3 *m );
+void   mat3_transpose( mat3 *m );
