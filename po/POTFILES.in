@@ -3651,6 +3651,8 @@ src/map_overlay.c
 src/map_overlay.h
 src/map_system.c
 src/map_system.h
+src/mat3.c
+src/mat3.h
 src/mat4.c
 src/mat4.h
 src/md5.c
