@@ -539,8 +539,7 @@ static int gltf_loadMaterial( const GltfObject *obj, Material *mat,
  *    @return OpenGL ID of the new VBO.
  */
 static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius,
-                            vec3 *aabb_min, vec3 *aabb_max,
-                            const cgltf_node *cnode )
+                            vec3 *aabb_min, vec3 *aabb_max )
 {
    GLuint       vid;
    cgltf_size   num = cgltf_accessor_unpack_floats( acc, NULL, 0 );
@@ -559,16 +558,13 @@ static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius,
 
    /* If applicable, store some useful stuff. */
    if ( radius != NULL ) {
-      mat4 H;
-      cgltf_node_transform_local( cnode, H.ptr );
       *radius = 0.;
       memset( aabb_min, 0, sizeof( vec3 ) );
       memset( aabb_max, 0, sizeof( vec3 ) );
       for ( unsigned int i = 0; i < num; i += 3 ) {
-         vec3 v, d;
+         vec3 v;
          for ( unsigned int j = 0; j < 3; j++ )
-            d.v[j] = dat[i + j];
-         mat4_mul_vec( &v, &H, &d );
+            v.v[j] = dat[i + j];
          for ( unsigned int j = 0; j < 3; j++ ) {
             aabb_min->v[j] = MIN( v.v[j], aabb_min->v[j] );
             aabb_max->v[j] = MAX( v.v[j], aabb_max->v[j] );
@@ -584,91 +580,116 @@ static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius,
 /**
  * @brief Loads a mesh for the object.
  */
-static int gltf_loadNode( cgltf_data *data, Node *node,
+static int gltf_loadMesh( cgltf_data *data, Mesh *mesh,
+                          const cgltf_mesh *cmesh )
+{
+   mesh->primitives =
+      calloc( cmesh->primitives_count, sizeof( MeshPrimitive ) );
+   mesh->nprimitives = cmesh->primitives_count;
+   for ( size_t i = 0; i < cmesh->primitives_count; i++ ) {
+      MeshPrimitive         *prim  = &mesh->primitives[i];
+      const cgltf_primitive *cprim = &cmesh->primitives[i];
+      const cgltf_accessor  *acc   = cprim->indices;
+      if ( acc == NULL ) {
+         prim->material = -1;
+         continue;
+      }
+
+      cgltf_size num = cgltf_num_components( acc->type ) * acc->count;
+      GLuint    *idx = malloc( sizeof( cgltf_uint ) * num );
+      for ( size_t j = 0; j < num; j++ )
+         cgltf_accessor_read_uint( acc, j, &idx[j], 1 );
+
+      /* Check material. */
+      if ( cprim->material != NULL )
+         prim->material = cgltf_material_index( data, cprim->material );
+      else
+         prim->material = -1;
+
+      /* Store indices. */
+      gl_contextSet();
+      glGenBuffers( 1, &prim->vbo_idx );
+      glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, prim->vbo_idx );
+      glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( cgltf_uint ) * num, idx,
+                    GL_STATIC_DRAW );
+      prim->nidx = acc->count;
+      glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+      gl_checkErr();
+      gl_contextUnset();
+      free( idx );
+
+      for ( size_t j = 0; j < cprim->attributes_count; j++ ) {
+         const cgltf_attribute *attr = &cprim->attributes[j];
+         switch ( attr->type ) {
+         case cgltf_attribute_type_position:
+            prim->vbo_pos = gltf_loadVBO( attr->data, &prim->radius,
+                                          &prim->aabb_min, &prim->aabb_max );
+            break;
+
+         case cgltf_attribute_type_normal:
+            prim->vbo_nor = gltf_loadVBO( attr->data, NULL, NULL, NULL );
+            break;
+
+         case cgltf_attribute_type_texcoord:
+            if ( attr->index == 0 )
+               prim->vbo_tex0 = gltf_loadVBO( attr->data, NULL, NULL, NULL );
+            else
+               prim->vbo_tex1 = gltf_loadVBO( attr->data, NULL, NULL, NULL );
+            /* TODO handle other cases? */
+            break;
+
+         case cgltf_attribute_type_color:
+         case cgltf_attribute_type_tangent:
+         default:
+            break;
+         }
+      }
+
+      vec3_max( &mesh->aabb_max, &mesh->aabb_max, &prim->aabb_max );
+      vec3_min( &mesh->aabb_min, &mesh->aabb_min, &prim->aabb_min );
+      mesh->radius = MAX( mesh->radius, prim->radius );
+   }
+   return 0;
+}
+
+/**
+ * @brief Loads a node for the object.
+ */
+static int gltf_loadNode( GltfObject *obj, const cgltf_data *data, Node *node,
                           const cgltf_node *cnode )
 {
-   cgltf_mesh *cmesh = cnode->mesh;
    /* Get transform for node. */
    cgltf_node_transform_local( cnode, node->H.ptr );
 
-   if ( cmesh == NULL ) {
-      node->nmesh = 0;
-   } else {
-      /* Load meshes. */
-      node->mesh  = calloc( cmesh->primitives_count, sizeof( Mesh ) );
-      node->nmesh = cmesh->primitives_count;
-      for ( size_t i = 0; i < cmesh->primitives_count; i++ ) {
-         Mesh                 *mesh = &node->mesh[i];
-         cgltf_primitive      *prim = &cmesh->primitives[i];
-         const cgltf_accessor *acc  = prim->indices;
-         if ( acc == NULL ) {
-            mesh->material = -1;
-            continue;
-         }
+   /* Get the mesh. */
+   if ( cnode->mesh != NULL ) {
+      mat4 H;
+      node->mesh = cgltf_mesh_index( data, cnode->mesh );
 
-         cgltf_size num = cgltf_num_components( acc->type ) * acc->count;
-         GLuint    *idx = malloc( sizeof( cgltf_uint ) * num );
-         for ( size_t j = 0; j < num; j++ )
-            cgltf_accessor_read_uint( acc, j, &idx[j], 1 );
-
-         /* Check material. */
-         if ( prim->material != NULL )
-            mesh->material = prim->material - data->materials;
-         else
-            mesh->material = -1;
-
-         /* Store indices. */
-         gl_contextSet();
-         glGenBuffers( 1, &mesh->vbo_idx );
-         glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
-         glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( cgltf_uint ) * num, idx,
-                       GL_STATIC_DRAW );
-         mesh->nidx = acc->count;
-         glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-         gl_checkErr();
-         gl_contextUnset();
-         free( idx );
-
-         for ( size_t j = 0; j < prim->attributes_count; j++ ) {
-            const cgltf_attribute *attr = &prim->attributes[j];
-            switch ( attr->type ) {
-            case cgltf_attribute_type_position:
-               mesh->vbo_pos =
-                  gltf_loadVBO( attr->data, &mesh->radius, &mesh->aabb_min,
-                                &mesh->aabb_max, cnode );
-               node->radius = MAX( node->radius, mesh->radius );
-               vec3_max( &node->aabb_max, &node->aabb_max, &mesh->aabb_max );
-               vec3_min( &node->aabb_min, &node->aabb_min, &mesh->aabb_min );
-               break;
-
-            case cgltf_attribute_type_normal:
-               mesh->vbo_nor =
-                  gltf_loadVBO( attr->data, NULL, NULL, NULL, NULL );
-               break;
-
-            case cgltf_attribute_type_texcoord:
-               if ( attr->index == 0 )
-                  mesh->vbo_tex0 =
-                     gltf_loadVBO( attr->data, NULL, NULL, NULL, NULL );
-               else
-                  mesh->vbo_tex1 =
-                     gltf_loadVBO( attr->data, NULL, NULL, NULL, NULL );
-               /* TODO handle other cases? */
-               break;
-
-            case cgltf_attribute_type_color:
-            case cgltf_attribute_type_tangent:
-            default:
-               break;
-            }
-         }
-      }
-   }
+      /* Compute dimensions from mesh. */
+      cgltf_node_transform_local( cnode, H.ptr );
+      vec3   vx = { .v = { H.m[0][0], H.m[0][1], H.m[0][2] } };
+      vec3   vy = { .v = { H.m[1][0], H.m[1][1], H.m[1][2] } };
+      vec3   vz = { .v = { H.m[2][0], H.m[2][1], H.m[2][2] } };
+      vec3   vt = { .v = { H.m[3][0], H.m[3][1], H.m[3][2] } };
+      double s  = MAX( vec3_length( &vx ),
+                       MAX( vec3_length( &vy ), vec3_length( &vz ) ) );
+      double t  = vec3_length( &vt );
+      // node->radius = obj->meshes[node->mesh].radius * s + t;
+      node->radius = obj->meshes[node->mesh].radius;
+      obj->radius  = MAX( obj->radius, node->radius );
+      DEBUG( "mesh = %d, obj->radius = %.3f, node->radius = %.3f, mesh->radius "
+             "= %.3f, s = %.3f, t = %.3f",
+             node->mesh, obj->radius, node->radius,
+             obj->meshes[node->mesh].radius, s, t );
+      mat4_print( &H );
+   } else
+      node->mesh = -1;
 
    /* Iterate over children. */
    node->nchildren = cnode->children_count;
    if ( node->nchildren > 0 ) {
-      node->children = calloc( cnode->children_count, sizeof( int ) );
+      node->children = calloc( cnode->children_count, sizeof( size_t ) );
       for ( size_t i = 0; i < cnode->children_count; i++ )
          node->children[i] = cgltf_node_index( data, cnode->children[i] );
    }
@@ -699,8 +720,9 @@ static void shadow_matrix( mat4 *m, const Light *light )
 /**
  * @brief Renders a mesh shadow with a transform.
  */
-static void renderMeshShadow( const GltfObject *obj, const Mesh *mesh,
-                              const mat4 *H )
+static void renderMeshPrimitiveShadow( const GltfObject    *obj,
+                                       const MeshPrimitive *mesh,
+                                       const mat4          *H )
 {
    (void)obj;
    const Shader *shd = &shadow_shader;
@@ -720,11 +742,18 @@ static void renderMeshShadow( const GltfObject *obj, const Mesh *mesh,
    glUniformMatrix4fv( shd->Hmodel, 1, GL_FALSE, H->ptr );
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 }
+static void renderMeshShadow( const GltfObject *obj, const Mesh *mesh,
+                              const mat4 *H )
+{
+   for ( int i = 0; i < mesh->nprimitives; i++ )
+      renderMeshPrimitiveShadow( obj, &mesh->primitives[i], H );
+}
 
 /**
  * @brief Renders a mesh with a transform.
  */
-static void renderMesh( const GltfObject *obj, const Mesh *mesh, const mat4 *H )
+static void renderMeshPrimitive( const GltfObject    *obj,
+                                 const MeshPrimitive *mesh, const mat4 *H )
 {
    const Material *mat;
    const Shader   *shd = &gltf_shader;
@@ -826,6 +855,11 @@ static void renderMesh( const GltfObject *obj, const Mesh *mesh, const mat4 *H )
    if ( mat->double_sided )
       glEnable( GL_CULL_FACE );
 }
+static void renderMesh( const GltfObject *obj, const Mesh *mesh, const mat4 *H )
+{
+   for ( int i = 0; i < mesh->nprimitives; i++ )
+      renderMeshPrimitive( obj, &mesh->primitives[i], H );
+}
 
 /**
  * @brief Recursive rendering to the shadow buffer.
@@ -838,9 +872,9 @@ static void gltf_renderNodeShadow( const GltfObject *obj, const Node *node,
    mat4 HH = node->H;
    mat4_apply( &HH, H );
 
-   /* Draw meshes. */
-   for ( size_t i = 0; i < node->nmesh; i++ )
-      renderMeshShadow( obj, &node->mesh[i], &HH );
+   /* Draw mesh. */
+   if ( node->mesh >= 0 )
+      renderMeshShadow( obj, &obj->meshes[node->mesh], &HH );
 
    /* Draw children. */
    for ( size_t i = 0; i < node->nchildren; i++ )
@@ -865,9 +899,9 @@ static void gltf_renderNodeMesh( const GltfObject *obj, const Node *node,
    mat3_from_mat4( &m, &HH );
    glFrontFace( ( mat3_det( &m ) < 0. ) ? GL_CW : GL_CCW );
 
-   /* Draw meshes. */
-   for ( size_t i = 0; i < node->nmesh; i++ )
-      renderMesh( obj, &node->mesh[i], &HH );
+   /* Draw mesh. */
+   if ( node->mesh >= 0 )
+      renderMesh( obj, &obj->meshes[node->mesh], &HH );
 
    /* Draw children. */
    for ( size_t i = 0; i < node->nchildren; i++ )
@@ -1112,23 +1146,35 @@ static int cmp_node( const void *p1, const void *p2 )
    int         b1 = 0;
    int         b2 = 0;
    int         b;
-   for ( size_t i = 0; i < n1->nmesh; i++ ) {
-      if ( n1->mesh->material >= 0 )
-         b1 |= cmp_obj->materials[n1->mesh->material].blend;
+   double      n1y = 0.;
+   double      n2y = 0.;
+   if ( n1->mesh >= 0 ) {
+      const Mesh *m = &cmp_obj->meshes[n1->mesh];
+      for ( int i = 0; i < m->nprimitives; i++ ) {
+         int mat = m->primitives[i].material;
+         if ( mat >= 0 )
+            b1 |= cmp_obj->materials[mat].blend;
+         n1y = MAX( n1y, m->aabb_max.v[1] );
+      }
    }
-   for ( size_t i = 0; i < n2->nmesh; i++ ) {
-      if ( n2->mesh->material >= 0 )
-         b2 |= cmp_obj->materials[n2->mesh->material].blend;
+   if ( n2->mesh >= 0 ) {
+      const Mesh *m = &cmp_obj->meshes[n2->mesh];
+      for ( int i = 0; i < m->nprimitives; i++ ) {
+         int mat = m->primitives[i].material;
+         if ( mat >= 0 )
+            b2 |= cmp_obj->materials[mat].blend;
+         n2y = MAX( n1y, m->aabb_max.v[1] );
+      }
    }
    b = b1 - b2;
    if ( b )
       return b;
-   return n1->aabb_max.v[1] - n2->aabb_max.v[1];
+   return n1y - n2y;
 }
 static int cmp_mesh( const void *p1, const void *p2 )
 {
-   const Mesh *m1 = p1;
-   const Mesh *m2 = p2;
+   const MeshPrimitive *m1 = p1;
+   const MeshPrimitive *m2 = p2;
    int b1 = ( m1->material >= 0 ) ? cmp_obj->materials[m1->material].blend : -1;
    int b2 = ( m2->material >= 0 ) ? cmp_obj->materials[m2->material].blend : -1;
    int b  = b1 - b2;
@@ -1188,13 +1234,19 @@ GltfObject *gltf_loadFromFile( const char *filename )
    for ( size_t i = 0; i < data->materials_count; i++ )
       gltf_loadMaterial( obj, &obj->materials[i], &data->materials[i], data );
 
+   /* Load meshes. */
+   obj->meshes  = calloc( data->meshes_count, sizeof( Mesh ) );
+   obj->nmeshes = data->meshes_count;
+   for ( size_t i = 0; i < data->meshes_count; i++ )
+      gltf_loadMesh( data, &obj->meshes[i], &data->meshes[i] );
+
    /* Load nodes. */
    obj->nodes  = calloc( data->nodes_count, sizeof( Node ) );
    obj->nnodes = data->nodes_count;
    for ( size_t n = 0; n < obj->nnodes; n++ ) {
       const cgltf_node *cnode = &data->nodes[n];
       Node             *node  = &obj->nodes[n];
-      gltf_loadNode( data, node, cnode );
+      gltf_loadNode( obj, data, node, cnode );
    }
 
    /* Load scenes. */
@@ -1218,22 +1270,15 @@ GltfObject *gltf_loadFromFile( const char *filename )
       /* Set up and allocate scene. */
       scene->nodes  = calloc( cscene->nodes_count, sizeof( size_t ) );
       scene->nnodes = cscene->nodes_count;
-      for ( size_t i = 0; i < scene->nnodes; i++ ) {
-         const Node *n;
+      for ( size_t i = 0; i < scene->nnodes; i++ )
          scene->nodes[i] = cgltf_node_index( data, cscene->nodes[i] );
-         n               = &obj->nodes[scene->nodes[i]];
-
-         obj->radius = MAX( obj->radius, n->radius );
-         vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
-         vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
-      }
    }
 
    /* Sort stuff afterwards so we can lock it. */
    cmp_obj = obj; /* For comparisons. */
-   for ( size_t i = 0; i < obj->nnodes; i++ ) {
-      Node *n = &obj->nodes[i];
-      qsort( n->mesh, n->nmesh, sizeof( Mesh ), cmp_mesh );
+   for ( size_t i = 0; i < obj->nmeshes; i++ ) {
+      Mesh *m = &obj->meshes[i];
+      qsort( m->primitives, m->nprimitives, sizeof( MeshPrimitive ), cmp_mesh );
    }
    for ( size_t s = 0; s < obj->nscenes; s++ ) {
       Scene *scene = &obj->scenes[s];
@@ -1250,24 +1295,26 @@ GltfObject *gltf_loadFromFile( const char *filename )
    return obj;
 }
 
+static void gltf_freeMesh( Mesh *mesh )
+{
+   for ( int i = 0; i < mesh->nprimitives; i++ ) {
+      MeshPrimitive *mp = &mesh->primitives[i];
+      if ( mp->vbo_idx )
+         glDeleteBuffers( 1, &mp->vbo_idx );
+      if ( mp->vbo_pos )
+         glDeleteBuffers( 1, &mp->vbo_pos );
+      if ( mp->vbo_nor )
+         glDeleteBuffers( 1, &mp->vbo_nor );
+      if ( mp->vbo_tex0 )
+         glDeleteBuffers( 1, &mp->vbo_tex0 );
+      if ( mp->vbo_tex1 )
+         glDeleteBuffers( 1, &mp->vbo_tex1 );
+   }
+   gl_checkErr();
+}
+
 static void gltf_freeNode( Node *node )
 {
-   for ( size_t i = 0; i < node->nmesh; i++ ) {
-      Mesh *m = &node->mesh[i];
-      if ( m->vbo_idx )
-         glDeleteBuffers( 1, &m->vbo_idx );
-      if ( m->vbo_pos )
-         glDeleteBuffers( 1, &m->vbo_pos );
-      if ( m->vbo_nor )
-         glDeleteBuffers( 1, &m->vbo_nor );
-      if ( m->vbo_tex0 )
-         glDeleteBuffers( 1, &m->vbo_tex0 );
-      if ( m->vbo_tex1 )
-         glDeleteBuffers( 1, &m->vbo_tex1 );
-   }
-   free( node->mesh );
-   gl_checkErr();
-
    free( node->children );
 }
 
@@ -1288,6 +1335,11 @@ void gltf_free( GltfObject *obj )
       return;
 
    free( obj->path );
+
+   for ( size_t i = 0; i < obj->nmeshes; i++ ) {
+      Mesh *mesh = &obj->meshes[i];
+      gltf_freeMesh( mesh );
+   }
 
    for ( size_t i = 0; i < obj->nnodes; i++ ) {
       Node *node = &obj->nodes[i];

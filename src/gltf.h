@@ -63,7 +63,7 @@ typedef struct Material_ {
 /**
  * @brief Represents an underlying 3D mesh.
  */
-typedef struct Mesh_ {
+typedef struct MeshPrimitive_ {
    size_t nidx;     /**< Number of indices. */
    GLuint vbo_idx;  /**< Index VBO. */
    GLuint vbo_pos;  /**< Position VBO. */
@@ -75,18 +75,25 @@ typedef struct Mesh_ {
    GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
    vec3    aabb_min; /**< Minimum value of AABB wrapping around it. */
    vec3    aabb_max; /**< Maximum value of AABB wrapping around it. */
+} MeshPrimitive;
+
+typedef struct Mesh_ {
+   MeshPrimitive *primitives;
+   int            nprimitives;
+
+   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
+   vec3    aabb_min; /**< Minimum value of AABB wrapping around it. */
+   vec3    aabb_max; /**< Maximum value of AABB wrapping around it. */
 } Mesh;
 
 /**
  * @brief Represents a node of an object. Each node can have multiple meshes and
  * children nodes with an associated transformation.
  */
-struct Node_;
 typedef struct Node_ {
    char   *name;      /**< Name information. */
    mat4    H;         /**< Homogeneous transform. */
-   Mesh   *mesh;      /**< Meshes. */
-   size_t  nmesh;     /**< Number of meshes. */
+   int     mesh;      /**< Associated Mesh. */
    size_t *children;  /**< Children nodes. */
    size_t  nchildren; /**< Number of children mesh. */
 
@@ -105,8 +112,10 @@ typedef struct Scene_ {
  * @brief Defines a complete object.
  */
 typedef struct GltfObject_ {
-   char     *path;  /**< Path containing the gltf, used for finding elements. */
-   Node     *nodes; /**< The nodes. */
+   char     *path; /**< Path containing the gltf, used for finding elements. */
+   Mesh     *meshes;     /**< The meshes. */
+   size_t    nmeshes;    /**< Number of meshes. */
+   Node     *nodes;      /**< The nodes. */
    size_t    nnodes;     /**< Number of nodes. */
    Scene    *scenes;     /**< The scenes. */
    size_t    nscenes;    /**< Number of scenes. */
