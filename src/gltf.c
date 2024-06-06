@@ -1297,6 +1297,7 @@ static void gltf_freeMesh( Mesh *mesh )
       if ( mp->vbo_tex1 )
          glDeleteBuffers( 1, &mp->vbo_tex1 );
    }
+   free( mesh->primitives );
    gl_checkErr();
 }
 
@@ -1327,11 +1328,13 @@ void gltf_free( GltfObject *obj )
       Mesh *mesh = &obj->meshes[i];
       gltf_freeMesh( mesh );
    }
+   free( obj->meshes );
 
    for ( size_t i = 0; i < obj->nnodes; i++ ) {
       Node *node = &obj->nodes[i];
       gltf_freeNode( node );
    }
+   free( obj->nodes );
 
    for ( size_t s = 0; s < obj->nscenes; s++ ) {
       Scene *scene = &obj->scenes[s];
