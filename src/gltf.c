@@ -538,13 +538,17 @@ static int gltf_loadMaterial( const GltfObject *obj, Material *mat,
  *    @param acc Accessor to load from.
  *    @return OpenGL ID of the new VBO.
  */
-static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius,
-                            vec3 *aabb_min, vec3 *aabb_max )
+static GLuint gltf_loadVBO( const cgltf_accessor *acc, cgltf_float **data,
+                            cgltf_size *datasize )
 {
    GLuint       vid;
    cgltf_size   num = cgltf_accessor_unpack_floats( acc, NULL, 0 );
    cgltf_float *dat = malloc( sizeof( cgltf_float ) * num );
    cgltf_accessor_unpack_floats( acc, dat, num );
+   if ( data != NULL ) {
+      *data     = dat;
+      *datasize = num;
+   }
 
    /* OpenGL magic. */
    gl_contextSet();
@@ -556,40 +560,26 @@ static GLuint gltf_loadVBO( const cgltf_accessor *acc, GLfloat *radius,
    gl_checkErr();
    gl_contextUnset();
 
-   /* If applicable, store some useful stuff. */
-   if ( radius != NULL ) {
-      *radius = 0.;
-      memset( aabb_min, 0, sizeof( vec3 ) );
-      memset( aabb_max, 0, sizeof( vec3 ) );
-      for ( unsigned int i = 0; i < num; i += 3 ) {
-         vec3 v;
-         for ( unsigned int j = 0; j < 3; j++ )
-            v.v[j] = dat[i + j];
-         for ( unsigned int j = 0; j < 3; j++ ) {
-            aabb_min->v[j] = MIN( v.v[j], aabb_min->v[j] );
-            aabb_max->v[j] = MAX( v.v[j], aabb_max->v[j] );
-         }
-         *radius = MAX( *radius, vec3_length( &v ) );
-      }
-   }
-
-   free( dat );
+   if ( data == NULL )
+      free( dat );
    return vid;
 }
 
 /**
  * @brief Loads a mesh for the object.
  */
-static int gltf_loadMesh( cgltf_data *data, Mesh *mesh,
+static int gltf_loadMesh( GltfObject *obj, const cgltf_data *data, Mesh *mesh,
                           const cgltf_mesh *cmesh )
 {
    mesh->primitives =
       calloc( cmesh->primitives_count, sizeof( MeshPrimitive ) );
    mesh->nprimitives = cmesh->primitives_count;
    for ( size_t i = 0; i < cmesh->primitives_count; i++ ) {
-      MeshPrimitive         *prim  = &mesh->primitives[i];
-      const cgltf_primitive *cprim = &cmesh->primitives[i];
-      const cgltf_accessor  *acc   = cprim->indices;
+      MeshPrimitive         *prim    = &mesh->primitives[i];
+      const cgltf_primitive *cprim   = &cmesh->primitives[i];
+      const cgltf_accessor  *acc     = cprim->indices;
+      cgltf_float           *rawdata = NULL;
+      cgltf_size             datasize;
       if ( acc == NULL ) {
          prim->material = -1;
          continue;
@@ -622,19 +612,18 @@ static int gltf_loadMesh( cgltf_data *data, Mesh *mesh,
          const cgltf_attribute *attr = &cprim->attributes[j];
          switch ( attr->type ) {
          case cgltf_attribute_type_position:
-            prim->vbo_pos = gltf_loadVBO( attr->data, &prim->radius,
-                                          &prim->aabb_min, &prim->aabb_max );
+            prim->vbo_pos = gltf_loadVBO( attr->data, &rawdata, &datasize );
             break;
 
          case cgltf_attribute_type_normal:
-            prim->vbo_nor = gltf_loadVBO( attr->data, NULL, NULL, NULL );
+            prim->vbo_nor = gltf_loadVBO( attr->data, NULL, NULL );
             break;
 
          case cgltf_attribute_type_texcoord:
             if ( attr->index == 0 )
-               prim->vbo_tex0 = gltf_loadVBO( attr->data, NULL, NULL, NULL );
+               prim->vbo_tex0 = gltf_loadVBO( attr->data, NULL, NULL );
             else
-               prim->vbo_tex1 = gltf_loadVBO( attr->data, NULL, NULL, NULL );
+               prim->vbo_tex1 = gltf_loadVBO( attr->data, NULL, NULL );
             /* TODO handle other cases? */
             break;
 
@@ -645,9 +634,25 @@ static int gltf_loadMesh( cgltf_data *data, Mesh *mesh,
          }
       }
 
-      vec3_max( &mesh->aabb_max, &mesh->aabb_max, &prim->aabb_max );
-      vec3_min( &mesh->aabb_min, &mesh->aabb_min, &prim->aabb_min );
-      mesh->radius = MAX( mesh->radius, prim->radius );
+      /* Try to figure out dimensions. */
+      if ( rawdata != NULL ) {
+         /* Try to find associated node. */
+         for ( size_t n = 0; n < obj->nnodes; n++ ) {
+            Node *node = &obj->nodes[n];
+            if ( cmesh != data->nodes[n].mesh )
+               continue;
+            for ( unsigned int di = 0; di < datasize; di += 3 ) {
+               vec3 v, d;
+               for ( unsigned int dj = 0; dj < 3; dj++ )
+                  d.v[dj] = rawdata[di + dj];
+               mat4_mul_vec( &v, &node->H, &d );
+               vec3_min( &node->aabb_min, &v, &node->aabb_min );
+               vec3_max( &node->aabb_max, &v, &node->aabb_max );
+               node->radius = MAX( node->radius, vec3_length( &v ) );
+            }
+         }
+         free( rawdata );
+      }
    }
    return 0;
 }
@@ -655,35 +660,16 @@ static int gltf_loadMesh( cgltf_data *data, Mesh *mesh,
 /**
  * @brief Loads a node for the object.
  */
-static int gltf_loadNode( GltfObject *obj, const cgltf_data *data, Node *node,
+static int gltf_loadNode( const cgltf_data *data, Node *node,
                           const cgltf_node *cnode )
 {
    /* Get transform for node. */
    cgltf_node_transform_local( cnode, node->H.ptr );
 
    /* Get the mesh. */
-   if ( cnode->mesh != NULL ) {
-      mat4 H;
+   if ( cnode->mesh != NULL )
       node->mesh = cgltf_mesh_index( data, cnode->mesh );
-
-      /* Compute dimensions from mesh. */
-      cgltf_node_transform_local( cnode, H.ptr );
-      vec3   vx = { .v = { H.m[0][0], H.m[0][1], H.m[0][2] } };
-      vec3   vy = { .v = { H.m[1][0], H.m[1][1], H.m[1][2] } };
-      vec3   vz = { .v = { H.m[2][0], H.m[2][1], H.m[2][2] } };
-      vec3   vt = { .v = { H.m[3][0], H.m[3][1], H.m[3][2] } };
-      double s  = MAX( vec3_length( &vx ),
-                       MAX( vec3_length( &vy ), vec3_length( &vz ) ) );
-      double t  = vec3_length( &vt );
-      // node->radius = obj->meshes[node->mesh].radius * s + t;
-      node->radius = obj->meshes[node->mesh].radius;
-      obj->radius  = MAX( obj->radius, node->radius );
-      DEBUG( "mesh = %d, obj->radius = %.3f, node->radius = %.3f, mesh->radius "
-             "= %.3f, s = %.3f, t = %.3f",
-             node->mesh, obj->radius, node->radius,
-             obj->meshes[node->mesh].radius, s, t );
-      mat4_print( &H );
-   } else
+   else
       node->mesh = -1;
 
    /* Iterate over children. */
@@ -1146,15 +1132,12 @@ static int cmp_node( const void *p1, const void *p2 )
    int         b1 = 0;
    int         b2 = 0;
    int         b;
-   double      n1y = 0.;
-   double      n2y = 0.;
    if ( n1->mesh >= 0 ) {
       const Mesh *m = &cmp_obj->meshes[n1->mesh];
       for ( int i = 0; i < m->nprimitives; i++ ) {
          int mat = m->primitives[i].material;
          if ( mat >= 0 )
             b1 |= cmp_obj->materials[mat].blend;
-         n1y = MAX( n1y, m->aabb_max.v[1] );
       }
    }
    if ( n2->mesh >= 0 ) {
@@ -1163,13 +1146,12 @@ static int cmp_node( const void *p1, const void *p2 )
          int mat = m->primitives[i].material;
          if ( mat >= 0 )
             b2 |= cmp_obj->materials[mat].blend;
-         n2y = MAX( n1y, m->aabb_max.v[1] );
       }
    }
    b = b1 - b2;
    if ( b )
       return b;
-   return n1y - n2y;
+   return 0;
 }
 static int cmp_mesh( const void *p1, const void *p2 )
 {
@@ -1180,7 +1162,7 @@ static int cmp_mesh( const void *p1, const void *p2 )
    int b  = b1 - b2;
    if ( b )
       return b;
-   return m1->aabb_max.v[1] - m2->aabb_max.v[1];
+   return 0;
 }
 
 /**
@@ -1234,20 +1216,21 @@ GltfObject *gltf_loadFromFile( const char *filename )
    for ( size_t i = 0; i < data->materials_count; i++ )
       gltf_loadMaterial( obj, &obj->materials[i], &data->materials[i], data );
 
-   /* Load meshes. */
-   obj->meshes  = calloc( data->meshes_count, sizeof( Mesh ) );
-   obj->nmeshes = data->meshes_count;
-   for ( size_t i = 0; i < data->meshes_count; i++ )
-      gltf_loadMesh( data, &obj->meshes[i], &data->meshes[i] );
-
    /* Load nodes. */
    obj->nodes  = calloc( data->nodes_count, sizeof( Node ) );
    obj->nnodes = data->nodes_count;
    for ( size_t n = 0; n < obj->nnodes; n++ ) {
       const cgltf_node *cnode = &data->nodes[n];
       Node             *node  = &obj->nodes[n];
-      gltf_loadNode( obj, data, node, cnode );
+      gltf_loadNode( data, node, cnode );
    }
+
+   /* Load meshes, has to be after nodes so we can fill information backwards.
+    */
+   obj->meshes  = calloc( data->meshes_count, sizeof( Mesh ) );
+   obj->nmeshes = data->meshes_count;
+   for ( size_t i = 0; i < data->meshes_count; i++ )
+      gltf_loadMesh( obj, data, &obj->meshes[i], &data->meshes[i] );
 
    /* Load scenes. */
    obj->scenes       = calloc( data->scenes_count, sizeof( Scene ) );
@@ -1273,6 +1256,10 @@ GltfObject *gltf_loadFromFile( const char *filename )
       for ( size_t i = 0; i < scene->nnodes; i++ )
          scene->nodes[i] = cgltf_node_index( data, cscene->nodes[i] );
    }
+
+   /* Get true radius. */
+   for ( size_t i = 0; i < obj->nnodes; i++ )
+      obj->radius = MAX( obj->radius, obj->nodes[i].radius );
 
    /* Sort stuff afterwards so we can lock it. */
    cmp_obj = obj; /* For comparisons. */

@@ -61,7 +61,7 @@ typedef struct Material_ {
 } Material;
 
 /**
- * @brief Represents an underlying 3D mesh.
+ * @brief Represents the underlyig 3D data and associated material.
  */
 typedef struct MeshPrimitive_ {
    size_t nidx;     /**< Number of indices. */
@@ -71,19 +71,14 @@ typedef struct MeshPrimitive_ {
    GLuint vbo_tex0; /**< Texture 0 coordinate VBO. */
    GLuint vbo_tex1; /**< Texture 1 coordinate VBO. */
    int    material; /**< ID of material to use. */
-
-   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
-   vec3    aabb_min; /**< Minimum value of AABB wrapping around it. */
-   vec3    aabb_max; /**< Maximum value of AABB wrapping around it. */
 } MeshPrimitive;
 
+/**
+ * @brief Represents a mesh that can be made of multiple primitives.
+ */
 typedef struct Mesh_ {
-   MeshPrimitive *primitives;
-   int            nprimitives;
-
-   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
-   vec3    aabb_min; /**< Minimum value of AABB wrapping around it. */
-   vec3    aabb_max; /**< Maximum value of AABB wrapping around it. */
+   MeshPrimitive *primitives;  /**< Primitives in the mesh. */
+   int            nprimitives; /**< Number of primitives. */
 } Mesh;
 
 /**
@@ -102,6 +97,9 @@ typedef struct Node_ {
    vec3    aabb_max; /**< Maximum value of AABB wrapping around it. */
 } Node;
 
+/**
+ * @brief Represents a scene that can have multiple nodes.
+ */
 typedef struct Scene_ {
    char   *name;   /**< Name of the scene. */
    size_t *nodes;  /**< Nodes the scene has. */
@@ -122,8 +120,6 @@ typedef struct GltfObject_ {
    Material *materials;  /**< Available materials. */
    size_t    nmaterials; /**< Number of materials. */
    GLfloat   radius;     /**< Sphere fit on the model centered at 0,0. */
-   vec3      aabb_min;   /**< Minimum value of AABB wrapping around it. */
-   vec3      aabb_max;   /**< Maximum value of AABB wrapping around it. */
    /* Some useful default scenes. */
    int scene_body;   /**< Body of the object. */
    int scene_engine; /**< Engine of the object (if applicable or -1) */
