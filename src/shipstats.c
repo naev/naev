@@ -242,11 +242,12 @@ static int         ss_printI( char *buf, int len, int newline, int i,
                               const ShipStatsLookup *sl );
 static int         ss_printB( char *buf, int len, int newline, int b,
                               const ShipStatsLookup *sl );
-static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type );
-static int    ss_statsGetLuaInternal( lua_State *L, const ShipStats *s,
-                                      ShipStatsType type, int internal );
-static void   ss_adjustDoubleStat( double *statptr, double adjustment,
-                                   int inverted );
+static double      ss_statsGetInternal( const ShipStats *s, ShipStatsType type,
+                                        int raw );
+static int         ss_statsGetLuaInternal( lua_State *L, const ShipStats *s,
+                                           ShipStatsType type, int internal );
+static void        ss_adjustDoubleStat( double *statptr, double adjustment,
+                                        int inverted );
 
 ShipStatList *ss_statsSetList( ShipStatList *head, ShipStatsType type,
                                double value, int overwrite, int raw )
@@ -255,6 +256,7 @@ ShipStatList *ss_statsSetList( ShipStatList *head, ShipStatsType type,
    ShipStatList          *ll      = NULL;
    ShipStatList          *newhead = head;
    int                    init    = overwrite;
+   double                 v;
 
    if ( type == SS_TYPE_NIL )
       return NULL;
@@ -298,17 +300,13 @@ ShipStatList *ss_statsSetList( ShipStatList *head, ShipStatsType type,
    /* Set the data. */
    switch ( sl->data ) {
    case SS_DATA_TYPE_DOUBLE:
-      if ( raw )
-         ll->d.d *= value;
-      else
-         ll->d.d *= value / 100.;
+      v = ( raw ) ? value : value / 100.;
+      ll->d.d *= v;
       break;
 
    case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-      if ( raw )
-         ll->d.d += value;
-      else
-         ll->d.d += value / 100.;
+      v = ( raw ) ? value : value / 100.;
+      ll->d.d *= v;
       break;
 
    case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
@@ -986,22 +984,29 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
    return 0;
 }
 
-static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type )
+static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type,
+                                   int raw )
 {
    const ShipStatsLookup *sl;
    const char            *ptr;
    const double          *destdbl;
    const int             *destint;
+   double                 v;
 
    sl  = &ss_lookup[type];
    ptr = (const char *)s;
    switch ( sl->data ) {
    case SS_DATA_TYPE_DOUBLE:
       destdbl = (const double *)(const void *)&ptr[sl->offset];
-      return 100. * ( ( *destdbl ) - 1.0 );
+      v       = ( *destdbl ) - 1.0;
+      if ( raw )
+         return v;
+      return 100. * v;
 
    case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
       destdbl = (const double *)(const void *)&ptr[sl->offset];
+      if ( raw )
+         return *destdbl;
       return 100. * ( *destdbl );
 
    case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
@@ -1073,7 +1078,15 @@ double ss_statsGet( const ShipStats *s, const char *name )
       return 0;
    }
 
-   return ss_statsGetInternal( s, type );
+   return ss_statsGetInternal( s, type, 0 );
+}
+
+/**
+ * @brief Gets a ship stat value by name.
+ */
+double ss_statsGetRaw( const ShipStats *s, ShipStatsType type )
+{
+   return ss_statsGetInternal( s, type, 1 );
 }
 
 /**
