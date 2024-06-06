@@ -9,6 +9,13 @@
 
 #include "vec3.h"
 
+void vec3_print( const vec3 *v )
+{
+   for ( int i = 0; i < 3; i++ )
+      printf( "%7.5g ", v->v[i] );
+   printf( "\n" );
+}
+
 /**
  * @brief Adds two vectors together (out = a + b).
  *
