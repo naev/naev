@@ -642,7 +642,8 @@ void main (void)
    }
 
    /* Do emissive. */
-   f_emissive = emissive * texture(emissive_tex, (emissive_texcoord ? tex_coord1 : tex_coord0) ).rgb;
+   vec4 tex_emmissive = texture(emissive_tex, (emissive_texcoord ? tex_coord1 : tex_coord0) );
+   f_emissive = emissive * tex_emmissive.rgb * tex_emmissive.a;
 
    /* Combine diffuse, emissive, and specular.. */
    colour_out.a = (u_blend==1) ? M.albedo.a : 1.0;
