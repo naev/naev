@@ -1134,11 +1134,8 @@ static void gltf_applyAnimNode( GltfObject *obj, Animation *anim, GLfloat time )
    for ( size_t j = 0; j < anim->nchannels; j++ ) {
       AnimationChannel *chan = &anim->channels[j];
       AnimationSampler *samp = chan->sampler;
-      size_t            c    = samp->cur;
-      size_t            n    = ( samp->cur + 1 ) % samp->n;
-      GLfloat           cur  = samp->time[c];
-      GLfloat           nex  = samp->time[n];
-      GLfloat           mix;
+      int               pi, ni;
+      GLfloat           p, n, mix;
       GLfloat           t    = fmod( time, samp->max );
       Node             *node = chan->target;
 
@@ -1148,26 +1145,22 @@ static void gltf_applyAnimNode( GltfObject *obj, Animation *anim, GLfloat time )
          node->has_anim = 1;
       }
 
-      if ( t < cur ) {
-         c         = 0;
-         n         = ( c + 1 ) % samp->n;
-         cur       = samp->time[c];
-         nex       = samp->time[n];
-         samp->cur = c;
+      /* TODO something better than linear search. */
+      pi = 0;
+      for ( size_t i = 0; i < samp->n; i++ ) {
+         if ( samp->time[i] < t ) {
+            pi = i;
+            break;
+         }
       }
-      /* Have to move pointer forward. */
-      while ( t >= nex ) {
-         c         = n;
-         n         = ( c + 1 ) % samp->n;
-         cur       = samp->time[c];
-         nex       = samp->time[n];
-         samp->cur = c;
-      }
+      ni = ( pi + 1 ) % samp->n;
+      p  = samp->time[pi];
+      n  = samp->time[ni];
 
       /* Interpolate. */
       switch ( samp->interp ) {
       case ANIM_INTER_LINEAR:
-         mix = ( t - cur ) / ( nex - cur );
+         mix = ( t - p ) / ( n - p );
          break;
       case ANIM_INTER_STEP:
          mix = 0.;
@@ -1176,18 +1169,18 @@ static void gltf_applyAnimNode( GltfObject *obj, Animation *anim, GLfloat time )
       /* Apply. */
       switch ( chan->type ) {
       case ANIM_TYPE_ROTATION:
-         quat_slerp( node->nt.rot, &samp->data[c * samp->l],
-                     &samp->data[n * samp->l], mix );
+         quat_slerp( node->nt.rot, &samp->data[pi * samp->l],
+                     &samp->data[ni * samp->l], mix );
          break;
       case ANIM_TYPE_TRANSLATION:
          for ( size_t i = 0; i < samp->l; i++ )
-            node->nt.tra[i] = samp->data[c * samp->l + i] * ( 1. - mix ) +
-                              samp->data[n * samp->l + i] * mix;
+            node->nt.tra[i] = samp->data[pi * samp->l + i] * ( 1. - mix ) +
+                              samp->data[ni * samp->l + i] * mix;
          break;
       case ANIM_TYPE_SCALE:
          for ( size_t i = 0; i < samp->l; i++ )
-            node->nt.sca[i] = samp->data[c * samp->l + i] * ( 1. - mix ) +
-                              samp->data[n * samp->l + i] * mix;
+            node->nt.sca[i] = samp->data[pi * samp->l + i] * ( 1. - mix ) +
+                              samp->data[ni * samp->l + i] * mix;
          break;
       }
    }
