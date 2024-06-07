@@ -28,6 +28,7 @@
 #include "mission.h"
 #include "ndata.h"
 #include "nstring.h"
+#include "ntracing.h"
 #include "nxml.h"
 #include "player.h"
 #include "plugin.h"
