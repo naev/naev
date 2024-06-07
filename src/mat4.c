@@ -234,6 +234,43 @@ void mat4_rotate( mat4 *m, double angle, double x, double y, double z )
 }
 
 /**
+ * @brief Applies a quaternion transformation.
+ *
+ *    @param[in, out] m Matrix to multiply with.
+ *    @param qx First component of the quaternion.
+ *    @param qy Second component of the quaternion.
+ *    @param qz Third component of the quaternion.
+ *    @param qw Fourth component of the quaternion.
+ */
+void mat4_rotate_quaternion( mat4 *m, double qx, double qy, double qz,
+                             double qw )
+{
+   mat4 R;
+
+   R.ptr[0] = ( 1. - 2. * qy * qy - 2. * qz * qz );
+   R.ptr[1] = ( 2. * qx * qy + 2. * qz * qw );
+   R.ptr[2] = ( 2. * qx * qz - 2. * qy * qw );
+   R.ptr[3] = 0.;
+
+   R.ptr[4] = ( 2. * qx * qy - 2. * qz * qw );
+   R.ptr[5] = ( 1. - 2. * qx * qx - 2. * qz * qz );
+   R.ptr[6] = ( 2. * qy * qz + 2. * qx * qw );
+   R.ptr[7] = 0.;
+
+   R.ptr[8]  = ( 2. * qx * qz + 2. * qy * qw );
+   R.ptr[9]  = ( 2. * qy * qz - 2. * qx * qw );
+   R.ptr[10] = ( 1. - 2. * qx * qx - 2. * qy * qy );
+   R.ptr[11] = 0.;
+
+   R.ptr[12] = 0.;
+   R.ptr[13] = 0.;
+   R.ptr[14] = 0.;
+   R.ptr[15] = 1.;
+
+   mat4_apply( m, &R );
+}
+
+/**
  * @brief Creates an identity matrix.
  *
  *    @return A new identity matrix.
