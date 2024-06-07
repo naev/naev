@@ -47,7 +47,6 @@ mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up );
 mat4 mat4_perspective( double fov, double aspect, double near, double far );
 
 /* Quaternion stuff. */
-void quat_normalize( quat *q ) void quat_slerp( GLfloat       qm[4],
-                                                const GLfloat qa[4],
-                                                const GLfloat qb[4],
-                                                GLfloat       t );
+void quat_normalize( quat *q );
+void quat_slerp( GLfloat qm[4], const GLfloat qa[4], const GLfloat qb[4],
+                 GLfloat t );
