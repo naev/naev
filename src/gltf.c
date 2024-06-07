@@ -1093,41 +1093,6 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H,
    gl_checkErr();
 }
 
-static void quat_slerp( GLfloat qm[4], const GLfloat qa[4], const GLfloat qb[4],
-                        GLfloat t )
-{
-   // Calculate angle between them.
-   double cosHalfTheta =
-      qa[3] * qb[3] + qa[0] * qb[0] + qa[1] * qb[1] + qa[2] * qb[2];
-   // if qa=qb or qa=-qb then theta = 0 and we can return qa
-   if ( fabs( cosHalfTheta ) >= 1.0 ) {
-      qm[3] = qa[3];
-      qm[0] = qa[0];
-      qm[1] = qa[1];
-      qm[2] = qa[2];
-      return;
-   }
-   // Calculate temporary values.
-   double halfTheta    = acos( cosHalfTheta );
-   double sinHalfTheta = sqrt( 1.0 - cosHalfTheta * cosHalfTheta );
-   // if theta = 180 degrees then result is not fully defined
-   // we could rotate around any axis normal to qa or qb
-   if ( fabs( sinHalfTheta ) < 0.001 ) { // fabs is floating point absolute
-      qm[3] = ( qa[3] * 0.5 + qb[3] * 0.5 );
-      qm[0] = ( qa[0] * 0.5 + qb[0] * 0.5 );
-      qm[1] = ( qa[1] * 0.5 + qb[1] * 0.5 );
-      qm[2] = ( qa[2] * 0.5 + qb[2] * 0.5 );
-      return;
-   }
-   double ratioA = sin( ( 1 - t ) * halfTheta ) / sinHalfTheta;
-   double ratioB = sin( t * halfTheta ) / sinHalfTheta;
-   // calculate Quaternion.
-   qm[3] = ( qa[3] * ratioA + qb[3] * ratioB );
-   qm[0] = ( qa[0] * ratioA + qb[0] * ratioB );
-   qm[1] = ( qa[1] * ratioA + qb[1] * ratioB );
-   qm[2] = ( qa[2] * ratioA + qb[2] * ratioB );
-}
-
 static void gltf_applyAnimNode( GltfObject *obj, Animation *anim, GLfloat time )
 {
    (void)obj;
