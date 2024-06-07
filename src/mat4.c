@@ -242,10 +242,15 @@ void mat4_rotate( mat4 *m, double angle, double x, double y, double z )
  *    @param qz Third component of the quaternion.
  *    @param qw Fourth component of the quaternion.
  */
-void mat4_rotate_quaternion( mat4 *m, double qx, double qy, double qz,
-                             double qw )
+void mat4_rotate_quaternion( mat4 *m, const quat *q )
 {
    mat4 R;
+
+   GLfloat qx, qy, qz, qw;
+   qx = q->q[0];
+   qy = q->q[1];
+   qz = q->q[2];
+   qw = q->q[3];
 
    R.ptr[0] = ( 1. - 2. * qy * qy - 2. * qz * qz );
    R.ptr[1] = ( 2. * qx * qy + 2. * qz * qw );
@@ -268,6 +273,50 @@ void mat4_rotate_quaternion( mat4 *m, double qx, double qy, double qz,
    R.ptr[15] = 1.;
 
    mat4_apply( m, &R );
+}
+
+/**
+ * @brief Creates a homogeneous transform matrix from a translation, rotation,
+ * and scaling. Uses T*R*S order.
+ */
+void mat4_trs( mat4 *m, const vec3 *t, const quat *r, const vec3 *s )
+{
+   GLfloat tx, ty, tz;
+   GLfloat qx, qy, qz, qw;
+   GLfloat sx, sy, sz;
+
+   tx = t->v[0];
+   ty = t->v[1];
+   tz = t->v[2];
+
+   qx = r->q[0];
+   qy = r->q[1];
+   qz = r->q[2];
+   qw = r->q[3];
+
+   sx = s->v[0];
+   sy = s->v[1];
+   sz = s->v[2];
+
+   m->ptr[0] = ( 1 - 2 * qy * qy - 2 * qz * qz ) * sx;
+   m->ptr[1] = ( 2 * qx * qy + 2 * qz * qw ) * sx;
+   m->ptr[2] = ( 2 * qx * qz - 2 * qy * qw ) * sx;
+   m->ptr[3] = 0.f;
+
+   m->ptr[4] = ( 2 * qx * qy - 2 * qz * qw ) * sy;
+   m->ptr[5] = ( 1 - 2 * qx * qx - 2 * qz * qz ) * sy;
+   m->ptr[6] = ( 2 * qy * qz + 2 * qx * qw ) * sy;
+   m->ptr[7] = 0.f;
+
+   m->ptr[8]  = ( 2 * qx * qz + 2 * qy * qw ) * sz;
+   m->ptr[9]  = ( 2 * qy * qz - 2 * qx * qw ) * sz;
+   m->ptr[10] = ( 1 - 2 * qx * qx - 2 * qy * qy ) * sz;
+   m->ptr[11] = 0.f;
+
+   m->ptr[12] = tx;
+   m->ptr[13] = ty;
+   m->ptr[14] = tz;
+   m->ptr[15] = 1.f;
 }
 
 /**

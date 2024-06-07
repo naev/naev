@@ -15,6 +15,10 @@ typedef struct mat4_ {
    };
 } mat4;
 
+typedef struct quat {
+   GLfloat q[4]; /* x, y, z, w */
+} quat;
+
 /* Basic operations. */
 void mat4_print( const mat4 *m );
 void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 );
@@ -29,10 +33,10 @@ void mat4_translate_x( mat4 *m, double x );
 void mat4_translate_xy( mat4 *m, double x, double y );
 void mat4_translate_scale_xy( mat4 *m, double x, double y, double w, double h );
 void mat4_rotate( mat4 *m, double angle, double x, double y, double z );
-void mat4_rotate_quaternion( mat4 *m, double qx, double qy, double qz,
-                             double qw );
+void mat4_rotate_quaternion( mat4 *m, const quat *q );
 void mat4_rotate2d( mat4 *m, double angle );
 void mat4_rotate2dv( mat4 *m, double x, double y );
+void mat4_trs( mat4 *m, const vec3 *t, const quat *r, const vec3 *s );
 
 /* Creation functions. */
 __attribute__( ( const ) ) mat4 mat4_identity( void );
