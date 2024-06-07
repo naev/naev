@@ -92,10 +92,11 @@ typedef struct NodeTransform {
  * children nodes with an associated transformation.
  */
 typedef struct Node {
-   char   *name;      /**< Name information. */
-   mat4    H;         /**< Homogeneous transform. */
-   mat4    Horig;     /**< Base homogeneous transform. */
-   int     mesh;      /**< Associated Mesh. */
+   char *name;  /**< Name information. */
+   mat4  H;     /**< Homogeneous transform. */
+   mat4  Horig; /**< Base homogeneous transform. */
+   int   mesh;  /**< Associated Mesh. */
+   // int parent;     /**< Parent node. */
    size_t *children;  /**< Children nodes. */
    size_t  nchildren; /**< Number of children mesh. */
 

@@ -643,11 +643,14 @@ static int gltf_loadMesh( GltfObject *obj, const cgltf_data *data, Mesh *mesh,
             Node *node = &obj->nodes[n];
             if ( cmesh != data->nodes[n].mesh )
                continue;
+            mat4 H;
+            cgltf_node_transform_world( &data->nodes[n], H.ptr );
             for ( unsigned int di = 0; di < datasize; di += 3 ) {
                vec3 v, d;
                for ( unsigned int dj = 0; dj < 3; dj++ )
                   d.v[dj] = rawdata[di + dj];
-               mat4_mul_vec( &v, &node->H, &d );
+               // mat4_mul_vec( &v, &node->H, &d );
+               mat4_mul_vec( &v, &H, &d );
                vec3_min( &node->aabb_min, &v, &node->aabb_min );
                vec3_max( &node->aabb_max, &v, &node->aabb_max );
                node->radius = MAX( node->radius, vec3_length( &v ) );
@@ -668,6 +671,7 @@ static int gltf_loadNode( const cgltf_data *data, Node *node,
    /* Get transform for node. */
    cgltf_node_transform_local( cnode, node->Horig.ptr );
    node->H = node->Horig; /* Copy over. */
+   // node->parent = cgltf_node_index( data, cnode->parent );
 
    if ( cnode->has_rotation )
       memcpy( node->nt.rot, cnode->rotation, sizeof( cnode->rotation ) );
