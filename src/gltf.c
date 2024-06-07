@@ -1260,8 +1260,6 @@ void gltf_renderScene( GLuint fb, GltfObject *obj, int scene, const mat4 *H,
             node->H.ptr[13] = ty;
             node->H.ptr[14] = tz;
             node->H.ptr[15] = 1.f;
-
-            mat4_print( &node->H );
          }
       }
    }
