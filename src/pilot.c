@@ -1800,7 +1800,7 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw,
       c.a = 0.5;
 
    ship_renderFramebuffer( p->ship, fbo, fw, fh, p->solid.dir, p->engine_glow,
-                           p->tilt, p->tsx, p->tsy, &c );
+                           p->tilt, p->r, p->tsx, p->tsy, &c );
 }
 
 /**
@@ -3266,6 +3266,9 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
       &pilot->outfit_structure, &pilot->outfit_utility, &pilot->outfit_weapon };
    ShipOutfitSlot *ship_list[] = { ship->outfit_structure, ship->outfit_utility,
                                    ship->outfit_weapon };
+
+   /* Randomness. */
+   pilot->r = RNGF();
 
    /* Defaults. */
    pilot->lua_mem      = LUA_NOREF;

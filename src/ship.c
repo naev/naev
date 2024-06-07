@@ -526,7 +526,7 @@ static int ship_generateStoreGFX( Ship *temp )
    gl_fboCreate( &fbo, &tex, size, size );
    gl_fboAddDepth( fbo, &depth_tex, size, size );
    ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., 0.,
-                           tsx, tsy, NULL );
+                           0., tsx, tsy, NULL );
    temp->_gfx_store = gl_rawTexture( buf, tex, size, size );
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glDeleteTextures( 1, &depth_tex );
@@ -1051,8 +1051,12 @@ static int ship_parse( Ship *temp, const char *filename )
  */
 void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
                              double dir, double engine_glow, double tilt,
-                             int sx, int sy, const glColour *c )
+                             double r, int sx, int sy, const glColour *c )
 {
+   double t =
+      elapsed_time_mod +
+      r * 300.; /* Compute a randomized time to avoid duplicate motions. */
+
    if ( c == NULL )
       c = &cWhite;
 
@@ -1091,8 +1095,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       /* Actually render. */
       if ( ( engine_glow > 0. ) && ( obj->scene_engine >= 0 ) ) {
          if ( engine_glow >= 1. ) {
-            gltf_renderScene( ship_fbo[0], obj, obj->scene_engine, &H,
-                              elapsed_time_mod, scale, NULL );
+            gltf_renderScene( ship_fbo[0], obj, obj->scene_engine, &H, t, scale,
+                              NULL );
          } else {
             /* More scissors. */
             glEnable( GL_SCISSOR_TEST );
@@ -1102,10 +1106,10 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
             glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
             /* First render separately. */
-            gltf_renderScene( ship_fbo[1], obj, obj->scene_body, &H,
-                              elapsed_time_mod, scale, NULL );
-            gltf_renderScene( ship_fbo[2], obj, obj->scene_engine, &H,
-                              elapsed_time_mod, scale, NULL );
+            gltf_renderScene( ship_fbo[1], obj, obj->scene_body, &H, t, scale,
+                              NULL );
+            gltf_renderScene( ship_fbo[2], obj, obj->scene_engine, &H, t, scale,
+                              NULL );
 
             /* Now merge to main framebuffer. */
             glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
@@ -1117,8 +1121,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
              * framebuffer in the gui. */
          }
       } else
-         gltf_renderScene( ship_fbo[0], obj, obj->scene_body, &H,
-                           elapsed_time_mod, scale, NULL );
+         gltf_renderScene( ship_fbo[0], obj, obj->scene_body, &H, t, scale,
+                           NULL );
 
       /*
        * First do sharpen pass.

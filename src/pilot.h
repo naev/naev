@@ -262,6 +262,7 @@ typedef struct Escort_s {
 typedef struct Pilot_ {
    unsigned int id;   /**< pilot's id, used for many functions */
    char        *name; /**< pilot's name (if unique) */
+   double       r;    /**< Pilot's randomness value in [0,1] range. */
 
    /* Fleet/faction management. */
    int faction;  /**< Pilot's faction. */
