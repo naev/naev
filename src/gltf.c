@@ -199,6 +199,9 @@ static int use_normal_mapping    = 1;
 static int use_ambient_occlusion = 1;
 static int max_tex_size          = 0;
 
+/* Prototypes. */
+static void gltf_applyAnim( GltfObject *obj, GLfloat time );
+
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
  *
@@ -1121,7 +1124,7 @@ static void quat_slerp( GLfloat qm[4], const GLfloat qa[4], const GLfloat qb[4],
    qm[2] = ( qa[2] * ratioA + qb[2] * ratioB );
 }
 
-static void gltf_applyAnim( GltfObject *obj, Animation *anim, GLfloat time )
+static void gltf_applyAnimNode( GltfObject *obj, Animation *anim, GLfloat time )
 {
    (void)obj;
    for ( size_t j = 0; j < anim->nchannels; j++ ) {
@@ -1186,6 +1189,54 @@ static void gltf_applyAnim( GltfObject *obj, Animation *anim, GLfloat time )
    }
 }
 
+static void gltf_applyAnim( GltfObject *obj, GLfloat time )
+{
+   if ( obj->nanimations <= 0 )
+      return;
+
+   for ( size_t i = 0; i < obj->nnodes; i++ )
+      obj->nodes[i].has_anim = 0;
+   for ( size_t i = 0; i < obj->nanimations; i++ )
+      gltf_applyAnimNode( obj, &obj->animations[i], time );
+   for ( size_t i = 0; i < obj->nnodes; i++ ) {
+      Node *node = &obj->nodes[i];
+      if ( !node->has_anim )
+         continue;
+      float tx = node->nt.tra[0];
+      float ty = node->nt.tra[1];
+      float tz = node->nt.tra[2];
+
+      float qx = node->nt.rot[0];
+      float qy = node->nt.rot[1];
+      float qz = node->nt.rot[2];
+      float qw = node->nt.rot[3];
+
+      float sx = node->nt.sca[0];
+      float sy = node->nt.sca[1];
+      float sz = node->nt.sca[2];
+
+      node->H.ptr[0] = ( 1 - 2 * qy * qy - 2 * qz * qz ) * sx;
+      node->H.ptr[1] = ( 2 * qx * qy + 2 * qz * qw ) * sx;
+      node->H.ptr[2] = ( 2 * qx * qz - 2 * qy * qw ) * sx;
+      node->H.ptr[3] = 0.f;
+
+      node->H.ptr[4] = ( 2 * qx * qy - 2 * qz * qw ) * sy;
+      node->H.ptr[5] = ( 1 - 2 * qx * qx - 2 * qz * qz ) * sy;
+      node->H.ptr[6] = ( 2 * qy * qz + 2 * qx * qw ) * sy;
+      node->H.ptr[7] = 0.f;
+
+      node->H.ptr[8]  = ( 2 * qx * qz + 2 * qy * qw ) * sz;
+      node->H.ptr[9]  = ( 2 * qy * qz - 2 * qx * qw ) * sz;
+      node->H.ptr[10] = ( 1 - 2 * qx * qx - 2 * qy * qy ) * sz;
+      node->H.ptr[11] = 0.f;
+
+      node->H.ptr[12] = tx;
+      node->H.ptr[13] = ty;
+      node->H.ptr[14] = tz;
+      node->H.ptr[15] = 1.f;
+   }
+}
+
 /**
  * @brief Renders an object (with a transformation).
  *
@@ -1220,49 +1271,7 @@ void gltf_renderScene( GLuint fb, GltfObject *obj, int scene, const mat4 *H,
    }
 
    /* Do animations if applicable. */
-   if ( obj->nanimations > 0 ) {
-      for ( size_t i = 0; i < obj->nnodes; i++ )
-         obj->nodes[i].has_anim = 0;
-      for ( size_t i = 0; i < obj->nanimations; i++ )
-         gltf_applyAnim( obj, &obj->animations[i], time );
-      for ( size_t i = 0; i < obj->nnodes; i++ ) {
-         Node *node = &obj->nodes[i];
-         if ( node->has_anim ) {
-            float tx = node->nt.tra[0];
-            float ty = node->nt.tra[1];
-            float tz = node->nt.tra[2];
-
-            float qx = node->nt.rot[0];
-            float qy = node->nt.rot[1];
-            float qz = node->nt.rot[2];
-            float qw = node->nt.rot[3];
-
-            float sx = node->nt.sca[0];
-            float sy = node->nt.sca[1];
-            float sz = node->nt.sca[2];
-
-            node->H.ptr[0] = ( 1 - 2 * qy * qy - 2 * qz * qz ) * sx;
-            node->H.ptr[1] = ( 2 * qx * qy + 2 * qz * qw ) * sx;
-            node->H.ptr[2] = ( 2 * qx * qz - 2 * qy * qw ) * sx;
-            node->H.ptr[3] = 0.f;
-
-            node->H.ptr[4] = ( 2 * qx * qy - 2 * qz * qw ) * sy;
-            node->H.ptr[5] = ( 1 - 2 * qx * qx - 2 * qz * qz ) * sy;
-            node->H.ptr[6] = ( 2 * qy * qz + 2 * qx * qw ) * sy;
-            node->H.ptr[7] = 0.f;
-
-            node->H.ptr[8]  = ( 2 * qx * qz + 2 * qy * qw ) * sz;
-            node->H.ptr[9]  = ( 2 * qy * qz - 2 * qx * qw ) * sz;
-            node->H.ptr[10] = ( 1 - 2 * qx * qx - 2 * qy * qy ) * sz;
-            node->H.ptr[11] = 0.f;
-
-            node->H.ptr[12] = tx;
-            node->H.ptr[13] = ty;
-            node->H.ptr[14] = tz;
-            node->H.ptr[15] = 1.f;
-         }
-      }
-   }
+   gltf_applyAnim( obj, time );
 
    if ( L == NULL ) {
       /* Use default light and shadow matrices. */
@@ -1456,19 +1465,23 @@ GltfObject *gltf_loadFromFile( const char *filename )
       gltf_loadNode( data, node, cnode );
    }
 
+   /* Load animations, has to be before meshes so we can update rotation
+    * information. */
+   obj->animations  = calloc( data->animations_count, sizeof( Animation ) );
+   obj->nanimations = data->animations_count;
+   for ( size_t i = 0; i < obj->nanimations; i++ )
+      gltf_loadAnimation( obj, data, &obj->animations[i],
+                          &data->animations[i] );
+   gltf_applyAnim(
+      obj,
+      0. ); /* Initial propagation of transformations for determining size. */
+
    /* Load meshes, has to be after nodes so we can fill information backwards.
     */
    obj->meshes  = calloc( data->meshes_count, sizeof( Mesh ) );
    obj->nmeshes = data->meshes_count;
    for ( size_t i = 0; i < data->meshes_count; i++ )
       gltf_loadMesh( obj, data, &obj->meshes[i], &data->meshes[i] );
-
-   /* Load animations. */
-   obj->animations  = calloc( data->animations_count, sizeof( Animation ) );
-   obj->nanimations = data->animations_count;
-   for ( size_t i = 0; i < obj->nanimations; i++ )
-      gltf_loadAnimation( obj, data, &obj->animations[i],
-                          &data->animations[i] );
 
    /* Load scenes. */
    obj->scenes       = calloc( data->scenes_count, sizeof( Scene ) );
