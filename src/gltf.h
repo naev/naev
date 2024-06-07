@@ -82,9 +82,9 @@ typedef struct Mesh {
 } Mesh;
 
 typedef struct NodeTransform {
-   GLfloat rot[4]; /**< Rotation from animation. */
-   GLfloat tra[3]; /**< Translation from animation. */
-   GLfloat sca[3]; /**< Scale from animation. */
+   vec3 t; /**< Translation from animation. */
+   quat r; /**< Rotation from animation. */
+   vec3 s; /**< Scale from animation. */
 } NodeTransform;
 
 /**

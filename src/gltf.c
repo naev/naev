@@ -674,26 +674,26 @@ static int gltf_loadNode( const cgltf_data *data, Node *node,
    // node->parent = cgltf_node_index( data, cnode->parent );
 
    if ( cnode->has_rotation )
-      memcpy( node->nt.rot, cnode->rotation, sizeof( cnode->rotation ) );
+      memcpy( node->nt.r.q, cnode->rotation, sizeof( cnode->rotation ) );
    else {
-      node->nt.rot[0] = 0.;
-      node->nt.rot[1] = 0.;
-      node->nt.rot[3] = 0.;
-      node->nt.rot[3] = 1.;
+      node->nt.r.q[0] = 0.;
+      node->nt.r.q[1] = 0.;
+      node->nt.r.q[3] = 0.;
+      node->nt.r.q[3] = 1.;
    }
    if ( cnode->has_translation )
-      memcpy( node->nt.tra, cnode->translation, sizeof( cnode->translation ) );
+      memcpy( node->nt.t.v, cnode->translation, sizeof( cnode->translation ) );
    else {
-      node->nt.tra[0] = 0.;
-      node->nt.tra[1] = 0.;
-      node->nt.tra[2] = 0.;
+      node->nt.t.v[0] = 0.;
+      node->nt.t.v[1] = 0.;
+      node->nt.t.v[2] = 0.;
    }
    if ( cnode->has_scale )
-      memcpy( node->nt.sca, cnode->scale, sizeof( cnode->scale ) );
+      memcpy( node->nt.s.v, cnode->scale, sizeof( cnode->scale ) );
    else {
-      node->nt.sca[0] = 1.;
-      node->nt.sca[1] = 1.;
-      node->nt.sca[2] = 1.;
+      node->nt.s.v[0] = 1.;
+      node->nt.s.v[1] = 1.;
+      node->nt.s.v[2] = 1.;
    }
    node->ntorig = node->nt;
 
@@ -1169,17 +1169,17 @@ static void gltf_applyAnimNode( GltfObject *obj, Animation *anim, GLfloat time )
       /* Apply. */
       switch ( chan->type ) {
       case ANIM_TYPE_ROTATION:
-         quat_slerp( node->nt.rot, &samp->data[pi * samp->l],
+         quat_slerp( node->nt.r.q, &samp->data[pi * samp->l],
                      &samp->data[ni * samp->l], mix );
          break;
       case ANIM_TYPE_TRANSLATION:
          for ( size_t i = 0; i < samp->l; i++ )
-            node->nt.tra[i] = samp->data[pi * samp->l + i] * ( 1. - mix ) +
+            node->nt.t.v[i] = samp->data[pi * samp->l + i] * ( 1. - mix ) +
                               samp->data[ni * samp->l + i] * mix;
          break;
       case ANIM_TYPE_SCALE:
          for ( size_t i = 0; i < samp->l; i++ )
-            node->nt.sca[i] = samp->data[pi * samp->l + i] * ( 1. - mix ) +
+            node->nt.s.v[i] = samp->data[pi * samp->l + i] * ( 1. - mix ) +
                               samp->data[ni * samp->l + i] * mix;
          break;
       }
@@ -1199,38 +1199,7 @@ static void gltf_applyAnim( GltfObject *obj, GLfloat time )
       Node *node = &obj->nodes[i];
       if ( !node->has_anim )
          continue;
-      float tx = node->nt.tra[0];
-      float ty = node->nt.tra[1];
-      float tz = node->nt.tra[2];
-
-      float qx = node->nt.rot[0];
-      float qy = node->nt.rot[1];
-      float qz = node->nt.rot[2];
-      float qw = node->nt.rot[3];
-
-      float sx = node->nt.sca[0];
-      float sy = node->nt.sca[1];
-      float sz = node->nt.sca[2];
-
-      node->H.ptr[0] = ( 1 - 2 * qy * qy - 2 * qz * qz ) * sx;
-      node->H.ptr[1] = ( 2 * qx * qy + 2 * qz * qw ) * sx;
-      node->H.ptr[2] = ( 2 * qx * qz - 2 * qy * qw ) * sx;
-      node->H.ptr[3] = 0.f;
-
-      node->H.ptr[4] = ( 2 * qx * qy - 2 * qz * qw ) * sy;
-      node->H.ptr[5] = ( 1 - 2 * qx * qx - 2 * qz * qz ) * sy;
-      node->H.ptr[6] = ( 2 * qy * qz + 2 * qx * qw ) * sy;
-      node->H.ptr[7] = 0.f;
-
-      node->H.ptr[8]  = ( 2 * qx * qz + 2 * qy * qw ) * sz;
-      node->H.ptr[9]  = ( 2 * qy * qz - 2 * qx * qw ) * sz;
-      node->H.ptr[10] = ( 1 - 2 * qx * qx - 2 * qy * qy ) * sz;
-      node->H.ptr[11] = 0.f;
-
-      node->H.ptr[12] = tx;
-      node->H.ptr[13] = ty;
-      node->H.ptr[14] = tz;
-      node->H.ptr[15] = 1.f;
+      mat4_trs( &node->H, &node->nt.t, &node->nt.r, &node->nt.s );
    }
 }
 
