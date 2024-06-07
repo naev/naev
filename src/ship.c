@@ -1059,10 +1059,10 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
    glClearColor( 0., 0., 0., 0. );
 
    if ( s->gfx_3d != NULL ) {
-      double            scale = ship_aa_scale * s->size;
-      const GltfObject *obj   = s->gfx_3d;
-      mat4              projection, tex_mat;
-      GLint             sbuffer = ceil( scale );
+      double      scale = ship_aa_scale * s->size;
+      GltfObject *obj   = s->gfx_3d;
+      mat4        projection, tex_mat;
+      GLint       sbuffer = ceil( scale );
 
       glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
 
@@ -1091,8 +1091,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       /* Actually render. */
       if ( ( engine_glow > 0. ) && ( obj->scene_engine >= 0 ) ) {
          if ( engine_glow >= 1. ) {
-            gltf_renderScene( ship_fbo[0], obj, obj->scene_engine, &H, 0.,
-                              scale, NULL );
+            gltf_renderScene( ship_fbo[0], obj, obj->scene_engine, &H,
+                              elapsed_time_mod, scale, NULL );
          } else {
             /* More scissors. */
             glEnable( GL_SCISSOR_TEST );
@@ -1102,10 +1102,10 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
             glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
             /* First render separately. */
-            gltf_renderScene( ship_fbo[1], obj, obj->scene_body, &H, 0., scale,
-                              NULL );
-            gltf_renderScene( ship_fbo[2], obj, obj->scene_engine, &H, 0.,
-                              scale, NULL );
+            gltf_renderScene( ship_fbo[1], obj, obj->scene_body, &H,
+                              elapsed_time_mod, scale, NULL );
+            gltf_renderScene( ship_fbo[2], obj, obj->scene_engine, &H,
+                              elapsed_time_mod, scale, NULL );
 
             /* Now merge to main framebuffer. */
             glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
@@ -1117,8 +1117,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
              * framebuffer in the gui. */
          }
       } else
-         gltf_renderScene( ship_fbo[0], obj, obj->scene_body, &H, 0., scale,
-                           NULL );
+         gltf_renderScene( ship_fbo[0], obj, obj->scene_body, &H,
+                           elapsed_time_mod, scale, NULL );
 
       /*
        * First do sharpen pass.

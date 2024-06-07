@@ -2207,8 +2207,8 @@ void spob_gfxLoad( Spob *spob )
          glClearColor( 0., 0., 0., 0. );
          glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-         gltf_renderScene( spob->gfx_fbo, spob->gfx_space3d, 0, NULL, 0.,
-                           s * spob_aa_scale, NULL );
+         gltf_renderScene( spob->gfx_fbo, spob->gfx_space3d, 0, NULL,
+                           elapsed_time_mod, s * spob_aa_scale, NULL );
 
          glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
          glClearColor( 0., 0., 0., 1. );
@@ -3737,7 +3737,7 @@ static void space_renderSpob( const Spob *p )
       glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-      gltf_renderScene( p->gfx_fbo, p->gfx_space3d, 0, NULL, 0.,
+      gltf_renderScene( p->gfx_fbo, p->gfx_space3d, 0, NULL, elapsed_time_mod,
                         s * spob_aa_scale, NULL );
 
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
