@@ -1551,7 +1551,15 @@ static void gltf_freeMesh( Mesh *mesh )
 
 static void gltf_freeNode( Node *node )
 {
+   free( node->name );
    free( node->children );
+}
+
+static void gltf_freeAnimation( Animation *anim )
+{
+   free( anim->name );
+   free( anim->samplers );
+   free( anim->channels );
 }
 
 static void gltf_freeTex( Texture *tex )
@@ -1583,6 +1591,12 @@ void gltf_free( GltfObject *obj )
       gltf_freeNode( node );
    }
    free( obj->nodes );
+
+   for ( size_t i = 0; i < obj->nanimations; i++ ) {
+      Animation *anim = &obj->animations[i];
+      gltf_freeAnimation( anim );
+   }
+   free( obj->animations );
 
    for ( size_t s = 0; s < obj->nscenes; s++ ) {
       Scene *scene = &obj->scenes[s];
