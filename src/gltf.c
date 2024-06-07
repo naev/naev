@@ -151,7 +151,6 @@ typedef struct Shader_ {
    GLuint Hmodel;
    GLuint Hnormal;
    GLuint Hshadow;
-   GLuint u_time;
    /* Fragment uniforms. */
    GLuint      baseColour_tex;
    GLuint      baseColour_texcoord;
@@ -664,7 +663,8 @@ static int gltf_loadNode( const cgltf_data *data, Node *node,
                           const cgltf_node *cnode )
 {
    /* Get transform for node. */
-   cgltf_node_transform_local( cnode, node->H.ptr );
+   cgltf_node_transform_local( cnode, node->Horig.ptr );
+   node->H = node->Horig; /* Copy over.
 
    /* Get the mesh. */
    if ( cnode->mesh != NULL )
@@ -676,8 +676,63 @@ static int gltf_loadNode( const cgltf_data *data, Node *node,
    node->nchildren = cnode->children_count;
    if ( node->nchildren > 0 ) {
       node->children = calloc( cnode->children_count, sizeof( size_t ) );
-      for ( size_t i = 0; i < cnode->children_count; i++ )
+      for ( cgltf_size i = 0; i < cnode->children_count; i++ )
          node->children[i] = cgltf_node_index( data, cnode->children[i] );
+   }
+   return 0;
+}
+
+static int gltf_loadAnimation( GltfObject *obj, const cgltf_data *data,
+                               Animation *anim, const cgltf_animation *canim )
+{
+   anim->nsamplers = canim->samplers_count;
+   anim->samplers  = calloc( anim->nsamplers, sizeof( AnimationSampler ) );
+   for ( cgltf_size i = 0; i < canim->samplers_count; i++ ) {
+      const cgltf_animation_sampler *csamp = &canim->samplers[i];
+      AnimationSampler              *samp  = &anim->samplers[i];
+      cgltf_size                     n;
+
+      if ( csamp->interpolation != cgltf_interpolation_type_linear )
+         WARN( _( "Unsupported interpolation type %d!" ),
+               csamp->interpolation );
+
+      samp->n    = cgltf_accessor_unpack_floats( csamp->input, NULL, 0 );
+      samp->time = malloc( sizeof( cgltf_float ) * samp->n );
+      cgltf_accessor_unpack_floats( csamp->input, samp->time, samp->n );
+      samp->max = samp->time[samp->n - 1]; /**< Assume last keyframe. */
+
+      samp->l = cgltf_num_components( csamp->output->type );
+      n       = cgltf_accessor_unpack_floats( csamp->output, NULL, 0 );
+      if ( cgltf_num_components( csamp->output->type ) * samp->n != n )
+         WARN( _( "Wrong number of elements. Got %lu, but expected %lu!" ),
+               samp->n * cgltf_num_components( csamp->output->type ), n );
+      samp->data = malloc( sizeof( cgltf_float ) * n );
+      cgltf_accessor_unpack_floats( csamp->output, samp->data, n );
+   }
+
+   anim->nchannels = canim->channels_count;
+   anim->channels  = calloc( anim->nchannels, sizeof( AnimationChannel ) );
+   for ( cgltf_size i = 0; i < canim->channels_count; i++ ) {
+      const cgltf_animation_channel *cchan = &canim->channels[i];
+      AnimationChannel              *chan  = &anim->channels[i];
+      chan->sampler =
+         &anim
+             ->samplers[cgltf_animation_sampler_index( canim, cchan->sampler )];
+      chan->target = &obj->nodes[cgltf_node_index( data, cchan->target_node )];
+      switch ( cchan->target_path ) {
+      case cgltf_animation_path_type_translation:
+         chan->type = ANIM_TYPE_TRANSLATION;
+         break;
+      case cgltf_animation_path_type_rotation:
+         chan->type = ANIM_TYPE_ROTATION;
+         break;
+      case cgltf_animation_path_type_scale:
+         chan->type = ANIM_TYPE_SCALE;
+         break;
+      default:
+         WARN( _( "Uknown animation type %d!" ), cchan->target_path );
+         break;
+      }
    }
    return 0;
 }
@@ -897,7 +952,7 @@ static void gltf_renderNodeMesh( const GltfObject *obj, const Node *node,
 }
 
 static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H,
-                               const Light *light, double time, int i )
+                               const Light *light, int i )
 {
    (void)light;
    const Shader *shd = &shadow_shader;
@@ -910,7 +965,6 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H,
    /* Set up shader. */
    glUseProgram( shd->program );
    glUniformMatrix4fv( shd->Hshadow, 1, GL_FALSE, light_mat[i].ptr );
-   glUniform1f( shd->u_time, time );
 
    for ( size_t j = 0; j < obj->scenes[scene].nnodes; j++ )
       gltf_renderNodeShadow( obj, &obj->nodes[obj->scenes[scene].nodes[j]], H );
@@ -960,12 +1014,11 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H,
 }
 
 static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H,
-                             double time, const Lighting *L )
+                             const Lighting *L )
 {
    /* Load constant stuff. */
    const Shader *shd = &gltf_shader;
    glUseProgram( shd->program );
-   glUniform1f( shd->u_time, time );
    glUniform3f( shd->u_ambient, L->ambient_r, L->ambient_g, L->ambient_b );
    glUniform1i( shd->nlights, L->nlights );
    for ( int i = 0; i < L->nlights; i++ ) {
@@ -1000,21 +1053,102 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H,
    gl_checkErr();
 }
 
+static void quat_slerp( GLfloat qm[4], const GLfloat qa[4], const GLfloat qb[4],
+                        GLfloat t )
+{
+   // Calculate angle between them.
+   double cosHalfTheta =
+      qa[3] * qb[3] + qa[0] * qb[0] + qa[1] * qb[1] + qa[2] * qb[2];
+   // if qa=qb or qa=-qb then theta = 0 and we can return qa
+   if ( fabs( cosHalfTheta ) >= 1.0 ) {
+      qm[3] = qa[3];
+      qm[0] = qa[0];
+      qm[1] = qa[1];
+      qm[2] = qa[2];
+      return;
+   }
+   // Calculate temporary values.
+   double halfTheta    = acos( cosHalfTheta );
+   double sinHalfTheta = sqrt( 1.0 - cosHalfTheta * cosHalfTheta );
+   // if theta = 180 degrees then result is not fully defined
+   // we could rotate around any axis normal to qa or qb
+   if ( fabs( sinHalfTheta ) < 0.001 ) { // fabs is floating point absolute
+      qm[3] = ( qa[3] * 0.5 + qb[3] * 0.5 );
+      qm[0] = ( qa[0] * 0.5 + qb[0] * 0.5 );
+      qm[1] = ( qa[1] * 0.5 + qb[1] * 0.5 );
+      qm[2] = ( qa[2] * 0.5 + qb[2] * 0.5 );
+      return;
+   }
+   double ratioA = sin( ( 1 - t ) * halfTheta ) / sinHalfTheta;
+   double ratioB = sin( t * halfTheta ) / sinHalfTheta;
+   // calculate Quaternion.
+   qm[3] = ( qa[3] * ratioA + qb[3] * ratioB );
+   qm[0] = ( qa[0] * ratioA + qb[0] * ratioB );
+   qm[1] = ( qa[1] * ratioA + qb[1] * ratioB );
+   qm[2] = ( qa[2] * ratioA + qb[2] * ratioB );
+}
+
+static void gltf_applyAnim( GltfObject *obj, Animation *anim, GLfloat time )
+{
+   (void)obj;
+   for ( size_t j = 0; j < anim->nchannels; j++ ) {
+      AnimationChannel *chan = &anim->channels[j];
+      AnimationSampler *samp = chan->sampler;
+      size_t            c    = samp->cur;
+      size_t            n    = ( samp->cur + 1 ) % samp->n;
+      GLfloat           cur  = samp->time[c];
+      GLfloat           nex  = samp->time[n];
+      GLfloat           dat[4];
+      GLfloat           mix;
+      GLfloat           t = fmod( time, samp->max );
+      /* Have to move pointer forward. */
+      if ( t >= nex ) {
+         c   = n;
+         n   = ( n + 1 ) % samp->n;
+         cur = samp->time[c];
+         nex = samp->time[n];
+      }
+      /* Interpolate. */
+      mix = ( t - cur ) / ( nex - cur );
+      /* Apply. */
+      chan->target->H = chan->target->Horig;
+      switch ( chan->type ) {
+      case ANIM_TYPE_ROTATION:
+         quat_slerp( dat, &samp->data[c * samp->l], &samp->data[n * samp->l],
+                     mix );
+         mat4_rotate_quaternion( &chan->target->H, dat[0], dat[1], dat[2],
+                                 dat[3] );
+         break;
+      case ANIM_TYPE_TRANSLATION:
+         for ( size_t i = 0; i < samp->l; i++ )
+            dat[i] = samp->data[c * samp->l + i] * ( 1. - mix ) +
+                     samp->data[n * samp->l + i] * mix;
+         mat4_translate( &chan->target->H, dat[0], dat[1], dat[2] );
+         break;
+      case ANIM_TYPE_SCALE:
+         for ( size_t i = 0; i < samp->l; i++ )
+            dat[i] = samp->data[c * samp->l + i] * ( 1. - mix ) +
+                     samp->data[n * samp->l + i] * mix;
+         mat4_scale( &chan->target->H, dat[0], dat[1], dat[2] );
+         break;
+      }
+   }
+}
+
 /**
  * @brief Renders an object (with a transformation).
  *
  *    @param obj GltfObject to render.
  *    @param H Transformation to apply (or NULL to use identity).
  */
-void gltf_render( GLuint fb, const GltfObject *obj, const mat4 *H, double time,
+void gltf_render( GLuint fb, GltfObject *obj, const mat4 *H, GLfloat time,
                   double size )
 {
    return gltf_renderScene( fb, obj, obj->scene_body, H, time, size, 0 );
 }
 
-void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene,
-                       const mat4 *H, double time, double size,
-                       const Lighting *L )
+void gltf_renderScene( GLuint fb, GltfObject *obj, int scene, const mat4 *H,
+                       GLfloat time, double size, const Lighting *L )
 {
    (void)time; /* TODO implement animations. */
    if ( scene < 0 )
@@ -1026,11 +1160,18 @@ void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene,
                                    { 0.0, 0.0, 0.0, 1.0 } } };
    mat4          Hptr;
 
+   /* Apply scaling. */
    if ( H == NULL )
       Hptr = Hscale;
    else {
       Hptr = *H;
       mat4_apply( &Hptr, &Hscale );
+   }
+
+   /* Do animations if applicable. */
+   if ( obj->nanimations > 0 ) {
+      for ( size_t i = 0; i < obj->nanimations; i++ )
+         gltf_applyAnim( obj, &obj->animations[i], time );
    }
 
    if ( L == NULL ) {
@@ -1055,12 +1196,12 @@ void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene,
    /* Render shadows for each light. */
    glCullFace( GL_FRONT );
    for ( int i = 0; i < L->nlights; i++ )
-      gltf_renderShadow( obj, scene, &Hptr, &L->lights[i], time, i );
+      gltf_renderShadow( obj, scene, &Hptr, &L->lights[i], i );
 
    /* Finally render the scene. */
    glViewport( 0, 0, size, size );
    glBindFramebuffer( GL_FRAMEBUFFER, fb );
-   gltf_renderMesh( obj, scene, &Hptr, time, L );
+   gltf_renderMesh( obj, scene, &Hptr, L );
 
    /* Some clean up. */
    glDisable( GL_CULL_FACE );
@@ -1231,6 +1372,13 @@ GltfObject *gltf_loadFromFile( const char *filename )
    obj->nmeshes = data->meshes_count;
    for ( size_t i = 0; i < data->meshes_count; i++ )
       gltf_loadMesh( obj, data, &obj->meshes[i], &data->meshes[i] );
+
+   /* Load animations. */
+   obj->animations  = calloc( data->animations_count, sizeof( Animation ) );
+   obj->nanimations = data->animations_count;
+   for ( size_t i = 0; i < obj->nanimations; i++ )
+      gltf_loadAnimation( obj, data, &obj->animations[i],
+                          &data->animations[i] );
 
    /* Load scenes. */
    obj->scenes       = calloc( data->scenes_count, sizeof( Scene ) );
@@ -1464,7 +1612,6 @@ int gltf_init( void )
    /* Vertex uniforms. */
    shd->Hshadow = glGetUniformLocation( shd->program, "u_shadow" );
    shd->Hmodel  = glGetUniformLocation( shd->program, "u_model" );
-   shd->u_time  = glGetUniformLocation( shd->program, "u_time" );
 
    /* Compile the X blur shader. */
    shd = &shadow_shader_blurX;
@@ -1506,7 +1653,6 @@ int gltf_init( void )
    /* Vertex uniforms. */
    shd->Hmodel  = glGetUniformLocation( shd->program, "u_model" );
    shd->Hnormal = glGetUniformLocation( shd->program, "u_normal" );
-   shd->u_time  = glGetUniformLocation( shd->program, "u_time" );
    /* Fragment uniforms. */
    shd->blend          = glGetUniformLocation( shd->program, "u_blend" );
    shd->u_ambient      = glGetUniformLocation( shd->program, "u_ambient" );

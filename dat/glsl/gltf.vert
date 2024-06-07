@@ -14,7 +14,6 @@ const mat4 view = mat4(
 uniform mat4 u_shadow[MAX_LIGHTS];
 uniform mat4 u_model;
 uniform mat3 u_normal;
-uniform float u_time;
 uniform int u_nlights;
 
 in vec3 vertex;

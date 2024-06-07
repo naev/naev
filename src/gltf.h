@@ -15,7 +15,7 @@
       */
 #define SHADOWMAP_SIZE 128 /**< Size of the shadow map. */
 
-typedef struct Texture_ {
+typedef struct Texture {
    GLuint  tex;
    GLuint  texcoord;
    GLfloat strength;
@@ -24,7 +24,7 @@ typedef struct Texture_ {
 /**
  * @brief PBR Material of an object.
  */
-typedef struct Material_ {
+typedef struct Material {
    char *name;         /**< Name of the material if applicable. */
    int   blend;        /**< Whether or not to blend it. */
    int   noshadows;    /**< Whether or not it ignores shadows. */
@@ -63,7 +63,7 @@ typedef struct Material_ {
 /**
  * @brief Represents the underlyig 3D data and associated material.
  */
-typedef struct MeshPrimitive_ {
+typedef struct MeshPrimitive {
    size_t nidx;     /**< Number of indices. */
    GLuint vbo_idx;  /**< Index VBO. */
    GLuint vbo_pos;  /**< Position VBO. */
@@ -76,7 +76,7 @@ typedef struct MeshPrimitive_ {
 /**
  * @brief Represents a mesh that can be made of multiple primitives.
  */
-typedef struct Mesh_ {
+typedef struct Mesh {
    MeshPrimitive *primitives;  /**< Primitives in the mesh. */
    int            nprimitives; /**< Number of primitives. */
 } Mesh;
@@ -85,9 +85,10 @@ typedef struct Mesh_ {
  * @brief Represents a node of an object. Each node can have multiple meshes and
  * children nodes with an associated transformation.
  */
-typedef struct Node_ {
+typedef struct Node {
    char   *name;      /**< Name information. */
    mat4    H;         /**< Homogeneous transform. */
+   mat4    Horig;     /**< Untransformed Homogeneous transform. */
    int     mesh;      /**< Associated Mesh. */
    size_t *children;  /**< Children nodes. */
    size_t  nchildren; /**< Number of children mesh. */
@@ -97,10 +98,39 @@ typedef struct Node_ {
    vec3    aabb_max; /**< Maximum value of AABB wrapping around it. */
 } Node;
 
+typedef enum AnimationType {
+   ANIM_TYPE_ROTATION,
+   ANIM_TYPE_TRANSLATION,
+   ANIM_TYPE_SCALE,
+} AnimationType;
+
+typedef struct AnimationSampler {
+   float   *time; /**< Time data for keyframes. */
+   GLfloat *data; /**< Associated data for keyframes. */
+   size_t   n;    /**< Number of keyframes. */
+   size_t   l;    /**< Length of each data element. */
+   size_t   cur;  /**< Current activate keyframe. */
+   GLfloat  max;  /**< Last time of keyframe. */
+} AnimationSampler;
+
+typedef struct AnimationChannel {
+   AnimationType     type;    /**< Type of animation. */
+   Node             *target;  /**< Target node to modify. */
+   AnimationSampler *sampler; /**< Keyframe sampling data. */
+} AnimationChannel;
+
+typedef struct Animation {
+   char             *name;      /**< Name of the animation. */
+   AnimationSampler *samplers;  /**< Samplers of the animation. */
+   size_t            nsamplers; /**< Number of sampler.s */
+   AnimationChannel *channels;  /**< Channels of the animation. */
+   size_t            nchannels; /**< Number of channels. */
+} Animation;
+
 /**
  * @brief Represents a scene that can have multiple nodes.
  */
-typedef struct Scene_ {
+typedef struct Scene {
    char   *name;   /**< Name of the scene. */
    size_t *nodes;  /**< Nodes the scene has. */
    size_t  nnodes; /**< Number of nodes. */
@@ -109,17 +139,19 @@ typedef struct Scene_ {
 /**
  * @brief Defines a complete object.
  */
-typedef struct GltfObject_ {
-   char     *path; /**< Path containing the gltf, used for finding elements. */
-   Mesh     *meshes;     /**< The meshes. */
-   size_t    nmeshes;    /**< Number of meshes. */
-   Node     *nodes;      /**< The nodes. */
-   size_t    nnodes;     /**< Number of nodes. */
-   Scene    *scenes;     /**< The scenes. */
-   size_t    nscenes;    /**< Number of scenes. */
-   Material *materials;  /**< Available materials. */
-   size_t    nmaterials; /**< Number of materials. */
-   GLfloat   radius;     /**< Sphere fit on the model centered at 0,0. */
+typedef struct GltfObject {
+   char      *path; /**< Path containing the gltf, used for finding elements. */
+   Mesh      *meshes;      /**< The meshes. */
+   size_t     nmeshes;     /**< Number of meshes. */
+   Node      *nodes;       /**< The nodes. */
+   size_t     nnodes;      /**< Number of nodes. */
+   Scene     *scenes;      /**< The scenes. */
+   size_t     nscenes;     /**< Number of scenes. */
+   Material  *materials;   /**< Available materials. */
+   size_t     nmaterials;  /**< Number of materials. */
+   Animation *animations;  /**< The animations. */
+   size_t     nanimations; /**< Number of animations. */
+   GLfloat    radius;      /**< Sphere fit on the model centered at 0,0. */
    /* Some useful default scenes. */
    int scene_body;   /**< Body of the object. */
    int scene_engine; /**< Engine of the object (if applicable or -1) */
@@ -128,7 +160,7 @@ typedef struct GltfObject_ {
 /**
  * @brief Simple point/sun light model.
  */
-typedef struct Light_ {
+typedef struct Light {
    int sun; /**< Whether or not it's a sun-type light source. */
    /* left(-)/right(+), down(-)/up(+), forward(-)/back(+) */
    vec3
@@ -138,7 +170,7 @@ typedef struct Light_ {
    vec3   colour;    /**< Light colour. */
 } Light;
 
-typedef struct Lighting_ {
+typedef struct Lighting {
    double ambient_r, ambient_g, ambient_b; /**< Ambient lighting. */
    Light  lights[MAX_LIGHTS];              /**< Standard lights. */
    int    nlights; /**< Number of lights being used. Has to be less than
@@ -155,11 +187,10 @@ GltfObject *gltf_loadFromFile( const char *filename );
 void        gltf_free( GltfObject *obj );
 
 /* Rendering and updating. */
-void gltf_render( GLuint fb, const GltfObject *obj, const mat4 *H, double time,
+void gltf_render( GLuint fb, GltfObject *obj, const mat4 *H, GLfloat time,
                   double size );
-void gltf_renderScene( GLuint fb, const GltfObject *obj, int scene,
-                       const mat4 *H, double time, double size,
-                       const Lighting *L );
+void gltf_renderScene( GLuint fb, GltfObject *obj, int scene, const mat4 *H,
+                       GLfloat time, double size, const Lighting *L );
 
 /* Lighting. */
 void   gltf_light( double r, double g, double b, double intensity );
