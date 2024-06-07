@@ -664,7 +664,7 @@ static int gltf_loadNode( const cgltf_data *data, Node *node,
 {
    /* Get transform for node. */
    cgltf_node_transform_local( cnode, node->Horig.ptr );
-   node->H = node->Horig; /* Copy over.
+   node->H = node->Horig; /* Copy over. */
 
    /* Get the mesh. */
    if ( cnode->mesh != NULL )
