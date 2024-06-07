@@ -81,6 +81,12 @@ typedef struct Mesh {
    int            nprimitives; /**< Number of primitives. */
 } Mesh;
 
+typedef struct NodeTransform {
+   GLfloat rot[4]; /**< Rotation from animation. */
+   GLfloat tra[3]; /**< Translation from animation. */
+   GLfloat sca[3]; /**< Scale from animation. */
+} NodeTransform;
+
 /**
  * @brief Represents a node of an object. Each node can have multiple meshes and
  * children nodes with an associated transformation.
@@ -88,7 +94,7 @@ typedef struct Mesh {
 typedef struct Node {
    char   *name;      /**< Name information. */
    mat4    H;         /**< Homogeneous transform. */
-   mat4    Horig;     /**< Untransformed Homogeneous transform. */
+   mat4    Horig;     /**< Base homogeneous transform. */
    int     mesh;      /**< Associated Mesh. */
    size_t *children;  /**< Children nodes. */
    size_t  nchildren; /**< Number of children mesh. */
@@ -96,7 +102,17 @@ typedef struct Node {
    GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
    vec3    aabb_min; /**< Minimum value of AABB wrapping around it. */
    vec3    aabb_max; /**< Maximum value of AABB wrapping around it. */
+
+   /* Animation data. */
+   int           has_anim; /**< Has an animation. */
+   NodeTransform nt;       /**< Animated transform. */
+   NodeTransform ntorig;   /**< Original values. */
 } Node;
+
+typedef enum AnimationInterpolation {
+   ANIM_INTER_LINEAR,
+   ANIM_INTER_STEP,
+} AnimationInterpolation;
 
 typedef enum AnimationType {
    ANIM_TYPE_ROTATION,
@@ -105,12 +121,13 @@ typedef enum AnimationType {
 } AnimationType;
 
 typedef struct AnimationSampler {
-   float   *time; /**< Time data for keyframes. */
-   GLfloat *data; /**< Associated data for keyframes. */
-   size_t   n;    /**< Number of keyframes. */
-   size_t   l;    /**< Length of each data element. */
-   size_t   cur;  /**< Current activate keyframe. */
-   GLfloat  max;  /**< Last time of keyframe. */
+   float                 *time;   /**< Time data for keyframes. */
+   GLfloat               *data;   /**< Associated data for keyframes. */
+   AnimationInterpolation interp; /**< Type of interpolation. */
+   size_t                 n;      /**< Number of keyframes. */
+   size_t                 l;      /**< Length of each data element. */
+   size_t                 cur;    /**< Current activate keyframe. */
+   GLfloat                max;    /**< Last time of keyframe. */
 } AnimationSampler;
 
 typedef struct AnimationChannel {
