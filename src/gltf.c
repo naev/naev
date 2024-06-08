@@ -1492,6 +1492,11 @@ static void gltf_freeNode( Node *node )
 static void gltf_freeAnimation( Animation *anim )
 {
    free( anim->name );
+   for ( size_t i = 0; i < anim->nsamplers; i++ ) {
+      AnimationSampler *samp = &anim->samplers[i];
+      free( samp->time );
+      free( samp->data );
+   }
    free( anim->samplers );
    free( anim->channels );
 }
