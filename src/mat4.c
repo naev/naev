@@ -237,10 +237,7 @@ void mat4_rotate( mat4 *m, double angle, double x, double y, double z )
  * @brief Applies a quaternion transformation.
  *
  *    @param[in, out] m Matrix to multiply with.
- *    @param qx First component of the quaternion.
- *    @param qy Second component of the quaternion.
- *    @param qz Third component of the quaternion.
- *    @param qw Fourth component of the quaternion.
+ *    @param q Quaternion to use for rotation.
  */
 void mat4_rotate_quaternion( mat4 *m, const quat *q )
 {
