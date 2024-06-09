@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-05-30 12:51+0900\n"
-"PO-Revision-Date: 2024-05-31 15:09+0000\n"
+"PO-Revision-Date: 2024-06-09 19:09+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -145,9 +145,9 @@ msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
-"Langit malam kerap menarik perhatian kita. Orang-orang menengadah "
-"memperhatikan cakrawala dengan pertanyaan, penuh rasa takjub, dan terkadang "
-"dengan sebuah mimpi: untuk bisa menjelajah maju menaklukkan bintang."
+"Langit malam senantiasa menarik perhatian kita. Manusia melihat cakrawala "
+"dengan pertanyaan, atau dengan penuh rasa takjub, dan terkadang juga dengan "
+"secarik impian: untuk bisa menjelajah dan menaklukkan bintang."
 
 #: dat/intro:4
 msgid ""
@@ -177,10 +177,10 @@ msgid ""
 "ripples in the dark sea of space."
 msgstr ""
 "Pada gelombang pertama, penjelajah-penjelajah ini merayap dari satu bintang "
-"ke bintang lainnya pada kecepatan di bawah cahaya. Kemudian diciptakanlah "
-"mesin hiperspasial yang membawa gelombang penjelajahan kedua. Maka peradaban "
-"pun tersebar secara exponensial, seperti yang selalu terjadi, bagaikan riak "
-"di dalam lautan gelap angkasa."
+"ke bintang lainnya pada kecepatan rendah, di bawah cahaya. Kemudian "
+"diciptakanlah mesin hiperspasial yang membawa gelombang penjelajahan kedua. "
+"Maka peradaban pun tersebar secara eksponensial, seperti yang selalu "
+"terjadi, seeprti riak di dalam lautan gelap angkasa."
 
 #: dat/intro:12
 msgid ""
@@ -189,11 +189,11 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
-"Namun, masa penjelajahan yang herois ini bertahan sesaat saja, karena pada "
-"akhirnya keserakahan melebihi rasa penasaran. Sekejap mata, konflik pun "
-"muncul kiri-kanan di koloni-koloni ini. Lahan, bahan bakar, pangan, dan rasa "
-"ketidakpercayaan menabur bibit kekacauan. Setelah mulai, perang pun menyebar "
-"dari satu tempat ke tempat yang lainnya dan menjadi bencana."
+"Namun, masa penjelajahan yang herois ini bertahan hanya sesaat saja, karena "
+"pada akhirnya keserakahan menang atas rasa penasaran. Sekejap mata, konflik "
+"pun muncul kiri-kanan di berbagai koloni. Lahan, bahan bakar, pangan, dan "
+"rasa ketidakpercayaan menabur bibit kekacauan. Setelah mulai, perang pun "
+"menyebar dari satu tempat ke tempat yang lainnya dan menjadi bencana."
 
 #: dat/intro:15
 msgid ""
@@ -210,10 +210,10 @@ msgid ""
 "traffic for the first time in living memory."
 msgstr ""
 "Seorang yang bernama Daedris menegaskan kekuasaan atas planet-planet yang "
-"kelelahan. Ia membangun sebuah Kekaisaran Galaksi dan menjadikan dirinya "
-"sendiri pemimpinnya. Dibawah tangan kekuasaan militernya, hubungan antar "
-"planet kembali berlanjut seperti semula; jalur dagang yang terlupakan pun "
-"kembali digunakan untuk pertama kalinya sejak entah kapan."
+"kelelahan berperang. Ia membangun sebuah Kekaisaran Galaksi dan menjadikan "
+"dirinya sendiri sebagai pemimpin. Dibawah tangan kekuasaan militernya, "
+"hubungan antar planet kembali berlanjut seperti semula; jalur dagang yang "
+"terlupakan pun kembali digunakan untuk pertama kalinya sejak entah kapan."
 
 #: dat/intro:19
 msgid ""
@@ -222,8 +222,8 @@ msgid ""
 "reigned in an imperial golden age."
 msgstr ""
 "Para ahli menyebutnya zenit: teknologi melompat jauh, budaya berkembang, dan "
-"planet mati dihidupkan kembali. Kedamaian terlaksana di dalam sebuah masa "
-"keemasan imperial."
+"planet mati dihidupkan kembali. Kedamaian terlaksana di masa keemasan "
+"imperial."
 
 #: dat/intro:21
 msgid ""
@@ -240,17 +240,17 @@ msgstr ""
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history."
-msgstr "Jatuh dan bangun, ritme dari sejarah."
+msgstr "Jatuh dan bangun, ritme sejarah."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
 msgstr ""
-"Tetapi pergerakan sejarah tersandung pada hal tak tentu, yaitu sebuah momen "
-"yang disebut Insiden."
+"Tetapi pergerakan sejarah tersandung hal tak tentu, momen yang disebut "
+"Insiden."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr "Insiden itu mengoyakkan keluar jantung dari Kekaisaran."
+msgstr "Insiden itu mengoyakkan jantung Kekaisaran."
 
 #: dat/intro:29
 msgid ""
@@ -259,11 +259,11 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
-"Dari bumi, sebuah ledakan dahsyat bagaikan merobek melalui ruang angkasa, "
-"menghancurkan bintang-bintang, membuat planet-planet sirna. Miliaran orang "
-"meninggal. Lusinan sistem bintang menghilang ke dalam nebula misterius yang "
-"ditinggalkannya. Peradaban yang dulunya merentang satu galaksi sekarang "
-"hanya tersisa sedikit kejayaannya."
+"Dari bumi, sebuah ledakan dahsyat menggelegar bagaikan merobek ruang "
+"angkasa, menghancurkan bintang-bintang, dan membuat planet-planet sirna. "
+"Miliaran orang meninggal. Lusinan sistem bintang menghilang ke dalam nebula "
+"misterius yang ditinggalkannya. Peradaban yang dulunya merentang satu "
+"galaksi sekarang hanya tersisa sedikit kejayaannya."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
@@ -275,14 +275,14 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
-"Sepuluh siklus standar telah terlalui di dalam sebuah semesta yang dikuasai "
-"pecahan kekaisaran yang telah melewati puncak kejayaannya. Setelah Insiden, "
-"korupsi dan perompakan menjadi lumrah, tetapi dimana ada kekacauan, di situ "
-"juga ada kesempatan."
+"Sepuluh siklus standar telah berlalu di alam semesta yang dikuasai pecahan "
+"kekaisaran yang telah melewati puncak kejayaannya. Setelah Insiden, korupsi "
+"dan perompakan menjadi lumrah, tetapi dimana ada kekacauan, di situ juga ada "
+"kesempatan."
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr "Selamat datang di Naev..."
+msgstr "Selamat datang di semestanya Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
@@ -2515,9 +2515,9 @@ msgid ""
 "and is full of confetti. You're not sure what to do with it, but it might "
 "liven up the ship."
 msgstr ""
-"Bagian kiri dari yang tadinya sepasang sepatu bot milik seorang pejabat "
-"tinggi Kekaisaran. Kamu pun kebingungan untuk apa sepatu bot hanya sebelah, "
-"tapi benda ini mungkin menghidupkan suasana kapal."
+"Pasangan kiri sepatu bot milik seorang pejabat tinggi Kekaisaran. Kamu "
+"kebingungan untuk apa sepatu bot hanya sebelah, tapi benda ini mungkin "
+"menghidupkan suasana kapal."
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#pSmells funky.#0"
@@ -2965,7 +2965,7 @@ msgstr ""
 #: dat/outfits/core_engine/small/unicorp_hawk_360_engine.xml:5
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:5
 msgid "Core Systems (Engine)"
-msgstr ""
+msgstr "Sistem Inti (Mesin)"
 
 #: dat/outfits/core_engine/dummy_engine.xml:9
 msgid ""
@@ -2975,7 +2975,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
-msgstr ""
+msgstr "Mesin Besar Usang"
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:9
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:9
@@ -2987,11 +2987,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:2
 msgid "Krain Remige Engine"
-msgstr ""
+msgstr "Mesin Remige Krain"
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:4
 msgid "K. Remige Engine"
-msgstr ""
+msgstr "Mesin Remige (K)"
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:10
 msgid ""
@@ -3003,11 +3003,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:2
 msgid "Melendez Mammoth XL Engine"
-msgstr ""
+msgstr "Mesin Mammoth XL Melendez"
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:4
 msgid "M. Mammoth XL Engine"
-msgstr ""
+msgstr "Mesin Mammoth XL (M)"
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:11
 msgid ""
@@ -3019,11 +3019,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/nexus_bolt_3000_engine.xml:2
 msgid "Nexus Bolt 3000 Engine"
-msgstr ""
+msgstr "Mesin Bolt 3000 Nexus"
 
 #: dat/outfits/core_engine/large/nexus_bolt_3000_engine.xml:4
 msgid "N. Bolt 3000 Engine"
-msgstr ""
+msgstr "Mesin Bolt 3000 (N)"
 
 #: dat/outfits/core_engine/large/nexus_bolt_3000_engine.xml:10
 msgid ""
@@ -3034,11 +3034,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
-msgstr ""
+msgstr "Mesin Typhoon Tricon"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:4
 msgid "T. Typhoon Engine"
-msgstr ""
+msgstr "Mesin Typhoon (T)"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:10
 msgid ""
@@ -3050,11 +3050,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
 msgid "Tricon Typhoon II Engine"
-msgstr ""
+msgstr "Mesin Typhoon II Tricon"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:4
 msgid "T. Typhoon II Engine"
-msgstr ""
+msgstr "Mesin Typhoon II (T)"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:11
 msgid ""
@@ -3066,11 +3066,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/unicorp_eagle_6500_engine.xml:2
 msgid "Unicorp Eagle 6500 Engine"
-msgstr ""
+msgstr "Mesin Eagle 6500 Unicorp"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_6500_engine.xml:4
 msgid "U. Eagle 6500 Engine"
-msgstr ""
+msgstr "Mesin Eagle 6500 (U)"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_6500_engine.xml:11
 msgid ""
@@ -3083,15 +3083,15 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:2
 msgid "Beat Up Medium Engine"
-msgstr ""
+msgstr "Mesin Medium Usang"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:2
 msgid "Krain Patagium Engine"
-msgstr ""
+msgstr "Mesin Patagium Krain"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:4
 msgid "K. Patagium Engine"
-msgstr ""
+msgstr "Mesin Patagium (K)"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:11
 msgid ""
@@ -3103,11 +3103,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:2
 msgid "Melendez Buffalo XL Engine"
-msgstr ""
+msgstr "Mesin Buffalo XL Melendez"
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:4
 msgid "M. Buffalo XL Engine"
-msgstr ""
+msgstr "Mesin Buffalo XL (M)"
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:11
 msgid ""
@@ -3119,11 +3119,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:2
 msgid "Nexus Arrow 700 Engine"
-msgstr ""
+msgstr "Mesin Arrow 700 Nexus"
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:4
 msgid "N. Arrow 700 Engine"
-msgstr ""
+msgstr "Mesin Arrow 700 (N)"
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:10
 msgid ""
@@ -3134,11 +3134,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:2
 msgid "Tricon Cyclone Engine"
-msgstr ""
+msgstr "Mesin Cyclone Tricon"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:4
 msgid "T. Cyclone Engine"
-msgstr ""
+msgstr "Mesin Cyclone (T)"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:10
 msgid ""
@@ -3149,11 +3149,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:2
 msgid "Tricon Cyclone II Engine"
-msgstr ""
+msgstr "Mesin Cyclone II Tricon"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:4
 msgid "T. Cyclone II Engine"
-msgstr ""
+msgstr "Mesin Cyclone II (T)"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:11
 msgid ""
@@ -3165,11 +3165,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:2
 msgid "Unicorp Falcon 1400 Engine"
-msgstr ""
+msgstr "Mesin Falcon 1400 Unicorp"
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:4
 msgid "U. Falcon 1400 Engine"
-msgstr ""
+msgstr "Mesin Falcon 1400 (U)"
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:11
 msgid ""
@@ -3181,15 +3181,15 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/beat_up_small_engine.xml:2
 msgid "Beat Up Small Engine"
-msgstr ""
+msgstr "Mesin Kecil Usang"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:2
 msgid "Melendez Ox XL Engine"
-msgstr ""
+msgstr "Mesin Ox XL Melendez"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:4
 msgid "M. Ox XL Engine"
-msgstr ""
+msgstr "Mesin Ox XL (M)"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:11
 msgid ""
@@ -3200,11 +3200,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/nexus_dart_160_engine.xml:2
 msgid "Nexus Dart 160 Engine"
-msgstr ""
+msgstr "Mesin Dart 160 Nexus"
 
 #: dat/outfits/core_engine/small/nexus_dart_160_engine.xml:4
 msgid "N. Dart 160 Engine"
-msgstr ""
+msgstr "Mesin Dart 160 (N)"
 
 #: dat/outfits/core_engine/small/nexus_dart_160_engine.xml:10
 msgid ""
@@ -3216,11 +3216,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:2
 msgid "Tricon Zephyr Engine"
-msgstr ""
+msgstr "Mesin Zephyr Tricon"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:4
 msgid "T. Zephyr Engine"
-msgstr ""
+msgstr "Mesin Zephyr (T)"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:10
 msgid ""
@@ -3233,11 +3233,11 @@ msgstr ""
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
 msgid "Tricon Zephyr II Engine"
-msgstr ""
+msgstr "Mesin Zephyr II Tricon"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:4
 msgid "T. Zephyr II Engine"
-msgstr ""
+msgstr "Mesin Zephyr II (T)"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:11
 msgid ""
@@ -3249,11 +3249,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/unicorp_hawk_360_engine.xml:2
 msgid "Unicorp Hawk 360 Engine"
-msgstr ""
+msgstr "Mesin Hawk 360 Unicorp"
 
 #: dat/outfits/core_engine/small/unicorp_hawk_360_engine.xml:4
 msgid "U. Hawk 360 Engine"
-msgstr ""
+msgstr "Mesin Hawk 360 (U)"
 
 #: dat/outfits/core_engine/small/unicorp_hawk_360_engine.xml:11
 msgid ""
@@ -3264,11 +3264,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:2
 msgid "Za'lek Test Engine"
-msgstr ""
+msgstr "Mesin Tes Za'lek"
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:4
 msgid "Z. Test Engine"
-msgstr ""
+msgstr "Mesin Tes (Z)"
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:11
 msgid ""
@@ -3307,7 +3307,7 @@ msgstr ""
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:5
 #: dat/outfits/core_hull/small/unicorp_d9_light_plating.xml:5
 msgid "Core Systems (Hull)"
-msgstr ""
+msgstr "Sistem Inti (Rangka)"
 
 #: dat/outfits/core_hull/dummy_plating.xml:9
 msgid ""
@@ -3317,7 +3317,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:2
 msgid "Patchwork Heavy Plating"
-msgstr ""
+msgstr "Pelapis Berat Seadanya"
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:10
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:10
@@ -3329,11 +3329,11 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:2
 msgid "Red Star Large Cargo Hull"
-msgstr ""
+msgstr "Rangka Kargo Besar Bintang Merah"
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:4
 msgid "RS. Large Cargo Hull"
-msgstr ""
+msgstr "Rangka Kargo Besar (BM)"
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:11
 msgid ""
@@ -3347,7 +3347,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:2
 msgid "S&K Heavy Combat Plating"
-msgstr ""
+msgstr "Pelapis Tempur Berat S&K"
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:10
 msgid ""
@@ -3358,7 +3358,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:2
 msgid "S&K Large Cargo Hull"
-msgstr ""
+msgstr "Rangka Kargo Besar S&K"
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:10
 msgid ""
@@ -3369,7 +3369,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:2
 msgid "S&K Superheavy Combat Plating"
-msgstr ""
+msgstr "Pelapis Tempur Sangat-Berat S&K"
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:10
 msgid ""
@@ -3425,7 +3425,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:2
 msgid "Patchwork Medium Plating"
-msgstr ""
+msgstr "Pelapis Menegah Seadanya"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
 msgid "Red Star Medium Cargo Hull"
@@ -3458,7 +3458,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:2
 msgid "S&K Medium Combat Plating"
-msgstr ""
+msgstr "Pelapis Tempur Menengah S&K"
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:9
 msgid ""
@@ -3469,7 +3469,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:2
 msgid "S&K Medium-Heavy Combat Plating"
-msgstr ""
+msgstr "Pelapis Tempur Menengah-Berat S&K"
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:10
 msgid ""
@@ -4994,7 +4994,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_empire_core.xml:2
 msgid "Map: Empire Core"
-msgstr ""
+msgstr "Peta Inti Kekaisara"
 
 #: dat/outfits/maps/map_empire_core.xml:7
 msgid ""
@@ -5004,7 +5004,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_empiresoromid_trade_route.xml:2
 msgid "Map: Empire-Soromid Trade Route"
-msgstr ""
+msgstr "Peta Rute Dagang Kekaisaran-Soromid"
 
 #: dat/outfits/maps/map_empiresoromid_trade_route.xml:7
 msgid ""
@@ -5014,7 +5014,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_flf.xml:2
 msgid "Map: FLF Hidden Jumps"
-msgstr ""
+msgstr "Peta Lompatan Tersembunyi FLF"
 
 #: dat/outfits/maps/map_flf.xml:7
 msgid ""
@@ -5024,7 +5024,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:2
 msgid "Map: FLF-Pirate Route"
-msgstr ""
+msgstr "Peta Rute FLF-Perompak"
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:7
 msgid ""
@@ -5044,7 +5044,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_kretogg_hypergate.xml:2
 msgid "Map: Kretogg's Hypergate"
-msgstr ""
+msgstr "Peta Gerbang Hiper Kretogg"
 
 #: dat/outfits/maps/map_kretogg_hypergate.xml:7
 msgid ""
@@ -5064,7 +5064,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_nebula_edge.xml:2
 msgid "Map: Nebula Edge"
-msgstr ""
+msgstr "Peta Ujung Nebula"
 
 #: dat/outfits/maps/map_nebula_edge.xml:7
 msgid ""
@@ -5074,7 +5074,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_new_haven_secrets.xml:2
 msgid "Map: New Haven's Secrets"
-msgstr ""
+msgstr "Peta Rahasia Haven Baru"
 
 #: dat/outfits/maps/map_new_haven_secrets.xml:7
 msgid ""
@@ -5084,7 +5084,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:2
 msgid "Map: Pirate Strongholds"
-msgstr ""
+msgstr "Peta Kubu Persembunyian Perompak"
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:7
 msgid ""
@@ -5094,7 +5094,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_qorel.xml:2
 msgid "Map: Qorel Tunnel"
-msgstr ""
+msgstr "Peta Terowongan Qorel"
 
 #: dat/outfits/maps/map_qorel.xml:7
 msgid ""
@@ -5114,7 +5114,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_sirius_core.xml:2
 msgid "Map: Sirius Core"
-msgstr ""
+msgstr "Peta Inti Sirius"
 
 #: dat/outfits/maps/map_sirius_core.xml:7
 msgid ""
@@ -5124,7 +5124,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_sol.xml:2
 msgid "Map: Sol"
-msgstr ""
+msgstr "Peta Sol"
 
 #: dat/outfits/maps/map_sol.xml:6
 msgid ""
@@ -5146,7 +5146,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_thurion.xml:2
 msgid "Map: Thurion Core"
-msgstr ""
+msgstr "Peta Inti Turion"
 
 #: dat/outfits/maps/map_thurion.xml:7
 msgid ""
@@ -5156,7 +5156,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_zalek_core.xml:2
 msgid "Map: Za'lek Core"
-msgstr ""
+msgstr "Peta Inti Za'lek"
 
 #: dat/outfits/maps/map_zalek_core.xml:7
 msgid ""
@@ -5166,11 +5166,11 @@ msgstr ""
 
 #: dat/outfits/maps/ultra_map.xml:2
 msgid "Ultra Map"
-msgstr ""
+msgstr "Peta Ultra"
 
 #: dat/outfits/maps/ultra_map.xml:6
 msgid "For cheating."
-msgstr ""
+msgstr "Untuk curang."
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:2
 msgid "Counterfeit Heavy Combat Vessel License"
@@ -5210,7 +5210,7 @@ msgstr ""
 
 #: dat/outfits/misc/gui_brushed.xml:2
 msgid "GUI - Brushed"
-msgstr ""
+msgstr "GUI - Brushed"
 
 #: dat/outfits/misc/gui_brushed.xml:6
 msgid "Outfit corresponding with the \"Brushed\" GUI."
@@ -5218,7 +5218,7 @@ msgstr ""
 
 #: dat/outfits/misc/gui_legacy.xml:2
 msgid "GUI - Legacy"
-msgstr ""
+msgstr "GUI - Legacy"
 
 #: dat/outfits/misc/gui_legacy.xml:6
 msgid "Outfit corresponding with the \"Legacy\" GUI."
@@ -5226,7 +5226,7 @@ msgstr ""
 
 #: dat/outfits/misc/gui_slim.xml:2
 msgid "GUI - Slim"
-msgstr ""
+msgstr "GUI - Slim"
 
 #: dat/outfits/misc/gui_slim.xml:6
 msgid "Outfit corresponding with the \"Slim\" GUI."
@@ -5234,7 +5234,7 @@ msgstr ""
 
 #: dat/outfits/misc/gui_slimv2.xml:2
 msgid "GUI - Slimv2"
-msgstr ""
+msgstr "GUI - Slimv2"
 
 #: dat/outfits/misc/gui_slimv2.xml:6
 msgid "Outfit corresponding with the \"Slimv2\" GUI."
@@ -8257,7 +8257,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_hyena.xml:2
 msgid "Pirate Hyena"
-msgstr ""
+msgstr "Hyena Perompak"
 
 #: dat/ships/pirate/pirate_hyena.xml:16
 msgid ""
@@ -8271,7 +8271,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_kestrel.xml:2
 msgid "Pirate Kestrel"
-msgstr ""
+msgstr "Kestrel Perompak"
 
 #: dat/ships/pirate/pirate_kestrel.xml:16
 msgid ""
@@ -8310,7 +8310,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_rhino.xml:2
 msgid "Pirate Rhino"
-msgstr ""
+msgstr "Badak Perompak"
 
 #: dat/ships/pirate/pirate_rhino.xml:17
 msgid ""
@@ -8321,7 +8321,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_shark.xml:2
 msgid "Pirate Shark"
-msgstr ""
+msgstr "Hiu Perompak"
 
 #: dat/ships/pirate/pirate_shark.xml:17
 msgid ""
@@ -15115,7 +15115,7 @@ msgstr ""
 
 #: dat/spob/jade_court.xml:2
 msgid "Jade Court"
-msgstr "Mahkamah Jade"
+msgstr "Mahkamah Giok"
 
 #: dat/spob/jade_court.xml:27
 msgid ""
@@ -15139,19 +15139,19 @@ msgstr ""
 
 #: dat/spob/jade_i.xml:2
 msgid "Jade I"
-msgstr "Jade I"
+msgstr "Giok I"
 
 #: dat/spob/jade_ii.xml:2
 msgid "Jade II"
-msgstr "Jade II"
+msgstr "Giok II"
 
 #: dat/spob/jade_iii.xml:2
 msgid "Jade III"
-msgstr "Jade III"
+msgstr "Giok III"
 
 #: dat/spob/jade_vi.xml:2
 msgid "Jade VI"
-msgstr "Jade VI"
+msgstr "Giok VI"
 
 #: dat/spob/jaegnhild.xml:2
 msgid "Jaegnhild"
@@ -16780,6 +16780,12 @@ msgid ""
 "ambience is designed to encourage excessive behaviour in a very carefully "
 "planned mechanical way."
 msgstr ""
+"Seperti sebagian besar stasiun ini, bar ini dibuat langsung ke dalam "
+"kompleks judi, dengan suara-suara berdering konstan dari berbagai mesin slot "
+"dan meja permainan. Staf stasiun mundar-mandir, sibuk membawa minuman "
+"komplementer baik ke wisatawan baru maupun kepada mereka yang kecanduan "
+"judi. Kamu bisa merasakan bagaimana latar suasana tempat ini dirancang "
+"sedemikian rupa untuk mendorong perilaku eksesif."
 
 #: dat/spob/mining_vrata_guildhouse.xml:2
 msgid "Mining Vrata Guildhouse"
@@ -24721,7 +24727,7 @@ msgstr "Jackson"
 
 #: dat/ssys/jade.xml:2
 msgid "Jade"
-msgstr "Jade"
+msgstr "Giok"
 
 #: dat/ssys/jervis.xml:2
 msgid "Jervis"
@@ -26189,7 +26195,7 @@ msgstr "El Ego de Deiz"
 
 #: dat/start.xml:6
 msgid "Your first space-worthy ship!"
-msgstr ""
+msgstr "Kapal pertamamu yang bisa menjelajahi luar angkasa!"
 
 #: dat/unidiff/antlejosv_1.xml:4
 msgid ""
@@ -26273,7 +26279,7 @@ msgstr ""
 #: dat/unidiff/hypergates_3.xml:15 dat/unidiff/hypergates_3.xml:20
 #: dat/unidiff/hypergates_3.xml:25 dat/unidiff/hypergates_3.xml:30
 msgid "Hypergate"
-msgstr ""
+msgstr "Gerbang Hiper"
 
 #: dat/unidiff/minerva_1.xml:4
 msgid ""
@@ -26324,6 +26330,17 @@ msgid ""
 "last remember. Could this be the result of the new CEO of Minerva Station? "
 "Who could they be?"
 msgstr ""
+"Stasiun ini terdiri dari satu kompleks perjudian yang amat besar. Ke mana "
+"pun engkau pergi, nampaknya selalu ada perjudian yang sedang berlangsung. "
+"Hal ini, digabungkan dengan hilir-mudik keluar-masuk, menciptakan sebuah "
+"lingkungan gila-gilaan. Ketika sedang docking ke stasiun ini, terdapat papan "
+"neon besar dengan tulisan \"Apa yang terjadi di Limbo, tetap di Limbo\". "
+"Stasiun ini direnovasi setelah ledakan besar yang tak diketahui penyebabnya "
+"menghancurkan sebagian dari stasiun ini.\n"
+"\n"
+"Nampaknya terdapat lebih banyak orang-orang mencurigakan di sekitaran "
+"stasiun ini daripada sebelumnya. Apakah ini ada kaitannya dengan CEO baru "
+"Stasiun Minerva? Siapakah dia yang sebenarnya?"
 
 #: dat/unidiff/minerva_3d.xml:4
 msgid ""
@@ -26340,6 +26357,18 @@ msgid ""
 "construction. This has lead to a larger affluence of Dvaered tourists and "
 "military than you remember."
 msgstr ""
+"Stasiun ini terdiri dari satu kompleks perjudian yang amat besar. Ke mana "
+"pun engkau pergi, nampaknya selalu ada perjudian yang sedang berlangsung. "
+"Hal ini, digabungkan dengan hilir-mudik keluar-masuk, menciptakan sebuah "
+"lingkungan gila-gilaan. Ketika sedang docking ke stasiun ini, terdapat papan "
+"neon besar dengan tulisan \"Apa yang terjadi di Limbo, tetap di Limbo\". "
+"Stasiun ini direnovasi setelah ledakan besar yang tak diketahui penyebabnya "
+"menghancurkan sebagian dari stasiun ini.\n"
+"\n"
+"Stasiun ini sekarang ada di bawah kuasa Dvaered, setelah Mahkamah Giok "
+"mencabut gelar independen yang dimiliki stasiun ini sejak selesainya "
+"konstruksi. Hal ini menimbulkan peningkatan jumlah militer dan turis Dvaered "
+"secara signifikan, jauh dari yang biasanya kamu amati."
 
 #: dat/unidiff/minerva_3z.xml:4
 msgid ""
@@ -26358,6 +26387,20 @@ msgid ""
 "tourists, but you can't shake the feeling they are mainly used for "
 "surveillance and control."
 msgstr ""
+"Stasiun ini terdiri dari satu kompleks perjudian yang amat besar. Ke mana "
+"pun engkau pergi, nampaknya selalu ada perjudian yang sedang berlangsung. "
+"Hal ini, digabungkan dengan hilir-mudik keluar-masuk, menciptakan sebuah "
+"lingkungan gila-gilaan. Ketika sedang docking ke stasiun ini, terdapat papan "
+"neon besar dengan tulisan \"Apa yang terjadi di Limbo, tetap di Limbo\". "
+"Stasiun ini direnovasi setelah ledakan besar yang tak diketahui penyebabnya "
+"menghancurkan sebagian dari stasiun ini.\n"
+"\n"
+"Stasiun ini sekarang ada di bawah kuasa Za'lek, setelah Mahkamah Giok "
+"mencabut gelar independen yang dimiliki stasiun ini sejak selesainya "
+"konstruksi. Hal ini menimbulkan peningkatan otomisasi dari stasiun, dengan "
+"banyak drone servis yang memberikan layanan terhadap gerombolan turis, namun "
+"firasatmu berkata bahwa tujuan utama drone-drone itu adalah untuk pengawasan "
+"dan pengendalian."
 
 #: dat/unidiff/sigma13_fixed1.xml:4
 msgid ""
@@ -26697,20 +26740,21 @@ msgstr ""
 
 #: dat/ai/advertiser.lua:108
 msgid "a Fool"
-msgstr ""
+msgstr "orang yang tolol"
 
 #: dat/ai/advertiser.lua:109
 msgid "a Coward"
-msgstr ""
+msgstr "seorang pecundang"
 
 #. Gets all warlorlds
 #: dat/ai/advertiser.lua:117
 msgid "I hereby declare {butthead} is {badword}. -{sponsor}"
 msgstr ""
+"Dengan ini saya menyatakan bahwa {butthead} adalah {badword}. -{sponsor}"
 
 #: dat/ai/advertiser.lua:118
 msgid "Let it be known that {butthead} is {badword}. -{sponsor}"
-msgstr ""
+msgstr "Biarlah diketahui bahwa {butthead} adalah {badword}. -{sponsor}"
 
 #. Soromid messages
 #. Soromid+Empire messages
@@ -75685,7 +75729,8 @@ msgstr ""
 "sistem {sys}.\n"
 "\n"
 "#nTarget:#0 {pirname} (kapal jenis {shipclass})\n"
-"#nDiinginkan:#0 Hidup-hidup"
+"#nDiinginkan:#0 Hidup-hidup\n"
+"#nTerakhir Terlihat:#0 sistem {sys}"
 
 #: dat/missions/neutral/bounty.lua:67
 msgid " for attempting to undermine the integry of {spb}"
@@ -83894,10 +83939,9 @@ msgid ""
 msgstr ""
 
 #: dat/missions/onion/onion03.lua:154
-#, fuzzy
-#| msgid "Land on {pnt} in the {sys} system"
 msgid "Head to the jump to {sys2} in the {sys1} system"
-msgstr "Mendaratlah di {pnt} di sistem {sys}"
+msgstr ""
+"Pergilah ke titik lompat yang ada di sistem {sys1} untuk melompat ke {sys2}"
 
 #: dat/missions/onion/onion03.lua:161
 msgid "Establish communication with l337_b01?"
@@ -83932,7 +83976,7 @@ msgstr ""
 #. Give a message if new enemies coming in
 #: dat/missions/onion/onion03.lua:203
 msgid "l337_b01: \"jump signal detected!\""
-msgstr ""
+msgstr "l337_b01: \"sinyal lompat terdeteksi!\""
 
 #. no more spawning
 #. get rid of pilots
@@ -83972,10 +84016,8 @@ msgid "You strayed too far from the jump!"
 msgstr ""
 
 #: dat/missions/onion/onion03.lua:262
-#, fuzzy
-#| msgid "You Won!"
 msgid "You won?"
-msgstr "Kamu Menang!"
+msgstr "Kamu menang?"
 
 #: dat/missions/onion/onion03.lua:264
 msgid "l337_b01: \"Done! Wait, why isn't it working.\""
