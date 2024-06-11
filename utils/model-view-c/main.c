@@ -135,9 +135,8 @@ int main( int argc, char *argv[] )
    free( path );
 
    /* Set some lighting parameters. */
-   double al = 0.0;
-   gltf_lightAmbient( al, al, al );
-   //gltf_lightAmbient( 3., 0.0, 0.0 );
+   double al = 0.1;
+   gltf_light( al, al, al, 1.0 );
 
    /* Set up some stuff. */
    GLuint shadowvbo;
@@ -186,12 +185,12 @@ int main( int argc, char *argv[] )
                   nebula = !nebula;
                   if (nebula) {
                      glColour col;
-                     const double str = 0.5;
+                     const double str = 3.0;
                      col_hsv2rgb( &col, 1.0 * 360., 1., 1. );
-                     gltf_light( str * col.r, str * col.g, str * col.b, 0.7 );
+                     gltf_light( str * col.r, str * col.g, str * col.b, 0.5 );
                   }
                   else
-                     gltf_light( 0., 0., 0., 1.0 );
+                     gltf_light( al, al, al, 1.0 );
                   break;
 
                case SDLK_e:

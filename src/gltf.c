@@ -68,7 +68,7 @@ const Lighting L_default_const = {
              */
             .sun       = 0,
             .pos       = { .v = { -3., 2.75, -3. } },
-            .intensity = 100.,
+            .intensity = 80.,
             // Sharky (directional) power: 5, direction: 10.75, -12.272, 7.463
             /*
             .sun = 1,
@@ -85,7 +85,7 @@ const Lighting L_default_const = {
              */
             .sun       = 1,
             .pos       = { .v = { 10., 11.5, 7. } },
-            .intensity = 1.5,
+            .intensity = 1.,
             // Sharky (point) power: 2000., position: -12.339, 10.559, 11.787
             /*
             .sun       = 0,

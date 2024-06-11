@@ -153,7 +153,7 @@ function starfield.init( params )
    end
 
    -- Default to some weak ambient light
-   gfx.lightAmbient( 0.5 )
+   gfx.lightAmbient( 0.1 )
 end
 
 function starfield.canvas ()
