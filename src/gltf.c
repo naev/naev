@@ -95,6 +95,29 @@ const Lighting L_default_const = {
          },
       },
 };
+const Lighting L_store_const = {
+   .ambient_r = 0.,
+   .ambient_g = 0.,
+   .ambient_b = 0.,
+   .nlights   = 2,
+   .lights =
+      {
+         {
+            /* Key Light. */
+            .colour    = { .v = { 1., 1., 1. } },
+            .sun       = 0,
+            .pos       = { .v = { -3., 2.75, -3. } },
+            .intensity = 100.,
+         },
+         {
+            /* Fill light. */
+            .colour    = { .v = { 1., 1., 1. } },
+            .sun       = 1,
+            .pos       = { .v = { 10., 11.5, 7. } },
+            .intensity = 1.,
+         },
+      },
+};
 static Lighting L_default;
 static double   light_intensity = 1.;
 

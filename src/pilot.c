@@ -80,7 +80,7 @@ static void pilot_updateSolid( Pilot *p, double dt );
 static void pilot_erase( Pilot *p );
 /* Misc. */
 static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw,
-                                         double fh );
+                                         double fh, const Lighting *L );
 static int  pilot_getStackPos( unsigned int id );
 static void pilot_init_trails( Pilot *p );
 static int  pilot_trail_generated( Pilot *p, int generator );
@@ -1789,9 +1789,10 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg,
  *    @param fbo Framebuffer to render to.
  *    @param fw Framebuffer width.
  *    @param fh Framebuffer height.
+ *    @param L Lighting to use or NULL for default.
  */
 static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw,
-                                         double fh )
+                                         double fh, const Lighting *L )
 {
    glColour c = { 1., 1., 1., 1. };
 
@@ -1800,7 +1801,7 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw,
       c.a = 0.5;
 
    ship_renderFramebuffer( p->ship, fbo, fw, fh, p->solid.dir, p->engine_glow,
-                           p->tilt, p->r, p->tsx, p->tsy, &c, NULL );
+                           p->tilt, p->r, p->tsx, p->tsy, &c, L );
 }
 
 /**
@@ -1812,8 +1813,10 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw,
  *    @param fbo Framebuffer to render to.
  *    @param fw Framebuffer width.
  *    @param fh Framebuffer height.
+ *    @param L Lighting to use or NULL for default.
  */
-void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
+void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh,
+                              const Lighting *L )
 {
    double        x, y, w, h;
    double        timeleft, elapsed;
@@ -1844,7 +1847,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 
    /* Render normally. */
    if ( e == NULL )
-      pilot_renderFramebufferBase( p, fbo, fw, fh );
+      pilot_renderFramebufferBase( p, fbo, fw, fh, L );
    /* Render effect single effect. */
    else {
       mat4              projection, tex_mat;
@@ -1863,7 +1866,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 
       /* Render onto framebuffer. */
       pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw,
-                                   gl_screen.nh );
+                                   gl_screen.nh, L );
 
       glBindFramebuffer( GL_FRAMEBUFFER, fbo );
 
@@ -1983,7 +1986,7 @@ void pilot_render( Pilot *p )
          if ( p->ship->gfx_3d != NULL ) {
             /* Render to framebuffer first. */
             pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw,
-                                         gl_screen.nh );
+                                         gl_screen.nh, NULL );
 
             /* Draw framebuffer on screen. */
             gl_renderTextureRaw(
@@ -2018,7 +2021,7 @@ void pilot_render( Pilot *p )
 
          /* Render onto framebuffer. */
          pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw,
-                                      gl_screen.nh );
+                                      gl_screen.nh, NULL );
 
          glUseProgram( ed->program );
 

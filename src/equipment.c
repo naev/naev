@@ -948,7 +948,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
 {
    Pilot                *p;
    int                   s;
-   double                px, py, pw, ph, lr, lg, lb, li;
+   double                px, py, pw, ph;
    vec2                  v;
    GLint                 fbo;
    const ShipWidgetData *swd = data;
@@ -992,10 +992,8 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    s = ceil(
       s / gl_screen.scale ); /* Have to correct for the true rendered size. */
    glGetIntegerv( GL_FRAMEBUFFER_BINDING, &fbo );
-   gltf_lightGet( &lr, &lg, &lb, &li );
-   gltf_light( 2., 2., 2., 0.8 );
-   pilot_renderFramebuffer( p, swd->fbo, gl_screen.nw, gl_screen.nh );
-   gltf_light( lr, lg, lb, li );
+   pilot_renderFramebuffer( p, swd->fbo, gl_screen.nw, gl_screen.nh,
+                            &L_store_const );
    /* TODO probably something more robust than restoring the blend mode here...
     */
    glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,

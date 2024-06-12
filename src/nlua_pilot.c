@@ -6820,7 +6820,7 @@ static int pilotL_render( lua_State *L )
     * TODO fix this shit. */
    eg             = p->engine_glow;
    p->engine_glow = ( eg > 0.5 ) ? 1.0 : 0.0;
-   pilot_renderFramebuffer( p, lc.fbo, gl_screen.rw, gl_screen.rh );
+   pilot_renderFramebuffer( p, lc.fbo, gl_screen.rw, gl_screen.rh, NULL );
    p->engine_glow = eg;
 
    lua_pushcanvas( L, lc );
@@ -6858,7 +6858,7 @@ static int pilotL_renderTo( lua_State *L )
     * TODO fix this shit. */
    eg             = p->engine_glow;
    p->engine_glow = ( eg > 0.5 ) ? 1.0 : 0.0;
-   pilot_renderFramebuffer( p, lc->fbo, gl_screen.rw, gl_screen.rh );
+   pilot_renderFramebuffer( p, lc->fbo, gl_screen.rw, gl_screen.rh, NULL );
    p->engine_glow = eg;
 
    lua_pushnumber( L, w );

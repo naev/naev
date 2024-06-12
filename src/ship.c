@@ -520,36 +520,11 @@ static int ship_generateStoreGFX( Ship *temp )
    snprintf( buf, sizeof( buf ), "%s_gfx_store", temp->name );
    gl_contextSet();
 
-   /* Lighting is based on default. */
-   const Lighting L = {
-      .ambient_r = 0.,
-      .ambient_g = 0.,
-      .ambient_b = 0.,
-      .nlights   = 2,
-      .lights =
-         {
-            {
-               /* Key Light. */
-               .colour    = { .v = { 1., 1., 1. } },
-               .sun       = 0,
-               .pos       = { .v = { -3., 2.75, -3. } },
-               .intensity = 100.,
-            },
-            {
-               /* Fill light. */
-               .colour    = { .v = { 1., 1., 1. } },
-               .sun       = 1,
-               .pos       = { .v = { 10., 11.5, 7. } },
-               .intensity = 1.,
-            },
-         },
-   };
-
    gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
    gl_fboCreate( &fbo, &tex, size, size );
    gl_fboAddDepth( fbo, &depth_tex, size, size );
    ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., 0.,
-                           0., tsx, tsy, NULL, &L );
+                           0., tsx, tsy, NULL, &L_store_const );
    temp->_gfx_store = gl_rawTexture( buf, tex, size, size );
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glDeleteTextures( 1, &depth_tex );

@@ -195,6 +195,7 @@ typedef struct Lighting {
                       MAX_LIGHTS. */
 } Lighting;
 extern const Lighting L_default_const;
+extern const Lighting L_store_const;
 
 /* Framework itself. */
 int  gltf_init( void );
