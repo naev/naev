@@ -34,6 +34,7 @@
 #include "render.h"
 #include "sound.h"
 #include "toolkit.h"
+#include "toolkit_priv.h"
 
 #define BUTTON_WIDTH 120 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT 30 /**< Button height, standard across menus. */
@@ -105,6 +106,7 @@ static void opt_setGammaCorrection( unsigned int wid, const char *str );
 static void opt_setScalefactor( unsigned int wid, const char *str );
 static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
+static void opt_checkRound( unsigned int wid, const char *str );
 static void opt_checkHealth( unsigned int wid, const char *str );
 static void opt_checkRestart( unsigned int wid, const char *str );
 /* Audio. */
@@ -146,10 +148,11 @@ void opt_menu( void )
 
    /* Dimensions. */
    w = 680;
-   h = 525;
+   h = 570;
 
    /* Create window and tabs. */
-   opt_wid = window_create( "wdwOptions", _( "Options" ), -1, -1, w, h );
+   opt_wid = window_createFlags( "wdwOptions", _( "Options" ), -1, -1, w, h,
+                                 WINDOW_TABBED | WINDOW_NOBORDER );
    window_setCancel( opt_wid, opt_close );
 
    /* Create tabbed window. */
@@ -157,7 +160,7 @@ void opt_menu( void )
    for ( size_t i = 0; i < sizeof( opt_names ) / sizeof( opt_names[0] ); i++ )
       names[i] = _( opt_names[i] );
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
-                                         OPT_WINDOWS, (const char **)names, 0 );
+                                         OPT_WINDOWS, (const char **)names, 2 );
    free( names );
 
    /* Common stuff. */
@@ -1472,6 +1475,9 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20, "chkBigIcons", _( "Bigger icons" ),
                        NULL, conf.big_icons );
+   y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20, "chkRoundGui", _( "Rounded GUI." ),
+                       opt_checkRound, conf.round_gui );
 }
 
 /**
@@ -1553,6 +1559,7 @@ static int opt_videoSave( unsigned int wid, const char *str )
 
    /* GUI. */
    conf.big_icons = window_checkboxState( wid, "chkBigIcons" );
+   conf.round_gui = window_checkboxState( wid, "chkRoundGui" );
 
    /* Reload background. */
    background_load( cur_system->background );
@@ -1599,6 +1606,15 @@ static void opt_listColourblind( unsigned int wid, const char *str )
 {
    conf.colourblind_type = toolkit_getListPos( wid, str );
    gl_colourblind();
+}
+
+/**
+ * @brief Handles the roundness.
+ */
+static void opt_checkRound( unsigned int wid, const char *str )
+{
+   int f          = window_checkboxState( wid, str );
+   conf.round_gui = f;
 }
 
 /**
@@ -1733,6 +1749,7 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
    window_checkboxSet( wid, "chkBigIcons", BIG_ICONS_DEFAULT );
+   window_checkboxSet( wid, "chkRoundGui", ROUND_GUI_DEFAULT );
 
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadScale", log( SCALE_FACTOR_DEFAULT ) );

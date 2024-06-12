@@ -1069,7 +1069,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    z = cst->zoom;
 
    /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
+   gl_renderPane( bx, by, w, h, &cBlack );
 
    if ( cst->alpha_decorators > 0. )
       map_renderDecorators( x, y, z, 0, EASE_ALPHA( cst->alpha_decorators ) );
@@ -1122,7 +1122,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    /* Current spob. */
    gl_renderCircle( x + cur_system->pos.x * z, y + cur_system->pos.y * z,
-                    1.5 * r, &cRadar_tSpob, 0 );
+                    1.5 * r, &cRadar_tSpob, 1 );
 
    glClear( GL_DEPTH_BUFFER_BIT );
 }
@@ -1281,7 +1281,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor,
 
          /* Draw. */
          glEnableVertexAttribArray( shaders.nebula_map.vertex );
-         gl_vboActivateAttribOffset( gl_squareVBO, shaders.nebula_map.vertex, 0,
+         gl_vboActivateAttribOffset( gl_paneVBO, shaders.nebula_map.vertex, 0,
                                      2, GL_FLOAT, 0 );
          glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
@@ -1311,7 +1311,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor,
 
          /* Draw. */
          glEnableVertexAttribArray( sys->ms->vertex );
-         gl_vboActivateAttribOffset( gl_squareVBO, sys->ms->vertex, 0, 2,
+         gl_vboActivateAttribOffset( gl_paneVBO, sys->ms->vertex, 0, 2,
                                      GL_FLOAT, 0 );
          glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
@@ -1423,7 +1423,7 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
       /* Draw an outer ring. */
       if ( mode == MAPMODE_EDITOR || mode == MAPMODE_TRAVEL ||
            mode == MAPMODE_TRADE )
-         gl_renderCircle( tx, ty, r, &cInert, 0 );
+         gl_renderCircle( tx, ty, r, &cInert, 1 );
 
       /* Ignore not known systems when not in the editor. */
       if ( mode != MAPMODE_EDITOR && !sys_isKnown( sys ) )
@@ -1455,13 +1455,13 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
 
          if ( mode == MAPMODE_EDITOR ) {
             /* Radius slightly shorter. */
-            gl_renderCircle( tx, ty, 0.5 * r, col, 1 );
+            gl_renderDisk( tx, ty, 0.5 * r, col );
          } else
-            gl_renderCircle( tx, ty, 0.65 * r, col, 1 );
+            gl_renderDisk( tx, ty, 0.65 * r, col );
       } else if ( mode == MAPMODE_DISCOVER ) {
-         gl_renderCircle( tx, ty, r, &cInert, 0 );
+         gl_renderCircle( tx, ty, r, &cInert, 1 );
          if ( sys_isFlag( sys, SYSTEM_DISCOVERED ) )
-            gl_renderCircle( tx, ty, 0.65 * r, &cGreen, 1 );
+            gl_renderDisk( tx, ty, 0.65 * r, &cGreen );
       }
    }
 }
@@ -1572,7 +1572,7 @@ void map_renderNotes( double bx, double by, double x, double y, double zoom,
       /* Background. */
       col   = cBlack;
       col.a = alpha * 0.8;
-      gl_renderRect( tx - 4., ty - 4., tw, th, &col );
+      gl_renderPane( tx - 4., ty - 4., tw, th, &col );
 
       /* Render note */
       col   = cFontOrange;
@@ -1740,7 +1740,7 @@ static void map_renderSysBlack( double bx, double by, double x, double y,
       /* If system is known fill it. */
       if ( ( sys_isKnown( sys ) ) && ( system_hasSpob( sys ) ) ) {
          ccol = cGrey10;
-         gl_renderCircle( tx, ty, r, &ccol, 1 );
+         gl_renderDisk( tx, ty, r, &ccol );
       }
    }
 }
@@ -1877,8 +1877,7 @@ void map_renderCommod( double bx, double by, double x, double y, double zoom,
                   best = tanh( 2 * best / curMinPrice );
                   col_blend( &ccol, &cFontBlue, &cFontYellow, best );
                   ccol.a = a;
-                  gl_renderCircle( tx, ty /*+ r*/, /*(0.1 + best) **/ r, &ccol,
-                                   1 );
+                  gl_renderDisk( tx, ty /*+ r*/, /*(0.1 + best) **/ r, &ccol );
                } else { /* draw circle below */
                   ccol   = cOrange;
                   ccol.a = a;
@@ -1888,14 +1887,13 @@ void map_renderCommod( double bx, double by, double x, double y, double zoom,
                   worst = tanh( -2 * worst / curMaxPrice );
                   col_blend( &ccol, &cFontOrange, &cFontYellow, worst );
                   ccol.a = a;
-                  gl_renderCircle( tx, ty /*- r*/, /*(0.1 - worst) **/ r, &ccol,
-                                   1 );
+                  gl_renderDisk( tx, ty /*- r*/, /*(0.1 - worst) **/ r, &ccol );
                }
             } else {
                /* Commodity not sold here */
                ccol   = cGrey10;
                ccol.a = a;
-               gl_renderCircle( tx, ty, r, &ccol, 1 );
+               gl_renderDisk( tx, ty, r, &ccol );
             }
          }
       }
@@ -1962,12 +1960,12 @@ void map_renderCommod( double bx, double by, double x, double y, double zoom,
                gl_print( &gl_smallFont, x + ( sys->pos.x + 12 ) * zoom,
                          y + ( sys->pos.y ) * zoom - gl_smallFont.h * 0.5,
                          &ccol, _( "%.1f ¤" ), sumPrice );
-               gl_renderCircle( tx, ty, r, &ccol, 1 );
+               gl_renderDisk( tx, ty, r, &ccol );
             } else {
                /* Commodity not sold here */
                ccol   = cGrey10;
                ccol.a = a;
-               gl_renderCircle( tx, ty, r, &ccol, 1 );
+               gl_renderDisk( tx, ty, r, &ccol );
             }
          }
       }

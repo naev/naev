@@ -16,7 +16,7 @@
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 
-#define TAB_HEIGHT 30
+#define TAB_HEIGHT 35
 #define TAB_HMARGIN 3
 #define TAB_HPADDING 15
 
@@ -50,7 +50,8 @@ static Widget *tab_getWgt( unsigned int wid, const char *tab );
  *    @param name Name of the widget to use internally.
  *    @param ntabs Number of tabs in the widget.
  *    @param tabnames Name of the tabs in the widget.
- *    @param tabpos Position to set up the tabs at.
+ *    @param tabpos Position to set up the tabs at. 0: ; 1: Bottom Centered; 2:
+ * Top centered
  *    @return List of created windows.
  */
 unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
@@ -74,15 +75,16 @@ unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
 
    /* specific */
    wgt_setFlag( wgt, WGT_FLAG_RAWINPUT );
-   wgt->exposeevent    = tab_expose;
-   wgt->rawevent       = tab_raw;
-   wgt->render         = tab_render;
-   wgt->renderDynamic  = tab_renderDynamic;
-   wgt->renderOverlay  = tab_renderOverlay;
-   wgt->cleanup        = tab_cleanup;
-   wgt->dat.tab.ntabs  = ntabs;
-   wgt->dat.tab.tabpos = tabpos;
-   wgt->dat.tab.font   = &gl_smallFont;
+   wgt->exposeevent           = tab_expose;
+   wgt->rawevent              = tab_raw;
+   wgt->render                = tab_render;
+   wgt->renderDynamic         = tab_renderDynamic;
+   wgt->renderOverlay         = tab_renderOverlay;
+   wgt->cleanup               = tab_cleanup;
+   wgt->dat.tab.parent_window = wid;
+   wgt->dat.tab.ntabs         = ntabs;
+   wgt->dat.tab.tabpos        = tabpos;
+   wgt->dat.tab.font          = &gl_smallFont;
 
    /* position/size */
    wgt->x = (double)( x < 0 ) ? 0. : x;
@@ -95,10 +97,15 @@ unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
    wy = wdw->y + wgt->y;
    ww = wgt->w;
    wh = wgt->h;
-   if ( tabpos == 0 ) {
-      wy += TAB_HEIGHT;
+   if ( tabpos == 1 ) {
+      // wy -= TAB_HEIGHT / 3;
+      wy += 2 * TAB_HEIGHT / 3;
+      // wh -= TAB_HEIGHT;
+   } else if ( tabpos == 2 ) {
+      // wy -= TAB_HEIGHT / 3;
       wh -= TAB_HEIGHT;
-   } else if ( tabpos == 1 ) {
+
+   } else if ( tabpos == 0 ) {
       wh -= TAB_HEIGHT;
    } else
       WARN( _( "Tab position '%d' parameter does not make sense" ), tabpos );
@@ -115,9 +122,15 @@ unsigned int *window_addTabbedWindow( unsigned int wid, const int x,
       /* Create windows with flags.
        * Parent window handles events for the children.
        */
-      wgt->dat.tab.windows[i] = window_createFlags(
-         tabnames[i], tabnames[i], wx, wy, ww, wh,
-         WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT | WINDOW_NOBORDER );
+      int flags =
+         WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT | WINDOW_NOTITLE;
+      /* For windows with upper tabs, keep borders to let them overwrite hiden
+       * tabs */
+      if ( !window_isFlag( wdw, WINDOW_TABBED ) )
+         flags |= WINDOW_NOBORDER;
+
+      wgt->dat.tab.windows[i] =
+         window_createFlags( tabnames[i], tabnames[i], wx, wy, ww, wh, flags );
    }
 
    /* Return list of windows. */
@@ -225,7 +238,7 @@ static int tab_mouse( Widget *tab, SDL_Event *event )
    y -= tab->y;
 
    /* Since it's at the top we have to translate down. */
-   if ( tab->dat.tab.tabpos == 1 )
+   if ( tab->dat.tab.tabpos == 0 )
       y -= ( tab->h - TAB_HEIGHT );
 
    /* Make sure event is in the TAB HEIGHT area. */
@@ -364,7 +377,7 @@ static int tab_key( Widget *tab, SDL_Event *event )
  */
 static void tab_render( Widget *tab, double bx, double by )
 {
-   int x, y;
+   int x, y, w, h, dy = 0;
    /* Get window. */
    Window *wdw = window_wget( tab->dat.tab.windows[tab->dat.tab.active] );
    if ( wdw == NULL ) {
@@ -372,38 +385,85 @@ static void tab_render( Widget *tab, double bx, double by )
             tab->name );
       return;
    }
-
-   /* Render the active window. */
-   window_render( wdw, wgt_isFlag( tab, WGT_FLAG_FOCUSED ) );
+   h                     = wdw->h < 800 ? 40 : wdw->h / 20;
+   w                     = tab_getBarWidth( tab );
+   Window *parent_window = window_wget( tab->dat.tab.parent_window );
+   int     isFullscreen  = window_isFlag( parent_window, WINDOW_FULLSCREEN );
 
    /* Render tabs ontop. */
-   x = bx + tab->x + 3.;
-   y = by + tab->y + 3.;
-   if ( tab->dat.tab.tabpos == 1 )
-      y += tab->h - TAB_HEIGHT;
-
-   /* Draw tab bar background */
-   toolkit_drawRect( x, y, wdw->w - 6., TAB_HEIGHT + 2, &cGrey10, NULL );
-   toolkit_drawRect( x, y, tab_getBarWidth( tab ), TAB_HEIGHT + 2, &cBlack,
-                     NULL );
-
+   if ( tab->dat.tab.tabpos == 1 ) {
+      /* Center tabs */
+      tab->x = wdw->w / 2 - w / 2;
+      dy     = 1;
+   } else if ( tab->dat.tab.tabpos == 2 ) {
+      tab->x = wdw->w / 2 - w / 2;
+      tab->y = wdw->h - TAB_HEIGHT / 3.;
+      dy     = -1;
+   }
+   y = by + tab->y;
+   x = bx + tab->x;
+   if ( tab->dat.tab.tabpos == 0 ) {
+      y += tab->h - h;
+   }
    /* Iterate through tabs */
    x += TAB_HMARGIN;
-   for ( int i = 0; i < tab->dat.tab.ntabs; i++ ) {
+   int len, x_active = 0, len_active = 0, y_active = y + dy * 5;
+   int i;
+   int y_text = TAB_HEIGHT - tab->dat.tab.font->h;
+   for ( i = 0; i < tab->dat.tab.ntabs; i++ ) {
       /* Draw contents rect */
-      toolkit_drawRect(
-         x, y, tab->dat.tab.namelen[i] + ( TAB_HPADDING * 2 ),
-         ( i == tab->dat.tab.active ? TAB_HEIGHT + 2 : TAB_HEIGHT ),
-         ( i == tab->dat.tab.active ? tab_active : tab_inactive ), NULL );
+      len = tab->dat.tab.namelen[i] + ( TAB_HPADDING * 2 );
+      if ( i != tab->dat.tab.active ) {
+         gl_renderRoundPane( x, y, len, TAB_HEIGHT, 10, 10, tab_inactive );
 
-      /* Draw text. */
-      gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
-                   y + ( TAB_HEIGHT - tab->dat.tab.font->h ) / 2., &cFontWhite,
-                   -1., tab->dat.tab.tabnames[i] );
+         /* Draw text. */
+         gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
+                      y - ( isFullscreen ? 0 : dy ) * y_text / 6. + y_text / 2.,
+                      &cFontWhite, -1., tab->dat.tab.tabnames[i] );
+         gl_renderRoundRect( x, y, len, TAB_HEIGHT, 2, 10, 10,
+                             toolkit_colLight );
+      } else {
 
+         if ( isFullscreen ) {
+            gl_renderRoundPane( x, y_active, len, TAB_HEIGHT, 10, 10,
+                                tab_active );
+            gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
+                         y_active + y_text / 2., &cFontWhite, -1.,
+                         tab->dat.tab.tabnames[i] );
+            gl_renderRoundRect( x, y_active, len, TAB_HEIGHT, 2, 10, 10,
+                                &cGrey70 );
+         } else {
+            gl_renderRoundRect( x, y_active, len, TAB_HEIGHT, 3, 10, 10,
+                                &cGrey70 );
+         }
+         x_active   = x;
+         len_active = len;
+      }
       /* Go to next line. */
-      x += ( TAB_HPADDING * 2 ) + TAB_HMARGIN + tab->dat.tab.namelen[i];
+      x += len + TAB_HMARGIN;
    }
+   /* Render the active window. */
+
+   if ( isFullscreen ) {
+      window_setFlag( wdw, WINDOW_NOBORDER );
+      window_setFlag( wdw, WINDOW_FULLSCREEN );
+   }
+
+   window_render( wdw, wgt_isFlag( tab, WGT_FLAG_FOCUSED ) );
+
+   if ( !isFullscreen ) {
+      i = tab->dat.tab.active;
+      gl_renderRoundPane( x_active + 3, y_active + 3, len_active - 6,
+                          TAB_HEIGHT - 6, 5, 5, tab_active );
+      gl_printRaw( tab->dat.tab.font, x_active + TAB_HPADDING,
+                   y_active + y_text / 2., &cFontWhite, -1.,
+                   tab->dat.tab.tabnames[i] );
+   } else {
+      window_rmFlag( wdw, WINDOW_NOBORDER );
+      window_rmFlag( wdw, WINDOW_FULLSCREEN );
+   }
+
+   /* Draw text. */
 }
 
 /**

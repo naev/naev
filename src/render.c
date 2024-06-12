@@ -79,11 +79,11 @@ static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
 
    /* Set up stuff .*/
    glEnableVertexAttribArray( shader->VertexPosition );
-   gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexPosition, 0, 2,
+   gl_vboActivateAttribOffset( gl_paneVBO, shader->VertexPosition, 0, 2,
                                GL_FLOAT, 0 );
    if ( shader->VertexTexCoord >= 0 ) {
       glEnableVertexAttribArray( shader->VertexTexCoord );
-      gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord, 0, 2,
+      gl_vboActivateAttribOffset( gl_paneVBO, shader->VertexTexCoord, 0, 2,
                                   GL_FLOAT, 0 );
    }
 

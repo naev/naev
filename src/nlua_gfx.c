@@ -412,14 +412,14 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shader->VertexPosition );
-   gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexPosition, 0, 2,
+   gl_vboActivateAttribOffset( gl_paneVBO, shader->VertexPosition, 0, 2,
                                GL_FLOAT, 0 );
 
    /* Set up texture vertices if necessary. */
    if ( shader->VertexTexCoord >= 0 ) {
       gl_uniformMat4( shader->ViewSpaceFromLocal, TH );
       glEnableVertexAttribArray( shader->VertexTexCoord );
-      gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord, 0, 2,
+      gl_vboActivateAttribOffset( gl_paneVBO, shader->VertexTexCoord, 0, 2,
                                   GL_FLOAT, 0 );
    }
 
@@ -467,29 +467,28 @@ static int gfxL_renderTexH( lua_State *L )
  *    @luatparam number w Width of the rectangle.
  *    @luatparam number h Height of the rectangle.
  *    @luatparam Colour col Colour to use.
- *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
+ *    @luatparam[opt=0] int lw Width of the outline or 0 to fill.
+ *    @luatparam[opt=0] int rx The corners curve length along x axis.
+ *    @luatparam[opt=0] int ry The corners curve length along y axis.
  * @luafunc renderRect
  */
 static int gfxL_renderRect( lua_State *L )
 {
    glColour *col;
-   double    x, y, w, h;
-   int       empty;
+   double    x, y, w, h, lw, rx, ry;
 
    /* Parse parameters. */
-   x     = luaL_checknumber( L, 1 );
-   y     = luaL_checknumber( L, 2 );
-   w     = luaL_checknumber( L, 3 );
-   h     = luaL_checknumber( L, 4 );
-   col   = luaL_checkcolour( L, 5 );
-   empty = lua_toboolean( L, 6 );
+   x   = luaL_checknumber( L, 1 );
+   y   = luaL_checknumber( L, 2 );
+   w   = luaL_checknumber( L, 3 );
+   h   = luaL_checknumber( L, 4 );
+   col = luaL_checkcolour( L, 5 );
+   lw  = luaL_optnumber( L, 6, 0. );
+   rx  = luaL_optnumber( L, 7, 0. );
+   ry  = luaL_optnumber( L, 8, 0. );
 
    /* Render. */
-   if ( empty )
-      gl_renderRectEmpty( x, y, w, h, col );
-   else
-      gl_renderRect( x, y, w, h, col );
-
+   gl_renderRoundRect( x, y, w, h, lw, rx, ry, col );
    return 0;
 }
 
@@ -499,6 +498,9 @@ static int gfxL_renderRect( lua_State *L )
  *    @luatparam Transform H Transformation matrix to use.
  *    @luatparam[opt=white] Colour col Colour to use.
  *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
+ *    @luatparam[opt=0] int lw Width of the outline or 0 to fill.
+ *    @luatparam[opt=0] int rx The corners curve length along x axis.
+ *    @luatparam[opt=0] int ry The corners curve length along y axis.
  * @luafunc renderRectH
  */
 static int gfxL_renderRectH( lua_State *L )
@@ -507,9 +509,13 @@ static int gfxL_renderRectH( lua_State *L )
    const mat4     *H     = luaL_checktransform( L, 1 );
    const glColour *col   = luaL_optcolour( L, 2, &cWhite );
    int             empty = lua_toboolean( L, 3 );
+   int             lw    = luaL_optinteger( L, 4, 0 );
+   int             rx    = luaL_optinteger( L, 5, 0 );
+   int             ry    = luaL_optinteger( L, 6, 0 );
 
    /* Render. */
-   gl_renderRectH( H, col, !empty );
+   lw = empty ? lw : 0;
+   gl_renderRectH( H, col, lw, rx, ry );
 
    return 0;
 }
@@ -521,24 +527,23 @@ static int gfxL_renderRectH( lua_State *L )
  *    @luatparam number y Y position to render at.
  *    @luatparam number r Radius of the circle.
  *    @luatparam Colour col Colour to use.
- *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
+ *    @luatparam[opt=0] int lw Width of the outline or 0 to fill.
  * @luafunc renderCircle
  */
 static int gfxL_renderCircle( lua_State *L )
 {
    glColour *col;
-   double    x, y, r;
-   int       empty;
+   double    x, y, r, lw;
 
    /* Parse parameters. */
-   x     = luaL_checknumber( L, 1 );
-   y     = luaL_checknumber( L, 2 );
-   r     = luaL_checknumber( L, 3 );
-   col   = luaL_checkcolour( L, 4 );
-   empty = lua_toboolean( L, 5 );
+   x   = luaL_checknumber( L, 1 );
+   y   = luaL_checknumber( L, 2 );
+   r   = luaL_checknumber( L, 3 );
+   col = luaL_checkcolour( L, 4 );
+   lw  = luaL_optinteger( L, 5, 0 );
 
    /* Render. */
-   gl_renderCircle( x, y, r, col, !empty );
+   gl_renderCircle( x, y, r, col, lw );
 
    return 0;
 }
@@ -549,6 +554,7 @@ static int gfxL_renderCircle( lua_State *L )
  *    @luatparam Transform H Transformation matrix to use.
  *    @luatparam[opt=white] Colour col Colour to use.
  *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
+ *    @luatparam[opt=0] int lw Width of the outline or 0 to fill.
  * @luafunc renderCircleH
  */
 static int gfxL_renderCircleH( lua_State *L )
@@ -558,9 +564,11 @@ static int gfxL_renderCircleH( lua_State *L )
    const mat4     *H     = luaL_checktransform( L, 1 );
    const glColour *col   = luaL_optcolour( L, 2, &cWhite );
    int             empty = lua_toboolean( L, 3 );
+   int             lw    = luaL_optinteger( L, 4, 0 );
 
    /* Render. */
-   gl_renderCircleH( H, col, !empty );
+   lw = empty ? lw : 0;
+   gl_renderCircleH( H, col, lw );
 
    return 0;
 }

@@ -298,14 +298,15 @@ void menu_info( int window )
    h = 700;
 
    /* Create the window. */
-   info_wid = window_create( "wdwInfo", _( "Info" ), -1, -1, w, h );
+   info_wid = window_createFlags( "wdwInfo", _( "Info" ), -1, -1, w, h,
+                                  WINDOW_TABBED | WINDOW_NOBORDER );
    window_setCancel( info_wid, info_close );
 
    /* Create tabbed window. */
    for ( size_t i = 0; i < INFO_WINDOWS; i++ )
       names[i] = _( info_names[i] );
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
-                                          INFO_WINDOWS, names, 0 );
+                                          INFO_WINDOWS, names, 2 );
 
    /* Open the subwindows. */
    info_openMain( info_windows[INFO_WIN_MAIN] );
@@ -902,17 +903,17 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh,
    gl_print( &gl_defFont, bx, y, &cFontWhite, p_( "info", "Legend" ) );
 
    y -= 20.;
-   toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );
+   gl_renderPane( bx, y, 10, 10, &cFontBlue );
    gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
              _( "Outfit that can be activated" ) );
 
    y -= 20.;
-   toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
+   gl_renderPane( bx, y, 10, 10, &cFontYellow );
    gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
              _( "Secondary Weapon (Right click toggles)" ) );
 
    y -= 20.;
-   toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
+   gl_renderPane( bx, y, 10, 10, &cFontRed );
    gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
              _( "Primary Weapon (Left click toggles)" ) );
 }

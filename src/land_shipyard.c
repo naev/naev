@@ -717,7 +717,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw,
          c = &cBlack;
 
       x += size + 7.;
-      toolkit_drawRect( x, by, size, size, c, NULL );
+      gl_renderPane( x, by, size, size, c );
 
       /* Add colour stripe depending on required/exclusiveness. */
       if ( s[i].required )
@@ -730,7 +730,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw,
          toolkit_drawTriangle( x, by, x + size, by + size, x, by + size,
                                &cBlack );
 
-      gl_renderRectEmpty( x, by, size, size, &cBlack );
+      gl_renderRect( x, by, size, size, 5, &cBlack );
 
       /* Draw icon if applicable. */
       icon = sp_icon( s[i].slot.spid );

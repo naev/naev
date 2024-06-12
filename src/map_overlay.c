@@ -767,7 +767,7 @@ void ovr_render( double dt )
 
    /* First render the background overlay. */
    glColour c = { .r = 0., .g = 0., .b = 0., .a = conf.map_overlay_opacity };
-   gl_renderRect( ovr_bounds.l, ovr_bounds.b, w, h, &c );
+   gl_renderPane( ovr_bounds.l, ovr_bounds.b, w, h, &c );
 
    /* Render the safe lanes */
    safelanes = safelanes_get( -1, 0, cur_system );
@@ -960,8 +960,8 @@ void ovr_render( double dt )
       glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
 
       glEnableVertexAttribArray( shaders.stealthoverlay.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.stealthoverlay.vertex,
-                                  0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( gl_paneVBO, shaders.stealthoverlay.vertex, 0,
+                                  2, GL_FLOAT, 0 );
 
       /* Set shader uniforms. */
       gl_uniformColour( shaders.stealthoverlay.colour, &cWhite );

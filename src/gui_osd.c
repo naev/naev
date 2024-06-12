@@ -379,7 +379,7 @@ void osd_render( void )
    NTracingZone( _ctx, 1 );
 
    /* Background. */
-   gl_renderRect( osd_x - 5., osd_y - ( osd_rh + 5. ), osd_w + 10., osd_rh + 10,
+   gl_renderPane( osd_x - 5., osd_y - ( osd_rh + 5. ), osd_w + 10., osd_rh + 10,
                   &cBlackHilight );
 
    /* Render each thingy. */

@@ -180,7 +180,7 @@ static void iar_render( Widget *iar, double bx, double by )
    yelem = iar->dat.iar.yelem;
 
    /* background */
-   toolkit_drawRect( x, y, iar->w, iar->h, &cBlack, NULL );
+   gl_renderPane( x, y, iar->w, iar->h, &cBlack );
 
    /*
     * Scrollbar.
@@ -190,7 +190,8 @@ static void iar_render( Widget *iar, double bx, double by )
       scroll_pos = 0.;
    else
       scroll_pos = iar->dat.iar.pos / hmax;
-   toolkit_drawScrollbar( x + iar->w - 10., y, 10., iar->h, scroll_pos );
+   toolkit_drawScrollbar( x + iar->w - 12., y + 2, 10., iar->h - 4,
+                          scroll_pos );
 
    /*
     * Main drawing loop.
@@ -229,7 +230,7 @@ static void iar_render( Widget *iar, double bx, double by )
                bgcolour = toolkit_colDark;
          }
          /* Draw background. */
-         toolkit_drawRect( xcurs, ycurs, w, h, bgcolour, NULL );
+         gl_renderPane( xcurs, ycurs, w, h, bgcolour );
 
          /* image */
          if ( cell->image != NULL ) {
@@ -294,10 +295,8 @@ static void iar_render( Widget *iar, double bx, double by )
             lc = toolkit_colLight;
             dc = toolkit_col;
          }
-         toolkit_drawOutline( xcurs + 2., ycurs + 2., w - 4., h - 4., 1., lc,
-                              NULL );
-         toolkit_drawOutline( xcurs + 2., ycurs + 2., w - 4., h - 4., 2., dc,
-                              NULL );
+         gl_renderRect( xcurs, ycurs, w - 2., h - 2., 2., dc );
+         gl_renderRect( xcurs, ycurs, w, h, 1., lc );
       }
    }
    gl_unclipRect();

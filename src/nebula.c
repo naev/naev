@@ -179,8 +179,8 @@ static void nebu_renderBackground( const double dt )
 
    /* Draw. */
    glEnableVertexAttribArray( shaders.nebula_background.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.nebula_background.vertex,
-                               0, 2, GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( gl_paneVBO, shaders.nebula_background.vertex, 0,
+                               2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    nebu_blitFBO();
 
@@ -290,7 +290,7 @@ void nebu_renderOverlay( const double dt )
 
    /* Draw. */
    glEnableVertexAttribArray( shaders.nebula.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.nebula.vertex, 0, 2,
+   gl_vboActivateAttribOffset( gl_paneVBO, shaders.nebula.vertex, 0, 2,
                                GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    nebu_blitFBO();

@@ -518,7 +518,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       else
          bc = *dc;
       bc.a = 0.4;
-      toolkit_drawRect( x, y, w, h, &bc, NULL );
+      gl_renderPane( x, y, w, h, &bc );
 
       if ( lst[i].outfit != NULL ) {
          /* Draw bugger. */
@@ -548,9 +548,9 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Draw outline. */
       if ( i == selected )
-         toolkit_drawOutlineThick( x, y, w, h, 5, 7, &cGreen, NULL );
+         gl_renderRect( x, y, w, h, 7, &cGreen );
       if ( rc != NULL )
-         toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
+         gl_renderRect( x, y, w, h, 3, rc );
 
       /* Draw slot iccon if applicable. */
       icon = sp_icon( lst[i].sslot->slot.spid );
@@ -695,9 +695,9 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh,
       percent = CLAMP( 0., 1.,
                        1. - (double)player.fleet_used /
                                (double)player.fleet_capacity );
-      toolkit_drawRect( x, y - 2, w * percent, h + 4, &cBlue, NULL );
-      toolkit_drawRect( x + w * percent, y - 2, w * ( 1. - percent ), h + 4,
-                        &cBlack, NULL );
+      gl_renderPane( x, y - 2, w * percent, h + 4, &cBlue );
+      gl_renderPane( x + w * percent, y - 2, w * ( 1. - percent ), h + 4,
+                     &cBlack );
       gl_printMid( &gl_smallFont, w, x, y + h / 2. - gl_smallFont.h / 2.,
                    &cFontWhite, "%d / %d",
                    player.fleet_capacity - player.fleet_used,
@@ -713,9 +713,8 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh,
    percent = ( p->cpu_max > 0 )
                 ? CLAMP( 0., 1., (double)p->cpu / (double)p->cpu_max )
                 : 0.;
-   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cGreen, NULL );
-   toolkit_drawRect( x + w * percent, y - 2, w * ( 1. - percent ), h + 4, &cRed,
-                     NULL );
+   gl_renderPane( x, y - 2, w * percent, h + 4, &cGreen );
+   gl_renderPane( x + w * percent, y - 2, w * ( 1. - percent ), h + 4, &cRed );
    gl_printMid( &gl_smallFont, w, x, y + h / 2. - gl_smallFont.h / 2.,
                 &cFontWhite, "%d / %d", p->cpu, p->cpu_max );
 
@@ -731,9 +730,9 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh,
                          ( p->stats.engine_limit - p->solid.mass ) /
                             p->stats.engine_limit )
                 : 0.;
-   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cGreen, NULL );
-   toolkit_drawRect( x + w * percent, y - 2, w * ( 1. - percent ), h + 4,
-                     &cOrange, NULL );
+   gl_renderPane( x, y - 2, w * percent, h + 4, &cGreen );
+   gl_renderPane( x + w * percent, y - 2, w * ( 1. - percent ), h + 4,
+                  &cOrange );
    gl_printMid( &gl_smallFont, w, x, y + h / 2. - gl_smallFont.h / 2.,
                 &cFontWhite, "%.0f / %.0f",
                 p->stats.engine_limit - p->solid.mass, p->stats.engine_limit );
@@ -824,8 +823,8 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
             tc.g = 0.;
             tc.b = 0.;
             tc.a = 0.9;
-            toolkit_drawRect( x, y - 5. + yoff, text_width + 60,
-                              gl_smallFont.h + 10, &tc, NULL );
+            gl_renderPane( x, y - 5. + yoff, text_width + 60,
+                           gl_smallFont.h + 10, &tc );
             gl_printMaxRaw( &gl_smallFont, text_width, x + 5, y + yoff, c, -1.,
                             display );
          }
@@ -986,7 +985,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    py = by + ( bh - ph ) / 2;
 
    /* Render background. */
-   gl_renderRect( px, py, pw, ph, &cBlack );
+   gl_renderPane( px, py, pw, ph, &cBlack );
 
    /* Use framebuffer to draw, have to use an additional one. */
    s = ceil(
@@ -1804,7 +1803,7 @@ static void equipment_genOutfitList( unsigned int wid )
    /* Create tabbed window. */
    if ( !widget_exists( wid, EQUIPMENT_OUTFIT_TAB ) ) {
       window_addTabbedWindow( wid, x, y + oh - 30, ow, 30, EQUIPMENT_OUTFIT_TAB,
-                              OUTFIT_TABS, tabnames, 1 );
+                              OUTFIT_TABS, tabnames, 0 );
 
       barw = window_tabWinGetBarWidth( wid, EQUIPMENT_OUTFIT_TAB );
 

@@ -114,12 +114,10 @@ static void cst_render( Widget *cst, double bx, double by )
    glClear( GL_DEPTH_BUFFER_BIT );
 
    if ( cst->dat.cst.border ) {
-      /* inner outline */
-      toolkit_drawOutline( x, y + 1, cst->w + 1, cst->h + 1, 0.,
-                           toolkit_colLight, NULL );
       /* outer outline */
-      toolkit_drawOutline( x, y, cst->w + 1, cst->h + 1, 1., toolkit_colDark,
-                           NULL );
+      gl_renderRect( x, y, cst->w + 2, cst->h + 1, 1., toolkit_colDark );
+      /* inner outline */
+      gl_renderRect( x, y, cst->w, cst->h, 1., toolkit_colLight );
    }
 
    if ( cst->dat.cst.clip != 0 )

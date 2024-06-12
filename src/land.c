@@ -50,6 +50,7 @@
 #include "save.h"
 #include "sound.h"
 #include "toolkit.h"
+#include "toolkit_priv.h"
 
 /*
  * we use visited flags to not duplicate missions generated
@@ -1183,7 +1184,11 @@ static void land_setupTabs( void )
    j = 0;
    /* Main. */
    land_windowsMap[LAND_WINDOW_MAIN] = j;
-   names[j++]                        = _( "Landing Main" );
+   char *spob_name                   = window_wget( land_wid )->displayname;
+   char  main_tab[40]                = { 0 };
+   scnprintf( main_tab, sizeof( main_tab ), _( "%s Terminal" ),
+              _( spob_name ) );
+   names[j++] = main_tab;
    /* Bar. */
    if ( spob_hasService( land_spob, SPOB_SERVICE_BAR ) ) {
       land_windowsMap[LAND_WINDOW_BAR] = j;
@@ -1217,7 +1222,7 @@ static void land_setupTabs( void )
    }
 
    land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand",
-                                          j, names, 0 );
+                                          j, names, 1 );
 }
 
 /**
@@ -1251,13 +1256,15 @@ void land_genWindows( int load )
 
    /* Create window. */
    if ( SCREEN_W < LAND_WIDTH || SCREEN_H < LAND_HEIGHT ) {
-      w = -1; /* Fullscreen. */
+      w = -1;
       h = -1;
    } else {
-      w = LAND_WIDTH + 0.5 * ( SCREEN_W - LAND_WIDTH );
-      h = LAND_HEIGHT + 0.5 * ( SCREEN_H - LAND_HEIGHT );
+      w = LAND_WIDTH / 2 + SCREEN_W / 2;
+      h = LAND_HEIGHT / 2 + SCREEN_H / 2;
    }
-   land_wid = window_create( "wdwLand", spob_name( p ), -1, -1, w, h );
+   land_wid =
+      window_createFlags( "wdwLand", spob_name( p ), -1, -1, w, h,
+                          WINDOW_TABBED | WINDOW_NOBORDER | WINDOW_NOTITLE );
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Create tabbed window. */

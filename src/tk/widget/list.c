@@ -125,12 +125,12 @@ static void lst_render( Widget *lst, double bx, double by )
     */
    glClear( GL_DEPTH_BUFFER_BIT );
    /* lst bg */
-   toolkit_drawRect( x, y, lst->w, lst->h, &cBlack, NULL );
+   gl_renderPane( x, y, lst->w, lst->h, &cBlack );
 
-   /* inner outline */
-   toolkit_drawOutline( x, y, lst->w, lst->h, 0., toolkit_colLight, NULL );
    /* outer outline */
-   toolkit_drawOutline( x, y, lst->w, lst->h, 1., toolkit_colDark, NULL );
+   gl_renderRect( x, y, lst->w + 1, lst->h + 1, 1., toolkit_colDark );
+   /* inner outline */
+   gl_renderRect( x, y, lst->w, lst->h, 1., toolkit_colLight );
 
    /* Draw scrollbar. */
    if ( lst->dat.lst.height > 0 ) {
@@ -140,14 +140,15 @@ static void lst_render( Widget *lst, double bx, double by )
 
       scroll_pos = (double)( lst->dat.lst.pos * CELLHEIGHT ) /
                    ( lst->dat.lst.height - lst->h + 2 );
-      toolkit_drawScrollbar( x + lst->w - 12. + 1, y, 12., lst->h, scroll_pos );
+      toolkit_drawScrollbar( x + lst->w - 12., y + 2., 10., lst->h - 4,
+                             scroll_pos );
    }
 
    /* draw selected item background */
    ty = y - 1 + lst->h -
         ( 1 + lst->dat.lst.selected - lst->dat.lst.pos ) * CELLHEIGHT;
    if ( ty > y && ty < y + lst->h - CELLHEIGHT )
-      toolkit_drawRect( x + 1, ty, w - 2, CELLHEIGHT, &cGrey30, NULL );
+      gl_renderPane( x + 1, ty, w - 2, CELLHEIGHT, &cGrey30 );
 
    /* draw content */
    tx = x + 6.;
