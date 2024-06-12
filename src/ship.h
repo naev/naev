@@ -227,5 +227,6 @@ int    ship_gfxLoad( Ship *temp );
 int    ship_compareTech( const void *arg1, const void *arg2 );
 void   ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
                                double dir, double engine_glow, double tilt,
-                               double r, int sx, int sy, const glColour *c );
+                               double r, int sx, int sy, const glColour *c,
+                               const Lighting *L );
 double ship_maxSize( void );

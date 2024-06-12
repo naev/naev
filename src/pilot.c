@@ -1800,7 +1800,7 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw,
       c.a = 0.5;
 
    ship_renderFramebuffer( p->ship, fbo, fw, fh, p->solid.dir, p->engine_glow,
-                           p->tilt, p->r, p->tsx, p->tsy, &c );
+                           p->tilt, p->r, p->tsx, p->tsy, &c, NULL );
 }
 
 /**
