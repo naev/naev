@@ -87,7 +87,7 @@ static int bkgL_image( lua_State *L )
 {
    glTexture      *tex;
    double          x, y, move, scale, angle;
-   const glColour *col;
+   const glColour *col, *radiosity;
    unsigned int    id;
    int             foreground;
 
@@ -100,9 +100,11 @@ static int bkgL_image( lua_State *L )
    angle      = luaL_optnumber( L, 6, 0. );
    col        = luaL_optcolour( L, 7, &cWhite );
    foreground = lua_toboolean( L, 8 );
+   radiosity  = luaL_optcolour( L, 9, &cBlack );
 
    /* Create image. */
-   id = background_addImage( tex, x, y, move, scale, angle, col, foreground );
+   id = background_addImage( tex, x, y, move, scale, angle, col, foreground,
+                             radiosity );
    lua_pushnumber( L, id );
    return 1;
 }

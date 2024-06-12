@@ -40,9 +40,10 @@ typedef struct background_image_s {
    double       y;     /**< Y center of the image. */
    double
       move; /**< How many pixels it moves for each pixel the player moves. */
-   double   scale; /**< How the image should be scaled. */
-   double   angle; /**< Rotation (in radians). */
-   glColour col;   /**< Colour to use. */
+   double   scale;     /**< How the image should be scaled. */
+   double   angle;     /**< Rotation (in radians). */
+   glColour col;       /**< Colour to use. */
+   glColour radiosity; /**< Radiosity. */
 } background_image_t;
 static background_image_t *bkg_image_arr_bk =
    NULL; /**< Background image array to display (behind dust). Assumed to be a
@@ -322,7 +323,8 @@ static void bkg_sort( background_image_t *arr )
  */
 unsigned int background_addImage( const glTexture *image, double x, double y,
                                   double move, double scale, double angle,
-                                  const glColour *col, int foreground )
+                                  const glColour *col, int foreground,
+                                  const glColour *radiosity )
 {
    background_image_t *bkg, **arr;
 
@@ -336,15 +338,16 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
       *arr = array_create( background_image_t );
 
    /* Create image. */
-   bkg        = &array_grow( arr );
-   bkg->id    = ++bkg_idgen;
-   bkg->image = gl_dupTexture( image );
-   bkg->x     = x;
-   bkg->y     = y;
-   bkg->move  = move;
-   bkg->scale = scale;
-   bkg->angle = angle;
-   bkg->col   = ( col != NULL ) ? *col : cWhite;
+   bkg            = &array_grow( arr );
+   bkg->id        = ++bkg_idgen;
+   bkg->image     = gl_dupTexture( image );
+   bkg->x         = x;
+   bkg->y         = y;
+   bkg->move      = move;
+   bkg->scale     = scale;
+   bkg->angle     = angle;
+   bkg->col       = ( col != NULL ) ? *col : cWhite;
+   bkg->radiosity = *radiosity;
 
    /* Sort if necessary. */
    bkg_sort( *arr );
@@ -522,6 +525,8 @@ void background_clear( void )
    /* Clear the backgrounds. */
    background_clearImgArr( &bkg_image_arr_bk );
    background_clearImgArr( &bkg_image_arr_ft );
+
+   /* Clear lighting. */
 }
 
 /**
