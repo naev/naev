@@ -1,6 +1,7 @@
 * 0.11.5 (unreleased)
    * Fixed FLF-Pirate map not providing jump information
    * Fixed the combat hologram projector making escorts hostile
+   * Build system no longer libdl on platforms such as BSD
 
 * 0.11.4
    * More guards against divides by zero in autonav

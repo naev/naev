@@ -193,10 +193,10 @@ if buildExec.disabled() == false
    # libdl can be used for debugging stack traces. On non-Windows platforms, GLAD relies on dlopen().
    glad_requires_libdl = not cc.has_header('windows.h')
    if glad_requires_libdl or debug
-     libdl = cc.find_library('dl', required: host_machine.system()!='windows')
+     libdl = cc.find_library('dl', required: false )
      if libdl.found()
        naev_deps += libdl
-     else
+     elif host_machine.system()=='windows'
        naev_deps += subproject('dlfcn-win32').get_variable('dl_dep')
      endif
    endif
