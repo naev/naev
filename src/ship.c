@@ -533,16 +533,14 @@ static int ship_generateStoreGFX( Ship *temp )
                .colour    = { .v = { 1., 1., 1. } },
                .sun       = 0,
                .pos       = { .v = { -3., 2.75, -3. } },
-               .intensity = 200.,
-               //.intensity = 0.,
+               .intensity = 100.,
             },
             {
                /* Fill light. */
-               .colour = { .v = { 1., 1., 1. } },
-               .sun    = 1,
-               .pos    = { .v = { 10., 11.5, 7. } },
-               //.intensity = 0.6,
-               .intensity = 0.,
+               .colour    = { .v = { 1., 1., 1. } },
+               .sun       = 1,
+               .pos       = { .v = { 10., 11.5, 7. } },
+               .intensity = 1.,
             },
          },
    };
