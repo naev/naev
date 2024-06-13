@@ -57,7 +57,7 @@ const Lighting L_default_const = {
    .ambient_r = 0.,
    .ambient_g = 0.,
    .ambient_b = 0.,
-   .nlights   = 2,
+   .nlights   = 1,
    .lights =
       {
          {
@@ -65,16 +65,16 @@ const Lighting L_default_const = {
             .colour = { .v = { 1., 1., 1. } },
             // Endless Sky (point) power: 150, pos: -12.339, 10.559, -11.787
             /*
-             */
             .sun       = 0,
             .pos       = { .v = { -3., 2.75, -3. } },
             .intensity = 80.,
+             */
             // Sharky (directional) power: 5, direction: 10.75, -12.272, 7.463
             /*
-            .sun = 1,
-            .pos = { .v = { 12., 10.5, -12. } },
-            .intensity = 5.,
-            */
+             */
+            .sun       = 1,
+            .pos       = { .v = { 12., 10.5, -12. } },
+            .intensity = 2.5,
          },
          {
             /* Fill light. */
@@ -82,16 +82,17 @@ const Lighting L_default_const = {
             // Endless Sky (directional) power: 1.5,
             // direction: 9.772, 11.602, 6.988
             /*
-             */
             .sun       = 1,
             .pos       = { .v = { 10., 11.5, 7. } },
             .intensity = 1.,
+             */
             // Sharky (point) power: 2000., position: -12.339, 10.559, 11.787
+            .sun = 0,
+            .pos = { .v = { -12.5, 10.5, 12. } },
+            //.intensity = 2000.,
+            .intensity = 0.,
             /*
-            .sun       = 0,
-            .pos       = { .v = { -12.5, 10.5, 12. } },
-            .intensity = 2000.,
-            */
+             */
          },
       },
 };
@@ -1807,18 +1808,6 @@ void gltf_exit( void )
    glDeleteTextures( 1, &tex_ones.tex );
    glDeleteProgram( gltf_shader.program );
    glDeleteProgram( shadow_shader.program );
-}
-
-void gltf_light( double r, double g, double b, double intensity )
-{
-   gltf_lightAmbient( r, g, b );
-   gltf_lightIntensity( intensity );
-}
-
-void gltf_lightGet( double *r, double *g, double *b, double *intensity )
-{
-   gltf_lightAmbientGet( r, g, b );
-   *intensity = gltf_lightIntensityGet();
 }
 
 /**
