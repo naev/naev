@@ -305,8 +305,10 @@ int log_warn( const char *file, size_t line, const char *func, const char *fmt,
    char        *buf;
    size_t       n;
 
-   /* First do a backtrace. */
+#if DEBUGGING
+   /* First do a backtrace, if possible. */
    debug_logBacktrace();
+#endif
 
    /* Create the new message. */
    va_start( ap, fmt );
