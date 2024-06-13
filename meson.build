@@ -209,6 +209,8 @@ int main (void) { return 0; }''')
    # libdl can be used for debugging stack traces. On non-Windows platforms, GLAD relies on dlopen().
    glad_requires_libdl = not cc.has_header('windows.h')
    if glad_requires_libdl or debug
+     # TODO maybe use dependency('dl') instead of find_library. Requires meson 0.62, however.
+     # ref: https://mesonbuild.com/Dependencies.html#dl-libdl
      libdl = cc.find_library('dl', required: false )
      if libdl.found()
        naev_deps += libdl
