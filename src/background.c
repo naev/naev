@@ -516,9 +516,6 @@ static void background_clearCurrent( void )
  */
 void background_clear( void )
 {
-   /* Reset ambient lighting. */
-   gltf_lightAmbient( 0., 0., 0. );
-
    /* Destroy current background script. */
    background_clearCurrent();
 
@@ -526,7 +523,8 @@ void background_clear( void )
    background_clearImgArr( &bkg_image_arr_bk );
    background_clearImgArr( &bkg_image_arr_ft );
 
-   /* Clear lighting. */
+   /* Reset lighting. */
+   gltf_lightReset();
 }
 
 /**

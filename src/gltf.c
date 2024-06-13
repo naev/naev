@@ -1811,6 +1811,28 @@ void gltf_exit( void )
 }
 
 /**
+ * @brief Resets the lighting settings.
+ */
+void gltf_lightReset( void )
+{
+   L_default       = L_default_const;
+   light_intensity = 1.;
+}
+
+/**
+ * @brief Sets a light.
+ *
+ *    @param idx Index to use, 0 refers to first light after the default.
+ *    @param L Light to set.
+ */
+void gltf_lightSet( int idx, const Light *L )
+{
+   int n               = L_default_const.nlights + idx;
+   L_default.nlights   = MAX( L_default.nlights, n );
+   L_default.lights[n] = *L;
+}
+
+/**
  * @brief Sets the ambient colour. Should be multiplied by intensity.
  */
 void gltf_lightAmbient( double r, double g, double b )
