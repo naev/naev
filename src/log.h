@@ -29,7 +29,6 @@
 #else  /* DEBUG */
 #define DEBUG( str, ... )                                                      \
    do {                                                                        \
-      ;                                                                        \
    } while ( 0 )
 #endif /* DEBUG */
 #define DEBUG_BLANK() DEBUG( "%s", "" )
