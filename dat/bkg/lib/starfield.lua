@@ -12,20 +12,20 @@ local starfield = {}
 -- Radiosity has been computed by blurring the base images and getting a representative colour
 -- Alpha can be used to control the intensity of the radiosity and multiplies the RGB values
 starfield.stars = {
-   { i="blue01.webp",     r=colour.new(0.80, 0.87, 0.96, 2) },
-   { i="blue02.webp",     r=colour.new(0.76, 0.88, 1.00, 2) },
-   { i="blue04.webp",     r=colour.new(0.83, 0.93, 1.00, 2) },
-   { i="green01.webp",    r=colour.new(0.80, 0.97, 0.78, 2) },
-   { i="green02.webp",    r=colour.new(0.89, 0.98, 0.86, 2) },
-   { i="orange01.webp",   r=colour.new(0.94, 0.30, 0.00, 2) },
-   { i="orange02.webp",   r=colour.new(1.00, 0.90, 0.67, 2) },
-   { i="orange05.webp",   r=colour.new(0.98, 0.86, 0.45, 2) },
-   { i="redgiant01.webp", r=colour.new(0.57, 0.00, 0.00, 2) },
-   --{ i="redgiant02.webp", r=colour.new(0.82, 0.53, 0.26, 2) }, -- Unused
-   { i="white01.webp",    r=colour.new(0.68, 0.91, 0.96, 2) },
-   { i="white02.webp",    r=colour.new(0.89, 0.92, 0.96, 2) },
-   { i="yellow01.webp",   r=colour.new(1.00, 0.97, 0.82, 2) },
-   { i="yellow02.webp",   r=colour.new(1.00, 0.95, 0.57, 2) },
+   { i="blue01.webp",     r=colour.new(0.80, 0.87, 0.96, 8) },
+   { i="blue02.webp",     r=colour.new(0.76, 0.88, 1.00, 8) },
+   { i="blue04.webp",     r=colour.new(0.83, 0.93, 1.00, 8) },
+   { i="green01.webp",    r=colour.new(0.80, 0.97, 0.78, 8) },
+   { i="green02.webp",    r=colour.new(0.89, 0.98, 0.86, 8) },
+   { i="orange01.webp",   r=colour.new(0.94, 0.30, 0.00, 8) },
+   { i="orange02.webp",   r=colour.new(1.00, 0.90, 0.67, 8) },
+   { i="orange05.webp",   r=colour.new(0.98, 0.86, 0.45, 8) },
+   { i="redgiant01.webp", r=colour.new(0.57, 0.00, 0.00, 8) },
+   --{ i="redgiant02.webp", r=colour.new(0.82, 0.53, 0.26, 8) }, -- Unused
+   { i="white01.webp",    r=colour.new(0.68, 0.91, 0.96, 8) },
+   { i="white02.webp",    r=colour.new(0.89, 0.92, 0.96, 8) },
+   { i="yellow01.webp",   r=colour.new(1.00, 0.97, 0.82, 8) },
+   { i="yellow02.webp",   r=colour.new(1.00, 0.95, 0.57, 8) },
 }
 
 local starfield_frag = lf.read('bkg/shaders/starfield.frag')
@@ -76,10 +76,16 @@ local function add_local_stars ()
    local r = prng:random()
    if r > 0.97 then
       n = 3
+      gfx.lightIntensity( 0.10 ) -- sun gives 3*8*0.10 = 2.4
    elseif r > 0.94 then
       n = 2
+      gfx.lightIntensity( 0.15 ) -- sun gives 2*8*0.15 = 2.4
    elseif r > 0.1 then
       n = 1
+      gfx.lightIntensity( 0.25 ) -- sun gives 8*0.25 = 2
+      gfx.lightAmbient( 0.05 )
+   else
+      gfx.lightAmbient( 0.1 ) -- Default to some weak ambient light
    end
 
    -- If there is an inhabited planet we'll need at least one star
@@ -154,11 +160,7 @@ function starfield.init( params )
 
    if not params.nolocalstars then
       add_local_stars()
-      -- TODO 3D lighting
    end
-
-   -- Default to some weak ambient light
-   gfx.lightAmbient( 0.1 )
 end
 
 function starfield.canvas ()

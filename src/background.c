@@ -364,7 +364,7 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
       bkg->L_idx = idx;
 
       /* Set up the new light. */
-      bkg->L.sun         = 0;
+      bkg->L.sun         = 1;
       bkg->L.colour.v[0] = bkg->radiosity.r;
       bkg->L.colour.v[1] = bkg->radiosity.g;
       bkg->L.colour.v[2] = bkg->radiosity.b;
@@ -398,11 +398,11 @@ static void background_renderImages( background_image_t *bkg_arr )
       m = bkg->move;
       z = bkg->scale;
       /* Relative coordinates. */
-      rx = ( bkg->x - cx ) * m - z * bkg->image->sw / 2. + gx;
-      ry = ( bkg->y - cy ) * m - z * bkg->image->sh / 2. + gy;
+      rx = ( bkg->x - cx ) * m + gx;
+      ry = ( bkg->y - cy ) * m + gy;
       /* Screen coordinates. */
-      y = ry + SCREEN_H / 2.;
-      x = rx + SCREEN_W / 2.;
+      y = ry + SCREEN_H / 2. - z * bkg->image->sw / 2.;
+      x = rx + SCREEN_W / 2. - z * bkg->image->sh / 2.;
 
       /* TODO speed up by not rendering when offscreen. */
 
@@ -410,21 +410,18 @@ static void background_renderImages( background_image_t *bkg_arr )
       col.g = bkg->col.g * conf.bg_brightness;
       col.b = bkg->col.b * conf.bg_brightness;
       col.a = bkg->col.a;
-
       gl_renderTexture( bkg->image, x, y, z * bkg->image->sw,
                         z * bkg->image->sh, 0., 0., bkg->image->srw,
                         bkg->image->srh, &col, bkg->angle );
 
       /* See if we have to update scene lighting. */
-      if ( bkg->L_idx < 0 )
-         continue;
-
-      /* Update Light. */
-      bkg->L.sun      = 1;
-      bkg->L.pos.v[0] = x;
-      bkg->L.pos.v[1] = y;
-      bkg->L.pos.v[2] = 100.;
-      gltf_lightSet( bkg->L_idx, &bkg->L );
+      if ( bkg->L_idx >= 0 ) {
+         /* Update Light. */
+         bkg->L.pos.v[0] = rx;
+         bkg->L.pos.v[1] = hypot( rx, ry ) - 150.;
+         bkg->L.pos.v[2] = ry;
+         gltf_lightSet( bkg->L_idx, &bkg->L );
+      }
    }
 }
 

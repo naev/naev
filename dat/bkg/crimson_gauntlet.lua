@@ -29,7 +29,7 @@ function background ()
 
    -- Slighty blue
    gfx.lightAmbient( 0.6, 0.8, 1.0, 2 )
-   gfx.lightIntensity( 0.5 )
+   gfx.lightIntensity( 0.5 * gfx.lightIntensityGet() )
 end
 
 renderbg = starfield.render

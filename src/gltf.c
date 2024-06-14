@@ -65,17 +65,16 @@ const Lighting L_default_const = {
             .colour = { .v = { 1., 1., 1. } },
             // Endless Sky (point) power: 150, pos: -12.339, 10.559, -11.787
             /*
+             */
             .sun       = 0,
             .pos       = { .v = { -3., 2.75, -3. } },
             .intensity = 80.,
-             */
             // Sharky (directional) power: 5, direction: 10.75, -12.272, 7.463
             /*
-             */
             .sun = 1,
             .pos = { .v = { 12., 10.5, -12. } },
-            //.intensity = 2.5,
-            .intensity = 0.,
+            .intensity = 2.5,
+             */
          },
          {
             /* Fill light. */
@@ -123,39 +122,6 @@ const Lighting L_store_const = {
 Lighting      L_default;
 static double light_intensity = 1.;
 
-#if 0
-static Light lights[MAX_LIGHTS] = {
-   {
-      .sun = 1,
-      .pos = { .v = {1., 0.5, 1.0} },
-      .colour = { .v = {1., 1., 1.} },
-      .intensity = 1.5,
-   },
-   {
-      .sun = 0,
-      .pos = { .v = {-6., 5.5, -5.} },
-      .colour = { .v = {0.7, 0.85, 1.} },
-      .intensity = 600.,
-   },
-};
-static Light lights[MAX_LIGHTS] = {
-   {
-      .pos = { .v = {5., 2., 0.} },
-      .colour = { .v = {1., 1., 1.} },
-      .intensity = 150.,
-   },
-   {
-      .pos = { .v = {0.5, 0.15, -2.0} },
-      .colour = { .v = {1., 1., 1.} },
-      .intensity = 10.,
-   },
-   {
-      .pos = { .v = {-0.5, 0.15, -2.0} },
-      .colour = { .v = {1., 1., 1.} },
-      .intensity = 10.,
-   },
-};
-#endif
 static GLuint light_fbo[MAX_LIGHTS]; /**< FBO correpsonding to the light. */
 static GLuint light_tex[MAX_LIGHTS]; /**< Texture corresponding to the light. */
 static mat4   light_mat_def[MAX_LIGHTS]; /**< Shadow matrices. */
@@ -1092,7 +1058,14 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H,
 
       /* Other parameters. */
       glUniform1i( sl->sun, l->sun );
-      glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
+      if ( l->sun ) {
+         /* Normalize here istead of frag shader. */
+         vec3 light_pos = l->pos;
+         vec3_normalize( &light_pos );
+         glUniform3f( sl->position, light_pos.v[0], light_pos.v[1],
+                      light_pos.v[2] );
+      } else
+         glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
       glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
       glUniform1f( sl->intensity, l->intensity );
 
@@ -1835,6 +1808,7 @@ void gltf_lightSet( int idx, const Light *L )
    }
    L_default.nlights   = MAX( L_default.nlights, n + 1 );
    L_default.lights[n] = *L;
+   shadow_matrix( &light_mat_def[n], &L_default.lights[n] );
 }
 
 /**

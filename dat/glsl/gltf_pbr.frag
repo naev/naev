@@ -600,7 +600,7 @@ void main (void)
       vec3 intensity;
 
       if (L.sun) {
-         l = normalize(L.position);
+         l = L.position;
          intensity = L.colour * L.intensity;
       }
       else {

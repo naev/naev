@@ -116,7 +116,7 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    sov = bgshaders.init( shader_ov, sf, {nobright=true} )
 
    gfx.lightAmbient( 92/255, 230/255, 23/255, 3 )
-   gfx.lightIntensity( 0.3 )
+   gfx.lightIntensity( 0.3 * gfx.lightIntensityGet() )
 
    -- Set some fancy effects
    --[[
