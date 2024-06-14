@@ -52,7 +52,8 @@ def wrapper(*args):
     debugger = get_debugger()
 
     if "gdb" in debugger:
-        subprocess.run([debugger, "-x", os.path.join(build_root, ".gdbinit"), "--args"] + list(args))
+        #subprocess.run([debugger, "-x", os.path.join(build_root, ".gdbinit"), "--args"] + list(args))
+        subprocess.run([debugger, "--args"] + list(args)) # Should use gdbinit automatically
     elif "lldb" in debugger:
         # TODO: Implement LLDB initialization
         subprocess.run([debugger, "-o", "run", "--"] + list(args))
