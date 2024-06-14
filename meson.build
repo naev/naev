@@ -394,7 +394,7 @@ int main (void) { return 0; }''')
    )
 
    gdbinit = configure_file(
-      input: join_paths('utils','build','gdbinit'),
+      input: join_paths('utils','build','gdbinit.in'),
       output: '.gdbinit',
       configuration: {
          'source_root': meson.source_root(),
