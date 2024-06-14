@@ -72,9 +72,10 @@ const Lighting L_default_const = {
             // Sharky (directional) power: 5, direction: 10.75, -12.272, 7.463
             /*
              */
-            .sun       = 1,
-            .pos       = { .v = { 12., 10.5, -12. } },
-            .intensity = 2.5,
+            .sun = 1,
+            .pos = { .v = { 12., 10.5, -12. } },
+            //.intensity = 2.5,
+            .intensity = 0.,
          },
          {
             /* Fill light. */
@@ -119,8 +120,8 @@ const Lighting L_store_const = {
          },
       },
 };
-static Lighting L_default;
-static double   light_intensity = 1.;
+Lighting      L_default;
+static double light_intensity = 1.;
 
 #if 0
 static Light lights[MAX_LIGHTS] = {
@@ -1827,8 +1828,12 @@ void gltf_lightReset( void )
  */
 void gltf_lightSet( int idx, const Light *L )
 {
-   int n               = L_default_const.nlights + idx;
-   L_default.nlights   = MAX( L_default.nlights, n );
+   int n = L_default_const.nlights + idx;
+   if ( n >= MAX_LIGHTS ) {
+      WARN( _( "Trying to set more lights than MAX_LIGHTS allows!" ) );
+      return;
+   }
+   L_default.nlights   = MAX( L_default.nlights, n + 1 );
    L_default.lights[n] = *L;
 }
 

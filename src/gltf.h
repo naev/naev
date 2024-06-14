@@ -194,8 +194,10 @@ typedef struct Lighting {
    int    nlights; /**< Number of lights being used. Has to be less than
                       MAX_LIGHTS. */
 } Lighting;
-extern const Lighting L_default_const;
-extern const Lighting L_store_const;
+extern const Lighting
+   L_default_const; /**< Default constant lighting for resetting. */
+extern const Lighting L_store_const; /**< Default store lighting setting. */
+extern Lighting       L_default;     /**< Default space lighting. */
 
 /* Framework itself. */
 int  gltf_init( void );

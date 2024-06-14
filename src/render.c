@@ -213,7 +213,8 @@ void render_all( double game_dt, double real_dt )
    gl_defViewport();
 
    /* Background stuff */
-   space_render( real_dt ); /* Nebula looks really weird otherwise. */
+   space_render( real_dt ); /* Nebula looks really weird otherwise. This also
+                               sets up the lighting from the background. */
    render_reset();          /* space_render can use a lua background. */
    NTracingZoneName( _ctx_renderbg, "hooks[renderbg]", 1 );
    hooks_run( "renderbg" );

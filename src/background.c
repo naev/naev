@@ -44,6 +44,10 @@ typedef struct background_image_s {
    double   angle;     /**< Rotation (in radians). */
    glColour col;       /**< Colour to use. */
    glColour radiosity; /**< Radiosity. */
+
+   /* Handled during rendering. */
+   Light L;     /**< Lighting to use. */
+   int   L_idx; /**< Lighting index. */
 } background_image_t;
 static background_image_t *bkg_image_arr_bk =
    NULL; /**< Background image array to display (behind dust). Assumed to be a
@@ -326,6 +330,7 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
                                   const glColour *col, int foreground,
                                   const glColour *radiosity )
 {
+   double              a, d;
    background_image_t *bkg, **arr;
 
    if ( foreground )
@@ -349,6 +354,24 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
    bkg->col       = ( col != NULL ) ? *col : cWhite;
    bkg->radiosity = *radiosity;
 
+   /* Deal with lighting. */
+   a = bkg->radiosity.a;
+   d = pow2( a * bkg->radiosity.r ) + pow2( a * bkg->radiosity.g ) +
+       pow2( a * bkg->radiosity.b );
+   if ( d > 1e-3 ) {
+      /* Get index. */
+      int idx    = L_default.nlights - L_default_const.nlights;
+      bkg->L_idx = idx;
+
+      /* Set up the new light. */
+      bkg->L.sun         = 0;
+      bkg->L.colour.v[0] = bkg->radiosity.r;
+      bkg->L.colour.v[1] = bkg->radiosity.g;
+      bkg->L.colour.v[2] = bkg->radiosity.b;
+      bkg->L.intensity   = a;
+      gltf_lightSet( bkg->L_idx, &bkg->L );
+   }
+
    /* Sort if necessary. */
    bkg_sort( *arr );
 
@@ -366,7 +389,7 @@ static void background_renderImages( background_image_t *bkg_arr )
 
    /* Render images in order. */
    for ( int i = 0; i < array_size( bkg_arr ); i++ ) {
-      double              cx, cy, x, y, gx, gy, z, m;
+      double              cx, cy, x, y, rx, ry, gx, gy, z, m;
       glColour            col;
       background_image_t *bkg = &bkg_arr[i];
 
@@ -374,8 +397,14 @@ static void background_renderImages( background_image_t *bkg_arr )
       gui_getOffset( &gx, &gy );
       m = bkg->move;
       z = bkg->scale;
-      x = ( bkg->x - cx ) * m - z * bkg->image->sw / 2. + gx + SCREEN_W / 2.;
-      y = ( bkg->y - cy ) * m - z * bkg->image->sh / 2. + gy + SCREEN_H / 2.;
+      /* Relative coordinates. */
+      rx = ( bkg->x - cx ) * m - z * bkg->image->sw / 2. + gx;
+      ry = ( bkg->y - cy ) * m - z * bkg->image->sh / 2. + gy;
+      /* Screen coordinates. */
+      y = ry + SCREEN_H / 2.;
+      x = rx + SCREEN_W / 2.;
+
+      /* TODO speed up by not rendering when offscreen. */
 
       col.r = bkg->col.r * conf.bg_brightness;
       col.g = bkg->col.g * conf.bg_brightness;
@@ -385,6 +414,17 @@ static void background_renderImages( background_image_t *bkg_arr )
       gl_renderTexture( bkg->image, x, y, z * bkg->image->sw,
                         z * bkg->image->sh, 0., 0., bkg->image->srw,
                         bkg->image->srh, &col, bkg->angle );
+
+      /* See if we have to update scene lighting. */
+      if ( bkg->L_idx < 0 )
+         continue;
+
+      /* Update Light. */
+      bkg->L.sun      = 1;
+      bkg->L.pos.v[0] = x;
+      bkg->L.pos.v[1] = y;
+      bkg->L.pos.v[2] = 100.;
+      gltf_lightSet( bkg->L_idx, &bkg->L );
    }
 }
 

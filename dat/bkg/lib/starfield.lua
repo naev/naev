@@ -9,20 +9,23 @@ local prng = require("prng").new()
 
 local starfield = {}
 
+-- Radiosity has been computed by blurring the base images and getting a representative colour
+-- Alpha can be used to control the intensity of the radiosity and multiplies the RGB values
 starfield.stars = {
-   "blue01.webp",
-   "blue02.webp",
-   "blue04.webp",
-   "green01.webp",
-   "green02.webp",
-   "orange01.webp",
-   "orange02.webp",
-   "orange05.webp",
-   "redgiant01.webp",
-   "white01.webp",
-   "white02.webp",
-   "yellow01.webp",
-   "yellow02.webp"
+   { i="blue01.webp",     r=colour.new(0.80, 0.87, 0.96, 2) },
+   { i="blue02.webp",     r=colour.new(0.76, 0.88, 1.00, 2) },
+   { i="blue04.webp",     r=colour.new(0.83, 0.93, 1.00, 2) },
+   { i="green01.webp",    r=colour.new(0.80, 0.97, 0.78, 2) },
+   { i="green02.webp",    r=colour.new(0.89, 0.98, 0.86, 2) },
+   { i="orange01.webp",   r=colour.new(0.94, 0.30, 0.00, 2) },
+   { i="orange02.webp",   r=colour.new(1.00, 0.90, 0.67, 2) },
+   { i="orange05.webp",   r=colour.new(0.98, 0.86, 0.45, 2) },
+   { i="redgiant01.webp", r=colour.new(0.57, 0.00, 0.00, 2) },
+   --{ i="redgiant02.webp", r=colour.new(0.82, 0.53, 0.26, 2) }, -- Unused
+   { i="white01.webp",    r=colour.new(0.68, 0.91, 0.96, 2) },
+   { i="white02.webp",    r=colour.new(0.89, 0.92, 0.96, 2) },
+   { i="yellow01.webp",   r=colour.new(1.00, 0.97, 0.82, 2) },
+   { i="yellow02.webp",   r=colour.new(1.00, 0.95, 0.57, 2) },
 }
 
 local starfield_frag = lf.read('bkg/shaders/starfield.frag')
@@ -41,7 +44,8 @@ local function star_add( added, num_added )
       num = prng:random(1,#stars)
       i   = i + 1
    end
-   local star  = stars[ num ]
+   local data  = stars[ num ]
+   local star  = data.i
    -- Load and set stuff
    local img   = tex.open( path .. star )
    -- Position should depend on whether there's more than a star in the system
@@ -61,7 +65,8 @@ local function star_add( added, num_added )
    -- however, it seems like this is actually a bit jarring, even though it's
    -- more correct, so we just mess things up and make the star render in front
    -- of the space dust. Has to move faster than the nebula to not be really really weird.
-   bkg.image( img, x, y, move, scale, nil, nil, true )
+   local rad = data.r
+   bkg.image( img, x, y, move, scale, nil, nil, true, rad )
    return num
 end
 
