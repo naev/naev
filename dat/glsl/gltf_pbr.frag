@@ -1,5 +1,5 @@
 #ifndef MAX_LIGHTS
-#  define MAX_LIGHTS 3
+#  define MAX_LIGHTS 5
 #endif
 
 /*
@@ -589,6 +589,14 @@ void main (void)
 #if MAX_LIGHTS > 2
    if (u_nlights>2)
       f_shadow[2] = shadow_map( shadowmap_tex[2], shadow[2] );
+#endif /* MAX_LIGHTS > 2 */
+#if MAX_LIGHTS > 3
+   if (u_nlights>3)
+      f_shadow[3] = shadow_map( shadowmap_tex[3], shadow[3] );
+#endif /* MAX_LIGHTS > 3 */
+#if MAX_LIGHTS > 4
+   if (u_nlights>4)
+      f_shadow[4] = shadow_map( shadowmap_tex[4], shadow[4] );
 #endif /* MAX_LIGHTS > 2 */
 
    /* Point light for now. */

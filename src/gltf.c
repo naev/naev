@@ -57,7 +57,7 @@ const Lighting L_default_const = {
    .ambient_r = 0.,
    .ambient_g = 0.,
    .ambient_b = 0.,
-   .nlights   = 1,
+   .nlights   = 2,
    .lights =
       {
          {
@@ -82,16 +82,15 @@ const Lighting L_default_const = {
             // Endless Sky (directional) power: 1.5,
             // direction: 9.772, 11.602, 6.988
             /*
+             */
             .sun       = 1,
             .pos       = { .v = { 10., 11.5, 7. } },
             .intensity = 1.,
-             */
             // Sharky (point) power: 2000., position: -12.339, 10.559, 11.787
+            /*
             .sun = 0,
             .pos = { .v = { -12.5, 10.5, 12. } },
-            //.intensity = 2000.,
-            .intensity = 0.,
-            /*
+            .intensity = 2000.,
              */
          },
       },

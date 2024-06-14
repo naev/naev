@@ -363,12 +363,18 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
       int idx    = L_default.nlights - L_default_const.nlights;
       bkg->L_idx = idx;
 
+      /* Normalize so RGB is unitary. Compensate modifying alpha. */
+      bkg->radiosity.r /= d;
+      bkg->radiosity.g /= d;
+      bkg->radiosity.b /= d;
+      bkg->radiosity.a *= d;
+
       /* Set up the new light. */
       bkg->L.sun         = 1;
       bkg->L.colour.v[0] = bkg->radiosity.r;
       bkg->L.colour.v[1] = bkg->radiosity.g;
       bkg->L.colour.v[2] = bkg->radiosity.b;
-      bkg->L.intensity   = a;
+      bkg->L.intensity   = bkg->radiosity.a;
       gltf_lightSet( bkg->L_idx, &bkg->L );
    }
 
@@ -416,9 +422,17 @@ static void background_renderImages( background_image_t *bkg_arr )
 
       /* See if we have to update scene lighting. */
       if ( bkg->L_idx >= 0 ) {
+         double d = hypot( rx, ry );
          /* Update Light. */
+         /*
+         double w = 1. / sqrt(3.);
+         double a = CLAMP( 0., 1., d/5000. );
+         bkg->L.colour.v[0] = bkg->radiosity.r * (1.-a) + a*w;
+         bkg->L.colour.v[1] = bkg->radiosity.g * (1.-a) + a*w;
+         bkg->L.colour.v[2] = bkg->radiosity.b * (1.-a) + a*w;
+         */
          bkg->L.pos.v[0] = rx;
-         bkg->L.pos.v[1] = hypot( rx, ry ) - 150.;
+         bkg->L.pos.v[1] = d - 150.;
          bkg->L.pos.v[2] = ry;
          gltf_lightSet( bkg->L_idx, &bkg->L );
       }

@@ -1,5 +1,5 @@
 #ifndef MAX_LIGHTS
-#  define MAX_LIGHTS 3
+#  define MAX_LIGHTS 5
 #endif
 
 /* Not including math.glsl here because a python script reads this also and

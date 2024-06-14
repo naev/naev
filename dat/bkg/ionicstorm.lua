@@ -31,7 +31,7 @@ function background ()
    background_default()
 
    -- Ambient light is coloured now
-   gfx.lightAmbient( 0.9, 0.475, 0.95, 0.2, 2 )
+   gfx.lightAmbient( 0.9, 0.475, 0.95, 0.2, 1.5 )
    gfx.lightIntensity( 0.6 * gfx.lightIntensityGet() )
 end
 

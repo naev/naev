@@ -11,7 +11,7 @@
 #include "vec3.h"
 
 #define MAX_LIGHTS                                                             \
-   3 /**< Maximum amount of lights. TODO deferred rendering.                   \
+   5 /**< Maximum amount of lights. TODO deferred rendering.                   \
       */
 #define SHADOWMAP_SIZE 128 /**< Size of the shadow map. */
 

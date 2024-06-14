@@ -12,20 +12,20 @@ local starfield = {}
 -- Radiosity has been computed by blurring the base images and getting a representative colour
 -- Alpha can be used to control the intensity of the radiosity and multiplies the RGB values
 starfield.stars = {
-   { i="blue01.webp",     r=colour.new(0.80, 0.87, 0.96, 6) },
-   { i="blue02.webp",     r=colour.new(0.76, 0.88, 1.00, 6) },
-   { i="blue04.webp",     r=colour.new(0.83, 0.93, 1.00, 6) },
-   { i="green01.webp",    r=colour.new(0.80, 0.97, 0.78, 6) },
-   { i="green02.webp",    r=colour.new(0.89, 0.98, 0.86, 6) },
-   { i="orange01.webp",   r=colour.new(0.94, 0.50, 0.20, 6) }, -- r=colour.new(0.94, 0.30, 0.00, 8) }, Too red otherwise
-   { i="orange02.webp",   r=colour.new(1.00, 0.90, 0.67, 6) },
-   { i="orange05.webp",   r=colour.new(0.98, 0.86, 0.45, 6) },
-   { i="redgiant01.webp", r=colour.new(0.78, 0.50, 0.50, 6) }, -- r=colour.new(0.57, 0.00, 0.00, 8) }, Too red otherwise
-   --{ i="redgiant02.webp", r=colour.new(0.82, 0.53, 0.26, 6) }, -- Unused
-   { i="white01.webp",    r=colour.new(0.68, 0.91, 0.96, 6) },
-   { i="white02.webp",    r=colour.new(0.89, 0.92, 0.96, 6) },
-   { i="yellow01.webp",   r=colour.new(1.00, 0.97, 0.82, 6) },
-   { i="yellow02.webp",   r=colour.new(1.00, 0.95, 0.57, 6) },
+   { i="blue01.webp",     r=colour.new(0.80, 0.87, 0.96, 5) },
+   { i="blue02.webp",     r=colour.new(0.76, 0.88, 1.00, 5) },
+   { i="blue04.webp",     r=colour.new(0.83, 0.93, 1.00, 5) },
+   { i="green01.webp",    r=colour.new(0.80, 0.97, 0.78, 5) },
+   { i="green02.webp",    r=colour.new(0.89, 0.98, 0.86, 5) },
+   { i="orange01.webp",   r=colour.new(0.94, 0.50, 0.20, 5) }, -- r=colour.new(0.94, 0.30, 0.00, 8) }, Too red otherwise
+   { i="orange02.webp",   r=colour.new(1.00, 0.90, 0.67, 5) },
+   { i="orange05.webp",   r=colour.new(0.98, 0.86, 0.45, 5) },
+   { i="redgiant01.webp", r=colour.new(0.78, 0.50, 0.50, 5) }, -- r=colour.new(0.57, 0.00, 0.00, 8) }, Too red otherwise
+   --{ i="redgiant02.webp", r=colour.new(0.82, 0.53, 0.26, 5) }, -- Unused
+   { i="white01.webp",    r=colour.new(0.68, 0.91, 0.96, 5) },
+   { i="white02.webp",    r=colour.new(0.89, 0.92, 0.96, 5) },
+   { i="yellow01.webp",   r=colour.new(1.00, 0.97, 0.82, 5) },
+   { i="yellow02.webp",   r=colour.new(1.00, 0.95, 0.57, 5) },
 }
 
 local starfield_frag = lf.read('bkg/shaders/starfield.frag')
@@ -76,13 +76,13 @@ local function add_local_stars ()
    local r = prng:random()
    if r > 0.97 then
       n = 3
-      gfx.lightIntensity( 0.10 ) -- sun gives 3*8*0.10 = 1.8
+      gfx.lightIntensity( 0.06 ) -- sun gives 3*6*0.06 = 1.08
    elseif r > 0.94 then
       n = 2
-      gfx.lightIntensity( 0.15 ) -- sun gives 2*8*0.15 = 1.8
+      gfx.lightIntensity( 0.10 ) -- sun gives 2*6*0.10 = 1.2
    elseif r > 0.1 then
       n = 1
-      gfx.lightIntensity( 0.25 ) -- sun gives 8*0.25 = 1.5
+      gfx.lightIntensity( 0.25 ) -- sun gives 6*0.25 = 1.5
       gfx.lightAmbient( 0.05 )
    else
       gfx.lightAmbient( 0.1 ) -- Default to some weak ambient light
