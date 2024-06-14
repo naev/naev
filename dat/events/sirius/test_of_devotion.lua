@@ -7,6 +7,12 @@
  <priority>0</priority>
 </event>
 --]]
+--[[
+   Trial that provides Avatar of Sirichana from Kal Sitra Obelisk.
+   Meant to be the 5th Obelisk the player does.
+
+   Plyaer has to survive a constant surge of enemies.
+--]]
 local textoverlay = require "textoverlay"
 local chakra = require "luaspfx.chakra_explosion"
 local srs = require "common.sirius"
@@ -31,20 +37,23 @@ function create ()
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
    pp:setPos( vec2.new(0,-200) )
+   --[[
    pp:intrinsicSet( { -- Ship is too fast otherwise
       accel_mod      = -30,
       speed_mod      = -30,
       turn_mod       = -30,
    }, true ) -- overwrite all
+   --]]
    local _n1, cleansing_flames = pp:outfitAdd( "Cleansing Flames" )
    local _n2, astral_projection = pp:outfitAdd( "Astral Projection" )
+   local _n3, feather_drive = pp:outfitAdd( "Feather Drive" )
    pp:outfitAddIntrinsic( "Astral Flow Amplifier" )
-   srs.weapsets{ cleansing_flames, astral_projection }
+   srs.weapsets{ cleansing_flames, astral_projection, feather_drive }
 
    textoverlay.init( "#y".._("Test of Devotion").."#0",
       "#y"..fmt.f(_("Survive for {amt} seconds"),{amt=survivetime}).."\n"..
-      fmt.f(_("{key1}: use cleansing flames\n{key2}: use astral projection"),
-         {key1=naev.keyGet("weapset1"),key2=naev.keyGet("weapset2")}).."#0",
+      fmt.f(_("{key1}: use cleansing flames\n{key2}: toggle astral projection\n{key3}: use feather drive"),
+         {key1=naev.keyGet("weapset1"),key2=naev.keyGet("weapset2"),key3=naev.keyGet("weapset3")}).."#0",
       { length=8 } )
 
    -- Player lost hooks

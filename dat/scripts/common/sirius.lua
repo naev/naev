@@ -34,13 +34,19 @@ function srs.sfxGong()
    luaspfx.sfx( false, nil, sfxGong )
 end
 
+local astral = outfit.get("Astral Projection")
 function srs.weapsets( outfits )
    local pp = player.pilot()
    pp:weapsetCleanup()
    pp:weapsetSetInrange(nil,false)
    for k,o in ipairs(outfits) do
-      pp:weapsetType( k, "hold" )
       pp:weapsetAdd( k, o )
+      if pp:outfitSlot(o)==astral then
+         print("toggle")
+         pp:weapsetType( k, "toggle" )
+      else
+         pp:weapsetType( k, "hold" )
+      end
    end
    local n = #outfits+1
    pp:weapsetType( n, "switch" )

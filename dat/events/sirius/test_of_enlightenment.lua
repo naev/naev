@@ -7,6 +7,12 @@
  <priority>0</priority>
 </event>
 --]]
+--[[
+   Trial that provides Seeking Chakra from Kal Atok Obelisk.
+   Meant to be the 1st Obelisk the player does.
+
+   Challenge is to simply turn on orbs and clear them.
+--]]
 local textoverlay = require "textoverlay"
 local chakra = require "luaspfx.chakra_explosion"
 local srs = require "common.sirius"
