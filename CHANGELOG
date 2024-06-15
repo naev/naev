@@ -21,6 +21,7 @@
       * Added small optional bounce to NPCs when they start talking
       * Inform the player when they don't meet mission requirements for some important missions
       * Can add new plugins directly from the options menu
+      * Can toggle whether or not autonav stops when missie lock-ons are detected
    * Content
       * 4 new missions
          * Hack the Gibson!

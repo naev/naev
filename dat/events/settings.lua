@@ -13,7 +13,7 @@ local luatk = require "luatk"
 local fmt = require "format"
 
 local settings, uselanes_jump, uselanes_spob, uselanes_thr, pick_gui
-local reset_dist, reset_shield, compr_speed, compr_max, match_fleet, follow_jump, brake_pos
+local reset_dist, reset_shield, compr_speed, compr_max, match_fleet, follow_jump, brake_pos, reset_lockon
 
 local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
 local COMPR_SPEED_MIN   = 1e3 -- Old default was 5e3
@@ -39,6 +39,7 @@ function create ()
    reset_dist  = var_peek_fix( "autonav_reset_dist",  3e3 )
    compr_speed = var_peek_fix( "autonav_compr_speed", 5e3 )
    compr_max   = var_peek_fix( "autonav_compr_max",   50 )
+   reset_lockon = var_peek_fix( "autonav_reset_lockon", true )
    match_fleet = var_peek_fix( "autonav_match_fleet", true )
    follow_jump = var_peek_fix( "autonav_follow_jump", false )
    brake_pos   = var_peek_fix( "autonav_brake_pos",   false )
@@ -49,7 +50,7 @@ end
 
 function settings ()
    local txt_autonav, fad_autonav, txt_compr
-   local chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_jump, chk_brake_pos
+   local chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_jump, chk_brake_pos, chk_reset_lockon
 
    local w, h = 600, 540
    local wdw = luatk.newWindow( nil, nil, w, h )
@@ -57,7 +58,7 @@ function settings ()
    luatk.newText( wdw, 0, 10, w, 20, _("Player Settings"), nil, "center" )
 
    local function update_autonav( _fad, value )
-      local msg = _("Stop Speedup At: ")
+      local msg = _("Stop Speed-up At: ")
       if value >= 1 then
          reset_dist = math.huge
          reset_shield = 1
@@ -125,11 +126,13 @@ function settings ()
    txt_compr = luatk.newText( wdw, 20, y, w-40, 20 )
    update_ship_tc()
    y = y + 30
+   chk_reset_lockon = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Stop autonav when missile lock-on detected"), nil, reset_lockon )
+   y = y + 30
    chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when jumping"), nil, uselanes_jump )
    y = y + 30
    chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when travelling to a space object"), nil, uselanes_spob )
    y = y + 30
-   chk_match_fleet = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Match speed with slowest ship in fleet"), nil, match_fleet )
+   chk_match_fleet = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Match speed with slowest ship in your fleet"), nil, match_fleet )
    y = y + 30
    chk_follow_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Jump to follow pilots"), nil, follow_jump )
    y = y + 30
@@ -152,9 +155,11 @@ function settings ()
          match_fleet = true
          follow_jump = false
          brake_pos = false
+         reset_lockon = true
          update_autonav_value()
          chk_uselanes_jump:set( uselanes_jump )
          chk_uselanes_spob:set( uselanes_spob )
+         chk_reset_lockon:set( reset_lockon )
          chk_match_fleet:set( match_fleet )
          chk_follow_jump:set( follow_jump )
          chk_brake_pos:set( brake_pos )
@@ -172,6 +177,7 @@ function settings ()
          var.push( "autonav_match_fleet", match_fleet )
          var.push( "autonav_follow_jump", follow_jump )
          var.push( "autonav_brake_pos", brake_pos )
+         var.push( "autonav_reset_lockon", reset_lockon )
 
          -- Also set GUI
          player.guiSet( player.start().gui ) -- Default setting GUI
@@ -186,6 +192,7 @@ function settings ()
    match_fleet = chk_match_fleet:get()
    follow_jump = chk_follow_jump:get()
    brake_pos = chk_brake_pos:get()
+   reset_lockon = chk_reset_lockon:get()
    var.push( "autonav_uselanes_jump", uselanes_jump )
    var.push( "autonav_uselanes_spob", uselanes_spob )
    var.push( "autonav_uselanes_thr", uselanes_thr )
@@ -196,6 +203,7 @@ function settings ()
    var.push( "autonav_match_fleet", match_fleet )
    var.push( "autonav_follow_jump", follow_jump )
    var.push( "autonav_brake_pos", brake_pos)
+   var.push( "autonav_reset_lockon", reset_lockon )
 end
 
 function pick_gui ()

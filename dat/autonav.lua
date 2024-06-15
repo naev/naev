@@ -47,7 +47,7 @@ local function autonav_setup ()
    reset_shield = var.peek("autonav_reset_shield")
    reset_dist = var.peek("autonav_reset_dist")
    brake_pos = var.peek("autonav_brake_pos")
-   reset_lockon = true
+   reset_lockon = var.peek("autonav_reset_lockon")
    player.autonavSetPos()
 
    -- Set time compression maximum
