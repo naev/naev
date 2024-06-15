@@ -276,8 +276,10 @@ void cam_update( double dt )
    camera_DY = ( camera_Y - camera_DY );
 
    /* Compute velocity. */
-   camera_VX = camera_DX / dt;
-   camera_VY = camera_DY / dt;
+   if ( dt > DOUBLE_TOL ) {
+      camera_VX = camera_DX / dt;
+      camera_VY = camera_DY / dt;
+   }
 
    NTracingZoneEnd( _ctx );
 }
