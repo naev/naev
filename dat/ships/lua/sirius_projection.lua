@@ -14,7 +14,7 @@ explode_init, explode_update = explib{
    exp_func = function( p )
       local a = math.sqrt( p:mass() )
       local r = mem.r * 1.2 + a
-      spfx.debris( p:mass(), mem.r, p:pos(), p:vel() )
+      --spfx.debris( p:mass(), mem.r, p:pos(), p:vel() )
       chakra( p:pos(), p:vel(), r )
       --p:cargoJet("all") -- shouldn't have cargo
    end,
