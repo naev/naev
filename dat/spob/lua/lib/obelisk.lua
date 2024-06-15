@@ -56,7 +56,7 @@ function obelisk.comm ()
    end )
 
    vn.label("cant_activate")
-   vn.na(_("You muster your psychic powers to attempt to activate he obelisk, however, it seems like you do not have the powers to be able to activate this obelisk.").."\n"..requirement)
+   vn.na(_("You muster your psychic powers to attempt to activate the obelisk, however, it seems like you do not have the powers to be able to activate this obelisk.").."\n"..requirement)
    vn.jump("menu")
 
    vn.label("activate")
