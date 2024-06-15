@@ -33,6 +33,10 @@ function obelisk.comm ()
    end
    local activated = false
    local canactivate, requirement = mem.criteria()
+   local desc = mem.description
+   if type(desc)=="function" then
+      desc = desc()
+   end
 
    vn.clear()
    vn.scene()
@@ -40,7 +44,7 @@ function obelisk.comm ()
    ccomm.newCharacterSpob( vn, mem.spob )
    vn.transition()
    vn.na(fmt.f(_("You tune your psychic energy to the {spb}. {description}"),
-      {spb=mem.spob, description=mem.description}))
+      {spb=mem.spob, description=desc}))
 
    vn.label("menu")
    vn.menu( function ()

@@ -9,11 +9,12 @@ local reqs = {
 }
 
 function init( spb )
-   local description
-   if player.outfitNum( reward ) > 0 then
-      description = _("You already have acquired a flow ability from the Obelisk, however, you can activate it to retry the test if you wish.")
-   else
-      description = fmt.f(_("You will be able to acquire the {reward} ability by passing the Obelisk's Test."), {reward=reward} )
+   local description = function ()
+      if player.outfitNum( reward ) > 0 then
+         return _("You already have acquired a flow ability from the Obelisk, however, you can activate it to retry the test if you wish.")
+      else
+         return fmt.f(_("You will be able to acquire the {reward} ability by passing the Obelisk's Test."), {reward=reward} )
+      end
    end
    return obelisk.init( spb, "Test of Devotion", description, function ()
       for k,o in ipairs(reqs) do
