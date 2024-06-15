@@ -32,7 +32,7 @@ local misssys = {
    system.get("Shakar"),        -- Escort meeting point
    refuelsys,                   -- Refuel stop
    system.get("Eneguoz"),       -- Protegee meeting point
-   system.get("Ogat"),          -- Final destination
+   system.get("Draygar"),       -- Final destination, was originally Ogat, but changed to avoid Surano
 }
 
 local ambush, diplomat, dvaerplomat, escorts, seiryuu -- Non-persistent state
