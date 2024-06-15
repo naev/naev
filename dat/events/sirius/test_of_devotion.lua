@@ -136,9 +136,9 @@ function spawn ()
    e:setVisible(true)
    e:setNoDisable(true)
    e:intrinsicSet( { -- Ship is too fast otherwise
-      accel_mod      = -30,
-      speed_mod      = -30,
-      turn_mod       = -30,
+      accel_mod      = -20,
+      speed_mod      = -20,
+      turn_mod       = -20,
       fwd_damage     = -20, -- Don't instagib player
       fwd_firerate   = -50, -- Less spam
       armour_mod     = -90,
