@@ -23,7 +23,7 @@ local reward = outfit.get("Avatar of Sirichana")
 local obelisk = spob.get("Kal Sitra Obelisk")
 local survivetime = 180 -- in seconds
 
-local hook_done
+local hook_done, starttime
 function create ()
    srs.obeliskEnter( obelisk )
 
@@ -62,39 +62,55 @@ function create ()
 
    -- Spawn at constant interval
    hook.timer( 8, "spawn" ) -- Be nice at first
-   hook.timer( 180, "eventover" ) -- Player one
+   for k,n in ipairs{30, 60, 90, 120, 150, 160, 170 } do
+      hook.timer( n, "eventleft", survivetime-n )
+   end
+   hook.timer( survivetime, "eventover" ) -- Player won
 
    -- Anything will finish the event
    hook_done = hook.enter( "done" )
+
+   -- Store start time
+   starttime = naev.ticksGame()
 end
 
 function puzzle01 ()
    hook.timer( 0.5, "puzzle01" )
 end
 
+local baddies = {}
+local noadd = false
 local end_hook
-function player_lost_disable ()
-   local pp = player.pilot()
-   pp:setInvincible( true )
-   pp:setInvisible( true )
-   if not end_hook then
-      textoverlay.init( "#r".._("Test Failed").."#0", nil, {length=6})
-      end_hook = hook.timer( 6, "cleanup" )
+local function lost_common ()
+   -- Get rid of enemies
+   for k,v in ipairs(baddies) do
+      if v:exists() then
+         v:setHealth( -1, -1 )
+      end
    end
-end
-function player_lost ()
-   local pp = player.pilot()
-   pp:setHealth( 100, 100 ) -- Heal up to avoid game over if necessary
-   pp:setHide( true )
-   pp:setInvincible( true )
+   noadd = true
+
+   -- End message
    if not end_hook then
       textoverlay.init( "#r".._("Test Failed").."#0", nil, {length=6})
       end_hook = hook.timer( 6, "cleanup" )
    end
 end
 
-local baddies = {}
-local noadd = false
+function player_lost_disable ()
+   local pp = player.pilot()
+   pp:setInvisible( true )
+   pp:setInvincible( true )
+   lost_common()
+end
+function player_lost ()
+   local pp = player.pilot()
+   pp:setHealth( 100, 100 ) -- Heal up to avoid game over if necessary
+   pp:setHide( true )
+   pp:setInvincible( true )
+   lost_common()
+end
+
 function spawn ()
    if noadd then return end
 
@@ -142,7 +158,15 @@ function spawn ()
    if #baddies < 20 then
       nexttime = nexttime * 0.5
    end
+   -- Last 30 seconds they spawn double time
+   if naev.ticksGame()-starttime > survivetime-30 then
+      nexttime = nexttime * 0.25
+   end
    hook.timer( nexttime, "spawn" ) -- Going to rerun in a bit
+end
+
+function eventleft ( left )
+   textoverlay.init( "#y"..fmt.f(_("{sec} s left"),{sec=left}).."#0", nil, {length=6})
 end
 
 function eventover ()

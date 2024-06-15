@@ -5,6 +5,7 @@ local reward = outfit.get("Avatar of Sirichana")
 local reqs = {
    outfit.get("Cleansing Flames"),
    outfit.get("Astral Projection"),
+   outfit.get("Feather Drive"),
 }
 
 function init( spb )
