@@ -136,7 +136,8 @@ int main( int argc, char *argv[] )
 
    /* Set some lighting parameters. */
    double al = 0.1;
-   gltf_light( al, al, al, 1.0 );
+   gltf_lightAmbient( al, al, al );
+   gltf_lightIntensity( 1. );
 
    /* Set up some stuff. */
    GLuint shadowvbo;
@@ -187,10 +188,13 @@ int main( int argc, char *argv[] )
                      glColour col;
                      const double str = 3.0;
                      col_hsv2rgb( &col, 1.0 * 360., 1., 1. );
-                     gltf_light( str * col.r, str * col.g, str * col.b, 0.5 );
+                     gltf_lightAmbient( str * col.r, str * col.g, str * col.b );
+                     gltf_lightIntensity( 0.5 );
                   }
-                  else
-                     gltf_light( al, al, al, 1.0 );
+                  else {
+                     gltf_lightAmbient( al, al, al );
+                     gltf_lightIntensity( 1. );
+                  }
                   break;
 
                case SDLK_e:
