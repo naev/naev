@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2023-01-30 00:36+0000\n"
-"Last-Translator: SC <lalocas@protonmail.com>\n"
+"PO-Revision-Date: 2024-06-16 04:45+0000\n"
+"Last-Translator: Bruno Fernandes <realbruno@tuta.io>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
-"naev/pt_BR/>\n"
+"naev-0-11-x/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -807,11 +807,11 @@ msgstr ""
 
 #: dat/AUTHORS:174
 msgid "   * Japanese translation"
-msgstr ""
+msgstr "Tradução japonesa"
 
 #: dat/AUTHORS:175
 msgid "   * Many bug fixes"
-msgstr ""
+msgstr "Correção de vários bugs"
 
 #: dat/AUTHORS:177
 msgid "theElerd"
