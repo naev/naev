@@ -56,6 +56,15 @@ function init( p, po )
    mem.flow_cost, mem.masslimit, mem.range, mem.cooldown, mem.drain = getStats( p )
    mem.timer = 0
    po:state("off")
+
+   if mem.isp then
+      for k,v in ipairs(p:outfits()) do
+         if v and v:typeBroad()=="Afterburner" then
+            mem.afterburner = true
+            break
+         end
+      end
+   end
 end
 
 function update( _p, po, dt )
@@ -129,4 +138,11 @@ function ontoggle( p, po, on )
    luaspfx.sfx( pos, p:vel(), sfx )
 
    return true
+end
+
+function keydoubletap( p, po, key )
+   -- Only blink forward on double tap if no afterburner
+   if not mem.afterburner and key=="accel" then
+      return ontoggle( p, po, true )
+   end
 end
