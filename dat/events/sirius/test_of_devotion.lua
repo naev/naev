@@ -11,7 +11,7 @@
    Trial that provides Avatar of Sirichana from Kal Sitra Obelisk.
    Meant to be the 5th Obelisk the player does.
 
-   Plyaer has to survive a constant surge of enemies.
+   Player has to survive a constant surge of enemies.
 --]]
 local textoverlay = require "textoverlay"
 local chakra = require "luaspfx.chakra_explosion"

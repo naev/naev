@@ -30,7 +30,7 @@ function init( spb )
          end
       end
       local fct = faction.get("Sirius")
-      local minstanding = 10
+      local minstanding = 30
       local curstanding = fct:playerStanding()
       if curstanding < minstanding then
          return false, fmt.f(_("You need at least {standing} with {fct} (you have {current})."),

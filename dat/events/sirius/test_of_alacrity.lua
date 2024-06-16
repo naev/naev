@@ -7,6 +7,12 @@
  <priority>0</priority>
 </event>
 --]]
+--[[
+   Trial that provides Feather Drive from Kal Maro Obelisk.
+   Meant to be the player's 2nd Obelisk.
+
+   Just a race through orbs.
+--]]
 local textoverlay = require "textoverlay"
 local chakra = require "luaspfx.chakra_explosion"
 local srs = require "common.sirius"

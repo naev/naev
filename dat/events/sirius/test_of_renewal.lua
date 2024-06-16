@@ -7,6 +7,12 @@
  <priority>0</priority>
 </event>
 --]]
+--[[
+   Provides the player with Astral Projection  from Kal Niut Obelisk.
+   Meant to be the 4th Obelisk the player does.
+
+   Player has to feather drive through orbs while being attacked.
+--]]
 local textoverlay = require "textoverlay"
 local chakra = require "luaspfx.chakra_explosion"
 local srs = require "common.sirius"
