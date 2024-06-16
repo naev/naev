@@ -381,9 +381,14 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    }
 
    inp = window_getInput( sysedit_widEdit, "inpLua" );
-   if ( strcmp( p->lua_file, inp ) != 0 ) {
+   if ( ( inp != p->lua_file ) ||
+        ( ( p->lua_file != NULL ) && ( inp != NULL ) &&
+          strcmp( p->lua_file, inp ) != 0 ) ) {
       if ( uniedit_diffMode ) {
-         sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_LUA, strdup( inp ) );
+         if ( ( inp == NULL ) || ( strlen( inp ) == 0 ) )
+            sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_LUA, NULL );
+         else
+            sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_LUA, strdup( inp ) );
       } else {
          free( p->lua_file );
          if ( ( inp == NULL ) || ( strlen( inp ) == 0 ) )
