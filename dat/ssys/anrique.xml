@@ -7,7 +7,9 @@
   <nolanes/>
  </general>
  <pos x="1262.642740" y="-354.918290"/>
- <spobs/>
+ <spobs>
+  <spob>Kal Vora Obelisk</spob>
+ </spobs>
  <jumps>
   <jump target="Herakin">
    <autopos/>
