@@ -65,6 +65,7 @@
       * Fixed hypergate and wormhole effects getting stuck
       * Obelisks tell if you have completed them already
       * Fixed space dust disappearing with certain jump abilities
+      * Double tap will activate feather drive like blink engines
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons
