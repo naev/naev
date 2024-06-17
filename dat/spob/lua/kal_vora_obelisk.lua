@@ -11,7 +11,7 @@ function init( spb )
          return fmt.f(_("You will be able to acquire the {reward} ability by passing the Obelisk's Test."), {reward=reward} )
       end
    end
-   return obelisk.init( spb, "Test of Devotion", description, function ()
+   return obelisk.init( spb, "Test of Purification", description, function ()
       local fct = faction.get("Sirius")
       local minstanding = 30
       local curstanding = fct:playerStanding()
