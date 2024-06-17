@@ -84,6 +84,7 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw,
 static int  pilot_getStackPos( unsigned int id );
 static void pilot_init_trails( Pilot *p );
 static int  pilot_trail_generated( Pilot *p, int generator );
+static void pilot_addQuadtree( const Pilot *p, int i );
 
 /**
  * @brief Gets the pilot stack.
@@ -3528,6 +3529,9 @@ Pilot *pilot_create( const Ship *ship, const char *name, int faction,
    /* Pilot creation hook. */
    pilot_runHook( p, PILOT_HOOK_CREATION );
 
+   /* Add to quadtree. */
+   pilot_addQuadtree( p, array_size( pilot_stack ) - 1 );
+
    NTracingZoneEnd( _ctx );
 
    return p;
@@ -3596,6 +3600,9 @@ unsigned int pilot_clone( const Pilot *ref )
    /* Reset the pilot. */
    pilot_reset( dyn );
 
+   /* Add to quadtree. */
+   pilot_addQuadtree( dyn, array_size( pilot_stack ) - 1 );
+
    return dyn->id;
 }
 
@@ -3624,6 +3631,9 @@ unsigned int pilot_addStack( Pilot *p )
       if ( pilot_stack[i] == pilot_stack[i - 1] )
          WARN( _( "Duplicate pilots on stack!" ) );
 #endif /* DEBUGGING */
+
+   /* Add to quadtree. */
+   pilot_addQuadtree( p, array_size( pilot_stack ) - 1 );
 
    return p->id;
 }
@@ -4067,6 +4077,19 @@ void pilots_cleanAll( void )
                 array_end( pilot_stack ) );
 }
 
+static void pilot_addQuadtree( const Pilot *p, int i )
+{
+   int x, y, w2, h2, px, py;
+   x  = round( p->solid.pos.x );
+   y  = round( p->solid.pos.y );
+   px = round( p->solid.pre.x );
+   py = round( p->solid.pre.y );
+   w2 = ceil( p->ship->size * 0.5 );
+   h2 = ceil( p->ship->size * 0.5 );
+   qt_insert( &pilot_quadtree, i, MIN( x, px ) - w2, MIN( y, py ) - h2,
+              MAX( x, px ) + w2, MAX( y, py ) + h2 );
+}
+
 /**
  * @brief Purges pilots set for deletion.
  */
@@ -4089,8 +4112,7 @@ void pilots_updatePurge( void )
    /* Second loop sets up quadtrees. */
    qt_clear( &pilot_quadtree ); /* Empty it. */
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
-      Pilot *p = pilot_stack[i];
-      int    x, y, w2, h2, px, py;
+      const Pilot *p = pilot_stack[i];
 
       /* Ignore pilots being deleted. */
       if ( pilot_isFlag( p, PILOT_DELETE ) )
@@ -4100,14 +4122,7 @@ void pilots_updatePurge( void )
       if ( pilot_isFlag( p, PILOT_HIDE ) )
          continue;
 
-      x  = round( p->solid.pos.x );
-      y  = round( p->solid.pos.y );
-      px = round( p->solid.pre.x );
-      py = round( p->solid.pre.y );
-      w2 = ceil( p->ship->size * 0.5 );
-      h2 = ceil( p->ship->size * 0.5 );
-      qt_insert( &pilot_quadtree, i, MIN( x, px ) - w2, MIN( y, py ) - h2,
-                 MAX( x, px ) + w2, MAX( y, py ) + h2 );
+      pilot_addQuadtree( p, i );
    }
 
    NTracingZoneEnd( _ctx );
