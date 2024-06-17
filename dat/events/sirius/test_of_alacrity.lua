@@ -147,6 +147,7 @@ function puzzle01 ()
    end
    player.omsgChange( omsg_id, string.format("%.1f",time_left), 0 )
 
+   -- TODO use quadtree matching here to speed it up
    local n = 0
    local ppos = player.pos()
    for k,m in ipairs(markers) do

@@ -2,10 +2,6 @@ local obelisk = require "spob.lua.lib.obelisk"
 local fmt = require "format"
 
 local reward = outfit.get("Cleansing Flames")
-local reqs = {
-   outfit.get("Feather Drive"),
-   outfit.get("Seeking Chakra"),
-}
 
 function init( spb )
    local description = function ()
@@ -16,19 +12,6 @@ function init( spb )
       end
    end
    return obelisk.init( spb, "Test of Devotion", description, function ()
-      for k,o in ipairs(reqs) do
-         if player.outfitNum( o ) <= 0 then
-            local desc = _("You need the following flow abilities to be able to activate the Obelisk:")
-            for i,r in ipairs(reqs) do
-               if player.outfitNum( r ) <= 0 then
-                  desc = desc.."\n#r"..r:name().."#0"
-               else
-                  desc = desc.."\n"..r:name()
-               end
-            end
-            return false, desc
-         end
-      end
       local fct = faction.get("Sirius")
       local minstanding = 30
       local curstanding = fct:playerStanding()
