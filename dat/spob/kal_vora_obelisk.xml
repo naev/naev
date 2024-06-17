@@ -3,7 +3,7 @@
  <feature>#yObelisk#0</feature>
  <lua>kal_vora_obelisk.lua</lua>
  <marker>spobmarker_obelisk</marker>
- <pos x="2042.937220" y="-3611.326894"/>
+ <pos x="14780.209704" y="5933.808522"/>
  <GFX>
   <space>obelisk_sirius.webp</space>
   <comm>obelisk_sirius_comm.webp</comm>
