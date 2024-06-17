@@ -21,8 +21,9 @@ local prevship
 local reward = outfit.get("Avatar of Sirichana")
 local obelisk = spob.get("Kal Sitra Obelisk")
 
-local drange = 100
-local dplace = drange * 0.8
+local drange = 50
+local dplace = 80
+local dradius = 200
 
 local hook_done
 function create ()
@@ -44,7 +45,7 @@ function create ()
       turn_mod       = -30,
    }, true ) -- overwrite all
 
-   textoverlay.init( "#y".._("Test of Devotion").."#0",
+   textoverlay.init( "#y".._("Test of Purification").."#0",
       "#y".._("Escape the Maze"),
       { length=8 } )
 
@@ -61,20 +62,19 @@ function create ()
       { type="line", r1=3, r2=5, a=-2.356 },
       { type="line", r1=5, r2=7, a=-1.952 },
    }
-   local scale = 200
    for k,m in ipairs(maze) do
       -- Do some sampling of positions
       local samples = {}
       if m.type=="arc" then
          for t = 0, 1, 0.01 do
             local a = m.a1*t + m.a2*(1-t)
-            local r = m.r * scale
+            local r = m.r * dradius
             samples[#samples+1] = vec2.newP( r, a )
          end
       else
          for t = 0, 1, 0.01 do
             local a = m.a
-            local r = (m.r1*t  + m.r2*(1-t)) * scale
+            local r = (m.r1*t  + m.r2*(1-t)) * dradius
             samples[#samples+1] = vec2.newP( r, a )
          end
       end
@@ -83,10 +83,9 @@ function create ()
       for i,s in ipairs(samples) do
          -- Only place nearby ones
          local r = pilot.getInrange( s, dplace )
-         print( r, #r )
          if #r <= 0 then
             local p = pilot.add("Psychic Orb", "Independent", s, nil, {ai="dummy"} )
-            --p:setInvincible(true)
+            p:setInvincible(true)
             p:setHostile(true)
             p:effectAdd("Psychic Orb On")
          end
@@ -99,17 +98,24 @@ function create ()
    hook_done = hook.enter( "done" )
 end
 
+local end_hook
 function heartbeat ()
-   local enemies = player.pilot():getEnemies( drange )
+   local enemies = player.pilot():getEnemies( drange, nil, true )
    if #enemies > 0 then
       for k,e in ipairs(enemies) do
          chakra( e:pos(), vec2.new(), 100 )
          e:rm()
       end
+
+      if not end_hook then
+         textoverlay.init( "#r".._("Test Failed").."#0", nil, {length=6})
+         end_hook = hook.timer( 6, "cleanup" )
+      end
+      hook.timer( 0.1, "heartbeat" )
       return
    end
 
-   if player.pos():dist() > 8 * drange then
+   if player.pos():dist() > 8 * dradius then
       -- All done, so give ability
       srs.sfxGong()
       if player.outfitNum( reward ) > 0 then
@@ -121,7 +127,10 @@ function heartbeat ()
             {length=6})
       end
       hook.timer( 6, "cleanup" )
+      return
    end
+
+   hook.timer( 0.1, "heartbeat" )
 end
 
 local function cleanup_player ()
