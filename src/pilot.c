@@ -2132,11 +2132,12 @@ void pilot_render( Pilot *p )
    /* Draw trail emitters on top in debug mode. */
    if ( debug_isFlag( DEBUG_MARK_EMITTER ) ) {
       double dircos, dirsin;
-      vec2   v;
       dircos = cos( p->solid.dir );
       dirsin = sin( p->solid.dir );
       for ( int i = 0; i < array_size( p->ship->trail_emitters ); i++ ) {
          const ShipTrailEmitter *trail = &p->ship->trail_emitters[i];
+         double                  scale;
+         vec2                    v;
 
          /* Visualize the trail emitters. */
          if ( trail->flags & SHIP_TRAIL_3D ) {
@@ -2147,6 +2148,17 @@ void pilot_render( Pilot *p )
                   trail->pos.v[2];
          }
 
+         /* Scale if necessary. */
+         if ( pilot_isFlag( p, PILOT_LANDING ) )
+            scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
+         else if ( pilot_isFlag( p, PILOT_TAKEOFF ) )
+            scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
+         else
+            scale = 1.;
+         v.x *= scale;
+         v.y *= scale;
+
+         /* Draw. */
          gl_gameToScreenCoords( &x, &y, p->solid.pos.x + v.x,
                                 p->solid.pos.y + v.y * M_SQRT1_2 );
          if ( trail->trail_spec->nebula )
