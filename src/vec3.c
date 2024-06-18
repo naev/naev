@@ -146,6 +146,15 @@ double vec3_length( const vec3 *a )
 }
 
 /**
+ * @brief Scales a 3D vector.
+ */
+void vec3_scale( vec3 *v, double s )
+{
+   for ( int i = 0; i < 3; i++ )
+      v->v[i] *= s;
+}
+
+/**
  * @brief Distance between a point and a triangle.
  *
  * Based on

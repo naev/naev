@@ -1491,6 +1491,16 @@ GltfObject *gltf_loadFromFile( const char *filename )
    }
    cmp_obj = NULL; /* No more comparisons. */
 
+   /* Some post-processing. */
+   for ( int i = 0; i < array_size( obj->trails ); i++ ) {
+      GltfTrail *t = &obj->trails[i];
+      vec3_scale( &t->pos, 1. / obj->radius );
+   }
+   for ( int i = 0; i < array_size( obj->mounts ); i++ ) {
+      GltfMount *m = &obj->mounts[i];
+      vec3_scale( &m->pos, 1. / obj->radius );
+   }
+
 #ifndef HAVE_NAEV
    PHYSFS_unmount( obj->path );
 #endif /* HAVE_NAEV */

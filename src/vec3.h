@@ -19,5 +19,6 @@ void   vec3_cross( vec3 *out, const vec3 *a, const vec3 *b );
 void   vec3_normalize( vec3 *a );
 double vec3_dist( const vec3 *a, const vec3 *b );
 double vec3_length( const vec3 *a );
+void   vec3_scale( vec3 *v, double s );
 
 double vec3_distPointTriangle( const vec3 *point, const vec3 tri[3] );
