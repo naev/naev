@@ -2136,7 +2136,6 @@ void pilot_render( Pilot *p )
       dirsin = sin( p->solid.dir );
       for ( int i = 0; i < array_size( p->ship->trail_emitters ); i++ ) {
          const ShipTrailEmitter *trail = &p->ship->trail_emitters[i];
-         double                  scale;
          vec2                    v;
 
          /* Visualize the trail emitters. */
