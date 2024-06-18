@@ -213,7 +213,8 @@ const char           *ship_classToString( ShipClass class );
 ShipClass             ship_classFromString( const char *str );
 credits_t             ship_basePrice( const Ship *s );
 credits_t             ship_buyPrice( const Ship *s );
-USE_RESULT glTexture *ship_renderCommGFX( const Ship *s, int size );
+USE_RESULT glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt,
+                                          double dir, const Lighting *Lscene );
 glTexture            *ship_gfxStore( const Ship *s );
 int                   ship_size( const Ship *s );
 

@@ -96,7 +96,7 @@ function comm.newCharacter( vn_in, plt )
    vn = vn_in
 
    -- Shortcuts and graphics
-   local shipgfx = lg.newImage( plt:ship():gfxComm() )
+   local shipgfx = lg.newImage( plt:renderComm() )
 
    -- Set up the namebox
    comm.nameboxUpdate( plt )

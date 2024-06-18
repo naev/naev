@@ -314,13 +314,13 @@ credits_t ship_buyPrice( const Ship *s )
  *
  * Must be freed afterwards.
  */
-glTexture *ship_renderCommGFX( const Ship *s, int size )
+glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
+                               const Lighting *Lscene )
 {
-   (void)size;
    if ( s->gfx_3d != NULL ) {
       GLuint   fbo, tex, depth_tex;
-      Lighting L = L_default;
-      mat4     H;
+      Lighting L = ( Lscene == NULL ) ? L_default : *Lscene;
+      mat4     H, Hlight;
       double   r = 0.;
       char     buf[STRMAX_SHORT];
       snprintf( buf, sizeof( buf ), "%s_gfx_comm", s->name );
@@ -329,10 +329,27 @@ glTexture *ship_renderCommGFX( const Ship *s, int size )
       gl_fboCreate( &fbo, &tex, size, size );
       gl_fboAddDepth( fbo, &depth_tex, size, size );
 
+      /* We rotate the model so it's staring at the player and facing slightly
+       * down. */
       H = mat4_identity();
       mat4_rotate( &H, -M_PI_4 * 0.5, 1.0, 0.0, 0.0 );
 
-      gltf_lightTransform( &L, &H );
+      /* Transform the light so it's consistent with the 3D model. */
+      Hlight = mat4_identity();
+      if ( fabs( tilt ) > DOUBLE_TOL ) {
+         mat4_rotate( &Hlight, M_PI_2, 0.0, 1.0, 0.0 );
+         mat4_rotate( &Hlight, -tilt, 1.0, 0.0, 0.0 );
+         mat4_rotate( &Hlight, dir, 0.0, 1.0, 0.0 );
+      } else
+         mat4_rotate( &Hlight, dir + M_PI_2, 0.0, 1.0, 0.0 );
+      gltf_lightTransform( &L, &Hlight );
+
+      /* Increase ambient a wee bit. */
+      L.ambient_r += 0.3;
+      L.ambient_g += 0.3;
+      L.ambient_b += 0.3;
+
+      /* Render the model. */
       ship_renderFramebuffer3D( s, fbo, size * gl_screen.scale, gl_screen.nw,
                                 gl_screen.nh, 0., r, &cWhite, &L, &H,
                                 OPENGL_TEX_VFLIP );

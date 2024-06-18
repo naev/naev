@@ -241,10 +241,11 @@ void shipyard_update( unsigned int wid, const char *str )
    /* update image */
    gl_freeTexture( shipyard_comm );
    shipyard_comm = NULL;
-   shipyard_comm = ship_renderCommGFX( ship, SHIP_GFX_W );
-   aspect        = shipyard_comm->w / shipyard_comm->h;
-   gw            = MIN( shipyard_comm->w, SHIP_GFX_W );
-   gh            = MIN( shipyard_comm->h, SHIP_GFX_H );
+   shipyard_comm =
+      ship_renderCommGFX( ship, SHIP_GFX_W, 0., 0., &L_store_const );
+   aspect = shipyard_comm->w / shipyard_comm->h;
+   gw     = MIN( shipyard_comm->w, SHIP_GFX_W );
+   gh     = MIN( shipyard_comm->h, SHIP_GFX_H );
    if ( aspect > 1. )
       gh /= aspect;
    else

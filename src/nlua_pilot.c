@@ -252,6 +252,7 @@ static int pilotL_calcStats( lua_State *L );
 static int pilotL_shipvarPeek( lua_State *L );
 static int pilotL_shipvarPush( lua_State *L );
 static int pilotL_shipvarPop( lua_State *L );
+static int pilotL_renderComm( lua_State *L );
 static int pilotL_render( lua_State *L );
 static int pilotL_renderTo( lua_State *L );
 
@@ -454,6 +455,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "shipvarPeek", pilotL_shipvarPeek },
    { "shipvarPush", pilotL_shipvarPush },
    { "shipvarPop", pilotL_shipvarPop },
+   { "renderComm", pilotL_renderComm },
    { "render", pilotL_render },
    { "renderTo", pilotL_renderTo },
    { 0, 0 },
@@ -6791,6 +6793,23 @@ static int pilotL_shipvarPop( lua_State *L )
    if ( var != NULL )
       lvar_rmArray( &p->shipvar, var );
    return 0;
+}
+
+/**
+ * @brief Renders the pilot communication image.
+ */
+static int pilotL_renderComm( lua_State *L )
+{
+   const Pilot *p    = luaL_validpilot( L, 1 );
+   int          size = luaL_optinteger( L, 2, 512 );
+   glTexture   *tex =
+      ship_renderCommGFX( p->ship, size, p->tilt, p->solid.dir, &L_default );
+   if ( tex == NULL ) {
+      WARN( _( "Unable to get ship comm graphic for '%s'." ), p->ship->name );
+      return 0;
+   }
+   lua_pushtex( L, tex );
+   return 1;
 }
 
 /**
