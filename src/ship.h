@@ -77,15 +77,16 @@ typedef struct ShipOutfitSlot_ {
    ShipMount     mount; /**< Mountpoint, only used for weapon slots. */
 } ShipOutfitSlot;
 
+#define SHIP_TRAIL_3D ( 1 << 0 ) /**< Is the trail emitter 3D? */
+#define SHIP_TRAIL_ALWAYS_UNDER                                                \
+   ( 1 << 1 ) /**< Should this trail be always drawn under the ship? */
+
 /**
  * @brief Ship trail emitter.
  */
 typedef struct ShipTrailEmitter_ {
-   double x_engine; /**< Offset x. */
-   double y_engine; /**< Offset y. */
-   double h_engine; /**< Offset z. */
-   unsigned int
-      always_under; /**< Should this trail be always drawn under the ship? */
+   vec3             pos;        /**< Position. */
+   unsigned int     flags;      /**< Flags to use. */
    const TrailSpec *trail_spec; /**< Trail type to emit. */
 } ShipTrailEmitter;
 

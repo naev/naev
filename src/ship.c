@@ -882,13 +882,13 @@ static int ship_parse( Ship *temp, const char *filename )
 
       if ( xml_isNode( node, "trail_generator" ) ) {
          char *buf;
-         xmlr_attr_float( node, "x", trail.x_engine );
-         xmlr_attr_float( node, "y", trail.y_engine );
-         xmlr_attr_float( node, "h", trail.h_engine );
-         xmlr_attr_int_def( node, "always_under", trail.always_under, 0 );
-         if ( temp->trail_emitters == NULL ) {
+         xmlr_attr_float( node, "x", trail.pos.v[0] );
+         xmlr_attr_float( node, "y", trail.pos.v[1] );
+         xmlr_attr_float( node, "h", trail.pos.v[2] );
+         xmlr_attr_int_def( node, "always_under", trail.flags,
+                            SHIP_TRAIL_ALWAYS_UNDER );
+         if ( temp->trail_emitters == NULL )
             temp->trail_emitters = array_create( ShipTrailEmitter );
-         }
          buf = xml_get( node );
          if ( buf == NULL )
             buf = "default";

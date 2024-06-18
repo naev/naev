@@ -2135,17 +2135,21 @@ void pilot_render( Pilot *p )
       vec2   v;
       dircos = cos( p->solid.dir );
       dirsin = sin( p->solid.dir );
-      for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
+      for ( int i = 0; i < array_size( p->ship->trail_emitters ); i++ ) {
+         const ShipTrailEmitter *trail = &p->ship->trail_emitters[i];
+
          /* Visualize the trail emitters. */
-         v.x = p->ship->trail_emitters[g].x_engine * dircos -
-               p->ship->trail_emitters[g].y_engine * dirsin;
-         v.y = p->ship->trail_emitters[g].x_engine * dirsin +
-               p->ship->trail_emitters[g].y_engine * dircos +
-               p->ship->trail_emitters[g].h_engine;
+         if ( trail->flags & SHIP_TRAIL_3D ) {
+            /* TODO */
+         } else {
+            v.x = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
+            v.y = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
+                  trail->pos.v[2];
+         }
 
          gl_gameToScreenCoords( &x, &y, p->solid.pos.x + v.x,
                                 p->solid.pos.y + v.y * M_SQRT1_2 );
-         if ( p->ship->trail_emitters[i].trail_spec->nebula )
+         if ( trail->trail_spec->nebula )
             gl_renderCross( x, y, 2, &cFontBlue );
          else
             gl_renderCross( x, y, 4, &cInert );
@@ -2837,20 +2841,26 @@ void pilot_sample_trails( Pilot *p, int none )
       if ( !pilot_trail_generated( p, g ) )
          continue;
 
-      p->trail[i]->ontop = 0;
-      if ( !( trail->always_under ) && ( dirsin > 0 ) ) {
-         /* See if the trail's front (tail) is in front of the ship. */
-         double prod =
-            ( trail_front( p->trail[i] ).x - p->solid.pos.x ) * dircos +
-            ( trail_front( p->trail[i] ).y - p->solid.pos.y ) * dirsin;
+      if ( trail->flags & SHIP_TRAIL_3D ) {
+         /* TODO */
+         dx = 0.;
+         dy = 0.;
+      } else {
+         p->trail[i]->ontop = 0;
+         if ( !( trail->flags & SHIP_TRAIL_ALWAYS_UNDER ) && ( dirsin > 0 ) ) {
+            /* See if the trail's front (tail) is in front of the ship. */
+            double prod =
+               ( trail_front( p->trail[i] ).x - p->solid.pos.x ) * dircos +
+               ( trail_front( p->trail[i] ).y - p->solid.pos.y ) * dirsin;
 
-         p->trail[i]->ontop = ( prod < 0 );
+            p->trail[i]->ontop = ( prod < 0 );
+         }
+
+         /* Figure our relative position. */
+         dx = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
+         dy = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
+              trail->pos.v[2];
       }
-
-      /* Figure our relative position. */
-      dx = trail->x_engine * dircos - trail->y_engine * dirsin;
-      dy =
-         trail->x_engine * dirsin + trail->y_engine * dircos + trail->h_engine;
 
       /* Check if needs scaling. */
       if ( pilot_isFlag( p, PILOT_LANDING ) )

@@ -1010,14 +1010,19 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
       dircos = cos( equipment_dir );
       dirsin = sin( equipment_dir );
       for ( i = 0; i < array_size( p->ship->trail_emitters ); i++ ) {
-         v.x = p->ship->trail_emitters[i].x_engine * dircos -
-               p->ship->trail_emitters[i].y_engine * dirsin;
-         v.y = p->ship->trail_emitters[i].x_engine * dirsin +
-               p->ship->trail_emitters[i].y_engine * dircos +
-               p->ship->trail_emitters[i].h_engine;
-         v.x *= pw / p->ship->size;
-         v.y *= ph / p->ship->size;
-         if ( p->ship->trail_emitters[i].trail_spec->nebula )
+         const ShipTrailEmitter *trail = &p->ship->trail_emitters[i];
+
+         if ( trail->flags & SHIP_TRAIL_3D ) {
+            /* TODO */
+         } else {
+            v.x = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
+            v.y = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
+                  trail->pos.v[2];
+            v.x *= pw / p->ship->size;
+            v.y *= ph / p->ship->size;
+         }
+
+         if ( trail->trail_spec->nebula )
             gl_renderCross( px + pw / 2. + v.x, py + ph / 2. + v.y * M_SQRT1_2,
                             2., &cFontBlue );
          else
