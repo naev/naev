@@ -1953,6 +1953,14 @@ void pilot_render( Pilot *p )
       inbounds = 0;
 
    if ( inbounds ) {
+      /* Check if needs scaling. */
+      if ( pilot_isFlag( p, PILOT_LANDING ) )
+         scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
+      else if ( pilot_isFlag( p, PILOT_TAKEOFF ) )
+         scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
+      else
+         scale = 1.;
+
       /* Render effects. */
       for ( int i = 0; i < array_size( p->effects ); i++ ) {
          // for (int i=array_size(p->effects)-1; i>=0; i--) {
@@ -1969,14 +1977,6 @@ void pilot_render( Pilot *p )
             elapsed  = MAX( e->elapsed, eiter->elapsed );
          }
       }
-
-      /* Check if needs scaling. */
-      if ( pilot_isFlag( p, PILOT_LANDING ) )
-         scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
-      else if ( pilot_isFlag( p, PILOT_TAKEOFF ) )
-         scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
-      else
-         scale = 1.;
 
       /* Add some transparency if stealthed. TODO better effect */
       if ( !pilot_isPlayer( p ) && pilot_isFlag( p, PILOT_STEALTH ) )
@@ -2084,7 +2084,7 @@ void pilot_render( Pilot *p )
 
    /* Useful debug stuff below. */
 #ifdef DEBUGGING
-   if ( debug_isFlag( DEBUG_MARK_COLLISION ) ) {
+   if ( inbounds && debug_isFlag( DEBUG_MARK_COLLISION ) ) {
       static gl_vbo      *poly_vbo = NULL;
       GLfloat             data[1024];
       const CollPolyView *poly = poly_view( &p->ship->polygon, p->solid.dir );
@@ -2130,7 +2130,7 @@ void pilot_render( Pilot *p )
    }
 
    /* Draw trail emitters on top in debug mode. */
-   if ( debug_isFlag( DEBUG_MARK_EMITTER ) ) {
+   if ( inbounds && debug_isFlag( DEBUG_MARK_EMITTER ) ) {
       double dircos, dirsin;
       dircos = cos( p->solid.dir );
       dirsin = sin( p->solid.dir );
@@ -2148,12 +2148,6 @@ void pilot_render( Pilot *p )
          }
 
          /* Scale if necessary. */
-         if ( pilot_isFlag( p, PILOT_LANDING ) )
-            scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
-         else if ( pilot_isFlag( p, PILOT_TAKEOFF ) )
-            scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
-         else
-            scale = 1.;
          v.x *= scale;
          v.y *= scale;
 
