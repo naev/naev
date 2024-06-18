@@ -722,6 +722,7 @@ static int gltf_loadNode( GltfObject *obj, const cgltf_data *data, Node *node,
             trail.generator = malloc( t[j + 1].end - t[j + 1].start + 1 );
             strncpy( trail.generator, &cnode->extras.data[t[j + 1].start],
                      t[j + 1].end - t[j + 1].start );
+            trail.generator[t[j + 1].end - t[j + 1].start] = '\0';
             cgltf_node_transform_world( cnode, H.ptr );
             mat4_mul_vec( &trail.pos, &H, &v );
             if ( obj->trails == NULL )
@@ -1372,6 +1373,34 @@ static int cmp_mesh( const void *p1, const void *p2 )
    return 0;
 }
 
+static const char *gltf_error_str( cgltf_result result )
+{
+   switch ( result ) {
+   case cgltf_result_success:
+      return p_( "cgltf", "success" );
+   case cgltf_result_data_too_short:
+      return p_( "cgltf", "data too short" );
+   case cgltf_result_unknown_format:
+      return p_( "cgltf", "unknown format" );
+   case cgltf_result_invalid_json:
+      return p_( "cgltf", "invalid json" );
+   case cgltf_result_invalid_gltf:
+      return p_( "cgltf", "invalid gltf" );
+   case cgltf_result_invalid_options:
+      return p_( "cgltf", "invalid options" );
+   case cgltf_result_file_not_found:
+      return p_( "cgltf", "file not found" );
+   case cgltf_result_io_error:
+      return p_( "cgltf", "io error" );
+   case cgltf_result_out_of_memory:
+      return p_( "cgltf", "out of memory" );
+   case cgltf_result_legacy_gltf:
+      return p_( "cgltf", "legacy gltf" );
+   default:
+      return NULL;
+   }
+}
+
 /**
  * @brief Loads an object from a file.
  *
@@ -1405,17 +1434,29 @@ GltfObject *gltf_loadFromFile( const char *filename )
    /* Start loading the file. */
    opts.file.read = gltf_read;
    res            = cgltf_parse_file( &opts, filename, &data );
-   assert( res == cgltf_result_success );
+   if ( res != cgltf_result_success ) {
+      WARN( _( "Error loading GLTF file '%s': %s" ), filename,
+            gltf_error_str( res ) );
+      return NULL;
+   }
 
 #if DEBUGGING
    /* Validate just in case. */
    res = cgltf_validate( data );
-   assert( res == cgltf_result_success );
+   if ( res != cgltf_result_success ) {
+      WARN( _( "Error loading GLTF file '%s': %s" ), filename,
+            gltf_error_str( res ) );
+      return NULL;
+   }
 #endif /* DEBUGGING */
 
    /* Will load from PHYSFS. */
    res = cgltf_load_buffers( &opts, data, filename );
-   assert( res == cgltf_result_success );
+   if ( res != cgltf_result_success ) {
+      WARN( _( "Error loading GLTF file '%s': %s" ), filename,
+            gltf_error_str( res ) );
+      return NULL;
+   }
 
    /* Load materials. */
    obj->materials  = calloc( data->materials_count, sizeof( Material ) );
