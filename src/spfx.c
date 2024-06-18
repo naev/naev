@@ -792,11 +792,12 @@ static void spfx_trail_update( Trail_spfx *trail, double dt )
  *    @param trail Trail to update.
  *    @param x X position of the new control point.
  *    @param y Y position of the new control point.
+ *    @param z Z position of the new control point.
  *    @param mode Type of trail emission at this point.
  *    @param force Whether or not to force the addition of the sample.
  */
-void spfx_trail_sample( Trail_spfx *trail, double x, double y, TrailMode mode,
-                        int force )
+void spfx_trail_sample( Trail_spfx *trail, double x, double y, double z,
+                        TrailMode mode, int force )
 {
    TrailPoint p;
 
@@ -805,6 +806,7 @@ void spfx_trail_sample( Trail_spfx *trail, double x, double y, TrailMode mode,
 
    p.x    = x;
    p.y    = y;
+   p.z    = z;
    p.t    = 1.;
    p.mode = mode;
 
@@ -920,8 +922,8 @@ void spfx_trail_draw( const Trail_spfx *trail )
       gl_uniformMat4( shaders.trail.projection, &projection );
       gl_uniformColour( shaders.trail.c1, &sp->col );
       gl_uniformColour( shaders.trail.c2, &spp->col );
-      glUniform1f( shaders.trail.t1, tp->t );
-      glUniform1f( shaders.trail.t2, tpp->t );
+      glUniform2f( shaders.trail.t, tp->t, tpp->t );
+      glUniform2f( shaders.trail.z, tp->z, tpp->z );
       glUniform2f( shaders.trail.pos2, len, sp->thick );
       len += s;
       glUniform2f( shaders.trail.pos1, len, spp->thick );

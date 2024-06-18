@@ -2075,11 +2075,13 @@ void pilot_render( Pilot *p )
 
    /* Re-draw backwards trails. */
    for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
+      glEnable( GL_DEPTH_TEST );
       if ( pilot_trail_generated( p, g ) ) {
          if ( p->trail[i]->ontop )
             spfx_trail_draw( p->trail[i] );
          i++;
       }
+      glDisable( GL_DEPTH_TEST );
    }
 
    /* Useful debug stuff below. */
@@ -2878,7 +2880,7 @@ void pilot_sample_trails( Pilot *p, int none )
    /* Compute the engine offset and decide where to draw the trail. */
    for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
       const ShipTrailEmitter *trail = &p->ship->trail_emitters[g];
-      double                  dx, dy, scale;
+      double                  dx, dy, dz, scale;
 
       if ( !pilot_trail_generated( p, g ) )
          continue;
@@ -2889,6 +2891,7 @@ void pilot_sample_trails( Pilot *p, int none )
          mat4_mul_vec( &v, &H, &trail->pos );
          dx = v.v[0];
          dy = v.v[1];
+         dz = v.v[2];
       } else {
          if ( !( trail->flags & SHIP_TRAIL_ALWAYS_UNDER ) && ( dirsin > 0 ) ) {
             /* See if the trail's front (tail) is in front of the ship. */
@@ -2904,6 +2907,7 @@ void pilot_sample_trails( Pilot *p, int none )
          dy = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
               trail->pos.v[2];
          dy *= M_SQRT1_2;
+         dz = 0.;
       }
 
       /* Check if needs scaling. */
@@ -2918,7 +2922,7 @@ void pilot_sample_trails( Pilot *p, int none )
 
       /* Sample. */
       spfx_trail_sample( p->trail[i++], p->solid.pos.x + dx,
-                         p->solid.pos.y + dy, mode, mode == MODE_NONE );
+                         p->solid.pos.y + dy, dz, mode, mode == MODE_NONE );
    }
 }
 

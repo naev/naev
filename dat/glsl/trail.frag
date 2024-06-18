@@ -22,9 +22,9 @@ subroutine uniform trail_func_prototype trail_func;
 
 uniform vec4 c1;  // Start colour
 uniform vec4 c2;  // End colour
-uniform float t1; // Start time [0,1]
-uniform float t2; // End time [0,1]
+uniform vec2 t; // Start and end time [0,1]
 uniform float dt; // Current time (in seconds)
+uniform vec2 z; // Depth
 uniform vec2 pos1;// Start position
 uniform vec2 pos2;// End position
 uniform float r;  // Unique value per trail [0,1]
@@ -271,7 +271,7 @@ void main(void) {
    colour_out = mix( c1, c2, pos.x );
    pos_px    = mix( pos1, pos2, pos );
    pos_px.y *= pos.y;
-   pos_tex.x = mix( t1, t2, pos.x );
+   pos_tex.x = mix( t.x, t.y, pos.x );
    pos_tex.y = 2. * pos.y - 1.;
 
 #ifdef HAS_GL_ARB_shader_subroutine
@@ -281,4 +281,6 @@ void main(void) {
    //* Just use default
    colour_out = trail_default( colour_out, pos_tex, pos_px );
 #endif /* HAS_GL_ARB_shader_subroutine */
+
+   gl_FragDepth = mix( z.x, z.y, pos.x );
 }

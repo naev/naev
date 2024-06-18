@@ -1207,12 +1207,18 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
    GLint sout = ceil( size / gl_screen.scale ) + 1;
    glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[1] );
    glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
-   if ( flags & OPENGL_TEX_VFLIP )
+   if ( flags & OPENGL_TEX_VFLIP ) {
       glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0, GL_COLOR_BUFFER_BIT,
                          GL_LINEAR );
-   else
+      /* Depth can only use NEAREST filtering. */
+      glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0, GL_DEPTH_BUFFER_BIT,
+                         GL_NEAREST );
+   } else {
       glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_COLOR_BUFFER_BIT,
                          GL_LINEAR );
+      glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_DEPTH_BUFFER_BIT,
+                         GL_NEAREST );
+   }
 
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
    glClearColor( 0., 0., 0., 1. );

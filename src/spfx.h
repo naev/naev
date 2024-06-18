@@ -62,7 +62,7 @@ typedef struct TrailSpec_ {
 } TrailSpec;
 
 typedef struct TrailPoint {
-   GLfloat x, y; /**< Control points for the trail. */
+   GLfloat x, y, z; /**< Control points for the trail. */
    GLfloat t; /**< Timer, normalized to the time to live of the trail (starts at
                  1, ends at 0). */
    TrailMode mode; /**< Type of trail emission at this point. */
@@ -112,10 +112,10 @@ void        spfx_update( const double dt, const double real_dt );
 void        spfx_render( int layer, double dt );
 void        spfx_clear( void );
 Trail_spfx *spfx_trail_create( const TrailSpec *spec );
-void spfx_trail_sample( Trail_spfx *trail, double x, double y, TrailMode mode,
-                        int force );
-void spfx_trail_remove( Trail_spfx *trail );
-void spfx_trail_draw( const Trail_spfx *trail );
+void        spfx_trail_sample( Trail_spfx *trail, double x, double y, double z,
+                               TrailMode mode, int force );
+void        spfx_trail_remove( Trail_spfx *trail );
+void        spfx_trail_draw( const Trail_spfx *trail );
 
 /*
  * Misc effects.
