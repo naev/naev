@@ -26,6 +26,7 @@
 #define gl_contextSet()
 #define gl_contextUnset()
 #endif /* HAVE_NAEV */
+#include "array.h"
 #include "mat3.h"
 #include "vec3.h"
 
@@ -655,7 +656,7 @@ static int gltf_loadMesh( GltfObject *obj, const cgltf_data *data, Mesh *mesh,
 /**
  * @brief Loads a node for the object.
  */
-static int gltf_loadNode( const cgltf_data *data, Node *node,
+static int gltf_loadNode( GltfObject *obj, const cgltf_data *data, Node *node,
                           const cgltf_node *cnode )
 {
    /* Get transform for node. */
@@ -692,6 +693,44 @@ static int gltf_loadNode( const cgltf_data *data, Node *node,
       node->mesh = cgltf_mesh_index( data, cnode->mesh );
    else
       node->mesh = -1;
+
+   /* Handle extras. */
+   if ( cnode->extras.data != NULL ) {
+      char       buf[STRMAX_SHORT];
+      cgltf_size len = sizeof( buf );
+      cgltf_copy_extras_json( data, &cnode->extras, buf, &len );
+      jsmn_parser p;
+      jsmntok_t   t[32]; /* Max number of expected tokens. */
+      jsmn_init( &p );
+      int r = jsmn_parse( &p, buf, len, t, sizeof( t ) / sizeof( jsmntok_t ) );
+      for ( int j = 0; j < r; j++ ) {
+         const jsmntok_t *tj = &t[j];
+         /* Handle trail generators, which are stored as properties on nodes. */
+         const char *strtrail = "NAEV_trail_generator";
+         if ( strncmp( strtrail, &buf[tj->start],
+                       MIN( strlen( strtrail ),
+                            (size_t)( tj->end - tj->start ) ) ) == 0 ) {
+            GltfTrail trail;
+            mat4      H;
+            vec3      v = { .v = {
+                          0.,
+                          0.,
+                          0.,
+                       } };
+            if ( j + 1 >= r )
+               break;
+            trail.generator = malloc( t[j + 1].end - t[j + 1].start + 1 );
+            strncpy( trail.generator, &cnode->extras.data[t[j + 1].start],
+                     t[j + 1].end - t[j + 1].start );
+            cgltf_node_transform_world( cnode, H.ptr );
+            mat4_mul_vec( &trail.pos, &H, &v );
+            if ( obj->trails == NULL )
+               obj->trails = array_create( GltfTrail );
+            array_push_back( &obj->trails, trail );
+            break;
+         }
+      }
+   }
 
    /* Iterate over children. */
    node->nchildren = cnode->children_count;
@@ -1390,7 +1429,7 @@ GltfObject *gltf_loadFromFile( const char *filename )
    for ( size_t n = 0; n < obj->nnodes; n++ ) {
       const cgltf_node *cnode = &data->nodes[n];
       Node             *node  = &obj->nodes[n];
-      gltf_loadNode( data, node, cnode );
+      gltf_loadNode( obj, data, node, cnode );
    }
 
    /* Load animations, has to be before meshes so we can update rotation
@@ -1550,6 +1589,13 @@ void gltf_free( GltfObject *obj )
       gltf_freeTex( &m->emissive_tex );
    }
    free( obj->materials );
+
+   /* Clean up extras. */
+   for ( int i = 0; i < array_size( obj->trails ); i++ ) {
+      GltfTrail *t = &obj->trails[i];
+      free( t->generator );
+   }
+   array_free( obj->trails );
 
    free( obj );
 }

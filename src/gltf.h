@@ -154,6 +154,16 @@ typedef struct Scene {
    size_t  nnodes; /**< Number of nodes. */
 } Scene;
 
+typedef struct GltfTrail {
+   char *generator;
+   vec3  pos;
+} GltfTrail;
+
+typedef struct GltfMount {
+   int  id;
+   vec3 pos;
+} GltfMount;
+
 /**
  * @brief Defines a complete object.
  */
@@ -173,6 +183,9 @@ typedef struct GltfObject {
    /* Some useful default scenes. */
    int scene_body;   /**< Body of the object. */
    int scene_engine; /**< Engine of the object (if applicable or -1) */
+   /* Useful things used for special cases. */
+   GltfTrail *trails; /**< Trails for trail generation. */
+   GltfMount *mounts; /**< Mount points fo weapons. */
 } GltfObject;
 
 /**
