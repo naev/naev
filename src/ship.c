@@ -507,11 +507,6 @@ int ship_gfxLoad( Ship *temp )
       }
    }
 
-   /* Get the comm graphic for future loading. */
-   if ( temp->gfx_comm == NULL )
-      SDL_asprintf( &temp->gfx_comm, SHIP_GFX_PATH "%s/%s" SHIP_COMM "%s", base,
-                    buf, ext );
-
    /* Load the polygon. */
    ship_loadPLG( temp, ( temp->polygon_path != NULL ) ? temp->polygon_path
                                                       : temp->gfx_path );
@@ -522,6 +517,11 @@ int ship_gfxLoad( Ship *temp )
       free( base );
       return 0;
    }
+
+   /* Get the comm graphic for future loading. */
+   if ( temp->gfx_comm == NULL )
+      SDL_asprintf( &temp->gfx_comm, SHIP_GFX_PATH "%s/%s" SHIP_COMM "%s", base,
+                    buf, ext );
 
    /* Load the space sprite. */
    ship_loadSpaceImage( temp, str, sx, sy );
