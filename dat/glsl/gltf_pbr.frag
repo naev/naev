@@ -674,4 +674,5 @@ void main (void)
    //colour_out = vec4( (n*0.5+0.5), 1.0 );
    //colour_out = vec4( vec3(sheen), 1.0 );
    //colour_out = vec4( vec3(sheenTint), 1.0 );
+   //colour_out.rgb = vec3(position.z);
 }

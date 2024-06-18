@@ -104,6 +104,14 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "texture_depth",
+      vs_path = "texture.vert",
+      fs_path = "texture_depth.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "colour", "tex_mat", "sampler", "depth"],
+      subroutines = {},
+   ),
+   Shader(
       name = "texture_bicubic",
       vs_path = "texture.vert",
       fs_path = "texture_bicubic.frag",

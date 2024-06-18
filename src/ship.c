@@ -1176,7 +1176,7 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
    glEnable( GL_SCISSOR_TEST );
    glScissor( 0, 0, sbuffer + ship_aa_scale_base,
               sbuffer + ship_aa_scale_base );
-   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+   glClear( GL_COLOR_BUFFER_BIT );
    glDisable( GL_SCISSOR_TEST );
 
    glUseProgram( shaders.texture_sharpen.program );
@@ -1211,11 +1211,13 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
       glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0, GL_COLOR_BUFFER_BIT,
                          GL_LINEAR );
       /* Depth can only use NEAREST filtering. */
+      glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[0] );
       glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0, GL_DEPTH_BUFFER_BIT,
                          GL_NEAREST );
    } else {
       glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_COLOR_BUFFER_BIT,
                          GL_LINEAR );
+      glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[0] );
       glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_DEPTH_BUFFER_BIT,
                          GL_NEAREST );
    }

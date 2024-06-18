@@ -175,6 +175,78 @@ void gl_renderTriangleEmpty( double x, double y, double a, double s,
    gl_endSolidProgram();
 }
 
+void gl_renderTextureDepthRawH( GLuint texture, GLuint depth,
+                                const mat4 *projection, const mat4 *tex_mat,
+                                const glColour *c )
+{
+   glUseProgram( shaders.texture_depth.program );
+
+   /* Bind the texture_depth. */
+   glActiveTexture( GL_TEXTURE1 );
+   glBindTexture( GL_TEXTURE_2D, depth );
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE_2D, texture );
+
+   /* Must have colour for now. */
+   if ( c == NULL )
+      c = &cWhite;
+
+   /* Set the vertex. */
+   glEnableVertexAttribArray( shaders.texture_depth.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_depth.vertex, 0, 2,
+                               GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   gl_uniformColour( shaders.texture_depth.colour, c );
+   gl_uniformMat4( shaders.texture_depth.projection, projection );
+   gl_uniformMat4( shaders.texture_depth.tex_mat, tex_mat );
+   glUniform1i( shaders.texture_depth.depth, 1 );
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.texture_depth.vertex );
+
+   /* anything failed? */
+   gl_checkErr();
+
+   glUseProgram( 0 );
+}
+
+void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
+                               double x, double y, double w, double h,
+                               double tx, double ty, double tw, double th,
+                               const glColour *c, double angle )
+{
+   double hw, hh; /* Half width and height. */
+   mat4   projection, tex_mat;
+
+   /* Must have colour for now. */
+   if ( c == NULL )
+      c = &cWhite;
+
+   hw = w * 0.5;
+   hh = h * 0.5;
+
+   /* Set the vertex. */
+   projection = gl_view_matrix;
+   if ( angle == 0. ) {
+      mat4_translate_scale_xy( &projection, x, y, w, h );
+   } else {
+      mat4_translate_xy( &projection, x + hw, y + hh );
+      mat4_rotate2d( &projection, angle );
+      mat4_translate_scale_xy( &projection, -hw, -hh, w, h );
+   }
+
+   /* Set the texture. */
+   tex_mat = ( flags & OPENGL_TEX_VFLIP ) ? mat4_ortho( -1, 1, 2, 0, 1, -1 )
+                                          : mat4_identity();
+   mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
+
+   gl_renderTextureDepthRawH( texture, depth, &projection, &tex_mat, c );
+}
+
 /**
  * @brief Texture blitting backend.
  *
