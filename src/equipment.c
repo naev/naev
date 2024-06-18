@@ -1039,14 +1039,15 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
                   trail->pos.v[2];
             v.x *= pw / p->ship->size;
             v.y *= ph / p->ship->size;
+            v.y *= M_SQRT1_2;
          }
 
          if ( trail->trail_spec->nebula )
-            gl_renderCross( px + pw / 2. + v.x, py + ph / 2. + v.y * M_SQRT1_2,
-                            2., &cFontBlue );
+            gl_renderCross( px + pw / 2. + v.x, py + ph / 2. + v.y, 2.,
+                            &cFontBlue );
          else
-            gl_renderCross( px + pw / 2. + v.x, py + ph / 2. + v.y * M_SQRT1_2,
-                            4., &cInert );
+            gl_renderCross( px + pw / 2. + v.x, py + ph / 2. + v.y, 4.,
+                            &cInert );
       }
    }
 #endif /* DEBUGGING */

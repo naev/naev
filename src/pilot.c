@@ -2166,6 +2166,7 @@ void pilot_render( Pilot *p )
             v.x = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
             v.y = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
                   trail->pos.v[2];
+            v.y *= M_SQRT1_2;
          }
 
          /* Scale if necessary. */
@@ -2174,7 +2175,7 @@ void pilot_render( Pilot *p )
 
          /* Draw. */
          gl_gameToScreenCoords( &x, &y, p->solid.pos.x + v.x,
-                                p->solid.pos.y + v.y * M_SQRT1_2 );
+                                p->solid.pos.y + v.y );
          if ( trail->trail_spec->nebula )
             gl_renderCross( x, y, 2, &cFontBlue );
          else
@@ -2902,6 +2903,7 @@ void pilot_sample_trails( Pilot *p, int none )
          dx = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
          dy = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
               trail->pos.v[2];
+         dy *= M_SQRT1_2;
       }
 
       /* Check if needs scaling. */
@@ -2916,8 +2918,7 @@ void pilot_sample_trails( Pilot *p, int none )
 
       /* Sample. */
       spfx_trail_sample( p->trail[i++], p->solid.pos.x + dx,
-                         p->solid.pos.y + dy * M_SQRT1_2, mode,
-                         mode == MODE_NONE );
+                         p->solid.pos.y + dy, mode, mode == MODE_NONE );
    }
 }
 
