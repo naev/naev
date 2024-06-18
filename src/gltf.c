@@ -729,6 +729,28 @@ static int gltf_loadNode( GltfObject *obj, const cgltf_data *data, Node *node,
             array_push_back( &obj->trails, trail );
             break;
          }
+         /* Handle mount points, also stored as extras. */
+         const char *strmount = "NAEV_weapon_mount";
+         if ( strncmp( strmount, &buf[tj->start],
+                       MIN( strlen( strmount ),
+                            (size_t)( tj->end - tj->start ) ) ) == 0 ) {
+            GltfMount mount;
+            mat4      H;
+            vec3      v = { .v = {
+                          0.,
+                          0.,
+                          0.,
+                       } };
+            if ( j + 1 >= r )
+               break;
+            mount.id = atoi( &cnode->extras.data[t[j + 1].start] );
+            cgltf_node_transform_world( cnode, H.ptr );
+            mat4_mul_vec( &mount.pos, &H, &v );
+            if ( obj->mounts == NULL )
+               obj->mounts = array_create( GltfMount );
+            array_push_back( &obj->mounts, mount );
+            break;
+         }
       }
    }
 
@@ -1371,6 +1393,12 @@ static int cmp_mesh( const void *p1, const void *p2 )
       return b;
    return 0;
 }
+static int cmp_mount( const void *p1, const void *p2 )
+{
+   const GltfMount *m1 = p1;
+   const GltfMount *m2 = p2;
+   return m1->id - m2->id;
+}
 
 static const char *gltf_error_str( cgltf_result result )
 {
@@ -1536,12 +1564,21 @@ GltfObject *gltf_loadFromFile( const char *filename )
       GltfTrail *t = &obj->trails[i];
       vec3_scale( &t->pos, 1. / obj->radius );
    }
+   qsort( obj->mounts, array_size( obj->mounts ), sizeof( GltfMount ),
+          cmp_mount );
    for ( int i = 0; i < array_size( obj->mounts ); i++ ) {
       GltfMount *m = &obj->mounts[i];
       vec3_scale( &m->pos, 1. / obj->radius );
+      if ( m->id != i )
+         WARN( _( "gltf warning '%s': xpected mount with id=%d, but got %d!" ),
+               filename, i, m->id );
    }
 
 #ifndef HAVE_NAEV
+   LOG( "Loaded %s", filename );
+   LOG( "   has %d trail generators", array_size( obj->trails ) );
+   LOG( "   has %d weapon mounts", array_size( obj->mounts ) );
+
    PHYSFS_unmount( obj->path );
 #endif /* HAVE_NAEV */
 
@@ -1646,6 +1683,7 @@ void gltf_free( GltfObject *obj )
       free( t->generator );
    }
    array_free( obj->trails );
+   array_free( obj->mounts );
 
    free( obj );
 }
