@@ -581,8 +581,9 @@ static int shipL_getSize( lua_State *L )
  */
 static int shipL_gfxComm( lua_State *L )
 {
-   const Ship *s   = luaL_validship( L, 1 );
-   glTexture  *tex = ship_loadCommGFX( s );
+   const Ship *s    = luaL_validship( L, 1 );
+   int         size = luaL_optinteger( L, 2, 512 );
+   glTexture  *tex  = ship_renderCommGFX( s, size );
    if ( tex == NULL ) {
       WARN( _( "Unable to get ship comm graphic for '%s'." ), s->name );
       return 0;

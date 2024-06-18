@@ -1851,6 +1851,25 @@ double gltf_lightIntensityGet( void )
 }
 
 /**
+ * @brief Transforms the lighting positions based on a trasnnform matrix.
+ */
+void gltf_lightTransform( Lighting *L, const mat4 *H )
+{
+   for ( int i = 0; i < L->nlights; i++ ) {
+      Light *l = &L->lights[i];
+      if ( l->sun ) {
+         mat3 h;
+         vec3 v = l->pos;
+         mat3_from_mat4( &h, H );
+         mat3_mul_vec( &l->pos, &h, &v );
+      } else {
+         vec3 v = l->pos;
+         mat4_mul_vec( &l->pos, H, &v );
+      }
+   }
+}
+
+/**
  * @brief Gets the shadow map texture.
  */
 GLuint gltf_shadowmap( int light )

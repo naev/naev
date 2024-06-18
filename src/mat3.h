@@ -19,6 +19,7 @@ typedef struct mat3_ {
 /* Basic operations. */
 void mat3_print( const mat3 *m );
 void mat3_from_mat4( mat3 *out, const mat4 *in );
+void mat3_mul_vec( vec3 *out, const mat3 *M, const vec3 *v );
 
 /* Useful functions. */
 double mat3_det( const mat3 *m );

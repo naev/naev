@@ -57,7 +57,7 @@ typedef struct ShipThreadData_ {
 static Ship *ship_stack = NULL; /**< Stack of ships available in the game. */
 
 #define SHIP_FBO 3
-static double       max_size            = 0.;
+static double       max_size            = 512.; /* Use at least 512 x 512. */
 static double       ship_fbos           = 0.;
 static GLuint       ship_fbo[SHIP_FBO]  = { GL_INVALID_ENUM };
 static GLuint       ship_tex[SHIP_FBO]  = { GL_INVALID_ENUM };
@@ -73,6 +73,11 @@ static int  ship_loadPLG( Ship *temp, const char *buf );
 static int  ship_parse( Ship *temp, const char *filename );
 static int  ship_parseThread( void *ptr );
 static void ship_freeSlot( ShipOutfitSlot *s );
+static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
+                                      double fw, double fh, double engine_glow,
+                                      double r, const glColour *c,
+                                      const Lighting *L, const mat4 *H,
+                                      unsigned int flags );
 
 /**
  * @brief Compares two ship pointers for qsort.
@@ -309,8 +314,36 @@ credits_t ship_buyPrice( const Ship *s )
  *
  * Must be freed afterwards.
  */
-glTexture *ship_loadCommGFX( const Ship *s )
+glTexture *ship_renderCommGFX( const Ship *s, int size )
 {
+   (void)size;
+   if ( s->gfx_3d != NULL ) {
+      GLuint   fbo, tex, depth_tex;
+      Lighting L = L_default;
+      mat4     H;
+      double   r = 0.;
+      char     buf[STRMAX_SHORT];
+      snprintf( buf, sizeof( buf ), "%s_gfx_comm", s->name );
+      gl_contextSet();
+
+      gl_fboCreate( &fbo, &tex, size, size );
+      gl_fboAddDepth( fbo, &depth_tex, size, size );
+
+      H = mat4_identity();
+      mat4_rotate( &H, -M_PI_4 * 0.5, 1.0, 0.0, 0.0 );
+
+      gltf_lightTransform( &L, &H );
+      ship_renderFramebuffer3D( s, fbo, size * gl_screen.scale, gl_screen.nw,
+                                gl_screen.nh, 0., r, &cWhite, &L, &H,
+                                OPENGL_TEX_VFLIP );
+
+      glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
+      glDeleteTextures( 1, &depth_tex );
+      glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+      gl_contextUnset();
+
+      return gl_rawTexture( buf, tex, size, size );
+   }
    if ( s->gfx_comm != NULL )
       return gl_newImage( s->gfx_comm, 0 );
    return NULL;
@@ -1043,6 +1076,118 @@ static int ship_parse( Ship *temp, const char *filename )
    return 0;
 }
 
+static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
+                                      double fw, double fh, double engine_glow,
+                                      double r, const glColour *c,
+                                      const Lighting *L, const mat4 *H,
+                                      unsigned int flags )
+{
+   double t =
+      elapsed_time_mod +
+      r * 300.; /* Compute a randomized time to avoid duplicate motions. */
+   double      scale = ship_aa_scale * size;
+   GltfObject *obj   = s->gfx_3d;
+   mat4        projection, tex_mat;
+   GLint       sbuffer = ceil( scale );
+
+   glClearColor( 0., 0., 0., 0. );
+
+   glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
+
+   /* Only clear the necessary area. */
+   glEnable( GL_SCISSOR_TEST );
+   glScissor( 0, 0, sbuffer, sbuffer );
+   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+   glDisable( GL_SCISSOR_TEST );
+
+   /* Compute projection and texture matrices. */
+   projection = mat4_ortho( 0., fw, 0, fh, -1., 1. );
+   mat4_scale_xy( &projection, scale * gl_screen.scale,
+                  scale * gl_screen.scale );
+   tex_mat = mat4_identity();
+   mat4_scale_xy( &tex_mat, scale / ship_fbos, scale / ship_fbos );
+
+   /* Actually render. */
+   if ( ( engine_glow > 0. ) && ( obj->scene_engine >= 0 ) ) {
+      if ( engine_glow >= 1. ) {
+         gltf_renderScene( ship_fbo[0], obj, obj->scene_engine, H, t, scale,
+                           L );
+      } else {
+         /* More scissors. */
+         glEnable( GL_SCISSOR_TEST );
+         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[2] );
+         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
+         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+         /* First render separately. */
+         gltf_renderScene( ship_fbo[1], obj, obj->scene_body, H, t, scale, L );
+         gltf_renderScene( ship_fbo[2], obj, obj->scene_engine, H, t, scale,
+                           L );
+
+         /* Now merge to main framebuffer. */
+         glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
+         gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1], engine_glow,
+                                          &projection, &tex_mat, &cWhite );
+
+         /* TODO fix this area, it causes issues with rendering pilots to the
+          * framebuffer in the gui. */
+      }
+   } else
+      gltf_renderScene( ship_fbo[0], obj, obj->scene_body, H, t, scale, L );
+
+   /*
+    * First do sharpen pass.
+    */
+   glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
+   glEnable( GL_SCISSOR_TEST );
+   glScissor( 0, 0, sbuffer + ship_aa_scale_base,
+              sbuffer + ship_aa_scale_base );
+   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+   glDisable( GL_SCISSOR_TEST );
+
+   glUseProgram( shaders.texture_sharpen.program );
+   glBindTexture( GL_TEXTURE_2D, ship_tex[0] );
+
+   glEnableVertexAttribArray( shaders.texture_sharpen.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_sharpen.vertex, 0,
+                               2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   gl_uniformColour( shaders.texture_sharpen.colour, c );
+   gl_uniformMat4( shaders.texture_sharpen.projection, &projection );
+   gl_uniformMat4( shaders.texture_sharpen.tex_mat, &tex_mat );
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.texture_sharpen.vertex );
+
+   /*
+    * Now downsample pass.
+    */
+   /* Tests show that for 2x AA, linear is visually indifferent from bicubic.
+    * The padding is to ensure that there is a one pixel buffer of alpha 0.
+    */
+   GLint sin  = sbuffer + (GLint)ship_aa_scale_base;
+   GLint sout = ceil( size / gl_screen.scale ) + 1;
+   glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[1] );
+   glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
+   if ( flags & OPENGL_TEX_VFLIP )
+      glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0, GL_COLOR_BUFFER_BIT,
+                         GL_LINEAR );
+   else
+      glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_COLOR_BUFFER_BIT,
+                         GL_LINEAR );
+
+   glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+   glClearColor( 0., 0., 0., 1. );
+
+   /* anything failed? */
+   gl_checkErr();
+}
+
 /**
  * @brief Renders a ship to a framebuffer.
  */
@@ -1051,29 +1196,10 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
                              double r, int sx, int sy, const glColour *c,
                              const Lighting *L )
 {
-   double t =
-      elapsed_time_mod +
-      r * 300.; /* Compute a randomized time to avoid duplicate motions. */
-
    if ( c == NULL )
       c = &cWhite;
 
-   glClearColor( 0., 0., 0., 0. );
-
    if ( s->gfx_3d != NULL ) {
-      double      scale = ship_aa_scale * s->size;
-      GltfObject *obj   = s->gfx_3d;
-      mat4        projection, tex_mat;
-      GLint       sbuffer = ceil( scale );
-
-      glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
-
-      /* Only clear the necessary area. */
-      glEnable( GL_SCISSOR_TEST );
-      glScissor( 0, 0, sbuffer, sbuffer );
-      glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-      glDisable( GL_SCISSOR_TEST );
-
       /* Determine the model transformation. */
       mat4 H = mat4_identity();
       if ( fabs( tilt ) > DOUBLE_TOL ) {
@@ -1083,91 +1209,14 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       } else
          mat4_rotate( &H, dir + M_PI_2, 0.0, 1.0, 0.0 );
 
-      /* Compute projection and texture matrices. */
-      projection = mat4_ortho( 0., fw, 0, fh, -1., 1. );
-      mat4_scale_xy( &projection, scale * gl_screen.scale,
-                     scale * gl_screen.scale );
-      tex_mat = mat4_identity();
-      mat4_scale_xy( &tex_mat, scale / ship_fbos, scale / ship_fbos );
-
-      /* Actually render. */
-      if ( ( engine_glow > 0. ) && ( obj->scene_engine >= 0 ) ) {
-         if ( engine_glow >= 1. ) {
-            gltf_renderScene( ship_fbo[0], obj, obj->scene_engine, &H, t, scale,
-                              L );
-         } else {
-            /* More scissors. */
-            glEnable( GL_SCISSOR_TEST );
-            glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[2] );
-            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-            glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
-            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-            /* First render separately. */
-            gltf_renderScene( ship_fbo[1], obj, obj->scene_body, &H, t, scale,
-                              L );
-            gltf_renderScene( ship_fbo[2], obj, obj->scene_engine, &H, t, scale,
-                              L );
-
-            /* Now merge to main framebuffer. */
-            glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
-            gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1],
-                                             engine_glow, &projection, &tex_mat,
-                                             &cWhite );
-
-            /* TODO fix this area, it causes issues with rendering pilots to the
-             * framebuffer in the gui. */
-         }
-      } else
-         gltf_renderScene( ship_fbo[0], obj, obj->scene_body, &H, t, scale, L );
-
-      /*
-       * First do sharpen pass.
-       */
-      glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
-      glEnable( GL_SCISSOR_TEST );
-      glScissor( 0, 0, sbuffer + ship_aa_scale_base,
-                 sbuffer + ship_aa_scale_base );
-      glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-      glDisable( GL_SCISSOR_TEST );
-
-      glUseProgram( shaders.texture_sharpen.program );
-      glBindTexture( GL_TEXTURE_2D, ship_tex[0] );
-
-      glEnableVertexAttribArray( shaders.texture_sharpen.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_sharpen.vertex,
-                                  0, 2, GL_FLOAT, 0 );
-
-      /* Set shader uniforms. */
-      gl_uniformColour( shaders.texture_sharpen.colour, c );
-      gl_uniformMat4( shaders.texture_sharpen.projection, &projection );
-      gl_uniformMat4( shaders.texture_sharpen.tex_mat, &tex_mat );
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clear state. */
-      glDisableVertexAttribArray( shaders.texture_sharpen.vertex );
-
-      /* anything failed? */
-      gl_checkErr();
-
-      /*
-       * Now downsample pass.
-       */
-      /* Tests show that for 2x AA, linear is visually indifferent from bicubic.
-       * The padding is to ensure that there is a one pixel buffer of alpha 0.
-       */
-      GLint sin  = sbuffer + (GLint)ship_aa_scale_base;
-      GLint sout = ceil( s->size / gl_screen.scale ) + 1;
-      glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[1] );
-      glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
-      glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_COLOR_BUFFER_BIT,
-                         GL_LINEAR );
+      ship_renderFramebuffer3D( s, fbo, s->size, fw, fh, engine_glow, r, c, L,
+                                &H, 0 );
    } else {
       double           tx, ty;
       const glTexture *sa, *sb;
       mat4             tmpm;
+
+      glClearColor( 0., 0., 0., 0. );
 
       glBindFramebuffer( GL_FRAMEBUFFER, fbo );
 
@@ -1192,10 +1241,10 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
                                    tx, ty, sa->srw, sa->srh, c );
 
       gl_view_matrix = tmpm;
-   }
 
-   glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
-   glClearColor( 0., 0., 0., 1. );
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+      glClearColor( 0., 0., 0., 1. );
+   }
 }
 
 /**
@@ -1372,6 +1421,7 @@ void ships_resize( void )
       gl_fboCreate( &ship_fbo[i], &ship_tex[i], ship_fbos, ship_fbos );
       gl_fboAddDepth( ship_fbo[i], &ship_texd[i], ship_fbos, ship_fbos );
    }
+   gl_checkErr();
 }
 
 /**

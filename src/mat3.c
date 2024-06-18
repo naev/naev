@@ -27,6 +27,16 @@ void mat3_from_mat4( mat3 *out, const mat4 *in )
          out->m[i][j] = in->m[i][j];
 }
 
+void mat3_mul_vec( vec3 *out, const mat3 *M, const vec3 *v )
+{
+   for ( int i = 0; i < 3; i++ ) {
+      GLfloat a = 0.;
+      for ( int j = 0; j < 3; j++ )
+         a += M->m[j][i] * v->v[j];
+      out->v[i] = a;
+   }
+}
+
 double mat3_det( const mat3 *m )
 {
    return m->m[0][0] * ( m->m[1][1] * m->m[2][2] - m->m[2][1] * m->m[1][2] ) -

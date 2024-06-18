@@ -220,6 +220,7 @@ void   gltf_lightAmbient( double r, double g, double b );
 void   gltf_lightAmbientGet( double *r, double *g, double *b );
 void   gltf_lightIntensity( double strength );
 double gltf_lightIntensityGet( void );
+void   gltf_lightTransform( Lighting *L, const mat4 *H );
 
 /* Misc functions. */
 GLuint gltf_shadowmap( int light );
