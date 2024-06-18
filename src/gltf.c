@@ -7,7 +7,6 @@
 
 #include "SDL_image.h"
 #include "glad.h"
-#include <assert.h>
 #include <libgen.h>
 #include <math.h>
 
