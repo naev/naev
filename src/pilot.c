@@ -2132,15 +2132,36 @@ void pilot_render( Pilot *p )
    /* Draw trail emitters on top in debug mode. */
    if ( inbounds && debug_isFlag( DEBUG_MARK_EMITTER ) ) {
       double dircos, dirsin;
-      dircos = cos( p->solid.dir );
-      dirsin = sin( p->solid.dir );
+      mat4   H;
+      int    use_3d = ship_isFlag( p->ship, SHIP_3DTRAILS );
+
+      /* Use 3D to compute trail stuff. */
+      if ( use_3d ) {
+         H = mat4_identity();
+         // H.m[2][2] = -1.;
+         if ( fabs( p->tilt ) > DOUBLE_TOL ) {
+            mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
+            mat4_rotate( &H, p->tilt, 1.0, 0.0, 0.0 );
+            mat4_rotate( &H, -p->solid.dir, 0.0, 1.0, 0.0 );
+         } else
+            mat4_rotate( &H, -p->solid.dir + M_PI_2, 0.0, 1.0, 0.0 );
+         mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
+      } else {
+         dircos = cos( p->solid.dir );
+         dirsin = sin( p->solid.dir );
+      }
+
+      /* Draw the trails emitters. */
       for ( int i = 0; i < array_size( p->ship->trail_emitters ); i++ ) {
          const ShipTrailEmitter *trail = &p->ship->trail_emitters[i];
          vec2                    v;
 
          /* Visualize the trail emitters. */
-         if ( trail->flags & SHIP_TRAIL_3D ) {
-            /* TODO */
+         if ( use_3d ) {
+            vec3 v2;
+            mat4_mul_vec( &v2, &H, &trail->pos );
+            v.x = v2.v[0];
+            v.y = v2.v[1];
          } else {
             v.x = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
             v.y = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
@@ -2805,6 +2826,8 @@ void pilot_sample_trails( Pilot *p, int none )
 {
    double    d2, cx, cy, dircos, dirsin;
    TrailMode mode;
+   int       use_3d;
+   mat4      H;
 
    /* Ignore for simulation. */
    if ( !space_needsEffects() )
@@ -2819,9 +2842,6 @@ void pilot_sample_trails( Pilot *p, int none )
    d2 = pow2( cx - p->solid.pos.x ) + pow2( cy - p->solid.pos.y );
    if ( d2 > pow2( MAX( SCREEN_W, SCREEN_H ) / conf.zoom_far * 2. ) )
       return;
-
-   dircos = cos( p->solid.dir );
-   dirsin = sin( p->solid.dir );
 
    /* Identify the emission type. */
    if ( none )
@@ -2838,6 +2858,22 @@ void pilot_sample_trails( Pilot *p, int none )
          mode = MODE_IDLE;
    }
 
+   use_3d = ship_isFlag( p->ship, SHIP_3DTRAILS );
+   if ( use_3d ) {
+      H = mat4_identity();
+      // H.m[2][2] = -1.;
+      if ( fabs( p->tilt ) > DOUBLE_TOL ) {
+         mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
+         mat4_rotate( &H, p->tilt, 1.0, 0.0, 0.0 );
+         mat4_rotate( &H, -p->solid.dir, 0.0, 1.0, 0.0 );
+      } else
+         mat4_rotate( &H, -p->solid.dir + M_PI_2, 0.0, 1.0, 0.0 );
+      mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
+   } else {
+      dircos = cos( p->solid.dir );
+      dirsin = sin( p->solid.dir );
+   }
+
    /* Compute the engine offset and decide where to draw the trail. */
    for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
       const ShipTrailEmitter *trail = &p->ship->trail_emitters[g];
@@ -2846,12 +2882,13 @@ void pilot_sample_trails( Pilot *p, int none )
       if ( !pilot_trail_generated( p, g ) )
          continue;
 
-      if ( trail->flags & SHIP_TRAIL_3D ) {
-         /* TODO */
-         dx = 0.;
-         dy = 0.;
+      p->trail[i]->ontop = 0;
+      if ( use_3d ) {
+         vec3 v;
+         mat4_mul_vec( &v, &H, &trail->pos );
+         dx = v.v[0];
+         dy = v.v[1];
       } else {
-         p->trail[i]->ontop = 0;
          if ( !( trail->flags & SHIP_TRAIL_ALWAYS_UNDER ) && ( dirsin > 0 ) ) {
             /* See if the trail's front (tail) is in front of the ship. */
             double prod =

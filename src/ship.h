@@ -19,6 +19,7 @@
 #define SHIP_UNIQUE                                                            \
    ( 1 << 2 ) /**< Ship is unique and player can only have one. */
 #define SHIP_NEEDSGFX ( 1 << 3 ) /**< Ship needs to load graphics. */
+#define SHIP_3DTRAILS ( 1 << 4 ) /**< Ship is using 3D trails. */
 #define ship_isFlag( s, f ) ( ( s )->flags & ( f ) )   /**< Checks ship flag. */
 #define ship_setFlag( s, f ) ( ( s )->flags |= ( f ) ) /**< Sets ship flag. */
 #define ship_rmFlag( s, f )                                                    \
@@ -77,9 +78,8 @@ typedef struct ShipOutfitSlot_ {
    ShipMount     mount; /**< Mountpoint, only used for weapon slots. */
 } ShipOutfitSlot;
 
-#define SHIP_TRAIL_3D ( 1 << 0 ) /**< Is the trail emitter 3D? */
 #define SHIP_TRAIL_ALWAYS_UNDER                                                \
-   ( 1 << 1 ) /**< Should this trail be always drawn under the ship? */
+   ( 1 << 0 ) /**< Should this trail be always drawn under the ship? */
 
 /**
  * @brief Ship trail emitter.

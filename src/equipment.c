@@ -1007,13 +1007,32 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
       /* Visualize the trail emitters. */
       double dircos, dirsin;
       int    i;
-      dircos = cos( equipment_dir );
-      dirsin = sin( equipment_dir );
+      mat4   H;
+      int    use_3d = ship_isFlag( p->ship, SHIP_3DTRAILS );
+
+      if ( use_3d ) {
+         H = mat4_identity();
+         // H.m[2][2] = -1.;
+         if ( fabs( p->tilt ) > DOUBLE_TOL ) {
+            mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
+            mat4_rotate( &H, p->tilt, 1.0, 0.0, 0.0 );
+            mat4_rotate( &H, -p->solid.dir, 0.0, 1.0, 0.0 );
+         } else
+            mat4_rotate( &H, -p->solid.dir + M_PI_2, 0.0, 1.0, 0.0 );
+         mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
+      } else {
+         dircos = cos( equipment_dir );
+         dirsin = sin( equipment_dir );
+      }
+
       for ( i = 0; i < array_size( p->ship->trail_emitters ); i++ ) {
          const ShipTrailEmitter *trail = &p->ship->trail_emitters[i];
 
-         if ( trail->flags & SHIP_TRAIL_3D ) {
-            /* TODO */
+         if ( use_3d ) {
+            vec3 v2;
+            mat4_mul_vec( &v2, &H, &trail->pos );
+            v.x = v2.v[0];
+            v.y = v2.v[1];
          } else {
             v.x = trail->pos.v[0] * dircos - trail->pos.v[1] * dirsin;
             v.y = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +

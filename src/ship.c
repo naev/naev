@@ -468,31 +468,51 @@ int ship_gfxLoadNeeded( void )
 /**
  * @brief Loads the graphics for a ship if necessary.
  *
- *    @param temp Ship to load into.
+ *    @param s Ship to load into.
  */
-int ship_gfxLoad( Ship *temp )
+int ship_gfxLoad( Ship *s )
 {
    char        str[PATH_MAX], *base, *delim, *base_path;
    const char *ext    = ".webp";
-   const char *buf    = temp->gfx_path;
-   int         sx     = temp->sx;
-   int         sy     = temp->sy;
-   int         engine = !temp->noengine;
+   const char *buf    = s->gfx_path;
+   int         sx     = s->sx;
+   int         sy     = s->sy;
+   int         engine = !s->noengine;
 
    /* If already loaded, just ignore. */
-   if ( ship_gfxLoaded( temp ) )
+   if ( ship_gfxLoaded( s ) )
       return 0;
 
    /* Get base path. */
    delim     = strchr( buf, '_' );
    base      = delim == NULL ? strdup( buf ) : strndup( buf, delim - buf );
-   base_path = ( temp->base_path != NULL ) ? temp->base_path : temp->base_type;
+   base_path = ( s->base_path != NULL ) ? s->base_path : s->base_type;
 
    /* Load the 3d model */
    snprintf( str, sizeof( str ), SHIP_3DGFX_PATH "%s/%s.gltf", base_path, buf );
    if ( PHYSFS_exists( str ) ) {
-      DEBUG( "Found 3D graphics for '%s' at '%s'!", temp->name, str );
-      temp->gfx_3d = gltf_loadFromFile( str );
+      DEBUG( "Found 3D graphics for '%s' at '%s'!", s->name, str );
+      s->gfx_3d = gltf_loadFromFile( str );
+
+      /* Replace trails if applicable. */
+      if ( array_size( s->gfx_3d->trails ) > 0 ) {
+         array_erase( &s->trail_emitters, array_begin( s->trail_emitters ),
+                      array_end( s->trail_emitters ) );
+         ship_setFlag( s, SHIP_3DTRAILS );
+
+         for ( int i = 0; i < array_size( s->gfx_3d->trails ); i++ ) {
+            GltfTrail       *t = &s->gfx_3d->trails[i];
+            ShipTrailEmitter trail;
+
+            /* New trail. */
+            trail.pos = t->pos;
+            vec3_scale( &trail.pos, s->size * 0.5 ); /* Convert to "pixels" */
+            trail.trail_spec = trailSpec_get( t->generator );
+
+            if ( trail.trail_spec != NULL )
+               array_push_back( &s->trail_emitters, trail );
+         }
+      }
    }
 
    /* Determine extension path. */
@@ -508,41 +528,40 @@ int ship_gfxLoad( Ship *temp )
    }
 
    /* Load the polygon. */
-   ship_loadPLG( temp, ( temp->polygon_path != NULL ) ? temp->polygon_path
-                                                      : temp->gfx_path );
+   ship_loadPLG( s,
+                 ( s->polygon_path != NULL ) ? s->polygon_path : s->gfx_path );
 
    /* If we have 3D and polygons, we'll ignore the 2D stuff. */
-   if ( ( temp->gfx_3d != NULL ) &&
-        ( array_size( temp->polygon.views ) > 0 ) ) {
+   if ( ( s->gfx_3d != NULL ) && ( array_size( s->polygon.views ) > 0 ) ) {
       free( base );
       return 0;
    }
 
    /* Get the comm graphic for future loading. */
-   if ( temp->gfx_comm == NULL )
-      SDL_asprintf( &temp->gfx_comm, SHIP_GFX_PATH "%s/%s" SHIP_COMM "%s", base,
+   if ( s->gfx_comm == NULL )
+      SDL_asprintf( &s->gfx_comm, SHIP_GFX_PATH "%s/%s" SHIP_COMM "%s", base,
                     buf, ext );
 
    /* Load the space sprite. */
-   ship_loadSpaceImage( temp, str, sx, sy );
+   ship_loadSpaceImage( s, str, sx, sy );
 
    /* Load the engine sprite .*/
    if ( engine ) {
       snprintf( str, sizeof( str ), SHIP_GFX_PATH "%s/%s" SHIP_ENGINE "%s",
                 base, buf, ext );
-      ship_loadEngineImage( temp, str, sx, sy );
-      if ( temp->gfx_engine == NULL )
-         WARN( _( "Ship '%s' does not have an engine sprite (%s)." ),
-               temp->name, str );
+      ship_loadEngineImage( s, str, sx, sy );
+      if ( s->gfx_engine == NULL )
+         WARN( _( "Ship '%s' does not have an engine sprite (%s)." ), s->name,
+               str );
    }
    free( base );
 
 #if DEBUGGING
-   if ( ( temp->gfx_space != NULL ) &&
-        ( round( temp->size ) != round( temp->gfx_space->sw ) ) )
+   if ( ( s->gfx_space != NULL ) &&
+        ( round( s->size ) != round( s->gfx_space->sw ) ) )
       WARN( ( "Mismatch between 'size' and 'gfx_space' sprite size for ship "
               "'%s'! 'size' should be %.0f!" ),
-            temp->name, temp->gfx_space->sw );
+            s->name, s->gfx_space->sw );
 #endif /* DEBUGGING */
 
    return 0;
@@ -768,9 +787,6 @@ static int ship_parse( Ship *temp, const char *filename )
    xmlr_attr_strd( parent, "name", temp->name );
    if ( temp->name == NULL )
       WARN( _( "Ship in %s has invalid or no name" ), SHIP_DATA_PATH );
-
-   /* Default offsets for the engine. */
-   temp->trail_emitters = NULL;
 
    /* Load the rest of the data. */
    node = parent->xmlChildrenNode;
