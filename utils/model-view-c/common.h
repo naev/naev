@@ -18,6 +18,7 @@
 #define SCREEN_H  1024
 
 #define _(String) String
+#define p_(note,String) String
 #define gl_checkErr()   gl_checkHandleError( __func__, __LINE__ )
 void gl_checkHandleError( const char *func, int line );
 
