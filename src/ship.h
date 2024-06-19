@@ -9,6 +9,7 @@
 #include "opengl.h"
 #include "outfit.h"
 #include "spfx.h"
+#include "vec3.h"
 
 /* Ship Flags. */
 #define SHIP_NOPLAYER                                                          \
@@ -20,6 +21,7 @@
    ( 1 << 2 ) /**< Ship is unique and player can only have one. */
 #define SHIP_NEEDSGFX ( 1 << 3 ) /**< Ship needs to load graphics. */
 #define SHIP_3DTRAILS ( 1 << 4 ) /**< Ship is using 3D trails. */
+#define SHIP_3DMOUNTS ( 1 << 5 ) /**< Ship is using 3D mounts. */
 #define ship_isFlag( s, f ) ( ( s )->flags & ( f ) )   /**< Checks ship flag. */
 #define ship_setFlag( s, f ) ( ( s )->flags |= ( f ) ) /**< Sets ship flag. */
 #define ship_rmFlag( s, f )                                                    \
@@ -59,9 +61,7 @@ typedef enum ShipClass_ {
  * @brief Represents a ship weapon mount point.
  */
 typedef struct ShipMount_ {
-   double x; /**< X position of the mount point. */
-   double y; /**< Y position of the mount point. */
-   double h; /**< Mount point height (displacement). */
+   vec3 pos; /**< Mount position. */
 } ShipMount;
 
 /**

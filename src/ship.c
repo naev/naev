@@ -678,12 +678,12 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot,
 
    /* Get mount point for weapons. */
    if ( type == OUTFIT_SLOT_WEAPON ) {
-      xmlr_attr_float( node, "x", slot->mount.x );
-      xmlr_attr_float( node, "y", slot->mount.y );
+      xmlr_attr_float( node, "x", slot->mount.pos.v[0] );
+      xmlr_attr_float( node, "y", slot->mount.pos.v[1] );
       /* Since we measure in pixels, we have to modify it so it
        *  doesn't get corrected by the ortho correction. */
-      slot->mount.y *= M_SQRT2;
-      xmlr_attr_float( node, "h", slot->mount.h );
+      slot->mount.pos.v[1] *= M_SQRT2;
+      xmlr_attr_float( node, "h", slot->mount.pos.v[2] );
    }
 
    /* Parse property. */

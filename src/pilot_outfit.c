@@ -163,34 +163,37 @@ void pilot_lockClear( Pilot *p )
  */
 int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
 {
-   double           a, x, y;
-   double           cm, sm;
-   const ShipMount *m;
+   double           x, y;
+   const ShipMount *m = &w->sslot->mount;
 
-   /* Calculate the sprite angle. */
-   a = p->solid.dir;
+   if ( ship_isFlag( p->ship, SHIP_3DMOUNTS ) ) {
+      /* TODO. */
+      x = y = 0.;
+   } else {
+      double a, cm, sm;
+      /* Calculate the sprite angle. */
+      a = p->solid.dir;
 
-   /* 2d rotation matrix
-    * [ x' ]   [  cos  sin  ]   [ x ]
-    * [ y' ] = [ -sin  cos  ] * [ y ]
-    *
-    * dir is inverted so that rotation is counter-clockwise.
-    */
-   m  = &w->sslot->mount;
-   cm = cos( -a );
-   sm = sin( -a );
-   x  = m->x * cm + m->y * sm;
-   y  = m->x * -sm + m->y * cm;
+      /* 2d rotation matrix
+       * [ x' ]   [  cos  sin  ]   [ x ]
+       * [ y' ] = [ -sin  cos  ] * [ y ]
+       *
+       * dir is inverted so that rotation is counter-clockwise.
+       */
+      cm = cos( -a );
+      sm = sin( -a );
+      x  = m->pos.v[0] * cm + m->pos.v[1] * sm;
+      y  = m->pos.v[0] * -sm + m->pos.v[1] * cm;
 
-   /* Correction for ortho perspective. */
-   y *= M_SQRT1_2;
+      /* Correction for ortho perspective. */
+      y *= M_SQRT1_2;
 
-   /* Don't forget to add height. */
-   y += m->h;
+      /* Don't forget to add height. */
+      y += m->pos.v[2];
+   }
 
    /* Get the mount and add the player.p offset. */
    vec2_cset( v, x, y );
-
    return 0;
 }
 
