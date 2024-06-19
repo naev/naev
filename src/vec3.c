@@ -16,6 +16,12 @@ void vec3_print( const vec3 *v )
    printf( "\n" );
 }
 
+void vec3_copy( vec3 *o, const vec3 *i )
+{
+   for ( int j = 0; j < 3; j++ )
+      o->v[j] = i->v[j];
+}
+
 /**
  * @brief Adds two vectors together (out = a + b).
  *
