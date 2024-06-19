@@ -511,6 +511,23 @@ int ship_gfxLoad( Ship *s )
                array_push_back( &s->trail_emitters, trail );
          }
       }
+
+      if ( array_size( s->gfx_3d->mounts ) > 0 ) {
+         int n = array_size( s->gfx_3d->mounts );
+
+         ship_setFlag( s, SHIP_3DMOUNTS );
+         if ( array_size( s->gfx_3d->mounts ) !=
+              array_size( s->outfit_weapon ) )
+            WARN( _( "Number of 3D weapon mounts from GLTF file do not match "
+                     "ship weapons!" ) );
+
+         for ( int i = 0; i < array_size( s->outfit_weapon ); i++ ) {
+            ShipMount *sm = &s->outfit_weapon[i].mount;
+            vec3_copy( &sm->pos,
+                       &s->gfx_3d->mounts[i % n].pos ); /* Loop over. */
+            vec3_scale( &sm->pos, s->size * 0.5 ); /* Convert to "pixels" */
+         }
+      }
    }
 
    /* Determine extension path. */
