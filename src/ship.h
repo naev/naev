@@ -172,9 +172,6 @@ typedef struct Ship_ {
    Outfit const  **outfit_intrinsic; /**< Array (array.h): Intrinsic outfits to
                                         start out with. */
 
-   /* Mounts */
-   double mangle; /**< Mount angle to simplify mount calculations. */
-
    /* Statistics. */
    char         *desc_stats;  /**< Ship statistics information. */
    ShipStatList *stats;       /**< Ship statistics properties. */

@@ -421,8 +421,6 @@ static int ship_loadSpaceImage( Ship *temp, const char *str, int sx, int sy )
    if ( array_size( temp->polygon.views ) <= 0 )
       flags |= OPENGL_TEX_MAPTRANS;
    temp->gfx_space = gl_newSprite( str, sx, sy, flags );
-   /* Calculate mount angle. */
-   temp->mangle = 2. * M_PI / (double)( sx * sy );
    return 0;
 }
 
