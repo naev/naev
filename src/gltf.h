@@ -13,7 +13,6 @@
 #define MAX_LIGHTS                                                             \
    5 /**< Maximum amount of lights. TODO deferred rendering.                   \
       */
-#define SHADOWMAP_SIZE 128 /**< Size of the shadow map. */
 
 typedef struct Texture {
    GLuint  tex;

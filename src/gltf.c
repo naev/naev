@@ -29,6 +29,9 @@
 #include "mat3.h"
 #include "vec3.h"
 
+#define SHADOWMAP_SIZE_LOW 128  /**< Size of the shadow map. */
+#define SHADOWMAP_SIZE_HIGH 512 /**< High resolution shadowmap size. */
+
 /* Horrible hack that turns a variable name into a string. */
 #define STR_HELPER( x ) #x
 #define STR( x ) STR_HELPER( x )
@@ -121,11 +124,19 @@ const Lighting L_store_const = {
 Lighting      L_default;
 static double light_intensity = 1.;
 
-static GLuint light_fbo[MAX_LIGHTS]; /**< FBO correpsonding to the light. */
-static GLuint light_tex[MAX_LIGHTS]; /**< Texture corresponding to the light. */
-static mat4   light_mat_def[MAX_LIGHTS]; /**< Shadow matrices. */
-static mat4   light_mat_alt[MAX_LIGHTS];
-static mat4  *light_mat = light_mat_def;
+static GLuint light_fbo_low[MAX_LIGHTS]; /**< FBO correpsonding to the light. */
+static GLuint
+   light_tex_low[MAX_LIGHTS]; /**< Texture corresponding to the light. */
+static GLuint light_fbo_high[MAX_LIGHTS]; /**< FBO correpsonding to the light,
+                                             with high resolution. */
+static GLuint light_tex_high[MAX_LIGHTS]; /**< Texture corresponding to the
+                                             light with high resolution. */
+static GLuint  shadowmap_size = SHADOWMAP_SIZE_LOW;
+static GLuint *light_fbo      = light_fbo_low;
+static GLuint *light_tex      = light_tex_low;
+static mat4    light_mat_def[MAX_LIGHTS]; /**< Shadow matrices. */
+static mat4    light_mat_alt[MAX_LIGHTS];
+static mat4   *light_mat = light_mat_def;
 
 /**
  * @brief Shader to use witha material.
@@ -178,11 +189,15 @@ static Texture tex_zero = {
 static Texture tex_ones = { .tex = 0, .texcoord = 0, .strength = 1. };
 
 /* Below here are for blurring purposes. */
-static GLuint shadow_vbo;
-static GLuint shadow_fbo;
-static GLuint shadow_tex;
-static Shader shadow_shader_blurX;
-static Shader shadow_shader_blurY;
+static GLuint  shadow_vbo;
+static GLuint  shadow_fbo_low;
+static GLuint  shadow_fbo_high;
+static GLuint  shadow_tex_low;
+static GLuint  shadow_tex_high;
+static GLuint *shadow_fbo = &shadow_fbo_low;
+static GLuint *shadow_tex = &shadow_tex_low;
+static Shader  shadow_shader_blurX;
+static Shader  shadow_shader_blurY;
 
 /* Options. */
 static int use_normal_mapping    = 1;
@@ -1051,7 +1066,7 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H,
    /* Set up the shadow map and render. */
    glBindFramebuffer( GL_FRAMEBUFFER, light_fbo[i] );
    glClear( GL_DEPTH_BUFFER_BIT );
-   glViewport( 0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE );
+   glViewport( 0, 0, shadowmap_size, shadowmap_size );
 
    /* Set up shader. */
    glUseProgram( shd->program );
@@ -1067,7 +1082,7 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H,
     * passes. */
    /* First pass for X. */
    shd = &shadow_shader_blurX;
-   glBindFramebuffer( GL_FRAMEBUFFER, shadow_fbo );
+   glBindFramebuffer( GL_FRAMEBUFFER, *shadow_fbo );
    glClear( GL_DEPTH_BUFFER_BIT );
    glUseProgram( shd->program );
 
@@ -1092,7 +1107,7 @@ static void gltf_renderShadow( const GltfObject *obj, int scene, const mat4 *H,
    glEnableVertexAttribArray( shd->vertex );
 
    glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE_2D, shadow_tex );
+   glBindTexture( GL_TEXTURE_2D, *shadow_tex );
 
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    /* Clean up. */
@@ -1250,6 +1265,21 @@ void gltf_renderScene( GLuint fb, GltfObject *obj, int scene, const mat4 *H,
                                    { 0.0, 0.0, -sca, 0.0 },
                                    { 0.0, 0.0, 0.0, 1.0 } } };
    mat4          Hptr;
+
+   /* Choose lighting stuff based on size. */
+   if ( size > 300. ) {
+      shadowmap_size = SHADOWMAP_SIZE_HIGH;
+      light_fbo      = light_fbo_high;
+      light_tex      = light_tex_high;
+      shadow_fbo     = &shadow_fbo_high;
+      shadow_tex     = &shadow_tex_high;
+   } else {
+      shadowmap_size = SHADOWMAP_SIZE_LOW;
+      light_fbo      = light_fbo_low;
+      light_tex      = light_tex_low;
+      shadow_fbo     = &shadow_fbo_low;
+      shadow_tex     = &shadow_tex_low;
+   }
 
    /* Apply scaling. */
    if ( H == NULL )
@@ -1695,9 +1725,8 @@ int gltf_init( void )
    const GLfloat b[4]         = { 1., 1., 1., 1. };
    GLenum        status;
    Shader       *shd;
-   const char   *prepend_fix = "#define MAX_LIGHTS " STR(
-      MAX_LIGHTS ) "\n#define SHADOWMAP_SIZE " STR( SHADOWMAP_SIZE ) "\n";
-   char prepend[STRMAX];
+   const char   *prepend_fix = "#define MAX_LIGHTS " STR( MAX_LIGHTS ) "\n";
+   char          prepend[STRMAX];
 
    /* Set up default lighting. */
    L_default = L_default_const;
@@ -1736,36 +1765,27 @@ int gltf_init( void )
    glBufferData( GL_ARRAY_BUFFER, sizeof( GLfloat ) * 8, vbo_data,
                  GL_STATIC_DRAW );
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
-   /* Gen the texture. */
-   glGenTextures( 1, &shadow_tex );
-   glBindTexture( GL_TEXTURE_2D, shadow_tex );
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, SHADOWMAP_SIZE,
-                 SHADOWMAP_SIZE, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL );
-   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
-   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );
-   glTexParameterfv( GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, b );
-   glBindTexture( GL_TEXTURE_2D, 0 );
-   /* Set up shadow buffer FBO. */
-   glGenFramebuffers( 1, &shadow_fbo );
-   glBindFramebuffer( GL_FRAMEBUFFER, shadow_fbo );
-   glFramebufferTexture2D( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
-                           shadow_tex, 0 );
-   glDrawBuffer( GL_NONE );
-   glReadBuffer( GL_NONE );
-   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
-   status = glCheckFramebufferStatus( GL_FRAMEBUFFER );
-   if ( status != GL_FRAMEBUFFER_COMPLETE )
-      WARN( _( "Error setting up shadowmap framebuffer!" ) );
 
-   glGenTextures( MAX_LIGHTS, light_tex );
-   glGenFramebuffers( MAX_LIGHTS, light_fbo );
-   for ( int i = 0; i < MAX_LIGHTS; i++ ) {
-      /* Set up shadow buffer depth tex. */
-      glBindTexture( GL_TEXTURE_2D, light_tex[i] );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, SHADOWMAP_SIZE,
-                    SHADOWMAP_SIZE, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL );
+   for ( int l = 0; l < 2; l++ ) {
+      if ( l == 0 ) {
+         shadowmap_size = SHADOWMAP_SIZE_LOW;
+         light_fbo      = light_fbo_low;
+         light_tex      = light_tex_low;
+         shadow_fbo     = &shadow_fbo_low;
+         shadow_tex     = &shadow_tex_low;
+      } else {
+         shadowmap_size = SHADOWMAP_SIZE_HIGH;
+         light_fbo      = light_fbo_high;
+         light_tex      = light_tex_high;
+         shadow_fbo     = &shadow_fbo_high;
+         shadow_tex     = &shadow_tex_high;
+      }
+
+      /* Gen the texture. */
+      glGenTextures( 1, shadow_tex );
+      glBindTexture( GL_TEXTURE_2D, *shadow_tex );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, shadowmap_size,
+                    shadowmap_size, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL );
       glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
       glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
       glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
@@ -1773,15 +1793,44 @@ int gltf_init( void )
       glTexParameterfv( GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, b );
       glBindTexture( GL_TEXTURE_2D, 0 );
       /* Set up shadow buffer FBO. */
-      glBindFramebuffer( GL_FRAMEBUFFER, light_fbo[i] );
+      glGenFramebuffers( 1, shadow_fbo );
+      glBindFramebuffer( GL_FRAMEBUFFER, *shadow_fbo );
       glFramebufferTexture2D( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-                              GL_TEXTURE_2D, light_tex[i], 0 );
+                              GL_TEXTURE_2D, *shadow_tex, 0 );
       glDrawBuffer( GL_NONE );
       glReadBuffer( GL_NONE );
       glBindFramebuffer( GL_FRAMEBUFFER, 0 );
       status = glCheckFramebufferStatus( GL_FRAMEBUFFER );
       if ( status != GL_FRAMEBUFFER_COMPLETE )
          WARN( _( "Error setting up shadowmap framebuffer!" ) );
+
+      /* Now generate the light maps .*/
+      glGenTextures( MAX_LIGHTS, light_tex );
+      glGenFramebuffers( MAX_LIGHTS, light_fbo );
+      for ( int i = 0; i < MAX_LIGHTS; i++ ) {
+         /* Set up shadow buffer depth tex. */
+         glBindTexture( GL_TEXTURE_2D, light_tex[i] );
+         glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, shadowmap_size,
+                       shadowmap_size, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL );
+         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+                          GL_CLAMP_TO_BORDER );
+         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+                          GL_CLAMP_TO_BORDER );
+         glTexParameterfv( GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, b );
+         glBindTexture( GL_TEXTURE_2D, 0 );
+         /* Set up shadow buffer FBO. */
+         glBindFramebuffer( GL_FRAMEBUFFER, light_fbo[i] );
+         glFramebufferTexture2D( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                                 GL_TEXTURE_2D, light_tex[i], 0 );
+         glDrawBuffer( GL_NONE );
+         glReadBuffer( GL_NONE );
+         glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+         status = glCheckFramebufferStatus( GL_FRAMEBUFFER );
+         if ( status != GL_FRAMEBUFFER_COMPLETE )
+            WARN( _( "Error setting up shadowmap framebuffer!" ) );
+      }
    }
 
    /* Compile the shadow shader. */
@@ -1907,10 +1956,14 @@ void gltf_exit( void )
       return;
 
    glDeleteBuffers( 1, &shadow_vbo );
-   glDeleteTextures( 1, &shadow_tex );
-   glDeleteFramebuffers( 1, &shadow_fbo );
-   glDeleteTextures( MAX_LIGHTS, light_tex );
-   glDeleteFramebuffers( MAX_LIGHTS, light_fbo );
+   glDeleteTextures( 1, &shadow_tex_high );
+   glDeleteTextures( 1, &shadow_tex_low );
+   glDeleteFramebuffers( 1, &shadow_fbo_high );
+   glDeleteFramebuffers( 1, &shadow_fbo_low );
+   glDeleteTextures( MAX_LIGHTS, light_tex_low );
+   glDeleteFramebuffers( MAX_LIGHTS, light_fbo_low );
+   glDeleteTextures( MAX_LIGHTS, light_tex_high );
+   glDeleteFramebuffers( MAX_LIGHTS, light_fbo_high );
    glDeleteTextures( 1, &tex_zero.tex );
    glDeleteTextures( 1, &tex_ones.tex );
    glDeleteProgram( gltf_shader.program );
