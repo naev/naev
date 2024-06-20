@@ -489,7 +489,7 @@ int ship_gfxLoad( Ship *s )
    /* Load the 3d model */
    snprintf( str, sizeof( str ), SHIP_3DGFX_PATH "%s/%s.gltf", base_path, buf );
    if ( PHYSFS_exists( str ) ) {
-      DEBUG( "Found 3D graphics for '%s' at '%s'!", s->name, str );
+      // DEBUG( "Found 3D graphics for '%s' at '%s'!", s->name, str );
       s->gfx_3d = gltf_loadFromFile( str );
 
       /* Replace trails if applicable. */
