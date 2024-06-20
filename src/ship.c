@@ -512,12 +512,12 @@ int ship_gfxLoad( Ship *s )
          }
       }
 
+      /* Replace mount points if applicable. */
       if ( array_size( s->gfx_3d->mounts ) > 0 ) {
          int n = array_size( s->gfx_3d->mounts );
 
          ship_setFlag( s, SHIP_3DMOUNTS );
-         if ( array_size( s->gfx_3d->mounts ) !=
-              array_size( s->outfit_weapon ) )
+         if ( n != array_size( s->outfit_weapon ) )
             WARN( _( "Number of 3D weapon mounts from GLTF file do not match "
                      "ship weapons!" ) );
 
@@ -526,6 +526,7 @@ int ship_gfxLoad( Ship *s )
             vec3_copy( &sm->pos,
                        &s->gfx_3d->mounts[i % n].pos ); /* Loop over. */
             vec3_scale( &sm->pos, s->size * 0.5 ); /* Convert to "pixels" */
+            vec3_print( &sm->pos );
          }
       }
    }

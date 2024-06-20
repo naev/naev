@@ -182,26 +182,12 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
       x = v2.v[0];
       y = v2.v[1];
    } else {
-      double a, cm, sm;
-      /* Calculate the sprite angle. */
-      a = p->solid.dir;
-
-      /* 2d rotation matrix
-       * [ x' ]   [  cos  sin  ]   [ x ]
-       * [ y' ] = [ -sin  cos  ] * [ y ]
-       *
-       * dir is inverted so that rotation is counter-clockwise.
-       */
-      cm = cos( -a );
-      sm = sin( -a );
-      x  = m->pos.v[0] * cm + m->pos.v[1] * sm;
-      y  = m->pos.v[0] * -sm + m->pos.v[1] * cm;
-
-      /* Correction for ortho perspective. */
+      double cm, sm;
+      cm = cos( p->solid.dir );
+      sm = sin( p->solid.dir );
+      x  = m->pos.v[0] * cm - m->pos.v[1] * sm;
+      y  = m->pos.v[0] * sm + m->pos.v[1] * cm + m->pos.v[2];
       y *= M_SQRT1_2;
-
-      /* Don't forget to add height. */
-      y += m->pos.v[2];
    }
 
    /* Get the mount and add the player.p offset. */
