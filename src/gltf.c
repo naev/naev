@@ -1429,6 +1429,17 @@ static int cmp_mount( const void *p1, const void *p2 )
    const GltfMount *m2 = p2;
    return m1->id - m2->id;
 }
+static int cmp_trail( const void *p1, const void *p2 )
+{
+   const GltfTrail *t1 = p1;
+   const GltfTrail *t2 = p2;
+   double           d  = t1->pos.v[1] - t2->pos.v[1];
+   if ( d < 0. )
+      return -1;
+   else if ( d > 0. )
+      return +1;
+   return 0;
+}
 
 static const char *gltf_error_str( cgltf_result result )
 {
@@ -1590,10 +1601,16 @@ GltfObject *gltf_loadFromFile( const char *filename )
    cmp_obj = NULL; /* No more comparisons. */
 
    /* Some post-processing. */
+   /* Sort trails from lowest to highest so they get properly ordered in-game.
+    */
+   qsort( obj->trails, array_size( obj->trails ), sizeof( GltfTrail ),
+          cmp_trail );
    for ( int i = 0; i < array_size( obj->trails ); i++ ) {
       GltfTrail *t = &obj->trails[i];
+      vec3_print( &t->pos );
       vec3_scale( &t->pos, 1. / obj->radius );
    }
+   /* Sort mounts to match ids. */
    qsort( obj->mounts, array_size( obj->mounts ), sizeof( GltfMount ),
           cmp_mount );
    for ( int i = 0; i < array_size( obj->mounts ); i++ ) {
