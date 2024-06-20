@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Phosarrus">
- <lua>highclass.lua</lua>
+ <lua>spob/lua/spob/lua/highclass.lua</lua>
  <pos x="-7220.963621" y="1126.205335"/>
  <GFX>
   <space>M02.webp</space>

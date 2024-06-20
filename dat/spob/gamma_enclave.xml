@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gamma Enclave">
- <lua>empire_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/empire_mil_restricted.lua</lua>
  <pos x="9473.428340" y="-2769.258058"/>
  <GFX>
   <space>002.webp</space>

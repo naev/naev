@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Majesteka Prime">
- <lua>dvaered_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="6862.430386" y="-3603.734393"/>
  <GFX>
   <space>M25.webp</space>

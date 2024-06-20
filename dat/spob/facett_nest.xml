@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Facett Nest">
- <lua>soromid_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="-5141.467977" y="-9293.620418"/>
  <GFX>
   <space>station-fleetbase2.webp</space>

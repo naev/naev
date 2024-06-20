@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ummula">
- <lua>highclass.lua</lua>
+ <lua>spob/lua/spob/lua/highclass.lua</lua>
  <pos x="13539.716197" y="1770.971587"/>
  <GFX>
   <space>M01.webp</space>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="New Haven">
- <lua>pirate_clanworld.lua</lua>
+ <lua>spob/lua/spob/lua/pirate_clanworld.lua</lua>
  <pos x="-29845.859288" y="4223.363841"/>
  <GFX>
   <space>X01.webp</space>

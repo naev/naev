@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Amphion">
- <lua>lowclass.lua</lua>
+ <lua>spob/lua/spob/lua/lowclass.lua</lua>
  <pos x="6123.453755" y="2327.102217"/>
  <GFX>
   <space>P01.webp</space>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="The Stinker">
- <lua>lowclass.lua</lua>
+ <lua>spob/lua/spob/lua/lowclass.lua</lua>
  <pos x="-319.479999" y="-1022.335998"/>
  <GFX>
   <space>X01.webp</space>

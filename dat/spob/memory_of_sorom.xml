@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Memory of Sorom">
- <lua>soromid_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="7378.896977" y="-6488.413784"/>
  <GFX>
   <space>station-fleetbase.webp</space>

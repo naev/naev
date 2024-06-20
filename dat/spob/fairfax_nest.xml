@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fairfax Nest">
- <lua>soromid_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="1670.614163" y="4658.343787"/>
  <GFX>
   <space>station-fleetbase2.webp</space>

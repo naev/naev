@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Aldous">
- <lua>lowclass.lua</lua>
+ <lua>spob/lua/spob/lua/lowclass.lua</lua>
  <pos x="3801.811993" y="-6006.223988"/>
  <GFX>
   <space>S00.webp</space>

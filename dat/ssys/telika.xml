@@ -18,6 +18,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Kartelle">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Leporis">
    <autopos/>
    <hide>1.000000</hide>

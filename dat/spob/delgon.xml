@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Delgon">
+ <lua>default.lua</lua>
+ <pos x="-5718.691989" y="4217.135992"/>
+ <GFX>
+  <space>M23.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <base>60.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>10000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Another of the Proteron mining worlds, this world is largely mined by nanobots that the Proteron to send from space, and that suits them down to the ground.</description>
+  <bar>An orbital station, its quick orbit lets you see both the strip-mined and the forested areas of Delgon in a dizzying hour. There are a few engineers in the bar, supervising the performance of their bot swarms and algorithms.</bar>
+ </general>
+ <tags>
+  <tag>mining</tag>
+ </tags>
+</spob>

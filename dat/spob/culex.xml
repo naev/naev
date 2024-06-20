@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Culex">
- <lua>lowclass.lua</lua>
+ <lua>spob/lua/spob/lua/lowclass.lua</lua>
  <pos x="-17337.694408" y="-16625.248069"/>
  <GFX>
   <space>moon-M06.webp</space>

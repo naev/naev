@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Marauder Citadel">
- <lua>dvaered_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="4769.810832" y="3378.616006"/>
  <GFX>
   <space>station-dvaered1.webp</space>

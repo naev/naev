@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Turawee">
- <lua>highclass.lua</lua>
+ <lua>spob/lua/spob/lua/highclass.lua</lua>
  <pos x="16925.367382" y="4758.979987"/>
  <GFX>
   <space>M02.webp</space>

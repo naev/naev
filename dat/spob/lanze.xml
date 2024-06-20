@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Lanze">
- <lua>highclass.lua</lua>
+ <lua>spob/lua/spob/lua/highclass.lua</lua>
  <pos x="9650.958314" y="5346.852767"/>
  <GFX>
   <space>M01.webp</space>

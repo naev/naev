@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Marius Enclave">
- <lua>empire_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/empire_mil_restricted.lua</lua>
  <pos x="-6450.889110" y="8554.815028"/>
  <GFX>
   <space>station-battlestation.webp</space>

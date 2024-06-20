@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hubfar Citadel">
- <lua>dvaered_mil_restricted.lua</lua>
+ <lua>spob/lua/spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="-1341.815997" y="2683.631995"/>
  <GFX>
   <space>station-fleetbase4.webp</space>

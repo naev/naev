@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Poller Mass">
- <lua>poller_mass.lua</lua>
+ <lua>spob/lua/spob/lua/poller_mass.lua</lua>
  <pos x="-6830.659875" y="-6470.534921"/>
  <GFX>
   <space>C01.webp</space>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Lora-Mor">
- <lua>highclass.lua</lua>
+ <lua>spob/lua/spob/lua/highclass.lua</lua>
  <pos x="12004.532136" y="-6382.199194"/>
  <GFX>
   <space>moon-M02.webp</space>
