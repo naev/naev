@@ -2139,15 +2139,7 @@ void pilot_render( Pilot *p )
 
       /* Use 3D to compute trail stuff. */
       if ( use_3d ) {
-         H = mat4_identity();
-         // H.m[2][2] = -1.;
-         if ( fabs( p->tilt ) > DOUBLE_TOL ) {
-            mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
-            mat4_rotate( &H, p->tilt, 1.0, 0.0, 0.0 );
-            mat4_rotate( &H, -p->solid.dir, 0.0, 1.0, 0.0 );
-         } else
-            mat4_rotate( &H, -p->solid.dir + M_PI_2, 0.0, 1.0, 0.0 );
-         mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
+         H = pilot_local_transform( p );
       } else {
          dircos = cos( p->solid.dir );
          dirsin = sin( p->solid.dir );
@@ -2863,15 +2855,7 @@ void pilot_sample_trails( Pilot *p, int none )
 
    use_3d = ship_isFlag( p->ship, SHIP_3DTRAILS );
    if ( use_3d ) {
-      H = mat4_identity();
-      // H.m[2][2] = -1.;
-      if ( fabs( p->tilt ) > DOUBLE_TOL ) {
-         mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
-         mat4_rotate( &H, p->tilt, 1.0, 0.0, 0.0 );
-         mat4_rotate( &H, -p->solid.dir, 0.0, 1.0, 0.0 );
-      } else
-         mat4_rotate( &H, -p->solid.dir + M_PI_2, 0.0, 1.0, 0.0 );
-      mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
+      H = pilot_local_transform( p );
    } else {
       dircos = cos( p->solid.dir );
       dirsin = sin( p->solid.dir );
@@ -4482,6 +4466,27 @@ credits_t pilot_worth( const Pilot *p, int count_unique )
    }
 
    return price;
+}
+
+/**
+ * @brief Gets the local transformation matrix of a pilot.
+ *
+ * Useful for transforming mount points or other objects on the pilot.
+ *
+ *    @param p Pilot to get local 3D transformation.
+ *    @return The local 3D transformation.
+ */
+mat4 pilot_local_transform( const Pilot *p )
+{
+   mat4 H = mat4_identity();
+   if ( fabs( p->tilt ) > DOUBLE_TOL ) {
+      mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
+      mat4_rotate( &H, p->tilt, 1.0, 0.0, 0.0 );
+      mat4_rotate( &H, -p->solid.dir, 0.0, 1.0, 0.0 );
+   } else
+      mat4_rotate( &H, -p->solid.dir + M_PI_2, 0.0, 1.0, 0.0 );
+   mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
+   return H;
 }
 
 /**

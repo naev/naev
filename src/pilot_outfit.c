@@ -168,16 +168,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
 
    if ( ship_isFlag( p->ship, SHIP_3DMOUNTS ) ) {
       vec3 v2;
-      mat4 H = mat4_identity();
-      // H.m[2][2] = -1.;
-      if ( fabs( p->tilt ) > DOUBLE_TOL ) {
-         mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
-         mat4_rotate( &H, p->tilt, 1.0, 0.0, 0.0 );
-         mat4_rotate( &H, -p->solid.dir, 0.0, 1.0, 0.0 );
-      } else
-         mat4_rotate( &H, -p->solid.dir + M_PI_2, 0.0, 1.0, 0.0 );
-      mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
-
+      mat4 H = pilot_local_transform( p );
       mat4_mul_vec( &v2, &H, &m->pos );
       x = v2.v[0];
       y = v2.v[1];

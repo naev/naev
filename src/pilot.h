@@ -572,6 +572,7 @@ int  pilot_isFriendly( const Pilot *p );
 char pilot_getFactionColourChar( const Pilot *p );
 
 /* Misc details. */
+mat4    pilot_local_transform( const Pilot *p );
 void    pilot_msg( const Pilot *p, const Pilot *receiver, const char *type,
                    unsigned int index );
 void    pilot_clearTrails( Pilot *p );
