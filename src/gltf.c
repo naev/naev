@@ -1607,7 +1607,6 @@ GltfObject *gltf_loadFromFile( const char *filename )
           cmp_trail );
    for ( int i = 0; i < array_size( obj->trails ); i++ ) {
       GltfTrail *t = &obj->trails[i];
-      vec3_print( &t->pos );
       vec3_scale( &t->pos, 1. / obj->radius );
    }
    /* Sort mounts to match ids. */
