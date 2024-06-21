@@ -440,6 +440,28 @@ vec4 trail_split( vec4 colour, vec2 pos_tex, vec2 pos_px )
    return colour;
 }
 
+TRAIL_FUNC_PROTOTYPE
+vec4 trail_pale( vec4 color, vec2 pos_tex, vec2 pos_px )
+{
+   float m;
+
+   // Modulate alpha base on length
+   color.a *= fastdropoff( pos_tex.x, 1.0 );
+
+   // Modulate alpha based on dispersion
+   m = 0.5 + 0.5*impulse( 1.0-pos_tex.x, 30.0 );
+
+   // Modulate width
+   color.a *= smoothbeam( pos_tex.y, m );
+
+   // Pulse effect
+   float v = smoothstep( 0.0, 0.5, 1.0-pos_tex.x );
+   color.rgb += m;
+   color.a *=  0.8 + 0.2 * mix( 1.0, sin( 2.0*M_PI * (0.02 * pos_px.x + dt * 2.0) ), v );
+
+   return color;
+}
+
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec4 color_out;
@@ -464,6 +486,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       color_out = trail_bubbles( color, pos, pos_px );
    else if (type==7)
       color_out = trail_split( color, pos, pos_px );
+   else if (type==8)
+      color_out = trail_pale( color, pos, pos_px );
    else
       color_out = trail_default( color, pos, pos_px );
 
@@ -498,6 +522,10 @@ local function set_shader( num )
       shader_color = { 0.9, 0.1, 0.4, 0.7 }
    elseif shader_type == 6 then -- soromid
       shader_color = { 0.5, 0.9, 0.2, 0.7 }
+   elseif shader_type == 7 then -- proteron
+      shader_color = { 0.76, 0.27, 0.86, 0.7 }
+   elseif shader_type == 8 then -- thurion
+      shader_color = { 0.7, 1.0, 1.0, 0.7 }
    else -- default
       shader_color = { 0, 1, 1, 0.7 }
    end
