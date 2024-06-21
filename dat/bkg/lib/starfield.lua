@@ -17,10 +17,10 @@ starfield.stars = {
    { i="blue04.webp",     r=colour.new(0.83, 0.93, 1.00, 5) },
    { i="green01.webp",    r=colour.new(0.80, 0.97, 0.78, 5) },
    { i="green02.webp",    r=colour.new(0.89, 0.98, 0.86, 5) },
-   { i="orange01.webp",   r=colour.new(0.94, 0.50, 0.20, 5) }, -- r=colour.new(0.94, 0.30, 0.00, 8) }, Too red otherwise
+   { i="orange01.webp",   r=colour.new(0.94, 0.70, 0.50, 5) }, -- r=colour.new(0.94, 0.30, 0.00, 8) }, Too red otherwise
    { i="orange02.webp",   r=colour.new(1.00, 0.90, 0.67, 5) },
    { i="orange05.webp",   r=colour.new(0.98, 0.86, 0.45, 5) },
-   { i="redgiant01.webp", r=colour.new(0.78, 0.50, 0.50, 5) }, -- r=colour.new(0.57, 0.00, 0.00, 8) }, Too red otherwise
+   { i="redgiant01.webp", r=colour.new(0.78, 0.60, 0.60, 5) }, -- r=colour.new(0.57, 0.00, 0.00, 8) }, Too red otherwise
    --{ i="redgiant02.webp", r=colour.new(0.82, 0.53, 0.26, 5) }, -- Unused
    { i="white01.webp",    r=colour.new(0.68, 0.91, 0.96, 5) },
    { i="white02.webp",    r=colour.new(0.89, 0.92, 0.96, 5) },
@@ -60,12 +60,15 @@ local function star_add( added, num_added )
    local move  = 0.02 + nmove
    local scale = 1.0 - (1 - nmove/0.2)/5
    scale = scale * 0.75
+   -- Normalize the radiosity so all stars are same brightness for same value of rad and equivalent to white light
+   local cr, cg, cb = data.r:rgb()
+   local cn = math.sqrt( cr*cr + cg*cg + cb*cb )
+   local rad = colour.new( cr, cg, cb, data.r:alpha() / cn * math.sqrt(3) )
    -- Now, none of this makes sense, the "star dust" should be rendered on top
    -- of the star because it moves faster the stars and should be closer,
    -- however, it seems like this is actually a bit jarring, even though it's
    -- more correct, so we just mess things up and make the star render in front
    -- of the space dust. Has to move faster than the nebula to not be really really weird.
-   local rad = data.r
    bkg.image( img, x, y, move, scale, nil, nil, true, rad )
    return num
 end
@@ -76,13 +79,13 @@ local function add_local_stars ()
    local r = prng:random()
    if r > 0.97 then
       n = 3
-      gfx.lightIntensity( 0.06 ) -- sun gives 3*6*0.06 = 1.08
+      gfx.lightIntensity( 0.18 ) -- sun gives 3*4*0.18 =  2.16
    elseif r > 0.94 then
       n = 2
-      gfx.lightIntensity( 0.10 ) -- sun gives 2*6*0.10 = 1.2
+      gfx.lightIntensity( 0.25 ) -- sun gives 2*4*0.25 = 2
    elseif r > 0.1 then
       n = 1
-      gfx.lightIntensity( 0.25 ) -- sun gives 6*0.25 = 1.5
+      gfx.lightIntensity( 0.5 ) -- sun gives 1*4*0.5 = 2
       gfx.lightAmbient( 0.05 )
    else
       gfx.lightAmbient( 0.1 ) -- Default to some weak ambient light

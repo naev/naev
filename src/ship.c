@@ -350,7 +350,7 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       L.ambient_r += 0.1;
       L.ambient_g += 0.1;
       L.ambient_b += 0.1;
-      L.intensity *= 1.3;
+      L.intensity *= 1.5;
 
       /* Render the model. */
       ship_renderFramebuffer3D( s, fbo, size * gl_screen.scale, gl_screen.nw,

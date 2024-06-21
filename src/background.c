@@ -432,7 +432,7 @@ static void background_renderImages( background_image_t *bkg_arr )
          bkg->L.colour.v[2] = bkg->radiosity.b * (1.-a) + a*w;
          */
          bkg->L.pos.v[0] = rx;
-         bkg->L.pos.v[1] = d - 150.;
+         bkg->L.pos.v[1] = 2. * d - 300.;
          bkg->L.pos.v[2] = ry;
          gltf_lightSet( bkg->L_idx, &bkg->L );
       }
