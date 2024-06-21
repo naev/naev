@@ -86,10 +86,7 @@ static void solid_update_euler( Solid *obj, double dt )
 
    /* Make sure angle doesn't flip */
    obj->dir += obj->dir_vel * dt;
-   if ( obj->dir >= 2 * M_PI )
-      obj->dir -= 2 * M_PI;
-   if ( obj->dir < 0. )
-      obj->dir += 2 * M_PI;
+   obj->dir = angle_clean( obj->dir );
 
    /* Initial positions. */
    px = obj->pos.x;
@@ -220,10 +217,7 @@ static void solid_update_rk4( Solid *obj, double dt )
    vec2_cset( &obj->pos, px, py );
 
    /* Validity check. */
-   if ( obj->dir >= 2. * M_PI )
-      obj->dir -= 2. * M_PI;
-   else if ( obj->dir < 0. )
-      obj->dir += 2. * M_PI;
+   obj->dir = angle_clean( obj->dir );
 }
 
 /**
