@@ -528,7 +528,6 @@ int ship_gfxLoad( Ship *s )
             vec3_copy( &sm->pos,
                        &s->gfx_3d->mounts[i % n].pos ); /* Loop over. */
             vec3_scale( &sm->pos, s->size * 0.5 ); /* Convert to "pixels" */
-            vec3_print( &sm->pos );
          }
       }
    }
