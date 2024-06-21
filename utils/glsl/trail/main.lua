@@ -410,32 +410,17 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos_px )
 TRAIL_FUNC_PROTOTYPE
 vec4 trail_split( vec4 colour, vec2 pos_tex, vec2 pos_px )
 {
-   float m, v, y, p, s;
-   vec2 ncoord;
-
    // Modulate alpha base on length
    colour.a *= fastdropoff( pos_tex.x, 1.0 );
 
    // Modulate alpha based on dispersion
-   m = 1.5 + 5.0*impulse( 1.0-pos_tex.x, 1.0 );
-
-   // Create three beams with varying parameters
-   ncoord = vec2( 0.03 * pos_px.x, 5.0*dt ) + 1000.0 * r;
-   s =  0.6 * smoothstep(0.0, 0.175, 1.0-pos_tex.x);
-   p = 2.0*M_PI * (pos_tex.x*5.0 + dt * 0.5 + r + (snoise( ncoord ) - 0.5)/8.0);
-   y = clamp( pos_tex.y + s * sin( p ), -1.0, 1.0 );
-   v += sharpbeam( y, m );
-   p = 2.0*M_PI * (pos_tex.x*5.0 + dt * 0.5 + r + 1.0/3.0 + (snoise( 1.5*ncoord ) - 0.5)/8.0);
-   y = clamp( pos_tex.y + s * sin( p ), -1.0, 1.0 );
-   v += sharpbeam( y, m );
-   p = 2.0*M_PI * (pos_tex.x*5.0 + dt * 0.5 + r + 2.0/3.0 + (snoise( 2.0*ncoord ) - 0.5)/8.0);
-   y = clamp( pos_tex.y + s * sin( p ), -1.0, 1.0 );
-   v += sharpbeam( y, m );
+   float m = 1.5 + 5.0*impulse( 1.0-pos_tex.x, 1.0 );
 
    // Modulate width
-   v = abs(v);
-   colour.a *= min(1.0, smoothbeam( pos_tex.y, m ) * (0.5 + 0.5*v));
-   colour.rgb  = mix( colour.rgb, vec3(1.0), min(pow((1.0-s)*v*0.4, 2.0), 0.25) );
+   colour.a *= smoothbeam( pos_tex.y, m );
+
+   // Split the tail
+   colour.a -= max( 0.0, (0.9 - pos_tex.x) * smoothbeam( pos_tex.y, 0.2 ) );
 
    return colour;
 }
@@ -523,7 +508,7 @@ local function set_shader( num )
    elseif shader_type == 6 then -- soromid
       shader_color = { 0.5, 0.9, 0.2, 0.7 }
    elseif shader_type == 7 then -- proteron
-      shader_color = { 0.76, 0.27, 0.86, 0.7 }
+      shader_color = { 0.9, 0.75, 0.95, 0.7 }
    elseif shader_type == 8 then -- thurion
       shader_color = { 0.7, 1.0, 1.0, 0.7 }
    else -- default
@@ -544,7 +529,7 @@ function love.load()
    love.graphics.setNewFont( 24 )
    -- Scaling
    scaling = 2
-   love.graphics.setBackgroundColor( 0.5, 0.5, 0.5, 1 )
+   love.graphics.setBackgroundColor( 0, 0, 0, 1 )
 end
 
 function love.keypressed(key)
