@@ -333,7 +333,8 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       /* We rotate the model so it's staring at the player and facing slightly
        * down. */
       H = mat4_identity();
-      mat4_rotate( &H, -M_PI_4 * 0.5, 1.0, 0.0, 0.0 );
+      mat4_rotate( &H, -M_PI_4, 0.0, 1.0, 0.0 );
+      mat4_rotate( &H, -M_PI_4 * 0.25, 1.0, 0.0, 0.0 );
 
       /* Transform the light so it's consistent with the 3D model. */
       Hlight = mat4_identity();
