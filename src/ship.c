@@ -517,9 +517,11 @@ int ship_gfxLoad( Ship *s )
          int n = array_size( s->gfx_3d->mounts );
 
          ship_setFlag( s, SHIP_3DMOUNTS );
-         if ( n != array_size( s->outfit_weapon ) )
-            WARN( _( "Number of 3D weapon mounts from GLTF file do not match "
-                     "ship weapons!" ) );
+         if ( n <= array_size( s->outfit_weapon ) )
+            WARN(
+               _( "Number of 3D weapon mounts from GLTF file is less than the "
+                  "number of ship ewapons! Got %d, expected at least %d." ),
+               n, array_size( s->outfit_weapon ) );
 
          for ( int i = 0; i < array_size( s->outfit_weapon ); i++ ) {
             ShipMount *sm = &s->outfit_weapon[i].mount;
