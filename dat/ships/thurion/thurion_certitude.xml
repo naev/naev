@@ -9,10 +9,10 @@
  <class>Battleship</class>
  <price>9000000</price>
  <time_mod>1.5</time_mod>
- <trail_generator x="-42" y="11" h="7" />
- <trail_generator x="-42" y="11" h="-8" />
- <trail_generator x="-42" y="-17" h="7" />
- <trail_generator x="-42" y="-17" h="-8" />
+ <trail_generator x="-42" y="11" h="7">thurion</trail_generator>
+ <trail_generator x="-42" y="11" h="-8">thurion</trail_generator>
+ <trail_generator x="-42" y="-17" h="7">thurion</trail_generator>
+ <trail_generator x="-42" y="-17" h="-8">thurion</trail_generator>
  <trail_generator x="-39" y="-25" h="0">nebula</trail_generator>
  <trail_generator x="-39" y="25" h="0">nebula</trail_generator>
  <fabricator>Thurion shipyards</fabricator>

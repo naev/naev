@@ -6,7 +6,7 @@
  <gfx size="80" sx="10" sy="10">taciturnity</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
- <trail_generator x="-20" y="0" h="0" />
+ <trail_generator x="-20" y="0" h="0">thurion</trail_generator>
  <trail_generator x="-7" y="23" h="-13">nebula</trail_generator>
  <trail_generator x="-7" y="-23" h="-13">nebula</trail_generator>
  <trail_generator x="-7" y="0" h="30">nebula</trail_generator>

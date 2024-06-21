@@ -9,7 +9,7 @@
  <class>Interceptor</class>
  <price>350000</price>
  <time_mod>0.9</time_mod>
- <trail_generator x="-8" y="0" h="0" />
+ <trail_generator x="-8" y="0" h="0">thurion</trail_generator>
  <trail_generator x="-5" y="0" h="0">nebula</trail_generator>
  <trail_generator x="-5" y="-8" h="3">nebula</trail_generator>
  <trail_generator x="-5" y="0" h="15">nebula</trail_generator>

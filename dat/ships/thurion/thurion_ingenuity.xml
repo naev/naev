@@ -9,7 +9,7 @@
  <class>Fighter</class>
  <price>650000</price>
  <time_mod>0.9</time_mod>
- <trail_generator x="-8" y="0" h="0" />
+ <trail_generator x="-8" y="0" h="0">thurion</trail_generator>
  <trail_generator x="-8" y="-24" h="-7">nebula</trail_generator>
  <trail_generator x="-8" y="24" h="-7">nebula</trail_generator>
  <trail_generator x="-4" y="0" h="10">nebula</trail_generator>

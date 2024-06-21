@@ -9,7 +9,7 @@
  <class>Bomber</class>
  <price>750000</price>
  <time_mod>0.9</time_mod>
- <trail_generator x="-10" y="0" h="0" />
+ <trail_generator x="-10" y="0" h="0">thurion</trail_generator>
  <trail_generator x="-10" y="-30" h="0">nebula</trail_generator>
  <trail_generator x="-9" y="-5" h="10">nebula</trail_generator>
  <trail_generator x="-10" y="30" h="0">nebula</trail_generator>
