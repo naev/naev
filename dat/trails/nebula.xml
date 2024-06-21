@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <trail name="nebula">
- <type>trail_nebula</type>
+ <shader>trail/nebula.frag</shader>
  <nebula>1</nebula>
  <thickness>9</thickness>
  <ttl>2</ttl>

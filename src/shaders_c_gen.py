@@ -70,24 +70,6 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
-      name = "trail",
-      vs_path = "project_pos.vert",
-      fs_path = "trail.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "c1", "c2", "t", "z", "dt", "pos1", "pos2", "r", "nebu_col" ],
-      subroutines = {
-        "trail_func" : [
-            "trail_default",
-            "trail_pulse",
-            "trail_wave",
-            "trail_flame",
-            "trail_nebula",
-            "trail_arc",
-            "trail_bubbles",
-        ]
-      }
-   ),
-   Shader(
       name = "smooth",
       vs_path = "smooth.vert",
       fs_path = "smooth.frag",

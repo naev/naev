@@ -476,8 +476,13 @@ void spfx_free( void )
 
    /* Free the trail styles. */
    for ( int i = 0; i < array_size( trail_spec_stack ); i++ ) {
-      free( trail_spec_stack[i].name );
-      free( trail_spec_stack[i].filename );
+      TrailSpec *ts = &trail_spec_stack[i];
+      free( ts->name );
+      free( ts->filename );
+      if ( ts->shader_path != NULL ) {
+         glDeleteProgram( ts->shader.program );
+         free( ts->shader_path );
+      }
    }
    array_free( trail_spec_stack );
    trail_spec_stack = NULL;
@@ -861,6 +866,7 @@ static void spfx_trail_free( Trail_spfx *trail )
  */
 void spfx_trail_draw( const Trail_spfx *trail )
 {
+   const TrailSpec  *spec;
    const TrailStyle *styles;
    size_t            n;
    GLfloat           len;
@@ -869,17 +875,16 @@ void spfx_trail_draw( const Trail_spfx *trail )
    n = trail_size( trail );
    if ( n == 0 )
       return;
-   styles = trail->spec->style;
+   spec   = trail->spec;
+   styles = spec->style;
 
    /* Stuff that doesn't change for the entire trail. */
-   glUseProgram( shaders.trail.program );
-   if ( gl_has( OPENGL_SUBROUTINES ) )
-      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &trail->spec->type );
-   glEnableVertexAttribArray( shaders.trail.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2,
+   glUseProgram( spec->shader.program );
+   glEnableVertexAttribArray( spec->shader.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, spec->shader.vertex, 0, 2,
                                GL_FLOAT, 0 );
-   glUniform1f( shaders.trail.dt, trail->dt );
-   glUniform1f( shaders.trail.r, trail->r );
+   glUniform1f( spec->shader.dt, trail->dt );
+   glUniform1f( spec->shader.r, trail->r );
 
    z   = cam_getZoom();
    len = 0.;
@@ -919,21 +924,21 @@ void spfx_trail_draw( const Trail_spfx *trail )
       mat4_translate_xy( &projection, 0., -0.5 );
 
       /* Set uniforms. */
-      gl_uniformMat4( shaders.trail.projection, &projection );
-      gl_uniformColour( shaders.trail.c1, &sp->col );
-      gl_uniformColour( shaders.trail.c2, &spp->col );
-      glUniform2f( shaders.trail.t, tp->t, tpp->t );
-      glUniform2f( shaders.trail.z, tp->z, tpp->z );
-      glUniform2f( shaders.trail.pos2, len, sp->thick );
+      gl_uniformMat4( spec->shader.projection, &projection );
+      gl_uniformColour( spec->shader.c1, &sp->col );
+      gl_uniformColour( spec->shader.c2, &spp->col );
+      glUniform2f( spec->shader.t, tp->t, tpp->t );
+      glUniform2f( spec->shader.z, tp->z, tpp->z );
+      glUniform2f( spec->shader.pos2, len, sp->thick );
       len += s;
-      glUniform2f( shaders.trail.pos1, len, spp->thick );
+      glUniform2f( spec->shader.pos1, len, spp->thick );
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    }
 
    /* Clear state. */
-   glDisableVertexAttribArray( shaders.trail.vertex );
+   glDisableVertexAttribArray( spec->shader.vertex );
    glUseProgram( 0 );
 
    /* Check errors. */
@@ -978,6 +983,19 @@ void spfx_damage( double mod )
    if ( damage_shader_pp_id == 0 )
       damage_shader_pp_id =
          render_postprocessAdd( &damage_shader, PP_LAYER_GUI, 98, 0 );
+}
+
+/**
+ * @brief Sets the nebula colour where applicable.
+ */
+void spfx_setNebulaColour( double r, double g, double b )
+{
+   for ( int i = 0; i < array_size( trail_spec_stack ); i++ ) {
+      TrailSpec *ts = &trail_spec_stack[i];
+      glUseProgram( ts->shader.program );
+      glUniform3f( ts->shader.nebu_col, r, g, b );
+   }
+   glUseProgram( 0 );
 }
 
 /**
@@ -1238,8 +1256,9 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
             char *name     = tc->name;
             char *filename = tc->filename;
             memcpy( tc, tsparent, sizeof( TrailSpec ) );
-            tc->name     = name;
-            tc->filename = filename;
+            tc->name        = name;
+            tc->filename    = filename;
+            tc->shader_path = NULL;
          }
       }
    }
@@ -1247,19 +1266,14 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
    node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes( node );
+
+      xmlr_strd( node, "shader", tc->shader_path );
+
       if ( xml_isNode( node, "thickness" ) )
          tc->def_thick = xml_getFloat( node );
       else if ( xml_isNode( node, "ttl" ) )
          tc->ttl = xml_getFloat( node );
-      else if ( xml_isNode( node, "type" ) ) {
-         char *type = xml_get( node );
-         if ( gl_has( OPENGL_SUBROUTINES ) ) {
-            tc->type = glGetSubroutineIndex( shaders.trail.program,
-                                             GL_FRAGMENT_SHADER, type );
-            if ( tc->type == GL_INVALID_INDEX )
-               WARN( "Trail '%s' has unknown type '%s'", tc->name, type );
-         }
-      } else if ( xml_isNode( node, "nebula" ) )
+      else if ( xml_isNode( node, "nebula" ) )
          tc->nebula = xml_getInt( node );
       else {
          int i;
@@ -1279,9 +1293,30 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
       }
    } while ( xml_nextNode( node ) );
 
+   /* Load shader. */
+   if ( firstpass && ( tc->shader_path != NULL ) ) {
+      tc->shader.program =
+         gl_program_vert_frag( "trail.vert", tc->shader_path );
+      tc->shader.vertex = glGetAttribLocation( tc->shader.program, "vertex" );
+      tc->shader.projection =
+         glGetUniformLocation( tc->shader.program, "projection" );
+      tc->shader.r    = glGetUniformLocation( tc->shader.program, "r" );
+      tc->shader.dt   = glGetUniformLocation( tc->shader.program, "dt" );
+      tc->shader.c1   = glGetUniformLocation( tc->shader.program, "c1" );
+      tc->shader.c2   = glGetUniformLocation( tc->shader.program, "c2" );
+      tc->shader.t    = glGetUniformLocation( tc->shader.program, "t" );
+      tc->shader.z    = glGetUniformLocation( tc->shader.program, "z" );
+      tc->shader.pos1 = glGetUniformLocation( tc->shader.program, "pos1" );
+      tc->shader.pos2 = glGetUniformLocation( tc->shader.program, "pos2" );
+      tc->shader.nebu_col =
+         glGetUniformLocation( tc->shader.program, "nebu_col" );
+      gl_checkErr();
+   }
+
 #define MELEMENT( o, s )                                                       \
    if ( o )                                                                    \
    WARN( _( "Trail '%s' missing '%s' element" ), tc->name, s )
+   MELEMENT( tc->shader.program == 0, "shader" );
    MELEMENT( tc->def_thick == 0, "thickness" );
    MELEMENT( tc->ttl == 0, "ttl" );
 #undef MELEMENT

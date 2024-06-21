@@ -54,11 +54,26 @@ typedef struct TrailSpec_ {
    char  *filename;  /** File the the trail spec is loaded from. */
    double ttl;       /**< Time To Life (in seconds). */
    float  def_thick; /**< Default thickness, relevant while loading. */
-   GLuint type;      /**< Shader to use. */
    TrailStyle
        style[MODE_MAX]; /**< Appearance characteristics for each trail mode. */
    int nebula; /**< Whether or not the trail should be only active in the
                   nebula. */
+   /* Shader stuff. */
+   char *shader_path; /**< Shader path. */
+   struct {
+      GLuint program;
+      GLuint vertex;
+      GLuint projection;
+      GLuint r;
+      GLuint dt;
+      GLuint c1;
+      GLuint c2;
+      GLuint t;
+      GLuint z;
+      GLuint pos1;
+      GLuint pos2;
+      GLuint nebu_col;
+   } shader;
 } TrailSpec;
 
 typedef struct TrailPoint {
@@ -122,6 +137,7 @@ void        spfx_trail_draw( const Trail_spfx *trail );
  */
 void spfx_shake( double mod );
 void spfx_damage( double mod );
+void spfx_setNebulaColour( double r, double g, double b );
 
 /*
  * other effects

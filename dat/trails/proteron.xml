@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <trail name="proteron">
- <type>trail_split</type>
+ <shader>trail/split.frag</shader>
  <thickness>6</thickness>
  <ttl>1.5</ttl>
  <idle r="1" g="1" b="1" a="0.05" />
