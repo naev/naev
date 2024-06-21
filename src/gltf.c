@@ -1616,7 +1616,7 @@ GltfObject *gltf_loadFromFile( const char *filename )
       GltfMount *m = &obj->mounts[i];
       vec3_scale( &m->pos, 1. / obj->radius );
       if ( m->id != i )
-         WARN( _( "gltf warning '%s': xpected mount with id=%d, but got %d!" ),
+         WARN( _( "gltf warning '%s': expected mount with id=%d, but got %d!" ),
                filename, i, m->id );
    }
 
