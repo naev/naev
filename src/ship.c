@@ -318,11 +318,12 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
                                const Lighting *Lscene )
 {
    if ( s->gfx_3d != NULL ) {
-      GLuint   fbo, tex, depth_tex;
-      Lighting L = ( Lscene == NULL ) ? L_default : *Lscene;
-      mat4     H, Hlight;
-      double   r = 0.;
-      char     buf[STRMAX_SHORT];
+      glTexture *gltex;
+      GLuint     fbo, tex, depth_tex;
+      Lighting   L = ( Lscene == NULL ) ? L_default : *Lscene;
+      mat4       H, Hlight;
+      double     r = 0.;
+      char       buf[STRMAX_SHORT];
       snprintf( buf, sizeof( buf ), "%s_gfx_comm", s->name );
       gl_contextSet();
 
@@ -359,7 +360,9 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       glBindFramebuffer( GL_FRAMEBUFFER, 0 );
       gl_contextUnset();
 
-      return gl_rawTexture( buf, tex, size, size );
+      gltex = gl_rawTexture( buf, tex, size, size );
+      gltex->flags |= OPENGL_TEX_VFLIP;
+      return gltex;
    }
    if ( s->gfx_comm != NULL )
       return gl_newImage( s->gfx_comm, 0 );
