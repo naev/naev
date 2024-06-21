@@ -4,6 +4,7 @@
       * Gave the Za'lek sting a slight detection buff
       * Can only have a single patrol mission active at a given time
       * Pirates are less numerous during Chapter 0
+      * Dvaered Arsenal has no fighter bays and fewer slots
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
@@ -29,6 +30,7 @@
          * Get more Sirius abilities
       * New NPC portraits
       * New generic NPC and News messages
+      * Secret faction got their own trails
    * Engine
       * Support for 3D models
          * Lighting is based on system stars
