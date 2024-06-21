@@ -1143,7 +1143,7 @@ static void gltf_renderMesh( const GltfObject *obj, int scene, const mat4 *H,
       } else
          glUniform3f( sl->position, l->pos.v[0], l->pos.v[1], l->pos.v[2] );
       glUniform3f( sl->colour, l->colour.v[0], l->colour.v[1], l->colour.v[2] );
-      glUniform1f( sl->intensity, l->intensity );
+      glUniform1f( sl->intensity, l->intensity * L->intensity );
 
       /* Set up matrix. */
       glUniformMatrix4fv( sl->Hshadow, 1, GL_FALSE, light_mat[i].ptr );
