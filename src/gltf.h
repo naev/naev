@@ -203,8 +203,9 @@ typedef struct Light {
 typedef struct Lighting {
    double ambient_r, ambient_g, ambient_b; /**< Ambient lighting. */
    Light  lights[MAX_LIGHTS];              /**< Standard lights. */
-   int    nlights; /**< Number of lights being used. Has to be less than
-                      MAX_LIGHTS. */
+   int    nlights;   /**< Number of lights being used. Has to be less than
+                        MAX_LIGHTS. */
+   double intensity; /**< Scales the intensity of the lights globally. */
 } Lighting;
 extern const Lighting
    L_default_const; /**< Default constant lighting for resetting. */

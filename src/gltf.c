@@ -60,6 +60,7 @@ const Lighting L_default_const = {
    .ambient_r = 0.,
    .ambient_g = 0.,
    .ambient_b = 0.,
+   .intensity = 1.,
    .nlights   = 2,
    .lights =
       {
@@ -103,6 +104,7 @@ const Lighting L_store_const = {
    .ambient_g = 0.,
    .ambient_b = 0.,
    .nlights   = 2,
+   .intensity = 1.,
    .lights =
       {
          {
@@ -121,8 +123,7 @@ const Lighting L_store_const = {
          },
       },
 };
-Lighting      L_default;
-static double light_intensity = 1.;
+Lighting L_default;
 
 static GLuint light_fbo_low[MAX_LIGHTS]; /**< FBO correpsonding to the light. */
 static GLuint
@@ -1991,8 +1992,7 @@ void gltf_exit( void )
  */
 void gltf_lightReset( void )
 {
-   L_default       = L_default_const;
-   light_intensity = 1.;
+   L_default = L_default_const;
 }
 
 /**
@@ -2039,10 +2039,7 @@ void gltf_lightAmbientGet( double *r, double *g, double *b )
  */
 void gltf_lightIntensity( double strength )
 {
-   for ( int i = 0; i < MAX_LIGHTS; i++ )
-      L_default.lights[i].intensity =
-         strength * L_default_const.lights[i].intensity;
-   light_intensity = strength;
+   L_default.intensity = strength;
 }
 
 /**
@@ -2050,7 +2047,7 @@ void gltf_lightIntensity( double strength )
  */
 double gltf_lightIntensityGet( void )
 {
-   return light_intensity;
+   return L_default.intensity;
 }
 
 /**

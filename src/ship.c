@@ -347,9 +347,10 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       gltf_lightTransform( &L, &Hlight );
 
       /* Increase ambient a wee bit. */
-      L.ambient_r += 0.3;
-      L.ambient_g += 0.3;
-      L.ambient_b += 0.3;
+      L.ambient_r += 0.1;
+      L.ambient_g += 0.1;
+      L.ambient_b += 0.1;
+      L.intensity *= 1.3;
 
       /* Render the model. */
       ship_renderFramebuffer3D( s, fbo, size * gl_screen.scale, gl_screen.nw,
