@@ -27,40 +27,45 @@ def luaprint(debugger, command, result, internal_dict):
         v = args[0]
         verbose = int(args[1]) if len(args) > 1 else 0
         debugger.HandleCommand(f"expr int $type = ((TValue*){v})->tt")
-        if $type == 0:
+        type = int(debugger.GetSelectedTarget().EvaluateExpression("$type").GetValue())
+        if type == 0:
             result.AppendMessage("nil")
-        elif $type == 1:
-            val = "(bool)(((TValue*){v})->value.b)"
-            debugger.HandleCommand(f"expr bool $val = {val}")
-            result.AppendMessage("true" if $val else "false")
-        elif $type == 2:
-            val = "(void*)(((TValue*){v})->value.p)"
-            result.AppendMessage(f"<ludata>{val}")
-        elif $type == 3:
-            val = "((TValue*){v})->value.n"
-            result.AppendMessage(f"{val}")
-        elif $type == 4:
-            ts = "(TString*)(((TValue*){v})->value.gc->ts)"
-            str = "(char*)({ts} + 1)"
-            result.AppendMessage(f"'{str}'")
-        elif $type == 5:
-            tab = "(Table*)(((TValue*){v})->value.gc->h)"
+        elif type == 1:
+            debugger.HandleCommand(f"expr bool $val = (bool)(((TValue*){v})->value.b)")
+            val = bool(debugger.GetSelectedTarget().EvaluateExpression("$val").GetValue())
+            result.AppendMessage("true" if val else "false")
+        elif type == 2:
+            debugger.HandleCommand(f"expr void* $p = ((TValue*){v})->value.p")
+            p = debugger.GetSelectedTarget().EvaluateExpression("$p").GetValueAsUnsigned()
+            result.AppendMessage(f"<ludata>{p}")
+        elif type == 3:
+            debugger.HandleCommand(f"expr double $n = ((TValue*){v})->value.n")
+            n = debugger.GetSelectedTarget().EvaluateExpression("$n").GetValue()
+            result.AppendMessage(f"{n}")
+        elif type == 4:
+            debugger.HandleCommand(f"expr TString* $ts = (TString*)(((TValue*){v})->value.gc->ts)")
+            ts = debugger.GetSelectedTarget().EvaluateExpression("$ts").GetValue()
+            result.AppendMessage(f"'{ts}'")
+        elif type == 5:
+            debugger.HandleCommand(f"expr Table* $tab = (Table*)(((TValue*){v})->value.gc->h)")
+            tab = debugger.GetSelectedTarget().EvaluateExpression("$tab").GetValue()
             result.AppendMessage(f"<tab> {tab}")
             if verbose:
                 luaprinttable(debugger, tab, result, internal_dict)
-        elif $type == 7:
-            uv = "(((TValue*){v})->value.gc.u->uv)"
-            size = "uv.len"
-            result.AppendMessage(f"<udata> {size}")
-            if verbose and uv.metatable:
+        elif type == 7:
+            debugger.HandleCommand(f"expr auto $uv = (((TValue*){v})->value.gc.u->uv)")
+            uv = debugger.GetSelectedTarget().EvaluateExpression("$uv").GetValue()
+            result.AppendMessage(f"<udata> {uv}")
+            if verbose and debugger.GetSelectedTarget().EvaluateExpression("$uv.metatable").IsValid():
                 result.AppendMessage("metatable=")
-                luaprinttable(debugger, uv.metatable, result, internal_dict)
-            if verbose and uv.env:
+                luaprinttable(debugger, "$uv.metatable", result, internal_dict)
+            if verbose and debugger.GetSelectedTarget().EvaluateExpression("$uv.env").IsValid():
                 result.AppendMessage("env=")
-                luaprinttable(debugger, uv.env, result, internal_dict)
+                luaprinttable(debugger, "$uv.env", result, internal_dict)
         else:
-            typename = "lua_typename(L, $type)"
-            val = "((TValue*){v})->value"
+            debugger.HandleCommand(f"expr const char* $typename = lua_typename(L, $type)")
+            typename = debugger.GetSelectedTarget().EvaluateExpression("$typename").GetSummary()
+            val = debugger.GetSelectedTarget().EvaluateExpression(f"((TValue*){v})->value").GetSummary()
             result.AppendMessage(f"<{typename}> {val}")
 
 lldb.debugger.HandleCommand('command script add -f __main__.luaprint luaprint')
@@ -73,29 +78,31 @@ def luaprinttable(debugger, command, result, internal_dict):
     else:
         t = args[0]
         result.AppendMessage(" { ")
-        node = f"((Table*){t})->node"
+        debugger.HandleCommand(f"expr auto $node = ((Table*){t})->node")
         i = 0
-        last = "1 << ((Table*){t})->lsizenode"
+        last = 1 << int(debugger.GetSelectedTarget().EvaluateExpression(f"((Table*){t})->lsizenode").GetValue())
         while i < last:
-            node_i = f"{node} + {i}"
-            key = f"{node_i}->i_key"
-            tvk_tt = f"((TValue*){key}).tt"
+            debugger.HandleCommand(f"expr auto $node_i = $node + {i}")
+            debugger.HandleCommand(f"expr auto $key = $node_i->i_key")
+            tvk_tt = int(debugger.GetSelectedTarget().EvaluateExpression(f"((TValue*)$key).tt").GetValue())
             if tvk_tt > 0:
                 if tvk_tt == 4:
-                    ts = f"(TString*)(((TValue*){key}).value.gc->ts)"
-                    str = f"(char*)({ts} + 1)"
-                    result.AppendMessage(f"{str} = ")
+                    debugger.HandleCommand(f"expr TString* $ts = (TString*)(((TValue*)$key).value.gc->ts)")
+                    ts = debugger.GetSelectedTarget().EvaluateExpression("$ts").GetValue()
+                    result.AppendMessage(f"{ts} = ")
                 else:
-                    typename = f"lua_typename(L, {tvk_tt})"
+                    debugger.HandleCommand(f"expr const char* $typename = lua_typename(L, {tvk_tt})")
+                    typename = debugger.GetSelectedTarget().EvaluateExpression("$typename").GetSummary()
                     result.AppendMessage(f"<{typename}> = ")
-                val = f"{node_i}->i_val"
-                luaprint(debugger, val, result, internal_dict)
+                debugger.HandleCommand(f"expr auto $val = $node_i->i_val")
+                luaprint(debugger, f"$val", result, internal_dict)
                 result.AppendMessage(",\n")
             i += 1
         i = 0
-        while i < t.sizearray:
-            val = f"((Table*){t})->array + {i}"
-            luaprint(debugger, val, result, internal_dict)
+        sizearray = int(debugger.GetSelectedTarget().EvaluateExpression(f"((Table*){t})->sizearray").GetValue())
+        while i < sizearray:
+            debugger.HandleCommand(f"expr auto $val = ((Table*){t})->array + {i}")
+            luaprint(debugger, f"$val", result, internal_dict)
             result.AppendMessage(", ")
             i += 1
         result.AppendMessage(" } ")
@@ -106,28 +113,12 @@ lldb.debugger.HandleCommand('''command script add -o -h "luaprinttable <table>\n
 def luastack(debugger, command, result, internal_dict):
     args = command.split()
     L = args[0] if len(args) > 0 else "L"
-    result.AppendMessage(f"Lua stack trace: {lua_gettop(L)} items")
-    ptr = f"{L}->base"
+    debugger.HandleCommand(f"expr int $stack_size = lua_gettop({L})")
+    stack_size = int(debugger.GetSelectedTarget().EvaluateExpression("$stack_size").GetValue())
+    result.AppendMessage(f"Lua stack trace: {stack_size} items")
+    debugger.HandleCommand(f"expr auto $ptr = {L}->base")
     idx = 1
-    while ptr < f"{L}->top":
-        result.AppendMessage(f"{idx:03d}: ")
-        luaprint(debugger, ptr, result, internal_dict)
-        result.AppendMessage("\n")
-        ptr = f"{ptr} + 1"
-        idx += 1
-
-lldb.debugger.HandleCommand('command script add -f __main__.luastack luastack')
-lldb.debugger.HandleCommand('''command script add -o -h "luastack [L]\nPrints values on the Lua C stack. Without arguments, uses the current value of 'L' as the lua_State*. You can provide an alternate lua_State as the first argument." luastack''')
-
-def luatrace(debugger, command, result, internal_dict):
-    args = command.split()
-    L = args[0] if len(args) > 0 else "L"
-    if luaL_loadstring(L, "return debug.traceback()") == 0:
-        if lua_pcall(L, 0, 1, 0) == 0:
-            result.AppendMessage(f"{lua_tolstring(L, -1, 0)}\n")
-        else:
-            result.AppendMessage(f"ERROR: {lua_tolstring(L, -1, 0)}\n")
-        lua_settop(L, -2)
-
-lldb.debugger.HandleCommand('command script add -f __main__.luatrace luatrace')
-lldb.debugger.HandleCommand('''command script add -o -h "luatraceback [L]\nDumps Lua execution stack, as debug.traceback() does. Without arguments, uses the current value of 'L' as the lua_State*. You can provide an alternate lua_State as the first argument." luatrace''')
+    while True:
+        debugger.HandleCommand(f"expr bool $is_less = $ptr < {L}->top")
+        if not bool(debugger.GetSelectedTarget().EvaluateExpression("$is_less").GetValue()):
+            break
