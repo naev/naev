@@ -108,7 +108,7 @@ build_appdir(){
     # Honours the MESON variable set by the environment before setting it manually
 
     if [ -z "$MESON" ]; then
-        MESON="$SOURCEPATH/meson.sh"
+        MESON="$SOURCEPATH/meson.py"
     fi
 
     "$MESON" setup "$BUILDPATH" "$SOURCEPATH" \

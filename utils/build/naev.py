@@ -80,7 +80,7 @@ def wrapper(*args):
         debugger_process.send_signal(signal.SIGINT)
         debugger_process.wait()
 
-subprocess.run([os.path.join(source_root, "meson.sh"), "compile", "-C", build_root, "naev-gmo"])
+subprocess.run([sys.executable, os.path.join(source_root, "meson.py"), "compile", "-C", build_root, "naev-gmo"])
 os.makedirs(os.path.join(build_root, "dat/gettext"), exist_ok=True)
 
 # Meson <= 0.59
