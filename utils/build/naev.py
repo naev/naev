@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import signal
 import subprocess
 import shutil
 import sys
@@ -51,14 +52,33 @@ def wrapper(*args):
     os.environ["ASAN_OPTIONS"] = "halt_on_error=1"
     debugger = get_debugger()
 
+    # Build debugger command
     if "gdb" in debugger:
-        # Explicitly mention which local gdbinit to run.
-        subprocess.run([debugger, "--nx", "-x", os.path.join(build_root, ".gdbinit"), "--args"] + list(args))
+        command = [
+            debugger,
+            "--nx",
+            "-x", os.path.join(build_root, ".gdbinit"),
+            "--args"
+        ] + list(args)
     elif "lldb" in debugger:
-        # TODO: Implement LLDB initialization
-        subprocess.run([debugger, "-o", "run", "--"] + list(args))
+        command = [
+            debugger,
+            "--one-line", f"command script import {os.path.join(build_root, "lldbinit.py")}",
+            "--"
+        ] + list(args)
     else:
-        subprocess.run(list(args))
+        command = list(args)
+
+    try:
+        # Run the command
+        debugger_process = subprocess.Popen(command)
+        # Wait for the process to complete
+        debugger_process.wait()
+    except KeyboardInterrupt:
+        print("Interrupted by user (Ctrl+C)")
+        # Send interrupt signal to debugger process
+        debugger_process.send_signal(signal.SIGINT)
+        debugger_process.wait()
 
 subprocess.run([os.path.join(source_root, "meson.sh"), "compile", "-C", build_root, "naev-gmo"])
 os.makedirs(os.path.join(build_root, "dat/gettext"), exist_ok=True)
