@@ -401,6 +401,14 @@ int main (void) { return 0; }''')
       }
    )
 
+   lldbinit = configure_file(
+      input: join_paths('utils','build','lldbinit.py.in'),
+      output: 'lldbinit.py',
+      configuration: {
+         'source_root': meson.source_root(),
+      }
+   )
+
    if host_machine.system() not in ['windows', 'darwin']
       install_data(
          'gpl.txt',
