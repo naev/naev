@@ -53,14 +53,14 @@ def wrapper(*args):
     debugger = get_debugger()
 
     # Build debugger command
-    if "gdb" in debugger:
+    if debugger and "gdb" in debugger:
         command = [
             debugger,
             "--nx",
             "-x", os.path.join(build_root, ".gdbinit"),
             "--args"
         ] + list(args)
-    elif "lldb" in debugger:
+    elif debugger and "lldb" in debugger:
         command = [
             debugger,
             "--one-line", f"command script import {os.path.join(build_root, "lldbinit.py")}",
