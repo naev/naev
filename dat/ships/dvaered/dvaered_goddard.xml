@@ -9,10 +9,10 @@
  <class>Battleship</class>
  <price>9200000</price>
  <time_mod>1.4</time_mod>
- <trail_generator x="-27" y="20" h="0" />
- <trail_generator x="-30" y="39" h="0" />
- <trail_generator x="-27" y="-20" h="0" />
- <trail_generator x="-30" y="-39" h="0" />
+ <trail_generator x="-27" y="20" h="0">fire</trail_generator>
+ <trail_generator x="-30" y="39" h="0">fire</trail_generator>
+ <trail_generator x="-27" y="-20" h="0">fire</trail_generator>
+ <trail_generator x="-30" y="-39" h="0">fire</trail_generator>
  <trail_generator x="-24" y="-60" h="0">nebula</trail_generator>
  <trail_generator x="-24" y="60" h="0">nebula</trail_generator>
  <fabricator>House Goddard</fabricator>

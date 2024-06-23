@@ -7,10 +7,10 @@
  <class>Bulk Freighter</class>
  <price>3500000</price>
  <time_mod>1.375</time_mod>
- <trail_generator x="-46" y="10" h="6" />
- <trail_generator x="-46" y="10" h="-6" />
- <trail_generator x="-46" y="-10" h="6" />
- <trail_generator x="-46" y="-10" h="-6" />
+ <trail_generator x="-46" y="10" h="6">melendez</trail_generator>
+ <trail_generator x="-46" y="10" h="-6">melendez</trail_generator>
+ <trail_generator x="-46" y="-10" h="6">melendez</trail_generator>
+ <trail_generator x="-46" y="-10" h="-6">melendez</trail_generator>
  <trail_generator x="-29" y="27" h="4">nebula</trail_generator>
  <trail_generator x="-29" y="-27" h="4">nebula</trail_generator>
  <trail_generator x="16" y="27" h="-4" always_under="1">nebula</trail_generator>
