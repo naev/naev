@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2022-04-08 09:11+0000\n"
-"Last-Translator: 이정희 <daemul72@gmail.com>\n"
-"Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
+"PO-Revision-Date: 2024-06-23 18:09+0000\n"
+"Last-Translator: Han Ga Eun <gdd72582@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
+"ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 5.6-rc\n"
 "X-Crowdin-Project: ofenthource\n"
 "X-Crowdin-Project-ID: 430038\n"
 "X-Crowdin-Language: ko\n"
@@ -19,45 +20,41 @@ msgstr ""
 "X-Crowdin-File-ID: 2\n"
 
 #: physfs.c:1
-#, fuzzy
-#| msgid "GL unknown error"
 msgid "no error"
-msgstr "GL 알 수 없는 오류"
+msgstr "오류 없음"
 
 #: physfs.c:2 src/background.c:453 src/gui.c:1745 src/nlua_evt.c:146
 #: src/nlua_misn.c:237 src/nopenal.c:68
 msgid "unknown error"
-msgstr ""
+msgstr "알 수 없는 오류"
 
 #: physfs.c:3
-#, fuzzy
-#| msgid "GL out of memory"
 msgid "out of memory"
-msgstr "GL 메모리 부족"
+msgstr "메모리 부족"
 
 #: physfs.c:4
 msgid "not initialized"
-msgstr ""
+msgstr "초기화되지 않음"
 
 #: physfs.c:5
 msgid "already initialized"
-msgstr ""
+msgstr "이미 초기화됨"
 
 #: physfs.c:6
 msgid "argv[0] is NULL"
-msgstr ""
+msgstr "argv[0]이 NULL입니다"
 
 #: physfs.c:7
 msgid "unsupported"
-msgstr ""
+msgstr "지원되지 않음"
 
 #: physfs.c:8
 msgid "past end of file"
-msgstr ""
+msgstr "파일 끝을 지남"
 
 #: physfs.c:9
 msgid "files still open"
-msgstr ""
+msgstr "파일이 아직 열려 있음"
 
 #: physfs.c:10
 #, fuzzy
@@ -67,20 +64,19 @@ msgstr "GL 유효하지 않은 값"
 
 #: physfs.c:11
 msgid "not mounted"
-msgstr ""
+msgstr "마운트되지 않음"
 
 #: physfs.c:12
-#, fuzzy
 msgid "not found"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 
 #: physfs.c:13
 msgid "symlinks are forbidden"
-msgstr ""
+msgstr "심볼릭 링크가 금지됨"
 
 #: physfs.c:14
 msgid "write directory is not set"
-msgstr ""
+msgstr "쓰기 디렉터리가 설정되지 않음"
 
 #: physfs.c:15
 #, fuzzy
@@ -96,7 +92,7 @@ msgstr "쓰기 위해 '%s'을 (를) 열 수 없습니다."
 
 #: physfs.c:17
 msgid "not a file"
-msgstr ""
+msgstr "파일이 아님"
 
 #: physfs.c:18
 #, fuzzy
@@ -106,51 +102,51 @@ msgstr "프론티어 시스템"
 
 #: physfs.c:19
 msgid "corrupted"
-msgstr ""
+msgstr "손상됨"
 
 #: physfs.c:20
 msgid "infinite symbolic link loop"
-msgstr ""
+msgstr "무한 심볼릭 링크 루프"
 
 #: physfs.c:21
 msgid "i/o error"
-msgstr ""
+msgstr "입/출력 오류"
 
 #: physfs.c:22
 msgid "permission denied"
-msgstr ""
+msgstr "권한 거부"
 
 #: physfs.c:23
 msgid "no space available for writing"
-msgstr ""
+msgstr "쓸 공간 없음"
 
 #: physfs.c:24
 msgid "filename is illegal or insecure"
-msgstr ""
+msgstr "파일 이름이 적절하지 않거나 안전하지 않음"
 
 #: physfs.c:25
 msgid "tried to modify a file the OS needs"
-msgstr ""
+msgstr "OS가 필요한 파일을 수정하려고 시도함"
 
 #: physfs.c:26
 msgid "directory isn't empty"
-msgstr ""
+msgstr "디렉터리가 비어 있지 않음"
 
 #: physfs.c:27
 msgid "OS reported an error"
-msgstr ""
+msgstr "OS가 오류를 보고함"
 
 #: physfs.c:28
 msgid "duplicate resource"
-msgstr ""
+msgstr "중복된 리소스"
 
 #: physfs.c:29
 msgid "bad password"
-msgstr ""
+msgstr "잘못된 비밀번호"
 
 #: physfs.c:30
 msgid "app callback reported error"
-msgstr ""
+msgstr "앱 콜백에서 오류 보고"
 
 #: dat/intro:2
 msgid ""
@@ -10513,6 +10509,11 @@ msgid ""
 "This was one of the important reasons the Emperor granted House Dvaered its "
 "independence."
 msgstr ""
+"앰브르는 노동자 반란에서 중요한 역할을 했던 행성 중 하나로, 결국 드바레드 "
+"가문의 설립으로 이어졌습니다. 그 당시 이 행성은 이 우주 구역의 제국 노동력의 "
+"상당 부분을 차지하고 있었습니다. 노동자들이 광산과 건설 현장에서 일하지 "
+"않으면 제국은 매 주기마다 천문학적인 금액을 잃게 되었습니다. 이것이 황제가 "
+"드바레드 가문의 독립을 승인한 중요한 이유 중 하나였습니다."
 
 #: dat/spob/ambre.xml:28
 msgid ""
@@ -10524,6 +10525,11 @@ msgid ""
 "into one of the only remaining spaces available, which was right over the "
 "freight lines."
 msgstr ""
+"앰브르의 우주 항구 바는 결코 조용하지 않습니다. 정기적으로 바의 다른 모든 "
+"소음은 바로 아래 철로를 따라 움직이는 화물 포드 소리에 묻히곤 합니다. 바는 "
+"이 행성 개발의 비교적 늦은 시기에 지어졌습니다. 앰브르가 단순한 노동 캠프에 "
+"불과했을 때 제국 정부는 바가 필요하지 않다고 보았습니다. 독립 후 바는 남아 "
+"있는 유일한 공간 중 하나인 화물선 바로 위에 억지로 들어서게 되었습니다."
 
 #: dat/spob/amhurst.xml:2
 msgid "Amhurst"
@@ -10536,6 +10542,10 @@ msgid ""
 "has not been hit as hard as many, it has seen its population dip in recent "
 "cycles. Most of the population are miners and other working-class folk."
 msgstr ""
+"찬란한 광산 및 무역 세계인 이 행성은 자렉의 남부 변경 지역에서 발생한 두뇌 "
+"유출의 피해자 중 비교적 상황이 나은 편입니다. 많은 행성이 큰 타격을 "
+"입었지만, 암허스트는 최근 주기 동안 인구가 감소했습니다. 대부분의 인구는 "
+"광부와 다른 노동 계층 사람들입니다."
 
 #: dat/spob/amhurst.xml:29
 msgid ""
@@ -10543,6 +10553,9 @@ msgid ""
 "rough aesthetic, the clientele, almost everything. There is little sign of "
 "the usual Za'lek trappings here."
 msgstr ""
+"알지 못하는 사람이 본다면 이곳이 드바레드 바라고 생각할 것입니다. 거친 미학, "
+"고객층, 거의 모든 것이 그렇습니다. 여기에는 일반적인 자렉 장식이 거의 보이지 "
+"않습니다."
 
 #: dat/spob/amianta.xml:2
 msgid "Amianta"
@@ -10554,6 +10567,8 @@ msgid ""
 "Proteron colonized it anyway due to the rich source of both food and water "
 "found underneath the ice."
 msgstr ""
+"아미안타의 혹독한 추위는 일부 사람들을 떠나게 만들겠지만, 프로테론은 얼음 "
+"아래에서 발견된 풍부한 식량과 물 자원 때문에 이곳을 식민지로 삼았습니다."
 
 #: dat/spob/ammu.xml:2
 msgid "Ammu"
@@ -10569,6 +10584,11 @@ msgid ""
 "but the climate makes Ammu dependent on nearby planets such as Reidd for "
 "food supplies."
 msgstr ""
+"암무는 용암 흐름의 지속적인 진동에 익숙해지면 일반적으로 평온한 행성입니다. "
+"용암 분출은 지하 우주 항구에서 자주 느껴지지만, 현지인들이 동요하지 않는 "
+"모습을 보면 안심이 됩니다. 용암은 높은 압력과 온도가 필요한 산업을 유치하는 "
+"긍정적인 측면도 있지만, 기후 때문에 암무는 음식 공급을 위해 레이드와 같은 "
+"인근 행성에 의존하고 있습니다."
 
 #: dat/spob/ammu.xml:28
 msgid ""
@@ -10578,6 +10598,10 @@ msgid ""
 "temperature, that's not to say you can't get a mean Pan-Galactic Gargle "
 "Blaster."
 msgstr ""
+"암무 우주 항구 바는 \"히트싱크\"로 알려져 있으며, 그 이유는 차가운 온도 "
+"때문입니다. 이곳은 역의 나머지 부분과 대조적이지만 대부분의 행성에서는 꽤 "
+"따뜻하게 여겨질 것입니다. 주로 온도로 알려져 있지만, 판-갤럭틱 가글 "
+"블래스터도 훌륭하게 즐길 수 있습니다."
 
 #: dat/spob/amphion.xml:2
 msgid "Amphion"
@@ -10591,6 +10615,10 @@ msgid ""
 "calm and the many underwater cities are famous all over the Empire for their "
 "grandeur and opulence."
 msgstr ""
+"암피온은 제국 장교들에게 인기 있는 은퇴 장소입니다. 제국의 중심부와 가까워서 "
+"복무에 대한 감사의 기억을 불러일으키지만, 충분히 멀어서 평화를 누릴 수 "
+"있습니다. 행성 표면을 지배하는 바다는 고요하며, 많은 해저 도시는 그 웅장함과 "
+"화려함으로 제국 전역에 유명합니다."
 
 #: dat/spob/amphion.xml:27
 msgid ""
@@ -10599,6 +10627,9 @@ msgid ""
 "cheery. You wind up making easy friends in the amiable and relaxing "
 "atmosphere."
 msgstr ""
+"이곳 손님의 평균 연령은 중년 후반으로 보입니다. 바 자체는 오래된 세계 "
+"스타일의 선술집처럼 낮고 어두우며 아늑하고 쾌활합니다. 이곳의 우호적이고 "
+"편안한 분위기 속에서 쉽게 친구를 사귈 수 있습니다."
 
 #: dat/spob/anarbalis_ii.xml:2
 msgid "Anarbalis II"
