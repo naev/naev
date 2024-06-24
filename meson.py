@@ -20,7 +20,7 @@ import sys
 import argparse
 
 MESONDIR = "meson-bin"
-VERSION = "0.55.3"
+VERSION = "1.3.0"
 PACKAGE = f"meson-{VERSION}.tar.gz"
 MESON = os.path.join(MESONDIR, "meson.py")
 
