@@ -6,7 +6,7 @@ project('naev', 'c',
       'werror=false',
       'warning_level=3',
    ],
-   meson_version: '>=0.55.0')
+   meson_version: '>=1.2.0')
 
 copyright_year = 2024
 forced_fallbacks = get_option('force_fallback_for')
