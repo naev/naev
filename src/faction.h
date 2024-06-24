@@ -80,6 +80,7 @@ int areAllies( int a, int b );
 
 /* load/free */
 int  factions_load( void );
+void factions_loadPost( void );
 void factions_free( void );
 void factions_reset( void );
 void faction_clearKnown( void );

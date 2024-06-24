@@ -698,16 +698,17 @@ void load_all( void )
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Damage Types…" ) );
    dtype_load(); /* dep for outfits */
 
+   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Factions…" ) );
+   factions_load(); /* dep for fleet, space, missions, AI */
+
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Outfits…" ) );
    outfit_load(); /* dep for ships, factions */
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Ships…" ) );
    ships_load(); /* dep for fleet */
 
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Factions…" ) );
-   factions_load(); /* dep for fleet, space, missions, AI */
-
-   /* Handle outfit loading part that may use ships and factions. */
+   /* Handle dependent faction/outfit stuff. */
+   factions_loadPost();
    outfit_loadPost();
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading AI…" ) );

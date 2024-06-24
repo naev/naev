@@ -61,6 +61,11 @@ typedef struct Faction_ {
    char *ai;          /**< Name of the faction's default pilot AI. */
    char *description; /**< Description of the faction. */
 
+   /* Scripts. */
+   char *script_standing;
+   char *script_spawn;
+   char *script_equip;
+
    /* Graphics. */
    glTexture *logo;   /**< Tiny logo. */
    glColour   colour; /**< Faction specific colour. */
@@ -1508,8 +1513,7 @@ static void faction_addStandingScript( Faction *temp, const char *scriptname )
  */
 static int faction_parseSocial( const char *file )
 {
-   char       buf[PATH_MAX], *name, *dat;
-   size_t     ndat;
+   char      *name;
    xmlNodePtr node, parent;
    Faction   *base;
 
@@ -1552,56 +1556,10 @@ static int faction_parseSocial( const char *file )
          continue;
       }
 
-      /* Standing scripts. */
-      if ( xml_isNode( node, "standing" ) ) {
-         if ( base->lua_env != LUA_NOREF )
-            WARN( _( "Faction '%s' has duplicate 'standing' tag." ),
-                  base->name );
-         faction_addStandingScript( base, xml_raw( node ) );
-         continue;
-      }
-
-      /* Spawning scripts. */
-      if ( xml_isNode( node, "spawn" ) ) {
-         if ( base->sched_env != LUA_NOREF )
-            WARN( _( "Faction '%s' has duplicate 'spawn' tag." ), base->name );
-         snprintf( buf, sizeof( buf ), FACTIONS_PATH "spawn/%s.lua",
-                   xml_raw( node ) );
-         base->sched_env = nlua_newEnv();
-         nlua_loadStandard( base->sched_env );
-         dat = ndata_read( buf, &ndat );
-         if ( nlua_dobufenv( base->sched_env, dat, ndat, buf ) != 0 ) {
-            WARN( _( "Failed to run spawn script: %s\n"
-                     "%s\n"
-                     "Most likely Lua file has improper syntax, please check" ),
-                  buf, lua_tostring( naevL, -1 ) );
-            nlua_freeEnv( base->sched_env );
-            base->sched_env = LUA_NOREF;
-         }
-         free( dat );
-         continue;
-      }
-
-      /* Equipment scripts. */
-      if ( xml_isNode( node, "equip" ) ) {
-         if ( base->equip_env != LUA_NOREF )
-            WARN( _( "Faction '%s' has duplicate 'equip' tag." ), base->name );
-         snprintf( buf, sizeof( buf ), FACTIONS_PATH "equip/%s.lua",
-                   xml_raw( node ) );
-         base->equip_env = nlua_newEnv();
-         nlua_loadStandard( base->equip_env );
-         dat = ndata_read( buf, &ndat );
-         if ( nlua_dobufenv( base->equip_env, dat, ndat, buf ) != 0 ) {
-            WARN( _( "Failed to run equip script: %s\n"
-                     "%s\n"
-                     "Most likely Lua file has improper syntax, please check" ),
-                  buf, lua_tostring( naevL, -1 ) );
-            nlua_freeEnv( base->equip_env );
-            base->equip_env = LUA_NOREF;
-         }
-         free( dat );
-         continue;
-      }
+      /* Load script paths. */
+      xmlr_strd( node, "standing", base->script_standing );
+      xmlr_strd( node, "spawn", base->script_spawn );
+      xmlr_strd( node, "equip", base->script_equip );
 
       /* Grab the allies */
       if ( xml_isNode( node, "allies" ) ) {
@@ -1629,10 +1587,6 @@ static int faction_parseSocial( const char *file )
          continue;
       }
    } while ( xml_nextNode( node ) );
-
-   if ( ( base->lua_env == LUA_NOREF ) &&
-        !faction_isFlag( base, FACTION_STATIC ) )
-      WARN( _( "Faction '%s' has no Lua and isn't static!" ), base->name );
 
    xmlFreeDoc( doc );
    return 0;
@@ -1761,6 +1715,61 @@ int factions_load( void )
    return 0;
 }
 
+void factions_loadPost( void )
+{
+   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
+      Faction *f = &faction_stack[i];
+
+      /* Standing scripts. */
+      if ( f->script_standing != NULL )
+         faction_addStandingScript( f, f->script_standing );
+
+      if ( f->script_spawn != NULL ) {
+         char   buf[PATH_MAX], *dat;
+         size_t ndat;
+
+         snprintf( buf, sizeof( buf ), FACTIONS_PATH "spawn/%s.lua",
+                   f->script_spawn );
+         f->sched_env = nlua_newEnv();
+         nlua_loadStandard( f->sched_env );
+         dat = ndata_read( buf, &ndat );
+         if ( nlua_dobufenv( f->sched_env, dat, ndat, buf ) != 0 ) {
+            WARN( _( "Failed to run spawn script: %s\n"
+                     "%s\n"
+                     "Most likely Lua file has improper syntax, please check" ),
+                  buf, lua_tostring( naevL, -1 ) );
+            nlua_freeEnv( f->sched_env );
+            f->sched_env = LUA_NOREF;
+         }
+         free( dat );
+      }
+
+      if ( f->script_equip != NULL ) {
+         char   buf[PATH_MAX], *dat;
+         size_t ndat;
+
+         snprintf( buf, sizeof( buf ), FACTIONS_PATH "equip/%s.lua",
+                   f->script_equip );
+         f->equip_env = nlua_newEnv();
+         nlua_loadStandard( f->equip_env );
+         dat = ndata_read( buf, &ndat );
+         if ( nlua_dobufenv( f->equip_env, dat, ndat, buf ) != 0 ) {
+            WARN( _( "Failed to run equip script: %s\n"
+                     "%s\n"
+                     "Most likely Lua file has improper syntax, please check" ),
+                  buf, lua_tostring( naevL, -1 ) );
+            nlua_freeEnv( f->equip_env );
+            f->equip_env = LUA_NOREF;
+         }
+         free( dat );
+      }
+
+      /* Make sure functions that need Lua have it. */
+      if ( ( f->lua_env == LUA_NOREF ) && !faction_isFlag( f, FACTION_STATIC ) )
+         WARN( _( "Faction '%s' has no Lua and isn't static!" ), f->name );
+   }
+}
+
 /**
  * @brief Frees a single faction.
  */
@@ -1772,6 +1781,9 @@ static void faction_freeOne( Faction *f )
    free( f->mapname );
    free( f->description );
    free( f->ai );
+   free( f->script_standing );
+   free( f->script_spawn );
+   free( f->script_equip );
    array_free( f->generators );
    gl_freeTexture( f->logo );
    array_free( f->allies );
