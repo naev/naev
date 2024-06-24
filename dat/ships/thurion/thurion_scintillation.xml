@@ -14,7 +14,7 @@
  <trail_generator x="-9" y="-5" h="10">nebula</trail_generator>
  <trail_generator x="-10" y="30" h="0">nebula</trail_generator>
  <trail_generator x="-9" y="5" h="10">nebula</trail_generator>
- <fabricator>Thurion shipyards</fabricator>
+ <fabricator>Thurion Shipyards</fabricator>
  <faction>Thurion</faction>
  <license>Light Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Thurion")+0.5) &gt;= 30</cond>

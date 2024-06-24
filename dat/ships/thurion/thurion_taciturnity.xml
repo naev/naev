@@ -13,7 +13,7 @@
  <class>Armoured Transport</class>
  <price>1600000</price>
  <time_mod>1.25</time_mod>
- <fabricator>Thurion shipyards</fabricator>
+ <fabricator>Thurion Shipyards</fabricator>
  <faction>Thurion</faction>
  <license>Large Civilian Vessel</license>
  <cond>math.ceil(faction.playerStanding("Thurion")+0.5) &gt;= 50</cond>
