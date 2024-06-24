@@ -222,10 +222,6 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
    double hw, hh; /* Half width and height. */
    mat4   projection, tex_mat;
 
-   /* Must have colour for now. */
-   if ( c == NULL )
-      c = &cWhite;
-
    hw = w * 0.5;
    hh = h * 0.5;
 
@@ -311,10 +307,6 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags, double x, double y,
 {
    double hw, hh; /* Half width and height. */
    mat4   projection, tex_mat;
-
-   /* Must have colour for now. */
-   if ( c == NULL )
-      c = &cWhite;
 
    hw = w * 0.5;
    hh = h * 0.5;
@@ -455,6 +447,10 @@ void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, double inter,
    else if ( inter <= 0. )
       return gl_renderTextureRawH( tb, projection, tex_mat, c );
 
+   /* Must have colour for now. */
+   if ( c == NULL )
+      c = &cWhite;
+
    glUseProgram( shaders.texture_interpolate.program );
 
    /* Bind the textures. */
@@ -519,10 +515,6 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
       return gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
    else if ( ta == NULL )
       return gl_renderTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
-
-   /* Must have colour for now. */
-   if ( c == NULL )
-      c = &cWhite;
 
    projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
