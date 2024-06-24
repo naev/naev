@@ -10,8 +10,8 @@ if genCDoc.disabled() == false
             'HAVE_DOT'           : dot.found() ? 'YES' : 'NO',
             'PROJECT_NAME'       : meson.project_name(),
             'PROJECT_NUMBER'     : meson.project_version(),
-            'PROJECT_LOGO'       : meson.source_root() / 'extras/logos/logo32.png',
-            'INPUT'              : meson.source_root() / 'src',
+            'PROJECT_LOGO'       : meson.project_source_root() / 'extras/logos/logo32.png',
+            'INPUT'              : meson.project_source_root() / 'src',
             'OUTPUT_DIRECTORY'   : meson.current_build_dir() / doxy_output
         })
 
@@ -65,8 +65,8 @@ if genLDoc.disabled() == false
             ldoc,
             '-c', lconfig,
             '-d', '@OUTPUT@',
-            '-l', meson.source_root() / 'docs/lua',
-            '-s', meson.source_root() / 'docs/lua',
+            '-l', meson.project_source_root() / 'docs/lua',
+            '-s', meson.project_source_root() / 'docs/lua',
             '@PRIVATE_DIR@'],
             install: true,
             install_dir: 'doc/naev')
@@ -92,7 +92,7 @@ if genLore.disabled() == false
         output: 'lore',  # Specify 'lore' as the output directory
         command: [
             loremasterpy,
-            '--source-dir', meson.source_root(),
+            '--source-dir', meson.project_source_root(),
             '--build-dir', meson.build_root()
         ],
     )

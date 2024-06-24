@@ -4,15 +4,15 @@ i18n = import('i18n')
 potfiles = custom_target(
     'potfiles',
     output: 'POTFILES.in',
-    command: [ files('../utils/update-po.sh'), meson.source_root(), '@OUTPUT@' ],
+    command: [ files('../utils/update-po.sh'), meson.project_source_root(), '@OUTPUT@' ],
     install: false
 )
 
 i18n.gettext('naev',
-    data_dirs: meson.source_root() / 'po',
+    data_dirs: meson.project_source_root() / 'po',
     args: [
-        '--files-from=' + (meson.source_root() / 'po/POTFILES.in'),
-        '--directory=' + meson.source_root(),
+        '--files-from=' + (meson.project_source_root() / 'po/POTFILES.in'),
+        '--directory=' + meson.project_source_root(),
         '--from-code=UTF-8',
         '--add-comments',
 
