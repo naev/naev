@@ -12,6 +12,7 @@
  <trail_generator x="-25" y="8" h="0">soromid</trail_generator>
  <trail_generator x="-25" y="-8" h="0">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <license>Medium Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Soromid")+0.5) &gt;= 50</cond>
  <condstr>You need at least 50% reputation with the Soromid.</condstr>

@@ -12,6 +12,7 @@
  <trail_generator x="-7" y="0" h="13">proteronS</trail_generator>
  <trail_generator x="-5" y="0" h="0">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
+ <faction>Proteron</faction>
  <description>The Proteron chose their battles carefully as their slow capital ships cannot retreat from a battle easily. Thus, they have rather large fleet of reconnaissance vessels with the Euler being the primarily used reconnaissance vessel. Not geared for combat, this ship relies on stealth and speed to avoid hostiles.</description>
  <health>
   <armour>30</armour>

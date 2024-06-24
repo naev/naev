@@ -11,6 +11,7 @@
  <trail_generator x="-11" y="0" h="0">nebula</trail_generator>
  <trail_generator x="-11" y="0" h="0">zalekS</trail_generator>
  <fabricator>Za'lek Robotics</fabricator>
+ <faction>Za'lek</faction>
  <description>This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by the player.</description>
  <movement>
   <accel>160</accel>

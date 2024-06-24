@@ -11,6 +11,7 @@
  <time_mod>0.9</time_mod>
  <trail_generator x="-20" y="0" h="0" always_under="1">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <license>Light Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Soromid")+0.5) &gt;= 30</cond>
  <condstr>You need at least 30% reputation with the Soromid.</condstr>

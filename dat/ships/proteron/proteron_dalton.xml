@@ -13,6 +13,7 @@
  <trail_generator x="-8" y="-6" h="0" always_under="1">proteronS</trail_generator>
  <trail_generator x="-6" y="0" h="0" always_under="1">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
+ <faction>Proteron</faction>
  <license>Light Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Proteron")+0.5) &gt;= 20</cond>
  <condstr>You need at least 20% reputation with the Proteron.</condstr>

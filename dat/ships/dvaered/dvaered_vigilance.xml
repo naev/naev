@@ -13,6 +13,7 @@
  <trail_generator x="-30" y="15" h="-3">nebula</trail_generator>
  <trail_generator x="-30" y="-15" h="-3">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
+ <faction>Dvaered</faction>
  <license>Medium Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Dvaered")+0.5) &gt;= 50</cond>
  <condstr>You need at least 50% reputation with House Dvaered.</condstr>

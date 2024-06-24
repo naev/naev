@@ -18,6 +18,7 @@
 #include "array.h"
 #include "colour.h"
 #include "conf.h"
+#include "faction.h"
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
@@ -795,6 +796,7 @@ static int ship_parse( Ship *temp, const char *filename )
    /* Defaults. */
    ss_statsInit( &temp->stats_array );
    temp->dt_default = 1.;
+   temp->faction    = -1;
 
    /* Lua defaults. */
    temp->lua_env            = LUA_NOREF;
@@ -845,6 +847,11 @@ static int ship_parse( Ship *temp, const char *filename )
 
          /* Graphics are now lazy loaded. */
 
+         continue;
+      }
+
+      if ( xml_isNode( node, "faction" ) ) {
+         temp->faction = faction_get( xml_get( node ) );
          continue;
       }
 

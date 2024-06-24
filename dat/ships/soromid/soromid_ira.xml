@@ -16,6 +16,7 @@
  <trail_generator x="-40" y="-5" h="-5" always_under="1">soromidS</trail_generator>
  <trail_generator x="-40" y="-12" h="0">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <license>Heavy Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Soromid")+0.5) &gt;= 60</cond>
  <condstr>You need at least 60% reputation with the Soromid.</condstr>

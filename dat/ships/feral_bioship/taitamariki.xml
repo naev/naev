@@ -16,6 +16,7 @@
  <trail_generator x="-15" y="0" h="0">soromid</trail_generator>
  <trail_generator x="-10" y="-8" h="0">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <description>Still to do...</description>
  <health>
   <armour>220</armour>

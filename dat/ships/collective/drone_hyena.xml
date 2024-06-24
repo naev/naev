@@ -17,6 +17,7 @@
  <trail_generator x="-9" y="-13" h="0">nebula</trail_generator>
  <trail_generator x="-8" y="0" h="-3" always_under="1" />
  <fabricator>Robosys</fabricator>
+ <faction>Collective</faction>
  <description>A fully sentient drone disguised as a Hyena.</description>
  <health>
   <armour>40</armour>

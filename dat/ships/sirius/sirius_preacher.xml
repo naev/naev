@@ -11,6 +11,7 @@
  <time_mod>1</time_mod>
  <trail_generator x="-25" y="0" h="0">sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>
+ <faction>Sirius</faction>
  <license>Medium Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Sirius")+0.5) &gt;= 40</cond>
  <condstr>You need at least 40% reputation with House Sirius.</condstr>

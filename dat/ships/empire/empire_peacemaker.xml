@@ -15,6 +15,7 @@
  <trail_generator x="5" y="-5" h="-35" always_under="1" />
  <trail_generator x="5" y="-5" h="-45" always_under="1" />
  <fabricator>Nexus Shipyards</fabricator>
+ <faction>Empire</faction>
  <license>Heavy Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Empire")+0.5) &gt;= 70</cond>
  <condstr>You need at least 70% reputation with the Empire.</condstr>

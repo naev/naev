@@ -17,6 +17,7 @@
  <trail_generator x="-44" y="19" h="-2" always_under="1">nebula</trail_generator>
  <trail_generator x="-44" y="-19" h="-2" always_under="1">nebula</trail_generator>
  <fabricator>Nexus Shipyards</fabricator>
+ <faction>Empire</faction>
  <license>Large Civilian Vessel</license>
  <cond>math.ceil(faction.playerStanding("Empire")+0.5) &gt;= 60</cond>
  <condstr>You need at least 60% reputation with the Empire.</condstr>

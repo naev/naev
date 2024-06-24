@@ -14,6 +14,7 @@
  <trail_generator x="-50" y="15" h="0">zalek</trail_generator>
  <trail_generator x="-60" y="-10" h="-10" always_under="1">zalekL</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
+ <faction>Za'lek</faction>
  <license>Heavy Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Za'lek")+0.5) &gt;= 70</cond>
  <condstr>You need at least 70% reputation with House Za'lek.</condstr>

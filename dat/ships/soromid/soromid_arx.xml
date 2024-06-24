@@ -18,6 +18,7 @@
  <trail_generator x="0" y="15" h="-15">nebula</trail_generator>
  <trail_generator x="0" y="-15" h="-15">nebula</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <license>Heavy Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Soromid")+0.5) &gt;= 70</cond>
  <condstr>You need at least 70% reputation with the Soromid.</condstr>

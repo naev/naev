@@ -15,6 +15,7 @@
  <trail_generator x="-20" y="5" h="-5" always_under="1" />
  <trail_generator x="-20" y="-5" h="-5" always_under="1" />
  <fabricator>Nexus Shipyards</fabricator>
+ <faction>Empire</faction>
  <license>Medium Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Empire")+0.5) &gt;= 40</cond>
  <condstr>You need at least 40% reputation with the Empire.</condstr>

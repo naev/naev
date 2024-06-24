@@ -16,6 +16,7 @@
  <trail_generator x="-36" y="0" h="-8" always_under="1">nebula</trail_generator>
  <trail_generator x="-36" y="11" h="0">nebula</trail_generator>
  <fabricator>Sirius Systems</fabricator>
+ <faction>Sirius</faction>
  <license>Large Civilian Vessel</license>
  <cond>math.ceil(faction.playerStanding("Sirius")+0.5) &gt;= 60</cond>
  <condstr>You need at least 60% reputation with House Sirius.</condstr>

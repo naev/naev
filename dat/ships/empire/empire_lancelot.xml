@@ -13,6 +13,7 @@
  <trail_generator x="-20" y="5" h="0" />
  <trail_generator x="-20" y="-5" h="0" />
  <fabricator>Nexus Shipyards</fabricator>
+ <faction>Empire</faction>
  <license>Light Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Empire")+0.5) &gt;= 30</cond>
  <condstr>You need at least 30% reputation with the Empire.</condstr>

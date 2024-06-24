@@ -12,6 +12,7 @@
  <trail_generator x="-52" y="5" h="0">sirius</trail_generator>
  <trail_generator x="-52" y="-5" h="0">sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>
+ <faction>Sirius</faction>
  <license>Heavy Combat Vessel</license>
  <cond>math.ceil(faction.playerStanding("Sirius")+0.5) &gt;= 70</cond>
  <condstr>You need at least 70% reputation with House Sirius.</condstr>
