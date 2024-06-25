@@ -2,7 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 /** @cond */
-#include "SDL.h"
 #include <float.h>
 /** @endcond */
 
@@ -15,12 +14,10 @@
 #include "input.h"
 #include "log.h"
 #include "naev.h"
-#include "nstring.h"
 #include "ntracing.h"
 #include "opengl.h"
 #include "pilot.h"
 #include "player.h"
-#include "quadtree.h"
 #include "safelanes.h"
 #include "space.h"
 
