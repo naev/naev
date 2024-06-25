@@ -315,11 +315,10 @@ credits_t ship_buyPrice( const Ship *s )
 glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
                           double glow )
 {
-   double          fbosize;
-   GLuint          fbo, tex;
-   char            buf[STRMAX_SHORT];
-   glTexture      *gltex;
-   const glColour *c = NULL;
+   double     fbosize;
+   GLuint     fbo, tex;
+   char       buf[STRMAX_SHORT];
+   glTexture *gltex;
 
    fbosize = size / gl_screen.scale;
 
@@ -329,10 +328,14 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
    glClearColor( 0., 0., 0., 0. );
    glClear( GL_COLOR_BUFFER_BIT );
 
-   glUseProgram( shaders.shop_bg.program );
-   if ( s->faction >= 0 )
-      c = faction_colour( s->faction );
-   gl_renderShader( 0., 0., size, size, 0., &shaders.shop_bg, c, 0 );
+   /* Give faction colour background if applicable. */
+   if ( s->faction >= 0 ) {
+      const glColour *c = faction_colour( s->faction );
+      if ( c != NULL ) {
+         glUseProgram( shaders.shop_bg.program );
+         gl_renderShader( 0., 0., size, size, 0., &shaders.shop_bg, c, 0 );
+      }
+   }
 
    if ( s->gfx_3d != NULL ) {
       Lighting L = L_store_const;
