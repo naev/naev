@@ -11,7 +11,6 @@
 /** @endcond */
 
 #include "array.h"
-#include "nstring.h"
 #include "opengl.h"
 #include "tk/toolkit_priv.h"
 
@@ -237,7 +236,7 @@ static void iar_render( Widget *iar, double bx, double by )
                  ( cell->image->sh < iar->dat.iar.ih ) ) {
                double offx, offy;
                offx = ( iar->dat.iar.iw - cell->image->sw ) * 0.5;
-               offy = ( iar->dat.iar.iw - cell->image->sh ) * 0.5;
+               offy = ( iar->dat.iar.ih - cell->image->sh ) * 0.5;
                gl_renderStatic( cell->image, xcurs + 5. + offx,
                                 ycurs + gl_smallFont.h + 7. + offy, NULL );
             } else
