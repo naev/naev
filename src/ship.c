@@ -325,7 +325,7 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       mat4       H, Hlight;
       double     r = 0.;
       char       buf[STRMAX_SHORT];
-      snprintf( buf, sizeof( buf ), "%s_gfx_comm", s->name );
+      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm", s->name );
       gl_contextSet();
 
       gl_fboCreate( &fbo, &tex, size, size );
@@ -367,8 +367,38 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       gltex->flags |= OPENGL_TEX_VFLIP;
       return gltex;
    }
-   if ( s->gfx_comm != NULL )
-      return gl_newImage( s->gfx_comm, 0 );
+   if ( s->gfx_comm != NULL ) {
+      glTexture *gltex, *glcomm;
+      GLuint     fbo, tex;
+      char       buf[STRMAX_SHORT];
+      double     fbosize, scale, w, h;
+
+      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm", s->gfx_comm );
+      gl_contextSet();
+
+      glcomm = gl_newImage( s->gfx_comm, 0 );
+
+      fbosize = size / gl_screen.scale;
+      gl_fboCreate( &fbo, &tex, fbosize, fbosize );
+      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+      glClearColor( 0., 0., 0., 0. );
+      glClear( GL_COLOR_BUFFER_BIT );
+
+      scale = MIN( size / glcomm->w, size / glcomm->h );
+      w     = scale * glcomm->w;
+      h     = scale * glcomm->h;
+      gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
+                        0., 0., 1., 1., NULL, 0. );
+
+      glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+      gl_freeTexture( glcomm );
+
+      gl_contextUnset();
+
+      gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
+      // gltex->flags |= OPENGL_TEX_VFLIP;
+      return gltex;
+   }
    return NULL;
 }
 

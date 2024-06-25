@@ -305,17 +305,16 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags, double x, double y,
                           double w, double h, double tx, double ty, double tw,
                           double th, const glColour *c, double angle )
 {
-   double hw, hh; /* Half width and height. */
-   mat4   projection, tex_mat;
-
-   hw = w * 0.5;
-   hh = h * 0.5;
+   mat4 projection, tex_mat;
 
    /* Set the vertex. */
    projection = gl_view_matrix;
    if ( angle == 0. ) {
       mat4_translate_scale_xy( &projection, x, y, w, h );
    } else {
+      double hw, hh; /* Half width and height. */
+      hw = w * 0.5;
+      hh = h * 0.5;
       mat4_translate_xy( &projection, x + hw, y + hh );
       mat4_rotate2d( &projection, angle );
       mat4_translate_scale_xy( &projection, -hw, -hh, w, h );
