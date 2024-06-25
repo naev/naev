@@ -3,7 +3,7 @@
  <points>80</points>
  <base_type>Starbridge</base_type>
  <gfx sx="10" sy="10" size="80">starbridge_pirate</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1850000</price>

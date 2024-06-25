@@ -4,7 +4,7 @@
  <points>90</points>
  <base_type>Vigilance</base_type>
  <gfx size="95" sx="10" sy="10">vigilance_dvaered</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2200000</price>

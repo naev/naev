@@ -3,7 +3,7 @@
  <points>60</points>
  <base_type>Phalanx</base_type>
  <gfx size="95" sx="10" sy="10">phalanx_pirate</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>925000</price>

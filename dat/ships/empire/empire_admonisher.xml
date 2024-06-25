@@ -3,7 +3,7 @@
  <points>60</points>
  <base_type>Admonisher</base_type>
  <gfx size="68">admonisher_empire</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>1100000</price>

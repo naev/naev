@@ -4,7 +4,7 @@
  <points>200</points>
  <base_type>Dogma</base_type>
  <gfx size="128" sx="12" sy="12">dogma</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Battleship</class>
  <price>9400000</price>

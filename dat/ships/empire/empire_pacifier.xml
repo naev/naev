@@ -3,7 +3,7 @@
  <points>90</points>
  <base_type>Pacifier</base_type>
  <gfx size="77" sx="10" sy="10">pacifier_empire</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2100000</price>

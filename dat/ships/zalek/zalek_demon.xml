@@ -4,7 +4,7 @@
  <points>100</points>
  <base_type>Demon</base_type>
  <gfx size="83" sx="12" sy="12">demon</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound pitch="0.76">engine_zalek</sound>
  <class>Destroyer</class>
  <price>2400000</price>

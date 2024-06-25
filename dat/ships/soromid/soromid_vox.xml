@@ -4,7 +4,7 @@
  <points>240</points>
  <base_type>Vox</base_type>
  <gfx size="171" sx="12" sy="12">vox</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound pitch="0.5">engine_soromid</sound>
  <class display="Bio-Battleship">Battleship</class>
  <price>23000000</price>

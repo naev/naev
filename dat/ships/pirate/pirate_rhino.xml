@@ -3,7 +3,7 @@
  <points>80</points>
  <base_type>Rhino</base_type>
  <gfx size="100" sx="10" sy="10">rhino_pirate</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Armoured Transport</class>
  <price>1450000</price>

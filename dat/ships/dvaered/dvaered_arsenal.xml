@@ -4,7 +4,7 @@
  <points>120</points>
  <base_type>Arsenal</base_type>
  <gfx size="128" sx="12" sy="12">arsenal_dvaered</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Bulk Freighter</class>
  <price>5400000</price>

@@ -4,7 +4,7 @@
  <points>30</points>
  <base_type>Fidelity</base_type>
  <gfx size="60">fidelity</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>320000</price>

@@ -4,7 +4,7 @@
  <points>30</points>
  <base_type>Brigand</base_type>
  <gfx size="60">brigand</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Interceptor">Interceptor</class>
  <price>380000</price>

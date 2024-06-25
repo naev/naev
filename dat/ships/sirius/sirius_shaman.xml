@@ -3,7 +3,7 @@
  <lua>sirius_shaman.lua</lua>
  <points>40</points>
  <base_type>Shaman</base_type>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <gfx size="68">shaman</gfx>
  <sound>engine</sound>
  <class>Bomber</class>

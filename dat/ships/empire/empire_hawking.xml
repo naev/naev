@@ -3,7 +3,7 @@
  <points>150</points>
  <base_type>Hawking</base_type>
  <gfx size="139" sx="12" sy="12">hawking_empire</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>5500000</price>

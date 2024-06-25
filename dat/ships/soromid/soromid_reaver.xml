@@ -4,7 +4,7 @@
  <points>40</points>
  <base_type>Reaver</base_type>
  <gfx size="68">reaver</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Fighter">Fighter</class>
  <price>670000</price>

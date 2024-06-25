@@ -3,7 +3,7 @@
  <points>30</points>
  <base_type>Shark</base_type>
  <gfx size="54">shark_empire</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>280000</price>

@@ -4,7 +4,7 @@
  <points>200</points>
  <base_type>Ira</base_type>
  <gfx size="112" sx="12" sy="12">ira</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound pitch="0.6">engine_soromid</sound>
  <class display="Bio-Cruiser">Cruiser</class>
  <price>7100000</price>

@@ -4,7 +4,7 @@
  <points>60</points>
  <base_type>Preacher</base_type>
  <gfx size="70" sx="10" sy="10">preacher</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>1200000</price>

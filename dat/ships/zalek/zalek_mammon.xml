@@ -4,7 +4,7 @@
  <points>110</points>
  <base_type>Mammon</base_type>
  <gfx size="128" sx="12" sy="12">mammon_zalek</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Bulk Freighter</class>
  <price>4600000</price>

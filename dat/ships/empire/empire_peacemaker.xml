@@ -3,7 +3,7 @@
  <points>200</points>
  <base_type>Peacemaker</base_type>
  <gfx size="110" sx="12" sy="12">peacemaker</gfx>
- <rarity>2</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Carrier</class>
  <price>10000000</price>
