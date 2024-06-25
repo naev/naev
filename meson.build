@@ -6,7 +6,7 @@ project('naev', 'c',
       'werror=false',
       'warning_level=3',
    ],
-   meson_version: '>=0.55.0')
+   meson_version: '>=1.2.0')
 
 copyright_year = 2024
 forced_fallbacks = get_option('force_fallback_for')
@@ -385,7 +385,7 @@ int main (void) { return 0; }''')
       output: 'naev.py',
       configuration: {
          'build_root': meson.current_build_dir(),
-         'source_root': meson.source_root(),
+         'source_root': meson.project_source_root(),
          'naev_bin' : naev_bin.full_path(),
          'zip_overlay' : zip_overlay.full_path(),
          'debug' : debug,
@@ -397,7 +397,7 @@ int main (void) { return 0; }''')
       input: join_paths('utils','build','gdbinit.in'),
       output: '.gdbinit',
       configuration: {
-         'source_root': meson.source_root(),
+         'source_root': meson.project_source_root(),
       }
    )
 
@@ -405,7 +405,7 @@ int main (void) { return 0; }''')
       input: join_paths('utils','build','lldbinit.py.in'),
       output: 'lldbinit.py',
       configuration: {
-         'source_root': meson.source_root(),
+         'source_root': meson.project_source_root(),
       }
    )
 
@@ -473,7 +473,7 @@ if (mutagen.found())
       command: [
          soundtrackpy,
          '--csv', 'yes',
-         '--source-dir', meson.source_root(),
+         '--source-dir', meson.project_source_root(),
          '--output', '@OUTPUT0@'
       ],
       output: [
