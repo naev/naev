@@ -318,18 +318,25 @@ credits_t ship_buyPrice( const Ship *s )
 glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
                                const Lighting *Lscene )
 {
-   if ( s->gfx_3d != NULL ) {
-      glTexture *gltex;
-      GLuint     fbo, tex, depth_tex;
-      Lighting   L = ( Lscene == NULL ) ? L_default : *Lscene;
-      mat4       H, Hlight;
-      double     r = 0.;
-      char       buf[STRMAX_SHORT];
-      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm", s->name );
-      gl_contextSet();
+   double     fbosize;
+   GLuint     fbo, tex, depth_tex;
+   char       buf[STRMAX_SHORT];
+   glTexture *gltex;
 
-      gl_fboCreate( &fbo, &tex, size, size );
-      gl_fboAddDepth( fbo, &depth_tex, size, size );
+   fbosize = size / gl_screen.scale;
+
+   gl_contextSet();
+   gl_fboCreate( &fbo, &tex, fbosize, fbosize );
+   gl_fboAddDepth( fbo, &depth_tex, fbosize, fbosize );
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   glClearColor( 0., 0., 0., 0. );
+   glClear( GL_COLOR_BUFFER_BIT );
+
+   if ( s->gfx_3d != NULL ) {
+      Lighting L = ( Lscene == NULL ) ? L_default : *Lscene;
+      mat4     H, Hlight;
+      double   r = 0.;
+      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm", s->name );
 
       /* We rotate the model so it's staring at the player and facing slightly
        * down. */
@@ -354,52 +361,31 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       L.intensity *= 1.5;
 
       /* Render the model. */
-      ship_renderFramebuffer3D( s, fbo, size * gl_screen.scale, gl_screen.nw,
-                                gl_screen.nh, 0., r, &cWhite, &L, &H,
-                                OPENGL_TEX_VFLIP );
-
-      glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
-      glDeleteTextures( 1, &depth_tex );
-      glBindFramebuffer( GL_FRAMEBUFFER, 0 );
-      gl_contextUnset();
-
-      gltex = gl_rawTexture( buf, tex, size, size );
-      gltex->flags |= OPENGL_TEX_VFLIP;
-      return gltex;
+      ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, 0., r,
+                                &cWhite, &L, &H, 0 );
    }
    if ( s->gfx_comm != NULL ) {
-      glTexture *gltex, *glcomm;
-      GLuint     fbo, tex;
-      char       buf[STRMAX_SHORT];
-      double     fbosize, scale, w, h;
+      glTexture *glcomm;
+      double     scale, w, h;
 
       snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm", s->gfx_comm );
-      gl_contextSet();
-
       glcomm = gl_newImage( s->gfx_comm, 0 );
-
-      fbosize = size / gl_screen.scale;
-      gl_fboCreate( &fbo, &tex, fbosize, fbosize );
-      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-      glClearColor( 0., 0., 0., 0. );
-      glClear( GL_COLOR_BUFFER_BIT );
 
       scale = MIN( size / glcomm->w, size / glcomm->h );
       w     = scale * glcomm->w;
       h     = scale * glcomm->h;
       gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
                         0., 0., 1., 1., NULL, 0. );
-
-      glBindFramebuffer( GL_FRAMEBUFFER, 0 );
-      gl_freeTexture( glcomm );
-
-      gl_contextUnset();
-
-      gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
-      // gltex->flags |= OPENGL_TEX_VFLIP;
-      return gltex;
    }
-   return NULL;
+
+   glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
+   glDeleteTextures( 1, &depth_tex );
+   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+   gl_contextUnset();
+
+   gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
+
+   return gltex;
 }
 
 /**
