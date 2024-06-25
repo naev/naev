@@ -100,11 +100,11 @@ const Lighting L_default_const = {
       },
 };
 const Lighting L_store_const = {
-   .ambient_r = 0.,
-   .ambient_g = 0.,
-   .ambient_b = 0.,
+   .ambient_r = 0.1,
+   .ambient_g = 0.1,
+   .ambient_b = 0.1,
    .nlights   = 2,
-   .intensity = 1.,
+   .intensity = 1.5,
    .lights =
       {
          {

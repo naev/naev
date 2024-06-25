@@ -416,6 +416,10 @@ SHADERS = [
       name = "healthbar",
       fs_path = "healthbar.frag",
    ),
+   SimpleShader(
+      name = "shop_bg",
+      fs_path = "shop_bg.frag",
+   ),
 ]
 SHADERS.sort()
 

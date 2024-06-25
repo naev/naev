@@ -173,8 +173,9 @@ void shipyard_open( unsigned int wid )
       /* Properly create the array. */
       for ( int i = 0; i < nships; i++ ) {
          cships[i].caption = strdup( _( shipyard_list[i]->name ) );
-         cships[i].image   = gl_dupTexture( ship_gfxStore( shipyard_list[i] ) );
-         cships[i].layers  = gl_copyTexArray( shipyard_list[i]->gfx_overlays );
+         cships[i].image =
+            gl_dupTexture( ship_gfxStore( shipyard_list[i], 256, 0., 0., 0. ) );
+         cships[i].layers = gl_copyTexArray( shipyard_list[i]->gfx_overlays );
          if ( shipyard_list[i]->rarity > 0 ) {
             glTexture *t     = rarity_texture( shipyard_list[i]->rarity );
             cships[i].layers = gl_addTexArray( cships[i].layers, t );
@@ -213,7 +214,6 @@ void shipyard_update( unsigned int wid, const char *str )
    Ship *ship;
    char  lbl[STRMAX], buf[STRMAX], buf_price[ECON_CRED_STRLEN],
       buf_credits[ECON_CRED_STRLEN];
-   double aspect, gw, gh;
    size_t k = 0, l = 0;
    int    blackmarket = ( ( land_spob != NULL ) &&
                        spob_hasService( land_spob, SPOB_SERVICE_BLACKMARKET ) );
@@ -241,20 +241,8 @@ void shipyard_update( unsigned int wid, const char *str )
    /* update image */
    gl_freeTexture( shipyard_comm );
    shipyard_comm = NULL;
-   shipyard_comm =
-      ship_renderCommGFX( ship, SHIP_GFX_W, 0., 0., &L_store_const );
-   aspect = shipyard_comm->w / shipyard_comm->h;
-   gw     = MIN( shipyard_comm->w, SHIP_GFX_W );
-   gh     = MIN( shipyard_comm->h, SHIP_GFX_H );
-   if ( aspect > 1. )
-      gh /= aspect;
-   else
-      gw /= aspect;
-   window_destroyWidget( wid, "imgTarget" );
-   window_addImage( wid, -40 - ( SHIP_GFX_W - gw ) / 2,
-                    -30 - ( SHIP_GFX_H - gh ) / 2, gw, gh, "imgTarget", NULL,
-                    0 );
-   window_modifyImage( wid, "imgTarget", shipyard_comm, gw, gh );
+   shipyard_comm = ship_gfxStore( ship, SHIP_GFX_W, 0., 0., 0. );
+   window_modifyImage( wid, "imgTarget", shipyard_comm, -1., -1. );
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );

@@ -606,7 +606,7 @@ static int shipL_gfxComm( lua_State *L )
 static int shipL_gfxStore( lua_State *L )
 {
    const Ship *s   = luaL_validship( L, 1 );
-   glTexture  *tex = ship_gfxStore( s );
+   glTexture  *tex = ship_gfxStore( s, 256, 0., 0., 0. );
    if ( tex == NULL ) {
       WARN( _( "Unable to get ship store graphic for '%s'." ), s->name );
       return 0;

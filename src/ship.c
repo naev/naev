@@ -69,7 +69,6 @@ static double       ship_aa_scale       = -1.;
 /*
  * Prototypes
  */
-static int  ship_generateStoreGFX( Ship *temp );
 static int  ship_loadPLG( Ship *temp, const char *buf );
 static int  ship_parse( Ship *temp, const char *filename );
 static int  ship_parseThread( void *ptr );
@@ -311,6 +310,101 @@ credits_t ship_buyPrice( const Ship *s )
 }
 
 /**
+ * @brief Get the store gfx.
+ */
+glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
+                          double glow )
+{
+   double          fbosize;
+   GLuint          fbo, tex;
+   char            buf[STRMAX_SHORT];
+   glTexture      *gltex;
+   const glColour *c = NULL;
+
+   fbosize = size / gl_screen.scale;
+
+   gl_contextSet();
+   gl_fboCreate( &fbo, &tex, fbosize, fbosize );
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   glClearColor( 0., 0., 0., 0. );
+   glClear( GL_COLOR_BUFFER_BIT );
+
+   glUseProgram( shaders.shop_bg.program );
+   if ( s->faction >= 0 )
+      c = faction_colour( s->faction );
+   gl_renderShader( 0., 0., size, size, 0., &shaders.shop_bg, c, 0 );
+
+   if ( s->gfx_3d != NULL ) {
+      Lighting L = L_store_const;
+      mat4     H, Hlight;
+      GLuint   fbo3d, tex3d, depth_tex3d;
+      double   r = 0.;
+      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->name, size );
+
+      gl_fboCreate( &fbo3d, &tex3d, fbosize, fbosize );
+      gl_fboAddDepth( fbo3d, &depth_tex3d, fbosize, fbosize );
+
+      /* We rotate the model so it's staring at the player and facing slightly
+       * down. */
+      H = mat4_identity();
+      mat4_rotate( &H, -M_PI_4, 0.0, 1.0, 0.0 );
+      mat4_rotate( &H, -M_PI_4 * 0.25, 1.0, 0.0, 0.0 );
+
+      /* Transform the light so it's consistent with the 3D model. */
+      Hlight = mat4_identity();
+      if ( fabs( updown ) > DOUBLE_TOL ) {
+         mat4_rotate( &Hlight, M_PI_2, 0.0, 1.0, 0.0 );
+         mat4_rotate( &Hlight, updown, 1.0, 0.0, 1.0 );
+         mat4_rotate( &Hlight, dir, 0.0, 1.0, 0.0 );
+      } else
+         mat4_rotate( &Hlight, dir + M_PI_2, 0.0, 1.0, 0.0 );
+      gltf_lightTransform( &L, &Hlight );
+
+      /* Render the model. */
+      glBindFramebuffer( GL_FRAMEBUFFER, fbo3d );
+      ship_renderFramebuffer3D( s, fbo3d, size, gl_screen.nw, gl_screen.nh,
+                                glow, r, &cWhite, &L, &H, OPENGL_TEX_VFLIP );
+
+      /* Draw on top. */
+      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+      gl_renderTextureRaw( tex3d, 0, 0., 0., size, size, 0., 0., 1., 1., NULL,
+                           0. );
+
+      /* Clean up. */
+      glDeleteFramebuffers( 1, &fbo3d );
+      glDeleteTextures( 1, &tex3d );
+      glDeleteTextures( 1, &depth_tex3d );
+   }
+   if ( s->gfx_comm != NULL ) {
+      glTexture *glcomm;
+      double     scale, w, h, tx, ty;
+      int        sx, sy;
+
+      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->gfx_comm, size );
+      glcomm = gl_newImage( s->gfx_comm, 0 );
+      glcomm->flags &= ~OPENGL_TEX_VFLIP;
+
+      scale = MIN( size / glcomm->w, size / glcomm->h );
+      w     = scale * glcomm->w;
+      h     = scale * glcomm->h;
+      gl_getSpriteFromDir( &sx, &sy, s->sx, s->sy, dir );
+      tx = glcomm->sw * (double)( sx ) / glcomm->w;
+      ty = glcomm->sh * ( glcomm->sy - (double)sy - 1 ) / glcomm->h;
+      gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
+                        tx, ty, glcomm->srw, glcomm->srh, NULL, 0. );
+   }
+
+   glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
+   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+   gl_contextUnset();
+
+   gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
+   gltex->flags |= OPENGL_TEX_VFLIP;
+
+   return gltex;
+}
+
+/**
  * @brief Loads the ship's comm graphic.
  *
  * Must be freed afterwards.
@@ -336,7 +430,7 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       Lighting L = ( Lscene == NULL ) ? L_default : *Lscene;
       mat4     H, Hlight;
       double   r = 0.;
-      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm", s->name );
+      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->name, size );
 
       /* We rotate the model so it's staring at the player and facing slightly
        * down. */
@@ -368,7 +462,7 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       glTexture *glcomm;
       double     scale, w, h;
 
-      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm", s->gfx_comm );
+      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->gfx_comm, size );
       glcomm = gl_newImage( s->gfx_comm, 0 );
       glcomm->flags &= ~OPENGL_TEX_VFLIP;
 
@@ -605,41 +699,6 @@ int ship_gfxLoad( Ship *s )
             s->name, s->gfx_space->sw );
 #endif /* DEBUGGING */
 
-   return 0;
-}
-
-/**
- * @brief Generates the store image for the ship.
- *
- * @TODO do we want to customize the lighting per planet and render on the fly?
- *
- *    @param temp Ship to generate store image for.
- */
-static int ship_generateStoreGFX( Ship *temp )
-{
-   GLuint       fbo, tex, depth_tex;
-   int          tsx, tsy;
-   char         buf[STRMAX_SHORT];
-   const double dir  = M_PI + M_PI_4;
-   GLsizei      size = ceil( temp->size / gl_screen.scale );
-
-   /* Load base gfx first. */
-   ship_gfxLoad( temp );
-
-   /* Load store graphics. */
-   snprintf( buf, sizeof( buf ), "%s_gfx_store", temp->name );
-   gl_contextSet();
-
-   gl_getSpriteFromDir( &tsx, &tsy, temp->sx, temp->sy, dir );
-   gl_fboCreate( &fbo, &tex, size, size );
-   gl_fboAddDepth( fbo, &depth_tex, size, size );
-   ship_renderFramebuffer( temp, fbo, gl_screen.nw, gl_screen.nh, dir, 0., 0.,
-                           0., tsx, tsy, NULL, &L_store_const );
-   temp->_gfx_store = gl_rawTexture( buf, tex, size, size );
-   glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
-   glDeleteTextures( 1, &depth_tex );
-   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
-   gl_contextUnset();
    return 0;
 }
 
@@ -1333,16 +1392,6 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
       glClearColor( 0., 0., 0., 1. );
    }
-}
-
-/**
- * @brief Get the store gfx.
- */
-glTexture *ship_gfxStore( const Ship *s )
-{
-   if ( s->_gfx_store == NULL )
-      ship_generateStoreGFX( (Ship *)s );
-   return s->_gfx_store;
 }
 
 /**
