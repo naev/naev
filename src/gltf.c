@@ -1268,7 +1268,7 @@ void gltf_renderScene( GLuint fb, GltfObject *obj, int scene, const mat4 *H,
    mat4          Hptr;
 
    /* Choose lighting stuff based on size. */
-   if ( size > 300. ) {
+   if ( size > 255. ) {
       shadowmap_size = SHADOWMAP_SIZE_HIGH;
       light_fbo      = light_fbo_high;
       light_tex      = light_tex_high;
