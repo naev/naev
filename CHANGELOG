@@ -23,6 +23,8 @@
       * Inform the player when they don't meet mission requirements for some important missions
       * Can add new plugins directly from the options menu
       * Can toggle whether or not autonav stops when missie lock-ons are detected
+      * Added colour coded factional backgrounds in the shipyard
+      * Can rotate shipyard image for ships with 3D graphics
    * Content
       * 4 new missions
          * Hack the Gibson!

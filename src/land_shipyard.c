@@ -858,6 +858,7 @@ static int preview_mouse( unsigned int wid, const SDL_Event *event, double mx,
          return 0;
       shipyard_dir += rx / ( SHIP_GFX_W / M_PI * 0.5 );
       shipyard_updown += ry / ( SHIP_GFX_H / M_PI * 0.5 );
+      /* TODO probably cache this instead of regenerating it each time... */
       gl_freeTexture( shipyard_preview );
       shipyard_preview = ship_gfxStore( shipyard_selected, SHIP_GFX_W,
                                         shipyard_dir, shipyard_updown, 0. );
