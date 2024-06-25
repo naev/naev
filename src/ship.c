@@ -362,7 +362,7 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
 
       /* Render the model. */
       ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, 0., r,
-                                &cWhite, &L, &H, 0 );
+                                &cWhite, &L, &H, OPENGL_TEX_VFLIP );
    }
    if ( s->gfx_comm != NULL ) {
       glTexture *glcomm;
@@ -370,6 +370,7 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
 
       snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm", s->gfx_comm );
       glcomm = gl_newImage( s->gfx_comm, 0 );
+      glcomm->flags &= ~OPENGL_TEX_VFLIP;
 
       scale = MIN( size / glcomm->w, size / glcomm->h );
       w     = scale * glcomm->w;
@@ -384,6 +385,7 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
    gl_contextUnset();
 
    gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
+   gltex->flags |= OPENGL_TEX_VFLIP;
 
    return gltex;
 }
