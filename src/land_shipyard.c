@@ -49,7 +49,10 @@ static Ship **shipyard_list =
    NULL; /**< Array (array.h): Available ships, valid when the shipyard
             image-array widget is. */
 static Ship *shipyard_selected = NULL; /**< Currently selected shipyard ship. */
-static glTexture *shipyard_comm = NULL; /**< Current comm image. */
+static glTexture *shipyard_preview  = NULL; /**< Current comm image. */
+static double     shipyard_dir      = 0.;
+static double     shipyard_updown   = 0.;
+static int        preview_mousedown = 0;
 
 /*
  * Helper functions.
@@ -69,6 +72,13 @@ static int  shipyard_mouseSlots( unsigned int wid, const SDL_Event *event,
 static void shipyard_renderSlotsOver( double bx, double by, double bw,
                                       double bh, void *data );
 static void shipyard_find( unsigned int wid, const char *str );
+/* Preview. */
+static void preview_render( double x, double y, double w, double h,
+                            void *data );
+static int  preview_mouse( unsigned int wid, const SDL_Event *event, double x,
+                           double y, double w, double h, double rx, double ry,
+                           void *data );
+static void preview_focusLose( unsigned int wid, const char *wgtname );
 
 /**
  * @brief Opens the shipyard window.
@@ -121,10 +131,11 @@ void shipyard_open( unsigned int wid )
    window_addButtonKey( wid, off, 20, bw, bh, "btnFindShips", _( "Find Ships" ),
                         shipyard_find, SDLK_f );
 
-   /* target gfx */
+   /* ship review */
    window_addRect( wid, -40 + 4, -40 + 4, sw + 8, sh + 8, "rctTarget", &cBlack,
                    1 );
-   window_addImage( wid, -40, -40, sw, sh, "imgTarget", NULL, 0 );
+   window_addCust( wid, -40, -40, sw, sh, "cstPreview", 0, preview_render,
+                   preview_mouse, NULL, preview_focusLose, NULL );
 
    /* slot types */
    data = calloc( 1, sizeof( CstShipSlotWidget ) );
@@ -173,9 +184,8 @@ void shipyard_open( unsigned int wid )
       /* Properly create the array. */
       for ( int i = 0; i < nships; i++ ) {
          cships[i].caption = strdup( _( shipyard_list[i]->name ) );
-         cships[i].image =
-            gl_dupTexture( ship_gfxStore( shipyard_list[i], 256, 0., 0., 0. ) );
-         cships[i].layers = gl_copyTexArray( shipyard_list[i]->gfx_overlays );
+         cships[i].image   = ship_gfxStore( shipyard_list[i], 256, 0., 0., 0. );
+         cships[i].layers  = gl_copyTexArray( shipyard_list[i]->gfx_overlays );
          if ( shipyard_list[i]->rarity > 0 ) {
             glTexture *t     = rarity_texture( shipyard_list[i]->rarity );
             cships[i].layers = gl_addTexArray( cships[i].layers, t );
@@ -222,12 +232,11 @@ void shipyard_update( unsigned int wid, const char *str )
 
    /* No ships */
    if ( i < 0 || array_size( shipyard_list ) == 0 ) {
-      gl_freeTexture( shipyard_comm );
-      shipyard_comm = NULL;
-      window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
+      gl_freeTexture( shipyard_preview );
+      shipyard_preview = NULL;
+      window_modifyImage( wid, "cstPreview", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip" );
       window_disableButton( wid, "btnTradeShip" );
-      window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_modifyText( wid, "txtStats", NULL );
       window_modifyText( wid, "txtDescription", NULL );
       window_modifyText( wid, "txtSDesc", NULL );
@@ -239,10 +248,11 @@ void shipyard_update( unsigned int wid, const char *str )
    shipyard_selected = ship;
 
    /* update image */
-   gl_freeTexture( shipyard_comm );
-   shipyard_comm = NULL;
-   shipyard_comm = ship_gfxStore( ship, SHIP_GFX_W, 0., 0., 0. );
-   window_modifyImage( wid, "imgTarget", shipyard_comm, -1., -1. );
+   gl_freeTexture( shipyard_preview );
+   shipyard_dir    = 0.;
+   shipyard_updown = 0.;
+   shipyard_preview =
+      ship_gfxStore( ship, SHIP_GFX_W, shipyard_dir, shipyard_updown, 0. );
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
@@ -420,8 +430,8 @@ void shipyard_cleanup( void )
    array_free( shipyard_list );
    shipyard_list     = NULL;
    shipyard_selected = NULL;
-   gl_freeTexture( shipyard_comm );
-   shipyard_comm = NULL;
+   gl_freeTexture( shipyard_preview );
+   shipyard_preview = NULL;
 }
 
 /**
@@ -772,11 +782,11 @@ static int shipyard_mouseSlots( unsigned int wid, const SDL_Event *event,
 
    default:
       wgt->mouseover = 0;
-      return 1;
+      return 0;
    }
    if ( ( x < 0 ) || ( x >= array_size( ps ) ) ) {
       wgt->mouseover = 0;
-      return 1;
+      return 0;
    }
 
    /* Mark the slot. */
@@ -815,4 +825,51 @@ static void shipyard_renderSlotsOver( double bx, double by, double bw,
 
    /* Draw the alt stuff. */
    toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
+}
+
+static void preview_render( double x, double y, double w, double h, void *data )
+{
+   (void)data;
+   if ( shipyard_preview == NULL )
+      return;
+   gl_renderScaleAspect( shipyard_preview, x, y, w, h, NULL );
+}
+
+static int preview_mouse( unsigned int wid, const SDL_Event *event, double mx,
+                          double my, double w, double h, double rx, double ry,
+                          void *data )
+{
+   (void)wid;
+   (void)data;
+
+   switch ( event->type ) {
+   case SDL_MOUSEBUTTONUP:
+      preview_mousedown = 0;
+      return 0;
+
+   case SDL_MOUSEBUTTONDOWN:
+      if ( ( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ) )
+         return 0;
+      preview_mousedown = 1;
+      return 1;
+
+   case SDL_MOUSEMOTION:
+      if ( !preview_mousedown )
+         return 0;
+      shipyard_dir += rx / ( SHIP_GFX_W / M_PI * 0.5 );
+      shipyard_updown += ry / ( SHIP_GFX_H / M_PI * 0.5 );
+      gl_freeTexture( shipyard_preview );
+      shipyard_preview = ship_gfxStore( shipyard_selected, SHIP_GFX_W,
+                                        shipyard_dir, shipyard_updown, 0. );
+      return 1;
+
+   default:
+      return 0;
+   }
+}
+
+static void preview_focusLose( unsigned int wid, const char *wgtname )
+{
+   (void)wid;
+   (void)wgtname;
 }

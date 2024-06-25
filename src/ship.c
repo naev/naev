@@ -351,7 +351,7 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
 
    if ( s->gfx_3d != NULL ) {
       Lighting L = L_store_const;
-      mat4     H, Hlight;
+      mat4     H;
       GLuint   fbo3d, tex3d, depth_tex3d;
       double   r = 0.;
       snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->name, size );
@@ -362,18 +362,8 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
       /* We rotate the model so it's staring at the player and facing slightly
        * down. */
       H = mat4_identity();
-      mat4_rotate( &H, -M_PI_4, 0.0, 1.0, 0.0 );
-      mat4_rotate( &H, -M_PI_4 * 0.25, 1.0, 0.0, 0.0 );
-
-      /* Transform the light so it's consistent with the 3D model. */
-      Hlight = mat4_identity();
-      if ( fabs( updown ) > DOUBLE_TOL ) {
-         mat4_rotate( &Hlight, M_PI_2, 0.0, 1.0, 0.0 );
-         mat4_rotate( &Hlight, updown, 1.0, 0.0, 1.0 );
-         mat4_rotate( &Hlight, dir, 0.0, 1.0, 0.0 );
-      } else
-         mat4_rotate( &Hlight, dir + M_PI_2, 0.0, 1.0, 0.0 );
-      gltf_lightTransform( &L, &Hlight );
+      mat4_rotate( &H, -M_PI_4 + dir, 0.0, 1.0, 0.0 );
+      mat4_rotate( &H, -M_PI_4 * 0.25 + updown, 1.0, 0.0, 0.0 );
 
       /* Render the model. */
       glBindFramebuffer( GL_FRAMEBUFFER, fbo3d );
@@ -407,6 +397,8 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
       ty = glcomm->sh * ( glcomm->sy - (double)sy - 1 ) / glcomm->h;
       gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
                         tx, ty, glcomm->srw, glcomm->srh, NULL, 0. );
+
+      gl_freeTexture( glcomm );
    }
 
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
@@ -486,6 +478,8 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       h     = scale * glcomm->h;
       gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
                         0., 0., 1., 1., NULL, 0. );
+
+      gl_freeTexture( glcomm );
    }
 
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
