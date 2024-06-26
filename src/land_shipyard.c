@@ -29,8 +29,7 @@
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 
-#define SHIP_GFX_W 256
-#define SHIP_GFX_H 256
+#define SHIP_GFX_SIZE 256 /**< Size of the ship preview widget. */
 
 /**
  * Custom ship slot widget.
@@ -42,10 +41,15 @@ typedef struct CstShipSlotWidget_ {
    double                alty;
 } CstShipSlotWidget;
 
+/**
+ * Custom ship preview widget.
+ */
 typedef struct CstShipPreview {
    int    mousedown;
    GLuint fbo;
    GLuint tex;
+   double dir;
+   double updown;
 } CstShipPreview;
 
 /*
@@ -55,8 +59,6 @@ static Ship **shipyard_list =
    NULL; /**< Array (array.h): Available ships, valid when the shipyard
             image-array widget is. */
 static Ship *shipyard_selected = NULL; /**< Currently selected shipyard ship. */
-static double preview_dir      = 0.;
-static double preview_updown   = 0.;
 
 /*
  * Helper functions.
@@ -112,8 +114,8 @@ void shipyard_open( unsigned int wid )
    ih = h - 60;
 
    /* Ship image dimensions. */
-   sw = SHIP_GFX_W;
-   sh = SHIP_GFX_H;
+   sw = SHIP_GFX_SIZE;
+   sh = SHIP_GFX_SIZE;
 
    /* Left padding + per-button padding * nbuttons */
    padding = 40 + 20 * 4;
@@ -255,10 +257,10 @@ void shipyard_update( unsigned int wid, const char *str )
 
    /* update image */
    CstShipPreview *p = window_custGetData( wid, "cstPreview" );
-   preview_dir       = 0.;
-   preview_updown    = 0.;
-   ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_W, preview_dir,
-                        preview_updown, 0. );
+   p->dir            = 0.;
+   p->updown         = 0.;
+   ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_SIZE, p->dir,
+                        p->updown, 0. );
    window_custSetDynamic( wid, "cstPreview",
                           ship_gfxAnimated( shipyard_selected ) );
 
@@ -396,7 +398,7 @@ void shipyard_update( unsigned int wid, const char *str )
    /* Calculate layout. */
    window_dimWindow( wid, &w, &h );
    iw = 440 + ( w - LAND_WIDTH );
-   sw = SHIP_GFX_W;
+   sw = SHIP_GFX_SIZE;
    bh = LAND_BUTTON_HEIGHT;
    tw = gl_printWidthRaw( &gl_defFont, lbl );
    th = gl_printHeightRaw( &gl_defFont, tw, lbl ) + gl_defFont.h;
@@ -408,7 +410,7 @@ void shipyard_update( unsigned int wid, const char *str )
    window_resizeWidget( wid, "txtDDesc", w - sw - 40 - ( 20 + iw + 20 + 128 ),
                         th );
    window_moveWidget( wid, "txtDDesc", 20 + iw + 20 + tw + 20, y );
-   y = MIN( y - th, -40 - SHIP_GFX_H - 20 );
+   y = MIN( y - th, -40 - SHIP_GFX_SIZE - 20 );
    if ( ship->desc_extra ) {
       scnprintf( &buf[0], sizeof( buf ), "%s\n%s", _( ship->description ),
                  _( ship->desc_extra ) );
@@ -849,8 +851,8 @@ static void preview_render( double x, double y, double w, double h, void *data )
       return;
 
    if ( ship_gfxAnimated( shipyard_selected ) ) {
-      ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_W, preview_dir,
-                           preview_updown, 0. );
+      ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_SIZE, p->dir,
+                           p->updown, 0. );
       glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
                            GL_ONE_MINUS_SRC_ALPHA );
    }
@@ -883,12 +885,12 @@ static int preview_mouse( unsigned int wid, const SDL_Event *event, double mx,
    case SDL_MOUSEMOTION:
       if ( !p->mousedown )
          return 0;
-      preview_dir += rx / ( SHIP_GFX_W / M_PI * 0.5 );
-      preview_updown += ry / ( SHIP_GFX_H / M_PI * 0.5 );
+      p->dir += rx / ( SHIP_GFX_SIZE / M_PI * 0.5 );
+      p->updown += ry / ( SHIP_GFX_SIZE / M_PI * 0.5 );
       /* Rerender if not animated. */
       if ( !ship_gfxAnimated( shipyard_selected ) )
-         ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_W,
-                              preview_dir, preview_updown, 0. );
+         ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_SIZE, p->dir,
+                              p->updown, 0. );
       return 1;
 
    default:
