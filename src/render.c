@@ -188,6 +188,9 @@ void render_all( double game_dt, double real_dt )
    pp_final = ( array_size( pp_shaders_list[PP_LAYER_FINAL] ) > 0 );
    pp_core  = ( array_size( pp_shaders_list[PP_LAYER_CORE] ) > 0 );
 
+   /* Use pitch black for main screens. */
+   glClearColor( 0., 0., 0., 1. );
+
    /* Case we have a post-processing shader we use the framebuffers. */
    if ( pp_game || pp_gui || pp_final || pp_core ) {
       /* Clear main screen. */
@@ -206,6 +209,7 @@ void render_all( double game_dt, double real_dt )
    /* Bind and clear new drawing area. */
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+   glClearColor( 0., 0., 0., 0. );
 
    dt = ( paused ) ? 0. : game_dt;
 

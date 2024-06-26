@@ -275,7 +275,6 @@ void nebu_renderOverlay( const double dt )
    /* Prepare the matrix */
    if ( nebu_dofbo ) {
       glBindFramebuffer( GL_FRAMEBUFFER, nebu_fbo );
-      glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
    }
 
@@ -297,7 +296,6 @@ void nebu_renderOverlay( const double dt )
 
    /* Clean up. */
    glDisableVertexAttribArray( shaders.nebula.vertex );
-   glClearColor( 0., 0., 0., 1. );
    glUseProgram( 0 );
    gl_checkErr();
 

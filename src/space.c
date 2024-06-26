@@ -2204,14 +2204,12 @@ void spob_gfxLoad( Spob *spob )
          spob->gfx_space = gl_rawTexture( spob->gfx_space3dName, tex, s, s );
          /* Do a single render pass to populate the framebuffer. */
          glBindFramebuffer( GL_FRAMEBUFFER, spob->gfx_fbo );
-         glClearColor( 0., 0., 0., 0. );
          glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
          gltf_renderScene( spob->gfx_fbo, spob->gfx_space3d, 0, NULL,
                            elapsed_time_mod, s * spob_aa_scale, NULL );
 
          glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
-         glClearColor( 0., 0., 0., 1. );
       } else if ( spob->gfx_spaceName != NULL )
          spob->gfx_space =
             gl_newImage( spob->gfx_spaceName, OPENGL_TEX_MIPMAPS );
@@ -3734,14 +3732,12 @@ static void space_renderSpob( const Spob *p )
          return;
 
       glBindFramebuffer( GL_FRAMEBUFFER, p->gfx_fbo );
-      glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
       gltf_renderScene( p->gfx_fbo, p->gfx_space3d, 0, NULL, elapsed_time_mod,
                         s * spob_aa_scale, NULL );
 
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
-      glClearColor( 0., 0., 0., 1. );
 
       gl_renderSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
    } else if ( p->gfx_space )

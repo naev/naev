@@ -325,7 +325,6 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
                           double updown, double glow )
 {
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-   glClearColor( 0., 0., 0., 0. );
    glClear( GL_COLOR_BUFFER_BIT );
 
    /* Give faction colour background if applicable. */
@@ -372,7 +371,6 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
       gl_freeTexture( glcomm );
    }
 
-   glClearColor( 0., 0., 0., 1. );
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
 }
 
@@ -395,7 +393,6 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
    ship_renderGfxStore( fbo, s, size, dir, updown, glow );
 
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
-   glClearColor( 0., 0., 0., 1. );
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
    gl_contextUnset();
 
@@ -424,8 +421,7 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
    gl_fboCreate( &fbo, &tex, fbosize, fbosize );
    gl_fboAddDepth( fbo, &depth_tex, fbosize, fbosize );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-   glClearColor( 0., 0., 0., 0. );
-   glClear( GL_COLOR_BUFFER_BIT );
+   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
    if ( s->gfx_3d != NULL ) {
       Lighting L = ( Lscene == NULL ) ? L_default : *Lscene;
@@ -478,7 +474,6 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
 
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glDeleteTextures( 1, &depth_tex );
-   glClearColor( 0., 0., 0., 1. );
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
    gl_contextUnset();
 
@@ -1243,8 +1238,6 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
    mat4        projection, tex_mat;
    GLint       sbuffer = ceil( scale );
 
-   glClearColor( 0., 0., 0., 0. );
-
    glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
 
    /* Only clear the necessary area. */
@@ -1353,7 +1346,6 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
    }
 
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
-   glClearColor( 0., 0., 0., 1. );
 
    /* anything failed? */
    gl_checkErr();
@@ -1389,8 +1381,6 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       const glTexture *sa, *sb;
       mat4             tmpm;
 
-      glClearColor( 0., 0., 0., 0. );
-
       glBindFramebuffer( GL_FRAMEBUFFER, fbo );
 
       sa = s->gfx_space;
@@ -1416,7 +1406,6 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       gl_view_matrix = tmpm;
 
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
-      glClearColor( 0., 0., 0., 1. );
    }
 }
 

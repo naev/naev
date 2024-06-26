@@ -885,7 +885,6 @@ void ovr_render( double dt )
       glColour col = { 0., 0., 1., 1. };
 
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
-      glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
       glBlendEquation( GL_FUNC_ADD );
       glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ONE );
@@ -951,7 +950,6 @@ void ovr_render( double dt )
       glBlendEquation( GL_FUNC_ADD );
       glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
-      glClearColor( 0., 0., 0., 1. );
 
       glUseProgram( shaders.stealthoverlay.program );
       glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );

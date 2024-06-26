@@ -1615,7 +1615,6 @@ void toolkit_render( double dt )
       toolkit_needsRender   = 0;
 
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
-      glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
       glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
                            GL_ONE_MINUS_SRC_ALPHA );
@@ -1634,7 +1633,6 @@ void toolkit_render( double dt )
       glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
       gl_screen.current_fbo = current_fbo;
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
-      glClearColor( 0., 0., 0., 1. );
    }
 
    /* We can just rendered stored FBO onto the screen. */

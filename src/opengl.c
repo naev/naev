@@ -560,7 +560,7 @@ int gl_init( void )
             GLVersion.major, GLVersion.minor );
 
    /* Some OpenGL options. */
-   glClearColor( 0., 0., 0., 1. );
+   glClearColor( 0., 0., 0., 0. );
 
    /* Set default opengl state. */
    gl_defState();
