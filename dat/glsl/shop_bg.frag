@@ -10,5 +10,5 @@ void main(void)
 {
    float d = 1.0-distance( pos, vec2(0.0,1.0) );
    colour_out = colour;
-   colour_out.a *= pow(d,0.5);
+   colour_out.a *= pow(d,0.75);
 }
