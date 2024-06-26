@@ -150,13 +150,15 @@ function flow.recalculate( p )
    local fm, fb, fr
 
    if srs.playerIsPsychic() then
-      fm = flow_mod[ p:ship():nameRaw() ] or 1
-      fb = flow_base[ p:ship():nameRaw() ] or 0
-      fr = flow_regen[ p:ship():nameRaw() ] or 0
+      local sn = p:ship():nameRaw()
+      fm = flow_mod[ sn ] or 1
+      fb = flow_base[ sn ] or 0
+      fr = flow_regen[ sn ] or 0
       for k,v in ipairs(p:outfitsList("all")) do
-         fm = fm * (flow_mod[ v:nameRaw() ] or 1)
-         fb = fb + (flow_base[ v:nameRaw() ] or 0)
-         fr = fr + (flow_regen[ v:nameRaw() ] or 0)
+         local vn = v:nameRaw()
+         fm = fm * (flow_mod[ vn ] or 1)
+         fb = fb + (flow_base[ vn ] or 0)
+         fr = fr + (flow_regen[ vn ] or 0)
          if v:tags().flow_amplifier then
             has_amplifier = true
          end
