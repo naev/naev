@@ -494,10 +494,23 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
 }
 
 /**
+ * @brief Returns whether or not the ship has animated graphics.
+ *
+ *    @param s Ship to check to see if has animated graphics.
+ *    @return Whether or not a ship has animated graphics.
+ */
+int ship_gfxAnimated( const Ship *s )
+{
+   if ( s->gfx_3d == NULL )
+      return 0;
+   return ( s->gfx_3d->nanimations > 0 );
+}
+
+/**
  * @brief Gets the size of the ship.
  *
  *    @brief s Ship to get the size of.
- * @return Size of the ship.
+ *    @return Size of the ship.
  */
 int ship_size( const Ship *s )
 {

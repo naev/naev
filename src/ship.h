@@ -217,8 +217,8 @@ USE_RESULT glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt,
                                           double dir, const Lighting *Lscene );
 USE_RESULT glTexture *ship_gfxStore( const Ship *s, int size, double dir,
                                      double updown, double glow );
-
-int ship_size( const Ship *s );
+int                   ship_gfxAnimated( const Ship *s );
+int                   ship_size( const Ship *s );
 
 /*
  * Misc.
