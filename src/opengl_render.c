@@ -236,8 +236,9 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
    }
 
    /* Set the texture. */
-   tex_mat = ( flags & OPENGL_TEX_VFLIP ) ? mat4_ortho( -1, 1, 2, 0, 1, -1 )
-                                          : mat4_identity();
+   tex_mat = ( flags & OPENGL_TEX_VFLIP )
+                ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
+                : mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    gl_renderTextureDepthRawH( texture, depth, &projection, &tex_mat, c );
@@ -321,8 +322,9 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags, double x, double y,
    }
 
    /* Set the texture. */
-   tex_mat = ( flags & OPENGL_TEX_VFLIP ) ? mat4_ortho( -1, 1, 2, 0, 1, -1 )
-                                          : mat4_identity();
+   tex_mat = ( flags & OPENGL_TEX_VFLIP )
+                ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
+                : mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    gl_renderTextureRawH( texture, &projection, &tex_mat, c );
@@ -402,7 +404,7 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
    sw      = 0.; // 1./w;
    sh      = 0.; // 1./h;
    tex_mat = ( texture->flags & OPENGL_TEX_VFLIP )
-                ? mat4_ortho( -1, 1, 2, 0, 1, -1 )
+                ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
                 : mat4_identity();
    mat4_scale_xy( &tex_mat, texture->srw + 2. * sw, texture->srh + 2. * sh );
    mat4_translate_xy( &tex_mat, -sw, -sh );
@@ -517,8 +519,9 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
 
    projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
-   tex_mat = ( ta->flags & OPENGL_TEX_VFLIP ) ? mat4_ortho( -1, 1, 2, 0, 1, -1 )
-                                              : mat4_identity();
+   tex_mat = ( ta->flags & OPENGL_TEX_VFLIP )
+                ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
+                : mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    return gl_renderTextureInterpolateRawH( ta->texture, tb->texture, inter,
