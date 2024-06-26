@@ -147,6 +147,7 @@ void shipyard_open( unsigned int wid )
    window_addCust( wid, -40, -40, sw, sh, "cstPreview", 0, preview_render,
                    preview_mouse, NULL, preview_focusLose, pre );
    window_custFreeDataFunc( wid, "cstPreview", preview_free );
+   window_custSetClipping( wid, "cstPreview", 0 );
 
    /* slot types */
    data = calloc( 1, sizeof( CstShipSlotWidget ) );
