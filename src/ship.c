@@ -321,6 +321,61 @@ credits_t ship_buyPrice( const Ship *s )
    return price;
 }
 
+void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
+                          double updown, double glow )
+{
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   glClearColor( 0., 0., 0., 0. );
+   glClear( GL_COLOR_BUFFER_BIT );
+
+   /* Give faction colour background if applicable. */
+   if ( s->faction >= 0 ) {
+      const glColour *c = faction_colour( s->faction );
+      if ( c != NULL ) {
+         glUseProgram( shaders.shop_bg.program );
+         gl_renderShader( 0., 0., size, size, 0., &shaders.shop_bg, c, 0 );
+      }
+   }
+
+   if ( s->gfx_3d != NULL ) {
+      Lighting L = L_store_const;
+      mat4     H;
+      double   t = SDL_GetTicks() / 1000.;
+
+      /* We rotate the model so it's staring at the player and facing slightly
+       * down. */
+      H = mat4_identity();
+      mat4_rotate( &H, -M_PI_4 + dir, 0.0, 1.0, 0.0 );
+      mat4_rotate( &H, -M_PI_4 * 0.25 + updown, 1.0, 0.0, 0.0 );
+
+      /* Render the model. */
+      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+      ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, glow,
+                                t, &cWhite, &L, &H, 0, OPENGL_TEX_VFLIP );
+   } else if ( s->gfx_comm != NULL ) {
+      glTexture *glcomm;
+      double     scale, w, h, tx, ty;
+      int        sx, sy;
+
+      glcomm = gl_newImage( s->gfx_comm, 0 );
+      glcomm->flags &= ~OPENGL_TEX_VFLIP;
+
+      scale = MIN( size / glcomm->w, size / glcomm->h );
+      w     = scale * glcomm->w;
+      h     = scale * glcomm->h;
+      gl_getSpriteFromDir( &sx, &sy, s->sx, s->sy, dir );
+      tx = glcomm->sw * (double)( sx ) / glcomm->w;
+      ty = glcomm->sh * ( glcomm->sy - (double)sy - 1 ) / glcomm->h;
+      gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
+                        tx, ty, glcomm->srw, glcomm->srh, NULL, 0. );
+
+      gl_freeTexture( glcomm );
+   }
+
+   glClearColor( 0., 0., 0., 1. );
+   glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+}
+
 /**
  * @brief Get the store gfx.
  */
@@ -340,66 +395,7 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
    glClearColor( 0., 0., 0., 0. );
    glClear( GL_COLOR_BUFFER_BIT );
 
-   /* Give faction colour background if applicable. */
-   if ( s->faction >= 0 ) {
-      const glColour *c = faction_colour( s->faction );
-      if ( c != NULL ) {
-         glUseProgram( shaders.shop_bg.program );
-         gl_renderShader( 0., 0., size, size, 0., &shaders.shop_bg, c, 0 );
-      }
-   }
-
-   if ( s->gfx_3d != NULL ) {
-      Lighting L = L_store_const;
-      mat4     H;
-      GLuint   fbo3d, tex3d, depth_tex3d;
-      double   t = SDL_GetTicks() / 1000.;
-      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->name, size );
-
-      gl_fboCreate( &fbo3d, &tex3d, fbosize, fbosize );
-      gl_fboAddDepth( fbo3d, &depth_tex3d, fbosize, fbosize );
-
-      /* We rotate the model so it's staring at the player and facing slightly
-       * down. */
-      H = mat4_identity();
-      mat4_rotate( &H, -M_PI_4 + dir, 0.0, 1.0, 0.0 );
-      mat4_rotate( &H, -M_PI_4 * 0.25 + updown, 1.0, 0.0, 0.0 );
-
-      /* Render the model. */
-      glBindFramebuffer( GL_FRAMEBUFFER, fbo3d );
-      ship_renderFramebuffer3D( s, fbo3d, size, gl_screen.nw, gl_screen.nh,
-                                glow, t, &cWhite, &L, &H, 0, OPENGL_TEX_VFLIP );
-
-      /* Draw on top. */
-      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-      gl_renderTextureRaw( tex3d, 0, 0., 0., size, size, 0., 0., 1., 1., NULL,
-                           0 );
-
-      /* Clean up. */
-      glDeleteFramebuffers( 1, &fbo3d );
-      glDeleteTextures( 1, &tex3d );
-      glDeleteTextures( 1, &depth_tex3d );
-   }
-   if ( s->gfx_comm != NULL ) {
-      glTexture *glcomm;
-      double     scale, w, h, tx, ty;
-      int        sx, sy;
-
-      snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->gfx_comm, size );
-      glcomm = gl_newImage( s->gfx_comm, 0 );
-      glcomm->flags &= ~OPENGL_TEX_VFLIP;
-
-      scale = MIN( size / glcomm->w, size / glcomm->h );
-      w     = scale * glcomm->w;
-      h     = scale * glcomm->h;
-      gl_getSpriteFromDir( &sx, &sy, s->sx, s->sy, dir );
-      tx = glcomm->sw * (double)( sx ) / glcomm->w;
-      ty = glcomm->sh * ( glcomm->sy - (double)sy - 1 ) / glcomm->h;
-      gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
-                        tx, ty, glcomm->srw, glcomm->srh, NULL, 0. );
-
-      gl_freeTexture( glcomm );
-   }
+   ship_renderGfxStore( fbo, s, size, dir, updown, glow );
 
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glClearColor( 0., 0., 0., 1. );
@@ -1351,7 +1347,6 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
       }
    } else {
       glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-      glClear( GL_COLOR_BUFFER_BIT );
       tex_mat = mat4_identity();
       if ( flags & OPENGL_TEX_VFLIP ) {
          tex_mat.m[1][1] = -1.;

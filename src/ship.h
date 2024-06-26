@@ -203,22 +203,32 @@ void ships_free( void );
 /*
  * Getters.
  */
-const Ship           *ship_get( const char *name );
-const Ship           *ship_getW( const char *name );
-const char           *ship_existsCase( const char *name );
-const Ship           *ship_getAll( void );
-const char           *ship_class( const Ship *s );
-const char           *ship_classDisplay( const Ship *s );
-const char           *ship_classToString( ShipClass class );
-ShipClass             ship_classFromString( const char *str );
-credits_t             ship_basePrice( const Ship *s );
-credits_t             ship_buyPrice( const Ship *s );
+const Ship *ship_get( const char *name );
+const Ship *ship_getW( const char *name );
+const char *ship_existsCase( const char *name );
+const Ship *ship_getAll( void );
+const char *ship_class( const Ship *s );
+const char *ship_classDisplay( const Ship *s );
+const char *ship_classToString( ShipClass class );
+ShipClass   ship_classFromString( const char *str );
+credits_t   ship_basePrice( const Ship *s );
+credits_t   ship_buyPrice( const Ship *s );
+int         ship_size( const Ship *s );
+
+/*
+ * Rendering.
+ */
+void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
+                             double dir, double engine_glow, double tilt,
+                             double r, int sx, int sy, const glColour *c,
+                             const Lighting *L );
 USE_RESULT glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt,
                                           double dir, const Lighting *Lscene );
+void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
+                          double updown, double glow );
 USE_RESULT glTexture *ship_gfxStore( const Ship *s, int size, double dir,
                                      double updown, double glow );
 int                   ship_gfxAnimated( const Ship *s );
-int                   ship_size( const Ship *s );
 
 /*
  * Misc.
@@ -228,8 +238,4 @@ int    ship_gfxLoaded( const Ship *s );
 int    ship_gfxLoadNeeded( void );
 int    ship_gfxLoad( Ship *temp );
 int    ship_compareTech( const void *arg1, const void *arg2 );
-void   ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
-                               double dir, double engine_glow, double tilt,
-                               double r, int sx, int sy, const glColour *c,
-                               const Lighting *L );
 double ship_maxSize( void );
