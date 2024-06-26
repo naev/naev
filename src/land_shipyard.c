@@ -42,6 +42,12 @@ typedef struct CstShipSlotWidget_ {
    double                alty;
 } CstShipSlotWidget;
 
+typedef struct CstShipPreview {
+   int    mousedown;
+   GLuint fbo;
+   GLuint tex;
+} CstShipPreview;
+
 /*
  * Vars.
  */
@@ -49,10 +55,8 @@ static Ship **shipyard_list =
    NULL; /**< Array (array.h): Available ships, valid when the shipyard
             image-array widget is. */
 static Ship *shipyard_selected = NULL; /**< Currently selected shipyard ship. */
-static glTexture *shipyard_preview  = NULL; /**< Current comm image. */
-static double     shipyard_dir      = 0.;
-static double     shipyard_updown   = 0.;
-static int        preview_mousedown = 0;
+static double preview_dir      = 0.;
+static double preview_updown   = 0.;
 
 /*
  * Helper functions.
@@ -73,6 +77,7 @@ static void shipyard_renderSlotsOver( double bx, double by, double bw,
                                       double bh, void *data );
 static void shipyard_find( unsigned int wid, const char *str );
 /* Preview. */
+static void preview_free( void *ptr );
 static void preview_render( double x, double y, double w, double h,
                             void *data );
 static int  preview_mouse( unsigned int wid, const SDL_Event *event, double x,
@@ -134,8 +139,12 @@ void shipyard_open( unsigned int wid )
    /* ship review */
    window_addRect( wid, -40 + 4, -40 + 4, sw + 8, sh + 8, "rctTarget", &cBlack,
                    1 );
+   CstShipPreview *pre = calloc( 1, sizeof( CstShipPreview ) );
+   gl_fboCreate( &pre->fbo, &pre->tex, sw / gl_screen.scale,
+                 sh / gl_screen.scale );
    window_addCust( wid, -40, -40, sw, sh, "cstPreview", 0, preview_render,
-                   preview_mouse, NULL, preview_focusLose, NULL );
+                   preview_mouse, NULL, preview_focusLose, pre );
+   window_custFreeDataFunc( wid, "cstPreview", preview_free );
 
    /* slot types */
    data = calloc( 1, sizeof( CstShipSlotWidget ) );
@@ -232,9 +241,6 @@ void shipyard_update( unsigned int wid, const char *str )
 
    /* No ships */
    if ( i < 0 || array_size( shipyard_list ) == 0 ) {
-      gl_freeTexture( shipyard_preview );
-      shipyard_preview = NULL;
-      window_modifyImage( wid, "cstPreview", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip" );
       window_disableButton( wid, "btnTradeShip" );
       window_modifyText( wid, "txtStats", NULL );
@@ -248,12 +254,11 @@ void shipyard_update( unsigned int wid, const char *str )
    shipyard_selected = ship;
 
    /* update image */
-   gl_freeTexture( shipyard_preview );
-   shipyard_dir    = 0.;
-   shipyard_updown = 0.;
-   shipyard_preview =
-      ship_gfxStore( ship, SHIP_GFX_W, shipyard_dir, shipyard_updown, 0. );
-   window_custSetDynamic( wid, "cstPreview", ship_gfxAnimated( ship ) );
+   CstShipPreview *p = window_custGetData( wid, "cstPreview" );
+   preview_dir       = 0.;
+   preview_updown    = 0.;
+   ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_W, preview_dir,
+                        preview_updown, 0. );
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
@@ -431,8 +436,6 @@ void shipyard_cleanup( void )
    array_free( shipyard_list );
    shipyard_list     = NULL;
    shipyard_selected = NULL;
-   gl_freeTexture( shipyard_preview );
-   shipyard_preview = NULL;
 }
 
 /**
@@ -828,20 +831,30 @@ static void shipyard_renderSlotsOver( double bx, double by, double bw,
    toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
 }
 
+static void preview_free( void *ptr )
+{
+   CstShipPreview *p = ptr;
+   glDeleteFramebuffers( 1, &p->fbo );
+   glDeleteTextures( 1, &p->tex );
+   free( ptr );
+}
+
 static void preview_render( double x, double y, double w, double h, void *data )
 {
-   (void)data;
-   if ( shipyard_preview == NULL )
+   CstShipPreview *p = data;
+
+   if ( shipyard_selected == NULL )
       return;
+
    if ( ship_gfxAnimated( shipyard_selected ) ) {
-      /* TODO probably cache this instead of regenerating it each time... */
-      gl_freeTexture( shipyard_preview );
-      shipyard_preview = ship_gfxStore( shipyard_selected, SHIP_GFX_W,
-                                        shipyard_dir, shipyard_updown, 0. );
+      ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_W, preview_dir,
+                           preview_updown, 0. );
       glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
                            GL_ONE_MINUS_SRC_ALPHA );
    }
-   gl_renderScaleAspect( shipyard_preview, x, y, w, h, NULL );
+
+   gl_renderTextureRaw( p->tex, OPENGL_TEX_VFLIP, x, y, w, h, 0., 0., 1., 1.,
+                        NULL, 0. );
 }
 
 static int preview_mouse( unsigned int wid, const SDL_Event *event, double mx,
@@ -849,30 +862,31 @@ static int preview_mouse( unsigned int wid, const SDL_Event *event, double mx,
                           void *data )
 {
    (void)wid;
-   (void)data;
+   CstShipPreview *p = data;
+
+   if ( shipyard_selected == NULL )
+      return 0;
 
    switch ( event->type ) {
    case SDL_MOUSEBUTTONUP:
-      preview_mousedown = 0;
+      p->mousedown = 0;
       return 0;
 
    case SDL_MOUSEBUTTONDOWN:
       if ( ( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ) )
          return 0;
-      preview_mousedown = 1;
+      p->mousedown = 1;
       return 1;
 
    case SDL_MOUSEMOTION:
-      if ( !preview_mousedown )
+      if ( !p->mousedown )
          return 0;
-      shipyard_dir += rx / ( SHIP_GFX_W / M_PI * 0.5 );
-      shipyard_updown += ry / ( SHIP_GFX_H / M_PI * 0.5 );
-      if ( !ship_gfxAnimated( shipyard_selected ) ) {
-         /* TODO probably cache this instead of regenerating it each time... */
-         gl_freeTexture( shipyard_preview );
-         shipyard_preview = ship_gfxStore( shipyard_selected, SHIP_GFX_W,
-                                           shipyard_dir, shipyard_updown, 0. );
-      }
+      preview_dir += rx / ( SHIP_GFX_W / M_PI * 0.5 );
+      preview_updown += ry / ( SHIP_GFX_H / M_PI * 0.5 );
+      /* Rerender if not animated. */
+      if ( !ship_gfxAnimated( shipyard_selected ) )
+         ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_W,
+                              preview_dir, preview_updown, 0. );
       return 1;
 
    default:

@@ -391,9 +391,6 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
 
    gl_contextSet();
    gl_fboCreate( &fbo, &tex, fbosize, fbosize );
-   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-   glClearColor( 0., 0., 0., 0. );
-   glClear( GL_COLOR_BUFFER_BIT );
 
    ship_renderGfxStore( fbo, s, size, dir, updown, glow );
 
