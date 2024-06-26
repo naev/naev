@@ -1610,9 +1610,11 @@ void toolkit_render( double dt )
    NTracingZone( _ctx, 1 );
 
    if ( toolkit_needsRender ) {
-      toolkit_needsRender = 0;
+      GLuint current_fbo    = gl_screen.current_fbo;
+      gl_screen.current_fbo = gl_screen.fbo[3];
+      toolkit_needsRender   = 0;
 
-      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[3] );
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
       glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
       glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
@@ -1630,6 +1632,7 @@ void toolkit_render( double dt )
       }
 
       glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+      gl_screen.current_fbo = current_fbo;
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
       glClearColor( 0., 0., 0., 1. );
    }

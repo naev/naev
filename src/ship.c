@@ -75,9 +75,9 @@ static int  ship_parseThread( void *ptr );
 static void ship_freeSlot( ShipOutfitSlot *s );
 static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
                                       double fw, double fh, double engine_glow,
-                                      double r, const glColour *c,
+                                      double t, const glColour *c,
                                       const Lighting *L, const mat4 *H,
-                                      unsigned int flags );
+                                      int blit, unsigned int flags );
 
 /**
  * @brief Compares two ship pointers for qsort.
@@ -353,7 +353,7 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
       Lighting L = L_store_const;
       mat4     H;
       GLuint   fbo3d, tex3d, depth_tex3d;
-      double   r = 0.;
+      double   t = SDL_GetTicks() / 1000.;
       snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->name, size );
 
       gl_fboCreate( &fbo3d, &tex3d, fbosize, fbosize );
@@ -368,12 +368,12 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
       /* Render the model. */
       glBindFramebuffer( GL_FRAMEBUFFER, fbo3d );
       ship_renderFramebuffer3D( s, fbo3d, size, gl_screen.nw, gl_screen.nh,
-                                glow, r, &cWhite, &L, &H, OPENGL_TEX_VFLIP );
+                                glow, t, &cWhite, &L, &H, 0, OPENGL_TEX_VFLIP );
 
       /* Draw on top. */
       glBindFramebuffer( GL_FRAMEBUFFER, fbo );
       gl_renderTextureRaw( tex3d, 0, 0., 0., size, size, 0., 0., 1., 1., NULL,
-                           0. );
+                           0 );
 
       /* Clean up. */
       glDeleteFramebuffers( 1, &fbo3d );
@@ -402,7 +402,8 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
    }
 
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
-   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+   glClearColor( 0., 0., 0., 1. );
+   glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
    gl_contextUnset();
 
    gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
@@ -436,7 +437,7 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
    if ( s->gfx_3d != NULL ) {
       Lighting L = ( Lscene == NULL ) ? L_default : *Lscene;
       mat4     H, Hlight;
-      double   r = 0.;
+      double   t = SDL_GetTicks() / 1000.;
       snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->name, size );
 
       /* We rotate the model so it's staring at the player and facing slightly
@@ -462,8 +463,8 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
       L.intensity *= 1.5;
 
       /* Render the model. */
-      ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, 0., r,
-                                &cWhite, &L, &H, OPENGL_TEX_VFLIP );
+      ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, 0., t,
+                                &cWhite, &L, &H, 0, OPENGL_TEX_VFLIP );
    }
    if ( s->gfx_comm != NULL ) {
       glTexture *glcomm;
@@ -484,7 +485,8 @@ glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
 
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glDeleteTextures( 1, &depth_tex );
-   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+   glClearColor( 0., 0., 0., 1. );
+   glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
    gl_contextUnset();
 
    gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
@@ -1239,13 +1241,10 @@ static int ship_parse( Ship *temp, const char *filename )
 
 static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
                                       double fw, double fh, double engine_glow,
-                                      double r, const glColour *c,
+                                      double t, const glColour *c,
                                       const Lighting *L, const mat4 *H,
-                                      unsigned int flags )
+                                      int blit, unsigned int flags )
 {
-   double t =
-      elapsed_time_mod +
-      r * 300.; /* Compute a randomized time to avoid duplicate motions. */
    double      scale = ship_aa_scale * size;
    GltfObject *obj   = s->gfx_3d;
    mat4        projection, tex_mat;
@@ -1331,23 +1330,34 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
    /* Tests show that for 2x AA, linear is visually indifferent from bicubic.
     * The padding is to ensure that there is a one pixel buffer of alpha 0.
     */
-   GLint sin  = sbuffer + (GLint)ship_aa_scale_base;
-   GLint sout = ceil( size / gl_screen.scale ) + 1;
-   glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[1] );
-   glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
-   if ( flags & OPENGL_TEX_VFLIP ) {
-      glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0, GL_COLOR_BUFFER_BIT,
-                         GL_LINEAR );
-      /* Depth can only use NEAREST filtering. */
-      glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[0] );
-      glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0, GL_DEPTH_BUFFER_BIT,
-                         GL_NEAREST );
+   if ( blit ) {
+      GLint sin  = sbuffer + (GLint)ship_aa_scale_base;
+      GLint sout = ceil( size / gl_screen.scale ) + 1;
+      glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[1] );
+      glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
+      if ( flags & OPENGL_TEX_VFLIP ) {
+         glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0,
+                            GL_COLOR_BUFFER_BIT, GL_LINEAR );
+         /* Depth can only use NEAREST filtering. */
+         glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[0] );
+         glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0,
+                            GL_DEPTH_BUFFER_BIT, GL_NEAREST );
+      } else {
+         glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout,
+                            GL_COLOR_BUFFER_BIT, GL_LINEAR );
+         glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[0] );
+         glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout,
+                            GL_DEPTH_BUFFER_BIT, GL_NEAREST );
+      }
    } else {
-      glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_COLOR_BUFFER_BIT,
-                         GL_LINEAR );
-      glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[0] );
-      glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_DEPTH_BUFFER_BIT,
-                         GL_NEAREST );
+      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+      glClear( GL_COLOR_BUFFER_BIT );
+      tex_mat = mat4_identity();
+      if ( flags & OPENGL_TEX_VFLIP ) {
+         tex_mat.m[1][1] = -1.;
+         tex_mat.m[3][1] = 0.5;
+      }
+      gl_renderTextureRawH( ship_tex[1], &projection, &tex_mat, &cWhite );
    }
 
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
@@ -1369,6 +1379,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       c = &cWhite;
 
    if ( s->gfx_3d != NULL ) {
+      double t = elapsed_time_mod + r * 300.;
+
       /* Determine the model transformation. */
       mat4 H = mat4_identity();
       if ( fabs( tilt ) > DOUBLE_TOL ) {
@@ -1378,8 +1390,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       } else
          mat4_rotate( &H, dir + M_PI_2, 0.0, 1.0, 0.0 );
 
-      ship_renderFramebuffer3D( s, fbo, s->size, fw, fh, engine_glow, r, c, L,
-                                &H, 0 );
+      ship_renderFramebuffer3D( s, fbo, s->size, fw, fh, engine_glow, t, c, L,
+                                &H, 1, 0 );
    } else {
       double           tx, ty;
       const glTexture *sa, *sb;

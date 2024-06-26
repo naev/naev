@@ -253,6 +253,7 @@ void shipyard_update( unsigned int wid, const char *str )
    shipyard_updown = 0.;
    shipyard_preview =
       ship_gfxStore( ship, SHIP_GFX_W, shipyard_dir, shipyard_updown, 0. );
+   window_custSetDynamic( wid, "cstPreview", ship_gfxAnimated( ship ) );
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
@@ -832,6 +833,14 @@ static void preview_render( double x, double y, double w, double h, void *data )
    (void)data;
    if ( shipyard_preview == NULL )
       return;
+   if ( ship_gfxAnimated( shipyard_selected ) ) {
+      /* TODO probably cache this instead of regenerating it each time... */
+      gl_freeTexture( shipyard_preview );
+      shipyard_preview = ship_gfxStore( shipyard_selected, SHIP_GFX_W,
+                                        shipyard_dir, shipyard_updown, 0. );
+      glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
+                           GL_ONE_MINUS_SRC_ALPHA );
+   }
    gl_renderScaleAspect( shipyard_preview, x, y, w, h, NULL );
 }
 
@@ -858,10 +867,12 @@ static int preview_mouse( unsigned int wid, const SDL_Event *event, double mx,
          return 0;
       shipyard_dir += rx / ( SHIP_GFX_W / M_PI * 0.5 );
       shipyard_updown += ry / ( SHIP_GFX_H / M_PI * 0.5 );
-      /* TODO probably cache this instead of regenerating it each time... */
-      gl_freeTexture( shipyard_preview );
-      shipyard_preview = ship_gfxStore( shipyard_selected, SHIP_GFX_W,
-                                        shipyard_dir, shipyard_updown, 0. );
+      if ( !ship_gfxAnimated( shipyard_selected ) ) {
+         /* TODO probably cache this instead of regenerating it each time... */
+         gl_freeTexture( shipyard_preview );
+         shipyard_preview = ship_gfxStore( shipyard_selected, SHIP_GFX_W,
+                                           shipyard_dir, shipyard_updown, 0. );
+      }
       return 1;
 
    default:
