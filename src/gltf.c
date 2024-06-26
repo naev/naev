@@ -1202,6 +1202,7 @@ static void gltf_applyAnimNode( GltfObject *obj, Animation *anim, GLfloat time )
          mix = ( t - p ) / ( n - p );
          break;
       case ANIM_INTER_STEP:
+      default:
          mix = 0.;
          break;
       }
