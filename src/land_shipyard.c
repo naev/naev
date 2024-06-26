@@ -259,6 +259,8 @@ void shipyard_update( unsigned int wid, const char *str )
    preview_updown    = 0.;
    ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_W, preview_dir,
                         preview_updown, 0. );
+   window_custSetDynamic( wid, "cstPreview",
+                          ship_gfxAnimated( shipyard_selected ) );
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
