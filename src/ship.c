@@ -409,8 +409,8 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
  *
  * Must be freed afterwards.
  */
-glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt, double dir,
-                               const Lighting *Lscene )
+glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
+                         const Lighting *Lscene )
 {
    double     fbosize;
    GLuint     fbo, tex, depth_tex;

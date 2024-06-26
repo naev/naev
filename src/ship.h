@@ -222,8 +222,8 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
                              double dir, double engine_glow, double tilt,
                              double r, int sx, int sy, const glColour *c,
                              const Lighting *L );
-USE_RESULT glTexture *ship_renderCommGFX( const Ship *s, int size, double tilt,
-                                          double dir, const Lighting *Lscene );
+USE_RESULT glTexture *ship_gfxComm( const Ship *s, int size, double tilt,
+                                    double dir, const Lighting *Lscene );
 void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
                           double updown, double glow );
 USE_RESULT glTexture *ship_gfxStore( const Ship *s, int size, double dir,
