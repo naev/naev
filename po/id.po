@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-06-15 19:23+0900\n"
-"PO-Revision-Date: 2024-06-09 19:09+0000\n"
+"PO-Revision-Date: 2024-06-27 10:09+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
-"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/"
-">\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
+"\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -2604,7 +2604,7 @@ msgstr ""
 
 #: dat/outfits/accessory/satellite_mockup.xml:2
 msgid "Satellite Mock-up"
-msgstr ""
+msgstr "Mock-up Satelit"
 
 #: dat/outfits/accessory/satellite_mockup.xml:11
 msgid ""
@@ -2624,7 +2624,7 @@ msgstr ""
 
 #: dat/outfits/accessory/swamp_bombing.xml:2
 msgid "Swamp Bombing"
-msgstr ""
+msgstr "Swamp Bombing"
 
 #: dat/outfits/accessory/swamp_bombing.xml:11
 msgid ""
@@ -2941,7 +2941,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/dummy_engine.xml:2
 msgid "Dummy Engine"
-msgstr ""
+msgstr "Mesin Palsu"
 
 #: dat/outfits/core_engine/dummy_engine.xml:4
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:4
@@ -2973,6 +2973,8 @@ msgid ""
 "This is a dummy engine for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
+"Ini adalah mesin palsu yang digunakan hanya di misi, dan tidak memiliki "
+"fungsi nyata. JANGAN DIBELI."
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
@@ -2985,6 +2987,8 @@ msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
 msgstr ""
+"Tersumbat, karatan, dan retak di berbagai bagian, mesin ini bisa digunakan, "
+"namun sebenarnya lebih baik dibuang ke tumpukan sampah."
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:2
 msgid "Krain Remige Engine"
@@ -3281,7 +3285,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/dummy_plating.xml:2
 msgid "Dummy Plating"
-msgstr ""
+msgstr "Plating Palsu"
 
 #: dat/outfits/core_hull/dummy_plating.xml:4
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:4
@@ -3315,6 +3319,8 @@ msgid ""
 "This is a dummy hull for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
+"Ini adalah rangka palsu yang digunakan hanya di misi, dan tidak memiliki "
+"fungsi nyata. JANGAN DIBELI."
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:2
 msgid "Patchwork Heavy Plating"
@@ -3327,6 +3333,8 @@ msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
 msgstr ""
+"Kelebihannya satu, yaitu mencegah udara bocor ke luar angkasa. Itu saja. "
+"Perangkaan semacam ini sesungguhnya keterlaluan."
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:2
 msgid "Red Star Large Cargo Hull"
@@ -3381,11 +3389,11 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/unicorp_d58_heavy_plating.xml:2
 msgid "Unicorp D-58 Heavy Plating"
-msgstr ""
+msgstr "Pelapis Berat D-58 Unicorp"
 
 #: dat/outfits/core_hull/large/unicorp_d58_heavy_plating.xml:4
 msgid "U. D-58 Heavy Plating"
-msgstr ""
+msgstr "Pelapis Berat D-58 (U)"
 
 #: dat/outfits/core_hull/large/unicorp_d58_heavy_plating.xml:10
 msgid ""
@@ -3396,11 +3404,11 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/unicorp_d72_heavy_plating.xml:2
 msgid "Unicorp D-72 Heavy Plating"
-msgstr ""
+msgstr "Pelapis Berat D-72 Unicorp"
 
 #: dat/outfits/core_hull/large/unicorp_d72_heavy_plating.xml:4
 msgid "U. D-72 Heavy Plating"
-msgstr ""
+msgstr "Pelapis Berat D-72 (U)"
 
 #: dat/outfits/core_hull/large/unicorp_d72_heavy_plating.xml:11
 msgid ""
@@ -3430,11 +3438,11 @@ msgstr "Pelapis Menegah Seadanya"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
 msgid "Red Star Medium Cargo Hull"
-msgstr ""
+msgstr "Rangka Kargo Menengah Bintang Merah"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:4
 msgid "RS. Medium Cargo Hull"
-msgstr ""
+msgstr "Rangka Kargo Menengah (BM)"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:11
 msgid ""
@@ -3449,7 +3457,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:2
 msgid "S&K Medium Cargo Hull"
-msgstr ""
+msgstr "Rangka Kargo Menengah S&K"
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:10
 msgid ""
@@ -3481,11 +3489,11 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/unicorp_d23_medium_plating.xml:2
 msgid "Unicorp D-23 Medium Plating"
-msgstr ""
+msgstr "Pelapis Tempur Menengah D-23 Unicorp"
 
 #: dat/outfits/core_hull/medium/unicorp_d23_medium_plating.xml:4
 msgid "U. D-23 Medium Plating"
-msgstr ""
+msgstr "Pelapis Tempur Menengah D-23 (U)"
 
 #: dat/outfits/core_hull/medium/unicorp_d23_medium_plating.xml:10
 msgid ""
@@ -3495,11 +3503,11 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/unicorp_d38_medium_plating.xml:2
 msgid "Unicorp D-38 Medium Plating"
-msgstr ""
+msgstr "Pelapis Tempur Menengah D-38 Unicorp"
 
 #: dat/outfits/core_hull/medium/unicorp_d38_medium_plating.xml:4
 msgid "U. D-38 Medium Plating"
-msgstr ""
+msgstr "Pelapis Tempur Menengah D-38 (U)"
 
 #: dat/outfits/core_hull/medium/unicorp_d38_medium_plating.xml:11
 msgid ""
@@ -3636,7 +3644,7 @@ msgstr ""
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:5
 #: dat/outfits/unique/homebrew_processing_unit.xml:6
 msgid "Core Systems (System)"
-msgstr ""
+msgstr "Sistem Inti (Sistem)"
 
 #: dat/outfits/core_system/dummy_systems.xml:9
 msgid ""
@@ -3983,7 +3991,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:9
 msgid "You need at least 50 reputation with the Empire."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Kekaisaran."
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:14
 msgid ""
@@ -4116,7 +4124,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:9
 msgid "You need at least 50 reputation with the Sirius."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Wangsa Sirius."
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:14
 msgid ""
@@ -4135,7 +4143,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:9
 msgid "You need at least 50 reputation with the Soromid."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Soromid."
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:14
 msgid ""
@@ -4154,7 +4162,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:9
 msgid "You need at least 50 reputation with the Thurion."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Turion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:14
 msgid ""
@@ -4173,7 +4181,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:9
 msgid "You need at least 30 reputation with the Thurion."
-msgstr ""
+msgstr "Kamu butuh setidaknya 30% reputasi dengan Turion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:14
 msgid ""
@@ -4193,7 +4201,7 @@ msgstr ""
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:9
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:9
 msgid "You need at least 50 reputation with House Za'lek."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Wangsa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:14
 msgid ""
@@ -4215,7 +4223,7 @@ msgstr ""
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:9
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:9
 msgid "You need at least 30 reputation with House Za'lek."
-msgstr ""
+msgstr "Kamu butuh setidaknya 30% reputasi dengan Wangsa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:14
 msgid ""
@@ -4235,7 +4243,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:9
 msgid "You need at least 60 reputation with House Za'lek."
-msgstr ""
+msgstr "Kamu butuh setidaknya 60% reputasi dengan Wangsa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:14
 msgid ""
@@ -4255,7 +4263,7 @@ msgstr ""
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:9
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:9
 msgid "You need at least 40 reputation with House Za'lek."
-msgstr ""
+msgstr "Kamu butuh setidaknya 40% reputasi dengan Wangsa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:14
 msgid ""
@@ -4974,7 +4982,7 @@ msgstr "Peta ini berisi informasi tentang sistem lokal."
 
 #: dat/outfits/maps/map_collective_space.xml:2
 msgid "Map: Collective Space"
-msgstr ""
+msgstr "Peta Daerah Kolektif"
 
 #: dat/outfits/maps/map_collective_space.xml:7
 msgid ""
@@ -4982,6 +4990,9 @@ msgid ""
 "Collective. Sadly, the Empire has no accurate intel about Collective assets "
 "in the area."
 msgstr ""
+"Peta ini memetakan titik-titik lompat yang menghubungkan sistem-sistem yang "
+"didiami Kolektif. Sayangnya, Kekaisaran tidak punya informasi akurat tentang "
+"aset Kolektif di daerah tersebut."
 
 #: dat/outfits/maps/map_dvaered_core.xml:2
 msgid "Map: Dvaered Core"
@@ -4992,16 +5003,20 @@ msgid ""
 "This map lists the locations of all Dvaered worlds and stations close to the "
 "Dvaered capital."
 msgstr ""
+"Peta ini mencatat lokasi dari semua planet dan stasiun milik Dvaered yang "
+"dekat dengan ibukotanya."
 
 #: dat/outfits/maps/map_empire_core.xml:2
 msgid "Map: Empire Core"
-msgstr "Peta Inti Kekaisara"
+msgstr "Peta Inti Kekaisaran"
 
 #: dat/outfits/maps/map_empire_core.xml:7
 msgid ""
 "This map lists the locations of all Imperial worlds and stations close to "
 "the Imperial capital."
 msgstr ""
+"Peta ini mencatat lokasi dari semua planet dan stasiun milik Kekaisaran yang "
+"dekat dengan ibukotanya."
 
 #: dat/outfits/maps/map_empiresoromid_trade_route.xml:2
 msgid "Map: Empire-Soromid Trade Route"
@@ -5055,7 +5070,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_kretogg_secrets.xml:2
 msgid "Map: Kretogg's Secrets"
-msgstr ""
+msgstr "Peta Rahasia Kretogg"
 
 #: dat/outfits/maps/map_kretogg_secrets.xml:7
 msgid ""
@@ -5137,7 +5152,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_the_frontier.xml:2
 msgid "Map: The Frontier"
-msgstr ""
+msgstr "Peta Frontir"
 
 #: dat/outfits/maps/map_the_frontier.xml:7
 msgid ""
@@ -5175,7 +5190,7 @@ msgstr "Untuk curang."
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:2
 msgid "Counterfeit Heavy Combat Vessel License"
-msgstr ""
+msgstr "Lisensi Kapal Perang Berat Palsu"
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:8
 msgid ""
@@ -5189,11 +5204,11 @@ msgstr ""
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:11
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:12
 msgid "Heavy Combat Vessel"
-msgstr ""
+msgstr "Kapal Perang Besar"
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:2
 msgid "Counterfeit Heavy Weapon License"
-msgstr ""
+msgstr "Lisensi Senjata Berat Palsu"
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:8
 msgid ""
@@ -5207,7 +5222,7 @@ msgstr ""
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:11
 #: dat/outfits/misc/heavy_weapon_license.xml:12
 msgid "Heavy Weapon"
-msgstr ""
+msgstr "Senjata Berat"
 
 #: dat/outfits/misc/gui_brushed.xml:2
 msgid "GUI - Brushed"
@@ -5243,7 +5258,7 @@ msgstr ""
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:2
 msgid "Heavy Combat Vessel License"
-msgstr ""
+msgstr "Lisensi Kapal Perang Berat"
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:9
 msgid "This license will authorize you to buy cruiser and carrier-class ships."
@@ -5251,7 +5266,7 @@ msgstr ""
 
 #: dat/outfits/misc/heavy_weapon_license.xml:2
 msgid "Heavy Weapon License"
-msgstr ""
+msgstr "Lisensi Senjata Berat"
 
 #: dat/outfits/misc/heavy_weapon_license.xml:9
 msgid ""
@@ -5261,7 +5276,7 @@ msgstr ""
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:2
 msgid "Large Civilian Vessel License"
-msgstr ""
+msgstr "Lisensi Kapal Sipil Besar"
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:7
 msgid "This license will authorize you to buy freighter-class ships."
@@ -5269,11 +5284,11 @@ msgstr ""
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:10
 msgid "Large Civilian Vessel"
-msgstr ""
+msgstr "Kapal Sipil Besar"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:2
 msgid "Light Combat Vessel License"
-msgstr ""
+msgstr "Lisensi Kapal Perang Ringan"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:7
 msgid "This license will authorize you to buy fighter and bomber class ships."
@@ -5281,11 +5296,11 @@ msgstr ""
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:10
 msgid "Light Combat Vessel"
-msgstr ""
+msgstr "Kapal Perang Ringan"
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:2
 msgid "Medium Combat Vessel License"
-msgstr ""
+msgstr "Lisensi Kapal Perang Sedang"
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:8
 msgid ""
@@ -5294,11 +5309,11 @@ msgstr ""
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:11
 msgid "Medium Combat Vessel"
-msgstr ""
+msgstr "Kapal Perang Sedang"
 
 #: dat/outfits/misc/medium_weapon_license.xml:2
 msgid "Medium Weapon License"
-msgstr ""
+msgstr "Lisensi Senjata Sedang"
 
 #: dat/outfits/misc/medium_weapon_license.xml:7
 msgid ""
@@ -5476,7 +5491,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_i.xml:2
 msgid "Battery I"
-msgstr ""
+msgstr "Baterai I"
 
 #: dat/outfits/structure/battery_i.xml:4 dat/outfits/structure/battery_ii.xml:4
 #: dat/outfits/structure/battery_iii.xml:4
@@ -5492,7 +5507,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_ii.xml:2
 msgid "Battery II"
-msgstr ""
+msgstr "Baterai II"
 
 #: dat/outfits/structure/battery_ii.xml:9
 msgid ""
@@ -5502,7 +5517,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_iii.xml:2
 msgid "Battery III"
-msgstr ""
+msgstr "Baterai III"
 
 #: dat/outfits/structure/battery_iii.xml:9
 msgid ""
@@ -5512,7 +5527,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_iv.xml:2
 msgid "Battery IV"
-msgstr ""
+msgstr "Baterai IV"
 
 #: dat/outfits/structure/battery_iv.xml:9
 msgid ""
@@ -5522,7 +5537,7 @@ msgstr ""
 
 #: dat/outfits/structure/biometal_armour.xml:2
 msgid "Biometal Armour"
-msgstr ""
+msgstr "Zirah Biometal"
 
 #: dat/outfits/structure/biometal_armour.xml:10
 msgid ""
@@ -5534,7 +5549,7 @@ msgstr ""
 
 #: dat/outfits/structure/engine_reroute.xml:2
 msgid "Engine Reroute"
-msgstr ""
+msgstr "Perute Ulang Mesin"
 
 #: dat/outfits/structure/engine_reroute.xml:4
 #: dat/outfits/structure/improved_stabilizer.xml:4
@@ -5564,13 +5579,13 @@ msgstr ""
 
 #: dat/outfits/structure/large_cargo_pod.xml:2
 msgid "Large Cargo Pod"
-msgstr ""
+msgstr "Pod Kargo Besar"
 
 #: dat/outfits/structure/large_cargo_pod.xml:4
 #: dat/outfits/structure/medium_cargo_pod.xml:4
 #: dat/outfits/structure/small_cargo_pod.xml:4
 msgid "Cargo Expansion"
-msgstr ""
+msgstr "Ekspansi Kargo"
 
 #: dat/outfits/structure/large_cargo_pod.xml:9
 #: dat/outfits/structure/medium_cargo_pod.xml:9
@@ -5583,7 +5598,7 @@ msgstr ""
 
 #: dat/outfits/structure/large_fuel_pod.xml:2
 msgid "Large Fuel Pod"
-msgstr ""
+msgstr "Pod Bahan Bakar Besar"
 
 #: dat/outfits/structure/large_fuel_pod.xml:4
 #: dat/outfits/structure/medium_fuel_pod.xml:4
@@ -5618,11 +5633,11 @@ msgstr ""
 
 #: dat/outfits/structure/medium_cargo_pod.xml:2
 msgid "Medium Cargo Pod"
-msgstr ""
+msgstr "Pod Kargo Menengah"
 
 #: dat/outfits/structure/medium_fuel_pod.xml:2
 msgid "Medium Fuel Pod"
-msgstr ""
+msgstr "Pod Bahan Bakar Menengah"
 
 #: dat/outfits/structure/medium_shield_booster.xml:2
 msgid "Medium Shield Booster"
@@ -5677,7 +5692,7 @@ msgstr ""
 
 #: dat/outfits/structure/plasteel_plating.xml:2
 msgid "Plasteel Plating"
-msgstr ""
+msgstr "Pelapis Plasteel"
 
 #: dat/outfits/structure/plasteel_plating.xml:10
 msgid ""
@@ -5691,7 +5706,7 @@ msgstr ""
 #: dat/outfits/structure/reactor_class_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:237
 msgid "Reactor Class I"
-msgstr ""
+msgstr "Reaktor Kelas I"
 
 #: dat/outfits/structure/reactor_class_i.xml:4
 #: dat/outfits/structure/reactor_class_ii.xml:4
@@ -5708,7 +5723,7 @@ msgstr ""
 
 #: dat/outfits/structure/reactor_class_ii.xml:2
 msgid "Reactor Class II"
-msgstr ""
+msgstr "Reaktor Kelas II"
 
 #: dat/outfits/structure/reactor_class_ii.xml:10
 msgid ""
@@ -5719,7 +5734,7 @@ msgstr ""
 
 #: dat/outfits/structure/reactor_class_iii.xml:2
 msgid "Reactor Class III"
-msgstr ""
+msgstr "Reaktor Kelas III"
 
 #: dat/outfits/structure/reactor_class_iii.xml:10
 msgid ""
@@ -5734,7 +5749,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:224
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:243
 msgid "Shield Capacitor I"
-msgstr ""
+msgstr "Kapasitor Perisai I"
 
 #: dat/outfits/structure/shield_capacitor_i.xml:9
 msgid ""
@@ -5744,7 +5759,7 @@ msgstr ""
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:2
 msgid "Shield Capacitor II"
-msgstr ""
+msgstr "Kapasitor Perisai II"
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:9
 msgid ""
@@ -5754,7 +5769,7 @@ msgstr ""
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:2
 msgid "Shield Capacitor III"
-msgstr ""
+msgstr "Kapasitor Perisai III"
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:9
 msgid ""
@@ -5763,7 +5778,7 @@ msgstr ""
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:2
 msgid "Shield Capacitor IV"
-msgstr ""
+msgstr "Kapasitor Perisai IV"
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:9
 msgid ""
@@ -5961,7 +5976,7 @@ msgstr ""
 
 #: dat/outfits/unique/valkyrie_beam.xml:2
 msgid "Valkyrie Beam"
-msgstr ""
+msgstr "Sinar Valkyrie"
 
 #: dat/outfits/unique/valkyrie_beam.xml:10
 msgid ""
@@ -6249,7 +6264,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:10
 msgid "You need at least 10 reputation with House Za'lek."
-msgstr ""
+msgstr "Kamu butuh setidaknya 10% reputasi dengan Wangsa Za'lek."
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:13
 msgid ""
@@ -7501,7 +7516,7 @@ msgstr "Ansestor Dvaered"
 #: dat/ships/dvaered/dvaered_ancestor.xml:18
 #: dat/ships/dvaered/dvaered_vendetta.xml:19
 msgid "You need at least 30% reputation with House Dvaered."
-msgstr ""
+msgstr "Kamu butuh setidaknya 30% reputasi dengan Wangsa Dvaered."
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:19
 msgid ""
@@ -7517,7 +7532,7 @@ msgstr ""
 #: dat/ships/dvaered/dvaered_arsenal.xml:21
 #: dat/ships/dvaered/dvaered_retribution.xml:19
 msgid "You need at least 60% reputation with House Dvaered."
-msgstr ""
+msgstr "Kamu butuh setidaknya 60% reputasi dengan Wangsa Dvaered."
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:22
 msgid ""
@@ -7536,7 +7551,7 @@ msgstr ""
 
 #: dat/ships/dvaered/dvaered_goddard.xml:21
 msgid "You need at least 70% reputation with House Dvaered."
-msgstr ""
+msgstr "Kamu butuh setidaknya 70% reputasi dengan Wangsa Dvaered."
 
 #: dat/ships/dvaered/dvaered_goddard.xml:22
 msgid ""
@@ -7555,7 +7570,7 @@ msgstr ""
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:19
 msgid "You need at least 40% reputation with House Dvaered."
-msgstr ""
+msgstr "Kamu butuh setidaknya 40% reputasi dengan Wangsa Dvaered."
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:20
 msgid ""
@@ -7596,7 +7611,7 @@ msgstr ""
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:18
 msgid "You need at least 50% reputation with House Dvaered."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Wangsa Dvaered."
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:19
 msgid ""
@@ -7623,7 +7638,7 @@ msgstr ""
 
 #: dat/ships/empire/empire_admonisher.xml:20
 msgid "You need at least 40% reputation with the Empire."
-msgstr ""
+msgstr "Kamu butuh setidaknya 40% reputasi dengan Kekaisaran."
 
 #: dat/ships/empire/empire_admonisher.xml:21
 msgid ""
@@ -7639,7 +7654,7 @@ msgstr ""
 #: dat/ships/empire/empire_hawking.xml:21
 #: dat/ships/empire/empire_rainmaker.xml:22
 msgid "You need at least 60% reputation with the Empire."
-msgstr ""
+msgstr "Kamu butuh setidaknya 60% reputasi dengan Kekaisaran."
 
 #: dat/ships/empire/empire_hawking.xml:22
 msgid ""
@@ -7654,7 +7669,7 @@ msgstr ""
 
 #: dat/ships/empire/empire_lancelot.xml:18
 msgid "You need at least 30% reputation with the Empire."
-msgstr ""
+msgstr "Kamu butuh setidaknya 30% reputasi dengan Kekaisaran."
 
 #: dat/ships/empire/empire_lancelot.xml:19
 msgid ""
@@ -7669,7 +7684,7 @@ msgstr "Pasifir Kekaisaran"
 
 #: dat/ships/empire/empire_pacifier.xml:18
 msgid "You need at least 50% reputation with the Empire."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Kekaisaran."
 
 #: dat/ships/empire/empire_pacifier.xml:19
 msgid ""
@@ -7684,7 +7699,7 @@ msgstr ""
 
 #: dat/ships/empire/empire_peacemaker.xml:20
 msgid "You need at least 70% reputation with the Empire."
-msgstr ""
+msgstr "Kamu butuh setidaknya 70% reputasi dengan Kekaisaran."
 
 #: dat/ships/empire/empire_peacemaker.xml:21
 msgid ""
@@ -7717,7 +7732,7 @@ msgstr ""
 
 #: dat/ships/empire/empire_shark.xml:19
 msgid "You need at least 20% reputation with the Empire."
-msgstr ""
+msgstr "Kamu butuh setidaknya 20% reputasi dengan Kekaisaran."
 
 #: dat/ships/empire/empire_shark.xml:20
 msgid ""
@@ -8379,7 +8394,7 @@ msgstr "Archimedes Proteron"
 #: dat/ships/proteron/proteron_archimedes.xml:20
 #: dat/ships/proteron/proteron_watson.xml:20
 msgid "You need at least 70% reputation with the Proteron."
-msgstr ""
+msgstr "Kamu butuh setidaknya 70% reputasi dengan Proteron."
 
 #: dat/ships/proteron/proteron_archimedes.xml:21
 msgid ""
@@ -8393,7 +8408,7 @@ msgstr "Dalton Proteron"
 
 #: dat/ships/proteron/proteron_dalton.xml:18
 msgid "You need at least 20% reputation with the Proteron."
-msgstr ""
+msgstr "Kamu butuh setidaknya 20% reputasi dengan Proteron."
 
 #: dat/ships/proteron/proteron_dalton.xml:19
 msgid ""
@@ -8437,7 +8452,7 @@ msgstr "Hippocrates Proteron"
 
 #: dat/ships/proteron/proteron_hippocrates.xml:20
 msgid "You need at least 50% reputation with the Proteron."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Proteron."
 
 #: dat/ships/proteron/proteron_hippocrates.xml:21
 msgid ""
@@ -8450,11 +8465,11 @@ msgstr ""
 
 #: dat/ships/proteron/proteron_pythagoras.xml:2
 msgid "Proteron Pythagoras"
-msgstr ""
+msgstr "Pythagoras Proteron"
 
 #: dat/ships/proteron/proteron_pythagoras.xml:19
 msgid "You need at least 60% reputation with the Proteron."
-msgstr ""
+msgstr "Kamu butuh setidaknya 60% reputasi dengan Proteron."
 
 #: dat/ships/proteron/proteron_pythagoras.xml:20
 msgid ""
@@ -8467,7 +8482,7 @@ msgstr ""
 
 #: dat/ships/proteron/proteron_watson.xml:2
 msgid "Proteron Watson"
-msgstr ""
+msgstr "Watson Proteron"
 
 #: dat/ships/proteron/proteron_watson.xml:21
 msgid ""
@@ -8500,7 +8515,7 @@ msgstr ""
 
 #: dat/ships/sirius/sirius_divinity.xml:17 dat/ships/sirius/sirius_dogma.xml:17
 msgid "You need at least 70% reputation with House Sirius."
-msgstr ""
+msgstr "Kamu butuh setidaknya 70% reputasi dengan Wangsa Sirius."
 
 #: dat/ships/sirius/sirius_divinity.xml:18
 msgid ""
@@ -8538,7 +8553,7 @@ msgstr ""
 
 #: dat/ships/sirius/sirius_fidelity.xml:16
 msgid "You need at least 20% reputation with House Sirius."
-msgstr ""
+msgstr "Kamu butuh setidaknya 20% reputasi dengan Wangsa Sirius."
 
 #: dat/ships/sirius/sirius_fidelity.xml:17
 msgid ""
@@ -8559,7 +8574,7 @@ msgstr ""
 
 #: dat/ships/sirius/sirius_preacher.xml:16
 msgid "You need at least 40% reputation with House Sirius."
-msgstr ""
+msgstr "Kamu butuh setidaknya 40% reputasi dengan Wangsa Sirius."
 
 #: dat/ships/sirius/sirius_preacher.xml:17
 msgid ""
@@ -8579,7 +8594,7 @@ msgstr ""
 
 #: dat/ships/sirius/sirius_providence.xml:21
 msgid "You need at least 60% reputation with House Sirius."
-msgstr ""
+msgstr "Kamu butuh setidaknya 60% reputasi dengan Wangsa Sirius."
 
 #: dat/ships/sirius/sirius_providence.xml:22
 msgid ""
@@ -8599,7 +8614,7 @@ msgstr ""
 
 #: dat/ships/sirius/sirius_shaman.xml:16
 msgid "You need at least 30% reputation with House Sirius."
-msgstr ""
+msgstr "Kamu butuh setidaknya 30% reputasi dengan Wangsa Sirius."
 
 #: dat/ships/sirius/sirius_shaman.xml:17
 msgid ""
@@ -8624,7 +8639,7 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_arx.xml:23 dat/ships/soromid/soromid_vox.xml:20
 msgid "You need at least 70% reputation with the Soromid."
-msgstr ""
+msgstr "Kamu butuh setidaknya 70% reputasi dengan Soromid."
 
 #: dat/ships/soromid/soromid_arx.xml:24
 msgid ""
@@ -8645,7 +8660,7 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_brigand.xml:16
 msgid "You need at least 20% reputation with the Soromid."
-msgstr ""
+msgstr "Kamu butuh setidaknya 20% reputasi dengan Soromid."
 
 #: dat/ships/soromid/soromid_brigand.xml:17
 msgid ""
@@ -8665,7 +8680,7 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_copia.xml:23 dat/ships/soromid/soromid_ira.xml:21
 msgid "You need at least 60% reputation with the Soromid."
-msgstr ""
+msgstr "Kamu butuh setidaknya 60% reputasi dengan Soromid."
 
 #: dat/ships/soromid/soromid_copia.xml:24
 msgid ""
@@ -8701,7 +8716,7 @@ msgstr ""
 #: dat/ships/soromid/soromid_marauder.xml:17
 #: dat/ships/soromid/soromid_reaver.xml:16
 msgid "You need at least 30% reputation with the Soromid."
-msgstr ""
+msgstr "Kamu butuh setidaknya 30% reputasi dengan Soromid."
 
 #: dat/ships/soromid/soromid_marauder.xml:18
 msgid ""
@@ -8721,7 +8736,7 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_nyx.xml:17
 msgid "You need at least 50% reputation with the Soromid."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Soromid."
 
 #: dat/ships/soromid/soromid_nyx.xml:18
 msgid ""
@@ -8736,7 +8751,7 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_odium.xml:18
 msgid "You need at least 40% reputation with the Soromid."
-msgstr ""
+msgstr "Kamu butuh setidaknya 40% reputasi dengan Soromid."
 
 #: dat/ships/soromid/soromid_odium.xml:19
 msgid ""
@@ -8788,7 +8803,7 @@ msgstr ""
 #: dat/ships/thurion/thurion_apprehension.xml:20
 #: dat/ships/thurion/thurion_taciturnity.xml:19
 msgid "You need at least 50% reputation with the Thurion."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Turion."
 
 #: dat/ships/thurion/thurion_apprehension.xml:21
 #: dat/ships/thurion/thurion_certitude.xml:22
@@ -8812,7 +8827,7 @@ msgstr ""
 
 #: dat/ships/thurion/thurion_certitude.xml:21
 msgid "You need at least 70% reputation with the Thurion."
-msgstr ""
+msgstr "Kamu butuh setidaknya 70% reputasi dengan Turion."
 
 #: dat/ships/thurion/thurion_ingenuity.xml:2
 msgid "Thurion Ingenuity"
@@ -8821,7 +8836,7 @@ msgstr ""
 #: dat/ships/thurion/thurion_ingenuity.xml:19
 #: dat/ships/thurion/thurion_scintillation.xml:20
 msgid "You need at least 30% reputation with the Thurion."
-msgstr ""
+msgstr "Kamu butuh setidaknya 30% reputasi dengan Turion."
 
 #: dat/ships/thurion/thurion_ingenuity.xml:20
 msgid ""
@@ -8839,7 +8854,7 @@ msgstr ""
 
 #: dat/ships/thurion/thurion_perspicacity.xml:21
 msgid "You need at least 20% reputation with the Thurion."
-msgstr ""
+msgstr "Kamu butuh setidaknya 20% reputasi dengan Turion."
 
 #: dat/ships/thurion/thurion_perspicacity.xml:22
 msgid ""
@@ -8874,7 +8889,7 @@ msgstr ""
 
 #: dat/ships/thurion/thurion_virtuosity.xml:21
 msgid "You need at least 40% reputation with the Thurion."
-msgstr ""
+msgstr "Kamu butuh setidaknya 40% reputasi dengan Turion."
 
 #: dat/ships/thurion/thurion_virtuosity.xml:22
 msgid ""
@@ -8896,7 +8911,7 @@ msgstr ""
 
 #: dat/ships/zalek/zalek_demon.xml:19
 msgid "You need at least 50% reputation with House Za'lek."
-msgstr ""
+msgstr "Kamu butuh setidaknya 50% reputasi dengan Wangsa Za'lek."
 
 #: dat/ships/zalek/zalek_demon.xml:20
 msgid ""
@@ -8912,7 +8927,7 @@ msgstr "Diablo Za'lek"
 
 #: dat/ships/zalek/zalek_diablo.xml:19 dat/ships/zalek/zalek_mephisto.xml:17
 msgid "You need at least 70% reputation with House Za'lek."
-msgstr ""
+msgstr "Kamu butuh setidaknya 70% reputasi dengan Wangsa Za'lek."
 
 #: dat/ships/zalek/zalek_diablo.xml:20
 msgid ""
@@ -8998,7 +9013,7 @@ msgstr "Mamon Za'lek"
 
 #: dat/ships/zalek/zalek_mammon.xml:23
 msgid "You need at least 60% reputation with House Za'lek."
-msgstr ""
+msgstr "Kamu butuh setidaknya 60% reputasi dengan Wangsa Za'lek."
 
 #: dat/ships/zalek/zalek_mammon.xml:24
 msgid ""
@@ -9029,7 +9044,7 @@ msgstr ""
 
 #: dat/ships/zalek/zalek_sting.xml:19
 msgid "You need at least 40% reputation with House Za'lek."
-msgstr ""
+msgstr "Kamu butuh setidaknya 40% reputasi dengan Wangsa Za'lek."
 
 #: dat/ships/zalek/zalek_sting.xml:20
 msgid ""
@@ -9113,6 +9128,9 @@ msgid ""
 "This slot is used for engines. Engines propel the ship, which is kind of "
 "important. Engines require energy from the core system to function."
 msgstr ""
+"Slot ini digunakan untuk permesinan. Mesin menggerakkan kapal; hal yang "
+"cukup penting. Mesin memerlukan energi dari sistem inti untuk dapat "
+"berfungsi."
 
 #: dat/slots/fighter_bay.xml:3
 msgid "Fighter Bays"
@@ -9135,7 +9153,7 @@ msgstr ""
 
 #: dat/slots/systems.xml:3
 msgid "Core Systems"
-msgstr ""
+msgstr "Sistem Inti"
 
 #: dat/slots/systems.xml:4
 msgid ""
@@ -9143,10 +9161,13 @@ msgid ""
 "rely on this system to manage them, and the bulk of the ship's power and "
 "shield generation also happens here."
 msgstr ""
+"Slot ini digunakan untuk sistem inti kapal. Subsistem lainnya mengandalkan "
+"sistem ini sebagai pengatur utama, dan sebagian besar pembangkitan listrik "
+"dan perisai terjadi di sini."
 
 #: dat/spob/abacus.xml:2
 msgid "Abacus"
-msgstr ""
+msgstr "Abakus"
 
 #: dat/spob/abacus.xml:16 dat/spob/adius.xml:9 dat/spob/aesir_iv.xml:9
 #: dat/spob/aldous_moon.xml:9 dat/spob/alsafi_ib.xml:9
@@ -9294,6 +9315,11 @@ msgid ""
 "researchers on site at any one time. Tourism is out of the question, so is a "
 "bar."
 msgstr ""
+"Abakus adalah planet yang sangat besar untuk planet batuan. Para Soromid "
+"telah mendirikan pos penelitian di sini untuk mencari tahu lebih dalam "
+"struktur planet ini. Pos ini lumayan kecil, hanya ada satu-dua lusin "
+"peneliti yang ditugaskan di tempat. Turisme tidak ada, maka bar pun tidak "
+"ada."
 
 #: dat/spob/adham.xml:2
 msgid "Adham"
@@ -9936,6 +9962,8 @@ msgid ""
 "Alsafi II is a barren world that other than some indications of prospection "
 "sites looking for mineral, is devoid of anything of interest."
 msgstr ""
+"Alsafi II adalah planet hampa yang tidak menarik sama sekali kalau tak ada "
+"tanda-tanda prospeksi penambangan mineral."
 
 #: dat/spob/alteris_i.xml:2
 msgid "Alteris I"
@@ -10284,7 +10312,7 @@ msgstr "Antlejos V"
 
 #: dat/spob/antlejos_v.xml:15
 msgid "A cold and barren inhospitable moon devoid of all life."
-msgstr "Bulan yang dingin, kosong melompong, dan tidak mengandung kehidupan."
+msgstr "Bulan yang dingin dan hampa, tanpa tanda kehidupan."
 
 #: dat/spob/anubis.xml:2
 msgid "Anubis"
@@ -10639,7 +10667,7 @@ msgstr ""
 
 #: dat/spob/astana_iiv.xml:2
 msgid "Astana IIV"
-msgstr ""
+msgstr "Astana IIV"
 
 #: dat/spob/atalanta.xml:2
 msgid "Atalanta"
@@ -10744,11 +10772,11 @@ msgstr ""
 
 #: dat/spob/awowa_iv.xml:2
 msgid "Awowa IV"
-msgstr ""
+msgstr "Awowa IV"
 
 #: dat/spob/awowa_v.xml:2
 msgid "Awowa V"
-msgstr ""
+msgstr "Awowa V"
 
 #: dat/spob/baba_yaga.xml:2
 msgid "Baba Yaga"
@@ -10756,23 +10784,23 @@ msgstr ""
 
 #: dat/spob/babylon_i.xml:2
 msgid "Babylon I"
-msgstr ""
+msgstr "Babilonia I"
 
 #: dat/spob/babylon_ii.xml:2
 msgid "Babylon II"
-msgstr ""
+msgstr "Babilonia II"
 
 #: dat/spob/babylon_iia.xml:2
 msgid "Babylon IIa"
-msgstr ""
+msgstr "Babilonia IIa"
 
 #: dat/spob/baf_i.xml:2
 msgid "Baf I"
-msgstr ""
+msgstr "Baf I"
 
 #: dat/spob/baf_iv.xml:2
 msgid "Baf IV"
-msgstr ""
+msgstr "Baf IV"
 
 #: dat/spob/barnards_star_ruined_ringworld.xml:2
 msgid "Barnard's Star Ruined Ringworld"
@@ -10949,7 +10977,7 @@ msgstr ""
 
 #: dat/spob/berkhere.xml:2
 msgid "Berkhere"
-msgstr "Berkher"
+msgstr "Berkhere"
 
 #: dat/spob/berkhere.xml:27
 msgid ""
@@ -10991,7 +11019,7 @@ msgstr "Blackwell VII"
 
 #: dat/spob/blunderbuss_ii.xml:2
 msgid "Blunderbuss II"
-msgstr ""
+msgstr "Pemuras II"
 
 #: dat/spob/bolero.xml:2
 msgid "Bolero"
@@ -11009,6 +11037,14 @@ msgid ""
 "before the Incident. However, some people avoid it for exactly the same "
 "reason…"
 msgstr ""
+"Bolero menjadi salah satu planet paling sukses di Kekaisaran karena "
+"pertumbuhannya yang cepat. Penduduknya makmur dan sukses, serta kondisi "
+"planet ini juga tidak ekstrem. Meskipun masih dianggap terpencil karena "
+"lokasinya, Bolero menjadi semakin penting dalam politik Kekaisaran.\n"
+"Sebagian besar popularitas Bolero berasal dari iklimnya yang mirip Bumi, "
+"sehingga memberikan rasa nostalgia bagi orang-orang yang dapat mengunjungi "
+"Bumi sebelum Insiden. Namun, beberapa orang menghindarinya karena alasan "
+"yang sama…"
 
 #: dat/spob/bolero.xml:31
 msgid ""
@@ -11020,6 +11056,13 @@ msgid ""
 "majority of people appear to be temporary visitors, either arriving for "
 "vacations or business trips."
 msgstr ""
+"Memaksimalkan kemiripan Bolero dengan Bumi, bar di sini bergaya seperti pub "
+"Bumi kuno, dengan langit-langit rendah, bir hangat, dan makanan enak. "
+"Suasananya hangat dan ramah, semua pengunjungnya sopan dan ceria, dan "
+"penjaganya nyaris tidak terlihat sama sekali.\n"
+"Hanya ada sedikit penduduk lokal yang berbaur dengan pengunjung; sebagian "
+"besar orang tampaknya hanyalah pengunjung sementara, baik yang datang untuk "
+"liburan atau perjalanan bisnis."
 
 #: dat/spob/bon_sebb.xml:2
 msgid "Bon Sebb"
@@ -11073,11 +11116,11 @@ msgstr ""
 
 #: dat/spob/botarn_i.xml:2
 msgid "Botarn I"
-msgstr ""
+msgstr "Botarn I"
 
 #: dat/spob/brandt_cloister.xml:2
 msgid "Brandt Cloister"
-msgstr ""
+msgstr "Biara Brandt"
 
 #: dat/spob/brandt_cloister.xml:25
 msgid ""
@@ -11100,23 +11143,23 @@ msgstr "Brendon I"
 
 #: dat/spob/brimstone_i.xml:2
 msgid "Brimstone I"
-msgstr ""
+msgstr "Batuluap I"
 
 #: dat/spob/brimstone_ia.xml:2
 msgid "Brimstone Ia"
-msgstr ""
+msgstr "Batuluap Ia"
 
 #: dat/spob/brimstone_ib.xml:2
 msgid "Brimstone Ib"
-msgstr ""
+msgstr "Batuluap Ib"
 
 #: dat/spob/brimstone_ii.xml:2
 msgid "Brimstone II"
-msgstr ""
+msgstr "Batuluap II"
 
 #: dat/spob/brimstone_iii.xml:2
 msgid "Brimstone III"
-msgstr ""
+msgstr "Batuluap III"
 
 #: dat/spob/brock.xml:2
 msgid "Brock"
@@ -11486,7 +11529,7 @@ msgstr ""
 
 #: dat/spob/cole_outpost.xml:2
 msgid "Cole Outpost"
-msgstr ""
+msgstr "Pos Depan Kole"
 
 #: dat/spob/cole_outpost.xml:24
 msgid ""
@@ -11501,7 +11544,7 @@ msgstr ""
 
 #: dat/spob/colley.xml:2
 msgid "Colley"
-msgstr "Colley"
+msgstr "Kollei"
 
 #: dat/spob/colley.xml:27
 msgid ""
@@ -11519,7 +11562,7 @@ msgstr ""
 
 #: dat/spob/coral_cloister.xml:2
 msgid "Coral Cloister"
-msgstr ""
+msgstr "Biara Koral"
 
 #: dat/spob/coral_cloister.xml:24
 msgid ""
@@ -11604,19 +11647,19 @@ msgstr ""
 
 #: dat/spob/corvus_i.xml:2
 msgid "Corvus I"
-msgstr "Corvus I"
+msgstr "Korvus I"
 
 #: dat/spob/corvus_vi.xml:2
 msgid "Corvus VI"
-msgstr "Corvus VI"
+msgstr "Korvus VI"
 
 #: dat/spob/corvus_via.xml:2
 msgid "Corvus VI-a"
-msgstr "Corvus VI-a"
+msgstr "Korvus VI-a"
 
 #: dat/spob/corvus_vib.xml:2
 msgid "Corvus VI-b"
-msgstr "Corvus VI-b"
+msgstr "Korvus VI-b"
 
 #: dat/spob/corvus_vib.xml:24
 msgid ""
@@ -11906,15 +11949,15 @@ msgstr ""
 
 #: dat/spob/delta_pavonis_i.xml:2
 msgid "Delta Pavonis I"
-msgstr ""
+msgstr "Delta Pavonis I"
 
 #: dat/spob/delta_pavonis_ii.xml:2
 msgid "Delta Pavonis II"
-msgstr ""
+msgstr "Delta Pavonis II"
 
 #: dat/spob/delta_pavonis_iia.xml:2
 msgid "Delta Pavonis IIa"
-msgstr ""
+msgstr "Delta Pavonis IIa"
 
 #: dat/spob/delta_polaris_i.xml:2
 msgid "Delta Polaris I"
@@ -11949,11 +11992,11 @@ msgstr ""
 
 #: dat/spob/deneb_iii.xml:2
 msgid "Deneb III"
-msgstr ""
+msgstr "Deneb III"
 
 #: dat/spob/deneb_iiia.xml:2
 msgid "Deneb III-a"
-msgstr ""
+msgstr "Deneb III-a"
 
 #: dat/spob/deneb_iiia.xml:9 dat/spob/toros_iv.xml:9
 msgid "R"
@@ -11984,19 +12027,19 @@ msgstr ""
 
 #: dat/spob/diadem_i.xml:2
 msgid "Diadem I"
-msgstr ""
+msgstr "Diadem I"
 
 #: dat/spob/diadem_ii.xml:2
 msgid "Diadem II"
-msgstr ""
+msgstr "Diadem II"
 
 #: dat/spob/doeston_prime.xml:2
 msgid "Doeston Prime"
-msgstr ""
+msgstr "Doeston Utama"
 
 #: dat/spob/dohriabi_prime.xml:2
 msgid "Dohriabi Prime"
-msgstr ""
+msgstr "Dohriabi Utama"
 
 #: dat/spob/dolmen.xml:2
 msgid "Dolmen"
@@ -12244,7 +12287,7 @@ msgstr ""
 
 #: dat/spob/dundrop_monastery.xml:2
 msgid "Dundrop Monastery"
-msgstr ""
+msgstr "Biara Dundrop"
 
 #: dat/spob/dundrop_monastery.xml:27
 msgid ""
@@ -13189,7 +13232,7 @@ msgstr "Folevo"
 
 #: dat/spob/forbes_monastery.xml:2
 msgid "Forbes Monastery"
-msgstr ""
+msgstr "Biara Forbes"
 
 #: dat/spob/forbes_monastery.xml:26
 msgid ""
@@ -13486,7 +13529,7 @@ msgstr ""
 
 #: dat/spob/fyruse_monastery.xml:2
 msgid "Fyruse Monastery"
-msgstr ""
+msgstr "Biara Fairuse"
 
 #: dat/spob/fyruse_monastery.xml:25
 msgid ""
@@ -13609,7 +13652,7 @@ msgstr ""
 
 #: dat/spob/gath_cloister.xml:2
 msgid "Gath Cloister"
-msgstr ""
+msgstr "Biara Gath"
 
 #: dat/spob/gath_cloister.xml:26
 msgid ""
@@ -14680,7 +14723,7 @@ msgstr ""
 
 #: dat/spob/hurne_monastery.xml:2
 msgid "Hurne Monastery"
-msgstr ""
+msgstr "Biara Hurne"
 
 #: dat/spob/hurne_monastery.xml:27
 msgid ""
@@ -16924,7 +16967,7 @@ msgstr "Monogram V"
 
 #: dat/spob/monsoon_cloister.xml:2
 msgid "Monsoon Cloister"
-msgstr ""
+msgstr "Biara Monsun"
 
 #: dat/spob/monsoon_cloister.xml:25
 msgid ""
@@ -16962,7 +17005,7 @@ msgstr "Moordra II"
 
 #: dat/spob/moorline_cloister.xml:2
 msgid "Moorline Cloister"
-msgstr ""
+msgstr "Biara Moorline"
 
 #: dat/spob/moorline_cloister.xml:27
 msgid ""
@@ -18613,7 +18656,7 @@ msgstr ""
 
 #: dat/spob/pokyos_cloister.xml:2
 msgid "Pokyos Cloister"
-msgstr ""
+msgstr "Biara Pokyos"
 
 #: dat/spob/pokyos_cloister.xml:27
 msgid ""
@@ -20229,7 +20272,7 @@ msgstr ""
 
 #: dat/spob/sirius_monastery.xml:2
 msgid "Sirius Monastery"
-msgstr ""
+msgstr "Biara Sirius"
 
 #: dat/spob/sirius_monastery.xml:26
 msgid ""
@@ -20405,7 +20448,7 @@ msgstr ""
 
 #: dat/spob/socrates_academy_monastery.xml:2
 msgid "Socrates Academy Monastery"
-msgstr ""
+msgstr "Biara Akademi Sokrates"
 
 #: dat/spob/socrates_academy_monastery.xml:25
 msgid ""
@@ -21054,7 +21097,7 @@ msgstr "Tandar IIX"
 
 #: dat/spob/tankard_cloister.xml:2
 msgid "Tankard Cloister"
-msgstr ""
+msgstr "Biara Tankard"
 
 #: dat/spob/tankard_cloister.xml:27
 msgid ""
@@ -21818,7 +21861,7 @@ msgstr "Treakel"
 
 #: dat/spob/trevis_cloister.xml:2
 msgid "Trevis Cloister"
-msgstr ""
+msgstr "Biara Trevis"
 
 #: dat/spob/trevis_cloister.xml:27
 msgid ""
@@ -22705,7 +22748,7 @@ msgstr ""
 
 #: dat/spob/violin_monastery.xml:2
 msgid "Violin Monastery"
-msgstr "Biara Violin"
+msgstr "Biara Biola"
 
 #: dat/spob/violin_monastery.xml:24
 msgid ""
@@ -22746,7 +22789,7 @@ msgstr ""
 
 #: dat/spob/virginis_lambda.xml:2
 msgid "Virginis Lambda"
-msgstr ""
+msgstr "Virginis Lambda"
 
 #: dat/spob/vlexair.xml:2
 msgid "Vlexair"
@@ -24032,7 +24075,7 @@ msgstr "Amatiri"
 #: dat/ssys/pisces_prime.xml:6 dat/ssys/ram.xml:6 dat/ssys/sleuth.xml:6
 #: dat/ssys/sylph.xml:6 dat/ssys/tandar.xml:6 dat/ssys/zintar.xml:6
 msgid "#rHaze (-50% Shield and Shield Regen)#0"
-msgstr ""
+msgstr "#rKabut (-50% Perisai dan Regen Perisai)#0"
 
 #: dat/ssys/anarbalis.xml:2
 msgid "Anarbalis"
@@ -24227,7 +24270,7 @@ msgstr "Brendon"
 
 #: dat/ssys/brimstone.xml:2
 msgid "Brimstone"
-msgstr ""
+msgstr "Batuluap"
 
 #: dat/ssys/brumerebus.xml:2
 msgid "Brumerebus"
@@ -24315,7 +24358,7 @@ msgstr "Coriolis"
 
 #: dat/ssys/corvus.xml:2
 msgid "Corvus"
-msgstr "Corvus"
+msgstr "Korvus"
 
 #. Create the OSD
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:140
@@ -26201,6 +26244,8 @@ msgid ""
 "A cold and barren inhospitable moon devoid of all life except for a small "
 "base camp for terraforming the entire planet."
 msgstr ""
+"Bulan yang dingin dan hampa, tanpa tanda kehidupan kecuali untuk satu kamp "
+"pangkal untuk menteraformasi planet ini."
 
 #: dat/unidiff/antlejosv_2.xml:4
 msgid ""
@@ -26208,6 +26253,9 @@ msgid ""
 "camp for terraforming the entire planet. You can see dust on the ground "
 "vibrating as heavy machinery operates nearby."
 msgstr ""
+"Bulan yang dingin dan hampa, tanpa tanda kehidupan kecuali untuk satu kamp "
+"pangkal untuk menteraformasi planet ini. Kamu bisa melihat debu di kakimu "
+"bergetar karena mesin dan alat berat yang sedang bekerja di sekelilingmu."
 
 #: dat/unidiff/antlejosv_3.xml:4
 msgid ""
@@ -26216,6 +26264,10 @@ msgid ""
 "heavy machinery operates nearby. A weak atmosphere has started to form "
 "around the surface of the planet."
 msgstr ""
+"Bulan yang dingin dan hampa, tanpa tanda kehidupan kecuali untuk satu kamp "
+"pangkal untuk menteraformasi planet ini. Kamu bisa melihat debu di kakimu "
+"bergetar karena mesin dan alat berat yang sedang bekerja di sekelilingmu. "
+"Atmosfer tipis mulai terbentuk."
 
 #: dat/unidiff/antlejosv_4.xml:4
 msgid ""
@@ -46030,16 +46082,16 @@ msgstr ""
 #. Democritus
 #: dat/events/taiomi/system.lua:159
 msgid "\"Perhaps {quote}.\""
-msgstr ""
+msgstr "\"Mungkin {quote}.\""
 
 #: dat/events/taiomi/system.lua:160
 msgid "\"Could it be that {quote}?\""
-msgstr ""
+msgstr "\"Mungkinkah {quote}?\""
 
 #: dat/events/taiomi/system.lua:166 dat/events/taiomi/system.lua:595
 #: dat/missions/minerva/finale1.lua:331
 msgid "\"Who are you?\""
-msgstr ""
+msgstr "\"Siapakah kamu?\""
 
 #: dat/events/taiomi/system.lua:170
 msgid "Ask about the future of Taiomi"
@@ -84224,10 +84276,8 @@ msgid "\"I feel sick.\""
 msgstr ""
 
 #: dat/missions/onion/onion03.lua:430
-#, fuzzy
-#| msgid "Home"
 msgid "\"Home?\""
-msgstr "Rumah"
+msgstr "\"Rumah?\""
 
 #: dat/missions/onion/onion03.lua:431
 msgid "\"Isn't this very empty?\""
@@ -117968,9 +118018,6 @@ msgid "+"
 msgstr ""
 
 #: src/dev_sysedit.c:287 src/dev_uniedit.c:308
-#, fuzzy
-#| msgctxt "keyname"
-#| msgid "-"
 msgctxt "zoomout"
 msgid "-"
 msgstr "-"
@@ -120837,20 +120884,16 @@ msgid "Sort by Reward"
 msgstr ""
 
 #: src/land.c:758
-#, fuzzy
-#| msgid "Jump Distance"
 msgid "Sort by Distance"
-msgstr "Jarak Lompatan"
+msgstr "Sortir dengan Jarak"
 
 #: src/land.c:836
 msgid "Priority (Default)"
 msgstr ""
 
 #: src/land.c:838
-#, fuzzy
-#| msgid "Jump Distance"
 msgid "Distance"
-msgstr "Jarak Lompatan"
+msgstr "Jarak"
 
 #. Create the window.
 #: src/land.c:846
@@ -125924,17 +125967,17 @@ msgstr "Plugin '%s' tidak memiliki nama!"
 #: src/plugin.c:156
 #, c-format
 msgid "Plugin '%s' has unknown metadata node '%s'!"
-msgstr ""
+msgstr "Plugin '%s' memiliki noda metadata '%s' yang tidak diketahui!"
 
 #: src/plugin.c:164
 #, c-format
 msgid "Plugin '%s' missing/invalid '%s' element"
-msgstr ""
+msgstr "Plugin '%s' element '%s' tidak ada/invalid"
 
 #: src/plugin.c:244
 #, c-format
 msgid "Plugin '%s' does not have a valid '%s'!"
-msgstr ""
+msgstr "Plugin '%s' tidak punya '%s' yang valid!"
 
 #: src/plugin.c:359
 #, c-format
@@ -125975,11 +126018,11 @@ msgstr ""
 #: src/ship.c:97
 #, c-format
 msgid "Ship %s does not exist"
-msgstr ""
+msgstr "Kapal %s tidak ada"
 
 #: src/ship.c:203
 msgid "Yacht"
-msgstr "Kapal pesiar"
+msgstr "Kapal Pesiar"
 
 #: src/ship.c:205
 msgid "Courier"
@@ -125987,19 +126030,19 @@ msgstr "Kurir"
 
 #: src/ship.c:207
 msgid "Freighter"
-msgstr ""
+msgstr "Kapal Angkut Barang"
 
 #: src/ship.c:209
 msgid "Armoured Transport"
-msgstr ""
+msgstr "Kapal Angkut Berzirah"
 
 #: src/ship.c:211
 msgid "Bulk Freighter"
-msgstr ""
+msgstr "Kapal Angkut Massal"
 
 #: src/ship.c:214
 msgid "Scout"
-msgstr ""
+msgstr "Pengintai"
 
 #: src/ship.c:216
 msgid "Interceptor"
@@ -126007,31 +126050,31 @@ msgstr "Pencegat"
 
 #: src/ship.c:218
 msgid "Fighter"
-msgstr ""
+msgstr "Pesawat Tempur"
 
 #: src/ship.c:220
 msgid "Bomber"
-msgstr ""
+msgstr "Pengebom"
 
 #: src/ship.c:222
 msgid "Corvette"
-msgstr "Corvette"
+msgstr "Korvet"
 
 #: src/ship.c:224
 msgid "Destroyer"
-msgstr ""
+msgstr "Kapal Perusak"
 
 #: src/ship.c:226
 msgid "Cruiser"
-msgstr ""
+msgstr "Kapal Penjelajah"
 
 #: src/ship.c:228
 msgid "Battleship"
-msgstr ""
+msgstr "Kapal Tempur"
 
 #: src/ship.c:230
 msgid "Carrier"
-msgstr ""
+msgstr "Kapal Induk"
 
 #: src/ship.c:485
 #, c-format
@@ -127552,20 +127595,16 @@ msgid "ssys tag remove"
 msgstr ""
 
 #: src/unidiff.c:92
-#, fuzzy
-#| msgid "Kobopos I"
 msgid "spob pos x"
-msgstr "Kobopos I"
+msgstr "spob pos x"
 
 #: src/unidiff.c:93
 msgid "spob pos x revert"
 msgstr ""
 
 #: src/unidiff.c:94
-#, fuzzy
-#| msgid "Kobopos I"
 msgid "spob pos y"
-msgstr "Kobopos I"
+msgstr "spob pos y"
 
 #: src/unidiff.c:95
 msgid "spob pos y revert"
@@ -127604,10 +127643,8 @@ msgid "spob presence bonus revert"
 msgstr ""
 
 #: src/unidiff.c:104
-#, fuzzy
-#| msgid "Za'lek Unpresence (Range 1)"
 msgid "spob presence range"
-msgstr "Za'lek Tidak Ada (Jarak 1)"
+msgstr "spob presensi jarak"
 
 #: src/unidiff.c:105
 msgid "spob presence range revert"
@@ -127654,10 +127691,8 @@ msgid "spob bar revert"
 msgstr ""
 
 #: src/unidiff.c:116
-#, fuzzy
-#| msgid "No Space"
 msgid "spob space"
-msgstr "Tidak Cukup Ruang"
+msgstr "ruang spob"
 
 #: src/unidiff.c:117
 msgid "spob space revert"
@@ -127736,10 +127771,8 @@ msgid "faction alignment reset"
 msgstr ""
 
 #: src/unidiff.c:136
-#, fuzzy
-#| msgid "Arrentil"
 msgid "sentinal"
-msgstr "Arrentil"
+msgstr "sentinal"
 
 #: src/unidiff.c:352
 #, c-format
@@ -127789,42 +127822,32 @@ msgid "Unknown unidiff hunk '%d'!"
 msgstr ""
 
 #: src/unidiff.c:558
-#, fuzzy
-#| msgid "unknown error"
 msgid "unknown hunk"
-msgstr "kesalahan tidak diketahui"
+msgstr "bongkah tidak diketahui"
 
 #: src/unidiff.c:565
-#, fuzzy, c-format
-#| msgctxt "outfitstats"
-#| msgid "%s: %s%s %s [%s %s]"
+#, c-format
 msgctxt "unidiff"
 msgid "   [%s] %s"
-msgstr "%s: %s%s %s [%s %s]"
+msgstr "   [%s] %s"
 
 #: src/unidiff.c:568
-#, fuzzy, c-format
-#| msgctxt "outfitstats"
-#| msgid "%s: %s %s"
+#, c-format
 msgctxt "unidiff"
 msgid "   [%s] %s: %s"
-msgstr "%s: %s %s"
+msgstr "   [%s] %s: %s"
 
 #: src/unidiff.c:572
-#, fuzzy, c-format
-#| msgctxt "outfitstats"
-#| msgid "%s: %s %s"
+#, c-format
 msgctxt "unidiff"
 msgid "   [%s] %s: %d"
-msgstr "%s: %s %s"
+msgstr "   [%s] %s: %d"
 
 #: src/unidiff.c:576
-#, fuzzy, c-format
-#| msgctxt "outfitstats"
-#| msgid "%s: %s %s"
+#, c-format
 msgctxt "unidiff"
 msgid "   [%s] %s: %f"
-msgstr "%s: %s %s"
+msgstr "   [%s] %s: %f"
 
 #: src/unidiff.c:581
 #, c-format
