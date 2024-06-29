@@ -705,6 +705,7 @@ int ship_gfxLoad( Ship *s )
    }
    free( base );
 
+#if 0
 #if DEBUGGING
    if ( ( s->gfx_space != NULL ) &&
         ( round( s->size ) != round( s->gfx_space->sw ) ) )
@@ -712,6 +713,7 @@ int ship_gfxLoad( Ship *s )
               "'%s'! 'size' should be %.0f!" ),
             s->name, s->gfx_space->sw );
 #endif /* DEBUGGING */
+#endif
 
    return 0;
 }
