@@ -63,7 +63,7 @@ def wrapper(*args):
     elif debugger and "lldb" in debugger:
         command = [
             debugger,
-            "--one-line", f"command script import {os.path.join(build_root, "lldbinit.py")}",
+            "--one-line", f"command script import {os.path.join(build_root, 'lldbinit.py')}",
             "--"
         ] + list(args)
     else:
