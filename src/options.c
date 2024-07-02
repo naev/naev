@@ -1122,11 +1122,13 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
 
    /* Warn if already bound. */
    boundkey = input_keyAlreadyBound( type, key, mod );
-   if ( ( boundkey >= 0 ) && ( boundkey != opt_selectedKeybind ) )
-      dialogue_alert( _( "Key '%s' overlaps with key '%s' that was just set. "
-                         "You may want to correct this." ),
-                      input_getKeybindName( boundkey ),
-                      input_getKeybindName( opt_selectedKeybind ) );
+   if ( ( boundkey >= 0 ) && ( boundkey < KST_END ) &&
+        ( boundkey != opt_selectedKeybind ) )
+      dialogue_alert(
+         _( "Key '#b%s#0' overlaps with key '#b%s#0' that was just set. "
+            "You may want to correct this." ),
+         input_getKeybindName( boundkey ),
+         input_getKeybindName( opt_selectedKeybind ) );
 
    /* Set keybinding. */
    input_setKeybind( opt_selectedKeybind, type, key, mod );
