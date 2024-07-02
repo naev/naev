@@ -2620,10 +2620,10 @@ dat/trails/default_missile.xml
 dat/trails/default_missileL.xml
 dat/trails/default_thin.xml
 dat/trails/fire.xml
+dat/trails/fireS.xml
 dat/trails/fire_missile.xml
 dat/trails/fire_missileL.xml
 dat/trails/fire_missileS.xml
-dat/trails/fire_thin.xml
 dat/trails/melendez.xml
 dat/trails/melendezS.xml
 dat/trails/nebula.xml
@@ -2639,6 +2639,7 @@ dat/trails/sirius_chakra.xml
 dat/trails/soromid.xml
 dat/trails/soromidS.xml
 dat/trails/thurion.xml
+dat/trails/thurionS.xml
 dat/trails/zalek.xml
 dat/trails/zalekL.xml
 dat/trails/zalekS.xml

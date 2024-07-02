@@ -9,8 +9,8 @@
  <time_mod>0.75</time_mod>
  <trail_generator x="-3" y="13" h="0">nebula</trail_generator>
  <trail_generator x="-3" y="-13" h="0">nebula</trail_generator>
- <trail_generator x="-15" y="-6" h="0">fire-thin</trail_generator>
- <trail_generator x="-15" y="6" h="0">fire-thin</trail_generator>
+ <trail_generator x="-15" y="-6" h="0">fireS</trail_generator>
+ <trail_generator x="-15" y="6" h="0">fireS</trail_generator>
  <fabricator>Aerosys</fabricator>
  <faction>Independent</faction>
  <description>The star product of Aerosys, the Hyena quickly has also become a favourite of guerrilla and paramilitary groups far and wide. Their top-notch acceleration combined with fast reaction time allow them to exhaust enemy energy supplies while wearing them down. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the ranks of the more notorious and unruly pilots.</description>
