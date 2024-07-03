@@ -293,13 +293,14 @@ static int intro_draw_text( char **const sb_list, int sb_size, int sb_index,
    do {
       if ( sb_list[i] != NULL ) {
          stop = 0;
-         if(y < 2 * line_height) {
+         if ( y < 2 * line_height ) {
             glColour fadedColour = cFontGreen;
-            fadedColour.a = y / ( (double)line_height * 2. );
+            fadedColour.a        = y / ( (double)line_height * 2. );
             gl_printRaw( &intro_font, x, y, &fadedColour, -1, sb_list[i] );
-         } else if( y > SCREEN_H - 2 * line_height ) {
+         } else if ( y > SCREEN_H - 2 * line_height ) {
             glColour fadedColour = cFontGreen;
-            fadedColour.a = ( (double)SCREEN_H - y ) / ( (double)line_height * 2. );
+            fadedColour.a =
+               ( (double)SCREEN_H - y ) / ( (double)line_height * 2. );
             gl_printRaw( &intro_font, x, y, &fadedColour, -1, sb_list[i] );
          } else
             gl_printRaw( &intro_font, x, y, &cFontGreen, -1, sb_list[i] );
