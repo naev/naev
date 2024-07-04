@@ -146,8 +146,10 @@ static int asteroid_updateSingle( Asteroid *a )
       case ASTEROID_FG:
          /* Don't go away if player is close. */
          if ( !forced && ( player.p != NULL ) &&
-              ( vec2_dist2( &player.p->solid.pos, &a->sol.pos ) <
-                pow2( 1500. ) ) )
+              ( ( vec2_dist2( &player.p->solid.pos, &a->sol.pos ) <
+                  pow2( 1500. ) ) ||
+                ( ( player.p->nav_anchor == a->parent ) &&
+                  ( player.p->nav_asteroid == a->id ) ) ) )
             a->state =
                ASTEROID_FG - 1; /* So it gets turned back into ASTEROID_FG. */
          else
