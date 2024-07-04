@@ -10,7 +10,7 @@
       * Exposed more colourblind options to the user
       * Can modify game speed directly instead of using a slow mode difficulty for accessibility
       * Messages get folded instead of repeating
-      * Asteroids no longer fade out if close to the player
+      * Asteroids no longer fade out if close to or targetted by the player
       * Display fuel consumption for ships in the equipment overlay
       * Added option to match speed with slowest ship in the fleet (on by default)
       * Made it so ships in the equipment screen do not change order based on value
