@@ -1524,6 +1524,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    int           l;
 
    /* Defaults */
+   temp->u.blt.gfx.size    = -1.;
    temp->u.blt.spfx_armour = -1;
    temp->u.blt.spfx_shield = -1;
    temp->u.blt.sound       = -1;
@@ -1733,7 +1734,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    if ( o )                                                                    \
    WARN( _( "Outfit '%s' missing/invalid '%s' element" ), temp->name,          \
          s ) /**< Define to help check for data errors. */
-   // MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
+   MELEMENT( temp->u.blt.gfx.size < 0., "gfx" );
    MELEMENT( temp->u.blt.spfx_shield == -1, "spfx_shield" );
    MELEMENT( temp->u.blt.spfx_armour == -1, "spfx_armour" );
    MELEMENT( ( sound_disabled != 0 ) && ( temp->u.blt.sound < 0 ), "sound" );
