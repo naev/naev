@@ -225,6 +225,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    GLuint                    tex;
    SDL_Surface              *surface = NULL;
    int                       has_alpha;
+   const char               *path;
 #ifdef HAVE_NAEV
    has_alpha = 0;
 #endif /* HAVE_NAEV */
@@ -236,27 +237,27 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    }
 
    /* Load from path. */
-   if ( ctex->texture->image->uri != NULL ) {
+   path = ( ctex->texture->has_webp ) ? ctex->texture->webp_image->uri
+                                      : ctex->texture->image->uri;
+   if ( path != NULL ) {
       SDL_RWops *rw;
 #ifdef HAVE_NAEV
-      char path[PATH_MAX];
-      snprintf( path, sizeof( path ), "%s/%s", obj->path,
-                ctex->texture->image->uri );
-      rw = PHYSFSRWOPS_openRead( path );
+      char filepath[PATH_MAX];
+      snprintf( filepath, sizeof( filepath ), "%s/%s", obj->path, path );
+      rw = PHYSFSRWOPS_openRead( filepath );
 #else  /* HAVE_NAEV */
       (void)obj;
-      rw = PHYSFSRWOPS_openRead( ctex->texture->image->uri );
+      rw = PHYSFSRWOPS_openRead( path );
 #endif /* HAVE_NAEV */
       if ( rw == NULL ) {
-         WARN( _( "Unable to open '%s': %s" ), ctex->texture->image->uri,
-               SDL_GetError() );
+         WARN( _( "Unable to open '%s': %s" ), filepath, SDL_GetError() );
          *otex = *def;
          return 0;
       }
       surface = IMG_Load_RW( rw, 1 );
       if ( surface == NULL ) {
-         WARN( _( "Unable to load surface '%s': %s" ),
-               ctex->texture->image->uri, SDL_GetError() );
+         WARN( _( "Unable to load surface '%s': %s" ), filepath,
+               SDL_GetError() );
          *otex = *def;
          return 0;
       }
