@@ -7,7 +7,7 @@
 #include <signal.h>
 #include <stdio.h>
 
-#include "gettext.h"
+#include "gettext.h" // IWYU pragma: keep
 /** @endcond */
 
 #include "nstring.h"
