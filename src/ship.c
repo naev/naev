@@ -350,7 +350,6 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
       mat4_rotate( &H, -M_PI_4 * 0.25 + updown, 1.0, 0.0, 0.0 );
 
       /* Render the model. */
-      glBindFramebuffer( GL_FRAMEBUFFER, fbo );
       ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, glow,
                                 t, &cWhite, &L, &H, 0, OPENGL_TEX_VFLIP );
    } else if ( s->gfx_comm != NULL ) {
@@ -455,7 +454,7 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
 
       /* Render the model. */
       ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, 0., t,
-                                &cWhite, &L, &H, 0, OPENGL_TEX_VFLIP );
+                                &cWhite, &L, &H, 1, OPENGL_TEX_VFLIP );
    }
    if ( s->gfx_comm != NULL ) {
       glTexture *glcomm;
