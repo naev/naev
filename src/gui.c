@@ -1099,17 +1099,21 @@ static void gui_renderMessages( double dt )
             const char *str = ( mesg_stack[m].dstr != NULL )
                                  ? mesg_stack[m].dstr
                                  : mesg_stack[m].str;
+            
+            glColour fadedWhite = cFontWhite;
+            fadedWhite.a        = mesg_stack[m].t > 2. ? 1. : mesg_stack[m].t / 2.;
+
             if ( str[0] == '\t' ) {
                gl_printRestore( &mesg_stack[m].restore );
                dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, &str[1] ) + 6;
                gl_renderRect( x - 4., y - 1., gui_mesg_w - 13., dy, &msgc );
                gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3,
-                               &cFontWhite, -1., &str[1] );
+                               &fadedWhite, -1., &str[1] );
             } else {
                dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, str ) + 6;
                gl_renderRect( x - 4., y - 1., gui_mesg_w - 13., dy, &msgc );
                gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3,
-                               &cFontWhite, -1., str );
+                               &fadedWhite, -1., str );
             }
             h += dy;
             y += dy;
