@@ -453,8 +453,14 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
       L.intensity *= 1.5;
 
       /* Render the model. */
-      ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, 0., t,
-                                &cWhite, &L, &H, 1, OPENGL_TEX_VFLIP );
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+      glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+      gltf_renderScene( gl_screen.fbo[2], s->gfx_3d, s->gfx_3d->scene_body, &H,
+                        t, fbosize, &L );
+      glBindFramebuffer( GL_READ_FRAMEBUFFER, gl_screen.fbo[2] );
+      glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
+      glBlitFramebuffer( 0, 0, fbosize, fbosize, 0, fbosize, fbosize, 0,
+                         GL_COLOR_BUFFER_BIT, GL_LINEAR );
    }
    if ( s->gfx_comm != NULL ) {
       glTexture *glcomm;
