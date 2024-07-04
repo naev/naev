@@ -1099,9 +1099,9 @@ static void gui_renderMessages( double dt )
             const char *str = ( mesg_stack[m].dstr != NULL )
                                  ? mesg_stack[m].dstr
                                  : mesg_stack[m].str;
-            
+
             glColour fadedWhite = cFontWhite;
-            fadedWhite.a        = mesg_stack[m].t > 2. ? 1. : mesg_stack[m].t / 2.;
+            fadedWhite.a = mesg_stack[m].t > 2. ? 1. : mesg_stack[m].t / 2.;
 
             if ( str[0] == '\t' ) {
                gl_printRestore( &mesg_stack[m].restore );
