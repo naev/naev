@@ -597,7 +597,15 @@ void main (void)
 #if MAX_LIGHTS > 4
    if (u_nlights>4)
       f_shadow[4] = shadow_map( shadowmap_tex[4], shadow[4] );
-#endif /* MAX_LIGHTS > 2 */
+#endif /* MAX_LIGHTS > 4 */
+#if MAX_LIGHTS > 5
+   if (u_nlights>5)
+      f_shadow[5] = shadow_map( shadowmap_tex[5], shadow[5] );
+#endif /* MAX_LIGHTS > 5 */
+#if MAX_LIGHTS > 6
+   if (u_nlights>6)
+      f_shadow[6] = shadow_map( shadowmap_tex[6], shadow[6] );
+#endif /* MAX_LIGHTS > 6 */
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, -1.0) ); /* Fixed view vector. */
