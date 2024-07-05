@@ -11,7 +11,7 @@
 #include "vec3.h"
 
 #define MAX_LIGHTS                                                             \
-   5 /**< Maximum amount of lights. TODO deferred rendering.                   \
+   7 /**< Maximum amount of lights. TODO deferred rendering.                   \
       */
 
 typedef struct Texture {
