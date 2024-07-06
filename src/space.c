@@ -602,7 +602,7 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
    vec2_cset( vel, HYPERSPACE_VEL * cos( a ), HYPERSPACE_VEL * sin( a ) );
 
    /* Set direction. */
-   *dir = a;
+   *dir = angle_clean( a );
 
    return 0;
 }

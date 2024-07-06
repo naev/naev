@@ -649,7 +649,7 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* Store position. */
    v   = player.p->solid.pos;
-   dir = player.p->solid.dir;
+   dir = angle_clean( player.p->solid.dir );
 
    /* Copy over weapon sets. */
    ws_copy( player.ps.p->weapon_sets, player.ps.weapon_sets );
