@@ -2325,10 +2325,7 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
 
    /* Calculate direction. */
    rdir += RNG_2SIGMA() * acc;
-   if ( rdir < 0. )
-      rdir += 2. * M_PI;
-   else if ( rdir >= 2. * M_PI )
-      rdir -= 2. * M_PI;
+   rdir = angle_clean( rdir );
 
    mass = 1.; /* Lasers are presumed to have unitary mass, just like the real
                  world. */
@@ -2387,12 +2384,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
    /* Disperse as necessary. */
    if ( outfit->u.blt.dispersion > 0. )
       rdir += RNG_1SIGMA() * outfit->u.lau.dispersion;
-
    /* Make sure angle is in range. */
-   while ( rdir < 0. )
-      rdir += 2. * M_PI;
-   while ( rdir >= 2. * M_PI )
-      rdir -= 2. * M_PI;
+   rdir = angle_clean( rdir );
 
    /* Launcher damage. */
    w->dam_mod *= parent->stats.launch_damage;
@@ -2561,11 +2554,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
             rdir = vec2_angle( pos, &tv );
          }
       }
-
-      if ( rdir < 0. )
-         rdir += 2. * M_PI;
-      else if ( rdir >= 2. * M_PI )
-         rdir -= 2. * M_PI;
+      rdir = angle_clean( rdir );
 
       mass = 1.; /**< Needs a mass. */
       solid_init( &w->solid, mass, rdir, pos, vel, SOLID_UPDATE_EULER );
