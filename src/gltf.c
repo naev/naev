@@ -247,7 +247,8 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       rw = PHYSFSRWOPS_openRead( filepath );
 #else  /* HAVE_NAEV */
       (void)obj;
-      rw = PHYSFSRWOPS_openRead( path );
+      const char *filepath = path;
+      rw                   = PHYSFSRWOPS_openRead( path );
 #endif /* HAVE_NAEV */
       if ( rw == NULL ) {
          WARN( _( "Unable to open '%s': %s" ), filepath, SDL_GetError() );
