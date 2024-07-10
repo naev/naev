@@ -6,6 +6,7 @@
 **Bug Fix**
 **New Feature**
 
+(If there is related bug/feature delete the line below.)
 This PR addresses the bug/feature described in #{{insert number}}
 
 ## Summary
