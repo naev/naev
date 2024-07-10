@@ -4,7 +4,7 @@ local head = {
 local greeting = {
    _("Genetically tailoured for you."),
    _("Naturally selected news."),
-   _("In memory of Sorom"),
+   _("In memory of Sorom."),
 }
 local articles = {
 
