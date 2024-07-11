@@ -575,11 +575,17 @@ static int ship_loadEngineImage( Ship *temp, const char *str, int sx, int sy )
    return ( temp->gfx_engine != NULL );
 }
 
+/**
+ * @brief Checks to see if a ship has loaded graphics.
+ */
 int ship_gfxLoaded( const Ship *s )
 {
    return ( ( s->gfx_3d != NULL ) || ( s->gfx_space != NULL ) );
 }
 
+/**
+ * @brief Tries to load the graphics for all ships that need it.
+ */
 int ship_gfxLoadNeeded( void )
 {
    ThreadQueue *tq = vpool_create();
@@ -1235,6 +1241,9 @@ static int ship_parse( Ship *temp, const char *filename )
    return 0;
 }
 
+/**
+ * @brief Renders a 3D ship to a framebuffer.
+ */
 static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
                                       double fw, double fh, double engine_glow,
                                       double t, const glColour *c,
