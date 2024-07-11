@@ -391,7 +391,7 @@ void poly_rotate( CollPolyView *rpolygon, const CollPolyView *ipolygon,
 
 const CollPolyView *poly_view( const CollPoly *poly, double dir )
 {
-   if ( poly->views == NULL )
+   if ( array_size( poly->views ) <= 0 )
       return NULL;
 
 #ifdef DEBUGGING
