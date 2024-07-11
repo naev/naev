@@ -136,9 +136,22 @@ void gl_saveFboDepth( GLuint fbo, const char *filename )
 
    /* Read pixels from buffer -- SLOW. */
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   GLint value;
+   glGetFramebufferAttachmentParameteriv( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                                          GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE,
+                                          &value );
+   if ( value != GL_TEXTURE ) {
+      WARN( "Trying to save depth of FBO with no depth attachment!" );
+      free( screenbuf );
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+      return;
+   }
    glPixelStorei( GL_PACK_ALIGNMENT, 1 ); /* Force them to pack the bytes. */
    glReadPixels( 0, 0, w, h, GL_DEPTH_COMPONENT, GL_FLOAT, screenbuf );
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+
+   /* Check to see if an error occurred. */
+   gl_checkErr();
 
    /* Convert data. */
    Uint8 *d = s->pixels;
@@ -155,9 +168,6 @@ void gl_saveFboDepth( GLuint fbo, const char *filename )
 
    /* Save PNG. */
    IMG_SavePNG( s, filename );
-
-   /* Check to see if an error occurred. */
-   gl_checkErr();
 
    /* Free memory. */
    SDL_FreeSurface( s );
