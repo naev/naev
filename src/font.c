@@ -27,11 +27,9 @@
 #include "font.h"
 
 #include "array.h"
-#include "conf.h"
 #include "distance_field.h"
 #include "log.h"
 #include "ndata.h"
-#include "nfile.h"
 #include "ntracing.h"
 #include "utf8.h"
 
