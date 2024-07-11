@@ -122,6 +122,47 @@ void gl_screenshot( const char *filename )
    SDL_FreeSurface( surface );
 }
 
+void gl_saveFboDepth( GLuint fbo, const char *filename )
+{
+   GLfloat     *screenbuf;
+   SDL_Surface *s;
+   int          w, h;
+
+   /* Allocate data. */
+   w         = gl_screen.rw; /* TODO get true size. */
+   h         = gl_screen.rh;
+   screenbuf = malloc( sizeof( GLfloat ) * 1 * w * h );
+   s         = SDL_CreateRGBSurface( 0, w, h, 24, RGBAMASK );
+
+   /* Read pixels from buffer -- SLOW. */
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   glPixelStorei( GL_PACK_ALIGNMENT, 1 ); /* Force them to pack the bytes. */
+   glReadPixels( 0, 0, w, h, GL_DEPTH_COMPONENT, GL_FLOAT, screenbuf );
+   glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+
+   /* Convert data. */
+   Uint8 *d = s->pixels;
+   for ( int i = 0; i < h; i++ ) {
+      for ( int j = 0; j < w; j++ ) {
+         float f = screenbuf[( h - i - 1 ) * w + j];
+         Uint8 v = f * 255.;
+         for ( int k = 0; k < 3; k++ ) {
+            d[i * s->pitch + j * s->format->BytesPerPixel + k] = v;
+         }
+      }
+   }
+   free( screenbuf );
+
+   /* Save PNG. */
+   IMG_SavePNG( s, filename );
+
+   /* Check to see if an error occurred. */
+   gl_checkErr();
+
+   /* Free memory. */
+   SDL_FreeSurface( s );
+}
+
 /*
  *
  * G L O B A L
