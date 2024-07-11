@@ -187,6 +187,10 @@ void gl_renderTextureDepthRawH( GLuint texture, GLuint depth,
    glActiveTexture( GL_TEXTURE0 );
    glBindTexture( GL_TEXTURE_2D, texture );
 
+   /* Depth testing is required for depth writing. */
+   glEnable( GL_DEPTH_TEST );
+   glDepthFunc( GL_ALWAYS );
+
    /* Must have colour for now. */
    if ( c == NULL )
       c = &cWhite;
@@ -207,6 +211,8 @@ void gl_renderTextureDepthRawH( GLuint texture, GLuint depth,
 
    /* Clear state. */
    glDisableVertexAttribArray( shaders.texture_depth.vertex );
+   glDepthFunc( GL_LESS );
+   glDisable( GL_DEPTH_TEST );
 
    /* anything failed? */
    gl_checkErr();
