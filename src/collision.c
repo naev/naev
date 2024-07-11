@@ -391,6 +391,9 @@ void poly_rotate( CollPolyView *rpolygon, const CollPolyView *ipolygon,
 
 const CollPolyView *poly_view( const CollPoly *poly, double dir )
 {
+   if ( poly->views == NULL )
+      return NULL;
+
 #ifdef DEBUGGING
    if ( ( dir > 2. * M_PI ) || ( dir < 0. ) ) {
       WARN( _( "Angle not between 0 and 2.*M_PI [%f]." ), dir );
