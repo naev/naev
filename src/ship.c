@@ -743,11 +743,9 @@ static int ship_loadPLG( Ship *temp, const char *buf )
 
    /* See if the file does exist. */
    if ( !PHYSFS_exists( file ) ) {
-      WARN( _( "%s xml collision polygon does not exist!\n \
-               Please use the script 'polygon_from_sprite.py' if sprites are used,\n \
-               And 'polygonSTL.py' if 3D model is used in game.\n \
-               These files can be found in Naev's artwork repo." ),
-            file );
+      WARN( _( "%s xml collision polygon does not exist!\nPlease use the "
+               "script '%s' found in Naev's main repository." ),
+            file, "utils/polygonize.py" );
       return 0;
    }
 
