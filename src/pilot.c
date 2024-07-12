@@ -1985,7 +1985,6 @@ void pilot_render( Pilot *p )
             /* Render to framebuffer first. */
             pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw,
                                          gl_screen.nh, NULL );
-            // gl_saveFboDepth( gl_screen.fbo[2], "fbo2.png" );
 
             /* Draw framebuffer with depth on screen. */
             gl_renderTextureDepthRaw(
@@ -1994,7 +1993,6 @@ void pilot_render( Pilot *p )
                y + ( 1. - scale ) * z * h * 0.5, w * scale * z, h * scale * z,
                0, 0, w / (double)gl_screen.nw, h / (double)gl_screen.nh, NULL,
                0. ); /* Colour should already be applied. */
-
          } else {
             gl_renderSpriteInterpolateScale(
                p->ship->gfx_space, p->ship->gfx_engine, 1. - p->engine_glow,
@@ -2020,7 +2018,15 @@ void pilot_render( Pilot *p )
          /* Render onto framebuffer. */
          pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw,
                                       gl_screen.nh, NULL );
+         /* gl_screen.current_fbo is bound. */
 
+         /* Draw the depth. */
+         gl_renderDepthRaw(
+            gl_screen.fbo_depth_tex[2], 0, x + ( 1. - scale ) * z * w * 0.5,
+            y + ( 1. - scale ) * z * h * 0.5, w * scale * z, h * scale * z, 0,
+            0, w / (double)gl_screen.nw, h / (double)gl_screen.nh, 0. );
+
+         /* Go to the shader now. */
          glUseProgram( ed->program );
 
          /* Has an image to use. */
@@ -2866,14 +2872,19 @@ void pilot_sample_trails( Pilot *p, int none )
       if ( !pilot_trail_generated( p, g ) )
          continue;
 
-      p->trail[i]->ontop = 0;
       if ( use_3d ) {
          vec3 v;
          mat4_mul_vec( &v, &H, &trail->pos );
          dx = v.v[0];
          dy = v.v[1];
-         dz = v.v[2];
+         dz = v.v[2]; /* Have to correct z so it's a valid depth for GLSL. */
+         /* Convert dz to [-1,1] range. */
+         dz /= p->ship->gfx_3d->radius * p->ship->size * 0.5;
+         /* Move to [0.1] range. */
+         dz                 = dz * 0.5 + 0.5;
+         p->trail[i]->ontop = 1; /* Since we use shaders to mess with it. */
       } else {
+         p->trail[i]->ontop = 0;
          if ( !( trail->flags & SHIP_TRAIL_ALWAYS_UNDER ) && ( dirsin > 0 ) ) {
             /* See if the trail's front (tail) is in front of the ship. */
             double prod =
@@ -2888,7 +2899,7 @@ void pilot_sample_trails( Pilot *p, int none )
          dy = trail->pos.v[0] * dirsin + trail->pos.v[1] * dircos +
               trail->pos.v[2];
          dy *= M_SQRT1_2;
-         dz = 0.;
+         dz = 1.; /* Will always be "above" */
       }
 
       /* Check if needs scaling. */
