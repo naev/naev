@@ -863,6 +863,8 @@ static void spfx_trail_free( Trail_spfx *trail )
 
 /**
  * @brief Draws a trail on screen.
+ *
+ * Assumes depth testing is enabled.
  */
 void spfx_trail_draw( const Trail_spfx *trail )
 {

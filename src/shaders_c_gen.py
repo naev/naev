@@ -90,6 +90,13 @@ SHADERS = [
       uniforms = ["projection", "colour", "tex_mat", "sampler", "depth"],
    ),
    Shader(
+      name = "texture_depth_only",
+      vs_path = "texture.vert",
+      fs_path = "texture_depth_only.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "tex_mat", "sampler"],
+   ),
+   Shader(
       name = "texture_bicubic",
       vs_path = "texture.vert",
       fs_path = "texture_bicubic.frag",
