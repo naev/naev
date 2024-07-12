@@ -25,6 +25,12 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by );
 /*
  * Rendering.
  */
+/* Depth only. */
+void gl_renderDepthRawH( GLuint depth, const mat4 *projection,
+                         const mat4 *tex_mat );
+void gl_renderDepthRaw( GLuint depth, uint8_t flags, double x, double y,
+                        double w, double h, double tx, double ty, double tw,
+                        double th, double angle );
 /* With depth. */
 void gl_renderTextureDepthRawH( GLuint texture, GLuint depth,
                                 const mat4 *projection, const mat4 *tex_mat,

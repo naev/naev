@@ -175,6 +175,71 @@ void gl_renderTriangleEmpty( double x, double y, double a, double s,
    gl_endSolidProgram();
 }
 
+void gl_renderDepthRawH( GLuint depth, const mat4 *projection,
+                         const mat4 *tex_mat )
+{
+   /* Depth testing is required for depth writing. */
+   glEnable( GL_DEPTH_TEST );
+   glDepthFunc( GL_ALWAYS );
+   glColorMask( GL_FALSE, GL_FALSE, GL_FALSE,
+                GL_FALSE ); /* Don't draw colour. */
+
+   glUseProgram( shaders.texture_depth_only.program );
+
+   /* Bind the texture_depth_only. */
+   glBindTexture( GL_TEXTURE_2D, depth );
+
+   /* Set the vertex. */
+   glEnableVertexAttribArray( shaders.texture_depth_only.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_depth_only.vertex,
+                               0, 2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   gl_uniformMat4( shaders.texture_depth_only.projection, projection );
+   gl_uniformMat4( shaders.texture_depth_only.tex_mat, tex_mat );
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.texture_depth_only.vertex );
+   glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
+   glDepthFunc( GL_LESS );
+   glDisable( GL_DEPTH_TEST );
+
+   /* anything failed? */
+   gl_checkErr();
+
+   glUseProgram( 0 );
+}
+
+void gl_renderDepthRaw( GLuint depth, uint8_t flags, double x, double y,
+                        double w, double h, double tx, double ty, double tw,
+                        double th, double angle )
+{
+   mat4 projection, tex_mat;
+
+   /* Set the vertex. */
+   projection = gl_view_matrix;
+   if ( angle == 0. ) {
+      mat4_translate_scale_xy( &projection, x, y, w, h );
+   } else {
+      double hw = w * 0.5;
+      double hh = h * 0.5;
+      mat4_translate_xy( &projection, x + hw, y + hh );
+      mat4_rotate2d( &projection, angle );
+      mat4_translate_scale_xy( &projection, -hw, -hh, w, h );
+   }
+
+   /* Set the texture. */
+   tex_mat = ( flags & OPENGL_TEX_VFLIP )
+                ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
+                : mat4_identity();
+   mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
+
+   gl_renderDepthRawH( depth, &projection, &tex_mat );
+}
+
 void gl_renderTextureDepthRawH( GLuint texture, GLuint depth,
                                 const mat4 *projection, const mat4 *tex_mat,
                                 const glColour *c )
