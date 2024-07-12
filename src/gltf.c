@@ -1001,9 +1001,13 @@ static void renderMeshPrimitive( const GltfObject    *obj,
 
    if ( mat->double_sided )
       glDisable( GL_CULL_FACE );
+   if ( mat->blend ) /* Don't write depth for transparent objects. */
+      glDepthMask( GL_FALSE );
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
    if ( mat->double_sided )
       glEnable( GL_CULL_FACE );
+   if ( mat->blend )
+      glDepthMask( GL_TRUE );
 }
 static void renderMesh( const GltfObject *obj, const Mesh *mesh, const mat4 *H )
 {
