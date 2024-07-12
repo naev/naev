@@ -1985,6 +1985,7 @@ void pilot_render( Pilot *p )
             /* Render to framebuffer first. */
             pilot_renderFramebufferBase( p, gl_screen.fbo[2], gl_screen.nw,
                                          gl_screen.nh, NULL );
+            // gl_saveFboDepth( gl_screen.fbo[2], "fbo2.png" );
 
             /* Draw framebuffer with depth on screen. */
             gl_renderTextureDepthRaw(

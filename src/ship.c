@@ -1276,7 +1276,7 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
          gltf_renderScene( ship_fbo[0], obj, obj->scene_engine, H, t, scale,
                            L );
       } else {
-         /* More scissors. */
+         /* More scissors on the remaining ship fbos. */
          glEnable( GL_SCISSOR_TEST );
          glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[2] );
          glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -1292,6 +1292,13 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
          glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
          gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1], engine_glow,
                                           &projection, &tex_mat, &cWhite );
+
+         /* Copy depth over. */
+         GLint blitsize = scale;
+         glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[1] );
+         glBindFramebuffer( GL_DRAW_FRAMEBUFFER, ship_fbo[0] );
+         glBlitFramebuffer( 0, 0, blitsize, blitsize, 0, 0, blitsize, blitsize,
+                            GL_DEPTH_BUFFER_BIT, GL_NEAREST );
 
          /* TODO fix this area, it causes issues with rendering pilots to the
           * framebuffer in the gui. */

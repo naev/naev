@@ -179,6 +179,10 @@ void gl_renderTextureDepthRawH( GLuint texture, GLuint depth,
                                 const mat4 *projection, const mat4 *tex_mat,
                                 const glColour *c )
 {
+   /* Depth testing is required for depth writing. */
+   glEnable( GL_DEPTH_TEST );
+   glDepthFunc( GL_ALWAYS );
+
    glUseProgram( shaders.texture_depth.program );
 
    /* Bind the texture_depth. */
@@ -186,10 +190,6 @@ void gl_renderTextureDepthRawH( GLuint texture, GLuint depth,
    glBindTexture( GL_TEXTURE_2D, depth );
    glActiveTexture( GL_TEXTURE0 );
    glBindTexture( GL_TEXTURE_2D, texture );
-
-   /* Depth testing is required for depth writing. */
-   glEnable( GL_DEPTH_TEST );
-   glDepthFunc( GL_ALWAYS );
 
    /* Must have colour for now. */
    if ( c == NULL )
@@ -225,17 +225,15 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
                                double tx, double ty, double tw, double th,
                                const glColour *c, double angle )
 {
-   double hw, hh; /* Half width and height. */
-   mat4   projection, tex_mat;
-
-   hw = w * 0.5;
-   hh = h * 0.5;
+   mat4 projection, tex_mat;
 
    /* Set the vertex. */
    projection = gl_view_matrix;
    if ( angle == 0. ) {
       mat4_translate_scale_xy( &projection, x, y, w, h );
    } else {
+      double hw = w * 0.5;
+      double hh = h * 0.5;
       mat4_translate_xy( &projection, x + hw, y + hh );
       mat4_rotate2d( &projection, angle );
       mat4_translate_scale_xy( &projection, -hw, -hh, w, h );
