@@ -3,7 +3,7 @@
 num_shaders = 0
 
 class Shader:
-    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines, geom_path=None):
+    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines={}, geom_path=None):
         global num_shaders
         num_shaders += 1
         self.name       = name
@@ -67,7 +67,6 @@ SHADERS = [
       fs_path = "solid.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "colour"],
-      subroutines = {},
    ),
    Shader(
       name = "smooth",
@@ -75,7 +74,6 @@ SHADERS = [
       fs_path = "smooth.frag",
       attributes = ["vertex", "vertex_colour"],
       uniforms = ["projection"],
-      subroutines = {},
    ),
    Shader(
       name = "texture",
@@ -83,7 +81,6 @@ SHADERS = [
       fs_path = "texture.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "colour", "tex_mat", "sampler"],
-      subroutines = {},
    ),
    Shader(
       name = "texture_depth",
@@ -91,7 +88,6 @@ SHADERS = [
       fs_path = "texture_depth.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "colour", "tex_mat", "sampler", "depth"],
-      subroutines = {},
    ),
    Shader(
       name = "texture_bicubic",
@@ -99,7 +95,6 @@ SHADERS = [
       fs_path = "texture_bicubic.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "tex_mat", "sampler"],
-      subroutines = {},
    ),
    Shader(
       name = "texture_sharpen",
@@ -107,7 +102,6 @@ SHADERS = [
       fs_path = "texture_sharpen.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "colour", "tex_mat", "sampler"],
-      subroutines = {},
    ),
    Shader(
       name = "texture_interpolate",
@@ -115,7 +109,6 @@ SHADERS = [
       fs_path = "texture_interpolate.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "colour", "tex_mat", "sampler1", "sampler2", "inter"],
-      subroutines = {},
    ),
    Shader(
       name = "texturesdf",
@@ -123,7 +116,6 @@ SHADERS = [
       fs_path = "texturesdf.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "colour", "tex_mat", "sampler", "m", "outline"],
-      subroutines = {},
    ),
    Shader(
       name = "stealthoverlay",
@@ -131,7 +123,6 @@ SHADERS = [
       fs_path = "stealthoverlay.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "colour", "tex_mat"],
-      subroutines = {},
    ),
    Shader(
       name = "nebula",
@@ -139,7 +130,6 @@ SHADERS = [
       fs_path = "nebula_overlay.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "hue", "nonuniformity", "horizon", "eddy_scale", "time"],
-      subroutines = {},
    ),
    Shader(
       name = "nebula_background",
@@ -147,7 +137,6 @@ SHADERS = [
       fs_path = "nebula_background.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "hue", "nonuniformity", "eddy_scale", "time", "volatility"],
-      subroutines = {},
    ),
    Shader(
       name = "nebula_puff",
@@ -155,7 +144,6 @@ SHADERS = [
       fs_path = "nebula_puff.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "nebu_col", "time", "r" ],
-      subroutines = {},
    ),
    Shader(
       name = "nebula_map",
@@ -163,7 +151,6 @@ SHADERS = [
       fs_path = "nebula_map.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "hue", "time", "globalpos", "alpha", "volatility"],
-      subroutines = {},
    ),
    Shader(
       name = "points",
@@ -171,7 +158,6 @@ SHADERS = [
       fs_path = "points.frag",
       attributes = ["vertex", "vertex_colour"],
       uniforms = ["projection"],
-      subroutines = {},
    ),
    Shader(
       name = "dust",
@@ -179,7 +165,6 @@ SHADERS = [
       fs_path = "dust.frag",
       attributes = ["vertex", "brightness"],
       uniforms = ["projection", "offset_xy", "dims", "screen", "use_lines"],
-      subroutines = {},
       geom_path = "dust.geom",
    ),
    Shader(
@@ -188,7 +173,6 @@ SHADERS = [
       fs_path = "lines.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "colour"],
-      subroutines = {},
    ),
    Shader(
       name = "font",
@@ -196,7 +180,6 @@ SHADERS = [
       fs_path = "font.frag",
       attributes = ["vertex", "tex_coord"],
       uniforms = ["projection", "m", "colour", "outline_colour"],
-      subroutines = {},
    ),
    Shader(
       name = "beam",
@@ -238,7 +221,6 @@ SHADERS = [
       fs_path = "material.frag",
       attributes = ["vertex", "vertex_normal", "vertex_tex"],
       uniforms = ["projection", "model", "map_Kd", "map_Ks", "map_Ke", "map_Bump", "Ns", "Ka", "Kd", "Ks", "Ke", "Ni", "d", "bm"],
-      subroutines = {},
    ),
    Shader(
       name = "colourblind_sim",
@@ -246,7 +228,6 @@ SHADERS = [
       fs_path = "colourblind_sim.frag",
       attributes = ["VertexPosition"],
       uniforms = ["ClipSpaceFromLocal", "MainTex", "type", "intensity" ],
-      subroutines = {},
    ),
    Shader(
       name = "colourblind_correct",
@@ -254,7 +235,6 @@ SHADERS = [
       fs_path = "colourblind.frag",
       attributes = ["VertexPosition"],
       uniforms = ["ClipSpaceFromLocal", "MainTex", "type", "intensity"],
-      subroutines = {},
    ),
    Shader(
       name = "shake",
@@ -262,7 +242,6 @@ SHADERS = [
       fs_path = "shake.frag",
       attributes = ["VertexPosition"],
       uniforms = ["ClipSpaceFromLocal", "MainTex", "shake_pos", "shake_vel", "shake_force"],
-      subroutines = {},
    ),
    Shader(
       name = "damage",
@@ -270,7 +249,6 @@ SHADERS = [
       fs_path = "damage.frag",
       attributes = ["VertexPosition"],
       uniforms = ["ClipSpaceFromLocal", "MainTex", "damage_strength", "love_ScreenSize"],
-      subroutines = {},
    ),
    Shader(
       name = "gamma_correction",
@@ -278,7 +256,6 @@ SHADERS = [
       fs_path = "gamma_correction.frag",
       attributes = ["VertexPosition"],
       uniforms = ["ClipSpaceFromLocal", "MainTex", "gamma"],
-      subroutines = {},
    ),
    SimpleShader(
       name = "status",
