@@ -397,6 +397,7 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
    gl_contextUnset();
 
+   snprintf( buf, sizeof( buf ), "%s_fbo_gfx_store_%d", s->name, size );
    gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
    gltex->flags |= OPENGL_TEX_VFLIP;
 
@@ -416,7 +417,7 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
    char       buf[STRMAX_SHORT];
    glTexture *gltex;
 
-   fbosize = size / gl_screen.scale;
+   fbosize = ceil( size / gl_screen.scale );
 
    gl_contextSet();
    gl_fboCreate( &fbo, &tex, fbosize, fbosize );
@@ -428,6 +429,9 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
       Lighting L = ( Lscene == NULL ) ? L_default : *Lscene;
       mat4     H, Hlight;
       double   t = SDL_GetTicks() / 1000.;
+      double   rendersize =
+         MIN( MIN( ceil( ship_aa_scale_base * fbosize ), gl_screen.rw ),
+              gl_screen.rh );
       snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->name, size );
 
       /* We rotate the model so it's staring at the player and facing slightly
@@ -456,10 +460,10 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
       gltf_renderScene( gl_screen.fbo[2], s->gfx_3d, s->gfx_3d->scene_body, &H,
-                        t, fbosize, &L );
+                        t, rendersize, &L );
       glBindFramebuffer( GL_READ_FRAMEBUFFER, gl_screen.fbo[2] );
       glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
-      glBlitFramebuffer( 0, 0, fbosize, fbosize, 0, fbosize, fbosize, 0,
+      glBlitFramebuffer( 0, 0, rendersize, rendersize, 0, fbosize, fbosize, 0,
                          GL_COLOR_BUFFER_BIT, GL_LINEAR );
    }
    if ( s->gfx_comm != NULL ) {
