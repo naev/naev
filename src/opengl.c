@@ -710,9 +710,9 @@ void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
  */
 GLint gl_stringToFilter( const char *s )
 {
-   if ( strcmp( s, "linear" ) == 0 )
+   if ( strcasecmp( s, "linear" ) == 0 )
       return GL_LINEAR;
-   else if ( strcmp( s, "nearest" ) == 0 )
+   else if ( strcasecmp( s, "nearest" ) == 0 )
       return GL_NEAREST;
    return 0;
 }
@@ -725,11 +725,11 @@ GLint gl_stringToFilter( const char *s )
  */
 GLint gl_stringToClamp( const char *s )
 {
-   if ( strcmp( s, "clamp" ) == 0 )
+   if ( strcasecmp( s, "clamp" ) == 0 )
       return GL_CLAMP_TO_EDGE;
-   else if ( strcmp( s, "repeat" ) == 0 )
+   else if ( strcasecmp( s, "repeat" ) == 0 )
       return GL_REPEAT;
-   else if ( strcmp( s, "mirroredrepeat" ) == 0 )
+   else if ( strcasecmp( s, "mirroredrepeat" ) == 0 )
       return GL_MIRRORED_REPEAT;
    return 0;
 }
