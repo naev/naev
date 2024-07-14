@@ -397,6 +397,7 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
    gl_contextUnset();
 
+   snprintf( buf, sizeof( buf ), "%s_fbo_gfx_store_%d", s->name, size );
    gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
    gltex->flags |= OPENGL_TEX_VFLIP;
 
