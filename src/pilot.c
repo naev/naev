@@ -2077,16 +2077,29 @@ void pilot_render( Pilot *p )
    }
 
    /* Re-draw backwards trails. */
-   for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
+   if ( inbounds ) {
       glEnable( GL_DEPTH_TEST );
       glDepthMask( GL_FALSE ); /* Don't overwrite depth. */
+   }
+   for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
       if ( pilot_trail_generated( p, g ) ) {
          if ( p->trail[i]->ontop )
             spfx_trail_draw( p->trail[i] );
          i++;
       }
+   }
+   if ( inbounds ) {
       glDepthMask( GL_TRUE );
       glDisable( GL_DEPTH_TEST );
+   }
+
+   /* Erase the depth so it doesn't affect trails of other pilots. */
+   if ( inbounds && ( p->ship->gfx_3d != NULL ) ) {
+      gl_clipRect( x + ( 1. - scale ) * z * w * 0.5,
+                   y + ( 1. - scale ) * z * h * 0.5, w * scale * z,
+                   h * scale * z );
+      glClear( GL_DEPTH_BUFFER_BIT );
+      gl_unclipRect();
    }
 
    /* Useful debug stuff below. */
