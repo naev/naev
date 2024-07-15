@@ -4501,7 +4501,10 @@ credits_t pilot_worth( const Pilot *p, int count_unique )
  */
 mat4 pilot_local_transform( const Pilot *p )
 {
-   mat4 H = mat4_identity();
+   mat4 H = { .m = { { -1., 0., 0., 0. },
+                     { 0., 1., 0., 0. },
+                     { 0., 0., 1., 0. },
+                     { 0., 0., 0., 1. } } };
    if ( fabs( p->tilt ) > DOUBLE_TOL ) {
       mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
       mat4_rotate( &H, p->tilt, 1.0, 0.0, 0.0 );
