@@ -887,6 +887,7 @@ void spfx_trail_draw( const Trail_spfx *trail )
    glUniform1f( spec->shader.dt, trail->dt );
    glUniform1f( spec->shader.r, trail->r );
 
+   /* Start drawing from head to tail. */
    z   = cam_getZoom();
    len = 0.;
    for ( size_t i = trail->iread + 1; i < trail->iwrite; i++ ) {

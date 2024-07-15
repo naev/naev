@@ -7,7 +7,6 @@ uniform vec4 c1;  // Start colour
 uniform vec4 c2;  // End colour
 uniform vec2 t; // Start and end time [0,1]
 uniform float dt; // Current time (in seconds)
-uniform vec2 z; // Depth
 uniform vec2 pos1;// Start position
 uniform vec2 pos2;// End position
 uniform float r;  // Unique value per trail [0,1]
@@ -55,6 +54,4 @@ void main(void) {
    pos_tex.y = 2. * pos.y - 1.;
 
    colour_out = trail_func( colour_out, pos_tex, pos_px );
-
-   gl_FragDepth = mix( z.x, z.y, pos.x );
 }
