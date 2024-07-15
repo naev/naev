@@ -870,11 +870,10 @@ void spfx_trail_draw( const Trail_spfx *trail )
 {
    const TrailSpec  *spec;
    const TrailStyle *styles;
-   size_t            n;
    GLfloat           len;
    double            z;
 
-   n = trail_size( trail );
+   size_t n = trail_size( trail );
    if ( n == 0 )
       return;
    spec   = trail->spec;

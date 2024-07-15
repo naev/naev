@@ -2076,16 +2076,32 @@ void pilot_render( Pilot *p )
       }
    }
 
+   /*
+if (pilot_isPlayer(p))
+   gl_saveFboDepth( gl_screen.current_fbo, "fbo_pre.png" );
+   */
+
    /* Re-draw backwards trails. */
    for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
       glEnable( GL_DEPTH_TEST );
+      glDepthMask( GL_FALSE ); /* Don't overwrite depth. */
+      // glDepthFunc( GL_GREATER );
       if ( pilot_trail_generated( p, g ) ) {
          if ( p->trail[i]->ontop )
             spfx_trail_draw( p->trail[i] );
          i++;
       }
+      // glDepthFunc( GL_LESS );
+      glDepthMask( GL_TRUE );
       glDisable( GL_DEPTH_TEST );
    }
+
+   /*
+if (pilot_isPlayer(p)) {
+gl_saveFboDepth( gl_screen.current_fbo, "fbo_post.png" );
+//abort();
+}
+*/
 
    /* Useful debug stuff below. */
 #ifdef DEBUGGING
@@ -2881,7 +2897,10 @@ void pilot_sample_trails( Pilot *p, int none )
          /* Convert dz to [-1,1] range. */
          dz /= p->ship->gfx_3d->radius * p->ship->size * 0.5;
          /* Move to [0.1] range. */
-         dz                 = dz * 0.5 + 0.5;
+         dz = dz * 0.5 + 0.5;
+         /* 0 is always on top. */
+         /* 0.99 is always below. */
+         // dz = 0.5;
          p->trail[i]->ontop = 1; /* Since we use shaders to mess with it. */
       } else {
          p->trail[i]->ontop = 0;
@@ -2911,6 +2930,7 @@ void pilot_sample_trails( Pilot *p, int none )
          scale = 1.;
       dx *= scale;
       dy *= scale;
+      dz *= scale;
 
       /* Sample. */
       spfx_trail_sample( p->trail[i++], p->solid.pos.x + dx,
