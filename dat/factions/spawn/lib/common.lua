@@ -56,9 +56,7 @@ function scom.init( fct, weights, max, params )
    scom._max         = _normalize_presence( max )
    scom._spawn_data  = nil
    scom._params      = params
-   if not params.nospawnfunc then
-      spawn = scom.spawn_handler -- Global!
-   end
+   _G.spawn = scom.spawn_handler -- Global!
 
    scom.choose()
    return scom.calcNextSpawn( 0 )
@@ -73,6 +71,10 @@ function scom.spawn_handler( presence, max )
    local pilots = scom.spawn()
    -- Choose next spawn and time to spawn
    scom.choose()
+   -- Case no ship was actually spawned, just create an arbitrary delay
+   if #pilots == 0 then
+      return 10
+   end
    return scom.calcNextSpawn( presence ), pilots
 end
 
