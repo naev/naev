@@ -1,5 +1,4 @@
 local scom = require "factions.spawn.lib.common"
-local lf = require "love.filesystem"
 
 local shyena      = ship.get("Pirate Hyena")
 local sshark      = ship.get("Pirate Shark")
@@ -86,16 +85,15 @@ function spir.spawn_capship ()
 end
 
 -- @brief Creation hook.
-function spir.create ( fpirate, max, params )
+return function ( t, max, params )
    params = params or {}
    prefer_fleets = params.prefer_fleets
-   local weights = {}
 
    -- Check to see if it's a hostile system
    hostile_system = false
    for k,v in ipairs(system.cur():spobs()) do
       local f = v:faction()
-      if f and f:areEnemies( fpirate ) then
+      if f and f:areEnemies( params.faction ) then
          hostile_system = true
          break
       end
@@ -108,53 +106,14 @@ function spir.create ( fpirate, max, params )
    end
 
    -- Create weights for spawn table
-   weights[ spir.spawn_patrol  ] = max
-   weights[ spir.spawn_loner_weak ] = max
-   weights[ spir.spawn_loner_strong ] = math.max(0, -80 + 1.0 * max )
-   weights[ spir.spawn_squad   ] = math.max(0, -120 + 0.80 * max)
-   weights[ spir.spawn_capship ] = math.max(0, capship_base + 1.70 * max)
+   t.patrol       = { f=spir.spawn_patrol, w=max }
+   t.loner_weak   = { f=spir.spawn_loner_weak, w=max }
+   t.loner_strong = { f=spir.spawn_loner_strong, w=math.max(0, -80 + 1.0 * max ) }
+   t.squad        = { f=spir.spawn_squad, w=math.max(0, -120 + 0.80 * max) }
+   t.capship      = { f=spir.spawn_capship, w=math.max(0, capship_base + 1.70 * max) }
 
    -- Allow reweighting
    if params.reweight then
-      weights = params.reweight( weights )
-   end
-
-   return scom.init( fpirate, weights, max )
-end
-
--- TODO integrate this with lib/default
-function spir.initDirectory( dir, faction, params )
-   params = params or {}
-   params.faction = faction
-
-   -- Set up directory
-   local spawners = {}
-   for k,v in ipairs(lf.getDirectoryItems('factions/spawn/pirate')) do
-      local f, priority = require( "factions.spawn.pirate."..string.gsub(v,".lua","") )
-      table.insert( spawners, { p=(priority or 5)+1000, f=f } ) -- Generic pirate gets run first
-   end
-   if dir ~= nil then
-      for k,v in ipairs(lf.getDirectoryItems('factions/spawn/'..dir)) do
-         local f, priority = require( "factions.spawn."..dir.."."..string.gsub(v,".lua","") )
-         table.insert( spawners, { p=priority or 5, f=f } )
-      end
-   end
-   table.sort( spawners, function( a, b )
-      return a.p < b.p
-   end )
-
-   -- Create init function (global)
-   _G.create = function ( max )
-      local spawn = {}
-      for k,v in ipairs(spawners) do
-         v.f( spawn, max, params )
-      end
-      -- Transform to old system. TODO replace when done
-      local weights = {}
-      for k,v in pairs(spawn) do
-         weights[ v.f ] = v.w
-      end
-      return scom.init( faction, weights, max, params )
+      params.reweight( t )
    end
 end
-return spir

@@ -24,14 +24,14 @@ function scom.initDirectory( dir, faction, params )
       table.insert( spawners, { p=priority or 5, f=f } )
    end
    table.sort( spawners, function( a, b )
-      return a.p < b.p
+      return a.p > b.p -- Lower priority gets run later, so it can overwrite
    end )
 
    -- Create init function (global)
    _G.create = function ( max )
       local spawn = {}
       for k,v in ipairs(spawners) do
-         v.f( spawn, max )
+         v.f( spawn, max, scom._params )
       end
       -- Transform to old system. TODO replace when done
       local weights = {}
