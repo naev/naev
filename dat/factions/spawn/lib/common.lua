@@ -36,7 +36,9 @@ function scom.initDirectory( dir, faction, params )
       -- Transform to old system. TODO replace when done
       local weights = {}
       for k,v in pairs(spawn) do
-         weights[ v.f ] = v.w
+         if v.w > 0 then
+            weights[ v.f ] = v.w
+         end
       end
       return scom.init( faction, weights, max, params )
    end
