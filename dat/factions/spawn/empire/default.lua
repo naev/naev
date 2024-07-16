@@ -43,13 +43,8 @@ local function spawn_capship ()
    } )
 end
 
-return function ( max )
-   local weights = {}
-
-   -- Create weights for spawn table
-   weights[ spawn_patrol  ] = 300
-   weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
-   weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
-
-   return weights
+return function ( t, max )
+   t.patrol  = { f = spawn_patrol,  w = 300 }
+   t.squad   = { f = spawn_squad,   w = math.max(1, -80 + 0.80 * max) }
+   t.capship = { f = spawn_capship, w = math.max(1, -500 + 1.70 * max) }
 end

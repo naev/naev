@@ -20,14 +20,23 @@ function scom.initDirectory( dir, faction, params )
    -- Set up directory
    local spawners = {}
    for k,v in ipairs(lf.getDirectoryItems('factions/spawn/'..dir)) do
-      table.insert( spawners, require( "factions.spawn."..dir.."."..string.gsub(v,".lua","") ) )
+      local f, priority = require( "factions.spawn."..dir.."."..string.gsub(v,".lua","") )
+      table.insert( spawners, { p=priority or 5, f=f } )
    end
+   table.sort( spawners, function( a, b )
+      return a.p < b.p
+   end )
 
    -- Create init function (global)
    _G.create = function ( max )
-      local weights = {}
+      local spawn = {}
       for k,v in ipairs(spawners) do
-         tmerge( weights, v(max) )
+         v.f( spawn, max )
+      end
+      -- Transform to old system. TODO replace when done
+      local weights = {}
+      for k,v in pairs(spawn) do
+         weights[ v.f ] = v.w
       end
       return scom.init( faction, weights, max, params )
    end
