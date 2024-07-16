@@ -1,4 +1,5 @@
 local lanes = require 'ai.core.misc.lanes'
+local lf = require "love.filesystem"
 
 local scom = {}
 
@@ -12,6 +13,24 @@ local function _normalize_presence( max )
    return max * area / norm
    --]]
    return max * math.min( 1, r / 15e3 )
+end
+
+-- @brief Initializes a faction using the directory system
+function scom.initDirectory( dir, faction, params )
+   -- Set up directory
+   local spawners = {}
+   for k,v in ipairs(lf.getDirectoryItems('factions/spawn/'..dir)) do
+      table.insert( spawners, require( "factions.spawn."..dir.."."..string.gsub(v,".lua","") ) )
+   end
+
+   -- Create init function (global)
+   _G.create = function ( max )
+      local weights = {}
+      for k,v in ipairs(spawners) do
+         tmerge( weights, v(max) )
+      end
+      return scom.init( faction, weights, max, params )
+   end
 end
 
 --[[
@@ -122,6 +141,21 @@ function scom.spawn( pilots )
    local spawned = {}
    local issim = naev.isSimulation()
 
+   local function getprop( a, b )
+      if b ~= nil then
+         return b
+      end
+      return a
+   end
+
+   -- Get properties prioritizing overwrites
+   local patrol = getprop( scom._params.patrol, pilots.__patrol )
+   local stealth = getprop( scom._params.stealth, pilots.__stealth )
+   local ai = getprop( scom._params.ai, pilots.__ai )
+   local nofleet = getprop( scom._params.nofleet, pilots.__nofleet )
+   local formation = getprop( scom._params.formation, pilots.__formation )
+   local doscans = getprop( scom._params.doscans, pilots.__doscans )
+
    -- Case no pilots
    if pilots == nil then
       return nil
@@ -135,7 +169,7 @@ function scom.spawn( pilots )
    local origin
    if issim then
       -- Stealth should avoid enemies nearby
-      if pilots.__stealth then
+      if stealth then
          local r = system.cur():radius() * 0.8
          local p = vec2.newP( rnd.rnd() * r, rnd.angle() )
          local m = 3000 -- margin
@@ -148,32 +182,28 @@ function scom.spawn( pilots )
             end
          end
       -- Spawn near patrol points in the system
-      elseif scom._params.patrol then
+      elseif patrol then
          local L = lanes.get(fct, "friendly")
          origin = lanes.getPoint( L )
       end
    end
    if not origin then
-      origin = pilot.choosePoint( fct, false, pilots.__stealth ) -- Find a suitable spawn point
+      origin = pilot.choosePoint( fct, false, stealth ) -- Find a suitable spawn point
    end
    for _k,v in ipairs(pilots) do
       local params = v.params or {}
-      if params.stealth==nil and pilots.__stealth then
-         params.stealth = true
-      end
-      if params.ai==nil and pilots.__ai then
-         params.ai = pilots.__ai
-      end
+      params.stealth = stealth
+      params.ai = ai
       local pfact = params.faction or fct
       local p = pilot.add( v.ship, pfact, origin, params.name, params )
       local mem = p:memory()
       mem.natural = true -- mark that it was spawned naturally and not as part of a mission
       local presence = v.presence
-      if not pilots.__nofleet then
+      if not nofleet then
          if leader == nil then
             leader = p
-            if pilots.__formation ~= nil then
-               mem.formation = pilots.__formation
+            if formation ~= nil then
+               mem.formation = formation
             end
          else
             p:setLeader(leader)
@@ -182,7 +212,7 @@ function scom.spawn( pilots )
             end
          end
       end
-      if pilots.__doscans then
+      if doscans then
          mem.doscans = true
       end
       if not pfact:known() then

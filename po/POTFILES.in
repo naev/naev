@@ -2947,6 +2947,7 @@ dat/factions/equip/zalek.lua
 dat/factions/spawn/collective.lua
 dat/factions/spawn/dvaered.lua
 dat/factions/spawn/empire.lua
+dat/factions/spawn/empire/default.lua
 dat/factions/spawn/flf.lua
 dat/factions/spawn/frontier.lua
 dat/factions/spawn/goddard.lua
