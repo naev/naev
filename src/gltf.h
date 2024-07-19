@@ -8,6 +8,7 @@
 #include "glad.h"
 
 #include "mat4.h"
+#include "opengl_tex.h"
 #include "vec3.h"
 
 #define MAX_LIGHTS                                                             \
@@ -15,9 +16,10 @@
       */
 
 typedef struct Texture {
-   GLuint  tex;
-   GLuint  texcoord;
-   GLfloat strength;
+   GLuint     tex;
+   GLuint     texcoord;
+   GLfloat    strength;
+   glTexture *gtex;
 } Texture;
 
 /**

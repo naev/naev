@@ -64,8 +64,6 @@ static int gl_loadNewImageRWops( glTexture *tex, const char *path,
                                  SDL_RWops *rw, int sx, int sy,
                                  unsigned int flags );
 /* List. */
-static glTexture *gl_texExistsOrCreate( const char *path, unsigned int flags,
-                                        int sx, int sy, int *created );
 static glTexture *gl_texCreate( const char *path, int sx, int sy,
                                 unsigned int flags );
 static int gl_texAdd( glTexture *tex, int sx, int sy, unsigned int flags );
@@ -497,7 +495,8 @@ static glTexture *gl_texCreate( const char *path, int sx, int sy,
 /**
  * @brief Check to see if a texture matching a path already exists.
  *
- * Note this increments the used counter if it exists.
+ * Note this increments the used counter if it exists. Does not actually
+ * initialize and set otex->gtex->texture if created.
  *
  *    @param path Path to the texture.
  *    @param flags Flags used by the new texture.
@@ -506,8 +505,9 @@ static glTexture *gl_texCreate( const char *path, int sx, int sy,
  *    @param[out] created Whether or not the texture was created.
  *    @return The texture
  */
-static glTexture *gl_texExistsOrCreate( const char *path, unsigned int flags,
-                                        int sx, int sy, int *created )
+USE_RESULT glTexture *gl_texExistsOrCreate( const char  *path,
+                                            unsigned int flags, int sx, int sy,
+                                            int *created )
 {
    char        buf[STRMAX];
    const char *realdir;

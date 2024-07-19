@@ -228,6 +228,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    int                       has_alpha;
    const char               *path;
    GLint                     internalformat;
+   SDL_RWops                *rw;
 #ifdef HAVE_NAEV
    has_alpha = 0;
 #endif /* HAVE_NAEV */
@@ -238,33 +239,51 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       return 0;
    }
 
+   /* Set up some data. */
+   otex->texcoord = ctex->texcoord;
+   otex->strength = ctex->transform.scale[0];
+
    /* Load from path. */
    path = ( ctex->texture->has_webp ) ? ctex->texture->webp_image->uri
                                       : ctex->texture->image->uri;
-   if ( path != NULL ) {
-      SDL_RWops *rw;
+   if ( path == NULL ) {
+      DEBUG( "Buffer textures not supported yet!" );
+      return -1;
+   }
+
 #ifdef HAVE_NAEV
-      char filepath[PATH_MAX];
-      snprintf( filepath, sizeof( filepath ), "%s/%s", obj->path, path );
-      nfile_simplifyPath( filepath );
-      rw = PHYSFSRWOPS_openRead( filepath );
+   char filepath[PATH_MAX];
+   snprintf( filepath, sizeof( filepath ), "%s/%s", obj->path, path );
+   nfile_simplifyPath( filepath );
 #else  /* HAVE_NAEV */
-      (void)obj;
-      const char *filepath = path;
-      rw                   = PHYSFSRWOPS_openRead( path );
+   (void)obj;
+   const char *filepath = path;
 #endif /* HAVE_NAEV */
-      if ( rw == NULL ) {
-         WARN( _( "Unable to open '%s': %s" ), filepath, SDL_GetError() );
-         *otex = *def;
-         return 0;
-      }
-      surface = IMG_Load_RW( rw, 1 );
-      if ( surface == NULL ) {
-         WARN( _( "Unable to load surface '%s': %s" ), filepath,
-               SDL_GetError() );
-         *otex = *def;
-         return 0;
-      }
+
+   /* Check to see if it already exists. */
+   int created;
+   int flags = OPENGL_TEX_MIPMAPS;
+   if ( notsrgb )
+      flags |= OPENGL_TEX_NOTSRGB;
+   otex->gtex = gl_texExistsOrCreate( filepath, flags, 1, 1, &created );
+   if ( !created ) {
+      /* Already exists, so texture should be valid. */
+      otex->tex = otex->gtex->texture;
+      return 0;
+   }
+
+   /* Load the image data as a surface. */
+   rw = PHYSFSRWOPS_openRead( filepath );
+   if ( rw == NULL ) {
+      WARN( _( "Unable to open '%s': %s" ), filepath, SDL_GetError() );
+      *otex = *def;
+      return 0;
+   }
+   surface = IMG_Load_RW( rw, 1 );
+   if ( surface == NULL ) {
+      WARN( _( "Unable to load surface '%s': %s" ), filepath, SDL_GetError() );
+      *otex = *def;
+      return 0;
    }
 
    gl_contextSet();
@@ -313,7 +332,6 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       SDL_UnlockSurface( surface );
    } else {
-      DEBUG( "Buffer textures not supported yet!" );
       /*
       glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
             surface->w, surface->h, 0,
@@ -402,10 +420,8 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    gl_checkErr();
    gl_contextUnset();
 
-   otex->tex      = tex;
-   otex->texcoord = ctex->texcoord;
-   otex->strength = ctex->transform.scale[0];
-
+   otex->tex           = tex;
+   otex->gtex->texture = tex; /* Update the texture. */
    return 0;
 }
 
@@ -1689,7 +1705,8 @@ static void gltf_freeTex( Texture *tex )
         ( tex->tex == tex_ones.tex ) )
       return;
 
-   glDeleteTextures( 1, &tex->tex );
+   // glDeleteTextures( 1, &tex->tex );
+   gl_freeTexture( tex->gtex ); /* Frees texture too. */
    gl_checkErr();
 }
 
