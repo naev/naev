@@ -1,24 +1,26 @@
 local scom = require "factions.spawn.lib.common"
 
-local slancelot   = ship.get("Lancelot")
-local svendetta   = ship.get("Vendetta")
-local spacifier   = ship.get("Pacifier")
+local stristan   = ship.get("Tristan")
+local svendetta  = ship.get("Vendetta")
+local spacifier  = ship.get("Pacifier")
+local sbedivere  = ship.get("Bedivere")
 
 -- @brief Spawns a small fleet.
 local function spawn_patrol ()
    return scom.doTable( {}, {
-      { w=0.5, slancelot, slancelot },
-      { w=0.8, slancelot, svendetta },
-      { slancelot, slancelot, svendetta },
+      { w=0.5, stristan, stristan },
+      { w=0.8, stristan, svendetta },
+      { stristan, stristan, svendetta },
    } )
 end
 
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
    return scom.doTable( {}, {
-      { w=0.5, slancelot, slancelot, svendetta },
-      { w=0.8, slancelot, svendetta, svendetta },
-      { spacifier, slancelot },
+      { w=0.3, spacifier, stristan },
+      { w=0.5, stristan, stristan, svendetta },
+      { w=0.8, stristan, svendetta, svendetta },
+      { sbedivere, stristan },
    } )
 end
 

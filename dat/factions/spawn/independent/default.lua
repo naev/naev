@@ -7,16 +7,20 @@ local skoala      = ship.get("Koala")
 local shyena      = ship.get("Hyena")
 local sshark      = ship.get("Shark")
 local sancestor   = ship.get("Ancestor")
+local stristan    = ship.get("Tristan")
 local slancelot   = ship.get("Lancelot")
 local svendetta   = ship.get("Vendetta")
 local sphalanx    = ship.get("Phalanx")
 local sadmonisher = ship.get("Admonisher")
 local sstarbridge = ship.get("Starbridge")
 local svigilance  = ship.get("Vigilance")
+local sbedivere   = ship.get("Bedivere")
 local spacifier   = ship.get("Pacifier")
 local skestrel    = ship.get("Kestrel")
 local shawking    = ship.get("Hawking")
 local sgoddard    = ship.get("Goddard")
+
+local frontier
 
 -- Make pilot more visible
 local function _advert( p )
@@ -59,22 +63,30 @@ local function spawn_bounty_hunter( shiplist )
 end
 
 local function spawn_bounty_hunter_sml ()
-   return spawn_bounty_hunter{
-      shyena,
-      sshark,
-      slancelot,
-      svendetta,
-      sancestor,
-   }
+   local ships = {
+         shyena,
+         sshark,
+         slancelot,
+         svendetta,
+         sancestor,
+      }
+   if frontier then
+      table.insert( ships, stristan )
+   end
+   return spawn_bounty_hunter( ships )
 end
 local function spawn_bounty_hunter_med ()
-   return spawn_bounty_hunter{
+   local ships = {
       sadmonisher,
       sphalanx,
       sstarbridge,
       svigilance,
       spacifier,
    }
+   if frontier then
+      table.insert( ships, sbedivere )
+   end
+   return spawn_bounty_hunter(ships)
 end
 local function spawn_bounty_hunter_lrg ()
    return spawn_bounty_hunter{
@@ -97,6 +109,8 @@ return function ( t, max )
       total = total + v
    end
    local hostnorm = host / total
+
+   frontier = csys:presences()["Frontier"]
 
    -- Solitary civilians
    t.solitary = { f=spawn_solitary_civilians, w=max }

@@ -2,7 +2,7 @@
 <ship name="Plowshare">
  <points>50</points>
  <base_type>Plowshare</base_type>
- <gfx size="96" sx="10" sy="10">plowshare</gfx>
+ <gfx size="69" sx="10" sy="10">plowshare</gfx>
  <sound>engine</sound>
  <class>Freighter</class>
  <price>500000</price>

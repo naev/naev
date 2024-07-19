@@ -7,6 +7,9 @@ local smule       = ship.get("Mule")
 local szebra      = ship.get("Zebra")
 local srhino      = ship.get("Rhino")
 local sshark      = ship.get("Shark")
+local splowshare  = ship.get("Plowshare")
+
+local tradelane
 
 local function add_llama( pilots )
    scom.addPilot( pilots, sllama, {name=_("Trader Llama")})
@@ -29,6 +32,9 @@ end
 local function add_shark( pilots )
    scom.addPilot( pilots, sshark, {name=_("Trader Shark"), ai="mercenary"})
 end
+local function add_plowshare( pilots )
+   scom.addPilot( pilots, splowshare, {name=_("Trader Plowshare")})
+end
 
 -- Doubles the credits of the pilot
 local function double_credits( p )
@@ -40,6 +46,15 @@ local function spawn_loner ()
    local pilots = {}
    local r = rnd.rnd()
 
+   -- Plowshare only appear in tradelanes
+   if r < 0.5 and tradelane then
+      add_plowshare( pilots )
+      return pilots
+   else
+      r = rnd.rnd() -- New random number
+   end
+
+   -- Regular loners
    if r < 0.3 then
       add_llama( pilots )
    elseif r < 0.5 then
@@ -181,6 +196,9 @@ return function ( t, max )
 
    -- Hermite interpolation
    hostnorm = math.pow(hostnorm,2) * (3-hostnorm)
+
+   -- Whether or not system is a tradelane
+   tradelane = csys:tags().tradelane
 
    -- Create weights for spawn table
    t.loner = { f=spawn_loner, w=400 }
