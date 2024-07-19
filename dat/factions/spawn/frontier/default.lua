@@ -18,8 +18,8 @@ end
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
    return scom.doTable( { __doscans = (rnd.rnd() < 0.5) }, {
-      { sbedivere, stristan },
-      { sbedivere, stristan, stristan },
+      { w=0.4, sbedivere, stristan },
+      { w=0.7, sbedivere, stristan, stristan },
       { stristan, stristan, sancestor },
    } )
 end

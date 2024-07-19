@@ -1,3 +1,4 @@
+local fmt = require "format"
 local lanes = require 'ai.core.misc.lanes'
 local lf = require "love.filesystem"
 
@@ -26,6 +27,10 @@ function scom.initDirectory( dir, faction, params )
    table.sort( spawners, function( a, b )
       return a.p > b.p -- Lower priority gets run later, so it can overwrite
    end )
+
+   if #spawners <= 0 then
+      error(_("No spawning script loaded from directory!"))
+   end
 
    -- Create init function (global)
    _G.create = function ( max )
@@ -258,17 +263,19 @@ end
 -- @brief Probabilistically adds a table of pilots
 function scom.doTable( pilots, tbl )
    local r = rnd.rnd()
-   local n = #tbl
+   local lw = 0
    for k,t in ipairs(tbl) do
-      if not t.w and k<n then
-         warn(_("Spawn table is missing 'w' fields!"))
+      local w = t.w or 1
+      if w <= lw then
+         warn(fmt.f(_("Invalid table for doTable! Weight have to be monotonically incremental and represent threshold for spawning the group.")))
       end
-      if not t.w or t.w <= r then
+      if w <= r then
          for i,p in ipairs(t) do
             scom.addPilot( pilots, p )
          end
          break
       end
+      lw = w
    end
    return pilots
 end
