@@ -40,6 +40,7 @@ char *nfile_readFile( size_t *filesize, const char *path );
 int   nfile_touch( const char *path );
 int   nfile_writeFile( const char *data, size_t len, const char *path );
 int   nfile_isSeparator( uint32_t c );
+int   nfile_simplifyPath( char path[static 1] );
 
 #if !SDL_VERSION_ATLEAST( 3, 0, 0 )
 typedef struct SDL_DialogFileFilter {

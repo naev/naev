@@ -30,6 +30,7 @@
 
 #include "nfile.h"
 
+#include "array.h"
 #include "conf.h"
 #if __MACOSX__
 #include "glue_macos.h"
@@ -664,6 +665,62 @@ int _nfile_concatPaths( char buf[static 1], int maxLength,
       return -1;
 
    return bufPos - buf;
+}
+
+/**
+ * @brief Simplifies the path removing things like ".." or consecutive "/".
+ *
+ *    @param path Path to simplify. Gets overwritten.
+ *    @return 0 on success.
+ */
+int nfile_simplifyPath( char path[static 1] )
+{
+   char **dirnames = array_create( char * );
+   char  *saveptr  = NULL;
+   size_t n        = strlen( path );
+   char  *token    = SDL_strtokr( path, "/", &saveptr );
+
+   while ( token != NULL ) {
+      /* Skip noop. */
+      if ( ( strcmp( token, "" ) == 0 ) || ( strcmp( token, "." ) == 0 ) )
+         continue;
+
+      /* Go up if ".." */
+      if ( strcmp( token, ".." ) == 0 ) {
+         int dn = array_size( dirnames );
+         if ( dn > 0 ) {
+            free( dirnames[dn - 1] );
+            array_erase( &dirnames, &dirnames[dn - 1], &dirnames[dn] );
+         }
+      } else {
+         array_push_back( &dirnames, strdup( token ) );
+      }
+
+      /* On to the next one. */
+      token = SDL_strtokr( NULL, "/", &saveptr );
+   }
+
+   /* If nothing, we're empty. */
+   if ( array_size( dirnames ) <= 0 ) {
+      array_free( dirnames );
+      path[0] = '\0';
+      return 0;
+   }
+
+   /* Build back the path, assume 'path' is smaller than simplified one. */
+   size_t s = 0;
+   for ( int i = 0; i < array_size( dirnames ); i++ ) {
+      char *ds = dirnames[i];
+      if ( ( s > 0 ) && ( s < n ) )
+         path[s++] = '/';
+      for ( size_t j = 0; j < strlen( ds ); j++ )
+         if ( s < n )
+            path[s++] = ds[j];
+      free( ds );
+   }
+   path[s] = '\0';
+   array_free( dirnames );
+   return 0;
 }
 
 #if !SDL_VERSION_ATLEAST( 3, 0, 0 )
