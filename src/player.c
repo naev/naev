@@ -2864,11 +2864,11 @@ int player_outfitOwnedTotal( const Outfit *o )
  */
 static int player_outfitCompare( const void *arg1, const void *arg2 )
 {
-   PlayerOutfit_t *po1, *po2;
+   const PlayerOutfit_t *po1, *po2;
 
    /* Get type. */
-   po1 = (PlayerOutfit_t *)arg1;
-   po2 = (PlayerOutfit_t *)arg2;
+   po1 = (const PlayerOutfit_t *)arg1;
+   po2 = (const PlayerOutfit_t *)arg2;
 
    /* Compare. */
    return outfit_compareTech( &po1->o, &po2->o );

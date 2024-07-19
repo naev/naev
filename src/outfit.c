@@ -315,6 +315,12 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
    else if ( o1->slot.type > o2->slot.type )
       return -1;
 
+   /* Compare slot properties. */
+   if ( o1->slot.spid && !o2->slot.spid )
+      return -1;
+   else if ( !o1->slot.spid && o2->slot.spid )
+      return +1;
+
    /* Compare intrinsic types. */
    if ( o1->type < o2->type )
       return -1;
