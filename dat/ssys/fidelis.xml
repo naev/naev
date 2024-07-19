@@ -39,4 +39,7 @@
    <pos x="-12582.897264" y="5418.913256"/>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>tradelane</tag>
+ </tags>
 </ssys>
