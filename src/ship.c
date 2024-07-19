@@ -902,8 +902,9 @@ static int ship_parse( Ship *temp, const char *filename )
 
    /* Defaults. */
    ss_statsInit( &temp->stats_array );
-   temp->dt_default = 1.;
-   temp->faction    = -1;
+   temp->dt_default     = 1.;
+   temp->faction        = -1;
+   temp->trail_emitters = array_create( ShipTrailEmitter );
 
    /* Lua defaults. */
    temp->lua_env            = LUA_NOREF;
@@ -1039,8 +1040,6 @@ static int ship_parse( Ship *temp, const char *filename )
          xmlr_attr_float( node, "h", trail.pos.v[2] );
          xmlr_attr_int_def( node, "always_under", trail.flags,
                             SHIP_TRAIL_ALWAYS_UNDER );
-         if ( temp->trail_emitters == NULL )
-            temp->trail_emitters = array_create( ShipTrailEmitter );
          buf = xml_get( node );
          if ( buf == NULL )
             buf = "default";
