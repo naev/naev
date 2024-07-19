@@ -532,6 +532,7 @@ dat/ships/misc/psychic_orb.xml
 dat/ships/misc/sindbad.xml
 dat/ships/neutral/admonisher.xml
 dat/ships/neutral/ancestor.xml
+dat/ships/neutral/bedivere.xml
 dat/ships/neutral/gawain.xml
 dat/ships/neutral/goddard.xml
 dat/ships/neutral/hawking.xml
@@ -543,14 +544,17 @@ dat/ships/neutral/llama.xml
 dat/ships/neutral/mule.xml
 dat/ships/neutral/pacifier.xml
 dat/ships/neutral/phalanx.xml
+dat/ships/neutral/plowshare.xml
 dat/ships/neutral/quicksilver.xml
 dat/ships/neutral/rhino.xml
 dat/ships/neutral/schroedinger.xml
 dat/ships/neutral/shark.xml
 dat/ships/neutral/starbridge.xml
+dat/ships/neutral/tristan.xml
 dat/ships/neutral/vendetta.xml
 dat/ships/neutral/vigilance.xml
 dat/ships/neutral/zebra.xml
+dat/ships/pirate/dealbreaker.xml
 dat/ships/pirate/pirate_admonisher.xml
 dat/ships/pirate/pirate_ancestor.xml
 dat/ships/pirate/pirate_hyena.xml

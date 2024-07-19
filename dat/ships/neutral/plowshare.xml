@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Plowshare">
+ <points>50</points>
+ <base_type>Plowshare</base_type>
+ <gfx size="96" sx="10" sy="10">plowshare</gfx>
+ <sound>engine</sound>
+ <class>Freighter</class>
+ <price>500000</price>
+ <time_mod>1.25</time_mod>
+ <fabricator>Melendez Corp.</fabricator>
+ <faction>Independent</faction>
+ <license>Large Civilian Vessel</license>
+ <description>When all your care about cargo, the Plowshare is the vessel you need. By minimizing defense capabilities, the plowshare is able to dedicate most of the ship's volume to cargo holds, allowing it to carry incredible amount of cargo. However, this also limits their movements to safe areas, which is why they are commonly seen only on trade lanes. Plowshares play a fundamental role in the distribution of low cost goods around the universe and are one of the cornerstones of modern spacefaring societies.</description>
+ <health>
+  <armour>150</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>3</crew>
+  <mass>330</mass>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>320</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="medium" />
+  <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
+  <utility size="medium" prop="accessory" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
+  <structure size="large" />
+  <structure size="medium" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <speed_mod>-20</speed_mod>
+  <turn_mod>-30</turn_mod>
+  <cargo_mod>80</cargo_mod>
+  <cargo_inertia>-20</cargo_inertia>
+  <ew_hide>25</ew_hide>
+ </stats>
+ <tags>
+  <tag>standard</tag>
+  <tag>transport</tag>
+ </tags>
+</ship>

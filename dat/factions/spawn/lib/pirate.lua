@@ -44,4 +44,5 @@ function spir.initDirectory( dir, faction, params )
       return scom.init( faction, weights, max, params )
    end
 end
+
 return spir
