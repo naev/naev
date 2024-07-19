@@ -8,7 +8,7 @@
   <price>600000</price>
   <gfx_store>hyena_fighter.webp</gfx_store>
   <description>This dock allows your ship to carry twin Hyena interceptors. It comes with all the amenities necessary for the maintenance and operation of the interceptors.</description>
-  <cpu>-140</cpu>
+  <cpu>-125</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
   <delay>6</delay>

@@ -12,9 +12,9 @@
   <gfx_store>core_system_cpu_l2.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>3500</cpu_max>
-  <energy>4200</energy>
-  <energy_regen>250</energy_regen>
+  <cpu_max>2800</cpu_max>
+  <energy>3360</energy>
+  <energy_regen>220</energy_regen>
   <shield>900</shield>
   <shield_regen>14</shield_regen>
  </specific>

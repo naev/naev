@@ -12,9 +12,9 @@
   <gfx_store>core_system_refined_l2.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>2800</cpu_max>
-  <energy>4800</energy>
-  <energy_regen>318</energy_regen>
+  <cpu_max>2200</cpu_max>
+  <energy>3840</energy>
+  <energy_regen>280</energy_regen>
   <shield>1100</shield>
   <shield_regen>18</shield_regen>
  </specific>

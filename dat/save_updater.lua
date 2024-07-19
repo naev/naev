@@ -24,6 +24,9 @@ end
    value indicating the amount of credits to refund the player.
 --]]
 local outfit_list = {
+   -- Below is a list of changes from 0.11.0 to 0.12.0
+   ["Unicorp PT-2200 Core System"] = "Unicorp PT-1750 Core System",
+   ["Unicorp PT-500 Core System"] = "Unicorp PT-440 Core System",
    -- Below is a list of changes from 0.10.0 to 0.11.0
    ["Unicorp D-68 Heavy Plating"] = "Unicorp D-72 Heavy Plating",
    ["Unicorp D-48 Heavy Plating"] = "Unicorp D-58 Heavy Plating",
@@ -370,9 +373,9 @@ local outfit_list = {
    ["Ultralight Bioship Shell Stage 2"] = 65000,
    ["Ultralight Bioship Shell Stage X"] = 65000,
    -- Below is a list of changes from 0.8.2 to 0.9.0
-   ["Unicorp PT-900 Core System"] = "Unicorp PT-500 Core System",
+   ["Unicorp PT-1000 Core System"] = "Unicorp PT-1750 Core System", -- Modified for 0.12.0
+   ["Unicorp PT-900 Core System"] = "Unicorp PT-440 Core System", -- Modified for 0.12.0
    ["Unicorp PT-600 Core System"] = "Unicorp PT-310 Core System",
-   ["Unicorp PT-1000 Core System"] = "Unicorp PT-2200 Core System",
    ["Unicorp PT-100 Core System"] = "Unicorp PT-16 Core System",
    ["Unicorp Hawk 150 Engine"] = "Nexus Dart 160 Engine", -- Modified for 0.11.0
    ["Unicorp Falcon 550 Engine"] = "Unicorp Falcon 1400 Engine",

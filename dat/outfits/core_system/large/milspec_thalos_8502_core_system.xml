@@ -12,9 +12,9 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cpu_max>850</cpu_max>
-  <energy>2875</energy>
-  <energy_regen>120</energy_regen>
+  <cpu_max>680</cpu_max>
+  <energy>2300</energy>
+  <energy_regen>105</energy_regen>
   <shield>800</shield>
   <shield_regen>14</shield_regen>
  </specific>

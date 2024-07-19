@@ -36,13 +36,13 @@ ssys["Destroyer"] = function ()
    return "Unicorp PT-310 Core System"
 end
 ssys["Cruiser"] = function ()
-   return "Unicorp PT-500 Core System"
+   return "Unicorp PT-440 Core System"
 end
 ssys["Battleship"] = function ()
-   return "Unicorp PT-2200 Core System"
+   return "Unicorp PT-1750 Core System"
 end
 ssys["Carrier"] = function ()
-   return "Unicorp PT-2200 Core System"
+   return "Unicorp PT-1750 Core System"
 end
 -- Civilian
 ssys["Yacht"] = function ()
@@ -56,7 +56,7 @@ ssys["Freighter"] = function ()
 end
 ssys["Armoured Transport"] = ssys["Freighter"]
 ssys["Bulk Freighter"] = function ()
-   return "Unicorp PT-2200 Core System"
+   return "Unicorp PT-1750 Core System"
 end
 
 -- STANDARD HULLS

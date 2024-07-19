@@ -60,7 +60,7 @@ local pirate_cores = {
          return {choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" }}
       end,
    ["Pirate Kestrel"] = function ()
-         return { "Krain Remige Engine", "Unicorp PT-500 Core System", "Unicorp D-58 Heavy Plating" }
+         return { "Krain Remige Engine", "Unicorp PT-440 Core System", "Unicorp D-58 Heavy Plating" }
       end,
    ["Pirate Starbridge"] = function (p)
          local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class } )

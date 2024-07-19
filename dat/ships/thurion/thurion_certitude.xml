@@ -38,7 +38,7 @@
   <weapon size="large" x="11" y="0" h="-7" />
   <weapon size="large" prop="fighter_bay" x="-19" y="12" h="9" />
   <weapon size="large" prop="fighter_bay" x="-19" y="-12" h="9" />
-  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
