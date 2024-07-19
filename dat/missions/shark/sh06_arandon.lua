@@ -110,7 +110,7 @@ function land()
 end
 
 function enter()
-   -- Entering in Behar in order to find the FLF Pacifier
+   -- Entering in Behar in order to find the FLF Bedivere
    if system.cur() ~= missys then
       return
    end
@@ -130,7 +130,7 @@ function wait_msg ()
 end
 
 function flf_people ()
-   pacifier = pilot.add( "Pacifier", "FLF", system.get("Doeston") )
+   pacifier = pilot.add( "Bedivere", "FLF", system.get("Doeston") )
    pacifier:memory().aggressive = false
    pacifier:setFriendly( true )
    pacifier:setInvincible( true )
@@ -144,7 +144,7 @@ function hail_pacifier()
    vn.scene()
    local p = ccomm.newCharacter( vn, pacifier )
    vn.transition()
-   p(_([[The Pacifier commander answers you and stops his ship, waiting to be boarded.]]))
+   p(fmt.f(_([[The {ship} commander answers you and stops his ship, waiting to be boarded.]]),{ship=pacifier:ship():name()}))
    vn.run()
 
    pacifier:control()

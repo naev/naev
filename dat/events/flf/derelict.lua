@@ -50,7 +50,7 @@ function create()
    local posFLF = vec2.new(-10500, -8500)
 
    shipDV = pilot.add( "Dvaered Vendetta", "Dvaered", posDV, _("Dvaered Patrol"), {ai="dummy"} )
-   shipFLF = pilot.add( "Vendetta", "FLF", posFLF, _("Frontier Patrol"), {ai="dummy"} )
+   shipFLF = pilot.add( "Tristan", "FLF", posFLF, _("Frontier Patrol"), {ai="dummy"} )
 
    shipDV:disable()
    shipFLF:disable()

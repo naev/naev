@@ -38,7 +38,7 @@
    0) Way to Zhiru to meet Dvaered contact agent
    1) Way to Caladan to meet Empire contact agent
    2) Going to speak to the contact agent
-   3) Way to Theras and ambush on the FLF Lancelot
+   3) Way to Theras and ambush on the FLF Tristan
    4) Battle at Theras
    5) After the Battle against the Swan
    6) Kill the true killer of the lost agent
@@ -360,7 +360,7 @@ function discussWithAg()
    }
 
    vn.label("details")
-   agent(fmt.f(_([[According to our information, Shaky Swan is in the Frontier sector right now, flying a Lancelot, presumably under FLF transponder. He might soon enter {sys1} from the jump point to {sys2}.
+   agent(fmt.f(_([[According to our information, Shaky Swan is in the Frontier sector right now, flying a Tristan, presumably under FLF transponder. He might soon enter {sys1} from the jump point to {sys2}.
 Your task will be to approach, engage and disable his ship. Only afterwards, squadron 138 will enter the system and load the swan's ship into a Pacifier's hangar. After that, you will come back here to collect your payment.]]),{sys1=mem.flfsys,sys2=mem.flfoys}))
    agent(_([[Very important point: the Imperials insist that they want to catch the swan by themselves. Do not board his ship under any circumstances.]]))
    vn.jump("menu")
@@ -450,7 +450,7 @@ end
 -- Spawn the Shaky Swan for the player to disable them
 local dhook
 function spawnSwan()
-   mem.swan = pilot.add("Lancelot", "FLF", mem.flfoys, _("Shaky Swan"), {ai="mercenary"})
+   mem.swan = pilot.add("Tristan", "FLF", mem.flfoys, _("Shaky Swan"), {ai="mercenary"})
    mem.swan:setHilight()
    mem.swan:setVisible() -- Not very elegant...
    dhook = hook.pilot(mem.swan,"disable","swanDisabled")

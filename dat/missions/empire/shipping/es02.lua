@@ -187,13 +187,13 @@ function enter ()
       hook.pilot( v, "death", "death" )
 
       -- FLF Spawn around the Gawain
-      local flf_med_force = { "Hyena", "Hyena", "Admonisher", "Vendetta", "Pacifier" }
+      local flf_med_force = { "Hyena", "Hyena", "Bedivere", "Tristan", "Tristan", "Pacifier" }
       local p = fleet.add( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
       for k,pk in ipairs(p) do
          pk:setHostile()
       end
       -- To make it more interesting a vendetta will solely target the player.
-      p = pilot.add( "Vendetta", "FLF", enter_vect )
+      p = pilot.add( "Tristan", "FLF", enter_vect )
       p:setHostile()
       -- If player is seen, have them target player
       local pp = player.pilot()
@@ -240,7 +240,7 @@ function delay_flf ()
    end
 
    -- More ships to pressure player from behind
-   local flf_sml_force = { "Hyena", "Admonisher", "Vendetta" }
+   local flf_sml_force = { "Hyena", "Bedivere", "Tristan" }
    local p = fleet.add( 1, flf_sml_force, "FLF", mem.prevsys, _("FLF Ambusher") )
    for k,v in ipairs(p) do
       v:setHostile()
