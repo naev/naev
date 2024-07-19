@@ -18,6 +18,7 @@
 #ifdef HAVE_NAEV
 #include "conf.h"
 #include "naev.h"
+#include "nfile.h"
 #include "opengl_shader.h"
 #else /* HAVE_NAEV */
 #include "common.h"
@@ -226,6 +227,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    SDL_Surface              *surface = NULL;
    int                       has_alpha;
    const char               *path;
+   GLint                     internalformat;
 #ifdef HAVE_NAEV
    has_alpha = 0;
 #endif /* HAVE_NAEV */
@@ -244,6 +246,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
 #ifdef HAVE_NAEV
       char filepath[PATH_MAX];
       snprintf( filepath, sizeof( filepath ), "%s/%s", obj->path, path );
+      nfile_simplifyPath( filepath );
       rw = PHYSFSRWOPS_openRead( filepath );
 #else  /* HAVE_NAEV */
       (void)obj;
@@ -288,6 +291,10 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
 
    if ( surface != NULL ) {
       has_alpha = surface->format->Amask;
+      if ( notsrgb )
+         internalformat = has_alpha ? GL_RGBA : GL_RGB;
+      else
+         internalformat = has_alpha ? GL_SRGB_ALPHA : GL_SRGB;
       if ( surface->format->format != fmt ) {
          SDL_Surface *temp = surface;
          surface           = SDL_ConvertSurfaceFormat( temp, fmt, 0 );
@@ -298,13 +305,11 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       glPixelStorei( GL_UNPACK_ALIGNMENT,
                      MIN( surface->pitch & -surface->pitch, 8 ) );
       if ( notsrgb )
-         glTexImage2D( GL_TEXTURE_2D, 0, has_alpha ? GL_RGBA : GL_RGB,
-                       surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                       surface->pixels );
+         glTexImage2D( GL_TEXTURE_2D, 0, internalformat, surface->w, surface->h,
+                       0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
       else
-         glTexImage2D( GL_TEXTURE_2D, 0, has_alpha ? GL_SRGB_ALPHA : GL_SRGB,
-                       surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                       surface->pixels );
+         glTexImage2D( GL_TEXTURE_2D, 0, internalformat, surface->w, surface->h,
+                       0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
       glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       SDL_UnlockSurface( surface );
    } else {
@@ -330,9 +335,8 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       /* Create the render buffer, keeping RGB status. */
       glGenTextures( 1, &downtex );
       glBindTexture( GL_TEXTURE_2D, downtex );
-      glTexImage2D( GL_TEXTURE_2D, 0, has_alpha ? GL_SRGB_ALPHA : GL_SRGB,
-                    max_tex_size, max_tex_size, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                    NULL );
+      glTexImage2D( GL_TEXTURE_2D, 0, internalformat, max_tex_size,
+                    max_tex_size, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL );
 
       /* Create the frame buffer. */
       glGenFramebuffers( 1, &downfbo );
