@@ -97,10 +97,10 @@ void gl_contextUnset( void )
 
 static int tex_cmp( const void *p1, const void *p2 )
 {
-   const glTexList   *t1 = (const glTexList *)p1;
-   const glTexList   *t2 = (const glTexList *)p2;
-   const unsigned int testflags =
-      OPENGL_TEX_SDF | OPENGL_TEX_VFLIP | OPENGL_TEX_MAPTRANS;
+   const glTexList   *t1        = (const glTexList *)p1;
+   const glTexList   *t2        = (const glTexList *)p2;
+   const unsigned int testflags = OPENGL_TEX_SDF | OPENGL_TEX_VFLIP |
+                                  OPENGL_TEX_MAPTRANS | OPENGL_TEX_NOTSRGB;
    int ret = strcmp( t1->path, t2->path );
    if ( ret != 0 )
       return ret;
@@ -436,12 +436,17 @@ static GLuint gl_loadSurface( SDL_Surface *surface, unsigned int flags,
       glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       free( dataf );
    } else {
+      GLint internalformat;
+      if ( flags & OPENGL_TEX_NOTSRGB )
+         internalformat = has_alpha ? GL_RGBA : GL_RGB;
+      else
+         internalformat = has_alpha ? GL_SRGB_ALPHA : GL_SRGB;
+
       *vmax = 1.;
       glPixelStorei( GL_UNPACK_ALIGNMENT,
                      MIN( rgba->pitch & -rgba->pitch, 8 ) );
-      glTexImage2D( GL_TEXTURE_2D, 0, has_alpha ? GL_SRGB_ALPHA : GL_SRGB,
-                    rgba->w, rgba->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                    rgba->pixels );
+      glTexImage2D( GL_TEXTURE_2D, 0, internalformat, rgba->w, rgba->h, 0,
+                    GL_RGBA, GL_UNSIGNED_BYTE, rgba->pixels );
       glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
    }
    SDL_UnlockSurface( rgba );
