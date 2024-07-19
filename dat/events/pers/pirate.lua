@@ -233,7 +233,7 @@ return function ()
       for k,v in ipairs{
          {
             spawn = function ()
-               local p = pilot.add("Pirate Zebra", "Black Lotus", nil, _("Diamond"), {naked=true, ai="pers_pirate"})
+               local p = pilot.add("Dealbreaker", "Black Lotus", nil, _("Diamond"), {naked=true, ai="pers_pirate"})
                equipopt.pirate( p, {fighterbay=5, beam=0.1} )
                p:intrinsicSet( "shield_mod", 25 )
                local m = p:memory()
