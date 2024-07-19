@@ -2524,6 +2524,7 @@ dat/tech/basic_trade_ships.xml
 dat/tech/beam1.xml
 dat/tech/beam2.xml
 dat/tech/bioship_outfits.xml
+dat/tech/black_lotus_tech.xml
 dat/tech/bulk_trade_ships.xml
 dat/tech/cargo_trader_outfits.xml
 dat/tech/crappy_core_systems.xml
@@ -2541,6 +2542,7 @@ dat/tech/engines_high.xml
 dat/tech/engines_low.xml
 dat/tech/engines_medium.xml
 dat/tech/flf_ships.xml
+dat/tech/frontier_combat_ships.xml
 dat/tech/goddard_ship.xml
 dat/tech/heavy_civilian_combat_ships.xml
 dat/tech/heavy_weapons1.xml
