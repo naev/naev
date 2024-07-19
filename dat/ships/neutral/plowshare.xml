@@ -37,6 +37,7 @@
   <speed_mod>-20</speed_mod>
   <turn_mod>-30</turn_mod>
   <cargo_mod>80</cargo_mod>
+  <armour_mod>-20</armour_mod>
   <cargo_inertia>-20</cargo_inertia>
   <ew_hide>25</ew_hide>
  </stats>
