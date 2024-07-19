@@ -188,8 +188,8 @@ function rogue_spawnRogue( n )
    pilot.toggleSpawn( false )
 
    if rnd.rnd() < 0.05 then n = n + 1 end
-   local shipnames = { "Vendetta", "Lancelot" }
-   local pilotnames = { _("Rogue FLF Vendetta"), _("Rogue FLF Lancelot") }
+   local shipnames = { "Vendetta", "Tristan" }
+   local pilotnames = { _("Rogue FLF Vendetta"), _("Rogue FLF Tristan") }
    local frogue = faction.dynAdd( "FLF", "Rogue FLF", _("Rogue FLF"), {clear_allies=true, clear_enemies=true})
    frogue:dynEnemy("FLF")
 
@@ -211,9 +211,9 @@ end
 -- Spawn n FLF ships at/from the location param.
 function rogue_spawnFLF( n, param )
    if rnd.rnd() < 0.25 then n = n - 1 end
-   local lancelots = rnd.rnd( n )
-   fleetFLF = fleet.add( lancelots, "Lancelot", "FLF", param, nil, {ai="escort_player"} )
-   local vendetta_fleet = fleet.add( n - lancelots, "Vendetta", "FLF", param, nil, {ai="escort_player"} )
+   local tristans = rnd.rnd( n )
+   fleetFLF = fleet.add( tristans, "Tristan", "FLF", param, nil, {ai="escort_player"} )
+   local vendetta_fleet = fleet.add( n - tristans, "Vendetta", "FLF", param, nil, {ai="escort_player"} )
    for i, j in ipairs( vendetta_fleet ) do
       fleetFLF[ #fleetFLF + 1 ] = j
    end
