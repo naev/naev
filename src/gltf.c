@@ -1,10 +1,5 @@
 #include "gltf.h"
 
-/* We use this file in utils/model-view-c to debug things. */
-#ifdef PACKAGE
-#define HAVE_NAEV
-#endif
-
 #include "SDL_image.h"
 #include "glad.h"
 #include <libgen.h>
@@ -251,16 +246,12 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       return -1;
    }
 
-#ifdef HAVE_NAEV
    char filepath[PATH_MAX];
    snprintf( filepath, sizeof( filepath ), "%s/%s", obj->path, path );
    nfile_simplifyPath( filepath );
-#else  /* HAVE_NAEV */
-   (void)obj;
-   const char *filepath = path;
-#endif /* HAVE_NAEV */
 
    /* Check to see if it already exists. */
+#ifdef HAVE_NAEV
    int created;
    int flags = OPENGL_TEX_MIPMAPS;
    if ( notsrgb )
@@ -271,9 +262,14 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       otex->tex = otex->gtex->texture;
       return 0;
    }
+#endif /* HAVE_NAEV */
 
    /* Load the image data as a surface. */
+#ifdef HAVE_NAEV
    rw = PHYSFSRWOPS_openRead( filepath );
+#else  /* HAVE_NAEV */
+   rw = SDL_RWFromFile( filepath, "r" );
+#endif /* HAVE_NAEV */
    if ( rw == NULL ) {
       WARN( _( "Unable to open '%s': %s" ), filepath, SDL_GetError() );
       *otex = *def;
@@ -420,8 +416,10 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    gl_checkErr();
    gl_contextUnset();
 
-   otex->tex           = tex;
+   otex->tex = tex;
+#ifdef HAVE_NAEV
    otex->gtex->texture = tex; /* Update the texture. */
+#endif                        /* HAVE_NAEV */
    return 0;
 }
 
@@ -1524,6 +1522,7 @@ GltfObject *gltf_loadFromFile( const char *filename )
    snprintf( mountpath, sizeof( mountpath ), "%s/%s",
              PHYSFS_getRealDir( filename ), dirname( dirpath ) );
    PHYSFS_mount( mountpath, "/", 0 ); /* Prefix so more priority. */
+   obj->path = strdup( mountpath );
 #endif /* HAVE_NAEV */
    free( dirpath );
 
@@ -1705,8 +1704,11 @@ static void gltf_freeTex( Texture *tex )
         ( tex->tex == tex_ones.tex ) )
       return;
 
-   // glDeleteTextures( 1, &tex->tex );
+#ifdef HAVE_NAEV
    gl_freeTexture( tex->gtex ); /* Frees texture too. */
+#else                           /* HAVE_NAEV */
+   glDeleteTextures( 1, &tex->tex );
+#endif                          /* HAVE_NAEV */
    gl_checkErr();
 }
 

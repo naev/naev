@@ -1,5 +1,7 @@
 #pragma once
 
+#include "array.h"
+
 #define LOG(str, args...)     (fprintf(stdout, str"\n", ## args))
 #define DEBUG(str, args...)   (fprintf(stdout, str"\n", ## args))
 #define WARN(str, args...)    (fprintf(stderr, "WARNING %s:%d [%s]: ", __FILE__, __LINE__, __func__), fprintf(stderr, str"\n", ## args))
@@ -27,3 +29,5 @@ typedef struct PlayerConf_ {
    int max_3d_tex_size;
 } PlayerConf_t;
 extern PlayerConf_t conf;
+
+int   nfile_simplifyPath( char path[static 1] );

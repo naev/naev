@@ -3,13 +3,20 @@
  */
 #pragma once
 
+/* We use this file in utils/model-view-c to debug things. */
+#ifdef PACKAGE
+#define HAVE_NAEV
+#endif
+
 #include <stddef.h>
 
 #include "glad.h"
 
 #include "mat4.h"
-#include "opengl_tex.h"
 #include "vec3.h"
+#ifdef HAVE_NAEV
+#include "opengl_tex.h"
+#endif /* HAVE_NAEV */
 
 #define MAX_LIGHTS                                                             \
    7 /**< Maximum amount of lights. TODO deferred rendering.                   \
@@ -20,7 +27,9 @@ typedef struct Texture {
    GLuint  texcoord; /**< Coordinates it uses. */
    GLfloat strength; /**< Strength value to multiply by (used for emissive
                         textures). */
-   glTexture *gtex;
+#ifdef HAVE_NAEV
+   glTexture *gtex; /**< Used for caching textures. */
+#endif              /* HAVE_NAEV */
 } Texture;
 
 /**
