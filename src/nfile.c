@@ -678,12 +678,15 @@ int nfile_simplifyPath( char path[static 1] )
    char **dirnames = array_create( char * );
    char  *saveptr  = NULL;
    size_t n        = strlen( path );
+   int    absolute = ( path[0] == '/' );
    char  *token    = SDL_strtokr( path, "/", &saveptr );
 
    while ( token != NULL ) {
       /* Skip noop. */
-      if ( ( strcmp( token, "" ) == 0 ) || ( strcmp( token, "." ) == 0 ) )
+      if ( ( strcmp( token, "" ) == 0 ) || ( strcmp( token, "." ) == 0 ) ) {
+         token = SDL_strtokr( NULL, "/", &saveptr );
          continue;
+      }
 
       /* Go up if ".." */
       if ( strcmp( token, ".." ) == 0 ) {
@@ -711,7 +714,7 @@ int nfile_simplifyPath( char path[static 1] )
    size_t s = 0;
    for ( int i = 0; i < array_size( dirnames ); i++ ) {
       char *ds = dirnames[i];
-      if ( ( s > 0 ) && ( s < n ) )
+      if ( ( absolute || ( s > 0 ) ) && ( s < n ) )
          path[s++] = '/';
       for ( size_t j = 0; j < strlen( ds ); j++ )
          if ( s < n )
