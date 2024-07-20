@@ -1,7 +1,13 @@
 [wrap-file]
 directory = glpk-5.0
-
 source_url = https://ftp.gnu.org/gnu/glpk/glpk-5.0.tar.gz
 source_filename = glpk-5.0.tar.gz
 source_hash = 4a1013eebb50f728fc601bdd833b0b2870333c3b3e5a816eeba921d95bec6f15
-patch_directory = glpk
+patch_filename = glpk_5.0-1_patch.zip
+patch_url = https://wrapdb.mesonbuild.com/v2/glpk_5.0-1/get_patch
+patch_hash = 12d3be4a943ab14a6f740e145d792898c0b206f130a242b2382a3876f7bd6efb
+source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/glpk_5.0-1/glpk-5.0.tar.gz
+wrapdb_version = 5.0-1
+
+[provide]
+glpk = glpk_dep
