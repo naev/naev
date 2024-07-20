@@ -13,6 +13,7 @@ local fmt = require "format"
 
 local luatk = {
    _windows = {},
+   _canvas = nil,
 
    colour = {
       bg       = { 0.2,  0.2,  0.2  },
@@ -66,7 +67,10 @@ function luatk.run ()
    local o = f:getOutline()
    f:setOutline(1)
    luatk._love = true
+   luatk._canvas = lg.newCanvas() -- Should default fullscreen
+   luatk._dirty = true
    love.exec( 'scripts/luatk' )  -- luacheck: ignore
+   luatk._canvas = nil -- Clean up
    luatk._love = false
    f:setOutline(o)
 end
@@ -93,6 +97,8 @@ vn.run()
 function luatk.vn( setup )
    local s = vn.custom()
    s._init = function ()
+      luatk._canvas = lg.newCanvas() -- Should default fullscreen
+      luatk._dirty = true
       setup()
    end
    s._draw = function ()
@@ -144,6 +150,7 @@ Closes the toolkit and all windows.
 function luatk.close ()
    luatk._windows = {}
    lk.setTextInput( false ) -- Hack as we can't use __gc
+   luatk._canvas = nil
    if luatk._love then
       le.quit()
    end
@@ -166,9 +173,20 @@ Draws the luatk toolkit.
 Only to be used when running the toolkit outside of luatk.run.
 --]]
 function luatk.draw()
-   for _k,wdw in ipairs(luatk._windows) do
-      wdw:draw()
+   if luatk._dirty then
+      local c = lg.getCanvas()
+      lg.setCanvas( luatk._canvas )
+      lg.clear( 0, 0, 0, 0 )
+      for _k,wdw in ipairs(luatk._windows) do
+         wdw:draw()
+      end
+      lg.setCanvas( c )
    end
+
+   lg.setBlendMode( "alpha", "premultiplied" )
+   lg.setColor(1, 1, 1, 1)
+   luatk._canvas:draw( 0, 0 )
+   lg.setBlendMode( "alpha" )
 end
 --[[--
 Updates the luatk toolkit.
@@ -202,6 +220,7 @@ function luatk.mousepressed( mx, my, button )
       if _checkbounds(wgt,x,y) then
          wgt._pressed = true
          if wgt.pressed and wgt:pressed( x-wgt.x, y-wgt.y, button ) then
+            luatk._dirty = true
             return true
          end
       end
@@ -226,12 +245,17 @@ function luatk.mousereleased( mx, my, button )
       local inbounds = _checkbounds(wgt,x,y)
       if wgt._pressed and inbounds and wgt.clicked then
          wgt:clicked( x-wgt.x, y-wgt.y, button )
+         luatk._dirty = true
       end
       wgt._pressed = false
       if wgt.released then
          wgt:released()
+         luatk._dirty = true
       end
       if inbounds then
+         if not wgt.mouseover then
+            luatk._dirty = true
+         end
          wgt.mouseover = true
       end
    end
@@ -254,6 +278,9 @@ function luatk.mousemoved( mx, my )
    for _k,wgt in ipairs(wdw._widgets) do
       local inbounds = _checkbounds( wgt, x, y )
       if not wgt._pressed then
+         if wgt.mouseover ~= inbounds then
+            luatk._dirty = true
+         end
          wgt.mouseover = inbounds
       end
       if (inbounds or wgt._pressed) and wgt.mmoved then
@@ -274,15 +301,18 @@ function luatk.keypressed( key )
 
    -- Custom keypress events
    if wdw.keypressed and wdw.keypressed( key ) then
+      luatk._dirty = true
       return true
    end
 
    if key=="return" then
       if wdw.accept and wdw:accept() then
+         luatk._dirty = true
          return true
       end
    elseif key=="escape" then
       if wdw.cancel and wdw:cancel() then
+         luatk._dirty = true
          return true
       end
    end
@@ -291,6 +321,7 @@ function luatk.keypressed( key )
       -- TODO proper focus model
       if wgt.keypressed then
          if wgt:keypressed( key ) then
+            luatk._dirty = true
             return true
          end
       end
@@ -311,6 +342,7 @@ function luatk.textinput( str )
       -- TODO proper focus model
       if wgt.textinput then
          if wgt:textinput( str ) then
+            luatk._dirty = true
             return true
          end
       end
