@@ -16,9 +16,10 @@
       */
 
 typedef struct Texture {
-   GLuint     tex;
-   GLuint     texcoord;
-   GLfloat    strength;
+   GLuint  tex;      /**< True texture. */
+   GLuint  texcoord; /**< Coordinates it uses. */
+   GLfloat strength; /**< Strength value to multiply by (used for emissive
+                        textures). */
    glTexture *gtex;
 } Texture;
 
@@ -156,13 +157,14 @@ typedef struct Scene {
 } Scene;
 
 typedef struct GltfTrail {
-   char *generator;
-   vec3  pos;
+   char *generator; /**< Type of the trail to use. */
+   vec3  pos;       /**< Location of the trail. */
 } GltfTrail;
 
 typedef struct GltfMount {
-   int  id;
-   vec3 pos;
+   int id;   /**< ID of the mount, should match with the position of the XML
+                value. */
+   vec3 pos; /**< Position of the mount. */
 } GltfMount;
 
 /**
