@@ -2655,7 +2655,7 @@ void pilot_update( Pilot *pilot, double dt )
        * alternatively ones which have a fast recharge but significantly less
        * capacity.
        */
-      pilot->energy += 0.5 * pilot->energy_regen * dt;
+      pilot->energy += pilot->energy_regen * dt;
       pilot->energy -= pilot->energy_loss * dt;
       if ( pilot->energy > pilot->energy_max )
          pilot->energy = pilot->energy_max;

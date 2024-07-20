@@ -12,7 +12,7 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <energy_regen_malus>65</energy_regen_malus>
+  <energy_regen_malus>26</energy_regen_malus>
   <engine_limit>2400</engine_limit>
   <fuel>1600</fuel>
   <speed>125</speed>

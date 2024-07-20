@@ -14,7 +14,7 @@
  <specific type="modification">
   <cpu_max>1750</cpu_max>
   <energy>2800</energy>
-  <energy_regen>194</energy_regen>
+  <energy_regen>97</energy_regen>
   <shield>750</shield>
   <shield_regen>13</shield_regen>
   <ew_detect>10</ew_detect>

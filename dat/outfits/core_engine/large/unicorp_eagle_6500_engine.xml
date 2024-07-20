@@ -12,7 +12,7 @@
   <gfx_store>unicorp_engine_l.webp</gfx_store>
  </general>
  <specific type="modification">
-  <energy_regen_malus>100</energy_regen_malus>
+  <energy_regen_malus>40</energy_regen_malus>
   <engine_limit>6500</engine_limit>
   <fuel>1600</fuel>
   <speed>65</speed>

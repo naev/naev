@@ -11,6 +11,6 @@
  </general>
  <specific type="modification">
   <shield_regen>12</shield_regen>
-  <energy_regen_malus>40</energy_regen_malus>
+  <energy_regen_malus>20</energy_regen_malus>
  </specific>
 </outfit>

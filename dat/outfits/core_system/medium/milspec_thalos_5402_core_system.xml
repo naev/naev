@@ -14,7 +14,7 @@
  <specific type="modification">
   <cpu_max>420</cpu_max>
   <energy>1400</energy>
-  <energy_regen>85</energy_regen>
+  <energy_regen>43</energy_regen>
   <shield>500</shield>
   <shield_regen>9</shield_regen>
  </specific>

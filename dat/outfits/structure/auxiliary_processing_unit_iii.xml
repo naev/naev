@@ -11,6 +11,6 @@
  </general>
  <specific type="modification">
   <cpu_max>60</cpu_max>
-  <energy_regen_malus>16</energy_regen_malus>
+  <energy_regen_malus>8</energy_regen_malus>
  </specific>
 </outfit>

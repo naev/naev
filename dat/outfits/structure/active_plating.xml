@@ -13,6 +13,6 @@
  <specific type="modification">
   <armour>400</armour>
   <energy_regen_mod>-10</energy_regen_mod>
-  <energy_regen_malus>5</energy_regen_malus>
+  <energy_regen_malus>2</energy_regen_malus>
  </specific>
 </outfit>

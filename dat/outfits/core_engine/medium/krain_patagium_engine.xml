@@ -12,7 +12,7 @@
   <gfx_store>krain_patagium_engine.webp</gfx_store>
  </general>
  <specific type="modification">
-  <energy_regen_malus>45</energy_regen_malus>
+  <energy_regen_malus>22</energy_regen_malus>
   <engine_limit>950</engine_limit>
   <fuel>600</fuel>
   <speed>190</speed>
