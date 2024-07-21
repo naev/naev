@@ -81,7 +81,7 @@ local reason_list = {
       _([[ for vandalism of critical infrastructure]]),
       _([[ for conspiracy to commit treason]]),
       _([[ for illegal surveillance of {spb} citizens]]),
-      _([[ for unauthorized use of advanced technology]])
+      _([[ for unauthorized use of advanced technology]]),
    },
    ["Empire"] = {
       _([[ for bureaucratic infringements]]),
@@ -102,7 +102,7 @@ local reason_list = {
       _([[ for misallocating resources to a favored Imperial project]]),
       _([[ for conspiring with a Great House to undermine the Emperor's authority]]),
       _([[ for submitting fraudulent expense reports to the Imperial Council]]),
-      _([[ for neglecting to perform a mandatory Imperial audit]])
+      _([[ for neglecting to perform a mandatory Imperial audit]]),
    },
    ["Za'lek"] = {
       _([[ for operating an illegal scientific paper mill]]),
@@ -126,7 +126,7 @@ local reason_list = {
       _([[ for creating a fake research institute to launder funds]]),
       _([[ for using Za'lek resources to develop a personal AI assistant]]),
       _([[ for neglecting to follow proper laboratory safety protocols]]),
-      _([[ for attempting to patent a scientific concept that is already widely known]])
+      _([[ for attempting to patent a scientific concept that is already widely known]]),
    },
    ["Dvaered"] = {
       _([[ for running away from a duel to the death]]),
@@ -191,10 +191,31 @@ local reason_list = {
       _([[ for conspiring against an Arch-Canter]]),
       _([[ for vandalizing a sacred text]]),
       _([[ for attempting to flee the echelon system]]),
-      _([[ for speaking ill of the 34th Emperor's decision to grant House Sirius autonomy]])
+      _([[ for speaking ill of the 34th Emperor's decision to grant House Sirius autonomy]]),
+   },
+   ["Goddard"] = {
+      _([[ for refusing to supply the Empire with Goddard battlecruisers during a time of war]]),
+      _([[ for attempting to reverse-engineer Imperial technology]]),
+      _([[ for disrespecting the memory of Eduard Goddard]]),
+      _([[ for spreading misinformation about the capabilities of the Goddard battlecruiser]]),
+      _([[ for attempting to steal Goddard family secrets]]),
+      _([[ for conspiring against the current leader of House Goddard]]),
+      _([[ for hoarding resources meant for the people of Zhiru]]),
+      _([[ for deserting a key research facility on Zhiru]]),
+      _([[ for spreading dissent among the Goddard family ranks]]),
+      _([[ for refusing to pay taxes to the Empire]]),
+      _([[ for attempting to create a rival to the Goddard battlecruiser]]),
+      _([[ for disrespecting the Imperial navy]]),
+      _([[ for spreading false rumors about the Goddard family]]),
+      _([[ for attempting to sabotage Goddard battlecruiser production]]),
+      _([[ for conspiring with rival Houses against the Empire]]),
+      _([[ for hoarding rare resources found on Zhiru]]),
+      _([[ for deserting a key diplomatic mission]]),
+      _([[ for spreading dissent among the people of Zhiru]]),
+      _([[ for refusing to provide aid to the Empire during a natural disaster]]),
+      _([[ for attempting to uncover the secrets of Eduard Goddard's mysterious death]]),
    },
 }
-reason_list["Goddard"] = reason_list["Independent"] -- TODO someday
 
 -- luacheck: globals get_faction
 function get_faction ()
