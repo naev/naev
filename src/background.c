@@ -46,8 +46,8 @@ typedef struct background_image_s {
    glColour radiosity; /**< Radiosity. */
 
    /* Handled during rendering. */
+   int   L_idx; /**< Lighting index. Invalid if < 0. */
    Light L;     /**< Lighting to use. */
-   int   L_idx; /**< Lighting index. */
 } background_image_t;
 static background_image_t *bkg_image_arr_bk =
    NULL; /**< Background image array to display (behind dust). Assumed to be a
@@ -353,6 +353,7 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
    bkg->angle     = angle;
    bkg->col       = ( col != NULL ) ? *col : cWhite;
    bkg->radiosity = *radiosity;
+   bkg->L_idx     = -1;
 
    /* Deal with lighting. */
    a = bkg->radiosity.a;
@@ -375,7 +376,8 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
       bkg->L.colour.v[1] = bkg->radiosity.g;
       bkg->L.colour.v[2] = bkg->radiosity.b;
       bkg->L.intensity   = bkg->radiosity.a;
-      gltf_lightSet( bkg->L_idx, &bkg->L );
+      if ( gltf_lightSet( bkg->L_idx, &bkg->L ) )
+         bkg->L_idx = -1; /* Failed to add. */
    }
 
    /* Sort if necessary. */

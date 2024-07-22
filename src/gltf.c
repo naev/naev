@@ -2031,17 +2031,18 @@ void gltf_lightReset( void )
  *    @param idx Index to use, 0 refers to first light after the default.
  *    @param L Light to set.
  */
-void gltf_lightSet( int idx, const Light *L )
+int gltf_lightSet( int idx, const Light *L )
 {
    int n = L_default_const.nlights +
            idx; /* We start counting after the default lights. */
    if ( n >= MAX_LIGHTS ) {
       WARN( _( "Trying to set more lights than MAX_LIGHTS allows!" ) );
-      return;
+      return -1;
    }
    L_default.nlights   = MAX( L_default.nlights, n + 1 );
    L_default.lights[n] = *L;
    shadow_matrix( &light_mat_def[n], &L_default.lights[n] );
+   return 0;
 }
 
 /**
