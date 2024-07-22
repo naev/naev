@@ -115,7 +115,7 @@ build_appdir(){
     --native-file "$SOURCEPATH/utils/build/linux_steamruntime.ini" \
     --buildtype "$BUILDTYPE" \
     --force-fallback-for=glpk,SuiteSparse \
-    -Dsteamruntime=false \
+    -Dsteamruntime=true \
     -Dprefix="/usr" \
     -Db_lto=true \
     -Dauto_features=enabled \
