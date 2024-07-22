@@ -3,6 +3,8 @@
  */
 #pragma once
 
-#include "nlua.h"
+/** @cond */
+#include <lua.h>
+/** @endcond */
 
 int luaopen_enet( lua_State *l );
