@@ -305,9 +305,6 @@ int log_warn( const char *file, size_t line, const char *func, const char *fmt,
    char        *buf;
    size_t       n;
 
-   /* First do a backtrace, if possible. */
-   debug_logBacktrace();
-
    /* Create the new message. */
    va_start( ap, fmt );
    n = vsnprintf( NULL, 0, fmt, ap );
@@ -331,6 +328,9 @@ int log_warn( const char *file, size_t line, const char *func, const char *fmt,
          return 0;
       }
    }
+
+   /* First do a backtrace, if possible. */
+   debug_logBacktrace();
 
    /* Display messages. */
    logprintf( stderr, 0, _( "WARNING %s:%lu [%s]: " ), file,
