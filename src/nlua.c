@@ -16,6 +16,7 @@
 #include "nlua.h"
 
 #include "array.h"
+#include "cmark_wrap.h"
 #include "conf.h"
 #include "debug.h"
 #include "log.h"
@@ -509,7 +510,7 @@ void nlua_register( nlua_env env, const char *libname, const luaL_Reg *l,
          lua_setfield( naevL, -2, "__index" );
       }
       luaL_register( naevL, NULL, l );
-   }                                   /* lib */
+   } /* lib */
    nlua_getenv( naevL, env, "naev" );  /* lib, naev */
    lua_pushvalue( naevL, -2 );         /* lib, naev, lib */
    lua_setfield( naevL, -2, libname ); /* lib, naev */
@@ -728,6 +729,8 @@ static int nlua_package_loader_c( lua_State *L )
       lua_pushcfunction( L, luaopen_utf8 );
    else if ( strcmp( name, "enet" ) == 0 && conf.lua_enet )
       lua_pushcfunction( L, luaopen_enet );
+   else if ( strcmp( name, "cmark" ) == 0 )
+      lua_pushcfunction( L, luaopen_cmark );
    else
       lua_pushnil( L );
    return 1;
@@ -1053,8 +1056,8 @@ void nlua_resize( void )
          lua_pop( naevL, 1 );                /* t, k */
       } else
          lua_pop( naevL, 2 ); /* t, k */
-   }                          /* t */
-   lua_pop( naevL, 1 );       /* */
+   } /* t */
+   lua_pop( naevL, 1 ); /* */
 }
 
 /**

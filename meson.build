@@ -112,6 +112,11 @@ int main (void) { return 0; }''')
       libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
    endif
 
+   cmark = dependency('libcmark', required: true, version: '>=0.29.0')
+   if not cmark.found()
+      cmark = cc.find_library( 'cmark', required: true, version: '>=0.29.0', has_headers: ['cmark.h'] )
+   endif
+
    use_system_physfs = ('physfs' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
    if use_system_physfs
       system_physfs = dependency('physfs', required: false, static: get_option('steamruntime'))
@@ -123,6 +128,7 @@ int main (void) { return 0; }''')
    naev_deps += use_system_physfs ? system_physfs : subproject('physfs').get_variable('physfs_dep')
 
    naev_deps += [
+      cmark,
       enet,
       dependency('freetype2', required: true),
       libunibreak,
