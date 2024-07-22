@@ -114,6 +114,15 @@ int pfleet_deploy( PlayerShip_t *ps )
    double a;
    vec2   v;
 
+#if DEBUGGING
+   if ( !pilot_isSpaceworthy( ps->p ) ) {
+      WARN( _( "Trying to deploy fleet ship '%s' despite not being space "
+               "worthy!" ),
+            ps->p->name );
+      return -1;
+   }
+#endif /* DEBUGGING */
+
    /* Get the position. */
    a = RNGF() * 2. * M_PI;
    vec2_cset( &v, player.p->solid.pos.x + 50. * cos( a ),

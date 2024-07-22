@@ -4252,12 +4252,14 @@ static int player_parseEscorts( xmlNodePtr parent )
                   ps->p->name );
 
          /* Only deploy spaceworthy escorts. */
-         if ( !pilot_isSpaceworthy( ps->p ) )
-            WARN( _( "Fleet ship '%s' is deployed despite not being space "
-                     "worthy!" ),
-                  ps->p->name );
-
-         pfleet_deploy( ps );
+         else if ( !pilot_isSpaceworthy( ps->p ) )
+            /* Player deployed without a spaceworthy one. We'll just print some
+             * debug info instead of a warning here. */
+            DEBUG( _( "Fleet ship '%s' is deployed despite not being space "
+                      "worthy!" ),
+                   ps->p->name );
+         else
+            pfleet_deploy( ps ); /* Can deploy. */
       } else
          WARN( _( "Escort has invalid type '%s'." ), buf );
       free( buf );
