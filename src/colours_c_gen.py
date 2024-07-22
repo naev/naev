@@ -27,6 +27,7 @@ class Colour:
 
 
 COLOURS = [
+    Colour( "Transparent", 0.00, 0.00, 0.00, 0.00 ),
     Colour( "White",  1.00, 1.00, 1.00 ),
     Colour( "Grey90", 0.90, 0.90, 0.90 ),
     Colour( "Grey80", 0.80, 0.80, 0.80 ),

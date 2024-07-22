@@ -241,7 +241,7 @@ void gltf_renderScene( GLuint fb, GltfObject *obj, int scene, const mat4 *H,
 
 /* Lighting. */
 void   gltf_lightReset( void );
-void   gltf_lightSet( int idx, const Light *L );
+int    gltf_lightSet( int idx, const Light *L );
 void   gltf_lightAmbient( double r, double g, double b );
 void   gltf_lightAmbientGet( double *r, double *g, double *b );
 void   gltf_lightIntensity( double strength );
