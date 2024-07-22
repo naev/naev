@@ -104,17 +104,13 @@ int main (void) { return 0; }''')
    sdl = dependency('sdl2', version: '>=2.0.26', required: true)
    sdl_image = dependency('SDL2_image', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
+   cmark = dependency('libcmark-gfm', required: true, version: '>=0.29.0', fallback: ['cmark-gfm', 'cmark_gfm_dep'], static: get_option('steamruntime'))
    # TODO replace nfd with SDL3 native functions when possible
    nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: true)
 
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
       libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
-   endif
-
-   cmark = dependency('libcmark', required: true, version: '>=0.29.0')
-   if not cmark.found()
-      cmark = cc.find_library( 'cmark', required: true, version: '>=0.29.0', has_headers: ['cmark.h'] )
    endif
 
    use_system_physfs = ('physfs' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
