@@ -2033,7 +2033,8 @@ void gltf_lightReset( void )
  */
 void gltf_lightSet( int idx, const Light *L )
 {
-   int n = L_default_const.nlights + idx;
+   int n = L_default_const.nlights +
+           idx; /* We start counting after the default lights. */
    if ( n >= MAX_LIGHTS ) {
       WARN( _( "Trying to set more lights than MAX_LIGHTS allows!" ) );
       return;
