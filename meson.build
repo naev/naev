@@ -104,7 +104,7 @@ int main (void) { return 0; }''')
    sdl = dependency('sdl2', version: '>=2.0.26', required: true)
    sdl_image = dependency('SDL2_image', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
-   cmark = dependency('libcmark-gfm', required: true, version: '>=0.29.0', fallback: ['cmark-gfm', 'cmark_gfm_dep'], static: get_option('steamruntime'))
+   cmark = dependency('libcmark', required: true, version: '>=0.29.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
    # TODO replace nfd with SDL3 native functions when possible
    nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: true)
 
