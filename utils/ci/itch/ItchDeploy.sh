@@ -124,7 +124,7 @@ tar -Jxf "$TEMPPATH/naev-win64/naev-windows.tar.xz" -C "$OUTDIR/win64"
 tar -Jxf "$TEMPPATH/naev-ndata/naev-ndata.tar.xz" -C "$OUTDIR/win64"
 
 # Rename windows binary so it follows the correct naming scheme.
-mv "$OUTDIR"/win64/*.exe "$OUTDIR/win64/naev-$VERSION-win64.exe"
+mv "$OUTDIR"/win64/naev*.exe "$OUTDIR/win64/naev-$VERSION-win64.exe"
 
 # Prepare itch.toml for Linux
 
