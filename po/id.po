@@ -3751,32 +3751,32 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:2
-msgid "Unicorp PT-2200 Core System"
+msgid "Unicorp PT-1750 Core System"
 msgstr ""
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:4
-msgid "U. PT-2200 System"
+msgid "U. PT-1750 System"
 msgstr ""
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:11
 msgid ""
 "Criticized by some as nothing more than a cluster of PT-400 systems, the "
-"PT-2200 nevertheless offers acceptable performance for capital ships at a "
+"PT-1750 nevertheless offers acceptable performance for capital ships at a "
 "fraction of its competitors' prices."
 msgstr ""
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:2
-msgid "Unicorp PT-500 Core System"
+msgid "Unicorp PT-440 Core System"
 msgstr ""
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:4
-msgid "U. PT-500 System"
+msgid "U. PT-440 System"
 msgstr ""
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:10
 msgid ""
 "Criticized by some as nothing more than a cluster of PT-310 systems, the "
-"PT-500 nevertheless offers acceptable performance for light cruisers at a "
+"PT-440 nevertheless offers acceptable performance for light cruisers at a "
 "fraction of its competitors' prices."
 msgstr ""
 
