@@ -44,6 +44,9 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, Markdown_mt )
 
+   -- Some helpers
+   wgt.linkfunc = options.linkfunc
+
    local deffont = options.font or luatk._deffont or lg.getFont()
    -- TODO load same font family
    local headerfont = options.fontheader or lg.newFont( math.floor(deffont:getHeight()*1.2+0.5) )
@@ -76,7 +79,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
          end
       elseif node_type == cmark.NODE_HEADING then
          if entering then
-            block.text = block.text .. "#n"
+            --block.text = block.text .. "#n"
             block.font = headerfont
             if block.y > 0 then
                ty = ty + headerfont:getHeight()
@@ -108,17 +111,18 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
             linky = block.y+by
          else
             block.text = block.text .. "#0"
-            print( block.text )
             local bx, by = naev.gfx.printfEnd( block.font.font, block.text, w )
-            print( block.y+by, linky )
+            local target = cmark.node_get_url(cur)
+            local fh = block.font:getHeight()
+            local flh = block.font:getLineHeight()
             if block.y+by == linky then
                -- One line, great!
                table.insert( wgt.links, {
                   x1 = linkx-3,
                   y1 = linky-3,
                   x2 = block.x+bx+3,
-                  y2 = block.y+by+block.font:getHeight()+3,
-                  target = cmark.node_get_url(cur),
+                  y2 = block.y+by+fh+3,
+                  target = target,
                } )
             else
                -- Two lines
@@ -126,25 +130,25 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   x1 = linkx-3,
                   y1 = linky-3,
                   x2 = w+3,
-                  y2 = linky+block.font:getHeight()+3,
-                  target = cmark.node_get_url(cur),
+                  y2 = linky+fh+3,
+                  target = target,
                } )
                --  More than 2 lines, bad!
-               if block.y+by > linky + block.font:getLineHeight() then
+               if block.y+by > linky + flh then
                   table.insert( wgt.links, {
                      x1 = -3,
-                     y1 = linky+block.font:getLineHeight()-3,
+                     y1 = linky+flh-3,
                      x2 = w+3,
-                     y2 = block.y+by-block.font:getLineHeight()+block.font:getHeight()+3,
-                     target = cmark.node_get_url(cur),
+                     y2 = block.y+by-flh+fh+3,
+                     target = target,
                   } )
                end
                table.insert( wgt.links, {
                   x1 = -3,
                   y1 = block.y+by-3,
                   x2 = block.x+bx+3,
-                  y2 = block.y+by+block.font:getHeight()+3,
-                  target = cmark.node_get_url(cur),
+                  y2 = block.y+by+fh+3,
+                  target = target,
                } )
             end
             linkx = nil
@@ -202,12 +206,18 @@ function Markdown:drawover( bx, by )
       end
    end
 end
+local function _checkbounds( l, mx, my )
+   return not (mx < l.x1 or mx > l.x2 or my < l.y1 or my > l.y2)
+end
 function Markdown:mmoved( mx, my )
    for k,l in ipairs(self.links) do
-      if mx < l.x1 or mx > l.x2 or my < l.y1 or my > l.y2 then
-         l.mouseover = false
-      else
-         l.mouseover = true
+      l.mouseover = _checkbounds( l, mx, my )
+   end
+end
+function Markdown:pressed( mx, my )
+   for k,l in ipairs(self.links) do
+      if _checkbounds( l, mx, my ) and self.linkfunc then
+         self.linkfunc( l.target )
       end
    end
 end
