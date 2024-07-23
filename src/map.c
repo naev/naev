@@ -2321,26 +2321,31 @@ static void map_buttonMarkSystem( unsigned int wid, const char *str )
 {
    (void)wid;
    (void)str;
-   if ( map_selected != -1 ) {
-      StarSystem *sys = system_getIndex( map_selected );
+   if ( map_selected < 0 )
+      return;
 
-      /* Remove old note */
-      if ( sys->note != NULL ) {
-         free( sys->note );
-         sys->note = NULL;
-      }
+   StarSystem *sys = system_getIndex( map_selected );
 
-      /* Switch marking */
-      if ( sys_isFlag( sys, SYSTEM_PMARKED ) )
-         sys_rmFlag( sys, SYSTEM_PMARKED );
-      else {
-         sys->note = dialogue_input(
-            _( "Add System Note" ), 0, 60,
-            _( "Write a note about the #o%s#0 system:" ),
-            sys_isKnown( sys ) ? system_name( sys ) : _( "Unknown" ) );
-         if ( sys->note != NULL )
-            sys_setFlag( sys, SYSTEM_PMARKED );
-      }
+   /* Remove old note. */
+   if ( sys->note != NULL ) {
+      if ( !dialogue_YesNo( _( "Remove System Note" ),
+                            _( "Remove the following note about the #o%s#0 "
+                               "system?\n\n#o%s#0" ),
+                            system_nameKnown( sys ), sys->note ) )
+         return;
+      free( sys->note );
+      sys->note = NULL;
+   }
+
+   /* Switch marking */
+   if ( sys_isFlag( sys, SYSTEM_PMARKED ) )
+      sys_rmFlag( sys, SYSTEM_PMARKED );
+   else {
+      sys->note = dialogue_input( _( "Add System Note" ), 0, 60,
+                                  _( "Write a note about the #o%s#0 system:" ),
+                                  system_nameKnown( sys ) );
+      if ( sys->note != NULL )
+         sys_setFlag( sys, SYSTEM_PMARKED );
    }
 }
 
@@ -2477,12 +2482,12 @@ static void map_updateInternal( CstMapWidget *cst, double dt )
    double mapmin = 1. - map_minimal_mode;
 
 #define AMAX( x ) ( x ) = MIN( 1., ( x ) + dt )
-#define AMIN( x ) ( x ) = MAX( 0., (x)-dt )
+#define AMIN( x ) ( x ) = MAX( 0., ( x ) - dt )
 #define ATAR( x, y )                                                           \
    if ( ( x ) < y )                                                            \
       ( x ) = MIN( y, ( x ) + dt );                                            \
    else                                                                        \
-      ( x ) = MAX( y, (x)-dt )
+      ( x ) = MAX( y, ( x ) - dt )
    switch ( cst->mode ) {
    case MAPMODE_EDITOR: /* fall through */
    case MAPMODE_TRAVEL:

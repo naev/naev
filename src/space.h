@@ -429,6 +429,7 @@ void        systems_reconstructJumps( void );
 void        systems_reconstructSpobs( void );
 StarSystem *system_new( void );
 const char *system_name( const StarSystem *sys );
+const char *system_nameKnown( const StarSystem *sys );
 int         system_addSpob( StarSystem *sys, const char *spobname );
 int         system_rmSpob( StarSystem *sys, const char *spobname );
 int         system_addVirtualSpob( StarSystem *sys, const char *spobname );
