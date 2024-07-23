@@ -2144,8 +2144,8 @@ int spob_luaInit( Spob *spob )
       lua_pushvalue( naevL, -2 );                /* m, d, k, v, k, v */
       lua_remove( naevL, -3 );                   /* m, d, k, k, v */
       lua_settable( naevL, -5 );                 /* m, d, k */
-   }                                             /* m, d */
-   lua_pop( naevL, 2 );                          /* */
+   } /* m, d */
+   lua_pop( naevL, 2 ); /* */
 
    /* Run init if applicable. */
    if ( spob->lua_init != LUA_NOREF ) {
@@ -2890,6 +2890,13 @@ const char *system_name( const StarSystem *sys )
    if ( sys->display != NULL )
       return _( sys->display );
    return _( sys->name );
+}
+
+const char *system_nameKnown( const StarSystem *sys )
+{
+   if ( !sys_isKnown( sys ) )
+      return _( "Unknown" );
+   return system_name( sys );
 }
 
 /**
