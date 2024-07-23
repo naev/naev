@@ -1115,13 +1115,11 @@ int gl_printEndRaw( int *xo, int *yo, const glFont *ft_font, int width,
 
    if ( ft_font == NULL )
       ft_font = &gl_defFont;
-   glFontStash *stsh  = gl_fontGetStash( ft_font );
-   double       scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
-
-   y = 0.;
+   glFontStash *stsh = gl_fontGetStash( ft_font );
 
    /* Default to 1.5 line height. */
    int line_height = 1.5 * (double)ft_font->h;
+   y               = -line_height;
 
    /* Clears restoration. */
    gl_printRestoreClear();
@@ -1145,20 +1143,21 @@ int gl_printEndRaw( int *xo, int *yo, const glFont *ft_font, int width,
          }
          if ( ( s == 1 ) && ( ch != FONT_COLOUR_CODE ) ) {
             font_lastCol = gl_fontGetColour( ch ); /* Need non-NULL value. */
+            s            = 0;
             continue;
          }
 
          glFontGlyph *glyph      = gl_fontGetGlyph( stsh, ch );
          int          kern_adv_x = gl_fontKernGlyph( stsh, ch, glyph );
 
-         x += ( glyph->adv_x + kern_adv_x ) / scale;
+         x += glyph->adv_x + kern_adv_x;
       }
 
-      y -= line_height; /* move position down */
+      y += line_height; /* move position down */
    }
 
    *xo = round( x );
-   *yo = round( y );
+   *yo = round( MAX( y, 0 ) );
 
    return 0;
 }
