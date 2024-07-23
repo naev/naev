@@ -1095,6 +1095,101 @@ int gl_printHeight( const glFont *ft_font, const int width, const char *fmt,
 }
 
 /**
+ * @brief Gets the position at which text would end writing.
+ *
+ *    @param[out] xo X value it ended writing at.
+ *    @param[out] yo Y value it ended writing at.
+ *    @param ft_font Font to use.
+ *    @param width Width to fit to.
+ *    @param text Text to calculate length of.
+ *    @return 0 on success;
+ */
+int gl_printEndRaw( int *xo, int *yo, const glFont *ft_font, int width,
+                    const char *text )
+{
+   glPrintLineIterator iter;
+   int                 s;
+   double              x, y;
+   uint32_t            ch;
+   NTracingZone( _ctx, 1 );
+
+   if ( ft_font == NULL )
+      ft_font = &gl_defFont;
+   glFontStash *stsh  = gl_fontGetStash( ft_font );
+   double       scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
+
+   y = 0.;
+
+   /* Default to 1.5 line height. */
+   int line_height = 1.5 * (double)ft_font->h;
+
+   /* Clears restoration. */
+   gl_printRestoreClear();
+
+   s = 0;
+   gl_printLineIteratorInit( &iter, ft_font, text, width );
+   while ( gl_printLineIteratorNext( &iter ) ) {
+      /* Must restore stuff. */
+      gl_printRestoreLast();
+
+      /* Start counting. */
+      x = 0;
+      gl_fontKernStart();
+      for ( size_t i = iter.l_begin; i < iter.l_end; ) {
+         ch = u8_nextchar( text, &i );
+
+         /* Handle escape sequences. */
+         if ( ( ch == FONT_COLOUR_CODE ) && ( s == 0 ) ) { /* Start sequence. */
+            s = 1;
+            continue;
+         }
+         if ( ( s == 1 ) && ( ch != FONT_COLOUR_CODE ) ) {
+            font_lastCol = gl_fontGetColour( ch ); /* Need non-NULL value. */
+            continue;
+         }
+
+         glFontGlyph *glyph      = gl_fontGetGlyph( stsh, ch );
+         int          kern_adv_x = gl_fontKernGlyph( stsh, ch, glyph );
+
+         x += ( glyph->adv_x + kern_adv_x ) / scale;
+      }
+
+      y -= line_height; /* move position down */
+   }
+
+   *xo = round( x );
+   *yo = round( y );
+
+   return 0;
+}
+
+/**
+ * @brief Gets the position at which text would end writing.
+ *
+ *    @param[out] x X value it ended writing at.
+ *    @param[out] y Y value it ended writing at.
+ *    @param ft_font Font to use.
+ *    @param width Width to fit to.
+ *    @param fmt Text to calculate length of.
+ *    @return 0 on success;
+ */
+PRINTF_FORMAT( 5, 6 )
+int gl_printEnd( int *x, int *y, const glFont *ft_font, int width,
+                 const char *fmt, ... )
+{
+   if ( fmt == NULL )
+      return -1;
+
+   char    text[STRMAX_SHORT]; /* holds the string */
+   va_list ap;
+   va_start( ap, fmt );
+   vsnprintf( text, sizeof( text ), fmt, ap );
+   va_end( ap );
+
+   return gl_printEndRaw( x, y, ft_font, width, text );
+}
+
+/**
  * @brief Gets the number of lines of a non-formatted string.
  *
  * Does not display the text on screen.

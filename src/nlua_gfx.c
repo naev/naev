@@ -45,6 +45,7 @@ static int gfxL_clearDepth( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
 /* TODO get rid of printDim and print in favour of printfDim and printf */
 static int gfxL_printfDim( lua_State *L );
+static int gfxL_printfEnd( lua_State *L );
 static int gfxL_printfWrap( lua_State *L );
 static int gfxL_printRestoreClear( lua_State *L );
 static int gfxL_printRestoreLast( lua_State *L );
@@ -80,6 +81,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "clearDepth", gfxL_clearDepth },
    { "fontSize", gfxL_fontSize },
    { "printfDim", gfxL_printfDim },
+   { "printfEnd", gfxL_printfEnd },
    { "printfWrap", gfxL_printfWrap },
    { "printRestoreClear", gfxL_printRestoreClear },
    { "printRestoreLast", gfxL_printRestoreLast },
@@ -670,9 +672,9 @@ static int gfxL_fontSize( lua_State *L )
  */
 static int gfxL_printDim( lua_State *L )
 {
-   const char *str;
-   int         width;
-   glFont     *font;
+   const char   *str;
+   int           width;
+   const glFont *font;
 
    /* Parse parameters. */
    font  = lua_toboolean( L, 1 ) ? &gl_smallFont : &gl_defFont;
@@ -694,13 +696,14 @@ static int gfxL_printDim( lua_State *L )
  *    @luatparam string str Text to calculate length of.
  *    @luatparam[opt] int width Optional parameter to indicate it is a block of
  * text and to use this width.
+ *    @luatreturn number The width or height (if width is not set) of the text.
  * @luafunc printfDim
  */
 static int gfxL_printfDim( lua_State *L )
 {
-   const char *str;
-   int         width;
-   glFont     *font;
+   const char   *str;
+   int           width;
+   const glFont *font;
 
    /* Parse parameters. */
    font  = luaL_checkfont( L, 1 );
@@ -713,6 +716,36 @@ static int gfxL_printfDim( lua_State *L )
    else
       lua_pushnumber( L, gl_printHeightRaw( font, width, str ) );
    return 1;
+}
+
+/**
+ * @brief Gets the position at which text would end printing. Can be the middle
+ * of a line.
+ *
+ *    @luatparam font font Font to use.
+ *    @luatparam string str Text to calculate length of.
+ *    @luatparam int width Maximum width to use for the text.
+ *    @luatreturn number The x coordinate it ended printing at.
+ *    @luatreturn number The y coordinate it ended up printing at.
+ * @luafunc printfEnd
+ */
+static int gfxL_printfEnd( lua_State *L )
+{
+   const char   *str;
+   int           width;
+   const glFont *font;
+   int           x, y;
+
+   /* Parse parameters. */
+   font  = luaL_checkfont( L, 1 );
+   str   = luaL_checkstring( L, 2 );
+   width = luaL_checkinteger( L, 3 );
+
+   /* Print length. */
+   gl_printEndRaw( &x, &y, font, width, str );
+   lua_pushinteger( L, x );
+   lua_pushinteger( L, y );
+   return 2;
 }
 
 /**
