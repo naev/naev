@@ -912,11 +912,11 @@ static int gfxL_printH( lua_State *L )
  */
 static int gfxL_print( lua_State *L )
 {
-   glFont     *font;
-   const char *str;
-   double      x, y;
-   glColour   *col;
-   int         max, mid;
+   glFont         *font;
+   const char     *str;
+   double          x, y;
+   const glColour *col;
+   int             max, mid;
 
    /* Parse parameters. */
    font = lua_toboolean( L, 1 ) ? &gl_smallFont : &gl_defFont;

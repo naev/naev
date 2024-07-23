@@ -1353,7 +1353,7 @@ static void gl_fontRenderStartH( const glFontStash *stsh, const mat4 *H,
    /* Handle colour. */
    a = ( c == NULL ) ? 1. : c->a;
    if ( font_restoreLast )
-      col = font_lastCol;
+      col = ( font_lastCol == NULL ) ? &cWhite : font_lastCol;
    else if ( c == NULL )
       col = &cWhite;
    else
