@@ -210,15 +210,18 @@ local function _checkbounds( l, mx, my )
    return not (mx < l.x1 or mx > l.x2 or my < l.y1 or my > l.y2)
 end
 function Markdown:mmoved( mx, my )
-   luatk.rerender()
    for k,l in ipairs(self.links) do
+      local m = l.mouseover
       l.mouseover = _checkbounds( l, mx, my )
+      if m ~= l.mouseover then
+         luatk.rerender()
+      end
    end
 end
 function Markdown:pressed( mx, my )
-   luatk.rerender()
    for k,l in ipairs(self.links) do
       if _checkbounds( l, mx, my ) and self.linkfunc then
+         luatk.rerender()
          self.linkfunc( l.target )
       end
    end
