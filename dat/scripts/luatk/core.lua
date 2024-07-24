@@ -156,6 +156,12 @@ function luatk.close ()
    end
 end
 --[[--
+Forces the toolkit to rerender.
+--]]
+function luatk.rerender ()
+   luatk._dirty = true
+end
+--[[--
 Sets the default font to use for the toolkit.
 
    @tparam font Font to set as default.
@@ -181,6 +187,7 @@ function luatk.draw()
          wdw:draw()
       end
       lg.setCanvas( c )
+      luatk._dirty = false
    end
 
    lg.setBlendMode( "alpha", "premultiplied" )
@@ -388,6 +395,7 @@ function luatk.newWindow( x, y, w, h )
    local wdw = { x=x, y=y, w=w, h=h, _widgets={} }
    setmetatable( wdw, Window_mt )
    table.insert( luatk._windows, wdw )
+   luatk._dirty = true
    return wdw
 end
 function luatk.Window:draw()
@@ -448,6 +456,7 @@ Destroys a window.
 function luatk.Window:destroy()
    for k,w in ipairs(luatk._windows) do
       if w==self then
+         luatk._dirty = true
          table.remove(luatk._windows,k)
          return
       end
@@ -509,11 +518,13 @@ function luatk.newWidget( parent, x, y, w, h )
    local wgt = { parent=parent, x=x, y=y, w=w, h=h }
    setmetatable( wgt, luatk.Widget_mt )
    table.insert( parent._widgets, wgt )
+   luatk._dirty = true
    return wgt
 end
 function luatk.Widget:destroy()
    for k,w in ipairs(self.parent._widgets) do
       if w==self then
+         luatk._dirty = true
          table.remove(self.parent._widgets,k)
          return
       end
@@ -603,6 +614,7 @@ function luatk.Button:clicked()
    end
    if self.handler then
       self.handler(self)
+      luatk._dirty = true
       return true
    end
    return false
@@ -611,24 +623,33 @@ end
 Enables a button widget.
 --]]
 function luatk.Button:enable()
+   luatk._dirty = true
    self.disabled = false
 end
 --[[--
 Disables a button widget.
 --]]
 function luatk.Button:disable()
+   luatk._dirty = true
    self.disabled = true
 end
 --[[--
 Sets the alt text of a button.
 --]]
 function luatk.Button:setAlt( alt )
+   luatk._dirty = true
    self.alt = alt
 end
 function luatk.Button:getCol () return self.col end
-function luatk.Button:setCol( col ) self.col = col end
+function luatk.Button:setCol( col )
+   luatk._dirty = true
+   self.col = col
+end
 function luatk.Button:getFCol () return self.fcol end
-function luatk.Button:setFCol( col ) self.fcol = col end
+function luatk.Button:setFCol( col )
+   luatk._dirty = true
+   self.fcol = col
+end
 
 --[[
 -- Text widget
@@ -665,6 +686,7 @@ Changes the text of the text widget.
    @tparam string text Text to set widget to.
 --]]
 function luatk.Text:set( text )
+   luatk._dirty = true
    self.text = text
 end
 --[[--
@@ -782,13 +804,17 @@ function luatk.Checkbox:draw( bx, by )
    lg.printf( self.text, self.font, bx+15, by+(h-self.fonth)*0.5, w-15 )
 end
 function luatk.Checkbox:clicked()
+   luatk._dirty = true
    self.state = not self.state
    if self.handler then
       self.handler(self)
    end
 end
 function luatk.Checkbox:get() return self.state end
-function luatk.Checkbox:set( state ) self.state = state end
+function luatk.Checkbox:set( state )
+   luatk._dirty = true
+   self.state = state
+end
 
 --[[
 -- Fader widget
@@ -855,6 +881,7 @@ function luatk.Fader:draw( bx, by )
    end
 end
 function luatk.Fader:pressed( mx, _my )
+   luatk._dirty = true
    self:set( self.min + (mx / self.w) * self.max )
 end
 function luatk.Fader:mmoved( mx, my )
@@ -866,6 +893,7 @@ function luatk.Fader:get()
    return self.val
 end
 function luatk.Fader:set( val, no_handler )
+   luatk._dirty = true
    self.val = math.max( self.min, math.min( self.max, val ) )
    if not no_handler then
       self.handler( self, self.val )
@@ -944,6 +972,7 @@ function luatk.List:draw( bx, by )
    end
 end
 function luatk.List:pressed( mx, my )
+   luatk._dirty = true
    if self.scrolls and mx > self.w-12 then
       self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
       return
@@ -961,6 +990,7 @@ function luatk.List:get()
    return self.items[ self.selected ], self.selected
 end
 function luatk.List:set( idx, no_handler )
+   luatk._dirty = true
    self.selected = math.max( 1, math.min( idx, #self.items ) )
    if not no_handler then
       self.onselect( self:get() )
@@ -974,6 +1004,7 @@ function luatk.List:setItem( itm, no_handler )
    end
 end
 function luatk.List:setPos( pos )
+   luatk._dirty = true
    self.pos = pos * self.scrollh
    self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
 end
@@ -1004,13 +1035,20 @@ function luatk.newInput( parent, x, y, w, h, max, params )
    end
    wgt.cursor = 0
    wgt.timer = 0
+   wgt.blink = true
    return wgt
 end
 function luatk.Input:focus ()
+   luatk._dirty = true
    lk.setTextInput( true, self.parent.x+self.x, self.parent.y+self.y, self.w, self.h )
 end
 function luatk.Input:update( dt )
    self.timer = self.timer + dt
+   local b = self.blink
+   self.blink = (math.fmod( math.floor(self.timer*1.1), 2 )==0)
+   if self.blink ~= b then
+      luatk._dirty = true
+   end
 end
 function luatk.Input:draw( bx, by )
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
@@ -1047,6 +1085,7 @@ function luatk.Input:get ()
    return self.str
 end
 function luatk.Input:_addStr( str )
+   luatk._dirty = true
    local head = utf8.sub( self.str, 1, self.cursor )
    local tail = utf8.sub( self.str, self.cursor+1, utf8.len(self.str) )
    local body = ""
@@ -1066,10 +1105,12 @@ function luatk.Input:_addStr( str )
    self.str = utf8.sub( head..body..tail, 1, self.max )
 end
 function luatk.Input:set( str )
+   luatk._dirty = true
    self.str = ""
    self:_addStr( str )
 end
 function luatk.Input:keypressed( key )
+   luatk._dirty = true
    if key == "backspace" then
       local l = utf8.len(self.str)
       if l > 0 then
@@ -1093,6 +1134,7 @@ function luatk.Input:keypressed( key )
    return true
 end
 function luatk.Input:textinput( str )
+   luatk._dirty = true
    self.str = self.str or ""
    self:_addStr( str )
    return true

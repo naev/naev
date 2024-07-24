@@ -132,6 +132,7 @@ function Map:center( pos, hardset )
    end
 end
 function Map:update( dt )
+   luatk.rerender() -- Fully animated, so draw every frame
    if (self.pos - self.target):dist2() > 1e-3 then
       local mod, dir = (self.target - self.pos):polar()
       self.pos = self.pos + vec2.newP( math.min(mod,self.speed*dt), dir )
