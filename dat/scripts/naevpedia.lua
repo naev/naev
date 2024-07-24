@@ -69,6 +69,7 @@ function naevpedia.open( name )
          mrk:destroy()
       end
 
+      -- Load the document
       local doc = loaddoc( filename )
 
       -- Create widget
@@ -87,6 +88,9 @@ function naevpedia.open( name )
             open_page( newdoc )
          end,
       } )
+
+      -- Clean up the document
+      cmark.node_free( doc )
    end
    open_page( name )
    luatk.run()
