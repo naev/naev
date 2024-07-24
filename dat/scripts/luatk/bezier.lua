@@ -44,6 +44,7 @@ function Bezier:draw( bx, by )
    lg.pop()
 end
 function Bezier:set( curves )
+   luatk.rerender()
    curves = curves or {}
 
    -- Generate the points from the curves
