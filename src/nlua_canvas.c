@@ -130,6 +130,8 @@ static int canvasL_gc( lua_State *L )
    const LuaCanvas_t *lc = luaL_checkcanvas( L, 1 );
    glDeleteFramebuffers( 1, &lc->fbo );
    gl_freeTexture( lc->tex );
+   if ( lc->depth != 0 )
+      glDeleteTextures( 1, &lc->depth );
    gl_checkErr();
    return 0;
 }
@@ -144,9 +146,8 @@ static int canvasL_gc( lua_State *L )
  */
 static int canvasL_eq( lua_State *L )
 {
-   LuaCanvas_t *c1, *c2;
-   c1 = luaL_checkcanvas( L, 1 );
-   c2 = luaL_checkcanvas( L, 2 );
+   LuaCanvas_t *c1 = luaL_checkcanvas( L, 1 );
+   LuaCanvas_t *c2 = luaL_checkcanvas( L, 2 );
    lua_pushboolean( L, ( memcmp( c1, c2, sizeof( LuaCanvas_t ) ) == 0 ) );
    return 1;
 }
@@ -184,6 +185,8 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
  *
  *    @luatparam number width Width of the new canvas.
  *    @luatparam number height Height of the new canvas.
+ *    @luatparam[opt=false] boolean depth Whether or not to add a depth channel
+ * to the canvas.
  *    @luatreturn Canvas New canvas object.
  * @luafunc new
  */
@@ -191,11 +194,14 @@ static int canvasL_new( lua_State *L )
 {
    LuaCanvas_t lc;
 
-   int w = luaL_checkint( L, 1 );
-   int h = luaL_checkint( L, 2 );
+   int w     = luaL_checkint( L, 1 );
+   int h     = luaL_checkint( L, 2 );
+   int depth = lua_toboolean( L, 3 );
 
    if ( canvas_new( &lc, w, h ) )
       return NLUA_ERROR( L, _( "Error setting up framebuffer!" ) );
+   if ( depth )
+      gl_fboAddDepth( lc.fbo, &lc.depth, w, h );
    lua_pushcanvas( L, lc );
    return 1;
 }

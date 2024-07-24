@@ -90,9 +90,9 @@ local function _setdefaults()
    vn._default._options_over = false
    vn._default._show_options = false
    -- These are implicitly dependent on lw, lh, so should be recalculated with the above.
-   vn._canvas     = graphics.newCanvas()
-   vn._prevcanvas = graphics.newCanvas()
-   vn._curcanvas  = graphics.newCanvas()
+   vn._canvas     = graphics.newCanvas( nil, nil, {depth=true} ) -- give depth
+   vn._prevcanvas = graphics.newCanvas( nil, nil, {depth=true} )
+   vn._curcanvas  = graphics.newCanvas( nil, nil, {depth=true} )
    -- Empty canvas used for some transitions
    vn._emptycanvas = graphics.newCanvas()
    local oldcanvas = graphics.getCanvas()

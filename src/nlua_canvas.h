@@ -3,10 +3,6 @@
  */
 #pragma once
 
-/** @cond */
-#include "SDL.h"
-/** @endcond */
-
 #include "nlua.h"
 
 #include "opengl.h"
@@ -17,8 +13,9 @@
  * @brief Wrapper to canvass.
  */
 typedef struct LuaCanvas_s {
-   GLuint     fbo; /**< Frame buffer object. */
-   glTexture *tex; /**< Texture object. */
+   GLuint     fbo;   /**< Frame buffer object. */
+   glTexture *tex;   /**< Texture object. */
+   GLuint     depth; /**< Depth texture if applicable. */
 } LuaCanvas_t;
 
 /*

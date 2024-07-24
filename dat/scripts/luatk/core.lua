@@ -67,7 +67,7 @@ function luatk.run ()
    local o = f:getOutline()
    f:setOutline(1)
    luatk._love = true
-   luatk._canvas = lg.newCanvas() -- Should default fullscreen
+   luatk._canvas = lg.newCanvas( nil, nil, {depth=true} ) -- Should default fullscreen, but we add depth channel
    luatk._dirty = true
    love.exec( 'scripts/luatk' )  -- luacheck: ignore
    luatk._canvas = nil -- Clean up
