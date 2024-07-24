@@ -352,6 +352,7 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
       /* Render the model. */
       ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, glow,
                                 t, &cWhite, &L, &H, 0, OPENGL_TEX_VFLIP );
+      /* Already restore current framebuffer. */
    } else if ( s->gfx_comm != NULL ) {
       glTexture *glcomm;
       double     scale, w, h, tx, ty;
@@ -370,9 +371,9 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
                         tx, ty, glcomm->srw, glcomm->srh, NULL, 0. );
 
       gl_freeTexture( glcomm );
-   }
 
-   glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+   }
 }
 
 /**
@@ -1403,6 +1404,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
 
       ship_renderFramebuffer3D( s, fbo, s->size, fw, fh, engine_glow, t, c, L,
                                 &H, 1, 0 );
+      /* Already restore current framebuffer. */
    } else {
       double           tx, ty;
       const glTexture *sa, *sb;
