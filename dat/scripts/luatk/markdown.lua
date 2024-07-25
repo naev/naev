@@ -5,7 +5,7 @@ local cmark = require "cmark"
 
 local luatk_markdown = {}
 
-local function nodestr( node_type )
+local function _nodestr( node_type )
    local types = {
       [cmark.NODE_DOCUMENT] = "DOCUMENT",
       [cmark.NODE_BLOCK_QUOTE] = "BLOCK_QUOTE",
@@ -72,7 +72,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local listn
    local linkx, linky
    for cur, entering, node_type in cmark.walk(doc) do
-      print( string.format("%s [%s]", nodestr(node_type), tostring(entering) ) )
+      --print( string.format("%s [%s]", _nodestr(node_type), tostring(entering) ) )
       if node_type == cmark.NODE_PARAGRAPH then
          if not entering then
             block_end()
