@@ -78,7 +78,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local listn
    local linkx, linky
    for cur, entering, node_type in cmark.walk(doc) do
-      --print( string.format("%s [%s]", _nodestr(node_type), tostring(entering) ) )
+      --print( string.format("%s - %s [%s]", _nodestr(node_type), cmark.node_get_type_string(cur), tostring(entering) ) )
       if node_type == cmark.NODE_PARAGRAPH then
          if not entering then
             block_end()
@@ -179,13 +179,32 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
             listn = listn + 1
          end
       elseif node_type == cmark.NODE_FIRST_INLINE or node_type == cmark.NODE_LAST_INLINE then
-         local str = cmark.node_get_literal(cur)
-         if str then
-            block.text = block.text .. _(str)
+         local str_type = cmark.node_get_type_string(cur)
+         if str_type == "text" and entering then
+            block.text = block.text .. _(cmark.node_get_literal(cur))
+         elseif str_type == "image" then
+            if not entering then
+               local img = lg.newImage( cmark.node_get_url(cur) )
+               local iw, ih = img:getDimensions()
+               local sx, sy = 1, 1
+               if iw > w then
+                  sx = w / iw
+                  sy = sx
+               end
+               local imgblock = {
+                  x = 0,
+                  y = ty,
+                  w = iw,
+                  h = ih,
+                  sx = sx,
+                  sy = sy,
+                  img = img,
+               }
+               table.insert( wgt.blocks, imgblock )
+               ty = ty +ih
+               block.y = ty
+            end
          end
-      elseif node_type == cmark.NODE_IMAGE then
-         print("IMAGE")
-         print( cmark.node_get_url(cur) )
       end
       --print( cmark.node_get_url(cur) )
       --print( cmark.node_get_literal(cur) )
@@ -233,7 +252,11 @@ function Markdown:draw( wx, wy )
    lg.setColour( 1, 1, 1 )
    for k,b in ipairs(self.blocks) do
       local bx, by = x+b.x, y+b.y
-      lg.printf( b.text, b.font, bx, by, w, "left" )
+      if b.text then
+         lg.printf( b.text, b.font, bx, by, w, "left" )
+      elseif b.img then
+         b.img:draw( bx, by, 0, b.sx, b.sy )
+      end
    end
 
    lg.setScissor( scs )
