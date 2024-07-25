@@ -28,7 +28,8 @@ lyaml_lua = files(
 )
 
 deps = []
-deps += dependency('yaml-0.1', fallback: ['yaml_dep'], required: true )
+#deps += dependency('yaml-0.1', fallback: ['yaml_dep'], required: true )
+deps += dependency('yaml-0.1')
 
 useLuaJIT = get_option('luajit')
 lua = dependency('', required: false)
