@@ -109,7 +109,6 @@ int main (void) { return 0; }''')
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
    cmark = dependency('libcmark', required: true, version: '>=0.29.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
    yaml = dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'))
-   lyaml = subproject('lyaml').get_variable('lyaml_dep')
 
    # TODO replace nfd with SDL3 native functions when possible
    nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: true)
@@ -132,7 +131,6 @@ int main (void) { return 0; }''')
    naev_deps += [
       cmark,
       yaml,
-      lyaml,
       enet,
       dependency('freetype2', required: true),
       libunibreak,
@@ -159,6 +157,10 @@ int main (void) { return 0; }''')
    endif
 
    naev_deps += lua
+
+   # Lua Libraries
+   lyaml = subproject('lyaml').get_variable('lyaml_dep')
+   naev_deps += [lyaml]
 
    # Linear Algebra
    use_system_glpk = ('glpk' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
