@@ -118,6 +118,7 @@ function naevpedia.open( name )
    name = name or "index"
 
    local history = {}
+   local historyrev = {}
    local current = "index"
 
    -- Set up the window
@@ -127,18 +128,34 @@ function naevpedia.open( name )
    luatk.newText( wdw, 0, 10, w, 20, _("Naevpedia"), nil, "center" )
    luatk.newButton( wdw, -20, -20, 80, 30, _("Close"), luatk.close )
 
-
-
-   -- Backbutton
-   local btnback = luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Back"), function ( self )
+   local btnback, btnfwd
+   local function goback ()
       local n = #history
+      table.insert( historyrev, current )
       current = history[n]
       history[n] = nil
       open_page( current )
       if #history <= 0 then
-         self:disable()
+         btnback:disable()
+         btnfwd:enable()
       end
-   end )
+   end
+   local function gofwd ()
+      local n = #historyrev
+      table.insert( history, current )
+      current = historyrev[n]
+      historyrev[n] = nil
+      open_page( current )
+      if #historyrev <= 0 then
+         btnfwd:disable()
+         btnback:enable()
+      end
+   end
+
+   -- Backbutton
+   btnfwd = luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Forward"), gofwd )
+   btnfwd:disable()
+   btnback = luatk.newButton( wdw, -20-(80+20)*2, -20, 80, 30, _("Back"), goback )
    btnback:disable()
    local mrk
    function open_page( filename )
@@ -168,6 +185,9 @@ function naevpedia.open( name )
                current = target
                mrk:destroy()
                open_page( newdoc )
+               -- Clear forward history
+               historyrev = {}
+               btnfwd:disable()
             end,
          } )
 
@@ -176,6 +196,17 @@ function naevpedia.open( name )
       end
    end
    open_page( name )
+   wdw:setCancel( function ()
+      wdw:destroy()
+      return true
+   end )
+   wdw:setKeypress( function ( key )
+      if key=="left" then
+         goback()
+      elseif key=="right" then
+         gofwd()
+      end
+   end )
    luatk.run()
 end
 

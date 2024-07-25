@@ -284,9 +284,9 @@ function Markdown:setPos( pos )
 end
 function Markdown:wheelmoved( _mx, my )
    if my > 0 then
-      self:setPos( (self.pos + 50) / self.scrollh )
-   elseif my < 0 then
       self:setPos( (self.pos - 50) / self.scrollh )
+   elseif my < 0 then
+      self:setPos( (self.pos + 50) / self.scrollh )
    end
 end
 
