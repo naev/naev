@@ -154,9 +154,13 @@ function naevpedia.open( name )
 
    -- Backbutton
    btnfwd = luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Forward"), gofwd )
-   btnfwd:disable()
+   if #historyrev <= 0 then
+      btnfwd:disable()
+   end
    btnback = luatk.newButton( wdw, -20-(80+20)*2, -20, 80, 30, _("Back"), goback )
-   btnback:disable()
+   if #history <= 0 then
+      btnback:disable()
+   end
    local mrk
    function open_page( filename )
       if mrk then
