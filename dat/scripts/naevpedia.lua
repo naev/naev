@@ -7,6 +7,20 @@ local fmt = require "format"
 
 local naevpedia = {}
 
+--[[--
+Pulls out the metadata header of the naevpedia file.
+--]]
+local function extractmetadata( s )
+   local meta = {}
+   if string.find( s, "---\n", 1, true )==1 then
+      local es, ee = string.find( s, "---\n", 4, true )
+      meta = lyaml.load( string.sub( s, 4, es-1 ) )
+      s = string.sub( s, ee+1 )
+   end
+   return s, meta
+end
+
+-- Load into the cache to avoid having to slurp all the files all the time
 local nc = naev.cache()
 function naevpedia.load()
    local mds = {}
@@ -21,7 +35,9 @@ function naevpedia.load()
             if i.type == "file" then
                local suffix = string.sub(f, -3)
                if suffix=='.md' then
-                  mds[ string.sub( f, 1, -4 ) ] = true
+                  local dat = lf.read( 'naevpedia/'..f )
+                  local _s, meta = extractmetadata( dat )
+                  mds[ string.sub( f, 1, -4 ) ] = meta
                end
             elseif i.type == "directory" then
                find_md( f )
@@ -35,19 +51,6 @@ end
 -- See if we have to load the naevpedia, since we want to cache it for speed
 if not nc._naevpedia then
    naevpedia.load()
-end
-
---[[--
-Pulls out the metadata header of the naevpedia file.
---]]
-local function extractmetadata( s )
-   local meta = {}
-   if string.find( s, "---\n", 1, true )==1 then
-      local es, ee = string.find( s, "---\n", 4, true )
-      meta = lyaml.load( string.sub( s, 4, es-1 ) )
-      s = string.sub( s, ee+1 )
-   end
-   return s, meta
 end
 
 --[[--
