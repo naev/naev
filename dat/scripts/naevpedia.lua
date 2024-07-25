@@ -120,11 +120,16 @@ function naevpedia.open( name )
    local history = {}
    local current = "index"
 
+   -- Set up the window
    local open_page
-   local w, h = 640, 480
+   local w, h = naev.gfx.dim()
    local wdw = luatk.newWindow( nil, nil, w, h )
    luatk.newText( wdw, 0, 10, w, 20, _("Naevpedia"), nil, "center" )
    luatk.newButton( wdw, -20, -20, 80, 30, _("Close"), luatk.close )
+
+
+
+   -- Backbutton
    local btnback = luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Back"), function ( self )
       local n = #history
       current = history[n]
