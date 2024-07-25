@@ -560,6 +560,7 @@ function bioship.window ()
          if skill_enable( pp, s ) then
             skillpoints = skillpoints-1
             skill_text()
+            luatk.rerender()
          end
       end
    end

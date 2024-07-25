@@ -223,10 +223,14 @@ function wgtBoard.new( parent, x, y, w, h, loot )
 end
 function wgtBoard:update( dt )
    dt = dt * 5
+   local a = self.selalpha
    if self.selected then
       self.selalpha = math.min( 1, self.selalpha + dt )
    else
       self.selalpha = math.max( 0, self.selalpha - dt )
+   end
+   if self.selalpha ~= a then
+      luatk.rerender()
    end
 end
 function wgtBoard:draw( bx, by )
@@ -280,8 +284,10 @@ function wgtBoard:clicked( _mx, _my, btn )
    if not self.loot then return end
 
    if btn==1 then
+      luatk.rerender()
       self.selected = not self.selected
    elseif btn==2 then
+      luatk.rerender()
       board_lootOne( self )
    end
 end
