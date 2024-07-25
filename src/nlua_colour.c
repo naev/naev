@@ -185,8 +185,7 @@ static int colL_tostring( lua_State *L )
  */
 static int colL_new( lua_State *L )
 {
-   glColour        col;
-   const glColour *col2;
+   glColour col;
 
    if ( lua_gettop( L ) == 0 ) {
       col.r = col.g = col.b = col.a = 1.;
@@ -196,7 +195,7 @@ static int colL_new( lua_State *L )
       col.b = gammaToLinear( luaL_checknumber( L, 3 ) );
       col.a = luaL_optnumber( L, 4, 1. );
    } else if ( lua_isstring( L, 1 ) ) {
-      col2 = col_fromName( lua_tostring( L, 1 ) );
+      const glColour *col2 = col_fromName( lua_tostring( L, 1 ) );
       if ( col2 == NULL )
          return NLUA_ERROR( L, _( "Colour '%s' does not exist!" ),
                             lua_tostring( L, 1 ) );
