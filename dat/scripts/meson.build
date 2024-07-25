@@ -20,3 +20,5 @@ lua_source = files(
    'vn/core.lua',
    'vntk.lua',
 )
+
+subdir('lyaml')

@@ -111,9 +111,6 @@ int main (void) { return 0; }''')
    yaml = dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'))
    lyaml = subproject('lyaml').get_variable('lyaml_dep')
 
-   #foreach file: subproject('lyaml').get_variable('lyaml_lua')
-   #   fs.copyfile( file, join_paths('dat','scripts') )
-   #endforeach
    # TODO replace nfd with SDL3 native functions when possible
    nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: true)
 
@@ -436,7 +433,7 @@ int main (void) { return 0; }''')
       'dat',
       install_dir: ndata_path,
       # Parts of dat/ are used as inputs to custom build targets, which generate the final installed versions.
-      exclude_files: ['AUTHORS', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build'],
+      exclude_files: ['AUTHORS', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build', 'scripts/lyaml/meson.build', ],
       exclude_directories: 'outfits/bioship/templates',
    )
 
