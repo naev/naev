@@ -20,6 +20,7 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    options = options or {}
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, Map_mt )
+   wgt.type    = "map"
 
    local sysname = {} -- To do quick look ups
    wgt.sys = {}

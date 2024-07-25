@@ -21,6 +21,8 @@ local luatk = {
       dark     = { 0.05, 0.05, 0.05 },
       text     = { 0.95, 0.95, 0.95 },
       selected = { 0.3,  0.3,  0.3  },
+      focus    = { 0.3,  0.3,  0.3  },
+      focusbtn = { 0.7,  0.7,  0.7  },
    },
    button = {
       colour = {
@@ -229,6 +231,7 @@ function luatk.mousepressed( mx, my, button )
    for _k,wgt in ipairs(wdw._widgets) do
       if _checkbounds(wgt,x,y) then
          wgt._pressed = true
+         wdw:setFocus( wgt )
          if wgt.pressed and wgt:pressed( x-wgt.x, y-wgt.y, button ) then
             luatk._dirty = true
             return true
@@ -411,6 +414,7 @@ function luatk.newWindow( x, y, w, h )
    local wdw = { x=x, y=y, w=w, h=h, _widgets={} }
    setmetatable( wdw, Window_mt )
    table.insert( luatk._windows, wdw )
+   wdw.type = "window"
    luatk._dirty = true
    return wdw
 end
@@ -436,6 +440,14 @@ function luatk.Window:draw()
    -- Draw widgets ontop
    for _k,wgt in ipairs(self._widgets) do
       wgt:draw( x, y )
+      if self.focused == wgt then
+         if wgt.type == "button" then
+            lg.setColour( luatk.colour.focusbtn )
+         else
+            lg.setColour( luatk.colour.focus )
+         end
+         lg.rectangle( "line", x+wgt.x-2, y+wgt.y-2, wgt.w+4, wgt.h+4 )
+      end
    end
 
    -- Restore scissors
@@ -514,6 +526,17 @@ Gets the dimensions of the window.
 function luatk.Window:getDimensions()
    return self.w, self.h
 end
+--[[--
+Sets the focused widget of a window.
+
+   @tparam Widget Widget to focus.
+--]]
+function luatk.Window:setFocus( wgt )
+   if wgt ~= self.focused then
+      luatk._dirty = true
+   end
+   self.focused = wgt
+end
 
 --[[
 -- Widget class
@@ -534,6 +557,7 @@ function luatk.newWidget( parent, x, y, w, h )
    local wgt = { parent=parent, x=x, y=y, w=w, h=h }
    setmetatable( wgt, luatk.Widget_mt )
    table.insert( parent._widgets, wgt )
+   wgt.type = "widget"
    luatk._dirty = true
    return wgt
 end
@@ -572,6 +596,7 @@ Creates a new button widget.
 function luatk.newButton( parent, x, y, w, h, text, handler )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Button_mt )
+   wgt.type = "button"
    if type(text)=="function" then
       wgt.render  = text
    else
@@ -685,6 +710,7 @@ Creates a new button widget.
 function luatk.newText( parent, x, y, w, h, text, col, align, font )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Text_mt )
+   wgt.type    = "text"
    wgt.text    = text
    wgt.col     = col or luatk.colour.text
    wgt.align   = align or "left"
@@ -743,6 +769,7 @@ luatk.Rect_mt = { __index = luatk.Rect }
 function luatk.newRect( parent, x, y, w, h, col, rot )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Rect_mt )
+   wgt.type    = "rect"
    wgt.col     = col or {1,1,1}
    wgt.rot     = rot
    return wgt
@@ -771,6 +798,7 @@ luatk.Image_mt = { __index = luatk.Image }
 function luatk.newImage( parent, x, y, w, h, img, col, rot )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Image_mt )
+   wgt.type    = "image"
    wgt.img     = img
    wgt.col     = col or {1,1,1}
    wgt.rot     = rot or 0
@@ -793,6 +821,7 @@ luatk.Checkbox_mt = { __index = luatk.Checkbox }
 function luatk.newCheckbox( parent, x, y, w, h, text, handler, default )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Checkbox_mt )
+   wgt.type    = "checkbox"
    wgt.text    = text
    wgt.handler = handler
    wgt.state   = (default==true)
@@ -841,15 +870,16 @@ luatk.Fader_mt = { __index = luatk.Fader }
 function luatk.newFader( parent, x, y, w, h, min, max, def, handler, params )
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Fader_mt )
-   params = params or {}
+   wgt.type    = "fader"
+   params      = params or {}
    wgt.handler = handler or function () end
-   wgt.min = min
-   wgt.max = max
-   wgt.range = max-min
-   def = def or (min+max)*0.5
-   wgt.val = math.min( math.max( def, min ), max )
-   wgt.params = params
-   wgt.font = params.font or luatk._deffont or lg.getFont()
+   wgt.min     = min
+   wgt.max     = max
+   wgt.range   = max-min
+   def         = def or (min+max)*0.5
+   wgt.val     = math.min( math.max( def, min ), max )
+   wgt.params  = params
+   wgt.font    = params.font or luatk._deffont or lg.getFont()
    return wgt
 end
 function luatk.Fader:draw( bx, by )
@@ -925,6 +955,7 @@ luatk.List_mt = { __index = luatk.List }
 function luatk.newList( parent, x, y, w, h, items, onselect, defitem )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.List_mt )
+   wgt.type    = "list"
    wgt.items   = items
    wgt.onselect= onselect or function () end
    wgt.selected= defitem or 1
@@ -1034,7 +1065,8 @@ luatk.Input_mt = { __index = luatk.Input }
 function luatk.newInput( parent, x, y, w, h, max, params )
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Input_mt )
-   params = params or {}
+   wgt.type    = "input"
+   params      = params or {}
    wgt.max     = max
    wgt.params  = params
    wgt.font    = params.font or luatk._deffont or lg.getFont()

@@ -43,6 +43,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    options = options or {}
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, Markdown_mt )
+   wgt.type    = "markdown"
 
    -- Modify for scrollbar
    w = w-12

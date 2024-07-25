@@ -22,6 +22,7 @@ local Bezier_mt = { __index = Bezier }
 function luatk_bezier.newBezier( parent, x, y, w, h, curves )
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, Bezier_mt )
+   wgt.type    = "bezier"
 
    wgt:set( curves )
 
