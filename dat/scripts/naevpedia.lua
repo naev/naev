@@ -59,6 +59,13 @@ Processes the Lua in the markdown file as nanoc does.
 <%= print('foo') %> statements get printed in the text, while <% if foo then %> get processed otherwise.
 --]]
 local function dolua( s )
+   -- Do early stopping if no Lua is detected
+   local ms, me = string.find( s, "<%", 1, true )
+   if not ms then
+      return true, s
+   end
+
+   -- Start up the Lua stuff
    local luastr = [[local out = ""
 local pr = _G.print
 local pro = function( str )
@@ -78,7 +85,6 @@ end
       end
    end
 
-   local ms, me = string.find( s, "<%", 1, true )
    local be = 1
    while ms do
       local bs
