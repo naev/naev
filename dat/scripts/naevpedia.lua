@@ -1,4 +1,5 @@
 local cmark = require "cmark"
+local lyaml = require "lyaml"
 local lf = require "love.filesystem"
 local luatk = require 'luatk'
 local md = require "luatk.markdown"
@@ -34,6 +35,19 @@ end
 -- See if we have to load the naevpedia, since we want to cache it for speed
 if not nc._naevpedia then
    naevpedia.load()
+end
+
+--[[--
+Pulls out the metadata header of the naevpedia file.
+--]]
+local function extractmetadata( s )
+   local meta = {}
+   if string.find( s, "---\n", 1, true )==1 then
+      local es, ee = string.find( s, "---\n", 4, true )
+      meta = lyaml.load( string.sub( s, 4, es-1 ) )
+      s = string.sub( s, ee+1 )
+   end
+   return s, meta
 end
 
 --[[--
@@ -100,18 +114,26 @@ end
 Parse document
 --]]
 local function loaddoc( filename )
+   local meta = {}
+
+   -- Load the file
    local rawdat = lf.read( 'naevpedia/'..filename..'.md' )
    if not rawdat then
       warn(fmt.f(_("File '{filename}' not found!"),{filename=filename}))
-      return false, fmt.f("#r".._("404\nfile '{filename}' not found"), {filename=filename})
+      return false, fmt.f("#r".._("404\nfile '{filename}' not found"), {filename=filename}), meta
    end
+
+   -- Extract metadata
+   rawdat, meta = extractmetadata( rawdat )
 
    -- Preprocess Lua
    local success, dat = dolua( rawdat )
    if not success then
-      return success, dat
+      return success, dat, meta
    end
-   return success, cmark.parse_string( dat, cmark.OPT_DEFAULT )
+
+   -- Finally parse the remaining text as markdown
+   return success, cmark.parse_string( dat, cmark.OPT_DEFAULT ), meta
 end
 
 function naevpedia.open( name )
