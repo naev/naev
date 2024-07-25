@@ -7,4 +7,4 @@
 #include <lua.h>
 /** @endcond */
 
-int luaopen_cmark( lua_State *L );
+int luaopen_yaml( lua_State *L );

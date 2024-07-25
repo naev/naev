@@ -22,6 +22,7 @@
 #include "log.h"
 #include "lua_enet.h"
 #include "lutf8lib.h"
+#include "lyaml.h"
 #include "ndata.h"
 #include "nlua_audio.h"
 #include "nlua_cli.h"
@@ -731,6 +732,8 @@ static int nlua_package_loader_c( lua_State *L )
       lua_pushcfunction( L, luaopen_enet );
    else if ( strcmp( name, "cmark" ) == 0 )
       lua_pushcfunction( L, luaopen_cmark );
+   else if ( strcmp( name, "yaml" ) == 0 )
+      lua_pushcfunction( L, luaopen_yaml );
    else
       lua_pushnil( L );
    return 1;

@@ -19,6 +19,9 @@ cc = meson.get_compiler('c')
 c_args = cc.get_supported_arguments(['-Wno-pedantic', '-Wshadow'])
 add_project_arguments(c_args, language: 'c')
 
+# Filesystem module for copying files
+fs = import('fs')
+
 # Python module checks (For AUTHORS generation and soundtrack generation)
 python_module = import('python')
 python = python_module.find_installation('python3', required: true)
@@ -105,6 +108,12 @@ int main (void) { return 0; }''')
    sdl_image = dependency('SDL2_image', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
    cmark = dependency('libcmark', required: true, version: '>=0.29.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
+   yaml = dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'))
+   lyaml = subproject('lyaml').get_variable('lyaml_dep')
+
+   #foreach file: subproject('lyaml').get_variable('lyaml_lua')
+   #   fs.copyfile( file, join_paths('dat','scripts') )
+   #endforeach
    # TODO replace nfd with SDL3 native functions when possible
    nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: true)
 
@@ -125,6 +134,8 @@ int main (void) { return 0; }''')
 
    naev_deps += [
       cmark,
+      yaml,
+      lyaml,
       enet,
       dependency('freetype2', required: true),
       libunibreak,

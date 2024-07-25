@@ -268,6 +268,7 @@ headers = files(
    'log.h',
    'lutf8lib.h',
    'lvar.h',
+   'lyaml.h',
    'map.h',
    'mapData.h',
    'map_find.h',

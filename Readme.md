@@ -52,6 +52,7 @@ graphics card and driver supporting at least OpenGL 3.2, Naev requires:
 * libunibreak (included)
 * pyyaml
 * cmark
+* libyaml
 
 ### DETAILS FOR YOUR OS
 
