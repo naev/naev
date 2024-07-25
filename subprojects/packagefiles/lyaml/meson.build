@@ -28,15 +28,16 @@ lyaml_lua = files(
 )
 
 deps = []
-deps += dependency('yaml-0.1')
+deps += dependency('yaml-0.1', fallback: ['yaml_dep'], required: true )
 
 useLuaJIT = get_option('luajit')
 lua = dependency('', required: false)
 if useLuaJIT.disabled() == false
-  lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'))
+    lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'))
 endif
+summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 if not lua.found()
-  lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
+    lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
 endif
 deps += lua
 
