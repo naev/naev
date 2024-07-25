@@ -44,6 +44,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, Markdown_mt )
    wgt.type    = "markdown"
+   --wgt.canfocus = true
 
    -- Modify for scrollbar
    w = w-12
@@ -280,6 +281,13 @@ function Markdown:setPos( pos )
    luatk.rerender()
    self.pos = pos * self.scrollh
    self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
+end
+function Markdown:wheelmoved( _mx, my )
+   if my > 0 then
+      self:setPos( (self.pos + 50) / self.scrollh )
+   elseif my < 0 then
+      self:setPos( (self.pos - 50) / self.scrollh )
+   end
 end
 
 return luatk_markdown

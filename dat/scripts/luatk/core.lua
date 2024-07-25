@@ -370,8 +370,12 @@ Wheel moved event.
 function luatk.wheelmoved( mx, my )
    local wdw = luatk._windows[ #luatk._windows ]
 
-   if wdw.focused and wdw.focused.wheelmoved then
-      return wdw.focused:wheelmoved( mx, my )
+   for k,wgt in ipairs(wdw._widgets) do
+      if wgt.mouseover and wgt.wheelmoved then
+         if wgt:wheelmoved( mx, my ) then
+            return true
+         end
+      end
    end
 
    return false
@@ -440,22 +444,33 @@ function luatk.Window:draw()
    -- Draw widgets ontop
    for _k,wgt in ipairs(self._widgets) do
       wgt:draw( x, y )
-      if self.focused == wgt then
-         if wgt.type == "button" then
-            lg.setColour( luatk.colour.focusbtn )
-         else
-            lg.setColour( luatk.colour.focus )
-         end
-         lg.rectangle( "line", x+wgt.x-2, y+wgt.y-2, wgt.w+4, wgt.h+4 )
-      end
    end
 
    -- Restore scissors
    lg.setScissor( scs )
 
+   -- Draw focused area
+   --[[
+   if self.focused then
+      local wgt = self.focused
+      if wgt.type == "button" then
+         lg.setColour( luatk.colour.focusbtn )
+      else
+         lg.setColour( luatk.colour.focus )
+      end
+      lg.rectangle( "line", x+wgt.x-2, y+wgt.y-2, wgt.w+4, wgt.h+4 )
+   end
+   --]]
+
    -- Draw overlay
+   local drawnover = false
    for _k,wgt in ipairs(self._widgets) do
       if wgt.drawover then
+         -- Have to clear for the overlay, but we only want to do it once when necessary
+         if not drawnover then
+            naev.gfx.clearDepth()
+            drawnover = true
+         end
          wgt:drawover( x, y )
       end
    end
@@ -532,6 +547,9 @@ Sets the focused widget of a window.
    @tparam Widget Widget to focus.
 --]]
 function luatk.Window:setFocus( wgt )
+   if wgt and not wgt.canfocus then
+      return
+   end
    if wgt ~= self.focused then
       luatk._dirty = true
    end
@@ -596,7 +614,9 @@ Creates a new button widget.
 function luatk.newButton( parent, x, y, w, h, text, handler )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Button_mt )
-   wgt.type = "button"
+   wgt.type    = "button"
+   wgt.canfocus= true
+   parent:setFocus( wgt )
    if type(text)=="function" then
       wgt.render  = text
    else
@@ -822,6 +842,7 @@ function luatk.newCheckbox( parent, x, y, w, h, text, handler, default )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Checkbox_mt )
    wgt.type    = "checkbox"
+   wgt.canfocus= true
    wgt.text    = text
    wgt.handler = handler
    wgt.state   = (default==true)
@@ -871,6 +892,7 @@ function luatk.newFader( parent, x, y, w, h, min, max, def, handler, params )
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Fader_mt )
    wgt.type    = "fader"
+   wgt.canfocus= true
    params      = params or {}
    wgt.handler = handler or function () end
    wgt.min     = min
@@ -945,6 +967,13 @@ function luatk.Fader:set( val, no_handler )
       self.handler( self, self.val )
    end
 end
+function luatk.Fader:wheelmoved( mx, _my )
+   if mx > 0 then
+      self:set( self.val + 0.05 * (self.max-self.min) )
+   elseif mx < 0 then
+      self:set( self.val - 0.05 * (self.max-self.min) )
+   end
+end
 
 --[[
 -- List widget
@@ -956,6 +985,7 @@ function luatk.newList( parent, x, y, w, h, items, onselect, defitem )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.List_mt )
    wgt.type    = "list"
+   wgt.canfocus= true
    wgt.items   = items
    wgt.onselect= onselect or function () end
    wgt.selected= defitem or 1
@@ -1055,6 +1085,13 @@ function luatk.List:setPos( pos )
    self.pos = pos * self.scrollh
    self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
 end
+function luatk.List:wheelmoved( _mx, my )
+   if my > 0 then
+      self:set( self.selected-1 )
+   elseif my < 0 then
+      self:set( self.selected+1 )
+   end
+end
 
 --[[
 -- Input widget
@@ -1066,6 +1103,7 @@ function luatk.newInput( parent, x, y, w, h, max, params )
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Input_mt )
    wgt.type    = "input"
+   wgt.canfocus= true
    params      = params or {}
    wgt.max     = max
    wgt.params  = params
