@@ -44,6 +44,9 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, Markdown_mt )
 
+   -- Modify for scrollbar
+   w = w-12
+
    -- Some helpers
    wgt.linkfunc = options.linkfunc
 
@@ -60,9 +63,10 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       end
       local f = block.font
       local _mw, t = f:getWrap( block.text, w )
-      ty = ty + #t * f:getLineHeight()
+      local bh = #t * f:getLineHeight()
+      ty = ty + bh
       table.insert( wgt.blocks, block )
-      block = { x = 0, y = ty, text = "", font=deffont }
+      block = { x = 0, y = ty, w=w, h=bh, text = "", font=deffont }
    end
    wgt.links = {}
 
@@ -180,10 +184,35 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       --print( cmark.node_get_type_string(cur) )
    end
 
+   -- Compute full size
+   wgt.scrollh = 0
+   if #wgt.blocks > 0 then
+      local b = wgt.blocks[#wgt.blocks]
+      wgt.scrollh = b.y+b.h
+   end
+   wgt.scrollh = math.max( 0, wgt.scrollh-wgt.h )
+   if wgt.scrollh > 0 then
+      wgt.scrolls = true
+   end
+   wgt.pos = 0
+
    return wgt
 end
 function Markdown:draw( wx, wy )
-   local x, y, w, _h = wx+self.x, wy+self.y, self.w, self.h
+   local x, y, w, h = wx+self.x, wy+self.y, self.w, self.h
+
+   -- Space for scrollbar
+   w = w-12
+
+   -- Draw scrollbar
+   if self.scrolls then
+      local scroll_pos = self.pos / self.scrollh
+      luatk.drawScrollbar( x+w, y, 12, h, scroll_pos )
+   end
+
+   local scs = lg.getScissor()
+   lg.setScissor( x, y, w, h )
+   y = y - self.pos
 
    --[[
    lg.setColour( 1, 0, 0 )
@@ -192,11 +221,14 @@ function Markdown:draw( wx, wy )
    end
    --]]
 
+   -- Draw the text
    lg.setColour( 1, 1, 1 )
    for k,b in ipairs(self.blocks) do
       local bx, by = x+b.x, y+b.y
       lg.printf( b.text, b.font, bx, by, w, "left" )
    end
+
+   lg.setScissor( scs )
 end
 function Markdown:drawover( bx, by )
    local x, y = bx+self.x, by+self.y
@@ -209,7 +241,12 @@ end
 local function _checkbounds( l, mx, my )
    return not (mx < l.x1 or mx > l.x2 or my < l.y1 or my > l.y2)
 end
+local scrollbar_h = 30
 function Markdown:mmoved( mx, my )
+   if self.scrolling then
+      self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
+   end
+
    for k,l in ipairs(self.links) do
       local m = l.mouseover
       l.mouseover = _checkbounds( l, mx, my )
@@ -219,12 +256,29 @@ function Markdown:mmoved( mx, my )
    end
 end
 function Markdown:pressed( mx, my )
+   -- Check scrollbar first
+   if self.scrolls and mx > self.w-12 then
+      self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
+      self.scrolling = true
+      return true
+   end
+
+   -- Check links
    for k,l in ipairs(self.links) do
       if _checkbounds( l, mx, my ) and self.linkfunc then
          luatk.rerender()
          self.linkfunc( l.target )
+         return true
       end
    end
+end
+function Markdown:released( _mx, _my )
+   self.scrolling = false
+end
+function Markdown:setPos( pos )
+   luatk.rerender()
+   self.pos = pos * self.scrollh
+   self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
 end
 
 return luatk_markdown

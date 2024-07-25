@@ -123,6 +123,7 @@ function naevpedia.open( name )
    local open_page
    local w, h = 640, 480
    local wdw = luatk.newWindow( nil, nil, w, h )
+   luatk.newText( wdw, 0, 10, w, 20, _("Naevpedia"), nil, "center" )
    luatk.newButton( wdw, -20, -20, 80, 30, _("Close"), luatk.close )
    local btnback = luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Back"), function ( self )
       local n = #history
@@ -146,10 +147,10 @@ function naevpedia.open( name )
       -- Create widget
       if not success then
          -- Failed, so just display the error
-         mrk = luatk.newText( wdw, 20, 20, w-40, h-60, doc )
+         mrk = luatk.newText( wdw, 20, 40, w-40, h-110, doc )
       else
          -- Success so we try to load the markdown
-         mrk = md.newMarkdown( wdw, doc, 20, 20, w-40, h-60, {
+         mrk = md.newMarkdown( wdw, doc, 20, 40, w-40, h-110, {
             linkfunc = function ( target )
                local newdoc = target
                if not newdoc then

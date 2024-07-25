@@ -277,7 +277,7 @@ Only to be used when running the toolkit outside of luatk.run.
    @tparam number my Y coordinates of the mouse released position.
    @treturn boolean true if the event was used, false otherwise.
 --]]
-function luatk.mousemoved( mx, my )
+function luatk.mousemoved( mx, my, dx, dy )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw or not _checkbounds(wdw,mx,my) then return false end
    local x, y = mx-wdw.x, my-wdw.y
@@ -291,7 +291,7 @@ function luatk.mousemoved( mx, my )
          wgt.mouseover = inbounds
       end
       if (inbounds or wgt._pressed) and wgt.mmoved then
-         wgt.mmoved( wgt, x-wgt.x, y-wgt.y )
+         wgt.mmoved( wgt, x-wgt.x, y-wgt.y, dx, dy )
       end
    end
 
@@ -362,7 +362,7 @@ end
 -- Helper functions
 --]]
 local scrollbar_h = 30 -- bar height
-local function drawScrollbar( x, y, w, h, pos )
+function luatk.drawScrollbar( x, y, w, h, pos )
    lg.setColour( luatk.scrollbar.colour.bg )
    lg.rectangle( "fill", x, y, w, h )
 
@@ -937,7 +937,7 @@ function luatk.List:draw( bx, by )
    if self.scrolls then
       local scroll_pos = self.pos / self.scrollh
       w = w - 12
-      drawScrollbar( x+w, y, 12, h, scroll_pos )
+      luatk.drawScrollbar( x+w, y, 12, h, scroll_pos )
 
       -- Have to scissors here
       scs = lg.getScissor()
