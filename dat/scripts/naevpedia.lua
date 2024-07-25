@@ -103,7 +103,7 @@ local function loaddoc( filename )
    local rawdat = lf.read( 'naevpedia/'..filename..'.md' )
    if not rawdat then
       warn(fmt.f(_("File '{filename}' not found!"),{filename=filename}))
-      return nil
+      return false, fmt.f("#r".._("404\nfile '{filename}' not found"), {filename=filename})
    end
 
    -- Preprocess Lua
