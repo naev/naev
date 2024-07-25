@@ -3,7 +3,7 @@ project(
     'c',
     version: '6.2.8',
     default_options: ['warning_level=3'],
-    meson_version: '>=0.49.0',
+    meson_version: '>=0.53.0',
     license: 'BSD-2-Clause',
 )
 
@@ -43,7 +43,7 @@ deps += lua
 
 includes = include_directories('.', 'ext/yaml')
 
-lyaml = library(
+lyaml = static_library(
     'lyaml',
     lyaml_src,
     dependencies : deps,
