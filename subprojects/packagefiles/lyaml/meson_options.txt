@@ -1,0 +1,2 @@
+option('luajit'      , type: 'feature', value: 'auto', yield: true )
+option('steamruntime', type: 'boolean', value: false,  yield: true )
