@@ -233,7 +233,7 @@ function Markdown:draw( wx, wy )
    lg.setScissor( scs )
 end
 function Markdown:drawover( bx, by )
-   local x, y = bx+self.x, by+self.y
+   local x, y = bx+self.x, by+self.y-self.pos
    for k,l in ipairs(self.links) do
       if l.mouseover then
          lg.rectangle( "line", x+l.x1, y+l.y1, l.x2-l.x1, l.y2-l.y1 )
@@ -248,6 +248,9 @@ function Markdown:mmoved( mx, my )
    if self.scrolling then
       self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
    end
+
+   -- Correct location for scrolling
+   my = my + self.pos
 
    for k,l in ipairs(self.links) do
       local m = l.mouseover
@@ -264,6 +267,9 @@ function Markdown:pressed( mx, my )
       self.scrolling = true
       return true
    end
+
+   -- Correct location for scrolling
+   my = my + self.pos
 
    -- Check links
    for k,l in ipairs(self.links) do
