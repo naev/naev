@@ -27,6 +27,7 @@
       * Can toggle whether or not autonav stops when missie lock-ons are detected
       * Added colour coded factional backgrounds in the shipyard
       * Can rotate shipyard image for ships with 3D graphics
+      * Prompt when deleting notes
    * Content
       * 4 new missions
          * Hack the Gibson!
