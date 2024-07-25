@@ -20,9 +20,25 @@ lyaml_src = files(
     'ext/yaml/scanner.c',
 )
 
+lyaml_lua = files(
+    'lib/lyaml/init.lua',
+    'lib/lyaml/explicit.lua',
+    'lib/lyaml/functional.lua',
+    'lib/lyaml/implicit.lua',
+)
+
 deps = []
 deps += dependency('yaml-0.1')
-deps += dependency('lua')
+
+useLuaJIT = get_option('luajit')
+lua = dependency('', required: false)
+if useLuaJIT.disabled() == false
+  lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'))
+endif
+if not lua.found()
+  lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
+endif
+deps += lua
 
 includes = include_directories('.', 'ext/yaml')
 
