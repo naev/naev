@@ -57,7 +57,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local headerfont = options.fontheader or lg.newFont( math.floor(deffont:getHeight()*1.2+0.5) )
 
    wgt.blocks = {}
-   local block = { x = 0, y = 0, text = "", font=deffont }
+   local block = { x = 0, y = 0, w=w, h=0, text = "", font=deffont }
    local ty = 0
    local function block_end ()
       if #block.text <= 0 then
@@ -179,7 +179,13 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
             listn = listn + 1
          end
       elseif node_type == cmark.NODE_FIRST_INLINE or node_type == cmark.NODE_LAST_INLINE then
-         block.text = block.text .. _(cmark.node_get_literal(cur))
+         local str = cmark.node_get_literal(cur)
+         if str then
+            block.text = block.text .. _(str)
+         end
+      elseif node_type == cmark.NODE_IMAGE then
+         print("IMAGE")
+         print( cmark.node_get_url(cur) )
       end
       --print( cmark.node_get_url(cur) )
       --print( cmark.node_get_literal(cur) )
