@@ -21,6 +21,10 @@ function love.textinput( str )
    return luatk.textinput( str )
 end
 
+function love.wheelmoved( mx, my )
+   return luatk.wheelmoved( mx, my )
+end
+
 function love.draw()
    luatk.draw()
 end

@@ -119,6 +119,9 @@ function luatk.vn( setup )
    s._textinput = function( _self, str )
       return luatk.textinput( str )
    end
+   s._wheelmoved = function( _self, mx, my )
+      return luatk.wheelmoved( mx, my )
+   end
    local function _update( self, dt )
       if #luatk._windows<=0 then
          self.done = true
@@ -353,6 +356,19 @@ function luatk.textinput( str )
             return true
          end
       end
+   end
+
+   return false
+end
+
+--[[--
+Wheel moved event.
+--]]
+function luatk.wheelmoved( mx, my )
+   local wdw = luatk._windows[ #luatk._windows ]
+
+   if wdw.focused and wdw.focused.wheelmoved then
+      return wdw.focused:wheelmoved( mx, my )
    end
 
    return false
