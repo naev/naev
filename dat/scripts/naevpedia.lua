@@ -199,6 +199,22 @@ function naevpedia.open( name )
       end
    end
 
+   local lstelem = {}
+   for k,v in pairs(nc._naevpedia) do
+      table.insert( lstelem, v.entry )
+   end
+   table.sort( lstelem )
+   local defelem = 1
+   for k,v in ipairs(lstelem) do
+      if v=="index" then
+         defelem = k
+         break
+      end
+   end
+   luatk.newList( wdw, 20, 60, 300, h-120, lstelem, function ( elem )
+      open_page( elem )
+   end, defelem )
+
    -- Backbutton
    btnfwd = luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Forward"), gofwd )
    if #historyrev <= 0 then
@@ -219,13 +235,16 @@ function naevpedia.open( name )
       -- Load the document
       local success, doc, _meta = loaddoc( filename )
 
+      -- Set dimensions here
+      local mx, my, mw, mh = 20+300+40, 40, w-(20+300+40), h-110
+
       -- Create widget
       if not success then
          -- Failed, so just display the error
-         mrk = luatk.newText( wdw, 20, 40, w-40, h-110, doc )
+         mrk = luatk.newText( wdw, mx, my, mw, mh, doc )
       else
          -- Success so we try to load the markdown
-         mrk = md.newMarkdown( wdw, doc, 20, 40, w-40, h-110, {
+         mrk = md.newMarkdown( wdw, doc, mx, my, mw, mh, {
             linkfunc = function ( target )
                local newdoc = target
                if not newdoc then
