@@ -350,8 +350,7 @@ function luatk.textinput( str )
    if not wdw then return false end
 
    for _k,wgt in ipairs(wdw._widgets) do
-      -- TODO proper focus model
-      if wgt.textinput then
+      if wgt.focused and wgt.textinput then
          if wgt:textinput( str ) then
             luatk._dirty = true
             return true
@@ -724,7 +723,9 @@ end
 function luatk.Button:keypressed( key )
    if key=="space" or key=="enter" then
       self:clicked()
+      return true
    end
+   return false
 end
 
 --[[
@@ -899,7 +900,9 @@ end
 function luatk.Checkbox:keypressed( key )
    if key=="space" or key=="enter" then
       self:clicked()
+      return true
    end
+   return false
 end
 
 --[[
@@ -997,9 +1000,12 @@ end
 function luatk.Fader:keypressed( key )
    if key=="left" then
       self:set( self.val - 0.05 * (self.max-self.min) )
+      return true
    elseif key == "right" then
       self:set( self.val + 0.05 * (self.max-self.min) )
+      return true
    end
+   return false
 end
 
 --[[
@@ -1122,9 +1128,12 @@ end
 function luatk.List:keypressed( key )
    if key=="up" then
       self:set( self.selected-1 )
+      return true
    elseif key == "down" then
       self:set( self.selected+1 )
+      return true
    end
+   return false
 end
 
 --[[
@@ -1251,7 +1260,7 @@ function luatk.Input:keypressed( key )
       self.cursor = utf8.len(self.str)
       self.timer = 0
    end
-   return true
+   return true -- eats all input, nom nom nom
 end
 function luatk.Input:textinput( str )
    luatk._dirty = true
