@@ -8,14 +8,24 @@ local utf8 = require "utf8"
 
 local naevpedia = {}
 
+local function strsplit( str, sep )
+   sep = sep or "%s"
+   local t={}
+   for s in utf8.gmatch(str, "([^"..sep.."]+)") do
+      table.insert(t, s)
+   end
+   return t
+end
+
 --[[--
 Pulls out the metadata header of the naevpedia file.
 --]]
 local function extractmetadata( entry, s )
-
+   local path = strsplit( entry, "/" )
    local meta = {
       entry = entry,
-      name = entry,
+      category = path[1],
+      name = path[#path],
    }
    if utf8.find( s, "---\n", 1, true )==1 then
       local es, ee = utf8.find( s, "---\n", 4, true )
