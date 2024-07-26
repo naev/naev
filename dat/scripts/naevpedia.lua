@@ -292,9 +292,13 @@ function naevpedia.open( name )
    end )
    wdw:setKeypress( function ( key )
       if key=="left" then
-         goback()
+         if #history > 0 then
+            goback()
+         end
       elseif key=="right" then
-         gofwd()
+         if #historyrev > 0 then
+            gofwd()
+         end
       end
    end )
    luatk.run()
