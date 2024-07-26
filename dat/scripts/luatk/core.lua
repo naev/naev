@@ -986,7 +986,7 @@ function luatk.Fader:wheelmoved( mx, _my )
       self:set( self.val - 0.05 * (self.max-self.min) )
    end
 end
-function luatk.List:keypressed( key )
+function luatk.Fader:keypressed( key )
    if key=="left" then
       self:set( self.val - 0.05 * (self.max-self.min) )
    elseif key == "right" then
