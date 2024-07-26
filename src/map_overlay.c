@@ -948,7 +948,8 @@ void ovr_render( double dt )
       }
 
       glBlendEquation( GL_FUNC_ADD );
-      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+      glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
+                           GL_ONE_MINUS_SRC_ALPHA );
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
 
       glUseProgram( shaders.stealthoverlay.program );

@@ -195,10 +195,8 @@ function luatk.draw()
       luatk._dirty = false
    end
 
-   lg.setBlendMode( "alpha", "premultiplied" )
    lg.setColor(1, 1, 1, 1)
    luatk._canvas:draw( 0, 0 )
-   lg.setBlendMode( "alpha" )
 end
 --[[--
 Updates the luatk toolkit.

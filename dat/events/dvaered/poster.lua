@@ -63,7 +63,6 @@ function watchPoster()
       local oldcanvas = graphics.getCanvas()
       graphics.setCanvas(myCanvas)
       graphics.clear( 0, 0, 0, 0 )
-      graphics.setBlendMode( "alpha", "premultiplied" )
       graphics.draw( img, 0, 0, 0, 1, 1 )
 
       -- Add FLF stuff on it
@@ -75,7 +74,6 @@ function watchPoster()
       end
 
       -- Finish
-      graphics.setBlendMode( "alpha" )
       graphics.setCanvas(oldcanvas)
    end
 

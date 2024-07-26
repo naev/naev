@@ -21,7 +21,6 @@ local function update_canvas ()
    lg.setCanvas( mem.cvs )
    lg.clear( 0, 0, 0, 0 )
    lg.setColour( 1, 1, 1, 1 )
-   --lg.setBlendMode( "alpha", "premultiplied" )
 
    -- Draw base hypergate
    mem.tex:draw( 0, 0 )
@@ -32,7 +31,6 @@ local function update_canvas ()
    mem.mask:draw( 0, 0 )
    lg.setShader( oldshader )
 
-   --lg.setBlendMode( "alpha" )
    lg.setCanvas( oldcanvas )
 end
 

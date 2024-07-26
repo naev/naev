@@ -1616,8 +1616,6 @@ void toolkit_render( double dt )
 
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-      glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
-                           GL_ONE_MINUS_SRC_ALPHA );
 
       /* Render base. */
       for ( Window *w = windows; w != NULL; w = w->next ) {
@@ -1630,7 +1628,6 @@ void toolkit_render( double dt )
          window_render( w, w == top );
       }
 
-      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
       gl_screen.current_fbo = current_fbo;
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
    }

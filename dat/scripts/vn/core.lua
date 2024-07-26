@@ -299,9 +299,7 @@ local function _draw()
       graphics.setCanvas( prevcanvas )
       graphics.setShader( vn._postshader )
       vn.setColour( {1, 1, 1, 1} )
-      graphics.setBlendMode( "alpha", "premultiplied" )
       vn._canvas:draw( 0, 0 )
-      graphics.setBlendMode( "alpha" )
       graphics.setShader()
    end
 end
@@ -1370,9 +1368,7 @@ local function _appear_setup( c, shader )
                local oldshader = graphics.getShader()
                graphics.setShader( shader )
                vn.setColour( {1, 1, 1, 1} )
-               graphics.setBlendMode( "alpha", "premultiplied" )
                vn._curcanvas:draw( 0, 0 )
-               graphics.setBlendMode( "alpha" )
                graphics.setShader( oldshader )
             end
             v.image = d
@@ -1689,9 +1685,7 @@ function vn.transition( name, seconds, transition )
 
          local oldshader = graphics.getShader()
          graphics.setShader( shader )
-         graphics.setBlendMode( "alpha", "premultiplied" )
          canvas:draw( 0, 0 )
-         graphics.setBlendMode( "alpha" )
          graphics.setShader( oldshader )
       end )
 end

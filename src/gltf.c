@@ -1331,7 +1331,8 @@ void gltf_renderScene( GLuint fb, GltfObject *obj, int scene, const mat4 *H,
 
    /* Set up blend mode. */
    glEnable( GL_BLEND );
-   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+   glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
+                        GL_ONE_MINUS_SRC_ALPHA );
 
    /* Depth testing. */
    glEnable( GL_DEPTH_TEST );

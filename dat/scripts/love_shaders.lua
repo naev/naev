@@ -140,11 +140,8 @@ function love_shaders.blur( image, kernel_size, blurtype )
    -- Since the kernel is separable we need two passes, one for x and one for y
    shader:send( "blurvec", 1, 0 )
    local pass1 = _shader2canvas( shader, image, w, h )
-   local mode, alphamode = graphics.getBlendMode()
-   graphics.setBlendMode( "alpha", "premultiplied" )
    shader:send( "blurvec", 0, 1 )
    local pass2 = _shader2canvas( shader, pass1, w, h )
-   graphics.setBlendMode( mode, alphamode )
    return pass2
 end
 

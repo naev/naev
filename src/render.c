@@ -58,10 +58,6 @@ static int         pp_gamma_correction = 0; /**< Gamma correction shader. */
  */
 static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
 {
-   /* Have to consider alpha premultiply. */
-   glBlendFuncSeparate( GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
-                        GL_ONE_MINUS_SRC_ALPHA );
-
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
 
    glUseProgram( shader->program );
@@ -110,9 +106,6 @@ static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
    if ( shader->VertexTexCoord >= 0 )
       glDisableVertexAttribArray( shader->VertexTexCoord );
    glUseProgram( 0 );
-
-   /* Restore the default mode. */
-   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 }
 
 /**
@@ -480,7 +473,8 @@ void render_reset( void )
    needsReset = 0;
 
    glBlendEquation( GL_FUNC_ADD );
-   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+   glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
+                        GL_ONE_MINUS_SRC_ALPHA );
    gl_unclipRect();
    canvas_reset();
 }

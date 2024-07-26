@@ -851,12 +851,9 @@ static void preview_render( double x, double y, double w, double h, void *data )
    if ( shipyard_selected == NULL )
       return;
 
-   if ( ship_gfxAnimated( shipyard_selected ) ) {
+   if ( ship_gfxAnimated( shipyard_selected ) )
       ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_SIZE, p->dir,
                            p->updown, 0. );
-      glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
-                           GL_ONE_MINUS_SRC_ALPHA );
-   }
 
    gl_renderTextureRaw( p->tex, OPENGL_TEX_VFLIP, x, y, w, h, 0., 0., 1., 1.,
                         NULL, 0. );

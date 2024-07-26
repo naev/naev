@@ -514,7 +514,9 @@ static int gl_defState( void )
 #endif /* DEBUG_GL */
 
    /* Set the blending/shading model to use. */
-   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
+   glBlendEquation( GL_FUNC_ADD );
+   glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
+                        GL_ONE_MINUS_SRC_ALPHA );
 
    return 0;
 }
