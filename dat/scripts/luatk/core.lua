@@ -546,7 +546,7 @@ Sets the focused widget of a window.
    @tparam Widget Widget to focus.
 --]]
 function luatk.Window:setFocus( wgt )
-   if wgt and not wgt.canfocus then
+   if self.focuslocked or (wgt and not wgt.canfocus) then
       return
    end
    if wgt ~= self.focused then
@@ -557,6 +557,14 @@ function luatk.Window:setFocus( wgt )
    end
    self.focused = wgt
    wgt.focused = true
+end
+--[[--
+Locks the focus for a window to whatever widget is being currently focused.
+
+   @tparam boolean Whether to enable or disable the focus lock.
+--]]
+function luatk.Window:setFocusLock( state )
+   self.focuslocked = state
 end
 
 --[[
@@ -1364,6 +1372,7 @@ function luatk.msgInput( title, msg, max, funcdone, params )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
    local inp = luatk.newInput( wdw, 20, h+100-20-20, w-40, 35, max, params )
    wdw:setFocus( inp )
+   wdw:setFocusLock( true ) -- Want to keep focus here
    local bw = 120
    local y = h+110-20-30+50
    luatk.newButton( wdw, w-10-bw, y, bw, 30, _("Done"), function( wgt )
