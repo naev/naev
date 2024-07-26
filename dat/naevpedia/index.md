@@ -1,5 +1,6 @@
 ---
 title: "Main"
+priority: 1
 ---
 ![](gfx/Naev.webp)
 

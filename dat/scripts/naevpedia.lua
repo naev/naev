@@ -206,7 +206,18 @@ function naevpedia.open( name )
    for k,v in pairs(nc._naevpedia) do
       table.insert( lstelem, v.entry )
    end
-   table.sort( lstelem )
+   table.sort( lstelem, function ( a, b )
+      local na = nc._naevpedia[a]
+      local nb = nc._naevpedia[b]
+      local pa = na.priority or 5
+      local pb = nb.priority or 5
+      if pa < pb then
+         return true
+      elseif pa > pb then
+         return false
+      end
+      return a < b
+   end )
    local titles = {}
    local defelem = 1
    for k,v in ipairs(lstelem) do
