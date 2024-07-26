@@ -56,7 +56,6 @@ function naevpedia.load()
                   local dat = lf.read( 'naevpedia/'..f )
                   local entry = utf8.sub( f, 1, -4 )
                   local _s, meta = extractmetadata( entry, dat )
-                  print(meta.name)
                   mds[ entry ] = meta
                end
             elseif i.type == "directory" then
@@ -217,7 +216,6 @@ function naevpedia.open( name )
       local e = nc._naevpedia[v]
       local prefix = (e.parent and "↳ ") or ""
       titles[k] = prefix.._(e.title or e.name)
-      print( k, titles[k] )
    end
    local lst = luatk.newList( wdw, 40, 100, 300, h-200, titles, function ( _name, idx )
       open_page( lstelem[idx] )
