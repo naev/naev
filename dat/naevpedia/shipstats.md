@@ -1,3 +1,6 @@
+---
+title: "Ship Stats"
+---
 ## Ship Stats
 
 There are many different important stats for ships that define their behavour when flying in space.

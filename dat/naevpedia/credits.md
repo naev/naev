@@ -1,3 +1,6 @@
+---
+title: "Credits"
+---
 ## Credits
 
 TODO

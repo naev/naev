@@ -27,9 +27,12 @@ local function extractmetadata( entry, s )
       category = path[1],
       name = path[#path],
    }
+   if #path >= 2 then
+      meta.parent = path[1] -- Just use top parent
+   end
    if utf8.find( s, "---\n", 1, true )==1 then
       local es, ee = utf8.find( s, "---\n", 4, true )
-      meta = lyaml.load( utf8.sub( s, 4, es-1 ) )
+      meta = tmerge( meta, lyaml.load( utf8.sub( s, 4, es-1 ) ) )
       s = utf8.sub( s, ee+1 )
    end
    return s, meta
@@ -53,6 +56,7 @@ function naevpedia.load()
                   local dat = lf.read( 'naevpedia/'..f )
                   local entry = utf8.sub( f, 1, -4 )
                   local _s, meta = extractmetadata( entry, dat )
+                  print(meta.name)
                   mds[ entry ] = meta
                end
             elseif i.type == "directory" then
@@ -204,15 +208,19 @@ function naevpedia.open( name )
       table.insert( lstelem, v.entry )
    end
    table.sort( lstelem )
+   local titles = {}
    local defelem = 1
    for k,v in ipairs(lstelem) do
       if v=="index" then
          defelem = k
-         break
       end
+      local e = nc._naevpedia[v]
+      local prefix = (e.parent and "↳ ") or ""
+      titles[k] = prefix.._(e.title or e.name)
+      print( k, titles[k] )
    end
-   local lst = luatk.newList( wdw, 20, 100, 300, h-200, lstelem, function ( elem )
-      open_page( elem )
+   local lst = luatk.newList( wdw, 40, 100, 300, h-200, titles, function ( _name, idx )
+      open_page( lstelem[idx] )
    end, defelem )
    wdw:setFocus( lst )
 
@@ -237,7 +245,7 @@ function naevpedia.open( name )
       local success, doc, _meta = loaddoc( filename )
 
       -- Set dimensions here
-      local mx, my, mw, mh = 20+300+40, 40, w-(20+300+40), h-110
+      local mx, my, mw, mh = 20+300+40+20, 40, w-(20+300+40+40), h-110
 
       -- Create widget
       if not success then

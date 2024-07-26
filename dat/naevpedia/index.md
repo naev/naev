@@ -1,3 +1,6 @@
+---
+title: "Main"
+---
 ![](gfx/Naev.webp)
 
 ## Welcome to the Naevpedia!
