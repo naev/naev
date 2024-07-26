@@ -330,7 +330,7 @@ function luatk.keypressed( key )
 
    for _k,wgt in ipairs(wdw._widgets) do
       -- TODO proper focus model
-      if wgt.keypressed then
+      if wgt.focused and wgt.keypressed then
          if wgt:keypressed( key ) then
             luatk._dirty = true
             return true
@@ -448,17 +448,18 @@ function luatk.Window:draw()
    lg.setScissor( scs )
 
    -- Draw focused area
-   --[[
    if self.focused then
       local wgt = self.focused
+      --[[
       if wgt.type == "button" then
          lg.setColour( luatk.colour.focusbtn )
       else
          lg.setColour( luatk.colour.focus )
       end
+      --]]
+      lg.setColour( luatk.colour.focusbtn )
       lg.rectangle( "line", x+wgt.x-2, y+wgt.y-2, wgt.w+4, wgt.h+4 )
    end
-   --]]
 
    -- Draw overlay
    local drawnover = false
@@ -551,7 +552,11 @@ function luatk.Window:setFocus( wgt )
    if wgt ~= self.focused then
       luatk._dirty = true
    end
+   for _k,w in ipairs(self._widgets) do
+      w.focused = false
+   end
    self.focused = wgt
+   wgt.focused = true
 end
 
 --[[
@@ -614,7 +619,6 @@ function luatk.newButton( parent, x, y, w, h, text, handler )
    setmetatable( wgt, luatk.Button_mt )
    wgt.type    = "button"
    wgt.canfocus= true
-   parent:setFocus( wgt )
    if type(text)=="function" then
       wgt.render  = text
    else
@@ -708,6 +712,11 @@ function luatk.Button:getFCol () return self.fcol end
 function luatk.Button:setFCol( col )
    luatk._dirty = true
    self.fcol = col
+end
+function luatk.Button:keypressed( key )
+   if key=="space" or key=="enter" then
+      self:clicked()
+   end
 end
 
 --[[
@@ -879,6 +888,11 @@ function luatk.Checkbox:set( state )
    luatk._dirty = true
    self.state = state
 end
+function luatk.Checkbox:keypressed( key )
+   if key=="space" or key=="enter" then
+      self:clicked()
+   end
+end
 
 --[[
 -- Fader widget
@@ -970,6 +984,13 @@ function luatk.Fader:wheelmoved( mx, _my )
       self:set( self.val + 0.05 * (self.max-self.min) )
    elseif mx < 0 then
       self:set( self.val - 0.05 * (self.max-self.min) )
+   end
+end
+function luatk.List:keypressed( key )
+   if key=="left" then
+      self:set( self.val - 0.05 * (self.max-self.min) )
+   elseif key == "right" then
+      self:set( self.val + 0.05 * (self.max-self.min) )
    end
 end
 
@@ -1087,6 +1108,13 @@ function luatk.List:wheelmoved( _mx, my )
    if my > 0 then
       self:set( self.selected-1 )
    elseif my < 0 then
+      self:set( self.selected+1 )
+   end
+end
+function luatk.List:keypressed( key )
+   if key=="up" then
+      self:set( self.selected-1 )
+   elseif key == "down" then
       self:set( self.selected+1 )
    end
 end
@@ -1335,6 +1363,7 @@ function luatk.msgInput( title, msg, max, funcdone, params )
    luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
    local inp = luatk.newInput( wdw, 20, h+100-20-20, w-40, 35, max, params )
+   wdw:setFocus( inp )
    local bw = 120
    local y = h+110-20-30+50
    luatk.newButton( wdw, w-10-bw, y, bw, 30, _("Done"), function( wgt )

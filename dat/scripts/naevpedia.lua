@@ -211,9 +211,10 @@ function naevpedia.open( name )
          break
       end
    end
-   luatk.newList( wdw, 20, 100, 300, h-200, lstelem, function ( elem )
+   local lst = luatk.newList( wdw, 20, 100, 300, h-200, lstelem, function ( elem )
       open_page( elem )
    end, defelem )
+   wdw:setFocus( lst )
 
    -- Backbutton
    btnfwd = luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Forward"), gofwd )
