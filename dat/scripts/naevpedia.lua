@@ -4,18 +4,23 @@ local lf = require "love.filesystem"
 local luatk = require 'luatk'
 local md = require "luatk.markdown"
 local fmt = require "format"
+local utf8 = require "utf8"
 
 local naevpedia = {}
 
 --[[--
 Pulls out the metadata header of the naevpedia file.
 --]]
-local function extractmetadata( s )
-   local meta = {}
-   if string.find( s, "---\n", 1, true )==1 then
-      local es, ee = string.find( s, "---\n", 4, true )
-      meta = lyaml.load( string.sub( s, 4, es-1 ) )
-      s = string.sub( s, ee+1 )
+local function extractmetadata( entry, s )
+
+   local meta = {
+      entry = entry,
+      name = entry,
+   }
+   if utf8.find( s, "---\n", 1, true )==1 then
+      local es, ee = utf8.find( s, "---\n", 4, true )
+      meta = lyaml.load( utf8.sub( s, 4, es-1 ) )
+      s = utf8.sub( s, ee+1 )
    end
    return s, meta
 end
@@ -33,11 +38,12 @@ function naevpedia.load()
          local i = lf.getInfo( 'naevpedia/'..f )
          if i then
             if i.type == "file" then
-               local suffix = string.sub(f, -3)
+               local suffix = utf8.sub(f, -3)
                if suffix=='.md' then
                   local dat = lf.read( 'naevpedia/'..f )
-                  local _s, meta = extractmetadata( dat )
-                  mds[ string.sub( f, 1, -4 ) ] = meta
+                  local entry = utf8.sub( f, 1, -4 )
+                  local _s, meta = extractmetadata( entry, dat )
+                  mds[ entry ] = meta
                end
             elseif i.type == "directory" then
                find_md( f )
@@ -60,7 +66,7 @@ Processes the Lua in the markdown file as nanoc does.
 --]]
 local function dolua( s )
    -- Do early stopping if no Lua is detected
-   local ms, me = string.find( s, "<%", 1, true )
+   local ms, me = utf8.find( s, "<%", 1, true )
    if not ms then
       return true, s
    end
@@ -78,7 +84,7 @@ end
          for j=1,i do
             sep = sep.."="
          end
-         if (not string.find(str,"["..sep.."[",1,true)) and (not string.find(str,"]"..sep.."]",1,true)) then
+         if (not utf8.find(str,"["..sep.."[",1,true)) and (not utf8.find(str,"]"..sep.."]",1,true)) then
             luastr = luastr.."out = out..["..sep.."["..str.."]"..sep.."]\n"
             break
          end
@@ -89,23 +95,23 @@ end
    while ms do
       local bs
       local display = false
-      embed_str( string.sub( s, be+1, ms-1 ) )
-      bs, be = string.find( s, "%>", me, true )
-      if string.sub( s, me+1, me+1 )=="=" then
+      embed_str( utf8.sub( s, be+1, ms-1 ) )
+      bs, be = utf8.find( s, "%>", me, true )
+      if utf8.sub( s, me+1, me+1 )=="=" then
          me = me+1
          display = true
          luastr = luastr.."_G.print = pro\n"
       else
          luastr = luastr.."_G.print = pr\n"
       end
-      local ss = string.sub( s, me+1, bs-1 )
+      local ss = utf8.sub( s, me+1, bs-1 )
       luastr = luastr..ss.."\n"
       if display then
          luastr = luastr.."out = out..'\\n'\n"
       end
-      ms, me = string.find( s, "<%", me, true )
+      ms, me = utf8.find( s, "<%", me, true )
    end
-   embed_str( string.sub( s, be+1 ) )
+   embed_str( utf8.sub( s, be+1 ) )
    luastr = luastr.."return out"
    local pr = _G.print
    local c = loadstring(luastr)
@@ -133,7 +139,7 @@ local function loaddoc( filename )
    end
 
    -- Extract metadata
-   rawdat, meta = extractmetadata( rawdat )
+   rawdat, meta = extractmetadata( filename, rawdat )
 
    -- Preprocess Lua
    local success, dat = dolua( rawdat )
