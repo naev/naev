@@ -765,6 +765,7 @@ GLenum gl_stringToFilter( const char *s )
       return GL_LINEAR;
    else if ( strcasecmp( s, "nearest" ) == 0 )
       return GL_NEAREST;
+   WARN( _( "Unknown %s '%s'!" ), "OpenGL Filter", s );
    return 0;
 }
 
@@ -782,6 +783,7 @@ GLenum gl_stringToClamp( const char *s )
       return GL_REPEAT;
    else if ( strcasecmp( s, "mirroredrepeat" ) == 0 )
       return GL_MIRRORED_REPEAT;
+   WARN( _( "Unknown %s '%s'!" ), "OpenGL Clamp", s );
    return 0;
 }
 
@@ -803,6 +805,7 @@ GLenum gl_stringToBlendFunc( const char *s )
       return GL_MIN;
    else if ( strcasecmp( s, "max" ) == 0 )
       return GL_MAX;
+   WARN( _( "Unknown %s '%s'!" ), "OpenGL BlendFunc", s );
    return 0;
 }
 
@@ -836,6 +839,7 @@ GLenum gl_stringToBlendFactor( const char *s )
       return GL_ONE_MINUS_DST_ALPHA;
    else if ( strcasecmp( s, "src_alpha_saturate" ) == 0 )
       return GL_SRC_ALPHA_SATURATE;
+   WARN( _( "Unknown %s '%s'!" ), "OpenGL BlendFactor", s );
    return 0;
 }
 
