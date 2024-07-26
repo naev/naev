@@ -1,4 +1,4 @@
-![foo](gfx/Naev.webp)
+![](gfx/Naev.webp)
 
 ## Welcome to the Naevpedia!
 

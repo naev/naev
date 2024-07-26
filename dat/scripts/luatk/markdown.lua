@@ -313,9 +313,11 @@ function Markdown:released( _mx, _my )
    self.scrolling = false
 end
 function Markdown:setPos( pos )
-   luatk.rerender()
-   self.pos = pos * self.scrollh
-   self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
+   if self.scrolls then
+      luatk.rerender()
+      self.pos = pos * self.scrollh
+      self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
+   end
 end
 function Markdown:wheelmoved( _mx, my )
    if my > 0 then
