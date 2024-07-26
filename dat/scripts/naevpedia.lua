@@ -214,8 +214,10 @@ function naevpedia.open( name )
          mrk:destroy()
       end
 
+      -- TODO detect if filename is special (like a ship), and grab data from there, or potentially do that when setting up the cache
+
       -- Load the document
-      local success, doc = loaddoc( filename )
+      local success, doc, _meta = loaddoc( filename )
 
       -- Create widget
       if not success then
