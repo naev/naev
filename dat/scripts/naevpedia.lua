@@ -211,7 +211,7 @@ function naevpedia.open( name )
          break
       end
    end
-   luatk.newList( wdw, 20, 60, 300, h-120, lstelem, function ( elem )
+   luatk.newList( wdw, 20, 100, 300, h-200, lstelem, function ( elem )
       open_page( elem )
    end, defelem )
 
