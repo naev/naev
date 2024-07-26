@@ -300,6 +300,7 @@ end
 function graphics.getBlendMode()
    return graphics._mode, graphics._alphamode
 end
+graphics.setBlendState = naev.gfx.setBlendState
 -- unimplemented
 function graphics.setLineStyle( _style )
    love._unimplemented()
