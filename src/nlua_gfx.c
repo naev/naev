@@ -55,6 +55,7 @@ static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
 static int gfxL_setBlendMode( lua_State *L );
+static int gfxL_setBlendState( lua_State *L );
 static int gfxL_setScissor( lua_State *L );
 static int gfxL_lightAmbient( lua_State *L );
 static int gfxL_lightAmbientGet( lua_State *L );
@@ -97,6 +98,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "lightIntensityGet", gfxL_lightIntensityGet },
    /* Misc. */
    { "setBlendMode", gfxL_setBlendMode },
+   { "setBlendState", gfxL_setBlendState },
    { "setScissor", gfxL_setScissor },
    { "screenshot", gfxL_screenshot },
    { "glVersion", gfxL_glVersion },
@@ -1036,6 +1038,43 @@ static int gfxL_setBlendMode( lua_State *L )
 
    glBlendEquation( func );
    glBlendFuncSeparate( srcRGB, dstRGB, srcA, dstA );
+   gl_checkErr();
+
+   render_needsReset();
+   return 0;
+}
+
+/**
+ * @brief Sets the OpenGL blending state. See
+ * https://love2d.org/wiki/love.graphics.setBlendState as of version 0.12.
+ *
+ * @usage gfx.setBlendState( "add", "src_alpha", "one_minus_src_alpha" )
+ *
+ * @luafunc setBlendState
+ */
+static int gfxL_setBlendState( lua_State *L )
+{
+   GLenum funcRGB, srcRGB, dstRGB;
+
+   funcRGB = gl_stringToBlendFunc( luaL_checkstring( L, 1 ) );
+   if ( lua_gettop( L ) <= 3 ) {
+      srcRGB = gl_stringToBlendFactor( luaL_checkstring( L, 2 ) );
+      dstRGB = gl_stringToBlendFactor( luaL_checkstring( L, 3 ) );
+
+      glBlendEquation( funcRGB );
+      glBlendFunc( srcRGB, dstRGB );
+   } else {
+      GLenum funcA, srcA, dstA;
+      funcA  = gl_stringToBlendFunc( luaL_checkstring( L, 2 ) );
+      srcRGB = gl_stringToBlendFactor( luaL_checkstring( L, 3 ) );
+      srcA   = gl_stringToBlendFactor( luaL_checkstring( L, 4 ) );
+      dstRGB = gl_stringToBlendFactor( luaL_checkstring( L, 5 ) );
+      dstA   = gl_stringToBlendFactor( luaL_checkstring( L, 6 ) );
+
+      glBlendEquationSeparate( funcRGB, funcA );
+      glBlendFuncSeparate( srcRGB, dstRGB, srcA, dstA );
+   }
+
    gl_checkErr();
 
    render_needsReset();

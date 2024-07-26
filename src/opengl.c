@@ -47,7 +47,7 @@
 glInfo gl_screen = {
    .window = NULL, /* Should be initialized to NULL as is used for cases of
                       SDL_ShowSimpleMessageBox. */
-};                 /**< Gives data of current opengl settings. */
+}; /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
 
 static unsigned int cb_correct_pp =
@@ -759,7 +759,7 @@ void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
  *    @param s String to get filter from.
  *    @return Filter.
  */
-GLint gl_stringToFilter( const char *s )
+GLenum gl_stringToFilter( const char *s )
 {
    if ( strcasecmp( s, "linear" ) == 0 )
       return GL_LINEAR;
@@ -774,7 +774,7 @@ GLint gl_stringToFilter( const char *s )
  *    @param s String to get filter from.
  *    @return Filter.
  */
-GLint gl_stringToClamp( const char *s )
+GLenum gl_stringToClamp( const char *s )
 {
    if ( strcasecmp( s, "clamp" ) == 0 )
       return GL_CLAMP_TO_EDGE;
@@ -782,6 +782,60 @@ GLint gl_stringToClamp( const char *s )
       return GL_REPEAT;
    else if ( strcasecmp( s, "mirroredrepeat" ) == 0 )
       return GL_MIRRORED_REPEAT;
+   return 0;
+}
+
+/**
+ * @brief Gets a blend function from a string.
+ *
+ *    @param s String to get blend function from.
+ *    @return The blend function corresponding to the string.
+ */
+GLenum gl_stringToBlendFunc( const char *s )
+{
+   if ( strcasecmp( s, "add" ) == 0 )
+      return GL_FUNC_ADD;
+   else if ( strcasecmp( s, "subrtract" ) == 0 )
+      return GL_FUNC_SUBTRACT;
+   else if ( strcasecmp( s, "reverse_subtract" ) == 0 )
+      return GL_FUNC_REVERSE_SUBTRACT;
+   else if ( strcasecmp( s, "min" ) == 0 )
+      return GL_MIN;
+   else if ( strcasecmp( s, "max" ) == 0 )
+      return GL_MAX;
+   return 0;
+}
+
+/**
+ * @brief Gets a blend factor from a string.
+ *
+ *    @param s String to get blend factor from.
+ *    @return The blend factor corresponding to the string.
+ */
+GLenum gl_stringToBlendFactor( const char *s )
+{
+   if ( strcasecmp( s, "zero" ) == 0 )
+      return GL_ZERO;
+   else if ( strcasecmp( s, "one" ) == 0 )
+      return GL_ONE;
+   else if ( strcasecmp( s, "src_color" ) == 0 )
+      return GL_SRC_COLOR;
+   else if ( strcasecmp( s, "one_minus_src_color" ) == 0 )
+      return GL_ONE_MINUS_SRC_COLOR;
+   else if ( strcasecmp( s, "src_alpha" ) == 0 )
+      return GL_SRC_ALPHA;
+   else if ( strcasecmp( s, "one_minus_src_alpha" ) == 0 )
+      return GL_ONE_MINUS_SRC_ALPHA;
+   else if ( strcasecmp( s, "dst_color" ) == 0 )
+      return GL_DST_COLOR;
+   else if ( strcasecmp( s, "one_minus_dst_color" ) == 0 )
+      return GL_ONE_MINUS_DST_COLOR;
+   else if ( strcasecmp( s, "dst_alpha" ) == 0 )
+      return GL_DST_ALPHA;
+   else if ( strcasecmp( s, "one_minus_dst_alpha" ) == 0 )
+      return GL_ONE_MINUS_DST_ALPHA;
+   else if ( strcasecmp( s, "src_alpha_saturate" ) == 0 )
+      return GL_SRC_ALPHA_SATURATE;
    return 0;
 }
 

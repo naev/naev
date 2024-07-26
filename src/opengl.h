@@ -109,11 +109,13 @@ int  gl_setupFullscreen( void );
 /*
  * misc
  */
-void  gl_colourblind( void );
-GLint gl_stringToFilter( const char *s );
-GLint gl_stringToClamp( const char *s );
-void  gl_screenshot( const char *filename );
-void  gl_saveFboDepth( GLuint fbo, const char *filename );
+void   gl_colourblind( void );
+GLenum gl_stringToFilter( const char *s );
+GLenum gl_stringToClamp( const char *s );
+GLenum gl_stringToBlendFunc( const char *s );
+GLenum gl_stringToBlendFactor( const char *s );
+void   gl_screenshot( const char *filename );
+void   gl_saveFboDepth( GLuint fbo, const char *filename );
 #ifdef DEBUGGING
 #define gl_checkErr() gl_checkHandleError( __func__, __LINE__ )
 void gl_checkHandleError( const char *func, int line );
