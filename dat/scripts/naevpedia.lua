@@ -128,7 +128,7 @@ end
    luastr = luastr.."return out"
    local pr = _G.print
    local c = loadstring(luastr)
-   --setfenv( c, { _G={}, print=pr } )
+   setfenv( c, _G )
    local success,result_or_err = pcall( c )
    _G.print = pr
    if not success then
