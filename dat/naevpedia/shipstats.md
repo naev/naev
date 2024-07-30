@@ -8,6 +8,9 @@ There are many different important stats for ships that define their behavour wh
 * [Model](ships): The name of the ship model.
 * [Class](shipstats/class): The ship class.
 * [Value](credits): The value of the ship including all the [outfits](outfits) equipped on it.
+<% if naev.player.fleetCapacity() > 0 then %>
+* [Points](mechanics/playerfleet):
+<% end %>
 * [Crew](mechanics/boarding): The crew the ship has. This plays a role when [boarding](mechanics/boarding) other ships.
 
 ## Movement Stats
