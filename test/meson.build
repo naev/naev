@@ -3,7 +3,7 @@ subdir('glcheck')
 test('main_menu',
     find_program('watch-for-msg.py'),
     args: [
-        naev_sh,
+        naev_py,
         'Reached main menu'
     ],
     env: ['WITHGDB=NO'],

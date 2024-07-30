@@ -392,7 +392,7 @@ int main (void) { return 0; }''')
       build_by_default: true
    )
 
-   naev_sh = configure_file(
+   naev_py = configure_file(
       input: join_paths('utils','build','naev.py'),
       output: 'naev.py',
       configuration: {
