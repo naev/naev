@@ -3,6 +3,56 @@
 <event name="Ship Lover Quiz">
  <location>land</location>
  <chance>10</chance>
+ <cond>
+   local pnt = spob.cur()
+   -- Do not spawn on restricted spobs
+   if pnt:tags().restricted then return false end
+
+   -- Ignore on uninhabited and planets without bars
+   local services = pnt:services()
+   local flags = pnt:flags()
+   if not services.inhabited or not services.bar or flags.nomissionspawn then
+      return false
+   end
+
+   -- Only available on whitelisted factions
+   local whitelist = {
+      ["Independent"]= true,
+      ["Empire"]     = true,
+      ["Dvaered"]    = true,
+      ["Sirius"]     = true,
+      ["Soromid"]    = true,
+      ["Za'lek"]     = true,
+      ["Goddard"]    = true,
+      ["Frontier"]   = true,
+   }
+   local pfact = pnt:faction()
+   if not pfact or not whitelist[ pfact:nameRaw() ] then
+      return false
+   end
+
+   -- Make sure not same system as last time
+   local lastplanet = var.peek("shiplover_lastplanet")
+   if lastplanet then
+      if spob.get(lastplanet):system() == system.cur() then
+         return false
+      end
+   end
+
+   -- Only allow once every 10 periods at best
+   local lastplayed = var.peek("shiplover_lastplayed")
+   if not lastplayed then
+      lastplayed = time.get():tonumber()
+      var.push( "shiplover_lastplayed", lastplayed )
+   end
+   lastplayed = time.fromnumber( lastplayed )
+   if lastplayed + time.new( 0, 10, 0 ) > time.get() then
+      return false
+   end
+
+   -- Good to go
+   return true
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>
@@ -142,56 +192,8 @@ end
 
 local nplayed
 function create ()
-   local pnt = spob.cur()
-
    -- Ignore claimed systems (don't want to ruin the atmosphere)
    if not naev.claimTest( system.cur() ) then evt.finish() end
-
-   -- Do not spawn on restricted spobs
-   if pnt:tags().restricted then evt.finish() end
-
-   -- Ignore on uninhabited and planets without bars
-   local services = pnt:services()
-   local flags = pnt:flags()
-   if not services.inhabited or not services.bar or flags.nomissionspawn then
-      evt.finish()
-   end
-
-   -- Only available on whitelisted factions
-   local whitelist = {
-      ["Independent"]= true,
-      ["Empire"]     = true,
-      ["Dvaered"]    = true,
-      ["Sirius"]     = true,
-      ["Soromid"]    = true,
-      ["Za'lek"]     = true,
-      ["Goddard"]    = true,
-      ["Frontier"]   = true,
-   }
-
-   local pfact = pnt:faction()
-   if not pfact or not whitelist[ pfact:nameRaw() ] then
-      evt.finish()
-   end
-
-   -- Make sure not same system as last time
-   local lastplanet = var.peek("shiplover_lastplanet")
-   if lastplanet then
-      if spob.get(lastplanet):system() == system.cur() then
-         evt.finish()
-      end
-   end
-
-   -- Only allow once every 10 periods at best
-   local lastplayed = var.peek("shiplover_lastplayed")
-   if not lastplayed then
-      lastplayed = time.get():tonumber()
-      var.push( "shiplover_lastplayed", lastplayed )
-   end
-   lastplayed = time.fromnumber( lastplayed )
-   if lastplayed + time.new( 0, 10, 0 ) > time.get() then
-      evt.finish()
-   end
 
    -- See how many times cleared
    local quiz_types = {
