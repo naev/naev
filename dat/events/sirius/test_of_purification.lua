@@ -18,8 +18,8 @@ local chakra = require "luaspfx.chakra_explosion"
 local srs = require "common.sirius"
 
 local prevship
-local reward = outfit.get("Avatar of Sirichana")
-local obelisk = spob.get("Kal Sitra Obelisk")
+local reward = outfit.get("Cleansing Flames")
+local obelisk = spob.get("Kal Vora Obelisk")
 
 local drange = 50
 local dplace = 80
