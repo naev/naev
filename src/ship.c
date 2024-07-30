@@ -387,6 +387,9 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
    char       buf[STRMAX_SHORT];
    glTexture *gltex;
 
+   /* Load graphic if applicable. */
+   ship_gfxLoad( (Ship *)s );
+
    fbosize = size / gl_screen.scale;
 
    gl_contextSet();
@@ -419,6 +422,9 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
    glTexture *gltex;
 
    fbosize = ceil( size / gl_screen.scale );
+
+   /* Load graphic if applicable. */
+   ship_gfxLoad( (Ship *)s );
 
    gl_contextSet();
    gl_fboCreate( &fbo, &tex, fbosize, fbosize );
@@ -466,8 +472,7 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
       glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
       glBlitFramebuffer( 0, 0, rendersize, rendersize, 0, fbosize, fbosize, 0,
                          GL_COLOR_BUFFER_BIT, GL_LINEAR );
-   }
-   if ( s->gfx_comm != NULL ) {
+   } else if ( s->gfx_comm != NULL ) {
       glTexture *glcomm;
       double     scale, w, h;
 
@@ -482,7 +487,8 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
                         0., 0., 1., 1., NULL, 0. );
 
       gl_freeTexture( glcomm );
-   }
+   } else
+      WARN( _( "Unable to render comm graphic for ship '%s'!" ), s->name );
 
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glDeleteTextures( 1, &depth_tex );
