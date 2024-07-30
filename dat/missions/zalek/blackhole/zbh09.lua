@@ -470,7 +470,7 @@ function heartbeat_ferals ()
             p:setInvincible(true)
             p:setHostile(false)
             p:setInvisible(true)
-            p:control()
+            p:control(true)
             p:moveto( l:pos() + vec2.newP( 500*rnd.rnd(), rnd.angle() ) )
          end
       end
@@ -494,6 +494,7 @@ function heartbeat_ferals ()
             if p:exists() then
                p:setInvisible(false)
                p:taskClear()
+               p:control(true)
                p:brake()
                p:face( icarus )
             end
@@ -530,7 +531,7 @@ function heartbeat_ferals ()
       for k,p in ipairs(pack) do
          p:control( false )
       end
-      l:control()
+      l:control(true)
       l:hyperspace()
       l:setHilight(false)
 
