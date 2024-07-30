@@ -10,8 +10,10 @@ project(
 cc = meson.get_compiler('c')
 add_project_arguments('-DPACKAGE="lyaml"', language: 'c')
 add_project_arguments('-DVERSION="6.2.8"', language: 'c')
-add_project_arguments('-DNDEBUG=1', language: 'c')
-add_project_arguments('-D_FORTIFY_SOURCE=2', language: 'c')
+if not get_option('debug')
+  add_project_arguments('-DNDEBUG=1', language: 'c')
+  add_project_arguments('-D_FORTIFY_SOURCE=2', language: 'c')
+endif
 
 lyaml_src = files(
     'ext/yaml/yaml.c',
