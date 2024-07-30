@@ -164,7 +164,10 @@ local function loaddoc( filename )
    return success, cmark.parse_string( dat, cmark.OPT_DEFAULT ), meta
 end
 
-function naevpedia.open( name )
+--[[--
+Sets up the naevpedia. Meant to be used through naevpedia.open or naevpedia,vn.
+--]]
+function naevpedia.setup( name )
    name = name or "index"
 
    local history = {}
@@ -237,13 +240,14 @@ function naevpedia.open( name )
    local topbar = {"mechanics","history"}
    local bw, bh = 100, 30
    local topbarw = #topbar*(20+bw)-20
+   local xoff = 340 + (w-340-topbarw)*0.5
    for k,v in ipairs(topbar) do
-      local bx = w-topbarw-(20+bw)*(k-1)+20
-      print("foo")
-      print( string.format("w=%d, topbarw=%d, bx=%d, k=%d", w, topbarw, bx, k ) )
-      luatk.newButton( wdw, bx, 20, bw, bh, _(v), function ()
-         local e = nc._naevpedia[v].title
-         open_page( _(e.title or e.name) )
+      local bx = xoff+(20+bw)*(k-1)
+      luatk.newButton( wdw, bx, 40, bw, bh, _(v), function ()
+         local e = nc._naevpedia[v]
+         if e then
+            open_page( e.name )
+         end
       end )
    end
 
@@ -267,8 +271,8 @@ function naevpedia.open( name )
       -- Load the document
       local success, doc, _meta = loaddoc( filename )
 
-      -- Set dimensions here
-      local mx, my, mw, mh = 20+300+40+20, 40, w-(20+300+40+40), h-110
+      -- Set markdown dimensions here
+      local mx, my, mw, mh = 20+300+40+20, 80, w-(20+300+40+40), h-110-40
 
       -- Create widget
       if not success then
@@ -315,7 +319,28 @@ function naevpedia.open( name )
          end
       end
    end )
+end
+
+--[[--
+For running the naevpedia from a Lua script.
+
+   @luatparam name string Name of the file to open.
+--]]
+function naevpedia.open( name )
+   naevpedia.setup( name )
    luatk.run()
+end
+
+--[[--
+For running the naevpedia from the VN.
+
+   @luatparam name string Name of the file to open.
+   @luatreturn State The newly created VN state.
+--]]
+function naevpedia.vn( name )
+   return luatk.vn( function ()
+      naevpedia.setup( name )
+   end )
 end
 
 return naevpedia
