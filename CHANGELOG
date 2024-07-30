@@ -78,6 +78,7 @@
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons
+   * `blackhole/zbh09`: fixed softlock during a cutscene under certain conditions
 
 * 0.11.5
    * Fixed FLF-Pirate map not providing jump information
