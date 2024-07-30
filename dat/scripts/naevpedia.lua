@@ -233,6 +233,20 @@ function naevpedia.open( name )
    end, defelem )
    wdw:setFocus( lst )
 
+   -- Top bar
+   local topbar = {"mechanics","history"}
+   local bw, bh = 100, 30
+   local topbarw = #topbar*(20+bw)-20
+   for k,v in ipairs(topbar) do
+      local bx = w-topbarw-(20+bw)*(k-1)+20
+      print("foo")
+      print( string.format("w=%d, topbarw=%d, bx=%d, k=%d", w, topbarw, bx, k ) )
+      luatk.newButton( wdw, bx, 20, bw, bh, _(v), function ()
+         local e = nc._naevpedia[v].title
+         open_page( _(e.title or e.name) )
+      end )
+   end
+
    -- Backbutton
    btnfwd = luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Forward"), gofwd )
    if #historyrev <= 0 then
