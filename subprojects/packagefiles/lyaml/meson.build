@@ -14,6 +14,9 @@ if not get_option('debug')
   add_project_arguments('-DNDEBUG=1', language: 'c')
   add_project_arguments('-D_FORTIFY_SOURCE=2', language: 'c')
 endif
+# Ideally we would want this fixed upstream
+add_project_arguments('-Wno-unused-parameter', language: 'c')
+add_project_arguments('-Wno-unused-variable', language: 'c')
 
 lyaml_src = files(
     'ext/yaml/yaml.c',
