@@ -23,6 +23,4 @@
   "FileExclusion" "*.x64"
   "FileExclusion" "*.x32"
   "FileExclusion" "*.so"
-   // add exclusions for luajit binaries
-  "FileExclusion" "luajit*.exe"
 }
