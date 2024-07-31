@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-07-22 21:45+0900\n"
-"PO-Revision-Date: 2024-07-31 17:17+0000\n"
+"PO-Revision-Date: 2024-07-31 19:45+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev/ca/>\n"
 "Language: ca\n"
@@ -69,7 +69,7 @@ msgstr "no trobat"
 
 #: physfs.c:13
 msgid "symlinks are forbidden"
-msgstr ""
+msgstr "els enllaços simbòlics estan prohibits"
 
 #: physfs.c:14
 msgid "write directory is not set"
