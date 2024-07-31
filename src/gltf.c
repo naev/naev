@@ -93,6 +93,7 @@ const Lighting L_default_const = {
             .intensity = 2000.,
              */
          },
+         { 0 },
       },
 };
 const Lighting L_store_const = {
@@ -117,6 +118,7 @@ const Lighting L_store_const = {
             .pos       = { .v = { 10., 11.5, 7. } },
             .intensity = 1.,
          },
+         { 0 },
       },
 };
 Lighting L_default;

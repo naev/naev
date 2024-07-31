@@ -1490,7 +1490,8 @@ int ships_load( void )
    for ( int i = 0; i < nfiles; i++ ) {
       if ( ndata_matchExt( ship_files[i], "xml" ) ) {
          ShipThreadData *td = &array_grow( &shipdata );
-         td->filename       = ship_files[i];
+         memset( td, 0, sizeof( ShipThreadData ) );
+         td->filename = ship_files[i];
       } else
          free( ship_files[i] );
    }
