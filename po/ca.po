@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-07-22 21:45+0900\n"
-"PO-Revision-Date: 2024-07-31 19:45+0000\n"
+"PO-Revision-Date: 2024-08-01 01:26+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev/ca/>\n"
 "Language: ca\n"
@@ -73,77 +73,80 @@ msgstr "els enllaços simbòlics estan prohibits"
 
 #: physfs.c:14
 msgid "write directory is not set"
-msgstr ""
+msgstr "el directori d'escriptura no està definit"
 
 #: physfs.c:15
 msgid "file open for reading"
-msgstr ""
+msgstr "fitxer obert per a llegir-lo"
 
 #: physfs.c:16
 msgid "file open for writing"
-msgstr ""
+msgstr "fitxer obert per a escriure"
 
 #: physfs.c:17
 msgid "not a file"
-msgstr ""
+msgstr "no es un fitxer"
 
 #: physfs.c:18
 msgid "read-only filesystem"
-msgstr ""
+msgstr "sistema de fitxers de només lectura"
 
 #: physfs.c:19
 msgid "corrupted"
-msgstr ""
+msgstr "corromput"
 
 #: physfs.c:20
 msgid "infinite symbolic link loop"
-msgstr ""
+msgstr "bucle d'enllaç simbòlic infinit"
 
 #: physfs.c:21
 msgid "i/o error"
-msgstr ""
+msgstr "error d'entrada/sortida"
 
 #: physfs.c:22
 msgid "permission denied"
-msgstr ""
+msgstr "permís denegat"
 
 #: physfs.c:23
 msgid "no space available for writing"
-msgstr ""
+msgstr "no hi ha espai disponible per a escriure"
 
 #: physfs.c:24
 msgid "filename is illegal or insecure"
-msgstr ""
+msgstr "el nom del fitxer és il·legal o insegur"
 
 #: physfs.c:25
 msgid "tried to modify a file the OS needs"
-msgstr ""
+msgstr "s'ha intentat modificar un fitxer que el sistema operatiu necessita"
 
 #: physfs.c:26
 msgid "directory isn't empty"
-msgstr ""
+msgstr "el directori no està buit"
 
 #: physfs.c:27
 msgid "OS reported an error"
-msgstr ""
+msgstr "SO ha informat d'un error"
 
 #: physfs.c:28
 msgid "duplicate resource"
-msgstr ""
+msgstr "recurs duplicat"
 
 #: physfs.c:29
 msgid "bad password"
-msgstr ""
+msgstr "contrasenya dolenta"
 
 #: physfs.c:30
 msgid "app callback reported error"
-msgstr ""
+msgstr "aplicació de devolució de trucada a informat d'un error"
 
 #: dat/intro:2
 msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
+"El cel nocturn sempre atrau els nostres ulls. La gent mira amunt amb una "
+"pregunta, o amb curiositat, i de vegades amb un somni: aventurar-se entre "
+"les estrelles."
 
 #: dat/intro:4
 msgid ""
@@ -151,6 +154,9 @@ msgid ""
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
+"Des de la Terra, els primers viatgers espacials van veure petites joies que "
+"brillaven amb la llum dels sols llunyans, lluny, però tan clares. Estirar la "
+"mà i agafar-ne una només costaria tota la vida. Barat al seu preu."
 
 #: dat/intro:7
 msgid ""
@@ -158,6 +164,10 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
+"Així doncs, homes i dones van tancar els seus cossos adormits dins d'enormes "
+"caixes metàl·liques. Es van llançar al buit. Al arribar, van descendre i es "
+"van despertar i van trobar noves estrelles mirant-los fredament des de cels "
+"estranys."
 
 #: dat/intro:10
 msgid ""
@@ -166,6 +176,11 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"La primera onada d'exploradors es va desplaçar d'estrella a estrella a "
+"velocitats de subllum, fins qu la invenció del motor d'hiperespai va "
+"estimular un segon creixement. Llavors es va estendre la civilització, com "
+"sempre ho ha fet, amb entusiasme exponencial -- ondulacions en el mar fosc "
+"de l'espai."
 
 #: dat/intro:12
 msgid ""
@@ -174,12 +189,19 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
+"Tanmateix, l'era heroica del descobriment només va durar mentre la "
+"curiositat humana va superar la cobdícia. Massa aviat, el conflicte va "
+"esclatar a les colònies. Terra, combustible, menjar, i la desconfiança va "
+"sembrar les llavors de la discòrdia. Un cop va començar, la febre de la "
+"guerra es va estendre de món a món i es va convertir en un holocaust."
 
 #: dat/intro:15
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
+"Després de cent anys de conflicte interestel·lar, sobre les cendres que "
+"quedaven, per fi un nou ordre va construir els seus fonaments."
 
 #: dat/intro:17
 msgid ""
@@ -188,6 +210,11 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
+"Un home anomenat Daedris va afirmar el domini sobre els mons esgotats. Va "
+"fundar un Imperi Galàctic i es va nomenar el seu governant. Sota la mà de "
+"ferro de la seva milícia, es van reprendre les relacions entre planetes; les "
+"rutes comercials abandonades van veure trànsit per primera vegada en la "
+"memòria viva."
 
 #: dat/intro:19
 msgid ""
@@ -195,6 +222,9 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
+"Els estudiosos l'anomenen el zenit: la tecnologia va saltar endavant, la "
+"cultura va florir, la roca irradiada es va netejar i els planetes morts van "
+"tornar a la vida. La pau va regnar en una edat d'or imperial."
 
 #: dat/intro:21
 msgid ""
@@ -203,18 +233,24 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
+"Després de Daedris, sota els seus successors, la llum de l'imperi va minvar. "
+"Els conflictes civils i la divisió religiosa van afeblir els vincles "
+"socials. Els grans projectes de l'imperi van sortir malament. En algunes "
+"regions, l'administració va caure en mans d'altres poders. Les Grans Cases "
+"ara vigilaven els carrils espacials."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history."
-msgstr ""
+msgstr "Puja i baixa, el ritme de la història."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
 msgstr ""
+"Però la marxa de la història va ensopegar amb el desconegut, amb l'Incident."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr ""
+msgstr "Va arrencar el cor de l'Imperi."
 
 #: dat/intro:29
 msgid ""
@@ -223,10 +259,15 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"Des de la Terra, una explosió cataclísmica va arrasar l'espai, aniquilant "
+"estrelles, vaporitzant mons. Milers de milions van morir. Desenes de "
+"sistemes van desaparèixer a la misteriosa nebulosa deixada enrere. Ara, la "
+"gran civilització que abasta galàxies sobreviu com a ombra de la seva antiga "
+"glòria."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr ""
+msgstr "Què més queda? Preguntes."
 
 #: dat/intro:34
 msgid ""
@@ -234,187 +275,191 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
+"Han passat deu cicles estàndard en un univers governat pels fragments d'un "
+"imperi en decadència. Després de l'incident, la corrupció i la pirateria es "
+"varen desenvolupar sense control, però on hi ha caos, també hi ha "
+"oportunitat."
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr ""
+msgstr "Benvingut a l'univers de Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "Equip de Desenvolupament Central Actual"
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:184
 #: dat/AUTHORS:197 dat/AUTHORS:218
 msgid "---------------------------------------"
-msgstr ""
+msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr ""
+msgstr "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * Desenvolupador principal"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
-msgstr ""
+msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * Escriptor de Contes i Desenvolupament de Miscel·lanis"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
-msgstr ""
+msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
 msgid "   * Misc. Development and Lua unifier"
-msgstr ""
+msgstr "   * Desenvolupament de miscel·lani i unificador de Lua"
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
-msgstr ""
+msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:14
 msgid "   * Code Carnage and Bug Beating"
-msgstr ""
+msgstr "   * Carnisseria de Codi i Matxaca Errors"
 
 #: dat/AUTHORS:16
 msgid "nenau"
-msgstr ""
+msgstr "nenau"
 
 #: dat/AUTHORS:17
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr ""
+msgstr "   * Desenvolupament de miscel·lani i aficionat dels Dvaered"
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
-msgstr ""
+msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
-msgstr ""
+msgstr "   * El tio del CI i es el Portador de llançaments automatitzats"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
-msgstr ""
+msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
 msgid "   * 3D modelling"
-msgstr ""
+msgstr "   * Modelatge 3D"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
-msgstr ""
+msgstr "Equip de desenvolupament anterior"
 
 #: dat/AUTHORS:28
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
-msgstr ""
+msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
 #: dat/AUTHORS:29
 msgid "   * Bringer of Sound"
-msgstr ""
+msgstr "   * Portador del so"
 
 #: dat/AUTHORS:31
 msgid "Deiz"
-msgstr ""
+msgstr "Deiz"
 
 #: dat/AUTHORS:32 dat/AUTHORS:35
 msgid "   * Misc. Development"
-msgstr ""
+msgstr "   * Desenvolupament miscel·lani"
 
 #: dat/AUTHORS:34
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
-msgstr ""
+msgstr "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:37
 msgid "Major Contributors"
-msgstr ""
+msgstr "Col·laboradors principals"
 
 #: dat/AUTHORS:40
 msgid "Josiah Schwartfeger"
-msgstr ""
+msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:41
 msgid "   * Graphic Designer and Modeller"
-msgstr ""
+msgstr "   * Dissenyador gràfic i modelista"
 
 #: dat/AUTHORS:43
 msgid "Elderman"
-msgstr ""
+msgstr "Elderman"
 
 #: dat/AUTHORS:44
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * Desenvolupament de la missió"
 
 #: dat/AUTHORS:45
 msgid "   The first non-bobbens mission developer!"
-msgstr ""
+msgstr "   El primer desenvolupador de missions que no és Bobbens!"
 
 #: dat/AUTHORS:47
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
-msgstr ""
+msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
 #: dat/AUTHORS:48
 msgid "   * NPC Portrait Artist"
-msgstr ""
+msgstr "   * Artista retrat NPC"
 
 #: dat/AUTHORS:50
 msgid "Enigmatic"
-msgstr ""
+msgstr "Enigmatic"
 
 #: dat/AUTHORS:51
 msgid "   * Ships for the Sirius, many other models and faction logos"
-msgstr ""
+msgstr "   * Naus per al Sirius, molts altres models i logotips de faccions"
 
 #: dat/AUTHORS:53
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
-msgstr ""
+msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:54
 msgid "   * Naev logo, Lua GUI development"
-msgstr ""
+msgstr "   * Logotip de Naev, desenvolupament de la GUI de Lua"
 
 #: dat/AUTHORS:56
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
-msgstr ""
+msgstr "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:57
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr ""
+msgstr "   * Naus per als Soromid i els Za'lek"
 
 #: dat/AUTHORS:59
 msgid "Askyel"
-msgstr ""
+msgstr "Askyel"
 
 #: dat/AUTHORS:60
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
-msgstr ""
+msgstr "   * Compositor de gairebé una hora de música exclusiva de Naev."
 
 #: dat/AUTHORS:62
 msgid "Contributions"
-msgstr ""
+msgstr "Aportacions"
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
-msgstr ""
+msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * Models de naus"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * Musica"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * So"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * Imatges de planetes"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -422,86 +467,95 @@ msgid ""
 "didn't actively participate, by allowing me to use their data they did me a "
 "great favour and let me concentrate on the coding."
 msgstr ""
+"   No hauria estat possible sense l'equip de Vega Strike, tot i que no hi "
+"van participar activament, en permetre'm utilitzar les seves dades em van "
+"fer un gran favor i em van deixar concentrar-me en el codi."
 
 #: dat/AUTHORS:72
 msgid "Joel Hans <wolorf@gmail.com>"
-msgstr ""
+msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr ""
+msgstr "   * Gràfics dels planetes"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
-msgstr ""
+msgstr "   * Script de renderitzat"
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
-msgstr ""
+msgstr "   Va ajudar quan començava el projecte. Gran reforç de la moral."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
-msgstr ""
+msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
 msgid "Rob Loach <http://robloach.net>"
-msgstr ""
+msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
-msgstr ""
+msgstr "   * SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
+"   Tot i que no utilitzem la mateixa biblioteca SDL_collide, va ser una "
+"inspiració per a les pròpies rutines de col·lisió de Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
-msgstr ""
+msgstr "Pete Shinners <pete@shinners.org>"
 
 #: dat/AUTHORS:83
 msgid "   * SavePNG"
-msgstr ""
+msgstr "   * SavePNG"
 
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
-msgstr ""
+msgstr "   Gran funció extreta directament de pygame. Funciona de meravella!"
 
 #: dat/AUTHORS:86
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
-msgstr ""
+msgstr "Aurore D. \"Rore\" <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
-msgstr ""
+msgstr "   * Script del planeta gimp"
 
 #: dat/AUTHORS:88
 msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
+"   Ens hem estalviat molts problemes en permetre'ns crear ràpidament gràfics "
+"de planetes espacials."
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
-msgstr ""
+msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
-msgstr ""
+msgstr "   * Sprite gimp script"
 
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
+"   Tot i que no s'utilitza directament, ens va ajudar a crear el nostre "
+"propi script sprite."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
-msgstr ""
+msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * Soroll de turbulència"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -509,51 +563,58 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
+"   Després de l'horrible fracàs del nostre propi intent de fractal de "
+"plasma, el soroll de turbulència de TCOD semblava fer-ho tot perfectament "
+"allà on ens vam equivocar. Amb una gran optimització, el codi es va "
+"introduir a Naev."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
-msgstr ""
+msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr ""
+msgstr "   * Model del coet de maça"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
-msgstr ""
+msgstr "Brian J. Cameron"
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
-msgstr ""
+msgstr "   *Molta obra d'art"
 
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
+"   Artista amb talent, un dels primers a crear contingut personalitzat de "
+"Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
-msgstr ""
+msgstr "Camilo Polymeris <cpolymeris@gmx.net>"
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
-msgstr ""
+msgstr "   * Art i codi"
 
 #: dat/AUTHORS:107
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
+"   Genial veure algú més treballant en el codi Naev i la documentació de Lua."
 
 #: dat/AUTHORS:109
 msgid "Dimitry Marakasov"
-msgstr ""
+msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
-msgstr ""
+msgstr "   * FreeBSD port i CMake"
 
 #: dat/AUTHORS:111
 msgid "   Talented coder who did the first official port of Naev."
-msgstr ""
+msgstr "   Programador talentós que va fer el primer port oficial de Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
