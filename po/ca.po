@@ -8,18 +8,20 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-08-02 04:09+0000\n"
+"Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
+"ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: physfs.c:1
 msgid "no error"
-msgstr ""
+msgstr "cap error"
 
 #: physfs.c:2 src/background.c:453 src/gui.c:1745 src/nlua_evt.c:146
 #: src/nlua_misn.c:237 src/nopenal.c:68
@@ -1337,69 +1339,75 @@ msgid "#gEnergy#0"
 msgstr ""
 
 #: dat/damagetype/energy_noknockback.xml:2
+#, fuzzy
 msgid "energy_noknockback"
-msgstr ""
+msgstr "energy_noknockback"
 
 #: dat/damagetype/explosion_splash.xml:2
+#, fuzzy
 msgid "explosion_splash"
-msgstr ""
+msgstr "explosion_splash"
 
 #: dat/damagetype/ion.xml:2
+#, fuzzy
 msgid "ion"
-msgstr ""
+msgstr "ion"
 
 #: dat/damagetype/ion.xml:2
+#, fuzzy
 msgid "#yIon#0"
-msgstr ""
+msgstr "#yIon#0"
 
 #: dat/damagetype/kinetic.xml:2
 msgid "kinetic"
-msgstr ""
+msgstr "cinètica"
 
 #: dat/damagetype/kinetic.xml:2
 msgid "#oKinetic#0"
-msgstr ""
+msgstr "#oCinètica#0"
 
 #: dat/damagetype/nebula.xml:2
 msgid "nebula"
-msgstr ""
+msgstr "nebulosa"
 
 #: dat/damagetype/nebula.xml:2
 msgid "#pNebula#0"
-msgstr ""
+msgstr "#pnebulosa#0"
 
 #: dat/damagetype/plasma.xml:2
+#, fuzzy
 msgid "plasma"
-msgstr ""
+msgstr "plasma"
 
 #: dat/damagetype/plasma.xml:2
+#, fuzzy
 msgid "#rPlasma#0"
-msgstr ""
+msgstr "#rPlasma#0"
 
 #: dat/difficulty/default.xml:2 dat/events/escort_settings.lua:83
 #: src/dev_uniedit.c:433
 msgid "Default"
-msgstr ""
+msgstr "Per defecte"
 
 #: dat/difficulty/default.xml:3
 msgid "Standard difficulty mode."
-msgstr ""
+msgstr "Mode de dificultat estàndard."
 
 #: dat/difficulty/easy_mode.xml:2
 msgid "Easy Mode"
-msgstr ""
+msgstr "Mode Fàcil"
 
 #: dat/difficulty/easy_mode.xml:3
 msgid "Makes the game easier for the player, without trivializing most things."
-msgstr ""
+msgstr "Facilita el joc al jugador, sense banalitzar la majoria de les coses."
 
 #: dat/difficulty/masochist_mode.xml:2
 msgid "Masochist Mode"
-msgstr ""
+msgstr "Mode Masoquista"
 
 #: dat/difficulty/masochist_mode.xml:3
 msgid "Makes the game significantly harder for the player."
-msgstr ""
+msgstr "Fa que el joc sigui significativament més difícil per al jugador."
 
 #: dat/difficulty/slow_mode.xml:2
 msgid "Slow Mode"
@@ -1413,13 +1421,15 @@ msgstr ""
 
 #: dat/difficulty/story_mode.xml:2
 msgid "Story Mode"
-msgstr ""
+msgstr "Mode Història"
 
 #: dat/difficulty/story_mode.xml:3
 msgid ""
 "Significantly reduces the difficulty of the game, allowing to concentrate on "
 "the story."
 msgstr ""
+"Redueix significativament la dificultat del joc, permetent concentrar-se en "
+"la història."
 
 #: dat/effects/ambush_hunter.xml:2
 #: dat/outfits/bioship/skills/ambush_hunter.xml:2
