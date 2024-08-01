@@ -93,6 +93,7 @@ const Lighting L_default_const = {
             .intensity = 2000.,
              */
          },
+         { 0 },
       },
 };
 const Lighting L_store_const = {
@@ -117,6 +118,7 @@ const Lighting L_store_const = {
             .pos       = { .v = { 10., 11.5, 7. } },
             .intensity = 1.,
          },
+         { 0 },
       },
 };
 Lighting L_default;
@@ -571,7 +573,7 @@ static GLuint gltf_loadVBO( const cgltf_accessor *acc, cgltf_float **data,
 {
    GLuint       vid;
    cgltf_size   num = cgltf_accessor_unpack_floats( acc, NULL, 0 );
-   cgltf_float *dat = malloc( sizeof( cgltf_float ) * num );
+   cgltf_float *dat = calloc( num, sizeof( cgltf_float ) );
    cgltf_accessor_unpack_floats( acc, dat, num );
    if ( data != NULL ) {
       *data     = dat;
@@ -614,7 +616,7 @@ static int gltf_loadMesh( GltfObject *obj, const cgltf_data *data, Mesh *mesh,
       }
 
       cgltf_size num = cgltf_num_components( acc->type ) * acc->count;
-      GLuint    *idx = malloc( sizeof( cgltf_uint ) * num );
+      GLuint    *idx = calloc( num, sizeof( cgltf_uint ) );
       for ( size_t j = 0; j < num; j++ )
          cgltf_accessor_read_uint( acc, j, &idx[j], 1 );
 
@@ -754,7 +756,7 @@ static int gltf_loadNode( GltfObject *obj, const cgltf_data *data, Node *node,
                        } };
             if ( j + 1 >= r )
                break;
-            trail.generator = malloc( t[j + 1].end - t[j + 1].start + 1 );
+            trail.generator = calloc( 1, t[j + 1].end - t[j + 1].start + 1 );
             strncpy( trail.generator, &cnode->extras.data[t[j + 1].start],
                      t[j + 1].end - t[j + 1].start );
             trail.generator[t[j + 1].end - t[j + 1].start] = '\0';
@@ -824,7 +826,7 @@ static int gltf_loadAnimation( GltfObject *obj, const cgltf_data *data,
       }
 
       samp->n    = cgltf_accessor_unpack_floats( csamp->input, NULL, 0 );
-      samp->time = malloc( sizeof( cgltf_float ) * samp->n );
+      samp->time = calloc( samp->n, sizeof( cgltf_float ) );
       cgltf_accessor_unpack_floats( csamp->input, samp->time, samp->n );
       samp->max = samp->time[samp->n - 1]; /**< Assume last keyframe. */
 
@@ -833,7 +835,7 @@ static int gltf_loadAnimation( GltfObject *obj, const cgltf_data *data,
       if ( cgltf_num_components( csamp->output->type ) * samp->n != n )
          WARN( _( "Wrong number of elements. Got %lu, but expected %lu!" ),
                samp->n * cgltf_num_components( csamp->output->type ), n );
-      samp->data = malloc( sizeof( cgltf_float ) * n );
+      samp->data = calloc( n, sizeof( cgltf_float ) );
       cgltf_accessor_unpack_floats( csamp->output, samp->data, n );
    }
 

@@ -290,7 +290,7 @@ function love_shaders.aura( params )
    local strength = params.strength or 1
    local speed = params.speed or 1
    local size = params.size or 40 -- Gaussian blur sigma
-   local pixelcode = string.format(love_file.read( "scripts/love_shaders/windy.frag" ),
+   local pixelcode = string.format(love_file.read( "scripts/love_shaders/aura.frag" ),
          colour[1], colour[2], colour[3], strength, speed, love_math.random() )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader.prerender = function( self, image )

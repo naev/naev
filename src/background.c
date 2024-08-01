@@ -343,7 +343,8 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
       *arr = array_create( background_image_t );
 
    /* Create image. */
-   bkg            = &array_grow( arr );
+   bkg = &array_grow( arr );
+   memset( bkg, 0, sizeof( background_image_t ) );
    bkg->id        = ++bkg_idgen;
    bkg->image     = gl_dupTexture( image );
    bkg->x         = x;
@@ -353,7 +354,7 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
    bkg->angle     = angle;
    bkg->col       = ( col != NULL ) ? *col : cWhite;
    bkg->radiosity = *radiosity;
-   bkg->L_idx     = -1;
+   bkg->L_idx     = -1; /* Disable lighting. */
 
    /* Deal with lighting. */
    a = bkg->radiosity.a;
@@ -361,8 +362,7 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
        pow2( a * bkg->radiosity.b );
    if ( d > 1e-3 ) {
       /* Get index. */
-      int idx    = L_default.nlights - L_default_const.nlights;
-      bkg->L_idx = idx;
+      bkg->L_idx = L_default.nlights - L_default_const.nlights;
 
       /* Normalize so RGB is unitary. Compensate modifying alpha. */
       bkg->radiosity.r /= d;
