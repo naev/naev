@@ -27,8 +27,8 @@ local function extractmetadata( entry, s )
       category = path[1],
       name = path[#path],
    }
-   if #path >= 2 then
-      meta.parent = path[1] -- Just use top parent
+   if #path >= 3 then
+      meta.parent = path[2] -- Just use subcategory (assuming only same category is visible)
    end
    if utf8.find( s, "---\n", 1, true )==1 then
       local es, ee = utf8.find( s, "---\n", 4, true )

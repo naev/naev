@@ -1,5 +1,5 @@
 ---
-title: "Game Mechanics"
+title: "Mechanics Overview"
 ---
 ## Mechanics
 
