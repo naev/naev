@@ -51,6 +51,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
 
    -- Some helpers
    wgt.linkfunc = options.linkfunc
+   wgt.linktargetfunc = options.linktargetfunc
 
    local deffont = options.font or luatk._deffont or lg.getFont()
    -- TODO load same font family
@@ -76,7 +77,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local emph = false
    local list = cmark.NO_LIST
    local listn
-   local linkx, linky
+   local linkx, linky, linkname
    for cur, entering, node_type in cmark.walk(doc) do
       --print( string.format("%s - %s [%s]", _nodestr(node_type), cmark.node_get_type_string(cur), tostring(entering) ) )
       if node_type == cmark.NODE_PARAGRAPH then
@@ -112,7 +113,18 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       elseif node_type == cmark.NODE_LINK then
          if entering then
             local bx, by = naev.gfx.printfEnd( block.font.font, block.text, w )
-            block.text = block.text .. "#b"
+            if wgt.linktargetfunc then
+               local target = cmark.node_get_url(cur)
+               linkname = wgt.linktargetfunc( target )
+               if linkname then
+                  block.text = block.text .. "#b"
+               else
+                  block.text = block.text .. "#r"
+               end
+            else
+               block.text = block.text .. "#b"
+               linkname = nil
+            end
             linkx = block.x+bx
             linky = block.y+by
          else
@@ -129,6 +141,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   x2 = block.x+bx+3,
                   y2 = block.y+by+fh+3,
                   target = target,
+                  name = linkname
                } )
             else
                -- Two lines
@@ -138,6 +151,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   x2 = w+3,
                   y2 = linky+fh+3,
                   target = target,
+                  name = linkname
                } )
                --  More than 2 lines, bad!
                if block.y+by > linky + flh then
@@ -147,6 +161,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                      x2 = w+3,
                      y2 = block.y+by-flh+fh+3,
                      target = target,
+                     name = linkname
                   } )
                end
                table.insert( wgt.links, {
@@ -155,6 +170,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   x2 = block.x+bx+3,
                   y2 = block.y+by+fh+3,
                   target = target,
+                  name = linkname
                } )
             end
             linkx = nil
@@ -266,6 +282,9 @@ function Markdown:drawover( bx, by )
    for k,l in ipairs(self.links) do
       if l.mouseover then
          lg.rectangle( "line", x+l.x1, y+l.y1, l.x2-l.x1, l.y2-l.y1 )
+         if l.name then
+            luatk.drawAltText( x+l.x2, y+l.y2, l.name )
+         end
       end
    end
 end

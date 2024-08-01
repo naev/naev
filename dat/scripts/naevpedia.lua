@@ -310,6 +310,13 @@ function naevpedia.setup( name )
                historyrev = {}
                btnfwd:disable()
             end,
+            linktargetfunc = function ( target )
+               local lmeta = nc._naevpedia[target]
+               if not lmeta then
+                  return nil
+               end
+               return _(lmeta.title or lmeta.name)
+            end,
          } )
 
          -- Clean up the document
