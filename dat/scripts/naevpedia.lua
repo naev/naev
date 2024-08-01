@@ -207,6 +207,7 @@ function naevpedia.setup( name )
 
    local lstnav
    local function update_list( meta )
+      if not meta.entry then return end
       if lstnav then
          lstnav:destroy()
       end
