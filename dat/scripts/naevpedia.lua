@@ -35,6 +35,16 @@ local function extractmetadata( entry, s )
       meta = tmerge( meta, lyaml.load( utf8.sub( s, 4, es-1 ) ) )
       s = utf8.sub( s, ee+1 )
    end
+   -- Post-processing
+   if meta.cond then
+      local c, cerror = loadstring(meta.cond)
+      if not c then
+         warn( cerror )
+      else
+         setfenv( c, _G )
+         meta.condchunk = c
+      end
+   end
    return s, meta
 end
 
@@ -127,7 +137,11 @@ end
    embed_str( utf8.sub( s, be+1 ) )
    luastr = luastr.."return out"
    local pr = _G.print
-   local c = loadstring(luastr)
+   local c,cerror = loadstring(luastr)
+   if not c then
+      warn( cerror )
+      return false, "#r"..cerror.."#0"
+   end
    setfenv( c, _G )
    local success,result_or_err = pcall( c )
    _G.print = pr
@@ -214,7 +228,7 @@ function naevpedia.setup( name )
 
       local lstelem = {}
       for k,v in pairs(nc._naevpedia) do
-         if meta.category == v.category then
+         if meta.category == v.category and (not v.condchunk or v.condchunk()) then
             table.insert( lstelem, v.entry )
          end
       end
@@ -312,7 +326,7 @@ function naevpedia.setup( name )
             end,
             linktargetfunc = function ( target )
                local lmeta = nc._naevpedia[target]
-               if not lmeta then
+               if not lmeta or (lmeta.condchunk and not lmeta.condchunk())then
                   return nil
                end
                return _(lmeta.title or lmeta.name)
