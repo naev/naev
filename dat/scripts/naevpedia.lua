@@ -205,36 +205,45 @@ function naevpedia.setup( name )
       end
    end
 
-   local lstelem = {}
-   for k,v in pairs(nc._naevpedia) do
-      table.insert( lstelem, v.entry )
-   end
-   table.sort( lstelem, function ( a, b )
-      local na = nc._naevpedia[a]
-      local nb = nc._naevpedia[b]
-      local pa = na.priority or 5
-      local pb = nb.priority or 5
-      if pa < pb then
-         return true
-      elseif pa > pb then
-         return false
+   local lstnav
+   local function update_list( meta )
+      if lstnav then
+         lstnav:destroy()
       end
-      return a < b
-   end )
-   local titles = {}
-   local defelem = 1
-   for k,v in ipairs(lstelem) do
-      if v=="index" then
-         defelem = k
+
+      local lstelem = {}
+      for k,v in pairs(nc._naevpedia) do
+         if meta.category == v.category then
+            table.insert( lstelem, v.entry )
+         end
       end
-      local e = nc._naevpedia[v]
-      local prefix = (e.parent and "↳ ") or ""
-      titles[k] = prefix.._(e.title or e.name)
+      table.sort( lstelem, function ( a, b )
+         local na = nc._naevpedia[a]
+         local nb = nc._naevpedia[b]
+         local pa = na.priority or 5
+         local pb = nb.priority or 5
+         if pa < pb then
+            return true
+         elseif pa > pb then
+            return false
+         end
+         return a < b
+      end )
+      local titles = {}
+      local defelem = 1 -- Defaults to highest priority element otherwise
+      for k,v in ipairs(lstelem) do
+         if v==meta.entry then
+            defelem = k
+         end
+         local e = nc._naevpedia[v]
+         local prefix = (e.parent and "↳ ") or ""
+         titles[k] = prefix.._(e.title or e.name)
+      end
+      lstnav = luatk.newList( wdw, 40, 100, 300, h-200, titles, function ( _name, idx )
+         open_page( lstelem[idx] )
+      end, defelem )
+      wdw:setFocus( lstnav )
    end
-   local lst = luatk.newList( wdw, 40, 100, 300, h-200, titles, function ( _name, idx )
-      open_page( lstelem[idx] )
-   end, defelem )
-   wdw:setFocus( lst )
 
    -- Top bar
    local topbar = {"mechanics","history"}
@@ -269,7 +278,10 @@ function naevpedia.setup( name )
       -- TODO detect if filename is special (like a ship), and grab data from there, or potentially do that when setting up the cache
 
       -- Load the document
-      local success, doc, _meta = loaddoc( filename )
+      local success, doc, meta = loaddoc( filename )
+
+      -- Update the list first
+      update_list( meta )
 
       -- Set markdown dimensions here
       local mx, my, mw, mh = 20+300+40+20, 80, w-(20+300+40+40), h-110-40
