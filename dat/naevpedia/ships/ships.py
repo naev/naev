@@ -37,10 +37,10 @@ cond: "return ship.get(\\\"{d['name']}\\\"):known()"
 * **[Class](mechanics/class)**:   {d['class']}
 * **Fabricator**:   {d['fabricator']}
 * **[Crew](mechanics/boarding)**:   {d['characteristics/crew']}
-* **[Mass](mechanics/movement)**:   {int(d['characteristics/mass']):,} <%= naev.unit('mass') %>
-* **[Base Armour](mechanics/damage)**:   {d['health/armour']}
-* **[Cargo Space](mechanics/cargo)**:   {d['characteristics/cargo']}
-* **[Fuel Consumption](mechanics/hyperspace)**:   {d['characteristics/fuel_consumption']} <%= naev.unit('unit') %>
+* **[Mass](mechanics/movement)**:   {int(d['characteristics/mass']):,} <%= print(naev.unit('mass')) %>
+* **[Base Armour](mechanics/damage)**:   {d['health/armour']} <%= print(naev.unit('energy')) %>
+* **[Cargo Space](mechanics/cargo)**:   {d['characteristics/cargo']} <%= print(naev.unit('mass')) %>
+* **[Fuel Consumption](mechanics/hyperspace)**:   {d['characteristics/fuel_consumption']} <%= print(naev.unit('unit')) %>
 * **[Price](mechanics/credits)**:   {int(d['price']):,} ¤
 """
 

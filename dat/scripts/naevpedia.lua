@@ -99,11 +99,11 @@ local function dolua( s )
 
    -- Start up the Lua stuff
    local luastr = [[local out = ""
-local pr = _G.print
-local pro = function( str )
-   out = out..str
-end
-]]
+   local pr = _G.print
+   local pro = function( str )
+      out = out..str
+   end
+   ]]
    local function embed_str( str )
       for i=1,20 do
          local sep = ""
