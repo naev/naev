@@ -299,8 +299,6 @@ function naevpedia.setup( name )
          mrk:destroy()
       end
 
-      -- TODO detect if filename is special (like a ship), and grab data from there, or potentially do that when setting up the cache
-
       -- Load the document
       local success, doc, meta = loaddoc( filename )
 
