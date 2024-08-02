@@ -1031,6 +1031,7 @@ function luatk.newList( parent, x, y, w, h, items, onselect, defitem )
    if wgt.scrolls then
       wgt.scrollh = wgt.maxh - wgt.h
    end
+   wgt:cleanpos()
    return wgt
 end
 function luatk.List:draw( bx, by )
@@ -1083,7 +1084,8 @@ function luatk.List:draw( bx, by )
 end
 function luatk.List:pressed( mx, my )
    luatk._dirty = true
-   if self.scrolls and mx > self.w-12 then
+   if self.scrolls and mx > self.w-16 then
+      self.scrolling = true
       self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
       return
    end
@@ -1091,13 +1093,30 @@ function luatk.List:pressed( mx, my )
    self.selected = math.max( 1, math.min( self.selected, #self.items ) )
    self.onselect( self:get() )
 end
-function luatk.List:mmoved( mx, my )
-   if self._pressed then
-      self:pressed( mx, my )
+function luatk.List:mmoved( _mx, my )
+   if self.scrolling then
+      self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
    end
+end
+function luatk.List:releases( _mx, _my )
+   self.scrolling = false
 end
 function luatk.List:get()
    return self.items[ self.selected ], self.selected
+end
+function luatk.List:cleanpos()
+   if not self.scrolls then return end
+   local op = self.pos
+   local posx =  self.cellh * self.selected - self.pos
+   if posx < 0 then
+      self:_setPos( self.cellh * self.selected / self.scrollh )
+   elseif posx > self.h then
+      self:_setPos( (self.cellh * self.selected - self.h) / self.scrollh )
+   end
+   self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
+   if self.pos ~= op then
+      luatk._dirty = true
+   end
 end
 function luatk.List:set( idx, no_handler )
    luatk._dirty = true
@@ -1105,6 +1124,7 @@ function luatk.List:set( idx, no_handler )
    if not no_handler then
       self.onselect( self:get() )
    end
+   self:cleanpos()
 end
 function luatk.List:setItem( itm, no_handler )
    for k,v in ipairs(self.items) do
@@ -1113,16 +1133,21 @@ function luatk.List:setItem( itm, no_handler )
       end
    end
 end
-function luatk.List:setPos( pos )
+function luatk.List:_setPos( pos )
    luatk._dirty = true
    self.pos = pos * self.scrollh
-   self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
+end
+function luatk.List:setPos( pos )
+   self:_setPos( pos )
+   self:cleanpos()
 end
 function luatk.List:wheelmoved( _mx, my )
    if my > 0 then
       self:set( self.selected-1 )
+      return true
    elseif my < 0 then
       self:set( self.selected+1 )
+      return true
    end
 end
 function luatk.List:keypressed( key )
