@@ -46,6 +46,7 @@ summary('NData Path', ndata_path, section: 'Features')
 
 # Subdirs
 subdir('src')
+subdir('dat/naevpedia')
 subdir('dat/outfits/bioship')
 subdir('dat/scripts')
 subdir('docs')
