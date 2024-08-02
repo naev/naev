@@ -99,7 +99,7 @@ function puzzle01_addship ()
    if noadd then return end
    -- Spawn an enemy
    local pos = player.pos() + vec2.newP( 800+400*rnd.rnd(), rnd.angle() )
-   local e = pilot.add( "Astral Projection Lesser", _("Independent"), pos, nil, {ai="baddie_norun"})
+   local e = pilot.add( "Astral Projection Lesser", "Independent", pos, nil, {ai="baddie_norun"})
    e:effectAdd("Astral Projection")
    e:setHostile(true)
    e:setVisible(true)

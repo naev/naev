@@ -19,7 +19,7 @@
 
 --]]
 local fmt = require "format"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 require "missions.flf.flf_rogue"
 
 -- luacheck: globals land_flf (inherited from mission above, TODO get rid of)

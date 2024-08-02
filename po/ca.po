@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-07-22 21:45+0900\n"
-"PO-Revision-Date: 2024-08-01 01:26+0000\n"
+"PO-Revision-Date: 2024-08-02 02:09+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev/ca/>\n"
 "Language: ca\n"
@@ -618,473 +618,477 @@ msgstr "   Programador talentós que va fer el primer port oficial de Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
-msgstr ""
+msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
-msgstr ""
+msgstr "   * Va codificar característiques interessants"
 
 #: dat/AUTHORS:115
 msgid ""
 "   First non-bobbens coder to make serious commits! Like the reason the maps "
 "are all over or the faction in the maps."
 msgstr ""
+"   El primer programador que no és bobbens a fer compromisos seriosos! Com "
+"la raó per la qual els mapes s'han acabat o la facció als mapes."
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
-msgstr ""
+msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
-msgstr ""
+msgstr "   * Va accelerar molt la generació de nebuloses"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
-msgstr ""
+msgstr "Unavowed <unavowed@vexillium.org>"
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
-msgstr ""
+msgstr "   * Va adaptar el sistema de compilació de Naev a autotools."
 
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
-msgstr ""
+msgstr "   Probablement, la implementació d'autotools més neta que he vist mai."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr ""
+msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr ""
+msgstr "   * Va condimentar les avorrides missions de càrrega genèriques."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr ""
+msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr ""
+msgstr "   * Missions"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
-msgstr ""
+msgstr "   * Suport de codificació miscel·lània"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
-msgstr ""
+msgstr "Fisherman"
 
 #: dat/AUTHORS:132
 msgid ""
 "   * Threading code to speed up nebula generation (and in the future who "
 "knows?)"
 msgstr ""
+"   * Codi de fils per accelerar la generació de nebuloses (i en el futur qui "
+"sap?)"
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
-msgstr ""
+msgstr "   * Missió de gossos calents (Hot Dog)"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
-msgstr ""
+msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
-msgstr ""
+msgstr "   * Programador Python extraordinari"
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
-msgstr ""
+msgstr "Les seves utilitats estalvien els cabells grisos per a tothom."
 
 #: dat/AUTHORS:139
 msgid "Josh Combs"
-msgstr ""
+msgstr "Josh Combs"
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr ""
+msgstr "   * Artista de la majoria de les nebuloses."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
-msgstr ""
+msgstr "Galileus"
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
-msgstr ""
+msgstr "   * Modelador del Shark i el Rhino"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
-msgstr ""
+msgstr "Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
-msgstr ""
+msgstr "   * Modelador de la Phalanx"
 
 #: dat/AUTHORS:148
 msgid "Areze"
-msgstr ""
+msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
-msgstr ""
+msgstr "   * Assistent júnior de creador de galàxies"
 
 #: dat/AUTHORS:151
 msgid "Old Man <oldtopman@gmail.com>"
-msgstr ""
+msgstr "Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
-msgstr ""
+msgstr "   * Mantenidor de Desura"
 
 #: dat/AUTHORS:154
 msgid "NeD"
-msgstr ""
+msgstr "NeD"
 
 #: dat/AUTHORS:155
 msgid "   * Mission contributor"
-msgstr ""
+msgstr "   * Col·laborador de missions"
 
 #: dat/AUTHORS:157
 msgid "Sudarshan S"
-msgstr ""
+msgstr "Sudarshan S"
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
-msgstr ""
+msgstr "   * Col·laborador d'events"
 
 #: dat/AUTHORS:160
 msgid "Arvind S"
-msgstr ""
+msgstr "Arvind S"
 
 #: dat/AUTHORS:161
 msgid "   * PoI contributor"
-msgstr ""
+msgstr "   * Col·laborador de PoI"
 
 #: dat/AUTHORS:162
 msgid "   * Proteron lore"
-msgstr ""
+msgstr "   * Saber popular sobre Proteron"
 
 #: dat/AUTHORS:164 dat/AUTHORS:202
 msgid "PhoenixRiver"
-msgstr ""
+msgstr "PhoenixRiver"
 
 #: dat/AUTHORS:165
 msgid "   * Content contributor"
-msgstr ""
+msgstr "   * Col·laborador de continguts"
 
 #: dat/AUTHORS:166
 msgid "   * Misc fixes and typos"
-msgstr ""
+msgstr "   * Correccions i errors tipogràfics diversos"
 
 #: dat/AUTHORS:168
 msgid "Alastair Basden"
-msgstr ""
+msgstr "Alastair Basden"
 
 #: dat/AUTHORS:169
 msgid "   * Economy development"
-msgstr ""
+msgstr "   * Desenvolupament de l'economia"
 
 #: dat/AUTHORS:170
 msgid "   * Ship log"
-msgstr ""
+msgstr "   * Registre de la nau"
 
 #: dat/AUTHORS:171
 msgid "   * Solar system information screen"
-msgstr ""
+msgstr "   * Pantalla d'informació del sistema solar"
 
 #: dat/AUTHORS:173
 msgid "oo13"
-msgstr ""
+msgstr "oo13"
 
 #: dat/AUTHORS:174
 msgid "   * Japanese translation"
-msgstr ""
+msgstr "   * Traducció al japonès"
 
 #: dat/AUTHORS:175
 msgid "   * Many bug fixes"
-msgstr ""
+msgstr "   * Moltes correccions d'errors"
 
 #: dat/AUTHORS:177
 msgid "theElerd"
-msgstr ""
+msgstr "theElerd"
 
 #: dat/AUTHORS:178
 msgid "   * New character images"
-msgstr ""
+msgstr "   *Noves imatges de personatges"
 
 #: dat/AUTHORS:180
 msgid "Music by Matthew Pablo"
-msgstr ""
+msgstr "Música de Matthew Pablo"
 
 #: dat/AUTHORS:181
 msgid "http://www.matthewpablo.com"
-msgstr ""
+msgstr "http://www.matthewpablo.com"
 
 #: dat/AUTHORS:183
 msgid "Translations"
-msgstr ""
+msgstr "Traduccions"
 
 #: dat/AUTHORS:186
 msgid "(ja) Masato Oota (oo13)"
-msgstr ""
+msgstr "(ja) Masato Oota (oo13)"
 
 #: dat/AUTHORS:187
 msgid "(de) Wuzzy, Solid Tscheik, murks"
-msgstr ""
+msgstr "(de) Wuzzy, Solid Tscheik, murks"
 
 #: dat/AUTHORS:188
 msgid "(fr) Nicolas, Jérémie Guegain, Étienne Girard, Nathan"
-msgstr ""
+msgstr "(fr) Nicolas, Jérémie Guegain, Étienne Girard, Nathan"
 
 #: dat/AUTHORS:189
 msgid "(es) paco, gallegonovato"
-msgstr ""
+msgstr "(es) paco, gallegonovato"
 
 #: dat/AUTHORS:190
 msgid "(cs) David Doubek, Hahaha Nope"
-msgstr ""
+msgstr "(cs) David Doubek, Hahaha Nope"
 
 #: dat/AUTHORS:191
 msgid "(pt_PT) SC, ssantos"
-msgstr ""
+msgstr "(pt_PT) SC, ssantos"
 
 #: dat/AUTHORS:192
 msgid "(pt_BR) Bloody Kenshiro, SC, Anthony Gregory Souza dos Santos"
-msgstr ""
+msgstr "(pt_BR) Bloody Kenshiro, SC, Anthony Gregory Souza dos Santos"
 
 #: dat/AUTHORS:193
 msgid "(ko) 이정희"
-msgstr ""
+msgstr "(ko) 이정희"
 
 #: dat/AUTHORS:194
 msgid "(it) Davide Prina"
-msgstr ""
+msgstr "(it) Davide Prina"
 
 #: dat/AUTHORS:196
 msgid "Testers"
-msgstr ""
+msgstr "Testers"
 
 #: dat/AUTHORS:199
 msgid "John Schwartfeger"
-msgstr ""
+msgstr "John Schwartfeger"
 
 #: dat/AUTHORS:200
 msgid "Leonardo Valeri Manera"
-msgstr ""
+msgstr "Leonardo Valeri Manera"
 
 #: dat/AUTHORS:201
 msgid "EvanR"
-msgstr ""
+msgstr "EvanR"
 
 #: dat/AUTHORS:203
 msgid "Markus Büchele (BM-W1)"
-msgstr ""
+msgstr "Markus Büchele (BM-W1)"
 
 #: dat/AUTHORS:204
 msgid "Alaisdair West (awest03)"
-msgstr ""
+msgstr "Alaisdair West (awest03)"
 
 #: dat/AUTHORS:205
 msgid "VividViolet"
-msgstr ""
+msgstr "VividViolet"
 
 #: dat/AUTHORS:206
 msgid "exoterws"
-msgstr ""
+msgstr "exoterws"
 
 #: dat/AUTHORS:207
 msgid "LJ_Dude"
-msgstr ""
+msgstr "LJ_Dude"
 
 #: dat/AUTHORS:208
 msgid "sigus"
-msgstr ""
+msgstr "sigus"
 
 #: dat/AUTHORS:209
 msgid "Timsticles"
-msgstr ""
+msgstr "Timsticles"
 
 #: dat/AUTHORS:210
 msgid "Mister T"
-msgstr ""
+msgstr "Mister T"
 
 #: dat/AUTHORS:211
 msgid "Lemuria"
-msgstr ""
+msgstr "Lemuria"
 
 #: dat/AUTHORS:212
 msgid "Powerpeon"
-msgstr ""
+msgstr "Powerpeon"
 
 #: dat/AUTHORS:213
 msgid "xrogaan"
-msgstr ""
+msgstr "xrogaan"
 
 #: dat/AUTHORS:214
 msgid "nloewen"
-msgstr ""
+msgstr "nloewen"
 
 #: dat/AUTHORS:215
 msgid "Elven_Moustache"
-msgstr ""
+msgstr "Elven_Moustache"
 
 #: dat/AUTHORS:217
 msgid "Artwork Contributors"
-msgstr ""
+msgstr "Col·laboradors d'obres d'art"
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
-msgstr ""
+msgstr "AMONESTADOR"
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
-msgstr ""
+msgstr "AMONESTADOR PIRATA"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
-msgstr ""
+msgstr "AVANTPASSAT"
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 msgid "PIRATE ANCESTOR"
-msgstr ""
+msgstr "AVANTPASSAT PIRATA"
 
 #: artwork/gfx/loading/dalton.webp.txt:1
 msgid "DALTON"
-msgstr ""
+msgstr "DALTON"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
-msgstr ""
+msgstr "DIABLO ZA'LEK"
 
 #: artwork/gfx/loading/drone.webp.txt:1
 msgid "DRONE"
-msgstr ""
+msgstr "DRON"
 
 #: artwork/gfx/loading/euler.webp.txt:1
 msgid "EULER"
-msgstr ""
+msgstr "EULER"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
-msgstr ""
+msgstr "FIDELITAT DE SIRIUS"
 
 #: artwork/gfx/loading/gauss.webp.txt:1
 msgid "GAUSS"
-msgstr ""
+msgstr "GAUSS"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
-msgstr ""
+msgstr "GAWAIN"
 
 #: artwork/gfx/loading/goddard.webp.txt:1
 msgid "GODDARD"
-msgstr ""
+msgstr "GODDARD"
 
 #: artwork/gfx/loading/hawking.webp.txt:1
 msgid "HAWKING"
-msgstr ""
+msgstr "HAWKING"
 
 #: artwork/gfx/loading/koala.webp.txt:1
 msgid "KOALA"
-msgstr ""
+msgstr "KOALA"
 
 #: artwork/gfx/loading/lancelot.webp.txt:1
 msgid "LANCELOT"
-msgstr ""
+msgstr "LANCELOT"
 
 #: artwork/gfx/loading/llama.webp.txt:1
 msgid "LLAMA"
-msgstr ""
+msgstr "LLAMA"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
-msgstr ""
+msgstr "MULA"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr ""
+msgstr "PACIFICADOR"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr ""
+msgstr "MEDIADOR IMPERIAL"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
-msgstr ""
+msgstr "PREDICADOR SIRI"
 
 #: artwork/gfx/loading/quicksilver.webp.txt:1
 msgid "QUICKSILVER"
-msgstr ""
+msgstr "HIDRARGIR"
 
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
-msgstr ""
+msgstr "RINOCERONT"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
-msgstr ""
+msgstr "RINOCERONT PIRATA"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
-msgstr ""
+msgstr "SCHROEDINGER"
 
 #: artwork/gfx/loading/shaman.webp.txt:1
 msgid "SIRIUS SHAMAN"
-msgstr ""
+msgstr "XAMAN SIRI"
 
 #: artwork/gfx/loading/shark.webp.txt:1
 msgid "SHARK"
-msgstr ""
+msgstr "TAURÓ"
 
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
-msgstr ""
+msgstr "TAURÓ IMPERIAL"
 
 #: artwork/gfx/loading/shark_pirate.webp.txt:1
 msgid "PIRATE SHARK"
-msgstr ""
+msgstr "TAURÓ PIRATA"
 
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
-msgstr ""
+msgstr "PICADA ZA'LEK"
 
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
-msgstr ""
+msgstr "VENJANÇA"
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
-msgstr ""
+msgstr "VENJANÇA PIRATA"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
-msgstr ""
+msgstr "VIGILÀNCIA"
 
 #: dat/asteroids/types/default.xml:3 dat/asteroids/types/diamond.xml:3
 #: dat/asteroids/types/iron_nickel.xml:3 dat/asteroids/types/liquid.xml:3
 #: dat/asteroids/types/massive.xml:3 dat/asteroids/types/silicate_olivine.xml:3
 #: dat/asteroids/types/water_clay.xml:3
 msgid "common"
-msgstr ""
+msgstr "comú"
 
 #: dat/asteroids/types/gold_platinum.xml:3
 #: dat/asteroids/types/gold_rhodium.xml:3 dat/asteroids/types/golden.xml:3
 #: dat/asteroids/types/mossy.xml:3 dat/asteroids/types/rhodium_yttrium.xml:3
 msgid "uncommon"
-msgstr ""
+msgstr "Poc comú"
 
 #: dat/asteroids/types/kermite.xml:3 dat/asteroids/types/nebula_crystal.xml:3
 #: dat/asteroids/types/therite.xml:3 dat/asteroids/types/vixilium.xml:3
 msgid "rare"
-msgstr ""
+msgstr "rar"
 
 #: dat/asteroids/types/nodrop.xml:3
 msgid "empty"
-msgstr ""
+msgstr "buit"
 
 #: dat/commodities/clay.xml:3
 msgid "Clay"
-msgstr ""
+msgstr "Argila"
 
 #: dat/commodities/clay.xml:4
 msgid ""
@@ -1093,11 +1097,15 @@ msgid ""
 "construction. Depending on the provenance of the clay it can have many "
 "different compositions and material properties."
 msgstr ""
+"L'argila extreta dels asteroides tendeix a tenir propietats diferents de les "
+"que es troben als cossos planetaris i té una gran varietat d'usos com ara "
+"blindatge i construcció. Segons la procedència de l'argila pot tenir moltes "
+"composicions i propietats materials diferents."
 
 #: dat/commodities/diamond.xml:3 dat/events/pers/pirate.lua:236
 #: dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
-msgstr ""
+msgstr "Diamant"
 
 #: dat/commodities/diamond.xml:4
 msgid ""
@@ -1107,10 +1115,15 @@ msgid ""
 "is commonly used in decorative applications, but diamond is now easy enough "
 "to produce synthetically that it is not as sought after as it once was."
 msgstr ""
+"El diamant és una forma de carboni que s'ha cristal·litzat a causa de la "
+"pressió intensa i la calor sota la superfície de certs tipus de planetes. El "
+"material és útil en algunes aplicacions de tall a causa de la seva duresa, i "
+"s'utilitza habitualment en aplicacions decoratives, però ara el diamant és "
+"prou fàcil de produir sintèticament que no és tan buscat com ho era abans."
 
 #: dat/commodities/food.xml:3
 msgid "Food"
-msgstr ""
+msgstr "Menjar"
 
 #: dat/commodities/food.xml:4
 msgid ""
@@ -1118,10 +1131,13 @@ msgid ""
 "meals are rich in nutrients and able to last many cycles in their vacuum-"
 "sealed packaging."
 msgstr ""
+"Evolucionant a partir de les racions militars del passat antic, els àpats "
+"envasats moderns són rics en nutrients i poden durar molts cicles en els "
+"seus envasos segellats al buit."
 
 #: dat/commodities/gold.xml:3 dat/ssys/gold.xml:2
 msgid "Gold"
-msgstr ""
+msgstr "Or"
 
 #: dat/commodities/gold.xml:4
 msgid ""
@@ -1130,20 +1146,26 @@ msgid ""
 "demanding application is as a component in decorative articles such as "
 "jewelry."
 msgstr ""
+"L'or és apreciat per la seva combinació de resistència a la corrosió i per "
+"la seva conductivitat, que s'utilitza per millorar la vida útil de "
+"l'electrònica. La seva aplicació més exigent és com a component en articles "
+"de decoració com ara joieria."
 
 #: dat/commodities/industrial_goods.xml:3
 msgid "Industrial Goods"
-msgstr ""
+msgstr "Béns industrials"
 
 #: dat/commodities/industrial_goods.xml:4
 msgid ""
 "An assortment of industrial goods, ranging from cutting lasers to processed "
 "metals."
 msgstr ""
+"Un assortiment de productes industrials, que van des de làsers de tall fins "
+"a metalls processats."
 
 #: dat/commodities/iron.xml:3
 msgid "Iron"
-msgstr ""
+msgstr "Ferro"
 
 #: dat/commodities/iron.xml:4
 msgid ""
@@ -1151,10 +1173,13 @@ msgid ""
 "production processes. Despite its wide availability in asteroids, there is "
 "always significant demand for more."
 msgstr ""
+"El ferro té un paper fonamental en molts processos químics i de producció de "
+"materials diferents. Tot i la seva àmplia disponibilitat en asteroides, "
+"sempre hi ha una demanda important de més."
 
 #: dat/commodities/kermite.xml:3
 msgid "Kermite"
-msgstr ""
+msgstr "Kermita"
 
 #: dat/commodities/kermite.xml:4
 msgid ""
@@ -1165,26 +1190,32 @@ msgid ""
 "generators, which practically ensures its widespread demand throughout the "
 "galaxy."
 msgstr ""
+"Tot i que és un dels materials més rars que es troben als asteroides, la "
+"kermita ha aconseguit un paper fonamental en moltes aplicacions "
+"tecnològiques diferents a causa dels seus efectes de flexió espai-temps quan "
+"està subjecte a combinacions particulars de pressió i radiació. S'utilitza "
+"habitualment en determinats tipus de generadors d'escut, cosa que "
+"pràcticament garanteix la seva demanda generalitzada per tota la galàxia."
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
-msgstr ""
+msgstr "Béns de luxe"
 
 #: dat/commodities/luxury_goods.xml:4
 msgid "All sorts of high quality luxury goods."
-msgstr ""
+msgstr "Tot tipus de productes de luxe d'alta qualitat."
 
 #: dat/commodities/medicine.xml:3
 msgid "Medicine"
-msgstr ""
+msgstr "Medicaments"
 
 #: dat/commodities/medicine.xml:4
 msgid "An assortment of medicines suitable for curing all kinds of ailments."
-msgstr ""
+msgstr "Un assortiment de medicaments aptes per curar tot tipus de dolències."
 
 #: dat/commodities/nebula_crystals.xml:3
 msgid "Nebula Crystals"
-msgstr ""
+msgstr "Cristalls de nebulosa"
 
 #: dat/commodities/nebula_crystals.xml:4
 msgid ""
@@ -1193,10 +1224,14 @@ msgid ""
 "you think you can hear noises coming from them. Your scanners, however, "
 "don't show anything out of the ordinary."
 msgstr ""
+"No està clar exactament com es formen aquests cristalls, però es poden "
+"trobar a les profunditats de la nebulosa. Se senten estranyament càlids al "
+"tacte i, de vegades, penses que pots sentir sorolls procedents d'ells. Els "
+"teus escàners, però, no mostren res fora del normal."
 
 #: dat/commodities/neodymium.xml:3
 msgid "Neodymium"
-msgstr ""
+msgstr "Neodimi"
 
 #: dat/commodities/neodymium.xml:4
 msgid ""
@@ -1206,10 +1241,15 @@ msgid ""
 "new technologies, the demand for neodymium remains relatively high and "
 "constant throughout the galaxy."
 msgstr ""
+"El neodimi és molt útil per les seves propietats magnètiques i de capacitat "
+"tèrmica, jugant un paper crític en aplicacions de crio-refrigeració com les "
+"cambres d'estasi. Tenint en compte el creixement de la població posterior a "
+"l'incident i l'ús generalitzat de les noves tecnologies, la demanda de "
+"neodimi es manté relativament alta i constant a tota la galàxia."
 
 #: dat/commodities/nickel.xml:3
 msgid "Nickel"
-msgstr ""
+msgstr "Níquel"
 
 #: dat/commodities/nickel.xml:4
 msgid ""
@@ -1217,10 +1257,13 @@ msgid ""
 "like iron it is quite common among asteroids, its widespread use means there "
 "is steady demand throughout the galaxy."
 msgstr ""
+"El níquel s'utilitza habitualment en aliatges i per crear camps magnètics. "
+"Tot i que com el ferro és força comú entre els asteroides, el seu ús "
+"generalitzat significa que hi ha una demanda constant a tota la galàxia."
 
 #: dat/commodities/olivine.xml:3
 msgid "Olivine"
-msgstr ""
+msgstr "Olivina"
 
 #: dat/commodities/olivine.xml:4
 msgid ""
@@ -1228,10 +1271,14 @@ msgid ""
 "is steadily increasing because of its usefulness in enhanced weathering and "
 "terraforming, for which immense amounts are needed."
 msgstr ""
+"Tot i que s'utilitza principalment per a decoracions en la història antiga, "
+"la demanda d'olivina augmenta constantment a causa de la seva utilitat en la "
+"meteorització i la terraformació millorades, per a la qual es necessiten "
+"quantitats immenses."
 
 #: dat/commodities/ore.xml:3
 msgid "Ore"
-msgstr ""
+msgstr "Mineral"
 
 #: dat/commodities/ore.xml:4
 msgid ""
@@ -1239,10 +1286,13 @@ msgid ""
 "metals crucial for many industries. Without ore, the ship-building industry "
 "and many others would grind to a halt."
 msgstr ""
+"El mineral és un material de roca que conté minerals valuosos que es fonen "
+"en metalls crucials per a moltes indústries. Sense el mineral, la indústria "
+"de la construcció naval i moltes altres s'aturarien."
 
 #: dat/commodities/platinum.xml:3
 msgid "Platinum"
-msgstr ""
+msgstr "Platí"
 
 #: dat/commodities/platinum.xml:4
 msgid ""
@@ -1250,10 +1300,13 @@ msgid ""
 "equipment. Although there is great demand for it, it is rather uncommon "
 "throughout space."
 msgstr ""
+"El platí és un metall preciós altament no reactiu, utilitzat habitualment en "
+"equips de gamma alta. Tot i que hi ha una gran demanda, és força poc "
+"freqüent a tot l'espai."
 
 #: dat/commodities/rhodium.xml:3
 msgid "Rhodium"
-msgstr ""
+msgstr "Rodi"
 
 #: dat/commodities/rhodium.xml:4
 msgid ""
@@ -1263,10 +1316,15 @@ msgid ""
 "older technologies still require rhodium and are the main source of market "
 "demand."
 msgstr ""
+"Tot i que la resistència a la corrosió del rodi ha estat tradicionalment "
+"molt important en molts aliatges, l'àmplia disponibilitat de nous materials "
+"ceràmics i endurits per radiació ha provocat una disminució de la demanda. "
+"Tanmateix, les tecnologies de gamma baixa i més antigues encara requereixen "
+"rodi i són la principal font de demanda del mercat."
 
 #: dat/commodities/silicate.xml:3
 msgid "Silicate"
-msgstr ""
+msgstr "Silicat"
 
 #: dat/commodities/silicate.xml:4
 msgid ""
@@ -1274,10 +1332,13 @@ msgid ""
 "to their versalitility they are commonly used in the manufacturing of many "
 "components fundamental to space-faring life."
 msgstr ""
+"El silicat comprèn una varietat de materials, com ara sílice i quars. A "
+"causa de la seva versatilitat, s'utilitzen habitualment en la fabricació de "
+"molts components fonamentals per a la vida espacial."
 
 #: dat/commodities/space_moss.xml:3
 msgid "Space Moss"
-msgstr ""
+msgstr "Molsa espacial"
 
 #. Some useful variable names
 #. Add the head guy
@@ -1323,7 +1384,7 @@ msgstr ""
 
 #: dat/commodities/therite.xml:3
 msgid "Therite"
-msgstr ""
+msgstr "Terita"
 
 #: dat/commodities/therite.xml:4
 msgid ""
@@ -1334,10 +1395,17 @@ msgid ""
 "a wide range of high-end materials applications for it, from sub-space "
 "sensors to reinforced armours, leading to a constant high demand for it."
 msgstr ""
+"La terita és un compost extremadament rar que es forma principalment per "
+"radiació extrema. Tot i que hi ha múltiples teories, la dominant especula "
+"que es tracta d'una projecció quasimatèrica de radiació auto-interferent. No "
+"obstant això, fins i tot sense entendre la física exacta que hi ha darrere, "
+"els enginyers han trobat una àmplia gamma d'aplicacions de materials d'alta "
+"gamma, des de sensors subespacials fins a armadures reforçades, la qual cosa "
+"comporta una gran demanda constant."
 
 #: dat/commodities/vixilium.xml:3
 msgid "Vixilium"
-msgstr ""
+msgstr "Vixita"
 
 #: dat/commodities/vixilium.xml:4
 msgid ""
@@ -1348,10 +1416,17 @@ msgid ""
 "has led to a surge in demand throughout the galaxy, especially in "
 "cryptographic and security applications."
 msgstr ""
+"La Vixita es coneixia originàriament com a \"mineral fantasma\" a causa de "
+"la dificultat que els costava als sensors i a l'ull nu detectar-los abans de "
+"la invenció de la fotografia quàntica, a causa de la poca presència de "
+"matèria normal. Tot i que també és apreciada per la creació artística, les "
+"seves excel·lents propietats quàntiques i de quasi-matèria són les que han "
+"provocat un augment de la demanda a tota la galàxia, especialment en "
+"aplicacions criptogràfiques i de seguretat."
 
 #: dat/commodities/water.xml:3
 msgid "Water"
-msgstr ""
+msgstr "Aigua"
 
 #: dat/commodities/water.xml:4
 msgid ""
@@ -1361,10 +1436,15 @@ msgid ""
 "universe, leading to heavy concentration in some areas and complete absence "
 "in others."
 msgstr ""
+"Una substància química inusual que els humans donem per fet, l'aigua és "
+"necessària per mantenir la vida humana i útil en moltes indústries a causa "
+"de les seves propietats particulars. Tot i que és comú, no està dispersa de "
+"manera homogènia per tot l'univers, la qual cosa condueix a una gran "
+"concentració en algunes zones i una absència total en altres."
 
 #: dat/commodities/yttrium.xml:3
 msgid "Yttrium"
-msgstr ""
+msgstr "Ittri"
 
 #: dat/commodities/yttrium.xml:4
 msgid ""
@@ -1372,105 +1452,117 @@ msgid ""
 "demand has led to record prices of yttrium since the Incident. Economists "
 "believe this is a key indicator of rough times ahead."
 msgstr ""
+"Tenint un paper crític en les tecnologies d'il·luminació i làser, la demanda "
+"constant ha portat a preus rècord de l'itri des de l'incident. Els "
+"economistes creuen que aquest és un indicador clau dels temps difícils que "
+"s'espera."
 
 #: dat/damagetype/armourbreaker.xml:2
 msgid "armourbreaker"
-msgstr ""
+msgstr "trenca-armadura"
 
 #: dat/damagetype/armourbreaker.xml:2
 msgid "#nArmourbreaker#0"
-msgstr ""
+msgstr "#ntrenca-armadura#0"
 
 #: dat/damagetype/emp.xml:2
 msgid "emp"
-msgstr ""
+msgstr "pem"
 
 #: dat/damagetype/emp.xml:2
 msgid "#bEMP#0"
-msgstr ""
+msgstr "#bPEM#0"
 
 #: dat/damagetype/energy.xml:2
 msgid "energy"
-msgstr ""
+msgstr "energia"
 
 #: dat/damagetype/energy.xml:2 dat/damagetype/energy_noknockback.xml:2
 msgid "#gEnergy#0"
-msgstr ""
+msgstr "#genergia#0"
 
 #: dat/damagetype/energy_noknockback.xml:2
+#, fuzzy
 msgid "energy_noknockback"
-msgstr ""
+msgstr "energy_noknockback"
 
 #: dat/damagetype/explosion_splash.xml:2
+#, fuzzy
 msgid "explosion_splash"
-msgstr ""
+msgstr "explosion_splash"
 
 #: dat/damagetype/ion.xml:2
+#, fuzzy
 msgid "ion"
-msgstr ""
+msgstr "ion"
 
 #: dat/damagetype/ion.xml:2
+#, fuzzy
 msgid "#yIon#0"
-msgstr ""
+msgstr "#yIon#0"
 
 #: dat/damagetype/kinetic.xml:2
 msgid "kinetic"
-msgstr ""
+msgstr "cinètica"
 
 #: dat/damagetype/kinetic.xml:2
 msgid "#oKinetic#0"
-msgstr ""
+msgstr "#oCinètica#0"
 
 #: dat/damagetype/nebula.xml:2
 msgid "nebula"
-msgstr ""
+msgstr "nebulosa"
 
 #: dat/damagetype/nebula.xml:2
 msgid "#pNebula#0"
-msgstr ""
+msgstr "#pnebulosa#0"
 
 #: dat/damagetype/plasma.xml:2
+#, fuzzy
 msgid "plasma"
-msgstr ""
+msgstr "plasma"
 
 #: dat/damagetype/plasma.xml:2
+#, fuzzy
 msgid "#rPlasma#0"
-msgstr ""
+msgstr "#rPlasma#0"
 
 #: dat/difficulty/default.xml:2 dat/events/escort_settings.lua:83
 #: src/dev_uniedit.c:568
 msgid "Default"
-msgstr ""
+msgstr "Per defecte"
 
 #: dat/difficulty/default.xml:3
 msgid "Standard difficulty mode."
-msgstr ""
+msgstr "Mode de dificultat estàndard."
 
 #: dat/difficulty/easy_mode.xml:2
 msgid "Easy Mode"
-msgstr ""
+msgstr "Mode Fàcil"
 
 #: dat/difficulty/easy_mode.xml:3
 msgid "Makes the game easier for the player, without trivializing most things."
-msgstr ""
+msgstr "Facilita el joc al jugador, sense banalitzar la majoria de les coses."
 
 #: dat/difficulty/masochist_mode.xml:2
 msgid "Masochist Mode"
-msgstr ""
+msgstr "Mode Masoquista"
 
 #: dat/difficulty/masochist_mode.xml:3
 msgid "Makes the game significantly harder for the player."
-msgstr ""
+msgstr "Fa que el joc sigui significativament més difícil per al jugador."
 
 #: dat/difficulty/story_mode.xml:2
 msgid "Story Mode"
-msgstr ""
+msgstr "Mode Història"
 
 #: dat/difficulty/story_mode.xml:3
 msgid ""
 "Significantly reduces the difficulty of the game, allowing to concentrate on "
 "the story."
 msgstr ""
+"Redueix significativament la dificultat del joc, permetent concentrar-se en "
+"la història."
 
 #: dat/effects/ambush_hunter.xml:2
 #: dat/outfits/bioship/skills/ambush_hunter.xml:2

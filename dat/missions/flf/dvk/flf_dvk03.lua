@@ -21,7 +21,7 @@
 --]]
 local fleet = require "fleet"
 local fmt = require "format"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 
 local civ_fleet, dv_base, dv_fleet, flf_fleet, pir_boss, pir_fleet -- Non-persistent state
 local finish -- Forward-declared functions

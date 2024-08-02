@@ -20,7 +20,7 @@
 
 --]]
 local fmt = require "format"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 require "missions.flf.flf_diversion"
 
 -- luacheck: globals success_text pay_text land (inherited from mission above, TODO remove horrible hack and make unique)

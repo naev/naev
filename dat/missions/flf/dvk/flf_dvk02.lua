@@ -20,7 +20,7 @@
 --]]
 local fmt = require "format"
 local fleet = require "fleet"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 
 local boss, pirates -- Non-persistent state
 
