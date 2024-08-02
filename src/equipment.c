@@ -131,6 +131,17 @@ static void equipment_changeTab( unsigned int wid, const char *wgt, int old,
 static int  equipment_playerAddOutfit( const Outfit *o, int quantity );
 static int  equipment_playerRmOutfit( const Outfit *o, int quantity );
 
+/* Filters. */
+static int equipment_filter( const Outfit *o );
+static int equipment_filterWeapon( const Outfit *o );
+static int equipment_filterUtility( const Outfit *o );
+static int equipment_filterStructure( const Outfit *o );
+static int equipment_filterCore( const Outfit *o );
+static int ( *tabfilters[] )( const Outfit *o ) = {
+   equipment_filter,          equipment_filterWeapon, equipment_filterUtility,
+   equipment_filterStructure, equipment_filterCore,
+};
+
 /**
  * @brief Handles right-click on unequipped outfit.
  *    @param wid Window to update.
@@ -1116,6 +1127,7 @@ static int equipment_mouseInColumn( const PilotOutfitSlot *lst, double y,
  *    @param p Pilot to which the elements belong.
  *    @param selected Currently selected element.
  *    @param wgt Slot widget.
+ *    @return Whether the event was used or not.
  */
 static int equipment_mouseColumn( unsigned int wid, const SDL_Event *event,
                                   double mx, double my, double y, double h,
@@ -1134,8 +1146,54 @@ static int equipment_mouseColumn( unsigned int wid, const SDL_Event *event,
                int sel = selected + ret;
                if ( wgt->slot == sel )
                   wgt->slot = -1;
-               else
+               else {
+                  const char *filtertext;
+                  int         active, noutfits;
+                  Outfit    **outfits;
+
+                  /* Actually select the slot. */
                   wgt->slot = sel;
+
+                  /* Get the filter text. */
+                  filtertext = NULL;
+                  if ( widget_exists( equipment_wid, EQUIPMENT_FILTER ) ) {
+                     filtertext =
+                        window_getInput( equipment_wid, EQUIPMENT_FILTER );
+                     if ( strlen( filtertext ) == 0 )
+                        filtertext = NULL;
+                  }
+
+                  /* See if we have no outfits selected, and if so, switch tabs.
+                   */
+                  /* TODO no freeing. */
+                  active   = window_tabWinGetActive( equipment_wid,
+                                                     EQUIPMENT_OUTFIT_TAB );
+                  outfits  = array_create( Outfit  *);
+                  noutfits = player_getOutfitsFiltered(
+                     (const Outfit ***)&outfits, tabfilters[active],
+                     filtertext );
+                  array_free( outfits );
+                  if ( noutfits <= 0 ) {
+                     int best  = active;
+                     int nbest = 0;
+                     for ( int i = 0; i < OUTFIT_TABS; i++ ) {
+                        outfits  = array_create( Outfit  *);
+                        noutfits = player_getOutfitsFiltered(
+                           (const Outfit ***)&outfits, tabfilters[i],
+                           filtertext );
+                        array_free( outfits );
+                        if ( noutfits > 0 ) {
+                           best  = i;
+                           nbest = noutfits;
+                        }
+                     }
+                     if ( nbest > 0 ) {
+                        window_tabWinSetActive( equipment_wid,
+                                                EQUIPMENT_OUTFIT_TAB, best );
+                        return 1;
+                     }
+                  }
+               }
                equipment_regenLists( wid, 1, 0 );
             }
          } else if ( ( event->button.button == SDL_BUTTON_RIGHT ) &&
@@ -1800,11 +1858,6 @@ static void equipment_genOutfitList( unsigned int wid )
    int         x, y, w, h, ow, oh;
    int         ix, iy, iw, ih, barw; /* Input filter. */
    const char *filtertext;
-   int ( *tabfilters[] )( const Outfit *o ) = {
-      equipment_filter,        equipment_filterWeapon,
-      equipment_filterUtility, equipment_filterStructure,
-      equipment_filterCore,
-   };
    const char *tabnames[] = {
       _( "All" ), _( OUTFIT_LABEL_WEAPON ), _( OUTFIT_LABEL_UTILITY ),
       _( OUTFIT_LABEL_STRUCTURE ), _( OUTFIT_LABEL_CORE ) };
