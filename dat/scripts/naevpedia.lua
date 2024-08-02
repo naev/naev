@@ -223,12 +223,17 @@ function naevpedia.setup( name )
    end
 
    -- TODO make list filterable / searchable
-   local lstnav
+   local lstnav, lstcategory
    local function update_list( meta )
       if not meta.entry then return end
+      if lstcategory==meta.category then
+         -- No need to recreate
+         return
+      end
       if lstnav then
          lstnav:destroy()
       end
+      lstcategory = meta.category
 
       local lstelem = {}
       for k,v in pairs(nc._naevpedia) do
