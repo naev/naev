@@ -19,6 +19,7 @@
 #include "nlua_outfit.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
+#include "player.h"
 #include "slots.h"
 
 /*
@@ -51,6 +52,7 @@ static int shipL_getSize( lua_State *L );
 static int shipL_description( lua_State *L );
 static int shipL_getShipStat( lua_State *L );
 static int shipL_getShipStatDesc( lua_State *L );
+static int shipL_known( lua_State *L );
 static int shipL_tags( lua_State *L );
 
 static const luaL_Reg shipL_methods[] = {
@@ -79,6 +81,7 @@ static const luaL_Reg shipL_methods[] = {
    { "description", shipL_description },
    { "shipstat", shipL_getShipStat },
    { "shipstatDesc", shipL_getShipStatDesc },
+   { "known", shipL_known },
    { "tags", shipL_tags },
    { 0, 0 } }; /**< Ship metatable methods. */
 
@@ -718,6 +721,34 @@ static int shipL_getShipStatDesc( lua_State *L )
    const Ship *s = luaL_validship( L, 1 );
    ss_statsDesc( &s->stats_array, buf, sizeof( buf ), 0 );
    lua_pushstring( L, buf );
+   return 1;
+}
+
+/**
+ * @brief Gets whether or not the ship is known to the player, as in they know a
+ * spob that sells it or own it.
+ */
+static int shipL_known( lua_State *L )
+{
+   const Ship         *s  = luaL_validship( L, 1 );
+   const PlayerShip_t *ps = player_getShipStack();
+   for ( int i = 0; i < array_size( ps ); i++ ) {
+      if ( ps->p->ship == s ) {
+         lua_pushboolean( L, 1 );
+         return 1;
+      }
+   }
+   Spob *ss = spob_getAll();
+   for ( int i = 0; i < array_size( ss ); i++ ) {
+      Spob *spb = &ss[i];
+      if ( !spob_hasService( spb, SPOB_SERVICE_SHIPYARD ) )
+         continue;
+      if ( tech_hasItem( spb->tech, s->name ) ) {
+         lua_pushboolean( L, 1 );
+         return 1;
+      }
+   }
+   lua_pushboolean( L, 0 );
    return 1;
 }
 
