@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import xml.etree.ElementTree as ET
 import argparse
@@ -24,7 +24,7 @@ root = tree.getroot()
 name = root.get('name')
 d = {'name':name}
 tags_recursive( root, d, '' )
-print( d )
+#print( d )
 
 outstr = f"""---
 title: "{d['name']}"
