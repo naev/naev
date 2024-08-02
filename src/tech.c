@@ -674,6 +674,8 @@ static void **tech_addGroupItem( void **items, tech_item_type_t type,
  */
 int tech_hasItem( const tech_group_t *tech, const char *item )
 {
+   if ( tech == NULL )
+      return 0;
    int s = array_size( tech->items );
    for ( int i = 0; i < s; i++ ) {
       const char *buf = tech_getItemName( &tech->items[i] );
@@ -681,6 +683,76 @@ int tech_hasItem( const tech_group_t *tech, const char *item )
          return 1;
    }
    return 0;
+}
+
+static int tech_hasItemInternal( const tech_group_t *tech,
+                                 const tech_item_t  *item )
+{
+   if ( tech == NULL )
+      return 0;
+   int s = array_size( tech->items );
+   for ( int i = 0; i < s; i++ ) {
+      const tech_item_t *itemi = &tech->items[i];
+      if ( memcmp( item, itemi, sizeof( tech_item_t ) ) == 0 )
+         return 1;
+
+      if ( itemi->type == TECH_TYPE_GROUP ) {
+         if ( tech_hasItemInternal( &tech_groups[itemi->u.grp], item ) )
+            return 1;
+      } else if ( itemi->type == TECH_TYPE_GROUP_POINTER ) {
+         if ( tech_hasItemInternal( itemi->u.grpptr, item ) )
+            return 1;
+      }
+   }
+   return 0;
+}
+
+/**
+ * @brief Checks to see whether a tech group contains a ship.
+ *
+ *    @param tech Tech group to look at.
+ *    @param ship Ship to see if is contained in the group.
+ *    @return 1 if the ship is contained, 0 otherwise.
+ */
+int tech_hasShip( const tech_group_t *tech, const Ship *ship )
+{
+   const tech_item_t item = {
+      .type   = TECH_TYPE_SHIP,
+      .u.ship = ship,
+   };
+   return tech_hasItemInternal( tech, &item );
+}
+
+/**
+ * @brief Checks to see whether a tech group contains a outfit.
+ *
+ *    @param tech Tech group to look at.
+ *    @param outfit Outfit to see if is contained in the group.
+ *    @return 1 if the outfit is contained, 0 otherwise.
+ */
+int tech_hasOutfit( const tech_group_t *tech, const Outfit *outfit )
+{
+   const tech_item_t item = {
+      .type     = TECH_TYPE_OUTFIT,
+      .u.outfit = outfit,
+   };
+   return tech_hasItemInternal( tech, &item );
+}
+
+/**
+ * @brief Checks to see whether a tech group contains a commodity.
+ *
+ *    @param tech Tech group to look at.
+ *    @param commodity Commodity to see if is contained in the group.
+ *    @return 1 if the commodity is contained, 0 otherwise.
+ */
+int tech_hasCommodity( const tech_group_t *tech, const Commodity *comm )
+{
+   const tech_item_t item = {
+      .type   = TECH_TYPE_COMMODITY,
+      .u.comm = comm,
+   };
+   return tech_hasItemInternal( tech, &item );
 }
 
 /**

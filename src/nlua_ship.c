@@ -743,7 +743,9 @@ static int shipL_known( lua_State *L )
       Spob *spb = &ss[i];
       if ( !spob_hasService( spb, SPOB_SERVICE_SHIPYARD ) )
          continue;
-      if ( tech_hasItem( spb->tech, s->name ) ) {
+      if ( !spob_isKnown( spb ) )
+         continue;
+      if ( tech_hasShip( spb->tech, s ) ) {
          lua_pushboolean( L, 1 );
          return 1;
       }

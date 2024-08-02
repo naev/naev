@@ -40,6 +40,9 @@ int tech_rmItem( const char *name, const char *value );
  * Get.
  */
 int         tech_hasItem( const tech_group_t *tech, const char *item );
+int         tech_hasShip( const tech_group_t *tech, const Ship *s );
+int         tech_hasOutfit( const tech_group_t *tech, const Outfit *o );
+int         tech_hasCommodity( const tech_group_t *tech, const Commodity *c );
 int         tech_getItemCount( const tech_group_t *tech );
 char      **tech_getItemNames( const tech_group_t *tech, int *n );
 char      **tech_getAllItemNames( int *n );
