@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-07-22 21:45+0900\n"
-"PO-Revision-Date: 2024-08-02 02:09+0000\n"
+"PO-Revision-Date: 2024-08-03 01:09+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev/ca/>\n"
 "Language: ca\n"
@@ -1482,22 +1482,18 @@ msgid "#gEnergy#0"
 msgstr "#genergia#0"
 
 #: dat/damagetype/energy_noknockback.xml:2
-#, fuzzy
 msgid "energy_noknockback"
 msgstr "energy_noknockback"
 
 #: dat/damagetype/explosion_splash.xml:2
-#, fuzzy
 msgid "explosion_splash"
 msgstr "explosion_splash"
 
 #: dat/damagetype/ion.xml:2
-#, fuzzy
 msgid "ion"
 msgstr "ion"
 
 #: dat/damagetype/ion.xml:2
-#, fuzzy
 msgid "#yIon#0"
 msgstr "#yIon#0"
 
@@ -1518,12 +1514,10 @@ msgid "#pNebula#0"
 msgstr "#pnebulosa#0"
 
 #: dat/damagetype/plasma.xml:2
-#, fuzzy
 msgid "plasma"
 msgstr "plasma"
 
 #: dat/damagetype/plasma.xml:2
-#, fuzzy
 msgid "#rPlasma#0"
 msgstr "#rPlasma#0"
 
@@ -1568,19 +1562,19 @@ msgstr ""
 #: dat/outfits/bioship/skills/ambush_hunter.xml:2
 #: dat/scripts/bioship/skills.lua:133
 msgid "Ambush Hunter"
-msgstr ""
+msgstr "Caçador d'Emboscada"
 
 #: dat/effects/ambush_hunter.xml:3
 msgid "The ship has caught other ships by surprise!"
-msgstr ""
+msgstr "La nau ha agafat altres naus per sorpresa!"
 
 #: dat/effects/antimatter_taint.xml:2
 msgid "Antimatter Taint"
-msgstr ""
+msgstr "Contaminació d'antimatèria"
 
 #: dat/effects/antimatter_taint.xml:3
 msgid "Antimatter is tainting your ship!"
-msgstr ""
+msgstr "L'antimatèria està contaminant la teva nau!"
 
 #. Set outfit state
 #. Astral proection
@@ -1588,95 +1582,95 @@ msgstr ""
 #: dat/outfits/flow/abilities/astral_projection.xml:2
 #: dat/outfits/flow/abilities/astral_projection.lua:57
 msgid "Astral Projection"
-msgstr ""
+msgstr "Projecció astral"
 
 #: dat/effects/astral_projection.xml:3
 msgid "Ship is being projected."
-msgstr ""
+msgstr "S'està projectant la nau."
 
 #: dat/effects/avatar_of_sirichana.xml:2
 #: dat/outfits/flow/abilities/avatar_of_sirichana.xml:2
 msgid "Avatar of Sirichana"
-msgstr ""
+msgstr "Avatar de Sirichana"
 
 #: dat/effects/avatar_of_sirichana.xml:3
 msgid "You are an avatar of Sirichana!"
-msgstr ""
+msgstr "Ets un avatar de Sirichana!"
 
 #: dat/effects/blink.xml:2
 msgid "Blink"
-msgstr ""
+msgstr "Parpelleig"
 
 #: dat/effects/blink.xml:3
 msgid "Your ship just blinked!"
-msgstr ""
+msgstr "La teva nau acaba de parpellejar!"
 
 #: dat/effects/bloodlust.xml:2 dat/scripts/bioship/skills.lua:42
 msgid "Blood Lust"
-msgstr ""
+msgstr "Luxúria de sang"
 
 #: dat/effects/bloodlust.xml:3
 msgid "The ship has had a taste of blood and wants more!"
-msgstr ""
+msgstr "La nau ha tingut un tast de sang i en vol més!"
 
 #: dat/effects/chakra_burn.xml:2
 msgid "Chakra Burn"
-msgstr ""
+msgstr "Cremada de Chakra"
 
 #: dat/effects/chakra_burn.xml:3
 msgid "Your ship is being burned by chakra!"
-msgstr ""
+msgstr "La teva nau està sent cremada per chakra!"
 
 #: dat/effects/chakra_corruption.xml:2
 msgid "Chakra Corruption"
-msgstr ""
+msgstr "Corrupció de Chakra"
 
 #: dat/effects/chakra_corruption.xml:3
 msgid "Your ship is corrupted by chakra damage!"
-msgstr ""
+msgstr "La teva nau està corrompuda pel dany chakra!"
 
 #: dat/effects/crippling_plasma.xml:2
 #: dat/outfits/bioship/skills/crippling_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:263
 msgid "Crippling Plasma"
-msgstr ""
+msgstr "Plasma paralizant"
 
 #: dat/effects/crippling_plasma.xml:3
 msgid "Plasma is interfering with the weapon systems!"
-msgstr ""
+msgstr "El plasma està interferint amb els sistemes d'armes!"
 
 #: dat/effects/ethereal.xml:2
 msgid "Ethereal"
-msgstr ""
+msgstr "Eteri"
 
 #: dat/effects/ethereal.xml:3
 msgid "Ship is ethereal."
-msgstr ""
+msgstr "La nau és eteria."
 
 #: dat/effects/fadein.xml:2
 msgid "Fade-In"
-msgstr ""
+msgstr "Apareixer"
 
 #: dat/effects/fadein.xml:3
 msgid "Fading in!"
-msgstr ""
+msgstr "Apareixent!"
 
 #: dat/effects/fadeout.xml:2
 msgid "Fade-Out"
-msgstr ""
+msgstr "Desaparèixer"
 
 #: dat/effects/fadeout.xml:3
 msgid "Fading Out!"
-msgstr ""
+msgstr "Desapareixent!"
 
 #: dat/effects/feather_drive.xml:2
 #: dat/outfits/flow/abilities/feather_drive.xml:2
 msgid "Feather Drive"
-msgstr ""
+msgstr "Impuls de Plumes"
 
 #: dat/effects/feather_drive.xml:3
 msgid "Your ship just used Feather Drive!"
-msgstr ""
+msgstr "La teva nau acaba d'utilitzar Impuls de Plumes!"
 
 #. Attack tree
 #. For everyone!
@@ -1684,61 +1678,62 @@ msgstr ""
 #: dat/effects/feral_rage_i.xml:2 dat/outfits/bioship/skills/feral_rage_i.xml:2
 #: dat/scripts/bioship/skills.lua:200
 msgid "Feral Rage I"
-msgstr ""
+msgstr "Fúria salvatge I"
 
 #: dat/effects/fractured_reality.xml:2
 msgid "Fractured Reality"
-msgstr ""
+msgstr "Realitat Fracturada"
 
 #: dat/effects/fractured_reality.xml:3
 msgid "Reality is not really what it seems! Or is this the true reality?"
 msgstr ""
+"La realitat no és realment el que sembla! O és aquesta la veritable realitat?"
 
 #: dat/effects/hypergate_enter.xml:2
 msgid "Hypergate Enter"
-msgstr ""
+msgstr "Entrar a l'Hiperporta"
 
 #: dat/effects/hypergate_enter.xml:3
 msgid "Entering a hypergate!"
-msgstr ""
+msgstr "Entrant a l'Hiperporta!"
 
 #: dat/effects/hypergate_exit.xml:2
 msgid "Hypergate Exit"
-msgstr ""
+msgstr "Sortir de l'Hiperporta"
 
 #: dat/effects/hypergate_exit.xml:3
 msgid "Exitting a hypergate!"
-msgstr ""
+msgstr "Sortint de l'Hiperporta!"
 
 #: dat/effects/ionization.xml:2
 msgid "Ionization"
-msgstr ""
+msgstr "Ionització"
 
 #: dat/effects/ionization.xml:3
 msgid "The ship is being ionized!"
-msgstr ""
+msgstr "La nau està sent ionitzada!"
 
 #: dat/effects/onionized.xml:2
 msgid "Onionized"
-msgstr ""
+msgstr "Cebada"
 
 #: dat/effects/onionized.xml:3
 msgid "Hacked!"
-msgstr ""
+msgstr "Hackejat!"
 
 #: dat/effects/paralyzing_plasma.xml:2
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:255
 msgid "Paralyzing Plasma"
-msgstr ""
+msgstr "Plasma paralitzant"
 
 #: dat/effects/paralyzing_plasma.xml:3
 msgid "Plasma is slowing the ship down!"
-msgstr ""
+msgstr "El plasma està frenant la nau!"
 
 #: dat/effects/plasma_burn.xml:2
 msgid "Plasma Burn"
-msgstr ""
+msgstr "Cremada de plasma"
 
 #: dat/effects/plasma_burn.xml:3 dat/effects/plasma_burn_ii.xml:3
 msgid "Plasma is burning the ship!"
