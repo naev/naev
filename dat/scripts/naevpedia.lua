@@ -43,6 +43,9 @@ local function extractmetadata( entry, s )
       else
          setfenv( c, _G )
          meta.condchunk = c
+         if __debugging then
+            meta.condchunk()
+         end
       end
    end
    return s, meta
