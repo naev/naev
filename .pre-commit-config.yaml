@@ -49,6 +49,13 @@ repos:
       language: script
       always_run: true
       pass_filenames: false
+    - id: naevpedia
+      name: check for stale naevpedia ships/outfits
+      entry: utils/update-naevpedia.sh . --pre-commit
+      language: script
+      always_run: true
+      files: dat/(ships/outfits)/.*.xml
+      pass_filenames: false
     - id: optipng
       name: PNG Optimizer
       entry: optipng

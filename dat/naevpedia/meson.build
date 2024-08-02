@@ -1,0 +1,2 @@
+subdir('ships')
+subdir('outfits')
