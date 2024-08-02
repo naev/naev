@@ -9,15 +9,39 @@ parser.add_argument('-o', type=str, help='Output path.' )
 
 args, unknown = parser.parse_known_args()
 
+def tags_recursive( root, d, curpath ):
+    for tag in root:
+        dataname = tag.tag if curpath=='' else curpath+'/'+tag.tag
+        # has children
+        if len(tag):
+            tags_recursive( tag, d, dataname )
+        # no children
+        else:
+            d[dataname] = tag.text
+
 tree = ET.parse( args.path )
 root = tree.getroot()
 name = root.get('name')
+d = {'name':name}
+tags_recursive( root, d, '' )
+print( d )
 
 outstr = f"""---
-title: "{name}"
-cond: "return ship.get(\\\"{name}\\\"):known()"
+title: "{d['name']}"
+cond: "return ship.get(\\\"{d['name']}\\\"):known()"
 ---
 ## {name}
+
+{d['description']}
+
+* **[Class](mechanics/class)**:   {d['class']}
+* **Fabricator**:   {d['fabricator']}
+* **[Crew](mechanics/boarding)**:   {d['characteristics/crew']}
+* **[Mass](mechanics/movement)**:   {int(d['characteristics/mass']):,} <%= naev.unit('mass') %>
+* **[Base Armour](mechanics/damage)**:   {d['health/armour']}
+* **[Cargo Space](mechanics/cargo)**:   {d['characteristics/cargo']}
+* **[Fuel Consumption](mechanics/hyperspace)**:   {d['characteristics/fuel_consumption']} <%= naev.unit('unit') %>
+* **[Price](mechanics/credits)**:   {int(d['price']):,} ¤
 """
 
 with open( args.o, 'w' ) as f:
