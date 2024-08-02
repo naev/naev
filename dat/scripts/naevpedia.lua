@@ -219,6 +219,7 @@ function naevpedia.setup( name )
       end
    end
 
+   -- TODO make list filterable / searchable
    local lstnav
    local function update_list( meta )
       if not meta.entry then return end
@@ -261,7 +262,7 @@ function naevpedia.setup( name )
    end
 
    -- Top bar
-   local topbar = {"mechanics","history"}
+   local topbar = {"mechanics","ships","outfits","history"}
    local bw, bh = 100, 30
    local topbarw = #topbar*(20+bw)-20
    local xoff = 340 + (w-340-topbarw)*0.5
