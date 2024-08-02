@@ -730,6 +730,8 @@ static int shipL_getShipStatDesc( lua_State *L )
  */
 static int shipL_known( lua_State *L )
 {
+   /* TODO cache this and mark as dirty instead of recomputing for each outfit.
+    */
    const Ship         *s  = luaL_validship( L, 1 );
    const PlayerShip_t *ps = player_getShipStack();
    for ( int i = 0; i < array_size( ps ); i++ ) {

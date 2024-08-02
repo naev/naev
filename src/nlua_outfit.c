@@ -52,6 +52,7 @@ static int outfitL_getShipStat( lua_State *L );
 static int outfitL_weapStats( lua_State *L );
 static int outfitL_specificStats( lua_State *L );
 static int outfitL_illegality( lua_State *L );
+static int outfitL_known( lua_State *L );
 static int outfitL_tags( lua_State *L );
 
 static const luaL_Reg outfitL_methods[] = {
@@ -83,6 +84,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "weapstats", outfitL_weapStats },
    { "specificstats", outfitL_specificStats },
    { "illegality", outfitL_illegality },
+   { "known", outfitL_known },
    { "tags", outfitL_tags },
    { 0, 0 } }; /**< Outfit metatable methods. */
 
@@ -883,6 +885,47 @@ static int outfitL_illegality( lua_State *L )
       lua_pushfaction( L, o->illegalto[i] );
       lua_rawseti( L, -2, i + 1 );
    }
+   return 1;
+}
+
+/**
+ * @brief Gets whether or not the outfit is known to the player, as in they know
+ * a spob that sells it or own it.
+ */
+static int outfitL_known( lua_State *L )
+{
+   /* TODO cache this and mark as dirty instead of recomputing for each outfit.
+    */
+   const Outfit         *o  = luaL_validoutfit( L, 1 );
+   const PlayerOutfit_t *po = player_getOutfits();
+   for ( int i = 0; i < array_size( po ); i++ ) {
+      if ( po[i].o == o ) {
+         lua_pushboolean( L, 1 );
+         return 1;
+      }
+   }
+   const PlayerShip_t *ps = player_getShipStack();
+   for ( int i = 0; i < array_size( ps ); i++ ) {
+      for ( int j = 0; j < array_size( ps[i].p->outfits ); j++ ) {
+         if ( ps[i].p->outfits[j]->outfit == o ) {
+            lua_pushboolean( L, 1 );
+            return 1;
+         }
+      }
+   }
+   const Spob *ss = spob_getAll();
+   for ( int i = 0; i < array_size( ss ); i++ ) {
+      const Spob *spb = &ss[i];
+      if ( !spob_hasService( spb, SPOB_SERVICE_SHIPYARD ) )
+         continue;
+      if ( !spob_isKnown( spb ) )
+         continue;
+      if ( tech_hasOutfit( spb->tech, o ) ) {
+         lua_pushboolean( L, 1 );
+         return 1;
+      }
+   }
+   lua_pushboolean( L, 0 );
    return 1;
 }
 
