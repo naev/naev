@@ -1172,27 +1172,28 @@ static int equipment_mouseColumn( unsigned int wid, const SDL_Event *event,
                   noutfits = player_getOutfitsFiltered(
                      (const Outfit ***)&outfits, tabfilters[active],
                      filtertext );
-                  array_free( outfits );
                   if ( noutfits <= 0 ) {
                      int best  = active;
                      int nbest = 0;
                      for ( int i = 0; i < OUTFIT_TABS; i++ ) {
-                        outfits  = array_create( Outfit  *);
+                        array_erase( &outfits, array_begin( outfits ),
+                                     array_end( outfits ) );
                         noutfits = player_getOutfitsFiltered(
                            (const Outfit ***)&outfits, tabfilters[i],
                            filtertext );
-                        array_free( outfits );
                         if ( noutfits > 0 ) {
                            best  = i;
                            nbest = noutfits;
                         }
                      }
+                     array_free( outfits );
                      if ( nbest > 0 ) {
                         window_tabWinSetActive( equipment_wid,
                                                 EQUIPMENT_OUTFIT_TAB, best );
                         return 1;
                      }
-                  }
+                  } else
+                     array_free( outfits );
                }
                equipment_regenLists( wid, 1, 0 );
             }
