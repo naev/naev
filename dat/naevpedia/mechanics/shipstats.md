@@ -9,7 +9,7 @@ There are many different important stats for ships that define their behaviour w
 * [Class](mechanics/shipstats/class): The ship class.
 * [Value](mechanics/credits): The value of the ship including all the [outfits](outfits) equipped on it.
 <% if naev.player.fleetCapacity() > 0 then %>
-* [Points](mechanics/playerfleet): Determine how much fleet capacity a ship uses when deployed in a [fleet](mechanics/playerfleet).
+* [Fleet Capacity](mechanics/playerfleet): Determine how much fleet capacity a ship uses when deployed in a [fleet](mechanics/playerfleet).
 <% end %>
 * [Crew](mechanics/boarding): The crew the ship has. This plays a role when [boarding](mechanics/boarding) other ships.
 
