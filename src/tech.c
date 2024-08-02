@@ -743,7 +743,7 @@ int tech_hasOutfit( const tech_group_t *tech, const Outfit *outfit )
  * @brief Checks to see whether a tech group contains a commodity.
  *
  *    @param tech Tech group to look at.
- *    @param commodity Commodity to see if is contained in the group.
+ *    @param comm Commodity to see if is contained in the group.
  *    @return 1 if the commodity is contained, 0 otherwise.
  */
 int tech_hasCommodity( const tech_group_t *tech, const Commodity *comm )
