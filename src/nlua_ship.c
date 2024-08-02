@@ -733,7 +733,7 @@ static int shipL_known( lua_State *L )
    const Ship         *s  = luaL_validship( L, 1 );
    const PlayerShip_t *ps = player_getShipStack();
    for ( int i = 0; i < array_size( ps ); i++ ) {
-      if ( ps->p->ship == s ) {
+      if ( ps[i].p->ship == s ) {
          lua_pushboolean( L, 1 );
          return 1;
       }
