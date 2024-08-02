@@ -693,8 +693,25 @@ static int tech_hasItemInternal( const tech_group_t *tech,
    int s = array_size( tech->items );
    for ( int i = 0; i < s; i++ ) {
       const tech_item_t *itemi = &tech->items[i];
-      if ( memcmp( item, itemi, sizeof( tech_item_t ) ) == 0 )
-         return 1;
+
+      if ( item->type == itemi->type ) {
+         switch ( item->type ) {
+         case TECH_TYPE_OUTFIT:
+            if ( item->u.outfit == itemi->u.outfit )
+               return 1;
+            break;
+         case TECH_TYPE_SHIP:
+            if ( item->u.ship == itemi->u.ship )
+               return 1;
+            break;
+         case TECH_TYPE_COMMODITY:
+            if ( item->u.comm == itemi->u.comm )
+               return 1;
+            break;
+         default:
+            break;
+         }
+      }
 
       if ( itemi->type == TECH_TYPE_GROUP ) {
          if ( tech_hasItemInternal( &tech_groups[itemi->u.grp], item ) )

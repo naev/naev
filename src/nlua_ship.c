@@ -738,9 +738,9 @@ static int shipL_known( lua_State *L )
          return 1;
       }
    }
-   Spob *ss = spob_getAll();
+   const Spob *ss = spob_getAll();
    for ( int i = 0; i < array_size( ss ); i++ ) {
-      Spob *spb = &ss[i];
+      const Spob *spb = &ss[i];
       if ( !spob_hasService( spb, SPOB_SERVICE_SHIPYARD ) )
          continue;
       if ( !spob_isKnown( spb ) )
