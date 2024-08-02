@@ -46,8 +46,8 @@ summary('NData Path', ndata_path, section: 'Features')
 
 # Subdirs
 subdir('src')
+subdir('dat/outfits/bioship') # Has to be before naevpedia
 subdir('dat/naevpedia')
-subdir('dat/outfits/bioship')
 subdir('dat/scripts')
 subdir('docs')
 subdir('po')
@@ -379,11 +379,9 @@ int main (void) { return 0; }''')
    gen_zip_overlay = find_program(join_paths('utils','build','gen_zip_overlay.py'))
    gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors.full_path(), '--cd', 'gettext_stats', gettext_stats.full_path()]
    gen_zip_command += ['--cd', 'outfits/bioship']
+   #gen_zip_command += bio_outfits.to_list()
    foreach target: bio_outfits
-     # Meson 0.60 supports "gen_zip_command += target.to_list()", but until then...
-     foreach output: target.to_list()
-       gen_zip_command += output.full_path()
-     endforeach
+     gen_zip_command += target.to_list()
    endforeach
    zip_overlay = custom_target(
       'zip_overlay',
