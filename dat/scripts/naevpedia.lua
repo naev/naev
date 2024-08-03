@@ -130,6 +130,7 @@ function naevpedia.load()
                   local _s, meta = extractmetadata( entry, dat )
                   meta._G = tcopy( _G ) -- Copy Lua table over
                   meta._G._ = _
+                  meta._G.fmt = fmt
                   mds[ entry ] = meta
                end
             elseif i.type == "directory" then
@@ -246,8 +247,12 @@ local function md_gettext( filename, outfile )
          local str_type = cmark.node_get_type_string(cur)
          if str_type == "text" and entering then
             local literal = cmark.node_get_literal(cur)
-            local str, _tbl = lua_escape(literal)
+            local str, tbl = lua_escape(literal)
             outfile:write( '_("'..str..'")\n' )
+            -- We also write the Lua strings just in case
+            for k,v in ipairs(tbl) do
+               outfile:write("__xxx__ = "..v)
+            end
          end
       end
    end
