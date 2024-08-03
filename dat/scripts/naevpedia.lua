@@ -41,7 +41,9 @@ local function extractmetadata( entry, s )
       if not c then
          warn( cerror )
       else
-         setfenv( c, _G )
+         -- Use a custom global environment that's just a copy of the current one
+         meta._G = tcopy( _G )
+         setfenv( c, meta._G )
          meta.condchunk = c
          if __debugging then
             meta.condchunk()
@@ -104,15 +106,23 @@ local function dolua( s )
       out = out..str
    end
    ]]
-   local function embed_str( str )
+   local function embed_str( sin, st, en )
+      local str = utf8.sub( sin, st, en )
+      -- Horrible hack here because [[]] in Lua will eat the first newline if
+      -- it exists, so we forcibly add one if detected
+      local newl = utf8.sub( sin, st, st )=="\n"
       for i=1,20 do
          local sep = ""
          for j=1,i do
             sep = sep.."="
          end
          if (not utf8.find(str,"["..sep.."[",1,true)) and (not utf8.find(str,"]"..sep.."]",1,true)) then
+            if newl then
+               -- Why Lua, why?!?
+               luastr = luastr..[[out = out..'\n']].."\n"
+            end
             luastr = luastr.."out = out..["..sep.."["..str.."]"..sep.."]\n"
-            break
+            return
          end
       end
    end
@@ -120,25 +130,19 @@ local function dolua( s )
    local be = 0
    while ms do
       local bs
-      local display = false
-      embed_str( utf8.sub( s, be+1, ms-1 ) )
+      embed_str( s, be+1, ms-1 )
       bs, be = utf8.find( s, "%>", me, true )
       if utf8.sub( s, me+1, me+1 )=="=" then
          me = me+1
-         display = true
-         luastr = luastr.."_G.print = pro\nout = out..'<l>'\n"
+         luastr = luastr.."_G.print = pro\n"
       else
          luastr = luastr.."_G.print = pr\n"
       end
       local ss = utf8.sub( s, me+1, bs-1 )
       luastr = luastr..ss.."\n"
-      if display then
-         --luastr = luastr.."out = out..'\\n'\n"
-         luastr = luastr.."out = out..'</l>'"
-      end
       ms, me = utf8.find( s, "<%", me, true )
    end
-   embed_str( utf8.sub( s, be+1 ) )
+   embed_str( s, be+1 )
    luastr = luastr.."return out"
    local pr = _G.print
    local c,cerror = loadstring(luastr)
@@ -153,7 +157,11 @@ local function dolua( s )
       warn( result_or_err )
       return "#r"..result_or_err.."#0"
    end
-   --print(luastr)
+   --[[
+   print("---luastr---")
+   print(luastr)
+   print("------------")
+   --]]
    return success, result_or_err
 end
 
@@ -174,10 +182,13 @@ local function loaddoc( filename )
    rawdat, meta = extractmetadata( filename, rawdat )
 
    -- Preprocess Lua
+   --[[
+   --]]
    local success, dat = dolua( rawdat )
    if not success then
       return success, dat, meta
    end
+   --local success, dat = true, rawdat
 
    -- Finally parse the remaining text as markdown
    return success, cmark.parse_string( dat, cmark.OPT_DEFAULT ), meta
