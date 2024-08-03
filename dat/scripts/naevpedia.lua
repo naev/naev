@@ -103,7 +103,7 @@ local function extractmetadata( entry, s )
          setfenv( c, _G )
          meta.condchunk = c
          if __debugging then
-            meta.condchunk()
+            pcall( meta.condchunk )
          end
       end
    end
@@ -268,6 +268,19 @@ function naevpedia.pot( filename )
    outfile:close()
 end
 
+local function test_cond( meta )
+   if not meta.condchunk then
+      return true
+   end
+   local success, retval = pcall( meta.condchunk )
+   if not success then
+      warn( retval )
+      return false
+   end
+   return retval
+end
+
+
 --[[--
 Sets up the naevpedia. Meant to be used through naevpedia.open or naevpedia,vn.
 --]]
@@ -324,7 +337,7 @@ function naevpedia.setup( name )
 
       local lstelem = {}
       for k,v in pairs(nc._naevpedia) do
-         if meta.category == v.category and (not v.condchunk or v.condchunk()) then
+         if meta.category == v.category and test_cond(v) then
             table.insert( lstelem, v.entry )
          end
       end
@@ -421,7 +434,7 @@ function naevpedia.setup( name )
             end,
             linktargetfunc = function ( target )
                local lmeta = nc._naevpedia[target]
-               if not lmeta or (lmeta.condchunk and not lmeta.condchunk())then
+               if not lmeta or test_cond(lmeta) then
                   return false, fmt.f(_("{target} 404"),{target=target})
                end
                return true, _(lmeta.title or lmeta.name)
