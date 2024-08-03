@@ -70,6 +70,7 @@ function naevpedia.load()
                   local entry = utf8.sub( f, 1, -4 )
                   local _s, meta = extractmetadata( entry, dat )
                   meta._G = tcopy( _G ) -- Copy Lua table over
+                  meta._G._ = _
                   mds[ entry ] = meta
                end
             elseif i.type == "directory" then
@@ -141,7 +142,7 @@ local out = ""
       warn( cerror )
       return false, "#r"..cerror.."#0"
    end
-   setfenv( c, (meta and meta._G) or _G )
+   setfenv( c, meta._G )
    local success,result_or_err = pcall( c )
    if not success then
       warn( result_or_err )
@@ -167,7 +168,7 @@ local function loaddoc( filename )
    rawdat, meta = extractmetadata( filename, rawdat )
 
    -- Preprocess Lua
-   local success, dat = dolua( rawdat, nc._naevpedia[filename].meta )
+   local success, dat = dolua( rawdat, nc._naevpedia[filename] )
    if not success then
       return success, dat, meta
    end
@@ -193,11 +194,11 @@ local function md_gettext( filename, outfile )
 end
 
 function naevpedia.pot( filename )
-   --local outfile = lf.newFile( filename, "w" )
-   local io = require "io"
-   local outfile = io.open( filename, "w" )
+   local outfile = lf.newFile( filename, "w" )
+   --local io = require "io"
+   --local outfile = io.open( filename, "w" )
    for k,v in pairs(nc._naevpedia) do
-      md_gettext( v, outfile )
+      md_gettext( k, outfile )
    end
    outfile:close()
 end
@@ -382,10 +383,14 @@ function naevpedia.setup( name )
                      warn( cerror )
                      sout = sout .. "#r" .. c .. "#0"
                   else
-                     setfenv( c, nmeta._G or _G ) -- Use the same environment used for the Lua
+                     print( nmeta._G )
+                     for k,v in pairs( nmeta._G ) do
+                        print( k )
+                     end
+                     setfenv( c, nmeta._G ) -- Use the same environment used for the Lua
                      local succ, result_or_err = pcall( c )
                      if succ then
-                        sout = sout .. result_or_err
+                        sout = sout .. tostring(result_or_err)
                      else
                         warn( result_or_err )
                         sout = sout.. "#r" .. result_or_err .. "#0"
