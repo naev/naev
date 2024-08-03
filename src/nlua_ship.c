@@ -41,6 +41,7 @@ static int shipL_crew( lua_State *L );
 static int shipL_mass( lua_State *L );
 static int shipL_armour( lua_State *L );
 static int shipL_cargo( lua_State *L );
+static int shipL_fuelConsumption( lua_State *L );
 static int shipL_getPoints( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
@@ -75,6 +76,7 @@ static const luaL_Reg shipL_methods[] = {
    { "mass", shipL_mass },
    { "armour", shipL_armour },
    { "cargo", shipL_cargo },
+   { "fuelConsumption", shipL_fuelConsumption },
    { "points", shipL_getPoints },
    { "slots", shipL_slots },
    { "getSlots", shipL_getSlots },
@@ -423,6 +425,20 @@ static int shipL_cargo( lua_State *L )
 {
    const Ship *s = luaL_validship( L, 1 );
    lua_pushnumber( L, s->cap_cargo );
+   return 1;
+}
+
+/**
+ * @brief Gets the number of fuel consumption of the ship.
+ *
+ *    @luatparam Ship s Ship to get fuel consumption of.
+ *    @luatreturn integer The number of fuel consumption of the ship.
+ * @luafunc fuelConsumption
+ */
+static int shipL_fuelConsumption( lua_State *L )
+{
+   const Ship *s = luaL_validship( L, 1 );
+   lua_pushnumber( L, s->fuel_consumption );
    return 1;
 }
 
