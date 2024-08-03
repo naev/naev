@@ -8,6 +8,65 @@ local utf8 = require "utf8"
 
 local naevpedia = {}
 
+function utf8.replace( s, old, new )
+   local search_start_idx = 1
+   while true do
+      local start_idx, end_idx = utf8.find( s, old, search_start_idx, true )
+      if (not start_idx) then
+         break
+      end
+      local postfix = utf8.sub( s, end_idx + 1 )
+      s = utf8.sub(s, 1, (start_idx - 1) ) .. new .. postfix
+      search_start_idx = -1 * utf8.len(postfix)
+   end
+   return s
+end
+
+local function lua_escape( s )
+   local tbl = {}
+   local ms, me = utf8.find( s, "<%=", 1, true )
+   if not ms then
+      return s, tbl
+   end
+
+   -- Here we process only the <%= ... %> tags
+   local sout = ""
+   local be = 0
+   while ms do
+      local bs
+      sout = sout..utf8.sub( s, be+1, ms-1 )
+      bs, be = utf8.find( s, "%>", me, true )
+      local ss = utf8.sub( s, me+1, bs-1 )
+      table.insert( tbl, ss )
+      sout = sout .. "<%="..tostring(#tbl).."%>"
+      ms, me = utf8.find( s, "<%=", me, true )
+   end
+   return sout, tbl
+end
+
+local function lua_unescape( str, tbl, env )
+   for k,v in ipairs(tbl) do
+      local sout
+      local c, cerror = loadstring( "return "..v )
+      if not c then
+         warn( cerror )
+         sout = "#r" .. c .. "#0"
+      else
+         setfenv( c, env ) -- Use the same environment used for the Lua
+         local succ, result_or_err = pcall( c )
+         if succ then
+            sout = tostring(result_or_err)
+         else
+            warn( result_or_err )
+            sout = "#r" .. result_or_err .. "#0"
+         end
+      end
+
+      str = utf8.replace( str, "<%="..tostring(k).."%>", sout )
+   end
+   return str
+end
+
 local function strsplit( str, sep )
    sep = sep or "%s"
    local t={}
@@ -187,7 +246,8 @@ local function md_gettext( filename, outfile )
          local str_type = cmark.node_get_type_string(cur)
          if str_type == "text" and entering then
             local literal = cmark.node_get_literal(cur)
-            outfile:write( '_("'..literal..'")\n' )
+            local str, _tbl = lua_escape(literal)
+            outfile:write( '_("'..str..'")\n' )
          end
       end
    end
@@ -362,44 +422,8 @@ function naevpedia.setup( name )
                return true, _(lmeta.title or lmeta.name)
             end,
             processliteral = function ( s )
-               -- Do early stopping if no Lua is detected
-               local ms, me = utf8.find( s, "<%=", 1, true )
-               if not ms then
-                  return s
-               end
-
-               -- Here we process only the <%= ... %> tags
-               local sout = ""
-               local be = 0
-               while ms do
-                  local bs
-                  sout = sout..utf8.sub( s, be+1, ms-1 )
-                  bs, be = utf8.find( s, "%>", me, true )
-                  local ss = utf8.sub( s, me+1, bs-1 )
-
-                  -- Run Lua, adding return
-                  local c, cerror = loadstring( "return "..ss )
-                  if not c then
-                     warn( cerror )
-                     sout = sout .. "#r" .. c .. "#0"
-                  else
-                     print( nmeta._G )
-                     for k,v in pairs( nmeta._G ) do
-                        print( k )
-                     end
-                     setfenv( c, nmeta._G ) -- Use the same environment used for the Lua
-                     local succ, result_or_err = pcall( c )
-                     if succ then
-                        sout = sout .. tostring(result_or_err)
-                     else
-                        warn( result_or_err )
-                        sout = sout.. "#r" .. result_or_err .. "#0"
-                     end
-                  end
-                  ms, me = utf8.find( s, "<%=", me, true )
-               end
-               sout = sout .. utf8.sub( s, be+1 )
-               return sout
+               local str, tbl = lua_escape( s )
+               return lua_unescape( _(str), tbl, nmeta._G )
             end,
          } )
 

@@ -199,7 +199,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       elseif node_type == cmark.NODE_FIRST_INLINE or node_type == cmark.NODE_LAST_INLINE then
          local str_type = cmark.node_get_type_string(cur)
          if str_type == "text" and entering then
-            local literal = _(cmark.node_get_literal(cur))
+            local literal = cmark.node_get_literal(cur)
             if options.processliteral then
                block.text = block.text .. options.processliteral( literal )
             else
