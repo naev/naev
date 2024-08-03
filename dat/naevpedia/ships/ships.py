@@ -30,21 +30,24 @@ outstr = f"""---
 title: "{d['name']}"
 cond: "return ship.get(\\\"{d['name']}\\\"):known()"
 ---
-## {name}
+<% s = ship.get("{d['name']}") %>
+"""
+# We don't want any substitution below if possible
+outstr += """## {name}
 
-{d['description']}
+<%= s:description() %>
 
-* **[Class](mechanics/class)**:   {d['class']}
-* **Fabricator**:   {d['fabricator']}
-* **[Crew](mechanics/boarding)**:   {d['characteristics/crew']}
+* **[Class](mechanics/class)**:   <%= _(s:classDisplay()) %>
+* **Fabricator**:   <%= _(s:fabricator()) %>
+* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>
 <% if naev.player.fleetCapacity() > 0 then %>
-* **[Fleet Capacity](mechanics/playerfleet)**:   {d['points']}
+* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>
 <% end %>
-* **[Mass](mechanics/movement)**:   {int(d['characteristics/mass']):,} <%= naev.unit('mass') %>
-* **[Base Armour](mechanics/damage)**:   {d['health/armour']} <%= naev.unit('energy') %>
-* **[Cargo Space](mechanics/cargo)**:   {d['characteristics/cargo']} <%= naev.unit('mass') %>
-* **[Fuel Consumption](mechanics/hyperspace)**:   {d['characteristics/fuel_consumption']} <%= naev.unit('unit') %>
-* **[Price](mechanics/credits)**:   {int(d['price']):,} ¤
+* **[Mass](mechanics/movement)**:   <%= fmt.f(_("{mass} {unit}"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>
+* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_("{armour} {unit}"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>
+* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_("{cargo} {unit}"), {cargo=fmt.number(s:cargo()), unit=naev.unit('energy')})%>
+* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_("{fuel} {unit}"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('energy')})%>
+* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>
 """
 
 with open( args.o, 'w' ) as f:
