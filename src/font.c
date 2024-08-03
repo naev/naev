@@ -1159,6 +1159,7 @@ int gl_printEndRaw( int *xo, int *yo, const glFont *ft_font, int width,
    *xo = round( x );
    *yo = round( MAX( y, 0 ) );
 
+   NTracingZoneEnd( _ctx );
    return 0;
 }
 
