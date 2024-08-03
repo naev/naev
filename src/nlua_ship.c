@@ -36,6 +36,7 @@ static int shipL_nameRaw( lua_State *L );
 static int shipL_baseType( lua_State *L );
 static int shipL_class( lua_State *L );
 static int shipL_classDisplay( lua_State *L );
+static int shipL_fabricator( lua_State *L );
 static int shipL_getPoints( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
@@ -65,6 +66,7 @@ static const luaL_Reg shipL_methods[] = {
    { "baseType", shipL_baseType },
    { "class", shipL_class },
    { "classDisplay", shipL_classDisplay },
+   { "fabricator", shipL_fabricator },
    { "points", shipL_getPoints },
    { "slots", shipL_slots },
    { "getSlots", shipL_getSlots },
@@ -343,6 +345,20 @@ static int shipL_classDisplay( lua_State *L )
 {
    const Ship *s = luaL_validship( L, 1 );
    lua_pushstring( L, ship_classDisplay( s ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the raw (untranslated) fabricator of the ship.
+ *
+ *    @luatparam Ship s Ship to get ship fabricator of.
+ *    @luatreturn string The raw name of the ship's fabricator.
+ * @luafunc classDisplay
+ */
+static int shipL_fabricator( lua_State *L )
+{
+   const Ship *s = luaL_validship( L, 1 );
+   lua_pushstring( L, s->fabricator );
    return 1;
 }
 
