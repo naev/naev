@@ -333,9 +333,9 @@ function naevpedia.setup( name )
             linktargetfunc = function ( target )
                local lmeta = nc._naevpedia[target]
                if not lmeta or (lmeta.condchunk and not lmeta.condchunk())then
-                  return nil
+                  return false, fmt.f(_("{target} 404"),{target=target})
                end
-               return _(lmeta.title or lmeta.name)
+               return true, _(lmeta.title or lmeta.name)
             end,
             processliteral = function ( s )
                print(s)

@@ -115,11 +115,13 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
             local bx, by = naev.gfx.printfEnd( block.font.font, block.text, w )
             if wgt.linktargetfunc then
                local target = cmark.node_get_url(cur)
-               linkname = wgt.linktargetfunc( target )
-               if linkname then
+               local found
+               found, linkname = wgt.linktargetfunc( target )
+               if found then
                   block.text = block.text .. "#b"
                else
                   block.text = block.text .. "#r"
+                  linkname = "#r"..linkname.."#0"
                end
             else
                block.text = block.text .. "#b"
