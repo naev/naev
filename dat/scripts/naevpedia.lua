@@ -248,7 +248,7 @@ local function md_gettext( filename, outfile )
          if str_type == "text" and entering then
             local literal = cmark.node_get_literal(cur)
             local str, tbl = lua_escape(literal)
-            outfile:write( '_("'..str..'")\n' )
+            outfile:write( '_([['..str..']])\n' )
             -- We also write the Lua strings just in case
             for k,v in ipairs(tbl) do
                outfile:write("__xxx__ = "..v)
