@@ -37,6 +37,7 @@ static int shipL_baseType( lua_State *L );
 static int shipL_class( lua_State *L );
 static int shipL_classDisplay( lua_State *L );
 static int shipL_fabricator( lua_State *L );
+static int shipL_crew( lua_State *L );
 static int shipL_getPoints( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
@@ -67,6 +68,7 @@ static const luaL_Reg shipL_methods[] = {
    { "class", shipL_class },
    { "classDisplay", shipL_classDisplay },
    { "fabricator", shipL_fabricator },
+   { "crew", shipL_crew },
    { "points", shipL_getPoints },
    { "slots", shipL_slots },
    { "getSlots", shipL_getSlots },
@@ -351,14 +353,28 @@ static int shipL_classDisplay( lua_State *L )
 /**
  * @brief Gets the raw (untranslated) fabricator of the ship.
  *
- *    @luatparam Ship s Ship to get ship fabricator of.
+ *    @luatparam Ship s Ship to get fabricator of.
  *    @luatreturn string The raw name of the ship's fabricator.
- * @luafunc classDisplay
+ * @luafunc fabricator
  */
 static int shipL_fabricator( lua_State *L )
 {
    const Ship *s = luaL_validship( L, 1 );
    lua_pushstring( L, s->fabricator );
+   return 1;
+}
+
+/**
+ * @brief Gets the number of crew of the ship.
+ *
+ *    @luatparam Ship s Ship to get crew of.
+ *    @luatreturn integer The number of crew the ship has.
+ * @luafunc crew
+ */
+static int shipL_crew( lua_State *L )
+{
+   const Ship *s = luaL_validship( L, 1 );
+   lua_pushinteger( L, s->crew );
    return 1;
 }
 
