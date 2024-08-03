@@ -30,9 +30,13 @@ outstr = f"""---
 title: "{d['name']}"
 cond: "return outfit.get(\\\"{d['name']}\\\"):known()"
 ---
-## {name}
+<% o = outfit.get([[{d['name']}]]) %>
+"""
+# We don't want any substitution below if possible
+outstr += """
+## <%= o:name() %>
 
-{d['general/description']}
+<%= o:description() %>
 """
 
 with open( args.o, 'w' ) as f:

@@ -30,10 +30,11 @@ outstr = f"""---
 title: "{d['name']}"
 cond: "return ship.get(\\\"{d['name']}\\\"):known()"
 ---
-<% s = ship.get("{d['name']}") %>
+<% s = ship.get([[{d['name']}]]) %>
 """
 # We don't want any substitution below if possible
-outstr += """## {name}
+outstr += """
+## <%= s:name() %>
 
 <%= s:description() %>
 
