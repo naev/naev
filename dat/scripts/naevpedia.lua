@@ -117,7 +117,7 @@ local function dolua( s )
       end
    end
 
-   local be = 1
+   local be = 0
    while ms do
       local bs
       local display = false
@@ -126,14 +126,15 @@ local function dolua( s )
       if utf8.sub( s, me+1, me+1 )=="=" then
          me = me+1
          display = true
-         luastr = luastr.."_G.print = pro\n"
+         luastr = luastr.."_G.print = pro\nout = out..'<l>'\n"
       else
          luastr = luastr.."_G.print = pr\n"
       end
       local ss = utf8.sub( s, me+1, bs-1 )
       luastr = luastr..ss.."\n"
       if display then
-         luastr = luastr.."out = out..'\\n'\n"
+         --luastr = luastr.."out = out..'\\n'\n"
+         luastr = luastr.."out = out..'</l>'"
       end
       ms, me = utf8.find( s, "<%", me, true )
    end
@@ -152,6 +153,7 @@ local function dolua( s )
       warn( result_or_err )
       return "#r"..result_or_err.."#0"
    end
+   --print(luastr)
    return success, result_or_err
 end
 
@@ -270,14 +272,14 @@ function naevpedia.setup( name )
    end
 
    -- Top bar
-   local topbar = {"mechanics","ships","outfits","history"}
+   local topbar = {N_("Mechanics"),N_("Ships"),N_("Outfits"),N_("History")}
    local bw, bh = 100, 30
    local topbarw = #topbar*(20+bw)-20
    local xoff = 340 + (w-340-topbarw)*0.5
    for k,v in ipairs(topbar) do
       local bx = xoff+(20+bw)*(k-1)
       luatk.newButton( wdw, bx, 40, bw, bh, _(v), function ()
-         local e = nc._naevpedia[v]
+         local e = nc._naevpedia[string.lower(v)]
          if e then
             open_page( e.name )
          end
