@@ -197,7 +197,12 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       elseif node_type == cmark.NODE_FIRST_INLINE or node_type == cmark.NODE_LAST_INLINE then
          local str_type = cmark.node_get_type_string(cur)
          if str_type == "text" and entering then
-            block.text = block.text .. _(cmark.node_get_literal(cur))
+            local literal = _(cmark.node_get_literal(cur))
+            if options.processliteral then
+               block.text = block.text .. options.processliteral( literal )
+            else
+               block.text = block.text .. literal
+            end
          elseif str_type == "image" then
             if not entering then
                local img = lg.newImage( cmark.node_get_url(cur) )
@@ -310,7 +315,7 @@ function Markdown:mmoved( mx, my )
 end
 function Markdown:pressed( mx, my )
    -- Check scrollbar first
-   if self.scrolls and mx > self.w-12 then
+   if self.scrolls and mx > self.w-16 then
       self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
       self.scrolling = true
       return true

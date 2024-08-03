@@ -40,10 +40,10 @@ cond: "return ship.get(\\\"{d['name']}\\\"):known()"
 <% if naev.player.fleetCapacity() > 0 then %>
 * **[Fleet Capacity](mechanics/playerfleet)**:   {d['points']}
 <% end %>
-* **[Mass](mechanics/movement)**:   {int(d['characteristics/mass']):,} <%= print(naev.unit('mass')) %>
-* **[Base Armour](mechanics/damage)**:   {d['health/armour']} <%= print(naev.unit('energy')) %>
-* **[Cargo Space](mechanics/cargo)**:   {d['characteristics/cargo']} <%= print(naev.unit('mass')) %>
-* **[Fuel Consumption](mechanics/hyperspace)**:   {d['characteristics/fuel_consumption']} <%= print(naev.unit('unit')) %>
+* **[Mass](mechanics/movement)**:   {int(d['characteristics/mass']):,} <%= naev.unit('mass') %>
+* **[Base Armour](mechanics/damage)**:   {d['health/armour']} <%= naev.unit('energy') %>
+* **[Cargo Space](mechanics/cargo)**:   {d['characteristics/cargo']} <%= naev.unit('mass') %>
+* **[Fuel Consumption](mechanics/hyperspace)**:   {d['characteristics/fuel_consumption']} <%= naev.unit('unit') %>
 * **[Price](mechanics/credits)**:   {int(d['price']):,} ¤
 """
 

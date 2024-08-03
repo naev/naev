@@ -41,9 +41,7 @@ local function extractmetadata( entry, s )
       if not c then
          warn( cerror )
       else
-         -- Use a custom global environment that's just a copy of the current one
-         meta._G = tcopy( _G )
-         setfenv( c, meta._G )
+         setfenv( c, _G )
          meta.condchunk = c
          if __debugging then
             meta.condchunk()
@@ -71,6 +69,7 @@ function naevpedia.load()
                   local dat = lf.read( 'naevpedia/'..f )
                   local entry = utf8.sub( f, 1, -4 )
                   local _s, meta = extractmetadata( entry, dat )
+                  meta._G = tcopy( _G ) -- Copy Lua table over
                   mds[ entry ] = meta
                end
             elseif i.type == "directory" then
@@ -92,7 +91,7 @@ Processes the Lua in the markdown file as nanoc does.
 
 <%= print('foo') %> statements get printed in the text, while <% if foo then %> get processed otherwise.
 --]]
-local function dolua( s )
+local function dolua( s, meta )
    -- Do early stopping if no Lua is detected
    local ms, me = utf8.find( s, "<%", 1, true )
    if not ms then
@@ -100,12 +99,9 @@ local function dolua( s )
    end
 
    -- Start up the Lua stuff
-   local luastr = [[local out = ""
-   local pr = _G.print
-   local pro = function( str )
-      out = out..str
-   end
-   ]]
+   local luastr = [[
+local out = ""
+]]
    local function embed_str( sin, st, en )
       local str = utf8.sub( sin, st, en )
       -- Horrible hack here because [[]] in Lua will eat the first newline if
@@ -129,39 +125,28 @@ local function dolua( s )
 
    local be = 0
    while ms do
-      local bs
-      embed_str( s, be+1, ms-1 )
-      bs, be = utf8.find( s, "%>", me, true )
-      if utf8.sub( s, me+1, me+1 )=="=" then
-         me = me+1
-         luastr = luastr.."_G.print = pro\n"
-      else
-         luastr = luastr.."_G.print = pr\n"
+      if utf8.sub( s, me+1, me+1 )~="=" then
+         local bs
+         embed_str( s, be+1, ms-1 )
+         bs, be = utf8.find( s, "%>", me, true )
+         local ss = utf8.sub( s, me+1, bs-1 )
+         luastr = luastr..ss.."\n"
       end
-      local ss = utf8.sub( s, me+1, bs-1 )
-      luastr = luastr..ss.."\n"
       ms, me = utf8.find( s, "<%", me, true )
    end
    embed_str( s, be+1 )
    luastr = luastr.."return out"
-   local pr = _G.print
    local c,cerror = loadstring(luastr)
    if not c then
       warn( cerror )
       return false, "#r"..cerror.."#0"
    end
-   setfenv( c, _G )
+   setfenv( c, (meta and meta._G) or _G )
    local success,result_or_err = pcall( c )
-   _G.print = pr
    if not success then
       warn( result_or_err )
       return "#r"..result_or_err.."#0"
    end
-   --[[
-   print("---luastr---")
-   print(luastr)
-   print("------------")
-   --]]
    return success, result_or_err
 end
 
@@ -184,7 +169,7 @@ local function loaddoc( filename )
    -- Preprocess Lua
    --[[
    --]]
-   local success, dat = dolua( rawdat )
+   local success, dat = dolua( rawdat, nc._naevpedia[filename].meta )
    if not success then
       return success, dat, meta
    end
@@ -326,6 +311,7 @@ function naevpedia.setup( name )
          -- Failed, so just display the error
          mrk = luatk.newText( wdw, mx, my, mw, mh, doc )
       else
+         local nmeta = nc._naevpedia[filename]
          -- Success so we try to load the markdown
          mrk = md.newMarkdown( wdw, doc, mx, my, mw, mh, {
             linkfunc = function ( target )
@@ -350,6 +336,43 @@ function naevpedia.setup( name )
                   return nil
                end
                return _(lmeta.title or lmeta.name)
+            end,
+            processliteral = function ( s )
+               print(s)
+               -- Do early stopping if no Lua is detected
+               local ms, me = utf8.find( s, "<%=", 1, true )
+               if not ms then
+                  return s
+               end
+
+               -- Here we process only the <%= ... %> tags
+               local sout = ""
+               local be = 0
+               while ms do
+                  local bs
+                  sout = sout..utf8.sub( s, be+1, ms-1 )
+                  bs, be = utf8.find( s, "%>", me, true )
+                  local ss = utf8.sub( s, me+1, bs-1 )
+
+                  -- Run Lua, adding return
+                  local c, cerror = loadstring( "return "..ss )
+                  if not c then
+                     warn( cerror )
+                     sout = sout .. "#r" .. c .. "#0"
+                  else
+                     setfenv( c, nmeta._G or _G ) -- Use the same environment used for the Lua
+                     local succ, result_or_err = pcall( c )
+                     if succ then
+                        sout = sout .. result_or_err
+                     else
+                        warn( result_or_err )
+                        sout = sout.. "#r" .. result_or_err .. "#0"
+                     end
+                  end
+                  ms, me = utf8.find( s, "<%=", me, true )
+               end
+               sout = sout .. utf8.sub( s, be+1 )
+               return sout
             end,
          } )
 
