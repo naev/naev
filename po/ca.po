@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-07-22 21:45+0900\n"
-"PO-Revision-Date: 2024-08-03 15:09+0000\n"
+"PO-Revision-Date: 2024-08-03 22:09+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev/ca/>\n"
 "Language: ca\n"
@@ -1789,65 +1789,72 @@ msgstr "S'estan potenciant els escuts."
 
 #: dat/effects/wormhole_enter.xml:2
 msgid "Wormhole Enter"
-msgstr ""
+msgstr "Entrar al forat de cuc"
 
 #: dat/effects/wormhole_enter.xml:3
 msgid "Entering a wormhole!"
-msgstr ""
+msgstr "Entrant en un forat de cuc!"
 
 #: dat/effects/wormhole_exit.xml:2
 msgid "Wormhole Exit"
-msgstr ""
+msgstr "Sortida del forat de cuc"
 
 #: dat/effects/wormhole_exit.xml:3
 msgid "Exiting a wormhole!"
-msgstr ""
+msgstr "Sortint d'un forat de cuc!"
 
 #: dat/factions/black_lotus.xml:2
 msgid "Black Lotus"
-msgstr ""
+msgstr "Lotus Negre"
 
 #: dat/factions/black_lotus.xml:5
 msgid "Black Lotus Pirate Clan"
-msgstr ""
+msgstr "Clan Pirata del Lotus Negre"
 
 #: dat/factions/black_lotus.xml:12
 msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
 "between the Za'lek and Sirius space. Organized crime at its finest."
 msgstr ""
+"El Clan Pirata del Lotus Negre és un clan de pirates ferotgement organitzat "
+"situat entre l'espai Za'lek i Sirius. El crim organitzat al màxim."
 
 #: dat/factions/collective.xml:2
 msgid "Collective"
-msgstr ""
+msgstr "Col·lectiu"
 
 #: dat/factions/collective.xml:9
 msgid ""
 "The Collective are a hivemind of AI ships gone rogue. They seem to attack "
 "and destroy all humans on sight."
 msgstr ""
+"El Col·lectiu és una ment de rusc de naus d'IA que s'han convertit en "
+"canalla. Sembla que ataquen i destrueixen tots els humans a la vista."
 
 #: dat/factions/derelict.xml:2
 msgid "Derelict"
-msgstr ""
+msgstr "Vestigi"
 
 #: dat/factions/dreamer_clan.xml:2
 msgid "Dreamer Clan"
-msgstr ""
+msgstr "Clan dels Somiadors"
 
 #: dat/factions/dreamer_clan.xml:5
 msgid "Dreamer Pirate Clan"
-msgstr ""
+msgstr "Clan dels Pirates Somiadors"
 
 #: dat/factions/dreamer_clan.xml:12
 msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
+"El Clan dels Pirates Somiadors està format en gran part per pirates "
+"descontents de la Frontera, farts tant del terrorisme del FAF i els Dvaered, "
+"i de la tirania de l'Imperi."
 
 #: dat/factions/dummy.xml:2
 msgid "Dummy"
-msgstr ""
+msgstr "Maniquí"
 
 #. Add the Cargo
 #. Ship to go back to
@@ -1871,7 +1878,7 @@ msgstr ""
 #: dat/missions/minerva/pirate6.lua:308 dat/scripts/common/dvaered.lua:6
 #: dat/scripts/common/dvaered.lua:11
 msgid "Dvaered"
-msgstr ""
+msgstr "Dvaered"
 
 #: dat/factions/dvaered.xml:7 dat/ships/dvaered/dvaered_ancestor.xml:15
 #: dat/ships/dvaered/dvaered_arsenal.xml:18
@@ -1882,24 +1889,29 @@ msgstr ""
 #: dat/ships/neutral/phalanx.xml:14 dat/ships/neutral/vendetta.xml:14
 #: dat/ships/neutral/vigilance.xml:13
 msgid "House Dvaered"
-msgstr ""
+msgstr "Casa Dvaered"
 
 #: dat/factions/dvaered.xml:12
 msgid ""
 "House Dvaered is one of the oldest Great Houses in the Empire. They are "
 "proud and formed by a coalition of many powerful warlords."
 msgstr ""
+"La Casa Dvaered és una de les Grans Cases més antigues de l'Imperi. Estan "
+"orgullosos i estan formats per una coalició de molts senyors de la guerra "
+"poderosos."
 
 #: dat/factions/empire.xml:2 dat/scripts/common/empire.lua:15
 #: dat/scripts/common/empire.lua:20
 msgid "Empire"
-msgstr ""
+msgstr "Imperi"
 
 #: dat/factions/empire.xml:11
 msgid ""
 "The Empire is the bureaucratic heart of the universe that provides stability "
 "and cohesion, when possible."
 msgstr ""
+"L'Imperi és el cor burocràtic de l'univers que proporciona estabilitat i "
+"cohesió, quan és possible."
 
 #. FLF are not a natural enemy of the Empire, we have to enforce that
 #.
@@ -1917,47 +1929,53 @@ msgstr ""
 #: dat/factions/flf.xml:2 dat/events/flf/flf_catastrophe.lua:94
 #: dat/scripts/common/flf.lua:71
 msgid "FLF"
-msgstr ""
+msgstr "FAF"
 
 #: dat/factions/flf.xml:5
 msgid "Frontier Liberation Front"
-msgstr ""
+msgstr "Front d'Alliberament de la Frontera"
 
 #: dat/factions/flf.xml:11
 msgid ""
 "The Frontier Liberation Front is a group of terrorists advocating for the "
 "independence of the Frontier from Imperial tyranny."
 msgstr ""
+"El Front d'Alliberament de la Frontera és un grup de terroristes que advoca "
+"per la independència de la Frontera de la tirania imperial."
 
 #: dat/factions/frontier.xml:2 dat/scripts/common/flf.lua:71
 msgid "Frontier"
-msgstr ""
+msgstr "Frontera"
 
 #: dat/factions/frontier.xml:6
 msgid "Frontier Alliance"
-msgstr ""
+msgstr "Aliança de la Fronterera"
 
 #: dat/factions/frontier.xml:11
 msgid ""
 "The Frontier Alliance is formed by the survivors of the initial attempts of "
 "Human expansion into space."
 msgstr ""
+"La Aliança de la Fronterera està formada pels supervivents dels intents "
+"inicials d'expansió humana a l'espai."
 
 #: dat/factions/goddard.xml:2 dat/ships/neutral/goddard.xml:2
 #: dat/ssys/goddard.xml:2 dat/events/dvaered/fwB_repay.lua:89
 msgid "Goddard"
-msgstr ""
+msgstr "Goddard"
 
 #: dat/factions/goddard.xml:7 dat/ships/dvaered/dvaered_goddard.xml:18
 #: dat/ships/neutral/goddard.xml:17 dat/events/dvaered/fwB_repay.lua:74
 msgid "House Goddard"
-msgstr ""
+msgstr "Casa Goddard"
 
 #: dat/factions/goddard.xml:12
 msgid ""
 "House Goddard is a minor house wedged between the Empire and Dvaered. They "
 "are one of the main fabricators of ships for the Dvaered."
 msgstr ""
+"La Casa Goddard és una casa menor situada entre l'Imperi i els Dvaered. Són "
+"un dels principals fabricants de naus per als Dvaered."
 
 #. Heal up to avoid game over if necessary
 #. Too many, so just wait a bit
@@ -1977,11 +1995,11 @@ msgstr ""
 #: dat/missions/neutral/adblocker.lua:99 dat/missions/neutral/teenager.lua:95
 #: dat/missions/taiomi/taiomi10.lua:137
 msgid "Independent"
-msgstr ""
+msgstr "Independent"
 
 #: dat/factions/marauder.xml:2
 msgid "Marauder"
-msgstr ""
+msgstr "Basquejador"
 
 #. Returns a lore message for the given faction.
 #. Need presence
@@ -1999,11 +2017,11 @@ msgstr ""
 #: dat/missions/tutorial/nelly02.lua:259 dat/scripts/common/pirate.lua:57
 #: dat/scripts/common/shadow.lua:28
 msgid "Pirate"
-msgstr ""
+msgstr "Pirata"
 
 #: dat/factions/marauder.xml:4
 msgid "Pirate Marauders"
-msgstr ""
+msgstr "Basquejadors Pirata"
 
 #: dat/factions/marauder.xml:14
 msgid ""
@@ -2011,6 +2029,9 @@ msgid ""
 "aggressive and will attack most vessels unprovoked. Even the pirate clans "
 "have difficulty in dealing with them."
 msgstr ""
+"Els Basquejadors Pirata són el més baix i vil dels pirates. Són "
+"extremadament agressius i atacaran la majoria de naus sense provocar-los. "
+"Fins i tot els clans de pirates tenen dificultats per a tractar amb ells."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -2088,19 +2109,19 @@ msgstr ""
 #: dat/missions/shark/sh02_tapping.lua:286
 #: dat/missions/shark/sh02_tapping.lua:291
 msgid "Mercenary"
-msgstr ""
+msgstr "Mercenari"
 
 #: dat/factions/miner.xml:2
 msgid "Miner"
-msgstr ""
+msgstr "Miner"
 
 #: dat/factions/nasin.xml:2
 msgid "Nasin"
-msgstr ""
+msgstr "Nasin"
 
 #: dat/factions/pirate.xml:6
 msgid "Galactic Space Pirates"
-msgstr ""
+msgstr "Pirates Espacials Galàctics"
 
 #: dat/factions/pirate.xml:13
 msgid ""
@@ -2108,6 +2129,9 @@ msgid ""
 "affiliated with any particular clan. Due to their disorganized nature, they "
 "tend to respect the clans they operate near."
 msgstr ""
+"Els Pirates Espacials Galàctics consisteixen en naus pirates independents no "
+"afiliats a cap clan en concret. A causa de la seva naturalesa "
+"desorganitzada, tendeixen a respectar els clans als quals operen a prop."
 
 #: dat/factions/proteron.xml:2 dat/ships/proteron/proteron_archimedes.xml:17
 #: dat/ships/proteron/proteron_dalton.xml:15
@@ -2117,11 +2141,11 @@ msgstr ""
 #: dat/ships/proteron/proteron_pythagoras.xml:16
 #: dat/ships/proteron/proteron_watson.xml:17
 msgid "Proteron"
-msgstr ""
+msgstr "Proteron"
 
 #: dat/factions/proteron.xml:5
 msgid "Sovereign Proteron Autarchy"
-msgstr ""
+msgstr "Autarquia Sobirana dels Proterons"
 
 #: dat/factions/proteron.xml:11
 msgid ""
@@ -2129,20 +2153,25 @@ msgid ""
 "move and attack the Emperor himself. This caused the Incident and left the "
 "universe irreversibly ravaged."
 msgstr ""
+"L'Autarquia Sobirana dels Proterons va ser una Gran Casa Imperial que va "
+"decidir actuar i atacar el mateix Emperador. Això va provocar l'Incident i "
+"va deixar l'univers devastat de manera irreversible."
 
 #: dat/factions/raven_clan.xml:2
 msgid "Raven Clan"
-msgstr ""
+msgstr "Clan Corb"
 
 #: dat/factions/raven_clan.xml:5
 msgid "Raven Pirate Clan"
-msgstr ""
+msgstr "Clan Pirata Corb"
 
 #: dat/factions/raven_clan.xml:12
 msgid ""
 "The Raven Pirate Clan is a band of pirates that lead over the widespread "
 "Qorel sector between the Empire and Dvaered systems."
 msgstr ""
+"El Clan Pirata Corb és una banda de pirates que lidera a l'extens sector "
+"Qorel entre els sistemes de l'Imperi i dels Dvaered."
 
 #. --
 #. Functions for handling cinematic scenes.
@@ -2170,17 +2199,19 @@ msgstr ""
 #: dat/scripts/common/achack.lua:7 dat/scripts/common/sirius.lua:20
 #: dat/scripts/common/sirius.lua:25
 msgid "Sirius"
-msgstr ""
+msgstr "Sirius"
 
 #: dat/factions/sirius.xml:7 dat/events/dvaered/fwB_repay.lua:72
 msgid "House Sirius"
-msgstr ""
+msgstr "Casa Sirius"
 
 #: dat/factions/sirius.xml:12
 msgid ""
 "House Sirius is defined by its state religion more than anything else, with "
 "Sirichana as the focus of worship."
 msgstr ""
+"La Casa Sirius es defineix per la seva religió estatal més que qualsevol "
+"altra cosa, amb Sirichana com a focus de culte."
 
 #: dat/factions/soromid.xml:2 dat/ships/feral_bioship/kauweke.xml:23
 #: dat/ships/feral_bioship/nohinohi.xml:16
@@ -2192,11 +2223,11 @@ msgstr ""
 #: dat/ships/soromid/soromid_nyx.xml:14 dat/ships/soromid/soromid_odium.xml:15
 #: dat/ships/soromid/soromid_reaver.xml:13 dat/ships/soromid/soromid_vox.xml:17
 msgid "Soromid"
-msgstr ""
+msgstr "Soromid"
 
 #: dat/factions/soromid.xml:7
 msgid "Soromid Tribes"
-msgstr ""
+msgstr "Tribus Soromid"
 
 #: dat/factions/soromid.xml:12
 msgid ""
@@ -2204,20 +2235,25 @@ msgid ""
 "themselves in order to survive a pandemic. They now openly embrace their "
 "human transcendence as a sign of strength."
 msgstr ""
+"Els Soromid consisteix en individus que es van veure obligats a modificar-se "
+"genèticament per sobreviure a una pandèmia. Ara accepten obertament la seva "
+"transcendència humana com a signe de força."
 
 #: dat/factions/strangelove.xml:2
 msgid "Strangelove"
-msgstr ""
+msgstr "Amorestrany"
 
 #: dat/factions/thurion.xml:2
 msgid "Thurion"
-msgstr ""
+msgstr "Thurion"
 
 #: dat/factions/thurion.xml:10
 msgid ""
 "The Thurion are a mysterious faction located deep in the Nebula. They seem "
 "to be out of touch with the external world."
 msgstr ""
+"Els Thurion són una misteriosa facció situada a les profunditats de la "
+"Nebulosa. Sembla que no estan en contacte amb el món exterior."
 
 #. Get a lore message
 #. Need a generic faction
@@ -2257,15 +2293,15 @@ msgstr ""
 #: dat/factions/trader.xml:2 dat/events/npc/trader.lua:60
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:48
 msgid "Trader"
-msgstr ""
+msgstr "Comerciant"
 
 #: dat/factions/traders_society.xml:2
 msgid "Traders Society"
-msgstr ""
+msgstr "Societat de Comerciants"
 
 #: dat/factions/traders_society.xml:5
 msgid "Space Traders Society"
-msgstr ""
+msgstr "Societat de Comerciants Espacials"
 
 #: dat/factions/traders_society.xml:12
 msgid ""
@@ -2274,20 +2310,27 @@ msgid ""
 "Great Houses, and Soromid. Some of the prominent members include Astra "
 "Vigilis, Mining Vrata, and the Imperial Red Star."
 msgstr ""
+"La Societat de Comerciants Espacials és una organització que abasta tots els "
+"diferents gremis i serveix per a protegir els seus interessos contra "
+"l'Imperi, les Grans Cases i els Soromid. Alguns dels membres destacats "
+"inclouen Astra Vigilis, Mining Vrata i l'Estrella Vermella Imperial."
 
 #: dat/factions/wild_ones.xml:2 dat/scripts/common/minerva.lua:307
 msgid "Wild Ones"
-msgstr ""
+msgstr "Els Salvatges"
 
 #: dat/factions/wild_ones.xml:5
 msgid "Wild Ones Pirate Clan"
-msgstr ""
+msgstr "Clan dels Pirates Salvatges"
 
 #: dat/factions/wild_ones.xml:12
 msgid ""
 "The Wild Ones Pirate Clan is a violent and loosely organized band of pirates "
 "that control the Haven sector between Empire and Soromid territories."
 msgstr ""
+"El Clan dels Pirates Salvatges és una banda de pirates violenta i poc "
+"organitzada que controla el sector Refugi entre els territoris de l'Imperi i "
+"els Soromid."
 
 #. Gets reset on enter system
 #. Must be goal system
@@ -2314,21 +2357,23 @@ msgstr ""
 #: dat/scripts/common/zalek_blackhole.lua:89
 #: dat/scripts/common/zalek_physics.lua:32
 msgid "Za'lek"
-msgstr ""
+msgstr "Za'lek"
 
 #: dat/factions/zalek.xml:7
 msgid "House Za'lek"
-msgstr ""
+msgstr "Casa Za'lek"
 
 #: dat/factions/zalek.xml:12
 msgid ""
 "House Za'lek is the scientific heart of the Empire. Until recently they were "
 "a secretive Great House, but they have recently become much more open."
 msgstr ""
+"La Casa Za'lek és el cor científic de l'Imperi. Fins fa poc eren una Gran "
+"Casa reservada, però recentment s'han tornat molt més oberts."
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
-msgstr ""
+msgstr "Ambientador"
 
 #: dat/outfits/accessory/air_freshener.xml:5
 #: dat/outfits/accessory/black_cat_doll.xml:5
@@ -2355,7 +2400,7 @@ msgstr ""
 #: dat/outfits/accessory/ugly_statue.xml:5
 #: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots/accessory.xml:3
 msgid "Accessory"
-msgstr ""
+msgstr "Accessori"
 
 #: dat/outfits/accessory/air_freshener.xml:11
 msgid ""
