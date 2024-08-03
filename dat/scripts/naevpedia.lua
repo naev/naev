@@ -167,16 +167,39 @@ local function loaddoc( filename )
    rawdat, meta = extractmetadata( filename, rawdat )
 
    -- Preprocess Lua
-   --[[
-   --]]
    local success, dat = dolua( rawdat, nc._naevpedia[filename].meta )
    if not success then
       return success, dat, meta
    end
-   --local success, dat = true, rawdat
 
    -- Finally parse the remaining text as markdown
    return success, cmark.parse_string( dat, cmark.OPT_DEFAULT ), meta
+end
+
+local function md_gettext( filename, outfile )
+   local success, doc, _meta = loaddoc( filename )
+   if not success then
+      return
+   end
+   for cur, entering, node_type in cmark.walk(doc) do
+      if node_type == cmark.NODE_FIRST_INLINE or node_type == cmark.NODE_LAST_INLINE then
+         local str_type = cmark.node_get_type_string(cur)
+         if str_type == "text" and entering then
+            local literal = cmark.node_get_literal(cur)
+            outfile:write( '_("'..literal..'")\n' )
+         end
+      end
+   end
+end
+
+function naevpedia.pot( filename )
+   --local outfile = lf.newFile( filename, "w" )
+   local io = require "io"
+   local outfile = io.open( filename, "w" )
+   for k,v in pairs(nc._naevpedia) do
+      md_gettext( v, outfile )
+   end
+   outfile:close()
 end
 
 --[[--
@@ -338,7 +361,6 @@ function naevpedia.setup( name )
                return true, _(lmeta.title or lmeta.name)
             end,
             processliteral = function ( s )
-               print(s)
                -- Do early stopping if no Lua is detected
                local ms, me = utf8.find( s, "<%=", 1, true )
                if not ms then
