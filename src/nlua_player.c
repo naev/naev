@@ -2378,6 +2378,7 @@ static int playerL_dt_mod( lua_State *L )
  */
 static int playerL_fleetCapacity( lua_State *L )
 {
+   PLAYER_CHECK();
    int                 nships = 0;
    const PlayerShip_t *pships;
    pfleet_update();
@@ -2402,6 +2403,7 @@ static int playerL_fleetCapacity( lua_State *L )
  */
 static int playerL_fleetCapacitySet( lua_State *L )
 {
+   PLAYER_CHECK();
    player.fleet_capacity = luaL_checkinteger( L, 1 );
    return 0;
 }
@@ -2414,6 +2416,7 @@ static int playerL_fleetCapacitySet( lua_State *L )
  */
 static int playerL_chapter( lua_State *L )
 {
+   PLAYER_CHECK();
    lua_pushstring( L, player.chapter );
    return 1;
 }
@@ -2426,6 +2429,7 @@ static int playerL_chapter( lua_State *L )
  */
 static int playerL_chapterSet( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str = luaL_checkstring( L, 1 );
    free( player.chapter );
    player.chapter = strdup( str );
