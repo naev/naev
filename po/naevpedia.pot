@@ -277,3 +277,264 @@ msgstr ""
 #: dat/naevpedia/ships.md:9
 msgid "[ship stats](mechanics/shipstats)"
 msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:2
+msgid "Ship Stats"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:4
+msgid "## Ship Stats"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:6
+msgid "There are many different important stats for ships that define their behaviour when flying in space. These are all visible from the [equipment](mechanics/equipment) panel."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:8
+msgid "* [Model](ships): The name of the ship model."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:9
+msgid "* [Class](mechanics/shipstats/class): The ship class."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:10
+msgid "* [Value](mechanics/credits): The value of the ship including all the [outfits](outfits) equipped on it."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:12
+msgid "* [Fleet Capacity](mechanics/playerfleet): Determine how much fleet capacity a ship uses when deployed in a [fleet](mechanics/playerfleet)."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:14
+msgid "* [Crew](mechanics/boarding): The crew the ship has. This plays a role when [boarding](mechanics/boarding) other ships."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:16
+msgid "## Movement Stats"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:18
+msgid "Movement is based on Newtonian physics, however, ships have a maximum speed limit when acceleration is not being applied."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:20
+msgid "* [Mass](mechanics/movement): How heavy the ship is. If the mass of a ship goes over the [mass limit](mechanics/mass) of the engine, it will receive a penalty to [movement](mechanics/movement)."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:21
+msgid "* [Jump Time](mechanics/time): Determines how long much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace)."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:22
+msgid "* [Accel](mechanics/movement): Specifies how fast a ship can accelerate. While accelerating, a ship can go over the [max speed](mechanics/movement)."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:23
+msgid "* [Speed](mechanics/movement): Determines the max speed of the ship when not accelerating."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:24
+msgid "* [Turn](mechanics/movement): Specifies how fast the ship can rotate."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:25
+msgid "* [Time Constant](mechanics/movement): Determines how fast time feels like it is moving. A value of 100% indicates that time progresses normally, a value of 120% would indicate that 1.2 seconds of game time happen in 1 second of real time."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:27
+msgid "## Electronic Warfare"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:29
+msgid "Electronic warfare determines how ships see and target each other."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:31
+msgid "* [Detected at](mechanics/ewarfare): The distance at which the ship will be detected without detection bonuses."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:32
+msgid "* [Signature](mechanics/ewarfare): Determines how well weapons track the ship. Any weapon with a lower maximum tracking value will be able to accurately target the ship. Any weapon with a higher minimum tracking value will have significant difficulties when tracking the ship. Also affects the time it takes for launcher weapons to lock on to the ship."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:33
+msgid "* [Stealth at](mechanics/ewarfare): The minimum distance needed from the nearest non-ally ship to be able to enter [stealth](mechanics/ewarfare)."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:34
+msgid "* [Scanning Time](mechanics/ewarfare): The amount of time it takes other ships to scan this ship and see the details of the cargo it has."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:36
+msgid "## Core Stats"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:38
+msgid "* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, can be overcome by weapon penetration."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:39
+msgid "* [Shield](mechanics/damage): The ship's first line of defense. Shields naturally regenerate and provide the ship with a first line of defense, absorbing weapon fire that would otherwise damage the hull."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:40
+msgid "* [Armour](mechanics/dammage): The last line of defense of a ship. When armour is completely depleted, the ship will begin to combust and finally, explode."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:41
+msgid "* [Energy](mechanics/energy): Primarily used to power weapons and other outfits. A ship is not able to take off with negative energy."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:42
+msgid "* [Cargo Space](mechanics/cargo): Determines how much cargo mass the ship can fit."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:43
+msgid "* [Fuel](mechanics/hyperspace): Fuel is used for jumping through hyperspace to cross astronomical distances in a short time. The amount of fuel used per jump depends on the ship size."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:45
+msgid "## Additional Stats"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats.md:47
+msgid "* TODO"
+msgstr ""
+#: dat/naevpedia/mechanics/credits.md:2
+msgid "Credits"
+msgstr ""
+#: dat/naevpedia/mechanics/credits.md:4
+msgid "## Credits"
+msgstr ""
+#: dat/naevpedia/mechanics/credits.md:6
+msgid "TODO"
+msgstr ""
+#: dat/naevpedia/mechanics/boarding.md:2
+msgid "Boarding Ships"
+msgstr ""
+#: dat/naevpedia/mechanics/boarding.md:4
+msgid "## Boarding"
+msgstr ""
+#: dat/naevpedia/mechanics/boarding.md:6
+msgid "TODO"
+msgstr ""
+#: dat/naevpedia/mechanics/ewarfare.md:2
+msgid "Electronic Warfare"
+msgstr ""
+#: dat/naevpedia/mechanics/ewarfare.md:4
+msgid "## Electronic Warfare"
+msgstr ""
+#: dat/naevpedia/mechanics/ewarfare.md:6
+msgid "* TODO"
+msgstr ""
+#: dat/naevpedia/mechanics/movement.md:2
+msgid "Movement in Space"
+msgstr ""
+#: dat/naevpedia/mechanics/movement.md:4
+msgid "## Movement"
+msgstr ""
+#: dat/naevpedia/mechanics/movement.md:6
+msgid "TODO"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:2
+msgid "Ship Classes"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:4
+msgid "## Ship Classes"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:6
+msgid "Ships are divided between military and civilian class ships."
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:8
+msgid "## Military Ships"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:10
+msgid "* Battleship"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:11
+msgid "* Carrier"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:12
+msgid "* Cruiser"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:13
+msgid "* Destroyer"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:14
+msgid "* Corette"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:15
+msgid "* Fighter"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:16
+msgid "* Bomber"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:17
+msgid "* Interceptor"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:18
+msgid "* Scout"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:20
+msgid "## Civilian Ships"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:22
+msgid "* Bulk Freighter"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:23
+msgid "* Armoured Transport"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:24
+msgid "* Freighter"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:25
+msgid "* Courier"
+msgstr ""
+#: dat/naevpedia/mechanics/shipstats/class.md:26
+msgid "* Yacht"
+msgstr ""
+#: dat/naevpedia/mechanics.md:2
+msgid "Mechanics Overview"
+msgstr ""
+#: dat/naevpedia/mechanics.md:4
+msgid "## Mechanics"
+msgstr ""
+#: dat/naevpedia/mechanics.md:6
+msgid "Here be explanation of mechanics."
+msgstr ""
+#: dat/naevpedia/history.md:2
+msgid "History Overview"
+msgstr ""
+#: dat/naevpedia/history.md:5
+msgid "## History"
+msgstr ""
+#: dat/naevpedia/history.md:7
+msgid "TODO"
+msgstr ""
+#: dat/naevpedia/outfits.md:2
+msgid "Outfits Overview"
+msgstr ""
+#: dat/naevpedia/outfits.md:5
+msgid "## Outfits"
+msgstr ""
+#: dat/naevpedia/outfits.md:7
+msgid "TODO"
+msgstr ""
+#: dat/naevpedia/outfits.md:9
+msgid "[ship stats](mechanics/shipstats)"
+msgstr ""
+#: dat/naevpedia/ships.md:2
+msgid "Ships Overview"
+msgstr ""
+#: dat/naevpedia/ships.md:5
+msgid "## Ships"
+msgstr ""
+#: dat/naevpedia/ships.md:7
+msgid "TODO"
+msgstr ""
+#: dat/naevpedia/ships.md:9
+msgid "[ship stats](mechanics/shipstats)"
+msgstr ""
+#: dat/naevpedia/index.md:2
+msgid "Main"
+msgstr ""
+#: dat/naevpedia/index.md:5
+msgid "![](gfx/Naev.webp)"
+msgstr ""
+#: dat/naevpedia/index.md:7
+msgid "## Welcome to the Naevpedia!"
+msgstr ""
+#: dat/naevpedia/index.md:9
+msgid "Here you can find information about different things you have encountered throughout your adventures throughout the galaxy. Below are some quick links to get you started on exploring all the information available at your fingertips!"
+msgstr ""
+#: dat/naevpedia/index.md:11
+msgid "* [Ship Stats](shipstats)"
+msgstr ""
+#: dat/naevpedia/index.md:12
+msgid "* [Ships](ships)"
+msgstr ""
+#: dat/naevpedia/index.md:13
+msgid "* [Outfits](outfits)"
+msgstr ""
+#: dat/naevpedia/index.md:14
+msgid "* [Characters](characters)"
+msgstr ""
+#: dat/naevpedia/index.md:15
+msgid "* [Locations](locations)"
+msgstr ""
+#: dat/naevpedia/index.md:16
+msgid "* [Mechanics](mechanics)"
+msgstr ""
+#: dat/naevpedia/index.md:18
+msgid "Test."
+msgstr ""

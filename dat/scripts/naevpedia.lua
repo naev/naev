@@ -1,4 +1,3 @@
-print("heyo")
 local cmark = require "cmark"
 local lyaml = require "lyaml"
 local lf = require "love.filesystem"
@@ -231,7 +230,13 @@ local function loaddoc( filename )
    -- Translate line by line
    local translated = ""
    for k,v in ipairs(strsplit( rawdat, "\n" )) do
-      translated = translated.._(v).."\n"
+      local s
+      if v=="" then
+         s = v
+      else
+         s = _(v)
+      end
+      translated = translated..s.."\n"
    end
 
    -- Preprocess Lua
