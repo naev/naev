@@ -25,8 +25,8 @@ msgstr ""
 """
 
 with open(sys.argv[1],"w") as fout:
+    fout.write(HEADER)
     for fn in sys.argv[2:]:
-        fout.write(HEADER)
         with open(fn) as f:
             fn = re.sub('.*/dat', 'dat', fn)
             for i, line in enumerate(f):

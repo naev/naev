@@ -1,3 +1,4 @@
+print("heyo")
 local cmark = require "cmark"
 local lyaml = require "lyaml"
 local lf = require "love.filesystem"
@@ -70,7 +71,7 @@ end
 local function strsplit( str, sep )
    sep = sep or "%s"
    local t={}
-   for s in utf8.gmatch(str, "([^"..sep.."]+)") do
+   for s in utf8.gmatch(str,  "([^"..sep.."]*)("..sep.."?)") do
       table.insert(t, s)
    end
    return t
@@ -214,7 +215,7 @@ end
 --[[--
 Parse document
 --]]
-local function loaddoc( filename, lua_noop )
+local function loaddoc( filename )
    local meta = {}
 
    -- Load the file
@@ -227,54 +228,20 @@ local function loaddoc( filename, lua_noop )
    -- Extract metadata
    rawdat, meta = extractmetadata( filename, rawdat )
 
+   -- Translate line by line
+   local translated = ""
+   for k,v in ipairs(strsplit( rawdat, "\n" )) do
+      translated = translated.._(v).."\n"
+   end
+
    -- Preprocess Lua
-   local success, dat
-   if lua_noop then
-      success = true
-      dat = utf8.gsub( rawdat, "<%%[^=].-%%>", "" )
-   else
-      success, dat = dolua( rawdat, nc._naevpedia[filename] )
-      if not success then
-         return success, dat, meta
-      end
+   local success, dat = dolua( translated, nc._naevpedia[filename] )
+   if not success then
+      return success, dat, meta
    end
 
    -- Finally parse the remaining text as markdown
    return success, cmark.parse_string( dat, cmark.OPT_DEFAULT ), meta
-end
-
-local function md_gettext( filename, tbl )
-   local success, doc, _meta = loaddoc( filename, true )
-   if not success then
-      return
-   end
-   for cur, entering, node_type in cmark.walk(doc) do
-      if node_type == cmark.NODE_FIRST_INLINE or node_type == cmark.NODE_LAST_INLINE then
-         local str_type = cmark.node_get_type_string(cur)
-         if str_type == "text" and entering then
-            local literal = cmark.node_get_literal(cur)
-            local str, luas = lua_escape(literal)
-            tbl['_([['..str..']])\n'] = true
-            -- We also write the Lua strings just in case
-            for k,v in ipairs(luas) do
-               tbl["__xxx__ = "..v.."\n"] = true
-            end
-         end
-      end
-   end
-end
-
-function naevpedia.pot()
-   local tbl = {}
-   for k,v in pairs(nc._naevpedia) do
-      md_gettext( k, tbl )
-   end
-   local out = {}
-   for k,v in pairs(tbl) do
-      out[#out+1] = k
-   end
-   table.sort(out)
-   return out
 end
 
 local function test_cond( meta )

@@ -41,9 +41,14 @@ deterministic_sort() { LC_ALL=C sort; }
 po/credits_pot.py po/credits.pot \
    dat/intro \
    dat/AUTHORS \
-   $(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|') \
+   $(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|')
+
+# shellcheck disable=SC2046
+po/naevpedia_pot.py po/naevpedia.pot \
+   $(cd dat; find_files naevpedia md | sed 's|^|dat/|')
 
 (
+   echo po/naevpedia.pot
    echo po/physfs.pot
    echo po/credits.pot
    find_files dat xml | deterministic_sort
