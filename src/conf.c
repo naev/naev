@@ -92,7 +92,7 @@ static void print_usage( void );
  */
 static void print_usage( void )
 {
-   LOG( _( "Usage: %s [OPTIONS] [DATA]" ), env.argv0 );
+   LOG( _( "Usage: %s [OPTIONS]" ), env.argv0 );
    LOG( _( "Options are:" ) );
    LOG( _( "   -f, --fullscreen      activate fullscreen" ) );
    LOG( _( "   -F n, --fps n         limit frames per second to n" ) );
@@ -575,7 +575,7 @@ int conf_loadConfig( const char *file )
 /*
  * parses the CLI options
  */
-void conf_parseCLI( int argc, char **argv )
+int conf_parseCLI( int argc, char **argv )
 {
    static struct option long_options[] = {
       { "datapath", required_argument, 0, 'd' },
@@ -665,11 +665,7 @@ void conf_parseCLI( int argc, char **argv )
       }
    }
 
-   /** @todo handle multiple ndata. */
-   if ( optind < argc ) {
-      free( conf.ndata );
-      conf.ndata = strdup( argv[optind] );
-   }
+   return optind;
 }
 
 /**
