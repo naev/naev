@@ -214,7 +214,7 @@ end
 --[[--
 Parse document
 --]]
-local function loaddoc( filename )
+local function loaddoc( filename, lua_noop )
    local meta = {}
 
    -- Load the file
@@ -228,9 +228,15 @@ local function loaddoc( filename )
    rawdat, meta = extractmetadata( filename, rawdat )
 
    -- Preprocess Lua
-   local success, dat = dolua( rawdat, nc._naevpedia[filename] )
-   if not success then
-      return success, dat, meta
+   local success, dat
+   if lua_noop then
+      success = true
+      dat = utf8.gsub( rawdat, "<%%[^=].-%%>", "" )
+   else
+      success, dat = dolua( rawdat, nc._naevpedia[filename] )
+      if not success then
+         return success, dat, meta
+      end
    end
 
    -- Finally parse the remaining text as markdown
@@ -238,7 +244,7 @@ local function loaddoc( filename )
 end
 
 local function md_gettext( filename, outfile )
-   local success, doc, _meta = loaddoc( filename )
+   local success, doc, _meta = loaddoc( filename, true )
    if not success then
       return
    end
@@ -251,7 +257,7 @@ local function md_gettext( filename, outfile )
             outfile:write( '_([['..str..']])\n' )
             -- We also write the Lua strings just in case
             for k,v in ipairs(tbl) do
-               outfile:write("__xxx__ = "..v)
+               outfile:write("__xxx__ = "..v.."\n")
             end
          end
       end
