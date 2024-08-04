@@ -368,7 +368,7 @@ static int gl_getFullscreenMode( void )
  */
 static int gl_createWindow( unsigned int flags )
 {
-   flags |= SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI;
+   flags |= SDL_WINDOW_ALLOW_HIGHDPI;
    if ( !conf.notresizable )
       flags |= SDL_WINDOW_RESIZABLE;
    if ( conf.borderless )
