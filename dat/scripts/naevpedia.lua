@@ -243,7 +243,7 @@ local function loaddoc( filename, lua_noop )
    return success, cmark.parse_string( dat, cmark.OPT_DEFAULT ), meta
 end
 
-local function md_gettext( filename, outfile )
+local function md_gettext( filename, tbl )
    local success, doc, _meta = loaddoc( filename, true )
    if not success then
       return
@@ -253,25 +253,28 @@ local function md_gettext( filename, outfile )
          local str_type = cmark.node_get_type_string(cur)
          if str_type == "text" and entering then
             local literal = cmark.node_get_literal(cur)
-            local str, tbl = lua_escape(literal)
-            outfile:write( '_([['..str..']])\n' )
+            local str, luas = lua_escape(literal)
+            tbl['_([['..str..']])\n'] = true
             -- We also write the Lua strings just in case
-            for k,v in ipairs(tbl) do
-               outfile:write("__xxx__ = "..v.."\n")
+            for k,v in ipairs(luas) do
+               tbl["__xxx__ = "..v.."\n"] = true
             end
          end
       end
    end
 end
 
-function naevpedia.pot( filename )
-   local outfile = lf.newFile( filename, "w" )
-   --local io = require "io"
-   --local outfile = io.open( filename, "w" )
+function naevpedia.pot()
+   local tbl = {}
    for k,v in pairs(nc._naevpedia) do
-      md_gettext( k, outfile )
+      md_gettext( k, tbl )
    end
-   outfile:close()
+   local out = {}
+   for k,v in pairs(tbl) do
+      out[#out+1] = k
+   end
+   table.sort(out)
+   return out
 end
 
 local function test_cond( meta )
