@@ -1,8 +1,8 @@
 [wrap-file]
-directory = cmark-0.31.0
-source_url = https://github.com/commonmark/cmark/archive/refs/tags/0.31.0.tar.gz
-source_filename = cmark-0.31.0.tar.gz
-source_hash = bbcb8f8c03b5af33fcfcf11a74e9499f20a9043200b8552f78a6e8ba76e04d11
+directory = cmark-0.31.1
+source_url = https://github.com/commonmark/cmark/archive/refs/tags/0.31.1.tar.gz
+source_filename = cmark-0.31.1.tar.gz
+source_hash = 3da93db5469c30588cfeb283d9d62edfc6ded9eb0edc10a4f5bbfb7d722ea802
 #patch_filename = cmark-gfm_0.29.0.gfm.13-1_patch.zip
 #patch_url = https://wrapdb.mesonbuild.com/v2/cmark-gfm_0.29.0.gfm.13-1/get_patch
 #patch_hash = e64e633e43c20e3b7da624891633d1c51a28ebed17555b2e632c7f5d6c0a2b6f
