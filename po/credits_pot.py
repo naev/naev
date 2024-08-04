@@ -33,4 +33,4 @@ with open(sys.argv[1],"w") as fout:
                 line = line.rstrip('\r\n')
                 if line and not line.startswith('['):
                     quoted_escaped_line = json.dumps(line, ensure_ascii=False)
-                    fout.write('#: {}:{}\nmsgid {}\nmsgstr ""\n'.format(fn, i+1, quoted_escaped_line))
+                    fout.write('#: {}:{}\nmsgid {}\nmsgstr ""\n\n'.format(fn, i+1, quoted_escaped_line))

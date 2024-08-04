@@ -21,6 +21,7 @@ dat/VERSION
 release.log
 Naev.app
 po/credits.pot
+po/naevpedia.pot
 
 /.ccls-cache
 /.cproject

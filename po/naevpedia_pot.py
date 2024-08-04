@@ -36,7 +36,7 @@ def needs_translation( line ):
 with open(sys.argv[1],"w") as fout:
     def print_line( fn, i, line ):
         quoted_escaped_line = json.dumps(line, ensure_ascii=False)
-        fout.write('#: {}:{}\nmsgid {}\nmsgstr ""\n'.format(fn, i+1, quoted_escaped_line))
+        fout.write('#: {}:{}\nmsgid {}\nmsgstr ""\n\n'.format(fn, i+1, quoted_escaped_line))
 
     fout.write( HEADER )
     for fn in sys.argv[2:]:
