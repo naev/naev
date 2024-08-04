@@ -42,7 +42,8 @@ static int shipL_mass( lua_State *L );
 static int shipL_armour( lua_State *L );
 static int shipL_cargo( lua_State *L );
 static int shipL_fuelConsumption( lua_State *L );
-static int shipL_getPoints( lua_State *L );
+static int shipL_license( lua_State *L );
+static int shipL_points( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
 static int shipL_fitsSlot( lua_State *L );
@@ -77,7 +78,8 @@ static const luaL_Reg shipL_methods[] = {
    { "armour", shipL_armour },
    { "cargo", shipL_cargo },
    { "fuelConsumption", shipL_fuelConsumption },
-   { "points", shipL_getPoints },
+   { "license", shipL_license },
+   { "points", shipL_points },
    { "slots", shipL_slots },
    { "getSlots", shipL_getSlots },
    { "fitsSlot", shipL_fitsSlot },
@@ -443,6 +445,24 @@ static int shipL_fuelConsumption( lua_State *L )
 }
 
 /**
+ * @brief Gets license required for the ship.
+ *
+ * @usage license = s:license()
+ *
+ *    @luatparam Ship s Ship to get license of.
+ *    @luatreturn string Required license or nil if not necessary.
+ * @luafunc license
+ */
+static int shipL_license( lua_State *L )
+{
+   const Ship *s = luaL_validship( L, 1 );
+   if ( s->license == NULL )
+      return 0;
+   lua_pushstring( L, s->license );
+   return 1;
+}
+
+/**
  * @brief Gets the point value of a ship. Used for comparing relative ship
  * strengths (minus outfits).
  *
@@ -452,7 +472,7 @@ static int shipL_fuelConsumption( lua_State *L )
  *    @luatreturn number Point value of the ship.
  * @luafunc points
  */
-static int shipL_getPoints( lua_State *L )
+static int shipL_points( lua_State *L )
 {
    const Ship *s = luaL_validship( L, 1 );
    lua_pushinteger( L, s->points );
