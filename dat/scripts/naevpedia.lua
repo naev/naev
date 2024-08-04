@@ -32,6 +32,51 @@ local function strsplit( str, sep )
    return t
 end
 
+local function lua_escape( s )
+   local tbl = {}
+   local ms, me = utf8.find( s, "<%=", 1, true )
+   if not ms then
+      return s, tbl
+   end
+
+   -- Here we process only the <%= ... %> tags
+   local sout = ""
+   local be = 0
+   while ms do
+      local bs
+      sout = sout..utf8.sub( s, be+1, ms-1 )
+      bs, be = utf8.find( s, "%>", me, true )
+      local ss = utf8.sub( s, me+1, bs-1 )
+      table.insert( tbl, ss )
+      sout = sout .. "<%="..tostring(#tbl).."%>"
+      ms, me = utf8.find( s, "<%=", me, true )
+   end
+   return sout, tbl
+end
+
+local function lua_unescape( str, tbl, env )
+   for k,v in ipairs(tbl) do
+      local sout
+      local c, cerror = loadstring( "return "..v )
+      if not c then
+         warn( cerror )
+         sout = "#r" .. c .. "#0"
+      else
+         setfenv( c, env ) -- Use the same environment used for the Lua
+         local succ, result_or_err = pcall( c )
+         if succ then
+            sout = tostring(result_or_err)
+         else
+            warn( result_or_err )
+            sout = "#r" .. result_or_err .. "#0"
+         end
+      end
+
+      str = utf8.replace( str, "<%="..tostring(k).."%>", sout )
+   end
+   return str
+end
+
 --[[--
 Pulls out the metadata header of the naevpedia file.
 --]]
@@ -350,6 +395,7 @@ function naevpedia.setup( name )
          -- Failed, so just display the error
          mrk = luatk.newText( wdw, mx, my, mw, mh, doc )
       else
+			local nmeta = nc._naevpedia[filename]
          -- Success so we try to load the markdown
          mrk = md.newMarkdown( wdw, doc, mx, my, mw, mh, {
             linkfunc = function ( target )
@@ -374,6 +420,10 @@ function naevpedia.setup( name )
                   return false, fmt.f(_("{target} 404"),{target=target})
                end
                return true, _(lmeta.title or lmeta.name)
+            end,
+            processliteral = function ( s )
+               local str, tbl = lua_escape( s )
+               return lua_unescape( str, tbl, nmeta._G )
             end,
          } )
 
