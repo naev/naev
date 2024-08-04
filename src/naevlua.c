@@ -123,7 +123,7 @@ int main( int argc, char **argv )
       LOG( _( "Missing Lua file!" ) );
    }
    char luafile[PATH_MAX];
-   strncpy( luafile, argv[opt], sizeof( luafile ) );
+   strncpy( luafile, argv[opt++], sizeof( luafile ) );
 
    /* Set up I/O. */
    ndata_setupWriteDir();
@@ -272,13 +272,32 @@ int main( int argc, char **argv )
    nlua_pcall( nenv, 0, 1 );
    nlua_setenv( naevL, nenv, "io" );
    /* Finally run the file. */
-   LOG( _( "Processing '%s'..." ), luafile );
-   if ( nlua_dofileenv( nenv, luafile ) ) {
+   if ( luaL_loadfile( naevL, luafile ) != 0 ) {
       WARN( _( "Script '%s' Lua error:\n%s" ), luafile,
             lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
+      return -1;
    }
-   nlua_freeEnv( nenv );
-
+   LOG( _( "Processing '%s'..." ), luafile );
+   nlua_pushenv( naevL, nenv );
+   lua_setfenv( naevL, -2 );
+   /* Add argument table. */
+   lua_newtable( naevL );
+   int nargs = 0;
+   lua_pushstring( naevL, luafile );
+   lua_rawseti( naevL, -2, 0 );
+   while ( opt < argc ) {
+      lua_pushstring( naevL, argv[opt++] );
+      lua_rawseti( naevL, -2, ++nargs );
+   }
+   nlua_setenv( naevL, nenv, "arg" );
+   /* Run the code. */
+   if ( nlua_pcall( nenv, 0, LUA_MULTRET ) != 0 ) {
+      WARN( _( "Script '%s' Lua error:\n%s" ), luafile,
+            lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return -1;
+   }
+   /* No cleaning up, because we're lazy. */
    return 0;
 }
