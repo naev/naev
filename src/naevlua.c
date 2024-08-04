@@ -99,6 +99,7 @@ int main( int argc, char **argv )
    input_init();
 
    lua_init(); /* initializes lua */
+   fps_init(); /* Not actually necessary, but removes warning. */
 
    conf_setDefaults(); /* set the default config values */
 
@@ -298,6 +299,6 @@ int main( int argc, char **argv )
       lua_pop( naevL, 1 );
       return -1;
    }
-   /* No cleaning up, because we're lazy. */
+   unload_all();
    return 0;
 }
