@@ -1,12 +1,18 @@
 #define NOMAIN 1
 #include "naev.c"
 
+#include "lualib.h"
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
 #include "nlua_cli.h"
 #include "nlua_linopt.h"
 #include "nlua_music.h"
 #include "nlua_tk.h"
+
+const char *__asan_default_options()
+{
+   return "detect_leaks=0";
+}
 
 int main( int argc, char **argv )
 {
@@ -261,6 +267,8 @@ int main( int argc, char **argv )
    nlua_loadMusic( nenv );
    nlua_loadTk( nenv );
    nlua_loadLinOpt( nenv );
+   lua_pushcfunction( naevL, luaopen_io );
+   nlua_setenv( naevL, nenv, "io" );
    LOG( _( "Processing '%s'..." ), luafile );
    if ( nlua_dofileenv( nenv, luafile ) ) {
       WARN( _( "Script '%s' Lua error:\n%s" ), luafile,
