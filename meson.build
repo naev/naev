@@ -315,6 +315,7 @@ int main (void) { return 0; }''')
          install: true, install_dir: 'Contents')
       install_data('extras/logos/naev.icns', install_dir: ndata_path)
       naev_source += mac_source
+      naevlua_source += mac_source
       naev_deps += dependency('Foundation', required: true )
    endif
 
