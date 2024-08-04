@@ -28,6 +28,7 @@ local function strsplit( str, sep )
    for s in utf8.gmatch(str,  "([^"..sep.."]*)("..sep.."?)") do
       table.insert(t, s)
    end
+   t[#t] = nil -- Creates an extra empty one
    return t
 end
 
@@ -369,7 +370,7 @@ function naevpedia.setup( name )
             end,
             linktargetfunc = function ( target )
                local lmeta = nc._naevpedia[target]
-               if not lmeta or test_cond(lmeta) then
+               if not lmeta or not test_cond(lmeta) then
                   return false, fmt.f(_("{target} 404"),{target=target})
                end
                return true, _(lmeta.title or lmeta.name)

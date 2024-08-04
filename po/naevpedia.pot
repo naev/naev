@@ -38,7 +38,7 @@ msgstr ""
 msgid "Here you can find information about different things you have encountered throughout your adventures throughout the galaxy. Below are some quick links to get you started on exploring all the information available at your fingertips!"
 msgstr ""
 #: dat/naevpedia/index.md:11
-msgid "* [Ship Stats](shipstats)"
+msgid "* [Mechanics](mechanics)"
 msgstr ""
 #: dat/naevpedia/index.md:12
 msgid "* [Ships](ships)"
@@ -47,13 +47,13 @@ msgstr ""
 msgid "* [Outfits](outfits)"
 msgstr ""
 #: dat/naevpedia/index.md:14
-msgid "* [Characters](characters)"
+msgid "* [History](history)"
 msgstr ""
 #: dat/naevpedia/index.md:15
-msgid "* [Locations](locations)"
+msgid "* [Characters](characters)"
 msgstr ""
 #: dat/naevpedia/index.md:16
-msgid "* [Mechanics](mechanics)"
+msgid "* [Locations](locations)"
 msgstr ""
 #: dat/naevpedia/index.md:18
 msgid "Test."
@@ -518,7 +518,7 @@ msgstr ""
 msgid "Here you can find information about different things you have encountered throughout your adventures throughout the galaxy. Below are some quick links to get you started on exploring all the information available at your fingertips!"
 msgstr ""
 #: dat/naevpedia/index.md:11
-msgid "* [Ship Stats](shipstats)"
+msgid "* [Mechanics](mechanics)"
 msgstr ""
 #: dat/naevpedia/index.md:12
 msgid "* [Ships](ships)"
@@ -527,13 +527,13 @@ msgstr ""
 msgid "* [Outfits](outfits)"
 msgstr ""
 #: dat/naevpedia/index.md:14
-msgid "* [Characters](characters)"
+msgid "* [History](history)"
 msgstr ""
 #: dat/naevpedia/index.md:15
-msgid "* [Locations](locations)"
+msgid "* [Characters](characters)"
 msgstr ""
 #: dat/naevpedia/index.md:16
-msgid "* [Mechanics](mechanics)"
+msgid "* [Locations](locations)"
 msgstr ""
 #: dat/naevpedia/index.md:18
 msgid "Test."
