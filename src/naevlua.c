@@ -111,10 +111,13 @@ int main( int argc, char **argv )
    snprintf( conf_file_path, sizeof( conf_file_path ), "%s" CONF_FILE,
              nfile_configPath() );
 
-   char luafile[PATH_MAX];
-   strncpy( luafile, argv[1], sizeof( luafile ) );
    conf_loadConfig( conf_file_path ); /* Lua to parse the configuration file */
-   conf_parseCLI( argc, argv );       /* parse CLI arguments */
+   int opt = conf_parseCLI( argc, argv ); /* parse CLI arguments */
+   if ( opt >= argc ) {
+      LOG( _( "Missing Lua file!" ) );
+   }
+   char luafile[PATH_MAX];
+   strncpy( luafile, argv[opt], sizeof( luafile ) );
 
    /* Set up I/O. */
    ndata_setupWriteDir();
@@ -258,6 +261,7 @@ int main( int argc, char **argv )
    nlua_loadMusic( nenv );
    nlua_loadTk( nenv );
    nlua_loadLinOpt( nenv );
+   LOG( _( "Processing '%s'..." ), luafile );
    if ( nlua_dofileenv( nenv, luafile ) ) {
       WARN( _( "Script '%s' Lua error:\n%s" ), luafile,
             lua_tostring( naevL, -1 ) );
