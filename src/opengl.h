@@ -87,7 +87,7 @@ extern mat4 gl_view_matrix;
 /*
  * initialization / cleanup
  */
-int  gl_init( void );
+int  gl_init( unsigned int extra_flags );
 void gl_exit( void );
 void gl_resize( void );
 

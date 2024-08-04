@@ -573,7 +573,7 @@ static int gl_setupScaling( void )
  * @brief Initializes SDL/OpenGL and the works.
  *    @return 0 on success.
  */
-int gl_init( void )
+int gl_init( unsigned int extra_flags )
 {
    unsigned int flags;
    GLuint       VaoId;
@@ -581,7 +581,7 @@ int gl_init( void )
    /* Defaults. */
    memset( &gl_screen, 0, sizeof( gl_screen ) );
    SDL_SetHint( "SDL_WINDOWS_DPI_SCALING", "1" );
-   flags = SDL_WINDOW_OPENGL | gl_getFullscreenMode();
+   flags = SDL_WINDOW_OPENGL | gl_getFullscreenMode() | extra_flags;
 
    /* Initializes Video */
    if ( SDL_InitSubSystem( SDL_INIT_VIDEO ) < 0 ) {

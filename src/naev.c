@@ -317,7 +317,7 @@ int main( int argc, char **argv )
    /*
     * OpenGL
     */
-   if ( gl_init() ) { /* initializes video output */
+   if ( gl_init( 0 ) ) { /* initializes video output */
       char buf[STRMAX];
       snprintf( buf, sizeof( buf ),
                 _( "Initializing video output failed, exiting…" ) );

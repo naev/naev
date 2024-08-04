@@ -162,7 +162,7 @@ int main( int argc, char **argv )
    /*
     * OpenGL
     */
-   if ( gl_init() ) { /* initializes video output */
+   if ( gl_init( SDL_WINDOW_HIDDEN ) ) { /* initializes video output */
       char buf[STRMAX];
       snprintf( buf, sizeof( buf ),
                 _( "Initializing video output failed, exiting…" ) );
