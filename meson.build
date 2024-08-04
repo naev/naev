@@ -50,7 +50,6 @@ subdir('dat/outfits/bioship') # Has to be before naevpedia
 subdir('dat/naevpedia')
 subdir('dat/scripts')
 subdir('docs')
-subdir('po')
 
 ####
 # Naev
@@ -502,6 +501,8 @@ int main (void) { return 0; }''')
 
    subdir ('extras')
 endif
+
+subdir('po')
 
 ####
 # Soundtrack
