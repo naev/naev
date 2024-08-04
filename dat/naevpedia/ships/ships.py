@@ -49,6 +49,11 @@ outstr += """
 * **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_("{cargo} {unit}"), {cargo=fmt.number(s:cargo()), unit=naev.unit('energy')})%>
 * **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_("{fuel} {unit}"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('energy')})%>
 * **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>
+<% if s:license() then %>
+* **License**:   <%= s:license() %>
+<% end %>
+
+<%= s:shipstatDesc() %>
 """
 
 with open( args.o, 'w' ) as f:
