@@ -414,6 +414,22 @@ int main (void) { return 0; }''')
       }
    )
 
+   naevpedia_pot = custom_target(
+      'naevpedia_pot',
+      command: [
+         naevlua_bin,
+         '-d', zip_overlay,
+         '-d', meson.project_source_root() / 'dat',
+         '-d', meson.project_source_root() / 'artwork',
+         '-d', meson.current_build_dir() / 'dat',
+         '-d', meson.project_source_root(),
+         meson.project_source_root() / 'utils' / 'build' / 'naevpedia.lua',
+      ],
+      #input: files(),
+      output: 'naevpedia.lua',
+      install: false,
+   )
+
    gdbinit = configure_file(
       input: join_paths('utils','build','gdbinit.in'),
       output: '.gdbinit',
