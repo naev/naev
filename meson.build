@@ -335,6 +335,7 @@ int main (void) { return 0; }''')
       output: ['shaders.gen.c', 'shaders.gen.h']
    )
    naev_source += shaders_source
+   naevlua_source += shaders_source
    colours_source = custom_target(
       'generate_colours',
       command: [python, '@INPUT@'],
@@ -342,6 +343,7 @@ int main (void) { return 0; }''')
       output: ['colours.gen.c', 'colours.gen.h']
    )
    naev_source += colours_source
+   naevlua_source += colours_source
 
    naev_bin = executable(
       'naev',
@@ -350,6 +352,14 @@ int main (void) { return 0; }''')
       dependencies: naev_deps,
       export_dynamic: get_option('debug'),
       install: true)
+   naevlua_bin = executable(
+      'naevlua',
+      naevlua_source,
+      include_directories: include_dirs,
+      dependencies: naev_deps,
+      export_dynamic: get_option('debug'),
+      override_options: ['-DNOMAIN=1'],
+      install: false)
 
    gen_authors = find_program(join_paths('utils','build','gen_authors.py'))
    authors = custom_target(

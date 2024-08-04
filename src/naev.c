@@ -157,6 +157,7 @@ int naev_isQuit( void )
    return quit;
 }
 
+#ifndef NOMAIN
 /**
  * @brief The entry point of Naev.
  *
@@ -553,6 +554,7 @@ int main( int argc, char **argv )
    debug_enableLeakSanitizer();
    return 0;
 }
+#endif /* NOMAIN */
 
 /**
  * @brief Loads a loading screen.

@@ -71,7 +71,6 @@ source = files(
    'mission.c',
    'msgcat.c',
    'music.c',
-   'naev.c',
    'naev_version.c',
    'ndata.c',
    'nebula.c',
@@ -198,6 +197,12 @@ sdf_source = files('distance_field.c', 'edtaa3func.c')
 mac_source = files('glue_macos.m')
 
 naev_source = [
+   files('naev.c'),
+   source,
+   nlua_source
+]
+naevlua_source = [
+   files('naevlua.c'),
    source,
    nlua_source
 ]
