@@ -414,24 +414,6 @@ int main (void) { return 0; }''')
       }
    )
 
-   # Compiles naevpedia.lua which allows for translations
-   naevpedia_lua = custom_target(
-      'naevpedia_lua',
-      command: [
-         naevlua_bin,
-         '-d', zip_overlay,
-         '-d', meson.project_source_root() / 'dat',
-         '-d', meson.project_source_root() / 'artwork',
-         '-d', meson.current_build_dir() / 'dat',
-         '-d', meson.project_source_root(),
-         meson.project_source_root() / 'utils' / 'build' / 'naevpedia.lua',
-         meson.current_build_dir() / 'naevpedia.lua',
-      ],
-      input: files( meson.project_source_root() / 'utils' / 'build' / 'naevpedia.lua' ),
-      output: 'naevpedia.lua',
-      install: false,
-   )
-
    gdbinit = configure_file(
       input: join_paths('utils','build','gdbinit.in'),
       output: '.gdbinit',

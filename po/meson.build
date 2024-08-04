@@ -8,22 +8,6 @@ potfiles = custom_target(
     install: false
 )
 
-xgettext = find_program( 'xgettext' )
-naevpedia_pot = custom_target(
-    'naevpedia_pot',
-    command: [
-      xgettext,
-      '@INPUT@',
-      '--from-code=utf-8',
-      '-o', '@OUTPUT@',
-    ],
-    input: naevpedia_lua,
-    #output: meson.project_source_root() / 'po' / 'naevpedia.pot',
-    output: 'naevpedia.pot',
-    install: false,
-)
-
-
 i18n.gettext('naev',
     data_dirs: meson.project_source_root() / 'po',
     args: [
