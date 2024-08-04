@@ -169,6 +169,12 @@ static int cli_printCore( lua_State *L, int cli_only, int escape )
 int cli_warn( lua_State *L )
 {
    const char *msg = luaL_checkstring( L, 1 );
+#if DEBUGGING
+   nlua_errTrace( L );
+   DEBUG( "%s", lua_tostring( L, -1 ) );
+   cli_printCoreString( lua_tostring( L, -1 ), 1 );
+   lua_pop( L, 1 );
+#endif /* DEBUGGING */
    WARN( "%s", msg );
    /* Add to console. */
    cli_printCoreString( msg, 1 );
@@ -221,7 +227,7 @@ static int cli_script( lua_State *L )
             lua_pushvalue( L, -1 );         /* t, key, key */
             lua_pushnil( L );               /* t, key, key, nil */
             lua_rawset( L, -4 );            /* t, key */
-         }                                  /* t */
+         } /* t */
       }
       lua_pop( L, 1 ); /* */
    }
