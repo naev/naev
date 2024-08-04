@@ -267,8 +267,11 @@ int main( int argc, char **argv )
    nlua_loadMusic( nenv );
    nlua_loadTk( nenv );
    nlua_loadLinOpt( nenv );
+   /* Reload IO library that was sandboxed out. */
    lua_pushcfunction( naevL, luaopen_io );
+   nlua_pcall( nenv, 0, 1 );
    nlua_setenv( naevL, nenv, "io" );
+   /* Finally run the file. */
    LOG( _( "Processing '%s'..." ), luafile );
    if ( nlua_dofileenv( nenv, luafile ) ) {
       WARN( _( "Script '%s' Lua error:\n%s" ), luafile,
