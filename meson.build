@@ -415,8 +415,9 @@ int main (void) { return 0; }''')
       }
    )
 
-   naevpedia_pot = custom_target(
-      'naevpedia_pot',
+   # Compiles naevpedia.lua which allows for translations
+   naevpedia_lua = custom_target(
+      'naevpedia_lua',
       command: [
          naevlua_bin,
          '-d', zip_overlay,
@@ -425,8 +426,9 @@ int main (void) { return 0; }''')
          '-d', meson.current_build_dir() / 'dat',
          '-d', meson.project_source_root(),
          meson.project_source_root() / 'utils' / 'build' / 'naevpedia.lua',
+         meson.current_build_dir() / 'naevpedia.lua',
       ],
-      #input: files(),
+      input: files( meson.project_source_root() / 'utils' / 'build' / 'naevpedia.lua' ),
       output: 'naevpedia.lua',
       install: false,
    )
