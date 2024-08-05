@@ -195,6 +195,7 @@ Only to be used when running the toolkit outside of luatk.run.
 --]]
 function luatk.draw()
    if luatk._dirty then
+      luatk._dirty = false -- So it can get set by render functions
       local c = lg.getCanvas()
       lg.setCanvas( luatk._canvas )
       lg.clear( 0, 0, 0, 0 )
@@ -202,7 +203,6 @@ function luatk.draw()
          wdw:draw()
       end
       lg.setCanvas( c )
-      luatk._dirty = false
    end
 
    lg.setColor(1, 1, 1, 1)
