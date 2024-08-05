@@ -418,14 +418,18 @@ function graphics.printf( text, ... )
 end
 function graphics.setScissor( x, y, width, height )
    if x then
-      y = y or 0
-      width = width or love.w
-      height = height or love.h
+      if x<=0 and y<=0 and width>=love.w and height>=love.h then
+         naev.gfx.setScissor()
+      else
+         y = y or 0
+         width = width or love.w
+         height = height or love.h
 
-      if graphics._canvas == nil then
-         y = love.h - y - height
-      end
-      naev.gfx.setScissor( love.x+x, love.y+y, width, height )
+         if graphics._canvas == nil then
+            y = love.h - y - height
+         end
+         naev.gfx.setScissor( love.x+x, love.y+y, width, height )
+   end
    else
       x = 0
       y = 0

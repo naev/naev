@@ -2,6 +2,7 @@ local luatk = require 'luatk'
 local lg = require "love.graphics"
 --local lf = require "love.filesystem"
 local cmark = require "cmark"
+--local utf8 = require "utf8"
 
 local luatk_markdown = {}
 
@@ -58,7 +59,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local headerfont = options.fontheader or lg.newFont( math.floor(deffont:getHeight()*1.2+0.5) )
 
    wgt.blocks = {}
-   local block = { x = 0, y = 0, w=w, h=0, text = "", font=deffont }
+   local block = { type="text", x = 0, y = 0, w=w, h=0, text = "", font=deffont }
    local ty = 0
    local function block_end ()
       if #block.text <= 0 then
@@ -69,9 +70,10 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       local bh = #t * f:getLineHeight()
       ty = ty + bh
       table.insert( wgt.blocks, block )
-      block = { x = 0, y = ty, w=w, h=bh, text = "", font=deffont }
+      block = { type = "text", x = 0, y = ty, w=w, h=bh, text = "", font=deffont }
    end
    wgt.links = {}
+   wgt.wgts = {}
 
    local strong = false
    local emph = false
@@ -79,7 +81,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local listn
    local linkx, linky, linkname
    for cur, entering, node_type in cmark.walk(doc) do
-      --print( string.format("%s - %s [%s]", _nodestr(node_type), cmark.node_get_type_string(cur), tostring(entering) ) )
+      print( string.format("%s - %s [%s]", _nodestr(node_type), cmark.node_get_type_string(cur), tostring(entering) ) )
       if node_type == cmark.NODE_PARAGRAPH then
          if not entering then
             block_end()
@@ -215,6 +217,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   sy = sx
                end
                local imgblock = {
+                  type = "image",
                   x = 0,
                   y = ty,
                   w = iw,
@@ -226,6 +229,27 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                table.insert( wgt.blocks, imgblock )
                ty = ty +ih
                block.y = ty
+            end
+         end
+      elseif node_type == cmark.NODE_HTML_BLOCK then
+         local literal = cmark.node_get_literal(cur)
+         if options.processhtml then
+            local luawgt = options.processhtml( literal, nil, 0, 0 )
+            print( type(luawgt) )
+            if luawgt then
+               local ww, wh = luawgt.w, luawgt.h
+               local wgtblock = {
+                  type = "widget",
+                  x = 0,
+                  y = ty,
+                  w = ww,
+                  h = wh,
+                  wgt = luawgt,
+               }
+               table.insert( wgt.blocks, wgtblock )
+               ty = ty + wh + 20
+               block.y = ty
+               table.insert( wgt.wgts, wgtblock )
             end
          end
       end
@@ -260,8 +284,7 @@ function Markdown:draw( wx, wy )
       luatk.drawScrollbar( x+w, y, 12, h, scroll_pos )
    end
 
-   local scs = lg.getScissor()
-   lg.setScissor( x, y, w, h )
+   local sx, sy, sw, sh = luatk.joinScissors( x, y, w, h )
    y = y - self.pos
 
    --[[
@@ -275,14 +298,16 @@ function Markdown:draw( wx, wy )
    lg.setColour( 1, 1, 1 )
    for k,b in ipairs(self.blocks) do
       local bx, by = x+b.x, y+b.y
-      if b.text then
+      if b.type=="text" then
          lg.printf( b.text, b.font, bx, by, w, "left" )
-      elseif b.img then
+      elseif b.type=="image" then
          b.img:draw( bx, by, 0, b.sx, b.sy )
+      elseif b.type=="widget" then
+         b.wgt:draw( bx, by )
       end
    end
 
-   lg.setScissor( scs )
+   lg.setScissor( sx, sy, sw, sh )
 end
 function Markdown:drawover( bx, by )
    local x, y = bx+self.x, by+self.y-self.pos

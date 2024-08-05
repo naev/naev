@@ -52,6 +52,16 @@ local luatk = {
    _deffont = nil,
 }
 
+--[[--
+Intersection of scissors with the current applied ones.
+--]]
+function luatk.joinScissors( x, y, w, h )
+   local sx, sy, sw, sh = lg.getScissor()
+   local nsx, nsy = math.max(x,sx), math.max(y,sy)
+   lg.setScissor( nsx, nsy, math.min( x+w, sx+sw) - nsx, math.min( y+h, sy+sh) - nsy )
+   return sx, sy, sw, sh
+end
+
 --[[
 -- Global functions
 --]]
@@ -432,8 +442,7 @@ function luatk.Window:draw()
    lg.rectangle( "line", x, y, w, h )
 
    -- Set scissors
-   local scs = lg.getScissor()
-   lg.setScissor( x, y, w, h )
+   local sx, sy, sw, sh = luatk.joinScissors( x, y, w, h )
 
    -- Clear depth
    naev.gfx.clearDepth()
@@ -444,7 +453,7 @@ function luatk.Window:draw()
    end
 
    -- Restore scissors
-   lg.setScissor( scs )
+   lg.setScissor( sx, sy, sw, sh )
 
    -- Draw focused area
    if self.focused then
@@ -576,20 +585,25 @@ function luatk.newWidget( parent, x, y, w, h )
    y = y or 0
    w = w or 0
    h = h or 0
-   if x < 0 then
+   if x < 0 and parent then
       x = parent.w - w + x
    end
-   if y < 0 then
+   if y < 0 and parent then
       y = parent.h - h + y
    end
    local wgt = { parent=parent, x=x, y=y, w=w, h=h }
    setmetatable( wgt, luatk.Widget_mt )
-   table.insert( parent._widgets, wgt )
+   if parent then
+      table.insert( parent._widgets, wgt )
+   end
    wgt.type = "widget"
    luatk._dirty = true
    return wgt
 end
 function luatk.Widget:destroy()
+   if not self.parent then
+      return
+   end
    for k,w in ipairs(self.parent._widgets) do
       if w==self then
          luatk._dirty = true
@@ -1044,15 +1058,14 @@ function luatk.List:draw( bx, by )
    lg.rectangle( "fill", x, y, w, h )
 
    -- Draw scrollbar
-   local scs
+   local sx, sy, sw, sh
    if self.scrolls then
       local scroll_pos = self.pos / self.scrollh
       w = w - 12
       luatk.drawScrollbar( x+w, y, 12, h, scroll_pos )
 
       -- Have to scissors here
-      scs = lg.getScissor()
-      lg.setScissor( x, y, w, h )
+      sx, sy, sw, sh = luatk.joinScissors( x, y, w, h )
    end
 
    -- Draw selected item background
@@ -1079,7 +1092,7 @@ function luatk.List:draw( bx, by )
 
    -- Undo scissors
    if self.scrolls then
-      lg.setScissor( scs )
+      lg.setScissor( sx, sy, sw, sh )
    end
 end
 function luatk.List:pressed( mx, my )

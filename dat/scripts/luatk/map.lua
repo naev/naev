@@ -81,8 +81,7 @@ function Map:draw( bx, by )
    lg.rectangle( "fill", 0, 0, w, h )
 
    -- Set scissors
-   local scs = lg.getScissor()
-   lg.setScissor( x, y, w, h )
+   local sx, sy, sw, sh = luatk.joinScissors( x, y, w, h )
    local c = vec2.new( w, h )*0.5
 
    -- Display edges
@@ -119,7 +118,7 @@ function Map:draw( bx, by )
    end
 
    -- Restore scissors
-   lg.setScissor( scs )
+   lg.setScissor( sx, sy, sw, sh )
    lg.pop()
 end
 function Map:center( pos, hardset )
