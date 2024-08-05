@@ -74,6 +74,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    end
    wgt.links = {}
    wgt.wgts = {}
+   wgt.focused = nil
 
    local strong = false
    local emph = false
@@ -234,21 +235,25 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       elseif node_type == cmark.NODE_HTML_BLOCK then
          local literal = cmark.node_get_literal(cur)
          if options.processhtml then
-            local luawgt = options.processhtml( literal, nil, 0, 0 )
+            local luawgt = options.processhtml( literal )
             print( type(luawgt) )
             if luawgt then
+               -- Move the location information to markdown side
+               local wx, wy = luawgt.x, luawgt.y+ty
                local ww, wh = luawgt.w, luawgt.h
+               luawgt.x = 0
+               luawgt.y = 0
                local wgtblock = {
                   type = "widget",
-                  x = 0,
-                  y = ty,
+                  x = wx,
+                  y = wy,
                   w = ww,
                   h = wh,
                   -- For checking
-                  x1 = 0,
-                  y1 = ty,
-                  x2 = ww,
-                  y2 = ty+wh,
+                  x1 = wx,
+                  y1 = wy,
+                  x2 = wx+ww,
+                  y2 = wy+wh,
                   -- Actual widget
                   wgt = luawgt,
                }
@@ -321,6 +326,15 @@ function Markdown:draw( wx, wy )
       end
    end
 
+   -- Draw focus thingy
+   if self.focused then
+      local wgt = self.focused.wgt
+      local bx, by = x+self.focused.x, y+self.focused.y
+      lg.setColour( luatk.colour.focusbtn )
+      print( bx-2, by-2, wgt.w+4, wgt.h+4 )
+      lg.rectangle( "line", bx-2, by-2, wgt.w+4, wgt.h+4 )
+   end
+
    lg.setScissor( sx, sy, sw, sh )
 end
 function Markdown:drawover( bx, by )
@@ -359,7 +373,7 @@ function Markdown:mmoved( mx, my, dx, dy )
       local inbounds = _checkbounds( w, mx, my )
       if not wgt._pressed then
          if wgt.mouseover ~= inbounds then
-            luatk._dirty = true
+            luatk.rerender()
          end
          wgt.mouseover = inbounds
       end
@@ -383,6 +397,7 @@ function Markdown:pressed( mx, my, button )
    for k,l in ipairs(self.links) do
       if _checkbounds( l, mx, my ) and self.linkfunc then
          luatk.rerender()
+         self.focused = nil
          self.linkfunc( l.target )
          return true
       end
@@ -390,15 +405,23 @@ function Markdown:pressed( mx, my, button )
 
    -- Check widget
    for k,w in ipairs(self.wgts) do
-      if _checkbounds(w,mx,my) then
+      if _checkbounds( w, mx, my ) then
          local wgt  = w.wgt
          wgt._pressed = true
+         if wgt.canfocus then
+            luatk.rerender()
+            self.focused = w
+         end
          if wgt.pressed and wgt:pressed( mx, my, button ) then
-            luatk._dirty = true
+            luatk.rerender()
             return true
          end
+         return true
       end
    end
+
+   -- Clear focus if we didn't click on anything
+   self.focused = nil
 end
 function Markdown:released( mx, my, button )
    self.scrolling = false
@@ -412,16 +435,16 @@ function Markdown:released( mx, my, button )
       local wgt  = w.wgt
       if wgt._pressed and inbounds and wgt.clicked then
          wgt:clicked( mx, my, button )
-         luatk._dirty = true
+         luatk.rerender()
       end
       wgt._pressed = false
       if wgt.released then
          wgt:released()
-         luatk._dirty = true
+         luatk.rerender()
       end
       if inbounds then
          if not wgt.mouseover then
-            luatk._dirty = true
+            luatk.rerender()
          end
          wgt.mouseover = true
       end
@@ -434,7 +457,16 @@ function Markdown:setPos( pos )
       self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
    end
 end
-function Markdown:wheelmoved( _mx, my )
+function Markdown:wheelmoved( mx, my )
+   -- Focus can steal the event now
+   if self.focused and self.focused.wgt.wheelmoved then
+      local ret = self.focused.wgt.wheelmoved( mx, my )
+      if ret then
+         return true
+      end
+   end
+
+   -- Otherwise we handle it
    if my > 0 then
       self:setPos( (self.pos - 50) / self.scrollh )
       return true

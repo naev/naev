@@ -425,9 +425,9 @@ function naevpedia.setup( name )
                local str, tbl = lua_escape( s )
                return lua_unescape( str, tbl, nmeta._G )
             end,
-            processhtml = function ( _s, wid, x, y )
+            processhtml = function ( _s )
                local m = require "luatk.map"
-               return m.newMap( wid, x, y, 400, 300, {} )
+               return m.newMap( nil, 10, 0, 400, 300, {} )
             end
          } )
 
