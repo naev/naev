@@ -82,7 +82,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local listn
    local linkx, linky, linkname
    for cur, entering, node_type in cmark.walk(doc) do
-      print( string.format("%s - %s [%s]", _nodestr(node_type), cmark.node_get_type_string(cur), tostring(entering) ) )
+      --print( string.format("%s - %s [%s]", _nodestr(node_type), cmark.node_get_type_string(cur), tostring(entering) ) )
       if node_type == cmark.NODE_PARAGRAPH then
          if not entering then
             block_end()
@@ -236,7 +236,6 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
          local literal = cmark.node_get_literal(cur)
          if options.processhtml then
             local luawgt = options.processhtml( literal )
-            print( type(luawgt) )
             if luawgt then
                -- Move the location information to markdown side
                local wx, wy = luawgt.x, luawgt.y+ty
@@ -331,7 +330,6 @@ function Markdown:draw( wx, wy )
       local wgt = self.focused.wgt
       local bx, by = x+self.focused.x, y+self.focused.y
       lg.setColour( luatk.colour.focusbtn )
-      print( bx-2, by-2, wgt.w+4, wgt.h+4 )
       lg.rectangle( "line", bx-2, by-2, wgt.w+4, wgt.h+4 )
    end
 
@@ -460,7 +458,7 @@ end
 function Markdown:wheelmoved( mx, my )
    -- Focus can steal the event now
    if self.focused and self.focused.wgt.wheelmoved then
-      local ret = self.focused.wgt.wheelmoved( mx, my )
+      local ret = self.focused.wgt:wheelmoved( mx, my )
       if ret then
          return true
       end

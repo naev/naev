@@ -4,11 +4,11 @@ local lg = require 'love.graphics'
 local luatk_map = {}
 
 local scale      = 1/3
-local sys_radius = 5
+local sys_radius = 15
 --local sys_inner  = 3
-local edge_width = 3
+local edge_width = 9
 
--- For access from the outside
+-- Defaults, for access from the outside
 luatk_map.scale = scale
 luatk_map.sys_radius = sys_radius
 luatk_map.edge_width = edge_width
@@ -22,6 +22,7 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    setmetatable( wgt, Map_mt )
    wgt.type    = "map"
    wgt.canfocus = true
+   wgt.scale   = luatk_map.scale
 
    local sysname = {} -- To do quick look ups
    wgt.sys = {}
@@ -87,26 +88,27 @@ function Map:draw( bx, by )
    local c = vec2.new( w, h )*0.5
 
    -- Display edges
+   local r = math.max( self.scale * luatk_map.sys_radius, 3 )
+   local ew = math.max( self.scale * luatk_map.edge_width, 1 )
    lg.setColour( {0.5, 0.5, 0.5} )
    for i,e in ipairs(self.edges) do
-      local px, py = ((e.c-self.pos)*scale + c):get()
-      local l = (e.l-sys_radius*2)*scale
+      local px, py = ((e.c-self.pos)*self.scale + c):get()
+      local l = (e.l*self.scale-r*2)
       local l2 = l*0.5
       if not (px < -l2 or px > w+l2 or py < -l2 or py > h+l2) then
          lg.push()
          lg.translate( px, py )
          lg.rotate( e.a )
-         lg.rectangle("fill", -l2, -edge_width*0.5*scale, l, edge_width*scale )
+         lg.rectangle("fill", -l2, -ew*0.5, l, ew )
          lg.pop()
       end
    end
 
    -- Display systems
-   local r = sys_radius
    local inv = vec2.new(1,-1)
    for i,sys in ipairs(self.sys) do
       local s = sys.s
-      local p = (s:pos()*inv-self.pos)*scale + c
+      local p = (s:pos()*inv-self.pos)*self.scale + c
       local px, py = p:get()
       if not (px < -r or px > w+r or py < -r or py > h+r) then
          lg.setColour( sys.c )
@@ -145,11 +147,25 @@ function Map:pressed( mx, my )
 end
 function Map:mmoved( mx, my )
    if self._pressed then
-      self.pos = self.pos + (self._mouse - vec2.new( mx, my )) / scale
+      self.pos = self.pos + (self._mouse - vec2.new( mx, my )) / self.scale
       self.target = self.pos
       self._mouse = vec2.new( mx, my )
       luatk.rerender()
    end
+end
+function Map:wheelmoved( _mx, my )
+   local s =self.scale
+   if my > 0 then
+      self.scale = self.scale * 1.1
+   elseif my < 0 then
+      self.scale = self.scale * 0.9
+   end
+   self.scale = math.min( 5, self.scale )
+   self.scale = math.max( 0.1, self.scale )
+   if s ~= self.scale then
+      luatk.rerender()
+   end
+   return true -- Always eat the event
 end
 
 return luatk_map

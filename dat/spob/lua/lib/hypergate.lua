@@ -149,7 +149,6 @@ function hypergate_window ()
    shd_jumpgoto.dt = 0
    local shd_selectsys = load_shader( "selectsys.frag" )
    shd_selectsys.dt = 0
-   shd_selectsys:send( "dimensions", {2*luatk_map.sys_radius, 2*luatk_map.sys_radius} )
 
    -- Get potential destinations from tags
    local csys = system.cur()
@@ -201,7 +200,7 @@ function hypergate_window ()
          else
             luatk.rerender() -- Animated, so we have to draw every frame
             local mx, my = m.pos:get()
-            local s = luatk_map.scale
+            local s = m.scale
             lg.setColour( {0, 0.5, 1, 0.7} )
             lg.push()
             lg.translate( (jumpx-mx)*s + mapw*0.5, (jumpy-my)*s + maph*0.5 )
@@ -211,8 +210,9 @@ function hypergate_window ()
             lg.setShader()
             lg.pop()
 
-            local r = luatk_map.sys_radius
+            local r = luatk_map.sys_radius * s
             lg.setColour( {1, 1, 1, 0.8} )
+            shd_selectsys:send( "dimensions", {2*r, 2*r} )
             lg.setShader( shd_selectsys )
             love_shaders.img:draw( (targetx-mx)*s + mapw*0.5 - 2*r, (targety-my)*s + maph*0.5 - 2*r, 0, 4*r, 4*r )
             lg.setShader()
