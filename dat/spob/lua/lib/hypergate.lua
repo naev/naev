@@ -199,6 +199,7 @@ function hypergate_window ()
             lg.rectangle("fill", 0, 0, mapw, maph )
             -- Show big question mark or something
          else
+            luatk.rerender() -- Animated, so we have to draw every frame
             local mx, my = m.pos:get()
             local s = luatk_map.scale
             lg.setColour( {0, 0.5, 1, 0.7} )

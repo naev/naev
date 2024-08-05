@@ -15,4 +15,10 @@ Here you can find information about different things you have encountered throug
 * [Characters](characters)
 * [Locations](locations)
 
-Test.
+<% function map( wid, x, y )
+    local m = require "luatk.map"
+    return m.newMap( wid, x, y, 400, 300, {} )
+end %>
+<widget map/>
+
+Test end.

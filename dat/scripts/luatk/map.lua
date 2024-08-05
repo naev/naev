@@ -67,6 +67,7 @@ function luatk_map.newMap( parent, x, y, w, h, options )
 
    -- Set up custom options and the likes
    wgt.pos = options.pos or vec2.new()
+   wgt.target = wgt.pos
    wgt.custrender = options.render
 
    return wgt
@@ -132,8 +133,8 @@ function Map:center( pos, hardset )
    end
 end
 function Map:update( dt )
-   luatk.rerender() -- Fully animated, so draw every frame
    if (self.pos - self.target):dist2() > 1e-3 then
+      luatk.rerender() -- Fully animated, so draw every frame
       local mod, dir = (self.target - self.pos):polar()
       self.pos = self.pos + vec2.newP( math.min(mod,self.speed*dt), dir )
    end
@@ -146,6 +147,7 @@ function Map:mmoved( mx, my )
       self.pos = self.pos + (self._mouse - vec2.new( mx, my )) / scale
       self.target = self.pos
       self._mouse = vec2.new( mx, my )
+      luatk.rerender()
    end
 end
 

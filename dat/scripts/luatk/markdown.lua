@@ -244,6 +244,12 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   y = ty,
                   w = ww,
                   h = wh,
+                  -- For checking
+                  x1 = 0,
+                  y1 = ty,
+                  x2 = ww,
+                  y2 = ty+wh,
+                  -- Actual widget
                   wgt = luawgt,
                }
                table.insert( wgt.blocks, wgtblock )
@@ -271,6 +277,14 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    wgt.pos = 0
 
    return wgt
+end
+function Markdown:update( dt )
+   for k,w in ipairs(self.wgts) do
+      local wgt  = w.wgt
+      if wgt.update then
+         wgt:update( dt )
+      end
+   end
 end
 function Markdown:draw( wx, wy )
    local x, y, w, h = wx+self.x, wy+self.y, self.w, self.h
@@ -324,7 +338,7 @@ local function _checkbounds( l, mx, my )
    return not (mx < l.x1 or mx > l.x2 or my < l.y1 or my > l.y2)
 end
 local scrollbar_h = 30
-function Markdown:mmoved( mx, my )
+function Markdown:mmoved( mx, my, dx, dy )
    if self.scrolling then
       self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
    end
@@ -339,8 +353,22 @@ function Markdown:mmoved( mx, my )
          luatk.rerender()
       end
    end
+
+   for k,w in ipairs(self.wgts) do
+      local wgt  = w.wgt
+      local inbounds = _checkbounds( w, mx, my )
+      if not wgt._pressed then
+         if wgt.mouseover ~= inbounds then
+            luatk._dirty = true
+         end
+         wgt.mouseover = inbounds
+      end
+      if (inbounds or wgt._pressed) and wgt.mmoved then
+         wgt.mmoved( wgt, mx, my, dx, dy )
+      end
+   end
 end
-function Markdown:pressed( mx, my )
+function Markdown:pressed( mx, my, button )
    -- Check scrollbar first
    if self.scrolls and mx > self.w-16 then
       self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
@@ -359,9 +387,45 @@ function Markdown:pressed( mx, my )
          return true
       end
    end
+
+   -- Check widget
+   for k,w in ipairs(self.wgts) do
+      if _checkbounds(w,mx,my) then
+         local wgt  = w.wgt
+         wgt._pressed = true
+         if wgt.pressed and wgt:pressed( mx, my, button ) then
+            luatk._dirty = true
+            return true
+         end
+      end
+   end
 end
-function Markdown:released( _mx, _my )
+function Markdown:released( mx, my, button )
    self.scrolling = false
+
+   -- Correct location for scrolling
+   my = my + self.pos
+
+   -- Check widget
+   for k,w in ipairs(self.wgts) do
+      local inbounds = _checkbounds(w,mx,my)
+      local wgt  = w.wgt
+      if wgt._pressed and inbounds and wgt.clicked then
+         wgt:clicked( mx, my, button )
+         luatk._dirty = true
+      end
+      wgt._pressed = false
+      if wgt.released then
+         wgt:released()
+         luatk._dirty = true
+      end
+      if inbounds then
+         if not wgt.mouseover then
+            luatk._dirty = true
+         end
+         wgt.mouseover = true
+      end
+   end
 end
 function Markdown:setPos( pos )
    if self.scrolls then
@@ -373,8 +437,10 @@ end
 function Markdown:wheelmoved( _mx, my )
    if my > 0 then
       self:setPos( (self.pos - 50) / self.scrollh )
+      return true
    elseif my < 0 then
       self:setPos( (self.pos + 50) / self.scrollh )
+      return true
    end
 end
 

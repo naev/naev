@@ -270,7 +270,7 @@ function luatk.mousereleased( mx, my, button )
       end
       wgt._pressed = false
       if wgt.released then
-         wgt:released()
+         wgt:released( mx, my, button )
          luatk._dirty = true
       end
       if inbounds then
