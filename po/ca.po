@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2024-08-03 22:09+0000\n"
+"PO-Revision-Date: 2024-08-05 17:09+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ca/>\n"
@@ -1259,7 +1259,7 @@ msgstr ""
 #: dat/outfits/special/bikers_fury_launcher.xml:9
 #: dat/events/hypergate_construction.lua:121 dat/scripts/common/minerva.lua:39
 msgid "TODO"
-msgstr ""
+msgstr "TODO"
 
 #: dat/commodities/therite.xml:3
 msgid "Therite"
@@ -2266,25 +2266,31 @@ msgid ""
 "modern ships' powerful filtration systems, these days they are entirely "
 "cosmetic."
 msgstr ""
+"Aparentment, els ambientadors s'han utilitzat tradicionalment en els "
+"vehicles humans com a ornaments. Abans tenien olors, però, com que no tenen "
+"cap impacte amb els potents sistemes de filtració de les naus modernes, "
+"actualment són completament cosmètics."
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
 msgid "Black Cat Doll"
-msgstr ""
+msgstr "Nina de Gat Negre"
 
 #: dat/outfits/accessory/black_cat_doll.xml:11
 msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
 "that was all over your ship. It's quite cute."
 msgstr ""
+"Una nina crua d'un gat negre feta amb una autèntica pell de \"Felis catus\" "
+"que vas fer amb el que estava per la teva nau. És bastant maca."
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
 msgid "#pOnly active when in stealth.#0"
-msgstr ""
+msgstr "#pNomés actiu quan estàs en sigil.#0"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:2
 msgid "Broken Nebular Shielding Prototype"
-msgstr ""
+msgstr "Prototip de Blindatge Nebular Trencat"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:11
 msgid ""
@@ -2293,6 +2299,10 @@ msgid ""
 "On the other hand it does seem to absorb harmful energy and emit heat "
 "radiation into space."
 msgstr ""
+"Un prototip trencat d'un nou dispositiu de blindatge que se suposa que "
+"permetrà viatjar a la nebulosa del Sol. No obstant això, a causa del seu mal "
+"funcionament gairebé vas morir. D'altra banda, sembla que absorbeix energia "
+"nociva i emet radiació de calor a l'espai."
 
 #: dat/outfits/accessory/commemorative_stein.xml:2
 msgid "Commemorative Stein"
