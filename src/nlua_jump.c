@@ -28,6 +28,7 @@ RETURNS_NONNULL static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind,
 static int jumpL_get( lua_State *L );
 static int jumpL_eq( lua_State *L );
 static int jumpL_tostring( lua_State *L );
+static int jumpL_reverse( lua_State *L );
 static int jumpL_radius( lua_State *L );
 static int jumpL_position( lua_State *L );
 static int jumpL_angle( lua_State *L );
@@ -43,6 +44,7 @@ static const luaL_Reg jump_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
    { "__tostring", jumpL_tostring },
+   { "reverse", jumpL_reverse },
    { "radius", jumpL_radius },
    { "pos", jumpL_position },
    { "angle", jumpL_angle },
@@ -228,10 +230,8 @@ int lua_isjump( lua_State *L, int ind )
  */
 static int jumpL_get( lua_State *L )
 {
-   StarSystem *a, *b;
-
-   a = luaL_validsystem( L, 1 );
-   b = luaL_validsystem( L, 2 );
+   const StarSystem *a = luaL_validsystem( L, 1 );
+   const StarSystem *b = luaL_validsystem( L, 2 );
 
    if ( ( a == NULL ) || ( b == NULL ) )
       return NLUA_ERROR( L, _( "No matching jump points found." ) );
@@ -263,9 +263,8 @@ static int jumpL_get( lua_State *L )
  */
 static int jumpL_eq( lua_State *L )
 {
-   LuaJump *a, *b;
-   a = luaL_checkjump( L, 1 );
-   b = luaL_checkjump( L, 2 );
+   const LuaJump *a = luaL_checkjump( L, 1 );
+   const LuaJump *b = luaL_checkjump( L, 2 );
    lua_pushboolean(
       L, ( ( a->srcid == b->srcid ) && ( a->destid == b->destid ) ) );
    return 1;
@@ -288,6 +287,23 @@ static int jumpL_tostring( lua_State *L )
              _( dst->name ) );
    lua_pushstring( L, buf );
    return 1;
+}
+
+/**
+ * @brief Gets the opposite jump.
+ *
+ *    @luatparam Jump j Jump to get the reverse jump of.
+ *    @luatreturn Jump The jump in the opposite direction.
+ * @luafunc reverse
+ */
+static int jumpL_reverse( lua_State *L )
+{
+   LuaJump        ret;
+   const LuaJump *lj = luaL_checkjump( L, 1 );
+   ret.srcid         = lj->destid;
+   ret.destid        = lj->srcid;
+   lua_pushjump( L, ret );
+   return 0;
 }
 
 /**
