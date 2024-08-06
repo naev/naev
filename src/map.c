@@ -223,8 +223,10 @@ static void map_setup( void )
             continue;
          sys_setFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE );
          spob_updateLand( p );
-         if ( p->can_land )
+         if ( p->can_land ) {
             sys_setFlag( sys, SYSTEM_HAS_LANDABLE );
+            break;
+         }
       }
 
       int known = 1;
