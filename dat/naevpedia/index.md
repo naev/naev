@@ -15,9 +15,9 @@ Here you can find information about different things you have encountered throug
 * [Characters](characters)
 * [Locations](locations)
 
-<% function map( wid, x, y )
+<% function map ( mw )
     local m = require "luatk.map"
-    return m.newMap( wid, x, y, 400, 300, {} )
+    return m.newMap( nil, 10, 0, mw-200, (mw-200) * 9 / 16, {} )
 end %>
 <widget map/>
 

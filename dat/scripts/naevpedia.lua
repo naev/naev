@@ -425,9 +425,19 @@ function naevpedia.setup( name )
                local str, tbl = lua_escape( s )
                return lua_unescape( str, tbl, nmeta._G )
             end,
-            processhtml = function ( _s )
-               local m = require "luatk.map"
-               return m.newMap( nil, 10, 0, 400, 300, {} )
+            processhtml = function ( s )
+               local t = strsplit( utf8.sub( s, 2, -4 ), ' ')
+               if t[1]=='widget' then
+                  local f = nmeta._G[t[2]]
+                  if not f then
+                     warn(fmt.f_(_("naevpedia: nknown function '{f}'"),{f=t[2]}))
+                     return nil
+                  end
+                  return f( mw )
+               else
+                  warn(fmt.f_(_("naevpedia: nknown html '{f}'"),{f=t[1]}))
+                  return nil
+               end
             end
          } )
 
