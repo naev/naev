@@ -99,6 +99,7 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    return wgt
 end
 function Map:draw( bx, by )
+   -- TODO use a canvas for the widget so we can do animations for cheap
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
 
    lg.push()

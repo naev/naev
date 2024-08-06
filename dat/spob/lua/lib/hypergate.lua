@@ -190,7 +190,6 @@ function hypergate_window ()
    local mapw, maph = w-330, h-60
    local jumpx, jumpy, jumpl, jumpa = 0, 0, 0, 0
    local targetx, targety = 0, 0
-   local jumpw = 10
    local map = luatk_map.newMap( wdw, 20, 40, mapw, maph, {
       render = function ( m )
          if not targetknown then
@@ -201,16 +200,18 @@ function hypergate_window ()
             luatk.rerender() -- Animated, so we have to draw every frame
             local mx, my = m.pos:get()
             local s = m.scale
+            local r = luatk_map.sys_radius * s
+            local jumpw = math.max( 10, 2*r )
             lg.setColour( {0, 0.5, 1, 0.7} )
             lg.push()
             lg.translate( (jumpx-mx)*s + mapw*0.5, (jumpy-my)*s + maph*0.5 )
             lg.rotate( jumpa )
             lg.setShader( shd_jumpgoto )
+            shd_jumpgoto:send( "dimensions", {jumpl*luatk_map.scale,jumpw} )
             love_shaders.img:draw( -jumpl*0.5*s, -jumpw*0.5, 0, jumpl*s, jumpw )
             lg.setShader()
             lg.pop()
 
-            local r = luatk_map.sys_radius * s
             lg.setColour( {1, 1, 1, 0.8} )
             shd_selectsys:send( "dimensions", {2*r, 2*r} )
             lg.setShader( shd_selectsys )
@@ -227,7 +228,6 @@ function hypergate_window ()
          jumpx, jumpy = (p*inv):get()
          targetx, targety = (s:pos()*inv):get()
          jumpl, jumpa = ((s:pos()-cpos)*inv):polar()
-         shd_jumpgoto:send( "dimensions", {jumpl*luatk_map.scale,jumpw} )
          map:center( p, hardset )
       else
          jumpx, jumpy = 0, 0
