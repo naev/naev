@@ -18,7 +18,7 @@ function NaevOptions()
    \  'lua':['languagetool', 'cspell', 'lua_language_server', 'luac', 'luacheck', 'selene'],
    \}
 
-   " indentation
+   " Indentation
    set expandtab    " Make sure that every file uses real tabs, not spaces
    set shiftround   " Round indent to multiple of 'shiftwidth'
    set smartindent  " Do smart indenting when starting a new line
@@ -27,4 +27,7 @@ function NaevOptions()
    exec 'set tabstop='    .s:tabwidth
    exec 'set shiftwidth=' .s:tabwidth
    exec 'set softtabstop='.s:tabwidth
+
+   " Vim defaults to C++ for .h files, so force C
+   autocmd! BufNewFile,BufRead *.h,*.c set ft=c
 endfunction
