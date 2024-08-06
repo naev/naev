@@ -23,6 +23,7 @@ static int colL_tostring( lua_State *L );
 static int colL_new( lua_State *L );
 static int colL_alpha( lua_State *L );
 static int colL_rgb( lua_State *L );
+static int colL_rgba( lua_State *L );
 static int colL_hsv( lua_State *L );
 static int colL_setrgb( lua_State *L );
 static int colL_sethsv( lua_State *L );
@@ -36,6 +37,7 @@ static const luaL_Reg colL_methods[] = {
    { "new", colL_new },
    { "alpha", colL_alpha },
    { "rgb", colL_rgb },
+   { "rgba", colL_rgba },
    { "hsv", colL_hsv },
    { "setRGB", colL_setrgb },
    { "setHSV", colL_sethsv },
@@ -256,6 +258,38 @@ static int colL_rgb( lua_State *L )
       lua_pushnumber( L, col->b );
    }
    return 3;
+}
+
+/**
+ * @brief Gets the RGBA values of a colour.
+ *
+ * Values are from 0. to 1.
+ *
+ * @usage r,g,b,a = col:rgba()
+ *
+ *    @luatparam Colour col Colour to get RGB values of.
+ *    @luatparam[opt=false] boolean gamma Whether or not to get the
+ * gamma-corrected value or not.
+ *    @luatreturn number The red value of the colour.
+ *    @luatreturn number The green value of the colour.
+ *    @luatreturn number The blue value of the colour.
+ *    @luatreturn number The alpha value of the colour.
+ * @luafunc rgba
+ */
+static int colL_rgba( lua_State *L )
+{
+   const glColour *col = luaL_checkcolour( L, 1 );
+   if ( lua_toboolean( L, 2 ) ) {
+      lua_pushnumber( L, linearToGamma( col->r ) );
+      lua_pushnumber( L, linearToGamma( col->g ) );
+      lua_pushnumber( L, linearToGamma( col->b ) );
+   } else {
+      lua_pushnumber( L, col->r );
+      lua_pushnumber( L, col->g );
+      lua_pushnumber( L, col->b );
+   }
+   lua_pushnumber( L, col->a );
+   return 4;
 }
 
 /**

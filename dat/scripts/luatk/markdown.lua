@@ -313,9 +313,9 @@ function Markdown:draw( wx, wy )
    --]]
 
    -- Draw the text
-   lg.setColour( 1, 1, 1 )
    for k,b in ipairs(self.blocks) do
       local bx, by = x+b.x, y+b.y
+      lg.setColour( 1, 1, 1 )
       if b.type=="text" then
          lg.printf( b.text, b.font, bx, by, w, "left" )
       elseif b.type=="image" then

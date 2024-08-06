@@ -1,12 +1,14 @@
 local luatk = require 'luatk'
 local lg = require 'love.graphics'
+local lf = require "love.filesystem"
+local love_shaders = require "love_shaders"
 
 local luatk_map = {}
 
 local scale      = 1/3
 local sys_radius = 15
 --local sys_inner  = 3
-local edge_width = 9
+local edge_width = 6
 
 -- Defaults, for access from the outside
 luatk_map.scale = scale
@@ -38,7 +40,8 @@ function luatk_map.newMap( parent, x, y, w, h, options )
       table.insert( wgt.sys, sys )
       sysname[ s:nameRaw() ] = #wgt.sys
    end
-   for i,s in ipairs(system.getAll()) do
+   local sysall = system.getAll()
+   for i,s in ipairs(sysall) do
       if s:known() then
          addsys( s )
       else
@@ -52,16 +55,29 @@ function luatk_map.newMap( parent, x, y, w, h, options )
       end
    end
 
+   local function edge_col( j )
+      if j:exitonly() then
+         return colour.new("Grey80")
+      elseif j:hidden() then
+         return colour.new("Red")
+      elseif j:hide() <= 0 then
+         return colour.new("Green")
+      else
+         return colour.new("AquaBlue")
+      end
+   end
+
    wgt.edges = {}
-   for ids,sys in ipairs(wgt.sys) do
-      local s = sys.s
-      local ps = sys.p
-      for j,a in ipairs(s:adjacentSystems()) do
+   for ids,s in ipairs(sysall) do
+      local ps = s:pos()*inv
+      for i,j in ipairs(s:jumps(true)) do
+         local a = j:dest()
          local ida = sysname[ a:nameRaw() ]
-         if ida and ida < ids then
+         if ida and ida < ids and j:known() then
             local pa = wgt.sys[ ida ].p
             local len, ang = (pa-ps):polar()
-            local e = { v0=ps, v1=pa, c=(ps+pa)*0.5, a=ang, l=len }
+            local cs, ce = edge_col(j), edge_col(j:reverse())
+            local e = { v0=ps, v1=pa, c=(ps+pa)*0.5, a=ang, l=len, cs=cs, ce=ce }
             table.insert( wgt.edges, e )
          end
       end
@@ -71,6 +87,14 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    wgt.pos = options.pos or vec2.new()
    wgt.target = wgt.pos
    wgt.custrender = options.render
+
+   -- Load shaders
+   local path = "scripts/luatk/glsl/"
+   local function load_shader( filename )
+      local src = lf.read( path..filename )
+      return lg.newShader( src )
+   end
+   wgt.shd_jumplane = load_shader( "jumplane.frag" )
 
    return wgt
 end
@@ -90,19 +114,26 @@ function Map:draw( bx, by )
    -- Display edges
    local r = math.max( self.scale * luatk_map.sys_radius, 3 )
    local ew = math.max( self.scale * luatk_map.edge_width, 1 )
-   lg.setColour( {0.5, 0.5, 0.5} )
+   lg.setShader( self.shd_jumplane )
+   self.shd_jumplane:send( "paramf", r*3 )
    for i,e in ipairs(self.edges) do
       local px, py = ((e.c-self.pos)*self.scale + c):get()
-      local l = (e.l*self.scale-r*2)
+      local l = e.l*self.scale
       local l2 = l*0.5
       if not (px < -l2 or px > w+l2 or py < -l2 or py > h+l2) then
+         lg.setColour( e.cs )
+         self.shd_jumplane:send( "paramv", e.ce:rgba() )
+         self.shd_jumplane:send( "dimensions", l, ew )
+
          lg.push()
          lg.translate( px, py )
          lg.rotate( e.a )
-         lg.rectangle("fill", -l2, -ew*0.5, l, ew )
+         love_shaders.img:draw( -l2, -ew*0.5, 0, l, ew )
+         --lg.rectangle("fill", -l2, -ew*0.5, l, ew )
          lg.pop()
       end
    end
+   lg.setShader()
 
    -- Display systems
    local inv = vec2.new(1,-1)

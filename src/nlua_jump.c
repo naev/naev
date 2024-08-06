@@ -305,7 +305,7 @@ static int jumpL_reverse( lua_State *L )
    ret.srcid         = lj->destid;
    ret.destid        = lj->srcid;
    lua_pushjump( L, ret );
-   return 0;
+   return 1;
 }
 
 /**

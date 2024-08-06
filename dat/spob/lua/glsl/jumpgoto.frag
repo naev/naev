@@ -3,7 +3,7 @@
 /* Based on dat/glsl/jumplanegoto.frag */
 
 uniform vec2 dimensions;
-uniform float paramf = 0.0;
+uniform float paramf;
 uniform float dt;
 
 vec4 effect( vec4 colour, Image tex, vec2 uv_in, vec2 px )
