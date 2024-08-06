@@ -32,6 +32,7 @@ static int jumpL_reverse( lua_State *L );
 static int jumpL_radius( lua_State *L );
 static int jumpL_position( lua_State *L );
 static int jumpL_angle( lua_State *L );
+static int jumpL_hide( lua_State *L );
 static int jumpL_hidden( lua_State *L );
 static int jumpL_exitonly( lua_State *L );
 static int jumpL_system( lua_State *L );
@@ -48,6 +49,7 @@ static const luaL_Reg jump_methods[] = {
    { "radius", jumpL_radius },
    { "pos", jumpL_position },
    { "angle", jumpL_angle },
+   { "hide", jumpL_hide },
    { "hidden", jumpL_hidden },
    { "exitonly", jumpL_exitonly },
    { "system", jumpL_system },
@@ -333,6 +335,21 @@ static int jumpL_position( lua_State *L )
 {
    const JumpPoint *jp = luaL_validjump( L, 1 );
    lua_pushvector( L, jp->pos );
+   return 1;
+}
+
+/**
+ * @brief Gets the hide value of a jump in radians.
+ *
+ * @usage v = j:hide()
+ *    @luatparam Jump j Jump to get the hide value of.
+ *    @luatreturn number The hide value.
+ * @luafunc hide
+ */
+static int jumpL_hide( lua_State *L )
+{
+   const JumpPoint *jp = luaL_validjump( L, 1 );
+   lua_pushnumber( L, jp->hide );
    return 1;
 }
 
