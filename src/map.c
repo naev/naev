@@ -18,7 +18,7 @@
 #include "faction.h"
 #include "gui.h"
 #include "log.h"
-#include "mapData.h"
+#include "mapData.h" // IWYU pragma: keep
 #include "map_find.h"
 #include "map_overlay.h"
 #include "map_system.h"

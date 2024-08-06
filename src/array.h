@@ -101,6 +101,7 @@ static inline _private_container *_array_private_container( void *a )
  */
 #define array_create_size( basic_type, capacity )                              \
    ( (basic_type *)( _array_create_helper( sizeof( basic_type ), capacity ) ) )
+// NOLINTBEGIN(bugprone-sizeof-expression)
 /**
  * @brief Resizes the array to accomodate new_size elements.
  *
@@ -112,6 +113,7 @@ static inline _private_container *_array_private_container( void *a )
 #define array_resize( ptr_array, new_size )                                    \
    ( _array_resize_helper( (void **)( ptr_array ),                             \
                            sizeof( ( ptr_array )[0][0] ), new_size ) )
+// NOLINTEND(bugprone-sizeof-expression)
 /**
  * @brief Increases the number of elements by one and returns the last element.
  *
@@ -133,6 +135,7 @@ static inline _private_container *_array_private_container( void *a )
    do                                                                          \
       array_grow( ptr_array ) = element;                                       \
    while ( 0 )
+// NOLINTBEGIN(bugprone-sizeof-expression)
 /**
  * @brief Erases elements in interval [first, last).
  *
@@ -145,7 +148,8 @@ static inline _private_container *_array_private_container( void *a )
 #define array_erase( ptr_array, first, last )                                  \
    ( _array_erase_helper( (void **)( ptr_array ),                              \
                           sizeof( ( ptr_array )[0][0] ), (void *)( first ),    \
-                          (void *)( last ) ) ) // NOLINT
+                          (void *)( last ) ) )
+// NOLINTEND(bugprone-sizeof-expression)
 /**
  * @brief Shrinks memory to fit only `size' elements.
  *
