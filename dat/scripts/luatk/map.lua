@@ -15,6 +15,8 @@ luatk_map.scale = scale
 luatk_map.sys_radius = sys_radius
 luatk_map.edge_width = edge_width
 
+local cInert = colour.new("Inert")
+
 local Map = {}
 setmetatable( Map, { __index = luatk.Widget } )
 local Map_mt = { __index = Map }
@@ -29,13 +31,32 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    local sysname = {} -- To do quick look ups
    wgt.sys = {}
    local inv = vec2.new(1,-1)
-   local function addsys( s )
+   local fplayer = faction.player()
+   local function addsys( s, known )
       local sys = { s=s, p=s:pos()*inv }
       local f = s:faction()
-      if f then
-         sys.c = { f:colour():rgb(true) }
+      if not f or not known then
+         sys.c = colour.new("Inert")
       else
-         sys.c = { 221/255, 221/255, 221/255 } -- cInert
+         local haslandable = false
+         for k,spb in ipairs(s:spobs()) do
+            if spb:known() then
+               sys.spob = true
+               if spb:canLand() then
+                  haslandable = true
+                  break
+               end
+            end
+         end
+         if f:areEnemies( fplayer ) then
+            sys.c = colour.new("Hostile")
+         elseif not haslandable then
+            sys.c = colour.new("Restricted")
+         elseif f:areAllies( fplayer ) then
+            sys.c = colour.new("Friend")
+         else
+            sys.c = colour.new("Neutral")
+         end
       end
       table.insert( wgt.sys, sys )
       sysname[ s:nameRaw() ] = #wgt.sys
@@ -43,12 +64,12 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    local sysall = system.getAll()
    for i,s in ipairs(sysall) do
       if s:known() then
-         addsys( s )
+         addsys( s, true )
       else
          -- Could still be near a known system
          for j,a in ipairs(s:jumps()) do
             if a:known() then
-               addsys( s )
+               addsys( s, false )
                break
             end
          end
@@ -143,8 +164,12 @@ function Map:draw( bx, by )
       local p = (s:pos()*inv-self.pos)*self.scale + c
       local px, py = p:get()
       if not (px < -r or px > w+r or py < -r or py > h+r) then
-         lg.setColour( sys.c )
+         lg.setColour( cInert )
          lg.circle( "line", px, py, r )
+         if sys.spob then
+            lg.setColour( sys.c )
+            lg.circle( "fill", px, py, 0.65*r )
+         end
       end
    end
 
