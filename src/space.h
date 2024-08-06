@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "space_fdecl.h"
+#include "space_fdecl.h" // IWYU pragma: export
 
 #include "asteroid.h"
 #include "commodity.h"

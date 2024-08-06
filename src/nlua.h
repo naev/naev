@@ -4,8 +4,8 @@
 #pragma once
 
 /** @cond */
-#include <lauxlib.h>
-#include <lua.h>
+#include <lauxlib.h> // IWYU pragma: export
+#include <lua.h>     // IWYU pragma: export
 /** @endcond */
 
 #define NLUA_LOAD_TABLE                                                        \

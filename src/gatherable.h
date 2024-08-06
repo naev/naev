@@ -4,7 +4,7 @@
 #pragma once
 
 #include "commodity.h"
-#include "pilot.h"
+#include "vec2.h"
 
 /**
  * @struct Gatherable

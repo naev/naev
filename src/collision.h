@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "nxml.h"
+#include "nxml.h" // IWYU pragma: keep
 #include "opengl_tex.h"
 #include "vec2.h"
 

@@ -20,12 +20,10 @@ typedef struct glColour_ {
 /*
  * default colours
  */
-#include "colours.gen.h"
+#include "colours.gen.h" // IWYU pragma: export
 
 #define COL_ALPHA( col, alpha )                                                \
-   {                                                                           \
-      .r = ( col ).r, .g = ( col ).g, .b = ( col ).b, .a = alpha               \
-   }
+   { .r = ( col ).r, .g = ( col ).g, .b = ( col ).b, .a = alpha }
 
 /*
  * Colour space conversion routines.

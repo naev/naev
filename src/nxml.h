@@ -17,8 +17,8 @@
 #define LIBXML_ATTR_FORMAT( fmt, args )
 #endif
 
-#include "libxml/parser.h"
-#include "libxml/xmlwriter.h"
+#include "libxml/parser.h"    // IWYU pragma: export
+#include "libxml/xmlwriter.h" // IWYU pragma: export
 /** @endcond */
 
 #include "attributes.h"

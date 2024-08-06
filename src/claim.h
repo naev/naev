@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "nxml.h"
+#include "nxml.h" // IWYU pragma: keep
 
 /* Forward declaration. */
 struct Claim_s;

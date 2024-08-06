@@ -3,6 +3,7 @@
  */
 #pragma once
 
+#include "naev.h"
 #include "space.h"
 
 /**

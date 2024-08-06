@@ -18,10 +18,12 @@
 
 #include "array.h"
 #include "conf.h"
+#include "faction.h"
 #include "gatherable.h"
 #include "log.h"
 #include "ndata.h"
 #include "nxml.h"
+#include "opengl.h"
 #include "threadpool.h"
 
 #define XML_COMMODITY_ID "commodity" /**< XML document identifier */
