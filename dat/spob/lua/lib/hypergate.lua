@@ -235,6 +235,7 @@ function hypergate_window ()
          map:center( cpos, hardset )
       end
    end
+   map:setScale( 1/3 )
    map_center( nil, 1, true ) -- Center on first item in the list
 
    local pp = player.pilot()

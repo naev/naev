@@ -5,9 +5,8 @@ local love_shaders = require "love_shaders"
 
 local luatk_map = {}
 
-local scale      = 1/3
+local scale      = 0.5
 local sys_radius = 15
---local sys_inner  = 3
 local edge_width = 6
 
 -- Defaults, for access from the outside
@@ -211,18 +210,21 @@ function Map:mmoved( mx, my )
    end
 end
 function Map:wheelmoved( _mx, my )
-   local s =self.scale
    if my > 0 then
-      self.scale = self.scale * 1.1
+      self:setScale( self.scale * 1.1 )
    elseif my < 0 then
-      self.scale = self.scale * 0.9
-   end
-   self.scale = math.min( 5, self.scale )
-   self.scale = math.max( 0.1, self.scale )
-   if s ~= self.scale then
-      luatk.rerender()
+      self:setScale( self.scale * 0.9 )
    end
    return true -- Always eat the event
+end
+function Map:setScale( s )
+   local ss =self.scale
+   self.scale = s
+   self.scale = math.min( 5, self.scale )
+   self.scale = math.max( 0.1, self.scale )
+   if ss ~= self.scale then
+      luatk.rerender()
+   end
 end
 
 return luatk_map
