@@ -196,8 +196,8 @@ function Map:draw( bx, by )
             end
          end
          if sys.s==cs then
-            lg.setColour( cInert )
-            lg.circle( "line", px, py, r+2 )
+            lg.setColour{ 1, 1, 1, 1 }
+            lg.circle( "line", px, py, 1.5*r )
          end
       end
 
@@ -218,7 +218,10 @@ function Map:draw( bx, by )
             local p = (sys.s:pos()*inv-self.pos)*self.scale + c
             local px, py = p:get()
             local fw = f:getWidth( n )
-            px = px + r + 3
+            px = px + r + 2
+            if sys.s==cs then
+               px = px + 0.5*r
+            end
             py = py - fh * 0.5
             if not (px < -fw or px > w or py < -fh or py > h) then
                lg.print( n, f, px, py )
@@ -244,7 +247,7 @@ function Map:draw( bx, by )
       local jcur = jmax
       local s = self.scale
       local r = luatk_map.sys_radius * s
-      local jumpw = math.max( 10, 2*r )
+      local jumpw = math.max( 10, r )
       lg.setShader( self.shd_jumpgoto )
       self.shd_jumpgoto:send( "paramf", r )
       for k,sys in ipairs(player.autonavRoute()) do
@@ -253,13 +256,16 @@ function Map:draw( bx, by )
          local jumpx, jumpy = (p*inv):get()
          local jumpl, jumpa = ((sys:pos()-cpos)*inv):polar()
 
-         local col
+         local col, parami
          if jcur==jmax and jmax > 0 then
             col = cGreen
+            parami = 1
          elseif jcur < 1 then
             col = cRed
+            parami = 0
          else
             col = cYellow
+            parami = 1
          end
          jcur = jcur-1
          lg.setColour( col )
@@ -267,8 +273,8 @@ function Map:draw( bx, by )
          lg.push()
          lg.translate( x + (jumpx-mx)*s + self.w*0.5, y + (jumpy-my)*s + self.h*0.5 )
          lg.rotate( jumpa )
-         self.shd_jumpgoto:send( "dimensions", {jumpl*s,jumpw*s} )
-         self.shd_jumpgoto:send( "parami", ((jcur >= 1) and 1) or 0 )
+         self.shd_jumpgoto:send( "dimensions", {jumpl*s,jumpw} )
+         self.shd_jumpgoto:send( "parami", parami )
          love_shaders.img:draw( -jumpl*0.5*s, -jumpw*0.5, 0, jumpl*s, jumpw )
          lg.pop()
 
