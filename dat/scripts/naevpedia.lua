@@ -51,6 +51,7 @@ local function lua_escape( s )
       sout = sout .. "<%="..tostring(#tbl).."%>"
       ms, me = utf8.find( s, "<%=", me, true )
    end
+   sout = sout..utf8.sub( s, be+1 )
    return sout, tbl
 end
 
@@ -130,8 +131,14 @@ function naevpedia.load()
                   local entry = utf8.sub( f, 1, -4 )
                   local _s, meta = extractmetadata( entry, dat )
                   meta._G = tcopy( _G ) -- Copy Lua table over
+                  meta._G._G = meta._G
                   meta._G._ = _
                   meta._G.fmt = fmt
+                  meta._G.require = require
+                  meta._G.print = print
+                  meta._G.ipairs = ipairs
+                  meta._G.pairs = pairs
+                  meta._G.inlist = inlist
                   mds[ entry ] = meta
                end
             elseif i.type == "directory" then
