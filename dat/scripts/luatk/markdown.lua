@@ -257,8 +257,8 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   wgt = luawgt,
                }
                table.insert( wgt.blocks, wgtblock )
-               ty = wy + wh
-               block.y = wy
+               ty = wy + wh + 10
+               block.y = ty
                table.insert( wgt.wgts, wgtblock )
             end
          end
