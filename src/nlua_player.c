@@ -689,6 +689,7 @@ static int playerL_autonav( lua_State *L )
  */
 static int playerL_autonavSetPos( lua_State *L )
 {
+   PLAYER_CHECK();
    const vec2 *pos = luaL_optvector( L, 1, NULL );
    if ( pos == NULL )
       ovr_autonavClear();
@@ -708,6 +709,7 @@ static int playerL_autonavSetPos( lua_State *L )
  */
 static int playerL_autonavDest( lua_State *L )
 {
+   PLAYER_CHECK();
    LuaSystem   ls;
    StarSystem *dest;
    int         jumps;
@@ -735,6 +737,7 @@ static int playerL_autonavDest( lua_State *L )
  */
 static int playerL_autonavAbort( lua_State *L )
 {
+   PLAYER_CHECK();
    const char *str = luaL_optstring( L, 1, NULL );
    player_autonavAbort( str );
    return 0;
@@ -751,6 +754,7 @@ static int playerL_autonavAbort( lua_State *L )
  */
 static int playerL_autonavReset( lua_State *L )
 {
+   PLAYER_CHECK();
    double timer = luaL_optnumber( L, 1, 0. );
    player_autonavReset( timer );
    return 0;
@@ -765,6 +769,7 @@ static int playerL_autonavReset( lua_State *L )
  */
 static int playerL_autonavEnd( lua_State *L )
 {
+   PLAYER_CHECK();
    (void)L;
    player_autonavEnd();
    return 0;
