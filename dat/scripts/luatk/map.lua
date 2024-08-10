@@ -32,6 +32,7 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    wgt.tinyfont = options.fonttiny or lg.newFont( math.floor(wgt.deffont:getHeight()*0.8+0.5) )
    wgt.hidenames = options.hidenames
    wgt.binaryhighlight = options.binaryhighlight
+   wgt.notinteractive = options.notinteractive
 
    local sysname = {} -- To do quick look ups
    wgt.sys = {}
@@ -123,12 +124,16 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    wgt.custrender = options.render
 
    -- Load shaders
-   local path = "scripts/luatk/glsl/"
    local function load_shader( filename )
-      local src = lf.read( path..filename )
+      local src = lf.read( filename )
       return lg.newShader( src )
    end
-   wgt.shd_jumplane = load_shader( "jumplane.frag" )
+   wgt.shd_jumplane = load_shader( "scripts/luatk/glsl/jumplane.frag" )
+   wgt.shd_jumpgoto = load_shader( "spob/lua/glsl/jumpgoto.frag" )
+
+   -- Internals
+   wgt._canvas = lg.newCanvas( wgt.w, wgt.h )
+   wgt._dirty = true
 
    return wgt
 end
@@ -136,102 +141,126 @@ function Map:draw( bx, by )
    -- TODO use a canvas for the widget so we can do animations for cheap
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
 
-   lg.push()
-   lg.translate( x, y )
+   if self._dirty then
+      self._dirty = false
 
-   lg.setColour( {0, 0, 0} )
-   lg.rectangle( "fill", 0, 0, w, h )
+      local cvs = lg.getCanvas()
+      local sx, sy, sw, sh = lg.getScissor()
+      lg.setCanvas( self._canvas )
+      lg.clear( 0, 0, 0, 1 )
 
-   -- Set scissors
-   local sx, sy, sw, sh = luatk.joinScissors( x, y, w, h )
-   local c = vec2.new( w, h )*0.5
+      -- Get dimensions
+      local c = vec2.new( w, h )*0.5
 
-   -- Display edges
-   local r = math.max( self.scale * luatk_map.sys_radius, 3 )
-   local ew = math.max( self.scale * luatk_map.edge_width, 1 )
-   lg.setShader( self.shd_jumplane )
-   self.shd_jumplane:send( "paramf", r*3 )
-   for i,e in ipairs(self.edges) do
-      local px, py = ((e.c-self.pos)*self.scale + c):get()
-      local l = e.l*self.scale
-      local l2 = l*0.5
-      if not (px < -l2 or px > w+l2 or py < -l2 or py > h+l2) then
-         lg.setColour( e.cs )
-         self.shd_jumplane:send( "paramv", e.ce:rgba() )
-         self.shd_jumplane:send( "dimensions", l, ew )
+      -- Display edges
+      local r = math.max( self.scale * luatk_map.sys_radius, 3 )
+      local ew = math.max( self.scale * luatk_map.edge_width, 1 )
+      lg.setShader( self.shd_jumplane )
+      self.shd_jumplane:send( "paramf", r*3 )
+      for i,e in ipairs(self.edges) do
+         local px, py = ((e.c-self.pos)*self.scale + c):get()
+         local l = e.l*self.scale
+         local l2 = l*0.5
+         if not (px < -l2 or px > w+l2 or py < -l2 or py > h+l2) then
+            lg.setColour( e.cs )
+            self.shd_jumplane:send( "paramv", e.ce:rgba() )
+            self.shd_jumplane:send( "dimensions", l, ew )
 
-         lg.push()
-         lg.translate( px, py )
-         lg.rotate( e.a )
-         love_shaders.img:draw( -l2, -ew*0.5, 0, l, ew )
-         lg.pop()
-      end
-   end
-   lg.setShader()
-
-   -- Display systems
-   local inv = vec2.new(1,-1)
-   for i,sys in ipairs(self.sys) do
-      local s = sys.s
-      local p = (s:pos()*inv-self.pos)*self.scale + c
-      local px, py = p:get()
-      if not (px < -r or px > w+r or py < -r or py > h+r) then
-         lg.setColour( sys.coutter )
-         lg.circle( "line", px, py, r )
-         if sys.spob then
-            lg.setColour( sys.c )
-            lg.circle( "fill", px, py, 0.65*r )
+            lg.push()
+            lg.translate( px, py )
+            lg.rotate( e.a )
+            love_shaders.img:draw( -l2, -ew*0.5, 0, l, ew )
+            lg.pop()
          end
       end
-   end
+      lg.setShader()
 
-   -- Render names
-   if not self.hidenames and self.scale >= 0.5 then
-      local f
-      if self.scale >= 1.5 then
-         f = self.deffont
-      elseif self.scale > 1.0 then
-         f = self.smallfont
-      else
-         f = self.tinyfont
-      end
-      local fh = f:getHeight()
-      lg.setColour( 1, 1, 1 )
+      local cs = system.cur()
+
+      -- Display systems
+      local inv = vec2.new(1,-1)
       for i,sys in ipairs(self.sys) do
-         local n = sys.n
-         local p = (sys.s:pos()*inv-self.pos)*self.scale + c
+         local s = sys.s
+         local p = (s:pos()*inv-self.pos)*self.scale + c
          local px, py = p:get()
-         local fw = f:getWidth( n )
-         px = px + r + 2.
-         py = py - fh * 0.5
-         if not (px < -fw or px > w or py < -fh or py > h) then
-            lg.print( n, f, px, py )
+         if not (px < -r or px > w+r or py < -r or py > h+r) then
+            lg.setColour( sys.coutter )
+            lg.circle( "line", px, py, r )
+            if sys.spob then
+               lg.setColour( sys.c )
+               lg.circle( "fill", px, py, 0.65*r )
+            end
+         end
+         if sys.s==cs then
+            lg.setColour( cInert )
+            lg.circle( "line", px, py, r+2 )
          end
       end
+
+      -- Render jump route
+      --if not self.hidetarget then
+      --   local dest = player.autonavDest()
+      --end
+
+      -- Render names
+      if not self.hidenames and self.scale >= 0.5 then
+         local f
+         if self.scale >= 1.5 then
+            f = self.deffont
+         elseif self.scale > 1.0 then
+            f = self.smallfont
+         else
+            f = self.tinyfont
+         end
+         local fh = f:getHeight()
+         lg.setColour( 1, 1, 1 )
+         for i,sys in ipairs(self.sys) do
+            local n = sys.n
+            local p = (sys.s:pos()*inv-self.pos)*self.scale + c
+            local px, py = p:get()
+            local fw = f:getWidth( n )
+            px = px + r + 3
+            py = py - fh * 0.5
+            if not (px < -fw or px > w or py < -fh or py > h) then
+               lg.print( n, f, px, py )
+            end
+         end
+      end
+
+      -- Restore canvas
+      lg.setCanvas( cvs )
+      lg.setScissor( sx, sy, sw, sh )
    end
+
+   -- Draw canvas
+   lg.setColor(1, 1, 1, 1)
+   self._canvas:draw( x, y )
 
    -- Allow for custom rendering
    if self.custrender then
+      lg.push()
+      lg.translate(x,y)
       self.custrender( self )
+      lg.pop()
    end
-
-   -- Restore scissors
-   lg.setScissor( sx, sy, sw, sh )
-   lg.pop()
+end
+function Map:rerender()
+   self._dirty = true
+   luatk.rerender()
 end
 function Map:center( pos, hardset )
    self.target = pos or vec2.new()
    self.target = self.target * vec2.new(1,-1)
-
    if hardset then
       self.pos = self.target
    else
       self.speed = (self.pos-self.target):dist() * 3
    end
+   self:rerender()
 end
 function Map:update( dt )
    if (self.pos - self.target):dist2() > 1e-3 then
-      luatk.rerender() -- Fully animated, so draw every frame
+      self:rerender() -- Fully animated, so draw every frame
       local mod, dir = (self.target - self.pos):polar()
       self.pos = self.pos + vec2.newP( math.min(mod,self.speed*dt), dir )
    end
@@ -244,7 +273,7 @@ function Map:mmoved( mx, my )
       self.pos = self.pos + (self._mouse - vec2.new( mx, my )) / self.scale
       self.target = self.pos
       self._mouse = vec2.new( mx, my )
-      luatk.rerender()
+      self:rerender()
    end
 end
 function Map:wheelmoved( _mx, my )
@@ -261,7 +290,7 @@ function Map:setScale( s )
    self.scale = math.min( 5, self.scale )
    self.scale = math.max( 0.1, self.scale )
    if ss ~= self.scale then
-      luatk.rerender()
+      self:rerender()
    end
 end
 
