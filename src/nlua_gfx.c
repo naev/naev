@@ -543,7 +543,6 @@ static int gfxL_renderCircle( lua_State *L )
 
    /* Render. */
    gl_renderCircle( x, y, r, col, !empty );
-
    return 0;
 }
 
@@ -557,7 +556,6 @@ static int gfxL_renderCircle( lua_State *L )
  */
 static int gfxL_renderCircleH( lua_State *L )
 {
-
    /* Parse parameters. */
    const mat4     *H     = luaL_checktransform( L, 1 );
    const glColour *col   = luaL_optcolour( L, 2, &cWhite );
@@ -565,7 +563,6 @@ static int gfxL_renderCircleH( lua_State *L )
 
    /* Render. */
    gl_renderCircleH( H, col, !empty );
-
    return 0;
 }
 
