@@ -38,6 +38,24 @@ outstr += """
 
 <%= s:description() %>
 
+## Availability
+
+Places where the <%= s:name() %> is sold are shown in #Fgreen#0.
+<% function map ( mw )
+    local m = require "luatk.map"
+    return m.newMap( nil, 10, 10, mw-200, (mw-200) * 9 / 16, {
+        binaryhighlight = function ( sys )
+            for k,spb in ipairs(sys:spobs()) do
+                if spb:known() and inlist( spb:shipsSold(), s ) then
+                    return true
+                end
+            end
+            return false
+        end
+    } )
+end %>
+<widget map/>
+
 ### Ship Properties
 
 * **[Class](mechanics/class)**:   <%= _(s:classDisplay()) %>
@@ -56,24 +74,6 @@ outstr += """
 <% end %>
 
 <%= s:shipstatDesc() %>
-
-## Availability
-
-Places where the <%= s:name() %> is sold are shown in #Fgreen#0.
-<% function map ( mw )
-    local m = require "luatk.map"
-    return m.newMap( nil, 10, 10, mw-200, (mw-200) * 9 / 16, {
-        binaryhighlight = function ( sys )
-            for k,spb in ipairs(sys:spobs()) do
-                if spb:known() and inlist( spb:shipsSold(), s ) then
-                    return true
-                end
-            end
-            return false
-        end
-    } )
-end %>
-<widget map/>
 """
 
 with open( args.o, 'w' ) as f:
