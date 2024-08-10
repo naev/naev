@@ -10,7 +10,6 @@ local sys_radius = 15
 local edge_width = 6
 
 -- Defaults, for access from the outside
-luatk_map.scale = scale
 luatk_map.sys_radius = sys_radius
 luatk_map.edge_width = edge_width
 
@@ -28,7 +27,7 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    setmetatable( wgt, Map_mt )
    wgt.type    = "map"
    wgt.canfocus = true
-   wgt.scale   = luatk_map.scale
+   wgt.scale   = scale
    wgt.deffont = options.font or luatk._deffont or lg.getFont()
    -- TODO load same font family
    wgt.smallfont = options.fontsmall or lg.newFont( math.floor(wgt.deffont:getHeight()*0.9+0.5) )
@@ -130,11 +129,13 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    local path = "scripts/luatk/glsl/"
    local function load_shader( filename )
       local src = lf.read( path..filename )
-      return lg.newShader( src )
+      local shd = lg.newShader( src )
+      shd.dt = 0
+      return shd
    end
+   wgt.shd_selectsys = load_shader( "selectsys.frag" )
    wgt.shd_jumplane = load_shader( "jumplane.frag" )
    wgt.shd_jumpgoto = load_shader( "jumplanegoto.frag" )
-   wgt.shd_jumpgoto.dt = 0
 
    -- Internals
    wgt._canvas = lg.newCanvas( wgt.w, wgt.h )
@@ -250,7 +251,8 @@ function Map:draw( bx, by )
       local jumpw = math.max( 10, r )
       lg.setShader( self.shd_jumpgoto )
       self.shd_jumpgoto:send( "paramf", r )
-      for k,sys in ipairs(player.autonavRoute()) do
+      local route = player.autonavRoute()
+      for k,sys in ipairs(route) do
          local spos = sys:pos()
          local p = (cpos + spos)*0.5
          local jumpx, jumpy = (p*inv):get()
@@ -280,6 +282,16 @@ function Map:draw( bx, by )
 
          cpos = spos
       end
+
+      -- Render target
+      if #route > 0 then
+         local tx, ty = (route[#route]:pos()*inv):get()
+         lg.setColour( {1, 1, 1, 1} )
+         self.shd_selectsys:send( "dimensions", {2*r, 2*r} )
+         lg.setShader( self.shd_selectsys )
+         love_shaders.img:draw( x+(tx-mx)*s + self.w*0.5 - 2*r, y+(ty-my)*s + self.h*0.5 - 2*r, 0, 4*r, 4*r )
+      end
+
       lg.setShader()
    end
 
@@ -315,6 +327,8 @@ function Map:update( dt )
    if player.autonavDest() then
       self.shd_jumpgoto.dt = self.shd_jumpgoto.dt + dt
       self.shd_jumpgoto:send( "dt", self.shd_jumpgoto.dt )
+      self.shd_selectsys.dt = self.shd_selectsys.dt + dt
+      self.shd_selectsys:send( "dt", self.shd_selectsys.dt )
    end
 end
 function Map:pressed( mx, my )

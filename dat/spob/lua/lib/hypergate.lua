@@ -140,12 +140,13 @@ function hypergate_window ()
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=mem.spob:system()}), nil, "center", lg.newFont(14) )
 
    -- Load shaders
-   local path = "spob/lua/glsl/"
+   local path = "scripts/luatk/glsl/"
    local function load_shader( filename )
       local src = lf.read( path..filename )
       return lg.newShader( src )
    end
-   local shd_jumpgoto = load_shader( "jumpgoto.frag" )
+   local shd_jumpgoto = load_shader( "jumplanegoto.frag" )
+   shd_jumpgoto:send( "parami", 1 )
    shd_jumpgoto.dt = 0
    local shd_selectsys = load_shader( "selectsys.frag" )
    shd_selectsys.dt = 0
@@ -204,12 +205,13 @@ function hypergate_window ()
             local s = m.scale
             local r = luatk_map.sys_radius * s
             local jumpw = math.max( 10, 2*r )
-            lg.setColour( {0, 0.5, 1, 0.7} )
+            lg.setColour( {0, 0.8, 1, 0.8} )
             lg.push()
             lg.translate( (jumpx-mx)*s + mapw*0.5, (jumpy-my)*s + maph*0.5 )
             lg.rotate( jumpa )
             lg.setShader( shd_jumpgoto )
-            shd_jumpgoto:send( "dimensions", {jumpl*luatk_map.scale,jumpw} )
+            shd_jumpgoto:send( "paramf", r )
+            shd_jumpgoto:send( "dimensions", {jumpl*s,jumpw} )
             love_shaders.img:draw( -jumpl*0.5*s, -jumpw*0.5, 0, jumpl*s, jumpw )
             lg.setShader()
             lg.pop()
