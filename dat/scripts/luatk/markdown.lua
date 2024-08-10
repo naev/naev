@@ -238,7 +238,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
             local luawgt = options.processhtml( literal )
             if luawgt then
                -- Move the location information to markdown side
-               local wx, wy = luawgt.x, luawgt.y+ty
+               local wx, wy = luawgt.x, luawgt.y+ty+10
                local ww, wh = luawgt.w, luawgt.h
                luawgt.x = 0
                luawgt.y = 0
@@ -257,8 +257,8 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   wgt = luawgt,
                }
                table.insert( wgt.blocks, wgtblock )
-               ty = ty + wh + 20
-               block.y = ty
+               ty = wy + wh
+               block.y = wy
                table.insert( wgt.wgts, wgtblock )
             end
          end
@@ -269,11 +269,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    end
 
    -- Compute full size
-   wgt.scrollh = 0
-   if #wgt.blocks > 0 then
-      local b = wgt.blocks[#wgt.blocks]
-      wgt.scrollh = b.y+b.h
-   end
+   wgt.scrollh = ty+10
    wgt.scrollh = math.max( 0, wgt.scrollh-wgt.h )
    if wgt.scrollh > 0 then
       wgt.scrolls = true
