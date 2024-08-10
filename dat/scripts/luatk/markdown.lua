@@ -334,6 +334,7 @@ function Markdown:draw( wx, wy )
    lg.setScissor( sx, sy, sw, sh )
 end
 function Markdown:drawover( bx, by )
+   lg.setColour( 1, 1, 1 )
    local x, y = bx+self.x, by+self.y-self.pos
    for k,l in ipairs(self.links) do
       if l.mouseover then
@@ -408,7 +409,7 @@ function Markdown:pressed( mx, my, button )
             luatk.rerender()
             self.focused = w
          end
-         if wgt.pressed and wgt:pressed( mx, my, button ) then
+         if wgt.pressed and wgt:pressed( mx-wgt.x, my-wgt.y, button ) then
             luatk.rerender()
             return true
          end
