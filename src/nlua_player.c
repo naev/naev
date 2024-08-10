@@ -738,7 +738,7 @@ static int playerL_autonavDest( lua_State *L )
 static int playerL_autonavRoute( lua_State *L )
 {
    PLAYER_CHECK();
-   const StarSystem **path = map_getRoute();
+   StarSystem *const *path = map_getRoute();
    lua_newtable( L );
    for ( int i = 0; i < array_size( path ); i++ ) {
       LuaSystem ls = system_index( path[i] );
