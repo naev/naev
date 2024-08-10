@@ -118,7 +118,7 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    end
 
    -- Set up custom options and the likes
-   wgt.pos = options.pos or vec2.new()
+   wgt.pos = options.pos or system.cur():pos()
    wgt.target = wgt.pos
    wgt.custrender = options.render
 
