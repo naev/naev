@@ -5,7 +5,7 @@ local love_shaders = require "love_shaders"
 
 local luatk_map = {}
 
-local scale      = 0.5
+local scale      = 0.33
 local sys_radius = 15
 local edge_width = 6
 
@@ -30,13 +30,15 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    -- TODO load same font family
    wgt.smallfont = options.fontsmall or lg.newFont( math.floor(wgt.deffont:getHeight()*0.9+0.5) )
    wgt.tinyfont = options.fonttiny or lg.newFont( math.floor(wgt.deffont:getHeight()*0.8+0.5) )
+   wgt.hidenames = options.hidenames
+   wgt.binaryhighlight = options.binaryhighlight
 
    local sysname = {} -- To do quick look ups
    wgt.sys = {}
    local inv = vec2.new(1,-1)
    local fplayer = faction.player()
    local function addsys( s, known )
-      local sys = { s=s, p=s:pos()*inv, n=s:name() }
+      local sys = { s=s, p=s:pos()*inv, n=s:name(), coutter=cInert }
       local f = s:faction()
       if not f or not known then
          sys.c = colour.new("Inert")
@@ -51,7 +53,15 @@ function luatk_map.newMap( parent, x, y, w, h, options )
                end
             end
          end
-         if f:areEnemies( fplayer ) then
+         if wgt.binaryhighlight then
+            if wgt.binaryhighlight( s ) then
+               sys.c = colour.new("Friend")
+               sys.coutter = sys.c
+            else
+               sys.c = cInert
+               sys.coutter = sys.c
+            end
+         elseif f:areEnemies( fplayer ) then
             sys.c = colour.new("Hostile")
          elseif not haslandable then
             sys.c = colour.new("Restricted")
@@ -166,7 +176,7 @@ function Map:draw( bx, by )
       local p = (s:pos()*inv-self.pos)*self.scale + c
       local px, py = p:get()
       if not (px < -r or px > w+r or py < -r or py > h+r) then
-         lg.setColour( cInert )
+         lg.setColour( sys.coutter )
          lg.circle( "line", px, py, r )
          if sys.spob then
             lg.setColour( sys.c )
@@ -176,7 +186,7 @@ function Map:draw( bx, by )
    end
 
    -- Render names
-   if self.scale >= 0.5 then
+   if not self.hidenames and self.scale >= 0.5 then
       local f
       if self.scale >= 1.5 then
          f = self.deffont
