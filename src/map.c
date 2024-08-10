@@ -1153,8 +1153,8 @@ void map_renderDecorators( double x, double y, double zoom, int editor,
 
    /* Fade in the decorators to allow toggling between commodity and nothing */
    for ( int i = 0; i < array_size( decorator_stack ); i++ ) {
-      int           visible;
-      MapDecorator *decorator = &decorator_stack[i];
+      int                 visible;
+      const MapDecorator *decorator = &decorator_stack[i];
 
       /* only if pict couldn't be loaded */
       if ( decorator->image == NULL )
@@ -1201,9 +1201,9 @@ void map_renderFactionDisks( double x, double y, double zoom, double r,
                              int editor, double alpha )
 {
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
-      glColour    c;
-      double      tx, ty;
-      StarSystem *sys = system_getIndex( i );
+      glColour          c;
+      double            tx, ty;
+      const StarSystem *sys = system_getIndex( i );
 
       if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
          continue;
@@ -1246,7 +1246,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor,
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
       double tx, ty;
       /* Fade in the disks to allow toggling between commodity and nothing */
-      StarSystem *sys = system_getIndex( i );
+      const StarSystem *sys = system_getIndex( i );
 
       if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
          continue;
@@ -1332,8 +1332,8 @@ void map_renderJumps( double x, double y, double zoom, double radius,
                       int editor )
 {
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
-      double      x1, y1;
-      StarSystem *sys = system_getIndex( i );
+      double            x1, y1;
+      const StarSystem *sys = system_getIndex( i );
 
       if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
          continue;
@@ -1345,9 +1345,9 @@ void map_renderJumps( double x, double y, double zoom, double radius,
       y1 = y + sys->pos.y * zoom;
 
       for ( int j = 0; j < array_size( sys->jumps ); j++ ) {
-         double          x2, y2, rx, ry, r, rw, rh;
-         const glColour *col, *cole;
-         StarSystem     *jsys = sys->jumps[j].target;
+         double            x2, y2, rx, ry, r, rw, rh;
+         const glColour   *col, *cole;
+         const StarSystem *jsys = sys->jumps[j].target;
          if ( sys_isFlag( jsys, SYSTEM_HIDDEN ) )
             continue;
          if ( !space_sysReachableFromSys( jsys, sys ) && !editor )
@@ -1401,8 +1401,8 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
                         double w, double h, double r, MapMode mode )
 {
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
-      double      tx, ty;
-      StarSystem *sys = system_getIndex( i );
+      double            tx, ty;
+      const StarSystem *sys = system_getIndex( i );
 
       if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
          continue;
@@ -1474,8 +1474,8 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
 static void map_renderPath( double x, double y, double zoom, double radius,
                             double alpha )
 {
-   StarSystem *sys1 = cur_system;
-   int         jmax, jcur;
+   const StarSystem *sys1 = cur_system;
+   int               jmax, jcur;
 
    if ( array_size( map_path ) == 0 )
       return;
@@ -1488,9 +1488,9 @@ static void map_renderPath( double x, double y, double zoom, double radius,
    jcur = jmax;                       /* Jump range remaining. */
 
    for ( int j = 0; j < array_size( map_path ); j++ ) {
-      glColour    col;
-      double      x1, y1, x2, y2, rx, ry, rw, rh, r;
-      StarSystem *sys2 = map_path[j];
+      glColour          col;
+      double            x1, y1, x2, y2, rx, ry, rw, rh, r;
+      const StarSystem *sys2 = map_path[j];
       if ( sys_isFlag( sys1, SYSTEM_HIDDEN ) ||
            sys_isFlag( sys2, SYSTEM_HIDDEN ) )
          continue;
@@ -1541,10 +1541,10 @@ void map_renderNotes( double bx, double by, double x, double y, double zoom,
 
    /* Find mouse over system and draw. */
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
-      double      tx, ty, tw, th;
-      glColour    col;
-      glFont     *font;
-      StarSystem *sys = &systems_stack[i];
+      double            tx, ty, tw, th;
+      glColour          col;
+      glFont           *font;
+      const StarSystem *sys = &systems_stack[i];
 
       if ( !sys_isFlag( sys, SYSTEM_PMARKED ) )
          continue;
@@ -1599,7 +1599,7 @@ void map_renderNames( double bx, double by, double x, double y, double zoom,
       return;
 
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
-      StarSystem *sys = system_getIndex( i );
+      const StarSystem *sys = system_getIndex( i );
 
       if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
          continue;
@@ -1628,9 +1628,9 @@ void map_renderNames( double bx, double by, double x, double y, double zoom,
       return;
 
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
-      StarSystem *sys = system_getIndex( i );
+      const StarSystem *sys = system_getIndex( i );
       for ( int j = 0; j < array_size( sys->jumps ); j++ ) {
-         StarSystem *jsys = sys->jumps[j].target;
+         const StarSystem *jsys = sys->jumps[j].target;
          /* Calculate offset. */
          vx = jsys->pos.x - sys->pos.x;
          vy = jsys->pos.y - sys->pos.y;
@@ -1660,9 +1660,9 @@ static void map_renderMarkers( double x, double y, double zoom, double r,
                                double a )
 {
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
-      double      tx, ty;
-      int         j, n, m;
-      StarSystem *sys = system_getIndex( i );
+      double            tx, ty;
+      int               j, n, m;
+      const StarSystem *sys = system_getIndex( i );
 
       /* We only care about marked now. */
       if ( !sys_isFlag( sys, SYSTEM_MARKED | SYSTEM_CMARKED | SYSTEM_PMARKED ) )
