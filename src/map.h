@@ -42,14 +42,15 @@ void map_close( void );
 int  map_isOpen( void );
 
 /* misc */
-StarSystem *map_getDestination( int *jumps );
-void        map_setZoom( unsigned int wid, double zoom );
-void        map_select( const StarSystem *sys, char shifted );
-void        map_cycleMissions( int dir );
-void        map_toggleNotes( void );
-void        map_cleanup( void );
-void        map_clear( void );
-void        map_jump( void );
+StarSystem *const *map_getRoute( void );
+StarSystem        *map_getDestination( int *jumps );
+void               map_setZoom( unsigned int wid, double zoom );
+void               map_select( const StarSystem *sys, char shifted );
+void               map_cycleMissions( int dir );
+void               map_toggleNotes( void );
+void               map_cleanup( void );
+void               map_clear( void );
+void               map_jump( void );
 
 /* manipulate universe stuff */
 StarSystem **map_getJumpPath( const char *sysstart, const vec2 *posstart,

@@ -2588,6 +2588,16 @@ StarSystem *map_getDestination( int *jumps )
 }
 
 /**
+ * @brief Gets the autonav route of the player.
+ *
+ *    @return The route of the player (array.h).
+ */
+StarSystem *const *map_getRoute( void )
+{
+   return map_path;
+}
+
+/**
  * @brief Updates the map after a jump.
  */
 void map_jump( void )

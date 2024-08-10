@@ -82,6 +82,7 @@ static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
 static int playerL_autonav( lua_State *L );
 static int playerL_autonavSetPos( lua_State *L );
+static int playerL_autonavRoute( lua_State *L );
 static int playerL_autonavDest( lua_State *L );
 static int playerL_autonavAbort( lua_State *L );
 static int playerL_autonavReset( lua_State *L );
@@ -182,6 +183,7 @@ static const luaL_Reg playerL_methods[] = {
    { "refuel", playerL_refuel },
    { "autonav", playerL_autonav },
    { "autonavSetPos", playerL_autonavSetPos },
+   { "autonavRoute", playerL_autonavRoute },
    { "autonavDest", playerL_autonavDest },
    { "autonavAbort", playerL_autonavAbort },
    { "autonavReset", playerL_autonavReset },
@@ -710,9 +712,9 @@ static int playerL_autonavSetPos( lua_State *L )
 static int playerL_autonavDest( lua_State *L )
 {
    PLAYER_CHECK();
-   LuaSystem   ls;
-   StarSystem *dest;
-   int         jumps;
+   LuaSystem         ls;
+   const StarSystem *dest;
+   int               jumps;
 
    /* Get destination. */
    dest = map_getDestination( &jumps );
@@ -723,6 +725,27 @@ static int playerL_autonavDest( lua_State *L )
    lua_pushsystem( L, ls );
    lua_pushnumber( L, jumps );
    return 2;
+}
+
+/**
+ * @brief Gets the player's autonav route.
+ *
+ * @usage syslist = player.autonavRoute()
+ *
+ *    @luatreturn Table A table of systems indicating the route of the player.
+ * @luafunc autonavRoute
+ */
+static int playerL_autonavRoute( lua_State *L )
+{
+   PLAYER_CHECK();
+   const StarSystem **path = map_getRoute();
+   lua_newtable( L );
+   for ( int i = 0; i < array_size( path ); i++ ) {
+      LuaSystem ls = system_index( path[i] );
+      lua_pushsystem( L, ls );
+      lua_rawseti( L, -2, i + 1 );
+   }
+   return 1;
 }
 
 /**
