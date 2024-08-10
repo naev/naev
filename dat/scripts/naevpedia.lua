@@ -138,6 +138,7 @@ function naevpedia.load()
                   meta._G.print = print
                   meta._G.ipairs = ipairs
                   meta._G.pairs = pairs
+                  meta._G.table = table
                   meta._G.inlist = inlist
                   mds[ entry ] = meta
                end
@@ -213,6 +214,10 @@ local out = ""
    setfenv( c, meta._G )
    local success,result_or_err = pcall( c )
    if not success then
+      -- Show line by line breakdown of script
+      for k,v in ipairs(strsplit( luastr, '\n'  )) do
+         print(string.format("%03d: %s",k,v))
+      end
       warn( result_or_err )
       return "#r"..result_or_err.."#0"
    end
