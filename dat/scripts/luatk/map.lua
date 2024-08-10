@@ -26,13 +26,17 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    wgt.type    = "map"
    wgt.canfocus = true
    wgt.scale   = luatk_map.scale
+   wgt.deffont = options.font or luatk._deffont or lg.getFont()
+   -- TODO load same font family
+   wgt.smallfont = options.fontsmall or lg.newFont( math.floor(wgt.deffont:getHeight()*0.9+0.5) )
+   wgt.tinyfont = options.fonttiny or lg.newFont( math.floor(wgt.deffont:getHeight()*0.8+0.5) )
 
    local sysname = {} -- To do quick look ups
    wgt.sys = {}
    local inv = vec2.new(1,-1)
    local fplayer = faction.player()
    local function addsys( s, known )
-      local sys = { s=s, p=s:pos()*inv }
+      local sys = { s=s, p=s:pos()*inv, n=s:name() }
       local f = s:faction()
       if not f or not known then
          sys.c = colour.new("Inert")
@@ -150,7 +154,6 @@ function Map:draw( bx, by )
          lg.translate( px, py )
          lg.rotate( e.a )
          love_shaders.img:draw( -l2, -ew*0.5, 0, l, ew )
-         --lg.rectangle("fill", -l2, -ew*0.5, l, ew )
          lg.pop()
       end
    end
@@ -168,6 +171,31 @@ function Map:draw( bx, by )
          if sys.spob then
             lg.setColour( sys.c )
             lg.circle( "fill", px, py, 0.65*r )
+         end
+      end
+   end
+
+   -- Render names
+   if self.scale >= 0.5 then
+      local f
+      if self.scale >= 1.5 then
+         f = self.deffont
+      elseif self.scale > 1.0 then
+         f = self.smallfont
+      else
+         f = self.tinyfont
+      end
+      local fh = f:getHeight()
+      lg.setColour( 1, 1, 1 )
+      for i,sys in ipairs(self.sys) do
+         local n = sys.n
+         local p = (sys.s:pos()*inv-self.pos)*self.scale + c
+         local px, py = p:get()
+         local fw = f:getWidth( n )
+         px = px + r + 2.
+         py = py - fh * 0.5
+         if not (px < -fw or px > w or py < -fh or py > h) then
+            lg.print( n, f, px, py )
          end
       end
    end
