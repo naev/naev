@@ -43,21 +43,34 @@ outstr += """
 
 ## Availability
 
+<%
+    local availability = {}
+    for i,sys in ipairs(system.getAll()) do
+        for j,spb in ipairs(sys:spobs()) do
+            if spb:known() and inlist( spb:shipsSold(), s ) then
+                table.insert( availability, sys )
+                break
+            end
+        end
+    end
+%>
+<% if #availability > 0 then %>
 Places where the <%= s:name() %> is sold are shown in #Fgreen#0.
 <% function map ( mw )
     local m = require "luatk.map"
     return m.newMap( nil, 10, 0, mw-200, (mw-200) * 9 / 16, {
         binaryhighlight = function ( sys )
-            for k,spb in ipairs(sys:spobs()) do
-                if spb:known() and inlist( spb:shipsSold(), s ) then
-                    return true
-                end
+            if inlist( availability, sys ) then
+                return true
             end
             return false
         end
     } )
 end %>
 <widget map/>
+<% else %>
+You are not aware of anywhere where the <%= s:name() %> is available for purchase.
+<% end %>
 
 ### Ship Properties
 
