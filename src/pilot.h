@@ -446,12 +446,12 @@ typedef struct Pilot_ {
 } Pilot;
 
 /* These depend on Pilot being defined first. */
-#include "pilot_cargo.h"
-#include "pilot_ew.h"
-#include "pilot_heat.h"
-#include "pilot_hook.h"
-#include "pilot_outfit.h"
-#include "pilot_weapon.h"
+#include "pilot_cargo.h"  // IWYU pragma: export
+#include "pilot_ew.h"     // IWYU pragma: export
+#include "pilot_heat.h"   // IWYU pragma: export
+#include "pilot_hook.h"   // IWYU pragma: export
+#include "pilot_outfit.h" // IWYU pragma: export
+#include "pilot_weapon.h" // IWYU pragma: export
 
 /* Getting pilot stuff. */
 Pilot *const *pilot_getAll( void );
