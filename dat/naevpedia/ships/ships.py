@@ -53,12 +53,15 @@ outstr += """
             end
         end
     end
+    table.sort( availability, function ( a, b )
+        return a:jumpDist() < b:jumpDist()
+    end )
 %>
 <% if #availability > 0 then %>
 Places where the <%= s:name() %> is sold are shown in #Fgreen#0.
 <% function map ( mw )
-    local m = require "luatk.map"
-    return m.newMap( nil, 10, 0, mw-200, (mw-200) * 9 / 16, {
+    local luatk_map = require "luatk.map"
+    local m = luatk_map.newMap( nil, 10, 0, mw-200, (mw-200) * 9 / 16, {
         binaryhighlight = function ( sys )
             if inlist( availability, sys ) then
                 return true
@@ -66,6 +69,10 @@ Places where the <%= s:name() %> is sold are shown in #Fgreen#0.
             return false
         end
     } )
+    if #availability > 0 then
+        m:center( availability[1]:pos(), true )
+    end
+    return m
 end %>
 <widget map/>
 <% else %>
