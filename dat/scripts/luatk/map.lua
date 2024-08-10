@@ -15,6 +15,9 @@ luatk_map.sys_radius = sys_radius
 luatk_map.edge_width = edge_width
 
 local cInert = colour.new("Inert")
+local cGreen = colour.new("Green")
+local cRed = colour.new("Red")
+local cYellow = colour.new("Yellow")
 
 local Map = {}
 setmetatable( Map, { __index = luatk.Widget } )
@@ -124,12 +127,14 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    wgt.custrender = options.render
 
    -- Load shaders
+   local path = "scripts/luatk/glsl/"
    local function load_shader( filename )
-      local src = lf.read( filename )
+      local src = lf.read( path..filename )
       return lg.newShader( src )
    end
-   wgt.shd_jumplane = load_shader( "scripts/luatk/glsl/jumplane.frag" )
-   wgt.shd_jumpgoto = load_shader( "spob/lua/glsl/jumpgoto.frag" )
+   wgt.shd_jumplane = load_shader( "jumplane.frag" )
+   wgt.shd_jumpgoto = load_shader( "jumplanegoto.frag" )
+   wgt.shd_jumpgoto.dt = 0
 
    -- Internals
    wgt._canvas = lg.newCanvas( wgt.w, wgt.h )
@@ -138,8 +143,8 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    return wgt
 end
 function Map:draw( bx, by )
-   -- TODO use a canvas for the widget so we can do animations for cheap
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
+   local inv = vec2.new(1,-1)
 
    if self._dirty then
       self._dirty = false
@@ -178,7 +183,6 @@ function Map:draw( bx, by )
       local cs = system.cur()
 
       -- Display systems
-      local inv = vec2.new(1,-1)
       for i,sys in ipairs(self.sys) do
          local s = sys.s
          local p = (s:pos()*inv-self.pos)*self.scale + c
@@ -196,11 +200,6 @@ function Map:draw( bx, by )
             lg.circle( "line", px, py, r+2 )
          end
       end
-
-      -- Render jump route
-      --if not self.hidetarget then
-      --   local dest = player.autonavDest()
-      --end
 
       -- Render names
       if not self.hidenames and self.scale >= 0.5 then
@@ -236,6 +235,48 @@ function Map:draw( bx, by )
    lg.setColor(1, 1, 1, 1)
    self._canvas:draw( x, y )
 
+   -- Render jump route
+   if not self.hidetarget then
+      luatk.rerender() -- Animated, so we have to draw every frame
+      local cpos = system.cur():pos()
+      local mx, my = self.pos:get()
+      local jmax = player:jumps()
+      local jcur = jmax
+      local s = self.scale
+      local r = luatk_map.sys_radius * s
+      local jumpw = math.max( 10, 2*r )
+      lg.setShader( self.shd_jumpgoto )
+      self.shd_jumpgoto:send( "paramf", r )
+      for k,sys in ipairs(player.autonavRoute()) do
+         local spos = sys:pos()
+         local p = (cpos + spos)*0.5
+         local jumpx, jumpy = (p*inv):get()
+         local jumpl, jumpa = ((sys:pos()-cpos)*inv):polar()
+
+         local col
+         if jcur==jmax and jmax > 0 then
+            col = cGreen
+         elseif jcur < 1 then
+            col = cRed
+         else
+            col = cYellow
+         end
+         jcur = jcur-1
+         lg.setColour( col )
+
+         lg.push()
+         lg.translate( x + (jumpx-mx)*s + self.w*0.5, y + (jumpy-my)*s + self.h*0.5 )
+         lg.rotate( jumpa )
+         self.shd_jumpgoto:send( "dimensions", {jumpl*s,jumpw*s} )
+         self.shd_jumpgoto:send( "parami", ((jcur >= 1) and 1) or 0 )
+         love_shaders.img:draw( -jumpl*0.5*s, -jumpw*0.5, 0, jumpl*s, jumpw )
+         lg.pop()
+
+         cpos = spos
+      end
+      lg.setShader()
+   end
+
    -- Allow for custom rendering
    if self.custrender then
       lg.push()
@@ -263,6 +304,11 @@ function Map:update( dt )
       self:rerender() -- Fully animated, so draw every frame
       local mod, dir = (self.target - self.pos):polar()
       self.pos = self.pos + vec2.newP( math.min(mod,self.speed*dt), dir )
+   end
+
+   if player.autonavDest() then
+      self.shd_jumpgoto.dt = self.shd_jumpgoto.dt + dt
+      self.shd_jumpgoto:send( "dt", self.shd_jumpgoto.dt )
    end
 end
 function Map:pressed( mx, my )
