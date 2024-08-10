@@ -265,10 +265,10 @@ static int gfxL_renderTex( lua_State *L )
  */
 static int gfxL_renderTexScale( lua_State *L )
 {
-   glTexture *tex;
-   glColour  *col;
-   double     x, y, bw, bh;
-   int        sx, sy;
+   const glTexture *tex;
+   const glColour  *col;
+   double           x, y, bw, bh;
+   int              sx, sy;
 
    /* Parameters. */
    col = NULL;
@@ -338,11 +338,11 @@ static int gfxL_renderTexScale( lua_State *L )
  */
 static int gfxL_renderTexRaw( lua_State *L )
 {
-   glTexture      *t;
-   const glColour *col;
-   double          px, py, pw, ph, tx, ty, tw, th;
-   double          angle;
-   int             sx, sy;
+   const glTexture *t;
+   const glColour  *col;
+   double           px, py, pw, ph, tx, ty, tw, th;
+   double           angle;
+   int              sx, sy;
 
    /* Parameters. */
    t     = luaL_checktex( L, 1 );
@@ -398,10 +398,10 @@ static int gfxL_renderTexRaw( lua_State *L )
  */
 static int gfxL_renderTexH( lua_State *L )
 {
-   glTexture      *t;
-   const glColour *col;
-   LuaShader_t    *shader;
-   mat4           *H, *TH, ID;
+   const glTexture *t;
+   const glColour  *col;
+   LuaShader_t     *shader;
+   mat4            *H, *TH, ID;
 
    ID = mat4_identity();
 
@@ -476,9 +476,9 @@ static int gfxL_renderTexH( lua_State *L )
  */
 static int gfxL_renderRect( lua_State *L )
 {
-   glColour *col;
-   double    x, y, w, h;
-   int       empty;
+   const glColour *col;
+   double          x, y, w, h;
+   int             empty;
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -530,9 +530,9 @@ static int gfxL_renderRectH( lua_State *L )
  */
 static int gfxL_renderCircle( lua_State *L )
 {
-   glColour *col;
-   double    x, y, r;
-   int       empty;
+   const glColour *col;
+   double          x, y, r;
+   int             empty;
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -761,7 +761,7 @@ static int gfxL_printfWrap( lua_State *L )
 {
    const char         *s;
    int                 width, maxw;
-   glFont             *font;
+   const glFont       *font;
    glPrintLineIterator iter;
    int                 linenum;
 
@@ -835,11 +835,11 @@ static int gfxL_printRestoreLast( lua_State *L )
  */
 static int gfxL_printf( lua_State *L )
 {
-   glFont     *font;
-   const char *str;
-   double      x, y;
-   glColour   *col;
-   int         max, mid;
+   const glFont   *font;
+   const char     *str;
+   double          x, y;
+   const glColour *col;
+   int             max, mid;
 
    /* Parse parameters. */
    font = luaL_checkfont( L, 1 );
@@ -873,7 +873,7 @@ static int gfxL_printf( lua_State *L )
 static int gfxL_printH( lua_State *L )
 {
    const mat4     *H;
-   glFont         *font;
+   const glFont   *font;
    const char     *str;
    const glColour *col;
    double          outline;
@@ -911,7 +911,7 @@ static int gfxL_printH( lua_State *L )
  */
 static int gfxL_print( lua_State *L )
 {
-   glFont         *font;
+   const glFont   *font;
    const char     *str;
    double          x, y;
    const glColour *col;
@@ -954,11 +954,11 @@ static int gfxL_print( lua_State *L )
  */
 static int gfxL_printText( lua_State *L )
 {
-   glFont     *font;
-   const char *str;
-   int         w, h, lh;
-   double      x, y;
-   glColour   *col;
+   const glFont   *font;
+   const char     *str;
+   int             w, h, lh;
+   double          x, y;
+   const glColour *col;
 
    /* Parse parameters. */
    font = lua_toboolean( L, 1 ) ? &gl_smallFont : &gl_defFont;
