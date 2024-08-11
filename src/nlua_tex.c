@@ -166,7 +166,8 @@ int lua_istex( lua_State *L, int ind )
 static int texL_close( lua_State *L )
 {
    gl_freeTexture( luaL_checktex( L, 1 ) );
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
    return 0;
 }
 
@@ -387,7 +388,8 @@ static int texL_writeData( lua_State *L )
    /* Read raw data. */
    glBindTexture( GL_TEXTURE_2D, tex->texture );
    glGetTexImage( GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data );
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
    /* Convert to PNG. */
    surface = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
@@ -506,7 +508,8 @@ static int texL_setFilter( lua_State *L )
    glBindTexture( GL_TEXTURE_2D, tex->texture );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min );
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
    return 0;
 }
@@ -542,7 +545,8 @@ static int texL_setWrap( lua_State *L )
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, horiz );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, vert );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, depth );
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
    return 0;
 }
