@@ -243,7 +243,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       elseif node_type == cmark.NODE_HTML_BLOCK then
          local literal = cmark.node_get_literal(cur)
          if options.processhtml then
-            local luawgt = options.processhtml( literal )
+            local luawgt = options.processhtml( literal, tw )
             if luawgt then
                -- Move the location information to markdown side
                local wx, wy = luawgt.x, luawgt.y+ty+10
@@ -252,6 +252,10 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                if rightalign then
                   wx = w + wx - ww -- Don't use w here
                   tw = wx - 10
+               end
+               -- Push down if can overlap
+               if tw < w and (rightalign or (ww > tw)) and #wgt.wgts > 0 then
+                  wy = wgt.wgts[#wgt.wgts].y2 + luawgt.y + 10
                end
                luawgt.x = 0
                luawgt.y = 0

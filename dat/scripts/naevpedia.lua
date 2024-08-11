@@ -135,6 +135,7 @@ function naevpedia.load()
                   meta._G._ = _
                   meta._G.fmt = fmt
                   meta._G.setmetatable = setmetatable
+                  meta._G.math = math
                   meta._G.require = require
                   meta._G.print = print
                   meta._G.ipairs = ipairs
@@ -438,7 +439,7 @@ function naevpedia.setup( name )
                local str, tbl = lua_escape( s )
                return lua_unescape( str, tbl, nmeta._G )
             end,
-            processhtml = function ( s )
+            processhtml = function ( s, tw )
                local t = strsplit( utf8.sub( s, 2, -4 ), ' ')
                if t[1]=='widget' then
                   local f = nmeta._G[t[2]]
@@ -446,7 +447,7 @@ function naevpedia.setup( name )
                      warn(fmt.f(_("naevpedia: unknown function '{f}'"),{f=t[2]}))
                      return nil
                   end
-                  return f( mw )
+                  return f( mw, tw )
                else
                   warn(fmt.f(_("naevpedia: unknown html '{f}'"),{f=t[1]}))
                   return nil

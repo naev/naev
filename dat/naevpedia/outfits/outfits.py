@@ -63,9 +63,10 @@ end %>
 %>
 <% if #availability > 0 then %>
 Places where <%= o:name() %> are sold are shown in #ggreen#0.
-<% function map ( mw )
+<% function map ( mw, tw )
     local luatk_map = require "luatk.map"
-    local m = luatk_map.newMap( nil, 10, 0, mw-200, (mw-200) * 9 / 16, {
+    local w = math.min( mw-200, tw-20 )
+    local m = luatk_map.newMap( nil, 10, 0, w, w * 9 / 16, {
         binaryhighlight = function ( sys )
             if inlist( availability, sys ) then
                 return true
