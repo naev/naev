@@ -56,7 +56,7 @@ function create()
    mem.stage = 0
    hook.jumpin("jumpin")
    hook.enter("enter")
-   hook.timer(1.0, "delayedClaim")
+   hook.timer(0, "delayedClaim")
 
    misn.setDesc(fmt.f(_([[You are invited to a meeting in {sys}]]), {sys=rebinasys}))
    misn.setReward(_("???"))
@@ -68,7 +68,13 @@ end
 
 -- Delayed claim to let time for the event's claim to disappear
 function delayedClaim()
-   if not misn.claim(misssys) then
+   local claims = tcopy( misssys )
+   for k,j in ipairs(misssys[3]:jumpPath( misssys[4] ) ) do
+      table.insert( claims, j:dest() )
+   end
+   table.insert( claims, rebinasys )
+   claims = tunique( claims )
+   if not misn.claim( claims, true ) then
       abort()
    end
 end

@@ -39,6 +39,7 @@ stds.Basic={
       "tmergei",
       "trepeat",
       "treverse",
+      "tunique",
       "N_",
       "_",
       "__debugging",
