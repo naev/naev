@@ -409,7 +409,7 @@ function Markdown:pressed( mx, my, button )
             luatk.rerender()
             self.focused = w
          end
-         if wgt.pressed and wgt:pressed( mx-wgt.x, my-wgt.y, button ) then
+         if wgt.pressed and wgt:pressed( mx-w.x1, my-w.y1, button ) then
             luatk.rerender()
             return true
          end
