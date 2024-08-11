@@ -24,7 +24,7 @@
       * Added small optional bounce to NPCs when they start talking
       * Inform the player when they don't meet mission requirements for some important missions
       * Can add new plugins directly from the options menu
-      * Can toggle whether or not autonav stops when missie lock-ons are detected
+      * Can toggle whether or not autonav stops when missile lock-ons are detected
       * Added colour coded factional backgrounds in the shipyard
       * Can rotate shipyard image for ships with 3D graphics
       * Prompt when deleting notes
@@ -60,7 +60,7 @@
       * Added a low memory mode to use fewer and smaller textures with 3D
       * Lazy load ship and outfit graphics to reduce memory usage and decrease load time
       * Use clang-format to format all the C code
-      * Use enums internally to represent keybindinsg instead of strings
+      * Use enums internally to represent keybindings instead of strings
       * Always use replaygain information when available when loading vorbis files
       * Stop repeating the same warning after a fixed amount of times
       * Editor has partial support for universe diffs
@@ -75,6 +75,7 @@
       * Obelisks tell if you have completed them already
       * Fixed space dust disappearing with certain jump abilities
       * Double tap will activate feather drive like blink engines
+      * shadowvigil: claim entire route
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons
