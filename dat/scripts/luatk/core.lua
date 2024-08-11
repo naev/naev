@@ -853,13 +853,13 @@ function luatk.newImage( parent, x, y, w, h, img, col, rot )
    wgt.col     = col or {1,1,1}
    wgt.rot     = rot or 0
    local iw, ih = wgt.img:getDimensions()
-   wgt.w       = wgt.w / iw
-   wgt.h       = wgt.h / ih
+   wgt.wscale  = wgt.w / iw
+   wgt.hscale  = wgt.h / ih
    return wgt
 end
 function luatk.Image:draw( bx, by )
    lg.setColour( self.col )
-   self.img:draw( bx+self.x, by+self.y, self.rot, self.w, self.h )
+   self.img:draw( bx+self.x, by+self.y, self.rot, self.wscale, self.hscale )
 end
 
 --[[
