@@ -117,3 +117,19 @@ function treverse( tbl )
    end
    return t
 end
+
+--[[--
+Removes duplicate from an ordered table
+
+   @tparam table tbl Table to remove duplicates from.
+   @treturn table An ordered table without any duplicates.
+--]]
+function tunique( tbl )
+   local t = {}
+   for i,v in ipairs(tbl) do
+      if not inlist( t, v ) then
+         table.insert( t, v )
+      end
+   end
+   return t
+end
