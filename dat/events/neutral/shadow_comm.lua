@@ -23,13 +23,27 @@ local ccomm = require "common.comm"
 
 local vendetta, hailhook -- Non-persistent state.
 
+local rebinasys = system.get("Pas")
+local _refuelspob, refuelsys = spob.getS("Semper") -- Qex
+local misssys = {
+   system.get("Shakar"),        -- Escort meeting point
+   refuelsys,                   -- Refuel stop
+   system.get("Eneguoz"),       -- Protegee meeting point
+   system.get("Draygar"),       -- Final destination, was originally Ogat, but changed to avoid Surano
+}
+
 function create ()
    -- Make sure system isn't claimed, but we don't claim it
    if not naev.claimTest( system.cur() ) then evt.finish() end
 
     -- Claim: test the claims in the mission.
-   local misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")}
-   if not naev.claimTest( misssys ) then
+   local claims = tcopy( misssys )
+   for k,j in ipairs(misssys[3]:jumpPath( misssys[4] ) ) do
+      table.insert( claims, j:dest() )
+   end
+   table.insert( claims, rebinasys )
+   claims = tunique( claims )
+   if not naev.claimTest( claims, true ) then
       evt.finish()
    end
 
