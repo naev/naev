@@ -61,16 +61,24 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    wgt.blocks = {}
    local block = { type="text", x = 0, y = 0, w=w, h=0, text = "", font=deffont }
    local ty = 0
+   local tw = w
    local function block_end ()
       if #block.text <= 0 then
          return
       end
       local f = block.font
-      local _mw, t = f:getWrap( block.text, w )
+      local _mw, t = f:getWrap( block.text, tw )
       local bh = #t * f:getLineHeight()
       ty = ty + bh
+      block.w = tw
       table.insert( wgt.blocks, block )
-      block = { type = "text", x = 0, y = ty, w=w, h=bh, text = "", font=deffont }
+      block = { type = "text", x = 0, y = ty, w=tw, h=bh, text = "", font=deffont }
+      -- See if it's time to restore width
+      if tw < w and #wgt.wgts > 0 then
+         if wgt.wgts[#wgt.wgts].y2 < ty then
+            tw = w
+         end
+      end
    end
    wgt.links = {}
    wgt.wgts = {}
@@ -115,7 +123,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
          end
       elseif node_type == cmark.NODE_LINK then
          if entering then
-            local bx, by = naev.gfx.printfEnd( block.font.font, block.text, w )
+            local bx, by = naev.gfx.printfEnd( block.font.font, block.text, tw )
             if wgt.linktargetfunc then
                local target = cmark.node_get_url(cur)
                local found
@@ -134,7 +142,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
             linky = block.y+by
          else
             block.text = block.text .. "#0"
-            local bx, by = naev.gfx.printfEnd( block.font.font, block.text, w )
+            local bx, by = naev.gfx.printfEnd( block.font.font, block.text, tw )
             local target = cmark.node_get_url(cur)
             local fh = block.font:getHeight()
             local flh = block.font:getLineHeight()
@@ -153,7 +161,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                table.insert( wgt.links, {
                   x1 = linkx-3,
                   y1 = linky-3,
-                  x2 = w+3,
+                  x2 = tw+3,
                   y2 = linky+fh+3,
                   target = target,
                   name = linkname
@@ -163,7 +171,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   table.insert( wgt.links, {
                      x1 = -3,
                      y1 = linky+flh-3,
-                     x2 = w+3,
+                     x2 = tw+3,
                      y2 = block.y+by-flh+fh+3,
                      target = target,
                      name = linkname
@@ -213,8 +221,8 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                local img = lg.newImage( cmark.node_get_url(cur) )
                local iw, ih = img:getDimensions()
                local sx, sy = 1, 1
-               if iw > w then
-                  sx = w / iw
+               if iw > tw then
+                  sx = tw / iw
                   sy = sx
                end
                local imgblock = {
@@ -240,6 +248,11 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                -- Move the location information to markdown side
                local wx, wy = luawgt.x, luawgt.y+ty+10
                local ww, wh = luawgt.w, luawgt.h
+               local rightalign = (wx < 0)
+               if rightalign then
+                  wx = w + wx - ww -- Don't use w here
+                  tw = wx - 10
+               end
                luawgt.x = 0
                luawgt.y = 0
                local wgtblock = {
@@ -257,8 +270,10 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   wgt = luawgt,
                }
                table.insert( wgt.blocks, wgtblock )
-               ty = wy + wh + 10
-               block.y = ty
+               if not rightalign then
+                  ty = wy + wh + 10
+                  block.y = ty
+               end
                table.insert( wgt.wgts, wgtblock )
             end
          end
@@ -313,7 +328,7 @@ function Markdown:draw( wx, wy )
       local bx, by = x+b.x, y+b.y
       lg.setColour( 1, 1, 1 )
       if b.type=="text" then
-         lg.printf( b.text, b.font, bx, by, w, "left" )
+         lg.printf( b.text, b.font, bx, by, b.w, "left" )
       elseif b.type=="image" then
          b.img:draw( bx, by, 0, b.sx, b.sy )
       elseif b.type=="widget" then

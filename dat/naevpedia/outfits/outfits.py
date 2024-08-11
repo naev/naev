@@ -34,6 +34,13 @@ cond: "return outfit.get(\\\"{d['name']}\\\"):known()"
 """
 # We don't want any substitution below if possible
 outstr += """
+<% function mainimg ( mw )
+    local lg = require "love.graphics"
+    local luatk = require "luatk"
+    return luatk.newImage( nil, -10, 0, 256, 256, lg.newImage(o:icon()) )
+end %>
+<widget mainimg />
+
 ## <%= o:name() %>
 
 <%= o:description() %>
@@ -71,7 +78,7 @@ Places where <%= o:name() %> are sold are shown in #ggreen#0.
     end
     return m
 end %>
-<widget map/>
+<widget map />
 <% else %>
 You are not aware of anywhere where <%= o:name() %> are available for purchase.
 <% end %>

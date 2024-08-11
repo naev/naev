@@ -90,7 +90,7 @@ Places where the <%= s:name() %> is sold are shown in #ggreen#0.
     end
     return m
 end %>
-<widget map/>
+<widget map />
 <% else %>
 You are not aware of anywhere where the <%= s:name() %> is available for purchase.
 <% end %>
