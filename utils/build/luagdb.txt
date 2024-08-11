@@ -175,7 +175,7 @@ define luatrace
 	end
 end
 document luatrace
-	luatraceback [L]
+	luatrace [L]
 	Dumps Lua execution stack, as debug.traceback() does. Without
 	arguments, uses the current value of "L" as the
 	lua_State*. You can provide an alternate lua_State as the
