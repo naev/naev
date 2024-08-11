@@ -132,7 +132,8 @@ static int canvasL_gc( lua_State *L )
    gl_freeTexture( lc->tex );
    if ( lc->depth != 0 )
       glDeleteTextures( 1, &lc->depth );
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
    return 0;
 }
 

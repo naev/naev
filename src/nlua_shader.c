@@ -140,7 +140,8 @@ static int shaderL_gc( lua_State *L )
    glDeleteProgram( shader->program );
    array_free( shader->tex );
    free( shader->uniforms );
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
    return 0;
 }
 
@@ -258,9 +259,8 @@ static int shaderL_new( lua_State *L )
    qsort( shader.uniforms, shader.nuniforms, sizeof( LuaUniform_t ),
           shader_compareUniform );
 
-   /* Check if there are textures. */
-
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
    lua_pushshader( L, shader );
    return 1;
@@ -403,7 +403,8 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
    }
    glUseProgram( 0 );
 
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
    return 0;
 }

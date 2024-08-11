@@ -451,7 +451,8 @@ static int gfxL_renderTexH( lua_State *L )
       glDisableVertexAttribArray( shader->VertexTexCoord );
 
    /* anything failed? */
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
    glUseProgram( 0 );
 
@@ -626,7 +627,8 @@ static int gfxL_renderLinesH( lua_State *L )
    glUseProgram( 0 );
 
    /* Check for errors. */
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
    return 0;
 }
@@ -1035,7 +1037,8 @@ static int gfxL_setBlendMode( lua_State *L )
 
    glBlendEquation( func );
    glBlendFuncSeparate( srcRGB, dstRGB, srcA, dstA );
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
    render_needsReset();
    return 0;
@@ -1072,7 +1075,8 @@ static int gfxL_setBlendState( lua_State *L )
       glBlendFuncSeparate( srcRGB, dstRGB, srcA, dstA );
    }
 
-   gl_checkErr();
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
    render_needsReset();
    return 0;
