@@ -58,7 +58,7 @@ outstr += """
     end )
 %>
 <% if #availability > 0 then %>
-Places where the <%= s:name() %> is sold are shown in #Fgreen#0.
+Places where the <%= s:name() %> is sold are shown in #ggreen#0.
 <% function map ( mw )
     local luatk_map = require "luatk.map"
     local m = luatk_map.newMap( nil, 10, 0, mw-200, (mw-200) * 9 / 16, {

@@ -15,8 +15,15 @@ luatk_map.edge_width = edge_width
 
 local cInert = colour.new("Inert")
 local cGreen = colour.new("Green")
+local cAquaBlue = colour.new("AquaBlue")
 local cRed = colour.new("Red")
+local cFontGreen = colour.new("FontGreen")
 local cYellow = colour.new("Yellow")
+local cFriend = colour.new("Friend")
+local cHostile = colour.new("Hostile")
+local cNeutral = colour.new("Neutral")
+local cRestricted = colour.new("Restricted")
+local cGrey80 = colour.new("Grey80")
 local inv = vec2.new(1,-1)
 
 local Map = {}
@@ -41,10 +48,10 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    wgt.sys = {}
    local fplayer = faction.player()
    local function addsys( s, known )
-      local sys = { s=s, p=s:pos()*inv, n=s:name(), coutter=cInert }
+      local sys = { s=s, p=s:pos()*inv, n=s:name(), coutter=cInert, r=luatk_map.sys_radius }
       local f = s:faction()
       if not f or not known then
-         sys.c = colour.new("Inert")
+         sys.c = cInert
       else
          local haslandable = false
          for k,spb in ipairs(s:spobs()) do
@@ -58,20 +65,22 @@ function luatk_map.newMap( parent, x, y, w, h, options )
          end
          if wgt.binaryhighlight then
             if wgt.binaryhighlight( s ) then
-               sys.c = colour.new("Friend")
+               sys.c = cFontGreen
                sys.coutter = sys.c
+               sys.r = sys.r*1.2
             else
                sys.c = cInert
                sys.coutter = sys.c
+               sys.r = sys.r*0.8
             end
          elseif f:areEnemies( fplayer ) then
-            sys.c = colour.new("Hostile")
+            sys.c = cHostile
          elseif not haslandable then
-            sys.c = colour.new("Restricted")
+            sys.c = cRestricted
          elseif f:areAllies( fplayer ) then
-            sys.c = colour.new("Friend")
+            sys.c = cFriend
          else
-            sys.c = colour.new("Neutral")
+            sys.c = cNeutral
          end
       end
       table.insert( wgt.sys, sys )
@@ -94,13 +103,13 @@ function luatk_map.newMap( parent, x, y, w, h, options )
 
    local function edge_col( j )
       if j:exitonly() then
-         return colour.new("Grey80")
+         return cGrey80
       elseif j:hidden() then
-         return colour.new("Red")
+         return cRed
       elseif j:hide() <= 0 then
-         return colour.new("Green")
+         return cGreen
       else
-         return colour.new("AquaBlue")
+         return cAquaBlue
       end
    end
 
@@ -188,12 +197,13 @@ function Map:draw( bx, by )
          local s = sys.s
          local p = (s:pos()*inv-self.pos)*self.scale + c
          local px, py = p:get()
-         if not (px < -r or px > w+r or py < -r or py > h+r) then
+         local sr = sys.r * self.scale
+         if not (px < -sr or px > w+sr or py < -sr or py > h+sr) then
             lg.setColour( sys.coutter )
-            lg.circle( "line", px, py, r )
+            lg.circle( "line", px, py, sr )
             if sys.spob then
                lg.setColour( sys.c )
-               lg.circle( "fill", px, py, 0.65*r )
+               lg.circle( "fill", px, py, 0.65*sr )
             end
          end
          if sys.s==cs then
