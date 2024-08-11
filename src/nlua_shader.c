@@ -140,6 +140,7 @@ static int shaderL_gc( lua_State *L )
    glDeleteProgram( shader->program );
    array_free( shader->tex );
    free( shader->uniforms );
+   gl_checkErr();
    return 0;
 }
 
@@ -153,7 +154,7 @@ static int shaderL_gc( lua_State *L )
  */
 static int shaderL_eq( lua_State *L )
 {
-   LuaShader_t *f1, *f2;
+   const LuaShader_t *f1, *f2;
    f1 = luaL_checkshader( L, 1 );
    f2 = luaL_checkshader( L, 2 );
    lua_pushboolean( L, ( memcmp( f1, f2, sizeof( LuaShader_t ) ) == 0 ) );
@@ -333,13 +334,13 @@ static int shaderL_sendRaw( lua_State *L )
  */
 static int shaderL_sendHelper( lua_State *L, int ignore_missing )
 {
-   LuaShader_t  *ls;
-   LuaUniform_t *u;
-   const char   *name;
-   int           idx;
-   GLfloat       values[4];
-   GLint         ivalues[4];
-   glTexture    *tex;
+   const LuaShader_t *ls;
+   LuaUniform_t      *u;
+   const char        *name;
+   int                idx;
+   GLfloat            values[4];
+   GLint              ivalues[4];
+   const glTexture   *tex;
 
    ls   = luaL_checkshader( L, 1 );
    name = luaL_checkstring( L, 2 );
