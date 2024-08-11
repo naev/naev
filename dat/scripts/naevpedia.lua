@@ -134,6 +134,7 @@ function naevpedia.load()
                   meta._G._G = meta._G
                   meta._G._ = _
                   meta._G.fmt = fmt
+                  meta._G.setmetatable = setmetatable
                   meta._G.require = require
                   meta._G.print = print
                   meta._G.ipairs = ipairs
@@ -442,12 +443,12 @@ function naevpedia.setup( name )
                if t[1]=='widget' then
                   local f = nmeta._G[t[2]]
                   if not f then
-                     warn(fmt.f_(_("naevpedia: nknown function '{f}'"),{f=t[2]}))
+                     warn(fmt.f(_("naevpedia: unknown function '{f}'"),{f=t[2]}))
                      return nil
                   end
                   return f( mw )
                else
-                  warn(fmt.f_(_("naevpedia: nknown html '{f}'"),{f=t[1]}))
+                  warn(fmt.f(_("naevpedia: unknown html '{f}'"),{f=t[1]}))
                   return nil
                end
             end
