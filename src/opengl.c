@@ -196,7 +196,7 @@ GLboolean gl_hasVersion( int major, int minor )
 /**
  * @brief Checks and reports if there's been an error.
  */
-void gl_checkHandleError( const char *func, int line )
+int gl_checkHandleError( const char *func, int line )
 {
    (void)func;
    (void)line;
@@ -206,7 +206,7 @@ void gl_checkHandleError( const char *func, int line )
 
    /* No error. */
    if ( err == GL_NO_ERROR )
-      return;
+      return 0;
 
    switch ( err ) {
    case GL_INVALID_ENUM:
@@ -230,7 +230,9 @@ void gl_checkHandleError( const char *func, int line )
       break;
    }
    WARN( _( "OpenGL error [%s:%d]: %s" ), func, line, errstr );
+   return 1;
 #endif /* !DEBUG_GL */
+   return 0;
 }
 
 #if DEBUG_GL
