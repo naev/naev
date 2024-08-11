@@ -17,6 +17,7 @@ local cInert = colour.new("Inert")
 local cGreen = colour.new("Green")
 local cRed = colour.new("Red")
 local cYellow = colour.new("Yellow")
+local inv = vec2.new(1,-1)
 
 local Map = {}
 setmetatable( Map, { __index = luatk.Widget } )
@@ -38,7 +39,6 @@ function luatk_map.newMap( parent, x, y, w, h, options )
 
    local sysname = {} -- To do quick look ups
    wgt.sys = {}
-   local inv = vec2.new(1,-1)
    local fplayer = faction.player()
    local function addsys( s, known )
       local sys = { s=s, p=s:pos()*inv, n=s:name(), coutter=cInert }
@@ -122,6 +122,7 @@ function luatk_map.newMap( parent, x, y, w, h, options )
 
    -- Set up custom options and the likes
    wgt.pos = options.pos or system.cur():pos()
+   wgt.pos = wgt.pos * inv
    wgt.target = wgt.pos
    wgt.custrender = options.render
 
@@ -145,7 +146,6 @@ function luatk_map.newMap( parent, x, y, w, h, options )
 end
 function Map:draw( bx, by )
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
-   local inv = vec2.new(1,-1)
 
    if self._dirty then
       self._dirty = false
@@ -295,6 +295,19 @@ function Map:draw( bx, by )
       lg.setShader()
    end
 
+   if self.selected then
+      local mx, my = self.pos:get()
+      local s = self.scale
+      local r = luatk_map.sys_radius * s
+      local tx, ty = (self.selected:pos()*inv):get()
+      lg.setColour( {1, 1, 1, 1} )
+      self.shd_selectsys:send( "dimensions", {2*r, 2*r} )
+      lg.setShader( self.shd_selectsys )
+      love_shaders.img:draw( x+(tx-mx)*s + self.w*0.5 - 2*r, y+(ty-my)*s + self.h*0.5 - 2*r, 0, 4*r, 4*r )
+      --print( (tx-mx)*s + self.w*0.5, (ty-my)*s + self.h*0.5 )
+      lg.setShader()
+   end
+
    -- Allow for custom rendering
    if self.custrender then
       lg.push()
@@ -309,7 +322,7 @@ function Map:rerender()
 end
 function Map:center( pos, hardset )
    self.target = pos or vec2.new()
-   self.target = self.target * vec2.new(1,-1)
+   self.target = self.target * inv
    if hardset then
       self.pos = self.target
    else
@@ -331,14 +344,33 @@ function Map:update( dt )
       self.shd_selectsys:send( "dt", self.shd_selectsys.dt )
    end
 end
+function Map:clicked( mx, my )
+   local m = vec2.new(mx,my)
+   if not self.notinteractive and self._mouse:dist(m) < 10 then
+      local c = vec2.new( self.w, -self.h )*0.5
+      local p = (m*inv-c) / self.scale + self.pos*inv
+      local s, d = nil, math.huge
+      for k,sys in ipairs(self.sys) do
+         local sd = (sys.s:pos()-p):dist2()
+         if sd < d then
+            s = sys.s
+            d = sd
+         end
+      end
+      local r = math.max( self.scale * luatk_map.sys_radius, 3 )
+      if d < (r*4)^2 then
+         -- TODO proper selection
+         self.selected = s
+      end
+   end
+end
 function Map:pressed( mx, my )
    self._mouse = vec2.new( mx, my )
 end
-function Map:mmoved( mx, my )
+function Map:mmoved( _mx, _my, dx, dy )
    if self._pressed then
-      self.pos = self.pos + (self._mouse - vec2.new( mx, my )) / self.scale
+      self.pos = self.pos - vec2.new( dx, dy ) / self.scale
       self.target = self.pos
-      self._mouse = vec2.new( mx, my )
       self:rerender()
    end
 end
