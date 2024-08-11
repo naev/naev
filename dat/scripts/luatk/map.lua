@@ -266,7 +266,8 @@ function Map:draw( bx, by )
          local spos = sys:pos()
          local p = (cpos + spos)*0.5
          local jumpx, jumpy = (p*inv):get()
-         local jumpl, jumpa = ((sys:pos()-cpos)*inv):polar()
+         local jumpl, jumpa = ((spos-cpos)*inv):polar()
+         jumpl = jumpl + luatk_map.sys_radius * 0.5
 
          local col, parami
          if jcur==jmax and jmax > 0 then
@@ -302,19 +303,6 @@ function Map:draw( bx, by )
          love_shaders.img:draw( x+(tx-mx)*s + self.w*0.5 - 2*r, y+(ty-my)*s + self.h*0.5 - 2*r, 0, 4*r, 4*r )
       end
 
-      lg.setShader()
-   end
-
-   if self.selected then
-      local mx, my = self.pos:get()
-      local s = self.scale
-      local r = luatk_map.sys_radius * s
-      local tx, ty = (self.selected:pos()*inv):get()
-      lg.setColour( {1, 1, 1, 1} )
-      self.shd_selectsys:send( "dimensions", {2*r, 2*r} )
-      lg.setShader( self.shd_selectsys )
-      love_shaders.img:draw( x+(tx-mx)*s + self.w*0.5 - 2*r, y+(ty-my)*s + self.h*0.5 - 2*r, 0, 4*r, 4*r )
-      --print( (tx-mx)*s + self.w*0.5, (ty-my)*s + self.h*0.5 )
       lg.setShader()
    end
 
