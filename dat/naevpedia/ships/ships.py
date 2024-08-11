@@ -37,7 +37,10 @@ outstr += """
 <% function mainimg ( mw )
     local lg = require "love.graphics"
     local luatk = require "luatk"
-    return luatk.newImage( nil, -10, 0, 256, 256, lg.newImage(s:gfxStore()) )
+    return luatk.newImage( nil, -10, 0, 256, 256, lg.newImage(s:gfxStore()), {
+        frame = {0.05,0.05,0.05},
+        bkg = {0,0,0},
+    } )
 end %>
 <widget mainimg />
 
