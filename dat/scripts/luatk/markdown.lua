@@ -375,7 +375,7 @@ function Markdown:mmoved( mx, my, dx, dy )
          wgt.mouseover = inbounds
       end
       if (inbounds or wgt._pressed) and wgt.mmoved then
-         wgt.mmoved( wgt, mx, my, dx, dy )
+         wgt.mmoved( wgt, mx-w.x1, my-w.y1, dx, dy )
       end
    end
 end
@@ -402,7 +402,7 @@ function Markdown:pressed( mx, my, button )
 
    -- Check widget
    for k,w in ipairs(self.wgts) do
-      if _checkbounds( w, mx, my ) then
+      if _checkbounds(w,mx,my) then
          local wgt  = w.wgt
          wgt._pressed = true
          if wgt.canfocus then
@@ -431,12 +431,12 @@ function Markdown:released( mx, my, button )
       local inbounds = _checkbounds(w,mx,my)
       local wgt  = w.wgt
       if wgt._pressed and inbounds and wgt.clicked then
-         wgt:clicked( mx, my, button )
+         wgt:clicked( mx-w.x1, my-w.y1, button )
          luatk.rerender()
       end
       wgt._pressed = false
       if wgt.released then
-         wgt:released()
+         wgt:released( mx-w.x1, my-w.y1, button )
          luatk.rerender()
       end
       if inbounds then
