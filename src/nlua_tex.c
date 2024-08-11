@@ -166,6 +166,7 @@ int lua_istex( lua_State *L, int ind )
 static int texL_close( lua_State *L )
 {
    gl_freeTexture( luaL_checktex( L, 1 ) );
+   gl_checkErr();
    return 0;
 }
 
@@ -423,8 +424,7 @@ static int texL_writeData( lua_State *L )
  */
 static int texL_dim( lua_State *L )
 {
-   glTexture *tex = luaL_checktex( L, 1 );
-
+   const glTexture *tex = luaL_checktex( L, 1 );
    /* Get all 4 values. */
    lua_pushnumber( L, tex->w );
    lua_pushnumber( L, tex->h );
@@ -446,8 +446,7 @@ static int texL_dim( lua_State *L )
  */
 static int texL_sprites( lua_State *L )
 {
-   glTexture *tex = luaL_checktex( L, 1 );
-
+   const glTexture *tex = luaL_checktex( L, 1 );
    /* Get sprites. */
    lua_pushnumber( L, tex->sx * tex->sy );
    lua_pushnumber( L, tex->sx );
@@ -493,10 +492,10 @@ static int texL_spriteFromDir( lua_State *L )
  */
 static int texL_setFilter( lua_State *L )
 {
-   glTexture  *tex  = luaL_checktex( L, 1 );
-   const char *smin = luaL_checkstring( L, 2 );
-   const char *smag = luaL_optstring( L, 3, smin );
-   GLint       min, mag;
+   const glTexture *tex  = luaL_checktex( L, 1 );
+   const char      *smin = luaL_checkstring( L, 2 );
+   const char      *smag = luaL_optstring( L, 3, smin );
+   GLint            min, mag;
 
    min = gl_stringToFilter( smin );
    mag = gl_stringToFilter( smag );
@@ -526,11 +525,11 @@ static int texL_setFilter( lua_State *L )
  */
 static int texL_setWrap( lua_State *L )
 {
-   glTexture  *tex    = luaL_checktex( L, 1 );
-   const char *shoriz = luaL_checkstring( L, 2 );
-   const char *svert  = luaL_optstring( L, 3, shoriz );
-   const char *sdepth = luaL_optstring( L, 4, shoriz );
-   GLint       horiz, vert, depth;
+   const glTexture *tex    = luaL_checktex( L, 1 );
+   const char      *shoriz = luaL_checkstring( L, 2 );
+   const char      *svert  = luaL_optstring( L, 3, shoriz );
+   const char      *sdepth = luaL_optstring( L, 4, shoriz );
+   GLint            horiz, vert, depth;
 
    horiz = gl_stringToClamp( shoriz );
    vert  = gl_stringToClamp( svert );
