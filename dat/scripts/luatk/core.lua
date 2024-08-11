@@ -270,7 +270,7 @@ function luatk.mousereleased( mx, my, button )
       end
       wgt._pressed = false
       if wgt.released then
-         wgt:released( mx-wgt.x, my-wgt.y, button )
+         wgt:released( x-wgt.x, y-wgt.y, button )
          luatk._dirty = true
       end
       if inbounds then
@@ -1097,6 +1097,7 @@ function luatk.List:draw( bx, by )
 end
 function luatk.List:pressed( mx, my )
    luatk._dirty = true
+   self.scrolling = false
    if self.scrolls and mx > self.w-16 then
       self.scrolling = true
       self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
@@ -1108,23 +1109,26 @@ function luatk.List:pressed( mx, my )
 end
 function luatk.List:mmoved( _mx, my )
    if self.scrolling then
-      self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
+      self:_setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
+      self:cleanpos(true)
    end
 end
-function luatk.List:releases( _mx, _my )
+function luatk.List:released( _mx, _my )
    self.scrolling = false
 end
 function luatk.List:get()
    return self.items[ self.selected ], self.selected
 end
-function luatk.List:cleanpos()
+function luatk.List:cleanpos( ignorelimit )
    if not self.scrolls then return end
    local op = self.pos
    local posx =  self.cellh * self.selected - self.pos
-   if posx < 0 then
-      self:_setPos( self.cellh * self.selected / self.scrollh )
-   elseif posx > self.h then
-      self:_setPos( (self.cellh * self.selected - self.h) / self.scrollh )
+   if not ignorelimit then
+      if posx < 0 then
+         self:_setPos( self.cellh * (self.selected-1) / self.scrollh )
+      elseif posx > self.h then
+         self:_setPos( (self.cellh * self.selected - self.h) / self.scrollh )
+      end
    end
    self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
    if self.pos ~= op then
