@@ -845,21 +845,34 @@ end
 luatk.Image = {}
 setmetatable( luatk.Image, { __index = luatk.Widget } )
 luatk.Image_mt = { __index = luatk.Image }
-function luatk.newImage( parent, x, y, w, h, img, col, rot )
+function luatk.newImage( parent, x, y, w, h, img, opts )
+   opts        = opts or {}
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Image_mt )
    wgt.type    = "image"
    wgt.img     = img
-   wgt.col     = col or {1,1,1}
-   wgt.rot     = rot or 0
+   wgt.col     = opts.col or {1,1,1}
+   wgt.rot     = opts.rot or 0
+   wgt.bkg     = opts.bkg
+   wgt.frame   = opts.frame
    local iw, ih = wgt.img:getDimensions()
    wgt.wscale  = wgt.w / iw
    wgt.hscale  = wgt.h / ih
    return wgt
 end
 function luatk.Image:draw( bx, by )
+   local x, y = bx+self.x, by+self.y
+   print( self.bkg )
+   if self.bkg then
+      lg.setColour( self.bkg )
+      lg.rectangle( "fill", x, y, self.w, self.h )
+   end
    lg.setColour( self.col )
-   self.img:draw( bx+self.x, by+self.y, self.rot, self.wscale, self.hscale )
+   self.img:draw( x, y, self.rot, self.wscale, self.hscale )
+   if self.frame then
+      lg.setColour( self.frame )
+      lg.rectangle( "line", x, y, self.w, self.h )
+   end
 end
 
 --[[

@@ -170,6 +170,7 @@ function Map:draw( bx, by )
       -- Display edges
       local r = math.max( self.scale * luatk_map.sys_radius, 3 )
       local ew = math.max( self.scale * luatk_map.edge_width, 1 )
+      local shd = lg.getShader()
       lg.setShader( self.shd_jumplane )
       self.shd_jumplane:send( "paramf", r*3 )
       for i,e in ipairs(self.edges) do
@@ -188,7 +189,7 @@ function Map:draw( bx, by )
             lg.pop()
          end
       end
-      lg.setShader()
+      lg.setShader(shd)
 
       local cs = system.cur()
 
@@ -259,6 +260,7 @@ function Map:draw( bx, by )
       local s = self.scale
       local r = luatk_map.sys_radius * s
       local jumpw = math.max( 10, r )
+      local shd = lg.getShader()
       lg.setShader( self.shd_jumpgoto )
       self.shd_jumpgoto:send( "paramf", r )
       local route = player.autonavRoute()
@@ -303,7 +305,7 @@ function Map:draw( bx, by )
          love_shaders.img:draw( x+(tx-mx)*s + self.w*0.5 - 2*r, y+(ty-my)*s + self.h*0.5 - 2*r, 0, 4*r, 4*r )
       end
 
-      lg.setShader()
+      lg.setShader(shd)
    end
 
    -- Allow for custom rendering
