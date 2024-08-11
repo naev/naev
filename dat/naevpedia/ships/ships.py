@@ -34,6 +34,13 @@ cond: "return ship.get(\\\"{d['name']}\\\"):known()"
 """
 # We don't want any substitution below if possible
 outstr += """
+<% function mainimg ( mw )
+    local lg = require "love.graphics"
+    local luatk = require "luatk"
+    return luatk.newImage( nil, -10, 0, 256, 256, lg.newImage(s:gfxStore()) )
+end %>
+<widget mainimg />
+
 ## <%= s:name() %>
 
 <%= s:description() %>
@@ -75,9 +82,10 @@ outstr += """
 %>
 <% if #availability > 0 then %>
 Places where the <%= s:name() %> is sold are shown in #ggreen#0.
-<% function map ( mw )
+<% function map ( mw, tw )
     local luatk_map = require "luatk.map"
-    local m = luatk_map.newMap( nil, 10, 0, mw-200, (mw-200) * 9 / 16, {
+    local w = math.min( mw-200, tw-20 )
+    local m = luatk_map.newMap( nil, 10, 0, w, w * 9 / 16, {
         binaryhighlight = function ( sys )
             if inlist( availability, sys ) then
                 return true
