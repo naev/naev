@@ -640,6 +640,8 @@ static int gfxL_clearDepth( lua_State *L )
 {
    (void)L;
    glClear( GL_DEPTH_BUFFER_BIT );
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
    return 0;
 }
 
@@ -1105,6 +1107,9 @@ static int gfxL_setScissor( lua_State *L )
    } else
       gl_unclipRect();
 
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
+
    return 0;
 }
 
@@ -1143,6 +1148,9 @@ static int gfxL_screenshot( lua_State *L )
    lua_pushcanvas( L, *lc );
    if ( mustfree )
       free( lc );
+
+   if ( gl_checkErr() )
+      NLUA_ERROR( L, _( "OpenGL Error!" ) );
    return 1;
 }
 
