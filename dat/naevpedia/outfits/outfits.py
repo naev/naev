@@ -46,7 +46,11 @@ end %>
 
 ## <%= o:name() %>
 
-<%= o:description() %>
+<%= o:description( nil ) %>
+
+## Properties
+
+<%= o:summary( nil, true ) %>
 
 ### Availability
 
