@@ -58,7 +58,9 @@ Intersection of scissors with the current applied ones.
 function luatk.joinScissors( x, y, w, h )
    local sx, sy, sw, sh = lg.getScissor()
    local nsx, nsy = math.max(x,sx), math.max(y,sy)
-   lg.setScissor( nsx, nsy, math.min( x+w, sx+sw) - nsx, math.min( y+h, sy+sh) - nsy )
+   local nsw = math.max( 0, math.min( x+w, sx+sw) - nsx )
+   local nsh = math.max( 0, math.min( y+h, sy+sh) - nsy )
+   lg.setScissor( nsx, nsy, nsw, nsh )
    return sx, sy, sw, sh
 end
 
@@ -862,7 +864,6 @@ function luatk.newImage( parent, x, y, w, h, img, opts )
 end
 function luatk.Image:draw( bx, by )
    local x, y = bx+self.x, by+self.y
-   print( self.bkg )
    if self.bkg then
       lg.setColour( self.bkg )
       lg.rectangle( "fill", x, y, self.w, self.h )
