@@ -1124,6 +1124,7 @@ int gl_printEndRaw( int *xo, int *yo, const glFont *ft_font, int width,
    /* Clears restoration. */
    gl_printRestoreClear();
 
+   x = 0;
    s = 0;
    gl_printLineIteratorInit( &iter, ft_font, text, width );
    while ( gl_printLineIteratorNext( &iter ) ) {
