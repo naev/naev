@@ -80,7 +80,7 @@ void commodity_exchange_open( unsigned int wid )
    dw = w - iw - 60;
 
    /* buttons */
-   bw = ( dw - 40 ) / 3;
+   bw = MIN( LAND_BUTTON_WIDTH, ( dw - 40 ) / 3 );
    snprintf( buf, sizeof( buf ), _( "Buy (%d %s)" ), q, UNIT_MASS );
    window_addButtonKey( wid, 40 + iw, 20, bw, LAND_BUTTON_HEIGHT,
                         "btnCommodityBuy", buf, commodity_buy, SDLK_b );

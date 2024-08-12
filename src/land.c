@@ -268,7 +268,7 @@ static void bar_getDim( int wid, int *w, int *h, int *iw, int *ih, int *bw,
    *ih = *h - 60;
 
    /* Calculate button dimensions. */
-   *bw = ( *w - *iw - 80 ) / 2;
+   *bw = MIN( LAND_BUTTON_WIDTH, ( *w - *iw - 80 ) / 2 );
    *bh = LAND_BUTTON_HEIGHT;
 }
 /**
@@ -591,14 +591,13 @@ static void misn_open( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* buttons */
-   window_addButtonKey( wid, -20, 20, LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT,
-                        "btnCloseMission", _( "Take Off" ), land_buttonTakeoff,
-                        SDLK_t );
-   window_addButtonKey( wid, -20, 40 + LAND_BUTTON_HEIGHT, LAND_BUTTON_WIDTH,
-                        LAND_BUTTON_HEIGHT, "btnAcceptMission",
-                        _( "Accept Mission" ), misn_accept, SDLK_a );
-   window_addButtonKey( wid, -20, 60 + 2 * LAND_BUTTON_HEIGHT,
-                        LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT,
+   int bw = MIN( LAND_BUTTON_WIDTH, ( w / 2 - 80 ) / 3 );
+   window_addButtonKey( wid, -20, 20, bw, LAND_BUTTON_HEIGHT, "btnCloseMission",
+                        _( "Take Off" ), land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -20 - bw - 20, 20, bw, LAND_BUTTON_HEIGHT,
+                        "btnAcceptMission", _( "Accept Mission" ), misn_accept,
+                        SDLK_a );
+   window_addButtonKey( wid, -20 - 2 * ( bw + 20 ), 20, bw, LAND_BUTTON_HEIGHT,
                         "btnAutonavMission", _( "Autonav" ), misn_autonav,
                         SDLK_n );
 
@@ -1101,10 +1100,9 @@ void land_updateMainTab( void )
       /* Buy local map button. */
       credits2str( cred, o->price, 0 );
       snprintf( buf, sizeof( buf ), _( "Buy Local Map (%s)" ), cred );
-      window_addButtonKey( land_windows[0], -20,
-                           20 + ( LAND_BUTTON_HEIGHT + 20 ), LAND_BUTTON_WIDTH,
-                           LAND_BUTTON_HEIGHT, "btnMap", buf, spaceport_buyMap,
-                           SDLK_b );
+      window_addButtonKey( land_windows[0], -20 - LAND_BUTTON_WIDTH - 20, 20,
+                           LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnMap", buf,
+                           spaceport_buyMap, SDLK_b );
    }
 
    /* Make sure player can click it. */

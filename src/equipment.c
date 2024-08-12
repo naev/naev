@@ -317,7 +317,8 @@ static void equipment_getDim( unsigned int wid, int *w, int *h, int *sw,
 
    /* Calculate button dimensions. */
    if ( bw != NULL )
-      *bw = ( *w - 20 - ( sw != NULL ? *sw : 0 ) - 40 - 20 - 60 ) / 5;
+      *bw = MIN( LAND_BUTTON_WIDTH,
+                 ( *w - 20 - ( sw != NULL ? *sw : 0 ) - 40 - 20 - 60 ) / 5 );
    if ( bh != NULL )
       *bh = BUTTON_HEIGHT;
 }
@@ -345,7 +346,7 @@ void equipment_open( unsigned int wid )
                      &bh );
 
    /* Buttons */
-   x = -20 + 4;
+   x = -20;
    y = 20;
    window_addButtonKey( wid, x, y, bw, bh, "btnCloseEquipment", _( "Take Off" ),
                         land_buttonTakeoff, SDLK_t );
