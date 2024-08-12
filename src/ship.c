@@ -399,6 +399,7 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
 
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+   gl_checkErr();
    gl_contextUnset();
 
    snprintf( buf, sizeof( buf ), "%s_fbo_gfx_store_%d", s->name, size );
@@ -493,6 +494,7 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
    glDeleteFramebuffers( 1, &fbo ); /* No need for FBO. */
    glDeleteTextures( 1, &depth_tex );
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+   gl_checkErr();
    gl_contextUnset();
 
    gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
@@ -624,7 +626,8 @@ int ship_gfxLoadNeeded( void )
  */
 int ship_gfxLoad( Ship *s )
 {
-   char        str[PATH_MAX], *base, *delim, *base_path;
+   char        str[PATH_MAX], *base;
+   const char *delim, *base_path;
    const char *ext    = ".webp";
    const char *buf    = s->gfx_path;
    int         sx     = s->sx;
