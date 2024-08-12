@@ -34,15 +34,22 @@ cond: "return ship.get(\\\"{d['name']}\\\"):known()"
 """
 # We don't want any substitution below if possible
 outstr += """
-<% function mainimg ( mw )
-    local lg = require "love.graphics"
-    local luatk = require "luatk"
+<%
+local lg = require "love.graphics"
+local luatk = require "luatk"
+function mainimg ( mw )
     return luatk.newImage( nil, -10, 0, 256, 256, lg.newImage(s:gfxStore()), {
         frame = {0.05,0.05,0.05},
         bkg = {0,0,0},
     } )
-end %>
+end
+function rightstats ( mw )
+    return luatk.newText( nil, -10, 0, 256, nil, s:shipstatDesc() )
+end
+%>
 <widget mainimg />
+
+<widget rightstats />
 
 ## <%= s:name() %>
 
@@ -64,8 +71,6 @@ end %>
 <% if s:license() then %>
 * **License**:   <%= s:license() %>
 <% end %>
-
-<%= s:shipstatDesc() %>
 
 ### Availability
 
