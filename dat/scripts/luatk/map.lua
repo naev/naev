@@ -161,6 +161,7 @@ function Map:draw( bx, by )
 
       local cvs = lg.getCanvas()
       local sx, sy, sw, sh = lg.getScissor()
+      lg.setScissor()
       lg.setCanvas( self._canvas )
       lg.clear( 0, 0, 0, 1 )
 
