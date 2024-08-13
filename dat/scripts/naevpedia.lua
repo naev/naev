@@ -366,14 +366,16 @@ function naevpedia.setup( name )
    end
 
    -- Top bar
-   local topbar = {N_("Mechanics"),N_("Ships"),N_("Outfits"),N_("History")}
+   local btns = {}
+   local topbar = {N_("Mechanics"),N_("Ships"),N_("Outfits"),N_("Lore")}
    local bw, bh = 100, 30
    local topbarw = #topbar*(20+bw)-20
    local xoff = 340 + (w-340-topbarw)*0.5
    for k,v in ipairs(topbar) do
+      local s = string.lower(v)
       local bx = xoff+(20+bw)*(k-1)
-      luatk.newButton( wdw, bx, 40, bw, bh, _(v), function ()
-         local e = nc._naevpedia[string.lower(v)]
+      btns[s] = luatk.newButton( wdw, bx, 40, bw, bh, _(v), function ()
+         local e = nc._naevpedia[s]
          if e then
             open_page( e.name )
          end
@@ -410,6 +412,16 @@ function naevpedia.setup( name )
          mrk = luatk.newText( wdw, mx, my, mw, mh, doc )
       else
 			local nmeta = nc._naevpedia[filename]
+
+         -- Disable button
+         for k,v in pairs(btns) do
+            v:enable()
+         end
+         local b = btns[nmeta.category]
+         if b then
+            b:disable()
+         end
+
          -- Success so we try to load the markdown
          mrk = md.newMarkdown( wdw, doc, mx, my, mw, mh, {
             linkfunc = function ( target )
