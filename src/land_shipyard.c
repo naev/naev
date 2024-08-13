@@ -21,7 +21,7 @@
 #include "dialogue.h"
 #include "hook.h"
 #include "land.h"
-#include "map_find.h"
+#include "naevpedia.h"
 #include "nstring.h"
 #include "player.h"
 #include "slots.h"
@@ -77,7 +77,7 @@ static int  shipyard_mouseSlots( unsigned int wid, const SDL_Event *event,
                                  double rx, double ry, void *data );
 static void shipyard_renderSlotsOver( double bx, double by, double bw,
                                       double bh, void *data );
-static void shipyard_find( unsigned int wid, const char *str );
+static void shipyard_naevpedia( unsigned int wid, const char *str );
 /* Preview. */
 static void preview_free( void *ptr );
 static void preview_render( double x, double y, double w, double h,
@@ -135,8 +135,8 @@ void shipyard_open( unsigned int wid )
    window_addButtonKey( wid, off, 20, bw, bh, "btnBuyShip", _( "Buy" ),
                         shipyard_buy, SDLK_b );
    off -= 20 + bw;
-   window_addButtonKey( wid, off, 20, bw, bh, "btnFindShips", _( "Find Ships" ),
-                        shipyard_find, SDLK_f );
+   window_addButtonKey( wid, off, 20, bw, bh, "btnNaevpediaOutfits",
+                        _( "Naevpedia" ), shipyard_naevpedia, SDLK_f );
 
    /* ship review */
    window_addRect( wid, -40 + 4, -40 + 4, sw + 8, sh + 8, "rctTarget", &cBlack,
@@ -448,10 +448,11 @@ void shipyard_cleanup( void )
  *    @param wid Window buying outfit from.
  *    @param str Unused.
  */
-static void shipyard_find( unsigned int wid, const char *str )
+static void shipyard_naevpedia( unsigned int wid, const char *str )
 {
+   (void)wid;
    (void)str;
-   map_inputFindType( wid, "ship" );
+   naevpedia_open( "ships" );
 }
 
 /**

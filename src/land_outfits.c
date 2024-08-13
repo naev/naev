@@ -24,7 +24,7 @@
 #include "land.h"
 #include "log.h"
 #include "map.h"
-#include "map_find.h"
+#include "naevpedia.h"
 #include "nlua.h"
 #include "nstring.h"
 #include "outfit.h"
@@ -69,7 +69,7 @@ static void outfits_buy( unsigned int wid, const char *str );
 static void outfits_sell( unsigned int wid, const char *str );
 static int  outfits_getMod( void );
 static void outfits_rmouse( unsigned int wid, const char *widget_name );
-static void outfits_find( unsigned int wid, const char *str );
+static void outfits_naevpedia( unsigned int wid, const char *str );
 static const char *outfit_getPrice( const Outfit *outfit, credits_t *price,
                                     int *canbuy, int *cansell,
                                     char **player_has );
@@ -214,8 +214,8 @@ void outfits_open( unsigned int wid, const Outfit **outfits, int blackmarket )
    window_addButtonKey( wid, off, 20, bw, bh, "btnBuyOutfit", _( "Buy" ),
                         outfits_buy, SDLK_b );
    off -= 20 + bw;
-   window_addButtonKey( wid, off, 20, bw, bh, "btnFindOutfits",
-                        _( "Find Outfits" ), outfits_find, SDLK_f );
+   window_addButtonKey( wid, off, 20, bw, bh, "btnNaevpediaOutfits",
+                        _( "Naevpedia" ), outfits_naevpedia, SDLK_n );
 
    /* fancy 256x256 image */
    window_addRect( wid, -40 + 4, -40 + 4, 264, 264, "rctImage", &cBlack, 1 );
@@ -708,10 +708,11 @@ int outfits_filter( const Outfit **outfits, int                    n,
  *    @param wid Window buying outfit from.
  *    @param str Unused.
  */
-static void outfits_find( unsigned int wid, const char *str )
+static void outfits_naevpedia( unsigned int wid, const char *str )
 {
+   (void)wid;
    (void)str;
-   map_inputFindType( wid, "outfit" );
+   naevpedia_open( "outfits" );
 }
 
 /**
