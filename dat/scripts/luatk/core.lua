@@ -760,13 +760,18 @@ Creates a new button widget.
    @tparam string text Text to display on the widget.
 --]]
 function luatk.newText( parent, x, y, w, h, text, col, align, font )
+   font = font or luatk._deffont or lg.getFont()
+   if not h then
+      local _maxw, wrap = font:getWrap( text, w )
+      h = font:getLineHeight() * #wrap
+   end
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Text_mt )
    wgt.type    = "text"
    wgt.text    = text
    wgt.col     = col or luatk.colour.text
    wgt.align   = align or "left"
-   wgt.font    = font or luatk._deffont or lg.getFont()
+   wgt.font    = font
    return wgt
 end
 function luatk.Text:draw( bx, by )

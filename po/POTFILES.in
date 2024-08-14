@@ -3711,6 +3711,8 @@ src/naev.c
 src/naev.h
 src/naev_version.c
 src/naevlua.c
+src/naevpedia.c
+src/naevpedia.h
 src/ndata.c
 src/ndata.h
 src/nebula.c

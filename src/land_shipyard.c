@@ -121,7 +121,7 @@ void shipyard_open( unsigned int wid )
    padding = 40 + 20 * 4;
 
    /* Calculate button dimensions. */
-   bw = ( w - iw - padding ) / 4;
+   bw = MIN( LAND_BUTTON_WIDTH, ( w - iw - padding ) / 4 );
    bh = LAND_BUTTON_HEIGHT;
 
    /* buttons */
