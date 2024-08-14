@@ -194,7 +194,7 @@ function hypergate_window ()
    local map = luatk_map.newMap( wdw, 20, 40, mapw, maph, {
       notinteractive = true,
       hidetarget = true,
-      render = function ( m )
+      render = function ( m, bx, by )
          if not targetknown then
             lg.setColour( {0, 0, 0, 0.3} )
             lg.rectangle("fill", 0, 0, mapw, maph )
@@ -206,21 +206,20 @@ function hypergate_window ()
             local r = luatk_map.sys_radius * s
             local jumpw = math.max( 10, 2*r )
             lg.setColour( {0, 0.8, 1, 0.8} )
-            lg.push()
-            lg.translate( (jumpx-mx)*s + mapw*0.5, (jumpy-my)*s + maph*0.5 )
-            lg.rotate( jumpa )
+
+            local jx = bx + (jumpx-mx)*s + mapw*0.5
+            local jy = by + (jumpy-my)*s + maph*0.5
+            local shd = lg.getShader()
             lg.setShader( shd_jumpgoto )
             shd_jumpgoto:send( "paramf", r )
             shd_jumpgoto:send( "dimensions", {jumpl*s,jumpw} )
-            love_shaders.img:draw( -jumpl*0.5*s, -jumpw*0.5, 0, jumpl*s, jumpw )
-            lg.setShader()
-            lg.pop()
+            love_shaders.img:draw( jx-jumpl*0.5*s, jy-jumpw*0.5, jumpa, jumpl*s, jumpw )
 
             lg.setColour( {1, 1, 1, 1} )
             shd_selectsys:send( "dimensions", {2*r, 2*r} )
             lg.setShader( shd_selectsys )
-            love_shaders.img:draw( (targetx-mx)*s + mapw*0.5 - 2*r, (targety-my)*s + maph*0.5 - 2*r, 0, 4*r, 4*r )
-            lg.setShader()
+            love_shaders.img:draw( bx+(targetx-mx)*s + mapw*0.5 - 2*r, by+(targety-my)*s + maph*0.5 - 2*r, 0, 4*r, 4*r )
+            lg.setShader( shd )
          end
       end,
    } )

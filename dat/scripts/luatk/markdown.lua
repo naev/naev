@@ -336,9 +336,9 @@ function Markdown:draw( wx, wy )
       elseif b.type=="image" then
          b.img:draw( bx, by, 0, b.sx, b.sy )
       elseif b.type=="widget" then
-         local wsx, wsy, wsw, wsh = luatk.joinScissors( bx, by, b.w, b.h )
+         --local wsx, wsy, wsw, wsh = luatk.joinScissors( bx, by, b.w, b.h )
          b.wgt:draw( bx, by )
-         lg.setScissor( wsx, wsy, wsw, wsh )
+         --lg.setScissor( wsx, wsy, wsw, wsh )
       end
    end
 

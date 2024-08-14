@@ -159,10 +159,10 @@ function Map:draw( bx, by )
    if self._dirty then
       self._dirty = false
 
-      local cvs = lg.getCanvas()
       local sx, sy, sw, sh = lg.getScissor()
-      lg.setScissor()
+      local cvs = lg.getCanvas()
       lg.setCanvas( self._canvas )
+      lg.setScissor()
       lg.clear( 0, 0, 0, 1 )
 
       -- Get dimensions
@@ -182,12 +182,7 @@ function Map:draw( bx, by )
             lg.setColour( e.cs )
             self.shd_jumplane:send( "paramv", e.ce:rgba() )
             self.shd_jumplane:send( "dimensions", l, ew )
-
-            lg.push()
-            lg.translate( px, py )
-            lg.rotate( e.a )
-            love_shaders.img:draw( -l2, -ew*0.5, 0, l, ew )
-            lg.pop()
+            love_shaders.img:draw( px-l2, py-ew*0.5, e.a, l, ew )
          end
       end
       lg.setShader(shd)
@@ -286,13 +281,11 @@ function Map:draw( bx, by )
          jcur = jcur-1
          lg.setColour( col )
 
-         lg.push()
-         lg.translate( x + (jumpx-mx)*s + self.w*0.5, y + (jumpy-my)*s + self.h*0.5 )
-         lg.rotate( jumpa )
+         local jx = x + (jumpx-mx)*s + self.w*0.5
+         local jy = y + (jumpy-my)*s + self.h*0.5
          self.shd_jumpgoto:send( "dimensions", {jumpl*s,jumpw} )
          self.shd_jumpgoto:send( "parami", parami )
-         love_shaders.img:draw( -jumpl*0.5*s, -jumpw*0.5, 0, jumpl*s, jumpw )
-         lg.pop()
+         love_shaders.img:draw( jx-jumpl*0.5*s, jy-jumpw*0.5, jumpa, jumpl*s, jumpw )
 
          cpos = spos
       end
@@ -311,10 +304,7 @@ function Map:draw( bx, by )
 
    -- Allow for custom rendering
    if self.custrender then
-      lg.push()
-      lg.translate(x,y)
-      self.custrender( self )
-      lg.pop()
+      self.custrender( self, x, y )
    end
 end
 function Map:rerender()
