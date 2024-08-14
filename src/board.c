@@ -12,19 +12,14 @@
 
 #include "board.h"
 
-#include "array.h"
 #include "commodity.h"
-#include "damagetype.h"
 #include "hook.h"
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
-#include "nstring.h"
 #include "pilot.h"
 #include "player.h"
-#include "rng.h"
 #include "space.h"
-#include "toolkit.h"
 
 #define BOARDING_WIDTH 380  /**< Boarding window width. */
 #define BOARDING_HEIGHT 200 /**< Boarding window height. */

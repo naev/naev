@@ -443,6 +443,12 @@ void shipyard_cleanup( void )
    shipyard_selected = NULL;
 }
 
+static int shipyard_naevpedia_hook( void *data )
+{
+   (void)data;
+   naevpedia_open( "ships" );
+   return 0;
+}
 /**
  * @brief Starts the map find with ship search selected.
  *    @param wid Window buying outfit from.
@@ -452,7 +458,7 @@ static void shipyard_naevpedia( unsigned int wid, const char *str )
 {
    (void)wid;
    (void)str;
-   naevpedia_open( "ships" );
+   hook_addFunc( shipyard_naevpedia_hook, NULL, "safe" );
 }
 
 /**
