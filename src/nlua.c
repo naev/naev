@@ -354,6 +354,8 @@ void nlua_pushEnvTable( lua_State *L )
 nlua_env nlua_newEnv( void )
 {
    nlua_env ref;
+
+   /* Create new table and register it. */
    lua_newtable( naevL );                      /* t */
    lua_pushvalue( naevL, -1 );                 /* t, t */
    ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* t */
@@ -379,9 +381,13 @@ nlua_env nlua_newEnv( void )
    /* Set up paths.
     * "package.path" to look in the data.
     * "package.cpath" unset */
-   lua_getglobal( naevL, "package" );                          /* t, t, p */
-   lua_newtable( naevL );                                      /* t, t, p, t */
-   lua_setfield( naevL, -2, "preload" );                       /* t, t, p */
+   nlua_getenv( naevL, ref, "package" );       /* t, t, p */
+   lua_newtable( naevL );                      /* t, t, p, t */
+   lua_pushvalue( naevL, -1 );                 /* t, t, p, t, t */
+   nlua_setenv( naevL, ref, NLUA_LOAD_TABLE ); /* t, t, p, t */
+   lua_setfield( naevL, -2, "loaded" );        /* t, t, p */
+   lua_newtable( naevL );                      /* t, t, p, t */
+   lua_setfield( naevL, -2, "preload" );       /* t, t, p */
    lua_pushstring( naevL, "?.lua;" LUA_INCLUDE_PATH "?.lua" ); /* t, t, p, s */
    lua_setfield( naevL, -2, "path" );                          /* t, t, p */
    lua_pushstring( naevL, "" );                                /* t, t, p, s */
@@ -801,15 +807,13 @@ static int nlua_require( lua_State *L )
       /* Already included. */
       if ( !lua_isnil( L, -1 ) ) {
          lua_remove( L, -2 ); /* val */
+         DEBUG( "ALREADY LOADED '%s'", filename );
          return 1;
       }
       lua_pop( L, 2 ); /* */
-   }
-   /* Must create new NLUA_LOAD_TABLE table. */
-   else {
-      lua_newtable( L );                          /* t */
-      lua_setfield( L, envtab, NLUA_LOAD_TABLE ); /* */
-   }
+   } else
+      luaL_error( L, _( "_LOADED must be a table" ) );
+   DEBUG( "LOADING %s", filename );
 
    lua_getglobal( L, "package" ); /* p */
    if ( !lua_istable( L, -1 ) )
@@ -836,8 +840,9 @@ static int nlua_require( lua_State *L )
    lua_remove( L, -2 ); /* l, r */
    lua_remove( L, -2 ); /* r */
 
-   lua_pushvalue( L, envtab );
-   lua_setfenv( L, -2 );
+   /* Set the environment for the call. */
+   lua_pushvalue( L, envtab ); /* r, e */
+   lua_setfenv( L, -2 );       /* r */
 
    /* run the buffer */
    lua_pushstring( L, filename ); /* pass name as first parameter */
@@ -848,10 +853,9 @@ static int nlua_require( lua_State *L )
       return 1;
    }
 #endif
-   lua_call( L, 1, 1 );
+   lua_call( L, 1, 1 ); /* val */
 
    /* Mark as loaded. */
-   /* val */
    if ( lua_isnil( L, -1 ) ) {
       lua_pop( L, 1 );
       lua_pushboolean( L, 1 );
