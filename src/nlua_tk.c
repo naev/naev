@@ -422,6 +422,7 @@ static void cust_cleanup( void *data )
    luaL_unref( L, LUA_REGISTRYINDEX, cf->mouse );
    luaL_unref( L, LUA_REGISTRYINDEX, cf->resize );
    luaL_unref( L, LUA_REGISTRYINDEX, cf->textinput );
+   luaL_unref( L, LUA_REGISTRYINDEX, cf->env );
    free( cf );
 }
 
@@ -455,8 +456,9 @@ static int tkL_custom( lua_State *L )
    int                 nodynamic;
 
    /* Set up custom function pointers. */
-   cf->L   = L;
-   cf->env = __NLUA_CURENV;
+   cf->L = L;
+   nlua_pushenv( L, __NLUA_CURENV );          /* e */
+   cf->env = lua_ref( L, LUA_REGISTRYINDEX ); /* */
 #define GETFUNC( address, pos )                                                \
    do {                                                                        \
       lua_pushvalue( L, ( pos ) );                                             \
@@ -474,7 +476,7 @@ static int tkL_custom( lua_State *L )
 
    /* Set done condition. */
    lua_pushboolean( L, 0 );
-   lua_setglobal( L, TK_CUSTOMDONE );
+   nlua_setenv( L, cf->env, TK_CUSTOMDONE );
 
    /* Create the dialogue. */
    dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, cf,
@@ -556,6 +558,9 @@ static int tkL_customSize( lua_State *L )
 
 /**
  * @brief Ends the execution of a custom widget.
+ *
+ * Can only stop the execution from the same environment that spawned it.
+ *
  * @luafunc customDone
  */
 static int tkL_customDone( lua_State *L )
@@ -564,7 +569,8 @@ static int tkL_customDone( lua_State *L )
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
    lua_pushboolean( L, 1 );
-   lua_setglobal( L, TK_CUSTOMDONE );
+   nlua_setenv( L, __NLUA_CURENV,
+                TK_CUSTOMDONE ); /* Can only stop from same env... */
    return 0;
 }
 
@@ -584,7 +590,7 @@ static int cust_update( double dt, void *data )
       return 1;
    }
    /* Check if done. */
-   lua_getglobal( L, TK_CUSTOMDONE );
+   nlua_getenv( L, cf->env, TK_CUSTOMDONE );
    ret = lua_toboolean( L, -1 );
    lua_pop( L, 1 );
    return ret;
