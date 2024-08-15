@@ -363,8 +363,7 @@ nlua_env nlua_newEnv( void )
    /* Store in the environment table. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t, e */
    lua_pushvalue( naevL, -2 );                         /* t, e, t */
-   lua_pushinteger( naevL, ref );                      /* t, e, t, r */
-   lua_rawset( naevL, -3 );                            /* t, e */
+   lua_rawseti( naevL, -1, ref );                      /* t, e */
    lua_pop( naevL, 1 );                                /* t */
 
    /* Metatable */
@@ -807,13 +806,11 @@ static int nlua_require( lua_State *L )
       /* Already included. */
       if ( !lua_isnil( L, -1 ) ) {
          lua_remove( L, -2 ); /* val */
-         DEBUG( "ALREADY LOADED '%s'", filename );
          return 1;
       }
       lua_pop( L, 2 ); /* */
    } else
       luaL_error( L, _( "_LOADED must be a table" ) );
-   DEBUG( "LOADING %s", filename );
 
    lua_getglobal( L, "package" ); /* p */
    if ( !lua_istable( L, -1 ) )
