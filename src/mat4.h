@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include <stddef.h>
+
 #include "glad.h"
 
 #include "vec3.h"
@@ -20,6 +22,7 @@ typedef struct quat {
 } quat;
 
 /* Basic operations. */
+void mat4_tostr( const mat4 *m, char *buf, size_t len );
 void mat4_print( const mat4 *m );
 void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 );
 void mat4_mul_vec( vec3 *out, const mat4 *m, const vec3 *v );

@@ -13,6 +13,17 @@
 #include <stdio.h>
 
 #include "mat4.h"
+#include "nstring.h"
+
+void mat4_tostr( const mat4 *m, char *buf, size_t len )
+{
+   int l = 0;
+   for ( int i = 0; i < 4; i++ ) {
+      for ( int j = 0; j < 4; j++ )
+         l += scnprintf( &buf[l], len - l, "%7.g ", m->m[j][i] );
+      l += scnprintf( &buf[l], len - l, "\n" );
+   }
+}
 
 void mat4_print( const mat4 *m )
 {
