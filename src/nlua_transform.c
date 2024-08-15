@@ -18,6 +18,7 @@
 #include "nluadef.h"
 
 /* Transform metatable methods. */
+static int transformL_tostring( lua_State *L );
 static int transformL_eq( lua_State *L );
 static int transformL_new( lua_State *L );
 static int transformL_mul( lua_State *L );
@@ -31,6 +32,7 @@ static int transformL_applyPoint( lua_State *L );
 static int transformL_applyDim( lua_State *L );
 
 static const luaL_Reg transformL_methods[] = {
+   { "__tostring", transformL_tostring },
    { "__eq", transformL_eq },
    { "__mul", transformL_mul },
    { "get", transformL_get },
@@ -123,6 +125,22 @@ int lua_istransform( lua_State *L, int ind )
 
    lua_pop( L, 2 ); /* remove both metatables */
    return ret;
+}
+
+/**
+ * @brief Gets a string representing the transform.
+ *
+ *    @luatparam Transform t Transform to get string of.
+ *    @luatreturn string String corresponding to the transform.
+ * @luafunc __tostring
+ */
+static int transformL_tostring( lua_State *L )
+{
+   char        buf[STRMAX_SHORT];
+   const mat4 *t = luaL_checktransform( L, 1 );
+   mat4_tostr( t, buf, sizeof( buf ) );
+   lua_pushstring( L, buf );
+   return 1;
 }
 
 /**
