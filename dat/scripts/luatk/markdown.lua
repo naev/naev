@@ -307,6 +307,8 @@ function Markdown:update( dt )
 end
 function Markdown:draw( wx, wy )
    local x, y, w, h = wx+self.x, wy+self.y, self.w, self.h
+   print("--MARKDOWN--")
+   print( lg )
 
    -- Space for scrollbar
    w = w-12

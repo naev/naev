@@ -130,18 +130,7 @@ function naevpedia.load()
                   local dat = lf.read( 'naevpedia/'..f )
                   local entry = utf8.sub( f, 1, -4 )
                   local _s, meta = extractmetadata( entry, dat )
-                  meta._G = tcopy( _G ) -- Copy Lua table over
-                  meta._G._G = meta._G
-                  meta._G._ = _
-                  meta._G.fmt = fmt
-                  meta._G.setmetatable = setmetatable
-                  meta._G.math = math
-                  meta._G.require = require
-                  meta._G.print = print
-                  meta._G.ipairs = ipairs
-                  meta._G.pairs = pairs
-                  meta._G.table = table
-                  meta._G.inlist = inlist
+                  -- We can't generate the Lua environment here or it's bound to the wrong env
                   mds[ entry ] = meta
                end
             elseif i.type == "directory" then
@@ -242,6 +231,20 @@ local function loaddoc( filename )
    -- Extract metadata
    rawdat, meta = extractmetadata( filename, rawdat )
 
+   -- Create Lua environment
+   meta._G = tcopy( _G ) -- Copy Lua table over
+   meta._G._G = meta._G
+   meta._G._ = _
+   meta._G.fmt = fmt
+   meta._G.setmetatable = setmetatable
+   meta._G.math = math
+   meta._G.require = require
+   meta._G.print = print
+   meta._G.ipairs = ipairs
+   meta._G.pairs = pairs
+   meta._G.table = table
+   meta._G.inlist = inlist
+
    -- Translate line by line
    local translated = ""
    for k,v in ipairs(strsplit( rawdat, "\n" )) do
@@ -255,7 +258,7 @@ local function loaddoc( filename )
    end
 
    -- Preprocess Lua
-   local success, dat = dolua( translated, nc._naevpedia[filename] )
+   local success, dat = dolua( translated, meta )
    if not success then
       return success, dat, meta
    end
@@ -411,13 +414,11 @@ function naevpedia.setup( name )
          -- Failed, so just display the error
          mrk = luatk.newText( wdw, mx, my, mw, mh, doc )
       else
-			local nmeta = nc._naevpedia[filename]
-
          -- Disable button
          for k,v in pairs(btns) do
             v:enable()
          end
-         local b = btns[nmeta.category]
+         local b = btns[meta.category]
          if b then
             b:disable()
          end
@@ -449,12 +450,12 @@ function naevpedia.setup( name )
             end,
             processliteral = function ( s )
                local str, tbl = lua_escape( s )
-               return lua_unescape( str, tbl, nmeta._G )
+               return lua_unescape( str, tbl, meta._G )
             end,
             processhtml = function ( s, tw )
                local t = strsplit( utf8.sub( s, 2, -4 ), ' ')
                if t[1]=='widget' then
-                  local f = nmeta._G[t[2]]
+                  local f = meta._G[t[2]]
                   if not f then
                      warn(fmt.f(_("naevpedia: unknown function '{f}'"),{f=t[2]}))
                      return nil
