@@ -219,17 +219,8 @@ static int cli_script( lua_State *L )
 
    /* Reset loaded buffer. */
    if ( cli_env != LUA_NOREF ) {
-      nlua_getenv( L, cli_env, "_LOADED" );
-      if ( lua_istable( L, -1 ) ) {
-         lua_pushnil( L );                  /* t, nil */
-         while ( lua_next( L, -2 ) != 0 ) { /* t, key, val */
-            lua_pop( L, 1 );                /* t, key */
-            lua_pushvalue( L, -1 );         /* t, key, key */
-            lua_pushnil( L );               /* t, key, key, nil */
-            lua_rawset( L, -4 );            /* t, key */
-         } /* t */
-      }
-      lua_pop( L, 1 ); /* */
+      lua_newtable( L );                          /* t */
+      nlua_setenv( L, cli_env, NLUA_LOAD_TABLE ); /* */
    }
 
    /* Do the file from PHYSFS. */

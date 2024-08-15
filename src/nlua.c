@@ -785,33 +785,30 @@ static int nlua_require( lua_State *L )
       lua_setfield( L, envtab, NLUA_LOAD_TABLE ); /* */
    }
 
-   lua_getglobal( L, "package" );
-   if ( !lua_istable( L, -1 ) ) {
-      lua_pop( L, 1 );
-      lua_pushstring( L, _( "package.loaders must be a table" ) );
-      return 1;
-   }
-   lua_getfield( L, -1, "loaders" );
-   lua_remove( L, -2 );
+   lua_getglobal( L, "package" ); /* p */
+   if ( !lua_istable( L, -1 ) )
+      luaL_error( L, _( "package must be a table" ) );
+   lua_getfield( L, -1, "loaders" ); /* p, l */
+   lua_remove( L, -2 );              /* l */
    if ( !lua_istable( L, -1 ) )
       luaL_error( L, _( "package.loaders must be a table" ) );
-   lua_pushliteral( L, "" ); /* error message accumulator */
+   lua_pushliteral( L, "" ); /* l, str */ /* error message accumulator */
    for ( int i = 1;; i++ ) {
-      lua_rawgeti( L, -2, i ); /* get a loader */
+      lua_rawgeti( L, -2, i ); /* l, str, i */ /* get a loader */
       if ( lua_isnil( L, -1 ) )
          luaL_error( L, _( "module '%s' not found:%s" ), filename,
                      lua_tostring( L, -2 ) );
-      lua_pushstring( L, filename );
-      lua_call( L, 1, 1 );              /* call it */
-      if ( lua_isfunction( L, -1 ) )    /* did it find module? */
-         break;                         /* module loaded successfully */
-      else if ( lua_isstring( L, -1 ) ) /* loader returned error message? */
-         lua_concat( L, 2 );            /* accumulate it */
+      lua_pushstring( L, filename );       /* l, str, i, f */
+      lua_call( L, 1, 1 ); /* l, str, r */ /* call it */
+      if ( lua_isfunction( L, -1 ) )       /* did it find module? */
+         break;                            /* module loaded successfully */
+      else if ( lua_isstring( L, -1 ) )    /* loader returned error message? */
+         lua_concat( L, 2 ); /* l, str */  /* accumulate it */
       else
-         lua_pop( L, 1 );
+         lua_pop( L, 1 ); /* l, str */
    }
-   lua_remove( L, -2 );
-   lua_remove( L, -2 );
+   lua_remove( L, -2 ); /* l, r */
+   lua_remove( L, -2 ); /* r */
 
    lua_pushvalue( L, envtab );
    lua_setfenv( L, -2 );
