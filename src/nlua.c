@@ -69,6 +69,7 @@ static LuaCache_t *lua_cache = NULL;
 /*
  * prototypes
  */
+static int        nlua_package_preload( lua_State *L );
 static int        nlua_package_loader_lua( lua_State *L );
 static int        nlua_package_loader_c( lua_State *L );
 static int        nlua_package_loader_croot( lua_State *L );
@@ -88,6 +89,10 @@ static const luaL_Reg gettext_methods[] = {
    { "pgettext", nlua_pgettext },
    { "gettext_noop", nlua_gettext_noop },
    { 0, 0 } }; /**< Vector metatable methods. */
+
+static const lua_CFunction loaders[] = {
+   nlua_package_preload, nlua_package_loader_lua, nlua_package_loader_c,
+   nlua_package_loader_croot, NULL }; /**< Our loaders. */
 
 /**
  * @brief gettext support.
@@ -375,18 +380,18 @@ nlua_env nlua_newEnv( void )
     * "package.path" to look in the data.
     * "package.cpath" unset */
    lua_getglobal( naevL, "package" );                          /* t, t, p */
+   lua_newtable( naevL );                                      /* t, t, p, t */
+   lua_setfield( naevL, -2, "preload" );                       /* t, t, p */
    lua_pushstring( naevL, "?.lua;" LUA_INCLUDE_PATH "?.lua" ); /* t, t, p, s */
    lua_setfield( naevL, -2, "path" );                          /* t, t, p */
    lua_pushstring( naevL, "" );                                /* t, t, p, s */
    lua_setfield( naevL, -2, "cpath" );                         /* t, t, p */
    lua_getfield( naevL, -1, "loaders" );                       /* t, t, p, l */
-   lua_pushcfunction( naevL, nlua_package_loader_lua );   /* t, t, p, l, f */
-   lua_rawseti( naevL, -2, 2 );                           /* t, t, p, l */
-   lua_pushcfunction( naevL, nlua_package_loader_c );     /* t, t, p, l, f */
-   lua_rawseti( naevL, -2, 3 );                           /* t, t, p, l */
-   lua_pushcfunction( naevL, nlua_package_loader_croot ); /* t, t, p, l, f */
-   lua_rawseti( naevL, -2, 4 );                           /* t, t, p, l */
-   lua_pop( naevL, 2 );                                   /* t, t */
+   for ( int i = 0; loaders[i] != NULL; i++ ) {
+      lua_pushcfunction( naevL, loaders[i] ); /* t, t, p, l, f */
+      lua_rawseti( naevL, -2, i + 1 );        /* t, t, p, l */
+   }
+   lua_pop( naevL, 2 ); /* t, t */
 
    /* The global table _G should refer back to the environment. */
    lua_pushvalue( naevL, -1 );      /* t, t, t */
@@ -605,6 +610,27 @@ static int lua_cache_cmp( const void *p1, const void *p2 )
    return strcmp( lc1->path, lc2->path );
 }
 
+static int nlua_package_preload( lua_State *L )
+{
+   const char *name = luaL_checkstring( L, 1 );
+
+   lua_getglobal( L, "package" ); /* p */
+   if ( !lua_istable( L, -1 ) ) {
+      lua_pop( L, 1 );
+      lua_pushstring( L, _( " package not found." ) );
+      return 1;
+   }
+
+   lua_getfield( L, -1, "preload" ); /* p, p */
+   lua_remove( L, -2 );              /* p */
+   if ( !lua_istable( L, -1 ) )
+      luaL_error( L, LUA_QL( "package.preload" ) " must be a table" );
+   lua_getfield( L, -1, name );
+   if ( lua_isnil( L, -1 ) ) /* not found? */
+      lua_pushfstring( L, "\n\tno field package.preload['%s']", name );
+   return 1;
+}
+
 /**
  * @brief load( string module ) -- searcher function to replace
  * package.loaders[2] (Lua 5.1), i.e., for Lua modules.
@@ -627,7 +653,7 @@ static int nlua_package_loader_lua( lua_State *L )
    lua_getglobal( L, "package" );
    if ( !lua_istable( L, -1 ) ) {
       lua_pop( L, 1 );
-      lua_pushstring( L, _( " package.path not found." ) );
+      lua_pushstring( L, _( " package not found." ) );
       return 1;
    }
    lua_getfield( L, -1, "path" );
