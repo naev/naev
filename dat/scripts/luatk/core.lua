@@ -262,6 +262,7 @@ Only to be used when running the toolkit outside of luatk.run.
 --]]
 function luatk.mousereleased( mx, my, button )
    local wdw = luatk._windows[ #luatk._windows ]
+   if not wdw then return false end
    local x, y = mx-wdw.x, my-wdw.y
 
    for _k,wgt in ipairs(wdw._widgets) do
