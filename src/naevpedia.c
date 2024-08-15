@@ -13,36 +13,39 @@
 #include "log.h"
 #include "nlua.h"
 #include "nlua_bkg.h"
-#include "nlua_camera.h"
-#include "nlua_cli.h"
 #include "nlua_colour.h"
 #include "nlua_linopt.h"
 #include "nlua_music.h"
 #include "nlua_tex.h"
 #include "nlua_tk.h"
 
+static nlua_env naevpedia_env = LUA_NOREF; /**< Naevpedia environment. */
+
+/**
+ * @brief Try to open naevpedia path.
+ */
 int naevpedia_open( const char *path )
 {
    char buf[STRMAX_SHORT];
    int  status;
-   snprintf( buf, sizeof( buf ), "require('naevpedia').open('%s')", path );
 
-   nlua_env env = nlua_newEnv();
-   nlua_loadStandard( env );
-   nlua_loadTex( env );
-   nlua_loadCol( env );
-   nlua_loadBackground( env );
-   nlua_loadCLI( env );
-   nlua_loadCamera( env );
-   nlua_loadMusic( env );
-   nlua_loadTk( env );
-   nlua_loadLinOpt( env );
-   status = nlua_dobufenv( env, buf, strlen( buf ), buf );
+   if ( naevpedia_env == LUA_NOREF ) {
+      naevpedia_env = nlua_newEnv();
+      nlua_loadStandard( naevpedia_env );
+      nlua_loadTex( naevpedia_env );
+      nlua_loadCol( naevpedia_env );
+      nlua_loadBackground( naevpedia_env );
+      nlua_loadMusic( naevpedia_env );
+      nlua_loadTk( naevpedia_env );
+      nlua_loadLinOpt( naevpedia_env );
+   }
+
+   snprintf( buf, sizeof( buf ), "require('naevpedia').open('%s')", path );
+   status = nlua_dobufenv( naevpedia_env, buf, strlen( buf ), buf );
    if ( status ) {
       WARN( _( "Naevpedia '%s' Lua error:\n%s" ), path,
             lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
    }
-   nlua_freeEnv( env );
    return 0;
 }
