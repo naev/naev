@@ -8,6 +8,7 @@
  */
 /** @cond */
 #include <lauxlib.h>
+#include <lua.h>
 #include <stdlib.h>
 /** @endcond */
 
@@ -457,8 +458,8 @@ static int tkL_custom( lua_State *L )
 
    /* Set up custom function pointers. */
    cf->L = L;
-   nlua_pushenv( L, __NLUA_CURENV );          /* e */
-   cf->env = lua_ref( L, LUA_REGISTRYINDEX ); /* */
+   nlua_pushenv( L, __NLUA_CURENV );           /* e */
+   cf->env = luaL_ref( L, LUA_REGISTRYINDEX ); /* */
 #define GETFUNC( address, pos )                                                \
    do {                                                                        \
       lua_pushvalue( L, ( pos ) );                                             \
