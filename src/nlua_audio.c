@@ -45,6 +45,7 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer );
 static int audio_genSource( ALuint *source );
 
 /* Audio methods. */
+static int audioL_tostring( lua_State *L );
 static int audioL_gc( lua_State *L );
 static int audioL_eq( lua_State *L );
 static int audioL_new( lua_State *L );
@@ -81,6 +82,7 @@ static int audioL_setGlobaDopplerFactor( lua_State *L );
 static int audioL_soundPlay( lua_State *L ); /* Obsolete API, to get rid of. */
 
 static const luaL_Reg audioL_methods[] = {
+   { "__tostring", audioL_tostring },
    { "__gc", audioL_gc },
    { "__eq", audioL_eq },
    { "new", audioL_new },
@@ -366,13 +368,9 @@ void audio_cleanup( LuaAudio_t *la )
          la->active = -1;
          if ( SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) ==
               SDL_MUTEX_TIMEDOUT )
-#if DEBUGGING
             WARN( _( "Timed out while waiting for audio thread of '%s' to "
                      "finish!" ),
                   la->name );
-#else  /* DEBUGGING */
-            WARN( _( "Timed out while waiting for audio thread to finish!" ) );
-#endif /* DEBUGGING */
       }
       if ( alIsSource( la->source ) == AL_TRUE )
          alDeleteSources( 1, &la->source );
@@ -388,9 +386,7 @@ void audio_cleanup( LuaAudio_t *la )
       break;
    }
 
-#if DEBUGGING
    free( la->name );
-#endif /* DEBUGGING */
 }
 
 /**
@@ -398,6 +394,21 @@ void audio_cleanup( LuaAudio_t *la )
  *
  * @luamod audio
  */
+/**
+ * @brief Gets a string representation of an audio file.
+ *
+ *    @luatparam Audio audio Audio to get string representation of.
+ *    @luatreturn string String representation of the audio.
+ * @luafunc __tostring
+ */
+static int audioL_tostring( lua_State *L )
+{
+   char              buf[STRMAX_SHORT];
+   const LuaAudio_t *la = luaL_checkaudio( L, 1 );
+   snprintf( buf, sizeof( buf ), "Audio( %s )", la->name );
+   lua_pushstring( L, buf );
+   return 1;
+}
 /**
  * @brief Frees a audio.
  *
@@ -511,9 +522,7 @@ static int audioL_new( lua_State *L )
    rw = PHYSFSRWOPS_openRead( name );
    if ( rw == NULL )
       return NLUA_ERROR( L, "Unable to open '%s'", name );
-#if DEBUGGING
    la.name = strdup( name );
-#endif /* DEBUGGING */
 
    soundLock();
    la.ok = audio_genSource( &la.source );
@@ -758,13 +767,9 @@ static int audioL_stop( lua_State *L )
          la->active = -1;
          if ( SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) ==
               SDL_MUTEX_TIMEDOUT )
-#if DEBUGGING
             WARN( _( "Timed out while waiting for audio thread of '%s' to "
                      "finish!" ),
                   la->name );
-#else  /* DEBUGGING */
-            WARN( _( "Timed out while waiting for audio thread to finish!" ) );
-#endif /* DEBUGGING */
       }
       la->th = NULL;
 
