@@ -450,11 +450,11 @@ void nlua_freeEnv( nlua_env env )
       return;
 
    /* Remove from the environment table. */
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs );
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, env );
-   lua_pushnil( naevL );
-   lua_rawset( naevL, -3 );
-   lua_pop( naevL, 1 );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, env );       /* t, e */
+   lua_pushnil( naevL );                               /* t, e, n */
+   lua_rawset( naevL, -3 );                            /* t */
+   lua_pop( naevL, 1 );                                /* */
 
    /* Unref. */
    luaL_unref( naevL, LUA_REGISTRYINDEX, env );
@@ -800,6 +800,7 @@ static int nlua_require( lua_State *L )
    int envtab = lua_upvalueindex( 1 );
 
    /* Check to see if already included. */
+   // lua_getglobal( L, NLUA_LOAD_TABLE ); /* t */
    lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
    if ( !lua_isnil( L, -1 ) ) {
       lua_getfield( L, -1, filename ); /* t, f */
@@ -857,6 +858,7 @@ static int nlua_require( lua_State *L )
       lua_pop( L, 1 );
       lua_pushboolean( L, 1 );
    }
+   // lua_getglobal( L,NLUA_LOAD_TABLE ); /* val, t */
    lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* val, t */
    lua_pushvalue( L, -2 );                     /* val, t, val */
    lua_setfield( L, -2, filename );            /* val, t */
