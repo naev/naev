@@ -931,20 +931,22 @@ int nlua_errTrace( lua_State *L )
    if ( strcmp( str, NLUA_DONE ) == 0 )
       return 1;
 
+   /* str */
    /* Otherwise execute "debug.traceback( str, int )". */
-   lua_getglobal( L, "debug" );
+   lua_getglobal( L, "debug" ); /* str, debug */
    if ( !lua_istable( L, -1 ) ) {
       lua_pop( L, 1 );
       return 1;
    }
-   lua_getfield( L, -1, "traceback" );
+   lua_getfield( L, -1, "traceback" ); /* str, debug, traceback */
    if ( !lua_isfunction( L, -1 ) ) {
       lua_pop( L, 2 );
       return 1;
    }
-   lua_pushvalue( L, 1 );
-   lua_pushinteger( L, 2 );
-   lua_call( L, 2, 1 );
+   lua_pushvalue( L, -3 );  /* str, debug, traceback, str */
+   lua_pushinteger( L, 2 ); /* str, debug, traceback, str, int */
+   lua_call( L, 2, 1 );     /* str, debug, ret */
+   lua_pop( L, 2 );         /* str */
    return 1;
 }
 
