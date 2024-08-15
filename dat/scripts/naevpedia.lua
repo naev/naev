@@ -296,6 +296,7 @@ function naevpedia.setup( name )
    local wdw = luatk.newWindow( nil, nil, w, h )
    luatk.newText( wdw, 0, 10, w, 20, _("Naevpedia"), nil, "center" )
    luatk.newButton( wdw, -20, -20, 80, 30, _("Close"), luatk.close )
+   wdw:setCancel( luatk.close )
 
    local btnback, btnfwd
    local function goback ()
