@@ -28,7 +28,7 @@ tags_recursive( root, d, '' )
 
 outstr = f"""---
 title: "{d['name']}"
-cond: "return ship.get(\\\"{d['name']}\\\"):known()"
+cond: "return ship.get([[{d['name']}]]):known()"
 ---
 <% s = ship.get([[{d['name']}]]) %>
 """

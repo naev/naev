@@ -28,7 +28,7 @@ tags_recursive( root, d, '' )
 
 outstr = f"""---
 title: "{d['name']}"
-cond: "return outfit.get(\\\"{d['name']}\\\"):known()"
+cond: "return outfit.get([[{d['name']}]]):known()"
 ---
 <% o = outfit.get([[{d['name']}]]) %>
 """
