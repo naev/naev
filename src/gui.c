@@ -1981,7 +1981,7 @@ int gui_load( const char *name )
    gui_env = LUA_NOREF;
 
    /* Create Lua state. */
-   gui_env = nlua_newEnv();
+   gui_env = nlua_newEnv( name );
    nlua_loadStandard( gui_env );
    nlua_loadGFX( gui_env );
    nlua_loadGUI( gui_env );

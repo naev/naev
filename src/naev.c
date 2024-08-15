@@ -564,7 +564,7 @@ void loadscreen_load( void )
    int r;
 
    load_mutex = SDL_CreateMutex();
-   load_env   = nlua_newEnv();
+   load_env   = nlua_newEnv( "loadscreen" );
 
    r = nlua_loadStandard( load_env );
    r |= nlua_loadNaev( load_env );

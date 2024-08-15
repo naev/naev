@@ -15,18 +15,13 @@
 
 #include "ai.h"
 #include "array.h"
-#include "commodity.h"
-#include "dialogue.h"
 #include "escort.h"
 #include "hook.h"
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
-#include "opengl.h"
 #include "pilot.h"
 #include "player.h"
-#include "rng.h"
-#include "toolkit.h"
 
 #define BUTTON_WIDTH 80  /**< Button width. */
 #define BUTTON_HEIGHT 30 /**< Button height. */
@@ -149,7 +144,7 @@ int comm_openPilot( unsigned int pilot )
 
    /* Set up environment first time. */
    if ( comm_env == LUA_NOREF ) {
-      comm_env = nlua_newEnv();
+      comm_env = nlua_newEnv( "comm" );
       nlua_loadStandard( comm_env );
 
       size_t bufsize;

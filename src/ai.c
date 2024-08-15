@@ -666,7 +666,7 @@ static int ai_loadEquip( void )
    nlua_freeEnv( equip_env );
 
    /* Create new state. */
-   equip_env = nlua_newEnv();
+   equip_env = nlua_newEnv( "ai_equip" );
    nlua_loadStandard( equip_env );
 
    /* Load the file. */
@@ -714,7 +714,7 @@ static int ai_loadProfile( AI_Profile *prof, const char *filename )
    prof->name[len] = '\0';
 
    /* Create Lua. */
-   env = nlua_newEnv();
+   env = nlua_newEnv( filename );
    nlua_loadStandard( env );
    prof->env = env;
 

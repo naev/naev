@@ -1548,7 +1548,7 @@ int ships_load( void )
          continue;
       }
 
-      env        = nlua_newEnv();
+      env        = nlua_newEnv( s->lua_file );
       s->lua_env = env;
       /* TODO limit libraries here. */
       nlua_loadStandard( env );

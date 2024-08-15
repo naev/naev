@@ -289,10 +289,6 @@ int nlua_dobufenv( nlua_env env, const char *buff, size_t sz, const char *name )
    ret = nlua_pcall( env, 0, LUA_MULTRET );
    if ( ret != 0 )
       return ret;
-#if DEBUGGING
-   lua_pushstring( naevL, name );
-   nlua_setenv( naevL, env, "__name" );
-#endif /* DEBUGGING */
    return 0;
 }
 
@@ -345,7 +341,7 @@ void nlua_pushEnvTable( lua_State *L )
  *
  * An "environment" is a table used with setfenv for sandboxing.
  */
-nlua_env nlua_newEnv( void )
+nlua_env nlua_newEnv( const char *name )
 {
    nlua_env ref;
 
@@ -359,6 +355,13 @@ nlua_env nlua_newEnv( void )
    lua_pushvalue( naevL, -2 );                         /* t, e, t */
    lua_rawseti( naevL, -1, ref );                      /* t, e */
    lua_pop( naevL, 1 );                                /* t */
+
+#if DEBUGGING
+   if ( name != NULL ) {
+      lua_pushstring( naevL, name );
+      nlua_setenv( naevL, ref, "__name" );
+   }
+#endif /* DEBUGGING */
 
    /* Metatable */
    lua_newtable( naevL );                    /* t, m */
@@ -946,7 +949,8 @@ int nlua_errTrace( lua_State *L )
    lua_pushvalue( L, -3 );  /* str, debug, traceback, str */
    lua_pushinteger( L, 2 ); /* str, debug, traceback, str, int */
    lua_call( L, 2, 1 );     /* str, debug, ret */
-   lua_pop( L, 2 );         /* str */
+   lua_remove( L, -2 );     /* str, ret */
+   lua_remove( L, -2 );     /* ret */
    return 1;
 }
 

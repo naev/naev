@@ -14,7 +14,6 @@
 
 #include "log.h"
 #include "nlua.h"
-#include "nluadef.h"
 
 static nlua_env cond_env = LUA_NOREF; /** Conditional Lua env. */
 
@@ -26,7 +25,7 @@ int cond_init( void )
    if ( cond_env != LUA_NOREF )
       return 0;
 
-   cond_env = nlua_newEnv();
+   cond_env = nlua_newEnv( "cond" );
    if ( nlua_loadStandard( cond_env ) ) {
       WARN( _( "Failed to load standard Lua libraries." ) );
       return -1;

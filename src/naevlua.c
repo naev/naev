@@ -258,7 +258,7 @@ int main( int argc, char **argv )
    /* Unload load screen. */
    loadscreen_unload();
 
-   nlua_env nenv = nlua_newEnv();
+   nlua_env nenv = nlua_newEnv( "naevlua" );
    nlua_loadStandard( nenv );
    nlua_loadTex( nenv );
    nlua_loadCol( nenv );

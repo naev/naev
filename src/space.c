@@ -4723,7 +4723,7 @@ static nlua_env spob_lua_get( int *mem, const char *filename )
       return LUA_NOREF;
    }
 
-   nlua_env env = nlua_newEnv();
+   nlua_env env = nlua_newEnv( filename );
    nlua_loadStandard( env );
    nlua_loadGFX( env );
    nlua_loadCamera( env );

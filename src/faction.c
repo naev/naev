@@ -1477,7 +1477,7 @@ static void faction_addStandingScript( Faction *temp, const char *scriptname )
    size_t ndat;
 
    snprintf( buf, sizeof( buf ), FACTIONS_PATH "standing/%s.lua", scriptname );
-   temp->lua_env = nlua_newEnv();
+   temp->lua_env = nlua_newEnv( temp->name );
 
    nlua_loadStandard( temp->lua_env );
    dat = ndata_read( buf, &ndat );
@@ -1733,7 +1733,7 @@ void factions_loadPost( void )
 
          snprintf( buf, sizeof( buf ), FACTIONS_PATH "spawn/%s.lua",
                    f->script_spawn );
-         f->sched_env = nlua_newEnv();
+         f->sched_env = nlua_newEnv( buf );
          nlua_loadStandard( f->sched_env );
          dat = ndata_read( buf, &ndat );
          if ( nlua_dobufenv( f->sched_env, dat, ndat, buf ) != 0 ) {
@@ -1753,7 +1753,7 @@ void factions_loadPost( void )
 
          snprintf( buf, sizeof( buf ), FACTIONS_PATH "equip/%s.lua",
                    f->script_equip );
-         f->equip_env = nlua_newEnv();
+         f->equip_env = nlua_newEnv( buf );
          nlua_loadStandard( f->equip_env );
          dat = ndata_read( buf, &ndat );
          if ( nlua_dobufenv( f->equip_env, dat, ndat, buf ) != 0 ) {

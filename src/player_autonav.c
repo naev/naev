@@ -53,7 +53,7 @@ static int player_autonavSetup( void );
  */
 int player_autonavInit( void )
 {
-   nlua_env env = nlua_newEnv();
+   nlua_env env = nlua_newEnv( AUTONAV_PATH );
    nlua_loadStandard( env );
    nlua_loadAI( env );
 

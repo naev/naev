@@ -30,7 +30,7 @@ int naevpedia_open( const char *path )
    int  status;
 
    if ( naevpedia_env == LUA_NOREF ) {
-      naevpedia_env = nlua_newEnv();
+      naevpedia_env = nlua_newEnv( "naevpedia" );
       nlua_loadStandard( naevpedia_env );
       nlua_loadTex( naevpedia_env );
       nlua_loadCol( naevpedia_env );

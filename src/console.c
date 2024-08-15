@@ -450,7 +450,7 @@ static int cli_initLua( void )
       return 0;
 
    /* Create the state. */
-   cli_env = nlua_newEnv();
+   cli_env = nlua_newEnv( "console" );
    nlua_loadStandard( cli_env );
    nlua_loadTex( cli_env );
    nlua_loadCol( cli_env );

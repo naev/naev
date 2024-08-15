@@ -20,11 +20,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
-#include "nlua_audio.h"
 #include "nlua_tk.h"
-#include "nlua_var.h"
-#include "nluadef.h"
-#include "nstring.h"
 #include "ntracing.h"
 #include "sound.h"
 
@@ -373,7 +369,7 @@ static int music_luaInit( void )
       music_luaQuit();
 
    /* Reset the environment. */
-   music_env = nlua_newEnv();
+   music_env = nlua_newEnv( MUSIC_LUA_PATH );
    nlua_loadStandard( music_env );
    nlua_loadTk( music_env );
 

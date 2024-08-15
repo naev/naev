@@ -137,7 +137,7 @@ static int effect_parse( EffectData *efx, const char *file )
             continue;
          }
 
-         env = nlua_newEnv();
+         env = nlua_newEnv( filename );
          nlua_loadStandard( env );
          if ( nlua_dobufenv( env, dat, sz, filename ) != 0 ) {
             WARN( _( "Effect '%s' Lua error:\n%s" ), efx->name,

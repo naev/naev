@@ -2608,7 +2608,7 @@ static void equipment_autoequipShip( unsigned int wid, const char *str )
          return;
       }
       /* New env. */
-      autoequip_env = nlua_newEnv();
+      autoequip_env = nlua_newEnv( file );
       nlua_loadStandard( autoequip_env );
       nlua_loadTk( autoequip_env );
       if ( nlua_dobufenv( autoequip_env, buf, bufsize, file ) != 0 ) {

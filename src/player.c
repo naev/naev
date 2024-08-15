@@ -3745,7 +3745,7 @@ static int player_runUpdaterScript( const char *type, const char *name, int q )
 
    /* Load env if necessary. */
    if ( player_updater_env == LUA_NOREF ) {
-      player_updater_env = nlua_newEnv();
+      player_updater_env = nlua_newEnv( "updater" );
       size_t bufsize;
       char  *buf = ndata_read( SAVE_UPDATER_PATH, &bufsize );
       if ( nlua_dobufenv( player_updater_env, buf, bufsize,
