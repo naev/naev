@@ -136,7 +136,7 @@ void shipyard_open( unsigned int wid )
                         shipyard_buy, SDLK_b );
    off -= 20 + bw;
    window_addButtonKey( wid, off, 20, bw, bh, "btnNaevpediaOutfits",
-                        _( "Naevpedia" ), shipyard_naevpedia, SDLK_f );
+                        _( "Archives" ), shipyard_naevpedia, SDLK_a );
 
    /* ship review */
    window_addRect( wid, -40 + 4, -40 + 4, sw + 8, sh + 8, "rctTarget", &cBlack,

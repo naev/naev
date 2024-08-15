@@ -13,5 +13,5 @@ local function donaevpedia ()
 end
 
 function create ()
-   player.infoButtonRegister( _("Naevpedia"), donaevpedia, 3, "N" )
+   player.infoButtonRegister( _("Archives"), donaevpedia, 3, "A" )
 end

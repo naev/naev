@@ -2,15 +2,12 @@
 title: "Main"
 priority: 1
 ---
-![](gfx/Naev.webp)
+## Welcome to the Holo-Archives!
 
-## Welcome to the Naevpedia!
-
-Here you can find information about different things you have encountered throughout your adventures throughout the galaxy. Below are some quick links to get you started on exploring all the information available at your fingertips!
+Here you can find an assortment of data collected throughout your adventures around the galaxy.
+Below are some quick links to get you started on exploring all the information available at your fingertips!
 
 * [Mechanics](mechanics)
 * [Ships](ships)
 * [Outfits](outfits)
 * [Lore](lore)
-* [Characters](characters)
-* [Locations](locations)

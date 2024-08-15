@@ -215,7 +215,7 @@ void outfits_open( unsigned int wid, const Outfit **outfits, int blackmarket )
                         outfits_buy, SDLK_b );
    off -= 20 + bw;
    window_addButtonKey( wid, off, 20, bw, bh, "btnNaevpediaOutfits",
-                        _( "Naevpedia" ), outfits_naevpedia, SDLK_n );
+                        _( "Archives" ), outfits_naevpedia, SDLK_a );
 
    /* fancy 256x256 image */
    window_addRect( wid, -40 + 4, -40 + 4, 264, 264, "rctImage", &cBlack, 1 );
