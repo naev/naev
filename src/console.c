@@ -637,7 +637,7 @@ static void cli_input( unsigned int wid, const char *unused )
          if ( lua_gettop( naevL ) > 0 ) {
             nlua_getenv( naevL, cli_env, "print" );
             lua_insert( naevL, 1 );
-            if ( lua_pcall( naevL, lua_gettop( naevL ) - 1, 0, 0 ) != 0 )
+            if ( nlua_pcall( cli_env, lua_gettop( naevL ) - 1, 0 ) != 0 )
                cli_addMessage( _( "Error printing results." ) );
          }
 
