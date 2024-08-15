@@ -332,7 +332,7 @@ static const luaL_Reg aiL_methods[] = {
    { "set_shoot_indicator", aiL_set_shoot_indicator },
    { "stealth", aiL_stealth },
    { 0, 0 } /* end */
-};          /**< Lua AI Function table. */
+}; /**< Lua AI Function table. */
 
 /*
  * current pilot "thinking" and assorted variables
@@ -522,10 +522,10 @@ int ai_pinit( Pilot *p, const char *ai )
    lua_pushnil( naevL );                                   /* m, d, nil */
    while ( lua_next( naevL, -2 ) != 0 ) {                  /* m, d, k, v */
       lua_pushvalue( naevL, -2 );                          /* m, d, k, v, k */
-      lua_pushvalue( naevL, -2 );                     /* m, d, k, v, k, v */
-      lua_remove( naevL, -3 );                        /* m, d, k, k, v */
-      lua_settable( naevL, -5 );                      /* m, d, k */
-   }                                                  /* m, d */
+      lua_pushvalue( naevL, -2 ); /* m, d, k, v, k, v */
+      lua_remove( naevL, -3 );    /* m, d, k, k, v */
+      lua_settable( naevL, -5 );  /* m, d, k */
+   } /* m, d */
    lua_pop( naevL, 1 );                               /* m */
    p->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
 
@@ -1138,8 +1138,6 @@ static void ai_create( Pilot *pilot )
          func = "equip";
       }
       nlua_getenv( naevL, env, func );
-      nlua_pushenv( naevL, env );
-      lua_setfenv( naevL, -2 );
       lua_pushpilot( naevL, pilot->id );
       if ( nlua_pcall( env, 1, 0 ) ) { /* Error has occurred. */
          WARN( _( "Pilot '%s' equip '%s' -> '%s': %s" ), pilot->name,

@@ -230,9 +230,7 @@ static int cli_script( lua_State *L )
    free( buf );
 
    /* Return the stuff. */
-   nlua_pushenv( L, cli_env );
-   lua_setfenv( L, -2 );
-   if ( lua_pcall( L, 0, LUA_MULTRET, 0 ) != 0 ) {
+   if ( nlua_pcall( cli_env, 0, LUA_MULTRET ) != 0 ) {
       WARN( _( "Error running 'script':\n%s" ), lua_tostring( L, -1 ) );
       lua_pop( L, 1 );
       return 0;
@@ -630,9 +628,6 @@ static void cli_input( unsigned int wid, const char *unused )
       /* Print results - all went well. */
       else if ( status == 0 ) {
          lua_remove( naevL, 1 );
-
-         nlua_pushenv( naevL, cli_env );
-         lua_setfenv( naevL, -2 );
 
          if ( nlua_pcall( cli_env, 0, LUA_MULTRET ) ) {
             cli_printCoreString( lua_tostring( naevL, -1 ), 1 );

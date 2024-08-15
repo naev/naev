@@ -286,8 +286,6 @@ int nlua_dobufenv( nlua_env env, const char *buff, size_t sz, const char *name )
       debug_enableFPUExcept();
 #endif /* DEBUGGING */
 
-   nlua_pushenv( naevL, env );
-   lua_setfenv( naevL, -2 );
    ret = nlua_pcall( env, 0, LUA_MULTRET );
    if ( ret != 0 )
       return ret;
@@ -308,8 +306,6 @@ int nlua_dofileenv( nlua_env env, const char *filename )
 {
    if ( luaL_loadfile( naevL, filename ) != 0 )
       return -1;
-   nlua_pushenv( naevL, env );
-   lua_setfenv( naevL, -2 );
    if ( nlua_pcall( env, 0, LUA_MULTRET ) != 0 )
       return -1;
    return 0;
@@ -327,8 +323,6 @@ int nlua_dochunkenv( nlua_env env, int chunk, const char *name )
    (void)name;
    int ret;
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, chunk );
-   nlua_pushenv( naevL, env );
-   lua_setfenv( naevL, -2 );
    ret = nlua_pcall( env, 0, LUA_MULTRET );
    if ( ret != 0 )
       return ret;
@@ -982,6 +976,8 @@ int nlua_pcall( nlua_env env, int nargs, int nresults )
    prev_env      = __NLUA_CURENV;
    __NLUA_CURENV = env;
 
+   nlua_pushenv( naevL, env );
+   lua_setfenv( naevL, -2 - nargs );
    ret = lua_pcall( naevL, nargs, nresults, errf );
 
    __NLUA_CURENV = prev_env;
