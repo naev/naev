@@ -68,6 +68,7 @@ function luatk_map.newMap( parent, x, y, w, h, options )
                sys.c = cFontGreen
                sys.coutter = sys.c
                sys.r = sys.r*1.2
+               sys.highlight = true
             else
                sys.c = cInert
                sys.coutter = sys.c
@@ -210,7 +211,7 @@ function Map:draw( bx, by )
       end
 
       -- Render names
-      if not self.hidenames and self.scale >= 0.5 then
+      if not self.hidenames then
          local f
          if self.scale >= 1.5 then
             f = self.deffont
@@ -222,17 +223,19 @@ function Map:draw( bx, by )
          local fh = f:getHeight()
          lg.setColour( 1, 1, 1 )
          for i,sys in ipairs(self.sys) do
-            local n = sys.n
-            local p = (sys.s:pos()*inv-self.pos)*self.scale + c
-            local px, py = p:get()
-            local fw = f:getWidth( n )
-            px = px + r + 2
-            if sys.s==cs then
-               px = px + 0.5*r
-            end
-            py = py - fh * 0.5
-            if not (px < -fw or px > w or py < -fh or py > h) then
-               lg.print( n, f, px, py )
+            if (sys.highlight and self.scale >= 0.33) or self.scale >= 0.5 then
+               local n = sys.n
+               local p = (sys.s:pos()*inv-self.pos)*self.scale + c
+               local px, py = p:get()
+               local fw = f:getWidth( n )
+               px = px + r + 2
+               if sys.s==cs then
+                  px = px + 0.5*r
+               end
+               py = py - fh * 0.5
+               if not (px < -fw or px > w or py < -fh or py > h) then
+                  lg.print( n, f, px, py )
+               end
             end
          end
       end
