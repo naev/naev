@@ -1488,6 +1488,9 @@ static void faction_addStandingScript( Faction *temp, const char *scriptname )
             buf, lua_tostring( naevL, -1 ) );
       nlua_freeEnv( temp->lua_env );
       temp->lua_env = LUA_NOREF;
+      free( dat );
+      lua_pop( naevL, 1 );
+      return;
    }
    free( dat );
 
