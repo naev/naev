@@ -11,7 +11,7 @@ Contributions are highly welcome!
 
 Naevpedia uses [cmark](https://github.com/commonmark/cmark) to process and thus adheres to the [CommonMark](https://commonmark.org/) specification. Note that it doesn't use github extensions or any other extensions.
 
-Files that are added to `dat/naevpedia/` will automatically be picked up if they have a .md extension.
+Files that are added to `dat/naevpedia/` will automatically be picked up if they have a `.md` extension.
 Other files, such as this one, will be ignored.
 
 Processing of files is done in a few stages:
