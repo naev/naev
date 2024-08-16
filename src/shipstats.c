@@ -51,10 +51,13 @@ typedef struct ShipStatsLookup_ {
 
 /* Flexible do everything macro. */
 #define ELEM( t, n, dsp, u, d, i )                                             \
-   {                                                                           \
-      .type = t, .name = #n, .display = dsp, .unit = u, .data = d,             \
-      .inverted = i, .offset = offsetof( ShipStats, n )                        \
-   }
+   { .type     = t,                                                            \
+     .name     = #n,                                                           \
+     .display  = dsp,                                                          \
+     .unit     = u,                                                            \
+     .data     = d,                                                            \
+     .inverted = i,                                                            \
+     .offset   = offsetof( ShipStats, n ) }
 /* Standard types. */
 #define D__ELEM( t, n, dsp )                                                   \
    ELEM( t, n, dsp, N_( "%" ), SS_DATA_TYPE_DOUBLE, 0 )
@@ -79,10 +82,12 @@ typedef struct ShipStatsLookup_ {
 
 /** Nil element. */
 #define N__ELEM( t )                                                           \
-   {                                                                           \
-      .type = t, .name = NULL, .display = NULL, .unit = NULL, .inverted = 0,   \
-      .offset = 0                                                              \
-   }
+   { .type     = t,                                                            \
+     .name     = NULL,                                                         \
+     .display  = NULL,                                                         \
+     .unit     = NULL,                                                         \
+     .inverted = 0,                                                            \
+     .offset   = 0 }
 
 /**
  * The ultimate look up table for ship stats, everything goes through this.
@@ -1125,6 +1130,46 @@ int ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal )
       /* Push name and get value. */
       lua_pushstring( L, sl->name );
       ss_statsGetLuaInternal( L, s, i, internal );
+      lua_rawset( L, -3 );
+   }
+   return 0;
+}
+
+/**
+ * @brief Converts ship stats to a Lua table, which is pushed on the Lua stack.
+ */
+int ss_statsGetLuaTableList( lua_State *L, const ShipStatList *list,
+                             int internal )
+{
+   lua_newtable( L );
+   if ( list == NULL )
+      return 0;
+   for ( const ShipStatList *ll = list; ll != NULL; ll = ll->next ) {
+      const ShipStatsLookup *sl = &ss_lookup[ll->type];
+
+      /* Push name and get value. */
+      lua_pushstring( L, ss_nameFromType( ll->type ) );
+      switch ( sl->data ) {
+      case SS_DATA_TYPE_DOUBLE:
+         lua_pushnumber( L, ( internal ) ? ll->d.d : ( ll->d.d - 1. ) * 100. );
+         break;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+         lua_pushnumber( L, ( internal ) ? ll->d.d : ll->d.d * 100. );
+         break;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         lua_pushnumber( L, ll->d.d );
+         break;
+
+      case SS_DATA_TYPE_INTEGER:
+         lua_pushinteger( L, ll->d.i );
+         break;
+
+      case SS_DATA_TYPE_BOOLEAN:
+         lua_pushboolean( L, ll->d.i );
+         break;
+      }
       lua_rawset( L, -3 );
    }
    return 0;

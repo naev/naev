@@ -19,6 +19,7 @@
 #include "array.h"
 #include "console.h"
 #include "debug.h"
+#include "difficulty.h"
 #include "event.h"
 #include "hook.h"
 #include "info.h"
@@ -72,6 +73,7 @@ static int naevL_hasTextInput( lua_State *L );
 static int naevL_setTextInput( lua_State *L );
 static int naevL_unit( lua_State *L );
 static int naevL_quadtreeParams( lua_State *L );
+static int naevL_difficulty( lua_State *L );
 #if DEBUGGING
 static int naevL_envs( lua_State *L );
 static int naevL_debugTrails( lua_State *L );
@@ -114,6 +116,7 @@ static const luaL_Reg naev_methods[] = {
    { "setTextInput", naevL_setTextInput },
    { "unit", naevL_unit },
    { "quadtreeParams", naevL_quadtreeParams },
+   { "difficulty", naevL_difficulty },
 #if DEBUGGING
    { "envs", naevL_envs },
    { "debugTrails", naevL_debugTrails },
@@ -939,6 +942,22 @@ static int naevL_quadtreeParams( lua_State *L )
    int depth    = luaL_checkinteger( L, 2 );
    pilot_quadtreeParams( max_elem, depth );
    return 0;
+}
+
+/**
+ * @brief Gets information about the current difficulty setting.
+ *
+ *    @luatreturn string Name (untranslated) of the difficulty setting.
+ *    @luatreturn table Table containing the ship stats (name is key, while
+ * value is value).
+ * @luafunc difficulty
+ */
+static int naevL_difficulty( lua_State *L )
+{
+   const Difficulty *dif = difficulty_cur();
+   lua_pushstring( L, dif->name );
+   ss_statsGetLuaTableList( L, dif->stats, lua_toboolean( L, 1 ) );
+   return 2;
 }
 
 #if DEBUGGING
