@@ -62,7 +62,6 @@ with open(sys.argv[1],"w") as fout:
                 luascript += l[2:-2]+"\n"
             args = [ "xgettext", "-", "-o", "-", "-L", "Lua", "--omit-header" ]
             ret = subprocess.run( args, input=luascript, capture_output=True, text=True )
-            print( ret.stdout )
             fout.write( ret.stdout + "\n" )
             # Replace Lua blocks with <%lua%>
             d = re.sub( "<%[^=].*?%>", "<%lua%>", d, flags=re.S )
