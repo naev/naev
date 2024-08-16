@@ -1188,8 +1188,8 @@ void map_system_buyCommodPrice( unsigned int wid, const char *str )
       cost   = 500;
       njumps = 0;
    } else {
-      syslist = map_getJumpPath( cur_system->name, NULL, cur_sys_sel->name, 1,
-                                 0, NULL, NULL );
+      syslist =
+         map_getJumpPath( cur_system, NULL, cur_sys_sel, 1, 0, NULL, NULL );
       if ( syslist == NULL ) {
          /* no route */
          dialogue_msg( _( "Unavailable" ),

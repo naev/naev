@@ -883,11 +883,14 @@ int space_sysReachable( const StarSystem *sys )
  */
 int space_sysReallyReachable( const char *sysname )
 {
-   StarSystem **path;
+   StarSystem **path, *goal;
 
    if ( strcmp( sysname, cur_system->name ) == 0 )
       return 1;
-   path = map_getJumpPath( cur_system->name, NULL, sysname, 1, 1, NULL, NULL );
+   goal = system_get( sysname );
+   if ( goal == NULL )
+      return 0;
+   path = map_getJumpPath( cur_system, NULL, goal, 1, 1, NULL, NULL );
    if ( path != NULL ) {
       array_free( path );
       return 1;

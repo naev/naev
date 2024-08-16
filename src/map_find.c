@@ -282,8 +282,8 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps,
    }
 
    /* Calculate jump path. */
-   slist  = map_getJumpPath( cur_system->name, &player.p->solid.pos, sys->name,
-                             0, 1, NULL, &d );
+   slist =
+      map_getJumpPath( cur_system, &player.p->solid.pos, sys, 0, 1, NULL, &d );
    *jumps = array_size( slist );
    if ( slist == NULL )
       /* Unknown. */

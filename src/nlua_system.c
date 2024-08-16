@@ -448,29 +448,23 @@ static int systemL_jumpdistance( lua_State *L )
 {
    StarSystem  *sys;
    StarSystem **s;
-   const char  *start, *goal;
+   StarSystem  *start, *goal;
    int          h, k;
 
-   sys   = luaL_validsystem( L, 1 );
-   start = sys->name;
-   h     = lua_toboolean( L, 3 );
-   k     = !lua_toboolean( L, 4 );
+   sys = luaL_validsystem( L, 1 );
+   h   = lua_toboolean( L, 3 );
+   k   = !lua_toboolean( L, 4 );
 
-   if ( lua_gettop( L ) > 1 ) {
-      if ( lua_isstring( L, 2 ) )
-         goal = lua_tostring( L, 2 );
-      else if ( lua_issystem( L, 2 ) ) {
-         const StarSystem *sysp = luaL_validsystem( L, 2 );
-         goal                   = sysp->name;
-      } else
-         NLUA_INVALID_PARAMETER( L, 2 );
+   if ( !lua_isnoneornil( L, 2 ) ) {
+      goal  = luaL_validsystem( L, 2 );
+      start = sys;
    } else {
-      goal  = sys->name;
-      start = cur_system->name;
+      goal  = sys;
+      start = cur_system;
    }
 
    /* Trivial case same system. */
-   if ( strcmp( start, goal ) == 0 ) {
+   if ( start->id == goal->id ) {
       lua_pushnumber( L, 0. );
       return 1;
    }
@@ -515,18 +509,15 @@ static int systemL_jumpPath( lua_State *L )
    StarSystem  *sys, *sysp;
    StarSystem **s;
    int          sid, pushed, h;
-   const char  *start, *goal;
 
    h = lua_toboolean( L, 3 );
 
    /* Foo to Bar */
-   sys   = luaL_validsystem( L, 1 );
-   start = sys->name;
-   sid   = sys->id;
-   sysp  = luaL_validsystem( L, 2 );
-   goal  = sysp->name;
+   sys  = luaL_validsystem( L, 1 );
+   sid  = sys->id;
+   sysp = luaL_validsystem( L, 2 );
 
-   s = map_getJumpPath( start, NULL, goal, 1, h, NULL, NULL );
+   s = map_getJumpPath( sys, NULL, sysp, 1, h, NULL, NULL );
    if ( s == NULL )
       return 0;
 

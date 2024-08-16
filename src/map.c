@@ -2663,7 +2663,7 @@ void map_select( const StarSystem *sys, char shifted )
          if ( player.p != NULL ) {
             posstart = &player.p->solid.pos;
          }
-         map_path = map_getJumpPath( cur_system->name, posstart, sys->name, 0,
+         map_path = map_getJumpPath( cur_system, posstart, (StarSystem *)sys, 0,
                                      1, map_path, NULL );
 
          if ( array_size( map_path ) == 0 ) {
@@ -2947,8 +2947,8 @@ void map_setZoom( unsigned int wid, double zoom )
  * if it's not NULL.
  *    @return Array (array.h): the systems in the path. NULL on failure.
  */
-StarSystem **map_getJumpPath( const char *sysstart, const vec2 *posstart,
-                              const char *sysend, int ignore_known,
+StarSystem **map_getJumpPath( StarSystem *sysstart, const vec2 *posstart,
+                              StarSystem *sysend, int ignore_known,
                               int show_hidden, StarSystem **old_data,
                               double *o_distance )
 {
@@ -2964,8 +2964,8 @@ StarSystem **map_getJumpPath( const char *sysstart, const vec2 *posstart,
    ojumps = array_size( old_data );
 
    /* initial and target systems */
-   ssys = system_get( sysstart ); /* start */
-   esys = system_get( sysend );   /* goal */
+   ssys = sysstart; /* start */
+   esys = sysend;   /* goal */
 
    /* Set up. */
    if ( ojumps > 0 )
@@ -2987,11 +2987,11 @@ StarSystem **map_getJumpPath( const char *sysstart, const vec2 *posstart,
    /* initial entry position */
    const vec2 *p_pos_entry = ( ojumps > 0 ) ? NULL : posstart;
    if ( ojumps > 0 ) {
-      const char *prev_name = sysstart;
+      StarSystem *prevsys = sysstart;
       if ( ojumps > 1 ) {
-         prev_name = old_data[ojumps - 2]->name;
+         prevsys = old_data[ojumps - 2];
       }
-      const JumpPoint *jp = jump_get( prev_name, ssys );
+      const JumpPoint *jp = jump_getTarget( prevsys, ssys );
       if ( jp != NULL ) {
          p_pos_entry = &jp->pos;
       }

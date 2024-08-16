@@ -53,8 +53,8 @@ void               map_clear( void );
 void               map_jump( void );
 
 /* manipulate universe stuff */
-StarSystem **map_getJumpPath( const char *sysstart, const vec2 *posstart,
-                              const char *sysend, int ignore_known,
+StarSystem **map_getJumpPath( StarSystem *sysstart, const vec2 *posstart,
+                              StarSystem *sysend, int ignore_known,
                               int show_hidden, StarSystem **old_data,
                               double *o_distance );
 int          map_map( const Outfit *map );
