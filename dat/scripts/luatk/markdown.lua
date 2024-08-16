@@ -105,7 +105,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
             --block.text = block.text .. "#n"
             block.font = headerfont
             if block.y > 0 then
-               ty = ty + headerfont:getHeight()
+               margin = math.max( margin, headerfont:getHeight() )
                block.y = ty
             end
          else
@@ -144,13 +144,14 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                linkname = nil
             end
             linkx = block.x+bx
-            linky = block.y+by
+            linky = block.y+by+margin
          else
             block.text = block.text .. "#0"
             local bx, by = naev.gfx.printfEnd( block.font.font, block.text, tw )
             local target = cmark.node_get_url(cur)
             local fh = block.font:getHeight()
             local flh = block.font:getLineHeight()
+            by = by + margin
             if block.y+by == linky then
                -- One line, great!
                table.insert( wgt.links, {
