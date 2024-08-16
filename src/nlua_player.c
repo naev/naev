@@ -81,6 +81,7 @@ static int playerL_jumps( lua_State *L );
 static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
 static int playerL_autonav( lua_State *L );
+static int playerL_autonavSetTarget( lua_State *L );
 static int playerL_autonavSetPos( lua_State *L );
 static int playerL_autonavRoute( lua_State *L );
 static int playerL_autonavDest( lua_State *L );
@@ -182,6 +183,7 @@ static const luaL_Reg playerL_methods[] = {
    { "fuel", playerL_fuel },
    { "refuel", playerL_refuel },
    { "autonav", playerL_autonav },
+   { "autonavSetTarget", playerL_autonavSetTarget },
    { "autonavSetPos", playerL_autonavSetPos },
    { "autonavRoute", playerL_autonavRoute },
    { "autonavDest", playerL_autonavDest },
@@ -680,6 +682,22 @@ static int playerL_autonav( lua_State *L )
    PLAYER_CHECK();
    lua_pushboolean( L, player_isFlag( PLAYER_AUTONAV ) );
    return 1;
+}
+
+/**
+ * @brief Set the autonav target system to travel to.
+ *
+ *    @luatparam StarSystem sys Star system to set as autonav target.
+ *    @luatparam boolean add Whether or not this should be added to the current
+ * route.
+ * @luafunc autonavSetTarget
+ */
+static int playerL_autonavSetTarget( lua_State *L )
+{
+   PLAYER_CHECK();
+   const StarSystem *sys = luaL_validsystem( L, 1 );
+   map_select( sys, lua_toboolean( L, 2 ) );
+   return 0;
 }
 
 /**
