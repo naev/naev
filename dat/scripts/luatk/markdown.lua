@@ -111,6 +111,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
          else
             margin = math.max( margin, headerfont:getHeight()*0.5 )
             block_end()
+            margin = math.max( margin, headerfont:getHeight()*0.5 )
          end
       elseif node_type == cmark.NODE_STRONG then
          strong = entering
