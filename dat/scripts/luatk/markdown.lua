@@ -95,11 +95,16 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    for cur, entering, node_type in cmark.walk(doc) do
       --print( string.format("%s - %s [%s]", _nodestr(node_type), cmark.node_get_type_string(cur), tostring(entering) ) )
       if node_type == cmark.NODE_PARAGRAPH then
+         if list== cmark.NO_LIST then
+            margin = math.max( margin, 10 )
+         end
          if not entering then
             block_end()
          end
       elseif node_type == cmark.NODE_SOFTBREAK then
-         margin = math.max( margin, 10 )
+         if block.text and block.text ~= "" then
+            block.text = block.text..p_("cmark_softbreak", " ")
+         end
       elseif node_type == cmark.NODE_HEADING then
          if entering then
             --block.text = block.text .. "#n"
