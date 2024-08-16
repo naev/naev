@@ -60,6 +60,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
 
    wgt.blocks = {}
    local block = { type="text", x = 0, y = 0, w=w, h=0, text = "", font=deffont }
+   local margin = 0
    local ty = 0
    local tw = w
    local function block_end ()
@@ -69,7 +70,9 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       local f = block.font
       local _mw, t = f:getWrap( block.text, tw )
       local bh = #t * f:getLineHeight()
-      ty = ty + bh
+      block.y = block.y + margin
+      ty = ty + bh + margin
+      margin = 0
       block.w = tw
       table.insert( wgt.blocks, block )
       block = { type = "text", x = 0, y = ty, w=tw, h=bh, text = "", font=deffont }
@@ -95,6 +98,8 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
          if not entering then
             block_end()
          end
+      elseif node_type == cmark.NODE_SOFTBREAK then
+         margin = math.max( margin, 10 )
       elseif node_type == cmark.NODE_HEADING then
          if entering then
             --block.text = block.text .. "#n"
@@ -104,7 +109,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                block.y = ty
             end
          else
-            ty = ty + headerfont:getHeight()*0.5
+            margin = math.max( margin, headerfont:getHeight()*0.5 )
             block_end()
          end
       elseif node_type == cmark.NODE_STRONG then
@@ -196,7 +201,8 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
          else
             list = cmark.NO_LIST
          end
-         ty = ty + headerfont:getHeight()
+         ty = ty
+         margin = headerfont:getHeight()
          block.y = ty
       elseif node_type == cmark.NODE_ITEM then
          if entering then
@@ -236,7 +242,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                   img = img,
                }
                table.insert( wgt.blocks, imgblock )
-               ty = ty +ih
+               ty = ty + ih
                block.y = ty
             end
          end
@@ -275,7 +281,8 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                }
                table.insert( wgt.blocks, wgtblock )
                if not rightalign then
-                  ty = wy + wh + 10
+                  ty = wy + wh
+                  margin = math.max( margin, 10 )
                   block.y = ty
                end
                table.insert( wgt.wgts, wgtblock )
