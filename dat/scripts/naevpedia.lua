@@ -288,7 +288,7 @@ function naevpedia.setup( name )
 
    local history = {}
    local historyrev = {}
-   local current = "index"
+   local current = nil
 
    -- Set up the window
    local open_page
@@ -302,9 +302,9 @@ function naevpedia.setup( name )
    local function goback ()
       local n = #history
       table.insert( historyrev, current )
-      current = history[n]
+      local target = history[n]
       history[n] = nil
-      open_page( current )
+      open_page( target )
       if #history <= 0 then
          btnback:disable()
          btnfwd:enable()
@@ -313,9 +313,9 @@ function naevpedia.setup( name )
    local function gofwd ()
       local n = #historyrev
       table.insert( history, current )
-      current = historyrev[n]
+      local target = historyrev[n]
       historyrev[n] = nil
-      open_page( current )
+      open_page( target )
       if #historyrev <= 0 then
          btnfwd:disable()
          btnback:enable()
@@ -397,8 +397,12 @@ function naevpedia.setup( name )
    end
    local mrk
    function open_page( filename )
+      if current==filename then return end
+      current = filename
+
       if mrk then
          mrk:destroy()
+         mrk = nil
       end
 
       -- Load the document
@@ -427,17 +431,14 @@ function naevpedia.setup( name )
          -- Success so we try to load the markdown
          mrk = md.newMarkdown( wdw, doc, mx, my, mw, mh, {
             linkfunc = function ( target )
-               local newdoc = target
-               if not newdoc then
+               if not target then
                   -- do warning
                   luatk.msg( _("404"), fmt.f(_("Unable to find link to '{target}'!"),{target=target}))
                   return
                end
                table.insert( history, current )
                btnback:enable()
-               current = target
-               mrk:destroy()
-               open_page( newdoc )
+               open_page( target )
                -- Clear forward history
                historyrev = {}
                btnfwd:disable()
