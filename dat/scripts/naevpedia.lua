@@ -246,6 +246,8 @@ local function loaddoc( filename )
    meta._G.inlist = inlist
 
    -- Translate line by line
+   -- TODO ignore <% %> blocks like the python script does.
+   -- Right now it'll try to translate them, but shouldn't find strings, so it *should* work though
    local translated = ""
    for k,v in ipairs(strsplit( rawdat, "\n" )) do
       local s
