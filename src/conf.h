@@ -67,6 +67,9 @@
    0.5 /**< How much to darken (or lighten) the backgrounds. */
 #define NEBU_NONUNIFORMITY_DEFAULT                                             \
    1. /**< How much to darken (or lighten) the nebula stuff. */
+#define PUZZLE_SKIP_DEFAULT                                                    \
+   0 /**< WHether to give a button to skip puzzles.                            \
+      */
 #define GAMMA_CORRECTION_DEFAULT 1.  /**< How much gamma correction to do. */
 #define JUMP_BRIGHTNESS_DEFAULT 0.8  /**< Default jump brightness.*/
 #define BIG_ICONS_DEFAULT 0          /**< Whether to display BIGGER icons. */
@@ -127,8 +130,9 @@ typedef struct PlayerConf_s {
    double bg_brightness;      /**< How much to darken the background stuff. */
    double nebu_nonuniformity; /**< How much to darken the nebula stuff. */
    double jump_brightness;    /**< Intensity to fade to/from when jumping. */
-   double gamma_correction;   /**< How much gamma correction to do. */
-   int    low_memory;         /**< Low memory mode. */
+   int puzzle_skip; /**< Whether or not to allow skipping puzzles for free. */
+   double gamma_correction; /**< How much gamma correction to do. */
+   int    low_memory;       /**< Low memory mode. */
    int max_3d_tex_size; /**< How large to make the textures in low memory mode.
                          */
 

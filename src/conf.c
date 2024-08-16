@@ -157,6 +157,9 @@ void conf_setDefaults( void )
    conf.translation_warning_seen = 0;
    memset( &conf.last_played, 0, sizeof( time_t ) );
 
+   /* Accessibility. */
+   conf.puzzle_skip = PUZZLE_SKIP_DEFAULT;
+
    /* Gameplay. */
    conf_setGameplayDefaults();
 
@@ -356,6 +359,7 @@ int conf_loadConfig( const char *file )
       conf_loadFloat( lEnv, "game_speed", conf.game_speed );
       conf_loadBool( lEnv, "healthbars", conf.healthbars );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
+      conf_loadBool( lEnv, "puzzle_skip", conf.puzzle_skip );
       /* todo leave only nebu_nonuniformity sometime */
       conf_loadFloat(
          lEnv, "nebu_brightness",
@@ -1002,6 +1006,11 @@ int conf_saveConfig( const char *file )
                         "textures and ambient occlusion. Useful when you want "
                         "to run Naev or more limited hardware." ) );
    conf_saveBool( "low_memory", conf.low_memory );
+   conf_saveEmptyLine();
+
+   conf_saveComment( _( "Provide an in-game option to skip puzzles that appear "
+                        "throughout the game." ) );
+   conf_saveBool( "puzzle_skip", conf.puzzle_skip );
    conf_saveEmptyLine();
 
    conf_saveComment(

@@ -1281,8 +1281,11 @@ static void opt_accessibility( unsigned int wid )
    x = 20 + cw + 20;
    y = -40;
 
-   /* Video. */
-   window_addText( wid, x, y, 100, 20, 0, "txtSGameplay", NULL, cHeader,
+   window_addCheckbox( wid, x, y, cw - 20, 20, "chkPuzzleSkip",
+                       _( "Allow skipping puzzles" ), NULL, conf.puzzle_skip );
+   y -= 30;
+
+   window_addText( wid, x, y, cw - 20, 20, 0, "txtSGameplay", NULL, cHeader,
                    _( "Gamplay:" ) );
    y -= 20;
    window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtGameSpeed", NULL, NULL,
@@ -1297,6 +1300,10 @@ static int opt_accessibilitySave( unsigned int wid, const char *str )
 {
    (void)wid;
    (void)str;
+
+   /* Checkboxes need saving. */
+   conf.puzzle_skip = window_checkboxState( wid, "chkPuzzleSkip" );
+
    /* Colourblind and faders are handled in their respective functions. */
    return 0;
 }
@@ -1318,6 +1325,9 @@ static void opt_accessibilityDefaults( unsigned int wid, const char *str )
                                 COLOURBLIND_CORRECT_DEFAULT );
    window_faderSetBoundedValue( wid, "fadColourblindSimulate",
                                 COLOURBLIND_CORRECT_DEFAULT );
+
+   /* Checkboxes. */
+   window_checkboxSet( wid, "chkPuzzleSkip", PUZZLE_SKIP_DEFAULT );
 
    /* Reset colorblind if needed. */
    gl_colourblind();
