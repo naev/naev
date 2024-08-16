@@ -4,6 +4,8 @@ import yaml
 import os
 import re
 import sys
+import subprocess
+import tempfile
 
 HEADER = r"""# Naevpedia
 # Copyright (C) YEAR Naev Dev Team
@@ -23,6 +25,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
 """
 
 def needs_translation( line ):
@@ -52,6 +55,17 @@ with open(sys.argv[1],"w") as fout:
                 if 'title' in y:
                     print_line( fn, 1, y['title'] )
                 d = ''.join(m[2:])
+            # Preprocess to get rid of Lua blocks
+            luas = re.findall( "<%[^=].*?%>", d, flags=re.S )
+            luascript = ""
+            for l in luas:
+                luascript += l[2:-2]+"\n"
+            args = [ "xgettext", "-", "-o", "-", "-L", "Lua", "--omit-header" ]
+            ret = subprocess.run( args, input=luascript, capture_output=True, text=True )
+            print( ret.stdout )
+            fout.write( ret.stdout + "\n" )
+            # Replace Lua blocks with <%lua%>
+            d = re.sub( "<%[^=].*?%>", "<%lua%>", d, flags=re.S )
             # Go over lines
             l = d.splitlines()
             for i, line in enumerate(l):
