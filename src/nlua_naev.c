@@ -578,6 +578,7 @@ static int naevL_conf( lua_State *L )
    PUSH_BOOL( L, "translation_warning_seen", conf.translation_warning_seen );
    PUSH_BOOL( L, "fpu_except", conf.fpu_except );
    PUSH_STRING( L, "dev_data_dir", conf.dev_data_dir );
+   PUSH_BOOL( L, "puzzle_skip", conf.puzzle_skip );
    return 1;
 }
 #undef PUSH_STRING
