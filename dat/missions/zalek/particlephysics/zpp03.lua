@@ -44,7 +44,7 @@ function accept ()
    vn.na(_([[You approach Noona, who doesn't seem too happy.]]))
    n(_([["I have no idea what went wrong."
 She has trouble keeping her composure.
-"I double checked everything and still it seems like the drones failed to perform the procedure. It should have been a walk in the park!"]]))
+"I double-checked everything and still it seems like the drones failed to perform the procedure. It should have been a walk in the park!"]]))
    n(_([[She looks at you with hope gleaming in her eyes.
 "Say, could you fly out and see what happened? The drones shouldn't be far from here and they don't seem to be moving. If you can, try to access the black box by opening the hull component. Could you look into this for me?"]]))
    vn.menu{

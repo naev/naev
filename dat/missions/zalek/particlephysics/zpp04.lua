@@ -48,7 +48,7 @@ function accept ()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You once again meet up with Noona.]]))
-   n(fmt.f(_([["It's a worse setback than expected. I'm going to have to get new materials to be able to do the experiments. Since they're usually pretty hard to get, and I don't have time to fill in all the usual academic bureaucracy, I decided to go the black market route. Would you be willing to go pick up the materials at {pnt} in the {sys} system? The materials should only be {amount}, so you should not have a trouble fitting them on your ship. I would be able to pay you {credits} for your troubles this time."]]),
+   n(fmt.f(_([["It's a worse setback than expected. I'm going to have to get new materials to be able to do the experiments. Since they're usually pretty hard to get, and I don't have time to fill in all the usual academic bureaucracy, I decided to go the black market route. Would you be willing to go pick up the materials at {pnt} in the {sys} system? The materials should only be {amount}, so you should not have trouble fitting them on your ship. I would be able to pay you {credits} for your troubles this time."]]),
       {pnt=destpnt, sys=destsys, amount=fmt.tonnes(cargo_amount), credits=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
