@@ -417,14 +417,14 @@ function vn.keypressed( key, isrepeat )
 
    -- Skip modifier keys
    local blacklist = {
-      "left alt",
-      "left shift",
-      "left ctrl",
-      "left gui",
-      "right alt",
-      "right ctrl",
-      "right shift",
-      "right gui",
+      "lalt",
+      "lshift",
+      "lctrl",
+      "lgui",
+      "ralt",
+      "rctrl",
+      "rshift",
+      "rgui",
    }
    for k,v in ipairs(blacklist) do
       if key == v then

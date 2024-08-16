@@ -161,9 +161,23 @@ local function _mouse( x, y, mtype, button )
       return love.wheelmoved( x, y )
    end
 end
+local key_translation = {
+   ["left shift"] = "lshift",
+   ["right shift"] = "rshift",
+   ["left alt"] = "lalt",
+   ["right alt"] = "ralt",
+   ["left ctrl"] = "lctrl",
+   ["right ctrl"] = "rctrl",
+   ["left gui"] = "lgui",
+   ["right gui"] = "rgui",
+}
 local function _keyboard( pressed, key, _mod, isrepeat )
    if not love.keyboard then return false end
    local k = string.lower( key )
+   local t = key_translation[k]
+   if t then
+      k = t
+   end
    love.keyboard._keystate[ k ] = pressed
    if pressed then
       return love.keypressed( k, k, isrepeat )
