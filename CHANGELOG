@@ -29,6 +29,7 @@
       * Can rotate shipyard image for ships with 3D graphics
       * Prompt when deleting notes
    * Content
+      * New in-game wiki with explanation on gameplay mechanics and lots of lore
       * 4 new missions
          * Hack the Gibson!
       * 4 new ships
@@ -43,6 +44,10 @@
          * Fancy effects for special systems
          * Ships tilt slightly when rotating
          * Simple animations are supported and used when applicable
+      * Support for an in-game wiki
+         * Can process YAML, Lua, and markdown
+         * Cross-link support
+         * Support for custom widgets
       * Stats (except inverted stats) are now additive instead of multiplicative
       * Try to merge saves if multiple directories correspond to the same player
       * More robust weapon set support that can handle multiple overlapping weapon sets
@@ -76,6 +81,7 @@
       * Fixed space dust disappearing with certain jump abilities
       * Double tap will activate feather drive like blink engines
       * shadowvigil: claim entire route
+      * sh01_corvette: should be completable on easy difficulties now
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons
