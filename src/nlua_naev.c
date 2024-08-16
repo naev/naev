@@ -947,6 +947,8 @@ static int naevL_quadtreeParams( lua_State *L )
 /**
  * @brief Gets information about the current difficulty setting.
  *
+ *    @luatparam boolean internal Whether or not to get values using the
+ * internal format, or a human readable format.
  *    @luatreturn string Name (untranslated) of the difficulty setting.
  *    @luatreturn table Table containing the ship stats (name is key, while
  * value is value).

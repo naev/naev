@@ -4161,7 +4161,7 @@ static int pilotL_intrinsicSet( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get stat of.
  *    @luatparam[opt=nil] string name Name of the stat to get. It is the same as
- * in the xml.
+ * in the xml. If nil, returns a table containing all the shipstats.
  *    @luatparam[opt=false] boolean internal Whether or not to use the internal
  * representation.
  *    @luaparam Value of the stat or a table containing all the stats if name is
