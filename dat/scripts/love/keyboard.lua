@@ -6,8 +6,13 @@ keyboard._keystate = {}
 keyboard._repeat = false
 
 -- Internal function that connects to Naev
-function keyboard.isDown( key )
-   return (keyboard._keystate[ key ] == true)
+function keyboard.isDown( ... )
+   for k,key in ipairs{...} do
+      if (keyboard._keystate[ key ] == true) then
+         return true
+      end
+   end
+   return false
 end
 function keyboard.setKeyRepeat( enable )
    keyboard._repeat = enable
