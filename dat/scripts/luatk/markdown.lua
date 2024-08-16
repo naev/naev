@@ -202,7 +202,6 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
          else
             list = cmark.NO_LIST
          end
-         ty = ty
          margin = headerfont:getHeight()
          block.y = ty
       elseif node_type == cmark.NODE_ITEM then
@@ -235,7 +234,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                local imgblock = {
                   type = "image",
                   x = 0,
-                  y = ty,
+                  y = ty+margin,
                   w = iw,
                   h = ih,
                   sx = sx,
@@ -244,6 +243,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                }
                table.insert( wgt.blocks, imgblock )
                ty = ty + ih
+               margin = 0
                block.y = ty
             end
          end
@@ -253,12 +253,16 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
             local luawgt = options.processhtml( literal, tw )
             if luawgt then
                -- Move the location information to markdown side
-               local wx, wy = luawgt.x, luawgt.y+ty+10
+               local wx, wy = luawgt.x, luawgt.y+ty
                local ww, wh = luawgt.w, luawgt.h
                local rightalign = (wx < 0)
+               margin = math.max( margin, 10 )
                if rightalign then
                   wx = w + wx - ww -- Don't use w here
                   tw = wx - 10
+               else
+                  wy = wy + margin
+                  margin = 0
                end
                -- Push down if can overlap
                if tw < w and (rightalign or (ww > tw)) and #wgt.wgts > 0 then
