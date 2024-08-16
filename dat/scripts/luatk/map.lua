@@ -48,6 +48,8 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    wgt.sys = {}
    local fplayer = faction.player()
    local function addsys( s, known )
+      if s:hidden() then return end
+
       local sys = { s=s, p=s:pos()*inv, n=s:name(), coutter=cInert, r=luatk_map.sys_radius }
       local f = s:faction()
       if not f or not known then
@@ -353,8 +355,7 @@ function Map:clicked( mx, my )
       end
       local r = math.max( self.scale * luatk_map.sys_radius, 3 )
       if d < (r*4)^2 then
-         -- TODO proper selection
-         self.selected = s
+         player.autonavSetTarget( s )
       end
    end
 end
