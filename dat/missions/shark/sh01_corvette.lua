@@ -150,6 +150,20 @@ function lets_go()
    sharkboy:setHostile(true)
    sharkboy:setHilight(true)
 
+   -- On easy difficulty, it's nearly impossible for the player to be disabled...
+   local _dif, stats = naev.difficulty(true)
+   local mod = math.max( (stats.armour_mod or 1), 1 )
+   mod = mod * math.max( (stats.time_speedup or 1), 1 )
+   mod = mod * math.max( (stats.armour_regen or 1), 1 )
+   mod = (mod-1)*100
+   if mod > 0 then
+      sharkboy:intrinsicSet{
+         fwd_damage = mod,
+         tur_damage = mod,
+         launch_damage = mod,
+      }
+   end
+
    mem.stage = 1
 
    mem.shark_dead_hook = hook.pilot( sharkboy, "death", "shark_dead" )
