@@ -92,7 +92,7 @@ function land ()
    local n = vn.newCharacter( zpp.noona.name, {colour=zpp.noona.colour} ) -- Just for the letter
    vn.transition()
    vn.na(_([[You land and head to where Noona told you to drop off the package. On the way you get lost in the maze of research laboratories, coffee machines, dangerous looking experiments, and Za'lek scientists engaged in heated arguments who don't notice your presence.]]))
-   vn.na(_([[Eventually, you find the hidden away room labeled "Particle Physics Experiments Registration Department", and enter to meet a unenthusiastic academic secretary. You hand them the package, and, after sighing, they proceed to inspect the contents. They mention something about Dr. Sanderaite being at it again, and hand you an envelope that was in the package mentioning that it is not part of the report.]]))
+   vn.na(_([[Eventually, you find the hidden away room labelled "Particle Physics Experiments Registration Department", and enter to meet an unenthusiastic academic secretary. You hand them the package, and, after sighing, they proceed to inspect the contents. They mention something about Dr. Sanderaite being at it again, and hand you an envelope that was in the package mentioning that it is not part of the report.]]))
    vn.na(_([[As you wonder about what is in the envelope, suddenly two Za'lek Military officers bust in to the room.]]))
    -- TODO proper graphics
    local z1 = vn.Character.new( _("Za'lek Officer A"), {image="zalek_thug1.png", pos="left"} )
