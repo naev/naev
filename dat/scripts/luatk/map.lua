@@ -153,6 +153,9 @@ function luatk_map.newMap( parent, x, y, w, h, options )
 
    -- Internals
    wgt._canvas = lg.newCanvas( wgt.w, wgt.h )
+   if not wgt.hidenames then
+      wgt._canvasnames = lg.newCanvas( wgt.w, wgt.h )
+   end
    wgt._dirty = true
 
    return wgt
@@ -215,6 +218,8 @@ function Map:draw( bx, by )
 
       -- Render names
       if not self.hidenames then
+         lg.setCanvas( self._canvasnames )
+         lg.clear( 0, 0, 0, 0 )
          local f
          if self.scale >= 1.5 then
             f = self.deffont
@@ -311,6 +316,12 @@ function Map:draw( bx, by )
    -- Allow for custom rendering
    if self.custrender then
       self.custrender( self, x, y )
+   end
+
+   -- Draw canvas
+   if not self.hidenames then
+      lg.setColor(1, 1, 1, 1)
+      self._canvasnames:draw( x, y )
    end
 end
 function Map:rerender()
