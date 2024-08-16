@@ -1,6 +1,7 @@
 local luatk = require 'luatk'
 local lg = require 'love.graphics'
 local lf = require "love.filesystem"
+local lk = require "love.keyboard"
 local love_shaders = require "love_shaders"
 
 local luatk_map = {}
@@ -355,7 +356,7 @@ function Map:clicked( mx, my )
       end
       local r = math.max( self.scale * luatk_map.sys_radius, 3 )
       if d < (r*4)^2 then
-         player.autonavSetTarget( s )
+         player.autonavSetTarget( s, lk.isDown("lshift","rshift") )
       end
    end
 end
