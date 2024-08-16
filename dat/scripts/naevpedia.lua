@@ -234,8 +234,10 @@ local function loaddoc( filename )
    -- Create Lua environment
    meta._G = tcopy( _G ) -- Copy Lua table over
    meta._G._G = meta._G
+   meta._G.p_ = p_
    meta._G._ = _
    meta._G.fmt = fmt
+   meta._G.string = string
    meta._G.setmetatable = setmetatable
    meta._G.math = math
    meta._G.require = require
