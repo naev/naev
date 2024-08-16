@@ -18,6 +18,7 @@ local colours = {
 
 local board_size, selected_x, selected_y, board, headerfont, headertext
 local movekeys, alpha, done, bx, by, bgshader, standalone, game_won
+local canskip, btnskip
 
 local function flip( x, y )
    -- flip
@@ -47,6 +48,9 @@ function mg.load ()
    standalone = c.flip.standalone
    board_size = params.board_size or 4
    headertext = params.header
+
+   -- See if can skip.
+   canskip = naev.conf().puzzle_skip
 
    -- Get movement keys
    movekeys = {
@@ -103,6 +107,17 @@ function mg.load ()
    bgshader = love_shaders.circuit()
    alpha = 0
    game_won = false
+
+   if canskip then
+      local luatk = require "luatk"
+      local bw, bh = 100, 30
+      btnskip = luatk.newButton( nil, lw-30-bw, lh-30-bh, bw, bh, _("SKIP"), function ()
+         game_won = true
+         local nc = naev.cache()
+         nc.flip.won = true
+         done = true
+      end )
+   end
 end
 
 function mg.keypressed( key )
@@ -135,10 +150,21 @@ function mg.keypressed( key )
    end
 end
 
+local function btnover( x, y, btn )
+   if x < btn.x or x > btn.x+btn.w or y < btn.y or y > btn.y+btn.h then
+      return false
+   end
+   return true
+end
+
 function mg.mousepressed( mx, my, _button )
    if game_won then
       done = true
       return
+   end
+
+   if canskip then
+      btnskip._pressed = btnover( mx, my, btnskip )
    end
 
    -- identify the clicked cell (if any)
@@ -157,6 +183,22 @@ function mg.mousepressed( mx, my, _button )
       local c = naev.cache()
       c.flip.won = true
       game_won = true
+   end
+end
+
+function mg.mousemoved( x, y )
+   if canskip then
+      btnskip.mouseover = btnover( x, y, btnskip )
+   end
+end
+
+function mg.mousereleased( x, y )
+   if canskip then
+      if btnskip._pressed and btnover( x, y, btnskip ) then
+         btnskip:clicked()
+      else
+         btnskip._pressed = false
+      end
    end
 end
 
@@ -215,6 +257,10 @@ function mg.draw ()
    else
       setcol{ 1, 1, 1 }
       lg.printf( "#n".._("Flip the blocks until they are all lit"), 0, by+y, nw, "center" )
+   end
+
+   if canskip then
+      btnskip:draw( 0, 0 )
    end
 end
 
