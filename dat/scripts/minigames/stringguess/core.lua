@@ -26,7 +26,7 @@ local function getpos( tbl, elm )
 end
 
 local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by, sol_length, mouseover
-local bgshader, movekeys, standalone, headertext, headerfont
+local bgshader, movekeys, standalone, headertext, headerfont, canskip, btnskip
 function mg.load ()
    local c = naev.cache()
    local params = c.stringguess.params
@@ -35,6 +35,9 @@ function mg.load ()
    keyset = params.keyset or {"B","E","K","N","O","V"} -- NAEV OK -> change A to B so it doesn't interfere with WASD keybinds
    sol_length = params.sol_length or 3
    headertext = params.header
+
+   -- See if can skip.
+   canskip = naev.conf().puzzle_skip
 
    -- Get movement keys
    movekeys = {
@@ -87,6 +90,18 @@ function mg.load ()
    end
    headerfont = lg.newFont(24)
    bgshader = love_shaders.circuit()
+
+   if canskip then
+      local luatk = require "luatk"
+      local bw, bh = 100, 30
+      btnskip = luatk.newButton( nil, lw-30-bw, lh-30-bh, bw, bh, _("SKIP"), function ()
+         game = 1
+         local nc = naev.cache()
+         nc.stringguess.won = true
+         mg.sfx.level:play()
+         done = true
+      end )
+   end
 end
 
 local matches_exact, matches_fuzzy
@@ -234,12 +249,23 @@ local function mousepos( x, y )
    return i
 end
 
+local function btnover( x, y, btn )
+   if x < btn.x or x > btn.x+btn.w or y < btn.y or y > btn.y+btn.h then
+      return false
+   end
+   return true
+end
+
 function mg.mousemoved( x, y )
    local i = mousepos( x, y )
    if i then
       mouseover = i
    else
       mouseover = nil
+   end
+
+   if canskip then
+      btnskip.mouseover = btnover( x, y, btnskip )
    end
 end
 
@@ -253,6 +279,20 @@ function mg.mousepressed( x, y, _button )
    -- Apply click
    if i then
       dopress( keyset[i] )
+   end
+
+   if canskip then
+      btnskip._pressed = btnover( x, y, btnskip )
+   end
+end
+
+function mg.mousereleased( x, y )
+   if canskip then
+      if btnskip._pressed and btnover( x, y, btnskip ) then
+         btnskip:clicked()
+      else
+         btnskip._pressed = false
+      end
    end
 end
 
@@ -389,6 +429,10 @@ Guess the sequence of codes
       end
       drawresult( t.matches_exact, t.matches_fuzzy, bx+x+boxw-40, by+y, s+b )
       y = y+s
+   end
+
+   if canskip then
+      btnskip:draw( 0, 0 )
    end
 end
 
