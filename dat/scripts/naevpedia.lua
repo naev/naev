@@ -353,7 +353,9 @@ function naevpedia.setup( name )
          elseif pa > pb then
             return false
          end
-         return a < b
+         local ta = _(na.title or a)
+         local tb = _(nb.title or b)
+         return ta < tb
       end )
       local titles = {}
       local defelem = 1 -- Defaults to highest priority element otherwise
