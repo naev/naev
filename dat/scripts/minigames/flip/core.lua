@@ -113,8 +113,7 @@ function mg.load ()
       local bw, bh = 100, 30
       btnskip = luatk.newButton( nil, lw-30-bw, lh-30-bh, bw, bh, _("SKIP"), function ()
          game_won = true
-         local nc = naev.cache()
-         nc.flip.won = true
+         naev.cache().flip.won = true
          done = true
       end )
    end

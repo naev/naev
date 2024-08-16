@@ -96,8 +96,7 @@ function mg.load ()
       local bw, bh = 100, 30
       btnskip = luatk.newButton( nil, lw-30-bw, lh-30-bh, bw, bh, _("SKIP"), function ()
          game = 1
-         local nc = naev.cache()
-         nc.stringguess.won = true
+         naev.cache().stringguess.won = true
          mg.sfx.level:play()
          done = true
       end )

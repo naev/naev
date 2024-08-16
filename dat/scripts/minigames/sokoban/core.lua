@@ -120,7 +120,7 @@ local function loadLevel()
 end
 
 local alpha, done, headerfont, headertext, completed, standalone
-local movekeys
+local movekeys, canskip, btnskip
 function sokoban.load()
    local c = naev.cache()
    c.sokoban.completed = false
@@ -131,6 +131,9 @@ function sokoban.load()
    if type(params.levels)=='number' then
       params.levels = {params.levels}
    end
+
+   -- See if can skip.
+   canskip = naev.conf().puzzle_skip
 
    -- Load audio
    if not sokoban.sfx then
@@ -169,6 +172,17 @@ function sokoban.load()
    done = false
 
    loadLevel()
+
+   if canskip then
+      local luatk = require "luatk"
+      local bw, bh = 100, 30
+      local lw, lh = love.window.getDesktopDimensions()
+      btnskip = luatk.newButton( nil, lw-30-bw, lh-30-bh, bw, bh, _("SKIP"), function ()
+         done = true
+         completed = true
+         naev.cache().sokoban.completed = true
+      end )
+   end
 end
 
 local function push( dx, dy )
@@ -385,6 +399,10 @@ function sokoban.draw()
    lg.rectangle( 'fill', (nw-cw)/2, cy, cw, 20 )
    setcol{ 1, 1, 1 }
    lg.printf( controls, 0, cy, nw, "center" )
+
+   if canskip then
+      btnskip:draw( 0, 0 )
+   end
 end
 
 function sokoban.update( dt )
@@ -403,6 +421,35 @@ function sokoban.update( dt )
    end
    alpha = math.min( alpha + dt * 2, 1 )
    return false
+end
+
+local function btnover( x, y, btn )
+   if x < btn.x or x > btn.x+btn.w or y < btn.y or y > btn.y+btn.h then
+      return false
+   end
+   return true
+end
+
+function sokoban.mousemoved( x, y )
+   if canskip then
+      btnskip.mouseover = btnover( x, y, btnskip )
+   end
+end
+
+function sokoban.mousepressed( x, y )
+   if canskip then
+      btnskip._pressed = btnover( x, y, btnskip )
+   end
+end
+
+function sokoban.mousereleased( x, y )
+   if canskip then
+      if btnskip._pressed and btnover( x, y, btnskip ) then
+         btnskip:clicked()
+      else
+         btnskip._pressed = false
+      end
+   end
 end
 
 return sokoban
