@@ -89,7 +89,7 @@ local function extractmetadata( entry, s )
       name = path[#path],
    }
    if #path >= 3 then
-      meta.parent = path[2] -- Just use subcategory (assuming only same category is visible)
+      meta.parent = path[1].."/"..path[2] -- Just use subcategory (assuming only same category is visible)
    end
    if utf8.find( s, "---\n", 1, true )==1 then
       local es, ee = utf8.find( s, "---\n", 4, true )
@@ -353,6 +353,11 @@ function naevpedia.setup( name )
          if pa < pb then
             return true
          elseif pa > pb then
+            return false
+         end
+         if a==nb.parent then
+            return true
+         elseif b==na.parent then
             return false
          end
          local ta = _(na.title or a)
