@@ -752,7 +752,7 @@ luatk.Text = {}
 setmetatable( luatk.Text, { __index = luatk.Widget } )
 luatk.Text_mt = { __index = luatk.Text }
 --[[
-Creates a new button widget.
+Creates a new text widget.
 
    @tparam number x X position of the widget.
    @tparam number y Y position of the widget.
@@ -816,6 +816,88 @@ Gets the dimensions of the text widget text.
 function luatk.Text:dimensions ()
    local maxw, wrap = self.font:getWrap( self.text, self.w )
    return maxw, self.font:getLineHeight() * #wrap
+end
+
+--[[
+-- Table widget
+--]]
+luatk.Table = {}
+setmetatable( luatk.Table, { __index = luatk.Widget } )
+luatk.Table_mt = { __index = luatk.Table }
+--[[
+Creates a new table widget.
+
+   @tparam number x X position of the widget.
+   @tparam number y Y position of the widget.
+   @tparam number w Width of the widget.
+   @tparam number h Height of the widget.
+   @tparam string text Table to display on the widget.
+--]]
+function luatk.newTable( parent, x, y, w, h, data, opts )
+   opts = opts or {}
+
+   local marginw = opts.marginw or 15
+   local marginh = opts.marginh or 3
+
+   -- Determine size and scaling
+   local font = opts.font or luatk._deffont or lg.getFont()
+   local nc = 0
+   local colw = {}
+   for i,r in ipairs(data) do
+      nc = math.max( nc, #r )
+      for j,c in ipairs(r) do
+         local maxw = font:getWidth( c )
+         colw[j] = math.max( colw[j] or 0, maxw+marginw )
+      end
+   end
+   local totalw = 0
+   for k,c in ipairs(colw) do
+      totalw = totalw + c
+   end
+   -- Too big so we downscale
+   if totalw > w then
+      local scale = w / totalw
+      for k,c in ipairs(colw) do
+         colw[k] = math.floor(c * scale)
+      end
+   end
+   -- Finally store data
+   local rowh = {}
+   for i,r in ipairs(data) do
+      nc = math.max( nc, #r )
+      for j,c in ipairs(r) do
+         local _maxw, wrap = font:getWrap( c, colw[j] )
+         rowh[i] = math.max( rowh[i] or 0, font:getLineHeight() * #wrap + marginh )
+      end
+   end
+   local totalh = 0
+   for k,r in ipairs(rowh) do
+      totalh = totalh+r
+   end
+
+   local wgt   = luatk.newWidget( parent, x, y, w, (h or totalh) )
+   setmetatable( wgt, luatk.Table_mt )
+   wgt.type    = "text"
+   wgt.data    = data
+   wgt.col     = opts.col or luatk.colour.text
+   wgt.align   = opts.align or "left"
+   wgt.font    = font
+   wgt.rowh    = rowh
+   wgt.colw    = colw
+   return wgt
+end
+function luatk.Table:draw( bx, by )
+   lg.setColour( self.col )
+   local y = by+self.y
+   for i,r in ipairs(self.data) do
+      local x = bx + self.x
+      for j,c in ipairs(r) do
+         local mw = self.colw[j]
+         lg.printf( c, self.font, x, y, mw, self.align )
+         x = x + self.colw[j]
+      end
+      y = y + self.rowh[i]
+   end
 end
 
 --[[
