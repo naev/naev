@@ -327,11 +327,20 @@ function naevpedia.setup( name )
    end
 
    -- TODO make list filterable / searchable
-   local lstnav, lstcategory
+   local lstnav, lstcategory, lstelem
    local function update_list( meta )
       if not meta.entry then return end
       if lstcategory==meta.category then
          -- No need to recreate
+         local defelem
+         for k,v in ipairs(lstelem) do
+            if v==meta.entry then
+               defelem = k
+            end
+         end
+         if defelem then
+            lstnav:set( defelem, true )
+         end
          return
       end
       if lstnav then
@@ -339,7 +348,7 @@ function naevpedia.setup( name )
       end
       lstcategory = meta.category
 
-      local lstelem = {}
+      lstelem = {}
       for k,v in pairs(nc._naevpedia) do
          if meta.category == v.category and test_cond(v) then
             table.insert( lstelem, v.entry )
