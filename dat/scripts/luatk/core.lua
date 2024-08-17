@@ -1414,6 +1414,46 @@ function luatk.Input:textinput( str )
 end
 
 --[[
+-- Container widget
+--]]
+luatk.Container = {}
+setmetatable( luatk.Container, { __index = luatk.Widget } )
+luatk.Container_mt = { __index = luatk.Container }
+--[[
+Creates a new table widget.
+
+   @tparam number x X position of the widget.
+   @tparam number y Y position of the widget.
+   @tparam number w Width of the widget.
+   @tparam number h Height of the widget.
+   @tparam string text Container to display on the widget.
+--]]
+function luatk.newContainer( parent, x, y, w, h, wgts, opts )
+   opts = opts or {}
+   local marginh = opts.marginh or 10
+
+   local totalh = -marginh
+   for k,v in ipairs(wgts) do
+      v.y = totalh+marginh
+      totalh = totalh+v.h+marginh
+   end
+   totalh = math.max( 0, totalh )
+   print( x, y, w, (h or totalh ) )
+
+   local wgt   = luatk.newWidget( parent, x, y, w, (h or totalh) )
+   setmetatable( wgt, luatk.Container_mt )
+   wgt.type    = "container"
+   wgt.wgts    = wgts
+   return wgt
+end
+function luatk.Container:draw( bx, by )
+   local x,y = bx+self.x, by+self.y
+   for k,v in ipairs(self.wgts) do
+      v:draw( x, y )
+   end
+end
+
+--[[
    High Level dialogue stuff
 --]]
 local function msgbox_size( title, msg )
