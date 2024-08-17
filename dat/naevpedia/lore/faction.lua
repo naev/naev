@@ -16,9 +16,38 @@ local function wgt ()
    end
    local txt = string.format( p_("standings", "#%c%+d%%#0   [ %s ]"), c:byte(), val, str )
 
-   local wgt_img = luatk.newImage( nil, 0, 0, 192, 192, lg.newImage(fct:logo()) )
-   local wgt_stand = luatk.newText( nil, 0, 0, nil, nil, txt, nil, "center" )
-   return luatk.newContainer( nil, -10, 0, nil, nil, { wgt_img, wgt_stand }, {
+   local wgtlist = {}
+   table.insert( wgtlist, luatk.newImage( nil, 0, 0, 192, 192, lg.newImage(fct:logo()) ) )
+   table.insert( wgtlist, luatk.newText( nil, 0, 0, nil, nil, txt, nil, "center" ) )
+
+   local function filter_known( lst )
+      local newlst = {}
+      for k,v in ipairs(lst) do
+         if v:known() and not v:invisible() then
+            table.insert( newlst, v )
+         end
+      end
+      return newlst
+   end
+
+   local allies = filter_known( fct:allies() )
+   if #allies > 0 then
+      local t = "#F".._("Allies:").."#0"
+      for k,v in ipairs(allies) do
+         t = t.."\n・"..v:longname()
+      end
+      table.insert( wgtlist, luatk.newText( nil, 0, 0, nil, nil, t ) )
+   end
+   local enemies = filter_known( fct:enemies() )
+   if #enemies > 0 then
+      local t = "#H".._("Enemies:").."#0"
+      for k,v in ipairs(enemies) do
+         t = t.."\n・"..v:longname()
+      end
+      table.insert( wgtlist, luatk.newText( nil, 0, 0, nil, nil, t ) )
+   end
+
+   return luatk.newContainer( nil, -10, 0, nil, nil, wgtlist, {
       center = true
    } )
 end
