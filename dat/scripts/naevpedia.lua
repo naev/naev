@@ -360,6 +360,11 @@ function naevpedia.setup( name )
          elseif b==na.parent then
             return false
          end
+         if na.parent ~= nb.parent then
+            local npa = (na.parent and nc._naevpedia[na.parent]) or na
+            local npb = (nb.parent and nc._naevpedia[nb.parent]) or nb
+            return _(npa.title or npa.entry) < _(npb.title or npb.entry)
+         end
          local ta = _(na.title or a)
          local tb = _(nb.title or b)
          return ta < tb
