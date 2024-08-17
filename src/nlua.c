@@ -836,6 +836,7 @@ static int nlua_require( lua_State *L )
    lua_remove( L, -2 ); /* r */
 
    /* Set the environment for the call. */
+   /* TODO this is wrong when using setfenv Lua-side... */
    lua_pushvalue( L, envtab ); /* r, e */
    lua_setfenv( L, -2 );       /* r */
 
