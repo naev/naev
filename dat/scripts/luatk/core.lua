@@ -1438,7 +1438,6 @@ function luatk.newContainer( parent, x, y, w, h, wgts, opts )
       totalh = totalh+v.h+marginh
    end
    totalh = math.max( 0, totalh )
-   print( x, y, w, (h or totalh ) )
 
    local wgt   = luatk.newWidget( parent, x, y, w, (h or totalh) )
    setmetatable( wgt, luatk.Container_mt )
