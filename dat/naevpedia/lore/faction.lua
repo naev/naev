@@ -3,7 +3,7 @@ local luatk = require "luatk"
 
 local fctlib = {}
 
-local fct, s
+local fct
 
 local function wgt ()
    local val, str = fct:playerStanding()
@@ -16,15 +16,15 @@ local function wgt ()
    end
    local txt = string.format( p_("standings", "#%c%+d%%#0   [ %s ]"), c:byte(), val, str )
 
-
-   local wgt_img = luatk.newImage( nil, 0, 0, s, s, lg.newImage(fct:logo()) )
-   local wgt_stand = luatk.newText( nil, 0, 0, s, nil, txt, nil, "center" )
-   return luatk.newContainer( nil, -10, 0, s, nil, { wgt_img, wgt_stand } )
+   local wgt_img = luatk.newImage( nil, 0, 0, 192, 192, lg.newImage(fct:logo()) )
+   local wgt_stand = luatk.newText( nil, 0, 0, nil, nil, txt, nil, "center" )
+   return luatk.newContainer( nil, -10, 0, nil, nil, { wgt_img, wgt_stand }, {
+      center = true
+   } )
 end
 
 function fctlib.init( fname )
    fct = faction.get( fname )
-   s = 256
    return wgt
 end
 
