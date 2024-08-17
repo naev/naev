@@ -1,6 +1,11 @@
 ---
 title: "Great House Dvareed"
 ---
+<%
+wgtfct = require("naevpedia.lore.faction").init( "Dvaered" )
+%>
+<widget wgtfct />
+
 # Great House Dvaered
 
 House Dvaered is one of the Great Houses of [the Empire](lore/empire).

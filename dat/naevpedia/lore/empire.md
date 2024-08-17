@@ -2,34 +2,9 @@
 title: "The Empire"
 ---
 <%
---require("naevpedia.lore.faction").init( "Empire" )
-local lg = require "love.graphics"
-local luatk = require "luatk"
-
-local fct = faction.get( "Empire" )
-local s = 256
-function mainimg ()
-    return luatk.newImage( nil, -10, 0, s, s, lg.newImage(fct:logo()), {
-    } )
-end
-function standing ()
-    local val, str = fct:playerStanding()
-    local c = "N"
-    local fp = faction.player()
-    if fct:areEnemies(fp) then
-        c = 'H'
-    elseif fct:areAllies(fp) then
-        c = 'F'
-    end
-    print( val, str )
-    local txt = string.format( p_("standings", "#%c%+d%%#0   [ %s ]"), c:byte(), val, str )
-    return luatk.newText( nil, -10, 0, s, nil, txt, nil, "center" )
-end
+wgtfct = require("naevpedia.lore.faction").init( "Empire" )
 %>
-
-<widget mainimg />
-
-<widget standing />
+<widget wgtfct />
 
 # The Empire
 

@@ -1,6 +1,11 @@
 ---
 title: "Great House Za'lek"
 ---
+<%
+wgtfct = require("naevpedia.lore.faction").init( "Za'lek" )
+%>
+<widget wgtfct />
+
 # Great House Za'lek
 
 House Za'lek is one of the Great Houses in [the Empire](lore/empire).
