@@ -951,6 +951,15 @@ function luatk.newImage( parent, x, y, w, h, img, opts )
    local iw, ih = wgt.img:getDimensions()
    wgt.wscale  = wgt.w / iw
    wgt.hscale  = wgt.h / ih
+   wgt.xoff    = 0
+   wgt.yoff    = 0
+   if not opts.stretch then
+      local scale = math.min( wgt.wscale, wgt.hscale )
+      wgt.wscale = scale
+      wgt.hscale = scale
+      wgt.xoff = (w-iw*scale)*0.5
+      wgt.yoff = (h-ih*scale)*0.5
+   end
    return wgt
 end
 function luatk.Image:draw( bx, by )
@@ -960,7 +969,7 @@ function luatk.Image:draw( bx, by )
       lg.rectangle( "fill", x, y, self.w, self.h )
    end
    lg.setColour( self.col )
-   self.img:draw( x, y, self.rot, self.wscale, self.hscale )
+   self.img:draw( x+self.xoff, y+self.yoff, self.rot, self.wscale, self.hscale )
    if self.frame then
       lg.setColour( self.frame )
       lg.rectangle( "line", x, y, self.w, self.h )
