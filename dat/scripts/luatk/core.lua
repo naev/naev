@@ -762,6 +762,9 @@ Creates a new text widget.
 --]]
 function luatk.newText( parent, x, y, w, h, text, col, align, font )
    font = font or luatk._deffont or lg.getFont()
+   if not w then
+      w = font:getWidth( text )
+   end
    if not h then
       local _maxw, wrap = font:getWrap( text, w )
       h = font:getLineHeight() * #wrap
@@ -1433,13 +1436,24 @@ function luatk.newContainer( parent, x, y, w, h, wgts, opts )
    local marginh = opts.marginh or 10
 
    local totalh = -marginh
+   local maxw = 0
    for k,v in ipairs(wgts) do
+      v.x = 0 -- Default left align
       v.y = totalh+marginh
       totalh = totalh+v.h+marginh
+      maxw = math.max( maxw, v.w )
    end
    totalh = math.max( 0, totalh )
+   maxw = math.min( maxw, (w or maxw) )
 
-   local wgt   = luatk.newWidget( parent, x, y, w, (h or totalh) )
+   -- See if we do centering
+   if opts.center then
+      for k,v in ipairs(wgts) do
+         v.x = (maxw-v.w)*0.5
+      end
+   end
+
+   local wgt   = luatk.newWidget( parent, x, y, (w or maxw), (h or totalh) )
    setmetatable( wgt, luatk.Container_mt )
    wgt.type    = "container"
    wgt.wgts    = wgts
