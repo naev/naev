@@ -50,6 +50,7 @@
 #include "player.h"
 #include "queue.h"
 #include "rng.h"
+#include "safelanes.h"
 #include "sound.h"
 #include "spfx.h"
 #include "start.h"
@@ -124,9 +125,10 @@ int space_spawn = 1; /**< Spawn enabled by default. */
  * Internal Prototypes.
  */
 /* spob load */
-static int spob_parse( Spob *spob, const char *filename, Commodity **stdList );
-static int space_parseSpobs( xmlNodePtr parent, StarSystem *sys );
-static int spob_parsePresence( xmlNodePtr node, SpobPresence *ap );
+static void spob_initDefaults( Spob *spob );
+static int  spob_parse( Spob *spob, const char *filename, Commodity **stdList );
+static int  space_parseSpobs( xmlNodePtr parent, StarSystem *sys );
+static int  spob_parsePresence( xmlNodePtr node, SpobPresence *ap );
 /* system load */
 static void system_init( StarSystem *sys );
 static int  systems_load( void );
@@ -1799,27 +1801,14 @@ Spob *spob_new( void )
    old_stack = spob_stack;
    p         = &array_grow( &spob_stack );
    realloced = ( old_stack != spob_stack );
-   memset( p, 0, sizeof( Spob ) );
-   p->id               = array_size( spob_stack ) - 1;
-   p->presence.faction = -1;
-
-   /* Lua doesn't default to 0 as a safe value... */
-   p->lua_env        = LUA_NOREF;
-   p->lua_mem        = LUA_NOREF;
-   p->lua_init       = LUA_NOREF;
-   p->lua_load       = LUA_NOREF;
-   p->lua_unload     = LUA_NOREF;
-   p->lua_can_land   = LUA_NOREF;
-   p->lua_land       = LUA_NOREF;
-   p->lua_render     = LUA_NOREF;
-   p->lua_update     = LUA_NOREF;
-   p->lua_comm       = LUA_NOREF;
-   p->lua_population = LUA_NOREF;
-   p->lua_barbg      = LUA_NOREF;
+   spob_initDefaults( p );
+   p->id = array_size( spob_stack ) - 1;
 
    /* Reconstruct the jumps. */
    if ( !systems_loading && realloced )
       systems_reconstructSpobs();
+   // if (!systems_loading)
+   //    safelanes_recalculate();
 
    return p;
 }
@@ -2295,6 +2284,31 @@ static int spob_parsePresence( xmlNodePtr node, SpobPresence *ap )
 }
 
 /**
+ * @brief Initializes a new spob to safe defaults.
+ */
+static void spob_initDefaults( Spob *spob )
+{
+   /* Clear up memory for safe defaults. */
+   memset( spob, 0, sizeof( Spob ) );
+   spob->hide             = 0.01;
+   spob->radius           = -1.;
+   spob->presence.faction = -1;
+   spob->marker_scale     = 1.; /* Default scale. */
+   /* Lua stuff. */
+   spob->lua_env        = LUA_NOREF;
+   spob->lua_init       = LUA_NOREF;
+   spob->lua_load       = LUA_NOREF;
+   spob->lua_unload     = LUA_NOREF;
+   spob->lua_land       = LUA_NOREF;
+   spob->lua_can_land   = LUA_NOREF;
+   spob->lua_render     = LUA_NOREF;
+   spob->lua_update     = LUA_NOREF;
+   spob->lua_comm       = LUA_NOREF;
+   spob->lua_population = LUA_NOREF;
+   spob->lua_barbg      = LUA_NOREF;
+}
+
+/**
  * @brief Parses a spob from an xml node.
  *
  *    @param spob Spob to fill up.
@@ -2320,26 +2334,10 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
       return -1;
    }
 
-   /* Clear up memory for safe defaults. */
-   memset( spob, 0, sizeof( Spob ) );
-   flags                  = 0;
-   spob->hide             = 0.01;
-   spob->radius           = -1.;
-   spob->presence.faction = -1;
-   spob->marker_scale     = 1.; /* Default scale. */
-   comms                  = array_create( Commodity                  *);
-   /* Lua stuff. */
-   spob->lua_env        = LUA_NOREF;
-   spob->lua_init       = LUA_NOREF;
-   spob->lua_load       = LUA_NOREF;
-   spob->lua_unload     = LUA_NOREF;
-   spob->lua_land       = LUA_NOREF;
-   spob->lua_can_land   = LUA_NOREF;
-   spob->lua_render     = LUA_NOREF;
-   spob->lua_update     = LUA_NOREF;
-   spob->lua_comm       = LUA_NOREF;
-   spob->lua_population = LUA_NOREF;
-   spob->lua_barbg      = LUA_NOREF;
+   /* Set defaults. */
+   spob_initDefaults( spob );
+   flags = 0;
+   comms = array_create( Commodity * );
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", spob->name );
@@ -2882,8 +2880,10 @@ StarSystem *system_new( void )
    sys->id = array_size( systems_stack ) - 1;
 
    /* Reconstruct the jumps, only truely necessary if the systems realloced. */
-   if ( !systems_loading )
+   if ( !systems_loading ) {
       systems_reconstructJumps();
+      safelanes_recalculate();
+   }
 
    return sys;
 }
