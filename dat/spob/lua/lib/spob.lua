@@ -6,12 +6,12 @@ local li = require "love.image"
 
 local luaspob = {}
 
-local f_empire = faction.get("Empire")
-local f_dvaered = faction.get("Dvaered")
-local f_zalek = faction.get("Za'lek")
-local f_sirius = faction.get("Sirius")
-local f_soromid = faction.get("Soromid")
-local f_proteron = faction.get("Proteron")
+local f_empire = faction.exists("Empire")
+local f_dvaered = faction.exists("Dvaered")
+local f_zalek = faction.exists("Za'lek")
+local f_sirius = faction.exists("Sirius")
+local f_soromid = faction.exists("Soromid")
+local f_proteron = faction.exists("Proteron")
 
 function luaspob.setup( init_params )
    mem.params = init_params or {} -- Store parameters
@@ -123,7 +123,7 @@ local function msg_granted_def ()
       }
    elseif fct == f_proteron then
       return {
-         _([["You loyalty to the Circle is noted. Commence landing when ready."]]), -- The landing request implicitly has a declaration of belief in the Circle
+         _([["Your loyalty to the Circle is noted. Commence landing when ready."]]), -- The landing request implicitly has a declaration of belief in the Circle
          fmt.f(_([["Landing ID X{num1}-{num2}, you are cleared to land. Follow the rules."]]), {num1=rnd.rnd(0, 9), num2=rnd.rnd(0, 99)}), --ID of an individual land request
          _([["You may land. Act appropriately while landed."]]), -- A true Proteron would not need to be told, but you are an outsider.
          _([["We have received your loyalty oath, pilot. You may land."]]), -- Colonel Cathcart smiles down on us

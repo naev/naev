@@ -34,7 +34,7 @@ function srs.sfxGong()
    luaspfx.sfx( false, nil, sfxGong )
 end
 
-local astral = outfit.get("Astral Projection")
+local astral = outfit.exists("Astral Projection")
 function srs.weapsets( outfits )
    local pp = player.pilot()
    pp:weapsetCleanup()
