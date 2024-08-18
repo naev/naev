@@ -33,7 +33,8 @@ local usable_outfits = {
    ["Reality Rip"]               = "reality_rip",
 }
 
-if __debugging then
+-- We ignore if plugins are enabled
+if __debugging  and #naev.plugins() <= 0 then
    for k,v in pairs(usable_outfits) do
       if not outfit.get(k) then
          warn(_("Unknown outfit"))
