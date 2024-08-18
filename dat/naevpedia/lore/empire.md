@@ -24,7 +24,7 @@ From The Empire came the Great Houses, and they interact with the Imperial gover
 
 ## History
 
-The Empire began with the first, self-proclaimed Emperor Daedris who used his forces to do battle with and eventually unite many of the the factions at war during the Faction Wars.
+The Empire began with the first, self-proclaimed Emperor Daedris who used his forces to do battle with and eventually unite many of the factions at war during the Faction Wars.
 His success meant the end of the Faction Wars and started the period now known as the Third Growth.
 
 The following period of peace was a Golden Age of The Empire, with new trade routes bringing wealth and prosperity to Empire worlds, patrols effectively extinguishing piracy and, apart from minor incidents, peace reigning in all of Empire Space.
