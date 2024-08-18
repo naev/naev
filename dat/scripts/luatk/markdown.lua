@@ -91,12 +91,16 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
    local emph = false
    local list = cmark.NO_LIST
    local listn
+   local listup = {}
+   local listdepth = 0
    local linkx, linky, linkname
    for cur, entering, node_type in cmark.walk(doc) do
       --print( string.format("%s - %s [%s]", _nodestr(node_type), cmark.node_get_type_string(cur), tostring(entering) ) )
       if node_type == cmark.NODE_PARAGRAPH then
          if list== cmark.NO_LIST then
             margin = math.max( margin, 10 )
+         else
+            margin = math.max( margin, 2 )
          end
          if not entering then
             block_end()
@@ -203,21 +207,36 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
          end
       elseif node_type == cmark.NODE_LIST then
          if entering then
+            table.insert( listup, { list=list, listn=listn } )
             list = cmark.node_get_list_type( cur )
             listn = 1
+            listdepth = listdepth + 1
+            if listdepth <= 1 then
+               margin = math.max( margin, deffont:getHeight()*0.5 )
+            end
          else
-            list = cmark.NO_LIST
+            local l = listup[#listup]
+            list = l.list
+            listn = l.listn
+            listup[#listup] = nil
+            listdepth = listdepth - 1
          end
-         margin = headerfont:getHeight()
+         if listdepth <= 0 then
+            margin = math.max( margin, deffont:getHeight() )
+         end
          block.y = ty
       elseif node_type == cmark.NODE_ITEM then
          if entering then
+            for i=1,(listdepth-1) do
+               block.text = block.text..p_("cmark_list","   ")
+            end
             if list == cmark.BULLET_LIST then
                block.text = block.text.."・"
             elseif list == cmark.ORDERED_LIST then
                block.text = block.text..string.format(p_("cmark_list","%d. "),listn)
             end
             listn = listn + 1
+            margin = math.max( margin, 2 )
          end
       elseif node_type == cmark.NODE_FIRST_INLINE or node_type == cmark.NODE_LAST_INLINE then
          local str_type = cmark.node_get_type_string(cur)
