@@ -27,6 +27,7 @@
 /* Outfit metatable methods. */
 static int outfitL_eq( lua_State *L );
 static int outfitL_get( lua_State *L );
+static int outfitL_exists( lua_State *L );
 static int outfitL_getAll( lua_State *L );
 static int outfitL_name( lua_State *L );
 static int outfitL_nameRaw( lua_State *L );
@@ -59,6 +60,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
    { "get", outfitL_get },
+   { "exists", outfitL_exists },
    { "getAll", outfitL_getAll },
    { "name", outfitL_name },
    { "nameRaw", outfitL_nameRaw },
@@ -225,7 +227,9 @@ static int outfitL_eq( lua_State *L )
 }
 
 /**
- * @brief Gets a outfit.
+ * @brief Gets a outfit
+ *
+ * Will raise an error if fails.
  *
  * @usage s = outfit.get( "Heavy Laser" ) -- Gets the heavy laser
  *
@@ -238,6 +242,37 @@ static int outfitL_get( lua_State *L )
    const Outfit *o = luaL_validoutfit( L, 1 );
    lua_pushoutfit( L, o );
    return 1;
+}
+
+/**
+ * @brief Gets a outfit if it exists, nil otherwise.
+ *
+ * Does not raise any warnings or errors if fails.
+ *
+ * @usage s = outfit.exists( "Heavy Laser" ) -- Gets the heavy laser if it
+ * exists
+ *
+ *    @luatparam string s Raw (untranslated) name of the outfit to get.
+ *    @luatreturn Outfit|nil The outfit matching name or nil if not found
+ * @luafunc get
+ */
+static int outfitL_exists( lua_State *L )
+{
+   const Outfit *o = NULL;
+   if ( lua_isoutfit( L, 1 ) )
+      o = luaL_checkoutfit( L, 1 );
+   else if ( lua_isstring( L, 1 ) ) {
+      const char *str = lua_tostring( L, 1 );
+      o               = outfit_getW( str );
+   } else {
+      luaL_typerror( L, 1, OUTFIT_METATABLE );
+      return 0;
+   }
+   if ( o != NULL ) {
+      lua_pushoutfit( L, o );
+      return 1;
+   }
+   return 0;
 }
 
 /**
