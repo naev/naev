@@ -2283,6 +2283,9 @@ static int spob_parsePresence( xmlNodePtr node, SpobPresence *ap )
    return 0;
 }
 
+/**
+ * @brief Initializes a new spob to safe defaults.
+ */
 static void spob_initDefaults( Spob *spob )
 {
    /* Clear up memory for safe defaults. */
