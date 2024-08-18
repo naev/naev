@@ -50,6 +50,7 @@
 #include "player.h"
 #include "queue.h"
 #include "rng.h"
+#include "safelanes.h"
 #include "sound.h"
 #include "spfx.h"
 #include "start.h"
@@ -2882,8 +2883,10 @@ StarSystem *system_new( void )
    sys->id = array_size( systems_stack ) - 1;
 
    /* Reconstruct the jumps, only truely necessary if the systems realloced. */
-   if ( !systems_loading )
+   if ( !systems_loading ) {
       systems_reconstructJumps();
+      safelanes_recalculate();
+   }
 
    return sys;
 }
