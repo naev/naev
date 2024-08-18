@@ -1570,8 +1570,9 @@ static int faction_parseSocial( const char *file )
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "ally" ) ) {
-               int *tmp = &array_grow( &base->allies );
-               *tmp     = faction_get( xml_get( cur ) );
+               int fct = faction_get( xml_get( cur ) );
+               if ( faction_isFaction( fct ) )
+                  array_push_back( &base->allies, fct );
             }
          } while ( xml_nextNode( cur ) );
          continue;
@@ -1583,8 +1584,9 @@ static int faction_parseSocial( const char *file )
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "enemy" ) ) {
-               int *tmp = &array_grow( &base->enemies );
-               *tmp     = faction_get( xml_get( cur ) );
+               int fct = faction_get( xml_get( cur ) );
+               if ( faction_isFaction( fct ) )
+                  array_push_back( &base->enemies, fct );
             }
          } while ( xml_nextNode( cur ) );
          continue;
