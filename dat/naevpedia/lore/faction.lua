@@ -31,22 +31,29 @@ local function wgt ()
    end
 
    local allies = filter_known( fct:allies() )
+   local t = ""
    if #allies > 0 then
-      local t = "#F".._("Allies:").."#0"
+      if t ~= "" then
+         t = t.."\n"
+      end
+      t = t.."#F".._("Allies:").."#0"
       for k,v in ipairs(allies) do
          t = t.."\n・"..v:longname()
       end
-      table.insert( wgtlist, luatk.newText( nil, 0, 0, nil, nil, t ) )
    end
    local enemies = filter_known( fct:enemies() )
    if #enemies > 0 then
-      local t = "#H".._("Enemies:").."#0"
+      if t ~= "" then
+         t = t.."\n"
+      end
+      t = t.."#H".._("Enemies:").."#0"
       for k,v in ipairs(enemies) do
          t = t.."\n・"..v:longname()
       end
+   end
+   if t ~= "" then
       table.insert( wgtlist, luatk.newText( nil, 0, 0, nil, nil, t ) )
    end
-
    return luatk.newContainer( nil, -10, 0, nil, nil, wgtlist, {
       center = true
    } )
