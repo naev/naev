@@ -137,6 +137,7 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path,
                "^asteroids/.*\\.xml",
                "^unidiff/.*\\.xml",
                "^map_decorator/.*\\.xml",
+               "^naevpedia/.*\\.xml",
                "^intro",
                NULL,
             };
