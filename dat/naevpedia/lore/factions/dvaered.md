@@ -8,8 +8,8 @@ wgtfct = require("naevpedia.lore.faction").init( "Dvaered" )
 
 # Great House Dvaered
 
-House Dvaered is one of the Great Houses of [the Empire](lore/empire).
-It evolved from the simple working class of [the Empire](lore/empire) during the Second Growth and the Faction Wars and was granted the status of a Great House by the Emperor during the golden age of [the Empire](lore/empire).
+House Dvaered is one of the Great Houses of [the Empire](lore/factions/empire).
+It evolved from the simple working class of [the Empire](lore/factions/empire) during the Second Growth and the Faction Wars and was granted the status of a Great House by the Emperor during the golden age of [the Empire](lore/factions/empire).
 Today, it is governed by the military and the armed forces dominate much of the everyday lives of the Dvaered citizens.
 Planets are governed by Warlords, former members of the Dvaered High Command, which makes all the most important decisions about the House.
 The Warlords regulate life on a local basis, while the High Command directs the Faction as a whole.
@@ -20,21 +20,21 @@ The only way of rising up is usually to join the military and earn medals and co
 * **Leader:** None
 * **Leading Structure:** High Command Generals
 * **Government:** Meritocracy
-* **Formation:** [UST 331](lore/timeline)
+* **Formation:** [UST 331](lore/history)
 * **Homeworld:** Dvaered High Command (Dvaer system)
 
 ## History
 
 House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual laborers, foot soldiers and outcasts.
-With the gradual decline in authority of [the Empire](lore/empire), the working class became increasingly disgruntled with their social position.
+With the gradual decline in authority of [the Empire](lore/factions/empire), the working class became increasingly disgruntled with their social position.
 They banded together into what could be considered the biggest labor union in all of human history, and started demanding better treatment.
 
-When [the Empire](lore/empire) was less than forthcoming, the laborers began to take more drastic measures.
+When [the Empire](lore/factions/empire) was less than forthcoming, the laborers began to take more drastic measures.
 The labor union turned into a resistance movement that escalated into open rebellion on several worlds.
 History names this movement the Dvaered Revolts.
 The origin of that name is unclear, but it became common among the rebelling workers.
 
-Cycles of civil unrest on the working planets and fruitless attempts on the part of [the Empire](lore/empire) to quell it eventually led the Emperor of that time to agree to the Dvaereds' demands.
+Cycles of civil unrest on the working planets and fruitless attempts on the part of [the Empire](lore/factions/empire) to quell it eventually led the Emperor of that time to agree to the Dvaereds' demands.
 Their leaders were granted the right to establish a Great House, and direct control over a sizeable chunk of space, in reparation for the lives lost during the Dvaered Revolts.
 
 Eager to claim their place among the other big players, the then-time Dvaered leadership decided that discipline was the only proper way to shape a society.

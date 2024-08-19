@@ -19,7 +19,7 @@ From The Empire came the Great Houses, and they interact with the Imperial gover
 * **Leader:** The Emperor
 * **Leading Structure:** Imperial Council
 * **Government:** Republic Monarchy
-* **Formation:** [UST 0](lore/timeline)
+* **Formation:** [UST 0](lore/history)
 * **Homeworld:** Emperor's Wrath (Gamma Polaris)
 
 ## History
@@ -30,7 +30,7 @@ His success meant the end of the Faction Wars and started the period now known a
 The following period of peace was a Golden Age of The Empire, with new trade routes bringing wealth and prosperity to Empire worlds, patrols effectively extinguishing piracy and, apart from minor incidents, peace reigning in all of Empire Space.
 
 That Golden Age ended when the Empire began to weaken and succumb to its own bureaucratic tendencies, in turn losing control over some of its territories.
-Notably, the [Dvaered](lore/dvaered) Revolts were a clear sign of the Empire's reduced ability to keep law and order.
+Notably, the [Dvaered](lore/factions/dvaered) Revolts were a clear sign of the Empire's reduced ability to keep law and order.
 
 The Empire suffered catastrophic damage from [the Incident](lore/history/incident).
 Many Empire worlds were devastated in the initial blast, and many stations and planets are now caught in the Sol Nebula.
@@ -55,13 +55,13 @@ It is a major goal of the Empire to restore the security of its territory to lev
 
 Civilian traders will not usually be able to trade with the Empire directly, as that trust is only given to individuals or factions enjoying a high reputation with the Empire.
 After a recruitment process, individuals can be tasked with running minor shipping assignments.
-Otherwise, the Empire holds trading treaties with many important factions, such as the Great Houses or the [Space Traders Society](lore/tradersociety).
+Otherwise, the Empire holds trading treaties with many important factions, such as the Great Houses or the [Space Traders Society](lore/factions/tradersociety).
 The Empire has a policy of interfering as little as possible with the local economy of planets, beyond monitoring that there is no contraband transported to or from them.
 Other than that, what commodities companies produce on planets is of no concern to the Empire.
 
 ## Science and Technology
 
-Most of the scientific research is conducted by [House Za'lek](lore/zalek), but the Empire still has research bases of its own.
+Most of the scientific research is conducted by [House Za'lek](lore/factions/zalek), but the Empire still has research bases of its own.
 It remains largely unknown to the public what projects the Imperial researchers develop.
 Empire engineers have created the [Peacemaker](ships/empire_peacemaker), a capital ship design which only the most respected among the Empire military are permitted to captain, and which is unequaled in combat by any other know vessel.
 These are the flagships of any larger Empire fleets, while local patrols usually consist primarily of [Admonishers](ships/empire_peacemaker) and [Lancelots](ships/empire_lancelot).
@@ -103,4 +103,4 @@ Typically, a Great House will put on a token show of loyalty, and subsequently i
 ### Minor Houses
 
 Next to the Great Houses, some Minor Houses exist, as well.
-The status of a Minor House is given for various reasons like an achievement or as is the case with the [House Goddard](lore/goddard), in return for a service.
+The status of a Minor House is given for various reasons like an achievement or as is the case with the [House Goddard](lore/factions/goddard), in return for a service.

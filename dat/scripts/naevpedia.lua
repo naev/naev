@@ -199,6 +199,10 @@ local out = ""
    luastr = luastr.."return out"
    local c,cerror = loadstring(luastr)
    if not c then
+      -- Show line by line breakdown of script
+      for k,v in ipairs(strsplit( luastr, '\n'  )) do
+         print(string.format("%03d: %s",k,v))
+      end
       warn( cerror )
       return false, "#r"..cerror.."#0"
    end
@@ -364,9 +368,7 @@ function naevpedia.setup( name )
             return false
          end
          if na.parent ~= nb.parent then
-            local npa = (na.parent and nc._naevpedia[na.parent]) or na
-            local npb = (nb.parent and nc._naevpedia[nb.parent]) or nb
-            return npsort( npa.entry, npb.entry )
+            return a < b
          end
          -- Sort by priority
          local pa = na.priority or 5
