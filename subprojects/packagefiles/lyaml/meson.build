@@ -52,7 +52,6 @@ lyaml = static_library(
     lyaml_src,
     include_directories: includes,
     dependencies: deps,
-    version: meson.project_version(),
 )
 
 lyaml_dep = declare_dependency(
