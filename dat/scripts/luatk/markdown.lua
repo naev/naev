@@ -116,7 +116,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       elseif node_type == cmark.NODE_HEADING then
          local hfont = headerfont[ cmark.node_get_heading_level(cur) ]
          if not hfont then
-            hfont = headerfont[4]
+            hfont = headerfont[#headerfont]
          end
          if entering then
             --block.text = block.text .. "#n"
