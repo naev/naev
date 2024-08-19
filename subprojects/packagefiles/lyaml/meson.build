@@ -33,17 +33,15 @@ lyaml_lua = files(
 )
 
 deps = []
-#deps += dependency('yaml-0.1', fallback: ['yaml_dep'], required: true )
-deps += dependency('yaml-0.1')
+deps += dependency('yaml-0.1', required: true)
 
 useLuaJIT = get_option('luajit')
-lua = dependency('', required: false)
 if useLuaJIT.disabled() == false
-    lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'))
+    lua = dependency('luajit', fallback: ['luajit'], required: useLuaJIT, static: get_option('steamruntime'))
 endif
 summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 if not lua.found()
-    lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
+    lua = dependency('lua51', fallback: ['lua'], required: true)
 endif
 deps += lua
 
@@ -52,11 +50,12 @@ includes = include_directories('.', 'ext/yaml')
 lyaml = static_library(
     'lyaml',
     lyaml_src,
-    dependencies : deps,
     include_directories: includes,
+    dependencies: deps,
+    version: meson.project_version(),
 )
 
 lyaml_dep = declare_dependency(
-    include_directories: includes,
     link_with: lyaml,
+    include_directories: includes,
 )

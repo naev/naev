@@ -156,7 +156,7 @@ int main (void) { return 0; }''')
       lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
    endif
 
-   naev_deps += lua
+   naev_deps += [lua]
 
    # Lua Libraries
    lyaml = subproject('lyaml').get_variable('lyaml_dep')
