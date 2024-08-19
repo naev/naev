@@ -44,7 +44,7 @@ outstr += """
 end %>
 <widget mainimg />
 
-## <%= o:name() %>
+# <%= o:name() %>
 
 <%= o:description( nil ) %>
 
@@ -52,7 +52,7 @@ end %>
 
 <%= o:summary( nil, true ) %>
 
-### Availability
+## Availability
 
 <%
     local availability = {}

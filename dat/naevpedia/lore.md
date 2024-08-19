@@ -2,6 +2,6 @@
 title: "Lore Overview"
 priority: 1
 ---
-## Lore
+# Lore
 
 * [History](lore/history)

@@ -1,7 +1,9 @@
 ---
 title: "Ship Stats"
 ---
-## Ship Stats
+# Ship Stats
+
+## Core Stats
 
 There are many different important stats for ships that define their behaviour when flying in space. These are all visible from the [equipment](mechanics/equipment) panel.
 
@@ -33,7 +35,7 @@ Electronic warfare determines how ships see and target each other.
 * [Stealth at](mechanics/ewarfare): The minimum distance needed from the nearest non-ally ship to be able to enter [stealth](mechanics/ewarfare).
 * [Scanning Time](mechanics/ewarfare): The amount of time it takes other ships to scan this ship and see the details of the cargo it has.
 
-## Core Stats
+## Health Stats
 
 * [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, can be overcome by weapon penetration.
 * [Shield](mechanics/damage): The ship's first line of defense. Shields naturally regenerate and provide the ship with a first line of defense, absorbing weapon fire that would otherwise damage the hull.

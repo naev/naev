@@ -1,7 +1,7 @@
 ---
 title: "Ship Classes"
 ---
-## Ship Classes
+# Ship Classes
 
 Ships are divided between military and civilian class ships.
 

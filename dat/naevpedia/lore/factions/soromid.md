@@ -1,6 +1,11 @@
 ---
 title: "Soromid"
 ---
+<%
+wgtfct = require("naevpedia.lore.faction").init( "Soromid" )
+%>
+<widget wgtfct />
+
 # Soromid
 
 The Soromid are a major faction in Naev.

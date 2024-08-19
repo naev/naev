@@ -1,6 +1,6 @@
 ---
 title: "Mechanics Overview"
 ---
-## Mechanics
+# Mechanics
 
 Here be explanation of mechanics.

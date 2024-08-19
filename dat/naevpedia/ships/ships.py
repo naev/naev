@@ -51,11 +51,11 @@ end
 
 <widget rightstats />
 
-## <%= s:name() %>
+# <%= s:name() %>
 
 <%= s:description() %>
 
-### Ship Properties
+## Properties
 
 * **[Class](mechanics/class)**:   <%= _(s:classDisplay()) %>
 * **Fabricator**:   <%= _(s:fabricator()) %>
@@ -72,7 +72,7 @@ end
 * **License**:   <%= s:license() %>
 <% end %>
 
-### Availability
+## Availability
 
 <%
     local availability = {}

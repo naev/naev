@@ -1,6 +1,11 @@
 ---
 title: "Great House Sirius"
 ---
+<%
+wgtfct = require("naevpedia.lore.faction").init( "Sirius" )
+%>
+<widget wgtfct />
+
 # Great House Sirius
 
 The House Sirius is one of the Great Houses in [the Empire](lore/factions/empire).

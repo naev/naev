@@ -1,9 +1,10 @@
 ---
 title: "Fabricators"
 ---
-## Fabricators
+# Fabricators
 
-### Independent
+## Independent
+
 * **Melendez Corp.**: Focuses on large cargo-oriented trade ships and heavy engines
 * **Krain Industries**: Niche fabricator that makes the Kestrel and Starbridge (and special engines)
 * **Nexus Shipyards**: Makes a decent amount of ships for the Empire and their civilian counterparts. Also makes engines and stealth armour.
@@ -14,7 +15,8 @@ title: "Fabricators"
 * **Schafer & Kane Industries**: Heavy armours and cargo hulls
 * **Red Star Organization**: Defensive armours
 
-### Faction-specific
+## Faction-specific
+
 * **House Goddard**: Makes the Goddard and involved in the design of House Dvaered ships
 * **House Dvaered**: Factional ships
 * **Skull and Bones**: Makes pirate versions of many ships
@@ -30,6 +32,6 @@ title: "Fabricators"
 <% end %>
 
 <% if player.misnDone("Operation Cold Metal") then %>
-### Miscellaneous
+## Miscellaneous
 * **Robosys**: For the collective
 <% end %>

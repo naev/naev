@@ -1,9 +1,7 @@
 ---
 title: History Overview
 ---
-## Important Events in History
-
-Notable Events:
+# Notable Recent Historical Events
 
 1. **Sirichana reaches Murtis** (UST -143)
 1. **Imperial Proclamation** (UST 0): Creation of the Empire
@@ -25,15 +23,15 @@ Notable Events:
 1. **Creation of [House Dvaered](lore/factions/dvaered)** (UST 331)
 1. **Quarantine of Sorom** (UST 333)
 1. **Formalization of [Soromid](lore/factions/soromid)** (UST 387)
+<% if false then %>
 1. **Hypergate Project** (UST 572)
+<% end %>
 <% if faction.get("Collective"):known() then %>
 1. **Collective Goes Rogue** (UST 590)
 <% end %>
 1. **[The Incident](lore/history/incident)** (UST 593:3726.4663)
 
-##
-
-### The First Growth (roughly UST -1000 to UST -400)
+## The First Growth (roughly UST -1000 to UST -400)
 
 The First Growth is seen as the true beginning of mankind's space age.
 Though space travel existed before this time, it was limited to Earth's immediate environs, and bore little in the way of fruit.
@@ -46,7 +44,7 @@ It was an achievement never before witnessed in human history.
 For a long time, the eleven colonies were on their own, as communication with each other and with Earth was a matter of years.
 That would change, abruptly and dramatically.
 
-### The Second Growth (roughly UST -400 to UST -100)
+## The Second Growth (roughly UST -400 to UST -100)
 
 While the eleven colonies painstakingly tried to develop themselves into economies resembling Earth's, Earth itself continued to progress scientifically.
 Though no new colonization efforts were made after the first twenty, as this was deemed too costly, different avenues of deep space exploration were being invented, tested and discarded on a regular basis.
@@ -66,7 +64,7 @@ The Second Growth had begun.
 As humanity settled farther and farther away from Earth, a decision was made to streamline the interplanetary relations by creating a large, democratic body to unite all worlds in a single political system.
 This body was known as the Federation.
 
-### The Federation (roughly UST -300 to UST -100)
+## The Federation (roughly UST -300 to UST -100)
 
 Though each colony was granted the right of self-government, the Federation was tasked with managing interplanetary affairs.
 Interstellar trade and security came to fall under the Federation's jurisdiction, and each standard cycle the planetary governments would convene in an interstellar summit, discussing the current state of affairs.
@@ -81,7 +79,7 @@ Gradually, the colonies began to lose faith in Federal leadership, and began to 
 These interests began to conflict with each other.
 Tensions grew higher and higher, until eventually the situation degenerated into armed conflict.
 
-### The Faction Wars (roughly UST -100 to UST 0)
+## The Faction Wars (roughly UST -100 to UST 0)
 
 The Faction Wars are the first interstellar war on record, and they also count as the largest human war ever waged.
 Truly every human world was at war, and precious few were safe from attack.
@@ -102,7 +100,7 @@ The two fleets clashed, as was Daedris' plan, decimating each other.
 This gave the Earth Federation the opening it needed to take the initiative and gain the upper hand.
 The other two factions couldn't recover in time. The Earth Federation had won the Faction Wars.
 
-### Rise of the Empire (roughly UST 0 to UST 300)
+## Rise of the Empire (roughly UST 0 to UST 300)
 
 After his military victory, Daedris took political control in a military coup.
 The Earth Federation was re-branded the Empire, and Daedris proclaimed himself Emperor over all human space, ruling over the Galaxy from his throne on Earth.
@@ -113,7 +111,7 @@ The vertical chain of command installed by the Empire proved to work better than
 A period of extended peace and prosperity began, which would later be referred to as the Imperial Golden Age.
 The wounds left by the Faction Wars slowly healed over time, and eventually humanity began to expand anew in an ambitious Third Growth.
 
-### Decline of the Empire (roughly UST 300 to UST 593)
+## Decline of the Empire (roughly UST 300 to UST 593)
 
 Though the Empire was the greatest and most stable political system in all of human history, it did not prove strong enough to stand the test of time.
 Little by little, as the Empire grew and its Emperors made ill-advised decisions, dissent crept into the minds of the Imperial citizens.
@@ -124,7 +122,7 @@ The Empire found itself forced to cede territory and political control to the ne
 Though all human worlds remained loyal to the Empire by treaty, the sphere of influence of the line of Emperors had dwindled considerably.
 What really broke the Empire's power, though, was a sudden, cataclysmic event known only as the Incident.
 
-### The Incident (UST 593:3726.4663)
+## The Incident (UST 593:3726.4663)
 
 Little is known about the Incident, other than what can be observed.
 An eruption of some kind occurred which decimated all planets in Sol and several systems around it.

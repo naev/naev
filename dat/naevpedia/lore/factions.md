@@ -1,27 +1,35 @@
 ---
 title: "Factions"
 ---
-
+# Factions
 
 ## The Empire
 
-* The Empire
-* Great House Dvaered
-* Great House Sirius
-* Great House Za'lek
-* House Goddard
+* [The Empire](docs/factions/empire)
+* [Great House Dvaered](docs/factions/dvaered)
+* [Great House Sirius](docs/factions/sirius)
+* [Great House Za'lek](docs/factions/zalek)
+* [House Goddard](docs/factions/goddard)
 
-* Soromid
-* The Frontier
-* Frontier Liberation Front
-* Space Traders Society
+## Independent Faction
+
+* [Soromid](docs/factions/soromid)
+* [The Frontier](docs/factions/frontier)
+* [Frontier Liberation Front](docs/factions/flf)
+* [Space Traders Society](docs/factions/spacetraders)
    * Mining Vrata
    * Astra Vigilis
    * Imperial Red Star
-* Thurion
-* Sovereign Proteron Autarchy
+<% if faction.get("Thurion"):known() then %>
+* [Thurion](docs/factions/thurion)
+<% end %>
+<% if faction.get("Proteron"):known() then %>
+* [Sovereign Proteron Autarchy](docs/factions/proteron)
+<% end %>
 
-* Galactic Space Pirates
+## Pirates
+
+* [Galactic Space Pirates](docs/factions/pirates)
 * Marauders
 <% if faction.get("Dreamer Clan"):known() then %>
 * Dreamer Clan

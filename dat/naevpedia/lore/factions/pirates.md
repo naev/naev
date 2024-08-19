@@ -13,6 +13,11 @@ title: "Galactic Space Pirates"
     strravenclan  = (fravenclan:known()   and _("[Raven Clan](lore/factions/pirates/ravenclan)"))     or strunknown
     strdreamerclan= (fdreamerclan:known() and _("[Dreamer clan](lore/factions/pirates/dreamerclan)")) or strunknown
 %>
+<%
+wgtfct = require("naevpedia.lore.faction").init( "Pirate" )
+%>
+<widget wgtfct />
+
 # Galactic Space Pirates
 
 The Galactic Space Pirates are split into to main groups, the clans and independent pirates. Independent pirates are further split into marauders, extremely aggressive and not very well equipped pirates, and the normal pirates, which tend to be better equip and usually strive to join one of the major pirate clans.

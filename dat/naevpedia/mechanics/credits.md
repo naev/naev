@@ -1,6 +1,6 @@
 ---
 title: "Credits"
 ---
-## Credits
+# Credits
 
 TODO

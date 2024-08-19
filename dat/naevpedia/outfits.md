@@ -2,7 +2,7 @@
 title: "Outfits Overview"
 priority: 1
 ---
-## Outfits
+# Outfits
 
 TODO
 
