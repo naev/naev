@@ -56,7 +56,11 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
 
    local deffont = options.font or luatk._deffont or lg.getFont()
    -- TODO load same font family
-   local headerfont = options.fontheader or lg.newFont( math.floor(deffont:getHeight()*1.2+0.5) )
+   local headerfont = {}
+   headerfont[1] = options.fontheader1 or lg.newFont( math.floor(deffont:getHeight()*1.4+0.5) )
+   headerfont[2] = options.fontheader2 or lg.newFont( math.floor(deffont:getHeight()*1.2+0.5) )
+   headerfont[3] = options.fontheader3 or lg.newFont( math.floor(deffont:getHeight()*1.1+0.5) )
+   headerfont[4] = options.fontheader4 or lg.newFont( math.floor(deffont:getHeight()*1.05+0.5) )
 
    wgt.blocks = {}
    local block = { type="text", x = 0, y = 0, w=w, h=0, text = "", font=deffont }
@@ -110,17 +114,21 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
             block.text = block.text..p_("cmark_softbreak", " ")
          end
       elseif node_type == cmark.NODE_HEADING then
+         local hfont = headerfont[ cmark.node_get_heading_level(cur) ]
+         if not hfont then
+            hfont = headerfont[4]
+         end
          if entering then
             --block.text = block.text .. "#n"
-            block.font = headerfont
+            block.font = hfont
             if block.y > 0 then
-               margin = math.max( margin, headerfont:getHeight() )
+               margin = math.max( margin, hfont:getHeight() )
                block.y = ty
             end
          else
-            margin = math.max( margin, headerfont:getHeight()*0.5 )
+            margin = math.max( margin, hfont:getHeight()*0.5 )
             block_end()
-            margin = math.max( margin, headerfont:getHeight()*0.5 )
+            margin = math.max( margin, hfont:getHeight()*0.5 )
          end
       elseif node_type == cmark.NODE_STRONG then
          strong = entering
