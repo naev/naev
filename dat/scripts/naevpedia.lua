@@ -354,16 +354,10 @@ function naevpedia.setup( name )
             table.insert( lstelem, v.entry )
          end
       end
-      table.sort( lstelem, function ( a, b )
+      local function npsort( a, b )
          local na = nc._naevpedia[a]
          local nb = nc._naevpedia[b]
-         local pa = na.priority or 5
-         local pb = nb.priority or 5
-         if pa < pb then
-            return true
-         elseif pa > pb then
-            return false
-         end
+         -- Sort by parent-child relationship first
          if a==nb.parent then
             return true
          elseif b==na.parent then
@@ -372,12 +366,22 @@ function naevpedia.setup( name )
          if na.parent ~= nb.parent then
             local npa = (na.parent and nc._naevpedia[na.parent]) or na
             local npb = (nb.parent and nc._naevpedia[nb.parent]) or nb
-            return _(npa.title or npa.entry) < _(npb.title or npb.entry)
+            return npsort( npa.entry, npb.entry )
          end
+         -- Sort by priority
+         local pa = na.priority or 5
+         local pb = nb.priority or 5
+         if pa < pb then
+            return true
+         elseif pa > pb then
+            return false
+         end
+         -- Sort by title or filename
          local ta = _(na.title or a)
          local tb = _(nb.title or b)
          return ta < tb
-      end )
+      end
+      table.sort( lstelem, npsort )
       local titles = {}
       local defelem = 1 -- Defaults to highest priority element otherwise
       for k,v in ipairs(lstelem) do
