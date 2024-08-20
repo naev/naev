@@ -368,9 +368,11 @@ void audio_cleanup( LuaAudio_t *la )
          la->active = -1;
          if ( SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) ==
               SDL_MUTEX_TIMEDOUT )
+#if DEBUGGING
             WARN( _( "Timed out while waiting for audio thread of '%s' to "
                      "finish!" ),
                   la->name );
+#endif
       }
       if ( alIsSource( la->source ) == AL_TRUE )
          alDeleteSources( 1, &la->source );
@@ -386,7 +388,9 @@ void audio_cleanup( LuaAudio_t *la )
       break;
    }
 
+#if DEBUGGING
    free( la->name );
+#endif
 }
 
 /**
@@ -405,7 +409,9 @@ static int audioL_tostring( lua_State *L )
 {
    char              buf[STRMAX_SHORT];
    const LuaAudio_t *la = luaL_checkaudio( L, 1 );
+#if DEBUGGING
    snprintf( buf, sizeof( buf ), "Audio( %s )", la->name );
+#endif
    lua_pushstring( L, buf );
    return 1;
 }
@@ -767,9 +773,11 @@ static int audioL_stop( lua_State *L )
          la->active = -1;
          if ( SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) ==
               SDL_MUTEX_TIMEDOUT )
+#if DEBUGGING
             WARN( _( "Timed out while waiting for audio thread of '%s' to "
                      "finish!" ),
                   la->name );
+#endif
       }
       la->th = NULL;
 
