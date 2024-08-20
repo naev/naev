@@ -271,6 +271,10 @@ local function loaddoc( filename )
       return success, dat, meta
    end
 
+   -- Process inline Lua
+   local str, tbl = lua_escape( dat )
+   dat = lua_unescape( str, tbl, meta._G )
+
    -- Finally parse the remaining text as markdown
    return success, cmark.parse_string( dat, cmark.OPT_DEFAULT ), meta
 end
@@ -480,10 +484,6 @@ function naevpedia.setup( name )
                   return false, fmt.f(_("{target} 404"),{target=target})
                end
                return true, _(lmeta.title or lmeta.name)
-            end,
-            processliteral = function ( s )
-               local str, tbl = lua_escape( s )
-               return lua_unescape( str, tbl, meta._G )
             end,
             processhtml = function ( s, tw )
                local t = strsplit( utf8.sub( s, 2, -4 ), ' ')
