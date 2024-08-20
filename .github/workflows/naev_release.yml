@@ -254,7 +254,7 @@ jobs:
               --prefix="$(pwd)"/build/windows \
               --bindir=. \
               -Dndata_path=. \
-              --cross-file='source/utils/build/windows_cross_mingw.ini' \
+              --cross-file='source/utils/build/windows_cross_mingw_ucrt64.ini' \
               --buildtype=release \
               --force-fallback-for=glpk,SuiteSparse \
               -Dinstaller=true \
