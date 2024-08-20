@@ -6,7 +6,7 @@ import shutil
 import sys
 
 # Set environment variables
-os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = '/mingw64/bin:/usr/x86_64-w64-mingw32/bin:/usr/x86_64-w64-mingw32/sys-root/mingw/bin:/usr/lib/mxe/usr/x86_64-w64-mingw32.shared/bin'
+os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = '/mingw64/bin:/usr/x86_64-w64-mingw32/bin:/usr/x86_64-w64-mingw32ucrt/bin:/usr/x86_64-w64-mingw32/sys-root/mingw/bin:/usr/x86_64-w64-mingw32ucrt/sys-root/mingw/bin:/usr/lib/mxe/usr/x86_64-w64-mingw32.shared/bin'
 
 def usage():
     print(f"usage: {os.path.basename(sys.argv[0])} [-d] (Verbose output)")
