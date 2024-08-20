@@ -465,7 +465,9 @@ static int audio_genSource( ALuint *source )
       break;
 
    default:
+#if DEBUGGING
       al_checkHandleError( err, __func__, __LINE__ );
+#endif /* DEBUGGING */
       break;
    }
    return -1;
