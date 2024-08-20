@@ -37,7 +37,7 @@ deps += dependency('yaml-0.1', required: true)
 
 useLuaJIT = get_option('luajit')
 if useLuaJIT.disabled() == false
-    lua = dependency('luajit', fallback: ['luajit'], required: useLuaJIT, static: get_option('steamruntime'))
+    lua = dependency('luajit', fallback: ['luajit'], required: useLuaJIT, static: get_option('steamruntime'), default_options: ['luajit=false'])
 endif
 summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 if not lua.found()
