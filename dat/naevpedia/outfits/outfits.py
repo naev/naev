@@ -34,23 +34,33 @@ cond: "return outfit.get([[{d['name']}]]):known()"
 """
 # We don't want any substitution below if possible
 outstr += """
-<% function mainimg ( mw )
-    local lg = require "love.graphics"
-    local luatk = require "luatk"
+<%
+local lg = require "love.graphics"
+local luatk = require "luatk"
+function mainimg ( mw )
     return luatk.newImage( nil, -10, 0, 256, 256, lg.newImage(o:icon()), {
         frame = {0.05,0.05,0.05},
         bkg = {0,0,0},
     } )
-end %>
+end
+
+function wgtdescription( mw, tw )
+    return luatk.newText( nil, 10, 0, tw, nil, o:description( nil ) )
+end
+
+function wgtsummary( mw, tw )
+    return luatk.newText( nil, 10, 0, tw, nil, o:summary( nil, true ) )
+end
+%>
 <widget mainimg />
 
 # <%= o:name() %>
 
-<%= o:description( nil ) %>
+<widget wgtdescription />
 
 ## Properties
 
-<%= o:summary( nil, true ) %>
+<widget wgtsummary />
 
 ## Availability
 

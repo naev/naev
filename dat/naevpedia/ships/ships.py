@@ -46,6 +46,9 @@ end
 function rightstats ( mw )
     return luatk.newText( nil, -10, 0, 256, nil, s:shipstatDesc() )
 end
+function wgtdescription ( mw, tw )
+    return luatk.newText( nil, 0, 0, tw, nil, s:description() )
+end
 %>
 <widget mainimg />
 
@@ -53,7 +56,7 @@ end
 
 # <%= s:name() %>
 
-<%= s:description() %>
+<widget wgtdescription />
 
 ## Properties
 
