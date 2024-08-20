@@ -47,12 +47,26 @@ deps += lua
 
 includes = include_directories('.', 'ext/yaml')
 
-lyaml = static_library(
-    'lyaml',
-    lyaml_src,
-    include_directories: includes,
-    dependencies: deps,
-)
+# Determine if the platform is Windows or a Windows-like environment
+is_windows = host_machine.system() == 'windows'
+is_cygwin = meson.has_function('gettimeofday') and meson.get_compiler('c').has_argument('-D__CYGWIN__')
+is_mingw = meson.get_compiler('c').has_argument('-D__MINGW32__') or meson.get_compiler('c').has_argument('-D__MINGW64__')
+
+if is_windows or is_cygwin or is_mingw
+    lyaml = shared_library(
+        'lyaml',
+        lyaml_src,
+        include_directories: includes,
+        dependencies: deps,
+    )
+else
+    lyaml = static_library(
+        'lyaml',
+        lyaml_src,
+        include_directories: includes,
+        dependencies: deps,
+    )
+endif
 
 lyaml_dep = declare_dependency(
     link_with: lyaml,
