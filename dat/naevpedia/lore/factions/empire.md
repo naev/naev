@@ -20,7 +20,7 @@ From The Empire came the Great Houses, and they interact with the Imperial gover
 * **Leading Structure:** Imperial Council
 * **Government:** Republic Monarchy
 * **Formation:** [UST 0](lore/history)
-* **Homeworld:** Emperor's Wrath (Gamma Polaris)
+* **Homeworld:** Emperor's Wrath (Gamma Polaris system)
 
 ## History
 

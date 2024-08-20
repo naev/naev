@@ -21,9 +21,6 @@ These tensions escalated into all-out war, with devastating consequences to both
 * **Government:** Autarchy
 * **Formation:** UST 47
 * **Homeworld:** ??? <!-- TODO: find the actual homeworld -->
-* **Important Figures:**
-   * High Autarch Python
-   * Autarchs
 
 ## House Proteron Society
 

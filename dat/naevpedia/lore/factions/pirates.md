@@ -31,8 +31,6 @@ The four main clans are the <%= strblacklotus %>, <%= strwildones %>, <%= strrav
 * **Government:** Aristocracy (varies by clan)
 * **Formation:** Beginning of History
 * **Homeworld:** Varies by Clan
-* **Important Figures:**
-    * Pirate Lords
 
 ## Independent Pirates
 

@@ -19,7 +19,7 @@ The only way of rising up is usually to join the military and earn medals and co
 
 * **Leader:** None
 * **Leading Structure:** High Command Generals
-* **Government:** Meritocracy
+* **Government:** Military Meritocracy
 * **Formation:** [UST 331](lore/history)
 * **Homeworld:** Dvaered High Command (Dvaer system)
 

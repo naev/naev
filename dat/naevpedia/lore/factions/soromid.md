@@ -16,7 +16,7 @@ The Soromid are a major faction in Naev.
 * **Leading Structure:** Tribal Council
 * **Government:** Neotribal Communitariasm
 * **Formation:** [UST 387](lore/history)
-* **Homeworld:** Kataka (Feye)
+* **Homeworld:** Kataka (Feye system)
 
 ## History
 
