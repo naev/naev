@@ -1,6 +1,7 @@
 [submodule "extras/windows/mingw-bundledlls"]
 	path = extras/windows/mingw-bundledlls
-	url = https://github.com/mpreisler/mingw-bundledlls.git
+	url = https://github.com/ProjectSynchro/mingw-bundledlls.git
+	branch = ucrt_blacklist
 [submodule "artwork"]
 	path = artwork
 	url = https://github.com/naev/naev-artwork-production.git
