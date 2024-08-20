@@ -366,13 +366,11 @@ void audio_cleanup( LuaAudio_t *la )
       soundLock();
       if ( la->th != NULL ) {
          la->active = -1;
-#if DEBUGGING
          if ( SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) ==
               SDL_MUTEX_TIMEDOUT )
             WARN( _( "Timed out while waiting for audio thread of '%s' to "
                      "finish!" ),
                   la->name );
-#endif /* DEBUGGING */
       }
       if ( alIsSource( la->source ) == AL_TRUE )
          alDeleteSources( 1, &la->source );
@@ -388,9 +386,7 @@ void audio_cleanup( LuaAudio_t *la )
       break;
    }
 
-#if DEBUGGING
    free( la->name );
-#endif /* DEBUGGING */
 }
 
 /**
@@ -407,11 +403,9 @@ void audio_cleanup( LuaAudio_t *la )
  */
 static int audioL_tostring( lua_State *L )
 {
-   char buf[STRMAX_SHORT];
-#if DEBUGGING
+   char              buf[STRMAX_SHORT];
    const LuaAudio_t *la = luaL_checkaudio( L, 1 );
    snprintf( buf, sizeof( buf ), "Audio( %s )", la->name );
-#endif /* DEBUGGING */
    lua_pushstring( L, buf );
    return 1;
 }
@@ -471,9 +465,7 @@ static int audio_genSource( ALuint *source )
       break;
 
    default:
-#if DEBUGGING
       al_checkHandleError( err, __func__, __LINE__ );
-#endif /* DEBUGGING */
       break;
    }
    return -1;
@@ -528,9 +520,7 @@ static int audioL_new( lua_State *L )
    rw = PHYSFSRWOPS_openRead( name );
    if ( rw == NULL )
       return NLUA_ERROR( L, "Unable to open '%s'", name );
-#if DEBUGGING
    la.name = strdup( name );
-#endif /* DEBUGGING */
 
    soundLock();
    la.ok = audio_genSource( &la.source );
@@ -773,13 +763,11 @@ static int audioL_stop( lua_State *L )
       /* Kill the thread first. */
       if ( la->th != NULL ) {
          la->active = -1;
-#if DEBUGGING
          if ( SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) ==
               SDL_MUTEX_TIMEDOUT )
             WARN( _( "Timed out while waiting for audio thread of '%s' to "
                      "finish!" ),
                   la->name );
-#endif /* DEBUGGING */
       }
       la->th = NULL;
 
