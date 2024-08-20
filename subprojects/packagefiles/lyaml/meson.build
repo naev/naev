@@ -47,12 +47,8 @@ deps += lua
 
 includes = include_directories('.', 'ext/yaml')
 
-# Determine if the platform is Windows or a Windows-like environment
-is_windows = host_machine.system() == 'windows'
-is_cygwin = meson.has_function('gettimeofday') and meson.get_compiler('c').has_argument('-D__CYGWIN__')
-is_mingw = meson.get_compiler('c').has_argument('-D__MINGW32__') or meson.get_compiler('c').has_argument('-D__MINGW64__')
-
-if is_windows or is_cygwin or is_mingw
+# Only statically link if platform isn't Windows (Or Cygwin, which should cover edge cases)
+if host_machine.system() == 'windows' or host_machine.system() == 'cygwin'
     lyaml = shared_library(
         'lyaml',
         lyaml_src,
