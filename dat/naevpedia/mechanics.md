@@ -1,5 +1,6 @@
 ---
 title: "Mechanics Overview"
+priority: 1
 ---
 # Mechanics
 

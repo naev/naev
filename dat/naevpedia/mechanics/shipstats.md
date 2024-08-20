@@ -39,7 +39,7 @@ Electronic warfare determines how ships see and target each other.
 
 * [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, can be overcome by weapon penetration.
 * [Shield](mechanics/damage): The ship's first line of defense. Shields naturally regenerate and provide the ship with a first line of defense, absorbing weapon fire that would otherwise damage the hull.
-* [Armour](mechanics/dammage): The last line of defense of a ship. When armour is completely depleted, the ship will begin to combust and finally, explode.
+* [Armour](mechanics/damage): The last line of defense of a ship. When armour is completely depleted, the ship will begin to combust and finally, explode.
 * [Energy](mechanics/energy): Primarily used to power weapons and other outfits. A ship is not able to take off with negative energy.
 * [Cargo Space](mechanics/cargo): Determines how much cargo mass the ship can fit.
 * [Fuel](mechanics/hyperspace): Fuel is used for jumping through hyperspace to cross astronomical distances in a short time. The amount of fuel used per jump depends on the ship size.
