@@ -143,6 +143,10 @@ build_bundle(){
     cp -r "$ARM64BUNDLEPATH/Naev.app" "$BUILDPATH/Naev.app"
     rm "$BUILDPATH"/Naev.app/Contents/MacOS/naev
     rm -rf "$BUILDPATH"/Naev.app/Contents/MacOS/naev.dSYM
+    # Remove bogus installed data
+    rm -rf "$BUILDPATH"/Naev.app/include
+    rm -rf "$BUILDPATH"/Naev.app/lib
+    # Clean out Frameworks
     rm "$BUILDPATH"/Naev.app/Contents/Frameworks/*
 
     # Deploy Universal and extra ARM64 libraries
