@@ -101,7 +101,7 @@ function land ()
    z1(_([["Where is Chairwoman Sanderaite!? We just got the signal that she submitted a report here!"]]))
    vn.na(_([[The secretary lazily points at you.]]))
    z1(_([["Damnit, she got someone else to bring the report for her again…"]]))
-   z2(_([["The council should have never passed the law permitting third parties to hand-in official reports."]]))
+   z2(_([["The board should have never passed the law permitting third parties to hand-in official reports."]]))
    z1(_([["They're trying to revoke it, but last time the meeting ended in fisticuffs."]]))
    z2(_([["Oh well, at least we have a hint to where she is now. On to Katar I!"]]))
    vn.disappear( { z1, z2 }, "slideleft" ) -- Played in reverse
