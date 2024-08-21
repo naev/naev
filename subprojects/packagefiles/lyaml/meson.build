@@ -33,7 +33,7 @@ lyaml_lua = files(
 )
 
 deps = []
-deps += dependency('yaml-0.1', required: true)
+deps += dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'))
 
 useLuaJIT = get_option('luajit')
 if useLuaJIT.disabled() == false
