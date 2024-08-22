@@ -3,7 +3,7 @@
  <general>
   <radius>15000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>128.925000</interference>
+  <interference>128.900000</interference>
   <nebula volatility="12.100000" hue="300.000000">500.000000</nebula>
   <nolanes/>
  </general>
@@ -24,5 +24,6 @@
  <tags>
   <tag>thenebula</tag>
   <tag>spoiler</tag>
+  <tag>noderelicts</tag>
  </tags>
 </ssys>

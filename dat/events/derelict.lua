@@ -3,7 +3,16 @@
 <event name="Derelict">
  <location>enter</location>
  <chance>45</chance>
- <cond>system.cur():faction() ~= nil</cond>
+ <cond>
+   local sc = system.cur()
+   if sc:faction() == nil then
+      return false
+   end
+   if sc:tags().noderelicts then
+      return false
+   end
+   return true
+ </cond>
  <priority>99</priority>
  <notes>
   <tier>1</tier>
