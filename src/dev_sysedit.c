@@ -1630,7 +1630,7 @@ static void sysedit_editPnt( void )
    s = _( "Class" );
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtClass", NULL, NULL, s );
-   window_addInput( wid, x += l + 5, y, 30, 20, "inpClass", 1, 1, NULL );
+   window_addInput( wid, x += l + 5, y, 30, 20, "inpClass", 16, 1, NULL );
    x += 30 + 10;
 
    s = _( "Lua" );
