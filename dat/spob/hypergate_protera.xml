@@ -2,9 +2,10 @@
 <spob name="Hypergate Protera">
  <display>Ruined Hypergate</display>
  <marker>spobmarker_triangle</marker>
- <pos x="5058.433323" y="3567.526660"/>
+ <pos x="-7853.883318" y="6096.743322"/>
  <GFX>
   <space>hypergate_debris.webp</space>
+  <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>
@@ -14,9 +15,16 @@
  </presence>
  <general>
   <class>Construct</class>
-  <population>0</population>
-  <hide>1.000000</hide>
-  <services/>
+  <population>100</population>
+  <hide>0.700000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>(null)</description>
+  <bar>(null)</bar>
  </general>
  <tags>
   <tag>hypergate</tag>

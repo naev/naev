@@ -8,7 +8,7 @@
  </general>
  <pos x="853.594383" y="566.174569"/>
  <spobs>
-  <spob>Hypergate Protera</spob>
+  <spob_virtual>Lost Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Baitas">

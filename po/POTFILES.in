@@ -103,6 +103,7 @@ dat/factions/flf.xml
 dat/factions/frontier.xml
 dat/factions/goddard.xml
 dat/factions/independent.xml
+dat/factions/lost.xml
 dat/factions/marauder.xml
 dat/factions/mercenary.xml
 dat/factions/miner.xml
@@ -1491,6 +1492,7 @@ dat/spob/possum_ii.xml
 dat/spob/praxis.xml
 dat/spob/priscus.xml
 dat/spob/procyon_shipyards.xml
+dat/spob/protera_husk.xml
 dat/spob/protera_nova.xml
 dat/spob/protera_sigma.xml
 dat/spob/provectus_nova_i.xml
@@ -1949,6 +1951,7 @@ dat/spob_virtual/independent_all_unpresence_range1.xml
 dat/spob_virtual/independent_trader_area.xml
 dat/spob_virtual/independent_trader_local.xml
 dat/spob_virtual/independent_unpresence.xml
+dat/spob_virtual/lost_small.xml
 dat/spob_virtual/miner_local.xml
 dat/spob_virtual/miner_small.xml
 dat/spob_virtual/pirate_all_unpresence.xml
@@ -2567,6 +2570,7 @@ dat/tech/laser1.xml
 dat/tech/laser2.xml
 dat/tech/laser3.xml
 dat/tech/light_civilian_combat_ships.xml
+dat/tech/lost.xml
 dat/tech/low_tech_upgrades.xml
 dat/tech/melendez_outfits.xml
 dat/tech/melendez_ships.xml

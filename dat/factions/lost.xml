@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Lost">
+ <mapname>Lost</mapname>
+ <ai>marauder</ai>
+ <static />
+ <logo>marauder</logo>
+ <player>-100</player>
+ <colour>red</colour>
+ <spawn>marauder</spawn>
+ <standing>marauder</standing>
+ <equip>marauder</equip>
+ <description>TODO</description>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Dvaered</enemy>
+  <enemy>Empire</enemy>
+  <enemy>Frontier</enemy>
+  <enemy>Goddard</enemy>
+  <enemy>Independent</enemy>
+  <enemy>Miner</enemy>
+  <enemy>Proteron</enemy>
+  <enemy>Sirius</enemy>
+  <enemy>Soromid</enemy>
+  <enemy>Trader</enemy>
+  <enemy>Traders Society</enemy>
+  <enemy>Thurion</enemy>
+  <enemy>Za'lek</enemy>
+ </enemies>
+ <tags>
+ </tags>
+</faction>

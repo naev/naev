@@ -7,7 +7,9 @@
   <nolanes/>
  </general>
  <pos x="885.284767" y="522.163255"/>
- <spobs/>
+ <spobs>
+  <spob>Protera Husk</spob>
+ </spobs>
  <jumps>
   <jump target="Protera">
    <autopos/>

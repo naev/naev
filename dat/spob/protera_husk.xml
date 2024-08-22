@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Protera Husk">
+ <pos x="7830.104028" y="-8539.559224"/>
+ <GFX>
+  <space>X00.webp</space>
+  <exterior>mining4.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Lost</faction>
+  <base>500.000000</base>
+  <bonus>0.000000</bonus>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>X</class>
+  <population>5000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+   <blackmarket/>
+  </services>
+  <commodities/>
+  <description>(null)</description>
+  <bar>(null)</bar>
+ </general>
+ <tech>
+  <item>Lost Tech</item>
+ </tech>
+ <tags>
+  <tag>criminal</tag>
+  <tag>nonews</tag>
+  <tag>nonpc</tag>
+  <tag>ruined</tag>
+  <tag>restricted</tag>
+ </tags>
+</spob>

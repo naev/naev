@@ -7,7 +7,9 @@
   <nolanes/>
  </general>
  <pos x="921.659767" y="560.288255"/>
- <spobs/>
+ <spobs>
+  <spob_virtual>Lost Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Protera">
    <autopos/>
