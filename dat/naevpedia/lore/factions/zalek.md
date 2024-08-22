@@ -52,7 +52,7 @@ A second world was added to Project Za'lek, and soon after a third.
 A few generations later, Project Za'lek had accumulated enough mass to develop a stable internal economy.
 By this time the Project had produced numerous advances in almost every scientific field, so the Emperor chose to bestow on the Project the noble title of Great House.
 
-#### House Za'lek
+### House Za'lek
 
 House Za'lek continued to grow and advance.
 Over time, it became the only place of consequence to be for any scientists, since [the Empire](lore/factions/empire)'s own R&D budget had all but dried up.
@@ -66,7 +66,7 @@ House Za'lek's momentum could no longer be stopped.
 Before long, all [the Empire](lore/factions/empire) was getting out of its former Great Project was a yearly file of unintelligible reports, articles and theorems, many of which used forms of mathematics the Imperial engineers had never even heard of before.
 When asked to provide [the Empire](lore/factions/empire) with tangible results such as pre-produced weapons or ships, the Za'lek indignantly replied that things like manufacturing things that had been successfully prototyped were beneath them.
 They could not be coaxed to change their disposition.
-The Empire, in short, was left behind.
+[The Empire](lore/factions/empire), in short, was left behind.
 
 Over the years, House Za'lek built up an impressive technological lead.
 At the same time, it became more isolated, its scientists choosing to devote their time to working on their myriad of projects rather than waste it on "the simpletons elsewhere".

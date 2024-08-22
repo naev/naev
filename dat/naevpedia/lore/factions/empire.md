@@ -11,7 +11,7 @@ wgtfct = require("naevpedia.lore.faction").init( "Empire" )
 The Empire is the backbone of modern civilization.
 Its governmental system is a mixture of a republic and a monarchy, with The Emperor presiding over all other powers of state.
 The Emperor delegates some of his power to the Imperial Council, consisting of 20 councilors who pass laws to be carried out by the Imperial bureaucracy which commands the Imperial army and governs the citizens.
-However, all of the councilors can be overruled by The Emperor.
+However, all the councilors can be overruled by The Emperor.
 From The Empire came the Great Houses, and they interact with the Imperial government through their respective liaisons.
 
 ## Organization
@@ -37,7 +37,7 @@ Many Empire worlds were devastated in the initial blast, and many stations and p
 The Empire's power has declined since then and the security that was ensured in the Golden Age has diminished greatly as the Imperial military, once the guardian of much of inhabited space, now finds itself struggling to keep the core systems of the Empire's former territory secure, let alone the sparsely-populated border systems or the vast expanses beyond.
 
 The current Emperor was elected by what remained of the Council shortly after [the Incident](lore/history/incident), and has held power ever since.
-They is fairly inexperienced and refuses to acknowledge that the Empire is in decline.
+They are fairly inexperienced and refuses to acknowledge that the Empire is in decline.
 It was they who had the Emperor's Wrath built, and who initiated the Emperor's Fist project, despite the state the rest of his realm is in.
 Many believe they will not be Emperor much longer.
 
@@ -93,7 +93,7 @@ The Houses are still bound to the Empire via contracts but are effectively facti
 They interact with the Imperial countries via Liaisons, chosen representatives of the Houses' governments.
 When the Emperor has a particular request to one of the houses, the Council passes his decree on to the responsible Liaison, who in turn passes it on to his superiors.
 This is by no means a binding contract or even an order.
-Today, the Houses are not required to follow the Emperor's orders and may decide for themselves whether or not to grant the Emperor's request.
+Today, the Houses are not required to follow the Emperor's orders and may decide for themselves whether to grant the Emperor's request.
 
 The Great Houses interact with the Imperial Council through liaisons, who represent the "vassals of the Empire".
 Whenever the Emperor requires one or more of the Great Houses to do his bidding, the Council will pass on the Imperial Decree to the relevant liaisons, who in turn convey the message to their respective leaders.

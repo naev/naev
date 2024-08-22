@@ -20,7 +20,8 @@ wgtfct = require("naevpedia.lore.faction").init( "Pirate" )
 
 # Galactic Space Pirates
 
-The Galactic Space Pirates are split into to main groups, the clans and independent pirates. Independent pirates are further split into marauders, extremely aggressive and not very well equipped pirates, and the normal pirates, which tend to be better equip and usually strive to join one of the major pirate clans.
+The Galactic Space Pirates are split into to main groups, the clans and independent pirates.
+Independent pirates are further split into marauders, extremely aggressive and not very well-equipped pirates, and the normal pirates, which tend to be better equip and usually strive to join one of the major pirate clans.
 
 The four main clans are the <%= strblacklotus %>, <%= strwildones %>, <%= strravenclan %>, and <%= strdreamerclan %>.
 
@@ -75,10 +76,10 @@ Although they get along well with the [Raven Clan](lore/factions/pirates/ravencl
 
 Arguably the clan that connects all the pirates and maintains infrastructure for their success.
 The [Raven Clan](lore/factions/pirates/ravenclan) is formed by many ex-merchants who were fed up with the corruption and bureaucracy of the Imperial system, and decided to do their own thing.
-They deal in smuggling and black market trade, although they do not shun nor turn away from the occasional raid and normal piracy.
+Although they deal in smuggling and black market trade, they do not shun nor turn away from the occasional raid and normal piracy.
 They are very diplomatic and put strong emphasis on human relationships, which they foster to maximize the success of their trading endeavours.
 
-They mainly inhabit the Qorel tunnel, which is a chain of systems not accessible through standard jump points.
+The Raven Clan mainly inhabits the Qorel tunnel, which is a chain of systems not accessible through standard jump points.
 They have several bases along it and use their cunning and secrecy to supply goods and connect all the pirates together.
 Due to their fundamental role, they tend to have strong connections and relationships with all the other pirate clans.
 They also work with corrupt officials of the Great Houses, and pretty much anyone that has the credits to pay.
@@ -101,8 +102,8 @@ They also tend to run protection rackets, which are often favoured over the whim
 The newest of the main pirate clans, the Dreamer Clan was able to capitalize on [the Incident](lore/history/incident) and establish itself as a force to be reckoned with.
 Formed mainly by refugees and outcasts of the so-called "civilized society", the Dreamer Clan is formed by individuals who do not want to follow rules.
 They have no hierarchy and form an eclectic and anarchistic bunch, giving lots of leeway for personal freedom and using voting and other systems to decide how to take action.
-They heavily rely on piracy, and most individuals pursue artistic talents when not raiding nearby convoys or scavenging from wrecks from [the Incident](lore/historyincident).
-They are also renown for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from substance abuse.
+Although they rely heavily on piracy, most individuals pursue artistic talents when not raiding nearby convoys or scavenging from wrecks from [the Incident](lore/historyincident).
+They are also renowned for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from substance abuse.
 
 They are located in the Nebula, near [House Sirius](lore/factions/sirius) and [the Frontier](lore/factions/frontienr), making use of abandoned planets and stations, which they adapt to their purposes.
 Although they tend to have little contact with other pirates outside of assemblies, they have lots of trade with the [Raven Clan](lore/factions/pirates/ravenclan), which wants access to the lucrative drug trade.
