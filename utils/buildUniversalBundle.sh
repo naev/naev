@@ -83,40 +83,52 @@ fatten_libraries(){
     # Create working directories
     mkdir -p "$BUILDPATH"/{Frameworks.arm64,Frameworks.x86_64,Frameworks.Universal}
 
-    # Collect and thin out other unneeded architectures from dylibs (if needed) for each architecture.
+    # Process x86_64 libraries
     for f in "$X8664BUNDLEPATH"/Naev.app/Contents/Frameworks/*
     do
-        if [[ $(lipo "$f" -archs ) == "x86_64" ]]; then
+        archs=$(lipo "$f" -archs)
+        if [[ "$archs" == "x86_64" ]]; then
             echo "$(basename "$f") already contains only the x86_64 architecture."
             cp "$f" "$BUILDPATH/Frameworks.x86_64"
-        else
+        elif [[ "$archs" == *"x86_64"* ]]; then
             echo "Extracting x86_64 arch from $(basename "$f")"
-            lipo "$f" -extract x86_64 -output "$BUILDPATH"/Frameworks.x86_64/"$(basename "$f")"
+            lipo "$f" -extract x86_64 -output "$BUILDPATH/Frameworks.x86_64/$(basename "$f")"
         fi
     done
+
+    # Process ARM64 libraries
     for f in "$ARM64BUNDLEPATH"/Naev.app/Contents/Frameworks/*
     do
-        if [[ $(lipo "$f" -archs) == "arm64" ]]; then
+        archs=$(lipo "$f" -archs)
+        if [[ "$archs" == "arm64" ]]; then
             echo "$(basename "$f") already contains only the arm64 architecture."
             cp "$f" "$BUILDPATH/Frameworks.arm64"
-        else
+        elif [[ "$archs" == *"arm64"* ]]; then
             echo "Extracting arm64 arch from $(basename "$f")"
-            lipo "$f" -extract arm64 -output "$BUILDPATH"/Frameworks.arm64/"$(basename "$f")"
+            lipo "$f" -extract arm64 -output "$BUILDPATH/Frameworks.arm64/$(basename "$f")"
         fi
     done
 
-    # Combine both arches into a universal binary (if that library exists for both) otherwise copy ARM64 library
-    # This should work well since ARM64 appears to depend on more libraries than x86_64, but also requires the same libraries.
-    # TODO, make this more robust, if possible (Probably is a way)
-
+    # Combine libraries into universal binaries or copy them as-is if only one architecture is present
     for f in "$BUILDPATH"/Frameworks.arm64/*
     do
-        if [[ -f "$BUILDPATH/Frameworks.x86_64/$(basename "$f")" ]]; then
-            echo "Combining ARM64 and x86_64 versions of $(basename "$f")"
-            lipo "$f" "$BUILDPATH/Frameworks.x86_64/$(basename "$f")" -create -output "$BUILDPATH"/Frameworks.Universal/"$(basename "$f")"
+        base=$(basename "$f")
+        if [[ -f "$BUILDPATH/Frameworks.x86_64/$base" ]]; then
+            echo "Combining ARM64 and x86_64 versions of $base"
+            lipo "$f" "$BUILDPATH/Frameworks.x86_64/$base" -create -output "$BUILDPATH/Frameworks.Universal/$base"
         else
-            echo "Copying $(basename "$f") as it is exclusively for ARM64"
-            cp "$f" "$BUILDPATH"/Frameworks.Universal
+            echo "Copying $base as it is exclusively for ARM64"
+            cp "$f" "$BUILDPATH/Frameworks.Universal"
+        fi
+    done
+
+    # Include any x86_64-only libraries that aren't in the universal binaries
+    for f in "$BUILDPATH"/Frameworks.x86_64/*
+    do
+        base=$(basename "$f")
+        if [[ ! -f "$BUILDPATH/Frameworks.Universal/$base" ]]; then
+            echo "Copying $base as it is exclusively for x86_64"
+            cp "$f" "$BUILDPATH/Frameworks.Universal"
         fi
     done
 }
@@ -143,6 +155,10 @@ build_bundle(){
     cp -r "$ARM64BUNDLEPATH/Naev.app" "$BUILDPATH/Naev.app"
     rm "$BUILDPATH"/Naev.app/Contents/MacOS/naev
     rm -rf "$BUILDPATH"/Naev.app/Contents/MacOS/naev.dSYM
+    # Remove bogus installed data
+    rm -rf "$BUILDPATH"/Naev.app/include
+    rm -rf "$BUILDPATH"/Naev.app/lib
+    # Clean out Frameworks
     rm "$BUILDPATH"/Naev.app/Contents/Frameworks/*
 
     # Deploy Universal and extra ARM64 libraries
