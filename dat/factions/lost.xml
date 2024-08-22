@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="Lost">
  <mapname>Lost</mapname>
- <ai>marauder</ai>
+ <ai>lost</ai>
  <static />
  <logo>marauder</logo>
  <player>-100</player>
  <colour>red</colour>
- <spawn>marauder</spawn>
- <standing>marauder</standing>
- <equip>marauder</equip>
+ <spawn>lost</spawn>
+ <standing>static</standing>
+ <equip>lost</equip>
  <description>TODO</description>
  <allies>
  </allies>
