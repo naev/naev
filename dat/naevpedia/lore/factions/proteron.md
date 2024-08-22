@@ -1,6 +1,6 @@
 ---
 title: "Sovereign Proteron Autarchy"
-cond: "return  faction.get([[Proteron]]):known()"
+cond: "return faction.get([[Proteron]]):known()"
 ---
 <%
 wgtfct = require("naevpedia.lore.faction").init( "Proteron" )
@@ -12,7 +12,7 @@ wgtfct = require("naevpedia.lore.faction").init( "Proteron" )
 Formed from the former Great House Proteron, the Sovereign Proteron Autarchy played a pivotal role in the history of the universe.
 It arose from an Emperor's desire to create a revolution in the sphere of society and societal structure.
 The project performed all too well, creating a Great House that surpassed its progenitor in nearly every way, and chafing at its restraints.
-These tensions escalated into all-out war, with devastating consequences to both bodies, because neither have the Proteron heard of restraint nor the Emperor of caution.
+These tensions escalated into all-out war, with devastating consequences for both bodies, because neither have the Proteron heard of restraint nor the Emperor of caution.
 
 ## Oganization
 
@@ -26,7 +26,7 @@ These tensions escalated into all-out war, with devastating consequences to both
 
 House Proteron worlds were governed by a totalitarian regime that required its citizens to follow their dictated daily routines, severely punishing transgressions under a zero-tolerance policy.
 A Proteron citizen was never their own person.
-They were an asset of the government, their life's labor neatly represented in a book keeping column somewhere.
+They were an asset of the government, their life's labor neatly represented in a bookkeeping column somewhere.
 Even the details of their private life were managed and tallied by the authorities.
 Despite the lack of freedom and privacy, Proteron citizens were not slaves.
 The government kept them in top shape, providing an adequate supply of health care, relaxation, and entertainment, making sure all predispositions and tastes were catered for.
@@ -122,8 +122,8 @@ Extensive simulations, dogfights and mock battles revealed that fighters and bom
 This means that their fleet strategy is not easy to adjust on the fly, so they developed the Euler, a fast and stealthy scout ship to ensure that there are no surprises facing the fleet when it commits to an attack.
 Similarly, it is illogical to commit before probing the enemy's weaknesses, so fleets consisting of smaller ships harass and draw out enemy fleets until the capital ships and their fleets of drones can reduce the enemy to dust.
 At the same time, a ship must be either capable of damage or of movement, else it is merely a sitting duck.
-Thus their destroyers and corvettes are faster than expected for ships of their size.
+Thus, their destroyers and corvettes are faster than expected for ships of their size.
 
-Further, the fleet does not believe that the pilot should hesitate to sacrifice themself to help the fleet on the path to victory.
+Further, the fleet does not believe that the pilot should hesitate to sacrifice themselves to help the fleet on the path to victory.
 As such, the Proteron largely follow a doctrine of no retreat to encourage pilots to fight to the death unless indicated otherwise ordered.
 The larger ships with the pilots are therefore also built to outlast any enemy in damage-dealing capability.
