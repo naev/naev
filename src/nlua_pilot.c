@@ -1022,8 +1022,8 @@ static int pilotL_toggleSpawn( lua_State *L )
  *    @luatparam Faction|{Faction,...} factions If f is a table of factions, it
  * will only get pilots matching those factions.  Otherwise it gets all the
  * pilots.
- *    @luatparam boolean disabled Whether or not to get disabled ships (default
- * is off if parameter is omitted).
+ *    @luatparam[opt=false] boolean disabled Whether or not to get disabled
+ * ships.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc get
  */
