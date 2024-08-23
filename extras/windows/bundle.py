@@ -5,8 +5,29 @@ import subprocess
 import shutil
 import sys
 
-# Set environment variables
-os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = '/mingw64/bin:/usr/x86_64-w64-mingw32/bin:/usr/x86_64-w64-mingw32ucrt/bin:/usr/x86_64-w64-mingw32/sys-root/mingw/bin:/usr/x86_64-w64-mingw32ucrt/sys-root/mingw/bin:/usr/lib/mxe/usr/x86_64-w64-mingw32.shared/bin'
+# Define the paths as a list
+search_paths = [
+# MSYS2 paths
+    '/mingw32/bin',
+    '/mingw64/bin',
+    '/ucrt64/bin',
+    '/clang32/bin',
+    '/clang64/bin',
+    '/clangarm64/bin',
+# Fedora toolchain paths
+    '/usr/i686-w64-mingw32/bin',
+    '/usr/x86_64-w64-mingw32/bin',
+    '/usr/x86_64-w64-mingw32ucrt/bin',
+# Fedora MINGW toolchain paths
+    '/usr/i686-w64-mingw32/sys-root/mingw/bin',
+    '/usr/x86_64-w64-mingw32/sys-root/mingw/bin',
+    '/usr/x86_64-w64-mingw32ucrt/sys-root/mingw/bin',
+# MXE toolchain paths
+    '/usr/lib/mxe/usr/x86_64-w64-mingw32.shared/bin'
+]
+
+# Join the paths with a colon to form the environment variable
+os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = ':'.join(search_paths)
 
 def usage():
     print(f"usage: {os.path.basename(sys.argv[0])} [-d] (Verbose output)")
