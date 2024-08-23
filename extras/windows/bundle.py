@@ -36,8 +36,13 @@ for subproj_dir in subproj_dirs:
             os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] += f':{root}'
 
 # Run mingw-bundledlls to get DLL list
-dll_list_cmd = [os.path.join(os.getenv('MESON_SOURCE_ROOT'), 'extras/windows/mingw-bundledlls/mingw-bundledlls'),
+dll_list_cmd = [sys.executable, os.path.join(os.getenv('MESON_SOURCE_ROOT'), 'extras/windows/mingw-bundledlls/mingw-bundledlls'),
                 os.path.join(os.getenv('MESON_BUILD_ROOT'), 'naev.exe')]
+
+if verbose:
+    print("Executing command:", dll_list_cmd)
+    print("Working directory:", os.getcwd())
+
 dll_list_proc = subprocess.Popen(dll_list_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 dll_list_out, dll_list_err = dll_list_proc.communicate()
 
