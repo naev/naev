@@ -69,7 +69,7 @@ def wrapper(*args):
     else:
         command = list(args)
 
-    command = ["meson", "devenv"] + command
+    command = [sys.executable, os.path.join(source_root, "meson.py"), "devenv"] + command
 
     try:
         # Run the command
