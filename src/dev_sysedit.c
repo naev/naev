@@ -1680,7 +1680,7 @@ static void sysedit_editPnt( void )
    for ( int i = 0; i < array_size( p->tags ); i++ )
       l += scnprintf( &buf[l], sizeof( buf ) - l, "%s %s",
                       ( ( i > 0 ) ? "," : "" ), p->tags[i] );
-   window_addText( wid, x, y, 300, 20, 0, "txtTags", NULL, NULL, buf );
+   window_addText( wid, x, y, 240, 100, 0, "txtTags", NULL, NULL, buf );
 
    /* Bottom buttons. */
    window_addButton( wid, -20 - bw * 3 - 15 * 3, 35 + BUTTON_HEIGHT, bw,
