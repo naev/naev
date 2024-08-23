@@ -24,7 +24,13 @@ function create ()
 end
 
 function chaos ()
-   local plts = pilot.get( {flost, fnewlost} )
+   local plts = {}
+   for k,p in ipairs(pilot.get( {flost, fnewlost} )) do
+      if not p:mothership() then
+         table.insert( plts, p )
+      end
+   end
+
    local p = plts[ rnd.rnd(1,#plts) ]
    if p then
       p:setLeader() -- Clear leader in case deployed
