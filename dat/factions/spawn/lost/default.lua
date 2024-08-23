@@ -47,6 +47,14 @@ local sarx        = ship.get("Soromid Arx")
 local sira        = ship.get("Soromid Ira")
 local scopia      = ship.get("Soromid Copia")
 
+local seuler      = ship.get("Proteron Euler")
+local sdalton     = ship.get("Proteron Dalton")
+local shippocrates= ship.get("Proteron Hippocrates")
+local sgauss      = ship.get("Proteron Gauss")
+local spythagoras = ship.get("Proteron Pythagoras")
+local sarchimedes = ship.get("Proteron Archimedes")
+local swatson     = ship.get("Proteron Watson")
+
 local spirhyena      = ship.get("Pirate Hyena")
 local spirshark      = ship.get("Pirate Shark")
 local spirvendetta   = ship.get("Pirate Vendetta")
@@ -93,6 +101,9 @@ local function spawn_small ()
       sbrigand,
       sreaver,
       smarauder,
+      -- Proteron
+      seuler,
+      sdalton,
       -- Pirate
       spirhyena,
       spirshark,
@@ -119,6 +130,9 @@ local function spawn_medium ()
       -- Soromid
       snyx,
       sodium,
+      -- Proteron
+      shippocrates,
+      sgauss,
       -- Pirate
       spirphalanx,
       spiradmonisher,
@@ -145,6 +159,10 @@ local function spawn_large ()
       sarx,
       sira,
       scopia,
+      -- Proteron
+      spythagoras,
+      sarchimedes,
+      swatson,
       -- Pirate
       spirkestrel,
    } )

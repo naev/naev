@@ -18,6 +18,8 @@ local fnewlost
 function create ()
    -- TODO add derelicts
 
+   -- TODO make the lost drop scraps?
+
    fnewlost = faction.dynAdd( flost, "newlost" )
    fnewlost:dynEnemy( flost )
    hook.timer( 15 + 20*rnd.rnd(), "chaos" )
