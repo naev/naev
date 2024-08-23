@@ -11,7 +11,8 @@
  <spobs/>
  <jumps>
   <jump target="Jommel">
-   <autopos/>
+   <pos x="-13670.548225" y="-4860.447275"/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Nirtos">

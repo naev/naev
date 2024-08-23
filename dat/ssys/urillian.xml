@@ -12,15 +12,15 @@
  </spobs>
  <jumps>
   <jump target="Protera">
-   <autopos/>
+   <pos x="-12625.563330" y="-7916.004235"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Sagittarius">
-   <autopos/>
+   <pos x="14240.408417" y="-3180.504387"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Tasopa">
-   <autopos/>
+   <pos x="-3796.107141" y="9286.444949"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

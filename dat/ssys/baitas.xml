@@ -12,11 +12,11 @@
  </spobs>
  <jumps>
   <jump target="Alpha Centauri">
-   <autopos/>
+   <pos x="-14901.412862" y="1174.628339"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Protera">
-   <autopos/>
+   <pos x="13197.498074" y="-4819.743244"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

@@ -12,15 +12,15 @@
  </spobs>
  <jumps>
   <jump target="Baitas">
-   <autopos/>
+   <pos x="6555.335332" y="15069.111705"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Tasopa">
-   <autopos/>
+   <pos x="-15544.419686" y="2956.560975"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Urillian">
-   <autopos/>
+   <pos x="-5022.934399" y="-16015.951942"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

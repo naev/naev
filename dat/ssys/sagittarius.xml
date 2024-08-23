@@ -17,7 +17,7 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Urillian">
-   <autopos/>
+   <pos x="13649.735477" y="1458.072698"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

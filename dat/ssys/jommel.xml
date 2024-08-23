@@ -3,7 +3,7 @@
  <general>
   <radius>12000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>15.075000</interference>
+  <interference>15.070000</interference>
   <nebula hue="240.000000">100.000000</nebula>
  </general>
  <pos x="671.638423" y="606.065862"/>
@@ -21,7 +21,7 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Syndania">
-   <autopos/>
+   <pos x="1151.566461" y="-3899.223600"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>

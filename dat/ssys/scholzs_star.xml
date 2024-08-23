@@ -11,11 +11,11 @@
  <spobs/>
  <jumps>
   <jump target="Haered">
-   <autopos/>
+   <pos x="3212.240412" y="-507.810325"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Veses">
-   <autopos/>
+   <pos x="1860.971187" y="14869.230894"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
