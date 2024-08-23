@@ -13,8 +13,13 @@ mem.bribe_no       = msg
 mem.refuel_no      = msg
 mem.comm_no        = msg
 
+local function insystem ()
+   return ai.pilot():pos():dist2() < mem.r2
+end
+
+-- Just drifts endlessly
 function drift ()
-   if ai.timeup(0) then
+   if not insystem() or ai.timeup(0) then
       ai.poptask()
    end
 end
@@ -27,8 +32,8 @@ function idle ()
    end
 
    local r = rnd.rnd()
-   if r < 0.5 then
-      ai.settimer(0 )
+   if r < 0.5 and insystem() then
+      ai.settimer( 0, 3 + 27*rnd.rnd() )
       ai.pushtask("drift")
    elseif r < 0.9 then
       -- Choose random point and choose a position between there and current position
@@ -53,5 +58,6 @@ end
 
 function create ()
    create_pre()
+   mem.r2 = system.cur():radius()^2
    create_post()
 end
