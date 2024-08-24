@@ -48,12 +48,16 @@ if verbose:
     print("Executing command:", dll_list_cmd)
     print("Working directory:", os.getcwd())
 
-dll_list_proc = subprocess.Popen(dll_list_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-dll_list_out, dll_list_err = dll_list_proc.communicate()
+dll_list_proc = subprocess.run(dll_list_cmd, capture_output=True)
+dll_list_out = dll_list_proc.stdout
+dll_list_err = dll_list_proc.stderr
 
 if verbose:
     print(dll_list_out.decode())
+if verbose or dll_list_proc.returncode != 0:
     print(dll_list_err.decode())
+
+dll_list_proc.check_returncode()
 
 # Copy DLLs to installation directory
 dll_list = dll_list_out.decode().splitlines()
