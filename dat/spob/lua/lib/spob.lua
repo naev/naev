@@ -549,6 +549,7 @@ function luaspob.bg_generic ()
 end
 
 bg_mapping = {
+   ["Construct"] = luaspob.bg_station,
    ["0"] = luaspob.bg_station,
    ["1"] = luaspob.bg_station,
    ["2"] = luaspob.bg_station,
