@@ -576,8 +576,6 @@ void main (void)
 
    /* Variance Shadow Mapping. */
    float f_shadow[MAX_LIGHTS];
-   for (int i=0; i<u_nlights; i++)
-      f_shadow[i] = 0.0;
 #if MAX_LIGHTS > 0
    if (u_nlights>0)
       f_shadow[0] = shadow_map( shadowmap_tex[0], shadow[0] );
@@ -653,12 +651,13 @@ void main (void)
          f_specular += NoLintensity * BRDF_specularGGX( M.f0, M.f90, M.roughness, VoH, NoL, NoV, NoH );
 
          /* Clear coat lobe. */
-         f_clearcoat += intensity * BRDF_specularGGX( M.f0, M.f90, M.clearcoat_roughness, VoH, NoL, NoV, NoH );
+         if (M.clearcoat > 0.0)
+            f_clearcoat += intensity * BRDF_specularGGX( M.f0, M.f90, M.clearcoat_roughness, VoH, NoL, NoV, NoH );
       //}
    }
 
    /* Do emissive. */
-   vec4 tex_emmissive = texture(emissive_tex, (emissive_texcoord ? tex_coord1 : tex_coord0) );
+   vec4 tex_emmissive = texture( emissive_tex, (emissive_texcoord ? tex_coord1 : tex_coord0) );
    f_emissive = emissive * tex_emmissive.rgb * tex_emmissive.a;
 
    /* Combine diffuse, emissive, and specular.. */
@@ -667,9 +666,11 @@ void main (void)
    colour_out.rgb = f_emissive + f_diffuse + f_sheen + f_specular;
 
    /* Apply clearcoat. */
-   vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, NoV );
-   f_clearcoat *= M.clearcoat;
-   colour_out.rgb = colour_out.rgb * (1.0 - M.clearcoat * clearcoatFresnel) + f_clearcoat;
+   if (M.clearcoat > 0.0) {
+      vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, NoV );
+      f_clearcoat *= M.clearcoat;
+      colour_out.rgb = colour_out.rgb * (1.0 - M.clearcoat * clearcoatFresnel) + f_clearcoat;
+   }
 
    /* Some fancy tone mapping. */
    colour_out.rgb = tonemap( colour_out.rgb );
