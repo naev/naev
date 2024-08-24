@@ -8,6 +8,24 @@ Valid parameters:
    idle - current playing music ran out
 ]]--
 local audio = require "love.audio"
+local utf8 = require "utf8"
+local lf = require "love.filesystem"
+
+-- List of songs to use
+local factional_songs = {}
+local spob_songs = {}
+local system_ambient_songs = {}
+
+for k,v in ipairs(lf.getDirectoryItems("snd/music")) do
+   local suffix = utf8.sub(v, -4)
+   if suffix=='.lua' then
+      local t = require( "snd.music."..string.gsub(v,".lua","") )
+      tmerge( factional_songs, t.factional_songs )
+      tmerge( spob_songs, t.spob_songs )
+      tmerge( system_ambient_songs, t.system_ambient_songs )
+   end
+end
+
 local last_track -- last played track name
 local tracks = {} -- currently playing tracks (including fading)
 local music_off = false -- disabled picking or changing music
@@ -93,41 +111,6 @@ local function tracks_resume ()
    end
 end
 
--- Faction-specific songs.
-local factional = {
-   Collective = { "collective1.ogg", "automat.ogg" },
-   Pirate     = { "pirate1_theme1.ogg", "pirates_orchestra.ogg", "ambient4.ogg",
-                  "terminal.ogg" },
-   Empire     = { "empire1.ogg", "empire2.ogg"; add_neutral = true },
-   Sirius     = { "sirius1.ogg", "sirius2.ogg"; add_neutral = true },
-   Dvaered    = { "dvaered1.ogg", "dvaered2.ogg"; add_neutral = true },
-   ["Za'lek"] = { "zalek1.ogg", "zalek2.ogg", "approach.ogg"; add_neutral = true },
-   Thurion    = { "motherload.ogg", "dark_city.ogg", "ambient1.ogg", "ambient3.ogg" },
-   Proteron   = { "heartofmachine.ogg", "imminent_threat.ogg", "ambient4.ogg" },
-}
-
--- Planet-specific songs
-local planet_songs = {
-   ["Minerva Station"] = { "meeting_mtfox.ogg" },
-   ["Strangelove Lab"] = { "landing_sinister.ogg" },
-   ["One-Wing Goddard"] = { "/snd/sounds/songs/inca-spa.ogg" },
-   ["Research Post Sigma-13"] = function ()
-         if not diff.isApplied("sigma13_fixed1") and
-            not diff.isApplied("sigma13_fixed2") then
-            return "landing_sinister.ogg"
-         end
-      end,
-}
-
--- System-specific songs
-local system_ambient_songs = {
-   ["Taiomi"] = { "/snd/sounds/songs/inca-spa.ogg" },
-   ["Test of Enlightenment"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
-   ["Test of Alacrity"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
-   ["Test of Renewal"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
-   ["Test of Devotion"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
-}
-
 --[[--
 Play a song if it's not currently playing.
 --]]
@@ -185,7 +168,7 @@ function choose_table.land ()
    }
 
    -- Planet override
-   local override = planet_songs[ pnt:nameRaw() ]
+   local override = spob_songs[ pnt:nameRaw() ]
    if override then
       if type(override)=="function" then
          local song = override()
@@ -315,9 +298,9 @@ function choose_table.ambient ()
       -- Choose the music, bias by faction first
       local add_neutral = false
       local neutral_prob = 0.6
-      if strongest ~= nil and factional[strongest] then
-         ambient = factional[strongest]
-         add_neutral = factional[strongest].add_neutral
+      if strongest ~= nil and factional_songs[strongest] then
+         ambient = factional_songs[strongest]
+         add_neutral = factional_songs[strongest].add_neutral
       elseif nebu then
          ambient = { "ambient1.ogg", "ambient3.ogg" }
          add_neutral = true
