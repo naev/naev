@@ -69,6 +69,8 @@ def wrapper(*args):
     else:
         command = list(args)
 
+    command = [sys.executable, os.path.join(source_root, "meson.py"), "devenv", "-C", build_root] + command
+
     try:
         # Run the command
         debugger_process = subprocess.Popen(command)
