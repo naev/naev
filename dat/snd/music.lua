@@ -12,9 +12,17 @@ local utf8 = require "utf8"
 local lf = require "love.filesystem"
 
 -- List of songs to use
+local takeoff_songs = {}
 local factional_songs = {}
 local spob_songs = {}
 local system_ambient_songs = {}
+local ambient_songs = {}
+local loading_songs = {}
+local intro_songs = {}
+local credits_songs = {}
+local factional_combat_songs = {}
+local combat_songs = {}
+local nebula_combat_songs = {}
 
 for k,v in ipairs(lf.getDirectoryItems("snd/music")) do
    local suffix = utf8.sub(v, -4)
@@ -23,6 +31,14 @@ for k,v in ipairs(lf.getDirectoryItems("snd/music")) do
       tmerge( factional_songs, t.factional_songs )
       tmerge( spob_songs, t.spob_songs )
       tmerge( system_ambient_songs, t.system_ambient_songs )
+      tmerge( takeoff_songs, t.takeoff_songs )
+      tmerge( ambient_songs, t.ambient_songs )
+      tmerge( loading_songs, t.loading_songs )
+      tmerge( intro_songs, t.intro_songs )
+      tmerge( credits_songs, t.credits_songs )
+      tmerge( factional_combat_songs, t.factional_combat_songs )
+      tmerge( combat_songs, t.combat_songs )
+      tmerge( nebula_combat_songs, t.nebula_combat_songs )
    end
 end
 
@@ -136,21 +152,24 @@ function choose_table.load ()
    if not music_situation then
       params.delay = nil
    end
-   return playIfNotPlaying( "machina.ogg", "load", params )
+   local s = loading_songs[ rnd.rnd(1,#loading_songs) ]
+   return playIfNotPlaying( s, "load", params )
 end
 
 --[[--
 Chooses Intro songs.
 --]]
 function choose_table.intro ()
-   return playIfNotPlaying( "intro.ogg", "intro" )
+   local s = intro_songs[ rnd.rnd(1,#intro_songs) ]
+   return playIfNotPlaying( s, "intro" )
 end
 
 --[[--
 Chooses Credit songs.
 --]]
 function choose_table.credits ()
-   return playIfNotPlaying( "empire1.ogg", "credits" )
+   local s = credits_songs[ rnd.rnd(1,#credits_songs) ]
+   return playIfNotPlaying( s, "credits" )
 end
 
 --[[--
@@ -212,8 +231,7 @@ function choose_table.takeoff ()
    if music_situation == "takeoff" and tracks_playing() then
       return false
    end
-   local takeoff = { "liftoff.ogg", "launch2.ogg", "launch3chatstart.ogg" }
-   tracks_add( takeoff[ rnd.rnd(1,#takeoff) ], "ambient" ) -- Don't want to repeat takeoff
+   tracks_add( takeoff_songs[ rnd.rnd(1,#takeoff_songs) ], "ambient" ) -- Don't want to repeat takeoff
    return true
 end
 
@@ -239,11 +257,6 @@ end
 -- Save old data
 local last_sysFaction  = nil
 local last_sysNebuDens = nil
-local ambient_neutral  = { "ambient2.ogg", "mission.ogg",
-      "peace1.ogg", "peace2.ogg", "peace4.ogg", "peace6.ogg",
-      "void_sensor.ogg", "ambiphonic.ogg",
-      "ambient4.ogg", "terminal.ogg", "eureka.ogg",
-      "ambient2_5.ogg", "78pulse.ogg", "therewillbestars.ogg", }
 --[[--
 Chooses ambient songs.
 --]]
@@ -305,12 +318,12 @@ function choose_table.ambient ()
          ambient = { "ambient1.ogg", "ambient3.ogg" }
          add_neutral = true
       else
-         ambient = ambient_neutral
+         ambient = ambient_songs
       end
 
       -- Clobber array with generic songs if allowed.
       if add_neutral and rnd.rnd() < neutral_prob then
-         ambient = ambient_neutral
+         ambient = ambient_songs
       end
 
       -- Make sure it's not already in the list or that we have to stop the
@@ -339,32 +352,6 @@ function choose_table.ambient ()
 end
 
 
-local nebula_combat = {
-   "nebu_battle1.ogg",
-   "nebu_battle2.ogg",
-   "combat1.ogg",
-   "combat2.ogg",
-}
-local normal_combat = {
-   "combat3.ogg",
-   "combat1.ogg",
-   "combat2.ogg",
-   "vendetta.ogg",
-}
--- Faction-specific combat songs
-local factional_combat = {
-   Collective = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", "combat3.ogg" },
-   Pirate     = { "battlesomething2.ogg", "blackmoor_tides.ogg", add_neutral = true },
-   Empire     = { "galacticbattle.ogg", "battlesomething2.ogg", add_neutral = true },
-   Goddard    = { "flf_battle1.ogg", "battlesomething1.ogg", add_neutral = true },
-   Dvaered    = { "flf_battle1.ogg", "battlesomething2.ogg", "for_grandeur.ogg", add_neutral = true },
-   ["FLF"]    = { "flf_battle1.ogg", "battlesomething2.ogg", add_neutral = true },
-   Frontier   = { "flf_battle1.ogg", add_neutral = true },
-   Sirius     = { "galacticbattle.ogg", "battlesomething1.ogg", add_neutral = true },
-   Soromid    = { "galacticbattle.ogg", "battlesomething2.ogg", add_neutral = true },
-   ["Za'lek"] = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", add_neutral = true }
-}
-
 --[[--
 Chooses battle songs.
 --]]
@@ -378,18 +365,18 @@ function choose_table.combat ()
 
    local nebu = nebu_dens > 0
    if nebu then
-      combat = nebula_combat
+      combat = nebula_combat_songs
    else
-      combat = normal_combat
+      combat = combat_songs
    end
 
-   if factional_combat[strongest] then
-      if factional_combat[strongest].add_neutral then
-         for k, v in ipairs( factional_combat[strongest] ) do
+   if factional_combat_songs[strongest] then
+      if factional_combat_songs[strongest].add_neutral then
+         for k, v in ipairs( factional_combat_songs[strongest] ) do
             combat[ #combat + 1 ] = v
          end
       else
-         combat = factional_combat[strongest]
+         combat = factional_combat_songs[strongest]
       end
    end
 
