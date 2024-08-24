@@ -29,7 +29,16 @@ while args:
 
 # Get DLL search path from meson
 devenv = subprocess.run([sys.executable, os.path.join(source_root, "meson.py"), "devenv", "--dump"], capture_output=True, check=True)
-os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = re.search(f"PATH=\"(.*){os.pathsep}\\$PATH\"",devenv.stdout.decode()).group(1) + os.pathsep + os.environ['PATH']
+
+# WINEPATH is set in cross compilation enviornments. Check it first
+devenvPath = re.search(f"WINEPATH=\"(.*);\\$WINEPATH\"",devenv.stdout.decode())
+if devenvPath is not None:
+    os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = (devenvPath.group(1) + ";" + os.environ.get('WINEPATH', default="")).replace(";", os.pathsep)
+
+# If WINEPATH wasn't set, this is a native windows build, and we should use PATH
+else:
+    devenvPath = re.search(f"PATH=\"(.*){os.pathsep}\\$PATH\"",devenv.stdout.decode())
+    os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = devenvPath.group(1) + os.pathsep + os.environ.get('PATH', default="")
 
 # Run mingw-bundledlls to get DLL list
 dll_list_cmd = [sys.executable, os.path.join(os.getenv('MESON_SOURCE_ROOT'), 'extras/windows/mingw-bundledlls/mingw-bundledlls'),
