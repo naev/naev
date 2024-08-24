@@ -4,9 +4,30 @@ import os
 import subprocess
 import shutil
 import sys
-import re
 
-source_root = os.environ['MESON_SOURCE_ROOT']
+# Define the paths as a list
+search_paths = [
+# MSYS2 paths
+    '/mingw32/bin',
+    '/mingw64/bin',
+    '/ucrt64/bin',
+    '/clang32/bin',
+    '/clang64/bin',
+    '/clangarm64/bin',
+# Fedora toolchain paths
+    '/usr/i686-w64-mingw32/bin',
+    '/usr/x86_64-w64-mingw32/bin',
+    '/usr/x86_64-w64-mingw32ucrt/bin',
+# Fedora MINGW toolchain paths
+    '/usr/i686-w64-mingw32/sys-root/mingw/bin',
+    '/usr/x86_64-w64-mingw32/sys-root/mingw/bin',
+    '/usr/x86_64-w64-mingw32ucrt/sys-root/mingw/bin',
+# MXE toolchain paths
+    '/usr/lib/mxe/usr/x86_64-w64-mingw32.shared/bin'
+]
+
+# Join the paths with a colon to form the environment variable
+os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = ':'.join(search_paths)
 
 def usage():
     print(f"usage: {os.path.basename(sys.argv[0])} [-d] (Verbose output)")
@@ -27,9 +48,13 @@ while args:
     else:
         usage()
 
-# Get DLL search path from meson
-devenv = subprocess.run([sys.executable, os.path.join(source_root, "meson.py"), "devenv", "--dump"], capture_output=True, check=True)
-os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = re.search(f"PATH=\"(.*){os.pathsep}\\$PATH\"",devenv.stdout.decode()).group(1) + os.pathsep + os.environ['PATH']
+# Search for DLLs in subproject directories
+subproj_dirs = [os.path.join(os.getenv('MESON_SOURCE_ROOT'), 'subprojects'),
+                os.path.join(os.getenv('MESON_BUILD_ROOT'), 'subprojects')]
+for subproj_dir in subproj_dirs:
+    if os.path.isdir(subproj_dir):
+        for root, dirs, files in os.walk(subproj_dir):
+            os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] += f':{root}'
 
 # Run mingw-bundledlls to get DLL list
 dll_list_cmd = [sys.executable, os.path.join(os.getenv('MESON_SOURCE_ROOT'), 'extras/windows/mingw-bundledlls/mingw-bundledlls'),
