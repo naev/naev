@@ -21,8 +21,8 @@
    <refuel/>
    <bar/>
    <outfits/>
-   <shipyard/>
    <blackmarket/>
+   <nomissionspawn/>
   </services>
   <commodities/>
   <description>(null)</description>
