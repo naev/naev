@@ -1203,7 +1203,8 @@ static void land_setupTabs( void )
       names[j++]                            = _( "Shipyard" );
    }
    /* Equipment. */
-   if ( spob_hasService( land_spob, SPOB_SERVICE_OUTFITS ) ||
+   if ( spob_hasService( land_spob, SPOB_SERVICE_REFUEL ) ||
+        spob_hasService( land_spob, SPOB_SERVICE_OUTFITS ) ||
         spob_hasService( land_spob, SPOB_SERVICE_SHIPYARD ) ) {
       land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
       names[j++]                             = p_( "service", "Equipment" );
@@ -1339,7 +1340,8 @@ void land_genWindows( int load )
    if ( should_open( SPOB_SERVICE_SHIPYARD, LAND_WINDOW_SHIPYARD ) )
       shipyard_open( land_getWid( LAND_WINDOW_SHIPYARD ) );
    /* Equipment. */
-   if ( ( spob_hasService( land_spob, SPOB_SERVICE_OUTFITS ) ||
+   if ( ( spob_hasService( land_spob, SPOB_SERVICE_REFUEL ) ||
+          spob_hasService( land_spob, SPOB_SERVICE_OUTFITS ) ||
           spob_hasService( land_spob, SPOB_SERVICE_SHIPYARD ) ) &&
         !land_tabGenerated( LAND_WINDOW_EQUIPMENT ) )
       equipment_open( land_getWid( LAND_WINDOW_EQUIPMENT ) );

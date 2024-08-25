@@ -1699,6 +1699,7 @@ static void equipment_genShipList( unsigned int wid )
    char                r[PATH_MAX];
    glTexture          *t;
    int                 iconsize;
+   int                 allships = 1;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -1708,7 +1709,7 @@ static void equipment_genShipList( unsigned int wid )
       return;
 
    eq_wgt.selected = NULL;
-   if ( spob_hasService( land_spob, SPOB_SERVICE_SHIPYARD ) )
+   if ( allships )
       nships = player_nships() + 1;
    else
       nships = 1;
@@ -1729,7 +1730,7 @@ static void equipment_genShipList( unsigned int wid )
       t                = gl_newImage( r, 0 );
       cships[0].layers = gl_addTexArray( cships[0].layers, t );
    }
-   if ( spob_hasService( land_spob, SPOB_SERVICE_SHIPYARD ) ) {
+   if ( allships ) {
       player_shipsSort();
       ps = player_getShipStack();
       for ( int i = 1; i <= array_size( ps ); i++ ) {
