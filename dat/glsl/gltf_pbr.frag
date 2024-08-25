@@ -645,12 +645,14 @@ void main (void)
          f_diffuse  += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL_diffuse, LoH );
 #endif
          f_diffuse  += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL, LoH );
-         if (M.sheen > 0.0)
-            f_sheen  += BRDF_sheen( LoH, M.c_diff, M.sheenTint, M.sheen );
          //f_subsurface  += NoLintensity * BRDF_subsurface( NoL, NoV, LoH, M.c_diff, M.roughness );
          f_specular += NoLintensity * BRDF_specularGGX( M.f0, M.f90, M.roughness, VoH, NoL, NoV, NoH );
 
-         /* Clear coat lobe. */
+         /* Sheen lobe if applicable. */
+         if (M.sheen > 0.0)
+            f_sheen  += BRDF_sheen( LoH, M.c_diff, M.sheenTint, M.sheen );
+
+         /* Clear coat lobe if applicable. */
          if (M.clearcoat > 0.0)
             f_clearcoat += intensity * BRDF_specularGGX( M.f0, M.f90, M.clearcoat_roughness, VoH, NoL, NoV, NoH );
       //}
