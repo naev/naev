@@ -4,30 +4,9 @@ import os
 import subprocess
 import shutil
 import sys
+import re
 
-# Define the paths as a list
-search_paths = [
-# MSYS2 paths
-    '/mingw32/bin',
-    '/mingw64/bin',
-    '/ucrt64/bin',
-    '/clang32/bin',
-    '/clang64/bin',
-    '/clangarm64/bin',
-# Fedora toolchain paths
-    '/usr/i686-w64-mingw32/bin',
-    '/usr/x86_64-w64-mingw32/bin',
-    '/usr/x86_64-w64-mingw32ucrt/bin',
-# Fedora MINGW toolchain paths
-    '/usr/i686-w64-mingw32/sys-root/mingw/bin',
-    '/usr/x86_64-w64-mingw32/sys-root/mingw/bin',
-    '/usr/x86_64-w64-mingw32ucrt/sys-root/mingw/bin',
-# MXE toolchain paths
-    '/usr/lib/mxe/usr/x86_64-w64-mingw32.shared/bin'
-]
-
-# Join the paths with a colon to form the environment variable
-os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = ':'.join(search_paths)
+source_root = os.environ['MESON_SOURCE_ROOT']
 
 def usage():
     print(f"usage: {os.path.basename(sys.argv[0])} [-d] (Verbose output)")
@@ -48,13 +27,18 @@ while args:
     else:
         usage()
 
-# Search for DLLs in subproject directories
-subproj_dirs = [os.path.join(os.getenv('MESON_SOURCE_ROOT'), 'subprojects'),
-                os.path.join(os.getenv('MESON_BUILD_ROOT'), 'subprojects')]
-for subproj_dir in subproj_dirs:
-    if os.path.isdir(subproj_dir):
-        for root, dirs, files in os.walk(subproj_dir):
-            os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] += f':{root}'
+# Get DLL search path from meson
+devenv = subprocess.run([sys.executable, os.path.join(source_root, "meson.py"), "devenv", "--dump"], capture_output=True, check=True)
+
+# WINEPATH is set in cross compilation enviornments. Check it first
+devenvPath = re.search(f"WINEPATH=\"(.*);\\$WINEPATH\"",devenv.stdout.decode())
+if devenvPath is not None:
+    os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = (devenvPath.group(1) + ";" + os.environ.get('WINEPATH', default="")).replace(";", os.pathsep)
+
+# If WINEPATH wasn't set, this is a native windows build, and we should use PATH
+else:
+    devenvPath = re.search(f"PATH=\"(.*){os.pathsep}\\$PATH\"",devenv.stdout.decode())
+    os.environ['MINGW_BUNDLEDLLS_SEARCH_PATH'] = devenvPath.group(1) + os.pathsep + os.environ.get('PATH', default="")
 
 # Run mingw-bundledlls to get DLL list
 dll_list_cmd = [sys.executable, os.path.join(os.getenv('MESON_SOURCE_ROOT'), 'extras/windows/mingw-bundledlls/mingw-bundledlls'),
@@ -64,12 +48,16 @@ if verbose:
     print("Executing command:", dll_list_cmd)
     print("Working directory:", os.getcwd())
 
-dll_list_proc = subprocess.Popen(dll_list_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-dll_list_out, dll_list_err = dll_list_proc.communicate()
+dll_list_proc = subprocess.run(dll_list_cmd, capture_output=True)
+dll_list_out = dll_list_proc.stdout
+dll_list_err = dll_list_proc.stderr
 
 if verbose:
     print(dll_list_out.decode())
+if verbose or dll_list_proc.returncode != 0:
     print(dll_list_err.decode())
+
+dll_list_proc.check_returncode()
 
 # Copy DLLs to installation directory
 dll_list = dll_list_out.decode().splitlines()
