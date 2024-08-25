@@ -63,6 +63,7 @@ return {
    spob_songs = {
       ["Minerva Station"] = { "meeting_mtfox.ogg" },
       ["Strangelove Lab"] = { "landing_sinister.ogg" },
+      ["Hypergate Protera"] = { "landing_sinister.ogg" },
       ["One-Wing Goddard"] = { "/snd/sounds/songs/inca-spa.ogg" },
       ["Research Post Sigma-13"] = function ()
             if not diff.isApplied("sigma13_fixed1") and
