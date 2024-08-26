@@ -76,11 +76,29 @@ function land ()
 
    vn.sfx( der.sfx.board )
    vn.na(_([[You slowly approach the location you were given with your ship avoiding the thick structural debris. After a long time of searching, you eventually find a crusty old docking port among the sprawling wreck that seemingly is in working condition. Weapon drawn and in full EVA gear you prepare to go into the rubbish.]]))
-   vn.na(_([[You work your way through the crushed structure]]))
+   vn.na(_([[You work your way through the crushed structure, and eventually find your way to what seems to be a working airlock. After fiddling with the controls, you are able to make your way into it and to what seemingly seems to be makeshift and surprisingly working area of the wreck. You make your way forward and eventually find yourself in what seems to be some sort of dirty cantina. You can see some ancient spoiled food and drink on the tables.]]))
 
    vn.scene()
    local c = vn.newCharacter( vni.soundonly( _("character","C") ) )
-   c(_([[]]))
+   vn.transition()
+   c(_([[Suddenly a loudspeaker screeches on, and you hear some coughing followed by a familiar voice.
+"I was right! You aren't one of them. How the hell did you make it here? I thought I was the only normal one left."]]))
+   vn.menu{
+      {_([["What is going on here?"]]),"cont01_what"},
+      {_([["Who are them?"]]),"cont01_who"},
+   }
+
+   vn.label("cont01_what")
+   c(_([["I was hoping you could tell me! One moment I'm jumping through hyperspace, then when I drop out it's a damn mess! Missing planets, the few remaining are completely damaged, death and destruction everywhere!"]]))
+   vn.jump("cont01")
+
+   vn.label("cont01_who")
+   c(_([["You've seen them, haven't you? All those ships out there, attacking everything on sight. They even kill each other all the time! It's a dog-eat-dog world out there..."]]))
+   vn.jump("cont01")
+
+   vn.label("cont01")
+   c(_([[They cough before continuing.
+""]]))
 
    vn.run()
 
