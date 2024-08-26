@@ -24,7 +24,6 @@ local zbh = require "common.zalek_blackhole"
 local lmisn = require  "lmisn"
 local pilotai = require "pilotai"
 
-
 local reward = zbh.rewards.zbh08
 local cargo_name = _("Sensor Upgrades")
 local cargo_amount = 32 -- Amount of cargo to take
