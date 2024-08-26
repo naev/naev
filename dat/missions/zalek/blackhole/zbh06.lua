@@ -23,7 +23,6 @@ local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
 local lmisn = require "lmisn"
 
-
 local reward = zbh.rewards.zbh06
 
 local mainpnt, mainsys = spob.getS("Research Post Sigma-13")
@@ -53,7 +52,7 @@ function accept ()
 "ALERT: Hostile ships detected inbound from {sys}."]]),{sys=jumpsys}))
    z(_([["Shit! I guess we have to postpone the surgery. Wait, is Icarus still out there?"
 Zach pulls up a hologram of Icarus who can be seen flying outside the station.]]))
-   z(_([["Damn, I don't think I can get Icarus in the station in time. Go out and intercept the hostiles, I'll see what I can do at the station!"]]))
+   z(_([["Damn, I don't think I can get Icarus in the station in time. Go out and intercept the incoming hostiles, I'll see what I can do at the station!"]]))
    vn.na(_([[Zach rushes out the bar and you follow in pursuit headed towards your ship.]]))
    vn.done( zbh.zach.transition )
    vn.run()
@@ -110,7 +109,7 @@ local badguys, icarus
 function enter ()
    if system.cur() ~= mainsys then
       if mem.state==1 and heartbeat_state > 0 then
-         lmisn.fail(_("You were supposed to eliminate the hostiles!"))
+         lmisn.fail(_("You were supposed to eliminate all hostiles!"))
       end
       return
    end
