@@ -1371,6 +1371,8 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
                   jp = &sys->jumps[sel->u.jump];
                   if ( uniedit_diffMode ) {
                      /* TODO diff. */
+                     dialogue_alertRaw( _( "Editing asteroids is not yet "
+                                           "supported in diff mode." ) );
                   } else {
                      jp->flags &= ~( JP_AUTOPOS );
                      jp->pos.x += xmove;
@@ -2013,7 +2015,13 @@ static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused )
       return;
    ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
-   /* TODO add diff support. */
+   if ( uniedit_diffMode ) {
+      /* TODO add diff support. */
+      dialogue_alertRaw(
+         _( "Removing asteroids is not yet supported in diff mode." ) );
+      return;
+   }
+
    if ( array_size( ast->groups ) > 0 )
       array_erase( &ast->groups, &ast->groups[pos], &ast->groups[pos + 1] );
 
@@ -2029,7 +2037,12 @@ static void sysedit_btnAddAsteroid( unsigned int wid, const char *unused )
    /* Failed to add. */
    if ( grp == NULL )
       return;
-   /* TODO add diff support. */
+   if ( uniedit_diffMode ) {
+      /* TODO add diff support. */
+      dialogue_alertRaw(
+         _( "Removing asteroids is not yet supported in diff mode." ) );
+      return;
+   }
    array_push_back( &ast->groups, grp );
 
    sysedit_genAsteroidsList( wid );
@@ -2058,7 +2071,13 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
 {
    AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
-   /* TODO add diff support. */
+   if ( uniedit_diffMode ) {
+      /* TODO add diff support. */
+      dialogue_alertRaw(
+         _( "Editing asteroids is not yet supported in diff mode." ) );
+      window_close( wid, unused );
+      return;
+   }
    ast->density  = atof( window_getInput( sysedit_widEdit, "inpDensity" ) );
    ast->radius   = atof( window_getInput( sysedit_widEdit, "inpRadius" ) );
    ast->maxspeed = atof( window_getInput( sysedit_widEdit, "inpMaxspeed" ) );
