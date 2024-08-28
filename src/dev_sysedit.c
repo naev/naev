@@ -1016,7 +1016,7 @@ static void sysedit_renderAsteroidExclusion( double bx, double by,
 
    if ( selected ) {
       const glColour csel = COL_ALPHA( cFontBlue, 0.5 );
-      gl_renderCircle( tx, ty, aexcl->radius * sysedit_zoom, &csel, 1 );
+      gl_renderCircle( tx, ty, r, &csel, 1 );
    }
 
    col = ( selected ) ? &cWhite : &cRed;
