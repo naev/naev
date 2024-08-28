@@ -653,8 +653,7 @@ static int diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node )
       HUNK_STRD( HUNK_TYPE_SSYS_TAG_ADD );
       HUNK_STRD( HUNK_TYPE_SSYS_TAG_REMOVE );
 
-      WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
-            node->name );
+      WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name, cur->name );
    } while ( xml_nextNode( cur ) );
 
    /* Clean up some stuff. */
@@ -694,8 +693,7 @@ static int diff_parseTech( UniDiffData_t *diff, xmlNodePtr node )
       HUNK_STRD( HUNK_TYPE_TECH_ADD );
       HUNK_STRD( HUNK_TYPE_TECH_REMOVE );
 
-      WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
-            node->name );
+      WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name, cur->name );
    } while ( xml_nextNode( cur ) );
 
    /* Clean up some stuff. */
@@ -806,8 +804,7 @@ static int diff_parseFaction( UniDiffData_t *diff, xmlNodePtr node )
       HUNK_STRD( HUNK_TYPE_FACTION_ENEMY );
       HUNK_STRD( HUNK_TYPE_FACTION_NEUTRAL );
 
-      WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name,
-            node->name );
+      WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name, cur->name );
    } while ( xml_nextNode( cur ) );
 
    /* Clean up some stuff. */
