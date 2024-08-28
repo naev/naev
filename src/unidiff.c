@@ -1387,6 +1387,7 @@ void diff_remove( const char *name )
  */
 void diff_clear( void )
 {
+   /* Remove in reverse order. */
    while ( array_size( diff_stack ) > 0 )
       diff_removeDiff( &diff_stack[array_size( diff_stack ) - 1] );
    array_free( diff_stack );
@@ -1416,7 +1417,8 @@ static UniDiff_t *diff_newDiff( void )
  */
 static int diff_removeDiff( UniDiff_t *diff )
 {
-   for ( int i = 0; i < array_size( diff->applied ); i++ ) {
+   /* Remove hunks in reverse order. */
+   for ( int i = array_size( diff->applied ) - 1; i >= 0; i-- ) {
       UniHunk_t hunk = diff->applied[i];
       if ( diff_revertHunk( &hunk ) )
          WARN( _( "Failed to remove hunk type '%s'." ), hunk_name[hunk.type] );
