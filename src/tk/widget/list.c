@@ -551,7 +551,8 @@ int toolkit_getListPos( unsigned int wid, const char *name )
    Widget *wgt = lst_getWgt( wid, name );
    if ( wgt == NULL )
       return -1;
-
+   if ( wgt->dat.lst.noptions <= 0 )
+      return -1;
    return wgt->dat.lst.selected;
 }
 
