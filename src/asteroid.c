@@ -1018,6 +1018,16 @@ void asteroid_free( AsteroidAnchor *ast )
 }
 
 /**
+ * @brief Frees an asteroid exclusion.
+ *
+ *    @param exc Asteroid exclusion to free.
+ */
+void asteroid_freeExclude( AsteroidExclusion *exc )
+{
+   free( exc->label );
+}
+
+/**
  * @brief Cleans up the system.
  */
 void asteroids_free( void )

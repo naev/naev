@@ -3070,6 +3070,9 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node,
    a = &array_grow( &sys->astexclude );
    memset( a, 0, sizeof( *a ) );
 
+   /* Parse label if available. */
+   xmlr_attr_strd( node, "label", a->label );
+
    /* Initialize stuff. */
    pos = 0;
 
@@ -3867,6 +3870,8 @@ void space_exit( void )
       /* Free the asteroids. */
       for ( int j = 0; j < array_size( sys->asteroids ); j++ )
          asteroid_free( &sys->asteroids[j] );
+      for ( int j = 0; j < array_size( sys->astexclude ); j++ )
+         asteroid_freeExclude( &sys->astexclude[j] );
       array_free( sys->asteroids );
       array_free( sys->astexclude );
 
