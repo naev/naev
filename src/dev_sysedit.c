@@ -1904,9 +1904,6 @@ static void sysedit_editAsteroids( void )
    window_addInput( wid, x + l + 8, y, 80, 20, "inpAccel", 10, 1, NULL );
    window_setInputFilter( wid, "inpAccel", INPUT_FILTER_NUMBER );
 
-   /* List to choose the different asteroids that appear. */
-   sysedit_genAsteroidsList( wid );
-
    /* Button width. */
    bw = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 4.;
 
@@ -1927,6 +1924,10 @@ static void sysedit_editAsteroids( void )
                      "btnDelete", _( "Delete" ), sysedit_btnAsteroidsDelete );
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT, "btnClose", _( "Close" ),
                      sysedit_editAsteroidsClose );
+
+   /* List to choose the different asteroids that appear. Has to be created
+    * after buttons. */
+   sysedit_genAsteroidsList( wid );
 
    /* Load current values. */
    snprintf( buf, sizeof( buf ), "%g", ast->density );
@@ -1969,8 +1970,11 @@ static void sysedit_genAsteroidsList( unsigned int wid )
       have = malloc( sizeof( char * ) * nhave );
       for ( int i = 0; i < nhave; i++ )
          have[i] = strdup( ast->groups[i]->name );
-   } else
+      window_enableButton( wid, "btnRmAsteroid" );
+   } else {
       have = NULL;
+      window_disableButton( wid, "btnRmAsteroid" );
+   }
    window_addList( wid, x, y, w, h, "lstAsteroidsHave", have, nhave, 0, NULL,
                    sysedit_btnRmAsteroid );
    x += w + 15;
@@ -1983,8 +1987,11 @@ static void sysedit_genAsteroidsList( unsigned int wid )
       for ( int i = 0; i < navail; i++ )
          available[i] = strdup( astgroups[i].name );
       qsort( available, navail, sizeof( char * ), strsort );
-   } else
+      window_enableButton( wid, "btnAddAsteroid" );
+   } else {
       available = NULL;
+      window_disableButton( wid, "btnAddAsteroid" );
+   }
    window_addList( wid, x, y, w, h, "lstAsteroidsAvailable", available, navail,
                    0, NULL, sysedit_btnAddAsteroid );
 
@@ -1999,7 +2006,12 @@ static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused )
 {
    (void)unused;
    int             pos = toolkit_getListPos( wid, "lstAsteroidsHave" );
-   AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
+   AsteroidAnchor *ast;
+   if ( pos < 0 )
+      return;
+   if ( array_size( sysedit_sys->asteroids ) <= 0 )
+      return;
+   ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
    /* TODO add diff support. */
    if ( array_size( ast->groups ) > 0 )
@@ -2013,9 +2025,12 @@ static void sysedit_btnAddAsteroid( unsigned int wid, const char *unused )
    (void)unused;
    const char     *selected = toolkit_getList( wid, "lstAsteroidsAvailable" );
    AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
-
+   AsteroidTypeGroup *grp = astgroup_getName( selected );
+   /* Failed to add. */
+   if ( grp == NULL )
+      return;
    /* TODO add diff support. */
-   array_push_back( &ast->groups, astgroup_getName( selected ) );
+   array_push_back( &ast->groups, grp );
 
    sysedit_genAsteroidsList( wid );
 }
