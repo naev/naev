@@ -245,6 +245,8 @@ static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
 #define HUNK_CUST( TYPE, DTYPE, FUNC )                                         \
    /* static_assert( hunk_tag[TYPE] != NULL, "" ); */                          \
    if ( xml_isNode( cur, hunk_tag[TYPE] ) ) {                                  \
+      memset( &hunk, 0, sizeof( hunk ) );                                      \
+      diff_parseAttr( &hunk, cur );                                            \
       hunk.target.type   = base.target.type;                                   \
       hunk.target.u.name = strdup( base.target.u.name );                       \
       hunk.type          = TYPE;                                               \
@@ -268,6 +270,7 @@ static int diff_applyInternal( const char *name, int oneshot );
 NONNULL( 1 ) static UniDiff_t *diff_get( const char *name );
 static UniDiff_t *diff_newDiff( void );
 static int        diff_removeDiff( UniDiff_t *diff );
+static void       diff_parseAttr( UniHunk_t *hunk, xmlNodePtr node );
 static int        diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc );
 static int        diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node );
 static int        diff_parseTech( UniDiffData_t *diff, xmlNodePtr node );
@@ -602,6 +605,21 @@ void diff_start( void )
 void diff_end( void )
 {
    diff_checkUpdateUniverse();
+}
+
+static void diff_parseAttr( UniHunk_t *hunk, xmlNodePtr node )
+{
+   xmlAttr *attribute = node->properties;
+   while ( attribute && attribute->name && attribute->children ) {
+      UniAttribute_t attr;
+      attr.name = strdup( (const char *)attribute->name );
+      attr.value =
+         (char *)xmlNodeListGetString( node->doc, attribute->children, 1 );
+      if ( hunk->attr == NULL )
+         hunk->attr = array_create( UniAttribute_t );
+      array_push_back( &hunk->attr, attr );
+      attribute = attribute->next;
+   }
 }
 
 /**
@@ -1471,6 +1489,12 @@ void diff_cleanupHunk( UniHunk_t *hunk )
       free( hunk->u.name );
       hunk->u.name = NULL;
    }
+   for ( int i = 0; i < array_size( hunk->attr ); i++ ) {
+      UniAttribute_t *attr = &hunk->attr[i];
+      free( attr->name );
+      free( attr->value );
+   }
+   array_free( hunk->attr );
    memset( hunk, 0, sizeof( UniHunk_t ) );
 }
 

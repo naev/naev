@@ -128,6 +128,11 @@ typedef enum UniHunkDataType_s {
    HUNK_DATA_FLOAT,
 } UniHunkDataType_t;
 
+typedef struct UniAttribute_ {
+   char *name;
+   char *value;
+} UniAttribute_t;
+
 /**
  * @struct UniHunk_t
  *
@@ -146,7 +151,8 @@ typedef struct UniHunk_ {
       const char *name; /* We just save the pointer, so keep as const. */
       int         data;
       double      fdata;
-   } o; /** Old data to possibly replace. */
+   } o;                  /** Old data to possibly replace. */
+   UniAttribute_t *attr; /**< Attributes. array.h */
 } UniHunk_t;
 
 /**
