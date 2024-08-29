@@ -54,197 +54,283 @@ static const char *diff_nav_spob =
 static const char *diff_nav_hyperspace =
    NULL; /**< Stores the player's hyperspace target if necessary. */
 
-static const char *const hunk_name[HUNK_TYPE_SENTINAL + 1] = {
-   [HUNK_TYPE_NONE]                     = N_( "none" ),
-   [HUNK_TYPE_SPOB_ADD]                 = N_( "spob add" ),
-   [HUNK_TYPE_SPOB_REMOVE]              = N_( "spob remove" ),
-   [HUNK_TYPE_VSPOB_ADD]                = N_( "virtual spob add" ),
-   [HUNK_TYPE_VSPOB_REMOVE]             = N_( "virtual spob remove" ),
-   [HUNK_TYPE_JUMP_ADD]                 = N_( "jump add" ),
-   [HUNK_TYPE_JUMP_REMOVE]              = N_( "jump remove" ),
-   [HUNK_TYPE_TECH_ADD]                 = N_( "tech add" ),
-   [HUNK_TYPE_TECH_REMOVE]              = N_( "tech remove" ),
-   [HUNK_TYPE_SSYS_BACKGROUND]          = N_( "ssys background" ),
-   [HUNK_TYPE_SSYS_BACKGROUND_REVERT]   = N_( "ssys background revert" ),
-   [HUNK_TYPE_SSYS_FEATURES]            = N_( "ssys features" ),
-   [HUNK_TYPE_SSYS_FEATURES_REVERT]     = N_( "ssys features revert" ),
-   [HUNK_TYPE_SSYS_POS_X]               = N_( "ssys pos x" ),
-   [HUNK_TYPE_SSYS_POS_X_REVERT]        = N_( "ssys pos x revert" ),
-   [HUNK_TYPE_SSYS_POS_Y]               = N_( "ssys pos y" ),
-   [HUNK_TYPE_SSYS_POS_Y_REVERT]        = N_( "ssys pos x revert" ),
-   [HUNK_TYPE_SSYS_DISPLAYNAME]         = N_( "ssys displayname" ),
-   [HUNK_TYPE_SSYS_DISPLAYNAME_REVERT]  = N_( "ssys displayname revert" ),
-   [HUNK_TYPE_SSYS_DUST]                = N_( "ssys dust" ),
-   [HUNK_TYPE_SSYS_DUST_REVERT]         = N_( "ssys dust revert" ),
-   [HUNK_TYPE_SSYS_INTERFERENCE]        = N_( "ssys interference" ),
-   [HUNK_TYPE_SSYS_INTERFERENCE_REVERT] = N_( "ssys interference revert" ),
-   [HUNK_TYPE_SSYS_NEBU_DENSITY]        = N_( "ssys nebula density" ),
-   [HUNK_TYPE_SSYS_NEBU_DENSITY_REVERT] = N_( "ssys nebula density revert" ),
-   [HUNK_TYPE_SSYS_NEBU_VOLATILITY]     = N_( "ssys nebula volatility" ),
+typedef struct HunkProperties {
+   const char   *name;
+   const char   *tag;
+   UniHunkType_t reverse;
+} HunkProperties;
+static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
+   [HUNK_TYPE_NONE] =
+      {
+         .name    = N_( "none" ),
+         .tag     = "none",
+         .reverse = HUNK_TYPE_NONE,
+      },
+   [HUNK_TYPE_SPOB_ADD]        = { .name    = N_( "spob add" ),
+                                   .tag     = "spob_add",
+                                   .reverse = HUNK_TYPE_SPOB_REMOVE },
+   [HUNK_TYPE_SPOB_REMOVE]     = { .name    = N_( "spob remove" ),
+                                   .tag     = "spob_remove",
+                                   .reverse = HUNK_TYPE_SPOB_ADD },
+   [HUNK_TYPE_VSPOB_ADD]       = { .name    = N_( "virtual spob add" ),
+                                   .tag     = "spob_virtual_add",
+                                   .reverse = HUNK_TYPE_VSPOB_REMOVE },
+   [HUNK_TYPE_VSPOB_REMOVE]    = { .name    = N_( "virtual spob remove" ),
+                                   .tag     = "spob_virtual_remove",
+                                   .reverse = HUNK_TYPE_VSPOB_ADD },
+   [HUNK_TYPE_JUMP_ADD]        = { .name    = N_( "jump add" ),
+                                   .tag     = "jump_add",
+                                   .reverse = HUNK_TYPE_JUMP_REMOVE },
+   [HUNK_TYPE_JUMP_REMOVE]     = { .name    = N_( "jump remove" ),
+                                   .tag     = "jump_remove",
+                                   .reverse = HUNK_TYPE_JUMP_ADD },
+   [HUNK_TYPE_TECH_ADD]        = { .name    = N_( "tech add" ),
+                                   .tag     = "item_add",
+                                   .reverse = HUNK_TYPE_TECH_REMOVE },
+   [HUNK_TYPE_TECH_REMOVE]     = { .name    = N_( "tech remove" ),
+                                   .tag     = "item_remove",
+                                   .reverse = HUNK_TYPE_TECH_ADD },
+   [HUNK_TYPE_SSYS_BACKGROUND] = { .name = N_( "ssys background" ),
+                                   .tag  = "background",
+                                   .reverse =
+                                      HUNK_TYPE_SSYS_BACKGROUND_REVERT },
+   [HUNK_TYPE_SSYS_BACKGROUND_REVERT] =
+      {
+         .name    = N_( "ssys background revert" ),
+         .tag     = NULL,
+         .reverse = HUNK_TYPE_NONE,
+      },
+   [HUNK_TYPE_SSYS_FEATURES]           = { .name    = N_( "ssys features" ),
+                                           .tag     = "features",
+                                           .reverse = HUNK_TYPE_SSYS_FEATURES_REVERT },
+   [HUNK_TYPE_SSYS_FEATURES_REVERT]    = { .name    = N_( "ssys features revert" ),
+                                           .tag     = NULL,
+                                           .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_POS_X]              = { .name    = N_( "ssys pos x" ),
+                                           .tag     = "pos_x",
+                                           .reverse = HUNK_TYPE_SSYS_POS_X_REVERT },
+   [HUNK_TYPE_SSYS_POS_X_REVERT]       = { .name    = N_( "ssys pos x revert" ),
+                                           .tag     = NULL,
+                                           .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_POS_Y]              = { .name    = N_( "ssys pos y" ),
+                                           .tag     = "pos_y",
+                                           .reverse = HUNK_TYPE_SSYS_POS_Y_REVERT },
+   [HUNK_TYPE_SSYS_POS_Y_REVERT]       = { .name    = N_( "ssys pos x revert" ),
+                                           .tag     = NULL,
+                                           .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_DISPLAYNAME]        = { .name = N_( "ssys displayname" ),
+                                           .tag  = "displayname",
+                                           .reverse =
+                                              HUNK_TYPE_SSYS_DISPLAYNAME_REVERT },
+   [HUNK_TYPE_SSYS_DISPLAYNAME_REVERT] = { .name =
+                                              N_( "ssys displayname revert" ),
+                                           .tag     = NULL,
+                                           .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_DUST]               = { .name    = N_( "ssys dust" ),
+                                           .tag     = "dust",
+                                           .reverse = HUNK_TYPE_SSYS_DUST_REVERT },
+   [HUNK_TYPE_SSYS_DUST_REVERT]        = { .name    = N_( "ssys dust revert" ),
+                                           .tag     = NULL,
+                                           .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_INTERFERENCE]       = { .name = N_( "ssys interference" ),
+                                           .tag  = "interference",
+                                           .reverse =
+                                              HUNK_TYPE_SSYS_INTERFERENCE_REVERT },
+   [HUNK_TYPE_SSYS_INTERFERENCE_REVERT] = { .name =
+                                               N_( "ssys interference revert" ),
+                                            .tag     = NULL,
+                                            .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_NEBU_DENSITY]        = { .name = N_( "ssys nebula density" ),
+                                            .tag  = "nebu_density",
+                                            .reverse =
+                                               HUNK_TYPE_SSYS_NEBU_DENSITY_REVERT },
+   [HUNK_TYPE_SSYS_NEBU_DENSITY_REVERT] = { .name = N_(
+                                               "ssys nebula density revert" ),
+                                            .tag     = NULL,
+                                            .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_NEBU_VOLATILITY] =
+      { .name    = N_( "ssys nebula volatility" ),
+        .tag     = "nebu_volatility",
+        .reverse = HUNK_TYPE_SSYS_NEBU_VOLATILITY_REVERT },
    [HUNK_TYPE_SSYS_NEBU_VOLATILITY_REVERT] =
-      N_( "ssys nebula volatility revert" ),
-   [HUNK_TYPE_SSYS_NEBU_HUE]              = N_( "ssys nebula hue" ),
-   [HUNK_TYPE_SSYS_NEBU_HUE_REVERT]       = N_( "ssys nebula hue revert" ),
-   [HUNK_TYPE_SSYS_NOLANES_ADD]           = N_( "ssys nolanes add" ),
-   [HUNK_TYPE_SSYS_NOLANES_REMOVE]        = N_( "ssys nolanes remove" ),
-   [HUNK_TYPE_SSYS_TAG_ADD]               = N_( "ssys tag add" ),
-   [HUNK_TYPE_SSYS_TAG_REMOVE]            = N_( "ssys tag remove" ),
-   [HUNK_TYPE_SPOB_POS_X]                 = N_( "spob pos x" ),
-   [HUNK_TYPE_SPOB_POS_X_REVERT]          = N_( "spob pos x revert" ),
-   [HUNK_TYPE_SPOB_POS_Y]                 = N_( "spob pos y" ),
-   [HUNK_TYPE_SPOB_POS_Y_REVERT]          = N_( "spob pos y revert" ),
-   [HUNK_TYPE_SPOB_CLASS]                 = N_( "spob class" ),
-   [HUNK_TYPE_SPOB_CLASS_REVERT]          = N_( "spob class revert" ),
-   [HUNK_TYPE_SPOB_FACTION]               = N_( "spob faction" ),
-   [HUNK_TYPE_SPOB_FACTION_REVERT]        = N_( "spob faction revert" ),
-   [HUNK_TYPE_SPOB_PRESENCE_BASE]         = N_( "spob presence base" ),
-   [HUNK_TYPE_SPOB_PRESENCE_BASE_REVERT]  = N_( "spob presence base revert" ),
-   [HUNK_TYPE_SPOB_PRESENCE_BONUS]        = N_( "spob presence bonus" ),
-   [HUNK_TYPE_SPOB_PRESENCE_BONUS_REVERT] = N_( "spob presence bonus revert" ),
-   [HUNK_TYPE_SPOB_PRESENCE_RANGE]        = N_( "spob presence range" ),
-   [HUNK_TYPE_SPOB_PRESENCE_RANGE_REVERT] = N_( "spob presence range revert" ),
-   [HUNK_TYPE_SPOB_HIDE]                  = N_( "spob hide" ),
-   [HUNK_TYPE_SPOB_HIDE_REVERT]           = N_( "spob hide revert" ),
-   [HUNK_TYPE_SPOB_POPULATION]            = N_( "spob population" ),
-   [HUNK_TYPE_SPOB_POPULATION_REVERT]     = N_( "spob population revert" ),
-   [HUNK_TYPE_SPOB_DISPLAYNAME]           = N_( "spob displayname" ),
-   [HUNK_TYPE_SPOB_DISPLAYNAME_REVERT]    = N_( "spob displayname revert" ),
-   [HUNK_TYPE_SPOB_DESCRIPTION]           = N_( "spob description" ),
-   [HUNK_TYPE_SPOB_DESCRIPTION_REVERT]    = N_( "spob description revert" ),
-   [HUNK_TYPE_SPOB_BAR]                   = N_( "spob bar" ),
-   [HUNK_TYPE_SPOB_BAR_REVERT]            = N_( "spob bar revert" ),
-   [HUNK_TYPE_SPOB_SPACE]                 = N_( "spob space" ),
-   [HUNK_TYPE_SPOB_SPACE_REVERT]          = N_( "spob space revert" ),
-   [HUNK_TYPE_SPOB_EXTERIOR]              = N_( "spob exterior" ),
-   [HUNK_TYPE_SPOB_EXTERIOR_REVERT]       = N_( "spob exterior revert" ),
-   [HUNK_TYPE_SPOB_LUA]                   = N_( "spob lua" ),
-   [HUNK_TYPE_SPOB_LUA_REVERT]            = N_( "spob lua revert" ),
-   [HUNK_TYPE_SPOB_SERVICE_ADD]           = N_( "spob service add" ),
-   [HUNK_TYPE_SPOB_SERVICE_REMOVE]        = N_( "spob service remove" ),
-   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD]       = N_( "spob nomissionspawn add" ),
-   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE]    = N_( "spob nomissionspawn remove" ),
-   [HUNK_TYPE_SPOB_TECH_ADD]              = N_( "spob tech add" ),
-   [HUNK_TYPE_SPOB_TECH_REMOVE]           = N_( "spob tech remove" ),
-   [HUNK_TYPE_SPOB_TAG_ADD]               = N_( "spob tag add" ),
-   [HUNK_TYPE_SPOB_TAG_REMOVE]            = N_( "spob tag remove" ),
-   [HUNK_TYPE_FACTION_VISIBLE]            = N_( "faction visible" ),
-   [HUNK_TYPE_FACTION_INVISIBLE]          = N_( "faction invisible" ),
-   [HUNK_TYPE_FACTION_ALLY]               = N_( "faction set ally" ),
-   [HUNK_TYPE_FACTION_ENEMY]              = N_( "faction set enemy" ),
-   [HUNK_TYPE_FACTION_NEUTRAL]            = N_( "faction set neutral" ),
-   [HUNK_TYPE_FACTION_REALIGN]            = N_( "faction alignment reset" ),
-   [HUNK_TYPE_SENTINAL]                   = N_( "sentinal" ),
-};
-static const char *const hunk_tag[HUNK_TYPE_SENTINAL] = {
-   [HUNK_TYPE_NONE]                    = "none",
-   [HUNK_TYPE_SPOB_ADD]                = "spob_add",
-   [HUNK_TYPE_SPOB_REMOVE]             = "spob_remove",
-   [HUNK_TYPE_VSPOB_ADD]               = "spob_virtual_add",
-   [HUNK_TYPE_VSPOB_REMOVE]            = "spob_virtual_remove",
-   [HUNK_TYPE_JUMP_ADD]                = "jump_add",
-   [HUNK_TYPE_JUMP_REMOVE]             = "jump_remove",
-   [HUNK_TYPE_SSYS_BACKGROUND]         = "background",
-   [HUNK_TYPE_SSYS_FEATURES]           = "features",
-   [HUNK_TYPE_SSYS_POS_X]              = "pos_x",
-   [HUNK_TYPE_SSYS_POS_Y]              = "pos_y",
-   [HUNK_TYPE_SSYS_DISPLAYNAME]        = "displayname",
-   [HUNK_TYPE_SSYS_DUST]               = "dust",
-   [HUNK_TYPE_SSYS_INTERFERENCE]       = "interference",
-   [HUNK_TYPE_SSYS_NEBU_DENSITY]       = "nebu_density",
-   [HUNK_TYPE_SSYS_NEBU_VOLATILITY]    = "nebu_volatility",
-   [HUNK_TYPE_SSYS_NEBU_HUE]           = "nebu_hue",
-   [HUNK_TYPE_SSYS_NOLANES_ADD]        = "nolanes_add",
-   [HUNK_TYPE_SSYS_NOLANES_REMOVE]     = "nolanes_remove",
-   [HUNK_TYPE_SSYS_TAG_ADD]            = "tag_add",
-   [HUNK_TYPE_SSYS_TAG_REMOVE]         = "tag_remove",
-   [HUNK_TYPE_TECH_ADD]                = "item_add",
-   [HUNK_TYPE_TECH_REMOVE]             = "item_remove",
-   [HUNK_TYPE_SPOB_POS_X]              = "pos_x",
-   [HUNK_TYPE_SPOB_POS_Y]              = "pos_y",
-   [HUNK_TYPE_SPOB_CLASS]              = "class",
-   [HUNK_TYPE_SPOB_FACTION]            = "faction",
-   [HUNK_TYPE_SPOB_PRESENCE_BASE]      = "presence_base",
-   [HUNK_TYPE_SPOB_PRESENCE_BONUS]     = "presence_bonus",
-   [HUNK_TYPE_SPOB_PRESENCE_RANGE]     = "presence_range",
-   [HUNK_TYPE_SPOB_HIDE]               = "hide",
-   [HUNK_TYPE_SPOB_POPULATION]         = "population",
-   [HUNK_TYPE_SPOB_DISPLAYNAME]        = "displayname",
-   [HUNK_TYPE_SPOB_DESCRIPTION]        = "description",
-   [HUNK_TYPE_SPOB_BAR]                = "bar",
-   [HUNK_TYPE_SPOB_SPACE]              = "gfx_space",
-   [HUNK_TYPE_SPOB_EXTERIOR]           = "gfx_exterior",
-   [HUNK_TYPE_SPOB_LUA]                = "lua",
-   [HUNK_TYPE_SPOB_SERVICE_ADD]        = "service_add",
-   [HUNK_TYPE_SPOB_SERVICE_REMOVE]     = "service_remove",
-   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD]    = "nomissionspawn_add",
-   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] = "nomissionspawn_remove",
-   [HUNK_TYPE_SPOB_TECH_ADD]           = "tech_add",
-   [HUNK_TYPE_SPOB_TECH_REMOVE]        = "tech_remove",
-   [HUNK_TYPE_SPOB_TAG_ADD]            = "tag_add",
-   [HUNK_TYPE_SPOB_TAG_REMOVE]         = "tag_remove",
-   [HUNK_TYPE_FACTION_VISIBLE]         = "visible",
-   [HUNK_TYPE_FACTION_INVISIBLE]       = "invisible",
-   [HUNK_TYPE_FACTION_ALLY]            = "ally",
-   [HUNK_TYPE_FACTION_ENEMY]           = "enemy",
-   [HUNK_TYPE_FACTION_NEUTRAL]         = "neutral",
-};
-static UniHunkType_t hunk_reverse[HUNK_TYPE_SENTINAL] = {
-   [HUNK_TYPE_NONE]                    = HUNK_TYPE_SENTINAL,
-   [HUNK_TYPE_SPOB_ADD]                = HUNK_TYPE_SPOB_REMOVE,
-   [HUNK_TYPE_SPOB_REMOVE]             = HUNK_TYPE_SPOB_ADD,
-   [HUNK_TYPE_VSPOB_ADD]               = HUNK_TYPE_VSPOB_REMOVE,
-   [HUNK_TYPE_VSPOB_REMOVE]            = HUNK_TYPE_VSPOB_ADD,
-   [HUNK_TYPE_JUMP_ADD]                = HUNK_TYPE_JUMP_REMOVE,
-   [HUNK_TYPE_JUMP_REMOVE]             = HUNK_TYPE_JUMP_ADD,
-   [HUNK_TYPE_SSYS_BACKGROUND]         = HUNK_TYPE_SSYS_BACKGROUND_REVERT,
-   [HUNK_TYPE_SSYS_FEATURES]           = HUNK_TYPE_SSYS_FEATURES_REVERT,
-   [HUNK_TYPE_SSYS_POS_X]              = HUNK_TYPE_SSYS_POS_X_REVERT,
-   [HUNK_TYPE_SSYS_POS_Y]              = HUNK_TYPE_SSYS_POS_Y_REVERT,
-   [HUNK_TYPE_SSYS_DISPLAYNAME]        = HUNK_TYPE_SSYS_DISPLAYNAME_REVERT,
-   [HUNK_TYPE_SSYS_DUST]               = HUNK_TYPE_SSYS_DUST_REVERT,
-   [HUNK_TYPE_SSYS_INTERFERENCE]       = HUNK_TYPE_SSYS_INTERFERENCE_REVERT,
-   [HUNK_TYPE_SSYS_NEBU_DENSITY]       = HUNK_TYPE_SSYS_NEBU_DENSITY_REVERT,
-   [HUNK_TYPE_SSYS_NEBU_VOLATILITY]    = HUNK_TYPE_SSYS_NEBU_VOLATILITY_REVERT,
-   [HUNK_TYPE_SSYS_NEBU_HUE]           = HUNK_TYPE_SSYS_NEBU_HUE_REVERT,
-   [HUNK_TYPE_SSYS_NOLANES_ADD]        = HUNK_TYPE_SSYS_NOLANES_REMOVE,
-   [HUNK_TYPE_SSYS_NOLANES_REMOVE]     = HUNK_TYPE_SSYS_NOLANES_ADD,
-   [HUNK_TYPE_SSYS_TAG_ADD]            = HUNK_TYPE_SSYS_TAG_REMOVE,
-   [HUNK_TYPE_SSYS_TAG_REMOVE]         = HUNK_TYPE_SSYS_TAG_ADD,
-   [HUNK_TYPE_TECH_ADD]                = HUNK_TYPE_TECH_REMOVE,
-   [HUNK_TYPE_TECH_REMOVE]             = HUNK_TYPE_TECH_ADD,
-   [HUNK_TYPE_SPOB_POS_X]              = HUNK_TYPE_SPOB_POS_X_REVERT,
-   [HUNK_TYPE_SPOB_POS_Y]              = HUNK_TYPE_SPOB_POS_Y_REVERT,
-   [HUNK_TYPE_SPOB_CLASS]              = HUNK_TYPE_SPOB_CLASS_REVERT,
-   [HUNK_TYPE_SPOB_FACTION]            = HUNK_TYPE_SPOB_FACTION_REVERT,
-   [HUNK_TYPE_SPOB_PRESENCE_BASE]      = HUNK_TYPE_SPOB_PRESENCE_BASE_REVERT,
-   [HUNK_TYPE_SPOB_PRESENCE_BONUS]     = HUNK_TYPE_SPOB_PRESENCE_BONUS_REVERT,
-   [HUNK_TYPE_SPOB_PRESENCE_RANGE]     = HUNK_TYPE_SPOB_PRESENCE_RANGE_REVERT,
-   [HUNK_TYPE_SPOB_HIDE]               = HUNK_TYPE_SPOB_HIDE_REVERT,
-   [HUNK_TYPE_SPOB_POPULATION]         = HUNK_TYPE_SPOB_POPULATION_REVERT,
-   [HUNK_TYPE_SPOB_DISPLAYNAME]        = HUNK_TYPE_SPOB_DISPLAYNAME_REVERT,
-   [HUNK_TYPE_SPOB_DESCRIPTION]        = HUNK_TYPE_SPOB_DESCRIPTION_REVERT,
-   [HUNK_TYPE_SPOB_BAR]                = HUNK_TYPE_SPOB_BAR_REVERT,
-   [HUNK_TYPE_SPOB_SERVICE_ADD]        = HUNK_TYPE_SPOB_SERVICE_REMOVE,
-   [HUNK_TYPE_SPOB_SERVICE_REMOVE]     = HUNK_TYPE_SPOB_SERVICE_ADD,
-   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD]    = HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE,
-   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] = HUNK_TYPE_SPOB_NOMISNSPAWN_ADD,
-   [HUNK_TYPE_SPOB_TECH_ADD]           = HUNK_TYPE_SPOB_TECH_REMOVE,
-   [HUNK_TYPE_SPOB_TECH_REMOVE]        = HUNK_TYPE_SPOB_TECH_ADD,
-   [HUNK_TYPE_SPOB_TAG_ADD]            = HUNK_TYPE_SPOB_TAG_REMOVE,
-   [HUNK_TYPE_SPOB_TAG_REMOVE]         = HUNK_TYPE_SPOB_TAG_ADD,
-   [HUNK_TYPE_SPOB_SPACE]              = HUNK_TYPE_SPOB_SPACE_REVERT,
-   [HUNK_TYPE_SPOB_EXTERIOR]           = HUNK_TYPE_SPOB_EXTERIOR_REVERT,
-   [HUNK_TYPE_SPOB_LUA]                = HUNK_TYPE_SPOB_LUA_REVERT,
-   [HUNK_TYPE_FACTION_VISIBLE]         = HUNK_TYPE_FACTION_INVISIBLE,
-   [HUNK_TYPE_FACTION_INVISIBLE]       = HUNK_TYPE_FACTION_VISIBLE,
-   [HUNK_TYPE_FACTION_ALLY]            = HUNK_TYPE_FACTION_REALIGN,
-   [HUNK_TYPE_FACTION_ENEMY]           = HUNK_TYPE_FACTION_REALIGN,
-   [HUNK_TYPE_FACTION_NEUTRAL]         = HUNK_TYPE_FACTION_REALIGN,
+      {
+         .name    = N_( "ssys nebula volatility revert" ),
+         .tag     = NULL,
+         .reverse = HUNK_TYPE_NONE,
+      },
+   [HUNK_TYPE_SSYS_NEBU_HUE]        = { .name    = N_( "ssys nebula hue" ),
+                                        .tag     = "nebu_hue",
+                                        .reverse = HUNK_TYPE_SSYS_NEBU_HUE_REVERT },
+   [HUNK_TYPE_SSYS_NEBU_HUE_REVERT] = { .name = N_( "ssys nebula hue revert" ),
+                                        .tag  = NULL,
+                                        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_NOLANES_ADD]     = { .name    = N_( "ssys nolanes add" ),
+                                        .tag     = "nolanes_add",
+                                        .reverse = HUNK_TYPE_SSYS_NOLANES_REMOVE },
+   [HUNK_TYPE_SSYS_NOLANES_REMOVE]  = { .name    = N_( "ssys nolanes remove" ),
+                                        .tag     = "nolanes_remove",
+                                        .reverse = HUNK_TYPE_SSYS_NOLANES_ADD },
+   [HUNK_TYPE_SSYS_TAG_ADD]         = { .name    = N_( "ssys tag = NULL add" ),
+                                        .tag     = "tag_add",
+                                        .reverse = HUNK_TYPE_SSYS_TAG_REMOVE },
+   [HUNK_TYPE_SSYS_TAG_REMOVE]      = { .name    = N_( "ssys tag = NULL remove" ),
+                                        .tag     = "tag_remove",
+                                        .reverse = HUNK_TYPE_SSYS_TAG_ADD },
+   [HUNK_TYPE_SPOB_POS_X]           = { .name    = N_( "spob pos x" ),
+                                        .tag     = "pos_x",
+                                        .reverse = HUNK_TYPE_SPOB_POS_X_REVERT },
+   [HUNK_TYPE_SPOB_POS_X_REVERT]    = { .name    = N_( "spob pos x revert" ),
+                                        .tag     = NULL,
+                                        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_POS_Y]           = { .name    = N_( "spob pos y" ),
+                                        .tag     = "pos_y",
+                                        .reverse = HUNK_TYPE_SPOB_POS_Y_REVERT },
+   [HUNK_TYPE_SPOB_POS_Y_REVERT]    = { .name    = N_( "spob pos y revert" ),
+                                        .tag     = NULL,
+                                        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_CLASS]           = { .name    = N_( "spob class" ),
+                                        .tag     = "class",
+                                        .reverse = HUNK_TYPE_SPOB_CLASS_REVERT },
+   [HUNK_TYPE_SPOB_CLASS_REVERT]    = { .name    = N_( "spob class revert" ),
+                                        .tag     = NULL,
+                                        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_FACTION]         = { .name    = N_( "spob faction" ),
+                                        .tag     = "faction",
+                                        .reverse = HUNK_TYPE_SPOB_FACTION_REVERT },
+   [HUNK_TYPE_SPOB_FACTION_REVERT]  = { .name    = N_( "spob faction revert" ),
+                                        .tag     = NULL,
+                                        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_PRESENCE_BASE]   = { .name = N_( "spob presence base" ),
+                                        .tag  = "presence_base",
+                                        .reverse =
+                                           HUNK_TYPE_SPOB_PRESENCE_BASE_REVERT },
+   [HUNK_TYPE_SPOB_PRESENCE_BASE_REVERT] = { .name = N_(
+                                                "spob presence base revert" ),
+                                             .tag     = NULL,
+                                             .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_PRESENCE_BONUS] =
+      { .name    = N_( "spob presence bonus" ),
+        .tag     = "presence_bonus",
+        .reverse = HUNK_TYPE_SPOB_PRESENCE_BONUS_REVERT },
+   [HUNK_TYPE_SPOB_PRESENCE_BONUS_REVERT] = { .name = N_(
+                                                 "spob presence bonus revert" ),
+                                              .tag     = NULL,
+                                              .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_PRESENCE_RANGE] =
+      { .name    = N_( "spob presence range" ),
+        .tag     = "presence_range",
+        .reverse = HUNK_TYPE_SPOB_PRESENCE_RANGE_REVERT },
+   [HUNK_TYPE_SPOB_PRESENCE_RANGE_REVERT] = { .name = N_(
+                                                 "spob presence range revert" ),
+                                              .tag     = NULL,
+                                              .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_HIDE]                  = { .name    = N_( "spob hide" ),
+                                              .tag     = "hide",
+                                              .reverse = HUNK_TYPE_SPOB_HIDE_REVERT },
+   [HUNK_TYPE_SPOB_HIDE_REVERT]           = { .name    = N_( "spob hide revert" ),
+                                              .tag     = NULL,
+                                              .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_POPULATION]            = { .name = N_( "spob population" ),
+                                              .tag  = "population",
+                                              .reverse =
+                                                 HUNK_TYPE_SPOB_POPULATION_REVERT },
+   [HUNK_TYPE_SPOB_POPULATION_REVERT]     = { .name =
+                                                 N_( "spob population revert" ),
+                                              .tag     = NULL,
+                                              .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_DISPLAYNAME]           = { .name = N_( "spob displayname" ),
+                                              .tag  = "displayname",
+                                              .reverse =
+                                                 HUNK_TYPE_SPOB_DISPLAYNAME_REVERT },
+   [HUNK_TYPE_SPOB_DISPLAYNAME_REVERT]    = { .name =
+                                                 N_( "spob displayname revert" ),
+                                              .tag     = NULL,
+                                              .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_DESCRIPTION]           = { .name = N_( "spob description" ),
+                                              .tag  = "description",
+                                              .reverse =
+                                                 HUNK_TYPE_SPOB_DESCRIPTION_REVERT },
+   [HUNK_TYPE_SPOB_DESCRIPTION_REVERT]    = { .name =
+                                                 N_( "spob description revert" ),
+                                              .tag     = NULL,
+                                              .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_BAR]                   = { .name    = N_( "spob bar" ),
+                                              .tag     = "bar",
+                                              .reverse = HUNK_TYPE_SPOB_BAR_REVERT },
+   [HUNK_TYPE_SPOB_BAR_REVERT]            = { .name    = N_( "spob bar revert" ),
+                                              .tag     = NULL,
+                                              .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_SPACE]                 = { .name    = N_( "spob space" ),
+                                              .tag     = "gfx_space",
+                                              .reverse = HUNK_TYPE_SPOB_SPACE_REVERT },
+   [HUNK_TYPE_SPOB_SPACE_REVERT]          = { .name    = N_( "spob space revert" ),
+                                              .tag     = NULL,
+                                              .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_EXTERIOR]              = { .name    = N_( "spob exterior" ),
+                                              .tag     = "gfx_exterior",
+                                              .reverse = HUNK_TYPE_SPOB_EXTERIOR_REVERT },
+   [HUNK_TYPE_SPOB_EXTERIOR_REVERT] = { .name    = N_( "spob exterior revert" ),
+                                        .tag     = NULL,
+                                        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_LUA]             = { .name    = N_( "spob lua" ),
+                                        .tag     = "lua",
+                                        .reverse = HUNK_TYPE_SPOB_LUA_REVERT },
+   [HUNK_TYPE_SPOB_LUA_REVERT]      = { .name    = N_( "spob lua revert" ),
+                                        .tag     = NULL,
+                                        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_SERVICE_ADD]     = { .name    = N_( "spob service add" ),
+                                        .tag     = "service_add",
+                                        .reverse = HUNK_TYPE_SPOB_SERVICE_REMOVE },
+   [HUNK_TYPE_SPOB_SERVICE_REMOVE]  = { .name    = N_( "spob service remove" ),
+                                        .tag     = "service_remove",
+                                        .reverse = HUNK_TYPE_SPOB_SERVICE_ADD },
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_ADD] = { .name = N_( "spob nomissionspawn add" ),
+                                        .tag  = "nomissionspawn_add",
+                                        .reverse =
+                                           HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE },
+   [HUNK_TYPE_SPOB_NOMISNSPAWN_REMOVE] = { .name = N_(
+                                              "spob nomissionspawn remove" ),
+                                           .tag = "nomissionspawn_remove",
+                                           .reverse =
+                                              HUNK_TYPE_SPOB_NOMISNSPAWN_ADD },
+   [HUNK_TYPE_SPOB_TECH_ADD]           = { .name    = N_( "spob tech add" ),
+                                           .tag     = "tech_add",
+                                           .reverse = HUNK_TYPE_SPOB_TECH_REMOVE },
+   [HUNK_TYPE_SPOB_TECH_REMOVE]        = { .name    = N_( "spob tech remove" ),
+                                           .tag     = "tech_remove",
+                                           .reverse = HUNK_TYPE_SPOB_TECH_ADD },
+   [HUNK_TYPE_SPOB_TAG_ADD]            = { .name    = N_( "spob tag = NULL add" ),
+                                           .tag     = "tag_add",
+                                           .reverse = HUNK_TYPE_SPOB_TAG_REMOVE },
+   [HUNK_TYPE_SPOB_TAG_REMOVE]   = { .name    = N_( "spob tag = NULL remove" ),
+                                     .tag     = "tag_remove",
+                                     .reverse = HUNK_TYPE_SPOB_TAG_ADD },
+   [HUNK_TYPE_FACTION_VISIBLE]   = { .name    = N_( "faction visible" ),
+                                     .tag     = "visible",
+                                     .reverse = HUNK_TYPE_FACTION_INVISIBLE },
+   [HUNK_TYPE_FACTION_INVISIBLE] = { .name    = N_( "faction invisible" ),
+                                     .tag     = "invisible",
+                                     .reverse = HUNK_TYPE_FACTION_INVISIBLE },
+   [HUNK_TYPE_FACTION_ALLY]      = { .name    = N_( "faction set ally" ),
+                                     .tag     = "ally",
+                                     .reverse = HUNK_TYPE_FACTION_REALIGN },
+   [HUNK_TYPE_FACTION_ENEMY]     = { .name    = N_( "faction set enemy" ),
+                                     .tag     = "enemy",
+                                     .reverse = HUNK_TYPE_FACTION_REALIGN },
+   [HUNK_TYPE_FACTION_NEUTRAL]   = { .name    = N_( "faction set neutral" ),
+                                     .tag     = "neutral",
+                                     .reverse = HUNK_TYPE_FACTION_REALIGN },
+   [HUNK_TYPE_FACTION_REALIGN]   = { .name    = N_( "faction alignment reset" ),
+                                     .tag     = NULL,
+                                     .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SENTINAL]          = { .name    = N_( "sentinal" ),
+                                     .tag     = NULL,
+                                     .reverse = HUNK_TYPE_NONE },
 };
 
 #define HUNK_CUST( TYPE, DTYPE, FUNC )                                         \
-   /* static_assert( hunk_tag[TYPE] != NULL, "" ); */                          \
-   if ( xml_isNode( cur, hunk_tag[TYPE] ) ) {                                  \
+   /* static_assert( hunk_prop[TYPE].tag != NULL, "" ); */                     \
+   if ( xml_isNode( cur, hunk_prop[TYPE].tag ) ) {                             \
       memset( &hunk, 0, sizeof( hunk ) );                                      \
       diff_parseAttr( &hunk, cur );                                            \
       hunk.target.type   = base.target.type;                                   \
@@ -307,14 +393,14 @@ int diff_init( void )
    Uint32 time = SDL_GetTicks();
 
    for ( int i = 0; i < HUNK_TYPE_SENTINAL; i++ ) {
-      if ( hunk_name[i] == NULL )
+      if ( hunk_prop[i].name == NULL )
          WARN( "HUNK_TYPE '%d' missing name!", i );
-      if ( hunk_reverse[i] == HUNK_TYPE_NONE ) {
+      if ( hunk_prop[i].reverse == HUNK_TYPE_NONE ) {
          /* It's possible that this is an internal usage only reverse one, so we
           * have to see if something points to it instead. */
          int found = 0;
          for ( int j = 0; j < HUNK_TYPE_SENTINAL; j++ ) {
-            if ( hunk_reverse[j] == (UniHunkType_t)i ) {
+            if ( hunk_prop[j].reverse == (UniHunkType_t)i ) {
                found = 1;
                break;
             }
@@ -322,10 +408,10 @@ int diff_init( void )
          /* If not found, that means that the type is not referred to by anyone.
           */
          if ( !found ) {
-            if ( hunk_name[i] == NULL )
+            if ( hunk_prop[i].name == NULL )
                WARN( "HUNK_TYPE '%d' missing reverse!", i );
             else
-               WARN( "HUNK_TYPE '%s' missing reverse!", hunk_name[i] );
+               WARN( "HUNK_TYPE '%s' missing reverse!", hunk_prop[i].name );
          }
       }
    }
@@ -556,11 +642,11 @@ static int diff_applyInternal( const char *name, int oneshot )
          char       *target = fail->target.u.name;
          const char *hname;
          if ( ( fail->type < 0 ) || ( fail->type >= HUNK_TYPE_SENTINAL ) ||
-              ( hunk_name[fail->type] == NULL ) ) {
+              ( hunk_prop[fail->type].name == NULL ) ) {
             WARN( _( "Unknown unidiff hunk '%d'!" ), fail->type );
             hname = N_( "unknown hunk" );
          } else
-            hname = hunk_name[fail->type];
+            hname = hunk_prop[fail->type].name;
 
          /* Have to handle all possible data cases. */
          switch ( fail->dtype ) {
@@ -841,7 +927,7 @@ static int diff_parseFaction( UniDiffData_t *diff, xmlNodePtr node )
 int diff_revertHunk( const UniHunk_t *hunk )
 {
    UniHunk_t rhunk = *hunk;
-   rhunk.type      = hunk_reverse[hunk->type];
+   rhunk.type      = hunk_prop[hunk->type].reverse;
    return diff_patchHunk( &rhunk );
 }
 
@@ -1436,7 +1522,8 @@ static int diff_removeDiff( UniDiff_t *diff )
    for ( int i = array_size( diff->applied ) - 1; i >= 0; i-- ) {
       UniHunk_t hunk = diff->applied[i];
       if ( diff_revertHunk( &hunk ) )
-         WARN( _( "Failed to remove hunk type '%s'." ), hunk_name[hunk.type] );
+         WARN( _( "Failed to remove hunk type '%s'." ),
+               hunk_prop[hunk.type].name );
    }
 
    diff_cleanup( diff );
@@ -1465,7 +1552,7 @@ static void diff_cleanup( UniDiff_t *diff )
  */
 const char *diff_hunkName( UniHunkType_t t )
 {
-   return hunk_name[t];
+   return hunk_prop[t].name;
 }
 
 /**
@@ -1473,7 +1560,7 @@ const char *diff_hunkName( UniHunkType_t t )
  */
 const char *diff_hunkTag( UniHunkType_t t )
 {
-   return hunk_tag[t];
+   return hunk_prop[t].tag;
 }
 
 /**
