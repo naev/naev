@@ -39,6 +39,7 @@
 #include "pause.h"
 #include "pilot.h"
 #include "player.h"
+#include "player_gui.h"
 #include "render.h"
 #include "space.h"
 #include "spfx.h"
@@ -2029,6 +2030,9 @@ int gui_load( const char *name )
       land_genWindows( 0 );
       window_lower( land_wid );
    }
+
+   /* Add the GUI to the player. */
+   player_guiAdd( name );
 
    return 0;
 }
