@@ -329,6 +329,7 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
 };
 
 #define HUNK_CUST( TYPE, DTYPE, FUNC )                                         \
+   /* should be possible to do the static_assert with C23's constexpr. */      \
    /* static_assert( hunk_prop[TYPE].tag != NULL, "" ); */                     \
    if ( xml_isNode( cur, hunk_prop[TYPE].tag ) ) {                             \
       memset( &hunk, 0, sizeof( hunk ) );                                      \
