@@ -554,15 +554,10 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused,
 
    if ( strcmp( ret, opts[0] ) == 0 ) {
       AsteroidAnchor *ast = &array_grow( &sysedit_sys->asteroids );
+      asteroid_initAnchor( ast );
       memset( ast, 0, sizeof( AsteroidAnchor ) );
-      ast->density  = ASTEROID_DEFAULT_DENSITY;
-      ast->groups   = array_create( AsteroidTypeGroup   *);
-      ast->groupsw  = array_create( double );
-      ast->radius   = 2500.;
-      ast->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
-      ast->accel    = ASTEROID_DEFAULT_ACCEL;
-      ast->pos.x    = sysedit_xpos / sysedit_zoom;
-      ast->pos.y    = sysedit_ypos / sysedit_zoom;
+      ast->pos.x = sysedit_xpos / sysedit_zoom;
+      ast->pos.y = sysedit_ypos / sysedit_zoom;
       asteroids_computeInternals( ast );
    } else {
       AsteroidExclusion *exc = &array_grow( &sysedit_sys->astexclude );
@@ -670,18 +665,17 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
                const Spob *sp = sysedit_sys->spobs[sel->u.spob];
                uniedit_diffCreateSysStr( sysedit_sys, HUNK_TYPE_SPOB_REMOVE,
                                          strdup( sp->name ) );
-               /* TODO asteroids too
-               } else if ( sel->type == SELECT_ASTEROID ) {
-                  AsteroidAnchor *ast =
-               &sysedit_sys->asteroids[sel->u.asteroid]; asteroid_free( ast );
-                  array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
-               } else if ( sel->type == SELECT_ASTEXCLUDE ) {
-                  AsteroidExclusion *exc =
-                     &sysedit_sys->astexclude[sel->u.astexclude];
-
-                  array_erase( &sysedit_sys->astexclude, exc, exc + 1 );
-               */
             }
+            /* TODO asteroids too
+            } else if ( sel->type == SELECT_ASTEROID ) {
+               AsteroidAnchor *ast =
+            &sysedit_sys->asteroids[sel->u.asteroid]; asteroid_freeAnchor( ast
+            ); array_erase( &sysedit_sys->asteroids, ast, ast + 1 ); } else if (
+            sel->type == SELECT_ASTEXCLUDE ) { AsteroidExclusion *exc =
+                  &sysedit_sys->astexclude[sel->u.astexclude];
+
+               array_erase( &sysedit_sys->astexclude, exc, exc + 1 );
+            */
          }
       }
    } else {
@@ -702,7 +696,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
                system_rmSpob( sysedit_sys, sp->name );
             } else if ( sel->type == SELECT_ASTEROID ) {
                AsteroidAnchor *ast = &sysedit_sys->asteroids[sel->u.asteroid];
-               asteroid_free( ast );
+               asteroid_freeAnchor( ast );
                array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
             } else if ( sel->type == SELECT_ASTEXCLUDE ) {
                AsteroidExclusion *exc =
@@ -2058,7 +2052,7 @@ static void sysedit_btnAsteroidsDelete( unsigned int wid, const char *unused )
 
    AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
-   asteroid_free( ast );
+   asteroid_freeAnchor( ast );
    array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
 
    if ( conf.devautosave )

@@ -2984,17 +2984,10 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
    /* Allocate more space. */
    a = &array_grow( &sys->asteroids );
-   memset( a, 0, sizeof( AsteroidAnchor ) );
 
    /* Initialize stuff. */
-   pos         = 1;
-   a->density  = ASTEROID_DEFAULT_DENSITY;
-   a->groups   = array_create( AsteroidTypeGroup   *);
-   a->groupsw  = array_create( double );
-   a->radius   = 0.;
-   a->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
-   a->maxspin  = ASTEROID_DEFAULT_MAXSPIN;
-   a->accel    = ASTEROID_DEFAULT_ACCEL;
+   pos = 1;
+   asteroid_initAnchor( a );
 
    /* Parse label if available. */
    xmlr_attr_strd( node, "label", a->label );
@@ -3869,7 +3862,7 @@ void space_exit( void )
 
       /* Free the asteroids. */
       for ( int j = 0; j < array_size( sys->asteroids ); j++ )
-         asteroid_free( &sys->asteroids[j] );
+         asteroid_freeAnchor( &sys->asteroids[j] );
       for ( int j = 0; j < array_size( sys->astexclude ); j++ )
          asteroid_freeExclude( &sys->astexclude[j] );
       array_free( sys->asteroids );

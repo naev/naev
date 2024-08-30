@@ -12,6 +12,8 @@
 #include "physics.h"
 #include "quadtree.h"
 
+#define ASTEROID_DEFAULT_RADIUS                                                \
+   2500. /**< Default radius of an asteroid field. */
 #define ASTEROID_DEFAULT_DENSITY                                               \
    1. /**< Default density of an asteroid field. */
 #define ASTEROID_DEFAULT_MAXSPEED                                              \
@@ -141,7 +143,8 @@ typedef struct AsteroidExclusion_ {
 /* Initialization and parsing. */
 int  asteroids_load( void );
 void asteroids_free( void );
-void asteroid_free( AsteroidAnchor *ast );
+void asteroid_initAnchor( AsteroidAnchor *ast );
+void asteroid_freeAnchor( AsteroidAnchor *ast );
 void asteroid_freeExclude( AsteroidExclusion *exc );
 void asteroids_init( void );
 
