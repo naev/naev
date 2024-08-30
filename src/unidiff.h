@@ -68,6 +68,10 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SSYS_NOLANES_REMOVE,
    HUNK_TYPE_SSYS_TAG_ADD,
    HUNK_TYPE_SSYS_TAG_REMOVE,
+   /* Target should be HUNK_TARGET_SYSTEM, but we use attributes for the
+      asteroid label. */
+   HUNK_TYPE_SSYS_ASTEROIDS_ADD,
+   HUNK_TYPE_SSYS_ASTEROIDS_REMOVE,
    /* Target should be HUNK_TARGET_TECH. */
    HUNK_TYPE_TECH_ADD,
    HUNK_TYPE_TECH_REMOVE,

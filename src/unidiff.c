@@ -55,9 +55,11 @@ static const char *diff_nav_hyperspace =
    NULL; /**< Stores the player's hyperspace target if necessary. */
 
 typedef struct HunkProperties {
-   const char   *name;
-   const char   *tag;
-   UniHunkType_t reverse;
+   const char   *name;    /**< Name of the hunk type. For display purposes. */
+   const char   *tag;     /**< Tag of the hunk. Used for parsing XML. */
+   UniHunkType_t reverse; /**< What is the hunk type to reverse the changes. */
+   const char  **attrs; /**< Attributes we are interested in for the hunk. NULL
+                           terminated array.  */
 } HunkProperties;
 static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_NONE] =
@@ -66,6 +68,7 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
          .tag     = "none",
          .reverse = HUNK_TYPE_NONE,
       },
+   /* HUNK_TARGET_SYSTEM. */
    [HUNK_TYPE_SPOB_ADD]        = { .name    = N_( "spob add" ),
                                    .tag     = "spob_add",
                                    .reverse = HUNK_TYPE_SPOB_REMOVE },
@@ -84,12 +87,6 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_JUMP_REMOVE]     = { .name    = N_( "jump remove" ),
                                    .tag     = "jump_remove",
                                    .reverse = HUNK_TYPE_JUMP_ADD },
-   [HUNK_TYPE_TECH_ADD]        = { .name    = N_( "tech add" ),
-                                   .tag     = "item_add",
-                                   .reverse = HUNK_TYPE_TECH_REMOVE },
-   [HUNK_TYPE_TECH_REMOVE]     = { .name    = N_( "tech remove" ),
-                                   .tag     = "item_remove",
-                                   .reverse = HUNK_TYPE_TECH_ADD },
    [HUNK_TYPE_SSYS_BACKGROUND] = { .name = N_( "ssys background" ),
                                    .tag  = "background",
                                    .reverse =
@@ -176,34 +173,51 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_SSYS_TAG_REMOVE]      = { .name    = N_( "ssys tag = NULL remove" ),
                                         .tag     = "tag_remove",
                                         .reverse = HUNK_TYPE_SSYS_TAG_ADD },
-   [HUNK_TYPE_SPOB_POS_X]           = { .name    = N_( "spob pos x" ),
-                                        .tag     = "pos_x",
-                                        .reverse = HUNK_TYPE_SPOB_POS_X_REVERT },
-   [HUNK_TYPE_SPOB_POS_X_REVERT]    = { .name    = N_( "spob pos x revert" ),
-                                        .tag     = NULL,
-                                        .reverse = HUNK_TYPE_NONE },
-   [HUNK_TYPE_SPOB_POS_Y]           = { .name    = N_( "spob pos y" ),
-                                        .tag     = "pos_y",
-                                        .reverse = HUNK_TYPE_SPOB_POS_Y_REVERT },
-   [HUNK_TYPE_SPOB_POS_Y_REVERT]    = { .name    = N_( "spob pos y revert" ),
-                                        .tag     = NULL,
-                                        .reverse = HUNK_TYPE_NONE },
-   [HUNK_TYPE_SPOB_CLASS]           = { .name    = N_( "spob class" ),
-                                        .tag     = "class",
-                                        .reverse = HUNK_TYPE_SPOB_CLASS_REVERT },
-   [HUNK_TYPE_SPOB_CLASS_REVERT]    = { .name    = N_( "spob class revert" ),
-                                        .tag     = NULL,
-                                        .reverse = HUNK_TYPE_NONE },
-   [HUNK_TYPE_SPOB_FACTION]         = { .name    = N_( "spob faction" ),
-                                        .tag     = "faction",
-                                        .reverse = HUNK_TYPE_SPOB_FACTION_REVERT },
-   [HUNK_TYPE_SPOB_FACTION_REVERT]  = { .name    = N_( "spob faction revert" ),
-                                        .tag     = NULL,
-                                        .reverse = HUNK_TYPE_NONE },
-   [HUNK_TYPE_SPOB_PRESENCE_BASE]   = { .name = N_( "spob presence base" ),
-                                        .tag  = "presence_base",
-                                        .reverse =
-                                           HUNK_TYPE_SPOB_PRESENCE_BASE_REVERT },
+   /* HUNK_TARGET_SYSTEM with label. */
+   [HUNK_TYPE_SSYS_ASTEROIDS_ADD]    = { .name = N_( "ssys asteroids add" ),
+                                         .tag  = "asteroids_add",
+                                         .reverse =
+                                            HUNK_TYPE_SSYS_ASTEROIDS_REMOVE },
+   [HUNK_TYPE_SSYS_ASTEROIDS_REMOVE] = { .name = N_( "ssys asteroids remove" ),
+                                         .tag  = "asteroids_remove",
+                                         .reverse =
+                                            HUNK_TYPE_SSYS_ASTEROIDS_ADD },
+   /* HUNK_TARGET_TECH. */
+   [HUNK_TYPE_TECH_ADD]    = { .name    = N_( "tech add" ),
+                               .tag     = "item_add",
+                               .reverse = HUNK_TYPE_TECH_REMOVE },
+   [HUNK_TYPE_TECH_REMOVE] = { .name    = N_( "tech remove" ),
+                               .tag     = "item_remove",
+                               .reverse = HUNK_TYPE_TECH_ADD },
+   /* HUNK_TARGET_SPOB. */
+   [HUNK_TYPE_SPOB_POS_X]          = { .name    = N_( "spob pos x" ),
+                                       .tag     = "pos_x",
+                                       .reverse = HUNK_TYPE_SPOB_POS_X_REVERT },
+   [HUNK_TYPE_SPOB_POS_X_REVERT]   = { .name    = N_( "spob pos x revert" ),
+                                       .tag     = NULL,
+                                       .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_POS_Y]          = { .name    = N_( "spob pos y" ),
+                                       .tag     = "pos_y",
+                                       .reverse = HUNK_TYPE_SPOB_POS_Y_REVERT },
+   [HUNK_TYPE_SPOB_POS_Y_REVERT]   = { .name    = N_( "spob pos y revert" ),
+                                       .tag     = NULL,
+                                       .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_CLASS]          = { .name    = N_( "spob class" ),
+                                       .tag     = "class",
+                                       .reverse = HUNK_TYPE_SPOB_CLASS_REVERT },
+   [HUNK_TYPE_SPOB_CLASS_REVERT]   = { .name    = N_( "spob class revert" ),
+                                       .tag     = NULL,
+                                       .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_FACTION]        = { .name    = N_( "spob faction" ),
+                                       .tag     = "faction",
+                                       .reverse = HUNK_TYPE_SPOB_FACTION_REVERT },
+   [HUNK_TYPE_SPOB_FACTION_REVERT] = { .name    = N_( "spob faction revert" ),
+                                       .tag     = NULL,
+                                       .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SPOB_PRESENCE_BASE]  = { .name = N_( "spob presence base" ),
+                                       .tag  = "presence_base",
+                                       .reverse =
+                                          HUNK_TYPE_SPOB_PRESENCE_BASE_REVERT },
    [HUNK_TYPE_SPOB_PRESENCE_BASE_REVERT] = { .name = N_(
                                                 "spob presence base revert" ),
                                              .tag     = NULL,
@@ -302,9 +316,10 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_SPOB_TAG_ADD]            = { .name    = N_( "spob tag = NULL add" ),
                                            .tag     = "tag_add",
                                            .reverse = HUNK_TYPE_SPOB_TAG_REMOVE },
-   [HUNK_TYPE_SPOB_TAG_REMOVE]   = { .name    = N_( "spob tag = NULL remove" ),
-                                     .tag     = "tag_remove",
-                                     .reverse = HUNK_TYPE_SPOB_TAG_ADD },
+   [HUNK_TYPE_SPOB_TAG_REMOVE] = { .name    = N_( "spob tag = NULL remove" ),
+                                   .tag     = "tag_remove",
+                                   .reverse = HUNK_TYPE_SPOB_TAG_ADD },
+   /* HUNK_TARGET_FACTION. */
    [HUNK_TYPE_FACTION_VISIBLE]   = { .name    = N_( "faction visible" ),
                                      .tag     = "visible",
                                      .reverse = HUNK_TYPE_FACTION_INVISIBLE },
@@ -333,7 +348,7 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
    /* static_assert( hunk_prop[TYPE].tag != NULL, "" ); */                     \
    if ( xml_isNode( cur, hunk_prop[TYPE].tag ) ) {                             \
       memset( &hunk, 0, sizeof( hunk ) );                                      \
-      diff_parseAttr( &hunk, cur );                                            \
+      diff_parseAttr( &hunk, TYPE, cur );                                      \
       hunk.target.type   = base.target.type;                                   \
       hunk.target.u.name = strdup( base.target.u.name );                       \
       hunk.type          = TYPE;                                               \
@@ -355,17 +370,19 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
  */
 static int diff_applyInternal( const char *name, int oneshot );
 NONNULL( 1 ) static UniDiff_t *diff_get( const char *name );
-static UniDiff_t *diff_newDiff( void );
-static int        diff_removeDiff( UniDiff_t *diff );
-static void       diff_parseAttr( UniHunk_t *hunk, xmlNodePtr node );
-static int        diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc );
-static int        diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node );
-static int        diff_parseTech( UniDiffData_t *diff, xmlNodePtr node );
-static int        diff_parseSpob( UniDiffData_t *diff, xmlNodePtr node );
-static int        diff_parseFaction( UniDiffData_t *diff, xmlNodePtr node );
-static void       diff_hunkFailed( UniDiff_t *diff, const UniHunk_t *hunk );
-static void       diff_hunkSuccess( UniDiff_t *diff, const UniHunk_t *hunk );
-static void       diff_cleanup( UniDiff_t *diff );
+static UniDiff_t  *diff_newDiff( void );
+static int         diff_removeDiff( UniDiff_t *diff );
+static const char *diff_getAttr( UniHunk_t *hunk, const char *name );
+static void        diff_parseAttr( UniHunk_t *hunk, UniHunkType_t type,
+                                   xmlNodePtr node );
+static int         diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc );
+static int         diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node );
+static int         diff_parseTech( UniDiffData_t *diff, xmlNodePtr node );
+static int         diff_parseSpob( UniDiffData_t *diff, xmlNodePtr node );
+static int         diff_parseFaction( UniDiffData_t *diff, xmlNodePtr node );
+static void        diff_hunkFailed( UniDiff_t *diff, const UniHunk_t *hunk );
+static void        diff_hunkSuccess( UniDiff_t *diff, const UniHunk_t *hunk );
+static void        diff_cleanup( UniDiff_t *diff );
 /* Misc. */
 static int diff_checkUpdateUniverse( void );
 /* Externed. */
@@ -684,21 +701,49 @@ static int diff_applyInternal( const char *name, int oneshot )
    return 0;
 }
 
+/**
+ * @brief Starts applying a set of diffs.
+ */
 void diff_start( void )
 {
    diff_universe_changed = 0;
 }
 
+/**
+ * @brief Cleans up after applying a set of diffs.
+ */
 void diff_end( void )
 {
    diff_checkUpdateUniverse();
 }
 
-static void diff_parseAttr( UniHunk_t *hunk, xmlNodePtr node )
+/**
+ * @brief Parsess the attributes.
+ */
+static void diff_parseAttr( UniHunk_t *hunk, UniHunkType_t type,
+                            xmlNodePtr node )
 {
-   xmlAttr *attribute = node->properties;
+   const char **attrs     = hunk_prop[type].attrs;
+   xmlAttr     *attribute = node->properties;
    while ( attribute && attribute->name && attribute->children ) {
       UniAttribute_t attr;
+      int            found = 0;
+
+      /* Check if we are interested in the type. */
+      if ( attrs != NULL ) {
+         for ( int i = 0; attrs[i] != 0; i++ ) {
+            if ( strcmp( (const char *)attribute->name, attrs[i] ) == 0 ) {
+               found = 1;
+               break;
+            }
+         }
+      }
+      if ( !found ) {
+         WARN( _( "Unidiff hunk '%s' has unkown attribute '%s'" ),
+               hunk_prop[type].name, attribute->name );
+         continue;
+      }
+
       attr.name = strdup( (const char *)attribute->name );
       attr.value =
          (char *)xmlNodeListGetString( node->doc, attribute->children, 1 );
@@ -707,6 +752,14 @@ static void diff_parseAttr( UniHunk_t *hunk, xmlNodePtr node )
       array_push_back( &hunk->attr, attr );
       attribute = attribute->next;
    }
+}
+
+static const char *diff_getAttr( UniHunk_t *hunk, const char *name )
+{
+   for ( int i = 0; i < array_size( hunk->attr ); i++ )
+      if ( strcmp( hunk->attr[i].name, name ) == 0 )
+         return hunk->attr[i].value;
+   return NULL;
 }
 
 /**
@@ -757,6 +810,9 @@ static int diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node )
       HUNK_NONE( HUNK_TYPE_SSYS_NOLANES_REMOVE );
       HUNK_STRD( HUNK_TYPE_SSYS_TAG_ADD );
       HUNK_STRD( HUNK_TYPE_SSYS_TAG_REMOVE );
+      /* These below use labels to indicate the asteroid field. */
+      HUNK_STRD( HUNK_TYPE_SSYS_ASTEROIDS_ADD );
+      HUNK_STRD( HUNK_TYPE_SSYS_ASTEROIDS_REMOVE );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name, cur->name );
    } while ( xml_nextNode( cur ) );
@@ -1133,6 +1189,47 @@ int diff_patchHunk( UniHunk_t *hunk )
       free( ssys->tags[a] );
       array_erase( &ssys->tags, &ssys->tags[a], &ssys->tags[a + 1] );
       return 0;
+
+   /* Adding an asteroid field. */
+   case HUNK_TYPE_SSYS_ASTEROIDS_ADD: {
+      AsteroidAnchor ast;
+      const char    *label = diff_getAttr( hunk, "label" );
+      if ( label == NULL ) {
+         WARN( _( "Hunk '%s' does not have a label attribute!" ),
+               hunk->target.type );
+         break;
+      }
+      asteroid_initAnchor( &ast );
+      ast.label = strdup( label );
+      asteroids_computeInternals( &ast );
+      array_push_back( &ssys->asteroids, ast );
+   } break;
+   /* Removing an asteroid field. */
+   case HUNK_TYPE_SSYS_ASTEROIDS_REMOVE: {
+      const char *label = diff_getAttr( hunk, "label" );
+      int         found = -1;
+      if ( label == NULL ) {
+         WARN( _( "Hunk '%s' does not have a label attribute!" ),
+               hunk->target.type );
+         break;
+      }
+      for ( int i = 0; i < array_size( ssys->asteroids ); i++ ) {
+         AsteroidAnchor *ast = &ssys->asteroids[i];
+         if ( ast->label && strcmp( ast->label, label ) == 0 ) {
+            found = i;
+            break;
+         }
+      }
+
+      if ( found >= 0 ) {
+         asteroid_freeAnchor( &ssys->asteroids[found] );
+         array_erase( &ssys->asteroids, &ssys->asteroids[found],
+                      &ssys->asteroids[found + 1] );
+      } else
+         WARN( _( "Hunk '%s' can not find an asteroid field with label '%s' in "
+                  "system '%s'!" ),
+               hunk->target.type, label, ssys->name );
+   } break;
 
    /* Adding a tech. */
    case HUNK_TYPE_TECH_ADD:
