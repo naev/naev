@@ -23,7 +23,6 @@ local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
 local lmisn = require "lmisn"
 
-
 local reward = zbh.rewards.zbh03
 
 local mainpnt, mainsys = spob.getS("Research Post Sigma-13")
@@ -111,7 +110,7 @@ local heartbeat_state = 0
 function land ()
    if mem.state~=2 or spob.cur() ~= mainpnt then
       if heartbeat_state > 0 then
-         lmisn.fail(_("You were supposed to eliminate the hostiles!"))
+         lmisn.fail(_("You were supposed to eliminate all hostiles!"))
       end
       if mem.hook_heartbeat then
          hook.rm( mem.hook_heartbeat )

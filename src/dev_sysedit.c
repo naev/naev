@@ -554,15 +554,10 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused,
 
    if ( strcmp( ret, opts[0] ) == 0 ) {
       AsteroidAnchor *ast = &array_grow( &sysedit_sys->asteroids );
+      asteroid_initAnchor( ast );
       memset( ast, 0, sizeof( AsteroidAnchor ) );
-      ast->density  = ASTEROID_DEFAULT_DENSITY;
-      ast->groups   = array_create( AsteroidTypeGroup   *);
-      ast->groupsw  = array_create( double );
-      ast->radius   = 2500.;
-      ast->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
-      ast->accel    = ASTEROID_DEFAULT_ACCEL;
-      ast->pos.x    = sysedit_xpos / sysedit_zoom;
-      ast->pos.y    = sysedit_ypos / sysedit_zoom;
+      ast->pos.x = sysedit_xpos / sysedit_zoom;
+      ast->pos.y = sysedit_ypos / sysedit_zoom;
       asteroids_computeInternals( ast );
    } else {
       AsteroidExclusion *exc = &array_grow( &sysedit_sys->astexclude );
@@ -670,18 +665,17 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
                const Spob *sp = sysedit_sys->spobs[sel->u.spob];
                uniedit_diffCreateSysStr( sysedit_sys, HUNK_TYPE_SPOB_REMOVE,
                                          strdup( sp->name ) );
-               /* TODO asteroids too
-               } else if ( sel->type == SELECT_ASTEROID ) {
-                  AsteroidAnchor *ast =
-               &sysedit_sys->asteroids[sel->u.asteroid]; asteroid_free( ast );
-                  array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
-               } else if ( sel->type == SELECT_ASTEXCLUDE ) {
-                  AsteroidExclusion *exc =
-                     &sysedit_sys->astexclude[sel->u.astexclude];
-
-                  array_erase( &sysedit_sys->astexclude, exc, exc + 1 );
-               */
             }
+            /* TODO asteroids too
+            } else if ( sel->type == SELECT_ASTEROID ) {
+               AsteroidAnchor *ast =
+            &sysedit_sys->asteroids[sel->u.asteroid]; asteroid_freeAnchor( ast
+            ); array_erase( &sysedit_sys->asteroids, ast, ast + 1 ); } else if (
+            sel->type == SELECT_ASTEXCLUDE ) { AsteroidExclusion *exc =
+                  &sysedit_sys->astexclude[sel->u.astexclude];
+
+               array_erase( &sysedit_sys->astexclude, exc, exc + 1 );
+            */
          }
       }
    } else {
@@ -702,7 +696,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
                system_rmSpob( sysedit_sys, sp->name );
             } else if ( sel->type == SELECT_ASTEROID ) {
                AsteroidAnchor *ast = &sysedit_sys->asteroids[sel->u.asteroid];
-               asteroid_free( ast );
+               asteroid_freeAnchor( ast );
                array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
             } else if ( sel->type == SELECT_ASTEXCLUDE ) {
                AsteroidExclusion *exc =
@@ -1016,7 +1010,7 @@ static void sysedit_renderAsteroidExclusion( double bx, double by,
 
    if ( selected ) {
       const glColour csel = COL_ALPHA( cFontBlue, 0.5 );
-      gl_renderCircle( tx, ty, aexcl->radius * sysedit_zoom, &csel, 1 );
+      gl_renderCircle( tx, ty, r, &csel, 1 );
    }
 
    col = ( selected ) ? &cWhite : &cRed;
@@ -1371,6 +1365,8 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
                   jp = &sys->jumps[sel->u.jump];
                   if ( uniedit_diffMode ) {
                      /* TODO diff. */
+                     dialogue_alertRaw( _( "Editing asteroids is not yet "
+                                           "supported in diff mode." ) );
                   } else {
                      jp->flags &= ~( JP_AUTOPOS );
                      jp->pos.x += xmove;
@@ -1904,9 +1900,6 @@ static void sysedit_editAsteroids( void )
    window_addInput( wid, x + l + 8, y, 80, 20, "inpAccel", 10, 1, NULL );
    window_setInputFilter( wid, "inpAccel", INPUT_FILTER_NUMBER );
 
-   /* List to choose the different asteroids that appear. */
-   sysedit_genAsteroidsList( wid );
-
    /* Button width. */
    bw = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 4.;
 
@@ -1927,6 +1920,10 @@ static void sysedit_editAsteroids( void )
                      "btnDelete", _( "Delete" ), sysedit_btnAsteroidsDelete );
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT, "btnClose", _( "Close" ),
                      sysedit_editAsteroidsClose );
+
+   /* List to choose the different asteroids that appear. Has to be created
+    * after buttons. */
+   sysedit_genAsteroidsList( wid );
 
    /* Load current values. */
    snprintf( buf, sizeof( buf ), "%g", ast->density );
@@ -1969,8 +1966,11 @@ static void sysedit_genAsteroidsList( unsigned int wid )
       have = malloc( sizeof( char * ) * nhave );
       for ( int i = 0; i < nhave; i++ )
          have[i] = strdup( ast->groups[i]->name );
-   } else
+      window_enableButton( wid, "btnRmAsteroid" );
+   } else {
       have = NULL;
+      window_disableButton( wid, "btnRmAsteroid" );
+   }
    window_addList( wid, x, y, w, h, "lstAsteroidsHave", have, nhave, 0, NULL,
                    sysedit_btnRmAsteroid );
    x += w + 15;
@@ -1983,8 +1983,11 @@ static void sysedit_genAsteroidsList( unsigned int wid )
       for ( int i = 0; i < navail; i++ )
          available[i] = strdup( astgroups[i].name );
       qsort( available, navail, sizeof( char * ), strsort );
-   } else
+      window_enableButton( wid, "btnAddAsteroid" );
+   } else {
       available = NULL;
+      window_disableButton( wid, "btnAddAsteroid" );
+   }
    window_addList( wid, x, y, w, h, "lstAsteroidsAvailable", available, navail,
                    0, NULL, sysedit_btnAddAsteroid );
 
@@ -1999,9 +2002,20 @@ static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused )
 {
    (void)unused;
    int             pos = toolkit_getListPos( wid, "lstAsteroidsHave" );
-   AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
+   AsteroidAnchor *ast;
+   if ( pos < 0 )
+      return;
+   if ( array_size( sysedit_sys->asteroids ) <= 0 )
+      return;
+   ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
-   /* TODO add diff support. */
+   if ( uniedit_diffMode ) {
+      /* TODO add diff support. */
+      dialogue_alertRaw(
+         _( "Removing asteroids is not yet supported in diff mode." ) );
+      return;
+   }
+
    if ( array_size( ast->groups ) > 0 )
       array_erase( &ast->groups, &ast->groups[pos], &ast->groups[pos + 1] );
 
@@ -2013,9 +2027,17 @@ static void sysedit_btnAddAsteroid( unsigned int wid, const char *unused )
    (void)unused;
    const char     *selected = toolkit_getList( wid, "lstAsteroidsAvailable" );
    AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
-
-   /* TODO add diff support. */
-   array_push_back( &ast->groups, astgroup_getName( selected ) );
+   AsteroidTypeGroup *grp = astgroup_getName( selected );
+   /* Failed to add. */
+   if ( grp == NULL )
+      return;
+   if ( uniedit_diffMode ) {
+      /* TODO add diff support. */
+      dialogue_alertRaw(
+         _( "Removing asteroids is not yet supported in diff mode." ) );
+      return;
+   }
+   array_push_back( &ast->groups, grp );
 
    sysedit_genAsteroidsList( wid );
 }
@@ -2030,7 +2052,7 @@ static void sysedit_btnAsteroidsDelete( unsigned int wid, const char *unused )
 
    AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
-   asteroid_free( ast );
+   asteroid_freeAnchor( ast );
    array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
 
    if ( conf.devautosave )
@@ -2043,7 +2065,13 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
 {
    AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
 
-   /* TODO add diff support. */
+   if ( uniedit_diffMode ) {
+      /* TODO add diff support. */
+      dialogue_alertRaw(
+         _( "Editing asteroids is not yet supported in diff mode." ) );
+      window_close( wid, unused );
+      return;
+   }
    ast->density  = atof( window_getInput( sysedit_widEdit, "inpDensity" ) );
    ast->radius   = atof( window_getInput( sysedit_widEdit, "inpRadius" ) );
    ast->maxspeed = atof( window_getInput( sysedit_widEdit, "inpMaxspeed" ) );

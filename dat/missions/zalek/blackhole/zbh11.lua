@@ -25,7 +25,6 @@ local fmt = require "format"
 local sokoban = require "minigames.sokoban"
 local zbh = require "common.zalek_blackhole"
 
-
 local retpnt, retsys = spob.getS("Research Post Sigma-13")
 local targetsys = system.get("Anubis Black Hole")
 local jret, jtarget = jump.get( retsys, targetsys )

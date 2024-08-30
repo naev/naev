@@ -48,7 +48,7 @@ function accept ()
    vn.na(_([[You find Zach deep in thought, who takes a while to notice your presence.]]))
    z(fmt.f(_([["Ah, didn't notice you. Sometimes I get lost in here. Too many things remind me of them."
 He chugs his drink and seems to sober up.
-"I've been organizing the notes I've found around the station, and it seems like there was anomalies or something going on around the station. Would you be willing to take a look for me?"]]),{}))
+"I've been organizing the notes I've found around the station, and it seems like there were anomalies or something going on around the station. Would you be willing to take a look for me?"]]),{}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -60,11 +60,11 @@ He chugs his drink and seems to sober up.
 
    vn.label("accept")
    z(_([["Thanks again. So, looking into the notes, I found mentions to some sort of object around the station. It seems like it was a ship or some sort of drone, but I haven't been able to restore all the data yet, so the initial encounters are missing. I only mainly know the codename they gave it, which is 'Icarus', although it's not clear why."]]))
-   z(_([["I have been able to recover lots of data regarding some sort of language, which is pretty strange given that all standard ship AI have universal translators, and languages haven't really been an issue outside of pure academic settings in ages. Quite a few details haven't really been recovered yet, but hopefully the data recovery drone will get something useful in a bit."]]))
+   z(_([["I have been able to recover lots of data regarding some sort of language, which is pretty strange given that all standard ship AI have universal translators, and languages haven't really been an issue outside pure academic settings in ages. Quite a few details haven't really been recovered yet, but hopefully the data recovery drone will get something useful in a bit."]]))
    z(fmt.f(_([["Other than that, there's still the mystery of the ships that tried to attack {pnt}. I have a feeling that they're not finished with business here. You should keep an eye out for any suspicious ships. There shouldn't be anyone here other than us."]]),{pnt=mainpnt}))
    vn.na(fmt.f(_([[Suddenly, one of Zach's drone starts flashing and announces that movement detected in {sys}.]]),{sys=mainsys}))
    z(_([["Shit, it looks like something is out there already! From the readings it doesn't look like it's very large. Quick, go see what is out there!"
-He gets up and starts running to the command center.
+He gets up and starts running to the command centre.
 "Looks like it's time to try the new scanner! I'll give you instructions once you're out there!"]]))
    vn.func( function () accepted = true end )
    vn.done( zbh.zach.transition )
@@ -118,7 +118,7 @@ function land ()
 The message resonates throughout the station and out into space…]]))
    vn.na(_([[After what seems like ages, the feral bioship starts approaching slowly, apparently intrigued by the holographic projections. As the drones have been programmed to keep their distance, they back away as the feral bioship approaches. This makes the bioship more intrigued and it begins to chase the cat drones around the exterior of the ship.]]))
    vn.na(_([[As you are enjoying the playful spectacle, you see Zach staring intently at all the collected data flashing on his cyberdeck screen.]]))
-   z(_([["Mmmm… this isn't looking very good. From a preliminary analysis of the feral bioship, or shall I say #oIcarus#0, we can see there's some pretty major structural damage that hasn't quite healed fully. Furthermore, I would venture to say that it even seems to be what you would call 'malnourished'. I'm much more familiar with normal technology than this biotechnology, so I'll have to double check with databases, but that's the only conclusion I can come to right now."]]))
+   z(_([["Mmmm… this isn't looking very good. From a preliminary analysis of the feral bioship, or shall I say #oIcarus#0, we can see there's some pretty major structural damage that hasn't quite healed fully. Furthermore, I would venture to say that it even seems to be what you would call 'malnourished'. I'm much more familiar with normal technology than this biotechnology, so I'll have to double-check with databases, but that's the only conclusion I can come to right now."]]))
    z(_([["I'm going to continue running a more in-depth scan, while I think of our next steps. Meet up with me at the bar when you're ready to help."]]))
    vn.na(_([[You see Icarus still playing with the cat drones, although it looks more like it is trying to eat them. Are those fangs?…]]))
    vn.sfxVictory()
@@ -290,7 +290,7 @@ function feral_hail ()
    z(_([["I see. However, this doesn't explain how the hell it got down here, There's no way it could have made the entire trip unnoticed."]]))
    vn.sfx( zbh.sfx.spacewhale1 )
    f(_("You can tell the ship is trying to convey something, but don't understand the meaning."))
-   z(_([["Wait wait, this wouldn't be Icarus? Wouldn't it? That would explain lots of things. One second, I may be able to make use of these notes."]]))
+   z(_([["Wait, wait, this wouldn't be Icarus? Wouldn't it? That would explain lots of things. One second, I may be able to make use of these notes."]]))
    vn.sfx( zbh.sfx.spacewhale2 )
    f(_("The feral bioship once again lets out a stream of electromagnetic radiation that your ship AI translates as a sound."))
    z(_([["One second, I'm getting there…"
