@@ -667,6 +667,15 @@ static int diff_applyInternal( const char *name, int oneshot )
       h.target.u.name = strdup( hi->target.u.name );
       if ( hi->dtype == HUNK_DATA_STRING )
          h.u.name = strdup( hi->u.name );
+      if ( h.attr != NULL ) {
+         h.attr = array_create( UniAttribute_t );
+         for ( int j = 0; j < array_size( hi->attr ); j++ ) {
+            UniAttribute_t attr;
+            attr.name  = strdup( hi->attr[j].name );
+            attr.value = strdup( hi->attr[j].value );
+            array_push_back( &h.attr, attr );
+         }
+      }
 
       /* Patch. */
       if ( diff_patchHunk( &h ) < 0 )
