@@ -270,8 +270,10 @@ static int asteroidL_get( lua_State *L )
    /* Get random asteroid. */
    if ( ( pos == NULL ) && ( field >= 0 ) ) {
       /* Random asteroid. */
-      int ast =
-         RNG( 0, array_size( cur_system->asteroids[field].asteroids ) - 1 );
+      int nast = array_size( cur_system->asteroids[field].asteroids );
+      if ( nast <= 0 )
+         return 0;
+      int       ast          = RNG( 0, nast - 1 );
       int       bad_asteroid = 0;
       Asteroid *a            = &cur_system->asteroids[field].asteroids[ast];
 
