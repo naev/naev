@@ -1897,33 +1897,53 @@ static void sysedit_editAsteroids( void )
 
    /* Add some inputs. */
    y = -40;
+   s = _( "Label: " );
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtLabel", NULL, NULL, s );
+   window_addInput( wid, x + l + 8, y, 80, 20, "inpLabel", 10, 1, NULL );
+   x += l + 20 + 80 + 8;
    s = _( "Density: " );
    l = gl_printWidthRaw( NULL, s );
+   if ( x + l > SYSEDIT_EDIT_WIDTH - 20 ) {
+      x = 20;
+      y -= 30;
+   }
    window_addText( wid, x, y, l, 20, 1, "txtDensity", NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 80, 20, "inpDensity", 10, 1, NULL );
    window_setInputFilter( wid, "inpDensity", INPUT_FILTER_NUMBER );
-   y -= 30;
+   x += l + 20 + 80 + 8;
    s = _( "Radius: " );
    l = gl_printWidthRaw( NULL, s );
+   if ( x + l > SYSEDIT_EDIT_WIDTH - 20 ) {
+      x = 20;
+      y -= 30;
+   }
    window_addText( wid, x, y, l, 20, 1, "txtInput", NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 80, 20, "inpRadius", 10, 1, NULL );
    window_setInputFilter( wid, "inpRadius", INPUT_FILTER_NUMBER );
-   x = 200;
-   y = -40;
+   x += l + 20 + 80 + 8;
    s = _( "Max Speed: " );
    l = gl_printWidthRaw( NULL, s );
+   if ( x + l > SYSEDIT_EDIT_WIDTH - 20 ) {
+      x = 20;
+      y -= 30;
+   }
    window_addText( wid, x, y, l, 20, 1, "txtMaxspeed", NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 80, 20, "inpMaxspeed", 10, 1, NULL );
    window_setInputFilter( wid, "inpMaxspeed", INPUT_FILTER_NUMBER );
-   y -= 30;
+   x += l + 20 + 80 + 8;
    s = _( "Accel: " );
    l = gl_printWidthRaw( NULL, s );
+   if ( x + l > SYSEDIT_EDIT_WIDTH - 20 ) {
+      x = 20;
+      y -= 30;
+   }
    window_addText( wid, x, y, l, 20, 1, "txtAccel", NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 80, 20, "inpAccel", 10, 1, NULL );
    window_setInputFilter( wid, "inpAccel", INPUT_FILTER_NUMBER );
 
    /* Button width. */
-   bw = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 4.;
+   bw = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 2.;
 
    /* List Captions. */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT + 15 + 200 + 5, bw,
@@ -1932,6 +1952,9 @@ static void sysedit_editAsteroids( void )
    window_addText( wid, 20 + bw + 15, 20 + BUTTON_HEIGHT + 15 + 200 + 5, bw,
                    gl_smallFont.h, 1, "txtAsteroidsAvailable", NULL, NULL,
                    _( "Available" ) );
+
+   /* Button width. */
+   bw = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 4.;
 
    /* Bottom buttons. */
    window_addButton( wid, 20, 20, bw, BUTTON_HEIGHT, "btnRmAsteroid",
@@ -1979,7 +2002,7 @@ static void sysedit_genAsteroidsList( unsigned int wid )
    /* Set up positions. */
    x = 20;
    y = 20 + BUTTON_HEIGHT + 15;
-   w = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 4;
+   w = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 2.;
    h = 200;
 
    /* Find and add used asteroids. */
