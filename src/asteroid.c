@@ -336,25 +336,36 @@ void asteroids_init( void )
       /* Add the asteroids to the anchor */
       array_erase( &ast->asteroids, array_begin( ast->asteroids ),
                    array_end( ast->asteroids ) );
-      for ( int j = 0; j < ast->nmax; j++ ) {
-         double   r = RNGF();
-         Asteroid a;
-         if ( asteroid_init( &a, ast ) ) {
-            continue;
+      if ( array_size( ast->groups ) > 0 ) {
+         for ( int j = 0; j < ast->nmax; j++ ) {
+            double   r = RNGF();
+            Asteroid a;
+            if ( asteroid_init( &a, ast ) ) {
+               continue;
+            }
+            a.id = array_size( ast->asteroids );
+            if ( r > 0.6 )
+               a.state = ASTEROID_FG;
+            else if ( r > 0.8 )
+               a.state = ASTEROID_XB;
+            else if ( r > 0.9 )
+               a.state = ASTEROID_BX;
+            else
+               a.state = ASTEROID_XX;
+            a.timer = a.timer_max = 30. * RNGF();
+            a.ang                 = RNGF() * M_PI * 2.;
+            /* Push into array. */
+            array_push_back( &ast->asteroids, a );
          }
-         a.id = array_size( ast->asteroids );
-         if ( r > 0.6 )
-            a.state = ASTEROID_FG;
-         else if ( r > 0.8 )
-            a.state = ASTEROID_XB;
-         else if ( r > 0.9 )
-            a.state = ASTEROID_BX;
+      } else {
+         if ( ast->label != NULL )
+            WARN( _( "Asteroid field '%s' in system '%s' has no asteroid types "
+                     "defined!" ),
+                  ast->label, cur_system->name );
          else
-            a.state = ASTEROID_XX;
-         a.timer = a.timer_max = 30. * RNGF();
-         a.ang                 = RNGF() * M_PI * 2.;
-         /* Push into array. */
-         array_push_back( &ast->asteroids, a );
+            WARN( _( "Asteroid field with no label in system '%s' has no "
+                     "asteroid types defined!" ),
+                  ast->label, cur_system->name );
       }
 
       density_max = MAX( density_max, ast->density );
