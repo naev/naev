@@ -58,9 +58,10 @@ typedef struct HunkProperties {
    const char   *name;    /**< Name of the hunk type. For display purposes. */
    const char   *tag;     /**< Tag of the hunk. Used for parsing XML. */
    UniHunkType_t reverse; /**< What is the hunk type to reverse the changes. */
-   const char  **attrs; /**< Attributes we are interested in for the hunk. NULL
-                           terminated array.  */
+   const char *const *attrs; /**< Attributes we are interested in for the hunk.
+                           NULL terminated array.  */
 } HunkProperties;
+const char *const           hunk_attr_label[] = { "label", NULL };
 static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_NONE] =
       {
@@ -177,11 +178,13 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_SSYS_ASTEROIDS_ADD]    = { .name = N_( "ssys asteroids add" ),
                                          .tag  = "asteroids_add",
                                          .reverse =
-                                            HUNK_TYPE_SSYS_ASTEROIDS_REMOVE },
+                                            HUNK_TYPE_SSYS_ASTEROIDS_REMOVE,
+                                         .attrs = hunk_attr_label },
    [HUNK_TYPE_SSYS_ASTEROIDS_REMOVE] = { .name = N_( "ssys asteroids remove" ),
                                          .tag  = "asteroids_remove",
                                          .reverse =
-                                            HUNK_TYPE_SSYS_ASTEROIDS_ADD },
+                                            HUNK_TYPE_SSYS_ASTEROIDS_ADD,
+                                         .attrs = hunk_attr_label },
    /* HUNK_TARGET_TECH. */
    [HUNK_TYPE_TECH_ADD]    = { .name    = N_( "tech add" ),
                                .tag     = "item_add",
