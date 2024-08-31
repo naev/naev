@@ -209,6 +209,42 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
       { .name    = N_( "ssys asteroids pos y revert" ),
         .tag     = NULL,
         .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_ASTEROIDS_DENSITY] =
+      { .name    = N_( "ssys asteroids density" ),
+        .tag     = "asteroids_density",
+        .reverse = HUNK_TYPE_SSYS_ASTEROIDS_DENSITY_REVERT,
+        .attrs   = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_DENSITY_REVERT] =
+      { .name    = N_( "ssys asteroids density revert" ),
+        .tag     = NULL,
+        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_ASTEROIDS_RADIUS] =
+      { .name    = N_( "ssys asteroids radius" ),
+        .tag     = "asteroids_radius",
+        .reverse = HUNK_TYPE_SSYS_ASTEROIDS_RADIUS_REVERT,
+        .attrs   = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_RADIUS_REVERT] =
+      { .name    = N_( "ssys asteroids radius revert" ),
+        .tag     = NULL,
+        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_ASTEROIDS_MAXSPEED] =
+      { .name    = N_( "ssys asteroids maxspeed" ),
+        .tag     = "asteroids_maxspeed",
+        .reverse = HUNK_TYPE_SSYS_ASTEROIDS_MAXSPEED_REVERT,
+        .attrs   = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_MAXSPEED_REVERT] =
+      { .name    = N_( "ssys asteroids maxspeed revert" ),
+        .tag     = NULL,
+        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_ASTEROIDS_ACCEL] =
+      { .name    = N_( "ssys asteroids accel" ),
+        .tag     = "asteroids_accel",
+        .reverse = HUNK_TYPE_SSYS_ASTEROIDS_ACCEL_REVERT,
+        .attrs   = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_ACCEL_REVERT] =
+      { .name    = N_( "ssys asteroids accel revert" ),
+        .tag     = NULL,
+        .reverse = HUNK_TYPE_NONE },
    /* HUNK_TARGET_TECH. */
    [HUNK_TYPE_TECH_ADD]    = { .name    = N_( "tech add" ),
                                .tag     = "item_add",
@@ -878,6 +914,10 @@ static int diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node )
       HUNK_STRD( HUNK_TYPE_SSYS_ASTEROIDS_REMOVE );
       HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_POS_X );
       HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_POS_Y );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_DENSITY );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_RADIUS );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_MAXSPEED );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_ACCEL );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name, cur->name );
    } while ( xml_nextNode( cur ) );
@@ -1327,6 +1367,83 @@ int diff_patchHunk( UniHunk_t *hunk )
       AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
       if ( ast != NULL ) {
          ast->pos.y = hunk->o.fdata;
+         return 0;
+      }
+   }
+      return -1;
+   /* Asteroid properties. */
+   case HUNK_TYPE_SSYS_ASTEROIDS_DENSITY: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         hunk->o.fdata = ast->density;
+         ast->density  = hunk->u.fdata;
+         asteroids_computeInternals( ast );
+         return 0;
+      }
+   }
+      return -1;
+   case HUNK_TYPE_SSYS_ASTEROIDS_DENSITY_REVERT: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         ast->density = hunk->o.fdata;
+         asteroids_computeInternals( ast );
+         return 0;
+      }
+   }
+      return -1;
+   case HUNK_TYPE_SSYS_ASTEROIDS_RADIUS: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         hunk->o.fdata = ast->radius;
+         ast->radius   = hunk->u.fdata;
+         asteroids_computeInternals( ast );
+         return 0;
+      }
+   }
+      return -1;
+   case HUNK_TYPE_SSYS_ASTEROIDS_RADIUS_REVERT: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         ast->radius = hunk->o.fdata;
+         asteroids_computeInternals( ast );
+         return 0;
+      }
+   }
+      return -1;
+   case HUNK_TYPE_SSYS_ASTEROIDS_MAXSPEED: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         hunk->o.fdata = ast->maxspeed;
+         ast->maxspeed = hunk->u.fdata;
+         asteroids_computeInternals( ast );
+         return 0;
+      }
+   }
+      return -1;
+   case HUNK_TYPE_SSYS_ASTEROIDS_MAXSPEED_REVERT: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         ast->maxspeed = hunk->o.fdata;
+         asteroids_computeInternals( ast );
+         return 0;
+      }
+   }
+      return -1;
+   case HUNK_TYPE_SSYS_ASTEROIDS_ACCEL: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         hunk->o.fdata = ast->accel;
+         ast->accel    = hunk->u.fdata;
+         asteroids_computeInternals( ast );
+         return 0;
+      }
+   }
+      return -1;
+   case HUNK_TYPE_SSYS_ASTEROIDS_ACCEL_REVERT: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         ast->accel = hunk->o.fdata;
+         asteroids_computeInternals( ast );
          return 0;
       }
    }
