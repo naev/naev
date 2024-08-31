@@ -535,9 +535,17 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused,
    };
 
    if ( uniedit_diffMode ) {
-      /* TODO let select the spob from a list. */
-      dialogue_alertRaw(
-         ( "Adding new asteroids is not supported in diff mode!" ) );
+      char *label = dialogue_inputRaw(
+         _( "New Asteroid Field Creation" ), 1, 32,
+         _( "What do you want to label the new asteroid field? This is used "
+            "when referencing the asteroid field and is not displayed to the "
+            "player." ) );
+      if ( label == NULL )
+         return;
+
+      /* Create the new unidiff hunk. */
+      uniedit_diffCreateSysStr( sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_ADD,
+                                label );
       return;
    }
 
@@ -1365,7 +1373,7 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
                   jp = &sys->jumps[sel->u.jump];
                   if ( uniedit_diffMode ) {
                      /* TODO diff. */
-                     dialogue_alertRaw( _( "Editing asteroids is not yet "
+                     dialogue_alertRaw( _( "Editing jump points is not yet "
                                            "supported in diff mode." ) );
                   } else {
                      jp->flags &= ~( JP_AUTOPOS );
@@ -1377,7 +1385,21 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
                case SELECT_ASTEROID:
                   ast = &sys->asteroids[sel->u.asteroid];
                   if ( uniedit_diffMode ) {
-                     /* TODO diff. */
+                     UniAttribute_t  attr;
+                     UniAttribute_t *attr_list = array_create( UniAttribute_t );
+                     attr.name                 = strdup( "label" );
+                     attr.value                = strdup( ast->label );
+                     array_push_back( &attr_list, attr );
+                     uniedit_diffCreateSysFloatAttr(
+                        sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_POS_X,
+                        ast->pos.x + xmove, attr_list );
+                     attr_list  = array_create( UniAttribute_t );
+                     attr.name  = strdup( "label" );
+                     attr.value = strdup( ast->label );
+                     array_push_back( &attr_list, attr );
+                     uniedit_diffCreateSysFloatAttr(
+                        sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_POS_Y,
+                        ast->pos.y + ymove, attr_list );
                   } else {
                      ast->pos.x += xmove;
                      ast->pos.y += ymove;

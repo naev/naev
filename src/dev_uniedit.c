@@ -2806,6 +2806,11 @@ void uniedit_diffCreateSysNone( const StarSystem *sys, UniHunkType_t type )
 void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
                                char *str )
 {
+   uniedit_diffCreateSysStrAttr( sys, type, str, NULL );
+}
+void uniedit_diffCreateSysStrAttr( const StarSystem *sys, UniHunkType_t type,
+                                   char *str, UniAttribute_t *attr )
+{
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );
    hunk.target.type   = HUNK_TARGET_SYSTEM;
@@ -2813,11 +2818,17 @@ void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
    hunk.type          = type;
    hunk.dtype         = HUNK_DATA_STRING;
    hunk.u.name        = str;
+   hunk.attr          = attr;
    uniedit_diffAdd( &hunk );
 }
 
 void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
                                int data )
+{
+   uniedit_diffCreateSysIntAttr( sys, type, data, NULL );
+}
+void uniedit_diffCreateSysIntAttr( const StarSystem *sys, UniHunkType_t type,
+                                   int data, UniAttribute_t *attr )
 {
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );
@@ -2826,11 +2837,17 @@ void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
    hunk.type          = type;
    hunk.dtype         = HUNK_DATA_INT;
    hunk.u.data        = data;
+   hunk.attr          = attr;
    uniedit_diffAdd( &hunk );
 }
 
 void uniedit_diffCreateSysFloat( const StarSystem *sys, UniHunkType_t type,
                                  double fdata )
+{
+   uniedit_diffCreateSysFloatAttr( sys, type, fdata, NULL );
+}
+void uniedit_diffCreateSysFloatAttr( const StarSystem *sys, UniHunkType_t type,
+                                     double fdata, UniAttribute_t *attr )
 {
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );
@@ -2839,6 +2856,7 @@ void uniedit_diffCreateSysFloat( const StarSystem *sys, UniHunkType_t type,
    hunk.type          = type;
    hunk.dtype         = HUNK_DATA_FLOAT;
    hunk.u.fdata       = fdata;
+   hunk.attr          = attr;
    uniedit_diffAdd( &hunk );
 }
 

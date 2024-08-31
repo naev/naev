@@ -178,17 +178,15 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
    [HUNK_TYPE_SSYS_ASTEROIDS_ADD]        = { .name = N_( "ssys asteroids add" ),
                                              .tag  = "asteroids_add",
                                              .reverse =
-                                                HUNK_TYPE_SSYS_ASTEROIDS_REMOVE,
-                                             .attrs = hunk_attr_label },
+                                                HUNK_TYPE_SSYS_ASTEROIDS_ADD_REVERT },
    [HUNK_TYPE_SSYS_ASTEROIDS_ADD_REVERT] = { .name = N_(
                                                 "ssys asteroids add revert" ),
                                              .tag     = NULL,
                                              .reverse = HUNK_TYPE_NONE },
-   [HUNK_TYPE_SSYS_ASTEROIDS_REMOVE] = { .name = N_( "ssys asteroids remove" ),
-                                         .tag  = "asteroids_remove",
-                                         .reverse =
-                                            HUNK_TYPE_SSYS_ASTEROIDS_ADD,
-                                         .attrs = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_REMOVE] =
+      { .name    = N_( "ssys asteroids remove" ),
+        .tag     = "asteroids_remove",
+        .reverse = HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_REVERT },
    [HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_REVERT] =
       { .name    = N_( "ssys asteroids remove revert" ),
         .tag     = NULL,
@@ -791,6 +789,17 @@ static const char *diff_getAttr( UniHunk_t *hunk, const char *name )
    return NULL;
 }
 
+static AsteroidAnchor *diff_getAsteroidsLabel( StarSystem *ssys,
+                                               const char *label )
+{
+   for ( int i = 0; i < array_size( ssys->asteroids ); i++ ) {
+      AsteroidAnchor *ast = &ssys->asteroids[i];
+      if ( ast->label && strcmp( ast->label, label ) == 0 )
+         return ast;
+   }
+   return NULL;
+}
+
 static AsteroidAnchor *diff_getAsteroids( StarSystem *ssys, UniHunk_t *hunk )
 {
    const char *label = diff_getAttr( hunk, "label" );
@@ -799,11 +808,9 @@ static AsteroidAnchor *diff_getAsteroids( StarSystem *ssys, UniHunk_t *hunk )
             hunk->target.type );
       return NULL;
    }
-   for ( int i = 0; i < array_size( ssys->asteroids ); i++ ) {
-      AsteroidAnchor *ast = &ssys->asteroids[i];
-      if ( ast->label && strcmp( ast->label, label ) == 0 )
-         return ast;
-   }
+   AsteroidAnchor *ast = diff_getAsteroidsLabel( ssys, label );
+   if ( ast != NULL )
+      return ast;
    WARN( _( "Hunk '%s' can not find an asteroid field with label '%s' in "
             "system '%s'!" ),
          hunk->target.type, label, ssys->name );
@@ -1243,61 +1250,79 @@ int diff_patchHunk( UniHunk_t *hunk )
    /* Adding an asteroid field. */
    case HUNK_TYPE_SSYS_ASTEROIDS_ADD: {
       AsteroidAnchor ast;
-      const char    *label = diff_getAttr( hunk, "label" );
-      if ( label == NULL ) {
-         WARN( _( "Hunk '%s' does not have a label attribute!" ),
-               hunk->target.type );
-         break;
-      }
       asteroid_initAnchor( &ast );
-      ast.label = strdup( label );
+      ast.label = strdup( hunk->u.name );
       asteroids_computeInternals( &ast );
       array_push_back( &ssys->asteroids, ast );
-   } break;
+   }
+      return 0;
    case HUNK_TYPE_SSYS_ASTEROIDS_ADD_REVERT: {
-      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      AsteroidAnchor *ast = diff_getAsteroidsLabel( ssys, hunk->u.name );
       if ( ast != NULL ) {
          asteroid_freeAnchor( ast );
          array_erase( &ssys->asteroids, ast, ast + 1 );
-      }
-   } break;
+         return 0;
+      } else
+         WARN( _( "Hunk '%s' can not find an asteroid field with label '%s' in "
+                  "system '%s'!" ),
+               hunk->target.type, hunk->u.name, ssys->name );
+   }
+      return -1;
    /* Removing an asteroid field. */
    case HUNK_TYPE_SSYS_ASTEROIDS_REMOVE: {
-      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      AsteroidAnchor *ast = diff_getAsteroidsLabel( ssys, hunk->u.name );
       if ( ast != NULL ) {
          hunk->o.ptr = ast;
          array_erase( &ssys->asteroids, ast, ast + 1 );
+         return 0;
+      } else
+         WARN( _( "Hunk '%s' can not find an asteroid field with label '%s' in "
+                  "system '%s'!" ),
+               hunk->target.type, hunk->u.name, ssys->name );
+   }
+      return -1;
+   case HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_REVERT:
+      if ( hunk->o.ptr != NULL ) {
+         AsteroidAnchor *ast = hunk->o.ptr;
+         array_push_back( &ssys->asteroids, *ast );
+         return 0;
       }
-   } break;
-   case HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_REVERT: {
-      AsteroidAnchor *ast = hunk->o.ptr;
-      array_push_back( &ssys->asteroids, *ast );
-   } break;
+      return -1;
    /* Position for asteroid field. */
    case HUNK_TYPE_SSYS_ASTEROIDS_POS_X: {
       AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
       if ( ast != NULL ) {
          hunk->o.fdata = ast->pos.x;
          ast->pos.x    = hunk->u.fdata;
+         return 0;
       }
-   } break;
+   }
+      return -1;
    case HUNK_TYPE_SSYS_ASTEROIDS_POS_X_REVERT: {
       AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
-      if ( ast != NULL )
+      if ( ast != NULL ) {
          ast->pos.x = hunk->o.fdata;
-   } break;
+         return 0;
+      }
+   }
+      return -1;
    case HUNK_TYPE_SSYS_ASTEROIDS_POS_Y: {
       AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
       if ( ast != NULL ) {
          hunk->o.fdata = ast->pos.y;
          ast->pos.y    = hunk->u.fdata;
+         return 0;
       }
-   } break;
+   }
+      return -1;
    case HUNK_TYPE_SSYS_ASTEROIDS_POS_Y_REVERT: {
       AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
-      if ( ast != NULL )
+      if ( ast != NULL ) {
          ast->pos.y = hunk->o.fdata;
-   } break;
+         return 0;
+      }
+   }
+      return -1;
 
    /* Adding a tech. */
    case HUNK_TYPE_TECH_ADD:
@@ -1598,7 +1623,10 @@ int diff_patchHunk( UniHunk_t *hunk )
    case HUNK_TYPE_SENTINAL:
       break;
    }
-   WARN( _( "Unknown hunk type '%d'." ), hunk->type );
+   if ( diff_hunkName( hunk->type ) != NULL )
+      WARN( _( "Unknown hunk type '%s'." ), diff_hunkName( hunk->type ) );
+   else
+      WARN( _( "Unknown hunk type '%d'." ), hunk->type );
    return -1;
 }
 
