@@ -86,6 +86,10 @@ int ddiff_save( UniHunk_t *diffs, const char *filename )
       case HUNK_DATA_FLOAT:
          xmlw_elem( writer, tag, "%f", h->u.fdata );
          break;
+      case HUNK_DATA_POINTER:
+         WARN( _( "Hunk '%s' is trying to save pointer data!" ),
+               diff_hunkName( h->type ) );
+         break;
       }
       if ( target.type != HUNK_TARGET_NONE ) {
          for ( int j = 0; i < array_size( h->attr ); i++ ) {

@@ -175,16 +175,42 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
                                         .tag     = "tag_remove",
                                         .reverse = HUNK_TYPE_SSYS_TAG_ADD },
    /* HUNK_TARGET_SYSTEM with label. */
-   [HUNK_TYPE_SSYS_ASTEROIDS_ADD]    = { .name = N_( "ssys asteroids add" ),
-                                         .tag  = "asteroids_add",
-                                         .reverse =
-                                            HUNK_TYPE_SSYS_ASTEROIDS_REMOVE,
-                                         .attrs = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_ADD]        = { .name = N_( "ssys asteroids add" ),
+                                             .tag  = "asteroids_add",
+                                             .reverse =
+                                                HUNK_TYPE_SSYS_ASTEROIDS_REMOVE,
+                                             .attrs = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_ADD_REVERT] = { .name = N_(
+                                                "ssys asteroids add revert" ),
+                                             .tag     = NULL,
+                                             .reverse = HUNK_TYPE_NONE },
    [HUNK_TYPE_SSYS_ASTEROIDS_REMOVE] = { .name = N_( "ssys asteroids remove" ),
                                          .tag  = "asteroids_remove",
                                          .reverse =
                                             HUNK_TYPE_SSYS_ASTEROIDS_ADD,
                                          .attrs = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_REVERT] =
+      { .name    = N_( "ssys asteroids remove revert" ),
+        .tag     = NULL,
+        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_ASTEROIDS_POS_X] =
+      { .name    = N_( "ssys asteroids pos x" ),
+        .tag     = "asteroids_pos_x",
+        .reverse = HUNK_TYPE_SSYS_ASTEROIDS_POS_X_REVERT,
+        .attrs   = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_POS_X_REVERT] =
+      { .name    = N_( "ssys asteroids pos x revert" ),
+        .tag     = NULL,
+        .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_ASTEROIDS_POS_Y] =
+      { .name    = N_( "ssys asteroids pos y" ),
+        .tag     = "asteroids_pos_y",
+        .reverse = HUNK_TYPE_SSYS_ASTEROIDS_POS_Y_REVERT,
+        .attrs   = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_POS_Y_REVERT] =
+      { .name    = N_( "ssys asteroids pos y revert" ),
+        .tag     = NULL,
+        .reverse = HUNK_TYPE_NONE },
    /* HUNK_TARGET_TECH. */
    [HUNK_TYPE_TECH_ADD]    = { .name    = N_( "tech add" ),
                                .tag     = "item_add",
@@ -726,8 +752,8 @@ void diff_end( void )
 static void diff_parseAttr( UniHunk_t *hunk, UniHunkType_t type,
                             xmlNodePtr node )
 {
-   const char **attrs     = hunk_prop[type].attrs;
-   xmlAttr     *attribute = node->properties;
+   const char *const *attrs     = hunk_prop[type].attrs;
+   xmlAttr           *attribute = node->properties;
    while ( attribute && attribute->name && attribute->children ) {
       UniAttribute_t attr;
       int            found = 0;
@@ -762,6 +788,25 @@ static const char *diff_getAttr( UniHunk_t *hunk, const char *name )
    for ( int i = 0; i < array_size( hunk->attr ); i++ )
       if ( strcmp( hunk->attr[i].name, name ) == 0 )
          return hunk->attr[i].value;
+   return NULL;
+}
+
+static AsteroidAnchor *diff_getAsteroids( StarSystem *ssys, UniHunk_t *hunk )
+{
+   const char *label = diff_getAttr( hunk, "label" );
+   if ( label == NULL ) {
+      WARN( _( "Hunk '%s' does not have a label attribute!" ),
+            hunk->target.type );
+      return NULL;
+   }
+   for ( int i = 0; i < array_size( ssys->asteroids ); i++ ) {
+      AsteroidAnchor *ast = &ssys->asteroids[i];
+      if ( ast->label && strcmp( ast->label, label ) == 0 )
+         return ast;
+   }
+   WARN( _( "Hunk '%s' can not find an asteroid field with label '%s' in "
+            "system '%s'!" ),
+         hunk->target.type, label, ssys->name );
    return NULL;
 }
 
@@ -816,6 +861,8 @@ static int diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node )
       /* These below use labels to indicate the asteroid field. */
       HUNK_STRD( HUNK_TYPE_SSYS_ASTEROIDS_ADD );
       HUNK_STRD( HUNK_TYPE_SSYS_ASTEROIDS_REMOVE );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_POS_X );
+      HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_POS_Y );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name, cur->name );
    } while ( xml_nextNode( cur ) );
@@ -1207,31 +1254,49 @@ int diff_patchHunk( UniHunk_t *hunk )
       asteroids_computeInternals( &ast );
       array_push_back( &ssys->asteroids, ast );
    } break;
+   case HUNK_TYPE_SSYS_ASTEROIDS_ADD_REVERT: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         asteroid_freeAnchor( ast );
+         array_erase( &ssys->asteroids, ast, ast + 1 );
+      }
+   } break;
    /* Removing an asteroid field. */
    case HUNK_TYPE_SSYS_ASTEROIDS_REMOVE: {
-      const char *label = diff_getAttr( hunk, "label" );
-      int         found = -1;
-      if ( label == NULL ) {
-         WARN( _( "Hunk '%s' does not have a label attribute!" ),
-               hunk->target.type );
-         break;
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         hunk->o.ptr = ast;
+         array_erase( &ssys->asteroids, ast, ast + 1 );
       }
-      for ( int i = 0; i < array_size( ssys->asteroids ); i++ ) {
-         AsteroidAnchor *ast = &ssys->asteroids[i];
-         if ( ast->label && strcmp( ast->label, label ) == 0 ) {
-            found = i;
-            break;
-         }
+   } break;
+   case HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_REVERT: {
+      AsteroidAnchor *ast = hunk->o.ptr;
+      array_push_back( &ssys->asteroids, *ast );
+   } break;
+   /* Position for asteroid field. */
+   case HUNK_TYPE_SSYS_ASTEROIDS_POS_X: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         hunk->o.fdata = ast->pos.x;
+         ast->pos.x    = hunk->u.fdata;
       }
-
-      if ( found >= 0 ) {
-         asteroid_freeAnchor( &ssys->asteroids[found] );
-         array_erase( &ssys->asteroids, &ssys->asteroids[found],
-                      &ssys->asteroids[found + 1] );
-      } else
-         WARN( _( "Hunk '%s' can not find an asteroid field with label '%s' in "
-                  "system '%s'!" ),
-               hunk->target.type, label, ssys->name );
+   } break;
+   case HUNK_TYPE_SSYS_ASTEROIDS_POS_X_REVERT: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL )
+         ast->pos.x = hunk->o.fdata;
+   } break;
+   case HUNK_TYPE_SSYS_ASTEROIDS_POS_Y: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         hunk->o.fdata = ast->pos.y;
+         ast->pos.y    = hunk->u.fdata;
+      }
+   } break;
+   case HUNK_TYPE_SSYS_ASTEROIDS_POS_Y_REVERT: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL )
+         ast->pos.y = hunk->o.fdata;
    } break;
 
    /* Adding a tech. */

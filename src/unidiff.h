@@ -71,7 +71,13 @@ typedef enum UniHunkType_ {
    /* Target should be HUNK_TARGET_SYSTEM, but we use attributes for the
       asteroid label. */
    HUNK_TYPE_SSYS_ASTEROIDS_ADD,
+   HUNK_TYPE_SSYS_ASTEROIDS_ADD_REVERT,
    HUNK_TYPE_SSYS_ASTEROIDS_REMOVE,
+   HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_REVERT,
+   HUNK_TYPE_SSYS_ASTEROIDS_POS_X,
+   HUNK_TYPE_SSYS_ASTEROIDS_POS_X_REVERT,
+   HUNK_TYPE_SSYS_ASTEROIDS_POS_Y,
+   HUNK_TYPE_SSYS_ASTEROIDS_POS_Y_REVERT,
    /* Target should be HUNK_TARGET_TECH. */
    HUNK_TYPE_TECH_ADD,
    HUNK_TYPE_TECH_REMOVE,
@@ -130,6 +136,7 @@ typedef enum UniHunkDataType_s {
    HUNK_DATA_STRING,
    HUNK_DATA_INT,
    HUNK_DATA_FLOAT,
+   HUNK_DATA_POINTER,
 } UniHunkDataType_t;
 
 typedef struct UniAttribute_ {
@@ -152,6 +159,7 @@ typedef struct UniHunk_ {
       double fdata;
    } u; /**< Actual data to patch. */
    union {
+      void       *ptr;  /* Allow Pointers, only for old attributes. */
       const char *name; /* We just save the pointer, so keep as const. */
       int         data;
       double      fdata;
