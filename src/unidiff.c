@@ -375,11 +375,11 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
    /* static_assert( hunk_prop[TYPE].tag != NULL, "" ); */                     \
    if ( xml_isNode( cur, hunk_prop[TYPE].tag ) ) {                             \
       memset( &hunk, 0, sizeof( hunk ) );                                      \
-      diff_parseAttr( &hunk, TYPE, cur );                                      \
       hunk.target.type   = base.target.type;                                   \
       hunk.target.u.name = strdup( base.target.u.name );                       \
       hunk.type          = TYPE;                                               \
       hunk.dtype         = DTYPE;                                              \
+      diff_parseAttr( &hunk, cur );                                            \
       FUNC array_push_back( &diff->hunks, hunk );                              \
       continue;                                                                \
    }
@@ -400,8 +400,7 @@ NONNULL( 1 ) static UniDiff_t *diff_get( const char *name );
 static UniDiff_t  *diff_newDiff( void );
 static int         diff_removeDiff( UniDiff_t *diff );
 static const char *diff_getAttr( UniHunk_t *hunk, const char *name );
-static void        diff_parseAttr( UniHunk_t *hunk, UniHunkType_t type,
-                                   xmlNodePtr node );
+static void        diff_parseAttr( UniHunk_t *hunk, xmlNodePtr node );
 static int         diff_parseDoc( UniDiffData_t *diff, xmlDocPtr doc );
 static int         diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node );
 static int         diff_parseTech( UniDiffData_t *diff, xmlNodePtr node );
@@ -747,10 +746,9 @@ void diff_end( void )
 /**
  * @brief Parsess the attributes.
  */
-static void diff_parseAttr( UniHunk_t *hunk, UniHunkType_t type,
-                            xmlNodePtr node )
+static void diff_parseAttr( UniHunk_t *hunk, xmlNodePtr node )
 {
-   const char *const *attrs     = hunk_prop[type].attrs;
+   const char *const *attrs     = hunk_prop[hunk->type].attrs;
    xmlAttr           *attribute = node->properties;
    while ( attribute && attribute->name && attribute->children ) {
       UniAttribute_t attr;
@@ -767,7 +765,8 @@ static void diff_parseAttr( UniHunk_t *hunk, UniHunkType_t type,
       }
       if ( !found ) {
          WARN( _( "Unidiff hunk '%s' has unkown attribute '%s'" ),
-               hunk_prop[type].name, attribute->name );
+               hunk_prop[hunk->type].name, attribute->name );
+         attribute = attribute->next;
          continue;
       }
 
@@ -805,7 +804,7 @@ static AsteroidAnchor *diff_getAsteroids( StarSystem *ssys, UniHunk_t *hunk )
    const char *label = diff_getAttr( hunk, "label" );
    if ( label == NULL ) {
       WARN( _( "Hunk '%s' does not have a label attribute!" ),
-            hunk->target.type );
+            hunk_prop[hunk->type].name );
       return NULL;
    }
    AsteroidAnchor *ast = diff_getAsteroidsLabel( ssys, label );
@@ -813,7 +812,7 @@ static AsteroidAnchor *diff_getAsteroids( StarSystem *ssys, UniHunk_t *hunk )
       return ast;
    WARN( _( "Hunk '%s' can not find an asteroid field with label '%s' in "
             "system '%s'!" ),
-         hunk->target.type, label, ssys->name );
+         hunk_prop[hunk->type].name, label, ssys->name );
    return NULL;
 }
 
@@ -1765,11 +1764,8 @@ const char *diff_hunkTag( UniHunkType_t t )
 void diff_cleanupHunk( UniHunk_t *hunk )
 {
    free( hunk->target.u.name );
-   hunk->target.u.name = NULL;
-   if ( hunk->dtype == HUNK_DATA_STRING ) {
+   if ( hunk->dtype == HUNK_DATA_STRING )
       free( hunk->u.name );
-      hunk->u.name = NULL;
-   }
    for ( int i = 0; i < array_size( hunk->attr ); i++ ) {
       UniAttribute_t *attr = &hunk->attr[i];
       free( attr->name );
