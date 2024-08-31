@@ -1941,17 +1941,16 @@ static void sysedit_editAsteroids( void )
    window_addText( wid, x, y, l, 20, 1, "txtAccel", NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 80, 20, "inpAccel", 10, 1, NULL );
    window_setInputFilter( wid, "inpAccel", INPUT_FILTER_NUMBER );
+   y -= 40;
 
    /* Button width. */
    bw = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 2.;
 
    /* List Captions. */
-   window_addText( wid, 20, 20 + BUTTON_HEIGHT + 15 + 200 + 5, bw,
-                   gl_smallFont.h, 1, "txtAsteroidsHave", NULL, NULL,
-                   _( "Asteroids" ) );
-   window_addText( wid, 20 + bw + 15, 20 + BUTTON_HEIGHT + 15 + 200 + 5, bw,
-                   gl_smallFont.h, 1, "txtAsteroidsAvailable", NULL, NULL,
-                   _( "Available" ) );
+   window_addText( wid, 20, y, bw, gl_smallFont.h, 1, "txtAsteroidsHave", NULL,
+                   NULL, _( "Asteroids" ) );
+   window_addText( wid, 20 + bw + 15, y, bw, gl_smallFont.h, 1,
+                   "txtAsteroidsAvailable", NULL, NULL, _( "Available" ) );
 
    /* Button width. */
    bw = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 4.;
@@ -1989,6 +1988,10 @@ static void sysedit_genAsteroidsList( unsigned int wid )
       &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
    const AsteroidTypeGroup *astgroups;
    char                   **have, **available;
+   int                      wx, wy, ww, wh;
+
+   window_posWidget( wid, "txtAsteroidsHave", &wx, &wy );
+   window_dimWidget( wid, "txtAsteroidsHave", &ww, &wh );
 
    hpos = apos = -1;
    if ( widget_exists( wid, "lstAsteroidsHave" ) &&
@@ -2000,10 +2003,10 @@ static void sysedit_genAsteroidsList( unsigned int wid )
    }
 
    /* Set up positions. */
-   x = 20;
-   y = 20 + BUTTON_HEIGHT + 15;
    w = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 2.;
    h = 200;
+   x = 20;
+   y = wy + wh - 15 - h;
 
    /* Find and add used asteroids. */
    nhave = array_size( ast->groups );
