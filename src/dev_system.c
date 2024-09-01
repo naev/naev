@@ -210,6 +210,8 @@ int dsys_saveSystem( StarSystem *sys )
       for ( int i = 0; i < array_size( sys->asteroids ); i++ ) {
          const AsteroidAnchor *ast = &sys->asteroids[i];
          xmlw_startElem( writer, "asteroid" );
+         if ( ast->label != NULL )
+            xmlw_attr_raw( writer, "label", ast->label );
 
          /* Type Groups */
          for ( int j = 0; j < array_size( ast->groups ); j++ )
@@ -236,6 +238,8 @@ int dsys_saveSystem( StarSystem *sys )
       for ( int i = 0; i < array_size( sys->astexclude ); i++ ) {
          const AsteroidExclusion *aexcl = &sys->astexclude[i];
          xmlw_startElem( writer, "exclusion" );
+         if ( aexcl->label != NULL )
+            xmlw_attr_raw( writer, "label", aexcl->label );
 
          /* Radius */
          xmlw_elem( writer, "radius", "%f", aexcl->radius );
