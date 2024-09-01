@@ -87,6 +87,12 @@ int ddiff_save( UniHunk_t *diffs, const char *filename )
          xmlw_elem( writer, tag, "%f", h->u.fdata );
          break;
       }
+      if ( target.type != HUNK_TARGET_NONE ) {
+         for ( int j = 0; i < array_size( h->attr ); i++ ) {
+            const UniAttribute_t *attr = &h->attr[j];
+            xmlw_attr_raw( writer, attr->name, (const xmlChar *)attr->value );
+         }
+      }
    }
    if ( target.type != HUNK_TARGET_NONE )
       xmlw_endElem( writer ); /* current target */

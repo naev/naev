@@ -1003,11 +1003,26 @@ static void debris_renderSingle( const Debris *d, double cx, double cy )
 }
 
 /**
+ * @brief Initializes an asteroid anchor.
+ */
+void asteroid_initAnchor( AsteroidAnchor *ast )
+{
+   memset( ast, 0, sizeof( AsteroidAnchor ) );
+   ast->density  = ASTEROID_DEFAULT_DENSITY;
+   ast->groups   = array_create( AsteroidTypeGroup   *);
+   ast->groupsw  = array_create( double );
+   ast->radius   = ASTEROID_DEFAULT_RADIUS;
+   ast->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
+   ast->maxspin  = ASTEROID_DEFAULT_MAXSPIN;
+   ast->accel    = ASTEROID_DEFAULT_ACCEL;
+}
+
+/**
  * @brief Frees an asteroid anchor.
  *
  *    @param ast Asteroid anchor to free.
  */
-void asteroid_free( AsteroidAnchor *ast )
+void asteroid_freeAnchor( AsteroidAnchor *ast )
 {
    if ( ast->qt_init )
       qt_destroy( &ast->qt );
@@ -1015,6 +1030,16 @@ void asteroid_free( AsteroidAnchor *ast )
    array_free( ast->asteroids );
    array_free( ast->groups );
    array_free( ast->groupsw );
+}
+
+/**
+ * @brief Frees an asteroid exclusion.
+ *
+ *    @param exc Asteroid exclusion to free.
+ */
+void asteroid_freeExclude( AsteroidExclusion *exc )
+{
+   free( exc->label );
 }
 
 /**

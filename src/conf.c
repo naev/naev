@@ -360,10 +360,7 @@ int conf_loadConfig( const char *file )
       conf_loadBool( lEnv, "healthbars", conf.healthbars );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
       conf_loadBool( lEnv, "puzzle_skip", conf.puzzle_skip );
-      /* todo leave only nebu_nonuniformity sometime */
-      conf_loadFloat(
-         lEnv, "nebu_brightness",
-         conf.nebu_nonuniformity ); /* Old conf name. TODO Remove for 0.12.0  */
+      /* TODO leave only nebu_nonuniformity for 0.13.0 */
       conf_loadFloat( lEnv, "nebu_uniformity", conf.nebu_nonuniformity );
       conf_loadFloat( lEnv, "nebu_nonuniformity", conf.nebu_nonuniformity );
       /* end todo */

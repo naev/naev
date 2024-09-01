@@ -376,7 +376,7 @@ static int load_enumerateCallback( void *data, const char *origdir,
    if ( !PHYSFS_stat( path, &stat ) )
       WARN( _( "PhysicsFS: Cannot stat %s: %s" ), path,
             _( PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
-   /* TODO remove this sometime in the future. Maybe 0.12.0 or 0.13.0? */
+   /* TODO remove this for 0.13.0 */
    else if ( stat.filetype == PHYSFS_FILETYPE_REGULAR ) {
       if ( ( name_len < 4 || strcmp( &fname[name_len - 3], ".ns" ) ) &&
            ( name_len < 11 ||
