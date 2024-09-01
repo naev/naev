@@ -703,17 +703,25 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
                const Spob *sp = sysedit_sys->spobs[sel->u.spob];
                uniedit_diffCreateSysStr( sysedit_sys, HUNK_TYPE_SPOB_REMOVE,
                                          strdup( sp->name ) );
-            }
-            /* TODO asteroids too
             } else if ( sel->type == SELECT_ASTEROID ) {
-               AsteroidAnchor *ast =
-            &sysedit_sys->asteroids[sel->u.asteroid]; asteroid_freeAnchor( ast
-            ); array_erase( &sysedit_sys->asteroids, ast, ast + 1 ); } else if (
-            sel->type == SELECT_ASTEXCLUDE ) { AsteroidExclusion *exc =
+               AsteroidAnchor *ast = &sysedit_sys->asteroids[sel->u.asteroid];
+               if ( ( ast->label == NULL ) ||
+                    ( strcmp( ast->label, "" ) == 0 ) ) {
+                  dialogue_alertRaw( _( "Modifying asteroid fields in diff "
+                                        "mode is only supported when "
+                                        "they "
+                                        "have labels. Please set a label via "
+                                        "the property editor." ) );
+                  return;
+               }
+               uniedit_diffCreateSysStr(
+                  sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_REMOVE, ast->label );
+            } /* TODO remove asteroid exclusions. */
+            /*else if ( sel->type == SELECT_ASTEXCLUDE ) {
+               AsteroidExclusion *exc =
                   &sysedit_sys->astexclude[sel->u.astexclude];
-
                array_erase( &sysedit_sys->astexclude, exc, exc + 1 );
-            */
+            }*/
          }
       }
    } else {
