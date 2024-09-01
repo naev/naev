@@ -245,6 +245,16 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
       { .name    = N_( "ssys asteroids accel revert" ),
         .tag     = NULL,
         .reverse = HUNK_TYPE_NONE },
+   [HUNK_TYPE_SSYS_ASTEROIDS_ADD_TYPE] =
+      { .name    = N_( "ssys asteroids add type" ),
+        .tag     = "asteroids_add_type",
+        .reverse = HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_TYPE,
+        .attrs   = hunk_attr_label },
+   [HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_TYPE] =
+      { .name    = N_( "ssys asteroids remove type" ),
+        .tag     = "asteroids_remove_type",
+        .reverse = HUNK_TYPE_SSYS_ASTEROIDS_ADD_TYPE,
+        .attrs   = hunk_attr_label },
    /* HUNK_TARGET_TECH. */
    [HUNK_TYPE_TECH_ADD]    = { .name    = N_( "tech add" ),
                                .tag     = "item_add",
@@ -918,6 +928,8 @@ static int diff_parseSystem( UniDiffData_t *diff, xmlNodePtr node )
       HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_RADIUS );
       HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_MAXSPEED );
       HUNK_FLOAT( HUNK_TYPE_SSYS_ASTEROIDS_ACCEL );
+      HUNK_STRD( HUNK_TYPE_SSYS_ASTEROIDS_ADD_TYPE );
+      HUNK_STRD( HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_TYPE );
 
       WARN( _( "Unidiff '%s' has unknown node '%s'." ), diff->name, cur->name );
    } while ( xml_nextNode( cur ) );
@@ -1445,6 +1457,44 @@ int diff_patchHunk( UniHunk_t *hunk )
          ast->accel = hunk->o.fdata;
          asteroids_computeInternals( ast );
          return 0;
+      }
+   }
+      return -1;
+   case HUNK_TYPE_SSYS_ASTEROIDS_ADD_TYPE: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         AsteroidTypeGroup *grp = astgroup_getName( hunk->u.name );
+         if ( grp == NULL )
+            return -1;
+         for ( int i = 0; i < array_size( ast->groups ); i++ ) {
+            if ( strcmp( grp->name, ast->groups[i]->name ) == 0 ) {
+               WARN( _( "Unidiff '%s' trying to add already existing asteroid "
+                        "type '%s'." ),
+                     diff_hunkName( hunk->type ), grp->name );
+               return -1;
+            }
+         }
+         array_push_back( &ast->groups, grp );
+         return 0;
+      }
+   }
+      return -1;
+   case HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_TYPE: {
+      AsteroidAnchor *ast = diff_getAsteroids( ssys, hunk );
+      if ( ast != NULL ) {
+         AsteroidTypeGroup *grp = astgroup_getName( hunk->u.name );
+         if ( grp == NULL )
+            return -1;
+         for ( int i = 0; i < array_size( ast->groups ); i++ ) {
+            if ( strcmp( grp->name, ast->groups[i]->name ) == 0 ) {
+               array_erase( &ast->groups, &ast->groups[i],
+                            &ast->groups[i + 1] );
+               return 0;
+            }
+         }
+         WARN(
+            _( "Unidiff '%s' trying to remove inexistent asteroid type '%s'." ),
+            diff_hunkName( hunk->type ), grp->name );
       }
    }
       return -1;

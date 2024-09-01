@@ -2080,13 +2080,13 @@ static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused )
                "have labels. Please set a label via the property editor." ) );
          return;
       }
-      uniedit_diffCreateSysStr( sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_REMOVE,
-                                ast->label );
-      return;
+      uniedit_diffCreateSysStrAttr(
+         sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_TYPE,
+         ast->groups[pos]->name, sysedit_asteroidsAttr( ast ) );
+   } else {
+      if ( array_size( ast->groups ) > 0 )
+         array_erase( &ast->groups, &ast->groups[pos], &ast->groups[pos + 1] );
    }
-
-   if ( array_size( ast->groups ) > 0 )
-      array_erase( &ast->groups, &ast->groups[pos], &ast->groups[pos + 1] );
 
    sysedit_genAsteroidsList( wid );
 }
@@ -2101,12 +2101,19 @@ static void sysedit_btnAddAsteroid( unsigned int wid, const char *unused )
    if ( grp == NULL )
       return;
    if ( uniedit_diffMode ) {
-      /* TODO add diff support. */
-      dialogue_alertRaw(
-         _( "Adding asteroids is not yet supported in diff mode." ) );
-      return;
+      if ( ( ast->label == NULL ) || ( strcmp( ast->label, "" ) == 0 ) ) {
+         dialogue_alertRaw(
+            _( "Modifying asteroid fields in diff mode is only supported when "
+               "they "
+               "have labels. Please set a label via the property editor." ) );
+         return;
+      }
+      uniedit_diffCreateSysStrAttr( sysedit_sys,
+                                    HUNK_TYPE_SSYS_ASTEROIDS_ADD_TYPE,
+                                    grp->name, sysedit_asteroidsAttr( ast ) );
+   } else {
+      array_push_back( &ast->groups, grp );
    }
-   array_push_back( &ast->groups, grp );
 
    sysedit_genAsteroidsList( wid );
 }
@@ -2120,6 +2127,20 @@ static void sysedit_btnAsteroidsDelete( unsigned int wid, const char *unused )
       return;
 
    AsteroidAnchor *ast = &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
+
+   if ( uniedit_diffMode ) {
+      if ( ( ast->label == NULL ) || ( strcmp( ast->label, "" ) == 0 ) ) {
+         dialogue_alertRaw(
+            _( "Modifying asteroid fields in diff mode is only supported when "
+               "they "
+               "have labels. Please set a label via the property editor." ) );
+         return;
+      }
+      uniedit_diffCreateSysStr( sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_REMOVE,
+                                ast->label );
+      window_close( wid, unused );
+      return;
+   }
 
    asteroid_freeAnchor( ast );
    array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
@@ -2143,7 +2164,6 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
          window_close( wid, unused );
       }
       density = atof( window_getInput( sysedit_widEdit, "inpDensity" ) );
-      /* TODO add attr. */
       if ( ast->density - density > DOUBLE_TOL )
          uniedit_diffCreateSysFloatAttr(
             sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_DENSITY, density,
