@@ -2218,8 +2218,21 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
    const char *label = window_getInput( sysedit_widEdit, "inpLabel" );
    free( ast->label );
    ast->label = NULL;
-   if ( ( label != NULL ) && ( strcmp( label, "" ) != 0 ) )
-      ast->label = strdup( label );
+   if ( ( label != NULL ) && ( strcmp( label, "" ) != 0 ) ) {
+      int found = 0;
+      for ( int i = 0; i < array_size( sysedit_sys->asteroids ); i++ ) {
+         if ( sysedit_sys->asteroids[i].label &&
+              ( strcmp( sysedit_sys->asteroids[i].label, label ) == 0 ) ) {
+            dialogue_alert( _( "Asteroid field with label '%s' already "
+                               "exists in system '%s'!" ),
+                            label, sysedit_sys->name );
+            found = 1;
+            break;
+         }
+      }
+      if ( !found )
+         ast->label = strdup( label );
+   }
    ast->density  = atof( window_getInput( sysedit_widEdit, "inpDensity" ) );
    ast->radius   = atof( window_getInput( sysedit_widEdit, "inpRadius" ) );
    ast->maxspeed = atof( window_getInput( sysedit_widEdit, "inpMaxspeed" ) );
