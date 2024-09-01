@@ -229,7 +229,8 @@ static inline char *nxml_trace_strdup( void *ptr )
    } while ( 0 )
 #define xmlw_attr_raw( w, str, val )                                           \
    do {                                                                        \
-      if ( xmlTextWriterWriteAttribute( w, (xmlChar *)str, val ) < 0 ) {       \
+      if ( xmlTextWriterWriteAttribute( w, (xmlChar *)str, (xmlChar *)val ) <  \
+           0 ) {                                                               \
          WARN( "xmlw: unable to write element attribute" );                    \
          return -1;                                                            \
       }                                                                        \
