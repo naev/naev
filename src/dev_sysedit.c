@@ -561,6 +561,15 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused,
                "player." ) );
          if ( label == NULL )
             return;
+         for ( int i = 0; i < array_size( sysedit_sys->asteroids ); i++ ) {
+            if ( sysedit_sys->asteroids[i].label &&
+                 ( strcmp( sysedit_sys->asteroids[i].label, label ) == 0 ) ) {
+               dialogue_alert( _( "Asteroid field with label '%s' already "
+                                  "exists in system '%s'!" ),
+                               label, sysedit_sys->name );
+               return;
+            }
+         }
 
          /* Create the new unidiff hunk. */
          uniedit_diffCreateSysStr( sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_ADD,
