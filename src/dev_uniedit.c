@@ -2868,19 +2868,38 @@ void uniedit_diffAdd( UniHunk_t *hunk )
    /* Replace if already same type exists. */
    for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
       UniHunk_t *hi = &uniedit_diff[i];
-      if ( ( hi->target.type == hunk->target.type ) &&
-           ( strcmp( hi->target.u.name, hunk->target.u.name ) == 0 ) &&
-           ( hi->type == hunk->type ) ) {
-         /* Have to revert the old one and then patch. */
-         diff_revertHunk( hi );
-         diff_cleanupHunk( hi );
-         if ( diff_patchHunk( hunk ) )
-            WARN( _( "uniedit: failed to patch '%s'" ),
-                  diff_hunkName( hunk->type ) );
-         diff_end();
-         memcpy( hi, hunk, sizeof( UniHunk_t ) );
-         return;
+      if ( hi->target.type != hunk->target.type )
+         continue;
+      if ( strcmp( hi->target.u.name, hunk->target.u.name ) != 0 )
+         continue;
+      if ( hi->type != hunk->type )
+         continue;
+      if ( array_size( hi->attr ) != array_size( hunk->attr ) )
+         continue;
+      if ( ( hi->attr != NULL ) && ( hunk->attr != NULL ) ) {
+         for ( int j = 0; j < array_size( hi->attr ); j++ ) {
+            int found = 0;
+            for ( int k = 0; k < array_size( hunk->attr ); k++ ) {
+               if ( ( strcmp( hi->attr[j].name, hunk->attr[k].name ) == 0 ) ||
+                    ( strcmp( hi->attr[j].name, hunk->attr[k].name ) == 0 ) ) {
+                  found = 1;
+                  break;
+               }
+            }
+            if ( !found )
+               continue;
+         }
       }
+
+      /* Have to revert the old one and then patch. */
+      diff_revertHunk( hi );
+      diff_cleanupHunk( hi );
+      if ( diff_patchHunk( hunk ) )
+         WARN( _( "uniedit: failed to patch '%s'" ),
+               diff_hunkName( hunk->type ) );
+      diff_end();
+      memcpy( hi, hunk, sizeof( UniHunk_t ) );
+      return;
    }
 
    /* Patch the hunk. */
