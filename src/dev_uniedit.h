@@ -26,7 +26,13 @@ void       uniedit_diffAdd( UniHunk_t *hunk );
 void uniedit_diffCreateSysNone( const StarSystem *sys, UniHunkType_t type );
 void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
                                char *str );
+void uniedit_diffCreateSysStrAttr( const StarSystem *sys, UniHunkType_t type,
+                                   char *str, UniAttribute_t *attr );
 void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
                                int data );
+void uniedit_diffCreateSysIntAttr( const StarSystem *sys, UniHunkType_t type,
+                                   int data, UniAttribute_t *attr );
 void uniedit_diffCreateSysFloat( const StarSystem *sys, UniHunkType_t type,
                                  double fdata );
+void uniedit_diffCreateSysFloatAttr( const StarSystem *sys, UniHunkType_t type,
+                                     double fdata, UniAttribute_t *attr );

@@ -35,8 +35,6 @@ local money_reward = onion.rewards.misn01
 
 -- Create the mission
 function create()
-   if not var.peek("testing") then return false end
-
    -- This will mess up strings quite badly
    local messup = function ( str )
       return strmess.messup( str, 0.2 )

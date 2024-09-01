@@ -2806,6 +2806,11 @@ void uniedit_diffCreateSysNone( const StarSystem *sys, UniHunkType_t type )
 void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
                                char *str )
 {
+   uniedit_diffCreateSysStrAttr( sys, type, str, NULL );
+}
+void uniedit_diffCreateSysStrAttr( const StarSystem *sys, UniHunkType_t type,
+                                   char *str, UniAttribute_t *attr )
+{
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );
    hunk.target.type   = HUNK_TARGET_SYSTEM;
@@ -2813,11 +2818,17 @@ void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
    hunk.type          = type;
    hunk.dtype         = HUNK_DATA_STRING;
    hunk.u.name        = str;
+   hunk.attr          = attr;
    uniedit_diffAdd( &hunk );
 }
 
 void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
                                int data )
+{
+   uniedit_diffCreateSysIntAttr( sys, type, data, NULL );
+}
+void uniedit_diffCreateSysIntAttr( const StarSystem *sys, UniHunkType_t type,
+                                   int data, UniAttribute_t *attr )
 {
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );
@@ -2826,11 +2837,17 @@ void uniedit_diffCreateSysInt( const StarSystem *sys, UniHunkType_t type,
    hunk.type          = type;
    hunk.dtype         = HUNK_DATA_INT;
    hunk.u.data        = data;
+   hunk.attr          = attr;
    uniedit_diffAdd( &hunk );
 }
 
 void uniedit_diffCreateSysFloat( const StarSystem *sys, UniHunkType_t type,
                                  double fdata )
+{
+   uniedit_diffCreateSysFloatAttr( sys, type, fdata, NULL );
+}
+void uniedit_diffCreateSysFloatAttr( const StarSystem *sys, UniHunkType_t type,
+                                     double fdata, UniAttribute_t *attr )
 {
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );
@@ -2839,6 +2856,7 @@ void uniedit_diffCreateSysFloat( const StarSystem *sys, UniHunkType_t type,
    hunk.type          = type;
    hunk.dtype         = HUNK_DATA_FLOAT;
    hunk.u.fdata       = fdata;
+   hunk.attr          = attr;
    uniedit_diffAdd( &hunk );
 }
 
@@ -2850,19 +2868,38 @@ void uniedit_diffAdd( UniHunk_t *hunk )
    /* Replace if already same type exists. */
    for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
       UniHunk_t *hi = &uniedit_diff[i];
-      if ( ( hi->target.type == hunk->target.type ) &&
-           ( strcmp( hi->target.u.name, hunk->target.u.name ) == 0 ) &&
-           ( hi->type == hunk->type ) ) {
-         /* Have to revert the old one and then patch. */
-         diff_revertHunk( hi );
-         diff_cleanupHunk( hi );
-         if ( diff_patchHunk( hunk ) )
-            WARN( _( "uniedit: failed to patch '%s'" ),
-                  diff_hunkName( hunk->type ) );
-         diff_end();
-         memcpy( hi, hunk, sizeof( UniHunk_t ) );
-         return;
+      if ( hi->target.type != hunk->target.type )
+         continue;
+      if ( strcmp( hi->target.u.name, hunk->target.u.name ) != 0 )
+         continue;
+      if ( hi->type != hunk->type )
+         continue;
+      if ( array_size( hi->attr ) != array_size( hunk->attr ) )
+         continue;
+      if ( ( hi->attr != NULL ) && ( hunk->attr != NULL ) ) {
+         for ( int j = 0; j < array_size( hi->attr ); j++ ) {
+            int found = 0;
+            for ( int k = 0; k < array_size( hunk->attr ); k++ ) {
+               if ( ( strcmp( hi->attr[j].name, hunk->attr[k].name ) == 0 ) ||
+                    ( strcmp( hi->attr[j].name, hunk->attr[k].name ) == 0 ) ) {
+                  found = 1;
+                  break;
+               }
+            }
+            if ( !found )
+               continue;
+         }
       }
+
+      /* Have to revert the old one and then patch. */
+      diff_revertHunk( hi );
+      diff_cleanupHunk( hi );
+      if ( diff_patchHunk( hunk ) )
+         WARN( _( "uniedit: failed to patch '%s'" ),
+               diff_hunkName( hunk->type ) );
+      diff_end();
+      memcpy( hi, hunk, sizeof( UniHunk_t ) );
+      return;
    }
 
    /* Patch the hunk. */
