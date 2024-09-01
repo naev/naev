@@ -1860,6 +1860,14 @@ static void sysedit_editJumpClose( unsigned int wid, const char *unused )
    (void)unused;
    JumpPoint *j = &sysedit_sys->jumps[sysedit_select[0].u.jump];
 
+   if ( uniedit_diffMode ) {
+      /* TODO implement. */
+      dialogue_alertRaw(
+         _( "Editing jump points is not yet supported in diff mode." ) );
+      window_close( wid, unused );
+      return;
+   }
+
    /* TODO add diff support. */
    if ( jp_hidden == 1 ) {
       jp_setFlag( j, JP_HIDDEN );
