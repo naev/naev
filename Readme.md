@@ -42,17 +42,24 @@ graphics card and driver supporting at least OpenGL 3.2, Naev requires:
 * SDL2
 * libxml2
 * freetype2
-* GLPK
 * libpng
 * libwebp
 * OpenAL
 * OpenBLAS
 * libvorbis
 * intltool
-* libunibreak (included)
 * pyyaml
-* cmark
-* libyaml
+* SuiteSparse`*`
+* enet`*`
+* physfs`*`
+* lua 5.1 / luajit`*`
+* pcre2`*`
+* GLPK`*`
+* libunibreak`*`
+* cmark`*`
+* libyaml`*`
+
+Dependencies marked with `*` will use subprojects if not found in the host system.
 
 ### DETAILS FOR YOUR OS
 
