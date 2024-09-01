@@ -2274,6 +2274,15 @@ static void sysedit_editExclusion( void )
    /* Add some inputs. */
    x = 20;
    y = -40;
+   s = _( "Label: " );
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtLabel", NULL, NULL, s );
+   if ( uniedit_diffMode )
+      window_addText( wid, x + l + 8, y, 80, 20, 1, "txtInpLabel", NULL, NULL,
+                      exc->label );
+   else
+      window_addInput( wid, x + l + 8, y, 80, 20, "inpLabel", 10, 1, NULL );
+   x += l + 20 + 80 + 8;
    s = _( "Radius: " );
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtInput", NULL, NULL, s );
@@ -2288,6 +2297,8 @@ static void sysedit_editExclusion( void )
                      sysedit_editExclusionClose );
 
    /* Load current values. */
+   if ( !uniedit_diffMode && ( exc->label != NULL ) )
+      window_setInput( wid, "inpLabel", exc->label );
    snprintf( buf, sizeof( buf ), "%g", exc->radius );
    window_setInput( wid, "inpRadius", buf );
 }
@@ -2316,6 +2327,24 @@ static void sysedit_editExclusionClose( unsigned int wid, const char *unused )
    AsteroidExclusion *exc =
       &sysedit_sys->astexclude[sysedit_select[0].u.astexclude];
 
+   const char *label = window_getInput( sysedit_widEdit, "inpLabel" );
+   free( exc->label );
+   exc->label = NULL;
+   if ( ( label != NULL ) && ( strcmp( label, "" ) != 0 ) ) {
+      int found = 0;
+      for ( int i = 0; i < array_size( sysedit_sys->astexclude ); i++ ) {
+         if ( sysedit_sys->astexclude[i].label &&
+              ( strcmp( sysedit_sys->astexclude[i].label, label ) == 0 ) ) {
+            dialogue_alert( _( "Asteroid exclusion with label '%s' already "
+                               "exists in system '%s'!" ),
+                            label, sysedit_sys->name );
+            found = 1;
+            break;
+         }
+      }
+      if ( !found )
+         exc->label = strdup( label );
+   }
    exc->radius = atof( window_getInput( sysedit_widEdit, "inpRadius" ) );
 
    if ( conf.devautosave )
