@@ -365,7 +365,7 @@ void asteroids_init( void )
          else
             WARN( _( "Asteroid field with no label in system '%s' has no "
                      "asteroid types defined!" ),
-                  ast->label, cur_system->name );
+                  cur_system->name );
       }
 
       density_max = MAX( density_max, ast->density );
