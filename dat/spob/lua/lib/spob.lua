@@ -25,9 +25,7 @@ function luaspob.setup( init_params )
 end
 
 local bg_mapping -- defined below
-function luaspob.init( spb )
-   mem.spob = spb
-   mem.std_land = mem.params.std_land or 0 -- Needed for can_land
+function luaspob.initBG( spb )
    mem.barbg = bg_mapping[ spb:class() ]
    local gfxext = spb:gfxExteriorPath()
    if gfxext and string.find( spb:gfxExteriorPath(), "aquatic" ) then
@@ -36,6 +34,12 @@ function luaspob.init( spb )
    if not mem.barbg then
       mem.barbg = luaspob.bg_generic
    end
+end
+
+function luaspob.init( spb )
+   mem.spob = spb
+   mem.std_land = mem.params.std_land or 0 -- Needed for can_land
+   luaspob.initBG( spb )
 end
 
 local function msg_bribed_def ()
@@ -415,7 +419,7 @@ local function calpha( c, a )
    return {c[1], c[2], c[3], a}
 end
 
-local function bg_generator( params )
+function luaspob.bg_generator( params )
    params = params or {}
    local cvs = lg.newCanvas( 400, 300 )
    local w, h = cvs:getDimensions()
@@ -464,7 +468,7 @@ local function bg_generator( params )
 end
 
 function luaspob.bg_inert ()
-   return bg_generator{
+   return luaspob.bg_generator{
       colbg    = { 0.3, 0.3, 0.3, 1 },
       colfeat  = { 0.1, 0.1, 0.1, 1 },
       collight = { 0.9, 0.9, 0.9, 1 },
@@ -474,7 +478,7 @@ function luaspob.bg_inert ()
 end
 
 function luaspob.bg_desert ()
-   return bg_generator{
+   return luaspob.bg_generator{
       colbg    = { 0.5, 0.4, 0.1, 1 },
       colfeat  = { 0.6, 0.5, 0.2, 1 },
       collight = { 1.0, 1.0, 0.9, 1 },
@@ -484,7 +488,7 @@ function luaspob.bg_desert ()
 end
 
 function luaspob.bg_lava ()
-   return bg_generator{
+   return luaspob.bg_generator{
       colbg    = { 0.7, 0.4, 0.4, 1 },
       colfeat  = { 0.6, 0.2, 0.2, 1 },
       collight = { 1.0, 0.9, 0.9, 1 },
@@ -496,7 +500,7 @@ function luaspob.bg_lava ()
 end
 
 function luaspob.bg_tundra ()
-   return bg_generator{
+   return luaspob.bg_generator{
       colbg    = { 0.4, 0.7, 0.7, 1 },
       colfeat  = { 0.2, 0.6, 0.6, 1 },
       collight = { 1.0, 1.0, 1.0, 1 },
@@ -507,7 +511,7 @@ function luaspob.bg_tundra ()
 end
 
 function luaspob.bg_underwater ()
-   return bg_generator{
+   return luaspob.bg_generator{
       colbg    = { 0.3, 0.3, 0.8, 1 },
       colfeat  = { 0.2, 0.2, 0.8, 1 },
       collight = { 0.9, 0.9, 1.0, 1 },
@@ -517,7 +521,7 @@ function luaspob.bg_underwater ()
 end
 
 function luaspob.bg_mclass ()
-   return bg_generator{
+   return luaspob.bg_generator{
       colbg    = { 0.1, 0.3, 0.1, 1 },
       colfeat  = { 0.2, 0.5, 0.2, 1 },
       collight = { 0.95, 1.0, 0.95, 1 },
@@ -528,7 +532,7 @@ function luaspob.bg_mclass ()
 end
 
 function luaspob.bg_station ()
-   return bg_generator{
+   return luaspob.bg_generator{
       colbg    = { 0.2, 0.2, 0.2, 1 },
       colfeat  = { 0.0, 0.0, 0.0, 1 },
       collight = { 0.9, 0.9, 0.9, 1 },
@@ -543,7 +547,7 @@ function luaspob.bg_station ()
 end
 
 function luaspob.bg_generic ()
-   return bg_generator{
+   return luaspob.bg_generator{
       nlights = rnd.rnd(6,8)
    }
 end
