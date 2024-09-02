@@ -119,7 +119,8 @@ function accept ()
    vn.label("02_yes")
    vn.func( function () accepted = true end )
    l337(_([["Great! Trixie and I will be using your ship as a beacon, and should be able to help you as bandwidth allows."]]))
-   trixie(_([["The convoy will be jumping from the {jmpsys} system to the {ambushsys} system. It's our best bet due to the high bandwidth and few ships to capture the cargo."]]))
+   trixie(fmt.f(_([["The convoy will be jumping from the {jmpsys} system to the {ambushsys} system. It's our best bet due to the high bandwidth and few ships to capture the cargo."]]),
+      {jmpsys=jmpsys, ambushsys=ambushsys}))
    l337(fmt.f(_([["No need to fret, {player} is an excellent pilot and this will be no challenge for the {shipname}!"]]),
       {player=player.name(), shipname=player.pilot():name()}))
 
@@ -226,7 +227,7 @@ function land ()
          else
             msg2 = _([[You can't just blast your alarm at the spacedocks! You know how much tympanic reconstruction costs!]])
          end
-         local msg = fmt.f([["{msg1} {msg2}"]],{
+         local msg = fmt.f(_([["{msg1} {msg2}"]]),{
             msg1=msg1, msg2=msg2 } )
          return msg
       end )
@@ -469,10 +470,10 @@ You hear a beep.
       vn.run()
 
       if mem.failedhack then
-         onion.log(fmt.f(_([[You helped l337_b01 and Trixie perform a heist at {spb}, although it was not a complete success,"]]),
+         onion.log(fmt.f(_([[You helped l337_b01 and Trixie perform a heist at {spb}, although it was not a complete success.]]),
             {spb=targetspb}))
       else
-         onion.log(fmt.f(_([[You helped l337_b01 and Trixie perform a heist at {spb}."]]),
+         onion.log(fmt.f(_([[You helped l337_b01 and Trixie perform a heist at {spb}.]]),
             {spb=targetspb}))
       end
       misn.finish(true)
