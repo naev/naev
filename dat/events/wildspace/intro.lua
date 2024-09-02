@@ -98,11 +98,24 @@ function land ()
 
    vn.label("cont01")
    c(_([[They cough before continuing.
-""]]))
+"Something happened out there, something big. Is there still a universe out there?"]]))
+   vn.na(_([[You explain to the best of your abilities the Incident and all the things that happen a few decacycles ago. The voice seems to go quiet, attentively listening to all your words. Eventually you finish and the room falls into silence.]]))
+   c(_([[After what seems like an eternity, a wracking cough plays over the speakers.
+"I always thought this couldn't be the end of it all. It's what has kept me going so long."]]))
+   c(_([[They cough once again.
+"But it seems like not long enough..."]]))
 
    vn.run()
 
    faction.get("Lost"):setKnown(true)
+
+   -- Will start the mission, so we can trigger the hook
+   naev.missionStart("Old Friends at Protera Husk")
+
+   -- Trigger the mission, skipping the initial npc.
+   naev.trigger("wildspace_start_misn")
+
+   evt.finish(true)
 end
 
 function enter ()

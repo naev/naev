@@ -25,5 +25,9 @@ function comm ()
 end
 
 function can_land ()
-   return true, _("Landing port seems to be open.")
+   if not var.peek("protera_husk_canland") then
+      return false, _("It does not look safe to land.")
+   else
+      return true, _("You can try to land here.")
+   end
 end
