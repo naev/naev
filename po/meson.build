@@ -4,7 +4,7 @@ i18n = import('i18n')
 potfiles = custom_target(
     'potfiles',
     output: 'POTFILES.in',
-    command: [ files('../utils/update-po.sh'), meson.project_source_root(), meson.current_build_dir() ],
+    command: [ files('../utils/update-po.sh'), meson.project_source_root(), meson.project_build_root() ],
     install: false
 )
 

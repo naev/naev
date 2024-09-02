@@ -16,7 +16,7 @@ The House Sirius is one of the Great Houses in [the Empire](lore/factions/empire
 * **Leading Structure:** Tribunal of Arch-Canters
 * **Government:** Constitutional Theocracy
 * **Formation:** [UST 97](lore/history)
-* **Homeworld:** Mutris (Ruadan system)
+* **Homeworld:** Mutris (Aesir system)
 
 ## Social Structure
 

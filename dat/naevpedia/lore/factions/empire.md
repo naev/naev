@@ -64,7 +64,7 @@ Other than that, what commodities companies produce on planets is of no concern 
 Most of the scientific research is conducted by [House Za'lek](lore/factions/zalek), but the Empire still has research bases of its own.
 It remains largely unknown to the public what projects the Imperial researchers develop.
 Empire engineers have created the [Peacemaker](ships/empire_peacemaker), a capital ship design which only the most respected among the Empire military are permitted to captain, and which is unequaled in combat by any other know vessel.
-These are the flagships of any larger Empire fleets, while local patrols usually consist primarily of [Admonishers](ships/empire_peacemaker) and [Lancelots](ships/empire_lancelot).
+These are the flagships of any larger Empire fleets, while local patrols usually consist primarily of [Admonishers](ships/empire_admonisher) and [Lancelots](ships/empire_lancelot).
 
 ## Political System
 

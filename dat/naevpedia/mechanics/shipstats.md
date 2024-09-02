@@ -8,7 +8,7 @@ title: "Ship Stats"
 There are many different important stats for ships that define their behaviour when flying in space. These are all visible from the [equipment](mechanics/equipment) panel.
 
 * [Model](ships): The name of the ship model.
-* [Class](mechanics/shipstats/class): The ship class.
+* [Class](mechanics/class): The ship class.
 * [Value](mechanics/credits): The value of the ship including all the [outfits](outfits) equipped on it.
 <% if naev.player.fleetCapacity() > 0 then %>
 * [Fleet Capacity](mechanics/playerfleet): Determine how much fleet capacity a ship uses when deployed in a [fleet](mechanics/playerfleet).
