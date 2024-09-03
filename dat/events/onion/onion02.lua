@@ -106,7 +106,7 @@ function hail()
    local o = vn.newCharacter( onion.vn_onion() )
    vn.music( onion.loops.circus )
    vn.transition("electric")
-   if var.peek("onion02_hailed") then
+   if not var.peek("onion02_hailed") then
       vn.na(_([[You communicate with the strange ship, however, instead of the channel opening with the bridge a familiar hologram appears.]]))
       o(fmt.f(_([["Hey, if it isn't {player}! Had a fun time on {spb}? You should have seen the look on everyone's faces!"]]),
          {player=player.name(), spb=spob.get("Gordon's Exchange")}))

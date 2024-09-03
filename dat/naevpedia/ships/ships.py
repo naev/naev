@@ -72,7 +72,7 @@ end
 * **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_("{fuel} {unit}"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('energy')})%>
 * **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>
 <% if s:license() then %>
-* **License**:   <%= s:license() %>
+* **License**:   <%= _(s:license()) %>
 <% end %>
 
 ## Availability
