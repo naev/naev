@@ -50,7 +50,11 @@ typedef struct LuaSpfxData_s {
    int          update;    /**< Reference to update function. */
    int          remove;    /**< Reference to remove function. */
    LuaAudio_t   sfx;       /**< Sound effect. */
-   nlua_env     env;       /**< Lua environment. */
+   /* We ideally would want the Lua SPFX to run in their own environment, in
+    * case any global voodoo is being done or the likes. However, this seems to
+    * crash, so we're just going to use pcall and not save the environment for
+    * now. Lua SPFX "shouldn't" be using globals anyways... */
+   // nlua_env     env;       /**< Lua environment. */
 } LuaSpfxData_t;
 
 /**
@@ -322,8 +326,14 @@ static int spfxL_new( lua_State *L )
    ls.render_mg = LUA_NOREF;
    ls.render_fg = LUA_NOREF;
    ls.remove    = LUA_NOREF;
+#if 0
    nlua_pushenv( L, __NLUA_CURENV );
+#if DEBUGGING
+   if (__NLUA_CURENV == LUA_NOREF)
+      WARN(_("Trying to create Lua SPFX from no environment!"));
+#endif /* DEBUGGING */
    ls.env = luaL_ref( naevL, LUA_REGISTRYINDEX );
+#endif
 
    /* Functions. */
    if ( !lua_isnoneornil( L, 2 ) )
@@ -438,7 +448,8 @@ static int spfxL_rm( lua_State *L )
       if ( ls->remove != LUA_NOREF ) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->remove );
          lua_pushspfx( naevL, ls->id );
-         if ( nlua_pcall( ls->env, 1, 0 ) != 0 ) {
+         if ( lua_pcall( naevL, 1, 0, 0 ) != 0 ) {
+            // if ( nlua_pcall( ls->env, 1, 0 ) != 0 ) {
             WARN( _( "Spfx failed to run 'remove':\n%s" ),
                   lua_tostring( naevL, -1 ) );
             lua_pop( naevL, 1 );
@@ -447,7 +458,7 @@ static int spfxL_rm( lua_State *L )
 
       ls->flags &= SPFX_CLEANUP;
       ls->ttl = -1.;
-      luaL_unref( L, LUA_REGISTRYINDEX, ls->env );
+      // luaL_unref( L, LUA_REGISTRYINDEX, ls->env );
    }
    return 0;
 }
@@ -688,7 +699,8 @@ void spfxL_update( double dt )
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->update );
       lua_pushspfx( naevL, ls->id );
       lua_pushnumber( naevL, dt );
-      if ( nlua_pcall( ls->env, 2, 0 ) != 0 ) {
+      if ( lua_pcall( naevL, 2, 0, 0 ) != 0 ) {
+         // if ( nlua_pcall( ls->env, 2, 0 ) != 0 ) {
          WARN( _( "Spfx failed to run 'update':\n%s" ),
                lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
@@ -747,7 +759,8 @@ static void spfxL_renderLayer( int func, const char *funcname, double dt )
       lua_pushnumber( naevL, pos.y );
       lua_pushnumber( naevL, z );
       lua_pushnumber( naevL, dt );
-      if ( nlua_pcall( ls->env, 5, 0 ) != 0 ) {
+      if ( lua_pcall( naevL, 5, 0, 0 ) != 0 ) {
+         // if ( nlua_pcall( ls->env, 5, 0 ) != 0 ) {
          WARN( _( "Spfx failed to run '%s':\n%s" ), funcname,
                lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
