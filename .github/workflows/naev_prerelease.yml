@@ -129,7 +129,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-dist
 
@@ -210,12 +210,12 @@ jobs:
 
     steps:
       - name: Get AppImage Packaging Script
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-appimage-packaging
 
       - name: Get AppDir
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-linux-appdir-x86-64
 
@@ -240,7 +240,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-dist
 
@@ -324,7 +324,7 @@ jobs:
           fi
 
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-dist
 
@@ -382,28 +382,28 @@ jobs:
 
     steps:
       - name: Get Universal Bundle Packaging Script
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-macos-packaging
 
       - name: Get DMG Assets
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-macos-dmg
           path: dmg_assets
 
       - name: Get Entitlements PLIST
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-macos-entitlements
 
       - name: Get x86_64 macOS Bundle
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-macos-x86_64
 
       - name: Get ARM64 macOS Bundle
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-macos-aarch64
 
@@ -458,7 +458,7 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           path: ${{ github.workspace }}/build/staging
 
