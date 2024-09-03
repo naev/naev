@@ -70,6 +70,7 @@ function hail ()
 end
 
 function land ()
+   local accept = false
    vn.clear()
    vn.scene()
    vn.transition()
@@ -104,21 +105,49 @@ function land ()
 "I always thought this couldn't be the end of it all. It's what has kept me going so long."]]))
    c(_([[They cough once again.
 "But it seems like not long enough..."]]))
+   c(_([["I know we just met, but I want to ask a favour of you. You see, it wasn't this bad, as it is now."]]))
+   c(_([[They give a small cough.
+"After the... the Incident, me and my crewmates, we thought we could pull through. We created a colony with the survivors on husk of what was left of the once glorious Protera. However, the worst was yet to come."]]))
+   c(_([["At first we thought it was some sort of pathogen, maybe due to all the debris, however, even with careful quarantine and elimination, it still spread. People would... change."]]))
+   c(_([["It started subtle, violent outbreaks, slight twitching, aversion to bathing, then it got worse. Eventually, they would lash out, attack everyone and everything in some sort of primal irrational rage. Having lost all their remaining humanity, we called the brutes the Lost."]]))
+   c(_([["Paranoia set it and many were purged, but it didn't stop. Eventually, the survivors split into separate enclaves, all fortified and wary against strangers. It never stopped progressing though..."]]))
+   c(_([["Almost everyone I knew was lost, and in the end, me and my roommate Ben, we tried to get out of there, the only..."
+They pause to give a wracking cough, it takes them a while before they can continue.]]))
+   c(_([["I'm rambling now, just like an old man... It wasn't supposed to end like this..."]]))
+   c(_([["Ah yes, the favour. Ben, he left some important items behind. I would like you to bring them to me."]]))
+   vn.menu{
+      {_([["Accept"]]), "accept"},
+      {_([["Maybe Later"]]), "decline"},
+   }
 
+   vn.label("decline")
+   c(_([["I will be waiting, if you change your mind..."
+To the tune of coughing the speaker goes silent.]]))
+   vn.done()
+
+   vn.label("accept")
+   c(_([[They cough.
+"Here, take the coordinates. Be careful."]]))
    vn.run()
 
    faction.get("Lost"):setKnown(true)
 
-   -- Will start the mission, so we can trigger the hook
-   naev.missionStart("Old Friends at Protera Husk")
+   -- Still finish event, but now the mission will have to be started "normally"
+   if not accept then
+      evt.finish(true)
+      return
+   end
 
-   -- Trigger the mission, skipping the initial npc.
+   -- Will start the mission, and trigger a hook to skip the accepting stage
+   naev.missionStart("Old Friends at Protera Husk")
    naev.trigger("wildspace_start_misn")
 
+   -- Done here
    evt.finish(true)
 end
 
 function enter ()
+   -- Clean up and restart if player changes system
    if system.cur() ~= mainsys then
       evt.finish(false)
    end
