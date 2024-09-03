@@ -126,6 +126,7 @@ To the tune of coughing the speaker goes silent.]]))
    vn.done()
 
    vn.label("accept")
+   vn.func( function () accept = true end )
    c(_([[They cough.
 "Here, take the coordinates. Be careful."]]))
    vn.run()
