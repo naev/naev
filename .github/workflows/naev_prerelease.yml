@@ -85,6 +85,7 @@ jobs:
           name: naev-macos-dmg
           path: ${{ github.workspace }}/build/dist/dmg_assets
           if-no-files-found: error
+          include-hidden-files: true
 
       - name: Upload Entitlements PLIST Artifact
         uses: actions/upload-artifact@v3
@@ -113,6 +114,7 @@ jobs:
           name: naev-itch-deployment
           path: ${{ github.workspace }}/build/dist/itch/*
           if-no-files-found: error
+          include-hidden-files: true
 
   "Linux_Naev_Release":
     needs: "Package_Source"
