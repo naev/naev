@@ -19,6 +19,7 @@
 ]]--
 local vn = require "vn"
 local vni = require "vnimage"
+local vne = require "vnextras"
 local fmt = require "format"
 local tut = require "common.tutorial"
 
@@ -94,7 +95,37 @@ function land ()
       vn.na(_([[You try to minimize your ship visibility during landing, but it's likely that it won't be long until you get unwanted local attention. You will have to be swift. Just in case, you double-check your hand weapons.]]))
       vn.na(_([[Without the niceties of a proper landing area, you try to find a clearing, but at the end, have to make do with precariously setting your ship on the rubble of a once majestic building. A bit more visible than what you were hoping for. Checking with the coordinates you were given, it doesn't seem like you are too far. Now to make haste.]]))
       vn.na(_([[Staying low you make your way across the rubble. No sign of life for now other some fungus that grows on the cracks and crevices throughout the decrepit structures. You notice some sort of tattered flag nearby, it seems like that is your destination.]]))
-      vn.na(_([[]]))
+      vn.na(_([[You sneak up closer and survey the surroundings. It looks there is a ruined building at your destination. You can't make out a clear door, but there seems to be a hole where a window once was that you should be able to squeeze through.]]))
+      vn.na(_([[You get closer and are about to squeeze through, when you hear a growl from behind you. You only make up some glowing purple eyes among a mass of black rags charging at you, as you quickly discharge your blaster into the assailant.]]))
+      vn.na(_([[You wince at the familiar smell of burning flesh and reverberating echoes of blaster fire. Looks like you're going to have to make a break for it, or you may not be as lucky next time.]]))
+      vn.na(_([[You manage to scrape through the window and quickly turn on your light. There's a layer of dust all over, but seems to be no life forms. You quickly turn on a scanner and manage to find a satchel that seems to have some sort of holodrive or something in it. As efficient as you were, howls in the distant indicate that it may be too late.]]))
+      vn.na(_([[Without time to spare, you toss the satchel out the window you came in, and squeeze back after it. Time to get out of here.]]))
+
+      vn.scene()
+      local sai = tut.vn_shipai()
+      vn.newCharacter( sai )
+      vn.transition()
+      sai(fmt.f(_([[A holo-image flashes in the corner of your retina.
+"{player}, there seems to be many lifeforms converging on your location. My preliminary analysis indicates that they want to skin you alive."]]),
+         {player=player.name()}))
+      vn.na(_([[No shit. You tell {shipai} to get your ship over to you, or at least provide cover fire and make themselves useful.]]))
+
+      vn.scene()
+      vn.transition()
+      vn.na(_([[You grab the satchel and turn a corner, face to face with another two Lost, they hiss and you don't hesitate to drop them both with a couple of well-placed shots. Maybe you'll pull it off. You run towards your ship location, as you notice it seems to be on the move. You pick up the pace when you are suddenly thrown into the air... what the hell was that?]]))
+      vn.na(_([[You roll over, and see some shapes charging at you. Trying to focus your blurred vision, you pick up your blaster and fire a few shots... nothing but air. Shit.]]))
+      vn.na(_([[You try to take aim again, when another nearby explosion showers you with debris.]]))
+
+      vn.scene()
+      vn.newCharacter( sai )
+      vn.transition()
+      sai(_([["I would recommend against rolling on the ground at the current time."]]))
+
+      vn.scene()
+      vn.transition()
+      vn.na(_([[You grab the satchel and run onto the ship, just in time it seems. You can make out more figures as the land gears close and you take off. Time to get out of here.]]))
+      vn.na(_([[You rush to the command chair and take control, pushing a sharp atmospheric ascent. The ship rattling as it tries to break free from the gravitational pull. As you climb, you hear an unwelcome lock-on warning. Your ship is rocked by some sort of ground-to-air missile. That's going to leave a blemish. You pull the throttle harder and eventually manage to break free.]]))
+      vn.na(_([[Although you want a break, your ship reminds you that more take-offs are being detected. Your break will have to wait a bit more.]]))
 
       vn.run()
 
@@ -113,7 +144,13 @@ function land ()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition()
-      sai(_([[]]))
+      sai(_([[Your shock is interrupted by a certain ship AI.
+"I've received a preprogrammed message, would you like me to play it?"]]))
+      vn.na(_([[Without anything better to do, you agree.]]))
+
+      local c = vne.flashbackTextStart(_("C"))
+      c(_([[Hello, again, i]]))
+      vne.flashbackTextEnd()
 
       vn.run()
 
@@ -125,7 +162,44 @@ function enter ()
    -- Took damage
    player.pilot():setHealth( 60, 30 )
 
-   --pilot.add( ..., "Lost", target )
+   player.landAllow( false, _("You can not land right now!") )
+   hook.timer( 5, "company1" )
+   hook.timer( 9, "company2" )
+   hook.timer( 13, "company3" )
+end
+
+local function addlost( ships )
+   local flost = faction.get("Lost")
+   for k,s in ipairs(ships) do
+      local p = pilot.add( s, flost, target )
+      p:setHostile()
+   end
+end
+
+function company1 ()
+   addlost{
+      "Proteron Dalton",
+      "Tristan",
+      "Llama",
+   }
+end
+
+function company2 ()
+   addlost{
+      "Empire Advance",
+      "Proteron Gauss",
+      "Soromid Brigand",
+      "Koala",
+   }
+end
+
+function company3 ()
+   addlost{
+      "Proteron Watson",
+      "Dvaered Retribution",
+      "Pirate Starbridge",
+      "Hyena",
+   }
 end
 
 function abort ()
