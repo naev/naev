@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout Naev Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           path: source
@@ -45,42 +45,42 @@ jobs:
           cp source/dat/VERSION build/dist
 
       - name: Upload Source Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-dist
           path: ${{ github.workspace }}/build/dist/source.tar.xz
           if-no-files-found: error
 
       - name: Upload Changelog Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-changelog
           path: ${{ github.workspace }}/build/dist/CHANGELOG
           if-no-files-found: error
 
       - name: Upload Version Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-version
           path: ${{ github.workspace }}/build/dist/VERSION
           if-no-files-found: error
 
       - name: Upload AppImage Packaging Script Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-appimage-packaging
           path: ${{ github.workspace }}/build/dist/buildAppImage.sh
           if-no-files-found: error
 
       - name: Upload Universal Bundle Packaging Script Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-macos-packaging
           path: ${{ github.workspace }}/build/dist/buildUniversalBundle.sh
           if-no-files-found: error
 
       - name: Upload DMG Assets Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-macos-dmg
           path: ${{ github.workspace }}/build/dist/dmg_assets
@@ -88,28 +88,28 @@ jobs:
           include-hidden-files: true
 
       - name: Upload Entitlements PLIST Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-macos-entitlements
           path: ${{ github.workspace }}/build/dist/entitlements.plist
           if-no-files-found: error
 
       - name: Upload GitHub Deployment Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-github-deployment
           path: ${{ github.workspace }}/build/dist/gh/*
           if-no-files-found: error
 
       - name: Upload Steam Deployment Script Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-steam-deployment
           path: ${{ github.workspace }}/build/dist/steam/*
           if-no-files-found: error
 
       - name: Upload Itch Deployment Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-itch-deployment
           path: ${{ github.workspace }}/build/dist/itch/*
@@ -129,14 +129,14 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: naev-dist
 
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist/source.tar.xz -C source --strip 1
+          tar -xf source.tar.xz -C source --strip 1
 
       - name: Meson Setup
         run: |
@@ -178,19 +178,19 @@ jobs:
           tar -cJvf build/dist/naev-ndata.tar.xz -C staging/usr/share/naev dat
 
       - name: Upload Naev Binary Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: naev-steamruntime
           path: ${{ github.workspace }}/build/dist/naev.x64
 
       - name: Upload Naev Data Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: naev-ndata
           path: ${{ github.workspace }}/build/dist/naev-ndata.tar.xz
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: naev-linux-appdir-x86-64
           path: "${{ github.workspace }}/build/dist/naev-appdir.tar.xz"
@@ -210,12 +210,12 @@ jobs:
 
     steps:
       - name: Get AppImage Packaging Script
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: naev-appimage-packaging
 
       - name: Get AppDir
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: naev-linux-appdir-x86-64
 
@@ -226,7 +226,7 @@ jobs:
               ./buildAppImage.sh -d -p -a "./AppDir" -b build
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-linux-x86-64
           path: "${{ github.workspace }}/build/dist/*"
@@ -240,7 +240,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: naev-dist
 
@@ -274,7 +274,7 @@ jobs:
           meson install -C build
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-win64
           path: ${{ github.workspace }}/build/dist/*
@@ -324,7 +324,7 @@ jobs:
           fi
 
       - name: Get Source
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: naev-dist
 
@@ -361,7 +361,7 @@ jobs:
           mv build/dist/naev-macos.zip build/dist/naev-macos-${{ matrix.arch }}.zip
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-macos-${{ matrix.arch }}
           path: ${{ github.workspace }}/build/dist/naev-macos-${{ matrix.arch }}.zip
@@ -382,28 +382,28 @@ jobs:
 
     steps:
       - name: Get Universal Bundle Packaging Script
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: naev-macos-packaging
 
       - name: Get DMG Assets
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: naev-macos-dmg
           path: dmg_assets
 
       - name: Get Entitlements PLIST
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: naev-macos-entitlements
 
       - name: Get x86_64 macOS Bundle
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: naev-macos-x86_64
 
       - name: Get ARM64 macOS Bundle
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: naev-macos-aarch64
 
@@ -416,7 +416,7 @@ jobs:
               ./buildUniversalBundle.sh -d -i ./dmg_assets -e ./entitlements.plist -a ./arm64 -x ./x86_64 -b ./build
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-macos
           path: "${{ github.workspace }}/build/dist/*"
@@ -449,7 +449,7 @@ jobs:
 
     steps:
       - name: Checkout Naev Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: ${{ matrix.releasetype == 'github' }}
 
       - name: Create Release Staging and Output Areas
@@ -458,7 +458,7 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           path: ${{ github.workspace }}/build/staging
 

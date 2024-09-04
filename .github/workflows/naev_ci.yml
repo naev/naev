@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout Naev Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: source
           fetch-depth: 0
@@ -59,7 +59,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Meson Setup
         id: setup
