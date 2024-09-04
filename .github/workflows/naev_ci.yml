@@ -52,7 +52,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-dist-${{ github.sha }}
 
@@ -151,7 +151,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-dist-${{ github.sha }}
 
@@ -257,7 +257,7 @@ jobs:
           fi
 
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-dist-${{ github.sha }}
 
@@ -336,7 +336,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-dist-${{ github.sha }}
 
@@ -378,7 +378,7 @@ jobs:
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: naev-dist-${{ github.sha }}
 
