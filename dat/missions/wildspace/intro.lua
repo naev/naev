@@ -142,18 +142,44 @@ function land ()
       vn.na(_([[You run back to your ship without looking back and lock yourself in the captain's room as you try to recover.]]))
 
       vn.scene()
-      local sai = vn.newCharacter( tut.vn_shipai() )
+      local sai = tut.vn_shipai()
+      vn.newCharacter( sai )
       vn.transition()
       sai(_([[Your shock is interrupted by a certain ship AI.
 "I've received a preprogrammed message, would you like me to play it?"]]))
       vn.na(_([[Without anything better to do, you agree.]]))
+      sai(_([["I have edited the recording to be more concise... and less coughy."]]))
+      vn.na(_([[The recording starts playing.]]))
 
       local c = vne.flashbackTextStart(_("C"))
-      c(_([[Hello, again, i]]))
+      c(_([[Seems like it is recording. Hello, again. I don't think I introduced me formally, my name is Claude. Sadly, I didn't get a chance to get your name nor what Autarch you serve under.
+
+I wish... *sigh* ... I wish we would have met under different circumstances.
+
+Let me be clear, the packet you have hopefully recovered. It is not for me. It is too late for me, but it is a parting gift for you.]]))
+      c(_([[You may have wondered why I have not become Lost. That may have been true when we first met. Now, not so much. My body is failing, I can see my eyes become more purple every day. That is the last stage. I am not myself any more.
+
+I do not want to succumb. Ben gave his everything, so I could survive until now. I did not want it to be in vain, I persisted, fought with all my strength. It was not enough, it is never enough.
+
+When I saw you at first, I knew it was a sign. I could pass all that Ben gave me to you, and finally be free of this curse to join him.]]))
+      c(_([[The package you should have, contains the blueprints for counteracting this disease. It can not cure, but it can prolong and delay. It was too late for us, but it is not so for you. Please analyze the documents, and do not become what we have become.
+
+When you receive this message, there is no need to come look for me. I will no longer be among the living, but I will also not be among the Lost. I will be finally free... finally with...]]))
       vne.flashbackTextEnd()
+
+      vn.scene()
+      vn.newCharacter( sai )
+      vn.transition()
+      sai(_([["That was the entire audible message. I have taken the liberty of analzing the data in the satchel you brought back. It seems to contain the blueprints for a trivial modification of the shield software that modulates the phase in hyper-spectral patterns. It seems like the modification counteracts some local effects in the so called 'wild space'. If you wish, I can apply them to your ships."]]))
+      vn.na(_([[You agree to the modifications. Claude and Ben's deaths should not be in vain.]]))
+
+      if not jump.get("Scholz's Star", "Haered"):known() then
+         sai(_([["I have run an analysis of the so-called Wild Space. Based on the symmetric properties, it seems like there should be another exit. It may be worth pursuing the possibility."]]))
+      end
 
       vn.run()
 
+      -- TODO log
       misn.finish(true)
    end
 end

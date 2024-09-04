@@ -98,8 +98,11 @@ function land ()
    vn.jump("cont01")
 
    vn.label("cont01")
-   c(_([[They cough before continuing.
-"Something happened out there, something big. Is there still a universe out there?"]]))
+   c(_([[They cough quite severely, before abruptly changing tone.
+"DAMNIT! I'LL AVENGE THEM ALL!"
+You hear a dull thud echo through the hull.]]))
+   c(_([[They recompose before continuing in a small voice.
+"Sorry about that. Something happened out there, something big, right? Is there still a universe out there?"]]))
    vn.na(_([[You explain to the best of your abilities the Incident and all the things that happen a few decacycles ago. The voice seems to go quiet, attentively listening to all your words. Eventually you finish and the room falls into silence.]]))
    c(_([[After what seems like an eternity, a wracking cough plays over the speakers.
 "I always thought this couldn't be the end of it all. It's what has kept me going so long."]]))
@@ -132,6 +135,8 @@ To the tune of coughing the speaker goes silent.]]))
    vn.run()
 
    faction.get("Lost"):setKnown(true)
+
+   -- TODO log
 
    -- Still finish event, but now the mission will have to be started "normally"
    if not accept then

@@ -8,7 +8,9 @@
   <nolanes/>
  </general>
  <pos x="960.511023" y="476.419195"/>
- <spobs/>
+ <spobs>
+  <spob>Scholz's Moon</spob>
+ </spobs>
  <jumps>
   <jump target="Haered">
    <pos x="3212.240412" y="-507.810325"/>
