@@ -26,7 +26,7 @@ jobs:
           meson dist -C build --no-tests --include-subprojects
 
       - name: Upload Dist Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: naev-dist-${{ github.sha }}
           path: ${{ github.workspace }}/build/meson-dist/*
@@ -79,7 +79,7 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Upload Setup Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-setup-log
@@ -91,14 +91,14 @@ jobs:
           meson compile -C build
 
       - name: Upload Compile Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
           path: ${{ github.workspace }}/build
@@ -111,7 +111,7 @@ jobs:
           DESTDIR: "${{ github.workspace }}/staging"
 
       - name: Upload Install Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
@@ -129,7 +129,7 @@ jobs:
           fi
 
       - name: Upload AppImage Compile Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         if: ${{ (success() || steps.appimageCompile.outcome == 'failure') }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-log
@@ -178,7 +178,7 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Upload Setup Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-setup-log
@@ -190,14 +190,14 @@ jobs:
           meson compile -C build
 
       - name: Upload Compile Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
           path: |
@@ -210,7 +210,7 @@ jobs:
           meson install -C build
 
       - name: Upload Install Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
@@ -284,7 +284,7 @@ jobs:
 
 
       - name: Upload Setup Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-setup-log
@@ -296,14 +296,14 @@ jobs:
           meson compile -C build
 
       - name: Upload Compile Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-buildArtifacts
           path: |
@@ -316,7 +316,7 @@ jobs:
           meson install -C build
 
       - name: Upload Install Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-install-log
@@ -364,7 +364,7 @@ jobs:
           meson test luacheck -C build
 
       - name: Upload Test Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ success() || steps.test.outcome == 'failure' }}
         with:
           name: ${{ github.sha }}-lualint-testlog
@@ -398,7 +398,7 @@ jobs:
           meson compile -C build
 
       - name: Upload Compile Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ steps.compile.outcome == 'failure' }}
         with:
           name: ${{ github.sha }}-ldoc-log
