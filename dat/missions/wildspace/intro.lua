@@ -22,6 +22,7 @@ local vni = require "vnimage"
 local vne = require "vnextras"
 local fmt = require "format"
 local tut = require "common.tutorial"
+local ws = require "common.wildspace"
 
 local title = _("Old Friends at Protera Husk")
 local target, targetsys = spob.getS( "Protera Husk" )
@@ -180,6 +181,12 @@ When you receive this message, there is no need to come look for me. I will no l
       vn.run()
 
       -- TODO log
+      local msg = _([[You recovered a package for Claude from {spb} ({sys} system), who, sacrificed himself before turning Lost. The package contained a blueprint to make your ship resistant to the Wild Space local effects making people Lost, allowing you to safely survive.]])
+      if not jump.get("Scholz's Star", "Haered"):known() then
+         msg = fmt.f(_([[{msg} Furthermore, your Ship AI indicated that it is likely that there is a second exit from Wild Space, which may warrant more exploration.]], {msg=msg}))
+      end
+      ws.log(fmt.f(msg, {spb=target, sys=targetsys}))
+
       misn.finish(true)
    end
 end

@@ -10,6 +10,8 @@
 local vn = require "vn"
 local vni = require "vnimage"
 local der = require "common.derelict"
+local ws = require "common.wildspace"
+local fmt = require "format"
 
 local mainspb, mainsys = spob.getS("Hypergate Protera")
 
@@ -137,6 +139,8 @@ To the tune of coughing the speaker goes silent.]]))
    faction.get("Lost"):setKnown(true)
 
    -- TODO log
+   ws.log(fmt.f(_([[You found a survivor in the {sys} system that led you to a ruined hypergate. You exchanged information with them, and they told you about the Lost that inhabit Wild Space. They seem to have something they want you to do.]]),
+      {sys=mainsys}))
 
    -- Still finish event, but now the mission will have to be started "normally"
    if not accept then
