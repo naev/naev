@@ -3,7 +3,7 @@
 <event name="Wild Space Chaos">
  <location>enter</location>
  <chance>100</chance>
- <cond>system.cur():tags().wildspace</cond>
+ <cond>system.cur():tags().wildspace ~= nil</cond>
 </event>
 --]]
 
