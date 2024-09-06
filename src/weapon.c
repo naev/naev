@@ -865,84 +865,52 @@ static void weapon_render( Weapon *w, double dt )
       /* Alpha based on strength. */
       c.a = MIN( 1., w->strength );
 
-      /* Outfit spins around. */
-      if ( outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_SPIN ) ) {
+      /* Render. */
+      if ( gfx->tex != NULL ) {
+         const glTexture *tex = gfx->tex;
+         if ( gfx->tex_end != NULL )
+            gl_renderSpriteInterpolate( tex, gfx->tex_end, w->timer / w->life,
+                                        w->solid.pos.x, w->solid.pos.y, w->sx,
+                                        w->sy, &c );
+         else
+            gl_renderSprite( tex, w->solid.pos.x, w->solid.pos.y, w->sx, w->sy,
+                             &c );
+      } else {
+         double r, z;
 
-         /* Render. */
-         if ( gfx->tex != NULL ) {
-            const glTexture *tex = gfx->tex;
+         /* Translate coords. */
+         z = cam_getZoom();
+         gl_gameToScreenCoords( &x, &y, w->solid.pos.x, w->solid.pos.y );
 
-            /* Check timer. */
-            w->anim -= dt;
-            if ( w->anim < 0. ) {
-               w->anim = outfit_spin( w->outfit );
+         /* Scaled sprite dimensions. */
+         r = gfx->size * z;
 
-               /* Increment sprite. */
-               w->sprite++;
-               if ( w->sprite >= tex->sx * tex->sy )
-                  w->sprite = 0;
-            }
+         /* Check if inbounds */
+         if ( ( x < -r ) || ( x > SCREEN_W + r ) || ( y < -r ) ||
+              ( y > SCREEN_H + r ) )
+            return;
 
-            if ( gfx->tex_end != NULL )
-               gl_renderSpriteInterpolate(
-                  tex, gfx->tex_end, w->timer / w->life, w->solid.pos.x,
-                  w->solid.pos.y, w->sprite % (int)tex->sx,
-                  w->sprite / (int)tex->sx, &c );
-            else
-               gl_renderSprite( tex, w->solid.pos.x, w->solid.pos.y,
-                                w->sprite % (int)tex->sx,
-                                w->sprite / (int)tex->sx, &c );
-         }
-      }
-      /* Outfit faces direction. */
-      else {
-         /* Render. */
-         if ( gfx->tex != NULL ) {
-            const glTexture *tex = gfx->tex;
-            if ( gfx->tex_end != NULL )
-               gl_renderSpriteInterpolate( tex, gfx->tex_end,
-                                           w->timer / w->life, w->solid.pos.x,
-                                           w->solid.pos.y, w->sx, w->sy, &c );
-            else
-               gl_renderSprite( tex, w->solid.pos.x, w->solid.pos.y, w->sx,
-                                w->sy, &c );
-         } else {
-            double r, z;
+         mat4 projection = gl_view_matrix;
+         mat4_translate_xy( &projection, x, y );
+         mat4_rotate2d( &projection, w->solid.dir );
+         mat4_scale_xy( &projection, r, r );
 
-            /* Translate coords. */
-            z = cam_getZoom();
-            gl_gameToScreenCoords( &x, &y, w->solid.pos.x, w->solid.pos.y );
+         glUseProgram( gfx->program );
+         glUniform2f( gfx->dimensions, r, r );
+         glUniform1f( gfx->u_r, w->r );
+         glUniform1f( gfx->u_time, w->life - w->timer );
+         glUniform1f( gfx->u_fade, MIN( 1., w->strength ) );
+         gl_uniformMat4( gfx->projection, &projection );
 
-            /* Scaled sprite dimensions. */
-            r = gfx->size * z;
+         glEnableVertexAttribArray( gfx->vertex );
+         gl_vboActivateAttribOffset( gl_circleVBO, gfx->vertex, 0, 2, GL_FLOAT,
+                                     0 );
 
-            /* Check if inbounds */
-            if ( ( x < -r ) || ( x > SCREEN_W + r ) || ( y < -r ) ||
-                 ( y > SCREEN_H + r ) )
-               return;
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
-            mat4 projection = gl_view_matrix;
-            mat4_translate_xy( &projection, x, y );
-            mat4_rotate2d( &projection, w->solid.dir );
-            mat4_scale_xy( &projection, r, r );
-
-            glUseProgram( gfx->program );
-            glUniform2f( gfx->dimensions, r, r );
-            glUniform1f( gfx->u_r, w->r );
-            glUniform1f( gfx->u_time, w->life - w->timer );
-            glUniform1f( gfx->u_fade, MIN( 1., w->strength ) );
-            gl_uniformMat4( gfx->projection, &projection );
-
-            glEnableVertexAttribArray( gfx->vertex );
-            gl_vboActivateAttribOffset( gl_circleVBO, gfx->vertex, 0, 2,
-                                        GL_FLOAT, 0 );
-
-            glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-            glDisableVertexAttribArray( gfx->vertex );
-            glUseProgram( 0 );
-            gl_checkErr();
-         }
+         glDisableVertexAttribArray( gfx->vertex );
+         glUseProgram( 0 );
+         gl_checkErr();
       }
       break;
 
@@ -1455,12 +1423,38 @@ static void weapon_updateCollide( Weapon *w, double dt )
  */
 static void weapon_update( Weapon *w, double dt )
 {
+   double odir = w->solid.dir;
+
    /* Smart weapons also get to think their next move */
    if ( w->think != NULL )
       ( *w->think )( w, dt );
 
    /* Update the solid position. */
    ( *w->solid.update )( &w->solid, dt );
+
+   /* Update graphics. */
+   if ( outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_SPIN ) ) {
+      /* Check timer. */
+      w->anim -= dt;
+      if ( w->anim < 0. ) {
+         const OutfitGFX *gfx = outfit_gfx( w->outfit );
+         const glTexture *tex = gfx->tex;
+         w->anim              = outfit_spin( w->outfit );
+
+         /* Increment sprite. */
+         w->sprite++;
+         if ( w->sprite >= tex->sx * tex->sy )
+            w->sprite = 0;
+
+         w->sx = w->sprite % (int)tex->sx;
+         w->sy = w->sprite / (int)tex->sx;
+      }
+   } else if ( fabs( odir - w->solid.dir ) > DOUBLE_TOL ) {
+      const OutfitGFX *gfx = outfit_gfx( w->outfit );
+      if ( ( gfx != NULL ) && ( gfx->tex != NULL ) )
+         gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex->sx, gfx->tex->sy,
+                              w->solid.dir );
+   }
 
    /* Update the sound. */
    sound_updatePos( w->voice, w->solid.pos.x, w->solid.pos.y, w->solid.vel.x,
