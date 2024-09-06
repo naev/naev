@@ -40,7 +40,7 @@ function create ()
    npc = misn.npcAdd( "approach", _("C"), "unknown.webp", _("Get in touch with the voice over the speakers.") )
 
    -- Skip intro when starting from event directly
-   hook.custom( "wildspace_start_misn")
+   hook.custom( "wildspace_start_misn", "wildspace_start_misn")
 end
 
 function approach ()
