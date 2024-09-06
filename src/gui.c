@@ -241,13 +241,15 @@ void gui_messageScrollUp( int lines )
       lines = o;
 
    /* Move viewpoint. */
-   mesg_viewpoint = ( mesg_viewpoint - lines ) % mesg_max;
+   const int new_point = ( mesg_viewpoint - lines ) % mesg_max;
+   if ( mesg_stack && mesg_stack[new_point].str )
+      mesg_viewpoint = new_point;
 }
 
 /**
- * @brief Scrolls up the message box.
+ * @brief Scrolls down the message box.
  *
- *    @param lines Number of lines to scroll up.
+ *    @param lines Number of lines to scroll down.
  */
 void gui_messageScrollDown( int lines )
 {
@@ -1102,7 +1104,9 @@ static void gui_renderMessages( double dt )
                                  : mesg_stack[m].str;
 
             glColour fadedWhite = cFontWhite;
-            fadedWhite.a = mesg_stack[m].t > 2. ? 1. : mesg_stack[m].t / 2.;
+            fadedWhite.a = ( mesg_viewpoint != -1 ) || ( mesg_stack[m].t > 2. )
+                              ? 1.
+                              : mesg_stack[m].t / 2.;
 
             if ( str[0] == '\t' ) {
                gl_printRestore( &mesg_stack[m].restore );
