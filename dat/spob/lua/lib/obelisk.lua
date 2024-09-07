@@ -2,6 +2,7 @@ local vn = require 'vn'
 local fmt = require "format"
 local ccomm = require "common.comm"
 local srs = require "common.sirius"
+local tut = require "common.tutorial"
 
 local obelisk = {}
 
@@ -18,7 +19,7 @@ function obelisk.can_land ()
       return false, _("The obelisk seems to be inert.")
    end
 
-   return false, _("It seems like you may be able to establish psychic communication with the obelisk.")
+   return false, fmt.f(_("It seems like you may be able to establish psychic communication with the obelisk by hailing it with {key}."), {key=tut.getKey("hail")})
 end
 
 function obelisk.comm ()
