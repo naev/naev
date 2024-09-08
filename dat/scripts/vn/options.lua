@@ -16,6 +16,12 @@ end
 function opt.keypressed( key )
    return luatk.keypressed( key )
 end
+function opt.textinput( str )
+   return luatk.textinput( str )
+end
+function opt.wheelmoved( mx, my )
+   return luatk.wheelmoved( mx, my )
+end
 function opt.draw ()
    luatk.draw()
 end
@@ -70,6 +76,7 @@ function opt.open( vn )
    end )
 
    opt.running = true
+   luatk.setup()
 end
 
 return opt
