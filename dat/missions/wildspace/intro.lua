@@ -27,6 +27,7 @@ local ws = require "common.wildspace"
 local title = _("Old Friends at Protera Husk")
 local target, targetsys = spob.getS( "Protera Husk" )
 local main, mainsys = spob.getS( "Hypergate Protera" )
+local flost = faction.get("Lost")
 
 --[[
    Mission states:
@@ -207,20 +208,25 @@ When you receive this message, there is no need to come look for me. I will no l
    end
 end
 
+local fnewlost
 function enter ()
    if mem.state == 1 then
       -- Took damage
       player.pilot():setHealth( 60, 30 )
       player.landAllow( false, _("You can not land right now!") )
       hook.timer( 5, "company1" )
-      hook.timer( 9, "company2" )
-      hook.timer( 13, "company3" )
+      hook.timer( 15, "company2" )
+      hook.timer( 27, "company3" )
+      hook.timer( 44, "company4" )
+      hook.timer( 14, "extrachaos" )
       mem.state = 2
+      fnewlost = faction.dynAdd( flost, "newlost" )
+      fnewlost:dynEnemy( flost )
    end
 end
 
 local function addlost( ships )
-   local flost = faction.get("Lost")
+   if system.cur() ~= targetsys then return end
    for k,s in ipairs(ships) do
       local p = pilot.add( s, flost, target )
       p:setHostile()
@@ -246,11 +252,39 @@ end
 
 function company3 ()
    addlost{
-      "Proteron Watson",
       "Dvaered Retribution",
-      "Pirate Starbridge",
       "Hyena",
    }
+end
+
+function company4 ()
+   addlost{
+      "Proteron Watson",
+      "Pirate Starbridge",
+   }
+end
+
+function extrachaos ()
+   if system.cur() ~= targetsys then return end
+   local plts = {}
+   for k,p in ipairs(pilot.get( {flost, fnewlost} )) do
+      if not p:mothership() then
+         table.insert( plts, p )
+      end
+   end
+
+   local p = plts[ rnd.rnd(1,#plts) ]
+   if p then
+      p:setLeader() -- Clear leader in case deployed
+      p:taskClear()
+      -- Flip faction
+      if p:faction() == flost then
+         p:setFaction( fnewlost )
+      else
+         p:setFaction( flost )
+      end
+   end
+   hook.timer( 8 + 12*rnd.rnd(), "extrachaos" )
 end
 
 function abort ()
