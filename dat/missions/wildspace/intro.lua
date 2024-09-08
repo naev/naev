@@ -36,11 +36,37 @@ local main, mainsys = spob.cur()
 mem.state = 0
 
 local npc
-function create ()
-   npc = misn.npcAdd( "approach", _("C"), "unknown.webp", _("Get in touch with the voice over the speakers.") )
+local function wildspace_start_misn ()
+   misn.accept()
+   if npc then
+      misn.npcRm( npc )
+      npc = nil
+   end
 
-   -- Skip intro when starting from event directly
-   hook.custom( "wildspace_start_misn", "wildspace_start_misn")
+   misn.setDesc(fmt.f(_("You've been asked to find a parcel on {target} ({targetsys} system) and bring it to {main} ({mainsys} system)."),
+      {target=target, targetsys=targetsys, main=main, mainsys=mainsys}))
+   misn.setReward(_("Unknown"))
+
+   misn.markerAdd( target )
+   misn.osdCreate( title, {
+      fmt.f(_([[Land on {spb} ({sys} system).]]), {spb=target, sys=targetsys}),
+      fmt.f(_([[Return to {spb} ({sys} system).]]), {spb=main, sys=mainsys}),
+   })
+   mem.state = 0
+
+   var.push("protera_husk_canland", true)
+   hook.land( "land" )
+   hook.land( "enter" )
+end
+
+function create ()
+   if var.peek("wildspace_start_misn") then
+      wildspace_start_misn()
+      var.pop("wildspace_start_misn")
+      return
+   end
+
+   npc = misn.npcAdd( "approach", _("C"), "unknown.webp", _("Get in touch with the voice over the speakers.") )
 end
 
 function approach ()
@@ -69,22 +95,6 @@ function approach ()
    if not accept then return end
 
    wildspace_start_misn()
-end
-
-function wildspace_start_misn ()
-   misn.accept()
-   misn.npcRm( npc )
-
-   misn.markerAdd( target )
-   misn.osdCreate( title, {
-      fmt.f(_([[Land on {spb} ({sys} system).]]), {spb=target, sys=targetsys}),
-      fmt.f(_([[Return to {spb} ({sys} system).]]), {spb=main, sys=mainsys}),
-   })
-   mem.state = 0
-
-   var.push("protera_husk_canland", true)
-   hook.land( "land" )
-   hook.land( "enter" )
 end
 
 function land ()

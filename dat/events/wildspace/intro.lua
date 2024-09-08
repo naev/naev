@@ -138,7 +138,6 @@ To the tune of coughing the speaker goes silent.]]))
 
    faction.get("Lost"):setKnown(true)
 
-   -- TODO log
    ws.log(fmt.f(_([[You found a survivor in the {sys} system that led you to a ruined hypergate. You exchanged information with them, and they told you about the Lost that inhabit Wild Space. They seem to have something they want you to do.]]),
       {sys=mainsys}))
 
@@ -148,9 +147,9 @@ To the tune of coughing the speaker goes silent.]]))
       return
    end
 
-   -- Will start the mission, and trigger a hook to skip the accepting stage
+   -- Will start the mission, and use variable to skip accepting stage
+   var.push("wildspace_start_misn", true)
    naev.missionStart("Old Friends at Protera Husk")
-   naev.trigger("wildspace_start_misn")
 
    -- Done here
    evt.finish(true)
