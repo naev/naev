@@ -217,7 +217,7 @@ local function print_debug( p, st, ss, outfit_list, params, constraints, energyg
    end
    local stn = p:stats()
    constraints = constraints or {}
-   print(string.format(_("CPU: %d / %d [%d < %d]"), stn.cpu, stn.cpu_max, constraints[1] or 0, st.cpu_max * ss.cpu_mod ))
+   print(string.format(_("CPU: %d / %d [%d < %d]"), stn.cpu, stn.cpu_max, constraints[1] or 0, st.cpu_max ))
    print(string.format(_("Energy Regen: %.3f [%.3f < %.3f (%.1f)]"), stn.energy_regen, constraints[2] or 0, st.energy_regen - emod*energygoal, emod))
    print(string.format(_("Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"), st.mass, ss.engine_limit, constraints[3] or 0, mmod * params.max_mass * ss.engine_limit - st.mass, mmod ))
    if nebu_row then
@@ -530,7 +530,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    nrows = nrows + ntype_range
    local lp = linopt.new( "equipopt", ncols, nrows, true )
    -- Add space worthy checks
-   lp:set_row( 1, "CPU",          nil, st.cpu_max * ss.cpu_mod )
+   lp:set_row( 1, "CPU",          nil, st.cpu_max ) -- Don't multiply by modifiers here or they get affected "twice"
    local energygoal = math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs)
    lp:set_row( 2, "energy_regen", nil, st.energy_regen - energygoal )
    local massgoal = math.max( params.max_mass * ss.engine_limit - st.mass, ss.engine_limit*params.min_mass_margin )
