@@ -237,7 +237,7 @@ end
 
 function company2 ()
    addlost{
-      "Empire Admonsher",
+      "Empire Admonisher",
       "Proteron Gauss",
       "Soromid Brigand",
       "Koala",
