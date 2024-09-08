@@ -26,7 +26,7 @@ local ws = require "common.wildspace"
 
 local title = _("Old Friends at Protera Husk")
 local target, targetsys = spob.getS( "Protera Husk" )
-local main, mainsys = spob.cur()
+local main, mainsys = spob.getS( "Hypergate Protera" )
 
 --[[
    Mission states:
