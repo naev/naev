@@ -45,14 +45,14 @@ end
 function hail ()
    vn.clear()
    vn.scene()
-   local c = vn.newCharacter( vni.soundonly( _("character","C") ) )
+   local c = vn.newCharacter( vni.soundonly( p_("character","C") ) )
    vn.transition()
 
    vn.na(_([[You respond to the mysterious hail from a derelict, and strangely enough are able to open a sound-only channel.]]))
    c(_([["You aren't one of them, are you?"]]))
    vn.menu{
-      {_("Who are YOU?"), "cont01_you"},
-      {_("Them?"), "cont01"},
+      {_([["Who are YOU?"]]), "cont01_you"},
+      {_([["Them?"]]), "cont01"},
    }
 
    vn.label("cont01_you")
@@ -80,7 +80,7 @@ function land ()
    vn.na(_([[You work your way through the crushed structure, and eventually find your way to what seems to be a working airlock. After fiddling with the controls, you are able to make your way into it and to what seemingly seems to be makeshift and surprisingly working area of the wreck. You make your way forward and eventually find yourself in what seems to be some sort of dirty cantina. You can see some ancient spoiled food and drink on the tables.]]))
 
    vn.scene()
-   local c = vn.newCharacter( vni.soundonly( _("character","C") ) )
+   local c = vn.newCharacter( vni.soundonly( p_("character","C") ) )
    vn.transition()
    c(_([[Suddenly a loudspeaker screeches on, and you hear some coughing followed by a familiar voice.
 "I was right! You aren't one of them. How the hell did you make it here? I thought I was the only normal one left."]]))
@@ -119,8 +119,8 @@ They pause to give a wracking cough, it takes them a while before they can conti
    c(_([["I'm rambling now, just like an old man... It wasn't supposed to end like this..."]]))
    c(_([["Ah yes, the favour. Ben, he left some important items behind. I would like you to bring them to me."]]))
    vn.menu{
-      {_([["Accept"]]), "accept"},
-      {_([["Maybe Later"]]), "decline"},
+      {_([[Accept]]), "accept"},
+      {_([[Maybe Later]]), "decline"},
    }
 
    vn.label("decline")

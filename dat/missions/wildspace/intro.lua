@@ -73,7 +73,7 @@ function approach ()
    local accept
    vn.clear()
    vn.scene()
-   local c = vn.newCharacter( vni.soundonly( _("character","C") ) )
+   local c = vn.newCharacter( vni.soundonly( p_("character","C") ) )
    vn.transition()
 
    c(fmt.f(_([["Will you do me a favour and pick up the important items that my roommate Ben left behind on {spb}?"]]),{spb=target}))
@@ -119,7 +119,8 @@ function land ()
       sai(fmt.f(_([[A holo-image flashes in the corner of your retina.
 "{player}, there seems to be many lifeforms converging on your location. My preliminary analysis indicates that they want to skin you alive."]]),
          {player=player.name()}))
-      vn.na(_([[No shit. You tell {shipai} to get your ship over to you, or at least provide cover fire and make themselves useful.]]))
+      vn.na(fmt.f(_([[No shit. You tell {shipai} to get your ship over to you, or at least provide cover fire and make themselves useful.]]),
+         {shipai=tut.ainame()}))
 
       vn.scene()
       vn.transition()
@@ -142,6 +143,9 @@ function land ()
 
       -- Advance mission
       mem.state = 1
+      player.takeoff()
+      misn.markerRm()
+      misn.markerAdd( main )
    elseif mem.state==1 and spob.cur() == main then
       vn.clear()
       vn.scene()
@@ -229,7 +233,7 @@ end
 
 function company2 ()
    addlost{
-      "Empire Advance",
+      "Empire Admonsher",
       "Proteron Gauss",
       "Soromid Brigand",
       "Koala",
