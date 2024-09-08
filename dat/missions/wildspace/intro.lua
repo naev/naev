@@ -57,7 +57,7 @@ local function wildspace_start_misn ()
 
    var.push("protera_husk_canland", true)
    hook.land( "land" )
-   hook.land( "enter" )
+   hook.enter( "enter" )
 end
 
 function create ()
@@ -147,7 +147,8 @@ function land ()
       player.takeoff()
       misn.markerRm()
       misn.markerAdd( main )
-   elseif mem.state==1 and spob.cur() == main then
+
+   elseif mem.state>=1 and spob.cur() == main then
       vn.clear()
       vn.scene()
       vn.transition()
