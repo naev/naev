@@ -32,6 +32,7 @@ local main, mainsys = spob.getS( "Hypergate Protera" )
    Mission states:
 0: started
 1: landed on target
+2: spawned chasers
 --]]
 mem.state = 0
 
@@ -206,13 +207,15 @@ When you receive this message, there is no need to come look for me. I will no l
 end
 
 function enter ()
-   -- Took damage
-   player.pilot():setHealth( 60, 30 )
-
-   player.landAllow( false, _("You can not land right now!") )
-   hook.timer( 5, "company1" )
-   hook.timer( 9, "company2" )
-   hook.timer( 13, "company3" )
+   if mem.state == 1 then
+      -- Took damage
+      player.pilot():setHealth( 60, 30 )
+      player.landAllow( false, _("You can not land right now!") )
+      hook.timer( 5, "company1" )
+      hook.timer( 9, "company2" )
+      hook.timer( 13, "company3" )
+      mem.state = 2
+   end
 end
 
 local function addlost( ships )
