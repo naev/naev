@@ -388,7 +388,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       oo.trackmin = oo.trackmin or 0
       oo.trackmax = oo.trackmax or 0
       oo.lockon   = (oo.lockon or 0) + (oo.iflockon or 0)
-      oo.cpu      = os.cpu - st.cpu * os.cpu_mod
+      oo.cpu      = os.cpu - st.cpu * os.cpu_mod - os.cpu_max
       oo.mass     = os.mass * ss.mass_mod
       oo.price    = os.price
       oo.limit    = os.limit
