@@ -293,6 +293,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Global ship stuff
    local ss = p:shipstat( nil, true ) -- Should include cores!!
    local st = p:stats() -- also include cores
+   st.cpu = st.cpu_max / ss.cpu_mod -- Base value to modulate
 
    -- Modify forward weapon bonus depending on turn rate
    if st.turn < 150 then
@@ -387,7 +388,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       oo.trackmin = oo.trackmin or 0
       oo.trackmax = oo.trackmax or 0
       oo.lockon   = (oo.lockon or 0) + (oo.iflockon or 0)
-      oo.cpu      = os.cpu
+      oo.cpu      = os.cpu - st.cpu * os.cpu_mod
       oo.mass     = os.mass * ss.mass_mod
       oo.price    = os.price
       oo.limit    = os.limit
