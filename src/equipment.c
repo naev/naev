@@ -533,6 +533,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       toolkit_drawRect( x, y, w, h, &bc, NULL );
 
       if ( lst[i].outfit != NULL ) {
+         outfit_gfxStoreLoad( (Outfit *)lst[i].outfit );
          /* Draw bugger. */
          gl_renderScale( lst[i].outfit->gfx_store, x, y, w, h, NULL );
       } else if ( ( o != NULL ) &&
