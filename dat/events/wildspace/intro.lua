@@ -17,8 +17,6 @@ local mainspb, mainsys = spob.getS("Hypergate Protera")
 
 local derelict
 function create ()
-   evt.finish(false)
-
    -- Create the random derelict
    derelict = pilot.add( "Koala", "Derelict", vec2.newP( system.cur():radius()*0.3, rnd.angle() ), p_("ship", "Derelict"), {ai="dummy", naked=true})
    derelict:disable()
