@@ -32,7 +32,7 @@ function idle ()
    end
 
    local r = rnd.rnd()
-   if r < 0.5 and insystem() then
+   if r < 0.5 and insystem() and not mem.drifted then
       ai.settimer( 0, 3 + 27*rnd.rnd() )
       ai.pushtask("drift")
    elseif r < 0.9 then
@@ -41,6 +41,7 @@ function idle ()
       local m = rnd.rnd()
       pos = pos * m + ai.pilot():pos() * (1-m)
       ai.pushtask("moveto_nobrake_raw", pos)
+      mem.drifted = false
    else
       if rnd.rnd() < 0.5 then
          local spb = ai.landspob(true)
@@ -53,11 +54,13 @@ function idle ()
       if tgt then
          ai.pushtask("hyperspace", tgt )
       end
+      mem.drifted = false
    end
 end
 
 function create ()
    create_pre()
    mem.r2 = system.cur():radius()^2
+   mem.drifted = true
    create_post()
 end
