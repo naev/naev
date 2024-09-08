@@ -64,6 +64,11 @@ function luatk.joinScissors( x, y, w, h )
    return sx, sy, sw, sh
 end
 
+function luatk.setup ()
+   luatk._canvas = lg.newCanvas( nil, nil, {depth=true} ) -- Should default fullscreen, but we add depth channel
+   luatk._dirty = true
+end
+
 --[[
 -- Global functions
 --]]
@@ -81,8 +86,7 @@ function luatk.run ()
    local o = f:getOutline()
    f:setOutline(1)
    luatk._love = true
-   luatk._canvas = lg.newCanvas( nil, nil, {depth=true} ) -- Should default fullscreen, but we add depth channel
-   luatk._dirty = true
+   luatk.setup()
    love.exec( 'scripts/luatk' )  -- luacheck: ignore
    luatk._canvas = nil -- Clean up
    luatk._love = false
@@ -110,9 +114,9 @@ vn.run()
 --]]
 function luatk.vn( setup )
    local s = vn.custom()
+   s._type = "luatk"
    s._init = function ()
-      luatk._canvas = lg.newCanvas() -- Should default fullscreen
-      luatk._dirty = true
+      luatk.setup()
       setup()
    end
    s._draw = function ()

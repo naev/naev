@@ -524,6 +524,11 @@ end
 Mouse wheel handler.
 --]]
 function vn.wheelmoved( dx, dy )
+   if vn._show_options then
+      opt.wheelmoved( dx, dy )
+      return true
+   end
+
    if vn.isDone() then return false end
    local s = vn._states[ vn._state ]
    return s:wheelmoved( dx, dy )
@@ -533,6 +538,11 @@ end
 Text input handler.
 --]]
 function vn.textinput( str )
+   if vn._show_options then
+      opt.textinput( str )
+      return true
+   end
+
    if vn.isDone() then return false end
    local s = vn._states[ vn._state ]
    return s:textinput( str )

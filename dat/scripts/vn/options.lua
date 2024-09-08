@@ -16,6 +16,12 @@ end
 function opt.keypressed( key )
    return luatk.keypressed( key )
 end
+function opt.textinput( str )
+   return luatk.textinput( str )
+end
+function opt.wheelmoved( mx, my )
+   return luatk.wheelmoved( mx, my )
+end
 function opt.draw ()
    luatk.draw()
 end
@@ -30,7 +36,7 @@ function opt.open( vn )
    luatk.setDefaultFont( font )
 
    local w = 400
-   local h = 200
+   local h = 230
    local wdw = luatk.newWindow( nil, nil, w, h )
 
    -- Translator note VN stands for Visual Novel
@@ -70,6 +76,7 @@ function opt.open( vn )
    end )
 
    opt.running = true
+   luatk.setup()
 end
 
 return opt
