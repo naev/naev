@@ -311,7 +311,7 @@ ShipStatList *ss_statsSetList( ShipStatList *head, ShipStatsType type,
 
    case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
       v = ( raw ) ? value : value / 100.;
-      ll->d.d *= v;
+      ll->d.d += v;
       break;
 
    case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
