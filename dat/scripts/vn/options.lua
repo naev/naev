@@ -30,7 +30,7 @@ function opt.open( vn )
    luatk.setDefaultFont( font )
 
    local w = 400
-   local h = 200
+   local h = 230
    local wdw = luatk.newWindow( nil, nil, w, h )
 
    -- Translator note VN stands for Visual Novel
