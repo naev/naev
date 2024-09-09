@@ -2947,6 +2947,7 @@ dat/events/tutorial/tut_land.lua
 dat/events/updater.lua
 dat/events/wildspace/chaos.lua
 dat/events/wildspace/intro.lua
+dat/events/wildspace/intro_npc.lua
 dat/events/wormhole.lua
 dat/events/zalek/sigma13.lua
 dat/factions/equip/dvaered.lua
