@@ -21,7 +21,7 @@
    end
 
    -- Less chance on non-criminal systems
-   if rnd.rnd() < 0.5 and not st.criminal then
+   if rnd.rnd() &lt; 0.5 and not st.criminal then
       return false
    end
 
@@ -59,7 +59,7 @@ function approach ()
    vn.na(_([[You approach the suspicious patron. They seem to reek of some sort of strong incense or herb.]]))
    if approached then
       pir(fmt.f(_([["Yo, soul. Ya changed ya mind about them #bWild Space#0 deets for {cost}?"]]),
-         {cost=price}))
+         {cost=fmt.credits(price)}))
    else
       -- deets is slang for details (aka intel)
       pir(_([["Yo, soul. Ya luk like ya could use some 'dventure, know whaddai mean? Ai've got mai hands on some iiinteresting data. You in fo' sum deets on a path to them so-called #bWild Space#0, soul?"]]))
@@ -74,9 +74,10 @@ function approach ()
 
       vn.label("cont01")
       pir(_([[They lean forward and talk in a hushed voice.
-   "Ya see, soul, it's them lost systems. Eaten by thee Neb'la. Full of all them rich's and stuff left 'hind. One 'tch though, soul, many souls go in, none come out! Like one of dem one-way doors."]]))
+"Ya see, soul, it's them lost systems. Eaten by thee Neb'la. Full of all them rich's and stuff left 'hind. One 'tch though, soul, many souls go in, none come out! Like one of dem one-way doors."]]))
       pir(fmt.f(_([["You be a strong soul, ya can pull out where other souls fail'd. I see et in ya eyes, soul. Wat ya say, {cost} and the deets are yurs, soul."]]),
          {cost=fmt.credits(price)}))
+      vn.func( function () approached = true end )
    end
    vn.menu{
       {_([["Hook me up, soul."]]), "cont02_buy"},
@@ -104,7 +105,9 @@ function approach ()
       vn.na(fmt.f(_([[You have obtained information about a jump from {sys} to #bWild Space#0.]]),
          {sys=jmpsys}))
    else
-      vn.na(_([[You have obtained information about a jump to #bWild Space#0.]]))
+      vn.na(fmt.f(_([[You have lost {cost}.
+You have obtained information about a jump to #bWild Space#0.]]),
+      {cost=fmt.credits(price)}))
    end
    vn.done()
 
@@ -113,7 +116,6 @@ function approach ()
    vn.done()
 
    vn.run()
-   approached = true
 
    if not accepted then return false end
 
