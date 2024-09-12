@@ -3562,6 +3562,7 @@ dat/spob/lua/sirius_mil_mutris.lua
 dat/spob/lua/sirius_mil_restricted.lua
 dat/spob/lua/soromid_mil_kataka.lua
 dat/spob/lua/soromid_mil_restricted.lua
+dat/spob/lua/thurion.lua
 dat/spob/lua/thurion_mil_restricted.lua
 dat/spob/lua/wormhole_carrza.lua
 dat/spob/lua/wormhole_ivella.lua
