@@ -206,4 +206,15 @@ function strmess.mangle( intext, amount )
    return outtext
 end
 
+--[[--
+Generates a string by randomnly sampling from subpatterns.
+--]]
+function strmess.generate( patterns, length )
+   local str = ""
+   for i=1,length do
+      str = str..patterns[ rnd.rnd(1,#patterns) ]
+   end
+   return str
+end
+
 return strmess
