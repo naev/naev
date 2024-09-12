@@ -1,6 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Wild Space Thurion Intro">
+ <unique/>
  <location>enter</location>
  <chance>100</chance>
  <system>Maron</system>
@@ -30,6 +31,8 @@ function create ()
 
    hook.timer(15, "timer")
    hook.enter("enter")
+
+   evt.save(true)
 end
 
 function timer ()
@@ -80,7 +83,7 @@ function timer ()
    signal(strmess.generate( {"0","1"}, 32 ).._([["P01EAS101110100DENTIFY YOURSELF OR WE WILL OPEN FIRE. THIS IS YOUR LAST WARNING."]]))
    vn.me(fmt.f(_([["This is the {shipname}. We wish no hostilities, please identify yourself."]]),
       {shipname=player.pilot():name()}))
-   signal(_([[""]]))
+   signal(_([["YOU HAVE"]]))
 
    --local c = vn.newCharacter( _(""), { image=nil } )
    --c(_([[]]))
@@ -90,6 +93,8 @@ function timer ()
    if fthurion:playerStanding() < 0 then
       return
    end
+
+   naev.missionStart("Wild Space Thurion Intro - Helper")
    hook.land("land")
 end
 
@@ -101,6 +106,7 @@ function land ()
 
       vn.run()
 
+      fthurion:setKnown(true)
       evt.finish(true)
    end
 end
