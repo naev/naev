@@ -24,10 +24,9 @@ The Thurion were originally a Great Project in [the Empire](lore/factions/empire
 
 Project Thurion was a secret Great Project founded by the Empire with the purpose of ascending the human existence to the next evolutionary stage with the use of genetic engineering, cybernetics and brain-computer interfaces.
 Needless to say, the research conducted was morally questionable and barely legal.
-Therefore, the project was top secret.
-Only few people knew about the project and it was closely guarded.
-The location of the project was chosen to be a remote planet (Sabe) which had been just recently discovered and lies beyond the periphery of known space.
-The whole area (including Booster and Katami) has been declared as military exclusion zone to prevent civilians from accidentally stumbling upon the planet.
+Therefore, the project was top secret, with only few people knowing about the closely guarded project.
+The location of the project was chosen to be a remote planet which had been just recently discovered and lies beyond the periphery of known space.
+The whole area was declared a military exclusion zone to prevent civilians from accidentally stumbling upon the planet.
 
 The scientists involved with the project received generous funding and top tier equipment.
 Yet there has been only little progress and an increasing number of casualties.
@@ -40,22 +39,20 @@ Ultimately, they succeeded in creating specialized hardware capable of simulatin
 Needless to say that the procedure did not work out well for the early test subjects.
 In the end, however, they were able to reliably upload a human mind to specialized computer hardware.
 Naturally, this has some implication.
-For instance, the uploaded individuals would be immortal.
-But as they would exist only within a simulation, their perception of the outside world and ultimately their reality can be manipulated at will of whoever operates the system.
-Only by now did the scientists realize which consequences their findings could have.
-Heated discussions followed.
+For instance, the uploaded individuals would be immortal, but as they would exist only within a simulation, their perception of the outside world and ultimately their reality can be manipulated at will of whoever operates the system.
+Only by now did the scientists realize which consequences their findings could have, and heated discussions followed.
 In the end everyone agreed to keep their true findings a secret.
 
 The Empire, however, was displeased with the presented results.
 In UST 125 it was decided that the project would be terminated at the end of the next cycle.
 That involves 'sterilization' of the colony where the research has been conducted, i.e. they planned to nuke the colony killing all personnel except some high ranking military officers in the process.
-The project has been highly unethical and the results could not justify any of the crimes committed.
+The project has been highly unethical, and the results could not justify any of the crimes committed.
 Thus, the Empire decided to purge project Thurion from history.
 
 The scientists, however, found out about the plan with just enough time left to come up with a plan.
 The system has been quarantined by then.
 Any attempt to flee would be pointless.
-Instead they used their resources to built a small bunker inside an asteroid.
+Instead ,they used their resources to build a small bunker inside an asteroid.
 Too small for people to survive, the bunker would hold the data of uploaded individuals, a few devices that can run an uploaded human mind (powered down) and the machines necessary for the uploading process as well as documentation of their work.
 They made sure that the bunker is hidden well and hoped the Empire would not notice it.
 There was, however, a traitor who did not want to be uploaded and thought the Empire would let him live in exchange for information on the plan.
@@ -89,7 +86,7 @@ Because the uploaded individuals need only energy and basic maintenance, logisti
 At this time questions about the goals of the Thurion came up.
 They had no intentions to grow further.
 The size of the organization was large enough to sustain itself.
-They decided that further growth would only increase the risk of being uncovered and adopted an utopian view.
+They decided that further growth would only increase the risk of being uncovered and adopted a utopian view.
 While back then the scientists denied the Empire access to their technology, they now come up with utopian visions for their organization.
 Every human should have the chance to lead an ideal live in a virtual environment after what the uploaded individuals consider a deprived life in retrospective.
 They planned to one day rejoin the rest of humanity and to freely share their technology with everyone.
@@ -98,7 +95,7 @@ They planned to one day rejoin the rest of humanity and to freely share their te
 
 The minds of the first few test subjects that were uploaded were broken beyond repair.
 For some others the procedure lead to major issues, but eventually the scientists working on project Thurion managed to solve them.
-The first successfully uploaded test subject did not even realized just what kind of experiment was conducted on them.
+The first successfully uploaded test subject did not even realize just what kind of experiment was conducted on them.
 The scientists, after being uploaded and rescued from the bunker, did not notice any changes in their personalities or thought patterns either and concluded that the method works flawless.
 Soon enough they started to upload further humans.
 
@@ -106,8 +103,8 @@ However, after some cycles issues began to manifest.
 Their minds started to break down which is visible in random changes of personality and the appearance of mental illnesses that grow worse over time.
 Although the initial symptoms are rather harmless, the Thurion realized that they had little time left to solve this issue.
 They came to the conclusion that the source of the problem are certain neuronal patterns that emerged within their simulations and do not naturally occur.
-Working under pressure they did not found a way to fix the simulation methods but came up with a rather hacky fix instead.
-They used the previously established communication network that allows uploaded Thurion to directly interact with each others and made a machine learning algorithm that used this network to directly access the Thurions' minds and cross reference their neuronal patterns.
+Working under pressure they did not fid a way to fix the simulation methods but came up with a rather hacky fix instead.
+They used the previously established communication network that allows uploaded Thurion to directly interact with each others and made a machine learning algorithm that used this network to directly access the Thurions' minds and cross-reference their neuronal patterns.
 The program is then identifying the abnormal neuronal patterns and resets them to their 'natural' state.
 Since this method apparently has been very successful and the problems stopped the Thurion did not further investigate.
 
@@ -122,7 +119,7 @@ In the worst case and over a long exposure time (the first case occurred after t
 ### The Incident
 
 The Thurion were mostly unaffected by the incident.
-The nebula did not spread out to the Nava system where the majority of their infrastructure was located.
+The nNbula did not spread out to the Nava system where the majority of their infrastructure was located.
 They did, however, loose all personnel and their followers inside Empire space.
 
 Under the influence of the gestalt consciousness the infrastructure in the Nava system has been greatly expanded and two more planets have been colonized prior to the incident and the Thurion began to expand quickly.
