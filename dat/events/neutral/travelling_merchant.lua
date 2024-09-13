@@ -151,6 +151,11 @@ function gen_outfits ()
       'Hades Torch',
    }
 
+   -- Wild space
+   if faction.get("Lost"):known() then
+      table.insert( outfits, "Berserk Chip" )
+   end
+
    -- Bonus for killing executors
    if player.outfitNum("Executor Shield Aura")<1 and (var.peek("executors_killed") or 0) >= 3 then
       table.insert( outfits, "Executor Shield Aura" )
