@@ -1989,7 +1989,7 @@ function vn.reset()
 end
 
 -- Default characters
-vn._me = vn.Character.new( "You", { colour={1, 1, 1}, hidetitle=true } )
+vn._me = vn.Character.new( "You", { colour={1, 1, 1} } )
 vn._na = vn.Character.new( "Narrator", { colour={0.5, 0.5, 0.5}, hidetitle=true } )
 
 -- Set defaults
