@@ -15,14 +15,14 @@ The Thurion were originally a Great Project in [the Empire](lore/factions/empire
 * **Leader:** None
 * **Leading Structure:** Self-Organizing Groups
 * **Government:** Digital Communalism
-* **Formation:** [UST 84:8324](lore/history) (start of the project) / [UST 387](lore/history) (established colony on Sabe)
+* **Formation:** [UST 84](lore/history) (Project Thurion)
 * **Homeworld:** Sabe (Nava system)
 
 ## History
 
 ### Project Thurion
 
-Project Thurion was a secret Great Project founded by the Empire with the purpose of ascending the human existence to the next evolutionary stage with the use of genetic engineering, cybernetics and brain-computer interfaces.
+Project Thurion was a secret Great Project founded by [the Empire](lore/factions/empire) with the purpose of ascending the human existence to the next evolutionary stage with the use of genetic engineering, cybernetics and brain-computer interfaces.
 Needless to say, the research conducted was morally questionable and barely legal.
 Therefore, the project was top secret, with only few people knowing about the closely guarded project.
 The location of the project was chosen to be a remote planet which had been just recently discovered and lies beyond the periphery of known space.
@@ -30,7 +30,7 @@ The whole area was declared a military exclusion zone to prevent civilians from 
 
 The scientists involved with the project received generous funding and top tier equipment.
 Yet there has been only little progress and an increasing number of casualties.
-The Empire grew impatient and increased pressure on the scientists while also giving them greater freedoms.
+[The Empire](lore/factions/empire) grew impatient and increased pressure on the scientists while also giving them greater freedoms.
 The experiments turned more and more inhuman.
 They focused on their brain-computer interfaces and the amalgamation of the human mind and machine intelligence because they made previously some progress on understanding the human consciousness.
 The work on cybernetics and genetic engineering was scratched because it led to too many incidents and casualties.
@@ -43,11 +43,46 @@ For instance, the uploaded individuals would be immortal, but as they would exis
 Only by now did the scientists realize which consequences their findings could have, and heated discussions followed.
 In the end everyone agreed to keep their true findings a secret.
 
-The Empire, however, was displeased with the presented results.
+[The Empire](lore/factions/empire), however, was displeased with the presented results.
 In UST 125 it was decided that the project would be terminated at the end of the next cycle.
 That involves 'sterilization' of the colony where the research has been conducted, i.e. they planned to nuke the colony killing all personnel except some high ranking military officers in the process.
 The project has been highly unethical, and the results could not justify any of the crimes committed.
-Thus, the Empire decided to purge project Thurion from history.
+Thus, [the Empire](lore/factions/empire) decided to purge project Thurion from history.
+
+<% if true then %>
+
+The scientists, however, found out about the plan with just enough time left to come up with a plan.
+The system has been quarantined by then, and any attempt to flee would be pointless.
+Instead, they used their last resources to build a small bunker inside an asteroid, and outlast [the Empire](lore/factions/empire).
+The scientists that could were uploaded, and they went into hibernation, until hundreds of cycles later in UST 437, in what they called the Revival.
+The bunker was never found by [the Empire](lore/factions/empire), which had also survived the passage of time.
+
+### Revival
+
+During the sterilization of Project Thurion, many systems had their planets indiscriminately bombarded and razed, and entry was indefinitely blocked.
+Initially, scouts periodically scanned the systems, but over time, orders were forgotten and the systems were largely abandoned.
+Although it did not work as well as planned, most of the Thurion were able to revive, with enough functional drones and electronics to support them.
+They found themselves in a large empty swathe of space all to themselves, which gave them the opportunity to begin to expand and grow.
+
+Although taking great care to not raise suspicions, they were able to establish the first large node structures to support the Uploaded at full capacity.
+The razed planets were unsuitable for organic life, but it did not prove a significant problem to digital life and they flourished.
+New ships and structures were developed, and their automation began to increase in capacity.
+Furthermore, given that there were no biological humans, and thus new Uploaded, techniques were developed to create new purely digital Thurion, which allowed their numbers to steadily increase.
+
+By mastering stealth and making most of their digital advantage, the Thurion were able to slowly expand in the shadows, even past the quarantined system.
+Nobody remembered them, and nobody ever found them.
+
+### The Incident
+
+Despite flourishing in the shadows, the Thurion were still very limited by the ever present dangers presented by [the Empire](lore/factions/empire) and Great Houses.
+Although it was cataclysmic for most factions, [the Incident](lore/history/incident) provide to be a boon for the Thurion, which were significantly less affected by the radiation and volatility.
+Furthermore, the dangers of Imperial surveillance all but vansihed, and they quickly were able to expand into newly destroyed systems and recover their losses.
+Not only that, they were able to assist in saving and uploading many survivors, expanding their ranks.
+
+Currently, the Thurion have a strong significant presence in the deep Nebula throughout many systems.
+While the rest of the universe is still oblivious to their presence, they feel like it is almost time to make their presence once more known to the universe.
+
+<% else %>
 
 The scientists, however, found out about the plan with just enough time left to come up with a plan.
 The system has been quarantined by then.
@@ -126,7 +161,7 @@ Under the influence of the gestalt consciousness the infrastructure in the Nava 
 They have acquired enough biological population to survive.
 Shortly after the incident they began to send scouts into the nebula to investigate the situation and eventually help the few survivors on their side of the galaxy.
 All survivors were integrated into their society and the Thurion started research on surviving the harsh condition within the nebula.
-Once counter measures were invented the Thurion started to quickly expand in the now empty space within the nebula.
+Once countermeasures were invented the Thurion started to quickly expand in the now empty space within the nebula.
 By salvaged the debris they found they were able to expand their infrastructure quickly.
 Most of their infrastructure is highly automated and operated by uploaded Thurion.
 Human resources are rare and thus valuable.
@@ -149,3 +184,5 @@ Biological Thurion have no political rights and are treated similar to children.
 
 However, as the gestalt consciousness grew stronger more and more decisions were made in accordance with its will.
 Without most of the uploaded Thurion even noticing, the system turns slowly but surely into a dictatorship of the gestalt consciousness.
+
+<% end %>
