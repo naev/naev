@@ -2942,13 +2942,13 @@ dat/events/start.lua
 dat/events/taiomi/find.lua
 dat/events/taiomi/intro.lua
 dat/events/taiomi/system.lua
+dat/events/thurion/intro_wildspace.lua
 dat/events/tutorial/tut_enter.lua
 dat/events/tutorial/tut_land.lua
 dat/events/updater.lua
 dat/events/wildspace/chaos.lua
 dat/events/wildspace/intro.lua
 dat/events/wildspace/intro_npc.lua
-dat/events/wildspace/thurion.lua
 dat/events/wormhole.lua
 dat/events/zalek/sigma13.lua
 dat/factions/equip/dvaered.lua
@@ -3224,6 +3224,7 @@ dat/missions/taiomi/taiomi07.lua
 dat/missions/taiomi/taiomi08.lua
 dat/missions/taiomi/taiomi09.lua
 dat/missions/taiomi/taiomi10.lua
+dat/missions/thurion/intro_wildspace.lua
 dat/missions/trader/anxiousmerchant.lua
 dat/missions/trader/trader_escort.lua
 dat/missions/trader/trader_rehab.lua
@@ -3232,7 +3233,6 @@ dat/missions/tutorial/nelly02.lua
 dat/missions/tutorial/nelly03.lua
 dat/missions/tutorial/tutorial.lua
 dat/missions/wildspace/intro.lua
-dat/missions/wildspace/thurion.lua
 dat/missions/zalek/blackhole/zbh01.lua
 dat/missions/zalek/blackhole/zbh02.lua
 dat/missions/zalek/blackhole/zbh03.lua
