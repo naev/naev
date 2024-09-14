@@ -320,6 +320,31 @@ local function board_lootAll ()
    end
 end
 
+local function can_capture ()
+   if player.fleetCapacity() <= 0 then
+      return false
+   end
+   return true
+end
+
+local function is_capturable ()
+   local t = board_plt:tags()
+   if t.noplayer then
+      return false
+   end
+   local pm = board_plt:memory()
+   if not pm.natural then
+      return false
+   end
+   return true
+end
+
+local function board_capture ()
+   if not is_capturable then
+      luatk.msg(_(""), _(""))
+   end
+end
+
 local function can_cannibalize ()
    local pp = player.pilot()
    if pp:ship():tags().cannibal then
@@ -464,11 +489,23 @@ function board( plt )
    local wdw = luatk.newWindow( nil, nil, w, h )
    board_wdw = wdw
 
-   luatk.newButton( wdw, w-20-80, h-20-30, 80, 30, _("Close"), board_close )
-   luatk.newButton( wdw, w-20-80-100, h-20-30, 80, 30, _("Loot"), board_lootSel )
-   luatk.newButton( wdw, w-20-80-200, h-20-30, 80, 30, _("Loot All"), board_lootAll )
+   local x = w-20-80
+   luatk.newButton( wdw, x, h-20-30, 80, 30, _("Close"), board_close )
+   x = x-100
+   luatk.newButton( wdw, x, h-20-30, 80, 30, _("Loot"), board_lootSel )
+   x = x-100
+   luatk.newButton( wdw, x, h-20-30, 80, 30, _("Loot All"), board_lootAll )
+   x = x-100
+   if can_capture() then
+      local btn_capture = luatk.newButton( wdw, x, h-20-30, 130, 30, _("Capture"), board_capture )
+      x = x-100
+      if not is_capturable() then
+         btn_capture:disable()
+      end
+   end
    if can_cannibalize() then
-      luatk.newButton( wdw, w-20-80-350, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
+      luatk.newButton( wdw, x, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
+      --x = x-100
    end
 
    -- Add manage cargo button if applicable

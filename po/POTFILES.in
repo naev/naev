@@ -2709,6 +2709,7 @@ dat/ai/core/attack/corvette.lua
 dat/ai/core/attack/drone.lua
 dat/ai/core/attack/fighter.lua
 dat/ai/core/attack/generic.lua
+dat/ai/core/attack/pacifist.lua
 dat/ai/core/attack/util.lua
 dat/ai/core/basic.lua
 dat/ai/core/control/escort.lua
@@ -2744,6 +2745,7 @@ dat/ai/flee.lua
 dat/ai/flf.lua
 dat/ai/flf_norun.lua
 dat/ai/flf_rogue_norun.lua
+dat/ai/follow.lua
 dat/ai/frontier_police.lua
 dat/ai/goddard.lua
 dat/ai/guard.lua
@@ -2810,6 +2812,7 @@ dat/effects/lua/wormhole_enter.lua
 dat/effects/lua/wormhole_exit.lua
 dat/events/bioship.lua
 dat/events/cache.lua
+dat/events/capture.lua
 dat/events/chapter1.lua
 dat/events/cinematic/DvdFLFbattle.lua
 dat/events/derelict.lua
