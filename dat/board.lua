@@ -325,6 +325,9 @@ local function can_capture ()
    if player.fleetCapacity() <= 0 then
       return false
    end
+   -- For now, only allow capturing one ship at a time. Potentially, make it so
+   -- the player can have multiple if it fits fleet capacity, just a bit
+   -- trickier to do interface-wise
    if player.evtActive("Ship Capture") then
       return false
    end
@@ -342,7 +345,8 @@ local function is_capturable ()
    end
    local flttot, fltcur = player.fleetCapacity()
    if flttot-fltcur < board_plt:points() then
-      return false, _("You do not have enough fleet capacity to capture the ship.")
+      return false, fmt.f(_("You do not have enough fleet capacity to capture the ship. You need {needed}, but only have {have}."),
+         {needed=board_plt:points(), have=flttot-fltcur})
    end
    return true
 end
@@ -558,8 +562,10 @@ function board( plt )
    if can_capture() then
       local btn_capture = luatk.newButton( wdw, x, h-20-30, 80, 30, _("Capture"), board_capture )
       x = x-100
-      if not is_capturable() then
+      local ok, msg = is_capturable()
+      if not ok then
          btn_capture:disable()
+         btn_capture:setAlt( msg )
       end
    end
    if can_cannibalize() then
