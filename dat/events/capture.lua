@@ -22,7 +22,11 @@ local function setup_pilot( p )
    plt:setFriendly(true)
    plt:setFaction( faction.player() )
    plt:outfitRm("all")
+   plt:outfitRm("intrinsic")
    plt:outfitsEquip( mem.outfits )
+   for k,v in ipairs(mem.intrinsics) do
+      plt:outfitAddIntrinsic( v )
+   end
    plt:weapsetCleanup() -- Hopefully won't do anything now
 end
 
@@ -36,6 +40,7 @@ function create ()
    mem.ship = plt:ship()
    mem.outfits = plt:outfits()
    mem.system = system.cur()
+   mem.intrinsics = plt:outfitsList("intrinsic")
    setup_pilot( plt )
    local a,s = plt:health()
    plt:setHealth( a, s ) -- Clears disabled state
