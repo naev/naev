@@ -378,8 +378,13 @@ local function board_capture ()
    local factionmsg = ""
    local pf = board_plt:faction()
    if not (pf:static() or pf:invisible()) then
-      factionmsg = fmt.f("#r".._(" Capturing the ship will lower your reputation with {fct} by {amount}.").."#0",
-         {fct=fct, amount=fcthit})
+      factionmsg = fmt.f(_(" Capturing the ship will lower your reputation with {fct} by {amount} (current standing is {current}."),
+         {fct=fct, amount=fcthit, current=fct:playerStanding()})
+      if fct:playerStanding()-fcthit < 0 then
+         factionmsg = fmt.f(_([[{msg} This action will make you hostile with {fct}!]]),
+            {msg=factionmsg, fct=fct})
+      end
+      factionmsg = "#r"..factionmsg.."#0"
    end
 
    local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #r{credits} ({sbonus}%#r from crew strength)#0 in repairs to successfully restore the ship. You have {playercreds}.{fctmsg}
