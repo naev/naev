@@ -544,7 +544,7 @@ function board( plt )
    font:setOutline(1)
    luatk.setDefaultFont( font )
 
-   local w, h = 480,310
+   local w, h = 570,310
    local wdw = luatk.newWindow( nil, nil, w, h )
    board_wdw = wdw
 
@@ -556,7 +556,7 @@ function board( plt )
    luatk.newButton( wdw, x, h-20-30, 80, 30, _("Loot All"), board_lootAll )
    x = x-100
    if can_capture() then
-      local btn_capture = luatk.newButton( wdw, x, h-20-30, 130, 30, _("Capture"), board_capture )
+      local btn_capture = luatk.newButton( wdw, x, h-20-30, 80, 30, _("Capture"), board_capture )
       x = x-100
       if not is_capturable() then
          btn_capture:disable()
@@ -584,7 +584,7 @@ function board( plt )
    local id = 1
    board_wgt = {}
    for j=1,nrows do
-      for i=1,5 do
+      for i=1,6 do
          local l = lootables[id]
          local wx, wy = 20+(i-1)*(m+b), y+(j-1)*(m+b)
          local wgt = wgtBoard.new( wdw, wx, wy, b, b, l )
