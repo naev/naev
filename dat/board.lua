@@ -582,6 +582,7 @@ function board( plt )
    cargo_btn = luatk.newButton( wdw, w-20-120, 25, 120, 30, _("Manage Cargo"), manage_cargo )
    if #player.fleetCargoList() <= 0 then
       cargo_btn:disable()
+      cargo_btn:setAlt(_("You have no cargo to manage."))
    end
 
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {plt}"), {plt=plt}), nil, "center" )
