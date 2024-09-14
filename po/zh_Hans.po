@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: naev 0.11.0-alpha.4\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-09-14 15:09+0000\n"
+"Last-Translator: Ziqian Gao <ziqiangao54@gmail.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
+"projects/naev/naev-0-11-x/zh_Hans/>\n"
 "Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -39,8 +41,9 @@ msgid "already initialized"
 msgstr ""
 
 #: physfs.c:6
+#, fuzzy
 msgid "argv[0] is NULL"
-msgstr ""
+msgstr "argv[0] 是NUL"
 
 #: physfs.c:7
 msgid "unsupported"
