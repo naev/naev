@@ -2650,7 +2650,7 @@ static int pilotL_outfits( lua_State *L )
  * taken from pilot.outfits). The key should be the slot id and the value should
  * be the outfit or false if there is no outfit in that slot.
  *    @luatreturn boolean If all the outfits were equipped successfully or not.
- * @luafunc outfits
+ * @luafunc outfitsEquip
  * @see outfits
  */
 static int pilotL_outfitsEquip( lua_State *L )
