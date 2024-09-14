@@ -332,7 +332,7 @@ local function can_capture ()
 end
 
 local function is_capturable ()
-   local t = board_plt:tags()
+   local t = board_plt:ship():tags()
    if t.noplayer then
       return false, _("This ship is not capturable.")
    end
@@ -374,7 +374,7 @@ local function board_capture ()
    local factionmsg = ""
    local pf = board_plt:faction()
    if not (pf:static() or pf:invisible()) then
-      factionmsg = fmt.f(_("Capturing the ship will lower your reputation with {fct} by {amount}."),
+      factionmsg = fmt.f("#r".._(" Capturing the ship will lower your reputation with {fct} by {amount}.").."#0",
          {fct=fct, amount=fcthit})
    end
 
@@ -394,6 +394,7 @@ You will still have to escort the ship and land with it to perform the repairs a
 
          -- Faction hit
          fct:modPlayer( -fcthit )
+         player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=fcthit,fct=fct}).."#0")
 
          -- Start capture script
          local nc = naev.cache()
