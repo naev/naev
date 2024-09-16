@@ -2650,7 +2650,7 @@ static int pilotL_outfits( lua_State *L )
  * taken from pilot.outfits). The key should be the slot id and the value should
  * be the outfit or false if there is no outfit in that slot.
  *    @luatreturn boolean If all the outfits were equipped successfully or not.
- * @luafunc outfits
+ * @luafunc outfitsEquip
  * @see outfits
  */
 static int pilotL_outfitsEquip( lua_State *L )
@@ -3886,13 +3886,16 @@ static int pilotL_outfitAddSlot( lua_State *L )
 /**
  * @brief Removes an outfit from a pilot.
  *
- * "all" will remove all outfits except cores and locked outfits.
- * "cores" will remove all cores, but nothing else.
+ * "all" will remove all outfits except cores, locked outfits, and intrinsic
+ * outfits. "cores" will remove all cores, but nothing else. "intrinsic" will
+ * remove all intrinsic outfits.
  *
  * @usage p:outfitRm( "all" ) -- Leaves the pilot naked (except for cores and
  * locked outfits).
  * @usage p:outfitRm( "cores" ) -- Strips the pilot of its cores, leaving it
  * dead in space.
+ * @usage p:outfitRm( "intrinsic" ) -- Removes all the intrinsic outfits of the
+ * ship.
  * @usage p:outfitRm( "Neutron Disruptor" ) -- Removes a neutron disruptor.
  * @usage p:outfitRm( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
  *
@@ -3937,6 +3940,17 @@ static int pilotL_outfitRm( lua_State *L )
             pilot_rmOutfitRaw( p, p->outfits[i] );
             removed++;
          }
+         pilot_calcStats( p ); /* Recalculate stats. */
+         matched = 1;
+      }
+      /* Remove intrinsic outfits. */
+      else if ( strcmp( outfit, "intrinsic" ) == 0 ) {
+         for ( int i = 0; i < array_size( p->outfit_intrinsic ); i++ ) {
+            pilot_rmOutfitRaw( p, &p->outfit_intrinsic[i] );
+            removed++;
+         }
+         array_erase( &p->outfit_intrinsic, array_begin( p->outfit_intrinsic ),
+                      array_end( p->outfit_intrinsic ) );
          pilot_calcStats( p ); /* Recalculate stats. */
          matched = 1;
       }

@@ -9,6 +9,7 @@ local der = require "common.derelict"
 local board_lootOne -- forward-declared function, defined at bottom of file
 local loot_mod
 local special_col = {0.7, 0.45, 0.22} -- Dark Gold
+local board_close
 
 local function slotTypeColour( stype )
    local c
@@ -320,6 +321,98 @@ local function board_lootAll ()
    end
 end
 
+local function can_capture ()
+   if player.fleetCapacity() <= 0 then
+      return false
+   end
+   -- For now, only allow capturing one ship at a time. Potentially, make it so
+   -- the player can have multiple if it fits fleet capacity, just a bit
+   -- trickier to do interface-wise
+   if player.evtActive("Ship Capture") then
+      return false
+   end
+   return true
+end
+
+local function is_capturable ()
+   local t = board_plt:ship():tags()
+   if t.noplayer then
+      return false, _("This ship is not capturable.")
+   end
+   local pm = board_plt:memory()
+   if not pm.natural then
+      return false, _("This ship is not capturable.")
+   end
+   local flttot, fltcur = player.fleetCapacity()
+   if flttot-fltcur < board_plt:points() then
+      return false, fmt.f(_("You do not have enough fleet capacity to capture the ship. You need {needed}, but only have {have}."),
+         {needed=board_plt:points(), have=flttot-fltcur})
+   end
+   return true
+end
+
+local function board_capture ()
+   local ok, msg = is_capturable()
+   if not ok then
+      luatk.msg(_("Unable to Capture Ship"), fmt.f(_("You are not able to capture the {shpname} for the following reason:\n\n{msg}"),
+         {shpname=board_plt:name(), msg=msg}))
+      return
+   end
+
+   local pp = player.pilot()
+   local ps = board_plt:stats()
+   local pps = pp:stats()
+   -- TODO should this be affected by loot_mod and how?
+   --local loot_mod = pp:shipstat("loot_mod", true)
+   local bonus = (10+ps.crew) / (10+pps.crew)
+   local cost = board_plt:worth() * bonus
+   local sbonus
+   if bonus > 1 then
+      sbonus = string.format("#r%+d", bonus*100 - 100)
+   else
+      sbonus = string.format("#g%+d", bonus*100 - 100)
+   end
+
+   local fct = board_plt:faction()
+   local fcthit = board_plt:points() / 2
+   local factionmsg = ""
+   local pf = board_plt:faction()
+   if not (pf:static() or pf:invisible()) then
+      factionmsg = fmt.f(_(" Capturing the ship will lower your reputation with {fct} by {amount} (current standing is {current}."),
+         {fct=fct, amount=fcthit, current=fct:playerStanding()})
+      if fct:playerStanding()-fcthit < 0 then
+         factionmsg = fmt.f(_([[{msg} This action will make you hostile with {fct}!]]),
+            {msg=factionmsg, fct=fct})
+      end
+      factionmsg = "#r"..factionmsg.."#0"
+   end
+
+   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #r{credits} ({sbonus}%#r from crew strength)#0 in repairs to successfully restore the ship. You have {playercreds}.{fctmsg}
+
+You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]),
+      {shpname=board_plt:name(),
+       credits=fmt.credits(cost),
+       playercreds=fmt.credits(player.credits()),
+       fctmsg=factionmsg,
+       sbonus=sbonus})
+
+   luatk.yesno( _("Capture Ship?"), capturemsg,
+      function ()
+         luatk.msg(_([[Ship Taken Over]]),fmt.f(_([[You have taken over the {shp}. You will still have to escort the ship to an spaceport with refueling capabilities to complete the capture and then pay the reparation fee of {amount}.]]),
+            {shp=board_plt:name(),amount=fmt.credits(cost)}))
+
+         -- Faction hit
+         fct:modPlayer( -fcthit )
+         player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=fcthit,fct=fct}).."#0")
+
+         -- Start capture script
+         local nc = naev.cache()
+         nc.capture_pilot = { pilot=board_plt, cost=cost }
+         naev.eventStart("Ship Capture")
+         board_close()
+      end )
+end
+
 local function can_cannibalize ()
    local pp = player.pilot()
    if pp:ship():tags().cannibal then
@@ -433,7 +526,7 @@ local function manage_cargo ()
    end )
 end
 
-local function board_close ()
+function board_close ()
    luatk.close()
    board_wdw = nil
    der.sfx.unboard:play()
@@ -460,21 +553,36 @@ function board( plt )
    font:setOutline(1)
    luatk.setDefaultFont( font )
 
-   local w, h = 480,310
+   local w, h = 570,310
    local wdw = luatk.newWindow( nil, nil, w, h )
    board_wdw = wdw
 
-   luatk.newButton( wdw, w-20-80, h-20-30, 80, 30, _("Close"), board_close )
-   luatk.newButton( wdw, w-20-80-100, h-20-30, 80, 30, _("Loot"), board_lootSel )
-   luatk.newButton( wdw, w-20-80-200, h-20-30, 80, 30, _("Loot All"), board_lootAll )
+   local x = w-20-80
+   luatk.newButton( wdw, x, h-20-30, 80, 30, _("Close"), board_close )
+   x = x-100
+   luatk.newButton( wdw, x, h-20-30, 80, 30, _("Loot"), board_lootSel )
+   x = x-100
+   luatk.newButton( wdw, x, h-20-30, 80, 30, _("Loot All"), board_lootAll )
+   x = x-100
+   if can_capture() then
+      local btn_capture = luatk.newButton( wdw, x, h-20-30, 80, 30, _("Capture"), board_capture )
+      x = x-100
+      local ok, msg = is_capturable()
+      if not ok then
+         btn_capture:disable()
+         btn_capture:setAlt( msg )
+      end
+   end
    if can_cannibalize() then
-      luatk.newButton( wdw, w-20-80-350, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
+      luatk.newButton( wdw, x, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
+      --x = x-100
    end
 
    -- Add manage cargo button if applicable
    cargo_btn = luatk.newButton( wdw, w-20-120, 25, 120, 30, _("Manage Cargo"), manage_cargo )
    if #player.fleetCargoList() <= 0 then
       cargo_btn:disable()
+      cargo_btn:setAlt(_("You have no cargo to manage."))
    end
 
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {plt}"), {plt=plt}), nil, "center" )
@@ -488,7 +596,7 @@ function board( plt )
    local id = 1
    board_wgt = {}
    for j=1,nrows do
-      for i=1,5 do
+      for i=1,6 do
          local l = lootables[id]
          local wx, wy = 20+(i-1)*(m+b), y+(j-1)*(m+b)
          local wgt = wgtBoard.new( wdw, wx, wy, b, b, l )
