@@ -241,7 +241,7 @@ void gui_messageScrollUp( int lines )
       lines = o;
 
    /* Move viewpoint. */
-   const int new_point = ( mesg_viewpoint - lines ) % mesg_max;
+   const int new_point = ( mesg_max + mesg_viewpoint - lines ) % mesg_max;
    if ( mesg_stack && mesg_stack[new_point].str )
       mesg_viewpoint = new_point;
 }
