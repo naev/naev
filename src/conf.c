@@ -1013,7 +1013,7 @@ int conf_saveConfig( const char *file )
    conf_saveComment(
       _( "Maximum texture size to use for 3D models when in low memory mode. A "
          "value of less than or equal to 0 disables texture resizing." ) );
-   conf_saveBool( "max_3d_tex_size", conf.max_3d_tex_size );
+   conf_saveInt( "max_3d_tex_size", conf.max_3d_tex_size );
    conf_saveEmptyLine();
 
    /* FPS */
