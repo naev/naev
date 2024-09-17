@@ -22,7 +22,7 @@ local zalek_outfits = eoutfits.merge{{
    "Particle Beam", "Particle Lance",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
-   "Targeting Array", "Agility Combat AI",
+   "Targetting Array", "Agility Combat AI",
    "Milspec Jammer", "Emergency Shield Booster",
    "Weapons Ionizer", "Sensor Array",
    "Faraday Tempest Coating", "Hive Combat AI",

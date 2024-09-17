@@ -2040,7 +2040,7 @@ static int diff_checkUpdateUniverse( void )
       space_gfxLoad( cur_system );
    }
 
-   /* Have to pilot targeting just in case. */
+   /* Have to pilot targetting just in case. */
    pilots = pilot_getAll();
    for ( int i = 0; i < array_size( pilots ); i++ ) {
       Pilot *p          = pilots[i];

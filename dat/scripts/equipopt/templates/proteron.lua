@@ -19,7 +19,7 @@ local proteron_outfits = eoutfits.merge{{
    "Plasma Turret MK1", "Plasma Blaster MK1",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
-   "Targeting Array",
+   "Targetting Array",
    "Hunting Combat AI", "Agility Combat AI",
    "Milspec Impacto-Plastic Coating", "Photo-Voltaic Nanobot Coating",
    "Milspec Jammer", "Emergency Shield Booster",

@@ -237,7 +237,7 @@ static int guiL_radarRender( lua_State *L )
 /**
  * @brief Sets the Lua spob target GFX.
  *
- *    @luatparam Tex tex Texture to set for the spob targeting.
+ *    @luatparam Tex tex Texture to set for the spob targetting.
  * @luafunc targetSpobGFX
  */
 static int guiL_targetSpobGFX( lua_State *L )
@@ -249,7 +249,7 @@ static int guiL_targetSpobGFX( lua_State *L )
 /**
  * @brief Sets the Lua pilot target GFX.
  *
- *    @luatparam Tex tex Texture to set for the pilot targeting.
+ *    @luatparam Tex tex Texture to set for the pilot targetting.
  * @luafunc targetPilotGFX
  */
 static int guiL_targetPilotGFX( lua_State *L )

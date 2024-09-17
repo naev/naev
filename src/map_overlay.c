@@ -189,7 +189,7 @@ int ovr_input( SDL_Event *event )
    if ( pilot_isFlag( player.p, PILOT_DEAD ) )
       return 0;
 
-   /* Mouse targeting only uses left and right buttons. */
+   /* Mouse targetting only uses left and right buttons. */
    if ( event->button.button != SDL_BUTTON_LEFT &&
         event->button.button != SDL_BUTTON_RIGHT )
       return 0;

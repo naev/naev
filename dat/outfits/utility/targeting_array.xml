@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Targeting Array">
+<outfit name="Targetting Array">
  <general>
   <typename>Weapon Modifier (Turret)</typename>
   <slot>utility</slot>
   <size>medium</size>
   <mass>15</mass>
   <price>430000</price>
-  <description>An improved targeting array allows your turrets to more quickly acquire targets, and minimises accuracy losses at range. It requires a short period to compute an ideal vector, slightly slowing firing rates.</description>
+  <description>An improved targetting array allows your turrets to more quickly acquire targets, and minimises accuracy losses at range. It requires a short period to compute an ideal vector, slightly slowing firing rates.</description>
   <gfx_store>accuracy_turret.webp</gfx_store>
  </general>
  <specific type="modification">

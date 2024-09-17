@@ -63,7 +63,7 @@ local function turnon( p, po )
    --]]
    np:attack( t )
 
-   -- Modify randomly targeting of hostiles (probably don't have to go over all ships)
+   -- Modify randomly targetting of hostiles (probably don't have to go over all ships)
    for k,v in ipairs(p:getEnemies(dist)) do
       if v:target()==p and rnd.rnd() > 0.5 then
          -- Note that this does not currently work with the AI, as it stores

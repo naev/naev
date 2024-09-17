@@ -6,7 +6,7 @@ local atk = require "ai.core.attack.util"
 local atk_generic = {}
 
 --[[
--- Mainly manages targeting nearest enemy.
+-- Mainly manages targetting nearest enemy.
 --]]
 function atk_generic.think( target, _si )
    -- A chance to just focus on the current enemy
@@ -106,7 +106,7 @@ function atk_generic.atk( target, dokill )
    -- See if the enemy is still seeable
    if not atk.check_seeable( target ) then return end
 
-   -- Targeting stuff
+   -- Targetting stuff
    ai.settarget(target)
 
    -- Get stats about enemy

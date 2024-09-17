@@ -85,7 +85,7 @@ static const char *keybind_info[KST_END][3] = {
    [KST_JUMP]         = { N_( "Initiate Jump" ),
                           N_( "Attempts to jump via a jump point." ), "jump" },
 
-   /* Targeting */
+   /* Targetting */
    [KST_TARGET_NEXT]  = { N_( "Target Next" ),
                           N_( "Cycles through ship targets." ), "target_next" },
    [KST_TARGET_PREV]  = { N_( "Target Previous" ),
@@ -275,7 +275,7 @@ void input_setDefault( int wasd )
    }
    input_setKeybind( KST_STEALTH, KEYBIND_KEYBOARD, SDLK_f, NMOD_NONE );
 
-   /* Targeting */
+   /* Targetting */
    if ( wasd ) {
       input_setKeybind( KST_TARGET_NEXT, KEYBIND_KEYBOARD, SDLK_e, NMOD_CTRL );
       input_setKeybind( KST_TARGET_PREV, KEYBIND_KEYBOARD, SDLK_q, NMOD_CTRL );
@@ -968,7 +968,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
       else if ( value == KEY_RELEASE )
          player_rmFlag( PLAYER_PRIMARY );
       break;
-   /* targeting */
+   /* targetting */
    case KST_TARGET_NEXT:
       if ( !INGAME() && !MAP() )
          break;
@@ -1491,7 +1491,7 @@ static void input_clickevent( SDL_Event *event )
       return;
    }
 
-   /* Mouse targeting only uses left and right buttons. */
+   /* Mouse targetting only uses left and right buttons. */
    if ( event->button.button != SDL_BUTTON_LEFT &&
         event->button.button != SDL_BUTTON_RIGHT )
       return;
@@ -1516,7 +1516,7 @@ static void input_clickevent( SDL_Event *event )
  *    @brief event The click event itself, used for button information.
  *    @brief x X coordinate within the system.
  *    @brief y Y coordinate within the system.
- *    @brief zoom Camera zoom (mostly for on-screen targeting).
+ *    @brief zoom Camera zoom (mostly for on-screen targetting).
  *    @brief minpr Minimum radius to assign to pilots.
  *    @brief minr Minimum radius to assign to spobs and jumps.
  *    @return Whether the click was used to trigger an action.

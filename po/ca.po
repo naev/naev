@@ -5359,7 +5359,7 @@ msgid ""
 "Interception System. Instead of basing itself on weaker laser turrets, the "
 "system makes use of specially modified Ripper cannons that allow it to "
 "neutralize most ordnance. Although designed for intercepting torpedoes, the "
-"targeting system is also efficient at tracking small enemy craft."
+"targetting system is also efficient at tracking small enemy craft."
 msgstr ""
 
 #: dat/outfits/pointdefense/spittle_tubuloid_cluster.xml:2
@@ -6116,7 +6116,7 @@ msgstr ""
 
 #: dat/outfits/utility/camouflage_burster.xml:4
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:4
-#: dat/outfits/utility/targeting_conduit.xml:4
+#: dat/outfits/utility/targetting_conduit.xml:4
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:4
 msgid "System Improvement"
 msgstr ""
@@ -6661,34 +6661,34 @@ msgid ""
 "integrated asteroid scanner is just the icing on the cake."
 msgstr ""
 
-#: dat/outfits/utility/targeting_array.xml:2
-msgid "Targeting Array"
+#: dat/outfits/utility/targetting_array.xml:2
+msgid "Targetting Array"
 msgstr ""
 
-#: dat/outfits/utility/targeting_array.xml:4
+#: dat/outfits/utility/targetting_array.xml:4
 msgid "Weapon Modifier (Turret)"
 msgstr ""
 
-#: dat/outfits/utility/targeting_array.xml:9
+#: dat/outfits/utility/targetting_array.xml:9
 msgid ""
-"An improved targeting array allows your turrets to more quickly acquire "
+"An improved targetting array allows your turrets to more quickly acquire "
 "targets, and minimises accuracy losses at range. It requires a short period "
 "to compute an ideal vector, slightly slowing firing rates."
 msgstr ""
 
-#: dat/outfits/utility/targeting_conduit.xml:2
-msgid "Targeting Conduit"
+#: dat/outfits/utility/targetting_conduit.xml:2
+msgid "Targetting Conduit"
 msgstr ""
 
-#: dat/outfits/utility/targeting_conduit.xml:10
+#: dat/outfits/utility/targetting_conduit.xml:10
 msgid ""
-"The targeting conduit redirects surplus shield energy into the targeting "
+"The targetting conduit redirects surplus shield energy into the targetting "
 "systems of a ship, allowing for a much quicker target lock time, albeit at "
 "the cost of reduced range due to the inherent instability caused by "
 "overloading the systems."
 msgstr ""
 
-#: dat/outfits/utility/targeting_conduit.xml:11
+#: dat/outfits/utility/targetting_conduit.xml:11
 msgid "Only active when shield is above 70%."
 msgstr ""
 
@@ -8332,7 +8332,7 @@ msgid ""
 "Ancestors were one of the first ships to be fancied by pirates. The big "
 "intimidating wings and good top speeds would usually get ships to surrender "
 "without firing a shot. As better ships came out in the market, their use has "
-"fallen due to their archaic electronics and targeting systems."
+"fallen due to their archaic electronics and targetting systems."
 msgstr ""
 
 #: dat/ships/pirate/pirate_hyena.xml:2
@@ -26984,7 +26984,7 @@ msgstr ""
 #. -- Bombers are expected to have heavy weapons and target
 #. --ships bigger than they are
 #. --
-#. Targeting stuff
+#. Targetting stuff
 #. Mark as hostile
 #. See if the enemy is still seeable
 #. Get stats about enemy
@@ -26994,7 +26994,7 @@ msgstr ""
 #.
 #. -- Main control function for capital ship behavior.
 #. --
-#. Targeting stuff
+#. Targetting stuff
 #. Mark as hostile
 #. See if the enemy is still seeable
 #. Get stats about enemy
@@ -27025,7 +27025,7 @@ msgstr ""
 #.
 #. -- Main control function for corvette behavior.
 #. --
-#. Targeting stuff
+#. Targetting stuff
 #. Mark as hostile
 #. See if the enemy is still seeable
 #. Get stats about enemy
@@ -27058,7 +27058,7 @@ msgstr ""
 #.
 #. -- Main control function for drone behavior.
 #. --
-#. Targeting stuff
+#. Targetting stuff
 #. Mark as hostile
 #. See if the enemy is still seeable
 #. Get stats about enemy
@@ -27124,7 +27124,7 @@ msgstr ""
 #.
 #. -- Main control function for fighter behavior.
 #. --
-#. Targeting stuff
+#. Targetting stuff
 #. Mark as hostile
 #. See if the enemy is still seeable
 #. Get stats about enemy
@@ -27136,7 +27136,7 @@ msgstr ""
 #. --    Generic attack functions
 #. --
 #.
-#. -- Mainly manages targeting nearest enemy.
+#. -- Mainly manages targetting nearest enemy.
 #. --
 #. A chance to just focus on the current enemy
 #. Get new target if it is better
@@ -27163,7 +27163,7 @@ msgstr ""
 #. Always launch fighters for now
 #. Mark as hostile
 #. See if the enemy is still seeable
-#. Targeting stuff
+#. Targetting stuff
 #. Get stats about enemy
 #. get distance
 #. We first bias towards range
@@ -39005,7 +39005,7 @@ msgstr ""
 
 #: dat/events/news/soromid.lua:28
 msgid ""
-"A Za'lek disinformation campaign, targeting the rural section of Soromid "
+"A Za'lek disinformation campaign, targetting the rural section of Soromid "
 "space, as well as the more backwater planets in imperial space, accuses "
 "Soromid scientists of creating elaborate genetic experiments on a hidden "
 "planet's ecosystem. Our sources reiterate that no such experiment exists, "
@@ -54233,7 +54233,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:437
 msgid ""
-"As you approach the ship, your targeting array focuses on it and processes "
+"As you approach the ship, your targetting array focuses on it and processes "
 "its clearance code. You read on your control pad: \"This citizen is an "
 "honourable {job} whose presence is required for the meeting: let the ship "
 "land on the station.\""
@@ -54898,7 +54898,7 @@ msgid ""
 "Hey, {player}! Long time no see, huh? How are you doing? I've been stuck at "
 "the hospital due to all the damage I took during the last mission. I got a "
 "brand-new right arm, see? It has the latest bio and cyber enhancements. "
-"Targeting abilities have been increased by 0.23 percent, pulling force by "
+"Targetting abilities have been increased by 0.23 percent, pulling force by "
 "0.26 percent, and pushing by 0.22 percent. But its best feature is that I "
 "can now scratch my nose without leaving oil marks on it. Everyone is jealous "
 "at the barracks."
@@ -71884,7 +71884,7 @@ msgstr ""
 msgid ""
 "You accept another job from the sketchy individual to destroy some Za'lek "
 "scout drones around Minerva Station with Dvaered weapons only to make it "
-"seem like the Dvaered are targeting Za'lek drones."
+"seem like the Dvaered are targetting Za'lek drones."
 msgstr ""
 
 #: dat/missions/minerva/pirate2.lua:112
@@ -98331,7 +98331,7 @@ msgstr ""
 msgid ""
 "\"If you target a pirate and hail them with {hailkey}, you should have an "
 "option to bribe them and their friends if they are hostile. Although it can "
-"be expensive, it beats getting blown to bits. Try targeting the nearest "
+"be expensive, it beats getting blown to bits. Try targetting the nearest "
 "enemy with {targetkey}, hailing them with {hailkey}, and bribing them!\""
 msgstr ""
 
@@ -98942,7 +98942,7 @@ msgid ""
 "\"To land on {pnt}, you need to slow down your ship on top of the planet, "
 "and engage the landing system. You can do this manually with the movement "
 "keys and engage your landing gears with {landkey}, or this can all be done "
-"automatically by targeting the planet with either #bclicking#0 on it, or "
+"automatically by targetting the planet with either #bclicking#0 on it, or "
 "with {targetplanetkey}, and then using the {landkey}. You can also #bdouble "
 "click#0 on the planet to engage the same behaviour. Give it a try!\""
 msgstr ""
@@ -106920,7 +106920,7 @@ msgstr ""
 #. np:attack( t )
 #. end
 #. --
-#. Modify randomly targeting of hostiles (probably don't have to go over all ships)
+#. Modify randomly targetting of hostiles (probably don't have to go over all ships)
 #. Note that this does not currently work with the AI, as it stores
 #. the target in the tasks. Would need some support to change it.
 #. get rid of hologram if exists
@@ -115178,7 +115178,7 @@ msgstr ""
 #. Don't play combat in stealth
 #. TODO stealth effects or music?
 #. If locked in, time to switch
-#. Nearby enemies targeting the player will also switch
+#. Nearby enemies targetting the player will also switch
 #.
 #. See if we should switch to playing ambient music again.
 #. --
@@ -115287,7 +115287,7 @@ msgstr ""
 #. overwritten).
 #.
 #. @luatreturn Texture A texture to be used as the planet image.
-#. @luatreturn[opt] number The value to use for the radius of the planet (for targeting, etc...)
+#. @luatreturn[opt] number The value to use for the radius of the planet (for targetting, etc...)
 #. --
 #.
 #. @brief Run when the system is left and the planet stuff is not needed
@@ -120682,7 +120682,7 @@ msgstr ""
 msgid "Attempts to jump via a jump point."
 msgstr ""
 
-#. Targeting
+#. Targetting
 #: src/input.c:89
 msgid "Target Next"
 msgstr ""

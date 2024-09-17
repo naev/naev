@@ -25,7 +25,7 @@ local articles = {
    },
    {
       head = N_([[Rampant Disinformation]]),
-      body = _([[A Za'lek disinformation campaign, targeting the rural section of Soromid space, as well as the more backwater planets in imperial space, accuses Soromid scientists of creating elaborate genetic experiments on a hidden planet's ecosystem. Our sources reiterate that no such experiment exists, and that there's no Sagan system, or a 4th planet of such system is used to induce abiogenesis events.]]),
+      body = _([[A Za'lek disinformation campaign, targetting the rural section of Soromid space, as well as the more backwater planets in imperial space, accuses Soromid scientists of creating elaborate genetic experiments on a hidden planet's ecosystem. Our sources reiterate that no such experiment exists, and that there's no Sagan system, or a 4th planet of such system is used to induce abiogenesis events.]]),
    },
    --[[
       Business

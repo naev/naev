@@ -305,7 +305,7 @@ function discussNkv()
    tk.msg( "", _([[Yeah, he was for sure a good guy. Of course, he was an "educated" man, like the others here, always calling everyone "citizen", and annoying people with "righteousness", "valour" and stuff. But he was one of the few who did not despise us spacemarines, and we could count on him. He certainly will be missed.]]) )
 end
 function discussHam()
-   tk.msg( "", fmt.f(_([[Hey, {player}! Long time no see, huh? How are you doing? I've been stuck at the hospital due to all the damage I took during the last mission. I got a brand-new right arm, see? It has the latest bio and cyber enhancements. Targeting abilities have been increased by 0.23 percent, pulling force by 0.26 percent, and pushing by 0.22 percent. But its best feature is that I can now scratch my nose without leaving oil marks on it. Everyone is jealous at the barracks.]]), {player=player.name()}) )
+   tk.msg( "", fmt.f(_([[Hey, {player}! Long time no see, huh? How are you doing? I've been stuck at the hospital due to all the damage I took during the last mission. I got a brand-new right arm, see? It has the latest bio and cyber enhancements. Targetting abilities have been increased by 0.23 percent, pulling force by 0.26 percent, and pushing by 0.22 percent. But its best feature is that I can now scratch my nose without leaving oil marks on it. Everyone is jealous at the barracks.]]), {player=player.name()}) )
 end
 function discussWdw()
    tk.msg( "", _([[It feels so strange. I knew this day could come sooner or later, but yet... I can't really figure out how the children and I will live without my husband from now on. It makes me so sad. Do you think that creating the next generation of Dvaered warriors is the sole purpose of marriage?]]) )

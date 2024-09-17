@@ -80,7 +80,7 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
 void gui_renderPlayer( double res, int overlay );
 
 /*
- * Targeting.
+ * Targetting.
  */
 void gui_targetSpobGFX( const glTexture *gfx );
 void gui_targetPilotGFX( const glTexture *gfx );

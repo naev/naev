@@ -4,7 +4,7 @@
 #pragma once
 
 /**
- * @brief Used to generalize what the weapon is targeting.
+ * @brief Used to generalize what the weapon is targetting.
  */
 typedef enum TargetType_ {
    TARGET_NONE,

@@ -589,7 +589,7 @@ static void think_beam( Weapon *w, double dt )
          diff = angle_diff( w->solid.dir, /* Get angle to target pos */
                             vec2_angle( &w->solid.pos, &tv ) );
       }
-      /* If target is dead beam stops moving. Targeting
+      /* If target is dead beam stops moving. Targetting
        * self is invalid so in that case we ignore the target.
        */
       else if ( t == NULL ) {

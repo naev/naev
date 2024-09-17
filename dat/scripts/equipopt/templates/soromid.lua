@@ -26,7 +26,7 @@ local soromid_outfits = eoutfits.merge{{
    "Spittle Tubuloid Cluster",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
-   "Targeting Array", "Agility Combat AI",
+   "Targetting Array", "Agility Combat AI",
    "Milspec Jammer", "Emergency Shield Booster",
    "Weapons Ionizer", "Sensor Array",
    "Bio-Neural Combat AI", "Nexus Stealth Coating",

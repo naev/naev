@@ -23,7 +23,7 @@ local sirius_outfits = eoutfits.merge{{
    "Ion Cannon",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
-   "Targeting Array", "Agility Combat AI",
+   "Targetting Array", "Agility Combat AI",
    "Milspec Jammer", "Emergency Shield Booster",
    "Weapons Ionizer", "Sensor Array",
    "Pinpoint Combat AI", "Lattice Thermal Coating",

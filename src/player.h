@@ -155,7 +155,7 @@ extern Player_t player; /**< Local player. */
 /*
  * Common player sounds.
  */
-extern int snd_target;       /**< Sound when targeting. */
+extern int snd_target;       /**< Sound when targetting. */
 extern int snd_jump;         /**< Sound when can jump. */
 extern int snd_nav;          /**< Sound when changing nav computer. */
 extern int snd_hail;         /**< Hail sound. */
@@ -281,7 +281,7 @@ int    player_getHypPreempt( void );
 double player_dt_default( void );
 
 /*
- * Targeting.
+ * Targetting.
  */
 /* Clearing. */
 void player_targetClear( void );

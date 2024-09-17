@@ -87,7 +87,7 @@ typedef struct AsteroidTypeGroup_ {
  */
 typedef struct Asteroid_ {
    /* Intrinsics. */
-   int                 id;      /**< ID of the asteroid, for targeting. */
+   int                 id;      /**< ID of the asteroid, for targetting. */
    int                 parent;  /**< ID of the anchor parent. */
    int                 state;   /**< State of the asteroid. */
    const AsteroidType *type;    /**< Type of the asteroid. */
@@ -110,7 +110,7 @@ typedef struct Asteroid_ {
  */
 typedef struct AsteroidAnchor_ {
    char               *label;     /**< Label used for unidiffs. */
-   int                 id;        /**< ID of the anchor, for targeting. */
+   int                 id;        /**< ID of the anchor, for targetting. */
    vec2                pos;       /**< Position in the system (from center). */
    double              density;   /**< Density of the field. */
    Asteroid           *asteroids; /**< Asteroids belonging to the field. */

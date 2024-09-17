@@ -72,7 +72,7 @@ function atk_drone.atk( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
-   -- Targeting stuff
+   -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 

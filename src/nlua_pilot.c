@@ -1964,7 +1964,7 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
  *  <li> left: Absolute ammo left or nil if not applicable. </li>
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable </li>
  *  <li> lockon: Lock-on [0:1] for seeker weapons or nil if not applicable.
- * </li> <li> in_arc: Whether or not the target is in targeting arc or nil if
+ * </li> <li> in_arc: Whether or not the target is in targetting arc or nil if
  * not applicable. </li> <li> level: Level of the weapon (1 is primary, 2 is
  * secondary). </li> <li> active: Whether or not the weapon is currently active.
  * </li> <li> heat: Heat level of the weapon where 1 is normal and 0 is

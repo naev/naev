@@ -146,7 +146,7 @@ As stealth and speed are not prominent needs, the Dvaered engineers prefer to re
 #### Particularly used utilities
 
 * Impacto-Plastic Coating: Used on a regular basis on warships to increase their absorption
-* Cyclic Combat AI: Used by Destroyers and up to increase their fire-rate, Corvettes on the contrary sometimes use Targeting Arrays for their turrets
+* Cyclic Combat AI: Used by Destroyers and up to increase their fire-rate, Corvettes on the contrary sometimes use Targetting Arrays for their turrets
 * Afterburners: Used in attack, mainly by bombers in their approach phase, in order to have less predictable trajectories, and more rarely in defence by fighters and bombers.
 
 #### Particularly used structure outfits

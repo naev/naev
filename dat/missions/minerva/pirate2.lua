@@ -94,7 +94,7 @@ She smiles at you.]]))
 
    mem.misnmarker = misn.markerAdd( system.cur() )
 
-   minerva.log.pirate(_("You accept another job from the sketchy individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
+   minerva.log.pirate(_("You accept another job from the sketchy individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targetting Za'lek drones.") )
 
    hook.enter("enter")
    hook.load("land")

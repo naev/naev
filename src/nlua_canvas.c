@@ -172,7 +172,7 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
    lc->tex->flags |=
       OPENGL_TEX_VFLIP; /* Long story, but love stuff inverts Y axis for
                            canvases so we have to redo that here for spob
-                           targeting stuff to work properly. */
+                           targetting stuff to work properly. */
    free( name );
 
    /* Create the frame buffer. */

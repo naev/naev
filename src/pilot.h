@@ -396,7 +396,7 @@ typedef struct Pilot_ {
    int dockslot; /**< Outfit slot pilot originates from, index of dockpilot's
                     outfits. */
 
-   /* Targeting. */
+   /* Targetting. */
    unsigned int target;         /**< AI pilot target. */
    void        *ptarget;        /**< AI pilot real target. */
    int          nav_spob;       /**< Spob land target. */
@@ -434,7 +434,7 @@ typedef struct Pilot_ {
    double     otimer;        /**< Lua outfit timer. */
    double     scantimer;     /**< Electronic warfare scanning timer. */
    int        hail_pos;      /**< Hail animation position. */
-   int    lockons; /**< Stores how many seeking weapons are targeting pilot */
+   int    lockons; /**< Stores how many seeking weapons are targetting pilot */
    int    projectiles;   /**< Stores how many weapons are after the pilot */
    int   *mounted;       /**< Number of mounted outfits on the mount. */
    double player_damage; /**< Accumulates damage done by player for hostileness.

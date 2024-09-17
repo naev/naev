@@ -139,8 +139,8 @@ static double gui_bl = 0.; /**< Border bottom-left. */
 
 /* Intrinsic graphical stuff. */
 static glTexture *gui_ico_hail     = NULL; /**< Hailing icon. */
-static glTexture *gui_target_spob  = NULL; /**< Spob targeting icon. */
-static glTexture *gui_target_pilot = NULL; /**< Pilot targeting icon. */
+static glTexture *gui_target_spob  = NULL; /**< Spob targetting icon. */
+static glTexture *gui_target_pilot = NULL; /**< Pilot targetting icon. */
 
 /* Lua Stuff. */
 static int gui_lua_create          = LUA_NOREF;
@@ -369,7 +369,7 @@ void player_message( const char *fmt, ... )
 }
 
 /**
- * @brief Sets up rendering of spob and jump point targeting reticles.
+ * @brief Sets up rendering of spob and jump point targetting reticles.
  */
 static void gui_renderSpobTarget( void )
 {
@@ -427,7 +427,7 @@ static void gui_renderSpobTarget( void )
 }
 
 /**
- * @brief Renders spob and jump point targeting reticles.
+ * @brief Renders spob and jump point targetting reticles.
  *
  *    @param shd Shader to use to render.
  *    @param x X position of reticle segment.
@@ -725,7 +725,7 @@ int gui_onScreenSpob( double *rx, double *ry, const JumpPoint *jp,
 }
 
 /**
- * @brief Renders the gui targeting reticles.
+ * @brief Renders the gui targetting reticles.
  *
  * @param dt Current deltatick.
  */
@@ -2252,7 +2252,7 @@ int gui_borderClickEvent( SDL_Event *event )
            ( my >= gl_screen.h - 15 || mx >= gl_screen.w - 15 ) ) )
       return 0;
 
-   /* Border targeting is handled as a special case, as it uses angles,
+   /* Border targetting is handled as a special case, as it uses angles,
     * not coordinates. */
    x        = ( mx - ( gl_screen.w / 2. ) ) + px;
    y        = ( my - ( gl_screen.h / 2. ) ) + py;
