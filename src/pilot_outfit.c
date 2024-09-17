@@ -113,7 +113,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt,
    /* Lower timer. When the timer reaches zero, the lock is established. */
    max = -o->outfit->u.lau.lockon / 3.;
    if ( o->u.ammo.lockon_timer > max ) {
-      /* Targetting is linear and can't be faster than the time specified (can
+      /* targeting is linear and can't be faster than the time specified (can
        * be slower though). */
       double mod = pilot_ewWeaponTrack( p, t, o->outfit->u.lau.trackmin,
                                         o->outfit->u.lau.trackmax );

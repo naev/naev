@@ -1172,7 +1172,7 @@ var Sigma = /** @class */ (function (_super) {
     };
     /**
      * Method used to get all the sigma node attributes.
-     * It's usefull for example to get the position of a node
+     * It's useful for example to get the position of a node
      * and to get values that are set by the nodeReducer
      *
      * @param  {string} key - The node's key.
@@ -1184,7 +1184,7 @@ var Sigma = /** @class */ (function (_super) {
     };
     /**
      * Method used to get all the sigma edge attributes.
-     * It's usefull for example to get values that are set by the edgeReducer.
+     * It's useful for example to get values that are set by the edgeReducer.
      *
      * @param  {string} key - The edge's key.
      * @return {EdgeDisplayData | undefined} A copy of the desired edge's attribute or undefined if not found

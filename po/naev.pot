@@ -98128,7 +98128,7 @@ msgstr ""
 msgid ""
 "\"If you target a pirate and hail them with {hailkey}, you should have an "
 "option to bribe them and their friends if they are hostile. Although it can "
-"be expensive, it beats getting blown to bits. Try targetting the nearest "
+"be expensive, it beats getting blown to bits. Try targeting the nearest "
 "enemy with {targetkey}, hailing them with {hailkey}, and bribing them!\""
 msgstr ""
 
@@ -106717,7 +106717,7 @@ msgstr ""
 #. np:attack( t )
 #. end
 #. --
-#. Modify randomly targetting of hostiles (probably don't have to go over all ships)
+#. Modify randomly targeting of hostiles (probably don't have to go over all ships)
 #. Note that this does not currently work with the AI, as it stores
 #. the target in the tasks. Would need some support to change it.
 #. get rid of hologram if exists
@@ -114975,7 +114975,7 @@ msgstr ""
 #. Don't play combat in stealth
 #. TODO stealth effects or music?
 #. If locked in, time to switch
-#. Nearby enemies targetting the player will also switch
+#. Nearby enemies targeting the player will also switch
 #.
 #. See if we should switch to playing ambient music again.
 #. --
@@ -115084,7 +115084,7 @@ msgstr ""
 #. overwritten).
 #.
 #. @luatreturn Texture A texture to be used as the planet image.
-#. @luatreturn[opt] number The value to use for the radius of the planet (for targetting, etc...)
+#. @luatreturn[opt] number The value to use for the radius of the planet (for targeting, etc...)
 #. --
 #.
 #. @brief Run when the system is left and the planet stuff is not needed
