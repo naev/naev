@@ -4,7 +4,7 @@
 Generates collision polygons from image or gltf files
 
 WARNING : this script uses python 3
-For needed depandancies, please see the import section
+For needed dependancies, please see the import section
 
 If you added a space ammo/bolt png:
 Go to bottom of the file, and replace '../naev/dat/gfx/outfit/space/' and
@@ -22,7 +22,7 @@ Go to bottom of the file, and replace '../naev/dat/gfx/ship/' and
 Then, commentarize the line "polygonify_all_outfits".
 If your png has more than 8X8 sprites,
 go in the function "polygonify_all_ships" and add the name of your
-png in the dictionnary maxNmin, along with (sx,sy,50,3,6).
+png in the dictionary maxNmin, along with (sx,sy,50,3,6).
 If your sprite is very big (2048), replace 3,6 by 4,8
 Then,run the script from shell
 (or any other interface that prints warnings).
@@ -64,7 +64,7 @@ increase the last 2 arguments up to (4,8), or even (5,10).
 Remark: for these cases, a convex polygon algorithm could be preferable...
 
 !! Very important : once you've found the right parameters to generate the
-polygon from your png, add them in the dictionnary maxNmin
+polygon from your png, add them in the dictionary maxNmin
 (except if the default values are right)
 
 
@@ -176,7 +176,7 @@ def pointsFromImg( address, sx, sy, alpha_threshold ):
         picture = address
     npict = len(picture)
 
-    pointsx = [] # This list of list will contian the abscissae of the points
+    pointsx = [] # This list of list will contain the abscissae of the points
     pointsy = []
 
     for p in range(npict):

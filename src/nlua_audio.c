@@ -1295,7 +1295,7 @@ static int audioL_soundPlay( lua_State *L )
    vec2       *pos, *vel, vel0;
    int         dopos;
 
-   /* Flag wether to use sound_playPos or sound_play. */
+   /* Flag whether to use sound_playPos or sound_play. */
    dopos = 0;
 
    /* Handle parameters. */
@@ -1642,7 +1642,7 @@ static int audioL_setEffectGlobal( lua_State *L )
                                                              (off) (0 (down)) */
    } else {
       soundUnlock();
-      return NLUA_ERROR( L, _( "Usupported audio effect type '%s'!" ), type );
+      return NLUA_ERROR( L, _( "Unsupported audio effect type '%s'!" ), type );
    }
 
    if ( volume > 0. )
