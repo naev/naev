@@ -272,7 +272,7 @@ A---s--hm---t---
 
    vne.notebookEnd()
    vn.sfxEerie()
-   vn.na(_([[You tune your ship sensors to pick up the most miniscule of disturbances and focus on the area indicated by the notebook. You are about to give up when you detect an anomaly. It looks like you can use this to jump, but where could it lead?]]))
+   vn.na(_([[You tune your ship sensors to pick up the most minuscule of disturbances and focus on the area indicated by the notebook. You are about to give up when you detect an anomaly. It looks like you can use this to jump, but where could it lead?]]))
    vn.done()
    vn.run()
 end

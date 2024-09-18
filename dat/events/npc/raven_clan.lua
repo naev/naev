@@ -29,7 +29,7 @@ local msg_lore = {
 }
 
 local msg_tip = {
-   _([["Them Empire patrols be lookin' mighty tough, but even when they spot yur contraband, it be easy enough to bribe 'em to look the other way."]]),
+   _([["Them Empire patrols be lookin' mighty tough, but even when they spot your contraband, it be easy enough to bribe 'em to look the other way."]]),
 }
 
 local msg_cond = {

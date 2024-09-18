@@ -435,7 +435,7 @@ The API for mission cargo is fairly simple and relies on three functions:
 
 #### Custom Commodities
 
-Commodities are generally defined in `dat/commodities/`, however, it is a common need for a mission to have custom cargo. Instead of bloating the commodity definitions, it is possible to create arbitrary commodities dynamically. Once created, they are saved with the player, but will disappear when the player gets rid of them. There are two functiosn to handle custom commodities:
+Commodities are generally defined in `dat/commodities/`, however, it is a common need for a mission to have custom cargo. Instead of bloating the commodity definitions, it is possible to create arbitrary commodities dynamically. Once created, they are saved with the player, but will disappear when the player gets rid of them. There are two functions to handle custom commodities:
 
 * `commodity.new`: takes the name of the cargo, description, and an optional set of parameters and returns a new commodity. If it already exist, it returns the commodity with the same name. It is important to note that you have to pass *untranslated* strings. However, in order to allow for translation, they should be used with `N_()`.
 * `commodity.illegalto`: makes a custom commodity illegal to a faction, and takes the commodity and a faction or table of factions to make the commodity illegal to as parameters. Note that this function only works with custom commodities.
