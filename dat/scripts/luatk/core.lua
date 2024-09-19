@@ -11,6 +11,9 @@ local utf8 = require 'utf8'
 local vn = require "vn"
 local fmt = require "format"
 
+local deffont = lg.newFont( naev.conf().font_size_def )
+deffont:setOutline(1)
+
 local luatk = {
    _windows = {},
    _canvas = nil,
@@ -49,7 +52,7 @@ local luatk = {
          text     = { 0.2,  0.8,  0.1  },
       },
    },
-   _deffont = nil,
+   _deffont = deffont,
 }
 
 --[[--
