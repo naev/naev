@@ -4,6 +4,7 @@ require 'ai.escort'
 mem.aggressive = false
 mem.land_planet = false
 mem.norun = true
+mem.ignore_orders = true
 
 function create ()
    create_pre()

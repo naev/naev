@@ -46,6 +46,7 @@ mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun         = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
 mem.doscans       = false -- Should the pilot try to scan other pilots?
+mem.ignoreorders  = false -- Should the pilot ignore order messages?
 -- mem.scanned is created per pilot otherwise the list gets "shared"
 --mem.scanned       = {} -- List of pilots that have been scanned
 
@@ -229,7 +230,6 @@ local message_handler_funcs = {
       if sender==nil then return false end
       return distress_handler( sender, data )
    end,
-   -- Special cases where we accept messages from all pilots in the same fleet
    hyperspace = function( p, _si, dopush, sender, data )
       if sender==nil or not dopush or ai.taskname()=="hyperspace_follow" or not (p:leader()==nil or sameFleet( p, sender )) then return false end
       ai.pushtask("hyperspace_follow", data)
@@ -290,7 +290,7 @@ local message_handler_funcs = {
    end,
    e_attack = function( p, _si, dopush, sender, data )
       local l = p:leader()
-      if not dopush or sender==nil or not sender:exists() or sender~=l or data:leader() == l then return false end
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l or data:leader() == l then return false end
       clean_task()
       --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
       if data:flags("disabled") then
@@ -302,19 +302,19 @@ local message_handler_funcs = {
    end,
    e_hold = function( p, _si, dopush, sender, _data )
       local l = p:leader()
-      if not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
       ai.pushtask("hold")
       return true
    end,
    e_return = function( p, _si, dopush, sender, _data )
       local l = p:leader()
-      if not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
       ai.pushtask( "flyback", mem.carried )
       return true
    end,
    e_clear = function( p, _si, dopush, sender, _data )
       local l = p:leader()
-      if not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
       p:taskClear()
       return true
    end,
