@@ -6,11 +6,6 @@
  *
  * @brief For communicating with spobs/pilots.
  */
-
-/** @cond */
-#include "naev.h"
-/** @endcond */
-
 #include "comm.h"
 
 #include "ai.h"
