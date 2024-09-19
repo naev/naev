@@ -74,7 +74,7 @@ Subject: Extra funding request]]))
       {_("House Goddard"), "wrong"},
    }
    vn.label("r1")
-   vn.na(_([[Particuliar context: Task force 5613 has recently suffered a consequent series of issues that include (but are not limited to) the firm opposition of Lord #owxft#0 (see Annexes A and B), ambushes by private pilots paid by an unidentified organization (see Annexes C, D and E),]]))
+   vn.na(_([[Particular context: Task force 5613 has recently suffered a consequent series of issues that include (but are not limited to) the firm opposition of Lord #owxft#0 (see Annexes A and B), ambushes by private pilots paid by an unidentified organization (see Annexes C, D and E),]]))
    vn.menu{
       {_("Hamelsen"), "wrong"},
       {_("Battleaddict"), "r2"},

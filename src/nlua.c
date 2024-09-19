@@ -334,7 +334,7 @@ void nlua_pushEnvTable( lua_State *L )
 {
    lua_rawgeti( L, LUA_REGISTRYINDEX, nlua_envs );
 }
-#endif /* DEBBUGING */
+#endif /* DEBUGGING */
 
 /*
  * @brief Create an new environment in global Lua state.
@@ -437,7 +437,7 @@ nlua_env nlua_newEnv( const char *name )
 /*
  * @brief Frees an environment created with nlua_newEnv()
  *
- *    @param env Enviornment to free.
+ *    @param env Environment to free.
  */
 void nlua_freeEnv( nlua_env env )
 {
@@ -468,7 +468,7 @@ void nlua_pushenv( lua_State *L, nlua_env env )
 }
 
 /*
- * @brief Gets variable from enviornment and pushes it to stack
+ * @brief Gets variable from environment and pushes it to stack
  *
  * This is meant to replace lua_getglobal()
  *
@@ -956,7 +956,7 @@ int nlua_errTrace( lua_State *L )
 }
 
 /*
- * @brief Wrapper around lua_pcall() that handles errors and enviornments
+ * @brief Wrapper around lua_pcall() that handles errors and environments
  *
  *    @param env Environment.
  *    @param nargs Number of arguments to pass.

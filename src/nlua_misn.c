@@ -327,7 +327,7 @@ static int misn_setReward( lua_State *L )
 
 /**
  * @brief Sets the distance to the mission's goal. Used for sorting missions in
- * the mission comuter. Unused otherwise.
+ * the mission computer. Unused otherwise.
  *
  *    @luatparam number Distance from the current player position.
  * @luafunc setDistance

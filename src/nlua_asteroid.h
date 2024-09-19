@@ -6,7 +6,7 @@
 #include "asteroid.h"
 #include "nlua.h"
 
-#define ASTEROID_METATABLE "asteroid" /**< Astroid metatable identifier. */
+#define ASTEROID_METATABLE "asteroid" /**< Asteroid metatable identifier. */
 
 typedef struct LuaAsteroid_s {
    int parent;

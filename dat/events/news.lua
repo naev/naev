@@ -18,7 +18,7 @@ local ARTICLE_CHANCE = 0.25 -- Chance a new article can appear
 
 local add_article, add_econ_article, add_header -- forward-declared functions
 
--- List to treat special factions diffferently
+-- List to treat special factions differently
 local override_list = {
    -- Treat pirate clans the same (at least for now)
    ["Wild Ones"]     = "Pirate",
@@ -208,7 +208,7 @@ function add_article( my_faction, force )
       return false
    end
 
-   -- Get the elemnt
+   -- Get the element
    local elem  = alst[ rnd.rnd( 1, #alst ) ]
    local head  = elem.head
    local body  = elem.body
