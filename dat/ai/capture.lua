@@ -13,6 +13,7 @@ function create ()
    mem.atk = require "ai.core.attack.pacifist"
 end
 
+-- Just follow or idle
 function idle ()
    local l = ai.pilot():leader()
    if l then
@@ -21,4 +22,9 @@ function idle ()
       ai.settimer( 0, 5 )
       ai.pushtask( "idle_wait", l )
    end
+end
+
+-- Do not attack
+function should_attack ()
+   return false
 end

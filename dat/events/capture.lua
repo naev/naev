@@ -16,7 +16,7 @@ local function setup_pilot( p )
    plt = p
    local pp = player.pilot()
    plt:setLeader( pp )
-   plt:changeAI( "follow" )
+   plt:changeAI( "capture" )
    plt:rename( mem.name )
    plt:setNoClear()
    plt:setFriendly(true)
