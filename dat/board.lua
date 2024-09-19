@@ -345,7 +345,7 @@ local function is_capturable ()
    end
    local flttot, fltcur = player.fleetCapacity()
    if flttot-fltcur < board_plt:points() then
-      return false, fmt.f(_("You do not have enough fleet capacity to capture the ship. You need {needed}, but only have {have}."),
+      return false, fmt.f(_("You do not have enough free fleet capacity to capture the ship. You need {needed}, but only have {have} free fleet capacity."),
          {needed=board_plt:points(), have=flttot-fltcur})
    end
    return true
