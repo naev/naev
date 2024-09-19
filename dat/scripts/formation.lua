@@ -23,7 +23,7 @@ formations[keys[#keys]] = function (leader)
    local angle = math.pi/4 -- Spokes start rotated at a 45 degree angle.
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       angle = math.fmod(angle + math.pi/2, 2*math.pi) -- Rotate spokes by 90 degrees.
       radius = 100 * (math.floor(i / 4) + 1) -- Increase the radius every 4 positions.
    end
@@ -74,7 +74,7 @@ formations[keys[#keys]] = function (leader)
          count[ship_class] = count[ship_class] + 1 --Update the count
       end
       radius = radii[ship_class] --Assign the radius, defined above.
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
    end
 end
 
@@ -86,7 +86,7 @@ formations[keys[#keys]] = function (leader)
    local angle = math.pi/4 -- Arms start at a 45 degree angle.
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       angle = angle * -1 -- Flip the arms between -45 and 45 degrees.
       radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
    end
@@ -102,7 +102,7 @@ formations[keys[#keys]] = function (leader)
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
       angle = (flip * math.pi/4) + math.pi -- Flip the arms between 135 and 225 degrees.
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
       radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
    end
@@ -118,7 +118,7 @@ formations[keys[#keys]] = function (leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.rad(135 + (90 * flip))  --Flip between 45 degrees and 225 degrees.
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
       radius = 100 * (math.ceil((i+1) / 2)) -- Increase the radius every 2 positions
    end
@@ -134,7 +134,7 @@ formations[keys[#keys]] = function (leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.rad(225 + (90 * flip)) --Flip between 315 degrees, and 135 degrees
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
       radius = 100 * (math.ceil((i+1) / 2))
    end
@@ -150,7 +150,7 @@ formations[keys[#keys]] = function (leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.pi * (1+flip)/2  --flip between 0 degrees and 180 degrees
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
       radius = 100 * (math.ceil((i+1)/2)) --Increase the radius every 2 ships.
    end
@@ -166,7 +166,7 @@ formations[keys[#keys]] = function (leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.pi + (math.pi/2 * flip) --flip between 90 degrees and 270 degrees
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
       radius = 100 * (math.ceil((i+1)/2)) --Increase the radius every 2 ships.
    end
@@ -182,7 +182,7 @@ formations[keys[#keys]] = function (leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.rad(22.5 * flip) / (radius / orig_radius)
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       if flip == 0 then
          flip = -1
          radius = (orig_radius * (math.ceil((i+1)/3))) + ((orig_radius * (math.ceil((i+1)/3))) / 30)
@@ -205,7 +205,7 @@ formations[keys[#keys]] = function (leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.rad(22.5 * flip) / (radius / orig_radius)
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       if flip == 0 then
          flip = -1
          radius = (orig_radius * (math.ceil((i+1)/3))) - ((orig_radius * (math.ceil((i+1)/3))) / 20)
@@ -226,7 +226,7 @@ formations[keys[#keys]] = function (leader)
    local angle = 2*math.pi / #pilots -- The angle between each ship, in radians.
    local radius = 80 + #pilots * 25 -- Pulling these numbers out of my ass. The point being that more ships mean a bigger circle.
    for i, p in ipairs(pilots) do
-      leader:msg(p, "form-pos", {angle * i, radius, "absolute"})
+      leader:msg(p, "form_pos", {angle * i, radius, "absolute"})
    end
 end
 
@@ -238,7 +238,7 @@ end
 
 -- Clear formation; not really a 'formation' so it is not in keys
 function formations.clear(leader)
-   leader:msg(leader:followers(), "form-pos", nil)
+   leader:msg(leader:followers(), "form_pos", nil)
 end
 
 function formations.random_key()
@@ -254,7 +254,7 @@ function formations.circleLarge(leader)
    local angle = 2*math.pi / #pilots -- The angle between each ship, in radians.
    local radius = 1500
    for i, p in ipairs(pilots) do
-      leader:msg(p, "form-pos", {angle * i, radius, "absolute"})
+      leader:msg(p, "form_pos", {angle * i, radius, "absolute"})
    end
 end
 
