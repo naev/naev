@@ -563,13 +563,14 @@ function board( plt )
 
    local fct = board_plt:faction()
    local pm = board_plt:memory()
-   board_fcthit = pm.distress_hit or math.max( math.pow(board_plt:points(), 0.37)-2 )
+   board_fcthit = pm.distress_hit or (math.pow(board_plt:points(), 0.37)-2)
+   board_fcthit = math.max( 0, board_fcthit )
    -- TODO see if nobody notices
    if fct:static() or fct:invisible() then
       board_fcthit = 0
    end
 
-   local w, h = 570,340
+   local w, h = 570,350
    local wdw = luatk.newWindow( nil, nil, w, h )
    board_wdw = wdw
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {plt}"), {plt=plt}), nil, "center" )
@@ -599,22 +600,22 @@ function board( plt )
    local fctmsg
    if board_fcthit > 0 then
       fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}."),
-            {fct=fct,fcthit=board_fcthit})
+            {fct=fct,fcthit=fmt.number(board_fcthit)})
    else
       fctmsg = _("TODO")
    end
    board_fcthit_txt = luatk.newText( wdw, 20, 40, w-40, 20, fctmsg )
 
    -- Add manage cargo button if applicable
-   cargo_btn = luatk.newButton( wdw, w-20-120, 60, 120, 30, _("Manage Cargo"), manage_cargo )
+   cargo_btn = luatk.newButton( wdw, w-20-120, 70, 120, 30, _("Manage Cargo"), manage_cargo )
    if #player.fleetCargoList() <= 0 then
       cargo_btn:disable()
       cargo_btn:setAlt(_("You have no cargo to manage."))
    end
-   board_freespace = luatk.newText( wdw, 20, 70, w-40, 20, "" )
+   board_freespace = luatk.newText( wdw, 20, 80, w-40, 20, "" )
    board_updateFreespace()
 
-   local y = 100
+   local y = 115
    local b = 80
    local m = 10
    local nrows = 2
@@ -641,10 +642,12 @@ function board_fcthit_check( func )
    local std = fct:playerStanding()
    if (std>=0) and (std-board_fcthit<0) then
       local msg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {amount} (current standing is {current}). #rThis action will make you hostile with {fct}!#0"),
-         {fct=fct, amount=board_fcthit, current=fct:playerStanding()})
+         {fct=fct, amount=fct.number(board_fcthit), current=fct:playerStanding()})
       luatk.yesno(fmt.f(_([[Offend {fct}?]]),{fct=fct}), msg, function ()
          func()
       end )
+   else
+      func()
    end
 end
 
@@ -652,8 +655,10 @@ local function board_fcthit_apply ()
    if board_fcthit <= 0 then
       return
    end
-   board_fcthit_txt:set(fmt.f(_("You have lost {fcthit} reputation with {fct}!"),
-      {fcthit=board_fcthit,fct=board_plt:faction()}))
+   local msg = fmt.f(_("You have lost {fcthit} reputation with {fct}!"),
+      {fcthit=fmt.number(board_fcthit),fct=board_plt:faction()})
+   player.msg( "#r"..msg.."#0" )
+   board_fcthit_txt:set( msg )
    board_fcthit = 0
 end
 
