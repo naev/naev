@@ -114,6 +114,7 @@ int comm_openPilot( unsigned int pilot )
     * already. */
    if ( !comm_commClose && p->faction == FACTION_PLAYER ) {
       escort_playerCommand( p );
+      ai_unsetPilot( oldmem );
       return 0;
    }
 
