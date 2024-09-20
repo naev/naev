@@ -2133,9 +2133,9 @@ void equipment_updateShips( unsigned int wid, const char *str )
       if ( player.fleet_capacity > 0 )
          l +=
             scnprintf( &buf[l], sizeof( buf ) - l, "\n%d", ship->ship->points );
-      l +=
-         scnprintf( &buf[l], sizeof( buf ) - l, "\n#%c%s%d#0",
-                    EQ_COMP( (int)floor( ship->crew ), ship->ship->crew, 0 ) );
+      l += scnprintf(
+         &buf[l], sizeof( buf ) - l, "\n#%c%s%d#0",
+         EQ_COMP( MAX( 1, (int)round( ship->crew ) ), ship->ship->crew, 0 ) );
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s#0 %s",
                       num2strU( ship->solid.mass, 0 ), UNIT_MASS );
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
