@@ -248,6 +248,7 @@ static int pilotL_collisionTest( lua_State *L );
 static int pilotL_damage( lua_State *L );
 static int pilotL_kill( lua_State *L );
 static int pilotL_knockback( lua_State *L );
+static int pilotL_distress( lua_State *L );
 static int pilotL_calcStats( lua_State *L );
 static int pilotL_shipvarPeek( lua_State *L );
 static int pilotL_shipvarPush( lua_State *L );
@@ -451,6 +452,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "damage", pilotL_damage },
    { "kill", pilotL_kill },
    { "knockback", pilotL_knockback },
+   { "distress", pilotL_distress },
    { "calcStats", pilotL_calcStats },
    { "shipvarPeek", pilotL_shipvarPeek },
    { "shipvarPush", pilotL_shipvarPush },
@@ -6735,6 +6737,46 @@ static int pilotL_knockback( lua_State *L )
                     e * v2->y + ( 1. - e ) * vy );
    }
 
+   return 0;
+}
+
+/**
+ * @brief Sends a distress single from the pilot.
+ *
+ * Does not cause a faction hit.
+ *
+ *    @luatparam Pilot p Pilot to send a distress signal.
+ *    @luatparam Pilot attacker Pilot to be distressing about.
+ * @luafunc distress
+ */
+static int pilotL_distress( lua_State *L )
+{
+   Pilot        *p           = luaL_validpilot( L, 1 );
+   Pilot        *attacker    = luaL_validpilot( L, 2 );
+   Pilot *const *pilot_stack = pilot_getAll();
+   /* Now we must check to see if a pilot is in range. */
+   for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
+      Pilot *pi = pilot_stack[i];
+
+      /* Skip if unsuitable. */
+      if ( ( pi->ai == NULL ) || ( pi->id == p->id ) ||
+           ( pilot_isFlag( pi, PILOT_DEAD ) ) ||
+           ( pilot_isFlag( pi, PILOT_DELETE ) ) )
+         continue;
+
+      if ( !pilot_inRangePilot( p, pi, NULL ) ) {
+         /*
+          * If the pilots are within sensor range of each other, send the
+          * distress signal, regardless of electronic warfare hide values.
+          */
+         double d = vec2_dist2( &p->solid.pos, &pi->solid.pos );
+         if ( d > pilot_sensorRange() )
+            continue;
+      }
+
+      /* Send AI the distress signal. */
+      ai_getDistress( pi, p, attacker );
+   }
    return 0;
 }
 
