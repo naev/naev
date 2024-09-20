@@ -11,6 +11,7 @@ function equip( p )
    local params = {
       disable = 0, -- THEY WANT BLOOD
    }
+   p:intrinsicSet( "crew_mod", 50 ) -- Compensate intrinsic and make harder to capture
    p:outfitAddIntrinsic( intrinsic_taint ) -- So the player can capture it
    return equipopt.pirate( p, params )
 end
