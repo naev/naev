@@ -605,6 +605,12 @@ function board( plt )
       fctmsg = _("Looting anything from the ship may anger nearby ships.")
    end
    board_fcthit_txt = luatk.newText( wdw, 20, 40, w-40, 20, fctmsg )
+   local fh = board_fcthit_txt:height()
+   local dfh = luatk._deffont:getLineHeight()
+   if fh > dfh then
+      h = h + fh-(30-dfh)
+      wdw:resize( w, h )
+   end
 
    -- Add manage cargo button if applicable
    cargo_btn = luatk.newButton( wdw, w-20-120, 70, 120, 30, _("Manage Cargo"), manage_cargo )
