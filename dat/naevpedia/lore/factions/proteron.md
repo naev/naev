@@ -104,7 +104,7 @@ They built a hypergate in secret in their home system, Protera.
 They seceded from Imperial authority as soon as the gate was built and moved a small fleet as a feint into the classical defences.
 When [the Empire](lore/factions/empire) took the bait, the Sovereign Proteron Autarchy, as they now styled themselves, sent the most massive fleet ever seen through their hypergate.
 
-Then [the Incident](lore/history/incident) occured.
+Then [the Incident](lore/history/incident) occurred.
 
 After the dust settled, Protera was inaccessible, Sol was unreachable, their planets, factories and fleets had been decimated and the Circle was mostly gone.
 Thankfully, enough of the hierarchy remained that society did not dissolve.

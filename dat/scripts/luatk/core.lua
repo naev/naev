@@ -11,6 +11,9 @@ local utf8 = require 'utf8'
 local vn = require "vn"
 local fmt = require "format"
 
+local deffont = lg.newFont( naev.conf().font_size_def )
+deffont:setOutline(1)
+
 local luatk = {
    _windows = {},
    _canvas = nil,
@@ -49,7 +52,7 @@ local luatk = {
          text     = { 0.2,  0.8,  0.1  },
       },
    },
-   _deffont = nil,
+   _deffont = deffont,
 }
 
 --[[--
@@ -427,14 +430,28 @@ Creates a new window.
 --]]
 function luatk.newWindow( x, y, w, h )
    local nw, nh = naev.gfx.dim()
+   local cx, cy = x==nil, y==nil
    x = x or ((nw-w)/2)
    y = y or ((nh-h)/2)
    local wdw = { x=x, y=y, w=w, h=h, _widgets={} }
    setmetatable( wdw, Window_mt )
    table.insert( luatk._windows, wdw )
    wdw.type = "window"
+   wdw.centerx = cx
+   wdw.centery = cy
    luatk._dirty = true
    return wdw
+end
+function luatk.Window:resize( w, h )
+   local nw, nh = naev.gfx.dim()
+   self.w = w
+   self.h = h
+   if self.centerx then
+      self.x = (nw-w)/2
+   end
+   if self.centery then
+      self.y = (nh-h)/2
+   end
 end
 function luatk.Window:draw()
    local x, y, w, h = self.x, self.y, self.w, self.h

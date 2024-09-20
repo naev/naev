@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 # Prefers GDB over LLDB if both are installed, you can choose your preference
 # by exporting PREFERLLDB=true
-# Set WITHDEBUGGER=false to avoid using debuggers where it is a hinderance.
+# Set WITHDEBUGGER=false to avoid using debuggers where it is a hindrance.
 PREFERLLDB = os.getenv("PREFERLLDB", "false")
 WITHDEBUGGER = os.getenv("WITHDEBUGGER", "true")
 

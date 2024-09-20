@@ -6,11 +6,6 @@
  *
  * @brief For communicating with spobs/pilots.
  */
-
-/** @cond */
-#include "naev.h"
-/** @endcond */
-
 #include "comm.h"
 
 #include "ai.h"
@@ -72,7 +67,6 @@ int comm_openPilot( unsigned int pilot )
 
    /* Get the pilot. */
    p = pilot_get( pilot );
-   c = pilot_getFactionColourChar( p );
 
    /* Make sure pilot exists. */
    if ( p == NULL )
@@ -84,6 +78,7 @@ int comm_openPilot( unsigned int pilot )
       player_message( _( "#rTarget is out of communications range" ) );
       return -1;
    }
+   c = pilot_getFactionColourChar( p );
 
    /* Must not be jumping. */
    if ( pilot_isFlag( p, PILOT_HYPERSPACE ) ) {
@@ -95,12 +90,6 @@ int comm_openPilot( unsigned int pilot )
    if ( !pilot_isFlag( p, PILOT_HAILING ) &&
         pilot_isFlag( p, PILOT_DISABLED ) ) {
       player_message( _( "#%c%s#r does not respond" ), c, p->name );
-      return 0;
-   }
-
-   /* Check for player faction (escorts). */
-   if ( p->faction == FACTION_PLAYER ) {
-      escort_playerCommand( p );
       return 0;
    }
 
@@ -119,6 +108,15 @@ int comm_openPilot( unsigned int pilot )
                              { .type = HOOK_PARAM_SENTINEL } };
       hooks_runParam( "hail", hparam );
       pilot_runHook( p, PILOT_HOOK_HAIL );
+   }
+
+   /* Check for player faction (escorts). Should be moved to the comm script
+    * most likely. For now, we just run it after hooks if it hasn't been closed
+    * already. */
+   if ( !comm_commClose && p->faction == FACTION_PLAYER ) {
+      escort_playerCommand( p );
+      ai_unsetPilot( oldmem );
+      return 0;
    }
 
    /* Check to see if pilot wants to communicate. */

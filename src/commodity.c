@@ -4,7 +4,7 @@
 /**
  * @file commodity.c
  *
- * @brief Handles commidities.
+ * @brief Handles commodities.
  */
 /** @cond */
 #include <stdio.h>
@@ -432,7 +432,7 @@ int commodity_checkIllegal( const Commodity *com, int faction )
  * @brief Checks to see if a commodity is temporary.
  *
  *    @brief Name of the commodity to check.
- *    @return 1 if temorary, 0 otherwise.
+ *    @return 1 if temporary, 0 otherwise.
  */
 int commodity_isTemp( const char *name )
 {

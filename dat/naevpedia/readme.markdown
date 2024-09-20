@@ -1,4 +1,3 @@
-
 ## Naevpedia (or Holo-Archives as known in-game)
 
 Welcome to the Naevpedia formatting document! This document uses the `.markdown` extension to avoid being sucked into the Naev build system.
@@ -32,7 +31,7 @@ and gets appended to the meta-data of the file. Currently used tags are:
 
 1. **title**: represents the title of the file as shown in the naevpedia.
 1. **priority**: affects the order in which it appears. Defaults to 5 and lower means higher up along the list. If tied priority, the tilte is used for sorting.
-1. **cond**: contains a conditional Lua statement indicating when the page should be visible. By default pages wil be visible unless cond is specified and evaluates to `false`.
+1. **cond**: contains a conditional Lua statement indicating when the page should be visible. By default pages will be visible unless cond is specified and evaluates to `false`.
 
 An example would be
 ```
@@ -48,7 +47,7 @@ which would make the page appears as "Admonisher" only if the condition is met, 
 
 Translations are done on a line-by-line basis after extracting the YAML and before processing the Lua and Markdown.
 For this purpose, it is best to break up text by lines.
-Each line will be trasnlated separately, but when it gets parsed by Markdown, it will become part of the same block and will not look like it was cut up.
+Each line will be translated separately, but when it gets parsed by Markdown, it will become part of the same block and will not look like it was cut up.
 This helps minimize the number of changes necessary when updating translations.
 
 
@@ -70,7 +69,7 @@ The Proteron are not very kind.
 You don't know about them!
 <% end %>
 ```
-In the above case, whether or not the `Proteron` faction is known will affect whan text gets generated. You can do arbitary Lua expressions in this way, including loops and defining variables.
+In the above case, whether or not the `Proteron` faction is known will affect what text gets generated. You can do arbitrary Lua expressions in this way, including loops and defining variables.
 
 
 #### Markdown Parser

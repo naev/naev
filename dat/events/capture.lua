@@ -10,13 +10,14 @@
 --]]
 local fmt = require 'format'
 local vn = require 'vn'
+local ccomm = require "common.comm"
 
 local plt
 local function setup_pilot( p )
    plt = p
    local pp = player.pilot()
    plt:setLeader( pp )
-   plt:changeAI( "follow" )
+   plt:changeAI( "capture" )
    plt:rename( mem.name )
    plt:setNoClear()
    plt:setFriendly(true)
@@ -35,6 +36,12 @@ function create ()
    plt = nc.capture_pilot.pilot
    mem.cost = nc.capture_pilot.cost
    nc.capture_pilot = nil
+
+   -- Original data
+   mem.o = {
+      faction = plt:faction(),
+      name = plt:name(),
+   }
 
    mem.name = fmt.f(_("Captured {shp}"), {shp=plt:ship():name()} )
    mem.ship = plt:ship()
@@ -61,6 +68,47 @@ function plt_death ()
 end
 
 function plt_hail ()
+   local abandon = false
+   player.commClose()
+
+   vn.reset()
+   vn.scene()
+   ccomm.newCharacter( vn, plt )
+   vn.transition()
+
+   vn.label("menu")
+   vn.na(_([[What do you wish to do with your captured ship?]]))
+   vn.menu{
+      {_([[Abandon.]]), "abandon"},
+      {_([[Close.]]), "close"},
+   }
+
+   vn.label("abandon")
+   vn.na(_([[Are you sure you wish to abandon this captured ship? #rThis is irreversible.#0]]))
+   vn.menu{
+      {_([[Cancel.]]), "menu"},
+      {_([[Abandon the ship.]]), "abandon_yes"},
+   }
+
+   vn.label("abandon_yes")
+   vn.label(fmt.f(_([[You abandon the {ship}.]]),
+      {ship=plt}))
+   vn.func( function () abandon = true end )
+   vn.done()
+
+   vn.label("close")
+   vn.run()
+
+   -- Ship is abandoned
+   if abandon then
+      plt:disable()
+      plt:setNoBoard(true)
+      plt:setLeader()
+      plt:setFaction( mem.o.faction )
+      plt:rename( mem.o.name )
+      plt:setFriendly(false)
+      evt.finish(false)
+   end
 end
 
 function land ()

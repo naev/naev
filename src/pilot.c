@@ -1245,7 +1245,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
             lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->lua_mem ); /* m */
             lua_getfield( naevL, -1, "distress_hit" );           /* m, v */
             if ( lua_isnil( naevL, -1 ) )
-               hit = ( pow( p->base_mass, 0.2 ) - 1. );
+               hit = MAX( 0, pow( p->ship->points, 0.37 ) - 2 );
             else if ( lua_isnumber( naevL, -1 ) )
                hit = lua_tonumber( naevL, -1 );
             else {

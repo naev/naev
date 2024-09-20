@@ -2703,6 +2703,7 @@ dat/ai/baddie_norun.lua
 dat/ai/baddiepatrol.lua
 dat/ai/baddiepos.lua
 dat/ai/black_lotus.lua
+dat/ai/capture.lua
 dat/ai/civilian.lua
 dat/ai/collective.lua
 dat/ai/collective_norun.lua
@@ -2750,7 +2751,6 @@ dat/ai/flee.lua
 dat/ai/flf.lua
 dat/ai/flf_norun.lua
 dat/ai/flf_rogue_norun.lua
-dat/ai/follow.lua
 dat/ai/frontier_police.lua
 dat/ai/goddard.lua
 dat/ai/guard.lua

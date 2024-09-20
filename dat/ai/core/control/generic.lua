@@ -46,6 +46,7 @@ mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun         = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
 mem.doscans       = false -- Should the pilot try to scan other pilots?
+mem.ignoreorders  = false -- Should the pilot ignore order messages?
 -- mem.scanned is created per pilot otherwise the list gets "shared"
 --mem.scanned       = {} -- List of pilots that have been scanned
 
@@ -210,135 +211,125 @@ local function sameFleet( pa, pb )
    return la == lb
 end
 
+--[[
+Functions to handle different commands that can be recieved
+--]]
+local message_handler_funcs = {
+   -- Case message is being sent from the environment, such as asteroids
+   asteroid = function( _p, si, dopush, sender, data )
+      if not dopush or sender==nil or not data or not data:exists() then return false end
+      local ap = data:pos()
+      if should_investigate( ap, si ) then
+         ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
+         ai.pushtask("inspect_moveto", ap )
+         return true
+      end
+      return false
+   end,
+   distress = function( _p, _si, _dopush, sender, data )
+      if sender==nil then return false end
+      return distress_handler( sender, data )
+   end,
+   hyperspace = function( p, _si, dopush, sender, data )
+      if sender==nil or not dopush or ai.taskname()=="hyperspace_follow" or not (p:leader()==nil or sameFleet( p, sender )) then return false end
+      ai.pushtask("hyperspace_follow", data)
+      return true
+   end,
+   land = function( p, _si, dopush, sender, data )
+      if not dopush or sender==nil or not (p:leader()==nil or sameFleet( p, sender )) then return false end
+      ai.pushtask("land", data)
+      return true
+   end,
+   scanned = function( p, _si, _dopush, sender, data )
+      if not mem.doscans or data==nil or not data:exists() or sender==nil or not sender:exists() or not p:faction():areAllies( sender:faction() ) then return false end
+      mem.scanned = mem.scanned or {} -- Create table if doesn't exist
+      table.insert( mem.scanned, data )
+      -- Stop scanning if they got information about the scan
+      if ai.taskname() == "scan" and ai.taskdata() == data then
+         ai.poptask()
+         return true
+      end
+      return false
+   end,
+   -- Follower is being attacked
+   f_attacked = function( p, si, dopush, sender, data )
+      if sender==nil or not sender:exists() or sender:leader()~=p then return false end
+      if not si.fighting and should_attack( data, si, true ) then
+         -- Also signal to other followers
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "l_attacked", data )
+         end
+         if dopush then
+            ai.pushtask("attack", data)
+            return true
+         end
+      end
+      return false
+   end,
+   form_pos = function( p, _si, _dopush, sender, data )
+      if sender==nil or not sender:exists() or sender~=p:leader() then return false end
+      mem.form_pos = data
+      return false
+   end,
+   l_attacked = function( p, si, dopush, sender, data )
+      if not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
+      if not si.fighting and should_attack( data, si, true ) then
+         ai.pushtask("attack", data)
+         return true
+      end
+      return false
+   end,
+   hyperspace_abort = function( p, _si, _dopush, sender, _data )
+      if sender==nil or not sender:exists() or sender~=p:leader() then return false end
+      if ai.taskname()=="hyperspace_follow" then
+         ai.poptask()
+         ai.hyperspaceAbort()
+         return true
+      end
+      return false
+   end,
+   e_attack = function( p, _si, dopush, sender, data )
+      local l = p:leader()
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l or data:leader() == l then return false end
+      clean_task()
+      --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
+      if data:flags("disabled") then
+         ai.pushtask("attack_forced_kill", data)
+      else
+         ai.pushtask("attack_forced", data)
+      end
+      return true
+   end,
+   e_hold = function( p, _si, dopush, sender, _data )
+      local l = p:leader()
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      ai.pushtask("hold")
+      return true
+   end,
+   e_return = function( p, _si, dopush, sender, _data )
+      local l = p:leader()
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      ai.pushtask( "flyback", mem.carried )
+      return true
+   end,
+   e_clear = function( p, _si, dopush, sender, _data )
+      local l = p:leader()
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      p:taskClear()
+      return true
+   end,
+}
+
 function handle_messages( p, si, dopush )
    local taskchange = false
-   local l = p:leader()
    for i, msg in ipairs(ai.messages()) do
       local sender, msgtype, data = msg[1], msg[2], msg[3]
-
-      -- This is the case that the message is being sent from the environment, such as asteroids
-      if sender==nil then
-         -- Asteroid was blown up with mining tools
-         if msgtype=="asteroid" and data and data:exists() then
-            local ap = data:pos()
-            if dopush and should_investigate( ap, si ) then
-               ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
-               ai.pushtask("inspect_moveto", ap )
-               taskchange = true
-            end
-
-         -- Some signal was detected
-         elseif msgtype=="signal" and data then
-            if dopush and should_investigate( data, si ) then
-               ai.pushtask("inspect_moveto", data )
-               taskchange = true
-            end
-         end
+      local f = message_handler_funcs[ msgtype ]
+      if f then
+         taskchange = f( p, si, dopush, sender, data ) and taskchange
       else
-         if msgtype=="distress" then
-            taskchange = distress_handler( sender, data )
-         end
-
-         -- Special case where we accept messages from all pilots in the same fleet
-         if l==nil or sameFleet( p, sender ) then
-            if msgtype == "hyperspace" then
-               if dopush and ai.taskname()~="hyperspace_follow" then
-                  ai.pushtask("hyperspace_follow", data)
-                  taskchange = true
-               end
-            elseif msgtype == "land" then
-               if dopush then
-                  ai.pushtask("land", data)
-                  taskchange = true
-               end
-            end
-         end
-
-         -- Skip message from nonexistent sender
-         if sender:exists() then
-
-            -- Below we only handle if they came from allies
-            -- (So far, only allies would send in the first place, but this check future-proofs things.
-            -- One day it might be interesting to have non-allied snitches whose tips get checked out...)
-            if p:faction():areAllies( sender:faction() ) then
-               if msgtype == "scanned" then
-                  if mem.doscans and data ~= nil and data:exists() then
-                     mem.scanned = mem.scanned or {} -- Create table if doesn't exist
-                     table.insert( mem.scanned, data )
-                     -- Stop scanning if they got information about the scan
-                     if ai.taskname() == "scan" and ai.taskdata() == data then
-                        ai.poptask()
-                        taskchange = true
-                     end
-                  end
-               end
-            end
-
-            -- Messages coming from followers
-            if sender:leader() == p then
-               if msgtype == "f_attacked" then
-                  if not si.fighting and should_attack( data, si, true ) then
-                     -- Also signal to other followers
-                     for k,v in ipairs(p:followers()) do
-                        p:msg( v, "l_attacked", data )
-                     end
-                     if dopush then
-                        ai.pushtask("attack", data)
-                        taskchange = true
-                     end
-                  end
-               end
-
-            -- Below we only handle if they came from the glorious leader
-            elseif sender == l then
-               if msgtype == "form-pos" then
-                  mem.form_pos = data
-               elseif msgtype == "l_attacked" then
-                  if not si.fighting and should_attack( data, si, true ) then
-                     if dopush then
-                        ai.pushtask("attack", data)
-                        taskchange = true
-                     end
-                  end
-               elseif msgtype=="hyperspace_abort" then
-                  if ai.taskname()=="hyperspace_follow" then
-                     ai.poptask()
-                     ai.hyperspaceAbort()
-                     taskchange = true
-                  end
-
-               -- Escort commands
-               elseif dopush then
-                  -- Attack target
-                  if msgtype == "e_attack" then
-                     if data ~= nil and data:exists() then
-                        if data:leader() ~= l then -- Don't kill from same team
-                           clean_task()
-                           --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
-                           if data:flags("disabled") then
-                              ai.pushtask("attack_forced_kill", data)
-                           else
-                              ai.pushtask("attack_forced", data)
-                           end
-                           taskchange = true
-                        end
-                     end
-                  -- Hold position
-                  elseif msgtype == "e_hold" then
-                     ai.pushtask("hold")
-                     taskchange = true
-                  -- Return to carrier
-                  elseif msgtype == "e_return" then
-                     ai.pushtask( "flyback", mem.carried )
-                     taskchange = true
-                  -- Clear orders
-                  elseif msgtype == "e_clear" then
-                     p:taskClear()
-                     taskchange = true
-                  end
-               end
-            end
-         end
+         warn(fmt.f(_("Unknown message '{msgtype}' to pilot '{receiver}' from pilot '{sender}'"),
+            {msgtype=msgtype, receiver=p, sender=(sender or "nil")}))
       end
    end
    return taskchange

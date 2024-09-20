@@ -57,7 +57,7 @@ void poly_load( CollPoly *polygon, xmlNodePtr base )
          if ( xml_isNode( cur, "x" ) ) {
             char *saveptr;
             char *list = xml_get( cur );
-            /* split the list of coordiantes */
+            /* split the list of coordinates */
             char *ch = SDL_strtokr( list, ",", &saveptr );
             while ( ch != NULL ) {
                float d = atof( ch );
@@ -70,7 +70,7 @@ void poly_load( CollPoly *polygon, xmlNodePtr base )
          } else if ( xml_isNode( cur, "y" ) ) {
             char *saveptr;
             char *list = xml_get( cur );
-            /* split the list of coordiantes */
+            /* split the list of coordinates */
             char *ch = SDL_strtokr( list, ",", &saveptr );
             while ( ch != NULL ) {
                float d = atof( ch );
@@ -357,7 +357,7 @@ int CollidePolygon( const CollPolyView *at, const vec2 *ap,
  * @brief Rotates a polygon.
  *
  *    @param[out] rpolygon Rotated polygon.
- *    @param[in] ipolygon Imput polygon.
+ *    @param[in] ipolygon Input polygon.
  *    @param[in] theta Rotation angle (radian).
  */
 void poly_rotate( CollPolyView *rpolygon, const CollPolyView *ipolygon,
@@ -411,7 +411,7 @@ const CollPolyView *poly_view( const CollPoly *poly, double dir )
  *
  *    @param[in] at Polygon a.
  *    @param[in] ap Position in space of polygon a.
- *    @param[in] x Coordiante of point.
+ *    @param[in] x Coordinate of point.
  *    @param[in] y Coordinate of point.
  *    @return 1 on collision, 0 else.
  */
@@ -454,9 +454,9 @@ static int PointInPolygon( const CollPolyView *at, const vec2 *ap, float x,
  *
  *    @param[in] at Polygon a.
  *    @param[in] ap Position in space of polygon a.
- *    @param[in] x1 Coordiante of point 1.
+ *    @param[in] x1 Coordinate of point 1.
  *    @param[in] y1 Coordinate of point 1.
- *    @param[in] x2 Coordiante of point 2.
+ *    @param[in] x2 Coordinate of point 2.
  *    @param[in] y2 Coordinate of point 2.
  *    @param[out] crash coordinates of the intersection.
  *    @return 1 on collision, 0 else.

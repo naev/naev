@@ -418,7 +418,7 @@ static int naevL_missionStart( lua_State *L )
  * still not start the mission.
  *
  * @usage naev.missionTest( "Some Mission" )
- *    @luatparam string misnname Name of the mision to test.
+ *    @luatparam string misnname Name of the mission to test.
  *    @luatreturn boolean true if the mission can be can be started, or false
  * otherwise.
  * @luafunc missionTest

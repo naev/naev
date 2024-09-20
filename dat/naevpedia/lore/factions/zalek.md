@@ -19,7 +19,7 @@ House Za'lek is one of the Great Houses in [the Empire](lore/factions/empire).
 %>
 
 * **Leader:** Za'lek Chairperson of the Board <%= leader %>
-* **Leading Structure:** Za'lek Philisophical Board for the Promotion of Science
+* **Leading Structure:** Za'lek Philosophical Board for the Promotion of Science
 * **Government:** Stochastic Meritocracy
 * **Formation:** [UST 72](lore/history)
 * **Homeworld:** Ruadan Prime (Ruadan system)

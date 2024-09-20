@@ -159,7 +159,7 @@ const Difficulty *difficulty_get( const char *name )
       if ( strcmp( name, d->name ) == 0 )
          return d;
    }
-   WARN( _( "Uknown difficulty setting '%s'" ), name );
+   WARN( _( "Unknown difficulty setting '%s'" ), name );
    return difficulty_default;
 }
 
