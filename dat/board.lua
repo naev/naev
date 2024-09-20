@@ -352,6 +352,9 @@ local function is_capturable ()
    if t.noplayer then
       return false, _("This ship is not capturable.")
    end
+   if board_plt:flags("carried") then
+      return false, _("You can not capture deployed fighters.")
+   end
    local pm = board_plt:memory()
    if not pm.natural then
       return false, _("This ship is not capturable.")
