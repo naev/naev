@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-07-22 21:45+0900\n"
-"PO-Revision-Date: 2024-08-08 01:09+0000\n"
+"PO-Revision-Date: 2024-09-20 13:40+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev/ca/>\n"
 "Language: ca\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -2461,20 +2461,29 @@ msgid ""
 "there is an inscription saying \"Screw the PUAAA, long live the Hero of "
 "Antlejos!\" with an illegible signature."
 msgstr ""
+"Es tracta d'un \"stein\" que commemora la terraformació i l'establiment "
+"d'una colònia permanent a Antlejos V. El \"stein\" està intricadament gravat "
+"amb el que sembla ser escenes de la breu història de la colònia. Podeu veure "
+"el que sembla ser alguns individus que lluiten, molta maquinària pesada i "
+"gent que fa algun tipus de ball en cercle. Va passar tot això? A la part "
+"inferior hi ha una inscripció que diu \"Que es foti la PUAAA, visca l'Heroi "
+"d'Antlejos!\" amb una signatura il·legible."
 
 #: dat/outfits/accessory/cyborg_feather.xml:2
 msgid "Cyborg Feather"
-msgstr ""
+msgstr "Ploma de Cíborg"
 
 #: dat/outfits/accessory/cyborg_feather.xml:11
 msgid ""
 "A feather from a cyborg duck. Although the quill is made of some lightweight "
 "metal alloy, the rest looks surisingly close to anormal feather."
 msgstr ""
+"Una ploma d'un ànec cíborg. Tot i que la ploma està feta d'un aliatge metàl·"
+"lic lleuger, la resta sembla sorprenentment propera a una ploma normal."
 
 #: dat/outfits/accessory/dv_handbook.xml:2
 msgid "Handbook for Dvaered Good Manners"
-msgstr ""
+msgstr "Manual per a Bones Maneres Dvaered"
 
 #: dat/outfits/accessory/dv_handbook.xml:11
 msgid ""
@@ -2487,10 +2496,18 @@ msgid ""
 "highest ranks\" -- Colonel Urnus, Executive Office Manager at the High "
 "Command"
 msgstr ""
+"Quan un cavaller utilitza el cap d'un altre cavaller com a trofeu al seu "
+"bany? I quan és més adequat utilitzar-lo com a tassa? Quan està permès "
+"cremar la casa d'una de les teves víctimes? I quan és un pas en fals "
+"absolut? Lord Motoserra, un dels senyors de la guerra amb més èxit del "
+"nostre temps, respon aquestes preguntes espinoses i moltes altres en aquest "
+"petit llibre essencial. \"Aquest llibre m'ha permès avançar ràpidament als "
+"rangs més alts\" -- Coronel Urnus, director de l'oficina executiva de l'Alt "
+"Comandament"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
 msgid "Fuzzy Dice"
-msgstr ""
+msgstr "Daus Peluts"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:11
 msgid ""
@@ -2499,15 +2516,20 @@ msgid ""
 "belonged to starship pilot Mireia, who was famous for recovering artefacts "
 "from the Nebula before she disappeared mysteriously."
 msgstr ""
+"Un parell de daus peluts que es poden penjar dins de la teva nau. Pel que "
+"sembla, se suposa que et porten bona fortuna. Es diu que aquesta parella en "
+"particular va pertànyer a la pilot de la nau estel·lar Mireia, que era "
+"famosa per recuperar artefactes de la nebulosa abans que desaparegués "
+"misteriosament."
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
 #: dat/outfits/intrinsic/machiavellian_fortune.xml:10
 msgid "#pImproves luck!#0"
-msgstr ""
+msgstr "#pMillora la sort!#0"
 
 #: dat/outfits/accessory/goatee_marker.xml:2
 msgid "Goatee Marker"
-msgstr ""
+msgstr "Marcador de Perilla"
 
 #: dat/outfits/accessory/goatee_marker.xml:11
 msgid ""
@@ -2515,19 +2537,25 @@ msgid ""
 "facial hair, but Goatees in particular. It seems to have been partially used "
 "and has the marauder logo on the bottom."
 msgstr ""
+"Una rara edició limitada de Marcador de Perilla, pensada exclusivament per "
+"dibuixar no només el pèl facial, sinó les Perilles en particular. Sembla que "
+"s'ha utilitzat parcialment i té el logotip del basquejador a la part "
+"inferior."
 
 #: dat/outfits/accessory/key_chain.xml:2
 msgid "Fancy Key Chain"
-msgstr ""
+msgstr "Clauer de Luxe"
 
 #: dat/outfits/accessory/key_chain.xml:11
 msgid ""
 "A small statue of a crossed-eyed gorilla lifting a Goddard Battlecruiser."
 msgstr ""
+"Una petita estàtua d'un goril·la amb els ulls creuats aixecant un Creuer de "
+"batalla Goddard."
 
 #: dat/outfits/accessory/left_boot.xml:2
 msgid "Left Boot"
-msgstr ""
+msgstr "Bota esquerra"
 
 #: dat/outfits/accessory/left_boot.xml:11
 msgid ""
@@ -2535,14 +2563,17 @@ msgid ""
 "and is full of confetti. You're not sure what to do with it, but it might "
 "liven up the ship."
 msgstr ""
+"La bota esquerra d'un alt funcionari de l'Imperi. Sembla que no et va bé i "
+"està ple de confeti. No estàs segur de què fer-hi, però podria animar el "
+"vaixell."
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#pSmells funky.#0"
-msgstr ""
+msgstr "#pFa olor rancia.#0"
 
 #: dat/outfits/accessory/love_letter.xml:2
 msgid "Love Letter"
-msgstr ""
+msgstr "Carta d'Amor"
 
 #: dat/outfits/accessory/love_letter.xml:11
 msgid ""
@@ -2551,10 +2582,14 @@ msgid ""
 "fairly certain that you did a favour in not delivering it. At least it makes "
 "your ship look cuter."
 msgstr ""
+"Una carta d'amor mal col·locada que se suposa que hauríeu de lliurar, "
+"llegint la primera línia \"Meva torqpompelles , que feroces son sass "
+"tapapompelles...\" esteu bastant segur que heu fet un favor en no lliurar-"
+"la. Almenys fa que el teu vaixell sembli més bonic."
 
 #: dat/outfits/accessory/love_letter.xml:13
 msgid "#rLove is in the air.#0"
-msgstr ""
+msgstr "#rL'amor està a l'aire.#0"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:2
 msgid "Pentagram of Valor"
