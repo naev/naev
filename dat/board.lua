@@ -387,7 +387,7 @@ local function board_capture ()
    end
 
    local fct = board_plt:faction()
-   local fcthit = board_plt:points() / 2
+   local fcthit = board_plt:points() / 2 + board_fcthit -- So looting is always applied
    local factionmsg = ""
    if not (fct:static() or fct:invisible()) then
       factionmsg = fmt.f(_(" Capturing the ship will lower your reputation with {fct} by {amount} (current standing is {current})."),
@@ -602,7 +602,7 @@ function board( plt )
       fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}."),
             {fct=fct,fcthit=fmt.number(board_fcthit)})
    else
-      fctmsg = _("TODO")
+      fctmsg = _("Looting anything from the ship may anger nearby ships.")
    end
    board_fcthit_txt = luatk.newText( wdw, 20, 40, w-40, 20, fctmsg )
 
@@ -652,10 +652,13 @@ function board_fcthit_check( func )
 end
 
 local function board_fcthit_apply ()
+   -- Piss off nearby ships
+   board_plt:distress( player.pilot() )
+
    if board_fcthit <= 0 then
       return
    end
-   local msg = fmt.f(_("You have lost {fcthit} reputation with {fct}!"),
+   local msg = fmt.f(_("You have lost {fcthit} reputation with {fct} for looting this ship!"),
       {fcthit=fmt.number(board_fcthit),fct=board_plt:faction()})
    player.msg( "#r"..msg.."#0" )
    board_fcthit_txt:set( msg )
