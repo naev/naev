@@ -29,6 +29,10 @@ local function setup_pilot( p )
       plt:outfitAddIntrinsic( v )
    end
    plt:weapsetCleanup() -- Hopefully won't do anything now
+
+   -- Set hooks
+   hook.pilot( plt, "death", "plt_death" )
+   hook.pilot( plt, "hail", "plt_hail" )
 end
 
 function create ()
@@ -52,8 +56,6 @@ function create ()
    local a,s = plt:health()
    plt:setHealth( a, s ) -- Clears disabled state
 
-   hook.pilot( plt, "death", "plt_death" )
-   hook.pilot( plt, "hail", "plt_hail" )
    hook.land( "land" )
    hook.jumpout( "jumpout" )
    hook.enter( "enter" )
