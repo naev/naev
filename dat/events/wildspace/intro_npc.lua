@@ -21,7 +21,7 @@
    end
 
    -- Less chance on non-criminal systems
-   if rnd.rnd() &lt; 0.5 and not st.criminal then
+   if rnd.rnd() &lt; 0.8 and not st.criminal then
       return false
    end
 
