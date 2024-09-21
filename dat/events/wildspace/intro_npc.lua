@@ -37,7 +37,7 @@ local fmt = require "format"
 
 local img, prt
 local npcname = _("Suspicious Patron")
-local price = 800e3
+local price = 800e3 -- Quite expensive
 local jmpsys = system.get("Jommel")
 local jmp = jump.get( jmpsys, "Syndania" )
 
@@ -62,7 +62,7 @@ function approach ()
          {cost=fmt.credits(price)}))
    else
       -- deets is slang for details (aka intel)
-      pir(_([["Yo, soul. Ya luk like ya could use some 'dventure, know whaddai mean? Ai've got mai hands on some iiinteresting data. You in fo' sum deets on a path to them so-called #bWild Space#0, soul?"]]))
+      pir(_([["Yo, soul. Ya luhk like ya could use some 'dventure, know whaddai mean? Ai've got mai hands on some iiinteresting data. You in fo' sum deets on a path to them so-called #bWild Space#0, soul?"]]))
       vn.menu{
          {_([["Wild Space?"]]), "cont01"},
          {_([["Not interested."]]), "decline"},
