@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-07-22 21:45+0900\n"
-"PO-Revision-Date: 2024-09-20 18:41+0000\n"
+"PO-Revision-Date: 2024-09-21 05:40+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -2611,7 +2611,7 @@ msgstr ""
 
 #: dat/outfits/accessory/rackham_razor.xml:13
 msgid "#gDouble effect when flying a pirate ship.#0"
-msgstr ""
+msgstr "#gEfek ganda ketika menerbangkan kapal perompak.#0"
 
 #: dat/outfits/accessory/sandwich_holder.xml:2
 msgid "Sandwich Holder"
@@ -2653,6 +2653,8 @@ msgid ""
 "A fairly mediocre cocktail that you don't intend to drink. At least it looks "
 "good as an accessory."
 msgstr ""
+"Koktail dengan rasa biasa saja yang kamu tidak ingin minum. Setidaknya "
+"kelihatan bagus sebagai aksesori."
 
 #: dat/outfits/accessory/toy_drone.xml:2
 msgid "Toy Drone"
@@ -2676,6 +2678,10 @@ msgid ""
 "the Hyena put so much strain on the pilots that it could crush them during "
 "high acceleration?"
 msgstr ""
+"Sebuah kartu koleksi #oHiena#0 dengan kelangkaan umum. Kartu ini "
+"mendeskripsikan secara detil semua informasi penting tentang kapal Hiena. "
+"Tahukah kamu bahwa model awal Hiena menaruh tekanan yang sangat besar kepada "
+"pilotnya sampai-sampai meremukkan sang pilot pada akselerasi tinggi?"
 
 #: dat/outfits/accessory/trading_card_rare.xml:2
 msgid "Trading Card (Rare)"
@@ -8371,7 +8377,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_hyena.xml:2
 msgid "Pirate Hyena"
-msgstr "Hyena Perompak"
+msgstr "Hiena Perompak"
 
 #: dat/ships/pirate/pirate_hyena.xml:17
 msgid ""
