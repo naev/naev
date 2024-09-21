@@ -421,7 +421,7 @@ function found ()
    } )
 
    local p = pilot.add( "Mule", "Derelict", mem.goal, _("Unusual Derelict"), {naked=true} )
-   p:disable()
+   p:setDisable()
    p:setInvincible()
    p:setHilight()
    p:effectAdd( "Fade-In" )

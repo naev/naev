@@ -413,8 +413,8 @@ end
 
 -- Disables the ships
 function disableDuel()
-   klank:disable()
-   battleaddict:disable()
+   klank:setDisable()
+   battleaddict:setDisable()
 
    -- Explosion and such
    audio.soundPlay( "empexplode" )

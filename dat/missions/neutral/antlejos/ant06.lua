@@ -167,7 +167,7 @@ end
 
 function supplyboard ()
    vntk.msg(_("No more supplies"), _([[You board the ship and blast out the entire control panel rendering the ship unrepairable and not operational. That should satisfy Verner.]]))
-   supplyship:disable() -- Permanently disable
+   supplyship:setDisable() -- Permanently disable
    mem.state = 2
    misn.osdActive(3)
    misn.markerMove( mem.mrk, retpnt )

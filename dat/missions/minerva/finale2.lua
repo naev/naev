@@ -450,7 +450,7 @@ function board_boss ()
    vn.func( function ()
       boss:setHealth( 40, 0 )
       boss:setEnergy( 0 )
-      boss:disable(true) -- not permanent
+      boss:setDisable(true) -- not permanent
       for k,v in ipairs(guards) do
          v:setHostile(true)
       end

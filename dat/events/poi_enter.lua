@@ -74,7 +74,7 @@ function found ()
    -- TODO something more interesting
    local shiptype = mem.reward.ship or "Mule"
    local p = pilot.add( shiptype, "Derelict", mem.goal, _("Unusual Derelict"), {naked=true} )
-   p:disable()
+   p:setDisable()
    p:setInvincible()
    p:setHilight()
    p:effectAdd( "Fade-In" )

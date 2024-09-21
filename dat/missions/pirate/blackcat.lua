@@ -143,7 +143,7 @@ local event_list = {
          player.msg(_("The black cat accidentally hit the ship restart button, but nothing happens."), true)
          return
       end
-      pp:disable( true )
+      pp:setDisable( true )
       hook.timer( 5, "disable_restart" )
       player.msg(_("The black cat accidentally hit the ship restart button!"), true)
       player.autonavReset()

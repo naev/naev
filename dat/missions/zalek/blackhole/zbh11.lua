@@ -224,7 +224,7 @@ function enter ()
 
       local pos = vec2.newP( 5000, 2000 )
       local p = pilot.add( "Za'lek Scout Drone", "Za'lek", pos, _("Damaged Drone") )
-      p:disable()
+      p:setDisable()
       p:setVisplayer(true)
       p:setHilight(true)
       p:setInvincible(true)

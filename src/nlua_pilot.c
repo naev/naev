@@ -153,6 +153,7 @@ static int pilotL_hasIllegal( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disable( lua_State *L );
+static int pilotL_setDisable( lua_State *L );
 static int pilotL_cooldown( lua_State *L );
 static int pilotL_setCooldown( lua_State *L );
 static int pilotL_cooldownCycle( lua_State *L );
@@ -370,6 +371,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setActiveBoard", pilotL_setActiveBoard },
    { "setNoDeath", pilotL_setNoDeath },
    { "disable", pilotL_disable },
+   { "setDisable", pilotL_setDisable },
    { "setCooldown", pilotL_setCooldown },
    { "cooldownCycle", pilotL_cooldownCycle },
    { "setNoJump", pilotL_setNoJump },
@@ -3538,6 +3540,13 @@ static int pilotL_setNoDeath( lua_State *L )
    return pilotL_setFlagWrapper( L, PILOT_NODEATH );
 }
 
+/* TODO remove in 0.13.0 */
+static int pilotL_disable( lua_State *L )
+{
+   NLUA_DEPRECATED( L, "disable" );
+   return pilotL_setDisable( L );
+}
+
 /**
  * @brief Disables a pilot.
  *
@@ -3546,9 +3555,9 @@ static int pilotL_setNoDeath( lua_State *L )
  *    @luatparam Pilot p Pilot to disable.
  *    @luatparam[opt=false] boolean nopermanent Whether or not the disable
  * should be not permanent.
- * @luafunc disable
+ * @luafunc setDisable
  */
-static int pilotL_disable( lua_State *L )
+static int pilotL_setDisable( lua_State *L )
 {
    /* Get the pilot. */
    Pilot *p         = luaL_validpilot( L, 1 );

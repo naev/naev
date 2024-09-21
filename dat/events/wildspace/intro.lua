@@ -19,7 +19,7 @@ local derelict
 function create ()
    -- Create the random derelict
    derelict = pilot.add( "Koala", "Derelict", vec2.newP( system.cur():radius()*0.3, rnd.angle() ), p_("ship", "Derelict"), {ai="dummy", naked=true})
-   derelict:disable()
+   derelict:setDisable()
    derelict:intrinsicSet( "ew_hide", 300 ) -- Much more visible
    derelict:intrinsicSet( "nebu_absorb", 100 ) -- Immune to nebula
 

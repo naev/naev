@@ -262,7 +262,7 @@ function scavenger_broadcast( pos )
 
          -- Find location
          corpse = pilot.add( "Drone", "Independent", corpsepos, taiomi.young_died() )
-         corpse:disable()
+         corpse:setDisable()
          corpse:setInvisible(true)
          system.markerAdd( corpsepos )
 

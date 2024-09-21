@@ -211,7 +211,7 @@ function enter()
       joe:setHilight(true)
       joe:setVisplayer()
       joe:setInvincible(true)
-      joe:disable()
+      joe:setDisable()
       spawnSquads(true)
 
       -- Make everyone visible for the cutscene

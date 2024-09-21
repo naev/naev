@@ -275,7 +275,7 @@ function enter ()
             local p = pilot.add( d, "Za'lek", pos + vec2.newP( 100+700*rnd.rnd(), rnd.angle() ) )
             p:setInvincible(true)
             p:setInvisible(true)
-            p:disable()
+            p:setDisable()
          end
 
       -- State 1: Do nothing (just in case the player kills bounty hunters and goes off somewhere)

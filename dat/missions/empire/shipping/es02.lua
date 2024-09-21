@@ -179,7 +179,7 @@ function enter ()
 
       v:setPos( enter_vect )
       v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
-      v:disable()
+      v:setDisable()
       v:setHilight(true)
       v:setVisplayer(true)
       v:setFaction( "Empire" )

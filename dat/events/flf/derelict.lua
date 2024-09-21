@@ -52,8 +52,8 @@ function create()
    shipDV = pilot.add( "Dvaered Vendetta", "Dvaered", posDV, _("Dvaered Patrol"), {ai="dummy"} )
    shipFLF = pilot.add( "Tristan", "FLF", posFLF, _("Frontier Patrol"), {ai="dummy"} )
 
-   shipDV:disable()
-   shipFLF:disable()
+   shipDV:setDisable()
+   shipFLF:setDisable()
 
    shipDV:setHilight(true)
    shipFLF:setHilight(true)

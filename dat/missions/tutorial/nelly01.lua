@@ -326,7 +326,7 @@ function enter ()
 
       local pos = player.pos() * 0.6 -- Should be to the center of the system
       derelict = pilot.add( "Koala", "Derelict", pos, p_("ship", "Derelict") )
-      derelict:disable()
+      derelict:setDisable()
       derelict:intrinsicSet( "ew_hide", 300 ) -- Much more visible
       derelict:setHilight(true)
       hook.pilot( derelict, "board", "board" )

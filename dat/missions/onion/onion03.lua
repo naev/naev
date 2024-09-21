@@ -373,7 +373,7 @@ function rtfm_board( p )
    } )
    mem.state = 2
    runaway() -- Others run away
-   p:disable() -- Disable pilot permanently
+   p:setDisable() -- Disable pilot permanently
    pilot.toggleSpawn(true) -- spawn again
 end
 

@@ -734,7 +734,7 @@ function target_board( p )
    clear_target_hook()
 
    vntk.msg( _("Target captured"), _("You board the ship and, after a short but intense firefight, are able to take the wanted outlaw alive. Time to hand them in to the authorities.") )
-   p:disable() -- Permanently disable
+   p:setDisable() -- Permanently disable
    local c = commodity.new( N_("Wanted Outlaw"), N_("A wanted outlaw you captured.") )
    misn.cargoAdd( c, 0 )
 

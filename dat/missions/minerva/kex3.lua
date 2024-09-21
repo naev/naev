@@ -463,7 +463,7 @@ function malik_respawn_real( pos )
 end
 function malik_disabled ()
    shader.rmPPShader( noise_shader )
-   pmalik:disable()
+   pmalik:setDisable()
    player.omsgAdd( _("Aaaaaargh!"), 3 )
 
    -- Kill all enemies
@@ -550,7 +550,7 @@ function maikki_arrives_real( pos )
    -- Disable some of the vendettas
    for k,pk in ipairs(enemies_weak) do
       if pk:exists() and rnd.rnd() < 0.5 then
-         pk:disable()
+         pk:setDisable()
       end
    end
 end

@@ -234,7 +234,7 @@ function _bounty_board ()
    b.target_killed = false
    target_ship:changeAI( "dummy" )
    target_ship:setHilight( false )
-   target_ship:disable() -- Stop it from coming back
+   target_ship:setDisable() -- Stop it from coming back
    hook.rm( b.death_hook )
 end
 
