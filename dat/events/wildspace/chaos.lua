@@ -56,7 +56,7 @@ function lost_boarded( boarded, boarder )
       -- May potentially not die if gets regenerated
       boarded:kill()
       if boarded == player.pilot() then
-         vntk(_([[Not Like This]]),_([[Upon being boarded by the Lost, you quickly learn that they do not spare anyone.]]))
+         vntk.msg(_([[Not Like This]]),_([[Upon being boarded by the Lost, you quickly learn that they do not spare anyone.]]))
          player.gameover()
       end
    end
