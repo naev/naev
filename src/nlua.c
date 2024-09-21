@@ -79,6 +79,8 @@ static lua_State *nlua_newState( void ); /* creates a new state */
 static int        nlua_loadBasic( lua_State *L );
 static int        luaB_loadstring( lua_State *L );
 static int        lua_cache_cmp( const void *p1, const void *p2 );
+static int        nlua_errTraceInternal( lua_State *L, int idx );
+
 /* gettext */
 static int            nlua_gettext( lua_State *L );
 static int            nlua_ngettext( lua_State *L );
@@ -250,7 +252,7 @@ int nlua_warn( lua_State *L, int idx )
 {
    const char *msg = luaL_checkstring( L, idx );
 #if DEBUGGING
-   nlua_errTrace( L );
+   nlua_errTraceInternal( L, idx );
    DEBUG( "%s", lua_tostring( L, -1 ) );
    cli_printCoreString( lua_tostring( L, -1 ), 1 );
    lua_pop( L, 1 );
@@ -946,8 +948,13 @@ int nlua_loadStandard( nlua_env env )
  */
 int nlua_errTrace( lua_State *L )
 {
+   return nlua_errTraceInternal( L, 1 );
+}
+
+static int nlua_errTraceInternal( lua_State *L, int idx )
+{
    /* Handle special done case. */
-   const char *str = luaL_checkstring( L, 1 );
+   const char *str = luaL_checkstring( L, idx );
    if ( strcmp( str, NLUA_DONE ) == 0 )
       return 1;
 
