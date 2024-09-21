@@ -196,6 +196,7 @@ static int pilotL_setSpeedLimit( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_getArmour( lua_State *L );
 static int pilotL_getShield( lua_State *L );
+static int pilotL_getStress( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
@@ -326,6 +327,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "health", pilotL_getHealth },
    { "armour", pilotL_getArmour },
    { "shield", pilotL_getShield },
+   { "stress", pilotL_getStress },
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
    { "stats", pilotL_getStats },
@@ -4906,6 +4908,30 @@ static int pilotL_getShield( lua_State *L )
    else
       lua_pushnumber(
          L, ( p->shield_max > 0. ) ? p->shield / p->shield_max * 100. : 0. );
+   return 1;
+}
+
+/**
+ * @brief Gets the pilot's stress.
+ *
+ * @usage stress = p:stress()
+ *
+ *    @luatparam Pilot p Pilot to get stress of.
+ *    @luatparam[opt=false] boolean absolute Whether or not it shouldn't be
+ * relative and be absolute instead.
+ *    @luatreturn number The shield in % [0:100] if relative or absolute value
+ * otherwise.
+ * @luafunc stress
+ */
+static int pilotL_getStress( lua_State *L )
+{
+   const Pilot *p        = luaL_validpilot( L, 1 );
+   int          absolute = lua_toboolean( L, 2 );
+   if ( absolute )
+      lua_pushnumber( L, p->stress );
+   else
+      lua_pushnumber(
+         L, ( p->armour > 0. ) ? MIN( 1., p->stress / p->armour ) * 100. : 0. );
    return 1;
 }
 
