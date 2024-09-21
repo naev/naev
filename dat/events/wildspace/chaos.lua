@@ -12,6 +12,7 @@
 
    ...And weird derelicts.
 --]]
+local vntk = require "vntk"
 
 local flost = faction.get("Lost")
 local fnewlost
@@ -23,6 +24,8 @@ function create ()
    fnewlost = faction.dynAdd( flost, "newlost" )
    fnewlost:dynEnemy( flost )
    hook.timer( 15 + 20*rnd.rnd(), "chaos" )
+
+   hook.pilot( nil, "boardall", "lost_boarded" )
 end
 
 function chaos ()
@@ -45,4 +48,16 @@ function chaos ()
       end
    end
    hook.timer( 15 + 20*rnd.rnd(), "chaos" )
+end
+
+function lost_boarded( boarded, boarder )
+   local bf = boarder:faction()
+   if bf==flost or bf==fnewlost then
+      -- May potentially not die if gets regenerated
+      boarded:kill()
+      if boarded == player.pilot() then
+         vntk(_([[Not Like This]]),_([[Upon being boarded by the Lost, you quickly learn that they do not spare anyone.]]))
+         player.gameover()
+      end
+   end
 end
