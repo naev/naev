@@ -14,3 +14,4 @@ void cli_exit( void );
  */
 void cli_open( void );
 int  cli_isOpen( void );
+void cli_printCoreString( const char *s, int escape );

@@ -12,6 +12,12 @@
    "_LOADED" /**< Table to use to store the status of required libraries. */
 
 #define NLUA_DONE "__done__"
+#define NLUA_DEPRECATED( L, f )                                                \
+   do {                                                                        \
+      lua_pushfstring( L, _( "Deprecated function call: %s" ), f );            \
+      nlua_warn( L, -1 );                                                      \
+      lua_pop( L, 1 );                                                         \
+   } while ( 0 )
 
 #define nluaL_optarg( L, ind, def, checkfunc )                                 \
    ( lua_isnoneornil( L, ind ) ? ( def ) : checkfunc( L, ind ) )
@@ -25,6 +31,7 @@ extern nlua_env   __NLUA_CURENV;
  */
 void     lua_init( void );
 void     lua_exit( void );
+int      nlua_warn( lua_State *L, int idx );
 void     lua_clearCache( void );
 nlua_env nlua_newEnv( const char *name );
 void     nlua_freeEnv( nlua_env env );

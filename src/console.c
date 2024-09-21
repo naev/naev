@@ -85,7 +85,6 @@ static const luaL_Reg cli_methods[] = {
 static int  cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
                             int isrepeat );
 static void cli_render( double bx, double by, double w, double h, void *data );
-static void cli_printCoreString( const char *s, int escape );
 static int  cli_printCore( lua_State *L, int cli_only, int escape );
 static void cli_addMessage( const char *msg );
 static void cli_addMessageMax( const char *msg, const int l );
@@ -109,7 +108,7 @@ static char *cli_escapeString( int *len_out, const char *s, int len )
 /**
  * @brief Prints a string.
  */
-static void cli_printCoreString( const char *s, int escape )
+void cli_printCoreString( const char *s, int escape )
 {
    int                 len;
    glPrintLineIterator iter;
@@ -168,17 +167,7 @@ static int cli_printCore( lua_State *L, int cli_only, int escape )
  */
 int cli_warn( lua_State *L )
 {
-   const char *msg = luaL_checkstring( L, 1 );
-#if DEBUGGING
-   nlua_errTrace( L );
-   DEBUG( "%s", lua_tostring( L, -1 ) );
-   cli_printCoreString( lua_tostring( L, -1 ), 1 );
-   lua_pop( L, 1 );
-#endif /* DEBUGGING */
-   WARN( "%s", msg );
-   /* Add to console. */
-   cli_printCoreString( msg, 1 );
-   return 0;
+   return nlua_warn( L, 1 );
 }
 
 /**

@@ -18,6 +18,7 @@
 #include "array.h"
 #include "cmark_wrap.h"
 #include "conf.h"
+#include "console.h"
 #include "debug.h"
 #include "log.h"
 #include "lua_enet.h"
@@ -243,6 +244,21 @@ void lua_exit( void )
    free( common_script );
    lua_close( naevL );
    naevL = NULL;
+}
+
+int nlua_warn( lua_State *L, int idx )
+{
+   const char *msg = luaL_checkstring( L, idx );
+#if DEBUGGING
+   nlua_errTrace( L );
+   DEBUG( "%s", lua_tostring( L, -1 ) );
+   cli_printCoreString( lua_tostring( L, -1 ), 1 );
+   lua_pop( L, 1 );
+#endif /* DEBUGGING */
+   WARN( "%s", msg );
+   /* Add to console. */
+   cli_printCoreString( msg, 1 );
+   return 0;
 }
 
 /**
