@@ -136,7 +136,7 @@ local event_list = {
    end,
    function () -- Temporarily disable
       local pp = player.pilot()
-      local _a, _s, _st, dis = pp:health()
+      local dis = pp:disabled()
       if dis then return end -- Already disabled
       luaspfx.sfx( false, nil, meow )
       if islucky() then

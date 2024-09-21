@@ -152,6 +152,7 @@ static int pilotL_flags( lua_State *L );
 static int pilotL_hasIllegal( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_setNoDeath( lua_State *L );
+static int pilotL_disabled( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_setDisable( lua_State *L );
 static int pilotL_cooldown( lua_State *L );
@@ -370,6 +371,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setBribed", pilotL_setBribed },
    { "setActiveBoard", pilotL_setActiveBoard },
    { "setNoDeath", pilotL_setNoDeath },
+   { "disabled", pilotL_disabled },
    { "disable", pilotL_disable },
    { "setDisable", pilotL_setDisable },
    { "setCooldown", pilotL_setCooldown },
@@ -3524,6 +3526,20 @@ static int pilotL_setBribed( lua_State *L )
 static int pilotL_setActiveBoard( lua_State *L )
 {
    return pilotL_setFlagWrapper( L, PILOT_BOARDABLE );
+}
+
+/**
+ * @brief Gets the disabled state of a pilot.
+ *
+ *    @luatparam Pilot p Pilot to get disabled state of.
+ *    @luatreturn boolean Whether or not the pilot is disabled.
+ * @luafunc disabled
+ */
+static int pilotL_disabled( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot( L, 1 );
+   lua_pushboolean( L, pilot_isDisabled( p ) );
+   return 1;
 }
 
 /**

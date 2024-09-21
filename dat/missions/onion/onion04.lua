@@ -691,7 +691,7 @@ end
 
 function heartbeat ()
    local l = enemies[1]
-   local _a, _s, _ss, dis = l:health()
+   local dis = l:disabled()
    if dis then
       -- Player already disabled, nothing to do
       return
