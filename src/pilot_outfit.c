@@ -90,7 +90,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt,
           * This is meant as an incentive for the aggressor not to lose the
           * lock, and for the target to try and break the lock. */
          double old = o->u.ammo.lockon_timer;
-         /* Limit decay to the lockon time for this launcher. */
+         /* Limit decay to the lock-on time for this launcher. */
          max = o->outfit->u.lau.lockon;
          o->u.ammo.lockon_timer += dt;
          if ( ( old <= 0. ) && ( o->u.ammo.lockon_timer > 0. ) )
