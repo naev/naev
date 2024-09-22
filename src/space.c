@@ -4114,13 +4114,12 @@ int space_playerSave( xmlTextWriterPtr writer )
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
       StarSystem *sys = &systems_stack[i];
 
-      if ( !sys_isKnown( sys ) )
-         continue; /* not known */
-
       xmlw_startElem( writer, "known" );
       xmlw_attr( writer, "sys", "%s", sys->name );
+      if ( sys_isKnown( sys ) )
+         xmlw_attr( writer, "known", "1" );
       if ( sys_isFlag( sys, SYSTEM_PMARKED ) )
-         xmlw_attr( writer, "pmarked", "%s", "true" );
+         xmlw_attr( writer, "pmarked", "1" );
       if ( sys->note != NULL )
          xmlw_attr( writer, "note", "%s", sys->note );
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
@@ -4146,11 +4145,17 @@ int space_playerSave( xmlTextWriterPtr writer )
  * @brief Loads player's space properties from an XML node.
  *
  *    @param parent Parent node for space.
+ *    @param version Version of save game being loaded.
  *    @return 0 on success.
  */
-int space_playerLoad( xmlNodePtr parent )
+int space_playerLoad( xmlNodePtr parent, const char *version )
 {
    xmlNodePtr node;
+
+   /* Whether or not using the old known system. */
+   int oldknown = naev_versionCompareTarget( version, "0.12.0-alpha.3" ) > 0;
+   // DEBUG("oldknown = %d (%d, %s)", oldknown, naev_versionCompareTarget(
+   // version, "0.12.0-alpha.3" ), version );
 
    space_clearKnown();
 
@@ -4182,7 +4187,15 @@ int space_playerLoad( xmlNodePtr parent )
          }
          free( str );
 
-         sys_setFlag( sys, SYSTEM_KNOWN );
+         if ( oldknown )
+            sys_setFlag( sys, SYSTEM_KNOWN );
+         else {
+            xmlr_attr_strd( cur, "known", str );
+            if ( str != NULL ) {
+               sys_setFlag( sys, SYSTEM_KNOWN );
+               free( str );
+            }
+         }
 
          xmlr_attr_strd( cur, "pmarked", str );
          if ( str != NULL ) {

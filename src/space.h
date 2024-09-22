@@ -524,4 +524,4 @@ const char *space_populationStr( const Spob *spb );
  * Save/Loading.
  */
 int space_playerSave( xmlTextWriterPtr writer );
-int space_playerLoad( xmlNodePtr parent );
+int space_playerLoad( xmlNodePtr parent, const char *version );

@@ -1355,7 +1355,7 @@ static int load_gameInternalHook( void *data )
    }
 
    /* Load more stuff. */
-   space_playerLoad( node );
+   space_playerLoad( node, version );
    var_load( node );
    misn_failed = missions_loadActive( node );
    evt_failed  = events_loadActive( node );
