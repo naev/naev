@@ -4176,29 +4176,31 @@ int space_sysLoad( xmlNodePtr parent )
          if ( !xml_isNode( cur, "known" ) )
             continue;
 
+         /* Get the system. */
          xmlr_attr_strd( cur, "sys", str );
-         if ( str != NULL ) { /* check for 0.5.0 saves */
-            sys = system_get( str );
-            free( str );
-         } else /* load from 0.5.0 saves */
-            sys = system_get( xml_get( cur ) );
-
-         if ( sys != NULL ) { /* Must exist */
-            sys_setFlag( sys, SYSTEM_KNOWN );
-
-            xmlr_attr_strd( cur, "pmarked", str );
-            if ( str != NULL ) {
-               sys_setFlag( sys, SYSTEM_PMARKED );
-               free( str );
-            }
-
-            xmlr_attr_strd( cur, "note", str );
-            if ( str != NULL ) {
-               xmlr_attr_strd( cur, "note", sys->note );
-               free( str );
-            }
-            space_parseSpobs( cur, sys );
+         sys = system_get( str );
+         if ( sys == NULL ) {
+            WARN( _( "Save trying to load information about system '%s', which "
+                     "is not found in the universe!" ),
+                  str );
+            continue;
          }
+         free( str );
+
+         sys_setFlag( sys, SYSTEM_KNOWN );
+
+         xmlr_attr_strd( cur, "pmarked", str );
+         if ( str != NULL ) {
+            sys_setFlag( sys, SYSTEM_PMARKED );
+            free( str );
+         }
+
+         xmlr_attr_strd( cur, "note", str );
+         if ( str != NULL ) {
+            xmlr_attr_strd( cur, "note", sys->note );
+            free( str );
+         }
+         space_parseSpobs( cur, sys );
       } while ( xml_nextNode( cur ) );
    } while ( xml_nextNode( node ) );
 
