@@ -4,7 +4,7 @@ title: "Boarding Ships"
 # Boarding
 
 You can board [disabled](mechanics/damage) ships by getting close to them and matcing speed with them.
-This can be automated by using your ship's builtin autonav functionality (<%= "#b"..naev.keyGet("approach").."#0" %>).
+This can be automated by using your ship's builtin autonav functionality (by pressing the <%= "#b"..naev.keyGet("approach").."#0" %> key).
 Once you board the ship, an interface will open that will let you interact with the ship.
 <% if player.fleetCapacity() > 0 then %>
 Possible actions include looting, stealing outfits, or trying to capture the ship.
