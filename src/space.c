@@ -157,11 +157,6 @@ static const MapShader *mapshader_get( const char *name );
 static int      spob_lua_cmp( const void *a, const void *b );
 static nlua_env spob_lua_get( int *mem, const char *filename );
 static void     spob_lua_free( spob_lua_file *lf );
-/*
- * Externed prototypes.
- */
-int space_sysSave( xmlTextWriterPtr writer );
-int space_sysLoad( xmlNodePtr parent );
 
 /**
  * @brief Gets the (English) name for a service code.
@@ -4113,7 +4108,7 @@ int space_rmMarker( int objid, MissionMarkerType type )
  *    @param writer XML writer to use.
  *    @return 0 on success.
  */
-int space_sysSave( xmlTextWriterPtr writer )
+int space_playerSave( xmlTextWriterPtr writer )
 {
    xmlw_startElem( writer, "space" );
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
@@ -4153,7 +4148,7 @@ int space_sysSave( xmlTextWriterPtr writer )
  *    @param parent Parent node for space.
  *    @return 0 on success.
  */
-int space_sysLoad( xmlNodePtr parent )
+int space_playerLoad( xmlNodePtr parent )
 {
    xmlNodePtr node;
 

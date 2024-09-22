@@ -76,8 +76,6 @@ extern int var_load( xmlNodePtr parent ); /**< Loads mission variables. */
 extern int pfaction_load( xmlNodePtr parent ); /**< Loads faction data. */
 /* hook.c */
 extern int hook_load( xmlNodePtr parent ); /**< Loads hooks. */
-/* space.c */
-extern int space_sysLoad( xmlNodePtr parent ); /**< Loads the space stuff. */
 /* economy.c */
 extern int
 economy_sysLoad( xmlNodePtr parent ); /**< Loads the economy stuff. */
@@ -1378,7 +1376,7 @@ static int load_gameInternalHook( void *data )
    }
 
    /* Load more stuff. */
-   space_sysLoad( node );
+   space_playerLoad( node );
    var_load( node );
    misn_failed = missions_loadActive( node );
    evt_failed  = events_loadActive( node );

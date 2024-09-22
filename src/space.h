@@ -8,6 +8,7 @@
 #include "asteroid.h"
 #include "commodity.h"
 #include "mission_markers.h"
+#include "nxml.h"
 #include "opengl_tex.h"
 #include "pilot.h"
 #include "shipstats.h"
@@ -518,3 +519,9 @@ void        space_checkLand( void );
 void        space_factionChange( void );
 void        space_queueLand( Spob *pnt );
 const char *space_populationStr( const Spob *spb );
+
+/*
+ * Save/Loading.
+ */
+int space_playerSave( xmlTextWriterPtr writer );
+int space_playerLoad( xmlNodePtr parent );
