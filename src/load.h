@@ -51,7 +51,7 @@ void load_loadGameMenu( void );
 void load_loadSnapshotMenu( const char *name, int disablesave );
 
 int load_gameDiff( const char *file );
-int load_gameFile( const char *file );
+int load_game( const nsave_t *ns );
 
 int            load_refresh( void );
 void           load_free( void );

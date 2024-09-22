@@ -221,5 +221,5 @@ void save_reload( void )
       WARN( _( "Unable to reload save for '%s'!" ), player.name );
       return;
    }
-   load_gameFile( ns[0].path );
+   load_game( &ns[0] );
 }

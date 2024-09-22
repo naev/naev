@@ -97,7 +97,6 @@ static void display_save_info( unsigned int wid, const nsave_t *ns );
 static void move_old_save( const char *path, const char *fname, const char *ext,
                            const char *new_name );
 static int  load_load( nsave_t *save );
-static int  load_game( const nsave_t *ns );
 static int  load_gameInternal( const char *file, const char *version );
 static int  load_gameInternalHook( void *data );
 static int  load_enumerateCallback( void *data, const char *origdir,
@@ -1258,23 +1257,12 @@ err:
 }
 
 /**
- * @brief Loads the game from a file.
- *
- *    @param file PhysicsFS path (i.e., relative path starting with "saves/").
- *    @return 0 on success
- */
-int load_gameFile( const char *file )
-{
-   return load_gameInternal( file, naev_version( 0 ) );
-}
-
-/**
  * @brief Actually loads a new game based on save structure.
  *
  *    @param ns Save game to load.
  *    @return 0 on success.
  */
-static int load_game( const nsave_t *ns )
+int load_game( const nsave_t *ns )
 {
    return load_gameInternal( ns->path, ns->version );
 }
