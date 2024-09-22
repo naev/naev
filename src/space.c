@@ -3153,7 +3153,7 @@ static int system_parse( StarSystem *sys, const char *filename )
             xmlr_strd( cur, "features", sys->features );
             xmlr_int( cur, "spacedust", sys->spacedust );
             if ( xml_isNode(
-                    cur, "stars" ) ) { /* Rename to "spacedust" in 0.11.0. TODO
+                    cur, "stars" ) ) { /* Renamed to "spacedust" in 0.11.0. TODO
                                           remove sometime around 0.13.0. */
                sys->spacedust = xml_getInt( cur );
                WARN( _( "System '%s' is using deprecated field 'stars'. Use "
@@ -4154,8 +4154,6 @@ int space_playerLoad( xmlNodePtr parent, const char *version )
 
    /* Whether or not using the old known system. */
    int oldknown = naev_versionCompareTarget( version, "0.12.0-alpha.3" ) > 0;
-   // DEBUG("oldknown = %d (%d, %s)", oldknown, naev_versionCompareTarget(
-   // version, "0.12.0-alpha.3" ), version );
 
    space_clearKnown();
 
