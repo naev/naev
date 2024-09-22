@@ -28,7 +28,6 @@
 #include "mission.h"
 #include "ndata.h"
 #include "nstring.h"
-#include "ntracing.h"
 #include "nxml.h"
 #include "player.h"
 #include "plugin.h"
@@ -40,6 +39,9 @@
 #include "threadpool.h"
 #include "toolkit.h"
 #include "unidiff.h"
+#if HAVE_TRACY
+#include "ntracing.h"
+#endif /* HAVE_TRACY */
 
 #define LOAD_WIDTH 600  /**< Load window width. */
 #define LOAD_HEIGHT 530 /**< Load window height. */
@@ -97,7 +99,6 @@ static void display_save_info( unsigned int wid, const nsave_t *ns );
 static void move_old_save( const char *path, const char *fname, const char *ext,
                            const char *new_name );
 static int  load_load( nsave_t *save );
-static int  load_gameInternal( const char *file, const char *version );
 static int  load_gameInternalHook( void *data );
 static int  load_enumerateCallback( void *data, const char *origdir,
                                     const char *fname );
@@ -1264,19 +1265,9 @@ err:
  */
 int load_game( const nsave_t *ns )
 {
-   return load_gameInternal( ns->path, ns->version );
-}
-
-/**
- * @brief Actually loads a new game.
- *
- *    @param file PhysicsFS path (i.e., relative path starting with "saves/").
- *    @param version Version string of game to load.
- *    @return 0 on success.
- */
-static int load_gameInternal( const char *file, const char *version )
-{
    const char **data;
+   const char  *file    = ns->path;
+   const char  *version = ns->version;
 
    /* Make sure it exists. */
    if ( !PHYSFS_exists( file ) ) {
