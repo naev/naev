@@ -81,7 +81,10 @@ local function get_enemies( sys )
 end
 
 function create ()
-   mem.paying_faction = spob.cur():faction()
+   mem.paying_faction = mem.paying_faction or spob.cur():faction()
+   if mem.paying_faction:playerStanding() < 0 then
+       misn.finish(false)
+   end
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 2,
       function(s)
@@ -162,8 +165,8 @@ function create ()
    end
 
    -- Set mission details
-   misn.setTitle(prefix..fmt.f(_("Patrol of the {sys} System"),
-      {sys=mem.missys}))
+   local title = prefix..fmt.f(_("Patrol of the {sys} System"),{sys=mem.missys})
+   mem.misn_title = mem.misn_title or title
    local desc = fmt.f(_([[Patrol specified points in the {sys} system, eliminating any hostiles you encounter.
 
 #nPatrol System:#0 {sys}
@@ -173,7 +176,9 @@ function create ()
       desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=mem.paying_faction})
    end
-   misn.setDesc(desc)
+   mem.misn_desc = mem.misn_desc or desc
+   misn.setTitle( mem.misn_title )
+   misn.setDesc( mem.misn_desc )
    misn.setReward( mem.credits )
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), mem.missys ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )

@@ -15,11 +15,9 @@
 </mission>
 --]]
 --[[
-
    Pirate Patrol
 
    Pirate version of the patrol mission.
-
 --]]
 local pir = require "common.pirate"
 require "missions.neutral.patrol"
