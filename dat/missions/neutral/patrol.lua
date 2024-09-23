@@ -81,7 +81,7 @@ local function get_enemies( sys )
 end
 
 function create ()
-   mem.paying_faction = spob.cur():faction()
+   mem.paying_faction = mem.paying_faction or spob.cur():faction()
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 2,
       function(s)
@@ -162,18 +162,27 @@ function create ()
    end
 
    -- Set mission details
-   misn.setTitle(prefix..fmt.f(_("Patrol of the {sys} System"),
-      {sys=mem.missys}))
-   local desc = fmt.f(_([[Patrol specified points in the {sys} system, eliminating any hostiles you encounter.
+   if mem.misn_title then
+      mem.misn_title = fmt.f( mem.misn_title, {sys=mem.missys} )
+   else
+      mem.misn_title = prefix..fmt.f(_("Patrol of the {sys} System"),{sys=mem.missys})
+   end
+   if mem.misn_desc then
+      mem.misn_desc = fmt.f( mem.misn_desc, {sys=mem.missys, fct=mem.paying_faction, amount=#mem.points} )
+   else
+      local desc = fmt.f(_([[Patrol specified points in the {sys} system, eliminating any hostiles you encounter.
 
 #nPatrol System:#0 {sys}
 #nPatrol Points:#0 {amount}]]),
-      {amount=#mem.points, sys=mem.missys})
-   if not mem.paying_faction:static() then
-      desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
-         {fct=mem.paying_faction})
+         {amount=#mem.points, sys=mem.missys})
+      if not mem.paying_faction:static() then
+         desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+            {fct=mem.paying_faction})
+      end
+      mem.misn_desc = desc
    end
-   misn.setDesc(desc)
+   misn.setTitle( mem.misn_title )
+   misn.setDesc( mem.misn_desc )
    misn.setReward( mem.credits )
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), mem.missys ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
@@ -280,7 +289,7 @@ function timer ()
    local enemies = pilot.getEnemies( mem.paying_faction, 1500, player_pos )
 
    for i, j in ipairs(enemies) do
-      if j ~= nil and j:exists() and not inlist( mem.hostiles, j ) then
+      if j ~= nil and j:exists() and not j:withPlayer() and not inlist( mem.hostiles, j ) then
          local m = j:memory()
          if m.natural then
             m.shield_run = -1
