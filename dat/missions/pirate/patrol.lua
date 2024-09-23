@@ -59,7 +59,10 @@ local create_original = create
 function create ()
    mem.paying_faction = pir.systemClanP()
    mem.misn_title  = pir.prefix(mem.paying_faction).._("Patrol of the {sys} System")
-   mem.misn_desc   = _("A local crime boss has offered a job to patrol the {sys} system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.")
+   mem.misn_desc   = _([[A local crime boss has offered a job to patrol the {sys} system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.
+
+#nPatrol System:#0 {sys}
+#nPatrol Points:#0 {amount}]])
    if pir.factionIsClan( mem.paying_faction ) then
       -- mem.misn_desc gets fmt.f'd in the main script
       mem.misn_desc = mem.misn_desc..pir.reputationMessage( mem.paying_faction )
