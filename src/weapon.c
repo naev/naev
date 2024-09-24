@@ -1491,8 +1491,9 @@ static void weapon_sample_trail( Weapon *w )
    else
       mode = MODE_IDLE;
 
+   /* TODO: Rockets/propellant weapons should also stream back thair tails */
    spfx_trail_sample( w->trail, w->solid.pos.x + dx,
-                      w->solid.pos.y + dy * M_SQRT1_2, 0., mode, 0 );
+                      w->solid.pos.y + dy * M_SQRT1_2, 0., 0, 0, 0, mode, 0 );
 }
 
 /**

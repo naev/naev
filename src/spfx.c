@@ -590,7 +590,7 @@ void spfx_update( const double dt, const double real_dt )
    spfx_update_layer( spfx_stack_front, dt );
    spfx_update_layer( spfx_stack_middle, dt );
    spfx_update_layer( spfx_stack_back, dt );
-   spfx_update_trails( dt );
+   spfx_update_trails( dt * 6.0 );
 
    /* Decrement the haptic timer. */
    if ( haptic_lastUpdate > 0. )
@@ -783,9 +783,15 @@ static void spfx_trail_update( Trail_spfx *trail, double dt )
    while ( trail->iread < trail->iwrite && trail_front( trail ).t < rel_dt )
       trail->iread++;
 
-   /* Update others' timestamps. */
+   /* Update the other trail point's properties. */
    for ( size_t i = trail->iread; i < trail->iwrite; i++ )
-      trail_at( trail, i ).t -= rel_dt;
+   {
+      TrailPoint *trail_point = &trail_at( trail, i );
+      trail_point->x += trail_point->dx * dt * trail_point->t;
+      trail_point->y += trail_point->dy * dt * trail_point->t;
+      trail_point->z += trail_point->dz * dt * trail_point->t;
+      trail_point->t -= rel_dt;
+   }
 
    /* Update timer. */
    trail->dt += dt;
@@ -802,7 +808,8 @@ static void spfx_trail_update( Trail_spfx *trail, double dt )
  *    @param force Whether or not to force the addition of the sample.
  */
 void spfx_trail_sample( Trail_spfx *trail, double x, double y, double z,
-                        TrailMode mode, int force )
+                        double dx, double dy, double dz, TrailMode mode,
+                        int force )
 {
    TrailPoint p;
 
@@ -812,6 +819,9 @@ void spfx_trail_sample( Trail_spfx *trail, double x, double y, double z,
    p.x    = x;
    p.y    = y;
    p.z    = z;
+   p.dx = dx;
+   p.dy = dy;
+   p.dz = dz;
    p.t    = 1.;
    p.mode = mode;
 
