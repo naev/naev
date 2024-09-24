@@ -2815,7 +2815,7 @@ void pilot_update( Pilot *pilot, double dt )
  */
 void pilot_sample_trails( Pilot *p, int none )
 {
-   double    d2, cx, cy, dircos, dirsin, dmul;
+   double    d2, cx, cy, dircos, dirsin;
    TrailMode mode;
    int       use_3d;
    mat4      H;
@@ -2860,7 +2860,7 @@ void pilot_sample_trails( Pilot *p, int none )
    /* Compute the engine offset and decide where to draw the trail. */
    for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
       const ShipTrailEmitter *trail = &p->ship->trail_emitters[g];
-      double                  dx, dy, dz, scale;
+      double                  dx, dy, dz, ax, ay, scale;
 
       if ( !pilot_trail_generated( p, g ) )
          continue;
@@ -2905,11 +2905,13 @@ void pilot_sample_trails( Pilot *p, int none )
       dy *= scale;
       dz *= scale;
 
-      dmul = p->solid.accel * trail->trail_spec->style[mode].thick * 0.20;
+      ax = p->solid.accel * -dircos;
+      ay = p->solid.accel * -dirsin;
 
       /* Sample. */
       spfx_trail_sample( p->trail[i++], p->solid.pos.x + dx,
-                         p->solid.pos.y + dy, dz, -dircos * dmul, -dirsin * dmul, 0, mode, mode == MODE_NONE );
+                         p->solid.pos.y + dy, dz, ax, ay, mode,
+                         mode == MODE_NONE );
    }
 }
 
