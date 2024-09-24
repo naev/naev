@@ -778,11 +778,7 @@ void spfx_update_trails( double dt )
  */
 static void spfx_trail_update( Trail_spfx *trail, double dt )
 {
-   GLfloat rel_dt;
-
-   dt = dt * 6.0;
-
-   rel_dt = dt / trail->spec->ttl;
+   GLfloat rel_dt = dt / trail->spec->ttl;
    /* Remove outdated elements. */
    while ( trail->iread < trail->iwrite && trail_front( trail ).t < rel_dt )
       trail->iread++;
@@ -790,8 +786,9 @@ static void spfx_trail_update( Trail_spfx *trail, double dt )
    /* Update the other trail point's properties. */
    for ( size_t i = trail->iread; i < trail->iwrite; i++ ) {
       TrailPoint *trail_point = &trail_at( trail, i );
-      trail_point->x += trail_point->dx * dt * trail_point->t * 0.8;
-      trail_point->y += trail_point->dy * dt * trail_point->t * 0.8;
+      double      mod         = dt * trail_point->t * trail->spec->accel_mod;
+      trail_point->x += trail_point->dx * mod;
+      trail_point->y += trail_point->dy * mod;
       trail_point->t -= rel_dt;
    }
 
@@ -1289,6 +1286,8 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
          tc->ttl = xml_getFloat( node );
       else if ( xml_isNode( node, "nebula" ) )
          tc->nebula = xml_getInt( node );
+      else if ( xml_isNode( node, "accel_mod" ) )
+         tc->accel_mod = xml_getFloat( node );
       else {
          int i;
          for ( i = 0; i < MODE_MAX; i++ )
