@@ -1693,11 +1693,14 @@ void takeoff( int delay, int nosave )
 
    /* Check to see if player fleet is ok. */
    if ( player.fleet_capacity > 0 ) {
-      char                badfleet_ships[STRMAX_SHORT];
-      int                 l        = 0;
-      int                 badfleet = 0;
-      int                 nships   = 0;
-      const PlayerShip_t *pships   = player_getShipStack();
+      char          badfleet_ships[STRMAX_SHORT];
+      char          overfleet_ships[STRMAX_SHORT];
+      int           l         = 0;
+      int           badfleet  = 0;
+      int           nships    = 0;
+      int           overfleet = 0;
+      int           capused   = player.p->ship->points;
+      PlayerShip_t *pships    = (PlayerShip_t *)player_getShipStack();
 
       /* Check to see if player's fleet is OK and count ships. */
       pfleet_update();
@@ -1706,6 +1709,13 @@ void takeoff( int delay, int nosave )
          const PlayerShip_t *pe = &pships[i];
          if ( !pe->deployed )
             continue;
+         capused += pe->p->ship->points;
+         if ( capused > player.fleet_capacity ) {
+            overfleet = 1;
+            l += scnprintf( &overfleet_ships[l], sizeof( overfleet_ships ) - l,
+                            "\n%s", pe->p->name );
+            capused -= pe->p->ship->points;
+         }
          if ( !pilot_isSpaceworthy( pe->p ) ) {
             badfleet = 1;
             l += scnprintf( &badfleet_ships[l], sizeof( badfleet_ships ) - l,
@@ -1716,14 +1726,28 @@ void takeoff( int delay, int nosave )
       /* Only care if the player has a fleet deployed. */
       if ( nships > 0 ) {
          if ( player.fleet_used > player.fleet_capacity ) {
-            if ( !spob_hasService( land_spob, SPOB_SERVICE_SHIPYARD ) ) {
-               land_stranded(); /* Needs rescuing. */
-               return;
-            } else {
-               dialogue_msgRaw( _( "Fleet not fit for flight" ),
-                                _( "You lack the fleet capacity to take off "
-                                   "with all selected ships." ) );
-               return;
+            if ( overfleet ) {
+               char buf[STRMAX];
+               snprintf( buf, sizeof( buf ), "%s\n%s",
+                         _( "You lack the fleet capacity to take off with all "
+                            "the selected ships. Do you wish to undeploy the "
+                            "following ships to be able to take off?" ),
+                         overfleet_ships );
+               if ( !dialogue_YesNo( _( "Fleet not fit for flight" ), "%s",
+                                     buf ) )
+                  return;
+
+               capused = player.p->ship->points;
+               for ( int i = 0; i < array_size( pships ); i++ ) {
+                  PlayerShip_t *pe = &pships[i];
+                  if ( !pe->deployed )
+                     continue;
+                  if ( capused + pe->p->ship->points > player.fleet_capacity ) {
+                     pfleet_toggleDeploy( pe, 0 );
+                     continue;
+                  }
+                  capused += pe->p->ship->points;
+               }
             }
          }
          if ( badfleet ) {
