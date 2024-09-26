@@ -68,7 +68,7 @@ local function check_stranded ()
    local services = spob.cur():services()
 
    -- Player has no ability to fix whatever's wrong, definitely stuck.
-   if not services["shipyard"] and not services["outfits"] then
+   if not services["refuel"] then
       return true
    end
 
@@ -101,7 +101,7 @@ local function check_stranded ()
    local inv = player.outfits()
 
    -- Add the player's other ships' outfits.
-   if services["shipyard"] then
+   if services["refuel"] then
       for k, s in ipairs( player.ships() ) do
          if s.name ~= pp:name() then
             local outfits = player.shipOutfits(s.name)
