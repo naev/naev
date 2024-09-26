@@ -173,7 +173,7 @@ function enter()
          mem.pil3 = pilot.add("Llama", targetF, t3, _("Kill Me"))
          for k,p in ipairs{ mem.pil1, mem.pil2, mem.pil3 } do
             p:setHealth(10)
-            p:disable()
+            p:setDisable()
             p:setVisible()
             p:setNoBoard()
          end

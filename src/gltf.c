@@ -1197,12 +1197,12 @@ static void gltf_applyAnimNode( GltfObject *obj, Animation *anim, GLfloat time )
 {
    (void)obj;
    for ( size_t j = 0; j < anim->nchannels; j++ ) {
-      AnimationChannel *chan = &anim->channels[j];
-      AnimationSampler *samp = chan->sampler;
-      int               pi, ni;
-      GLfloat           p, n, mix;
-      GLfloat           t    = fmod( time, samp->max );
-      Node             *node = chan->target;
+      const AnimationChannel *chan = &anim->channels[j];
+      const AnimationSampler *samp = chan->sampler;
+      int                     pi, ni;
+      GLfloat                 p, n, mix;
+      GLfloat                 t    = fmod( time, samp->max );
+      Node                   *node = chan->target;
 
       /* See if target has animation, and initialize. */
       if ( !node->has_anim ) {

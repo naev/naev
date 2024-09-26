@@ -2,9 +2,10 @@
 <spob name="Hypergate Protera">
  <display>Ruined Hypergate</display>
  <marker>spobmarker_triangle</marker>
- <pos x="5058.433323" y="3567.526660"/>
+ <pos x="-7853.883318" y="6096.743322"/>
  <GFX>
   <space>hypergate_debris.webp</space>
+  <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>
@@ -15,11 +16,23 @@
  <general>
   <class>Construct</class>
   <population>0</population>
-  <hide>1.000000</hide>
-  <services/>
+  <hide>0.700000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <nomissionspawn/>
+   <uninhabited/>
+  </services>
+  <commodities/>
+  <description>The sprawling structure of what seems to have been once a colossal hypergate, but lies in complete ruins. Most of the structure is unrecognizable with deep scars and burns, however, there is a small area that seems to have been slightly refurbished and you can dock your ship. Surprisingly enough, some basic electronics are working, although it seems like no part is from the original structure, and some makeshift atmosphere generator allows moving around without a HEV suit. Not the greatest place to land, but at least you can siphon fuel to refuel your ship.</description>
+  <bar>A small atmospherized room that was once tidied up. There are some rotten remains of food left out and clear signs that nobody other than you has been here in ages. It might have been cozy at one point at time, but it looks fairly neglected now.</bar>
  </general>
  <tags>
   <tag>hypergate</tag>
   <tag>ruined</tag>
+  <tag>nonews</tag>
+  <tag>nonpc</tag>
+  <tag>restricted</tag>
  </tags>
 </spob>

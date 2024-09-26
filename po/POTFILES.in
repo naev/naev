@@ -103,6 +103,7 @@ dat/factions/flf.xml
 dat/factions/frontier.xml
 dat/factions/goddard.xml
 dat/factions/independent.xml
+dat/factions/lost.xml
 dat/factions/marauder.xml
 dat/factions/mercenary.xml
 dat/factions/miner.xml
@@ -301,6 +302,7 @@ dat/outfits/intrinsic/machiavellian_fortune.xml
 dat/outfits/intrinsic/machiavellian_necessity.xml
 dat/outfits/intrinsic/machiavellian_virtue.xml
 dat/outfits/intrinsic/port_and_polish.xml
+dat/outfits/intrinsic/wild_space_taint.xml
 dat/outfits/launchers/convulsion_launcher.xml
 dat/outfits/launchers/electron_burst_cannon.xml
 dat/outfits/launchers/emp_grenade_launcher.xml
@@ -1491,6 +1493,7 @@ dat/spob/possum_ii.xml
 dat/spob/praxis.xml
 dat/spob/priscus.xml
 dat/spob/procyon_shipyards.xml
+dat/spob/protera_husk.xml
 dat/spob/protera_nova.xml
 dat/spob/protera_sigma.xml
 dat/spob/provectus_nova_i.xml
@@ -1604,6 +1607,7 @@ dat/spob/sarcophagus_v.xml
 dat/spob/savoy_terminal.xml
 dat/spob/scarlet_ii.xml
 dat/spob/scarlett_iii.xml
+dat/spob/scholzs_moon.xml
 dat/spob/scinfaxi.xml
 dat/spob/scipio.xml
 dat/spob/scorch.xml
@@ -1949,6 +1953,7 @@ dat/spob_virtual/independent_all_unpresence_range1.xml
 dat/spob_virtual/independent_trader_area.xml
 dat/spob_virtual/independent_trader_local.xml
 dat/spob_virtual/independent_unpresence.xml
+dat/spob_virtual/lost_small.xml
 dat/spob_virtual/miner_local.xml
 dat/spob_virtual/miner_small.xml
 dat/spob_virtual/pirate_all_unpresence.xml
@@ -2567,6 +2572,7 @@ dat/tech/laser1.xml
 dat/tech/laser2.xml
 dat/tech/laser3.xml
 dat/tech/light_civilian_combat_ships.xml
+dat/tech/lost.xml
 dat/tech/low_tech_upgrades.xml
 dat/tech/melendez_outfits.xml
 dat/tech/melendez_ships.xml
@@ -2751,6 +2757,7 @@ dat/ai/goddard.lua
 dat/ai/guard.lua
 dat/ai/house_of_mirrors.lua
 dat/ai/independent.lua
+dat/ai/lost.lua
 dat/ai/marauder.lua
 dat/ai/mercenary.lua
 dat/ai/miner.lua
@@ -2862,7 +2869,6 @@ dat/events/neutral/kidnapped.lua
 dat/events/neutral/levo_pirates.lua
 dat/events/neutral/levo_pirates_epilogue.lua
 dat/events/neutral/majesteka_stowaways.lua
-dat/events/neutral/poi.lua
 dat/events/neutral/quai_pirates.lua
 dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
@@ -2918,7 +2924,8 @@ dat/events/pers/soromid.lua
 dat/events/pers/zalek.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
-dat/events/poi.lua
+dat/events/poi_enter.lua
+dat/events/poi_generator.lua
 dat/events/proteron/blockade.lua
 dat/events/restricted.lua
 dat/events/settings.lua
@@ -2939,14 +2946,19 @@ dat/events/start.lua
 dat/events/taiomi/find.lua
 dat/events/taiomi/intro.lua
 dat/events/taiomi/system.lua
+dat/events/thurion/intro_wildspace.lua
 dat/events/tutorial/tut_enter.lua
 dat/events/tutorial/tut_land.lua
 dat/events/updater.lua
+dat/events/wildspace/chaos.lua
+dat/events/wildspace/intro.lua
+dat/events/wildspace/intro_npc.lua
 dat/events/wormhole.lua
 dat/events/zalek/sigma13.lua
 dat/factions/equip/dvaered.lua
 dat/factions/equip/empire.lua
 dat/factions/equip/generic.lua
+dat/factions/equip/lost.lua
 dat/factions/equip/marauder.lua
 dat/factions/equip/miner.lua
 dat/factions/equip/pirate.lua
@@ -2972,6 +2984,8 @@ dat/factions/spawn/independent.lua
 dat/factions/spawn/independent/default.lua
 dat/factions/spawn/lib/common.lua
 dat/factions/spawn/lib/pirate.lua
+dat/factions/spawn/lost.lua
+dat/factions/spawn/lost/default.lua
 dat/factions/spawn/marauder.lua
 dat/factions/spawn/marauder/default.lua
 dat/factions/spawn/miner.lua
@@ -3146,6 +3160,7 @@ dat/missions/neutral/poi/proteron_agent.lua
 dat/missions/neutral/poi/proteron_press.lua
 dat/missions/neutral/poi/red_rackham.lua
 dat/missions/neutral/poi/soromid_biologist.lua
+dat/missions/neutral/poi/wildspace.lua
 dat/missions/neutral/poi/zalek_drone.lua
 dat/missions/neutral/poi_intro.lua
 dat/missions/neutral/race/tracks_qex.lua
@@ -3214,6 +3229,7 @@ dat/missions/taiomi/taiomi07.lua
 dat/missions/taiomi/taiomi08.lua
 dat/missions/taiomi/taiomi09.lua
 dat/missions/taiomi/taiomi10.lua
+dat/missions/thurion/intro_wildspace.lua
 dat/missions/trader/anxiousmerchant.lua
 dat/missions/trader/trader_escort.lua
 dat/missions/trader/trader_rehab.lua
@@ -3221,6 +3237,7 @@ dat/missions/tutorial/nelly01.lua
 dat/missions/tutorial/nelly02.lua
 dat/missions/tutorial/nelly03.lua
 dat/missions/tutorial/tutorial.lua
+dat/missions/wildspace/intro.lua
 dat/missions/zalek/blackhole/zbh01.lua
 dat/missions/zalek/blackhole/zbh02.lua
 dat/missions/zalek/blackhole/zbh03.lua
@@ -3363,6 +3380,7 @@ dat/scripts/common/soromid.lua
 dat/scripts/common/taiomi.lua
 dat/scripts/common/tut_nelly.lua
 dat/scripts/common/tutorial.lua
+dat/scripts/common/wildspace.lua
 dat/scripts/common/zalek.lua
 dat/scripts/common/zalek_blackhole.lua
 dat/scripts/common/zalek_physics.lua
@@ -3516,6 +3534,7 @@ dat/ships/lua/soromid.lua
 dat/ships/lua/thurion.lua
 dat/ships/lua/zalek.lua
 dat/snd/music.lua
+dat/snd/music/default.lua
 dat/spob/lua/default.lua
 dat/spob/lua/dvaered_mil_dhc.lua
 dat/spob/lua/dvaered_mil_restricted.lua
@@ -3544,11 +3563,13 @@ dat/spob/lua/lowclass.lua
 dat/spob/lua/maanens_moon.lua
 dat/spob/lua/pirate_clanworld.lua
 dat/spob/lua/poller_mass.lua
+dat/spob/lua/protera_husk.lua
 dat/spob/lua/proteron_mil_restricted.lua
 dat/spob/lua/sirius_mil_mutris.lua
 dat/spob/lua/sirius_mil_restricted.lua
 dat/spob/lua/soromid_mil_kataka.lua
 dat/spob/lua/soromid_mil_restricted.lua
+dat/spob/lua/thurion.lua
 dat/spob/lua/thurion_mil_restricted.lua
 dat/spob/lua/wormhole_carrza.lua
 dat/spob/lua/wormhole_ivella.lua

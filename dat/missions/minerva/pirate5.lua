@@ -420,7 +420,7 @@ end
 function drone_control1_dead ()
    for k,p in ipairs(drone_group1) do
       if p:exists() then
-         p:disable()
+         p:setDisable()
          p:setInvisible(true)
       end
    end
@@ -430,7 +430,7 @@ end
 function drone_control2_dead ()
    for k,p in ipairs(drone_group2) do
       if p:exists() then
-         p:disable()
+         p:setDisable()
          p:setInvisible(true)
       end
    end

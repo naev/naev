@@ -48,7 +48,7 @@ function enter ()
 
       drones_create()
       for k,d in ipairs(drones) do
-         d:disable()
+         d:setDisable()
       end
    elseif evt_state==1 then
       drones_create() -- Not disable as they move

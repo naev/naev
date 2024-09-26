@@ -181,7 +181,7 @@ end
 function disable()
    if harja:health() > 0 then
       harja:setInvincible()
-      harja:disable() -- This is to make sure he doesn't re-enable himself.
+      harja:setDisable() -- This is to make sure he doesn't re-enable himself.
       vntk.msg(_("Harja's ship is disabled"), _("With a few well placed shots you overload Harja's systems and set his ship adrift. Now you can have a little talk with him, face to face."))
    end
 end

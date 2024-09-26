@@ -7,18 +7,22 @@
   <nolanes/>
  </general>
  <pos x="807.795878" y="520.502144"/>
- <spobs/>
+ <spobs>
+  <spob_virtual>Lost Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Alpha Centauri">
-   <autopos/>
+   <pos x="-14901.412862" y="1174.628339"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Protera">
-   <autopos/>
+   <pos x="13197.498074" y="-4819.743244"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>
   <tag>spoiler</tag>
+  <tag>noderelicts</tag>
+  <tag>wildspace</tag>
  </tags>
 </ssys>

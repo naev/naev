@@ -12,7 +12,7 @@ desc_list["generic"] = {
    _("A pirate drumming on bongo drums with infectious energy."),
    _("A blissed-out Dreamer practicing meditative yoga poses in a corner."),
    _("A pirate creating abstract artwork on a portable canvas."),
-   _("A Dreamer clan soul who seems to fade in and out of the concious reality."),
+   _("A Dreamer clan soul who seems to fade in and out of the conscious reality."),
    _("A pirate that may or may have not taken too many illicit substances."),
    _("A Dreamer clansperson surrounded by a cloud of fragrant smoke"),
    _("A laid-back Dreamer soul with a serene smile."),
@@ -22,8 +22,8 @@ desc_list["generic"] = {
 
 local msg_lore = {
    _([["I'm still adapting to the Dreamer Clan, but I love how they call everyone soul. You're a soul, I'm a soul, they're a soul. We are all one with the universe!"]]),
-   _([["I used to be a devote believer of Sirichana, but I only truly learned to open my mind when I joined the Dreamer clan."]]),
-   _([["All the rigidness and bad karma of the Great houses is really putting a hamper on human potential. As if humans were meant to spend all day locked in a cubicle processing paperwork!"]]),
+   _([["I used to be a devoted believer of Sirichana, but I only truly learned to open my mind when I joined the Dreamer clan."]]),
+   _([["All the rigidity and bad karma of the Great houses is really putting a hamper on human potential. As if humans were meant to spend all day locked in a cubicle processing paperwork!"]]),
    _([["I used to think that property was like a thing, you know? Now I know it's all an arbitrary mechanism to control us, like sheep! Being a pirate gives you a whole new perspective on this property stuff."]]),
    _([["If you're stealing from an indoctrinated wage-slaving zombie, is that ethically wrong? How can it be if they are not even truly alive? The system must break for them to be free!"]]),
    _([["There's nothing quite like being in the Dreamer clan. Sure we have to raid convoys here and there to make ends meet, but it's all so liberating."]]),

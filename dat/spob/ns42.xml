@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="NS-42">
+ <lua>thurion.lua</lua>
  <pos x="-3614.000000" y="689.000000"/>
  <GFX>
   <space>001.webp</space>

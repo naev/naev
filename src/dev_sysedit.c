@@ -1687,7 +1687,7 @@ static void sysedit_editPnt( void )
    s = _( "Class" );
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtClass", NULL, NULL, s );
-   window_addInput( wid, x += l + 5, y, 30, 20, "inpClass", 1, 1, NULL );
+   window_addInput( wid, x += l + 5, y, 30, 20, "inpClass", 16, 1, NULL );
    x += 30 + 10;
 
    s = _( "Lua" );
@@ -1737,7 +1737,7 @@ static void sysedit_editPnt( void )
    for ( int i = 0; i < array_size( p->tags ); i++ )
       l += scnprintf( &buf[l], sizeof( buf ) - l, "%s %s",
                       ( ( i > 0 ) ? "," : "" ), p->tags[i] );
-   window_addText( wid, x, y, 300, 20, 0, "txtTags", NULL, NULL, buf );
+   window_addText( wid, x, y, 240, 100, 0, "txtTags", NULL, NULL, buf );
 
    /* Bottom buttons. */
    window_addButton( wid, -20 - bw * 3 - 15 * 3, 35 + BUTTON_HEIGHT, bw,

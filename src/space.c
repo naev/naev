@@ -1418,6 +1418,8 @@ static void system_scheduler( double dt, int init )
                continue;
             }
             pilot->presence = lua_tonumber( naevL, -1 );
+            pilot->faction_spawn =
+               p->faction; /* Save the faction who spawned it. */
             if ( pilot->faction != p->faction ) {
                int pi;
                WARN( _( "Lua spawn script for faction '%s' actually spawned a "
@@ -4550,6 +4552,10 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    int             id;
    nlua_env        env;
    SystemPresence *presence;
+
+   /* Ignore dynamic factions. */
+   if ( faction_isDynamic( faction ) )
+      return;
 
    /* Remove the presence. */
    id = getPresenceIndex( cur_system, faction );

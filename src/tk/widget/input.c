@@ -610,15 +610,17 @@ const char *window_setInput( unsigned int wid, const char *name,
       return NULL;
    }
 
+   /* Reset. */
+   memset( wgt->dat.inp.input, 0, wgt->dat.inp.byte_max );
+   wgt->dat.inp.pos  = 0;
+   wgt->dat.inp.view = 0;
+
    /* Set the message. */
-   if ( msg == NULL ) {
-      memset( wgt->dat.inp.input, 0, wgt->dat.inp.byte_max );
-      wgt->dat.inp.pos  = 0;
-      wgt->dat.inp.view = 0;
-   } else {
-      strncpy( wgt->dat.inp.input, msg, wgt->dat.inp.byte_max );
-      wgt->dat.inp.input[wgt->dat.inp.byte_max - 1] = '\0';
-      wgt->dat.inp.pos = strlen( wgt->dat.inp.input );
+   if ( msg != NULL ) {
+      uint32_t ch;
+      size_t   i = 0;
+      while ( ( ch = u8_nextchar( msg, &i ) ) )
+         inp_addKey( wgt, ch );
    }
 
    /* Get the value. */

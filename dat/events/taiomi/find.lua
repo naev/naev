@@ -47,7 +47,7 @@ function create ()
          local s = shiptype[ rnd.rnd(1,#shiptype) ]
          local d = pilot.add( s, "Derelict", p, p_("ship", "Derelict") )
          d:setInvincible(true)
-         d:disable()
+         d:setDisable()
          hook.pilot( d, "board", boardfunc )
          table.insert( derelicts, d )
       end
@@ -59,7 +59,7 @@ function create ()
    local pos = vec2.new( 12000, 4250 )
    derelict_mule = pilot.add( "Mule", "Derelict", pos, p_("ship", "Derelict") )
    derelict_mule:setInvincible(true)
-   derelict_mule:disable()
+   derelict_mule:setDisable()
 
    -- Drone
    pos = derelict_mule:pos() + vec2.newP( 30, rnd.angle() )

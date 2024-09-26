@@ -4,8 +4,8 @@ luaspob.setup{
    std_land = 50,
    std_bribe = 100,
    msg_granted = {
-      _("Military clearance approved."),
-      _("Military authorization cleared."),
+      _([["Military clearance approved."]]),
+      _([["Military authorization cleared."]]),
    },
    msg_notyet = {
       _([["You are not authorized to land here, citizen."]]),

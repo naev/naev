@@ -359,6 +359,9 @@ local function is_capturable ()
    if not pm.natural then
       return false, _("This ship is not capturable.")
    end
+   if board_plt:flags("carried") then
+      return false, _("You can not capture deployed fighters.")
+   end
    local flttot, fltcur = player.fleetCapacity()
    if flttot-fltcur < board_plt:points() then
       return false, fmt.f(_("You do not have enough free fleet capacity to capture the ship. You need {needed}, but only have {have} free fleet capacity."),

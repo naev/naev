@@ -691,7 +691,7 @@ end
 
 function heartbeat ()
    local l = enemies[1]
-   local _a, _s, _ss, dis = l:health()
+   local dis = l:disabled()
    if dis then
       -- Player already disabled, nothing to do
       return
@@ -699,7 +699,7 @@ function heartbeat ()
    if l:pos():dist( player.pos() ) < 1500 then
       local fct = faction.dynAdd( "Dummy", "_onion_nexus_hacked", _("Nexus IT (Hacked)"), { ai="baddie" } )
       fct:dynEnemy( fct_baddie() )
-      l:disable()
+      l:setDisable()
       local dohack = { 3, 6, 8, 11, 14 } -- IDs of ships to hack
       for k,p in ipairs(enemies) do
          if p:exists() then

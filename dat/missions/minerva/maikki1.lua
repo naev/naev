@@ -722,7 +722,7 @@ function stealthheartbeat ()
          if mem.stealthtarget==4 then
             pos = waypoints[ #waypoints ] + vec2.new(-10, -50)
             wreck = pilot.add( "Rhino", "Derelict", pos, _("Ship Wreck") )
-            wreck:disable()
+            wreck:setDisable()
             wreck:setInvincible()
             hook.pilot( wreck, "board", "board_wreck" )
          end

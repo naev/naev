@@ -3377,7 +3377,7 @@ static int aiL_settimer( lua_State *L )
 static int aiL_timeup( lua_State *L )
 {
    int n = luaL_checkint( L, 1 );
-   lua_pushboolean( L, cur_pilot->timer[n] < 0. );
+   lua_pushboolean( L, cur_pilot->timer[n] <= 0. );
    return 1;
 }
 

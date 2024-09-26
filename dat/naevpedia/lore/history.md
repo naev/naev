@@ -10,10 +10,12 @@ title: History Overview
 <% end %>
 1. **Project Za'lek** (UST 42:6284)
 <% if faction.get("Proteron"):known() then %>
-1. **Creation of House Proteron** (UST 47)
+1. **Creation of [House Proteron](lore/factions/proteron)** (UST 47)
 <% end %>
 1. **Creation of [House Za'lek](lore/factions/zalek)** (UST 72)
-1. **Project Thurion** (UST 84:8324)
+<% if faction.get("Thurion"):known() then %>
+1. **[Project Thurion](lore/factions/thurion)** (UST 84:8324)
+<% end %>
 1. **Creation of [House Sirius](lore/factions/sirius)** (UST 97)
 <% if faction.get("Collective"):known() then %>
 1. **Project Collective** (UST 266:7626)
@@ -23,6 +25,9 @@ title: History Overview
 1. **Creation of [House Dvaered](lore/factions/dvaered)** (UST 331)
 1. **Quarantine of Sorom** (UST 333)
 1. **Formalization of [Soromid](lore/factions/soromid)** (UST 387)
+<% if faction.get("Thurion"):known() then %>
+1. **Thurion Revival** (UST 437)
+<% end %>
 <% if false then %>
 1. **Hypergate Project** (UST 572)
 <% end %>

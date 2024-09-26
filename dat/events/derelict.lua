@@ -3,7 +3,16 @@
 <event name="Derelict">
  <location>enter</location>
  <chance>45</chance>
- <cond>system.cur():faction() ~= nil</cond>
+ <cond>
+   local sc = system.cur()
+   if sc:faction() == nil then
+      return false
+   end
+   if sc:tags().noderelicts then
+      return false
+   end
+   return true
+ </cond>
  <priority>99</priority>
  <notes>
   <tier>1</tier>
@@ -126,7 +135,7 @@ function create ()
    local dist  = rnd.rnd() * cursys:radius() * 0.8
    local pos   = vec2.newP( dist, rnd.angle() )
    derelict    = pilot.add(dship, "Derelict", pos, p_("ship", "Derelict"), {ai="dummy", naked=true})
-   derelict:disable()
+   derelict:setDisable()
    derelict:intrinsicSet( "ew_hide", 300 ) -- Much more visible
    hook.pilot(derelict, "board", "board")
    hook.pilot(derelict, "death", "destroyevent")

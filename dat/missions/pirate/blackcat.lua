@@ -136,14 +136,14 @@ local event_list = {
    end,
    function () -- Temporarily disable
       local pp = player.pilot()
-      local _a, _s, _st, dis = pp:health()
+      local dis = pp:disabled()
       if dis then return end -- Already disabled
       luaspfx.sfx( false, nil, meow )
       if islucky() then
          player.msg(_("The black cat accidentally hit the ship restart button, but nothing happens."), true)
          return
       end
-      pp:disable( true )
+      pp:setDisable( true )
       hook.timer( 5, "disable_restart" )
       player.msg(_("The black cat accidentally hit the ship restart button!"), true)
       player.autonavReset()

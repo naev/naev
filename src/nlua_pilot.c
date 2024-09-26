@@ -152,7 +152,9 @@ static int pilotL_flags( lua_State *L );
 static int pilotL_hasIllegal( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_setNoDeath( lua_State *L );
+static int pilotL_disabled( lua_State *L );
 static int pilotL_disable( lua_State *L );
+static int pilotL_setDisable( lua_State *L );
 static int pilotL_cooldown( lua_State *L );
 static int pilotL_setCooldown( lua_State *L );
 static int pilotL_cooldownCycle( lua_State *L );
@@ -194,6 +196,7 @@ static int pilotL_setSpeedLimit( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_getArmour( lua_State *L );
 static int pilotL_getShield( lua_State *L );
+static int pilotL_getStress( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
@@ -324,6 +327,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "health", pilotL_getHealth },
    { "armour", pilotL_getArmour },
    { "shield", pilotL_getShield },
+   { "stress", pilotL_getStress },
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
    { "stats", pilotL_getStats },
@@ -369,7 +373,9 @@ static const luaL_Reg pilotL_methods[] = {
    { "setBribed", pilotL_setBribed },
    { "setActiveBoard", pilotL_setActiveBoard },
    { "setNoDeath", pilotL_setNoDeath },
+   { "disabled", pilotL_disabled },
    { "disable", pilotL_disable },
+   { "setDisable", pilotL_setDisable },
    { "setCooldown", pilotL_setCooldown },
    { "cooldownCycle", pilotL_cooldownCycle },
    { "setNoJump", pilotL_setNoJump },
@@ -1024,8 +1030,8 @@ static int pilotL_toggleSpawn( lua_State *L )
  *    @luatparam Faction|{Faction,...} factions If f is a table of factions, it
  * will only get pilots matching those factions.  Otherwise it gets all the
  * pilots.
- *    @luatparam boolean disabled Whether or not to get disabled ships (default
- * is off if parameter is omitted).
+ *    @luatparam[opt=false] boolean disabled Whether or not to get disabled
+ * ships.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc get
  */
@@ -3525,6 +3531,20 @@ static int pilotL_setActiveBoard( lua_State *L )
 }
 
 /**
+ * @brief Gets the disabled state of a pilot.
+ *
+ *    @luatparam Pilot p Pilot to get disabled state of.
+ *    @luatreturn boolean Whether or not the pilot is disabled.
+ * @luafunc disabled
+ */
+static int pilotL_disabled( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot( L, 1 );
+   lua_pushboolean( L, pilot_isDisabled( p ) );
+   return 1;
+}
+
+/**
  * @brief Makes it so the pilot never dies, stays at 1. armour.
  *
  * @usage p:setNoDeath( true ) -- Pilot will never die
@@ -3538,6 +3558,13 @@ static int pilotL_setNoDeath( lua_State *L )
    return pilotL_setFlagWrapper( L, PILOT_NODEATH );
 }
 
+/* TODO remove in 0.13.0 */
+static int pilotL_disable( lua_State *L )
+{
+   NLUA_DEPRECATED( L, "disable" );
+   return pilotL_setDisable( L );
+}
+
 /**
  * @brief Disables a pilot.
  *
@@ -3546,9 +3573,9 @@ static int pilotL_setNoDeath( lua_State *L )
  *    @luatparam Pilot p Pilot to disable.
  *    @luatparam[opt=false] boolean nopermanent Whether or not the disable
  * should be not permanent.
- * @luafunc disable
+ * @luafunc setDisable
  */
-static int pilotL_disable( lua_State *L )
+static int pilotL_setDisable( lua_State *L )
 {
    /* Get the pilot. */
    Pilot *p         = luaL_validpilot( L, 1 );
@@ -4881,6 +4908,30 @@ static int pilotL_getShield( lua_State *L )
    else
       lua_pushnumber(
          L, ( p->shield_max > 0. ) ? p->shield / p->shield_max * 100. : 0. );
+   return 1;
+}
+
+/**
+ * @brief Gets the pilot's stress.
+ *
+ * @usage stress = p:stress()
+ *
+ *    @luatparam Pilot p Pilot to get stress of.
+ *    @luatparam[opt=false] boolean absolute Whether or not it shouldn't be
+ * relative and be absolute instead.
+ *    @luatreturn number The shield in % [0:100] if relative or absolute value
+ * otherwise.
+ * @luafunc stress
+ */
+static int pilotL_getStress( lua_State *L )
+{
+   const Pilot *p        = luaL_validpilot( L, 1 );
+   int          absolute = lua_toboolean( L, 2 );
+   if ( absolute )
+      lua_pushnumber( L, p->stress );
+   else
+      lua_pushnumber(
+         L, ( p->armour > 0. ) ? MIN( 1., p->stress / p->armour ) * 100. : 0. );
    return 1;
 }
 

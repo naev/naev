@@ -319,7 +319,7 @@ function mainguy_board ()
    vn.run()
 
    -- Permanently disable mainguy
-   mainguy:disable()
+   mainguy:setDisable()
 
    -- Message update
    minerva.log.kex(_("You boarded a transport destined for the Minerva CEO, but didn't find anything."))

@@ -14,3 +14,14 @@ luaspob.setup{
       _([["We have no need for your credits."]]),
    },
 }
+
+local _can_land = can_land
+function can_land ()
+   local ret, msg = _can_land()
+   if not ret then
+      return ret, msg
+   end
+   if not faction.get("Thurion"):known() then
+      return false, _([["You are not yet authorized to land here."]])
+   end
+end

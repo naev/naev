@@ -3,12 +3,14 @@
  <general>
   <radius>15000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>128.925000</interference>
+  <interference>128.900000</interference>
   <nebula volatility="12.100000" hue="300.000000">500.000000</nebula>
   <nolanes/>
  </general>
  <pos x="890.722267" y="433.531310"/>
- <spobs/>
+ <spobs>
+  <spob_virtual>Lost Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Alpha Centauri">
    <autopos/>
@@ -22,5 +24,7 @@
  <tags>
   <tag>thenebula</tag>
   <tag>spoiler</tag>
+  <tag>noderelicts</tag>
+  <tag>wildspace</tag>
  </tags>
 </ssys>

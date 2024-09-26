@@ -4,7 +4,7 @@ luaspob.setup{
    std_land = 50,
    std_bribe = 100,
    msg_granted = {
-      _("Landing access authorized."),
+      _([["Landing access authorized."]]),
    },
    msg_notyet = {
       _([["Only the faithful may land here. Request denied."]]),

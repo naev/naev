@@ -462,7 +462,7 @@ end
 
 -- Player Has disabled Shaky Swan
 function swanDisabled()
-   mem.swan:disable() -- To be sure it won't recover.
+   mem.swan:setDisable() -- To be sure it won't recover.
    mem.swan:comm(_("What the? Damn!"))
    faction.modPlayerRaw(faction.get("FLF"), -5) -- Faction loss with the FLF.
    hook.rm(dhook)

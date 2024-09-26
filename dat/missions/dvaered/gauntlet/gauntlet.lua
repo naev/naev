@@ -178,7 +178,7 @@ local function enemy_out( p )
    end
 end
 function p_disabled( p )
-   p:disable() -- don't let them come back
+   p:setDisable() -- don't let them come back
    p:setInvisible( true ) -- can't target
    p:setInvincible( true ) -- just stays there
    enemy_out( p )

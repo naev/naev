@@ -1621,7 +1621,7 @@ void pilot_updateDisable( Pilot *p, unsigned int shooter )
 
       /* Disabled ships don't use up presence. */
       if ( p->presence > 0 ) {
-         system_rmCurrentPresence( cur_system, p->faction, p->presence );
+         system_rmCurrentPresence( cur_system, p->faction_spawn, p->presence );
          p->presence = 0;
       }
 
@@ -2955,7 +2955,7 @@ void pilot_delete( Pilot *p )
 
    /* Remove faction if necessary. */
    if ( p->presence > 0 ) {
-      system_rmCurrentPresence( cur_system, p->faction, p->presence );
+      system_rmCurrentPresence( cur_system, p->faction_spawn, p->presence );
       p->presence = 0;
    }
 
@@ -3334,7 +3334,9 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    pilot->name = strdup( ( name == NULL ) ? _( ship->name ) : name );
 
    /* faction */
-   pilot->faction = faction;
+   pilot->faction       = faction;
+   pilot->faction_spawn = faction; /* Just copy for now, but can be overwritten
+                                      by spawn scheduler. */
 
    /* solid */
    solid_init( &pilot->solid, ship->mass, dir, pos, vel, SOLID_UPDATE_RK4 );

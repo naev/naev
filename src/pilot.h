@@ -265,8 +265,9 @@ typedef struct Pilot_ {
    double       r;    /**< Pilot's randomness value in [0,1] range. */
 
    /* Fleet/faction management. */
-   int faction;  /**< Pilot's faction. */
-   int presence; /**< Presence being used by the pilot. */
+   int faction;       /**< Pilot's faction. */
+   int faction_spawn; /**< Faction used to spawn the pilot. */
+   int presence;      /**< Presence being used by the pilot. */
 
    /* Object characteristics */
    const Ship  *ship;        /**< ship pilot is flying */

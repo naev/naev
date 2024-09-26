@@ -7,18 +7,22 @@
   <nolanes/>
  </general>
  <pos x="885.284767" y="522.163255"/>
- <spobs/>
+ <spobs>
+  <spob>Protera Husk</spob>
+ </spobs>
  <jumps>
   <jump target="Protera">
-   <autopos/>
+   <pos x="9386.801584" y="11444.000511"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Urillian">
-   <autopos/>
+   <pos x="-11210.302922" y="9798.472345"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
  <tags>
   <tag>spoiler</tag>
+  <tag>noderelicts</tag>
+  <tag>wildspace</tag>
  </tags>
 </ssys>

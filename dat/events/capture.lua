@@ -103,7 +103,7 @@ function plt_hail ()
 
    -- Ship is abandoned
    if abandon then
-      plt:disable()
+      plt:setDisable()
       plt:setNoBoard(true)
       plt:setLeader()
       plt:setFaction( mem.o.faction )
