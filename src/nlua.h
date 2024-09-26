@@ -16,7 +16,6 @@
    do {                                                                        \
       lua_pushfstring( L, _( "Deprecated function call: %s" ), f );            \
       nlua_warn( L, -1 );                                                      \
-      lua_pop( L, 1 );                                                         \
    } while ( 0 )
 
 #define nluaL_optarg( L, ind, def, checkfunc )                                 \
