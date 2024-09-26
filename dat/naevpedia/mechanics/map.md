@@ -3,7 +3,7 @@ title: "Star Map"
 ---
 # Map
 
-The map can be opened by the <%= "#b"..naev.getKey("map").."#0" %> key and gives in-depth information about the explored universe.
+The map can be opened by the <%= "#b"..naev.keyGet("starmap").."#0" %> key and gives in-depth information about the explored universe.
 By default, the map shows in-depth information including dominant faction of the systems, local system features, the nebula, and more.
 What the map shows can be toggled with the different map modes.
 

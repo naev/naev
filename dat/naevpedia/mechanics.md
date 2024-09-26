@@ -30,5 +30,5 @@ Below is an overview of the mechanics covered in the Holo-Archives.
 * [Mining](mechanics/mining)
 * [Electronic Warfare](mechanics/ewarfare)
 <% if naev.player.fleetCapacity() > 0 then %>
-* [Fleets](playerfleet)
+* [Fleets](mechanics/playerfleet)
 <% end %>

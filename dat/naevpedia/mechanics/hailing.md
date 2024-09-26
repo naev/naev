@@ -4,9 +4,9 @@ title: "Hailing"
 # Hailing
 
 Communicating with ships or spaceportscan be a good way to request assistance, discourage them from bribing your, or even obtaining information.
-You can hail ships in space using the <%= "#b"..naev.getKey("hail").."#0" %> key.
+You can hail ships in space using the <%= "#b"..naev.keyGet("hail").."#0" %> key.
 Additionally, some ships will hail your ship.
-You can respond to these ships by either targetting them and hailing them, or using the <%= "#b"..naev.getKey("autohail").."#0" %> key to respond directly.
+You can respond to these ships by either targetting them and hailing them, or using the <%= "#b"..naev.keyGet("autohail").."#0" %> key to respond directly.
 
 ## Requesting Fuel
 
