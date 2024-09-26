@@ -19,7 +19,13 @@ desc_list["heavy"] = {
 desc_list["aquatic"] = {
    _("A new human individual with gills and slimy skin."),
    _("A Soromid individual that seems suited for aquatic life."),
-   _("The lights highlight the post-humans slimy skin, who is enjoying their drink."),
+   _("The lights highlight the post-human's slimy skin, as they enjoy their drink."),
+}
+desc_list["dark"] = {
+   _("A new human with large eyes meant for seeing in low light environments."),
+   _("A Soromid post-human that seems to be using sonar to see around."),
+   _("A pale individual with bat-like ears and eyes."),
+   _("The new-human seems to be carefully mixing their drink with ultra-sonic screetching."),
 }
 
 local gfx_list = {
@@ -30,6 +36,9 @@ local gfx_list = {
    {"soromid/soromid_aquatic_01.webp", "aquatic"},
    {"soromid/soromid_aquatic_01_v2.webp", "aquatic"},
    {"soromid/soromid_aquatic_01_v3.webp", "aquatic"},
+   {"soromid/soromid_dark_01.webp", "dark"},
+   {"soromid/soromid_dark_01_v2.webp", "dark"},
+   {"soromid/soromid_dark_01_v3.webp", "dark"},
 }
 
 local msg_lore = {
@@ -118,6 +127,9 @@ return function ()
       end
       -- Soromid use descriptions based on type (or generic)
       local descriptions = desc_list[ civtype ]
+      if #descriptions<=0 then
+         descriptions = desc_list["generic"]
+      end
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local msg
       local r = rnd.rnd()

@@ -1186,6 +1186,29 @@ int naev_versionCompare( const char *version )
 }
 
 /**
+ * @brief Does a comparison with a specific target.
+ */
+int naev_versionCompareTarget( const char *version, const char *target )
+{
+   int      res;
+   semver_t sv_version, sv_target;
+
+   if ( semver_parse( version, &sv_version ) ) {
+      WARN( _( "Failed to parse version string '%s'!" ), version );
+      return -1;
+   }
+   if ( semver_parse( target, &sv_target ) ) {
+      WARN( _( "Failed to parse version string '%s'!" ), target );
+      return -1;
+   }
+
+   res = semver_compare( sv_target, sv_version );
+   semver_free( &sv_target );
+   semver_free( &sv_version );
+   return res;
+}
+
+/**
  * @brief Prints the SDL version to console.
  */
 static void print_SDLversion( void )

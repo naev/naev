@@ -145,7 +145,7 @@ static os_opts swivel_opts   = { N_( "Swivel" ), _UNIT_ANGLE, 0, 0, 1, 0 };
 static os_opts tracking_opts = { N_( "Tracking" ), _UNIT_DISTANCE, 0, 0, 1, 0 };
 static os_opts duration_opts = { N_( "Duration" ), _UNIT_TIME, 0, 0, 1, 1 };
 static os_opts cooldown_opts = { N_( "Cooldown" ), _UNIT_TIME, 0, 0, 1, 1 };
-static os_opts lockon_opts   = { N_( "Lock On" ), _UNIT_TIME, 0, 0, 1, 0 };
+static os_opts lockon_opts   = { N_( "Lock-On" ), _UNIT_TIME, 0, 0, 1, 0 };
 static os_opts inflight_calib_opts = {
    N_( "Inflight Calibration" ), _UNIT_TIME, 0, 0, 1, 1 };
 static os_opts initial_speed_opts = {

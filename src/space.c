@@ -157,11 +157,6 @@ static const MapShader *mapshader_get( const char *name );
 static int      spob_lua_cmp( const void *a, const void *b );
 static nlua_env spob_lua_get( int *mem, const char *filename );
 static void     spob_lua_free( spob_lua_file *lf );
-/*
- * Externed prototypes.
- */
-int space_sysSave( xmlTextWriterPtr writer );
-int space_sysLoad( xmlNodePtr parent );
 
 /**
  * @brief Gets the (English) name for a service code.
@@ -3160,7 +3155,7 @@ static int system_parse( StarSystem *sys, const char *filename )
             xmlr_strd( cur, "features", sys->features );
             xmlr_int( cur, "spacedust", sys->spacedust );
             if ( xml_isNode(
-                    cur, "stars" ) ) { /* Rename to "spacedust" in 0.11.0. TODO
+                    cur, "stars" ) ) { /* Renamed to "spacedust" in 0.11.0. TODO
                                           remove sometime around 0.13.0. */
                sys->spacedust = xml_getInt( cur );
                WARN( _( "System '%s' is using deprecated field 'stars'. Use "
@@ -4115,19 +4110,18 @@ int space_rmMarker( int objid, MissionMarkerType type )
  *    @param writer XML writer to use.
  *    @return 0 on success.
  */
-int space_sysSave( xmlTextWriterPtr writer )
+int space_playerSave( xmlTextWriterPtr writer )
 {
    xmlw_startElem( writer, "space" );
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
       StarSystem *sys = &systems_stack[i];
 
-      if ( !sys_isKnown( sys ) )
-         continue; /* not known */
-
       xmlw_startElem( writer, "known" );
       xmlw_attr( writer, "sys", "%s", sys->name );
+      if ( sys_isKnown( sys ) )
+         xmlw_attr( writer, "known", "1" );
       if ( sys_isFlag( sys, SYSTEM_PMARKED ) )
-         xmlw_attr( writer, "pmarked", "%s", "true" );
+         xmlw_attr( writer, "pmarked", "1" );
       if ( sys->note != NULL )
          xmlw_attr( writer, "note", "%s", sys->note );
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
@@ -4153,11 +4147,15 @@ int space_sysSave( xmlTextWriterPtr writer )
  * @brief Loads player's space properties from an XML node.
  *
  *    @param parent Parent node for space.
+ *    @param version Version of save game being loaded.
  *    @return 0 on success.
  */
-int space_sysLoad( xmlNodePtr parent )
+int space_playerLoad( xmlNodePtr parent, const char *version )
 {
    xmlNodePtr node;
+
+   /* Whether or not using the old known system. */
+   int oldknown = naev_versionCompareTarget( version, "0.12.0-alpha.3" ) > 0;
 
    space_clearKnown();
 
@@ -4178,29 +4176,39 @@ int space_sysLoad( xmlNodePtr parent )
          if ( !xml_isNode( cur, "known" ) )
             continue;
 
+         /* Get the system. */
          xmlr_attr_strd( cur, "sys", str );
-         if ( str != NULL ) { /* check for 0.5.0 saves */
-            sys = system_get( str );
-            free( str );
-         } else /* load from 0.5.0 saves */
-            sys = system_get( xml_get( cur ) );
-
-         if ( sys != NULL ) { /* Must exist */
-            sys_setFlag( sys, SYSTEM_KNOWN );
-
-            xmlr_attr_strd( cur, "pmarked", str );
-            if ( str != NULL ) {
-               sys_setFlag( sys, SYSTEM_PMARKED );
-               free( str );
-            }
-
-            xmlr_attr_strd( cur, "note", str );
-            if ( str != NULL ) {
-               xmlr_attr_strd( cur, "note", sys->note );
-               free( str );
-            }
-            space_parseSpobs( cur, sys );
+         sys = system_get( str );
+         if ( sys == NULL ) {
+            WARN( _( "Save trying to load information about system '%s', which "
+                     "is not found in the universe!" ),
+                  str );
+            continue;
          }
+         free( str );
+
+         if ( oldknown )
+            sys_setFlag( sys, SYSTEM_KNOWN );
+         else {
+            xmlr_attr_strd( cur, "known", str );
+            if ( str != NULL ) {
+               sys_setFlag( sys, SYSTEM_KNOWN );
+               free( str );
+            }
+         }
+
+         xmlr_attr_strd( cur, "pmarked", str );
+         if ( str != NULL ) {
+            sys_setFlag( sys, SYSTEM_PMARKED );
+            free( str );
+         }
+
+         xmlr_attr_strd( cur, "note", str );
+         if ( str != NULL ) {
+            xmlr_attr_strd( cur, "note", sys->note );
+            free( str );
+         }
+         space_parseSpobs( cur, sys );
       } while ( xml_nextNode( cur ) );
    } while ( xml_nextNode( node ) );
 

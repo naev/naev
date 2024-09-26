@@ -2843,7 +2843,7 @@ void pilot_sample_trails( Pilot *p, int none )
          mode = MODE_JUMPING;
       else if ( pilot_isFlag( p, PILOT_AFTERBURNER ) )
          mode = MODE_AFTERBURN;
-      else if ( p->engine_glow > 0. )
+      else if ( p->solid.accel > 0. )
          mode = MODE_GLOW;
       else
          mode = MODE_IDLE;
@@ -2852,15 +2852,15 @@ void pilot_sample_trails( Pilot *p, int none )
    use_3d = ship_isFlag( p->ship, SHIP_3DTRAILS );
    if ( use_3d ) {
       H = pilot_local_transform( p );
-   } else {
-      dircos = cos( p->solid.dir );
-      dirsin = sin( p->solid.dir );
    }
+
+   dircos = cos( p->solid.dir );
+   dirsin = sin( p->solid.dir );
 
    /* Compute the engine offset and decide where to draw the trail. */
    for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
       const ShipTrailEmitter *trail = &p->ship->trail_emitters[g];
-      double                  dx, dy, dz, scale;
+      double                  dx, dy, dz, ax, ay, scale;
 
       if ( !pilot_trail_generated( p, g ) )
          continue;
@@ -2905,9 +2905,13 @@ void pilot_sample_trails( Pilot *p, int none )
       dy *= scale;
       dz *= scale;
 
+      ax = p->solid.accel * -dircos;
+      ay = p->solid.accel * -dirsin;
+
       /* Sample. */
       spfx_trail_sample( p->trail[i++], p->solid.pos.x + dx,
-                         p->solid.pos.y + dy, dz, mode, mode == MODE_NONE );
+                         p->solid.pos.y + dy, dz, ax, ay, mode,
+                         mode == MODE_NONE );
    }
 }
 

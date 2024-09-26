@@ -783,9 +783,14 @@ static void spfx_trail_update( Trail_spfx *trail, double dt )
    while ( trail->iread < trail->iwrite && trail_front( trail ).t < rel_dt )
       trail->iread++;
 
-   /* Update others' timestamps. */
-   for ( size_t i = trail->iread; i < trail->iwrite; i++ )
-      trail_at( trail, i ).t -= rel_dt;
+   /* Update the other trail point's properties. */
+   for ( size_t i = trail->iread; i < trail->iwrite; i++ ) {
+      TrailPoint *trail_point = &trail_at( trail, i );
+      double      mod         = dt * trail_point->t * trail->spec->accel_mod;
+      trail_point->x += trail_point->dx * mod;
+      trail_point->y += trail_point->dy * mod;
+      trail_point->t -= rel_dt;
+   }
 
    /* Update timer. */
    trail->dt += dt;
@@ -798,11 +803,13 @@ static void spfx_trail_update( Trail_spfx *trail, double dt )
  *    @param x X position of the new control point.
  *    @param y Y position of the new control point.
  *    @param z Z position of the new control point.
+ *    @param dx X derivative if applicable.
+ *    @param dy Y derivative if applicable.
  *    @param mode Type of trail emission at this point.
  *    @param force Whether or not to force the addition of the sample.
  */
 void spfx_trail_sample( Trail_spfx *trail, double x, double y, double z,
-                        TrailMode mode, int force )
+                        double dx, double dy, TrailMode mode, int force )
 {
    TrailPoint p;
 
@@ -812,6 +819,8 @@ void spfx_trail_sample( Trail_spfx *trail, double x, double y, double z,
    p.x    = x;
    p.y    = y;
    p.z    = z;
+   p.dx   = dx;
+   p.dy   = dy;
    p.t    = 1.;
    p.mode = mode;
 
@@ -1277,6 +1286,8 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
          tc->ttl = xml_getFloat( node );
       else if ( xml_isNode( node, "nebula" ) )
          tc->nebula = xml_getInt( node );
+      else if ( xml_isNode( node, "accel_mod" ) )
+         tc->accel_mod = xml_getFloat( node );
       else {
          int i;
          for ( i = 0; i < MODE_MAX; i++ )

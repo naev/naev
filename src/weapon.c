@@ -1470,7 +1470,8 @@ static void weapon_update( Weapon *w, double dt )
  */
 static void weapon_sample_trail( Weapon *w )
 {
-   double    a, dx, dy;
+   double    a, dx, dy, ax, ay;
+   double    ca, sa;
    TrailMode mode;
 
    if ( !space_needsEffects() )
@@ -1478,8 +1479,12 @@ static void weapon_sample_trail( Weapon *w )
 
    /* Compute the engine offset. */
    a  = w->solid.dir;
-   dx = w->outfit->u.lau.trail_x_offset * cos( a );
-   dy = w->outfit->u.lau.trail_x_offset * sin( a );
+   ca = cos( a );
+   sa = sin( a );
+   dx = w->outfit->u.lau.trail_x_offset * ca;
+   dy = w->outfit->u.lau.trail_x_offset * sa;
+   ax = w->solid.accel * -ca;
+   ay = w->solid.accel * -sa;
 
    /* Set the colour. */
    if ( ( w->outfit->u.lau.ai == AMMO_AI_UNGUIDED ) ||
@@ -1492,7 +1497,7 @@ static void weapon_sample_trail( Weapon *w )
       mode = MODE_IDLE;
 
    spfx_trail_sample( w->trail, w->solid.pos.x + dx,
-                      w->solid.pos.y + dy * M_SQRT1_2, 0., mode, 0 );
+                      w->solid.pos.y + dy * M_SQRT1_2, 0., ax, ay, mode, 0 );
 }
 
 /**

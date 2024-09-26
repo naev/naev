@@ -10,10 +10,13 @@
 
 #include "ntime.h"
 
+/**
+ * @brief Encodes whether a save is compatible with current version or not.
+ */
 typedef enum SaveCompatibility_ {
-   SAVE_COMPATIBILITY_OK = 0,
-   SAVE_COMPATIBILITY_NAEV_VERSION,
-   SAVE_COMPATIBILITY_PLUGINS,
+   SAVE_COMPATIBILITY_OK = 0, /**< Perfect match, should be 100% compatible. */
+   SAVE_COMPATIBILITY_NAEV_VERSION, /**< Naev version mismatch. */
+   SAVE_COMPATIBILITY_PLUGINS,      /**< Naev plugins mismatch. */
 } SaveCompatibility;
 
 /**
@@ -51,7 +54,7 @@ void load_loadGameMenu( void );
 void load_loadSnapshotMenu( const char *name, int disablesave );
 
 int load_gameDiff( const char *file );
-int load_gameFile( const char *file );
+int load_game( const nsave_t *ns );
 
 int            load_refresh( void );
 void           load_free( void );

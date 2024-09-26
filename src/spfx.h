@@ -53,6 +53,7 @@ typedef struct TrailSpec_ {
    char  *name;      /**< Trail definition's name. */
    char  *filename;  /** File the the trail spec is loaded from. */
    double ttl;       /**< Time To Life (in seconds). */
+   double accel_mod; /**< How acceleration is added to it (defaults to 0.). */
    float  def_thick; /**< Default thickness, relevant while loading. */
    TrailStyle
        style[MODE_MAX]; /**< Appearance characteristics for each trail mode. */
@@ -80,7 +81,8 @@ typedef struct TrailPoint {
    GLfloat x, y, z; /**< Control points for the trail. */
    GLfloat t; /**< Timer, normalized to the time to live of the trail (starts at
                  1, ends at 0). */
-   TrailMode mode; /**< Type of trail emission at this point. */
+   GLfloat   dx, dy; /**< Initial velocity of the trail. */
+   TrailMode mode;   /**< Type of trail emission at this point. */
 } TrailPoint;
 
 /**
@@ -128,7 +130,7 @@ void        spfx_render( int layer, double dt );
 void        spfx_clear( void );
 Trail_spfx *spfx_trail_create( const TrailSpec *spec );
 void        spfx_trail_sample( Trail_spfx *trail, double x, double y, double z,
-                               TrailMode mode, int force );
+                               double dx, double dy, TrailMode mode, int force );
 void        spfx_trail_remove( Trail_spfx *trail );
 void        spfx_trail_draw( const Trail_spfx *trail );
 

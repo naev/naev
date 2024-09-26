@@ -46,9 +46,6 @@ extern int var_save( xmlTextWriterPtr writer ); /**< Saves mission variables. */
 extern int pfaction_save( xmlTextWriterPtr writer ); /**< Saves faction data. */
 /* hook.c */
 extern int hook_save( xmlTextWriterPtr writer ); /**< Saves hooks. */
-/* space.c */
-extern int
-space_sysSave( xmlTextWriterPtr writer ); /**< Saves the space stuff. */
 /* economy.c */
 extern int
 economy_sysSave( xmlTextWriterPtr writer ); /**< Saves the economy stuff. */
@@ -83,7 +80,7 @@ static int save_data( xmlTextWriterPtr writer )
       return -1;
    if ( hook_save( writer ) < 0 )
       return -1;
-   if ( space_sysSave( writer ) < 0 )
+   if ( space_playerSave( writer ) < 0 )
       return -1;
    if ( economy_sysSave( writer ) < 0 )
       return -1;
@@ -224,5 +221,5 @@ void save_reload( void )
       WARN( _( "Unable to reload save for '%s'!" ), player.name );
       return;
    }
-   load_gameFile( ns[0].path );
+   load_game( &ns[0] );
 }

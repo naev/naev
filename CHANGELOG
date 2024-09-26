@@ -45,7 +45,7 @@
          * Find the dark side of the Nebula
       * New NPC portraits
       * New generic NPC and News messages
-      * Secret faction got their own trails
+      * Reworked trails to make ships feel more speedy
    * Engine
       * Support for 3D models
          * Lighting is based on system stars
@@ -90,6 +90,7 @@
       * Double tap will activate feather drive like blink engines
       * shadowvigil: claim entire route
       * sh01_corvette: should be completable on easy difficulties now
+      * patrol: fixed escorts and fighters becoming hostile if hostile to the mission giving faction
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons
