@@ -3337,6 +3337,7 @@ dat/outfits/weapons/razor.lua
 dat/rep.lua
 dat/rescue.lua
 dat/save_updater.lua
+dat/scan.lua
 dat/scripts/bioship.lua
 dat/scripts/bioship/intrinsics.lua
 dat/scripts/bioship/skills.lua

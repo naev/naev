@@ -1933,7 +1933,7 @@ static void land_stranded( void )
    /* Run Lua. */
    nlua_getenv( naevL, rescue_env, "rescue" );
    if ( nlua_pcall( rescue_env, 0, 0 ) ) { /* error has occurred */
-      WARN( _( "Rescue: 'rescue' : '%s'" ), lua_tostring( naevL, -1 ) );
+      WARN( _( "Rescue: 'Ys' : '%s'" ), "rescue", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
    }
 }

@@ -111,6 +111,7 @@
 #define AUTONAV_PATH "autonav.lua"
 #define COMM_PATH "comm.lua"
 #define BOARD_PATH "board.lua"
+#define SCAN_PATH "scan.lua"
 #define SAVE_UPDATER_PATH "save_updater.lua"
 #define DIFFICULTY_PATH "difficulty/"
 

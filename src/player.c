@@ -47,6 +47,7 @@
 #include "news.h"
 #include "nlua_outfit.h"
 #include "nlua_ship.h"
+#include "nlua_tk.h"
 #include "nlua_var.h"
 #include "nstring.h"
 #include "ntime.h"
@@ -80,6 +81,7 @@ static credits_t player_payback = 0; /**< Temporary hack for when creating. */
 static int   player_ran_updater = 0; /**< Temporary hack for when creating. */
 static char *player_message_noland =
    NULL; /**< No landing message (when PLAYER_NOLAND is set). */
+static nlua_env scan_env = LUA_NOREF; /**< Scanning script. */
 
 /*
  * Licenses.
@@ -2536,6 +2538,48 @@ void player_autohail( void )
    }
 
    player_message( "#r%s", _( "You haven't been hailed by any pilots." ) );
+}
+
+void player_scan( void )
+{
+   const Pilot *t = pilot_getTarget( player.p );
+   if ( t == NULL ) {
+      player_message( "#r%s", _( "You need a target to scan." ) );
+      return;
+   }
+   if ( !pilot_ewScanCheck( player.p ) ) {
+      player_message( "#o%s", _( "You are not ready to scan yet." ) );
+      return;
+   }
+
+   /* Have to lead scirpt. */
+   if ( scan_env == LUA_NOREF ) {
+      scan_env = nlua_newEnv( "scanner" );
+      nlua_loadStandard( scan_env );
+      nlua_loadTk( scan_env );
+      size_t bufsize;
+      char  *buf = ndata_read( SCAN_PATH, &bufsize );
+      if ( buf == NULL ) {
+         WARN( _( "File '%s' not found!" ), SCAN_PATH );
+         return;
+      }
+      if ( nlua_dobufenv( scan_env, buf, bufsize, SCAN_PATH ) != 0 ) {
+         WARN( _( "Error loading file: %s\n"
+                  "%s\n"
+                  "Most likely Lua file has improper syntax, please check" ),
+               SCAN_PATH, lua_tostring( naevL, -1 ) );
+         free( buf );
+         return;
+      }
+      free( buf );
+   }
+
+   /* Run Lua. */
+   nlua_getenv( naevL, scan_env, "scan" );
+   if ( nlua_pcall( scan_env, 0, 0 ) ) { /* error has occurred */
+      WARN( _( "Scan: '%s' : '%s'" ), "scan", lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+   }
 }
 
 /**

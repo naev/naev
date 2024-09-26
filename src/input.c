@@ -188,6 +188,8 @@ static const char *keybind_info[KST_END][3] = {
                       N_( "Automatically initialize communication with a ship "
                           "that is hailing you." ),
                       "autohail" },
+   [KST_SCAN]     = { N_( "Scan Target" ), N_( "Attempts to scan the target." ),
+                      "scan" },
    [KST_LOG_UP]   = { N_( "Log Scroll Up" ), N_( "Scrolls the log upwards." ),
                       "log_up" },
    [KST_LOG_DOWN] = { N_( "Log Scroll Down" ),
@@ -339,10 +341,11 @@ void input_setDefault( int wasd )
    input_setKeybind( KST_MOUSE_FLYING, KEYBIND_KEYBOARD, SDLK_x, NMOD_CTRL );
    input_setKeybind( KST_COOLDOWN, KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
    /* Communication */
-   input_setKeybind( KST_LOG_UP, KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ANY );
-   input_setKeybind( KST_LOG_DOWN, KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ANY );
    input_setKeybind( KST_HAIL, KEYBIND_KEYBOARD, SDLK_y, NMOD_NONE );
    input_setKeybind( KST_AUTOHAIL, KEYBIND_KEYBOARD, SDLK_y, NMOD_CTRL );
+   input_setKeybind( KST_SCAN, KEYBIND_KEYBOARD, SDLK_u, NMOD_ANY ),
+      input_setKeybind( KST_LOG_UP, KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ANY );
+   input_setKeybind( KST_LOG_DOWN, KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ANY );
    /* Misc. */
    input_setKeybind( KST_ZOOM_IN, KEYBIND_KEYBOARD, SDLK_KP_PLUS, NMOD_ANY );
    input_setKeybind( KST_ZOOM_OUT, KEYBIND_KEYBOARD, SDLK_KP_MINUS, NMOD_ANY );
@@ -1204,18 +1207,6 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
    /*
     * Communication.
     */
-   case KST_LOG_UP:
-      if ( !INGAME() )
-         break;
-      if ( value == KEY_PRESS )
-         gui_messageScrollUp( 5 );
-      break;
-   case KST_LOG_DOWN:
-      if ( !INGAME() )
-         break;
-      if ( value == KEY_PRESS )
-         gui_messageScrollDown( 5 );
-      break;
    case KST_HAIL:
       if ( repeat || !INGAME() || HYP() )
          break;
@@ -1227,6 +1218,24 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
          break;
       if ( value == KEY_PRESS )
          player_autohail();
+      break;
+   case KST_SCAN:
+      if ( repeat || !INGAME() || HYP() )
+         break;
+      if ( value == KEY_PRESS )
+         player_scan();
+      break;
+   case KST_LOG_UP:
+      if ( !INGAME() )
+         break;
+      if ( value == KEY_PRESS )
+         gui_messageScrollUp( 5 );
+      break;
+   case KST_LOG_DOWN:
+      if ( !INGAME() )
+         break;
+      if ( value == KEY_PRESS )
+         gui_messageScrollDown( 5 );
       break;
 
    /*

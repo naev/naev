@@ -79,6 +79,7 @@ typedef enum KeySemanticType_ {
 
    KST_HAIL,
    KST_AUTOHAIL,
+   KST_SCAN,
    KST_LOG_UP,
    KST_LOG_DOWN,
 
