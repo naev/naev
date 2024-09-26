@@ -2,7 +2,8 @@
 <trail name="fire">
  <shader>trail/flame.frag</shader>
  <thickness>8</thickness>
- <ttl>1.5</ttl>
+ <ttl>0.35</ttl>
+ <accel_mod>3</accel_mod>
  <idle r="1" g="1" b="1" a="0.05" />
  <glow r="1" g="0.84" b="0" a="0.7" />
  <afterburn r="1" g="0.5" b="0" a="0.85" scale="1.5" />
