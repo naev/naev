@@ -1,5 +1,5 @@
 ---
-title: "Map"
+title: "Star Map"
 ---
 # Map
 
