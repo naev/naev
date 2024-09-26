@@ -415,7 +415,7 @@ local function board_capture ()
       factionmsg = "#r"..factionmsg.."#0"
    end
 
-   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #r{credits} ({sbonus}%#r from crew strength)#0 in repairs to successfully restore the ship with outfits, and #r{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
+   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}% from crew strength) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
 
 You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]),
       {shpname=board_plt:name(),
