@@ -384,7 +384,17 @@ local function board_capture ()
    -- TODO should this be affected by loot_mod and how?
    --local loot_mod = pp:shipstat("loot_mod", true)
    local bonus = (10+ps.crew) / (10+pps.crew) + 0.25
-   local cost = board_plt:worth() * bonus
+   local cost = board_plt:worth()
+   local costnaked = cost
+   cost = cost * bonus
+   local outfitsnaked = board_plt:outfits(nil,true) -- Get non-locked
+   for k,v in ipairs(outfitsnaked) do
+      if v then
+         outfitsnaked[k] = nil
+         costnaked = costnaked - v:price()
+      end
+   end
+   costnaked = math.min( cost, costnaked * bonus * 1.1 ) -- Always a bit more expensive, but never more than base
    local sbonus
    if bonus > 1 then
       sbonus = string.format("#r%+d", bonus*100 - 100)
@@ -405,11 +415,12 @@ local function board_capture ()
       factionmsg = "#r"..factionmsg.."#0"
    end
 
-   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #r{credits} ({sbonus}%#r from crew strength)#0 in repairs to successfully restore the ship. You have {playercreds}.{fctmsg}
+   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #r{credits} ({sbonus}%#r from crew strength)#0 in repairs to successfully restore the ship with outfits, and #r{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
 
 You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]),
       {shpname=board_plt:name(),
        credits=fmt.credits(cost),
+       creditsnaked=fmt.credits(costnaked),
        playercreds=fmt.credits(player.credits()),
        fctmsg=factionmsg,
        sbonus=sbonus})
@@ -425,7 +436,12 @@ You will still have to escort the ship and land with it to perform the repairs a
 
          -- Start capture script
          local nc = naev.cache()
-         nc.capture_pilot = { pilot=board_plt, cost=cost }
+         nc.capture_pilot = {
+            pilot=board_plt,
+            cost=cost,
+            costnaked=costnaked,
+            outfitsnaked=outfitsnaked,
+         }
          naev.eventStart("Ship Capture")
          board_close()
       end )
