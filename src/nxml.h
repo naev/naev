@@ -125,7 +125,7 @@
          continue;                                                             \
       }                                                                        \
    }
-#define xmlr_strd_rewrite( n, s, str )                                         \
+#define xmlr_strd_free( n, s, str )                                            \
    {                                                                           \
       if ( xml_isNode( n, s ) ) {                                              \
          if ( str != NULL )                                                    \
@@ -153,7 +153,7 @@ static inline char *nxml_trace_strdup( void *ptr )
 /* Attribute reader (allocates memory). */
 #define xmlr_attr_strd( n, s, a )                                              \
    a = nxml_trace_strdup( xmlGetProp( n, (xmlChar *)s ) )
-#define xmlr_attr_strd_rewrite( n, s, a )                                      \
+#define xmlr_attr_strd_free( n, s, a )                                         \
    do {                                                                        \
       if ( a != NULL )                                                         \
          free( a );                                                            \

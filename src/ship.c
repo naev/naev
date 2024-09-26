@@ -926,7 +926,7 @@ static int ship_parse( Ship *temp, const char *filename )
    temp->lua_explode_update = LUA_NOREF;
 
    /* Get name. */
-   xmlr_attr_strd( parent, "name", temp->name );
+   xmlr_attr_strd_free( parent, "name", temp->name );
    if ( temp->name == NULL )
       WARN( _( "Ship in %s has invalid or no name" ), SHIP_DATA_PATH );
 
@@ -938,7 +938,7 @@ static int ship_parse( Ship *temp, const char *filename )
       xml_onlyNodes( node );
 
       if ( xml_isNode( node, "class" ) ) {
-         xmlr_attr_strd( node, "display", temp->class_display );
+         xmlr_attr_strd_free( node, "display", temp->class_display );
          temp->class = ship_classFromString( xml_get( node ) );
          continue;
       }
@@ -952,16 +952,18 @@ static int ship_parse( Ship *temp, const char *filename )
          if ( str == NULL ) {
             WARN( _( "Ship '%s' has NULL tag '%s'!" ), temp->name, "gfx" );
             continue;
-         } else
+         } else {
+            free( temp->gfx_path );
             temp->gfx_path = strdup( str );
+         }
 
          /* Parse attributes. */
          xmlr_attr_float_def( node, "size", temp->size, 1 );
          xmlr_attr_int_def( node, "sx", temp->sx, 8 );
          xmlr_attr_int_def( node, "sy", temp->sy, 8 );
-         xmlr_attr_strd( node, "comm", temp->gfx_comm );
+         xmlr_attr_strd_free( node, "comm", temp->gfx_comm );
          xmlr_attr_int( node, "noengine", temp->noengine );
-         xmlr_attr_strd( node, "polygon", temp->polygon_path );
+         xmlr_attr_strd_free( node, "polygon", temp->polygon_path );
 
          /* Graphics are now lazy loaded. */
 
@@ -974,7 +976,8 @@ static int ship_parse( Ship *temp, const char *filename )
       }
 
       if ( xml_isNode( node, "gfx_overlays" ) ) {
-         xmlNodePtr cur     = node->children;
+         xmlNodePtr cur = node->children;
+         array_free( temp->gfx_overlays );
          temp->gfx_overlays = array_create_size( glTexture *, 2 );
          do {
             xml_onlyNodes( cur );
@@ -993,18 +996,19 @@ static int ship_parse( Ship *temp, const char *filename )
       }
       if ( xml_isNode( node, "base_type" ) ) {
          const char *nstr = xml_get( node );
-         xmlr_attr_strd( node, "path", temp->base_path );
+         xmlr_attr_strd_free( node, "path", temp->base_path );
+         free( temp->base_type );
          temp->base_type = ( nstr != NULL ) ? strdup( nstr ) : NULL;
          continue;
       }
       xmlr_float( node, "time_mod", temp->dt_default );
       xmlr_long( node, "price", temp->price );
-      xmlr_strd( node, "license", temp->license );
-      xmlr_strd( node, "cond", temp->cond );
-      xmlr_strd( node, "condstr", temp->condstr );
-      xmlr_strd( node, "fabricator", temp->fabricator );
-      xmlr_strd( node, "description", temp->description );
-      xmlr_strd( node, "desc_extra", temp->desc_extra );
+      xmlr_strd_free( node, "license", temp->license );
+      xmlr_strd_free( node, "cond", temp->cond );
+      xmlr_strd_free( node, "condstr", temp->condstr );
+      xmlr_strd_free( node, "fabricator", temp->fabricator );
+      xmlr_strd_free( node, "description", temp->description );
+      xmlr_strd_free( node, "desc_extra", temp->desc_extra );
       xmlr_int( node, "points", temp->points );
       xmlr_int( node, "rarity", temp->rarity );
       if ( xml_isNode( node, "lua" ) ) {
@@ -1013,6 +1017,7 @@ static int ship_parse( Ship *temp, const char *filename )
             WARN( _( "Ship '%s' has invalid '%s' node." ), temp->name, "lua" );
             continue;
          }
+         free( temp->lua_file );
          if ( nstr[0] == '/' )
             temp->lua_file = strdup( nstr );
          else
@@ -1044,7 +1049,7 @@ static int ship_parse( Ship *temp, const char *filename )
       }
 
       if ( xml_isNode( node, "trail_generator" ) ) {
-         char *buf;
+         const char *buf;
          xmlr_attr_float( node, "x", trail.pos.v[0] );
          xmlr_attr_float( node, "y", trail.pos.v[1] );
          xmlr_attr_float( node, "h", trail.pos.v[2] );
@@ -1109,6 +1114,10 @@ static int ship_parse( Ship *temp, const char *filename )
          continue;
       }
       if ( xml_isNode( node, "slots" ) ) {
+         /* Clean up, just in case. */
+         array_free( temp->outfit_structure );
+         array_free( temp->outfit_utility );
+         array_free( temp->outfit_weapon );
          /* Allocate the space. */
          temp->outfit_structure = array_create( ShipOutfitSlot );
          temp->outfit_utility   = array_create( ShipOutfitSlot );
@@ -1171,6 +1180,7 @@ static int ship_parse( Ship *temp, const char *filename )
          /* Create description. */
          if ( temp->stats != NULL ) {
             int i;
+            free( temp->desc_stats );
             temp->desc_stats = malloc( STATS_DESC_MAX );
             i = ss_statsListDesc( temp->stats, temp->desc_stats, STATS_DESC_MAX,
                                   0 );
@@ -1186,7 +1196,8 @@ static int ship_parse( Ship *temp, const char *filename )
       /* Parse tags. */
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
-         temp->tags     = array_create( char     *);
+         array_free( temp->tags );
+         temp->tags = array_create( char * );
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "tag" ) ) {
