@@ -119,7 +119,17 @@
             WARN( "Node '%s' already loaded and being replaced from '%s' to "  \
                   "'%s'",                                                      \
                   s, str, xml_raw( n ) );                                      \
+            free( str );                                                       \
          }                                                                     \
+         str = ( ( xml_get( n ) == NULL ) ? NULL : strdup( xml_raw( n ) ) );   \
+         continue;                                                             \
+      }                                                                        \
+   }
+#define xmlr_strd_rewrite( n, s, str )                                         \
+   {                                                                           \
+      if ( xml_isNode( n, s ) ) {                                              \
+         if ( str != NULL )                                                    \
+            free( str );                                                       \
          str = ( ( xml_get( n ) == NULL ) ? NULL : strdup( xml_raw( n ) ) );   \
          continue;                                                             \
       }                                                                        \
@@ -143,6 +153,12 @@ static inline char *nxml_trace_strdup( void *ptr )
 /* Attribute reader (allocates memory). */
 #define xmlr_attr_strd( n, s, a )                                              \
    a = nxml_trace_strdup( xmlGetProp( n, (xmlChar *)s ) )
+#define xmlr_attr_strd_rewrite( n, s, a )                                      \
+   do {                                                                        \
+      if ( a != NULL )                                                         \
+         free( a );                                                            \
+      a = nxml_trace_strdup( xmlGetProp( n, (xmlChar *)s ) );                  \
+   } while ( 0 )
 
 /* Attribute readers with defaults. */
 #define xmlr_attr_int_def( n, s, a, def )                                      \
