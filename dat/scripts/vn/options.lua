@@ -70,7 +70,7 @@ function opt.open( vn )
       var.push( "vn_textspeed", vn.speed )
       var.push( "vn_autoscroll", vn.autoscroll )
       var.push( "vn_nobounce", vn.nobounce )
-      luatk.close()
+      wdw:destroy()
       opt.running = false
       return true
    end )
