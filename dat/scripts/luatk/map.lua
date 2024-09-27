@@ -1,3 +1,8 @@
+--[[
+
+   Map Widget for Luatk. Similar to in-game star map.
+
+--]]
 local luatk = require 'luatk'
 local lg = require 'love.graphics'
 local lf = require "love.filesystem"

@@ -3462,6 +3462,7 @@ dat/scripts/luatk.lua
 dat/scripts/luatk/bezier.lua
 dat/scripts/luatk/conf.lua
 dat/scripts/luatk/core.lua
+dat/scripts/luatk/equipment.lua
 dat/scripts/luatk/main.lua
 dat/scripts/luatk/map.lua
 dat/scripts/luatk/markdown.lua
