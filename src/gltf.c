@@ -32,6 +32,17 @@
 #define STR_HELPER( x ) #x
 #define STR( x ) STR_HELPER( x )
 
+/**
+ * @brief Simple caching for GLTF objects to avoid double loads.
+ */
+typedef struct ObjectCache {
+   char       *name;     /**< Original file name for loading. */
+   GltfObject *obj;      /**< Associated object. */
+   int         refcount; /**< Reference counting. */
+} ObjectCache;
+static ObjectCache *obj_cache  = NULL;
+static SDL_mutex   *cache_lock = NULL;
+
 static Material material_default;
 
 /**
@@ -204,7 +215,10 @@ static int use_ambient_occlusion = 1;
 static int max_tex_size          = 0;
 
 /* Prototypes. */
-static void gltf_applyAnim( GltfObject *obj, GLfloat time );
+static int         cache_cmp( const void *p1, const void *p2 );
+static GltfObject *cache_get( const char *filename );
+static int         cache_dec( GltfObject *obj );
+static void        gltf_applyAnim( GltfObject *obj, GLfloat time );
 
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
@@ -1514,7 +1528,9 @@ GltfObject *gltf_loadFromFile( const char *filename )
    memset( &opts, 0, sizeof( opts ) );
 
    /* Initialize object. */
-   obj = calloc( 1, sizeof( GltfObject ) );
+   obj = cache_get( filename );
+   if ( obj->path != NULL )
+      return obj;
 
    /* Set up the gltf path. */
    dirpath = strdup( filename );
@@ -1717,7 +1733,13 @@ static void gltf_freeTex( Texture *tex )
 
 void gltf_free( GltfObject *obj )
 {
+   int c;
    if ( obj == NULL )
+      return;
+
+   /* Try to get from cache, if refcount > 0 then it'll be 0. */
+   c = cache_dec( obj );
+   if ( c == 0 )
       return;
 
    free( obj->path );
@@ -1777,6 +1799,8 @@ int gltf_init( void )
    Shader       *shd;
    const char   *prepend_fix = "#define MAX_LIGHTS " STR( MAX_LIGHTS ) "\n";
    char          prepend[STRMAX];
+
+   cache_lock = SDL_CreateMutex();
 
    /* Set up default lighting. */
    L_default = L_default_const;
@@ -2005,6 +2029,14 @@ void gltf_exit( void )
    if ( tex_zero.tex == 0 )
       return;
 
+   SDL_DestroyMutex( cache_lock );
+   for ( int i = 0; i < array_size( obj_cache ); i++ ) {
+      WARN( _( "Object Cache '%s' not properly freed (refcount=%d)!" ),
+            obj_cache[i].name, obj_cache[i].refcount );
+      free( obj_cache->name );
+   }
+   array_free( obj_cache );
+
    glDeleteBuffers( 1, &shadow_vbo );
    glDeleteTextures( 1, &shadow_tex_high );
    glDeleteTextures( 1, &shadow_tex_low );
@@ -2110,4 +2142,77 @@ void gltf_lightTransform( Lighting *L, const mat4 *H )
 GLuint gltf_shadowmap( int light )
 {
    return light_tex[light];
+}
+
+/**
+ * @brief Checks to see if two caches are the same.
+ */
+static int cache_cmp( const void *p1, const void *p2 )
+{
+   const ObjectCache *o1 = p1;
+   const ObjectCache *o2 = p2;
+   return strcmp( o1->name, o2->name );
+}
+
+/**
+ * @brief Gets a new object from cache, allocating as necessary.
+ *
+ *    @param filename Name of the file to load.
+ *    @return Object associated to the cache.
+ */
+static GltfObject *cache_get( const char *filename )
+{
+   SDL_mutexP( cache_lock );
+   const ObjectCache cache = {
+      .name = (char *)filename,
+   };
+   ObjectCache *hit = bsearch( &cache, obj_cache, array_size( obj_cache ),
+                               sizeof( ObjectCache ), cache_cmp );
+   if ( hit == NULL ) {
+      ObjectCache newcache = {
+         .name     = strdup( filename ),
+         .obj      = calloc( 1, sizeof( GltfObject ) ),
+         .refcount = 1,
+      };
+      if ( obj_cache == NULL )
+         obj_cache = array_create( ObjectCache );
+      array_push_back( &obj_cache, newcache );
+      qsort( obj_cache, array_size( obj_cache ), sizeof( ObjectCache ),
+             cache_cmp );
+      SDL_mutexV( cache_lock );
+      return newcache.obj;
+   }
+   hit->refcount++;
+   SDL_mutexV( cache_lock );
+   return hit->obj;
+}
+
+/**
+ * @brief Decerments the refcount for a cached object and sees if it should be
+ * freed.
+ *
+ *    @param obj Object to check to see if it should be freed.
+ *    @return Whether or not it should be freed.
+ */
+static int cache_dec( GltfObject *obj )
+{
+   SDL_mutexP( cache_lock );
+   for ( int i = 0; i < array_size( obj_cache ); i++ ) {
+      ObjectCache *c = &obj_cache[i];
+      if ( c->obj != obj )
+         continue;
+
+      c->refcount--;
+      if ( c->refcount <= 0 ) {
+         free( c->name );
+         array_erase( &obj_cache, &c[0], &c[1] );
+         SDL_mutexV( cache_lock );
+         return 1;
+      }
+      SDL_mutexV( cache_lock );
+      return 0;
+   }
+   WARN( _( "GltfObject '%s' not found in cache!" ), obj->path );
+   SDL_mutexV( cache_lock );
+   return 0;
 }
