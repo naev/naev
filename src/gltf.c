@@ -216,7 +216,7 @@ static int max_tex_size          = 0;
 
 /* Prototypes. */
 static int         cache_cmp( const void *p1, const void *p2 );
-static GltfObject *cache_get( const char *filename );
+static GltfObject *cache_get( const char *filename, int *new );
 static int         cache_dec( GltfObject *obj );
 static void        gltf_applyAnim( GltfObject *obj, GLfloat time );
 
@@ -1525,11 +1525,12 @@ GltfObject *gltf_loadFromFile( const char *filename )
    cgltf_data   *data;
    cgltf_options opts;
    char         *dirpath;
+   int new;
    memset( &opts, 0, sizeof( opts ) );
 
    /* Initialize object. */
-   obj = cache_get( filename );
-   if ( obj->path != NULL )
+   obj = cache_get( filename, &new );
+   if ( !new )
       return obj;
 
    /* Set up the gltf path. */
@@ -2158,9 +2159,10 @@ static int cache_cmp( const void *p1, const void *p2 )
  * @brief Gets a new object from cache, allocating as necessary.
  *
  *    @param filename Name of the file to load.
+ *    @param[out] new Set to 1 when a new object is created, and 0 when reused.
  *    @return Object associated to the cache.
  */
-static GltfObject *cache_get( const char *filename )
+static GltfObject *cache_get( const char *filename, int *new )
 {
    SDL_mutexP( cache_lock );
    const ObjectCache cache = {
@@ -2179,10 +2181,12 @@ static GltfObject *cache_get( const char *filename )
       array_push_back( &obj_cache, newcache );
       qsort( obj_cache, array_size( obj_cache ), sizeof( ObjectCache ),
              cache_cmp );
+      *new = 1;
       SDL_mutexV( cache_lock );
       return newcache.obj;
    }
    hit->refcount++;
+   *new = 0;
    SDL_mutexV( cache_lock );
    return hit->obj;
 }
