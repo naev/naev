@@ -34,6 +34,7 @@ local function updater0120( _did0110, _did0100, _did090 )
       1. Equip ships with refueling
       1. Holo-Archives
       1. Stats are additive
+      1. Scanning (scan key)
    --]]
 end
 
