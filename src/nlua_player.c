@@ -107,7 +107,8 @@ static int playerL_land( lua_State *L );
 static int playerL_landAllow( lua_State *L );
 static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
-static int playerL_commclose( lua_State *L );
+static int playerL_commOpen( lua_State *L );
+static int playerL_commClose( lua_State *L );
 /* Shipvars. */
 static int playerL_shipvarPeek( lua_State *L );
 static int playerL_shipvarPush( lua_State *L );
@@ -205,7 +206,8 @@ static const luaL_Reg playerL_methods[] = {
    { "land", playerL_land },
    { "landAllow", playerL_landAllow },
    { "landWindow", playerL_landWindow },
-   { "commClose", playerL_commclose },
+   { "commOpen", playerL_commOpen },
+   { "commClose", playerL_commClose },
    { "shipvarPeek", playerL_shipvarPeek },
    { "shipvarPush", playerL_shipvarPush },
    { "shipvarPop", playerL_shipvarPop },
@@ -1268,11 +1270,37 @@ static int playerL_landWindow( lua_State *L )
 }
 
 /**
+ * @brief Opens communication with a pilot or spob.
+ *
+ * Will do no checks with spobs.
+ *
+ *    @luatparam Pilot|Spob Target to open communication channel with.
+ *    @luatreturn boolean true on success, false if failed to open.
+ * @luafunc commOpen
+ */
+static int playerL_commOpen( lua_State *L )
+{
+   if ( lua_ispilot( L, 1 ) ) {
+      const Pilot *p   = luaL_validpilot( L, 1 );
+      int          ret = comm_openPilot( p->id );
+      lua_pushboolean( L, ret == 0 );
+      return 1;
+   } else if ( lua_isspob( L, 1 ) ) {
+      Spob *spb = luaL_validspob( L, 1 );
+      int   ret = comm_openSpob( spb );
+      lua_pushboolean( L, ret == 0 );
+      return 1;
+   } else
+      NLUA_INVALID_PARAMETER( L, 1 );
+   return 0;
+}
+
+/**
  * @brief Forces the player to close comm if they are chatting.
  *
  * @luafunc commClose
  */
-static int playerL_commclose( lua_State *L )
+static int playerL_commClose( lua_State *L )
 {
    (void)L;
    comm_queueClose();
