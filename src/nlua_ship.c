@@ -568,6 +568,10 @@ static int shipL_getSlots( lua_State *L )
          lua_pushboolean( L, sslot->locked ); /* value */
          lua_rawset( L, -3 );                 /* table[key] = value */
 
+         lua_pushstring( L, "visible" );       /* key */
+         lua_pushboolean( L, sslot->visible ); /* value */
+         lua_rawset( L, -3 );                  /* table[key] = value */
+
          if ( sslot->data != NULL ) {
             lua_pushstring( L, "outfit" );    /* key */
             lua_pushoutfit( L, sslot->data ); /* value*/
