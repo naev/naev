@@ -19,17 +19,17 @@ local edge_width = 6
 luatk_map.sys_radius = sys_radius
 luatk_map.edge_width = edge_width
 
-local cInert = colour.new("Inert")
-local cGreen = colour.new("Green")
-local cAquaBlue = colour.new("AquaBlue")
-local cRed = colour.new("Red")
-local cFontGreen = colour.new("FontGreen")
-local cYellow = colour.new("Yellow")
-local cFriend = colour.new("Friend")
-local cHostile = colour.new("Hostile")
-local cNeutral = colour.new("Neutral")
+local cInert      = colour.new("Inert")
+local cGreen      = colour.new("Green")
+local cAquaBlue   = colour.new("AquaBlue")
+local cRed        = colour.new("Red")
+local cFontGreen  = colour.new("FontGreen")
+local cYellow     = colour.new("Yellow")
+local cFriend     = colour.new("Friend")
+local cHostile    = colour.new("Hostile")
+local cNeutral    = colour.new("Neutral")
 local cRestricted = colour.new("Restricted")
-local cGrey80 = colour.new("Grey80")
+local cGrey80     = colour.new("Grey80")
 local inv = vec2.new(1,-1)
 
 local Map = {}

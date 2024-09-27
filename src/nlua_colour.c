@@ -69,6 +69,10 @@ int nlua_loadCol( nlua_env env )
  * col2:setHSV( col1:hsv() ) -- Set colour 2 with colour 1's HSV values
  * @endcode
  *
+ * Colours are assumed to be given as gamma-corrected values and are stored
+ * internally in linear colourspace by default. Most functions have a boolean
+ * parameter that allows controlling this behaviour.
+ *
  * @luamod colour
  */
 /**
@@ -253,7 +257,7 @@ static int colL_alpha( lua_State *L )
  *
  *    @luatparam Colour col Colour to get RGB values of.
  *    @luatparam[opt=false] boolean gamma Whether or not to get the
- * gamma-corrected value or not.
+ * gamma-corrected value or not. Defaults to internal value that is linear.
  *    @luatreturn number The red value of the colour.
  *    @luatreturn number The green value of the colour.
  *    @luatreturn number The blue value of the colour.
