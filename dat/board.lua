@@ -561,7 +561,9 @@ local function manage_cargo ()
 end
 
 function board_close ()
-   luatk.close()
+   if board_wdw then
+      board_wdw:destroy()
+   end
    board_wdw = nil
    der.sfx.unboard:play()
 end
