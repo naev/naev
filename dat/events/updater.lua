@@ -16,6 +16,8 @@ local luatk = require "luatk"
 
 -- Runs on saves older than 0.11.0
 local function updater0120( _did0110, _did0100, _did090 )
+
+   -- Have to apply diff to lower pirates if necessary
    if player.chapter()=="0" then
       if not diff.isApplied( "Chapter 0" ) then
          diff.apply( "Chapter 0" )
@@ -23,6 +25,16 @@ local function updater0120( _did0110, _did0100, _did090 )
    else
       diff.remove( "Chapter 0" )
    end
+
+   --[[
+      TODO new features explanation
+
+      1. Ship Capturing (chapter 1+)
+      1. Fuel increase
+      1. Equip ships with refueling
+      1. Holo-Archives
+      1. Stats are additive
+   --]]
 end
 
 -- Runs on saves older than 0.11.0
