@@ -18,15 +18,54 @@ function scan ()
 
    -- Buttons
    luatk.newButton( wdw, w-20-80, h-20-30, 80, 30, _("Close"), wdw_close )
+   --[[ Doesn't work unless support for multiple dialogues is implemented...
+   luatk.newButton( wdw, w-2*(20+80), h-20-30, 80, 30, _("Hail"), function ()
+      luatk.close() -- Need to make sure it is closed
+      player.commOpen( plt )
+   end )
+   --]]
 
-   -- Cargo
    local x = 20+weq:width()+20
    local y = 40
+
+   -- Fleet
+   if plt:flags("carried") then
+      local wcarried = luatk.newText( wdw, x, y, w-x-20, 30, _("This ship is a deployed fighter.") )
+      y = y+wcarried:height()+20
+   end
+
+   local fleet
+   local leader = plt:leader()
+   if leader ~= nil then
+      fleet = leader:followers(true)
+   else
+      fleet = plt:followers(true)
+   end
+   if #fleet > 0 then
+      luatk.newText( wdw, x, y, w-x-20, 30, "#n".._("Ships in the same fleet:") )
+      y = y+25
+      local fleetstr = ""
+      for k,p in ipairs(fleet) do
+         if p~=plt then
+            if fleetstr~="" then
+               fleetstr = fleetstr.."\n"
+            end
+            fleetstr = fleetstr..p:name()
+         end
+      end
+      local wfleet = luatk.newText( wdw, x, y, w-x-20, 200, fleetstr )
+      y = y+wfleet:height()+20
+   end
+
+   -- Cargo
    luatk.newText( wdw, x, y, w-x-20, 30, "#n".._("Cargo:") )
    y = y+25
    local cargostr = ""
    for k,c in ipairs(plt:cargoList()) do
-      cargostr = cargostr..fmt.f(_("{amount} of {cargo}").."\n", {
+      if cargostr~="" then
+         cargostr = cargostr.."\n"
+      end
+      cargostr = cargostr..fmt.f(_("{amount} of {cargo}"), {
          amount=fmt.tonnes(c.q),
          cargo=c.c,
       })
@@ -43,7 +82,10 @@ function scan ()
    y = y+25
    local intrinsicstr = ""
    for k,v in ipairs(ointrinsic) do
-      intrinsicstr = intrinsicstr..tostring(v).."\n"
+      if intrinsicstr~="" then
+         intrinsicstr = intrinsicstr.."\n"
+      end
+      intrinsicstr = intrinsicstr..tostring(v)
    end
    if intrinsicstr=="" then
       intrinsicstr = _("No intrinsic outfits detected.")
