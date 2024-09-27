@@ -1397,6 +1397,13 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 {
    int    engsound;
    double pitch = 1.;
+   Pilot *t     = pilot_getTarget( pplayer );
+
+   /* Set special flag if scanned by player. */
+   if ( ( t != NULL ) && !pilot_isFlag( t, PILOT_PLAYER_SCANNED ) &&
+        pilot_ewScanCheck( pplayer ) ) {
+      pilot_setFlag( t, PILOT_PLAYER_SCANNED );
+   }
 
    /* Calculate engine sound to use. */
    if ( pilot_isFlag( pplayer, PILOT_AFTERBURNER ) )
@@ -2547,7 +2554,7 @@ void player_scan( void )
       player_message( "#r%s", _( "You need a target to scan." ) );
       return;
    }
-   if ( !pilot_ewScanCheck( player.p ) ) {
+   if ( pilot_isFlag( t, PILOT_PLAYER_SCANNED ) ) {
       player_message( "#o%s", _( "You are not ready to scan yet." ) );
       return;
    }

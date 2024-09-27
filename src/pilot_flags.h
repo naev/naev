@@ -60,14 +60,15 @@ enum {
    PILOT_INVINCIBLE,    /**< Pilot can't be hit ever. */
    PILOT_INVINC_PLAYER, /**< Pilot can not be hurt by the player. */
    /* Player-related stuff. */
-   PILOT_HOSTILE,       /**< Pilot is hostile to the player. */
-   PILOT_FRIENDLY,      /**< Pilot is friendly to the player. */
-   PILOT_SCANNING,      /**< Pilot is scanning the pilot. */
-   PILOT_COMBAT,        /**< Pilot is engaged in combat. */
-   PILOT_BRIBED,        /**< Pilot has been bribed already. */
-   PILOT_DISTRESSED,    /**< Pilot has distressed once already. */
-   PILOT_NONTARGETABLE, /**< Safe time for when the player is taking off or
-                           jumping in. */
+   PILOT_HOSTILE,        /**< Pilot is hostile to the player. */
+   PILOT_FRIENDLY,       /**< Pilot is friendly to the player. */
+   PILOT_SCANNING,       /**< Pilot is scanning the pilot. */
+   PILOT_COMBAT,         /**< Pilot is engaged in combat. */
+   PILOT_BRIBED,         /**< Pilot has been bribed already. */
+   PILOT_DISTRESSED,     /**< Pilot has distressed once already. */
+   PILOT_NONTARGETABLE,  /**< Safe time for when the player is taking off or
+                            jumping in. */
+   PILOT_PLAYER_SCANNED, /**< Pilot has been scanned by the player. */
    /* Landing stuff. */
    PILOT_LANDING, /**< Pilot is landing. */
    PILOT_TAKEOFF, /**< Pilot is taking off. */
