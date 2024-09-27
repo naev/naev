@@ -447,6 +447,12 @@ function luatk.newWindow( x, y, w, h )
    luatk._dirty = true
    return wdw
 end
+--[[--
+Resizes the window, recentering if necessary.
+
+   @tparam number w Width to set the window to.
+   @tparam number h Height to set the window to.
+--]]
 function luatk.Window:resize( w, h )
    local nw, nh = naev.gfx.dim()
    self.w = w

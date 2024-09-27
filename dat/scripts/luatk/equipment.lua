@@ -114,4 +114,18 @@ function wgtEquipment:mmoved( mx, my, _dx, _dy )
    end
 end
 
+function wgtEquipment:dimensions()
+   local w = COL * 3
+   local h = HEADER + (BOX+BOXSEP)*math.max(#self.oweap,math.max(#self.outil,#self.ostru))
+   return w, h
+end
+function wgtEquipment:height ()
+   local _w, h = self:dimensions()
+   return h
+end
+function wgtEquipment:width ()
+   local w, _h = self:dimensions()
+   return w
+end
+
 return wgtEquipment
