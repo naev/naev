@@ -53,7 +53,7 @@ function approach ()
 
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( _(""), { image=img } )
+   local pir = vn.newCharacter( _("Suspicious Patron"), { image=img } )
    vn.transition()
 
    vn.na(_([[You approach the suspicious patron. They seem to reek of some sort of strong incense or herb.]]))
