@@ -6560,13 +6560,16 @@ static int pilotL_setLeader( lua_State *L )
  * @brief Get all of a pilots followers.
  *
  *    @luatparam Pilot p Pilot to get the followers of.
+ *    @luatparam boolean hidefighters Whether or not to ignore deployed
+ * fighters.
  *    @luatreturn {Pilot,...} Table of followers.
  * @luafunc followers
  */
 static int pilotL_followers( lua_State *L )
 {
-   const Pilot *p   = luaL_validpilot( L, 1 );
-   int          idx = 1;
+   const Pilot *p              = luaL_validpilot( L, 1 );
+   int          ignorefighters = lua_toboolean( L, 2 );
+   int          idx            = 1;
 
    lua_newtable( L );
    for ( int i = 0; i < array_size( p->escorts ); i++ ) {
@@ -6575,6 +6578,10 @@ static int pilotL_followers( lua_State *L )
       if ( ( pe == NULL ) || pilot_isFlag( pe, PILOT_DEAD ) ||
            pilot_isFlag( pe, PILOT_HIDE ) )
          continue;
+
+      if ( ignorefighters && pilot_isFlag( pe, PILOT_CARRIED ) )
+         continue;
+
       lua_pushpilot( L, p->escorts[i].id );
       lua_rawseti( L, -2, idx++ );
    }
