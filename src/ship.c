@@ -1160,6 +1160,11 @@ static int ship_parse( Ship *temp, const char *filename )
       /* Parse ship stats. */
       if ( xml_isNode( node, "stats" ) ) {
          xmlNodePtr cur = node->children;
+         /* Clear if duplicated. */
+         if ( temp->stats != NULL ) {
+            ss_free( temp->stats );
+            temp->stats = NULL;
+         }
          do {
             xml_onlyNodes( cur );
             ll = ss_listFromXML( cur );
