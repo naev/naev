@@ -224,6 +224,11 @@ Only to be used when running the toolkit outside of luatk.run.
    @tparam number dt Number of seconds since last update.
 --]]
 function luatk.update(dt)
+   -- Close if all windows are destroyed
+   if #luatk._windows<=0 then
+      luatk.close()
+      return
+   end
    for _k,wdw in ipairs(luatk._windows) do
       wdw:update(dt)
    end
