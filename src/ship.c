@@ -899,24 +899,23 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
    if ( ( !firstpass ) && ( temp->inherits == NULL ) )
       return 0;
 
-   /* Load the XML. */
-   doc = xml_parsePhysFS( filename );
-   if ( doc == NULL )
-      return -1;
-
-   parent = doc->xmlChildrenNode; /* First ship node */
-   if ( parent == NULL ) {
-      xmlFreeDoc( doc );
-      WARN( _( "Malformed %s file: does not contain elements" ), filename );
-      return -1;
-   }
-
    if ( firstpass ) {
+      /* Load the XML. */
+      doc = xml_parsePhysFS( filename );
+      if ( doc == NULL )
+         return -1;
+
+      parent = doc->xmlChildrenNode; /* First ship node */
+      if ( parent == NULL ) {
+         xmlFreeDoc( doc );
+         WARN( _( "Malformed %s file: does not contain elements" ), filename );
+         return -1;
+      }
+
       /* Clear memory. */
       memset( temp, 0, sizeof( Ship ) );
 
       /* Defaults. */
-      temp->filename = strdup( filename );
       ss_statsInit( &temp->stats_array );
       temp->dt_default     = 1.;
       temp->faction        = -1;
@@ -939,11 +938,13 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       /* Get inheritance. */
       xmlr_attr_strd_free( parent, "inherits", temp->inherits );
       if ( temp->inherits != NULL ) {
-         /* TODO try to reuse doc instead of freeing again... */
-         xmlFreeDoc( doc );
+         /* Don't free doc as it gets reused next iteration. */
+         temp->rawdata = doc;
          return 0;
       }
    } else {
+      doc    = temp->rawdata;
+      parent = doc->xmlChildrenNode; /* First ship node */
 #define STRDUP_( x ) ( ( x == NULL ) ? NULL : strdup( x ) )
 #define ARRAYDUP_( x, y )                                                      \
    do {                                                                        \
@@ -953,7 +954,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       Ship  t             = *temp;
       Ship *base          = (Ship *)ship_get( temp->inherits );
       *temp               = *base;
-      temp->filename      = t.filename;
+      temp->rawdata       = doc;
       temp->inherits      = t.inherits;
       temp->name          = t.name;
       temp->base_type     = STRDUP_( base->base_type );
@@ -1611,7 +1612,7 @@ int ships_load( void )
    /* Now we do the second pass to resolve inheritance. */
    for ( int i = array_size( ship_stack ) - 1; i >= 0; i-- ) {
       Ship *s   = &ship_stack[i];
-      int   ret = ship_parse( s, s->filename, 0 );
+      int   ret = ship_parse( s, NULL, 0 );
       if ( ret )
          array_erase( &ship_stack, &s[0], &s[1] );
    }
@@ -1727,7 +1728,6 @@ void ships_free( void )
       Ship *s = &ship_stack[i];
 
       /* Free stored strings. */
-      free( s->filename );
       free( s->inherits );
       free( s->name );
       free( s->class_display );
