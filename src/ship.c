@@ -938,8 +938,11 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
 
       /* Get inheritance. */
       xmlr_attr_strd_free( parent, "inherits", temp->inherits );
-      if ( temp->inherits != NULL )
+      if ( temp->inherits != NULL ) {
+         /* TODO try to reuse doc instead of freeing again... */
+         xmlFreeDoc( doc );
          return 0;
+      }
    } else {
 #define STRDUP_( x ) ( ( x == NULL ) ? NULL : strdup( x ) )
 #define ARRAYDUP_( x, y )                                                      \
