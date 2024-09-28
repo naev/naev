@@ -70,7 +70,7 @@ static double       ship_aa_scale       = -1.;
  * Prototypes
  */
 static int  ship_loadPLG( Ship *temp, const char *buf );
-static int  ship_parse( Ship *temp, const char *filename );
+static int  ship_parse( Ship *temp, const char *filename, int firstpass );
 static int  ship_parseThread( void *ptr );
 static void ship_freeSlot( ShipOutfitSlot *s );
 static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
@@ -888,12 +888,15 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot,
  *    @param filename File to load ship from.
  *    @return 0 on success.
  */
-static int ship_parse( Ship *temp, const char *filename )
+static int ship_parse( Ship *temp, const char *filename, int firstpass )
 {
    xmlNodePtr       parent, node;
    xmlDocPtr        doc;
-   ShipStatList    *ll;
    ShipTrailEmitter trail;
+
+   /* On second pass we ignore inheriting ones. */
+   if ( ( !firstpass ) && ( temp->inherits == NULL ) )
+      return 0;
 
    /* Load the XML. */
    doc = xml_parsePhysFS( filename );
@@ -907,28 +910,86 @@ static int ship_parse( Ship *temp, const char *filename )
       return -1;
    }
 
-   /* Clear memory. */
-   memset( temp, 0, sizeof( Ship ) );
+   if ( firstpass ) {
+      /* Clear memory. */
+      memset( temp, 0, sizeof( Ship ) );
 
-   /* Defaults. */
-   ss_statsInit( &temp->stats_array );
-   temp->dt_default     = 1.;
-   temp->faction        = -1;
-   temp->trail_emitters = array_create( ShipTrailEmitter );
+      /* Defaults. */
+      temp->filename = strdup( filename );
+      ss_statsInit( &temp->stats_array );
+      temp->dt_default     = 1.;
+      temp->faction        = -1;
+      temp->trail_emitters = array_create( ShipTrailEmitter );
 
-   /* Lua defaults. */
-   temp->lua_env            = LUA_NOREF;
-   temp->lua_init           = LUA_NOREF;
-   temp->lua_cleanup        = LUA_NOREF;
-   temp->lua_update         = LUA_NOREF;
-   temp->lua_dt             = 0.1;
-   temp->lua_explode_init   = LUA_NOREF;
-   temp->lua_explode_update = LUA_NOREF;
+      /* Lua defaults. */
+      temp->lua_env            = LUA_NOREF;
+      temp->lua_init           = LUA_NOREF;
+      temp->lua_cleanup        = LUA_NOREF;
+      temp->lua_update         = LUA_NOREF;
+      temp->lua_dt             = 0.1;
+      temp->lua_explode_init   = LUA_NOREF;
+      temp->lua_explode_update = LUA_NOREF;
 
-   /* Get name. */
-   xmlr_attr_strd_free( parent, "name", temp->name );
-   if ( temp->name == NULL )
-      WARN( _( "Ship in %s has invalid or no name" ), SHIP_DATA_PATH );
+      /* Get name. */
+      xmlr_attr_strd_free( parent, "name", temp->name );
+      if ( temp->name == NULL )
+         WARN( _( "Ship in %s has invalid or no name" ), SHIP_DATA_PATH );
+
+      /* Get inheritance. */
+      xmlr_attr_strd_free( parent, "inherits", temp->inherits );
+      if ( temp->inherits != NULL )
+         return 0;
+   } else {
+#define STRDUP_( x ) ( ( x == NULL ) ? NULL : strdup( x ) )
+#define ARRAYDUP_( x, y )                                                      \
+   do {                                                                        \
+      for ( int i = 0; i < array_size( y ); i++ )                              \
+         array_push_back( &x, y[i] );                                          \
+   } while ( 0 )
+      Ship  t             = *temp;
+      Ship *base          = (Ship *)ship_get( temp->inherits );
+      *temp               = *base;
+      temp->inherits      = t.inherits;
+      temp->name          = t.name;
+      temp->base_type     = STRDUP_( base->base_type );
+      temp->base_path     = STRDUP_( base->base_path );
+      temp->class_display = STRDUP_( base->class_display );
+      temp->license       = STRDUP_( base->license );
+      temp->cond          = STRDUP_( base->cond );
+      temp->condstr       = STRDUP_( base->condstr );
+      temp->fabricator    = STRDUP_( base->fabricator );
+      temp->description   = STRDUP_( base->description );
+      temp->desc_extra    = STRDUP_( base->desc_extra );
+      temp->gfx_path      = STRDUP_( base->gfx_path );
+      temp->polygon_path  = STRDUP_( base->polygon_path );
+      temp->gfx_comm      = STRDUP_( base->gfx_comm );
+      if ( base->gfx_overlays != NULL ) {
+         temp->gfx_overlays = array_create( glTexture * );
+         for ( int i = 0; i < array_size( base->gfx_overlays ); i++ )
+            array_push_back( &temp->gfx_overlays,
+                             gl_dupTexture( base->gfx_overlays[i] ) );
+      }
+      temp->trail_emitters   = t.trail_emitters;
+      temp->outfit_structure = array_create( ShipOutfitSlot );
+      ARRAYDUP_( temp->outfit_structure, base->outfit_structure );
+      temp->outfit_utility = array_create( ShipOutfitSlot );
+      ARRAYDUP_( temp->outfit_utility, base->outfit_utility );
+      temp->outfit_weapon = array_create( ShipOutfitSlot );
+      ARRAYDUP_( temp->outfit_weapon, base->outfit_weapon );
+      temp->desc_stats = STRDUP_( base->desc_stats );
+      ShipStatList *ll = base->stats;
+      while ( ll != NULL ) {
+         ShipStatList *ln = calloc( 1, sizeof( ShipStatList ) );
+         *ln              = *ll;
+         ln->next         = temp->stats;
+         temp->stats      = ln;
+      }
+      temp->tags = array_create( char * );
+      for ( int i = 0; i < array_size( base->tags ); i++ )
+         array_push_back( &temp->tags, strdup( base->tags[i] ) );
+      temp->lua_file = STRDUP_( base->lua_file );
+#undef STRDUP_
+   }
 
    /* Load the rest of the data. */
    node = parent->xmlChildrenNode;
@@ -1166,6 +1227,7 @@ static int ship_parse( Ship *temp, const char *filename )
             temp->stats = NULL;
          }
          do {
+            ShipStatList *ll;
             xml_onlyNodes( cur );
             ll = ss_listFromXML( cur );
             if ( ll != NULL ) {
@@ -1201,6 +1263,8 @@ static int ship_parse( Ship *temp, const char *filename )
       /* Parse tags. */
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
+         for ( int i = 0; i < array_size( temp->tags ); i++ )
+            free( temp->tags[i] );
          array_free( temp->tags );
          temp->tags = array_create( char * );
          do {
@@ -1470,7 +1534,7 @@ static int ship_parseThread( void *ptr )
 {
    ShipThreadData *data = ptr;
    /* Load the ship. */
-   data->ret = ship_parse( &data->ship, data->filename );
+   data->ret = ship_parse( &data->ship, data->filename, 1 );
    /* Render if necessary. */
    if ( naev_shouldRenderLoadscreen() ) {
       gl_contextSet();
@@ -1534,8 +1598,16 @@ int ships_load( void )
    }
    array_free( shipdata );
 
-   /* Sort and done! */
+   /* Sort so we can use ship_get. */
    qsort( ship_stack, array_size( ship_stack ), sizeof( Ship ), ship_cmp );
+
+   /* Now we do the second pass to resolve inheritance. */
+   for ( int i = array_size( ship_stack ) - 1; i >= 0; i-- ) {
+      Ship *s   = &ship_stack[i];
+      int   ret = ship_parse( s, s->filename, 0 );
+      if ( ret )
+         array_erase( &ship_stack, &s[0], &s[1] );
+   }
 
 #if DEBUGGING
    /* Check to see if there are name collisions. */
@@ -1648,6 +1720,8 @@ void ships_free( void )
       Ship *s = &ship_stack[i];
 
       /* Free stored strings. */
+      free( s->filename );
+      free( s->inherits );
       free( s->name );
       free( s->class_display );
       free( s->description );

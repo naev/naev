@@ -95,6 +95,8 @@ typedef struct ShipTrailEmitter_ {
  * @brief Represents a space ship.
  */
 typedef struct Ship_ {
+   char *filename;  /**< Filename loaded from. */
+   char *inherits;  /**< Ship from which it is inheriting values. */
    char *name;      /**< Ship name. */
    char *base_type; /**< Ship's base type, basically used for figuring out what
                        ships are related. */
