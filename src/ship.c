@@ -886,6 +886,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot,
  *
  *    @param temp Ship to load data into.
  *    @param filename File to load ship from.
+ *    @param firstpass Whether or not on the first pass.
  *    @return 0 on success.
  */
 static int ship_parse( Ship *temp, const char *filename, int firstpass )
@@ -949,6 +950,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       Ship  t             = *temp;
       Ship *base          = (Ship *)ship_get( temp->inherits );
       *temp               = *base;
+      temp->filename      = t.filename;
       temp->inherits      = t.inherits;
       temp->name          = t.name;
       temp->base_type     = STRDUP_( base->base_type );
@@ -977,12 +979,14 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       temp->outfit_weapon = array_create( ShipOutfitSlot );
       ARRAYDUP_( temp->outfit_weapon, base->outfit_weapon );
       temp->desc_stats = STRDUP_( base->desc_stats );
+      temp->stats      = NULL;
       ShipStatList *ll = base->stats;
       while ( ll != NULL ) {
          ShipStatList *ln = calloc( 1, sizeof( ShipStatList ) );
          *ln              = *ll;
          ln->next         = temp->stats;
          temp->stats      = ln;
+         ll               = ll->next;
       }
       temp->tags = array_create( char * );
       for ( int i = 0; i < array_size( base->tags ); i++ )
