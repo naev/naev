@@ -429,7 +429,7 @@ function graphics.setScissor( x, y, width, height )
             y = love.h - y - height
          end
          naev.gfx.setScissor( love.x+x, love.y+y, width, height )
-   end
+      end
    else
       x = 0
       y = 0
@@ -666,7 +666,7 @@ function graphics.newCanvas( width, height, settings )
       c.w = width or nw
       c.h = height or nh
       local dpiscale = settings.dpiscale or graphics.getDPIScale()
-      c.canvas = naev.canvas.new( c.w*dpiscale, c.h*dpiscale, settings.depth )
+      c.canvas = naev.canvas.new( math.ceil(c.w*dpiscale), math.ceil(c.h*dpiscale), settings.depth )
       c.s = 1/dpiscale
    end
    -- Set texture
