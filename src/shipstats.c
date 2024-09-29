@@ -855,6 +855,8 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
    double *dbl;
    int    *num;
 
+   if ( len > 0 )
+      buf[0] = '\0';
    l   = 0;
    ptr = (char *)s;
    for ( int i = 0; i < SS_TYPE_SENTINEL; i++ ) {
