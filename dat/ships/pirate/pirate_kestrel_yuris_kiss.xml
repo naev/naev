@@ -26,7 +26,7 @@ The model diverges from the classic Kestrel design by removing the fighter bays 
  </slots>
  <stats>
   <speed_mod>10</speed_mod>
-  <ew_hide>-15</ew_hide>
+  <ew_hide>-10</ew_hide>
   <ew_stealth>-25</ew_stealth>
   <ew_track>25</ew_track>
   <tur_range>30</tur_range>
