@@ -20,7 +20,10 @@ local slancelot   = ship.get("Lancelot")
 local svendetta   = ship.get("Vendetta")
 local sphalanx    = ship.get("Phalanx")
 local sadmonisher = ship.get("Admonisher")
-local sstarbridge = ship.get("Starbridge")
+local sstarbridge = scom.variants{
+   { w=1,    ship.get("Starbridge") },
+   { w=0.05, ship.get("Starbridge Sigma") },
+}
 local svigilance  = ship.get("Vigilance")
 local sbedivere   = ship.get("Bedivere")
 local spacifier   = ship.get("Pacifier")
@@ -59,7 +62,7 @@ local function spawn_solitary_civilians ()
       { w=0.6,  squicksilver },
       { w=0.75, skoala },
       { w=0.85, smule },
-      { w=0.9, sgawain },
+      { w=0.9,  sgawain },
       { sschroedinger },
    } )
 end

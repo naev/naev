@@ -48,6 +48,7 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/neutral/schroedinger.xml',
    root / 'dat/ships/neutral/shark.xml',
    root / 'dat/ships/neutral/starbridge.xml',
+   root / 'dat/ships/neutral/starbridge_sigma.xml',
    root / 'dat/ships/neutral/tristan.xml',
    root / 'dat/ships/neutral/vendetta.xml',
    root / 'dat/ships/neutral/vigilance.xml',
