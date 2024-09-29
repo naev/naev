@@ -1192,6 +1192,14 @@ function luatk.newList( parent, x, y, w, h, items, onselect, defitem )
       wgt.scrollh = wgt.maxh - wgt.h
    end
    wgt:cleanpos()
+
+   -- Chop text if necessary
+   wgt.itemsfit = {}
+   for k,v in ipairs( wgt.items ) do
+      local _maxw, wrapped = font:getWrap( v, w-4 )
+      wgt.itemsfit[k] = wrapped[1]
+   end
+
    return wgt
 end
 function luatk.List:draw( bx, by )
@@ -1225,7 +1233,7 @@ function luatk.List:draw( bx, by )
    local yoff = y+4-self.pos
    local woff = w-4
    local hlim = by+self.y+self.h
-   for k,v in ipairs( self.items ) do
+   for k,v in ipairs( self.itemsfit ) do
       if yoff > -self.cellh then
          lg.setColour( luatk.colour.text )
          lg.printf( v, font, xoff, yoff, woff )
