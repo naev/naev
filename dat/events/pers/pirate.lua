@@ -87,6 +87,28 @@ return function ()
       end
    end
 
+   if pirpres > 400 then
+      for k,v in ipairs {
+         {
+            spawn = function ()
+               local p = pilot.add("Pirate Kestrel", "Pirate", nil, _("Flying Dutchman"), {naked= true, ai="pers_pirate"})
+               p:intrinsicSet( "shield_mod", 80 )
+               p:intrinsicSet( "armour_mod", 60 )
+               p:intrinsicSet( "shield_regen_mod", 50 )
+               p:intrinsicSet( "tur_damage", 25 )
+               equipopt.pirate( p ) -- So intrinsics affect
+               local m = p:memory()
+               m.comm_greet = _([[You hear the sound of oceans and wild over the communication channel.]])
+               m.taunt = nil
+               m.bribe_no = _([[The wind is howling over the communication channel.]])
+               return p
+            end,
+         }
+      } do
+         table.insert( pers, v )
+      end
+   end
+
    local pres = scur:presences()
 
    local wildones = pres["Wild Ones"] or 0
