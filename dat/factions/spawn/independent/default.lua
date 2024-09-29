@@ -24,8 +24,8 @@ local svendetta   = ship.get("Vendetta")
 local sphalanx    = ship.get("Phalanx")
 local sadmonisher = ship.get("Admonisher")
 local sstarbridge = scom.variants{
-   { w=1,    ship.get("Starbridge") },
-   { w=0.05, ship.get("Starbridge Sigma") },
+   { w=1,    s=ship.get("Starbridge") },
+   { w=0.05, s=ship.get("Starbridge Sigma") },
 }
 local svigilance  = ship.get("Vigilance")
 local sbedivere   = ship.get("Bedivere")
