@@ -976,6 +976,7 @@ end
 -- Lower taunt frequency, at most once per X seconds per target
 mem._taunted = {}
 function consider_taunt( target, offensive )
+   if mem.carried then return end -- Fighters don't taunt
    local id = target:id()
    local last_taunted = mem._taunted[id] or -100
    if mem.elapsed - last_taunted > 15 then
