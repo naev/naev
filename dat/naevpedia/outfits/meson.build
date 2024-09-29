@@ -174,6 +174,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/intrinsic/machiavellian_necessity.xml',
    root / 'dat/outfits/intrinsic/machiavellian_virtue.xml',
    root / 'dat/outfits/intrinsic/port_and_polish.xml',
+   root / 'dat/outfits/intrinsic/wild_space_taint.xml',
    root / 'dat/outfits/launchers/convulsion_launcher.xml',
    root / 'dat/outfits/launchers/electron_burst_cannon.xml',
    root / 'dat/outfits/launchers/emp_grenade_launcher.xml',

@@ -38,10 +38,12 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/neutral/lancelot.xml',
    root / 'dat/ships/neutral/llama.xml',
    root / 'dat/ships/neutral/mule.xml',
+   root / 'dat/ships/neutral/mule_hardhat.xml',
    root / 'dat/ships/neutral/pacifier.xml',
    root / 'dat/ships/neutral/phalanx.xml',
    root / 'dat/ships/neutral/plowshare.xml',
    root / 'dat/ships/neutral/quicksilver.xml',
+   root / 'dat/ships/neutral/quicksilver_mercury.xml',
    root / 'dat/ships/neutral/rhino.xml',
    root / 'dat/ships/neutral/schroedinger.xml',
    root / 'dat/ships/neutral/shark.xml',
@@ -104,6 +106,8 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/zalek/zalek_mammon.xml',
    root / 'dat/ships/zalek/zalek_mephisto.xml',
    root / 'dat/ships/zalek/zalek_sting.xml',
+   root / 'dat/ships/zalek/zalek_sting_typeii.xml',
+   root / 'dat/ships/zalek/zalek_sting_typeiv.xml',
 )
 
 ships_gen = [find_program('ships.py'), '@INPUT@', '-o', '@OUTPUT@']
