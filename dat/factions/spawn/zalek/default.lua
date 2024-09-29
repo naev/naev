@@ -7,6 +7,7 @@ local sdroneheavy = ship.get("Za'lek Heavy Drone")
 local ssting      = scom.variants{
    { w=1,    s=ship.get("Za'lek Sting") },
    { w=0.05, s=ship.get("Za'lek Sting Type II") },
+   { w=0.05, s=ship.get("Za'lek Sting Type IV") },
 }
 local sdemon      = ship.get("Za'lek Demon")
 local smephisto   = ship.get("Za'lek Mephisto")

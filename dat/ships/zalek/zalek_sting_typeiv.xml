@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship inherits="Za'lek Sting" name="Za'lek Sting Type IV">
+ <price>2100000</price>
+ <cond>math.ceil(faction.playerStanding("Za'lek")+0.5) &gt;= 50</cond>
+ <condstr>You need at least 50% reputation with House Za'lek.</condstr>
+ <description>A lot of the popularity of the Za'lek Sting comes from the large amount of drones it can deploy for such a small ship. Seeing that, some engineers at Za'lek Fabricators decided to see if they could fit a second fighter bay. It turns out, that, by stripping out a lot of armour and adding auxiliary computational units, it can be made to work. However, these changes do not come cheap.</description>
+ <slots>
+  <weapon size="medium" prop="fighter bay" x="15" y="0" h="2" />
+  <weapon size="medium" prop="fighter_bay" x="4" y="2" h="-5" />
+  <weapon size="medium" prop="fighter_bay" x="4" y="-2" h="-5" />
+  <weapon size="small" x="-9" y="-5" h="-9" />
+  <weapon size="small" x="-9" y="5" h="-9" />
+  <utility size="medium" prop="systems">Unicorp PT-200 Core System</utility>
+  <utility size="medium" prop="accessory" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="small" />
+  <structure size="small" />
+ </slots>
+ <stats>
+  <armour_mod>-50</armour_mod>
+  <shield_mod>50</shield_mod>
+  <shield_regen_mod>40</shield_regen_mod>
+  <stress_dissipation>10</stress_dissipation>
+  <fbay_damage>25</fbay_damage>
+  <fbay_rate>25</fbay_rate>
+  <ew_detect>10</ew_detect>
+  <cpu_max>60</cpu_max>
+  <energy_regen>-8</energy_regen>
+ </stats>
+</ship>
