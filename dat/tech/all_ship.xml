@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tech name="All Ships">
  <item>Llama</item>
+ <item>Llama Voyager</item>
  <item>Hyena</item>
  <item>Pirate Hyena</item>
  <item>Schroedinger</item>
@@ -59,6 +60,7 @@
  <item>Empire Pacifier</item>
  <item>Thurion Apprehension</item>
  <item>Starbridge</item>
+ <item>Starbridge Sigma</item>
  <item>Pirate Starbridge</item>
  <item>Rhino</item>
  <item>Pirate Rhino</item>
