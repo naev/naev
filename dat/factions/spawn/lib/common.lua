@@ -190,12 +190,12 @@ function scom.spawn( pilots )
    end
 
    -- Get properties prioritizing overwrites
-   local patrol = getprop( scom._params.patrol, pilots.__patrol )
-   local stealth = getprop( scom._params.stealth, pilots.__stealth )
-   local ai = getprop( scom._params.ai, pilots.__ai )
-   local nofleet = getprop( scom._params.nofleet, pilots.__nofleet )
+   local patrol    = getprop( scom._params.patrol,    pilots.__patrol )
+   local stealth   = getprop( scom._params.stealth,   pilots.__stealth )
+   local ai        = getprop( scom._params.ai,        pilots.__ai )
+   local nofleet   = getprop( scom._params.nofleet,   pilots.__nofleet )
    local formation = getprop( scom._params.formation, pilots.__formation )
-   local doscans = getprop( scom._params.doscans, pilots.__doscans )
+   local doscans   = getprop( scom._params.doscans,   pilots.__doscans )
 
    -- Case no pilots
    if pilots == nil then
