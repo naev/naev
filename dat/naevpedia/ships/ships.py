@@ -68,8 +68,8 @@ end
 <% end %>
 * **[Mass](mechanics/movement)**:   <%= fmt.f(_("{mass} {unit}"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>
 * **[Base Armour](mechanics/damage)**:   <%= fmt.f(_("{armour} {unit}"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>
-* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_("{cargo} {unit}"), {cargo=fmt.number(s:cargo()), unit=naev.unit('energy')})%>
-* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_("{fuel} {unit}"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('energy')})%>
+* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_("{cargo} {unit}"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>
+* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_("{fuel} {unit}"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>
 * **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>
 <% if s:license() then %>
 * **License**:   <%= _(s:license()) %>
