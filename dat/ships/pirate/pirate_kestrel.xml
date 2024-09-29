@@ -8,13 +8,12 @@
  <class>Cruiser</class>
  <price>3960000</price>
  <time_mod>1.3</time_mod>
-
  <trail_generator x="-23" y="28" h="2">nebula</trail_generator>
  <trail_generator x="-23" y="-28" h="2">nebula</trail_generator>
  <trail_generator x="-45" y="0" h="17">pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Pirate</faction>
- <description>The Kestrel is the best ship offered by Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirates who can afford it.</description>
+ <description>The Kestrel is one of the best ship offered by Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirate captains who can afford it and want to make a lasting impression.</description>
  <health>
   <armour>950</armour>
   <armour_regen>0</armour_regen>
