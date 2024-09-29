@@ -20,6 +20,7 @@
 #include "ndata.h"
 #include "nxml.h"
 #include "outfit.h"
+#include "rng.h"
 #include "ship.h"
 
 #define XML_TECH_ID "Techs" /**< Tech xml document tag. */
@@ -40,7 +41,8 @@ typedef enum tech_item_type_e {
  * @brief Item contained in a tech group.
  */
 typedef struct tech_item_s {
-   tech_item_type_t type; /**< Type of data. */
+   tech_item_type_t type;   /**< Type of data. */
+   double           chance; /**< For probalistic versions. */
    union {
       void         *ptr; /**< Pointer when needing to do indifferent voodoo. */
       const Outfit *outfit;       /**< Outfit pointer. */
@@ -330,6 +332,7 @@ static int tech_parseXMLData( tech_group_t *tech, xmlNodePtr parent )
                      name, tech->name );
          } else
             itm = NULL;
+         xmlr_attr_float_def( node, "chance", itm->chance, -1. );
          free( buf );
          continue;
       }
@@ -621,12 +624,12 @@ static void **tech_addGroupItem( void **items, tech_item_type_t type,
    /* Set up. */
    int size = array_size( tech->items );
 
-   /* Load commodities first, then we handle groups. */
+   /* Handle specified type. */
    for ( int i = 0; i < size; i++ ) {
       int          f;
       tech_item_t *item = &tech->items[i];
 
-      /* Only handle commodities for now. */
+      /* Only care about type. */
       if ( item->type != type )
          continue;
 
@@ -639,6 +642,10 @@ static void **tech_addGroupItem( void **items, tech_item_type_t type,
          }
       }
       if ( f == 1 )
+         continue;
+
+      /* Check chance. */
+      if ( ( item->chance > 0. ) && ( RNGF() < item->chance ) )
          continue;
 
       /* Add. */
