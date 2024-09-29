@@ -57,6 +57,7 @@ typedef struct Weapon_ {
    const Outfit *outfit;  /**< related outfit that fired it or whatnot */
 
    double  real_vel;       /**< Keeps track of the real velocity. */
+   double  range_mod;      /**< Range modifier. */
    double  dam_mod;        /**< Damage modifier. */
    double  dam_as_dis_mod; /**< Damage as disable modifier. */
    int     voice;          /**< Weapon's voice. */

@@ -774,6 +774,7 @@ static void weapon_renderBeam( Weapon *w, double dt )
 {
    double x, y, z;
    mat4   projection;
+   double range = w->outfit->u.bem.range * w->range_mod;
 
    /* Animation. */
    w->anim += dt;
@@ -790,8 +791,7 @@ static void weapon_renderBeam( Weapon *w, double dt )
    projection = gl_view_matrix;
    mat4_translate_xy( &projection, x, y );
    mat4_rotate2d( &projection, w->solid.dir );
-   mat4_scale_xy( &projection, w->outfit->u.bem.range * z,
-                  w->outfit->u.bem.width * z );
+   mat4_scale_xy( &projection, range * z, w->outfit->u.bem.width * z );
    mat4_translate_xy( &projection, 0., -0.5 );
 
    /* Set the vertex. */
@@ -802,8 +802,7 @@ static void weapon_renderBeam( Weapon *w, double dt )
    /* Set shader uniforms. */
    gl_uniformMat4( shaders.beam.projection, &projection );
    gl_uniformColour( shaders.beam.colour, &w->outfit->u.bem.colour );
-   glUniform2f( shaders.beam.dimensions, w->outfit->u.bem.range,
-                w->outfit->u.bem.width );
+   glUniform2f( shaders.beam.dimensions, range, w->outfit->u.bem.width );
    glUniform1f( shaders.beam.dt, w->anim );
    glUniform1f( shaders.beam.r, w->r );
 
@@ -1233,22 +1232,25 @@ static void weapon_updateCollide( Weapon *w, double dt )
          if ( w->outfit->type == OUTFIT_TYPE_BEAM ) {
             w->dam_mod        = p->stats.fwd_damage;
             w->dam_as_dis_mod = p->stats.fwd_dam_as_dis - 1.;
+            w->range_mod      = p->stats.fwd_range;
          } else {
             w->dam_mod        = p->stats.tur_damage;
             w->dam_as_dis_mod = p->stats.tur_dam_as_dis - 1.;
+            w->range_mod      = p->stats.tur_range;
          }
          w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
       }
-      wc.gfx       = NULL;
-      wc.polygon   = NULL;
-      wc.range     = w->outfit->u.bem.width * 0.5; /* Set beam range. */
-      wc.beamrange = w->outfit->u.bem.range;       /* Set beam range. */
+      wc.gfx     = NULL;
+      wc.polygon = NULL;
+      wc.range   = w->outfit->u.bem.width * 0.5; /* Set beam width. */
+      wc.beamrange =
+         w->outfit->u.bem.range * w->range_mod; /* Set beam range. */
 
       /* Determine quadtree location. */
       x1 = round( w->solid.pos.x );
       y1 = round( w->solid.pos.y );
-      x2 = x1 + ceil( w->outfit->u.bem.range * cos( w->solid.dir ) );
-      y2 = y1 + ceil( w->outfit->u.bem.range * sin( w->solid.dir ) );
+      x2 = x1 + ceil( wc.beamrange * cos( w->solid.dir ) );
+      y2 = y1 + ceil( wc.beamrange * sin( w->solid.dir ) );
       if ( x1 > x2 ) {
          int t = x1;
          x1    = x2;
@@ -2313,10 +2315,12 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
       w->dam_mod *= parent->stats.tur_damage;
       /* dam_as_dis is computed as multiplier, must be corrected. */
       w->dam_as_dis_mod = parent->stats.tur_dam_as_dis - 1.;
+      w->range_mod      = parent->stats.tur_range;
    } else {
       w->dam_mod *= parent->stats.fwd_damage;
       /* dam_as_dis is computed as multiplier, must be corrected. */
       w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis - 1.;
+      w->range_mod      = parent->stats.fwd_range;
    }
    /* Clamping, but might not actually be necessary if weird things want to be
     * done. */
@@ -2333,7 +2337,7 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
    if ( outfit->u.blt.speed_dispersion > 0. )
       m += RNG_1SIGMA() * outfit->u.blt.speed_dispersion;
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
-   w->timer   = outfit->u.blt.range / outfit->u.blt.speed;
+   w->timer   = outfit->u.blt.range / outfit->u.blt.speed * w->range_mod;
    w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    w->voice = sound_playPos( w->outfit->u.blt.sound, w->solid.pos.x,
@@ -2388,6 +2392,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
 
    /* Launcher damage. */
    w->dam_mod *= parent->stats.launch_damage;
+   w->range_mod = 1.;
 
    /* If accel is 0. we assume it starts out at speed. */
    v = *vel;
@@ -2480,10 +2485,12 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
    w->id      = ++weapon_idgen;
    w->layer   = ( parent->id == PLAYER_ID ) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
    w->mount   = po;
-   w->dam_mod = 1.;                     /* Default of 100% damage. */
-   w->dam_as_dis_mod = 0.;              /* Default of 0% damage to disable. */
-   w->faction        = parent->faction; /* non-changeable */
-   w->parent         = parent->id;      /* non-changeable */
+   w->dam_mod = 1.;   /* Default of 100% damage. */
+   w->range_mod = 1.; /* Default of 100% range. */
+   // w->dam_as_dis_mod = 0.;              /* Default of 0% damage to disable.
+   // */
+   w->faction = parent->faction;                   /* non-changeable */
+   w->parent  = parent->id;                        /* non-changeable */
    memcpy( &w->target, target, sizeof( Target ) ); /* non-changeable */
    w->lua_mem = LUA_NOREF;
    if ( po != NULL && po->lua_mem != LUA_NOREF ) {
@@ -2566,9 +2573,11 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
       if ( outfit->type == OUTFIT_TYPE_BEAM ) {
          w->dam_mod *= parent->stats.fwd_damage;
          w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis - 1.;
+         w->range_mod      = parent->stats.fwd_range;
       } else {
          w->dam_mod *= parent->stats.tur_damage;
          w->dam_as_dis_mod = parent->stats.tur_dam_as_dis - 1.;
+         w->range_mod      = parent->stats.tur_range;
       }
       w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
 

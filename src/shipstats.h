@@ -85,6 +85,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_FORWARD_FIRERATE,          /**< Firerate of cannons. */
    SS_TYPE_D_FORWARD_ENERGY,            /**< Energy usage of cannons. */
    SS_TYPE_D_FORWARD_DAMAGE_AS_DISABLE, /**< Damage converted to disable. */
+   SS_TYPE_D_FORWARD_RANGE,             /**< Weapon range. */
 
    /* Turrets. */
    SS_TYPE_D_TURRET_HEAT,              /**< Heat generation for turrets. */
@@ -93,6 +94,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TURRET_FIRERATE,          /**< Firerate of turrets. */
    SS_TYPE_D_TURRET_ENERGY,            /**< Energy usage of turrets. */
    SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, /**< Damage converted to disable. */
+   SS_TYPE_D_TURRET_RANGE,             /**< Weapon range. */
 
    /* Misc. */
    SS_TYPE_D_HEAT_DISSIPATION,   /**< Ship heat dissipation. */
@@ -297,6 +299,7 @@ typedef struct ShipStats_ {
    double fwd_firerate;   /**< Rate of fire of forward mounts. */
    double fwd_energy;     /**< Consumption rate of forward mounts. */
    double fwd_dam_as_dis; /**< Damage as disable for forward mounts. */
+   double fwd_range;      /**< Range of forward mounts. */
 
    /* Destroyer/Cruiser type. */
    double tur_heat;       /**< Heat of turrets. */
@@ -305,6 +308,7 @@ typedef struct ShipStats_ {
    double tur_firerate;   /**< Rate of fire of turrets. */
    double tur_energy;     /**< Consumption rate of turrets. */
    double tur_dam_as_dis; /**< Damage as disable for turrets. */
+   double tur_range;      /**< Range of forward mounts. */
 
    /* Jamming. */
    double jam_chance; /**< Jamming chance. */

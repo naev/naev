@@ -891,11 +891,26 @@ void pilot_fillAmmo( Pilot *pilot )
 
 double pilot_outfitRange( const Pilot *p, const Outfit *o )
 {
-   if ( outfit_isBolt( o ) )
-      return o->u.blt.falloff + ( o->u.blt.range - o->u.blt.falloff ) / 2.;
-   else if ( outfit_isBeam( o ) )
-      return o->u.bem.range;
-   else if ( outfit_isLauncher( o ) ) {
+   if ( outfit_isBolt( o ) ) {
+      double range =
+         o->u.blt.falloff + ( o->u.blt.range - o->u.blt.falloff ) / 2.;
+      if ( p != NULL ) {
+         if ( outfit_isTurret( o ) )
+            range *= p->stats.tur_range;
+         else if ( outfit_isForward( o ) )
+            range *= p->stats.fwd_range;
+      }
+      return range;
+   } else if ( outfit_isBeam( o ) ) {
+      double range = o->u.bem.range;
+      if ( p != NULL ) {
+         if ( outfit_isTurret( o ) )
+            range *= p->stats.tur_range;
+         else if ( outfit_isForward( o ) )
+            range *= p->stats.fwd_range;
+      }
+      return range;
+   } else if ( outfit_isLauncher( o ) ) {
       double duration = o->u.lau.duration;
       if ( p != NULL )
          duration *= p->stats.launch_range;

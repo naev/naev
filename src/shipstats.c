@@ -153,6 +153,7 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Energy Usage (Cannon)" ) ),
    D__ELEM( SS_TYPE_D_FORWARD_DAMAGE_AS_DISABLE, fwd_dam_as_dis,
             N_( "Damage as Disable (Cannon)" ) ),
+   D__ELEM( SS_TYPE_D_FORWARD_RANGE, fwd_range, N_( "Weapon Range (Cannon)" ) ),
 
    DI_ELEM( SS_TYPE_D_TURRET_HEAT, tur_heat, N_( "Heat (Turret)" ) ),
    D__ELEM( SS_TYPE_D_TURRET_DAMAGE, tur_damage, N_( "Damage (Turret)" ) ),
@@ -164,6 +165,7 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Energy Usage (Turret)" ) ),
    D__ELEM( SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, tur_dam_as_dis,
             N_( "Damage as Disable (Turret)" ) ),
+   D__ELEM( SS_TYPE_D_TURRET_RANGE, tur_range, N_( "Weapon Range (Turret)" ) ),
 
    D__ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation,
             N_( "Heat Dissipation" ) ),
