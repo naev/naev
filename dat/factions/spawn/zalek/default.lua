@@ -4,7 +4,10 @@ local scom = require "factions.spawn.lib.common"
 local sdronelight = ship.get("Za'lek Light Drone")
 local sdronebomber= ship.get("Za'lek Bomber Drone")
 local sdroneheavy = ship.get("Za'lek Heavy Drone")
-local ssting      = ship.get("Za'lek Sting")
+local ssting      = scom.variants{
+   { w=1,    s=ship.get("Za'lek Sting") },
+   { w=0.05, s=ship.get("Za'lek Sting Type II") },
+}
 local sdemon      = ship.get("Za'lek Demon")
 local smephisto   = ship.get("Za'lek Mephisto")
 local sdiablo     = ship.get("Za'lek Diablo")
