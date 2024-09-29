@@ -688,11 +688,20 @@ local function board_fcthit_apply ()
    if board_fcthit <= 0 then
       return
    end
+   local fct = board_plt:faction()
+   local std = fct:playerStanding()
+   fct:modPlayer( -board_fcthit )
+   local loss = std - fct:playerStanding()
+   board_fcthit = 0
+   if loss <= 0 then
+      -- No loss actually happened
+      return
+   end
+
    local msg = fmt.f(_("You have lost {fcthit} reputation with {fct} for looting this ship!"),
       {fcthit=fmt.number(board_fcthit),fct=board_plt:faction()})
    player.msg( "#r"..msg.."#0" )
    board_fcthit_txt:set( msg )
-   board_fcthit = 0
 end
 
 -- Frontend to do checks when looting
