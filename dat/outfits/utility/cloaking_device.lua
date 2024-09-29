@@ -33,7 +33,7 @@ local function turnon( p, po )
 
    local ps = p:stats()
    po:set( "shield_regen_malus", ps.shield * shielddrain )
-   po:set( "energy_loss", ps.mass * energydrain )
+   po:set( "energy_regen_malus", ps.mass * energydrain )
    mem.timer = active
 
    -- Make invisible

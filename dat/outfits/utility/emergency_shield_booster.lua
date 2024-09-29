@@ -22,7 +22,7 @@ local function turnon( p, po )
    local ps = p:stats()
    local regen = boost * ps.shield_regen
    po:set( "shield_regen_malus", -regen )
-   po:set( "energy_loss", efficiency * regen )
+   po:set( "energy_regen_malus", efficiency * regen )
 
    mem.timer = active
 

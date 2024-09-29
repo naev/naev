@@ -121,9 +121,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_ENERGY_REGEN,       /**< Energy regeneration modifier. */
    SS_TYPE_A_ENERGY_REGEN_MALUS, /**< Flat energy regeneration modifier (not
                                     multiplied). */
-   SS_TYPE_A_ENERGY_LOSS, /**< Flat energy modifier (not multiplied) and applied
-                             linearly. */
-   SS_TYPE_A_SHIELD,      /**< Shield modifier. */
+   SS_TYPE_A_SHIELD,             /**< Shield modifier. */
    SS_TYPE_A_SHIELD_REGEN,       /**< Shield regeneration modifier. */
    SS_TYPE_A_SHIELD_REGEN_MALUS, /**< Flat shield regeneration modifier (not
                                     multiplied). */
@@ -230,7 +228,6 @@ typedef struct ShipStats_ {
    double energy_mod;         /**< Energy multiplier. */
    double energy_regen_mod;   /**< Energy regeneration multiplier. */
    double energy_regen_malus; /**< Energy usage (flat). */
-   double energy_loss;        /**< Energy modifier (flat and linear). */
    double shield;             /**< Shield modifier. */
    double shield_regen;       /**< Shield regeneration modifier. */
    double shield_mod;         /**< Shield multiplier. */

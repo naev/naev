@@ -2634,7 +2634,6 @@ void pilot_update( Pilot *pilot, double dt )
        * recharge at 30% of its normal rate.
        */
       pilot->energy += pilot->energy_regen * dt;
-      pilot->energy -= pilot->energy_loss * dt;
       if ( pilot->energy > pilot->energy_max )
          pilot->energy = pilot->energy_max;
       else if ( pilot->energy < 0. ) {

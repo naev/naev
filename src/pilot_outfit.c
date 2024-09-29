@@ -979,7 +979,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
       pilot_setFlag(
          pilot,
          PILOT_AFTERBURNER ); /* We use old school flags for this still... */
-      pilot->energy_loss +=
+      pilot->energy_regen -=
          pilot->afterburner->outfit->u.afb.energy; /* energy loss */
    } else {
       /* Always add stats for non mod/afterburners. */
@@ -1029,7 +1029,6 @@ void pilot_calcStats( Pilot *pilot )
    /* Energy. */
    pilot->energy_max   = pilot->ship->energy;
    pilot->energy_regen = pilot->ship->energy_regen;
-   pilot->energy_loss  = 0.; /* Initially no net loss. */
    /* Misc. */
    pilot->outfitlupdate = 0;
    /* Stats. */
@@ -1120,7 +1119,6 @@ void pilot_calcStats( Pilot *pilot )
    pilot->armour_regen -= s->armour_regen_malus;
    pilot->shield_regen -= s->shield_regen_malus;
    pilot->energy_regen -= s->energy_regen_malus;
-   pilot->energy_loss += s->energy_loss;
    pilot->dmg_absorb = CLAMP( 0., 1., pilot->dmg_absorb + s->absorb );
 
    /* Give the pilot his health proportion back */
