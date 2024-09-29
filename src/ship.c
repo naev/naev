@@ -997,6 +997,10 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
          array_push_back( &temp->tags, strdup( base->tags[i] ) );
       temp->lua_file = STRDUP_( base->lua_file );
 #undef STRDUP_
+
+      /* Have to correct some post-processing. */
+      temp->dmg_absorb *= 100.;
+      temp->turn *= 180. / M_PI;
    }
 
    /* Load the rest of the data. */
