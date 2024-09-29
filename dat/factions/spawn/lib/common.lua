@@ -4,6 +4,29 @@ local lf = require "love.filesystem"
 
 local scom = {}
 
+--[[--
+   Creates a distribution of ships based on variants and weights.
+--]]
+function scom.variants( tbl )
+   table.sort( tbl, function ( a, b )
+      return a.w > b.w
+   end )
+   local wmax = 0
+   for k,v in ipairs(tbl) do
+      wmax = wmax+v.w
+   end
+   return function ()
+      local r = rnd.rnd()*wmax
+      local w = 0
+      for k,v in ipairs(tbl) do
+         w = w+v.w
+         if r <= w then
+            return v.s
+         end
+      end
+   end
+end
+
 local function _normalize_presence( max )
    local r = system.cur():radius()
    --[[
@@ -144,7 +167,7 @@ function scom.choose ()
    local m = 0
    for _k,v in ipairs( scom._weight_table ) do
       m = m + v.w
-      if r < m then
+      if r <= m then
          scom._spawn_data = v.func()
          return true
       end
@@ -282,6 +305,9 @@ end
 
 -- @brief adds a pilot to the table
 function scom.addPilot( pilots, s, params )
+   if type(s)=="function" then
+      s = s()
+   end
    local presence = s:points()
    table.insert(pilots, { ship=s, presence=presence, params=params })
    pilots.__presence = (pilots.__presence or 0) + presence
