@@ -8,6 +8,10 @@ local squicksilver = scom.variants{
    { w=1,    s=ship.get("Quicksilver") },
    { w=0.05, s=ship.get("Quicksilver Mercury") },
 }
+local smule       = scom.variants{
+   { w=1,    s=ship.get("Mule")},
+   { w=0.05, s=ship.get("Mule Hardhat")},
+}
 local shyena      = ship.get("Hyena")
 local sshark      = ship.get("Shark")
 local sancestor   = ship.get("Ancestor")
@@ -52,10 +56,11 @@ local function spawn_solitary_civilians ()
    return scom.doTable( {}, {
       { w=0.25, sllama },
       { w=0.45, shyena },
-      { w=0.6, squicksilver },
-      { w=0.75, sgawain },
-      { w=0.9, sschroedinger },
-      { skoala },
+      { w=0.6,  squicksilver },
+      { w=0.75, skoala },
+      { w=0.85, smule },
+      { w=0.9, sgawain },
+      { sschroedinger },
    } )
 end
 
