@@ -306,32 +306,21 @@ static int tech_parseXMLData( tech_group_t *tech, xmlNodePtr parent )
          /* Try to find hard-coded type. */
          xmlr_attr_strd( node, "type", buf );
          if ( buf == NULL ) {
-            int ret = 1;
-            // if (ret)
-            ret = tech_addItemGroup( tech, name );
-            if ( ret )
-               ret = tech_addItemOutfit( tech, name );
-            if ( ret )
-               ret = tech_addItemShip( tech, name );
-            if ( ret )
-               ret = tech_addItemCommodity( tech, name );
-            if ( ret )
-               WARN( _( "Generic item '%s' not found in tech group '%s'" ),
-                     name, tech->name );
+            tech_addItemTech( tech, name );
          } else if ( strcmp( buf, "group" ) == 0 ) {
             if ( !tech_addItemGroup( tech, name ) )
                WARN( _( "Group item '%s' not found in tech group '%s'." ), name,
                      tech->name );
          } else if ( strcmp( buf, "outfit" ) == 0 ) {
-            if ( !tech_addItemGroup( tech, name ) )
+            if ( !tech_addItemOutfit( tech, name ) )
                WARN( _( "Outfit item '%s' not found in tech group '%s'." ),
                      name, tech->name );
          } else if ( strcmp( buf, "ship" ) == 0 ) {
-            if ( !tech_addItemGroup( tech, name ) )
+            if ( !tech_addItemShip( tech, name ) )
                WARN( _( "Ship item '%s' not found in tech group '%s'." ), name,
                      tech->name );
          } else if ( strcmp( buf, "commodity" ) == 0 ) {
-            if ( !tech_addItemGroup( tech, name ) )
+            if ( !tech_addItemCommodity( tech, name ) )
                WARN( _( "Commodity item '%s' not found in tech group '%s'." ),
                      name, tech->name );
          }
