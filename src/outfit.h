@@ -51,6 +51,8 @@
                   whatever). */
 #define OUTFIT_PROP_NEEDSGFX                                                   \
    ( 1 << 14 ) /**< The outfit needs to load graphics. */
+#define OUTFIT_PROP_STEALTH_ON                                                 \
+   ( 1 << 15 ) /**< The outfit does not get turned off by stealth. */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must
  * precede the #define.] */

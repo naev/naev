@@ -564,7 +564,7 @@ int pilot_stealth( Pilot *p )
    pilot_weapSetUpdateOutfitState( p );
 
    /* Turn off outfits. */
-   ret = pilot_outfitOffAll( p );
+   ret = pilot_outfitOffAllStealth( p );
 
    /* Got into stealth. */
    if ( !pilot_outfitLOnstealth( p ) || ret )

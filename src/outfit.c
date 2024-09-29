@@ -2768,12 +2768,13 @@ static int outfit_parse( Outfit *temp, const char *file )
             if ( xml_isNode( cur, "unique" ) ) {
                outfit_setProp( temp, OUTFIT_PROP_UNIQUE );
                continue;
-            }
-            if ( xml_isNode( cur, "shoot_dry" ) ) {
+            } else if ( xml_isNode( cur, "stealth_on" ) ) {
+               outfit_setProp( temp, OUTFIT_PROP_STEALTH_ON );
+               continue;
+            } else if ( xml_isNode( cur, "shoot_dry" ) ) {
                outfit_setProp( temp, OUTFIT_PROP_SHOOT_DRY );
                continue;
-            }
-            if ( xml_isNode( cur, "template" ) ) {
+            } else if ( xml_isNode( cur, "template" ) ) {
                outfit_setProp( temp, OUTFIT_PROP_TEMPLATE );
                continue;
             } else if ( xml_isNode( cur, "gfx_store" ) ) {
