@@ -14,6 +14,9 @@ function scom.variants( tbl )
    local wmax = 0
    for k,v in ipairs(tbl) do
       wmax = wmax+v.w
+      if not v.s then
+         warn(_("Variant has s==nil!"))
+      end
    end
    return function ()
       local r = rnd.rnd()*wmax
