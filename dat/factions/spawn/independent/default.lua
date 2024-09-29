@@ -4,6 +4,10 @@ local sschroedinger= ship.get("Schroedinger")
 local sllama      = ship.get("Llama")
 local sgawain     = ship.get("Gawain")
 local skoala      = ship.get("Koala")
+local squicksilver = scom.variants{
+   { w=1,    s=ship.get("Quicksilver") },
+   { w=0.05, s=ship.get("Quicksilver Mercury") },
+}
 local shyena      = ship.get("Hyena")
 local sshark      = ship.get("Shark")
 local sancestor   = ship.get("Ancestor")
@@ -46,8 +50,9 @@ end
 -- @brief Spawns a small patrol fleet.
 local function spawn_solitary_civilians ()
    return scom.doTable( {}, {
-      { w=0.3, sllama },
-      { w=0.55, shyena },
+      { w=0.25, sllama },
+      { w=0.45, shyena },
+      { w=0.6, squicksilver },
       { w=0.75, sgawain },
       { w=0.9, sschroedinger },
       { skoala },
