@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Pirate Kestrel Yuri's Kiss" inherits="Pirate Kestrel">
+ <price>5710000</price>
+ <description>One-Eyed Yuri was a famous ship engineer at Skull and Bonus, renown for her extravagant antics, many mistresses, and unconventional designs. She pushed the limits of her designs, and many of the pirate modifications have her signature on them. She perished in the annihilation of Haven, however, her legacy lives with the blueprints of a modified Pirate Kestrel, popularly called Yuri's Kiss.
+
+The model diverges from the classic Kestrel design by removing the fighter bays and using the newly obtained space to install a gravitational distorter that is able to mess with the signature of the ship. This gives the ship a surprisingly hard to detect signature that can allow it to catch targets off guard. Not only that, but the ship features an unconventional weapon adapter that both allows weapons systems to track more accurate and fire from a significantly longer range. In hands of a skilled pilot, the Yuri's Kiss can sneak up upon unsuspecting ships and unleash deadly barrages before the targets are able to react.</description>
+ <slots>
+  <weapon size="large" x="-23" y="-15" h="5" />
+  <weapon size="large" x="-23" y="15" h="5" />
+  <weapon size="large" x="44" y="0" h="0" />
+  <weapon size="large" x="-6" y="0" h="12" />
+  <weapon size="medium" x="-24" y="-8" h="8" />
+  <weapon size="medium" x="-24" y="8" h="8" />
+  <utility size="large" prop="systems">Previous Generation Large Systems</utility>
+  <utility size="large" prop="accessory" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <structure size="large" prop="engines">Krain Remige Engine</structure>
+  <structure size="large" prop="hull">Patchwork Heavy Plating</structure>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <speed_mod>10</speed_mod>
+  <ew_hide>-15</ew_hide>
+  <ew_stealth>-25</ew_stealth>
+  <ew_track>25</ew_track>
+  <tur_range>30</tur_range>
+  <fwd_range>30</fwd_range>
+ </stats>
+</ship>

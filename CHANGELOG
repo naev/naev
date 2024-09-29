@@ -10,6 +10,7 @@
       * Decreased CPU and energy provided by large core slots
       * Pillaging ships affects reputation
       * Significantly increased the amount of fuel provided by outfits
+      * Camouflage burster gives a speed bonus while active and disables when out of stealth
       * Can scan ships with 'u' key
    * Quality of Life
       * Added colourblind correction mode
@@ -39,7 +40,7 @@
       * 6 new missions
          * Hack the Gibson!
       * 4 new ships
-      * 6 new ship variants
+      * 7 new ship variants
          * Give a new twist to existing ships
       * 3 new outfits
       * New area with unique challenges
@@ -79,6 +80,8 @@
       * Use enums internally to represent keybindings instead of strings
       * Always use replaygain information when available when loading vorbis files
       * Stop repeating the same warning after a fixed amount of times
+      * Support for outfits that don't break stealth
+      * Added tur_range and fwd_range ship stats
       * Editor has partial support for universe diffs
       * Editor has separate configuration and file dialogues
    * Fixes
@@ -91,6 +94,7 @@
       * Obelisks tell if you have completed them already
       * Fixed space dust disappearing with certain jump abilities
       * Double tap will activate feather drive like blink engines
+      * Fixed camouflage burster not activating stealth
       * shadowvigil: claim entire route
       * sh01_corvette: should be completable on easy difficulties now
       * patrol: fixed escorts and fighters becoming hostile if hostile to the mission giving faction

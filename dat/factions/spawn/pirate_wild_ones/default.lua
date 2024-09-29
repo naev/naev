@@ -7,7 +7,10 @@ local sancestor   = ship.get("Pirate Ancestor")
 local sadmonisher = ship.get("Pirate Admonisher")
 local srevenant   = ship.get("Pirate Revenant")
 local sstarbridge = ship.get("Pirate Starbridge")
-local skestrel    = ship.get("Pirate Kestrel")
+local skestrel    = scom.variants{
+   { w=1,    s=ship.get("Pirate Kestrel") },
+   { w=0.05, s=ship.get("Pirate Kestrel Yuri's Kiss") },
+}
 
 local prefer_fleets, hostile_system
 

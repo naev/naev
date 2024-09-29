@@ -59,6 +59,7 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/pirate/pirate_ancestor.xml',
    root / 'dat/ships/pirate/pirate_hyena.xml',
    root / 'dat/ships/pirate/pirate_kestrel.xml',
+   root / 'dat/ships/pirate/pirate_kestrel_yuris_kiss.xml',
    root / 'dat/ships/pirate/pirate_phalanx.xml',
    root / 'dat/ships/pirate/pirate_revenant.xml',
    root / 'dat/ships/pirate/pirate_rhino.xml',
