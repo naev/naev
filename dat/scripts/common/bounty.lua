@@ -227,12 +227,10 @@ end
 function _bounty_board ()
    local b = mem._bounty
 
-   player.unboard()
    local t = fmt.f( b.msg_subdue[ rnd.rnd( 1, #b.msg_subdue ) ], {plt=b.targetname} )
    vntk.msg( _("Captured Alive"), t )
    succeed()
    b.target_killed = false
-   target_ship:changeAI( "dummy" )
    target_ship:setHilight( false )
    target_ship:setDisable() -- Stop it from coming back
    hook.rm( b.death_hook )
