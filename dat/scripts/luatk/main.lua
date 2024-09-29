@@ -29,6 +29,10 @@ function love.draw()
    luatk.draw()
 end
 
+function love.resize( _w, _h )
+   luatk.setup() -- Resetup
+end
+
 local function _update( dt )
    if #luatk._windows<=0 then
       le.quit()
