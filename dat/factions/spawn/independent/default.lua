@@ -1,23 +1,6 @@
 local scom = require "factions.spawn.lib.common"
+local var = require "shipvariants"
 
-local sllama      = scom.variants{
-   { w=1,    s=ship.get("Llama") },
-   { w=0.05, s=ship.get("Llama Voyager") },
-}
-local sschroedinger= ship.get("Schroedinger")
-local sgawain     = ship.get("Gawain")
-local skoala   = scom.variants{
-   { w=1,    s=ship.get("Koala") },
-   { w=0.05, s=ship.get("Koala Armoured") },
-}
-local squicksilver = scom.variants{
-   { w=1,    s=ship.get("Quicksilver") },
-   { w=0.05, s=ship.get("Quicksilver Mercury") },
-}
-local smule       = scom.variants{
-   { w=1,    s=ship.get("Mule")},
-   { w=0.05, s=ship.get("Mule Hardhat")},
-}
 local shyena      = ship.get("Hyena")
 local sshark      = ship.get("Shark")
 local sancestor   = ship.get("Ancestor")
@@ -26,10 +9,6 @@ local slancelot   = ship.get("Lancelot")
 local svendetta   = ship.get("Vendetta")
 local sphalanx    = ship.get("Phalanx")
 local sadmonisher = ship.get("Admonisher")
-local sstarbridge = scom.variants{
-   { w=1,    s=ship.get("Starbridge") },
-   { w=0.05, s=ship.get("Starbridge Sigma") },
-}
 local svigilance  = ship.get("Vigilance")
 local sbedivere   = ship.get("Bedivere")
 local spacifier   = ship.get("Pacifier")
@@ -49,9 +28,9 @@ end
 local function spawn_advert ()
    local pilots = {}
    local civships = {
-      sschroedinger,
-      sllama,
-      sgawain,
+      var.schroedinger,
+      var.llama,
+      var.gawain,
       shyena,
    }
    local shp = civships[ rnd.rnd(1, #civships) ]
@@ -63,13 +42,13 @@ end
 -- @brief Spawns a small patrol fleet.
 local function spawn_solitary_civilians ()
    return scom.doTable( {}, {
-      { w=0.25, sllama },
+      { w=0.25, var.llama },
       { w=0.45, shyena },
-      { w=0.6,  squicksilver },
-      { w=0.75, skoala },
-      { w=0.85, smule },
-      { w=0.9,  sgawain },
-      { sschroedinger },
+      { w=0.6,  var.quicksilver },
+      { w=0.75, var.koala },
+      { w=0.85, var.mule },
+      { w=0.9,  var.gawain },
+      { var.schroedinger },
    } )
 end
 
@@ -98,7 +77,7 @@ local function spawn_bounty_hunter_med ()
    local ships = {
       sadmonisher,
       sphalanx,
-      sstarbridge,
+      var.starbridge,
       svigilance,
       spacifier,
    }
