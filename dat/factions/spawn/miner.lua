@@ -2,7 +2,10 @@ local scom = require "factions.spawn.lib.common"
 
 local sllama   = ship.get("Llama")
 local skoala   = ship.get("Koala")
-local smule    = ship.get("Mule")
+local smule    = scom.variants{
+   { w=1, s=ship.get("Mule") },
+   { w=0.2, s=ship.get("Mule Hardhat") },
+}
 local srhino   = ship.get("Rhino")
 
 -- @brief Spawns a small group of miners
