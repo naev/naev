@@ -116,6 +116,8 @@ local function _draw( x, y, w, h )
    love.h = h
    if love.graphics then
       love.graphics.origin()
+      love.graphics.setScissor()
+      love.graphics.setCanvas()
       love.graphics.clear()
    end
    love.draw()
