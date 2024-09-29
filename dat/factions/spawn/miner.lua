@@ -1,6 +1,9 @@
 local scom = require "factions.spawn.lib.common"
 
-local sllama   = ship.get("Llama")
+local sllama      = scom.variants{
+   { w=1,    ship.get("Llama") },
+   { w=0.05, ship.get("Llama Voyager") },
+}
 local skoala   = ship.get("Koala")
 local smule    = scom.variants{
    { w=1, s=ship.get("Mule") },
