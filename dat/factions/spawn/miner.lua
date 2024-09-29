@@ -4,7 +4,10 @@ local sllama      = scom.variants{
    { w=1,    s=ship.get("Llama") },
    { w=0.05, s=ship.get("Llama Voyager") },
 }
-local skoala   = ship.get("Koala")
+local skoala   = scom.variants{
+   { w=1,    s=ship.get("Koala") },
+   { w=0.05, s=ship.get("Koala Armoured") },
+}
 local smule    = scom.variants{
    { w=1,   s=ship.get("Mule") },
    { w=0.2, s=ship.get("Mule Hardhat") },

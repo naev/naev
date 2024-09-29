@@ -6,7 +6,10 @@ local sllama      = scom.variants{
 }
 local sschroedinger= ship.get("Schroedinger")
 local sgawain     = ship.get("Gawain")
-local skoala      = ship.get("Koala")
+local skoala   = scom.variants{
+   { w=1,    s=ship.get("Koala") },
+   { w=0.05, s=ship.get("Koala Armoured") },
+}
 local squicksilver = scom.variants{
    { w=1,    s=ship.get("Quicksilver") },
    { w=0.05, s=ship.get("Quicksilver Mercury") },
