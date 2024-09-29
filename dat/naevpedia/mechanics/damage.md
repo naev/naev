@@ -31,3 +31,9 @@ There are different damage types that differentiate how much damage is done to s
 For example, kinetic damage does 80% damage to shields, 115% damage to armour, and 100% knockback.
 On the other hand, ion damage does 130% damage to shields, 80% damage to armour, and has 10% knockback.
 Using the best damage type can play a critical role in winning fights.
+
+## Shields Down and Regeneration
+
+When a ship's shields get knocked offline, it takes 5 seconds for the shields to start regenerating again.
+Any damage during this window will restart the time it takes to regenerate shields.
+When shields get back up there they will regenerate faster during the first 3 seconds.

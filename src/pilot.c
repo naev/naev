@@ -1470,7 +1470,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
 
       /* Increment shield timer or time before shield regeneration kicks in. */
       if ( reset ) {
-         p->stimer = 3.;
+         p->stimer = 5.;
          p->sbonus = 3.;
       }
    }
@@ -1487,7 +1487,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
 
       /* Increment shield timer or time before shield regeneration kicks in. */
       if ( reset ) {
-         p->stimer = 3.;
+         p->stimer = 5.;
          p->sbonus = 3.;
       }
 
