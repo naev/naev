@@ -53,7 +53,7 @@ repos:
       name: check for stale naevpedia ships/outfits
       entry: utils/update-naevpedia.sh . --pre-commit
       language: script
-      files: dat/(ships/outfits)/.*.xml
+      always_run: true
       pass_filenames: false
     - id: optipng
       name: PNG Optimizer
