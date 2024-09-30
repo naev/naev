@@ -28,6 +28,7 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/misc/sindbad.xml',
    root / 'dat/ships/neutral/admonisher.xml',
    root / 'dat/ships/neutral/ancestor.xml',
+   root / 'dat/ships/neutral/ancestor_hg_eagleeye.xml',
    root / 'dat/ships/neutral/bedivere.xml',
    root / 'dat/ships/neutral/gawain.xml',
    root / 'dat/ships/neutral/goddard.xml',

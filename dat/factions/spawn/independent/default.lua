@@ -3,7 +3,6 @@ local var = require "shipvariants"
 
 local shyena      = ship.get("Hyena")
 local sshark      = ship.get("Shark")
-local sancestor   = ship.get("Ancestor")
 local stristan    = ship.get("Tristan")
 local slancelot   = ship.get("Lancelot")
 local svendetta   = ship.get("Vendetta")
@@ -65,7 +64,7 @@ local function spawn_bounty_hunter_sml ()
          sshark,
          slancelot,
          svendetta,
-         sancestor,
+         var.ancestor,
       }
    if frontier then
       table.insert( ships, stristan )
