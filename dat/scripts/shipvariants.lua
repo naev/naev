@@ -82,5 +82,10 @@ var.kestrel = _v{
    { w=1,    s=ship.get("Kestrel") },
    { w=0.05, s=ship.get("Kestrel Sigma") },
 }
+-- Battleship
+var.zalek_mephisto = _v{
+   { w=1,    s=ship.get("Za'lek Mephisto") },
+   { w=0.05, s=ship.get("Za'lek Mephisto Type V") },
+}
 
 return var

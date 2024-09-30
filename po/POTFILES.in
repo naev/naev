@@ -620,6 +620,7 @@ dat/ships/zalek/zalek_drone_scout.xml
 dat/ships/zalek/zalek_hephaestus.xml
 dat/ships/zalek/zalek_mammon.xml
 dat/ships/zalek/zalek_mephisto.xml
+dat/ships/zalek/zalek_mephisto_type_v.xml
 dat/ships/zalek/zalek_sting.xml
 dat/ships/zalek/zalek_sting_typeii.xml
 dat/ships/zalek/zalek_sting_typeiv.xml
@@ -3553,6 +3554,7 @@ dat/ships/lua/sirius_shaman.lua
 dat/ships/lua/soromid.lua
 dat/ships/lua/thurion.lua
 dat/ships/lua/zalek.lua
+dat/ships/lua/zalek_mephisto_type_v.lua
 dat/snd/music.lua
 dat/snd/music/default.lua
 dat/spob/lua/default.lua

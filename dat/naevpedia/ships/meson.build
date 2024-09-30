@@ -112,6 +112,7 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/zalek/zalek_hephaestus.xml',
    root / 'dat/ships/zalek/zalek_mammon.xml',
    root / 'dat/ships/zalek/zalek_mephisto.xml',
+   root / 'dat/ships/zalek/zalek_mephisto_type_v.xml',
    root / 'dat/ships/zalek/zalek_sting.xml',
    root / 'dat/ships/zalek/zalek_sting_typeii.xml',
    root / 'dat/ships/zalek/zalek_sting_typeiv.xml',
