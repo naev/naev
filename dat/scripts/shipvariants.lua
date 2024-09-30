@@ -62,6 +62,16 @@ var.ancestor = _v{
    { w=1,    s=ship.get("Ancestor") },
    { w=0.05, s=ship.get("Ancestor HG Eagle-Eye") },
 }
+-- Corvette
+var.admonisher = _v{
+   { w=1,    s=ship.get("Admonisher") },
+   { w=0.05, s=ship.get("Admonisher ΩIIa") },
+}
+var.zalek_sting= _v{
+   { w=1,    s=ship.get("Za'lek Sting") },
+   { w=0.05, s=ship.get("Za'lek Sting Type II") },
+   { w=0.05, s=ship.get("Za'lek Sting Type IV") },
+}
 -- Destroyer
 var.starbridge = _v{
    { w=1,    s=ship.get("Starbridge") },
