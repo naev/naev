@@ -12,7 +12,6 @@ local sadmonisher = ship.get("Admonisher")
 local svigilance  = ship.get("Vigilance")
 local sbedivere   = ship.get("Bedivere")
 local spacifier   = ship.get("Pacifier")
-local skestrel    = ship.get("Kestrel")
 local shawking    = ship.get("Hawking")
 local sgoddard    = ship.get("Goddard")
 
@@ -88,7 +87,7 @@ local function spawn_bounty_hunter_med ()
 end
 local function spawn_bounty_hunter_lrg ()
    return spawn_bounty_hunter{
-      skestrel,
+      var.kestrel,
       shawking,
       sgoddard,
    }

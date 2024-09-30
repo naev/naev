@@ -62,5 +62,10 @@ var.starbridge = _v{
    { w=1,    s=ship.get("Starbridge") },
    { w=0.05, s=ship.get("Starbridge Sigma") },
 }
+-- Cruiser
+var.kestrel = _v{
+   { w=1,    s=ship.get("Kestrel") },
+   { w=0.05, s=ship.get("Kestrel Sigma") },
+}
 
 return var
