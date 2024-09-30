@@ -286,7 +286,9 @@ void pilot_weapSetUpdate( Pilot *p )
        * XXX for simplicity we are using pilot position / velocity instead of
        * mount point, which might be a bit off. */
       if ( ( pos->flags & PILOTOUTFIT_INRANGE ) && !outfit_isFighterBay( o ) &&
-           ( ( outfit_duration( o ) * p->stats.launch_range < time ) ||
+           ( ( outfit_duration( o ) * p->stats.launch_range *
+                  p->stats.weapon_range <
+               time ) ||
              ( !weapon_inArc( o, p, &wt, &p->solid.pos, &p->solid.vel,
                               p->solid.dir, time ) ) ) )
          continue;
@@ -1301,19 +1303,22 @@ void pilot_getRateMod( double *rate_mod, double *energy_mod, const Pilot *p,
    switch ( o->type ) {
    case OUTFIT_TYPE_BOLT:
    case OUTFIT_TYPE_BEAM:
-      *rate_mod   = 1. / p->stats.fwd_firerate; /* Invert. */
-      *energy_mod = p->stats.fwd_energy;
+      *rate_mod   = 1. / ( p->stats.fwd_firerate *
+                         p->stats.weapon_firerate ); /* Invert. */
+      *energy_mod = p->stats.fwd_energy * p->stats.weapon_energy;
       break;
    case OUTFIT_TYPE_TURRET_BOLT:
    case OUTFIT_TYPE_TURRET_BEAM:
-      *rate_mod   = 1. / p->stats.tur_firerate; /* Invert. */
-      *energy_mod = p->stats.tur_energy;
+      *rate_mod   = 1. / ( p->stats.tur_firerate *
+                         p->stats.weapon_firerate ); /* Invert. */
+      *energy_mod = p->stats.tur_energy * p->stats.weapon_energy;
       break;
 
    case OUTFIT_TYPE_LAUNCHER:
    case OUTFIT_TYPE_TURRET_LAUNCHER:
-      *rate_mod   = 1. / p->stats.launch_rate; /* Invert. */
-      *energy_mod = p->stats.launch_energy;
+      *rate_mod =
+         1. / ( p->stats.launch_rate * p->stats.weapon_firerate ); /* Invert. */
+      *energy_mod = p->stats.launch_energy * p->stats.weapon_energy;
       break;
 
    case OUTFIT_TYPE_FIGHTER_BAY:

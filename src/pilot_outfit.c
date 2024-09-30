@@ -896,24 +896,24 @@ double pilot_outfitRange( const Pilot *p, const Outfit *o )
          o->u.blt.falloff + ( o->u.blt.range - o->u.blt.falloff ) / 2.;
       if ( p != NULL ) {
          if ( outfit_isTurret( o ) )
-            range *= p->stats.tur_range;
+            range *= p->stats.tur_range * p->stats.weapon_range;
          else if ( outfit_isForward( o ) )
-            range *= p->stats.fwd_range;
+            range *= p->stats.fwd_range * p->stats.weapon_range;
       }
       return range;
    } else if ( outfit_isBeam( o ) ) {
       double range = o->u.bem.range;
       if ( p != NULL ) {
          if ( outfit_isTurret( o ) )
-            range *= p->stats.tur_range;
+            range *= p->stats.tur_range * p->stats.weapon_range;
          else if ( outfit_isForward( o ) )
-            range *= p->stats.fwd_range;
+            range *= p->stats.fwd_range * p->stats.weapon_range;
       }
       return range;
    } else if ( outfit_isLauncher( o ) ) {
       double duration = o->u.lau.duration;
       if ( p != NULL )
-         duration *= p->stats.launch_range;
+         duration *= p->stats.launch_range * p->stats.weapon_range;
       if ( o->u.lau.accel ) {
          double speedinc;
          if ( o->u.lau.speed >
@@ -1140,22 +1140,6 @@ void pilot_calcStats( Pilot *pilot )
    pilot->armour = ac * pilot->armour_max;
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
-
-   /* Weapon stuff gets split into separate categories. */
-   s->launch_rate *= s->weapon_firerate;
-   // s->fbay_rate *= s->weapon_firerate;
-   s->fwd_firerate *= s->weapon_firerate;
-   s->tur_firerate *= s->weapon_firerate;
-   s->launch_range *= s->weapon_range;
-   s->fwd_range *= s->weapon_range;
-   s->tur_range *= s->weapon_range;
-   s->launch_damage *= s->weapon_damage;
-   // s->fbay_damage *= s->weapon_damage;
-   s->fwd_damage *= s->weapon_damage;
-   s->tur_damage *= s->weapon_damage;
-   s->launch_energy *= s->weapon_energy;
-   s->fwd_energy *= s->weapon_energy;
-   s->tur_energy *= s->weapon_energy;
 
    /* Dump excess fuel */
    pilot->fuel = MIN( pilot->fuel, pilot->fuel_max );

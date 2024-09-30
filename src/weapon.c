@@ -499,6 +499,7 @@ static void think_beam( Weapon *w, double dt )
    vec2             v;
    PilotOutfitSlot *slot;
    unsigned int     turn_off;
+   double           rate;
 
    /* Get pilot, if pilot is dead beam is destroyed. */
    p = pilot_get( w->parent );
@@ -507,12 +508,17 @@ static void think_beam( Weapon *w, double dt )
       return;
    }
    slot = w->mount;
-   dt *= p->stats.time_speedup; /* Have to consider time speedup here. */
+   if ( slot->outfit->type == OUTFIT_TYPE_BEAM )
+      rate = p->stats.fwd_firerate;
+   else
+      rate = p->stats.tur_firerate;
+   dt *= p->stats.time_speedup * rate *
+         p->stats.weapon_firerate; /* Have to consider time speedup here. */
 
    /* Check if pilot has enough energy left to keep beam active. */
    mod = ( w->outfit->type == OUTFIT_TYPE_BEAM ) ? p->stats.fwd_energy
                                                  : p->stats.tur_energy;
-   p->energy -= mod * dt * w->outfit->u.bem.energy;
+   p->energy -= mod * dt * w->outfit->u.bem.energy * p->stats.weapon_energy;
    pilot_heatAddSlotTime( p, slot, dt );
    if ( p->energy < 0. ) {
       p->energy = 0.;
@@ -542,12 +548,12 @@ static void think_beam( Weapon *w, double dt )
       turn_off = 1;
       if ( t != NULL ) {
          if ( vec2_dist( &p->solid.pos, &t->solid.pos ) <=
-              slot->outfit->u.bem.range )
+              slot->outfit->u.bem.range * w->range_mod )
             turn_off = 0;
       }
       if ( ast != NULL ) {
          if ( vec2_dist( &p->solid.pos, &ast->sol.pos ) <=
-              slot->outfit->u.bem.range )
+              slot->outfit->u.bem.range * w->range_mod )
             turn_off = 0;
       }
 
@@ -1230,13 +1236,13 @@ static void weapon_updateCollide( Weapon *w, double dt )
       if ( p != NULL ) {
          /* Beams need to update their properties online. */
          if ( w->outfit->type == OUTFIT_TYPE_BEAM ) {
-            w->dam_mod        = p->stats.fwd_damage;
+            w->dam_mod        = p->stats.fwd_damage * p->stats.weapon_damage;
             w->dam_as_dis_mod = p->stats.fwd_dam_as_dis - 1.;
-            w->range_mod      = p->stats.fwd_range;
+            w->range_mod      = p->stats.fwd_range * p->stats.weapon_range;
          } else {
-            w->dam_mod        = p->stats.tur_damage;
+            w->dam_mod        = p->stats.tur_damage * p->stats.weapon_damage;
             w->dam_as_dis_mod = p->stats.tur_dam_as_dis - 1.;
-            w->range_mod      = p->stats.tur_range;
+            w->range_mod      = p->stats.tur_range * p->stats.weapon_range;
          }
          w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
       }
@@ -1893,7 +1899,8 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
       firerate = parent->stats.tur_firerate;
    else
       firerate = parent->stats.fwd_firerate;
-   mod = w->dam_mod * w->strength * firerate * parent->stats.time_speedup * dt;
+   mod = w->dam_mod * w->strength * firerate * parent->stats.weapon_firerate *
+         parent->stats.time_speedup * dt;
    damage          = odmg->damage * mod;
    dmg.damage      = MAX( 0., damage * ( 1. - w->dam_as_dis_mod ) );
    dmg.penetration = odmg->penetration;
@@ -2312,15 +2319,15 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
 
    /* Stat modifiers. */
    if ( outfit->type == OUTFIT_TYPE_TURRET_BOLT ) {
-      w->dam_mod *= parent->stats.tur_damage;
+      w->dam_mod *= parent->stats.tur_damage * parent->stats.weapon_damage;
       /* dam_as_dis is computed as multiplier, must be corrected. */
       w->dam_as_dis_mod = parent->stats.tur_dam_as_dis - 1.;
-      w->range_mod      = parent->stats.tur_range;
+      w->range_mod      = parent->stats.tur_range * parent->stats.weapon_range;
    } else {
-      w->dam_mod *= parent->stats.fwd_damage;
+      w->dam_mod *= parent->stats.fwd_damage * parent->stats.weapon_damage;
       /* dam_as_dis is computed as multiplier, must be corrected. */
       w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis - 1.;
-      w->range_mod      = parent->stats.fwd_range;
+      w->range_mod      = parent->stats.fwd_range * parent->stats.weapon_range;
    }
    /* Clamping, but might not actually be necessary if weird things want to be
     * done. */
@@ -2404,7 +2411,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
 
    /* Set up ammo details. */
    mass     = w->outfit->u.lau.ammo_mass;
-   w->timer = w->outfit->u.lau.duration * parent->stats.launch_range;
+   w->timer = w->outfit->u.lau.duration * parent->stats.launch_range *
+              parent->stats.weapon_range;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    if ( w->outfit->u.lau.accel > 0. ) {
       weapon_setAccel( w, w->outfit->u.lau.accel );
@@ -2571,13 +2579,13 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
                         w->solid.vel.x, w->solid.vel.y );
 
       if ( outfit->type == OUTFIT_TYPE_BEAM ) {
-         w->dam_mod *= parent->stats.fwd_damage;
+         w->dam_mod *= parent->stats.fwd_damage * parent->stats.weapon_damage;
          w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis - 1.;
-         w->range_mod      = parent->stats.fwd_range;
+         w->range_mod = parent->stats.fwd_range * parent->stats.weapon_range;
       } else {
-         w->dam_mod *= parent->stats.tur_damage;
+         w->dam_mod *= parent->stats.tur_damage * parent->stats.weapon_damage;
          w->dam_as_dis_mod = parent->stats.tur_dam_as_dis - 1.;
-         w->range_mod      = parent->stats.tur_range;
+         w->range_mod = parent->stats.tur_range * parent->stats.weapon_range;
       }
       w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
 
