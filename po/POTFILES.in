@@ -296,6 +296,7 @@ dat/outfits/flow/structure/medium_meditation_chamber.xml
 dat/outfits/flow/structure/small_flow_amplifier.xml
 dat/outfits/flow/structure/small_flow_resonator.xml
 dat/outfits/flow/structure/small_meditation_chamber.xml
+dat/outfits/intrinsic/black_agate_finishing.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/gauntlet_supreme.xml
 dat/outfits/intrinsic/machiavellian_fortune.xml
@@ -3301,6 +3302,7 @@ dat/outfits/flow/astral_projection/astral_cannon.lua
 dat/outfits/flow/flow_amplifier.lua
 dat/outfits/flow/structure/flow_resonator.lua
 dat/outfits/flow/structure/meditation_chamber.lua
+dat/outfits/intrinsic/black_agate_finishing.lua
 dat/outfits/intrinsic/gauntlet_supreme.lua
 dat/outfits/intrinsic/port_and_polish.lua
 dat/outfits/launchers/space_mine_layer.lua
