@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship inherits="Za'lek Sting" name="Za'lek Sting Type II">
+ <rarity>3</rarity>
  <price>1950000</price>
  <cond>math.ceil(faction.playerStanding("Za'lek")+0.5) &gt;= 50</cond>
  <condstr>You need at least 50% reputation with House Za'lek.</condstr>

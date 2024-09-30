@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Kestrel Yuri's Kiss" inherits="Pirate Kestrel">
+ <rarity>3</rarity>
  <price>5710000</price>
  <description>One-Eyed Yuri was a famous ship engineer at Skull and Bonus, renown for her extravagant antics, many mistresses, and unconventional designs. She pushed the limits of her designs, and many of the pirate modifications have her signature on them. She perished in the annihilation of Haven, however, her legacy lives with the blueprints of a modified Pirate Kestrel, popularly called Yuri's Kiss.
 
