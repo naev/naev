@@ -16,6 +16,7 @@
 
 #include "array.h"
 #include "log.h"
+#include "nlua_faction.h"
 #include "nlua_outfit.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
@@ -36,6 +37,7 @@ static int shipL_nameRaw( lua_State *L );
 static int shipL_baseType( lua_State *L );
 static int shipL_class( lua_State *L );
 static int shipL_classDisplay( lua_State *L );
+static int shipL_faction( lua_State *L );
 static int shipL_fabricator( lua_State *L );
 static int shipL_crew( lua_State *L );
 static int shipL_mass( lua_State *L );
@@ -72,6 +74,7 @@ static const luaL_Reg shipL_methods[] = {
    { "baseType", shipL_baseType },
    { "class", shipL_class },
    { "classDisplay", shipL_classDisplay },
+   { "faction", shipL_faction },
    { "fabricator", shipL_fabricator },
    { "crew", shipL_crew },
    { "mass", shipL_mass },
@@ -358,6 +361,25 @@ static int shipL_classDisplay( lua_State *L )
    const Ship *s = luaL_validship( L, 1 );
    lua_pushstring( L, ship_classDisplay( s ) );
    return 1;
+}
+
+/**
+ * @brief Gets the faction of a ship.
+ *
+ * @usage shipclass = s:faction()
+ *
+ *    @luatparam Ship s Ship to get faction of.
+ *    @luatreturn Faction The faction of the ship, or nil if not applicable.
+ * @luafunc faction
+ */
+static int shipL_faction( lua_State *L )
+{
+   const Ship *s = luaL_validship( L, 1 );
+   if ( faction_isFaction( s->faction ) ) {
+      lua_pushfaction( L, s->faction );
+      return 1;
+   }
+   return 0;
 }
 
 /**
