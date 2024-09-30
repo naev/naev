@@ -128,6 +128,11 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Stealth Discovered Speed" ) ),
    DI_ELEM( SS_TYPE_D_EW_SCANNED_TIME, ew_scanned_time, N_( "Scanned Speed" ) ),
 
+   D__ELEM( SS_TYPE_D_WEAPON_RANGE, weapon_range, N_( "Weapon Range" ) ),
+   D__ELEM( SS_TYPE_D_WEAPON_DAMAGE, weapon_damage, N_( "Weapon Damage" ) ),
+   D__ELEM( SS_TYPE_D_WEAPON_FIRERATE, weapon_firerate,
+            N_( "Weapon Fire Rate" ) ),
+
    D__ELEM( SS_TYPE_D_LAUNCH_RATE, launch_rate, N_( "Fire Rate (Launcher)" ) ),
    D__ELEM( SS_TYPE_D_LAUNCH_RANGE, launch_range, N_( "Launch Range" ) ),
    D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE, launch_damage, N_( "Damage (Launcher)" ) ),

@@ -59,6 +59,11 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_EW_SCANNED_TIME,  /**< Electronic warfare time it takes to get
                                   scanned. */
 
+   /* Weapons. */
+   SS_TYPE_D_WEAPON_RANGE,    /**< Weapon range. */
+   SS_TYPE_D_WEAPON_DAMAGE,   /**< Weapon damage. */
+   SS_TYPE_D_WEAPON_FIRERATE, /**< Weapon fire rate. */
+
    /* Launchers. */
    SS_TYPE_D_LAUNCH_RATE,        /**< Launch rate for missiles. */
    SS_TYPE_D_LAUNCH_RANGE,       /**< Launch range for missiles. */
@@ -274,6 +279,11 @@ typedef struct ShipStats_ {
    double stress_dissipation; /**< Global stress dissipation. */
    double crew_mod;           /**< Relative crew modification. */
    double mass_mod;           /**< Relative mass modification. */
+
+   /* Weapons. */
+   double weapon_range;    /**< Weapon range. */
+   double weapon_damage;   /**< Weapon damage. */
+   double weapon_firerate; /**< Weapon firerate. */
 
    /* Launchers. */
    double launch_rate;        /**< Fire rate of launchers. */

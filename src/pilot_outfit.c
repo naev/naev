@@ -1141,6 +1141,19 @@ void pilot_calcStats( Pilot *pilot )
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
 
+   /* Weapon stuff gets split into separate categories. */
+   s->launch_rate *= s->weapon_firerate;
+   s->fbay_rate *= s->weapon_firerate;
+   s->fwd_firerate *= s->weapon_firerate;
+   s->tur_firerate *= s->weapon_firerate;
+   s->launch_range *= s->weapon_range;
+   s->fwd_range *= s->weapon_range;
+   s->tur_range *= s->weapon_range;
+   s->launch_damage *= s->weapon_damage;
+   s->fbay_damage *= s->weapon_damage;
+   s->fwd_damage *= s->weapon_damage;
+   s->tur_damage *= s->weapon_damage;
+
    /* Dump excess fuel */
    pilot->fuel = MIN( pilot->fuel, pilot->fuel_max );
 
