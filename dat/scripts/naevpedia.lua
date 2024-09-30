@@ -58,7 +58,10 @@ end
 local function lua_unescape( str, tbl, env )
    for k,v in ipairs(tbl) do
       local sout
-      local c, cerror = loadstring( "return "..v )
+      if not utf8.find( v, "return ", 1, true ) then
+         v = "return "..v
+      end
+      local c, cerror = loadstring( v )
       if not c then
          warn( cerror )
          sout = "#r" .. c .. "#0"
