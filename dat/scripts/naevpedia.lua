@@ -375,6 +375,13 @@ function naevpedia.setup( name )
             return false
          end
          if na.parent ~= nb.parent then
+            if na.parent~=nil and nb.parent~=nil then
+               return npsort( na.parent, nb.parent )
+            elseif na.parent~=nil then
+               return npsort( a.parent, b )
+            elseif nb.parent~=nil then
+               return npsort( a, nb.parent )
+            end
             return a < b
          end
          -- Sort by priority
