@@ -9,8 +9,7 @@ local utf8 = require "utf8"
 local naevpedia = {}
 local nc = naev.cache()
 
-local nhelper = {}
-function nhelper.get( title )
+function naevpedia.get( title )
    for k,e in pairs( nc._naevpedia ) do
       local name = e.title or e.name
       if name==title then
@@ -264,7 +263,7 @@ local function loaddoc( filename )
    meta._G.pairs = pairs
    meta._G.table = table
    meta._G.inlist = inlist
-   meta._G.naevpedia = nhelper
+   meta._G.naevpedia = naevpedia
 
    -- Translate line by line
    -- TODO ignore <% %> blocks like the python script does.
