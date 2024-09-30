@@ -706,13 +706,26 @@ void weapons_updateCollide( double dt )
 
       /* Beam weapons handled a part. */
       case OUTFIT_TYPE_BEAM:
-      case OUTFIT_TYPE_TURRET_BEAM:
+      case OUTFIT_TYPE_TURRET_BEAM: {
+         double       rate, beamdt;
+         const Pilot *p = pilot_get( w->parent );
+         if ( p == NULL ) {
+            weapon_miss( w );
+            break;
+         }
+         if ( w->mount->outfit->type == OUTFIT_TYPE_BEAM )
+            rate = p->stats.fwd_firerate;
+         else
+            rate = p->stats.tur_firerate;
+         beamdt =
+            dt * p->stats.time_speedup * rate *
+            p->stats.weapon_firerate; /* Have to consider time speedup here. */
          /* Beams don't have inherent accuracy, so we use the
           * heatAccuracyMod to modulate duration. */
-         w->timer -= dt / ( 1. - pilot_heatAccuracyMod( w->mount->heat_T ) );
+         w->timer -=
+            beamdt / ( 1. - pilot_heatAccuracyMod( w->mount->heat_T ) );
          if ( w->timer < 0. || ( w->outfit->u.bem.min_duration > 0. &&
                                  w->mount->stimer < 0. ) ) {
-            const Pilot *p = pilot_get( w->parent );
             if ( p != NULL )
                pilot_stopBeam( p, w->mount );
             weapon_miss( w );
@@ -723,7 +736,7 @@ void weapons_updateCollide( double dt )
          w->timer2 -= dt;
          if ( w->timer2 < -1. )
             w->timer2 = 0.100;
-         break;
+      } break;
       default:
          WARN( _( "Weapon of type '%s' has no update implemented yet!" ),
                w->outfit->name );
