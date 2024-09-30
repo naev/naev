@@ -8,9 +8,7 @@
  <buff/>
  <priority>4</priority>
  <stats>
-  <fwd_damage>25</fwd_damage>
-  <tur_damage>25</tur_damage>
-  <launch_damage>25</launch_damage>
+  <weapon_damage>25</weapon_damage>
   <speed_mod>25</speed_mod>
   <turn_mod>25</turn_mod>
   <accel_mod>25</accel_mod>

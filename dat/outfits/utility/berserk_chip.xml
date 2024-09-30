@@ -17,8 +17,6 @@
   <shield_regen_mod>-500</shield_regen_mod>
   <time_mod>-50</time_mod>
   <time_speedup>50</time_speedup>
-  <fwd_damage>25</fwd_damage>
-  <tur_damage>25</tur_damage>
-  <launch_damage>25</launch_damage>
+  <weapon_damage>25</weapon_damage>
  </specific>
 </outfit>

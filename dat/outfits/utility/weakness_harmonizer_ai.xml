@@ -13,9 +13,7 @@
   <gfx_store>misc04.webp</gfx_store>
   </general>
  <specific type="modification">
-  <fwd_damage>10</fwd_damage>
-  <tur_damage>10</tur_damage>
-  <launch_damage>10</launch_damage>
+  <weapon_damage>10</weapon_damage>
   <lua>outfits/utility/weakness_harmonizer_ai.lua</lua>
  </specific>
 </outfit>
