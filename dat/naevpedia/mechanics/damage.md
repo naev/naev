@@ -34,6 +34,6 @@ Using the best damage type can play a critical role in winning fights.
 
 ## Shields Down and Regeneration
 
-When a ship's shields get knocked offline, it takes 5 seconds for the shields to start regenerating again.
+When a ship's shields get knocked offline, it takes 5 seconds for the shields to start regenerating again, and can be reduced with lower **Shield Down Time**.
 Any damage during this window will restart the time it takes to regenerate shields.
 When shields get back up there they will regenerate faster during the first 3 seconds.
