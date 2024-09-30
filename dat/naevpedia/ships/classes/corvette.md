@@ -2,4 +2,4 @@
 title: "Corvettes"
 ---
 # Corvettes
-<%= require("naevpedia.ships.classes").list("Corvettes") %>
+<%= require("naevpedia.ships.classes").list("Corvette") %>
