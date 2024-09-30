@@ -189,6 +189,7 @@ typedef struct Ship_ {
    nlua_env
       lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    double lua_dt;             /**< Update rate for Lua update script. */
+   int    lua_descextra;      /**< Run when obtaining description. */
    int    lua_init;           /**< Run when pilot enters a system. */
    int    lua_cleanup;        /**< Run when the pilot is erased. */
    int    lua_update;         /**< Run periodically. */

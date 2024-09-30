@@ -24,6 +24,7 @@
 #include "nlua.h"
 #include "nlua_camera.h"
 #include "nlua_gfx.h"
+#include "nlua_ship.h"
 #include "nstring.h"
 #include "nxml.h"
 #include "opengl_tex.h"
@@ -923,6 +924,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
 
       /* Lua defaults. */
       temp->lua_env            = LUA_NOREF;
+      temp->lua_descextra      = LUA_NOREF;
       temp->lua_init           = LUA_NOREF;
       temp->lua_cleanup        = LUA_NOREF;
       temp->lua_update         = LUA_NOREF;
@@ -1672,13 +1674,32 @@ int ships_load( void )
       if ( !lua_isnoneornil( naevL, -1 ) )
          s->lua_dt = luaL_checknumber( naevL, -1 );
       lua_pop( naevL, 1 );
-      s->lua_init    = nlua_refenvtype( env, "init", LUA_TFUNCTION );
-      s->lua_cleanup = nlua_refenvtype( env, "cleanup", LUA_TFUNCTION );
-      s->lua_update  = nlua_refenvtype( env, "update", LUA_TFUNCTION );
+      s->lua_descextra = nlua_refenvtype( env, "descextra", LUA_TFUNCTION );
+      s->lua_init      = nlua_refenvtype( env, "init", LUA_TFUNCTION );
+      s->lua_cleanup   = nlua_refenvtype( env, "cleanup", LUA_TFUNCTION );
+      s->lua_update    = nlua_refenvtype( env, "update", LUA_TFUNCTION );
       s->lua_explode_init =
          nlua_refenvtype( env, "explode_init", LUA_TFUNCTION );
       s->lua_explode_update =
          nlua_refenvtype( env, "explode_update", LUA_TFUNCTION );
+
+      /* We're just going to run the script and paste here for now. */
+      if ( s->lua_descextra != LUA_NOREF ) {
+         free( s->desc_extra );
+         s->desc_extra = NULL;
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, s->lua_descextra ); /* f */
+         lua_pushnil( naevL );                                      /* f, p */
+         lua_pushship( naevL, s );               /* f, p, s */
+         if ( nlua_pcall( s->lua_env, 2, 1 ) ) { /* */
+            lua_pop( naevL, 1 );
+         } else if ( lua_isnoneornil( naevL, -1 ) ) {
+            /* Case no return we just pass nothing. */
+            lua_pop( naevL, 1 );
+         } else {
+            s->desc_extra = strdup( luaL_checkstring( naevL, -1 ) );
+            lua_pop( naevL, 1 );
+         }
+      }
    }
 
    /* Debugging timings. */

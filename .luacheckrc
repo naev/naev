@@ -227,6 +227,7 @@ stds.API_pilotoutfit = {globals={
    "mem", -- Automatically created using nlua_setenv().
 }}
 stds.API_pilotship = {globals={
+   "descextra",
    "update_dt",
    "init",
    "cleanup",
