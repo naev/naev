@@ -1,5 +1,6 @@
 ---
 title: "Ship Classes"
+priority: 2
 ---
 # Ship Classes
 
@@ -14,7 +15,7 @@ Military ships are focused on warfare and come in different sizes and flavours.
 The large military ships are slow hulks that can dominate the battlefield.
 While they have speed and manoeuvrability in general, they make up for this with large amounts of firepower and armour.
 
-* **Battleship**: The largest ships that focus on raw firepower.
+* **[Battleship](ships/classes/battleship)**: The largest ships that focus on raw firepower.
 * **Carrier**: Very large ships meant to provide support by hosting large amount of fighter ships.
 * **Cruiser**: The smallest of the large ships, which are more flexible and significantly faster than their larger counterparts.
 
