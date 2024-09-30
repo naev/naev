@@ -3391,6 +3391,7 @@ dat/scripts/common/shark.lua
 dat/scripts/common/sirius.lua
 dat/scripts/common/soromid.lua
 dat/scripts/common/taiomi.lua
+dat/scripts/common/thurion.lua
 dat/scripts/common/tut_nelly.lua
 dat/scripts/common/tutorial.lua
 dat/scripts/common/wildspace.lua
