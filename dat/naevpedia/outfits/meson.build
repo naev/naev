@@ -168,6 +168,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/flow/structure/small_flow_amplifier.xml',
    root / 'dat/outfits/flow/structure/small_flow_resonator.xml',
    root / 'dat/outfits/flow/structure/small_meditation_chamber.xml',
+   root / 'dat/outfits/intrinsic/black_agate_finishing.xml',
    root / 'dat/outfits/intrinsic/gauntlet_deluxe.xml',
    root / 'dat/outfits/intrinsic/gauntlet_supreme.xml',
    root / 'dat/outfits/intrinsic/machiavellian_fortune.xml',

@@ -35,6 +35,7 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/neutral/hyena.xml',
    root / 'dat/ships/neutral/kestrel.xml',
    root / 'dat/ships/neutral/koala.xml',
+   root / 'dat/ships/neutral/koala_armoured.xml',
    root / 'dat/ships/neutral/lancelot.xml',
    root / 'dat/ships/neutral/llama.xml',
    root / 'dat/ships/neutral/llama_voyager.xml',
