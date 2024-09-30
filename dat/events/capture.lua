@@ -40,7 +40,7 @@ function create ()
    plt = nc.capture_pilot.pilot
    mem.cost = nc.capture_pilot.cost
    mem.costnaked = nc.capture_pilot.costnaked
-   mem.outfitsnaked = nc.caputer_pilot.outfitsnaked
+   mem.outfitsnaked = nc.capture_pilot.outfitsnaked
    nc.capture_pilot = nil
 
    -- Original data
