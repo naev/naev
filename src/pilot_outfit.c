@@ -1153,6 +1153,9 @@ void pilot_calcStats( Pilot *pilot )
    // s->fbay_damage *= s->weapon_damage;
    s->fwd_damage *= s->weapon_damage;
    s->tur_damage *= s->weapon_damage;
+   s->launch_energy *= s->weapon_energy;
+   s->fwd_energy *= s->weapon_energy;
+   s->tur_energy *= s->weapon_energy;
 
    /* Dump excess fuel */
    pilot->fuel = MIN( pilot->fuel, pilot->fuel_max );

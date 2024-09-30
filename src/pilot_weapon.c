@@ -1312,8 +1312,8 @@ void pilot_getRateMod( double *rate_mod, double *energy_mod, const Pilot *p,
 
    case OUTFIT_TYPE_LAUNCHER:
    case OUTFIT_TYPE_TURRET_LAUNCHER:
-      *rate_mod   = 1. / p->stats.launch_rate;
-      *energy_mod = 1.;
+      *rate_mod   = 1. / p->stats.launch_rate; /* Invert. */
+      *energy_mod = p->stats.launch_energy;
       break;
 
    case OUTFIT_TYPE_FIGHTER_BAY:

@@ -64,11 +64,13 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_WEAPON_RANGE,    /**< Weapon range. */
    SS_TYPE_D_WEAPON_DAMAGE,   /**< Weapon damage. */
    SS_TYPE_D_WEAPON_FIRERATE, /**< Weapon fire rate. */
+   SS_TYPE_D_WEAPON_ENERGY,   /**< Weapon energy usage. */
 
    /* Launchers. */
    SS_TYPE_D_LAUNCH_RATE,        /**< Launch rate for missiles. */
    SS_TYPE_D_LAUNCH_RANGE,       /**< Launch range for missiles. */
    SS_TYPE_D_LAUNCH_DAMAGE,      /**< Launch damage for missiles. */
+   SS_TYPE_D_LAUNCH_ENERGY,      /**< Launch energy for missiles. */
    SS_TYPE_D_AMMO_CAPACITY,      /**< Capacity of launchers. */
    SS_TYPE_D_LAUNCH_LOCKON,      /**< Lock-on speed of launchers. */
    SS_TYPE_D_LAUNCH_CALIBRATION, /**< Calibration speed of launchers. */
@@ -286,11 +288,13 @@ typedef struct ShipStats_ {
    double weapon_range;    /**< Weapon range. */
    double weapon_damage;   /**< Weapon damage. */
    double weapon_firerate; /**< Weapon firerate. */
+   double weapon_energy;   /**< Weapon energy usage. */
 
    /* Launchers. */
    double launch_rate;        /**< Fire rate of launchers. */
    double launch_range;       /**< Range of launchers. */
    double launch_damage;      /**< Damage of launchers. */
+   double launch_energy;      /**< Energy usage of launchers. */
    double ammo_capacity;      /**< Capacity of launchers. */
    double launch_lockon;      /**< Lock on speed of launchers. */
    double launch_calibration; /**< Calibration speed of launchers. */
