@@ -75,6 +75,9 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LAUNCH_LOCKON,      /**< Lock-on speed of launchers. */
    SS_TYPE_D_LAUNCH_CALIBRATION, /**< Calibration speed of launchers. */
    SS_TYPE_D_LAUNCH_RELOAD,      /**< Regeneration rate of launcher ammo. */
+   SS_TYPE_D_LAUNCH_ACCEL,       /**< Launched ammo accel. */
+   SS_TYPE_D_LAUNCH_SPEED,       /**< Launched ammo speed. */
+   SS_TYPE_D_LAUNCH_TURN,        /**< Launched ammo turn. */
 
    /* Fighter Bays. */
    SS_TYPE_D_FBAY_DAMAGE,   /**< Fighter bay fighter damage bonus (all weapons).
@@ -299,6 +302,9 @@ typedef struct ShipStats_ {
    double launch_lockon;      /**< Lock on speed of launchers. */
    double launch_calibration; /**< Calibration speed of launchers. */
    double launch_reload;      /**< Reload rate of launchers. */
+   double launch_accel /**< Missile accel. */;
+   double launch_speed; /**< Missile speed. */
+   double launch_turn;  /**< Missile turn. */
 
    /* Fighter bays. */
    double fbay_damage;   /**< Fighter bay fighter damage (all weapons). */

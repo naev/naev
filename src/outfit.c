@@ -907,34 +907,9 @@ double outfit_range( const Outfit *o )
  */
 double outfit_speed( const Outfit *o )
 {
-   if ( outfit_isBolt( o ) )
-      return o->u.blt.speed;
-   else if ( outfit_isLauncher( o ) ) {
-      if ( o->u.lau.accel == 0. )
-         return o->u.lau.speed;
-      else { /* Gets the average speed. */
-         double t;
-         if ( o->u.lau.speed >
-              0. ) /* Ammo that don't start stopped don't have max speed. */
-            t = INFINITY;
-         else
-            t = ( o->u.lau.speed_max - o->u.lau.speed ) /
-                o->u.lau.accel; /* Time to reach max speed */
-
-         /* Reaches max speed. */
-         if ( t < o->u.lau.duration )
-            return ( o->u.lau.accel * t * t / 2. +
-                     ( o->u.lau.speed_max - o->u.lau.speed ) *
-                        ( o->u.lau.duration - t ) ) /
-                      o->u.lau.duration +
-                   o->u.lau.speed;
-         /* Doesn't reach max speed. */
-         else
-            return o->u.lau.accel * o->u.lau.duration / 2. + o->u.lau.speed;
-      }
-   }
-   return -1.;
+   return pilot_outfitSpeed( NULL, o );
 }
+
 /**
  * @brief Gets the swivel of an outfit.
  *    @param o Outfit to get swivel of.

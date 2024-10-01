@@ -367,7 +367,7 @@ static void think_seeker( Weapon *w, double dt )
    case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
       w->timer2 -= dt;
       if ( w->timer2 >= 0. )
-         weapon_setAccel( w, w->outfit->u.lau.accel );
+         weapon_setAccel( w, w->outfit->u.lau.accel * w->accel_mod );
       else
          w->status = WEAPON_STATUS_OK; /* Weapon locked on. */
       /* Can't get jammed while locking on. */
@@ -386,12 +386,12 @@ static void think_seeker( Weapon *w, double dt )
                   w->status = WEAPON_STATUS_JAMMED;
                } else if ( r < 0.6 ) {
                   w->status = WEAPON_STATUS_JAMMED;
-                  weapon_setTurn( w, w->outfit->u.lau.turn *
+                  weapon_setTurn( w, w->outfit->u.lau.turn * w->turn_mod *
                                         ( ( RNGF() > 0.5 ) ? -1.0 : 1.0 ) );
                } else if ( r < 0.8 ) {
                   w->status = WEAPON_STATUS_JAMMED;
                   weapon_setTurn( w, 0. );
-                  weapon_setAccel( w, w->outfit->u.lau.accel );
+                  weapon_setAccel( w, w->outfit->u.lau.accel * w->accel_mod );
                } else {
                   w->status  = WEAPON_STATUS_JAMMED_SLOWED;
                   w->falloff = RNGF() * 0.5;
@@ -403,9 +403,9 @@ static void think_seeker( Weapon *w, double dt )
       }
       FALLTHROUGH;
 
-   case WEAPON_STATUS_JAMMED_SLOWED:    /* Slowed down. */
-   case WEAPON_STATUS_UNJAMMED:         /* Work as expected */
-      turn_max = w->outfit->u.lau.turn; // * ewtrack;
+   case WEAPON_STATUS_JAMMED_SLOWED:                  /* Slowed down. */
+   case WEAPON_STATUS_UNJAMMED:                       /* Work as expected */
+      turn_max = w->outfit->u.lau.turn * w->turn_mod; // * ewtrack;
       if ( w->status == WEAPON_STATUS_JAMMED_SLOWED )
          turn_max *= w->falloff;
 
@@ -459,8 +459,9 @@ static void think_seeker( Weapon *w, double dt )
       else {
          double diff = angle_diff( w->solid.dir, /* Get angle to target pos */
                                    vec2_angle( &w->solid.pos, &p->solid.pos ) );
-         weapon_setTurn( w, CLAMP( -turn_max, turn_max,
-                                   10 * diff * w->outfit->u.lau.turn ) );
+         weapon_setTurn(
+            w, CLAMP( -turn_max, turn_max,
+                      10 * diff * w->outfit->u.lau.turn * w->turn_mod ) );
       }
       break;
 
@@ -474,11 +475,13 @@ static void think_seeker( Weapon *w, double dt )
    }
 
    /* Slow off based on falloff. */
-   speed_mod = ( w->status == WEAPON_STATUS_JAMMED_SLOWED ) ? w->falloff : 1.;
+   speed_mod = w->speed_mod;
+   speed_mod *= ( w->status == WEAPON_STATUS_JAMMED_SLOWED ) ? w->falloff : 1.;
 
    /* Limit speed here */
-   w->real_vel = MIN( speed_mod * w->outfit->u.lau.speed_max,
-                      w->real_vel + w->outfit->u.lau.accel * dt );
+   w->real_vel =
+      MIN( speed_mod * w->outfit->u.lau.speed_max,
+           w->real_vel + w->outfit->u.lau.accel * w->accel_mod * dt );
    vec2_pset( &w->solid.vel, /* ewtrack * */ w->real_vel, w->solid.dir );
 
    /* Modulate max speed. */
@@ -2130,12 +2133,12 @@ static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
 
    /* For unguided rockets: use a FD quasi-Newton algorithm to aim better. */
    if ( outfit_isLauncher( outfit ) && outfit->u.lau.accel > 0. ) {
-      double vmin = outfit->u.lau.speed;
+      double vmin = outfit->u.lau.speed * parent->stats.launch_speed;
 
       if ( vmin > 0. ) {
          /* Get various details. */
          double tt, ddir, acc, pxv, ang, dvx, dvy;
-         acc = outfit->u.lau.accel;
+         acc = outfit->u.lau.accel * parent->stats.launch_accel;
 
          /* Get the relative velocity. */
          dvx = lead * ( target_vel->x - vel->x );
@@ -2410,13 +2413,15 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
    /* Make sure angle is in range. */
    rdir = angle_clean( rdir );
 
-   /* Launcher damage. */
+   /* Snapshot. */
    w->dam_mod *= parent->stats.launch_damage;
-   w->range_mod = 1.;
+   w->accel_mod = parent->stats.launch_accel;
+   w->speed_mod = parent->stats.launch_speed;
+   w->turn_mod  = parent->stats.launch_turn;
 
    /* If accel is 0. we assume it starts out at speed. */
    v = *vel;
-   m = outfit->u.lau.speed;
+   m = outfit->u.lau.speed * w->speed_mod;
    if ( outfit->u.lau.speed_dispersion > 0. )
       m += RNG_1SIGMA() * outfit->u.lau.speed_dispersion;
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
@@ -2428,10 +2433,10 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
               parent->stats.weapon_range;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    if ( w->outfit->u.lau.accel > 0. ) {
-      weapon_setAccel( w, w->outfit->u.lau.accel );
+      weapon_setAccel( w, w->outfit->u.lau.accel * w->accel_mod );
       /* Limit speed, we only relativize in the case it has accel + initial
        * speed. */
-      w->solid.speed_max = w->outfit->u.lau.speed_max;
+      w->solid.speed_max = w->outfit->u.lau.speed_max * w->speed_mod;
       if ( w->outfit->u.lau.speed > 0. )
          w->solid.speed_max = -1; /* No limit. */
    }
@@ -2508,8 +2513,10 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
    w->mount   = po;
    w->dam_mod = 1.;   /* Default of 100% damage. */
    w->range_mod = 1.; /* Default of 100% range. */
-   // w->dam_as_dis_mod = 0.;              /* Default of 0% damage to disable.
-   // */
+   w->accel_mod = 1.;
+   w->speed_mod = 1.;
+   w->turn_mod  = 1.;
+   // w->dam_as_dis_mod = 0.;   /* Default of 0% damage to disable. */
    w->faction = parent->faction;                   /* non-changeable */
    w->parent  = parent->id;                        /* non-changeable */
    memcpy( &w->target, target, sizeof( Target ) ); /* non-changeable */

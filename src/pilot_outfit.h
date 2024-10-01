@@ -21,6 +21,8 @@ typedef enum OutfitKey_ {
 const char *pilot_outfitDescription( const Pilot *pilot, const Outfit *o );
 const char *pilot_outfitSummary( const Pilot *p, const Outfit *o,
                                  int withname );
+double      pilot_outfitSpeed( const Pilot *p, const Outfit *o );
+double      pilot_outfitRange( const Pilot *p, const Outfit *o );
 
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot *pilot, const Outfit *outfit,
@@ -40,13 +42,12 @@ int pilot_rmOutfitIntrinsic( Pilot *pilot, const Outfit *outfit );
 int pilot_hasIntrinsic( const Pilot *pilot, const Outfit *outfit );
 
 /* Ammo. */
-int    pilot_addAmmo( Pilot *pilot, PilotOutfitSlot *s, int quantity );
-int    pilot_rmAmmo( Pilot *pilot, PilotOutfitSlot *s, int quantity );
-int    pilot_countAmmo( const Pilot *pilot );
-int    pilot_maxAmmo( const Pilot *pilot );
-int    pilot_maxAmmoO( const Pilot *p, const Outfit *o );
-void   pilot_fillAmmo( Pilot *pilot );
-double pilot_outfitRange( const Pilot *p, const Outfit *o );
+int  pilot_addAmmo( Pilot *pilot, PilotOutfitSlot *s, int quantity );
+int  pilot_rmAmmo( Pilot *pilot, PilotOutfitSlot *s, int quantity );
+int  pilot_countAmmo( const Pilot *pilot );
+int  pilot_maxAmmo( const Pilot *pilot );
+int  pilot_maxAmmoO( const Pilot *p, const Outfit *o );
+void pilot_fillAmmo( Pilot *pilot );
 
 /* Checks. */
 int         pilot_hasOutfitLimit( const Pilot *p, const char *limit );

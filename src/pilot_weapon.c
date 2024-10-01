@@ -966,6 +966,8 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
                  VY( parent->solid.vel ) - vel->y );
 
    speed = outfit_speed( o );
+   if ( outfit_isLauncher( o ) )
+      speed *= parent->stats.launch_speed;
 
    /* Get the vector : shooter -> target */
    vec2_cset( &relative_location, pos->x - VX( parent->solid.pos ),
