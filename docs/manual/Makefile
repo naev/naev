@@ -17,15 +17,15 @@ Naev.png: ../../artwork/gfx/Naev.webp
 
 llama: images/llama.png images/llamaengine.png images/llamacomm.png
 
-images/llama.png: ../../artwork/gfx/ship/llama/llama.webp
+images/llama.png: ./legacy_images/llama/llama.webp
 	test -d images || mkdir images
 	gm convert "$<" "$@"
 
-images/llamaengine.png: ../../artwork/gfx/ship/llama/llama_engine.webp
+images/llamaengine.png: ./legacy_images/llama/llama_engine.webp
 	test -d images || mkdir images
 	gm convert "$<" "$@"
 
-images/llamacomm.png: ../../artwork/gfx/ship/llama/llama_comm.webp
+images/llamacomm.png: ./legacy_images/llama/llama_comm.webp
 	test -d images || mkdir images
 	gm convert "$<" "$@"
 
