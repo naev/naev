@@ -62,6 +62,11 @@ var.shark = _v{
    { w=1,    s=ship.get("Shark") },
    { w=0.05, s=ship.get("Shark ΨIIIa") },
 }
+-- Fighter
+var.empire_lancelot = _v{
+   { w=1,    s=ship.get("Empire Lancelot") },
+   { w=0.05, s=ship.get("Empire Lancelot Golden Efreeti") },
+}
 -- Bomber
 var.ancestor = _v{
    { w=1,    s=ship.get("Ancestor") },

@@ -14,6 +14,7 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/empire/empire_admonisher.xml',
    root / 'dat/ships/empire/empire_hawking.xml',
    root / 'dat/ships/empire/empire_lancelot.xml',
+   root / 'dat/ships/empire/empire_lancelot_golden_efreeti.xml',
    root / 'dat/ships/empire/empire_pacifier.xml',
    root / 'dat/ships/empire/empire_peacemaker.xml',
    root / 'dat/ships/empire/empire_rainmaker.xml',
