@@ -88,6 +88,7 @@
          * Global weapon range, damage, firerate and energy usage
          * Range ship stat for all specific weapon types
          * Turn, speed, and accel for launchers
+         * Shield down time modifier
    * Fixes
       * PSO and Mizar nebulas have trails again
       * Removed fancy background mode
