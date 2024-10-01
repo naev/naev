@@ -71,7 +71,7 @@ def wrapper(*args):
 
     command = [sys.executable, os.path.join(source_root, "meson.py"), "devenv", "-C", build_root] + command
 
-    os.execvp(command[0], command)
+    os.spawnv(command[0], command)
 
 subprocess.run([sys.executable, os.path.join(source_root, "meson.py"), "compile", "-C", build_root, "naev-gmo"])
 os.makedirs(os.path.join(build_root, "dat/gettext"), exist_ok=True)
