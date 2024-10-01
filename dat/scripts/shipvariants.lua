@@ -57,6 +57,11 @@ var.rhino = _v{
 var.schroedinger = _v{
    { w=1,    s=ship.get("Schroedinger") },
 }
+-- Interceptor
+var.shark = _v{
+   { w=1,    s=ship.get("Shark") },
+   { w=0.05, s=ship.get("Shark ΨIIIa") },
+}
 -- Bomber
 var.ancestor = _v{
    { w=1,    s=ship.get("Ancestor") },

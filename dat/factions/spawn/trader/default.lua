@@ -3,7 +3,6 @@ local var = require "shipvariants"
 
 local szebra      = ship.get("Zebra")
 local srhino      = ship.get("Rhino")
-local sshark      = ship.get("Shark")
 local splowshare  = ship.get("Plowshare")
 
 local tradelane
@@ -27,7 +26,7 @@ local function add_rhino( pilots )
    scom.addPilot( pilots, srhino, {name=_("Trader Rhino")})
 end
 local function add_shark( pilots )
-   scom.addPilot( pilots, sshark, {name=_("Trader Shark"), ai="mercenary"})
+   scom.addPilot( pilots, var.shark, {name=_("Trader Shark"), ai="mercenary"})
 end
 local function add_plowshare( pilots )
    scom.addPilot( pilots, splowshare, {name=_("Trader Plowshare")})
