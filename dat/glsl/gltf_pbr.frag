@@ -575,6 +575,7 @@ void main (void)
 #endif /* HAS_AO */
 
    /* Variance Shadow Mapping. */
+#if GLSL_VERSION < 460
    float f_shadow[MAX_LIGHTS];
 #if MAX_LIGHTS > 0
    if (u_nlights>0)
@@ -604,6 +605,7 @@ void main (void)
    if (u_nlights>6)
       f_shadow[6] = shadow_map( shadowmap_tex[6], shadow[6] );
 #endif /* MAX_LIGHTS > 6 */
+#endif
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, -1.0) ); /* Fixed view vector. */
@@ -633,7 +635,14 @@ void main (void)
       /* Habemus light. */
       /* TODO this check will always be true if we do the NoV trick above. */
       //if (NoL > 0.0 || NoV > 0.0) {
+
+      /* Long story short, GLSL 4.60 only supports  dynamically uniform expressions.
+       * https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)#Dynamically_uniform_expression */
+#if GLSL_VERSION < 460
          vec3 NoLintensity = NoL * intensity * f_shadow[i];
+#else /* GLSL_VERSION < 460 */
+         vec3 NoLintensity = NoL * intensity * shadow_map( shadowmap_tex[i], shadow[i] );
+#endif /* GLSL_VERSION < 460 */
 
 #if 0
          //f_diffuse  += intensity * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
