@@ -35,6 +35,7 @@
   <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
   <structure size="medium" />
+  <structure size="medium" />
   <structure size="small" />
   <structure size="small" />
  </slots>
