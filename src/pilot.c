@@ -2859,7 +2859,7 @@ void pilot_sample_trails( Pilot *p, int none )
    /* Compute the engine offset and decide where to draw the trail. */
    for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
       const ShipTrailEmitter *trail = &p->ship->trail_emitters[g];
-      double                  dx, dy, dz, ax, ay, scale;
+      double                  dx, dy, dz, amod, ax, ay, scale;
 
       if ( !pilot_trail_generated( p, g ) )
          continue;
@@ -2904,8 +2904,9 @@ void pilot_sample_trails( Pilot *p, int none )
       dy *= scale;
       dz *= scale;
 
-      ax = p->solid.accel * -dircos;
-      ay = p->solid.accel * -dirsin;
+      amod = p->solid.accel * p->engine_glow;
+      ax   = amod * -dircos;
+      ay   = amod * -dirsin;
 
       /* Sample. */
       spfx_trail_sample( p->trail[i++], p->solid.pos.x + dx,
