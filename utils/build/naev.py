@@ -71,16 +71,7 @@ def wrapper(*args):
 
     command = [sys.executable, os.path.join(source_root, "meson.py"), "devenv", "-C", build_root] + command
 
-    try:
-        # Run the command
-        debugger_process = subprocess.Popen(command)
-        # Wait for the process to complete
-        debugger_process.wait()
-    except KeyboardInterrupt:
-        print("Interrupted by user (Ctrl+C)")
-        # Send interrupt signal to debugger process
-        debugger_process.send_signal(signal.SIGINT)
-        debugger_process.wait()
+    os.execvp(command[0], command)
 
 subprocess.run([sys.executable, os.path.join(source_root, "meson.py"), "compile", "-C", build_root, "naev-gmo"])
 os.makedirs(os.path.join(build_root, "dat/gettext"), exist_ok=True)
