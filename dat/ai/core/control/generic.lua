@@ -327,9 +327,9 @@ function handle_messages( p, si, dopush )
       local f = message_handler_funcs[ msgtype ]
       if f then
          taskchange = f( p, si, dopush, sender, data ) and taskchange
-      else
+      elseif sender ~= nil then
          warn(fmt.f(_("Unknown message '{msgtype}' to pilot '{receiver}' from pilot '{sender}'"),
-            {msgtype=msgtype, receiver=p, sender=(sender or "nil")}))
+            {msgtype=msgtype, receiver=p, sender=sender}))
       end
    end
    return taskchange
