@@ -327,6 +327,9 @@ function handle_messages( p, si, dopush )
       local f = message_handler_funcs[ msgtype ]
       if f then
          taskchange = f( p, si, dopush, sender, data ) and taskchange
+      -- Sender can be nil if the pilot died after sending th emessage, or with
+      -- cases like the pulse scanner outfit that just creates a signal at a
+      -- location
       elseif sender ~= nil then
          warn(fmt.f(_("Unknown message '{msgtype}' to pilot '{receiver}' from pilot '{sender}'"),
             {msgtype=msgtype, receiver=p, sender=sender}))
