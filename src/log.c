@@ -342,7 +342,11 @@ int log_warn( const char *file, size_t line, const char *func, const char *fmt,
    warn_last_msg = buf;
 
 #ifdef DEBUG_PARANOID
+#if __WIN32__
+   __debugbreak();
+#else
    raise( SIGINT );
+#endif /* __WIN32__ */
 #endif /* DEBUG_PARANOID */
    return n;
 }
