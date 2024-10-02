@@ -103,6 +103,7 @@
       * shadowvigil: claim entire route
       * sh01_corvette: should be completable on easy difficulties now
       * patrol: fixed escorts and fighters becoming hostile if hostile to the mission giving faction
+      * Fixed debugging paranoid builds under Windows
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons
