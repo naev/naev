@@ -233,15 +233,19 @@ static int poL_state( lua_State *L )
          L, _( "'pilotoutfit.%s' only works with modifier outfits!" ),
          "state" );
 
-   if ( state == NULL || strcmp( state, "off" ) == 0 )
+   if ( state == NULL || strcmp( state, "off" ) == 0 ) {
       po->state = PILOT_OUTFIT_OFF;
-   else if ( strcmp( state, "warmup" ) == 0 )
+      po->flags &= ~PILOTOUTFIT_ISON_LUA;
+   } else if ( strcmp( state, "warmup" ) == 0 ) {
       po->state = PILOT_OUTFIT_WARMUP;
-   else if ( strcmp( state, "on" ) == 0 )
+      po->flags &= ~PILOTOUTFIT_ISON_LUA;
+   } else if ( strcmp( state, "on" ) == 0 ) {
       po->state = PILOT_OUTFIT_ON;
-   else if ( strcmp( state, "cooldown" ) == 0 )
+      po->flags |= PILOTOUTFIT_ISON_LUA; /* Gets disabled if ontoggle is set. */
+   } else if ( strcmp( state, "cooldown" ) == 0 ) {
       po->state = PILOT_OUTFIT_COOLDOWN;
-   else
+      po->flags &= ~PILOTOUTFIT_ISON_LUA;
+   } else
       return NLUA_ERROR( L, _( "Unknown PilotOutfit state '%s'!" ), state );
 
    /* Mark as modified if state changed. */
