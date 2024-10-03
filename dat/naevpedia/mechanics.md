@@ -32,6 +32,9 @@ Below is an overview of the mechanics covered in the Holo-Archives.
 <% if naev.player.fleetCapacity() > 0 then %>
 * [Fleets](mechanics/playerfleet)
 <% end %>
+<% if require("common.soromid").playerHasBioship() then %>
+* [Bioships](mechanics/bioships)
+<% end %>
 <% if require("common.sirius").playerIsPsychic() then %>
 * [Psychic Powers and Flow](mechanics/flow)
 <% end %>

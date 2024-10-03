@@ -16,7 +16,7 @@ function srm.playerHasBioship()
       return true
    end
    for k,s in ipairs(player.ships()) do
-      if isbioship( s ) then
+      if isbioship( s.ship ) then
          return true
       end
    end
