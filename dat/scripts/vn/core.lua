@@ -1293,7 +1293,10 @@ function vn.Character.new( who, params )
    local pimage = params.image
    if pimage ~= nil then
       local img
-      if type(pimage)=='string' then
+      local timg = type(pimage)
+      if timg=='function' then
+         img = pimage()
+      elseif timg=='string' then
          local searchpath = {
             "",
             "gfx/vn/characters/",
