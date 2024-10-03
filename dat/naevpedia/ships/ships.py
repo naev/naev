@@ -28,7 +28,7 @@ tags_recursive( root, d, '' )
 
 outstr = f"""---
 title: "{d['name']}"
-cond: "return ship.get([[{d['name']}]]):known()"
+cond: "return ship.get([[{d['name']}]]):known() and not ship.get([[{d['name']}]]):tags().nonaevpedia"
 ---
 <% s = ship.get([[{d['name']}]]) %>
 """
