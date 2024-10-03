@@ -191,7 +191,7 @@ function autonav_system ()
    local jmp = pp:navJump()
    local pos = jmp:pos()
    local d = jmp:jumpDist( pp )
-   target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
+   target_pos = pos + (pp:pos()-pos):normalize( math.max(0.75*d, d-50) )
 
    if uselanes_jump then
       lanes.clearCache( pp )
