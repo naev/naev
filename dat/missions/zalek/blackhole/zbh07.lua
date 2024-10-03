@@ -139,6 +139,9 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
          end
       end
    end )
+   -- Add two pointless labels to quiet runtime warnings
+   vn.label("come")
+   vn.label("wait")
 
    vn.label("idle")
    icarus(_("Icarus keeps on lazily floating at a distance without a care in the world."))
