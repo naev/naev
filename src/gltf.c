@@ -263,7 +263,11 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    }
 
    char filepath[PATH_MAX];
+#ifdef HAVE_NAEV
    snprintf( filepath, sizeof( filepath ), "%s/%s", obj->path, path );
+#else  /* HAVE_NAEV */
+   snprintf( filepath, sizeof( filepath ), "%s", path );
+#endif /* HAVE_NAEV */
    nfile_simplifyPath( filepath );
 
    /* Check to see if it already exists. */
@@ -281,11 +285,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
 #endif /* HAVE_NAEV */
 
    /* Load the image data as a surface. */
-#ifdef HAVE_NAEV
    rw = PHYSFSRWOPS_openRead( filepath );
-#else  /* HAVE_NAEV */
-   rw = SDL_RWFromFile( filepath, "r" );
-#endif /* HAVE_NAEV */
    if ( rw == NULL ) {
       WARN( _( "Unable to open '%s': %s" ), filepath, SDL_GetError() );
       *otex = *def;

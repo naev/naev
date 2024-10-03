@@ -92,7 +92,7 @@ int main( int argc, char *argv[] )
    (void) argv;
    GLuint VaoId;
    int shadowmap_sel = 0;
-   char *path;
+   char *path, **search_path;
    SDL_GLContext *context;
 
    if (argc < 2) {
@@ -108,6 +108,12 @@ int main( int argc, char *argv[] )
    path = strdup(argv[0]);
    PHYSFS_mount( dirname(path), "/", 1 );
    free(path);
+
+   search_path = PHYSFS_getSearchPath();
+   LOG( "%s", _( "Read locations, searched in order:" ) );
+   for ( char **p = search_path; *p != NULL; p++ )
+      LOG( "    %s", *p );
+   PHYSFS_freeList( search_path );
 
    SDL_Init( SDL_INIT_VIDEO );
    SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 1);
