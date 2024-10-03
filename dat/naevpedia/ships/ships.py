@@ -60,7 +60,7 @@ end
 
 ## Properties
 
-* **[Class](mechanics/class)**:   <%= _(s:classDisplay()) %>
+* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>
 * **Fabricator**:   <%= _(s:fabricator()) %>
 * **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>
 <% if naev.player.fleetCapacity() > 0 then %>
