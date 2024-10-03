@@ -4,15 +4,14 @@
 
 /** @cond */
 #include <limits.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "naev.h"
+#include <string.h>
 /** @endcond */
 
 #include "array.h"
 
-#include "nstring.h"
 #include "ntracing.h"
 
 void *_array_create_helper( size_t e_size, size_t capacity )
