@@ -721,6 +721,7 @@ static int shipL_getSize( lua_State *L )
  * @usage gfx = s:gfxComm()
  *
  *    @luatparam Ship s Ship to get comm graphics of.
+ *    @luatparam[opt=512] number resolution Resolution to render the image at.
  *    @luatreturn Tex The comm graphics of the ship.
  * @luafunc gfxComm
  */
