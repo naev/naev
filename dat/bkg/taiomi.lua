@@ -43,24 +43,35 @@ function background ()
    sImage._type = "ShipImage"
    function sImage.newImage( s )
       local t = sImage.new()
-      local c = s:render( rnd.angle(), 0, rnd.angle() )
       t.ship = s
-      t.tex = c:getTex()
+      t.t = {}
+      for i=1,16 do
+         local c = s:render( rnd.angle(), 0, rnd.angle() )
+         table.insert( t.t, c:getTex() )
+      end
+      t.tex = t.t[1]
       t.w, t.h = t.tex:dim()
       t.s = 1
       return t
+   end
+   function sImage:draw( id, ... )
+      self.tex = self.t[id]
+      lg.Image.draw( self, ... )
+   end
+   function sImage:id()
+      return rnd.rnd( 1, #self.t )
    end
 
    -- Load graphics
    local images_raw = {
       -- Debris
-      { n = 3,i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
-      { n = 3,i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
-      { n = 3,i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
-      { n = 3,i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
-      { n = 3,i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
-      { n = 3,i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
-      { n = 3,i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
       { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster1.webp' ), s = 6, debris = true },
       { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster2.webp' ), s = 6, debris = true },
       -- Neutral
@@ -74,7 +85,7 @@ function background ()
       { n = 1, i = sImage.newImage( ship.get("Quicksilver") ), s = 1 },
       { n = 1, i = sImage.newImage( ship.get("Rhino") ), s = 1 },
       -- Pirate
-      { n = 3,i = sImage.newImage( ship.get('Hyena' ) ), s = 1 },
+      { n = 3, i = sImage.newImage( ship.get('Hyena' ) ), s = 1 },
       { n = 2, i = sImage.newImage( ship.get('Pirate Shark' ) ), s = 1 },
       { n = 2, i = sImage.newImage( ship.get('Pirate Vendetta' ) ), s = 1 },
       { n = 1, i = sImage.newImage( ship.get('Pirate Ancestor' ) ), s = 1 },
@@ -104,18 +115,23 @@ function background ()
    end
 
    local function parts_create( nodebris )
-      local part = {}
-      part.x = tw*rnd.rnd() - buffer
-      part.y = th*rnd.rnd() - buffer
+      local part = {
+         x = tw*rnd.rnd() - buffer,
+         y = th*rnd.rnd() - buffer,
+      }
       if nodebris then
          part.i = images_nodebris[ rnd.rnd( 1, #images_nodebris ) ]
       else
          part.i = images[ rnd.rnd( 1, #images ) ]
       end
       local img = part.i
-      local sx = rnd.rnd(1,img.s)-1
-      local sy = rnd.rnd(1,img.s)-1
-      part.q = lg.newQuad( sx*img.w, sy*img.h, img.w, img.h, img.i )
+      if img.i._type=="ShipImage" then
+         part.id = img.i:id()
+      else
+         local sx = rnd.rnd(1,img.s)-1
+         local sy = rnd.rnd(1,img.s)-1
+         part.q = lg.newQuad( sx*img.w, sy*img.h, img.w, img.h, img.i )
+      end
       part.w = img.w
       part.h = img.h
       return part
@@ -191,7 +207,11 @@ function background ()
          local y = 0.7 * naev.rnd.threesigma()
          p.x = w*(x+3) / 6
          p.y = h*(y+3) / 6
-         lg.draw( p.i.i, p.q, p.x, p.y, 0, p.s )
+         if p.q then
+            p.i.i:draw( p.q,  p.x, p.y, 0, p.s )
+         else
+            p.i.i:draw( p.id, p.x, p.y, 0, p.s )
+         end
       end
       lg.setCanvas(oldcanvas)
       naev.bkg.image( cvs.t.tex, 0, 0, move, scale, angle )
@@ -266,7 +286,11 @@ renderbg = starfield.render
 
 local function draw_part( p, s, z )
    if p.r then
-      lg.draw( p.i.i, p.q, p.rx, p.ry, 0, p.s * s / z )
+      if p.q then
+         p.i.i:draw( p.q,  p.x, p.y, 0, p.s * s / z )
+      else
+         p.i.i:draw( p.id, p.x, p.y, 0, p.s * s / z )
+      end
    end
 end
 function renderfg ()
