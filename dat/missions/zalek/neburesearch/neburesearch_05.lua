@@ -4,7 +4,7 @@
  <unique />
  <priority>4</priority>
  <done>Shielding Prototype Funding</done>
- <chance>10</chance>
+ <chance>30</chance>
  <location>Bar</location>
  <cond>
    if system.get("Regas"):jumpDist() &gt; 3 then
