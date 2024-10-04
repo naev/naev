@@ -8,6 +8,7 @@
 local starfield = require "bkg.lib.starfield"
 local lg = require 'love.graphics'
 local taiomi = require "common.taiomi"
+local class = require "class"
 
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
@@ -37,16 +38,29 @@ function background ()
    th = zmax*nh+2*buffer
    local nparts = math.floor( tw * th / math.pow(density,2) + 0.5 )
 
+   -- New class that randomly samples from ship images
+   local sImage = class.inheritsFrom( lg.Image )
+   sImage._type = "ShipImage"
+   function sImage.newImage( s )
+      local t = sImage.new()
+      local c = s:render( rnd.angle(), 0, rnd.angle() )
+      t.ship = s
+      t.tex = c:getTex()
+      t.w, t.h = t.tex:dim()
+      t.s = 1
+      return t
+   end
+
    -- Load graphics
    local images_raw = {
       -- Debris
-      { n = 3, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
+      { n = 3,i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
+      { n = 3,i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
+      { n = 3,i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
+      { n = 3,i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
+      { n = 3,i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
+      { n = 3,i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
+      { n = 3,i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
       { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster1.webp' ), s = 6, debris = true },
       { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster2.webp' ), s = 6, debris = true },
       -- Neutral
@@ -57,20 +71,20 @@ function background ()
       { n = 1, i = lg.newImage( 'gfx/spfx/derelict_phalanx1.webp' ), s = 6 },
       { n = 1, i = lg.newImage( 'gfx/spfx/derelict_shark1.webp' ), s = 6 },
       { n = 1, i = lg.newImage( 'gfx/spfx/derelict_vendetta1.webp' ), s = 6 },
-      { i = lg.newImage( 'gfx/ship/quicksilver/quicksilver.webp' ), s = 10 },
-      { i = lg.newImage( 'gfx/ship/rhino/rhino.webp' ), s = 10 },
+      { n = 1, i = sImage.newImage( ship.get("Quicksilver") ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get("Rhino") ), s = 1 },
       -- Pirate
-      { n = 3, i = lg.newImage( 'gfx/ship/hyena/hyena.webp' ), s = 8 },
-      { n = 2, i = lg.newImage( 'gfx/ship/shark/shark_pirate.webp' ), s = 8 },
-      { n = 2, i = lg.newImage( 'gfx/ship/vendetta/vendetta_pirate.webp' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/ancestor/ancestor_pirate.webp' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/phalanx/phalanx_pirate.webp' ), s = 10 },
-      { i = lg.newImage( 'gfx/ship/rhino/rhino_pirate.webp' ), s = 10 },
+      { n = 3,i = sImage.newImage( ship.get('Hyena' ) ), s = 1 },
+      { n = 2, i = sImage.newImage( ship.get('Pirate Shark' ) ), s = 1 },
+      { n = 2, i = sImage.newImage( ship.get('Pirate Vendetta' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Pirate Ancestor' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Pirate Phalanx' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Pirate Rhino' ) ), s = 1 },
       -- Empire
-      { n = 2, i = lg.newImage( 'gfx/ship/lancelot/lancelot_empire.webp' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/shark/shark_empire.webp' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/admonisher/admonisher_empire.webp' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/pacifier/pacifier_empire.webp' ), s = 10 },
+      { n = 2, i = sImage.newImage( ship.get('Empire Lancelot' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Empire Shark' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Empire Admonisher' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Empire Pacifier' ) ), s = 1 },
    }
    local images = {}
    for k,v in ipairs(images_raw) do
