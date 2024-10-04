@@ -24,6 +24,7 @@ local vn = require "vn"
 local fmt = require "format"
 local sokoban = require "minigames.sokoban"
 local zbh = require "common.zalek_blackhole"
+local lg = require "love.graphics"
 
 local retpnt, retsys = spob.getS("Research Post Sigma-13")
 local targetsys = system.get("Anubis Black Hole")
@@ -251,7 +252,7 @@ function board_drone ()
 
    local z = zbh.vn_zach()
    local d = vn.newCharacter( pexp:name(), {
-      image = "gfx/ship/zalek/zalek_drone_light_comm.webp",
+      image = lg.newImage( pexp:ship():gfxComm(1024) ),
    } )
    vn.transition( zbh.zach.transition )
    vn.na(_([[You hook up to the damage drone and are able to access the control panel. Since Zach seems to be distracted, it seems like you have to access it yourself.]]))
