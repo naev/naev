@@ -371,10 +371,19 @@ int main (void) { return 0; }''')
       console: true,
       command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', cp, 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
    naev_rlib_lib = library('libnaev_rlib', naev_rlib)
+   # We create naev.rs with naev_rlib as a dependency to force rlib to be
+   # compiled first, otherwise meson tries to compile both naev.rs and
+   # naev_rlib in parallel and it fails.
+   naev_rs = custom_target( 'naevrs',
+	   build_by_default: true,
+      output: 'naev.rs',
+      input: meson.project_source_root() / 'utils' / 'build' / 'naev.rs',
+      depends: [naev_rlib],
+      command: [ cp, '@INPUT@', '@OUTPUT@' ] )
 
    naev_bin = executable(
       'naev',
-      sources: files('naev.rs'),
+      sources: naev_rs,
       rust_args: ['--extern', 'naev=libnaev.rlib'],
       dependencies: naev_deps,
       link_with: [naev_rlib_lib],
