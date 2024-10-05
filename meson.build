@@ -374,12 +374,14 @@ int main (void) { return 0; }''')
       output: 'libnaev.rlib',
       console: true,
       command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', 'cp', 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
+   naev_rlib_dep = declare_dependency( sources: naev_rlib, link_args: ['--extern', 'naev=libnaev.rlib'] )
 
    naev_bin = executable(
       'naev',
-      files('src/naev.rs'),
+      files('naev.rs'),
       rust_args: ['--extern', 'naev=libnaev.rlib'],
-      dependencies: naev_deps,
+      #dependencies: naev_rlib_dep,
+      #dependencies: naev_deps+naev_rlib_dep,
       export_dynamic: get_option('debug'),
       install: false)
 
