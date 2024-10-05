@@ -369,7 +369,7 @@ int main (void) { return 0; }''')
       output: 'libnaev.rlib',
       console: true,
       command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', 'cp', 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
-   naev_rlib_dep = library('libnaev', naev_rlib)
+   naev_rlib_dep = library('libnaev_rlib', naev_rlib)
 
    naev_bin = executable(
       'naev',
