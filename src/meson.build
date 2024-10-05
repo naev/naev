@@ -1,6 +1,9 @@
 ####
 # Source lists
 ####
+source_rust = files(
+   'naev.rs',
+)
 source = files(
    'array.c',
    'asteroid.c',
