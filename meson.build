@@ -379,8 +379,7 @@ int main (void) { return 0; }''')
    endif
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
    naev_rlib = custom_target( 'cargo-build',
- 	   build_always_stale: true,
-      depend_files: source_rust,
+      depend_files: source_rust + cargo_toml,
       output: 'libnaev.rlib',
       console: true,
       command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', cp, 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
