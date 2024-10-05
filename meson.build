@@ -360,6 +360,8 @@ int main (void) { return 0; }''')
       output: 'naevc.rs',
       include_directories: [include_dirs, '.'],
       dependencies: naev_deps,
+      args: ['--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]',
+             '--blocklist-file', '/usr/include/math.h'],
    )
    copydir = find_program('utils/build/copydir.py')
    naevc_crate = custom_target(
@@ -399,7 +401,7 @@ int main (void) { return 0; }''')
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
    cargo_options = [ '--manifest-path', cargo_toml ]
-   if get_option('debug')
+   if not get_option('debug')
       cargo_options += ['--release']
    endif
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]

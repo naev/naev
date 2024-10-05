@@ -21,7 +21,9 @@ pub fn naev() {
         .collect::<Vec<_>>();
     argv.shrink_to_fit();
 
-    println!("SDL_log(16) is {}", naevc::SDL_log(16) );
+    println!("Starting Rust!");
+    println!("SDL_log(16) is {}", unsafe{naevc::SDL_log(16.0)} );
+    println!("Rust done, starting C main loop!");
 
     unsafe{
         naev_main( argv.len() as c_int, argv.as_mut_ptr() );
