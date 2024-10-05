@@ -1,9 +1,8 @@
+use std::os::raw::{c_int, c_char};
+
 #[link(name = "naev")]
 extern "C" {
-    pub fn naev_main(
-        argc: ::std::os::raw::c_int,
-        argv: *mut *mut ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+    pub fn naev_main( argc: c_int, argv: *mut *mut c_char ) -> c_int;
 }
 
 use std::env;
@@ -23,6 +22,6 @@ pub fn naev() {
     argv.shrink_to_fit();
 
     unsafe{
-        naev_main( argv.len() as ::std::os::raw::c_int, argv.as_mut_ptr() );
+        naev_main( argv.len() as c_int, argv.as_mut_ptr() );
     }
 }
