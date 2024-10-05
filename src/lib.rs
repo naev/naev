@@ -9,8 +9,10 @@ extern "C" {
 use std::env;
 use std::ffi::CString;
 
+mod naev;
+
 #[allow(dead_code)]
-fn naev() {
+pub fn naev() {
     let args: Vec<String> = env::args().collect();
     let mut cargs = vec![];
     for a in args {
