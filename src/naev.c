@@ -165,7 +165,7 @@ int naev_isQuit( void )
  *    @param[in] argv Array of argc arguments.
  *    @return EXIT_SUCCESS on success.
  */
-int main( int argc, char **argv )
+int naev_main( int argc, char **argv )
 {
    char   conf_file_path[PATH_MAX], **search_path;
    Uint32 starttime;

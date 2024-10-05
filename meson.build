@@ -1,4 +1,4 @@
-project('naev', 'c',
+project('naev', ['c','rust'],
    version : '0.12.0-alpha.3',
    default_options : [
       'optimization=g',
@@ -28,7 +28,6 @@ python = python_module.find_installation('python3', required: true)
 pyyaml = python_module.find_installation('python3', modules: ['yaml'], required: true)
 mutagen = python_module.find_installation('python3', modules: ['mutagen'], required: false)
 
-cc = meson.get_compiler('c')
 subdir('utils')
 
 # Version Generation
@@ -345,13 +344,47 @@ int main (void) { return 0; }''')
    naev_source += colours_source
    naevlua_source += colours_source
 
-   naev_bin = executable(
+   #foreach d: naev_deps
+   #  message(d.link_args)
+   #endforeach
+   #message( sdl.get_variable('linker_args') )
+
+   naev_lib = static_library(
       'naev',
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
+      #export_dynamic: get_option('debug'),
+      install: false)
+
+   msrv = '1.77.2'
+   if get_option('debug')
+      rust_target = 'debug'
+   else
+      rust_target = 'release'
+   endif
+   cargo = find_program('cargo', version:'>= @0@'.format(msrv))
+   cargo_toml = meson.project_source_root() / 'Cargo.toml'
+   cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
+   cargo_options = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
+   cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
+   naev_rlib = custom_target( 'cargo-build',
+	   build_by_default: true,
+ 	   build_always_stale: true,
+      output: 'libnaev.rlib',
+      console: true,
+      #install: true,
+      #install_dir: bindir,
+      #depends: naev_deps,
+      command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', 'cp', 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
+
+   naev_bin = executable(
+      'naev',
+      files('src/naev.rs'),
+      #dependencies: naev_deps,
       export_dynamic: get_option('debug'),
-      install: true)
+      install: false)
+
    naevlua_bin = executable(
       'naevlua',
       naevlua_source,
