@@ -3,6 +3,7 @@
 *.a
 *.pyc
 .hgignore
+Cargo.lock
 appImageBuild/
 build/*
 bintray.json

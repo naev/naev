@@ -66,7 +66,7 @@ if buildExec.disabled() == false
    # The next three are sometimes expected by GNU tools and headers, sometimes for mere existence. Provide stable values.
    config_data.set_quoted('PACKAGE', meson.project_name())
    config_data.set_quoted('PACKAGE_NAME', meson.project_name())
-   config_data.set_quoted('PACKAGE_VERSION', '0')
+   config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
    config_data.set_quoted('PKGDATADIR', get_option('prefix') / ndata_path)
    config_data.set_quoted('HOST', host_machine.system() + '-' + host_machine.cpu_family())
    # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
@@ -360,9 +360,13 @@ int main (void) { return 0; }''')
    endif
    cp = find_program('cp')
    cargo = find_program('cargo', version:'>= @0@'.format(msrv))
-   cargo_toml = meson.project_source_root() / 'Cargo.toml'
+   cargo_data = configuration_data()
+   cargo_data.set_quoted('NAME', meson.project_name())
+   cargo_data.set_quoted('VERSION', meson.project_version())
+   cargo_data.set_quoted('PATH', meson.project_source_root() / 'src' / 'naev.rs')
+   cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
-   cargo_options = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
+   cargo_options = [ '--manifest-path', cargo_toml ]
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
    naev_rlib = custom_target( 'cargo-build',
  	   build_always_stale: true,
