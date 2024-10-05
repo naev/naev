@@ -365,7 +365,6 @@ int main (void) { return 0; }''')
    cargo_options = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
    naev_rlib = custom_target( 'cargo-build',
-	   build_by_default: true,
  	   build_always_stale: true,
       output: 'libnaev.rlib',
       console: true,
@@ -375,7 +374,6 @@ int main (void) { return 0; }''')
    # compiled first, otherwise meson tries to compile both naev.rs and
    # naev_rlib in parallel and it fails.
    naev_rs = custom_target( 'naevrs',
-	   build_by_default: true,
       output: 'naev.rs',
       input: meson.project_source_root() / 'utils' / 'build' / 'naev.rs',
       depends: [naev_rlib],
