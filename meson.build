@@ -345,14 +345,20 @@ int main (void) { return 0; }''')
    naev_source += colours_source
    naevlua_source += colours_source
 
+   # Compiling Naev
+   # 1. First, compile all the C code as a static library with meson.
+   # 2. Next, compile all the main Rust code as a static library with Cargo.
+   # 3. Finally, use meson to link it all together in Rust.
+
+   # First create the static library with C using meson
    naev_lib = static_library(
       'naev',
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
-      #export_dynamic: get_option('debug'),
       install: false)
 
+   # Next handle setting up and passing stuff to Cargo
    msrv = '1.77.2'
    if get_option('debug')
       rust_target = 'debug'
@@ -387,23 +393,27 @@ int main (void) { return 0; }''')
       depends: [naev_rlib],
       command: [ cp, '@INPUT@', '@OUTPUT@' ] )
 
+   # Finally, build the executable with Rust again, but using meson to link it all together
    naev_bin = executable(
       'naev',
       sources: naev_rs,
+      # Have to make sure Rust uses the dependencies from Cargo
       rust_args: ['--extern', 'naev=libnaev.rlib', '-L', 'src' / rust_target / 'deps'],
+      # Also have to pull in the C dependencies
       dependencies: naev_deps,
       link_with: [naev_rlib_lib],
       export_dynamic: get_option('debug'),
       install: true)
 
-   naevlua_bin = executable(
-      'naevlua',
-      naevlua_source,
-      include_directories: include_dirs,
-      dependencies: naev_deps,
-      export_dynamic: get_option('debug'),
-      override_options: ['-DNOMAIN=1'],
-      install: false)
+   # Naevlua is unused and unsupported with rust for now.
+   #naevlua_bin = executable(
+   #   'naevlua',
+   #   naevlua_source,
+   #   include_directories: include_dirs,
+   #   dependencies: naev_deps,
+   #   export_dynamic: get_option('debug'),
+   #   override_options: ['-DNOMAIN=1'],
+   #   install: false)
 
    gen_authors = find_program(join_paths('utils','build','gen_authors.py'))
    authors = custom_target(
