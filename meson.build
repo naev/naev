@@ -367,6 +367,9 @@ int main (void) { return 0; }''')
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
    cargo_options = [ '--manifest-path', cargo_toml ]
+   if get_option('debug')
+      cargo_options += ['--release']
+   endif
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
    naev_rlib = custom_target( 'cargo-build',
  	   build_always_stale: true,
