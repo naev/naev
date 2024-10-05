@@ -5,6 +5,7 @@ project('naev', ['c','rust'],
       'c_std=gnu11',
       'werror=false',
       'warning_level=3',
+      'rust_std=2021',
    ],
    meson_version: '>=1.4.0')
 
