@@ -358,6 +358,7 @@ int main (void) { return 0; }''')
    else
       rust_target = 'release'
    endif
+   cp = find_program('cp')
    cargo = find_program('cargo', version:'>= @0@'.format(msrv))
    cargo_toml = meson.project_source_root() / 'Cargo.toml'
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
@@ -368,15 +369,15 @@ int main (void) { return 0; }''')
  	   build_always_stale: true,
       output: 'libnaev.rlib',
       console: true,
-      command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', 'cp', 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
-   naev_rlib_dep = library('libnaev_rlib', naev_rlib)
+      command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', cp, 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
+   naev_rlib_lib = library('libnaev_rlib', naev_rlib)
 
    naev_bin = executable(
       'naev',
       sources: files('naev.rs'),
       rust_args: ['--extern', 'naev=libnaev.rlib'],
       dependencies: naev_deps,
-      link_with: [naev_rlib_dep],
+      link_with: [naev_rlib_lib],
       export_dynamic: get_option('debug'),
       install: false)
 
