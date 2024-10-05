@@ -344,11 +344,6 @@ int main (void) { return 0; }''')
    naev_source += colours_source
    naevlua_source += colours_source
 
-   #foreach d: naev_deps
-   #  message(d.link_args)
-   #endforeach
-   #message( sdl.get_variable('linker_args') )
-
    naev_lib = static_library(
       'naev',
       naev_source,
@@ -374,14 +369,14 @@ int main (void) { return 0; }''')
       output: 'libnaev.rlib',
       console: true,
       command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', 'cp', 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
-   naev_rlib_dep = declare_dependency( sources: naev_rlib, link_args: ['--extern', 'naev=libnaev.rlib'] )
+   naev_rlib_dep = library('libnaev', naev_rlib)
 
    naev_bin = executable(
       'naev',
-      files('naev.rs'),
+      sources: files('naev.rs'),
       rust_args: ['--extern', 'naev=libnaev.rlib'],
-      #dependencies: naev_rlib_dep,
-      #dependencies: naev_deps+naev_rlib_dep,
+      dependencies: naev_deps,
+      link_with: [naev_rlib_dep],
       export_dynamic: get_option('debug'),
       install: false)
 
