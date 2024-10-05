@@ -386,7 +386,7 @@ int main (void) { return 0; }''')
    naev_bin = executable(
       'naev',
       sources: naev_rs,
-      rust_args: ['--extern', 'naev=libnaev.rlib'],
+      rust_args: ['--extern', 'naev=libnaev.rlib', '-L', 'src' / rust_target / 'deps'],
       dependencies: naev_deps,
       link_with: [naev_rlib_lib],
       export_dynamic: get_option('debug'),
