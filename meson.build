@@ -390,7 +390,7 @@ int main (void) { return 0; }''')
       dependencies: naev_deps,
       link_with: [naev_rlib_lib],
       export_dynamic: get_option('debug'),
-      install: false)
+      install: true)
 
    naevlua_bin = executable(
       'naevlua',
