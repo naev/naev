@@ -345,6 +345,23 @@ int main (void) { return 0; }''')
    naev_source += colours_source
    naevlua_source += colours_source
 
+   # Generate Rust headers from C
+   rust = import('unstable-rust')
+   merge_h = find_program('utils/build/merge_h.py')
+   naevch = custom_target(
+      'merge headers',
+      input: headers,
+      command: [ merge_h, '@INPUT@' ],
+      capture: true,
+      output: 'naevc.h',
+   )
+   naevcrs = rust.bindgen(
+      input: naevch,
+      output: 'naevc.rs',
+      include_directories: [include_dirs, '.'],
+      dependencies: naev_deps,
+   )
+
    # Compiling Naev
    # 1. First, compile all the C code as a static library with meson.
    # 2. Next, compile all the main Rust code as a static library with Cargo.
@@ -379,6 +396,7 @@ int main (void) { return 0; }''')
    endif
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
    naev_rlib = custom_target( 'cargo-build',
+      depends: naevcrs,
       depend_files: source_rust + cargo_toml,
       output: 'libnaev.rlib',
       console: true,
