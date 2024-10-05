@@ -361,6 +361,13 @@ int main (void) { return 0; }''')
       include_directories: [include_dirs, '.'],
       dependencies: naev_deps,
    )
+   copydir = find_program('utils/build/copydir.py')
+   naevc_crate = custom_target(
+      'naevc crate',
+      input: [ naevcrs, 'utils' / 'build' / 'Cargo.toml' ],
+      output: 'naevc',
+      command: [ copydir, '@OUTPUT@', '@INPUT@' ],
+   )
 
    # Compiling Naev
    # 1. First, compile all the C code as a static library with meson.
@@ -388,6 +395,7 @@ int main (void) { return 0; }''')
    cargo_data.set_quoted('NAME', meson.project_name())
    cargo_data.set_quoted('VERSION', meson.project_version())
    cargo_data.set_quoted('PATH', meson.project_source_root() / 'src' / 'naev.rs')
+   cargo_data.set_quoted('NAEVC', naevc_crate.full_path() )
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
    cargo_options = [ '--manifest-path', cargo_toml ]
@@ -396,7 +404,7 @@ int main (void) { return 0; }''')
    endif
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
    naev_rlib = custom_target( 'cargo-build',
-      depends: naevcrs,
+      depends: [naevcrs, naevc_crate],
       depend_files: source_rust + cargo_toml,
       output: 'libnaev.rlib',
       console: true,
