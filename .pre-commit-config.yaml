@@ -66,3 +66,9 @@ repos:
       types: [c]
       files: '^src/'
       language: system
+    - id: rustfmt
+      name: Rust formatter
+      entry: rustfmt
+      types: [rust]
+      files: '^src/'
+      language: system
