@@ -17,6 +17,9 @@ pub struct SlotProperty {
     pub visible: bool,
     pub icon: *mut naevc::glTexture,
 }
+// Implementation of glTexture should be fairly thread safe, so set properties
+unsafe impl Sync for SlotProperty {}
+unsafe impl Send for SlotProperty {}
 impl Default for SlotProperty {
     fn default() -> Self {
         SlotProperty {
@@ -48,14 +51,16 @@ impl PartialEq for SlotProperty {
 }
 impl Eq for SlotProperty {}
 
-static mut SLOT_PROPERTIES: Vec<SlotProperty> = Vec::new();
+use std::sync::OnceLock;
+fn slot_properties() -> &'static Vec<SlotProperty> {
+    static SLOT_PROPERTIES: OnceLock<Vec<SlotProperty>> = OnceLock::new();
+    SLOT_PROPERTIES.get_or_init(|| load().expect("Failed to load Slot Properties!"))
+}
 
 #[no_mangle]
 pub extern "C" fn sp_load() -> c_int {
-    match load() {
-        Ok(_) => 0,
-        Err(_) => -1,
-    }
+    slot_properties(); // Should trigger a load, not necessary though
+    0
 }
 
 #[no_mangle]
@@ -70,7 +75,7 @@ pub extern "C" fn sp_get(name: *const c_char) -> c_int {
             name: sname,
             ..SlotProperty::default()
         };
-        match SLOT_PROPERTIES.binary_search(&query) {
+        match slot_properties().binary_search(&query) {
             Ok(i) => (i + 1) as c_int,
             Err(_) => 0,
         }
@@ -135,7 +140,7 @@ pub extern "C" fn sp_locked(sp: c_int) -> c_int {
 
 // Assume static here, because it doesn't really change after loading
 pub fn get_c(sp: c_int) -> Option<&'static SlotProperty> {
-    unsafe { SLOT_PROPERTIES.get((sp - 1) as usize) }
+    slot_properties().get((sp - 1) as usize)
 }
 
 #[allow(dead_code)]
@@ -144,24 +149,23 @@ pub fn get(name: CString) -> Result<&'static SlotProperty> {
         name,
         ..SlotProperty::default()
     };
-    unsafe {
-        match SLOT_PROPERTIES.binary_search(&query) {
-            Ok(i) => Ok(&SLOT_PROPERTIES[i]),
-            Err(_) => Err(Error::new(
-                ErrorKind::Other,
-                gettext(
-                    format!(
-                        "Slot property '{name}' not found .",
-                        name = query.name.to_str().unwrap()
-                    )
-                    .as_str(),
-                ),
-            )),
-        }
+    let props = slot_properties();
+    match props.binary_search(&query) {
+        Ok(i) => Ok(props.get(i).expect("")),
+        Err(_) => Err(Error::new(
+            ErrorKind::Other,
+            gettext(
+                format!(
+                    "Slot property '{name}' not found .",
+                    name = query.name.to_str().unwrap()
+                )
+                .as_str(),
+            ),
+        )),
     }
 }
 
-pub fn load() -> Result<()> {
+pub fn load() -> Result<Vec<SlotProperty>> {
     let sp_files = unsafe { naevc::ndata_listRecursive(naevc::SP_DATA_PATH.as_ptr().cast()) };
     let sp_array = array::to_vec(sp_files)?;
     let mut files: Vec<String> = Vec::new();
@@ -169,6 +173,7 @@ pub fn load() -> Result<()> {
         files.push(unsafe { CStr::from_ptr(sp).to_str().unwrap().to_string() });
     }
 
+    let mut sp_data: Vec<SlotProperty> = Vec::new();
     for filename in files {
         let data = ndata::read(filename)?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data).unwrap()).unwrap();
@@ -209,8 +214,8 @@ pub fn load() -> Result<()> {
             }
         }
         //println!("{:?}", sp);
-        unsafe { SLOT_PROPERTIES.push(sp) };
+        sp_data.push(sp);
     }
-    unsafe { SLOT_PROPERTIES.sort() };
-    Ok(())
+    sp_data.sort();
+    Ok(sp_data)
 }
