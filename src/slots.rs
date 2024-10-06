@@ -1,4 +1,4 @@
-use std::ffi::CStr;
+use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int};
 
 use crate::array;
@@ -6,9 +6,9 @@ use crate::ndata;
 
 #[derive(Debug, Clone)]
 pub struct SlotProperty {
-    pub name: String,
-    pub display: String,
-    pub description: String,
+    pub name: CString,
+    pub display: CString,
+    pub description: CString,
     pub required: bool,
     pub exclusive: bool,
     pub locked: bool,
@@ -33,7 +33,7 @@ pub extern "C" fn sp_cleanup() {}
 pub extern "C" fn sp_get(name: *const c_char) -> c_int {
     unsafe {
         let ptr = CStr::from_ptr(name);
-        let sname = ptr.to_str().unwrap();
+        let sname = CString::new(ptr.to_str().unwrap()).unwrap();
         for (i, sp) in SLOT_PROPERTIES.iter().enumerate() {
             if sp.name == sname {
                 return i as c_int;
@@ -115,11 +115,11 @@ pub fn load() -> std::io::Result<()> {
     for filename in files {
         let f = ndata::File::open(filename, ndata::Mode::Read)?;
         let root = minidom::Element::from_reader(std::io::BufReader::new(f)).unwrap();
-        let name = root.attr("name").unwrap().to_string();
+        let name = CString::new(root.attr("name").unwrap())?;
         let mut sp = SlotProperty {
             name: name,
-            display: "".to_string(),
-            description: "".to_string(),
+            display: CString::new("")?,
+            description: CString::new("")?,
             required: false,
             exclusive: false,
             locked: false,
@@ -128,8 +128,8 @@ pub fn load() -> std::io::Result<()> {
         };
         for node in root.children() {
             match node.name().to_lowercase().as_str() {
-                "display" => sp.display = node.text(),
-                "description" => sp.display = node.text(),
+                "display" => sp.display = CString::new(node.text())?,
+                "description" => sp.display = CString::new(node.text())?,
                 "required" => sp.required = true,
                 "exclusive" => sp.exclusive = true,
                 "locked" => sp.locked = true,

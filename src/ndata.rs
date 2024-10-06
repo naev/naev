@@ -18,6 +18,7 @@ pub fn physfs_error_as_io_error() -> Error {
 }
 
 /// Possible ways to open a file.
+#[allow(dead_code)]
 #[derive(Copy, Clone)]
 pub enum Mode {
     /// Append to the end of the file.
@@ -29,10 +30,9 @@ pub enum Mode {
 }
 
 /// A file handle.
-#[allow(dead_code)]
 pub struct File<'f> {
     raw: *mut naevc::PHYSFS_File,
-    mode: Mode,
+    //mode: Mode,
     _marker: std::marker::PhantomData<&'f isize>,
 }
 
@@ -53,7 +53,7 @@ impl<'f> File<'f> {
         } else {
             Ok(File {
                 raw: raw,
-                mode: mode,
+                //mode: mode,
                 _marker: std::marker::PhantomData,
             })
         }
@@ -68,16 +68,15 @@ impl<'f> File<'f> {
     }
 
     /// Checks whether eof is reached or not.
+    #[allow(dead_code)]
     pub fn eof(&self) -> bool {
         let ret = unsafe { naevc::PHYSFS_eof(self.raw) };
-
         ret != 0
     }
 
     /// Determine length of file, if possible
     pub fn len(&self) -> Result<u64> {
         let len = unsafe { naevc::PHYSFS_fileLength(self.raw) };
-
         if len >= 0 {
             Ok(len as u64)
         } else {
@@ -88,7 +87,6 @@ impl<'f> File<'f> {
     /// Determines current position within a file
     pub fn tell(&self) -> Result<u64> {
         let ret = unsafe { naevc::PHYSFS_tell(self.raw) };
-
         match ret {
             -1 => Err(physfs_error_as_io_error()),
             _ => Ok(ret as u64),
@@ -107,7 +105,6 @@ impl<'f> Read for File<'f> {
                 buf.len() as naevc::PHYSFS_uint32,
             )
         };
-
         match ret {
             -1 => Err(physfs_error_as_io_error()),
             _ => Ok(ret as usize),
@@ -177,9 +174,11 @@ impl<'f> Drop for File<'f> {
     }
 }
 
+/*
 pub fn read(path: String) -> Result<Vec<u8>> {
     let mut f = File::open(path, Mode::Read)?;
     let mut out: Vec<u8> = vec![0; f.len()? as usize];
     f.read(out.as_mut())?;
     Ok(out)
 }
+*/
