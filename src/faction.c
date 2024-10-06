@@ -19,7 +19,6 @@
 
 #include "array.h"
 #include "colour.h"
-#include "conf.h"
 #include "hook.h"
 #include "log.h"
 #include "ndata.h"
@@ -54,12 +53,13 @@ int faction_player; /**< Player faction identifier. */
  * @brief Represents a faction.
  */
 typedef struct Faction_ {
-   char *name;        /**< Normal Name. */
-   char *longname;    /**< Long Name. */
-   char *displayname; /**< Display name. */
-   char *mapname;     /**< Name to use on the map. */
-   char *ai;          /**< Name of the faction's default pilot AI. */
-   char *description; /**< Description of the faction. */
+   char  *name;        /**< Normal Name. */
+   char  *longname;    /**< Long Name. */
+   char  *displayname; /**< Display name. */
+   char  *mapname;     /**< Name to use on the map. */
+   char  *ai;          /**< Name of the faction's default pilot AI. */
+   char  *description; /**< Description of the faction. */
+   double local_th;    /**< Local threshold between adjacent systems. */
 
    /* Scripts. */
    char *script_standing;
@@ -1602,9 +1602,66 @@ static int faction_parseSocial( const char *file )
  */
 void factions_reset( void )
 {
+   factions_clearDynamic();
+
+   /* Reset global standing. */
    for ( int i = 0; i < array_size( faction_stack ); i++ ) {
       faction_stack[i].player = faction_stack[i].player_def;
       faction_stack[i].flags  = faction_stack[i].oflags;
+   }
+}
+
+/**
+ * @brief Reset local standing.
+ */
+void factions_resetLocal( void )
+{
+   StarSystem *sys_stack = system_getAll();
+   for ( int i = 0; i < array_size( sys_stack ); i++ ) {
+      StarSystem *sys = &sys_stack[i];
+      for ( int j = 0; j < array_size( sys->presence ); j++ ) {
+         SystemPresence *sp = &sys->presence[j];
+         sp->local          = faction_getPlayer( sp->faction );
+      }
+   }
+}
+
+static void faction_cleanLocalSingle( Faction *f )
+{
+   double      maxval    = 0.;
+   StarSystem *maxsys    = NULL;
+   StarSystem *sys_stack = system_getAll();
+
+   /* First pass, find max faction standing to propagate from there. */
+   for ( int i = 0; i < array_size( sys_stack ); i++ ) {
+      StarSystem *sys = &sys_stack[i];
+      for ( int j = 0; j < array_size( sys->presence ); j++ ) {
+         SystemPresence *sp = &sys->presence[j];
+         if ( sp->faction != ( f - faction_stack ) )
+            continue;
+         if ( sp->local <= maxval )
+            continue;
+
+         maxval = sp->local;
+         maxsys = sys;
+      }
+   }
+
+   /* Failed to find a max system? */
+   if ( maxsys == NULL )
+      return;
+
+   /* Second pass, start to propagate. */
+   // double th = f->local_th;
+}
+
+void factions_cleanLocal( void )
+{
+   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
+      Faction *f = &faction_stack[i];
+      if ( faction_isFlag( f, FACTION_STATIC ) )
+         continue;
+      faction_cleanLocalSingle( f );
    }
 }
 
@@ -1829,18 +1886,19 @@ int pfaction_save( xmlTextWriterPtr writer )
 {
    xmlw_startElem( writer, "factions" );
 
-   for ( int i = 0; i < array_size( faction_stack );
-         i++ ) { /* player is faction 0 */
+   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
+      const Faction *f = &faction_stack[i];
+
       /* Must not be static. */
-      if ( faction_isFlag( &faction_stack[i], FACTION_STATIC ) )
+      if ( faction_isFlag( f, FACTION_STATIC ) )
          continue;
 
       xmlw_startElem( writer, "faction" );
 
-      xmlw_attr( writer, "name", "%s", faction_stack[i].name );
-      xmlw_elem( writer, "standing", "%f", faction_stack[i].player );
+      xmlw_attr( writer, "name", "%s", f->name );
+      xmlw_elem( writer, "standing", "%f", f->player );
 
-      if ( faction_isKnown_( &faction_stack[i] ) )
+      if ( faction_isKnown_( f ) )
          xmlw_elemEmpty( writer, "known" );
 
       xmlw_endElem( writer ); /* "faction" */

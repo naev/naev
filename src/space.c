@@ -127,7 +127,7 @@ int space_spawn = 1; /**< Spawn enabled by default. */
 /* spob load */
 static void spob_initDefaults( Spob *spob );
 static int  spob_parse( Spob *spob, const char *filename, Commodity **stdList );
-static int  space_parseSpobs( xmlNodePtr parent, StarSystem *sys );
+static int  space_parseSaveNodes( xmlNodePtr parent, StarSystem *sys );
 static int  spob_parsePresence( xmlNodePtr node, SpobPresence *ap );
 /* system load */
 static void system_init( StarSystem *sys );
@@ -4124,16 +4124,33 @@ int space_playerSave( xmlTextWriterPtr writer )
          xmlw_attr( writer, "pmarked", "1" );
       if ( sys->note != NULL )
          xmlw_attr( writer, "note", "%s", sys->note );
+
+      /* Save known spobs. */
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
          if ( !spob_isKnown( sys->spobs[j] ) )
             continue; /* not known */
          xmlw_elem( writer, "spob", "%s", sys->spobs[j]->name );
       }
 
+      /* Save known Jump points. */
       for ( int j = 0; j < array_size( sys->jumps ); j++ ) {
          if ( !jp_isKnown( &sys->jumps[j] ) )
             continue; /* not known */
          xmlw_elem( writer, "jump", "%s", ( &sys->jumps[j] )->target->name );
+      }
+
+      /* Save presences if applicable. */
+      for ( int j = 0; j < array_size( sys->presence ); j++ ) {
+         const SystemPresence *sp = &sys->presence[j];
+         if ( faction_isStatic( sp->faction ) )
+            continue;
+         if ( fabs( sp->local - faction_getPlayer( sp->faction ) ) <=
+              DOUBLE_TOL )
+            continue;
+         xmlw_startElem( writer, "faction" );
+         xmlw_attr( writer, "name", "%s", faction_name( sp->faction ) );
+         xmlw_str( writer, "%f", sp->local );
+         xmlw_endElem( writer );
       }
 
       xmlw_endElem( writer );
@@ -4158,6 +4175,7 @@ int space_playerLoad( xmlNodePtr parent, const char *version )
    int oldknown = naev_versionCompareTarget( version, "0.12.0-alpha.3" ) > 0;
 
    space_clearKnown();
+   factions_resetLocal();
 
    node = parent->xmlChildrenNode;
    do {
@@ -4208,7 +4226,8 @@ int space_playerLoad( xmlNodePtr parent, const char *version )
             xmlr_attr_strd( cur, "note", sys->note );
             free( str );
          }
-         space_parseSpobs( cur, sys );
+         space_parseSaveNodes( cur, sys );
+
       } while ( xml_nextNode( cur ) );
    } while ( xml_nextNode( node ) );
 
@@ -4222,7 +4241,7 @@ int space_playerLoad( xmlNodePtr parent, const char *version )
  *    @param sys System to populate.
  *    @return 0 on success.
  */
-static int space_parseSpobs( xmlNodePtr parent, StarSystem *sys )
+static int space_parseSaveNodes( xmlNodePtr parent, StarSystem *sys )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
@@ -4234,6 +4253,22 @@ static int space_parseSpobs( xmlNodePtr parent, StarSystem *sys )
          JumpPoint *jp = jump_get( xml_get( node ), sys );
          if ( jp != NULL ) /* Must exist */
             jp_setFlag( jp, JP_KNOWN );
+      } else if ( xml_isNode( node, "faction" ) ) {
+         char *buf;
+         int   f;
+         xmlr_attr_strd( node, "name", buf );
+         f = faction_get( buf );
+         free( buf );
+         if ( !faction_isFaction( f ) )
+            continue;
+
+         /* Add presence. */
+         for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+            SystemPresence *sp = &sys->presence[i];
+            if ( sp->faction != f )
+               continue;
+            sp->local = xml_getFloat( node );
+         }
       }
    } while ( xml_nextNode( node ) );
 

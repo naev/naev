@@ -806,7 +806,6 @@ void player_cleanup( void )
    events_cleanup();
    space_clearKnown();
    map_cleanup();
-   factions_clearDynamic();
    player_inventoryClear();
 
    /* Reset controls. */
