@@ -100,10 +100,11 @@ pub extern "C" fn sp_locked(sp: c_int) -> c_int {
     }
 }
 
-pub fn get_c(sp: c_int) -> std::io::Result<SlotProperty> {
+// Assume static here, because it doesn't really change after loading
+pub fn get_c(sp: c_int) -> std::io::Result<&'static SlotProperty> {
     unsafe {
         match SLOT_PROPERTIES.get((sp - 1) as usize) {
-            Some(sp) => Ok(sp.clone()),
+            Some(sp) => Ok(sp),
             None => Err(std::io::Error::new(std::io::ErrorKind::Other, "")),
         }
     }
