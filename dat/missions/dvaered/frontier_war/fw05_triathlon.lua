@@ -325,11 +325,11 @@ end
 function tamCommon()
    local c = tk.choice("", _("What do you want to ask Major Tam?"), _("Explain next stage"), _("Display the scores"))
    if c == 1 then
-      if mem.stage == 1 then
+      if mem.stage <= 2 then
          tamStage1()
-      elseif mem.stage == 3 then
+      elseif mem.stage <= 4 then
          tamStage2()
-      else --if mem.stage == 5 then
+      else --if mem.stage <= 6 then
          tamStage3()
       end
    else -- Display the scores

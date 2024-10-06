@@ -467,7 +467,7 @@ end
 
 -- Spawn Hamelsen in a hyena
 function spawnHam()
-   hamelsen = pilot.add( "Hyena", "Independent", system.get("Beeklo"), {naked=true} )
+   hamelsen = pilot.add( "Hyena", "Independent", system.get("Beeklo"), nil, {naked=true} )
    equipHyena( hamelsen )
    hamelsen:control()
    hamelsen:land(targpla)
@@ -476,7 +476,7 @@ function spawnHam()
    hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = "incomingHamelsen", focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
-   jules = pilot.add( "Hyena", "Independent", system.get("Beeklo"), {naked=true} )
+   jules = pilot.add( "Hyena", "Independent", system.get("Beeklo"), nil, {naked=true} )
    equipHyena( jules )
    jules:control()
    jules:follow( hamelsen )

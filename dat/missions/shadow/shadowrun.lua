@@ -212,7 +212,7 @@ end
 function soldier2()
    vn.clear()
    vn.scene()
-   vn.newCharacter( "Soldier", {image=sol2img, pos="lef:"} )
+   vn.newCharacter( "Soldier", {image=sol2img, pos="left"} )
    vn.newCharacter( "Soldier", {image=sol3img, pos="right"} )
    vn.transition()
    vn.na(_([[They don't seem to appreciate your company. You decide to leave them to their game.]]))

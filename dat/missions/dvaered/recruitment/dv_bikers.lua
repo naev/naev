@@ -50,10 +50,10 @@ local portrait = require "portrait"
 local agentPort = "dvaered/dv_military_m2.webp"
 local BBB1Port = "pirate/pirate4.webp"
 local BBB2Port = "pirate/pirate6.webp"
-local npc1img, npc1por = vni.get()
-local npc2img, npc2por = vni.get()
-local npc3img, npc3por = vni.get()
-local npc4img, npc4por = vni.get()
+local npc1img, npc1por = vni.generic()
+local npc2img, npc2por = vni.generic()
+local npc3img, npc3por = vni.generic()
+local npc4img, npc4por = vni.generic()
 
 local gangs = { _("Big Bang Band"), -- gang of Blue Belly Billy
                 _("Cringe Crew"),

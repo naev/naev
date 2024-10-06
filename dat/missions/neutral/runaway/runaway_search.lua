@@ -207,8 +207,8 @@ function land ()
 
       if mem.hascynthia then
          --Talk to the father and get the reward
-         local _cynthia = vn.newCharacter( npc_name, {image=npc_image, pos="left"} )
-         local _father = vn.newCharacter( npc_name, {image=npc_image, pos="righ"} )
+         local _cynthia = vn.newCharacter( npc2_name, {image=npc2_image, pos="left"} )
+         local _father = vn.newCharacter( npc_name, {image=npc_image, pos="right"} )
          vn.transition()
 
          vn.na(_("As Cynthia sees her father, she begins her crying anew. You overhear the father talking about how her abusive mother died. Cynthia becomes visibly happier, so you pick up your payment and depart."))
