@@ -36,12 +36,12 @@ pub extern "C" fn sp_get(name: *const c_char) -> c_int {
         let sname = CString::new(ptr.to_str().unwrap()).unwrap();
         for (i, sp) in SLOT_PROPERTIES.iter().enumerate() {
             if sp.name == sname {
-                return i as c_int;
+                return (i + 1) as c_int;
             }
         }
     }
     // WARN( _( "Slot property '%s' not found in array." ), name );
-    -1
+    0
 }
 
 #[no_mangle]
@@ -101,7 +101,12 @@ pub extern "C" fn sp_locked(sp: c_int) -> c_int {
 }
 
 pub fn get_c(sp: c_int) -> std::io::Result<SlotProperty> {
-    unsafe { Ok(SLOT_PROPERTIES[sp as usize].clone()) }
+    unsafe {
+        match SLOT_PROPERTIES.get((sp - 1) as usize) {
+            Some(sp) => Ok(sp.clone()),
+            None => Err(std::io::Error::new(std::io::ErrorKind::Other, "")),
+        }
+    }
 }
 
 pub fn load() -> std::io::Result<()> {
