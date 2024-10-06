@@ -46,6 +46,8 @@ FORMAT_ARG( 1 ) static inline const char *_( const char *msgid )
 {
    return gettext_ngettext( msgid, NULL, 1 );
 }
+/* Helper for rust. */
+const char *gettext_rust( const char *msgid );
 
 /** \see gettext_noop */
 #define N_( msgid ) gettext_noop( msgid )

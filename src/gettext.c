@@ -351,3 +351,8 @@ const char *pgettext_var( const char *msgctxt, const char *msgid )
    free( lookup );
    return trans;
 }
+
+const char *gettext_rust( const char *msgid )
+{
+   return _( msgid );
+}

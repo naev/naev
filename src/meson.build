@@ -3,6 +3,7 @@
 ####
 source_rust = files(
    'array.rs',
+   'gettext.rs',
    'naev.rs',
    'ndata.rs',
    'slots.rs',

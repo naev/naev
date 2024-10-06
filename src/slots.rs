@@ -1,8 +1,9 @@
 use std::ffi::{CStr, CString};
-use std::io::Result;
+use std::io::{Error, ErrorKind, Result};
 use std::os::raw::{c_char, c_int};
 
 use crate::array;
+use crate::gettext::gettext;
 use crate::ndata;
 
 #[derive(Debug, Clone)]
@@ -79,82 +80,85 @@ pub extern "C" fn sp_get(name: *const c_char) -> c_int {
 #[no_mangle]
 pub extern "C" fn sp_display(sp: c_int) -> *const c_char {
     match get_c(sp) {
-        Ok(prop) => prop.display.as_ptr() as *const c_char,
-        Err(_) => std::ptr::null(),
+        Some(prop) => prop.display.as_ptr() as *const c_char,
+        None => std::ptr::null(),
     }
 }
 
 #[no_mangle]
 pub extern "C" fn sp_description(sp: c_int) -> *const c_char {
     match get_c(sp) {
-        Ok(prop) => prop.description.as_ptr() as *const c_char,
-        Err(_) => std::ptr::null(),
+        Some(prop) => prop.description.as_ptr() as *const c_char,
+        None => std::ptr::null(),
     }
 }
 
 #[no_mangle]
 pub extern "C" fn sp_visible(sp: c_int) -> c_int {
     match get_c(sp) {
-        Ok(prop) => prop.visible as c_int,
-        Err(_) => 0,
+        Some(prop) => prop.visible as c_int,
+        None => 0,
     }
 }
 
 #[no_mangle]
 pub extern "C" fn sp_required(sp: c_int) -> c_int {
     match get_c(sp) {
-        Ok(prop) => prop.required as c_int,
-        Err(_) => 0,
+        Some(prop) => prop.required as c_int,
+        None => 0,
     }
 }
 
 #[no_mangle]
 pub extern "C" fn sp_exclusive(sp: c_int) -> c_int {
     match get_c(sp) {
-        Ok(prop) => prop.exclusive as c_int,
-        Err(_) => 0,
+        Some(prop) => prop.exclusive as c_int,
+        None => 0,
     }
 }
 
 #[no_mangle]
 pub extern "C" fn sp_icon(sp: c_int) -> *const naevc::glTexture {
     match get_c(sp) {
-        Ok(prop) => prop.icon,
-        Err(_) => std::ptr::null(),
+        Some(prop) => prop.icon,
+        None => std::ptr::null(),
     }
 }
 
 #[no_mangle]
 pub extern "C" fn sp_locked(sp: c_int) -> c_int {
     match get_c(sp) {
-        Ok(prop) => prop.locked as c_int,
-        Err(_) => 0,
+        Some(prop) => prop.locked as c_int,
+        None => 0,
     }
 }
 
 // Assume static here, because it doesn't really change after loading
-pub fn get_c(sp: c_int) -> Result<&'static SlotProperty> {
-    unsafe {
-        match SLOT_PROPERTIES.get((sp - 1) as usize) {
-            Some(sp) => Ok(sp),
-            None => Err(std::io::Error::new(std::io::ErrorKind::Other, "")),
-        }
-    }
+pub fn get_c(sp: c_int) -> Option<&'static SlotProperty> {
+    unsafe { SLOT_PROPERTIES.get((sp - 1) as usize) }
 }
 
 #[allow(dead_code)]
 pub fn get(name: CString) -> Result<&'static SlotProperty> {
+    let query = SlotProperty {
+        name,
+        ..SlotProperty::default()
+    };
     unsafe {
-        let query = SlotProperty {
-            name: name,
-            ..SlotProperty::default()
-        };
         match SLOT_PROPERTIES.binary_search(&query) {
             Ok(i) => Ok(&SLOT_PROPERTIES[i]),
-            Err(_) => Err(std::io::Error::new(std::io::ErrorKind::Other, "")),
+            Err(_) => Err(Error::new(
+                ErrorKind::Other,
+                gettext(
+                    format!(
+                        "Slot property '{name}' not found .",
+                        name = query.name.to_str().unwrap()
+                    )
+                    .as_str(),
+                ),
+            )),
         }
     }
-    // WARN( _( "Slot property '%s' not found in array." ), name );
 }
 
 pub fn load() -> Result<()> {
@@ -171,7 +175,7 @@ pub fn load() -> Result<()> {
         let root = doc.root_element();
         let name = CString::new(root.attribute("name").unwrap())?;
         let mut sp = SlotProperty {
-            name: name,
+            name,
             ..SlotProperty::default()
         };
         for node in root.children() {
@@ -189,7 +193,19 @@ pub fn load() -> Result<()> {
                     let gfxname = CString::new(format!("gfx/slots/{}", node.text().unwrap()))?;
                     sp.icon = naevc::gl_newImage(gfxname.as_ptr() as *const c_char, 0)
                 },
-                i => todo!("not found: {}", i),
+                tag => {
+                    return Err(Error::new(
+                        ErrorKind::Other,
+                        gettext(
+                            format!(
+                                "Slot property '{name}' has unknown node '{node}'.",
+                                name = sp.name.to_str().unwrap(),
+                                node = tag
+                            )
+                            .as_str(),
+                        ),
+                    ))
+                }
             }
         }
         //println!("{:?}", sp);

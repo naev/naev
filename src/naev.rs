@@ -9,6 +9,7 @@ extern "C" {
 }
 
 mod array;
+mod gettext;
 mod ndata;
 mod slots;
 
