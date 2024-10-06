@@ -1,6 +1,6 @@
 [package]
 name = "naevc"
-version = "0.0.1"
+version = @VERSION@
 edition = "2021"
 
 [lib]

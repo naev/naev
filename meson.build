@@ -366,7 +366,7 @@ int main (void) { return 0; }''')
    copydir = find_program('utils/build/copydir.py')
    naevc_crate = custom_target(
       'naevc crate',
-      input: [ naevcrs, 'utils' / 'build' / 'Cargo.toml' ],
+      input: [ naevcrs, naevc_crate_cargo ],
       output: 'naevc',
       command: [ copydir, '@OUTPUT@', '@INPUT@' ],
    )
