@@ -19,7 +19,7 @@ pub struct SlotProperty {
 static mut SLOT_PROPERTIES: Vec<SlotProperty> = Vec::new();
 
 #[no_mangle]
-pub extern "C" fn _sp_load() -> c_int {
+pub extern "C" fn sp_load() -> c_int {
     match load() {
         Ok(_) => 0,
         Err(_) => -1,
@@ -27,10 +27,10 @@ pub extern "C" fn _sp_load() -> c_int {
 }
 
 #[no_mangle]
-pub extern "C" fn _sp_cleanup() {}
+pub extern "C" fn sp_cleanup() {}
 
 #[no_mangle]
-pub extern "C" fn _sp_get_c(name: *const c_char) -> c_int {
+pub extern "C" fn sp_get(name: *const c_char) -> c_int {
     unsafe {
         let ptr = CStr::from_ptr(name);
         let sname = ptr.to_str().unwrap();
@@ -40,11 +40,12 @@ pub extern "C" fn _sp_get_c(name: *const c_char) -> c_int {
             }
         }
     }
+    // WARN( _( "Slot property '%s' not found in array." ), name );
     -1
 }
 
 #[no_mangle]
-pub extern "C" fn _sp_display(sp: c_int) -> *const c_char {
+pub extern "C" fn sp_display(sp: c_int) -> *const c_char {
     match get_c(sp) {
         Ok(prop) => prop.display.as_ptr() as *const c_char,
         Err(_) => std::ptr::null(),
@@ -52,7 +53,7 @@ pub extern "C" fn _sp_display(sp: c_int) -> *const c_char {
 }
 
 #[no_mangle]
-pub extern "C" fn _sp_description(sp: c_int) -> *const c_char {
+pub extern "C" fn sp_description(sp: c_int) -> *const c_char {
     match get_c(sp) {
         Ok(prop) => prop.description.as_ptr() as *const c_char,
         Err(_) => std::ptr::null(),
@@ -60,7 +61,7 @@ pub extern "C" fn _sp_description(sp: c_int) -> *const c_char {
 }
 
 #[no_mangle]
-pub extern "C" fn _sp_visible(sp: c_int) -> c_int {
+pub extern "C" fn sp_visible(sp: c_int) -> c_int {
     match get_c(sp) {
         Ok(prop) => prop.visible as c_int,
         Err(_) => 0,
@@ -68,7 +69,7 @@ pub extern "C" fn _sp_visible(sp: c_int) -> c_int {
 }
 
 #[no_mangle]
-pub extern "C" fn _sp_required(sp: c_int) -> c_int {
+pub extern "C" fn sp_required(sp: c_int) -> c_int {
     match get_c(sp) {
         Ok(prop) => prop.required as c_int,
         Err(_) => 0,
@@ -76,7 +77,7 @@ pub extern "C" fn _sp_required(sp: c_int) -> c_int {
 }
 
 #[no_mangle]
-pub extern "C" fn _sp_exclusive(sp: c_int) -> c_int {
+pub extern "C" fn sp_exclusive(sp: c_int) -> c_int {
     match get_c(sp) {
         Ok(prop) => prop.exclusive as c_int,
         Err(_) => 0,
@@ -84,7 +85,7 @@ pub extern "C" fn _sp_exclusive(sp: c_int) -> c_int {
 }
 
 #[no_mangle]
-pub extern "C" fn _sp_icon(sp: c_int) -> *const naevc::glTexture {
+pub extern "C" fn sp_icon(sp: c_int) -> *const naevc::glTexture {
     match get_c(sp) {
         Ok(prop) => prop.icon,
         Err(_) => std::ptr::null(),
@@ -92,7 +93,7 @@ pub extern "C" fn _sp_icon(sp: c_int) -> *const naevc::glTexture {
 }
 
 #[no_mangle]
-pub extern "C" fn _sp_locked(sp: c_int) -> c_int {
+pub extern "C" fn sp_locked(sp: c_int) -> c_int {
     match get_c(sp) {
         Ok(prop) => prop.locked as c_int,
         Err(_) => 0,

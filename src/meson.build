@@ -127,7 +127,6 @@ source = files(
    'ship.c',
    'shiplog.c',
    'shipstats.c',
-   'slots.c',
    'sound.c',
    'space.c',
    'spfx.c',
@@ -418,3 +417,13 @@ headers = files(
    'vec3.h',
    'weapon.h'
 )
+
+#cbindgen = find_program('cbindgen')
+#cbindgen_toml =  meson.project_source_root() / 'utils' / 'build' / 'cbindgen.toml'
+#rust_headers = custom_target(
+#   'generate_shaders',
+#   command: [cbindgen, '--config', cbindgen_toml, '@INPUT@' ],
+#   capture: true,
+#   input: 'slots.rs',
+#   output: 'slots.h',
+#)
