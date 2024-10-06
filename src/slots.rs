@@ -51,15 +51,12 @@ impl PartialEq for SlotProperty {
 }
 impl Eq for SlotProperty {}
 
-use std::sync::OnceLock;
-fn slot_properties() -> &'static Vec<SlotProperty> {
-    static SLOT_PROPERTIES: OnceLock<Vec<SlotProperty>> = OnceLock::new();
-    SLOT_PROPERTIES.get_or_init(|| load().expect("Failed to load Slot Properties!"))
-}
+use std::sync::LazyLock;
+static SLOT_PROPERTIES: LazyLock<Vec<SlotProperty>> = LazyLock::new(|| load().unwrap());
 
 #[no_mangle]
 pub extern "C" fn sp_load() -> c_int {
-    slot_properties(); // Should trigger a load, not necessary though
+    //SLOT_PROPERTIES; // Should trigger a load, not necessary though
     0
 }
 
@@ -75,7 +72,7 @@ pub extern "C" fn sp_get(name: *const c_char) -> c_int {
             name: sname,
             ..SlotProperty::default()
         };
-        match slot_properties().binary_search(&query) {
+        match SLOT_PROPERTIES.binary_search(&query) {
             Ok(i) => (i + 1) as c_int,
             Err(_) => 0,
         }
@@ -140,7 +137,7 @@ pub extern "C" fn sp_locked(sp: c_int) -> c_int {
 
 // Assume static here, because it doesn't really change after loading
 pub fn get_c(sp: c_int) -> Option<&'static SlotProperty> {
-    slot_properties().get((sp - 1) as usize)
+    SLOT_PROPERTIES.get((sp - 1) as usize)
 }
 
 #[allow(dead_code)]
@@ -149,7 +146,7 @@ pub fn get(name: CString) -> Result<&'static SlotProperty> {
         name,
         ..SlotProperty::default()
     };
-    let props = slot_properties();
+    let props = &SLOT_PROPERTIES;
     match props.binary_search(&query) {
         Ok(i) => Ok(props.get(i).expect("")),
         Err(_) => Err(Error::new(
