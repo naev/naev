@@ -5,7 +5,7 @@ luaspob.setup{
    std_land = 0,
    std_bribe = 101,
    msg_granted = {
-      function () fmt.f(_([["Welcome, {player}. You may dock when ready."]]), {player=player.name()}) end,
+      function () return player.name() and fmt.f(_([["Welcome, {player}. You may dock when ready."]]), {player=player.name()}) or "" end,
       _([["Dock at the life-support enabled ports when ready."]]),
    },
    msg_denied = {
@@ -22,10 +22,14 @@ luaspob.setup{
 local _can_land = can_land
 function can_land ()
    local ret, msg = _can_land()
+   if type(msg) == "function" then
+      msg = msg()
+   end
    if not ret then
       return ret, msg
    end
    if not faction.get("Thurion"):known() then
       return false, _([["You are not yet authorized to land here."]])
    end
+   return ret, msg
 end
