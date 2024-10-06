@@ -8,10 +8,11 @@ extern "C" {
 use std::env;
 use std::ffi::CString;
 
+mod ndata;
 mod slots;
 
 #[allow(dead_code)]
-pub fn naev() {
+pub fn naev() -> std::io::Result<()> {
     let args: Vec<String> = env::args().collect();
     let mut cargs = vec![];
     for a in args {
@@ -26,5 +27,6 @@ pub fn naev() {
 
     unsafe {
         naev_main(argv.len() as c_int, argv.as_mut_ptr());
-    }
+    };
+    Ok(())
 }

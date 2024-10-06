@@ -2,6 +2,8 @@ use std::ffi::CStr;
 use std::io;
 use std::os::raw::{c_char, c_int};
 
+use crate::ndata;
+
 #[derive(Debug, Clone)]
 pub struct SlotProperty {
     pub name: String,
@@ -89,10 +91,13 @@ pub extern "C" fn _sp_locked(sp: c_int) -> c_int {
     }
 }
 
-pub fn get_c(sp: c_int) -> Result<SlotProperty, io::Error> {
+pub fn get_c(sp: c_int) -> std::io::Result<SlotProperty> {
     return unsafe { Ok(SPROPS[sp as usize].clone()) };
 }
 
-pub fn load() -> Result<(), io::Error> {
+pub fn load() -> std::io::Result<()> {
+    let data = ndata::read("dat/VERSION".to_string())?;
+    println!("{}", String::from_utf8(data).unwrap());
+
     Err(io::Error::new(io::ErrorKind::Other, "Oops"))
 }
