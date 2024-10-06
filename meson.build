@@ -346,7 +346,7 @@ int main (void) { return 0; }''')
    naevlua_source += colours_source
 
    # Generate Rust headers from C
-   rust = import('unstable-rust')
+   rust = import('rust')
    merge_h = find_program('utils/build/merge_h.py')
    naevch = custom_target(
       'merge headers',
