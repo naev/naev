@@ -192,7 +192,7 @@ pub fn load() -> Result<()> {
                 i => todo!("not found: {}", i),
             }
         }
-        println!("{:?}", sp);
+        //println!("{:?}", sp);
         unsafe { SLOT_PROPERTIES.push(sp) };
     }
     unsafe { SLOT_PROPERTIES.sort() };

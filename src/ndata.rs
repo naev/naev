@@ -4,6 +4,7 @@ use std::mem;
 use std::os::raw::c_void;
 
 // Some stuff is based on the physfs-rs package.
+// Modified to not use a global context and use functions from naevc
 
 pub fn physfs_error_as_io_error() -> Error {
     let cerrstr = unsafe {
@@ -135,7 +136,6 @@ impl<'f> Write for File<'f> {
     /// Flushes a file if buffered; no-op if unbuffered.
     fn flush(&mut self) -> Result<()> {
         let ret = unsafe { naevc::PHYSFS_flush(self.raw) };
-
         match ret {
             0 => Err(physfs_error_as_io_error()),
             _ => Ok(()),
@@ -157,13 +157,10 @@ impl<'f> Seek for File<'f> {
                 n + curr_pos as i64
             }
         };
-
         let result = unsafe { naevc::PHYSFS_seek(self.raw, seek_pos as naevc::PHYSFS_uint64) };
-
         if result == -1 {
             return Err(physfs_error_as_io_error());
         }
-
         self.tell()
     }
 }
