@@ -56,7 +56,7 @@ static SLOT_PROPERTIES: LazyLock<Vec<SlotProperty>> = LazyLock::new(|| load().un
 
 #[no_mangle]
 pub extern "C" fn sp_load() -> c_int {
-    //SLOT_PROPERTIES; // Should trigger a load, not necessary though
+    let _ = SLOT_PROPERTIES; // Should trigger a load, not necessary though
     0
 }
 
