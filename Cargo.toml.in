@@ -8,5 +8,4 @@ path = @PATH@
 
 [dependencies]
 naevc = { path=@NAEVC@ }
-quick-xml = "0.36.2"
-minidom = "0.16.0"
+roxmltree = "0.20.0"

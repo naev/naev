@@ -113,9 +113,10 @@ pub fn load() -> std::io::Result<()> {
     }
 
     for filename in files {
-        let f = ndata::File::open(filename, ndata::Mode::Read)?;
-        let root = minidom::Element::from_reader(std::io::BufReader::new(f)).unwrap();
-        let name = CString::new(root.attr("name").unwrap())?;
+        let data = ndata::read(filename)?;
+        let doc = roxmltree::Document::parse(std::str::from_utf8(&data).unwrap()).unwrap();
+        let root = doc.root_element();
+        let name = CString::new(root.attribute("name").unwrap())?;
         let mut sp = SlotProperty {
             name,
             display: CString::new("")?,
@@ -127,19 +128,24 @@ pub fn load() -> std::io::Result<()> {
             icon: std::ptr::null_mut(),
         };
         for node in root.children() {
-            match node.name().to_lowercase().as_str() {
-                "display" => sp.display = CString::new(node.text())?,
-                "description" => sp.display = CString::new(node.text())?,
+            if !node.is_element() {
+                continue;
+            }
+            match node.tag_name().name().to_lowercase().as_str() {
+                "display" => sp.display = CString::new(node.text().unwrap())?,
+                "description" => sp.description = CString::new(node.text().unwrap())?,
                 "required" => sp.required = true,
                 "exclusive" => sp.exclusive = true,
                 "locked" => sp.locked = true,
                 "visible" => sp.visible = true,
                 "icon" => unsafe {
-                    sp.icon = naevc::gl_newImage(node.text().as_ptr() as *const c_char, 0)
+                    let gfxname = CString::new(format!("gfx/slots/{}", node.text().unwrap()))?;
+                    sp.icon = naevc::gl_newImage(gfxname.as_ptr() as *const c_char, 0)
                 },
-                &_ => todo!(),
+                i => todo!("not found: {}", i),
             }
         }
+        println!("{:?}", sp);
         unsafe { SLOT_PROPERTIES.push(sp) };
     }
     Ok(())
