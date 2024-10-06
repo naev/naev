@@ -20,9 +20,6 @@ cc = meson.get_compiler('c')
 c_args = cc.get_supported_arguments(['-Wno-pedantic', '-Wshadow'])
 add_project_arguments(c_args, language: 'c')
 
-# Filesystem module for copying files
-fs = import('fs')
-
 # Python module checks (For AUTHORS generation and soundtrack generation)
 python_module = import('python')
 python = python_module.find_installation('python3', required: true)
