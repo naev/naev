@@ -377,7 +377,7 @@ int main (void) { return 0; }''')
    # 3. Finally, use meson to link it all together in Rust.
 
    # First create the static library with C using meson
-   naev_lib = static_library(
+   naev_clib = static_library(
       'naev',
       naev_source,
       include_directories: include_dirs,
@@ -406,7 +406,7 @@ int main (void) { return 0; }''')
    endif
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
    naev_rlib = custom_target( 'cargo-build',
-      depends: [naevcrs, naevc_crate, naev_lib],
+      depends: [naevcrs, naevc_crate, naev_clib],
       depend_files: source_rust + cargo_toml,
       output: 'libnaev.rlib',
       console: true,
