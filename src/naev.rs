@@ -8,6 +8,7 @@ extern "C" {
 use std::env;
 use std::ffi::CString;
 
+mod array;
 mod ndata;
 mod slots;
 

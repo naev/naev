@@ -190,6 +190,7 @@ ALWAYS_INLINE static inline int array_size( const void *array )
 
    return c1[-1]._size;
 }
+int array_size_rust( const void *array ); /* Helper for rust. */
 /**
  * @brief Returns number of elements reserved.
  *

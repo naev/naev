@@ -116,6 +116,11 @@ void *_array_copy_helper( size_t e_size, void *a )
    return memcpy( copy, a, e_size * c->_size );
 }
 
+int array_size_rust( const void *array )
+{
+   return array_size( array );
+}
+
 #if 0
 int main() {
    const int size = 100;

@@ -2,6 +2,7 @@
 # Source lists
 ####
 source_rust = files(
+   'array.rs',
    'naev.rs',
    'ndata.rs',
    'slots.rs',

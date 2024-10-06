@@ -1,7 +1,7 @@
 use std::ffi::CStr;
-use std::io;
 use std::os::raw::{c_char, c_int};
 
+use crate::array;
 use crate::ndata;
 
 #[derive(Debug, Clone)]
@@ -104,34 +104,42 @@ pub fn get_c(sp: c_int) -> std::io::Result<SlotProperty> {
 }
 
 pub fn load() -> std::io::Result<()> {
-    let f = ndata::File::open("dat/VERSION".to_string(), ndata::Mode::Read)?;
-    let root = minidom::Element::from_reader(std::io::BufReader::new(f)).unwrap();
-    let name = root.attr("name").unwrap().to_string();
-    let mut sp = SlotProperty {
-        name: name,
-        display: "".to_string(),
-        description: "".to_string(),
-        required: false,
-        exclusive: false,
-        locked: false,
-        visible: false,
-        icon: std::ptr::null_mut(),
-    };
-    for node in root.children() {
-        match node.name().to_lowercase().as_str() {
-            "display" => sp.display = node.text(),
-            "description" => sp.display = node.text(),
-            "required" => sp.required = true,
-            "exclusive" => sp.exclusive = true,
-            "locked" => sp.locked = true,
-            "visible" => sp.visible = true,
-            "icon" => unsafe {
-                sp.icon = naevc::gl_newImage(node.text().as_ptr() as *const c_char, 0)
-            },
-            &_ => todo!(),
-        }
+    let sp_files = unsafe { naevc::ndata_listRecursive(naevc::SP_DATA_PATH.as_ptr().cast()) };
+    let sp_array = array::to_vec(sp_files)?;
+    let mut files: Vec<String> = Vec::new();
+    for sp in sp_array {
+        files.push(unsafe { CStr::from_ptr(sp).to_str().unwrap().to_string() });
     }
-    unsafe { SLOT_PROPERTIES.push(sp) };
 
-    Err(io::Error::new(io::ErrorKind::Other, "Oops"))
+    for filename in files {
+        let f = ndata::File::open(filename, ndata::Mode::Read)?;
+        let root = minidom::Element::from_reader(std::io::BufReader::new(f)).unwrap();
+        let name = root.attr("name").unwrap().to_string();
+        let mut sp = SlotProperty {
+            name: name,
+            display: "".to_string(),
+            description: "".to_string(),
+            required: false,
+            exclusive: false,
+            locked: false,
+            visible: false,
+            icon: std::ptr::null_mut(),
+        };
+        for node in root.children() {
+            match node.name().to_lowercase().as_str() {
+                "display" => sp.display = node.text(),
+                "description" => sp.display = node.text(),
+                "required" => sp.required = true,
+                "exclusive" => sp.exclusive = true,
+                "locked" => sp.locked = true,
+                "visible" => sp.visible = true,
+                "icon" => unsafe {
+                    sp.icon = naevc::gl_newImage(node.text().as_ptr() as *const c_char, 0)
+                },
+                &_ => todo!(),
+            }
+        }
+        unsafe { SLOT_PROPERTIES.push(sp) };
+    }
+    Ok(())
 }
