@@ -101,7 +101,7 @@ pub extern "C" fn sp_locked(sp: c_int) -> c_int {
 }
 
 pub fn get_c(sp: c_int) -> std::io::Result<SlotProperty> {
-    return unsafe { Ok(SLOT_PROPERTIES[sp as usize].clone()) };
+    unsafe { Ok(SLOT_PROPERTIES[sp as usize].clone()) }
 }
 
 pub fn load() -> std::io::Result<()> {
@@ -117,7 +117,7 @@ pub fn load() -> std::io::Result<()> {
         let root = minidom::Element::from_reader(std::io::BufReader::new(f)).unwrap();
         let name = CString::new(root.attr("name").unwrap())?;
         let mut sp = SlotProperty {
-            name: name,
+            name,
             display: CString::new("")?,
             description: CString::new("")?,
             required: false,

@@ -52,8 +52,8 @@ impl<'f> File<'f> {
             Err(physfs_error_as_io_error())
         } else {
             Ok(File {
-                raw: raw,
-                //mode: mode,
+                raw,
+                //mode,
                 _marker: std::marker::PhantomData,
             })
         }
