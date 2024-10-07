@@ -176,18 +176,22 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
          continue;
       if ( !( pos->flags & PILOTOUTFIT_TOGGLEABLE ) )
          continue;
-      /* Ignore outfits handled by Lua. */
-      if ( pos->flags & PILOTOUTFIT_ISON_LUA )
-         continue;
 
       /* Se whether to turn on or off. */
       if ( pos->flags & PILOTOUTFIT_ISON ) {
+         /* If outfit is ISON_LUA, this gets clear so it just stays normal "on".
+          */
+         pos->flags &= ~PILOTOUTFIT_ISON_LUA;
          if ( pos->state == PILOT_OUTFIT_OFF ) {
-            non += pilot_outfitOn( p, pos );
-            if ( !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
+            int n = pilot_outfitOn( p, pos );
+            if ( ( n > 0 ) &&
+                 !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
                breakstealth = 1;
+            non += n;
          }
       } else {
+         if ( pos->flags & PILOTOUTFIT_ISON_LUA )
+            continue;
          if ( pos->state == PILOT_OUTFIT_ON )
             noff += pilot_outfitOff( p, pos );
       }
@@ -229,22 +233,6 @@ void pilot_weapSetUpdate( Pilot *p )
       if ( o == NULL )
          continue;
       if ( !( pos->flags & PILOTOUTFIT_TOGGLEABLE ) )
-         continue;
-      /* Ignore outfits handled by Lua. */
-      if ( pos->flags & PILOTOUTFIT_ISON_LUA )
-         continue;
-
-      /* Turn on if off. */
-      if ( pos->flags & PILOTOUTFIT_ISON ) {
-         if ( pos->state == PILOT_OUTFIT_OFF )
-            n += pilot_outfitOn( p, pos );
-      } else {
-         if ( pos->state == PILOT_OUTFIT_ON )
-            n += pilot_outfitOff( p, pos );
-      }
-
-      /* Handle volley sets below. */
-      if ( !( pos->flags & PILOTOUTFIT_ISON ) )
          continue;
       if ( pos->state != PILOT_OUTFIT_ON )
          continue;
@@ -911,10 +899,10 @@ void pilot_stopBeam( const Pilot *p, PilotOutfitSlot *w )
 
    /* Lua test to stop beam. */
    /*
-   if ((w->outfit->lua_onshoot!= LUA_NOREF) &&
-         !pilot_outfitLOnshoot( p, w, 0 ))
+      if ((w->outfit->lua_onshoot!= LUA_NOREF) &&
+      !pilot_outfitLOnshoot( p, w, 0 ))
       return;
-   */
+      */
 
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
@@ -1529,10 +1517,10 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       pilot_afterburnOver( p );
    } else if ( outfit_isBeam( o->outfit ) ) {
       /*
-      if ((o->outfit->lua_onshoot != LUA_NOREF) &&
-            !pilot_outfitLOnshoot( p, o, 0 ))
+         if ((o->outfit->lua_onshoot != LUA_NOREF) &&
+         !pilot_outfitLOnshoot( p, o, 0 ))
          return 0;
-      */
+         */
       /* Beams use stimer to represent minimum time until shutdown. */
       if ( o->u.beamid > 0 ) {
          /* Enforce minimum duration if set. */
