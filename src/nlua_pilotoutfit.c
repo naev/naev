@@ -247,8 +247,10 @@ static int poL_state( lua_State *L )
       po->state = PILOT_OUTFIT_WARMUP;
       po->flags &= ~PILOTOUTFIT_ISON_LUA;
    } else if ( strcmp( state, "on" ) == 0 ) {
+      if ( po->state != PILOT_OUTFIT_ON )
+         po->flags |=
+            PILOTOUTFIT_ISON_LUA; /* Gets disabled if ontoggle is set. */
       po->state = PILOT_OUTFIT_ON;
-      po->flags |= PILOTOUTFIT_ISON_LUA; /* Gets disabled if ontoggle is set. */
    } else if ( strcmp( state, "cooldown" ) == 0 ) {
       po->state = PILOT_OUTFIT_COOLDOWN;
       po->flags &= ~PILOTOUTFIT_ISON_LUA;
