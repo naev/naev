@@ -273,13 +273,25 @@ void pilot_weapSetUpdate( Pilot *p )
       /* Only "inrange" outfits.
        * XXX for simplicity we are using pilot position / velocity instead of
        * mount point, which might be a bit off. */
-      if ( ( pos->flags & PILOTOUTFIT_INRANGE ) && !outfit_isFighterBay( o ) &&
-           ( ( outfit_duration( o ) * p->stats.launch_range *
-                  p->stats.weapon_range <
-               time ) ||
-             ( !weapon_inArc( o, p, &wt, &p->solid.pos, &p->solid.vel,
-                              p->solid.dir, time ) ) ) )
-         continue;
+      if ( ( pos->flags & PILOTOUTFIT_INRANGE ) && !outfit_isFighterBay( o ) ) {
+         /* Check range for different types. */
+         if ( time < 0. )
+            continue;
+         else if ( outfit_isBolt( o ) ) {
+            if ( pilot_outfitRange( p, o ) / o->u.blt.speed < time )
+               continue;
+         } else if ( outfit_isLauncher( o ) ) {
+            if ( o->u.lau.duration * p->stats.launch_range *
+                    p->stats.weapon_range <
+                 time )
+               continue;
+         }
+
+         /* Must be in aiming arc if applicable. */
+         if ( !weapon_inArc( o, p, &wt, &p->solid.pos, &p->solid.vel,
+                             p->solid.dir, time ) )
+            continue;
+      }
 
       /* Shoot the weapon of the weaponset. */
       if ( volley )
@@ -938,12 +950,12 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
    if ( outfit_isBeam( o ) ) {
       if ( dist > o->u.bem.range )
          return INFINITY;
-      return 0.;
+      return -1.; /* Impossible. */
    }
 
    /* A bay doesn't have range issues */
    if ( outfit_isFighterBay( o ) )
-      return 0.;
+      return -1.;
 
    /* Missiles use absolute velocity while bolts and unguided rockets use
     * relative vel */
