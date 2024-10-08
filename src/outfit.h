@@ -211,10 +211,10 @@ typedef struct OutfitBoltData_ {
  */
 typedef struct OutfitBeamData_ {
    /* Time stuff. */
-   double delay;        /**< Delay between usage. */
-   double warmup;       /**< How long beam takes to warm up. */
-   double duration;     /**< How long the beam lasts active. */
-   double min_duration; /**< Minimum duration the beam can be fired for. */
+   double delay;     /**< Delay between usage. */
+   double warmup;    /**< How long beam takes to warm up. */
+   double duration;  /**< How long the beam lasts active. */
+   double min_delay; /**< Minimum delay between firing the  beam. */
 
    /* Beam properties. */
    double range;      /**< how far it goes */

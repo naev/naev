@@ -856,9 +856,9 @@ static int outfitL_specificStats( lua_State *L )
       FALLTHROUGH;
    case OUTFIT_TYPE_BEAM:
       SETFIELD( "delay", o->u.bem.delay );
+      SETFIELD( "min_delay", o->u.bem.min_delay );
       SETFIELD( "warmup", o->u.bem.warmup );
       SETFIELD( "duration", o->u.bem.duration );
-      SETFIELD( "min_duration", o->u.bem.min_duration );
       SETFIELD( "range", o->u.bem.range );
       SETFIELD( "turn", o->u.bem.turn );
       SETFIELD( "energy", o->u.bem.energy );

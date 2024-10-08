@@ -13,6 +13,7 @@
       * Camouflage burster gives a speed bonus while active and disables when out of stealth
       * Can scan ships with 'u' key
       * Gave the Quicksilver another medium structural slot
+      * Beam weapons have minimum delays instead of minimum durations
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
