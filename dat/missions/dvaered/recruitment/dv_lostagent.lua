@@ -303,12 +303,16 @@ And again, be ensured that your initial reward will be dramatically increased fr
       agent(fmt.f(_([[Now that Chilperic Duchmol aka The Death Dealer is no more, your mission is over and it is my utmost privilege to reward you the sum of {credits} in name of the Dvaered High Command.]]),{credits=fmt.credits(reward)}))
       agent(_([[The fact that this mission did not go as planned is actually a rather good thing for you, you know: now you have proven to the Dvaered High Command that you are a reliable pilot. I don't know if you intend to continue working for them, but I have information that suggest that they might offer you more work in the future.]]))
 
-      vn.done()
+      vn.sfxVictory()
+      vn.func( function ()
+         player.pay(reward)
+      end )
+      vn.na( fmt.reward(reward) )
+
       vn.run()
 
       -- TODO once the whole recruitment campaign is stabilized: faction.get("Dvaered"):modPlayerRaw(someQuantity)
       dv.addStandardLog( _([[You performed a delivery mission for the Dvaered-Empire collaboration. This mission did however turn out oddly and you ended up helping the Empire capture a shady FLF-friendly agent surnamed "Shaky Swan" and killing a pirate.]]) )
-      player.pay(reward)
       misn.finish(true)
    end
 end
