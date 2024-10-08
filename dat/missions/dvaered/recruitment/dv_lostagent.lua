@@ -207,7 +207,7 @@ But it is too risky to wait for them here. This means that we have to take the c
       misn.osdCreate( _("Dvaered Delivery"), {
          fmt.f(_("Go to {sys} and land on {pnt}. Avoid being scanned on the way."), {sys=mem.sys2, pnt=mem.spob2} ),
       } )
-      misn.markerRm( mem.misn_marker )
+      misn.markerRm()
       mem.misn_marker = misn.markerAdd( mem.spob2 )
 
    -- Player makes it to the second rendez-vous point. An overly complicated discussion happens to show how messy the Dvaered-Imperial black-ops system is.
@@ -243,7 +243,7 @@ A seemingly-unarmed man steps forward. He must be the imperial agent in charge o
 
       misn.npcAdd("discussWithAg", _("Bony Boudica"), agentPort, _("This agent is an intermediate between the Empire and Dvaered.")) -- Add boudica at the bar
       misn.cargoRm( mem.cid ) -- Done with the cargo
-      misn.markerRm( mem.misn_marker )
+      misn.markerRm()
       mem.misn_state = 2
 
    -- Player meets Boudica again after having captured Shaky Swan.
@@ -266,7 +266,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
       mem.misn_state = 6
       misn.setReward( fmt.f(_( "Hopefully much more than {credits}"), {credits=fmt.credits(mem.credits)}) )
       misn.setDesc( _("When will it end?") )
-      misn.markerRm( mem.misn_marker )
+      misn.markerRm()
       mem.misn_marker = misn.markerAdd( mem.duchpnt )
 
       misn.osdDestroy()
@@ -494,7 +494,7 @@ function assetBoardsSwan( )
    mem.asset:hyperspace()
    mem.misn_state = 5
    misn.osdActive(3)
-   misn.markerRm( mem.misn_marker )
+   misn.markerRm()
    mem.misn_marker = misn.markerAdd( mem.spob2 )
 end
 
@@ -547,7 +547,7 @@ function duchExploded()
    vntk.msg("", _([[The final explosion of a hostile ship is always a pleasant sight, isn't it? It is now time to report back to Bony Boudica.]]))
    misn.osdActive(2)
    mem.misn_state = 8
-   misn.markerRm( mem.misn_marker )
+   misn.markerRm()
    mem.misn_marker = misn.markerAdd( mem.spob2 )
 end
 function duchEscaped()
