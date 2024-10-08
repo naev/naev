@@ -13,6 +13,7 @@
       * Camouflage burster gives a speed bonus while active and disables when out of stealth
       * Can scan ships with 'u' key
       * Gave the Quicksilver another medium structural slot
+      * Beam weapons have minimum delays instead of minimum durations
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
@@ -85,7 +86,7 @@
       * Editor has partial support for universe diffs
       * Editor has separate configuration and file dialogues
       * New ship stats
-         * Global weapon range, damage, firerate and energy usage
+         * Global weapon range, damage, fire-rate and energy usage
          * Range ship stat for all specific weapon types
          * Turn, speed, and accel for launchers
          * Shield down time modifier
@@ -98,8 +99,10 @@
       * Fixed hypergate and wormhole effects getting stuck
       * Obelisks tell if you have completed them already
       * Fixed space dust disappearing with certain jump abilities
+      * Boarded pilots become permanently disabled if they lose space-worthiness
       * Double tap will activate feather drive like blink engines
       * Fixed camouflage burster not activating stealth
+      * Fixed bug where beams were counted as giving energy in the equipment optimizer
       * shadowvigil: claim entire route
       * sh01_corvette: should be completable on easy difficulties now
       * patrol: fixed escorts and fighters becoming hostile if hostile to the mission giving faction

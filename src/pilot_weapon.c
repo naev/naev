@@ -924,8 +924,9 @@ void pilot_stopBeam( const Pilot *p, PilotOutfitSlot *w )
    used = w->outfit->u.bem.duration -
           w->timer * ( 1. - pilot_heatAccuracyMod( w->heat_T ) );
 
-   w->timer = rate_mod * ( used / w->outfit->u.bem.duration ) *
-              outfit_delay( w->outfit );
+   w->timer    = rate_mod * MAX( w->outfit->u.bem.min_delay,
+                                 ( used / w->outfit->u.bem.duration ) *
+                                    outfit_delay( w->outfit ) );
    w->u.beamid = 0;
    w->state    = PILOT_OUTFIT_OFF;
 }
@@ -1125,10 +1126,6 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
    /* Make sure weapon has outfit. */
    if ( w->outfit == NULL )
       return 0;
-
-   /* Reset beam shut-off if needed. */
-   if ( outfit_isBeam( w->outfit ) && w->outfit->u.bem.min_duration )
-      w->stimer = INFINITY;
 
    /* check to see if weapon is ready */
    if ( w->timer > 0. )
@@ -1535,15 +1532,6 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
          */
       /* Beams use stimer to represent minimum time until shutdown. */
       if ( o->u.beamid > 0 ) {
-         /* Enforce minimum duration if set. */
-         if ( o->outfit->u.bem.min_duration > 0. ) {
-
-            o->stimer = o->outfit->u.bem.min_duration -
-                        ( o->outfit->u.bem.duration - o->timer );
-
-            if ( o->stimer > 0. )
-               return 0;
-         }
          beam_end( o->u.beamid );
          pilot_stopBeam( p, o ); /* Sets the state. */
       } else

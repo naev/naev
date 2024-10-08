@@ -79,10 +79,17 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
       margin = 0
       block.w = tw
       table.insert( wgt.blocks, block )
-      block = { type = "text", x = 0, y = ty, w=tw, h=bh, text = "", font=deffont }
+      block = { type="text", x=0, y=ty, w=tw, h=bh, text = "", font=deffont }
       -- See if it's time to restore width
       if tw < w and #wgt.wgts > 0 then
-         if wgt.wgts[#wgt.wgts].y2 < ty then
+         -- Get last rightalign widget
+         local rwgt = nil
+         for k,v in ipairs(wgt.wgts) do
+            if v.rightalign then
+               rwgt = v
+            end
+         end
+         if rwgt.y2 < ty then
             tw = w
          end
       end
@@ -292,7 +299,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                margin = math.max( margin, 10 )
                if rightalign then
                   wx = w + wx - ww -- Don't use w here
-                  tw = wx - 10
+                  tw = math.min( tw, wx-10 )
                else
                   wy = wy + margin
                   margin = 0
@@ -305,6 +312,7 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
                luawgt.y = 0
                local wgtblock = {
                   type = "widget",
+                  rightalign = rightalign,
                   x = wx,
                   y = wy,
                   w = ww,

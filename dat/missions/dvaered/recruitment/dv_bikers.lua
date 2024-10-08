@@ -347,12 +347,15 @@ The man on your right answers: "Certainly not, your Lordship."]]),
       vn.jump("shutup")
 
       vn.label("shutup")
-      vn.done()
+      vn.sfxVictory()
+      vn.func( function ()
+         player.pay(pay)
+      end )
+      vn.na( fmt.reward(pay) )
       vn.run()
 
       -- TODO once the whole recruitment campaign is stabilized: faction.get("Dvaered"):modPlayerRaw(someQuantity)
       dv.addStandardLog( _([[You stole a nozzle hubcap to the leader of a gang of Hyena bikers for the Baron Sauterfeldt to help Lord Fatgun getting a second Goddard battlecruiser.]]) )
-      player.pay(pay)
       misn.finish(true)
    end
 end

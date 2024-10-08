@@ -74,6 +74,8 @@ local goodness_override = {
    ["Asteroid Scanner"] = 1,
    ["Blink Drive"] = 3,
    ["Hyperbolic Blink Engine"] = 3,
+   ["S&K Heavy Plasma Drill"] = 1,
+   ["S&K Plasma Drill"] = 1,
 }
 
 -- Special weights
@@ -533,7 +535,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Add space worthy checks
    lp:set_row( 1, "CPU",          nil, st.cpu_max ) -- Don't multiply by modifiers here or they get affected "twice"
    local energygoal = math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs)
-   lp:set_row( 2, "energy_regen", nil, st.energy_regen - energygoal )
+   lp:set_row( 2, "energy_regen", st.energy_regen - energygoal )
    local massgoal = math.max( params.max_mass * ss.engine_limit - st.mass, ss.engine_limit*params.min_mass_margin )
    if massgoal < 0 then
       warn(string.format(_("Impossible mass goal of %d set! Ignoring mass for pilot '%s'!"), massgoal, p:name()))
@@ -605,7 +607,7 @@ function optimize.optimize( p, cores, outfit_list, params )
          -- Energy constraint
          table.insert( ia, 2 )
          table.insert( ja, c )
-         table.insert( ar, -stats.energy_regen + params.eps_weight*(stats.eps or 0) )
+         table.insert( ar, stats.energy_regen-params.eps_weight*(stats.eps or 0) )
          -- Mass constraint
          table.insert( ia, 3 )
          table.insert( ja, c )
@@ -696,6 +698,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    local smod = 1
    local done
    local z, x, constraints
+   local min_energy = params.min_energy_regen_abs - st.energy_regen
    repeat
       try = try + 1
       done = true
@@ -708,9 +711,9 @@ function optimize.optimize( p, cores, outfit_list, params )
          mmod = mmod * 2
          massgoal = mmod * params.max_mass * ss.engine_limit - st.mass
          lp:set_row( 3, "mass", nil, massgoal )
-         -- Energy constraint
+         -- Energy constraint, ensure doesn't go over base
          energygoal = energygoal / 1.5
-         lp:set_row( 2, "energy_regen", nil, st.energy_regen - emod*energygoal )
+         lp:set_row( 2, "energy_regen", math.max( min_energy, st.energy_regen - emod*energygoal ))
 
          -- Re-solve
          z, x, constraints = lp:solve( sparams )
@@ -758,13 +761,13 @@ function optimize.optimize( p, cores, outfit_list, params )
       end
 
       -- Due to the approximation, sometimes they end up with not enough
-      -- energy, we'll try again with larger energy constraints
+      -- energy, we'll try again with more relaxed energy constraints
       local stn = p:stats()
-      if stn.energy_regen < energygoal and try < 5 then
+      if stn.energy_regen < energygoal and try < 5 and (st.energy_regen - emod*energygoal) > min_energy then
          p:outfitRm( "all" )
          emod = emod * 1.5
          --print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
-         lp:set_row( 2, "energy_regen", nil, st.energy_regen - emod*energygoal )
+         lp:set_row( 2, "energy_regen", math.max( min_energy, st.energy_regen - emod*energygoal ))
          done = false
       end
    until done or try >= 5 -- attempts should be fairly fast since we just do optimization step
