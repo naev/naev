@@ -1034,14 +1034,6 @@ double outfit_duration( const Outfit *o )
          return o->u.mod.duration;
    } else if ( outfit_isAfterburner( o ) )
       return INFINITY;
-   else if ( outfit_isBolt( o ) )
-      return ( o->u.blt.range / o->u.blt.speed );
-   else if ( outfit_isBeam( o ) )
-      return o->u.bem.duration;
-   else if ( outfit_isLauncher( o ) )
-      return o->u.lau.duration;
-   else if ( outfit_isFighterBay( o ) )
-      return INFINITY;
    return -1.;
 }
 /**

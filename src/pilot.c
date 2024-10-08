@@ -4394,7 +4394,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
             mod_damage = p->stats.tur_damage;
             mod_shots  = 1. / p->stats.tur_firerate;
          }
-         shots     = outfit_duration( o );
+         shots     = o->u.bem.duration;
          mod_shots = shots / ( shots + mod_shots * outfit_delay( o ) );
          dps += mod_shots * mod_damage * outfit_damage( o )->damage;
          eps += mod_shots * mod_energy * outfit_energy( o );
