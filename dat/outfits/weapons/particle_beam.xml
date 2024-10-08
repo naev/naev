@@ -11,7 +11,7 @@
   <cpu>-24</cpu>
  </general>
  <specific type="turret beam">
-  <delay>2</delay>
+  <delay min="1">2</delay>
   <duration>2</duration>
   <range>350</range>
   <turn>120</turn>

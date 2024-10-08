@@ -14,7 +14,7 @@
   <mining_bonus>-15</mining_bonus>
  </stats>
  <specific type="beam">
-  <delay>1.1</delay>
+  <delay min="0.6">1.1</delay>
   <duration>1</duration>
   <range>200</range>
   <energy>70</energy>
