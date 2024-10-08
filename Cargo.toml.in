@@ -2,6 +2,7 @@
 name = @NAME@
 version = @VERSION@
 edition = "2021"
+rust-version = "1.80" # LazyLock
 
 [lib]
 path = @PATH@
