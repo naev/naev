@@ -6,6 +6,7 @@ source_rust = files(
    'gettext.rs',
    'naev.rs',
    'ndata.rs',
+   'ntime.rs',
    'slots.rs',
 )
 source = files(
@@ -89,7 +90,6 @@ source = files(
    'nopenal.c',
    'npc.c',
    'nstring.c',
-   'ntime.c',
    'nxml.c',
    'nxml_lua.c',
    'opengl.c',

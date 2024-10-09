@@ -11,6 +11,7 @@ extern "C" {
 mod array;
 mod gettext;
 mod ndata;
+mod ntime;
 mod slots;
 
 #[allow(dead_code)]
