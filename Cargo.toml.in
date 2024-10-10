@@ -10,3 +10,4 @@ path = @PATH@
 [dependencies]
 naevc = { path=@NAEVC@ }
 roxmltree = "0.20.0"
+derive_more = { version = "1", features = ["add","add_assign"] }
