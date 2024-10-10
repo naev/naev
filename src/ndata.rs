@@ -174,6 +174,6 @@ impl<'f> Drop for File<'f> {
 pub fn read(path: String) -> Result<Vec<u8>> {
     let mut f = File::open(path, Mode::Read)?;
     let mut out: Vec<u8> = vec![0; f.len()? as usize];
-    f.read(out.as_mut())?;
+    f.read_exact(out.as_mut())?;
     Ok(out)
 }

@@ -36,7 +36,7 @@ impl Default for SlotProperty {
 }
 impl Ord for SlotProperty {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        (&self.name).cmp(&(&other.name))
+        self.name.cmp(&other.name)
     }
 }
 impl PartialOrd for SlotProperty {
@@ -46,7 +46,7 @@ impl PartialOrd for SlotProperty {
 }
 impl PartialEq for SlotProperty {
     fn eq(&self, other: &Self) -> bool {
-        &self.name == &other.name
+        self.name == other.name
     }
 }
 impl Eq for SlotProperty {}

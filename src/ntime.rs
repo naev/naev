@@ -40,7 +40,43 @@ impl From<NTime> for u32 {
 }
 impl From<NTime> for i64 {
     fn from(t: NTime) -> i64 {
-        t.0.try_into().unwrap()
+        t.0
+    }
+}
+impl std::fmt::Display for NTime {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let cycles = self.cycles();
+        let periods = self.periods();
+        let seconds = self.seconds();
+        // TODO try to move 2 to variable decimal length, but not that important
+        if cycles == 0 && periods == 0 {
+            write!(
+                f,
+                "{}",
+                formatx!(gettext("{:04d} s").to_string(), seconds).unwrap()
+            )
+        } else if cycles == 0 {
+            write!(
+                f,
+                "{}",
+                formatx!(
+                    gettext("{p:.2f} s").to_string(),
+                    p = periods as f64 + 0.0001 * seconds as f64
+                )
+                .unwrap()
+            )
+        } else {
+            write!(
+                f,
+                "{}",
+                formatx!(
+                    gettext("UST {c}:{p:.2f}").to_string(),
+                    c = cycles,
+                    p = periods as f64 + 0.0001 * seconds as f64
+                )
+                .unwrap()
+            )
+        }
     }
 }
 impl NTime {
@@ -69,28 +105,6 @@ impl NTime {
     pub fn to_seconds(self) -> f64 {
         let t = self.0 as f64;
         t / 1_000.
-    }
-    pub fn to_string(self) -> String {
-        let cycles = self.cycles();
-        let periods = self.periods();
-        let seconds = self.seconds();
-        // TODO try to move 2 to variable decimal length, but not that important
-        if cycles == 0 && periods == 0 {
-            formatx!(gettext("{:04d} s").to_string(), seconds).unwrap()
-        } else if cycles == 0 {
-            formatx!(
-                gettext("{p:.2f} s").to_string(),
-                p = periods as f64 + 0.0001 * seconds as f64
-            )
-            .unwrap()
-        } else {
-            formatx!(
-                gettext("UST {c}:{p:.2f}").to_string(),
-                c = cycles,
-                p = periods as f64 + 0.0001 * seconds as f64
-            )
-            .unwrap()
-        }
     }
 }
 
@@ -156,16 +170,15 @@ pub unsafe extern "C" fn ntime_pretty(t: NTimeC, d: c_int) -> *mut c_char {
         t,
         d,
     );
-    return naevc::strdup(str.as_mut_ptr());
+    naevc::strdup(str.as_mut_ptr())
 }
 #[no_mangle]
 pub unsafe extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTimeC, d: c_int) {
-    let nt: NTime;
-    if t == 0 {
-        nt = TIME.lock().unwrap().time;
+    let nt = if t == 0 {
+        TIME.lock().unwrap().time
     } else {
-        nt = NTime(t);
-    }
+        NTime(t)
+    };
     let cycles = nt.cycles();
     let periods = nt.periods();
     let seconds = nt.seconds();
@@ -232,7 +245,7 @@ pub fn set(t: NTime) {
 pub fn set_remainder(t: NTime, rem: f64) {
     let mut nt = TIME.lock().unwrap();
     nt.time = t;
-    nt.time = nt.time + NTime(rem.floor() as i64);
+    nt.time += NTime(rem.floor() as i64);
     nt.remainder %= 1.0;
 }
 
@@ -270,15 +283,10 @@ pub fn inc_queue(t: NTime) {
 }
 
 pub fn refresh() {
-    loop {
-        match DEFERLIST.lock().unwrap().pop_front() {
-            Some(t) => {
-                TIME.lock().unwrap().time += t;
-                unsafe {
-                    naevc::economy_update(t.into());
-                }
-            }
-            _ => break,
+    while let Some(t) = DEFERLIST.lock().unwrap().pop_front() {
+        TIME.lock().unwrap().time += t;
+        unsafe {
+            naevc::economy_update(t.into());
         }
     }
 }
