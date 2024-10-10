@@ -28,6 +28,11 @@ impl From<NTime> for u32 {
         t.0.try_into().unwrap()
     }
 }
+impl From<NTime> for i64 {
+    fn from(t: NTime) -> i64 {
+        t.0.try_into().unwrap()
+    }
+}
 impl NTime {
     pub fn new(scu: i32, stp: i32, stu: i32) -> NTime {
         let scu = scu as i64;
@@ -66,16 +71,7 @@ static ENABLED: Mutex<bool> = Mutex::new(true);
 
 #[no_mangle]
 pub extern "C" fn ntime_update(dt: c_double) {
-    if !*ENABLED.lock().unwrap() {
-        return;
-    }
-    let mut nt = TIME.lock().unwrap();
-    let dtt = nt.remainder + dt * 30. * 1000.;
-    let tu = dtt.floor();
-    let inc = tu as i64;
-    nt.remainder = dtt - tu;
-    nt.time += NTime(inc);
-    unsafe { naevc::hooks_updateDate(inc) };
+    update(dt);
 }
 #[no_mangle]
 pub extern "C" fn ntime_create(scu: c_int, stp: c_int, stu: c_int) -> NTimeC {
@@ -83,7 +79,7 @@ pub extern "C" fn ntime_create(scu: c_int, stp: c_int, stu: c_int) -> NTimeC {
 }
 #[no_mangle]
 pub unsafe extern "C" fn ntime_get() -> NTimeC {
-    return TIME.lock().unwrap().time.0;
+    get().0
 }
 #[no_mangle]
 pub unsafe extern "C" fn ntime_getR(
@@ -168,40 +164,80 @@ pub unsafe extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTime
 }
 #[no_mangle]
 pub extern "C" fn ntime_set(t: NTimeC) {
-    let mut nt = TIME.lock().unwrap();
-    nt.time = NTime(t);
-    nt.remainder = 0.;
+    set(NTime(t));
 }
 #[no_mangle]
 pub extern "C" fn ntime_setR(cycles: c_int, periods: c_int, seconds: c_int, rem: c_double) {
-    let mut nt = TIME.lock().unwrap();
-    nt.time = NTime::new(cycles, periods, seconds);
-    nt.time = nt.time + NTime(rem.floor() as i64);
-    nt.remainder %= 1.0;
+    set_remainder(NTime::new(cycles, periods, seconds), rem);
 }
 #[no_mangle]
 pub extern "C" fn ntime_inc(tc: NTimeC) {
-    let t = NTime(tc);
+    inc(NTime(tc));
+}
+#[no_mangle]
+pub extern "C" fn ntime_allowUpdate(enable: c_int) {
+    allow_update(enable != 0);
+}
+#[no_mangle]
+pub extern "C" fn ntime_incLagged(t: NTimeC) {
+    inc_queue(NTime(t));
+}
+#[no_mangle]
+pub extern "C" fn ntime_refresh() {
+    refresh();
+}
+
+pub fn get() -> NTime {
+    TIME.lock().unwrap().time
+}
+
+pub fn set(t: NTime) {
+    let mut nt = TIME.lock().unwrap();
+    nt.time = t;
+    nt.remainder = 0.;
+}
+
+pub fn set_remainder(t: NTime, rem: f64) {
+    let mut nt = TIME.lock().unwrap();
+    nt.time = t;
+    nt.time = nt.time + NTime(rem.floor() as i64);
+    nt.remainder %= 1.0;
+}
+
+pub fn update(dt: f64) {
+    if !*ENABLED.lock().unwrap() {
+        return;
+    }
+    let mut nt = TIME.lock().unwrap();
+    let dtt = nt.remainder + dt * 30. * 1000.;
+    let tu = dtt.floor();
+    let inc = tu as i64;
+    nt.remainder = dtt - tu;
+    nt.time += NTime(inc);
+    unsafe { naevc::hooks_updateDate(inc) };
+}
+
+pub fn allow_update(enable: bool) {
+    *ENABLED.lock().unwrap() = enable;
+}
+
+pub fn inc(t: NTime) {
     TIME.lock().unwrap().time += t;
     unsafe {
         naevc::economy_update(t.into());
     }
     if t > NTime(0) {
         unsafe {
-            naevc::hooks_updateDate(tc);
+            naevc::hooks_updateDate(t.into());
         }
     }
 }
-#[no_mangle]
-pub extern "C" fn ntime_allowUpdate(enable: c_int) {
-    *ENABLED.lock().unwrap() = enable != 0;
+
+pub fn inc_queue(t: NTime) {
+    DEFERLIST.lock().unwrap().push_back(t);
 }
-#[no_mangle]
-pub extern "C" fn ntime_incLagged(t: NTimeC) {
-    DEFERLIST.lock().unwrap().push_back(NTime(t));
-}
-#[no_mangle]
-pub extern "C" fn ntime_refresh() {
+
+pub fn refresh() {
     loop {
         match DEFERLIST.lock().unwrap().pop_front() {
             Some(t) => {
@@ -213,9 +249,4 @@ pub extern "C" fn ntime_refresh() {
             _ => break,
         }
     }
-}
-
-#[allow(dead_code)]
-pub fn get() -> NTime {
-    TIME.lock().unwrap().time
 }
