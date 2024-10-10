@@ -5,7 +5,7 @@ use std::ffi::CString;
 use std::os::raw::{c_char, c_double, c_int, c_ulong};
 use std::sync::Mutex;
 
-pub type NTimeC = i64;
+type NTimeC = i64;
 #[derive(Clone, Copy, PartialEq, Eq, Add, AddAssign)]
 pub struct NTime(i64);
 
@@ -29,7 +29,7 @@ impl From<NTime> for u32 {
     }
 }
 impl NTime {
-    pub fn create(scu: i32, stp: i32, stu: i32) -> NTime {
+    pub fn new(scu: i32, stp: i32, stu: i32) -> NTime {
         let scu = scu as i64;
         let stp = stp as i64;
         let stu = stu as i64;
@@ -47,6 +47,14 @@ impl NTime {
         let t = self.0;
         (t / 1000 % 10000).try_into().unwrap()
     }
+    pub fn remainder(self) -> f64 {
+        let t = self.0 as f64;
+        t % 1000.
+    }
+    pub fn to_seconds(self) -> f64 {
+        let t = self.0 as f64;
+        t / 1000.
+    }
 }
 
 static DEFERLIST: Mutex<VecDeque<NTime>> = Mutex::new(VecDeque::new());
@@ -57,12 +65,11 @@ static TIME: Mutex<NTimeInternal> = Mutex::new(NTimeInternal {
 static ENABLED: Mutex<bool> = Mutex::new(true);
 
 #[no_mangle]
-pub extern "C" fn ntime_update(cdt: c_double) {
+pub extern "C" fn ntime_update(dt: c_double) {
     if !*ENABLED.lock().unwrap() {
         return;
     }
     let mut nt = TIME.lock().unwrap();
-    let dt = cdt as f64;
     let dtt = nt.remainder + dt * 30. * 1000.;
     let tu = dtt.floor();
     let inc = tu as i64;
@@ -72,7 +79,7 @@ pub extern "C" fn ntime_update(cdt: c_double) {
 }
 #[no_mangle]
 pub extern "C" fn ntime_create(scu: c_int, stp: c_int, stu: c_int) -> NTimeC {
-    NTime::create(scu, stp, stu).0
+    NTime::new(scu, stp, stu).0
 }
 #[no_mangle]
 pub unsafe extern "C" fn ntime_get() -> NTimeC {
@@ -90,7 +97,7 @@ pub unsafe extern "C" fn ntime_getR(
     *cycles = t.cycles();
     *periods = t.periods();
     *seconds = t.seconds();
-    *rem = ntime_getRemainder(nt.time.0) + nt.remainder;
+    *rem = nt.time.remainder() + nt.remainder;
 }
 #[no_mangle]
 pub unsafe extern "C" fn ntime_getCycles(t: NTimeC) -> c_int {
@@ -106,11 +113,11 @@ pub unsafe extern "C" fn ntime_getSeconds(t: NTimeC) -> c_int {
 }
 #[no_mangle]
 pub unsafe extern "C" fn ntime_convertSeconds(t: NTimeC) -> c_double {
-    t as c_double / 1000.0
+    NTime(t).to_seconds()
 }
 #[no_mangle]
 pub unsafe extern "C" fn ntime_getRemainder(t: NTimeC) -> c_double {
-    t as c_double % 1000.
+    NTime(t).remainder()
 }
 #[no_mangle]
 pub unsafe extern "C" fn ntime_pretty(t: NTimeC, d: c_int) -> *mut c_char {
@@ -168,7 +175,7 @@ pub extern "C" fn ntime_set(t: NTimeC) {
 #[no_mangle]
 pub extern "C" fn ntime_setR(cycles: c_int, periods: c_int, seconds: c_int, rem: c_double) {
     let mut nt = TIME.lock().unwrap();
-    nt.time = NTime::create(cycles, periods, seconds);
+    nt.time = NTime::new(cycles, periods, seconds);
     nt.time = nt.time + NTime(rem.floor() as i64);
     nt.remainder %= 1.0;
 }
@@ -206,4 +213,9 @@ pub extern "C" fn ntime_refresh() {
             _ => break,
         }
     }
+}
+
+#[allow(dead_code)]
+pub fn get() -> NTime {
+    TIME.lock().unwrap().time
 }
