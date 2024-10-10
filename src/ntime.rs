@@ -8,7 +8,6 @@ use std::sync::Mutex;
 type NTimeC = i64;
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub struct NTime(i64);
-
 struct NTimeInternal {
     time: NTime,
     remainder: f64,
@@ -53,23 +52,23 @@ impl NTime {
     }
     pub fn cycles(self) -> i32 {
         let t = self.0;
-        (t / (5000 * 10000 * 1000)).try_into().unwrap()
+        (t / (5_000 * 10_000 * 1_000)).try_into().unwrap()
     }
     pub fn periods(self) -> i32 {
         let t = self.0;
-        (t / (10000 * 1000) % 5000).try_into().unwrap()
+        (t / (10_000 * 1_000) % 5_000).try_into().unwrap()
     }
     pub fn seconds(self) -> i32 {
         let t = self.0;
-        (t / 1000 % 10000).try_into().unwrap()
+        (t / 1_000 % 10_000).try_into().unwrap()
     }
     pub fn remainder(self) -> f64 {
         let t = self.0 as f64;
-        t % 1000.
+        t % 1_000.
     }
     pub fn to_seconds(self) -> f64 {
         let t = self.0 as f64;
-        t / 1000.
+        t / 1_000.
     }
     pub fn to_string(self) -> String {
         let cycles = self.cycles();
@@ -174,14 +173,14 @@ pub unsafe extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTime
     if cycles == 0 && periods == 0 {
         let cmsg = CString::new(gettext("%04d s")).unwrap();
         naevc::snprintf(cstr, max, cmsg.as_ptr().cast(), seconds);
-    } else if cycles == 0 as c_int || d == 0 as c_int {
+    } else if cycles == 0 || d == 0 {
         let cmsg = CString::new(gettext("%.*f p")).unwrap();
         naevc::snprintf(
             cstr,
             max,
             cmsg.as_ptr().cast(),
             d,
-            periods as c_double + 0.0001f64 * seconds as c_double,
+            periods as c_double + 0.0001 * seconds as c_double,
         );
     } else {
         let cmsg = CString::new(gettext("UST %d:%.*f")).unwrap();
@@ -191,7 +190,7 @@ pub unsafe extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTime
             cmsg.as_ptr().cast(),
             cycles,
             d,
-            periods as c_double + 0.0001f64 * seconds as c_double,
+            periods as c_double + 0.0001 * seconds as c_double,
         );
     };
 }
