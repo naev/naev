@@ -1,5 +1,6 @@
 use crate::gettext::gettext;
 use derive_more::{Add, AddAssign};
+use formatx::formatx;
 use std::collections::VecDeque;
 use std::ffi::CString;
 use std::os::raw::{c_char, c_double, c_int, c_ulong};
@@ -59,6 +60,27 @@ impl NTime {
     pub fn to_seconds(self) -> f64 {
         let t = self.0 as f64;
         t / 1000.
+    }
+    pub fn to_string(self) -> String {
+        let cycles = self.cycles();
+        let periods = self.periods();
+        let seconds = self.seconds();
+        if cycles == 0 && periods == 0 {
+            formatx!(gettext("{:04d} s").to_string(), seconds).unwrap()
+        } else if cycles == 0 {
+            formatx!(
+                gettext("{p:.2f} s").to_string(),
+                p = periods as f64 + 0.0001 * seconds as f64
+            )
+            .unwrap()
+        } else {
+            formatx!(
+                gettext("UST {c}:{p:.2f}").to_string(),
+                c = cycles,
+                p = periods as f64 + 0.0001 * seconds as f64
+            )
+            .unwrap()
+        }
     }
 }
 
