@@ -58,7 +58,7 @@ po/naevpedia_pot.py po/naevpedia.pot \
    echo po/physfs.pot
    echo po/credits.pot
    find_files dat xml | deterministic_sort
-   ( find_files dat lua; find_files src "[ch]") | deterministic_sort
+   ( find_files dat lua; find_files src "[ch]"; find_files src rs) | deterministic_sort
    echo dat/outfits/bioship/generate.py
 ) | filter_skipped > po/POTFILES.in
 

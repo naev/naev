@@ -3611,6 +3611,7 @@ src/ai.c
 src/ai.h
 src/array.c
 src/array.h
+src/array.rs
 src/asteroid.c
 src/asteroid.h
 src/attributes.h
@@ -3690,6 +3691,7 @@ src/gatherable.c
 src/gatherable.h
 src/gettext.c
 src/gettext.h
+src/gettext.rs
 src/glad.c
 src/glad.h
 src/gltf.c
@@ -3759,12 +3761,14 @@ src/music.c
 src/music.h
 src/naev.c
 src/naev.h
+src/naev.rs
 src/naev_version.c
 src/naevlua.c
 src/naevpedia.c
 src/naevpedia.h
 src/ndata.c
 src/ndata.h
+src/ndata.rs
 src/nebula.c
 src/nebula.h
 src/news.c
@@ -3867,6 +3871,7 @@ src/npc.h
 src/nstring.c
 src/nstring.h
 src/ntime.h
+src/ntime.rs
 src/ntracing.h
 src/nxml.c
 src/nxml.h
@@ -3946,6 +3951,7 @@ src/shiplog.h
 src/shipstats.c
 src/shipstats.h
 src/slots.h
+src/slots.rs
 src/sound.c
 src/sound.h
 src/space.c
