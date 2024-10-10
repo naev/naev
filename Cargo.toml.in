@@ -11,4 +11,3 @@ path = @PATH@
 naevc = { path=@NAEVC@ }
 roxmltree = "0.20.0"
 formatx = "0.2.2"
-derive_more = { version = "1", features = ["add","add_assign"] }

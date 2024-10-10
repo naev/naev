@@ -1,5 +1,4 @@
 use crate::gettext::gettext;
-use derive_more::{Add, AddAssign};
 use formatx::formatx;
 use std::collections::VecDeque;
 use std::ffi::CString;
@@ -7,12 +6,23 @@ use std::os::raw::{c_char, c_double, c_int, c_ulong};
 use std::sync::Mutex;
 
 type NTimeC = i64;
-#[derive(Clone, Copy, PartialEq, Eq, Add, AddAssign)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 pub struct NTime(i64);
 
 struct NTimeInternal {
     time: NTime,
     remainder: f64,
+}
+impl<T: Into<i64>> std::ops::Add<T> for NTime {
+    type Output = NTime;
+    fn add(self, other: T) -> Self {
+        NTime(self.0 + other.into())
+    }
+}
+impl<T: Into<i64>> std::ops::AddAssign<T> for NTime {
+    fn add_assign(&mut self, other: T) {
+        self.0 += other.into()
+    }
 }
 impl Ord for NTime {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
@@ -65,6 +75,7 @@ impl NTime {
         let cycles = self.cycles();
         let periods = self.periods();
         let seconds = self.seconds();
+        // TODO try to move 2 to variable decimal length, but not that important
         if cycles == 0 && periods == 0 {
             formatx!(gettext("{:04d} s").to_string(), seconds).unwrap()
         } else if cycles == 0 {
