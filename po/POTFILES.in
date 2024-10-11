@@ -3730,6 +3730,7 @@ src/load.c
 src/load.h
 src/log.c
 src/log.h
+src/log.rs
 src/lua_enet.c
 src/lua_enet.h
 src/lutf8lib.c
