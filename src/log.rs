@@ -38,8 +38,12 @@ macro_rules! ndebug {
 #[macro_export]
 macro_rules! nwarn {
     ($($arg:tt)*) => {
-        println!("{}{}",
+        eprintln!("{}WARNING {}:{}: {}",
             std::backtrace::Backtrace::force_capture(),
+            file!(), line!(),
             &formatx!($($arg)*).unwrap());
+        if cfg!(unix) && naevc::config::DEBUG_PARANOID {
+            nix::sys::signal::raise( nix::sys::signal::Signal::SIGINT ).unwrap();
+        }
     };
 }

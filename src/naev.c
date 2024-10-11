@@ -154,8 +154,6 @@ int naev_isQuit( void )
 /**
  * @brief The entry point of Naev.
  *
- *    @param[in] argc Number of arguments.
- *    @param[in] argv Array of argc arguments.
  *    @return EXIT_SUCCESS on success.
  */
 int naev_main( void )

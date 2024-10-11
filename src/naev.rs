@@ -146,12 +146,25 @@ pub fn naev() -> Result<()> {
         naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
         nlog!(gettext("Loaded configuration: {}"), conf_file_path);
         let search_path = naevc::PHYSFS_getSearchPath();
-        /*
-        LOG( "%s", _( "Read locations, searched in order:" ) );
-        for ( char **p = search_path; *p != NULL; p++ )
-            LOG( "    %s", *p );
-        */
+        nlog!("{}", gettext("Read locations, searched in order:"));
+        for p in {
+            let mut out: Vec<&str> = Vec::new();
+            let mut i = 0;
+            loop {
+                let sp = *search_path.offset(i);
+                if sp as *const i8 == std::ptr::null() {
+                    break;
+                }
+                let s = CStr::from_ptr(sp).to_str().unwrap();
+                out.push(s);
+                i += 1;
+            }
+            out
+        } {
+            nlog!("    {}", p);
+        }
         naevc::PHYSFS_freeList(search_path as *mut c_void);
+
         /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
         ndebug!(
             gettext("Cache location: {}"),

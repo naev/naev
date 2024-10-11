@@ -8,5 +8,6 @@ pub const PACKAGE_VERSION: &str = @PACKAGE_VERSION@;
 pub const PKGDATADIR: &str = @PKGDATADIR@;
 
 pub const DEBUG: bool = @DEBUG@==1;
+pub const DEBUG_PARANOID: bool = @DEBUG_PARANOID@==1;
 
 //pub const have_luajit: bool = @HAVE_LUAJIT@==1;
