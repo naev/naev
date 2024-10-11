@@ -3945,8 +3945,6 @@ src/safelanes.c
 src/safelanes.h
 src/save.c
 src/save.h
-src/semver.c
-src/semver.h
 src/ship.c
 src/ship.h
 src/shiplog.c

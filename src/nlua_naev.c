@@ -33,7 +33,6 @@
 #include "pause.h"
 #include "player.h"
 #include "plugin.h"
-#include "semver.h"
 
 static int cache_table = LUA_NOREF; /* No reference. */
 
@@ -179,24 +178,9 @@ static int naevL_version( lua_State *L )
 static int naevL_versionTest( lua_State *L )
 {
    const char *s1, *s2;
-   semver_t    sv1, sv2;
-   int         res;
-   /* Parse inputs. */
    s1 = luaL_checkstring( L, 1 );
    s2 = luaL_checkstring( L, 2 );
-   if ( semver_parse( s1, &sv1 ) )
-      WARN( _( "Failed to parse version string '%s'!" ), s1 );
-   if ( semver_parse( s2, &sv2 ) )
-      WARN( _( "Failed to parse version string '%s'!" ), s2 );
-
-   /* Check version. */
-   res = semver_compare( sv1, sv2 );
-
-   /* Cleanup. */
-   semver_free( &sv1 );
-   semver_free( &sv2 );
-
-   lua_pushinteger( L, res );
+   lua_pushinteger( L, naev_versionCompareTarget( s1, s2 ) );
    return 1;
 }
 

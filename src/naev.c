@@ -78,7 +78,6 @@
 #include "render.h"
 #include "rng.h"
 #include "safelanes.h"
-#include "semver.h"
 #include "ship.h"
 #include "slots.h"
 #include "sound.h"
@@ -98,8 +97,6 @@ Uint32              SDL_LOOPDONE = 0; /**< For custom event to exit loops. */
 static Uint64       last_t      = 0; /**< used to calculate FPS and movement. */
 static SDL_Surface *naev_icon   = NULL; /**< Icon. */
 static int          fps_skipped = 0;    /**< Skipped last frame? */
-/* Version stuff. */
-static semver_t version_binary; /**< Naev binary version. */
 
 /*
  * FPS stuff.
@@ -172,10 +169,6 @@ int naev_main( int argc, char **argv )
    /* Set Debugging flags. */
    memset( debug_flags, 0, DEBUG_FLAGS_MAX );
 #endif /* DEBUGGING */
-
-   /* Parse version. */
-   if ( semver_parse( naev_version( 0 ), &version_binary ) )
-      WARN( _( "Failed to parse version string '%s'!" ), naev_version( 0 ) );
 
    /* Initializes SDL for possible warnings. */
    if ( SDL_Init( 0 ) ) {

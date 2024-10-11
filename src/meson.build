@@ -128,7 +128,6 @@ source = files(
    'rng.c',
    'safelanes.c',
    'save.c',
-   'semver.c',
    'ship.c',
    'shiplog.c',
    'shipstats.c',
