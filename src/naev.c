@@ -13,7 +13,6 @@
  */
 /** @cond */
 #include "SDL.h"
-#include "SDL_error.h"
 #include "SDL_image.h"
 #include "physfsrwops.h"
 
@@ -85,7 +84,6 @@
 #include "spfx.h"
 #include "start.h"
 #include "tech.h"
-#include "threadpool.h"
 #include "toolkit.h"
 #include "unidiff.h"
 #include "weapon.h"
@@ -160,7 +158,7 @@ int naev_isQuit( void )
  *    @param[in] argv Array of argc arguments.
  *    @return EXIT_SUCCESS on success.
  */
-int naev_main( int argc, char **argv )
+int naev_main( void )
 {
    char   conf_file_path[PATH_MAX], **search_path;
    Uint32 starttime;
@@ -188,16 +186,9 @@ int naev_main( int argc, char **argv )
    starttime    = SDL_GetTicks();
    SDL_LOOPDONE = SDL_RegisterEvents( 1 );
 
-   /* Create the home directory if needed. */
-   if ( nfile_dirMakeExist( nfile_configPath() ) )
-      WARN( _( "Unable to create config directory '%s'" ), nfile_configPath() );
-
    /* Set the configuration. */
    snprintf( conf_file_path, sizeof( conf_file_path ), "%s" CONF_FILE,
              nfile_configPath() );
-
-   conf_loadConfig( conf_file_path ); /* Lua to parse the configuration file */
-   conf_parseCLI( argc, argv );       /* parse CLI arguments */
 
    /* Set up I/O. */
    ndata_setupWriteDir();
