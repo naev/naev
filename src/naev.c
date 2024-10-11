@@ -160,7 +160,7 @@ int naev_isQuit( void )
  */
 int naev_main( void )
 {
-   char   conf_file_path[PATH_MAX], **search_path;
+   char   conf_file_path[PATH_MAX];
    Uint32 starttime;
 
 #ifdef DEBUGGING
@@ -168,21 +168,7 @@ int naev_main( void )
    memset( debug_flags, 0, DEBUG_FLAGS_MAX );
 #endif /* DEBUGGING */
 
-   /* Initializes SDL for possible warnings. */
-#if 0
-   if ( SDL_Init( 0 ) ) {
-      char buf[STRMAX];
-      snprintf( buf, sizeof( buf ), _( "Unable to initialize SDL: %s" ),
-                SDL_GetError() );
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
-      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                _( "Naev Critical Error" ), buf,
-                                gl_screen.window );
-#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
-      ERR( "%s", buf );
-      return -1;
-   }
-#endif
+   /* Start counting things and such. */
    starttime    = SDL_GetTicks();
    SDL_LOOPDONE = SDL_RegisterEvents( 1 );
 

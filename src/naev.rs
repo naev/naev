@@ -173,4 +173,11 @@ pub fn naev() -> Result<()> {
         naev_main();
     };
     Ok(())
+    /*
+    #if SDL_VERSION_ATLEAST( 3, 0, 0 )
+          SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
+                                    _( "Naev Critical Error" ), buf,
+                                    gl_screen.window );
+    #endif
+            */
 }
