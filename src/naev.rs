@@ -70,9 +70,9 @@ pub fn naev() -> Result<()> {
     if cfg!(target_os = "linux") {
         match env::ENV.is_appimage {
             true => {
-                log::log(format!("AppImage detected. Running from: {}", env::ENV.appdir).as_str())
+                nlog!("AppImage detected. Running from: {}", &env::ENV.appdir)
             }
-            false => log::debug("AppImage not detected."),
+            false => ndebug!("AppImage not detected."),
         }
     }
 
@@ -121,7 +121,7 @@ pub fn naev() -> Result<()> {
     let cpath = unsafe { naevc::nfile_configPath() };
     unsafe {
         if naevc::nfile_dirMakeExist(cpath) != 0 {
-            log::warn(&formatx!(gettext("Unable to create config directory '{}'"), "foo").unwrap());
+            nwarn!(gettext("Unable to create config directory '{}'"), "foo");
         }
     }
 
@@ -144,7 +144,7 @@ pub fn naev() -> Result<()> {
         naevc::log_redirect();
         naevc::ndata_setupReadDirs();
         naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
-        log::log(&formatx!(gettext("Loaded configuration: {}"), conf_file_path).unwrap());
+        nlog!(gettext("Loaded configuration: {}"), conf_file_path);
         let search_path = naevc::PHYSFS_getSearchPath();
         /*
         LOG( "%s", _( "Read locations, searched in order:" ) );
@@ -153,19 +153,13 @@ pub fn naev() -> Result<()> {
         */
         naevc::PHYSFS_freeList(search_path as *mut c_void);
         /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
-        log::debug(
-            &formatx!(
-                gettext("Cache location: {}"),
-                cptr_to_cstr(naevc::nfile_cachePath())
-            )
-            .unwrap(),
+        ndebug!(
+            gettext("Cache location: {}"),
+            cptr_to_cstr(naevc::nfile_cachePath())
         );
-        log::log(
-            &formatx!(
-                gettext("Write location: %s\n"),
-                cptr_to_cstr(naevc::PHYSFS_getWriteDir())
-            )
-            .unwrap(),
+        nlog!(
+            gettext("Write location: {}\n"),
+            cptr_to_cstr(naevc::PHYSFS_getWriteDir())
         );
     }
 
