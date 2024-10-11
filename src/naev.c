@@ -36,7 +36,6 @@
 #include "dialogue.h"
 #include "difficulty.h"
 #include "economy.h"
-#include "env.h"
 #include "event.h"
 #include "faction.h"
 #include "font.h"
@@ -177,16 +176,6 @@ int naev_main( int argc, char **argv )
    /* Parse version. */
    if ( semver_parse( naev_version( 0 ), &version_binary ) )
       WARN( _( "Failed to parse version string '%s'!" ), naev_version( 0 ) );
-
-   /* Print the version */
-   LOG( " %s v%s (%s)", APPNAME, naev_version( 0 ), HOST );
-
-#if __LINUX__
-   if ( env.isAppImage )
-      LOG( "AppImage detected. Running from: %s", env.appdir );
-   else
-      DEBUG( "AppImage not detected." );
-#endif /*__LINUX__ */
 
    /* Initializes SDL for possible warnings. */
    if ( SDL_Init( 0 ) ) {
@@ -1125,63 +1114,6 @@ static void window_caption( void )
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon( gl_screen.window, naev_icon );
    free( buf );
-}
-
-static int binary_comparison( int x, int y )
-{
-   if ( x == y )
-      return 0;
-   if ( x > y )
-      return 1;
-   return -1;
-}
-/**
- * @brief Compares the version against the current naev version.
- *
- *    @return positive if version is newer or negative if version is older.
- */
-int naev_versionCompare( const char *version )
-{
-   int      res;
-   semver_t sv;
-
-   if ( semver_parse( version, &sv ) ) {
-      WARN( _( "Failed to parse version string '%s'!" ), version );
-      return -1;
-   }
-
-   if ( ( res = 3 * binary_comparison( version_binary.major, sv.major ) ) ==
-        0 ) {
-      if ( ( res = 2 * binary_comparison( version_binary.minor, sv.minor ) ) ==
-           0 ) {
-         res = semver_compare( version_binary, sv );
-      }
-   }
-   semver_free( &sv );
-   return res;
-}
-
-/**
- * @brief Does a comparison with a specific target.
- */
-int naev_versionCompareTarget( const char *version, const char *target )
-{
-   int      res;
-   semver_t sv_version, sv_target;
-
-   if ( semver_parse( version, &sv_version ) ) {
-      WARN( _( "Failed to parse version string '%s'!" ), version );
-      return -1;
-   }
-   if ( semver_parse( target, &sv_target ) ) {
-      WARN( _( "Failed to parse version string '%s'!" ), target );
-      return -1;
-   }
-
-   res = semver_compare( sv_target, sv_version );
-   semver_free( &sv_target );
-   semver_free( &sv_version );
-   return res;
 }
 
 /**

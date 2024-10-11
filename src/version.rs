@@ -1,15 +1,79 @@
+use crate::gettext::gettext;
+use crate::log;
+use formatx::formatx;
 use naevc::config;
+use std::ffi::CStr;
+use std::os::raw::{c_char, c_int};
 use std::sync::LazyLock;
 
 pub const VERSION: LazyLock<semver::Version> =
-    LazyLock::new(|| semver::Version::parse(config::package_version).unwrap());
+    LazyLock::new(|| semver::Version::parse(config::PACKAGE_VERSION).unwrap());
 pub const VERSION_HUMAN: LazyLock<String> = LazyLock::new(|| {
     format!(
         " {} v{} ({})",
-        config::package_name,
-        config::package_version,
-        config::host
+        config::PACKAGE_NAME,
+        config::PACKAGE_VERSION,
+        config::HOST
     )
 });
 // If we can move the naevc::config info into this crate, we could solve this
-//pub const VERSION_HUMAN: String = format!(" {} v{} ({})", config::package_name, config::package_version, config::host );
+//pub const VERSION_HUMAN: String = format!(" {} v{} ({})", config::PACKAGE_NAME, config::PACKAGE_VERSION, config::HOST );
+
+fn binary_comparison(x: u64, y: u64) -> i32 {
+    if x == y {
+        0
+    } else if x > y {
+        1
+    } else {
+        -1
+    }
+}
+
+fn compare_versions(vera: &semver::Version, verb: &semver::Version) -> i32 {
+    let res = binary_comparison(vera.major, verb.major);
+    if res != 0 {
+        return 3 * res;
+    }
+    let res = binary_comparison(vera.minor, verb.minor);
+    if res != 0 {
+        return 2 * res;
+    }
+    binary_comparison(vera.patch, verb.patch)
+}
+
+fn parse_cstr(ver: *const c_char) -> Result<semver::Version, semver::Error> {
+    let ptr = unsafe { CStr::from_ptr(ver) };
+    let cstr = ptr.to_str().unwrap();
+    match semver::Version::parse(cstr) {
+        Ok(v) => Ok(v),
+        Err(e) => {
+            log::warn(&formatx!(gettext("Failed to parse version string '{}'!"), cstr).unwrap());
+            Err(e)
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn naev_versionCompare(version: *const c_char) -> c_int {
+    let ver = match parse_cstr(version) {
+        Ok(v) => v,
+        _ => return 0,
+    };
+    compare_versions(&VERSION, &ver)
+}
+
+#[no_mangle]
+pub extern "C" fn naev_versionCompareTarget(
+    version: *const c_char,
+    target: *const c_char,
+) -> c_int {
+    let vera = match parse_cstr(version) {
+        Ok(v) => v,
+        _ => return 0,
+    };
+    let verb = match parse_cstr(target) {
+        Ok(v) => v,
+        _ => return 0,
+    };
+    compare_versions(&vera, &verb)
+}

@@ -55,6 +55,18 @@ pub fn naev() -> Result<()> {
     linebreak::init();
     gettext::init();
 
+    /* Print the version */
+    let human_version = version::VERSION_HUMAN;
+    log::log(&human_version);
+    if cfg!(target_os = "linux") {
+        match env::ENV.is_appimage {
+            true => {
+                log::log(format!("AppImage detected. Running from: {}", env::ENV.appdir).as_str())
+            }
+            false => log::debug("AppImage not detected."),
+        }
+    }
+
     unsafe {
         naev_main(argv.len() as c_int, argv.as_mut_ptr());
     };

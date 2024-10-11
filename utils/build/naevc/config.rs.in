@@ -1,12 +1,12 @@
 
 #![allow(dead_code)]
 
-pub const host: &str = @HOST@;
-pub const package: &str = @PACKAGE@;
-pub const package_name: &str = @PACKAGE_NAME@;
-pub const package_version: &str = @PACKAGE_VERSION@;
-pub const pkgdatadir: &str = @PKGDATADIR@;
+pub const HOST: &str = @HOST@;
+pub const PACKAGE: &str = @PACKAGE@;
+pub const PACKAGE_NAME: &str = @PACKAGE_NAME@;
+pub const PACKAGE_VERSION: &str = @PACKAGE_VERSION@;
+pub const PKGDATADIR: &str = @PKGDATADIR@;
 
-pub const debug: bool = @DEBUG@==1;
+pub const DEBUG: bool = @DEBUG@==1;
 
 //pub const have_luajit: bool = @HAVE_LUAJIT@==1;
