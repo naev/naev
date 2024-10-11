@@ -2,7 +2,7 @@ use formatx::formatx;
 use sdl2 as sdl;
 use std::ffi::{CStr, CString};
 use std::io::{Error, ErrorKind, Result};
-use std::os::raw::{c_char, c_int};
+use std::os::raw::{c_char, c_int, c_void};
 
 #[link(name = "naev")]
 extern "C" {
@@ -26,6 +26,10 @@ static APPNAME: &str = "Naev";
 
 use std::sync::atomic::AtomicBool;
 static _QUIT: AtomicBool = AtomicBool::new(false);
+
+unsafe fn cptr_to_cstr<'a>(s: *const c_char) -> &'a str {
+    CStr::from_ptr(s).to_str().unwrap()
+}
 
 pub fn naev() -> Result<()> {
     /* Load up the argv and argc for the C main. */
@@ -123,7 +127,7 @@ pub fn naev() -> Result<()> {
 
     /* Set up the configuration. */
     let conf_file_path = unsafe {
-        let rpath = CStr::from_ptr(cpath).to_str().unwrap();
+        let rpath = cptr_to_cstr(cpath);
         let conf_file = CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char)
             .to_str()
             .unwrap();
@@ -131,9 +135,38 @@ pub fn naev() -> Result<()> {
     };
 
     unsafe {
-        let cconf_file_path = CString::new(conf_file_path).unwrap();
+        let cconf_file_path = CString::new(conf_file_path.clone()).unwrap();
         naevc::conf_loadConfig(cconf_file_path.as_ptr()); /* Lua to parse the configuration file */
         naevc::conf_parseCLI(argv.len() as c_int, argv.as_mut_ptr()); /* parse CLI arguments */
+
+        /* Set up I/O. */
+        naevc::ndata_setupWriteDir();
+        naevc::log_redirect();
+        naevc::ndata_setupReadDirs();
+        naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
+        log::log(&formatx!(gettext("Loaded configuration: {}"), conf_file_path).unwrap());
+        let search_path = naevc::PHYSFS_getSearchPath();
+        /*
+        LOG( "%s", _( "Read locations, searched in order:" ) );
+        for ( char **p = search_path; *p != NULL; p++ )
+            LOG( "    %s", *p );
+        */
+        naevc::PHYSFS_freeList(search_path as *mut c_void);
+        /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
+        log::debug(
+            &formatx!(
+                gettext("Cache location: {}"),
+                cptr_to_cstr(naevc::nfile_cachePath())
+            )
+            .unwrap(),
+        );
+        log::log(
+            &formatx!(
+                gettext("Write location: %s\n"),
+                cptr_to_cstr(naevc::PHYSFS_getWriteDir())
+            )
+            .unwrap(),
+        );
     }
 
     unsafe {

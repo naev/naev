@@ -190,21 +190,6 @@ int naev_main( void )
    snprintf( conf_file_path, sizeof( conf_file_path ), "%s" CONF_FILE,
              nfile_configPath() );
 
-   /* Set up I/O. */
-   ndata_setupWriteDir();
-   log_redirect();
-   ndata_setupReadDirs();
-   gettext_setLanguage( conf.language ); /* now that we can find translations */
-   LOG( _( "Loaded configuration: %s" ), conf_file_path );
-   search_path = PHYSFS_getSearchPath();
-   LOG( "%s", _( "Read locations, searched in order:" ) );
-   for ( char **p = search_path; *p != NULL; p++ )
-      LOG( "    %s", *p );
-   PHYSFS_freeList( search_path );
-   /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
-   DEBUG( _( "Cache location: %s" ), nfile_cachePath() );
-   LOG( _( "Write location: %s\n" ), PHYSFS_getWriteDir() );
-
    /* Enable FPU exceptions. */
    if ( conf.fpu_except )
       debug_enableFPUExcept();
