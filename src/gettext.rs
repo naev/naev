@@ -1,6 +1,12 @@
 use std::ffi::{CStr, CString};
 use std::os::raw::c_ulong;
 
+pub fn init() {
+    unsafe {
+        naevc::gettext_init();
+    };
+}
+
 #[allow(dead_code)]
 /*
 pub fn gettext<'a>(msgid: &'a str) -> &'static str {

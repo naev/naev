@@ -12,12 +12,13 @@ mod array;
 mod env;
 mod gettext;
 mod linebreak;
+mod log;
 mod ndata;
 mod ntime;
 mod slots;
 
-#[allow(dead_code)]
 pub fn naev() -> Result<()> {
+    /* Load up the argv and argc for the C main. */
     let args: Vec<String> = std::env::args().collect();
     let mut cargs = vec![];
     for a in args {
@@ -26,16 +27,19 @@ pub fn naev() -> Result<()> {
     let mut argv = cargs.into_iter().map(|s| s.into_raw()).collect::<Vec<_>>();
     argv.shrink_to_fit();
 
-    unsafe {
-        naevc::log_init();
+    /* Begin logging infrastructure. */
+    log::init();
 
+    /* Start up PHYSFS. */
+    unsafe {
         let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
         match naevc::PHYSFS_init(argv0.as_ptr() as *const c_char) {
             0 => {
                 let err = ndata::physfs_error_as_io_error();
                 println!("{}", err);
                 return Err(Error::new(ErrorKind::Other, err));
-                /*
+                /* TODO probably move the error handling to the "real" main, when shit hits the
+                 * fan. Below depends on sdl3
                 SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
                     _( "Naev Critical Error" ), buf,
                     gl_screen.window );
@@ -44,11 +48,11 @@ pub fn naev() -> Result<()> {
             _ => (),
         }
         naevc::PHYSFS_permitSymbolicLinks(1);
-
-        /* Set up locales. */
-        naevc::gettext_init();
-        linebreak::init();
     }
+
+    /* Set up locales. */
+    linebreak::init();
+    gettext::init();
 
     unsafe {
         naev_main(argv.len() as c_int, argv.as_mut_ptr());

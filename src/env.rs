@@ -1,4 +1,6 @@
 use std::env;
+use std::ffi::CString;
+use std::os::raw::c_char;
 
 #[derive(Clone)]
 pub struct AppEnv {
@@ -37,5 +39,17 @@ fn detect() -> AppEnv {
             e.argv0 = env::args().nth(0).unwrap();
         }
     }
+
+    /* TODO remove. */
+    let cappimage: CString = CString::new(e.appimage.clone()).unwrap();
+    let cargv0: CString = CString::new(e.argv0.clone()).unwrap();
+    let cappdir: CString = CString::new(e.appdir.clone()).unwrap();
+    unsafe {
+        naevc::env.isAppImage = if e.is_appimage { 1 } else { 0 };
+        naevc::env.appimage = cappimage.as_ptr() as *mut c_char;
+        naevc::env.argv0 = cargv0.as_ptr() as *mut c_char;
+        naevc::env.appdir = cappdir.as_ptr() as *mut c_char;
+    }
+
     e
 }

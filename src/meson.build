@@ -6,6 +6,7 @@ source_rust = files(
    'env.rs',
    'gettext.rs',
    'linebreak.rs',
+   'log.rs',
    'naev.rs',
    'ndata.rs',
    'ntime.rs',

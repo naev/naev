@@ -174,8 +174,6 @@ int naev_main( int argc, char **argv )
    memset( debug_flags, 0, DEBUG_FLAGS_MAX );
 #endif /* DEBUGGING */
 
-   env_detect( argc, argv );
-
    /* Parse version. */
    if ( semver_parse( naev_version( 0 ), &version_binary ) )
       WARN( _( "Failed to parse version string '%s'!" ), naev_version( 0 ) );
