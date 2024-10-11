@@ -38,7 +38,8 @@ macro_rules! ndebug {
 #[macro_export]
 macro_rules! nwarn {
     ($($arg:tt)*) => {
-        println!("{}", std::backtrace::Backtrace::force_capture());
-        println!("{}",&formatx!($($arg)*).unwrap());
+        println!("{}{}",
+            std::backtrace::Backtrace::force_capture(),
+            &formatx!($($arg)*).unwrap());
     };
 }
