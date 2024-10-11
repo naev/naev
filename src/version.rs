@@ -2,13 +2,14 @@ use crate::gettext::gettext;
 use crate::log;
 use formatx::formatx;
 use naevc::config;
+use std::cmp::Ordering;
 use std::ffi::CStr;
 use std::os::raw::{c_char, c_int};
 use std::sync::LazyLock;
 
-pub const VERSION: LazyLock<semver::Version> =
+pub static VERSION: LazyLock<semver::Version> =
     LazyLock::new(|| semver::Version::parse(config::PACKAGE_VERSION).unwrap());
-pub const VERSION_HUMAN: LazyLock<String> = LazyLock::new(|| {
+pub static VERSION_HUMAN: LazyLock<String> = LazyLock::new(|| {
     format!(
         " {} v{} ({})",
         config::PACKAGE_NAME,
@@ -17,15 +18,13 @@ pub const VERSION_HUMAN: LazyLock<String> = LazyLock::new(|| {
     )
 });
 // If we can move the naevc::config info into this crate, we could solve this
-//pub const VERSION_HUMAN: String = format!(" {} v{} ({})", config::PACKAGE_NAME, config::PACKAGE_VERSION, config::HOST );
+//pub static VERSION_HUMAN: String = format!(" {} v{} ({})", config::PACKAGE_NAME, config::PACKAGE_VERSION, config::HOST );
 
 fn binary_comparison(x: u64, y: u64) -> i32 {
-    if x == y {
-        0
-    } else if x > y {
-        1
-    } else {
-        -1
+    match x.cmp(&y) {
+        Ordering::Equal => 0,
+        Ordering::Greater => 1,
+        Ordering::Less => -1,
     }
 }
 

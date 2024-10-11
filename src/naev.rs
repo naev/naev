@@ -34,19 +34,16 @@ pub fn naev() -> Result<()> {
     /* Start up PHYSFS. */
     unsafe {
         let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
-        match naevc::PHYSFS_init(argv0.as_ptr() as *const c_char) {
-            0 => {
-                let err = ndata::physfs_error_as_io_error();
-                println!("{}", err);
-                return Err(Error::new(ErrorKind::Other, err));
-                /* TODO probably move the error handling to the "real" main, when shit hits the
-                 * fan. Below depends on sdl3
-                SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                    _( "Naev Critical Error" ), buf,
-                    gl_screen.window );
-                */
-            }
-            _ => (),
+        if naevc::PHYSFS_init(argv0.as_ptr() as *const c_char) == 0 {
+            let err = ndata::physfs_error_as_io_error();
+            println!("{}", err);
+            return Err(Error::new(ErrorKind::Other, err));
+            /* TODO probably move the error handling to the "real" main, when shit hits the
+                * fan. Below depends on sdl3
+            SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
+                _( "Naev Critical Error" ), buf,
+                gl_screen.window );
+            */
         }
         naevc::PHYSFS_permitSymbolicLinks(1);
     }
@@ -56,8 +53,7 @@ pub fn naev() -> Result<()> {
     gettext::init();
 
     /* Print the version */
-    let human_version = version::VERSION_HUMAN;
-    log::log(&human_version);
+    log::log(&version::VERSION_HUMAN);
     if cfg!(target_os = "linux") {
         match env::ENV.is_appimage {
             true => {

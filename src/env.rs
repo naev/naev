@@ -11,7 +11,7 @@ pub struct AppEnv {
 }
 
 use std::sync::LazyLock;
-pub static ENV: LazyLock<AppEnv> = LazyLock::new(|| detect());
+pub static ENV: LazyLock<AppEnv> = LazyLock::new(detect);
 
 fn detect() -> AppEnv {
     let mut e = AppEnv {
@@ -25,18 +25,16 @@ fn detect() -> AppEnv {
         Ok(appimage) => {
             e.appimage = appimage;
             e.is_appimage = true;
-            match env::var("ARGV0") {
-                Ok(v) => e.argv0 = v,
-                _ => (),
+            if let Ok(v) = env::var("ARGV0") {
+                e.argv0 = v
             }
-            match env::var("APPDIR") {
-                Ok(v) => e.appdir = v,
-                _ => (),
+            if let Ok(v) = env::var("APPDIR") {
+                e.appdir = v
             }
         }
         Err(_) => {
             e.is_appimage = false;
-            e.argv0 = env::args().nth(0).unwrap();
+            e.argv0 = env::args().next().unwrap();
         }
     }
 
