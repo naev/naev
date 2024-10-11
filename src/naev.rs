@@ -72,7 +72,7 @@ pub fn naev() -> Result<()> {
             true => {
                 nlog!("AppImage detected. Running from: {}", &env::ENV.appdir)
             }
-            false => ndebug!("AppImage not detected."),
+            false => debug!("AppImage not detected."),
         }
     }
 
@@ -121,7 +121,7 @@ pub fn naev() -> Result<()> {
     let cpath = unsafe { naevc::nfile_configPath() };
     unsafe {
         if naevc::nfile_dirMakeExist(cpath) != 0 {
-            nwarn!(gettext("Unable to create config directory '{}'"), "foo");
+            warn!(gettext("Unable to create config directory '{}'"), "foo");
         }
     }
 
@@ -166,7 +166,7 @@ pub fn naev() -> Result<()> {
         naevc::PHYSFS_freeList(search_path as *mut c_void);
 
         /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
-        ndebug!(
+        debug!(
             gettext("Cache location: {}"),
             cptr_to_cstr(naevc::nfile_cachePath())
         );

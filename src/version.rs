@@ -1,5 +1,5 @@
 use crate::gettext::gettext;
-use crate::nwarn;
+use crate::warn;
 use formatx::formatx;
 use naevc::config;
 use std::cmp::Ordering;
@@ -46,7 +46,7 @@ fn parse_cstr(ver: *const c_char) -> Result<semver::Version, semver::Error> {
     match semver::Version::parse(cstr) {
         Ok(v) => Ok(v),
         Err(e) => {
-            nwarn!(&formatx!(
+            warn!(&formatx!(
                 gettext("Failed to parse version string '{}': {}"),
                 &cstr,
                 &e

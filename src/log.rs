@@ -1,6 +1,9 @@
 // Logging tools
 #![allow(dead_code)]
 
+use crate::{debug, nlog, warn};
+use formatx::formatx;
+
 pub fn init() {
     unsafe {
         naevc::log_init();
@@ -8,15 +11,15 @@ pub fn init() {
 }
 
 pub fn log(msg: &str) {
-    println!("{}", msg);
+    nlog!(msg);
 }
 
 pub fn debug(msg: &str) {
-    println!("{}", msg);
+    debug!(msg);
 }
 
 pub fn warn(msg: &str) {
-    println!("{}", msg);
+    warn!(msg);
 }
 
 #[macro_export]
@@ -27,7 +30,7 @@ macro_rules! nlog {
 }
 
 #[macro_export]
-macro_rules! ndebug {
+macro_rules! debug {
     ($($arg:tt)*) => {
         if naevc::config::DEBUG {
             println!("{}",&formatx!($($arg)*).unwrap());
@@ -36,7 +39,7 @@ macro_rules! ndebug {
 }
 
 #[macro_export]
-macro_rules! nwarn {
+macro_rules! warn {
     ($($arg:tt)*) => {
         eprintln!("{}WARNING {}:{}: {}",
             std::backtrace::Backtrace::force_capture(),
