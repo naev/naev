@@ -3675,6 +3675,7 @@ src/effect.c
 src/effect.h
 src/env.c
 src/env.h
+src/env.rs
 src/equipment.c
 src/equipment.h
 src/escort.c
@@ -3724,6 +3725,7 @@ src/land_shipyard.c
 src/land_shipyard.h
 src/land_trade.c
 src/land_trade.h
+src/linebreak.rs
 src/load.c
 src/load.h
 src/log.c

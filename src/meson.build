@@ -3,7 +3,9 @@
 ####
 source_rust = files(
    'array.rs',
+   'env.rs',
    'gettext.rs',
+   'linebreak.rs',
    'naev.rs',
    'ndata.rs',
    'ntime.rs',

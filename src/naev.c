@@ -15,7 +15,6 @@
 #include "SDL.h"
 #include "SDL_error.h"
 #include "SDL_image.h"
-#include "linebreak.h"
 #include "physfsrwops.h"
 
 #include "naev.h"
@@ -176,27 +175,6 @@ int naev_main( int argc, char **argv )
 #endif /* DEBUGGING */
 
    env_detect( argc, argv );
-
-   log_init();
-
-   /* Set up PhysicsFS. */
-   if ( PHYSFS_init( env.argv0 ) == 0 ) {
-      char buf[STRMAX];
-      snprintf( buf, sizeof( buf ), "PhysicsFS initialization failed: %s",
-                PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
-      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                _( "Naev Critical Error" ), buf,
-                                gl_screen.window );
-#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
-      ERR( "%s", buf );
-      return -1;
-   }
-   PHYSFS_permitSymbolicLinks( 1 );
-
-   /* Set up locales. */
-   gettext_init();
-   init_linebreak();
 
    /* Parse version. */
    if ( semver_parse( naev_version( 0 ), &version_binary ) )
