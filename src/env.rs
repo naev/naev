@@ -48,6 +48,5 @@ fn detect() -> AppEnv {
         naevc::env.argv0 = cargv0.as_ptr() as *mut c_char;
         naevc::env.appdir = cappdir.as_ptr() as *mut c_char;
     }
-
     e
 }

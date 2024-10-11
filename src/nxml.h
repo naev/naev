@@ -296,3 +296,5 @@ int                   xml_parseTime( xmlNodePtr node, time_t *t );
  */
 void xmlw_setParams( xmlTextWriterPtr writer );
 int  xmlw_saveTime( xmlTextWriterPtr writer, const char *name, time_t t );
+
+int nxml_init( void );

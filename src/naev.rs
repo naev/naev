@@ -1,3 +1,4 @@
+use sdl2 as sdl;
 use std::ffi::CString;
 use std::io::{Error, ErrorKind, Result};
 use std::os::raw::{c_char, c_int};
@@ -17,6 +18,8 @@ mod ndata;
 mod ntime;
 mod slots;
 mod version;
+
+static APPNAME: &str = "Naev";
 
 pub fn naev() -> Result<()> {
     /* Load up the argv and argc for the C main. */
@@ -61,6 +64,41 @@ pub fn naev() -> Result<()> {
             }
             false => log::debug("AppImage not detected."),
         }
+    }
+
+    /* Initialize SDL. */
+    let sdlctx = match sdl::init() {
+        Ok(s) => s,
+        Err(e) => panic!("Unable to initialize SDL: {}", e),
+    };
+
+    unsafe {
+        naevc::threadpool_init();
+        naevc::debug_sigInit();
+    }
+
+    if cfg!(unix) {
+        /* Set window class and name. */
+        std::env::set_var("SDL_VIDEO_X11_WMCLASS", APPNAME);
+    }
+
+    let _sdlvid = match sdlctx.video() {
+        Ok(s) => s,
+        Err(e) => panic!("Unable to initialize SDL Video: {}", e),
+    };
+
+    unsafe {
+        naevc::nxml_init(); /* We'll be parsing XML. */
+        naevc::input_init(); /* input has to be initialized for config to work. */
+        naevc::lua_init(); /* initializes lua. */
+        naevc::conf_setDefaults(); /* set the default config values. */
+
+        /*
+         * Attempts to load the data path from datapath.lua
+         * At this early point in the load process, the binary path
+         * is the only place likely to be checked.
+         */
+        naevc::conf_loadConfigPath();
     }
 
     unsafe {

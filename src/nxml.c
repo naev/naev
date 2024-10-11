@@ -102,3 +102,10 @@ int xml_parseTime( xmlNodePtr node, time_t *t )
    *t = xml_getULong( node );
    return 0;
 }
+
+int nxml_init( void )
+{
+   LIBXML_TEST_VERSION
+   xmlInitParser();
+   return 0;
+}

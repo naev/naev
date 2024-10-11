@@ -171,6 +171,7 @@ int naev_main( int argc, char **argv )
 #endif /* DEBUGGING */
 
    /* Initializes SDL for possible warnings. */
+#if 0
    if ( SDL_Init( 0 ) ) {
       char buf[STRMAX];
       snprintf( buf, sizeof( buf ), _( "Unable to initialize SDL: %s" ),
@@ -183,43 +184,9 @@ int naev_main( int argc, char **argv )
       ERR( "%s", buf );
       return -1;
    }
+#endif
    starttime    = SDL_GetTicks();
    SDL_LOOPDONE = SDL_RegisterEvents( 1 );
-
-   /* Initialize the threadpool */
-   threadpool_init();
-
-   /* Set up debug signal handlers. */
-   debug_sigInit();
-
-#if HAS_UNIX
-   /* Set window class and name. */
-   SDL_setenv( "SDL_VIDEO_X11_WMCLASS", APPNAME, 0 );
-#endif /* HAS_UNIX */
-
-   /* Must be initialized before input_init is called. */
-   if ( SDL_InitSubSystem( SDL_INIT_VIDEO ) < 0 ) {
-      WARN( _( "Unable to initialize SDL Video: %s" ), SDL_GetError() );
-      return -1;
-   }
-
-   /* We'll be parsing XML. */
-   LIBXML_TEST_VERSION
-   xmlInitParser();
-
-   /* Input must be initialized for config to work. */
-   input_init();
-
-   lua_init(); /* initializes lua */
-
-   conf_setDefaults(); /* set the default config values */
-
-   /*
-    * Attempts to load the data path from datapath.lua
-    * At this early point in the load process, the binary path
-    * is the only place likely to be checked.
-    */
-   conf_loadConfigPath();
 
    /* Create the home directory if needed. */
    if ( nfile_dirMakeExist( nfile_configPath() ) )
