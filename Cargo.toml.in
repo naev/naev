@@ -11,3 +11,4 @@ path = @PATH@
 naevc = { path=@NAEVC@ }
 roxmltree = "0.20.0"
 formatx = "0.2.2"
+semver = "1"
