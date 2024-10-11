@@ -357,7 +357,7 @@ int main (void) { return 0; }''')
       output: 'naevc.rs',
       include_directories: [include_dirs, '.'],
       dependencies: naev_deps,
-      args: ['--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\nmod config;',
+      args: ['--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;',
              '--blocklist-file', '/usr/include/math.h'],
    )
    copydir = find_program('utils/build/copydir.py')
