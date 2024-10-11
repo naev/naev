@@ -38,13 +38,22 @@ macro_rules! debug {
     };
 }
 
+use std::sync::atomic::AtomicU32;
+pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
+
 #[macro_export]
 macro_rules! warn {
     ($($arg:tt)*) => {
-        eprintln!("{}WARNING {}:{}: {}",
-            std::backtrace::Backtrace::force_capture(),
-            file!(), line!(),
-            &formatx!($($arg)*).unwrap());
+        let nw = crate::log::WARN_NUM.fetch_add( 1, std::sync::atomic::Ordering::SeqCst );
+        if nw <= 1000 {
+            eprintln!("{}WARNING {}:{}: {}",
+                std::backtrace::Backtrace::force_capture(),
+                file!(), line!(),
+                &formatx!($($arg)*).unwrap());
+        }
+        if nw==1000 {
+            eprintln!("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS");
+        }
         if naevc::config::DEBUG_PARANOID {
             if cfg!(unix) {
                 nix::sys::signal::raise( nix::sys::signal::Signal::SIGINT ).unwrap();
