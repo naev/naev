@@ -16,6 +16,7 @@ mod log;
 mod ndata;
 mod ntime;
 mod slots;
+mod version;
 
 pub fn naev() -> Result<()> {
     /* Load up the argv and argc for the C main. */

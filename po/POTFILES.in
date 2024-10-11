@@ -4006,6 +4006,7 @@ src/vec2.c
 src/vec2.h
 src/vec3.c
 src/vec3.h
+src/version.rs
 src/weapon.c
 src/weapon.h
 dat/outfits/bioship/generate.py

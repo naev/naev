@@ -11,6 +11,7 @@ source_rust = files(
    'ndata.rs',
    'ntime.rs',
    'slots.rs',
+   'version.rs',
 )
 source = files(
    'array.c',
