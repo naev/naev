@@ -29,7 +29,7 @@ macro_rules! nlog {
 #[macro_export]
 macro_rules! ndebug {
     ($($arg:tt)*) => {
-        if cfg!(debug_assertions) {
+        if naevc::config::DEBUG {
             println!("{}",&formatx!($($arg)*).unwrap());
         }
     };
@@ -42,8 +42,10 @@ macro_rules! nwarn {
             std::backtrace::Backtrace::force_capture(),
             file!(), line!(),
             &formatx!($($arg)*).unwrap());
-        if cfg!(unix) && naevc::config::DEBUG_PARANOID {
-            nix::sys::signal::raise( nix::sys::signal::Signal::SIGINT ).unwrap();
+        if naevc::config::DEBUG_PARANOID {
+            if cfg!(unix) {
+                nix::sys::signal::raise( nix::sys::signal::Signal::SIGINT ).unwrap();
+            }
         }
     };
 }
