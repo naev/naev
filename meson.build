@@ -360,7 +360,6 @@ int main (void) { return 0; }''')
       args: ['--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\nmod config;',
              '--blocklist-file', '/usr/include/math.h'],
    )
-   configrs = configure_file( input: 'utils/build/config.rs.in', output: 'config.rs', configuration: config_data )
    copydir = find_program('utils/build/copydir.py')
    naevc_crate = custom_target(
       'naevc crate',

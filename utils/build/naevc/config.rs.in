@@ -1,0 +1,12 @@
+
+#![allow(dead_code)]
+
+pub const host: &str = @HOST@;
+pub const package: &str = @PACKAGE@;
+pub const package_name: &str = @PACKAGE_NAME@;
+pub const package_version: &str = @PACKAGE_VERSION@;
+pub const pkgdatadir: &str = @PKGDATADIR@;
+
+pub const debug: bool = @DEBUG@==1;
+
+//pub const have_luajit: bool = @HAVE_LUAJIT@==1;
