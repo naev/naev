@@ -60,7 +60,7 @@
   <fbay_capacity>50</fbay_capacity>
   <fbay_rate>50</fbay_rate>
   <fbay_reload>25</fbay_reload>
-  <cpu_max>600</cpu_max>
+  <cpu_mod>40</cpu_mod>
  </stats>
  <tags>
   <tag>zalek</tag>
