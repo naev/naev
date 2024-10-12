@@ -2308,7 +2308,7 @@ static int pilotL_weapsetAmmo( lua_State *L )
  * @usage act_outfits = p:actives() -- Gets the table of active outfits
  *
  *    @luatparam Pilot p Pilot to get active outfits of.
- *    @luatparam[opt=false] boolean sort Whether or not to sort the otufits.
+ *    @luatparam[opt=false] boolean sort Whether or not to sort the outfits.
  *    @luatreturn table The table with each active outfit's information.
  * @luafunc actives
  */
@@ -2342,7 +2342,7 @@ static int pilotL_actives( lua_State *L )
          continue;
       if ( !( o->flags & PILOTOUTFIT_ACTIVE ) )
          continue;
-      if ( !outfit_isMod( o->outfit ) && !outfit_isAfterburner( o->outfit ) )
+      if ( outfit_isWeapon( o->outfit ) && ( outfits[i]->weapset < 2 ) )
          continue;
 
       /* Set up for creation. */
@@ -2461,6 +2461,12 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
    const PilotOutfitSlot *s1, *s2;
    s1 = *(const PilotOutfitSlot **)slot1;
    s2 = *(const PilotOutfitSlot **)slot2;
+
+   /* Put unassigned outfits at the end. */
+   if ( ( s1->weapset < 0 ) && ( s2->weapset >= 0 ) )
+      return -1;
+   else if ( ( s1->weapset >= 0 ) && ( s2->weapset < 0 ) )
+      return +1;
 
    /* Compare weapon set indexes. */
    if ( s1->weapset < s2->weapset )
