@@ -870,6 +870,7 @@ double pilot_minbrakedist( const Pilot *p, double dt, double *flytime )
       return vel * ( t + dt ) -
              0.5 * PILOT_REVERSE_THRUST * accel * pow2( t - dt );
    }
+   /* Small compensation for current delta-tick. */
    *flytime = t + M_PI / p->turn + dt;
    return vel * ( *flytime ) - 0.5 * accel * pow2( t - dt );
 }
@@ -890,11 +891,12 @@ int pilot_brake( Pilot *p, double dt )
       return 1;
 
    if ( pilot_brakeCheckReverseThrusters( p ) ) {
-      dir   = VANGLE( p->solid.vel );
-      accel = -PILOT_REVERSE_THRUST;
+      dir = VANGLE( p->solid.vel );
+      accel =
+         -MIN( PILOT_REVERSE_THRUST, VMOD( p->solid.vel ) / ( p->accel * dt ) );
    } else {
       dir   = VANGLE( p->solid.vel ) + M_PI;
-      accel = 1.;
+      accel = MIN( 1., VMOD( p->solid.vel ) / ( p->accel * dt ) );
    }
 
    diff = pilot_face( p, dir, dt );
