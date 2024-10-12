@@ -1251,9 +1251,10 @@ void pilot_weaponClear( Pilot *p )
  */
 void pilot_weaponAuto( Pilot *p )
 {
-   int idnext = 2;
-   int hasfb  = 0;
-   int haspd  = 0;
+   int idnext   = 2;
+   int hasfb    = 0;
+   int haspd    = 0;
+   int isplayer = pilot_isPlayer( p );
 
    /* Clear weapons. */
    pilot_weaponClear( p );
@@ -1266,23 +1267,26 @@ void pilot_weaponAuto( Pilot *p )
    for ( int i = 2; i < PILOT_WEAPON_SETS; i++ )
       pilot_weapSetType( p, i, WEAPSET_TYPE_TOGGLE );
 
-   /* See if fighter bays or point defense. */
-   for ( int i = 0; i < array_size( p->outfits ); i++ ) {
-      PilotOutfitSlot *slot = p->outfits[i];
-      const Outfit    *o    = slot->outfit;
-      if ( outfit_isFighterBay( o ) )
-         hasfb = 1;
-      else if ( outfit_isProp( o, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
-         haspd = 1;
-   }
+   if ( isplayer ) {
+      /* See if fighter bays or point defense. */
+      for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+         PilotOutfitSlot *slot = p->outfits[i];
+         const Outfit    *o    = slot->outfit;
+         if ( outfit_isFighterBay( o ) )
+            hasfb = 1;
+         else if ( outfit_isProp( o, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
+            haspd = 1;
+      }
 
-   if ( haspd ) {
-      haspd = 2; /* 0 weapset. */
-      idnext++;
-   }
-   if ( hasfb ) {
-      hasfb = 2 + !!haspd; /* 0 or 1 weapset. */
-      idnext++;
+      /* Determine weapon ids so they get together. */
+      if ( haspd ) {
+         haspd = 2; /* 0 weapset. */
+         idnext++;
+      }
+      if ( hasfb ) {
+         hasfb = 2 + !!haspd; /* 0 or 1 weapset. */
+         idnext++;
+      }
    }
 
    /* Iterate through all the outfits. */
@@ -1297,31 +1301,48 @@ void pilot_weaponAuto( Pilot *p )
          continue;
       }
 
-      /* Manually defined group preempts others. */
-      if ( o->group )
-         id = o->group +
-              2; /* Start counting after primary /secondary weapon sets. */
-      else if ( outfit_isSecondary( o ) )
-         id = 1; /* Secondary override. */
-      /* Bolts and beams. */
-      else if ( outfit_isBolt( o ) || outfit_isBeam( o ) ||
-                ( outfit_isLauncher( o ) && !outfit_isSeeker( o ) ) )
-         id = 0; /* Primary. */
-      /* Seekers. */
-      else if ( outfit_isLauncher( o ) && outfit_isSeeker( o ) )
-         id = 1; /* Secondary. */
-      /* Point defense. */
-      else if ( outfit_isProp( o, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
-         id = haspd;
-      /* Fighter bays. */
-      else if ( outfit_isFighterBay( o ) )
-         id = hasfb;
-      /* Rest just incrcement. */
-      else {
-         id = idnext++;
-         /* Ran out of space. */
-         if ( id >= PILOT_WEAPON_SETS )
-            break;
+      if ( isplayer ) {
+         /* Manually defined group preempts others. */
+         if ( o->group )
+            id = o->group +
+                 2; /* Start counting after primary /secondary weapon sets. */
+         else if ( outfit_isSecondary( o ) )
+            id = 1; /* Secondary override. */
+         /* Bolts and beams. */
+         else if ( outfit_isBolt( o ) || outfit_isBeam( o ) ||
+                   ( outfit_isLauncher( o ) && !outfit_isSeeker( o ) ) )
+            id = 0; /* Primary. */
+         /* Seekers. */
+         else if ( outfit_isLauncher( o ) && outfit_isSeeker( o ) )
+            id = 1; /* Secondary. */
+         /* Point defense. */
+         else if ( outfit_isProp( o, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
+            id = haspd;
+         /* Fighter bays. */
+         else if ( outfit_isFighterBay( o ) )
+            id = hasfb;
+         /* Rest just incrcement. */
+         else {
+            id = idnext++;
+            /* Ran out of space. */
+            if ( id >= PILOT_WEAPON_SETS )
+               break;
+         }
+      } else {
+         if ( outfit_isSecondary( o ) )
+            id = 1; /* Secondary override. */
+         /* Bolts and beams. */
+         else if ( outfit_isBolt( o ) || outfit_isBeam( o ) ||
+                   ( outfit_isLauncher( o ) && !outfit_isSeeker( o ) ) )
+            id = 0; /* Primary. */
+         /* Point defense. */
+         else if ( outfit_isProp( o, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
+            id = 2;
+         /* Fighter bays. */
+         else if ( outfit_isFighterBay( o ) )
+            id = 3;
+         else
+            continue;
       }
 
       /* Add to its base group. */
