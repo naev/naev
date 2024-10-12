@@ -487,7 +487,7 @@ function update_effects()
 end
 
 local function update_wset()
-   wset_name, wset  = pp:weapset(true)
+   wset_name, wset  = pp:weapset()
 
    -- Set the names as short names
    for k, w in ipairs( wset ) do

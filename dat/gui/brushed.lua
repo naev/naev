@@ -703,9 +703,10 @@ function render( _dt )
    energy = pp:energy()
    fuel = player.fuel() / stats.fuel_max * 100
    local heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
-   local _wset_name, pwset = pp:weapset( true )
-   local wset_id = string.format( "%d", pp:weapsetActive() )
-   if wset_id == 10 then wset_id = 0 end
+   local _wset_name, pwset = pp:weapset()
+   -- Active sets don't exist anymore
+   --local wset_id = string.format( "%d", pp:weapsetActive() )
+   --if wset_id == 10 then wset_id = 0 end
    local wset = {}
    local aset = pp:actives( true )
    table.sort( aset, function(a,b)
@@ -817,7 +818,7 @@ function render( _dt )
    end
 
    --Weapon set indicator
-   gfx.print( false, wset_id, 383 + mod_x, 72 + mod_y, col_text, 12, true )
+   --gfx.print( false, wset_id, 383 + mod_x, 72 + mod_y, col_text, 12, true )
 
    --Speed Lights
    local nlights = 11

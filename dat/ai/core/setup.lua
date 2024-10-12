@@ -50,6 +50,15 @@ function setup.setup( p )
    m._o = nil
    local o = {}
 
+   -- Set up some defaults
+   -- 1 to 4 are set by C-side engine
+   -- 1 is primary
+   -- 2 is secondary
+   -- 3 has point defense
+   -- 4 has fighter bays
+   -- We have to set up the rest manually
+   -- 5 is forward weapons
+
    -- Check flow
    flow.recalculate( p )
    o.flow = flow.has( p )
@@ -67,8 +76,12 @@ function setup.setup( p )
                o[var] = k
             end
             added = true
-         elseif v:type()=="Afterburner" then
-            o["afterburner"] = k
+         else
+            local t = v:type()
+            if t=="Afterburner" then
+               o["afterburner"] = k
+               added = true
+            end
          end
       end
    end
@@ -77,7 +90,7 @@ function setup.setup( p )
    -- TODO probably move atk.choose here if we use this in all cases we initialize pilots (see issue #2197)
 
    -- Set up some ammo variables
-   m.ranged_ammo = p:weapsetAmmo(4)
+   m.ranged_ammo = p:weapsetAmmo(1) -- secondary set
    m.equipopt_params = m.equipopt_params or {}
 
    -- Actually added an outfit, so we set the list
