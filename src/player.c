@@ -4849,11 +4849,12 @@ void player_stealth( void )
       player_message( "#g%s", _( "You have entered stealth mode." ) );
    } else {
       /* Stealth failed. */
+      /*
       if ( player.p->lockons > 0 )
          player_message( "#r%s",
                          _( "Unable to stealth: missiles locked on!" ) );
       else
-         player_message( "#r%s",
-                         _( "Unable to stealth: other pilots nearby!" ) );
+      */
+      player_message( "#r%s", _( "Unable to stealth: other pilots nearby!" ) );
    }
 }
