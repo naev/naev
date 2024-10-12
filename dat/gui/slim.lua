@@ -663,9 +663,9 @@ local function render_ammoBar( weap, x, y )
    local col
    if weap.active then
       col = cols.weap_on
-   elseif weap.level==1 then
+   elseif weap.weapset==1 then
       col = cols.weap_pri
-   elseif weap.level==2 then
+   elseif weap.weapset==2 then
       col = cols.weap_sec
    else
       col = cols.weap_off

@@ -1776,10 +1776,6 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
    if ( !( outfit_isBolt( o ) || outfit_isBeam( o ) || is_lau || is_fb ) )
       return 0;
 
-   /* Must be weapon. */
-   if ( outfit_isMod( o ) || outfit_isAfterburner( o ) )
-      return 0;
-
    /* Set up new item. */
    lua_pushnumber( L, ++( *k ) );
 
@@ -1886,6 +1882,10 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
    lua_pushstring( L, "type" );
    lua_pushstring( L, outfit_getType( slot->outfit ) );
    lua_rawset( L, -3 );
+
+   /* First weapon set. */
+   lua_pushinteger( L, slot->weapset + 1 );
+   lua_setfield( L, -2, "weapset" );
 
    /* Damage type. */
    dmg = outfit_damage( slot->outfit );
