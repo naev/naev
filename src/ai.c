@@ -463,7 +463,8 @@ void ai_thinkApply( Pilot *p )
    pilot_setAccel( p, pilot_acc );
 
    /* Fire weapons if needed */
-   pilot_shoot( p, ai_isFlag( AI_PRIMARY ), ai_isFlag( AI_SECONDARY ) );
+   pilot_weapSetPress( p, 0, ai_isFlag( AI_PRIMARY ) );
+   pilot_weapSetPress( p, 1, ai_isFlag( AI_SECONDARY ) );
 
    /* other behaviours. */
    if ( ai_isFlag( AI_DISTRESS ) )
@@ -2572,7 +2573,7 @@ static int aiL_land( lua_State *L )
  */
 static int aiL_hyperspace( lua_State *L )
 {
-   int dist;
+   int canjump;
 
    /* Find the target jump. */
    if ( !lua_isnoneornil( L, 1 ) ) {
@@ -2583,13 +2584,11 @@ static int aiL_hyperspace( lua_State *L )
       cur_pilot->nav_hyperspace = jp - cur_system->jumps;
    }
 
-   dist = space_hyperspace( cur_pilot );
-   if ( dist == 0 ) {
-      pilot_shoot( cur_pilot, 0, 0 );
+   canjump = space_hyperspace( cur_pilot );
+   if ( canjump == 0 )
       return 0;
-   }
 
-   lua_pushnumber( L, dist );
+   lua_pushnumber( L, canjump );
    return 1;
 }
 
@@ -3220,9 +3219,8 @@ static int aiL_hostile( lua_State *L )
  */
 static int aiL_getweaprange( lua_State *L )
 {
-   int id    = luaL_optinteger( L, 1, cur_pilot->active_set );
-   int level = luaL_optinteger( L, 2, -1 );
-   lua_pushnumber( L, pilot_weapSetRange( cur_pilot, id, level ) );
+   int id = luaL_checkinteger( L, 1 );
+   lua_pushnumber( L, pilot_weapSetRange( cur_pilot, id ) );
    return 1;
 }
 
@@ -3237,9 +3235,8 @@ static int aiL_getweaprange( lua_State *L )
  */
 static int aiL_getweapspeed( lua_State *L )
 {
-   int id    = luaL_optinteger( L, 1, cur_pilot->active_set );
-   int level = luaL_optinteger( L, 2, -1 );
-   lua_pushnumber( L, pilot_weapSetSpeed( cur_pilot, id, level ) );
+   int id = luaL_checkinteger( L, 1 );
+   lua_pushnumber( L, pilot_weapSetSpeed( cur_pilot, id ) );
    return 1;
 }
 
@@ -3248,15 +3245,13 @@ static int aiL_getweapspeed( lua_State *L )
  *
  *    @luatparam[opt] number id Optional parameter indicating id of weapon set
  * to get ammo of, defaults to selected one.
- *    @luatparam[opt=-1] number level Level of weapon set to get range of.
  *    @luatreturn number The range of the weapon set.
  * @luafunc getweapammo
  */
 static int aiL_getweapammo( lua_State *L )
 {
-   int id    = luaL_optinteger( L, 1, cur_pilot->active_set );
-   int level = luaL_optinteger( L, 2, -1 );
-   lua_pushnumber( L, pilot_weapSetAmmo( cur_pilot, id, level ) );
+   int id = luaL_checkinteger( L, 1 );
+   lua_pushnumber( L, pilot_weapSetAmmo( cur_pilot, id ) );
    return 1;
 }
 

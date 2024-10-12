@@ -75,14 +75,6 @@ void pilot_weapSetPress( Pilot *p, int id, int type )
 
    /* Handle fire groups. */
    switch ( ws->type ) {
-   case WEAPSET_TYPE_SWITCH:
-      /* On press just change active weapon set to whatever is available. */
-      if ( ( type > 0 ) && ( array_size( ws->slots ) > 0 ) ) {
-         p->active_set = id;
-         pilot_weapSetUpdateOutfits( p, ws );
-      }
-      break;
-
    case WEAPSET_TYPE_TOGGLE:
       /* The behaviour here is more complex. What we do is consider a group
        * to be entirely off if not all outfits are either on or cooling down.
@@ -152,8 +144,6 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
       for ( int j = 0; j < array_size( ws->slots ); j++ ) {
          PilotOutfitSlot *pos = p->outfits[ws->slots[j].slotid];
          if ( pos->outfit == NULL )
-            continue;
-         if ( !( ( 1 << ws->slots[j].level ) & ws->active ) )
             continue;
          pos->flags |= PILOTOUTFIT_ISON;
          if ( ws->volley )
@@ -329,27 +319,6 @@ void pilot_weapSetUpdate( Pilot *p )
  */
 static void pilot_weapSetUpdateOutfits( Pilot *p, PilotWeaponSet *ws )
 {
-   /* Make sure we have a valid active switched set. */
-   const PilotWeaponSet *wsa = pilot_weapSet( p, p->active_set );
-   if ( wsa->type != WEAPSET_TYPE_SWITCH ) {
-      for ( int i = 0; i < PILOT_WEAPON_SETS; i++ ) {
-         const PilotWeaponSet *wsi = pilot_weapSet( p, i );
-         if ( wsi->type == WEAPSET_TYPE_SWITCH ) {
-            p->active_set = i;
-            wsa           = pilot_weapSet( p, p->active_set );
-            break;
-         }
-      }
-   }
-
-   /* Turn off switched sets. */
-   for ( int i = 0; i < PILOT_WEAPON_SETS; i++ ) {
-      PilotWeaponSet *wsi = pilot_weapSet( p, i );
-      if ( wsi->type != WEAPSET_TYPE_SWITCH )
-         continue;
-      wsi->active = 0;
-   }
-
    /* Have to update slots potentially. */
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       PilotOutfitSlot *o = p->outfits[i];
@@ -368,8 +337,6 @@ static void pilot_weapSetUpdateOutfits( Pilot *p, PilotWeaponSet *ws )
    /* Just update levels of active weapon set.  */
    for ( int i = 0; i < array_size( p->outfits ); i++ )
       p->outfits[i]->level = -1;
-   for ( int i = 0; i < array_size( wsa->slots ); i++ )
-      p->outfits[wsa->slots[i].slotid]->level = wsa->slots[i].level;
 }
 
 /**
@@ -489,9 +456,6 @@ const char *pilot_weapSetName( Pilot *p, int id )
    problem = type = base = NULL;
 
    switch ( ws->type ) {
-   case WEAPSET_TYPE_SWITCH:
-      type = p_( "weapset", "Switch" );
-      break;
    case WEAPSET_TYPE_TOGGLE:
       type = p_( "weapset", "Toggle" );
       break;
@@ -547,10 +511,6 @@ const char *pilot_weapSetName( Pilot *p, int id )
          base = p_( "weapset", "Structurals" );
       else
          base = p_( "weapset", "Mixed" );
-
-      /* Try to proactively detect issues with the weapon set. */
-      if ( !has_weap && ( ws->type == WEAPSET_TYPE_SWITCH ) )
-         problem = _( "no weapons!" );
    }
 
    if ( problem != NULL )
@@ -568,9 +528,8 @@ const char *pilot_weapSetName( Pilot *p, int id )
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set.
  *    @param o Outfit to add.
- *    @param level Level of the trigger.
  */
-void pilot_weapSetAdd( Pilot *p, int id, const PilotOutfitSlot *o, int level )
+void pilot_weapSetAdd( Pilot *p, int id, const PilotOutfitSlot *o )
 {
    PilotWeaponSetOutfit *slot;
    PilotWeaponSet       *ws = pilot_weapSet( p, id );
@@ -583,14 +542,11 @@ void pilot_weapSetAdd( Pilot *p, int id, const PilotOutfitSlot *o, int level )
    for ( int i = 0; i < array_size( ws->slots ); i++ ) {
       if ( ws->slots[i].slotid != o->id )
          continue;
-      ws->slots[i].level = level;
-      pilot_weapSetUpdateOutfits( p, ws );
       return;
    }
 
    /* Add it. */
    slot         = &array_grow( &ws->slots );
-   slot->level  = level;
    slot->slotid = o->id;
    if ( o->outfit != NULL )
       slot->range2 = pow2( pilot_outfitRange( p, o->outfit ) );
@@ -628,7 +584,7 @@ void pilot_weapSetRm( Pilot *p, int id, const PilotOutfitSlot *o )
 void pilot_weapSetClear( Pilot *p, int id )
 {
    PilotWeaponSet *ws = pilot_weapSet( p, id );
-   ws->type           = WEAPSET_TYPE_SWITCH;
+   ws->type           = WEAPSET_TYPE_TOGGLE;
    array_free( ws->slots );
    ws->slots = NULL;
 
@@ -646,7 +602,7 @@ int pilot_weapSetInSet( Pilot *p, int id, const PilotOutfitSlot *o )
       /* Must match the current weapon. */
       if ( ws->slots[i].slotid != o->id )
          continue;
-      return ws->slots[i].level;
+      return 0;
    }
    /* Not found. */
    return -1;
@@ -667,11 +623,7 @@ int pilot_weapSetCheck( Pilot *p, int id, const PilotOutfitSlot *o )
       /* Must match the current weapon. */
       if ( ws->slots[i].slotid != o->id )
          continue;
-      /* Only weapons can be used as switch sets. */
-      if ( ( o->outfit != NULL ) && !outfit_isWeapon( o->outfit ) &&
-           ( ws->type == WEAPSET_TYPE_SWITCH ) )
-         continue;
-      return ws->slots[i].level;
+      return 0;
    }
    /* Not found. */
    return -1;
@@ -696,28 +648,21 @@ void pilot_weapSetUpdateStats( Pilot *p )
  */
 static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
 {
-   int    lev;
    double range, speed;
-   double range_accum[PILOT_WEAPSET_MAX_LEVELS];
-   int    range_num[PILOT_WEAPSET_MAX_LEVELS];
-   double speed_accum[PILOT_WEAPSET_MAX_LEVELS];
-   int    speed_num[PILOT_WEAPSET_MAX_LEVELS];
+   double range_accum;
+   int    range_num;
+   double speed_accum;
+   int    speed_num;
 
    /* Calculate ranges. */
-   for ( int i = 0; i < PILOT_WEAPSET_MAX_LEVELS; i++ ) {
-      range_accum[i] = 0.;
-      range_num[i]   = 0;
-      speed_accum[i] = 0.;
-      speed_num[i]   = 0;
-   }
+   range_accum = 0.;
+   range_num   = 0;
+   speed_accum = 0.;
+   speed_num   = 0;
+
    for ( int i = 0; i < array_size( ws->slots ); i++ ) {
       PilotOutfitSlot *pos = p->outfits[ws->slots[i].slotid];
       if ( pos->outfit == NULL )
-         continue;
-
-      /* Get level. */
-      lev = ws->slots[i].level;
-      if ( lev >= PILOT_WEAPSET_MAX_LEVELS )
          continue;
 
       /* Empty Launchers aren't valid */
@@ -728,33 +673,30 @@ static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
       range = pilot_outfitRange( p, pos->outfit );
       if ( range >= 0. ) {
          /* Calculate. */
-         range_accum[lev] += range;
-         range_num[lev]++;
+         range_accum += range;
+         range_num++;
       }
 
       /* Get speed. */
       speed = outfit_speed( pos->outfit );
       if ( speed >= 0. ) {
          /* Calculate. */
-         speed_accum[lev] += speed;
-         speed_num[lev]++;
+         speed_accum += speed;
+         speed_num++;
       }
    }
 
-   /* Postprocess. */
-   for ( int i = 0; i < PILOT_WEAPSET_MAX_LEVELS; i++ ) {
-      /* Postprocess range. */
-      if ( range_num[i] == 0 )
-         ws->range[i] = 0;
-      else
-         ws->range[i] = range_accum[i] / (double)range_num[i];
+   /* Postprocess range. */
+   if ( range_num == 0 )
+      ws->range = 0;
+   else
+      ws->range = range_accum / (double)range_num;
 
-      /* Postprocess speed. */
-      if ( speed_num[i] == 0 )
-         ws->speed[i] = 0;
-      else
-         ws->speed[i] = speed_accum[i] / (double)speed_num[i];
-   }
+   /* Postprocess speed. */
+   if ( speed_num == 0 )
+      ws->speed = 0;
+   else
+      ws->speed = speed_accum / (double)speed_num;
 }
 
 /**
@@ -762,20 +704,11 @@ static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
  *
  *    @param p Pilot to get the range of.
  *    @param id ID of weapon set to get the range of.
- *    @param level Level of the weapons to get the range of (-1 for all).
  */
-double pilot_weapSetRange( Pilot *p, int id, int level )
+double pilot_weapSetRange( Pilot *p, int id )
 {
-   double          range;
    PilotWeaponSet *ws = pilot_weapSet( p, id );
-   if ( level < 0 ) {
-      range = 0.;
-      for ( int i = 0; i < PILOT_WEAPSET_MAX_LEVELS; i++ )
-         range += ws->range[i];
-   } else
-      range = ws->range[level];
-
-   return range;
+   return ws->range;
 }
 
 /**
@@ -783,20 +716,11 @@ double pilot_weapSetRange( Pilot *p, int id, int level )
  *
  *    @param p Pilot to get the speed of.
  *    @param id ID of weapon set to get the speed of.
- *    @param level Level of the weapons to get the speed of (-1 for all).
  */
-double pilot_weapSetSpeed( Pilot *p, int id, int level )
+double pilot_weapSetSpeed( Pilot *p, int id )
 {
-   double          speed;
    PilotWeaponSet *ws = pilot_weapSet( p, id );
-   if ( level < 0 ) {
-      speed = 0.;
-      for ( int i = 0; i < PILOT_WEAPSET_MAX_LEVELS; i++ )
-         speed += ws->speed[i];
-   } else
-      speed = ws->speed[level];
-
-   return speed;
+   return ws->speed;
 }
 
 /**
@@ -804,9 +728,8 @@ double pilot_weapSetSpeed( Pilot *p, int id, int level )
  *
  *    @param p Pilot to get the speed of.
  *    @param id ID of weapon set to get the speed of.
- *    @param level Level of the weapons to get the speed of (-1 for all).
  */
-double pilot_weapSetAmmo( Pilot *p, int id, int level )
+double pilot_weapSetAmmo( Pilot *p, int id )
 {
    PilotWeaponSet *ws    = pilot_weapSet( p, id );
    double          ammo  = 0.;
@@ -814,9 +737,7 @@ double pilot_weapSetAmmo( Pilot *p, int id, int level )
    for ( int i = 0; i < array_size( ws->slots ); i++ ) {
       int              amount;
       PilotOutfitSlot *s = p->outfits[ws->slots[i].slotid];
-      if ( ( level >= 0 ) && ( ws->slots[i].level != level ) )
-         continue;
-      amount = pilot_maxAmmoO( p, s->outfit );
+      amount             = pilot_maxAmmoO( p, s->outfit );
       if ( amount > 0 ) {
          ammo += (double)s->u.ammo.quantity / (double)amount;
          nammo++;
@@ -861,32 +782,6 @@ void pilot_weapSetFree( Pilot *p )
 PilotWeaponSetOutfit *pilot_weapSetList( Pilot *p, int id )
 {
    return pilot_weapSet( p, id )->slots;
-}
-
-/**
- * @brief Makes the pilot shoot.
- *
- *    @param p The pilot which is shooting.
- *    @param primary Whether or not to shoot the primary.
- *    @param secondary Whether or not to shoot the secondary.
- *    @return The number of shots fired.
- */
-int pilot_shoot( Pilot *p, int primary, int secondary )
-{
-   PilotWeaponSet *ws = pilot_weapSet( p, p->active_set );
-   if ( ws->type == WEAPSET_TYPE_SWITCH ) {
-      int old = ws->active;
-      /* Set new state. */
-      ws->active = 0;
-      if ( primary )
-         ws->active |= WEAPSET_ACTIVE_PRIMARY;
-      if ( secondary )
-         ws->active |= WEAPSET_ACTIVE_SECONDARY;
-      /* Update state if something changed. */
-      if ( ws->active != old )
-         pilot_weapSetUpdateOutfitState( p );
-   }
-   return 0;
 }
 
 /**
@@ -1360,18 +1255,21 @@ void pilot_weaponClear( Pilot *p )
  */
 void pilot_weaponAuto( Pilot *p )
 {
-   int level, id;
+   int id;
 
    /* Clear weapons. */
    pilot_weaponClear( p );
 
    /* Set modes. */
-   pilot_weapSetType( p, 0, WEAPSET_TYPE_SWITCH ); /* All weaps. */
-   pilot_weapSetType( p, 1, WEAPSET_TYPE_SWITCH ); /* Forwards. */
-   pilot_weapSetType( p, 2, WEAPSET_TYPE_SWITCH ); /* Turrets. */
-   pilot_weapSetType( p, 3, WEAPSET_TYPE_SWITCH ); /* All weaps. */
-   pilot_weapSetType( p, 4, WEAPSET_TYPE_HOLD );   /* Seekers. */
-   pilot_weapSetType( p, 5, WEAPSET_TYPE_HOLD );   /* Fighter bays. */
+   pilot_weapSetType( p, 0, WEAPSET_TYPE_HOLD ); /* Primary. */
+   pilot_weapSetType( p, 1, WEAPSET_TYPE_HOLD ); /* Secondary. */
+
+   pilot_weapSetType( p, 0, WEAPSET_TYPE_HOLD ); /* All weaps. */
+   pilot_weapSetType( p, 1, WEAPSET_TYPE_HOLD ); /* Forwards. */
+   pilot_weapSetType( p, 2, WEAPSET_TYPE_HOLD ); /* Turrets. */
+   pilot_weapSetType( p, 3, WEAPSET_TYPE_HOLD ); /* All weaps. */
+   pilot_weapSetType( p, 4, WEAPSET_TYPE_HOLD ); /* Seekers. */
+   pilot_weapSetType( p, 5, WEAPSET_TYPE_HOLD ); /* Fighter bays. */
    pilot_weapSetType( p, 6, WEAPSET_TYPE_HOLD );
    pilot_weapSetType( p, 7, WEAPSET_TYPE_HOLD ); /* Afterburner. */
    pilot_weapSetType( p, 8, WEAPSET_TYPE_HOLD );
@@ -1392,13 +1290,9 @@ void pilot_weaponAuto( Pilot *p )
 
       /* Must be non-empty, and a weapon or active outfit. */
       if ( ( o == NULL ) || !outfit_isActive( o ) ) {
-         slot->level   = -1; /* Clear level. */
          slot->weapset = -1;
          continue;
       }
-
-      /* Set level based on secondary flag. */
-      level = outfit_isSecondary( o );
 
       /* Manually defined group preempts others. */
       if ( o->group ) {
@@ -1416,6 +1310,8 @@ void pilot_weaponAuto( Pilot *p )
       /* Fighter bays. */
       else if ( outfit_isFighterBay( o ) ) {
          id = 5;
+      } else if ( outfit_isSecondary( o ) ) {
+         id = 1;
       }
       /* Ignore rest. */
       else {
@@ -1424,64 +1320,25 @@ void pilot_weaponAuto( Pilot *p )
       }
 
       /* Add to its base group. */
-      pilot_weapSetAdd( p, id, slot, level );
+      pilot_weapSetAdd( p, id, slot );
 
       /* Also add another copy to another group. */
-      if ( id == 1 ) {                          /* Forward. */
-         pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
-         pilot_weapSetAdd( p, 3, slot, 0 ); /* Also get added to 'Fwd/Tur'. */
-      } else if ( id == 2 ) {               /* Turrets. */
-         pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
-         pilot_weapSetAdd( p, 3, slot, 1 ); /* Also get added to 'Fwd/Tur'. */
-      } else if ( id == 4 ) {               /* Seekers */
-         pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
+      if ( id == 1 ) {                   /* Forward. */
+         pilot_weapSetAdd( p, 0, slot ); /* Also get added to 'All'. */
+         pilot_weapSetAdd( p, 3, slot ); /* Also get added to 'Fwd/Tur'. */
+      } else if ( id == 2 ) {            /* Turrets. */
+         pilot_weapSetAdd( p, 0, slot ); /* Also get added to 'All'. */
+         pilot_weapSetAdd( p, 3, slot ); /* Also get added to 'Fwd/Tur'. */
+      } else if ( id == 4 ) {            /* Seekers */
+         pilot_weapSetAdd( p, 0, slot ); /* Also get added to 'All'. */
          if ( outfit_isTurret( o ) )
             pilot_weapSetAdd(
-               p, 9, slot, level ); /* Also get added to 'Turreted Seekers'. */
+               p, 9, slot ); /* Also get added to 'Turreted Seekers'. */
       }
    }
 
    /* Update all outfits. */
    pilot_weaponSafe( p );
-}
-
-/**
- * @brief Gives the pilot a default weapon set.
- */
-void pilot_weaponSetDefault( Pilot *p )
-{
-   int i;
-
-   /* If current set isn't a fire group no need to worry. */
-   if ( ( p->weapon_sets[p->active_set].type == WEAPSET_TYPE_SWITCH ) &&
-        ( array_size( p->weapon_sets[p->active_set].slots ) > 0 ) ) {
-      /* Update active weapon set. */
-      pilot_weapSetUpdateOutfits( p, &p->weapon_sets[p->active_set] );
-      return;
-   }
-
-   /* Find first fire group. */
-   for ( i = 0; i < PILOT_WEAPON_SETS; i++ ) {
-      const PilotWeaponSet *ws = &p->weapon_sets[i];
-      if ( ( ws->type == WEAPSET_TYPE_SWITCH ) &&
-           ( array_size( ws->slots ) > 0 ) )
-         break;
-   }
-
-   /* Set active set to first if all fire groups or first non-fire group. */
-   if ( i >= PILOT_WEAPON_SETS ) {
-      /* Fallback to first switch group. */
-      for ( i = 0; i < PILOT_WEAPON_SETS; i++ ) {
-         const PilotWeaponSet *ws = &p->weapon_sets[i];
-         if ( ws->type == WEAPSET_TYPE_SWITCH )
-            break;
-      }
-      p->active_set = ( i >= PILOT_WEAPON_SETS ) ? 0 : i;
-   } else
-      p->active_set = i;
-
-   /* Update active weapon set. */
-   pilot_weapSetUpdateOutfits( p, &p->weapon_sets[p->active_set] );
 }
 
 /**
@@ -1497,9 +1354,6 @@ void pilot_weaponSafe( Pilot *p )
       /* Update range. */
       pilot_weapSetUpdateRange( p, ws );
    }
-
-   /* Update active weapon set. */
-   pilot_weapSetUpdateOutfits( p, &p->weapon_sets[p->active_set] );
 }
 
 /**

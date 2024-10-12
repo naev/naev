@@ -756,41 +756,24 @@ static void weapons_updateList( unsigned int wid, const char *str )
 
 static void weapons_toggleList( unsigned int wid, const char *str )
 {
-   int i, t, c;
+   int t, c;
    (void)str;
 
    /* See how to handle. */
    t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
    switch ( t ) {
-   case WEAPSET_TYPE_SWITCH:
-      c = WEAPSET_TYPE_HOLD;
-      break;
    case WEAPSET_TYPE_HOLD:
       c = WEAPSET_TYPE_TOGGLE;
       break;
    case WEAPSET_TYPE_TOGGLE:
-      c = WEAPSET_TYPE_SWITCH;
+      c = WEAPSET_TYPE_HOLD;
       break;
    default:
       /* Shouldn't happen... but shuts up GCC */
-      c = WEAPSET_TYPE_SWITCH;
+      c = WEAPSET_TYPE_HOLD;
       break;
    }
    pilot_weapSetType( player.p, info_eq_weaps.weapons, c );
-
-   /* Check to see if they are all fire groups. */
-   for ( i = 0; i < PILOT_WEAPON_SETS; i++ )
-      if ( pilot_weapSetTypeCheck( player.p, i ) == WEAPSET_TYPE_SWITCH )
-         break;
-
-   /* Not able to set them all to fire groups. */
-   if ( i >= PILOT_WEAPON_SETS ) {
-      dialogue_alertRaw( _( "You need at least one switch group!" ) );
-      pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_SWITCH );
-   }
-
-   /* Set default if needs updating. */
-   pilot_weaponSetDefault( player.p );
 
    /* Must regen. */
    weapons_genList( wid );
