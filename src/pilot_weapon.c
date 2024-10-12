@@ -949,7 +949,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
 
    /* Beam weapons */
    if ( outfit_isBeam( o ) ) {
-      if ( dist > o->u.bem.range )
+      if ( dist <= o->u.bem.range )
          return INFINITY;
       return -1.; /* Impossible. */
    }
