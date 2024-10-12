@@ -548,8 +548,10 @@ int pilot_stealth( Pilot *p )
       return 1;
 
    /* Can't stealth if locked on. */
+   /*
    if ( p->lockons > 0 )
       return 0;
+      */
 
    /* Can't stealth if pilots nearby. */
    pilot_setFlag( p, PILOT_STEALTH );
