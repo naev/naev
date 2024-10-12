@@ -333,10 +333,6 @@ static void pilot_weapSetUpdateOutfits( Pilot *p, PilotWeaponSet *ws )
 
    /* Update range. */
    pilot_weapSetUpdateRange( p, ws );
-
-   /* Just update levels of active weapon set.  */
-   for ( int i = 0; i < array_size( p->outfits ); i++ )
-      p->outfits[i]->level = -1;
 }
 
 /**
@@ -1255,8 +1251,6 @@ void pilot_weaponClear( Pilot *p )
  */
 void pilot_weaponAuto( Pilot *p )
 {
-   int id;
-
    /* Clear weapons. */
    pilot_weaponClear( p );
 
@@ -1264,29 +1258,15 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetType( p, 0, WEAPSET_TYPE_HOLD ); /* Primary. */
    pilot_weapSetType( p, 1, WEAPSET_TYPE_HOLD ); /* Secondary. */
 
-   pilot_weapSetType( p, 0, WEAPSET_TYPE_HOLD ); /* All weaps. */
-   pilot_weapSetType( p, 1, WEAPSET_TYPE_HOLD ); /* Forwards. */
-   pilot_weapSetType( p, 2, WEAPSET_TYPE_HOLD ); /* Turrets. */
-   pilot_weapSetType( p, 3, WEAPSET_TYPE_HOLD ); /* All weaps. */
-   pilot_weapSetType( p, 4, WEAPSET_TYPE_HOLD ); /* Seekers. */
-   pilot_weapSetType( p, 5, WEAPSET_TYPE_HOLD ); /* Fighter bays. */
-   pilot_weapSetType( p, 6, WEAPSET_TYPE_HOLD );
-   pilot_weapSetType( p, 7, WEAPSET_TYPE_HOLD ); /* Afterburner. */
-   pilot_weapSetType( p, 8, WEAPSET_TYPE_HOLD );
-   pilot_weapSetType( p, 9, WEAPSET_TYPE_HOLD ); /* Turret seekers. */
-
-   /* All should be inrange. */
-   if ( !pilot_isPlayer( p ) )
-      for ( int i = 0; i < PILOT_WEAPON_SETS; i++ ) {
-         pilot_weapSetInrange( p, i, 1 );
-         /* Update range and speed (at 0)*/
-         pilot_weapSetUpdateRange( p, &p->weapon_sets[i] );
-      }
+   /* Set weapon sets. */
+   for ( int i = 2; i < PILOT_WEAPON_SETS; i++ )
+      pilot_weapSetType( p, i, WEAPSET_TYPE_TOGGLE );
 
    /* Iterate through all the outfits. */
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       PilotOutfitSlot *slot = p->outfits[i];
       const Outfit    *o    = slot->outfit;
+      int              id;
 
       /* Must be non-empty, and a weapon or active outfit. */
       if ( ( o == NULL ) || !outfit_isActive( o ) ) {
@@ -1295,46 +1275,34 @@ void pilot_weaponAuto( Pilot *p )
       }
 
       /* Manually defined group preempts others. */
-      if ( o->group ) {
-         id = o->group;
-      }
+      if ( o->group )
+         id = o->group +
+              2; /* Start counting after primary /secondary weapon sets. */
+      else if ( outfit_isSecondary( o ) )
+         id = 1; /* Secondary override. */
       /* Bolts and beams. */
       else if ( outfit_isBolt( o ) || outfit_isBeam( o ) ||
-                ( outfit_isLauncher( o ) && !outfit_isSeeker( o ) ) ) {
-         id = outfit_isTurret( o ) ? 2 : 1;
-      }
+                ( outfit_isLauncher( o ) && !outfit_isSeeker( o ) ) )
+         id = 0; /* Primary. */
       /* Seekers. */
-      else if ( outfit_isLauncher( o ) && outfit_isSeeker( o ) ) {
-         id = 4;
-      }
+      else if ( outfit_isLauncher( o ) && outfit_isSeeker( o ) )
+         id = 1; /* Secondary. */
       /* Fighter bays. */
-      else if ( outfit_isFighterBay( o ) ) {
-         id = 5;
-      } else if ( outfit_isSecondary( o ) ) {
-         id = 1;
-      }
+      else if ( outfit_isFighterBay( o ) )
+         id = 2; /* Weapon set 0. */
       /* Ignore rest. */
-      else {
-         slot->level = -1;
+      else
          continue;
-      }
 
       /* Add to its base group. */
       pilot_weapSetAdd( p, id, slot );
+   }
 
-      /* Also add another copy to another group. */
-      if ( id == 1 ) {                   /* Forward. */
-         pilot_weapSetAdd( p, 0, slot ); /* Also get added to 'All'. */
-         pilot_weapSetAdd( p, 3, slot ); /* Also get added to 'Fwd/Tur'. */
-      } else if ( id == 2 ) {            /* Turrets. */
-         pilot_weapSetAdd( p, 0, slot ); /* Also get added to 'All'. */
-         pilot_weapSetAdd( p, 3, slot ); /* Also get added to 'Fwd/Tur'. */
-      } else if ( id == 4 ) {            /* Seekers */
-         pilot_weapSetAdd( p, 0, slot ); /* Also get added to 'All'. */
-         if ( outfit_isTurret( o ) )
-            pilot_weapSetAdd(
-               p, 9, slot ); /* Also get added to 'Turreted Seekers'. */
-      }
+   /* All should be inrange. */
+   for ( int i = 0; i < PILOT_WEAPON_SETS; i++ ) {
+      pilot_weapSetInrange( p, i, 1 );
+      /* Update range and speed (at 0)*/
+      pilot_weapSetUpdateRange( p, &p->weapon_sets[i] );
    }
 
    /* Update all outfits. */
