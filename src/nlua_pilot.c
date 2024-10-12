@@ -1946,7 +1946,7 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
  * @usage set_name, slots = p:weapset( 5 ) -- Get info about the set number 5
  *
  *    @luatparam Pilot p Pilot to get weapset weapon of.
- *    @luatparam[opt=pilot.weapsetActive()] number id ID of the set to get
+ *    @luatparam[opt=all] number id ID of the set to get
  * information of. Defaults to currently active set.
  *    @luatreturn string The name of the set.
  *    @luatreturn table A table with each slot's information.

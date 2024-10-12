@@ -1252,6 +1252,8 @@ void pilot_weaponClear( Pilot *p )
 void pilot_weaponAuto( Pilot *p )
 {
    int idnext = 2;
+   int hasfb  = 0;
+   int haspd  = 0;
 
    /* Clear weapons. */
    pilot_weaponClear( p );
@@ -1264,14 +1266,23 @@ void pilot_weaponAuto( Pilot *p )
    for ( int i = 2; i < PILOT_WEAPON_SETS; i++ )
       pilot_weapSetType( p, i, WEAPSET_TYPE_TOGGLE );
 
-   /* See if fighter bays. */
+   /* See if fighter bays or point defense. */
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       PilotOutfitSlot *slot = p->outfits[i];
       const Outfit    *o    = slot->outfit;
-      if ( outfit_isFighterBay( o ) ) {
-         idnext = 3;
-         break;
-      }
+      if ( outfit_isFighterBay( o ) )
+         hasfb = 1;
+      else if ( outfit_isProp( o, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
+         haspd = 1;
+   }
+
+   if ( haspd ) {
+      haspd = 2; /* 0 weapset. */
+      idnext++;
+   }
+   if ( hasfb ) {
+      hasfb = 2 + !!haspd; /* 0 or 1 weapset. */
+      idnext++;
    }
 
    /* Iterate through all the outfits. */
@@ -1299,9 +1310,12 @@ void pilot_weaponAuto( Pilot *p )
       /* Seekers. */
       else if ( outfit_isLauncher( o ) && outfit_isSeeker( o ) )
          id = 1; /* Secondary. */
+      /* Point defense. */
+      else if ( outfit_isProp( o, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
+         id = haspd;
       /* Fighter bays. */
       else if ( outfit_isFighterBay( o ) )
-         id = 2; /* Weapon set 0. */
+         id = hasfb;
       /* Rest just incrcement. */
       else {
          id = idnext++;
