@@ -28,8 +28,8 @@
   <fuel_consumption>400</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="-20" h="0" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="20" h="0" />
+  <weapon size="large" prop="fighter_bay"  x="40" y="-20" h="0" />
+  <weapon size="large" prop="fighter_bay"  x="40" y="20" h="0" />
   <weapon size="large" x="0" y="-20" h="0" />
   <weapon size="large" x="0" y="20" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-20" y="-20" h="0" />
@@ -52,6 +52,7 @@
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <shield_mod>50</shield_mod>
@@ -59,6 +60,7 @@
   <fbay_capacity>50</fbay_capacity>
   <fbay_rate>50</fbay_rate>
   <fbay_reload>25</fbay_reload>
+  <cpu_max>600</cpu_max>
  </stats>
  <tags>
   <tag>zalek</tag>
