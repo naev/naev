@@ -1251,6 +1251,8 @@ void pilot_weaponClear( Pilot *p )
  */
 void pilot_weaponAuto( Pilot *p )
 {
+   int idnext = 2;
+
    /* Clear weapons. */
    pilot_weaponClear( p );
 
@@ -1261,6 +1263,16 @@ void pilot_weaponAuto( Pilot *p )
    /* Set weapon sets. */
    for ( int i = 2; i < PILOT_WEAPON_SETS; i++ )
       pilot_weapSetType( p, i, WEAPSET_TYPE_TOGGLE );
+
+   /* See if fighter bays. */
+   for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+      PilotOutfitSlot *slot = p->outfits[i];
+      const Outfit    *o    = slot->outfit;
+      if ( outfit_isFighterBay( o ) ) {
+         idnext = 3;
+         break;
+      }
+   }
 
    /* Iterate through all the outfits. */
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
@@ -1290,9 +1302,13 @@ void pilot_weaponAuto( Pilot *p )
       /* Fighter bays. */
       else if ( outfit_isFighterBay( o ) )
          id = 2; /* Weapon set 0. */
-      /* Ignore rest. */
-      else
-         continue;
+      /* Rest just incrcement. */
+      else {
+         id = idnext++;
+         /* Ran out of space. */
+         if ( id >= PILOT_WEAPON_SETS )
+            break;
+      }
 
       /* Add to its base group. */
       pilot_weapSetAdd( p, id, slot );
