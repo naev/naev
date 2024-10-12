@@ -2169,9 +2169,8 @@ static int pilotL_weapsetCleanup( lua_State *L )
  *  <li>1-2: Weapon set has full accuracy penalty plus reduced fire rate.</li>
  * </ul>
  *
- * @usage hmean, hpeak = p:weapsetHeat( true ) -- Gets info for all active
+ * @usage hmean, hpeak = p:weapsetHeat() -- Gets info for all active
  * weapons
- * @usage hmean, hpeak = p:weapsetHeat() -- Get info about the current set
  * @usage hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
  *
  *    @luatparam Pilot p Pilot to get weapset weapon of.

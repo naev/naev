@@ -3061,7 +3061,7 @@ static int aiL_gatherablePos( lua_State *L )
 static int aiL_weapSet( lua_State *L )
 {
    int id, type;
-   id = luaL_checkinteger( L, 1 );
+   id = luaL_checkinteger( L, 1 ) + 1;
 
    if ( lua_gettop( L ) > 1 )
       type = lua_toboolean( L, 2 );
@@ -3219,7 +3219,7 @@ static int aiL_hostile( lua_State *L )
  */
 static int aiL_getweaprange( lua_State *L )
 {
-   int id = luaL_checkinteger( L, 1 );
+   int id = luaL_checkinteger( L, 1 ) + 1;
    lua_pushnumber( L, pilot_weapSetRange( cur_pilot, id ) );
    return 1;
 }
@@ -3235,7 +3235,7 @@ static int aiL_getweaprange( lua_State *L )
  */
 static int aiL_getweapspeed( lua_State *L )
 {
-   int id = luaL_checkinteger( L, 1 );
+   int id = luaL_checkinteger( L, 1 ) + 1;
    lua_pushnumber( L, pilot_weapSetSpeed( cur_pilot, id ) );
    return 1;
 }
@@ -3250,7 +3250,7 @@ static int aiL_getweapspeed( lua_State *L )
  */
 static int aiL_getweapammo( lua_State *L )
 {
-   int id = luaL_checkinteger( L, 1 );
+   int id = luaL_checkinteger( L, 1 ) + 1;
    lua_pushnumber( L, pilot_weapSetAmmo( cur_pilot, id ) );
    return 1;
 }

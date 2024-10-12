@@ -1272,6 +1272,11 @@ void pilot_weaponAuto( Pilot *p )
       for ( int i = 0; i < array_size( p->outfits ); i++ ) {
          PilotOutfitSlot *slot = p->outfits[i];
          const Outfit    *o    = slot->outfit;
+
+         /* Must be non-empty, and a weapon or active outfit. */
+         if ( ( o == NULL ) || !outfit_isActive( o ) )
+            continue;
+
          if ( outfit_isFighterBay( o ) )
             hasfb = 1;
          else if ( outfit_isProp( o, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
