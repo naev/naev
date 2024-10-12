@@ -44,7 +44,7 @@ pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
 #[macro_export]
 macro_rules! warn {
     ($($arg:tt)*) => {
-        let nw = crate::log::WARN_NUM.fetch_add( 1, std::sync::atomic::Ordering::SeqCst );
+        let nw = $crate::log::WARN_NUM.fetch_add( 1, std::sync::atomic::Ordering::SeqCst );
         if nw <= 1000 {
             eprintln!("{}WARNING {}:{}: {}",
                 std::backtrace::Backtrace::force_capture(),

@@ -153,7 +153,7 @@ pub fn naev() -> Result<()> {
             let mut i = 0;
             loop {
                 let sp = *search_path.offset(i);
-                if sp as *const i8 == std::ptr::null() {
+                if sp.is_null() {
                     break;
                 }
                 let s = CStr::from_ptr(sp).to_str().unwrap();
