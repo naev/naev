@@ -93,7 +93,7 @@ void pilot_weapSetPress( Pilot *p, int id, int type )
          ws->active = 0;
       /* Turn them on. */
       else
-         ws->active = WEAPSET_ACTIVE_ALL;
+         ws->active = 1;
       break;
 
    case WEAPSET_TYPE_HOLD:
@@ -106,13 +106,11 @@ void pilot_weapSetPress( Pilot *p, int id, int type )
 
       /* Clear change variables. */
       if ( type > 0 )
-         ws->active = WEAPSET_ACTIVE_ALL;
+         ws->active = 1;
       else if ( type < 0 )
          ws->active = 0;
       break;
    }
-
-   pilot_weapSetUpdateOutfitState( p );
 }
 
 /**

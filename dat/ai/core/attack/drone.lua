@@ -171,18 +171,15 @@ function __atk_d_flyby( target, dist )
 
    --otherwise we're close to the target and should attack until we start to zip away
    else
-      dir = ai.aim(target)
+      ai.aim(target)
       --not accelerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
       if mem.aggressive == true then
          ai.accel()
       end
 
       -- Shoot if should be shooting.
-      if dir < math.rad(10) then
-         ai.shoot()
-      end
-      ai.shoot(true)
-
+      atk.primary()
+      atk.secondary()
    end
 end
 
@@ -223,7 +220,7 @@ function __atk_d_space_sup( target, dist )
 
    --within close range; aim and blast away with everything
    elseif dist > 0.4*range then
-      dir = ai.aim(target)
+      ai.aim(target)
       local dir2 = ai.idir(target)
 
       --accelerate and try to close
@@ -232,20 +229,14 @@ function __atk_d_space_sup( target, dist )
          ai.accel()
       end
 
-      -- Shoot if should be shooting.
-      if dir < math.rad(10) then
-         ai.shoot()
-      end
-      ai.shoot(true)
+      atk.primary()
+      atk.secondary()
 
    --within really close range (?); aim and blast away with everything
    else
-      dir = ai.aim(target)
-      -- Shoot if should be shooting.
-      if dir < math.rad(15) then  -- mod: was 10
-         ai.shoot()
-      end
-      ai.shoot(true)
+      ai.aim(target)
+      atk.primary()
+      atk.secondary()
    end
 end
 

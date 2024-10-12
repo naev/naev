@@ -10,11 +10,6 @@
 #define WEAPSET_INRANGE_PLAYER_DEF                                             \
    0 /**< Default weaponset inrange parameter for the player. */
 
-#define WEAPSET_ACTIVE_NONE 0
-#define WEAPSET_ACTIVE_PRIMARY ( 1 << 0 )
-#define WEAPSET_ACTIVE_SECONDARY ( 1 << 1 )
-#define WEAPSET_ACTIVE_ALL ( WEAPSET_ACTIVE_PRIMARY | WEAPSET_ACTIVE_SECONDARY )
-
 /* Freedom. */
 void pilot_weapSetFree( Pilot *p );
 
