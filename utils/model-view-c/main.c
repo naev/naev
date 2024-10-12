@@ -92,7 +92,8 @@ int main( int argc, char *argv[] )
    (void) argv;
    GLuint VaoId;
    int shadowmap_sel = 0;
-   char *path;
+   char *path, **search_path;
+   SDL_GLContext *context;
 
    if (argc < 2) {
       DEBUG("Usage: %s FILENAME", argv[0]);
@@ -108,13 +109,26 @@ int main( int argc, char *argv[] )
    PHYSFS_mount( dirname(path), "/", 1 );
    free(path);
 
+   search_path = PHYSFS_getSearchPath();
+   LOG( "%s", _( "Read locations, searched in order:" ) );
+   for ( char **p = search_path; *p != NULL; p++ )
+      LOG( "    %s", *p );
+   PHYSFS_freeList( search_path );
+
    SDL_Init( SDL_INIT_VIDEO );
-   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 2 );
    SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 1);
-   SDL_Window *win = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_W, SCREEN_H, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
-   SDL_SetWindowTitle( win, "Naev Model Viewer" );
-   SDL_GL_CreateContext( win );
+   SDL_Window *win = SDL_CreateWindow( "Naev Model Viewer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_W, SCREEN_H, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
+   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 4 );
+   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 6 );
+   SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK,
+                        SDL_GL_CONTEXT_PROFILE_CORE );
+   context = SDL_GL_CreateContext( win );
+   if (context==NULL) {
+      SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
+      SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 2 );
+      context = SDL_GL_CreateContext( win );
+      assert( context != NULL );
+   }
    gladLoadGLLoader(SDL_GL_GetProcAddress);
 
    IMG_Init(IMG_INIT_PNG);

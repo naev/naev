@@ -217,6 +217,13 @@ static int poL_outfit( lua_State *L )
 /**
  * @brief Sets the state of the PilotOutfit.
  *
+ * Note on setting state("on"): this will bypass and ignore the weapon sets so
+ * you can set an outfit on in the update(...) function and it will be set as
+ * on until it is toggled off or the state is changed. A single exception is
+ * when it is set as "on" during an ontoggle(...) function call that returns
+ * true. In that case, it will behave like non-Lua outfits and be turned off
+ * whenever it is toggled off again.
+ *
  *    @luatparam PilotOutfit po Pilot outfit to set the state of.
  *    @luatparam string state State to set the pilot outfit to. Can be either
  * "off", "warmup", "on", or "cooldown".
@@ -233,15 +240,21 @@ static int poL_state( lua_State *L )
          L, _( "'pilotoutfit.%s' only works with modifier outfits!" ),
          "state" );
 
-   if ( state == NULL || strcmp( state, "off" ) == 0 )
+   if ( state == NULL || strcmp( state, "off" ) == 0 ) {
       po->state = PILOT_OUTFIT_OFF;
-   else if ( strcmp( state, "warmup" ) == 0 )
+      po->flags &= ~PILOTOUTFIT_ISON_LUA;
+   } else if ( strcmp( state, "warmup" ) == 0 ) {
       po->state = PILOT_OUTFIT_WARMUP;
-   else if ( strcmp( state, "on" ) == 0 )
+      po->flags &= ~PILOTOUTFIT_ISON_LUA;
+   } else if ( strcmp( state, "on" ) == 0 ) {
+      if ( po->state != PILOT_OUTFIT_ON )
+         po->flags |=
+            PILOTOUTFIT_ISON_LUA; /* Gets disabled if ontoggle is set. */
       po->state = PILOT_OUTFIT_ON;
-   else if ( strcmp( state, "cooldown" ) == 0 )
+   } else if ( strcmp( state, "cooldown" ) == 0 ) {
       po->state = PILOT_OUTFIT_COOLDOWN;
-   else
+      po->flags &= ~PILOTOUTFIT_ISON_LUA;
+   } else
       return NLUA_ERROR( L, _( "Unknown PilotOutfit state '%s'!" ), state );
 
    /* Mark as modified if state changed. */

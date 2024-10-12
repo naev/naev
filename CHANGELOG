@@ -12,6 +12,8 @@
       * Significantly increased the amount of fuel provided by outfits
       * Camouflage burster gives a speed bonus while active and disables when out of stealth
       * Can scan ships with 'u' key
+      * Gave the Quicksilver another medium structural slot
+      * Beam weapons have minimum delays instead of minimum durations
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
@@ -40,7 +42,7 @@
       * 6 new missions
          * Hack the Gibson!
       * 4 new ships
-      * 11 new ship variants
+      * 13 new ship variants
          * Give a new twist to existing ships
       * 4 new outfits
       * New area with unique challenges
@@ -81,9 +83,13 @@
       * Always use replaygain information when available when loading vorbis files
       * Stop repeating the same warning after a fixed amount of times
       * Support for outfits that don't break stealth
-      * Added tur_range and fwd_range ship stats
       * Editor has partial support for universe diffs
       * Editor has separate configuration and file dialogues
+      * New ship stats
+         * Global weapon range, damage, fire-rate and energy usage
+         * Range ship stat for all specific weapon types
+         * Turn, speed, and accel for launchers
+         * Shield down time modifier
    * Fixes
       * PSO and Mizar nebulas have trails again
       * Removed fancy background mode
@@ -93,11 +99,14 @@
       * Fixed hypergate and wormhole effects getting stuck
       * Obelisks tell if you have completed them already
       * Fixed space dust disappearing with certain jump abilities
+      * Boarded pilots become permanently disabled if they lose space-worthiness
       * Double tap will activate feather drive like blink engines
       * Fixed camouflage burster not activating stealth
+      * Fixed bug where beams were counted as giving energy in the equipment optimizer
       * shadowvigil: claim entire route
       * sh01_corvette: should be completable on easy difficulties now
       * patrol: fixed escorts and fighters becoming hostile if hostile to the mission giving faction
+      * Fixed debugging paranoid builds under Windows
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons

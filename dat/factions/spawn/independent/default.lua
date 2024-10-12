@@ -2,7 +2,6 @@ local scom = require "factions.spawn.lib.common"
 local var = require "shipvariants"
 
 local shyena      = ship.get("Hyena")
-local sshark      = ship.get("Shark")
 local stristan    = ship.get("Tristan")
 local slancelot   = ship.get("Lancelot")
 local svendetta   = ship.get("Vendetta")
@@ -61,7 +60,7 @@ end
 local function spawn_bounty_hunter_sml ()
    local ships = {
          shyena,
-         sshark,
+         var.shark,
          slancelot,
          svendetta,
          var.ancestor,

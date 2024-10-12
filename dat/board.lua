@@ -565,6 +565,13 @@ function board_close ()
       board_wdw:destroy()
    end
    board_wdw = nil
+
+   -- Player stole something to make it not spaceworthy, sorry bud, you're
+   -- not waking up.
+   if not board_plt:spaceworthy() then
+      board_plt:setDisable(false) -- Permanently disable
+   end
+
    der.sfx.unboard:play()
 end
 

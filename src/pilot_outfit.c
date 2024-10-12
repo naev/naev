@@ -911,26 +911,31 @@ double pilot_outfitRange( const Pilot *p, const Outfit *o )
       }
       return range;
    } else if ( outfit_isLauncher( o ) ) {
-      double duration = o->u.lau.duration;
-      if ( p != NULL )
+      double duration  = o->u.lau.duration;
+      double accel     = o->u.lau.accel;
+      double speed     = o->u.lau.speed;
+      double speed_max = o->u.lau.speed_max;
+      if ( p != NULL ) {
          duration *= p->stats.launch_range * p->stats.weapon_range;
-      if ( o->u.lau.accel ) {
+         speed *= p->stats.launch_speed;
+         accel *= p->stats.launch_accel;
+         speed_max *= p->stats.launch_speed;
+      }
+      if ( o->u.lau.accel != 0. ) {
          double speedinc;
-         if ( o->u.lau.speed >
+         if ( speed >
               0. ) /* Ammo that don't start stopped don't have max speed. */
             speedinc = INFINITY;
          else
-            speedinc = o->u.lau.speed_max - o->u.lau.speed;
-         double at = speedinc / o->u.lau.accel;
+            speedinc = speed_max - speed;
+         double at = speedinc / accel;
          if ( at < duration )
-            return speedinc * ( duration - at / 2. ) +
-                   o->u.lau.speed * duration;
+            return speedinc * ( duration - at / 2. ) + speed * duration;
 
          /* Maximum speed will never be reached. */
-         return pow2( duration ) * o->u.lau.accel / 2. +
-                duration * o->u.lau.speed;
+         return pow2( duration ) * accel / 2. + duration * speed;
       }
-      return o->u.lau.speed * duration;
+      return speed * duration;
    } else if ( outfit_isFighterBay( o ) )
       return INFINITY;
    return -1.;
@@ -1410,6 +1415,48 @@ const char *pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname )
 }
 
 /**
+ * @brief Gets the speed of an outfit given a pilot.
+ */
+double pilot_outfitSpeed( const Pilot *p, const Outfit *o )
+{
+   if ( outfit_isBolt( o ) )
+      return o->u.blt.speed;
+   else if ( outfit_isLauncher( o ) ) {
+      double t;
+      double accel     = o->u.lau.accel;
+      double speed     = o->u.lau.speed;
+      double speed_max = o->u.lau.speed_max;
+      double duration  = o->u.lau.duration;
+      if ( p != NULL ) {
+         speed *= p->stats.launch_speed;
+         accel *= p->stats.launch_accel;
+         speed_max *= p->stats.launch_speed;
+         duration *= p->stats.launch_range * p->stats.weapon_range;
+      }
+
+      if ( o->u.lau.accel == 0. )
+         return speed;
+
+      if ( speed >
+           0. ) /* Ammo that don't start stopped don't have max speed. */
+         t = INFINITY;
+      else
+         t = ( speed_max - speed ) / accel; /* Time to reach max speed */
+
+      /* Reaches max speed. */
+      if ( t < duration )
+         return ( accel * t * t / 2. +
+                  ( speed_max - speed ) * ( duration - t ) ) /
+                   duration +
+                speed;
+      /* Doesn't reach max speed. */
+      else
+         return accel * duration / 2. + speed;
+   }
+   return -1.;
+}
+
+/**
  * @brief Runs the pilot's Lua outfits init script.
  *
  *    @param pilot Pilot to run Lua outfits for.
@@ -1697,6 +1744,8 @@ int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on )
 
    /* Handle return boolean. */
    ret = lua_toboolean( naevL, -1 );
+   if ( ret )
+      po->flags &= ~PILOTOUTFIT_ISON_LUA; /* Clear if it was set via toggle. */
    lua_pop( naevL, 1 );
    pilot_outfitLunmem( env, oldmem );
    return ret || pilotoutfit_modified; /* Even if the script says it didn't

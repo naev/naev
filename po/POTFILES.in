@@ -522,6 +522,7 @@ dat/ships/dvaered/dvaered_vigilance.xml
 dat/ships/empire/empire_admonisher.xml
 dat/ships/empire/empire_hawking.xml
 dat/ships/empire/empire_lancelot.xml
+dat/ships/empire/empire_lancelot_golden_efreeti.xml
 dat/ships/empire/empire_pacifier.xml
 dat/ships/empire/empire_peacemaker.xml
 dat/ships/empire/empire_rainmaker.xml
@@ -560,6 +561,7 @@ dat/ships/neutral/quicksilver_mercury.xml
 dat/ships/neutral/rhino.xml
 dat/ships/neutral/schroedinger.xml
 dat/ships/neutral/shark.xml
+dat/ships/neutral/shark_psiiiia.xml
 dat/ships/neutral/starbridge.xml
 dat/ships/neutral/starbridge_sigma.xml
 dat/ships/neutral/tristan.xml

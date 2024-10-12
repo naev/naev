@@ -22,6 +22,7 @@
 #include "map.h"
 #include "menu.h"
 #include "mission.h"
+#include "naevpedia.h"
 #include "nlua.h"
 #include "nstring.h"
 #include "ntime.h"
@@ -114,6 +115,7 @@ static void weapons_volley( unsigned int wid, const char *str );
 static void aim_lines( unsigned int wid, const char *str );
 static void weapons_renderLegend( double bx, double by, double bw, double bh,
                                   void *data );
+static void weapons_help( unsigned int wid, const char *str );
 static void info_openStandings( unsigned int wid );
 static void info_shiplogView( unsigned int wid, const char *str );
 static void standings_update( unsigned int wid, const char *str );
@@ -683,8 +685,10 @@ static void info_openWeapons( unsigned int wid )
    weapons_genList( wid );
 
    /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeCargo",
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeWeapons",
                      _( "Close" ), info_close );
+   window_addButton( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
+                     BUTTON_HEIGHT, "help", _( "Help" ), weapons_help );
 }
 
 /**
@@ -915,6 +919,16 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh,
    toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
    gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
              _( "Primary Weapon (Left click toggles)" ) );
+}
+
+/**
+ * @brief Opens the naevpedia for weapon sets.
+ */
+static void weapons_help( unsigned int wid, const char *str )
+{
+   (void)wid;
+   (void)str;
+   naevpedia_open( "mechanics/weaponsets" );
 }
 
 /**

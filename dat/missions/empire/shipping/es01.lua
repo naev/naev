@@ -212,6 +212,7 @@ function enemies( enter_vect )
    if rnd.rnd() < 0.3 then table.insert( merc, "Pacifier" ) end
    if rnd.rnd() < 0.7 then table.insert( merc, "Ancestor" ) end
    if rnd.rnd() < 0.9 then table.insert( merc, "Vendetta" ) end
+   if #merc <= 0 then return end
 
    -- Add mercenaries
    local flt = fleet.add( 1, merc, "Mercenary", enter_vect )

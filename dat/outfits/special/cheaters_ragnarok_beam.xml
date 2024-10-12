@@ -11,7 +11,7 @@
  <rarity>6</rarity></general>
  <specific type="beam">
   <delay>2</delay>
-  <duration min="2">6</duration>
+  <duration>6</duration>
   <range>500</range>
   <turn>35</turn>
   <energy>20</energy>

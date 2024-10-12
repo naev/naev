@@ -1,8 +1,6 @@
 local scom = require "factions.spawn.lib.common"
 local var = require "shipvariants"
 
---local sshark      = ship.get("Shark")
-
 -- @brief Spawns a small trade fleet.
 local function spawn_patrol ()
    return scom.doTable( {}, {

@@ -870,6 +870,7 @@ double pilot_minbrakedist( const Pilot *p, double dt, double *flytime )
       return vel * ( t + dt ) -
              0.5 * PILOT_REVERSE_THRUST * accel * pow2( t - dt );
    }
+   /* Small compensation for current delta-tick. */
    *flytime = t + M_PI / p->turn + dt;
    return vel * ( *flytime ) - 0.5 * accel * pow2( t - dt );
 }
@@ -890,11 +891,12 @@ int pilot_brake( Pilot *p, double dt )
       return 1;
 
    if ( pilot_brakeCheckReverseThrusters( p ) ) {
-      dir   = VANGLE( p->solid.vel );
-      accel = -PILOT_REVERSE_THRUST;
+      dir = VANGLE( p->solid.vel );
+      accel =
+         -MIN( PILOT_REVERSE_THRUST, VMOD( p->solid.vel ) / ( p->accel * dt ) );
    } else {
       dir   = VANGLE( p->solid.vel ) + M_PI;
-      accel = 1.;
+      accel = MIN( 1., VMOD( p->solid.vel ) / ( p->accel * dt ) );
    }
 
    diff = pilot_face( p, dir, dt );
@@ -2859,7 +2861,7 @@ void pilot_sample_trails( Pilot *p, int none )
    /* Compute the engine offset and decide where to draw the trail. */
    for ( int i = 0, g = 0; g < array_size( p->ship->trail_emitters ); g++ ) {
       const ShipTrailEmitter *trail = &p->ship->trail_emitters[g];
-      double                  dx, dy, dz, ax, ay, scale;
+      double                  dx, dy, dz, amod, ax, ay, scale;
 
       if ( !pilot_trail_generated( p, g ) )
          continue;
@@ -2904,8 +2906,9 @@ void pilot_sample_trails( Pilot *p, int none )
       dy *= scale;
       dz *= scale;
 
-      ax = p->solid.accel * -dircos;
-      ay = p->solid.accel * -dirsin;
+      amod = p->solid.accel * p->engine_glow;
+      ax   = amod * -dircos;
+      ay   = amod * -dirsin;
 
       /* Sample. */
       spfx_trail_sample( p->trail[i++], p->solid.pos.x + dx,
@@ -3963,9 +3966,12 @@ void pilot_stackRemove( Pilot *p )
 {
    int i = pilot_getStackPos( p->id );
 #ifdef DEBUGGING
-   if ( i < 0 )
+   if ( i < 0 ) {
       WARN( _( "Trying to remove non-existent pilot '%s' from stack!" ),
             p->name );
+      p->id = 0;
+      return;
+   }
 #endif /* DEBUGGING */
    p->id = 0;
    array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i + 1] );
@@ -4390,7 +4396,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
             mod_damage = p->stats.tur_damage;
             mod_shots  = 1. / p->stats.tur_firerate;
          }
-         shots     = outfit_duration( o );
+         shots     = o->u.bem.duration;
          mod_shots = shots / ( shots + mod_shots * outfit_delay( o ) );
          dps += mod_shots * mod_damage * outfit_damage( o )->damage;
          eps += mod_shots * mod_energy * outfit_energy( o );

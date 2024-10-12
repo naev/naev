@@ -304,8 +304,18 @@ GLuint gl_program_backend( const char *vertfile, const char *fragfile, const cha
    char *vert_str, *frag_str, prepend[STRMAX];
    size_t vert_size, frag_size;
    GLuint vertex_shader, fragment_shader, program;
+   int major, minor, glsl;
 
-   strncpy( prepend, GLSL_VERSION, sizeof(prepend)-1 );
+   SDL_GL_GetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, &major );
+   SDL_GL_GetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, &minor );
+   if ( major * 100 + minor * 10 > 320 )
+      glsl = 100 * major + 10 * minor;
+   else
+      glsl = 150;
+
+   snprintf( prepend, sizeof( prepend ) - 1,
+             "#version %d\n\n#define GLSL_VERSION %d\n", glsl,
+             glsl );
    if (prependtext != NULL)
       strncat( prepend, prependtext, sizeof(prepend)-strlen(prepend)-1 );
    //if (gl_has( OPENGL_SUBROUTINES ))

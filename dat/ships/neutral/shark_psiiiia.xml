@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Shark ΨIIIa" inherits="Shark">
+ <price>290000</price>
+ <class>Scout</class>
+ <description>With the Shark ΨIIIa, Nexus Shipyards rethinks the Shark as a Scout-class vessel. The weapon mounts are significantly reduced in exchange for more utility. However, unlike most scout ships, it still retains the durability, allowing it to play a more combat-focused reconnaissance role. For reasons unknown, there has been almost no publicity regarding the ΨIIIa and it is very hard to find.</description>
+ <slots>
+  <weapon size="small" x="12" y="0" h="0" />
+  <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
+  <utility size="small" prop="accessory" />
+  <utility size="small" />
+  <utility size="small" />
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
+  <structure size="small" />
+ </slots>
+ <stats>
+  <shield_mod>10</shield_mod>
+  <shield_regen_mod>15</shield_regen_mod>
+  <accel_mod>15</accel_mod>
+  <ew_detect>20</ew_detect>
+  <cooldown_mod>-30</cooldown_mod>
+  <jump_delay>-50</jump_delay>
+  <land_delay>-50</land_delay>
+ </stats>
+</ship>

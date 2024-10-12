@@ -907,34 +907,9 @@ double outfit_range( const Outfit *o )
  */
 double outfit_speed( const Outfit *o )
 {
-   if ( outfit_isBolt( o ) )
-      return o->u.blt.speed;
-   else if ( outfit_isLauncher( o ) ) {
-      if ( o->u.lau.accel == 0. )
-         return o->u.lau.speed;
-      else { /* Gets the average speed. */
-         double t;
-         if ( o->u.lau.speed >
-              0. ) /* Ammo that don't start stopped don't have max speed. */
-            t = INFINITY;
-         else
-            t = ( o->u.lau.speed_max - o->u.lau.speed ) /
-                o->u.lau.accel; /* Time to reach max speed */
-
-         /* Reaches max speed. */
-         if ( t < o->u.lau.duration )
-            return ( o->u.lau.accel * t * t / 2. +
-                     ( o->u.lau.speed_max - o->u.lau.speed ) *
-                        ( o->u.lau.duration - t ) ) /
-                      o->u.lau.duration +
-                   o->u.lau.speed;
-         /* Doesn't reach max speed. */
-         else
-            return o->u.lau.accel * o->u.lau.duration / 2. + o->u.lau.speed;
-      }
-   }
-   return -1.;
+   return pilot_outfitSpeed( NULL, o );
 }
+
 /**
  * @brief Gets the swivel of an outfit.
  *    @param o Outfit to get swivel of.
@@ -1058,14 +1033,6 @@ double outfit_duration( const Outfit *o )
       if ( o->u.mod.active )
          return o->u.mod.duration;
    } else if ( outfit_isAfterburner( o ) )
-      return INFINITY;
-   else if ( outfit_isBolt( o ) )
-      return ( o->u.blt.range / o->u.blt.speed );
-   else if ( outfit_isBeam( o ) )
-      return o->u.bem.duration;
-   else if ( outfit_isLauncher( o ) )
-      return o->u.lau.duration;
-   else if ( outfit_isFighterBay( o ) )
       return INFINITY;
    return -1.;
 }
@@ -1790,7 +1757,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "range", temp->u.bem.range );
       xmlr_float( node, "turn", temp->u.bem.turn );
       xmlr_float( node, "energy", temp->u.bem.energy );
-      xmlr_float( node, "delay", temp->u.bem.delay );
+      xmlr_float( node, "duration", temp->u.bem.duration );
       xmlr_float( node, "warmup", temp->u.bem.warmup );
       xmlr_float( node, "heatup", temp->u.bem.heatup );
       xmlr_float( node, "swivel", temp->u.bem.swivel );
@@ -1809,9 +1776,9 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
          continue;
       }
 
-      if ( xml_isNode( node, "duration" ) ) {
-         xmlr_attr_float( node, "min", temp->u.bem.min_duration );
-         temp->u.bem.duration = xml_getFloat( node );
+      if ( xml_isNode( node, "delay" ) ) {
+         xmlr_attr_float( node, "min", temp->u.bem.min_delay );
+         temp->u.bem.delay = xml_getFloat( node );
          continue;
       }
 
@@ -1906,9 +1873,9 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    /* Standard stats. */
    l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.penetration * 100,
                   &penetration_opts );
-   l = os_printD_range( temp->summary_raw, l, temp->u.bem.min_duration,
-                        temp->u.bem.duration, &duration_opts );
-   l = os_printD( temp->summary_raw, l, temp->u.bem.delay, &cooldown_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.bem.duration, &duration_opts );
+   l = os_printD_range( temp->summary_raw, l, temp->u.bem.min_delay,
+                        temp->u.bem.delay, &cooldown_opts );
    l = os_printD( temp->summary_raw, l, temp->u.bem.range, &range_opts );
    l = os_printD( temp->summary_raw, l, temp->u.bem.heatup, &heatup_opts );
    if ( !outfit_isTurret( temp ) )
@@ -1931,7 +1898,8 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
              "sound_off" );
    MELEMENT( temp->u.bem.delay == 0, "delay" );
    MELEMENT( temp->u.bem.duration == 0, "duration" );
-   MELEMENT( temp->u.bem.min_duration < 0, "duration" );
+   MELEMENT( temp->u.bem.min_delay < 0, "delay" );
+   MELEMENT( temp->u.bem.min_delay > temp->u.bem.delay, "delay" );
    MELEMENT( temp->u.bem.range == 0, "range" );
    MELEMENT( ( temp->type != OUTFIT_TYPE_BEAM ) && ( temp->u.bem.turn == 0 ),
              "turn" );

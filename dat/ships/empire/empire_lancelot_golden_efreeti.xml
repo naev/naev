@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Empire Lancelot Golden Efreeti" inherits="Empire Lancelot">
+ <rarity>3</rarity>
+ <price>850000</price>
+ <cond>math.ceil(faction.playerStanding("Empire")+0.5) &gt;= 40</cond>
+ <condstr>You need at least 40% reputation with the Empire.</condstr>
+ <description>A high-spec bombing focused Lancelot that is most known by the use with the famous Sigma-5 squadron. The Golden Efreeti features a classified targetting system, that while it has significantly lower range than standard variants, it compensates by having much faster locking and agility. The result is an agile ship that is able to engine ships at short distances and quickly switch between targets while depending on missiles and torpedoes.</description>
+ <slots>
+  <weapon size="medium" x="-3" y="0" h="-2" />
+  <weapon size="medium" x="-3" y="3" h="5" />
+  <weapon size="small" x="-3" y="-3" h="5" />
+  <weapon size="small" x="-5" y="0" h="5" />
+  <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
+  <utility size="small" prop="accessory" />
+  <utility size="small" />
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
+  <structure size="small" />
+  <structure size="small" />
+ </slots>
+ <stats>
+  <shield_mod>15</shield_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+  <cpu_mod>-20</cpu_mod>
+  <launch_damage>15</launch_damage>
+  <launch_range>-50</launch_range>
+  <launch_lockon>-50</launch_lockon>
+  <launch_calibration>-50</launch_calibration>
+  <launch_turn>50</launch_turn>
+  <ew_track>15</ew_track>
+ </stats>
+</ship>

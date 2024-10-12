@@ -38,4 +38,7 @@ if not selected:
     sys.exit(-1)
 
 # Export to STL
-bpy.ops.export_mesh.stl( "EXEC_DEFAULT",  use_selection=True, filepath=stlpath )
+# blender 4.0 or earlier
+#bpy.ops.export_mesh.stl( "EXEC_DEFAULT",  use_selection=True, filepath=stlpath )
+# blender 4.1 or later
+bpy.ops.wm.stl_export( export_selected_objects=True, filepath=stlpath )

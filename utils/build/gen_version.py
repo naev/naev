@@ -12,7 +12,7 @@ def parse_version(version_str):
     try:
         version_parts = version_str.split('-')
         if len(version_parts) >= 2:
-            version = version_parts[0] + '-' + version_parts[1].replace('.', '.') + '+' + '.'.join(version_parts[2:]).replace('-', '+').replace('.dirty', '+dirty')
+            version = version_parts[0] + '-' + version_parts[1].replace('.', '.') + '+' + '.'.join(version_parts[2:]).replace('-', '+')
         else:
             version = version_str
         return version

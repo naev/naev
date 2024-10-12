@@ -56,18 +56,23 @@ typedef struct Weapon_ {
    Target        target;  /**< Weapon target. */
    const Outfit *outfit;  /**< related outfit that fired it or whatnot */
 
-   double  real_vel;       /**< Keeps track of the real velocity. */
-   double  range_mod;      /**< Range modifier. */
-   double  dam_mod;        /**< Damage modifier. */
-   double  dam_as_dis_mod; /**< Damage as disable modifier. */
-   int     voice;          /**< Weapon's voice. */
-   double  timer2; /**< Explosion timer for beams, and lockon for ammo. */
-   double  paramf; /**< Arbitrary parameter for outfits. */
-   double  life;   /**< Total life. */
-   double  timer;  /**< mainly used to see when the weapon was fired */
-   double  anim;   /**< Used for beam weapon graphics and others. */
-   GLfloat r;      /**< Unique random value . */
-   int     sprite; /**< Used for spinning outfits. */
+   /* We want to snapshot shistats during creation here. */
+   double range_mod;      /**< Range modifier. */
+   double dam_mod;        /**< Damage modifier. */
+   double dam_as_dis_mod; /**< Damage as disable modifier. */
+   double accel_mod;      /**< Acceleration modifier. */
+   double speed_mod;      /**< Speed modifier. */
+   double turn_mod;       /**< Turn modifier. */
+
+   double  real_vel; /**< Keeps track of the real velocity. */
+   int     voice;    /**< Weapon's voice. */
+   double  timer2;   /**< Explosion timer for beams, and lockon for ammo. */
+   double  paramf;   /**< Arbitrary parameter for outfits. */
+   double  life;     /**< Total life. */
+   double  timer;    /**< mainly used to see when the weapon was fired */
+   double  anim;     /**< Used for beam weapon graphics and others. */
+   GLfloat r;        /**< Unique random value . */
+   int     sprite;   /**< Used for spinning outfits. */
    PilotOutfitSlot *mount;   /**< Used for beam weapons. */
    int              lua_mem; /**< Mem table, in case of a Pilot Outfit. */
    double falloff;       /**< Point at which damage falls off. Used to determine

@@ -58,8 +58,9 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
                  _( "Your ship '%s' has %s of cargo but there is only %s of "
                     "free space in the rest of the fleet. Get rid of %s of "
                     "cargo to shrink your fleet?" ),
-                 p->name, buf_amount, buf_free, buf_needed ) )
+                 p->name, buf_amount, buf_free, buf_needed ) ) {
             return -1;
+         }
       }
       /* Try to make room for the commodities. */
       idx = -1;
@@ -75,10 +76,12 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
             break;
          }
       }
-      if ( idx < 0 )
+      if ( idx < 0 ) {
          WARN( _( "Player deployed ship '%s' not found in escort list!" ),
                p->name );
-      else
+         ps->deployed = 0;
+         return -1;
+      } else
          escort_rmListIndex( player.p, idx );
 
       /* Try to add the cargo. */
@@ -119,6 +122,7 @@ int pfleet_deploy( PlayerShip_t *ps )
       WARN( _( "Trying to deploy fleet ship '%s' despite not being space "
                "worthy!" ),
             ps->p->name );
+      ps->deployed = 0;
       return -1;
    }
 #endif /* DEBUGGING */

@@ -246,6 +246,15 @@ When you arrive at the said office, a soldier greets you.]]), {player=player.nam
       sol(fmt.f(_([["And finally, two Warlords, namely Lady Proserpina and Lord Richthofen, required us to give you the sum of {credits} and their greetings. I wish you to stay right, loyal and strong, citizen."]]),
             {credits=fmt.credits(amount)}))
       vn.done()
+
+      vn.sfxVictor()
+      local reward_outfit = outfit.get("Fancy Key Chain" )
+      vn.func( function ()
+         player.pay(amount)
+         player.outfitAdd( reward_outfit )
+      end )
+      vn.na( fmt.reward{amount, reward_outfit} )
+
       vn.run()
 
       if diff.isApplied( "heavy_combat_vessel_license" ) then -- Player already has the license
@@ -255,8 +264,6 @@ When you arrive at the said office, a soldier greets you.]]), {player=player.nam
          diff.apply("heavy_combat_vessel_license")
       end
 
-      player.pay(amount)
-      player.outfitAdd( "Fancy Key Chain" )
       misn.finish(true)
    end
 end

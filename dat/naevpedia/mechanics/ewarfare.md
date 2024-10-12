@@ -62,7 +62,7 @@ Being within 2,500 units of jump points also lowers the stealth range by 50%, ma
 
 Like the detection range, the scanning time of a ship is determined by its mass.
 The time it takes to scan a ship is determined by `mass^(1/3) * 1.25`, which amounts to 7.22 seconds for a Llama with 193 tonnes of mass or 22.5 seconds for a Goddard with 5,834 tonnes of mass.
-This value is divided by the **Detection Range** and **Signature Range** values of the ship, and multiplied **Scanned Speed* of the ship.
+This value is divided by the **Detection Range** and **Signature Range** values of the ship, and multiplied **Scanned Speed** of the ship.
 
 ## System Modifiers
 

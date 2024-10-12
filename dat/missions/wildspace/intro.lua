@@ -200,7 +200,7 @@ When you receive this message, there is no need to come look for me. I will no l
       -- TODO log
       local msg = _([[You recovered a package for Claude from {spb} ({sys} system), who, sacrificed himself before turning Lost. The package contained a blueprint to make your ship resistant to the Wild Space local effects making people Lost, allowing you to safely survive.]])
       if not jump.get("Scholz's Star", "Haered"):known() then
-         msg = fmt.f(_([[{msg} Furthermore, your Ship AI indicated that it is likely that there is a second exit from Wild Space, which may warrant more exploration.]], {msg=msg}))
+         msg = fmt.f(_([[{msg} Furthermore, your Ship AI indicated that it is likely that there is a second exit from Wild Space, which may warrant more exploration.]]), {msg=msg})
       end
       ws.log(fmt.f(msg, {spb=target, sys=targetsys}))
 

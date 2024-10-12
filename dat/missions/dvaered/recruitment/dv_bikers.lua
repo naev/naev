@@ -50,10 +50,10 @@ local portrait = require "portrait"
 local agentPort = "dvaered/dv_military_m2.webp"
 local BBB1Port = "pirate/pirate4.webp"
 local BBB2Port = "pirate/pirate6.webp"
-local npc1img, npc1por = vni.get()
-local npc2img, npc2por = vni.get()
-local npc3img, npc3por = vni.get()
-local npc4img, npc4por = vni.get()
+local npc1img, npc1por = vni.generic()
+local npc2img, npc2por = vni.generic()
+local npc3img, npc3por = vni.generic()
+local npc4img, npc4por = vni.generic()
 
 local gangs = { _("Big Bang Band"), -- gang of Blue Belly Billy
                 _("Cringe Crew"),
@@ -347,12 +347,15 @@ The man on your right answers: "Certainly not, your Lordship."]]),
       vn.jump("shutup")
 
       vn.label("shutup")
-      vn.done()
+      vn.sfxVictory()
+      vn.func( function ()
+         player.pay(pay)
+      end )
+      vn.na( fmt.reward(pay) )
       vn.run()
 
       -- TODO once the whole recruitment campaign is stabilized: faction.get("Dvaered"):modPlayerRaw(someQuantity)
       dv.addStandardLog( _([[You stole a nozzle hubcap to the leader of a gang of Hyena bikers for the Baron Sauterfeldt to help Lord Fatgun getting a second Goddard battlecruiser.]]) )
-      player.pay(pay)
       misn.finish(true)
    end
 end

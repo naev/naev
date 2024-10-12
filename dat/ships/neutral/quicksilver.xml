@@ -20,7 +20,7 @@
  </health>
  <characteristics>
   <crew>4</crew>
-  <mass>150</mass>
+  <mass>125</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>30</cargo>
  </characteristics>
@@ -34,6 +34,7 @@
   <utility size="small" />
   <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure size="medium" />
   <structure size="medium" />
   <structure size="small" />
   <structure size="small" />

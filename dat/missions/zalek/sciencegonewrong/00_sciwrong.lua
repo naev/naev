@@ -210,6 +210,7 @@ function third_trd()
 
    misn.npcRm(mem.bar1pir1)
    misn.cargoRm(mem.carg_id)
+   mem.carg_id = nil
    player.msg(mem.t_sys[3]:name())
    misn.osdCreate(_("The one with the Shopping"), {
       fmt.f(_("Return to the {sys} system and deliver to Dr. Geller on {pnt}"), {sys=mem.t_sys[3], pnt=mem.t_pla[3]}),
@@ -245,7 +246,7 @@ function fnl_ld ()
 end
 -- when the player takes off the authorities will want them
 function sys_enter ()
-   if system.cur() == mem.t_sys[2] then
+   if system.cur() == mem.t_sys[2] and mem.carg_id then
       hook.timer(7.0, "call_the_police")
    end
 end
@@ -266,7 +267,7 @@ function call_the_police ()
 end
 
 function spwn_police () -- Get called to Waterhole
-   local spwnsys = system.get("Holly")
+   local spwnsys = system.get("Majesteka")
    lance1 = pilot.add( "Empire Lancelot", "Empire", spwnsys, nil, {naked=true} )
    lance2 = pilot.add( "Empire Lancelot", "Empire", spwnsys, nil, {naked=true} )
    adm1 = pilot.add( "Empire Admonisher", "Empire", spwnsys, nil, {naked=true} )
@@ -339,6 +340,7 @@ function fine_vanish ()
    end
 
    misn.cargoRm(mem.carg_id)
+   mem.carg_id = nil
    if adm1:exists() then
       adm1:hyperspace()
    end

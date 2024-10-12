@@ -4,7 +4,7 @@
  <location>land</location>
  <unique />
  <chance>10</chance>
- <chapter>^0</chapter><!-- TODO bump to 2 when finished. -->
+ <chapter>[^0]</chapter><!-- TODO bump to 2 when finished. -->
  <cond>
    local s = spob.cur()
    if not s:services()["bar"] then

@@ -694,8 +694,12 @@ local function _getpos( pos )
       return 0.15
    elseif pos == "farright" then
       return 0.85
+   elseif pos == nil then
+      return 0.5
+   else
+      warn(fmt.f(_("vn: trying to set unknown character position '{pos}'!"),{pos=pos}))
+      return 0.5
    end
-   return 0.5
 end
 function vn.StateCharacter:_init()
    if self.remove then
@@ -1293,7 +1297,10 @@ function vn.Character.new( who, params )
    local pimage = params.image
    if pimage ~= nil then
       local img
-      if type(pimage)=='string' then
+      local timg = type(pimage)
+      if timg=='function' then
+         img = pimage()
+      elseif timg=='string' then
          local searchpath = {
             "",
             "gfx/vn/characters/",

@@ -1,4 +1,23 @@
 local vn = require 'vn'
+local lg = require "love.graphics"
+
+local _drone_comm
+local function drone_comm ()
+   if _drone_comm then
+      return _drone_comm
+   end
+   _drone_comm = lg.newImage( ship.get("Drone"):gfxComm(1024) )
+   return _drone_comm
+end
+
+local _drone_hyena_comm
+local function drone_hyena_comm ()
+   if _drone_hyena_comm then
+      return _drone_hyena_comm
+   end
+   _drone_hyena_comm = lg.newImage( ship.get("Drone (Hyena)"):gfxComm(1024) )
+   return _drone_hyena_comm
+end
 
 --[[
 -- Helper functions and defines for the Taiomi campaigns
@@ -7,31 +26,31 @@ local taiomi = {
    scavenger = {
       name = _("Scavenger Drone"),
       portrait = nil,
-      image = 'gfx/ship/drone/drone_hyena_comm.webp',
+      image = drone_hyena_comm(),
       colour = { 0.7, 0.8, 1.0 },
    },
    elder = {
       name = _("Elder Drone"),
       portrait = nil,
-      image = 'gfx/ship/drone/drone_comm.webp',
+      image = drone_comm(),
       colour = nil,
    },
    philosopher = {
       name = _("Philosopher Drone"),
       portrait = nil,
-      image = 'gfx/ship/drone/drone_comm.webp',
+      image = drone_comm(),
       colour = {1.0, 0.65, 1.0},
    },
    younga = {
       name = _("Hugonn"), -- Odin's raven
       portrait = nil,
-      image = 'gfx/ship/drone/drone_comm.webp',
+      image = drone_comm(),
       colour = nil,
    },
    youngb = {
       name = _("Muninn"), -- Odin's raven
       portrait = nil,
-      image = 'gfx/ship/drone/drone_comm.webp',
+      image = drone_comm(),
       colour = nil,
    },
    log = {
