@@ -592,10 +592,11 @@ local function renderWeapBar( weapon, x, y )
          gfx.renderTexRaw( icon, x + offsets[1] + bar_w/2 - 17, y + offsets[2] + outfit_yoffset, 34, 34 )
          if weapon.weapset ~= nil then
             local ws_name
-            if weapon.weapset == 10 then
+            local ws = weapon.weapset-2
+            if ws == 10 then
                ws_name = "0"
             else
-               ws_name = string.format( "%d", weapon.weapset )
+               ws_name = string.format( "%d", ws )
             end
             gfx.print( false, ws_name, x + offsets[1], y + offsets[2] + name_offset, col_text, 40, true )
          end
