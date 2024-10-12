@@ -634,14 +634,14 @@ static void info_openWeapons( unsigned int wid )
    info_eq_weaps.canmodify = 0;
 
    /* Custom widget for legend. */
-   y = -240;
+   y = -290;
    window_addCust( wid, 220, y, w - 200 - 60, 100, "cstLegend", 0,
                    weapons_renderLegend, NULL, NULL, NULL, NULL );
 
    /* Checkboxes. */
    wlen = w - 220 - 20;
    x    = 220;
-   y -= 95;
+   y -= 65;
    window_addButton( wid, x + 10, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCycle",
                      _( "Cycle Mode" ), weapons_toggleList );
    window_addButton( wid, x + 10 + ( BUTTON_WIDTH + 10 ), y, BUTTON_WIDTH,
@@ -653,8 +653,6 @@ static void info_openWeapons( unsigned int wid )
    window_addText(
       wid, x + 10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
       _( "Cycles through the following modes:\n"
-         "- Switch: sets the selected weapons as primary and secondary "
-         "weapons.\n"
          "- Hold: turns on the selected outfits as long as key is held\n"
          "- Toggle: toggles the selected outfits to on or off state" ) );
    y -= 8 + window_getTextHeight( wid, "txtSMode" );
@@ -713,13 +711,14 @@ static void weapons_genList( unsigned int wid )
    buf = malloc( sizeof( char * ) * PILOT_WEAPON_SETS );
    for ( int i = 0; i < PILOT_WEAPON_SETS; i++ ) {
       const char *str = pilot_weapSetName( info_eq_weaps.selected->p, i );
-      if ( str == NULL )
-         snprintf( tbuf, sizeof( tbuf ), "%d - ??", ( i + 1 ) % 10 );
+      if ( i < 2 )
+         snprintf( tbuf, sizeof( tbuf ), "#o%s#0 - %s",
+                   ( i == 0 ) ? _( "Primary" ) : _( "Secondary" ), str );
       else
-         snprintf( tbuf, sizeof( tbuf ), "%d - %s", ( i + 1 ) % 10, str );
+         snprintf( tbuf, sizeof( tbuf ), _( "Weapset %d - %s" ), i - 2, str );
       buf[i] = strdup( tbuf );
    }
-   window_addList( wid, 20 + 180 + 20, -40, w - ( 20 + 180 + 20 + 20 ), 200,
+   window_addList( wid, 20 + 180 + 20, -40, w - ( 20 + 180 + 20 + 20 ), 250,
                    "lstWeapSets", buf, PILOT_WEAPON_SETS, 0, weapons_updateList,
                    weapons_toggleList );
    window_setFocus( wid, "lstWeapSets" );
@@ -909,16 +908,6 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh,
    toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );
    gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
              _( "Outfit that can be activated" ) );
-
-   y -= 20.;
-   toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
-   gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
-             _( "Secondary Weapon (Right click toggles)" ) );
-
-   y -= 20.;
-   toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
-   gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
-             _( "Primary Weapon (Left click toggles)" ) );
 }
 
 /**

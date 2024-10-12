@@ -47,7 +47,7 @@
 #define PILOT_REFUEL_TIME 3. /**< Time to complete refueling. */
 /* Misc. */
 #define PILOT_SIZE_APPROX 0.8      /**< approximation for pilot size */
-#define PILOT_WEAPON_SETS 10       /**< Number of weapon sets the pilot has. */
+#define PILOT_WEAPON_SETS 12       /**< Number of weapon sets the pilot has. */
 #define PILOT_WEAPSET_MAX_LEVELS 2 /**< Maximum amount of weapon levels. */
 #define PILOT_REVERSE_THRUST                                                   \
    0.4 /**< Ratio of normal accel to apply when reversing. */
