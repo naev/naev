@@ -7,6 +7,9 @@
  <location>Bar</location>
  <spob>Regensburg</spob>
  <done>Minerva Finale 1</done>
+ <tags>
+  <tag>fleetcap_10</tag>
+ </tags>
  <notes>
   <campaign>Minerva</campaign>
  </notes>
