@@ -641,7 +641,7 @@ static void info_openWeapons( unsigned int wid )
    /* Checkboxes. */
    wlen = w - 220 - 20;
    x    = 220;
-   y -= 65;
+   y -= 75;
    window_addButton( wid, x + 10, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCycle",
                      _( "Cycle Mode" ), weapons_toggleList );
    window_addButton( wid, x + 10 + ( BUTTON_WIDTH + 10 ), y, BUTTON_WIDTH,
@@ -891,6 +891,11 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh,
    toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );
    gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
              _( "Outfit that can be activated" ) );
+
+   y -= 20.;
+   toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
+   gl_print( &gl_smallFont, bx + 20, y, &cFontWhite,
+             _( "Outfit that is enabled for the weapon set" ) );
 }
 
 /**

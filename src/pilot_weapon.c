@@ -1273,8 +1273,9 @@ void pilot_weaponAuto( Pilot *p )
          PilotOutfitSlot *slot = p->outfits[i];
          const Outfit    *o    = slot->outfit;
 
-         /* Must be non-empty, and a weapon or active outfit. */
-         if ( ( o == NULL ) || !outfit_isActive( o ) )
+         if ( o == NULL )
+            continue;
+         if ( !pilot_slotIsToggleable( slot ) ) /* Ignore non-active. */
             continue;
 
          if ( outfit_isFighterBay( o ) )
@@ -1300,11 +1301,10 @@ void pilot_weaponAuto( Pilot *p )
       const Outfit    *o    = slot->outfit;
       int              id;
 
-      /* Must be non-empty, and a weapon or active outfit. */
-      if ( ( o == NULL ) || !outfit_isActive( o ) ) {
-         slot->weapset = -1;
+      if ( o == NULL )
          continue;
-      }
+      if ( !pilot_slotIsToggleable( slot ) ) /* Ignore non-active. */
+         continue;
 
       if ( isplayer ) {
          /* Manually defined group preempts others. */

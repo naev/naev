@@ -4755,7 +4755,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          /* Parse individual weapons. */
          ccur = cur->xmlChildrenNode;
          do {
-            int level, weapid;
+            int weapid;
             /* Only nodes. */
             xml_onlyNodes( ccur );
 
@@ -4767,14 +4767,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                continue;
             }
 
-            /* Get level. */
-            xmlr_attr_int_def( ccur, "level", level, -1 );
-            if ( level == -1 ) {
-               WARN( _( "Player ship '%s' missing 'level' tag for weapon set "
-                        "weapon." ),
-                     ship->name );
-               continue;
-            }
             weapid = xml_getInt( ccur );
             if ( ( weapid < 0 ) || ( weapid >= array_size( ship->outfits ) ) ) {
                WARN( _( "Player ship '%s' has invalid weapon id %d [max %d]." ),
