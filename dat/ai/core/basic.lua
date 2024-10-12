@@ -127,7 +127,7 @@ function _attack_zigzag( target )
 
    -- Are we ready to shoot?
    local dist = ai.dist( target )
-   local range = ai.getweaprange(3)
+   local range = atk.primary_range()
    if dist < range then
       ai.popsubtask()
       return
@@ -562,20 +562,15 @@ function __shoot_turret( target )
       return
    end
 
-   -- Always launch fighters while running away
-   ai.weapset( 5 )
+   -- Point defense and Fighters
+   atk.fb_and_pd()
 
    -- Shoot the target
    ai.hostile(target)
    ai.settarget(target)
-   local dist = ai.dist(target)
    -- See if we have some turret to use
    if ai.hasturrets() then
-      if dist < ai.getweaprange(3) then
-         ai.weapset( 3 )
-         ai.shoot( true )
-         ai.weapset( 9 )
-      end
+      atk.turrets()
    end
 end
 
@@ -1012,9 +1007,8 @@ function mine_shoot( ast )
       return
    end
 
-   ai.weapset( 1 )
    local p         = ai.pilot()
-   local wrange    = ai.getweaprange(nil, 0)
+   local wrange    = atk.primary_range()
    local erange    = 100
    local trange    = math.min( math.max( erange, wrange * 3 / 4 ), wrange )
    local mbd       = ai.minbrakedist()
@@ -1053,7 +1047,7 @@ end
 
 -- luacheck: globals _killasteroid (AI Task functions passed by name)
 function _killasteroid( ast )
-   local wrange    = ai.getweaprange()
+   local wrange    = atk.primary_range()
 
    local target = ast:pos()
    local dir  = ai.face(target)
@@ -1074,9 +1068,9 @@ function _killasteroid( ast )
 
    -- Second task : destroy it
    if dir < math.rad(8) then
-      ai.weapset( 1 )
-      ai.shoot()
-      ai.shoot(true)
+      -- TODO really use all weapon sets?
+      atk.primary()
+      atk.secondary()
    end
    if not ast:exists() then
       ai.poptask()
@@ -1239,7 +1233,7 @@ function ambush_stalk( target )
    local dist  = ai.dist(target)
 
    -- Must approach
-   local range = ai.getweaprange( 3 )
+   local range = atk.primary_range()
    if dist < range * mem.atk_aim then
       -- Go for the kill!
       ai.pushtask( "attack", target )

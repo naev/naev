@@ -51,13 +51,11 @@ function setup.setup( p )
    local o = {}
 
    -- Set up some defaults
-   -- 1 to 4 are set by C-side engine
    -- 1 is primary
    -- 2 is secondary
    -- 3 has point defense
    -- 4 has fighter bays
-   -- We have to set up the rest manually
-   -- 5 is forward weapons
+   -- 5 is turret weapons
 
    -- Check flow
    flow.recalculate( p )
