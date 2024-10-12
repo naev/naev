@@ -17,6 +17,7 @@ mod linebreak;
 mod log;
 mod ndata;
 mod ntime;
+mod physfs;
 mod slots;
 mod version;
 
@@ -48,7 +49,7 @@ pub fn naev() -> Result<()> {
     unsafe {
         let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
         if naevc::PHYSFS_init(argv0.as_ptr() as *const c_char) == 0 {
-            let err = ndata::physfs_error_as_io_error();
+            let err = physfs::error_as_io_error();
             println!("{}", err);
             return Err(Error::new(ErrorKind::Other, err));
             /* TODO probably move the error handling to the "real" main, when shit hits the
