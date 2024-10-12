@@ -5,6 +5,9 @@
  <chance>100</chance>
  <location>Bar</location>
  <spob>Hypergate Protera</spob>
+ <tags>
+  <tag>fleetcap_10</tag>
+ </tags>
  <notes>
   <campaign>Taiomi</campaign>
   <tier>2</tier>
