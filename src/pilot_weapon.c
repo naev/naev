@@ -222,7 +222,7 @@ void pilot_weapSetUpdate( Pilot *p )
          continue;
       if ( !( pos->flags & PILOTOUTFIT_TOGGLEABLE ) )
          continue;
-      if ( pos->state != PILOT_OUTFIT_ON )
+      if ( !( pos->flags & PILOTOUTFIT_ISON ) )
          continue;
       if ( !outfit_isWeapon( o ) )
          continue;
