@@ -712,7 +712,7 @@ static void weapons_genList( unsigned int wid )
    for ( int i = 0; i < PILOT_WEAPON_SETS; i++ ) {
       const char *str = pilot_weapSetName( info_eq_weaps.selected->p, i );
       if ( i < 2 )
-         snprintf( tbuf, sizeof( tbuf ), "#o%s#0 - %s",
+         snprintf( tbuf, sizeof( tbuf ), "#%c%s#0 - %s", ( i == 0 ) ? 'r' : 'y',
                    ( i == 0 ) ? _( "Primary" ) : _( "Secondary" ), str );
       else
          snprintf( tbuf, sizeof( tbuf ), _( "Weapset %d - %s" ), i - 2, str );
