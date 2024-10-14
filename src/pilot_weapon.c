@@ -164,6 +164,9 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
          continue;
       if ( !( pos->flags & PILOTOUTFIT_TOGGLEABLE ) )
          continue;
+      /* Weapons are handled separately. */
+      if ( outfit_isWeapon( o ) )
+         continue;
 
       /* Se whether to turn on or off. */
       if ( pos->flags & PILOTOUTFIT_ISON ) {
