@@ -915,7 +915,7 @@ function render( dt, dt_mod )
 
          -- Have to ignore the primary/secondary weapon sets
          if a.weapset and a.weapset>2 then
-            gfx.print( true, _(a.weapset-2), slot_x + slot_img_offs_x + 5,
+            gfx.print( true, _(a.weapset-2)%10, slot_x + slot_img_offs_x + 5,
                   slot_y + slot_img_offs_y + 5, cols.txt_bar, slot_w, false )
          end
 

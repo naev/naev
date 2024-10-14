@@ -715,7 +715,8 @@ static void weapons_genList( unsigned int wid )
          snprintf( tbuf, sizeof( tbuf ), "#%c%s#0 - %s", ( i == 0 ) ? 'r' : 'y',
                    ( i == 0 ) ? _( "Primary" ) : _( "Secondary" ), str );
       else
-         snprintf( tbuf, sizeof( tbuf ), _( "Weapset %d - %s" ), i - 2, str );
+         snprintf( tbuf, sizeof( tbuf ), _( "Weapset %d - %s" ),
+                   ( i - 2 + 1 ) % 10, str );
       buf[i] = strdup( tbuf );
    }
    window_addList( wid, 20 + 180 + 20, -40, w - ( 20 + 180 + 20 + 20 ), 250,
