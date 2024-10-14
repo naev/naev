@@ -1034,7 +1034,7 @@ double pilot_aimAngle( Pilot *p, const vec2 *pos, const vec2 *vel )
    dist = vec2_dist( &p->solid.pos, pos );
 
    /* Check if should recalculate weapon speed with secondary weapon. */
-   speed = pilot_weapSetSpeed( p, p->active_set, -1 );
+   speed = pilot_weapSetSpeed( p, 0 ); /* primary. */
 
    /* determine the radial, or approach speed */
    /*

@@ -1,6 +1,7 @@
 * 0.12.0 (unreleased)
    * Gameplay
       * Ability to capture disabled ships
+      * Significantly increase maximum potential fleet capacity
       * Excess energy to battery recharge efficiency is now a flat 50% instead of varying based on charge level
       * Gave the Za'lek sting a slight detection buff
       * Can only have a single patrol mission active at a given time
@@ -14,6 +15,7 @@
       * Can scan ships with 'u' key
       * Gave the Quicksilver another medium structural slot
       * Beam weapons have minimum delays instead of minimum durations
+      * Can stealth when missiles are locked on
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user

@@ -10,7 +10,7 @@
   <description>This dock allows your ship to carry twin Hyena interceptors. It comes with all the amenities necessary for the maintenance and operation of the interceptors.</description>
   <cpu>-125</cpu>
  </general>
- <specific type="fighter bay" secondary="1">
+ <specific type="fighter bay">
   <delay>6</delay>
   <reload_time>180</reload_time>
   <amount>2</amount>

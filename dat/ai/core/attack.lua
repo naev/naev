@@ -1,4 +1,5 @@
 local atk_generic = require "ai.core.attack.generic"
+local libatk = require "ai.core.attack.util"
 local flow = require "ships.lua.lib.flow"
 
 local atk = {}
@@ -11,7 +12,7 @@ function atk.choose ()
    local class = p:ship():class()
 
    -- Set initial variables
-   mem.ranged_ammo = ai.getweapammo(4)
+   mem.ranged_ammo = libatk.seekers_ammo()
    mem.equipopt_params = mem.equipopt_params or {}
 
    -- Lighter ships
@@ -51,7 +52,7 @@ function atk.think( target, si, noretarget )
    if si.noattack then return end
 
    -- Update some high level stats
-   mem.ranged_ammo = ai.getweapammo(4)
+   mem.ranged_ammo = libatk.seekers_ammo()
 
    -- Use special outfits
    if mem._o then
@@ -146,21 +147,21 @@ function atk.think( target, si, noretarget )
          end
          if mem._o.avatar_sirichana and f > fm * 0.4 and rnd.rnd() < 0.4 then
             -- Want enemy to be in shooting range
-            local range = ai.getweaprange(3, 0) -- all turrets
+            local range = libatk.primary_range()
             if ai.dist( target ) < 0.8*range then
                p:outfitToggle( mem._o.avatar_sirichana, true )
             end
          end
          if mem._o.house_mirrors and f > fm * 0.4 and rnd.rnd() < 0.5 then
             -- Want enemy to be in shooting range
-            local range = ai.getweaprange(3, 0) -- all turrets
+            local range = libatk.primary_range()
             if ai.dist( target ) < 0.8*range then
                p:outfitToggle( mem._o.house_mirrors, true )
             end
          end
          if mem._o.reality_rip and f > fm * 0.4 and rnd.rnd() < 0.5 then
             -- Want enemy to be close, but not too close
-            local range = ai.getweaprange(3, 0) -- all turrets
+            local range = libatk.primary_range()
             local d = ai.dist( target )
             if d > 300 and d < 0.8*range  then
                p:outfitToggle( mem._o.reality_rip, true )

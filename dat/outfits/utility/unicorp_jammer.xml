@@ -10,7 +10,7 @@
   <gfx_store>jammer0.webp</gfx_store>
   <limit>jammer</limit>
  </general>
- <specific type="modification" group="6">
+ <specific type="modification">
   <active cooldown="5" />
   <ew_signature>-18</ew_signature>
   <jam_chance>80</jam_chance>

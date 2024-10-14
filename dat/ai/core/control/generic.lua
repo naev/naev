@@ -6,7 +6,7 @@ local formation = require "formation"
 local lanes = require 'ai.core.misc.lanes'
 local scans = require 'ai.core.misc.scans'
 
-local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown, consider_taunt, distress_handler -- Forward-declared functions
+local clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown, consider_taunt, distress_handler -- Forward-declared functions
 
 --[[
 -- Variables to adjust AI
@@ -41,7 +41,6 @@ mem.distress_hit  = 0 -- Amount of faction lost on distress
 mem.distressrate  = 8 -- Number of ticks before calling for help. Should default to about 16 seconds with defaults.
 mem.distressmsg   = nil -- Message when calling for help
 mem.distressmsgfunc = nil -- Function to call when distressing
-mem.weapset       = 3 -- Weapon set that should be used (tweaked based on heat).
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun         = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
@@ -461,9 +460,6 @@ function control_funcs.generic_attack( si, noretarget )
    local target_parmour, target_pshield = target:health()
    local parmour, pshield = ai.pilot():health()
 
-   -- Pick an appropriate weapon set.
-   choose_weapset()
-
    -- Runaway if needed
    if not mem.norun and (pshield < mem.shield_run
             and pshield < target_pshield ) or
@@ -582,7 +578,8 @@ function control( dt )
                return
             -- Cool down if the current weapon set is suffering from >= 20% accuracy loss.
             -- This equates to a temperature of 560K presently.
-            elseif (p:weapsetHeat() > 0.2) then
+            -- Focus on primaries
+            elseif (p:weapsetHeat(1) > 0.2) then
                mem.cooldown = true
                p:setCooldown(true)
                return
@@ -1122,52 +1119,11 @@ function gen_distress_attacked( attacker )
    mem.distressed = 1
 end
 
--- Picks an appropriate weapon set for ships with mixed weaponry.
-function choose_weapset()
-   if ai.hascannons() and ai.hasturrets() then
-      local p = ai.pilot()
-      local meant, peakt = p:weapsetHeat( 3 )
-      local meanc, peakc = p:weapsetHeat( 2 )
-
-      --[[
-      -- Weapon groups:
-      --    1: Cannons
-      --    2: Turrets
-      --    3: Combined
-      --
-      -- Note: AI indexes from 0, but pilot module indexes from 1.
-      --]]
-
-      -- Use both if both are cool, or if both are similar in temperature.
-      if meant + meanc < .1 then
-         mem.weapset = 3
-      elseif peakt == 0 then
-         mem.weapset = 2
-      elseif peakc == 0 then
-         mem.weapset = 1
-      -- Both sets are similarly hot.
-      elseif math.abs(meant - meanc) < .15 then
-         mem.weapset = 3
-      -- An extremely-hot weapon is a good reason to pick another set.
-      elseif math.abs(peakt - peakc) > .4 then
-         if peakt > peakc then
-            mem.weapset = 1
-         else
-            mem.weapset = 2
-         end
-      elseif meant > meanc then
-         mem.weapset = 1
-      else
-         mem.weapset = 2
-      end
-   end
-end
-
 -- Puts the pilot into cooldown mode if its weapons are overly hot and its shields are relatively high.
 -- This can happen during combat, so mem.heatthreshold should be quite high.
 function should_cooldown()
    local p = ai.pilot()
-   local mean = p:weapsetHeat()
+   local mean = p:weapsetHeat(1) -- Care about primaries
    local _, pshield = p:health()
 
    -- Don't want to cool down again so soon.

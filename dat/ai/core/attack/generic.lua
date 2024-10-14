@@ -18,7 +18,7 @@ function atk_generic.think( target, _si )
    local enemy = atk.preferred_enemy()
    if enemy ~= target and enemy ~= nil then
       local dist  = ai.dist( target )
-      local range = ai.getweaprange( 3 )
+      local range = atk.primary_range()
 
       -- Shouldn't switch targets if close
       if dist > range * mem.atk_changetarget then
@@ -41,7 +41,7 @@ function atk_generic.attacked( attacker )
       return
    end
    local dist  = ai.dist(attacker)
-   local range = ai.getweaprange( 0 )
+   local range = atk.primary_range()
 
    -- Choose target based on preference
    if target ~= attacker and dist < range * mem.atk_changetarget then
@@ -73,8 +73,7 @@ end
 --]]
 local function __atk_g_melee( target, dist )
    local dir   = ai.aim(target) -- We aim instead of face
-   local range = ai.getweaprange( 3 )
-   ai.weapset( 3 ) -- Set turret/forward weaponset.
+   local range = atk.primary_range()
 
    -- Drifting away we'll want to get closer
    if dir < math.rad(10) and dist > 0.5*range and ai.relvel(target) > -10 then
@@ -82,10 +81,7 @@ local function __atk_g_melee( target, dist )
    end
 
    -- Shoot if should be shooting.
-   if dir < math.rad(10) then
-      ai.shoot()
-   end
-   ai.shoot(true)
+   atk.primary()
 
    -- Also try to shoot missiles
    atk.dogfight_seekers( dist, dir )
@@ -99,7 +95,7 @@ function atk_generic.atk( target, dokill )
    if target == nil then return end
 
    -- Always launch fighters for now
-   ai.weapset( 5 )
+   atk.fb_and_pd()
 
    ai.hostile(target) -- Mark as hostile
 
@@ -111,7 +107,7 @@ function atk_generic.atk( target, dokill )
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange( 3 )
+   local range = atk.primary_range()
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then

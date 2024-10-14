@@ -46,9 +46,8 @@
 /* Refueling. */
 #define PILOT_REFUEL_TIME 3. /**< Time to complete refueling. */
 /* Misc. */
-#define PILOT_SIZE_APPROX 0.8      /**< approximation for pilot size */
-#define PILOT_WEAPON_SETS 10       /**< Number of weapon sets the pilot has. */
-#define PILOT_WEAPSET_MAX_LEVELS 2 /**< Maximum amount of weapon levels. */
+#define PILOT_SIZE_APPROX 0.8 /**< approximation for pilot size */
+#define PILOT_WEAPON_SETS 12  /**< Number of weapon sets the pilot has. */
 #define PILOT_REVERSE_THRUST                                                   \
    0.4 /**< Ratio of normal accel to apply when reversing. */
 #define PILOT_PLAYER_NONTARGETABLE_TAKEOFF_DELAY                               \
@@ -162,7 +161,6 @@ typedef struct PilotOutfitSlot_ {
    double           rtimer; /**< Used to store when a reload can happen. */
    double
        progress; /**< Used to store state progress and used by Lua outfits. */
-   int level;    /**< Level in current weapon set (-1 is none). */
    int weapset;  /**< First weapon set that uses the outfit (-1 is none). */
    unsigned int inrange; /**< Should the slot be shut down when not inrange?
                             (only used for beams). */
@@ -185,13 +183,14 @@ typedef struct PilotOutfitSlot_ {
  * @brief A pilot Weapon Set Outfit.
  */
 typedef struct PilotWeaponSetOutfit_ {
-   int    level;  /**< Level of trigger. */
    double range2; /**< Range squared of this specific outfit. */
    int    slotid; /**< ID of the slot associated with the weapon set. */
 } PilotWeaponSetOutfit;
 
+/**
+ * Uses old IDs which is why it starts at 1.
+ */
 typedef enum WeaponSetType_ {
-   WEAPSET_TYPE_SWITCH = 0, /**< Changes weaponsets. */
    WEAPSET_TYPE_HOLD   = 1, /**< Activates weapons (while held down). */
    WEAPSET_TYPE_TOGGLE = 2, /**< Toggles outfits (if on it deactivates). */
 } WeaponSetType;
@@ -210,10 +209,8 @@ typedef struct PilotWeaponSet_ {
    int    inrange; /**< Whether or not to fire only if the target is inrange. */
    int    manual;  /**< Whether or not is manually aiming. */
    int    volley;  /**< Whether or not the weapon set is firing in volleys. */
-   double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the
-                                              outfit slot. */
-   double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the
-                                              outfit slot. */
+   double range;   /**< Average range of the weapon set. */
+   double speed;   /**< Average speed of the weapon set. */
 } PilotWeaponSet;
 
 /**
@@ -373,9 +370,8 @@ typedef struct Pilot_ {
    /* Weapon sets. */
    PilotWeaponSet
       weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
-   int active_set; /**< Index of the currently active weapon set. */
-   int autoweap;   /**< Automatically update weapon sets. */
-   int aimLines;   /**< Activate aiming helper lines. */
+   int autoweap;                      /**< Automatically update weapon sets. */
+   int aimLines;                      /**< Activate aiming helper lines. */
 
    /* Cargo */
    credits_t       credits;     /**< monies the pilot has */

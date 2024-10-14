@@ -24,7 +24,7 @@ function atk_bomber.atk( target, dokill )
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange(3, 0)
+   local range = atk.primary_range()
 
    -- TODO bombers need their own specific routines
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then

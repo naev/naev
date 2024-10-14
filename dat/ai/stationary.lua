@@ -76,26 +76,14 @@ function attack ()
 
    -- Choose how to face
    local dist  = ai.dist( target )
-   local range = ai.getweaprange( 3 ) -- Short range
-   local dir
+   local range = atk.primary_range()
    if dist < range then
-      dir = ai.aim( target )
+      ai.aim( target )
    else
-      dir = ai.face( target )
+      ai.face( target )
    end
 
-   -- In melee
-   if dist < range then
-      ai.weapset( 3 ) -- Forward/turret
-      if dir < math.rad(10) then
-         ai.shoot() -- Forward
-      end
-      ai.shoot(true) -- Turret
-   end
-
-   -- Long-range
-   if dir < math.rad(10) then
-      ai.weapset( 4 ) -- Missiles, it's a fire group
-   end
-   ai.weapset( 9 ) -- Turreted Missiles
+   -- Fire all weapons, let inrange decideIn melee
+   atk.primary()
+   atk.secondary()
 end
