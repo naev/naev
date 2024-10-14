@@ -686,7 +686,7 @@ static void info_openWeapons( unsigned int wid )
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeWeapons",
                      _( "Close" ), info_close );
    window_addButton( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "help", _( "Help" ), weapons_help );
+                     BUTTON_HEIGHT, "help", p_( "UI", "Help" ), weapons_help );
 }
 
 /**
