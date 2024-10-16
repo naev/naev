@@ -249,7 +249,7 @@ void pilot_weapSetUpdate( Pilot *p )
          int s = 0;
          for ( int j = 0; j < i; j++ ) {
             const PilotOutfitSlot *posj = p->outfits[j];
-            if ( posj->state != PILOT_OUTFIT_ON )
+            if ( posj->flags != PILOTOUTFIT_ISON )
                continue;
             /* Found a match. */
             if ( posj->outfit == o ) {
@@ -968,7 +968,7 @@ static int pilot_shootWeaponSetOutfit( Pilot *p, const Outfit *o,
          continue;
 
       /* Must be on. */
-      if ( pos->state != PILOT_OUTFIT_ON )
+      if ( !( pos->flags & PILOTOUTFIT_ISON ) )
          continue;
 
       /* Launcher only counts with ammo. */
