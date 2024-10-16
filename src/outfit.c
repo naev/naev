@@ -589,7 +589,7 @@ int outfit_isToggleable( const Outfit *o )
 
    /* Special case it is lua-based and not toggleable. */
    if ( outfit_isMod( o ) && ( o->lua_env != LUA_NOREF ) &&
-        ( o->lua_ontoggle == LUA_NOREF ) )
+        ( ( o->lua_ontoggle == LUA_NOREF ) || ( o->lua_onhold == LUA_NOREF ) ) )
       return 0;
 
    return 1;
@@ -2683,6 +2683,7 @@ static int outfit_parse( Outfit *temp, const char *file )
    temp->lua_cleanup      = LUA_NOREF;
    temp->lua_update       = LUA_NOREF;
    temp->lua_ontoggle     = LUA_NOREF;
+   temp->lua_onhold       = LUA_NOREF;
    temp->lua_onshoot      = LUA_NOREF;
    temp->lua_onhit        = LUA_NOREF;
    temp->lua_outofenergy  = LUA_NOREF;
@@ -3086,6 +3087,7 @@ int outfit_load( void )
       o->lua_cleanup     = nlua_refenvtype( env, "cleanup", LUA_TFUNCTION );
       o->lua_update      = nlua_refenvtype( env, "update", LUA_TFUNCTION );
       o->lua_ontoggle    = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
+      o->lua_onhold      = nlua_refenvtype( env, "onhold", LUA_TFUNCTION );
       o->lua_onshoot     = nlua_refenvtype( env, "onshoot", LUA_TFUNCTION );
       o->lua_onhit       = nlua_refenvtype( env, "onhit", LUA_TFUNCTION );
       o->lua_outofenergy = nlua_refenvtype( env, "outofenergy", LUA_TFUNCTION );
@@ -3113,9 +3115,13 @@ int outfit_load( void )
          if ( lua_toboolean( naevL, -1 ) ) {
             o->u.mod.active = 0;
             if ( o->lua_ontoggle != LUA_NOREF )
-               WARN( _( "Outfit '%s' has 'ontoggle' Lua function defined, but "
+               WARN( _( "Outfit '%s' has '%s' Lua function defined, but "
                         "is set as 'notactive'!" ),
-                     o->name );
+                     o->name, "ontoggle" );
+            if ( o->lua_onhold != LUA_NOREF )
+               WARN( _( "Outfit '%s' has '%s' Lua function defined, but "
+                        "is set as 'notactive'!" ),
+                     o->name, "onhold" );
          }
          lua_pop( naevL, 1 );
 

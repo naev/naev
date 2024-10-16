@@ -216,6 +216,7 @@ stds.API_pilotoutfit = {globals={
    "onshootany",
    "onstealth",
    "ontoggle",
+   "onhold",
    "onshoot",
    "outofenergy",
    "takeoff",
