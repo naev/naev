@@ -234,16 +234,6 @@ void pilot_weapSetUpdate( Pilot *p )
       /* @TODO Make beams not fire all at once. */
       volley = ( ( pos->flags & PILOTOUTFIT_VOLLEY ) || outfit_isBeam( o ) );
 
-      /* TODO clean this hack. */
-      if ( outfit_isFighterBay( o ) ) {
-         nweap += pilot_shootWeapon( p, pos, &wt, -1.,
-                                     !( pos->flags & PILOTOUTFIT_MANUAL ) );
-         n++;
-         if ( !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
-            breakstealth = 1;
-         continue;
-      }
-
       /* For non-volley mode we want to run once per outfit type. */
       if ( !volley ) {
          int s = 0;
