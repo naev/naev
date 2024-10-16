@@ -3649,6 +3649,11 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
             xmlw_str( writer, "%d", weaps[j].slotid );
             xmlw_endElem( writer ); /* "weapon" */
          }
+         /* This code here is to change the group behaviour, since the old '0'
+          * was switch groups. */
+         if ( ws->type == 0 )
+            ws->type =
+               WEAPSET_TYPE_HOLD; /* Change switch groups to hold groups. */
       }
       xmlw_endElem( writer ); /* "weaponset" */
    }
