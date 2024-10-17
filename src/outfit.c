@@ -589,7 +589,7 @@ int outfit_isToggleable( const Outfit *o )
 
    /* Special case it is lua-based and not toggleable. */
    if ( outfit_isMod( o ) && ( o->lua_env != LUA_NOREF ) &&
-        ( ( o->lua_ontoggle == LUA_NOREF ) || ( o->lua_onhold == LUA_NOREF ) ) )
+        ( o->lua_ontoggle == LUA_NOREF ) && ( o->lua_onhold == LUA_NOREF ) )
       return 0;
 
    return 1;
