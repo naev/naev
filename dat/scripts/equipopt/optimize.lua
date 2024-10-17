@@ -7,6 +7,7 @@ local optimize = {}
 local eparams = require 'equipopt.params'
 local bioship = require 'bioship'
 local ai_setup = require "ai.core.setup"
+local fmt = require "format"
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 -- Create caches and stuff
@@ -194,7 +195,7 @@ function optimize.goodness_default( o, p )
 end
 
 
-local function print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, _budget_row )
+local function print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, _budget_row )
    -- TODO: displaying budget_row could be useful.
    emod = emod or 1
    mmod = mmod or 1
@@ -225,6 +226,11 @@ local function print_debug( p, st, ss, outfit_list, params, constraints, energyg
    if nebu_row then
       local _nebu_dens, nebu_vol = system.cur():nebula()
       print(string.format(_("Shield Regen: %.3f [%.3f > %.3f (%.1f)]"), stn.shield_regen, constraints[nebu_row] or 0, nebu_vol*(1-ss.nebu_absorb)-st.shield_regen, 1))
+   end
+   if __debugging then
+      local outfile = fmt.f( "logs/linopt-{date}-{ship}{shipid}.mps", {date=naev.date("%Y-%m-%d_%H:%M:%S"), ship=p:name(), shipid=p:id()})
+      lp:write_problem( outfile )
+      print(fmt.f(_("Wrote optimization problem to '{path}'!"),{path=outfile}))
    end
 end
 
@@ -742,7 +748,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       if not z then
          -- Maybe should be error instead?
          warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
-         print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
+         print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
          return false
       end
 
@@ -773,7 +779,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    until done or try >= 5 -- attempts should be fairly fast since we just do optimization step
    if not done then
       warn(string.format(_("Failed to equip pilot '%s'!"), p:name()))
-      print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
+      print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
       return false
    end
 
@@ -788,7 +794,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       local b, s = p:spaceworthy()
       if not b then
          warn(string.format(_("Pilot '%s' is not space worthy after equip script is run! Reason: %s"),p:name(),s))
-         print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
+         print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
          return false
       end
    end
