@@ -214,11 +214,17 @@ static void map_setup( void )
       sys_rmFlag( sys, SYSTEM_DISCOVERED | SYSTEM_INTEREST );
 
       /* Check to see if system has landable spobs. */
-      sys_rmFlag( sys, SYSTEM_HAS_LANDABLE );
+      sys_rmFlag( sys, SYSTEM_HAS_LANDABLE | SYSTEM_HAS_KNOWN_SPOB |
+                          SYSTEM_HAS_KNOWN_FACTION_SPOB |
+                          SYSTEM_HAS_KNOWN_LANDABLE );
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
          Spob *p = sys->spobs[j];
          if ( !spob_isKnown( p ) )
             continue;
+         sys_setFlag( sys, SYSTEM_HAS_KNOWN_SPOB );
+         if ( ( p->presence.faction >= 0 ) &&
+              ( ( p->presence.base + p->presence.bonus ) > 0. ) )
+            sys_setFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB );
          if ( !spob_hasService( p, SPOB_SERVICE_LAND ) )
             continue;
          sys_setFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE );
@@ -1208,7 +1214,7 @@ void map_renderFactionDisks( double x, double y, double zoom, double r,
       if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
          continue;
 
-      if ( ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE ) ||
+      if ( ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) ||
              !sys_isKnown( sys ) ) &&
            !editor )
          continue;
@@ -1436,13 +1442,14 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
          const glColour *col;
          if ( !system_hasSpob( sys ) )
             continue;
-         if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE ) &&
+         if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_SPOB ) &&
               mode != MAPMODE_EDITOR )
             continue;
          /* Spob colours */
          if ( mode != MAPMODE_EDITOR && !sys_isKnown( sys ) )
             col = &cInert;
-         else if ( sys->faction < 0 )
+         else if ( ( sys->faction < 0 ) ||
+                   ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) ) )
             col = &cInert;
          else if ( mode == MAPMODE_EDITOR )
             col = &cNeutral;
