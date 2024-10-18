@@ -11,7 +11,7 @@
   <description>This dock allows your ship to carry a pair of Pirate Hyena interceptors. It comes with all the amenities necessary for the maintenance and operation of the interceptors. The Pirate Hyenas can assist in ship scavenging and looting.</description>
   <cpu>-120</cpu>
  </general>
- <specific type="fighter bay" secondary="1">
+ <specific type="fighter bay">
   <delay>5</delay>
   <reload_time>180</reload_time>
   <amount>2</amount>

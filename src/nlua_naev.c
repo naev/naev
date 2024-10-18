@@ -8,6 +8,7 @@
  */
 /** @cond */
 #include <lauxlib.h>
+#include <time.h>
 
 #include "SDL_timer.h"
 
@@ -41,6 +42,7 @@ static int naevL_version( lua_State *L );
 static int naevL_versionTest( lua_State *L );
 static int naevL_language( lua_State *L );
 static int naevL_lastplayed( lua_State *L );
+static int naevL_date( lua_State *L );
 static int naevL_ticks( lua_State *L );
 static int naevL_ticksGame( lua_State *L );
 static int naevL_clock( lua_State *L );
@@ -84,6 +86,7 @@ static const luaL_Reg naev_methods[] = {
    { "versionTest", naevL_versionTest },
    { "language", naevL_language },
    { "lastplayed", naevL_lastplayed },
+   { "date", naevL_date },
    { "ticks", naevL_ticks },
    { "ticksGame", naevL_ticksGame },
    { "clock", naevL_clock },
@@ -211,6 +214,70 @@ static int naevL_lastplayed( lua_State *L )
    lua_pushnumber( L, d / ( 3600. * 24. ) ); /*< convert to days */
    lua_pushnumber( L, g / ( 3600. * 24. ) ); /*< convert to days */
    return 2;
+}
+
+/**
+ * @brief Equivalent to os.date from standard Lua.
+ *
+ * @luafunc date
+ */
+static int naevL_date( lua_State *L )
+{
+   const char *s = luaL_optstring( L, 1, "%c" );
+   time_t      t = luaL_opt( L, (time_t)luaL_checknumber, 2, time( NULL ) );
+   struct tm  *stm;
+   if ( *s == '!' ) { /* UTC? */
+      stm = gmtime( &t );
+      s++; /* skip `!' */
+   } else
+      stm = localtime( &t );
+   if ( stm == NULL ) /* invalid date? */
+      lua_pushnil( L );
+   else if ( strcmp( s, "*t" ) == 0 ) {
+      lua_createtable( L, 0, 9 ); /* 9 = number of fields */
+#define setfield( L, key, value )                                              \
+   do {                                                                        \
+      lua_pushinteger( L, value );                                             \
+      lua_setfield( L, -2, key );                                              \
+   } while ( 0 )
+#define setboolfield( L, key, value )                                          \
+   do {                                                                        \
+      if ( value >= 0 ) {                                                      \
+         lua_pushinteger( L, value );                                          \
+         lua_setfield( L, -2, key );                                           \
+      }                                                                        \
+   } while ( 0 )
+      setfield( L, "sec", stm->tm_sec );
+      setfield( L, "min", stm->tm_min );
+      setfield( L, "hour", stm->tm_hour );
+      setfield( L, "day", stm->tm_mday );
+      setfield( L, "month", stm->tm_mon + 1 );
+      setfield( L, "year", stm->tm_year + 1900 );
+      setfield( L, "wday", stm->tm_wday + 1 );
+      setfield( L, "yday", stm->tm_yday + 1 );
+      setboolfield( L, "isdst", stm->tm_isdst );
+#undef setfield
+#undef setboolfield
+   } else {
+      char        cc[3];
+      luaL_Buffer b;
+      cc[0] = '%';
+      cc[2] = '\0';
+      luaL_buffinit( L, &b );
+      for ( ; *s; s++ ) {
+         if ( *s != '%' || *( s + 1 ) == '\0' ) /* no conversion specifier? */
+            luaL_addchar( &b, *s );
+         else {
+            size_t reslen;
+            char buff[200]; /* should be big enough for any conversion result */
+            cc[1]  = *( ++s );
+            reslen = strftime( buff, sizeof( buff ), cc, stm );
+            luaL_addlstring( &b, buff, reslen );
+         }
+      }
+      luaL_pushresult( &b );
+   }
+   return 1;
 }
 
 /**

@@ -24,7 +24,7 @@ function atk_capital.atk( target, dokill )
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange(3)
+   local range = atk.primary_range()
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
@@ -43,19 +43,16 @@ end
 --As there is no aiming involved this is a turret/capital ship only attack method
 --]]
 function __atk_g_capital( target, dist )
-   local range = ai.getweaprange(3)
+   local range = atk.primary_range()
    local aimdir, dir
    local shoot = false
 
    -- Always launch fighters for now
-   ai.weapset( 5 )
+   atk.fb_and_pd()
 
    -- Also try to shoot missiles
    aimdir = ai.aim(target)
    atk.dogfight_seekers( dist, aimdir )
-
-   -- Set main weapon set
-   ai.weapset( mem.weapset )
 
    --capital ships tend to require heavier energy reserves and burst output for maximum effectiveness
    if ai.pilot():energy() <= 1 then
@@ -97,20 +94,14 @@ function __atk_g_capital( target, dist )
 
    --within close range; aim and blast away with everything
    else
-      -- At point-blank range, we ignore recharge.
-      if aimdir < math.rad(10) then
-         ai.shoot()
-      end
-      ai.shoot(true)
+      atk.primary()
+      atk.secondary()
    end
 
    if shoot then
       if not mem.recharge then
-         -- test if, by chance, the target can be hit by cannons
-         if aimdir < math.rad(10) then
-            ai.shoot()
-         end
-         ai.shoot(true)
+         atk.primary()
+         atk.secondary()
       end
    end
 end

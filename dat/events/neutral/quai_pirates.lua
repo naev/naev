@@ -96,10 +96,12 @@ local pirhook
 function pirate_check ()
    local spotted = false
    for i,b in ipairs(baddies) do
-      for k,p in ipairs(b:getVisible()) do
-         if p:withPlayer() then
-            spotted = true
-            break
+      if b:exists() then
+         for k,p in ipairs(b:getVisible()) do
+            if p:withPlayer() then
+               spotted = true
+               break
+            end
          end
       end
    end
@@ -151,8 +153,10 @@ function pirate_hail ()
    vn.func( function ()
       player.pay( -cost )
       for k,b in ipairs(baddies) do
-         b:setBribed(true)
-         b:taskClear()
+         if b:exists() then
+            b:setBribed(true)
+            b:taskClear()
+         end
       end
    end )
    vn.done()
@@ -204,7 +208,9 @@ function pirate_hail ()
    vn.label("fight")
    vn.func( function ()
       for k,b in ipairs(baddies) do
-         b:setHostile(true)
+         if b:exists() then
+            b:setHostile(true)
+         end
       end
    end )
 

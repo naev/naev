@@ -40,18 +40,16 @@ function srs.weapsets( outfits )
    pp:weapsetCleanup()
    pp:weapsetSetInrange(nil,false)
    for k,o in ipairs(outfits) do
-      pp:weapsetAdd( k, o )
+      pp:weapsetAdd( k+2, o )
       if pp:outfitSlot(o)==astral then
-         print("toggle")
-         pp:weapsetType( k, "toggle" )
+         pp:weapsetType( k+2, "toggle" )
       else
-         pp:weapsetType( k, "hold" )
+         pp:weapsetType( k+2, "hold" )
       end
    end
-   local n = #outfits+1
-   pp:weapsetType( n, "switch" )
-   pp:weapsetAddType( n, "Bolt Weapon" )
-   pp:weapsetSetActive( n )
+   -- Set primary weapon
+   pp:weapsetType( 0, "hold" )
+   pp:weapsetAddType( 0, "Bolt Weapon" )
 end
 
 local ssys, sysr, obelisk, spos, sdir, hook_limits

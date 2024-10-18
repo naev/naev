@@ -11,6 +11,76 @@ mem.lanedistance = mem.lanedistance or mem.enemyclose or 3e3
 mem.atk_pref_range = 5e3 -- Range to prefer to attack from
 
 --[[
+0 -> all weaps (switch, primary=primary, secondary=secondary)
+1 -> forward (switch)
+2 -> turret (switch)
+3 -> all_weaps (switch, primary=forward, secondary=turret)
+4 -> seekers (contains 9)
+5 -> fighter bays
+6 -> ()
+7 -> afterburner
+8 -> ()
+9 -> turret seekers
+--]]
+
+function atk.shootall()
+   atk.primary()
+   atk.secondary()
+end
+function atk.primary()
+   ai.weapset( 1, true ) -- Usually beam / bolt are here
+end
+function atk.secondary()
+   ai.weapset( 2, true ) -- Usually seekers / ammo outfits are here
+end
+function atk.pointdefense()
+   ai.weapset( 3, true ) -- Probably want to keep on most of the time
+end
+function atk.fighterbays()
+   ai.weapset( 4, true ) -- Toggle to launch
+end
+function atk.fb_and_pd()
+   atk.pointdefense()
+   atk.fighterbays()
+end
+function atk.turrets()
+   ai.weapset( 5, true )
+end
+function atk.seekers()
+   ai.weapset( 6, true )
+end
+function atk.seeker_turrets()
+   ai.weapset( 7, true )
+end
+
+function atk.primary_range()
+   return ai.getweaprange( 1 )
+end
+function atk.secondary_range()
+   return ai.getweaprange( 2 )
+end
+function atk.turrets_range()
+   return ai.getweaprange( 5 )
+end
+function atk.seekers_range()
+   return ai.getweaprange( 6 )
+end
+function atk.seeker_turrets_range()
+   return ai.getweaprange( 7 )
+end
+
+function atk.seekers_speed()
+   return ai.getweapspeed( 6 )
+end
+function atk.seeker_turrets_speed()
+   return ai.getweapspeed( 7 )
+end
+
+function atk.seekers_ammo()
+   return ai.getweapammo( 6 )
+end
+
+--[[
 --Attempts to maintain a constant distance from nearby things
 --This modulates the distance between the current pilot and its nearest neighbor
 --]]
@@ -59,7 +129,7 @@ function atk.decide_zz( target, dist )
    -- The situation is the following: we're out of range, facing the target,
    -- going towards the target, and someone is shooting on us.
    local pilot  = ai.pilot()
-   local range  = ai.getweaprange(3)
+   local range  = atk.primary_range()
    local dir    = ai.idir(target)
 
    local _m1, d1 = vec2.polar( pilot:vel() )
@@ -75,10 +145,10 @@ end
 --]]
 function atk.dogfight_seekers( dist, dir )
    if dist > 100 then
-      if dist < ai.getweaprange( 4 ) and dir < math.rad(20)  then
-         ai.weapset( 4 )
-      elseif dist < ai.getweaprange( 9 ) then
-         ai.weapset( 9 )
+      if dist < atk.seekers_range() and dir < math.rad(20)  then
+         atk.seekers()
+      elseif dist < atk.seeker_turrets_range() then
+         atk.seeker_turrets()
       end
    end
 end
@@ -130,7 +200,7 @@ function atk.heuristic_big_game_think( target, _si )
 
    -- Don't switch targets if close to current one
    local dist = ai.dist(target)
-   local range = ai.getweaprange(3, 0)
+   local range = atk.primary_range()
    if dist < range * mem.atk_changetarget then
       return
    end
@@ -149,9 +219,8 @@ end
 -- This version is slightly less aggressive and cruises by the target
 --]]
 function atk.flyby( target, dist )
-   local range = ai.getweaprange(3)
+   local range = atk.primary_range()
    local dir
-   ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
    if atk.decide_zz( target, dist ) then
@@ -194,17 +263,15 @@ function atk.flyby( target, dist )
       end
 
       -- Shoot if should be shooting.
-      if dir < math.rad(10) then
-         ai.shoot()
-      end
-      ai.shoot(true)
+      atk.primary()
+      atk.secondary()
 
       -- Also try to shoot missiles
       atk.dogfight_seekers( dist, dir )
    end
 
    -- Always launch fighters for now
-   ai.weapset( 5 )
+   atk.fb_and_pd()
 end
 
 --[[
@@ -213,9 +280,8 @@ end
 --This is designed for fighters engaging other fighters
 --]]
 function atk.space_sup( target, dist )
-   local range = ai.getweaprange(3)
+   local range = atk.primary_range()
    local dir
-   ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
    if atk.decide_zz( target, dist ) then
@@ -252,42 +318,35 @@ function atk.space_sup( target, dist )
       end
 
       -- Shoot if should be shooting.
-      if dir < math.rad(10) then
-         ai.shoot()
-      end
-      ai.shoot(true)
+      atk.shootall()
 
       -- Also try to shoot missiles
       atk.dogfight_seekers( dist, dir )
 
    --within close range; aim and blast away with everything
    else
-      dir = ai.aim(target)
-      -- Shoot if should be shooting.
-      if dir < math.rad(10) then
-         ai.shoot()
-      end
-      ai.shoot(true)
+      ai.aim(target)
+      atk.shootall()
    end
 
-   -- Always launch fighters for now
-   ai.weapset( 5 )
+   -- Always launch fighters and pd for now
+   atk.fb_and_pd()
 end
 
 local function ___atk_g_ranged_dogfight( target, dist )
    local dir
-   if not mem.careful or dist < 3 * ai.getweaprange(3, 0) * mem.atk_approach then
+   if not mem.careful or dist < 3 * atk.primary_range() * mem.atk_approach then
       dir = ai.face(target) -- Normal face the target
    else
       dir = ai.careful_face(target) -- Careful method
    end
 
    -- Check if in range to shoot missiles
-   if dist < ai.getweaprange( 4 ) then
+   if dist < atk.seekers_range() then
       if dir < math.rad(30) then
-         ai.weapset( 4 ) -- Weaponset 4 contains weaponset 9
+         atk.seekers()
       else
-         ai.weapset( 9 )
+         atk.seeker_turrets()
       end
    else
       -- Test if we should zz
@@ -299,8 +358,7 @@ local function ___atk_g_ranged_dogfight( target, dist )
    -- Approach for melee
    if dir < math.rad(10) then
       ai.accel()
-      ai.weapset( 3 ) -- Set turret/forward weaponset.
-      ai.shoot()
+      atk.primary()
    end
 end
 local function ___atk_g_ranged_strafe( target, dist )
@@ -316,8 +374,8 @@ local function ___atk_g_ranged_strafe( target, dist )
 
    -- Estimate the range
    local radial_vel = ai.relvel(target, true)
-   local range = ai.getweaprange( 4 )
-   range = math.min ( range - dist * radial_vel / ( ai.getweapspeed( 4 ) - radial_vel ), range )
+   local range = atk.seekers_range()
+   range = math.min ( range - dist * radial_vel / ( atk.seekers_speed() - radial_vel ), range )
 
    local goal = ai.follow_accurate(target, range * 0.8, 0, 10, 20, "keepangle")
    local mod = vec2.mod(goal - p:pos())
@@ -355,7 +413,7 @@ local function ___atk_g_ranged_strafe( target, dist )
       local dir  = ai.face(target)
       if dir < math.rad(30) then
          ai.set_shoot_indicator(false)
-         ai.weapset( 4 )
+         atk.seekers()
          -- If he managed to shoot, reinitialize the timer
          if ai.shoot_indicator() and not ai.timeup(1) then
             ai.settimer(1, 13.0)
@@ -365,10 +423,10 @@ local function ___atk_g_ranged_strafe( target, dist )
 
    -- We didn't shoot with all seekers: see if it's appropriate to use turreted ones
    if not shoot4 then
-      range = ai.getweaprange( 9 )
-      range = math.min ( range - dist * radial_vel / ( ai.getweapspeed( 9 ) - radial_vel ), range )
+      range = atk.seeker_turrets_range()
+      range = math.min ( range - dist * radial_vel / ( atk.seeker_turrets_speed() - radial_vel ), range )
       if dist < range*0.95 then
-         ai.weapset( 9 )
+         atk.seeker_turrets()
       end
    end
 
@@ -383,7 +441,7 @@ local function ___atk_g_ranged_kite( target, dist )
    local p = ai.pilot()
 
    -- Estimate the range
-   local range = ai.getweaprange( 4 )
+   local range = atk.seekers_range()
 
    -- Try to keep velocity vector away from enemy
    local targetpos = target:pos()
@@ -402,27 +460,22 @@ local function ___atk_g_ranged_kite( target, dist )
    local dir = ai.aim(target) -- aim instead of facing
    if dir < math.rad(30) then
       if dist < range*0.95 then
-         ai.weapset( 4 )
+         atk.seekers()
       end
-
-      if dir < math.rad(10) then
-         ai.weapset( 3 ) -- Set turret/forward weaponset.
-         ai.shoot()
-      end
-      ai.shoot(true)
+      atk.primary()
    end
 end
 --[[
 -- Enters ranged combat with the target
 --]]
 function atk.ranged( target, dist )
-   local range = ai.getweaprange( 4 )
-   local wrange = math.min( ai.getweaprange(3,0), ai.getweaprange(3,1) )
+   local range = atk.seekers_range()
+   local wrange = math.min( atk.primary_range(), atk.secondary_range() )
 
    -- Pilot thinks dogfight is the best
    if ai.relhp(target)*ai.reldps(target) >= 0.25
-         or ai.getweapspeed(4) < target:speedMax()*1.2
-         or range < ai.getweaprange(1)*1.5 then
+         or atk.seekers_speed() < target:speedMax()*1.2
+         or range < atk.primary_range()*1.5 then
       ___atk_g_ranged_dogfight( target, dist )
    elseif target:target()==ai.pilot() and dist < range and ai.hasprojectile() then
       local tvel = target:vel()
@@ -440,8 +493,8 @@ function atk.ranged( target, dist )
       ___atk_g_ranged_strafe( target, dist )
    end
 
-   -- Always launch fighters for now
-   ai.weapset( 5 )
+   -- Always launch fighters and pd for now
+   atk.fb_and_pd()
 end
 
 function atk.prefer_similar( p, h, v )

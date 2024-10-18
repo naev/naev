@@ -55,7 +55,7 @@ def nluacheck( filename, extra_opts=[] ):
     else:
         ret = subprocess.run( args, capture_output=True )
 
-    return ret.returncode, ret.stdout
+    return ret.returncode, ret.stdout, ret.stderr
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
@@ -105,6 +105,7 @@ if __name__ == "__main__":
     for r in retlist:
         if r[0]!=0:
             err = r[0]
-            # only write to stdeout in class of error for less spam
+            # only write to stdout in class of error for less spam
             sys.stdout.buffer.write( r[1] )
+            sys.stderr.buffer.write( r[2] )
     sys.exit( err )

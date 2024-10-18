@@ -18,7 +18,7 @@ function atk_fighter.think( target, _si )
 
    -- Don't switch targets if close to current one
    local dist  = ai.dist( target )
-   local range = ai.getweaprange(3, 0)
+   local range = atk.primary_range()
    if dist < range * mem.atk_changetarget then
       return
    end
@@ -48,7 +48,7 @@ function atk_fighter.atk( target, dokill )
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange(3, 0)
+   local range = atk.primary_range()
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then

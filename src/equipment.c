@@ -1216,7 +1216,7 @@ static int equipment_mouseColumn( unsigned int wid, const SDL_Event *event,
          if ( exists == level )
             pilot_weapSetRm( p, wgt->weapons, &os[ret] );
          else
-            pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+            pilot_weapSetAdd( p, wgt->weapons, &os[ret] );
          p->autoweap = 0; /* Disable autoweap. */
          info_update();   /* Need to update weapons. */
       }

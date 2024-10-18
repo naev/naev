@@ -22,12 +22,7 @@ function atk_corvette.atk( target, dokill )
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange(3, 0)
-   local range2 = ai.getweaprange(3, 1)
-
-   if range2 > range then
-      range = range2
-   end
+   local range = atk.primary_range()
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then

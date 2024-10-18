@@ -1,5 +1,6 @@
 require 'ai.core.core'
 require 'ai.core.control.escort'
+local atk = require "ai.core.attack.util"
 
 control_rate = math.huge -- don't actually run control
 
@@ -42,12 +43,9 @@ function shootat( target )
       ai.poptask()
       return
    end
-   ai.weapset( 3 ) -- Turret and forward weapons
    ai.settarget( target )
 
-   local dir = ai.aim( target )
-   if dir < math.rad(10) then
-      ai.shoot()
-   end
-   ai.shoot(true)
+   ai.aim( target )
+   atk.primary()
+   atk.secondary()
 end

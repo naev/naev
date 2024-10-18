@@ -528,6 +528,8 @@ int space_hyperspace( Pilot *p )
       return -3;
    if ( !space_canHyperspace( p ) )
       return -1;
+   if ( pilot_outfitOffAll( p ) > 0 )
+      pilot_calcStats( p );
 
    /* pilot is now going to get automatically ready for hyperspace */
    pilot_setFlag( p, PILOT_HYP_PREP );

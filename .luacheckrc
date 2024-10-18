@@ -216,6 +216,7 @@ stds.API_pilotoutfit = {globals={
    "onshootany",
    "onstealth",
    "ontoggle",
+   "onhold",
    "onshoot",
    "outofenergy",
    "takeoff",
@@ -266,7 +267,7 @@ files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/**/*.lua"].std = STANDARD .. TK .. "+API_music+music"
 files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+camera+API_spob"
 files["dat/effects/**/*.lua"].std = STANDARD .. "+API_effects"
-files["dat/naevpedia/**/*.lua"].std = STANDARD.. TK .. GFX
+files["dat/naevpedia/**/*.lua"].std = STANDARD .. TK .. GFX
 
 -- No way to be sure what type of environment will load these.
 files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+API_mem+misn+hook+camera+tex+bkg+music" .. TK
@@ -278,8 +279,12 @@ files["docs/missions/**/*.lua"].std = files["dat/missions/**/*.lua"].std
 
 files["extras/autotests.lua"].std = STANDARD
 files["utils/**/*.lua"].std = STANDARD
+files["docs/**/*.lua"].std = STANDARD .. TK .. "+API_mem+hook+music+misn+camera"
 
 files["**/datapath.lua"].std = "API_datapath"
 
--- This file should have no dependencies and sets globals, so we'll just remove it from luachecking
-exclude_files = {"dat/common.lua"}
+exclude_files = {
+   -- This file should have no dependencies and sets globals, so we'll just remove it from luachecking
+   "dat/common.lua",
+   -- lyaml has errosr, but we have to fix upstream
+   "dat/scripts/lyaml/implicit.lua", "dat/scripts/lyaml/init.lua"}

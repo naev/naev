@@ -706,7 +706,7 @@ local function board_fcthit_apply ()
    end
 
    local msg = fmt.f(_("You have lost {fcthit} reputation with {fct} for looting this ship!"),
-      {fcthit=fmt.number(board_fcthit),fct=board_plt:faction()})
+      {fcthit=fmt.number(loss),fct=board_plt:faction()})
    player.msg( "#r"..msg.."#0" )
    board_fcthit_txt:set( msg )
 end

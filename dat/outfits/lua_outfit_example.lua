@@ -96,10 +96,19 @@ end
 function onshootany( _p, _po )
 end
 
--- The ontoggle function allows the oufit to be toggled by the player
--- on is whether it was toggled "on" or "off" and is a boolean value
--- the function returns whether or not the outfit changed state
+-- The ontoggle function is run when the outfit is part of a toggle weapon set
+-- and is toggled by the player. If it was not "on" when toggled, the on value
+-- will be true, it will be false otherwise.
+-- It returns a boolean whether or not the outfit was actually triggered.
 function ontoggle( _p, _po, _on )
+   return false
+end
+
+-- The ontoggle function is run when the outfit is part of a hold weapon set
+-- and is held by the player. The on value will be true when pressed, and false
+-- when released.
+-- It returns a boolean whether or not the outfit was actually triggered.
+function onhold( _p, _po, _on )
    return false
 end
 

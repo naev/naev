@@ -7,6 +7,7 @@ local optimize = {}
 local eparams = require 'equipopt.params'
 local bioship = require 'bioship'
 local ai_setup = require "ai.core.setup"
+local fmt = require "format"
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 -- Create caches and stuff
@@ -194,7 +195,7 @@ function optimize.goodness_default( o, p )
 end
 
 
-local function print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, _budget_row )
+local function print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, _budget_row )
    -- TODO: displaying budget_row could be useful.
    emod = emod or 1
    mmod = mmod or 1
@@ -219,12 +220,17 @@ local function print_debug( p, st, ss, outfit_list, params, constraints, energyg
    end
    local stn = p:stats()
    constraints = constraints or {}
-   print(string.format(_("CPU: %d / %d [%d < %d]"), stn.cpu, stn.cpu_max, constraints[1] or 0, st.cpu_max ))
-   print(string.format(_("Energy Regen: %.3f [%.3f < %.3f (%.1f)]"), stn.energy_regen, constraints[2] or 0, st.energy_regen - emod*energygoal, emod))
-   print(string.format(_("Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"), st.mass, ss.engine_limit, constraints[3] or 0, mmod * params.max_mass * ss.engine_limit - st.mass, mmod ))
+   print(string.format(_("CPU: %d / %d [x=%d < %d]"), stn.cpu, stn.cpu_max, constraints[1] or 0, st.cpu_max ))
+   print(string.format(_("Energy Regen: %.3f [x=%.3f > %.3f (%.1f)]"), stn.energy_regen, constraints[2] or 0, st.energy_regen - emod*energygoal, emod))
+   print(string.format(_("Mass: %.3f / %.3f [x=3f < %.3f (%.1f)]"), st.mass, ss.engine_limit, constraints[3] or 0, mmod * params.max_mass * ss.engine_limit - st.mass, mmod ))
    if nebu_row then
       local _nebu_dens, nebu_vol = system.cur():nebula()
-      print(string.format(_("Shield Regen: %.3f [%.3f > %.3f (%.1f)]"), stn.shield_regen, constraints[nebu_row] or 0, nebu_vol*(1-ss.nebu_absorb)-st.shield_regen, 1))
+      print(string.format(_("Shield Regen: %.3f [x=%.3f > %.3f (%.1f)]"), stn.shield_regen, constraints[nebu_row] or 0, nebu_vol*(1-ss.nebu_absorb)-st.shield_regen, 1))
+   end
+   if __debugging then
+      local outfile = fmt.f( "logs/linopt-{date}-{ship}{shipid}.mps", {date=naev.date("%Y-%m-%d_%H:%M:%S"), ship=p:name(), shipid=p:id()})
+      lp:write_problem( outfile )
+      print(fmt.f(_("Wrote optimization problem to '{path}'!"),{path=outfile}))
    end
 end
 
@@ -534,8 +540,8 @@ function optimize.optimize( p, cores, outfit_list, params )
    local lp = linopt.new( "equipopt", ncols, nrows, true )
    -- Add space worthy checks
    lp:set_row( 1, "CPU",          nil, st.cpu_max ) -- Don't multiply by modifiers here or they get affected "twice"
-   local energygoal = math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs)
-   lp:set_row( 2, "energy_regen", st.energy_regen - energygoal )
+   local energygoal = math.max((1-params.min_energy_regen)*st.energy_regen, params.min_energy_regen_abs)
+   lp:set_row( 2, "energy_regen", energygoal - st.energy_regen )
    local massgoal = math.max( params.max_mass * ss.engine_limit - st.mass, ss.engine_limit*params.min_mass_margin )
    if massgoal < 0 then
       warn(string.format(_("Impossible mass goal of %d set! Ignoring mass for pilot '%s'!"), massgoal, p:name()))
@@ -713,7 +719,7 @@ function optimize.optimize( p, cores, outfit_list, params )
          lp:set_row( 3, "mass", nil, massgoal )
          -- Energy constraint, ensure doesn't go over base
          energygoal = energygoal / 1.5
-         lp:set_row( 2, "energy_regen", math.max( min_energy, st.energy_regen - emod*energygoal ))
+         lp:set_row( 2, "energy_regen", math.max( min_energy, emod*energygoal - st.energy_regen ))
 
          -- Re-solve
          z, x, constraints = lp:solve( sparams )
@@ -740,40 +746,43 @@ function optimize.optimize( p, cores, outfit_list, params )
       end
 
       if not z then
-         -- Maybe should be error instead?
-         warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
-         print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
-         return false
-      end
+         if try >= 5 then
+            -- Maybe should be error instead?
+            warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
+            print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
+         end
 
-      -- Interpret results
-      c = 1
-      for i,s in ipairs(slots) do
-         for j,o in ipairs(s.outfits) do
-            if x[c] == 1 then
-               local q = p:outfitAdd( o, 1, true )
-               if q < 1 then
-                  warn(string.format(_("Unable to equip outfit '%s' on '%s'!"), o,  p:name()))
+         -- Interpret results
+      else
+         c = 1
+         for i,s in ipairs(slots) do
+            for j,o in ipairs(s.outfits) do
+               if x[c] == 1 then
+                  local q = p:outfitAdd( o, 1, true )
+                  if q < 1 then
+                     warn(string.format(_("Unable to equip outfit '%s' on '%s'!"), o,  p:name()))
+                  end
                end
+               c = c + 1
             end
-            c = c + 1
          end
       end
 
       -- Due to the approximation, sometimes they end up with not enough
       -- energy, we'll try again with more relaxed energy constraints
       local stn = p:stats()
-      if stn.energy_regen < energygoal and try < 5 and (st.energy_regen - emod*energygoal) > min_energy then
+      if not z or (stn.energy_regen < energygoal and try < 5 and (st.energy_regen - emod*energygoal) > min_energy) then
+         -- TODO let this handle noremove
          p:outfitRm( "all" )
          emod = emod * 1.5
-         --print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
+         print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
          lp:set_row( 2, "energy_regen", math.max( min_energy, st.energy_regen - emod*energygoal ))
          done = false
       end
    until done or try >= 5 -- attempts should be fairly fast since we just do optimization step
    if not done then
       warn(string.format(_("Failed to equip pilot '%s'!"), p:name()))
-      print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
+      print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
       return false
    end
 
@@ -788,7 +797,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       local b, s = p:spaceworthy()
       if not b then
          warn(string.format(_("Pilot '%s' is not space worthy after equip script is run! Reason: %s"),p:name(),s))
-         print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
+         print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
          return false
       end
    end
