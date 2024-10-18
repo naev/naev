@@ -76,6 +76,7 @@
       * Dropped SDL_image fallback
       * Use higher internal timer for all platforms
       * Support for Tracy
+      * Spobs that are not landable yet generate presence will be shown on the map
       * Warn the player if they try to use a name with all space characters
       * Decoupled the collision system from the rendering system
       * Added a low memory mode to use fewer and smaller textures with 3D

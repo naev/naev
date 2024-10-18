@@ -222,17 +222,14 @@ static void map_setup( void )
          if ( !spob_isKnown( p ) )
             continue;
          sys_setFlag( sys, SYSTEM_HAS_KNOWN_SPOB );
-         if ( ( p->presence.faction >= 0 ) &&
-              ( ( p->presence.base + p->presence.bonus ) > 0. ) )
+         if ( ( p->presence.base + p->presence.bonus ) > 0. )
             sys_setFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB );
          if ( !spob_hasService( p, SPOB_SERVICE_LAND ) )
             continue;
          sys_setFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE );
          spob_updateLand( p );
-         if ( p->can_land ) {
+         if ( p->can_land )
             sys_setFlag( sys, SYSTEM_HAS_LANDABLE );
-            break;
-         }
       }
 
       int known = 1;
@@ -1445,11 +1442,11 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
          if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_SPOB ) &&
               mode != MAPMODE_EDITOR )
             continue;
+
          /* Spob colours */
          if ( mode != MAPMODE_EDITOR && !sys_isKnown( sys ) )
             col = &cInert;
-         else if ( ( sys->faction < 0 ) ||
-                   ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) ) )
+         else if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) )
             col = &cInert;
          else if ( mode == MAPMODE_EDITOR )
             col = &cNeutral;
