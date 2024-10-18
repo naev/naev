@@ -46,7 +46,7 @@ end
       @luatreturn string Message to give the player regarding being able to land or not.
 --]]
 function can_land ()
-   return true, _("Go ahead.")
+   return true, _([["Go ahead."]])
 end
 
 --[[
