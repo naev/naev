@@ -27,9 +27,12 @@ if (ascli_exe.found())
 endif
 
 if (luacheck.found())
+    env = environment()
+    env.set( 'LUA_PATH', meson.project_source_root() / '?.lua;;' )
     test('luacheck',
         nluacheck,
         args: ['dat', 'docs', 'extras', 'utils', '--no-color'],
+        env: env,
         workdir: meson.project_source_root(),
         timeout: 150,
         )
