@@ -283,5 +283,8 @@ files["docs/**/*.lua"].std = STANDARD .. TK .. "+API_mem+hook+music+misn+camera"
 
 files["**/datapath.lua"].std = "API_datapath"
 
--- This file should have no dependencies and sets globals, so we'll just remove it from luachecking
-exclude_files = {"dat/common.lua"}
+exclude_files = {
+   -- This file should have no dependencies and sets globals, so we'll just remove it from luachecking
+   "dat/common.lua",
+   -- lyaml has errosr, but we have to fix upstream
+   "dat/scripts/lyaml/implicit.lua", "dat/scripts/lyaml/init.lua"}
