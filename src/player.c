@@ -3004,9 +3004,12 @@ int player_addOutfit( const Outfit *o, int quantity )
    }
    /* intrinsic outfits get added as intinsics. */
    else if ( o->slot.type == OUTFIT_SLOT_INTRINSIC ) {
+      int ret;
       if ( pilot_hasOutfitLimit( player.p, o->limit ) )
          return 0;
-      return pilot_addOutfitIntrinsic( player.p, o );
+      ret = pilot_addOutfitIntrinsic( player.p, o );
+      pilot_calcStats( player.p );
+      return ret;
    }
 
    /* Try to find it. */
