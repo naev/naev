@@ -37,7 +37,7 @@ Next it is possible to identify mission properties. In particular, only the `<un
 
 The header includes all the information about mission availability. Most are optional and ignored if not provided. The following nodes can be used to control the availability:
 
-* **chance**: *required field*. Indicates the chance that the mission appears. For values over 100, the whole part of dividing the value by 100 indicates how many instances can spawn, and the remainder is the chance of each instance. So, for example, a value of 320 indicates that 3 instances can spawn with 20\% each.
+* **chance**: *required field*. Indicates the chance that the mission appears. For values over 100, the whole part of dividing the value by 100 indicates how many instances can spawn, and the remainder is the chance of each instance. So, for example, a value of 320 indicates that 3 instances can spawn with 20% each.
 * **location**: *required field*. Indicates where the mission or event can start. It can be one of `none`, `land`, `enter`, `load`, `computer`, or `bar`. Note that not all are supported by both missions and events. More details will be discussed later in this section.
 * **unique**: the presence of this tag indicates the mission or event is unique and will *not appear again* once fully completed.
 * **chapter**: indicates what chapter it can appear in. Note that this is regular expression-powered. Something like `0` will match chapter 0 only, while you can write `[01]` to match either chapter 0 or 1. All chapters except 0 would be `[^0]`, and such. Please refer to a regular expression guide such as [regexr](https://regexr.com/) for more information on how to write regex.
@@ -67,7 +67,7 @@ Finally, there is a `<notes>` section that contains optional metadata about the 
 
 #### Example: Cargo Missions
 
-Cargo missions appear at the mission computer in a multitude of different factions. Since they are not too important, they have a lower than default priority (6). Furthermore, they have 9 independent chances to appear, each with 60\% chance. This is written as `<chance>960</chance>`. The full example is shown below:
+Cargo missions appear at the mission computer in a multitude of different factions. Since they are not too important, they have a lower than default priority (6). Furthermore, they have 9 independent chances to appear, each with 60% chance. This is written as `<chance>960</chance>`. The full example is shown below:
 
 ```lua
 --[[
@@ -93,7 +93,7 @@ Cargo missions appear at the mission computer in a multitude of different factio
 
 #### Example: Antlejos
 
-Terraforming antlejos missions form a chain. Each mission requires the previous one and are available at the same planet (Antlejos V) with 100\% chance. The priority is slightly lower than default to try to ensure the claims get through. Most missions trigger on *Land* (`<location>Land</location>`) because Antlejos V does not have a spaceport bar at the beginning. The full example is shown below:
+Terraforming antlejos missions form a chain. Each mission requires the previous one and are available at the same planet (Antlejos V) with 100% chance. The priority is slightly lower than default to try to ensure the claims get through. Most missions trigger on *Land* (`<location>Land</location>`) because Antlejos V does not have a spaceport bar at the beginning. The full example is shown below:
 
 ```lua
 --[[
@@ -114,7 +114,7 @@ Terraforming antlejos missions form a chain. Each mission requires the previous 
 
 #### Example: Taiomi
 
-Next is an example of a unique event. The Finding Taiomi event has a 100\% of appearing in the `Bastion` system outside of Chapter 0. It triggers automatically when entering the system (`<location>enter</location>`).
+Next is an example of a unique event. The Finding Taiomi event has a 100% of appearing in the `Bastion` system outside of Chapter 0. It triggers automatically when entering the system (`<location>enter</location>`).
 
 ```lua
 --[[
