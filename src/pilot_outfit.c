@@ -1292,8 +1292,11 @@ static void pilot_outfitLRun( Pilot *p,
       func( p, po, data );
    }
    /* Recalculate if anything changed. */
-   if ( pilotoutfit_modified )
+   if ( pilotoutfit_modified ) {
       pilot_calcStats( p );
+      pilot_weapSetUpdateOutfitState(
+         p ); /* TODO pilot_calcStats can be called twice here. */
+   }
 }
 static void outfitLRunWarning( const Pilot *p, const Outfit *o,
                                const char *name, const char *error )
