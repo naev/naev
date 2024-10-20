@@ -2355,71 +2355,71 @@ void pilot_update( Pilot *pilot, double dt )
    Q    = 0.;
    nchg = 0; /* Number of outfits that change state, processed at the end. */
    for ( int i = 0; i < array_size( pilot->outfits ); i++ ) {
-      PilotOutfitSlot *o = pilot->outfits[i];
+      PilotOutfitSlot *pos = pilot->outfits[i];
 
       /* Picky about our outfits. */
-      if ( o->outfit == NULL )
+      if ( pos->outfit == NULL )
          continue;
-      if ( !( o->flags & PILOTOUTFIT_ACTIVE ) )
+      if ( !( pos->flags & PILOTOUTFIT_ACTIVE ) )
          continue;
 
       /* Handle firerate timer. */
-      if ( o->timer > 0. )
-         o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
+      if ( pos->timer > 0. )
+         pos->timer -= dt * pilot_heatFireRateMod( pos->heat_T );
 
       /* Handle reload timer. (Note: this works backwards compared to
        * other timers. This helps to simplify code resetting the timer
        * elsewhere.)
        */
-      if ( outfit_isLauncher( o->outfit ) ||
-           outfit_isFighterBay( o->outfit ) ) {
+      if ( outfit_isLauncher( pos->outfit ) ||
+           outfit_isFighterBay( pos->outfit ) ) {
          double ammo_threshold, reload_time;
 
          /* Initial (raw) ammo threshold */
-         if ( outfit_isLauncher( o->outfit ) ) {
-            ammo_threshold = o->outfit->u.lau.amount;
+         if ( outfit_isLauncher( pos->outfit ) ) {
+            ammo_threshold = pos->outfit->u.lau.amount;
             ammo_threshold =
                round( (double)ammo_threshold * pilot->stats.ammo_capacity );
             reload_time =
-               o->outfit->u.lau.reload_time / pilot->stats.launch_reload;
+               pos->outfit->u.lau.reload_time / pilot->stats.launch_reload;
          } else {
-            /* if (outfit_isFighterBay( o->outfit)) { */ /* Commented to shut up
-                                                            warning. */
-            ammo_threshold = o->outfit->u.bay.amount;
+            /* if (outfit_isFighterBay( pos->outfit)) { */ /* Commented to shut
+                                                            up warning. */
+            ammo_threshold = pos->outfit->u.bay.amount;
             ammo_threshold =
                round( (double)ammo_threshold * pilot->stats.fbay_capacity );
             /* Adjust for deployed fighters if needed */
-            ammo_threshold -= o->u.ammo.deployed;
+            ammo_threshold -= pos->u.ammo.deployed;
             reload_time =
-               o->outfit->u.bay.reload_time / pilot->stats.fbay_reload;
+               pos->outfit->u.bay.reload_time / pilot->stats.fbay_reload;
          }
 
          /* Add to timer. */
-         if ( o->rtimer < reload_time )
-            o->rtimer += dt;
+         if ( pos->rtimer < reload_time )
+            pos->rtimer += dt;
 
          /* Don't allow accumulation of the timer before reload allowed */
-         if ( o->u.ammo.quantity >= ammo_threshold )
-            o->rtimer = 0;
+         if ( pos->u.ammo.quantity >= ammo_threshold )
+            pos->rtimer = 0;
 
-         while ( ( o->rtimer >= reload_time ) &&
-                 ( o->u.ammo.quantity < ammo_threshold ) ) {
-            o->rtimer -= reload_time;
-            pilot_addAmmo( pilot, o, 1 );
+         while ( ( pos->rtimer >= reload_time ) &&
+                 ( pos->u.ammo.quantity < ammo_threshold ) ) {
+            pos->rtimer -= reload_time;
+            pilot_addAmmo( pilot, pos, 1 );
          }
 
-         o->rtimer = MIN( o->rtimer, reload_time );
+         pos->rtimer = MIN( pos->rtimer, reload_time );
       }
 
       /* Handle state timer. */
-      if ( o->stimer >= 0. ) {
-         o->stimer -= dt;
-         if ( o->stimer < 0. ) {
-            if ( o->state == PILOT_OUTFIT_ON ) {
-               pilot_outfitOff( pilot, o );
+      if ( pos->stimer >= 0. ) {
+         pos->stimer -= dt;
+         if ( pos->stimer < 0. ) {
+            if ( pos->state == PILOT_OUTFIT_ON ) {
+               pilot_outfitOff( pilot, pos );
                nchg++;
-            } else if ( o->state == PILOT_OUTFIT_COOLDOWN ) {
-               o->state = PILOT_OUTFIT_OFF;
+            } else if ( pos->state == PILOT_OUTFIT_COOLDOWN ) {
+               pos->state = PILOT_OUTFIT_OFF;
                nchg++;
             }
          }
@@ -2427,10 +2427,10 @@ void pilot_update( Pilot *pilot, double dt )
 
       /* Handle heat. */
       if ( !cooling )
-         Q += pilot_heatUpdateSlot( pilot, o, dt );
+         Q += pilot_heatUpdateSlot( pilot, pos, dt );
 
       /* Handle lockons. */
-      pilot_lockUpdateSlot( pilot, o, target, &wt, &a, dt );
+      pilot_lockUpdateSlot( pilot, pos, target, &wt, &a, dt );
    }
 
    /* Global heat. */
