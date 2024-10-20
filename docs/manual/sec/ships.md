@@ -6,7 +6,7 @@ Ships are tho cornerstone of gameplay in Naev. The player themselves is represen
 
 Ships classes have an intrinsic size parameter accessible with the `ship.size()` Lua API. This is a whole integer number from 1 to 6.
 
-In \naev, small ships (size 1 and 2) use small core slots and are meant to be fast and small. Medium ships (size 3 and 4) use medium core slots and are still agile, while being able to pack more of a punch. Large ships (size 5 and 6) are slow hulking giants with heavy slots meant to dominate. There is always a trade-off between agility and raw power, giving all ships a useful role in the game.
+In $\naev$, small ships (size 1 and 2) use small core slots and are meant to be fast and small. Medium ships (size 3 and 4) use medium core slots and are still agile, while being able to pack more of a punch. Large ships (size 5 and 6) are slow hulking giants with heavy slots meant to dominate. There is always a trade-off between agility and raw power, giving all ships a useful role in the game.
 
 Ships are also split into two categories: civilian and military. Civilian ships are meant to focus more on utility and flexibility, while military ships focus more on combat abilities.
 
@@ -83,7 +83,7 @@ Each ship is represented with a stand alone file that has to be located in `ship
     * `energy_regen`: Energy regeneration in MW (MJ per second).
     * `absorb`: Reduction to incoming damage.
 
-A full example of the \naev starter ship "Llama" is shown below.
+A full example of the $\naev$ starter ship "Llama" is shown below.
 
 \lstinputlisting[language=XML]{../../dat/ships/neutral/llama.xml}
 

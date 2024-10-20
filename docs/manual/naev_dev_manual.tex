@@ -8,6 +8,7 @@
    fencedCode=true,
    codeSpans=true,
    notes=true,
+   texMathDollars,
 ]{markdown}
 
 \usepackage{amssymb}   % for checkmarks
@@ -88,7 +89,7 @@
 % TODO we would want the height to depend here on the line height, but that
 % breaks headers in some cases if we use \baselineskip, so just hardcode height
 % for now...
-\DeclareRobustCommand*\naev{\includegraphics[height=14pt]{Naev.png}}
+\DeclareRobustCommand{\naev}{\includegraphics[height=14pt]{Naev.png}}
 
 \definecolor{bluekeywords}{rgb}{0.13, 0.13, 1}
 \definecolor{greencomments}{rgb}{0, 0.5, 0}

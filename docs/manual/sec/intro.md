@@ -1,6 +1,6 @@
 # Introduction to the Naev Engine
 
-While this document does cover the Naev engine in general, many sections refer to customs and properties specific to the **Sea of Darkness** default Naev universe. These are marked with `\naev`{=tex}.
+While this document does cover the Naev engine in general, many sections refer to customs and properties specific to the **Sea of Darkness** default Naev universe. These are marked with $\naev$.
 
 ## Getting Started
 

@@ -8,7 +8,7 @@ Plugins are found at the following locations by default, and are automatically l
 | Operating System | Data Location |
 | --- | --- |
 | Linux | `~/.local/share/naev/plugins` |
-| Mac OS X |  `~/Library/Application Support/org.naev.Naev/plugins` |
+| Mac OS X | `~/Library/Application Support/org.naev.Naev/plugins` |
 | Windows | `%APPDATA%\naev\plugins` |
 
 Plugins can either be a directory structure or compressed into a single `zip` file which allows for easier distribution.
