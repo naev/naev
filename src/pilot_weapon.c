@@ -1344,8 +1344,9 @@ void pilot_weaponAuto( Pilot *p )
          else if ( outfit_isSecondary( o ) )
             id = 1; /* Secondary override. */
          /* Bolts and beams. */
-         else if ( outfit_isBolt( o ) || outfit_isBeam( o ) ||
-                   ( outfit_isLauncher( o ) && !outfit_isSeeker( o ) ) )
+         else if ( !outfit_isProp( o, OUTFIT_PROP_WEAP_POINTDEFENSE ) &&
+                   ( outfit_isBolt( o ) || outfit_isBeam( o ) ||
+                     ( outfit_isLauncher( o ) && !outfit_isSeeker( o ) ) ) )
             id = 0; /* Primary. */
          /* Seekers. */
          else if ( outfit_isLauncher( o ) && outfit_isSeeker( o ) )
