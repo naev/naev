@@ -242,7 +242,8 @@ static int poL_state( lua_State *L )
 
    if ( state == NULL || strcmp( state, "off" ) == 0 ) {
       po->state = PILOT_OUTFIT_OFF;
-      po->flags &= ~PILOTOUTFIT_ISON_LUA;
+      po->flags &=
+         ~( PILOTOUTFIT_DYNAMIC_FLAGS | PILOTOUTFIT_ISON ); /* Clear toggles. */
    } else if ( strcmp( state, "warmup" ) == 0 ) {
       po->state = PILOT_OUTFIT_WARMUP;
       po->flags &= ~PILOTOUTFIT_ISON_LUA;
@@ -253,7 +254,8 @@ static int poL_state( lua_State *L )
       po->state = PILOT_OUTFIT_ON;
    } else if ( strcmp( state, "cooldown" ) == 0 ) {
       po->state = PILOT_OUTFIT_COOLDOWN;
-      po->flags &= ~PILOTOUTFIT_ISON_LUA;
+      po->flags &=
+         ~( PILOTOUTFIT_DYNAMIC_FLAGS | PILOTOUTFIT_ISON ); /* Clear toggles. */
    } else
       return NLUA_ERROR( L, _( "Unknown PilotOutfit state '%s'!" ), state );
 

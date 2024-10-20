@@ -88,12 +88,30 @@ void pilot_weapSetPress( Pilot *p, int id, int type )
       if ( ( pilot_isDisabled( p ) ) || ( pilot_isFlag( p, PILOT_COOLDOWN ) ) )
          return;
 
-      /* Turn them off. */
-      if ( ws->active )
-         ws->active = 0;
-      /* Turn them on. */
-      else
-         ws->active = 1;
+      /* Toggle state. */
+      for ( int j = 0; j < array_size( ws->slots ); j++ ) {
+         PilotOutfitSlot *pos = p->outfits[ws->slots[j].slotid];
+         if ( pos->outfit == NULL )
+            continue;
+         if ( !( pos->flags & PILOTOUTFIT_TOGGLEABLE ) )
+            continue;
+         /* Holding has priority over toggling. */
+         if ( pos->flags & PILOTOUTFIT_ISON_HOLD )
+            continue;
+
+         /* Flip state to ON/OFF. */
+         if ( pos->flags & PILOTOUTFIT_ISON ) {
+            pos->flags &= ~( PILOTOUTFIT_ISON_TOGGLE | PILOTOUTFIT_ISON_LUA );
+         } else {
+            pos->flags |= PILOTOUTFIT_ISON_TOGGLE;
+            if ( ws->volley )
+               pos->flags |= PILOTOUTFIT_VOLLEY;
+            if ( ws->inrange )
+               pos->flags |= PILOTOUTFIT_INRANGE;
+            if ( ws->manual )
+               pos->flags |= PILOTOUTFIT_MANUAL;
+         }
+      }
       break;
 
    case WEAPSET_TYPE_HOLD:
@@ -125,7 +143,7 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
    /* First pass to remove all dynamic flags. */
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       PilotOutfitSlot *pos = p->outfits[i];
-      pos->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
+      pos->flags &= ~PILOTOUTFIT_ISON_HOLD;
    }
 
    /* Now mark all the outfits as on or off. */
@@ -138,12 +156,17 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
       if ( !ws->active )
          continue;
 
+      /* Only care about HOLD sets. */
+      if ( ws->type != WEAPSET_TYPE_HOLD )
+         continue;
+
       /* Keep on toggling on. */
       for ( int j = 0; j < array_size( ws->slots ); j++ ) {
          PilotOutfitSlot *pos = p->outfits[ws->slots[j].slotid];
          if ( pos->outfit == NULL )
             continue;
-         pos->flags |= PILOTOUTFIT_ISON;
+         pos->flags &= ~( PILOTOUTFIT_ISON_TOGGLE );
+         pos->flags |= PILOTOUTFIT_ISON_HOLD;
          if ( ws->volley )
             pos->flags |= PILOTOUTFIT_VOLLEY;
          if ( ws->inrange )
@@ -164,6 +187,11 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
          continue;
       if ( !( pos->flags & PILOTOUTFIT_TOGGLEABLE ) )
          continue;
+
+      if ( pos->flags & ( PILOTOUTFIT_ISON_TOGGLE | PILOTOUTFIT_ISON_HOLD ) )
+         pos->flags |= PILOTOUTFIT_ISON;
+      else
+         pos->flags &= ~PILOTOUTFIT_ISON;
 
       /* Se whether to turn on or off. */
       if ( pos->flags & PILOTOUTFIT_ISON ) {
@@ -1391,8 +1419,8 @@ void pilot_weaponSafe( Pilot *p )
  */
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 {
-   /* Disable Lua trigger. */
-   o->flags &= ~PILOTOUTFIT_ISON_LUA;
+   /* Clean up flags. */
+   o->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
 
    /* Must be equipped, not disabled, not cooling down. */
    if ( o->outfit == NULL || ( pilot_isDisabled( p ) ) ||
@@ -1421,7 +1449,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       return 0;
    else if ( o->outfit->lua_ontoggle != LUA_NOREF ) {
       int ret = pilot_outfitLOntoggle( p, o, 0 );
-      if ( ret && outfit_isWeapon( o->outfit ) )
+      if ( outfit_isWeapon( o->outfit ) )
          o->state = PILOT_OUTFIT_OFF;
       return ret;
    } else {
@@ -1439,23 +1467,23 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
  * @brief Enable a given active outfit.
  *
  * @param p Pilot whose outfit we are enabling.
- * @param o Outfit to enable.
+ * @param pos Outfit to enable.
  * @return Whether the outfit was actually enabled.
  */
-int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o )
+int pilot_outfitOn( Pilot *p, PilotOutfitSlot *pos )
 {
-   if ( o->outfit == NULL )
+   if ( pos->outfit == NULL )
       return 0;
-   if ( outfit_isAfterburner( o->outfit ) )
+   if ( outfit_isAfterburner( pos->outfit ) )
       pilot_afterburn( p );
-   else if ( o->outfit->lua_ontoggle != LUA_NOREF ) {
-      int ret = pilot_outfitLOntoggle( p, o, 1 );
-      if ( ret && outfit_isWeapon( o->outfit ) )
-         o->state = PILOT_OUTFIT_ON;
+   else if ( pos->outfit->lua_ontoggle != LUA_NOREF ) {
+      int ret = pilot_outfitLOntoggle( p, pos, 1 );
+      if ( ret && outfit_isWeapon( pos->outfit ) )
+         pos->state = PILOT_OUTFIT_ON;
       return ret;
    } else {
-      o->state  = PILOT_OUTFIT_ON;
-      o->stimer = outfit_duration( o->outfit ) * p->stats.cooldown_mod;
+      pos->state  = PILOT_OUTFIT_ON;
+      pos->stimer = outfit_duration( pos->outfit ) * p->stats.cooldown_mod;
    }
 
    return 1;

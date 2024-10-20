@@ -133,9 +133,13 @@ typedef struct PilotOutfitAmmo_ {
    ( 1 << 5 ) /**< Pilot outfit is part of a manual weapon set (and ison). */
 #define PILOTOUTFIT_ISON_LUA                                                   \
    ( 1 << 6 ) /**< Pilot outfit is triggered by Lua. */
+#define PILOTOUTFIT_ISON_TOGGLE                                                \
+   ( 1 << 7 )                            /**< Pilot outfit was toggled on.     \
+                                          */
+#define PILOTOUTFIT_ISON_HOLD ( 1 << 8 ) /**< Pilot outfit is being held. */
 #define PILOTOUTFIT_DYNAMIC_FLAGS                                              \
-   ( PILOTOUTFIT_ISON | PILOTOUTFIT_VOLLEY | PILOTOUTFIT_INRANGE |             \
-     PILOTOUTFIT_MANUAL )
+   ( PILOTOUTFIT_VOLLEY | PILOTOUTFIT_INRANGE | PILOTOUTFIT_MANUAL |           \
+     PILOTOUTFIT_ISON_LUA | PILOTOUTFIT_ISON_TOGGLE | PILOTOUTFIT_ISON_HOLD )
 
 /**
  * @brief Stores an outfit the pilot has.

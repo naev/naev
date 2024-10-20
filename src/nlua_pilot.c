@@ -1764,7 +1764,7 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
 {
    const Damage *dmg;
    const Outfit *o = slot->outfit;
-   int           is_lau, is_fb, active;
+   int           is_lau, is_fb;
 
    /* Check if we should add. */
    if ( o == NULL )
@@ -1854,23 +1854,8 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
       lua_rawset( L, -3 );
    }
 
-   active = 0;
-   for ( int id = 0; id < PILOT_WEAPON_SETS; id++ ) {
-      PilotWeaponSet             *ws      = pilot_weapSet( p, id );
-      const PilotWeaponSetOutfit *po_list = ws->slots;
-      if ( !ws->active )
-         continue;
-      for ( int i = 0; i < array_size( po_list ); i++ ) {
-         if ( po_list[i].slotid != slot->id )
-            continue;
-         active = 1;
-         break;
-      }
-      if ( active )
-         break;
-   }
    lua_pushstring( L, "active" );
-   lua_pushboolean( L, active );
+   lua_pushboolean( L, slot->flags & PILOTOUTFIT_ISON );
    lua_rawset( L, -3 );
 
    /* Temperature. */
@@ -2336,13 +2321,12 @@ static int pilotL_actives( lua_State *L )
 
    for ( int i = 0; i < array_size( outfits ); i++ ) {
       /* Get active outfits. */
-      PilotOutfitSlot *o = outfits[i];
-      int              active;
-      if ( o->outfit == NULL )
+      PilotOutfitSlot *pos = outfits[i];
+      if ( pos->outfit == NULL )
          continue;
-      if ( !( o->flags & PILOTOUTFIT_ACTIVE ) )
+      if ( !( pos->flags & PILOTOUTFIT_ACTIVE ) )
          continue;
-      if ( outfit_isWeapon( o->outfit ) && ( outfits[i]->weapset < 2 ) )
+      if ( outfit_isWeapon( pos->outfit ) && ( outfits[i]->weapset < 2 ) )
          continue;
 
       /* Set up for creation. */
@@ -2351,38 +2335,23 @@ static int pilotL_actives( lua_State *L )
 
       /* Outfit. */
       lua_pushstring( L, "outfit" );
-      lua_pushoutfit( L, o->outfit );
+      lua_pushoutfit( L, pos->outfit );
       lua_rawset( L, -3 );
 
       /* Type. */
       lua_pushstring( L, "type" );
-      lua_pushstring( L, outfit_getType( o->outfit ) );
+      lua_pushstring( L, outfit_getType( pos->outfit ) );
       lua_rawset( L, -3 );
 
       /* Heat. */
       lua_pushstring( L, "heat" );
-      lua_pushnumber(
-         L, 1. - pilot_heatEfficiencyMod( o->heat_T, o->outfit->overheat_min,
-                                          o->outfit->overheat_max ) );
+      lua_pushnumber( L, 1. - pilot_heatEfficiencyMod(
+                                 pos->heat_T, pos->outfit->overheat_min,
+                                 pos->outfit->overheat_max ) );
       lua_rawset( L, -3 );
 
-      active = 0;
-      for ( int id = 0; id < PILOT_WEAPON_SETS; id++ ) {
-         PilotWeaponSet             *ws      = pilot_weapSet( p, id );
-         const PilotWeaponSetOutfit *po_list = ws->slots;
-         if ( !ws->active )
-            continue;
-         for ( int j = 0; j < array_size( po_list ); j++ ) {
-            if ( po_list[j].slotid == o->id ) {
-               active = 1;
-               break;
-            }
-         }
-         if ( active )
-            break;
-      }
       lua_pushstring( L, "active" );
-      lua_pushboolean( L, active );
+      lua_pushboolean( L, pos->flags & PILOTOUTFIT_ISON );
       lua_rawset( L, -3 );
 
       /* Find the first weapon set containing the outfit, if any. */
@@ -2393,43 +2362,46 @@ static int pilotL_actives( lua_State *L )
       }
 
       /* State and timer. */
-      switch ( o->state ) {
+      switch ( pos->state ) {
       case PILOT_OUTFIT_OFF:
          str = "off";
          break;
       case PILOT_OUTFIT_WARMUP:
          str = "warmup";
-         if ( !outfit_isMod( o->outfit ) || o->outfit->lua_env == LUA_NOREF )
+         if ( !outfit_isMod( pos->outfit ) ||
+              pos->outfit->lua_env == LUA_NOREF )
             d = 1.; /* TODO add warmup stuff to normal active outfits (not sure
                        if necessary though. */
          else
-            d = o->progress;
+            d = pos->progress;
          lua_pushstring( L, "warmup" );
          lua_pushnumber( L, d );
          lua_rawset( L, -3 );
          break;
       case PILOT_OUTFIT_ON:
          str = "on";
-         if ( !outfit_isMod( o->outfit ) || o->outfit->lua_env == LUA_NOREF ) {
-            d = outfit_duration( o->outfit );
+         if ( !outfit_isMod( pos->outfit ) ||
+              pos->outfit->lua_env == LUA_NOREF ) {
+            d = outfit_duration( pos->outfit );
             if ( d == 0. )
                d = 1.;
-            else if ( !isinf( o->stimer ) )
-               d = o->stimer / d;
+            else if ( !isinf( pos->stimer ) )
+               d = pos->stimer / d;
          } else
-            d = o->progress;
+            d = pos->progress;
          lua_pushstring( L, "duration" );
          lua_pushnumber( L, d );
          lua_rawset( L, -3 );
          break;
       case PILOT_OUTFIT_COOLDOWN:
          str = "cooldown";
-         if ( !outfit_isMod( o->outfit ) || o->outfit->lua_env == LUA_NOREF ) {
-            d = outfit_cooldown( o->outfit );
-            if ( d > 0. && !isinf( o->stimer ) )
-               d = o->stimer / d;
+         if ( !outfit_isMod( pos->outfit ) ||
+              pos->outfit->lua_env == LUA_NOREF ) {
+            d = outfit_cooldown( pos->outfit );
+            if ( d > 0. && !isinf( pos->stimer ) )
+               d = pos->stimer / d;
          } else
-            d = o->progress;
+            d = pos->progress;
          lua_pushstring( L, "cooldown" );
          lua_pushnumber( L, d );
          lua_rawset( L, -3 );
