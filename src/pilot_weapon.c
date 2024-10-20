@@ -1471,12 +1471,12 @@ int pilot_outfitOffAll( Pilot *p )
 {
    int nchg = 0;
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
-      PilotOutfitSlot *o = p->outfits[i];
+      PilotOutfitSlot *pos = p->outfits[i];
       /* Picky about our outfits. */
-      if ( o->outfit == NULL )
+      if ( pos->outfit == NULL )
          continue;
-      if ( o->state == PILOT_OUTFIT_ON )
-         nchg += pilot_outfitOff( p, o );
+      if ( pos->state == PILOT_OUTFIT_ON )
+         nchg += pilot_outfitOff( p, pos );
    }
    return ( nchg > 0 );
 }
