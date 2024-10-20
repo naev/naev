@@ -97,31 +97,31 @@ In particular, the `GFX` string name is sensitive to underscores, and the first 
 * `gfx/ship/DIR/GFX_engine.webp`: ship engine glow graphics file
 * `gfx/ship/DIR/GFX_comm.webp`: ship communication graphics (used in the comm window)
 
-The base graphics are stored as a spritesheet and start facing right before spinning counter-clockwise. The top-left sprite faces to the right and it rotates across the row first before going down to the next row. The background should be stored in RGBA with a transparent background. An example can be seen in Figure \ref{fig:llamagfx}.
+The base graphics are stored as a spritesheet and start facing right before spinning counter-clockwise. The top-left sprite faces to the right and it rotates across the row first before going down to the next row. The background should be stored in RGBA with a transparent background. An example can be seen in Figure `\ref{fig:llamagfx}`{=tex}.
 
 \begin{figure}[h!]
 \centering
 \colorbox{black}{\includegraphics[width=0.8\linewidth]{images/llama.png}}
 \caption{Example of the ship graphics for the "Llama". Starting from top-left position, and going right first before going down, the ship rotates counter-clockwise and starts facing right. A black background has been added for visibility.}
-\label{fig:llamagfx}
+`\label{fig:llamagfx}`{=tex}
 \end{figure}
 
-The engine glow graphics are similar to the base graphics, but should show engine glow of the ship. This graphic gets used instead of the normal graphic when accelerated with some interpolation to fade on and off. An example is shown in Figure \ref{fig:llamaenginegfx}.
+The engine glow graphics are similar to the base graphics, but should show engine glow of the ship. This graphic gets used instead of the normal graphic when accelerated with some interpolation to fade on and off. An example is shown in Figure `\ref{fig:llamaenginegfx}`{=tex}.
 
 \begin{figure}[h!]
 \centering
 \colorbox{black}{\includegraphics[width=0.8\linewidth]{images/llamaengine.png}}
 \caption{Example of the engine glow graphics for the "Llama". Notice the yellow glow of the engines. A black background has been added for visibility.}
-\label{fig:llamaenginegfx}
+`\label{fig:llamaenginegfx}`{=tex}
 \end{figure}
 
-The comm graphics should show the ship facing the player and be higher resolution. This image will be shown in large when the player communicates with them. An example is shown in Figure \ref{fig:llamacommgfx}.
+The comm graphics should show the ship facing the player and be higher resolution. This image will be shown in large when the player communicates with them. An example is shown in Figure `\ref{fig:llamacommgfx}`{=tex}.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.8\linewidth]{images/llamacomm.png}
 \caption{Example of the comm graphics for the "Llama".}
-\label{fig:llamacommgfx}
+`\label{fig:llamacommgfx}`{=tex}
 \end{figure}
 
 ### Specifying Full Paths

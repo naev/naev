@@ -23,7 +23,7 @@ Not that it is not necessary to run `misn.finish()` nor any other clean up funct
 TODO
 
 ### Minigames
-\label{sec:misn-adv-minigames}
+`\label{sec:misn-adv-minigames}`{=tex}
 
 TODO
 
@@ -98,16 +98,16 @@ In this case, `"my_custom_hook_type"` is the name we are using for the hook. It 
 The hook will not be triggered immediately, but the second the current running code is done to ensure that no Lua code is run in parallel. In general, the mission variables should be more than good enough for event-mission communication, however, in the few cases communication needs to be more tightly coupled, custom hooks are a perfect solution.
 
 ### LuaTK API
-\label{sec:misn-adv-luatk}
+`\label{sec:misn-adv-luatk}`{=tex}
 
 TODO
 
 ### Love2D API
-\label{sec:misn-adv-love2d}
+`\label{sec:misn-adv-love2d}`{=tex}
 
 > LÖVE is an *awesome* framework you can use to make 2D games in Lua. It's free, open-source, and works on Windows, Mac OS X, Linux, Android and iOS.
 
-Naev implements a subset of the [LÖVE](https://love2d.org/) API (also known as Love2D), allowing it to execute many Love2D games out of the box. Furthermore, it is possible to use the Naev API from inside the Love2D to have the games interact with the Naev engine. In particular, the VN (Sec. \ref{sec:misn-basic-vn}), minigames (Sec. \ref{sec:misn-adv-minigames}), and LuaTK (Sec. \ref{sec:misn-adv-luatk}) are implemented using the Love2D API. Many of the core game functionality, such as the boarding or communication menus make use of this API also, albeit indirectly.
+Naev implements a subset of the [LÖVE](https://love2d.org/) API (also known as Love2D), allowing it to execute many Love2D games out of the box. Furthermore, it is possible to use the Naev API from inside the Love2D to have the games interact with the Naev engine. In particular, the VN (Sec. `\ref{sec:misn-basic-vn}`{=tex}), minigames (Sec. `\ref{sec:misn-adv-minigames}`{=tex}), and LuaTK (Sec. `\ref{sec:misn-adv-luatk}`{=tex}) are implemented using the Love2D API. Many of the core game functionality, such as the boarding or communication menus make use of this API also, albeit indirectly.
 
 The Love2D API works with a custom dialogue window that has to be started up. There are two ways to do this: create a Love2D game directory and run them, or set up the necessary functions and create the Love2D instance. Both are very similar.
 

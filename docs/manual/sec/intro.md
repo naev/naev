@@ -36,4 +36,4 @@ missions/
 
 This will cause `my_mission.xml` to be loaded as an extra mission. `plugin.xml` is a plugin-specific file which would contain information on plugin name, authors, version, description, compatibility, and so on.
 
-Plugins are described in detail in Chapter \ref{chapter:plugins}.
+Plugins are described in detail in Chapter `\ref{chapter:plugins}`{=tex}.
