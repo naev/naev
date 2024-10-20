@@ -198,7 +198,7 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
          /* If outfit is ISON_LUA, this gets clear so it just stays normal "on".
           */
          /* Weapons are handled separately. */
-         if ( outfit_isWeapon( o ) )
+         if ( outfit_isWeapon( o ) && ( o->lua_ontoggle == LUA_NOREF ) )
             continue;
 
          pos->flags &= ~PILOTOUTFIT_ISON_LUA;
@@ -1449,7 +1449,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       return 0;
    else if ( o->outfit->lua_ontoggle != LUA_NOREF ) {
       int ret = pilot_outfitLOntoggle( p, o, 0 );
-      if ( outfit_isWeapon( o->outfit ) )
+      if ( ret && outfit_isWeapon( o->outfit ) )
          o->state = PILOT_OUTFIT_OFF;
       return ret;
    } else {
