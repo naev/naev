@@ -845,6 +845,8 @@ static void weapons_inrange( unsigned int wid, const char *str )
 {
    int state = window_checkboxState( wid, str );
    pilot_weapSetInrange( player.p, info_eq_weaps.weapons, state );
+   player.p->autoweap = 0;
+   window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
 }
 
 /**
@@ -854,6 +856,8 @@ static void weapons_manual( unsigned int wid, const char *str )
 {
    int state = window_checkboxState( wid, str );
    pilot_weapSetManual( player.p, info_eq_weaps.weapons, state );
+   player.p->autoweap = 0;
+   window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
 }
 
 /**
@@ -863,6 +867,8 @@ static void weapons_volley( unsigned int wid, const char *str )
 {
    int state = window_checkboxState( wid, str );
    pilot_weapSetVolley( player.p, info_eq_weaps.weapons, state );
+   player.p->autoweap = 0;
+   window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
 }
 
 /**
