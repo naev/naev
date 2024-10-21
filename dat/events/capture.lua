@@ -188,6 +188,9 @@ function land ()
       else
          player.pilot():outfitsEquip( mem.outfits )
       end
+      for k,v in ipairs(mem.intrinsics) do
+         plt:outfitAddIntrinsic( v )
+      end
       player.shipSwap( name, true )
       evt.finish(true)
    end
