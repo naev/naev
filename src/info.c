@@ -1206,8 +1206,8 @@ static void info_openStandings( unsigned int wid )
 
    /* Create list. */
    for ( int i = 0; i < array_size( info_factions ); i++ ) {
-      int m = round( faction_getPlayer( info_factions[i] ) );
-      SDL_asprintf( &str[i], "%s   [ #%c%+d%%#0 ]",
+      double m = round( faction_getPlayer( info_factions[i] ) );
+      SDL_asprintf( &str[i], p_( "standings", "%s   [ #%c%+.0f%%#0 ]" ),
                     faction_longname( info_factions[i] ),
                     faction_getColourChar( info_factions[i] ), m );
    }
@@ -1226,7 +1226,8 @@ static void standings_update( unsigned int wid, const char *str )
    (void)str;
    int              p, x, y;
    const glTexture *t;
-   int              w, h, lw, m, l;
+   int              w, h, lw, l;
+   double           m;
    const int       *flist;
    char             buf[STRMAX];
 
@@ -1254,7 +1255,7 @@ static void standings_update( unsigned int wid, const char *str )
    /* Modify text. */
    y -= 10;
    m = round( faction_getPlayer( info_factions[p] ) );
-   snprintf( buf, sizeof( buf ), p_( "standings", "#%c%+d%%#0   [ %s ]" ),
+   snprintf( buf, sizeof( buf ), p_( "standings", "#%c%+.0f%%#0   [ %s ]" ),
              faction_getColourChar( info_factions[p] ), m,
              faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
