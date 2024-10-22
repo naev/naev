@@ -2326,7 +2326,21 @@ static int pilotL_actives( lua_State *L )
          continue;
       if ( !( pos->flags & PILOTOUTFIT_ACTIVE ) )
          continue;
-      if ( outfit_isWeapon( pos->outfit ) && ( outfits[i]->weapset < 2 ) )
+      if ( outfit_isWeapon( pos->outfit ) && ( pos->weapset < 2 ) )
+         continue;
+
+      /* See if there's a same configuration that is lower. */
+      int skip = 0;
+      for ( int j = 0; j < i; j++ ) {
+         PilotOutfitSlot *posj = outfits[j];
+         if ( posj->outfit != pos->outfit )
+            continue;
+         if ( posj->weapset != pos->weapset )
+            continue;
+         skip = 1;
+         break;
+      }
+      if ( skip )
          continue;
 
       /* Set up for creation. */
