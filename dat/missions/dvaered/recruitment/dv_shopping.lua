@@ -247,7 +247,7 @@ When you arrive at the said office, a soldier greets you.]]), {player=player.nam
             {credits=fmt.credits(amount)}))
       vn.done()
 
-      vn.sfxVictor()
+      vn.sfxVictory()
       local reward_outfit = outfit.get("Fancy Key Chain" )
       vn.func( function ()
          player.pay(amount)
