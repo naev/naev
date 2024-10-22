@@ -765,6 +765,10 @@ static void weapons_updateList( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkInrange",
                        pilot_weapSetInrangeCheck( player.p, pos ) );
 
+   /* Update volley. */
+   window_checkboxSet( wid, "chkVolley",
+                       pilot_weapSetVolleyCheck( player.p, pos ) );
+
    /* Update manual aiming. */
    window_checkboxSet( wid, "chkManual",
                        pilot_weapSetManualCheck( player.p, pos ) );
