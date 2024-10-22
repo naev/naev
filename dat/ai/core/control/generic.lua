@@ -1029,13 +1029,14 @@ function distress_handler( pilot, attacker )
    elseif a_enemy then
       badguy = attacker
    -- We'll be nice and go after the aggressor if the victim is peaceful.
-   elseif mem.whiteknight and not pilot:memory().aggressive then
+   elseif mem.whiteknight and (not pilot:memory().aggressive or attacker:withPlayer()) then
       badguy = attacker
    end
 
    -- Cannot discern the bad guy, so just look the other way
    if not badguy then return end
 
+   ai.hostile( badguy )
    local task = ai.taskname()
    local si   = _stateinfo( task )
    -- Already fighting
