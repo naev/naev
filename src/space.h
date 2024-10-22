@@ -49,6 +49,7 @@
 #define SPOB_UNINHABITED ( 1 << 3 ) /**< Force spob to be uninhabited. */
 #define SPOB_MARKED ( 1 << 4 )      /**< Spob is marked. */
 #define SPOB_NOLANES ( 1 << 5 )     /**< Spob doesn't connect with lanes. */
+#define SPOB_HOSTILE ( 1 << 6 )     /**< Spob is hostile. */
 #define SPOB_RADIUS ( 1 << 10 )     /**< Spob has radius defined. */
 #define spob_isFlag( p, f ) ( ( p )->flags & ( f ) ) /**< Checks spob flag. */
 #define spob_setFlag( p, f )                                                   \
@@ -172,6 +173,7 @@ typedef struct Spob_ {
    int lua_population; /**< Run when getting a string representing the
                           population of the spob. */
    int lua_barbg;      /**< Run to generate bar backgrounds as necessary. */
+   int lua_distress;   /**< Run when a pilot is distressing in the system. */
 } Spob;
 
 /*
@@ -409,6 +411,7 @@ char            spob_getColourChar( const Spob *p );
 const char     *spob_getSymbol( const Spob *p );
 const glColour *spob_getColour( const Spob *p );
 void            spob_updateLand( Spob *p );
+void spob_distress( Spob *spb, const Pilot *p, const Pilot *attacker );
 /* Lua stuff. */
 void spob_luaInitMem( const Spob *spob );
 

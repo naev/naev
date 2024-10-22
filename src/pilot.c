@@ -1196,12 +1196,13 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
    if ( !pilot_isFlag( p, PILOT_DISTRESSED ) ) {
       /* Check if spob is in range. */
       for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
-         if ( spob_hasService( cur_system->spobs[i], SPOB_SERVICE_INHABITED ) &&
-              pilot_inRangeSpob( p, i ) &&
-              !areEnemies( p->faction,
-                           cur_system->spobs[i]->presence.faction ) ) {
-            r = 1;
-            break;
+         Spob *spb = cur_system->spobs[i];
+         if ( spob_hasService( spb, SPOB_SERVICE_INHABITED ) &&
+              pilot_inRangeSpob( p, i ) ) {
+            spob_distress( spb, p, attacker );
+            if ( !areEnemies( p->faction, spb->presence.faction ) ) {
+               r = 1;
+            }
          }
       }
    }

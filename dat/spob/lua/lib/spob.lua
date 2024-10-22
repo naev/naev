@@ -22,6 +22,7 @@ function luaspob.setup( init_params )
    comm     = luaspob.comm
    population = luaspob.population
    barbg    = luaspob.barbg
+   distress = luaspob.distress
 end
 
 local bg_mapping -- defined below
@@ -227,6 +228,7 @@ end
 
 function luaspob.unload ()
    mem.bribed = false
+   mem.spob:setHostile( false )
 end
 
 function luaspob.can_land ()
@@ -242,7 +244,7 @@ function luaspob.can_land ()
       return true,nil -- Use default landing message
    end
    local std = fct:playerStanding()
-   if mem.spob:getLandDeny() or std < 0 then
+   if mem.spob:getLandDeny() or std < 0 or mem.spob:hostile() then
       return false, mem.msg_denied
    end
    if std < mem.std_land then
@@ -273,7 +275,7 @@ function luaspob.comm ()
          { _("Close"), "leave" }
       }
       local std = fct:playerStanding()
-      if std < mem.std_land and not mem.bribed then
+      if (mem.spob:hostile() or std < mem.std_land) and not mem.bribed then
          table.insert( opts, 1, { _("Bribe"), "bribe" } )
       end
       return opts
@@ -310,6 +312,7 @@ function luaspob.comm ()
          return
       end
       player.pay( -bribe_cost )
+      mem.spob:setHostile(false)
       mem.bribed = true
       mem.params.bribed = true
       ccomm.nameboxUpdateSpob( mem.spob, mem.params )
@@ -585,6 +588,18 @@ bg_mapping = {
 
 function luaspob.barbg ()
    return mem.barbg()
+end
+
+function luaspob.distress( p, attacker )
+   -- Ignore if the player isn't the bad one
+   if not attacker:withPlayer() then return end
+
+   local f = mem.spob:faction()
+   if not f:areEnemies( p:faction() ) then
+      -- Small faction hit
+      f:faction():modPlayer( -1 )
+      mem.spob:setHostile(true)
+   end
 end
 
 return luaspob

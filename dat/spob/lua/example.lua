@@ -82,3 +82,9 @@ end
 --]]
 function comm ()
 end
+
+--[[
+   @brief Run when receiving a distress signal from an attacker against a pilot.
+--]]
+function distress ( _p, _attacker )
+end
