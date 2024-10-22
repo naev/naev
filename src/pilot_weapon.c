@@ -102,6 +102,7 @@ int pilot_weapSetPress( Pilot *p, int id, int type )
 {
    PilotWeaponSet *ws  = pilot_weapSet( p, id );
    int             ret = 0;
+   WeaponSetType   t;
 
    /* Case no outfits. */
    if ( ws->slots == NULL )
@@ -111,8 +112,18 @@ int pilot_weapSetPress( Pilot *p, int id, int type )
    if ( ( pilot_isDisabled( p ) ) || ( pilot_isFlag( p, PILOT_COOLDOWN ) ) )
       return 0;
 
+   /* If not advanced we'll override the types. */
+   if ( p->advweap )
+      t = ws->type;
+   else {
+      if ( id < 2 )
+         t = WEAPSET_TYPE_HOLD;
+      else
+         t = WEAPSET_TYPE_DEFAULT;
+   }
+
    /* Handle fire groups. */
-   switch ( ws->type ) {
+   switch ( t ) {
    case WEAPSET_TYPE_DEFAULT:
       /* Tap is toggle, hold is hold. */
       if ( type < 0 ) {
@@ -180,8 +191,7 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
          continue;
 
       /* Only care about HOLD sets. */
-      if ( ( ws->type != WEAPSET_TYPE_DEFAULT ) &&
-           ( ws->type != WEAPSET_TYPE_HOLD ) )
+      if ( p->advweap && ( ws->type == WEAPSET_TYPE_TOGGLE ) )
          continue;
 
       /* Keep on toggling on. */
@@ -501,9 +511,9 @@ void pilot_weapSetVolley( Pilot *p, int id, int volley )
 const char *pilot_weapSetName( Pilot *p, int id )
 {
    static char     setname[STRMAX_SHORT];
-   const char     *base, *type, *problem;
+   const char     *base, *type;
    PilotWeaponSet *ws = pilot_weapSet( p, id );
-   problem = type = base = NULL;
+   type = base = NULL;
 
    switch ( ws->type ) {
    case WEAPSET_TYPE_DEFAULT:
@@ -566,12 +576,11 @@ const char *pilot_weapSetName( Pilot *p, int id )
          base = p_( "weapset", "Mixed" );
    }
 
-   if ( problem != NULL )
-      snprintf( setname, sizeof( setname ),
-                p_( "weapset", "#o%s - %s#0 [#r%s#0]" ), type, base, problem );
-   else
+   if ( p->advweap )
       snprintf( setname, sizeof( setname ), p_( "weapset", "%s - %s" ), type,
                 base );
+   else
+      snprintf( setname, sizeof( setname ), "%s", base );
    return setname;
 }
 

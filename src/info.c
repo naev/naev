@@ -686,9 +686,10 @@ static void info_openWeapons( unsigned int wid )
                        _( "Dogfight visual aiming helper (all sets)" ),
                        aim_lines, player.p->aimLines );
    y -= 28;
-   window_addCheckbox( wid, x + 10, y, wlen, BUTTON_HEIGHT, "chkAutoweap",
-                       _( "Automatically handle all weapons sets" ),
-                       weapons_autoweap, player.p->autoweap );
+   if ( !advanced )
+      window_addCheckbox( wid, x + 10, y, wlen, BUTTON_HEIGHT, "chkAutoweap",
+                          _( "Automatically handle all weapons sets" ),
+                          weapons_autoweap, player.p->autoweap );
 
    /* List. Has to be generated after checkboxes. */
    weapons_genList( wid );
@@ -702,6 +703,8 @@ static void info_openWeapons( unsigned int wid )
    window_addButtonKey( wid, -20 - 2 * ( BUTTON_WIDTH + 10 ), 20, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnAdvanced", p_( "UI", "Advanced" ),
                         weapons_advanced, SDLK_e );
+   if ( advanced )
+      window_buttonCaption( wid, "btnAdvanced", p_( "UI", "Simple" ) );
 }
 
 /**
@@ -940,10 +943,6 @@ static void weapons_advanced( unsigned int wid, const char *str )
 {
    (void)str;
    player.p->advweap = !player.p->advweap;
-   if ( player.p->advweap )
-      window_buttonCaption( wid, "btnAdvanced", p_( "UI", "Simple" ) );
-   else
-      window_buttonCaption( wid, "btnAdvanced", p_( "UI", "Advanced" ) );
 
    int n = toolkit_getListPos( wid, "lstWeapSets" );
    window_clearWidgets( wid );

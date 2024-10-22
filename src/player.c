@@ -3638,6 +3638,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
 
    xmlw_startElem( writer, "weaponsets" );
    xmlw_attr( writer, "autoweap", "%d", ship->autoweap );
+   xmlw_attr( writer, "advweap", "%d", ship->advweap );
    xmlw_attr( writer, "aim_lines", "%d", ship->aimLines );
    for ( int i = 0; i < PILOT_WEAPON_SETS; i++ ) {
       PilotWeaponSet       *ws    = &pship->weapon_sets[i];
@@ -4695,6 +4696,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
       /* Check for autoweap. */
       xmlr_attr_int( node, "autoweap", autoweap );
+      xmlr_attr_int( node, "autoweap", ship->advweap );
 
       /* Check for aim_lines. */
       xmlr_attr_int( node, "aim_lines", aim_lines );
