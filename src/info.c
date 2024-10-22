@@ -442,8 +442,8 @@ static void info_openMain( unsigned int wid )
    free( nt );
 
    /* menu */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
-                     _( "Close" ), info_close );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
+                        _( "Close" ), info_close, SDLK_c );
 
    /* TODO probably add alt text with descriptions. */
    lic = player_getLicenses();
@@ -497,8 +497,8 @@ static void info_openShip( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeOutfits",
-                     _( "Close" ), info_close );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+                        "closeOutfits", _( "Close" ), info_close, SDLK_c );
 
    /* Text. */
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", _( "Name:" ) );
@@ -642,13 +642,14 @@ static void info_openWeapons( unsigned int wid )
    wlen = w - 220 - 20;
    x    = 220;
    y -= 75;
-   window_addButton( wid, x + 10, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCycle",
-                     _( "Cycle Mode" ), weapons_toggleList );
-   window_addButton( wid, x + 10 + ( BUTTON_WIDTH + 10 ), y, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnClear", _( "Clear" ), weapons_clear );
-   window_addButton( wid, x + 10 + ( BUTTON_WIDTH + 10 ) * 2, y, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnClearAll", _( "Clear All" ),
-                     weapons_clearAll );
+   window_addButtonKey( wid, x + 10, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCycle",
+                        _( "Cycle Mode" ), weapons_toggleList, SDLK_m );
+   window_addButtonKey( wid, x + 10 + ( BUTTON_WIDTH + 10 ), y, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnClear", _( "Clear" ), weapons_clear,
+                        SDLK_l );
+   window_addButtonKey( wid, x + 10 + ( BUTTON_WIDTH + 10 ) * 2, y,
+                        BUTTON_WIDTH, BUTTON_HEIGHT, "btnClearAll",
+                        _( "Clear All" ), weapons_clearAll, SDLK_a );
    y -= BUTTON_HEIGHT + 10;
    window_addText(
       wid, x + 10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
@@ -683,10 +684,11 @@ static void info_openWeapons( unsigned int wid )
    weapons_genList( wid );
 
    /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeWeapons",
-                     _( "Close" ), info_close );
-   window_addButton( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "help", p_( "UI", "Help" ), weapons_help );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+                        "closeWeapons", _( "Close" ), info_close, SDLK_c );
+   window_addButtonKey( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "help", p_( "UI", "Help" ), weapons_help,
+                        SDLK_h );
 }
 
 /**
@@ -928,11 +930,11 @@ static void info_openCargo( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeCargo",
-                     _( "Close" ), info_close );
-   window_addButton( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnJettisonCargo", _( "Jettison" ),
-                     cargo_jettison );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeCargo",
+                        _( "Close" ), info_close, SDLK_c );
+   window_addButtonKey( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnJettisonCargo", _( "Jettison" ),
+                        cargo_jettison, SDLK_j );
    window_disableButton( wid, "btnJettisonCargo" );
 
    /* Description. */
@@ -1184,8 +1186,8 @@ static void info_openStandings( unsigned int wid )
    window_onClose( wid, standings_close );
 
    /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeMissions",
-                     _( "Close" ), info_close );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+                        "closeMissions", _( "Close" ), info_close, SDLK_c );
 
    /* Graphics. */
    window_addImage( wid, 0, 0, 0, 0, "imgLogo", NULL, 0 );
@@ -1326,8 +1328,8 @@ static void info_openMissions( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeMissions",
-                     _( "Close" ), info_close );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+                        "closeMissions", _( "Close" ), info_close, SDLK_c );
    window_addButtonKey( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnAbortMission", _( "Abort" ),
                         mission_menu_abort, SDLK_a );
@@ -1732,17 +1734,17 @@ static void info_openShipLog( unsigned int wid )
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
    /* buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeShipLog",
-                     _( "Close" ), info_close );
-   window_addButton( wid, -20 - 1 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnDeleteLog", _( "Delete" ),
-                     info_shiplogMenuDelete );
-   window_addButton( wid, -20 - 2 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnViewLog", _( "View Entry" ),
-                     info_shiplogView );
-   window_addButton( wid, -20 - 3 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnAddLog", _( "Add Entry" ),
-                     info_shiplogAdd );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+                        "closeShipLog", _( "Close" ), info_close, SDLK_c );
+   window_addButtonKey( wid, -20 - 1 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnDeleteLog", _( "Delete" ),
+                        info_shiplogMenuDelete, SDLK_d );
+   window_addButtonKey( wid, -20 - 2 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnViewLog", _( "View Entry" ),
+                        info_shiplogView, SDLK_v );
+   window_addButtonKey( wid, -20 - 3 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnAddLog", _( "Add Entry" ),
+                        info_shiplogAdd, SDLK_a );
    /* Description text */
    texth = gl_printHeightRaw( &gl_smallFont, w, "Select log type" );
    window_addText( wid, 20, 80 + BUTTON_HEIGHT + LOGSPACING, w - 40, texth, 0,
