@@ -376,6 +376,7 @@ typedef struct Pilot_ {
    PilotWeaponSet
       weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
    int autoweap;                      /**< Automatically update weapon sets. */
+   int advweap;                       /**< Advanced weapon sets. */
    int aimLines;                      /**< Activate aiming helper lines. */
 
    /* Cargo */

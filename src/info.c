@@ -116,6 +116,7 @@ static void aim_lines( unsigned int wid, const char *str );
 static void weapons_renderLegend( double bx, double by, double bw, double bh,
                                   void *data );
 static void weapons_help( unsigned int wid, const char *str );
+static void weapons_advanced( unsigned int wid, const char *str );
 static void info_openStandings( unsigned int wid );
 static void info_shiplogView( unsigned int wid, const char *str );
 static void standings_update( unsigned int wid, const char *str );
@@ -622,7 +623,8 @@ static void ship_update( unsigned int wid )
  */
 static void info_openWeapons( unsigned int wid )
 {
-   int w, h, x, y, wlen;
+   int       w, h, x, y, wlen;
+   const int advanced = player.p->advweap;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -642,21 +644,29 @@ static void info_openWeapons( unsigned int wid )
    wlen = w - 220 - 20;
    x    = 220;
    y -= 75;
-   window_addButtonKey( wid, x + 10, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCycle",
-                        _( "Cycle Mode" ), weapons_toggleList, SDLK_m );
-   window_addButtonKey( wid, x + 10 + ( BUTTON_WIDTH + 10 ), y, BUTTON_WIDTH,
-                        BUTTON_HEIGHT, "btnClear", _( "Clear" ), weapons_clear,
-                        SDLK_l );
-   window_addButtonKey( wid, x + 10 + ( BUTTON_WIDTH + 10 ) * 2, y,
+   if ( advanced ) {
+      window_addButtonKey( wid, x + 10, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+                           "btnCycle", _( "Cycle Mode" ), weapons_toggleList,
+                           SDLK_m );
+      x += BUTTON_WIDTH + 10;
+   }
+   window_addButtonKey( wid, x + 10 + ( BUTTON_WIDTH + 10 ) * 0, y,
+                        BUTTON_WIDTH, BUTTON_HEIGHT, "btnClear", _( "Clear" ),
+                        weapons_clear, SDLK_l );
+   window_addButtonKey( wid, x + 10 + ( BUTTON_WIDTH + 10 ) * 1, y,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnClearAll",
                         _( "Clear All" ), weapons_clearAll, SDLK_a );
+   x = 220;
    y -= BUTTON_HEIGHT + 10;
-   window_addText(
-      wid, x + 10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
-      _( "Cycles through the following modes:\n"
-         "- Hold: turns on the selected outfits as long as key is held\n"
-         "- Toggle: toggles the selected outfits to on or off state" ) );
-   y -= 8 + window_getTextHeight( wid, "txtSMode" );
+   if ( advanced ) {
+      window_addText(
+         wid, x + 10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
+         _( "Cycles through the following modes:\n"
+            "- Default: tap to toggle, hold to hold\n"
+            "- Hold: turns on the selected outfits as long as key is held\n"
+            "- Toggle: toggles the selected outfits to on or off state" ) );
+      y -= 8 + window_getTextHeight( wid, "txtSMode" );
+   }
    window_addCheckbox(
       wid, x + 10, y, wlen, BUTTON_HEIGHT, "chkManual",
       _( "Enable manual aiming mode" ), weapons_manual,
@@ -686,9 +696,12 @@ static void info_openWeapons( unsigned int wid )
    /* Buttons */
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
                         "closeWeapons", _( "Close" ), info_close, SDLK_c );
-   window_addButtonKey( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
-                        BUTTON_HEIGHT, "help", p_( "UI", "Help" ), weapons_help,
-                        SDLK_h );
+   window_addButtonKey( wid, -20 - 1 * ( BUTTON_WIDTH + 10 ), 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnHelp", p_( "UI", "Help" ),
+                        weapons_help, SDLK_h );
+   window_addButtonKey( wid, -20 - 2 * ( BUTTON_WIDTH + 10 ), 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnAdvanced", p_( "UI", "Advanced" ),
+                        weapons_advanced, SDLK_e );
 }
 
 /**
@@ -918,6 +931,24 @@ static void weapons_help( unsigned int wid, const char *str )
    (void)wid;
    (void)str;
    naevpedia_open( "mechanics/weaponsets" );
+}
+
+/**
+ * @brief Toggles between advanced and simple.
+ */
+static void weapons_advanced( unsigned int wid, const char *str )
+{
+   (void)str;
+   player.p->advweap = !player.p->advweap;
+   if ( player.p->advweap )
+      window_buttonCaption( wid, "btnAdvanced", p_( "UI", "Simple" ) );
+   else
+      window_buttonCaption( wid, "btnAdvanced", p_( "UI", "Advanced" ) );
+
+   int n = toolkit_getListPos( wid, "lstWeapSets" );
+   window_clearWidgets( wid );
+   info_openWeapons( wid );
+   toolkit_setListPos( wid, "lstWeapSets", n );
 }
 
 /**
