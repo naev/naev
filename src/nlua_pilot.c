@@ -753,17 +753,21 @@ static int pilotL_add( lua_State *L )
       }
       if ( jump == NULL ) {
          if ( array_size( cur_system->jumps ) > 0 ) {
-            WARN( _( "Ship '%s' jumping in from non-adjacent system '%s' to "
-                     "'%s'." ),
-                  pilotname, ss->name, cur_system->name );
+            NLUA_WARN(
+               L,
+               _( "Ship '%s' jumping in from non-adjacent system '%s' to "
+                  "'%s'." ),
+               pilotname, ss->name, cur_system->name );
             jump =
                cur_system
                   ->jumps[RNG_BASE( 0, array_size( cur_system->jumps ) - 1 )]
                   .returnJump;
          } else
-            WARN( _( "Ship '%s' attempting to jump in from '%s', but '%s' has "
-                     "no jump points." ),
-                  pilotname, ss->name, cur_system->name );
+            NLUA_WARN(
+               L,
+               _( "Ship '%s' attempting to jump in from '%s', but '%s' has "
+                  "no jump points." ),
+               pilotname, ss->name, cur_system->name );
       }
    }
 
@@ -2004,8 +2008,9 @@ static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx )
    const char      *slotname = luaL_checkstring( L, idx );
    PilotOutfitSlot *s        = pilot_getSlotByName( p, slotname );
    if ( s == NULL ) {
-      WARN( _( "Pilot '%s' with ship '%s' does not have named slot '%s'!" ),
-            p->name, _( p->ship->name ), slotname );
+      NLUA_WARN(
+         L, _( "Pilot '%s' with ship '%s' does not have named slot '%s'!" ),
+         p->name, _( p->ship->name ), slotname );
       return NULL;
    }
    return s;
@@ -2590,9 +2595,11 @@ static int pilotL_outfitsEquip( lua_State *L )
       }
 
       if ( i > array_size( p->outfits ) ) {
-         WARN( _( "Trying to equip more outfits than slots available on pilot "
-                  "'%s'!" ),
-               p->name );
+         NLUA_WARN(
+            L,
+            _( "Trying to equip more outfits than slots available on pilot "
+               "'%s'!" ),
+            p->name );
          lua_pop( L, 1 );
          break;
       }
@@ -5366,8 +5373,8 @@ static int pilotL_flags( lua_State *L )
             return 1;
          }
 #if DEBUGGING
-      WARN( _( "Tried to access unknown flag '%s' for pilot '%s'!" ), name,
-            p->name );
+      NLUA_WARN( L, _( "Tried to access unknown flag '%s' for pilot '%s'!" ),
+                 name, p->name );
 #endif /* DEBUGGING */
       return 0;
    }
@@ -6400,8 +6407,8 @@ static int pilotL_setLeader( lua_State *L )
          break;
       }
       if ( !found )
-         WARN( _( "Pilot '%s' not found in followers of '%s'" ), p->name,
-               prev_leader->name );
+         NLUA_WARN( L, _( "Pilot '%s' not found in followers of '%s'" ),
+                    p->name, prev_leader->name );
    }
 
    /* Just clear parent, will already be gone from parent escort list. */
@@ -6832,7 +6839,8 @@ static int pilotL_renderComm( lua_State *L )
    glTexture   *tex =
       ship_gfxComm( p->ship, size, p->tilt, p->solid.dir, &L_default );
    if ( tex == NULL ) {
-      WARN( _( "Unable to get ship comm graphic for '%s'." ), p->ship->name );
+      NLUA_WARN( L, _( "Unable to get ship comm graphic for '%s'." ),
+                 p->ship->name );
       return 0;
    }
    lua_pushtex( L, tex );
@@ -6893,7 +6901,8 @@ static int pilotL_renderTo( lua_State *L )
    w = p->ship->size;
    h = p->ship->size;
    if ( ( lc->tex->w < w ) || ( lc->tex->h < h ) )
-      WARN(
+      NLUA_WARN(
+         L,
          _( "Canvas is too small to fully render '%s': %.0f x %.0f < %d x %d" ),
          p->name, lc->tex->w, lc->tex->h, w, h );
 
