@@ -70,7 +70,7 @@ local function clicked ()
    sai(_([["This will reset and enable all in-game tutorial hints, are you sure you want to do this?"]]))
    vn.menu{
       {_("Reset tutorial hints"), "resetyes"},
-      {_("Nevermind"), "opts"},
+      {_("Never mind"), "opts"},
    }
    vn.label("resetyes")
    vn.func( function () tut.reset() end )
@@ -127,7 +127,7 @@ local function clicked ()
    sai(_([["There are three different types of weapon sets:
 - #oSwitch#0: activating the hotkey will set your primary and secondary weapons
 - #oToggle#0: activating the hotkey will toggle the outfits between on/off states
-- #oHold#0: holding the hotkey will turn the outfits on]]))
+- #oHold#0: holding the hotkey will turn the outfits on"]]))
    sai(_([["By default, the weapon sets will be automatically managed by me, with forward bolts in set 1 (switch), turret weapons in set 2 (switch), and both turret and forward weapons in set 3 (switch). Seeker weapons are in set 4 (hold), and fighter bays in set 5 (hold). However, you can override this and set them however you prefer. Just remember to update them whenever you change your outfits."]]))
    vn.jump("tutorials")
 
@@ -246,5 +246,5 @@ function advice ()
 end
 
 function create ()
-   player.infoButtonRegister( _("Ship AI"), clicked, 1, "A" )
+   player.infoButtonRegister( _("Ship AI"), clicked, 1, "I" )
 end
