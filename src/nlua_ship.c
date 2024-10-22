@@ -15,7 +15,6 @@
 #include "nlua_ship.h"
 
 #include "array.h"
-#include "log.h"
 #include "nlua_canvas.h"
 #include "nlua_faction.h"
 #include "nlua_outfit.h"
@@ -734,7 +733,7 @@ static int shipL_gfxComm( lua_State *L )
    int         size = luaL_optinteger( L, 2, 512 );
    glTexture  *tex  = ship_gfxComm( s, size, 0., 0., &L_store_const );
    if ( tex == NULL ) {
-      WARN( _( "Unable to get ship comm graphic for '%s'." ), s->name );
+      NLUA_WARN( L, _( "Unable to get ship comm graphic for '%s'." ), s->name );
       return 0;
    }
    lua_pushtex( L, tex );
@@ -757,7 +756,8 @@ static int shipL_gfxStore( lua_State *L )
    const Ship *s   = luaL_validship( L, 1 );
    glTexture  *tex = ship_gfxStore( s, 256, 0., 0., 0. );
    if ( tex == NULL ) {
-      WARN( _( "Unable to get ship store graphic for '%s'." ), s->name );
+      NLUA_WARN( L, _( "Unable to get ship store graphic for '%s'." ),
+                 s->name );
       return 0;
    }
    lua_pushtex( L, tex );
@@ -782,7 +782,7 @@ static int shipL_gfx( lua_State *L )
    ship_gfxLoad( (Ship *)s );
    glTexture *tex = gl_dupTexture( s->gfx_space );
    if ( tex == NULL ) {
-      WARN( _( "Unable to get ship graphic for '%s'." ), s->name );
+      NLUA_WARN( L, _( "Unable to get ship graphic for '%s'." ), s->name );
       return 0;
    }
    lua_pushtex( L, tex );

@@ -796,7 +796,7 @@ static int misn_osdCreate( lua_State *L )
 
    /* Must be accepted. */
    if ( !cur_mission->accepted ) {
-      WARN( _( "Can't create an OSD on an unaccepted mission!" ) );
+      NLUA_WARN( L, _( "Can't create an OSD on an unaccepted mission!" ) );
       return 0;
    }
 

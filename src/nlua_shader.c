@@ -13,7 +13,6 @@
 #include "nlua_shader.h"
 
 #include "array.h"
-#include "log.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
 #include "render.h"
@@ -397,9 +396,10 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
       break;
 
    default:
-      WARN( _( "Unsupported shader uniform type '%d' for uniform '%s'. "
-               "Ignoring." ),
-            u->type, u->name );
+      NLUA_WARN( L,
+                 _( "Unsupported shader uniform type '%d' for uniform '%s'. "
+                    "Ignoring." ),
+                 u->type, u->name );
    }
    glUseProgram( 0 );
 

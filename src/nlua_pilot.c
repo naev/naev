@@ -21,7 +21,6 @@
 #include "escort.h"
 #include "gui.h"
 #include "land_outfits.h"
-#include "log.h"
 #include "map.h"
 #include "nlua.h"
 #include "nlua_asteroid.h"

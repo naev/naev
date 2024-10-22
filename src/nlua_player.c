@@ -28,7 +28,6 @@
 #include "info.h"
 #include "land.h"
 #include "land_outfits.h"
-#include "log.h"
 #include "map.h"
 #include "map_overlay.h"
 #include "menu.h"
@@ -1168,8 +1167,8 @@ static int playerL_land( lua_State *L )
       lua_pushspob( naevL, spob_index( spob ) );
       lua_pushpilot( naevL, player.p->id );
       if ( nlua_pcall( spob->lua_env, 2, 0 ) ) {
-         WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spob->name, "land",
-               lua_tostring( naevL, -1 ) );
+         NLUA_WARN( L, _( "Spob '%s' failed to run '%s':\n%s" ), spob->name,
+                    "land", lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
       }
 
@@ -2546,7 +2545,7 @@ static int playerL_infoButtonUnregister( lua_State *L )
    int id  = luaL_checkinteger( L, 1 );
    int ret = info_buttonUnregister( id );
    if ( ret != 0 )
-      WARN( _( "Failed to unregister info button with id '%d'!" ), id );
+      NLUA_WARN( L, _( "Failed to unregister info button with id '%d'!" ), id );
    return 0;
 }
 

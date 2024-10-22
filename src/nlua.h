@@ -6,6 +6,8 @@
 /** @cond */
 #include <lauxlib.h> // IWYU pragma: export
 #include <lua.h>     // IWYU pragma: export
+
+#include "log.h" // IWYU pragma: export
 /** @endcond */
 
 #define NLUA_LOAD_TABLE                                                        \

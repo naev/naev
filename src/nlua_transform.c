@@ -14,7 +14,6 @@
 
 #include "nlua_transform.h"
 
-#include "log.h"
 #include "nluadef.h"
 
 /* Transform metatable methods. */
@@ -234,11 +233,11 @@ static int transformL_set( lua_State *L )
    double v = luaL_checknumber( L, 4 );
 #if DEBUGGING
    if ( i < 0 || i > 3 ) {
-      WARN( _( "Matrix column value not in range: %d" ), i );
+      NLUA_WARN( L, _( "Matrix column value not in range: %d" ), i );
       i = CLAMP( 0, 3, i );
    }
    if ( j < 0 || j > 3 ) {
-      WARN( _( "Matrix row value not in range: %d" ), j );
+      NLUA_WARN( L, _( "Matrix row value not in range: %d" ), j );
       j = CLAMP( 0, 3, j );
    }
 #endif /* DEBUGGING */

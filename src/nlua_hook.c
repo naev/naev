@@ -20,7 +20,6 @@
 #include "array.h"
 #include "event.h"
 #include "hook.h"
-#include "log.h"
 #include "mission.h"
 #include "nlua_evt.h"
 #include "nlua_misn.h"
@@ -276,8 +275,8 @@ static unsigned int hookL_generic( lua_State *L, const char *stack, double sec,
          if ( player_missions[i]->id == running_mission->id )
             break;
       if ( i >= array_size( player_missions ) ) {
-         WARN( _( "Mission not in stack trying to hook, forgot to run "
-                  "misn.accept()?" ) );
+         NLUA_WARN( L, _( "Mission not in stack trying to hook, forgot to run "
+                          "misn.accept()?" ) );
          return 0;
       }
 

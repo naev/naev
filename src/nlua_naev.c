@@ -26,7 +26,6 @@
 #include "info.h"
 #include "input.h"
 #include "land.h"
-#include "log.h"
 #include "menu.h"
 #include "nlua_misn.h"
 #include "nlua_system.h"
@@ -188,9 +187,9 @@ static int naevL_versionTest( lua_State *L )
    s1 = luaL_checkstring( L, 1 );
    s2 = luaL_checkstring( L, 2 );
    if ( semver_parse( s1, &sv1 ) )
-      WARN( _( "Failed to parse version string '%s'!" ), s1 );
+      NLUA_WARN( L, _( "Failed to parse version string '%s'!" ), s1 );
    if ( semver_parse( s2, &sv2 ) )
-      WARN( _( "Failed to parse version string '%s'!" ), s2 );
+      NLUA_WARN( L, _( "Failed to parse version string '%s'!" ), s2 );
 
    /* Check version. */
    res = semver_compare( sv1, sv2 );
