@@ -225,7 +225,7 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
       if ( pos->flags & ( PILOTOUTFIT_ISON_TOGGLE | PILOTOUTFIT_ISON_HOLD ) )
          pos->flags |= PILOTOUTFIT_ISON;
       else
-         pos->flags &= ~PILOTOUTFIT_ISON;
+         pos->flags &= ~( PILOTOUTFIT_ISON | PILOTOUTFIT_DYNAMIC_FLAGS );
 
       /* Se whether to turn on or off. */
       if ( pos->flags & PILOTOUTFIT_ISON ) {
