@@ -258,9 +258,14 @@ local message_handler_funcs = {
       for k,v in ipairs(p:followers()) do
          p:msg( v, "l_attacked", data )
       end
-      if not si.fighting and should_attack( data, si, true ) then
-         if dopush then
-            ai.pushtask("attack", data)
+      if not si.fighting then
+         if should_attack( data, si, true ) then
+            if dopush then
+               ai.pushtask("attack", data)
+               return true
+            end
+         elseif dopush and not mem.norun then
+            ai.pushtask("runaway", data)
             return true
          end
       end
