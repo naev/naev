@@ -59,76 +59,99 @@ void pilot_weapSetAIClear( Pilot *p )
    }
 }
 
+static int pilot_weapSetPressToggle( Pilot *p, PilotWeaponSet *ws )
+{
+   int ret = 0;
+   /* Toggle state. */
+   for ( int j = 0; j < array_size( ws->slots ); j++ ) {
+      PilotOutfitSlot *pos = p->outfits[ws->slots[j].slotid];
+      if ( pos->outfit == NULL )
+         continue;
+      if ( !( pos->flags & PILOTOUTFIT_TOGGLEABLE ) )
+         continue;
+      /* Holding has priority over toggling. */
+      if ( pos->flags & PILOTOUTFIT_ISON_HOLD )
+         continue;
+
+      /* Flip state to ON/OFF. */
+      if ( pos->flags & PILOTOUTFIT_ISON ) {
+         pos->flags &= ~( PILOTOUTFIT_ISON_TOGGLE | PILOTOUTFIT_ISON_LUA );
+      } else {
+         pos->flags |= PILOTOUTFIT_ISON_TOGGLE;
+         if ( ws->volley )
+            pos->flags |= PILOTOUTFIT_VOLLEY;
+         if ( ws->inrange )
+            pos->flags |= PILOTOUTFIT_INRANGE;
+         if ( ws->manual )
+            pos->flags |= PILOTOUTFIT_MANUAL;
+      }
+      ret = 1;
+   }
+   return ret;
+}
+
 /**
  * @brief Handles a weapon set press.
  *
  *    @param p Pilot the weapon set belongs to.
  *    @param id ID of the weapon set.
  *    @param type Is +1 if it's a press or -1 if it's a release.
+ *    @return Whether or not something changed.
  */
-void pilot_weapSetPress( Pilot *p, int id, int type )
+int pilot_weapSetPress( Pilot *p, int id, int type )
 {
-   PilotWeaponSet *ws = pilot_weapSet( p, id );
+   PilotWeaponSet *ws  = pilot_weapSet( p, id );
+   int             ret = 0;
+
    /* Case no outfits. */
    if ( ws->slots == NULL )
-      return;
+      return 0;
+
+   /* Must not be disabled or cooling down. */
+   if ( ( pilot_isDisabled( p ) ) || ( pilot_isFlag( p, PILOT_COOLDOWN ) ) )
+      return 0;
 
    /* Handle fire groups. */
    switch ( ws->type ) {
+   case WEAPSET_TYPE_DEFAULT:
+      /* Tap is toggle, hold is hold. */
+      if ( type < 0 ) {
+         ret        = ( ws->active != 0 );
+         ws->active = 0;
+      } else if ( type > 1 ) {
+         ret        = ( ws->active != 1 );
+         ws->active = 1;
+      } else {
+         ret        = ( ws->active != 0 );
+         ws->active = 0;
+         ret |= pilot_weapSetPressToggle( p, ws );
+      }
+      break;
+
    case WEAPSET_TYPE_TOGGLE:
-      /* The behaviour here is more complex. What we do is consider a group
-       * to be entirely off if not all outfits are either on or cooling down.
-       *  In the case it's deemed to be off, all outfits that are off get turned
-       * on, otherwise all outfits that are on are turrned to cooling down. */
+      /* This just toggles an outfit on until it turns off. If it is on, it
+       * toggles it off instead. */
       /* Only care about presses. */
       if ( type < 0 )
          break;
-
-      /* Must not be disabled or cooling down. */
-      if ( ( pilot_isDisabled( p ) ) || ( pilot_isFlag( p, PILOT_COOLDOWN ) ) )
-         return;
-
-      /* Toggle state. */
-      for ( int j = 0; j < array_size( ws->slots ); j++ ) {
-         PilotOutfitSlot *pos = p->outfits[ws->slots[j].slotid];
-         if ( pos->outfit == NULL )
-            continue;
-         if ( !( pos->flags & PILOTOUTFIT_TOGGLEABLE ) )
-            continue;
-         /* Holding has priority over toggling. */
-         if ( pos->flags & PILOTOUTFIT_ISON_HOLD )
-            continue;
-
-         /* Flip state to ON/OFF. */
-         if ( pos->flags & PILOTOUTFIT_ISON ) {
-            pos->flags &= ~( PILOTOUTFIT_ISON_TOGGLE | PILOTOUTFIT_ISON_LUA );
-         } else {
-            pos->flags |= PILOTOUTFIT_ISON_TOGGLE;
-            if ( ws->volley )
-               pos->flags |= PILOTOUTFIT_VOLLEY;
-            if ( ws->inrange )
-               pos->flags |= PILOTOUTFIT_INRANGE;
-            if ( ws->manual )
-               pos->flags |= PILOTOUTFIT_MANUAL;
-         }
-      }
+      ret = pilot_weapSetPressToggle( p, ws );
       break;
 
    case WEAPSET_TYPE_HOLD:
       /* Activation philosophy here is to turn on while pressed and off
        * when it's not held anymore. */
 
-      /* Must not be disabled or cooling down. */
-      if ( ( pilot_isDisabled( p ) ) || ( pilot_isFlag( p, PILOT_COOLDOWN ) ) )
-         return;
-
       /* Clear change variables. */
-      if ( type > 0 )
+      if ( type > 0 ) {
+         ret        = ( ws->active != 1 );
          ws->active = 1;
-      else if ( type < 0 )
+      } else if ( type < 0 ) {
+         ret        = ( ws->active != 0 );
          ws->active = 0;
+      }
       break;
    }
+   return ret;
 }
 
 /**
@@ -157,7 +180,8 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
          continue;
 
       /* Only care about HOLD sets. */
-      if ( ws->type != WEAPSET_TYPE_HOLD )
+      if ( ( ws->type != WEAPSET_TYPE_DEFAULT ) &&
+           ( ws->type != WEAPSET_TYPE_HOLD ) )
          continue;
 
       /* Keep on toggling on. */
@@ -482,6 +506,9 @@ const char *pilot_weapSetName( Pilot *p, int id )
    problem = type = base = NULL;
 
    switch ( ws->type ) {
+   case WEAPSET_TYPE_DEFAULT:
+      type = p_( "weapset", "Default" );
+      break;
    case WEAPSET_TYPE_TOGGLE:
       type = p_( "weapset", "Toggle" );
       break;
@@ -1293,11 +1320,10 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetType( p, 0, WEAPSET_TYPE_HOLD ); /* Primary. */
    pilot_weapSetType( p, 1, WEAPSET_TYPE_HOLD ); /* Secondary. */
 
-   /* Set weapon sets. */
-   for ( int i = 2; i < PILOT_WEAPON_SETS; i++ )
-      pilot_weapSetType( p, i, WEAPSET_TYPE_TOGGLE );
-
    if ( isplayer ) {
+      for ( int i = 2; i < PILOT_WEAPON_SETS; i++ )
+         pilot_weapSetType( p, i, WEAPSET_TYPE_DEFAULT );
+
       /* See if fighter bays or point defense. */
       for ( int i = 0; i < array_size( p->outfits ); i++ ) {
          PilotOutfitSlot *slot = p->outfits[i];
@@ -1323,6 +1349,10 @@ void pilot_weaponAuto( Pilot *p )
          hasfb = 2 + !!haspd; /* 0 or 1 weapset. */
          idnext++;
       }
+   } else {
+      /* Set weapon sets. */
+      for ( int i = 2; i < PILOT_WEAPON_SETS; i++ )
+         pilot_weapSetType( p, i, WEAPSET_TYPE_TOGGLE );
    }
 
    /* Iterate through all the outfits. */

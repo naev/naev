@@ -1490,10 +1490,12 @@ void player_weapSetPress( int id, double value, int repeat )
 {
    int type;
 
-   if ( repeat || ( player.p == NULL ) )
+   if ( player.p == NULL )
       return;
 
    type = ( value >= 0 ) ? +1 : -1;
+   if ( repeat )
+      type = 2;
 
    if ( type > 0 ) {
       if ( toolkit_isOpen() )
@@ -1506,8 +1508,9 @@ void player_weapSetPress( int id, double value, int repeat )
          return;
    }
 
-   pilot_weapSetPress( player.p, id, type );
-   pilot_weapSetUpdateOutfitState( player.p );
+   /* Only update if necessary. */
+   if ( pilot_weapSetPress( player.p, id, type ) )
+      pilot_weapSetUpdateOutfitState( player.p );
 }
 
 /**
@@ -3652,11 +3655,6 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
             xmlw_str( writer, "%d", weaps[j].slotid );
             xmlw_endElem( writer ); /* "weapon" */
          }
-         /* This code here is to change the group behaviour, since the old '0'
-          * was switch groups. */
-         if ( ws->type == 0 )
-            ws->type =
-               WEAPSET_TYPE_HOLD; /* Change switch groups to hold groups. */
       }
       xmlw_endElem( writer ); /* "weaponset" */
    }

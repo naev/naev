@@ -195,8 +195,9 @@ typedef struct PilotWeaponSetOutfit_ {
  * Uses old IDs which is why it starts at 1.
  */
 typedef enum WeaponSetType_ {
-   WEAPSET_TYPE_HOLD   = 1, /**< Activates weapons (while held down). */
-   WEAPSET_TYPE_TOGGLE = 2, /**< Toggles outfits (if on it deactivates). */
+   WEAPSET_TYPE_DEFAULT = 0, /**< Tap to toggle, hold to hold. */
+   WEAPSET_TYPE_HOLD    = 1, /**< Activates weapons (while held down). */
+   WEAPSET_TYPE_TOGGLE  = 2, /**< Toggles outfits (if on it deactivates). */
 } WeaponSetType;
 
 /**
