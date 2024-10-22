@@ -253,11 +253,12 @@ local message_handler_funcs = {
    -- Follower is being attacked
    f_attacked = function( p, si, dopush, sender, data )
       if sender==nil or not sender:exists() or sender:leader()~=p then return false end
+      ai.hostile( data ) -- Set hostile
+      -- Also signal to other followers
+      for k,v in ipairs(p:followers()) do
+         p:msg( v, "l_attacked", data )
+      end
       if not si.fighting and should_attack( data, si, true ) then
-         -- Also signal to other followers
-         for k,v in ipairs(p:followers()) do
-            p:msg( v, "l_attacked", data )
-         end
          if dopush then
             ai.pushtask("attack", data)
             return true
@@ -272,6 +273,7 @@ local message_handler_funcs = {
    end,
    l_attacked = function( p, si, dopush, sender, data )
       if not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
+      ai.hostile( data ) -- Set hostile
       if not si.fighting and should_attack( data, si, true ) then
          ai.pushtask("attack", data)
          return true
@@ -1089,6 +1091,7 @@ function gen_distress( target )
 
    -- Initialize if unset.
    if mem.distressed == nil then
+      -- Start between 0 and 50% of max distress
       mem.distressed = rnd.rnd(1,math.ceil(mem.distressrate*0.5+0.5))
    end
 
