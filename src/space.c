@@ -2070,6 +2070,10 @@ void spob_distress( Spob *spb, const Pilot *p, const Pilot *attacker )
    if ( attacker == NULL )
       return;
 
+   /* Doesn't have a function defined. */
+   if ( spb->lua_distress == LUA_NOREF )
+      return;
+
    /* Run the function. */
    spob_luaInitMem( spb );
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, spb->lua_distress ); /* f */
