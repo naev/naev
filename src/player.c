@@ -2552,8 +2552,13 @@ void player_scan( void )
       player_message( "#r%s", _( "You need a target to scan." ) );
       return;
    }
-   if ( pilot_isFlag( t, PILOT_PLAYER_SCANNED ) ) {
+   if ( !pilot_isFlag( t, PILOT_PLAYER_SCANNED ) ) {
       player_message( "#o%s", _( "You are not ready to scan yet." ) );
+      return;
+   }
+   if ( pilot_inRangePilot( player.p, t, NULL ) <= 0 ) {
+      player_message(
+         "#o%s", _( "You can not identify the target at this distance." ) );
       return;
    }
 
