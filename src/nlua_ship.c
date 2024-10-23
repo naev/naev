@@ -51,6 +51,7 @@ static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
 static int shipL_fitsSlot( lua_State *L );
 static int shipL_CPU( lua_State *L );
+static int shipL_gfxPath( lua_State *L );
 static int shipL_gfxComm( lua_State *L );
 static int shipL_gfxStore( lua_State *L );
 static int shipL_gfx( lua_State *L );
@@ -93,6 +94,7 @@ static const luaL_Reg shipL_methods[] = {
    { "price", shipL_price },
    { "time_mod", shipL_time_mod },
    { "size", shipL_getSize },
+   { "gfxPath", shipL_gfxPath },
    { "gfxComm", shipL_gfxComm },
    { "gfxStore", shipL_gfxStore },
    { "gfx", shipL_gfx },
@@ -731,6 +733,21 @@ static int shipL_getSize( lua_State *L )
 {
    const Ship *s = luaL_validship( L, 1 );
    lua_pushinteger( L, ship_size( s ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the path where the ship's graphics are located. Useful for seeing
+ * if two ships share the same graphics.
+ *
+ *    @luatparam Ship s Ship to get the path of the graphis of.
+ *    @luatreturn string The path to the ship graphics.
+ * @luafunc size
+ */
+static int shipL_gfxPath( lua_State *L )
+{
+   const Ship *s = luaL_validship( L, 1 );
+   lua_pushstring( L, s->gfx_path );
    return 1;
 }
 
