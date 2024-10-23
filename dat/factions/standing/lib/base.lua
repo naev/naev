@@ -8,7 +8,7 @@ friendly_at = 70 -- global
 
 function sbase.init( args )
    args = args or {}
-   sbase.fct               = args.fct                              -- The faction
+   sbase.fct                = args.fct                              -- The faction
 
    -- Faction caps.
    sbase.cap_kill           = args.cap_kill            or 20       -- Kill cap
