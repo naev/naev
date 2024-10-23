@@ -23,6 +23,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
+#include "nlua_system.h"
 #include "nxml.h"
 #include "opengl_tex.h"
 #include "player.h"
@@ -123,8 +124,8 @@ static size_t   faction_mgrid = 0;    /**< Allocated memory. */
 static int  faction_getRaw( const char *name );
 static void faction_freeOne( Faction *f );
 static void faction_sanitizePlayer( Faction *faction );
-static void faction_modPlayerLua( int f, double mod, const char *source,
-                                  int secondary );
+static void faction_hitLua( int f, const StarSystem *sys, double mod,
+                            const char *source, int secondary );
 static int  faction_parse( Faction *temp, const char *file );
 static int  faction_parseSocial( const char *file );
 static void faction_addStandingScript( Faction *temp, const char *scriptname );
@@ -776,8 +777,8 @@ static void faction_sanitizePlayer( Faction *faction )
 /**
  * @brief Mods player using the power of Lua.
  */
-static void faction_modPlayerLua( int f, double mod, const char *source,
-                                  int secondary )
+static void faction_hitLua( int f, const StarSystem *sys, double mod,
+                            const char *source, int secondary )
 {
    Faction *faction;
    double   old, delta;
@@ -798,34 +799,19 @@ static void faction_modPlayerLua( int f, double mod, const char *source,
 
    old = faction->player;
 
-   if ( faction->lua_env == LUA_NOREF )
-      faction->player += mod;
-   else {
+   /* Set up the function:
+    * standing:hit( sys, amount, source, secondary ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_hit );
+   lua_pushsystem( naevL, sys->id );
+   lua_pushnumber( naevL, mod );
+   lua_pushstring( naevL, source );
+   lua_pushboolean( naevL, secondary );
 
-      /* Set up the function:
-       * standing:hit( current, amount, source, secondary ) */
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_hit );
-      lua_pushnumber( naevL, faction->player );
-      lua_pushnumber( naevL, mod );
-      lua_pushstring( naevL, source );
-      lua_pushboolean( naevL, secondary );
-
-      /* Call function. */
-      if ( nlua_pcall( faction->lua_env, 4, 1 ) ) { /* An error occurred. */
-         WARN( _( "Faction '%s': %s" ), faction->name,
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
-         return;
-      }
-
-      /* Parse return. */
-      if ( !lua_isnumber( naevL, -1 ) )
-         WARN(
-            _( "Lua script for faction '%s' did not return a %s from '%s'." ),
-            faction->name, _( "number" ), "hit" );
-      else
-         faction->player = lua_tonumber( naevL, -1 );
+   /* Call function. */
+   if ( nlua_pcall( faction->lua_env, 4, 0 ) ) { /* An error occurred. */
+      WARN( _( "Faction '%s': %s" ), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
+      return;
    }
 
    /* Sanitize just in case. */
@@ -844,6 +830,34 @@ static void faction_modPlayerLua( int f, double mod, const char *source,
 
       /* Tell space the faction changed. */
       space_factionChange();
+   }
+}
+
+/**
+ * @brief Handles a faction hit against a faction and how to apply it.
+ */
+void faction_hit( int f, const StarSystem *sys, double mod, const char *source,
+                  int single )
+{
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
+      return;
+   }
+   Faction *faction = &faction_stack[f];
+
+   /* Modify faction standing with parent faction. */
+   faction_hitLua( f, sys, mod, source, 0 );
+
+   /* Don't apply secondary hits. */
+   if ( !single ) {
+      /* Now mod allies to a lesser degree */
+      for ( int i = 0; i < array_size( faction->allies ); i++ )
+         /* Modify faction standing */
+         faction_hitLua( faction->allies[i], sys, mod, source, 1 );
+      /* Now mod enemies */
+      for ( int i = 0; i < array_size( faction->enemies ); i++ )
+         /* Modify faction standing. */
+         faction_hitLua( faction->enemies[i], sys, -mod, source, 1 );
    }
 }
 
@@ -872,17 +886,17 @@ void faction_modPlayer( int f, double mod, const char *source )
    faction = &faction_stack[f];
 
    /* Modify faction standing with parent faction. */
-   faction_modPlayerLua( f, mod, source, 0 );
+   faction_hitLua( f, NULL, mod, source, 0 );
 
    /* Now mod allies to a lesser degree */
    for ( int i = 0; i < array_size( faction->allies ); i++ )
       /* Modify faction standing */
-      faction_modPlayerLua( faction->allies[i], mod, source, 1 );
+      faction_hitLua( faction->allies[i], NULL, mod, source, 1 );
 
    /* Now mod enemies */
    for ( int i = 0; i < array_size( faction->enemies ); i++ )
       /* Modify faction standing. */
-      faction_modPlayerLua( faction->enemies[i], -mod, source, 1 );
+      faction_hitLua( faction->enemies[i], NULL, -mod, source, 1 );
 }
 
 /**
@@ -907,7 +921,7 @@ void faction_modPlayerSingle( int f, double mod, const char *source )
       WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
-   faction_modPlayerLua( f, mod, source, 0 );
+   faction_hitLua( f, NULL, mod, source, 0 );
 }
 
 /**
@@ -1623,7 +1637,7 @@ void factions_resetLocal( void )
          sp->local          = faction_getPlayer( sp->faction );
       }
    }
-   faction_updateGlobal();
+   // faction_updateGlobal();
 }
 
 /**
