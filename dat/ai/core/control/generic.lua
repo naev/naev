@@ -1036,8 +1036,15 @@ function distress_handler( pilot, attacker )
    elseif a_enemy then
       badguy = attacker
    -- We'll be nice and go after the aggressor if the victim is peaceful.
-   elseif mem.whiteknight and (not pilot:memory().aggressive or attacker:withPlayer()) then
-      badguy = attacker
+   elseif mem.whiteknight then
+      -- In some cases, like wanted pirates in bounty missions, they will be
+      -- labelled as neutral and this can cause nearby NPCs to view the player
+      -- as the aggressor and try to kill them. For now, we limit this
+      -- behaviour to natural pilots.  detect that.
+      local p_m = pilot:memory()
+      if p_m.natural and (not p_m.aggressive or attacker:withPlayer()) then
+         badguy = attacker
+      end
    end
 
    -- Cannot discern the bad guy, so just look the other way
