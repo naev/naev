@@ -135,9 +135,8 @@ int pfaction_load( xmlNodePtr parent );
 
 static int faction_cmp( const void *p1, const void *p2 )
 {
-   const Faction *f1, *f2;
-   f1 = (const Faction *)p1;
-   f2 = (const Faction *)p2;
+   const Faction *f1 = p1;
+   const Faction *f2 = p2;
    return strcmp( f1->name, f2->name );
 }
 
@@ -208,7 +207,6 @@ int *faction_getAll( void )
    int *f = array_create_size( int, array_size( faction_stack ) );
    for ( int i = 0; i < array_size( faction_stack ); i++ )
       array_push_back( &f, i );
-
    return f;
 }
 
@@ -469,7 +467,6 @@ const glTexture *faction_logo( int f )
       WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
-
    return faction_stack[f].logo;
 }
 
@@ -485,7 +482,6 @@ const glColour *faction_colour( int f )
       WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
-
    return &faction_stack[f].colour;
 }
 
@@ -909,7 +905,6 @@ void faction_modPlayerSingle( int f, double mod, const char *source )
       WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
-
    faction_modPlayerLua( f, mod, source, 0 );
 }
 
@@ -1339,6 +1334,7 @@ static int faction_parse( Faction *temp, const char *file )
 
    /* Clear memory. */
    memset( temp, 0, sizeof( Faction ) );
+   temp->local_th           = 10.;
    temp->equip_env          = LUA_NOREF;
    temp->sched_env          = LUA_NOREF;
    temp->lua_env            = LUA_NOREF;
@@ -1369,6 +1365,7 @@ static int faction_parse( Faction *temp, const char *file )
       xmlr_strd( node, "mapname", temp->mapname );
       xmlr_strd( node, "description", temp->description );
       xmlr_strd( node, "ai", temp->ai );
+      xmlr_float( node, "local_th", temp->local_th );
       xmlr_float( node, "lane_length_per_presence",
                   temp->lane_length_per_presence );
       xmlr_float( node, "lane_base_cost", temp->lane_base_cost );
@@ -1905,7 +1902,6 @@ int pfaction_save( xmlTextWriterPtr writer )
    }
 
    xmlw_endElem( writer ); /* "factions" */
-
    return 0;
 }
 
