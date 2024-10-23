@@ -4700,7 +4700,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
       /* Check for autoweap. */
       xmlr_attr_int( node, "autoweap", autoweap );
-      xmlr_attr_int( node, "autoweap", ship->advweap );
+      xmlr_attr_int( node, "advweap", ship->advweap );
 
       /* Check for aim_lines. */
       xmlr_attr_int( node, "aim_lines", aim_lines );
