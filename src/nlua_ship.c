@@ -35,6 +35,7 @@ static int shipL_getAll( lua_State *L );
 static int shipL_name( lua_State *L );
 static int shipL_nameRaw( lua_State *L );
 static int shipL_baseType( lua_State *L );
+static int shipL_inherits( lua_State *L );
 static int shipL_class( lua_State *L );
 static int shipL_classDisplay( lua_State *L );
 static int shipL_faction( lua_State *L );
@@ -73,6 +74,7 @@ static const luaL_Reg shipL_methods[] = {
    { "name", shipL_name },
    { "nameRaw", shipL_nameRaw },
    { "baseType", shipL_baseType },
+   { "inherits", shipL_inherits },
    { "class", shipL_class },
    { "classDisplay", shipL_classDisplay },
    { "faction", shipL_faction },
@@ -329,6 +331,23 @@ static int shipL_baseType( lua_State *L )
 {
    const Ship *s = luaL_validship( L, 1 );
    lua_pushstring( L, s->base_type );
+   return 1;
+}
+
+/**
+ * @brief Gets the ship it inherits stats from if applicable.
+ *
+ *    @luatparam Ship s Ship to get the ship it is inheriting from.
+ *    @luatreturn Ship|nil The ship it is inheritng from or nil if not
+ * applicable.
+ * @luafunc inherits
+ */
+static int shipL_inherits( lua_State *L )
+{
+   const Ship *s = luaL_validship( L, 1 );
+   if ( s->inherits == NULL )
+      return 0;
+   lua_pushship( L, ship_get( s->inherits ) );
    return 1;
 }
 
