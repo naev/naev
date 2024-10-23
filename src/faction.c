@@ -129,6 +129,8 @@ static int  faction_parse( Faction *temp, const char *file );
 static int  faction_parseSocial( const char *file );
 static void faction_addStandingScript( Faction *temp, const char *scriptname );
 static void faction_computeGrid( void );
+static void faction_cleanLocalSingle( int f, StarSystem *sys );
+static void faction_cleanLocalSingleMax( Faction *f );
 /* externed */
 int pfaction_save( xmlTextWriterPtr writer );
 int pfaction_load( xmlNodePtr parent );
@@ -1621,9 +1623,97 @@ void factions_resetLocal( void )
          sp->local          = faction_getPlayer( sp->faction );
       }
    }
+   faction_updateGlobal();
 }
 
-static void faction_cleanLocalSingle( Faction *f )
+/**
+ * @brief Computes the global faction standing for each of the factions.
+ */
+void faction_updateGlobal( void )
+{
+   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
+      int         n         = 0;
+      double      v         = 0.;
+      StarSystem *sys_stack = system_getAll();
+      for ( int j = 0; j < array_size( sys_stack ); j++ ) {
+         StarSystem *sys = &sys_stack[j];
+         for ( int k = 0; k < array_size( sys->presence ); k++ ) {
+            SystemPresence *sp = &sys->presence[k];
+            if ( sp->faction != i )
+               continue;
+            v += sp->local;
+            n++;
+         }
+      }
+      faction_stack[i].player = v / (double)n;
+   }
+}
+
+static SystemPresence *sys_getRep( const StarSystem *sys, int faction )
+{
+   /* Go through the array, looking for the faction. */
+   for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+      if ( sys->presence[i].faction == faction )
+         return &sys->presence[i];
+   }
+   return NULL;
+}
+
+static void faction_cleanLocalSingle( int f, StarSystem *sys )
+{
+   /* Second pass, start to propagate. */
+   int            *done   = array_create( int );
+   int            *queuea = array_create( int );
+   int            *queueb = array_create( int );
+   SystemPresence *srep   = sys_getRep( sys, f ); /* Starting reputation. */
+   if ( srep == NULL )
+      return;
+   double      n         = 0;
+   double      rep       = srep->local;
+   StarSystem *sys_stack = system_getAll();
+   double      th        = faction_stack[f].local_th;
+
+   array_push_back( &queuea, sys->id );
+   while ( array_size( queuea ) > 0 ) {
+      /* Go backwards through queue. */
+      for ( int i = array_size( queuea ) - 1; i >= 0; i-- ) {
+         StarSystem *qsys = &sys_stack[queuea[i]];
+
+         /* Update local presence. */
+         srep = sys_getRep( sys, f );
+         if ( srep != NULL )
+            srep->local = CLAMP( rep - n * th, rep + n * th, srep->local );
+
+         /* Propagate to next systems. */
+         for ( int j = 0; j < array_size( qsys->jumps ); j++ ) {
+            StarSystem *nsys = qsys->jumps[j].target;
+            for ( int k = 0; k < array_size( done ); k++ ) {
+               if ( nsys->id == done[k] )
+                  continue;
+            }
+            array_push_back( &queueb, nsys->id );
+         }
+
+         /* Erase and add to done. */
+         array_erase( &queuea, &queuea[i], &queuea[i - 1] );
+         array_push_back( &done, queuea[i] );
+
+         /* Increment distance. */
+         n++;
+      }
+
+      /* Flip buffers. */
+      int *queue = queuea;
+      queuea     = queueb;
+      queueb     = queue;
+   }
+
+   array_free( done );
+   array_free( queuea );
+   array_free( queueb );
+}
+
+static void faction_cleanLocalSingleMax( Faction *f )
 {
    double      maxval    = 0.;
    StarSystem *maxsys    = NULL;
@@ -1643,13 +1733,7 @@ static void faction_cleanLocalSingle( Faction *f )
          maxsys = sys;
       }
    }
-
-   /* Failed to find a max system? */
-   if ( maxsys == NULL )
-      return;
-
-   /* Second pass, start to propagate. */
-   // double th = f->local_th;
+   faction_cleanLocalSingle( f - faction_stack, maxsys );
 }
 
 void factions_cleanLocal( void )
@@ -1658,7 +1742,7 @@ void factions_cleanLocal( void )
       Faction *f = &faction_stack[i];
       if ( faction_isFlag( f, FACTION_STATIC ) )
          continue;
-      faction_cleanLocalSingle( f );
+      faction_cleanLocalSingleMax( f );
    }
 }
 
