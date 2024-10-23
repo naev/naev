@@ -126,8 +126,8 @@ function land ()
       vn.scene()
       vn.transition()
 
-      vn.na(fmt.f(_([[You land on {spb}.]]),
-         {spb=spob.cur()}))
+      vn.na(fmt.f(_([[You land on {spb} with your {shp}.]]),
+         {spb=spob.cur(), shp=mem.ship}))
       vn.menu{
          {fmt.f(_([[Repair the {shp} for {amount}]]),{shp=mem.ship, amount=fmt.credits(mem.cost)}), "repair"},
          {fmt.f(_([[Repair the {shp} for {amount} (without outfits)]]),{shp=mem.ship, amount=fmt.credits(mem.costnaked)}), "repair_naked"},
@@ -183,13 +183,14 @@ function land ()
       local newname = player.shipAdd( mem.ship, mem.name, fmt.f(_("You captured this ship in the {sys} system."), {sys=mem.system}) )
       local name = player.pilot():name()
       player.shipSwap( newname, true )
+      local pp = player.pilot()
       if naked then
-         player.pilot():outfitsEquip( mem.outfitsnaked )
+         pp:outfitsEquip( mem.outfitsnaked )
       else
-         player.pilot():outfitsEquip( mem.outfits )
+         pp:outfitsEquip( mem.outfits )
       end
       for k,v in ipairs(mem.intrinsics) do
-         plt:outfitAddIntrinsic( v )
+         pp:outfitAddIntrinsic( v )
       end
       player.shipSwap( name, true )
       evt.finish(true)
