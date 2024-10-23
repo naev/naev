@@ -10,7 +10,7 @@
   <cpu>-5</cpu>
  </general>
  <specific type="beam">
-  <delay>1.5</delay>
+  <delay min="0.5">1.5</delay>
   <duration>2</duration>
   <range>350</range>
   <energy>5</energy>

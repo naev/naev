@@ -487,7 +487,7 @@ function update_effects()
 end
 
 local function update_wset()
-   wset_name, wset  = pp:weapset(true)
+   wset_name, wset  = pp:weapset()
 
    -- Set the names as short names
    for k, w in ipairs( wset ) do
@@ -663,9 +663,9 @@ local function render_ammoBar( weap, x, y )
    local col
    if weap.active then
       col = cols.weap_on
-   elseif weap.level==1 then
+   elseif weap.weapset==1 then
       col = cols.weap_pri
-   elseif weap.level==2 then
+   elseif weap.weapset==2 then
       col = cols.weap_sec
    else
       col = cols.weap_off
@@ -913,8 +913,9 @@ function render( dt, dt_mod )
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
          end
 
-         if a.weapset then
-            gfx.print( true, _(a.weapset), slot_x + slot_img_offs_x + 5,
+         -- Have to ignore the primary/secondary weapon sets
+         if a.weapset and a.weapset>2 then
+            gfx.print( true, _(a.weapset-2)%10, slot_x + slot_img_offs_x + 5,
                   slot_y + slot_img_offs_y + 5, cols.txt_bar, slot_w, false )
          end
 

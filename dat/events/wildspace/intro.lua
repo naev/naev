@@ -113,7 +113,7 @@ You hear a dull thud echo through the hull.]]))
 "After the... the Incident, me and my crewmates, we thought we could pull through. We created a colony with the survivors on husk of what was left of the once glorious Protera. However, the worst was yet to come."]]))
    c(_([["At first we thought it was some sort of pathogen, maybe due to all the debris, however, even with careful quarantine and elimination, it still spread. People would... change."]]))
    c(_([["It started subtle, violent outbreaks, slight twitching, aversion to bathing, then it got worse. Eventually, they would lash out, attack everyone and everything in some sort of primal irrational rage. Having lost all their remaining humanity, we called the brutes the Lost."]]))
-   c(_([["Paranoia set it and many were purged, but it didn't stop. Eventually, the survivors split into separate enclaves, all fortified and wary against strangers. It never stopped progressing though..."]]))
+   c(_([["Paranoia set in and many were purged, but it didn't stop. Eventually, the survivors split into separate enclaves, all fortified and wary against strangers. It never stopped progressing though..."]]))
    c(_([["Almost everyone I knew was lost, and in the end, me and my roommate Ben, we tried to get out of there, the only..."
 They pause to give a wracking cough, it takes them a while before they can continue.]]))
    c(_([["I'm rambling now, just like an old man... It wasn't supposed to end like this..."]]))

@@ -10,18 +10,11 @@
 #define WEAPSET_INRANGE_PLAYER_DEF                                             \
    0 /**< Default weaponset inrange parameter for the player. */
 
-#define WEAPSET_ACTIVE_NONE 0
-#define WEAPSET_ACTIVE_PRIMARY ( 1 << 0 )
-#define WEAPSET_ACTIVE_SECONDARY ( 1 << 1 )
-#define WEAPSET_ACTIVE_ALL ( WEAPSET_ACTIVE_PRIMARY | WEAPSET_ACTIVE_SECONDARY )
-
 /* Freedom. */
 void pilot_weapSetFree( Pilot *p );
 
 /* Shooting. */
 Pilot *pilot_weaponTarget( Pilot *p, Target *wt );
-int    pilot_shoot( Pilot *p, int primary, int secondary );
-void   pilot_shootStop( Pilot *p, int level );
 int    pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
                           double time, int aim );
 void   pilot_stopBeam( const Pilot *p, PilotOutfitSlot *w );
@@ -34,22 +27,22 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
 void pilot_weapSetUpdateOutfitState( Pilot *p );
 void pilot_weapSetUpdateStats( Pilot *p );
 void pilot_weapSetAIClear( Pilot *p );
-void pilot_weapSetPress( Pilot *p, int id, int type );
+int  pilot_weapSetPress( Pilot *p, int id, int type );
 void pilot_weapSetUpdate( Pilot *p );
 
 /* Weapon Set. */
 PilotWeaponSet *pilot_weapSet( Pilot *p, int id );
 const char     *pilot_weapSetName( Pilot *p, int id );
 const char     *pilot_weapSetTypeName( WeaponSetType t );
-void pilot_weapSetAdd( Pilot *p, int id, const PilotOutfitSlot *o, int level );
-void pilot_weapSetRm( Pilot *p, int id, const PilotOutfitSlot *o );
-void pilot_weapSetClear( Pilot *p, int id );
-int  pilot_weapSetInSet( Pilot *p, int id, const PilotOutfitSlot *o );
-int  pilot_weapSetCheck( Pilot *p, int id, const PilotOutfitSlot *o );
-double                pilot_weapSetRange( Pilot *p, int id, int level );
-double                pilot_weapSetSpeed( Pilot *p, int id, int level );
-double                pilot_weapSetAmmo( Pilot *p, int id, int level );
-void                  pilot_weapSetCleanup( Pilot *p, int id );
+void            pilot_weapSetAdd( Pilot *p, int id, const PilotOutfitSlot *o );
+void            pilot_weapSetRm( Pilot *p, int id, const PilotOutfitSlot *o );
+void            pilot_weapSetClear( Pilot *p, int id );
+int    pilot_weapSetInSet( Pilot *p, int id, const PilotOutfitSlot *o );
+int    pilot_weapSetCheck( Pilot *p, int id, const PilotOutfitSlot *o );
+double pilot_weapSetRange( Pilot *p, int id );
+double pilot_weapSetSpeed( Pilot *p, int id );
+double pilot_weapSetAmmo( Pilot *p, int id );
+void   pilot_weapSetCleanup( Pilot *p, int id );
 PilotWeaponSetOutfit *pilot_weapSetList( Pilot *p, int id );
 void pilot_weapSetCopy( PilotWeaponSet *dest, const PilotWeaponSet *src );
 
@@ -66,7 +59,6 @@ void pilot_weapSetVolley( Pilot *p, int id, int volley );
 /* High level. */
 void pilot_weaponClear( Pilot *p );
 void pilot_weaponAuto( Pilot *p );
-void pilot_weaponSetDefault( Pilot *p );
 void pilot_weaponSafe( Pilot *p );
 void pilot_afterburn( Pilot *p );
 void pilot_afterburnOver( Pilot *p );

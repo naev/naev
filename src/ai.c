@@ -199,12 +199,11 @@ static int aiL_hyperspaceAbort( lua_State *L );
 static int aiL_dock( lua_State *L ); /* dock( number ) */
 
 /* combat */
-static int aiL_combat( lua_State *L );     /* combat( number ) */
-static int aiL_settarget( lua_State *L );  /* settarget( number ) */
-static int aiL_weapSet( lua_State *L );    /* weapset( number ) */
-static int aiL_shoot( lua_State *L );      /* shoot( number ); number = 1,2,3 */
-static int aiL_hascannons( lua_State *L ); /* bool hascannons() */
-static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
+static int aiL_combat( lua_State *L );         /* combat( number ) */
+static int aiL_settarget( lua_State *L );      /* settarget( number ) */
+static int aiL_weapSet( lua_State *L );        /* weapset( number ) */
+static int aiL_hascannons( lua_State *L );     /* bool hascannons() */
+static int aiL_hasturrets( lua_State *L );     /* bool hasturrets() */
 static int aiL_hasfighterbays( lua_State *L ); /* bool hasfighterbays() */
 static int aiL_hasafterburner( lua_State *L ); /* bool hasafterburner() */
 static int aiL_getenemy( lua_State *L );       /* number getenemy() */
@@ -304,7 +303,6 @@ static const luaL_Reg aiL_methods[] = {
    { "hasturrets", aiL_hasturrets },
    { "hasfighterbays", aiL_hasfighterbays },
    { "hasafterburner", aiL_hasafterburner },
-   { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
    { "hostile", aiL_hostile },
    { "getweaprange", aiL_getweaprange },
@@ -461,9 +459,6 @@ void ai_thinkApply( Pilot *p )
    /* Set turn and accel. */
    pilot_setTurn( p, pilot_turn );
    pilot_setAccel( p, pilot_acc );
-
-   /* Fire weapons if needed */
-   pilot_shoot( p, ai_isFlag( AI_PRIMARY ), ai_isFlag( AI_SECONDARY ) );
 
    /* other behaviours. */
    if ( ai_isFlag( AI_DISTRESS ) )
@@ -870,6 +865,12 @@ void ai_think( Pilot *pilot, double dt, int dotask )
       ai_unsetPilot( oldmem );
       NTracingZoneEnd( _ctx );
       return;
+   }
+
+   /* Mark weapon sets as off, and the AI will activate as necessary. */
+   if ( !pilot_isPlayer( cur_pilot ) ) {
+      for ( int i = 0; i < PILOT_WEAPON_SETS; i++ )
+         cur_pilot->weapon_sets[i].active = 0;
    }
 
    /* pilot has a currently running task */
@@ -1329,7 +1330,8 @@ static int aiL_poptask( lua_State *L )
    Task *t = ai_curTask( cur_pilot );
    /* Tasks must exist. */
    if ( t == NULL ) {
-      WARN( _( "Trying to pop task when there are no tasks on the stack." ) );
+      NLUA_WARN(
+         L, _( "Trying to pop task when there are no tasks on the stack." ) );
       return 0;
    }
    /*
@@ -2549,8 +2551,8 @@ static int aiL_land( lua_State *L )
       lua_pushspob( naevL, spob_index( spob ) );
       lua_pushpilot( naevL, cur_pilot->id );
       if ( nlua_pcall( spob->lua_env, 2, 0 ) ) {
-         WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spob->name, "land",
-               lua_tostring( naevL, -1 ) );
+         NLUA_WARN( L, _( "Spob '%s' failed to run '%s':\n%s" ), spob->name,
+                    "land", lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
       }
    }
@@ -2572,7 +2574,7 @@ static int aiL_land( lua_State *L )
  */
 static int aiL_hyperspace( lua_State *L )
 {
-   int dist;
+   int canjump;
 
    /* Find the target jump. */
    if ( !lua_isnoneornil( L, 1 ) ) {
@@ -2583,13 +2585,11 @@ static int aiL_hyperspace( lua_State *L )
       cur_pilot->nav_hyperspace = jp - cur_system->jumps;
    }
 
-   dist = space_hyperspace( cur_pilot );
-   if ( dist == 0 ) {
-      pilot_shoot( cur_pilot, 0, 0 );
+   canjump = space_hyperspace( cur_pilot );
+   if ( canjump == 0 )
       return 0;
-   }
 
-   lua_pushnumber( L, dist );
+   lua_pushnumber( L, canjump );
    return 1;
 }
 
@@ -2734,8 +2734,8 @@ static int aiL_rndhyptarget( lua_State *L )
    }
 
    if ( array_size( jumps ) <= 0 ) {
-      WARN( _( "Pilot '%s' can't find jump to leave system!" ),
-            cur_pilot->name );
+      NLUA_WARN( L, _( "Pilot '%s' can't find jump to leave system!" ),
+                 cur_pilot->name );
       return 0;
    }
 
@@ -3062,7 +3062,7 @@ static int aiL_gatherablePos( lua_State *L )
 static int aiL_weapSet( lua_State *L )
 {
    int id, type;
-   id = luaL_checkinteger( L, 1 );
+   id = luaL_checkinteger( L, 1 ) - 1;
 
    if ( lua_gettop( L ) > 1 )
       type = lua_toboolean( L, 2 );
@@ -3123,27 +3123,6 @@ static int aiL_hasafterburner( lua_State *L )
 {
    lua_pushboolean( L, cur_pilot->nafterburners > 0 );
    return 1;
-}
-
-/**
- * @brief Makes the pilot shoot
- *
- *    @luatparam[opt=false] boolean secondary Fire secondary weapons instead of
- * primary.
- *    @luafunc shoot
- */
-static int aiL_shoot( lua_State *L )
-{
-   /* Cooldown is similar to a ship being disabled, but the AI continues to
-    * think during cooldown, and thus must not be allowed to fire weapons. */
-   if ( pilot_isFlag( cur_pilot, PILOT_COOLDOWN ) )
-      return 0;
-
-   if ( lua_toboolean( L, 1 ) )
-      ai_setFlag( AI_SECONDARY );
-   else
-      ai_setFlag( AI_PRIMARY );
-   return 0;
 }
 
 /**
@@ -3220,9 +3199,8 @@ static int aiL_hostile( lua_State *L )
  */
 static int aiL_getweaprange( lua_State *L )
 {
-   int id    = luaL_optinteger( L, 1, cur_pilot->active_set );
-   int level = luaL_optinteger( L, 2, -1 );
-   lua_pushnumber( L, pilot_weapSetRange( cur_pilot, id, level ) );
+   int id = luaL_checkinteger( L, 1 ) - 1;
+   lua_pushnumber( L, pilot_weapSetRange( cur_pilot, id ) );
    return 1;
 }
 
@@ -3237,9 +3215,8 @@ static int aiL_getweaprange( lua_State *L )
  */
 static int aiL_getweapspeed( lua_State *L )
 {
-   int id    = luaL_optinteger( L, 1, cur_pilot->active_set );
-   int level = luaL_optinteger( L, 2, -1 );
-   lua_pushnumber( L, pilot_weapSetSpeed( cur_pilot, id, level ) );
+   int id = luaL_checkinteger( L, 1 ) - 1;
+   lua_pushnumber( L, pilot_weapSetSpeed( cur_pilot, id ) );
    return 1;
 }
 
@@ -3248,15 +3225,13 @@ static int aiL_getweapspeed( lua_State *L )
  *
  *    @luatparam[opt] number id Optional parameter indicating id of weapon set
  * to get ammo of, defaults to selected one.
- *    @luatparam[opt=-1] number level Level of weapon set to get range of.
  *    @luatreturn number The range of the weapon set.
  * @luafunc getweapammo
  */
 static int aiL_getweapammo( lua_State *L )
 {
-   int id    = luaL_optinteger( L, 1, cur_pilot->active_set );
-   int level = luaL_optinteger( L, 2, -1 );
-   lua_pushnumber( L, pilot_weapSetAmmo( cur_pilot, id, level ) );
+   int id = luaL_checkinteger( L, 1 ) - 1;
+   lua_pushnumber( L, pilot_weapSetAmmo( cur_pilot, id ) );
    return 1;
 }
 

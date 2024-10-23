@@ -20,7 +20,7 @@ function atk_drone.think( target, _si )
 
    -- Don't switch targets if close to current one
    local dist  = ai.dist( target )
-   local range = ai.getweaprange(3, 0)
+   local range = atk.primary_range()
    if dist < range * mem.atk_changetarget then
       return
    end
@@ -43,11 +43,11 @@ function __atk_drone_ranged( target, dist )
    -- TODO: should modify this line
 
    -- Check if in range
-   if dist < ai.getweaprange( 4 ) then
+   if dist < atk.seekers_range() then
       if dir < math.rad(30) then
-         ai.weapset( 4 ) -- Weaponset 4 contains weaponset 9
+         atk.seekers()
       else
-         ai.weapset( 9 )
+         atk.turret_seekers()
       end
    else
       -- First test if we should zz
@@ -57,7 +57,7 @@ function __atk_drone_ranged( target, dist )
    end
 
    -- Always launch fighters
-   ai.weapset( 5 )
+   atk.fb_and_pd()
 
    -- Approach for melee
    if dir < math.rad(10) then
@@ -81,7 +81,7 @@ function atk_drone.atk( target, dokill )
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange(3, 0)  -- get my weapon range (?)
+   local range = atk.primary_range()
 
    -- We first bias towards range
    if dist > range * mem.atk_approach then
@@ -132,9 +132,8 @@ end -- end spiral approach
 -- This version is slightly less aggressive and cruises by the target
 --]]
 function __atk_d_flyby( target, dist )
-   local range = ai.getweaprange(3)
+   local range = atk.primary_range()
    local dir
-   ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
    if atk.decide_zz( target, dist ) then
@@ -172,18 +171,15 @@ function __atk_d_flyby( target, dist )
 
    --otherwise we're close to the target and should attack until we start to zip away
    else
-      dir = ai.aim(target)
+      ai.aim(target)
       --not accelerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
       if mem.aggressive == true then
          ai.accel()
       end
 
       -- Shoot if should be shooting.
-      if dir < math.rad(10) then
-         ai.shoot()
-      end
-      ai.shoot(true)
-
+      atk.primary()
+      atk.secondary()
    end
 end
 
@@ -194,9 +190,8 @@ end
 --This is designed for drones engaging other drones
 --]]
 function __atk_d_space_sup( target, dist )
-   local range = ai.getweaprange(3)
+   local range = atk.primary_range()
    local dir
-   ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
    if atk.decide_zz( target, dist ) then
@@ -225,7 +220,7 @@ function __atk_d_space_sup( target, dist )
 
    --within close range; aim and blast away with everything
    elseif dist > 0.4*range then
-      dir = ai.aim(target)
+      ai.aim(target)
       local dir2 = ai.idir(target)
 
       --accelerate and try to close
@@ -234,20 +229,14 @@ function __atk_d_space_sup( target, dist )
          ai.accel()
       end
 
-      -- Shoot if should be shooting.
-      if dir < math.rad(10) then
-         ai.shoot()
-      end
-      ai.shoot(true)
+      atk.primary()
+      atk.secondary()
 
    --within really close range (?); aim and blast away with everything
    else
-      dir = ai.aim(target)
-      -- Shoot if should be shooting.
-      if dir < math.rad(15) then  -- mod: was 10
-         ai.shoot()
-      end
-      ai.shoot(true)
+      ai.aim(target)
+      atk.primary()
+      atk.secondary()
    end
 end
 

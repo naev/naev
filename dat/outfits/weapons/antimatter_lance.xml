@@ -13,8 +13,8 @@
  </general>
  <specific type="beam">
   <lua>outfits/weapons/antimatter_lance.lua</lua>
-  <delay>5</delay>
-  <duration min="3.5">4.5</duration>
+  <delay min="3.5">5</delay>
+  <duration>4.5</duration>
   <range>600</range>
   <energy>40</energy>
   <heatup>50</heatup>

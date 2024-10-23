@@ -49,6 +49,7 @@
 #define SPOB_UNINHABITED ( 1 << 3 ) /**< Force spob to be uninhabited. */
 #define SPOB_MARKED ( 1 << 4 )      /**< Spob is marked. */
 #define SPOB_NOLANES ( 1 << 5 )     /**< Spob doesn't connect with lanes. */
+#define SPOB_HOSTILE ( 1 << 6 )     /**< Spob is hostile. */
 #define SPOB_RADIUS ( 1 << 10 )     /**< Spob has radius defined. */
 #define spob_isFlag( p, f ) ( ( p )->flags & ( f ) ) /**< Checks spob flag. */
 #define spob_setFlag( p, f )                                                   \
@@ -172,6 +173,7 @@ typedef struct Spob_ {
    int lua_population; /**< Run when getting a string representing the
                           population of the spob. */
    int lua_barbg;      /**< Run to generate bar backgrounds as necessary. */
+   int lua_distress;   /**< Run when a pilot is distressing in the system. */
 } Spob;
 
 /*
@@ -195,15 +197,18 @@ typedef struct Spob_ {
                  (temporary use by map!) */
 #define SYSTEM_HAS_LANDABLE                                                    \
    ( 1 << 7 ) /**< System has landable spobs (temporary use by map!) */
+#define SYSTEM_HAS_KNOWN_SPOB ( 1 << 8 ) /**< System has a known spob. */
+#define SYSTEM_HAS_KNOWN_FACTION_SPOB                                          \
+   ( 1 << 9 ) /**< System has a known factional spob. */
 #define SYSTEM_NOLANES                                                         \
-   ( 1 << 8 ) /**< System should not use safe lanes at all. */
-#define SYSTEM_PMARKED ( 1 << 9 ) /**< System is marked by a player. */
+   ( 1 << 10 ) /**< System should not use safe lanes at all. */
+#define SYSTEM_PMARKED ( 1 << 11 ) /**< System is marked by a player. */
 #define SYSTEM_INTEREST                                                        \
-   ( 1 << 10 ) /**< System is temporary marked as "of interest". Used when     \
+   ( 1 << 12 ) /**< System is temporary marked as "of interest". Used when     \
                   rendering map. */
-#define SYSTEM_NEBULATRAIL ( 1 << 11 ) /**< System uses nebula trails. */
+#define SYSTEM_NEBULATRAIL ( 1 << 13 ) /**< System uses nebula trails. */
 #define SYSTEM_HIDENEBULADAMAGE                                                \
-   ( 1 << 12 ) /**< HIdes amount of nebula damage. */
+   ( 1 << 14 ) /**< HIdes amount of nebula damage. */
 #define sys_isFlag( s, f )                                                     \
    ( ( s )->flags & ( f ) ) /**< Checks system flag.                           \
                              */
@@ -407,6 +412,7 @@ char            spob_getColourChar( const Spob *p );
 const char     *spob_getSymbol( const Spob *p );
 const glColour *spob_getColour( const Spob *p );
 void            spob_updateLand( Spob *p );
+void spob_distress( Spob *spb, const Pilot *p, const Pilot *attacker );
 /* Lua stuff. */
 void spob_luaInitMem( const Spob *spob );
 

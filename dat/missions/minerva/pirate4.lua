@@ -27,7 +27,7 @@ local reward_amount = minerva.rewards.pirate4
 
 local mainsys     = system.get("Fried")
 local dvaeredsys  = system.get("Limbo")
-local piratesys   = system.get("Effetey")
+local piratesys   = system.get("Gold")
 local shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 -- Mission states:
 --  nil: mission not accepted yet

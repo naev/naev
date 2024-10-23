@@ -3,7 +3,7 @@
 In this section we will discuss basic and fundamental aspects of mission and event developments that you will have to take into account in almost all cases.
 
 ### Headers
-\label{sec:misn-headers}
+`\label{sec:misn-headers}`{=tex}
 
 Headers contain all the necessary data about a mission or event to determine where and when they should be run. They are written as XML code embedded in a Lua comment at the top of each individual mission or event. In the case a Lua file does not contain a header, it is ignored and not loaded as a mission or event.
 
@@ -37,8 +37,8 @@ Next it is possible to identify mission properties. In particular, only the `<un
 
 The header includes all the information about mission availability. Most are optional and ignored if not provided. The following nodes can be used to control the availability:
 
-* **chance**: *required field*. indicates the chance that the mission appears. For values over 100, the whole part of dividing the value by 100 indicates how many instances can spawn, and the remainder is the chance of each instance. So, for example, a value of 320 indicates that 3 instances can spawn with 20\% each.
-* **location**: *required field*. indicates where the mission or event can start. It can be one of `none`, `land`, `enter`, `load`, `computer`, or `bar`. Note that not all are supported by both missions and events. More details will be discussed later in this section.
+* **chance**: *required field*. Indicates the chance that the mission appears. For values over 100, the whole part of dividing the value by 100 indicates how many instances can spawn, and the remainder is the chance of each instance. So, for example, a value of 320 indicates that 3 instances can spawn with 20% each.
+* **location**: *required field*. Indicates where the mission or event can start. It can be one of `none`, `land`, `enter`, `load`, `computer`, or `bar`. Note that not all are supported by both missions and events. More details will be discussed later in this section.
 * **unique**: the presence of this tag indicates the mission or event is unique and will *not appear again* once fully completed.
 * **chapter**: indicates what chapter it can appear in. Note that this is regular expression-powered. Something like `0` will match chapter 0 only, while you can write `[01]` to match either chapter 0 or 1. All chapters except 0 would be `[^0]`, and such. Please refer to a regular expression guide such as [regexr](https://regexr.com/) for more information on how to write regex.
 * **faction**: must match a faction. Multiple can be specified, and only one has to match. In the case of `land`, `computer`, or `bar` locations it refers to the spob faction, while for `enter` locations it refers to the system faction.
@@ -63,11 +63,11 @@ Note that availability differs between events and missions. Furthermore, there a
 
 Also notice that it is also possible to define arbitrary tags in the `<tags>` node. This can be accessed with `player.misnDoneList()` and can be used for things such as handling faction standing caps automatically.
 
-Finally, there is a `<notes>` section that contains optional meta data about the meta data. This is only used by auxiliary tools to create visualizations of mission maps.
+Finally, there is a `<notes>` section that contains optional metadata about the metadata. This is only used by auxiliary tools to create visualizations of mission maps.
 
 #### Example: Cargo Missions
 
-Cargo missions appear at the mission computer in a multitude of different factions. Since they are not too important, they have a lower than default priority (6). Furthermore, they have 9 independent chances to appear, each with 60\% chance. This is written as `<chance>960</chance>`. The full example is shown below:
+Cargo missions appear at the mission computer in a multitude of different factions. Since they are not too important, they have a lower than default priority (6). Furthermore, they have 9 independent chances to appear, each with 60% chance. This is written as `<chance>960</chance>`. The full example is shown below:
 
 ```lua
 --[[
@@ -93,7 +93,7 @@ Cargo missions appear at the mission computer in a multitude of different factio
 
 #### Example: Antlejos
 
-Terraforming antlejos missions form a chain. Each mission requires the previous one and are available at the same planet (Antlejos V) with 100\% chance. The priority is slightly lower than default to try to ensure the claims get through. Most missions trigger on *Land* (`<location>Land</location>`) because Antlejos V does not have a spaceport bar at the beginning. The full example is shown below:
+Terraforming antlejos missions form a chain. Each mission requires the previous one and are available at the same planet (Antlejos V) with 100% chance. The priority is slightly lower than default to try to ensure the claims get through. Most missions trigger on *Land* (`<location>Land</location>`) because Antlejos V does not have a spaceport bar at the beginning. The full example is shown below:
 
 ```lua
 --[[
@@ -114,7 +114,7 @@ Terraforming antlejos missions form a chain. Each mission requires the previous 
 
 #### Example: Taiomi
 
-Next is an example of a unique event. The Finding Taiomi event has a 100\% of appearing in the `Bastion` system outside of Chapter 0. It triggers automatically when entering the system (`<location>enter</location>`).
+Next is an example of a unique event. The Finding Taiomi event has a 100% of appearing in the `Bastion` system outside of Chapter 0. It triggers automatically when entering the system (`<location>enter</location>`).
 
 ```lua
 --[[
@@ -132,8 +132,13 @@ Next is an example of a unique event. The Finding Taiomi event has a 100\% of ap
 --]]
 ```
 
+### Mission Computer MissionsA
+`\label{sec:misn-basic-computer}`{=tex}
+
+TODO
+
 ### Memory Model
-\label{sec:misn-basic-mem}
+`\label{sec:misn-basic-mem}`{=tex}
 
 By default, variables in Lua scripts are not saved when the player saves the game. This means that all the values you have set up will be cleared if the player saves and loads. This can lead to problems with scripts that do the following:
 
@@ -187,7 +192,7 @@ Mission variables allow storing arbitrary variables in save files. Unlike the `m
 
 The core of the `var` module is three functions:
 
-* `var.peek( varname )`: allows to obtain the value of a mission variable called `varname`. If it does not exist it returns `nil`.
+* `var.peek( varname )`: allows obtaining the value of a mission variable called `varname`. If it does not exist it returns `nil`.
 * `var.push( varname, value )`: creates a new mission variable `varname` or overwrites an existing mission variable `varname` if it exists with the value `value`. Note that not all data types are supported, but many are.
 * `var.pop( varname)`: removes a mission variable.
 
@@ -196,7 +201,7 @@ It is common to use mission variables to store outcomes in mission strings that 
 Supported variable types are `number`, `boolean`, `string`, and `time`. If you want to pass systems and other data, you have to pass it via untranslated name `:nameRaw()` and then use the corresponding `.get()` function to convert it to the corresponding type again.
 
 ### Hooks
-\label{sec:misn-basic-hooks}
+`\label{sec:misn-basic-hooks}`{=tex}
 
 Hooks are the basic way missions and events can interact with the game. They are accessed via the `hook.*` API and basically serve the purpose of binding script functions to specific in-game events or actions. A full list of the hook API is [available here](https://naev.org/api/modules/hook.html) and the API is always available in missions and events. **Hooks are saved and loaded automatically.**
 
@@ -265,7 +270,7 @@ function dostuff ()
 end
 ```
 
-In this example, an `enter` hook is created and triggered when the player enters a system by taking off or jumping. Then, in the `enter` function, a 5 second timer hook is started that runs the `dostuff` function when the time is up. The `dostuff` function then checks a condition to do something and end, otherwise it repeats the 5 second hook. This system can be used to, for example, detect when the player is near a pilot or position, or display periodic messages.
+In this example, an `enter` hook is created and triggered when the player enters a system by taking off or jumping. Then, in the `enter` function, a 5-second timer hook is started that runs the `dostuff` function when the time is up. The `dostuff` function then checks a condition to do something and end, otherwise it repeats the 5-second hook. This system can be used to, for example, detect when the player is near a pilot or position, or display periodic messages.
 
 Timer hooks persist even when the player lands and takes off. If you wish to clear them, please use `hook.timerClear()`, which will remove all the timers created by the mission or event calling the function. This can be useful in combination with `hook.enter`.
 
@@ -291,7 +296,7 @@ In the above example, when the player enters a system with the `enter` function,
 There are other hooks for a diversity of pilot actions that are documented in [the official API documentation](https://naev.org/api/modules/hook.html#pilot), allowing for full control of pilot actions.
 
 ### Translation Support
-\label{sec:misn-basic-translation}
+`\label{sec:misn-basic-translation}`{=tex}
 
 Naev supports translation through [Weblate](https://hosted.weblate.org/projects/naev/naev/). However, in order for translations to be used you have to mark strings as translatable. This is done with a [gettext](https://www.gnu.org/software/gettext/) compatible interface. In particular, the following functions are provided:
 
@@ -318,18 +323,16 @@ pilot.add( "Hyena", "Mercenary", nil, _("Cool Dude") )
 
 Note that the name (`Cool Dude` in this case) does have to be translated!
 
-For plurals you have to use `n_()` given that not all languages pluralize like in English. For example, if you want to indicate how many pirates are left, you could do something like:
+For plurals, you have to use `n_()` given that not all languages pluralize like in English. For example, if you want to indicate how many pirates are left, you could do something like:
 
 ```lua
-player.msg(string.format(n_(
-    "%d pirate left!",
-    "%d pirates left!", left ), left ))
+player.msg(string.format(n_( "%d pirate left!", "%d pirates left!", left ), left ))
 ```
 
 The above example says how many pirates are left based on the value of the variable `left`. In the case there is a single pirate left, the singular form should be used in English, which is the first parameter. For other cases, the plural form is used. The value of the variable `left` determines which is used based on translated language. Although the example above uses `string.format` to display the number value for illustrative purposes, it is recommended to format text with the `format` library explained below.
 
 ### Formatting Text
-\label{sec:misn-basic-fmt}
+`\label{sec:misn-basic-fmt}`{=tex}
 
 An important part of displaying information to the player is formatting text. While `string.format` exists, it is not very good for translations, as the Lua version can not change the order of parameters unlike C. For this purpose, we have prepared the `format` library, which is much more intuitive and powerful than string.format. A small example is shown below:
 
@@ -359,7 +362,7 @@ There are additional useful functions in the `format` library. In particular the
 More details can be found in the [generated documentation](https://naev.org/api/modules/format.html).
 
 ### Colouring Text
-\label{sec:misn-basic-colour}
+`\label{sec:misn-basic-colour}`{=tex}
 
 All string printing functions in Naev accept special combinations to change the colour. This will work whenever the string is shown to the player. In particular, the character `#` is used for a prefix to set the colour of text in a string. The colour is determined by the character after `#`. In particular, the following are valid values:
 
@@ -385,7 +388,7 @@ Multiple colours can be used in a string such as `"It is a #ggood#0 #rmonday#0!"
 While it is possible to accent and emphasize text with this, it is important to not go too overboard, as it can difficult translating. When possible, it is also best to put the colour outside of the string being translated. For example `_("#rred#0")`  should be written as `"#r".._("red").."#0"`.
 
 ### System Claiming
-\label{sec:misn-basic-claims}
+`\label{sec:misn-basic-claims}`{=tex}
 
 One important aspect of mission and event development are system claiming. Claims serve the purpose of avoiding collisions between Lua code. For example, `pilot.clear()` allows removing all pilots from a system. However, say that there are two events going on in a system. They both run `pilot.clear()` and add some custom pilots. What will happen then, is that the second event to run will get rid of all the pilots created from the first event, likely resulting in Lua errors. This is not what we want is it? In this case, we would want both events to try to claim the system and abort if the system was already claimed.
 
@@ -468,8 +471,8 @@ end
 
 You would use the function to quickly add log messages with `addlog(_("This is a message relating to secret stuff."))`. Usually logs are added when important one-time things happen during missions or when they are completed.
 
-### Visual Novel Framework \naev
-\label{sec:misn-basic-vn}
+### Visual Novel Framework $\naev$
+`\label{sec:misn-basic-vn}`{=tex}
 
 The Visual Novel framework is based on the Love2D API and allows for displaying text, characters, and other effects to the player. It can be thought of as a graph representing the choices and messages the player can engage with. The core API is in the [`vn` module](https://naev.org/api/modules/vn.html).
 
@@ -514,7 +517,7 @@ Player choices are controlled with `vn.menu` which receives a table where each e
 
 It is recommended to look at existing missions for examples of what can be done with the `vn` framework.
 
-#### `vntk` Wrapper \naev
+#### `vntk` Wrapper $\naev$
 
 The full `vn` framework can be a bit verbose when only displaying small messages or giving small options. For this purpose, the [`vntk` module](https://naev.org/api/modules/vntk.html) can simplify the usage, as it is a wrapper around the `vn` framework. Like the `vn` framework, you have to import the library with `require`, and all the functions are blocking, that is, the Lua code execution will not continue until the dialogues have closed. Let us look at some simple examples of `vntk.msg` and `vntk.yesno` below:
 
@@ -534,7 +537,7 @@ end
 
 The code is very simple and requires the library. Then it will display a message, and afterwards, it will display another with a `Yes` and `No` prompt. If the player chooses yes, the first part of the code will be executed, and if they choose no, the second part is executed.
 
-#### Arbitrary Code Execution \naev
+#### Arbitrary Code Execution $\naev$
 
 It is also possible to create nodes in the dialogue that execute arbitrary Lua code, and can be used to do things such as pay the player money or modify mission variables. Note that you can not write Lua code directly, or it will be executed when the `vn` is being set up. To have the code run when triggered by the `vn` framework, you must use `vn.func` and pass a function to it. A very simple example would be
 

@@ -16,8 +16,6 @@ enum {
    PLAYER_ACCEL,      /**< player is accelerating */
    PLAYER_DESTROYED,  /**< player is destroyed */
    PLAYER_FACE,       /**< player is facing target */
-   PLAYER_PRIMARY,    /**< player is shooting primary weapon */
-   PLAYER_SECONDARY,  /**< player is shooting secondary weapon */
    PLAYER_LANDACK,    /**< player has permission to land */
    PLAYER_CREATING,   /**< player is being created */
    PLAYER_AUTONAV,    /**< player has autonavigation on. */

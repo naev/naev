@@ -1353,9 +1353,6 @@ void player_think( Pilot *pplayer, const double dt )
    /*
     * Weapon shooting stuff
     */
-   pilot_shoot( pplayer, player_isFlag( PLAYER_PRIMARY ),
-                player_isFlag( PLAYER_SECONDARY ) );
-
    if ( !player_isFlag( PLAYER_AUTONAV ) ) {
       double acc = player_acc;
       /* Have to handle the case the player is doing reverse. This takes
@@ -1492,10 +1489,12 @@ void player_weapSetPress( int id, double value, int repeat )
 {
    int type;
 
-   if ( repeat || ( player.p == NULL ) )
+   if ( player.p == NULL )
       return;
 
    type = ( value >= 0 ) ? +1 : -1;
+   if ( repeat )
+      type = 2;
 
    if ( type > 0 ) {
       if ( toolkit_isOpen() )
@@ -1508,8 +1507,9 @@ void player_weapSetPress( int id, double value, int repeat )
          return;
    }
 
-   pilot_weapSetPress( player.p, id, type );
-   pilot_weapSetUpdateOutfitState( player.p );
+   /* Only update if necessary. */
+   if ( pilot_weapSetPress( player.p, id, type ) )
+      pilot_weapSetUpdateOutfitState( player.p );
 }
 
 /**
@@ -2085,8 +2085,6 @@ int player_jump( void )
       player_message( "#o%s", _( "Preparing for hyperspace." ) );
       /* Stop acceleration noise. */
       player_accelOver();
-      /* Stop possible shooting. */
-      pilot_shoot( player.p, 0, 0 );
 
       /* Order escorts to jump; just for aesthetics (for now) */
       escorts_jump( player.p, &cur_system->jumps[player.p->nav_hyperspace] );
@@ -2553,8 +2551,13 @@ void player_scan( void )
       player_message( "#r%s", _( "You need a target to scan." ) );
       return;
    }
-   if ( pilot_isFlag( t, PILOT_PLAYER_SCANNED ) ) {
+   if ( !pilot_isFlag( t, PILOT_PLAYER_SCANNED ) ) {
       player_message( "#o%s", _( "You are not ready to scan yet." ) );
+      return;
+   }
+   if ( pilot_inRangePilot( player.p, t, NULL ) <= 0 ) {
+      player_message(
+         "#o%s", _( "You can not identify the target at this distance." ) );
       return;
    }
 
@@ -3008,9 +3011,12 @@ int player_addOutfit( const Outfit *o, int quantity )
    }
    /* intrinsic outfits get added as intinsics. */
    else if ( o->slot.type == OUTFIT_SLOT_INTRINSIC ) {
+      int ret;
       if ( pilot_hasOutfitLimit( player.p, o->limit ) )
          return 0;
-      return pilot_addOutfitIntrinsic( player.p, o );
+      ret = pilot_addOutfitIntrinsic( player.p, o );
+      pilot_calcStats( player.p );
+      return ret;
    }
 
    /* Try to find it. */
@@ -3636,7 +3642,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
 
    xmlw_startElem( writer, "weaponsets" );
    xmlw_attr( writer, "autoweap", "%d", ship->autoweap );
-   xmlw_attr( writer, "active_set", "%d", ship->active_set );
+   xmlw_attr( writer, "advweap", "%d", ship->advweap );
    xmlw_attr( writer, "aim_lines", "%d", ship->aimLines );
    for ( int i = 0; i < PILOT_WEAPON_SETS; i++ ) {
       PilotWeaponSet       *ws    = &pship->weapon_sets[i];
@@ -3651,7 +3657,6 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
          xmlw_attr( writer, "type", "%d", ws->type );
          for ( int j = 0; j < array_size( weaps ); j++ ) {
             xmlw_startElem( writer, "weapon" );
-            xmlw_attr( writer, "level", "%d", weaps[j].level );
             xmlw_str( writer, "%d", weaps[j].slotid );
             xmlw_endElem( writer ); /* "weapon" */
          }
@@ -3769,9 +3774,6 @@ Spob *player_load( xmlNodePtr parent )
 
    /* Updates the fleet internals. */
    pfleet_update();
-
-   /* Update weapon set. */
-   pilot_weaponSetDefault( player.p );
 
    return pnt;
 }
@@ -4442,7 +4444,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
 static int player_parseShip( xmlNodePtr parent, int is_player )
 {
    char        *name, *model;
-   int          id, autoweap, fuel, aim_lines, active_set;
+   int          id, autoweap, fuel, aim_lines;
    const Ship  *ship_parsed;
    Pilot       *ship;
    xmlNodePtr   node;
@@ -4686,8 +4688,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       pilot_weapSetInrange( ship, i, WEAPSET_INRANGE_PLAYER_DEF );
 
    /* Second pass for weapon sets. */
-   active_set = 0;
-   node       = parent->xmlChildrenNode;
+   node = parent->xmlChildrenNode;
    do {
       xmlNodePtr cur;
 
@@ -4699,9 +4700,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
       /* Check for autoweap. */
       xmlr_attr_int( node, "autoweap", autoweap );
-
-      /* Load the last weaponset the player used on this ship. */
-      xmlr_attr_int_def( node, "active_set", active_set, -1 );
+      xmlr_attr_int( node, "autoweap", ship->advweap );
 
       /* Check for aim_lines. */
       xmlr_attr_int( node, "aim_lines", aim_lines );
@@ -4768,7 +4767,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          /* Parse individual weapons. */
          ccur = cur->xmlChildrenNode;
          do {
-            int level, weapid;
+            int weapid;
             /* Only nodes. */
             xml_onlyNodes( ccur );
 
@@ -4780,14 +4779,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                continue;
             }
 
-            /* Get level. */
-            xmlr_attr_int_def( ccur, "level", level, -1 );
-            if ( level == -1 ) {
-               WARN( _( "Player ship '%s' missing 'level' tag for weapon set "
-                        "weapon." ),
-                     ship->name );
-               continue;
-            }
             weapid = xml_getInt( ccur );
             if ( ( weapid < 0 ) || ( weapid >= array_size( ship->outfits ) ) ) {
                WARN( _( "Player ship '%s' has invalid weapon id %d [max %d]." ),
@@ -4796,7 +4787,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             }
 
             /* Add the weapon set. */
-            pilot_weapSetAdd( ship, id, ship->outfits[weapid], level );
+            pilot_weapSetAdd( ship, id, ship->outfits[weapid] );
 
          } while ( xml_nextNode( ccur ) );
       } while ( xml_nextNode( cur ) );
@@ -4807,10 +4798,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    if ( autoweap )
       pilot_weaponAuto( ship );
    pilot_weaponSafe( ship );
-   if ( active_set >= 0 && active_set < PILOT_WEAPON_SETS )
-      ship->active_set = active_set;
-   else
-      pilot_weaponSetDefault( ship );
    /* Copy the weapon set over to the player ship, where we store it. */
    ws_copy( ps.weapon_sets, ship->weapon_sets );
 
@@ -4848,11 +4835,12 @@ void player_stealth( void )
       player_message( "#g%s", _( "You have entered stealth mode." ) );
    } else {
       /* Stealth failed. */
+      /*
       if ( player.p->lockons > 0 )
          player_message( "#r%s",
                          _( "Unable to stealth: missiles locked on!" ) );
       else
-         player_message( "#r%s",
-                         _( "Unable to stealth: other pilots nearby!" ) );
+      */
+      player_message( "#r%s", _( "Unable to stealth: other pilots nearby!" ) );
    }
 }

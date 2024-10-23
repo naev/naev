@@ -382,13 +382,17 @@ static int factionL_areallies( lua_State *L )
  *
  *    @luatparam Faction f Faction to modify player's standing with.
  *    @luatparam number mod The modifier to modify faction by.
+ *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
+ * a string to the faction "hit" function. The engine can generate "kill" and
+ * "distress" sources. For missions the default is "script".
  * @luafunc modPlayer
  */
 static int factionL_modplayer( lua_State *L )
 {
-   int    f = luaL_validfaction( L, 1 );
-   double n = luaL_checknumber( L, 2 );
-   faction_modPlayer( f, n, "script" );
+   int         f      = luaL_validfaction( L, 1 );
+   double      n      = luaL_checknumber( L, 2 );
+   const char *reason = luaL_optstring( L, 3, "script" );
+   faction_modPlayer( f, n, reason );
    return 0;
 }
 
@@ -401,13 +405,17 @@ static int factionL_modplayer( lua_State *L )
  *
  *    @luatparam Faction f Faction to modify player's standing with.
  *    @luatparam number mod The modifier to modify faction by.
+ *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
+ * a string to the faction "hit" function. The engine can generate "kill" and
+ * "distress" sources. For missions the default is "script".
  * @luafunc modPlayerSingle
  */
 static int factionL_modplayersingle( lua_State *L )
 {
-   int    f = luaL_validfaction( L, 1 );
-   double n = luaL_checknumber( L, 2 );
-   faction_modPlayerSingle( f, n, "script" );
+   int         f      = luaL_validfaction( L, 1 );
+   double      n      = luaL_checknumber( L, 2 );
+   const char *reason = luaL_optstring( L, 3, "script" );
+   faction_modPlayerSingle( f, n, reason );
    return 0;
 }
 

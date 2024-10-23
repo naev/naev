@@ -528,6 +528,8 @@ int space_hyperspace( Pilot *p )
       return -3;
    if ( !space_canHyperspace( p ) )
       return -1;
+   if ( pilot_outfitOffAll( p ) > 0 )
+      pilot_calcStats( p );
 
    /* pilot is now going to get automatically ready for hyperspace */
    pilot_setFlag( p, PILOT_HYP_PREP );
@@ -1959,7 +1961,8 @@ char spob_getColourChar( const Spob *p )
       return 'N';
    }
 
-   if ( areEnemies( FACTION_PLAYER, p->presence.faction ) )
+   if ( spob_isFlag( p, SPOB_HOSTILE ) ||
+        areEnemies( FACTION_PLAYER, p->presence.faction ) )
       return 'H';
    return 'R';
 }
@@ -1981,7 +1984,8 @@ const char *spob_getSymbol( const Spob *p )
       return "~ ";
    }
 
-   if ( areEnemies( FACTION_PLAYER, p->presence.faction ) )
+   if ( spob_isFlag( p, SPOB_HOSTILE ) ||
+        areEnemies( FACTION_PLAYER, p->presence.faction ) )
       return "!! ";
    return "* ";
 }
@@ -2000,7 +2004,8 @@ const glColour *spob_getColour( const Spob *p )
       return &cNeutral;
    }
 
-   if ( areEnemies( FACTION_PLAYER, p->presence.faction ) )
+   if ( spob_isFlag( p, SPOB_HOSTILE ) ||
+        areEnemies( FACTION_PLAYER, p->presence.faction ) )
       return &cHostile;
    return &cRestricted;
 }
@@ -2058,6 +2063,34 @@ void spob_updateLand( Spob *p )
 }
 
 /**
+ * @brief Spob is receiving distress from a pilot about an attacker.
+ */
+void spob_distress( Spob *spb, const Pilot *p, const Pilot *attacker )
+{
+   if ( attacker == NULL )
+      return;
+
+   /* Doesn't have a function defined. */
+   if ( spb->lua_distress == LUA_NOREF )
+      return;
+
+   /* Run the function. */
+   spob_luaInitMem( spb );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, spb->lua_distress ); /* f */
+   lua_pushpilot( naevL, p->id );
+   lua_pushpilot( naevL, attacker->id );
+   if ( nlua_pcall( spb->lua_env, 2, 0 ) ) {
+      WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spb->name, "distress",
+            lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return;
+   }
+
+   /* Update land permissions. */
+   spob_updateLand( spb );
+}
+
+/**
  * @brief Initializes the memory fo a spob.
  */
 void spob_luaInitMem( const Spob *spob )
@@ -2094,6 +2127,7 @@ int spob_luaInit( Spob *spob )
    UNREF( spob->lua_comm );
    UNREF( spob->lua_population );
    UNREF( spob->lua_barbg );
+   UNREF( spob->lua_distress );
    UNREF( spob->lua_mem );
 #undef UNREF
 
@@ -2119,6 +2153,7 @@ int spob_luaInit( Spob *spob )
    spob->lua_comm       = nlua_refenvtype( env, "comm", LUA_TFUNCTION );
    spob->lua_population = nlua_refenvtype( env, "population", LUA_TFUNCTION );
    spob->lua_barbg      = nlua_refenvtype( env, "barbg", LUA_TFUNCTION );
+   spob->lua_distress   = nlua_refenvtype( env, "distress", LUA_TFUNCTION );
 
    /* Set up local memory. */
    lua_newtable( naevL );                                /* m */
@@ -2303,6 +2338,7 @@ static void spob_initDefaults( Spob *spob )
    spob->lua_comm       = LUA_NOREF;
    spob->lua_population = LUA_NOREF;
    spob->lua_barbg      = LUA_NOREF;
+   spob->lua_distress   = LUA_NOREF;
 }
 
 /**

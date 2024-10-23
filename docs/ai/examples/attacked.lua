@@ -47,6 +47,6 @@ function attack( target )
    if math.abs(dir) < math.rad(10) and dist > 300 then
       ai.accel()
    elseif (math.abs(dir) < math.rad(10) or ai.hasturrets()) and dist < 300 then
-      ai.shoot()
+      ai.weapset( 1, true ) -- Shoot primary weapons
    end
 end

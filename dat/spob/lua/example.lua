@@ -46,7 +46,7 @@ end
       @luatreturn string Message to give the player regarding being able to land or not.
 --]]
 function can_land ()
-   return true, _("Go ahead.")
+   return true, _([["Go ahead."]])
 end
 
 --[[
@@ -81,4 +81,10 @@ end
    @brief Runs when hailed by the player.
 --]]
 function comm ()
+end
+
+--[[
+   @brief Run when receiving a distress signal from an attacker against a pilot.
+--]]
+function distress ( _p, _attacker )
 end

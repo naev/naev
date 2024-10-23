@@ -75,7 +75,7 @@ Naev planetary classes are based on [Star Trek planetary classes](https://stexpa
   * `<item>`: Includes one Tech List.
  * `<tags>`: Category which includes tags that describe the spob. These tags can be referenced in missions and scripts; see the Spob Tags section below for more information.
 
-### Spob Tags \naev
+### Spob Tags $\naev$
 
 Tags are a versatile way to define the main facets of interest about a spob with respect to its faction, i.e. what differentiates it from the other spobs the player will (try and) visit.
 

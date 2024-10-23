@@ -101,7 +101,7 @@ local function shouldResetSpeed ()
    local will_reset = (autonav_timer > 0)
 
    local armour, shield = pp:health()
-   local lowhealth = (shield < last_shield and reset_shield) or (armour < last_armour)
+   local lowhealth = (shield < last_shield and shield < reset_shield) or (armour < last_armour)
 
    -- First check enemies in distance which should be fast
    if not will_reset and reset_dist > 0 then

@@ -14,7 +14,7 @@
   <description>This bay is built to launch a swarm of Za'lek Light Drones. The drones are expendable, but in numbers they excel at clearing enemy light craft. It comes with all the devices required for the maintenance and flight of the drones.</description>
   <cpu>-400</cpu>
  </general>
- <specific type="fighter bay" secondary="1">
+ <specific type="fighter bay">
   <delay>2</delay>
   <reload_time>60</reload_time>
   <amount>8</amount>

@@ -75,6 +75,7 @@ Possible sources:
    - "kill" : Pilot death.
    - "distress" : Pilot distress signal.
    - "script" : Either a mission or an event.
+   - "scan" : when scanned by pilots and illegal content is found
 
    @param current Current faction player has.
    @param amount Amount of faction being changed.
@@ -90,7 +91,7 @@ function hit( current, amount, source, secondary )
    -- Set caps and/or deltas based on source
    local cap
    local mod = 1
-   if source == "distress" then
+   if source == "distress" or source == "scan" then
       cap   = sbase.cap_kill
       delta = tcopy( sbase.delta_distress )
 
@@ -104,7 +105,7 @@ function hit( current, amount, source, secondary )
       end
    elseif source == "kill" then
       cap   = sbase.cap_kill
-      delta = tcopy(sbase.delta_kill)
+      delta = tcopy( sbase.delta_kill )
 
       -- Adjust for secondary hit
       if secondary then

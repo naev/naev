@@ -6,6 +6,8 @@
 /** @cond */
 #include <lauxlib.h> // IWYU pragma: export
 #include <lua.h>     // IWYU pragma: export
+
+#include "log.h" // IWYU pragma: export
 /** @endcond */
 
 #define NLUA_LOAD_TABLE                                                        \
@@ -15,6 +17,11 @@
 #define NLUA_DEPRECATED( L, f )                                                \
    do {                                                                        \
       lua_pushfstring( L, _( "Deprecated function call: %s" ), f );            \
+      nlua_warn( L, -1 );                                                      \
+   } while ( 0 )
+#define NLUA_WARN( L, str, ... )                                               \
+   do {                                                                        \
+      lua_pushfstring( L, str, ##__VA_ARGS__ );                                \
       nlua_warn( L, -1 );                                                      \
    } while ( 0 )
 

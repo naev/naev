@@ -12,7 +12,7 @@
   <overheat_min>700</overheat_min>
   <overheat_max>900</overheat_max>
  </general>
- <specific type="afterburner" group="8">
+ <specific type="afterburner">
   <rumble>0.5</rumble>
   <sound>afterburner</sound>
   <sound_off>afb_disengage</sound_off>

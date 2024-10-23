@@ -14,7 +14,7 @@
   <description>This fighter bay allows your ship to carry a pair of Sirius Shaman class bombers. It comes with all the devices required for the maintenance and flight of the bombers.</description>
   <cpu>-440</cpu>
  </general>
- <specific type="fighter bay" secondary="1">
+ <specific type="fighter bay">
   <delay>6</delay>
   <reload_time>240</reload_time>
   <amount>2</amount>

@@ -174,7 +174,7 @@ You hear the sound of mashing keys on a console.
       l337(fmt.f(_([["House Dvaered economy hit a new low as {warlord1} and {warlord2} have been found to be hoarding gauss guns and railguns, which will likely cause a shortage across House Dvaered."]]),
          {warlord1=warlords[1], warlord2=warlords[2]}))
       l337(_([["Supplies are forecasted to only last 10 periods as Warlords scramble to supply their endless feuds. Dvaered High Command has denied the situation, claiming that the free market will regulate itself."]]))
-      l337(fmt.f(_([["{warlord} has called the statement by Dvaered High Command, 'bollocks', and threatened to fly over there themselves and shell the station until it becomes a ball of molten steel."]]),
+      l337(fmt.f(_([["{warlord} has called the statement by Dvaered High Command, 'bollocks', and threatened to fly over there themself and shell the station until it becomes a ball of molten steel."]]),
          {warlord=warlords[3]}))
       l337(_([["Until the situation clears up, we can only recommend you to acquire as many weapons as possible, and remember, don't panic. That was all."]]))
       vn.music( "snd/sounds/crowdpanic03.ogg" )

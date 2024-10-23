@@ -65,6 +65,8 @@ static int spobL_commoditiesSold( lua_State *L );
 static int spobL_isBlackMarket( lua_State *L );
 static int spobL_isKnown( lua_State *L );
 static int spobL_setKnown( lua_State *L );
+static int spobL_isHostile( lua_State *L );
+static int spobL_setHostile( lua_State *L );
 static int spobL_recordCommodityPriceAtTime( lua_State *L );
 static int spobL_tags( lua_State *L );
 
@@ -104,6 +106,8 @@ static const luaL_Reg spob_methods[] = {
    { "blackmarket", spobL_isBlackMarket },
    { "known", spobL_isKnown },
    { "setKnown", spobL_setKnown },
+   { "hostile", spobL_isHostile },
+   { "setHostile", spobL_setHostile },
    { "recordCommodityPriceAtTime", spobL_recordCommodityPriceAtTime },
    { "tags", spobL_tags },
    { 0, 0 } }; /**< Spob metatable methods. */
@@ -1028,6 +1032,37 @@ static int spobL_setKnown( lua_State *L )
       outfits_updateEquipmentOutfits();
    }
 
+   return 0;
+}
+
+/**
+ * @brief Checks to see if a spob currently has the hostile flag set.
+ *
+ *    @luatparam Spob spb Spob to check hostile flag status of.
+ *    @luatreturn boolean Whether or not the spob is hostile.
+ * @luafunc hostile
+ */
+static int spobL_isHostile( lua_State *L )
+{
+   const Spob *p = luaL_validspob( L, 1 );
+   lua_pushboolean( L, spob_isFlag( p, SPOB_HOSTILE ) );
+   return 1;
+}
+
+/**
+ * @brief Sets the hostile flag of a spob.
+ *
+ *    @luatparam Spob spb Spob to set hostile flag.
+ *    @luatreturn boolean Whether or not to set the hostile status.
+ * @luafunc setHostile
+ */
+static int spobL_setHostile( lua_State *L )
+{
+   Spob *p = luaL_validspob( L, 1 );
+   if ( lua_toboolean( L, 2 ) )
+      spob_setFlag( p, SPOB_HOSTILE );
+   else
+      spob_rmFlag( p, SPOB_HOSTILE );
    return 0;
 }
 

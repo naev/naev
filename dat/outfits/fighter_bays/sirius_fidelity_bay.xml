@@ -14,7 +14,7 @@
   <description>This bay launches three Sirius Fidelity fighters. Weak individually, they are stronger when working together in groups. Quite apropos, given Sirian society.</description>
   <cpu>-440</cpu>
  </general>
- <specific type="fighter bay" secondary="1">
+ <specific type="fighter bay">
   <delay>4</delay>
   <reload_time>180</reload_time>
   <amount>3</amount>

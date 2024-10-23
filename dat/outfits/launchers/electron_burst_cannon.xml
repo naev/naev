@@ -14,7 +14,7 @@
   <gfx_store>weapon01.webp</gfx_store>
   <cpu>-10</cpu>
  </general>
- <specific type="launcher" secondary="1">
+ <specific type="launcher">
   <delay>0.3</delay>
   <reload_time>6</reload_time>
   <amount>50</amount>

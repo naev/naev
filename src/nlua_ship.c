@@ -15,7 +15,6 @@
 #include "nlua_ship.h"
 
 #include "array.h"
-#include "log.h"
 #include "nlua_canvas.h"
 #include "nlua_faction.h"
 #include "nlua_outfit.h"
@@ -36,6 +35,7 @@ static int shipL_getAll( lua_State *L );
 static int shipL_name( lua_State *L );
 static int shipL_nameRaw( lua_State *L );
 static int shipL_baseType( lua_State *L );
+static int shipL_inherits( lua_State *L );
 static int shipL_class( lua_State *L );
 static int shipL_classDisplay( lua_State *L );
 static int shipL_faction( lua_State *L );
@@ -51,6 +51,7 @@ static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
 static int shipL_fitsSlot( lua_State *L );
 static int shipL_CPU( lua_State *L );
+static int shipL_gfxPath( lua_State *L );
 static int shipL_gfxComm( lua_State *L );
 static int shipL_gfxStore( lua_State *L );
 static int shipL_gfx( lua_State *L );
@@ -74,6 +75,7 @@ static const luaL_Reg shipL_methods[] = {
    { "name", shipL_name },
    { "nameRaw", shipL_nameRaw },
    { "baseType", shipL_baseType },
+   { "inherits", shipL_inherits },
    { "class", shipL_class },
    { "classDisplay", shipL_classDisplay },
    { "faction", shipL_faction },
@@ -92,6 +94,7 @@ static const luaL_Reg shipL_methods[] = {
    { "price", shipL_price },
    { "time_mod", shipL_time_mod },
    { "size", shipL_getSize },
+   { "gfxPath", shipL_gfxPath },
    { "gfxComm", shipL_gfxComm },
    { "gfxStore", shipL_gfxStore },
    { "gfx", shipL_gfx },
@@ -330,6 +333,23 @@ static int shipL_baseType( lua_State *L )
 {
    const Ship *s = luaL_validship( L, 1 );
    lua_pushstring( L, s->base_type );
+   return 1;
+}
+
+/**
+ * @brief Gets the ship it inherits stats from if applicable.
+ *
+ *    @luatparam Ship s Ship to get the ship it is inheriting from.
+ *    @luatreturn Ship|nil The ship it is inheritng from or nil if not
+ * applicable.
+ * @luafunc inherits
+ */
+static int shipL_inherits( lua_State *L )
+{
+   const Ship *s = luaL_validship( L, 1 );
+   if ( s->inherits == NULL )
+      return 0;
+   lua_pushship( L, ship_get( s->inherits ) );
    return 1;
 }
 
@@ -717,6 +737,21 @@ static int shipL_getSize( lua_State *L )
 }
 
 /**
+ * @brief Gets the path where the ship's graphics are located. Useful for seeing
+ * if two ships share the same graphics.
+ *
+ *    @luatparam Ship s Ship to get the path of the graphis of.
+ *    @luatreturn string The path to the ship graphics.
+ * @luafunc size
+ */
+static int shipL_gfxPath( lua_State *L )
+{
+   const Ship *s = luaL_validship( L, 1 );
+   lua_pushstring( L, s->gfx_path );
+   return 1;
+}
+
+/**
  * @brief Gets the ship's comm graphics.
  *
  * Will not work without access to the Tex module.
@@ -734,7 +769,7 @@ static int shipL_gfxComm( lua_State *L )
    int         size = luaL_optinteger( L, 2, 512 );
    glTexture  *tex  = ship_gfxComm( s, size, 0., 0., &L_store_const );
    if ( tex == NULL ) {
-      WARN( _( "Unable to get ship comm graphic for '%s'." ), s->name );
+      NLUA_WARN( L, _( "Unable to get ship comm graphic for '%s'." ), s->name );
       return 0;
    }
    lua_pushtex( L, tex );
@@ -757,7 +792,8 @@ static int shipL_gfxStore( lua_State *L )
    const Ship *s   = luaL_validship( L, 1 );
    glTexture  *tex = ship_gfxStore( s, 256, 0., 0., 0. );
    if ( tex == NULL ) {
-      WARN( _( "Unable to get ship store graphic for '%s'." ), s->name );
+      NLUA_WARN( L, _( "Unable to get ship store graphic for '%s'." ),
+                 s->name );
       return 0;
    }
    lua_pushtex( L, tex );
@@ -782,7 +818,7 @@ static int shipL_gfx( lua_State *L )
    ship_gfxLoad( (Ship *)s );
    glTexture *tex = gl_dupTexture( s->gfx_space );
    if ( tex == NULL ) {
-      WARN( _( "Unable to get ship graphic for '%s'." ), s->name );
+      NLUA_WARN( L, _( "Unable to get ship graphic for '%s'." ), s->name );
       return 0;
    }
    lua_pushtex( L, tex );

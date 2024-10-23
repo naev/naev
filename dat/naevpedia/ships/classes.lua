@@ -15,7 +15,7 @@ function classes.list( c )
       return a:name() < b:name()
    end )
    for k,s in ipairs(ships) do
-      local desc = fmt.f(_("{fct} {class}"), {fct=s:faction(), class=s:classDisplay()})
+      local desc = fmt.f(_("{fct} {class}"), {fct=s:faction(), class=_(s:classDisplay())})
       out = out.."* **["..s:name().."]("..naevpedia.get(s:nameRaw())..")**: "..desc.."\n"
    end
    return out

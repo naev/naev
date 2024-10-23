@@ -565,6 +565,13 @@ function board_close ()
       board_wdw:destroy()
    end
    board_wdw = nil
+
+   -- Player stole something to make it not spaceworthy, sorry bud, you're
+   -- not waking up.
+   if not board_plt:spaceworthy() then
+      board_plt:setDisable(false) -- Permanently disable
+   end
+
    der.sfx.unboard:play()
 end
 
@@ -699,7 +706,7 @@ local function board_fcthit_apply ()
    end
 
    local msg = fmt.f(_("You have lost {fcthit} reputation with {fct} for looting this ship!"),
-      {fcthit=fmt.number(board_fcthit),fct=board_plt:faction()})
+      {fcthit=fmt.number(loss),fct=board_plt:faction()})
    player.msg( "#r"..msg.."#0" )
    board_fcthit_txt:set( msg )
 end

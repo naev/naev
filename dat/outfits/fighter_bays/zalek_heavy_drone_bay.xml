@@ -14,7 +14,7 @@
   <description>This bay can launch an entire squadron of drones capable of fighting all but the biggest ships in packs. It comes with all the devices required for the maintenance and flight of the drones.</description>
   <cpu>-600</cpu>
  </general>
- <specific type="fighter bay" secondary="1">
+ <specific type="fighter bay">
   <delay>5</delay>
   <reload_time>90</reload_time>
   <amount>6</amount>

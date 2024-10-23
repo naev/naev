@@ -592,10 +592,11 @@ local function renderWeapBar( weapon, x, y )
          gfx.renderTexRaw( icon, x + offsets[1] + bar_w/2 - 17, y + offsets[2] + outfit_yoffset, 34, 34 )
          if weapon.weapset ~= nil then
             local ws_name
-            if weapon.weapset == 10 then
+            local ws = (weapon.weapset-2)%10
+            if ws == 10 then
                ws_name = "0"
             else
-               ws_name = string.format( "%d", weapon.weapset )
+               ws_name = string.format( "%d", ws )
             end
             gfx.print( false, ws_name, x + offsets[1], y + offsets[2] + name_offset, col_text, 40, true )
          end
@@ -703,9 +704,10 @@ function render( _dt )
    energy = pp:energy()
    fuel = player.fuel() / stats.fuel_max * 100
    local heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
-   local _wset_name, pwset = pp:weapset( true )
-   local wset_id = string.format( "%d", pp:weapsetActive() )
-   if wset_id == 10 then wset_id = 0 end
+   local _wset_name, pwset = pp:weapset()
+   -- Active sets don't exist anymore
+   --local wset_id = string.format( "%d", pp:weapsetActive() )
+   --if wset_id == 10 then wset_id = 0 end
    local wset = {}
    local aset = pp:actives( true )
    table.sort( aset, function(a,b)
@@ -817,7 +819,7 @@ function render( _dt )
    end
 
    --Weapon set indicator
-   gfx.print( false, wset_id, 383 + mod_x, 72 + mod_y, col_text, 12, true )
+   --gfx.print( false, wset_id, 383 + mod_x, 72 + mod_y, col_text, 12, true )
 
    --Speed Lights
    local nlights = 11

@@ -14,8 +14,8 @@
  <rarity>6</rarity></general>
  <specific type="turret beam">
   <lua>outfits/unique/valkyrie_beam.lua</lua>
-  <delay>10</delay>
-  <duration min="2">5</duration>
+  <delay min="4">10</delay>
+  <duration>5</duration>
   <range>700</range>
   <turn>25</turn>
   <energy>160</energy>

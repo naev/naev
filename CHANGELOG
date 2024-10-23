@@ -1,6 +1,7 @@
 * 0.12.0 (unreleased)
    * Gameplay
       * Ability to capture disabled ships
+      * Significantly increase maximum potential fleet capacity
       * Excess energy to battery recharge efficiency is now a flat 50% instead of varying based on charge level
       * Gave the Za'lek sting a slight detection buff
       * Can only have a single patrol mission active at a given time
@@ -13,6 +14,8 @@
       * Camouflage burster gives a speed bonus while active and disables when out of stealth
       * Can scan ships with 'u' key
       * Gave the Quicksilver another medium structural slot
+      * Beam weapons have minimum delays instead of minimum durations
+      * Can stealth when missiles are locked on
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
@@ -73,6 +76,7 @@
       * Dropped SDL_image fallback
       * Use higher internal timer for all platforms
       * Support for Tracy
+      * Spobs that are not landable yet generate presence will be shown on the map
       * Warn the player if they try to use a name with all space characters
       * Decoupled the collision system from the rendering system
       * Added a low memory mode to use fewer and smaller textures with 3D
@@ -85,7 +89,7 @@
       * Editor has partial support for universe diffs
       * Editor has separate configuration and file dialogues
       * New ship stats
-         * Global weapon range, damage, firerate and energy usage
+         * Global weapon range, damage, fire-rate and energy usage
          * Range ship stat for all specific weapon types
          * Turn, speed, and accel for launchers
          * Shield down time modifier
@@ -98,8 +102,10 @@
       * Fixed hypergate and wormhole effects getting stuck
       * Obelisks tell if you have completed them already
       * Fixed space dust disappearing with certain jump abilities
+      * Boarded pilots become permanently disabled if they lose space-worthiness
       * Double tap will activate feather drive like blink engines
       * Fixed camouflage burster not activating stealth
+      * Fixed bug where beams were counted as giving energy in the equipment optimizer
       * shadowvigil: claim entire route
       * sh01_corvette: should be completable on easy difficulties now
       * patrol: fixed escorts and fighters becoming hostile if hostile to the mission giving faction

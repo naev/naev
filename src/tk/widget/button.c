@@ -78,6 +78,30 @@ void window_addButtonKey(
 
    if ( wdw->focus == -1 ) /* initialize the focus */
       toolkit_nextFocus( wdw );
+
+      /* Check for duplicate key bindings. */
+#if DEBUGGING
+   if ( key != 0 ) {
+      for ( Widget *wgti = wdw->widgets; wgti != NULL; wgti = wgti->next ) {
+         if ( wgti->id == wgt->id )
+            continue;
+
+         if ( wgt_isFlag( wgti, WGT_FLAG_KILL ) )
+            continue;
+
+         if ( wgti->type != WIDGET_BUTTON )
+            continue;
+
+         if ( wgti->dat.btn.key == 0 )
+            continue;
+
+         if ( wgti->dat.btn.key == key )
+            WARN( "Duplicate key binding detected for button widget '%s'! "
+                  "Overlaps with '%s'!",
+                  wgt->name, wgti->name );
+      }
+   }
+#endif /* DEBUGGING */
 }
 
 /**

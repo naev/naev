@@ -52,13 +52,23 @@ Converts an item object or number of credits to reward string ("You have receive
 
    @usage vn.na(fmt.reward(money_reward))
 
-      @param reward Thing or number of credits the player is receiving.
-                    Avoid passing strings (English or translated) for clarity's sake.
+      @param reward_list Thing or number of credits the player is receiving.
+                    Avoid passing strings (English or translated) for clarity's sake. Can be a table containing multiple instances.
       @return A string taking the form of "You have received X." -- translated and colourized.
 --]]
-function format.reward( reward )
-   local reward_text = (type(reward) == "number") and format.credits(reward) or reward
-   return format.f(_("You have received #g{reward}#0."), {reward=reward_text})
+function format.reward( reward_list )
+   if type(reward_list)~="table" then
+      reward_list = {reward_list}
+   end
+   local out = ""
+   for i,reward in ipairs(reward_list) do
+      local reward_text = (type(reward) == "number") and format.credits(reward) or reward
+      if i>1 then
+         out=out.."\n"
+      end
+      out = out..format.f(_("You have received #g{reward}#0."), {reward=reward_text})
+   end
+   return out
 end
 
 

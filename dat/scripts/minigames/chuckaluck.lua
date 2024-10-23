@@ -62,7 +62,7 @@ local function _chatter( chat_type )
    local text
    cl.chatter_colour = nil
    -- Special secretcode being input chat
-   if var.peek("minerva_caninputcode") then
+   if not cl.secretcode and var.peek("minerva_caninputcode") then
       if secretcode_status == 4 then
          cl.chatter = _("The dealer hands you a note saying to meet him after his shift.")
          naev.trigger( "minerva_secretcode" )

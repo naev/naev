@@ -17,7 +17,6 @@
 #include "array.h"
 #include "font.h"
 #include "gltf.h"
-#include "log.h"
 #include "nlua_canvas.h"
 #include "nlua_colour.h"
 #include "nlua_font.h"
@@ -592,7 +591,7 @@ static int gfxL_renderLinesH( lua_State *L )
 
    while ( !lua_isnoneornil( L, i ) ) {
       if ( n >= 256 ) {
-         WARN( _( "Trying to draw too many lines in one call!" ) );
+         NLUA_WARN( L, _( "Trying to draw too many lines in one call!" ) );
          n = 256;
          break;
       }

@@ -1,10 +1,10 @@
-## Extending Naev Functionality \naev
+## Extending Naev Functionality $\naev$
 
 This section deals with some of the core functionality in Naev that can be extended to support plugins without the need to be overwritten. Extending Naev functionality, in general, relies heavily on the [Lua](https://www.lua.org/) using custom bindings that can interact with the Naev engine.
 
 A full overview of the Naev Lua API can be found at [naev.org/api](https://naev.org/api) and is out of the scope of this document.
 
-### Adding News \naev
+### Adding News $\naev$
 
 News is controlled by the [dat/events/news.lua](https://github.com/naev/naev/blob/main/dat/events/news.lua) script. This script looks in the [dat/events/news/](https://github.com/naev/naev/tree/main/dat/events/news) for news data that can be used to create customized news feeds for the player. In general, all you have to do is created a specially formatted news file and chuck it in the directory for it to be used in-game.
 
@@ -50,18 +50,18 @@ Most of the meat of news lies in the articles. Each article is represented as a 
 
 As an alternative, it is also possible to bypass the news script entirely and directly add news with [`news.add`](https://naev.org/api/modules/news.html#add). This can be useful when adding news you want to appear directly as a result of in-game actions and not have it randomly appear. However, do note that not all players read the news and it can easily be missed.
 
-### Adding Bar NPCs \naev
+### Adding Bar NPCs $\naev$
 
 TODO
 
-### Adding Derelict Events \naev
+### Adding Derelict Events $\naev$
 
 TODO add engine support
 
-### Adding Points of Interest \naev
+### Adding Points of Interest $\naev$
 
 TODO
 
-### Adding Personalities \naev
+### Adding Personalities $\naev$
 
 TODO

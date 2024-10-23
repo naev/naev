@@ -891,14 +891,17 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
          player_setFlag( PLAYER_TURN_LEFT );
          player_left = kabs;
       } else {
-         /* set flags for facing correction */
+         if ( isdoubletap ) {
+            if ( NODEAD() )
+               pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_LEFT );
+         } else if ( value == KEY_RELEASE ) {
+            player_rmFlag( PLAYER_TURN_LEFT );
+            player_left = 0.;
+         }
          if ( value == KEY_PRESS ) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag( PLAYER_TURN_LEFT );
             player_left = 1.;
-         } else if ( value == KEY_RELEASE ) {
-            player_rmFlag( PLAYER_TURN_LEFT );
-            player_left = 0.;
          }
       }
       break;
@@ -911,14 +914,17 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
          player_setFlag( PLAYER_TURN_RIGHT );
          player_right = kabs;
       } else {
-         /* set flags for facing correction */
+         if ( isdoubletap ) {
+            if ( NODEAD() )
+               pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_RIGHT );
+         } else if ( value == KEY_RELEASE ) {
+            player_rmFlag( PLAYER_TURN_RIGHT );
+            player_right = 0.;
+         }
          if ( value == KEY_PRESS ) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag( PLAYER_TURN_RIGHT );
             player_right = 1.;
-         } else if ( value == KEY_RELEASE ) {
-            player_rmFlag( PLAYER_TURN_RIGHT );
-            player_right = 0.;
          }
       }
       break;
@@ -962,15 +968,6 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
    /*
     * Combat
     */
-   /* shooting primary weapon */
-   case KST_FIRE_PRIMARY:
-      if ( repeat )
-         break;
-      if ( value == KEY_PRESS )
-         player_setFlag( PLAYER_PRIMARY );
-      else if ( value == KEY_RELEASE )
-         player_rmFlag( PLAYER_PRIMARY );
-      break;
    /* targeting */
    case KST_TARGET_NEXT:
       if ( !INGAME() && !MAP() )
@@ -1070,65 +1067,68 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
    /*
     * secondary weapons
     */
+   /* shooting primary weapon */
+   case KST_FIRE_PRIMARY:
+      if ( DEAD() )
+         break;
+      player_weapSetPress( 0, value, repeat );
+      break;
    /* shooting secondary weapon */
    case KST_FIRE_SECONDARY:
-      if ( repeat )
+      if ( DEAD() )
          break;
-      if ( value == KEY_PRESS )
-         player_setFlag( PLAYER_SECONDARY );
-      else if ( value == KEY_RELEASE )
-         player_rmFlag( PLAYER_SECONDARY );
+      player_weapSetPress( 1, value, repeat );
       break;
    /* Weapon sets. */
    case KST_WEAPSET1:
       if ( DEAD() )
          break;
-      player_weapSetPress( 0, value, repeat );
+      player_weapSetPress( 2, value, repeat );
       break;
    case KST_WEAPSET2:
       if ( DEAD() )
          break;
-      player_weapSetPress( 1, value, repeat );
+      player_weapSetPress( 3, value, repeat );
       break;
    case KST_WEAPSET3:
       if ( DEAD() )
          break;
-      player_weapSetPress( 2, value, repeat );
+      player_weapSetPress( 4, value, repeat );
       break;
    case KST_WEAPSET4:
       if ( DEAD() )
          break;
-      player_weapSetPress( 3, value, repeat );
+      player_weapSetPress( 5, value, repeat );
       break;
    case KST_WEAPSET5:
       if ( DEAD() )
          break;
-      player_weapSetPress( 4, value, repeat );
+      player_weapSetPress( 6, value, repeat );
       break;
    case KST_WEAPSET6:
       if ( DEAD() )
          break;
-      player_weapSetPress( 5, value, repeat );
+      player_weapSetPress( 7, value, repeat );
       break;
    case KST_WEAPSET7:
       if ( DEAD() )
          break;
-      player_weapSetPress( 6, value, repeat );
+      player_weapSetPress( 8, value, repeat );
       break;
    case KST_WEAPSET8:
       if ( DEAD() )
          break;
-      player_weapSetPress( 7, value, repeat );
+      player_weapSetPress( 9, value, repeat );
       break;
    case KST_WEAPSET9:
       if ( DEAD() )
          break;
-      player_weapSetPress( 8, value, repeat );
+      player_weapSetPress( 10, value, repeat );
       break;
    case KST_WEAPSET0:
       if ( DEAD() )
          break;
-      player_weapSetPress( 9, value, repeat );
+      player_weapSetPress( 11, value, repeat );
       break;
 
    /*
