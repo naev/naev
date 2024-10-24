@@ -360,6 +360,8 @@ static int factionL_longname( lua_State *L )
  *
  *    @luatparam Faction f Faction to check against.
  *    @luatparam Faction e Faction to check if is an enemy.
+ *    @luatparam[opt] System sys System to check to see if they are enemies in.
+ * Mainly for when comparing to the player's faction.
  *    @luatreturn string true if they are enemies, false if they aren't.
  * @luafunc areEnemies
  */
@@ -367,7 +369,10 @@ static int factionL_areenemies( lua_State *L )
 {
    int f  = luaL_validfaction( L, 1 );
    int ff = luaL_validfaction( L, 2 );
-   lua_pushboolean( L, areEnemies( f, ff ) );
+   if ( !lua_isnoneornil( L, 3 ) )
+      lua_pushboolean( L, areEnemiesSystem( f, ff, luaL_validsystem( L, 3 ) ) );
+   else
+      lua_pushboolean( L, areEnemies( f, ff ) );
    return 1;
 }
 
@@ -378,6 +383,8 @@ static int factionL_areenemies( lua_State *L )
  *
  *    @luatparam Faction f Faction to check against.
  *    @luatparam faction a Faction to check if is an enemy.
+ *    @luatparam[opt] System sys System to check to see if they are allies in.
+ * Mainly for when comparing to the player's faction.
  *    @luatreturn boolean true if they are enemies, false if they aren't.
  * @luafunc areAllies
  */
@@ -385,7 +392,10 @@ static int factionL_areallies( lua_State *L )
 {
    int f  = luaL_validfaction( L, 1 );
    int ff = luaL_validfaction( L, 2 );
-   lua_pushboolean( L, areAllies( f, ff ) );
+   if ( !lua_isnoneornil( L, 3 ) )
+      lua_pushboolean( L, areAlliesSystem( f, ff, luaL_validsystem( L, 3 ) ) );
+   else
+      lua_pushboolean( L, areAllies( f, ff ) );
    return 1;
 }
 
