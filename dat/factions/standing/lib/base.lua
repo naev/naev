@@ -72,10 +72,12 @@ end
 Handles a faction hit for a faction.
 
 Possible sources:
-   - "kill" : Pilot death.
-   - "distress" : Pilot distress signal.
-   - "script" : Either a mission or an event.
-   - "scan" : when scanned by pilots and illegal content is found
+   - "destroy": Pilot death.
+   - "board": Pilot ship as boarded.
+   - "capture": Pilot ship was captured.
+   - "distress": Pilot distress signal.
+   - "scan": when scanned by pilots and illegal content is found
+   - "script": Either a mission or an event.
 
    @param current Current faction player has.
    @param amount Amount of faction being changed.

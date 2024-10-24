@@ -145,7 +145,7 @@ He seems to be seriously considering how to modify his drones.]]))
       vn.done( zbh.zach.transition )
       vn.run()
 
-      faction.modPlayer("Za'lek", zbh.fctmod.zbh05)
+      faction.hit("Za'lek", zbh.fctmod.zbh05)
       player.pay( reward )
       zbh.log(_("You helped Zach get some supplies to help nourish the feral bioship Icarus and prepare for surgery."))
       misn.finish(true)

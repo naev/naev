@@ -2,14 +2,22 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Clan Shipping">
  <priority>2</priority>
- <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") ~= nil and var.peek("ps_misn") &gt;= 2</cond>
+ <cond>
+   if spob.cur():reputation() &lt; 0 then
+      return false
+   end
+   local ps_misn = var.peek("ps_misn") or 0
+   if ps_misn &lt; 2 then
+      return false
+   end
+   return true
  <chance>10</chance>
  <location>Bar</location>
  <faction>Wild Ones</faction>
  <faction>Black Lotus</faction>
  <faction>Raven Clan</faction>
  <faction>Dreamer Clan</faction>
- <faction>Pirate</faction>
+ <!--<faction>Pirate</faction>-->
  <notes>
   <tier>2</tier>
  </notes>
@@ -120,7 +128,7 @@ function land()
    lmisn.sfxVictory()
    vntk.msg( _("Mission Accomplished"), _("Your mission was a complete success! The clan you just gave the packages have already paid you.").."\n\n"..fmt.reward(mem.reward) )
 
-   faction.modPlayerSingle("Pirate",5)
+   faction.hit( landed:faction(), 5 )
 
    local n = var.peek("ps_clancargo_misn") or 0
    var.push("ps_clancargo_misn", n + 1)

@@ -431,7 +431,7 @@ You will still have to escort the ship and land with it to perform the repairs a
             {shp=board_plt:name(),amount=fmt.credits(cost)}))
 
          -- Faction hit
-         fct:modPlayer( -fcthit )
+         fct:hit( -fcthit, system.cur(), "capture" )
          player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=fcthit,fct=fct}).."#0")
 
          -- Start capture script
@@ -697,7 +697,7 @@ local function board_fcthit_apply ()
    end
    local fct = board_plt:faction()
    local std = fct:playerStanding()
-   fct:modPlayer( -board_fcthit )
+   fct:hit( -board_fcthit, system.cur(), "board" )
    local loss = std - fct:playerStanding()
    board_fcthit = 0
    if loss <= 0 then

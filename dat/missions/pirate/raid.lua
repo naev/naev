@@ -205,7 +205,7 @@ function land ()
       player.pay( reward )
 
       -- Faction hit
-      faction.modPlayerSingle(mem.reward_faction, mem.tier*(rnd.rnd(1, 2)+math.min(q*3/100,3)))
+      faction.hit( mem.reward_faction, mem.tier*(rnd.rnd(1, 2)+math.min(q*3/100,3)) )
 
       -- Mark as done
       local done = var.peek( "pir_convoy_raid" ) or 0

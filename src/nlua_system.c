@@ -251,7 +251,7 @@ static int systemL_get( lua_State *L )
    /* Passing a spob */
    else if ( lua_isspob( L, 1 ) ) {
       pnt = luaL_validspob( L, 1 );
-      ss  = system_get( spob_getSystem( pnt->name ) );
+      ss  = system_get( spob_getSystemName( pnt->name ) );
    } else if ( lua_issystem( L, 1 ) ) {
       lua_pushvalue( L, 1 );
       return 1;

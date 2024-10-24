@@ -1120,7 +1120,7 @@ static int playerL_land( lua_State *L )
    PLAYER_CHECK();
 
    Spob       *spob    = luaL_validspob( L, 1 );
-   const char *sysname = spob_getSystem( spob->name );
+   const char *sysname = spob_getSystemName( spob->name );
    if ( sysname == NULL )
       return NLUA_ERROR( L, _( "Spob '%s' is not in a system!" ), spob->name );
 
@@ -2330,7 +2330,7 @@ static int playerL_teleport( lua_State *L )
    /* Get a spob. */
    else if ( lua_isspob( L, 1 ) ) {
       pnt  = luaL_validspob( L, 1 );
-      name = spob_getSystem( pnt->name );
+      name = spob_getSystemName( pnt->name );
       if ( name == NULL )
          return NLUA_ERROR( L, _( "Spob '%s' does not belong to a system." ),
                             pnt->name );
@@ -2343,7 +2343,7 @@ static int playerL_teleport( lua_State *L )
       if ( sysname == NULL ) {
          /* No system found, assume destination string is the name of a spob. */
          pntname = name;
-         name    = spob_getSystem( pntname );
+         name    = spob_getSystemName( pntname );
          pnt     = spob_get( pntname );
          if ( pnt == NULL )
             return NLUA_ERROR(

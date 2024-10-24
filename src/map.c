@@ -3125,7 +3125,7 @@ int map_map( const Outfit *map )
       Spob *spb = map->u.map->spobs[i];
       spob_setKnown( spb );
 #if DEBUGGING
-      const char *sysname = spob_getSystem( spb->name );
+      const char *sysname = spob_getSystemName( spb->name );
       if ( sysname == NULL )
          WARN( _( "Map '%s' is trying to set spob '%s' as known when it has no "
                   "system!" ),

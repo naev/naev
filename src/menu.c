@@ -131,7 +131,7 @@ static int menu_main_bkg_system( void )
       if ( spob_exists( ns[0].spob ) ) {
          const Spob *pnt = spob_get( ns[0].spob );
          if ( pnt != NULL ) {
-            sys = spob_getSystem( ns[0].spob );
+            sys = spob_getSystemName( ns[0].spob );
             if ( sys != NULL ) {
                cx = pnt->pos.x;
                cy = pnt->pos.y;

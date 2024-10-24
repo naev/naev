@@ -126,7 +126,7 @@ The message resonates throughout the station and out into space…]]))
    vn.done( zbh.zach.transition )
    vn.run()
 
-   faction.modPlayer("Za'lek", zbh.fctmod.zbh04)
+   faction.hit("Za'lek", zbh.fctmod.zbh04)
    player.pay( reward )
    zbh.log(fmt.f(_("You and Zach found a feral bioship wandering around {sys}. After Zach managed to create a simple program to communicate with it, you were able to get it to follow you back to {pnt}."),{sys=mainsys, pnt=mainpnt}))
    misn.finish(true)

@@ -134,7 +134,7 @@ function land ()
       vn.done( zbh.zach.transition )
       vn.run()
 
-      faction.modPlayer("Za'lek", zbh.fctmod.zbh09)
+      faction.hit("Za'lek", zbh.fctmod.zbh09)
       player.pay( reward )
       zbh.log(_("You travelled through a wormhole with Zach and met a family of feral bioships. After a brief and intense exchange, Icarus came to make peace and decided to return to their family."))
       misn.finish(true)

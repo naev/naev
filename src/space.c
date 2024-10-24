@@ -286,7 +286,7 @@ const char *spob_getClassName( const char *class )
  */
 credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
 {
-   const char       *sysname = spob_getSystem( p->name );
+   const char       *sysname = spob_getSystemName( p->name );
    const StarSystem *sys     = system_get( sysname );
    return economy_getPrice( c, sys, p );
 }
@@ -301,7 +301,7 @@ credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
 credits_t spob_commodityPriceAtTime( const Spob *p, const Commodity *c,
                                      ntime_t t )
 {
-   const char       *sysname = spob_getSystem( p->name );
+   const char       *sysname = spob_getSystemName( p->name );
    const StarSystem *sys     = system_get( sysname );
    return economy_getPriceAtTime( c, sys, p, t );
 }
@@ -413,7 +413,7 @@ int spob_addService( Spob *p, int service )
       economy_clearSingleSpob( p );
 
       /* Try to figure out the system. */
-      sysname = spob_getSystem( p->name );
+      sysname = spob_getSystemName( p->name );
       if ( sysname == NULL ) {
          DEBUG( _( "Spob '%s' not in system. Not initializing economy." ),
                 p->name );
@@ -688,7 +688,7 @@ const char *space_getRndSpob( int landable, unsigned int services,
          if ( !pnt->can_land )
             continue;
       }
-      if ( !space_sysReallyReachable( spob_getSystem( pnt->name ) ) )
+      if ( !space_sysReallyReachable( spob_getSystemName( pnt->name ) ) )
          continue;
 
       /* We want the name, not the actual spob. */
@@ -1060,12 +1060,20 @@ int spob_hasSystem( const Spob *spb )
 }
 
 /**
+ * @brief Gets the system a spob is in.
+ */
+StarSystem *spob_getSystem( const Spob *spob )
+{
+   return system_get( spob_getSystemName( spob->name ) );
+}
+
+/**
  * @brief Get the name of a system from a spobname.
  *
  *    @param spobname Spob name to match.
  *    @return Name of the system spob belongs to.
  */
-const char *spob_getSystem( const char *spobname )
+const char *spob_getSystemName( const char *spobname )
 {
    for ( int i = 0; i < array_size( spobname_stack ); i++ )
       if ( strcmp( spobname_stack[i], spobname ) == 0 )
@@ -4019,7 +4027,7 @@ static int space_addMarkerSpob( int pntid, MissionMarkerType type )
    spob_setFlag( pnt, SPOB_MARKED );
 
    /* Now try to mark system. */
-   sys = spob_getSystem( pnt->name );
+   sys = spob_getSystemName( pnt->name );
    if ( sys == NULL ) {
       WARN( _( "Marking spob '%s' that is not in any system!" ), pnt->name );
       return 0;
@@ -4107,7 +4115,7 @@ static int space_rmMarkerSpob( int pntid, MissionMarkerType type )
       spob_rmFlag( pnt, SPOB_MARKED );
 
    /* Now try to remove system. */
-   sys = spob_getSystem( pnt->name );
+   sys = spob_getSystemName( pnt->name );
    if ( sys == NULL )
       return 0;
    stype = mission_markerTypeSpobToSystem( type );

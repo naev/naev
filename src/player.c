@@ -4090,7 +4090,7 @@ static Spob *player_parse( xmlNodePtr parent )
    /* set player in system */
    pnt = spob_get( spob );
    /* Get random spob if it's NULL. */
-   if ( ( pnt == NULL ) || ( spob_getSystem( spob ) == NULL ) ||
+   if ( ( pnt == NULL ) || ( spob_getSystemName( spob ) == NULL ) ||
         !spob_hasService( pnt, SPOB_SERVICE_LAND ) ) {
       WARN( _( "Player starts out in non-existent or invalid spob '%s',"
                "trying to find a suitable one instead." ),
@@ -4134,7 +4134,7 @@ static Spob *player_parse( xmlNodePtr parent )
    }
 
    /* Initialize system. */
-   sys = system_get( spob_getSystem( pnt->name ) );
+   sys = system_get( spob_getSystemName( pnt->name ) );
    space_gfxLoad( sys );
    a = RNGF() * 2. * M_PI;
    r = RNGF() * pnt->radius * 0.8;

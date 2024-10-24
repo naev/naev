@@ -43,6 +43,7 @@ static int spobL_nameRaw( lua_State *L );
 static int spobL_population( lua_State *L );
 static int spobL_radius( lua_State *L );
 static int spobL_faction( lua_State *L );
+static int spobL_reputation( lua_State *L );
 static int spobL_colour( lua_State *L );
 static int spobL_colourChar( lua_State *L );
 static int spobL_class( lua_State *L );
@@ -84,6 +85,7 @@ static const luaL_Reg spob_methods[] = {
    { "population", spobL_population },
    { "radius", spobL_radius },
    { "faction", spobL_faction },
+   { "reputation", spobL_reputation },
    { "colour", spobL_colour },
    { "colourChar", spobL_colourChar },
    { "class", spobL_class },
@@ -244,7 +246,7 @@ static int spobL_cur( lua_State *L )
       return NLUA_ERROR(
          L, _( "Attempting to get landed spob when player not landed." ) );
    lua_pushspob( L, spob_index( land_spob ) );
-   sys = system_index( system_get( spob_getSystem( land_spob->name ) ) );
+   sys = system_index( system_get( spob_getSystemName( land_spob->name ) ) );
    lua_pushsystem( L, sys );
    return 2;
 }
@@ -348,7 +350,7 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
    lua_pushspob( L, spob_index( pnt ) );
    if ( system ) {
       LuaSystem   sys;
-      const char *sysname = spob_getSystem( rndspob );
+      const char *sysname = spob_getSystemName( rndspob );
       if ( sysname == NULL )
          return 1;
       sys = system_index( system_get( sysname ) );
@@ -458,7 +460,7 @@ static int spobL_system( lua_State *L )
 {
    LuaSystem   sys;
    const Spob *p       = luaL_validspob( L, 1 );
-   const char *sysname = spob_getSystem( p->name );
+   const char *sysname = spob_getSystemName( p->name );
    if ( sysname == NULL )
       return 0;
    sys = system_index( system_get( sysname ) );
@@ -569,10 +571,26 @@ static int spobL_radius( lua_State *L )
  */
 static int spobL_faction( lua_State *L )
 {
-   Spob *p = luaL_validspob( L, 1 );
+   const Spob *p = luaL_validspob( L, 1 );
    if ( p->presence.faction < 0 )
       return 0;
    lua_pushfaction( L, p->presence.faction );
+   return 1;
+}
+
+/**
+ * @brief Gets the local reputation of the faction at a spob.
+ *
+ *    @luatparam Spob spb Spob to get the reputation of.
+ *    @luatreturn number The reputation of the player at the space object.
+ * @luafunc reputation
+ */
+static int spobL_reputation( lua_State *L )
+{
+   const Spob       *spb = luaL_validspob( L, 1 );
+   const StarSystem *sys = spob_getSystem( spb );
+   lua_pushnumber( L,
+                   system_getReputationOrGlobal( sys, spb->presence.faction ) );
    return 1;
 }
 

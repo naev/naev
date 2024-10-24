@@ -129,7 +129,7 @@ function land ()
       vn.done( zbh.zach.transition )
       vn.run()
 
-      faction.modPlayer("Za'lek", zbh.fctmod.zbh08)
+      faction.hit("Za'lek", zbh.fctmod.zbh08)
       player.pay( reward )
       zbh.log(fmt.f(_("You helped Zach get cargo important to upgrading the sensors of {pnt}, despite heavy enemy patrols on the way."),
          {pnt=retpnt}))

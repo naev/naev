@@ -156,7 +156,7 @@ function land()
       vn.na(_([[As you touch down at the spaceport you see the Traders Society depot surrounded by a hustle and bustle. The cargo inspector looks at you with surprise, and you explain to him what happened as the cargo is unloaded from your ship. "Wow, thanks for the help! You definitely saved us a ton of grief. Here's your payment. Maybe I can buy you a drink some time!" You laugh and part ways.]]))
       vn.sfxVictory()
       vn.func( function ()
-         faction.modPlayerSingle("Traders Society", 1)
+         faction.hit("Traders Society", 1)
          player.pay(mem.payment)
       end )
       vn.na(fmt.reward(mem.payment))
@@ -164,7 +164,7 @@ function land()
       vn.na(_([[Landing at the spaceport you see the Traders Society depot surrounded by a fraught hum of activity. The cargo inspector looks at you with surprise and then anger, "What the hell is this?! This shipment was supposed to be here ages ago! We've been shifting stuff around to make up for it and then you come waltzing in here… where the hell is the employee who was supposed to deliver this stuff?" A group of workers rushes along with you and the inspector and you as you try to explain what happened. "That fool has been causing us all sorts of problems, and passing on the job to someone as incompetent as you is the last straw! I swear!"]]))
       vn.na(_([[You wait to one side as the cargo is hauled off your ship at breakneck speed and wonder if you should have just dumped the stuff in space. Just as the last of the cargo is taken off your ship, the inspector, who has clearly cooled off a bit, comes up to you and says "Look, I know you were trying to do us a favour, but next time don't bother if you can't make it on time. I'm glad you didn't just dump it all into space like some people have done, but I can't pay you for this." He shakes his head and walks away. "That pilot is so fired…"]]))
       vn.func( function ()
-         faction.modPlayerSingle("Traders Society", -1)
+         faction.hit("Traders Society", -1, system.cur()) -- Negative affects locally, maybe not needed?
       end )
    end
 

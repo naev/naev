@@ -178,7 +178,7 @@ He points at a part that you can't tell what's different from any other standard
       vn.done( zbh.zach.transition )
       vn.run()
 
-      faction.modPlayer("Za'lek", zbh.fctmod.zbh11)
+      faction.hit("Za'lek", zbh.fctmod.zbh11)
       --player.pay( reward )
       player.outfitAdd( reward )
       zbh.log(fmt.f(_([[You helped Zach recover a drone containing notes and experiments from his deceased colleagues by doing a non-standard jump to and from the Anubis Black Hole. Zach was able to use the technology to create the first {outfit} prototype which was given to you.]]),

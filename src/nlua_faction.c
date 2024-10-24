@@ -392,9 +392,12 @@ static int factionL_areallies( lua_State *L )
 /**
  * @brief Modifies the player's standing with the faction.
  *
- * Also modifies standing with allies and enemies of the faction.
+ * Also can modify the standing with allies and enemies of the faction.
  *
  * @usage f:hit( -5, system.cur() ) -- Lowers faction by 5 at the current system
+ * @usage f:hit( 10 ) -- Globally increases faction by 10
+ * @usage f:hit( 10, nil, nil, true ) -- Globally increases faction by 10, but
+ * doesn't affect allies nor enemies of the faction.
  *
  *    @luatparam Faction f Faction to modify player's standing with.
  *    @luatparam number mod The modifier to modify faction by.
@@ -404,7 +407,7 @@ static int factionL_areallies( lua_State *L )
  * a string to the faction "hit" function. The engine can generate "kill" and
  * "distress" sources. For missions the default is "script".
  *    @luatparam[opt=false] boolean single Whether or not the hit should affect
- * allies/enemies.
+ * allies/enemies of the faction getting a hit.
  * @luafunc hit
  */
 static int factionL_hit( lua_State *L )

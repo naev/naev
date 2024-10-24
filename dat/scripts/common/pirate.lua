@@ -161,7 +161,7 @@ function pir.reputationNormalMission( amount )
          elseif s > 0 then
             vamount = vamount * 2
          end
-         v:modPlayerSingle( vamount )
+         v:hit( vamount, nil, nil, true )
       end
    end
 end

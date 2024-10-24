@@ -134,7 +134,7 @@ He stops one second realizing what he just said and gives a puzzled look.
 
    zbh.unidiff( "sigma13_fixed1" )
 
-   faction.modPlayer("Za'lek", zbh.fctmod.zbh01)
+   faction.hit("Za'lek", zbh.fctmod.zbh01)
    player.pay( reward )
    zbh.log(fmt.f(_("You took Zach to {pnt} where he found that his colleagues had seemingly met a gruesome fate. He vowed to look into what happened and continue the research that was started. Using his engineering skills, he was able to restore minimum functionality of the station."),{pnt=destpnt}))
    music.play()

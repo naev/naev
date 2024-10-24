@@ -132,7 +132,7 @@ He rubs his temples.]]))
    vn.done( zbh.zach.transition )
    vn.run()
 
-   faction.modPlayer("Za'lek", zbh.fctmod.zbh03)
+   faction.hit("Za'lek", zbh.fctmod.zbh03)
    player.pay( reward )
    zbh.log(fmt.f(_("During a patrol of the {sys} system, you were attacked by some unidentified Za'lek forces. You were able to destroy them, but have not yet found out what is going on at {pnt}."),{sys=mainsys,pnt=mainpnt}))
    misn.finish(true)

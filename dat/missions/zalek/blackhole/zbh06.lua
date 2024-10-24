@@ -97,7 +97,7 @@ function land ()
    vn.done( zbh.zach.transition )
    vn.run()
 
-   faction.modPlayer("Za'lek", zbh.fctmod.zbh06)
+   faction.hit("Za'lek", zbh.fctmod.zbh06)
    player.pay( reward )
    zbh.log(fmt.f(_([[You defended {pnt} and Icarus from a hostile attack.]]),{pnt=mainpnt}))
    misn.finish(true)

@@ -1934,7 +1934,7 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
       if ( spob == NULL )
          continue;
 
-      const char *sysname = spob_getSystem( spobs[i] );
+      const char *sysname = spob_getSystemName( spobs[i] );
       if ( sysname == NULL )
          continue;
 
