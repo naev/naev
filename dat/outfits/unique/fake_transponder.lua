@@ -33,8 +33,8 @@ local function reset( p, po )
 
    for k,f in ipairs(factions) do
       local os = fget( f ) -- original standing
-      local cs = f:playerStanding() -- current standing
-      local ds = f:playerStandingDefault() -- default standing
+      local cs = f:reputationGlobal() -- current standing
+      local ds = f:reputationDefault() -- default standing
       -- See how to modify saved value
       if not os then
          -- If not set, just set

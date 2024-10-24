@@ -40,6 +40,7 @@
 #define FACTION_DYNAMIC ( 1 << 3 ) /**< Faction was created dynamically. */
 #define FACTION_USESHIDDENJUMPS                                                \
    ( 1 << 4 ) /**< Faction will try to use hidden jumps when possible. */
+#define FACTION_REPOVERRIDE ( 1 << 5 ) /* Reputation is being overidden. */
 
 #define faction_setFlag( fa, f ) ( ( fa )->flags |= ( f ) )
 #define faction_rmFlag( fa, f ) ( ( fa )->flags &= ~( f ) )
@@ -80,6 +81,7 @@ typedef struct Faction_ {
    /* Player information. */
    double player_def; /**< Default player standing. */
    double player;     /**< Standing with player - from -100 to 100 */
+   double override;   /**< Override the player standing. */
 
    /* Scheduler. */
    nlua_env sched_env; /**< Lua scheduler script. */
@@ -791,8 +793,8 @@ static void faction_hitLua( int f, const StarSystem *sys, double mod,
    if ( faction_isFlag( faction, FACTION_STATIC ) )
       return;
 
-   /* Player is dead or cleared. */
-   if ( player.p == NULL )
+   /* Overriden, so doesn't budge. */
+   if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
       return;
 
    old = faction->player;
@@ -982,8 +984,16 @@ void faction_setReputation( int f, double value )
       WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
+   faction = &faction_stack[f];
 
-   faction         = &faction_stack[f];
+   /* Make sure it's not static. */
+   if ( faction_isFlag( faction, FACTION_STATIC ) )
+      return;
+
+   /* Overriden, so doesn't budge. */
+   if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
+      return;
+
    mod             = value - faction->player;
    faction->player = value;
    /* Run hook if necessary. */
@@ -1012,8 +1022,13 @@ void faction_setReputation( int f, double value )
  */
 double faction_reputation( int f )
 {
-   if ( faction_isFaction( f ) )
-      return faction_stack[f].player;
+   if ( faction_isFaction( f ) ) {
+      Faction *fac = &faction_stack[f];
+      if ( faction_isFlag( fac, FACTION_REPOVERRIDE ) )
+         return fac->override;
+      else
+         return fac->player;
+   }
    WARN( _( "Faction id '%d' is invalid." ), f );
    return -1000.;
 }
@@ -1041,7 +1056,7 @@ double faction_reputationDefault( int f )
 int faction_isPlayerFriend( int f )
 {
    const Faction *faction = &faction_stack[f];
-   return ( faction->player >= faction->friendly_at );
+   return ( faction_reputation( f ) >= faction->friendly_at );
 }
 int faction_isPlayerFriendSystem( int f, const StarSystem *sys )
 {
@@ -1057,8 +1072,7 @@ int faction_isPlayerFriendSystem( int f, const StarSystem *sys )
  */
 int faction_isPlayerEnemy( int f )
 {
-   const Faction *faction = &faction_stack[f];
-   return ( faction->player < 0 );
+   return ( faction_reputation( f ) < 0. );
 }
 int faction_isPlayerEnemySystem( int f, const StarSystem *sys )
 {
@@ -1220,7 +1234,9 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
    /* Set up the method:
     * standing:text_broad( standing, bribed, override ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_text_broad );
-   lua_pushnumber( naevL, faction->player );
+   lua_pushnumber( naevL, ( faction_isFlag( faction, FACTION_REPOVERRIDE )
+                               ? faction->override
+                               : faction->player ) );
    lua_pushboolean( naevL, bribed );
    lua_pushinteger( naevL, override );
 
@@ -2020,6 +2036,7 @@ int pfaction_save( xmlTextWriterPtr writer )
 
       xmlw_attr( writer, "name", "%s", f->name );
       xmlw_elem( writer, "standing", "%f", f->player );
+      xmlw_elem( writer, "override", "%f", f->override );
 
       if ( faction_isKnown_( f ) )
          xmlw_elemEmpty( writer, "known" );
@@ -2065,6 +2082,12 @@ int pfaction_load( xmlNodePtr parent )
                      if ( xml_isNode( sub, "known" ) ) {
                         faction_setFlag( &faction_stack[faction],
                                          FACTION_KNOWN );
+                        continue;
+                     }
+                     if ( xml_isNode( sub, "override" ) ) {
+                        faction_stack[faction].override = xml_getFloat( sub );
+                        faction_setFlag( &faction_stack[faction],
+                                         FACTION_REPOVERRIDE );
                         continue;
                      }
                   } while ( xml_nextNode( sub ) );
@@ -2118,6 +2141,30 @@ int *faction_getGroup( int which )
    default:
       return NULL;
    }
+}
+
+double faction_reputationOverride( int f, int *set )
+{
+   if ( faction_isFaction( f ) ) {
+      *set = -1;
+      return 0.;
+   }
+   Faction *fct = &faction_stack[f];
+   *set         = faction_isFlag( fct, FACTION_REPOVERRIDE );
+   return fct->override;
+}
+
+void faction_setReputationOverride( int f, int set, double value )
+{
+   if ( faction_isFaction( f ) )
+      return;
+   Faction *fct = &faction_stack[f];
+   if ( !set ) {
+      faction_rmFlag( fct, FACTION_REPOVERRIDE );
+      return;
+   }
+   faction_setFlag( fct, FACTION_REPOVERRIDE );
+   fct->override = value;
 }
 
 /**

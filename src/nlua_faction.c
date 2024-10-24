@@ -49,6 +49,8 @@ static int factionL_isKnown( lua_State *L );
 static int factionL_setKnown( lua_State *L );
 static int factionL_isInvisible( lua_State *L );
 static int factionL_isStatic( lua_State *L );
+static int factionL_reputationOverride( lua_State *L );
+static int factionL_setReputationOverride( lua_State *L );
 static int factionL_tags( lua_State *L );
 static int factionL_dynAdd( lua_State *L );
 static int factionL_dynAlly( lua_State *L );
@@ -94,6 +96,8 @@ static const luaL_Reg faction_methods[] = {
    { "setKnown", factionL_setKnown },
    { "invisible", factionL_isInvisible },
    { "static", factionL_isStatic },
+   { "reputationOverride", factionL_reputationOverride },
+   { "setReputationOverride", factionL_setReputationOverride },
    { "tags", factionL_tags },
    { "dynAdd", factionL_dynAdd },
    { "dynAlly", factionL_dynAlly },
@@ -795,6 +799,31 @@ static int factionL_isStatic( lua_State *L )
 {
    int fac = luaL_validfaction( L, 1 );
    lua_pushboolean( L, faction_isStatic( fac ) );
+   return 1;
+}
+
+/**
+ * @brief
+ */
+static int factionL_reputationOverride( lua_State *L )
+{
+   int    fac = luaL_validfaction( L, 1 );
+   int    set;
+   double val = faction_reputationOverride( fac, &set );
+   if ( !set )
+      return 0;
+   lua_pushnumber( L, val );
+   return 1;
+}
+
+/**
+ * @brief
+ */
+static int factionL_setReputationOverride( lua_State *L )
+{
+   int fac = luaL_validfaction( L, 1 );
+   int set = !lua_isnoneornil( L, 2 );
+   faction_setReputationOverride( fac, set, luaL_optnumber( L, 3, 0. ) );
    return 1;
 }
 

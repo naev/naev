@@ -57,7 +57,9 @@ int                     faction_usesHiddenJumps( int f );
 const FactionGenerator *faction_generators( int f );
 
 /* Set stuff */
-int faction_setKnown( int id, int state );
+int    faction_setKnown( int id, int state );
+double faction_reputationOverride( int f, int *set );
+void   faction_setReputationOverride( int f, int set, double value );
 
 /* player stuff */
 void faction_hit( int f, const StarSystem *sys, double mod, const char *source,
