@@ -1086,6 +1086,17 @@ const glColour *faction_reputationColour( int f )
    else
       return &cNeutral;
 }
+const glColour *faction_reputationColourSystem( int f, const StarSystem *sys )
+{
+   if ( f < 0 )
+      return &cInert;
+   else if ( areAlliesSystem( FACTION_PLAYER, f, sys ) )
+      return &cFriend;
+   else if ( areEnemiesSystem( FACTION_PLAYER, f, sys ) )
+      return &cHostile;
+   else
+      return &cNeutral;
+}
 
 /**
  * @brief Gets the faction character associated to its standing with the player.
@@ -1103,6 +1114,17 @@ char faction_reputationColourChar( int f )
    else if ( areEnemies( FACTION_PLAYER, f ) )
       return 'H';
    else if ( areAllies( FACTION_PLAYER, f ) )
+      return 'F';
+   else
+      return 'N';
+}
+char faction_reputationColourCharSystem( int f, const StarSystem *sys )
+{
+   if ( f < 0 )
+      return 'I';
+   else if ( areEnemiesSystem( FACTION_PLAYER, f, sys ) )
+      return 'H';
+   else if ( areAlliesSystem( FACTION_PLAYER, f, sys ) )
       return 'F';
    else
       return 'N';

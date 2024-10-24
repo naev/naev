@@ -2075,7 +2075,8 @@ void map_updateFactionPresence( const unsigned int wid, const char *name,
       char             col;
       FactionPresence *p = &presence[i];
       if ( faction_exists( p->name ) )
-         col = faction_reputationColourChar( faction_get( p->name ) );
+         col =
+            faction_reputationColourCharSystem( faction_get( p->name ), sys );
       else
          col = 'N';
 

@@ -78,6 +78,8 @@ const char     *faction_getStandingBroad( int f, int bribed, int override );
 double          faction_reputationMax( int f );
 const glColour *faction_reputationColour( int f );
 char            faction_reputationColourChar( int f );
+const glColour *faction_reputationColourSystem( int f, const StarSystem *sys );
+char faction_reputationColourCharSystem( int f, const StarSystem *sys );
 
 /* Works with only factions */
 int areEnemies( int a, int b );

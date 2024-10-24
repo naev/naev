@@ -785,9 +785,10 @@ void ovr_render( double dt )
          safelanes[i].map_alpha =
             MIN( safelanes[i].map_alpha + OVERLAY_FADEIN * dt, 1.0 );
 
-      if ( faction_isPlayerFriend( safelanes[i].faction ) )
+      if ( faction_isPlayerFriendSystem( safelanes[i].faction, cur_system ) )
          col = cFriend;
-      else if ( faction_isPlayerEnemy( safelanes[i].faction ) )
+      else if ( faction_isPlayerEnemySystem( safelanes[i].faction,
+                                             cur_system ) )
          col = cHostile;
       else
          col = cNeutral;
@@ -932,7 +933,8 @@ void ovr_render( double dt )
          double r;
          if ( pilot_isDisabled( pstk[i] ) )
             continue;
-         if ( areAllies( player.p->faction, pstk[i]->faction ) ||
+         if ( areAlliesSystem( player.p->faction, pstk[i]->faction,
+                               cur_system ) ||
               pilot_isFriendly( pstk[i] ) )
             continue;
          /* Only show pilots the player can see. */

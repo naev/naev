@@ -750,7 +750,7 @@ int pilot_areAllies( const Pilot *p, const Pilot *target )
       else if ( pilot_isFlag( p, PILOT_HOSTILE ) )
          return 0;
    } else {
-      if ( areAllies( p->faction, target->faction ) )
+      if ( areAlliesSystem( p->faction, target->faction, cur_system ) )
          return 1;
    }
    return 0;
@@ -777,7 +777,7 @@ int pilot_areEnemies( const Pilot *p, const Pilot *target )
       else if ( pilot_isFlag( p, PILOT_BRIBED ) )
          return 0;
    } else {
-      if ( areEnemies( p->faction, target->faction ) )
+      if ( areEnemiesSystem( p->faction, target->faction, cur_system ) )
          return 1;
    }
    return 0;
@@ -1125,7 +1125,7 @@ char pilot_getFactionColourChar( const Pilot *p )
       return 'H';
    else if ( pilot_isFlag( p, PILOT_BRIBED ) )
       return 'N';
-   return faction_reputationColourChar( p->faction );
+   return faction_reputationColourCharSystem( p->faction, cur_system );
 }
 
 /**
@@ -1257,7 +1257,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
                hit = 0.;
             }
             lua_pop( naevL, 2 );
-            faction_modPlayer( p->faction, -hit, "distress" );
+            faction_hit( p->faction, cur_system, -hit, "distress", 0 );
          }
       }
 
@@ -1581,7 +1581,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
             int mod = 2. * ( pow( p->base_mass, 0.4 ) - 1. );
 
             /* Modify faction for him and friends. */
-            faction_modPlayer( p->faction, -mod, "kill" );
+            faction_hit( p->faction, cur_system, -mod, "kill", 0 );
 
             /* Note that player destroyed the ship. */
             player.ships_destroyed[p->ship->class]++;
