@@ -526,7 +526,7 @@ function hail( target )
          if not target:hostile() then
             -- Everybody except the pirates takes offence if you threaten them
             if not pir.factionIsPirate( target:faction() ) then
-               faction.modPlayerSingle( target:faction(), -1 )
+               faction.hit( target:faction(), -1 )
             end
 
             if isScared(target) then
@@ -630,7 +630,7 @@ function land()
       lmisn.sfxVictory()
       vntk.msg( _("Good work, pilot!"), quotes.pay[rnd.rnd(1,#quotes.pay)].."\n\n"..fmt.reward(mem.credits) )
       player.pay( mem.credits )
-      mem.paying_faction:modPlayerSingle( rnd.rnd(1,2) )
+      mem.paying_faction:hit( rnd.rnd(1,2) )
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish( true )
    end

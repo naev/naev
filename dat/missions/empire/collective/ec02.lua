@@ -90,7 +90,7 @@ function land()
     "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analyzing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile, give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]]) )
 
       -- Rewards
-      faction.modPlayerSingle("Empire",5)
+      faction.hit("Empire",5)
       player.pay( emp.rewards.ec02 )
 
       emp.addCollectiveLog( _([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on Omega Enclave again later.]]) )

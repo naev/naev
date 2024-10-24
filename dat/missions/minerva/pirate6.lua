@@ -134,7 +134,7 @@ She shoves a credit chip into your hand.
       player.pay( reward_amount )
       minerva.log.pirate(fmt.f(_("You took out a Za'lek General and Dvaered Warlord in the {sys} system. Upon informing Zuri of your accomplishment, an announcement that deliberations regarding the sovereignty of {spb} will be held at {trialspb} in the {trialsys} system. Zuri told you to meet up with her afterwards at bar at {spb}."),
          {sys=mainsys, spb=base, trialspb=trialspb, trialsys=trialsys}))
-      faction.modPlayerSingle("Wild Ones", 5)
+      faction.hit( "Wild Ones", 5, nil, nil, true )
    end )
    vn.na(fmt.reward(reward_amount))
    zuri(_([[She joins the chaos of people running around the station and fades into the shadows.]]))

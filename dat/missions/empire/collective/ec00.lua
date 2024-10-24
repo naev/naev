@@ -137,7 +137,7 @@ function land()
    if mem.misn_stage == 1 and  pnt == misn_base then
       tk.msg( _("Mission Accomplished"), fmt.f(_([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.
     "Well it seems like the drone has some strange fixation on {sys}. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]]), {sys=misn_target}) )
-      faction.modPlayerSingle("Empire",5)
+      faction.hit("Empire",5)
       player.pay(mem.credits)
       emp.addCollectiveLog( _([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on Omega Enclave for your next mission.]]) )
       misn.finish(true)

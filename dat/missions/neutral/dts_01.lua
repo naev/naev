@@ -98,7 +98,7 @@ function enter_system()
          hook.timer(1.0, "ship_enters")
       elseif mem.defender == true then
          player.msg( _("You fled from the battle. The Empire won't forget.") )
-         faction.modPlayerSingle( "Empire", -3)
+         faction.hit( "Empire", -3)
          misn.finish( true)
       elseif mem.this_system == system.cur() and mem.been_here_before ~= true then
          mem.been_here_before = true
@@ -193,7 +193,7 @@ function celebrate_victory()
       if mem.victory == true then
          tk.msg( _("On the way in"), _([[As you taxi in to land, you can make out the tiny figure of the Commodore saluting a small group of individuals to the side of the landing pads. After you and your fellow volunteers alight, she greets you with the portmaster by her side.]]) )
          player.pay( mem.reward )
-         faction.modPlayerSingle( "Empire", 3)
+         faction.hit( "Empire", 3)
          tk.msg( _("Thank you"), _([["That was good flying," the Commodore says with a tight smile. "Thank you all for your help. This gentleman has arranged a transfer of forty thousand credits to each of you. You can be proud of what you've done today."]]) )
          misn.finish( true)
       else
@@ -219,8 +219,8 @@ end
 
 function abort()
       if mem.victory ~= true then
-         faction.modPlayerSingle( "Empire", -10)
-         faction.modPlayerSingle( "Trader", -10)
+         faction.hit( "Empire", -10)
+         faction.hit( "Trader", -10)
          player.msg( fmt.f( _("Comm Trader> You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )
       else
          player.msg( fmt.f( _("Comm Trader> You're running away now, {player}? The fight's finished, you know..."), {player=player.name()} ) )

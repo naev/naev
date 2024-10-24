@@ -284,7 +284,7 @@ function land ()
 
       -- Rewards
       -- This was the last mission in the minor campaign, so bump the reputation cap.
-      faction.modPlayerSingle("Empire",5)
+      faction.hit("Empire",5)
       player.pay( emp.rewards.ec06 )
 
       tk.msg( _("Mission Success"), _([[She continues. "As a symbol of appreciation, you should find a deposit of 5,000,000 credits in your account. There will be a celebration later today in the officer's room if you want to join in."

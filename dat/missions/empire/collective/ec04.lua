@@ -247,7 +247,7 @@ function land ()
 
       -- Rewards
       player.pay(credits)
-      faction.modPlayerSingle("Empire",5)
+      faction.hit("Empire",5)
 
       emp.addCollectiveLog( _([[You attempted to rescue the commando team on Eiroik, but despite your best efforts, they were already dead by the time you got there. However, you managed to retrieve a datapad from the team's wrecked ship. Lt. Commander Dimitri has asked you to meet him in the bar again in a while.]]) )
 

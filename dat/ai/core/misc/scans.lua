@@ -98,7 +98,7 @@ function scans.scan( target )
                v:memory().found_illegal = true
             end
             -- Small faction hit
-            p:faction():modPlayer( -1, "scan" )
+            p:faction():hit( -1, system.cur(), "scan" )
          end
       else
          local msg = mem.scan_msg_ok or _("Thank you for your cooperation.")

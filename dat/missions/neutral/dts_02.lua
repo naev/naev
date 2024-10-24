@@ -104,7 +104,7 @@ function enter_system()
          hook.timer(1.0, "ship_enters")
       elseif mem.defender == true then
          player.msg( _("You fled from the battle. The Empire won't forget.") )
-         faction.modPlayerSingle( "Empire", -3)
+         faction.hit( "Empire", -3)
          misn.finish( true)
       elseif mem.this_system == system.cur() and mem.been_here_before ~= true then
          mem.been_here_before = true
@@ -244,7 +244,7 @@ function celebrate_victory()
     When he shakes your hand, the Governor looks keenly at you at smiles, "Very well done."
     After meeting each surviving pilot, the tall man stands still for aide to attach an microphone to his lapel. Then he turns to the news-casters and the crowd.]]), {pnt=mem.this_planet}) )
          player.pay( reward)
-         faction.modPlayerSingle( "Empire", 3)
+         faction.hit( "Empire", 3)
          tk.msg( _("The Governor's speech"), fmt.f( _([[
 "Even here on {pnt}, even in the protective embrace of civilization, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they threaten the very foundations of our peace. We are grateful for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heroes with the {pnt} Silver Heart. I hope they, and their volunteers, will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
     The public ceremony lasts only a few hectoseconds. Afterwards, as interviewers draw the young navy officers aside and the crowd disperses, you catch sight of the elderly couple from the bar holding each other and looking up into the darkening sky.]]), {pnt=mem.this_planet} ) )
@@ -273,8 +273,8 @@ end
 -- If the player aborts the mission, the Empire and Traders react
 function abort()
       if mem.victory == false then
-         faction.modPlayerSingle( "Empire", -10)
-         faction.modPlayerSingle( "Trader", -10)
+         faction.hit( "Empire", -10)
+         faction.hit( "Trader", -10)
          player.msg( fmt.f( _("Comm Lancelot> You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )
       else
          player.msg( fmt.f( _("Comm Lancelot> You're running away now, {player}? The fight's finished, you know..."), {player=player.name()} ) )

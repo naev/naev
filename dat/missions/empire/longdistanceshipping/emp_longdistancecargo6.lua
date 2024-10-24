@@ -107,7 +107,7 @@ function land()
    vn.sfxVictory()
    vn.func( function ()
       player.pay( emp.rewards.ldc6 )
-      faction.modPlayerSingle( "Empire",3 )
+      faction.hit( "Empire",3 )
    end )
    vn.na(fmt.reward( emp.rewards.ldc6 ))
 

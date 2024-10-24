@@ -151,7 +151,7 @@ From the cockpit you see the marines lead the prisoners in front of them with gu
       soldner(_([[He sighs. "We had good people there. And we certainly didn't want you to start with a mess like this, but if you're interested in more missions, meet me up in the bar in a while. We get no rest around here. The payment has already been transferred to your bank account."]]))
       vn.func( function ()
          player.pay( emp.rewards.es00 )
-         faction.modPlayerSingle("Empire",5)
+         faction.hit( "Empire", 5 )
       end )
       vn.sfxVictory()
       vn.na(fmt.reward( emp.rewards.es00 ))

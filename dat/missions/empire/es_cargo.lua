@@ -139,7 +139,7 @@ function land()
 
       -- increase faction
       local reputation = rnd.rnd(2, 4)
-      faction.modPlayerSingle("Empire", reputation)
+      faction.hit( "Empire", reputation )
       pir.reputationNormalMission(reputation)
       misn.finish(true)
    end

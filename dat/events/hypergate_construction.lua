@@ -226,7 +226,7 @@ function boss_board ()
          pp:cargoRm( m, a )
          player.pay( a * markup * m:price() )
          -- Add some faction too
-         hypergate:faction():modPlayer( a * standing )
+         hypergate:faction():hit( a * standing )
          -- Store how much was traded
          local q = var.peek( traded_amount ) or 0
          var.push( traded_amount, q+a )

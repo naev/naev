@@ -331,7 +331,7 @@ function land ()
 
       -- Rewards
       player.pay(credits)
-      faction.modPlayerSingle("Empire",5)
+      faction.hit("Empire",5)
 
       misn.finish(true)
    end

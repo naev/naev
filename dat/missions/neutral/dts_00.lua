@@ -100,7 +100,7 @@ function enter_system()
          hook.timer(1.0, "ship_enters")
       elseif mem.defender == true then
          player.msg( _("You fled from the battle. The Empire won't forget.") )
-         faction.modPlayerSingle( "Empire", -3)
+         faction.hit( "Empire", -3)
          misn.finish( true)
       elseif mem.this_system == system.cur() and mem.been_here_before ~= true then
          mem.been_here_before = true
@@ -189,7 +189,7 @@ function celebrate_victory()
     "Well done. You got those pirates on the run!" he exclaims. "Maybe they'll think twice now before bothering us again. I hope you all feel proud. You've spared this planet millions in shipping, and saved countless lives. And you've earned a reward. Before you take off today, the port authority will give you each forty thousand credits. Congratulations!"
     Your comrades raise a cheer, and everyone shakes the portmaster's hand. One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]]) )
       player.pay( reward )
-      faction.modPlayerSingle( "Empire", 3)
+      faction.hit( "Empire", 3)
       tk.msg( _("Over drinks"), fmt.f( _([[Many periods later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the Battle of {sys},' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.
     "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]]), {sys=mem.this_system} ) )
       misn.finish( true)
@@ -214,8 +214,8 @@ end
 
 function abort()
    if mem.victory ~= true then
-      faction.modPlayerSingle( "Empire", -10)
-      faction.modPlayerSingle( "Trader", -10)
+      faction.hit( "Empire", -10)
+      faction.hit( "Trader", -10)
       player.msg( fmt.f( _("Comm Trader> You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )
    else
       player.msg( fmt.f( _("Comm Trader> You're running away now, {player}? The fight's finished, you know..."), {player=player.name()} ) )
