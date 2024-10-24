@@ -3,7 +3,7 @@
 <mission name="Za'lek Test">
  <priority>3</priority>
  <cond>
-   if faction.playerStanding("Za'lek") &lt; 0 then
+   if system.cur():reputation("Za'lek") &lt; 0 or faction.reputationGlobal("Za'lek") &lt; 0 then
       return false
    end
    if spob.cur():services()["outfits"] == nil then

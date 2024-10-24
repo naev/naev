@@ -151,8 +151,8 @@ end
 --]]
 function pir.reputationNormalMission( amount )
    for k,v in ipairs(pir.factions_clans) do
-      local s = v:playerStanding()
-      local d = v:playerStandingDefault()
+      local s = v:reputationGlobal()
+      local d = v:reputationDefault()
       -- TODO Probably should handle this minimum stuff better
       local vamount = -amount
       if s > d then
@@ -179,7 +179,7 @@ end
 function pir.maxClanStanding ()
    local maxval = -100
    for k,v in ipairs(pir.factions_clans) do
-      local vs = v:playerStanding()
+      local vs = v:reputationGlobal()
       maxval = math.max( maxval, vs )
    end
    return maxval
@@ -193,11 +193,11 @@ function pir.updateStandings( maxval )
    if not pp:exists() then return end
    maxval = maxval or pir.maxClanStanding()
    if pir.isPirateShip( pp ) then
-      fpir:setPlayerStanding( maxval )
-      fmar:setPlayerStanding( maxval - 20 )
+      fpir:setReputationGlobal( maxval )
+      fmar:setReputationGlobal( maxval - 20 )
    else
-      fpir:setPlayerStanding( maxval - 20 )
-      fmar:setPlayerStanding( maxval - 40 )
+      fpir:setReputationGlobal( maxval - 20 )
+      fmar:setReputationGlobal( maxval - 40 )
    end
 end
 

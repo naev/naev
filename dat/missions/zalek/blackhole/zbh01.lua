@@ -6,7 +6,7 @@
  <chance>30</chance>
  <faction>Za'lek</faction>
  <cond>
-   if faction.playerStanding("Za'lek") &lt; 0 then
+   if system.cur():reputation("Za'lek") &lt; 0 or faction.reputationGlobal("Za'lek") &lt; 0 then
       return false
    end
    return require("misn_test").reweight_active()

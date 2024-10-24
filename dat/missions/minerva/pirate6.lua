@@ -356,13 +356,13 @@ end
 
 function zl_attacked( _p, attacker )
    if attacker:withPlayer() then
-      fzlk:setPlayerStanding(-100)
+      fzlk:setReputationGlobal(-100)
    end
 end
 
 function dv_attacked( _p, attacker )
    if attacker:withPlayer() then
-      fdvd:setPlayerStanding(-100)
+      fdvd:setReputationGlobal(-100)
    end
 end
 

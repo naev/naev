@@ -28,7 +28,7 @@ local function nameboxUpdateInternal( obj, params )
       if params.bribed then
          faction_str = "#g".._("Bribed").."#0"
       else
-         local _std, str = fac:playerStanding()
+         local _std, str = obj:reputation()
          if params.hostile then
             faction_str = "#r".._("Hostile").."#0"
          elseif not fac:known() then

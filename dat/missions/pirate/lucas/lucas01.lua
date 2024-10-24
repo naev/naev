@@ -6,7 +6,7 @@
  <location>Bar</location>
  <cond>
    -- Required to bribe Maanen's Moon
-   if faction.get("Empire"):playerStanding() &lt; 0 then
+   if spob.get("Maanen's Moon"):reputation() &lt; 0 then
       return false
    end
 

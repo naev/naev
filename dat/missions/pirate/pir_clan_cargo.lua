@@ -11,6 +11,7 @@
       return false
    end
    return true
+ </cond>
  <chance>10</chance>
  <location>Bar</location>
  <faction>Wild Ones</faction>

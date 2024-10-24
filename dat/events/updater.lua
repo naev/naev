@@ -179,14 +179,14 @@ local function updater090 ()
 
    -- Set up pirate faction
    local fpir = faction.get("Pirate")
-   local pirmod = fpir:playerStanding()
+   local pirmod = fpir:reputationGlobal()
    for k,v in ipairs(pir.factions_clans) do
-      local vs = v:playerStanding() -- Only get first parameter
-      local vsd = v:playerStandingDefault()
+      local vs = v:reputationGlobal() -- Only get first parameter
+      local vsd = v:reputationDefault()
       -- We'll be kind and set the player's pirate standing for the clans
       -- to be positive if the player was doing well with pirates before
       if pirmod > 0 and vs==vsd and not v:isKnown() then
-         v:setPlayerStanding( fpir+20 )
+         v:setReputationGlobal( fpir+20 )
       end
    end
    pir.updateStandings() -- Update pirate/marauder
@@ -199,7 +199,7 @@ local function updater090 ()
    if not var.peek("disc_proteron") then
       local pro = faction.get("Proteron")
       pro:setKnown(false)
-      pro:setPlayerStanding( pro:playerStandingDefault() ) -- Hostile by default
+      pro:setReputationGlobal( pro:reputationDefault() ) -- Hostile by default
    end
    local fflf = faction.get("FLF")
    fflf:setKnown(false)

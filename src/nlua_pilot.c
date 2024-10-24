@@ -122,6 +122,7 @@ static int pilotL_speed( lua_State *L );
 static int pilotL_speed_max( lua_State *L );
 static int pilotL_turn( lua_State *L );
 static int pilotL_faction( lua_State *L );
+static int pilotL_reputation( lua_State *L );
 static int pilotL_areEnemies( lua_State *L );
 static int pilotL_areAllies( lua_State *L );
 static int pilotL_spaceworthy( lua_State *L );
@@ -316,6 +317,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "turn", pilotL_turn },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
+   { "reputation", pilotL_reputation },
    { "areEnemies", pilotL_areEnemies },
    { "areAllies", pilotL_areAllies },
    { "spaceworthy", pilotL_spaceworthy },
@@ -2937,6 +2939,20 @@ static int pilotL_faction( lua_State *L )
 {
    const Pilot *p = luaL_validpilot( L, 1 );
    lua_pushfaction( L, p->faction );
+   return 1;
+}
+
+/**
+ * @brief Get the reputation the player has with the pilot's faction.
+ *
+ *    @luatparam Pilot p Pilot to get the reputation with.
+ *    @luatreturn number The reputation with the pilot's faction.
+ * @luafunc reputation
+ */
+static int pilotL_reputation( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot( L, 1 );
+   lua_pushnumber( L, system_getReputation( cur_system, p->faction ) );
    return 1;
 }
 

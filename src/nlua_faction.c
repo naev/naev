@@ -39,12 +39,7 @@ static int factionL_usesHiddenJumps( lua_State *L );
 static int factionL_hit( lua_State *L );
 static int factionL_reputationGlobal( lua_State *L );
 static int factionL_reputationDefault( lua_State *L );
-static int factionL_modplayer( lua_State *L );
-static int factionL_modplayersingle( lua_State *L );
-static int factionL_modplayerraw( lua_State *L );
-static int factionL_setplayerstanding( lua_State *L );
-static int factionL_playerstanding( lua_State *L );
-static int factionL_playerstandingdefault( lua_State *L );
+static int factionL_setReputationGlobal( lua_State *L );
 static int factionL_enemies( lua_State *L );
 static int factionL_allies( lua_State *L );
 static int factionL_logo( lua_State *L );
@@ -57,6 +52,14 @@ static int factionL_tags( lua_State *L );
 static int factionL_dynAdd( lua_State *L );
 static int factionL_dynAlly( lua_State *L );
 static int factionL_dynEnemy( lua_State *L );
+/* Following functions are deprecated and should be removed in 0.13.0. */
+static int factionL_modplayer( lua_State *L );
+static int factionL_modplayersingle( lua_State *L );
+static int factionL_modplayerraw( lua_State *L );
+static int factionL_setplayerstanding( lua_State *L );
+static int factionL_playerstanding( lua_State *L );
+static int factionL_playerstandingdefault( lua_State *L );
+/* End of deprecated functions. */
 
 static const luaL_Reg faction_methods[] = {
    { "exists", factionL_exists },
@@ -73,6 +76,7 @@ static const luaL_Reg faction_methods[] = {
    { "hit", factionL_hit },
    { "reputationGlobal", factionL_reputationGlobal },
    { "reputationDefault", factionL_reputationDefault },
+   { "setReputationGlobal", factionL_setReputationGlobal },
    { "modPlayer", factionL_modplayer },
    { "modPlayerSingle", factionL_modplayersingle },
    { "modPlayerRaw", factionL_modplayerraw },
@@ -462,6 +466,22 @@ static int factionL_reputationDefault( lua_State *L )
 }
 
 /**
+ * @brief Overrides the player's faction global standing with a faction. Use
+ * sparingly as it overrites local standings.
+ *
+ *    @luatparam Faction f Faction to set the player's golbal reptation with.
+ *    @luatreturn number The value of the reputation to set to.
+ * @luafunc setReputationGlobal
+ */
+static int factionL_setReputationGlobal( lua_State *L )
+{
+   int    f = luaL_validfaction( L, 1 );
+   double n = luaL_checknumber( L, 2 );
+   faction_setReputation( f, n );
+   return 0;
+}
+
+/**
  * @brief Modifies the player's standing with the faction.
  *
  * Also modifies standing with allies and enemies of the faction.
@@ -545,7 +565,7 @@ static int factionL_setplayerstanding( lua_State *L )
    NLUA_DEPRECATED( L, "setPlayerStanding" );
    int    f = luaL_validfaction( L, 1 );
    double n = luaL_checknumber( L, 2 );
-   faction_setPlayer( f, n );
+   faction_setReputation( f, n );
    return 0;
 }
 
@@ -867,7 +887,7 @@ static int factionL_dynAdd( lua_State *L )
    if ( clear_enemies )
       faction_clearEnemy( newfac );
    if ( set_player )
-      faction_setPlayer( newfac, player );
+      faction_setReputation( newfac, player );
 
    lua_pushfaction( L, newfac );
    return 1;

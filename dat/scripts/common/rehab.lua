@@ -20,20 +20,20 @@ function rehab.init( fct, params )
    local txtaccept = params.txtaccept or fmt.f(_([[Your application has been processed. The {fct} security forces will no longer attack you on sight. You may conduct your business in {fct} space again, but remember that you still have a criminal record! If you attack any traders, civilians or {fct} ships, or commit any other felony against this faction, you will immediately become their enemy again.]]),
       {fct=fct})
    local txtsuccess = params.txtsuccess or _([[Congratulations, you have successfully worked your way back into good standing with this faction. Try not to relapse into your life of crime!]])
-   local txtabort = params.txtabort or _([[You have committed another offense against this faction! Your rehabilitation procedure has been canceled, and your reputation is once again tarnished. You may start another rehabilitation procedure at a later time.]])
+   local txtabort = params.txtabort or _([[You have committed another offense against this faction! Your rehabilitation procedure has been cancelled, and your reputation is once again tarnished. You may start another rehabilitation procedure at a later time.]])
 
    function create()
       -- Note: this mission does not make any system claims.
 
       -- Only spawn this mission if the player needs it.
-      mem.rep = fct:playerStanding()
+      mem.rep = fct:reputationGlobal()
       if mem.rep >= 0 then
          misn.finish()
       end
 
       -- Don't spawn this mission if the player is buddies with this faction's enemies.
       for _k, enemy in pairs(fct:enemies()) do
-         if enemy:playerStanding() > 20 then
+         if enemy:reputationGlobal() > 20 then
          misn.finish()
          end
       end
@@ -41,7 +41,7 @@ function rehab.init( fct, params )
       setFine( mem.rep )
 
       misn.setTitle(prefix.prefix(fct)..fmt.f(_("{fct} Rehabilitation"), {fct=fct}))
-      local stdval, stdname = fct:playerStanding()
+      local stdval, stdname = fct:reputationGlobal()
       misn.setDesc(desc.."\n\n"..fmt.f(_([[#nFaction:#0 {fct}
 #nCost:#0 {credits}
 #nCurrent Standing:#0 #r{standingname} ({standingvalue})#0]]),
@@ -116,7 +116,7 @@ function rehab.init( fct, params )
             setosd()
          else
             mem.excess = mem.excess + delta
-            if mem.excess < 0 or fct:playerStanding() < 0 then
+            if mem.excess < 0 or fct:reputationGlobal() < 0 then
                abort()
             end
          end
@@ -131,7 +131,7 @@ function rehab.init( fct, params )
       -- Reapply the original negative reputation.
       fct:modPlayerRaw(mem.rep)
 
-      vntk.msg(fmt.f(_("{fct} Rehabilitation Canceled"), {fct=fct}), txtabort )
+      vntk.msg(fmt.f(_("{fct} Rehabilitation Cancelled"), {fct=fct}), txtabort )
       misn.finish(false)
    end
 end

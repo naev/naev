@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Convoy Raid">
  <priority>4</priority>
- <cond>faction.playerStanding("Pirate") &gt;= -20</cond>
+ <cond>faction.reputationGlobal("Pirate") &gt;= -20</cond>
  <chance>460</chance>
  <location>Computer</location>
  <faction>Wild Ones</faction>

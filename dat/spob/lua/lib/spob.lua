@@ -189,11 +189,10 @@ end
 
 function luaspob.load ()
    -- Basic stuff
-   local fct = mem.spob:faction()
    mem.bribed = false
 
    mem.bribe_cost_function = mem.params.bribe_cost or function ()
-      local std = fct:playerStanding()
+      local std = mem.spob:reputation()
       return (mem.std_land-std) * 1e3 * player.pilot():ship():size() + 5e3
    end
 
@@ -243,7 +242,7 @@ function luaspob.can_land ()
    if not fct then
       return true,nil -- Use default landing message
    end
-   local std = fct:playerStanding()
+   local std = mem.spob:reputation()
    if mem.spob:getLandDeny() or std < 0 or mem.spob:hostile() then
       return false, mem.msg_denied
    end
@@ -259,7 +258,6 @@ function luaspob.comm ()
       return false
    end
 
-   local fct = mem.spob:faction()
    vn.clear()
    vn.scene()
    local spb = ccomm.newCharacterSpob( vn, mem.spob, {
@@ -274,7 +272,7 @@ function luaspob.comm ()
       local opts = {
          { _("Close"), "leave" }
       }
-      local std = fct:playerStanding()
+      local std = mem.spob:reputation()
       if (mem.spob:hostile() or std < mem.std_land) and not mem.bribed then
          table.insert( opts, 1, { _("Bribe"), "bribe" } )
       end
@@ -284,7 +282,7 @@ function luaspob.comm ()
    local bribe_cost
    vn.label("bribe")
    vn.func( function ()
-      local std = fct:playerStanding()
+      local std = mem.spob:reputation()
       if std < mem.std_dangerous then
          vn.jump("dangerous")
          return

@@ -971,7 +971,7 @@ void faction_modPlayerRaw( int f, double mod )
  *    @param f Faction to set the player's standing for.
  *    @param value Value to set the player's standing to.
  */
-void faction_setPlayer( int f, double value )
+void faction_setReputation( int f, double value )
 {
    Faction *faction;
    double   mod;
