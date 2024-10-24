@@ -12,8 +12,6 @@ function sbase.init( args )
 
    -- Faction caps.
    sbase.cap_kill           = args.cap_kill            or 20       -- Kill cap
-   sbase.delta_distress     = args.delta_distress      or {-1, 0}  -- Maximum change constraints
-   sbase.delta_kill         = args.delta_kill          or {-5, 1}  -- Maximum change constraints
    sbase.cap_misn_def       = args.cap_misn_def        or 30       -- Starting mission cap, gets overwritten
    sbase.cap_misn_var       = args.cap_misn_var        or nil      -- Mission variable to use for limits
 
@@ -45,27 +43,51 @@ function sbase.init( args )
    return sbase
 end
 
---[[
-   Clamps a value x between low and high.
---]]
-local function clamp( low, high, x )
-   return math.max( low, math.min( high, x ) )
-end
+local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
+   -- Make sure it doesn't go over the true cap
+   cap = math.min( reputation_max(), cap )
 
---[[
-   Linearly interpolates x between x1,y1 and x2,y2
---]]
-local function lerp( x, x1, y1, x2, y2 )
-   local m = (y1-y2) / (x1-x2)
-   local b = y1-m*x1
-   return m*x + b
-end
+   -- Adjust for secondary hit if applicable
+   if secondary then
+      if mod > 0 then
+         mod = mod * modenemy
+      else
+         mod = mod * modfriend
+      end
+   end
 
---[[
-   Same as lerp but clamps to [0,1].
---]]
-local function clerp( x, x1, y1, x2, y2 )
-   return clamp( 0, 1, lerp( x, x1, y1, x2, y2 ) )
+   -- Being applied to a system
+   if sys then
+      local f = sys:reputation( sbase.fct ) + mod
+      f = math.min( cap, f )
+      sys:setReputation( sbase.fct, f )
+      sbase.fct:applyLocalThreshold( sys )
+   else
+      -- Apply change to all systems
+      local minsys, maxsys
+      local minval, maxval = math.huge, -math.huge
+      for k,s in ipairs(system.getAll()) do
+         local f = s:reputation( sbase.fct )
+         if f < minval then
+            minsys = s
+            minval = f
+         end
+         if f > maxval then
+            maxsys = s
+            maxval = f
+         end
+         s:setReputation( sbase.fct, f+mod )
+      end
+
+      -- Now propagate the thresholding from the max or min depending on sign of mod
+      if mod >= 0 then
+         sys = maxsys
+      else
+         sys = minsys
+      end
+      sbase.fct:applyLocalThreshold( sys )
+   end
+
 end
 
 --[[
@@ -79,98 +101,22 @@ Possible sources:
    - "scan": when scanned by pilots and illegal content is found
    - "script": Either a mission or an event.
 
-   @param current Current faction player has.
-   @param amount Amount of faction being changed.
+   @param sys System (or nil for global) that is having the hit
+   @param mod Amount of faction being changed.
    @param source Source of the faction hit.
    @param secondary Flag that indicates whether this is a secondary (through ally or enemy) hit.
    @return The faction amount to set to.
 --]]
-function hit( current, amount, source, secondary )
-   -- Comfort macro
-   local f = current
-   local delta = {-200, 200}
+function hit( sys, mod, source, secondary )
+   if source=="distress" or source=="scan" then
+      fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_distress_enemy, sbase.mode_distress_friend )
 
-   -- Set caps and/or deltas based on source
-   local cap
-   local mod = 1
-   if source == "distress" or source == "scan" then
-      cap   = sbase.cap_kill
-      delta = tcopy( sbase.delta_distress )
+   elseif source == "kill" or source=="board" or source=="capture"then
+      fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_kill_enemy, sbase.mod_kill_friend )
 
-      -- Adjust for secondary hit
-      if secondary then
-         if amount > 0 then
-            mod = mod * sbase.mod_distress_enemy
-         else
-            mod = mod * sbase.mod_distress_friend
-         end
-      end
-   elseif source == "kill" then
-      cap   = sbase.cap_kill
-      delta = tcopy( sbase.delta_kill )
-
-      -- Adjust for secondary hit
-      if secondary then
-         if amount > 0 then
-            mod = mod * sbase.mod_kill_enemy
-         else
-            mod = mod * sbase.mod_kill_friend
-         end
-      end
    else
-      cap = reputation_max()
-
-      -- Adjust for secondary hit
-      if secondary then
-         if amount > 0 then
-            mod = mod * sbase.mod_misn_friend
-         else
-            mod = mod * sbase.mod_misn_enemy
-         end
-      end
+      fctmod( sys, mod, reputation_max(), secondary, sbase.mod_misn_enemy, sbase.mod_misn_friend )
    end
-
-   amount = mod * amount
-   delta[1] = mod * delta[1]
-   delta[2] = mod * delta[2]
-
-   -- Faction gain
-   if amount > 0 then
-      -- Must be under cap
-      if f < cap then
-         if source == "kill" then
-            local has_planet
-            -- Positive kill, which means an enemy of this faction got killed.
-            -- We need to check if this happened in the faction's territory, otherwise it doesn't count.
-            for _k, planet in ipairs(system.cur():spobs()) do
-                if planet:faction() == sbase.fct then
-                   -- Planet belonging to this faction found. Modify reputation.
-                   f = math.min( cap, f + math.min(delta[2], amount * clerp( f, 0, 1, cap, 0.2 )) )
-                   has_planet = true
-                   break
-                end
-            end
-            local witness = pilot.get( { sbase.fct } )
-            if not has_planet and witness then
-               for _k, pilot in ipairs(witness) do
-                  if player.pos():dist( pilot:pos() ) < 5000 then
-                     -- Halve impact relative to a normal secondary hit.
-                     f = math.min( cap, f + math.min(delta[2], amount * 0.5 * clerp( f, 0, 1, cap, 0.2 )) )
-                     break
-                  end
-               end
-            end
-         else
-            -- Script induced change. No diminishing returns on these.
-            f = math.min( cap, f + math.min(delta[2], amount) )
-         end
-      end
-   -- Faction loss.
-   else
-      -- No diminishing returns on loss.
-      f = math.max( -100, f + math.max(delta[1], amount) )
-   end
-   return f
 end
 
 

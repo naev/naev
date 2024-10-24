@@ -130,8 +130,6 @@ static int  faction_parse( Faction *temp, const char *file );
 static int  faction_parseSocial( const char *file );
 static void faction_addStandingScript( Faction *temp, const char *scriptname );
 static void faction_computeGrid( void );
-static void faction_cleanLocalSingle( int f, StarSystem *sys );
-static void faction_cleanLocalSingleMax( Faction *f );
 /* externed */
 int pfaction_save( xmlTextWriterPtr writer );
 int pfaction_load( xmlNodePtr parent );
@@ -1732,7 +1730,7 @@ void faction_updateGlobal( void )
    }
 }
 
-static void faction_cleanLocalSingle( int f, StarSystem *sys )
+void faction_applyLocalThreshold( int f, StarSystem *sys )
 {
    /* Second pass, start to propagate. */
    int            *done   = array_create( int );
@@ -1785,39 +1783,6 @@ static void faction_cleanLocalSingle( int f, StarSystem *sys )
    array_free( done );
    array_free( queuea );
    array_free( queueb );
-}
-
-static void faction_cleanLocalSingleMax( Faction *f )
-{
-   double      maxval    = 0.;
-   StarSystem *maxsys    = NULL;
-   StarSystem *sys_stack = system_getAll();
-
-   /* First pass, find max faction standing to propagate from there. */
-   for ( int i = 0; i < array_size( sys_stack ); i++ ) {
-      StarSystem *sys = &sys_stack[i];
-      for ( int j = 0; j < array_size( sys->presence ); j++ ) {
-         SystemPresence *sp = &sys->presence[j];
-         if ( sp->faction != ( f - faction_stack ) )
-            continue;
-         if ( sp->local <= maxval )
-            continue;
-
-         maxval = sp->local;
-         maxsys = sys;
-      }
-   }
-   faction_cleanLocalSingle( f - faction_stack, maxsys );
-}
-
-void factions_cleanLocal( void )
-{
-   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
-      Faction *f = &faction_stack[i];
-      if ( faction_isFlag( f, FACTION_STATIC ) )
-         continue;
-      faction_cleanLocalSingleMax( f );
-   }
 }
 
 /**

@@ -40,6 +40,7 @@ static int factionL_hit( lua_State *L );
 static int factionL_reputationGlobal( lua_State *L );
 static int factionL_reputationDefault( lua_State *L );
 static int factionL_setReputationGlobal( lua_State *L );
+static int factionL_applyLocalThreshold( lua_State *L );
 static int factionL_enemies( lua_State *L );
 static int factionL_allies( lua_State *L );
 static int factionL_logo( lua_State *L );
@@ -77,6 +78,7 @@ static const luaL_Reg faction_methods[] = {
    { "reputationGlobal", factionL_reputationGlobal },
    { "reputationDefault", factionL_reputationDefault },
    { "setReputationGlobal", factionL_setReputationGlobal },
+   { "applyLocalThreshold", factionL_applyLocalThreshold },
    { "modPlayer", factionL_modplayer },
    { "modPlayerSingle", factionL_modplayersingle },
    { "modPlayerRaw", factionL_modplayerraw },
@@ -477,7 +479,26 @@ static int factionL_setReputationGlobal( lua_State *L )
 {
    int    f = luaL_validfaction( L, 1 );
    double n = luaL_checknumber( L, 2 );
+   /* TODO finish. */
    faction_setReputation( f, n );
+   return 0;
+}
+
+/**
+ * @brief Enforces the local threshold of a faction starting at a particular
+ * system. Meant to be used when computing faction hits from the faction
+ * standing Lua scripts. Not meant for use elsewhere.
+ *
+ *    @luatparam Faction f Faction to apply local thresholding to.
+ *    @luatparam System sys System to compute the thresholding from. This will
+ * be the reference and will not have its value modified.
+ * @luafunc applyLocalThreshold
+ */
+static int factionL_applyLocalThreshold( lua_State *L )
+{
+   int         f   = luaL_validfaction( L, 1 );
+   StarSystem *sys = luaL_validsystem( L, 2 );
+   faction_applyLocalThreshold( f, sys );
    return 0;
 }
 
