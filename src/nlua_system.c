@@ -1020,8 +1020,7 @@ static int systemL_markerRm( lua_State *L )
 static int systemL_reputation( lua_State *L )
 {
    const StarSystem *sys = luaL_validsystem( L, 1 );
-   int               f   = luaL_optfaction( L, 2, -1 );
-   if ( f < 0 ) {
+   if ( lua_isnoneornil( L, 2 ) ) {
       lua_newtable( L );
       for ( int i = 0; i < array_size( sys->presence ); i++ ) {
          const char *name = faction_name( sys->presence[i].faction );
@@ -1030,13 +1029,16 @@ static int systemL_reputation( lua_State *L )
       }
       return 1;
    }
+
+   int f = luaL_validfaction( L, 2 );
    for ( int i = 0; i < array_size( sys->presence ); i++ ) {
       if ( sys->presence[i].faction == f ) {
          lua_pushnumber( L, sys->presence[i].local );
          return 1;
       }
    }
-   return 0;
+   lua_pushnumber( L, faction_reputation( f ) );
+   return 1;
 }
 
 /**
@@ -1050,7 +1052,7 @@ static int systemL_reputation( lua_State *L )
 static int systemL_setReputation( lua_State *L )
 {
    const StarSystem *sys = luaL_validsystem( L, 1 );
-   int               f   = luaL_optfaction( L, 2, -1 );
+   int               f   = luaL_validfaction( L, 2 );
    double            m   = luaL_checknumber( L, 3 );
    for ( int i = 0; i < array_size( sys->presence ); i++ ) {
       if ( sys->presence[i].faction != f )

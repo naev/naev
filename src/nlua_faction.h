@@ -7,10 +7,6 @@
 
 #define FACTION_METATABLE "faction" /**< Faction metatable identifier. */
 
-/* Helper. */
-#define luaL_optfaction( L, ind, def )                                         \
-   nluaL_optarg( L, ind, def, lua_checkfaction )
-
 /**
  * @brief Lua Faction wrapper.
  */
