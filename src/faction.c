@@ -1732,10 +1732,6 @@ void faction_updateGlobal( void )
 
 void faction_applyLocalThreshold( int f, StarSystem *sys )
 {
-   /* Second pass, start to propagate. */
-   int            *done   = array_create( int );
-   int            *queuea = array_create( int );
-   int            *queueb = array_create( int );
    SystemPresence *srep =
       system_getFactionPresence( sys, f ); /* Starting reputation. */
    if ( srep == NULL )
@@ -1744,35 +1740,42 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
    double      rep       = srep->local;
    StarSystem *sys_stack = system_getAll();
    double      th        = faction_stack[f].local_th;
+   int        *done      = array_create( int );
+   int        *queuea    = array_create( int );
+   int        *queueb    = array_create( int );
 
    array_push_back( &queuea, sys->id );
+   array_push_back( &done, sys->id );
    while ( array_size( queuea ) > 0 ) {
       /* Go backwards through queue. */
-      for ( int i = array_size( queuea ) - 1; i >= 0; i-- ) {
+      for ( int i = 0; i < array_size( queuea ); i++ ) {
          StarSystem *qsys = &sys_stack[queuea[i]];
 
          /* Update local presence. */
-         srep = system_getFactionPresence( sys, f );
+         srep = system_getFactionPresence( qsys, f );
          if ( srep != NULL )
             srep->local = CLAMP( rep - n * th, rep + n * th, srep->local );
 
          /* Propagate to next systems. */
          for ( int j = 0; j < array_size( qsys->jumps ); j++ ) {
-            StarSystem *nsys = qsys->jumps[j].target;
+            StarSystem *nsys  = qsys->jumps[j].target;
+            int         found = 0;
             for ( int k = 0; k < array_size( done ); k++ ) {
-               if ( nsys->id == done[k] )
-                  continue;
+               if ( nsys->id == done[k] ) {
+                  found = 1;
+                  break;
+               }
             }
+            if ( found )
+               continue;
             array_push_back( &queueb, nsys->id );
+            array_push_back( &done, nsys->id );
          }
-
-         /* Erase and add to done. */
-         array_push_back( &done, queuea[i] );
-         array_erase( &queuea, &queuea[i], &queuea[i - 1] );
-
-         /* Increment distance. */
-         n++;
       }
+      array_erase( &queuea, array_begin( queuea ), array_end( queuea ) );
+
+      /* Increment distance. */
+      n++;
 
       /* Flip buffers. */
       int *queue = queuea;
