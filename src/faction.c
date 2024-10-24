@@ -1767,8 +1767,8 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
          }
 
          /* Erase and add to done. */
-         array_erase( &queuea, &queuea[i], &queuea[i - 1] );
          array_push_back( &done, queuea[i] );
+         array_erase( &queuea, &queuea[i], &queuea[i - 1] );
 
          /* Increment distance. */
          n++;
