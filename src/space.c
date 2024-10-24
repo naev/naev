@@ -4180,7 +4180,7 @@ int space_playerSave( xmlTextWriterPtr writer )
          const SystemPresence *sp = &sys->presence[j];
          if ( faction_isStatic( sp->faction ) )
             continue;
-         if ( fabs( sp->local - faction_getPlayer( sp->faction ) ) <=
+         if ( fabs( sp->local - faction_reputation( sp->faction ) ) <=
               DOUBLE_TOL )
             continue;
          xmlw_startElem( writer, "faction" );
@@ -4475,6 +4475,32 @@ sys_cleanup:
    for ( int i = 0; i < array_size( systems_stack ); i++ )
       systems_stack[i].spilled = 0;
    return;
+}
+
+SystemPresence *system_getFactionPresence( StarSystem *sys, int faction )
+{
+   /* Go through the array, looking for the faction. */
+   for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+      if ( sys->presence[i].faction == faction )
+         return &sys->presence[i];
+   }
+   return NULL;
+}
+
+double system_getReputation( StarSystem *sys, int faction )
+{
+   const SystemPresence *sp = system_getFactionPresence( sys, faction );
+   if ( sp != NULL )
+      return sp->local;
+   return 0.;
+}
+
+double system_getReputationOrGlobal( StarSystem *sys, int faction )
+{
+   const SystemPresence *sp = system_getFactionPresence( sys, faction );
+   if ( sp != NULL )
+      return sp->local;
+   return faction_reputation( faction );
 }
 
 /**

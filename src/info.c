@@ -1204,8 +1204,8 @@ static int factionsSort( const void *p1, const void *p2 )
    double v1, v2;
    f1 = *(int *)p1;
    f2 = *(int *)p2;
-   v1 = round( faction_getPlayer( f1 ) );
-   v2 = round( faction_getPlayer( f2 ) );
+   v1 = round( faction_reputation( f1 ) );
+   v2 = round( faction_reputation( f2 ) );
    if ( v1 < v2 )
       return 1;
    else if ( v1 > v2 )
@@ -1249,7 +1249,7 @@ static void info_openStandings( unsigned int wid )
 
    /* Create list. */
    for ( int i = 0; i < array_size( info_factions ); i++ ) {
-      double m = round( faction_getPlayer( info_factions[i] ) );
+      double m = round( faction_reputation( info_factions[i] ) );
       SDL_asprintf( &str[i], p_( "standings", "%s   [ #%c%+.0f%%#0 ]" ),
                     faction_longname( info_factions[i] ),
                     faction_getColourChar( info_factions[i] ), m );
@@ -1297,7 +1297,7 @@ static void standings_update( unsigned int wid, const char *str )
 
    /* Modify text. */
    y -= 10;
-   m = round( faction_getPlayer( info_factions[p] ) );
+   m = round( faction_reputation( info_factions[p] ) );
    snprintf( buf, sizeof( buf ), p_( "standings", "#%c%+.0f%%#0   [ %s ]" ),
              faction_getColourChar( info_factions[p] ), m,
              faction_getStandingText( info_factions[p] ) );

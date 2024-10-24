@@ -1012,7 +1012,7 @@ void faction_setPlayer( int f, double value )
  *    @param f Faction to get player's standing from.
  *    @return The standing the player has with the faction.
  */
-double faction_getPlayer( int f )
+double faction_reputation( int f )
 {
    if ( faction_isFaction( f ) )
       return faction_stack[f].player;
@@ -1026,7 +1026,7 @@ double faction_getPlayer( int f )
  *    @param f Faction to get player's default standing from.
  *    @return The default standing the player has with the faction.
  */
-double faction_getPlayerDef( int f )
+double faction_reputationDefault( int f )
 {
    if ( faction_isFaction( f ) )
       return faction_stack[f].player_def;
@@ -1634,7 +1634,7 @@ void factions_resetLocal( void )
       StarSystem *sys = &sys_stack[i];
       for ( int j = 0; j < array_size( sys->presence ); j++ ) {
          SystemPresence *sp = &sys->presence[j];
-         sp->local          = faction_getPlayer( sp->faction );
+         sp->local          = faction_reputation( sp->faction );
       }
    }
    // faction_updateGlobal();
@@ -1663,23 +1663,14 @@ void faction_updateGlobal( void )
    }
 }
 
-static SystemPresence *sys_getRep( const StarSystem *sys, int faction )
-{
-   /* Go through the array, looking for the faction. */
-   for ( int i = 0; i < array_size( sys->presence ); i++ ) {
-      if ( sys->presence[i].faction == faction )
-         return &sys->presence[i];
-   }
-   return NULL;
-}
-
 static void faction_cleanLocalSingle( int f, StarSystem *sys )
 {
    /* Second pass, start to propagate. */
    int            *done   = array_create( int );
    int            *queuea = array_create( int );
    int            *queueb = array_create( int );
-   SystemPresence *srep   = sys_getRep( sys, f ); /* Starting reputation. */
+   SystemPresence *srep =
+      system_getFactionPresence( sys, f ); /* Starting reputation. */
    if ( srep == NULL )
       return;
    double      n         = 0;
@@ -1694,7 +1685,7 @@ static void faction_cleanLocalSingle( int f, StarSystem *sys )
          StarSystem *qsys = &sys_stack[queuea[i]];
 
          /* Update local presence. */
-         srep = sys_getRep( sys, f );
+         srep = system_getFactionPresence( sys, f );
          if ( srep != NULL )
             srep->local = CLAMP( rep - n * th, rep + n * th, srep->local );
 

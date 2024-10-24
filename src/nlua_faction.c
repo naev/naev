@@ -430,7 +430,7 @@ static int factionL_hit( lua_State *L )
 static int factionL_reputationGlobal( lua_State *L )
 {
    int f = luaL_validfaction( L, 1 );
-   lua_pushnumber( L, faction_getPlayer( f ) );
+   lua_pushnumber( L, faction_reputation( f ) );
    return 1;
 }
 
@@ -444,7 +444,7 @@ static int factionL_reputationGlobal( lua_State *L )
 static int factionL_reputationDefault( lua_State *L )
 {
    int f = luaL_validfaction( L, 1 );
-   lua_pushnumber( L, faction_getPlayerDef( f ) );
+   lua_pushnumber( L, faction_reputationDefault( f ) );
    return 1;
 }
 
@@ -558,7 +558,7 @@ static int factionL_playerstanding( lua_State *L )
    if ( !lua_isnoneornil( L, 2 ) )
       n = luaL_checknumber( L, 2 );
    else
-      n = faction_getPlayer( f );
+      n = faction_reputation( f );
    lua_pushnumber( L, n );
    lua_pushstring( L, faction_getStandingTextAtValue( f, n ) );
    return 2;
@@ -575,7 +575,7 @@ static int factionL_playerstandingdefault( lua_State *L )
 {
    NLUA_DEPRECATED( L, "playerStandingDefault" );
    int    f = luaL_validfaction( L, 1 );
-   double n = faction_getPlayerDef( f );
+   double n = faction_reputationDefault( f );
    lua_pushnumber( L, n );
    return 1;
 }

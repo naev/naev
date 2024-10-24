@@ -455,9 +455,12 @@ void spobs_render( void );
 /*
  * Presence stuff.
  */
-void   system_presenceCleanupAll( void );
-void   system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap );
-double system_getPresence( const StarSystem *sys, int faction );
+void system_presenceCleanupAll( void );
+void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap );
+SystemPresence *system_getFactionPresence( StarSystem *sys, int faction );
+double          system_getReputation( StarSystem *sys, int faction );
+double          system_getReputationOrGlobal( StarSystem *sys, int faction );
+double          system_getPresence( const StarSystem *sys, int faction );
 double system_getPresenceFull( const StarSystem *sys, int faction, double *base,
                                double *bonus );
 void   system_addAllSpobsPresence( StarSystem *sys );
