@@ -524,7 +524,7 @@ static void map_system_render( double bx, double by, double w, double h,
             continue;
          hasPresence = 1;
          if ( faction_isKnown( sys->presence[i].faction ) ) {
-            t = faction_getColourChar( sys->presence[i].faction );
+            t = faction_reputationColourChar( sys->presence[i].faction );
             cnt += scnprintf( &buf[cnt], sizeof( buf ) - cnt, "#n%s: #%c%.0f\n",
                               faction_shortname( sys->presence[i].faction ), t,
                               sys->presence[i].value );

@@ -1110,10 +1110,10 @@ void pilot_setHostile( Pilot *p )
 }
 
 /**
- * @brief Gets the faction colour char, works like faction_getColourChar but for
- * a pilot.
+ * @brief Gets the faction colour char, works like faction_reputationColourChar
+ * but for a pilot.
  *
- * @sa faction_getColourChar
+ * @sa faction_reputationColourChar
  */
 char pilot_getFactionColourChar( const Pilot *p )
 {
@@ -1125,7 +1125,7 @@ char pilot_getFactionColourChar( const Pilot *p )
       return 'H';
    else if ( pilot_isFlag( p, PILOT_BRIBED ) )
       return 'N';
-   return faction_getColourChar( p->faction );
+   return faction_reputationColourChar( p->faction );
 }
 
 /**

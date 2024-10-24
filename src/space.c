@@ -4486,18 +4486,35 @@ SystemPresence *system_getFactionPresence( StarSystem *sys, int faction )
    }
    return NULL;
 }
-
-double system_getReputation( StarSystem *sys, int faction )
+const SystemPresence *system_getFactionPresenceConst( const StarSystem *sys,
+                                                      int faction )
 {
-   const SystemPresence *sp = system_getFactionPresence( sys, faction );
+   /* Go through the array, looking for the faction. */
+   for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+      if ( sys->presence[i].faction == faction )
+         return &sys->presence[i];
+   }
+   return NULL;
+}
+
+/**
+ * @brief Gets the local reputation of the player in a system or returns 0.
+ */
+double system_getReputation( const StarSystem *sys, int faction )
+{
+   const SystemPresence *sp = system_getFactionPresenceConst( sys, faction );
    if ( sp != NULL )
       return sp->local;
    return 0.;
 }
 
-double system_getReputationOrGlobal( StarSystem *sys, int faction )
+/**
+ * @brief Gets the local reputation of the player in a system or returns the
+ * global standing.
+ */
+double system_getReputationOrGlobal( const StarSystem *sys, int faction )
 {
-   const SystemPresence *sp = system_getFactionPresence( sys, faction );
+   const SystemPresence *sp = system_getFactionPresenceConst( sys, faction );
    if ( sp != NULL )
       return sp->local;
    return faction_reputation( faction );

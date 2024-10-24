@@ -1045,6 +1045,11 @@ int faction_isPlayerFriend( int f )
    const Faction *faction = &faction_stack[f];
    return ( faction->player >= faction->friendly_at );
 }
+int faction_isPlayerFriendSystem( int f, const StarSystem *sys )
+{
+   const Faction *faction = &faction_stack[f];
+   return ( system_getReputationOrGlobal( sys, f ) >= faction->friendly_at );
+}
 
 /**
  * @brief Gets whether or not the player is an enemy of the faction.
@@ -1057,6 +1062,10 @@ int faction_isPlayerEnemy( int f )
    const Faction *faction = &faction_stack[f];
    return ( faction->player < 0 );
 }
+int faction_isPlayerEnemySystem( int f, const StarSystem *sys )
+{
+   return ( system_getReputationOrGlobal( sys, f ) < 0 );
+}
 
 /**
  * @brief Gets the colour of the faction based on it's standing with the player.
@@ -1066,7 +1075,7 @@ int faction_isPlayerEnemy( int f )
  *    @param f Faction to get the colour of based on player's standing.
  *    @return Pointer to the colour.
  */
-const glColour *faction_getColour( int f )
+const glColour *faction_reputationColour( int f )
 {
    if ( f < 0 )
       return &cInert;
@@ -1081,13 +1090,13 @@ const glColour *faction_getColour( int f )
 /**
  * @brief Gets the faction character associated to its standing with the player.
  *
- * Use this to do something like "#%c", faction_getColourChar( some_faction ) in
- * the font print routines.
+ * Use this to do something like "#%c", faction_reputationColourChar(
+ * some_faction ) in the font print routines.
  *
  *    @param f Faction to get the colour of based on player's standing.
  *    @return The character associated to the faction.
  */
-char faction_getColourChar( int f )
+char faction_reputationColourChar( int f )
 {
    if ( f < 0 )
       return 'I';
@@ -1309,6 +1318,44 @@ int areAllies( int a, int b )
       return faction_isPlayerFriend( b );
    else if ( b == FACTION_PLAYER )
       return faction_isPlayerFriend( a );
+
+   return faction_grid[a * faction_mgrid + b] > 0;
+}
+
+int areEnemiesSystem( int a, int b, const StarSystem *sys )
+{
+   /* luckily our factions aren't masochistic */
+   if ( a == b )
+      return 0;
+
+   /* Make sure they're valid. */
+   if ( !faction_isFaction( a ) || !faction_isFaction( b ) )
+      return 0;
+
+   /* player handled separately */
+   if ( a == FACTION_PLAYER )
+      return faction_isPlayerEnemySystem( b, sys );
+   else if ( b == FACTION_PLAYER )
+      return faction_isPlayerEnemySystem( a, sys );
+
+   return faction_grid[a * faction_mgrid + b] < 0;
+}
+
+int areAlliesSystem( int a, int b, const StarSystem *sys )
+{
+   /* If they are the same they must be allies. */
+   if ( a == b )
+      return 1;
+
+   /* Make sure they're valid. */
+   if ( !faction_isFaction( a ) || !faction_isFaction( b ) )
+      return 0;
+
+   /* we assume player becomes allies with high rating */
+   if ( a == FACTION_PLAYER )
+      return faction_isPlayerFriendSystem( b, sys );
+   else if ( b == FACTION_PLAYER )
+      return faction_isPlayerFriendSystem( a, sys );
 
    return faction_grid[a * faction_mgrid + b] > 0;
 }

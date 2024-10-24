@@ -1252,7 +1252,7 @@ static void info_openStandings( unsigned int wid )
       double m = round( faction_reputation( info_factions[i] ) );
       SDL_asprintf( &str[i], p_( "standings", "%s   [ #%c%+.0f%%#0 ]" ),
                     faction_longname( info_factions[i] ),
-                    faction_getColourChar( info_factions[i] ), m );
+                    faction_reputationColourChar( info_factions[i] ), m );
    }
 
    /* Display list. */
@@ -1299,7 +1299,7 @@ static void standings_update( unsigned int wid, const char *str )
    y -= 10;
    m = round( faction_reputation( info_factions[p] ) );
    snprintf( buf, sizeof( buf ), p_( "standings", "#%c%+.0f%%#0   [ %s ]" ),
-             faction_getColourChar( info_factions[p] ), m,
+             faction_reputationColourChar( info_factions[p] ), m,
              faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
    window_moveWidget( wid, "txtName", x, y );

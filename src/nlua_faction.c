@@ -672,7 +672,7 @@ static int factionL_logo( lua_State *L )
 static int factionL_colour( lua_State *L )
 {
    int             lf  = luaL_validfaction( L, 1 );
-   const glColour *col = faction_getColour( lf );
+   const glColour *col = faction_reputationColour( lf );
    if ( col == NULL )
       return 0;
    lua_pushcolour( L, *col );

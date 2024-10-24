@@ -70,16 +70,20 @@ double          faction_reputation( int f );
 double          faction_reputationDefault( int f );
 int             faction_isPlayerFriend( int f );
 int             faction_isPlayerEnemy( int f );
+int             faction_isPlayerFriendSystem( int f, const StarSystem *sys );
+int             faction_isPlayerEnemySystem( int f, const StarSystem *sys );
 const char     *faction_getStandingText( int f );
 const char     *faction_getStandingTextAtValue( int f, double value );
 const char     *faction_getStandingBroad( int f, int bribed, int override );
 double          faction_reputationMax( int f );
-const glColour *faction_getColour( int f );
-char            faction_getColourChar( int f );
+const glColour *faction_reputationColour( int f );
+char            faction_reputationColourChar( int f );
 
 /* Works with only factions */
 int areEnemies( int a, int b );
 int areAllies( int a, int b );
+int areEnemiesSystem( int a, int b, const StarSystem *sys );
+int areAlliesSystem( int a, int b, const StarSystem *sys );
 
 /* load/free */
 int  factions_load( void );
