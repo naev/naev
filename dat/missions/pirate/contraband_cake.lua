@@ -165,7 +165,6 @@ As they lumber away, you suddenly notice that quite a few suspicious figures in 
 
    pir.addMiscLog(_("You helped deliver a 'cake' for some shady individuals. Your success has opened up more 'special' delivery missions from the mission computer."))
 
-   -- increase faction, TODO make this be a clan or something
-   faction.hit( "Pirate", rnd.rnd(2, 4), nil, nil, true )
+   faction.hit( pir.systemClan(), rnd.rnd(2, 4), nil, nil, true )
    misn.finish(true)
 end

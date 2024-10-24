@@ -143,7 +143,7 @@ function landed()
    vn.func( function ()
       player.pay(reward)
       pir.modDecayFloor(3)
-      faction.hit( "Pirate", 5 , nil, nil, true ) -- TODO make this be a clan
+      faction.hit( pir.systemClan(), 5 , nil, nil, true )
    end )
    vn.sfxVictory()
    vn.na(fmt.reward(reward))
