@@ -4510,6 +4510,10 @@ const SystemPresence *system_getFactionPresenceConst( const StarSystem *sys,
  */
 double system_getReputation( const StarSystem *sys, int faction )
 {
+   int    set;
+   double val = faction_reputationOverride( faction, &set );
+   if ( set )
+      return val;
    const SystemPresence *sp = system_getFactionPresenceConst( sys, faction );
    if ( sp != NULL )
       return sp->local;
@@ -4522,6 +4526,10 @@ double system_getReputation( const StarSystem *sys, int faction )
  */
 double system_getReputationOrGlobal( const StarSystem *sys, int faction )
 {
+   int    set;
+   double val = faction_reputationOverride( faction, &set );
+   if ( set )
+      return val;
    const SystemPresence *sp = system_getFactionPresenceConst( sys, faction );
    if ( sp != NULL )
       return sp->local;
