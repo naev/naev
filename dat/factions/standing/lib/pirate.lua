@@ -19,7 +19,7 @@ function hit( current, amount, source, secondary )
    local maxval = value
    for k,v in ipairs(pir.factions_clans) do
       if v ~= sbase.fct then
-         local vs = v:playerStanding() -- Only get first parameter
+         local vs = v:reputationGlobal() -- Only get first parameter
          maxval = math.max( maxval, vs )
       end
    end
