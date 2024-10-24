@@ -8,7 +8,7 @@
  <faction>Dvaered</faction>
  <done>Dvaered Negotiation 2</done>
  <cond>
-   if faction.playerStanding("Dvaered") &lt;= 0 then
+   if system.cur():reputation("Dvaered") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 then
       return false
    end
    if system.get("Goddard"):jumpDist() &gt;= 10 then
@@ -76,7 +76,7 @@ function accept()
    local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
    local doaccept = false
 
-   local std = faction.playerStanding("Dvaered")
+   local std = faction.reputationGlobal("Dvaered")
    if std < 20 then
       sol(fmt.f(_([["Hello, citizen. You lack reputation with House Dvareed for us to entrust you with work."
 

@@ -8,7 +8,7 @@
  <faction>Dvaered</faction>
  <done>Dvaered Delivery</done>
  <cond>
-   if faction.playerStanding("Dvaered") &lt; 0 then
+   if system.cur():reputation("Dvaered") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 then
       return false
    end
    --return require("misn_test").reweight_active() -- don't reweight for licenses
@@ -98,7 +98,7 @@ function accept()
    local doaccept = false
    vn.transition()
 
-   local std = faction.playerStanding("Dvaered")
+   local std = faction.reputationGlobal("Dvaered")
    if std < 20 then
       sol(fmt.f(_([["Hello, citizen. You lack reputation with House Dvareed for us to entrust you with work."
 

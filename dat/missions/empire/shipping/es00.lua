@@ -4,7 +4,7 @@
  <unique />
  <priority>2</priority>
  <cond>
-   if faction.playerStanding("Empire") &lt; 0 or faction.playerStanding("Dvaered") &lt; 0 or faction.playerStanding("FLF") &gt;= 10 then
+   if system.cur():reputation("Empire") &lt; 0 or faction.reputationGlobal("Empire") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 or faction.reputationGlobal("FLF") &gt;= 10 then
       return false
    end
    --return require("misn_test").reweight_active() -- Don't reweight as licenses are important!

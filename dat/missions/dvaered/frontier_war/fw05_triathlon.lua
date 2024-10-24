@@ -589,7 +589,7 @@ function compDie( _victim, attacker )
    -- This was a bad idea
    if attacker and attacker:withPlayer() then
       tk.msg( _("That was not very smart."), _([[While watching the hull of your opponent's ship collapsing under the impact of your rockets, you suddenly remember with horror that this is all just a competition. You think that the Dvaered might be upset at you for this, but then you realize they will probably just kill you instead.]]) )
-      faction.get("Dvaered").setPlayerStanding(-100)
+      faction.get("Dvaered").setReputationGlobal(-100)
       for i, p in ipairs(competitors) do
          p:taskClear()
          p:attack( player.pilot() )

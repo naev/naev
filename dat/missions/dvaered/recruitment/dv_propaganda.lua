@@ -153,7 +153,7 @@ end
 
 -- Activates hostility
 function spawnHostiles()
-   mem.dynFact:setPlayerStanding( -100 )
+   mem.dynFact:setReputationGlobal( -100 )
    for i = 1, 2 do
       pilot.add( "Dvaered Vendetta", mem.dynFact, mem.pnt )
    end
