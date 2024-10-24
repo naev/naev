@@ -253,20 +253,22 @@ local message_handler_funcs = {
    -- Follower is being attacked
    f_attacked = function( p, si, dopush, sender, data )
       if sender==nil or not sender:exists() or sender:leader()~=p then return false end
-      ai.hostile( data ) -- Set hostile
-      -- Also signal to other followers
-      for k,v in ipairs(p:followers()) do
-         p:msg( v, "l_attacked", data )
-      end
-      if not si.fighting then
-         if should_attack( data, si, true ) then
-            if dopush then
-               ai.pushtask("attack", data)
+      if data and data:exists() then
+         ai.hostile( data ) -- Set hostile
+         -- Also signal to other followers
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "l_attacked", data )
+         end
+         if not si.fighting then
+            if should_attack( data, si, true ) then
+               if dopush then
+                  ai.pushtask("attack", data)
+                  return true
+               end
+            elseif dopush and not mem.norun then
+               ai.pushtask("runaway", data)
                return true
             end
-         elseif dopush and not mem.norun then
-            ai.pushtask("runaway", data)
-            return true
          end
       end
       return false
@@ -278,10 +280,12 @@ local message_handler_funcs = {
    end,
    l_attacked = function( p, si, dopush, sender, data )
       if not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
-      ai.hostile( data ) -- Set hostile
-      if not si.fighting and should_attack( data, si, true ) then
-         ai.pushtask("attack", data)
-         return true
+      if data and data:exists() then
+         ai.hostile( data ) -- Set hostile
+         if not si.fighting and should_attack( data, si, true ) then
+            ai.pushtask("attack", data)
+            return true
+         end
       end
       return false
    end,
