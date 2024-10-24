@@ -3,7 +3,7 @@
 <mission name="Long Distance Empire Shipping">
  <priority>3</priority>
  <cond>
-   if faction.playerStanding("Empire") &lt; 0 then
+   if faction.reputationGlobal("Empire") &lt; 0 or system.cur():reputation("Empire") &lt; 0 then
       return false
    end
    return require("misn_test").computer()

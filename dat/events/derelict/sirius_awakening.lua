@@ -50,7 +50,7 @@ return function ()
                {_("Return to your ship"),"leave"},
                {_("Eject the bodies to space"), "eject"},
             }
-            if faction.get("Sirius"):playerStanding() >= 0 then
+            if system.cur():reputation(faction.get("Sirius")) >= 0 then
                table.insert( opts, {_("Notify local Sirius authorities"), "notify"} )
             end
             return opts

@@ -3,7 +3,7 @@
 <mission name="Collective Espionage 1">
  <unique />
  <priority>2</priority>
- <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+ <cond>faction.reputationGlobal("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
  <done>Collective Scouting</done>
  <chance>100</chance>
  <location>Bar</location>

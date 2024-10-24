@@ -4,7 +4,7 @@
  <unique />
  <priority>4</priority>
  <cond>
-   if faction.playerStanding("Empire") &lt; 0 then
+   if faction.reputationGlobal("Empire") &lt; 0 or system.cur():reputation("Empire") &lt; 0 then
       return false
    end
    if var.peek("es_cargo") ~= true then

@@ -3,7 +3,7 @@
 <mission name="Collective Scouting">
  <unique />
  <priority>2</priority>
- <cond>var.peek("es_cargo") == true and faction.playerStanding("Empire") &gt; 5</cond>
+ <cond>var.peek("es_cargo") == true and faction.reputationGlobal("Empire") &gt; 5</cond>
  <chance>40</chance>
  <location>Bar</location>
  <done>Empire Shipping 3</done>

@@ -132,7 +132,7 @@ end
 --Start the real mission after a short delay
 function funStartsSoon()
    if rep then return end -- Probably system tour event
-   rep = faction.playerStanding(faction.get("Sirius"))
+   rep = system.cur():reputation("Sirius")
    hook.timer(5, "theFunBegins") --for effect, so that we can see them jumping in!
 end
 

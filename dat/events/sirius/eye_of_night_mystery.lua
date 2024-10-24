@@ -4,7 +4,7 @@
  <unique/>
  <chance>100</chance>
  <cond>
-   if faction.playerStanding("Sirius") &lt; 0 then
+   if faction.reputationGlobal("Sirius") &lt; 0 then
       return false
    end
    local srs = require "common.sirius"

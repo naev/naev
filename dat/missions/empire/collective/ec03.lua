@@ -3,7 +3,7 @@
 <mission name="Collective Distraction">
  <unique />
  <priority>2</priority>
- <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+ <cond>faction.reputationGlobal("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
  <done>Collective Espionage 2</done>
  <chance>100</chance>
  <location>Bar</location>

@@ -8,7 +8,7 @@
    if not pir.factionIsPirate( spob.cur():faction() ) then
       return false
    end
-   if faction.playerStanding("Pirate") &lt; -20 then
+   if faction.reputationGlobal("Pirate") &lt; -20 then
       return false
    end
    if player.credits() &lt; 1e6 then
