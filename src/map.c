@@ -710,9 +710,10 @@ static void map_update( unsigned int wid )
       h  = gl_smallFont.h;
       fh = gl_smallFont.h;
    } else {
-      const char      *fcttext;
+      char             standing[STRMAX_SHORT];
       const glTexture *logo;
       int              logow, logoh;
+      double           reputation = system_getReputation( sys, f );
       if ( !multiple ) /* saw them all and all the same */
          snprintf( buf, sizeof( buf ), "%s", faction_longname( f ) );
 
@@ -728,14 +729,16 @@ static void map_update( unsigned int wid )
       if ( logo != NULL )
          window_moveWidget( wid, "imgFaction", -90 + logow / 2,
                             -20 - 32 - 10 - gl_defFont.h + logoh / 2 );
-      fcttext = faction_getStandingText( f );
+      snprintf( standing, sizeof( standing ), "%s [#%c%.0f%%#0]",
+                faction_getStandingTextAtValue( f, reputation ),
+                faction_reputationColourCharSystem( f, sys ), reputation );
 
       /* Modify the text */
       window_modifyText( wid, "txtFaction", buf );
-      window_modifyText( wid, "txtStanding", fcttext );
+      window_modifyText( wid, "txtStanding", standing );
 
       h  = gl_printHeightRaw( &gl_smallFont, w, buf );
-      fh = gl_printHeightRaw( &gl_smallFont, w, fcttext );
+      fh = gl_printHeightRaw( &gl_smallFont, w, standing );
    }
 
    /* Faction */
