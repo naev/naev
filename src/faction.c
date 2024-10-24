@@ -2067,32 +2067,30 @@ int pfaction_load( xmlNodePtr parent )
                char *str;
                xmlr_attr_strd( cur, "name", str );
                faction = faction_get( str );
-
-               if ( faction != -1 ) { /* Faction is valid. */
-                  xmlNodePtr sub = cur->xmlChildrenNode;
-                  do {
-                     if ( xml_isNode( sub, "standing" ) ) {
-
-                        /* Must not be static. */
-                        if ( !faction_isFlag( &faction_stack[faction],
-                                              FACTION_STATIC ) )
-                           faction_stack[faction].player = xml_getFloat( sub );
-                        continue;
-                     }
-                     if ( xml_isNode( sub, "known" ) ) {
-                        faction_setFlag( &faction_stack[faction],
-                                         FACTION_KNOWN );
-                        continue;
-                     }
-                     if ( xml_isNode( sub, "override" ) ) {
-                        faction_stack[faction].override = xml_getFloat( sub );
-                        faction_setFlag( &faction_stack[faction],
-                                         FACTION_REPOVERRIDE );
-                        continue;
-                     }
-                  } while ( xml_nextNode( sub ) );
-               }
                free( str );
+               if ( faction < 0 )
+                  continue;
+
+               xmlNodePtr sub = cur->xmlChildrenNode;
+               Faction   *fct = &faction_stack[faction];
+               do {
+                  if ( xml_isNode( sub, "standing" ) ) {
+
+                     /* Must not be static. */
+                     if ( !faction_isFlag( fct, FACTION_STATIC ) )
+                        fct->player = xml_getFloat( sub );
+                     continue;
+                  }
+                  if ( xml_isNode( sub, "known" ) ) {
+                     faction_setFlag( fct, FACTION_KNOWN );
+                     continue;
+                  }
+                  if ( xml_isNode( sub, "override" ) ) {
+                     fct->override = xml_getFloat( sub );
+                     faction_setFlag( fct, FACTION_REPOVERRIDE );
+                     continue;
+                  }
+               } while ( xml_nextNode( sub ) );
             }
          } while ( xml_nextNode( cur ) );
       }
