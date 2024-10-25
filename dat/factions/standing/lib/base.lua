@@ -10,7 +10,10 @@ function sbase.init( args )
    args = args or {}
    sbase.fct                = args.fct                              -- The faction
 
+   -- Some general faction parameters
    sbase.hit_range          = args.hit_range or 2 -- Range at which it affects
+   sbase.rep_min            = args.rep_min or -100
+   sbase.rep_max            = args.rep_max or 100
 
    -- Faction caps.
    sbase.cap_kill           = args.cap_kill            or 20       -- Kill cap
@@ -45,6 +48,10 @@ function sbase.init( args )
    return sbase
 end
 
+local function clamp( x, min, max )
+   return math.max( min, math.min( max, x ) )
+end
+
 local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
    local changed -- Amount changed
 
@@ -70,7 +77,7 @@ local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
       local r = sys:reputation( sbase.fct )
       local f = math.min( cap, r+mod )
       changed = f-r
-      sys:setReputation( sbase.fct, f )
+      sys:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
    else
       if mod < 0 then
          changed = math.huge
@@ -96,7 +103,7 @@ local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
          else
             changed = math.max( changed, f-r )
          end
-         s:setReputation( sbase.fct, f )
+         s:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
       end
 
       -- Now propagate the thresholding from the max or min depending on sign of mod
