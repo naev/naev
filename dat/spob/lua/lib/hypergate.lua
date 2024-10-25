@@ -49,7 +49,7 @@ function hypergate.load( opts )
       mem.cost_mod = opts.cost_mod or 1
       if type(opts.cost_mod)=="table" then
          mem.cost_mod = 1
-         local standing = mem.spob:faction():playerStanding()
+         local standing = mem.spob:reputation()
          for k,v in ipairs(opts.cost_mod) do
             if standing >= k then
                mem.cost_mod = v
@@ -248,8 +248,10 @@ function hypergate_window ()
       totalmass = totalmass + v:mass()
    end
    local totalcost = (mem.cost_flat + mem.cost_mass * totalmass) * mem.cost_mod
+   local hgsys = mem.spob:system()
    local hgfact = mem.spob:faction()
-   local standing_value, standing = hgfact:playerStanding()
+   local standing_value = mem.spob:reputation()
+   local standing = hgfact:reputationText( standing_value )
    local cost_mod_str = tostring(mem.cost_mod*100)
    if mem.cost_mod < 1 then
       cost_mod_str = "#g"..cost_mod_str
@@ -257,9 +259,9 @@ function hypergate_window ()
       cost_mod_str = "#r"..cost_mod_str
    end
    local standing_col = "#N"
-   if hgfact:areAllies(ppf) then
+   if hgfact:areAllies(ppf,hgsys) then
       standing_col = "#F"
-   elseif hgfact:areEnemies(ppf) then
+   elseif hgfact:areEnemies(ppf,hgsys) then
       standing_col = "#H"
    end
    local txt = luatk.newText( wdw, w-260-20, 40, 260, 200, fmt.f(_(

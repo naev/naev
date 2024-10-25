@@ -38,6 +38,7 @@ static int factionL_areallies( lua_State *L );
 static int factionL_usesHiddenJumps( lua_State *L );
 static int factionL_hit( lua_State *L );
 static int factionL_reputationGlobal( lua_State *L );
+static int factionL_reputationText( lua_State *L );
 static int factionL_reputationDefault( lua_State *L );
 static int factionL_setReputationGlobal( lua_State *L );
 static int factionL_applyLocalThreshold( lua_State *L );
@@ -78,6 +79,7 @@ static const luaL_Reg faction_methods[] = {
    { "areAllies", factionL_areallies },
    { "hit", factionL_hit },
    { "reputationGlobal", factionL_reputationGlobal },
+   { "reputationText", factionL_reputationText },
    { "reputationDefault", factionL_reputationDefault },
    { "setReputationGlobal", factionL_setReputationGlobal },
    { "applyLocalThreshold", factionL_applyLocalThreshold },
@@ -448,12 +450,33 @@ static int factionL_hit( lua_State *L )
  *
  *    @luatparam Faction f Faction to get player's standing with.
  *    @luatreturn number The value of the standing.
- * @luafunc playerStanding
+ * @luafunc reputationGlobal
  */
 static int factionL_reputationGlobal( lua_State *L )
 {
    int f = luaL_validfaction( L, 1 );
    lua_pushnumber( L, faction_reputation( f ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the human readable standing text correpsonding (translated).
+ *
+ *    @luatparam faction f Faction to get standing text from.
+ *    @luatparam[opt=f:reputationGlobal()] number|nil val Value to get the
+ * standing text of, or nil to use the global faction standing.
+ *    @luatreturn string Translated text corresponding to the faction value.
+ * @luafunc reputationText
+ */
+static int factionL_reputationText( lua_State *L )
+{
+   int f = luaL_validfaction( L, 1 );
+   if ( lua_isnoneornil( L, 2 ) )
+      lua_pushstring( L, faction_getStandingTextAtValue(
+                            f, faction_reputationDefault( f ) ) );
+   else
+      lua_pushstring(
+         L, faction_getStandingTextAtValue( f, luaL_checknumber( L, 2 ) ) );
    return 1;
 }
 
