@@ -30,9 +30,10 @@ local function updater0120( _did0110, _did0100, _did090 )
       TODO new features explanation
 
       1. Ship Capturing (chapter 1+)
+      1. Reputation changes
+      1. Holo-Archives
       1. Fuel increase
       1. Equip ships with refueling
-      1. Holo-Archives
       1. Stats are additive
       1. Scanning (scan key)
    --]]

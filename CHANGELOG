@@ -1,6 +1,7 @@
 * 0.12.0 (unreleased)
    * Gameplay
       * Ability to capture disabled ships
+      * Faction reputation is no longer universal, but varies on systems
       * Significantly increase maximum potential fleet capacity
       * Excess energy to battery recharge efficiency is now a flat 50% instead of varying based on charge level
       * Gave the Za'lek sting a slight detection buff
