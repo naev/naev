@@ -84,6 +84,7 @@ char            faction_reputationColourChar( int f );
 const glColour *faction_reputationColourSystem( int f, const StarSystem *sys );
 char faction_reputationColourCharSystem( int f, const StarSystem *sys );
 void faction_applyLocalThreshold( int f, StarSystem *sys );
+void faction_updateGlobal( void );
 
 /* Works with only factions */
 int areEnemies( int a, int b );

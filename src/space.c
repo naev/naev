@@ -4188,9 +4188,7 @@ int space_playerSave( xmlTextWriterPtr writer )
          const SystemPresence *sp = &sys->presence[j];
          if ( faction_isStatic( sp->faction ) )
             continue;
-         if ( fabs( sp->local - faction_reputation( sp->faction ) ) <=
-              DOUBLE_TOL )
-            continue;
+
          xmlw_startElem( writer, "faction" );
          xmlw_attr( writer, "name", "%s", faction_name( sp->faction ) );
          xmlw_str( writer, "%f", sp->local );
@@ -4275,6 +4273,9 @@ int space_playerLoad( xmlNodePtr parent, const char *version )
       } while ( xml_nextNode( cur ) );
    } while ( xml_nextNode( node ) );
 
+   /* Update global standing. */
+   faction_updateGlobal();
+
    return 0;
 }
 
@@ -4312,6 +4313,7 @@ static int space_parseSaveNodes( xmlNodePtr parent, StarSystem *sys )
             if ( sp->faction != f )
                continue;
             sp->local = xml_getFloat( node );
+            break;
          }
       }
    } while ( xml_nextNode( node ) );

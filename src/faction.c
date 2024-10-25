@@ -1714,6 +1714,7 @@ void factions_reset( void )
       faction_stack[i].player = faction_stack[i].player_def;
       faction_stack[i].flags  = faction_stack[i].oflags;
    }
+   factions_resetLocal();
 }
 
 /**

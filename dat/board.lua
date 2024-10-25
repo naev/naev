@@ -679,7 +679,7 @@ function board_fcthit_check( func )
    local std = board_plt:reputation()
    if (std>=0) and (std-board_fcthit<0) then
       local msg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {amount} (current standing is {current}). #rThis action will make you hostile with {fct}!#0"),
-         {fct=fct, amount=fct.number(board_fcthit), current=std})
+         {fct=fct, amount=fmt.number(board_fcthit), current=std})
       luatk.yesno(fmt.f(_([[Offend {fct}?]]),{fct=fct}), msg, function ()
          func()
       end )

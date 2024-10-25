@@ -1343,7 +1343,7 @@ static int load_gameInternalHook( void *data )
    unidiff_universeDefer( 0 );
    missions_loadCommodity( node ); /* Must be loaded before player. */
    pfaction_load( node ); /* Must be loaded before player so the messages show
-                             up properly. */
+                             up properly. Also before space_playerLoad. */
    pnt = player_load( node );
    player.loaded_version =
       strdup( ( version != NULL ) ? version : naev_version( 0 ) );
