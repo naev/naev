@@ -48,86 +48,53 @@ function sbase.init( args )
    return sbase
 end
 
+-- based on GLSL clamp
 local function clamp( x, min, max )
    return math.max( min, math.min( max, x ) )
 end
 
-local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
-   local changed -- Amount changed
-
+-- Applies a local hit to a system
+local function hit_local( sys, mod, max )
    -- Case system and no presence, it doesn't actually do anything...
    if sys and sys:presence( sbase.fct )<=0 then
       return
    end
+   -- Just simple application based on local reputation
+   local r = sys:reputation( sbase.fct )
+   local f = math.min( max, r+mod )
+   sys:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
+   return f-r
+end
 
-   -- Make sure it doesn't go over the true cap
-   cap = math.min( reputation_max(), cap )
+-- Determine max and modifier based on type and whether is secondary
+local function hit_mod( mod, source, secondary )
+   local max, modenemy, modally
 
-   -- Adjust for secondary hit if applicable
+   -- Split by type
+   if source=="distress" or source=="scan" then
+      modenemy = sbase.mod_distress_enemy
+      modally = sbase.mod_distress_friend
+      max = sbase.cap_kill
+   elseif source == "kill" or source=="board" or source=="capture"then
+      modenemy = sbase.mod_kill_enemy
+      modally = sbase.mod_kill_friend
+      max = sbase.cap_kill
+   else
+      modenemy = sbase.mod_misn_enemy
+      modally = sbase.mod_misn_friend
+      max = reputation_max()
+   end
+
+   -- Modulate based on friend/foe
    if secondary then
       if mod > 0 then
          mod = mod * modenemy
       else
-         mod = mod * modfriend
+         mod = mod * modally
       end
    end
 
-   -- Being applied to a system
-   if sys then
-      local r = sys:reputation( sbase.fct )
-      local f = math.min( cap, r+mod )
-      changed = f-r
-      sys:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
-   else
-      if mod < 0 then
-         changed = math.huge
-      else
-         changed = -math.huge
-      end
-      -- Apply change to all systems
-      local minsys, maxsys
-      local minval, maxval = math.huge, -math.huge
-      for k,s in ipairs(system.getAll()) do
-         local r = s:reputation( sbase.fct )
-         if r < minval then
-            minsys = s
-            minval = r
-         end
-         if r > maxval then
-            maxsys = s
-            maxval = r
-         end
-         local f = math.min( cap, r+mod )
-         if mod < 0 then
-            changed = math.min( changed, f-r )
-         else
-            changed = math.max( changed, f-r )
-         end
-         s:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
-      end
-
-      -- Now propagate the thresholding from the max or min depending on sign of mod
-      if mod >= 0 then
-         sys = maxsys
-      else
-         sys = minsys
-      end
-      sbase.fct:applyLocalThreshold( sys )
-   end
-
-   return changed
-end
-
-local function hitLocal( sys, mod, source, secondary )
-   if source=="distress" or source=="scan" then
-      return fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_distress_enemy, sbase.mode_distress_friend )
-
-   elseif source == "kill" or source=="board" or source=="capture"then
-      return fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_kill_enemy, sbase.mod_kill_friend )
-
-   else
-      return fctmod( sys, mod, reputation_max(), secondary, sbase.mod_misn_enemy, sbase.mod_misn_friend )
-   end
+   return max, mod
 end
 
 --[[
@@ -148,13 +115,51 @@ Possible sources:
    @return The faction amount to set to.
 --]]
 function hit( sys, mod, source, secondary )
+   local  max
+   max, mod = hit_mod( mod, source, secondary )
+
    -- No system, so just do the global hit
    if not sys then
-      return hitLocal( sys, mod, source, secondary )
+      local changed
+      if mod < 0 then
+         changed = math.huge
+      else
+         changed = -math.huge
+      end
+      -- Apply change to all systems
+      local minsys, maxsys
+      local minval, maxval = math.huge, -math.huge
+      for k,s in ipairs(system.getAll()) do
+         local r = s:reputation( sbase.fct )
+         if r < minval then
+            minsys = s
+            minval = r
+         end
+         if r > maxval then
+            maxsys = s
+            maxval = r
+         end
+         local f = math.min( max, r+mod )
+         if mod < 0 then
+            changed = math.min( changed, f-r )
+         else
+            changed = math.max( changed, f-r )
+         end
+         s:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
+      end
+
+      -- Now propagate the thresholding from the max or min depending on sign of mod
+      if mod >= 0 then
+         sys = maxsys
+      else
+         sys = minsys
+      end
+      sbase.fct:applyLocalThreshold( sys )
+      return changed
    end
 
    -- Center hit on sys and have to expand out
-   local val = hitLocal( sys, mod, source, secondary )
+   local val = hit_local( sys, mod, max )
    if sbase.hit_range > 0 then
       local done = { sys }
       local todo = { sys }
@@ -163,7 +168,7 @@ function hit( sys, mod, source, secondary )
          for i,s in ipairs(todo) do
             for j,n in ipairs(s:adjacentSystems()) do
                if not inlist( done, n ) then
-                  local v = hitLocal( n, mod / (dist+1), source, secondary )
+                  local v = hit_local( n, mod / (dist+1), max )
                   if not val then
                      val = v
                   end
