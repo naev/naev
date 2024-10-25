@@ -318,7 +318,7 @@ function land()
       vn.done()
       vn.run()
 
-      -- TODO once the whole recruitment campaign is stabilized: faction.get("Dvaered"):modPlayerRaw(someQuantity)
+      faction.get("Dvaered"):hit(5)
       if diff.isApplied( "heavy_weapons_license" ) then
          dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract.]]) )
       else -- Player does not have the license

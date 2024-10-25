@@ -84,7 +84,7 @@ function land()
          var.push("dc_misn", 1)
       end
 
-      faction.modPlayerSingle("Dvaered", rnd.rnd(1, 2))
+      faction.hit("Dvaered", rnd.rnd(2, 3))
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end

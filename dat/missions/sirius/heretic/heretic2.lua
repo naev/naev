@@ -105,13 +105,13 @@ end
 function land()
    if mem.finished ~= 1 then
       tk.msg(_("The Patrol"),_([[Draga's face goes red with fury when he sees you. For a moment you start to worry he might beat you into a pulp for abandoning your mission, but he moves along, fuming. You breathe a sigh of relief; you may have angered Nasin, but at least you're still alive.]])) --landing pre-emptively is a bad thing.
-      faction.modPlayerSingle("Nasin",-20)
+      faction.hit("Nasin",-20)
       misn.finish(false)
    elseif spob.cur() == mem.homeasset and mem.finished == 1 then
       tk.msg(_("The Patrol"),_([[You land, having defeated the small recon force, and find Draga with a smile on his face. "Great job!" he says. "I see you really are what you're made out to be and not just some overblown merchant!" He hands you a credit chip. "Thank you for your services. Meet us in the bar again sometime. We will certainly have another mission for you."]]))
       player.pay(mem.reward)
       mem.misn_tracker = mem.misn_tracker + 1
-      faction.modPlayer("Nasin",7)
+      faction.hit("Nasin",7)
       var.push("heretic_misn_tracker", mem.misn_tracker)
       srs.addHereticLog( _([[You eliminated a Sirian patrol for Draga, high commander of Nasin's operations. He said that Nasin will have another mission for you if you meet him in the bar on The Wringer again.]]) )
       misn.finish(true)
@@ -121,7 +121,7 @@ end
 function out_sys_failure() --jumping pre-emptively is a bad thing.
    if system.cur() ~= mem.homesys then
       tk.msg(_("The Patrol"), _([[As you abandon your mission, you receive a message from Draga saying that Nasin has no need for deserters. You hope you made the right decision.]]))
-      faction.modPlayerSingle("Nasin",-20)
+      faction.hit("Nasin",-20)
       misn.finish(false)
    end
 end

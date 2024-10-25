@@ -70,7 +70,7 @@ function landing()
       player.pay(mem.reward)
       misn.cargoRm(mem.message)
       mem.misn_tracker = mem.misn_tracker + 1
-      faction.modPlayer("Nasin",5) --once again, the Nasin like the fact that we are helping the Nasin.
+      faction.hit("Nasin",5) --once again, the Nasin like the fact that we are helping the Nasin.
       var.push("heretic_misn_tracker", mem.misn_tracker)
       srs.addHereticLog( _([[You found out that the organization you delivered an illegal package for is Nasin, a group of followers of Sirichana who the Sirii brand as "heretics". You then delivered a message for Nasin to their base in The Wringer. You were then invited to meet the Nasin officials at the bar on The Wringer.]]) )
       misn.finish(true)

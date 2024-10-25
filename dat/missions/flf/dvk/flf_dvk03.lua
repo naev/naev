@@ -332,7 +332,7 @@ end
 function finish ()
    player.pay( mem.credits )
    flf.setReputation( 70 )
-   faction.get("FLF"):modPlayer( mem.reputation )
+   faction.get("FLF"):hit( mem.reputation )
    flf.addLog( _([[You led the effort to destroy the hated Dvaered base, Fort Raelid, a major victory for the FLF. This act led to the Empire listing you and the FLF as an enemy of the Empire.]]) )
    misn.finish( true )
 end

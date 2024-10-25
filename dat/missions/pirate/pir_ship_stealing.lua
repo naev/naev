@@ -117,7 +117,7 @@ local function improve_standing(size, fct)
          -- Never more than 5.
          standing = math.max(0, current_standing - standing)
       end
-      faction.modPlayerSingle(enemy, standing)
+      faction.hit(enemy, standing)
    end
 end
 ]]
@@ -135,7 +135,7 @@ local function damage_standing( size, fct )
       modifier = 0.5
    end
 
-   fct:modPlayerSingle( -base * modifier )
+   fct:hit( -base * modifier )
 end
 
 local pir_portrait, pir_image
@@ -246,8 +246,8 @@ Enemy ships will probably be after you as soon as you leave the atmosphere, so y
          )
       )
 
-      -- Hey, stealing a ship isn’t anything! (if you survive, that is)
-      faction.modPlayerSingle( mem.reward_faction, rnd.rnd(3,5) )
+      -- Hey, stealing a ship isn't anything! (if you survive, that is)
+      faction.hit( mem.reward_faction, rnd.rnd(3,5) )
 
       -- Let’s keep a counter. Just in case we want to know how many you
       -- stole in the future.

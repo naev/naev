@@ -75,7 +75,7 @@ function land ()
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( mem.credits )
       flf.setReputation( 75 )
-      faction.get("FLF"):modPlayer( mem.reputation )
+      faction.get("FLF"):hit( mem.reputation )
       flf.addLog( _([[You diverted Dvaered forces away from Haleb so that other FLF agents could complete an important operation there, most likely planting a bomb on another Dvaered base.]]) )
       misn.finish( true )
    end

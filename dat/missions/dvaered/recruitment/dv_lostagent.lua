@@ -311,7 +311,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
 
       vn.run()
 
-      -- TODO once the whole recruitment campaign is stabilized: faction.get("Dvaered"):modPlayerRaw(someQuantity)
+      faction.get("Dvaered"):hit(5)
       dv.addStandardLog( _([[You performed a delivery mission for the Dvaered-Empire collaboration. This mission did however turn out oddly and you ended up helping the Empire capture a shady FLF-friendly agent surnamed "Shaky Swan" and killing a pirate.]]) )
       misn.finish(true)
    end
@@ -468,7 +468,7 @@ end
 function swanDisabled()
    mem.swan:setDisable() -- To be sure it won't recover.
    mem.swan:comm(_("What the? Damn!"))
-   faction.modPlayerRaw(faction.get("FLF"), -5) -- Faction loss with the FLF.
+   faction.hit(faction.get("FLF"), -5) -- Faction loss with the FLF.
    hook.rm(dhook)
    hook.timer(1.0,"spawnSquad")
    misn.osdActive(2)

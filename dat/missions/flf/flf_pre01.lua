@@ -122,7 +122,7 @@ function land()
          tk.msg(_("Another criminal caught"), _([[It doesn't take Dvaered security long to arrive at your landing bay. They board your ship, seize Gregar, and take him away before he even comprehends what's going on.
    "You have served House Dvaered adequately, citizen," the stone-faced captain of the security detail tells you. "In recognition of your service, we may allow you to participate in other operations regarding the FLF terrorists. If you have further questions, direct them to our public liaison."
    The officer turns and leaves without waiting for an answer, and without rewarding you in any tangible way. You wonder if you should scout out this liaison, in hopes of at least getting something out of this whole situation.]]))
-         faction.get("Dvaered"):modPlayerSingle(5)
+         faction.get("Dvaered"):hit(5)
          var.push("flfbase_intro", 1)
          var.pop("flfbase_flfshipkilled")
          dv.addAntiFLFLog( _([[You turned in FLF Lt. Gregar Fletcher to Dvaered authorities. The Dvaered captain who took him off your hands said that you could join in on a campaign against the FLF terrorists; you can direct questions to a Dvaered public liaison. You may want to scout out this liaison.]]) )

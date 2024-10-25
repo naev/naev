@@ -76,7 +76,7 @@ function land ()
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( mem.credits )
       flf.setReputation( 30 )
-      faction.get("FLF"):modPlayer( mem.reputation )
+      faction.get("FLF"):hit( mem.reputation )
       flf.addLog( _([[You helped the FLF conduct some kind of operation in Raelid by distracting the Dvaereds in another system.]]) )
       misn.finish( true )
    end

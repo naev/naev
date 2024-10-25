@@ -133,7 +133,7 @@ end
 
 function out_sys_failure() --feel like jumping out? AWOL! its easier this way. trust me.
    tk.msg(_("The Assault"),_([[You receive a scathing angry message from Draga chastising you for abandoning your mission. You put it behind you. There's no turning back now.]]))
-   faction.modPlayerSingle("Nasin",-50)
+   faction.hit("Nasin",-50)
    misn.finish(false)
 end
 
@@ -152,13 +152,13 @@ end
 function return_to_base()
    if not mem.returnchecker then --feel like landing early? AWOL!
       tk.msg(_("The Assault"),_([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you duck your head and make a mental note to get out of here as soon as possible.]]))
-      faction.modPlayerSingle("Nasin",-50)
+      faction.hit("Nasin",-50)
       misn.finish(false) --mwahahahahaha!
    else
       player.pay(mem.reward)
       tk.msg(_("The Assault"),_([[As you land, you see the Nasin forces desperately trying to regroup. "Hurry and get your ship ready for another battle," he says, "and meet me at the bar when you're ready! Payment has been transferred into your account. More importantly, we have a dire situation!"]]))
       mem.misn_tracker = mem.misn_tracker + 1
-      faction.modPlayer("Nasin",10)
+      faction.hit("Nasin",10)
       var.push("heretic_misn_tracker", mem.misn_tracker)
       srs.addHereticLog( _([[You helped Draga in an attempt to protect Nasin from the Sirius military. Draga ordered you to get your ship ready for another battle and meet him at the bar.]]) )
       misn.finish(true)
