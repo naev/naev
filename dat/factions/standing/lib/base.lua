@@ -44,6 +44,8 @@ function sbase.init( args )
 end
 
 local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
+   local changed -- Amount changed
+
    -- Make sure it doesn't go over the true cap
    cap = math.min( reputation_max(), cap )
 
@@ -58,25 +60,37 @@ local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
 
    -- Being applied to a system
    if sys then
-      local f = sys:reputation( sbase.fct ) + mod
-      f = math.min( cap, f )
+      local r = sys:reputation( sbase.fct )
+      local f = math.min( cap, r+mod )
+      changed = f-r
       sys:setReputation( sbase.fct, f )
       sbase.fct:applyLocalThreshold( sys )
    else
+      if mod < 0 then
+         changed = math.huge
+      else
+         changed = -math.huge
+      end
       -- Apply change to all systems
       local minsys, maxsys
       local minval, maxval = math.huge, -math.huge
       for k,s in ipairs(system.getAll()) do
-         local f = s:reputation( sbase.fct )
-         if f < minval then
+         local r = s:reputation( sbase.fct )
+         if r < minval then
             minsys = s
-            minval = f
+            minval = r
          end
-         if f > maxval then
+         if r > maxval then
             maxsys = s
-            maxval = f
+            maxval = r
          end
-         s:setReputation( sbase.fct, f+mod )
+         local f = math.min( cap, r+mod )
+         if mod < 0 then
+            changed = math.min( changed, f-r )
+         else
+            changed = math.max( changed, f-r )
+         end
+         s:setReputation( sbase.fct, f )
       end
 
       -- Now propagate the thresholding from the max or min depending on sign of mod
@@ -88,6 +102,7 @@ local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
       sbase.fct:applyLocalThreshold( sys )
    end
 
+   return changed
 end
 
 --[[
@@ -109,13 +124,13 @@ Possible sources:
 --]]
 function hit( sys, mod, source, secondary )
    if source=="distress" or source=="scan" then
-      fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_distress_enemy, sbase.mode_distress_friend )
+      return fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_distress_enemy, sbase.mode_distress_friend )
 
    elseif source == "kill" or source=="board" or source=="capture"then
-      fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_kill_enemy, sbase.mod_kill_friend )
+      return fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_kill_enemy, sbase.mod_kill_friend )
 
    else
-      fctmod( sys, mod, reputation_max(), secondary, sbase.mod_misn_enemy, sbase.mod_misn_friend )
+      return fctmod( sys, mod, reputation_max(), secondary, sbase.mod_misn_enemy, sbase.mod_misn_friend )
    end
 end
 

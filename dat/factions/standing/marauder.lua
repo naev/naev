@@ -9,6 +9,6 @@ spir.init{
 }
 --friendly_at    = 50
 
-function hit( current, _amount, _source, _secondary )
-   return current -- Doesn't change through hits
+function hit( _sys, _mod, _source, _secondary )
+   return 0 -- Doesn't change through hits
 end

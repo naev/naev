@@ -34,7 +34,7 @@ function rehab.init( fct, params )
       -- Don't spawn this mission if the player is buddies with this faction's enemies.
       for _k, enemy in pairs(fct:enemies()) do
          if enemy:reputationGlobal() > 20 then
-         misn.finish()
+            misn.finish()
          end
       end
 
@@ -71,7 +71,13 @@ function rehab.init( fct, params )
          _([[While this agreement is active, your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offenses will eventually be stricken from the record.]])
       } )
 
-      fct:modPlayerRaw(-mem.rep)
+
+      -- Store old standing
+      mem.rep_local = {}
+      for k,s in ipairs(system.getAll()) do
+         mem.rep_local[ s:nameRaw() ] = s:reputation( fct )
+         s:setReputation( fct, 0 ) -- Reset to 0
+      end
 
       misn.accept()
       setosd()
@@ -87,36 +93,40 @@ function rehab.init( fct, params )
    end
 
    -- Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
-   function standing( hookfac, delta )
+   function standing( hookfac, delta, sys )
       if hookfac == fct then
          if delta >= 0 then
-            -- Be ware of the fake transponder!
-            local pp = player.pilot()
-            local hasft = false
-            local ft = outfit.get("Fake Transponder")
-            for k,v in ipairs(pp:outfitsList()) do
-               if v==ft then
-               hasft = true
-               break
-               end
-            end
-            if hasft then return end -- When fake transponder is equipped, we ignore all positive stuff
+            -- No need for fake transponder stuff anymore, because it stops faction standing changes
 
             mem.rep = mem.rep + delta
             if mem.rep >= 0 then
                -- The player has successfully erased his criminal record.
                mem.excess = mem.excess + delta
-               fct:modPlayerRaw(-delta + mem.rep)
+
+               -- Just set to 0 for now
+               for k,s in ipairs(system.getAll()) do
+                  s:setReputation( fct, 0 )
+               end
+
                vntk.msg(fmt.f(_("{fct} Rehabilitation Successful"), {fct=fct}), txtsuccess )
                misn.finish(true)
             end
 
+            -- TODO restore all the local standings
             mem.excess = mem.excess + delta
-            fct:modPlayerRaw(-delta)
+
+            if sys then
+               sys:setReputation( 0 )
+            else
+               for k,s in ipairs(system.getAll()) do
+                  s:setReputation( fct, 0 )
+               end
+            end
+
             setosd()
          else
             mem.excess = mem.excess + delta
-            if mem.excess < 0 or fct:reputationGlobal() < 0 then
+            if mem.excess < 0 then
                abort()
             end
          end
@@ -129,8 +139,9 @@ function rehab.init( fct, params )
       hook.rm( mem.standhook )
 
       -- Reapply the original negative reputation.
-      fct:modPlayerRaw(mem.rep)
-
+      for k,s in ipairs(system.getAll()) do
+         s:setReputation( fct, mem.rep_local[ s:nameRaw() ] )
+      end
       vntk.msg(fmt.f(_("{fct} Rehabilitation Cancelled"), {fct=fct}), txtabort )
       misn.finish(false)
    end

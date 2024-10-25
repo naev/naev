@@ -781,7 +781,7 @@ static void faction_hitLua( int f, const StarSystem *sys, double mod,
                             const char *source, int secondary )
 {
    Faction *faction;
-   double   old, delta;
+   double   delta;
 
    /* Ignore it if player is dead. */
    if ( player.p == NULL )
@@ -797,8 +797,6 @@ static void faction_hitLua( int f, const StarSystem *sys, double mod,
    if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
       return;
 
-   old = faction->player;
-
    /* Set up the function:
     * standing:hit( sys, amount, source, secondary ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_hit );
@@ -808,7 +806,7 @@ static void faction_hitLua( int f, const StarSystem *sys, double mod,
    lua_pushboolean( naevL, secondary );
 
    /* Call function. */
-   if ( nlua_pcall( faction->lua_env, 4, 0 ) ) { /* An error occurred. */
+   if ( nlua_pcall( faction->lua_env, 4, 1 ) ) { /* An error occurred. */
       WARN( _( "Faction '%s': %s" ), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
       return;
@@ -818,14 +816,20 @@ static void faction_hitLua( int f, const StarSystem *sys, double mod,
    faction_sanitizePlayer( faction );
 
    /* Run hook if necessary. */
-   delta = faction->player - old;
+   delta = lua_tonumber( naevL, -1 );
+   lua_pop( naevL, 1 );
    if ( FABS( delta ) > DOUBLE_TOL ) {
-      HookParam hparam[3];
+      HookParam hparam[4];
       hparam[0].type  = HOOK_PARAM_FACTION;
       hparam[0].u.lf  = f;
       hparam[1].type  = HOOK_PARAM_NUMBER;
       hparam[1].u.num = delta;
-      hparam[2].type  = HOOK_PARAM_SENTINEL;
+      if ( sys != NULL ) {
+         hparam[2].type = HOOK_PARAM_SSYS;
+         hparam[2].u.ls = sys->id;
+         hparam[3].type = HOOK_PARAM_SENTINEL;
+      } else
+         hparam[2].type = HOOK_PARAM_SENTINEL;
       hooks_runParam( "standing", hparam );
 
       /* Tell space the faction changed. */
