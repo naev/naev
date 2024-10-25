@@ -10,6 +10,8 @@ function sbase.init( args )
    args = args or {}
    sbase.fct                = args.fct                              -- The faction
 
+   sbase.hit_range          = args.hit_range or 2 -- Range at which it affects
+
    -- Faction caps.
    sbase.cap_kill           = args.cap_kill            or 20       -- Kill cap
    sbase.cap_misn_def       = args.cap_misn_def        or 30       -- Starting mission cap, gets overwritten
@@ -64,7 +66,6 @@ local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
       local f = math.min( cap, r+mod )
       changed = f-r
       sys:setReputation( sbase.fct, f )
-      sbase.fct:applyLocalThreshold( sys )
    else
       if mod < 0 then
          changed = math.huge
@@ -105,6 +106,18 @@ local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
    return changed
 end
 
+local function hitLocal( sys, mod, source, secondary )
+   if source=="distress" or source=="scan" then
+      return fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_distress_enemy, sbase.mode_distress_friend )
+
+   elseif source == "kill" or source=="board" or source=="capture"then
+      return fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_kill_enemy, sbase.mod_kill_friend )
+
+   else
+      return fctmod( sys, mod, reputation_max(), secondary, sbase.mod_misn_enemy, sbase.mod_misn_friend )
+   end
+end
+
 --[[
 Handles a faction hit for a faction.
 
@@ -123,17 +136,35 @@ Possible sources:
    @return The faction amount to set to.
 --]]
 function hit( sys, mod, source, secondary )
-   if source=="distress" or source=="scan" then
-      return fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_distress_enemy, sbase.mode_distress_friend )
-
-   elseif source == "kill" or source=="board" or source=="capture"then
-      return fctmod( sys, mod, sbase.cap_kill, secondary, sbase.mod_kill_enemy, sbase.mod_kill_friend )
-
-   else
-      return fctmod( sys, mod, reputation_max(), secondary, sbase.mod_misn_enemy, sbase.mod_misn_friend )
+   -- No system, so just do the global hit
+   if not sys then
+      return hitLocal( sys, mod, source, secondary )
    end
-end
 
+   -- Center hit on sys and have to expand out
+   local val = hitLocal( sys, mod, source, secondary )
+   if sbase.hit_range > 0 then
+      local done = { sys }
+      local todo = { sys }
+      for dist=1,sbase.hit_range do
+         local dosys = {}
+         for i,s in ipairs(todo) do
+            for j,n in ipairs(s:adjacentSystems()) do
+               if not inlist( done, n ) then
+                  hitLocal( n, mod / (dist+1), source, secondary )
+                  table.insert( done, n )
+                  table.insert( dosys, n )
+               end
+            end
+         end
+         todo = dosys
+      end
+   end
+
+   -- Update frcom system that did hit and return change at that system
+   sbase.fct:applyLocalThreshold( sys )
+   return val
+end
 
 --[[
 Returns a text representation of the player's standing.
@@ -149,7 +180,6 @@ function text_rank( value )
    end
    return sbase.text[0]
 end
-
 
 --[[
 Returns a text representation of the player's broad standing.

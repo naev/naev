@@ -7,4 +7,5 @@ return {
    cap_misn_var   = "_fcap_frontier",
    cap_tags       = {
    },
+   hit_range      = 1,
 }

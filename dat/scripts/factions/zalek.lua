@@ -33,4 +33,5 @@ return {
    text_neutral   = _("Impartial"),
    text_hostile   = _("Belligerent"),
    text_bribed    = _("Funded"),
+   hit_range      = 3,
 }
