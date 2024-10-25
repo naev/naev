@@ -1766,9 +1766,10 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
    double      rep       = srep->local;
    StarSystem *sys_stack = system_getAll();
    double      th        = faction_stack[f].local_th;
-   int        *done      = array_create( int );
-   int        *queuea    = array_create( int );
-   int        *queueb    = array_create( int );
+   /* TODO avoid a memory allocation every call. */
+   int *done   = array_create( int );
+   int *queuea = array_create( int );
+   int *queueb = array_create( int );
 
    array_push_back( &queuea, sys->id );
    array_push_back( &done, sys->id );
@@ -1786,6 +1787,7 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
          for ( int j = 0; j < array_size( qsys->jumps ); j++ ) {
             StarSystem *nsys  = qsys->jumps[j].target;
             int         found = 0;
+            /* Ignore systems already looked at. */
             for ( int k = 0; k < array_size( done ); k++ ) {
                if ( nsys->id == done[k] ) {
                   found = 1;
@@ -1794,7 +1796,10 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
             }
             if ( found )
                continue;
-            array_push_back( &queueb, nsys->id );
+            /* We only process systems that have presence. No presence systems
+             * will act as a buffer. */
+            if ( system_getPresence( nsys, f ) > 0. )
+               array_push_back( &queueb, nsys->id );
             array_push_back( &done, nsys->id );
          }
       }
