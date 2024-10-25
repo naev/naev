@@ -1733,27 +1733,31 @@ void factions_resetLocal( void )
    // faction_updateGlobal();
 }
 
+static void faction_updateSingle( int f )
+{
+   int         n         = 0;
+   double      v         = 0.;
+   StarSystem *sys_stack = system_getAll();
+   for ( int j = 0; j < array_size( sys_stack ); j++ ) {
+      StarSystem *sys = &sys_stack[j];
+      for ( int k = 0; k < array_size( sys->presence ); k++ ) {
+         SystemPresence *sp = &sys->presence[k];
+         if ( sp->faction != f )
+            continue;
+         v += sp->local;
+         n++;
+      }
+   }
+   faction_stack[f].player = v / (double)n;
+}
+
 /**
  * @brief Computes the global faction standing for each of the factions.
  */
 void faction_updateGlobal( void )
 {
-   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
-      int         n         = 0;
-      double      v         = 0.;
-      StarSystem *sys_stack = system_getAll();
-      for ( int j = 0; j < array_size( sys_stack ); j++ ) {
-         StarSystem *sys = &sys_stack[j];
-         for ( int k = 0; k < array_size( sys->presence ); k++ ) {
-            SystemPresence *sp = &sys->presence[k];
-            if ( sp->faction != i )
-               continue;
-            v += sp->local;
-            n++;
-         }
-      }
-      faction_stack[i].player = v / (double)n;
-   }
+   for ( int i = 0; i < array_size( faction_stack ); i++ )
+      faction_updateSingle( i );
 }
 
 void faction_applyLocalThreshold( int f, StarSystem *sys )
@@ -1817,6 +1821,9 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
    array_free( done );
    array_free( queuea );
    array_free( queueb );
+
+   /* Update global standing. */
+   faction_updateSingle( f );
 }
 
 /**
