@@ -62,23 +62,23 @@ double faction_reputationOverride( int f, int *set );
 void   faction_setReputationOverride( int f, int set, double value );
 
 /* player stuff */
-void faction_hit( int f, const StarSystem *sys, double mod, const char *source,
-                  int single );
-void faction_modPlayer( int f, double mod, const char *source );
-void faction_modPlayerSingle( int f, double mod, const char *source );
-void faction_modPlayerRaw( int f, double mod );
-void faction_setReputation( int f, double value );
-double          faction_reputation( int f );
-double          faction_reputationDefault( int f );
-void            faction_setReputation( int f, double value );
-int             faction_isPlayerFriend( int f );
-int             faction_isPlayerEnemy( int f );
-int             faction_isPlayerFriendSystem( int f, const StarSystem *sys );
-int             faction_isPlayerEnemySystem( int f, const StarSystem *sys );
-const char     *faction_getStandingText( int f );
-const char     *faction_getStandingTextAtValue( int f, double value );
-const char     *faction_getStandingBroad( int f, int bribed, int override );
-double          faction_reputationMax( int f );
+double      faction_hit( int f, const StarSystem *sys, double mod,
+                         const char *source, int single );
+void        faction_modPlayer( int f, double mod, const char *source );
+void        faction_modPlayerSingle( int f, double mod, const char *source );
+void        faction_modPlayerRaw( int f, double mod );
+void        faction_setReputation( int f, double value );
+double      faction_reputation( int f );
+double      faction_reputationDefault( int f );
+void        faction_setReputation( int f, double value );
+int         faction_isPlayerFriend( int f );
+int         faction_isPlayerEnemy( int f );
+int         faction_isPlayerFriendSystem( int f, const StarSystem *sys );
+int         faction_isPlayerEnemySystem( int f, const StarSystem *sys );
+const char *faction_getStandingText( int f );
+const char *faction_getStandingTextAtValue( int f, double value );
+const char *faction_getStandingBroad( int f, int bribed, int override );
+double      faction_reputationMax( int f );
 const glColour *faction_reputationColour( int f );
 char            faction_reputationColourChar( int f );
 const glColour *faction_reputationColourSystem( int f, const StarSystem *sys );

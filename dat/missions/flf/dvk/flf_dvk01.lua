@@ -7,7 +7,7 @@
  <done>Disrupt a Dvaered Patrol</done>
  <location>Bar</location>
  <faction>FLF</faction>
- <cond>faction.playerStanding("FLF") &gt;= 10</cond>
+ <cond>spob.cur():reputation("FLF") &gt;= 10</cond>
  <notes>
   <campaign>Save the Frontier</campaign>
   <tier>4</tier>

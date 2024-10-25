@@ -63,7 +63,7 @@ function hail ()
    mem.bribe_paid    = nil
    mem.bribe_no      = nil
 
-   local standing = p:faction():playerStanding()
+   local standing = p:reputation()
 
    -- Handle bribes.
    mem.bribe = mem.bribe_base

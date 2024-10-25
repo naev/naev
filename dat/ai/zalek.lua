@@ -105,7 +105,7 @@ function hail ()
    mem.bribe_no      = nil
 
    -- Deal with refueling
-   local standing = p:faction():playerStanding()
+   local standing = p:reputation()
    mem.refuel = mem.refuel_base
    if standing < -10 then
       mem.refuel_no = _([["I do not have fuel to spare."]])

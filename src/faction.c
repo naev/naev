@@ -123,13 +123,13 @@ static size_t   faction_mgrid = 0;    /**< Allocated memory. */
  * Prototypes
  */
 /* static */
-static int  faction_getRaw( const char *name );
-static void faction_freeOne( Faction *f );
-static void faction_sanitizePlayer( Faction *faction );
-static void faction_hitLua( int f, const StarSystem *sys, double mod,
-                            const char *source, int secondary );
-static int  faction_parse( Faction *temp, const char *file );
-static int  faction_parseSocial( const char *file );
+static int    faction_getRaw( const char *name );
+static void   faction_freeOne( Faction *f );
+static void   faction_sanitizePlayer( Faction *faction );
+static double faction_hitLua( int f, const StarSystem *sys, double mod,
+                              const char *source, int secondary );
+static int    faction_parse( Faction *temp, const char *file );
+static int    faction_parseSocial( const char *file );
 static void faction_addStandingScript( Faction *temp, const char *scriptname );
 static void faction_computeGrid( void );
 /* externed */
@@ -777,25 +777,25 @@ static void faction_sanitizePlayer( Faction *faction )
 /**
  * @brief Mods player using the power of Lua.
  */
-static void faction_hitLua( int f, const StarSystem *sys, double mod,
-                            const char *source, int secondary )
+static double faction_hitLua( int f, const StarSystem *sys, double mod,
+                              const char *source, int secondary )
 {
    Faction *faction;
    double   delta;
 
    /* Ignore it if player is dead. */
    if ( player.p == NULL )
-      return;
+      return 0.;
 
    faction = &faction_stack[f];
 
    /* Make sure it's not static. */
    if ( faction_isFlag( faction, FACTION_STATIC ) )
-      return;
+      return 0.;
 
    /* Overriden, so doesn't budge. */
    if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
-      return;
+      return 0.;
 
    /* Set up the function:
     * standing:hit( sys, amount, source, secondary ) */
@@ -809,7 +809,7 @@ static void faction_hitLua( int f, const StarSystem *sys, double mod,
    if ( nlua_pcall( faction->lua_env, 4, 1 ) ) { /* An error occurred. */
       WARN( _( "Faction '%s': %s" ), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
-      return;
+      return 0.;
    }
 
    /* Sanitize just in case. */
@@ -835,22 +835,25 @@ static void faction_hitLua( int f, const StarSystem *sys, double mod,
       /* Tell space the faction changed. */
       space_factionChange();
    }
+
+   return delta;
 }
 
 /**
  * @brief Handles a faction hit against a faction and how to apply it.
  */
-void faction_hit( int f, const StarSystem *sys, double mod, const char *source,
-                  int single )
+double faction_hit( int f, const StarSystem *sys, double mod,
+                    const char *source, int single )
 {
+   double ret;
    if ( !faction_isFaction( f ) ) {
       WARN( _( "Faction id '%d' is invalid." ), f );
-      return;
+      return 0;
    }
    Faction *faction = &faction_stack[f];
 
    /* Modify faction standing with parent faction. */
-   faction_hitLua( f, sys, mod, source, 0 );
+   ret = faction_hitLua( f, sys, mod, source, 0 );
 
    /* Don't apply secondary hits. */
    if ( !single ) {
@@ -863,6 +866,8 @@ void faction_hit( int f, const StarSystem *sys, double mod, const char *source,
          /* Modify faction standing. */
          faction_hitLua( faction->enemies[i], sys, -mod, source, 1 );
    }
+
+   return ret;
 }
 
 /**

@@ -65,7 +65,7 @@ function hail ()
    mem.bribe_no      = nil
 
    -- Deal with refueling
-   local standing = p:faction():playerStanding()
+   local standing = p:reputation()
    mem.refuel = mem.refuel_base
    if standing > 60 then mem.refuel = mem.refuel * 0.7 end
    mem.refuel_msg = fmt.f( _([["I could do you the favour of refueling for the price of {credits}."]]),

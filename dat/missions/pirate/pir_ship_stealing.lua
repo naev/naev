@@ -4,7 +4,7 @@
  <priority>4</priority>
  <chance>10</chance>
  <location>Bar</location>
- <cond>faction.playerStanding("Pirate") &gt;= -20 and not player.misnActive("Stealing ships")</cond>
+ <cond>faction.reputationGlobal("Pirate") &gt;= -20 and not player.misnActive("Stealing ships")</cond>
  <faction>Wild Ones</faction>
  <faction>Black Lotus</faction>
  <faction>Raven Clan</faction>
@@ -112,7 +112,7 @@ local function improve_standing(size, fct)
 
    for i = 1,#enemies do
       local enemy = enemies[i]
-      local current_standing = faction.playerStanding(enemy)
+      local current_standing = faction.reputationGlobal(enemy)
       if current_standing + standing > 5 then
          -- Never more than 5.
          standing = math.max(0, current_standing - standing)

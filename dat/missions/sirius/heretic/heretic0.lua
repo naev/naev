@@ -3,7 +3,7 @@
 <mission name="The Gauntlet">
  <unique />
  <priority>3</priority>
- <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+ <cond>spob.cur():reputation("Nasin") &gt;= 0</cond>
  <chance>50</chance>
  <location>Bar</location>
  <faction>Sirius</faction>

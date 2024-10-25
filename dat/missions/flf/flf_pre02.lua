@@ -134,7 +134,7 @@ local function spawnDVReinforcements ()
    end
 
    -- Check for defection possibility
-   if faction.playerStanding( "Dvaered" ) >= -5 then
+   if faction.reputationGlobal( "Dvaered" ) >= -5 then
       mem.hailer = hook.timer( 30.0, "timer_hail" )
    else
       mem.spawner = hook.timer( 30.0, "timer_spawnFLF" )
@@ -171,10 +171,10 @@ function hail ()
    if choice == 1 then
       tk.msg( _("Opportunism is an art"), fmt.f( _([[Colonel Urnus smiles broadly. "I knew you'd make the right choice, citizen!" He addresses someone on his bridge, out of the view of the camera. "Notify the flight group. This ship is now friendly. Cease fire." Then he turns back to you. "Proceed to {pnt} in the {sys} system, citizen. I will personally meet you there."]]), {pnt=mem.DVplanet, sys=mem.DVsys} ) )
 
-      faction.get("FLF"):setPlayerStanding( -100 )
-      local standing = faction.get("Dvaered"):playerStanding()
+      faction.get("FLF"):setReputationGlobal( -100 )
+      local standing = faction.get("Dvaered"):reputationGlobal()
       if standing < 0 then
-         faction.get("Dvaered"):setPlayerStanding( 0 )
+         faction.get("Dvaered"):setReputationGlobal( 0 )
       end
 
       for i, j in ipairs( fleetDV ) do
@@ -255,9 +255,9 @@ function pilot_death_dv ()
       hook.rm( mem.rehailer )
 
       mem.job_done = true
-      local standing = faction.get("Dvaered"):playerStanding()
+      local standing = faction.get("Dvaered"):reputationGlobal()
       if standing > -20 then
-         faction.get("Dvaered"):setPlayerStanding( -20 )
+         faction.get("Dvaered"):setReputationGlobal( -20 )
       end
       misn.osdActive( 3 )
       misn.markerRm( mem.marker )

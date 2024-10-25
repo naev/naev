@@ -7,7 +7,7 @@
  <done>Diversion from Raelid</done>
  <location>Bar</location>
  <faction>FLF</faction>
- <cond>faction.playerStanding("FLF") &gt;= 30</cond>
+ <cond>spob.cur():reputation("FLF") &gt;= 30</cond>
  <notes>
   <campaign>Save the Frontier</campaign>
  </notes>
@@ -80,7 +80,7 @@ function accept ()
       mem.credits = 300e3
       mem.reputation = 1
       mem.pir_reputation = 10
-      mem.pir_starting_reputation = faction.get("Dreamer Clan"):playerStanding()
+      mem.pir_starting_reputation = faction.get("Dreamer Clan"):reputationGlobal()
 
       hook.enter( "enter" )
    else
@@ -104,9 +104,9 @@ function pilot_hail_boss ()
    if mem.stage <= 1 then
       if mem.boss_impressed then
          mem.stage = 2
-         local standing = faction.get("Dreamer Clan"):playerStanding()
+         local standing = faction.get("Dreamer Clan"):reputationGlobal()
          if standing < 25 then
-            faction.get("Dreamer Clan"):setPlayerStanding( 25 )
+            faction.get("Dreamer Clan"):setReputationGlobal( 25 )
          end
 
          if boss ~= nil then
@@ -251,7 +251,7 @@ end
 
 
 function abort ()
-   faction.get("Dreamer Clan"):setPlayerStanding( mem.pir_starting_reputation )
+   faction.get("Dreamer Clan"):setReputationGlobal( mem.pir_starting_reputation )
    local hj1, hj2 = jump.get( "Tormulex", "Anger" )
    hj1:setKnown( false )
    hj2:setKnown( false )

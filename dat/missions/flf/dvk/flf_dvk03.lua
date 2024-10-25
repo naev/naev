@@ -7,7 +7,7 @@
  <done>FLF Pirate Alliance</done>
  <location>Bar</location>
  <faction>FLF</faction>
- <cond>faction.playerStanding("FLF") &gt;= 50</cond>
+ <cond>spob.cur():reputation("FLF") &gt;= 50</cond>
  <notes>
    <provides name="The Empire and the FLF are enemies">Because they're caught in the battle</provides>
    <campaign>Save the Frontier</campaign>
@@ -312,7 +312,7 @@ function timer_station ()
 
    mem.completed = true
    pilot.toggleSpawn( true )
-   faction.get("Empire"):setPlayerStanding( -100 )
+   faction.get("Empire"):setReputationGlobal( -100 )
    diff.apply( "flf_vs_empire" )
    misn.osdActive( 4 )
    if mem.marker ~= nil then misn.markerRm( mem.marker ) end

@@ -430,6 +430,8 @@ static int factionL_areallies( lua_State *L )
  * "distress" sources. For missions the default is "script".
  *    @luatparam[opt=false] boolean single Whether or not the hit should affect
  * allies/enemies of the faction getting a hit.
+ *    @luatreturn How much the reputation was actually changed after Lua script
+ * was run.
  * @luafunc hit
  */
 static int factionL_hit( lua_State *L )
@@ -439,8 +441,9 @@ static int factionL_hit( lua_State *L )
    const StarSystem *sys =
       ( lua_isnoneornil( L, 3 ) ) ? NULL : luaL_validsystem( L, 3 );
    const char *reason = luaL_optstring( L, 4, "script" );
-   faction_hit( f, sys, mod, reason, lua_toboolean( L, 5 ) );
-   return 0;
+   double      ret = faction_hit( f, sys, mod, reason, lua_toboolean( L, 5 ) );
+   lua_pushnumber( L, ret );
+   return 1;
 }
 
 /**

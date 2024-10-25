@@ -4,7 +4,7 @@
  <unique />
  <priority>4</priority>
  <cond>
-   if faction.playerStanding("Dvaered") &lt; 5 then
+   if spob.cur():reputation("Dvaered") &lt; 5 then
       return false
    end
    return require("misn_test").reweight_active()

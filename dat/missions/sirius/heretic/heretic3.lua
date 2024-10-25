@@ -4,7 +4,7 @@
  <unique />
  <priority>3</priority>
  <done>The Patrol</done>
- <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+ <cond>spob.cur():reputation("Nasin") &gt;= 0</cond>
  <chance>100</chance>
  <location>Bar</location>
  <spob>The Wringer</spob>
@@ -29,7 +29,7 @@ local flee -- Forward-declared functions
 function create()
    --this mission makes one mission claim, in Suna.
    --initialize your variables
-   mem.nasin_rep = faction.playerStanding("Nasin")
+   mem.nasin_rep = spob.cur():reputation("Nasin")
    mem.misn_tracker = var.peek("heretic_misn_tracker")
    mem.reward = math.floor((100e3+(math.random(5,8)*2e3)*(mem.nasin_rep^1.315))*.01+.5)/.01
    mem.planding = 0

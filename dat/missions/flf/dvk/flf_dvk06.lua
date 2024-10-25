@@ -7,7 +7,7 @@
  <done>Alliance of Inconvenience</done>
  <location>Bar</location>
  <faction>FLF</faction>
- <cond>faction.playerStanding("FLF") &gt;= 80</cond>
+ <cond>spob.cur():reputation("FLF") &gt;= 80</cond>
  <notes>
   <campaign>Save the Frontier</campaign>
  </notes>

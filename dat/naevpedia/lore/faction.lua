@@ -6,7 +6,8 @@ local fctlib = {}
 local fct
 
 local function wgt ()
-   local val, str = fct:playerStanding()
+   local val = fct:reputationGlobal()
+   local str = fct:reputationText( val )
    local c = "N"
    local fp = faction.player()
    if fct:areEnemies(fp) then

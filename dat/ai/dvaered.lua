@@ -67,7 +67,7 @@ function hail ()
    mem.bribe_no      = nil
 
    -- Handle refueling
-   local standing = p:faction():playerStanding()
+   local standing = p:reputation()
    if standing < 50 then
       mem.refuel_no = _([["You are not worthy of my attention."]])
    else
