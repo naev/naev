@@ -6,6 +6,7 @@
  <colour>silver</colour>
  <spawn>collective</spawn>
  <standing>collective</standing>
+ <local_th>0</local_th>
  <description>The Collective are a hivemind of AI ships gone rogue. They seem to attack and destroy all humans on sight.</description>
  <enemies>
   <enemy>Empire</enemy>

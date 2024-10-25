@@ -9,6 +9,7 @@
  <spawn>soromid</spawn>
  <standing>soromid</standing>
  <equip>soromid</equip>
+ <local_th>20</local_th>
  <description>The Soromid consists of individuals who were forced to genetically modify themselves in order to survive a pandemic. They now openly embrace their human transcendence as a sign of strength.</description>
  <generator weight="0.4">Independent</generator>
  <generator weight="0.35">Trader</generator>
