@@ -48,6 +48,11 @@ end
 local function fctmod( sys, mod, cap, secondary, modenemy, modfriend )
    local changed -- Amount changed
 
+   -- Case system and no presence, it doesn't actually do anything...
+   if sys and sys:presence( sbase.fct )<=0 then
+      return
+   end
+
    -- Make sure it doesn't go over the true cap
    cap = math.min( reputation_max(), cap )
 
@@ -151,7 +156,10 @@ function hit( sys, mod, source, secondary )
          for i,s in ipairs(todo) do
             for j,n in ipairs(s:adjacentSystems()) do
                if not inlist( done, n ) then
-                  hitLocal( n, mod / (dist+1), source, secondary )
+                  local v = hitLocal( n, mod / (dist+1), source, secondary )
+                  if not val then
+                     val = v
+                  end
                   table.insert( done, n )
                   table.insert( dosys, n )
                end
@@ -163,7 +171,7 @@ function hit( sys, mod, source, secondary )
 
    -- Update frcom system that did hit and return change at that system
    sbase.fct:applyLocalThreshold( sys )
-   return val
+   return val or 0
 end
 
 --[[
