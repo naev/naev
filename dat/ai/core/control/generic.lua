@@ -330,13 +330,17 @@ local message_handler_funcs = {
    end,
 }
 
+-- Returns true if the task changed
 function handle_messages( p, si, dopush )
    local taskchange = false
    for i, msg in ipairs(ai.messages()) do
       local sender, msgtype, data = msg[1], msg[2], msg[3]
       local f = message_handler_funcs[ msgtype ]
       if f then
-         taskchange = f( p, si, dopush, sender, data ) and taskchange
+         local tc = f( p, si, dopush, sender, data )
+         if tc then
+            taskchange = true
+         end
       -- Sender can be nil if the pilot died after sending th emessage, or with
       -- cases like the pulse scanner outfit that just creates a signal at a
       -- location
@@ -489,6 +493,240 @@ function control_funcs.generic_attack( si, noretarget )
    -- Handle distress
    gen_distress( target )
    return false
+end
+function control_funcs.loiter ()
+   if mem.doscans and rnd.rnd() < 0.1 then
+      local target = scans.get_target()
+      if target then
+         if ai.isenemy(target) then
+            if should_attack(target) then
+               ai.pushtask( "attack", target )
+            end
+         else
+            scans.push( target )
+         end
+      end
+   end
+   return false
+end
+control_funcs.loiter_last = control_funcs.loiter
+control_funcs.inspect_moveto = function ()
+   local p = ai.pilot()
+   local target = ai.taskdata()
+   local lr = mem.enemyclose
+   local ls = mem._scan_last -- Should only be set for scanning pilots
+   if ls then
+      if not ls:exists() then
+         mem._scan_last = nil
+      elseif mem.doscans then
+         if scans.check_visible( ls ) then
+            mem._scan_last = nil
+            ai.poptask()
+            if ai.isenemy(ls) then
+               if should_attack(ls) then
+                  ai.pushtask( "attack", ls )
+                  return true
+               end
+            else
+               scans.push( ls )
+               return true
+            end
+         end
+      end
+   end
+   if mem.natural and target and lr and lanes.getDistance2P( p, target ) > lr*lr then
+      ai.poptask()
+      return false
+   end
+   return true
+end
+function control_funcs.runaway ()
+   local p = ai.pilot()
+   if mem.norun or p:leader() ~= nil then
+      ai.poptask()
+      return true
+   end
+   local target = ai.taskdata()
+
+   -- Needs to have a target
+   if not target:exists() then
+      ai.poptask()
+      return true
+   end
+
+   local dist = ai.dist( target )
+
+   -- Should return to combat?
+   local parmour, pshield = p:health()
+   if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
+         (mem.armour_return > 0 and parmour >= mem.armour_return)) then
+      ai.poptask() -- "attack" should be above "runaway"
+      return true
+
+   -- Try to jump
+   elseif dist > mem.safe_jump_distance then
+      ai.hyperspace()
+   else
+      -- If far enough away, stop the task
+      local enemy = atk.preferred_enemy() -- nearest enemy
+      if not enemy or (enemy and ai.dist(enemy) > mem.safe_distance) then
+         ai.poptask()
+         return true
+      end
+   end
+
+   -- Handle distress
+   gen_distress( target )
+   return true
+end
+function control_funcs.board ()
+   local task = ai.taskname()
+   local si = _stateinfo( task )
+
+   -- Needs to have a target
+   local target = ai.taskdata()
+   if not target or not target:exists() then
+      ai.poptask()
+      return true
+   end
+   -- We want to think in case another attacker gets close
+   atklib.think( target, si )
+   return true
+end
+function control_funcs.attack ()
+   return control_funcs.generic_attack()
+end
+function control_funcs.attack_forced ()
+   -- Independent of control_funcs.attack
+   control_funcs.generic_attack( nil, true )
+   return true
+end
+function control_funcs.flyback () return true end
+function control_funcs.hold () return true end
+function attacked_manual( attacker )
+   -- Ignore hits from dead pilots.
+   if not attacker:exists() then
+      return
+   end
+
+   local task = ai.taskname()
+   local si = _stateinfo( task )
+
+   -- Notify that pilot has been attacked before
+   local p = ai.pilot()
+   if not mem.attacked then
+      mem.attacked = true
+      if ai.hasfighterbays() then
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "e_clear" )
+         end
+      end
+   end
+
+   -- Pilot shouldn't be allowed to rebribe, so we just have to cancel
+   -- bribe status
+   if ai.isbribed(attacker) then
+      p:setBribed( false )
+   end
+
+   -- Notify followers that we've been attacked
+   if not si.fighting then
+      for k,v in ipairs(p:followers()) do
+         p:msg( v, "l_attacked", attacker )
+      end
+      local l = p:leader()
+      if l then
+         p:msg( l, "f_attacked", attacker )
+      end
+   end
+
+   -- Generate distress if necessary
+   gen_distress_attacked( attacker )
+end
+
+-- Required "attacked" function
+function attacked( attacker )
+   -- Ignore hits from dead pilots.
+   if not attacker:exists() then
+      return
+   end
+
+   local task = ai.taskname()
+   local si = _stateinfo( task )
+
+   -- Notify that pilot has been attacked before
+   local p = ai.pilot()
+   if not mem.attacked then
+      mem.attacked = true
+      mem.found_illegal = false -- We clear here so the player can't attack and still bribe
+      if ai.hasfighterbays() then
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "e_clear" )
+         end
+      end
+   end
+
+   -- Pilot shouldn't be allowed to rebribe, so we just have to cancel
+   -- bribe status
+   if ai.isbribed(attacker) then
+      p:setBribed( false )
+   end
+
+   -- Cooldown should be left running if not taking heavy damage.
+   if mem.cooldown then
+      local _a, pshield = p:health()
+      if pshield < 90 then
+         mem.cooldown = false
+         p:setCooldown( false )
+      else
+         return
+      end
+   end
+
+   -- Notify followers that we've been attacked
+   if not si.fighting then
+      for k,v in ipairs(p:followers()) do
+         p:msg( v, "l_attacked", attacker )
+      end
+      local l = p:leader()
+      if l then
+         p:msg( l, "f_attacked", attacker )
+      end
+   end
+
+   -- Generate distress if necessary
+   gen_distress_attacked( attacker )
+
+   -- If forced we'll stop after telling friends
+   if si.forced then return end
+
+   if not si.fighting then
+      if mem.defensive then
+         -- Some taunting
+         ai.hostile(attacker) -- Should be done before taunting
+         consider_taunt( attacker, false )
+
+         -- Now pilot fights back
+         clean_task( task )
+         ai.pushtask("attack", attacker)
+      else
+
+         -- Runaway
+         if not mem.norun then
+            ai.pushtask("runaway", attacker)
+         end
+      end
+
+   -- Let attacker profile handle it.
+   elseif si.attack then
+      atklib.attacked( attacker )
+
+   elseif task == "runaway" then
+      if ai.taskdata() ~= attacker and not mem.norun then
+         ai.poptask()
+         ai.pushtask("runaway", attacker)
+      end
+   end
 end
 
 -- Required "control" function
@@ -676,241 +914,6 @@ function control( dt )
    end
 end
 
-function control_funcs.loiter ()
-   if mem.doscans and rnd.rnd() < 0.1 then
-      local target = scans.get_target()
-      if target then
-         if ai.isenemy(target) then
-            if should_attack(target) then
-               ai.pushtask( "attack", target )
-            end
-         else
-            scans.push( target )
-         end
-      end
-   end
-   return false
-end
-control_funcs.loiter_last = control_funcs.loiter
-control_funcs.inspect_moveto = function ()
-   local p = ai.pilot()
-   local target = ai.taskdata()
-   local lr = mem.enemyclose
-   local ls = mem._scan_last -- Should only be set for scanning pilots
-   if ls then
-      if not ls:exists() then
-         mem._scan_last = nil
-      elseif mem.doscans then
-         if scans.check_visible( ls ) then
-            mem._scan_last = nil
-            ai.poptask()
-            if ai.isenemy(ls) then
-               if should_attack(ls) then
-                  ai.pushtask( "attack", ls )
-                  return true
-               end
-            else
-               scans.push( ls )
-               return true
-            end
-         end
-      end
-   end
-   if mem.natural and target and lr and lanes.getDistance2P( p, target ) > lr*lr then
-      ai.poptask()
-      return false
-   end
-   return true
-end
-function control_funcs.runaway ()
-   local p = ai.pilot()
-   if mem.norun or p:leader() ~= nil then
-      ai.poptask()
-      return true
-   end
-   local target = ai.taskdata()
-
-   -- Needs to have a target
-   if not target:exists() then
-      ai.poptask()
-      return true
-   end
-
-   local dist = ai.dist( target )
-
-   -- Should return to combat?
-   local parmour, pshield = p:health()
-   if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
-         (mem.armour_return > 0 and parmour >= mem.armour_return)) then
-      ai.poptask() -- "attack" should be above "runaway"
-      return true
-
-   -- Try to jump
-   elseif dist > mem.safe_jump_distance then
-      ai.hyperspace()
-   else
-      -- If far enough away, stop the task
-      local enemy = atk.preferred_enemy() -- nearest enemy
-      if not enemy or (enemy and ai.dist(enemy) > mem.safe_distance) then
-         ai.poptask()
-         return true
-      end
-   end
-
-   -- Handle distress
-   gen_distress( target )
-   return true
-end
-function control_funcs.board ()
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-
-   -- Needs to have a target
-   local target = ai.taskdata()
-   if not target or not target:exists() then
-      ai.poptask()
-      return true
-   end
-   -- We want to think in case another attacker gets close
-   atklib.think( target, si )
-   return true
-end
-function control_funcs.attack ()
-   return control_funcs.generic_attack()
-end
-function control_funcs.attack_forced ()
-   -- Independent of control_funcs.attack
-   control_funcs.generic_attack( nil, true )
-   return true
-end
-function control_funcs.flyback () return true end
-function control_funcs.hold () return true end
-
-function attacked_manual( attacker )
-   -- Ignore hits from dead pilots.
-   if not attacker:exists() then
-      return
-   end
-
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-
-   -- Notify that pilot has been attacked before
-   local p = ai.pilot()
-   if not mem.attacked then
-      mem.attacked = true
-      if ai.hasfighterbays() then
-         for k,v in ipairs(p:followers()) do
-            p:msg( v, "e_clear" )
-         end
-      end
-   end
-
-   -- Pilot shouldn't be allowed to rebribe, so we just have to cancel
-   -- bribe status
-   if ai.isbribed(attacker) then
-      p:setBribed( false )
-   end
-
-   -- Notify followers that we've been attacked
-   if not si.fighting then
-      for k,v in ipairs(p:followers()) do
-         p:msg( v, "l_attacked", attacker )
-      end
-      local l = p:leader()
-      if l then
-         p:msg( l, "f_attacked", attacker )
-      end
-   end
-
-   -- Generate distress if necessary
-   gen_distress_attacked( attacker )
-end
-
--- Required "attacked" function
-function attacked( attacker )
-   -- Ignore hits from dead pilots.
-   if not attacker:exists() then
-      return
-   end
-
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-
-   -- Notify that pilot has been attacked before
-   local p = ai.pilot()
-   if not mem.attacked then
-      mem.attacked = true
-      mem.found_illegal = false -- We clear here so the player can't attack and still bribe
-      if ai.hasfighterbays() then
-         for k,v in ipairs(p:followers()) do
-            p:msg( v, "e_clear" )
-         end
-      end
-   end
-
-   -- Pilot shouldn't be allowed to rebribe, so we just have to cancel
-   -- bribe status
-   if ai.isbribed(attacker) then
-      p:setBribed( false )
-   end
-
-   -- Cooldown should be left running if not taking heavy damage.
-   if mem.cooldown then
-      local _a, pshield = p:health()
-      if pshield < 90 then
-         mem.cooldown = false
-         p:setCooldown( false )
-      else
-         return
-      end
-   end
-
-   -- Notify followers that we've been attacked
-   if not si.fighting then
-      for k,v in ipairs(p:followers()) do
-         p:msg( v, "l_attacked", attacker )
-      end
-      local l = p:leader()
-      if l then
-         p:msg( l, "f_attacked", attacker )
-      end
-   end
-
-   -- Generate distress if necessary
-   gen_distress_attacked( attacker )
-
-   -- If forced we'll stop after telling friends
-   if si.forced then return end
-
-   if not si.fighting then
-      if mem.defensive then
-         -- Some taunting
-         ai.hostile(attacker) -- Should be done before taunting
-         consider_taunt( attacker, false )
-
-         -- Now pilot fights back
-         clean_task( task )
-         ai.pushtask("attack", attacker)
-      else
-
-         -- Runaway
-         if not mem.norun then
-            ai.pushtask("runaway", attacker)
-         end
-      end
-
-   -- Let attacker profile handle it.
-   elseif si.attack then
-      atklib.attacked( attacker )
-
-   elseif task == "runaway" then
-      if ai.taskdata() ~= attacker and not mem.norun then
-         ai.poptask()
-         ai.pushtask("runaway", attacker)
-      end
-   end
-end
 
 -- Default create function just runs create_post
 function create ()
