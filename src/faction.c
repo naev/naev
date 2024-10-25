@@ -2045,7 +2045,8 @@ int pfaction_save( xmlTextWriterPtr writer )
 
       xmlw_attr( writer, "name", "%s", f->name );
       xmlw_elem( writer, "standing", "%f", f->player );
-      xmlw_elem( writer, "override", "%f", f->override );
+      if ( faction_isFlag( f, FACTION_REPOVERRIDE ) )
+         xmlw_elem( writer, "override", "%f", f->override );
 
       if ( faction_isKnown_( f ) )
          xmlw_elemEmpty( writer, "known" );
@@ -2152,7 +2153,7 @@ int *faction_getGroup( int which )
 
 double faction_reputationOverride( int f, int *set )
 {
-   if ( faction_isFaction( f ) ) {
+   if ( !faction_isFaction( f ) ) {
       *set = -1;
       return 0.;
    }
@@ -2163,7 +2164,7 @@ double faction_reputationOverride( int f, int *set )
 
 void faction_setReputationOverride( int f, int set, double value )
 {
-   if ( faction_isFaction( f ) )
+   if ( !faction_isFaction( f ) )
       return;
    Faction *fct = &faction_stack[f];
    if ( !set ) {
