@@ -1334,13 +1334,6 @@ static int aiL_poptask( lua_State *L )
          L, _( "Trying to pop task when there are no tasks on the stack." ) );
       return 0;
    }
-   /*
-   if (strcmp(cur_pilot->ai->name,"escort")==0) {
-      if (cur_pilot->task==t) {
-         WARN("Popping last task!");
-      }
-   }
-   */
    t->done = 1;
    return 0;
 }
@@ -1354,10 +1347,9 @@ static int aiL_poptask( lua_State *L )
 static int aiL_taskname( lua_State *L )
 {
    const Task *t = ai_curTask( cur_pilot );
-   if ( t )
-      lua_pushstring( L, t->name );
-   else
-      lua_pushnil( L );
+   if ( t == NULL )
+      return 0;
+   lua_pushstring( L, t->name );
    return 1;
 }
 
@@ -1371,11 +1363,9 @@ static int aiL_taskname( lua_State *L )
 static int aiL_taskdata( lua_State *L )
 {
    const Task *t = ai_curTask( cur_pilot );
-
    /* Must have a task. */
    if ( t == NULL )
       return 0;
-
    return ai_tasktarget( L, t );
 }
 
