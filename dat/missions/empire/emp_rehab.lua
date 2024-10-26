@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Empire Rehabilitation">
  <priority>10</priority>
- <cond>faction.playerStanding("Empire") &lt; 0</cond>
+ <cond>faction.reputationGlobal("Empire") &lt; 0</cond>
  <chance>100</chance>
  <location>Computer</location>
 </mission>

@@ -118,7 +118,7 @@ You aren't too sure of what to make of your encounter with the Empire. Only time
       {pnt=mem.dest, label=emp.prefix} ))
    vn.func( function ()
       var.push("es_cargo", true)
-      faction.modPlayerSingle("Empire",3)
+      faction.hit( "Empire", 3 )
       pir.reputationNormalMission(3)
       player.pay( emp.rewards.cargo00 )
    end )

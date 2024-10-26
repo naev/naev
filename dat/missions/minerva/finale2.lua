@@ -710,7 +710,7 @@ Oh never mind. Here, take this credit stick, it's the least that I can do for yo
       vn.done("hexagon")
       vn.run()
 
-      faction.modPlayerSingle("Wild Ones", 15)
+      faction.hit( "Wild Ones", 15, nil, nil, true )
       minerva.log.maikki(fmt.f(_([[You managed to infiltrate the weapon laboratory on Minerva Station, obtaining important document including schematics related to Kex's cyborg parts. Despite being blown out into space and rescued by your ship AI, you were able to reach {returnspb} and hand over the documents. This allowed Maikki's engineers to resuscitate Kex and you were able to witness an emotional reunion between Kex and Maikki. They then took off to New Haven and you promised you would visit them sometime.]]),
          {returnspb=returnspb}))
 

@@ -66,7 +66,7 @@ function hail ()
    mem.bribe_no      = nil
 
    -- Get refuel chance
-   local standing = p:faction():playerStanding()
+   local standing = p:reputation()
    mem.refuel = mem.refuel_base
    if standing > 50 or
          (standing > 0 and mem.refuel_rng > 0.8) or

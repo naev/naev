@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="FLF Rehabilitation">
  <priority>10</priority>
- <cond>faction.playerStanding("FLF") &lt; 0</cond>
+ <cond>faction.reputationGlobal("FLF") &lt; 0</cond>
  <chance>100</chance>
  <faction>Frontier</faction>
  <faction>FLF</faction>

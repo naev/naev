@@ -760,7 +760,7 @@ static int linoptL_solve( lua_State *L )
    /* Complain about time. */
 #if DEBUGGING
    if ( SDL_GetTicks64() - starttime > LINOPT_MAX_TM )
-      WARN( _( "glpk: too over 1 second to optimize!" ) );
+      NLUA_WARN( L, _( "glpk: too over 1 second to optimize!" ) );
 #endif /* DEBUGGING */
 
    return 3;

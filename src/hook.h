@@ -8,6 +8,7 @@
 #include "nlua_jump.h"
 #include "nlua_pilot.h"
 #include "nlua_spob.h"
+#include "nlua_system.h"
 
 #define HOOK_MAX_PARAM                                                         \
    5 /**< Maximum hook params, to avoid dynamic allocation. */
@@ -25,6 +26,7 @@ typedef enum HookParamType_e {
    HOOK_PARAM_OUTFIT,    /**< Outfit hook parameter. */
    HOOK_PARAM_COMMODITY, /** Commodity hook parameter. */
    HOOK_PARAM_FACTION,   /**< Faction hook parameter. */
+   HOOK_PARAM_SSYS,      /**< Star system hook paramet.r */
    HOOK_PARAM_SPOB,      /**< Spob hook parameter. */
    HOOK_PARAM_JUMP,      /**< Jump point hook parameter. */
    HOOK_PARAM_ASTEROID,  /**< Asteroid hook parameter. */
@@ -46,6 +48,7 @@ typedef struct HookParam_s {
       const Outfit *outfit;    /**< Hook parameter outfit data. */
       Commodity    *commodity; /**< Hook parameter commodity data. */
       LuaFaction    lf;        /**< Hook parameter faction data. */
+      LuaSystem     ls;        /**< Hook parameter system data. */
       LuaSpob       la;        /**< Hook parameter spob data. */
       LuaJump       lj;        /**< Hook parameter jump data. */
       LuaAsteroid_t ast;       /**< Hook parameter asteroid data. */

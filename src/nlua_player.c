@@ -28,7 +28,6 @@
 #include "info.h"
 #include "land.h"
 #include "land_outfits.h"
-#include "log.h"
 #include "map.h"
 #include "map_overlay.h"
 #include "menu.h"
@@ -1121,7 +1120,7 @@ static int playerL_land( lua_State *L )
    PLAYER_CHECK();
 
    Spob       *spob    = luaL_validspob( L, 1 );
-   const char *sysname = spob_getSystem( spob->name );
+   const char *sysname = spob_getSystemName( spob->name );
    if ( sysname == NULL )
       return NLUA_ERROR( L, _( "Spob '%s' is not in a system!" ), spob->name );
 
@@ -1168,8 +1167,8 @@ static int playerL_land( lua_State *L )
       lua_pushspob( naevL, spob_index( spob ) );
       lua_pushpilot( naevL, player.p->id );
       if ( nlua_pcall( spob->lua_env, 2, 0 ) ) {
-         WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spob->name, "land",
-               lua_tostring( naevL, -1 ) );
+         NLUA_WARN( L, _( "Spob '%s' failed to run '%s':\n%s" ), spob->name,
+                    "land", lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
       }
 
@@ -2331,7 +2330,7 @@ static int playerL_teleport( lua_State *L )
    /* Get a spob. */
    else if ( lua_isspob( L, 1 ) ) {
       pnt  = luaL_validspob( L, 1 );
-      name = spob_getSystem( pnt->name );
+      name = spob_getSystemName( pnt->name );
       if ( name == NULL )
          return NLUA_ERROR( L, _( "Spob '%s' does not belong to a system." ),
                             pnt->name );
@@ -2344,7 +2343,7 @@ static int playerL_teleport( lua_State *L )
       if ( sysname == NULL ) {
          /* No system found, assume destination string is the name of a spob. */
          pntname = name;
-         name    = spob_getSystem( pntname );
+         name    = spob_getSystemName( pntname );
          pnt     = spob_get( pntname );
          if ( pnt == NULL )
             return NLUA_ERROR(
@@ -2546,7 +2545,7 @@ static int playerL_infoButtonUnregister( lua_State *L )
    int id  = luaL_checkinteger( L, 1 );
    int ret = info_buttonUnregister( id );
    if ( ret != 0 )
-      WARN( _( "Failed to unregister info button with id '%d'!" ), id );
+      NLUA_WARN( L, _( "Failed to unregister info button with id '%d'!" ), id );
    return 0;
 }
 

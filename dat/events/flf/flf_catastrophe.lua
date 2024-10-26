@@ -3,7 +3,18 @@
 <event name="FLF Catastrophe">
  <location>enter</location>
  <chance>70</chance>
- <cond>system.cur() == system.get("Sigur") and faction.get("FLF"):playerStanding() &gt;= 98 and player.misnDone("The FLF Split")</cond>
+ <cond>
+   if system.cur() ~= system.get("Sigur") then
+      return false
+   end
+   if not player.misnDone("The FLF Split") then
+      return false
+   end
+   if system.cur():reputation("FLF") &lt; 98 then
+      return false
+   end
+   return true
+  </cond>
  <notes>
   <done_misn name="The FLF Split"/>
   <campaign>Save the Frontier</campaign>
@@ -172,9 +183,9 @@ end
 
 function pilot_attacked_sindbad( _pilot, attacker, _arg )
    if attacker and attacker:withPlayer()
-         and faction.get("FLF"):playerStanding() > -100 then
+         and faction.get("FLF"):reputationGlobal() > -100 then
       -- Punish the player with a faction hit every time they attack
-      faction.get("FLF"):modPlayer(-10)
+      faction.get("FLF"):hit(-10)
    end
 end
 
@@ -209,11 +220,11 @@ function pilot_death_sindbad( pilot, attacker, _arg )
    end
 
    if (attacker and attacker:withPlayer())
-         or faction.get("FLF"):playerStanding() < 0 then
+         or faction.get("FLF"):reputationGlobal() < 0 then
       -- Player decided to help destroy Sindbad for some reason. Set FLF
       -- reputation to "enemy", add a log entry, and finish the event
       -- without giving the usual rewards.
-      faction.get("FLF"):setPlayerStanding( -100 )
+      faction.get("FLF"):setReputationGlobal( -100 )
       flf.addLog( _([[You turned on the FLF and helped the Empire and the Dvaereds destroy Sindbad for some reason.]]) )
       evt.finish( true )
    end
@@ -229,7 +240,7 @@ function pilot_death_sindbad( pilot, attacker, _arg )
    tk.msg( _("Escape and Live On"), fmt.f( _([["Well, this is it, soldier. My last transmission to you. I can't say I wanted it to go this way, but...
     "Listen. That chip I handed you before? It's a map. It shows the location of a hidden jump from Iris to an unknown system deep in the nebula. Go straight there, right now. Escape the Empire, find what lies beyond, and live on. Perhaps, in your future travels, you'll find a way to destroy the Dvaereds, and the Empire, once and for all." Benito smiles as more and more of the station detonates around her. "Goodbye, {player}. Stay vigilant." The transmission then cuts as you are forced to watch Sindbad finally erupt in a fiery explosion.]]), {player=player.name()} ) )
    flf.setReputation( 100 )
-   faction.get("FLF"):setPlayerStanding( 100 )
+   faction.get("FLF"):setReputationGlobal( 100 )
    flf.addLog( fmt.f( _([[The Empire discovered Sindbad. Try as you might, you and your comrades could not stop the combined onslaught of the Empire and the Dvaereds, and Sindbad erupted in a fiery explosion, killing Benito and all of your other comrades who were within Sindbad. Before the station exploded, Benito gave you a map leading into the unknown reaches of the inner nebula and told you to use the map to find what lies within in the hopes that one day, you can help the FLF rise again and defeat the Dvaereds once and for all. Her last words were short, but memorable: "Goodbye, {player}. Stay vigilant."]]), {player=player.name()} ) )
    player.outfitAdd( "Map: Inner Nebula Secret Jump" )
    hook.jumpin( "jumpin" )

@@ -3,7 +3,7 @@ local luaspob = require "spob.lua.lib.spob"
 
 mem.params = {
    bribe_cost = function ()
-      local std = mem.spob:faction():playerStanding()
+      local std = mem.spob:reputation()
       return (mem.std_land - std) * 500 + 1000
    end,
    std_land = 20,

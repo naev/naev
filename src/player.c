@@ -806,7 +806,6 @@ void player_cleanup( void )
    events_cleanup();
    space_clearKnown();
    map_cleanup();
-   factions_clearDynamic();
    player_inventoryClear();
 
    /* Reset controls. */
@@ -1490,10 +1489,12 @@ void player_weapSetPress( int id, double value, int repeat )
 {
    int type;
 
-   if ( repeat || ( player.p == NULL ) )
+   if ( player.p == NULL )
       return;
 
    type = ( value >= 0 ) ? +1 : -1;
+   if ( repeat )
+      type = 2;
 
    if ( type > 0 ) {
       if ( toolkit_isOpen() )
@@ -1506,8 +1507,9 @@ void player_weapSetPress( int id, double value, int repeat )
          return;
    }
 
-   pilot_weapSetPress( player.p, id, type );
-   pilot_weapSetUpdateOutfitState( player.p );
+   /* Only update if necessary. */
+   if ( pilot_weapSetPress( player.p, id, type ) )
+      pilot_weapSetUpdateOutfitState( player.p );
 }
 
 /**
@@ -2549,8 +2551,13 @@ void player_scan( void )
       player_message( "#r%s", _( "You need a target to scan." ) );
       return;
    }
-   if ( pilot_isFlag( t, PILOT_PLAYER_SCANNED ) ) {
+   if ( !pilot_isFlag( t, PILOT_PLAYER_SCANNED ) ) {
       player_message( "#o%s", _( "You are not ready to scan yet." ) );
+      return;
+   }
+   if ( pilot_inRangePilot( player.p, t, NULL ) <= 0 ) {
+      player_message(
+         "#o%s", _( "You can not identify the target at this distance." ) );
       return;
    }
 
@@ -3635,6 +3642,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
 
    xmlw_startElem( writer, "weaponsets" );
    xmlw_attr( writer, "autoweap", "%d", ship->autoweap );
+   xmlw_attr( writer, "advweap", "%d", ship->advweap );
    xmlw_attr( writer, "aim_lines", "%d", ship->aimLines );
    for ( int i = 0; i < PILOT_WEAPON_SETS; i++ ) {
       PilotWeaponSet       *ws    = &pship->weapon_sets[i];
@@ -3652,11 +3660,6 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
             xmlw_str( writer, "%d", weaps[j].slotid );
             xmlw_endElem( writer ); /* "weapon" */
          }
-         /* This code here is to change the group behaviour, since the old '0'
-          * was switch groups. */
-         if ( ws->type == 0 )
-            ws->type =
-               WEAPSET_TYPE_HOLD; /* Change switch groups to hold groups. */
       }
       xmlw_endElem( writer ); /* "weaponset" */
    }
@@ -4087,7 +4090,7 @@ static Spob *player_parse( xmlNodePtr parent )
    /* set player in system */
    pnt = spob_get( spob );
    /* Get random spob if it's NULL. */
-   if ( ( pnt == NULL ) || ( spob_getSystem( spob ) == NULL ) ||
+   if ( ( pnt == NULL ) || ( spob_getSystemName( spob ) == NULL ) ||
         !spob_hasService( pnt, SPOB_SERVICE_LAND ) ) {
       WARN( _( "Player starts out in non-existent or invalid spob '%s',"
                "trying to find a suitable one instead." ),
@@ -4131,7 +4134,7 @@ static Spob *player_parse( xmlNodePtr parent )
    }
 
    /* Initialize system. */
-   sys = system_get( spob_getSystem( pnt->name ) );
+   sys = system_get( spob_getSystemName( pnt->name ) );
    space_gfxLoad( sys );
    a = RNGF() * 2. * M_PI;
    r = RNGF() * pnt->radius * 0.8;
@@ -4697,6 +4700,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
       /* Check for autoweap. */
       xmlr_attr_int( node, "autoweap", autoweap );
+      xmlr_attr_int( node, "advweap", ship->advweap );
 
       /* Check for aim_lines. */
       xmlr_attr_int( node, "aim_lines", aim_lines );

@@ -641,7 +641,7 @@ const StarSystem *mission_sysComputerMark( const Mission *misn )
       case SPOBMARKER_HIGH:
       case SPOBMARKER_PLOT:
          pnt     = spob_getIndex( m->objid );
-         sysname = spob_getSystem( pnt->name );
+         sysname = spob_getSystemName( pnt->name );
          if ( sysname == NULL ) {
             WARN( _( "Marked spob '%s' is not in any system!" ), pnt->name );
             continue;
@@ -690,7 +690,7 @@ const StarSystem *mission_getSystemMarker( const Mission *misn )
       case SPOBMARKER_HIGH:
       case SPOBMARKER_PLOT:
          pnt     = spob_getIndex( m->objid );
-         sysname = spob_getSystem( pnt->name );
+         sysname = spob_getSystemName( pnt->name );
          if ( sysname == NULL ) {
             WARN( _( "Marked spob '%s' is not in any system!" ), pnt->name );
             continue;

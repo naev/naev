@@ -54,6 +54,8 @@ static int systemL_setHidden( lua_State *L );
 static int systemL_markerClear( lua_State *L );
 static int systemL_markerAdd( lua_State *L );
 static int systemL_markerRm( lua_State *L );
+static int systemL_reputation( lua_State *L );
+static int systemL_setReputation( lua_State *L );
 static int systemL_tags( lua_State *L );
 
 static const luaL_Reg system_methods[] = {
@@ -86,6 +88,8 @@ static const luaL_Reg system_methods[] = {
    { "markerClear", systemL_markerClear },
    { "markerAdd", systemL_markerAdd },
    { "markerRm", systemL_markerRm },
+   { "reputation", systemL_reputation },
+   { "setReputation", systemL_setReputation },
    { "tags", systemL_tags },
    { 0, 0 } }; /**< System metatable methods. */
 
@@ -247,7 +251,7 @@ static int systemL_get( lua_State *L )
    /* Passing a spob */
    else if ( lua_isspob( L, 1 ) ) {
       pnt = luaL_validspob( L, 1 );
-      ss  = system_get( spob_getSystem( pnt->name ) );
+      ss  = system_get( spob_getSystemName( pnt->name ) );
    } else if ( lua_issystem( L, 1 ) ) {
       lua_pushvalue( L, 1 );
       return 1;
@@ -999,6 +1003,63 @@ static int systemL_markerRm( lua_State *L )
 {
    unsigned int id = luaL_checklong( L, 1 );
    ovr_mrkRm( id );
+   return 0;
+}
+
+/**
+ * @brief Gets the stored local reputation of a system.
+ *
+ *    @luatparam System s System to get the stored local reputation of.
+ *    @luatparam[opt=nil] Faction f Faction to get reputation of or nil to get
+ * the local reputation of all factions in the system.
+ *    @luatreturn number|table|nil Either a number if the faction has a
+ * reputation in the system, a table if the faction wasn't set, or nil if
+ * nothing was found.
+ * @luafunc reputation
+ */
+static int systemL_reputation( lua_State *L )
+{
+   const StarSystem *sys = luaL_validsystem( L, 1 );
+   if ( lua_isnoneornil( L, 2 ) ) {
+      lua_newtable( L );
+      for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+         const char *name = faction_name( sys->presence[i].faction );
+         lua_pushnumber( L, sys->presence[i].local );
+         lua_setfield( L, -2, name );
+      }
+      return 1;
+   }
+
+   int f = luaL_validfaction( L, 2 );
+   for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+      if ( sys->presence[i].faction == f ) {
+         lua_pushnumber( L, sys->presence[i].local );
+         return 1;
+      }
+   }
+   lua_pushnumber( L, faction_reputation( f ) );
+   return 1;
+}
+
+/**
+ * @brief Sets the stored local reputation of a system.
+ *
+ *    @luatparam System s System to set the stored local reputation of.
+ *    @luatparam Faction f Faction to set the local reputation of.
+ *    @luatparam number value Value to set the local reputation to.
+ * @luafunc setReputation
+ */
+static int systemL_setReputation( lua_State *L )
+{
+   const StarSystem *sys = luaL_validsystem( L, 1 );
+   int               f   = luaL_validfaction( L, 2 );
+   double            m   = luaL_checknumber( L, 3 );
+   for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+      if ( sys->presence[i].faction != f )
+         continue;
+      sys->presence[i].local = m;
+      break;
+   }
    return 0;
 }
 

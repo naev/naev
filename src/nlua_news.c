@@ -230,7 +230,7 @@ int newsL_add( lua_State *L )
                news_add( title, body, faction, NULL, date, date_to_rm,
                          priority );
             else
-               WARN( _( "Bad arguments" ) );
+               NLUA_WARN( L, _( "Bad arguments" ) );
          }
          lua_pop( L, 1 );
       }
@@ -248,7 +248,8 @@ int newsL_add( lua_State *L )
 
    if ( !( lua_isstring( L, 1 ) && lua_isstring( L, 2 ) &&
            lua_isstring( L, 3 ) ) ) {
-      WARN( _( "\nBad arguments, use "
+      NLUA_WARN(
+         L, _( "\nBad arguments, use "
                "addArticle(\"Faction\",\"Title\",\"Content\",[date,[date_to_rm]"
                "])" ) );
       return 0;
@@ -469,13 +470,14 @@ int newsL_bind( lua_State *L )
       /* traverse table */
       while ( lua_next( L, -2 ) ) {
          if ( !( a = luaL_checknews( L, -1 ) ) ) {
-            WARN( _( "Bad argument to news.date(), must be article or a table "
+            NLUA_WARN(
+               L, _( "Bad argument to news.date(), must be article or a table "
                      "of articles" ) );
             return 0;
          }
          article_ptr = news_get( *a );
          if ( article_ptr == NULL ) {
-            WARN( _( "Article not valid" ) );
+            NLUA_WARN( L, _( "Article not valid" ) );
             return 0;
          }
          article_ptr->tag = strdup( tag );
@@ -484,13 +486,14 @@ int newsL_bind( lua_State *L )
    } else {
       const char *tag;
       if ( !( a = luaL_checknews( L, 1 ) ) ) {
-         WARN( _( "Bad argument to news.date(), must be article or a table of "
+         NLUA_WARN(
+            L, _( "Bad argument to news.date(), must be article or a table of "
                   "articles" ) );
          return 0;
       }
       article_ptr = news_get( *a );
       if ( article_ptr == NULL ) {
-         WARN( _( "Article not valid" ) );
+         NLUA_WARN( L, _( "Article not valid" ) );
          return 0;
       }
 

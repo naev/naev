@@ -91,7 +91,7 @@ function timer ()
 
    vn.run()
 
-   if fthurion:playerStanding() < 0 then
+   if fthurion:reputationGlobal() < 0 then
       return
    end
 

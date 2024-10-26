@@ -8,7 +8,7 @@
  <faction>Dvaered</faction>
  <done>Dvaered Delivery</done>
  <cond>
-   if faction.playerStanding("Dvaered") &lt; 0 then
+   if system.cur():reputation("Dvaered") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 then
       return false
    end
    --return require("misn_test").reweight_active() -- don't reweight for licenses
@@ -98,7 +98,7 @@ function accept()
    local doaccept = false
    vn.transition()
 
-   local std = faction.playerStanding("Dvaered")
+   local std = faction.reputationGlobal("Dvaered")
    if std < 20 then
       sol(fmt.f(_([["Hello, citizen. You lack reputation with House Dvareed for us to entrust you with work."
 
@@ -318,7 +318,7 @@ function land()
       vn.done()
       vn.run()
 
-      -- TODO once the whole recruitment campaign is stabilized: faction.get("Dvaered"):modPlayerRaw(someQuantity)
+      faction.get("Dvaered"):hit(5)
       if diff.isApplied( "heavy_weapons_license" ) then
          dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract.]]) )
       else -- Player does not have the license

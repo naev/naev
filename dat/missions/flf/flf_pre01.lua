@@ -95,7 +95,7 @@ function enter()
          fleetFLF[#fleetFLF + 1] = p
       end
 
-      faction.get("FLF"):setPlayerStanding( -100 )
+      faction.get("FLF"):setReputationGlobal( -100 )
 
       hook.timer(2.0, "commFLF")
       hook.timer(15.0, "wakeUpGregarYouLazyBugger")
@@ -122,7 +122,7 @@ function land()
          tk.msg(_("Another criminal caught"), _([[It doesn't take Dvaered security long to arrive at your landing bay. They board your ship, seize Gregar, and take him away before he even comprehends what's going on.
    "You have served House Dvaered adequately, citizen," the stone-faced captain of the security detail tells you. "In recognition of your service, we may allow you to participate in other operations regarding the FLF terrorists. If you have further questions, direct them to our public liaison."
    The officer turns and leaves without waiting for an answer, and without rewarding you in any tangible way. You wonder if you should scout out this liaison, in hopes of at least getting something out of this whole situation.]]))
-         faction.get("Dvaered"):modPlayerSingle(5)
+         faction.get("Dvaered"):hit(5)
          var.push("flfbase_intro", 1)
          var.pop("flfbase_flfshipkilled")
          dv.addAntiFLFLog( _([[You turned in FLF Lt. Gregar Fletcher to Dvaered authorities. The Dvaered captain who took him off your hands said that you could join in on a campaign against the FLF terrorists; you can direct questions to a Dvaered public liaison. You may want to scout out this liaison.]]) )
@@ -162,7 +162,7 @@ function wakeUpGregarYouLazyBugger()
    "Apologies, Alpha. It's a long story. For now, let me just tell you that you can trust the pilot of this ship. This pilot kindly helped me out of a desperate situation, and without that help I probably would never have returned alive. Request you escort us to Sindbad."
    "Copy that Lt. Fletcher." Alpha then addresses you. "Please follow us. We will guide you to our base. Stay close. Sensor range is lousy in these parts, and if you get separated from us, we won't be able to find you again, and you won't be able to find us or our base."
    With that, Alpha breaks the connection. It seems you have little choice but to do as he says if you ever want to take Gregar to his destination.]]))
-      faction.get("FLF"):setPlayerStanding( 5 ) -- Small buffer to ensure it doesn't go negative again right away.
+      faction.get("FLF"):setReputationGlobal( 5 ) -- Small buffer to ensure it doesn't go negative again right away.
       misn.osdCreate(_("Deal with the FLF agent"), {
          fmt.f( _("Take Gregar, the FLF agent, to the {sys} system and make contact with the FLF"), {sys=mem.destsys}),
          _("Follow the FLF ships to their secret base. Do not lose them!"),

@@ -1192,6 +1192,26 @@ void window_destroyWidget( unsigned int wid, const char *wgtname )
    wgt_setFlag( wgt, WGT_FLAG_KILL );
 }
 
+void window_clearWidgets( unsigned int wid )
+{
+   Window *wdw;
+   Widget *wgt;
+
+   /* Get the window. */
+   wdw = window_wget( wid );
+   if ( wdw == NULL )
+      return;
+
+   /* Get the widget. */
+   for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next ) {
+      toolkit_defocusWidget( wdw, wgt );
+
+      /* There's dead stuff now. */
+      wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
+      wgt_setFlag( wgt, WGT_FLAG_KILL );
+   }
+}
+
 /**
  * @brief Destroy a widget really.
  */

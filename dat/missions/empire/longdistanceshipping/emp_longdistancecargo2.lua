@@ -4,7 +4,7 @@
  <unique />
  <priority>4</priority>
  <cond>
-   if faction.playerStanding("Empire") &lt; 0 then
+   if faction.reputationGlobal("Empire") &lt; 0 or system.cur():reputation("Empire") &lt; 0 then
       return false
    end
    return require("misn_test").reweight_active()
@@ -94,7 +94,7 @@ function land()
    end
 
    player.pay( emp.rewards.ldc2 )
-   faction.modPlayerSingle( "Empire",3 )
+   faction.hit( "Empire",3 )
    lmisn.sfxVictory()
 
    -- More flavour text

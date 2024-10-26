@@ -3,7 +3,7 @@
 <mission name="Collective Distraction">
  <unique />
  <priority>2</priority>
- <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+ <cond>faction.reputationGlobal("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
  <done>Collective Espionage 2</done>
  <chance>100</chance>
  <location>Bar</location>
@@ -127,7 +127,7 @@ function land()
 
       -- Rewards
       player.pay(mem.credits)
-      faction.modPlayerSingle("Empire",5)
+      faction.hit("Empire",5)
 
       emp.addCollectiveLog( _([[You provided a distraction while a commando team was inserted into Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Enclave again at that time.]]) )
 

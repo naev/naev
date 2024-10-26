@@ -275,6 +275,9 @@ static int hook_parseParam( const HookParam *param )
       case HOOK_PARAM_FACTION:
          lua_pushfaction( naevL, param[n].u.lf );
          break;
+      case HOOK_PARAM_SSYS:
+         lua_pushsystem( naevL, param[n].u.ls );
+         break;
       case HOOK_PARAM_SPOB:
          lua_pushspob( naevL, param[n].u.la );
          break;

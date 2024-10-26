@@ -3,7 +3,18 @@
 <event name="FLF/DV Derelicts">
  <location>enter</location>
  <chance>60</chance>
- <cond>faction.get("Dvaered"):playerStanding() &gt;= 0 and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
+ <cond>
+   if player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")  then
+      return false
+   end
+   if player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home") then
+      return false
+   end
+   if faction.get("Dvaered"):reputationGlobal() &lt; 0 then
+      return false
+   end
+   return true
+ </cond>
  <chapter>[^0]</chapter>
 </event>
 --]]

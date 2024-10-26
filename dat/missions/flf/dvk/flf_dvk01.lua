@@ -7,7 +7,7 @@
  <done>Disrupt a Dvaered Patrol</done>
  <location>Bar</location>
  <faction>FLF</faction>
- <cond>faction.playerStanding("FLF") &gt;= 10</cond>
+ <cond>spob.cur():reputation("FLF") &gt;= 10</cond>
  <notes>
   <campaign>Save the Frontier</campaign>
   <tier>4</tier>
@@ -76,7 +76,7 @@ function land ()
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( mem.credits )
       flf.setReputation( 30 )
-      faction.get("FLF"):modPlayer( mem.reputation )
+      faction.get("FLF"):hit( mem.reputation )
       flf.addLog( _([[You helped the FLF conduct some kind of operation in Raelid by distracting the Dvaereds in another system.]]) )
       misn.finish( true )
    end

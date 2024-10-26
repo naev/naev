@@ -412,7 +412,7 @@ function followup ()
    local pir = vn.newCharacter( minerva.vn_zuri{ shader=love_shaders.hologram()} )
    local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { colour = minerva.maikkiP.colour } )
    vn.transition("electric")
-   vn.na(_("As everything settles down you receive an incoming transmission from the interrogation ship, and the individual apparently known as 'Zuri' appears on screen."))
+   vn.na(_("As everything settles down you receive an incoming transmission from the interrogation ship, and the individual apparently known as 'Zuri' appears on-screen."))
    pir(_([["Damn that was close. I never thought the Dvaered would be tricky enough to trail us over here. Pretty sure the damn mole had some sort of tracking device we must have missed."]]))
    pir(_([["I'm sure you have a lot of questions, however, now is not the time for answers. We can't linger here long, the Dvaered are bound to be back, and this time in larger numbers."]]))
    maikki(_([[The still familiar voice butts in.
@@ -425,7 +425,7 @@ She gives you a tired grin.
    vn.func( function () -- Rewards
       player.pay( reward_amount )
       minerva.log.pirate(_("You helped defend an interrogation ship from Dvaered vessels.") )
-      faction.modPlayerSingle("Wild Ones", 5)
+      faction.hit( "Wild Ones", 5, nil, nil, true )
    end )
    vn.sfxVictory()
    vn.done("electric")

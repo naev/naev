@@ -4,7 +4,7 @@
  <unique />
  <priority>4</priority>
  <cond>
-   if faction.playerStanding("Dvaered") &lt; 5 then
+   if spob.cur():reputation("Dvaered") &lt; 5 then
       return false
    end
    return require("misn_test").reweight_active()
@@ -117,7 +117,7 @@ end
 local function player_left_mission_theater()
    if mem.missionstarted then -- The player has landed, which instantly ends the mission.
       vntk.msg(_("You ran away!"), _("You have left the system without first completing your mission. The operation ended in failure."))
-      faction.get("Dvaered"):modPlayerSingle(-5)
+      faction.get("Dvaered"):hit(-5)
       abort()
    end
 end
@@ -175,13 +175,13 @@ end
 
 function hawk_jump () -- Got away
    vntk.msg(_("The Hawk got away!"), _("The Hawk jumped out of the system. You have failed your mission."))
-   faction.get("Dvaered"):modPlayerSingle(-5)
+   faction.get("Dvaered"):hit(-5)
    hook.timer(10, "abort")
 end
 
 function hawk_land(_plt, pnt) -- Got away
    vntk.msg(_("The Hawk got away!"), fmt.f(_("The Hawk landed back on {pnt}. You have failed your mission."), {pnt=pnt}))
-   faction.get("Dvaered"):modPlayerSingle(-5)
+   faction.get("Dvaered"):hit(-5)
    hook.timer(10, "abort")
 end
 
@@ -325,7 +325,7 @@ function jump_fleet_cap_dead () -- mission failed
    hawk:broadcast(_("Pathetic, can't even take down an unarmed ship."))
    hawk:setNoDeath()
    vntk.msg(_("The Hawk is safe."), _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission."))
-   faction.get("Dvaered"):modPlayerSingle(-5)
+   faction.get("Dvaered"):hit(-5)
    hawk:land(destplanet)
    for i, j in ipairs(fleetdv) do
       if j:exists() then

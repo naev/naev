@@ -186,7 +186,7 @@ function land ()
    if spob.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( mem.credits )
-      faction.get("FLF"):modPlayer( mem.reputation )
+      faction.get("FLF"):hit( mem.reputation )
       misn.finish( true )
    end
 end

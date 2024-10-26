@@ -6,7 +6,7 @@
  <location>Computer</location>
  <faction>Dvaered</faction>
  <cond>
-   if faction.playerStanding("Dvaered") &lt; 0 then
+   if system.cur():reputation("Dvaered") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 then
       return false
    end
    return require("misn_test").computer()
@@ -84,7 +84,7 @@ function land()
          var.push("dc_misn", 1)
       end
 
-      faction.modPlayerSingle("Dvaered", rnd.rnd(1, 2))
+      faction.hit("Dvaered", rnd.rnd(2, 3))
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end

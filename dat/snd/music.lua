@@ -245,7 +245,7 @@ local function sys_strongest_faction( sys, combat )
          if f:tags().pirate then
             k = "Pirate" -- We don't distinguish between pirate factions ATM
          end
-         if (not combat or f:playerStanding() < 0) and v > strongest_amount then
+         if (not combat or sys:reputation(f) < 0) and v > strongest_amount then
             strongest = k
             strongest_amount = v
          end

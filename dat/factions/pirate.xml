@@ -9,6 +9,7 @@
  <spawn>pirate</spawn>
  <standing>pirate</standing>
  <equip>pirate</equip>
+ <local_th>0</local_th>
  <useshiddenjumps/>
  <description>The Galactic Space Pirates consists of independent pirate vessels not affiliated with any particular clan. Due to their disorganized nature, they tend to respect the clans they operate near.</description>
  <generator weight="0.5">Marauder</generator>

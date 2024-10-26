@@ -83,7 +83,7 @@ function hail ()
    mem.bribe_no      = nil
 
    -- Deal with refueling
-   local standing = p:faction():playerStanding()
+   local standing = p:reputation()
    mem.refuel = mem.refuel_base
    if standing < 0 then
       mem.refuel_no = _([["The warriors of Sorom are not your personal refueller."]])

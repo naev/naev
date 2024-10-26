@@ -63,8 +63,8 @@ function create ()
 
       -- Sort the hypergates by player standing
       table.sort( hypergate_list, function ( a, b )
-         local sa = a:faction():playerStanding()
-         local sb = b:faction():playerStanding()
+         local sa = a:faction():reputationGlobal()
+         local sb = b:faction():reputationGlobal()
          return sa > sb
       end )
 

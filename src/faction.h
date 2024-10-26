@@ -6,6 +6,7 @@
 #include "colour.h"
 #include "nlua.h"
 #include "opengl_tex.h"
+#include "space_fdecl.h"
 
 extern int faction_player;
 
@@ -56,33 +57,48 @@ int                     faction_usesHiddenJumps( int f );
 const FactionGenerator *faction_generators( int f );
 
 /* Set stuff */
-int faction_setKnown( int id, int state );
+int    faction_setKnown( int id, int state );
+double faction_reputationOverride( int f, int *set );
+void   faction_setReputationOverride( int f, int set, double value );
 
 /* player stuff */
+double      faction_hit( int f, const StarSystem *sys, double mod,
+                         const char *source, int single );
 void        faction_modPlayer( int f, double mod, const char *source );
 void        faction_modPlayerSingle( int f, double mod, const char *source );
 void        faction_modPlayerRaw( int f, double mod );
-void        faction_setPlayer( int f, double value );
-double      faction_getPlayer( int f );
-double      faction_getPlayerDef( int f );
+void        faction_setReputation( int f, double value );
+double      faction_reputation( int f );
+double      faction_reputationDefault( int f );
+void        faction_setReputation( int f, double value );
 int         faction_isPlayerFriend( int f );
 int         faction_isPlayerEnemy( int f );
+int         faction_isPlayerFriendSystem( int f, const StarSystem *sys );
+int         faction_isPlayerEnemySystem( int f, const StarSystem *sys );
 const char *faction_getStandingText( int f );
 const char *faction_getStandingTextAtValue( int f, double value );
 const char *faction_getStandingBroad( int f, int bribed, int override );
 double      faction_reputationMax( int f );
-const glColour *faction_getColour( int f );
-char            faction_getColourChar( int f );
+const glColour *faction_reputationColour( int f );
+char            faction_reputationColourChar( int f );
+const glColour *faction_reputationColourSystem( int f, const StarSystem *sys );
+char faction_reputationColourCharSystem( int f, const StarSystem *sys );
+void faction_applyLocalThreshold( int f, StarSystem *sys );
+void faction_updateGlobal( void );
 
 /* Works with only factions */
 int areEnemies( int a, int b );
 int areAllies( int a, int b );
+int areEnemiesSystem( int a, int b, const StarSystem *sys );
+int areAlliesSystem( int a, int b, const StarSystem *sys );
 
 /* load/free */
 int  factions_load( void );
 void factions_loadPost( void );
 void factions_free( void );
 void factions_reset( void );
+void factions_resetLocal( void );
+void factions_cleanLocal( void );
 void faction_clearKnown( void );
 
 /* Dynamic factions. */

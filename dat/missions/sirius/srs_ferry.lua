@@ -4,7 +4,7 @@
  <priority>3</priority>
  <chance>266</chance>
  <cond>
-   if faction.playerStanding("Sirius") &lt; 0 then
+   if system.cur():reputation("Sirius") &lt; 0 then
       return false
    end
    return require("misn_test").computer()
@@ -109,8 +109,6 @@ end
 function create()
    -- RULES:
    -- You have to be flying a Sirian ship to land on Mutris, and have standing > 75, but you get much more money
-   --   faction.get('Sirius'):playerStanding() > 75
-   --   player.pilot():ship():baseType() in (...)
    -- Otherwise, you can drop the person off at Urail or Gayathi (if they're OK with that) and get less pay
    --   Lower-class citizens are more likely to be OK with this
 
@@ -178,8 +176,7 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
       end
    end
 
-   --if faction.get('Sirius'):playerStanding() <= 75 then
-   local can_land = mem.destplanet:canLand()  -- Player with mem.rank < 75 will not be allowed to land on Mutris
+   local can_land = mem.destplanet:canLand()  -- Player with reputation < 75 will not be allowed to land on Mutris
    if not can_land then
       -- Decide if the passenger will be OK with being dropped off at Urail or Gayathi, and if mem.reward is reduced
       -- Then ask player if they're OK with that
@@ -304,7 +301,7 @@ function land()
 
       if mem.intime then
          local distbonus = math.max(math.min(mem.numjumps,mem.distbonus_maxjumps)-mem.distbonus_minjumps+1, 0) / 2  -- ranges from 0 (<mem.distbonus_minjumps jumps) to 4 (>=mem.distbonus_maxjumps jumps)
-         faction.modPlayerSingle("Sirius", rnd.rnd(distbonus, distbonus+mem.rank+1))
+         faction.hit("Sirius", rnd.rnd(distbonus, distbonus+mem.rank+1))
 
          vntk.msg(_("Successful arrival!"), fmt.f( ferry_land_p2[mem.rank], {passenger=ferry_land_p1[mem.rank]} ) )
       elseif mem.overtime then
@@ -318,7 +315,7 @@ function land()
 
       if mem.change == 2 then
          -- A little bonus for doing something nice
-         faction.modPlayerSingle("Sirius", 1)
+         faction.hit("Sirius", 1)
          vntk.msg(_("Altering the deal"), _("Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!"))
          mem.reward = mem.reward * 1.25
       end

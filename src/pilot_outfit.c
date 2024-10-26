@@ -1292,8 +1292,11 @@ static void pilot_outfitLRun( Pilot *p,
       func( p, po, data );
    }
    /* Recalculate if anything changed. */
-   if ( pilotoutfit_modified )
+   if ( pilotoutfit_modified ) {
       pilot_calcStats( p );
+      pilot_weapSetUpdateOutfitState(
+         p ); /* TODO pilot_calcStats can be called twice here. */
+   }
 }
 static void outfitLRunWarning( const Pilot *p, const Outfit *o,
                                const char *name, const char *error )
@@ -1710,46 +1713,6 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield,
    const struct OnhitData data = {
       .armour = armour, .shield = shield, .attacker = attacker };
    pilot_outfitLRun( pilot, outfitLOnhit, &data );
-}
-
-/**
- * @brief Handle the manual holding of an outfit.
- *
- *    @param pilot Pilot to trigger onhold function of.
- *    @param po Outfit to be holding.
- *    @param on Whether to the hold is on or off.
- *    @return 1 if was able to toggle it, 0 otherwise.
- */
-int pilot_outfitLOnhold( const Pilot *pilot, PilotOutfitSlot *po, int on )
-{
-   nlua_env env = po->outfit->lua_env;
-   int      ret, oldmem;
-   pilotoutfit_modified = 0;
-
-   /* Set the memory. */
-   oldmem = pilot_outfitLmem( po, env );
-
-   /* Set up the function: onhold( p, po, armour, shield ) */
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, po->outfit->lua_onhold ); /* f */
-   lua_pushpilot( naevL, pilot->id );                               /* f, p */
-   lua_pushpilotoutfit( naevL, po ); /* f, p, po */
-   lua_pushboolean( naevL, on );     /* f, p, po, on */
-   if ( nlua_pcall( env, 3, 1 ) ) {  /* */
-      outfitLRunWarning( pilot, po->outfit, "onhold",
-                         lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
-      pilot_outfitLunmem( env, oldmem );
-      return 0;
-   }
-
-   /* Handle return boolean. */
-   ret = lua_toboolean( naevL, -1 );
-   if ( ret )
-      po->flags &= ~PILOTOUTFIT_ISON_LUA; /* Clear if it was set via toggle. */
-   lua_pop( naevL, 1 );
-   pilot_outfitLunmem( env, oldmem );
-   return ret || pilotoutfit_modified; /* Even if the script says it didn't
-                                          change, it may have been modified. */
 }
 
 /**

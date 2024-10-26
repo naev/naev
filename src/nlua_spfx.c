@@ -450,8 +450,8 @@ static int spfxL_rm( lua_State *L )
          lua_pushspfx( naevL, ls->id );
          if ( lua_pcall( naevL, 1, 0, 0 ) != 0 ) {
             // if ( nlua_pcall( ls->env, 1, 0 ) != 0 ) {
-            WARN( _( "Spfx failed to run 'remove':\n%s" ),
-                  lua_tostring( naevL, -1 ) );
+            NLUA_WARN( L, _( "Spfx failed to run 'remove':\n%s" ),
+                       lua_tostring( naevL, -1 ) );
             lua_pop( naevL, 1 );
          }
       }

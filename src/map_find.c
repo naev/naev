@@ -450,7 +450,7 @@ static int map_findSearchSpobs( unsigned int wid_map_find, const char *name )
    /* Exact match. */
    if ( ( spobname != NULL ) && ( len == 1 ) ) {
       /* Check exact match. */
-      const char *sysname = spob_getSystem( spobname );
+      const char *sysname = spob_getSystemName( spobname );
       if ( sysname != NULL ) {
          /* Make sure it's known. */
          Spob *spob = spob_get( spobname );
@@ -482,7 +482,7 @@ static int map_findSearchSpobs( unsigned int wid_map_find, const char *name )
          continue;
 
       /* System must be known. */
-      sysname = spob_getSystem( names[i] );
+      sysname = spob_getSystemName( names[i] );
       if ( sysname == NULL )
          continue;
       sys = system_get( sysname );
@@ -772,7 +772,7 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
          continue;
 
       /* System must be known. */
-      sysname = spob_getSystem( spob->name );
+      sysname = spob_getSystemName( spob->name );
       if ( sysname == NULL )
          continue;
       sys = system_get( sysname );
@@ -910,7 +910,7 @@ static int map_findSearchShips( unsigned int wid_map_find, const char *name )
          continue;
 
       /* System must be known. */
-      sysname = spob_getSystem( spob->name );
+      sysname = spob_getSystemName( spob->name );
       if ( sysname == NULL )
          continue;
       sys = system_get( sysname );

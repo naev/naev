@@ -12,14 +12,14 @@ end
 
 -- Override hit function
 local oldhit = hit
-function hit( current, amount, source, secondary )
-   local value = math.max( -50, oldhit( current, amount, source, secondary ) )
+function hit( sys, mod, source, secondary )
+   local changed = oldhit( sys, mod, source, secondary )
 
    -- Get the maximum player value with any pirate clan
-   local maxval = value
+   local maxval = changed
    for k,v in ipairs(pir.factions_clans) do
       if v ~= sbase.fct then
-         local vs = v:playerStanding() -- Only get first parameter
+         local vs = v:reputationGlobal() -- Only get first parameter
          maxval = math.max( maxval, vs )
       end
    end
@@ -28,7 +28,7 @@ function hit( current, amount, source, secondary )
    pir.updateStandings( maxval )
 
    -- Set current faction standing
-   return value
+   return changed
 end
 
 return spir

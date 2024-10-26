@@ -27,4 +27,5 @@ return {
    --text_neutral   = _("Impartial"),
    --text_hostile   = _("Belligerent"),
    text_bribed    = _("Paid Off"),
+   hit_range      = 0,
 }

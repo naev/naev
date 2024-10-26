@@ -4,7 +4,7 @@
  <unique />
  <priority>3</priority>
  <done>The Assault</done>
- <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+ <cond>spob.cur():reputation("Nasin") &gt;= 0</cond>
  <chance>100</chance>
  <location>Bar</location>
  <spob>The Wringer</spob>
@@ -34,7 +34,7 @@ local targetasset, targetsys = spob.getS("Ulios") --this will be the new HQ for 
 function create()
    --this mission make no system claims.
    --initialize your variables
-   mem.nasin_rep = faction.playerStanding("Nasin")
+   mem.nasin_rep = spob.cur():reputation("Nasin")
    mem.misn_tracker = var.peek("heretic_misn_tracker")
    mem.reward = math.floor((100e3+(math.random(5,8)*2e3)*(mem.nasin_rep^1.315))*.01+.5)/.01
    mem.homeasset = spob.cur()
@@ -134,7 +134,7 @@ function misn_over() --aren't you glad thats over?
       player.pay(mem.reward)
       misn.cargoRm(mem.refugees)
       mem.misn_tracker = mem.misn_tracker + 1
-      faction.modPlayer("Nasin",25) --big boost to the Nasin, for completing the prologue
+      faction.hit("Nasin",25) --big boost to the Nasin, for completing the prologue
       var.push("heretic_misn_tracker", mem.misn_tracker)
       misn.osdDestroy()
       player.allowSave(true)
@@ -146,7 +146,7 @@ end
 function abort()
    tk.msg(_("The Egress"), fmt.f(_([[You decide that this mission is just too much. You open up the cargo doors and jettison all {n} people out into the cold emptiness of space. The Nasin will hate you forever, but you did what you had to do.]]), {n=fmt.number(mem.people_carried)}))
    misn.cargoJet(mem.refugees)
-   faction.modPlayerSingle("Nasin",-200)
+   faction.hit("Nasin",-200)
    player.allowSave(true)
    misn.finish(true)
 end

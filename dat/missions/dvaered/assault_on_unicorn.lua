@@ -3,7 +3,7 @@
 <mission name="Assault on Unicorn">
  <priority>3</priority>
  <cond>
-   if faction.playerStanding("Dvaered") &lt; 5 then
+   if spob.cur():reputation("Dvaered") &lt; 5 then
       return false
    end
    if system.get("Unicorn"):jumpDist() &gt; 5 then
@@ -56,7 +56,7 @@ local function update_osd()
 end
 
 function create ()
-   local rep = faction.playerStanding("Dvaered")
+   local rep = spob.cur():reputation("Dvaered")
    -- Round the payment to the nearest thousand.
    mem.max_payment = rep * 50e3
    misn.setTitle(dv.prefix.._("Assault on Unicorn"))
@@ -112,7 +112,7 @@ function land()
       vn.sfxMoney()
       vn.func( function ()
          player.pay(mem.bounty_earned)
-         faction.modPlayerSingle( "Dvaered", math.pow( mem.bounty_earned, 0.5 ) / 100 )
+         faction.hit( "Dvaered", math.pow( mem.bounty_earned, 0.5 ) / 100 )
       end )
       vn.na(fmt.reward(mem.bounty_earned))
       vn.run()

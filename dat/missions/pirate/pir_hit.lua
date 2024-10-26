@@ -661,6 +661,6 @@ function succeed ()
       end
    end
 
-   mem.paying_faction:modPlayerSingle( mem.reputation )
+   mem.paying_faction:hit( mem.reputation )
    misn.finish( true )
 end

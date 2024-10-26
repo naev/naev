@@ -119,7 +119,7 @@ function land ()
    vn.na( fmt.reward(reward) )
    vn.run()
 
-   faction.modPlayer("Za'lek", zpp.fctmod.zpp06)
+   faction.hit("Za'lek", zpp.fctmod.zpp06)
    player.pay( reward )
    if getlicense then
       diff.apply("heavy_combat_vessel_license")

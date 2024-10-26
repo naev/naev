@@ -675,8 +675,8 @@ void load_loadGameMenu( void )
    window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT + 15, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnLoad", _( "Load" ), load_menu_load,
                         SDLK_l );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnDelete",
-                     _( "Delete" ), load_menu_delete );
+   window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnDelete",
+                        _( "Delete" ), load_menu_delete, SDLK_d );
 
    if ( old_saves_detected && !player_warned ) {
       char buf[STRMAX_SHORT];
@@ -778,8 +778,8 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT + 15, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnLoad", _( "Load" ),
                         load_snapshot_menu_load, SDLK_l );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnDelete",
-                     _( "Delete" ), load_snapshot_menu_delete );
+   window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnDelete",
+                        _( "Delete" ), load_snapshot_menu_delete, SDLK_d );
 
    if ( disablesave || window_exists( "wdwLoadGameMenu" ) )
       window_disableButton( wid, "btnSave" );
@@ -1343,7 +1343,7 @@ static int load_gameInternalHook( void *data )
    unidiff_universeDefer( 0 );
    missions_loadCommodity( node ); /* Must be loaded before player. */
    pfaction_load( node ); /* Must be loaded before player so the messages show
-                             up properly. */
+                             up properly. Also before space_playerLoad. */
    pnt = player_load( node );
    player.loaded_version =
       strdup( ( version != NULL ) ? version : naev_version( 0 ) );

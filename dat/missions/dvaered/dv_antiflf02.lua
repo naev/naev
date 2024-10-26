@@ -107,7 +107,7 @@ function enter()
       hook.timer(15.0, "spawnDV")
    elseif mem.missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission.
       tk.msg(_("You ran away!"), _("You have left the system without first completing your mission. The operation ended in failure."))
-      faction.get("Dvaered"):modPlayerSingle(-10)
+      faction.get("Dvaered"):hit(-10)
       abort()
    end
 end
@@ -120,7 +120,7 @@ function land()
    "In addition," Urnus resumes, "Dvaered military command has decided that you may participate in the upcoming battle against the FLF stronghold, in recognition of your courage and your skill in battle. You may contact our liaison whenever you're ready."
    That concludes the pleasantries, and you are unceremoniously deposited outside the security compound. But at least you earned some money - and a chance to see some real action.]]))
       var.push("flfbase_intro", 3)
-      faction.get("Dvaered"):modPlayerSingle(5)
+      faction.get("Dvaered"):hit(5)
       player.pay(700e3)
       dv.addAntiFLFLog( _([[You aided the Dvaered in their efforts to locate a secret FLF base. You posed as an FLF pilot, luring real FLF pilots out so that one could be disabled and you could steal its flight logs. The Dvaered are now planning an assault on the terrorist base, and Colonel Urnus said that you can contact a Dvaered liaison whenever you're ready for the operation.]]) )
       misn.finish(true)
@@ -194,7 +194,7 @@ end
 function disableDV()
    if mem.DVdisablefail then -- Only true as long as the FLF aren't there yet
       tk.msg(_("You fought too hard!"), _("You have disabled a Dvaered ship, thereby violating your orders. The operation is canceled thanks to you. The Dvaered are less than pleased."))
-      faction.get("Dvaered"):modPlayerSingle(-10)
+      faction.get("Dvaered"):hit(-10)
       abort()
    end
 end

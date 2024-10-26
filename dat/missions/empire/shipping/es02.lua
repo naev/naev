@@ -4,7 +4,7 @@
  <unique />
  <priority>2</priority>
  <cond>
-   if faction.playerStanding("Empire") &lt; 0 or faction.playerStanding("Dvaered") &lt; 0 or faction.playerStanding("FLF") &gt;= 10 then
+   if system.cur():reputation("Empire") &lt; 0 or faction.reputationGlobal("Empire") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 or faction.reputationGlobal("FLF") &gt;= 10 then
       return false
    end
    return true
@@ -151,8 +151,8 @@ function land ()
 
          vn.func( function ()
             player.pay( emp.rewards.es02 )
-            faction.modPlayerSingle("Empire",5)
-            faction.modPlayerSingle("Dvaered",5)
+            faction.hit( "Empire", 5 )
+            faction.hit( "Dvaered", 5 )
          end )
          vn.sfxVictory()
          vn.na(fmt.reward( emp.rewards.es02 ))

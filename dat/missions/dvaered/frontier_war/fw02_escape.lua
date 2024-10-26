@@ -221,8 +221,7 @@ function land()
       player.pay(fw.credits_02)
 
       -- Reset the zlk standing.
-      local stand1 = fzlk:playerStanding()
-      fzlk:modPlayerRaw( mem.stand0-stand1 )
+      fzlk:setReputationOverride()
       var.pop("loyal2klank") -- We don't need this one anymore
       misn.finish(true)
    end
@@ -302,8 +301,6 @@ end
 function enter()
    -- Intercept the ship
    if mem.stage==1 and system.cur()==intsys then
-      mem.stand0 = fzlk:playerStanding() -- To reset it after the fight
-
       pilot.toggleSpawn(false)
       pilot.clear()
       mem.prevsys = lmisn.getNextSystem(system.cur(), prisys)
@@ -470,8 +467,7 @@ function targetBoarded()
    mem.mark = misn.markerAdd(reppla, "low")
 
    -- Reset the zlk standing
-   local stand1 = fzlk:playerStanding()
-   fzlk:modPlayerRaw( mem.stand0-stand1 )
+   fzlk:setReputationOverride()
 end
 function targetDied()
    -- Don't care after boarding
@@ -513,7 +509,7 @@ end
 function takeoff( )
    -- Player takes off from planet after attacking the hospital
    if mem.stage == 4 and mem.lastPlanet:faction() == fzlk then
-      fzlk:modPlayerRaw( -100 )
+      fzlk:setReputationOverride( -100 )
       hook.timer(1.0, "spawnDrones")
 
       -- Clear all Zlk pilots in a given radius of the player to avoid being insta-killed at takeoff
@@ -752,7 +748,6 @@ end
 -- Aborting if mem.stage >= 4: reset zlk reputation
 function abort()
    if mem.stage >= 4 then
-      local stand1 = fzlk:playerStanding()
-      fzlk:modPlayerRaw( mem.stand0-stand1 )
+      fzlk:setReputationOverride()
    end
 end

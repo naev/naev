@@ -3,7 +3,7 @@
 <mission name="Collective Espionage 1">
  <unique />
  <priority>2</priority>
- <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+ <cond>faction.reputationGlobal("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
  <done>Collective Scouting</done>
  <chance>100</chance>
  <location>Bar</location>
@@ -121,7 +121,7 @@ function land()
       tk.msg( _("Mission Accomplished"), _([[After landing, Lt. Commander Dimitri greets you on the land pad.
     "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]) )
       player.pay(mem.credits)
-      faction.modPlayerSingle("Empire",5)
+      faction.hit("Empire",5)
       emp.addCollectiveLog( _([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on Omega Enclave.]]) )
       misn.finish(true)
    end

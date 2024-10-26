@@ -127,7 +127,7 @@ int space_spawn = 1; /**< Spawn enabled by default. */
 /* spob load */
 static void spob_initDefaults( Spob *spob );
 static int  spob_parse( Spob *spob, const char *filename, Commodity **stdList );
-static int  space_parseSpobs( xmlNodePtr parent, StarSystem *sys );
+static int  space_parseSaveNodes( xmlNodePtr parent, StarSystem *sys );
 static int  spob_parsePresence( xmlNodePtr node, SpobPresence *ap );
 /* system load */
 static void system_init( StarSystem *sys );
@@ -286,7 +286,7 @@ const char *spob_getClassName( const char *class )
  */
 credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
 {
-   const char       *sysname = spob_getSystem( p->name );
+   const char       *sysname = spob_getSystemName( p->name );
    const StarSystem *sys     = system_get( sysname );
    return economy_getPrice( c, sys, p );
 }
@@ -301,7 +301,7 @@ credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
 credits_t spob_commodityPriceAtTime( const Spob *p, const Commodity *c,
                                      ntime_t t )
 {
-   const char       *sysname = spob_getSystem( p->name );
+   const char       *sysname = spob_getSystemName( p->name );
    const StarSystem *sys     = system_get( sysname );
    return economy_getPriceAtTime( c, sys, p, t );
 }
@@ -413,7 +413,7 @@ int spob_addService( Spob *p, int service )
       economy_clearSingleSpob( p );
 
       /* Try to figure out the system. */
-      sysname = spob_getSystem( p->name );
+      sysname = spob_getSystemName( p->name );
       if ( sysname == NULL ) {
          DEBUG( _( "Spob '%s' not in system. Not initializing economy." ),
                 p->name );
@@ -688,7 +688,7 @@ const char *space_getRndSpob( int landable, unsigned int services,
          if ( !pnt->can_land )
             continue;
       }
-      if ( !space_sysReallyReachable( spob_getSystem( pnt->name ) ) )
+      if ( !space_sysReallyReachable( spob_getSystemName( pnt->name ) ) )
          continue;
 
       /* We want the name, not the actual spob. */
@@ -1060,12 +1060,20 @@ int spob_hasSystem( const Spob *spb )
 }
 
 /**
+ * @brief Gets the system a spob is in.
+ */
+StarSystem *spob_getSystem( const Spob *spob )
+{
+   return system_get( spob_getSystemName( spob->name ) );
+}
+
+/**
  * @brief Get the name of a system from a spobname.
  *
  *    @param spobname Spob name to match.
  *    @return Name of the system spob belongs to.
  */
-const char *spob_getSystem( const char *spobname )
+const char *spob_getSystemName( const char *spobname )
 {
    for ( int i = 0; i < array_size( spobname_stack ); i++ )
       if ( strcmp( spobname_stack[i], spobname ) == 0 )
@@ -1961,7 +1969,8 @@ char spob_getColourChar( const Spob *p )
       return 'N';
    }
 
-   if ( areEnemies( FACTION_PLAYER, p->presence.faction ) )
+   if ( spob_isFlag( p, SPOB_HOSTILE ) ||
+        areEnemies( FACTION_PLAYER, p->presence.faction ) )
       return 'H';
    return 'R';
 }
@@ -1983,7 +1992,8 @@ const char *spob_getSymbol( const Spob *p )
       return "~ ";
    }
 
-   if ( areEnemies( FACTION_PLAYER, p->presence.faction ) )
+   if ( spob_isFlag( p, SPOB_HOSTILE ) ||
+        areEnemies( FACTION_PLAYER, p->presence.faction ) )
       return "!! ";
    return "* ";
 }
@@ -2002,7 +2012,8 @@ const glColour *spob_getColour( const Spob *p )
       return &cNeutral;
    }
 
-   if ( areEnemies( FACTION_PLAYER, p->presence.faction ) )
+   if ( spob_isFlag( p, SPOB_HOSTILE ) ||
+        areEnemies( FACTION_PLAYER, p->presence.faction ) )
       return &cHostile;
    return &cRestricted;
 }
@@ -2060,6 +2071,34 @@ void spob_updateLand( Spob *p )
 }
 
 /**
+ * @brief Spob is receiving distress from a pilot about an attacker.
+ */
+void spob_distress( Spob *spb, const Pilot *p, const Pilot *attacker )
+{
+   if ( attacker == NULL )
+      return;
+
+   /* Doesn't have a function defined. */
+   if ( spb->lua_distress == LUA_NOREF )
+      return;
+
+   /* Run the function. */
+   spob_luaInitMem( spb );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, spb->lua_distress ); /* f */
+   lua_pushpilot( naevL, p->id );
+   lua_pushpilot( naevL, attacker->id );
+   if ( nlua_pcall( spb->lua_env, 2, 0 ) ) {
+      WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spb->name, "distress",
+            lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return;
+   }
+
+   /* Update land permissions. */
+   spob_updateLand( spb );
+}
+
+/**
  * @brief Initializes the memory fo a spob.
  */
 void spob_luaInitMem( const Spob *spob )
@@ -2096,6 +2135,7 @@ int spob_luaInit( Spob *spob )
    UNREF( spob->lua_comm );
    UNREF( spob->lua_population );
    UNREF( spob->lua_barbg );
+   UNREF( spob->lua_distress );
    UNREF( spob->lua_mem );
 #undef UNREF
 
@@ -2121,6 +2161,7 @@ int spob_luaInit( Spob *spob )
    spob->lua_comm       = nlua_refenvtype( env, "comm", LUA_TFUNCTION );
    spob->lua_population = nlua_refenvtype( env, "population", LUA_TFUNCTION );
    spob->lua_barbg      = nlua_refenvtype( env, "barbg", LUA_TFUNCTION );
+   spob->lua_distress   = nlua_refenvtype( env, "distress", LUA_TFUNCTION );
 
    /* Set up local memory. */
    lua_newtable( naevL );                                /* m */
@@ -2305,6 +2346,7 @@ static void spob_initDefaults( Spob *spob )
    spob->lua_comm       = LUA_NOREF;
    spob->lua_population = LUA_NOREF;
    spob->lua_barbg      = LUA_NOREF;
+   spob->lua_distress   = LUA_NOREF;
 }
 
 /**
@@ -3985,7 +4027,7 @@ static int space_addMarkerSpob( int pntid, MissionMarkerType type )
    spob_setFlag( pnt, SPOB_MARKED );
 
    /* Now try to mark system. */
-   sys = spob_getSystem( pnt->name );
+   sys = spob_getSystemName( pnt->name );
    if ( sys == NULL ) {
       WARN( _( "Marking spob '%s' that is not in any system!" ), pnt->name );
       return 0;
@@ -4073,7 +4115,7 @@ static int space_rmMarkerSpob( int pntid, MissionMarkerType type )
       spob_rmFlag( pnt, SPOB_MARKED );
 
    /* Now try to remove system. */
-   sys = spob_getSystem( pnt->name );
+   sys = spob_getSystemName( pnt->name );
    if ( sys == NULL )
       return 0;
    stype = mission_markerTypeSpobToSystem( type );
@@ -4126,16 +4168,31 @@ int space_playerSave( xmlTextWriterPtr writer )
          xmlw_attr( writer, "pmarked", "1" );
       if ( sys->note != NULL )
          xmlw_attr( writer, "note", "%s", sys->note );
+
+      /* Save known spobs. */
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
          if ( !spob_isKnown( sys->spobs[j] ) )
             continue; /* not known */
          xmlw_elem( writer, "spob", "%s", sys->spobs[j]->name );
       }
 
+      /* Save known Jump points. */
       for ( int j = 0; j < array_size( sys->jumps ); j++ ) {
          if ( !jp_isKnown( &sys->jumps[j] ) )
             continue; /* not known */
          xmlw_elem( writer, "jump", "%s", ( &sys->jumps[j] )->target->name );
+      }
+
+      /* Save presences if applicable. */
+      for ( int j = 0; j < array_size( sys->presence ); j++ ) {
+         const SystemPresence *sp = &sys->presence[j];
+         if ( faction_isStatic( sp->faction ) )
+            continue;
+
+         xmlw_startElem( writer, "faction" );
+         xmlw_attr( writer, "name", "%s", faction_name( sp->faction ) );
+         xmlw_str( writer, "%f", sp->local );
+         xmlw_endElem( writer );
       }
 
       xmlw_endElem( writer );
@@ -4160,6 +4217,7 @@ int space_playerLoad( xmlNodePtr parent, const char *version )
    int oldknown = naev_versionCompareTarget( version, "0.12.0-alpha.3" ) > 0;
 
    space_clearKnown();
+   factions_resetLocal();
 
    node = parent->xmlChildrenNode;
    do {
@@ -4210,9 +4268,13 @@ int space_playerLoad( xmlNodePtr parent, const char *version )
             xmlr_attr_strd( cur, "note", sys->note );
             free( str );
          }
-         space_parseSpobs( cur, sys );
+         space_parseSaveNodes( cur, sys );
+
       } while ( xml_nextNode( cur ) );
    } while ( xml_nextNode( node ) );
+
+   /* Update global standing. */
+   faction_updateGlobal();
 
    return 0;
 }
@@ -4224,7 +4286,7 @@ int space_playerLoad( xmlNodePtr parent, const char *version )
  *    @param sys System to populate.
  *    @return 0 on success.
  */
-static int space_parseSpobs( xmlNodePtr parent, StarSystem *sys )
+static int space_parseSaveNodes( xmlNodePtr parent, StarSystem *sys )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
@@ -4236,6 +4298,23 @@ static int space_parseSpobs( xmlNodePtr parent, StarSystem *sys )
          JumpPoint *jp = jump_get( xml_get( node ), sys );
          if ( jp != NULL ) /* Must exist */
             jp_setFlag( jp, JP_KNOWN );
+      } else if ( xml_isNode( node, "faction" ) ) {
+         char *buf;
+         int   f;
+         xmlr_attr_strd( node, "name", buf );
+         f = faction_get( buf );
+         free( buf );
+         if ( !faction_isFaction( f ) )
+            continue;
+
+         /* Add presence. */
+         for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+            SystemPresence *sp = &sys->presence[i];
+            if ( sp->faction != f )
+               continue;
+            sp->local = xml_getFloat( node );
+            break;
+         }
       }
    } while ( xml_nextNode( node ) );
 
@@ -4406,6 +4485,57 @@ sys_cleanup:
    for ( int i = 0; i < array_size( systems_stack ); i++ )
       systems_stack[i].spilled = 0;
    return;
+}
+
+SystemPresence *system_getFactionPresence( StarSystem *sys, int faction )
+{
+   /* Go through the array, looking for the faction. */
+   for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+      if ( sys->presence[i].faction == faction )
+         return &sys->presence[i];
+   }
+   return NULL;
+}
+const SystemPresence *system_getFactionPresenceConst( const StarSystem *sys,
+                                                      int faction )
+{
+   /* Go through the array, looking for the faction. */
+   for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+      if ( sys->presence[i].faction == faction )
+         return &sys->presence[i];
+   }
+   return NULL;
+}
+
+/**
+ * @brief Gets the local reputation of the player in a system or returns 0.
+ */
+double system_getReputation( const StarSystem *sys, int faction )
+{
+   int    set;
+   double val = faction_reputationOverride( faction, &set );
+   if ( set )
+      return val;
+   const SystemPresence *sp = system_getFactionPresenceConst( sys, faction );
+   if ( sp != NULL )
+      return sp->local;
+   return 0.;
+}
+
+/**
+ * @brief Gets the local reputation of the player in a system or returns the
+ * global standing.
+ */
+double system_getReputationOrGlobal( const StarSystem *sys, int faction )
+{
+   int    set;
+   double val = faction_reputationOverride( faction, &set );
+   if ( set )
+      return val;
+   const SystemPresence *sp = system_getFactionPresenceConst( sys, faction );
+   if ( sp != NULL )
+      return sp->local;
+   return faction_reputation( faction );
 }
 
 /**

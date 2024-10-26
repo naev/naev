@@ -22,6 +22,7 @@ function luaspob.setup( init_params )
    comm     = luaspob.comm
    population = luaspob.population
    barbg    = luaspob.barbg
+   distress = luaspob.distress
 end
 
 local bg_mapping -- defined below
@@ -188,11 +189,10 @@ end
 
 function luaspob.load ()
    -- Basic stuff
-   local fct = mem.spob:faction()
    mem.bribed = false
 
    mem.bribe_cost_function = mem.params.bribe_cost or function ()
-      local std = fct:playerStanding()
+      local std = mem.spob:reputation()
       return (mem.std_land-std) * 1e3 * player.pilot():ship():size() + 5e3
    end
 
@@ -227,6 +227,7 @@ end
 
 function luaspob.unload ()
    mem.bribed = false
+   mem.spob:setHostile( false )
 end
 
 function luaspob.can_land ()
@@ -241,8 +242,8 @@ function luaspob.can_land ()
    if not fct then
       return true,nil -- Use default landing message
    end
-   local std = fct:playerStanding()
-   if mem.spob:getLandDeny() or std < 0 then
+   local std = mem.spob:reputation()
+   if mem.spob:getLandDeny() or std < 0 or mem.spob:hostile() then
       return false, mem.msg_denied
    end
    if std < mem.std_land then
@@ -257,7 +258,6 @@ function luaspob.comm ()
       return false
    end
 
-   local fct = mem.spob:faction()
    vn.clear()
    vn.scene()
    local spb = ccomm.newCharacterSpob( vn, mem.spob, {
@@ -272,8 +272,8 @@ function luaspob.comm ()
       local opts = {
          { _("Close"), "leave" }
       }
-      local std = fct:playerStanding()
-      if std < mem.std_land and not mem.bribed then
+      local std = mem.spob:reputation()
+      if (mem.spob:hostile() or std < mem.std_land) and not mem.bribed then
          table.insert( opts, 1, { _("Bribe"), "bribe" } )
       end
       return opts
@@ -282,7 +282,7 @@ function luaspob.comm ()
    local bribe_cost
    vn.label("bribe")
    vn.func( function ()
-      local std = fct:playerStanding()
+      local std = mem.spob:reputation()
       if std < mem.std_dangerous then
          vn.jump("dangerous")
          return
@@ -310,6 +310,7 @@ function luaspob.comm ()
          return
       end
       player.pay( -bribe_cost )
+      mem.spob:setHostile(false)
       mem.bribed = true
       mem.params.bribed = true
       ccomm.nameboxUpdateSpob( mem.spob, mem.params )
@@ -585,6 +586,18 @@ bg_mapping = {
 
 function luaspob.barbg ()
    return mem.barbg()
+end
+
+function luaspob.distress( p, attacker )
+   -- Ignore if the player isn't the bad one
+   if not attacker:withPlayer() then return end
+
+   local f = mem.spob:faction()
+   if not f:areEnemies( p:faction() ) then
+      -- Small faction hit
+      f:hit( -1, "distress" ) -- Amplifies distress signals
+      mem.spob:setHostile(true)
+   end
 end
 
 return luaspob

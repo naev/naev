@@ -8,6 +8,7 @@
  <colour>yellow</colour>
  <spawn>frontier</spawn>
  <standing>frontier</standing>
+ <local_th>40</local_th>
  <description>The Frontier Alliance is formed by the survivors of the initial attempts of Human expansion into space.</description>
  <generator weight="0.6">Independent</generator>
  <generator weight="0.4">Trader</generator>

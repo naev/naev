@@ -3,7 +3,7 @@
 <mission name="Za'lek Test">
  <priority>3</priority>
  <cond>
-   if faction.playerStanding("Za'lek") &lt; 0 then
+   if system.cur():reputation("Za'lek") &lt; 0 or faction.reputationGlobal("Za'lek") &lt; 0 then
       return false
    end
    if spob.cur():services()["outfits"] == nil then
@@ -21,7 +21,7 @@
 --]]
 --[[
    Handles the randomly generated Za'lek test missions.
-   (Based on the ES lua code)
+   (Based on the Empire Shipping lua code)
 
    stages :
              0 : everything normal
@@ -166,13 +166,13 @@ function land()
       player.outfitRm("Za'lek Test Engine")
 
       -- increase faction
-      faction.modPlayerSingle("Za'lek", rnd.rnd(1, 2))
+      faction.hit("Za'lek", rnd.rnd(1, 2))
       rmTheOutfit()
       misn.finish(true)
    end
 
    if spob.cur() ~= mem.curplanet and mem.stage == 1 then  --Lands elsewhere without the engine
-      vntk.msg( _("Mission failed"), _("You traveled without the engine."))
+      vntk.msg( _("Mission failed"), _("You travelled without the engine."))
       abort()
    end
 

@@ -4,7 +4,7 @@
  <unique/>
  <chance>100</chance>
  <cond>
-   if faction.playerStanding("Sirius") &lt; 0 then
+   if system.cur():reputation("Sirius") &lt; 0 or faction.reputationGlobal("Sirius") &lt; 0 then
       return false
    end
    if not var.peek("sirius_awakening") then

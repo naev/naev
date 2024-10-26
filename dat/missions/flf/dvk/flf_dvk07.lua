@@ -7,7 +7,7 @@
  <done>Assault on Haleb</done>
  <location>Bar</location>
  <faction>FLF</faction>
- <cond>faction.playerStanding("FLF") &gt;= 90</cond>
+ <cond>spob.cur():reputation("FLF") &gt;= 90</cond>
  <notes>
    <campaign>Save the Frontier</campaign>
  </notes>

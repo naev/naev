@@ -19,7 +19,6 @@
 #include "input.h"
 #include "land.h"
 #include "land_outfits.h"
-#include "log.h"
 #include "nlua_colour.h"
 #include "nlua_gfx.h"
 #include "nlua_outfit.h"
@@ -586,7 +585,8 @@ static int cust_update( double dt, void *data )
    lua_pushnumber( L, dt );
    if ( nlua_pcall( cf->env, 1, 0 ) ) {
       cf->done = 1;
-      WARN( _( "Custom dialogue internal error: %s" ), lua_tostring( L, -1 ) );
+      NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
+                 lua_tostring( L, -1 ) );
       lua_pop( L, 1 );
       return 1;
    }
@@ -609,7 +609,8 @@ static void cust_render( double x, double y, double w, double h, void *data )
    lua_pushnumber( L, h );
    if ( nlua_pcall( cf->env, 4, 0 ) ) {
       cf->done = 1;
-      WARN( _( "Custom dialogue internal error: %s" ), lua_tostring( L, -1 ) );
+      NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
+                 lua_tostring( L, -1 ) );
       lua_pop( L, 1 );
    }
 }
@@ -672,7 +673,8 @@ static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, int isrepeat,
    lua_pushboolean( L, isrepeat );
    if ( nlua_pcall( cf->env, 4, 1 ) ) {
       cf->done = 1;
-      WARN( _( "Custom dialogue internal error: %s" ), lua_tostring( L, -1 ) );
+      NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
+                 lua_tostring( L, -1 ) );
       lua_pop( L, 1 );
       return 0;
    }
@@ -688,7 +690,8 @@ static int cust_text( const char *str, custom_functions_t *cf )
    lua_pushstring( L, str );
    if ( nlua_pcall( cf->env, 1, 1 ) ) {
       cf->done = 1;
-      WARN( _( "Custom dialogue internal error: %s" ), lua_tostring( L, -1 ) );
+      NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
+                 lua_tostring( L, -1 ) );
       lua_pop( L, 1 );
       return 0;
    }
@@ -722,7 +725,8 @@ static int cust_mouse( int type, int button, double x, double y,
    }
    if ( nlua_pcall( cf->env, nargs, 1 ) ) {
       cf->done = 1;
-      WARN( _( "Custom dialogue internal error: %s" ), lua_tostring( L, -1 ) );
+      NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
+                 lua_tostring( L, -1 ) );
       lua_pop( L, 1 );
       return 0;
    }
@@ -744,7 +748,8 @@ static int cust_event_window( SDL_WindowEventID event, Sint32 w, Sint32 h,
    lua_pushinteger( L, h );
    if ( nlua_pcall( cf->env, 2, 1 ) ) {
       cf->done = 1;
-      WARN( _( "Custom dialogue internal error: %s" ), lua_tostring( L, -1 ) );
+      NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
+                 lua_tostring( L, -1 ) );
       lua_pop( L, 1 );
       return 0;
    }

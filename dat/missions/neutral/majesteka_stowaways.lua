@@ -64,7 +64,7 @@ local function spob_goodness( s )
       return 0, "#o".._("Inadequate environment for kids").."#0"
    end
 
-   local fs = f:playerStanding()
+   local fs = s:reputation()
    if fs < 0 then
       return 0, "#o".._("You are in poor local standing here").."#0"
    end

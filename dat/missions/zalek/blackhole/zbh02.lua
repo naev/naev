@@ -179,7 +179,7 @@ He looks more determined than ever.]]))
 
       zbh.unidiff( "sigma13_fixed2" )
 
-      faction.modPlayer("Za'lek", zbh.fctmod.zbh02)
+      faction.hit("Za'lek", zbh.fctmod.zbh02)
       player.pay( reward )
       zbh.log(fmt.f(_("You helped Zach get more supplies to repair {pnt}, but were threatened by an unknown individual, and also ran into an unknown ship leading to more questions than answers."),{pnt=retpnt}))
       misn.finish(true)

@@ -50,7 +50,7 @@ return function ()
                {_("Return to your ship"),"leave"},
                {_("Eject the bodies to space"), "eject"},
             }
-            if faction.get("Sirius"):playerStanding() >= 0 then
+            if system.cur():reputation(faction.get("Sirius")) >= 0 then
                table.insert( opts, {_("Notify local Sirius authorities"), "notify"} )
             end
             return opts
@@ -60,7 +60,7 @@ return function ()
          vn.sfx( der.sfx.unboard )
          vn.na(_("You head back to your ship and notify the local Sirius authorities about the issue. They thank you for the information."))
          vn.func( function ()
-            faction.modPlayerSingle("Sirius", 2)
+            faction.hit( "Sirius", 2 )
          end )
          vn.jump("cont01")
 

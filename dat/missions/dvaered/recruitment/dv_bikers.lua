@@ -8,7 +8,7 @@
  <faction>Dvaered</faction>
  <done>Dvaered Negotiation 1</done>
  <cond>
-   if faction.playerStanding("Dvaered") &lt; 0 then
+   if system.cur():reputation("Dvaered") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 then
       return false
    end
    return require("misn_test").reweight_active()
@@ -82,7 +82,7 @@ function accept()
    local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
    local doaccept = false
 
-   local std = faction.playerStanding("Dvaered")
+   local std = faction.reputationGlobal("Dvaered")
    if std < 20 then
       sol(fmt.f(_([["Hello, citizen. You lack reputation with House Dvareed for us to entrust you with work."
 
@@ -354,7 +354,7 @@ The man on your right answers: "Certainly not, your Lordship."]]),
       vn.na( fmt.reward(pay) )
       vn.run()
 
-      -- TODO once the whole recruitment campaign is stabilized: faction.get("Dvaered"):modPlayerRaw(someQuantity)
+      faction.get("Dvaered"):hit( 5 )
       dv.addStandardLog( _([[You stole a nozzle hubcap to the leader of a gang of Hyena bikers for the Baron Sauterfeldt to help Lord Fatgun getting a second Goddard battlecruiser.]]) )
       misn.finish(true)
    end

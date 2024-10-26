@@ -26,7 +26,6 @@
 #include "info.h"
 #include "input.h"
 #include "land.h"
-#include "log.h"
 #include "menu.h"
 #include "nlua_misn.h"
 #include "nlua_system.h"

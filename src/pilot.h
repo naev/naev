@@ -133,9 +133,13 @@ typedef struct PilotOutfitAmmo_ {
    ( 1 << 5 ) /**< Pilot outfit is part of a manual weapon set (and ison). */
 #define PILOTOUTFIT_ISON_LUA                                                   \
    ( 1 << 6 ) /**< Pilot outfit is triggered by Lua. */
+#define PILOTOUTFIT_ISON_TOGGLE                                                \
+   ( 1 << 7 )                            /**< Pilot outfit was toggled on.     \
+                                          */
+#define PILOTOUTFIT_ISON_HOLD ( 1 << 8 ) /**< Pilot outfit is being held. */
 #define PILOTOUTFIT_DYNAMIC_FLAGS                                              \
-   ( PILOTOUTFIT_ISON | PILOTOUTFIT_VOLLEY | PILOTOUTFIT_INRANGE |             \
-     PILOTOUTFIT_MANUAL )
+   ( PILOTOUTFIT_VOLLEY | PILOTOUTFIT_INRANGE | PILOTOUTFIT_MANUAL |           \
+     PILOTOUTFIT_ISON_LUA | PILOTOUTFIT_ISON_TOGGLE | PILOTOUTFIT_ISON_HOLD )
 
 /**
  * @brief Stores an outfit the pilot has.
@@ -191,8 +195,9 @@ typedef struct PilotWeaponSetOutfit_ {
  * Uses old IDs which is why it starts at 1.
  */
 typedef enum WeaponSetType_ {
-   WEAPSET_TYPE_HOLD   = 1, /**< Activates weapons (while held down). */
-   WEAPSET_TYPE_TOGGLE = 2, /**< Toggles outfits (if on it deactivates). */
+   WEAPSET_TYPE_DEFAULT = 0, /**< Tap to toggle, hold to hold. */
+   WEAPSET_TYPE_HOLD    = 1, /**< Activates weapons (while held down). */
+   WEAPSET_TYPE_TOGGLE  = 2, /**< Toggles outfits (if on it deactivates). */
 } WeaponSetType;
 
 /**
@@ -371,6 +376,7 @@ typedef struct Pilot_ {
    PilotWeaponSet
       weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
    int autoweap;                      /**< Automatically update weapon sets. */
+   int advweap;                       /**< Advanced weapon sets. */
    int aimLines;                      /**< Activate aiming helper lines. */
 
    /* Cargo */

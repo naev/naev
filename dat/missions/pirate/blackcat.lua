@@ -222,7 +222,7 @@ function jumpin ()
 
    local fwo = faction.get("Wild Ones")
    local fpir = faction.dynAdd( fwo, "blackcat_owner", fwo:name(), {clear_enemies=true, clear_allies=true, player=0} )
-   fpir:setPlayerStanding(0)
+   fpir:setReputationGlobal(0)
 
    local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), rnd.angle() )
    owner = pilot.add( "Pirate Shark", fpir, pos )
@@ -310,7 +310,7 @@ function owner_board ()
    player.outfitAdd( "Black Cat Doll" )
 
    der.addMiscLog(_([[You rescued a black cat from a derelict ship and safely delivered it to its owner, who was flying a Wild Ones pirate ship.]]))
-   faction.get("Wild Ones"):modPlayerSingle(3)
+   faction.get("Wild Ones"):hit( 3, nil, nil, true )
 
    player.unboard()
    hook.safe("owner_gone")

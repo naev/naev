@@ -710,9 +710,10 @@ static void map_update( unsigned int wid )
       h  = gl_smallFont.h;
       fh = gl_smallFont.h;
    } else {
-      const char      *fcttext;
+      char             standing[STRMAX_SHORT];
       const glTexture *logo;
       int              logow, logoh;
+      double           reputation = system_getReputation( sys, f );
       if ( !multiple ) /* saw them all and all the same */
          snprintf( buf, sizeof( buf ), "%s", faction_longname( f ) );
 
@@ -728,14 +729,16 @@ static void map_update( unsigned int wid )
       if ( logo != NULL )
          window_moveWidget( wid, "imgFaction", -90 + logow / 2,
                             -20 - 32 - 10 - gl_defFont.h + logoh / 2 );
-      fcttext = faction_getStandingText( f );
+      snprintf( standing, sizeof( standing ), "%s [#%c%.0f%%#0]",
+                faction_getStandingTextAtValue( f, reputation ),
+                faction_reputationColourCharSystem( f, sys ), reputation );
 
       /* Modify the text */
       window_modifyText( wid, "txtFaction", buf );
-      window_modifyText( wid, "txtStanding", fcttext );
+      window_modifyText( wid, "txtStanding", standing );
 
       h  = gl_printHeightRaw( &gl_smallFont, w, buf );
-      fh = gl_printHeightRaw( &gl_smallFont, w, fcttext );
+      fh = gl_printHeightRaw( &gl_smallFont, w, standing );
    }
 
    /* Faction */
@@ -809,11 +812,12 @@ static void map_update( unsigned int wid )
       if ( !spob_hasService( pnt, SPOB_SERVICE_INHABITED ) )
          services_u |= pnt->services;
       else if ( pnt->can_land ) {
-         if ( areAllies( pnt->presence.faction, FACTION_PLAYER ) )
+         if ( areAlliesSystem( pnt->presence.faction, FACTION_PLAYER, sys ) )
             services_f |= pnt->services;
          else
             services |= pnt->services;
-      } else if ( areEnemies( pnt->presence.faction, FACTION_PLAYER ) )
+      } else if ( areEnemiesSystem( pnt->presence.faction, FACTION_PLAYER,
+                                    sys ) )
          services_h |= pnt->services;
       else
          services_r |= pnt->services;
@@ -1450,11 +1454,11 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
             col = &cInert;
          else if ( mode == MAPMODE_EDITOR )
             col = &cNeutral;
-         else if ( areEnemies( FACTION_PLAYER, sys->faction ) )
+         else if ( areEnemiesSystem( FACTION_PLAYER, sys->faction, sys ) )
             col = &cHostile;
          else if ( !sys_isFlag( sys, SYSTEM_HAS_LANDABLE ) )
             col = &cRestricted;
-         else if ( areAllies( FACTION_PLAYER, sys->faction ) )
+         else if ( areAlliesSystem( FACTION_PLAYER, sys->faction, sys ) )
             col = &cFriend;
          else
             col = &cNeutral;
@@ -2009,9 +2013,8 @@ static void map_renderCommodIgnorance( double x, double y, double zoom,
 
 static int factionPresenceCompare( const void *a, const void *b )
 {
-   FactionPresence *fpa, *fpb;
-   fpa = (FactionPresence *)a;
-   fpb = (FactionPresence *)b;
+   const FactionPresence *fpa = a;
+   const FactionPresence *fpb = b;
    if ( fpa->value < fpb->value )
       return 1;
    else if ( fpb->value < fpa->value )
@@ -2075,7 +2078,8 @@ void map_updateFactionPresence( const unsigned int wid, const char *name,
       char             col;
       FactionPresence *p = &presence[i];
       if ( faction_exists( p->name ) )
-         col = faction_getColourChar( faction_get( p->name ) );
+         col =
+            faction_reputationColourCharSystem( faction_get( p->name ), sys );
       else
          col = 'N';
 
@@ -3124,7 +3128,7 @@ int map_map( const Outfit *map )
       Spob *spb = map->u.map->spobs[i];
       spob_setKnown( spb );
 #if DEBUGGING
-      const char *sysname = spob_getSystem( spb->name );
+      const char *sysname = spob_getSystemName( spb->name );
       if ( sysname == NULL )
          WARN( _( "Map '%s' is trying to set spob '%s' as known when it has no "
                   "system!" ),

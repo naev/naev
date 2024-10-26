@@ -44,7 +44,7 @@ Each system is represented by a standalone .XML file within the `/ssys/` directo
     * `<exclusion>`: Defines an asteroid exclusion zone, creating a "negative" asteroid field. This can be used to create asteroid fields of unique shapes such as rings or crescents.
       * `<radius>` and <pos> fields function identically to those under <asteroid>.
 
-### System Tags \naev
+### System Tags $\naev$
 
 TODO
 

@@ -48,8 +48,8 @@ function srs.weapsets( outfits )
       end
    end
    -- Set primary weapon
-   pp:weapsetType( 0, "hold" )
-   pp:weapsetAddType( 0, "Bolt Weapon" )
+   pp:weapsetType( 1, "hold" )
+   pp:weapsetAddType( 1, "Bolt Weapon" )
 end
 
 local ssys, sysr, obelisk, spos, sdir, hook_limits

@@ -4,7 +4,7 @@
  <priority>4</priority>
  <chance>10</chance>
  <location>Bar</location>
- <cond>faction.playerStanding("Pirate") &gt;= -20 and not player.misnActive("Stealing ships")</cond>
+ <cond>faction.reputationGlobal("Pirate") &gt;= -20 and not player.misnActive("Stealing ships")</cond>
  <faction>Wild Ones</faction>
  <faction>Black Lotus</faction>
  <faction>Raven Clan</faction>
@@ -112,12 +112,12 @@ local function improve_standing(size, fct)
 
    for i = 1,#enemies do
       local enemy = enemies[i]
-      local current_standing = faction.playerStanding(enemy)
+      local current_standing = faction.reputationGlobal(enemy)
       if current_standing + standing > 5 then
          -- Never more than 5.
          standing = math.max(0, current_standing - standing)
       end
-      faction.modPlayerSingle(enemy, standing)
+      faction.hit(enemy, standing)
    end
 end
 ]]
@@ -135,7 +135,7 @@ local function damage_standing( size, fct )
       modifier = 0.5
    end
 
-   fct:modPlayerSingle( -base * modifier )
+   fct:hit( -base * modifier )
 end
 
 local pir_portrait, pir_image
@@ -246,8 +246,8 @@ Enemy ships will probably be after you as soon as you leave the atmosphere, so y
          )
       )
 
-      -- Hey, stealing a ship isn’t anything! (if you survive, that is)
-      faction.modPlayerSingle( mem.reward_faction, rnd.rnd(3,5) )
+      -- Hey, stealing a ship isn't anything! (if you survive, that is)
+      faction.hit( mem.reward_faction, rnd.rnd(3,5) )
 
       -- Let’s keep a counter. Just in case we want to know how many you
       -- stole in the future.

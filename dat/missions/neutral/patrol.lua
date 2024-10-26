@@ -261,7 +261,7 @@ function land ()
       if not pir.factionIsPirate( mem.paying_faction ) then
          pir.reputationNormalMission( mem.reputation )
       end
-      mem.paying_faction:modPlayer( mem.reputation )
+      mem.paying_faction:hit( mem.reputation )
       misn.finish( true )
    elseif not mem.job_done and system.cur() == mem.missys then
       local txt = abandon_text[ rnd.rnd( 1, #abandon_text ) ]

@@ -171,7 +171,7 @@ function hail()
    vnlogan(_([["Hello again. It's Dr. Logan. I am terribly sorry for the delay. As agreed, you will be paid your fee. I am pleased by your help, captain; I hope we meet again."]]))
    vn.func( function ()
       player.pay( payment )
-      faction.modPlayerSingle("Za'lek", 5)
+      faction.hit("Za'lek", 5)
    end )
    vn.sfxVictory()
    vn.na(fmt.f(_([[You check your account balance as he closes the comm channel to find yourself {credits} richer. A good compensation indeed. You feel better already.]]),

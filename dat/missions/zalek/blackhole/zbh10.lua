@@ -126,7 +126,7 @@ Zach grabs the drone and runs into the station, leaving you alone face to face w
    vn.done( zbh.zach.transition )
    vn.run()
 
-   faction.modPlayer("Za'lek", zbh.fctmod.zbh10)
+   faction.hit("Za'lek", zbh.fctmod.zbh10)
    player.pay( reward )
    zbh.log(fmt.f(_([[You defended {pnt} from a hostile attack with the help of Icarus and their kin.]]),{pnt=mainpnt}))
    misn.finish(true)

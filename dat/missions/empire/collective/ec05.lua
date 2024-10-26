@@ -3,7 +3,7 @@
 <mission name="Operation Black Trinity">
  <unique />
  <priority>2</priority>
- <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+ <cond>faction.reputationGlobal("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
  <done>Collective Extraction</done>
  <chance>100</chance>
  <location>Bar</location>
@@ -331,7 +331,7 @@ function land ()
 
       -- Rewards
       player.pay(credits)
-      faction.modPlayerSingle("Empire",5)
+      faction.hit("Empire",5)
 
       misn.finish(true)
    end

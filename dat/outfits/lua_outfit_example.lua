@@ -104,14 +104,6 @@ function ontoggle( _p, _po, _on )
    return false
 end
 
--- The ontoggle function is run when the outfit is part of a hold weapon set
--- and is held by the player. The on value will be true when pressed, and false
--- when released.
--- It returns a boolean whether or not the outfit was actually triggered.
-function onhold( _p, _po, _on )
-   return false
-end
-
 -- The onstealth function runs when the pilot stealths or destealths
 -- stealthed the current stealth status of the pilot
 function onstealth( _p, _po, _stealthed )

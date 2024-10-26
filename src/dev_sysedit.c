@@ -476,7 +476,7 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    if ( spob_exists( name ) ) {
       dialogue_alert( _( "Space object by the name of #r'%s'#0 already exists "
                          "in the #r'%s'#0 system" ),
-                      name, spob_getSystem( name ) );
+                      name, spob_getSystemName( name ) );
       free( name );
       sysedit_btnNewSpob( 0, NULL );
       return;
@@ -647,7 +647,7 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
          if ( spob_exists( name ) ) {
             dialogue_alert( _( "Space object by the name of #r'%s'#0 already "
                                "exists in the #r'%s'#0 system" ),
-                            name, spob_getSystem( name ) );
+                            name, spob_getSystemName( name ) );
             free( name );
             i--;
             continue;

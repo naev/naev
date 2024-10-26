@@ -201,7 +201,7 @@ function _bounty_land ()
       vntk.msg( _("Mission Completed"), fmt.f( pay_text, {plt=b.targetname, credits=fmt.credits(b.reward)} ) )
       player.pay( b.reward )
       if b.reputation then
-         b.payingfaction:modPlayerSingle( b.reputation )
+         b.payingfaction:hit( b.reputation )
          pir.reputationNormalMission( b.reputation )
       end
       misn.finish( true )

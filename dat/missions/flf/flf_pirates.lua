@@ -215,7 +215,7 @@ function land_flf ()
       vn.sfxMoney()
       vn.func( function ()
          player.pay( mem.credits )
-         faction.get("FLF"):modPlayerSingle( mem.reputation )
+         faction.get("FLF"):hit( mem.reputation )
       end )
 
       misn.finish( true )

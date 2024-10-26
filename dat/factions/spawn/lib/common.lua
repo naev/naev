@@ -236,8 +236,8 @@ function scom.spawn( pilots )
    end
    for _k,v in ipairs(pilots) do
       local params = v.params or {}
-      params.stealth = stealth
-      params.ai = ai
+      params.stealth = params.stealth or stealth
+      params.ai = params.ai or ai
       local pfact = params.faction or fct
       local p = pilot.add( v.ship, pfact, origin, params.name, params )
       local mem = p:memory()

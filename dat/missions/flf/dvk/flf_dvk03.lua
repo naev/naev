@@ -7,7 +7,7 @@
  <done>FLF Pirate Alliance</done>
  <location>Bar</location>
  <faction>FLF</faction>
- <cond>faction.playerStanding("FLF") &gt;= 50</cond>
+ <cond>spob.cur():reputation("FLF") &gt;= 50</cond>
  <notes>
    <provides name="The Empire and the FLF are enemies">Because they're caught in the battle</provides>
    <campaign>Save the Frontier</campaign>
@@ -312,7 +312,7 @@ function timer_station ()
 
    mem.completed = true
    pilot.toggleSpawn( true )
-   faction.get("Empire"):setPlayerStanding( -100 )
+   faction.get("Empire"):setReputationGlobal( -100 )
    diff.apply( "flf_vs_empire" )
    misn.osdActive( 4 )
    if mem.marker ~= nil then misn.markerRm( mem.marker ) end
@@ -332,7 +332,7 @@ end
 function finish ()
    player.pay( mem.credits )
    flf.setReputation( 70 )
-   faction.get("FLF"):modPlayer( mem.reputation )
+   faction.get("FLF"):hit( mem.reputation )
    flf.addLog( _([[You led the effort to destroy the hated Dvaered base, Fort Raelid, a major victory for the FLF. This act led to the Empire listing you and the FLF as an enemy of the Empire.]]) )
    misn.finish( true )
 end

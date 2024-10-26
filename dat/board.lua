@@ -407,8 +407,8 @@ local function board_capture ()
    local factionmsg = ""
    if not (fct:static() or fct:invisible()) then
       factionmsg = fmt.f(_(" Capturing the ship will lower your reputation with {fct} by {amount} (current standing is {current})."),
-         {fct=fct, amount=fcthit, current=fct:playerStanding()})
-      if fct:playerStanding()-fcthit < 0 then
+         {fct=fct, amount=fcthit, current=board_plt:reputation()})
+      if board_plt:reputation()-fcthit < 0 then
          factionmsg = fmt.f(_([[{msg} This action will make you hostile with {fct}!]]),
             {msg=factionmsg, fct=fct})
       end
@@ -431,7 +431,7 @@ You will still have to escort the ship and land with it to perform the repairs a
             {shp=board_plt:name(),amount=fmt.credits(cost)}))
 
          -- Faction hit
-         fct:modPlayer( -fcthit )
+         fct:hit( -fcthit, system.cur(), "capture" )
          player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=fcthit,fct=fct}).."#0")
 
          -- Start capture script
@@ -676,10 +676,10 @@ end
 
 function board_fcthit_check( func )
    local fct = board_plt:faction()
-   local std = fct:playerStanding()
+   local std = board_plt:reputation()
    if (std>=0) and (std-board_fcthit<0) then
       local msg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {amount} (current standing is {current}). #rThis action will make you hostile with {fct}!#0"),
-         {fct=fct, amount=fct.number(board_fcthit), current=fct:playerStanding()})
+         {fct=fct, amount=fmt.number(board_fcthit), current=std})
       luatk.yesno(fmt.f(_([[Offend {fct}?]]),{fct=fct}), msg, function ()
          func()
       end )
@@ -696,9 +696,7 @@ local function board_fcthit_apply ()
       return
    end
    local fct = board_plt:faction()
-   local std = fct:playerStanding()
-   fct:modPlayer( -board_fcthit )
-   local loss = std - fct:playerStanding()
+   local loss = fct:hit( -board_fcthit, system.cur(), "board" )
    board_fcthit = 0
    if loss <= 0 then
       -- No loss actually happened

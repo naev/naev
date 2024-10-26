@@ -116,6 +116,7 @@ static void aim_lines( unsigned int wid, const char *str );
 static void weapons_renderLegend( double bx, double by, double bw, double bh,
                                   void *data );
 static void weapons_help( unsigned int wid, const char *str );
+static void weapons_advanced( unsigned int wid, const char *str );
 static void info_openStandings( unsigned int wid );
 static void info_shiplogView( unsigned int wid, const char *str );
 static void standings_update( unsigned int wid, const char *str );
@@ -442,8 +443,8 @@ static void info_openMain( unsigned int wid )
    free( nt );
 
    /* menu */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
-                     _( "Close" ), info_close );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
+                        _( "Close" ), info_close, SDLK_c );
 
    /* TODO probably add alt text with descriptions. */
    lic = player_getLicenses();
@@ -497,8 +498,8 @@ static void info_openShip( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeOutfits",
-                     _( "Close" ), info_close );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+                        "closeOutfits", _( "Close" ), info_close, SDLK_c );
 
    /* Text. */
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", _( "Name:" ) );
@@ -622,7 +623,8 @@ static void ship_update( unsigned int wid )
  */
 static void info_openWeapons( unsigned int wid )
 {
-   int w, h, x, y, wlen;
+   int       w, h, x, y, wlen;
+   const int advanced = player.p->advweap;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -642,20 +644,29 @@ static void info_openWeapons( unsigned int wid )
    wlen = w - 220 - 20;
    x    = 220;
    y -= 75;
-   window_addButton( wid, x + 10, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCycle",
-                     _( "Cycle Mode" ), weapons_toggleList );
-   window_addButton( wid, x + 10 + ( BUTTON_WIDTH + 10 ), y, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnClear", _( "Clear" ), weapons_clear );
-   window_addButton( wid, x + 10 + ( BUTTON_WIDTH + 10 ) * 2, y, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnClearAll", _( "Clear All" ),
-                     weapons_clearAll );
+   if ( advanced ) {
+      window_addButtonKey( wid, x + 10, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+                           "btnCycle", _( "Cycle Mode" ), weapons_toggleList,
+                           SDLK_m );
+      x += BUTTON_WIDTH + 10;
+   }
+   window_addButtonKey( wid, x + 10 + ( BUTTON_WIDTH + 10 ) * 0, y,
+                        BUTTON_WIDTH, BUTTON_HEIGHT, "btnClear", _( "Clear" ),
+                        weapons_clear, SDLK_l );
+   window_addButtonKey( wid, x + 10 + ( BUTTON_WIDTH + 10 ) * 1, y,
+                        BUTTON_WIDTH, BUTTON_HEIGHT, "btnClearAll",
+                        _( "Clear All" ), weapons_clearAll, SDLK_a );
+   x = 220;
    y -= BUTTON_HEIGHT + 10;
-   window_addText(
-      wid, x + 10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
-      _( "Cycles through the following modes:\n"
-         "- Hold: turns on the selected outfits as long as key is held\n"
-         "- Toggle: toggles the selected outfits to on or off state" ) );
-   y -= 8 + window_getTextHeight( wid, "txtSMode" );
+   if ( advanced ) {
+      window_addText(
+         wid, x + 10, y, wlen, 100, 0, "txtSMode", NULL, NULL,
+         _( "Cycles through the following modes:\n"
+            "- Default: tap to toggle, hold to hold\n"
+            "- Hold: turns on the selected outfits as long as key is held\n"
+            "- Toggle: toggles the selected outfits to on or off state" ) );
+      y -= 8 + window_getTextHeight( wid, "txtSMode" );
+   }
    window_addCheckbox(
       wid, x + 10, y, wlen, BUTTON_HEIGHT, "chkManual",
       _( "Enable manual aiming mode" ), weapons_manual,
@@ -675,18 +686,25 @@ static void info_openWeapons( unsigned int wid )
                        _( "Dogfight visual aiming helper (all sets)" ),
                        aim_lines, player.p->aimLines );
    y -= 28;
-   window_addCheckbox( wid, x + 10, y, wlen, BUTTON_HEIGHT, "chkAutoweap",
-                       _( "Automatically handle all weapons sets" ),
-                       weapons_autoweap, player.p->autoweap );
+   if ( !advanced )
+      window_addCheckbox( wid, x + 10, y, wlen, BUTTON_HEIGHT, "chkAutoweap",
+                          _( "Automatically handle all weapons sets" ),
+                          weapons_autoweap, player.p->autoweap );
 
    /* List. Has to be generated after checkboxes. */
    weapons_genList( wid );
 
    /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeWeapons",
-                     _( "Close" ), info_close );
-   window_addButton( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "help", p_( "UI", "Help" ), weapons_help );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+                        "closeWeapons", _( "Close" ), info_close, SDLK_c );
+   window_addButtonKey( wid, -20 - 1 * ( BUTTON_WIDTH + 10 ), 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnHelp", p_( "UI", "Help" ),
+                        weapons_help, SDLK_h );
+   window_addButtonKey( wid, -20 - 2 * ( BUTTON_WIDTH + 10 ), 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnAdvanced", p_( "UI", "Advanced" ),
+                        weapons_advanced, SDLK_e );
+   if ( advanced )
+      window_buttonCaption( wid, "btnAdvanced", p_( "UI", "Simple" ) );
 }
 
 /**
@@ -747,12 +765,17 @@ static void weapons_updateList( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkInrange",
                        pilot_weapSetInrangeCheck( player.p, pos ) );
 
+   /* Update volley. */
+   window_checkboxSet( wid, "chkVolley",
+                       pilot_weapSetVolleyCheck( player.p, pos ) );
+
    /* Update manual aiming. */
    window_checkboxSet( wid, "chkManual",
                        pilot_weapSetManualCheck( player.p, pos ) );
 
    /* Update autoweap. */
-   window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
+   if ( widget_exists( wid, "chkAutoweap" ) )
+      window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
 }
 
 static void weapons_toggleList( unsigned int wid, const char *str )
@@ -763,11 +786,14 @@ static void weapons_toggleList( unsigned int wid, const char *str )
    /* See how to handle. */
    t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
    switch ( t ) {
+   case WEAPSET_TYPE_DEFAULT:
+      c = WEAPSET_TYPE_HOLD;
+      break;
    case WEAPSET_TYPE_HOLD:
       c = WEAPSET_TYPE_TOGGLE;
       break;
    case WEAPSET_TYPE_TOGGLE:
-      c = WEAPSET_TYPE_HOLD;
+      c = WEAPSET_TYPE_DEFAULT;
       break;
    default:
       /* Shouldn't happen... but shuts up GCC */
@@ -845,6 +871,9 @@ static void weapons_inrange( unsigned int wid, const char *str )
 {
    int state = window_checkboxState( wid, str );
    pilot_weapSetInrange( player.p, info_eq_weaps.weapons, state );
+   player.p->autoweap = 0;
+   if ( widget_exists( wid, "chkAutoweap" ) )
+      window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
 }
 
 /**
@@ -854,6 +883,9 @@ static void weapons_manual( unsigned int wid, const char *str )
 {
    int state = window_checkboxState( wid, str );
    pilot_weapSetManual( player.p, info_eq_weaps.weapons, state );
+   player.p->autoweap = 0;
+   if ( widget_exists( wid, "chkAutoweap" ) )
+      window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
 }
 
 /**
@@ -863,6 +895,9 @@ static void weapons_volley( unsigned int wid, const char *str )
 {
    int state = window_checkboxState( wid, str );
    pilot_weapSetVolley( player.p, info_eq_weaps.weapons, state );
+   player.p->autoweap = 0;
+   if ( widget_exists( wid, "chkAutoweap" ) )
+      window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
 }
 
 /**
@@ -910,6 +945,20 @@ static void weapons_help( unsigned int wid, const char *str )
 }
 
 /**
+ * @brief Toggles between advanced and simple.
+ */
+static void weapons_advanced( unsigned int wid, const char *str )
+{
+   (void)str;
+   player.p->advweap = !player.p->advweap;
+
+   int n = toolkit_getListPos( wid, "lstWeapSets" );
+   window_clearWidgets( wid );
+   info_openWeapons( wid );
+   toolkit_setListPos( wid, "lstWeapSets", n );
+}
+
+/**
  * @brief Shows the player their cargo.
  *
  *    @param str Unused.
@@ -922,11 +971,11 @@ static void info_openCargo( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeCargo",
-                     _( "Close" ), info_close );
-   window_addButton( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnJettisonCargo", _( "Jettison" ),
-                     cargo_jettison );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeCargo",
+                        _( "Close" ), info_close, SDLK_c );
+   window_addButtonKey( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnJettisonCargo", _( "Jettison" ),
+                        cargo_jettison, SDLK_j );
    window_disableButton( wid, "btnJettisonCargo" );
 
    /* Description. */
@@ -1155,8 +1204,8 @@ static int factionsSort( const void *p1, const void *p2 )
    double v1, v2;
    f1 = *(int *)p1;
    f2 = *(int *)p2;
-   v1 = round( faction_getPlayer( f1 ) );
-   v2 = round( faction_getPlayer( f2 ) );
+   v1 = round( faction_reputation( f1 ) );
+   v2 = round( faction_reputation( f2 ) );
    if ( v1 < v2 )
       return 1;
    else if ( v1 > v2 )
@@ -1178,8 +1227,8 @@ static void info_openStandings( unsigned int wid )
    window_onClose( wid, standings_close );
 
    /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeMissions",
-                     _( "Close" ), info_close );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+                        "closeMissions", _( "Close" ), info_close, SDLK_c );
 
    /* Graphics. */
    window_addImage( wid, 0, 0, 0, 0, "imgLogo", NULL, 0 );
@@ -1200,10 +1249,10 @@ static void info_openStandings( unsigned int wid )
 
    /* Create list. */
    for ( int i = 0; i < array_size( info_factions ); i++ ) {
-      int m = round( faction_getPlayer( info_factions[i] ) );
-      SDL_asprintf( &str[i], "%s   [ #%c%+d%%#0 ]",
+      double m = round( faction_reputation( info_factions[i] ) );
+      SDL_asprintf( &str[i], p_( "standings", "%s   [ #%c%+.0f%%#0 ]" ),
                     faction_longname( info_factions[i] ),
-                    faction_getColourChar( info_factions[i] ), m );
+                    faction_reputationColourChar( info_factions[i] ), m );
    }
 
    /* Display list. */
@@ -1220,7 +1269,8 @@ static void standings_update( unsigned int wid, const char *str )
    (void)str;
    int              p, x, y;
    const glTexture *t;
-   int              w, h, lw, m, l;
+   int              w, h, lw, l;
+   double           m;
    const int       *flist;
    char             buf[STRMAX];
 
@@ -1247,9 +1297,9 @@ static void standings_update( unsigned int wid, const char *str )
 
    /* Modify text. */
    y -= 10;
-   m = round( faction_getPlayer( info_factions[p] ) );
-   snprintf( buf, sizeof( buf ), p_( "standings", "#%c%+d%%#0   [ %s ]" ),
-             faction_getColourChar( info_factions[p] ), m,
+   m = round( faction_reputation( info_factions[p] ) );
+   snprintf( buf, sizeof( buf ), p_( "standings", "#%c%+.0f%%#0   [ %s ]" ),
+             faction_reputationColourChar( info_factions[p] ), m,
              faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
    window_moveWidget( wid, "txtName", x, y );
@@ -1319,8 +1369,8 @@ static void info_openMissions( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeMissions",
-                     _( "Close" ), info_close );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+                        "closeMissions", _( "Close" ), info_close, SDLK_c );
    window_addButtonKey( wid, -20 - BUTTON_WIDTH - 10, 20, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnAbortMission", _( "Abort" ),
                         mission_menu_abort, SDLK_a );
@@ -1725,17 +1775,17 @@ static void info_openShipLog( unsigned int wid )
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
    /* buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "closeShipLog",
-                     _( "Close" ), info_close );
-   window_addButton( wid, -20 - 1 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnDeleteLog", _( "Delete" ),
-                     info_shiplogMenuDelete );
-   window_addButton( wid, -20 - 2 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnViewLog", _( "View Entry" ),
-                     info_shiplogView );
-   window_addButton( wid, -20 - 3 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnAddLog", _( "Add Entry" ),
-                     info_shiplogAdd );
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+                        "closeShipLog", _( "Close" ), info_close, SDLK_c );
+   window_addButtonKey( wid, -20 - 1 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnDeleteLog", _( "Delete" ),
+                        info_shiplogMenuDelete, SDLK_d );
+   window_addButtonKey( wid, -20 - 2 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnViewLog", _( "View Entry" ),
+                        info_shiplogView, SDLK_v );
+   window_addButtonKey( wid, -20 - 3 * ( 20 + BUTTON_WIDTH ), 20, BUTTON_WIDTH,
+                        BUTTON_HEIGHT, "btnAddLog", _( "Add Entry" ),
+                        info_shiplogAdd, SDLK_a );
    /* Description text */
    texth = gl_printHeightRaw( &gl_smallFont, w, "Select log type" );
    window_addText( wid, 20, 80 + BUTTON_HEIGHT + LOGSPACING, w - 40, texth, 0,
