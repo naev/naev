@@ -107,6 +107,8 @@ function standing_change( fct, sys, mod, _source, secondary, _primary_fct )
 
    if not fct:known() then return end
 
+   if fct:invisible() or fct:static() then return end
+
    if secondary ~= 0 and var.peek("factionhit_hide_secondary") then return end
 
    local n = fct:nameRaw()
