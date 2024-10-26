@@ -13,6 +13,7 @@ local luatk = require "luatk"
 local fmt = require "format"
 
 local settings, uselanes_jump, uselanes_spob, uselanes_thr, pick_gui
+local fcthit_hide
 local reset_dist, reset_shield, compr_speed, compr_max, match_fleet, follow_jump, brake_pos, reset_lockon
 
 local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
@@ -32,6 +33,7 @@ function create ()
    end
 
    -- Load variables
+   fcthit_hide = var_peek_fix("factionhit_hide",false)
    uselanes_jump=var_peek_fix( "autonav_uselanes_jump",false )
    uselanes_spob=var_peek_fix( "autonav_uselanes_spob",false )
    uselanes_thr= var_peek_fix( "autonav_uselanes_thr",2 )
@@ -50,12 +52,18 @@ end
 
 function settings ()
    local txt_autonav, fad_autonav, txt_compr
-   local chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_jump, chk_brake_pos, chk_reset_lockon
+   local chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_jump, chk_brake_pos, chk_reset_lockon, chk_fcthit_hide
 
-   local w, h = 600, 540
+   local w, h = 600, 600
    local wdw = luatk.newWindow( nil, nil, w, h )
    wdw:setCancel( luatk.close )
    luatk.newText( wdw, 0, 10, w, 20, _("Player Settings"), nil, "center" )
+
+   local y = 40
+   luatk.newText( wdw, 20, y, w-40, 20, "#n".._("General Settings") )
+   y = y + 20
+   chk_fcthit_hide = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Hide messages when faction reputation changes"), nil, fcthit_hide )
+   y = y + 40
 
    local function update_autonav( _fad, value )
       local msg = _("Stop Speed-up At: ")
@@ -95,8 +103,7 @@ function settings ()
       txt_compr:set( msg )
    end
 
-   local y = 40
-   luatk.newText( wdw, 20, y, w-40, 20, "#n".._("Autonav") )
+   luatk.newText( wdw, 20, y, w-40, 20, "#n".._("Autonav Settings") )
    y = y + 20
    txt_autonav = luatk.newText( wdw, 20, y, w-40, 20 )
    y = y + 20
@@ -145,6 +152,7 @@ function settings ()
 
    luatk.newButton( wdw, -20-80-20, -20, 80, 40, _("Defaults"), function ()
       luatk.yesno(_("Reset Player Settings?"), _("Are you sure you want to reset the player settings?"), function ()
+         fcthit_hide = false
          uselanes_jump = true
          uselanes_spob = true
          uselanes_thr = 2
@@ -157,6 +165,7 @@ function settings ()
          brake_pos = false
          reset_lockon = true
          update_autonav_value()
+         chk_fcthit_hide:set( fcthit_hide )
          chk_uselanes_jump:set( uselanes_jump )
          chk_uselanes_spob:set( uselanes_spob )
          chk_reset_lockon:set( reset_lockon )
@@ -187,12 +196,14 @@ function settings ()
    luatk.run()
 
    -- Save as variables
+   fcthit_hide = chk_fcthit_hide:get()
    uselanes_jump = chk_uselanes_jump:get()
    uselanes_spob = chk_uselanes_spob:get()
    match_fleet = chk_match_fleet:get()
    follow_jump = chk_follow_jump:get()
    brake_pos = chk_brake_pos:get()
    reset_lockon = chk_reset_lockon:get()
+   var.push( "factionhit_hide", fcthit_hide )
    var.push( "autonav_uselanes_jump", uselanes_jump )
    var.push( "autonav_uselanes_spob", uselanes_spob )
    var.push( "autonav_uselanes_thr", uselanes_thr )

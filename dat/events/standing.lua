@@ -99,8 +99,13 @@ local fmar = faction.get("Marauder")
 local htimer
 local fctchanged = {}
 function standing_change( fct, sys, mod, _source, _secondary, _primary_fct )
+   -- Messages are disabled
+   if var.peek("factionhit_hide") then return end
+
    -- Ignore marauder / pirate changes, since they're fake changes tied with the clans
    if fct==fpir or fct==fmar then return end
+
+   if not fct:known() then return end
 
    --if secondary ~= 0 then return end
 
