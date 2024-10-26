@@ -712,7 +712,6 @@ void load_all( void )
    ships_load(); /* dep for fleet */
 
    /* Handle dependent faction/outfit stuff. */
-   factions_loadPost();
    outfit_loadPost();
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading AI…" ) );
@@ -738,6 +737,9 @@ void load_all( void )
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Calculating Patrols…" ) );
    safelanes_init();
+
+   /* Handled at the end, deals with equip / standing scripts. */
+   factions_loadPost();
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Initializing Details…" ) );
 #if DEBUGGING

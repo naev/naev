@@ -73,6 +73,26 @@ function sbase.init( args )
    sbase.text_neutral  = args.text_neutral or _("Neutral")
    sbase.text_hostile  = args.text_hostile or _("Hostile")
    sbase.text_bribed   = args.text_bribed or _("Bribed")
+
+   -- TODO maybe we should do something better than this
+   -- Look at enemy factions and remove them if they don't share systems
+   if sbase.fct then
+      for i,e in ipairs(sbase.fct:enemies()) do
+         if sbase.attitude_toward[ e:nameRaw() ]==nil then
+            local found = false
+            for j,s in ipairs(system:getAll()) do
+               if s:presence(e) > 0 and s:presence(sbase.fct) > 0 then
+                  found = true
+                  break
+               end
+            end
+            if not found then
+               sbase.attitude_toward[ e:nameRaw() ] = 0
+            end
+         end
+      end
+   end
+
    return sbase
 end
 
