@@ -172,8 +172,8 @@ function hit( sys, mod, source, secondary, primary_fct )
    local min, max
    min, max, mod = hit_mod( mod, source, secondary, primary_fct )
 
-   -- Case nothing changes
-   if mod==0 then
+   -- Case nothing changes, or too small to matter
+   if math.abs(mod) < 1e-1 then
       return 0
    end
 
