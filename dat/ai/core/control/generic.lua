@@ -38,7 +38,7 @@ mem.land_planet   = true -- Should land on planets?
 mem.land_friendly = false -- Only land on friendly planets?
 mem.distress      = true -- AI distresses
 mem.distress_hit  = 0 -- Amount of faction lost on distress
-mem.distressrate  = 8 -- Number of ticks before calling for help. Should default to about 16 seconds with defaults.
+mem.distressrate  = 4 -- Number of ticks before calling for help. Should default to about at most 8 seconds with defaults.
 mem.distressmsg   = nil -- Message when calling for help
 mem.distressmsgfunc = nil -- Function to call when distressing
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
@@ -929,9 +929,8 @@ function create_pre ()
    mem.carried    = p:flags("carried")
    mem.mothership = p:mothership()
 
-   -- Amount of faction lost when the pilot distresses at the player
-   -- Should be roughly 1 for a 20 point llama and 4.38 for a 150 point hawking
-   mem.distress_hit = math.max( 0, math.pow( p:ship():points(), 0.37 )-2)
+   -- Amount of faction lost when the pilot distresses at the player, is modulated later
+   mem.distress_hit = p:points()
 
    -- Tune PD parameter (with a nice heuristic formula)
    local ps = p:stats()
@@ -1111,7 +1110,7 @@ function gen_distress( target )
    -- Initialize if unset.
    if mem.distressed == nil then
       -- Start between 0 and 50% of max distress
-      mem.distressed = rnd.rnd(1,math.ceil(mem.distressrate*0.5+0.5))
+      mem.distressed = rnd.rnd(0,math.ceil(mem.distressrate*0.5+0.5))
    end
 
    -- Update distress counter

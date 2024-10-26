@@ -403,7 +403,7 @@ local function board_capture ()
    end
 
    local fct = board_plt:faction()
-   local fcthit = board_plt:points() / 2
+   local fcthit = board_plt:points()
    local factionmsg = ""
    if not (fct:static() or fct:invisible()) then
       local rep = board_plt:reputation()
@@ -598,9 +598,7 @@ function board( plt )
    end
 
    local fct = board_plt:faction()
-   local pm = board_plt:memory()
-   board_fcthit = pm.distress_hit or (math.pow(board_plt:points(), 0.37)-2)
-   board_fcthit = math.max( 0, board_fcthit )
+   board_fcthit = math.max( 0, board_plt:points() )
    if fct:static() or fct:invisible() then
       board_fcthit = 0
    end
@@ -634,8 +632,9 @@ function board( plt )
    -- Display about faction hits
    local fctmsg
    if board_fcthit > 0 then
-      fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}."),
-            {fct=fct,fcthit=fmt.number(board_fcthit)})
+      local loss = fct:hitTest( -board_fcthit, system.cur(), "board" )
+      fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}, and may anger nearby ships."),
+            {fct=fct,fcthit=fmt.number(loss)})
    else
       fctmsg = _("Looting anything from the ship may anger nearby ships.")
    end

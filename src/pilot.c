@@ -1578,11 +1578,9 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
          /* adjust the combat rating based on pilot mass and ditto faction */
          if ( ( p->armour <= 0. ) && ( pshooter != NULL ) &&
               pilot_isWithPlayer( pshooter ) ) {
-            /* About 6 for a llama, 52 for hawking. */
-            int mod = 2. * ( pow( p->base_mass, 0.4 ) - 1. );
-
             /* Modify faction for him and friends. */
-            faction_hit( p->faction, cur_system, -mod, "destroy", 0 );
+            faction_hit( p->faction, cur_system, -p->ship->points, "destroy",
+                         0 );
 
             /* Note that player destroyed the ship. */
             player.ships_destroyed[p->ship->class]++;

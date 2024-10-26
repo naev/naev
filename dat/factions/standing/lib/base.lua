@@ -3,9 +3,14 @@
    standard behaviour can be, but from here you can let your imagination go
    wild.
 --]]
+local fmt = require "format"
 local sbase = {}
 friendly_at = 70 -- global
 
+local function rep_from_points( points )
+   -- 4 points for 20 point Llama, 30 points for 150 point Hawking
+   return points / 5
+end
 
 function sbase.init( args )
    args = args or {}
@@ -18,32 +23,35 @@ function sbase.init( args )
    -- Some general faction parameters
    param( "hit_range",     2 ) -- Range at which it affects
    param( "rep_min",       -100 )
-   param( "rep_max",       100 )
+   param( "rep_max",       30 )
    param( "secondary_default", 0.5 )
    param( "rep_max_var",   nil ) -- Mission variable to use for limits if defined
+   param( "rep_from_points", rep_from_points )
 
    -- Type of source parameters.
    param( "destroy_max",   30 )
+   param( "destroy_min",   -100 )
    param( "destroy_mod",   1 )
 
    --param( "disable_max",   20 )
+   --param( "disable_min",   -100 )
    --param( "disable_mod",   0.3 )
 
    param( "board_max",     20 )
-   param( "board_mod",     1 )
+   param( "board_min",     -100 )
+   param( "board_mod",     0.25 )
 
    param( "capture_max",   30 )
+   param( "capture_max",   -100 )
    param( "capture_mod",   1 )
 
    param( "distress_max",  -20 ) -- Can't get positive  reputation from distress
+   param( "distress_min",  -100 )
    param( "distress_mod",  0 )
 
    param( "scan_max",      -100 ) -- Can't gain reputation scanning by default
-   param( "scan_mod",      0 )
-
-   -- Amount of faction lost when the pilot distresses at the player
-   -- Should be roughly 1 for a 20 point llama and 4.38 for a 150 point hawking
-   --mem.distress_hit = math.max( 0, math.pow( p:ship():points(), 0.37 )-2)
+   param( "scan_min",      -20 )
+   param( "scan_mod",      0.1 )
 
    -- Allows customizing relationships with other factions
    param( "attitude_toward", {} )
@@ -74,7 +82,7 @@ local function clamp( x, min, max )
 end
 
 -- Applies a local hit to a system
-local function hit_local( sys, mod, max )
+local function hit_local( sys, mod, min, max )
    -- Case system and no presence, it doesn't actually do anything...
    if sys and sys:presence( sbase.fct )<=0 then
       return
@@ -82,34 +90,45 @@ local function hit_local( sys, mod, max )
    -- Just simple application based on local reputation
    local r = sys:reputation( sbase.fct )
    max = math.max( r, max ) -- Don't lower under the current value
-   local f = math.min( max, r+mod )
+   min = math.min( r, min ) -- Don't increase the current value
+   local f = clamp( r+mod, min, max )
    sys:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
    return f-r
 end
 
 -- Determine max and modifier based on type and whether is secondary
-local function hit_mod( modin, source, secondary, primary_fct )
-   local max, mod
+local function hit_mod( mod, source, secondary, primary_fct )
+   local max, min
 
    -- Split by type
    if source=="destroy" then
       max = sbase.destroy_max
-      mod = sbase.destroy_mod
+      min = sbase.destroy_min
+      mod = sbase.destroy_mod * sbase.rep_from_points( mod )
    elseif source=="board" then
       max = sbase.board_max
-      mod = sbase.board_mod
-   elseif source=="caputer" then
-      max = sbase.caputer_max
-      mod = sbase.caputer_mod
+      min = sbase.board_min
+      mod = sbase.board_mod * sbase.rep_from_points( mod )
+   elseif source=="capture" then
+      max = sbase.capture_max
+      min = sbase.capture_min
+      mod = sbase.capture_mod * sbase.rep_from_points( mod )
    elseif source=="distress" then
       max = sbase.distress_max
-      mod = sbase.distress_mod
+      min = sbase.distress_min
+      mod = sbase.distress_mod * sbase.rep_from_points( mod )
    elseif source=="scan" then
       max = sbase.scan_max
-      mod = sbase.scan_mod
-   else -- "script" type is handled here
+      min = sbase.scan_min
+      mod = sbase.scan_mod * sbase.rep_from_points( mod )
+   elseif source=="script" then -- "script" type is handled here
       max = sbase.rep_max
-      mod = 1
+      min = sbase.rep_min
+      --mod = mod -- Not modified
+   else
+      max = sbase.rep_max
+      min = sbase.rep_min
+      warn(fmt.f("Unknown faction hit source '{src}' for faction '{fct}'!"), {src=source,fct=sbase.fct})
    end
 
    -- Modify secondaries
@@ -123,7 +142,7 @@ local function hit_mod( modin, source, secondary, primary_fct )
       end
    end
 
-   return max, mod * modin
+   return min, max, mod
 end
 
 --[[
@@ -146,8 +165,13 @@ Possible sources:
    @return The faction amount to set to.
 --]]
 function hit( sys, mod, source, secondary, primary_fct )
-   local  max
-   max, mod = hit_mod( mod, source, secondary, primary_fct )
+   local min, max
+   min, max, mod = hit_mod( mod, source, secondary, primary_fct )
+
+   -- Case nothing changes
+   if mod==0 then
+      return 0
+   end
 
    -- No system, so just do the global hit
    if not sys then
@@ -170,7 +194,9 @@ function hit( sys, mod, source, secondary, primary_fct )
             maxsys = s
             maxval = r
          end
-         local f = math.min( max, r+mod )
+         local fmin = math.min( r, min )
+         local fmax = math.max( r, max )
+         local f = clamp( r+mod, fmin, fmax )
          if mod < 0 then
             changed = math.min( changed, f-r )
          else
@@ -190,7 +216,7 @@ function hit( sys, mod, source, secondary, primary_fct )
    end
 
    -- Center hit on sys and have to expand out
-   local val = hit_local( sys, mod, max )
+   local val = hit_local( sys, mod, min, max )
    if sbase.hit_range > 0 then
       local done = { sys }
       local todo = { sys }
@@ -199,7 +225,7 @@ function hit( sys, mod, source, secondary, primary_fct )
          for i,s in ipairs(todo) do
             for j,n in ipairs(s:adjacentSystems()) do
                if not inlist( done, n ) then
-                  local v = hit_local( n, mod / (dist+1), max )
+                  local v = hit_local( n, mod / (dist+1), min, max )
                   if not val then
                      val = v
                   end
@@ -270,13 +296,12 @@ function reputation_max ()
    if sbase.rep_max_var == nil then
       return sbase.rep_max
    end
-
-   local cap   = var.peek( sbase.cap_misn_var )
-   if cap == nil then
-      cap = sbase.cap_misn_def
-      var.push( sbase.cap_misn_var, cap )
+   local max   = var.peek( sbase.rep_max_var )
+   if max == nil then
+      max = sbase.rep_max
+      var.push( sbase.rep_max_var, max )
    end
-   return cap
+   return max
 end
 
 return sbase
