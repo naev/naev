@@ -130,29 +130,43 @@ function standing_change( fct, sys, mod, _source, secondary, _primary_fct )
 end
 
 function standing_change_hook ()
+   local fctlist = {}
    for k,v in pairs(fctchanged) do
       local mod = math.floor( v.mod+0.5 )
       if math.abs(mod) > 0 then
-         local reptype
-         if v.sys then
-            reptype = p_("reputation","local")
-         else
-            reptype = p_("reputation","global")
-         end
-         local fctstr = v.fct:name()
-         if v.fct:areAllies( faction.player(), system.cur() ) then
-            fctstr = "#F"..fctstr.."#0"
-         elseif v.fct:areEnemies( faction.player(), system.cur() ) then
-            fctstr = "#H"..fctstr.."#0"
-         else
-            fctstr = "#N"..fctstr.."#0"
-         end
+         v.mod = mod
+         table.insert( fctlist, v )
+      end
+   end
+   table.sort( fctlist, function( a, b )
+      if a.mod < b.mod then
+         return true
+      elseif b.mod < a.mod then
+         return false
+      end
+      return a.fct:name() < b.fct:name()
+   end )
+   for k,v in ipairs(fctlist) do
+      local mod = v.mod
+      local reptype
+      if v.sys then
+         reptype = p_("reputation","local")
+      else
+         reptype = p_("reputation","global")
+      end
+      local fctstr = v.fct:name()
+      if v.fct:areAllies( faction.player(), system.cur() ) then
+         fctstr = "#F"..fctstr.."#0"
+      elseif v.fct:areEnemies( faction.player(), system.cur() ) then
+         fctstr = "#H"..fctstr.."#0"
+      else
+         fctstr = "#N"..fctstr.."#0"
+      end
 
-         if mod < 0 then
-            player.msg(fmt.f("#r".._("Lost {amount} {reptype} reputation with {fct}."),{amount=math.abs(mod), fct=fctstr, reptype=reptype}))
-         else
-            player.msg(fmt.f("#g".._("Gained {amount} {reptype} reputation with {fct}."),{amount=mod, fct=fctstr, reptype=reptype}))
-         end
+      if mod < 0 then
+         player.msg(fmt.f("#r".._("Lost {amount} {reptype} reputation with {fct}."),{amount=math.abs(mod), fct=fctstr, reptype=reptype}))
+      else
+         player.msg(fmt.f("#g".._("Gained {amount} {reptype} reputation with {fct}."),{amount=mod, fct=fctstr, reptype=reptype}))
       end
    end
    fctchanged = {} -- Clear changes
