@@ -1018,8 +1018,7 @@ void faction_modPlayerSingle( int f, double mod, const char *source )
  */
 void faction_modPlayerRaw( int f, double mod )
 {
-   Faction  *faction;
-   HookParam hparam[3];
+   Faction *faction;
 
    /* Ignore it if player is dead. */
    if ( player.p == NULL )
@@ -1032,13 +1031,8 @@ void faction_modPlayerRaw( int f, double mod )
 
    faction = &faction_stack[f];
    faction->player += mod;
-   /* Run hook if necessary. */
-   hparam[0].type  = HOOK_PARAM_FACTION;
-   hparam[0].u.lf  = f;
-   hparam[1].type  = HOOK_PARAM_NUMBER;
-   hparam[1].u.num = mod;
-   hparam[2].type  = HOOK_PARAM_SENTINEL;
-   hooks_runParam( "standing", hparam );
+
+   /* Deprecated so no hook now. */
 
    /* Sanitize just in case. */
    faction_sanitizePlayer( faction );
@@ -1080,12 +1074,18 @@ void faction_setReputation( int f, double value )
    faction->player = value;
    /* Run hook if necessary. */
    if ( !faction_isFlag( faction, FACTION_DYNAMIC ) ) {
-      HookParam hparam[3];
+      HookParam hparam[7];
       hparam[0].type  = HOOK_PARAM_FACTION;
       hparam[0].u.lf  = f;
-      hparam[1].type  = HOOK_PARAM_NUMBER;
-      hparam[1].u.num = mod;
-      hparam[2].type  = HOOK_PARAM_SENTINEL;
+      hparam[1].type  = HOOK_PARAM_NIL;
+      hparam[2].type  = HOOK_PARAM_NUMBER;
+      hparam[2].u.num = mod;
+      hparam[3].type  = HOOK_PARAM_STRING;
+      hparam[3].u.str = "script";
+      hparam[4].type  = HOOK_PARAM_NUMBER;
+      hparam[4].u.num = 0;
+      hparam[5].type  = HOOK_PARAM_NIL;
+      hparam[6].type  = HOOK_PARAM_SENTINEL;
       hooks_runParam( "standing", hparam );
 
       /* Sanitize just in case. */
