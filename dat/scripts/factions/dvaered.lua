@@ -6,7 +6,7 @@ return {
    disable_max    = 0,
    capture_max    = 0,
    board_max      = 0,
-   cap_tags       = {
+   rep_max_tags   = {
       -- TODO return cap_ch01 to 50 when possible
       ["dva_cap_ch01_sml"] = { val=1, max=70 },
       ["dva_cap_ch01_med"] = { val=3, max=70 },

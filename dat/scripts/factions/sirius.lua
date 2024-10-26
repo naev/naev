@@ -5,8 +5,7 @@ return {
    -- Much more strict about scanning.
    scan_min       = -30,
    scan_mod       = 0.2,
-   cap_tags       = {
-   },
+   rep_max_tags   = {},
    -- Based on Zen ranks
    text = {
       [100] = _("Prefect"),

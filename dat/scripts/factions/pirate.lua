@@ -11,7 +11,7 @@ return {
    distress_min   = 0, -- Don't care too much about themselves
    distress_mod   = 0.1,
    scan_mod       = 0, -- Don't care about scanning
-   cap_tags       = {
+   rep_max_tags   = {
       ["pir_cap_ch01_sml"] = { val=1, max=80 },
       ["pir_cap_ch01_med"] = { val=3, max=80 },
       ["pir_cap_ch01_lrg"] = { val=5, max=80 },

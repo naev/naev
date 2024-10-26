@@ -4,7 +4,7 @@ return {
    rep_max_var    = "_fcap_zalek",
    secondary_default = 0.3, -- Care less about others
    destroy_max    = 15,
-   cap_tags       = {
+   rep_max_tags   = {
       -- TODO return cap_ch01 to 50 when possible
       ["zlk_cap_ch01_sml"] = { val=1, max=70 },
       ["zlk_cap_ch01_med"] = { val=3, max=70 },

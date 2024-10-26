@@ -6,7 +6,7 @@ return {
    capture_max    = -100,
    capture_mod    = 2,
    scan_mod       = 0, -- Don't care about scanning
-   cap_tags       = {
+   rep_max_tags   = {
       -- TODO return cap_ch01 to 50 when possible
       ["srm_cap_ch01_sml"] = { val=1, max=70 },
       ["srm_cap_ch01_med"] = { val=3, max=70 },

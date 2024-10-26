@@ -17,33 +17,33 @@ for k,v in ipairs(lf.getDirectoryItems("scripts/factions")) do
    table.insert( factions, e )
 end
 
-local cap_tags_list = {}
+local rep_max_tags_list = {}
 for k, f in ipairs( factions ) do
-   for t, v in pairs( f.cap_tags ) do
-      cap_tags_list[t] = { val=v.val, max=v.max, fct=f.fct, var=f.cap_misn_var }
+   for t, v in pairs( f.rep_max_tags ) do
+      rep_max_tags_list[t] = { val=v.val, max=v.max, fct=f.fct, var=f.rep_max_var }
    end
 end
 
 local function recalculate( domsg )
-   local ocaps = {}
+   local omax = {}
    if domsg then
       for k, f in ipairs( factions ) do
-         --ocaps[ f.cap_misn_var ] = var.peek( f.cap_misn_var ) or f.cap_misn_def
-         ocaps[ f.cap_misn_var ] = f.cap_misn_def
+         --omax[ f.rep_max_var ] = var.peek( f.rep_max_var ) or f.cap_misn_def
+         omax[ f.rep_max_var ] = f.rep_max
       end
    end
 
-   -- Initialize caps
-   local caps = {}
+   -- Initialize reputation maximums
+   local max = {}
    for k, f in ipairs( factions ) do
-      caps[ f.cap_misn_var ] = f.cap_misn_def
+      max[ f.rep_max_var ] = f.rep_max
    end
 
    -- Create a list of done tags
    local donetags = {}
    for k, m in ipairs(player.misnDoneList()) do
       for t, b in pairs( m.tags ) do
-         local c = cap_tags_list[t]
+         local c = rep_max_tags_list[t]
          if c then
             table.insert( donetags, c )
          end
@@ -55,24 +55,24 @@ local function recalculate( domsg )
 
    -- Now run over and apply within limit
    for k, c in ipairs(donetags) do
-      caps[ c.var ] = math.min( caps[ c.var ] + c.val, c.max )
+      max[ c.var ] = math.min( max[ c.var ] + c.val, c.max )
    end
 
-   -- Set the caps
-   local scaps = {}
-   for k, v in pairs(caps) do
-      scaps[k] = var.peek( k ) or ocaps[k]
+   -- Set the max
+   local smax = {}
+   for k, v in pairs(max) do
+      smax[k] = var.peek( k ) or omax[k]
       var.push( k, v )
    end
 
    -- Do message if increased
    if domsg then
-      for k, n in pairs(caps) do
-         local s = scaps[ k ]
+      for k, n in pairs(max) do
+         local s = smax[ k ]
          if s ~= n then
             local fct
             for i, f in ipairs(factions) do
-               if f.cap_misn_var==k then
+               if f.rep_max_var==k then
                   fct = f.fct
                   break
                end
@@ -86,7 +86,7 @@ end
 function eventmission_done( data )
    -- Only update if there's a tag we care about
    for t, b in pairs( data.tags ) do
-      local c = cap_tags_list[t]
+      local c = rep_max_tags_list[t]
       if c then
          recalculate( true )
          return
