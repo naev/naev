@@ -94,12 +94,15 @@ function eventmission_done( data )
    end
 end
 
+local fpir = faction.get("Pirate")
+local fmar = faction.get("Marauder")
 local htimer
 local fctchanged = {}
-function standing_change( fct, sys, mod, _source, secondary, _primary_fct )
-   if secondary ~= 0 then
-      return
-   end
+function standing_change( fct, sys, mod, _source, _secondary, _primary_fct )
+   -- Ignore marauder / pirate changes, since they're fake changes tied with the clans
+   if fct==fpir or fct==fmar then return end
+
+   --if secondary ~= 0 then return end
 
    local n = fct:nameRaw()
    local v = fctchanged[n]
