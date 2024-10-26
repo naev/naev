@@ -33,6 +33,9 @@ static int commodity_mod =
    10; /**< Amount you can buy or sell in a single click. */
 static Commodity **commodity_list = NULL;
 
+/* Prototypes. */
+static void commodity_exchange_genList( unsigned int wid );
+
 static void commodity_exchange_modifiers( unsigned int wid )
 {
    int q = commodity_getMod();
@@ -59,13 +62,10 @@ static int commodity_exchange_events( unsigned int wid, SDL_Event *evt )
  */
 void commodity_exchange_open( unsigned int wid )
 {
-   int             j, ngoods;
-   ImageArrayCell *cgoods;
-   int             w, h, iw, ih, dw, bw, titleHeight, infoHeight;
-   char            buf[STRMAX_SHORT];
-   size_t          l = 0;
-   int             iconsize;
-   int             q = commodity_getMod();
+   int    w, h, iw, dw, bw, titleHeight, infoHeight;
+   char   buf[STRMAX_SHORT];
+   size_t l = 0;
+   int    q = commodity_getMod();
 
    /* Mark as generated. */
    land_tabGenerate( LAND_WINDOW_COMMODITY );
@@ -76,7 +76,6 @@ void commodity_exchange_open( unsigned int wid )
    /* Calculate image array dimensions. */
    /* Window size minus right column size minus space on left and right */
    iw = 565 + ( w - LAND_WIDTH );
-   ih = h - 60;
    dw = w - iw - 60;
 
    /* buttons */
@@ -132,8 +131,35 @@ void commodity_exchange_open( unsigned int wid )
       h - ( 80 + titleHeight + infoHeight ) - ( 40 + LAND_BUTTON_HEIGHT ), 0,
       "txtDesc", &gl_smallFont, NULL, NULL );
 
+   /* Generate list. */
+   commodity_exchange_genList( wid );
+
+   /* Set default keyboard focuse to the list */
+   window_setFocus( wid, "iarTrade" );
+}
+
+static void commodity_exchange_genList( unsigned int wid )
+{
+   iar_data_t      idat;
+   int             exists = widget_exists( wid, "iarTrade" );
+   ImageArrayCell *cgoods;
+   int             w, h, iw, ih, j, iconsize;
+
+   /* Get window dimensions. */
+   window_dimWindow( wid, &w, &h );
+
+   /* Calculate image array dimensions. */
+   /* Window size minus right column size minus space on left and right */
+   iw = 565 + ( w - LAND_WIDTH );
+   ih = h - 60;
+
    /* goods list */
-   ngoods = array_size( land_spob->commodities );
+   int ngoods = array_size( land_spob->commodities );
+
+   if ( exists ) {
+      toolkit_saveImageArrayData( wid, "iarTrade", &idat );
+      window_destroyWidget( wid, "iarTrade" );
+   }
 
    /* Count always sellable goods. */
    PilotCommodity *pclist = pfleet_cargoList();
@@ -168,10 +194,12 @@ void commodity_exchange_open( unsigned int wid )
 
       /* Then add default. */
       for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
-         cgoods[j].image =
-            gl_dupTexture( land_spob->commodities[i]->gfx_store );
-         cgoods[j].caption = strdup( _( land_spob->commodities[i]->name ) );
-         commodity_list[j] = land_spob->commodities[i];
+         const Commodity *com = land_spob->commodities[i];
+         ;
+         cgoods[j].image    = gl_dupTexture( com->gfx_store );
+         cgoods[j].caption  = strdup( _( com->name ) );
+         cgoods[j].quantity = pfleet_cargoOwned( com );
+         commodity_list[j]  = land_spob->commodities[i];
          j++;
       }
    } else {
@@ -196,8 +224,8 @@ void commodity_exchange_open( unsigned int wid )
                          cgoods, ngoods, commodity_update, commodity_update,
                          commodity_update );
 
-   /* Set default keyboard focuse to the list */
-   window_setFocus( wid, "iarTrade" );
+   if ( exists )
+      toolkit_loadImageArrayData( wid, "iarTrade", &idat );
 }
 
 void commodity_exchange_cleanup( void )
@@ -398,6 +426,7 @@ void commodity_buy( unsigned int wid, const char *str )
    price *= q;
    player_modCredits( -price );
    commodity_update( wid, NULL );
+   commodity_exchange_genList( wid );
 
    /* Run hooks. */
    hparam[0].type        = HOOK_PARAM_COMMODITY;
@@ -443,6 +472,7 @@ void commodity_sell( unsigned int wid, const char *str )
                                            zero, in case missions add cargo. */
       com->lastPurchasePrice = 0;
    commodity_update( wid, NULL );
+   commodity_exchange_genList( wid );
 
    /* Run hooks. */
    hparam[0].type        = HOOK_PARAM_COMMODITY;
