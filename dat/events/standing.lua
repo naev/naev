@@ -129,10 +129,19 @@ function standing_change_hook ()
          else
             reptype = p_("reputation","global")
          end
-         if mod < 0 then
-            player.msg(fmt.f("#r".._("Lost {amount} {reptype} reputation with {fct}."),{amount=math.abs(mod), fct=v.fct, reptype=reptype}))
+         local fctstr = v.fct:name()
+         if v.fct:areAllies( faction.player(), system.cur() ) then
+            fctstr = "#F"..fctstr.."#0"
+         elseif v.fct:areEnemies( faction.player(), system.cur() ) then
+            fctstr = "#H"..fctstr.."#0"
          else
-            player.msg(fmt.f("#g".._("Gained {amount} {reptype} reputation with {fct}."),{amount=mod, fct=v.fct, reptype=reptype}))
+            fctstr = "#N"..fctstr.."#0"
+         end
+
+         if mod < 0 then
+            player.msg(fmt.f("#r".._("Lost {amount} {reptype} reputation with {fct}."),{amount=math.abs(mod), fct=fctstr, reptype=reptype}))
+         else
+            player.msg(fmt.f("#g".._("Gained {amount} {reptype} reputation with {fct}."),{amount=mod, fct=fctstr, reptype=reptype}))
          end
       end
    end
