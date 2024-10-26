@@ -829,17 +829,26 @@ static double faction_hitLua( int f, const StarSystem *sys, double mod,
    delta = lua_tonumber( naevL, -1 );
    lua_pop( naevL, 1 );
    if ( FABS( delta ) > DOUBLE_TOL ) {
-      HookParam hparam[4];
-      hparam[0].type  = HOOK_PARAM_FACTION;
-      hparam[0].u.lf  = f;
-      hparam[1].type  = HOOK_PARAM_NUMBER;
-      hparam[1].u.num = delta;
+      HookParam hparam[7];
+      hparam[0].type = HOOK_PARAM_FACTION;
+      hparam[0].u.lf = f;
       if ( sys != NULL ) {
-         hparam[2].type = HOOK_PARAM_SSYS;
-         hparam[2].u.ls = sys->id;
-         hparam[3].type = HOOK_PARAM_SENTINEL;
+         hparam[1].type = HOOK_PARAM_SSYS;
+         hparam[1].u.ls = sys->id;
       } else
-         hparam[2].type = HOOK_PARAM_SENTINEL;
+         hparam[1].type = HOOK_PARAM_NIL;
+      hparam[2].type  = HOOK_PARAM_NUMBER;
+      hparam[2].u.num = delta;
+      hparam[3].type  = HOOK_PARAM_STRING;
+      hparam[3].u.str = source;
+      hparam[4].type  = HOOK_PARAM_NUMBER;
+      hparam[4].u.num = secondary;
+      if ( faction_isFaction( primary_faction ) ) {
+         hparam[5].type = HOOK_PARAM_FACTION;
+         hparam[5].u.lf = primary_faction;
+      } else
+         hparam[5].type = HOOK_PARAM_NIL;
+      hparam[6].type = HOOK_PARAM_SENTINEL;
       hooks_runParam( "standing", hparam );
 
       /* Tell space the faction changed. */

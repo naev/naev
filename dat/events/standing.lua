@@ -94,9 +94,56 @@ function eventmission_done( data )
    end
 end
 
+local htimer
+local fctchanged = {}
+function standing_change( fct, sys, mod, _source, secondary, _primary_fct )
+   if secondary ~= 0 then
+      return
+   end
+
+   local n = fct:nameRaw()
+   local v = fctchanged[n]
+   if not v then
+      v = 0
+   else
+      v = v.mod
+   end
+   -- We actually overwrite system here, so a local + global hit will be interpreted as the last one...
+   -- Might make more sense to separate them.
+   fctchanged[n] = { fct=fct, mod=v+mod, sys=sys }
+
+   -- Start timer if it hasn't yet
+   if htimer == nil then
+      -- Show changed factions with a delay, this basically ends up "accumulating" during the time
+      htimer = hook.timer( 1, "standing_change_hook" )
+   end
+end
+
+function standing_change_hook ()
+   for k,v in pairs(fctchanged) do
+      local mod = math.floor( v.mod+0.5 )
+      if math.abs(mod) > 0 then
+         local reptype
+         if v.sys then
+            reptype = p_("reputation","local")
+         else
+            reptype = p_("reputation","global")
+         end
+         if mod < 0 then
+            player.msg(fmt.f("#r".._("Lost {amount} {reptype} reputation with {fct}."),{amount=math.abs(mod), fct=v.fct, reptype=reptype}))
+         else
+            player.msg(fmt.f("#g".._("Gained {amount} {reptype} reputation with {fct}."),{amount=mod, fct=v.fct, reptype=reptype}))
+         end
+      end
+   end
+   fctchanged = {} -- Clear changes
+   htimer = nil -- Timer is done
+end
+
 function create ()
    recalculate( false )
 
    hook.mission_done( "eventmission_done" )
    hook.event_done( "eventmission_done" )
+   hook.standing( "standing_change" )
 end

@@ -93,7 +93,7 @@ function rehab.init( fct, params )
    end
 
    -- Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
-   function standing( hookfac, delta, sys )
+   function standing( hookfac, sys, delta, _source, _secondary, _primary_fct )
       if hookfac == fct then
          if delta >= 0 then
             -- No need for fake transponder stuff anymore, because it stops faction standing changes
