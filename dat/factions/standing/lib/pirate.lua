@@ -12,8 +12,8 @@ end
 
 -- Override hit function
 local oldhit = hit
-function hit( sys, mod, source, secondary )
-   local changed = oldhit( sys, mod, source, secondary )
+function hit( ... )
+   local changed = oldhit( ... )
 
    -- Get the maximum player value with any pirate clan
    local maxval = changed
