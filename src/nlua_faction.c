@@ -37,6 +37,7 @@ static int factionL_areenemies( lua_State *L );
 static int factionL_areallies( lua_State *L );
 static int factionL_usesHiddenJumps( lua_State *L );
 static int factionL_hit( lua_State *L );
+static int factionL_hitTest( lua_State *L );
 static int factionL_reputationGlobal( lua_State *L );
 static int factionL_reputationText( lua_State *L );
 static int factionL_reputationDefault( lua_State *L );
@@ -78,6 +79,7 @@ static const luaL_Reg faction_methods[] = {
    { "areEnemies", factionL_areenemies },
    { "areAllies", factionL_areallies },
    { "hit", factionL_hit },
+   { "hitTest", factionL_hitTest },
    { "reputationGlobal", factionL_reputationGlobal },
    { "reputationText", factionL_reputationText },
    { "reputationDefault", factionL_reputationDefault },
@@ -422,9 +424,9 @@ static int factionL_areallies( lua_State *L )
  * doesn't affect allies nor enemies of the faction.
  *
  *    @luatparam Faction f Faction to modify player's standing with.
- *    @luatparam number mod The modifier to modify faction by.
+ *    @luatparam number mod Amount of reputation to change.
  *    @luatparam System|nil Whether to make the faction hit local at a system,
- * or global.
+ * or global affecting all systems of the faction.
  *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
  * a string to the faction "hit" function. The engine can generate "kill" and
  * "distress" sources. For missions the default is "script".
@@ -442,6 +444,33 @@ static int factionL_hit( lua_State *L )
       ( lua_isnoneornil( L, 3 ) ) ? NULL : luaL_validsystem( L, 3 );
    const char *reason = luaL_optstring( L, 4, "script" );
    double      ret = faction_hit( f, sys, mod, reason, lua_toboolean( L, 5 ) );
+   lua_pushnumber( L, ret );
+   return 1;
+}
+
+/**
+ * @brief Simulates modifying the player's standing with a faction and computes
+ * how much would be changed.
+ *
+ *    @luatparam Faction f Faction to simulate player's standing with.
+ *    @luatparam number mod Amount of reputation to simulate change.
+ *    @luatparam System|nil Whether to make the faction hit local at a system,
+ * or global.
+ *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
+ * a string to the faction "hit" function. The engine can generate "kill" and
+ * "distress" sources. For missions the default is "script".
+ *    @luatreturn How much the reputation was actually changed after Lua script
+ * was run.
+ * @luafunc hit
+ */
+static int factionL_hitTest( lua_State *L )
+{
+   int               f   = luaL_validfaction( L, 1 );
+   double            mod = luaL_checknumber( L, 2 );
+   const StarSystem *sys =
+      ( lua_isnoneornil( L, 3 ) ) ? NULL : luaL_validsystem( L, 3 );
+   const char *reason = luaL_optstring( L, 4, "script" );
+   double      ret    = faction_hitTest( f, sys, mod, reason );
    lua_pushnumber( L, ret );
    return 1;
 }

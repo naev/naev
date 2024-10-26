@@ -6,27 +6,47 @@
 local sbase = {}
 friendly_at = 70 -- global
 
+
 function sbase.init( args )
    args = args or {}
    sbase.fct                = args.fct                              -- The faction
 
+   local function param( name, def )
+      sbase[name] = args[name] or def
+   end
+
    -- Some general faction parameters
-   sbase.hit_range          = args.hit_range or 2 -- Range at which it affects
-   sbase.rep_min            = args.rep_min or -100
-   sbase.rep_max            = args.rep_max or 100
+   param( "hit_range",     2 ) -- Range at which it affects
+   param( "rep_min",       -100 )
+   param( "rep_max",       100 )
+   param( "secondary_default", 0.5 )
+   param( "rep_max_var",   nil ) -- Mission variable to use for limits if defined
 
-   -- Faction caps.
-   sbase.cap_kill           = args.cap_kill            or 20       -- Kill cap
-   sbase.cap_misn_def       = args.cap_misn_def        or 30       -- Starting mission cap, gets overwritten
-   sbase.cap_misn_var       = args.cap_misn_var        or nil      -- Mission variable to use for limits
+   -- Type of source parameters.
+   param( "destroy_max",   30 )
+   param( "destroy_mod",   1 )
 
-   -- Secondary hit modifiers.
-   sbase.mod_distress_enemy = args.mod_distress_enemy  or 0        -- Distress of the faction's enemies
-   sbase.mod_distress_friend= args.mod_distress_friend or 0.3      -- Distress of the faction's allies
-   sbase.mod_kill_enemy     = args.mod_kill_enemy      or 0.3      -- Kills of the faction's enemies
-   sbase.mod_kill_friend    = args.mod_kill_friend     or 0.3      -- Kills of the faction's allies
-   sbase.mod_misn_enemy     = args.mod_misn_enemy      or 0.3      -- Missions done for the faction's enemies
-   sbase.mod_misn_friend    = args.mod_misn_friend     or 0.3      -- Missions done for the faction's allies
+   --param( "disable_max",   20 )
+   --param( "disable_mod",   0.3 )
+
+   param( "board_max",     20 )
+   param( "board_mod",     1 )
+
+   param( "capture_max",   30 )
+   param( "capture_mod",   1 )
+
+   param( "distress_max",  -20 ) -- Can't get positive  reputation from distress
+   param( "distress_mod",  0 )
+
+   param( "scan_max",      -100 ) -- Can't gain reputation scanning by default
+   param( "scan_mod",      0 )
+
+   -- Amount of faction lost when the pilot distresses at the player
+   -- Should be roughly 1 for a 20 point llama and 4.38 for a 150 point hawking
+   --mem.distress_hit = math.max( 0, math.pow( p:ship():points(), 0.37 )-2)
+
+   -- Allows customizing relationships with other factions
+   param( "attitude_toward", {} )
 
    -- Text stuff
    sbase.text = args.text or {
@@ -61,40 +81,49 @@ local function hit_local( sys, mod, max )
    end
    -- Just simple application based on local reputation
    local r = sys:reputation( sbase.fct )
+   max = math.max( r, max ) -- Don't lower under the current value
    local f = math.min( max, r+mod )
    sys:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
    return f-r
 end
 
 -- Determine max and modifier based on type and whether is secondary
-local function hit_mod( mod, source, secondary )
-   local max, modenemy, modally
+local function hit_mod( modin, source, secondary, primary_fct )
+   local max, mod
 
    -- Split by type
-   if source=="distress" or source=="scan" then
-      modenemy = sbase.mod_distress_enemy
-      modally = sbase.mod_distress_friend
-      max = sbase.cap_kill
-   elseif source == "kill" or source=="board" or source=="capture"then
-      modenemy = sbase.mod_kill_enemy
-      modally = sbase.mod_kill_friend
-      max = sbase.cap_kill
-   else
-      modenemy = sbase.mod_misn_enemy
-      modally = sbase.mod_misn_friend
-      max = reputation_max()
+   if source=="destroy" then
+      max = sbase.destroy_max
+      mod = sbase.destroy_mod
+   elseif source=="board" then
+      max = sbase.board_max
+      mod = sbase.board_mod
+   elseif source=="caputer" then
+      max = sbase.caputer_max
+      mod = sbase.caputer_mod
+   elseif source=="distress" then
+      max = sbase.distress_max
+      mod = sbase.distress_mod
+   elseif source=="scan" then
+      max = sbase.scan_max
+      mod = sbase.scan_mod
+   else -- "script" type is handled here
+      max = sbase.rep_max
+      mod = 1
    end
 
-   -- Modulate based on friend/foe
-   if secondary then
-      if mod > 0 then
-         mod = mod * modenemy
+   -- Modify secondaries
+   if secondary ~= 0 then
+      -- If we have a particular attitude towards a government, expose that
+      local at = sbase.attitude_toward[ primary_fct:nameRaw() ]
+      if at then
+         mod = mod * at
       else
-         mod = mod * modally
+         mod = mod * sbase.secondary_default
       end
    end
 
-   return max, mod
+   return max, mod * modin
 end
 
 --[[
@@ -102,7 +131,8 @@ Handles a faction hit for a faction.
 
 Possible sources:
    - "destroy": Pilot death.
-   - "board": Pilot ship as boarded.
+   - "disable": Pilot ship was disabled.
+   - "board": Pilot ship was boarded.
    - "capture": Pilot ship was captured.
    - "distress": Pilot distress signal.
    - "scan": when scanned by pilots and illegal content is found
@@ -111,12 +141,13 @@ Possible sources:
    @param sys System (or nil for global) that is having the hit
    @param mod Amount of faction being changed.
    @param source Source of the faction hit.
-   @param secondary Flag that indicates whether this is a secondary (through ally or enemy) hit.
+   @param secondary Flag that indicates whether this is a secondary hit. If 0 it is primary, if +1 it is secondary hit from ally, if -1 it is a secondary hit from an enemy.
+   @param primary_fct In the case of a secondary hit, the faction that caused the primary hit.
    @return The faction amount to set to.
 --]]
-function hit( sys, mod, source, secondary )
+function hit( sys, mod, source, secondary, primary_fct )
    local  max
-   max, mod = hit_mod( mod, source, secondary )
+   max, mod = hit_mod( mod, source, secondary, primary_fct )
 
    -- No system, so just do the global hit
    if not sys then
@@ -187,6 +218,15 @@ function hit( sys, mod, source, secondary )
 end
 
 --[[
+Highly simplified version that doesn't take into account maximum standings and the likes.
+--]]
+function hit_test( _sys, mod, source )
+   local  _max
+   _max, mod = hit_mod( mod, source, 0 )
+   return mod
+end
+
+--[[
 Returns a text representation of the player's standing.
 
    @param value Current standing value of the player.
@@ -227,8 +267,8 @@ end
    Returns the maximum reputation limit of the player.
 --]]
 function reputation_max ()
-   if sbase.cap_misn_var == nil then
-      return sbase.cap_misn_def
+   if sbase.rep_max_var == nil then
+      return sbase.rep_max
    end
 
    local cap   = var.peek( sbase.cap_misn_var )

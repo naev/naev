@@ -964,9 +964,9 @@ function create_post ()
       ai.pushtask("jumpin_wait")
    end
 
-   -- Fighters give much smaller faction hits
+   -- Fighters do not give faction hits
    if mem.carried then
-      mem.distress_hit = mem.distress_hit * 0.05
+      mem.distress_hit = 0.
    end
 end
 

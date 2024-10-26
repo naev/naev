@@ -110,7 +110,8 @@ stds.API_loadscreen = {globals={
 stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment_autoequipShip()
 stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
-   "hit",            -- C functions: faction_modPlayerLua
+   "hit",            -- C functions: faction_hit
+   "hit_test",       -- C functions: faction_hitTest
    "text_rank",      -- C functions: faction_getStandingText
    "text_broad",     -- C functions: faction_getStandingBroad
    "reputation_max", -- C functions: faction_reputationMax
