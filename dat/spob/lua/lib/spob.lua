@@ -193,7 +193,7 @@ function luaspob.load ()
 
    mem.bribe_cost_function = mem.params.bribe_cost or function ()
       local std = mem.spob:reputation()
-      return (mem.std_land-std) * 1e3 * player.pilot():ship():size() + 5e3
+      return math.min( 10, (mem.std_land-std) ) * 1e3 * player.pilot():ship():size() + 5e3
    end
 
    mem.std_land = mem.params.std_land or 0
