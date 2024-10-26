@@ -13,7 +13,7 @@ local luatk = require "luatk"
 local fmt = require "format"
 
 local settings, uselanes_jump, uselanes_spob, uselanes_thr, pick_gui
-local fcthit_hide, fcthit_hide_secondary
+local fcthit_hide--, fcthit_hide_secondary
 local reset_dist, reset_shield, compr_speed, compr_max, match_fleet, follow_jump, brake_pos, reset_lockon
 
 local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
@@ -34,7 +34,7 @@ function create ()
 
    -- Load variables
    fcthit_hide = var_peek_fix("factionhit_hide",false)
-   fcthit_hide_secondary = var_peek_fix("factionhit_hide_secondary",true)
+   --fcthit_hide_secondary = var_peek_fix("factionhit_hide_secondary",true)
    uselanes_jump=var_peek_fix( "autonav_uselanes_jump",false )
    uselanes_spob=var_peek_fix( "autonav_uselanes_spob",false )
    uselanes_thr= var_peek_fix( "autonav_uselanes_thr",2 )
@@ -53,7 +53,7 @@ end
 
 function settings ()
    local txt_autonav, fad_autonav, txt_compr
-   local chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_jump, chk_brake_pos, chk_reset_lockon, chk_fcthit_hide, chk_fcthit_hide_secondary
+   local chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_jump, chk_brake_pos, chk_reset_lockon, chk_fcthit_hide--, chk_fcthit_hide_secondary
 
    local w, h = 600, 620
    local wdw = luatk.newWindow( nil, nil, w, h )
@@ -64,8 +64,8 @@ function settings ()
    luatk.newText( wdw, 20, y, w-40, 20, "#n".._("General Settings") )
    y = y + 20
    chk_fcthit_hide = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Hide all messages when faction reputation changes"), nil, fcthit_hide )
-   y = y + 20
-   chk_fcthit_hide_secondary = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Hide messages when faction reputation changes indirectly"), nil, fcthit_hide_secondary )
+   --y = y + 20
+   --chk_fcthit_hide_secondary = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Hide messages when faction reputation changes indirectly"), nil, fcthit_hide_secondary )
    y = y + 40
 
    local function update_autonav( _fad, value )
@@ -142,7 +142,7 @@ function settings ()
    y = y + 30
    chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when travelling to a space object"), nil, uselanes_spob )
    y = y + 30
-   chk_match_fleet = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Match speed with slowest ship in your fleet"), nil, match_fleet )
+   chk_match_fleet = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Match speed with the slowest ship in your fleet"), nil, match_fleet )
    y = y + 30
    chk_follow_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Jump to follow pilots"), nil, follow_jump )
    y = y + 30
@@ -156,7 +156,7 @@ function settings ()
    luatk.newButton( wdw, -20-80-20, -20, 80, 40, _("Defaults"), function ()
       luatk.yesno(_("Reset Player Settings?"), _("Are you sure you want to reset the player settings?"), function ()
          fcthit_hide = false
-         fcthit_hide_secondary = true
+         --fcthit_hide_secondary = true
          uselanes_jump = true
          uselanes_spob = true
          uselanes_thr = 2
@@ -170,7 +170,7 @@ function settings ()
          reset_lockon = true
          update_autonav_value()
          chk_fcthit_hide:set( fcthit_hide )
-         chk_fcthit_hide_secondary:set( fcthit_hide_secondary )
+         --chk_fcthit_hide_secondary:set( fcthit_hide_secondary )
          chk_uselanes_jump:set( uselanes_jump )
          chk_uselanes_spob:set( uselanes_spob )
          chk_reset_lockon:set( reset_lockon )
@@ -202,7 +202,7 @@ function settings ()
 
    -- Save as variables
    fcthit_hide = chk_fcthit_hide:get()
-   fcthit_hide_secondary = chk_fcthit_hide_secondary:get()
+   --fcthit_hide_secondary = chk_fcthit_hide_secondary:get()
    uselanes_jump = chk_uselanes_jump:get()
    uselanes_spob = chk_uselanes_spob:get()
    match_fleet = chk_match_fleet:get()
@@ -210,7 +210,7 @@ function settings ()
    brake_pos = chk_brake_pos:get()
    reset_lockon = chk_reset_lockon:get()
    var.push( "factionhit_hide", fcthit_hide )
-   var.push( "factionhit_hide_secondary", fcthit_hide_secondary )
+   --var.push( "factionhit_hide_secondary", fcthit_hide_secondary )
    var.push( "autonav_uselanes_jump", uselanes_jump )
    var.push( "autonav_uselanes_spob", uselanes_spob )
    var.push( "autonav_uselanes_thr", uselanes_thr )

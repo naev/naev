@@ -98,7 +98,7 @@ local fpir = faction.get("Pirate")
 local fmar = faction.get("Marauder")
 local htimer
 local fctchanged = {}
-function standing_change( fct, sys, mod, _source, secondary, _primary_fct )
+function standing_change( fct, sys, mod, _source, _secondary, _primary_fct )
    -- Messages are disabled
    if var.peek("factionhit_hide") then return end
 
@@ -109,7 +109,7 @@ function standing_change( fct, sys, mod, _source, secondary, _primary_fct )
 
    if fct:invisible() or fct:static() then return end
 
-   if secondary ~= 0 and var.peek("factionhit_hide_secondary") then return end
+   --if secondary ~= 0 and var.peek("factionhit_hide_secondary") then return end
 
    local n = fct:nameRaw()
    local v = fctchanged[n]
