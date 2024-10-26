@@ -412,7 +412,7 @@ local function board_capture ()
          fcthittest = fcthittest + fct:hitTest( -board_fcthit, system.cur(), "board" )
       end
       factionmsg = fmt.f(_(" Capturing the ship will lower your reputation with {fct} by {amount} (current standing is {current})."),
-         {fct=fct, amount=fcthit, current=rep})
+         {fct=fct, amount=fmt.number(math.abs(fcthittest)), current=rep})
       if rep+fcthittest < 0 then
          factionmsg = fmt.f(_([[{msg} This action will make you hostile with {fct}!]]),
             {msg=factionmsg, fct=fct})
@@ -436,8 +436,8 @@ You will still have to escort the ship and land with it to perform the repairs a
             {shp=board_plt:name(),amount=fmt.credits(cost)}))
 
          -- Faction hit
-         fct:hit( -fcthit, system.cur(), "capture" )
-         player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=fcthit,fct=fct}).."#0")
+         local realhit = fct:hit( -fcthit, system.cur(), "capture" )
+         player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=realhit,fct=fct}).."#0")
 
          -- Start capture script
          local nc = naev.cache()
@@ -634,7 +634,7 @@ function board( plt )
    if board_fcthit > 0 then
       local loss = fct:hitTest( -board_fcthit, system.cur(), "board" )
       fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}, and may anger nearby ships."),
-            {fct=fct,fcthit=fmt.number(loss)})
+            {fct=fct,fcthit=fmt.number(math.abs(loss))})
    else
       fctmsg = _("Looting anything from the ship may anger nearby ships.")
    end
@@ -680,9 +680,10 @@ end
 function board_fcthit_check( func )
    local fct = board_plt:faction()
    local std = board_plt:reputation()
-   if (std>=0) and (std-board_fcthit<0) then
+   local fcthittest = fct:hitTest( -board_fcthit, system.cur(), "board" )
+   if (std>=0) and (std-fcthittest<0) then
       local msg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {amount} (current standing is {current}). #rThis action will make you hostile with {fct}!#0"),
-         {fct=fct, amount=fmt.number(board_fcthit), current=std})
+         {fct=fct, amount=fmt.number(math.abs(fcthittest)), current=std})
       luatk.yesno(fmt.f(_([[Offend {fct}?]]),{fct=fct}), msg, function ()
          func()
       end )
