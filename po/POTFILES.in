@@ -3029,7 +3029,6 @@ dat/factions/spawn/traders_society.lua
 dat/factions/spawn/traders_society/default.lua
 dat/factions/spawn/zalek.lua
 dat/factions/spawn/zalek/default.lua
-dat/factions/standing/collective.lua
 dat/factions/standing/dvaered.lua
 dat/factions/standing/empire.lua
 dat/factions/standing/flf.lua

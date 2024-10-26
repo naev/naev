@@ -46,7 +46,7 @@ function sbase.init( args )
    param( "capture_mod",   1 )
 
    param( "distress_max",  -20 ) -- Can't get positive  reputation from distress
-   param( "distress_min",  -100 )
+   param( "distress_min",  -40 )
    param( "distress_mod",  0 )
 
    param( "scan_max",      -100 ) -- Can't gain reputation scanning by default
@@ -92,7 +92,7 @@ local function hit_local( sys, mod, min, max )
    max = math.max( r, max ) -- Don't lower under the current value
    min = math.min( r, min ) -- Don't increase the current value
    local f = clamp( r+mod, min, max )
-   sys:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
+   sys:setReputation( sbase.fct, f )
    return f-r
 end
 
@@ -122,14 +122,18 @@ local function hit_mod( mod, source, secondary, primary_fct )
       min = sbase.scan_min
       mod = sbase.scan_mod * sbase.rep_from_points( mod )
    elseif source=="script" then -- "script" type is handled here
-      max = sbase.rep_max
+      max = reputation_max()
       min = sbase.rep_min
       --mod = mod -- Not modified
    else
-      max = sbase.rep_max
+      max = reputation_max()
       min = sbase.rep_min
       warn(fmt.f("Unknown faction hit source '{src}' for faction '{fct}'!"), {src=source,fct=sbase.fct})
    end
+
+   -- Make sure it's within the global minimum and maximum.
+   max = math.min( max, reputation_max() )
+   min = math.max( min, sbase.rep_min )
 
    -- Modify secondaries
    if secondary ~= 0 then
@@ -202,7 +206,7 @@ function hit( sys, mod, source, secondary, primary_fct )
          else
             changed = math.max( changed, f-r )
          end
-         s:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
+         s:setReputation( sbase.fct, f )
       end
 
       -- Now propagate the thresholding from the max or min depending on sign of mod

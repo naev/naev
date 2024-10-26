@@ -1,10 +1,10 @@
 return {
    fct            = faction.get("Sirius"),
-   cap_kill       = 10,
-   delta_distress = {-0.5, 0},    -- Maximum change constraints
-   delta_kill     = {-5, 1},    -- Maximum change constraints
-   cap_misn_def   = 70, --30, -- TODO lower as missions get added
-   cap_misn_var   = "_fcap_sirius",
+   rep_max        = 70, --30, -- TODO lower as missions get added
+   rep_max_var    = "_fcap_sirius",
+   -- Much more strict about scanning.
+   scan_min       = -30,
+   scan_mod       = 0.2,
    cap_tags       = {
    },
    -- Based on Zen ranks

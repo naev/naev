@@ -1,10 +1,7 @@
 return {
    fct            = faction.get("Empire"),
-   cap_kill       = 15,
-   delta_distress = {-1, 0},    -- Maximum change constraints
-   delta_kill     = {-5, 1},    -- Maximum change constraints
-   cap_misn_def   = 70-15, --30, -- TODO lower as more campaigns get added
-   cap_misn_var   = "_fcap_empire",
+   max_rep        = 70-15, --30, -- TODO lower as more campaigns get added
+   max_rep_var    = "_fcap_empire",
    cap_tags       = {
       -- TODO return cap_ch01 to 50 when possible
       ["emp_cap_ch01_sml"] = { val=1, max=70 },
