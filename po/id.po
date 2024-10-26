@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-10-26 17:16+0000\n"
+"Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/"
+"naev-0-11-x/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.8.2-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -52,7 +54,7 @@ msgstr ""
 
 #: physfs.c:9
 msgid "files still open"
-msgstr ""
+msgstr "berkas masih terbuka"
 
 #: physfs.c:10
 msgid "invalid argument"
@@ -60,7 +62,7 @@ msgstr ""
 
 #: physfs.c:11
 msgid "not mounted"
-msgstr ""
+msgstr "tidak terpasang"
 
 #: physfs.c:12
 msgid "not found"
@@ -100,7 +102,7 @@ msgstr ""
 
 #: physfs.c:21
 msgid "i/o error"
-msgstr ""
+msgstr "kesalahan i/o"
 
 #: physfs.c:22
 msgid "permission denied"
@@ -345,7 +347,7 @@ msgstr ""
 
 #: dat/AUTHORS:44
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * Pengembangan Misi"
 
 #: dat/AUTHORS:45
 msgid "   The first non-bobbens mission developer!"
@@ -397,7 +399,7 @@ msgstr ""
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
-msgstr ""
+msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
@@ -640,7 +642,7 @@ msgstr ""
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr ""
+msgstr "   * Seniman untuk mayoritas nebula."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
@@ -728,7 +730,7 @@ msgstr ""
 
 #: dat/AUTHORS:171
 msgid "   * Solar system information screen"
-msgstr ""
+msgstr "   * Layar informasi tata surya"
 
 #: dat/AUTHORS:173
 msgid "oo13"
@@ -876,7 +878,7 @@ msgstr ""
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
-msgstr ""
+msgstr "ADMONISER PEROMPAK"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
@@ -956,7 +958,7 @@ msgstr ""
 
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
-msgstr ""
+msgstr "BADAK"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
@@ -1413,7 +1415,7 @@ msgstr ""
 
 #: dat/difficulty/story_mode.xml:2
 msgid "Story Mode"
-msgstr ""
+msgstr "Mode Cerita"
 
 #: dat/difficulty/story_mode.xml:3
 msgid ""
@@ -1655,7 +1657,7 @@ msgstr ""
 
 #: dat/effects/wormhole_exit.xml:3
 msgid "Exiting a wormhole!"
-msgstr ""
+msgstr "Keluar dari gerbang hiper!"
 
 #: dat/factions/black_lotus.xml:2
 msgid "Black Lotus"
@@ -1670,6 +1672,9 @@ msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
 "between the Za'lek and Sirius space. Organized crime at its finest."
 msgstr ""
+"Klan Perompak Seroja Hitam adalah sebuah organisasi perompak bengis yang "
+"terlokasi di antara daerah Za'lek dan Sirius. Kriminal terorganisir pada "
+"puncaknya."
 
 #: dat/factions/collective.xml:2
 msgid "Collective"
@@ -1771,7 +1776,7 @@ msgstr ""
 #: dat/factions/flf.xml:2 dat/events/flf/flf_catastrophe.lua:94
 #: dat/missions/flf/flf_common.lua:71
 msgid "FLF"
-msgstr ""
+msgstr "FLF"
 
 #: dat/factions/flf.xml:5
 msgid "Frontier Liberation Front"
@@ -1800,7 +1805,7 @@ msgstr ""
 #: dat/factions/goddard.xml:2 dat/ships/neutral/goddard.xml:2
 #: dat/ssys/goddard.xml:2 dat/events/dvaered/fwB_repay.lua:89
 msgid "Goddard"
-msgstr ""
+msgstr "Goddard"
 
 #: dat/factions/goddard.xml:7 dat/ships/dvaered/dvaered_goddard.xml:18
 #: dat/ships/neutral/goddard.xml:16 dat/events/dvaered/fwB_repay.lua:74
@@ -2180,7 +2185,7 @@ msgstr ""
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
-msgstr ""
+msgstr "Pengharum Udara"
 
 #: dat/outfits/accessory/air_freshener.xml:5
 #: dat/outfits/accessory/black_cat_doll.xml:5
@@ -3786,7 +3791,7 @@ msgstr ""
 #: dat/ships/thurion/thurion_ingenuity.xml:19
 #: dat/ships/thurion/thurion_scintillation.xml:20
 msgid "You need at least 30 reputation with the Thurion."
-msgstr ""
+msgstr "Kamu butuh setidaknya 30% reputasi dengan Turion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:14
 msgid ""
@@ -4741,7 +4746,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_sol.xml:2
 msgid "Map: Sol"
-msgstr ""
+msgstr "Peta Sol"
 
 #: dat/outfits/maps/map_sol.xml:6
 msgid ""
@@ -4843,7 +4848,7 @@ msgstr ""
 
 #: dat/outfits/misc/gui_slim.xml:2
 msgid "GUI - Slim"
-msgstr ""
+msgstr "GUI - Slim"
 
 #: dat/outfits/misc/gui_slim.xml:6
 msgid "Outfit corresponding with the \"Slim\" GUI."
@@ -5690,7 +5695,7 @@ msgstr ""
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
-msgstr ""
+msgstr "Android Perebut Kapal MK1"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:4
 #: dat/outfits/utility/boarding_androids_mk2.xml:4
@@ -5863,7 +5868,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:10
 msgid "You need at least 10 reputation with House Za'lek."
-msgstr ""
+msgstr "Kamu butuh setidaknya 10% reputasi dengan Wangsa Za'lek."
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:13
 msgid ""
@@ -7606,7 +7611,7 @@ msgstr ""
 
 #: dat/ships/neutral/hyena.xml:2
 msgid "Hyena"
-msgstr ""
+msgstr "Hiena"
 
 #: dat/ships/neutral/hyena.xml:14
 msgid "Aerosys"
@@ -7642,7 +7647,7 @@ msgstr ""
 
 #: dat/ships/neutral/koala.xml:2
 msgid "Koala"
-msgstr ""
+msgstr "Koala"
 
 #: dat/ships/neutral/koala.xml:13 dat/ships/neutral/llama.xml:15
 #: dat/ships/neutral/mule.xml:14 dat/ships/neutral/quicksilver.xml:14
@@ -8915,7 +8920,7 @@ msgstr ""
 
 #: dat/spob/adius.xml:2
 msgid "Adius"
-msgstr ""
+msgstr "Adius"
 
 #: dat/spob/adrian.xml:2
 msgid "Adrian"
@@ -9571,7 +9576,7 @@ msgstr ""
 
 #: dat/spob/amatiri_ia.xml:2
 msgid "Amatiri Ia"
-msgstr ""
+msgstr "Amatiri Ia"
 
 #: dat/spob/amatiri_ii.xml:2
 msgid "Amatiri II"
@@ -9593,7 +9598,7 @@ msgstr ""
 
 #: dat/spob/ambre.xml:2
 msgid "Ambre"
-msgstr ""
+msgstr "Ambre"
 
 #: dat/spob/ambre.xml:27
 msgid ""
@@ -9937,7 +9942,7 @@ msgstr ""
 
 #: dat/spob/apez_v.xml:2
 msgid "Apez V"
-msgstr ""
+msgstr "Apez V"
 
 #: dat/spob/apik_i.xml:2
 msgid "Apik I"
@@ -10045,7 +10050,7 @@ msgstr ""
 
 #: dat/spob/arch_arai.xml:2
 msgid "Arch Arai"
-msgstr ""
+msgstr "Arca Arai"
 
 #: dat/spob/arch_arai.xml:28
 msgid ""
@@ -10336,7 +10341,7 @@ msgstr ""
 
 #: dat/spob/babylon_ii.xml:2
 msgid "Babylon II"
-msgstr ""
+msgstr "Babilonia II"
 
 #: dat/spob/babylon_iia.xml:2
 msgid "Babylon IIa"
@@ -10551,7 +10556,7 @@ msgstr ""
 
 #: dat/spob/bgg1356.xml:2
 msgid "BGG-1356"
-msgstr ""
+msgstr "BGG-1356"
 
 #: dat/spob/blackwell_i.xml:2
 msgid "Blackwell I"
@@ -10676,7 +10681,7 @@ msgstr ""
 
 #: dat/spob/brimstone_i.xml:2
 msgid "Brimstone I"
-msgstr ""
+msgstr "Batuluap I"
 
 #: dat/spob/brimstone_ia.xml:2
 msgid "Brimstone Ia"
@@ -11775,7 +11780,7 @@ msgstr ""
 
 #: dat/spob/drognain.xml:2
 msgid "Drognain"
-msgstr ""
+msgstr "Drognain"
 
 #: dat/spob/drognain.xml:24
 msgid ""
@@ -12125,7 +12130,7 @@ msgstr ""
 #: dat/spob/fury_station.xml:15 dat/spob/the_crucible.xml:15
 #: dat/spob/voproid_monastery.xml:16 dat/spob/wardens_end.xml:16
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: dat/spob/efferey.xml:28
 msgid ""
@@ -12166,7 +12171,7 @@ msgstr ""
 
 #: dat/spob/eiroik.xml:2 dat/missions/empire/collective/ec05.lua:103
 msgid "Eiroik"
-msgstr ""
+msgstr "Eiroik"
 
 #: dat/spob/eiroik.xml:9 dat/spob/haven.xml:9 dat/spob/uhriabi9.xml:9
 msgid "Z"
@@ -13681,7 +13686,7 @@ msgstr ""
 
 #: dat/spob/hadosh_ia.xml:2
 msgid "Hadosh Ia"
-msgstr ""
+msgstr "Hadosh Ia"
 
 #: dat/spob/hadosh_ii.xml:2
 msgid "Hadosh II"
@@ -13725,7 +13730,7 @@ msgstr ""
 
 #: dat/spob/halir.xml:2
 msgid "Halir"
-msgstr ""
+msgstr "Halir"
 
 #: dat/spob/halir.xml:29
 msgid ""
@@ -14333,7 +14338,7 @@ msgstr ""
 
 #: dat/spob/hzmm01.xml:2
 msgid "HZMM-01"
-msgstr ""
+msgstr "BTWZ-01"
 
 #: dat/spob/hzmm01.xml:25
 msgid ""
@@ -14623,7 +14628,7 @@ msgstr ""
 
 #: dat/spob/jaan.xml:2
 msgid "Jaan"
-msgstr ""
+msgstr "Jaan"
 
 #: dat/spob/jaan.xml:26
 msgid ""
@@ -14881,7 +14886,7 @@ msgstr ""
 
 #: dat/spob/jermose.xml:2
 msgid "Jermose"
-msgstr ""
+msgstr "Jermose"
 
 #: dat/spob/jermose.xml:27
 msgid ""
@@ -15077,7 +15082,7 @@ msgstr ""
 
 #: dat/spob/kal_niut_obelisk.xml:2
 msgid "Kal Niut Obelisk"
-msgstr ""
+msgstr "Tugu Kal Niut"
 
 #: dat/spob/kal_sitra_obelisk.xml:2
 msgid "Kal Sitra Obelisk"
@@ -15239,7 +15244,7 @@ msgstr ""
 
 #: dat/spob/kayel.xml:2
 msgid "Kayel"
-msgstr ""
+msgstr "Kayel"
 
 #: dat/spob/kayel.xml:27
 msgid ""
@@ -15375,7 +15380,7 @@ msgstr ""
 
 #: dat/spob/kraft_vi.xml:2
 msgid "Kraft VI"
-msgstr ""
+msgstr "Kraft VI"
 
 #: dat/spob/kramer.xml:2
 msgid "Kramer"
@@ -15398,7 +15403,7 @@ msgstr ""
 
 #: dat/spob/kretogg_i.xml:2
 msgid "Kretogg I"
-msgstr ""
+msgstr "Kretogg I"
 
 #: dat/spob/kretogg_ii.xml:2
 msgid "Kretogg II"
@@ -15549,7 +15554,7 @@ msgstr ""
 
 #: dat/spob/leo.xml:2
 msgid "Leo"
-msgstr ""
+msgstr "Leo"
 
 #: dat/spob/leszec.xml:2
 msgid "Leszec"
@@ -15827,7 +15832,7 @@ msgstr ""
 
 #: dat/spob/madria.xml:2
 msgid "Madria"
-msgstr ""
+msgstr "Madria"
 
 #: dat/spob/madria.xml:29
 msgid ""
@@ -16438,7 +16443,7 @@ msgstr ""
 
 #: dat/spob/mokoshotar_enclave.xml:2
 msgid "Mokoshotar Enclave"
-msgstr ""
+msgstr "Enklave Mokosotar"
 
 #: dat/spob/mokoshotar_enclave.xml:26
 msgid ""
@@ -17005,7 +17010,7 @@ msgstr ""
 
 #: dat/spob/newmarch_a1.xml:2
 msgid "Newmarch A-1"
-msgstr ""
+msgstr "Newmarch A-1"
 
 #: dat/spob/newmarch_d3.xml:2
 msgid "Newmarch D-3"
@@ -17965,7 +17970,7 @@ msgstr ""
 
 #: dat/spob/peogas_v.xml:2
 msgid "Peogas V"
-msgstr ""
+msgstr "Peogas V"
 
 #: dat/spob/percola.xml:2
 msgid "Percola"
@@ -18400,7 +18405,7 @@ msgstr ""
 
 #: dat/spob/pso_1234.xml:2
 msgid "PSO 1234"
-msgstr ""
+msgstr "PSO 1234"
 
 #: dat/spob/pso_1251.xml:2
 msgid "PSO 1251"
@@ -18862,7 +18867,7 @@ msgstr ""
 
 #: dat/spob/rostra.xml:2
 msgid "Rostra"
-msgstr ""
+msgstr "Rostra"
 
 #: dat/spob/rostra.xml:28
 msgid ""
@@ -19114,7 +19119,7 @@ msgstr ""
 
 #: dat/spob/s91456.xml:2
 msgid "S91456"
-msgstr ""
+msgstr "S91456"
 
 #: dat/spob/sabe.xml:2
 msgid "Sabe"
@@ -19538,7 +19543,7 @@ msgstr ""
 
 #: dat/spob/shakar_iii.xml:2
 msgid "Shakar III"
-msgstr ""
+msgstr "Shakar III"
 
 #: dat/spob/shangris_station.xml:2
 msgid "Shangris Station"
@@ -19718,7 +19723,7 @@ msgstr ""
 
 #: dat/spob/sinclair.xml:2
 msgid "Sinclair"
-msgstr ""
+msgstr "Sinclair"
 
 #: dat/spob/sinclair.xml:28
 msgid ""
@@ -19857,7 +19862,7 @@ msgstr ""
 
 #: dat/spob/skater.xml:2
 msgid "Skater"
-msgstr ""
+msgstr "Skater"
 
 #: dat/spob/skater.xml:26
 msgid ""
@@ -19942,7 +19947,7 @@ msgstr ""
 
 #: dat/spob/socrates_academy_monastery.xml:2
 msgid "Socrates Academy Monastery"
-msgstr ""
+msgstr "Biara Akademi Sokrates"
 
 #: dat/spob/socrates_academy_monastery.xml:25
 msgid ""
@@ -20327,7 +20332,7 @@ msgstr ""
 
 #: dat/spob/stormgard.xml:2
 msgid "Stormgard"
-msgstr ""
+msgstr "Stormgard"
 
 #: dat/spob/stormgard.xml:28
 msgid ""
@@ -20970,7 +20975,7 @@ msgstr ""
 
 #: dat/spob/thavma.xml:2
 msgid "Thavma"
-msgstr ""
+msgstr "Thavma"
 
 #: dat/spob/thavma.xml:26
 msgid ""
@@ -21458,7 +21463,7 @@ msgstr ""
 
 #: dat/spob/tulla.xml:2
 msgid "Tulla"
-msgstr ""
+msgstr "Tulla"
 
 #: dat/spob/tulla.xml:27
 msgid ""
@@ -21586,7 +21591,7 @@ msgstr ""
 
 #: dat/spob/ulios.xml:2
 msgid "Ulios"
-msgstr ""
+msgstr "Ulios"
 
 #: dat/spob/ulios.xml:26
 msgid ""
@@ -21792,7 +21797,7 @@ msgstr ""
 
 #: dat/spob/urbanus_iii.xml:2
 msgid "Urbanus III"
-msgstr ""
+msgstr "Urbanus III"
 
 #: dat/spob/uridhrion_i.xml:2
 msgid "Uridhrion I"
@@ -21846,7 +21851,7 @@ msgstr ""
 
 #: dat/spob/uuries.xml:2
 msgid "Uuries"
-msgstr ""
+msgstr "Uuries"
 
 #: dat/spob/ux_i.xml:2
 msgid "UX I"
@@ -22827,7 +22832,7 @@ msgstr ""
 
 #: dat/spob/worscha.xml:2
 msgid "Worscha"
-msgstr ""
+msgstr "Worscha"
 
 #: dat/spob/worscha.xml:29
 msgid ""
@@ -23087,7 +23092,7 @@ msgstr ""
 
 #: dat/spob/zalek_ii.xml:2
 msgid "Za'lek II"
-msgstr ""
+msgstr "Za'lek II"
 
 #: dat/spob/zalek_iv.xml:2
 msgid "Za'lek IV"
@@ -23129,7 +23134,7 @@ msgstr ""
 
 #: dat/spob/zembla_shakar.xml:2
 msgid "Zembla Shakar"
-msgstr ""
+msgstr "Zembla Shakar"
 
 #: dat/spob/zembla_shakar.xml:28
 msgid ""
@@ -23303,7 +23308,7 @@ msgstr ""
 
 #: dat/spob_virtual/dvaered_small.xml:2
 msgid "Dvaered Small"
-msgstr ""
+msgstr "Dvaered Sedikit"
 
 #: dat/spob_virtual/dvaered_unpresence.xml:2
 msgid "Dvaered Unpresence"
@@ -23495,7 +23500,7 @@ msgstr ""
 
 #: dat/ssys/adran.xml:2
 msgid "Adran"
-msgstr ""
+msgstr "Adran"
 
 #: dat/ssys/aesir.xml:2
 msgid "Aesir"
@@ -23585,7 +23590,7 @@ msgstr ""
 
 #: dat/ssys/anrique.xml:2
 msgid "Anrique"
-msgstr ""
+msgstr "Anrique"
 
 #: dat/ssys/antares.xml:2
 msgid "Antares"
@@ -23898,7 +23903,7 @@ msgstr ""
 
 #: dat/ssys/delta_polaris.xml:2
 msgid "Delta Polaris"
-msgstr ""
+msgstr "Delta Polaris"
 
 #: dat/ssys/dendria.xml:2
 msgid "Dendria"
@@ -23906,7 +23911,7 @@ msgstr ""
 
 #: dat/ssys/deneb.xml:2
 msgid "Deneb"
-msgstr ""
+msgstr "Deneb"
 
 #: dat/ssys/diadem.xml:2
 msgid "Diadem"
@@ -23970,7 +23975,7 @@ msgstr ""
 
 #: dat/ssys/ekkodu.xml:2
 msgid "Ekkodu"
-msgstr ""
+msgstr "Ekkodu"
 
 #: dat/ssys/ekta.xml:2
 msgid "Ekta"
@@ -24296,7 +24301,7 @@ msgstr ""
 
 #: dat/ssys/klintus.xml:2
 msgid "Klintus"
-msgstr ""
+msgstr "Klintus"
 
 #: dat/ssys/klunzar.xml:2
 msgid "Klunzar"
@@ -24552,7 +24557,7 @@ msgstr ""
 
 #: dat/ssys/ngc11444.xml:2
 msgid "NGC-11444"
-msgstr ""
+msgstr "NGC-11444"
 
 #: dat/ssys/ngc11718.xml:2
 msgid "NGC-11718"
@@ -25168,7 +25173,7 @@ msgstr ""
 
 #: dat/ssys/severus.xml:2
 msgid "Severus"
-msgstr ""
+msgstr "Severus"
 
 #: dat/ssys/shakar.xml:2
 msgid "Shakar"
@@ -25332,7 +25337,7 @@ msgstr ""
 
 #: dat/ssys/stelman.xml:2
 msgid "Stelman"
-msgstr ""
+msgstr "Stelman"
 
 #: dat/ssys/sten.xml:2
 msgid "Sten"
@@ -25398,7 +25403,7 @@ msgstr ""
 
 #: dat/ssys/tarmak.xml:2
 msgid "Tarmak"
-msgstr ""
+msgstr "Tarmak"
 
 #: dat/ssys/tarsus.xml:2
 msgid "Tarsus"
@@ -29697,7 +29702,7 @@ msgstr ""
 
 #: dat/board.lua:462
 msgid "Loot"
-msgstr ""
+msgstr "Jarah"
 
 #: dat/board.lua:463
 msgid "Loot All"
@@ -29765,7 +29770,7 @@ msgstr ""
 
 #: dat/board.lua:572
 msgid "You have no free cargo space!"
-msgstr ""
+msgstr "Kamu tidak punya ruang kargo kosong!"
 
 #. Might be a misaligned here with loot_mod, but we sort of ignore it :/
 #. We just use the original bonus computed with loot_mod
@@ -29870,7 +29875,7 @@ msgstr ""
 #: dat/events/neutral/travelling_merchant.lua:476
 #: dat/missions/pirate/lucas/lucas02.lua:325
 msgid "Pay"
-msgstr ""
+msgstr "Bayar"
 
 #: dat/comm.lua:260 dat/comm.lua:323 dat/comm.lua:369 dat/comm.lua:482
 #: dat/missions/dvaered/dv_diversion.lua:74
@@ -30321,6 +30326,9 @@ msgid ""
 "\"Long story short. I've been able to override the disable routine and "
 "reactivate the functionality!\""
 msgstr ""
+"{shipai} terlihat mengacuhkanmu sambil lanjut berbicara.\n"
+"\"Singkat cerita, aku berhasil menghentikan penonaktifnya dan merestorasi "
+"fungsinya!\""
 
 #: dat/events/chapter1.lua:690
 msgid "\"I have to keep myself busy or the voices start talking again.\""
@@ -42654,6 +42662,8 @@ msgstr ""
 msgid ""
 "Your current ship will have a time compression factor of #o{tc_max:.1f}x#0."
 msgstr ""
+"Kapalmu yang kau pakai saat ini akan memiliki faktor kompresi waktu sebesar "
+"#o{tc_max:.1f}x#0."
 
 #: dat/events/settings.lua:97 src/land.c:551 src/map.c:389
 msgid "Autonav"
@@ -49389,6 +49399,35 @@ msgid ""
 "has come under attack! Since their base is nearby, they will undoubtedly "
 "send reinforcements to help their 'comrade' out of a tight situation.\""
 msgstr ""
+" Tepat saat kamu menduduki kursi terakhir di meja pertemuan, Kolonel Urnus "
+"memulai meeting. \"Selamat datang, kapten sipil. Anda tahu mengapa anda ada "
+"di sini dan anda tahu pertemuan ini tentang apa, jadi mari kita langsung ke "
+"inti diskusinya saja. Kami punya bukti yang cukup bahwa teroris FLF "
+"beroperasi dari sebuah markas rahasia. Kami tahu bahwa markas ini terletak "
+"di sekitaran nebula, dan informasi intel terbaru kami mengindikasikan bahwa "
+"markas ini kemungkinan ada di sistem {sys}.\"\n"
+"   Salah satu dinding menyala, memperlihatkan bagian dari peta galaksi. "
+"Sistem {sys} bercahaya merah, berpijar secara halus.\n"
+"   \"Tentunya kami sudah melakukan patroli di sistem ini, namun selama ini "
+"masih belum ada hasil. Sensor kami sangatlah dibatasi keberadaan nebula di "
+"sistem ini, sehingga kemungkinan kami menemukan sarang teroris dengan alat "
+"kami sendiri sangatlah rendah. Untungnya, strategis kami berhasil "
+"merencanakan sesuatu yang mungkin membuat FLF datang ke kita.\"\n"
+"   \"Kita akan menggunakan kapal sipil - kapalmu, tentunya - sebagai umpan,\""
+" lanjut Urnus. Gambar di dinding membesar ke sistem {sys}, dan panah kecil "
+"menggambarkan kapalmu di dekat titik lompat. \"Kapalmu akan dipasangkan "
+"transponder IFF yang digunakan FLF, sehingga untuk yang tidak melihat dengan "
+"rinci engkau akan terlihat seperti kapal FLF. Tentunya hal ini saja tidak "
+"akan cukup. FLF akan mengira kamu tahu markas mereka dimana, karna kamu "
+"terlihat seperti mereka. Perlu dicatat bahwa transponder itu bekerja paling "
+"efektif di Nebula, dimana markas mereka kemungkinan berada.\"\n"
+"   Gambar di dinding berubah lagi, kali ini menggambarkan beberapa kapal "
+"Wangsa Dvaered mengelilingi kapalmu.\n"
+"   \"Beberapa waktu setelah kamu masuk ke sistem ini, beberapa aset militer "
+"kami akan ikut melompat masuk dan menyerang kapalmu. Bagi FLF, akan tampak "
+"kalau sesama mereka sedang diserang! Karena markas mereka ada di dekat situ, "
+"mereka pasti akan mengirimkan bantuan untuk membantu seorang 'komrade' "
+"keluar dari situasi genting.\""
 
 #: dat/missions/dvaered/dv_antiflf02.lua:62
 msgid ""
@@ -49720,6 +49759,33 @@ msgid ""
 "action before in your career, but you still feel tense about what is to "
 "come. You decide to have another drink, just for luck."
 msgstr ""
+"Skemanya berubah lagi, kali ini menggambarkan beberapa kelompok titik merah "
+"diantara piringan berpijar dan formasi Dvaered.\n"
+"   \"FLF akan mengirim pesawat tempur dan pengebom untuk melawan kapal-kapal "
+"kita. Di sini angka dan komposisi dari kapal mereka tidak diketahui, namun "
+"sepertinya bijaksana untuk mengasumsi bahwa jumlah mereka akan lebih banyak "
+"daripada kita. Tugasmu sebagai pengawal tambahan adalah untuk melindungi "
+"samping formasi dan mencegah kapal FLF mentarget Obstinate. Ingatlah bahwa "
+"Kapal Obstinate hanya mempunyai senjata anti-penempur yang terbatas karena "
+"sebagian besar ruangnya dipakai untuk labuh pesawat tempur. Kapal Obstinate "
+"tidak boleh hancur! Inilah tujuan misimu yang paling penting!\"\n"
+"   Di dinding titik-titik merah di serbu titik-titik putih, lalu menghilang. "
+"Kemudian kelompok kedua titik putih muncul di dekat logo Dvaered, dan "
+"bergerak mendekati piringan berpijar.\n"
+"   \"Seketika sesaat setelah FLF kehabisan kekuatan akibat melawan serangan, "
+"Kapal HDSF Obstinate akan mulai meluncurkan pengebom. Kami percaya bahwa "
+"pengebom saja akan cukup untuk menghabisi markas mereka, namun jika "
+"perlawanan mereka lebih kuat dari yang diantisipasi, Obstinate juga akan "
+"ikut menyerang.\"\n"
+"   Piringan berpijar di dinding berangsur menghilang, meninggalkan hanya "
+"armada Dvaered dan kemenangannya.\n"
+"   \"Itu saja. Itu perintah untuk kalian. Kembali ke penempatan kalian "
+"sesuai jadwal. Aku akan berjumpa dengan kalian di {sys}. Semoga beruntung.\""
+"\n"
+"   Beberapa waktu kemudian, kamu kembali berada di bar labuh Dvaered. Dalam "
+"karirmu hal seperti ini sudah tidak asing, namun masih ada sedikit rasa "
+"khawatir di kalbumu. Kamu memutuskan untuk membeli minuman, demi "
+"keberuntungan."
 
 #: dat/missions/dvaered/dv_antiflf03.lua:96
 #: dat/missions/dvaered/dv_antiflf03.lua:104
@@ -74789,7 +74855,7 @@ msgstr ""
 
 #: dat/missions/neutral/bounty.lua:91
 msgid " for fraudulent use of research funds"
-msgstr ""
+msgstr " menggunakan dana penelitian secara tidak jujur"
 
 #: dat/missions/neutral/bounty.lua:92
 msgid " for failing to comply with research ethics course"
@@ -75370,7 +75436,7 @@ msgstr ""
 
 #: dat/missions/neutral/crimelord.lua:127
 msgid "Associate Kestrel"
-msgstr ""
+msgstr "Kestrel Rekan"
 
 #: dat/missions/neutral/crimelord.lua:138
 msgid "We've got your back. Engaging hostiles."
@@ -111289,7 +111355,7 @@ msgstr ""
 
 #: dat/spob/lua/lib/hypergate.lua:307
 msgid "Jump!"
-msgstr ""
+msgstr "Lompat!"
 
 #. No psychic powers
 #: dat/spob/lua/lib/obelisk.lua:18 dat/spob/lua/lib/obelisk.lua:27
@@ -111773,7 +111839,7 @@ msgstr ""
 #: src/SDL_keynames.h:38
 msgctxt "keyname"
 msgid "K"
-msgstr ""
+msgstr "K"
 
 #: src/SDL_keynames.h:39
 msgctxt "keyname"
@@ -112203,7 +112269,7 @@ msgstr ""
 #: src/SDL_keynames.h:124
 msgctxt "keyname"
 msgid "Keypad ."
-msgstr ""
+msgstr "Keypad ."
 
 #: src/SDL_keynames.h:126
 msgctxt "keyname"
@@ -112473,7 +112539,7 @@ msgstr ""
 #: src/SDL_keynames.h:184
 msgctxt "keyname"
 msgid "Keypad Backspace"
-msgstr ""
+msgstr "Keypad Backspace"
 
 #: src/SDL_keynames.h:185
 msgctxt "keyname"
@@ -117604,7 +117670,7 @@ msgstr ""
 #: src/map.c:843
 msgctxt "adj Nebula"
 msgid "Dense "
-msgstr ""
+msgstr "Tebal "
 
 #: src/map.c:845
 msgctxt "adj Nebula"
@@ -118132,7 +118198,7 @@ msgstr ""
 
 #: src/menu.c:444
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/menu.c:450
 msgid "Resume"
@@ -119902,7 +119968,7 @@ msgstr[1] ""
 
 #: src/options.c:53
 msgid "Gameplay"
-msgstr ""
+msgstr "Permainan"
 
 #: src/options.c:54
 msgid "Video"
@@ -119910,7 +119976,7 @@ msgstr ""
 
 #: src/options.c:55
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: src/options.c:56
 msgid "Input"
@@ -121859,7 +121925,7 @@ msgstr ""
 #: src/ship.c:91
 #, c-format
 msgid "Ship %s does not exist"
-msgstr ""
+msgstr "Kapal %s tidak ada"
 
 #: src/ship.c:196
 msgid "Yacht"
@@ -122367,7 +122433,7 @@ msgstr ""
 
 #: src/shipstats.c:179
 msgid "Damage Absorption"
-msgstr ""
+msgstr "Absorpsi Kerusakan"
 
 #: src/shipstats.c:181
 msgid "Nebula Resistance"
@@ -122403,7 +122469,7 @@ msgstr ""
 #, c-format
 msgctxt "shipstats_double"
 msgid "%s#%s%s: %+g %s#0"
-msgstr ""
+msgstr "%s#%s%s: %+g %s#0"
 
 #: src/shipstats.c:737
 #, c-format
