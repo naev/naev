@@ -10,7 +10,7 @@
  <spawn>marauder</spawn>
  <standing>marauder</standing>
  <equip>marauder</equip>
- <local_th>0</local_th>
+ <local_th>5</local_th>
  <useshiddenjumps/>
  <description>Pirate Marauders are the lowest and most vile of pirates. They are extremely aggressive and will attack most vessels unprovoked. Even the pirate clans have difficulty in dealing with them.</description>
  <allies>

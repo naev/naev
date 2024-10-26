@@ -7,5 +7,5 @@ sbase.init{
    delta_kill     = {-5, 1},    -- Maximum change constraints
    cap_misn_def   = 30,
    cap_misn_var   = "_fcap_thurion",
-   hit_range      = 0,
+   hit_range      = 5,
 }
