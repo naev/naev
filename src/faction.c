@@ -800,7 +800,10 @@ static double faction_hitLua( int f, const StarSystem *sys, double mod,
    /* Set up the function:
     * standing:hit( sys, amount, source, secondary ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_hit );
-   lua_pushsystem( naevL, sys->id );
+   if ( sys != NULL )
+      lua_pushsystem( naevL, sys->id );
+   else
+      lua_pushnil( naevL );
    lua_pushnumber( naevL, mod );
    lua_pushstring( naevL, source );
    lua_pushboolean( naevL, secondary );
