@@ -10,7 +10,7 @@ local lg = require "love.graphics"
 local love_shaders = require "love_shaders"
 
 local radar_gfx, radar_x, radar_y, screen_h, screen_w
-local aset, cargo, nav_spob, nav_pnt, pp, ptarget, slot_w, slot_h, slot_y, timers
+local aset, cargo, nav_spob, nav_pnt, ptarget, slot_w, slot_h, slot_y, timers
 local ta_pane_w, ta_pane_x, ta_pane_y, ta_pnt_pane_x, ta_pnt_pane_y, pl_pane_x, pl_pane_y
 local slot, slotend, slotframe
 -- This script has a lot of globals. It really loves them.
@@ -27,9 +27,20 @@ local cols = {}
 local icons = {}
 local has_flow
 
+--local cRed = colour.new("Red")
+local cOrange = colour.new("Orange")
+local cCyan = colour.new("Cyan")
+local cFriend = colour.new("Friend")
+local cHostile = colour.new("Hostile")
+
+local scan_icon, scandone_icon
+
+local time_global = 0
 function create()
+   time_global = 0
+
    --Get player
-   pp = player.pilot()
+   local pp = player.pilot()
    pname = player.name()
 
    -- Set default formation
@@ -137,6 +148,8 @@ function create()
    tracking_light = shader_open( "track.frag" )
    target_light_off = tex_open( "targeted_off.png" )
    target_light_on =  tex_open( "targeted_on.png" )
+   scan_icon = shader_open( "scan.frag" )
+   scandone_icon = shader_open( "scandone.frag" )
    cargo_light_off = tex_open( "cargo_off.png" )
    cargo_light_on =  tex_open( "cargo_on.png" )
    question = tex_open( "question.png" )
@@ -346,7 +359,7 @@ function create()
 end
 
 function update_target()
-   ptarget = pp:target()
+   ptarget = player.pilot():target()
    if ptarget then
       ptarget_cvs = ptarget:render()
       ptarget_gfx = ptarget_cvs:getTex()
@@ -372,7 +385,7 @@ end
 
 function update_nav()
    nav_spob = {}
-   nav_pnt, nav_hyp = pp:nav()
+   nav_pnt, nav_hyp = player.pilot():nav()
    local autonav_hyp, jumps = player.autonavDest()
    if nav_pnt then
       pntflags = nav_pnt:services()
@@ -438,6 +451,7 @@ function update_faction()
 end
 
 function update_cargo()
+   local pp = player.pilot()
    local cargol = pp:cargoList()
    cargofree = string.format( _(" (%s free)"), fmt.tonnes_short( pp:cargoFree() ) )
    cargofreel = gfx.printDim( true, cargofree )
@@ -456,6 +470,7 @@ function update_cargo()
 end
 
 function update_ship()
+   local pp = player.pilot()
    stats = pp:stats()
 
    -- If flow status changed, reset
@@ -473,8 +488,7 @@ end
 
 local effects = {}
 function update_effects()
-   local buff_col    = colour.new("Friend")
-   local debuff_col  = colour.new("Hostile")
+   local pp = player.pilot()
    effects = {}
    local effects_added = {}
    for k,e in ipairs(pp:effects()) do
@@ -486,9 +500,9 @@ function update_effects()
          effects_added[ e.name ] = a
 
          if e.buff then
-            e.col = buff_col
+            e.col = cFriend
          elseif e.debuff then
-            e.col = debuff_col
+            e.col = cHostile
          end
       end
       effects[ a ].n = effects[ a ].n + 1
@@ -496,6 +510,7 @@ function update_effects()
 end
 
 local function update_wset()
+   local pp = player.pilot()
    wset_name, wset  = pp:weapset()
 
    -- Set the names as short names
@@ -689,12 +704,10 @@ local function render_ammoBar( weap, x, y )
       else -- Handling turret tracking.
          trackcol = colour.newHSV(125*track, 1, 1)
       end
-      local sh = lg.getShader()
       lg.setShader( tracking_light )
       lg.setColour( trackcol )
       tracking_light:send( "u_track", track )
       love_shaders.img:draw( x+offsets[7], screen_h-y-offsets[8], 0, track_w, -track_h )
-      lg.setShader( sh )
       textoffset = track_w + 2
    end
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
@@ -726,6 +739,11 @@ local function largeNumber( number, idp )
 end
 
 function render( dt, dt_mod )
+   time_global = time_global + dt / dt_mod
+
+   local pp = player.pilot()
+   local sh = lg.getShader()
+
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
@@ -995,7 +1013,6 @@ function render( dt, dt_mod )
                end
             end
 
-
             --Warning Light
             if ptarget_target == pp and not ta_disabled then
                gfx.renderTex( target_light_on, ta_warning_x - 3, ta_warning_y - 3 )
@@ -1010,12 +1027,25 @@ function render( dt, dt_mod )
                gfx.renderTexScale( ptarget_faction_gfx, ta_fact_x - ls*lw/2, ta_fact_y - ls*lh/2, ls*lw, ls*lh )
             end
 
+            -- Player's scanning status
+            if pp:scandone() then
+               lg.setColour( cCyan )
+               lg.setShader( scandone_icon )
+            else
+               lg.setColour( cOrange )
+               lg.setShader( scan_icon )
+               scan_icon:send( "u_time", time_global )
+            end
+            love_shaders.img:draw( ta_cargo_x, screen_h-ta_cargo_y, 0, 24, -24 )
+
             -- Cargo light cargo_light_off
+            --[[
             if ta_cargo and #ta_cargo >= 1 then
                gfx.renderTex( cargo_light_on, ta_cargo_x, ta_cargo_y )
             else
                gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
             end
+            --]]
 
             -- Status information
             local status
@@ -1048,7 +1078,7 @@ function render( dt, dt_mod )
             gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
 
             -- Cargo light
-            gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
+            --gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
 
             --Pilot name
             gfx.print( true, _("Unknown"), ta_pane_x + 14, ta_pane_y + 176, cols.txt_una )
@@ -1188,6 +1218,8 @@ function render( dt, dt_mod )
       length = length + gfx.printDim( true, _("none") ) + 6
    end
    gfx.print( true, cargofree, length, 6, cols.txt_std )
+
+   lg.setShader( sh )
 end
 
 local function mouseInsideButton( x, y )

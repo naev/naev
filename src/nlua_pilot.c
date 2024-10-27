@@ -1628,8 +1628,12 @@ static int pilotL_inrange( lua_State *L )
  */
 static int pilotL_scandone( lua_State *L )
 {
-   const Pilot *p = luaL_validpilot( L, 1 );
-   lua_pushboolean( L, pilot_ewScanCheck( p ) );
+   Pilot *p = luaL_validpilot( L, 1 );
+   if ( pilot_isPlayer( p ) ) {
+      const Pilot *t = pilot_getTarget( p );
+      lua_pushboolean( L, pilot_isFlag( t, PILOT_PLAYER_SCANNED ) );
+   } else
+      lua_pushboolean( L, pilot_ewScanCheck( p ) );
    return 1;
 }
 

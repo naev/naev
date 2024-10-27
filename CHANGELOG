@@ -19,6 +19,7 @@
       * Gave the Quicksilver another medium structural slot
       * Beam weapons have minimum delays instead of minimum durations
       * Can stealth when missiles are locked on
+      * Electron Burst Cannons and Za'lek Heavy Drones have had their damage per second lowered
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
@@ -117,6 +118,7 @@
       * patrol: fixed escorts and fighters becoming hostile if hostile to the mission giving faction
       * Fixed debugging paranoid builds under Windows
       * Fixed autonav not respecting shield thresholds
+      * zbh10: Godheart and friends get at most 1 fighter bay per ship now
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons
