@@ -27,9 +27,11 @@ local cols = {}
 local icons = {}
 local has_flow
 
+local cGrey = colour.new("Grey40")
+--local cWhite = colour.new("White")
 --local cRed = colour.new("Red")
-local cOrange = colour.new("Orange")
-local cCyan = colour.new("Cyan")
+--local cOrange = colour.new("Orange")
+--local cCyan = colour.new("Cyan")
 local cFriend = colour.new("Friend")
 local cHostile = colour.new("Hostile")
 
@@ -1029,10 +1031,10 @@ function render( dt, dt_mod )
 
             -- Player's scanning status
             if pp:scandone() then
-               lg.setColour( cCyan )
+               lg.setColour( cols.txt_top )
                lg.setShader( scandone_icon )
             else
-               lg.setColour( cOrange )
+               lg.setColour( cGrey )
                lg.setShader( scan_icon )
                scan_icon:send( "u_time", time_global )
             end
