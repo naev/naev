@@ -5,7 +5,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <cond>faction.playerStanding("Za'lek") &gt;= 40</cond>
+  <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 40</cond>
   <condstr>You need at least 40 reputation with House Za'lek.</condstr>
   <rarity>3</rarity>
   <mass>12</mass>
