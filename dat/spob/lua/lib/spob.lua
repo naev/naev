@@ -593,7 +593,7 @@ function luaspob.distress( p, attacker )
    if not attacker:withPlayer() then return end
 
    local f = mem.spob:faction()
-   if not f:areEnemies( p:faction() ) then
+   if p:memory().natural and not f:areEnemies( p:faction() ) then
       -- Small faction hit
       --f:hit( -1, "distress" ) -- Amplifies distress signals
       mem.spob:setHostile(true)
