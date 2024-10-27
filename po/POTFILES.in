@@ -2778,7 +2778,6 @@ dat/ai/lost.lua
 dat/ai/marauder.lua
 dat/ai/mercenary.lua
 dat/ai/miner.lua
-dat/ai/noidle.lua
 dat/ai/pers.lua
 dat/ai/pers_patrol.lua
 dat/ai/pers_pirate.lua

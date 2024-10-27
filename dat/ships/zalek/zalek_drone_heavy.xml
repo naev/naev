@@ -32,11 +32,10 @@
   <fuel>100</fuel>
   <cargo>0</cargo>
   <fuel_consumption>1</fuel_consumption>
-  <cpu>80</cpu>
+  <cpu>68</cpu>
  </characteristics>
  <slots>
   <weapon size="small" x="15" y="-5" h="2">Orion Lance</weapon>
-  <weapon size="small" x="15" y="-4" h="2">Orion Lance</weapon>
   <weapon size="small" x="-12" y="6" h="0">Electron Burst Cannon</weapon>
   <utility size="small" />
   <utility size="small" />
@@ -44,7 +43,6 @@
   <structure size="small" />
  </slots>
  <stats>
-  <fwd_damage>-20</fwd_damage>
   <tur_damage>-20</tur_damage>
   <launch_damage>-20</launch_damage>
  </stats>
