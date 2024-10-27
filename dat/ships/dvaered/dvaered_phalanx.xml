@@ -16,7 +16,7 @@
  <fabricator>House Dvaered</fabricator>
  <faction>Dvaered</faction>
  <license>Medium Combat Vessel</license>
- <cond>math.ceil(faction.playerStanding("Dvaered")+0.5) &gt;= 40</cond>
+ <cond>math.floor(system.cur():reputation("Dvaered")+0.5) &gt;= 40</cond>
  <condstr>You need at least 40% reputation with House Dvaered.</condstr>
  <description>On this military grade version of the Phalanx, the distribution of the weight on the structure has been optimized in order to allow embarking more payload.</description>
  <health>

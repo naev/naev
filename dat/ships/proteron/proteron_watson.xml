@@ -17,7 +17,7 @@
  <fabricator>Proteron</fabricator>
  <faction>Proteron</faction>
  <license>Heavy Combat Vessel</license>
- <cond>math.ceil(faction.playerStanding("Proteron")+0.5) &gt;= 70</cond>
+ <cond>math.floor(system.cur():reputation("Proteron")+0.5) &gt;= 70</cond>
  <condstr>You need at least 70% reputation with the Proteron.</condstr>
  <description>The heart of the Proteron battle fleet is formed by the Watson. Acting as a mobile launch base as well as a command and control unit, this vessel co-ordinates the rest of the fleet in the fight for dominance over the galaxy.</description>
  <health>
