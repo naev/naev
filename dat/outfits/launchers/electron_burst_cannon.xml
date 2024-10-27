@@ -10,12 +10,12 @@
   <rarity>3</rarity>
   <mass>12</mass>
   <price>40000</price>
-  <description>This powerful energy weapon is built to bombard a target from great range with EMP bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively defenceless. It was developed by the Za'lek to be used by their heavier droness to supplement the short range and high damage of their beams.</description>
+  <description>This powerful energy weapon is built to bombard a target from great range with ion bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively defenceless. It was developed by the Za'lek to be used by their heavier droness to supplement the short range and high damage of their beams.</description>
   <gfx_store>weapon01.webp</gfx_store>
   <cpu>-10</cpu>
  </general>
  <specific type="launcher">
-  <delay>0.3</delay>
+  <delay>0.4</delay>
   <reload_time>6</reload_time>
   <amount>50</amount>
   <swivel>22</swivel>
@@ -31,10 +31,9 @@
   <accel>0</accel>
   <speed>1500</speed>
   <damage>
-   <type>emp</type>
+   <type>ion</type>
    <penetrate>24</penetrate>
-   <physical>13</physical>
-   <disable>3</disable>
+   <physical>12</physical>
   </damage>
   <ai>unguided</ai>
  </specific>
