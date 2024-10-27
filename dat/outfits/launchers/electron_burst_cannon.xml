@@ -33,7 +33,7 @@
   <damage>
    <type>ion</type>
    <penetrate>24</penetrate>
-   <physical>12</physical>
+   <physical>14</physical>
   </damage>
   <ai>unguided</ai>
  </specific>
