@@ -739,7 +739,7 @@ vec4 sdf_missilelockon( vec4 colour, vec2 uv )
    float m = 1.0 / dimensions.x;
 
    /* Outter stuff. */
-   float d = 1e1000;
+   float d = 1e10;
 
    /* Inner steps */
    float dts = 0.05 * max( 0.5, 100.0 * m );
@@ -989,6 +989,26 @@ vec4 electric2( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords 
    return colour;
 }
 
+vec4 target( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec2 uv = texture_coords*2.0-1.0;
+   float progress = min( u_time*0.5, 1.0 );
+   float m = 1.0 / dimensions.x;
+   vec2 sc = vec2( sin(progress*M_PI), cos(progress*M_PI) );
+   float d = sdArc( uv, vec2(1.0,0.0), sc, 0.6, 0.2 );
+
+   if (progress >= 1.0) {
+      d = max( d, -sdBox( uv, vec2( 0.2, 0.9 ) )+m );
+      d = max( d, -sdBox( uv, vec2( 0.9, 0.2 ) )+m );
+
+      d = min( d, sdBox( uv, vec2( 0.05, 0.9 ) )-0.1+m );
+      d = min( d, sdBox( uv, vec2( 0.9, 0.05 ) )-0.1+m );
+   }
+
+   colour.a = smoothstep( -m, 0.0, -d );
+   return colour;
+}
+
 vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
    vec4 col_out;
@@ -1017,8 +1037,9 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_notemarker( colour, uv_rel );
    //col_out = sm_highlight( colour, tex, uv, px );
    //col_out = sm( colour, tex, uv, px );
-   col_out = electric( colour, tex, uv, px );
+   //col_out = electric( colour, tex, uv, px );
    //col_out = electric2( colour, tex, uv, px );
+   col_out = target( colour, tex, uv, px );
 
    return mix( bg(uv), col_out, col_out.a );
 }

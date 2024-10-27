@@ -21,6 +21,7 @@
 static int colL_eq( lua_State *L );
 static int colL_tostring( lua_State *L );
 static int colL_new( lua_State *L );
+static int colL_newHSV( lua_State *L );
 static int colL_alpha( lua_State *L );
 static int colL_rgb( lua_State *L );
 static int colL_rgba( lua_State *L );
@@ -35,6 +36,7 @@ static const luaL_Reg colL_methods[] = {
    { "__eq", colL_eq },
    { "__tostring", colL_tostring },
    { "new", colL_new },
+   { "newHSV", colL_newHSV },
    { "alpha", colL_alpha },
    { "rgb", colL_rgb },
    { "rgba", colL_rgba },
@@ -231,6 +233,45 @@ static int colL_new( lua_State *L )
 }
 
 /**
+ * @brief Creates a new colour from HSV values. Colours are assumed to be in
+ * gamma colourspace by default and are converted to linear unless specified.
+ *
+ * @usage colour.new( 0., 0.5, 0.5 ) -- Creates a colour with 0 hue, 0.5
+ * saturation and 0.5 value.
+ *
+ *    @luatparam number h Hue of the colour (0-360 value).
+ *    @luatparam number s Saturation of the colour (0-1 value).
+ *    @luatparam number v Value of the colour (0-1 value).
+ *    @luatparam[opt=1.] number a Alpha value of the colour.
+ *    @luatparam[opt=false] gamma Whether to load the colour in the gamma
+ * colourspace.
+ *    @luatreturn Colour A newly created colour.
+ * @luafunc newHSV
+ */
+static int colL_newHSV( lua_State *L )
+{
+   glColour col;
+
+   if ( lua_isnumber( L, 1 ) ) {
+      double h, s, v;
+      h = luaL_checknumber( L, 1 );
+      s = luaL_checknumber( L, 2 );
+      v = luaL_checknumber( L, 3 );
+      col_hsv2rgb( &col, h, s, v );
+      if ( !lua_toboolean( L, 5 ) ) {
+         col.r = gammaToLinear( col.r );
+         col.g = gammaToLinear( col.g );
+         col.b = gammaToLinear( col.b );
+      }
+      col.a = luaL_optnumber( L, 4, 1. );
+   } else
+      NLUA_INVALID_PARAMETER( L, 1 );
+
+   lua_pushcolour( L, col );
+   return 1;
+}
+
+/**
  * @brief Gets the alpha of a colour.
  *
  * Value is from from 0. (transparent) to 1. (opaque).
@@ -313,16 +354,16 @@ static int colL_rgba( lua_State *L )
 /**
  * @brief Gets the HSV values of a colour.
  *
- * Values are from 0. to 1.
+ * Values are from 0 to 1 except hue which is 0 to 360.
  *
  * @usage h,s,v = col:rgb()
  *
  *    @luatparam Colour col Colour to get HSV values of.
  *    @luatparam[opt=false] boolean gamma Whether or not to get the
  * gamma-corrected value or not.
- *    @luatreturn number The hue of the colour.
- *    @luatreturn number The saturation of the colour.
- *    @luatreturn number The value of the colour.
+ *    @luatreturn number The hue of the colour (0-360 value).
+ *    @luatreturn number The saturation of the colour (0-1 value).
+ *    @luatreturn number The value of the colour (0-1 value).
  * @luafunc hsv
  */
 static int colL_hsv( lua_State *L )

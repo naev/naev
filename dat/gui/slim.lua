@@ -5,6 +5,9 @@ local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
 local formation = require "formation"
 local playerform = require "playerform"
+local lf = require "love.filesystem"
+local lg = require "love.graphics"
+local love_shaders = require "love_shaders"
 
 local radar_gfx, radar_x, radar_y, screen_h, screen_w
 local aset, cargo, nav_spob, nav_pnt, pp, ptarget, slot_w, slot_h, slot_y, timers
@@ -69,11 +72,17 @@ function create()
    cols.slot_bg = colour.new(  12/255,  14/255,  20/255 )
 
    --Load Images
-   local base = "gfx/gui/slim/"
    local function tex_open( name, sx, sy )
-      local t = tex.open( base .. name, sx, sy )
+      local t = tex.open( "gfx/gui/slim/" .. name, sx, sy )
       t:setWrap( "clamp" )
       return t
+   end
+   local function shader_open( name )
+      local px, err = lf.read("gui/slim/" .. name  )
+      if px==nil then
+         warn( err )
+      end
+      return lg.newShader( px )
    end
    player_pane_t = tex_open( "frame_player_top.png" )
    player_pane_m = tex_open( "frame_player_middle.webp" )
@@ -125,7 +134,7 @@ function create()
    warnlight3 = tex_open( "warnlight3.png" )
    warnlight4 = tex_open( "warnlight4.png" )
    warnlight5 = tex_open( "warnlight5.png" )
-   tracking_light = tex_open( "track.png" )
+   tracking_light = shader_open( "track.frag" )
    target_light_off = tex_open( "targeted_off.png" )
    target_light_on =  tex_open( "targeted_on.png" )
    cargo_light_off = tex_open( "cargo_off.png" )
@@ -212,7 +221,7 @@ function create()
    --Ammo, heat and ready bars
    bar_weapon_w, bar_weapon_h = bgs.ammo:dim()
    bar_ready_w, bar_ready_h = bgs.ready:dim()
-   track_w, track_h = tracking_light:dim()
+   track_w, track_h = 12, 12 --tracking_light:dim()
    x_ammo = pl_pane_x + 39
    y_ammo = pl_pane_y - 27
    if has_flow then
@@ -277,7 +286,7 @@ function create()
          22, -- Refire sheen Y
           6, -- Text Y
           5, -- Tracking icon X
-          8, -- Tracking icon Y
+          6, -- Tracking icon Y
       }
    }
 
@@ -677,18 +686,15 @@ local function render_ammoBar( weap, x, y )
    if track then
       if track == -1 or ptarget == nil then
          trackcol = cols.txt_una
-      elseif weap.lockon then
-         if track < 1. then
-            local h, s, v = cols.txt_una:hsv()
-            trackcol = colour.new( cols.txt_una )
-            trackcol:setHSV( h, s, v + track * (1-v))
-         else
-            trackcol = colour.new( "Green" )
-         end
       else -- Handling turret tracking.
-         trackcol = colour.new(1-track, track, 0)
+         trackcol = colour.newHSV(125*track, 1, 1)
       end
-      gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], trackcol )
+      local sh = lg.getShader()
+      lg.setShader( tracking_light )
+      lg.setColour( trackcol )
+      tracking_light:send( "u_track", track )
+      love_shaders.img:draw( x+offsets[7], screen_h-y-offsets[8], 0, track_w, -track_h )
+      lg.setShader( sh )
       textoffset = track_w + 2
    end
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
