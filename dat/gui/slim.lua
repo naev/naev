@@ -639,9 +639,11 @@ local function render_ammoBar( weap, x, y )
       else
          txtcol = cols.txt_bar
       end
+      --[[
       if not weap.in_arc and ptarget ~= nil then
          txtcol = cols.txt_una
       end
+      --]]
       value = weap.left_p
       track = weap.track or weap.lockon
    else

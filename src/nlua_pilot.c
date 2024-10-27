@@ -1858,6 +1858,7 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
       lua_rawset( L, -3 );
 
       /* Is in arc. */
+      /* TODO this is broken right now. */
       lua_pushstring( L, "in_arc" );
       lua_pushboolean( L, slot->u.ammo.in_arc );
       lua_rawset( L, -3 );
