@@ -1,5 +1,11 @@
 local flow = require "ships.lua.lib.flow"
+local fmt = require "format"
 require "ships.lua.sirius"
+
+function descextra( _p, _s )
+ return "#y"..fmt.f(_("For each {over} flow over {min} flow, increases action speed by {bonus}% up to a maximum of {max}%."),
+   {over=10, min=25, bonus=3, max=25}).."#0"
+end
 
 function update( p, _dt )
    local f = flow.get( p, mem )
