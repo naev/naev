@@ -241,6 +241,7 @@ function hit( sys, mod, source, secondary, primary_fct )
 
    -- Center hit on sys and have to expand out
    local val = hit_local( sys, mod, min, max )
+   local valsys = sys
    if sbase.hit_range > 0 then
       local done = { sys }
       local todo = { sys }
@@ -252,6 +253,7 @@ function hit( sys, mod, source, secondary, primary_fct )
                   local v = hit_local( n, mod / (dist+1), min, max )
                   if not val then
                      val = v
+                     valsys = n
                   end
                   table.insert( done, n )
                   table.insert( dosys, n )
@@ -263,7 +265,9 @@ function hit( sys, mod, source, secondary, primary_fct )
    end
 
    -- Update frcom system that did hit and return change at that system
-   sbase.fct:applyLocalThreshold( sys )
+   if val then
+      sbase.fct:applyLocalThreshold( valsys )
+   end
    return val or 0
 end
 

@@ -16,12 +16,10 @@ function hit( ... )
    local changed = oldhit( ... )
 
    -- Get the maximum player value with any pirate clan
-   local maxval = changed
+   local maxval = -math.huge
    for k,v in ipairs(pir.factions_clans) do
-      if v ~= sbase.fct then
-         local vs = v:reputationGlobal() -- Only get first parameter
-         maxval = math.max( maxval, vs )
-      end
+      local vs = v:reputationGlobal() -- Only get first parameter
+      maxval = math.max( maxval, vs )
    end
 
    -- Update pirate and marauder standings

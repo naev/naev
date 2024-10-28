@@ -783,14 +783,11 @@ static double faction_hitLua( int f, const StarSystem *sys, double mod,
                               const char *source, int secondary,
                               int primary_faction )
 {
-   Faction *faction;
-   double   delta;
-
    /* Ignore it if player is dead. */
    if ( player.p == NULL )
       return 0.;
 
-   faction = &faction_stack[f];
+   Faction *faction = &faction_stack[f];
 
    /* Make sure it's not static. */
    if ( faction_isFlag( faction, FACTION_STATIC ) )
@@ -826,7 +823,7 @@ static double faction_hitLua( int f, const StarSystem *sys, double mod,
    faction_sanitizePlayer( faction );
 
    /* Run hook if necessary. */
-   delta = lua_tonumber( naevL, -1 );
+   double delta = lua_tonumber( naevL, -1 );
    lua_pop( naevL, 1 );
    if ( FABS( delta ) > DOUBLE_TOL ) {
       HookParam hparam[7];
