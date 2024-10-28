@@ -412,48 +412,37 @@ static void think_seeker( Weapon *w, double dt )
       /* Smart seekers take into account ship velocity. */
       if ( w->outfit->u.lau.ai == AMMO_AI_SMART ) {
          /*
-           The control interval is short enough compared to the maximum turn
-           rate, so we can use a bang-bang control.
+           v = (Xp, Yp), p->solid->vel = (Vpx, Vpy), w->solid->vel = (Vwx, Vwy)
+           (Xp + t*Vpx)**2 + (Yp + t*Vpy)**2 = (Vwx*t)**2 + (Vwy*t)**2
          */
          vec2_csetmin( &v, p->solid.pos.x - w->solid.pos.x,
                        p->solid.pos.y - w->solid.pos.y );
-
-#define QUADRATURE( ref, v ) ( ( v ).x * ( -( ref ).y ) + ( v ).y * ( ref ).x )
-         if ( vec2_dot( &v, &w->solid.vel ) < 0 ) {
-            /*
-              The target's behind the weapon.
-              Make U-turn.
-            */
-            if ( QUADRATURE( w->solid.vel, v ) > 0 )
-               weapon_setTurn( w, turn_max );
-            else
-               weapon_setTurn( w, -turn_max );
+         const double a =
+            vec2_odist2( &p->solid.vel ) - vec2_odist2( &w->solid.vel );
+         const double b = vec2_dot( &p->solid.vel, &v );
+         const double c = vec2_odist2( &v );
+         double       t = w->timer;
+         if ( a == 0.0 ) {
+            if ( b != 0.0 ) {
+               t = -c / ( 2 * b );
+            }
          } else {
-            vec2 r_vel;
-            vec2_csetmin( &r_vel, p->solid.vel.x - w->solid.vel.x,
-                          p->solid.vel.y - w->solid.vel.y );
-            if ( vec2_dot( &r_vel, &w->solid.vel ) > 0 ) {
-               /*
-                 The target is going away.
-                 Run parallel to the target.
-               */
-               if ( QUADRATURE( w->solid.vel, p->solid.vel ) > 0 )
-                  weapon_setTurn( w, turn_max );
-               else
-                  weapon_setTurn( w, -turn_max );
-            } else {
-               /*
-                 Match the horizontal speed of the missile to the target's.
-                 (cf. Proportional navigation)
-                 It assumes that the approaching speed is a positive number.
-               */
-               if ( QUADRATURE( r_vel, v ) < 0 )
-                  weapon_setTurn( w, turn_max );
-               else
-                  weapon_setTurn( w, -turn_max );
+            const double b2_ac = b * b - a * c;
+            if ( b2_ac >= 0 ) {
+               t = ( -b - sqrt( b2_ac ) ) / a;
+               /* Another solution is a negative value or greater than t */
             }
          }
-#undef QUADRATURE
+         if ( t < 0 ) {
+            /* The missile is unreachable. */
+            /* t is a negative value when a > 0 and b > 0. */
+            t = w->timer;
+         }
+         /* Calculate target's movement. */
+         const double angle =
+            ANGLE( v.x + t * p->solid.vel.x, v.y + t * p->solid.vel.y );
+         const double diff = angle_diff( w->solid.dir, angle );
+         weapon_setTurn( w, CLAMP( -turn_max, turn_max, diff / dt ) );
       }
       /* Other seekers are simplistic. */
       else {
