@@ -420,11 +420,7 @@ function info_ship ()
 end
 
 function info_weapons ()
-   info_msg( fmt.f(_([["At the #oWeapon Info#0, you can modify the current ship's weapon sets. There are three types of weapon sets:
-- #oSwitch#0: sets which weapons fire with the primary weapon key {keyprimary} and secondary weapon key {keysecondary}.
-- #oToggle#0: toggles the state between on and off of the outfits in the sets.
-- #oHold#0: turns on all the outfits in the set while held down."]]),
-      {keyprimary=tut.getKey("primary"), keysecondary=tut.getKey("secondary")} ) )
+   info_msg( _([["At the #oWeapon Info#0, you can modify the current ship's weapon sets, including your ships primary and secondary weapons. Weapon sets will be normally automatically handled by your ship, but you can always configure them to whatever liking your want! If you want full details, you can click on the #bHelp#0 button for all the information about it. It always makes me head dizzy though, so I just keep the defaults and mash the weapon controls. It works great!"]]) )
    hook.rm( mem.hk_info_weapons )
    mem.hk_info_weapons = nil
    info_checkdone()
@@ -526,7 +522,11 @@ function equip ()
       return
    end
 
-   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically handle weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set, so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
+   if pp:autoweap() then
+      info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. Looks like your ship is set to automatically handle weapons, so it should be assigned to a primary weapon. You can always change this from the #oInfo Window#0 you can open with {infokey}. Let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
+   else
+      info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. Looks like your ship is not set to automatically handle weapons. You might have to assign the #o{outfit}#0 to a weapon set, so you can use it. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
+   end
 
    hook.rm( mem.hk_equip )
    mem.hk_equip = nil

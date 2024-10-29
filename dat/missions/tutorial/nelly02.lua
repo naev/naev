@@ -164,7 +164,11 @@ function accept ()
    local nearplanet = pnts[1]
 
    if has_dis then
-      nel(_([["It looks like you already have some disabling weapons equipped. Make sure they are set in the info window as either a primary or secondary weapon in your active weapon set or as an instant fire weapon set and let's go get my ship back!"]]))
+      if pp:autoweap() then
+         nel(_([["It looks like you already have some disabling weapons equipped. They should be set as your primary or secondary weapon, so let's go get my ship back!"]]))
+      else
+         nel(_([["It looks like you already have some disabling weapons equipped. Make sure they are set in the info window as either a primary or secondary weapon and let's go get my ship back!"]]))
+      end
    elseif has_dis_owned then
       nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname}#0 before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]}))
       local s = spob.cur():services()
