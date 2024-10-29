@@ -85,3 +85,5 @@ double naev_getrealdt( void );
 int  naev_shouldRenderLoadscreen( void );
 void naev_doRenderLoadscreen( void );
 void naev_renderLoadscreen( void );
+void print_SDLversion( void );
+void window_caption( void );

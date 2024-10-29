@@ -119,12 +119,10 @@ static SDL_mutex   *load_mutex;
  * prototypes
  */
 /* Loading. */
-static void print_SDLversion( void );
 static void loadscreen_load( void );
 static void loadscreen_unload( void );
 static void load_all( void );
 static void unload_all( void );
-static void window_caption( void );
 /* update */
 static void   fps_init( void );
 static double fps_elapsed( void );
@@ -173,49 +171,6 @@ int naev_main( void )
    /* Set the configuration. */
    snprintf( conf_file_path, sizeof( conf_file_path ), "%s" CONF_FILE,
              nfile_configPath() );
-
-   /* Enable FPU exceptions. */
-   if ( conf.fpu_except )
-      debug_enableFPUExcept();
-
-   /* Load the start info. */
-   if ( start_load() ) {
-      char buf[STRMAX];
-      snprintf( buf, sizeof( buf ), _( "Failed to load module start data." ) );
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
-      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                _( "Naev Critical Error" ), buf,
-                                gl_screen.window );
-#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
-      ERR( "%s", buf );
-   }
-   LOG( " %s", start_name() );
-   DEBUG_BLANK();
-
-   /* Display the SDL Version. */
-   print_SDLversion();
-   DEBUG_BLANK();
-
-   /* random numbers */
-   rng_init();
-
-   /*
-    * OpenGL
-    */
-   if ( gl_init( 0 ) ) { /* initializes video output */
-      char buf[STRMAX];
-      snprintf( buf, sizeof( buf ),
-                _( "Initializing video output failed, exiting…" ) );
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
-      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                _( "Naev Critical Error" ), buf,
-                                gl_screen.window );
-#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
-      ERR( "%s", buf );
-      // SDL_Quit();
-      exit( EXIT_FAILURE );
-   }
-   window_caption();
 
    /* Have to set up fonts before rendering anything. */
    // DEBUG("Using '%s' as main font and '%s' as monospace font.",
@@ -1014,7 +969,7 @@ void update_routine( double dt, int dohooks )
 /**
  * @brief Sets the window caption.
  */
-static void window_caption( void )
+void window_caption( void )
 {
    char      *buf;
    SDL_RWops *rw;
@@ -1041,7 +996,7 @@ static void window_caption( void )
 /**
  * @brief Prints the SDL version to console.
  */
-static void print_SDLversion( void )
+void print_SDLversion( void )
 {
    const SDL_version *linked;
    SDL_version        compiled;

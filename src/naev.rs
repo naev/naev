@@ -175,6 +175,38 @@ pub fn naev() -> Result<()> {
             gettext("Write location: {}\n"),
             cptr_to_cstr(naevc::PHYSFS_getWriteDir())
         );
+
+        /* Enable FPU exceptions. */
+        if naevc::conf.fpu_except != 0 {
+            naevc::debug_enableFPUExcept();
+        }
+
+        if naevc::start_load() != 0 {
+            let err = gettext("Failed to load start data.");
+            warn!("{}", err.clone());
+            // TODO show some simple error message
+            return Err(Error::new(ErrorKind::Other, err));
+        }
+        nlog!(
+            " {}\n",
+            CStr::from_ptr(naevc::start_name()).to_str().unwrap()
+        );
+
+        /* Display the SDL version. */
+        naevc::print_SDLversion();
+        nlog!("");
+
+        /* Random numbers, TODO replace with rust rand library. */
+        naevc::rng_init();
+
+        /* Set up OpenGL. */
+        if naevc::gl_init(0) != 0 {
+            let err = gettext("Initializing video output failed, exiting…");
+            warn!("{}", err.clone());
+            // TODO show some simple error message
+            return Err(Error::new(ErrorKind::Other, err));
+        }
+        naevc::window_caption();
     }
 
     unsafe {
