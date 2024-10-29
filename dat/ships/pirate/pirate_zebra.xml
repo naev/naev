@@ -59,6 +59,7 @@
   <cargo_inertia>-10</cargo_inertia>
   <armour_mod>-10</armour_mod>
   <ew_hide>-10</ew_hide>
+  <fuel>400</fuel>
  </stats>
  <tags>
   <tag>pirate</tag>

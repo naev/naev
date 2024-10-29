@@ -53,6 +53,7 @@
   <cargo_mod>15</cargo_mod>
   <armour_mod>-10</armour_mod>
   <ew_hide>-10</ew_hide>
+  <fuel>200</fuel>
  </stats>
  <tags>
   <tag>pirate</tag>

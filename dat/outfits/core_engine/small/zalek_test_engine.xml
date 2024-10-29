@@ -16,7 +16,7 @@
   <accel>100</accel>
   <turn>85</turn>
   <speed>175</speed>
-  <fuel>400</fuel>
+  <fuel>500</fuel>
   <energy_regen_malus>5</energy_regen_malus>
   <engine_limit>300</engine_limit>
  </specific>

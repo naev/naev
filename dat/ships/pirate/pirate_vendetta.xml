@@ -48,6 +48,7 @@
   <armour_mod>5</armour_mod>
   <energy_mod>10</energy_mod>
   <ew_hide>-10</ew_hide>
+  <fuel>100</fuel>
  </stats>
  <tags>
   <tag>pirate</tag>

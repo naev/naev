@@ -46,6 +46,7 @@
   <cargo_mod>20</cargo_mod>
   <jump_delay>-25</jump_delay>
   <cargo_inertia>-20</cargo_inertia>
+  <fuel>100</fuel>
  </stats>
  <tags>
   <tag>standard</tag>

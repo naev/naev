@@ -50,6 +50,7 @@
   <launch_rate>15</launch_rate>
   <launch_range>10</launch_range>
   <ammo_capacity>25</ammo_capacity>
+  <fuel>100</fuel>
  </stats>
  <tags>
   <tag>pirate</tag>
