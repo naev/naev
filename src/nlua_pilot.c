@@ -92,6 +92,7 @@ static int pilotL_nav( lua_State *L );
 static int pilotL_navSpob( lua_State *L );
 static int pilotL_navJump( lua_State *L );
 static int pilotL_navJumpSet( lua_State *L );
+static int pilotL_autoweap( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetList( lua_State *L );
 static int pilotL_weapsetType( lua_State *L );
@@ -286,6 +287,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "navSpob", pilotL_navSpob },
    { "navJump", pilotL_navJump },
    { "navJumpSet", pilotL_navJumpSet },
+   { "autoweap", pilotL_autoweap },
    { "weapset", pilotL_weapset },
    { "weapsetList", pilotL_weapsetList },
    { "weapsetType", pilotL_weapsetType },
@@ -1904,6 +1906,22 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
 
    /* Add to table. */
    lua_rawset( L, -3 );
+   return 1;
+}
+
+/**
+ * @brief Gets if a pilot is using automatically set weapon sets.
+ *
+ *    @luatparam Pilot p Pilot to get whether or not is using automatic weapon
+ * sets.
+ *    @luatretun boolean Whether or not the pilot is using automatic weapon
+ * sets.
+ * @luafunc autoweap
+ */
+static int pilotL_autoweap( lua_State *L )
+{
+   Pilot *p = luaL_validpilot( L, 1 );
+   lua_pushboolean( L, p->autoweap );
    return 1;
 }
 
