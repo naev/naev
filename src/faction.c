@@ -1839,6 +1839,15 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
       system_getFactionPresence( sys, f ); /* Starting reputation. */
    if ( srep == NULL )
       return;
+
+#if DEBUGGING
+   if ( srep->value <= 0. ) {
+      WARN( "Trying to apply local faction threshol from system with no "
+            "presence." );
+      return;
+   }
+#endif /* DEBUGGING */
+
    double      n         = 0;
    double      rep       = srep->local;
    StarSystem *sys_stack = system_getAll();
