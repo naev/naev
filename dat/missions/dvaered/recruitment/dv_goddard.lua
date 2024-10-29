@@ -217,7 +217,7 @@ function enter()
       misn.osdActive(2)
 
    -- Player jump in Dvaered system to intercept Agrippina Grosjean
-   elseif mem.misn_state == 4 and system.cur() == mem.sharksys and player.pilot():ship():nameRaw() == "Llama" then
+   elseif mem.misn_state == 4 and system.cur() == mem.sharksys and player.pilot():ship():baseType() == "Llama" then
       mem.misn_state = 5
       pilot.toggleSpawn(false)
       pilot.clear()
