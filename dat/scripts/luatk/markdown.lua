@@ -253,6 +253,12 @@ function luatk_markdown.newMarkdown( parent, doc, x, y, w, h, options )
             listn = listn + 1
             margin = math.max( margin, 2 )
          end
+      elseif node_type == cmark.NODE_CODE then
+         local literal = cmark.node_get_literal(cur)
+         if entering then
+            -- TODO monospace font or something better?
+            block.text = block.text .. "#n"..literal.."#0"
+         end
       elseif node_type == cmark.NODE_FIRST_INLINE or node_type == cmark.NODE_LAST_INLINE then
          local str_type = cmark.node_get_type_string(cur)
          if str_type == "text" and entering then
