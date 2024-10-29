@@ -3,7 +3,7 @@ title: "Boarding Ships"
 ---
 # Boarding
 
-You can board [disabled](mechanics/damage) ships by getting close to them and matcing speed with them.
+You can board [disabled](mechanics/damage) ships by getting close to them and matching speed with them.
 This can be automated by using your ship's builtin autonav functionality (by pressing the <%= "#b"..naev.keyGet("approach").."#0" %> key).
 Once you board the ship, an interface will open that will let you interact with the ship.
 <% if player.fleetCapacity() > 0 then %>
@@ -24,7 +24,7 @@ Higher values will allow you to obtain more loot from the ships you board.
 ## Stealing Outfits
 
 The outfits that you can steal from a ship are random, and the number is influenced by your **Boarding Bonus** modifier.
-Higher modifier values will let you steal more outfist from a ship.
+Higher modifier values will let you steal more outfits from a ship.
 The cost of repairing a stolen outfit is the base cost multiplied by `(10 + their crew) / (10 + your crew)`.
 
 <% if player.fleetCapacity() > 0 then %>
