@@ -2416,7 +2416,7 @@ void pilot_update( Pilot *pilot, double dt )
          pos->stimer -= dt;
          if ( pos->stimer < 0. ) {
             if ( pos->state == PILOT_OUTFIT_ON ) {
-               pilot_outfitOff( pilot, pos );
+               pilot_outfitOff( pilot, pos, 0 );
                nchg++;
             } else if ( pos->state == PILOT_OUTFIT_COOLDOWN ) {
                pos->state = PILOT_OUTFIT_OFF;

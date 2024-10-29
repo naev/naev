@@ -62,7 +62,7 @@ void pilot_weaponAuto( Pilot *p );
 void pilot_weaponSafe( Pilot *p );
 void pilot_afterburn( Pilot *p );
 void pilot_afterburnOver( Pilot *p );
-int  pilot_outfitOff( Pilot *p, PilotOutfitSlot *o );
+int  pilot_outfitOff( Pilot *p, PilotOutfitSlot *o, int natural );
 int  pilot_outfitOffAll( Pilot *p );
 int  pilot_outfitOffAllStealth( Pilot *p );
 int  pilot_outfitOn( Pilot *p, PilotOutfitSlot *o );
