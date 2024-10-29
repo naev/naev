@@ -117,7 +117,10 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt,
        * be slower though). */
       double mod = pilot_ewWeaponTrack( p, t, o->outfit->u.lau.trackmin,
                                         o->outfit->u.lau.trackmax );
-      o->u.ammo.lockon_timer -= dt * mod / p->stats.launch_lockon;
+      if ( p->stats.launch_lockon <= 0. )
+         o->u.ammo.lockon_timer = max;
+      else
+         o->u.ammo.lockon_timer -= dt * mod / p->stats.launch_lockon;
 
       /* Cap at -max/3. */
       if ( o->u.ammo.lockon_timer < max )
@@ -489,7 +492,7 @@ int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s )
 
    /* Force turn off if necessary. */
    if ( s->state == PILOT_OUTFIT_ON )
-      pilot_outfitOff( pilot, s );
+      pilot_outfitOff( pilot, s, 0 );
 
    /* Run remove hook if necessary. */
    pilot_outfitLRemove( pilot, s );
@@ -1721,9 +1724,12 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield,
  *    @param pilot Pilot to toggle outfit of.
  *    @param po Outfit to be toggling.
  *    @param on Whether to toggle on or off.
+ *    @param natural Whether it's a result of the pilot input, or something
+ * automatic (such as turning off outfits when landing or hyperspace).
  *    @return 1 if was able to toggle it, 0 otherwise.
  */
-int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on )
+int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on,
+                           int natural )
 {
    nlua_env env = po->outfit->lua_env;
    int      ret, oldmem;
@@ -1735,9 +1741,10 @@ int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on )
    /* Set up the function: ontoggle( p, po, armour, shield ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, po->outfit->lua_ontoggle ); /* f */
    lua_pushpilot( naevL, pilot->id );                                 /* f, p */
-   lua_pushpilotoutfit( naevL, po ); /* f, p, po */
-   lua_pushboolean( naevL, on );     /* f, p, po, on */
-   if ( nlua_pcall( env, 3, 1 ) ) {  /* */
+   lua_pushpilotoutfit( naevL, po );  /* f, p, po */
+   lua_pushboolean( naevL, on );      /* f, p, po, on */
+   lua_pushboolean( naevL, natural ); /* f, p, po, on, natural */
+   if ( nlua_pcall( env, 4, 1 ) ) {   /* */
       outfitLRunWarning( pilot, po->outfit, "ontoggle",
                          lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );

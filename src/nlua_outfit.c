@@ -694,7 +694,7 @@ static int outfitL_weapStats( lua_State *L )
    Pilot        *p = ( lua_ispilot( L, 2 ) ) ? luaL_validpilot( L, 2 ) : NULL;
 
    /* Just return 0 for non-wapons. */
-   if ( o->slot.type != OUTFIT_SLOT_WEAPON )
+   if ( !outfit_isWeapon( o ) )
       return 0;
 
    /* Special case beam weapons .*/

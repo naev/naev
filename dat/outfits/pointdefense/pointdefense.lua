@@ -22,13 +22,20 @@ function descextra( _p, _o )
       {trackmax=fmt.number(trackmax), unit=naev.unit("distance")})
 end
 
-function init( _p, _po )
-   mem.on = false
+function init( _p, po )
+   if mem.on == nil then
+      -- Defaults to on, TODO option?
+      mem.on = true
+      po:state("on")
+   end
    mem.target = nil -- current target
    mem.tpilot = false -- whether or not the target is a pilot
 end
 
-function ontoggle( _p, _po, on )
+function ontoggle( _p, _po, on, nat )
+   if not nat then
+      return false
+   end
    mem.on = on
    return true
 end

@@ -154,9 +154,8 @@ function enter()
    if system.cur() == battlesys and mem.stage == 1 then
       --Check if the player uses a Shark
       local playership = player.pilot():ship()
-      local playershipname = playership:nameRaw()
 
-      if playershipname ~= "Shark" and playershipname ~= "Empire Shark" then
+      if playership:baseType() ~= "Shark" then
          lmisn.fail( _("You were supposed to use a Shark.") )
       end
 

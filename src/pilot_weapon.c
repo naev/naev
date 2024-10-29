@@ -247,7 +247,7 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
          if ( pos->flags & PILOTOUTFIT_ISON_LUA )
             continue;
          if ( pos->state == PILOT_OUTFIT_ON )
-            noff += pilot_outfitOff( p, pos );
+            noff += pilot_outfitOff( p, pos, 1 );
       }
    }
 
@@ -1466,13 +1466,11 @@ void pilot_weaponSafe( Pilot *p )
  *
  * @param p Pilot whose outfit we are disabling.
  * @param o Outfit to disable.
+ * @param natural Whether a result of natural behaviour, or something automatic.
  * @return Whether the outfit was actually disabled.
  */
-int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
+int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o, int natural )
 {
-   /* Clean up flags. */
-   o->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
-
    /* Must be equipped, not disabled, not cooling down. */
    if ( o->outfit == NULL || ( pilot_isDisabled( p ) ) ||
         ( pilot_isFlag( p, PILOT_COOLDOWN ) ) )
@@ -1480,15 +1478,17 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 
    if ( outfit_isAfterburner( o->outfit ) ) { /* Afterburners */
       if ( ( o->outfit->lua_ontoggle != LUA_NOREF ) &&
-           !pilot_outfitLOntoggle( p, o, 0 ) )
+           !pilot_outfitLOntoggle( p, o, 0, natural ) )
          return 0;
+      o->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
       pilot_afterburnOver( p );
+
    } else if ( outfit_isBeam( o->outfit ) ) {
-      /*
-         if ((o->outfit->lua_onshoot != LUA_NOREF) &&
-         !pilot_outfitLOnshoot( p, o, 0 ))
+      if ( ( o->outfit->lua_ontoggle != LUA_NOREF ) &&
+           !pilot_outfitLOntoggle( p, o, 0, natural ) )
          return 0;
-         */
+      o->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
+
       /* Beams use stimer to represent minimum time until shutdown. */
       if ( o->u.beamid > 0 ) {
          beam_end( o->u.beamid );
@@ -1499,9 +1499,12 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       /* Case of a mod we can't toggle. */
       return 0;
    else if ( o->outfit->lua_ontoggle != LUA_NOREF ) {
-      int ret = pilot_outfitLOntoggle( p, o, 0 );
-      if ( ret && outfit_isWeapon( o->outfit ) )
-         o->state = PILOT_OUTFIT_OFF;
+      int ret = pilot_outfitLOntoggle( p, o, 0, natural );
+      if ( ret ) {
+         if ( outfit_isWeapon( o->outfit ) )
+            o->state = PILOT_OUTFIT_OFF;
+         o->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
+      }
       return ret;
    } else {
       o->stimer = outfit_cooldown( o->outfit );
@@ -1509,6 +1512,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
          o->state = PILOT_OUTFIT_OFF;
       else
          o->state = PILOT_OUTFIT_COOLDOWN;
+      o->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
    }
 
    return 1;
@@ -1528,7 +1532,7 @@ int pilot_outfitOn( Pilot *p, PilotOutfitSlot *pos )
    if ( outfit_isAfterburner( pos->outfit ) )
       pilot_afterburn( p );
    else if ( pos->outfit->lua_ontoggle != LUA_NOREF ) {
-      int ret = pilot_outfitLOntoggle( p, pos, 1 );
+      int ret = pilot_outfitLOntoggle( p, pos, 1, 1 );
       if ( ret && outfit_isWeapon( pos->outfit ) )
          pos->state = PILOT_OUTFIT_ON;
       return ret;
@@ -1555,7 +1559,7 @@ int pilot_outfitOffAll( Pilot *p )
       if ( pos->outfit == NULL )
          continue;
       if ( pos->state == PILOT_OUTFIT_ON )
-         nchg += pilot_outfitOff( p, pos );
+         nchg += pilot_outfitOff( p, pos, 0 );
    }
    return ( nchg > 0 );
 }
@@ -1577,7 +1581,7 @@ int pilot_outfitOffAllStealth( Pilot *p )
       if ( outfit_isProp( o->outfit, OUTFIT_PROP_STEALTH_ON ) )
          continue;
       if ( o->state == PILOT_OUTFIT_ON )
-         nchg += pilot_outfitOff( p, o );
+         nchg += pilot_outfitOff( p, o, 0 );
    }
    return ( nchg > 0 );
 }
