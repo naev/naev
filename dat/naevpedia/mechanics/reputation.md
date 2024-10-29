@@ -8,14 +8,16 @@ Increasing your reputation with a specific faction can give you access to more o
 With sufficient reputation, a faction will see you as friendly, changing how their ships behave near you.
 On the other hand, lowering your reputation can lead to a faction seeing you as an enemy, barring you from their spaceports and attacking you on sight.
 
-Your current reputation standings can be seen from the information menu that you can open with the <%= "#b"..naev.keyGet("info").."#0" %> key.
+Your reputation is on a per-system basis, however, neighbouring systems of the same faction will have a tendency to be similar.
+By default, whenever will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= "#b"..naev.keyGet("info").."#0" %> key.
+Your current global reputation standings and other details of the different factions can also be seen from the #bInformation window#0.
 
 ## Changing Reputation
 
 There are several ways to change your reputation with a faction:
 
 1. [Doing missions](mechanics/missions)
-1. Attacking or [boarding](mechanics/boarding) ships
+1. Attacking, [boarding](mechanics/boarding), or destroying ships
 
 Reputation changes will propagate to allies and enemies of the faction your reputation is changing with.
 For example, although attacking a faction will decrease your standing with them, attacking an enemy of a faction will increase your standing with them.
