@@ -21,7 +21,6 @@
  <cond>math.floor(system.cur():reputation("Sirius")+0.5) &gt;= 60</cond>
  <condstr>You need at least 60% reputation with House Sirius.</condstr>
  <description>The Providence is the bulk freighter of House Sirius and is mainly used to transport large amounts of supplies. Some of them are also being used to transport pilgrims, even though most Sirii dislike these overcrowded mass transports.</description>
- <desc_extra>For every 100 flow over 150, increases damage absorption by 15%.</desc_extra>
  <health>
   <armour>1000</armour>
   <armour_regen>0</armour_regen>
