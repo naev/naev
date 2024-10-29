@@ -151,7 +151,7 @@ function enter ( from_sys )
          misn.osdActive(2)
 
          -- Position trinity on the other side of the player
-         trinity = pilot.add( "Empire Hawking", "Empire", vec2.new(-5000, 1500), _("ESS Trinity"), {ai="noidle"} )
+         trinity = pilot.add( "Empire Hawking", "Empire", vec2.new(-5000, 1500), _("ESS Trinity"), {ai="baddie"} )
          trinity:setVisplayer()
          trinity:setHilight(true)
          trinity:setFaction("Empire") -- Starts out non-hostile

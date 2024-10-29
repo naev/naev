@@ -193,7 +193,7 @@ function luaspob.load ()
 
    mem.bribe_cost_function = mem.params.bribe_cost or function ()
       local std = mem.spob:reputation()
-      return (mem.std_land-std) * 1e3 * player.pilot():ship():size() + 5e3
+      return math.max( 10, (mem.std_land-std) ) * 1e3 * player.pilot():ship():size() + 5e3
    end
 
    mem.std_land = mem.params.std_land or 0
@@ -593,9 +593,9 @@ function luaspob.distress( p, attacker )
    if not attacker:withPlayer() then return end
 
    local f = mem.spob:faction()
-   if not f:areEnemies( p:faction() ) then
+   if p:memory().natural and not f:areEnemies( p:faction() ) then
       -- Small faction hit
-      f:hit( -1, "distress" ) -- Amplifies distress signals
+      --f:hit( -1, "distress" ) -- Amplifies distress signals
       mem.spob:setHostile(true)
    end
 end

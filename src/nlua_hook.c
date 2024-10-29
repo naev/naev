@@ -796,7 +796,7 @@ static int hookL_mouse( lua_State *L )
  *
  * The parameters passed to the function are faction whose standing is being
  * changed and the amount changed:<br/>
- * function f( faction, change, args )
+ * function f( faction, change, system, secondary, primary_fct, args )
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.

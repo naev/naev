@@ -11,7 +11,7 @@
 #include "nlua_system.h"
 
 #define HOOK_MAX_PARAM                                                         \
-   5 /**< Maximum hook params, to avoid dynamic allocation. */
+   7 /**< Maximum hook params, to avoid dynamic allocation. */
 
 /**
  * @brief The hook parameter types.

@@ -9,7 +9,7 @@
  <standing>pirate_wild_ones</standing>
  <equip>pirate</equip>
  <useshiddenjumps/>
- <local_th>0</local_th>
+ <local_th>5</local_th>
  <description>The Wild Ones Pirate Clan is a violent and loosely organized band of pirates that control the Haven sector between Empire and Soromid territories.</description>
  <generator weight="0.35">Pirate</generator>
  <generator weight="0.65">Marauder</generator>

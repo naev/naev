@@ -23,6 +23,7 @@ local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
+local equipopt = require "equipopt"
 
 local reward = zbh.rewards.zbh10
 local title = _("Sigma-13 Showdown")
@@ -151,8 +152,13 @@ function enter ()
    local jp = jump.get( system.cur(), jumpsys )
    badguys = {}
    local function create_fleet( ships )
-      local plts = fleet.add( 1, ships, fbadguys, jp, nil, {ai="baddie"} )
+      local plts = fleet.add( 1, ships, fbadguys, jp, nil, {ai="baddie", naked=true} )
       for k,p in ipairs(plts) do
+         equipopt.zalek( p, {
+            type_range = {
+               ["Fighter Bay"] = { max=1 },
+            },
+         } )
          p:setHostile(true)
          table.insert( badguys, p )
       end

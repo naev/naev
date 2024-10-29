@@ -1,10 +1,7 @@
 return {
    fct            = faction.get("Proteron"),
-   cap_kill       = 5,
-   delta_distress = {-0.5, 0},    -- Maximum change constraints
-   delta_kill     = {-5, 1},    -- Maximum change constraints
-   cap_misn_def   = 70, --30, -- TODO lower as missions get added
-   cap_misn_var   = "_fcap_proteron",
-   cap_tags       = {
-   },
+   rep_max        = 70, --30, -- TODO lower as missions get added
+   rep_max_var    = "_fcap_proteron",
+   secondary_default = 0, -- Unaffected by secondary hits, oblivious to the universe (for now...)
+   rep_max_tags   = {},
 }

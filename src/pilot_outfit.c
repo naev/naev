@@ -2177,6 +2177,8 @@ static void outfitLOnkeydoubletap( const Pilot *pilot, PilotOutfitSlot *po,
 }
 void pilot_outfitLOnkeydoubletap( Pilot *pilot, OutfitKey key )
 {
+   if ( pilot_isDisabled( pilot ) )
+      return;
    stealth_break = 0;
    pilot_outfitLRun( pilot, outfitLOnkeydoubletap, &key );
    if ( stealth_break && pilot_isFlag( pilot, PILOT_STEALTH ) )

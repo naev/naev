@@ -2,6 +2,8 @@
    * Gameplay
       * Ability to capture disabled ships
       * Faction reputation is no longer universal, but varies on systems
+         * Direct faction hit changes are shown as messages
+         * Your actions will more directly affect ships in the system
       * Significantly increase maximum potential fleet capacity
       * Excess energy to battery recharge efficiency is now a flat 50% instead of varying based on charge level
       * Gave the Za'lek sting a slight detection buff
@@ -17,6 +19,7 @@
       * Gave the Quicksilver another medium structural slot
       * Beam weapons have minimum delays instead of minimum durations
       * Can stealth when missiles are locked on
+      * Electron Burst Cannons and Za'lek Heavy Drones have had their damage per second lowered
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
@@ -40,6 +43,7 @@
       * Prompt when deleting notes
       * Added accessibility option that allows skipping story minigames
       * Can view and change all your ships in the equipment tab when there is refuelling
+      * Reduced space dust size by 50%
    * Content
       * New in-game wiki with explanation on gameplay mechanics and lots of lore
       * 6 new missions
@@ -94,6 +98,8 @@
          * Range ship stat for all specific weapon types
          * Turn, speed, and accel for launchers
          * Shield down time modifier
+      * Deprecated old faction API in favour of the new one for local / global standings
+      * Added support for temporarily overriding faction standings
    * Fixes
       * PSO and Mizar nebulas have trails again
       * Removed fancy background mode
@@ -111,6 +117,9 @@
       * sh01_corvette: should be completable on easy difficulties now
       * patrol: fixed escorts and fighters becoming hostile if hostile to the mission giving faction
       * Fixed debugging paranoid builds under Windows
+      * Fixed autonav not respecting shield thresholds
+      * zbh10: Godheart and friends get at most 1 fighter bay per ship now
+      * Fixed ESS Trinity being bribeable
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons

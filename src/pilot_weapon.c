@@ -1422,6 +1422,17 @@ void pilot_weaponAuto( Pilot *p )
 
       /* Add to its base group. */
       pilot_weapSetAdd( p, id, slot );
+
+      /* Add to additional special groups if not player. */
+      if ( !isplayer ) {
+         if ( outfit_isTurret( o ) )
+            pilot_weapSetAdd( p, 4, slot );
+         if ( outfit_isLauncher( o ) && outfit_isSeeker( o ) ) {
+            pilot_weapSetAdd( p, 5, slot );
+            if ( outfit_isTurret( o ) )
+               pilot_weapSetAdd( p, 6, slot );
+         }
+      }
    }
 
    /* All should be inrange. */

@@ -18,7 +18,7 @@
  <fabricator>Thurion Shipyards</fabricator>
  <faction>Thurion</faction>
  <license>Heavy Combat Vessel</license>
- <cond>math.ceil(faction.playerStanding("Thurion")+0.5) &gt;= 70</cond>
+ <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 70</cond>
  <condstr>You need at least 70% reputation with the Thurion.</condstr>
  <description>...</description>
  <health>

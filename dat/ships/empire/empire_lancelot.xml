@@ -15,7 +15,7 @@
  <fabricator>Nexus Shipyards</fabricator>
  <faction>Empire</faction>
  <license>Light Combat Vessel</license>
- <cond>math.ceil(faction.playerStanding("Empire")+0.5) &gt;= 30</cond>
+ <cond>math.floor(system.cur():reputation("Empire")+0.5) &gt;= 30</cond>
  <condstr>You need at least 30% reputation with the Empire.</condstr>
  <description>This military grade version of the Lancelot is mostly identical in function to a standard Lancelot, but with slightly better armour, shields, and heat dissipation.</description>
  <health>

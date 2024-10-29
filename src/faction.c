@@ -90,6 +90,7 @@ typedef struct Faction_ {
    double   friendly_at;        /**< Value of "standing.friendly_at" */
    nlua_env lua_env;            /**< Faction specific environment. */
    int      lua_hit;            /**< "standing.hit" */
+   int      lua_hit_test;       /**< "standing.hit_test" */
    int      lua_text_rank;      /**< "standing.text_rank" */
    int      lua_text_broad;     /**< "standing.text_broad" */
    int      lua_reputation_max; /**< "standing.reputation_max" */
@@ -127,7 +128,8 @@ static int    faction_getRaw( const char *name );
 static void   faction_freeOne( Faction *f );
 static void   faction_sanitizePlayer( Faction *faction );
 static double faction_hitLua( int f, const StarSystem *sys, double mod,
-                              const char *source, int secondary );
+                              const char *source, int secondary,
+                              int primary_faction );
 static int    faction_parse( Faction *temp, const char *file );
 static int    faction_parseSocial( const char *file );
 static void faction_addStandingScript( Faction *temp, const char *scriptname );
@@ -778,16 +780,14 @@ static void faction_sanitizePlayer( Faction *faction )
  * @brief Mods player using the power of Lua.
  */
 static double faction_hitLua( int f, const StarSystem *sys, double mod,
-                              const char *source, int secondary )
+                              const char *source, int secondary,
+                              int primary_faction )
 {
-   Faction *faction;
-   double   delta;
-
    /* Ignore it if player is dead. */
    if ( player.p == NULL )
       return 0.;
 
-   faction = &faction_stack[f];
+   Faction *faction = &faction_stack[f];
 
    /* Make sure it's not static. */
    if ( faction_isFlag( faction, FACTION_STATIC ) )
@@ -806,10 +806,14 @@ static double faction_hitLua( int f, const StarSystem *sys, double mod,
       lua_pushnil( naevL );
    lua_pushnumber( naevL, mod );
    lua_pushstring( naevL, source );
-   lua_pushboolean( naevL, secondary );
+   lua_pushinteger( naevL, secondary );
+   if ( faction_isFaction( primary_faction ) )
+      lua_pushfaction( naevL, primary_faction );
+   else
+      lua_pushnil( naevL );
 
    /* Call function. */
-   if ( nlua_pcall( faction->lua_env, 4, 1 ) ) { /* An error occurred. */
+   if ( nlua_pcall( faction->lua_env, 5, 1 ) ) { /* An error occurred. */
       WARN( _( "Faction '%s': %s" ), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
       return 0.;
@@ -819,20 +823,29 @@ static double faction_hitLua( int f, const StarSystem *sys, double mod,
    faction_sanitizePlayer( faction );
 
    /* Run hook if necessary. */
-   delta = lua_tonumber( naevL, -1 );
+   double delta = lua_tonumber( naevL, -1 );
    lua_pop( naevL, 1 );
    if ( FABS( delta ) > DOUBLE_TOL ) {
-      HookParam hparam[4];
-      hparam[0].type  = HOOK_PARAM_FACTION;
-      hparam[0].u.lf  = f;
-      hparam[1].type  = HOOK_PARAM_NUMBER;
-      hparam[1].u.num = delta;
+      HookParam hparam[7];
+      hparam[0].type = HOOK_PARAM_FACTION;
+      hparam[0].u.lf = f;
       if ( sys != NULL ) {
-         hparam[2].type = HOOK_PARAM_SSYS;
-         hparam[2].u.ls = sys->id;
-         hparam[3].type = HOOK_PARAM_SENTINEL;
+         hparam[1].type = HOOK_PARAM_SSYS;
+         hparam[1].u.ls = sys->id;
       } else
-         hparam[2].type = HOOK_PARAM_SENTINEL;
+         hparam[1].type = HOOK_PARAM_NIL;
+      hparam[2].type  = HOOK_PARAM_NUMBER;
+      hparam[2].u.num = delta;
+      hparam[3].type  = HOOK_PARAM_STRING;
+      hparam[3].u.str = source;
+      hparam[4].type  = HOOK_PARAM_NUMBER;
+      hparam[4].u.num = secondary;
+      if ( faction_isFaction( primary_faction ) ) {
+         hparam[5].type = HOOK_PARAM_FACTION;
+         hparam[5].u.lf = primary_faction;
+      } else
+         hparam[5].type = HOOK_PARAM_NIL;
+      hparam[6].type = HOOK_PARAM_SENTINEL;
       hooks_runParam( "standing", hparam );
 
       /* Tell space the faction changed. */
@@ -853,24 +866,78 @@ double faction_hit( int f, const StarSystem *sys, double mod,
       WARN( _( "Faction id '%d' is invalid." ), f );
       return 0;
    }
-   Faction *faction = &faction_stack[f];
+   const Faction *faction = &faction_stack[f];
 
    /* Modify faction standing with parent faction. */
-   ret = faction_hitLua( f, sys, mod, source, 0 );
+   ret = faction_hitLua( f, sys, mod, source, 0, -1 );
 
    /* Don't apply secondary hits. */
    if ( !single ) {
       /* Now mod allies to a lesser degree */
       for ( int i = 0; i < array_size( faction->allies ); i++ )
          /* Modify faction standing */
-         faction_hitLua( faction->allies[i], sys, mod, source, 1 );
+         faction_hitLua( faction->allies[i], sys, mod, source, 1, f );
       /* Now mod enemies */
       for ( int i = 0; i < array_size( faction->enemies ); i++ )
          /* Modify faction standing. */
-         faction_hitLua( faction->enemies[i], sys, -mod, source, 1 );
+         faction_hitLua( faction->enemies[i], sys, -mod, source, -1, f );
    }
 
    return ret;
+}
+
+/**
+ * @brief Tests a faction hit to see how much it would apply. Does not actually
+ * modify standing.
+ */
+double faction_hitTest( int f, const StarSystem *sys, double mod,
+                        const char *source )
+{
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
+      return 0;
+   }
+
+   /* Ignore it if player is dead. */
+   if ( player.p == NULL )
+      return 0.;
+
+   Faction *faction = &faction_stack[f];
+
+   /* Make sure it's not static. */
+   if ( faction_isFlag( faction, FACTION_STATIC ) )
+      return 0.;
+
+   /* Overriden, so doesn't budge. */
+   if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
+      return 0.;
+
+   /* Set up the function:
+    * standing:hit( sys, amount, source, secondary ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_hit );
+   if ( sys != NULL )
+      lua_pushsystem( naevL, sys->id );
+   else
+      lua_pushnil( naevL );
+   lua_pushnumber( naevL, mod );
+   lua_pushstring( naevL, source );
+   lua_pushinteger( naevL, 0 );
+   lua_pushnil( naevL );
+
+   /* Call function. */
+   if ( nlua_pcall( faction->lua_env, 5, 1 ) ) { /* An error occurred. */
+      WARN( _( "Faction '%s': %s" ), faction->name, lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return 0.;
+   }
+
+   /* Sanitize just in case. */
+   faction_sanitizePlayer( faction );
+
+   /* Run hook if necessary. */
+   double delta = lua_tonumber( naevL, -1 );
+   lua_pop( naevL, 1 );
+   return delta;
 }
 
 /**
@@ -898,17 +965,17 @@ void faction_modPlayer( int f, double mod, const char *source )
    faction = &faction_stack[f];
 
    /* Modify faction standing with parent faction. */
-   faction_hitLua( f, NULL, mod, source, 0 );
+   faction_hitLua( f, NULL, mod, source, 0, -1 );
 
    /* Now mod allies to a lesser degree */
    for ( int i = 0; i < array_size( faction->allies ); i++ )
       /* Modify faction standing */
-      faction_hitLua( faction->allies[i], NULL, mod, source, 1 );
+      faction_hitLua( faction->allies[i], NULL, mod, source, 1, f );
 
    /* Now mod enemies */
    for ( int i = 0; i < array_size( faction->enemies ); i++ )
       /* Modify faction standing. */
-      faction_hitLua( faction->enemies[i], NULL, -mod, source, 1 );
+      faction_hitLua( faction->enemies[i], NULL, -mod, source, 1, f );
 }
 
 /**
@@ -933,7 +1000,7 @@ void faction_modPlayerSingle( int f, double mod, const char *source )
       WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
-   faction_hitLua( f, NULL, mod, source, 0 );
+   faction_hitLua( f, NULL, mod, source, 0, -1 );
 }
 
 /**
@@ -948,8 +1015,7 @@ void faction_modPlayerSingle( int f, double mod, const char *source )
  */
 void faction_modPlayerRaw( int f, double mod )
 {
-   Faction  *faction;
-   HookParam hparam[3];
+   Faction *faction;
 
    /* Ignore it if player is dead. */
    if ( player.p == NULL )
@@ -962,13 +1028,8 @@ void faction_modPlayerRaw( int f, double mod )
 
    faction = &faction_stack[f];
    faction->player += mod;
-   /* Run hook if necessary. */
-   hparam[0].type  = HOOK_PARAM_FACTION;
-   hparam[0].u.lf  = f;
-   hparam[1].type  = HOOK_PARAM_NUMBER;
-   hparam[1].u.num = mod;
-   hparam[2].type  = HOOK_PARAM_SENTINEL;
-   hooks_runParam( "standing", hparam );
+
+   /* Deprecated so no hook now. */
 
    /* Sanitize just in case. */
    faction_sanitizePlayer( faction );
@@ -1010,12 +1071,18 @@ void faction_setReputation( int f, double value )
    faction->player = value;
    /* Run hook if necessary. */
    if ( !faction_isFlag( faction, FACTION_DYNAMIC ) ) {
-      HookParam hparam[3];
+      HookParam hparam[7];
       hparam[0].type  = HOOK_PARAM_FACTION;
       hparam[0].u.lf  = f;
-      hparam[1].type  = HOOK_PARAM_NUMBER;
-      hparam[1].u.num = mod;
-      hparam[2].type  = HOOK_PARAM_SENTINEL;
+      hparam[1].type  = HOOK_PARAM_NIL;
+      hparam[2].type  = HOOK_PARAM_NUMBER;
+      hparam[2].u.num = mod;
+      hparam[3].type  = HOOK_PARAM_STRING;
+      hparam[3].u.str = "script";
+      hparam[4].type  = HOOK_PARAM_NUMBER;
+      hparam[4].u.num = 0;
+      hparam[5].type  = HOOK_PARAM_NIL;
+      hparam[6].type  = HOOK_PARAM_SENTINEL;
       hooks_runParam( "standing", hparam );
 
       /* Sanitize just in case. */
@@ -1450,6 +1517,7 @@ static int faction_parse( Faction *temp, const char *file )
    temp->sched_env          = LUA_NOREF;
    temp->lua_env            = LUA_NOREF;
    temp->lua_hit            = LUA_NOREF;
+   temp->lua_hit_test       = LUA_NOREF;
    temp->lua_text_rank      = LUA_NOREF;
    temp->lua_text_broad     = LUA_NOREF;
    temp->lua_reputation_max = LUA_NOREF;
@@ -1604,6 +1672,8 @@ static void faction_addStandingScript( Faction *temp, const char *scriptname )
 
    /* Set up the references. */
    temp->lua_hit = nlua_refenvtype( temp->lua_env, "hit", LUA_TFUNCTION );
+   temp->lua_hit_test =
+      nlua_refenvtype( temp->lua_env, "hit_test", LUA_TFUNCTION );
    temp->lua_text_broad =
       nlua_refenvtype( temp->lua_env, "text_broad", LUA_TFUNCTION );
    temp->lua_text_rank =
@@ -1769,6 +1839,15 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
       system_getFactionPresence( sys, f ); /* Starting reputation. */
    if ( srep == NULL )
       return;
+
+#if DEBUGGING
+   if ( srep->value <= 0. ) {
+      WARN( "Trying to apply local faction threshol from system with no "
+            "presence." );
+      return;
+   }
+#endif /* DEBUGGING */
+
    double      n         = 0;
    double      rep       = srep->local;
    StarSystem *sys_stack = system_getAll();
@@ -1852,6 +1931,7 @@ int factions_load( void )
    f->sched_env          = LUA_NOREF;
    f->lua_env            = LUA_NOREF;
    f->lua_hit            = LUA_NOREF;
+   f->lua_hit_test       = LUA_NOREF;
    f->lua_text_rank      = LUA_NOREF;
    f->lua_text_broad     = LUA_NOREF;
    f->lua_reputation_max = LUA_NOREF;

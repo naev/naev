@@ -403,12 +403,17 @@ local function board_capture ()
    end
 
    local fct = board_plt:faction()
-   local fcthit = board_plt:points() / 2 + board_fcthit -- So looting is always applied
+   local fcthit = board_plt:points()
    local factionmsg = ""
    if not (fct:static() or fct:invisible()) then
+      local rep = board_plt:reputation()
+      local fcthittest = fct:hitTest( -fcthit, system.cur(), "capture" )
+      if board_fcthit ~= 0 then
+         fcthittest = fcthittest + fct:hitTest( -board_fcthit, system.cur(), "board" )
+      end
       factionmsg = fmt.f(_(" Capturing the ship will lower your reputation with {fct} by {amount} (current standing is {current})."),
-         {fct=fct, amount=fcthit, current=board_plt:reputation()})
-      if board_plt:reputation()-fcthit < 0 then
+         {fct=fct, amount=fmt.number(math.abs(fcthittest)), current=rep})
+      if rep+fcthittest < 0 then
          factionmsg = fmt.f(_([[{msg} This action will make you hostile with {fct}!]]),
             {msg=factionmsg, fct=fct})
       end
@@ -431,8 +436,8 @@ You will still have to escort the ship and land with it to perform the repairs a
             {shp=board_plt:name(),amount=fmt.credits(cost)}))
 
          -- Faction hit
-         fct:hit( -fcthit, system.cur(), "capture" )
-         player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=fcthit,fct=fct}).."#0")
+         local realhit = fct:hit( -fcthit, system.cur(), "capture" )
+         player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=realhit,fct=fct}).."#0")
 
          -- Start capture script
          local nc = naev.cache()
@@ -593,10 +598,7 @@ function board( plt )
    end
 
    local fct = board_plt:faction()
-   local pm = board_plt:memory()
-   board_fcthit = pm.distress_hit or (math.pow(board_plt:points(), 0.37)-2)
-   board_fcthit = math.max( 0, board_fcthit )
-   -- TODO see if nobody notices
+   board_fcthit = math.max( 0, board_plt:points() )
    if fct:static() or fct:invisible() then
       board_fcthit = 0
    end
@@ -630,8 +632,9 @@ function board( plt )
    -- Display about faction hits
    local fctmsg
    if board_fcthit > 0 then
-      fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}."),
-            {fct=fct,fcthit=fmt.number(board_fcthit)})
+      local loss = fct:hitTest( -board_fcthit, system.cur(), "board" )
+      fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}, and may anger nearby ships."),
+            {fct=fct,fcthit=fmt.number(math.abs(loss))})
    else
       fctmsg = _("Looting anything from the ship may anger nearby ships.")
    end
@@ -677,9 +680,10 @@ end
 function board_fcthit_check( func )
    local fct = board_plt:faction()
    local std = board_plt:reputation()
-   if (std>=0) and (std-board_fcthit<0) then
+   local fcthittest = fct:hitTest( -board_fcthit, system.cur(), "board" )
+   if (std>=0) and (std-fcthittest<0) then
       local msg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {amount} (current standing is {current}). #rThis action will make you hostile with {fct}!#0"),
-         {fct=fct, amount=fmt.number(board_fcthit), current=std})
+         {fct=fct, amount=fmt.number(math.abs(fcthittest)), current=std})
       luatk.yesno(fmt.f(_([[Offend {fct}?]]),{fct=fct}), msg, function ()
          func()
       end )
@@ -704,7 +708,7 @@ local function board_fcthit_apply ()
    end
 
    local msg = fmt.f(_("You have lost {fcthit} reputation with {fct} for looting this ship!"),
-      {fcthit=fmt.number(loss),fct=board_plt:faction()})
+      {fcthit=fmt.number(loss),fct=fct})
    player.msg( "#r"..msg.."#0" )
    board_fcthit_txt:set( msg )
 end

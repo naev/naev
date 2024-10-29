@@ -15,7 +15,7 @@
  <fabricator>Soromid</fabricator>
  <faction>Soromid</faction>
  <license>Medium Combat Vessel</license>
- <cond>math.ceil(faction.playerStanding("Soromid")+0.5) &gt;= 40</cond>
+ <cond>math.floor(system.cur():reputation("Soromid")+0.5) &gt;= 40</cond>
  <condstr>You need at least 40% reputation with the Soromid.</condstr>
  <description>The Odium offers a good balance between shields and armour, as well as an impressive amount of system hardpoints for a ship its size. It can often be found dominating smaller military engagements.</description>
  <health>

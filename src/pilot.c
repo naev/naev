@@ -1248,7 +1248,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
             lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->lua_mem ); /* m */
             lua_getfield( naevL, -1, "distress_hit" );           /* m, v */
             if ( lua_isnil( naevL, -1 ) )
-               hit = MAX( 0, pow( p->ship->points, 0.37 ) - 2 );
+               hit = MAX( 0., pow( p->ship->points, 0.37 ) - 2. );
             else if ( lua_isnumber( naevL, -1 ) )
                hit = lua_tonumber( naevL, -1 );
             else {
@@ -1576,12 +1576,11 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
          pilot_dead( p, shooter );
 
          /* adjust the combat rating based on pilot mass and ditto faction */
-         if ( ( pshooter != NULL ) && pilot_isWithPlayer( pshooter ) ) {
-            /* About 6 for a llama, 52 for hawking. */
-            int mod = 2. * ( pow( p->base_mass, 0.4 ) - 1. );
-
+         if ( ( p->armour <= 0. ) && ( pshooter != NULL ) &&
+              pilot_isWithPlayer( pshooter ) ) {
             /* Modify faction for him and friends. */
-            faction_hit( p->faction, cur_system, -mod, "destroy", 0 );
+            faction_hit( p->faction, cur_system, -p->ship->points, "destroy",
+                         0 );
 
             /* Note that player destroyed the ship. */
             player.ships_destroyed[p->ship->class]++;

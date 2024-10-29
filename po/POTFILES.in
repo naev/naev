@@ -2778,7 +2778,6 @@ dat/ai/lost.lua
 dat/ai/marauder.lua
 dat/ai/mercenary.lua
 dat/ai/miner.lua
-dat/ai/noidle.lua
 dat/ai/pers.lua
 dat/ai/pers_patrol.lua
 dat/ai/pers_pirate.lua
@@ -3029,7 +3028,6 @@ dat/factions/spawn/traders_society.lua
 dat/factions/spawn/traders_society/default.lua
 dat/factions/spawn/zalek.lua
 dat/factions/spawn/zalek/default.lua
-dat/factions/standing/collective.lua
 dat/factions/standing/dvaered.lua
 dat/factions/standing/empire.lua
 dat/factions/standing/flf.lua

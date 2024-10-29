@@ -1,11 +1,17 @@
 return {
    fct            = faction.get("Pirate"), -- To be replaced by clans
-   cap_kill       = 50,
-   delta_distress = {-2, 0.25},    -- Maximum change constraints
-   --delta_kill     = {-5, 1},    -- Maximum change constraints
-   cap_misn_def   = 80-3*3-5*3, -- Player should be able to get to 80
-   cap_misn_var   = "_fcap_pirate",
-   cap_tags       = {
+   rep_max        = 80-3*3-5*3, -- Player should be able to get to 80
+   rep_max_var    = "_fcap_pirate",
+   destroy_max    = 30,
+   destroy_mod    = 0.8,
+   board_max      = 50, -- In general prefer boarding / capturing over killing
+   board_min      = 30, -- Don't care too much about being boarded
+   capture_max    = 60,
+   distress_max   = 10, -- Can enjoy you distressing others
+   distress_min   = 0, -- Don't care too much about themselves
+   distress_mod   = 0.1,
+   scan_mod       = 0, -- Don't care about scanning
+   rep_max_tags   = {
       ["pir_cap_ch01_sml"] = { val=1, max=80 },
       ["pir_cap_ch01_med"] = { val=3, max=80 },
       ["pir_cap_ch01_lrg"] = { val=5, max=80 },
@@ -19,13 +25,9 @@ return {
       [0]  = _("Common Thief"),
       [-1] = _("Normie"),
    },
-   mod_distress_enemy = 1, -- Distress of the faction's enemies
-   mod_distress_friend= 0, -- Distress of the faction's allies
-   mod_kill_enemy     = 1, -- Kills of the faction's enemies
-   mod_kill_friend    = 0, -- Kills of the faction's allies
    --text_friendly  = _("Benevolent"),
    --text_neutral   = _("Impartial"),
    --text_hostile   = _("Belligerent"),
    text_bribed    = _("Paid Off"),
-   hit_range      = 0,
+   hit_range      = 5,
 }

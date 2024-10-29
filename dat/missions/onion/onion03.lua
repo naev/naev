@@ -377,7 +377,7 @@ function rtfm_board( p )
    pilot.toggleSpawn(true) -- spawn again
 end
 
--- Misison end cutscene
+-- Mission end cutscene
 function conclave ()
    vn.clear()
    vn.scene()

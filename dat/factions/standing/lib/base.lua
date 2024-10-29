@@ -3,30 +3,58 @@
    standard behaviour can be, but from here you can let your imagination go
    wild.
 --]]
+local fmt = require "format"
 local sbase = {}
 friendly_at = 70 -- global
+
+local function rep_from_points( points )
+   -- 4 points for 20 point Llama, 30 points for 150 point Hawking
+   return points / 5
+end
 
 function sbase.init( args )
    args = args or {}
    sbase.fct                = args.fct                              -- The faction
 
+   local function param( name, def )
+      sbase[name] = args[name] or def
+   end
+
    -- Some general faction parameters
-   sbase.hit_range          = args.hit_range or 2 -- Range at which it affects
-   sbase.rep_min            = args.rep_min or -100
-   sbase.rep_max            = args.rep_max or 100
+   param( "hit_range",     2 ) -- Range at which it affects
+   param( "rep_min",       -100 )
+   param( "rep_max",       30 )
+   param( "secondary_default", 0.5 )
+   param( "rep_max_var",   nil ) -- Mission variable to use for limits if defined
+   param( "rep_from_points", rep_from_points )
 
-   -- Faction caps.
-   sbase.cap_kill           = args.cap_kill            or 20       -- Kill cap
-   sbase.cap_misn_def       = args.cap_misn_def        or 30       -- Starting mission cap, gets overwritten
-   sbase.cap_misn_var       = args.cap_misn_var        or nil      -- Mission variable to use for limits
+   -- Type of source parameters.
+   param( "destroy_max",   30 )
+   param( "destroy_min",   -100 )
+   param( "destroy_mod",   1 )
 
-   -- Secondary hit modifiers.
-   sbase.mod_distress_enemy = args.mod_distress_enemy  or 0        -- Distress of the faction's enemies
-   sbase.mod_distress_friend= args.mod_distress_friend or 0.3      -- Distress of the faction's allies
-   sbase.mod_kill_enemy     = args.mod_kill_enemy      or 0.3      -- Kills of the faction's enemies
-   sbase.mod_kill_friend    = args.mod_kill_friend     or 0.3      -- Kills of the faction's allies
-   sbase.mod_misn_enemy     = args.mod_misn_enemy      or 0.3      -- Missions done for the faction's enemies
-   sbase.mod_misn_friend    = args.mod_misn_friend     or 0.3      -- Missions done for the faction's allies
+   --param( "disable_max",   20 )
+   --param( "disable_min",   -100 )
+   --param( "disable_mod",   0.3 )
+
+   param( "board_max",     20 )
+   param( "board_min",     -100 )
+   param( "board_mod",     0.25 )
+
+   param( "capture_max",   30 )
+   param( "capture_max",   -100 )
+   param( "capture_mod",   1 )
+
+   param( "distress_max",  -20 ) -- Can't get positive  reputation from distress
+   param( "distress_min",  -40 )
+   param( "distress_mod",  0 )
+
+   param( "scan_max",      -100 ) -- Can't gain reputation scanning by default
+   param( "scan_min",      -20 )
+   param( "scan_mod",      0.1 )
+
+   -- Allows customizing relationships with other factions
+   param( "attitude_toward", {} )
 
    -- Text stuff
    sbase.text = args.text or {
@@ -45,6 +73,26 @@ function sbase.init( args )
    sbase.text_neutral  = args.text_neutral or _("Neutral")
    sbase.text_hostile  = args.text_hostile or _("Hostile")
    sbase.text_bribed   = args.text_bribed or _("Bribed")
+
+   -- TODO maybe we should do something better than this
+   -- Look at enemy factions and remove them if they don't share systems
+   if sbase.fct then
+      for i,e in ipairs(sbase.fct:enemies()) do
+         if sbase.attitude_toward[ e:nameRaw() ]==nil then
+            local found = false
+            for j,s in ipairs(system:getAll()) do
+               if s:presence(e) > 0 and s:presence(sbase.fct) > 0 then
+                  found = true
+                  break
+               end
+            end
+            if not found then
+               sbase.attitude_toward[ e:nameRaw() ] = 0
+            end
+         end
+      end
+   end
+
    return sbase
 end
 
@@ -54,47 +102,71 @@ local function clamp( x, min, max )
 end
 
 -- Applies a local hit to a system
-local function hit_local( sys, mod, max )
+local function hit_local( sys, mod, min, max )
    -- Case system and no presence, it doesn't actually do anything...
    if sys and sys:presence( sbase.fct )<=0 then
       return
    end
    -- Just simple application based on local reputation
    local r = sys:reputation( sbase.fct )
-   local f = math.min( max, r+mod )
-   sys:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
+   max = math.max( r, max ) -- Don't lower under the current value
+   min = math.min( r, min ) -- Don't increase the current value
+   local f = clamp( r+mod, min, max )
+   sys:setReputation( sbase.fct, f )
    return f-r
 end
 
 -- Determine max and modifier based on type and whether is secondary
-local function hit_mod( mod, source, secondary )
-   local max, modenemy, modally
+local function hit_mod( mod, source, secondary, primary_fct )
+   local max, min
 
    -- Split by type
-   if source=="distress" or source=="scan" then
-      modenemy = sbase.mod_distress_enemy
-      modally = sbase.mod_distress_friend
-      max = sbase.cap_kill
-   elseif source == "kill" or source=="board" or source=="capture"then
-      modenemy = sbase.mod_kill_enemy
-      modally = sbase.mod_kill_friend
-      max = sbase.cap_kill
-   else
-      modenemy = sbase.mod_misn_enemy
-      modally = sbase.mod_misn_friend
+   if source=="destroy" then
+      max = sbase.destroy_max
+      min = sbase.destroy_min
+      mod = sbase.destroy_mod * sbase.rep_from_points( mod )
+   elseif source=="board" then
+      max = sbase.board_max
+      min = sbase.board_min
+      mod = sbase.board_mod * sbase.rep_from_points( mod )
+   elseif source=="capture" then
+      max = sbase.capture_max
+      min = sbase.capture_min
+      mod = sbase.capture_mod * sbase.rep_from_points( mod )
+   elseif source=="distress" then
+      max = sbase.distress_max
+      min = sbase.distress_min
+      mod = sbase.distress_mod * sbase.rep_from_points( mod )
+   elseif source=="scan" then
+      max = sbase.scan_max
+      min = sbase.scan_min
+      mod = sbase.scan_mod * sbase.rep_from_points( mod )
+   elseif source=="script" then -- "script" type is handled here
       max = reputation_max()
+      min = sbase.rep_min
+      --mod = mod -- Not modified
+   else
+      max = reputation_max()
+      min = sbase.rep_min
+      warn(fmt.f("Unknown faction hit source '{src}' for faction '{fct}'!"), {src=source,fct=sbase.fct})
    end
 
-   -- Modulate based on friend/foe
-   if secondary then
-      if mod > 0 then
-         mod = mod * modenemy
+   -- Make sure it's within the global minimum and maximum.
+   max = math.min( max, reputation_max() )
+   min = math.max( min, sbase.rep_min )
+
+   -- Modify secondaries
+   if secondary ~= 0 then
+      -- If we have a particular attitude towards a government, expose that
+      local at = sbase.attitude_toward[ primary_fct:nameRaw() ]
+      if at then
+         mod = mod * at
       else
-         mod = mod * modally
+         mod = mod * sbase.secondary_default
       end
    end
 
-   return max, mod
+   return min, max, mod
 end
 
 --[[
@@ -102,7 +174,8 @@ Handles a faction hit for a faction.
 
 Possible sources:
    - "destroy": Pilot death.
-   - "board": Pilot ship as boarded.
+   - "disable": Pilot ship was disabled.
+   - "board": Pilot ship was boarded.
    - "capture": Pilot ship was captured.
    - "distress": Pilot distress signal.
    - "scan": when scanned by pilots and illegal content is found
@@ -111,12 +184,18 @@ Possible sources:
    @param sys System (or nil for global) that is having the hit
    @param mod Amount of faction being changed.
    @param source Source of the faction hit.
-   @param secondary Flag that indicates whether this is a secondary (through ally or enemy) hit.
+   @param secondary Flag that indicates whether this is a secondary hit. If 0 it is primary, if +1 it is secondary hit from ally, if -1 it is a secondary hit from an enemy.
+   @param primary_fct In the case of a secondary hit, the faction that caused the primary hit.
    @return The faction amount to set to.
 --]]
-function hit( sys, mod, source, secondary )
-   local  max
-   max, mod = hit_mod( mod, source, secondary )
+function hit( sys, mod, source, secondary, primary_fct )
+   local min, max
+   min, max, mod = hit_mod( mod, source, secondary, primary_fct )
+
+   -- Case nothing changes, or too small to matter
+   if math.abs(mod) < 1e-1 then
+      return 0
+   end
 
    -- No system, so just do the global hit
    if not sys then
@@ -139,13 +218,15 @@ function hit( sys, mod, source, secondary )
             maxsys = s
             maxval = r
          end
-         local f = math.min( max, r+mod )
+         local fmin = math.min( r, min )
+         local fmax = math.max( r, max )
+         local f = clamp( r+mod, fmin, fmax )
          if mod < 0 then
             changed = math.min( changed, f-r )
          else
             changed = math.max( changed, f-r )
          end
-         s:setReputation( sbase.fct, clamp( f, sbase.rep_min, sbase.rep_max ) )
+         s:setReputation( sbase.fct, f )
       end
 
       -- Now propagate the thresholding from the max or min depending on sign of mod
@@ -159,7 +240,8 @@ function hit( sys, mod, source, secondary )
    end
 
    -- Center hit on sys and have to expand out
-   local val = hit_local( sys, mod, max )
+   local val = hit_local( sys, mod, min, max )
+   local valsys = sys
    if sbase.hit_range > 0 then
       local done = { sys }
       local todo = { sys }
@@ -168,9 +250,10 @@ function hit( sys, mod, source, secondary )
          for i,s in ipairs(todo) do
             for j,n in ipairs(s:adjacentSystems()) do
                if not inlist( done, n ) then
-                  local v = hit_local( n, mod / (dist+1), max )
+                  local v = hit_local( n, mod / (dist+1), min, max )
                   if not val then
                      val = v
+                     valsys = n
                   end
                   table.insert( done, n )
                   table.insert( dosys, n )
@@ -182,8 +265,19 @@ function hit( sys, mod, source, secondary )
    end
 
    -- Update frcom system that did hit and return change at that system
-   sbase.fct:applyLocalThreshold( sys )
+   if val then
+      sbase.fct:applyLocalThreshold( valsys )
+   end
    return val or 0
+end
+
+--[[
+Highly simplified version that doesn't take into account maximum standings and the likes.
+--]]
+function hit_test( _sys, mod, source )
+   local  _max
+   _max, mod = hit_mod( mod, source, 0 )
+   return mod
 end
 
 --[[
@@ -227,16 +321,15 @@ end
    Returns the maximum reputation limit of the player.
 --]]
 function reputation_max ()
-   if sbase.cap_misn_var == nil then
-      return sbase.cap_misn_def
+   if sbase.rep_max_var == nil then
+      return sbase.rep_max
    end
-
-   local cap   = var.peek( sbase.cap_misn_var )
-   if cap == nil then
-      cap = sbase.cap_misn_def
-      var.push( sbase.cap_misn_var, cap )
+   local max   = var.peek( sbase.rep_max_var )
+   if max == nil then
+      max = sbase.rep_max
+      var.push( sbase.rep_max_var, max )
    end
-   return cap
+   return max
 end
 
 return sbase

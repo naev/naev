@@ -5,9 +5,12 @@ local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
 local formation = require "formation"
 local playerform = require "playerform"
+local lf = require "love.filesystem"
+local lg = require "love.graphics"
+local love_shaders = require "love_shaders"
 
 local radar_gfx, radar_x, radar_y, screen_h, screen_w
-local aset, cargo, nav_spob, nav_pnt, pp, ptarget, slot_w, slot_h, slot_y, timers
+local aset, cargo, nav_spob, nav_pnt, ptarget, slot_w, slot_h, slot_y, timers
 local ta_pane_w, ta_pane_x, ta_pane_y, ta_pnt_pane_x, ta_pnt_pane_y, pl_pane_x, pl_pane_y
 local slot, slotend, slotframe
 -- This script has a lot of globals. It really loves them.
@@ -24,9 +27,22 @@ local cols = {}
 local icons = {}
 local has_flow
 
+local cGrey = colour.new("Grey40")
+--local cWhite = colour.new("White")
+--local cRed = colour.new("Red")
+--local cOrange = colour.new("Orange")
+--local cCyan = colour.new("Cyan")
+local cFriend = colour.new("Friend")
+local cHostile = colour.new("Hostile")
+
+local scan_icon, scandone_icon
+
+local time_global = 0
 function create()
+   time_global = 0
+
    --Get player
-   pp = player.pilot()
+   local pp = player.pilot()
    pname = player.name()
 
    -- Set default formation
@@ -69,11 +85,17 @@ function create()
    cols.slot_bg = colour.new(  12/255,  14/255,  20/255 )
 
    --Load Images
-   local base = "gfx/gui/slim/"
    local function tex_open( name, sx, sy )
-      local t = tex.open( base .. name, sx, sy )
+      local t = tex.open( "gfx/gui/slim/" .. name, sx, sy )
       t:setWrap( "clamp" )
       return t
+   end
+   local function shader_open( name )
+      local px, err = lf.read("gui/slim/" .. name  )
+      if px==nil then
+         warn( err )
+      end
+      return lg.newShader( px )
    end
    player_pane_t = tex_open( "frame_player_top.png" )
    player_pane_m = tex_open( "frame_player_middle.webp" )
@@ -125,9 +147,11 @@ function create()
    warnlight3 = tex_open( "warnlight3.png" )
    warnlight4 = tex_open( "warnlight4.png" )
    warnlight5 = tex_open( "warnlight5.png" )
-   tracking_light = tex_open( "track.png" )
+   tracking_light = shader_open( "track.frag" )
    target_light_off = tex_open( "targeted_off.png" )
    target_light_on =  tex_open( "targeted_on.png" )
+   scan_icon = shader_open( "scan.frag" )
+   scandone_icon = shader_open( "scandone.frag" )
    cargo_light_off = tex_open( "cargo_off.png" )
    cargo_light_on =  tex_open( "cargo_on.png" )
    question = tex_open( "question.png" )
@@ -212,7 +236,7 @@ function create()
    --Ammo, heat and ready bars
    bar_weapon_w, bar_weapon_h = bgs.ammo:dim()
    bar_ready_w, bar_ready_h = bgs.ready:dim()
-   track_w, track_h = tracking_light:dim()
+   track_w, track_h = 12, 12 --tracking_light:dim()
    x_ammo = pl_pane_x + 39
    y_ammo = pl_pane_y - 27
    if has_flow then
@@ -277,7 +301,7 @@ function create()
          22, -- Refire sheen Y
           6, -- Text Y
           5, -- Tracking icon X
-          8, -- Tracking icon Y
+          6, -- Tracking icon Y
       }
    }
 
@@ -337,7 +361,7 @@ function create()
 end
 
 function update_target()
-   ptarget = pp:target()
+   ptarget = player.pilot():target()
    if ptarget then
       ptarget_cvs = ptarget:render()
       ptarget_gfx = ptarget_cvs:getTex()
@@ -363,7 +387,7 @@ end
 
 function update_nav()
    nav_spob = {}
-   nav_pnt, nav_hyp = pp:nav()
+   nav_pnt, nav_hyp = player.pilot():nav()
    local autonav_hyp, jumps = player.autonavDest()
    if nav_pnt then
       pntflags = nav_pnt:services()
@@ -429,6 +453,7 @@ function update_faction()
 end
 
 function update_cargo()
+   local pp = player.pilot()
    local cargol = pp:cargoList()
    cargofree = string.format( _(" (%s free)"), fmt.tonnes_short( pp:cargoFree() ) )
    cargofreel = gfx.printDim( true, cargofree )
@@ -447,6 +472,7 @@ function update_cargo()
 end
 
 function update_ship()
+   local pp = player.pilot()
    stats = pp:stats()
 
    -- If flow status changed, reset
@@ -464,8 +490,7 @@ end
 
 local effects = {}
 function update_effects()
-   local buff_col    = colour.new("Friend")
-   local debuff_col  = colour.new("Hostile")
+   local pp = player.pilot()
    effects = {}
    local effects_added = {}
    for k,e in ipairs(pp:effects()) do
@@ -477,9 +502,9 @@ function update_effects()
          effects_added[ e.name ] = a
 
          if e.buff then
-            e.col = buff_col
+            e.col = cFriend
          elseif e.debuff then
-            e.col = debuff_col
+            e.col = cHostile
          end
       end
       effects[ a ].n = effects[ a ].n + 1
@@ -487,6 +512,7 @@ function update_effects()
 end
 
 local function update_wset()
+   local pp = player.pilot()
    wset_name, wset  = pp:weapset()
 
    -- Set the names as short names
@@ -613,9 +639,11 @@ local function render_ammoBar( weap, x, y )
       else
          txtcol = cols.txt_bar
       end
+      --[[
       if not weap.in_arc and ptarget ~= nil then
          txtcol = cols.txt_una
       end
+      --]]
       value = weap.left_p
       track = weap.track or weap.lockon
    else
@@ -677,18 +705,13 @@ local function render_ammoBar( weap, x, y )
    if track then
       if track == -1 or ptarget == nil then
          trackcol = cols.txt_una
-      elseif weap.lockon then
-         if track < 1. then
-            local h, s, v = cols.txt_una:hsv()
-            trackcol = colour.new( cols.txt_una )
-            trackcol:setHSV( h, s, v + track * (1-v))
-         else
-            trackcol = colour.new( "Green" )
-         end
       else -- Handling turret tracking.
-         trackcol = colour.new(1-track, track, 0)
+         trackcol = colour.newHSV(125*track, 1, 1)
       end
-      gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], trackcol )
+      lg.setShader( tracking_light )
+      lg.setColour( trackcol )
+      tracking_light:send( "u_track", track )
+      love_shaders.img:draw( x+offsets[7], screen_h-y-offsets[8], 0, track_w, -track_h )
       textoffset = track_w + 2
    end
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
@@ -720,6 +743,11 @@ local function largeNumber( number, idp )
 end
 
 function render( dt, dt_mod )
+   time_global = time_global + dt / dt_mod
+
+   local pp = player.pilot()
+   local sh = lg.getShader()
+
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
@@ -989,7 +1017,6 @@ function render( dt, dt_mod )
                end
             end
 
-
             --Warning Light
             if ptarget_target == pp and not ta_disabled then
                gfx.renderTex( target_light_on, ta_warning_x - 3, ta_warning_y - 3 )
@@ -1004,12 +1031,25 @@ function render( dt, dt_mod )
                gfx.renderTexScale( ptarget_faction_gfx, ta_fact_x - ls*lw/2, ta_fact_y - ls*lh/2, ls*lw, ls*lh )
             end
 
+            -- Player's scanning status
+            if pp:scandone() then
+               lg.setColour( cols.txt_top )
+               lg.setShader( scandone_icon )
+            else
+               lg.setColour( cGrey )
+               lg.setShader( scan_icon )
+               scan_icon:send( "u_time", time_global )
+            end
+            love_shaders.img:draw( ta_cargo_x, screen_h-ta_cargo_y, 0, 24, -24 )
+
             -- Cargo light cargo_light_off
+            --[[
             if ta_cargo and #ta_cargo >= 1 then
                gfx.renderTex( cargo_light_on, ta_cargo_x, ta_cargo_y )
             else
                gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
             end
+            --]]
 
             -- Status information
             local status
@@ -1042,7 +1082,7 @@ function render( dt, dt_mod )
             gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
 
             -- Cargo light
-            gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
+            --gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
 
             --Pilot name
             gfx.print( true, _("Unknown"), ta_pane_x + 14, ta_pane_y + 176, cols.txt_una )
@@ -1143,9 +1183,8 @@ function render( dt, dt_mod )
       fuelstring = _("none")
    end
 
-   local bartext = { _("Pilot:"), pname, _("System:"), sysname, _("Time:"), time.str(), _("Credits:"),
-         largeNumber( credits, 2 ), _("Nav:"), navstring, _("Fuel:"), fuelstring,
-         _("WSet:"), wset_name, _("Cargo:") }
+   local bartext = { _("System:"), sysname, _("Time:"), time.str(), _("Credits:"),
+         largeNumber( credits, 2 ), _("Nav:"), navstring, _("Fuel:"), fuelstring, _("Cargo:") }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
          gfx.print( true, v, length, 5, cols.txt_top )
@@ -1183,6 +1222,8 @@ function render( dt, dt_mod )
       length = length + gfx.printDim( true, _("none") ) + 6
    end
    gfx.print( true, cargofree, length, 6, cols.txt_std )
+
+   lg.setShader( sh )
 end
 
 local function mouseInsideButton( x, y )

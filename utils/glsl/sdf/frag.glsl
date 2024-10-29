@@ -739,7 +739,7 @@ vec4 sdf_missilelockon( vec4 colour, vec2 uv )
    float m = 1.0 / dimensions.x;
 
    /* Outter stuff. */
-   float d = 1e1000;
+   float d = 1e10;
 
    /* Inner steps */
    float dts = 0.05 * max( 0.5, 100.0 * m );
@@ -989,6 +989,64 @@ vec4 electric2( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords 
    return colour;
 }
 
+vec4 target( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec2 uv = texture_coords*2.0-1.0;
+   float t = fract( u_time*0.25 )*4.0;
+   float u_track = min( t*0.5, 1.0 );
+   float m = 1.0 / dimensions.x;
+   vec2 sc = vec2( sin(u_track*M_PI), cos(u_track*M_PI) );
+   float d = sdArc( uv, vec2(1.0,0.0), sc, 0.6, 0.2 );
+
+   if (u_track >= 1.0) {
+      d = max( d, -sdBox( uv, vec2( 0.2, 0.9 ) )+m*2.0 );
+      d = max( d, -sdBox( uv, vec2( 0.9, 0.2 ) )+m*2.0 );
+      colour.a = smoothstep( -m, 0.0, -d );
+
+      d = sdBox( uv, vec2( 0.05, 0.9 ) )-0.1+m;
+      //d = min( d, sdBox( uv, vec2( 0.05, 0.9 ) )-0.1+m );
+      d = min( d, sdBox( uv, vec2( 0.9, 0.05 ) )-0.1+m );
+      colour.a = colour.a * 0.3 + smoothstep( -m, 0.0, -d );
+   }
+   else
+      colour.a = smoothstep( -m, 0.0, -d );
+
+   return colour;
+}
+
+vec4 scan( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   float progress = min( 1.0, u_time * 0.5 );
+   vec2 uv = texture_coords*2.0-1.0;
+   float m = 1.0 / dimensions.x;
+
+   float d;
+
+   if (progress < 1.0 ) {
+      float c = cos(u_time*1.0);
+      float s = sin(u_time*1.0);
+      mat2 R = mat2( c, s, -s, c );
+      uv = R*uv;
+      uv.x = abs(uv.x);
+      d = sdTriangleEquilateral( (uv + 0.75*vec2(sin(0.0),-cos(0.0))) * -4.0 )-0.1;
+      d = min( d, sdTriangleEquilateral( (uv + 0.75*vec2(sin(-M_PI*2/3),-cos(-M_PI*2/3))) * -4.0 )-0.1 );
+      d = min( d, sdCircle( uv, 0.3 ) );
+      d = max( d, -sdCircle( uv, 0.2 ) );
+   }
+   else {
+      uv.x = abs(uv.x);
+      d = sdCircle( uv, 0.65 );
+      d = max( d, -sdCircle( uv, 0.55 ) );
+      d = min( d, sdTriangleEquilateral( (uv + 0.75*vec2(sin(0.0),-cos(0.0))) * -4.0 )-0.1 );
+      d = min( d, sdTriangleEquilateral( (uv + 0.75*vec2(sin(-M_PI*2/3),-cos(-M_PI*2/3))) * -4.0 )-0.1 );
+      d = min( d, sdCircle( uv, 0.2 ) );
+   }
+
+   colour.a = smoothstep( -m, 0.0, -d );
+
+   return colour;
+}
+
 vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
    vec4 col_out;
@@ -1017,8 +1075,10 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_notemarker( colour, uv_rel );
    //col_out = sm_highlight( colour, tex, uv, px );
    //col_out = sm( colour, tex, uv, px );
-   col_out = electric( colour, tex, uv, px );
+   //col_out = electric( colour, tex, uv, px );
    //col_out = electric2( colour, tex, uv, px );
+   //col_out = target( colour, tex, uv, px );
+   col_out = scan( colour, tex, uv, px );
 
    return mix( bg(uv), col_out, col_out.a );
 }

@@ -64,6 +64,8 @@ void   faction_setReputationOverride( int f, int set, double value );
 /* player stuff */
 double      faction_hit( int f, const StarSystem *sys, double mod,
                          const char *source, int single );
+double      faction_hitTest( int f, const StarSystem *sys, double mod,
+                             const char *source );
 void        faction_modPlayer( int f, double mod, const char *source );
 void        faction_modPlayerSingle( int f, double mod, const char *source );
 void        faction_modPlayerRaw( int f, double mod );

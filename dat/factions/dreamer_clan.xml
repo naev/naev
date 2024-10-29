@@ -8,7 +8,7 @@
  <spawn>pirate_dreamer_clan</spawn>
  <standing>pirate_dreamer_clan</standing>
  <equip>pirate</equip>
- <local_th>0</local_th>
+ <local_th>5</local_th>
  <useshiddenjumps/>
  <description>The Dreamer Pirate Clan consists largely of disgruntled pirates from the Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny.</description>
  <generator weight="0.4">Pirate</generator>
