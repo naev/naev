@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-07-22 21:45+0900\n"
-"PO-Revision-Date: 2024-10-26 17:16+0000\n"
+"PO-Revision-Date: 2024-11-01 17:00+0000\n"
 "Last-Translator: Ezra Alvarion <ezraalvarion71@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/>"
 "\n"
@@ -1624,11 +1624,11 @@ msgstr ""
 
 #: dat/effects/chakra_burn.xml:2
 msgid "Chakra Burn"
-msgstr ""
+msgstr "Bakaran Cakra"
 
 #: dat/effects/chakra_burn.xml:3
 msgid "Your ship is being burned by chakra!"
-msgstr ""
+msgstr "Kapalmu sedang dibakar cakra!"
 
 #: dat/effects/chakra_corruption.xml:2
 msgid "Chakra Corruption"
@@ -1642,11 +1642,11 @@ msgstr ""
 #: dat/outfits/bioship/skills/crippling_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:263
 msgid "Crippling Plasma"
-msgstr ""
+msgstr "Plasma Pelumpuh"
 
 #: dat/effects/crippling_plasma.xml:3
 msgid "Plasma is interfering with the weapon systems!"
-msgstr ""
+msgstr "Plasma sedang berinterferensi dengan sistem senjata!"
 
 #: dat/effects/ethereal.xml:2
 msgid "Ethereal"
@@ -2155,7 +2155,7 @@ msgstr "Proteron"
 
 #: dat/factions/proteron.xml:5
 msgid "Sovereign Proteron Autarchy"
-msgstr ""
+msgstr "Autarki Proteron Berdaulat"
 
 #: dat/factions/proteron.xml:11
 msgid ""
@@ -2163,6 +2163,9 @@ msgid ""
 "move and attack the Emperor himself. This caused the Incident and left the "
 "universe irreversibly ravaged."
 msgstr ""
+"Autarki Proteron Berdaulat adalah sebuah Wangsa Besar Imperial yang mencoba "
+"untuk bergerak dan menyerang sang Kaisar. Hal ini menyebabkan terjadinya "
+"Insiden dan meninggalkan bekas luka yang dalam kepada alam semesta kita."
 
 #: dat/factions/raven_clan.xml:2
 msgid "Raven Clan"
@@ -2527,6 +2530,8 @@ msgstr "Gantungan Kunci Unik"
 msgid ""
 "A small statue of a crossed-eyed gorilla lifting a Goddard Battlecruiser."
 msgstr ""
+"Patung kecil dari seekor gorila jereng yang sedang mengangkat Kapal Perang "
+"Goddard."
 
 #: dat/outfits/accessory/left_boot.xml:2
 msgid "Left Boot"
@@ -2538,8 +2543,8 @@ msgid ""
 "and is full of confetti. You're not sure what to do with it, but it might "
 "liven up the ship."
 msgstr ""
-"Pasangan kiri sepatu bot milik seorang pejabat tinggi Kekaisaran. Kamu "
-"kebingungan untuk apa sepatu bot hanya sebelah, tapi benda ini mungkin "
+"Pasangan kiri sepatu bot milik seorang pejabat tinggi Kekaisaran. Kamu pun "
+"kebingungan apa guna sepatu bot hanya sebelah, tapi benda ini mungkin dapat "
 "menghidupkan suasana kapal."
 
 #: dat/outfits/accessory/left_boot.xml:13
@@ -2557,10 +2562,14 @@ msgid ""
 "fairly certain that you did a favour in not delivering it. At least it makes "
 "your ship look cuter."
 msgstr ""
+"Surat cinta yang seharusnya kamu kirim, tapi malah terselip tertinggal; "
+"baris pertamanya berisi \"Permen jaheku, betapa sembulak kua bulan dakau...\""
+" kamu yakin bahwa alam semesta amat baik telah membuat surat ini tertinggal. "
+"Setidaknya barang ini membuat kapalmu lebih lucu."
 
 #: dat/outfits/accessory/love_letter.xml:13
 msgid "#rLove is in the air.#0"
-msgstr ""
+msgstr "#rCinta bersemarak di udara.#0"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:2
 msgid "Pentagram of Valor"
@@ -2599,7 +2608,7 @@ msgstr ""
 
 #: dat/outfits/accessory/rackham_razor.xml:2
 msgid "Rackham's Razor"
-msgstr ""
+msgstr "Silet Rackham"
 
 #: dat/outfits/accessory/rackham_razor.xml:11
 msgid ""
@@ -2608,6 +2617,10 @@ msgid ""
 "mere sight of this sword struck fear into his enemies and rallied his crew "
 "with visions of plunder and glory."
 msgstr ""
+"Sebuah pedang dengan ukiran keren, bilah besi nano setajam silet, menjadi "
+"senjata andalan perompak legendaris Red Rackham. Melihat pedang ini saja "
+"cukup untuk membuat takut musuh-musuhnya dan mengingatkan krunya akan harta "
+"dan kejayaan."
 
 #: dat/outfits/accessory/rackham_razor.xml:13
 msgid "#gDouble effect when flying a pirate ship.#0"
@@ -39148,7 +39161,7 @@ msgstr ""
 
 #: dat/events/news/soromid.lua:7
 msgid "In memory of Sorom."
-msgstr "Untuk menangan Sorom."
+msgstr "Untuk mengenang Sorom."
 
 #.
 #. Science and technology
@@ -126767,7 +126780,7 @@ msgstr "Kapal Penjelajah"
 
 #: src/ship.c:247
 msgid "Battleship"
-msgstr "Kapal Tempur"
+msgstr "Kapal Perang"
 
 #: src/ship.c:249
 msgid "Carrier"
