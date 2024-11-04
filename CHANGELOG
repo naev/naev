@@ -19,6 +19,7 @@
       * Gave the Quicksilver another medium structural slot
       * Beam weapons have minimum delays instead of minimum durations
       * Can stealth when missiles are locked on
+      * Deployed fighters take stress and damage over time when their mother ship is destroyed
       * Electron Burst Cannons and Za'lek Heavy Drones have had their damage per second lowered
    * Quality of Life
       * Added colourblind correction mode

@@ -1149,6 +1149,15 @@ void pilot_calcStats( Pilot *pilot )
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
 
+   /* Deployed fighters with no mothership take damage over time. */
+   if ( pilot_isFlag( pilot, PILOT_CARRIED ) ) {
+      const Pilot *parent = pilot_get( pilot->parent );
+      if ( parent == NULL ) {
+         pilot->armour_regen = MIN( -3.5, pilot->armour_regen - 10. );
+         pilot->stats.disable += 35.;
+      }
+   }
+
    /* Dump excess fuel */
    pilot->fuel = MIN( pilot->fuel, pilot->fuel_max );
 
