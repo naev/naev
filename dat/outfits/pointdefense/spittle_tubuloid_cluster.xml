@@ -34,7 +34,7 @@
   <pointdefense />
   <miss_ships />
   <shots>5</shots>
-  <dispersion>60</dispersion>
+  <dispersion>30</dispersion>
   <speed_dispersion>20</speed_dispersion>
  </specific>
 </outfit>
