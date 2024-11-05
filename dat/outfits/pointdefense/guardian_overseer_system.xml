@@ -12,7 +12,7 @@
   <cpu>-200</cpu>
  </general>
  <specific type="turret bolt">
-  <lua>outfits/pointdefense/guardian_overseer_system.lua</lua>
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
   <gfx>ripperM.png</gfx>
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>
@@ -24,7 +24,7 @@
   <energy>70</energy>
   <heatup>80</heatup>
   <trackmin>0</trackmin>
-  <trackmax>2000</trackmax>
+  <trackmax>5000</trackmax>
   <damage>
    <type>energy</type>
    <penetrate>34</penetrate>

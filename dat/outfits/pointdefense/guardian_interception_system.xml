@@ -12,7 +12,7 @@
   <cpu>-40</cpu>
  </general>
  <specific type="turret bolt">
-  <lua>outfits/pointdefense/guardian_interception_system.lua</lua>
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
   <gfx>laser2M.png</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
@@ -24,7 +24,7 @@
   <energy>8</energy>
   <heatup>60</heatup>
   <trackmin>0</trackmin>
-  <trackmax>1200</trackmax>
+  <trackmax>3600</trackmax>
   <damage>
    <type>energy</type>
    <penetrate>10</penetrate>
