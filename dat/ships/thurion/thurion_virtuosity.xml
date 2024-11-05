@@ -52,5 +52,7 @@
  <stats>
   <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
+  <launch_calibration>-50</launch_calibration>
+  <launch_lockon>-25</launch_lockon>
  </stats>
 </ship>
