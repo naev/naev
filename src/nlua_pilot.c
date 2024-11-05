@@ -1914,7 +1914,7 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
  *
  *    @luatparam Pilot p Pilot to get whether or not is using automatic weapon
  * sets.
- *    @luatretun boolean Whether or not the pilot is using automatic weapon
+ *    @luatreturn boolean Whether or not the pilot is using automatic weapon
  * sets.
  * @luafunc autoweap
  */
