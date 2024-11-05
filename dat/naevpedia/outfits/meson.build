@@ -235,6 +235,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/misc/mercenary_license.xml',
    root / 'dat/outfits/pointdefense/guardian_interception_system.xml',
    root / 'dat/outfits/pointdefense/guardian_overseer_system.xml',
+   root / 'dat/outfits/pointdefense/ratchet_point_defense.xml',
    root / 'dat/outfits/pointdefense/spittle_tubuloid_cluster.xml',
    root / 'dat/outfits/special/base_ripper_mk2.xml',
    root / 'dat/outfits/special/bikers_fury_launcher.xml',
