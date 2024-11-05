@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Guardian Overseer System">
  <general>
+  <shortname>Guardian O.S.</shortname>
   <slot>weapon</slot>
   <size>large</size>
   <license>Heavy Weapon</license>

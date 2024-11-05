@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Guardian Interception System">
  <general>
+  <shortname>Guardian I.S.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
