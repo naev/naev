@@ -33,4 +33,7 @@
   </damage>
   <pointdefense />
  </specific>
+ <tags>
+  <tag>empire</tag>
+ </tags>
 </outfit>
