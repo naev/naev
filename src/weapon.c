@@ -1198,20 +1198,27 @@ static void weapon_updateCollide( Weapon *w, double dt )
    if ( !wc.beam ) {
       int x, y, w2, h2, px, py;
       wc.gfx = outfit_gfx( w->outfit );
-      if ( wc.gfx->tex != NULL ) {
-         const CollPoly *plg = outfit_plg( w->outfit );
-         if ( plg != NULL ) {
-            wc.polygon  = plg;
-            wc.polyview = poly_view( plg, w->solid.dir );
-         } else {
-            wc.polygon  = NULL;
-            wc.polyview = NULL;
-         }
-         wc.range = wc.gfx->size; /* Range is set to size in this case. */
-      } else {
+      if ( outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_COLLISION_OVERRIDE ) ) {
          wc.polygon  = NULL;
          wc.polyview = NULL;
          wc.range    = wc.gfx->col_size;
+         wc.gfx      = NULL;
+      } else {
+         if ( wc.gfx->tex != NULL ) {
+            const CollPoly *plg = outfit_plg( w->outfit );
+            if ( plg != NULL ) {
+               wc.polygon  = plg;
+               wc.polyview = poly_view( plg, w->solid.dir );
+            } else {
+               wc.polygon  = NULL;
+               wc.polyview = NULL;
+            }
+            wc.range = wc.gfx->size; /* Range is set to size in this case. */
+         } else {
+            wc.polygon  = NULL;
+            wc.polyview = NULL;
+            wc.range    = wc.gfx->col_size;
+         }
       }
       wc.beamrange = 0.;
 
