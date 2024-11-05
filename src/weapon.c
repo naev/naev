@@ -2410,13 +2410,13 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
       if ( pilot_isPlayer( parent ) && input_mouseIsShown() ) {
          vec2 tv;
          gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
-         rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.blt.swivel );
+         rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.lau.swivel );
       } else
          rdir = dir;
    }
 
    /* Disperse as necessary. */
-   if ( outfit->u.blt.dispersion > 0. )
+   if ( outfit->u.lau.dispersion > 0. )
       rdir += RNG_1SIGMA() * outfit->u.lau.dispersion;
    /* Make sure angle is in range. */
    rdir = angle_clean( rdir );
