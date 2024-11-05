@@ -17,7 +17,6 @@
  <trail_generator x="-5" y="0" h="-15">nebula</trail_generator>
  <fabricator>Thurion Shipyards</fabricator>
  <faction>Thurion</faction>
- <license>Light Combat Vessel</license>
  <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 20</cond>
  <condstr>You need at least 20% reputation with the Thurion.</condstr>
  <description>The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms.</description>
