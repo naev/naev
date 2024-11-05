@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Guardian Interception System">
  <general>
+  <shortname>Guardian I.S.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
@@ -12,7 +13,7 @@
   <cpu>-40</cpu>
  </general>
  <specific type="turret bolt">
-  <lua>outfits/pointdefense/guardian_interception_system.lua</lua>
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
   <gfx>laser2M.png</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
@@ -24,12 +25,15 @@
   <energy>8</energy>
   <heatup>60</heatup>
   <trackmin>0</trackmin>
-  <trackmax>1200</trackmax>
+  <trackmax>4200</trackmax>
   <damage>
    <type>energy</type>
    <penetrate>10</penetrate>
-   <physical>5</physical>
+   <physical>10</physical>
   </damage>
   <pointdefense />
  </specific>
+ <tags>
+  <tag>empire</tag>
+ </tags>
 </outfit>

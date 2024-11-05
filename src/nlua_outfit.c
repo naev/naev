@@ -694,7 +694,7 @@ static int outfitL_weapStats( lua_State *L )
    Pilot        *p = ( lua_ispilot( L, 2 ) ) ? luaL_validpilot( L, 2 ) : NULL;
 
    /* Just return 0 for non-wapons. */
-   if ( o->slot.type != OUTFIT_SLOT_WEAPON )
+   if ( !outfit_isWeapon( o ) )
       return 0;
 
    /* Special case beam weapons .*/
@@ -767,15 +767,18 @@ static int outfitL_weapStats( lua_State *L )
    shots = 1. / ( mod_shots * outfit_delay( o ) );
    /* Special case: Ammo-based weapons. */
    dmg = outfit_damage( o );
-   if ( dmg == NULL )
-      return 0;
-   /* Modulate the damage by average of damage types. */
-   dtype_raw( dmg->type, &sdmg, &admg, NULL );
-   mod_damage *= 0.5 * ( sdmg + admg );
-   /* Calculate good damage estimates. */
-   dps     = shots * mod_damage * dmg->damage;
-   disable = shots * mod_damage * dmg->disable;
-   eps     = shots * mod_energy * MAX( outfit_energy( o ), 0. );
+   if ( dmg == NULL ) {
+      dps     = 0.;
+      disable = 0.;
+   } else {
+      /* Modulate the damage by average of damage types. */
+      dtype_raw( dmg->type, &sdmg, &admg, NULL );
+      mod_damage *= 0.5 * ( sdmg + admg );
+      /* Calculate good damage estimates. */
+      dps     = shots * mod_damage * dmg->damage;
+      disable = shots * mod_damage * dmg->disable;
+   }
+   eps = shots * mod_energy * MAX( outfit_energy( o ), 0. );
 
    lua_pushnumber( L, dps );
    lua_pushnumber( L, disable );

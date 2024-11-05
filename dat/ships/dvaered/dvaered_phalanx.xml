@@ -58,6 +58,7 @@
   <launch_range>20</launch_range>
   <ammo_capacity>10</ammo_capacity>
   <engine_limit_rel>15</engine_limit_rel>
+  <fuel>200</fuel>
  </stats>
  <tags>
   <tag>dvaered</tag>

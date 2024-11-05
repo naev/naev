@@ -235,10 +235,26 @@ static int poL_state( lua_State *L )
    const char      *state = luaL_optstring( L, 2, NULL );
    PilotOutfitState pos   = po->state;
 
-   if ( !outfit_isMod( po->outfit ) )
-      return NLUA_ERROR(
-         L, _( "'pilotoutfit.%s' only works with modifier outfits!" ),
-         "state" );
+   if ( !outfit_isMod( po->outfit ) ) {
+      if ( outfit_isWeapon( po->outfit ) ) {
+         if ( state == NULL || strcmp( state, "off" ) == 0 ) {
+            po->flags &= ~( PILOTOUTFIT_DYNAMIC_FLAGS |
+                            PILOTOUTFIT_ISON ); /* Clear toggles. */
+         } else if ( strcmp( state, "on" ) == 0 ) {
+            po->flags |=
+               PILOTOUTFIT_ISON |
+               PILOTOUTFIT_ISON_LUA; /* Gets disabled if ontoggle is set. */
+         } else
+            return NLUA_ERROR( L,
+                               _( "'pilotoutfit.%s' only works with \"on\" and "
+                                  "\"off\" for weapon outfits!" ),
+                               "state" );
+      } else
+         return NLUA_ERROR(
+            L,
+            _( "'pilotoutfit.%s' only works with modifier or weapon outfits!" ),
+            "state" );
+   }
 
    if ( state == NULL || strcmp( state, "off" ) == 0 ) {
       po->state = PILOT_OUTFIT_OFF;

@@ -412,48 +412,37 @@ static void think_seeker( Weapon *w, double dt )
       /* Smart seekers take into account ship velocity. */
       if ( w->outfit->u.lau.ai == AMMO_AI_SMART ) {
          /*
-           The control interval is short enough compared to the maximum turn
-           rate, so we can use a bang-bang control.
+           v = (Xp, Yp), p->solid->vel = (Vpx, Vpy), w->solid->vel = (Vwx, Vwy)
+           (Xp + t*Vpx)**2 + (Yp + t*Vpy)**2 = (Vwx*t)**2 + (Vwy*t)**2
          */
          vec2_csetmin( &v, p->solid.pos.x - w->solid.pos.x,
                        p->solid.pos.y - w->solid.pos.y );
-
-#define QUADRATURE( ref, v ) ( ( v ).x * ( -( ref ).y ) + ( v ).y * ( ref ).x )
-         if ( vec2_dot( &v, &w->solid.vel ) < 0 ) {
-            /*
-              The target's behind the weapon.
-              Make U-turn.
-            */
-            if ( QUADRATURE( w->solid.vel, v ) > 0 )
-               weapon_setTurn( w, turn_max );
-            else
-               weapon_setTurn( w, -turn_max );
+         const double a =
+            vec2_odist2( &p->solid.vel ) - vec2_odist2( &w->solid.vel );
+         const double b = vec2_dot( &p->solid.vel, &v );
+         const double c = vec2_odist2( &v );
+         double       t = w->timer;
+         if ( a == 0.0 ) {
+            if ( b != 0.0 ) {
+               t = -c / ( 2 * b );
+            }
          } else {
-            vec2 r_vel;
-            vec2_csetmin( &r_vel, p->solid.vel.x - w->solid.vel.x,
-                          p->solid.vel.y - w->solid.vel.y );
-            if ( vec2_dot( &r_vel, &w->solid.vel ) > 0 ) {
-               /*
-                 The target is going away.
-                 Run parallel to the target.
-               */
-               if ( QUADRATURE( w->solid.vel, p->solid.vel ) > 0 )
-                  weapon_setTurn( w, turn_max );
-               else
-                  weapon_setTurn( w, -turn_max );
-            } else {
-               /*
-                 Match the horizontal speed of the missile to the target's.
-                 (cf. Proportional navigation)
-                 It assumes that the approaching speed is a positive number.
-               */
-               if ( QUADRATURE( r_vel, v ) < 0 )
-                  weapon_setTurn( w, turn_max );
-               else
-                  weapon_setTurn( w, -turn_max );
+            const double b2_ac = b * b - a * c;
+            if ( b2_ac >= 0 ) {
+               t = ( -b - sqrt( b2_ac ) ) / a;
+               /* Another solution is a negative value or greater than t */
             }
          }
-#undef QUADRATURE
+         if ( t < 0 ) {
+            /* The missile is unreachable. */
+            /* t is a negative value when a > 0 and b > 0. */
+            t = w->timer;
+         }
+         /* Calculate target's movement. */
+         const double angle =
+            ANGLE( v.x + t * p->solid.vel.x, v.y + t * p->solid.vel.y );
+         const double diff = angle_diff( w->solid.dir, angle );
+         weapon_setTurn( w, CLAMP( -turn_max, turn_max, diff / dt ) );
       }
       /* Other seekers are simplistic. */
       else {
@@ -1209,20 +1198,27 @@ static void weapon_updateCollide( Weapon *w, double dt )
    if ( !wc.beam ) {
       int x, y, w2, h2, px, py;
       wc.gfx = outfit_gfx( w->outfit );
-      if ( wc.gfx->tex != NULL ) {
-         const CollPoly *plg = outfit_plg( w->outfit );
-         if ( plg != NULL ) {
-            wc.polygon  = plg;
-            wc.polyview = poly_view( plg, w->solid.dir );
-         } else {
-            wc.polygon  = NULL;
-            wc.polyview = NULL;
-         }
-         wc.range = wc.gfx->size; /* Range is set to size in this case. */
-      } else {
+      if ( outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_COLLISION_OVERRIDE ) ) {
          wc.polygon  = NULL;
          wc.polyview = NULL;
          wc.range    = wc.gfx->col_size;
+         wc.gfx      = NULL;
+      } else {
+         if ( wc.gfx->tex != NULL ) {
+            const CollPoly *plg = outfit_plg( w->outfit );
+            if ( plg != NULL ) {
+               wc.polygon  = plg;
+               wc.polyview = poly_view( plg, w->solid.dir );
+            } else {
+               wc.polygon  = NULL;
+               wc.polyview = NULL;
+            }
+            wc.range = wc.gfx->size; /* Range is set to size in this case. */
+         } else {
+            wc.polygon  = NULL;
+            wc.polyview = NULL;
+            wc.range    = wc.gfx->col_size;
+         }
       }
       wc.beamrange = 0.;
 
@@ -1565,10 +1561,14 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
  *    @param w Weapon exploding.
  *    @param dmg Damage it does.
  *    @param radius Radius of the explosion.
+ *    @param center Center of the explosion caused by the weapon (likely from
+ * collisions).
  */
-static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
+static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
+                               const vec2 *center )
 {
    int             x, y, r, x1, y1, x2, y2;
+   double          vx, vy, nvel;
    Pilot          *parent = pilot_get( w->parent );
    WeaponCollision wc;
 
@@ -1580,9 +1580,12 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
    wc.polygon   = NULL;
    wc.explosion = 1;
 
+   /* Speed of the impact. */
+   vx = vy = nvel = 0.;
+
    /* Set up coordinates. */
-   x  = round( w->solid.pos.x );
-   y  = round( w->solid.pos.y );
+   x  = round( center->x );
+   y  = round( center->y );
    r  = ceil( radius );
    x1 = x - r;
    y1 = y - r;
@@ -1623,6 +1626,10 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
             pilot_hit( p, &w->solid, parent, dmg, w->outfit, w->lua_mem, 1 );
          /* Inform AI that it's been hit. */
          weapon_hitAI( p, parent, damage );
+
+         vx += p->solid.vel.x;
+         vy += p->solid.vel.y;
+         nvel++;
       }
    }
 
@@ -1664,6 +1671,10 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
                continue;
 
             asteroid_hit( a, dmg, mining_rarity, mining_bonus );
+
+            vx += a->sol.vel.x;
+            vy += a->sol.vel.y;
+            nvel++;
          }
       }
    }
@@ -1677,16 +1688,14 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
          vec2            crash[2];
          int             coll;
 
-         wchit.gfx = outfit_gfx( w->outfit );
+         /* We can only hit ammo weapons, so no beams. */
+         wchit.w         = whit;
+         wchit.explosion = 0;
+         wchit.beam      = 0;
+         wchit.gfx       = outfit_gfx( w->outfit );
          if ( wchit.gfx->tex != NULL ) {
-            const CollPoly *plg = outfit_plg( w->outfit );
-            if ( plg != NULL ) {
-               wchit.polygon  = plg;
-               wchit.polyview = poly_view( plg, w->solid.dir );
-            } else {
-               wchit.polygon  = NULL;
-               wchit.polyview = NULL;
-            }
+            wchit.polygon  = outfit_plg( w->outfit );
+            wchit.polyview = poly_view( wchit.polygon, w->solid.dir );
             wchit.range =
                wchit.gfx->size; /* Range is set to size in this case. */
          } else {
@@ -1704,8 +1713,23 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius )
 
          /* Handle the hit. */
          weapon_damage( whit, dmg );
+
+         vx += whit->solid.vel.x;
+         vy += whit->solid.vel.y;
+         nvel++;
       }
    }
+
+   /* Explosions! */
+   if ( nvel > 0. ) {
+      vx /= nvel;
+      vy /= nvel;
+   } else {
+      vx = w->solid.vel.x;
+      vy = w->solid.vel.y;
+   }
+   spfx_add( outfit_spfxArmour( w->outfit ), w->solid.pos.x, w->solid.pos.y, vx,
+             vy, SPFX_LAYER_FRONT );
 }
 
 /**
@@ -1739,7 +1763,7 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
 
    /* Explosive weapons blow up and hit everything in range. */
    if ( radius > 0. ) {
-      weapon_hitExplode( w, &dmg, radius );
+      weapon_hitExplode( w, &dmg, radius, hit->pos );
       weapon_destroy( w );
       return;
    }
@@ -1854,7 +1878,7 @@ static void weapon_miss( Weapon *w )
       dmg.disable     = MAX( 0., w->dam_mod * w->strength * odmg->disable +
                                     damage * w->dam_as_dis_mod );
 
-      weapon_hitExplode( w, &dmg, radius );
+      weapon_hitExplode( w, &dmg, radius, &w->solid.pos );
    }
 
    weapon_destroy( w );
@@ -1883,6 +1907,26 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
 
    /* Bye bye. */
    weapon_destroy( w );
+
+   int spfx = -1;
+   /* See if we need armour death sprite. */
+   if ( outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR ) )
+      spfx = outfit_spfxArmour( w->outfit );
+   /* See if we need shield death sprite. */
+   else if ( outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_BLOWUP_SHIELD ) )
+      spfx = outfit_spfxShield( w->outfit );
+   if ( spfx != -1 ) {
+      int s;
+      spfx_add( spfx, w->solid.pos.x, w->solid.pos.y, w->solid.vel.x,
+                w->solid.vel.y,
+                ( w->layer == WEAPON_LAYER_FG ) ? SPFX_LAYER_FRONT
+                                                : SPFX_LAYER_MIDDLE );
+      /* Add sound if explodes and has it. */
+      s = outfit_soundHit( w->outfit );
+      if ( s != -1 )
+         w->voice = sound_playPos( s, w->solid.pos.x, w->solid.pos.y,
+                                   w->solid.vel.x, w->solid.vel.y );
+   }
 }
 
 /**
@@ -2393,13 +2437,13 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
       if ( pilot_isPlayer( parent ) && input_mouseIsShown() ) {
          vec2 tv;
          gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
-         rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.blt.swivel );
+         rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.lau.swivel );
       } else
          rdir = dir;
    }
 
    /* Disperse as necessary. */
-   if ( outfit->u.blt.dispersion > 0. )
+   if ( outfit->u.lau.dispersion > 0. )
       rdir += RNG_1SIGMA() * outfit->u.lau.dispersion;
    /* Make sure angle is in range. */
    rdir = angle_clean( rdir );

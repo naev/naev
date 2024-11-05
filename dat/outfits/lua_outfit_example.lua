@@ -79,7 +79,7 @@ function update( _p, _po, _dt )
 end
 
 -- When the pilot is out of energy, this function triggers. Note that before
--- this triggers, 'ontoggle( p, po false )' will be run if it exists.
+-- this triggers, 'ontoggle( p, po false, false )' will be run if it exists.
 -- This is especially useful for outfits that can't be toggled, but want to
 -- turn off when they run out of energy.
 function outofenergy( _p, _po )
@@ -100,7 +100,7 @@ end
 -- and is toggled by the player. If it was not "on" when toggled, the on value
 -- will be true, it will be false otherwise.
 -- It returns a boolean whether or not the outfit was actually triggered.
-function ontoggle( _p, _po, _on )
+function ontoggle( _p, _po, _on, _natural )
    return false
 end
 

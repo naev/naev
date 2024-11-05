@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spfx name="Firework40">
+ <anim>1.1</anim>
+ <shader>
+  <vert>project_pos.vert</vert>
+  <frag>spfx/firework.frag</frag>
+  <size>45</size>
+  <uniforms>
+   <u_colour x="1.0" y="0.4" z="0.1" />
+   <u_duration x="1.1" />
+  </uniforms>
+ </shader>
+</spfx>

@@ -47,6 +47,7 @@
   <fwd_firerate>10</fwd_firerate>
   <ew_signature>-10</ew_signature>
   <loot_mod>20</loot_mod>
+  <fuel>100</fuel>
  </stats>
  <tags>
   <tag>pirate</tag>

@@ -55,6 +55,7 @@
   <ew_hide>-10</ew_hide>
   <launch_range>20</launch_range>
   <ammo_capacity>25</ammo_capacity>
+  <fuel>200</fuel>
  </stats>
  <tags>
   <tag>pirate</tag>

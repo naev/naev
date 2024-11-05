@@ -10,6 +10,6 @@
   <gfx_store>fueltank.webp</gfx_store>
  </general>
  <specific type="modification">
-  <fuel>600</fuel>
+  <fuel>500</fuel>
  </specific>
 </outfit>

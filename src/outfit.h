@@ -49,10 +49,12 @@
 #define OUTFIT_PROP_WEAP_ONLYHITTARGET                                         \
    ( 1 << 13 ) /**< The weapon can only hit the target (and asteroids or       \
                   whatever). */
+#define OUTFIT_PROP_WEAP_COLLISION_OVERRIDE                                    \
+   ( 1 << 14 ) /**< Weapon uses collision sphere irregardless of graphics.  */
 #define OUTFIT_PROP_NEEDSGFX                                                   \
-   ( 1 << 14 ) /**< The outfit needs to load graphics. */
+   ( 1 << 15 ) /**< The outfit needs to load graphics. */
 #define OUTFIT_PROP_STEALTH_ON                                                 \
-   ( 1 << 15 ) /**< The outfit does not get turned off by stealth. */
+   ( 1 << 16 ) /**< The outfit does not get turned off by stealth. */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must
  * precede the #define.] */

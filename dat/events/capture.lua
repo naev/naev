@@ -52,8 +52,19 @@ function create ()
    mem.name = fmt.f(_("Captured {shp}"), {shp=plt:ship():name()} )
    mem.ship = plt:ship()
    mem.outfits = plt:outfits()
+   for k,v in pairs(mem.outfits) do
+      -- Ignore outfits that can't be stolen
+      if v:tags().nosteal then
+         mem.outfits[k] = nil
+      end
+   end
    mem.system = system.cur()
    mem.intrinsics = plt:outfitsList("intrinsic")
+   for k,v in pairs(mem.intrinsics) do
+      if v:tags().nosteal then
+         mem.intrinsics[k] = nil
+      end
+   end
    setup_pilot( plt )
    local a,s = plt:health()
    plt:setHealth( a, s ) -- Clears disabled state

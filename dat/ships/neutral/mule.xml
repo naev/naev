@@ -47,6 +47,7 @@
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
   <ew_hide>25</ew_hide>
+  <fuel>200</fuel>
  </stats>
  <tags>
   <tag>standard</tag>

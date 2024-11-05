@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Dvaered Flare Battery">
+ <general>
+  <shortname>D. Flare B.</shortname>
+  <slot>weapon</slot>
+  <size>large</size>
+  <license>Heavy Weapon</license>
+  <typename>Point Defense</typename>
+  <mass>90</mass>
+  <price>120000</price>
+  <description>TODO</description>
+  <gfx_store>pd4.webp</gfx_store>
+  <cpu>-80</cpu>
+ </general>
+ <specific type="turret launcher">
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
+  <gfx col_size="30">empgrenade_blue.png</gfx>
+  <sound>grenadefire</sound>
+  <sound_hit>empexplode</sound_hit>
+  <spfx_shield>Firework40</spfx_shield>
+  <spfx_armour>Firework40</spfx_armour>
+  <delay>0.15</delay>
+  <reload_time>2</reload_time>
+  <amount>70</amount>
+  <speed>800</speed>
+  <duration>0.5</duration>
+  <trackmin>0</trackmin>
+  <trackmax>4000</trackmax>
+  <ammo_mass>0.1</ammo_mass>
+  <damage>
+   <type>kinetic</type>
+   <penetrate>0</penetrate>
+   <physical>18</physical>
+  </damage>
+  <radius>35</radius>
+  <ai>unguided</ai>
+  <pointdefense />
+  <miss_explode />
+  <dispersion>10</dispersion>
+  <speed_dispersion>200</speed_dispersion>
+ </specific>
+ <tags>
+  <tag>dvaered</tag>
+ </tags>
+</outfit>

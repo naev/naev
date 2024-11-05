@@ -14,7 +14,7 @@
  <specific type="modification">
   <energy_regen_malus>26</energy_regen_malus>
   <engine_limit>2400</engine_limit>
-  <fuel>3200</fuel>
+  <fuel>2400</fuel>
   <speed>125</speed>
   <accel>70</accel>
   <turn>80</turn>

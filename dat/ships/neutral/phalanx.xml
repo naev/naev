@@ -53,6 +53,7 @@
   <energy_regen_mod>-15</energy_regen_mod>
   <launch_range>20</launch_range>
   <ammo_capacity>10</ammo_capacity>
+  <fuel>200</fuel>
  </stats>
  <tags>
   <tag>frontier</tag>

@@ -1475,6 +1475,15 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
    gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH "space/%s", 6, 6, flags );
    gfx->size = ( gfx->tex->sw + gfx->tex->sh ) * 0.5;
 
+   /* See if there is a collision size, or an override. */
+   char *col;
+   xmlr_attr_strd( node, "col_size", col );
+   if ( col != NULL ) {
+      outfit_setProp( temp, OUTFIT_PROP_WEAP_COLLISION_OVERRIDE );
+      gfx->col_size = strtod( col, NULL );
+      free( col );
+   }
+
    /* Validity check: there must be 1 polygon per sprite. */
    if ( array_size( gfx->polygon.views ) <= 0 )
       WARN( _( "Outfit '%s' is missing collision polygon!" ), temp->name );

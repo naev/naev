@@ -92,6 +92,7 @@ static int pilotL_nav( lua_State *L );
 static int pilotL_navSpob( lua_State *L );
 static int pilotL_navJump( lua_State *L );
 static int pilotL_navJumpSet( lua_State *L );
+static int pilotL_autoweap( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetList( lua_State *L );
 static int pilotL_weapsetType( lua_State *L );
@@ -286,6 +287,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "navSpob", pilotL_navSpob },
    { "navJump", pilotL_navJump },
    { "navJumpSet", pilotL_navJumpSet },
+   { "autoweap", pilotL_autoweap },
    { "weapset", pilotL_weapset },
    { "weapsetList", pilotL_weapsetList },
    { "weapsetType", pilotL_weapsetType },
@@ -1908,6 +1910,22 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
 }
 
 /**
+ * @brief Gets if a pilot is using automatically set weapon sets.
+ *
+ *    @luatparam Pilot p Pilot to get whether or not is using automatic weapon
+ * sets.
+ *    @luatreturn boolean Whether or not the pilot is using automatic weapon
+ * sets.
+ * @luafunc autoweap
+ */
+static int pilotL_autoweap( lua_State *L )
+{
+   Pilot *p = luaL_validpilot( L, 1 );
+   lua_pushboolean( L, p->autoweap );
+   return 1;
+}
+
+/**
  * @brief Gets the weapset weapon of the pilot.
  *
  * The weapon sets have the following structure: <br />
@@ -2671,7 +2689,7 @@ static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
          po->flags |= PILOTOUTFIT_ISON_LUA;
       return ret;
    } else
-      return pilot_outfitOff( p, po );
+      return pilot_outfitOff( p, po, 1 );
 }
 /**
  * @brief Toggles an outfit.

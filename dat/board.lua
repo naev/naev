@@ -386,14 +386,18 @@ local function board_capture ()
    local bonus = (10+ps.crew) / (10+pps.crew) + 0.25
    local cost = board_plt:worth()
    local costnaked = cost
-   cost = cost * bonus
    local outfitsnaked = board_plt:outfits(nil,true) -- Get non-locked
-   for k,v in ipairs(outfitsnaked) do
+   for k,v in pairs(outfitsnaked) do
       if v then
+         -- Ignore outfits that can't be stolen
+         if v:tags().nosteal then
+            cost = cost - v:price()
+         end
          outfitsnaked[k] = nil
          costnaked = costnaked - v:price()
       end
    end
+   cost = cost * bonus
    costnaked = math.min( cost, costnaked * bonus * 1.1 ) -- Always a bit more expensive, but never more than base
    local sbonus
    if bonus > 1 then
@@ -582,6 +586,12 @@ end
 
 function board( plt )
    if not plt:exists() then return end
+
+   if plt:flags("carried") then
+      player.msg( "#r".._("You can not board deployed fighters.").."#0" )
+      return
+   end
+
    der.sfx.board:play()
    board_plt = plt
    loot_mod = player.pilot():shipstat("loot_mod", true)

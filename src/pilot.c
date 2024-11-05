@@ -1716,15 +1716,31 @@ void pilot_dead( Pilot *p, unsigned int killer )
    pilot_runHookParam( p, PILOT_HOOK_DEATH, &hparam, 1 );
 
    /* Need a check here in case the hook "regenerates" the pilot. */
-   if ( p->armour <= 0. ) {
-      if ( p->parent == PLAYER_ID )
-         player_message( _( "#rShip under command '%s' was destroyed!#0" ),
-                         p->name );
-      /* PILOT R OFFICIALLY DEADZ0R */
-      pilot_setFlag( p, PILOT_DEAD );
+   if ( p->armour > 0. )
+      return;
 
-      /* Run Lua if applicable. */
-      pilot_shipLExplodeInit( p );
+   if ( p->parent == PLAYER_ID )
+      player_message( _( "#rShip under command '%s' was destroyed!#0" ),
+                      p->name );
+   /* PILOT R OFFICIALLY DEADZ0R */
+   pilot_setFlag( p, PILOT_DEAD );
+
+   /* Run Lua if applicable. */
+   pilot_shipLExplodeInit( p );
+
+   /* Kill deployed ships. */
+   for ( int i = 0; i < array_size( p->escorts ); i++ ) {
+      /* Make sure the followers are valid. */
+      Pilot *pe = pilot_get( p->escorts[i].id );
+      if ( ( pe == NULL ) || pilot_isFlag( pe, PILOT_DEAD ) ||
+           pilot_isFlag( pe, PILOT_HIDE ) )
+         continue;
+
+      if ( !pilot_isFlag( pe, PILOT_CARRIED ) )
+         continue;
+
+      /* Update stats, they will include damage over time now. */
+      pilot_calcStats( pe );
    }
 }
 
@@ -2416,7 +2432,7 @@ void pilot_update( Pilot *pilot, double dt )
          pos->stimer -= dt;
          if ( pos->stimer < 0. ) {
             if ( pos->state == PILOT_OUTFIT_ON ) {
-               pilot_outfitOff( pilot, pos );
+               pilot_outfitOff( pilot, pos, 0 );
                nchg++;
             } else if ( pos->state == PILOT_OUTFIT_COOLDOWN ) {
                pos->state = PILOT_OUTFIT_OFF;

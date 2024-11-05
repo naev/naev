@@ -37,6 +37,7 @@ local function update( s, dt )
          explosion( s:pos(), s:vel(), d.explosion, d.damage, {
             parent = d.pilot,
             penetration = d.penetration,
+            dmgtype = "kinetic",
          } )
          s:rm() -- Remove
       end

@@ -3,9 +3,13 @@ title: "Ship Stats"
 ---
 # Ship Stats
 
+There are many different important stats for ships that define their behaviour when flying in space.
+These are all visible from the [equipment](mechanics/equipment) panel.
+The final ship stats are defined based on the intrinsic ship stats, equipped outfits, and other sources such as temporary effects.
+
 ## Core Stats
 
-There are many different important stats for ships that define their behaviour when flying in space. These are all visible from the [equipment](mechanics/equipment) panel.
+The core stats define basic properties of the ship.
 
 * [Model](ships): The name of the ship model.
 * [Class](ships/classes): The ship class.
@@ -46,4 +50,4 @@ Electronic warfare determines how ships see and target each other.
 
 ## Additional Stats
 
-* TODO
+There are many additional ship stats you will encounter on different outfits and ships, such as modifiers for **Ammo Capacity** or **Jump Time**.

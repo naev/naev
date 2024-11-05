@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Guardian Overseer System">
  <general>
+  <shortname>Guardian O.S.</shortname>
   <slot>weapon</slot>
   <size>large</size>
   <license>Heavy Weapon</license>
@@ -12,7 +13,7 @@
   <cpu>-200</cpu>
  </general>
  <specific type="turret bolt">
-  <lua>outfits/pointdefense/guardian_overseer_system.lua</lua>
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
   <gfx>ripperM.png</gfx>
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>
@@ -24,7 +25,7 @@
   <energy>70</energy>
   <heatup>80</heatup>
   <trackmin>0</trackmin>
-  <trackmax>2000</trackmax>
+  <trackmax>5500</trackmax>
   <damage>
    <type>energy</type>
    <penetrate>34</penetrate>
@@ -32,4 +33,7 @@
   </damage>
   <pointdefense />
  </specific>
+ <tags>
+  <tag>empire</tag>
+ </tags>
 </outfit>
