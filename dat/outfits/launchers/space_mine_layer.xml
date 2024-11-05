@@ -23,7 +23,7 @@
   <sound>grenadefire</sound>
   <duration>90</duration>
   <damage>
-   <type>emp</type>
+   <type>kinetic</type>
    <penetrate>50</penetrate>
    <physical>1000</physical>
    <disable>0</disable>
