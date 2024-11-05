@@ -25,7 +25,7 @@
   <energy>70</energy>
   <heatup>80</heatup>
   <trackmin>0</trackmin>
-  <trackmax>5000</trackmax>
+  <trackmax>5500</trackmax>
   <damage>
    <type>energy</type>
    <penetrate>34</penetrate>

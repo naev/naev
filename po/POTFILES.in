@@ -361,6 +361,7 @@ dat/outfits/misc/light_combat_vessel_license.xml
 dat/outfits/misc/medium_combat_vessel_license.xml
 dat/outfits/misc/medium_weapon_license.xml
 dat/outfits/misc/mercenary_license.xml
+dat/outfits/pointdefense/dvaered_flare_battery.xml
 dat/outfits/pointdefense/guardian_interception_system.xml
 dat/outfits/pointdefense/guardian_overseer_system.xml
 dat/outfits/pointdefense/ratchet_point_defense.xml
@@ -666,6 +667,7 @@ dat/spfx/explosion/ExpL.xml
 dat/spfx/explosion/ExpM.xml
 dat/spfx/explosion/ExpS.xml
 dat/spfx/firework30.xml
+dat/spfx/firework40.xml
 dat/spob/abacus.xml
 dat/spob/adham.xml
 dat/spob/adius.xml
