@@ -21,6 +21,10 @@
       * Can stealth when missiles are locked on
       * Deployed fighters take stress and damage over time when their mother ship is destroyed
       * Electron Burst Cannons and Za'lek Heavy Drones have had their damage per second lowered
+      * Improved point defense
+         * Spittle Tubuloid Cluster is now a utility and does more damage
+         * Guardian Interception System does double damage
+         * Missiles explode when intercepted
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
