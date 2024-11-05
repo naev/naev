@@ -1907,6 +1907,26 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
 
    /* Bye bye. */
    weapon_destroy( w );
+
+   int spfx = -1;
+   /* See if we need armour death sprite. */
+   if ( outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR ) )
+      spfx = outfit_spfxArmour( w->outfit );
+   /* See if we need shield death sprite. */
+   else if ( outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_BLOWUP_SHIELD ) )
+      spfx = outfit_spfxShield( w->outfit );
+   if ( spfx != -1 ) {
+      int s;
+      spfx_add( spfx, w->solid.pos.x, w->solid.pos.y, w->solid.vel.x,
+                w->solid.vel.y,
+                ( w->layer == WEAPON_LAYER_FG ) ? SPFX_LAYER_FRONT
+                                                : SPFX_LAYER_MIDDLE );
+      /* Add sound if explodes and has it. */
+      s = outfit_soundHit( w->outfit );
+      if ( s != -1 )
+         w->voice = sound_playPos( s, w->solid.pos.x, w->solid.pos.y,
+                                   w->solid.vel.x, w->solid.vel.y );
+   }
 }
 
 /**
