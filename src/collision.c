@@ -1015,6 +1015,14 @@ int CollideLineCircle( const vec2 *p1, const vec2 *p2, const vec2 *cc,
    double x2 = p2->x;
    double y2 = p2->y;
 
+   /* Case line in circle. */
+   double r2 = cr * cr;
+   if ( ( vec2_dist2( p1, cc ) < r2 ) && ( vec2_dist2( p2, cc ) < r2 ) ) {
+      crash[0].x = ( x1 + x2 ) * 0.5;
+      crash[0].y = ( y1 + y2 ) * 0.5;
+      return 1;
+   }
+
    double A = y2 - y1;
    double B = x1 - x2;
    double C = x2 * y1 - x1 * y2;
