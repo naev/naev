@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Ratchet Point Defense">
  <general>
-  <shortname>Hatchet P.D.</shortname>
+  <shortname>Ratchet P.D.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
   <typename>Point Defense</typename>
   <mass>50</mass>
   <price>120000</price>
-  <description>TODO</description>
+  <description>The Ratchet was a popular weapon used during the Dvaered revolts by the Dvaered revolutionaries. Although they lacked power and reliability, they were easily mass produced helping turn the tide of war. Similar to the original Ratchet, the Ratchet Point Defense launches explosive cluster rounds that break and detonate in a large area, making them effective at clearing groups of interceptors or missiles. Unlike the original model, the point defense system has a much higher reliability thanks to tighter tolerances and controls giving it significantly more reliability.</description>
   <gfx_store>pd3.webp</gfx_store>
   <cpu>-30</cpu>
  </general>
@@ -37,7 +37,7 @@
   <pointdefense />
   <miss_explode />
   <dispersion>5</dispersion>
-  <speed_dispersion>50</speed_dispersion>
+  <speed_dispersion>100</speed_dispersion>
  </specific>
  <tags>
   <tag>dvaered</tag>
