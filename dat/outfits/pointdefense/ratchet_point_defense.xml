@@ -17,8 +17,8 @@
   <gfx col_size="20">empgrenade_blue.png</gfx>
   <sound>grenadefire</sound>
   <sound_hit>empexplode</sound_hit>
-  <spfx_shield>ExpM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>Firework30</spfx_shield>
+  <spfx_armour>Firework30</spfx_armour>
   <delay>0.2</delay>
   <reload_time>2</reload_time>
   <amount>50</amount>
