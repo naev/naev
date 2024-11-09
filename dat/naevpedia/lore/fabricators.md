@@ -9,7 +9,7 @@ There are a diversity of fabricators that produce different ships and outfits.
 
 * **Melendez Corp.**: Focuses on large cargo-oriented trade ships and heavy engines.
 * **Krain Industries**: Fabricator that makes the [Kestrel](ships/kestrel) and [Starbridge](ships/starbridge) and their assorted custom engines.
-* **Nexus Shipyards**: Makes a decent amount of ships for the Empire and their civilian counterparts. Also makes engines and stealth armour.
+* **Nexus Shipyards**: Makes a decent amount of ships for [the Empire](lore/factions/empire) and their civilian counterparts. Also makes engines and stealth armour.
 * **Aerosys**: Maker of the popular [Hyena](ships/hyena) interceptor.
 * **MilSpec**: Provides high-end cores and outfits. A favourite of bounty hunters.
 * **Unicorp**: Designs many accessible core outfits, and also launchers for the Caeser torpedoes, among others.

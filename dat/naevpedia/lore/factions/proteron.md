@@ -97,7 +97,7 @@ Soon enough, the Proteron were even in charge of [the Empire](lore/factions/empi
 Now having loosened their leash greatly, they set out to prepare for a galaxy-scale war.
 While they worked, the shape of the galaxy was changing, so to speak.
 
-New advances in quantum engineering led to the development of quantum transtators and translators, alternative travel engines capable of bypassing warp points and so changing conventional military doctrine, which recommended fortifying chokepoint systems on the warp network.
+New advances in quantum engineering led to the development of quantum transtators and translators, alternative travel engines capable of bypassing warp points and so changing conventional military doctrine, which recommended fortifying choke point systems on the warp network.
 Expecting correctly that [the Empire](lore/factions/empire) had not even thought of this change, the Proteron decided to bypass their defences using the new hypergate being built in Sol.
 After all, once the Emperor and their successors were in their hands, the war would be essentially meaningless.
 They built a hypergate in secret in their home system, Protera.

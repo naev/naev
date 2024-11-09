@@ -8,7 +8,7 @@ wgtfct = require("naevpedia.lore.faction").init( "Soromid" )
 
 # Soromid
 
-The Soromid are a major faction in Naev.
+The Soromid are an important faction, and although they are not a Great House of [the Empire](lore/factions/empire), they are very close in practice.
 
 ## Organization
 
@@ -23,7 +23,7 @@ The Soromid are a major faction in Naev.
 ### Sorom
 
 Sorom was a fairly hospitable planet, like many others in the galaxy during the Second Growth.
-It was settled roughly halfway through the Growth, changed ownership several times during the Faction Wars and eventually came under the rule of the old Empire afterwards.
+It was settled roughly halfway through [the Growth](lore/history), changed ownership several times during the Faction Wars and eventually came under the rule of the old Empire afterwards.
 In this it was about as average as worlds got, just one more property in the vast expanse of the Empire.
 
 But Sorom was also different.
@@ -40,7 +40,7 @@ The human immune system, too, lacked the capacity to combat the disease.
 [The Empire](lore/factions/empire) was quick to realize the threat Sorom now presented to the galaxy.
 With no known cure or inoculation, the plague would lay waste to any world unfortunate enough to be infected by it.
 It was therefore decided that Sorom should be quarantined from the rest of humanity.
-The Empire implemented a blockade to deny any ships landing or takeoff, and destroyed all spaceports on the face of the planet from orbit.
+[The Empire](lore/factions/empire) implemented a blockade to deny any ships landing or takeoff, and destroyed all spaceports on the face of the planet from orbit.
 The people of Sorom were left to die.
 
 ### Gene Treatment
@@ -86,12 +86,12 @@ They used their understanding of genetics to grow semi-organic ships, thereby im
 Then they ventured out into the galaxy.
 
 For years Sorom had been in the books as a hazard world that could support no human life, so the appearance of the Soromid came as a shock to the rest of inhabited space.
-The Empire briefly tried to suppress the Soromid by force on the basis that the plague could still be a threat to other worlds, but when it became apparent that the Soromid carried no infectious diseases whatsoever the Emperor begrudgingly acknowledged their presence in the galaxy.
+[The Empire](lore/factions/empire) briefly tried to suppress the Soromid by force on the basis that the plague could still be a threat to other worlds, but when it became apparent that the Soromid carried no infectious diseases whatsoever the Emperor begrudgingly acknowledged their presence in the galaxy.
 It also helped that the Soromid ships proved to be quite combat capable.
 
 The Soromid were met with distrust.
 Their physical appearance and their uncanny tendency to outperform normal people did not ingratiate them with humanity.
-The Za'lek in particular weren't amused with the newcomers, as they couldn't stomach that someone other than them had developed new technology, and technology the Za'lek could not reproduce at that.
+[The Za'lek](lore/factions/zalek) in particular weren't amused with the newcomers, as they couldn't stomach that someone other than them had developed new technology, and technology [the Za'lek](lore/factions/zalek) could not reproduce at that.
 
 Unfazed by the reception of the other factions, the Soromid went to work.
 The galaxy had plenty of suitable worlds left to colonize - at least, worlds suitable to the Soromid.
@@ -119,7 +119,7 @@ Periodically, and when needed, the tribe will gather in councils to decide posit
 The same structure of councils happens at a larger scale, where instead of all individuals, tribal representatives get together to reach consensus over matters that affect the Soromid as a whole.
 
 Although it would seem that the overhead of such a system would make it unmanageable at a large scale, due to historic issues and through strong education, young Soromid new humans are raised with a strong focus on putting the community over the individual.
-Such a social education, combinade with strong customs, helps keep most friction at a minimum, allowing fast and effective decision making.
+Such a social education, combined with strong customs, helps keep most friction at a minimum, allowing fast and effective decision making.
 When frictions arise, each tribe tends to have mechanisms for dealing with this, while for inter-tribal issues, duels or competitions are often used to solve issues and foster camaraderie.
 
 The tribes can consist of a single world or even various star systems.

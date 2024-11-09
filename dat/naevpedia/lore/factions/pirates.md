@@ -8,10 +8,14 @@ title: "Galactic Space Pirates"
     fblacklotus = faction.get("Black Lotus")
 
     local strunknown = _("???")
-    strblacklotus = (fblacklotus:known()  and _("[Black Lotus](lore/factions/pirates/blacklotus)"))   or strunknown
-    strwildones   = (fwildones:known()    and _("[Wild Ones](lore/factions/pirates/wildones)"))       or strunknown
-    strravenclan  = (fravenclan:known()   and _("[Raven Clan](lore/factions/pirates/ravenclan)"))     or strunknown
-    strdreamerclan= (fdreamerclan:known() and _("[Dreamer clan](lore/factions/pirates/dreamerclan)")) or strunknown
+    --strblacklotus = (fblacklotus:known()  and _("[Black Lotus](lore/factions/pirates/blacklotus)"))   or strunknown
+    --strwildones   = (fwildones:known()    and _("[Wild Ones](lore/factions/pirates/wildones)"))       or strunknown
+    --strravenclan  = (fravenclan:known()   and _("[Raven Clan](lore/factions/pirates/ravenclan)"))     or strunknown
+    --strdreamerclan= (fdreamerclan:known() and _("[Dreamer clan](lore/factions/pirates/dreamerclan)")) or strunknown
+    strblacklotus = (fblacklotus:known()  and _("Black Lotus"))  or strunknown
+    strwildones   = (fwildones:known()    and _("Wild Ones"))    or strunknown
+    strravenclan  = (fravenclan:known()   and _("Raven Clan"))   or strunknown
+    strdreamerclan= (fdreamerclan:known() and _("Dreamer Clan")) or strunknown
 %>
 <%
 wgtfct = require("naevpedia.lore.faction").init( "Pirate" )
@@ -47,7 +51,7 @@ They are tolerated by other pirates, who tend to exploit them and give them scra
 ## Pirate Assemblies
 
 Usually occurring once a cycle, pirate assemblies are as formal of a gathering as you can find in the pirate world.
-They are usually held at more neutral pirate clansworld, such as those of the [Raven Clan](lore/factions/pirates/ravenclan), and consist of several decaperiods of partying and lawmaking.
+They are usually held at more neutral pirate clansworld, such as those of the <%= strravenclan %>, and consist of several [decaperiods](mechanics/time) of partying and lawmaking.
 The main event consists of the meeting of the Pirate Lords who will listen to proposals and decide on courses of actions, while letting their crew loose.
 
 The assemblies tend to be a good opportunity for the Pirate Lords to calculate each other strengths, where they tend to bring significant ships from their fleet.
@@ -68,14 +72,14 @@ The clan's territory is the sparsely inhabited area between the [Empire](lore/fa
 Their main clansworld was Haven, until it was destroyed in an offensive by the Empire and Great Houses.
 Since then, they have moved to a more secluded area known as New Haven where they are careful to not repeat the same fate.
 
-Although they get along well with the [Raven Clan](lore/factions/pirates/ravenclan), they tend to get into fights with the [Black Lotus](lore/factions/pirates/blacklotus), and look down upon the [Dreamer Clan](lore/factions/pirates/dreamerclan).
+Although they get along well with the <%= strravenclan %>, they tend to get into fights with the <%= strblacklotus %>, and look down upon the <%= strdreamerclan %>.
 <% end %>
 
 <% if fravenclan:known() then %>
 ## Raven Clan
 
 Arguably the clan that connects all the pirates and maintains infrastructure for their success.
-The [Raven Clan](lore/factions/pirates/ravenclan) is formed by many ex-merchants who were fed up with the corruption and bureaucracy of the Imperial system, and decided to do their own thing.
+The Raven Clan is formed by many ex-merchants who were fed up with the corruption and bureaucracy of the Imperial system, and decided to do their own thing.
 Although they deal in smuggling and black market trade, they do not shun nor turn away from the occasional raid and normal piracy.
 They are very diplomatic and put strong emphasis on human relationships, which they foster to maximize the success of their trading endeavours.
 
@@ -106,6 +110,6 @@ Although they rely heavily on piracy, most individuals pursue artistic talents w
 They are also renowned for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from substance abuse.
 
 They are located in the Nebula, near [House Sirius](lore/factions/sirius) and [the Frontier](lore/factions/frontienr), making use of abandoned planets and stations, which they adapt to their purposes.
-Although they tend to have little contact with other pirates outside of assemblies, they have lots of trade with the [Raven Clan](lore/factions/pirates/ravenclan), which wants access to the lucrative drug trade.
+Although they tend to have little contact with other pirates outside of assemblies, they have lots of trade with the <%= strravenclan %>, which wants access to the lucrative drug trade.
 Although in general less organized than other clans, they can be ruthless at raiding convoys, sometimes going deep into [House Sirius](lore/factions/sirius) space.
 <% end %>
