@@ -94,7 +94,7 @@ Colonies changed ownership time and again, factions were eliminated, new faction
 Untold human lives were lost.
 Needless to say, no new worlds were settled during this time, as attempting to do so would mean certain death.
 
-After many, many cycles of constant fighting, the Faction Wars stabilized into a three way conflict between factions calling themselves the Earth Federation, the Free Colonies, and the Rimward Block.
+After many, many cycles of constant fighting, the Faction Wars stabilized into a three-way conflict between factions calling themselves the Earth Federation, the Free Colonies, and the Rimward Block.
 These factions were similar in strength, and for a time there was a balance of power.
 Many believed that eventually hostilities would cease, and new political and trade relations would establish themselves.
 But this didn't happen.
