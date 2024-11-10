@@ -143,6 +143,8 @@ function land ()
    vn.func( function() player.pay(reward) end )
    vn.na( fmt.reward(reward) )
 
+   diff.apply("thurion_espionage")
+
    vn.run()
 
    misn.finish(true)

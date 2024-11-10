@@ -2719,6 +2719,7 @@ dat/unidiff/raglan_outpost_death.xml
 dat/unidiff/sigma13_fixed1.xml
 dat/unidiff/sigma13_fixed2.xml
 dat/unidiff/strangelove.xml
+dat/unidiff/thurion_espionage.xml
 dat/ai/advertiser.lua
 dat/ai/baddie.lua
 dat/ai/baddie_norun.lua
