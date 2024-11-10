@@ -138,6 +138,7 @@ static int playerL_guiSet( lua_State *L );
 /* Fleet stuff. */
 static int playerL_fleetList( lua_State *L );
 static int playerL_fleetCargoFree( lua_State *L );
+static int playerL_fleetCargoMissionFree( lua_State *L );
 static int playerL_fleetCargoUsed( lua_State *L );
 static int playerL_fleetCargoOwned( lua_State *L );
 static int playerL_fleetCargoAdd( lua_State *L );
@@ -232,6 +233,7 @@ static const luaL_Reg playerL_methods[] = {
    { "guiSet", playerL_guiSet },
    { "fleetList", playerL_fleetList },
    { "fleetCargoFree", playerL_fleetCargoFree },
+   { "fleetCargoMissionFree", playerL_fleetCargoMissionFree },
    { "fleetCargoUsed", playerL_fleetCargoUsed },
    { "fleetCargoOwned", playerL_fleetCargoOwned },
    { "fleetCargoAdd", playerL_fleetCargoAdd },
@@ -2062,6 +2064,34 @@ static int playerL_fleetCargoFree( lua_State *L )
       lua_pushinteger( L, 0 );
    else
       lua_pushinteger( L, pfleet_cargoFree() );
+   return 1;
+}
+
+/**
+ * @brief Gets the free space for mission cargos on the player's ship. This can
+ * be less than the amount of free space in the player's fleet since the other
+ * fleet ships can not carry mission cargo.
+ *
+ *    @luatreturn number Amount of free cargo space for mission cargos.
+ * @luafunc fleetCargoMissionFree
+ */
+static int playerL_fleetCargoMissionFree( lua_State *L )
+{
+   if ( player.p == NULL ) {
+      lua_pushinteger( L, 0 );
+      return 0;
+   }
+   /* Count mission cargo. */
+   int misn_cargo = 0;
+   for ( int i = 0; i < array_size( player.p->commodities ); i++ ) {
+      PilotCommodity *pc = &player.p->commodities[i];
+      if ( !pc->id )
+         continue;
+      misn_cargo += pc->quantity;
+   }
+   /* Return minimum between free fleet space and minimum cargo space. */
+   lua_pushinteger(
+      L, MIN( player.p->cap_cargo - misn_cargo, pfleet_cargoFree() ) );
    return 1;
 }
 
