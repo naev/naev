@@ -340,6 +340,13 @@ static int load_enumerateCallbackPlayer( void *data, const char *origdir,
             _( PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       free( path );
    } else if ( stat.filetype == PHYSFS_FILETYPE_REGULAR ) {
+      size_t path_len = strlen( path );
+      /* Want .ns extensions. */
+      if ( path_len < 4 || strcmp( &fname[path_len - 3], ".ns" ) ) {
+         free( path );
+         return PHYSFS_ENUM_OK;
+      }
+
       player_saves_t *ps = (player_saves_t *)data;
       nsave_t         ns;
       memset( &ns, 0, sizeof( ns ) );
