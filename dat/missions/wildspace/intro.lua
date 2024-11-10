@@ -191,7 +191,7 @@ When you receive this message, there is no need to come look for me. I will no l
       vn.scene()
       vn.newCharacter( sai )
       vn.transition()
-      sai(_([["That was the entire audible message. I have taken the liberty of analzing the data in the satchel you brought back. It seems to contain the blueprints for a trivial modification of the shield software that modulates the phase in hyper-spectral patterns. It seems like the modification counteracts some local effects in the so called 'wild space'. If you wish, I can apply them to your ships."]]))
+      sai(_([["That was the entire audible message. I have taken the liberty of analyzing the data in the satchel you brought back. It seems to contain the blueprints for a trivial modification of the shield software that modulates the phase in hyper-spectral patterns. It seems like the modification counteracts some local effects in the so called 'wild space'. If you wish, I can apply them to your ships."]]))
       vn.na(_([[You agree to the modifications. Claude and Ben's deaths should not be in vain.]]))
 
       if not jump.get("Scholz's Star", "Haered"):known() then
