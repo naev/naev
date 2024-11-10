@@ -125,6 +125,7 @@
       * Fixed autonav not respecting shield thresholds
       * zbh10: Godheart and friends get at most 1 fighter bay per ship now
       * Fixed ESS Trinity being bribeable
+      * Cargo on fleets with be displayed to make room for mission cargo when necessary
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons
