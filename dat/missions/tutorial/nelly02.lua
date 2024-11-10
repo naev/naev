@@ -408,7 +408,9 @@ function approach_nelly ()
    mem.misn_state = 2
 end
 
+local spawned = false
 function timer_pirate( fpir )
+   if spawned then return end
    local pp = player.pilot()
    local d = mem.jump_dest:pos():dist( pp:pos() )
    if d < 5000 then
@@ -434,6 +436,7 @@ function timer_pirate( fpir )
       hook.timer( 3, "timer_pirate_nelly" )
       hook.timer( 3, "timer_pirate_checkbribe" )
       mem.nelly_spam = 2
+      spawned = true
       return
    end
    hook.timer( 1, "timer_pirate", fpir )
