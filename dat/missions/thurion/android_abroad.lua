@@ -5,6 +5,7 @@
  <location>Bar</location>
  <chance>50</chance>
  <faction>Thurion</faction>
+ <cond>system.cur():reputation("Thurion") &gt;= 0</cond>
 </mission>
 --]]
 --[[
@@ -12,11 +13,12 @@
 --]]
 local fmt = require "format"
 local vn = require "vn"
-local vni = require "vnimage"
 local title = _("Android Abroad")
 
 local destspb, destsys = spob.getS("Tenal-P")
-local npc_image, npc_portrait
+-- TODO non-generic portrait?
+local npc_image = "neutral/male3n_v2.webp"
+local npc_portrait = "neutral/male3n_v2.webp"
 
 local cargo_amount = 10
 local reward = 200e3
@@ -24,8 +26,6 @@ local reward = 200e3
 function create ()
    -- Note: this mission does not make any system claims.
 
-   -- TODO non-generic portrait?
-   npc_image, npc_portrait = vni.generic()
    misn.setNPC(_("Odd Individual"), npc_portrait, _("You see a non-uploaded Thurion sitting at the bar."))
 end
 
@@ -89,6 +89,7 @@ Their eyes flicker for a second.
       end
       accepted = true
    end )
+   liao(_([["We're always glad to have more people support the Thurion and understand our ways. Let me load my things on your ship and let us be on our way."]]))
 
    vn.run()
    talked = true
