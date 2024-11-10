@@ -17,8 +17,8 @@ local title = _("Android Abroad")
 
 local destspb, destsys = spob.getS("Tenal-P")
 -- TODO non-generic portrait?
-local npc_image = "neutral/male3n_v2.webp"
-local npc_portrait = "neutral/male3n_v2.webp"
+local npc_image = "neutral/male1n.webp"
+local npc_portrait = "neutral/male1n.webp"
 
 local cargo_amount = 10
 local reward = 200e3
