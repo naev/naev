@@ -2081,17 +2081,7 @@ static int playerL_fleetCargoMissionFree( lua_State *L )
       lua_pushinteger( L, 0 );
       return 0;
    }
-   /* Count mission cargo. */
-   int misn_cargo = 0;
-   for ( int i = 0; i < array_size( player.p->commodities ); i++ ) {
-      PilotCommodity *pc = &player.p->commodities[i];
-      if ( !pc->id )
-         continue;
-      misn_cargo += pc->quantity;
-   }
-   /* Return minimum between free fleet space and minimum cargo space. */
-   lua_pushinteger(
-      L, MIN( player.p->cap_cargo - misn_cargo, pfleet_cargoFree() ) );
+   lua_pushinteger( L, pfleet_cargoMissionFree() );
    return 1;
 }
 

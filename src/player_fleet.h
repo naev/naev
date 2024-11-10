@@ -17,6 +17,7 @@ int             pfleet_toggleDeploy( PlayerShip_t *ps, int deploy );
 int             pfleet_deploy( PlayerShip_t *ps );
 int             pfleet_cargoUsed( void );
 int             pfleet_cargoFree( void );
+int             pfleet_cargoMissionFree( void );
 int             pfleet_cargoOwned( const Commodity *com );
 int             pfleet_cargoAdd( const Commodity *com, int q );
 unsigned int    pfleet_cargoMissionAdd( const Commodity *com, int q );

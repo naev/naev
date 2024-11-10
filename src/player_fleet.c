@@ -16,6 +16,9 @@
 #include "naev.h"
 #include "rng.h"
 
+/* Prototypes. */
+static int pfleet_cargoAddRaw( const Commodity *com, int q );
+
 /**
  * @brief Updates the used fleet capacity of the player.
  */
@@ -237,7 +240,7 @@ static void pfleet_cargoRedistributeInternal( PilotCommodity *pc_add )
       if ( pc->id > 0 )
          q = pilot_cargoAddRaw( player.p, pc->commodity, pc->quantity, pc->id );
       else {
-         q = pfleet_cargoAdd( pc->commodity, pc->quantity );
+         q = pfleet_cargoAddRaw( pc->commodity, pc->quantity );
          /* When landed, just stuff everything on the player's ship as they may
           * not be ready for take-off yet. */
          if ( landed && ( q < pc->quantity ) )
@@ -313,6 +316,22 @@ int pfleet_cargoFree( void )
 }
 
 /**
+ * @brief Gets the free mission cargo space in the player's fleet.
+ */
+int pfleet_cargoMissionFree( void )
+{
+   int misn_cargo = 0;
+   for ( int i = 0; i < array_size( player.p->commodities ); i++ ) {
+      PilotCommodity *pc = &player.p->commodities[i];
+      if ( !pc->id )
+         continue;
+      misn_cargo += pc->quantity;
+   }
+   /* Return minimum between free fleet space and minimum cargo space. */
+   return MIN( player.p->cap_cargo - misn_cargo, pfleet_cargoFree() );
+}
+
+/**
  * @brief Gets the total amount of a commodity type owned by the player's fleet.
  *
  *    @param com Commodity to add.
@@ -335,6 +354,25 @@ int pfleet_cargoOwned( const Commodity *com )
       amount += pilot_cargoOwned( pe, com );
    }
    return amount;
+}
+
+static int pfleet_cargoAddRaw( const Commodity *com, int q )
+{
+   int added = pilot_cargoAdd( player.p, com, q, 0 );
+   if ( ( player.fleet_capacity <= 0 ) || ( q - added <= 0 ) )
+      return added;
+   for ( int i = 0; i < array_size( player.p->escorts ); i++ ) {
+      const Escort_t *e  = &player.p->escorts[i];
+      Pilot          *pe = pilot_get( e->id );
+      if ( pe == NULL )
+         continue;
+      if ( e->type != ESCORT_TYPE_FLEET )
+         continue;
+      added += pilot_cargoAdd( pe, com, q - added, 0 );
+      if ( q - added <= 0 )
+         break;
+   }
+   return added;
 }
 
 /**
