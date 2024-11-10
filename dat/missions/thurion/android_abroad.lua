@@ -84,7 +84,7 @@ Their eyes flicker for a second.
 
    vn.label("accept")
    vn.func( function ()
-      if player.pilot():cargoFree() < cargo_amount then
+      if player.fleetCargoMissionFree() < cargo_amount then
          return vn.jump("nospace")
       end
       accepted = true

@@ -65,7 +65,7 @@ function accept()
    vn.label("accept")
    vn.func( function ()
       accepted = true
-      mem.amount = player.pilot():cargoFree()
+      mem.amount = player.fleetCargoMissionFree()
       if mem.amount <= 0 then
          vn.jump("nospace")
       else

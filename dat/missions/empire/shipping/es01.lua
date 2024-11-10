@@ -101,8 +101,9 @@ function land ()
    if mem.landed == mem.pickup and mem.misn_stage == 0 then
 
       -- Make sure player has room.
-      if player.pilot():cargoFree() < 3 then
-         local needed = 3 - player.pilot():cargoFree()
+      local fs = player.fleetCargoMissionFree()
+      if fs < 3 then
+         local needed = 3 - fs
          vntk.msg( _("Need More Space"), string.format( n_(
             "You do not have enough space to load the packages. You need to make room for %d more tonne.",
             "You do not have enough space to load the packages. You need to make room for %d more tonnes.",

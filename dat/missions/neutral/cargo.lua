@@ -87,7 +87,7 @@ end
 
 -- Mission is accepted
 function accept ()
-   local freecargo = player.pilot():cargoFree()
+   local freecargo = player.fleetCargoMissionFree()
    if freecargo < mem.amount then
       vntk.msg( _("No room in ship"), fmt.f(
          _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short} more than you have)."),

@@ -77,7 +77,7 @@ function accept ()
 
    vn.label("accept")
    vn.func( function ()
-      if player.pilot():cargoFree() < cargo_space then
+      if player.fleetCargoMissionFree() < cargo_space then
          vn.jump("nospace")
          return
       end
@@ -114,7 +114,7 @@ end
 
 function land ()
    if spob.cur() == mem.pickupWorld and not mem.pickedup then
-      if player.pilot():cargoFree() < cargo_space then
+      if player.fleetCargoMissionFree() < cargo_space then
          vntk.msg( _("No Room"), fmt.f(_([[You need at least {amount} of free cargo space to pick up the cargo.]]),
             {amount=fmt.tonnes(cargo_space)}))
          return
