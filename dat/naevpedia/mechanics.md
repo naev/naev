@@ -11,6 +11,7 @@ Below is an overview of the mechanics covered in the Holo-Archives.
 * [Movement](mechanics/movement)
 * [Landing](mechanics/landing)
 * [Hyperspace and Jumping](mechanics/hyperspace)
+* [Autonav](mechanics/autonav)
 * [Star Map](mechanics/map)
 * [Equipment](mechanics/equipment)
 * [Time](mechanics/time)

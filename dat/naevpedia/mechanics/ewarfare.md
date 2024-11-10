@@ -12,6 +12,18 @@ There are fundamentally three different levels, from coarse to fine:
 
 All electronic warfare values are based on distances, since they represent the distance at which the ship is fully detected.
 
+## Scanning
+
+Whenever you target a ship, your ship will begin performing a scan on it.
+This is indicated by the rotating icon on the ship tab that appears in your ship's interface.
+When the icon stops rotating, it indicates that the ship has been scanned.
+By pressing the <%= "#b"..naev.keyGet("scan").."#0" %> key, you can call up the information about the scanned ship.
+This will show you things such as the outfits the ship has and the cargo it is carrying.
+
+Similarly, other ships will scan your ship when targeting it.
+This is usually not a problem, however, if you are carrying outfits or commodities that are illegal to the faction of the ship scanning you, it may bring repercussions.
+Ships scanning your are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav).
+
 ## Detection and Hiding
 
 Without modifiers, ships are detected based on [their mass](mechanics/mass).
