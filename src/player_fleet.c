@@ -349,6 +349,7 @@ int pfleet_cargoAdd( const Commodity *com, int q )
       if ( q - added <= 0 )
          break;
    }
+   pfleet_cargoRedistribute();
    return added;
 }
 
@@ -390,6 +391,7 @@ int pfleet_cargoRm( const Commodity *com, int q, int jet )
       else
          removed += pilot_cargoRm( player.p, com, q );
    }
+   pfleet_cargoRedistribute();
    return removed;
 }
 
