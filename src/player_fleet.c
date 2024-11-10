@@ -13,6 +13,7 @@
 #include "equipment.h"
 #include "escort.h"
 #include "land.h"
+#include "naev.h"
 #include "rng.h"
 
 /**
@@ -205,9 +206,13 @@ static int pc_cmp( const void *pa, const void *pb )
 /**
  * @brief Redistributes the cargo in the player's fleet.
  */
-void pfleet_cargoRedistribute( void )
+static void pfleet_cargoRedistributeInternal( PilotCommodity *pc_add )
 {
    PilotCommodity *pclist = array_create( PilotCommodity );
+
+   /* Add commodity if we want to. */
+   if ( pc_add != NULL )
+      array_push_back( &pclist, *pc_add );
 
    /* First build up a list of all the potential cargo. */
    shipCargo( &pclist, player.p, 1 );
@@ -249,6 +254,14 @@ void pfleet_cargoRedistribute( void )
    }
 
    array_free( pclist );
+}
+
+/**
+ * @brief Redistributes the cargo in the player's fleet.
+ */
+void pfleet_cargoRedistribute( void )
+{
+   pfleet_cargoRedistributeInternal( NULL );
 }
 
 /**
@@ -335,22 +348,34 @@ int pfleet_cargoAdd( const Commodity *com, int q )
 {
    if ( player.p == NULL )
       return 0;
-   int added = pilot_cargoAdd( player.p, com, q, 0 );
-   if ( ( player.fleet_capacity <= 0 ) || ( q - added <= 0 ) )
-      return added;
-   for ( int i = 0; i < array_size( player.p->escorts ); i++ ) {
-      const Escort_t *e  = &player.p->escorts[i];
-      Pilot          *pe = pilot_get( e->id );
-      if ( pe == NULL )
-         continue;
-      if ( e->type != ESCORT_TYPE_FLEET )
-         continue;
-      added += pilot_cargoAdd( pe, com, q - added, 0 );
-      if ( q - added <= 0 )
-         break;
-   }
-   pfleet_cargoRedistribute();
-   return added;
+   int            amount = MIN( q, pfleet_cargoFree() );
+   PilotCommodity pc;
+   memset( &pc, 0, sizeof( pc ) );
+   pc.commodity = com;
+   pc.quantity  = amount;
+   pfleet_cargoRedistributeInternal( &pc );
+   return amount;
+}
+
+/**
+ * @brief Adds some mission cargo to the player's fleet.
+ *
+ *    @param com Commodity to add.
+ *    @param q Quantity to add.
+ *    @return ID of the added mission cargo.
+ */
+unsigned int pfleet_cargoMissionAdd( const Commodity *com, int q )
+{
+   if ( player.p == NULL )
+      return 0;
+   PilotCommodity pc;
+   unsigned int   id = pilot_genMissionCargoID( player.p );
+   memset( &pc, 0, sizeof( pc ) );
+   pc.commodity = com;
+   pc.quantity  = q;
+   pc.id        = id;
+   pfleet_cargoRedistributeInternal( &pc );
+   return id;
 }
 
 /**

@@ -19,6 +19,7 @@ int             pfleet_cargoUsed( void );
 int             pfleet_cargoFree( void );
 int             pfleet_cargoOwned( const Commodity *com );
 int             pfleet_cargoAdd( const Commodity *com, int q );
+unsigned int    pfleet_cargoMissionAdd( const Commodity *com, int q );
 int             pfleet_cargoRm( const Commodity *com, int q, int jet );
 PilotCommodity *pfleet_cargoList( void );
 PFleetCargo    *pfleet_cargoListShips( const Commodity *com );
