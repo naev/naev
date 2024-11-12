@@ -3250,6 +3250,7 @@ dat/missions/taiomi/taiomi08.lua
 dat/missions/taiomi/taiomi09.lua
 dat/missions/taiomi/taiomi10.lua
 dat/missions/thurion/android_abroad.lua
+dat/missions/thurion/data_extraction.lua
 dat/missions/thurion/intro_wildspace.lua
 dat/missions/trader/anxiousmerchant.lua
 dat/missions/trader/trader_escort.lua
