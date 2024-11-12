@@ -6,7 +6,7 @@ return {
       "intro.ogg",
    },
    credits_songs = {
-      "empire11.ogg",
+      "empire1.ogg",
    },
    -- Songs chosen randomly when taking off
    takeoff_songs = {
