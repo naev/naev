@@ -103,6 +103,7 @@ function land ()
       c:illegalto{ "Empire", "Dvaered", "Za'lek", "Sirius", "Soromid", "Frontier" }
       mem.carg_id = misn.cargoAdd(c, mem.amount)
 
+      mem.osdActive(2)
       mem.state = 1
    elseif sc==mem.returnspb and mem.state==1 then
 
