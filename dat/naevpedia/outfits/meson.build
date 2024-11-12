@@ -396,15 +396,16 @@ foreach ns: naevpedia_outfits_sources
     )
 endforeach
 
+biolist = []
 foreach bio: bio_outfits
-  foreach ns: bio.to_list()
-    naevpedia_outfits += custom_target( ns.full_path().replace('/','_'),
-        command: outfits_gen,
-        input: ns,
-        output: '@BASENAME@.md',
-        install: true,
-        install_dir: ndata_path / 'dat/naevpedia/outfits',
-        depends: bio,
-      )
-  endforeach
+  biolist += bio.to_list()
+endforeach
+foreach ns: biolist
+  naevpedia_outfits += custom_target( ns.full_path().replace('/','_'),
+      command: outfits_gen,
+      input: ns,
+      output: '@BASENAME@.md',
+      install: true,
+      install_dir: ndata_path / 'dat/naevpedia/outfits',
+    )
 endforeach
