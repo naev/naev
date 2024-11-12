@@ -35,7 +35,7 @@ function init( spb )
       local curstanding = fct:reputationGlobal()
       if curstanding < minstanding then
          return false, fmt.f(_("You need at least {standing} with {fct} (you have {current})."),
-            {standing=minstanding,fct=fct:longname(),current=curstanding})
+            {standing=minstanding,fct=fct:longname(),current=fmt.number(curstanding)})
       end
       return true, ""
    end )
