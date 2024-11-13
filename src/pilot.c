@@ -1740,6 +1740,7 @@ void pilot_dead( Pilot *p, unsigned int killer )
          continue;
 
       /* Update stats, they will include damage over time now. */
+      pilot_setFlag( pe, PILOT_CARRIER_DIED );
       pilot_calcStats( pe );
    }
 }
