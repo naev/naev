@@ -181,12 +181,16 @@ local last_spammed = 0
 local unsafe = false
 -- Handle the convoy getting attacked.
 -- luacheck: globals trader_attacked
-function trader_attacked( p, _attacker )
+function trader_attacked( p, attacker )
    unsafe = true
    p:control( false )
    p:setNoJump( true )
    p:setNoLand( true )
 
+   -- Attackers have to be marked as hostile
+   attacker:setHostile()
+
+   -- Only spam so often
    local t = naev.ticks()
    if (t-last_spammed) > 10 then
       p:comm( _("Convoy ships under attack! Requesting immediate assistance!") )
