@@ -759,7 +759,7 @@ function __hyp_approach( target, jumptsk )
    local pos      = target:pos() + mem.target_bias
    local dist     = ai.dist( pos )
    local bdist    = ai.minbrakedist()
-   jumptsk  = jumptsk or "_hyp_jump"
+   jumptsk = jumptsk or "_hyp_jump"
 
    -- 2 methods for dir
    if not mem.careful or dist < 3*bdist then
@@ -798,9 +798,13 @@ function _hyp_jump_follow( jump )
       -- Wait until leader is in hyperspace
       if l:flags("jumpingout") then
          _hyp_jump( jump )
-      elseif not ai.canHyperspace() then
-         -- Drifted away or whatever, so pop and go back
-         ai.popsubtask()
+      else
+         -- Stop and wait just to get ready to hyperspace
+         ai.brake()
+         if ai.isstopped() and not ai.canHyperspace() then
+            -- Drifted away or whatever, so pop and go back
+            ai.popsubtask()
+         end
       end
    else
       _hyp_jump( jump )
