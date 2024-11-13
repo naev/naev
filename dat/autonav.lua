@@ -521,6 +521,8 @@ function autonav_jump_brake ()
 
    if ai.canHyperspace() then
       ai.hyperspace()
+      local pp = player.pilot()
+      pp:msg( pp:followers(), "hyperspace", pp:navJump() )
    elseif ret then
       -- Recompute the location for a better position
       recompute_jump_pos()
