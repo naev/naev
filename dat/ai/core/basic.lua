@@ -784,7 +784,7 @@ end
 
 -- luacheck: globals _hyp_jump (AI Task functions passed by name)
 function _hyp_jump ( jump )
-   if ai.hyperspace( jump ) == nil then
+   if ai.hyperspace( jump ) then
       local p = ai.pilot()
       p:msg(p:followers(), "hyperspace", jump)
    end
