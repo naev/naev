@@ -738,6 +738,10 @@ function hyperspace( target )
    end
    mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
    ai.pushsubtask( "_hyp_approach", target )
+
+   -- Order followers to return if possible
+   local p = ai.pilot()
+   p:msg(p:followers(), "e_return", jump)
 end
 
 -- luacheck: globals hyperspace_follow (AI Task functions passed by name)
