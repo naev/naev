@@ -2088,7 +2088,6 @@ int player_jump( void )
 
       /* Order escorts to jump; just for aesthetics (for now) */
       escorts_jump( player.p, &cur_system->jumps[player.p->nav_hyperspace] );
-
       return 1;
    }
 
