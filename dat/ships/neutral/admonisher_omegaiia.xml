@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Admonisher ΩIIa" inherits="Admonisher">
+ <gfx size="68">admonisher_omegaiia</gfx>
  <rarity>2</rarity>
  <price>1280000</price>
  <description>The Admonisher ΩIIa makes the hard choice of sacrificing long-range engagement capability to be able to excel in dogfighting. The original long-range targetting system has been scrapped and replaced by an efficient close range weapon system. In particular, the high tracking allows it to mow down fighters and bombers with ease. However, the difficulty to equip torpedo launchers make the ship ill-suited for engagements with larger ships.</description>
