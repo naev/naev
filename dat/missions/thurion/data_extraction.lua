@@ -59,17 +59,55 @@ function create ()
    mem.reputation = math.floor( 2 + dist/5 + mem.amount/24 + 0.5 )
 
    -- TODO more custom ridiculous message about types of documents and such
+   local cargos = {
+      { N_("Confidential Documents"),
+         N_("A serious of notes and documents collected by Thurion agents.") },
+      { N_("Situational Reports"),
+         N_("Detailed reports covering different aspects of systems outside of the Nebula, mixed in with stolen documents and illegal recordings.") }
+   }
+   local fspb = mem.targetspb:faction()
+   if fspb==faction.get("Empire") then
+      tmergei( cargos, {
+         { N_("Imperial Census Data"),
+            N_("Private data regarding habits and behaviours of the Citizens of the Empire.") },
+         { N_("Imperial Gift Log"),
+            N_("Data regarding gifts given and received by the different members of the Imperial Aristocracy, paid by the Imperial Coffers.") },
+         { N_("Aristocratic Secrets"),
+            N_("Detailed information about the likes, dislikes, and personalities of various important figures in the Empire.") },
+         { N_("Great House Liason Logs"),
+            N_("Logs regarding the behaviours and details of interactions between the Great House Liasons and the Empire.") },
+      } )
+   end
+   if fspb==faction.get("Dvaered") then
+      tmergei( cargos, {
+         { N_("Dvaered Ship Census"),
+            N_("Information collected about ship movements and activities around Dvaered space.") },
+         { N_("Dvaered Economic Data"),
+            N_("Data regarding the poor economic outlook of the Dvared territories, where large lists of military expenses outnumber investment in infrastructure and social services.") },
+         { N_("Dvaered Security Reports"),
+            N_("Detailed reports regarding engagements between different Warlords. You can tell whoever wrote this is a fan of military tactics.") },
+      } )
+   end
+   if fspb==faction.get("Traders Society") then
+      tmergei( cargos, {
+         { N_("Trade Secrets"),
+            N_("Detailed documents regarding patented trade secrets.") },
+         { N_("Space Trader Membership Logs"),
+            N_("Information about the members of the different guilds of the Space Traders Society.") },
+      } )
+   end
+   mem.cargoname, mem.cargodesc = table.unpack( cargos[rnd.rnd(1,#cargos)] )
 
    misn.setTitle( thurion.prefix..fmt.f(_("Data Extraction from {spb} in {sys}"),
       {spb=mem.targetspb, sys=mem.targetsys}))
-   misn.setDesc(fmt.f(_([[A Thurion agent has prepared some confidential documents that have to be extracted. #rThe documents are illegal to possess and must be delivered without raising suspicions.#0
+   misn.setDesc(fmt.f(_([[A Thurion agent has prepared some {cargoname} that have to be extracted. #rThe cargo is illegal to possess and must be delivered without raising suspicions.#0
 
 #nAmount:#0 {amount}
 #nPickup:#0 {spb} ({sys} system, )
 #nDelivery:#0 {returnspb} ({returnsys} system)
 #nJumps (One-way):#0 {dist}
 #nReputation Gained:#0 {rep}]]),
-      {spb=mem.targetspb, sys=mem.targetsys, returnspb=mem.returnspb, returnsys=mem.returnsys, dist=dist, amount=fmt.tonnes(mem.amount), rep=mem.reputation}))
+      {spb=mem.targetspb, sys=mem.targetsys, returnspb=mem.returnspb, returnsys=mem.returnsys, dist=dist, amount=fmt.tonnes(mem.amount), rep=mem.reputation, cargoname=_(mem.cargoname)}))
    misn.setReward( mem.reward )
    misn.markerAdd( mem.targetspb, "computer" )
 end
@@ -89,8 +127,8 @@ function land ()
       local freecargo = player.fleetCargoMissionFree()
       if freecargo < mem.amount then
          vntk.msg( _("No room in ship"), fmt.f(
-            _("You don't have enough cargo space to collect the extracted confidential documents. You need {tonnes_free} of free space ({tonnes_short} more than you have)."),
-            { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - freecargo ) } ) )
+            _("You don't have enough cargo space to collect the extracted {cargoname}. You need {tonnes_free} of free space ({tonnes_short} more than you have)."),
+            { tonnes_free=fmt.tonnes(mem.amount), tonnes_short=fmt.tonnes( mem.amount - freecargo ), cargoname=_(mem.cargoname) } ) )
          return
       end
 
@@ -99,11 +137,11 @@ function land ()
 
       misn.markerRm()
       misn.markerAdd( mem.returnspb, "computer" )
-      local c = commodity.new( N_("Confidential Documents"), N_("A serious of notes and documents collected by Thurion agents.") )
+      local c = commodity.new( mem.cargoname, mem.cargodesc )
       c:illegalto{ "Empire", "Dvaered", "Za'lek", "Sirius", "Soromid", "Frontier" }
       mem.carg_id = misn.cargoAdd(c, mem.amount)
 
-      mem.osdActive(2)
+      misn.osdActive(2)
       mem.state = 1
    elseif sc==mem.returnspb and mem.state==1 then
 
