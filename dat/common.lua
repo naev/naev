@@ -37,7 +37,7 @@ function tcopy( tbl, copy )
 end
 
 --[[--
-   Merges src table into dest. Does not recurse into subtables. This functino is for unordered tables.
+   Merges src table into dest. Does not recurse into subtables. This function is for unordered tables.
 
    @tparam table dest Destination table. Must not be nil.
    @tparam[opt={}] table src Source table to be merged into dest.
