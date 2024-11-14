@@ -9,7 +9,7 @@ wgtfct = require("naevpedia.lore.faction").init( "Dvaered" )
 # Great House Dvaered
 
 House Dvaered is one of the Great Houses of [the Empire](lore/factions/empire).
-It evolved from the simple working class of [the Empire](lore/factions/empire) during the Second Growth and the Faction Wars and was granted the status of a Great House by the Emperor during the golden age of [the Empire](lore/factions/empire).
+It evolved from the simple working class of [the Empire](lore/factions/empire) during the [Second Growth and the Faction Wars](lore/history) and was granted the status of a Great House by the Emperor during the golden age of [the Empire](lore/factions/empire).
 Today, it is governed by the military and the armed forces dominate much of the everyday lives of the Dvaered citizens.
 Planets are governed by Warlords, former members of the Dvaered High Command, which makes all the most important decisions about the House.
 The Warlords regulate life on a local basis, while the High Command directs the Faction as a whole.
@@ -25,7 +25,7 @@ The only way of rising up is usually to join the military and earn medals and co
 
 ## History
 
-House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual laborers, foot soldiers and outcasts.
+House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual laborers, foot soldiers, and outcasts.
 With the gradual decline in authority of [the Empire](lore/factions/empire), the working class became increasingly disgruntled with their social position.
 They banded together into what could be considered the biggest labor union in all of human history, and started demanding better treatment.
 

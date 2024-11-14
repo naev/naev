@@ -2576,9 +2576,6 @@ static int aiL_hyperspace( lua_State *L )
    }
 
    canjump = space_hyperspace( cur_pilot );
-   if ( canjump == 0 )
-      return 0;
-
    lua_pushnumber( L, canjump );
    return 1;
 }

@@ -4632,8 +4632,15 @@ void space_reconstructPresences( void )
 {
    /* Reset the presence in each system. */
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
-      array_free( systems_stack[i].presence );
-      systems_stack[i].presence      = array_create( SystemPresence );
+      StarSystem *sys = &systems_stack[i];
+      /* We can't destroy the array or the player's local presence will get
+       * lost. */
+      for ( int j = 0; j < array_size( sys->presence ); j++ ) {
+         SystemPresence *sp = &sys->presence[j];
+         sp->base           = 0.;
+         sp->bonus          = 0.;
+         sp->value          = 0.;
+      }
       systems_stack[i].ownerpresence = 0.;
    }
 

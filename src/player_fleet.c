@@ -13,7 +13,11 @@
 #include "equipment.h"
 #include "escort.h"
 #include "land.h"
+#include "naev.h"
 #include "rng.h"
+
+/* Prototypes. */
+static int pfleet_cargoAddRaw( const Commodity *com, int q );
 
 /**
  * @brief Updates the used fleet capacity of the player.
@@ -205,9 +209,13 @@ static int pc_cmp( const void *pa, const void *pb )
 /**
  * @brief Redistributes the cargo in the player's fleet.
  */
-void pfleet_cargoRedistribute( void )
+static void pfleet_cargoRedistributeInternal( PilotCommodity *pc_add )
 {
    PilotCommodity *pclist = array_create( PilotCommodity );
+
+   /* Add commodity if we want to. */
+   if ( pc_add != NULL )
+      array_push_back( &pclist, *pc_add );
 
    /* First build up a list of all the potential cargo. */
    shipCargo( &pclist, player.p, 1 );
@@ -232,7 +240,7 @@ void pfleet_cargoRedistribute( void )
       if ( pc->id > 0 )
          q = pilot_cargoAddRaw( player.p, pc->commodity, pc->quantity, pc->id );
       else {
-         q = pfleet_cargoAdd( pc->commodity, pc->quantity );
+         q = pfleet_cargoAddRaw( pc->commodity, pc->quantity );
          /* When landed, just stuff everything on the player's ship as they may
           * not be ready for take-off yet. */
          if ( landed && ( q < pc->quantity ) )
@@ -249,6 +257,14 @@ void pfleet_cargoRedistribute( void )
    }
 
    array_free( pclist );
+}
+
+/**
+ * @brief Redistributes the cargo in the player's fleet.
+ */
+void pfleet_cargoRedistribute( void )
+{
+   pfleet_cargoRedistributeInternal( NULL );
 }
 
 /**
@@ -300,6 +316,22 @@ int pfleet_cargoFree( void )
 }
 
 /**
+ * @brief Gets the free mission cargo space in the player's fleet.
+ */
+int pfleet_cargoMissionFree( void )
+{
+   int misn_cargo = 0;
+   for ( int i = 0; i < array_size( player.p->commodities ); i++ ) {
+      PilotCommodity *pc = &player.p->commodities[i];
+      if ( !pc->id )
+         continue;
+      misn_cargo += pc->quantity;
+   }
+   /* Return minimum between free fleet space and minimum cargo space. */
+   return MIN( player.p->cap_cargo - misn_cargo, pfleet_cargoFree() );
+}
+
+/**
  * @brief Gets the total amount of a commodity type owned by the player's fleet.
  *
  *    @param com Commodity to add.
@@ -324,17 +356,8 @@ int pfleet_cargoOwned( const Commodity *com )
    return amount;
 }
 
-/**
- * @brief Adds some cargo to the player's fleet.
- *
- *    @param com Commodity to add.
- *    @param q Quantity to add.
- *    @return Total amount of cargo added (less than q if it doesn't fit).
- */
-int pfleet_cargoAdd( const Commodity *com, int q )
+static int pfleet_cargoAddRaw( const Commodity *com, int q )
 {
-   if ( player.p == NULL )
-      return 0;
    int added = pilot_cargoAdd( player.p, com, q, 0 );
    if ( ( player.fleet_capacity <= 0 ) || ( q - added <= 0 ) )
       return added;
@@ -350,6 +373,47 @@ int pfleet_cargoAdd( const Commodity *com, int q )
          break;
    }
    return added;
+}
+
+/**
+ * @brief Adds some cargo to the player's fleet.
+ *
+ *    @param com Commodity to add.
+ *    @param q Quantity to add.
+ *    @return Total amount of cargo added (less than q if it doesn't fit).
+ */
+int pfleet_cargoAdd( const Commodity *com, int q )
+{
+   if ( player.p == NULL )
+      return 0;
+   int            amount = MIN( q, pfleet_cargoFree() );
+   PilotCommodity pc;
+   memset( &pc, 0, sizeof( pc ) );
+   pc.commodity = com;
+   pc.quantity  = amount;
+   pfleet_cargoRedistributeInternal( &pc );
+   return amount;
+}
+
+/**
+ * @brief Adds some mission cargo to the player's fleet.
+ *
+ *    @param com Commodity to add.
+ *    @param q Quantity to add.
+ *    @return ID of the added mission cargo.
+ */
+unsigned int pfleet_cargoMissionAdd( const Commodity *com, int q )
+{
+   if ( player.p == NULL )
+      return 0;
+   PilotCommodity pc;
+   unsigned int   id = pilot_genMissionCargoID( player.p );
+   memset( &pc, 0, sizeof( pc ) );
+   pc.commodity = com;
+   pc.quantity  = q;
+   pc.id        = id;
+   pfleet_cargoRedistributeInternal( &pc );
+   return id;
 }
 
 /**
@@ -390,6 +454,7 @@ int pfleet_cargoRm( const Commodity *com, int q, int jet )
       else
          removed += pilot_cargoRm( player.p, com, q );
    }
+   pfleet_cargoRedistribute();
    return removed;
 }
 

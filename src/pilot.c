@@ -1102,9 +1102,10 @@ double pilot_aimAngle( Pilot *p, const vec2 *pos, const vec2 *vel )
  */
 void pilot_setHostile( Pilot *p )
 {
-   if ( pilot_isFriendly( p ) || pilot_isFlag( p, PILOT_BRIBED ) ||
-        !pilot_isFlag( p, PILOT_HOSTILE ) )
-      pilot_setFlag( p, PILOT_HOSTILE );
+   /* Don't let player ships be hostile to player. */
+   if ( pilot_isWithPlayer( p ) )
+      return;
+   pilot_setFlag( p, PILOT_HOSTILE );
    pilot_rmFriendly( p );
    pilot_rmFlag( p, PILOT_BRIBED );
 }
@@ -1740,6 +1741,7 @@ void pilot_dead( Pilot *p, unsigned int killer )
          continue;
 
       /* Update stats, they will include damage over time now. */
+      pilot_setFlag( pe, PILOT_CARRIER_DIED );
       pilot_calcStats( pe );
    }
 }

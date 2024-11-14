@@ -5,6 +5,7 @@
 --  Pirate mission functions.
 --]]
 local fmt = require 'format'
+local lmisn = require 'lmisn'
 local pir = {}
 
 -- List of all the pirate factions
@@ -150,6 +151,7 @@ end
    @brief Decrease pirate standings for doing normal missions.
 --]]
 function pir.reputationNormalMission( amount )
+   -- Modify all the clans
    for k,v in ipairs(pir.factions_clans) do
       local s = v:reputationGlobal()
       local d = v:reputationDefault()
@@ -161,7 +163,13 @@ function pir.reputationNormalMission( amount )
          elseif s > 0 then
             vamount = vamount * 2
          end
-         v:hit( vamount, nil, nil, true )
+
+         -- We'll only do the hit if there are pirates "nearby"
+         if #lmisn.getSysAtDistance( nil, 0, 4, function ( sys )
+            return sys:presence( v ) > 0
+         end ) > 0 then
+            v:hit( vamount, nil, nil, true )
+         end
       end
    end
 end

@@ -96,7 +96,7 @@ end
 function land ()
    if mem.state==1 and  spob.cur() == mem.destpnt then
 
-      local fs = player.pilot():cargoFree()
+      local fs = player.fleetCargoMissionFree()
       if fs < cargo_amount then
          vntk.msg(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
             {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))

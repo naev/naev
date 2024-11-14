@@ -15,6 +15,9 @@ local dvaered_outfits = eoutfits.merge{{
    -- Small Weapons
    "Shredder", "Vulcan Gun", "Gauss Gun",
    "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
+   -- Point Defense
+   "Dvaered Flare Battery",
+   "Ratchet Point Defense",
    -- Utility
    "Cyclic Combat AI", "Milspec Impacto-Plastic Coating",
    "Unicorp Scrambler", "Unicorp Light Afterburner",

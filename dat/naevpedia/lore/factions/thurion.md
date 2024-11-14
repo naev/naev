@@ -9,7 +9,7 @@ wgtfct = require("naevpedia.lore.faction").init( "Thurion" )
 
 # Thurion
 
-The Thurion were originally a Great Project in [the Empire](lore/factions/empire), before being nearly exterminated and becoming its own faction.
+The Thurion were originally a Great Project in [the Empire](lore/factions/empire), before being nearly exterminated and escaping into obscurity.
 
 ## Organization
 * **Leader:** None
@@ -76,7 +76,7 @@ Nobody remembered them, and nobody ever found them.
 
 Despite flourishing in the shadows, the Thurion were still very limited by the ever present dangers presented by [the Empire](lore/factions/empire) and Great Houses.
 Although it was cataclysmic for most factions, [the Incident](lore/history/incident) provide to be a boon for the Thurion, which were significantly less affected by the radiation and volatility.
-Furthermore, the dangers of Imperial surveillance all but vansihed, and they quickly were able to expand into newly destroyed systems and recover their losses.
+Furthermore, the dangers of Imperial surveillance all but vanished, and they quickly were able to expand into newly destroyed systems and recover their losses.
 Not only that, they were able to assist in saving and uploading many survivors, expanding their ranks.
 
 Currently, the Thurion have a strong significant presence in the deep Nebula throughout many systems.
@@ -102,7 +102,7 @@ The second part of the scientists' plan was the activation of a transmitter that
 They assumed that the Empire would forget about project Thurion after some time and programmed the transmitter to activate after 200 cycles.
 By that time, however, the system was still under lock down and Empire fleets occasionally patrolled the system.
 Soon enough they would find the hidden bunker.
-But in UST 307 the Dvaered revolts occurred.
+But in [UST 307](mechanics/time) [the Dvaered revolts](lore/history) occurred.
 Only the emperor himself knew about project Thurion.
 The commanding general assumed that the reason for the patrols was to prevent pirates from settling in the area and decided the fleet should be deployed in the conflict with the Dvaered.
 
@@ -138,7 +138,7 @@ However, after some cycles issues began to manifest.
 Their minds started to break down which is visible in random changes of personality and the appearance of mental illnesses that grow worse over time.
 Although the initial symptoms are rather harmless, the Thurion realized that they had little time left to solve this issue.
 They came to the conclusion that the source of the problem are certain neuronal patterns that emerged within their simulations and do not naturally occur.
-Working under pressure they did not fid a way to fix the simulation methods but came up with a rather hacky fix instead.
+Working under pressure they did not find a way to fix the simulation methods but came up with a rather hacky fix instead.
 They used the previously established communication network that allows uploaded Thurion to directly interact with each others and made a machine learning algorithm that used this network to directly access the Thurions' minds and cross-reference their neuronal patterns.
 The program is then identifying the abnormal neuronal patterns and resets them to their 'natural' state.
 Since this method apparently has been very successful and the problems stopped the Thurion did not further investigate.
@@ -154,7 +154,7 @@ In the worst case and over a long exposure time (the first case occurred after t
 ### The Incident
 
 The Thurion were mostly unaffected by the incident.
-The nNbula did not spread out to the Nava system where the majority of their infrastructure was located.
+The nebula did not spread out to the Nava system where the majority of their infrastructure was located.
 They did, however, loose all personnel and their followers inside Empire space.
 
 Under the influence of the gestalt consciousness the infrastructure in the Nava system has been greatly expanded and two more planets have been colonized prior to the incident and the Thurion began to expand quickly.

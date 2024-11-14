@@ -749,8 +749,6 @@ function control( dt )
             end
          end
       end
-      -- Tell followers to jump if not doing so
-      --p:msg(p:followers(), "hyperspace", ai.taskdata())
       return
    end
 

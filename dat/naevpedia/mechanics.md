@@ -11,6 +11,7 @@ Below is an overview of the mechanics covered in the Holo-Archives.
 * [Movement](mechanics/movement)
 * [Landing](mechanics/landing)
 * [Hyperspace and Jumping](mechanics/hyperspace)
+* [Autonav](mechanics/autonav)
 * [Star Map](mechanics/map)
 * [Equipment](mechanics/equipment)
 * [Time](mechanics/time)
@@ -22,6 +23,7 @@ Below is an overview of the mechanics covered in the Holo-Archives.
 * [Cargo](mechanics/cargo)
 * [Hailing](mechanics/hailing)
 * [Weapon Sets](mechanics/weaponsets)
+* [Launchers](mechanics/launchers)
 
 ## Advanced
 
@@ -32,6 +34,7 @@ Below is an overview of the mechanics covered in the Holo-Archives.
 * [Mining](mechanics/mining)
 * [Electronic Warfare](mechanics/ewarfare)
 * [Effects](mechanics/effects)
+* [Heat](mechanics/heat)
 <% if naev.player.fleetCapacity() > 0 then %>
 * [Fleets](mechanics/playerfleet)
 <% end %>

@@ -65,6 +65,7 @@ end
 
 function accept ()
    local accepted = false
+   local fs = player.fleetCargoMissionFree()
 
    vn.clear()
    vn.scene()
@@ -82,12 +83,12 @@ function accept ()
 
    vn.label("nospace")
    vn.na(fmt.f(_([["You need an additional {space} of free cargo space to accept this mission!"]]),
-      {space=cargo_space - player.pilot():cargoFree()}))
+      {space=cargo_space - fs}))
    vn.done()
 
    vn.label("accept")
    vn.func( function ()
-      if player.pilot():cargoFree() < cargo_space then
+      if fs < cargo_space then
          vn.jump("nospace")
          return
       end

@@ -16,10 +16,9 @@
  <trail_generator x="-9" y="5" h="10">nebula</trail_generator>
  <fabricator>Thurion Shipyards</fabricator>
  <faction>Thurion</faction>
- <license>Light Combat Vessel</license>
  <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 30</cond>
  <condstr>You need at least 30% reputation with the Thurion.</condstr>
- <description>The Thurion Scintillation is a bomber designed to attack from a large distance. It is better armed than any other Thurion ship of comparable size, but still not as well as other non-Thurion bombers.</description>
+ <description>The Thurion Scintillation is a bomber designed to attack from a large distance. It is better armed than any other Thurion ship of comparable size, but still not as well as bombers from other makers.</description>
  <health>
   <armour>60</armour>
   <armour_regen>0</armour_regen>

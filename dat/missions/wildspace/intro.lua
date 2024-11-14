@@ -159,7 +159,7 @@ function land ()
 
       vn.na(_([[After your ordeal, you once again make your way through the airlock. It is oddly silent. You arrive the cantina, but hear no welcome. You try to make some noise to catch the attention of the inhabitant but to no avail. Not really knowing what you do, you decide to take a look and delve deeper into the structure.]]))
       vn.na(_([[You find a door that seems to have been remotely unlocked and go through a winding hallway that twists and turns following the damage to the hull. You reach another door, this time it looks more ad-hoc and less reinforced. Out of courtesy, you knock with your weapon to see if anyone responds.]]))
-      vn.na(_([[You seemingly have no choice but to kick it down to see what is on the other side. You brace for impact, but the door easily gives under the force of your boot. However, the seen you uncover almost makes you wish you hadn't.]]))
+      vn.na(_([[You seemingly have no choice but to kick it down to see what is on the other side. You brace for impact, but the door easily gives under the force of your boot. However, the scene you uncover almost makes you wish you hadn't.]]))
       vn.na(_([[You run back to your ship without looking back and lock yourself in the captain's room as you try to recover.]]))
 
       vn.scene()
@@ -191,7 +191,7 @@ When you receive this message, there is no need to come look for me. I will no l
       vn.scene()
       vn.newCharacter( sai )
       vn.transition()
-      sai(_([["That was the entire audible message. I have taken the liberty of analzing the data in the satchel you brought back. It seems to contain the blueprints for a trivial modification of the shield software that modulates the phase in hyper-spectral patterns. It seems like the modification counteracts some local effects in the so called 'wild space'. If you wish, I can apply them to your ships."]]))
+      sai(_([["That was the entire audible message. I have taken the liberty of analyzing the data in the satchel you brought back. It seems to contain the blueprints for a trivial modification of the shield software that modulates the phase in hyper-spectral patterns. It seems like the modification counteracts some local effects in the so called 'wild space'. If you wish, I can apply them to your ships."]]))
       vn.na(_([[You agree to the modifications. Claude and Ben's deaths should not be in vain.]]))
 
       if not jump.get("Scholz's Star", "Haered"):known() then

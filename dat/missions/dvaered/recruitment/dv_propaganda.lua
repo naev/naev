@@ -88,7 +88,7 @@ function accept()
 
    -- Add the Cargo
    local cflyers = _flyers()
-   mem.qtt = player.pilot():cargoFree()
+   mem.qtt = player.fleetCargoMissionFree()
    mem.pay = mem.credits * mem.qtt
    mem.cid = misn.cargoAdd( cflyers, mem.qtt )
    misn.setReward( mem.pay )

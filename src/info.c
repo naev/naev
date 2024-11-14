@@ -1045,7 +1045,7 @@ static void cargo_update( unsigned int wid, const char *str )
       return; /* No cargo, redundant check */
    }
 
-   /* Can jettison all but mission cargo when not landed*/
+   /* Can jettison all but mission cargo when not landed. */
    if ( landed )
       window_disableButton( wid, "btnJettisonCargo" );
    else
@@ -1061,7 +1061,11 @@ static void cargo_update( unsigned int wid, const char *str )
                      _( com->description ) );
 
    /* Only add fleet information with fleet capacity. */
-   if ( ( player.fleet_capacity > 0 ) && ( pclist[pos].quantity > 0 ) ) {
+   if ( pclist[pos].id > 0 ) {
+      l += scnprintf( &desc[l], sizeof( desc ) - l, "\n\n%s",
+                      _( "This is cargo related to a mission and can only be "
+                         "carried by your main ship." ) );
+   } else if ( ( player.fleet_capacity > 0 ) && ( pclist[pos].quantity > 0 ) ) {
       l += scnprintf( &desc[l], sizeof( desc ) - l, "\n\n%s",
                       _( "Carried by the following ships in your fleet:\n" ) );
       PFleetCargo *plist = pfleet_cargoListShips( com );

@@ -465,6 +465,14 @@ local function update_left ()
 end
 
 function _escort_jumpout()
+   -- We'll be nice and mark escorts that are currently jumping as jumped out too
+   for j,p in ipairs(_escort_convoy) do
+      if p:exists() and p:flags("jumpingout") then
+         table.insert( exited, p )
+      end
+   end
+
+   -- Update and report
    update_left ()
    if not mem._escort.nofailifdead and #exited <= 0 then
       lmisn.fail( _("You jumped before the convoy you were escorting.") )

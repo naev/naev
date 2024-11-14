@@ -749,10 +749,11 @@ def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
 def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
     root = ET.parse( filename ).getroot()
     name = root.get('name')
-    cls = root.find( "class" ).text
+    inherits = root.get('inherits')
     tag = root.find( "gfx" )
     basetag = root.find( "base_type" )
-    basetype = basetag.get("path")
+    basetype = "Llama"
+    #basetype = basetag.get("path")
     if basetype == None:
         basetype = basetag.text
     if tag != None:

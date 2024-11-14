@@ -45,10 +45,10 @@ Many believe they will not be Emperor much longer.
 
 The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centered around Polaris Prime in the Gamma Polaris system, the official seat of The Emperor.
 It is there that all important decisions of the Empire are made.
-However, the Empire holds outposts deep in hostile space, like Cerberus Station in the Doeston system or Zabween in Draconis.
+However, the Empire holds outposts deep in hostile space, like Cerberus Outpost in the Doeston system or Zabween Outpost in Draconis.
 The core systems, those in the vicinity of Gamma Polaris, are heavily patrolled and kept safe by the Empire military.
 However, frequent patrols to the outer systems are a logistical impossibility, and the Empire relies on its allies to keep traders safe there.
-Still, skirmishes between Imperial forces and pirate raiders are not uncommon.
+Still, skirmishes between Imperial forces and [pirate raiders](lore/factions/pirates) are not uncommon.
 It is a major goal of the Empire to restore the security of its territory to levels present prior to [the Incident](lore/history/incident).
 
 ## Economy
@@ -63,7 +63,7 @@ Other than that, what commodities companies produce on planets is of no concern 
 
 Most of the scientific research is conducted by [House Za'lek](lore/factions/zalek), but the Empire still has research bases of its own.
 It remains largely unknown to the public what projects the Imperial researchers develop.
-Empire engineers have created the [Peacemaker](ships/empire_peacemaker), a capital ship design which only the most respected among the Empire military are permitted to captain, and which is unequaled in combat by any other know vessel.
+Empire engineers in collaboration with [Nexus Shipyards](lore/fabricators) have created the [Peacemaker](ships/empire_peacemaker), a capital ship design which only the most respected among the Empire military are permitted to captain, and which is unequaled in combat by any other know vessel.
 These are the flagships of any larger Empire fleets, while local patrols usually consist primarily of [Admonishers](ships/empire_admonisher) and [Lancelots](ships/empire_lancelot).
 
 ## Political System

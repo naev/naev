@@ -2719,6 +2719,7 @@ dat/unidiff/raglan_outpost_death.xml
 dat/unidiff/sigma13_fixed1.xml
 dat/unidiff/sigma13_fixed2.xml
 dat/unidiff/strangelove.xml
+dat/unidiff/thurion_espionage.xml
 dat/ai/advertiser.lua
 dat/ai/baddie.lua
 dat/ai/baddie_norun.lua
@@ -3248,6 +3249,8 @@ dat/missions/taiomi/taiomi07.lua
 dat/missions/taiomi/taiomi08.lua
 dat/missions/taiomi/taiomi09.lua
 dat/missions/taiomi/taiomi10.lua
+dat/missions/thurion/android_abroad.lua
+dat/missions/thurion/data_extraction.lua
 dat/missions/thurion/intro_wildspace.lua
 dat/missions/trader/anxiousmerchant.lua
 dat/missions/trader/trader_escort.lua

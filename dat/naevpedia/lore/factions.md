@@ -3,6 +3,8 @@ title: "Factions"
 ---
 # Factions
 
+There are a diversity of factions that vie for the control of the universe.
+
 ## The Empire
 
 * [The Empire](lore/factions/empire)
@@ -11,7 +13,7 @@ title: "Factions"
 * [Great House Za'lek](lore/factions/zalek)
 * [House Goddard](lore/factions/goddard)
 
-## Independent Faction
+## Independent Factions
 
 * [Soromid](lore/factions/soromid)
 * [The Frontier](lore/factions/frontier)

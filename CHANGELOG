@@ -51,12 +51,12 @@
       * Reduced space dust size by 50%
    * Content
       * New in-game wiki with explanation on gameplay mechanics and lots of lore
-      * 6 new missions
-         * Hack the Gibson!
+      * 8 new missions
+         * The Onions call
       * 4 new ships
       * 13 new ship variants
          * Give a new twist to existing ships
-      * 4 new outfits
+      * 6 new outfits
       * New area with unique challenges
       * New events
          * Get more Sirius abilities
@@ -125,6 +125,7 @@
       * Fixed autonav not respecting shield thresholds
       * zbh10: Godheart and friends get at most 1 fighter bay per ship now
       * Fixed ESS Trinity being bribeable
+      * Cargo on fleets with be displayed to make room for mission cargo when necessary
 
 * 0.11.6 (unreleased)
    * Made it so Shadow Vigil doesn't try to go through Surano system for reasons

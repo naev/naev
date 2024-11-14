@@ -162,12 +162,12 @@ function create ()
    -- There will probably be lot of failure in this loop.
    -- Just increase the mission probability to compensate.
    for i = 2, mem.nbsys do
-      mem.thesys = systems[ rnd.rnd( 1, #systems ) ]
+      local thesys = systems[ rnd.rnd( 1, #systems ) ]
       -- Don't re-use the previous system
-      if mem.thesys == mem.mysys[i-1] then
+      if thesys == mem.mysys[i-1] then
          misn.finish( false )
       end
-      mem.mysys[i] = mem.thesys
+      mem.mysys[i] = thesys
    end
 
    if not misn.claim(mem.mysys) then
@@ -419,6 +419,7 @@ function hail( target )
    -- Custom option
    local lbl = "seekndestroy_check"
    local mmem = mem -- have to use auxiliary variable here
+   local nextsys = mmem.mysys[mmem.cursys+1]
    ccomm.customComm( target, function ()
       if mmem.stage ~= 0 or system.cur() ~= mmem.mysys[mmem.cursys] or inlist( hailed, target )then
          return nil -- Past first stage
@@ -428,7 +429,7 @@ function hail( target )
    end, function ( lvn, vnp )
       lvn.func( function ()
          table.insert( hailed, target )
-         if mmem.cursys+1 >= mem.nbsys then -- No more claimed system : need to finish the mission
+         if not nextsys then -- No more claimed system : need to finish the mission
             return lvn.jump( "seekndestroy_cold")
          end
          return lvn.jump("seekndestroy_std")
@@ -479,7 +480,7 @@ function hail( target )
          target:setHostile( false )
       end )
       vnp(fmt.f( quotes.clue[m._seekndestroy_clue],
-            {plt=mmem.name, sys=mmem.mysys[mmem.cursys+1]}))
+            {plt=mmem.name, sys=nextsys}))
       lvn.jump("menu")
 
       lvn.label("seekndestroy_clue")
@@ -513,7 +514,7 @@ function hail( target )
          player.pay(-m._seekndestroy_price)
       end )
       vnp(_([["I know the pilot you're looking for."]]))
-      vnp(fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mmem.name, sys=mmem.mysys[mmem.cursys+1]}))
+      vnp(fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mmem.name, sys=nextsys}))
       lvn.func( function ()
          var.push("seekndestroy_nextsys",true)
          target:setHostile( false )
@@ -544,7 +545,7 @@ function hail( target )
       end )
 
       lvn.label("seekndestroy_scared")
-      vnp(fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=mmem.mysys[mmem.cursys+1]}))
+      vnp(fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=nextsys}))
       lvn.func( function ()
          var.push("seekndestroy_nextsys",true)
          target:control()
@@ -554,7 +555,7 @@ function hail( target )
       lvn.done()
 
       lvn.label("seekndestroy_notimpressed")
-      vnp(fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mmem.name, sys=mmem.mysys[mmem.cursys+1]}))
+      vnp(fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mmem.name, sys=nextsys}))
       lvn.func( function ()
          target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
          -- Clean the previous hook if it exists
@@ -575,7 +576,7 @@ function hail( target )
       }
 
       lvn.label( "seekndestroy_intimidating" )
-      vnp( fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=mmem.mysys[mmem.cursys+1]} ) )
+      vnp( fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=nextsys} ) )
       lvn.func( function ()
          var.push("seekndestroy_nextsys",true)
          target:control()

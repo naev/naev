@@ -4,7 +4,7 @@ cond: "return require('common.soromid').playerHasBioship()"
 ---
 # Bioships
 
-Bioships are hybrid between man-made constructs and living animals, and are tamed and created by the [Soromid Tribes](factions/soromid).
+Bioships are hybrid between man-made constructs and living animals, and are tamed and created by the [Soromid Tribes](lore/factions/soromid).
 Unlike normal ships, bioships have built-in cores that grow stronger as the ship gains stages.
 Increasing stages can be done by gaining experience, primarily through doing missions with the ship.
 Other than improving the core outfits, stages allows the ship to learn new skills and become significantly more powerful.

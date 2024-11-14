@@ -17,10 +17,9 @@
  <trail_generator x="-39" y="25" h="0">nebula</trail_generator>
  <fabricator>Thurion Shipyards</fabricator>
  <faction>Thurion</faction>
- <license>Heavy Combat Vessel</license>
  <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 70</cond>
  <condstr>You need at least 70% reputation with the Thurion.</condstr>
- <description>...</description>
+ <description>The largest ship produced by Thurion Shipyards, the Certitude boasts an advanced array of electronics that reproduces a lot of functionality found in any of the node stations, although non-uploaded humans can only make limited use of them through the standard interface. Combat functionality is also unrivaled by other Thurion ships, and the towering presence makes it clear that the ship is not only for support.</description>
  <health>
   <armour>2400</armour>
   <armour_regen>0</armour_regen>

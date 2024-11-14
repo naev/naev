@@ -331,6 +331,11 @@ static int load_enumerateCallbackPlayer( void *data, const char *origdir,
    size_t      dir_len;
    PHYSFS_Stat stat;
 
+   /* Want .ns extensions. */
+   size_t name_len = strlen( fname );
+   if ( name_len < 4 || strcmp( &fname[name_len - 3], ".ns" ) )
+      return PHYSFS_ENUM_OK;
+
    dir_len = strlen( origdir );
 
    fmt = dir_len && origdir[dir_len - 1] == '/' ? "%s%s" : "%s/%s";

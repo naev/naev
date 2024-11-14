@@ -51,6 +51,7 @@ end
 
 function accept ()
    local accepted = false
+   local fs = player.fleetCargoMissionFree()
 
    vn.clear()
    vn.scene()
@@ -66,13 +67,13 @@ function accept ()
    vn.done()
 
    vn.label("nospace")
-   vn.na(fmt.f(_([[You neeed an additional {space} of free space if you want to accept the mission.]]),
-      {space=fmt.tonnes(cargo_amount - player.pilot():cargoFree())}))
+   vn.na(fmt.f(_([[You need an additional {space} of free space if you want to accept the mission.]]),
+      {space=fmt.tonnes(cargo_amount - fs)}))
    vn.done()
 
    vn.label("yes")
    vn.func( function ()
-      if player.pilot():cargoFree() < cargo_amount then
+      if fs < cargo_amount then
          vn.jump("nospace")
       end
    end )
@@ -110,7 +111,7 @@ end
 
 function land ()
    if spob.cur() == mem.pickupWorld and not mem.pickedup then
-      if player.pilot():cargoFree() < cargo_amount then
+      if player.fleetCargoMissionFree() < cargo_amount then
          vntk.msg( _("No Room"), fmt.f(_([[You need at least {amount} of free space to pick up the cargo.]]), {amount=cargo_amount}))  -- Not enough space
          misn.finish()
 
@@ -129,7 +130,7 @@ function land ()
       vn.scene()
       vn.transition()
       vn.na(_([[You finally arrive at your destination, bringing your ship down to land right beside a beautiful woman with long blonde locks in a long extravagant gown. You know this must be the countess, but you're unsure how she knew you were going to arrive, to be waiting for you. When you get out of your ship, you notice there are no dock workers anywhere in sight, only a group of heavily armed private militia that weren't there when you landed.]]))
-      vn.na(_([[You gulp as she motions to them without showing a hint of emotion. In formation, they all raise their weapons. As you think your life is about to end, every other row turns and hands off their weapon, and then marches forward and quickly unloads your cargo onto a small transport carrier, and march off. The countess smirks at you and winks before walking off. You breath a sigh of relief, only to realize you haven't been paid. As you walk back onto your ship, you see a card laying on the floor with simply her name, Countess Amelia Vollana.]]))
+      vn.na(_([[You gulp as she motions to them without showing a hint of emotion. In formation, they all raise their weapons. As you think your life is about to end, every other row turns and hands off their weapon, and then marches forward and quickly unloads your cargo onto a small transport carrier, and march off. The countess smirks at you and winks before walking off. You breathe a sigh of relief, only to realize you haven't been paid. As you walk back onto your ship, you see a card laying on the floor with simply her name, Countess Amelia Vollana.]]))
       vn.run()
       misn.cargoRm (mem.cargoID)
 
