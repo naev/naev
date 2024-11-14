@@ -14,6 +14,7 @@ import os
 import argparse
 import logging
 import time
+import datetime
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
@@ -55,8 +56,8 @@ while (time.time() - start_time) < max_wait_time and not code_found:
     # Select the default mailbox and search for the 2FA email
     try:
         connection.select()
-        # Search for emails from 'noreply@steampowered.com'
-        result, data = connection.search(None, 'FROM', '"noreply@steampowered.com"')
+        # Search for unread emails from 'noreply@steampowered.com'
+        result, data = connection.search(None, '(UNSEEN)', 'FROM', '"noreply@steampowered.com"')
     except Exception as e:
         logging.error('Could not search the mailbox: %s', e)
         exit(1)
@@ -64,14 +65,16 @@ while (time.time() - start_time) < max_wait_time and not code_found:
     if result == 'OK':
         uids = data[0].split()
         if uids:
-            # Fetch the latest email from the results
+            # Fetch the most recent email (highest UID)
             num = uids[-1]
             result, data = connection.fetch(num, '(RFC822)')
             if result == 'OK':
                 email_message = email.message_from_bytes(data[0][1])
-                # Check if the email is recent
+                # Get the email date
                 email_date = email.utils.parsedate_to_datetime(email_message['Date'])
-                if email_date.timestamp() >= start_time:
+                # Check if the email is from the last five minutes
+                time_diff = datetime.datetime.now(datetime.timezone.utc) - email_date
+                if time_diff.total_seconds() <= 300:
                     # Walk through the email parts to find the text/plain content
                     for part in email_message.walk():
                         if part.get_content_type() == 'text/plain':
@@ -87,14 +90,13 @@ while (time.time() - start_time) < max_wait_time and not code_found:
                                 code_found = True
                                 break
                     if not code_found:
-                        logging.info('2FA code not found in the email. Waiting for the next email.')
+                        logging.info('2FA code not found in the email.')
                 else:
-                    logging.info('No new 2FA emails found. Waiting...')
+                    logging.info('Most recent email is older than five minutes. Waiting...')
             else:
                 logging.error('Could not retrieve the email message.')
-                exit(1)
         else:
-            logging.info('No new 2FA emails found. Waiting...')
+            logging.info('No unread 2FA emails found. Waiting...')
     else:
         logging.error('Could not find any messages.')
         exit(1)
