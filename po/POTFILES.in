@@ -3944,6 +3944,7 @@ src/queue.h
 src/render.c
 src/render.h
 src/rng.h
+src/rng.rs
 src/safelanes.c
 src/safelanes.h
 src/save.c
