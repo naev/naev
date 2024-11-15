@@ -176,7 +176,7 @@ function enter_ship()
 
 
     vn.label( "abort" )
-    vn.na(_("This is too much! You better leave before doing anything embarrassing or humiliating happens."))
+    vn.na(_("This is too much! You better leave before doing anything embarrassing or humiliating."))
     vn.func( function ()
         misn.finish(false)
     end )
